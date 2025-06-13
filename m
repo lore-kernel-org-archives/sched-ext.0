@@ -1,110 +1,158 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1826B2E175B;
-	Fri, 13 Jun 2025 09:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E5B1F3B83;
+	Fri, 13 Jun 2025 20:03:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749807940; cv=none; b=Pmn63Vum14/mUlYAonMGgPbWId4pbD36VvqZMQaD1nRSZTydz7EWYM+4DgixTRDmeCpPMpAIgXU680gStTJKhVhSe2mlgs4NLaKuZvEvGy+Yp3dtfg3f488CNX1RZfZOFID/aVjs3g00fe8gAKMhBOye/CE4h0p6yY1D9waHxyU=
+	t=1749844997; cv=none; b=P0kYqZ7JNU8LryTGPks/EsGLtIteEyvuvwZNGn9xtFEbrojw+qWL1TwIBJFWr8BUSUhZfAsdKdPVhfxqcr/KTxZArVQPmcnFw9c5jks2mLC89myZdYuYX+G3VJf8C/hr80L+CPwnoWJRL4pdMZrB+/s/u81AqcBVPMTYf3QOm3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749807940; c=relaxed/simple;
-	bh=2FudhAI9UWkcztWjvNL8C1SXNVOscvCku0Qp53bjWpw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mw0p2xEdk/FKqPF/DGNObvSiy4XpUXg7gVyFJThIXPneLphcASM0QxmxZZqG0MCy+Qi8BF4fLkLtcFzK7QHvYatA8cQwsjINSUgGnWCxCttRf62UZEQ+EvsXAmHVqy6IJlp90FJ3vztGi05NEw0tzOpKB8oz7yGKm4FWIysfxYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=VNo5+tQG; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1749844997; c=relaxed/simple;
+	bh=/4cO2oxwE2+MFIsqBcFcY3X9Z9y419YIquujHe9FTio=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RIvm/tjp3ow3Xi79vUOJ6on+N2FFEzjo7K3y7mwrwB/7BqzBKkYghUVTVs83olD/Ex1j3+cF0U4UQsRvx3iC4cbp4jJHUMgQu4hP1fHhoksAg6pPXM6Cd1CmdTOryl2+tyZA8DrOdUz/In3bq98HLGiIf38Wofus2HCVQT2f92I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RMJK21uk; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="VNo5+tQG"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=68O/6enx02DdtYXCqP3EiTv8qCX7nFwxWLKHvVg5lTo=; b=VNo5+tQGwmDnCmPm57hu9Y9Tn5
-	TWSVm9Uzg6frtYGFtGZ35RmfYqNh2L8ekLC6AHPJ8GjduT/WkBhoKbH4fIp3h/3VmIYh1l9RwSt4I
-	jJ+VZBZadBQ+ANjeZMD4rqNzZZgxlMkrkvprVR7vpwvanHci5ovqpJinzEbIB7VfAQZtfukzt4S/r
-	jMTiv5z1Q2lGSk5VzLSJcV+GKgMDq/wf0L7F6/Dw5gRTrPM2ycbb2H5nSbfAIOmkbptwoEgdll/aG
-	62pKiwE5Iuoa3PiGPeoiSDmE1wXrk0kJ72sfYlg7DNIH0ZTWz6xfuT5X/d/Z69V3jZ7zoevfTGbWG
-	7PFsqnEw==;
-Received: from [58.29.143.236] (helo=localhost)
-	by fanzine2.igalia.com with utf8esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1uQ0yZ-002xfb-6m; Fri, 13 Jun 2025 11:45:32 +0200
-From: Changwoo Min <changwoo@igalia.com>
-To: lukasz.luba@arm.com,
-	rafael@kernel.org,
-	len.brown@intel.com,
-	pavel@kernel.org
-Cc: christian.loehle@arm.com,
-	tj@kernel.org,
-	kernel-dev@igalia.com,
-	linux-pm@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Changwoo Min <changwoo@igalia.com>
-Subject: [PATCH v2 10/10] PM: EM: Notify an event when the performance domain changes.
-Date: Fri, 13 Jun 2025 18:44:28 +0900
-Message-ID: <20250613094428.267791-11-changwoo@igalia.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250613094428.267791-1-changwoo@igalia.com>
-References: <20250613094428.267791-1-changwoo@igalia.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RMJK21uk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1749844996; x=1781380996;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/4cO2oxwE2+MFIsqBcFcY3X9Z9y419YIquujHe9FTio=;
+  b=RMJK21ukGX6FxQzNSaoMFym1H3cMYf+MdIxJaDqK17cu6ooDPJZRAwFK
+   CLU4PKbcTyGPOQt9iaxclTNi2UAj2j9OCYWvzlxp/QEnUryltKzrJVoTx
+   45WOlF/apimHw8GbAeYgvgE/MHzzFRLC5JpQxoDW6qy8MXiwvBoMBnYhq
+   +/LMNQ/cAqyJW+vMhXxAXSo4iZ2sShdPoK3LX4DfS2Gb5IlPXpfOQGX+6
+   WWeL4piDwZzdZbf9lbHyMmd8oR6fjd5MsTo7lJwzitjkEvGw26AigLfGq
+   udem169OfzzM9dJfTW3EerJHbD5IjJOH0UWlfc/ANULjnDAa9eBeSg8yE
+   w==;
+X-CSE-ConnectionGUID: yqNMggqnQCaJezlEM6NINg==
+X-CSE-MsgGUID: YucCovVFRje7J4UJ9an3WQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11463"; a="51788473"
+X-IronPort-AV: E=Sophos;i="6.16,234,1744095600"; 
+   d="scan'208";a="51788473"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2025 13:03:15 -0700
+X-CSE-ConnectionGUID: NGjm4sX7RoCq04Iz9oE4xw==
+X-CSE-MsgGUID: DiqxwtpWSIaxHbuuah5MvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,234,1744095600"; 
+   d="scan'208";a="178898439"
+Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 13 Jun 2025 13:03:12 -0700
+Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uQAcI-000CyA-0K;
+	Fri, 13 Jun 2025 20:03:10 +0000
+Date: Sat, 14 Jun 2025 04:02:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Changwoo Min <changwoo@igalia.com>, lukasz.luba@arm.com,
+	rafael@kernel.org, len.brown@intel.com, pavel@kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	christian.loehle@arm.com, tj@kernel.org, kernel-dev@igalia.com,
+	linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Changwoo Min <changwoo@igalia.com>
+Subject: Re: [PATCH v2 09/10] PM: EM: Implement
+ em_notify_pd_created/updated().
+Message-ID: <202506140306.tuIoz8rN-lkp@intel.com>
+References: <20250613094428.267791-10-changwoo@igalia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250613094428.267791-10-changwoo@igalia.com>
 
-Send an event to userspace when a performance domain is created or deleted,
-or its energy model is updated.
+Hi Changwoo,
 
-Signed-off-by: Changwoo Min <changwoo@igalia.com>
----
- kernel/power/energy_model.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+kernel test robot noticed the following build warnings:
 
-diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
-index f125262a93c9..c72ac1585f59 100644
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -17,6 +17,8 @@
- #include <linux/sched/topology.h>
- #include <linux/slab.h>
- 
-+#include "em_netlink.h"
-+
- /*
-  * Mutex serializing the registrations of performance domains and letting
-  * callbacks defined by drivers sleep.
-@@ -350,6 +352,8 @@ int em_dev_update_perf_domain(struct device *dev,
- 	em_table_free(old_table);
- 
- 	mutex_unlock(&em_pd_mutex);
-+
-+	em_notify_pd_updated(pd);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(em_dev_update_perf_domain);
-@@ -673,6 +677,7 @@ int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
- 	list_add_tail(&dev->em_pd->node, &em_pd_list);
- 	mutex_unlock(&em_pd_list_mutex);
- 
-+	em_notify_pd_created(dev->em_pd);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(em_dev_register_perf_domain);
-@@ -695,6 +700,8 @@ void em_dev_unregister_perf_domain(struct device *dev)
- 	list_del_init(&dev->em_pd->node);
- 	mutex_unlock(&em_pd_list_mutex);
- 
-+	em_notify_pd_deleted(dev->em_pd);
-+
- 	/*
- 	 * The mutex separates all register/unregister requests and protects
- 	 * from potential clean-up/setup issues in the debugfs directories.
+[auto build test WARNING on linus/master]
+[also build test WARNING on v6.16-rc1 next-20250613]
+[cannot apply to amd-pstate/linux-next amd-pstate/bleeding-edge]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Changwoo-Min/PM-EM-Add-em-yaml-and-autogen-files/20250613-174859
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20250613094428.267791-10-changwoo%40igalia.com
+patch subject: [PATCH v2 09/10] PM: EM: Implement em_notify_pd_created/updated().
+config: i386-randconfig-001-20250614 (https://download.01.org/0day-ci/archive/20250614/202506140306.tuIoz8rN-lkp@intel.com/config)
+compiler: clang version 20.1.2 (https://github.com/llvm/llvm-project 58df0ef89dd64126512e4ee27b4ac3fd8ddf6247)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250614/202506140306.tuIoz8rN-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202506140306.tuIoz8rN-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> kernel/power/em_netlink.c:234:6: warning: variable 'ret' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+     234 |         if (!hdr)
+         |             ^~~~
+   kernel/power/em_netlink.c:249:9: note: uninitialized use occurs here
+     249 |         return ret;
+         |                ^~~
+   kernel/power/em_netlink.c:234:2: note: remove the 'if' if its condition is always false
+     234 |         if (!hdr)
+         |         ^~~~~~~~~
+     235 |                 goto out_free_msg;
+         |                 ~~~~~~~~~~~~~~~~~
+   kernel/power/em_netlink.c:221:17: note: initialize the variable 'ret' to silence this warning
+     221 |         int msg_sz, ret;
+         |                        ^
+         |                         = 0
+   1 warning generated.
+
+
+vim +234 kernel/power/em_netlink.c
+
+   215	
+   216	
+   217	/**************************** Event encoding *********************************/
+   218	static int __em_notify_pd_table(const struct em_perf_domain *pd, int ntf_type)
+   219	{
+   220		struct sk_buff *msg;
+   221		int msg_sz, ret;
+   222		void *hdr;
+   223	
+   224		if (!genl_has_listeners(&em_nl_family, &init_net, EM_NLGRP_EVENT))
+   225			return 0;
+   226	
+   227		msg_sz = __em_nl_get_pd_table_size(pd);
+   228	
+   229		msg = genlmsg_new(msg_sz, GFP_KERNEL);
+   230		if (!msg)
+   231			return -ENOMEM;
+   232	
+   233		hdr = genlmsg_put(msg, 0, 0, &em_nl_family, 0, ntf_type);
+ > 234		if (!hdr)
+   235			goto out_free_msg;
+   236	
+   237		ret = __em_nl_get_pd_table(msg, pd);
+   238		if (ret)
+   239			goto out_free_msg;
+   240	
+   241		genlmsg_end(msg, hdr);
+   242	
+   243		genlmsg_multicast(&em_nl_family, msg, 0, EM_NLGRP_EVENT, GFP_KERNEL);
+   244	
+   245		return 0;
+   246	
+   247	out_free_msg:
+   248		nlmsg_free(msg);
+   249		return ret;
+   250	}
+   251	
+
 -- 
-2.49.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
