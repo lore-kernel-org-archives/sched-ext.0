@@ -1,435 +1,231 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31932151990;
-	Sat, 14 Jun 2025 01:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7761A12B93;
+	Sat, 14 Jun 2025 01:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749864234; cv=none; b=i2iM0CYuNqzASIvaI3XgShVayWt+7bPDU+5rBHehNM544Rtfla7/FerBWAqvWIJczrUCyKYjP0VNDlGqt1SF13arZ++UKYK6iWt5HsFPqwqP+2/CJ04grGGuYV1rcRrdl4IOiuZy9EQQxLaFkMjel7UbiJ2AzPk72LLD5VXvd/k=
+	t=1749864792; cv=none; b=mKi76UUf65ZFPQf3uiuGziqV16ACfBWqVmArYNy0ycCxAjrSJDmuAtJdIEDHNGZ77lYhBygGkX9BZhobb88mAkHhh0rAM005smhIuOPEnv0kTdROPmCm1ewEI1iV15EAcwt/bfnvyMpxi59VdZfmW5+FX13z10NWl0FbkYS68SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749864234; c=relaxed/simple;
-	bh=jmnQOULJ2u1KPG3F1AMgRwSW6d2bByiHvcY/fzeS9uc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ax/8Q+AgDIq8gkhlxpXptyWOWS3ivWAkP3xFj/OtA7ryJY1BtHxP1PfYEsnQ+P1I8E9XK4uQCukQkZ0VJH1HP8HNEUjpNic1n++jkFiN/r+2Kj2VhZ1859Mc8y2RIGSgGd26kUL4gZrZWwvkp65rz3mCAOjdvfrsbY4zMeYKbDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q2ZQDAzO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749864792; c=relaxed/simple;
+	bh=ljO7ko//xPyBGAMTXSAqK5hkpWjaCEL4iURgQsHbWRc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=A2e5pkqRaspFrbrPAnf9X5c3lptph272dRGt/5EFPgFpsetZAXYUMVEIJJKynUr5Qq8VfK2nmAm00AN8RSHe8vAbVOvbIbntkhs/wx3QXJSJ46wPqnsNuYMJIZud5LeomdDIAXKeXVictkxkdGGgL0GJoAf/XZOCh5vfNqlp3S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M2+1z64u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q2ZQDAzO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F623C4CEED;
-	Sat, 14 Jun 2025 01:23:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M2+1z64u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC510C4CEE3;
+	Sat, 14 Jun 2025 01:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749864233;
-	bh=jmnQOULJ2u1KPG3F1AMgRwSW6d2bByiHvcY/fzeS9uc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2ZQDAzOEeyPaEeIIBtTLg/CyiZFaKNY8ZIW1zlTw/tmMef2eGnL4lPT8Ip/QGeVF
-	 n3RkJ2Lc8Jg0MWXXH3BX8aH5MF0hTNzFPAP1RJSZJeFcENgqEMfqq0W599uiDhq65K
-	 kroJ9XaPll+6Gl09CwbN1WYYyw8z/zxLsdCesM7yDQLxOeMjQDdEzPl+E8I31ARq1H
-	 Vf/JYDwDTNV+Jm2qHAgf5t2U2dkRFwtx5wxfqYbz0Dkgd3EXvuU3eGx0Lzj4JgAVd2
-	 W4n+sweiA2Wf6qnxtIgaM0i/WJtjVATyN1bXlmG/lAydcjpEAvsXohh5SQ/mFw6r2h
-	 O40HYZ51JkNFQ==
+	s=k20201202; t=1749864792;
+	bh=ljO7ko//xPyBGAMTXSAqK5hkpWjaCEL4iURgQsHbWRc=;
+	h=Date:From:To:Cc:Subject:From;
+	b=M2+1z64umY3rWqdCKiOc4qOrF/M0BTYThm/wWG+aN6LkGcIipRDv8ucHVxuiTC6yg
+	 dLW6sHVcIy8RJmk8xe+/gxI3brpHXEEqll5DLPpygzW3zoTm9ENWahjEy0j8eAt1RX
+	 hV+vKfR3paEXP8oJGXVaVWbXs2lBaj0lVwhiR7akahSLwWeEKjzmvABLdlnvHLZJNb
+	 V4eajwXxM2xJkrzBUr+FZgrgBE7c6BL1ATe1lj1Dj3oCAAU7jAb9085JwbGSafU1h7
+	 vN9JGaPU1RBbYe+6Tmzrs75qHHIY87TSAA1Bg/pUyv5XgJD0IWt2bWKJT7eH1IqCaQ
+	 1prfMf/8utBPA==
+Date: Fri, 13 Jun 2025 15:33:10 -1000
 From: Tejun Heo <tj@kernel.org>
-To: mingo@redhat.com,
-	peterz@infradead.org
-Cc: linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4/4] sched/core: Reorganize cgroup bandwidth control interface file writes
-Date: Fri, 13 Jun 2025 15:23:30 -1000
-Message-ID: <20250614012346.2358261-5-tj@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250614012346.2358261-1-tj@kernel.org>
-References: <20250614012346.2358261-1-tj@kernel.org>
+To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH sched_ext/for-6.17 1/2] sched_ext, sched/core: Factor out
+ struct scx_task_group
+Message-ID: <aEzRVj5ha38RAEr5@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-- Move input parameter validation from tg_set_cfs_bandwidth() to the new
-  outer function tg_set_bandwidth(). The outer function handles parameters
-  in usecs, validates them and calls tg_set_cfs_bandwidth() which converts
-  them into nsecs. This matches tg_bandwidth() on the read side.
+From 55aa129e6add97a98340326451bdadd4c5dd3242 Mon Sep 17 00:00:00 2001
+From: Tejun Heo <tj@kernel.org>
+Date: Fri, 13 Jun 2025 15:06:47 -1000
 
-- max/min_cfs_* consts are now used by tg_set_bandwidth(). Relocate, convert
-  into usecs and drop "cfs" from the names.
-
-- Reimplement cpu_cfs_{period|quote|burst}_write_*() using tg_bandwidth()
-  and tg_set_bandwidth() and replace "cfs" in the names with "bw".
-
-- Update cpu_max_write() to use tg_set_bandiwdth(). cpu_period_quota_parse()
-  is updated to drop nsec conversion accordingly. This aligns the behavior
-  with cfs_period_quota_print().
-
-- Drop now unused tg_set_cfs_{period|quota|burst}().
-
-- While at it, for consistency, rename default_cfs_period() to
-  default_bw_period_us() and make it return usecs.
-
-This is to prepare for adding bandwidth control support to sched_ext.
-tg_set_bandwidth() will be used as the muxing point. No functional changes
-intended.
+More sched_ext fields will be added to struct task_group. In preparation,
+factor out sched_ext fields into struct scx_task_group to reduce clutter in
+the common header. No functional changes.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/core.c  | 205 +++++++++++++++++++++----------------------
- kernel/sched/fair.c  |   4 +-
- kernel/sched/sched.h |  10 +--
- 3 files changed, 106 insertions(+), 113 deletions(-)
+These two patches are on top of:
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 8de93a3bfa27..2f8caa9db78d 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -9309,47 +9309,23 @@ static u64 cpu_shares_read_u64(struct cgroup_subsys_state *css,
- #ifdef CONFIG_CFS_BANDWIDTH
- static DEFINE_MUTEX(cfs_constraints_mutex);
+ + Two fix pathces pending on sched_ext/for-6.16-fixes
+     http://lkml.kernel.org/r/aEyy27BecPPHDWHc@slm.duckdns.org
+     http://lkml.kernel.org/r/aEyzhBAl5zkP6Ku-@slm.duckdns.org
+ + tip/sched/core patchset to reorganize bandwidth control interface handling
+     http://lkml.kernel.org/r/20250614012346.2358261-1-tj@kernel.org
+
+See the following git branch for the merged result:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-bandwidth-control
+
+Peter, while this touches sched.h, the change is contained to scx part and
+shouldn't cause noticeable problems for other scheduler changes. I'll carry
+this through sched_ext/for-6.17. Please let me know if there are any
+concerns.
+
+Thanks.
+
+ include/linux/sched/ext.h |  8 ++++++++
+ kernel/sched/ext.c        | 32 ++++++++++++++++----------------
+ kernel/sched/sched.h      |  5 +----
+ 3 files changed, 25 insertions(+), 20 deletions(-)
+
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index f7545430a548..eda89acdb7ab 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -214,4 +214,12 @@ static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
+ static inline void scx_softlockup(u32 dur_s) {}
  
--const u64 max_cfs_quota_period = 1 * NSEC_PER_SEC; /* 1s */
--static const u64 min_cfs_quota_period = 1 * NSEC_PER_MSEC; /* 1ms */
--/* More than 203 days if BW_SHIFT equals 20. */
--static const u64 max_cfs_runtime = MAX_BW * NSEC_PER_USEC;
--
- static int __cfs_schedulable(struct task_group *tg, u64 period, u64 runtime);
+ #endif	/* CONFIG_SCHED_CLASS_EXT */
++
++struct scx_task_group {
++#ifdef CONFIG_EXT_GROUP_SCHED
++	u32			flags;		/* SCX_TG_* */
++	u32			weight;
++#endif
++};
++
+ #endif	/* _LINUX_SCHED_EXT_H */
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 4db51e708f86..6732e50e0679 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4058,7 +4058,7 @@ static bool scx_cgroup_enabled;
  
--static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota,
--				u64 burst)
-+static int tg_set_cfs_bandwidth(struct task_group *tg,
-+				u64 period_us, u64 quota_us, u64 burst_us)
+ void scx_tg_init(struct task_group *tg)
  {
- 	int i, ret = 0, runtime_enabled, runtime_was_enabled;
- 	struct cfs_bandwidth *cfs_b = &tg->cfs_bandwidth;
-+	u64 period, quota, burst;
- 
--	if (tg == &root_task_group)
--		return -EINVAL;
--
--	/*
--	 * Ensure we have at some amount of bandwidth every period.  This is
--	 * to prevent reaching a state of large arrears when throttled via
--	 * entity_tick() resulting in prolonged exit starvation.
--	 */
--	if (quota < min_cfs_quota_period || period < min_cfs_quota_period)
--		return -EINVAL;
-+	period = (u64)period_us * NSEC_PER_USEC;
- 
--	/*
--	 * Likewise, bound things on the other side by preventing insane quota
--	 * periods.  This also allows us to normalize in computing quota
--	 * feasibility.
--	 */
--	if (period > max_cfs_quota_period)
--		return -EINVAL;
--
--	/*
--	 * Bound quota to defend quota against overflow during bandwidth shift.
--	 */
--	if (quota != RUNTIME_INF && quota > max_cfs_runtime)
--		return -EINVAL;
-+	if (quota_us == RUNTIME_INF)
-+		quota = RUNTIME_INF;
-+	else
-+		quota = (u64)quota_us * NSEC_PER_USEC;
- 
--	if (quota != RUNTIME_INF && (burst > quota ||
--				     burst + quota > max_cfs_runtime))
--		return -EINVAL;
-+	burst = (u64)burst_us * NSEC_PER_USEC;
- 
- 	/*
- 	 * Prevent race between setting of cfs_rq->runtime_enabled and
-@@ -9437,50 +9413,6 @@ static u64 tg_get_cfs_burst(struct task_group *tg)
- 	return burst_us;
+-	tg->scx_weight = CGROUP_WEIGHT_DFL;
++	tg->scx.weight = CGROUP_WEIGHT_DFL;
  }
  
--static int tg_set_cfs_period(struct task_group *tg, long cfs_period_us)
--{
--	u64 quota, period, burst;
--
--	if ((u64)cfs_period_us > U64_MAX / NSEC_PER_USEC)
--		return -EINVAL;
--
--	period = (u64)cfs_period_us * NSEC_PER_USEC;
--	quota = tg->cfs_bandwidth.quota;
--	burst = tg->cfs_bandwidth.burst;
--
--	return tg_set_cfs_bandwidth(tg, period, quota, burst);
--}
--
--static int tg_set_cfs_quota(struct task_group *tg, long cfs_quota_us)
--{
--	u64 quota, period, burst;
--
--	period = ktime_to_ns(tg->cfs_bandwidth.period);
--	burst = tg->cfs_bandwidth.burst;
--	if (cfs_quota_us < 0)
--		quota = RUNTIME_INF;
--	else if ((u64)cfs_quota_us <= U64_MAX / NSEC_PER_USEC)
--		quota = (u64)cfs_quota_us * NSEC_PER_USEC;
--	else
--		return -EINVAL;
--
--	return tg_set_cfs_bandwidth(tg, period, quota, burst);
--}
--
--static int tg_set_cfs_burst(struct task_group *tg, long cfs_burst_us)
--{
--	u64 quota, period, burst;
--
--	if ((u64)cfs_burst_us > U64_MAX / NSEC_PER_USEC)
--		return -EINVAL;
--
--	burst = (u64)cfs_burst_us * NSEC_PER_USEC;
--	period = ktime_to_ns(tg->cfs_bandwidth.period);
--	quota = tg->cfs_bandwidth.quota;
--
--	return tg_set_cfs_bandwidth(tg, period, quota, burst);
--}
--
- struct cfs_schedulable_data {
- 	struct task_group *tg;
- 	u64 period, quota;
-@@ -9614,6 +9546,11 @@ static int cpu_cfs_local_stat_show(struct seq_file *sf, void *v)
- 	return 0;
- }
+ int scx_tg_online(struct task_group *tg)
+@@ -4066,14 +4066,14 @@ int scx_tg_online(struct task_group *tg)
+ 	struct scx_sched *sch = scx_root;
+ 	int ret = 0;
  
-+const u64 max_bw_quota_period_us = 1 * USEC_PER_SEC; /* 1s */
-+static const u64 min_bw_quota_period_us = 1 * USEC_PER_MSEC; /* 1ms */
-+/* More than 203 days if BW_SHIFT equals 20. */
-+static const u64 max_bw_runtime_us = MAX_BW;
-+
- static void tg_bandwidth(struct task_group *tg,
- 			 u64 *period_us_p, u64 *quota_us_p, u64 *burst_us_p)
+-	WARN_ON_ONCE(tg->scx_flags & (SCX_TG_ONLINE | SCX_TG_INITED));
++	WARN_ON_ONCE(tg->scx.flags & (SCX_TG_ONLINE | SCX_TG_INITED));
+ 
+ 	percpu_down_read(&scx_cgroup_rwsem);
+ 
+ 	if (scx_cgroup_enabled) {
+ 		if (SCX_HAS_OP(sch, cgroup_init)) {
+ 			struct scx_cgroup_init_args args =
+-				{ .weight = tg->scx_weight };
++				{ .weight = tg->scx.weight };
+ 
+ 			ret = SCX_CALL_OP_RET(sch, SCX_KF_UNLOCKED, cgroup_init,
+ 					      NULL, tg->css.cgroup, &args);
+@@ -4081,9 +4081,9 @@ int scx_tg_online(struct task_group *tg)
+ 				ret = ops_sanitize_err(sch, "cgroup_init", ret);
+ 		}
+ 		if (ret == 0)
+-			tg->scx_flags |= SCX_TG_ONLINE | SCX_TG_INITED;
++			tg->scx.flags |= SCX_TG_ONLINE | SCX_TG_INITED;
+ 	} else {
+-		tg->scx_flags |= SCX_TG_ONLINE;
++		tg->scx.flags |= SCX_TG_ONLINE;
+ 	}
+ 
+ 	percpu_up_read(&scx_cgroup_rwsem);
+@@ -4094,15 +4094,15 @@ void scx_tg_offline(struct task_group *tg)
  {
-@@ -9634,6 +9571,50 @@ static u64 cpu_period_read_u64(struct cgroup_subsys_state *css,
- 	return period_us;
+ 	struct scx_sched *sch = scx_root;
+ 
+-	WARN_ON_ONCE(!(tg->scx_flags & SCX_TG_ONLINE));
++	WARN_ON_ONCE(!(tg->scx.flags & SCX_TG_ONLINE));
+ 
+ 	percpu_down_read(&scx_cgroup_rwsem);
+ 
+ 	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_exit) &&
+-	    (tg->scx_flags & SCX_TG_INITED))
++	    (tg->scx.flags & SCX_TG_INITED))
+ 		SCX_CALL_OP(sch, SCX_KF_UNLOCKED, cgroup_exit, NULL,
+ 			    tg->css.cgroup);
+-	tg->scx_flags &= ~(SCX_TG_ONLINE | SCX_TG_INITED);
++	tg->scx.flags &= ~(SCX_TG_ONLINE | SCX_TG_INITED);
+ 
+ 	percpu_up_read(&scx_cgroup_rwsem);
  }
+@@ -4211,11 +4211,11 @@ void scx_group_set_weight(struct task_group *tg, unsigned long weight)
+ 	percpu_down_read(&scx_cgroup_rwsem);
  
-+static int tg_set_bandwidth(struct task_group *tg,
-+			    u64 period_us, u64 quota_us, u64 burst_us)
-+{
-+	const u64 max_usec = U64_MAX / NSEC_PER_USEC;
-+
-+	if (tg == &root_task_group)
-+		return -EINVAL;
-+
-+	/* Values should survive translation to nsec */
-+	if (period_us > max_usec ||
-+	    (quota_us != RUNTIME_INF && quota_us > max_usec) ||
-+	    burst_us > max_usec)
-+		return -EINVAL;
-+
-+	/*
-+	 * Ensure we have some amount of bandwidth every period. This is to
-+	 * prevent reaching a state of large arrears when throttled via
-+	 * entity_tick() resulting in prolonged exit starvation.
-+	 */
-+	if (quota_us < min_bw_quota_period_us ||
-+	    period_us < min_bw_quota_period_us)
-+		return -EINVAL;
-+
-+	/*
-+	 * Likewise, bound things on the other side by preventing insane quota
-+	 * periods.  This also allows us to normalize in computing quota
-+	 * feasibility.
-+	 */
-+	if (period_us > max_bw_quota_period_us)
-+		return -EINVAL;
-+
-+	/*
-+	 * Bound quota to defend quota against overflow during bandwidth shift.
-+	 */
-+	if (quota_us != RUNTIME_INF && quota_us > max_bw_runtime_us)
-+		return -EINVAL;
-+
-+	if (quota_us != RUNTIME_INF && (burst_us > quota_us ||
-+					burst_us + quota_us > max_bw_runtime_us))
-+		return -EINVAL;
-+
-+	return tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
-+}
-+
- static s64 cpu_quota_read_s64(struct cgroup_subsys_state *css,
- 			      struct cftype *cft)
- {
-@@ -9652,22 +9633,37 @@ static u64 cpu_burst_read_u64(struct cgroup_subsys_state *css,
- 	return burst_us;
+ 	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_set_weight) &&
+-	    tg->scx_weight != weight)
++	    tg->scx.weight != weight)
+ 		SCX_CALL_OP(sch, SCX_KF_UNLOCKED, cgroup_set_weight, NULL,
+ 			    tg_cgrp(tg), weight);
+ 
+-	tg->scx_weight = weight;
++	tg->scx.weight = weight;
+ 
+ 	percpu_up_read(&scx_cgroup_rwsem);
  }
+@@ -4366,9 +4366,9 @@ static void scx_cgroup_exit(struct scx_sched *sch)
+ 	css_for_each_descendant_post(css, &root_task_group.css) {
+ 		struct task_group *tg = css_tg(css);
  
--static int cpu_cfs_period_write_u64(struct cgroup_subsys_state *css,
--				    struct cftype *cftype, u64 cfs_period_us)
-+static int cpu_period_write_u64(struct cgroup_subsys_state *css,
-+				struct cftype *cftype, u64 period_us)
- {
--	return tg_set_cfs_period(css_tg(css), cfs_period_us);
-+	struct task_group *tg = css_tg(css);
-+	u64 quota_us, burst_us;
-+
-+	tg_bandwidth(tg, NULL, &quota_us, &burst_us);
-+	return tg_set_bandwidth(tg, period_us, quota_us, burst_us);
- }
+-		if (!(tg->scx_flags & SCX_TG_INITED))
++		if (!(tg->scx.flags & SCX_TG_INITED))
+ 			continue;
+-		tg->scx_flags &= ~SCX_TG_INITED;
++		tg->scx.flags &= ~SCX_TG_INITED;
  
--static int cpu_cfs_quota_write_s64(struct cgroup_subsys_state *css,
--				   struct cftype *cftype, s64 cfs_quota_us)
-+static int cpu_quota_write_s64(struct cgroup_subsys_state *css,
-+			       struct cftype *cftype, s64 quota_us)
- {
--	return tg_set_cfs_quota(css_tg(css), cfs_quota_us);
-+	struct task_group *tg = css_tg(css);
-+	u64 period_us, burst_us;
-+
-+	if (quota_us < 0)
-+		quota_us = RUNTIME_INF;
-+
-+	tg_bandwidth(tg, &period_us, NULL, &burst_us);
-+	return tg_set_bandwidth(tg, period_us, quota_us, burst_us);
- }
+ 		if (!sch->ops.cgroup_exit)
+ 			continue;
+@@ -4400,14 +4400,14 @@ static int scx_cgroup_init(struct scx_sched *sch)
+ 	rcu_read_lock();
+ 	css_for_each_descendant_pre(css, &root_task_group.css) {
+ 		struct task_group *tg = css_tg(css);
+-		struct scx_cgroup_init_args args = { .weight = tg->scx_weight };
++		struct scx_cgroup_init_args args = { .weight = tg->scx.weight };
  
--static int cpu_cfs_burst_write_u64(struct cgroup_subsys_state *css,
--				   struct cftype *cftype, u64 cfs_burst_us)
-+static int cpu_burst_write_u64(struct cgroup_subsys_state *css,
-+			       struct cftype *cftype, u64 burst_us)
- {
--	return tg_set_cfs_burst(css_tg(css), cfs_burst_us);
-+	struct task_group *tg = css_tg(css);
-+	u64 period_us, quota_us;
-+
-+	tg_bandwidth(tg, &period_us, &quota_us, NULL);
-+	return tg_set_bandwidth(tg, period_us, quota_us, burst_us);
- }
- #endif /* CONFIG_CFS_BANDWIDTH */
+-		if ((tg->scx_flags &
++		if ((tg->scx.flags &
+ 		     (SCX_TG_ONLINE | SCX_TG_INITED)) != SCX_TG_ONLINE)
+ 			continue;
  
-@@ -9733,17 +9729,17 @@ static struct cftype cpu_legacy_files[] = {
- 	{
- 		.name = "cfs_period_us",
- 		.read_u64 = cpu_period_read_u64,
--		.write_u64 = cpu_cfs_period_write_u64,
-+		.write_u64 = cpu_period_write_u64,
- 	},
- 	{
- 		.name = "cfs_quota_us",
- 		.read_s64 = cpu_quota_read_s64,
--		.write_s64 = cpu_cfs_quota_write_s64,
-+		.write_s64 = cpu_quota_write_s64,
- 	},
- 	{
- 		.name = "cfs_burst_us",
- 		.read_u64 = cpu_burst_read_u64,
--		.write_u64 = cpu_cfs_burst_write_u64,
-+		.write_u64 = cpu_burst_write_u64,
- 	},
- 	{
- 		.name = "stat",
-@@ -9940,22 +9936,20 @@ static void __maybe_unused cpu_period_quota_print(struct seq_file *sf,
- }
+ 		if (!sch->ops.cgroup_init) {
+-			tg->scx_flags |= SCX_TG_INITED;
++			tg->scx.flags |= SCX_TG_INITED;
+ 			continue;
+ 		}
  
- /* caller should put the current value in *@periodp before calling */
--static int __maybe_unused cpu_period_quota_parse(char *buf,
--						 u64 *periodp, u64 *quotap)
-+static int __maybe_unused cpu_period_quota_parse(char *buf, u64 *period_us_p,
-+						 u64 *quota_us_p)
- {
- 	char tok[21];	/* U64_MAX */
+@@ -4422,7 +4422,7 @@ static int scx_cgroup_init(struct scx_sched *sch)
+ 			scx_error(sch, "ops.cgroup_init() failed (%d)", ret);
+ 			return ret;
+ 		}
+-		tg->scx_flags |= SCX_TG_INITED;
++		tg->scx.flags |= SCX_TG_INITED;
  
--	if (sscanf(buf, "%20s %llu", tok, periodp) < 1)
-+	if (sscanf(buf, "%20s %llu", tok, period_us_p) < 1)
- 		return -EINVAL;
- 
--	*periodp *= NSEC_PER_USEC;
--
--	if (sscanf(tok, "%llu", quotap))
--		*quotap *= NSEC_PER_USEC;
--	else if (!strcmp(tok, "max"))
--		*quotap = RUNTIME_INF;
--	else
--		return -EINVAL;
-+	if (sscanf(tok, "%llu", quota_us_p) < 1) {
-+		if (!strcmp(tok, "max"))
-+			*quota_us_p = RUNTIME_INF;
-+		else
-+			return -EINVAL;
-+	}
- 
- 	return 0;
- }
-@@ -9975,14 +9969,13 @@ static ssize_t cpu_max_write(struct kernfs_open_file *of,
- 			     char *buf, size_t nbytes, loff_t off)
- {
- 	struct task_group *tg = css_tg(of_css(of));
--	u64 period = tg_get_cfs_period(tg);
--	u64 burst = tg->cfs_bandwidth.burst;
--	u64 quota;
-+	u64 period_us, quota_us, burst_us;
- 	int ret;
- 
--	ret = cpu_period_quota_parse(buf, &period, &quota);
-+	tg_bandwidth(tg, &period_us, NULL, &burst_us);
-+	ret = cpu_period_quota_parse(buf, &period_us, &quota_us);
- 	if (!ret)
--		ret = tg_set_cfs_bandwidth(tg, period, quota, burst);
-+		ret = tg_set_bandwidth(tg, period_us, quota_us, burst_us);
- 	return ret ?: nbytes;
- }
- #endif /* CONFIG_CFS_BANDWIDTH */
-@@ -10019,7 +10012,7 @@ static struct cftype cpu_files[] = {
- 		.name = "max.burst",
- 		.flags = CFTYPE_NOT_ON_ROOT,
- 		.read_u64 = cpu_burst_read_u64,
--		.write_u64 = cpu_cfs_burst_write_u64,
-+		.write_u64 = cpu_burst_write_u64,
- 	},
- #endif /* CONFIG_CFS_BANDWIDTH */
- #ifdef CONFIG_UCLAMP_TASK_GROUP
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 707be4570430..7e2963efe800 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6422,7 +6422,7 @@ static enum hrtimer_restart sched_cfs_period_timer(struct hrtimer *timer)
- 			 * to fail.
- 			 */
- 			new = old * 2;
--			if (new < max_cfs_quota_period) {
-+			if (new < max_bw_quota_period_us * NSEC_PER_USEC) {
- 				cfs_b->period = ns_to_ktime(new);
- 				cfs_b->quota *= 2;
- 				cfs_b->burst *= 2;
-@@ -6456,7 +6456,7 @@ void init_cfs_bandwidth(struct cfs_bandwidth *cfs_b, struct cfs_bandwidth *paren
- 	raw_spin_lock_init(&cfs_b->lock);
- 	cfs_b->runtime = 0;
- 	cfs_b->quota = RUNTIME_INF;
--	cfs_b->period = ns_to_ktime(default_cfs_period());
-+	cfs_b->period = us_to_ktime(default_bw_period_us());
- 	cfs_b->burst = 0;
- 	cfs_b->hierarchical_quota = parent ? parent->hierarchical_quota : RUNTIME_INF;
- 
+ 		rcu_read_lock();
+ 		css_put(css);
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index e00b80cd998e..105190b18020 100644
+index 105190b18020..fdf5f52b54a3 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
-@@ -403,15 +403,15 @@ static inline bool dl_server_active(struct sched_dl_entity *dl_se)
- extern struct list_head task_groups;
+@@ -471,10 +471,7 @@ struct task_group {
+ 	struct rt_bandwidth	rt_bandwidth;
+ #endif
  
- #ifdef CONFIG_CFS_BANDWIDTH
--extern const u64 max_cfs_quota_period;
-+extern const u64 max_bw_quota_period_us;
+-#ifdef CONFIG_EXT_GROUP_SCHED
+-	u32			scx_flags;	/* SCX_TG_* */
+-	u32			scx_weight;
+-#endif
++	struct scx_task_group	scx;
  
- /*
-- * default period for cfs group bandwidth.
-- * default: 0.1s, units: nanoseconds
-+ * default period for group bandwidth.
-+ * default: 0.1s, units: microseconds
-  */
--static inline u64 default_cfs_period(void)
-+static inline u64 default_bw_period_us(void)
- {
--	return 100000000ULL;
-+	return 100000ULL;
- }
- #endif /* CONFIG_CFS_BANDWIDTH */
- 
+ 	struct rcu_head		rcu;
+ 	struct list_head	list;
 -- 
 2.49.0
 
