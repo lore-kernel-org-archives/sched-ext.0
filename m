@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB45434CDD;
-	Sat, 14 Jun 2025 01:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B31B4D599;
+	Sat, 14 Jun 2025 01:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749864229; cv=none; b=qysM2s7sa0U1ixn+/3HpqHeMOE/ROqT9L5VYLVfEjDJPqdmKwIPLLZorDTxCecjHkY1MG2Tkcavn9r+uTapr+8I01Zj8tfxJtlTjPQfjMO5SBIH9zrL8Wd3HYFfM76kTsFEBK2KHGLZ6ljen+WkKny+uIcJAhEvEH4GB/nTjnf0=
+	t=1749864230; cv=none; b=UauzJ5WBjx+qXSHSF36M0j2Lyw07WMhDlMfxPUMhb4kZAGBbR4ZVVkg5X2MF0UTPbHwH1nUM7Bu61GLl59eExwWPHXkNCQowQG3/m9TAOMmdYBfcZaXPqO9Mt6Y/Up1tAFfOPAOgx/F1iufO0LusYjkgkj7Wzco8tkW88+sJ+Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749864229; c=relaxed/simple;
-	bh=p5V7ULUZiDWy2MxK/Et7kVkKxqEGHUJ4GGhF/sqXqhQ=;
+	s=arc-20240116; t=1749864230; c=relaxed/simple;
+	bh=Q1vDPFMEZ8YDYo/7iiM4deGh7nPttv91s0nXEWZuCqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jUuhKzFJc+KdqvxDMJXyS47PugSPnx+lX7fIRdo8YL2KaNNnxnHlGEQRAZHzg606y9gqPyu2BAelPc0Cujq/eyQFFTgIAuO71Jv60M/hESFmn+Itk0agk6iQK+pBdYDmIrU+VzSnrcLz9B47fhJV271Aa9RBsm0FAVUoAa6xmVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NE1MqI/x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oH4qgP+MbL/Jz/V2LA5Yxi+/7ovr5zY7wdL/7mhEpL7HrSX5WTQZb3rqkLNUXvntE8QYOGC7N/ByvKsdsoWHLE9E1twDfyT9uM9OgeAWFDh8MBaUZel80Ix8ZE0x/WFYpQYZD63jBdCk50V7WCbH6/UQiHy1XwxvFkyJQ2Sq3ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e4jAxq/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NE1MqI/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FDAC4CEE3;
-	Sat, 14 Jun 2025 01:23:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e4jAxq/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52289C4CEF5;
+	Sat, 14 Jun 2025 01:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749864229;
-	bh=p5V7ULUZiDWy2MxK/Et7kVkKxqEGHUJ4GGhF/sqXqhQ=;
+	s=k20201202; t=1749864230;
+	bh=Q1vDPFMEZ8YDYo/7iiM4deGh7nPttv91s0nXEWZuCqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NE1MqI/xR/zo/91hSObT2xKrGav62ankEwmx8th4bDlr9sppct8jXBiXFHLxy5Lhy
-	 RyT34uy+WJ3Xm6xcX3Akw7iQrMpmfkJvF/Ppjxu7pKxxIG8d6etUEuCYj5aljodasN
-	 BXeQN3tjew6J5n/dAUsQ4eMQGHEpCST5cHWc0hT6wRXDni7YfweDBqvHH2yYUtH6Jj
-	 FMFUWyvro6uDGW5oNfv06guea5tpm0orW7fhsTwT1xgdvV4G5kvCfm1dzj7hMqKmIB
-	 JdU6/DAblFguot6NGhteiGLOGX+QaG2zzK+A6ebFOugIwkRmgjuonB3p0v8WQTtOxI
-	 /ZkoShhO0VsXg==
+	b=e4jAxq/bGJMzq3Ar2t8UFk80HrTVpizHq41KYoZAUI6Pmhm04kuphqg3G4C0Mg0G9
+	 UmAtJUHCAXeK6nEotjtZzWPe3j7SSSYo5Vm5SBvQo3tIbE3fW8H+HHYNCB1szQfE13
+	 eKeaIWCO6s2bVTJhQJDCVuPxJ78fMSzURInM/U18SCjG2+3FKrxA73aJx0JhNN5Gfm
+	 uRO0qlR+OJ09qHfOaYaF/bWYetDYGVT87X3rPo6xk5UCZ4YFzl4Zj8fHZuXEWo7zBa
+	 9KPriFw6QA8EWf6tnI1o2LMYD4w1wbPuQaNnbqgrgRKFr33ELaHMctz2YbmcnTGA41
+	 Bf2NtI5sdDK5g==
 From: Tejun Heo <tj@kernel.org>
 To: mingo@redhat.com,
 	peterz@infradead.org
@@ -35,9 +35,9 @@ Cc: linux-kernel@vger.kernel.org,
 	arighi@nvidia.com,
 	changwoo@igalia.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 1/4] sched/fair: Move max_cfs_quota_period decl and default_cfs_period() def from fair.c to sched.h
-Date: Fri, 13 Jun 2025 15:23:27 -1000
-Message-ID: <20250614012346.2358261-2-tj@kernel.org>
+Subject: [PATCH 2/4] sched/core: Relocate tg_get_cfs_*() and cpu_cfs_*_read_*()
+Date: Fri, 13 Jun 2025 15:23:28 -1000
+Message-ID: <20250614012346.2358261-3-tj@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250614012346.2358261-1-tj@kernel.org>
 References: <20250614012346.2358261-1-tj@kernel.org>
@@ -49,69 +49,206 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-max_cfs_quota_period is defined in core.c but has a declaration in fair.c.
-Move the declaration to kernel/sched/sched.h. Also, move
-default_cfs_period() from fair.c to sched.h. No functional changes.
+Collect the getters, relocate the trivial interface file wrappers, and put
+all of them in period, quota, burst order to prepare for future changes.
+Pure reordering. No functional changes.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/fair.c  | 11 -----------
- kernel/sched/sched.h | 13 +++++++++++++
- 2 files changed, 13 insertions(+), 11 deletions(-)
+ kernel/sched/core.c | 134 ++++++++++++++++++++++----------------------
+ 1 file changed, 67 insertions(+), 67 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 6b17d3da034a..707be4570430 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5617,15 +5617,6 @@ void cfs_bandwidth_usage_inc(void) {}
- void cfs_bandwidth_usage_dec(void) {}
- #endif /* !CONFIG_JUMP_LABEL */
- 
--/*
-- * default period for cfs group bandwidth.
-- * default: 0.1s, units: nanoseconds
-- */
--static inline u64 default_cfs_period(void)
--{
--	return 100000000ULL;
--}
--
- static inline u64 sched_cfs_bandwidth_slice(void)
- {
- 	return (u64)sysctl_sched_cfs_bandwidth_slice * NSEC_PER_USEC;
-@@ -6405,8 +6396,6 @@ static enum hrtimer_restart sched_cfs_slack_timer(struct hrtimer *timer)
- 	return HRTIMER_NORESTART;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index a03c3c1d7f50..dc9668a6592f 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9404,20 +9404,14 @@ static int tg_set_cfs_bandwidth(struct task_group *tg, u64 period, u64 quota,
+ 	return 0;
  }
  
--extern const u64 max_cfs_quota_period;
--
- static enum hrtimer_restart sched_cfs_period_timer(struct hrtimer *timer)
+-static int tg_set_cfs_quota(struct task_group *tg, long cfs_quota_us)
++static long tg_get_cfs_period(struct task_group *tg)
  {
- 	struct cfs_bandwidth *cfs_b =
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index c323d015486c..e00b80cd998e 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -402,6 +402,19 @@ static inline bool dl_server_active(struct sched_dl_entity *dl_se)
+-	u64 quota, period, burst;
++	u64 cfs_period_us;
  
- extern struct list_head task_groups;
+-	period = ktime_to_ns(tg->cfs_bandwidth.period);
+-	burst = tg->cfs_bandwidth.burst;
+-	if (cfs_quota_us < 0)
+-		quota = RUNTIME_INF;
+-	else if ((u64)cfs_quota_us <= U64_MAX / NSEC_PER_USEC)
+-		quota = (u64)cfs_quota_us * NSEC_PER_USEC;
+-	else
+-		return -EINVAL;
++	cfs_period_us = ktime_to_ns(tg->cfs_bandwidth.period);
++	do_div(cfs_period_us, NSEC_PER_USEC);
  
-+#ifdef CONFIG_CFS_BANDWIDTH
-+extern const u64 max_cfs_quota_period;
-+
-+/*
-+ * default period for cfs group bandwidth.
-+ * default: 0.1s, units: nanoseconds
-+ */
-+static inline u64 default_cfs_period(void)
+-	return tg_set_cfs_bandwidth(tg, period, quota, burst);
++	return cfs_period_us;
+ }
+ 
+ static long tg_get_cfs_quota(struct task_group *tg)
+@@ -9433,6 +9427,16 @@ static long tg_get_cfs_quota(struct task_group *tg)
+ 	return quota_us;
+ }
+ 
++static long tg_get_cfs_burst(struct task_group *tg)
 +{
-+	return 100000000ULL;
-+}
-+#endif /* CONFIG_CFS_BANDWIDTH */
++	u64 burst_us;
 +
- struct cfs_bandwidth {
++	burst_us = tg->cfs_bandwidth.burst;
++	do_div(burst_us, NSEC_PER_USEC);
++
++	return burst_us;
++}
++
+ static int tg_set_cfs_period(struct task_group *tg, long cfs_period_us)
+ {
+ 	u64 quota, period, burst;
+@@ -9447,14 +9451,20 @@ static int tg_set_cfs_period(struct task_group *tg, long cfs_period_us)
+ 	return tg_set_cfs_bandwidth(tg, period, quota, burst);
+ }
+ 
+-static long tg_get_cfs_period(struct task_group *tg)
++static int tg_set_cfs_quota(struct task_group *tg, long cfs_quota_us)
+ {
+-	u64 cfs_period_us;
++	u64 quota, period, burst;
+ 
+-	cfs_period_us = ktime_to_ns(tg->cfs_bandwidth.period);
+-	do_div(cfs_period_us, NSEC_PER_USEC);
++	period = ktime_to_ns(tg->cfs_bandwidth.period);
++	burst = tg->cfs_bandwidth.burst;
++	if (cfs_quota_us < 0)
++		quota = RUNTIME_INF;
++	else if ((u64)cfs_quota_us <= U64_MAX / NSEC_PER_USEC)
++		quota = (u64)cfs_quota_us * NSEC_PER_USEC;
++	else
++		return -EINVAL;
+ 
+-	return cfs_period_us;
++	return tg_set_cfs_bandwidth(tg, period, quota, burst);
+ }
+ 
+ static int tg_set_cfs_burst(struct task_group *tg, long cfs_burst_us)
+@@ -9471,52 +9481,6 @@ static int tg_set_cfs_burst(struct task_group *tg, long cfs_burst_us)
+ 	return tg_set_cfs_bandwidth(tg, period, quota, burst);
+ }
+ 
+-static long tg_get_cfs_burst(struct task_group *tg)
+-{
+-	u64 burst_us;
+-
+-	burst_us = tg->cfs_bandwidth.burst;
+-	do_div(burst_us, NSEC_PER_USEC);
+-
+-	return burst_us;
+-}
+-
+-static s64 cpu_cfs_quota_read_s64(struct cgroup_subsys_state *css,
+-				  struct cftype *cft)
+-{
+-	return tg_get_cfs_quota(css_tg(css));
+-}
+-
+-static int cpu_cfs_quota_write_s64(struct cgroup_subsys_state *css,
+-				   struct cftype *cftype, s64 cfs_quota_us)
+-{
+-	return tg_set_cfs_quota(css_tg(css), cfs_quota_us);
+-}
+-
+-static u64 cpu_cfs_period_read_u64(struct cgroup_subsys_state *css,
+-				   struct cftype *cft)
+-{
+-	return tg_get_cfs_period(css_tg(css));
+-}
+-
+-static int cpu_cfs_period_write_u64(struct cgroup_subsys_state *css,
+-				    struct cftype *cftype, u64 cfs_period_us)
+-{
+-	return tg_set_cfs_period(css_tg(css), cfs_period_us);
+-}
+-
+-static u64 cpu_cfs_burst_read_u64(struct cgroup_subsys_state *css,
+-				  struct cftype *cft)
+-{
+-	return tg_get_cfs_burst(css_tg(css));
+-}
+-
+-static int cpu_cfs_burst_write_u64(struct cgroup_subsys_state *css,
+-				   struct cftype *cftype, u64 cfs_burst_us)
+-{
+-	return tg_set_cfs_burst(css_tg(css), cfs_burst_us);
+-}
+-
+ struct cfs_schedulable_data {
+ 	struct task_group *tg;
+ 	u64 period, quota;
+@@ -9649,6 +9613,42 @@ static int cpu_cfs_local_stat_show(struct seq_file *sf, void *v)
+ 
+ 	return 0;
+ }
++
++static u64 cpu_cfs_period_read_u64(struct cgroup_subsys_state *css,
++				   struct cftype *cft)
++{
++	return tg_get_cfs_period(css_tg(css));
++}
++
++static s64 cpu_cfs_quota_read_s64(struct cgroup_subsys_state *css,
++				  struct cftype *cft)
++{
++	return tg_get_cfs_quota(css_tg(css));
++}
++
++static u64 cpu_cfs_burst_read_u64(struct cgroup_subsys_state *css,
++				  struct cftype *cft)
++{
++	return tg_get_cfs_burst(css_tg(css));
++}
++
++static int cpu_cfs_period_write_u64(struct cgroup_subsys_state *css,
++				    struct cftype *cftype, u64 cfs_period_us)
++{
++	return tg_set_cfs_period(css_tg(css), cfs_period_us);
++}
++
++static int cpu_cfs_quota_write_s64(struct cgroup_subsys_state *css,
++				   struct cftype *cftype, s64 cfs_quota_us)
++{
++	return tg_set_cfs_quota(css_tg(css), cfs_quota_us);
++}
++
++static int cpu_cfs_burst_write_u64(struct cgroup_subsys_state *css,
++				   struct cftype *cftype, u64 cfs_burst_us)
++{
++	return tg_set_cfs_burst(css_tg(css), cfs_burst_us);
++}
+ #endif /* CONFIG_CFS_BANDWIDTH */
+ 
+ #ifdef CONFIG_RT_GROUP_SCHED
+@@ -9710,16 +9710,16 @@ static struct cftype cpu_legacy_files[] = {
+ 	},
+ #endif
  #ifdef CONFIG_CFS_BANDWIDTH
- 	raw_spinlock_t		lock;
+-	{
+-		.name = "cfs_quota_us",
+-		.read_s64 = cpu_cfs_quota_read_s64,
+-		.write_s64 = cpu_cfs_quota_write_s64,
+-	},
+ 	{
+ 		.name = "cfs_period_us",
+ 		.read_u64 = cpu_cfs_period_read_u64,
+ 		.write_u64 = cpu_cfs_period_write_u64,
+ 	},
++	{
++		.name = "cfs_quota_us",
++		.read_s64 = cpu_cfs_quota_read_s64,
++		.write_s64 = cpu_cfs_quota_write_s64,
++	},
+ 	{
+ 		.name = "cfs_burst_us",
+ 		.read_u64 = cpu_cfs_burst_read_u64,
 -- 
 2.49.0
 
