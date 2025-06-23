@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AD022F77F;
-	Mon, 23 Jun 2025 17:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B8322577C;
+	Mon, 23 Jun 2025 22:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750701596; cv=none; b=QkdtZrZZT9Z3g8ZdpiZt4Bfcf+nAOK4qEOrLHjBnxMNoZD4fCCYwNmx2FXaqW8KLTl9PWtekWrMYFBMDELtFiRni15QXYgPjBFg4GWDGQInLIRWvyHMsyuaVkzKKFTn72r6wDppQgtiwNqULWrkK3qIcolXcqCq8pLxsZMicss4=
+	t=1750716668; cv=none; b=lW/59aDk3RlyHkOokFsZs5L7OLcwO9pPjj5oq5Ioze7YbKlxgqNBeHezERxWWqNObLNaSfdAOEZCyLyPi3/t/5FGQjgM6C/48DP8eeaDVlN/LYVGUsCl/5FIOo3uzQh4782fL0ji0o5GKBH6MfdugvXUby65o3CYUlIeCFymdRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750701596; c=relaxed/simple;
-	bh=K0mHJOlQlG9yt7f6lU81M46kiooSYMEJTNVD2Qvh1zU=;
+	s=arc-20240116; t=1750716668; c=relaxed/simple;
+	bh=jg97oCJgKWw4G6fFl+eTqGW97MfSzVXs69TgiS2OkNY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NyAVp1au7RnKtD0+rX/rWq8Lg/PKEvYk4WYhEr7xf8oKcgwQklOQKuQ3LatQsxUm9PhQe/q5edMd8HMHcyAwkRriMgAp/uNvqEhMan9ptxPoahw79KvD/2VfZLdnnecFaahxTPS7a4kW96uu2Cp3KwU6DPFwp5oBiOIr/wV+j4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DN7stiM4; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=YA+xUykpRyZ0XqqOzhQ5kk7352OpF+CLAbBTlLz361xcMuJ/FEtLzjkQDXMUH58+2W79qiWX8wED0zVCiL+MmFn7hfKsS/hhmFWt2MD/Czme4qcwarevi6acsPn8sy8ykcPq9AjmXPD05ah3TFOLsgBELaruxKIKXBjy2vcYczk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QZGCfpC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DN7stiM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA533C4CEEA;
-	Mon, 23 Jun 2025 17:59:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QZGCfpC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AB0C4CEEA;
+	Mon, 23 Jun 2025 22:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750701595;
-	bh=K0mHJOlQlG9yt7f6lU81M46kiooSYMEJTNVD2Qvh1zU=;
+	s=k20201202; t=1750716668;
+	bh=jg97oCJgKWw4G6fFl+eTqGW97MfSzVXs69TgiS2OkNY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DN7stiM43vCCxWcthoQVOYUWGMoSnFGlUp8V3bImSr7UozuoLwGVelALc/977XUYp
-	 cx++WF/vNR5m7dE34CFFSuOOiqEV67yevGYOD6eY5B9xcLOcouxKg7qzZS3hrhjEow
-	 CI2B9X2/OX1Aknk7vcF0iD6WMwCvW/0btCJqYT73rEKjQmcDHk0sM1eKxW+tivyJbK
-	 NvjPcTm26dqBNUGR48hwWjzOM1FgeTWiABPJ4Li2tTp4V/S4EQy/QSUcKH5Bf5z45I
-	 y9ejVfG/+cvWncN+Agl9sWYOKSN1HXOEwpkL3D88axogp1WmY/1/8s51kpLqb7P5Z5
-	 hcU8L35NIkZcA==
-Date: Mon, 23 Jun 2025 07:59:54 -1000
+	b=QZGCfpC3dzw0k497nv4tJ7NUCQ7LKarF4QH8a0Uckvtsu4aimXKHf/LitzMg7K9CK
+	 3snTB2StPQUZtDjzRGvZlf2quCDRZIfPep9f9VPOhlIHNMfB84VeeQqp/kbiJnXLur
+	 QLHPNF0wrsa78ttzPB6V7VaNfLMBTW6Y7x5U0RO3yAWo1PMAaUFRhDjrGzV4YZxvgc
+	 oYBhMxraIsZCEgMRK6atPlAbRah3ipTI512O2KMoaS/ZK4BYwFMVq2TUYhYBb9SttQ
+	 7uN/DgaNtze5XwUvr4fAe4IuwAo+uYH1/g68SNrIimBnnKF2OQLzXzZDqyil8YVMou
+	 D45jtCFwKNLwQ==
+Date: Mon, 23 Jun 2025 12:11:07 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Henry Huang <henry.hj@antgroup.com>
-Cc: changwoo@igalia.com, arighi@nvidia.com, void@manifault.com,
-	=?utf-8?B?6LCI6Ym06ZSL?= <henry.tjf@antgroup.com>,
-	"Yan Yan(cailing)" <yanyan.yan@antgroup.com>,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH v3] sched_ext: Implement SCX_OPS_TRACK_MIGRATION
-Message-ID: <aFmWGi8n1ndB1K_M@slm.duckdns.org>
-References: <20250623063033.76808-1-henry.hj@antgroup.com>
- <20250623063033.76808-2-henry.hj@antgroup.com>
+To: Joel Fernandes <joelagnelf@nvidia.com>
+Cc: linux-kernel@vger.kernel.org, Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Luigi De Matteis <ldematteis123@gmail.com>,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH v5 08/14] sched/ext: Add a DL server for sched_ext tasks
+Message-ID: <aFnQ-3L6ixL7nSz0@slm.duckdns.org>
+References: <20250620203234.3349930-1-joelagnelf@nvidia.com>
+ <20250620203234.3349930-9-joelagnelf@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,25 +53,40 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250623063033.76808-2-henry.hj@antgroup.com>
+In-Reply-To: <20250620203234.3349930-9-joelagnelf@nvidia.com>
 
-Hello,
+On Fri, Jun 20, 2025 at 04:32:23PM -0400, Joel Fernandes wrote:
+> +static struct task_struct *ext_server_pick_task(struct sched_dl_entity *dl_se,
+> +						void *flags)
+> +{
+> +	struct rq_flags *rf = flags;
+> +
+> +	balance_scx(dl_se->rq, dl_se->rq->curr, rf);
+> +	return pick_task_scx(dl_se->rq, rf);
+> +}
+...
+> +void ext_server_init(struct rq *rq)
+> +{
+> +	struct sched_dl_entity *dl_se = &rq->ext_server;
+> +
+> +	init_dl_entity(dl_se);
+> +
+> +	dl_server_init(dl_se, rq, ext_server_has_tasks, ext_server_pick_task);
+> +}
 
-On Mon, Jun 23, 2025 at 02:30:33PM +0800, Henry Huang wrote:
-> For some BPF-schedulers, they should do something when
-> task is doing migration, such as updating per-cpu map.
-> If SCX_OPS_TRACK_MIGRATION is set, runnable/quiescent
-> would be called whether task is doing migration or not.
+Needing to pass in @rf to ext_server_pick_task() makes sense as SCX always
+needs to balance first. However, I still don't understand why that
+necessitates adding @rf to sched_class->pick_task(). The existing assumption
+is that ->pick_task() cannot release and regrab the rq lock and that's why
+->balance() exists in the first place. Breaking this can lead to other
+misbehaviors - e.g. if a higher priority class ->pick_task() releases the rq
+lock, a lower one may end up losing a task that its ->balance() saw. This
+can lead to lower priority class's ->pick_task() being called without its
+->balance() being called which can lead to stalls.
 
-It's rather odd to invoke runnable/quiescent on these transitions as the
-runnable state isn't actually changing and the events end up triggering for
-all the migration operations that SCX does internally.
-
-In the head message (BTW, if it's just a single patch, it'd be better to
-include all the context in the patch description), you said that this is
-needed to udpate percpu data structures when tasks migrate. Wouldn't you be
-able to do that by tracking whether the current CPU is different from the
-previous one from ops.running()?
+One thing that confuses me is that all that the patchset needs to do seems
+to be adding @rf to dl_server_pick_f and that seems fine to me. Why is it
+necessary to add @rf to sched_class->pick_task()?
 
 Thanks.
 
