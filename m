@@ -1,45 +1,45 @@
-Received: from out0-212.mail.aliyun.com (out0-212.mail.aliyun.com [140.205.0.212])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7946717D7
-	for <sched-ext@lists.linux.dev>; Tue, 24 Jun 2025 03:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.205.0.212
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E417E1
+	for <sched-ext@lists.linux.dev>; Tue, 24 Jun 2025 22:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750734203; cv=none; b=bAqhqSLpEf1SCzADyx5lBTqD2REEfKMSfQB1IRNw5pzg/d0c7lsOxibr7qc34CJz7KKm7md/my+qLwmPXgKtmxzMLlY05DmMtOwsOJiFKsMDU33324/cy/6J/KEMXQgTOjJpX5X3tPJkUCoDHMunzSiHqxnTIEvIDBqzgkvSNuw=
+	t=1750805357; cv=none; b=Xz/jR931JoPh9h3WMmFdEPMkblIoV9cN4h2JX58t+uYhNbyhgVLGnwJp7isd6xJs8+rzd51QsoLtlNdKUDC7WIJGVDT1qOS7GH2ATfvuIE7l3AWnuMiN4cSA4ESpX0gF6tDS1+TRyHFA/eFDUNHuZbOghGSLjTEYWLBG8+LgJps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750734203; c=relaxed/simple;
-	bh=x54Hgd8Vb+9uKtEoLHQMTz4ODUR4o+1AOHqMpq8qAJM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DONccDg69odA2W+7ZwGn8xkdny3Ja7HQnNvl8Sfo038bopicFNuznE1ArPKbUcL40LTlosvmV32dhVUX3K0IXdQJ+4QsFrWPT4teZS7iVE1fHfPVilAfWQkErMBtNb/FTcQy+zdc5ZYBiEoajWJbwNpZBcV39UwMCavQMUcwc4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=antgroup.com; spf=pass smtp.mailfrom=antgroup.com; dkim=pass (1024-bit key) header.d=antgroup.com header.i=@antgroup.com header.b=Exouejk+; arc=none smtp.client-ip=140.205.0.212
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=antgroup.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=antgroup.com
+	s=arc-20240116; t=1750805357; c=relaxed/simple;
+	bh=swAQJ7D6uR3+UHJ6FyNnFhWOPUR7IHCfJUMioFtwZKw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=A/XFHidxPyQcUZVHCJCU8Mhlj7m3PDXX/avHQQPcuRXj4SdJDCWVPt/M+FCAl0autJ274e7BDMx/ABTqdHSRivgaSvXY1wvzYrmgxOKnI7HSsLOXXO10bc7udIlJHOa2edL9z8ZtigQ5BJj6BgIUztw7pEikQTcIzDu6yeB7u9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BrVkqt/S; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=antgroup.com header.i=@antgroup.com header.b="Exouejk+"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=antgroup.com; s=default;
-	t=1750734197; h=From:To:Subject:Date:Message-ID:MIME-Version;
-	bh=h+0mi8eC+J3xUw5Xo5AFUvG9XykWYO6OhaS3iBZj/a4=;
-	b=Exouejk+B+rI6efZq6es2rVxCtfNbJj07VR2RIqnM1DWXDKAOQhMBFRHTjeO0XeVXZUixmhWImnHNm6G2WV7zwDt8eMrqZZ20RV1xKzfvoz89W2tYCHopHaFu6Y6hngoR4qrYSoAg2h9erL7Lb9v3q+dZJFSEotHY75xu/IPQc4=
-Received: from localhost(mailfrom:henry.hj@antgroup.com fp:SMTPD_---.dVBuTMH_1750734196 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Tue, 24 Jun 2025 11:03:16 +0800
-From: "Henry Huang" <henry.hj@antgroup.com>
-To: tj@kernel.org
-Cc:  <arighi@nvidia.com>,
-   <changwoo@igalia.com>,
-  "Henry Huang" <henry.hj@antgroup.com>,
-  "=?UTF-8?B?6LCI6Ym06ZSL?=" <henry.tjf@antgroup.com>,
-   <linux-kernel@vger.kernel.org>,
-   <sched-ext@lists.linux.dev>,
-   <void@manifault.com>,
-  "=?UTF-8?B?WWFuIFlhbihjYWlsaW5nKQ==?=" <yanyan.yan@antgroup.com>
-Subject: Re: [PATCH v3] sched_ext: include SCX_OPS_TRACK_MIGRATION
-Date: Tue, 24 Jun 2025 11:03:14 +0800
-Message-ID: <20250624030314.48808-1-henry.hj@antgroup.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <aFmWGi8n1ndB1K_M@slm.duckdns.org>
-References: <aFmWGi8n1ndB1K_M@slm.duckdns.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BrVkqt/S"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1750805353;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=waCMU8XToJ4/O0TuOlz1/Eb71vMnpeZ9I1kTPcvNFP4=;
+	b=BrVkqt/SNYzQXu4buoXkoHww1LOaEqIB5unHnPQSE5xvz3tkkCLr0Gt9P567oEeSyeRePq
+	bBJ0YrvOT+rfTRZVC1Z5hTJYK3+bLAP8l3qJ8IYkdOspcXTgZQmsr1D5FdojOpD0EmMkLh
+	WS072j3hOOSkDOIdBM2YrnryccI12Mc=
+From: David Dai <david.dai@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	paulmck@kernel.org
+Cc: david.dai@linux.dev,
+	davidai@meta.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	rcu@vger.kernel.org,
+	kernel-team@meta.com
+Subject: [PATCH] sched_ext, rcu: Eject BPF scheduler on RCU CPU stall panic
+Date: Tue, 24 Jun 2025 15:49:06 -0700
+Message-ID: <20250624224906.3662221-1-david.dai@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,30 +47,110 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, 23 Jun 2025 07:59:54 -1000, Tejun Heo wrote:
-> It's rather odd to invoke runnable/quiescent on these transitions as the
-> runnable state isn't actually changing and the events end up triggering for
-> all the migration operations that SCX does internally.
->
-> In the head message (BTW, if it's just a single patch, it'd be better to
-> include all the context in the patch description), you said that this is
-> needed to udpate percpu data structures when tasks migrate. Wouldn't you be
-> able to do that by tracking whether the current CPU is different from the
-> previous one from ops.running()?
+For systems using a sched_ext scheduler and has panic_on_rcu_stall
+enabled, try kicking out the current scheduler before issuing a panic.
 
-We will traverse the per-CPU map information in ops.select_cpu() to select
-the appropriate CPU. To reduce the competition for the rq spinlock, tasks are
-likely to run on the CPU selected by ops.select_cpu().
+While there are numerous reasons for RCU CPU stalls that are not
+directly attributed to the scheduler, deferring the panic gives
+sched_ext an opportunity to provide additional debug info when ejecting
+the current scheduler. Also, handling the event more gracefully allows
+us to potentially recover the system instead of incurring additional
+down time.
 
-However, I can think of two scenarios where passive migration may occur:
-1. set_task_allowed_cpus
-2. cpu_stop
-There may also be some passive migration scenarios that we haven't thought of.
-This could lead to incorrect information in the per-CPU map. Therefore,
-we hope to track enqueue_task_scx and dequeue_task_scx to ensure that the
-information in the per-CPU map is accurate.
+Suggested-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: David Dai <david.dai@linux.dev>
+---
+ include/linux/sched/ext.h |  2 ++
+ kernel/rcu/tree_stall.h   |  7 +++++++
+ kernel/sched/ext.c        | 35 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+)
 
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 8b92842776cb..0cf0915572c9 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -206,12 +206,14 @@ struct sched_ext_entity {
+ void sched_ext_free(struct task_struct *p);
+ void print_scx_info(const char *log_lvl, struct task_struct *p);
+ void scx_softlockup(u32 dur_s);
++bool scx_rcu_cpu_stall(void);
+ 
+ #else	/* !CONFIG_SCHED_CLASS_EXT */
+ 
+ static inline void sched_ext_free(struct task_struct *p) {}
+ static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
+ static inline void scx_softlockup(u32 dur_s) {}
++static inline bool scx_rcu_cpu_stall(void) { return false; }
+ 
+ #endif	/* CONFIG_SCHED_CLASS_EXT */
+ 
+diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
+index 486c00536207..af61b2d0d311 100644
+--- a/kernel/rcu/tree_stall.h
++++ b/kernel/rcu/tree_stall.h
+@@ -134,6 +134,13 @@ static void panic_on_rcu_stall(void)
+ {
+ 	static int cpu_stall;
+ 
++	/*
++	 * Attempt to kick out the BPF scheduler if it's installed and defer
++	 * the panic to give the system a chance to recover.
++	 */
++	if (scx_rcu_cpu_stall())
++		return;
++
+ 	if (++cpu_stall < sysctl_max_rcu_stall_to_panic)
+ 		return;
+ 
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index bee98fdcdd01..df5b2c952cf7 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4672,6 +4672,41 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
+ 		p->sched_class != &ext_sched_class;
+ }
+ 
++/**
++ * scx_rcu_cpu_stall - sched_ext RCU CPU stall handler
++ *
++ * While there are various reasons why RCU CPU stalls can occur on a system
++ * that may not be caused by the current BPF scheduler, try kicking out the
++ * current scheduler in an attempt to recover the system to a good state before
++ * issuing panics.
++ */
++bool scx_rcu_cpu_stall(void)
++{
++	struct scx_sched *sch;
++
++	rcu_read_lock();
++
++	sch = rcu_dereference(scx_root);
++	if (unlikely(!sch)) {
++		rcu_read_unlock();
++		return false;
++	}
++
++	switch (scx_enable_state()) {
++	case SCX_ENABLING:
++	case SCX_ENABLED:
++		break;
++	default:
++		rcu_read_unlock();
++		return false;
++	}
++
++	scx_error(sch, "RCU CPU stall detected!");
++	rcu_read_unlock();
++
++	return true;
++}
++
+ /**
+  * scx_softlockup - sched_ext softlockup handler
+  * @dur_s: number of seconds of CPU stuck due to soft lockup
 -- 
-Henry
+2.47.1
 
