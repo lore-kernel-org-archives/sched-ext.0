@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A8730749E;
-	Wed, 25 Jun 2025 23:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA732D29D7;
+	Wed, 25 Jun 2025 23:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750892826; cv=none; b=a21K2E7Ua54WC8gLr6GjiI5RR1Ylx/1jMUKb3i2ncZRGqawB3v/cV/KgW9AI0TQFOMpJhfBpKH18INKg5VrDTW+BkRhRDgT04i0cgWMrzefcvGKntuosKNrwx2FHM5oVTs1p2bVN9As3TbZSOjviCIrAzAGFiZs3A7DP9RkvRUc=
+	t=1750893307; cv=none; b=ixRzdGrvbcT1dQpceOEHczOVKLWbU+aqjbbYtHRlq71twNcbk7/2fuymgyFnuvTlzKpL0zzIP7AQdMmghC8vFUSLt6D/d0WLOtVhTxVDNEWUWU1anBUOcvGJeA1KwcEH/2fmc3CXObjTbFisLMM4zvceG9P5//zEwSA9rdOxk/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750892826; c=relaxed/simple;
-	bh=ltCoo6osxwk4k0lJLXSGNXx2b4oy+RQ6KefWTPp+Wy0=;
+	s=arc-20240116; t=1750893307; c=relaxed/simple;
+	bh=ULpLJIaM9TeysiPeOAcS+WIhV2fOnk1DrQVpGmf26r0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IXW9gPhXGGIBZATnrpyoQozZU9wovpKBS7TfZLNXSct2WauszJc27lJqrzsUSvtw3DCTbpXLmL6r68f/t49b8/LAaa5+6XS+7R/RwG1vMkcFEeb0XGNTfb9Hxo3f4EZvgBCdWxmZa6j3WWwH9tjbhTsomqmBhm0mqX8BEpd14QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TnaDl0w9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=e6EdGOE1c+5Z0r0dUn8MEF95GudXltJ2HfCmn3k9Z1rRsFDky5KulVI+cd4exW+7V71dzNdtw+ljfMoLOR2bNXhGzLw/W/K9eB1DW6ObgaKZrycNCphh2QtPB4Ef+C5p8Muo60g/UBW9+p5cviCVCuuQDizCRWCLBTLsYNPbu5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UodmVyY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TnaDl0w9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BEB6C4CEEA;
-	Wed, 25 Jun 2025 23:07:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UodmVyY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF42C4CEEA;
+	Wed, 25 Jun 2025 23:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750892825;
-	bh=ltCoo6osxwk4k0lJLXSGNXx2b4oy+RQ6KefWTPp+Wy0=;
+	s=k20201202; t=1750893306;
+	bh=ULpLJIaM9TeysiPeOAcS+WIhV2fOnk1DrQVpGmf26r0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TnaDl0w9eVbydX2XwvO1tA0RjK8Z5zEMLte/cJireSUaav4f3nlGlECwQMoJk1Sgj
-	 wuXLDKBO2y9my+4Jd6CTgZdZ4Pie7aSfqbrkO798pLPWCm4+cnhyyIKeL5jEw2fGdg
-	 v3SLPvzmgbiSFSglBeBUT9vVXdJhak3uk9WYY8voB80DdXFJrym58UwbdsUPS/A3bv
-	 m1f3UdGJKsXVI+vLk4leLqeWrlzn4UikyEgRtzCn1xEhVdC6KEjtlEyoMdtkLu9EZt
-	 Aut8fHNQ4pBRadWGqfjCvZR+FWGAtW96ZKP4JSz3TECEMKziGBGp35XWBMmbhh3yXv
-	 pqzIh0DHnL7gQ==
-Date: Wed, 25 Jun 2025 13:07:04 -1000
+	b=UodmVyY5VH9Sz5Hxy+Qk6bEH9syQ5IfHG4YR+ADKnsVNpuXPRWAREKVZqv/EUnEfG
+	 fePlHbL/wPzx1kh8iYGi42y7ayO3QJBAX2/YW93+g+bAjmqH9KfuwN9VcPz1nRk0di
+	 2TOYb+tkYralsp4THivq58cPs2HpxPJUMrJnb9bZwkKmigR4YRt75jnAC0B8vRaagA
+	 IJLKj2iTk4rTwgj+vNkUlUpSgijzzjUFI2CRAmAQXYxjjKB4i5FObPEgnw5dURF3mb
+	 JFzfmytkWvg5nFlDQKORyFzYqc5CL6+iKMwRRencmg0heAWyEGIzTWJg7zvTf3gWhA
+	 chGebt3qJLdAg==
+Date: Wed, 25 Jun 2025 13:15:05 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Henry Huang <henry.hj@antgroup.com>
-Cc: arighi@nvidia.com, changwoo@igalia.com,
-	=?utf-8?B?6LCI6Ym06ZSL?= <henry.tjf@antgroup.com>,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
-	void@manifault.com, "Yan Yan(cailing)" <yanyan.yan@antgroup.com>
-Subject: Re: [PATCH v3] sched_ext: include SCX_OPS_TRACK_MIGRATION
-Message-ID: <aFyBGAce73hzbPhQ@slm.duckdns.org>
-References: <aFmWGi8n1ndB1K_M@slm.duckdns.org>
- <20250624030314.48808-1-henry.hj@antgroup.com>
+To: jake@hillion.co.uk
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, bpf@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: Drop kfuncs marked for removal in 6.15
+Message-ID: <aFyC-WVI1fkk0rPN@slm.duckdns.org>
+References: <20250625-scx-kfunc-cleanup-v1-1-d93335286fd5@hillion.co.uk>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,43 +50,25 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250624030314.48808-1-henry.hj@antgroup.com>
+In-Reply-To: <20250625-scx-kfunc-cleanup-v1-1-d93335286fd5@hillion.co.uk>
 
-Hello,
-
-On Tue, Jun 24, 2025 at 11:03:14AM +0800, Henry Huang wrote:
-...
-> We will traverse the per-CPU map information in ops.select_cpu() to select
-> the appropriate CPU. To reduce the competition for the rq spinlock, tasks are
-> likely to run on the CPU selected by ops.select_cpu().
+On Wed, Jun 25, 2025 at 06:05:46PM +0100, Jake Hillion via B4 Relay wrote:
+> From: Jake Hillion <jake@hillion.co.uk>
 > 
-> However, I can think of two scenarios where passive migration may occur:
-> 1. set_task_allowed_cpus
-> 2. cpu_stop
+> sched_ext performed a kfunc renaming pass in 6.13 and kept the old names
+> around for compatibility with old binaries. These were scheduled for
+> cleanup in 6.15 but were missed. Submitting for cleanup in for-next.
+> 
+> Removed the kfuncs, their flags, and any references I could find to them
+> in doc comments. Left the entries in include/scx/compat.bpf.h as they're
+> still useful to make new binaries compatible with old kernels.
+> 
+> Tested by applying to my kernel. It builds and a modern version of
+> scx_lavd loads fine.
+> 
+> Signed-off-by: Jake Hillion <jake@hillion.co.uk>
 
-What do you mean by "passive migration"? The above two cases would still
-travel ops.enqueue(). There are cases where ops.select_cpu()'s return value
-or the local DSQ that ops.dispatch() targeted are overridden, mostly when
-the CPU goes down inbetween. Are you referring to those cases?
-
-> There may also be some passive migration scenarios that we haven't thought of.
-> This could lead to incorrect information in the per-CPU map. Therefore,
-> we hope to track enqueue_task_scx and dequeue_task_scx to ensure that the
-> information in the per-CPU map is accurate.
-
-Even in such cases, wouldn't something like the following work?
-
-void my_running(struct task_struct *p)
-{
-        struct my_task_ctx *taskc;
-
-        if (!(taskc = lookup_task_ctx(p)))
-                return;
-        if (taskc->cpu != scx_bpf_task_cpu(p)) {
-                /* update other stuff */
-                taskc->cpu = scx_bpf_task_cpu(p);
-        }
-}
+Applied to sched_ext/for-6.17.
 
 Thanks.
 
