@@ -1,161 +1,71 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from out0-220.mail.aliyun.com (out0-220.mail.aliyun.com [140.205.0.220])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2E318FDA5;
-	Fri, 27 Jun 2025 03:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FFF18FDA5
+	for <sched-ext@lists.linux.dev>; Fri, 27 Jun 2025 03:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.205.0.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750995488; cv=none; b=S/YYglB4i5JbAm8ZNmOh+rKYchO2L6mfFDwjP6cJ8+D2MOxeAYUhOJo0QQ8V6uNsldTpm1aB5Q8UJsjjvZlxNQVq10b6pqhAtsP6k5DEBqO05bhKtQQED+EBN8ehsnVWw4UfvA17tg5n7HIq5vgQDU3u8mqXEa/6KEfRBE1H0F4=
+	t=1750995828; cv=none; b=TLPYotMrxPGfmWLDyIktY6fAP3WDPMhmwZYqNarxx+SJ3RRAp0tI22xxA931dc+u97TpOMqJQSCM75Edbrg15sDt9u0zesytLDcb3O/yuOEUH84EVmNstwy0Maok/zwmqt9uh920nmLWZO2mUF650fGrWNb5UqnIzFuKr6902FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750995488; c=relaxed/simple;
-	bh=vIwQvESFQL3sMXcIqPq2w/7GLahXqsMOC7GJdypTPcg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bjmbSJCxvjZT149SDRp8a7diIlT8J7tsmm3B/U/SKrvSUNKtDnjukAsYKhP/e5U4f4vyRMUf6b9L0Pni42RVsj3wb30gnmx8H/oqg9zwZqau0hpfIS/xffJ0WwdiVqH899iDFa9uPcd8hJx5bs21dLmHOqzZr4+oTdhMxLuxz1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=ovGvLsNg; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1750995828; c=relaxed/simple;
+	bh=9T1GNen7cBtUFhzbi0SAvdy21/sniPe60n/XQeir4kQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TRoBsDl+UXDd4e3R6e8TaJNXFCA76ZfJot1rbtoB4UTu3UDfMdfF9ANr7zU4ioWH29gEjUGmssiP3JEEe11d+S2zUrRbs9sRTkSBdZBKRvEpl/aiZDjlCxaG+J/LIkPiFvLQ+YMas5W/rdGIDm+sJ90ww/Zx3cPZUiScTkVRp8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=antgroup.com; spf=pass smtp.mailfrom=antgroup.com; dkim=pass (1024-bit key) header.d=antgroup.com header.i=@antgroup.com header.b=sGrJip5d; arc=none smtp.client-ip=140.205.0.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=antgroup.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=antgroup.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="ovGvLsNg"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=3z7DVek5PQALlWeukz2QC/IvVFBYSVxtsPML/WlhtTc=; b=ovGvLsNgeLeELIVOWqnyuqLgem
-	5ACWK/SyHp8pGnrZ7UdrOQJ1R8Sx9STUfSsMfFCke5Qydpyt+c6psDYp5hLxecnqyVOfS/Plo6H5d
-	4pFYDZfHNQm/6BmUsLfDkIo6EzuN+iw9BLH5idYK+rBIoaqjBe+vPInN77q1565BBqbJQtbBwOohf
-	FJ7eum8bX2oZ6J/C5php6h5rQ1cWhrN1+lZPp08215+z/8a7v0nx/cg+c9DZHiODl+Mldw7hAk2Xp
-	riHkSnhUPHQJuHKUxEOSFfdzD/nuwwNVY66dnqGq+VDbdTTBzP2Sl5e+G2bg0ZbvuuXH7uTSeLCxD
-	Qf323JUA==;
-Received: from [58.29.143.236] (helo=[192.168.1.6])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1uUzuS-009EpM-BY; Fri, 27 Jun 2025 05:37:52 +0200
-Message-ID: <b74f6484-dd16-430a-bad9-4dca6384d1dc@igalia.com>
-Date: Fri, 27 Jun 2025 12:37:45 +0900
+	dkim=pass (1024-bit key) header.d=antgroup.com header.i=@antgroup.com header.b="sGrJip5d"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=antgroup.com; s=default;
+	t=1750995818; h=From:To:Subject:Date:Message-ID:MIME-Version;
+	bh=Icc7OsswoGVni4vwpOnCjOvpQDls5UXGNPH6hnaQ3QU=;
+	b=sGrJip5dCwYrn2z6I8ScE9gRNKT6pao2o64EL43+eFThbBrtiDKonQI5LZtK9DzT0PC/bRoj+hvCv64x9MAh6NgkXIYKTCdOV5WifO9tD4w9Ut6721oCFAHsrYKx0oQ5WP9wGADaCgZr7w5Q8g/y97VwYbVEPlf51Qex3IGwtkw=
+Received: from localhost(mailfrom:henry.hj@antgroup.com fp:SMTPD_---.dXmhNpj_1750995817 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Fri, 27 Jun 2025 11:43:37 +0800
+From: "Henry Huang" <henry.hj@antgroup.com>
+To: tj@kernel.org
+Cc:  <arighi@nvidia.com>,
+   <changwoo@igalia.com>,
+  "Henry Huang" <henry.hj@antgroup.com>,
+  "=?UTF-8?B?6LCI6Ym06ZSL?=" <henry.tjf@antgroup.com>,
+   <linux-kernel@vger.kernel.org>,
+   <sched-ext@lists.linux.dev>,
+   <void@manifault.com>,
+  "=?UTF-8?B?WWFuIFlhbihjYWlsaW5nKQ==?=" <yanyan.yan@antgroup.com>
+Subject: Re: [PATCH v3] sched_ext: Implement SCX_OPS_TRACK_MIGRATION
+Date: Fri, 27 Jun 2025 11:43:34 +0800
+Message-ID: <20250627034334.19345-1-henry.hj@antgroup.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <aFyBGAce73hzbPhQ@slm.duckdns.org>
+References: <aFyBGAce73hzbPhQ@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] PM: EM: Add netlink support for the energy
- model.
-To: lukasz.luba@arm.com, rafael@kernel.org, len.brown@intel.com,
- pavel@kernel.org
-Cc: christian.loehle@arm.com, tj@kernel.org, kernel-dev@igalia.com,
- linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org, "Rafael J. Wysocki"
- <rafael.j.wysocki@intel.com>
-References: <20250613094428.267791-1-changwoo@igalia.com>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <20250613094428.267791-1-changwoo@igalia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Gentle ping as it reaches 2-weeks.
+On Wed, 25 Jun 2025 13:07:04 -1000, Tejun Heo wrote:
+> Even in such cases, wouldn't something like the following work?
+>
+> void my_running(struct task_struct *p)
+> {
+>         struct my_task_ctx *taskc;
+>
+>         if (!(taskc = lookup_task_ctx(p)))
+>                 return;
+>         if (taskc->cpu != scx_bpf_task_cpu(p)) {
+>                 /* update other stuff */
+>                 taskc->cpu = scx_bpf_task_cpu(p);
+>         }
+> }
 
-@Lukasz, @Rafael -- I have a question related to the energy model
-in general. As far as I understand, the energy model describes
-the performance-energy consumption tradeoff when a single CPU in
-a performance domain is running. However, in reality, SoCs may
-have thermal constraints, which would result in additional
-constraints. For example, running all CPUs with the highest
-frequency may not be possible. My question is this: does kernel
-maintain and use such (thermal?) constraints?
+Thank you for your reply. I will try it again and will reach out via
+email if I have any other questions.
 
-Regards,
-Changwoo Min
+-- 
+Henry
 
-On 6/13/25 18:44, Changwoo Min wrote:
-> There is a need to access the energy model from the userspace. One such
-> example is the sched_ext schedulers [1]. The userspace part of the
-> sched_ext schedules could feed the (post-processed) energy-model
-> information to the BPF part of the scheduler.
-> 
-> Currently, debugfs is the only way to read the energy model from userspace;
-> however, it lacks proper notification mechanisms when a performance domain
-> and its associated energy model change.
-> 
-> This patch set introduces a generic netlink for the energy model, as
-> discussed in [2]. It allows a userspace program to read the performance
-> domain and its energy model. It notifies the userspace program when a
-> performance domain is created or deleted or its energy model is updated
-> through a multicast interface.
-> 
-> Specifically, it supports two commands:
->    - EM_CMD_GET_PDS: Get the list of information for all performance
->      domains.
->    - EM_CMD_GET_PD_TABLE: Get the energy model table of a performance
->      domain.
-> 
-> Also, it supports three notification events:
->    - EM_CMD_PD_CREATED: When a performance domain is created.
->    - EM_CMD_PD_DELETED: When a performance domain is deleted.
->    - EM_CMD_PD_UPDATED: When the energy model table of a performance domain
->      is updated.
-> 
-> This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for example,
-> with the following commands:
-> 
->    $> tools/net/ynl/pyynl/cli.py \
->       --spec Documentation/netlink/specs/em.yaml \
->       --do get-pds
->    $> tools/net/ynl/pyynl/cli.py \
->       --spec Documentation/netlink/specs/em.yaml \
->       --do get-pd-table --json '{"pd-id": 0}'
->    $> tools/net/ynl/pyynl/cli.py \
->       --spec Documentation/netlink/specs/em.yaml \
->       --subscribe event  --sleep 10
-> 
-> [1] https://lwn.net/Articles/922405/
-> [2] https://lore.kernel.org/lkml/a82423bc-8c38-4d57-93da-c4f20011cc92@arm.com/
-> 
-> ChangeLog v1 -> v2:
->    - Use YNL to generate boilerplate code. Overhaul the naming conventions
->      (command, event, notification, attribute) to follow the typical
->      conventions of other YNL-based netlink implementations.
->    - Calculate the exact message size instead of using NLMSG_GOODSIZE
->      when allocating a message (genlmsg_new). This avoids the reallocation
->      of a message.
->    - Remove an unnecessary function, em_netlink_exit(), and initialize the
->      netlink (em_netlink_init) at em_netlink.c without touching energy_model.c.
-> 
-> CC: Lukasz Luba <lukasz.luba@arm.com>
-> CC: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> CC: Tejun Heo <tj@kernel.org>
-> Signed-off-by: Changwoo Min <changwoo@igalia.com>
-> 
-> Changwoo Min (10):
->    PM: EM: Add em.yaml and autogen files.
->    PM: EM: Add a skeleton code for netlink notification.
->    PM: EM: Assign a unique ID when creating a performance domain.
->    PM: EM: Expose the ID of a performance domain via debugfs.
->    PM: EM: Add an iterator and accessor for the performance domain.
->    PM: EM: Implement em_nl_get_pds_doit().
->    PM: EM: Implement em_nl_get_pd_table_doit().
->    PM: EM: Implement em_notify_pd_deleted().
->    PM: EM: Implement em_notify_pd_created/updated().
->    PM: EM: Notify an event when the performance domain changes.
-> 
->   Documentation/netlink/specs/em.yaml | 113 ++++++++++
->   MAINTAINERS                         |   3 +
->   include/linux/energy_model.h        |  19 ++
->   include/uapi/linux/energy_model.h   |  62 ++++++
->   kernel/power/Makefile               |   5 +-
->   kernel/power/em_netlink.c           | 311 ++++++++++++++++++++++++++++
->   kernel/power/em_netlink.h           |  34 +++
->   kernel/power/em_netlink_autogen.c   |  48 +++++
->   kernel/power/em_netlink_autogen.h   |  23 ++
->   kernel/power/energy_model.c         |  83 +++++++-
->   10 files changed, 699 insertions(+), 2 deletions(-)
->   create mode 100644 Documentation/netlink/specs/em.yaml
->   create mode 100644 include/uapi/linux/energy_model.h
->   create mode 100644 kernel/power/em_netlink.c
->   create mode 100644 kernel/power/em_netlink.h
->   create mode 100644 kernel/power/em_netlink_autogen.c
->   create mode 100644 kernel/power/em_netlink_autogen.h
-> 
