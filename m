@@ -1,71 +1,86 @@
-Received: from out0-220.mail.aliyun.com (out0-220.mail.aliyun.com [140.205.0.220])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FFF18FDA5
-	for <sched-ext@lists.linux.dev>; Fri, 27 Jun 2025 03:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.205.0.220
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA7936BFC0
+	for <sched-ext@lists.linux.dev>; Mon, 30 Jun 2025 10:07:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750995828; cv=none; b=TLPYotMrxPGfmWLDyIktY6fAP3WDPMhmwZYqNarxx+SJ3RRAp0tI22xxA931dc+u97TpOMqJQSCM75Edbrg15sDt9u0zesytLDcb3O/yuOEUH84EVmNstwy0Maok/zwmqt9uh920nmLWZO2mUF650fGrWNb5UqnIzFuKr6902FQ=
+	t=1751278030; cv=none; b=FyoO1/RngEm3zF/S/a3qXUhaTjJ+oxSw+dZIy8JkCQoEaqNiQ2JPi6D0uYubR67QV4qpHdRnM3wtPJirBNPcUUyouJ/Bd4gJTkjpGkEqSX3uiVQrvMjUfEncKUtUC0cwZmPB25FAe8anoWSsqITumvwVYEbnCaZ4Pq/dAtrmTmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750995828; c=relaxed/simple;
-	bh=9T1GNen7cBtUFhzbi0SAvdy21/sniPe60n/XQeir4kQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRoBsDl+UXDd4e3R6e8TaJNXFCA76ZfJot1rbtoB4UTu3UDfMdfF9ANr7zU4ioWH29gEjUGmssiP3JEEe11d+S2zUrRbs9sRTkSBdZBKRvEpl/aiZDjlCxaG+J/LIkPiFvLQ+YMas5W/rdGIDm+sJ90ww/Zx3cPZUiScTkVRp8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=antgroup.com; spf=pass smtp.mailfrom=antgroup.com; dkim=pass (1024-bit key) header.d=antgroup.com header.i=@antgroup.com header.b=sGrJip5d; arc=none smtp.client-ip=140.205.0.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=antgroup.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=antgroup.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=antgroup.com header.i=@antgroup.com header.b="sGrJip5d"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=antgroup.com; s=default;
-	t=1750995818; h=From:To:Subject:Date:Message-ID:MIME-Version;
-	bh=Icc7OsswoGVni4vwpOnCjOvpQDls5UXGNPH6hnaQ3QU=;
-	b=sGrJip5dCwYrn2z6I8ScE9gRNKT6pao2o64EL43+eFThbBrtiDKonQI5LZtK9DzT0PC/bRoj+hvCv64x9MAh6NgkXIYKTCdOV5WifO9tD4w9Ut6721oCFAHsrYKx0oQ5WP9wGADaCgZr7w5Q8g/y97VwYbVEPlf51Qex3IGwtkw=
-Received: from localhost(mailfrom:henry.hj@antgroup.com fp:SMTPD_---.dXmhNpj_1750995817 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Fri, 27 Jun 2025 11:43:37 +0800
-From: "Henry Huang" <henry.hj@antgroup.com>
-To: tj@kernel.org
-Cc:  <arighi@nvidia.com>,
-   <changwoo@igalia.com>,
-  "Henry Huang" <henry.hj@antgroup.com>,
-  "=?UTF-8?B?6LCI6Ym06ZSL?=" <henry.tjf@antgroup.com>,
-   <linux-kernel@vger.kernel.org>,
-   <sched-ext@lists.linux.dev>,
-   <void@manifault.com>,
-  "=?UTF-8?B?WWFuIFlhbihjYWlsaW5nKQ==?=" <yanyan.yan@antgroup.com>
-Subject: Re: [PATCH v3] sched_ext: Implement SCX_OPS_TRACK_MIGRATION
-Date: Fri, 27 Jun 2025 11:43:34 +0800
-Message-ID: <20250627034334.19345-1-henry.hj@antgroup.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <aFyBGAce73hzbPhQ@slm.duckdns.org>
-References: <aFyBGAce73hzbPhQ@slm.duckdns.org>
+	s=arc-20240116; t=1751278030; c=relaxed/simple;
+	bh=BBC7Jiocg90QkWAgP3ev2DTS4q8/YMW6mfcj5aBowm4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NihRZjNPbgVH7KPc4bk7KaHJNOKZH2O4N+WbiFGq8F5XIEFx9zyZe39BWutlg8ny4xQlwLJNKb0UdwSjgd/AdY0x5r++8EZLqa7byrlRqzDyWx+6ICiNKJjiLShWjdRZ+9SpGuRlz8QM+CV4cN3cmgf9EYg8AGYSnFyQrk2JW4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3521E1D34;
+	Mon, 30 Jun 2025 03:06:53 -0700 (PDT)
+Received: from [10.57.85.50] (unknown [10.57.85.50])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DADD13F58B;
+	Mon, 30 Jun 2025 03:07:06 -0700 (PDT)
+Message-ID: <5afe2400-659d-40d8-ab4f-33a1b250ac85@arm.com>
+Date: Mon, 30 Jun 2025 11:07:12 +0100
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/10] PM: EM: Add netlink support for the energy
+ model.
+To: Changwoo Min <changwoo@igalia.com>
+Cc: christian.loehle@arm.com, tj@kernel.org, pavel@kernel.org,
+ len.brown@intel.com, rafael@kernel.org, kernel-dev@igalia.com,
+ linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, "Rafael J. Wysocki"
+ <rafael.j.wysocki@intel.com>
+References: <20250613094428.267791-1-changwoo@igalia.com>
+ <b74f6484-dd16-430a-bad9-4dca6384d1dc@igalia.com>
+Content-Language: en-US
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <b74f6484-dd16-430a-bad9-4dca6384d1dc@igalia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 25 Jun 2025 13:07:04 -1000, Tejun Heo wrote:
-> Even in such cases, wouldn't something like the following work?
->
-> void my_running(struct task_struct *p)
-> {
->         struct my_task_ctx *taskc;
->
->         if (!(taskc = lookup_task_ctx(p)))
->                 return;
->         if (taskc->cpu != scx_bpf_task_cpu(p)) {
->                 /* update other stuff */
->                 taskc->cpu = scx_bpf_task_cpu(p);
->         }
-> }
+Hi Changwoo,
 
-Thank you for your reply. I will try it again and will reach out via
-email if I have any other questions.
+On 6/27/25 04:37, Changwoo Min wrote:
+> Gentle ping as it reaches 2-weeks.
 
--- 
-Henry
+My apologies for delay on that topic.
 
+Let me have a look into this...
+
+> 
+> @Lukasz, @Rafael -- I have a question related to the energy model
+> in general. As far as I understand, the energy model describes
+> the performance-energy consumption tradeoff when a single CPU in
+> a performance domain is running. However, in reality, SoCs may
+> have thermal constraints, which would result in additional
+> constraints. For example, running all CPUs with the highest
+> frequency may not be possible. My question is this: does kernel
+> maintain and use such (thermal?) constraints?
+
+That's true in real scenarios on mobile SoCs, running with max freq
+on all CPUs is possible likely only for short period...
+
+The Energy Model itself doesn't handle such situation. The code in
+thermal framework and in Energy Aware Scheduler has feature to handle
+it and know which top OPPs are not possible to be used.
+
+Although, the EM in such situation is likely to be adjusted, because the
+SoC temperature reaches high values. Especially if that heat was
+generated by the GPU not CPUs themselves, then it's extra leakage will
+be accounted and EM data modified in runtime.
+
+Another scenario when the EM might be updated is when Middleware
+will recognize a known 'scenario' e.g. long video conference
+with camera in use (thus Image Signal Processor, which also can
+heat the SoC, like GPU). Or a 'preferred profile' for light-weight
+application using some HW decoding, e.g. video playback and
+thus some CPUs are more preferred by EAS to be used in it (EM might
+change the energy efficiency gently for such CPUs).
+
+Regards,
+Lukasz
