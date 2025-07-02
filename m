@@ -1,47 +1,47 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2071.outbound.protection.outlook.com [40.107.220.71])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2065.outbound.protection.outlook.com [40.107.223.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22C32F5C5C
-	for <sched-ext@lists.linux.dev>; Wed,  2 Jul 2025 23:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C09A2DE709
+	for <sched-ext@lists.linux.dev>; Wed,  2 Jul 2025 23:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.65
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751499013; cv=fail; b=YwVrdYvrIvVqWihJDFHjeDowiAJjLMVNG/J9/rY91D6y4uPPuqv5Urwo8BQVX6vaKqPTgIY96b7L8DoBylSIAK0nHM12tsqXsj+8Jr33FuloPcBVU8LnbgoH03lYW1XL4ok5MuviX9opkH1Ey4SfnklTQXhZ9jbXCYrZzbVENvE=
+	t=1751499018; cv=fail; b=l6ir6f3oaQY/GqG4x7btIsY/QELGtZEzO1/wpJmn86a3EZ9wh90Tm9t9BCjvddnS/yxo5I4GOEE5ZRZENfeLIpy8W17zpXc8hpYZXcYJgiJvkA4c/gTkSfsqMiPk11+VtwhAGOGJ+bQAPFMyk3ttqBktxfmCGacvlcZZSQI62Z8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751499013; c=relaxed/simple;
-	bh=+73dKM3TgeTNA20S32ox0Gm5rUq2AJxNITw+yDrnJV0=;
+	s=arc-20240116; t=1751499018; c=relaxed/simple;
+	bh=WtpmkKxh99zrJX4hTje2ThQ1RLR+JZ3CYMTo/CUd3Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=C8DgyHGsMKH/e3O/2JvGugQ+drIikKwT4QCKEOZWA/tf+GErKM9lXLVeB1ViIpuLwfQw9J/5gilYY+0wB/v5yVVXoeth1shn/EfMSEhd0Xes+1F+5fbCz/gEXQ2dz1W0vHUfM+5T+UVdtYzWOLJCExNFYmxX6HCDtR7dDqLM8OY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=gfZz1gq/; arc=fail smtp.client-ip=40.107.220.71
+	 Content-Type:MIME-Version; b=K4WsRRmSU9owhRIedO2yDmpQBH0LmDIVr9zuOh5hpA2V1lr3toTiaR25+36+L5EV3Og6h9EsonwAAadr/tXnLdauFn4cZNCakeTvAmcRCi9hTDHJ4V4slpuUnfLtuxJjBc0yEB+z0aEgjfRZlMbvahAsO/glWC2Vk608ATzxeSY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Ko6c71kQ; arc=fail smtp.client-ip=40.107.223.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="gfZz1gq/"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Ko6c71kQ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TR0g0kFttFMEjEz6YCpdjZWRkP/f1LqQgXykPHYVxRZ/xKNgQ1do8bPzhD9kjpUjO+ridAAYsnI5R6so0Z300/9ts27IvQX9939XoK9JRxUl1TnX3KOfTP8/U98KUq+8UzHfKsdYiYjJSeBtgNpB1hmoMx6pNDrg6oW/KO0rS5clc/Dvq6T7QdG/YlVmHdvQzDoYieooAsw52GVa7XkD6GRREM4PG/Nj5ytWZOkXz5whfov8dwpem4P5L0ygtJ1E5GmfEhkLaSt00X9Jfn67/2slV5RlhAXiSNcYgzZp54O9lP3RDO4HpUIJcdG33vGBKh1nXqGGNvgidjvQcDCLfg==
+ b=jxPJB2OgMkwQdIvwJT4ZNSUwiygWr8ayqQR91PeP70rT/G2YqVLBRxzSBlOLlNtUqGeJ3bsyhsPzxAK7ULdfDxSu99dW+8fEhhJOZxu95/S1DdLgOeWIC+6oKeza0duq1wETFcDJHLVSDdh4JdTvnRQvonDG4/LjvagJi6LgtWVXUu7XlZbLKY70yfWrfpij46C3ZKzYzzXkRm4gZI3GemVhqzF+CcNHRj/J0vDoS7JAVDcBQVYDBXfZqjUJ2JkacI48RppU5UTdSES2RcBDTLbNbyqEtlctajxr0HnbkuYi/Do4ey9y3ecxASiVD9F83jJqY+mrWY1fr2WZzGJTMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8k0UrMroM4NjCYSF9aLNPhA/GPUkQT7mrRIwAi/KvVY=;
- b=VY6Z5OwUBuA7fJ3gPYJE+FqbiuviNrl9CFx2vNKRafbLl9mUNgdBnnPcc2/JDqEEmx+UF3EWWtI67veMbcL3V4W63QUMkMzXc0kl6gy16lT15r3IB4HCHM5SRHlTV4KtMjoTH5FSK2Trb7K3fjOG5gMHnin28mUH2/ITdB53saNU0NYsiuSmN3LM1Yd4guObU/bonvAvLILfBycCWOAOn5tOpJPCNmpHF2NtAQXeBS+YddzSNOpvJhE02iFs/RpPyBimTQPQsg5tenCgWrlCmkwAHOa9pnr1l+w3Ak0OKrOCLEny6hw1ZGSt0mn+fmorsP5dvKQH01gCNICskPoM5A==
+ bh=uMV0pisGA76dSe13TKEzAoYKnE8YQhq7bUMyCcNQVgY=;
+ b=NgEELWbvktev5fpt61f0ixqTP5+G9t56MALplC+JSIXu/6vWe0r13YOvIB5cfw7RQ+USG/7jm6KHb606R97v16uFToKO8dzFurqQNMbn6A23TZBAxaRgoT3Bu+qXUFEOf2APc8k8dkqcSMDolZewOadnPi/iEbXR1AF8+UzXsajtJ4ujd0s8slVxLRmhuhG5Iry8G0zaPa4INgh1VUFgk4fomJZI1AsLwdNqVY7Sp+ndEhGVywyzUy4rGruuqdeHGWy6QyFjgej/ewwI8kWBgV+9AcU3yncS8qeehtfayVifOTVkwcZuy479Y0cAX9a6CBEScmLBXWBXlgMEpplvhQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8k0UrMroM4NjCYSF9aLNPhA/GPUkQT7mrRIwAi/KvVY=;
- b=gfZz1gq/bgciB8/E6TAW/0ekQpdahLtXSDPxcrY2mz3JNjX8au+/kXPRB7tZiQmCgiX2nFx+ypHNVoFgDkHv6IjZ2gVcyYLsL8ixI1gdUtVcT/WBV1pwdjJAEpJzZKNqzzPrSYCKdH5qGiqxxGqBP/T5p/kVdr5Thsu+4S535swR1f30wdwJx2tPvwhaVC26yFgekyiKsG7c8+nngvobyvaxkaIefzbwoVqMB56iaBUZqbMFOIn76N59Ec91hAHaR+Gmjd2e7kGPW4Wv5RGsS1poR/eaKQ5FDF0eDCrUbBr5Lm8ZmvXE51gwc8iTyeKpSlPPGFpTpMqGakq9BdiEJg==
+ bh=uMV0pisGA76dSe13TKEzAoYKnE8YQhq7bUMyCcNQVgY=;
+ b=Ko6c71kQKI4S0EqsTIogSMNzOKvbGYJ3AqO0p/km0FdWBdbNJf6VmI2eRCVNTXlFv2JgAukNngVb0xeIrYYwy1d9V8Pnf6YUl9D2akfHD+4oT1XdYFczoUMoOCXP+Wh/qwI+DV5hbYv0NL4oz5vUSVsqeMgwQGd9w9mmphkEBPtzDHlVL8ATxeIt2Bi4yaDtTS7RdSL4CaAf0k76t2WmtNXVw5D3sDtPzsSMaJsrkH3B8XgePaP89BSHpEC13pGls+bs/F9NC8ZlL5omkubtPRwCcvtCGZwzpYN0+Ac/YLt2NsQdwvQDpsDwQKHTje9X7zYwXQzUHA7HHi+gHUJ+sg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from SN7PR12MB8059.namprd12.prod.outlook.com (2603:10b6:806:32b::7)
  by MW6PR12MB7069.namprd12.prod.outlook.com (2603:10b6:303:238::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Wed, 2 Jul
- 2025 23:30:07 +0000
+ 2025 23:30:12 +0000
 Received: from SN7PR12MB8059.namprd12.prod.outlook.com
  ([fe80::4ee2:654e:1fe8:4b91]) by SN7PR12MB8059.namprd12.prod.outlook.com
  ([fe80::4ee2:654e:1fe8:4b91%7]) with mapi id 15.20.8901.018; Wed, 2 Jul 2025
- 23:30:07 +0000
+ 23:30:12 +0000
 From: Joel Fernandes <joelagnelf@nvidia.com>
 To: linux-kernel@vger.kernel.org,
 	Ingo Molnar <mingo@redhat.com>,
@@ -58,17 +58,18 @@ To: linux-kernel@vger.kernel.org,
 	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>
 Cc: Joel Fernandes <joelagnelf@nvidia.com>,
+	Luigi De Matteis <ldematteis123@gmail.com>,
 	sched-ext@lists.linux.dev
-Subject: [PATCH v6 06/14] sched: Add support to pick functions to take rf
-Date: Wed,  2 Jul 2025 19:29:31 -0400
-Message-ID: <20250702232944.3221001-7-joelagnelf@nvidia.com>
+Subject: [PATCH v6 08/14] sched/ext: Add a DL server for sched_ext tasks
+Date: Wed,  2 Jul 2025 19:29:33 -0400
+Message-ID: <20250702232944.3221001-9-joelagnelf@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250702232944.3221001-1-joelagnelf@nvidia.com>
 References: <20250702232944.3221001-1-joelagnelf@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BLAPR03CA0086.namprd03.prod.outlook.com
- (2603:10b6:208:329::31) To SN7PR12MB8059.namprd12.prod.outlook.com
+X-ClientProxiedBy: MN0P220CA0019.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:208:52e::14) To SN7PR12MB8059.namprd12.prod.outlook.com
  (2603:10b6:806:32b::7)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -78,347 +79,260 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SN7PR12MB8059:EE_|MW6PR12MB7069:EE_
-X-MS-Office365-Filtering-Correlation-Id: cc5a44e9-ed34-4b1b-8e35-08ddb9c06138
+X-MS-Office365-Filtering-Correlation-Id: 08064471-d94f-4146-51bf-08ddb9c063ef
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?lSEBp4tn0hg0KlJwh3548SVi1/EDHpsPN15OefNUV4XDRveQvQxtRu+SI5R8?=
- =?us-ascii?Q?Py9BOYC10rAi8NHGtHLr/6n8YUpmMYYdsk/ucapoKKtzKS6M6D25/KTsu1Fm?=
- =?us-ascii?Q?2Bd9SmLyLbr7lK7Gu6t3xsT8FhuKuq5BEldtVMBzrkwyehp1S2lF+8j1QLrV?=
- =?us-ascii?Q?Po6YYReN4kmOwqggj5R9b3tF2X9XLdN3XBd56acCzXBwc9VqgOQGBT3YDZjV?=
- =?us-ascii?Q?FEhzSIwZPAvf/IPvt+qvV3Kbd7q29JyYFh0qO2t0QPVld+CxBS6YIWgxyDhO?=
- =?us-ascii?Q?4ASUCJNN8aO7m8GtTm9IjxQZMvtpyaNcVDFzpuZR5K4YlLj+7Hh4lWWlCZ+N?=
- =?us-ascii?Q?YBz9jKmObGkyOj3wp0Nxou/Su6h5h6Fxogiv7Veb/PGJrYjndowX0BlYjVw7?=
- =?us-ascii?Q?dgzvzt5IybBLybdoDa8rOdrGZarws2J87pL607lImHalT/4WMG0sAshTaK0b?=
- =?us-ascii?Q?w7izyHa4s+8gHZScTGJ3RbCBT4OsOnbERBzAphye0bz4ciWNCrrf3qfYSdCp?=
- =?us-ascii?Q?vkpWzpz/YiW3mwVsWwCl/RlNXvyJ9jI8cPe5+kUEZf2zuv//F+TesLDPe0B9?=
- =?us-ascii?Q?RHdTWi611SwwaLpPPSFOfR65QlmLS6j8dbMpgvT3ZjcIR7e+Bc6hnUkqUSpc?=
- =?us-ascii?Q?2bEqCPQ1W+BjucmOApj+MQPg43OnqqwRG44np2Yp/9O0tkpR4/COhWRaioEW?=
- =?us-ascii?Q?+xiOKnVsukrUpMzrcgBJuyBVUNBRtizbQAmnvPILgGPXjxbtE79pQo5Nq23N?=
- =?us-ascii?Q?XrmJNObXidf7wvmkNhCfnxiHlB1WhqilCvQUcMRR51qNSch7oQCTDhg/1iGh?=
- =?us-ascii?Q?6jpPDb0tzqP3QTRsgmTw8lIruXvWPanJ5VJadzQRioWdXgwL6W8hTP/P/hvq?=
- =?us-ascii?Q?ScKLbeSkVS0uMYIUgdc18lvQ8wkK5Me5pa11xXC29PpcRLUUVFY4e4WG/KgT?=
- =?us-ascii?Q?GUD4trbK43VrXZF+CC+KhSMaxbQ2mvTAVMHov/HwGLrAKkeTD5lX3jp8k792?=
- =?us-ascii?Q?qdZKhymYwul7o/GWmhFMWjqDt1REHDlXEQVCiRx/WylmjsDagxxiV9aO7I0P?=
- =?us-ascii?Q?9LPjVvgWV1Bz6JUY12N86a8Sg32zZHhic0BWPouC3KFEz6yygaTmPW+/402h?=
- =?us-ascii?Q?tlOhQsNpdIbhDx2LUzN8p2jSwbq3l0U38UmHfDjPKxcgFAS5VKACSmaFVbMT?=
- =?us-ascii?Q?ZuNTFx6iFEEayNDSVYHD8XW2w3rhBSPqjmVfgScMLcT8XGQV9Xc3gPdalNyj?=
- =?us-ascii?Q?Jqgk2HGRhKEgbREChEKxx7mGPBgSa0K9uXQfypq5CtQfHnm1rF6Rmjn2c6rf?=
- =?us-ascii?Q?4A8YNpQ3JdjZWiJ1HxT+1rgqijWpVpp2HkTgxsoSGii8UzK4/EyJwK6GZ4G3?=
- =?us-ascii?Q?QhyQ8KPGrSZU6hN/U17Buidn9fXKC0iYDpiUs/9f7/O4UsWfNwytmqSgcIGX?=
- =?us-ascii?Q?eCRNqO86kEj0iY+PmdlcLJCED4i2UvYxmZlL3zeeZ/33EbNyb/tbXg=3D=3D?=
+	=?us-ascii?Q?Fwf2cHWtxd47pQNCiyU1rd22WyWxzLdgfkcrKQggwf12fczaIRelF5B1GA+Q?=
+ =?us-ascii?Q?gUwDmowh3rsmY5bNQO4ss4d9Qq/6noxxLmaY3eL0CeDEXQtVGoEsIBPbclXL?=
+ =?us-ascii?Q?kJiw4ju9okcSz5np1kYKdea/LAlqspH4C6bLyDS4lafkHjAS9UKuCsm7cXLh?=
+ =?us-ascii?Q?7ZcdDPnv+L/pg3s4fbidRB0eab5UaHNOZZprPR2RkfDsJleJGNjd45Kn/7ij?=
+ =?us-ascii?Q?WRZl9EktuMklcrteISgnqmF+vRbmm4iWPBAT0DJv/mQgTBypRbzCF+XeLhtS?=
+ =?us-ascii?Q?9u5ayyo2id9Rn0oMD6VJ9SC4GYHtBVCdVUaD/9idG6yPqezn4EsdCo0IgcQT?=
+ =?us-ascii?Q?gbNxHsN24l26w+dlj8Uy28INxi8T9ic9kNfW84myesUiQHsdiSgz+Mr1wAOm?=
+ =?us-ascii?Q?tjTUEf05ZZs14oa1JLDiFmJLtiughSYpZrFwgtnh7rbG7rKNcCBwcUrI2fGw?=
+ =?us-ascii?Q?TD7v03quczb35w+1yWX06pm7F8/k/IyDqnJk/PyiN4E/wKF1LR9P1sykyaZv?=
+ =?us-ascii?Q?2yAOZB/jjaf21svNdfg/4zl9TIFj4zd7czU7ygveqcZLeZRRRoHntnGkq5fm?=
+ =?us-ascii?Q?K+u3LPEnj+dxS9kJjdC9dz+rUPocBllqfD1FNhd9DlyCiBSvnjckC1Rk0oJ7?=
+ =?us-ascii?Q?vfDwkEO3XmLCld43b+nHl3/P6Ucewk+nHnjj1fQ+EVr3A8C5JqBMwMo8lYql?=
+ =?us-ascii?Q?bDT9GmFM9lZQ6n6sZ49vMzVOT94b2nR8cFu9UH3Ys1e42ok1z4gaJMKL4h+A?=
+ =?us-ascii?Q?qjjUaj6Za12WNO1qQOYE1l91zx8l2F8R4ymw4ZEzrZW9Lxv9kpGQtuNLH5hZ?=
+ =?us-ascii?Q?8c91NIwCHaQQt4HkcSzw/t/1q6Ej/GpqrK6rFKDHEWB9Cgzg4X1SstoQH6ti?=
+ =?us-ascii?Q?6hv+XgM66EpPKLAbUPlpuX3uBIG6LwlcrHvi9ieEhJzDyLpWKmpWoTCnBr0p?=
+ =?us-ascii?Q?BobLku3/c+d3oJnD4aKmuy4Sq68qJej+TrDR1sDy6t5Wi194Z2fyb6QqrXdM?=
+ =?us-ascii?Q?dTgwhrAf8ah6c1aYl0MruIf1PNSjtHZLDSCuf2ShHqrvYfbG6zA672W6lIiM?=
+ =?us-ascii?Q?EyBdsZM3qM8VoLF+mZlCx8MlC4mJUQwoqRAKJKzb/6MGcmCjP5Calx89uSDi?=
+ =?us-ascii?Q?HbOr6cO+DekKHNHqVs2UHglVjEYaJLj/mnJep+8d/FpsBsHEW1GtG+ExpDko?=
+ =?us-ascii?Q?H9bkV2gkhYxzUr6cLXSR/lFl5gICG4gkbzMc91xUHHRm73FJGmQuUZXF3NKz?=
+ =?us-ascii?Q?s986uU5R//W6LXubX3Eb/dHjTwjdbX+TfT252WcmdsgZpGbfKUOHb4Acech5?=
+ =?us-ascii?Q?H+uSM7qTuc6luCfrxkGjnZzypVai/BecEoLa0flLIu4DuZ+eaSHe9r4bD8V2?=
+ =?us-ascii?Q?k3AArz3zqDXrm7ajgeGg+WisvTRZolwBU0Tylsax72anFrSVY0bZISY9Zttg?=
+ =?us-ascii?Q?9XiwXfpkOoiQuNnLMJHaARTKbzE9txvr9N11TeHmTljrfAlVDveTCw=3D=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR12MB8059.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?wTz5z3yZfR97cvOBMxN2eBRX5kQfifgiO4UBUxi5d0gKP4xeaEow2nh8gOjI?=
- =?us-ascii?Q?+Pd1TrBb7qv7D/0TYdh8fX0KUCiRtd40qBzIrEqDqMeiXmcsnSzO/QWJevds?=
- =?us-ascii?Q?vGOw/2wuVT+t0WHFHMLsZNrWXZLvmVR2rE+mCo2/PikfPV+vYK3+lwK1A/3s?=
- =?us-ascii?Q?z2UFZ2Vh6fUBk3ZbHDn3kzDP35inz2sMPqvXomL6rVkrekJTqlj5z54Ug48i?=
- =?us-ascii?Q?Mv3i53tJNrzEhQrz+V+0HSqzwcFmeTXXVBPIe0eDPl57RI3/kN/XM17m/jau?=
- =?us-ascii?Q?dGknXM6POFpkU30rtTZnhNfp4TTRNs1CY/gna0wkRQmFNsJD1DnAE+qqusC6?=
- =?us-ascii?Q?aJJ6zMKGzB+teZravHRtCqgIqkV7e6pha7xtJtmXqFePmha8WyT3qerKqmSV?=
- =?us-ascii?Q?2/VlYUQJ6dVlEwcghIxR3jZcMCwCW1fjIiiDA9dRJ/Cz0uPDSNvIhU42elBC?=
- =?us-ascii?Q?sMKpoknBe1dxZ/s9kihNqhZOZMIXr6c8wM8pGbBwSlNQf+qN8OAk9B5n+Eho?=
- =?us-ascii?Q?EnYdSWTe2aGBsGfimHus7RNQDZbjjLntVVP69ULzrCHosaQTykFw7VQSyqf9?=
- =?us-ascii?Q?Z+oA8euD+6scO96Yq0PYzhePY/o5ZHjj6lxPuFcy1aq0COG/SKTdR/fmtWQg?=
- =?us-ascii?Q?/4WqTjdFaIbFC307nlKb5vqbB0tCp+kGKknLYDtpUfJve9ByImTlPmIXtmq5?=
- =?us-ascii?Q?Xh9721aS6u5YvWcsd0WuU1sHW41IUAIyqC8jG/jq9jcRr94zN8LJNrTHvV4m?=
- =?us-ascii?Q?2BbLE5ds0xSUGfIHzNPyOIzow0DZVXy9Ahs18/SqNo87tzpxUjitOCU4Sb+Y?=
- =?us-ascii?Q?fdjYSPMYzP+ixf/D3vMPEsrzvgt/7WUDzrqDsaNQqBKnJyXzGYqBH68y1PvP?=
- =?us-ascii?Q?7vqS29y/RTagYfYvgGNIXtHikp9cfmNKYfxQvWwU3NN1B/yDLoW4u0oskMGZ?=
- =?us-ascii?Q?6KkVnjpC7FDhSzuRq+XhrnwFSyhxAnku7qrGakBKtEc/LNDu/c1ajAg5Cb+A?=
- =?us-ascii?Q?VhPrReFkxzWGsPX405ql3mHjXxSbs10Y6+3+mJgk0f6tI2ItGYz8u2NXZtDS?=
- =?us-ascii?Q?mrG78d4fawRLXkSohUHgripxSJklOnOE6fbvq30KihO4EHLj/iPKkjp0TbJU?=
- =?us-ascii?Q?LNlQX+AneH6iA0nQqTw99fHZbrlw+wg2br6zHPiWCN4A+m7fwfxRBvZ/o0id?=
- =?us-ascii?Q?NTRrv9RlZFKfAKOdwbVqBkmQnrc1dezhqB67vrTf7N2YuaX1VlIgnRF1VU/i?=
- =?us-ascii?Q?8cu6oTlISalPFA8V7nS5YYQgkApAe8ZwdTK75iByHS4ZS7gRBH2DpEkr3P1h?=
- =?us-ascii?Q?MYXMwGzpmp6pt9JaL+oOy6Ilqa9pC4IvKPHxqZ6A8wCNGsPyMMta38+VXdd+?=
- =?us-ascii?Q?1NFzaU5UjxcbOMvsMlDwkBDJab2qIvLfPpWwB2/ldw5ENsj0dZjWkP5hWGN7?=
- =?us-ascii?Q?u8hKP2Ieq7G1Zi0GAkfT1XwPa3iHHMAzi79jOyVrC9SOsittaj7MIQvuFBKI?=
- =?us-ascii?Q?WVK8HxLE1aoZV6SB6WPo8VdokBxyNlcFvPy00a0auZfhAApEQAwWaGCmSL0w?=
- =?us-ascii?Q?6GNW/MKDXq7fVbyR4fl9wMB/6PwSNAZ6vFeun16g?=
+	=?us-ascii?Q?kbnG6FYDdOxhgegPPkMWt6GIeGSl43ZJkvR3EJyFJ9FqslQfSa+3xtFrJYbe?=
+ =?us-ascii?Q?fLSs5L8P/ikFXGHGO2rs64eca6RApxTMHAhW5WOZVB2iMNwRO4mJLUe7TxpE?=
+ =?us-ascii?Q?5so7RewVDLQ4VE0CtDBvr/JT4MEsh6fBVj17KKsnbfwWr/oTHbYnAQSARI2H?=
+ =?us-ascii?Q?4fv3Pt+mFQ36tGEV3QxWs0c0lWPtuUNh0MP4RDoUtYk3Urb+p1/95OCxV9w4?=
+ =?us-ascii?Q?nsPfxSsoL+6doQ50CXYAqyCfHQvzW+TC7cubhiRSudEdgsQIP3AemK3Ms4lQ?=
+ =?us-ascii?Q?DP4a6bm4ctIgunKnXfLG6BYEc/JEyHqUserQpeX8dF2ZgOT5ovg1tjRUkq5U?=
+ =?us-ascii?Q?E0/F+lhcnaCS+vSRpsXakR3O3Y2W/sui1x7+sSQWuxrb9Z3OV3uE9MN7dwuj?=
+ =?us-ascii?Q?/yk+nxUzlX0XI0x/v2t+ZS2BkSl8CVNlVsehL9mx9HeFxQ4ZG598phuVWjuB?=
+ =?us-ascii?Q?sxE2zu9f2QK5mxgQD5wLL5+ysN5HiFG4pxa4iNcRDwODkkeej299OMt6M3KE?=
+ =?us-ascii?Q?+rAgN5Pzk9qxdNOncVkL8fhhkr++wxhKJCFxoqa9k9UNbnq5nuDpsWVc6021?=
+ =?us-ascii?Q?B/pqN4xfyHIe62iMQRIjU2RgMXprnb2abGN77sXNFFUaMZXKx/5yW3AMIdsw?=
+ =?us-ascii?Q?Gvvk6R4z9oRnjj3TsTushtCndEvAWw6VXJdmiyss4cEf1b5kV3/jDe5Z510u?=
+ =?us-ascii?Q?wXZF4Bn7khwVmZmw4hOz1GnEf/O6jp3yKj8u1zDwAjXFPswSI8VdFBzqBft6?=
+ =?us-ascii?Q?/kF+a0yyTzV8Mx9SinoWianL6X57jwM1vSOMH881q1b019P3VcyjY8E8h/m4?=
+ =?us-ascii?Q?A7cFiOyG/fFYv88iyCoDv/VHNXImdg3vu9kcF2ESp+3HyrOb3Ve79WYRt+YM?=
+ =?us-ascii?Q?nOO78MJL01w2KqnGfmY1DPP8bVsTrtrEgayt5bqnnoT6eulYbR96Uaitpym/?=
+ =?us-ascii?Q?cFr/IEPEdnI6AovUZWdAtb8X2/YbOQ39o/q11ElXnk2J22zEF1BkvGx1F36I?=
+ =?us-ascii?Q?3y0akRQtIm/jw7UhCXB8IHwBad3q6KgcsKQAzhuk/MjcHyWhVKP2GuwBZNRN?=
+ =?us-ascii?Q?VesKtdYtEC2e+rJLiQKa5QFdXKdGYlN2vWHz+z9IIh2Ui9VO17v/NT1CU2lC?=
+ =?us-ascii?Q?U5KgrmcPykTysdpSlQvQBzSh2YMc0cJeE5VAzz/NTtGTKO/ot0znjE5APkpk?=
+ =?us-ascii?Q?E/7IiDW04D/mVS546+Vtwk2Aghnq9AOGBA/epjPKh23WI+No7qzGeMm8FWwp?=
+ =?us-ascii?Q?8YxQmtGvJ2Og6pL+dLODeA1QDKnRVCM0pIpdS+Rd4Z71uoxMg/kUFf3gsZGd?=
+ =?us-ascii?Q?StCQaxE8jAMqFhneoVuFH1o6ilvuKlIOm75HhnFsQ3o6LwYdYk1oh+vAPNQg?=
+ =?us-ascii?Q?M9pwhzcqwM/QZD4kJq0VMkiu8v7PaXc8LeTtxQ6VZtzN6t/7psoz4+1ILgOJ?=
+ =?us-ascii?Q?fNcH+rsaGNSnYqenU+jVyrYrHXXrmx6hVn1SLpXkz/LR8tmLa/XQyXCrQn+G?=
+ =?us-ascii?Q?yLyVrbbeqSjSImjKmkxETaOH/a9IcNBTKkHJ/ceCblhnr5wthfJWkCGpbtuW?=
+ =?us-ascii?Q?c+0DaioRIEz5ZJ68RRfydeKFojCDliWE5xWNJZId?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc5a44e9-ed34-4b1b-8e35-08ddb9c06138
+X-MS-Exchange-CrossTenant-Network-Message-Id: 08064471-d94f-4146-51bf-08ddb9c063ef
 X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB8059.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2025 23:30:07.3999
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2025 23:30:11.9605
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yyDIiw6T9NtCu/DVxzOELEobzEenKcBHlR6sn2NtiNI5yAKRAh1Y5BEWd9efWyZH0ElLmUFLcWlsS57QlLjakw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: odQQdvgO3CWJZnNlXmIfyX3Eu268Xd8nGquEZoDcXdmS1yd7WXcYOymKjA0KojYiZIQMBVoUx+kp39LQwBINHA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB7069
 
-Some pick functions like the internal pick_next_task_fair() already take
-rf but some others dont. We need this for scx's server pick function.
-Prepare for this by having pick functions accept it.
+sched_ext currently suffers starvation due to RT. The same workload when
+converted to EXT can get zero runtime if RT is 100% running, causing EXT
+processes to stall. Fix it by adding a DL server for EXT.
 
+A kselftest is also provided later to verify:
+
+./runner -t rt_stall
+===== START =====
+TEST: rt_stall
+DESCRIPTION: Verify that RT tasks cannot stall SCHED_EXT tasks
+OUTPUT:
+TAP version 13
+1..1
+ok 1 PASS: CFS task got more than 4.00% of runtime
+
+Cc: Luigi De Matteis <ldematteis123@gmail.com>
 Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
 ---
- include/linux/sched.h    |  2 +-
- kernel/sched/core.c      | 16 ++++++++--------
- kernel/sched/deadline.c  |  8 ++++----
- kernel/sched/ext.c       |  2 +-
- kernel/sched/fair.c      | 13 ++++++++-----
- kernel/sched/idle.c      |  2 +-
- kernel/sched/rt.c        |  2 +-
- kernel/sched/sched.h     |  7 ++++---
- kernel/sched/stop_task.c |  2 +-
- 9 files changed, 29 insertions(+), 25 deletions(-)
+ kernel/sched/core.c     |  3 ++
+ kernel/sched/deadline.c |  2 +-
+ kernel/sched/ext.c      | 62 +++++++++++++++++++++++++++++++++++++++--
+ kernel/sched/sched.h    |  2 ++
+ 4 files changed, 66 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 4f78a64beb52..6799c14061b7 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -634,7 +634,7 @@ struct sched_rt_entity {
- } __randomize_layout;
- 
- typedef bool (*dl_server_has_tasks_f)(struct sched_dl_entity *);
--typedef struct task_struct *(*dl_server_pick_f)(struct sched_dl_entity *);
-+typedef struct task_struct *(*dl_server_pick_f)(struct sched_dl_entity *, void *);
- 
- struct sched_dl_entity {
- 	struct rb_node			rb_node;
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 8988d38d46a3..7d856d8dcb94 100644
+index 7d856d8dcb94..a1ee241a63ce 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -6049,7 +6049,7 @@ __pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
+@@ -8650,6 +8650,9 @@ void __init sched_init(void)
+ 		hrtick_rq_init(rq);
+ 		atomic_set(&rq->nr_iowait, 0);
+ 		fair_server_init(rq);
++#ifdef CONFIG_SCHED_CLASS_EXT
++		ext_server_init(rq);
++#endif
  
- 		/* Assume the next prioritized class is idle_sched_class */
- 		if (!p) {
--			p = pick_task_idle(rq);
-+			p = pick_task_idle(rq, rf);
- 			put_prev_set_next_task(rq, prev, p);
- 		}
- 
-@@ -6061,11 +6061,11 @@ __pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
- 
- 	for_each_active_class(class) {
- 		if (class->pick_next_task) {
--			p = class->pick_next_task(rq, prev);
-+			p = class->pick_next_task(rq, prev, rf);
- 			if (p)
- 				return p;
- 		} else {
--			p = class->pick_task(rq);
-+			p = class->pick_task(rq, rf);
- 			if (p) {
- 				put_prev_set_next_task(rq, prev, p);
- 				return p;
-@@ -6095,7 +6095,7 @@ static inline bool cookie_match(struct task_struct *a, struct task_struct *b)
- 	return a->core_cookie == b->core_cookie;
- }
- 
--static inline struct task_struct *pick_task(struct rq *rq)
-+static inline struct task_struct *pick_task(struct rq *rq, struct rq_flags *rf)
- {
- 	const struct sched_class *class;
- 	struct task_struct *p;
-@@ -6103,7 +6103,7 @@ static inline struct task_struct *pick_task(struct rq *rq)
- 	rq->dl_server = NULL;
- 
- 	for_each_active_class(class) {
--		p = class->pick_task(rq);
-+		p = class->pick_task(rq, rf);
- 		if (p)
- 			return p;
- 	}
-@@ -6203,7 +6203,7 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
- 	 * and there are no cookied tasks running on siblings.
- 	 */
- 	if (!need_sync) {
--		next = pick_task(rq);
-+		next = pick_task(rq, rf);
- 		if (!next->core_cookie) {
- 			rq->core_pick = NULL;
- 			rq->core_dl_server = NULL;
-@@ -6234,7 +6234,7 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
- 		if (i != cpu && (rq_i != rq->core || !core_clock_updated))
- 			update_rq_clock(rq_i);
- 
--		rq_i->core_pick = p = pick_task(rq_i);
-+		rq_i->core_pick = p = pick_task(rq_i, rf);
- 		rq_i->core_dl_server = rq_i->dl_server;
- 
- 		if (!max || prio_less(max, p, fi_before))
-@@ -6256,7 +6256,7 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
- 			if (cookie)
- 				p = sched_core_find(rq_i, cookie);
- 			if (!p)
--				p = idle_sched_class.pick_task(rq_i);
-+				p = idle_sched_class.pick_task(rq_i, rf);
- 		}
- 
- 		rq_i->core_pick = p;
+ #ifdef CONFIG_SCHED_CORE
+ 		rq->core = rq;
 diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 0e73577257ad..2889cfecf835 100644
+index b571d06c837c..b7f1724c54a6 100644
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
-@@ -2424,7 +2424,7 @@ static struct sched_dl_entity *pick_next_dl_entity(struct dl_rq *dl_rq)
-  * __pick_next_task_dl - Helper to pick the next -deadline task to run.
-  * @rq: The runqueue to pick the next task from.
-  */
--static struct task_struct *__pick_task_dl(struct rq *rq)
-+static struct task_struct *__pick_task_dl(struct rq *rq, struct rq_flags *rf)
- {
- 	struct sched_dl_entity *dl_se;
- 	struct dl_rq *dl_rq = &rq->dl;
-@@ -2438,7 +2438,7 @@ static struct task_struct *__pick_task_dl(struct rq *rq)
- 	WARN_ON_ONCE(!dl_se);
+@@ -1570,7 +1570,7 @@ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64
+ 	 * The fair server (sole dl_server) does not account for real-time
+ 	 * workload because it is running fair work.
+ 	 */
+-	if (dl_se == &rq->fair_server)
++	if (dl_se == &rq->fair_server || dl_se == &rq->ext_server)
+ 		return;
  
- 	if (dl_server(dl_se)) {
--		p = dl_se->server_pick_task(dl_se);
-+		p = dl_se->server_pick_task(dl_se, rf);
- 		if (!p) {
- 			if (dl_server_active(dl_se)) {
- 				dl_se->dl_yielded = 1;
-@@ -2454,9 +2454,9 @@ static struct task_struct *__pick_task_dl(struct rq *rq)
- 	return p;
- }
- 
--static struct task_struct *pick_task_dl(struct rq *rq)
-+static struct task_struct *pick_task_dl(struct rq *rq, struct rq_flags *rf)
- {
--	return __pick_task_dl(rq);
-+	return __pick_task_dl(rq, rf);
- }
- 
- static void put_prev_task_dl(struct rq *rq, struct task_struct *p, struct task_struct *next)
+ #ifdef CONFIG_RT_GROUP_SCHED
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b498d867ba21..f00bb75ad539 100644
+index f00bb75ad539..34c95100fbe5 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -3397,7 +3397,7 @@ static struct task_struct *first_local_task(struct rq *rq)
- 					struct task_struct, scx.dsq_list.node);
+@@ -1909,6 +1909,9 @@ static void update_curr_scx(struct rq *rq)
+ 		if (!curr->scx.slice)
+ 			touch_core_sched(rq, curr);
+ 	}
++
++	if (dl_server_active(&rq->ext_server))
++		dl_server_update(&rq->ext_server, delta_exec);
  }
  
--static struct task_struct *pick_task_scx(struct rq *rq)
-+static struct task_struct *pick_task_scx(struct rq *rq, struct rq_flags *rf)
+ static bool scx_dsq_priq_less(struct rb_node *node_a,
+@@ -2396,6 +2399,15 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int enq_flags
+ 	if (enq_flags & SCX_ENQ_WAKEUP)
+ 		touch_core_sched(rq, p);
+ 
++	if (rq->scx.nr_running == 1) {
++		/* Account for idle runtime */
++		if (!rq->nr_running)
++			dl_server_update_idle_time(rq, rq->curr, &rq->ext_server);
++
++		/* Start dl_server if this is the first task being enqueued */
++		dl_server_start(&rq->ext_server);
++	}
++
+ 	do_enqueue_task(rq, p, enq_flags, sticky_cpu);
+ out:
+ 	rq->scx.flags &= ~SCX_RQ_IN_WAKEUP;
+@@ -2495,6 +2507,11 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int deq_flags
+ 	sub_nr_running(rq, 1);
+ 
+ 	dispatch_dequeue(rq, p);
++
++	/* Stop the server if this was the last task */
++	if (rq->scx.nr_running == 0)
++		dl_server_stop(&rq->ext_server);
++
+ 	return true;
+ }
+ 
+@@ -4050,6 +4067,15 @@ static void switching_to_scx(struct rq *rq, struct task_struct *p)
+ static void switched_from_scx(struct rq *rq, struct task_struct *p)
  {
- 	struct task_struct *prev = rq->curr;
- 	struct task_struct *p;
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 7a14da5396fb..6bf097e39b4a 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8852,7 +8852,7 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
- 	resched_curr_lazy(rq);
+ 	scx_disable_task(p);
++
++	/*
++	 * After class switch, if the DL server is still active, restart it so
++	 * that DL timers will be queued, in case SCX switched to higher class.
++	 */
++	if (dl_server_active(&rq->ext_server)) {
++		dl_server_stop(&rq->ext_server);
++		dl_server_start(&rq->ext_server);
++	}
  }
  
--static struct task_struct *pick_task_fair(struct rq *rq)
-+static struct task_struct *pick_task_fair(struct rq *rq, struct rq_flags *rf)
- {
- 	struct sched_entity *se;
- 	struct cfs_rq *cfs_rq;
-@@ -8890,7 +8890,7 @@ pick_next_task_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf
- 	int new_tasks;
+ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p,int wake_flags) {}
+@@ -7310,8 +7336,8 @@ __bpf_kfunc u32 scx_bpf_cpuperf_cur(s32 cpu)
+  * relative scale between 0 and %SCX_CPUPERF_ONE. This determines how the
+  * schedutil cpufreq governor chooses the target frequency.
+  *
+- * The actual performance level chosen, CPU grouping, and the overhead and
+- * latency of the operations are dependent on the hardware and cpufreq driver in
++ * The actual performance level chosen, CPU grouping, and the overhead and latency
++ * of the operations are dependent on the hardware and cpufreq driver in
+  * use. Consult hardware and cpufreq documentation for more information. The
+  * current performance level can be monitored using scx_bpf_cpuperf_cur().
+  */
+@@ -7603,6 +7629,38 @@ BTF_ID_FLAGS(func, scx_bpf_now)
+ BTF_ID_FLAGS(func, scx_bpf_events, KF_TRUSTED_ARGS)
+ BTF_KFUNCS_END(scx_kfunc_ids_any)
  
- again:
--	p = pick_task_fair(rq);
-+	p = pick_task_fair(rq, rf);
- 	if (!p)
- 		goto idle;
- 	se = &p->se;
-@@ -8969,7 +8969,8 @@ pick_next_task_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf
- 	return NULL;
- }
- 
--static struct task_struct *__pick_next_task_fair(struct rq *rq, struct task_struct *prev)
-+static struct task_struct *__pick_next_task_fair(struct rq *rq, struct task_struct *prev,
-+												 struct rq_flags *rf)
- {
- 	return pick_next_task_fair(rq, prev, NULL);
- }
-@@ -8979,9 +8980,11 @@ static bool fair_server_has_tasks(struct sched_dl_entity *dl_se)
- 	return !!dl_se->rq->cfs.nr_queued;
- }
- 
--static struct task_struct *fair_server_pick_task(struct sched_dl_entity *dl_se)
-+static struct task_struct *fair_server_pick_task(struct sched_dl_entity *dl_se, void *flags)
- {
--	return pick_task_fair(dl_se->rq);
++/*
++ * Check if ext scheduler has tasks ready to run.
++ */
++static bool ext_server_has_tasks(struct sched_dl_entity *dl_se)
++{
++	return !!dl_se->rq->scx.nr_running;
++}
++
++/*
++ * Select the next task to run from the ext scheduling class.
++ */
++static struct task_struct *ext_server_pick_task(struct sched_dl_entity *dl_se,
++						void *flags)
++{
 +	struct rq_flags *rf = flags;
 +
-+	return pick_task_fair(dl_se->rq, rf);
- }
- 
- void fair_server_init(struct rq *rq)
-diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-index 2c85c86b455f..01e9612deefe 100644
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -463,7 +463,7 @@ static void set_next_task_idle(struct rq *rq, struct task_struct *next, bool fir
- 	next->se.exec_start = rq_clock_task(rq);
- }
- 
--struct task_struct *pick_task_idle(struct rq *rq)
-+struct task_struct *pick_task_idle(struct rq *rq, struct rq_flags *rf)
- {
- 	scx_update_idle(rq, true, false);
- 	return rq->idle;
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index e40422c37033..6e62fe531067 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1744,7 +1744,7 @@ static struct task_struct *_pick_next_task_rt(struct rq *rq)
- 	return rt_task_of(rt_se);
- }
- 
--static struct task_struct *pick_task_rt(struct rq *rq)
-+static struct task_struct *pick_task_rt(struct rq *rq, struct rq_flags *rf)
- {
- 	struct task_struct *p;
- 
++	balance_scx(dl_se->rq, dl_se->rq->curr, rf);
++	return pick_task_scx(dl_se->rq, rf);
++}
++
++/*
++ * Initialize the ext server deadline entity.
++ */
++void ext_server_init(struct rq *rq)
++{
++	struct sched_dl_entity *dl_se = &rq->ext_server;
++
++	init_dl_entity(dl_se);
++
++	dl_server_init(dl_se, rq, ext_server_has_tasks, ext_server_pick_task);
++}
++
+ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
+ 	.owner			= THIS_MODULE,
+ 	.set			= &scx_kfunc_ids_any,
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 475bb5998295..35d7b328a9c7 100644
+index 1ac2fb398982..576b69cee6b1 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
-@@ -2401,7 +2401,7 @@ struct sched_class {
- 	void (*wakeup_preempt)(struct rq *rq, struct task_struct *p, int flags);
+@@ -389,6 +389,7 @@ extern void dl_server_update_idle_time(struct rq *rq,
+ 		    struct task_struct *p,
+ 		    struct sched_dl_entity *rq_dl_server);
+ extern void fair_server_init(struct rq *rq);
++extern void ext_server_init(struct rq *rq);
+ extern void __dl_server_attach_root(struct sched_dl_entity *dl_se, struct rq *rq);
+ extern int dl_server_apply_params(struct sched_dl_entity *dl_se,
+ 		    u64 runtime, u64 period, bool init);
+@@ -1137,6 +1138,7 @@ struct rq {
+ #endif
  
- 	int (*balance)(struct rq *rq, struct task_struct *prev, struct rq_flags *rf);
--	struct task_struct *(*pick_task)(struct rq *rq);
-+	struct task_struct *(*pick_task)(struct rq *rq, struct rq_flags *rf);
- 	/*
- 	 * Optional! When implemented pick_next_task() should be equivalent to:
- 	 *
-@@ -2411,7 +2411,8 @@ struct sched_class {
- 	 *       set_next_task_first(next);
- 	 *   }
- 	 */
--	struct task_struct *(*pick_next_task)(struct rq *rq, struct task_struct *prev);
-+	struct task_struct *(*pick_next_task)(struct rq *rq, struct task_struct *prev,
-+										  struct rq_flags *rf);
+ 	struct sched_dl_entity	fair_server;
++	struct sched_dl_entity	ext_server;
  
- 	void (*put_prev_task)(struct rq *rq, struct task_struct *p, struct task_struct *next);
- 	void (*set_next_task)(struct rq *rq, struct task_struct *p, bool first);
-@@ -2574,7 +2575,7 @@ static inline bool sched_fair_runnable(struct rq *rq)
- }
- 
- extern struct task_struct *pick_next_task_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf);
--extern struct task_struct *pick_task_idle(struct rq *rq);
-+extern struct task_struct *pick_task_idle(struct rq *rq, struct rq_flags *rf);
- 
- #define SCA_CHECK		0x01
- #define SCA_MIGRATE_DISABLE	0x02
-diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
-index 058dd42e3d9b..1c70123cb6a4 100644
---- a/kernel/sched/stop_task.c
-+++ b/kernel/sched/stop_task.c
-@@ -33,7 +33,7 @@ static void set_next_task_stop(struct rq *rq, struct task_struct *stop, bool fir
- 	stop->se.exec_start = rq_clock_task(rq);
- }
- 
--static struct task_struct *pick_task_stop(struct rq *rq)
-+static struct task_struct *pick_task_stop(struct rq *rq, struct rq_flags *rf)
- {
- 	if (!sched_stop_runnable(rq))
- 		return NULL;
+ #ifdef CONFIG_FAIR_GROUP_SCHED
+ 	/* list of leaf cfs_rq on this CPU: */
 -- 
 2.34.1
 
