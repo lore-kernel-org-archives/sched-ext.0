@@ -1,60 +1,53 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9CF2E11CB
-	for <sched-ext@lists.linux.dev>; Mon,  7 Jul 2025 14:48:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B22320F;
+	Fri, 11 Jul 2025 00:53:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751899725; cv=none; b=f609cQrUH4q2K28qKGWep1fbWaznIaeKQAgXQnmzICLDjRxGGAN6LUYGRIRhzGA60qznJckANyb2MjtIJUS7QuS60HqM+O0GPoPsuwr+Myxls+MtDci6E+udl0uQmKIdomdaKbDVbMgNurbQdOrsBxoR+zwdXu17pqJyrzc1Y6k=
+	t=1752195215; cv=none; b=iGuNagbvjnU39McSvMv3O3ovtbh1281ltf7OSjFKou/12aUf9/zSFRDwbnwq05bAjJuJ28aC0ngBSODUohOuZYNS9XiY706PE55mj7FlETvnH2jNotVaRUDvW6caII+KIQv0bAWzjgjiQEdpSmxk2YbW6g72y53JapUH5ufOtW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751899725; c=relaxed/simple;
-	bh=XOo/KqeoUFr4ZoV+7SA2c0dUkyLoUkEZgvTIoppRoo4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFdb0fTmjVuL9sRfC6lR4s5LrulaAFJO/7mD4lWZPJVVeVtTnOXpaFeeS3lvyoOC1gwRAOwuHEP/KNDYSj7+YVlyEdT9pEF1K9q+x8UHlRsB4lMHzfLRc4KU38kKe2o5aeNko8XlWV+TlkVqsAGJWu3YJaF8WjVXcBE0h18vLm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MQHI765d; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1752195215; c=relaxed/simple;
+	bh=Slj8ovwrtJoxHMJtyZwD5KGnAhVL7zfKcsAIKbM231o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Jb6EDndASvyz/NYpHlkPZ4cyzvzjuDwPALo1mxNIL9bcLJbgVCEh3zjUAN3DNJdhDGIt3waAfrlNNzF8hSyp0qvsIC6t74ahujhgrnaDWrdMIsmqsD50pHKaHELSU3q2GxrsZ44Bclf62IQX10E613ti2D05+cjtmfY8P6QGSFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=gNosl8vv; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MQHI765d"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1751899722;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=p7oIatGosEglmz7e/TgETTEwaxMtMboDfPP4HMOfw2I=;
-	b=MQHI765d0lvXnZ3oYxYbaRinpN4d6xFlXrFhb+oFsStb61tklYm+N6QgADjKH7GTISFfb/
-	mdXGw1jPcDyC9cajxXPCRCe49Y5AgVmDNdC3k1NYPmYVMRcalF9nIAjYQSOAngPHQRfXMO
-	WtLRop2ay6q0m4nSW4EZToErss32Baw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-9VK7nEcINiidUlGI8xicbg-1; Mon,
- 07 Jul 2025 10:48:39 -0400
-X-MC-Unique: 9VK7nEcINiidUlGI8xicbg-1
-X-Mimecast-MFC-AGG-ID: 9VK7nEcINiidUlGI8xicbg_1751899718
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id BEADB1955EC1;
-	Mon,  7 Jul 2025 14:48:37 +0000 (UTC)
-Received: from gmonaco-thinkpadt14gen3.rmtit.com (unknown [10.45.226.23])
-	by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 3FF79180045B;
-	Mon,  7 Jul 2025 14:48:33 +0000 (UTC)
-From: Gabriele Monaco <gmonaco@redhat.com>
-To: linux-kernel@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	sched-ext@lists.linux.dev
-Cc: Gabriele Monaco <gmonaco@redhat.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ingo Molnar <mingo@redhat.org>
-Subject: [PATCH v14 1/3] sched: Add prev_sum_exec_runtime support for RT, DL and SCX classes
-Date: Mon,  7 Jul 2025 16:48:22 +0200
-Message-ID: <20250707144824.117014-2-gmonaco@redhat.com>
-In-Reply-To: <20250707144824.117014-1-gmonaco@redhat.com>
-References: <20250707144824.117014-1-gmonaco@redhat.com>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="gNosl8vv"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=LRnv8m5dG+/sfazhZsc0JD2Xbfv61sfuQUBJUodIOKE=; b=gNosl8vv0l2/tfjpG2uwbMM/j0
+	qHKyquDGPnIrohfl3teA0Ntk1cuW66Sxq2BhG6EEZH38v0IbwOTNaPwhkloxlnSezLIEETKm+peHw
+	GqLI0l+NMMM8J/W9NlmBFXf+YlHZW9B8Y2C+wg40XOpsPkKZxKNcWE99PRjCgcs3QlKFvM7o4cWfo
+	87QMJ7UQkJ0IW3Hh2kpi9I23995pZV984RJdZDiVS0p5tEUSe1tKboWWj30bi5NP+0GQRfW1Srvpj
+	OT7ezG2s8OyyERrVYFr2Hq7rMdZ4hEbqj3QOkid0O/+iO1C6HAhU3n1DcK4inEugkALgTf5aX0RYz
+	TudC095g==;
+Received: from [59.10.240.225] (helo=localhost)
+	by fanzine2.igalia.com with utf8esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1ua20t-00FAmH-MU; Fri, 11 Jul 2025 02:53:20 +0200
+From: Changwoo Min <changwoo@igalia.com>
+To: lukasz.luba@arm.com,
+	rafael@kernel.org,
+	len.brown@intel.com,
+	pavel@kernel.org
+Cc: christian.loehle@arm.com,
+	tj@kernel.org,
+	kernel-dev@igalia.com,
+	linux-pm@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Changwoo Min <changwoo@igalia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH v3 0/10] PM: EM: Add netlink support for the energy model.
+Date: Fri, 11 Jul 2025 09:53:00 +0900
+Message-ID: <20250711005310.20740-1-changwoo@igalia.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -62,61 +55,103 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 
-The fair scheduling class relies on prev_sum_exec_runtime to compute the
-duration of the task's runtime since it was last scheduled. This value
-is currently not required by other scheduling classes but can be useful
-to understand long running tasks and take certain actions (e.g. during a
-scheduler tick).
+There is a need to access the energy model from the userspace. One such
+example is the sched_ext schedulers [1]. The userspace part of the
+sched_ext schedules could feed the (post-processed) energy-model
+information to the BPF part of the scheduler.
 
-Add support for prev_sum_exec_runtime to the RT, deadline and sched_ext
-classes by simply assigning the sum_exec_runtime at each set_next_task.
+Currently, debugfs is the only way to read the energy model from userspace;
+however, it lacks proper notification mechanisms when a performance domain
+and its associated energy model change.
 
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
----
- kernel/sched/deadline.c | 1 +
- kernel/sched/ext.c      | 1 +
- kernel/sched/rt.c       | 1 +
- 3 files changed, 3 insertions(+)
+This patch set introduces a generic netlink for the energy model, as
+discussed in [2]. It allows a userspace program to read the performance
+domain and its energy model. It notifies the userspace program when a
+performance domain is created or deleted or its energy model is updated
+through a multicast interface.
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 89019a1408264..65ecd86bae37d 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2389,6 +2389,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_dl_rq(&p->dl))
- 		update_stats_wait_end_dl(dl_rq, dl_se);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* You can't push away the running task */
- 	dequeue_pushable_dl_task(rq, p);
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b498d867ba210..a4ac4386b9795 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3255,6 +3255,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
- 	}
- 
- 	p->se.exec_start = rq_clock_task(rq);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* see dequeue_task_scx() on why we skip when !QUEUED */
- 	if (SCX_HAS_OP(sch, running) && (p->scx.flags & SCX_TASK_QUEUED))
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index e40422c370335..2c70ff2042ee9 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1693,6 +1693,7 @@ static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool f
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_rt_rq(&p->rt))
- 		update_stats_wait_end_rt(rt_rq, rt_se);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* The running task is never eligible for pushing */
- 	dequeue_pushable_task(rq, p);
+Specifically, it supports two commands:
+  - EM_CMD_GET_PDS: Get the list of information for all performance
+    domains.
+  - EM_CMD_GET_PD_TABLE: Get the energy model table of a performance
+    domain.
+
+Also, it supports three notification events:
+  - EM_CMD_PD_CREATED: When a performance domain is created.
+  - EM_CMD_PD_DELETED: When a performance domain is deleted.
+  - EM_CMD_PD_UPDATED: When the energy model table of a performance domain
+    is updated.
+
+This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for example,
+with the following commands:
+
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --do get-pds
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --do get-pd-table --json '{"pd-id": 0}'
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --subscribe event  --sleep 10
+
+[1] https://lwn.net/Articles/922405/
+[2] https://lore.kernel.org/lkml/a82423bc-8c38-4d57-93da-c4f20011cc92@arm.com/
+[3] https://lore.kernel.org/lkml/202506140306.tuIoz8rN-lkp@intel.com/#t
+
+ChangeLog v2 -> v3:
+  - Properly initialize a return variable in
+    em_notify_pd_created/updated() at an error path (09/10), reported by
+    the kernel test robot [3].
+  - Remove redundant initialization of a return variable in
+    em_notify_pd_deleted() at an error path (08/10).
+
+ChangeLog v1 -> v2:
+  - Use YNL to generate boilerplate code. Overhaul the naming conventions
+    (command, event, notification, attribute) to follow the typical
+    conventions of other YNL-based netlink implementations.
+  - Calculate the exact message size instead of using NLMSG_GOODSIZE
+    when allocating a message (genlmsg_new). This avoids the reallocation
+    of a message.
+  - Remove an unnecessary function, em_netlink_exit(), and initialize the
+    netlink (em_netlink_init) at em_netlink.c without touching energy_model.c.
+
+CC: Lukasz Luba <lukasz.luba@arm.com>
+CC: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+CC: Tejun Heo <tj@kernel.org>
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
+
+Changwoo Min (10):
+  PM: EM: Add em.yaml and autogen files.
+  PM: EM: Add a skeleton code for netlink notification.
+  PM: EM: Assign a unique ID when creating a performance domain.
+  PM: EM: Expose the ID of a performance domain via debugfs.
+  PM: EM: Add an iterator and accessor for the performance domain.
+  PM: EM: Implement em_nl_get_pds_doit().
+  PM: EM: Implement em_nl_get_pd_table_doit().
+  PM: EM: Implement em_notify_pd_deleted().
+  PM: EM: Implement em_notify_pd_created/updated().
+  PM: EM: Notify an event when the performance domain changes.
+
+ Documentation/netlink/specs/em.yaml | 113 ++++++++++
+ MAINTAINERS                         |   3 +
+ include/linux/energy_model.h        |  19 ++
+ include/uapi/linux/energy_model.h   |  62 ++++++
+ kernel/power/Makefile               |   5 +-
+ kernel/power/em_netlink.c           | 309 ++++++++++++++++++++++++++++
+ kernel/power/em_netlink.h           |  34 +++
+ kernel/power/em_netlink_autogen.c   |  48 +++++
+ kernel/power/em_netlink_autogen.h   |  23 +++
+ kernel/power/energy_model.c         |  83 +++++++-
+ 10 files changed, 697 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/netlink/specs/em.yaml
+ create mode 100644 include/uapi/linux/energy_model.h
+ create mode 100644 kernel/power/em_netlink.c
+ create mode 100644 kernel/power/em_netlink.h
+ create mode 100644 kernel/power/em_netlink_autogen.c
+ create mode 100644 kernel/power/em_netlink_autogen.h
+
 -- 
 2.50.0
 
