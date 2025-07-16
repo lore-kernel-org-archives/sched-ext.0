@@ -1,122 +1,104 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631EC2F533F
-	for <sched-ext@lists.linux.dev>; Wed, 16 Jul 2025 16:06:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFD6266580
+	for <sched-ext@lists.linux.dev>; Wed, 16 Jul 2025 16:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752682010; cv=none; b=dPiigQJSJqHC5MRVuc+qa9SO4yyiWwcxHz0CKhCBKElL+NAh/0hGWhCMhumU4KOZI2czumFfU/R/ODMkSvt/rMzlKiHd5wa5kw5GDaNQpPS14fTAXa+vwoHF1hvAzSMVYIHFNJ4asGlAbVBhip8PG4pOx0xyongXTOuEVAF0dMY=
+	t=1752682123; cv=none; b=S54c57vZjZ3VIZbPT2sDk43IF/wY7zkgUSOglFpaFHxdTGpEuQBE3qDVq66JQDX37g1VkZsUqBpFeDSLnZpO0bZHhHRUZiJacjKNsdBSmCJN5Fk9xAT3OSjMAElxniR0+/B5/P7CrXKI+UTEHXAZ6qDNrc+LznC8J9Te6ahvl9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752682010; c=relaxed/simple;
-	bh=edSYU/bBIK5jUtlJoKdM/Esaxbt7uRjtsFTqe0jDFKQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUMopR0kvoL7CqyG3WDfoBfGAl98g81Wr/nkXIUjR4qDT+MWHuBAVfKYqMs1NZKX6/OP68knnja9IDkV1VccdW2QV9UzwxfJTbayaAkqSYE6qhggmYcQWDKfKUNx9ChegwpVt69a1x91JyMZ38JdjTRR71iS9wTsMA4gJSjqH70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GxGI8pgL; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GxGI8pgL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752682007;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cUMR6AgLLIFcwMdK2r2Cw5KLluDgtRgYt1YiW6x37yA=;
-	b=GxGI8pgLu8y0vmP7djWOhpn0q3l4S19Wal/th9Mhz6l8oJAH5YwEGihGBUqamDox8ReznN
-	ku32KyVRbsuv4XtVrtTnlILI2VAsPE5f07a0B6ZY5LZV9zRGlY6OxAOePK7a6JrVmGpc8g
-	I/TNQ8GPEPriag9W7xCoBQUJB1YL1l0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-_l-FqFHJO2OE8CwW5JxQEQ-1; Wed,
- 16 Jul 2025 12:06:45 -0400
-X-MC-Unique: _l-FqFHJO2OE8CwW5JxQEQ-1
-X-Mimecast-MFC-AGG-ID: _l-FqFHJO2OE8CwW5JxQEQ_1752682004
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 0002F19560A5;
-	Wed, 16 Jul 2025 16:06:43 +0000 (UTC)
-Received: from gmonaco-thinkpadt14gen3.rmtit.com (unknown [10.44.33.144])
-	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id EE7DA19560AB;
-	Wed, 16 Jul 2025 16:06:40 +0000 (UTC)
-From: Gabriele Monaco <gmonaco@redhat.com>
-To: linux-kernel@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	sched-ext@lists.linux.dev
-Cc: Gabriele Monaco <gmonaco@redhat.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ingo Molnar <mingo@redhat.org>
-Subject: [PATCH v2 1/4] sched: Add prev_sum_exec_runtime support for RT, DL and SCX classes
-Date: Wed, 16 Jul 2025 18:06:05 +0200
-Message-ID: <20250716160603.138385-7-gmonaco@redhat.com>
-In-Reply-To: <20250716160603.138385-6-gmonaco@redhat.com>
-References: <20250716160603.138385-6-gmonaco@redhat.com>
+	s=arc-20240116; t=1752682123; c=relaxed/simple;
+	bh=RuJ0y6y+QAI9WVzMzX/KikwojyoXGGOl1EPIuSN/pqI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eabSS5BRBOjtWr5nRYBXKu6RuDbmSd2Uc9RXGAzQV59f0YmzTJmGSGr1hhu3gglxuKP17gqvMbHeKLzkSFDPv6vKEmSetFH1N9Nhe2vK61NRk5Jy9p9zNp2q7HUb4lBiBRAmYf1APSv9/7G8MGxBB8jrZAnjTo3Lt9QEh4WyhA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-60707b740a6so10412368a12.0
+        for <sched-ext@lists.linux.dev>; Wed, 16 Jul 2025 09:08:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752682120; x=1753286920;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HjhPeDzwKMbLRpiaCQVZDGt0RvE2h5eKhuFW3u9Cc4k=;
+        b=uCxws+KNUI33MlP1gsoqBODEHoxrdwjwTqP+T5T0lxwnKb704K93e8qxUMTKoW54+T
+         QpNK8PJIFMIcKV0oTY9CHU6n8viiLt0xdzQQPoXyOYhuTede5HO9kdik8sJUzZhS9F89
+         /BhnFYhNY2EETJpy2iS42DM9qNbhhS3QMeWvja6wpxslIAOnIWPzbCfWkooeggWJbgCo
+         9HbATeqPPSieh7gPS+6SoqklzFhymMfGTb5vf5IF6pn3ltTYYBkjDSwLm6UxsAX81iyR
+         A5YtxMiiNpdJ33t+Cmf55qKQaDBxMTUM85WdoAjzUGBKvTeOlCA1xu9cHOzj0jJbEsE0
+         7nYA==
+X-Forwarded-Encrypted: i=1; AJvYcCVOLgILTG/PCV+t2x/FoxeHzXXaEl4kBoPtL+OaSOKDhzrxHqTdkPBUmjmMqIj3lrlXYskzFChMIFA=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw8c4Oi+TkthQaHmxPfzG5mrfptYBUVgykP40FXLk2KFvSlwMmz
+	a3WXMtXcb59JMWlmzv3gD/WgEfU7QdbW82LzXqv1gcarJmkddONBpHbx
+X-Gm-Gg: ASbGncuwP+oAJMAB/UgoHNFgR7dDdJ9aVuhqPh7vaAFgEzNzREhVe4AJ5HhTZVC5DGt
+	ssI/7e+B9i4P6As/eXT/X+FADe1yfJghG5ojJ8RbRW6fDHn3BPc1V4ekUrwZ2Lgks44Pi+IADtz
+	9GIhsXXmYgw19z31a/HW0iJZ0edE259o/gtN5mEXa1kDeHLUrf/ftZu7THZXRPLvk1vMqnbrVRx
+	y5gpO/6Lvn2sCUKGoxIGw9kayuueX+HV/ipICWzoeMNbmss+i+C6Hke3Qnz+QdMJlN4N150wjf/
+	6N1+bUsNtNNA//hNLXm2lBxq5+yMr91au8RXGvpKXlP6S10JxMB1CEbBt7B2z5/t+0Mtw+B1ikP
+	6gML/LSMayHiK
+X-Google-Smtp-Source: AGHT+IFnkeUOGi9pD7dry62krv8SIZuFe1pRe8oR5Vur8GS5Ex8kCG5MXl5cty9UiHysD9gduqJFnA==
+X-Received: by 2002:a05:6402:34c3:b0:60c:40bd:8843 with SMTP id 4fb4d7f45d1cf-612859338a2mr2877101a12.11.1752682119791;
+        Wed, 16 Jul 2025 09:08:39 -0700 (PDT)
+Received: from gmail.com ([2a03:2880:30ff:2::])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c976ecb6sm8848523a12.56.2025.07.16.09.08.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Jul 2025 09:08:39 -0700 (PDT)
+Date: Wed, 16 Jul 2025 09:08:36 -0700
+From: Breno Leitao <leitao@debian.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ingo Molnar <mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>, 
+	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Valentin Schneider <vschneid@redhat.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	kernel-team@meta.com, jake@hillion.co.uk
+Subject: Re: [PATCH] sched/ext: Suppress warning in __this_cpu_write() by
+ disabling preemption
+Message-ID: <imrfubmkw3a6qdznnpounrnen5ituzchwtbjmouocuk77upn67@ljrz32ppyqyr>
+References: <20250716-scx_warning-v1-1-0e814f78eb8c@debian.org>
+ <20250716125128.GX905792@noisy.programming.kicks-ass.net>
+ <aHel4LvT_Y5gpYfy@gpd4>
+ <20250716133631.GZ905792@noisy.programming.kicks-ass.net>
+ <aHe2j6pIyQiBf1S_@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aHe2j6pIyQiBf1S_@gpd4>
 
-The fair scheduling class relies on prev_sum_exec_runtime to compute the
-duration of the task's runtime since it was last scheduled. This value
-is currently not required by other scheduling classes but can be useful
-to understand long running tasks and take certain actions (e.g. during a
-scheduler tick).
+On Wed, Jul 16, 2025 at 04:26:23PM +0200, Andrea Righi wrote:
+> On Wed, Jul 16, 2025 at 03:36:31PM +0200, Peter Zijlstra wrote:
+> > On Wed, Jul 16, 2025 at 03:15:12PM +0200, Andrea Righi wrote:
+> > 
+> > > The idea is to track the scx callbacks that are invoked with a rq lock held
+> > > and, in those cases, store the locked rq. However, some callbacks may also
+> > > be invoked from an unlocked context, where no rq is locked and in this case
+> > > rq should be NULL.
+> > > 
+> > > In the latter case, it's acceptable for preemption to remain enabled, but
+> > > we still want to explicitly set locked_rq = NULL. If during the execution
+> > > of the callback we jump on another CPU, it'd still be in an unlocked state,
+> > > so it's locked_rq is still NULL.
+> > 
+> > Right; but doing superfluous NULL stores seems pointless. So better to
+> > avoid the store entirely, rather than making it more expensive and no
+> > less pointless, right?
+> 
+> Right, we can definitely avoid rewriting NULL.
+> The following should do the trick.
+> 
+> Breno, can you give it a try?
 
-Add support for prev_sum_exec_runtime to the RT, deadline and sched_ext
-classes by simply assigning the sum_exec_runtime at each set_next_task.
+Sure thing. I've tested it and I don't see the warning on my side.
 
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
----
- kernel/sched/deadline.c | 1 +
- kernel/sched/ext.c      | 1 +
- kernel/sched/rt.c       | 1 +
- 3 files changed, 3 insertions(+)
+Would you like to me post the patch, probably removing the WARN_ONCE()
+as raised by peterz?
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 89019a1408264..65ecd86bae37d 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2389,6 +2389,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_dl_rq(&p->dl))
- 		update_stats_wait_end_dl(dl_rq, dl_se);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* You can't push away the running task */
- 	dequeue_pushable_dl_task(rq, p);
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b498d867ba210..a4ac4386b9795 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3255,6 +3255,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
- 	}
- 
- 	p->se.exec_start = rq_clock_task(rq);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* see dequeue_task_scx() on why we skip when !QUEUED */
- 	if (SCX_HAS_OP(sch, running) && (p->scx.flags & SCX_TASK_QUEUED))
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index e40422c370335..2c70ff2042ee9 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1693,6 +1693,7 @@ static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool f
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_rt_rq(&p->rt))
- 		update_stats_wait_end_rt(rt_rq, rt_se);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* The running task is never eligible for pushing */
- 	dequeue_pushable_task(rq, p);
--- 
-2.50.1
-
+Thanks
+--breno
