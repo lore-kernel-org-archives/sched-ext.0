@@ -1,57 +1,57 @@
 Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D45335972;
-	Wed, 16 Jul 2025 13:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736E41A76BB;
+	Wed, 16 Jul 2025 13:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752672796; cv=none; b=JIrpyzY4VMCBCfWraLLcFow5YRcK/B64RDPWUyjyk76q9iCUMZFBuZZMZpB6QcQqyb9t5MtsEYwROMmrPznF0tuMqZdJotVawYLXAO2RQuliqRmsTqMHpJbxG21gcgqvIxTdLsdLsxQdxYagti+D3W9j0t9W9IuXuUiG4DdVXco=
+	t=1752672999; cv=none; b=R4gwWqZFFOI5XGkTmKt+3x6UAemhGyttXMmfpd+/WF0ubz5NdMwNcIsGPhdJ5rvjgIcMXj2OXTMEuxs31EtUbztVgvcLFMo3UifdtatYHgJHR972R35dzm278s3v3LhEOoPGZXANQhty0gqlHKzom3C388zln7Wq7Hp98irjlbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752672796; c=relaxed/simple;
-	bh=x6i70Mv2Cezij3IaXwLb1y0bICFN4EcBfdv0Utb/q4E=;
+	s=arc-20240116; t=1752672999; c=relaxed/simple;
+	bh=AKxGT5AMNeusYivSHXb8iYN0qH5N9KGc2AIgJkaPLKI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iLG3Bq5JOPt7PgKa+8qelT4hCr4wCeoGXcTr+CLRafZyt/R0Anwz5Ta81O6u/eSz7VDl/h2hulSomaGM6WgzexjJADoNwmF0G+pAKGqUdgWkrVYeu87ZDSfTuYmmEadtNFfRxecHzlcdkYYwgC5CLzCqR9OwaxydeKUO8QvDvkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Qy+qhD+g; arc=none smtp.client-ip=90.155.50.34
+	 Content-Type:Content-Disposition:In-Reply-To; b=L9KFAvuRlcA4isg80MCQqDjkxJqOm1a6bbDt4LACfUFbtdjnqvMSpodj+qq3p4gtDYXcaJYWhKLzred93dxEGzAfhOMuFnNs2SMHTu331tAwL7/ZLN2jQ+LTQqQdyETc9QfMLUTYAKJLssqypr5r6oed9C9uhJT2I+AdY8YYooo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=WOVBcWbz; arc=none smtp.client-ip=90.155.50.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Qy+qhD+g"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="WOVBcWbz"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=7JIhGkXj7jed7Tn8m6IrEdyMDpGTVSbcYUAZwKdgoBE=; b=Qy+qhD+gb3pgMFanQ7Me6t26QK
-	MYQdNecjBni5/BjUWKXv43GI+GjZlDs0xjoOe8xlnsJ3yQh+r59X2WEEyi1EXktloR40O6BKut7O4
-	1/vqWv+M4/Dvus8BMqQInvfCCdiYKaXa7udvtijW1d+GTfIMsczaesLkYmJvO/95ee0RKcMLw7uzE
-	4xzXfeJ6guQRJF/7Wn1NxRnJCKaREp/jahZaHpPyNSsMVpOncz04CHymCxmhXvsG2Hm3FmVhjDgTR
-	sV2r5flmG6F4i4lIRggvBVximL+ir73t2o78VMWFjnKR+V3bJJd/+FYF5FvtQu0WAOyuIOa3R/O9v
-	gciVyqtA==;
+	bh=yTMgUcFyj0zsIpb13A6gWhzlFrFD+gidzrUP42fMUAw=; b=WOVBcWbzjWlfYZpJajfN2CwZlk
+	DuUPv9MrkC/a81JDpQB35SkMaIfsWsH8Ziks/zAo8tCvb7emLsN5uzVwmxbHXLgBW4dF0NIVFwdOK
+	5QdS0MFRJvZwLIpmGGYUpSpNAXtc0/oUJM0wOri58bGD1XrqGI+PuTCYOMgTwHm8NHG5PW3OwLWlE
+	vnnx38kzZUh+NL6L4Drp0IGZ1ZCF9gxsTzrncx5oZiTAN6agtFI/khE2wqVCT6hWP2ZXWuOFOTXfG
+	RYa1b06gqobcGSnF30KseOKSwyCy+f4/l/qf1qAAhB69P2Yvn94w9ODSfyvkan4etYpgLx4bmIB6u
+	U+R5bFOQ==;
 Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
 	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uc2Fv-0000000GhqT-3Aqb;
-	Wed, 16 Jul 2025 13:33:07 +0000
+	id 1uc2JE-0000000GiCN-1U4a;
+	Wed, 16 Jul 2025 13:36:32 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 55F8C3007A0; Wed, 16 Jul 2025 15:33:07 +0200 (CEST)
-Date: Wed, 16 Jul 2025 15:33:07 +0200
+	id F2F67300186; Wed, 16 Jul 2025 15:36:31 +0200 (CEST)
+Date: Wed, 16 Jul 2025 15:36:31 +0200
 From: Peter Zijlstra <peterz@infradead.org>
 To: Andrea Righi <arighi@nvidia.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>, Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+Cc: Breno Leitao <leitao@debian.org>, Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
 	Juri Lelli <juri.lelli@redhat.com>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
 	Valentin Schneider <vschneid@redhat.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org, kernel-team@meta.com,
 	jake@hillion.co.uk
 Subject: Re: [PATCH] sched/ext: Suppress warning in __this_cpu_write() by
  disabling preemption
-Message-ID: <20250716133307.GY905792@noisy.programming.kicks-ass.net>
+Message-ID: <20250716133631.GZ905792@noisy.programming.kicks-ass.net>
 References: <20250716-scx_warning-v1-1-0e814f78eb8c@debian.org>
- <20250716085447.06feeb86@gandalf.local.home>
- <20250716130652.GB3429938@noisy.programming.kicks-ass.net>
- <aHenIcWaLOXL2Yix@gpd4>
+ <20250716125128.GX905792@noisy.programming.kicks-ass.net>
+ <aHel4LvT_Y5gpYfy@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -60,76 +60,20 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aHenIcWaLOXL2Yix@gpd4>
+In-Reply-To: <aHel4LvT_Y5gpYfy@gpd4>
 
-On Wed, Jul 16, 2025 at 03:20:33PM +0200, Andrea Righi wrote:
-> On Wed, Jul 16, 2025 at 03:06:52PM +0200, Peter Zijlstra wrote:
-> > On Wed, Jul 16, 2025 at 08:54:47AM -0400, Steven Rostedt wrote:
-> > > On Wed, 16 Jul 2025 05:46:15 -0700
-> > > Breno Leitao <leitao@debian.org> wrote:
-> > > 
-> > > > __this_cpu_write() emits a warning if used with preemption enabled.
-> > > > 
-> > > > Function update_locked_rq() might be called with preemption enabled,
-> > > > which causes the following warning:
-> > > > 
-> > > > 	BUG: using __this_cpu_write() in preemptible [00000000] code: scx_layered_6-9/68770
-> > > > 
-> > > > Disable preemption around the __this_cpu_write() call in
-> > > > update_locked_rq() to suppress the warning, without affecting behavior.
-> > > > 
-> > > > If preemption triggers a  jump to another CPU during the callback it's
-> > > > fine, since we would track the rq state on the other CPU with its own
-> > > > local variable.
-> > > > 
-> > > > Suggested-by: Andrea Righi <arighi@nvidia.com>
-> > > > Signed-off-by: Breno Leitao <leitao@debian.org>
-> > > > Fixes: 18853ba782bef ("sched_ext: Track currently locked rq")
-> > > > Acked-by: Andrea Righi <arighi@nvidia.com>
-> > > > ---
-> > > >  kernel/sched/ext.c | 7 +++++++
-> > > >  1 file changed, 7 insertions(+)
-> > > > 
-> > > > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> > > > index b498d867ba210..24fcbd7331f73 100644
-> > > > --- a/kernel/sched/ext.c
-> > > > +++ b/kernel/sched/ext.c
-> > > > @@ -1258,7 +1258,14 @@ static inline void update_locked_rq(struct rq *rq)
-> > > >  	 */
-> > > >  	if (rq)
-> > > >  		lockdep_assert_rq_held(rq);
-> > > 
-> > > <blink>
-> > > 
-> > > If an rq lock is expected to be held, there had better be no preemption
-> > > enabled. How is this OK?
-> > 
-> > The rq=NULL case; but from the usage I've seen that also happens with
-> > rq lock held.
-> > 
-> > Specifically I think the check ought to be:
-> > 
-> > 	if (rq)
-> > 		lockdep_assert_rq_held(rq)
-> > 	else
-> > 		lockdep_assert_rq_held(__this_cpu_read(locked_rq));
+On Wed, Jul 16, 2025 at 03:15:12PM +0200, Andrea Righi wrote:
+
+> The idea is to track the scx callbacks that are invoked with a rq lock held
+> and, in those cases, store the locked rq. However, some callbacks may also
+> be invoked from an unlocked context, where no rq is locked and in this case
+> rq should be NULL.
 > 
-> Hm... but if the same CPU invokes two "unlocked" callbacks in a row,
-> locked_rq would be NULL during the second call and we would check rq_held
-> against NULL.
+> In the latter case, it's acceptable for preemption to remain enabled, but
+> we still want to explicitly set locked_rq = NULL. If during the execution
+> of the callback we jump on another CPU, it'd still be in an unlocked state,
+> so it's locked_rq is still NULL.
 
-Current usage in SCX_CALL_OP*() seems to not generate this pattern. It
-is always rq,NULL in order.
-
-Ooh, there are a few SCX_CALL_OP*() instances where rq:=NULL, which
-messes this up.
-
-Changing them to:
-
-  if (rq)
-    update_locked_rq(rq);
-  ...
-  if (rq)
-    update_locked_rq(NULL);
-
-might help.
+Right; but doing superfluous NULL stores seems pointless. So better to
+avoid the store entirely, rather than making it more expensive and no
+less pointless, right?
