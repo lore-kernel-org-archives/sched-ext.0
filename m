@@ -1,66 +1,60 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7E62F4A16;
-	Wed, 16 Jul 2025 12:51:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7A92F5308
+	for <sched-ext@lists.linux.dev>; Wed, 16 Jul 2025 12:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752670301; cv=none; b=F6ImJt9Q8u7KT4MJBqQWgunj826TZ2wyEaQKZIZ/CURknm5HLQmH4EMhqZ0F7T+BNwdT8ghHgOGVYBR9LiAHG5DK6jwfeWQqgiYkbIPIBS+UnauLW/QAS7RsofL8L7G3SMJDVQS5dJXP6NifJKcuPdRhPspZzclT/t70Jt5O21Y=
+	t=1752670482; cv=none; b=Rmp1otWlKXxGepFWiq68udtdL4/FKn8717WPj5gc5GdGQ0VVQwH87kXZHrsOASnGZ27M/+5k1456EVnM/E92WXb4fKqSD9a8mUJHkh04W1KuBoCPxBl3cfg7uffHsuf7sqG89yyGi3EW4OsnEfcmkaEtLsuLM07JubB+UOmyy4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752670301; c=relaxed/simple;
-	bh=mMvWaLNOwtl8MXi1ChoYu02nFr3kiqf+L6ufzBWr4MU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gauZx0QHyptzpAtipO1qsr4fBDiiD+/2gYH7sHWsjlvRzR+gdoahrnlSlSVgq6X+pebva3hPESOnE4l0HKF9xoLJGCLD5yETorGbFH09rFvgJ1AwfANdusHJ29kUXToAZwtBn4Z+ez93IKNpBIZiujo5LCl1sxkwkbB1p6z3TTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=iV94vVxm; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="iV94vVxm"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=ofeIGZ8x5KoMgSaejtDVRToiFCJTnfX/7IoKzW3fTa8=; b=iV94vVxmRr6Qdcjtg0dyNjtu5R
-	sdoPNd7SBTvXfrqPAYUbispvthgeggoNGrfH/MnzuqHW4vqh01nLwEUFdte0WPVLaO0il3VJAMcNJ
-	JRtrtUkXGUGMf5ALms4acNlEb4qyOnl7NZO8EFRFzJxalvIpZTs2XcflUB7RyhbJTU62tG0dCWCZu
-	hPaFli5uGJZvFDSDvFyi4EHoBMaRScN3RulBNJLywGvqfBCsI7N/IgEC8TCi2Lrg4lF2VSg6zAwnp
-	IeewslqiN9ZeZBlteFaN5+PP5A9jKM3oSIF9AjOXAi4H6+BWlR/hx6ElAc6zuMio0dWZ574495v5j
-	Jrz07ZiA==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uc1bd-0000000A6IQ-1XUt;
-	Wed, 16 Jul 2025 12:51:29 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id E3E94300186; Wed, 16 Jul 2025 14:51:28 +0200 (CEST)
-Date: Wed, 16 Jul 2025 14:51:28 +0200
-From: Peter Zijlstra <peterz@infradead.org>
+	s=arc-20240116; t=1752670482; c=relaxed/simple;
+	bh=nBFtaQVvD8Z1f+t4c2aOVAFPBmeOIuqesSj5OuCdDzc=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EyPPSdXFMEm+HwY2RJUiO6gBLJzrhEmdzA2bys/kmqv9Lp4y+vfu9MuLHkgkTT/BeIiXU28z99TkBReM3Kiz8xT+tndjVzfsoEiCF34UsfEq9waKxyTv45RQPSW0RWwx/FD8hhVC3LyVF/3V1Wg+G8s70DsbtvEZhzoa/tjg3cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf07.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay06.hostedemail.com (Postfix) with ESMTP id A587D10F862;
+	Wed, 16 Jul 2025 12:54:32 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf07.hostedemail.com (Postfix) with ESMTPA id EAD222002C;
+	Wed, 16 Jul 2025 12:54:28 +0000 (UTC)
+Date: Wed, 16 Jul 2025 08:54:47 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
 To: Breno Leitao <leitao@debian.org>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, kernel-team@meta.com,
-	jake@hillion.co.uk
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea
+ Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Ingo Molnar
+ <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Juri Lelli
+ <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>,
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, Ben Segall
+ <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, Valentin Schneider
+ <vschneid@redhat.com>, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, kernel-team@meta.com, jake@hillion.co.uk
 Subject: Re: [PATCH] sched/ext: Suppress warning in __this_cpu_write() by
  disabling preemption
-Message-ID: <20250716125128.GX905792@noisy.programming.kicks-ass.net>
+Message-ID: <20250716085447.06feeb86@gandalf.local.home>
+In-Reply-To: <20250716-scx_warning-v1-1-0e814f78eb8c@debian.org>
 References: <20250716-scx_warning-v1-1-0e814f78eb8c@debian.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250716-scx_warning-v1-1-0e814f78eb8c@debian.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: EAD222002C
+X-Stat-Signature: afn5nuhziiy6sbhpr349xn4d5u6kfx4j
+X-Rspamd-Server: rspamout06
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX188QncSd6KETI4SzQbvHnl99aSvwULRtAI=
+X-HE-Tag: 1752670468-570265
+X-HE-Meta: U2FsdGVkX1/rtGLPXr4VR193lnhwg21mVpNnc3ORz/3h9h0lCQcApRbIya1y2WRzVPRPPUCAaKtL4JYzHTSQ3YvKbBWwKRGzSIW4lNzQWlmuHcYsX5Tp/lhv7vJY651eVg2U5gu7nVTY2y+56AdIFWnsRxyClTwpO1yoz4p2kPYT0Rp1jevYJO5NB+2qe6Uc9hmm3IRjns5a2QxpX2xC/lAUGggc3oIDO6Bmvvua4dmECZLx9hPqO4YwR1uKv8tngcjJbp2kGLvYXccGe+s3o5ofF2cSJNKr0eIBfwcQqFqKZsnEYk8YiBNne9RJIDCHoHqF5ji9HHcZGdXaiACUq/YOh/R+54YSEoPmxOT/YwLTRYiFZJpXsg==
 
-On Wed, Jul 16, 2025 at 05:46:15AM -0700, Breno Leitao wrote:
+On Wed, 16 Jul 2025 05:46:15 -0700
+Breno Leitao <leitao@debian.org> wrote:
+
 > __this_cpu_write() emits a warning if used with preemption enabled.
 > 
 > Function update_locked_rq() might be called with preemption enabled,
@@ -91,6 +85,15 @@ On Wed, Jul 16, 2025 at 05:46:15AM -0700, Breno Leitao wrote:
 >  	 */
 >  	if (rq)
 >  		lockdep_assert_rq_held(rq);
+
+<blink>
+
+If an rq lock is expected to be held, there had better be no preemption
+enabled. How is this OK?
+
+-- Steve
+
+
 > +	/*
 > +	 * __this_cpu_write() emits a warning when used with preemption enabled.
 > +	 * While there's no functional issue if the callback runs on another
@@ -100,7 +103,14 @@ On Wed, Jul 16, 2025 at 05:46:15AM -0700, Breno Leitao wrote:
 >  	__this_cpu_write(locked_rq, rq);
 > +	preempt_enable();
 >  }
+>  
+>  /*
+> 
+> ---
+> base-commit: 155a3c003e555a7300d156a5252c004c392ec6b0
+> change-id: 20250716-scx_warning-5143cf17f806
+> 
+> Best regards,
+> --  
+> Breno Leitao <leitao@debian.org>
 
-This looks dodgy as heck. Why can't we do this update_locked_rq(NULL)
-call while still holding rq? Also, I don't seem to have this scx_layered
-thing.
