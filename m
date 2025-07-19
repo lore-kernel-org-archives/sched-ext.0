@@ -1,84 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6862642AA4;
-	Sat, 19 Jul 2025 17:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC12289E02;
+	Sat, 19 Jul 2025 18:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752944577; cv=none; b=lCwT267xFNiAxL7dZ1vBcSKVVjUNRdQPHEIMb7YY0HZ9cW36s2Pkgrf42nc+57HY0U1ZSM2opsccVnwVbQ6jbnWWeUdNd8R8uAG86J9V0waJ7iD1sLufafegXkIOKLQa7MMIn6NIKFGEEVZCoMft27UcgUsgCfDJ4pFu8EvDag0=
+	t=1752949744; cv=none; b=cnTxKG+JuFmkTBDqwxXwry+qI6pP9DN/QUpV579F+nj0wVtIYnv4NkIPMTRR9HMYFUu6dlEiE5O0IbUinXuAqHkO1GJpLvIB8Ec+P3y+XwZEJk1KaSsFVoBAnbfXTjJCSaMkb00xC2aL5XNpzfdmacyYL/6YTurCHUHqDGF9GD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752944577; c=relaxed/simple;
-	bh=NxrKEo6TW3QpFyL4ZwiWJ9cTkhlJqK8L2nDZg37x57s=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=uNVVfnKEuir5+if4Gl47iTcUGqvTFnNQXnXa2ElAbnS3nPuz01Q7pHZp7jBgSSDgLaIi6lOBhOYnKOy1Y2xr/aUAHolhGugOJrzWfdirag0d4IABuG3x1dNumkNqoUUbY/Qt0KOYsUWSJuWROwpK5tM/0udjYapx5R3lw77Fb+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lznGnp/o; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752949744; c=relaxed/simple;
+	bh=1OfZ8plrvX9b/UBqsDkNEkiiL5EF+SuorAfBigFZhlE=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=Sc3NxUhuZWmFzWW3BteYt7uexSQs8C/tgm0CQtfTE15WDCVcoeJeTwLneXkKtEyQ9hWcVjRCn4we5gdwG1rpGJ/t9fjKSTd7i2ZQhPvSznJNtjGeBr/hpB7vYtcc+3Tzd1vQaueX7lNGAUMUegzUzaK8kC3XvZ3bY9fLVglH/pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ulqTl5nF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lznGnp/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C101EC4CEE3;
-	Sat, 19 Jul 2025 17:02:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ulqTl5nF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34053C4CEF4;
+	Sat, 19 Jul 2025 18:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752944576;
-	bh=NxrKEo6TW3QpFyL4ZwiWJ9cTkhlJqK8L2nDZg37x57s=;
-	h=Date:From:To:Cc:Subject:From;
-	b=lznGnp/oNO50dbJTV7ja5VKnkzMdO6dlcG1ddglomgpBlcOVIlQ90VLkXhztg33Sy
-	 hvqZzzDehNrsBili0eMzIP0Yq36NrkJA1XNWoVrQ32wAcyGl+scToFy/deznpqWIiO
-	 3xPxOm0kBdNe/rZLjHaTkxnwhbachdl30zGJPvwyCaEklA26I2TVMFnzijdXD7Axhm
-	 vsb5FX56rH7tFzCgcPWgq4DD+Sz2oNAbvIvTTsNb6EcJkzyeIobvdUQJWGFZdYV3x0
-	 OErqqp5lwuaq3Sjg0ULQKgNBDLtOSB2gByhiPRA0SSn52LsiBS/V1fxZJTAwR0cqSc
-	 G7nReJa/brMfA==
-Date: Sat, 19 Jul 2025 07:02:54 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: [GIT PULL] sched_ext: Fixes for v6.16-rc6
-Message-ID: <aHvPvsnPScZVpVAM@slm.duckdns.org>
+	s=k20201202; t=1752949743;
+	bh=1OfZ8plrvX9b/UBqsDkNEkiiL5EF+SuorAfBigFZhlE=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=ulqTl5nFqbayNSwCxKDUS3jP9n4WSJUDMncyUvssaY8qAiYUAYVdqNELZAvg8AqpQ
+	 cMidxiVbQ/Wtif2S/yavo7dC3xLGJTWAV3EAWFUwm2XfzREHPTTB1SM+S53P/UJgEW
+	 sGtD025rqre/Nm1+l4nwtAfsggCCFvNy3zsycOyAfuP6gBQBVU50tLRLyzEYJltN0e
+	 PUPZE2vmJsspUOHxUh+hNKkuBkl5HaR0V8CE2mJTOBPP4YE24dokHuC432MVEkcla5
+	 goRL6YTKLCjvJXzhrtXHfWq0U8/taoveBI1tNpFC3gnvkhY0ryIPd84jaLSIZspAhp
+	 bNpQwkWZltGMQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADD11383BAC1;
+	Sat, 19 Jul 2025 18:29:23 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Fixes for v6.16-rc6
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <aHvPvsnPScZVpVAM@slm.duckdns.org>
+References: <aHvPvsnPScZVpVAM@slm.duckdns.org>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <aHvPvsnPScZVpVAM@slm.duckdns.org>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git/ tags/sched_ext-for-6.16-rc6-fixes
+X-PR-Tracked-Commit-Id: 06efc9fe0b8deeb83b47fd7c5451fe1a60c8a761
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: bf61759db409ce21a8f2a5bb442b7c35905a713d
+Message-Id: <175294976236.3026904.13662774877694299885.pr-tracker-bot@kernel.org>
+Date: Sat, 19 Jul 2025 18:29:22 +0000
+To: Tejun Heo <tj@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-The following changes since commit 33796b91871ad4010c8188372dd1faf97cf0f1c0:
+The pull request you sent on Sat, 19 Jul 2025 07:02:54 -1000:
 
-  sched_ext, sched/core: Don't call scx_group_set_weight() prematurely from sched_create_group() (2025-06-17 08:19:55 -1000)
+> git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git/ tags/sched_ext-for-6.16-rc6-fixes
 
-are available in the Git repository at:
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/bf61759db409ce21a8f2a5bb442b7c35905a713d
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git/ tags/sched_ext-for-6.16-rc6-fixes
-
-for you to fetch changes up to 06efc9fe0b8deeb83b47fd7c5451fe1a60c8a761:
-
-  sched_ext: idle: Handle migration-disabled tasks in idle selection (2025-07-17 08:19:38 -1000)
-
-----------------------------------------------------------------
-sched_ext: Fixes for v6.16-rc6
-
-- Fix handling of migration disabled tasks in default idle selection.
-
-- update_locked_rq() called __this_cpu_write() spuriously with NULL when @rq
-  was not locked. As the writes were spurious, it didn't break anything
-  directly. However, the function could be called in a preemptible leading
-  to a context warning in __this_cpu_write(). Skip the spurious NULL writes.
-
-- Selftest fix on UP.
-
-----------------------------------------------------------------
-Andrea Righi (2):
-      selftests/sched_ext: Fix exit selftest hang on UP
-      sched_ext: idle: Handle migration-disabled tasks in idle selection
-
-Breno Leitao (1):
-      sched/ext: Prevent update_locked_rq() calls with NULL rq
-
- kernel/sched/ext.c                       | 12 ++++++++----
- kernel/sched/ext_idle.c                  |  2 +-
- tools/testing/selftests/sched_ext/exit.c |  8 ++++++++
- 3 files changed, 17 insertions(+), 5 deletions(-)
+Thank you!
 
 -- 
-tejun
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
