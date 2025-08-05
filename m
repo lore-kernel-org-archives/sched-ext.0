@@ -1,23 +1,22 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94205241682
-	for <sched-ext@lists.linux.dev>; Tue,  5 Aug 2025 11:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3123240604
+	for <sched-ext@lists.linux.dev>; Tue,  5 Aug 2025 11:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754392256; cv=none; b=LjyR/lnHxiVFbLzEKdv9zIK9jO1GFDc8up5acq3n25LC3wV2L4YqXsPNrHuu411kYSmjKanqG7MPGEo06ROmr/yiaWx7p3SAgdf4mVkyVrRjtKCba0yqsvvHtWJCWcpo+Td6U1xCwXDTtndn6/+fxe4ltMes91/WaM/7FaLG9bg=
+	t=1754392256; cv=none; b=UnvFdfUS7HZYCcM3Rtsu5o0rH54of1p+/giFNa+ZuOaDsIsE+A1RZHYGvbS3NkInF0MVsZKDpRLzTrrU2JVUqee2VB4naGTPEHKiL4wYH/BBLPo2GhUth4HmiuPrBtmlOv9aqPzF6vN6HEySg9mKUoopjBKtdt6zXfkrOgVTOm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754392256; c=relaxed/simple;
-	bh=T2X+D7Iro9Z0/J5jP5X6XGioyv6EcvCHjXQcPHQxzXU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DQ5DCSQVd5g5V4nmDg/TNNdhEvVn0cjlfkQTkN3B0Bij8uuL8LCLvy+wXFS0/OamO3cy60OJ5vKmq34Z8AdiTsCK5PyCd4GQg2QQQNLKDHkx/6qdRyJ/YR1YBa0YEahFlxVoSWRSrX6bch1ZLIwu7w/z20mXLJNLrmagwUu/9o8=
+	bh=F7Zw+I0BAXSsG+EFV8OrdsAeZa7wvySKCdDHH4gQABQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rMIfXRUrt5LcVTIckS2dwNh6BDPXmL+mewZ+cnhrvbvdyjJNVx6Pwe5XBTHva3ZnLcJs53OOFsw195hdlUisZeGr6gJWS4YHjd7ypCAw/sRSGBmDd1r9AbU9nCKSZmmDZ4/AQR5Edc5Y4nLU9/dpxn45rTjZzFfRQAJ2pdhQASs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1897D2BCB;
-	Tue,  5 Aug 2025 04:10:46 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 22DBD113E;
+	Tue,  5 Aug 2025 04:10:39 -0700 (PDT)
 Received: from e127648.cambridge.arm.com (e127648.arm.com [10.1.27.68])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 084853F673;
-	Tue,  5 Aug 2025 04:10:51 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id BA20B3F673;
+	Tue,  5 Aug 2025 04:10:44 -0700 (PDT)
 From: Christian Loehle <christian.loehle@arm.com>
 To: tj@kernel.org,
 	arighi@nvidia.com,
@@ -29,12 +28,10 @@ Cc: linux-kernel@vger.kernel.org,
 	mingo@redhat.com,
 	peterz@infradead.org,
 	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH v3 2/3] sched_ext: Provide scx_bpf_task_acquire_remote_curr()
-Date: Tue,  5 Aug 2025 12:10:35 +0100
-Message-Id: <20250805111036.130121-3-christian.loehle@arm.com>
+Subject: [PATCH v3 0/3] sched_ext: Harden scx_bpf_cpu_rq()
+Date: Tue,  5 Aug 2025 12:10:33 +0100
+Message-Id: <20250805111036.130121-1-christian.loehle@arm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250805111036.130121-1-christian.loehle@arm.com>
-References: <20250805111036.130121-1-christian.loehle@arm.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -43,75 +40,59 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Provide scx_bpf_task_acquire_remote_curr() as a way for scx schedulers
-to check the curr task of a remote rq without assuming its lock is
-held.
+scx_bpf_cpu_rq() currently allows accessing struct rq fields without
+holding the associated rq.
+It is being used by scx_cosmos, scx_flash, scx_lavd, scx_layered, and
+scx_tickless. Fortunately it is only ever used to fetch rq->curr.
+So provide an alternative scx_bpf_task_acquire_remote_curr() that
+doesn't expose struct rq and harden scx_bpf_cpu_rq() by ensuring we
+hold the rq lock.
 
-Many scx schedulers make use of scx_bpf_cpu_rq() to check a remote curr
-(e.g. to see if it should be preempted). This is problematic because
-scx_bpf_cpu_rq() provides access to all fields of struct rq, most of
-which aren't safe to use without holding the associated rq lock.
+This also simplifies scx code from:
 
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
----
- kernel/sched/ext.c                       | 24 ++++++++++++++++++++++++
+rq = scx_bpf_cpu_rq(cpu);
+if (!rq)
+	return;
+p = rq->curr
+if (!p)
+	return;
+/* ... Do something with p */
+
+into:
+
+p = scx_bpf_tas_acquire_remote_curr(cpu);
+if (!p)
+	return;
+/* ... Do something with p */
+bpf_task_release(p);
+
+
+Patch 1 was previously submitted and can be applied independently of
+the other two.
+https://lore.kernel.org/lkml/43a9cbdc-5121-4dc8-8438-0f01c90a4687@arm.com/
+https://lore.kernel.org/lkml/0b8111c6-1b14-41dc-a674-14a6361992b3@arm.com/
+
+v2:
+https://lore.kernel.org/lkml/20250804112743.711816-1-christian.loehle@arm.com/
+- Open-code bpf_task_acquire() to avoid the forward declaration (Andrea)
+- Rename scx_bpf_task_acquire_remote_curr() to make it more explicit it
+behaves like bpf_task_acquire()
+- Dis
+v1:
+https://lore.kernel.org/lkml/20250801141741.355059-1-christian.loehle@arm.com/
+- scx_bpf_cpu_rq() now errors when a not locked rq is requested. (Andrea)
+- scx_bpf_remote_curr() calls bpf_task_acquire() which BPF user needs to
+release. (Andrea)
+
+Christian Loehle (3):
+  sched_ext: Mark scx_bpf_cpu_rq as NULL returnable
+  sched_ext: Provide scx_bpf_task_acquire_remote_curr()
+  sched_ext: Guarantee rq lock on scx_bpf_cpu_rq()
+
+ kernel/sched/ext.c                       | 38 ++++++++++++++++++++++--
  tools/sched_ext/include/scx/common.bpf.h |  1 +
- 2 files changed, 25 insertions(+)
+ 2 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 3ea3f0f18030..3e2fa0b1eb57 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -7426,6 +7426,29 @@ __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
- 	return cpu_rq(cpu);
- }
- 
-+/**
-+ * scx_bpf_task_acquire_remote_curr - Fetch the curr task of a rq without
-+ * acquiring its rq lock
-+ * @cpu: CPU of the rq
-+ *
-+ * Increments the refcount of the task_struct which needs to be released using
-+ * bpf_task_release().
-+ */
-+__bpf_kfunc struct task_struct *scx_bpf_task_acquire_remote_curr(s32 cpu)
-+{
-+	struct task_struct *p;
-+
-+	if (!kf_cpu_valid(cpu, NULL))
-+		return NULL;
-+
-+	rcu_read_lock();
-+	p = cpu_rq(cpu)->curr;
-+	if (p)
-+		p = refcount_inc_not_zero(&p->rcu_users) ? p : NULL;
-+	rcu_read_unlock();
-+	return p;
-+}
-+
- /**
-  * scx_bpf_task_cgroup - Return the sched cgroup of a task
-  * @p: task of interest
-@@ -7590,6 +7613,7 @@ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
- BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_RET_NULL)
-+BTF_ID_FLAGS(func, scx_bpf_task_acquire_remote_curr, KF_RET_NULL | KF_ACQUIRE)
- #ifdef CONFIG_CGROUP_SCHED
- BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_RCU | KF_ACQUIRE)
- #endif
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index d4e21558e982..bdd68f3100b7 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -91,6 +91,7 @@ s32 scx_bpf_pick_any_cpu(const cpumask_t *cpus_allowed, u64 flags) __ksym;
- bool scx_bpf_task_running(const struct task_struct *p) __ksym;
- s32 scx_bpf_task_cpu(const struct task_struct *p) __ksym;
- struct rq *scx_bpf_cpu_rq(s32 cpu) __ksym;
-+struct task_struct *scx_bpf_task_acquire_remote_curr(s32 cpu) __ksym;
- struct cgroup *scx_bpf_task_cgroup(struct task_struct *p) __ksym __weak;
- u64 scx_bpf_now(void) __ksym __weak;
- void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __weak;
 -- 
 2.34.1
 
