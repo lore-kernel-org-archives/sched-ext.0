@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589B114F98;
-	Sat,  9 Aug 2025 19:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E3A14F98;
+	Sat,  9 Aug 2025 19:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754766228; cv=none; b=eIFRtu0dddM5pDO48euKqjrb4QYPzqsMUXYS0mXcGMzAhINpea9muhC+nyG/CLwMQuAbibWzmWTv7u93NfjOf0jt5dxeZnTi7q/vBhlrN1J0vu2xQIQMe2z6/pTT5PdpgUHqwjmbnTRBWswm9XDt65+4s9GE/a34zmgsJRA8Og0=
+	t=1754766358; cv=none; b=BePcN/l8CGgIIOqJkVaH8L/hxo2Wgn5FEVMiNupqz+gMlwTCr20UuZ8qN30eT0H1TmVobGXSRMxgCDYPTFjLVPvSLna7ctuS76EiJpTm3Y69/UkOyB5AfnabOdbVsqrwnLXDKw/VdBYTxCWW8jukuKed304/xaxJUb0aG8SR7Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754766228; c=relaxed/simple;
-	bh=ySMQAEA+dv3QrFUKZl5okzZ326WUM2YnxAg2gIYbIq0=;
+	s=arc-20240116; t=1754766358; c=relaxed/simple;
+	bh=rExTbwvEF3xB6jxB/Z8+HO6SeihUoUr7IJLIc0lvJwU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kpGUkgAS5tH09YpH5sI59xBP1qsMlJHRaXHea3WwyQzyruqYD2Cg9QWCJNHF5Btpj8Yqld0sC0Mht08dcw/E/nsibprCo0RjqGhjjCFnrsX8nUkkv2z46mw7qTnKI/hODGiTMUWfU7d2Nr8R/anldGezK7AS2/Kn/qMKdB22tKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2a9V0Xc; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=f0L5rbZmwhv1YqJhnePAGWb7+0519KKCCsXClmNr9qN5bCVmA2ERHHWaUyrhCnHByxDQDC3oqvx2A3SGsvkIlKgIVj+RSizWfSzUY6aU+d+6DSVgJwwfIYXmub+0dlE2MfM6jEprJZGFEgiBcBqiw1wQGNnXyW0ha5u1zyCq/d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WbjmDOkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2a9V0Xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED02C4CEE7;
-	Sat,  9 Aug 2025 19:03:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WbjmDOkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1DCC4CEE7;
+	Sat,  9 Aug 2025 19:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754766227;
-	bh=ySMQAEA+dv3QrFUKZl5okzZ326WUM2YnxAg2gIYbIq0=;
+	s=k20201202; t=1754766358;
+	bh=rExTbwvEF3xB6jxB/Z8+HO6SeihUoUr7IJLIc0lvJwU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z2a9V0Xc752WeflhOrDJDNuuJCQzshxgB97aHUIWPRoYIdyu67TJDUzzeLvlKN6bi
-	 2zXAN4NQGnSWXCLzg9TYBhiOuvYDpxKlRsqaCpaQezh9E26D0GwZn9dcP7/izRCaZn
-	 MDug255hOVVlinNxi6W/CFw3Hm6Q+9X2KakWoK21jVQj9MJOsIOxWu18WhhCXXOl77
-	 vInZgO8j8EOeFYJLZwjjggNkzA5DaTA/aUMQqo6jbnWhfpCAQ36kV9efaxHp1+tJIz
-	 Je1jOZnIU/Is6NupshDU3fPNQ5J4IWdZHYq3oDgVgRxiSIsmJPw3qeBI6m/HDhPaVS
-	 vxwq0KxeGVvfg==
-Date: Sat, 9 Aug 2025 09:03:46 -1000
+	b=WbjmDOkkVGFCuG2g+0VLhqtvdOjRHyx6BEk6ux9V5W+CTu3zhCa4VBvUmMPHA5jcx
+	 g85uvST3LMXA4XS/WLzrHPcshfhZM0owuvn9OsN7fkBuvk0HXfUmCUMKpr6vMtG9wK
+	 Flz4Jbo1ER3j47OyMed8zCx+V3OCkQlMrzSS+qDkUMMuK9XdmTW3qjF2zLfkPS5kzP
+	 uqyosO82QAz5VAR4FKDW34AgnlYqoUvCZLIEBPy27/tajzgDfMACMuL60eUoRKY7JS
+	 8tNIGLjvcpH/ZJUB/tFKSWOBvK0wHZ/FjhBa+5AIjztx3p+rJA/tn5QtkkZNhIUK8Q
+	 D6n7prAxmj3gg==
+Date: Sat, 9 Aug 2025 09:05:57 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Christian Loehle <christian.loehle@arm.com>
-Cc: arighi@nvidia.com, void@manifault.com, linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev, changwoo@igalia.com, hodgesd@meta.com,
-	mingo@redhat.com, peterz@infradead.org
-Subject: Re: [PATCH v3 3/3] sched_ext: Guarantee rq lock on scx_bpf_cpu_rq()
-Message-ID: <aJebkj-neVJNKEJ4@slm.duckdns.org>
-References: <20250805111036.130121-1-christian.loehle@arm.com>
- <20250805111036.130121-4-christian.loehle@arm.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched/ext: Fix invalid task state transitions on class
+ switch
+Message-ID: <aJecFbsDcVQPVcwn@slm.duckdns.org>
+References: <20250805085911.164956-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -44,32 +43,40 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250805111036.130121-4-christian.loehle@arm.com>
+In-Reply-To: <20250805085911.164956-1-arighi@nvidia.com>
 
-Hello,
+On Tue, Aug 05, 2025 at 10:59:11AM +0200, Andrea Righi wrote:
+> When enabling a sched_ext scheduler, we may trigger invalid task state
+> transitions, resulting in warnings like the following (which can be
+> easily reproduced by running the hotplug selftest in a loop):
+> 
+>  sched_ext: Invalid task state transition 0 -> 3 for fish[770]
+>  WARNING: CPU: 18 PID: 787 at kernel/sched/ext.c:3862 scx_set_task_state+0x7c/0xc0
+>  ...
+>  RIP: 0010:scx_set_task_state+0x7c/0xc0
+>  ...
+>  Call Trace:
+>   <TASK>
+>   scx_enable_task+0x11f/0x2e0
+>   switching_to_scx+0x24/0x110
+>   scx_enable.isra.0+0xd14/0x13d0
+>   bpf_struct_ops_link_create+0x136/0x1a0
+>   __sys_bpf+0x1edd/0x2c30
+>   __x64_sys_bpf+0x21/0x30
+>   do_syscall_64+0xbb/0x370
+>   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+> 
+> This happens because we skip initialization for tasks that are already
+> dead (with their usage counter set to zero), but we don't exclude them
+> during the scheduling class transition phase.
+> 
+> Fix this by also skipping dead tasks during class swiching, preventing
+> invalid task state transitions.
+> 
+> Fixes: a8532fac7b5d2 ("sched_ext: TASK_DEAD tasks must be switched into SCX on ops_enable")
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
 
-On Tue, Aug 05, 2025 at 12:10:36PM +0100, Christian Loehle wrote:
-> @@ -7420,10 +7420,20 @@ __bpf_kfunc s32 scx_bpf_task_cpu(const struct task_struct *p)
->   */
->  __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
->  {
-> +	struct rq *rq;
-> +
->  	if (!kf_cpu_valid(cpu, NULL))
->  		return NULL;
->  
-> -	return cpu_rq(cpu);
-> +	preempt_disable();
-> +	rq = cpu_rq(cpu);
-> +	if (rq != scx_locked_rq()) {
-> +		scx_kf_error("Accessing not locked rq %d", cpu);
-> +		rq = NULL;
-> +	}
-> +	preempt_enable();
-
-So, this will break the existing scheduler binaries immediately, which I
-don't think is a good way to go about it. Can you add a pr_warn_once() to
-print deprecation warning and add e.g. scx_bpf_locked_cpu_rq() instead?
+Applied to sched_ext/for-6.17-fixes.
 
 Thanks.
 
