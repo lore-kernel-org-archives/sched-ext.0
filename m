@@ -1,85 +1,159 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 378C12D5C91
-	for <sched-ext@lists.linux.dev>; Sun, 10 Aug 2025 22:19:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EF1157A72;
+	Sun, 10 Aug 2025 23:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754864353; cv=none; b=CNQJs1JmpSR2CzMZz66vsCiatX2c7bv7aK+uUvC/AKmS9JEBXO/zcF2i7XagXjXHBgPTYcHsrhEkjOgXE/cOT6gvwwm4G+haT1XUIbaaMgCvtyACAdbeZYT/y9E7HfuQ1xlrBZN8F7advBW5HspXMAWTxRs2sfr0Tsp6qKxxvW0=
+	t=1754868858; cv=none; b=hME52Dn5+QF5OB/rciwsfC1IfIJJuFXq50pncLxMZ6EPWLrAM6DisMrp4A7SxXjIvcwE3fKFux3EoAVYIvdS4eYqPu01X14HoGRasQ3ZmBxqBULgJBNBAMMQQ6rj6bR2BJDf9McdWY7pKVT3TA6jI8TRnitCtJnAiKq/6GvKR+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754864353; c=relaxed/simple;
-	bh=xSTvinf6QHJ/tcvawD5nXvMu0BMw86IESQVB3t83wRc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tUCkv1cA3JqSLwepJEHrwIAJrcLIB1IXCVT43yRdCMLGiK1h4VPRqOwtNOGMQSEpPSdUxSK+tzK2vzq+vZBTvKzpTcoEHt2vHHw13mqpRGDO8hjPxw+kUECduIZbezkOEeuGG4t3G4tu13uC5Urn6v9YIc4V56UF/f69zlsrhQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 344D61596;
-	Sun, 10 Aug 2025 15:18:56 -0700 (PDT)
-Received: from [192.168.0.16] (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4A5363F738;
-	Sun, 10 Aug 2025 15:19:02 -0700 (PDT)
-Message-ID: <cc68722b-75f8-4de8-bf83-0fc1518ad60c@arm.com>
-Date: Sun, 10 Aug 2025 23:18:52 +0100
+	s=arc-20240116; t=1754868858; c=relaxed/simple;
+	bh=fwBfeBD3BAKG1XdYGSZgUuboIl7CVDdrTtUVguEDnF8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VQnLgXx2xESh4+584K1v4wImAmZWkg4XfU4TjUPDmAJ4KPK4MvpqQ0p4bXAWBlZEd2w3NSUJnnGZvl8nWKKzy3dJxgwmEi8++AjycRWwLFgpBqukTsyma9i8MWujfOuj74HHqdURr5dF9e4n52uaPKEIdmGfAWlew5wmReDNhDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=VJIcqH9P; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="VJIcqH9P"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=khCMGdKVWJOOAKC9RC16vYgD/TuMBHFFGnJ3AsYFXDk=; b=VJIcqH9PCHJYfOHtv/7P7Cmwro
+	RwuETCYMvdE3/IAMqQIrXX9zroFgaatvl+9XFshRGuWgzQuLpzSwUhgi0uZq08oo69Hb8Wr3d7yj3
+	c+G5beHOSxD1K6cueQJO4SlyRtF3sG1jgRtgc3hpEb3IBWt9F5Y+Vwaj2cu0PAXHNZEcYtKeqZrg4
+	8d8xt0Mcx8+OwlMX2U/T1ub2g1jO1RRBKM1zDNd/ltwcZHUZIvqOvYXl2SpqYQg05CRgnPGzURhit
+	xQFWSwfuBeWdn/eI3ggVZvpw8NKEUF8zKzQjs+EC+1aTKdkCSkzm7x62iFPDV+F0Y0YpiIxcYQbCh
+	LYnNYtUw==;
+Received: from [58.29.143.236] (helo=localhost)
+	by fanzine2.igalia.com with utf8esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1ulFY3-00CW99-1e; Mon, 11 Aug 2025 01:33:56 +0200
+From: Changwoo Min <changwoo@igalia.com>
+To: lukasz.luba@arm.com,
+	rafael@kernel.org,
+	len.brown@intel.com,
+	pavel@kernel.org
+Cc: christian.loehle@arm.com,
+	tj@kernel.org,
+	kernel-dev@igalia.com,
+	linux-pm@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Changwoo Min <changwoo@igalia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH RESEND v3 00/10] PM: EM: Add netlink support for the energy model.
+Date: Mon, 11 Aug 2025 08:33:37 +0900
+Message-ID: <20250810233347.81957-1-changwoo@igalia.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] sched_ext: Guarantee rq lock on scx_bpf_cpu_rq()
-To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>
-Cc: void@manifault.com, linux-kernel@vger.kernel.org,
- sched-ext@lists.linux.dev, changwoo@igalia.com, hodgesd@meta.com,
- mingo@redhat.com, peterz@infradead.org
-References: <20250805111036.130121-1-christian.loehle@arm.com>
- <20250805111036.130121-4-christian.loehle@arm.com>
- <aJebkj-neVJNKEJ4@slm.duckdns.org> <aJh6BWX7rYCNrzGu@gpd4>
-Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
-In-Reply-To: <aJh6BWX7rYCNrzGu@gpd4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/10/25 11:52, Andrea Righi wrote:
-> On Sat, Aug 09, 2025 at 09:03:46AM -1000, Tejun Heo wrote:
->> Hello,
->>
->> On Tue, Aug 05, 2025 at 12:10:36PM +0100, Christian Loehle wrote:
->>> @@ -7420,10 +7420,20 @@ __bpf_kfunc s32 scx_bpf_task_cpu(const struct task_struct *p)
->>>   */
->>>  __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
->>>  {
->>> +	struct rq *rq;
->>> +
->>>  	if (!kf_cpu_valid(cpu, NULL))
->>>  		return NULL;
->>>  
->>> -	return cpu_rq(cpu);
->>> +	preempt_disable();
->>> +	rq = cpu_rq(cpu);
->>> +	if (rq != scx_locked_rq()) {
->>> +		scx_kf_error("Accessing not locked rq %d", cpu);
->>> +		rq = NULL;
->>> +	}
->>> +	preempt_enable();
->>
->> So, this will break the existing scheduler binaries immediately, which I
->> don't think is a good way to go about it. Can you add a pr_warn_once() to
->> print deprecation warning and add e.g. scx_bpf_locked_cpu_rq() instead?
-> 
-> Yeah, this is not nice, but they would be still broken though, in PATCH 1/3
-> we force schedulers to check for NULL and, if they don't, the verifier
-> won't be happy, so this already breaks existing binaries.
-> 
-> Even if a scheduler performs the NULL check, this change might still cause
-> incorrect behaviors, which can be worse than triggering an error.
-> 
-> How about we introduce scx_bpf_locked_cpu_rq() and we still trigger an
-> error in scx_bpf_cpu_rq(), mentioning about the new locked kfunc and
-> scx_bpf_task_acquire_remote_curr()?
+Just rebased on Linus's master and resend it for review.
 
-If we still trigger an error in scx_bpf_cpu_rq() what's the difference
-between scx_bpf_cpu_rq() and scx_bpf_cpu_rq_locked() then?
-Just the error message?
+There is a need to access the energy model from the userspace. One such
+example is the sched_ext schedulers [1]. The userspace part of the
+sched_ext schedules could feed the (post-processed) energy-model
+information to the BPF part of the scheduler.
+
+Currently, debugfs is the only way to read the energy model from userspace;
+however, it lacks proper notification mechanisms when a performance domain
+and its associated energy model change.
+
+This patch set introduces a generic netlink for the energy model, as
+discussed in [2]. It allows a userspace program to read the performance
+domain and its energy model. It notifies the userspace program when a
+performance domain is created or deleted or its energy model is updated
+through a multicast interface.
+
+Specifically, it supports two commands:
+  - EM_CMD_GET_PDS: Get the list of information for all performance
+    domains.
+  - EM_CMD_GET_PD_TABLE: Get the energy model table of a performance
+    domain.
+
+Also, it supports three notification events:
+  - EM_CMD_PD_CREATED: When a performance domain is created.
+  - EM_CMD_PD_DELETED: When a performance domain is deleted.
+  - EM_CMD_PD_UPDATED: When the energy model table of a performance domain
+    is updated.
+
+This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for example,
+with the following commands:
+
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --do get-pds
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --do get-pd-table --json '{"pd-id": 0}'
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --subscribe event  --sleep 10
+
+[1] https://lwn.net/Articles/922405/
+[2] https://lore.kernel.org/lkml/a82423bc-8c38-4d57-93da-c4f20011cc92@arm.com/
+[3] https://lore.kernel.org/lkml/202506140306.tuIoz8rN-lkp@intel.com/#t
+
+ChangeLog v2 -> v3:
+  - Properly initialize a return variable in
+    em_notify_pd_created/updated() at an error path (09/10), reported by
+    the kernel test robot [3].
+  - Remove redundant initialization of a return variable in
+    em_notify_pd_deleted() at an error path (08/10).
+
+ChangeLog v1 -> v2:
+  - Use YNL to generate boilerplate code. Overhaul the naming conventions
+    (command, event, notification, attribute) to follow the typical
+    conventions of other YNL-based netlink implementations.
+  - Calculate the exact message size instead of using NLMSG_GOODSIZE
+    when allocating a message (genlmsg_new). This avoids the reallocation
+    of a message.
+  - Remove an unnecessary function, em_netlink_exit(), and initialize the
+    netlink (em_netlink_init) at em_netlink.c without touching energy_model.c.
+
+CC: Lukasz Luba <lukasz.luba@arm.com>
+CC: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+CC: Tejun Heo <tj@kernel.org>
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
+
+Changwoo Min (10):
+  PM: EM: Add em.yaml and autogen files.
+  PM: EM: Add a skeleton code for netlink notification.
+  PM: EM: Assign a unique ID when creating a performance domain.
+  PM: EM: Expose the ID of a performance domain via debugfs.
+  PM: EM: Add an iterator and accessor for the performance domain.
+  PM: EM: Implement em_nl_get_pds_doit().
+  PM: EM: Implement em_nl_get_pd_table_doit().
+  PM: EM: Implement em_notify_pd_deleted().
+  PM: EM: Implement em_notify_pd_created/updated().
+  PM: EM: Notify an event when the performance domain changes.
+
+ Documentation/netlink/specs/em.yaml | 113 ++++++++++
+ MAINTAINERS                         |   3 +
+ include/linux/energy_model.h        |  19 ++
+ include/uapi/linux/energy_model.h   |  62 ++++++
+ kernel/power/Makefile               |   5 +-
+ kernel/power/em_netlink.c           | 311 ++++++++++++++++++++++++++++
+ kernel/power/em_netlink.h           |  34 +++
+ kernel/power/em_netlink_autogen.c   |  48 +++++
+ kernel/power/em_netlink_autogen.h   |  23 ++
+ kernel/power/energy_model.c         |  83 +++++++-
+ 10 files changed, 699 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/netlink/specs/em.yaml
+ create mode 100644 include/uapi/linux/energy_model.h
+ create mode 100644 kernel/power/em_netlink.c
+ create mode 100644 kernel/power/em_netlink.h
+ create mode 100644 kernel/power/em_netlink_autogen.c
+ create mode 100644 kernel/power/em_netlink_autogen.h
+
+-- 
+2.50.1
 
