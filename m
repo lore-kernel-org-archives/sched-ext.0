@@ -1,221 +1,78 @@
-Received: from mail-io1-f77.google.com (mail-io1-f77.google.com [209.85.166.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DCD2798E1
-	for <sched-ext@lists.linux.dev>; Mon, 18 Aug 2025 07:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE2E3101D1;
+	Tue, 19 Aug 2025 07:57:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755503615; cv=none; b=nKgy8UR/Mt9vHo2fTR1AEXt9BZMOUBWArgCm6xFPqdKX9ykdvNvgdB/scK32Ylw7ZsRCHqXmbw2rfZlvAMKe4DyYsU0QEpGc3+SD985B2JYzKM6WZx++hvWZZsayxZfA5E/TiquIthhPPXMRJo67Zi39k10uvN2KQTu/5Fhomkw=
+	t=1755590247; cv=none; b=k8K4VJGgbGvDPU9fOjGJV22s3HXfWZjzJNeWOVaB42cdLicQYKeYB5LOCfL8PPrICnIg9rM7pyPUFAuTlUhPwWsUD0VrBmEcK5W2F+8amgiCRJHXTIsuXRfVZMY9hokpdCrY5CHOW2MTrzv7ZM83+a7Mqp6F2qPabwjUkrWB9LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755503615; c=relaxed/simple;
-	bh=Qm98CsKiZssJ89VPl287AmugGSc7bt8qYP2C0hgs4Ns=;
-	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=WQS76FOywu/nCxr29jPaY/hSRmjjmXUTWFIbUUUl+w1nQb/t9NvmFC1f9dmGtGw6LVLnuOidtXT/oNoWvbap1db7m3Tbnfpa+YEsSC7C581MBWPgNje547kC29lPG805SOtkh3+C7oOkkiUofhyLOpDggfaIM6Tsuv7QAicfIcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.166.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-io1-f77.google.com with SMTP id ca18e2360f4ac-884418a2614so669324839f.3
-        for <sched-ext@lists.linux.dev>; Mon, 18 Aug 2025 00:53:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755503613; x=1756108413;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+xErwOmLK+upZ5SztH45fHWHRLrfJkU1Tu5wxEcT0Jo=;
-        b=sx9erUiHsEgjznxMsVHQjjNvNN1aDTyamNJtULBEv2CvqCClpzZxR+uF4SvdDlRJhL
-         y0HH6lNTvlSd8HFPumFB7Bgk46wfPjSnYiPy2xC0M8Lb5dsNzKq8wsvRnJtc8woCpK0L
-         BVziBjbzurWqHv/valSL3JKZhzryS6wNKs8eRVN34RM3htmPGWkBtR9M8m6IPjgjAnxT
-         +ViN+UkJMoyvwg4Y/zUUpjgn6eyU8bMPJ6sMRhtESblUfXodDazKrpRUT9k5DBI1aRpf
-         mnLaH8ezT/b/D9ttpyDZHzgPHRxOsUsWHIQhUYt8I+BZKBqKedU1nHuU70e5sN/NCpJC
-         e1+g==
-X-Forwarded-Encrypted: i=1; AJvYcCXCdh85FsaHBwDANynzTjaLFd2Qju6Vm3Jo5faUuFbI3Ep6cFAvVWRERBlF/oYxRF0nhvX1jOpKAtM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YznM7RrCh1aRO0wwoK1mDn7pG+Wrw9VmokyoH14v/v94TlgGwq7
-	3dKwmRtLIBQYQeLZOlO6HkDgBRvBem2MgiDRSMZzcGQF45a0JEsjXj3JTC97o3GunMGmRtK2Wqk
-	FTE0AuOiY1jZ+w2C19bKE7Vpo8N2ULAhaDQ/xUlt1UC87OWgf/UBpv6DYhZk=
-X-Google-Smtp-Source: AGHT+IEKNm0dujcvmxcJQ1bwMG7c3CsIBMnei11YBxoOAkeqZE0BYc10q9fxiOU8HId8YCHUs5B7SRHWAb0d7m6XPn+QQBJrxf1Z
+	s=arc-20240116; t=1755590247; c=relaxed/simple;
+	bh=6pvltH+FqpRjs3ghx0QZ/sWmg06Mxyz5vKd8SKGqpzk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u9v3gYdxV0naLsrYbNyr5nAVH0thYORI1sU3cfQwWxPV3AlOPOqLCaUgUyXctFIS54m2dLMG/EDOVsefjP6Ow9+R0fu7WLYNRUP4pP6AhByBpBraa5nNFI1WEWeet/YL2kz9gFC3CLNdJ0ViLnsWzCVVrQe0NgUnRlV1txYey1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=EJB2prlL; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="EJB2prlL"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=VmIosm4L4PY+P0mM7SGV9Zk2/LL+r6zCjeW39m4X7t4=; b=EJB2prlLkNY84ehu1mS2n4wkjK
+	L7qoY/lgnJ0QODp7pnIdbkLBELGIxv6/JEQVcE0fhzPlZI29hzmg2y4+pTZGOWef5U/TCJIotgmbK
+	czMGROWYX6rUZlJZwoYIYngvaJzVWc31otqJjkETJjehxgXXVWmbdTsDBg7hobZ2BzJg+YY9qJwal
+	dvXMtQJyN5PQL0YOvTqAHJIDXJQdZHzAK4d7sPUfkB/CeqvNfOfVGE/80Z4QRyrdcApSwNkxeoqLp
+	YCZz9ZXSk0pG+/Wunlz+NFG/Grc3ZANU0XG52ZNyPqLKEYP1g+OfJeZD6y3cbi4kEOIhvT9qM1Yjj
+	TogBDSLw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1uoHDX-0000000Haj3-42yj;
+	Tue, 19 Aug 2025 07:57:16 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id BBDF830036F; Tue, 19 Aug 2025 09:57:14 +0200 (CEST)
+Date: Tue, 19 Aug 2025 09:57:14 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Joel Fernandes <joelagnelf@nvidia.com>
+Cc: linux-kernel@vger.kernel.org, Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Luigi De Matteis <ldematteis123@gmail.com>,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH -rebased 07/15] sched_ext: Add a DL server for sched_ext
+ tasks
+Message-ID: <20250819075714.GE3245006@noisy.programming.kicks-ass.net>
+References: <20250809184800.129831-1-joelagnelf@nvidia.com>
+ <20250809184800.129831-8-joelagnelf@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6602:6705:b0:881:758b:802c with SMTP id
- ca18e2360f4ac-8843e4dc512mr1429380739f.10.1755503613348; Mon, 18 Aug 2025
- 00:53:33 -0700 (PDT)
-Date: Mon, 18 Aug 2025 00:53:33 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <68a2dbfd.050a0220.e29e5.0094.GAE@google.com>
-Subject: [syzbot] [bpf?] general protection fault in __pcpu_freelist_pop
-From: syzbot <syzbot+331f5bebb641724ff1f0@syzkaller.appspotmail.com>
-To: andrii@kernel.org, arighi@nvidia.com, ast@kernel.org, bpf@vger.kernel.org, 
-	bsegall@google.com, changwoo@igalia.com, daniel@iogearbox.net, 
-	dietmar.eggemann@arm.com, eddyz87@gmail.com, haoluo@google.com, 
-	john.fastabend@gmail.com, jolsa@kernel.org, juri.lelli@redhat.com, 
-	kpsingh@kernel.org, linux-kernel@vger.kernel.org, martin.lau@linux.dev, 
-	mgorman@suse.de, mingo@redhat.com, netdev@vger.kernel.org, 
-	peterz@infradead.org, rostedt@goodmis.org, sched-ext@lists.linux.dev, 
-	sdf@fomichev.me, song@kernel.org, syzkaller-bugs@googlegroups.com, 
-	tj@kernel.org, vincent.guittot@linaro.org, void@manifault.com, 
-	vschneid@redhat.com, yonghong.song@linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250809184800.129831-8-joelagnelf@nvidia.com>
 
-Hello,
+On Sat, Aug 09, 2025 at 02:47:52PM -0400, Joel Fernandes wrote:
 
-syzbot found the following issue on:
+> --- a/kernel/sched/deadline.c
+> +++ b/kernel/sched/deadline.c
+> @@ -1510,7 +1510,7 @@ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64
+>  	 * The fair server (sole dl_server) does not account for real-time
+>  	 * workload because it is running fair work.
+>  	 */
+> -	if (dl_se == &rq->fair_server)
+> +	if (dl_se == &rq->fair_server || dl_se == &rq->ext_server)
+>  		return;
 
-HEAD commit:    e4414b01c1cd bpf: Check the helper function is valid in ge..
-git tree:       bpf
-console output: https://syzkaller.appspot.com/x/log.txt?x=11cd4442580000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=412ee2f8b704a5e6
-dashboard link: https://syzkaller.appspot.com/bug?extid=331f5bebb641724ff1f0
-compiler:       Debian clang version 20.1.7 (++20250616065708+6146a88f6049-1~exp1~20250616065826.132), Debian LLD 20.1.7
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10d2e3a2580000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=11bd0ba2580000
+Does that want to be: if (dl_se->dl_server) ?
 
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/cf622f58cf3e/disk-e4414b01.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/8947767e2701/vmlinux-e4414b01.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/2a73aee74e9c/bzImage-e4414b01.xz
-
-The issue was bisected to:
-
-commit c68ea8243c5cc901cea62f695504bec73195d906
-Author: Andrea Righi <arighi@nvidia.com>
-Date:   Wed Jun 4 14:33:11 2025 +0000
-
-    sched_ext: idle: Remove unnecessary ifdef in scx_bpf_cpu_node()
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=13d7aba2580000
-final oops:     https://syzkaller.appspot.com/x/report.txt?x=1037aba2580000
-console output: https://syzkaller.appspot.com/x/log.txt?x=17d7aba2580000
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+331f5bebb641724ff1f0@syzkaller.appspotmail.com
-Fixes: c68ea8243c5c ("sched_ext: idle: Remove unnecessary ifdef in scx_bpf_cpu_node()")
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 UID: 0 PID: 5867 Comm: syz-executor Not tainted 6.17.0-rc1-syzkaller-ge4414b01c1cd #0 PREEMPT(full) 
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/12/2025
-RIP: 0010:___pcpu_freelist_pop kernel/bpf/percpu_freelist.c:114 [inline]
-RIP: 0010:__pcpu_freelist_pop+0x6b7/0x8c0 kernel/bpf/percpu_freelist.c:125
-Code: 10 48 3b 8c 24 80 00 00 00 0f 85 b4 01 00 00 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 48 89 f8 48 c1 e8 03 <80> 3c 18 00 48 89 7c 24 20 74 0a e8 29 3f 41 00 48 8b 7c 24 20 48
-RSP: 0018:ffffc90000a08820 EFLAGS: 00010046
-RAX: 0000000000000000 RBX: dffffc0000000000 RCX: ffffe8ffffd6e308
-RDX: 0000000000000100 RSI: 0000000000000000 RDI: 0000000000000002
-RBP: ffffc90000a088f0 R08: 0000000000000003 R09: 0000000000000004
-R10: dffffc0000000000 R11: fffff52000141110 R12: 1ffffd1ffffadc60
-R13: ffffe8ffffd6e300 R14: 0000000000000001 R15: 0000000000000000
-FS:  0000555583dc4500(0000) GS:ffff888125d1c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005555622ed5c8 CR3: 00000000769d6000 CR4: 00000000003526f0
-Call Trace:
- <IRQ>
- pcpu_freelist_pop+0xca/0x170 kernel/bpf/percpu_freelist.c:134
- __bpf_get_stackid+0x574/0xcf0 kernel/bpf/stackmap.c:259
- ____bpf_get_stackid_raw_tp kernel/trace/bpf_trace.c:1810 [inline]
- bpf_get_stackid_raw_tp+0x196/0x210 kernel/trace/bpf_trace.c:1799
- bpf_prog_b724608cae728045+0x27/0x2f
- bpf_dispatcher_nop_func include/linux/bpf.h:1332 [inline]
- __bpf_prog_run include/linux/filter.h:718 [inline]
- bpf_prog_run include/linux/filter.h:725 [inline]
- __bpf_trace_run kernel/trace/bpf_trace.c:2257 [inline]
- bpf_trace_run2+0x284/0x4b0 kernel/trace/bpf_trace.c:2298
- __do_trace_kfree include/trace/events/kmem.h:94 [inline]
- trace_kfree include/trace/events/kmem.h:94 [inline]
- kfree+0x3a0/0x440 mm/slub.c:4866
- slab_free_after_rcu_debug+0x60/0x2a0 mm/slub.c:4717
- rcu_do_batch kernel/rcu/tree.c:2605 [inline]
- rcu_core+0xca8/0x1770 kernel/rcu/tree.c:2861
- handle_softirqs+0x283/0x870 kernel/softirq.c:579
- do_softirq+0xec/0x180 kernel/softirq.c:480
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0x17d/0x1c0 kernel/softirq.c:407
- lock_sock include/net/sock.h:1667 [inline]
- tcp_sendmsg+0x21/0x50 net/ipv4/tcp.c:1392
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x19c/0x270 net/socket.c:729
- sock_write_iter+0x258/0x330 net/socket.c:1179
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x5c9/0xb30 fs/read_write.c:686
- ksys_write+0x145/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe78c18d660
-Code: 40 00 48 c7 c2 a8 ff ff ff f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 80 3d 01 af 1f 00 00 74 17 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 58 c3 0f 1f 80 00 00 00 00 48 83 ec 28 48 89
-RSP: 002b:00007ffc45dccfb8 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00000000179a7b00 RCX: 00007fe78c18d660
-RDX: 0000000000000108 RSI: 00007fe789c3fef8 RDI: 0000000000000003
-RBP: 0000000000000000 R08: 0000000000000007 R09: 000000000003fde8
-R10: 1a917aa2f8ade145 R11: 0000000000000202 R12: 0000000000000108
-R13: 0000555583ddd6d0 R14: 00007ffc45dcd480 R15: 00007fe789c3fef8
- </TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:___pcpu_freelist_pop kernel/bpf/percpu_freelist.c:114 [inline]
-RIP: 0010:__pcpu_freelist_pop+0x6b7/0x8c0 kernel/bpf/percpu_freelist.c:125
-Code: 10 48 3b 8c 24 80 00 00 00 0f 85 b4 01 00 00 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc 48 89 f8 48 c1 e8 03 <80> 3c 18 00 48 89 7c 24 20 74 0a e8 29 3f 41 00 48 8b 7c 24 20 48
-RSP: 0018:ffffc90000a08820 EFLAGS: 00010046
-RAX: 0000000000000000 RBX: dffffc0000000000 RCX: ffffe8ffffd6e308
-RDX: 0000000000000100 RSI: 0000000000000000 RDI: 0000000000000002
-RBP: ffffc90000a088f0 R08: 0000000000000003 R09: 0000000000000004
-R10: dffffc0000000000 R11: fffff52000141110 R12: 1ffffd1ffffadc60
-R13: ffffe8ffffd6e300 R14: 0000000000000001 R15: 0000000000000000
-FS:  0000555583dc4500(0000) GS:ffff888125d1c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005555622ed5c8 CR3: 00000000769d6000 CR4: 00000000003526f0
-----------------
-Code disassembly (best guess):
-   0:	10 48 3b             	adc    %cl,0x3b(%rax)
-   3:	8c 24 80             	mov    %fs,(%rax,%rax,4)
-   6:	00 00                	add    %al,(%rax)
-   8:	00 0f                	add    %cl,(%rdi)
-   a:	85 b4 01 00 00 48 8d 	test   %esi,-0x72b80000(%rcx,%rax,1)
-  11:	65 d8 5b 41          	fcomps %gs:0x41(%rbx)
-  15:	5c                   	pop    %rsp
-  16:	41 5d                	pop    %r13
-  18:	41 5e                	pop    %r14
-  1a:	41 5f                	pop    %r15
-  1c:	5d                   	pop    %rbp
-  1d:	c3                   	ret
-  1e:	cc                   	int3
-  1f:	cc                   	int3
-  20:	cc                   	int3
-  21:	cc                   	int3
-  22:	cc                   	int3
-  23:	48 89 f8             	mov    %rdi,%rax
-  26:	48 c1 e8 03          	shr    $0x3,%rax
-* 2a:	80 3c 18 00          	cmpb   $0x0,(%rax,%rbx,1) <-- trapping instruction
-  2e:	48 89 7c 24 20       	mov    %rdi,0x20(%rsp)
-  33:	74 0a                	je     0x3f
-  35:	e8 29 3f 41 00       	call   0x413f63
-  3a:	48 8b 7c 24 20       	mov    0x20(%rsp),%rdi
-  3f:	48                   	rex.W
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
-
-If the report is already addressed, let syzbot know by replying with:
-#syz fix: exact-commit-title
-
-If you want syzbot to run the reproducer, reply with:
-#syz test: git://repo/address.git branch-or-commit-hash
-If you attach or paste a git patch, syzbot will apply it before testing.
-
-If you want to overwrite report's subsystems, reply with:
-#syz set subsystems: new-subsystem
-(See the list of subsystem names on the web dashboard)
-
-If the report is a duplicate of another one, reply with:
-#syz dup: exact-subject-of-another-report
-
-If you want to undo deduplication, reply with:
-#syz undup
+>  
