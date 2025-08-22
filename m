@@ -1,63 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9716921C167;
-	Thu, 21 Aug 2025 20:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AAF4A3E;
+	Fri, 22 Aug 2025 00:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755807980; cv=none; b=ft/t40Hl8/RvPwVdY/X7TnjoUG5ZEXwX1Z9WBAPkqbYppMEGY7K+Prp+G4m8ZaXcB27fBimxwzP+XPZvG6ErJZ+4g+Y9WxhsU5MCL52SjUabifTLFiiviK0yWrc9rbwRspLGfQEo65xAgC98jpqf6iTtpgdCcMcwe2aovwYcebo=
+	t=1755821522; cv=none; b=WDJgpGKejlQVrIR38f8lQuL2/DEYnWf5V9bnpC5H5X2ppaoMHbFX5TjBBBRo/lD80OmuWYi5AvYRd4d0jSiL7mnEBcdhfGnQ0xqvHg6FtiIaiHD4muKnIuysNVIOZid64J1umk2m9PfXfGARPlYibxSh/S/N7OvTp5ivCtmHl2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755807980; c=relaxed/simple;
-	bh=RKoYlWNCxaVS8dYfd9yesGBZY3ipakicPCugx2GJ+6Y=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=ns7eqLsTFW3sQMa+6RD4KyUTglXRcy1oKfGcb1U3ThkKA7qUh6JT4SF+y77jmMZg3VPZZENxWH0l+3Asx736v2IGNalmhUYcyLmmO4xIvKX/PEWSerlf+lF72CEcDcjOPqZsBOoJ16qTu70VrD6g2Xu5RL69Al7tlcm1FWjepX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L2rcFPSo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1755821522; c=relaxed/simple;
+	bh=ABAWepAjHiZJzYettTX3FTQg/SU/KOcCVAnQL50u/gg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lbr0C/XoUQiJbgZflhj3AOC9X3f9WbZtrmbI96g0Uc6BUW2eB6ugcPbMkqoYtWa1vzSLsiei0sXlDWLPfBl1qi9zKw5GFaKMzp3wLhQPlVXth3NT7gdMmVoO966P/zRYqP7/uxgvby6qKtLsqlvi5Yu/nQCmGiyVZY0q+j9NryQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=UqOWNexb; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L2rcFPSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070BDC4CEEB;
-	Thu, 21 Aug 2025 20:26:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755807980;
-	bh=RKoYlWNCxaVS8dYfd9yesGBZY3ipakicPCugx2GJ+6Y=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=L2rcFPSoG7OiJSJZefIlZfPBxz5rMoJFzWXur0VSnWGNpmc7ww8VM1SZR40DOvH08
-	 VfBFJDzImKUDlx98xSQtQERcbyoBCwb3RAC69gv1QBfR+jXFUvyxTCL1LQiiYU95As
-	 6/R1Paq4GLPWzP7ce+RTBRBthTgGqYdMgwFc+zPQfmkmm8ierchwqsQix08C+0x1SU
-	 EkCoi7CyjTZ1W1CEzaY2JeHZ2KRJX7xsaZHBfCyq1kfqqPwfdKt5HW6vCHuMjQkgEt
-	 gOWTYzI/eLURmLBf/m35gwNBLCfGmJj/OF+0O0p2abK+muhDxW/uclOUwhX/9wZHIL
-	 KWuuFkD41LQrw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 71277383BF5B;
-	Thu, 21 Aug 2025 20:26:30 +0000 (UTC)
-Subject: Re: [GIT PULL] sched_ext: Fixes for v6.17-rc2
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <aKdXB6r48hme9su1@slm.duckdns.org>
-References: <aKdXB6r48hme9su1@slm.duckdns.org>
-X-PR-Tracked-List-Id: <sched-ext.lists.linux.dev>
-X-PR-Tracked-Message-Id: <aKdXB6r48hme9su1@slm.duckdns.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git/ tags/sched_ext-for-6.17-rc2-fixes
-X-PR-Tracked-Commit-Id: e69980bd16f264581c3f606bae987e54f0ba8c4a
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: d72052ac09ceba6e49230ea9d7e37675d5bab789
-Message-Id: <175580798895.1187953.3236608519208462669.pr-tracker-bot@kernel.org>
-Date: Thu, 21 Aug 2025 20:26:28 +0000
-To: Tejun Heo <tj@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, linux-kernel@vger.kernel.org, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="UqOWNexb"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=aeUBRdfQnoF/XeLI+FS29F1kvxnlVvl/a40ejNepzFw=; b=UqOWNexbepiAZnlzW+cl6Rn7Kx
+	FbmRX41KlgAEJBXWEpW6sGdtT1hvX/dgZe/HxldMHrYUL7DgpwuTSqXKY5nrvyK6lqGsiSxyiCdcK
+	CipY5jnGkDS5D8xxnR82TPXQ0cZ/DrY1G64rhT5qFiPf04z88FmAqdnwWd51568YkK5bHu+eThLX3
+	b8VigckODHM4XMTGwnk7eLNjDbrxP9jMQjTsjHzdiLVNPNYGoP1iUGnER/EKm5xNT7sEZLupcWmY6
+	at/xkCgAeLI/vJVVm1ZfqwbXgYfNJnMLZQcFp6vWXMduFXUGVu2QZdh03kWvMOkMkCW6ZyYIB7Cwd
+	CwrmJbOg==;
+Received: from [59.10.240.225] (helo=[172.28.113.15])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1upFNZ-00HTRe-Rv; Fri, 22 Aug 2025 02:11:38 +0200
+Message-ID: <2c5134f4-c0b6-47a8-ba44-402b7f6893bd@igalia.com>
+Date: Fri, 22 Aug 2025 09:11:28 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND v3 00/10] PM: EM: Add netlink support for the
+ energy model.
+To: "Rafael J. Wysocki" <rafael@kernel.org>, lukasz.luba@arm.com
+Cc: len.brown@intel.com, pavel@kernel.org, christian.loehle@arm.com,
+ tj@kernel.org, kernel-dev@igalia.com, linux-pm@vger.kernel.org,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+References: <20250810233347.81957-1-changwoo@igalia.com>
+ <CAJZ5v0ibEHC+Ckgisr+VAU=B21MgKJz2=QqGH2hd6UjUFutMSg@mail.gmail.com>
+From: Changwoo Min <changwoo@igalia.com>
+Content-Language: en-US, ko-KR, en-US-large, ko
+In-Reply-To: <CAJZ5v0ibEHC+Ckgisr+VAU=B21MgKJz2=QqGH2hd6UjUFutMSg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Thu, 21 Aug 2025 07:27:35 -1000:
+Hi Rafael,
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git/ tags/sched_ext-for-6.17-rc2-fixes
+On 8/21/25 20:27, Rafael J. Wysocki wrote:
+> Hi,
+> 
+> On Mon, Aug 11, 2025 at 1:34 AM Changwoo Min <changwoo@igalia.com> wrote:
+>>
+> I've done a high-level review of this and it looks reasonable to me
+> overall, but I'd like to get some feedback from Lukasz on it.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/d72052ac09ceba6e49230ea9d7e37675d5bab789
+Thank you, Rafael, for the review! I will send v4 as soon as
+I get feedback from Lukasz.
 
-Thank you!
+> 
+> My two requests for now are: please reorder the series, so patches
+> [3-5] go first, and remove the ending period (".") from all of the
+> patch subjects.
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Sure. Moving [3-5] to the beginning of the series and making the
+title style consistent makes sense. I will change it in the next
+version as suggested.
+
+Regards,
+Changwoo Min
