@@ -1,55 +1,38 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBBD21507F;
-	Mon,  1 Sep 2025 02:01:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92CB71E0E14
+	for <sched-ext@lists.linux.dev>; Mon,  1 Sep 2025 13:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756692074; cv=none; b=r/Q0mL6AsAqEv9NyaQgDw+o2zB+fB6JKk4IFoChqiJewU523CbqHpOVOJ45Go1lP90YhuAed64jCnklDDR033dV/gDxnSKA7REMJDCGuv2Nh6YZYNmXpgpGWLe9n6Pp8/BxqG6+mffaa+vz6WjPD33i+ZW5LzcqQnxt8l+KoIaw=
+	t=1756733175; cv=none; b=aLElreJHYoAOxldaQAD7iaDPdC/4N8p9kq9dWcyOYslRS/1G1nPE5KUtWsVZoiK3MqUrYkABrMNQ/s5lvv5a0ABzbhkSH2eCO0bYhst+rcFwlM2T3SKBwRN0TWfovz5kyO4UOoQ/+OjzdSfJvU6kxuTgudt8Wt7qqTzNf8QM5hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756692074; c=relaxed/simple;
-	bh=Q/z7LI47wr9pn1YEATow99dNBdZHfjMqq5CdG8/pbJk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBVfm4CO4ij21KJFpfiXysJdO9wXvXkXJ0do5soT2PRTmtFbudWskYml0szRPS35rwXfrsr2XLPGgQ5VT8Ya+ayLddxBtlbIvAqx1tbCqlTSPOhdQVOkw6M3Tt0kOSWfhCj+nwEWHBkbkEqgo7us0cVcymt5AyB6YbYYnu/zdNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=PxcNI5nS; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="PxcNI5nS"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=dfYbmrCczlNVG1eBqr4LEnZbYXkxcRDqXj5cgSmNT+c=; b=PxcNI5nSAmQGBfHf6v0tSJlQPU
-	eiVG/sM8fLz44IrfC9lM/bWwWyFFrwR+6nc+V/wRt9iW+EUaWOoxQ0G2omjf3u6i7Wd0bnlm0m2r3
-	K0vCuXgL22VhD9txcGAWYFGqFuFR5lY8a96uW6VdNSq6MVJCYxlpmbyTfJ11KiV9Tm3vndM42hvaZ
-	+bWhxpTTJKja068uM1mTDNnfM7by9gVJ2zN/JCGPMeaY7SCf7g7rt7carBBGr3ZXda3lynm9/JwUM
-	hcL6pOUDQrQ1WPmQe82ph1MfRnNFxmOsDbO2b9/NfBKS5FIfXykD6/IJti6N7ghC+uoijqoEVl9MV
-	9iyLkGtg==;
-Received: from [58.29.143.236] (helo=localhost)
-	by fanzine2.igalia.com with utf8esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1ustqz-0054Vm-SV; Mon, 01 Sep 2025 04:01:06 +0200
-From: Changwoo Min <changwoo@igalia.com>
-To: lukasz.luba@arm.com,
-	rafael@kernel.org,
-	len.brown@intel.com,
-	pavel@kernel.org
-Cc: christian.loehle@arm.com,
-	tj@kernel.org,
-	kernel-dev@igalia.com,
-	linux-pm@vger.kernel.org,
+	s=arc-20240116; t=1756733175; c=relaxed/simple;
+	bh=JIwwHamYIg6ImzIx11Fn52SRN15A1Imu5cksjrEjJww=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NcLQMhyJj92kMuj/qhQP72Rk0pkPT8ON8YqwIdlSv4qUHIg7VOskPopUM1CbdaywJTXB+nJiVyuLj4tzBGEEXcnyt5MzftEGCBv9ntEg8jK5eQmO5SC81X0es+Gnpm/plP7uzQuqyIvrDNGpqdhUC1/T3FBPTL9QaZNRzoKUsVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9D79E16A3;
+	Mon,  1 Sep 2025 06:26:03 -0700 (PDT)
+Received: from e127648.cambridge.arm.com (e127648.arm.com [10.1.36.60])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 524153F694;
+	Mon,  1 Sep 2025 06:26:10 -0700 (PDT)
+From: Christian Loehle <christian.loehle@arm.com>
+To: tj@kernel.org,
+	arighi@nvidia.com,
+	void@manifault.com
+Cc: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Changwoo Min <changwoo@igalia.com>
-Subject: [PATCH v4 10/10] PM: EM: Notify an event when the performance domain changes
-Date: Mon,  1 Sep 2025 11:00:03 +0900
-Message-ID: <20250901020003.86415-11-changwoo@igalia.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250901020003.86415-1-changwoo@igalia.com>
-References: <20250901020003.86415-1-changwoo@igalia.com>
+	changwoo@igalia.com,
+	hodgesd@meta.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	jake@hillion.co.uk,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH v4 0/3] sched_ext: Harden scx_bpf_cpu_rq()
+Date: Mon,  1 Sep 2025 14:26:00 +0100
+Message-Id: <20250901132605.2282650-1-christian.loehle@arm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -58,53 +41,60 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Send an event to userspace when a performance domain is created or deleted,
-or its energy model is updated.
+scx_bpf_cpu_rq() currently allows accessing struct rq fields without
+holding the associated rq.
+It is being used by scx_cosmos, scx_flash, scx_lavd, scx_layered, and
+scx_tickless. Fortunately it is only ever used to fetch rq->curr.
+So provide an alternative scx_bpf_task_acquire_remote_curr() that
+doesn't expose struct rq and provide a hardened scx_bpf_cpu_rq_locked()
+by ensuring we hold the rq lock.
+Add a deprecation warning to scx_bpf_cpu_rq_locked() that mentions the
+two alternatives.
 
-Signed-off-by: Changwoo Min <changwoo@igalia.com>
----
- kernel/power/energy_model.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+This also simplifies scx code from:
 
-diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
-index f125262a93c9..c72ac1585f59 100644
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -17,6 +17,8 @@
- #include <linux/sched/topology.h>
- #include <linux/slab.h>
- 
-+#include "em_netlink.h"
-+
- /*
-  * Mutex serializing the registrations of performance domains and letting
-  * callbacks defined by drivers sleep.
-@@ -350,6 +352,8 @@ int em_dev_update_perf_domain(struct device *dev,
- 	em_table_free(old_table);
- 
- 	mutex_unlock(&em_pd_mutex);
-+
-+	em_notify_pd_updated(pd);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(em_dev_update_perf_domain);
-@@ -673,6 +677,7 @@ int em_dev_register_perf_domain(struct device *dev, unsigned int nr_states,
- 	list_add_tail(&dev->em_pd->node, &em_pd_list);
- 	mutex_unlock(&em_pd_list_mutex);
- 
-+	em_notify_pd_created(dev->em_pd);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(em_dev_register_perf_domain);
-@@ -695,6 +700,8 @@ void em_dev_unregister_perf_domain(struct device *dev)
- 	list_del_init(&dev->em_pd->node);
- 	mutex_unlock(&em_pd_list_mutex);
- 
-+	em_notify_pd_deleted(dev->em_pd);
-+
- 	/*
- 	 * The mutex separates all register/unregister requests and protects
- 	 * from potential clean-up/setup issues in the debugfs directories.
+rq = scx_bpf_cpu_rq(cpu);
+if (!rq)
+	return;
+p = rq->curr
+if (!p)
+	return;
+/* ... Do something with p */
+
+into:
+
+p = scx_bpf_task_acquire_remote_curr(cpu);
+if (!p)
+	return;
+/* ... Do something with p */
+bpf_task_release(p);
+
+
+v3:
+https://lore.kernel.org/lkml/20250805111036.130121-1-christian.loehle@arm.com/
+Don't change scx_bpf_cpu_rq() do not break BPF schedulers without the
+grace period. Just add the deprecation warning and do the hardening in
+the new scx_bpf_cpu_rq_locked(). (Andrea, Tejun, Jake)
+v2:
+https://lore.kernel.org/lkml/20250804112743.711816-1-christian.loehle@arm.com/
+- Open-code bpf_task_acquire() to avoid the forward declaration (Andrea)
+- Rename scx_bpf_task_acquire_remote_curr() to make it more explicit it
+behaves like bpf_task_acquire()
+- Dis
+v1:
+https://lore.kernel.org/lkml/20250801141741.355059-1-christian.loehle@arm.com/
+- scx_bpf_cpu_rq() now errors when a not locked rq is requested. (Andrea)
+- scx_bpf_remote_curr() calls bpf_task_acquire() which BPF user needs to
+release. (Andrea)
+Christian Loehle (3):
+  sched_ext: Introduce scx_bpf_cpu_rq_locked()
+  sched_ext: Provide scx_bpf_task_acquire_remote_curr()
+  sched_ext: deprecation warn for scx_bpf_cpu_rq()
+
+ kernel/sched/ext.c                       | 49 ++++++++++++++++++++++++
+ tools/sched_ext/include/scx/common.bpf.h |  2 +
+ 2 files changed, 51 insertions(+)
+
 -- 
-2.51.0
+2.34.1
 
