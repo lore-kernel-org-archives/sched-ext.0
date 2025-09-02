@@ -1,22 +1,23 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B82642F5485
-	for <sched-ext@lists.linux.dev>; Tue,  2 Sep 2025 11:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89EBC2F6594
+	for <sched-ext@lists.linux.dev>; Tue,  2 Sep 2025 11:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756811551; cv=none; b=DzHvT//mngjzDXpR2v3xvaFeNDhEp5RY5Pdq24LMTF9kIRXHLMN2E+5xlS5JwHRe+7Mc220W/F28qeZrXEEuwcWhLaIldkMfT8TU3RkzWPbo8p/5gpo833DWpbdYarvkFQQn49t8wV0KMoKC4CZSc+y9uArph4XOF2Q0HTVvoNQ=
+	t=1756811553; cv=none; b=n4ZaK8FM6dX+18e3IxB6r5QjGeZMu6jMWmKEbcmfFYxUL7Cjqtg+W+d8KPT8gpkw3NWtgbxSS5noXlTutxzQy4BIsDx2wweywHy69d8TkLxnaMhNJQMJadwrskUyADl9PQCcheM0A9vYEieIKeLiPf9bg9R25lv0Og+L9bWDVBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756811551; c=relaxed/simple;
-	bh=rWWZd7XItYTPoZRL+fgwWhMxqYXoYcDLlGPYszb8vlM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=O+7AkWWy5RQy28ikRstA2H9E31izgEEfIZIMyp+M8v8QIyI1bjj6XuCPgTb6kb3yjE2agoFMXu4O9x0LKOdkYLizC4lOOleLD/xNaNg4Iqs3xFv9sgouUhV3D0Z6ASJQfKgr8xG+U9jrC4pjOgI9Qbo/CYdD/XfWdC4fBtrvQJk=
+	s=arc-20240116; t=1756811553; c=relaxed/simple;
+	bh=ZgLcD+Uip94yvizlqHhEv7KW/s+A49+1dOGZmLQf2g8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=UPxiX6MY7kcLkPu8tu3pSSWJw6wqBnkzUWpbWOkq6h0CSSFLaSDySTSoFWFfd8XXBJT+1VzoES5sVDxBWK7Ma0cFdkbs5PM7jwhqShK6V9mTbYY0Gs3ymIfdt7AVJriral7Pcj8l8Qgp2P4h73wWLy/r4I0c5X9AqvW6+q/jy3I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DAE0426BE;
-	Tue,  2 Sep 2025 04:12:19 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A20D02720;
+	Tue,  2 Sep 2025 04:12:22 -0700 (PDT)
 Received: from e127648.arm.com (unknown [10.57.90.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id D49C43F694;
-	Tue,  2 Sep 2025 04:12:25 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id B3EA23F694;
+	Tue,  2 Sep 2025 04:12:28 -0700 (PDT)
 From: Christian Loehle <christian.loehle@arm.com>
 To: tj@kernel.org,
 	arighi@nvidia.com,
@@ -29,10 +30,12 @@ Cc: linux-kernel@vger.kernel.org,
 	peterz@infradead.org,
 	jake@hillion.co.uk,
 	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH v6 0/3] sched_ext: Harden scx_bpf_cpu_rq()
-Date: Tue,  2 Sep 2025 12:11:40 +0100
-Message-Id: <20250902111143.2667154-1-christian.loehle@arm.com>
+Subject: [PATCH v6 1/3] sched_ext: Introduce scx_bpf_cpu_rq_locked()
+Date: Tue,  2 Sep 2025 12:11:41 +0100
+Message-Id: <20250902111143.2667154-2-christian.loehle@arm.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250902111143.2667154-1-christian.loehle@arm.com>
+References: <20250902111143.2667154-1-christian.loehle@arm.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -41,61 +44,72 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_cpu_rq() currently allows accessing struct rq fields without
-holding the associated rq.
-It is being used by scx_cosmos, scx_flash, scx_lavd, scx_layered, and
-scx_tickless. Fortunately it is only ever used to fetch rq->curr.
-So provide an alternative scx_bpf_remote_curr() that doesn't expose struct rq
-and provide a hardened scx_bpf_cpu_rq_locked() by ensuring we hold the rq lock.
-Add a deprecation warning to scx_bpf_cpu_rq() that mentions the two alternatives.
+Most fields in scx_bpf_cpu_rq() assume that its rq_lock is held.
+Furthermore they become meaningless without rq lock, too.
+Make a safer version of scx_bpf_cpu_rq() that only returns a rq
+if we hold rq lock of that rq.
 
-This also simplifies scx code from:
+Also mark the new scx_bpf_cpu_rq_locked() as returning NULL.
 
-rq = scx_bpf_cpu_rq(cpu);
-if (!rq)
-	return;
-p = rq->curr
-/* ... Do something with p */
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+---
+ kernel/sched/ext.c                       | 23 +++++++++++++++++++++++
+ tools/sched_ext/include/scx/common.bpf.h |  1 +
+ 2 files changed, 24 insertions(+)
 
-into:
-
-p = scx_bpf_remote_curr(cpu);
-/* ... Do something with p */
-
-Changes since:
-v5:
-https://lore.kernel.org/lkml/20250901132605.2282650-2-christian.loehle@arm.com/
-- Actually expose the RCU pointer in scx_bpf_remote_curr() as such (Andrea)
-v4:
-https://lore.kernel.org/lkml/20250811212150.85759-1-christian.loehle@arm.com/
-- Remove cpu argument from scx_bpf_cpu_rq_locked() as SCX has a unique
-locked_rq_state anyway. (Tejun)
-- Expose RCU pointer in scx_bpf_remote_curr() (Peter)
-v3:
-https://lore.kernel.org/lkml/20250805111036.130121-1-christian.loehle@arm.com/
-- Don't change scx_bpf_cpu_rq() do not break BPF schedulers without the
-grace period. Just add the deprecation warning and do the hardening in
-the new scx_bpf_cpu_rq_locked(). (Andrea, Tejun, Jake)
-v2:
-https://lore.kernel.org/lkml/20250804112743.711816-1-christian.loehle@arm.com/
-- Open-code bpf_task_acquire() to avoid the forward declaration (Andrea)
-- Rename scx_bpf_task_acquire_remote_curr() to make it more explicit it
-behaves like bpf_task_acquire()
-v1:
-https://lore.kernel.org/lkml/20250801141741.355059-1-christian.loehle@arm.com/
-- scx_bpf_cpu_rq() now errors when a not locked rq is requested. (Andrea)
-- scx_bpf_remote_curr() calls bpf_task_acquire() which BPF user needs to
-release. (Andrea)
-
-Christian Loehle (3):
-  sched_ext: Introduce scx_bpf_cpu_rq_locked()
-  sched_ext: Introduce scx_bpf_remote_curr()
-  sched_ext: deprecation warn for scx_bpf_cpu_rq()
-
- kernel/sched/ext.c                       | 40 ++++++++++++++++++++++++
- tools/sched_ext/include/scx/common.bpf.h |  2 ++
- 2 files changed, 42 insertions(+)
-
---
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 4ae32ef179dd..9fcc310d85d5 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -7430,6 +7430,28 @@ __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
+ 	return cpu_rq(cpu);
+ }
+ 
++/**
++ * scx_bpf_cpu_rq_locked - Return the rq currently locked by SCX
++ *
++ * Returns the rq if a rq lock is currently held by SCX.
++ * Otherwise emits an error and returns NULL.
++ */
++__bpf_kfunc struct rq *scx_bpf_cpu_rq_locked(void)
++{
++	struct rq *rq;
++
++	preempt_disable();
++	rq = scx_locked_rq();
++	if (!rq) {
++		preempt_enable();
++		scx_kf_error("accessing rq without holding rq lock");
++		return NULL;
++	}
++	preempt_enable();
++
++	return rq;
++}
++
+ /**
+  * scx_bpf_task_cgroup - Return the sched cgroup of a task
+  * @p: task of interest
+@@ -7594,6 +7616,7 @@ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
+ BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_rq)
++BTF_ID_FLAGS(func, scx_bpf_cpu_rq_locked, KF_RET_NULL)
+ #ifdef CONFIG_CGROUP_SCHED
+ BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_RCU | KF_ACQUIRE)
+ #endif
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index d4e21558e982..f5be06c93359 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -91,6 +91,7 @@ s32 scx_bpf_pick_any_cpu(const cpumask_t *cpus_allowed, u64 flags) __ksym;
+ bool scx_bpf_task_running(const struct task_struct *p) __ksym;
+ s32 scx_bpf_task_cpu(const struct task_struct *p) __ksym;
+ struct rq *scx_bpf_cpu_rq(s32 cpu) __ksym;
++struct rq *scx_bpf_cpu_rq_locked(void) __ksym;
+ struct cgroup *scx_bpf_task_cgroup(struct task_struct *p) __ksym __weak;
+ u64 scx_bpf_now(void) __ksym __weak;
+ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __weak;
+-- 
 2.34.1
 
