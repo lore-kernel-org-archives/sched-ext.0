@@ -1,84 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F404F5E0;
-	Wed,  3 Sep 2025 20:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB4862EB86C
+	for <sched-ext@lists.linux.dev>; Wed,  3 Sep 2025 21:23:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756933061; cv=none; b=t1UDyKmU8dn3b7foOCkVSBNz4n/qljO/3LUonVMnrPzqYZ2wiFw0kCHeQ3GDaFNunvSYJGaJ++rLzAD4Ojwh68itNIxZl1H00iwv0r3duRIiGy7yB7WyO1UKzSYOSp7V9lUptQA0O0ULONiMfPoKj0RAOzhzIgEIy7a1NJ/XcJk=
+	t=1756934613; cv=none; b=PQBnVM5CTvvpAiT+gh8i6uEfa53YrNGa8+jouRHZTkc5hiLTwdylsAUDGfkuXlC9UCQpjHxJF3l0gN6mrojelm1xfwLyunfXpzof3ca7g7QFiMQNwBU4GSIxk8q6icMN4xMyNxT8amrUnXHhRJrTQeweYuDc+02pkFkrLKSym60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756933061; c=relaxed/simple;
-	bh=f/KWYTA/DxpHnAzgn5OQod2RUCvIH1M7xETk4wmHHkA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HsleCHcj+ZL7PGkTemsTdPU0h3LRI9C10xjKKdFbrDTn2wshTGvoBcrnY391GK3/f4QxJDnc+4MhKVfHEXK/6hrVSeL6lCX5aMFiZBPymI9ExebX85xNUbfba0l9k9mZ4C+JO7iVnZUYMIhuBjZt0q9je/zPC2Z+lqOOJ4g/ecU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ji1YyKyg; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ji1YyKyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F0EC4CEE7;
-	Wed,  3 Sep 2025 20:57:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756933060;
-	bh=f/KWYTA/DxpHnAzgn5OQod2RUCvIH1M7xETk4wmHHkA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ji1YyKygbp0FQk0KAUrs6L8RptQPsE1zLNHBMQRQKXDHoZ6NpuJnIQyKV7WK9moXS
-	 Ip35U2v7OzpXdAPJqvgN7Zr/xc8PNtNEFH0x3iV8JpFg5g6WCR9zwUFwcaQTaKviqv
-	 Hv5m5j5BlGVSjyeQCWT484PCz0iFAtRCP9HSoqlVwVJ9yQHIK2fIEIinqmPLNpT8xY
-	 MXx/jiDJgnriHGyDoPMLJnm/VEo/J+0WCQs3QFWH4/HSAN2NPiKrmtgKouyf1kSbru
-	 +dO3VBscSvggsNyGI2aA81S20V8jJVJx4C9OAwvpxRBI9GTHASR66wOHWTKY49aZRl
-	 FKkBAz25lEMXQ==
-Date: Wed, 3 Sep 2025 10:57:39 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-6.18] sched_ext: Use cgroup_lock/unlock()
- to synchronize against cgroup operations
-Message-ID: <aLirwysOBpAGubIy@slm.duckdns.org>
-References: <aLeANmpO03QiPgSX@slm.duckdns.org>
- <aLg4SsZHY66n3Vi2@gpd4>
- <aLhvUpkanqxNHyZe@slm.duckdns.org>
- <aLipid4JRKEac1bS@gpd4>
+	s=arc-20240116; t=1756934613; c=relaxed/simple;
+	bh=h1QhN/kSTcrpq+tj/cQL6u+Ya5TSdAHv2+PcPv0chsM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Rl9NK3jPf0W1m6fzfu/xWhj2IqMtXMiRlsDuNwffyMkgHnkXqi3lzQi5SwA89Hh5yfDOEcmGaNTycZ1mlD91v+LQVk3UYyBSLuP/AaFNLqvFdwRSA42KyD3xhEi7BVylFGJXakRIsFVpjfVYoHsvz55LrdRQR/3Nqky9E+mraDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E26C1655;
+	Wed,  3 Sep 2025 14:23:22 -0700 (PDT)
+Received: from e127648.arm.com (unknown [10.57.93.203])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 915283F694;
+	Wed,  3 Sep 2025 14:23:28 -0700 (PDT)
+From: Christian Loehle <christian.loehle@arm.com>
+To: tj@kernel.org,
+	arighi@nvidia.com,
+	void@manifault.com
+Cc: linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	changwoo@igalia.com,
+	hodgesd@meta.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	jake@hillion.co.uk,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH v7 0/3] sched_ext: Harden scx_bpf_cpu_rq()
+Date: Wed,  3 Sep 2025 22:23:08 +0100
+Message-Id: <20250903212311.369697-1-christian.loehle@arm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aLipid4JRKEac1bS@gpd4>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 03, 2025 at 10:48:09PM +0200, Andrea Righi wrote:
-> On Wed, Sep 03, 2025 at 06:39:46AM -1000, Tejun Heo wrote:
-> > Hello,
-> > 
-> > On Wed, Sep 03, 2025 at 02:44:58PM +0200, Andrea Righi wrote:
-> > > >  static void scx_cgroup_lock(void)
-> > > >  {
-> > > > -	percpu_down_write(&scx_cgroup_rwsem);
-> > > > +	percpu_down_write(&scx_cgroup_ops_rwsem);
-> > > > +	cgroup_lock();
-> > > >  }
-> > > 
-> > > Shouldn't we acquire cgroup_lock() before scx_cgroup_ops_rwsem to avoid
-> > > a potential AB-BA deadlock?
-> > 
-> > There's no existing ordering between the two locks, so any order should be
-> > safe. The reason why I put it in this particular order is because any
-> > cgroup_lock() holder has no reason to grab ops_rwsem now or in the future
-> > while the opposite direction is still unlikely but theoretically more
-> > possible.
-> 
-> Isn't scx_group_set_weight() called with cgroup_mutex held? In this case
-> the order is cgroup_lock() -> scx_cgroup_ops_rwsem, or am I missing
-> something?
+scx_bpf_cpu_rq() currently allows accessing struct rq fields without
+holding the associated rq.
+It is being used by scx_cosmos, scx_flash, scx_lavd, scx_layered, and
+scx_tickless. Fortunately it is only ever used to fetch rq->curr.
+So provide an alternative scx_bpf_cpu_curr() that doesn't expose struct rq
+and provide a hardened scx_bpf_locked_rq() by ensuring we hold the rq lock.
+Add a deprecation warning to scx_bpf_cpu_rq() that mentions the two alternatives.
 
-Oh, no, cgroup_lock() is only held for operations that change the cgroup
-hierarchy - cgroup creation, deletion, controller enable/disable, task
-migration and so on. Writes to control knobs doesn't acquire cgroup_lock().
+This also simplifies scx code from:
 
-Thanks.
+rq = scx_bpf_cpu_rq(cpu);
+if (!rq)
+	return;
+p = rq->curr
+/* ... Do something with p */
 
--- 
-tejun
+into:
+
+p = scx_bpf_cpu_curr(cpu);
+/* ... Do something with p */
+
+Changes since:
+v6:
+https://lore.kernel.org/lkml/20250902111143.2667154-1-christian.loehle@arm.com/
+- Rename: scx_bpf_cpu_rq_locked() -> scx_bpf_locked_rq() and
+scx_bpf_remote_curr() -> scx_bpf_cpu_curr() (Tejun)
+- Print the deprecation warning of scx_bpf_cpu_rq() once per scheduler. (Tejun)
+- Picked up Andrea's ACKs (except for 3/3 because of the logic change).
+v5:
+https://lore.kernel.org/lkml/20250901132605.2282650-2-christian.loehle@arm.com/
+- Actually expose the RCU pointer in scx_bpf_remote_curr() as such (Andrea)
+v4:
+https://lore.kernel.org/lkml/20250811212150.85759-1-christian.loehle@arm.com/
+- Remove cpu argument from scx_bpf_cpu_rq_locked() as SCX has a unique
+locked_rq_state anyway. (Tejun)
+- Expose RCU pointer in scx_bpf_remote_curr() (Peter)
+v3:
+https://lore.kernel.org/lkml/20250805111036.130121-1-christian.loehle@arm.com/
+- Don't change scx_bpf_cpu_rq() do not break BPF schedulers without the
+grace period. Just add the deprecation warning and do the hardening in
+the new scx_bpf_cpu_rq_locked(). (Andrea, Tejun, Jake)
+v2:
+https://lore.kernel.org/lkml/20250804112743.711816-1-christian.loehle@arm.com/
+- Open-code bpf_task_acquire() to avoid the forward declaration (Andrea)
+- Rename scx_bpf_task_acquire_remote_curr() to make it more explicit it
+behaves like bpf_task_acquire()
+v1:
+https://lore.kernel.org/lkml/20250801141741.355059-1-christian.loehle@arm.com/
+- scx_bpf_cpu_rq() now errors when a not locked rq is requested. (Andrea)
+- scx_bpf_remote_curr() calls bpf_task_acquire() which BPF user needs to
+release. (Andrea)
+
+Christian Loehle (3):
+  sched_ext: Introduce scx_bpf_locked_rq()
+  sched_ext: Introduce scx_bpf_cpu_curr()
+  sched_ext: deprecation warn for scx_bpf_cpu_rq()
+
+ kernel/sched/ext.c                       | 47 ++++++++++++++++++++++++
+ tools/sched_ext/include/scx/common.bpf.h |  2 +
+ 2 files changed, 49 insertions(+)
+
+--
+2.34.1
+
