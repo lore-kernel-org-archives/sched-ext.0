@@ -1,72 +1,83 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5E521FF46
-	for <sched-ext@lists.linux.dev>; Wed,  3 Sep 2025 20:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCA128CF50;
+	Wed,  3 Sep 2025 20:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756931881; cv=none; b=ia94E1/W5l21OSlcnER3E1mloF/yAG2B4sh/pARYAfREmgGWjC6LGJ28DS3HH63TziMmuss/0P6z9I6jOeku165t1RW8bJN6jvQiQ9Oy7xortwJ8Imih9qvMwR0pZG7onw4Wt+m9mpIdJ2+DEImNoK3sYGq10kJUTfdU4NZhlG4=
+	t=1756932083; cv=none; b=W/T2LujknmRnX0Z1/NxYKASWOi1U8X0tNodxfD0xwLg3JKlK4F0gqJzoGEQK8msKBSAz+yaz7pYsaKGPgi6zRl9XgFeFeqktJgA4nF9Xmq881pl7uHepTMCF2G+kLel6PONMqhhheRWCJe4rqvQHsEz4x9p5eU8YUuu3Wnz/6OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756931881; c=relaxed/simple;
-	bh=uKu8S39LMZPkk9uPU/gev0Ffo2LUCTJHd4AdQN9gLgo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mBWDiTlZ8JbpLGRM1zNm3rOWekNzmCws7Tmk9+5gDOa4itiWKaTBj8XkUxIPTMdpQsWeMrpYVgvjSg2hVr+r84H9gpxk710QXFpwiQ3NKaGocDlxtcLn7r2yYY1xN13sXmAC4HBciQh7QR3Yc+yHx6jqx8A8qEitqxkONvLciiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DE4DB1688;
-	Wed,  3 Sep 2025 13:37:48 -0700 (PDT)
-Received: from [10.57.93.203] (unknown [10.57.93.203])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AD7A23F6A8;
-	Wed,  3 Sep 2025 13:37:55 -0700 (PDT)
-Message-ID: <8559c7d7-2171-4d86-8334-7e8442e96b9a@arm.com>
-Date: Wed, 3 Sep 2025 21:37:54 +0100
+	s=arc-20240116; t=1756932083; c=relaxed/simple;
+	bh=awJ5ekaSn/np8rb2X9ETbHDafqUhUp5JucDgif5oFhU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c335u0a8DzYtBBjro7lSTbvjNf4nV8LHtdYd/5Jq6aVcWoaBt8KTCkXcV0WN0spyW3bCHiMa2c/mfJFmghNi8swuTlJN9z4gj+rOvncZgcSrMxl1UdC5mjiCQ3H3+UhNEhE0gzVdhP0WIim9o/spRWcdcSjPVw1qVuviU8p0NuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AkQi/ZnA; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkQi/ZnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDC1C4CEE7;
+	Wed,  3 Sep 2025 20:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756932082;
+	bh=awJ5ekaSn/np8rb2X9ETbHDafqUhUp5JucDgif5oFhU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AkQi/ZnAGxjji9uEM2T8wA9OCC8J6mFlgkr0aRspn0XNyWMlsyWmMPC6R8mwXLQxX
+	 JJW2Ge37HAWqw3feyFcKAbIMYq/B9KiyEAm2NUzoZTr4NeVIZjeqwvpy3JV2SbpUgb
+	 g4e0bbsR3/FBETj/k3eg3Yfbc9RUpqZ3I0ebEbYa0L/Seg9+HuRVfr9tI7xRhZMB0R
+	 IkDe+0YLx3ApwHkNitRoEhRyQoAmBf+I6waB9kQnZ2wxtmj/ztcueWFzw393P95CGs
+	 Viq4RBU7m7O+LcQKn2eufZOzNfgffUQLrCVNhLtaKL8NAHPwWJI48LJYe3RsmjmBIH
+	 RGAVCjUyHEB4Q==
+Date: Wed, 3 Sep 2025 10:41:21 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: Andrea Righi <arighi@nvidia.com>, Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
+	sched-ext@lists.linux.dev, bpf@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Luigi De Matteis <ldematteis123@gmail.com>
+Subject: Re: [PATCH 07/16] sched_ext: Add a DL server for sched_ext tasks
+Message-ID: <aLin8VayVsYyKXze@slm.duckdns.org>
+References: <20250903095008.162049-1-arighi@nvidia.com>
+ <20250903095008.162049-8-arighi@nvidia.com>
+ <aLidEvX41Xie5kwY@slm.duckdns.org>
+ <20250903200822.GO4067720@noisy.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] sched_ext: deprecation warn for scx_bpf_cpu_rq()
-To: Tejun Heo <tj@kernel.org>
-Cc: arighi@nvidia.com, void@manifault.com, linux-kernel@vger.kernel.org,
- sched-ext@lists.linux.dev, changwoo@igalia.com, hodgesd@meta.com,
- mingo@redhat.com, peterz@infradead.org, jake@hillion.co.uk
-References: <20250901132605.2282650-1-christian.loehle@arm.com>
- <20250901132605.2282650-5-christian.loehle@arm.com>
- <aLhlPaa_lLFPnX2A@slm.duckdns.org>
-Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
-In-Reply-To: <aLhlPaa_lLFPnX2A@slm.duckdns.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250903200822.GO4067720@noisy.programming.kicks-ass.net>
 
-On 9/3/25 16:56, Tejun Heo wrote:
-> On Mon, Sep 01, 2025 at 02:26:04PM +0100, Christian Loehle wrote:
->> scx_bpf_cpu_rq() works on an unlocked rq which generally isn't safe.
->> For the common use-cases scx_bpf_cpu_rq_locked() and
->> scx_bpf_remote_curr() work, so add a deprecation warning
->> to scx_bpf_cpu_rq() so it can eventually be removed.
->>
->> Signed-off-by: Christian Loehle <christian.loehle@arm.com>
->> ---
->>  kernel/sched/ext.c | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
->> index e242a2520f06..a524d404ad09 100644
->> --- a/kernel/sched/ext.c
->> +++ b/kernel/sched/ext.c
->> @@ -7427,6 +7427,9 @@ __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
->>  	if (!kf_cpu_valid(cpu, NULL))
->>  		return NULL;
->>  
->> +	pr_warn_once("%s() is deprecated; use scx_bpf_cpu_rq_locked() when holding rq lock "
->> +		     "or scx_bpf_remote_curr() to read remote curr safely.\n", __func__);
->> +
+Hello,
+
+On Wed, Sep 03, 2025 at 10:08:22PM +0200, Peter Zijlstra wrote:
+> > I'm a bit confused. This series doesn't have prep patches to add @rf to
+> > dl_server_pick_f. Is this the right patch?
 > 
-> I wonder whether it'd make more sense to tie the once testing to the
-> scheduler instance (see warned_zero_slice).
+> Patch 14 seems to be the proposed alternative, and I'm not liking that
+> at all.
 > 
-Yes that makes sense to me, I'll resend with this and the renaming suggestions.
-Thanks!
+> That rf passing was very much also needed for that other issue; I'm not
+> sure why that's gone away.
+
+Using balance() was my suggestion to stay within the current framework. If
+we want to add @rf to pick_task(), that's more fundamental change. We
+dropped the discussion in the other thread but I found it odd to add @rf to
+pick_task() while disallowing the use of @rf in non-dl-server pick path and
+if we want to allow that, we gotta solve the race between pick_task()
+dropping rq lock and the ttwu inserting high pri task.
+
+Thanks.
+
+-- 
+tejun
