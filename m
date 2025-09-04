@@ -1,168 +1,203 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2054.outbound.protection.outlook.com [40.107.101.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E68299AB4
-	for <sched-ext@lists.linux.dev>; Thu,  4 Sep 2025 07:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756970255; cv=none; b=ltIGTvzVlzZj6y7ZVLk1TagXwSzRmK/admU5lHflB1iVjccg9sFcvxRVUqpcAibbBCQnH+ZzSzJU2x/n6f9LvfLpwlvW9cxPphHBZ1jlW1Sw/fvyWKtKFnifFdlVw8s0fl4DwmDMdga4eMatahIWTB1xBp7Nb5x1w1hxZ9DUZj0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756970255; c=relaxed/simple;
-	bh=oIckBVKRKgmc03f98rn0emLj9a37R8lZrEevCLloEgE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=c4gQFZLO4yfb8D2O0MmNukY+tTtZNAVRA4hI7EfoSjh73Mp4+2NKjcjXPi6ViFJnoKN8zTqiCjjobQ1S8900nKczAlBPK0ZTs1QUL8SsCjyUlOurx+oJYUmtVev/VQHWh74By5kevsO1mm4bwChbcX5uundcXlq4VHCRR+8UfKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=H9Mmvq9p; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A518277CA4
+	for <sched-ext@lists.linux.dev>; Thu,  4 Sep 2025 12:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.101.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756990539; cv=fail; b=UmslPBoLG7yabbJ1SxXKsQCDBi/ZZlkG6L+pqyhC7fqLN5NFu8CXApTT4EvFkbGbIJjdcHpbGD8WeW6rjMf50ivLlxkNm9O2K51RP+sFSseTntYjFMHODWn5oEGYoRN/4cfSUUZOr5UAVZ9TvtdaPVGpNJRWA5wxqkBv1L93MAM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756990539; c=relaxed/simple;
+	bh=u/+HyqGSZ5xiCBCDkfNLJj++M4lzNWHhfhFdLpKh0g4=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=eM+UgjRMYBAAlNIdI2HFdAT+mPUq75jnmvjcjv9oCO+31TtEceYLcw5MU2WWThUkop1J/ySHVzN3u0kHwc5ikdM6t7k1dmGGS/mNlDq+tBCq0sG6OKK7deiIDEV6GoZq+peUy0A7rQ71WKUsg0xKfniCmuyPy1TCeVNX2U8klVg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=koZH1Zg5; arc=fail smtp.client-ip=40.107.101.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="H9Mmvq9p"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1756970252;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=e8hHca6nrr4DSD1i4RnW4HNPHcBb/x8yT/5uh6e1tr0=;
-	b=H9Mmvq9pnJ5Yfmr80sFuvZUSEdGTvHlwJz15alG09ev2iPm7csu9gJCEcAVQ9isArjo+9y
-	txrFk3tpwAlRLClvtzDG9vIPDZ9DGJCc0cl0vCcM6Rg/pSzRAabbx9YmveSAlrErkEXqQb
-	osmC1fIuQVJsdA2O4r5wyHWVmlGqLxk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-x6rxxHw4Msm6oFnKQQ_Tvw-1; Thu, 04 Sep 2025 03:17:29 -0400
-X-MC-Unique: x6rxxHw4Msm6oFnKQQ_Tvw-1
-X-Mimecast-MFC-AGG-ID: x6rxxHw4Msm6oFnKQQ_Tvw_1756970248
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-45b99c18484so2643925e9.1
-        for <sched-ext@lists.linux.dev>; Thu, 04 Sep 2025 00:17:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756970248; x=1757575048;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e8hHca6nrr4DSD1i4RnW4HNPHcBb/x8yT/5uh6e1tr0=;
-        b=LrXRgPqQX6y8/AgKOowLkFPswd693wzo2vKN0EAXXxxwwao5xt6hil+IHiJH09Ejy3
-         EZ6/NZf0IoqFXOQ5ys9NZfqxzcDVmIQrWduCiPZLGUeh/DRSkOpoDW7y+RdtE9Ej61J8
-         Ec5MxxzHt6OalH+Y3rYE4VYn4x6HMUyLA+woQvC3GTcnEiw/s04Wu5lj+m3qqG8YPkRm
-         CuQpm/+cjq7lgJ7XrX+fPmDOEdWqSYril2O//WO7qWTH5GA/dZ9SltY9mI8sra8oX0QW
-         /c+bldwLu78qEqUEHV4xmvcsEjyQAtui5S6AEccNfZ21fCaCTKPQuaRiaRRdjnr5s8au
-         muBA==
-X-Forwarded-Encrypted: i=1; AJvYcCU1hMIhe5K2inFs2jf8/CBlWAvjUSzYFtJIc5HNNWsOUm8+TUuzPdQWIyzK8xWhLxggOxRVIsKnp7s=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2qoNsaNcTyUV08ndFBun2ya6gDjcfzqyoA1ygO5CQrCfdCRSw
-	eoG2KjgbsR4CaUzUqjZ2C4VLLwefMHSKfCGOFvACTK7mv0H+bV1jaazaYQF39uBaP435DoFEk6P
-	P1hynMHUPqA5PsG6EvI91JLkX3h77Ocx9ssrn2IsvkPfs2NarTVSG8VUzAXLiXw==
-X-Gm-Gg: ASbGncusVDiUH3RsrhZEpBnjN0bBjmTeKAcOEizyuuwUp9Bn8SfWNOiyZJqeNyJneqW
-	DOr1oMkLuzjxyimwWu1ERgUG4vpzvUKIEZc0ku40hYSiEb0AXCxQtlri1IOl6t7n6RNeETWAit2
-	rMr1j0RZv0c127y4Bsv+rNUKrxt1dIHzAl1WAnbyyQHLLcuQ8JIfNCckJVzYMVYF1REipf3GSoI
-	FRImKBFmksBsqhlz/t1UDuiKnO5BX3KFwTQMNW9pr8ZXTY8jkr8xUk/nGM6uRrbw4to9FYmxjGS
-	ksC3rlyaTn++pc4b0IhjhsW4P030sekyexdSrrf9roliCBX0oq2TJHlVZ3booErcyaZzbUw=
-X-Received: by 2002:a05:600c:4694:b0:459:443e:b177 with SMTP id 5b1f17b1804b1-45b8557a72cmr141027085e9.25.1756970248432;
-        Thu, 04 Sep 2025 00:17:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxlNaYXu+Ti5TyjToAfM/VPhoLNPClSOiPQxxxvQ/mXgMA1LuzTwi9Jqs2HyOXrR/sPrrxEg==
-X-Received: by 2002:a05:600c:4694:b0:459:443e:b177 with SMTP id 5b1f17b1804b1-45b8557a72cmr141026695e9.25.1756970247956;
-        Thu, 04 Sep 2025 00:17:27 -0700 (PDT)
-Received: from jlelli-thinkpadt14gen4.remote.csb ([151.29.70.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45dd2304e16sm7685035e9.7.2025.09.04.00.17.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 00:17:27 -0700 (PDT)
-Date: Thu, 4 Sep 2025 09:17:24 +0200
-From: Juri Lelli <juri.lelli@redhat.com>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Andrea Righi <arighi@nvidia.com>, Ingo Molnar <mingo@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>, Tejun Heo <tj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="koZH1Zg5"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WZIWxCuDnvJCsl8T3WYnjgpfxyWn1KVGoO8Nf+N5RKyLj40FGK4+TpdpzatjT8bs4KSNK78tlROo2hgz33grZO4pHAFIVl22Pt4V0BD9ITxBPooIHEF3EATODMO2iKpucE4YydD7/8sluFVigQKMobU1pSm2wrinDXOp/lBclOjN9WwJvDjXqu5HwfsiutLz9cTQIbqlrCvYRQBzhhrsGWxNbLmK7yIxusbPuOQgAtUT/+IKGjttw6HdlYc9BQRZnJhgXYe63/HVNDAUBrqiDiW34KXNfZzK8NfLloiVd97jcTN0BCeL3jLauDGBVMGvE3NfJxBZqsH3m7ANsJDj+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XUmcES2UNf9ceW52kh0rBzOzSX4rlLaUB9962C/HX+Q=;
+ b=kqcgSFO4guiePVnqe+g2OzHA1/76Hy3/UHofJ62+psSNWj0oyZCXyh+NTYNeipb+Hp9YQ67gXElnCrS7IRagNmEeTMNEqaq73ibhDrbGl5cob4hrgG4Og64OEQcENQdjJJiv0wOuW4mmBI4TRsx5Pz5sSKz3bD6P9GowN1pV571y4+lqzYOLA5F86A72BiQRsIAyZ9Fh91b2PrMoqaOCQkffFkF0pBjpK2879qKU6j86cSgviLIap92eEVR9UQcD+CoMDT8mhQRE6+HdoJk3utOPtyVGgZlLgS7uyb5RCYxBSqL9WYiT6KcUs450qpB8E3FqR3WtY5MLhO2YsMmNpA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XUmcES2UNf9ceW52kh0rBzOzSX4rlLaUB9962C/HX+Q=;
+ b=koZH1Zg5KZXU7WK4dtwfpNxbxsTVl+65E99vM3Q33UHCEezQvL5M1ZT3Ht0d1fpc0Jca822ITXM0MLi9O81/o3VVu+89pqQhNhQuy1Oy902rVN2+RU/mEfTmRK48+QgA9YAof57wm92blwdr8Hrzg6P2kRoAMfVvBZ9si74dmKdrcsrZ5jaYgpSl+3qPRL2pK0cjZ40Id1hd/89yNMHfldYJDK6UtrgGdH8dkwpTDtVPDGThOZi78oj9O38pYlnMAEyc86+t0uWQWlcUEZ7Mr2hHTvxkm2VrAWWa9Z6mELkSwTSsdehpOhKUtgTOr+NNeuPmUEXifOsMFW6RcetR2g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by MN0PR12MB6342.namprd12.prod.outlook.com (2603:10b6:208:3c1::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Thu, 4 Sep
+ 2025 12:55:33 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%5]) with mapi id 15.20.9094.017; Thu, 4 Sep 2025
+ 12:55:33 +0000
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
-	sched-ext@lists.linux.dev, bpf@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Luca Abeni <luca.abeni@santannapisa.it>,
-	Yuri Andriaccio <yurand2000@gmail.com>
-Subject: Re: [PATCH 05/16] sched/deadline: Return EBUSY if dl_bw_cpus is zero
-Message-ID: <aLk9BNnFYZ3bhVAE@jlelli-thinkpadt14gen4.remote.csb>
-References: <20250903095008.162049-1-arighi@nvidia.com>
- <20250903095008.162049-6-arighi@nvidia.com>
- <aLhWh9_bJ5oKlQ3O@jlelli-thinkpadt14gen4.remote.csb>
- <20250903200520.GN4067720@noisy.programming.kicks-ass.net>
+	Changwoo Min <changwoo@igalia.com>
+Cc: Christian Loehle <christian.loehle@arm.com>,
+	Jake Hillion <jakehillion@meta.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH sched_ext/for-6.18] sched_ext: Fix NULL dereference in scx_bpf_cpu_rq() warning
+Date: Thu,  4 Sep 2025 14:55:22 +0200
+Message-ID: <20250904125522.561737-1-arighi@nvidia.com>
+X-Mailer: git-send-email 2.51.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MI2P293CA0015.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:45::9) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20250903200520.GN4067720@noisy.programming.kicks-ass.net>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 8rkhCHb8fh3Etp3djZ3UaIA1H7EbpD55lE9aGxKyUE8_1756970248
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|MN0PR12MB6342:EE_
+X-MS-Office365-Filtering-Correlation-Id: b51301c1-97a5-404b-c667-08ddebb255cd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?0XKqEOWrIjVYumKB3+GMQ0h9ouyMA+RMhb2wyVy6HSw8LjqyyQkU0ymBNTiC?=
+ =?us-ascii?Q?djdYE8rJ+2IM3w7hbq4tHboytRSCqiGJFxaOosIEKZv0+svEz+8JE9ikxGjo?=
+ =?us-ascii?Q?44/0LabRnE2kRP56JElX0p2y9rZA6MwzIYo8coND5fy2dLxVdikmwEsW8Awh?=
+ =?us-ascii?Q?ShOGnD+mN/DVpETrOLC4tkwBv7ykF1gcIy0UbXu8FCWb8ES1acNFNBaXhloC?=
+ =?us-ascii?Q?Kih3xQwxj+KwoV9W3E6PjGvqvkIvGONj1WT118tk+Y0Pb9gI5lXOwE358oKl?=
+ =?us-ascii?Q?5jk0MmEZSI04cuhCT77LjM+53Ux/1IZu/RaS10sZjNxlrKMiAh8TQYF4AWAC?=
+ =?us-ascii?Q?oNyC+gTnvbm1O3woFtHQihiDleIuTzp4uAPl/WEm4rfs7Hqc6PsJ5GdI/Vtd?=
+ =?us-ascii?Q?ZU2UBC5Olauxv5IHOUZocbTKR5fUZH1OhEg3gLDAB/1L2znoghf6UMV40mfG?=
+ =?us-ascii?Q?cqqrD5JpXpc2KCdOLXkcw6DZptNNr56Nq/rlv+6klmPgJt5GDB8Aeo3TIbjL?=
+ =?us-ascii?Q?+8tSwjU5GYWZGK3UxipADipY8OaXF0/xxI19ARTzbYYKFUTdSbMpDu36HhZ7?=
+ =?us-ascii?Q?/shAzyy3EiFGAqiBFgiMISNHNtnMZSZSuWl20V4zMnZsKCVbeZbu0MqWGYDq?=
+ =?us-ascii?Q?xO07GKbVPYtVv+6rB+4Azj8svezJfqpEzEpr9mzSjAMrz6kB5wBlF59uWOnN?=
+ =?us-ascii?Q?zkyGezHbyTbJwvlLnTrty+tIFhyR6gz5MeD68UXg+aoc3Lk2gOgq8XNkIPVx?=
+ =?us-ascii?Q?Gsalxfu5FR1JP6WMdet1WRIPAe6zJc5k0FAdtbjbulL3lW1rwOQccUfVqwJY?=
+ =?us-ascii?Q?Jti1dBVawjnabFu+oJPdIF/kPYWGj05XAzGKEolqL/m6yJhKA1osjaIlDzky?=
+ =?us-ascii?Q?tWvBguVbj7Xjnis1TRZ19lnjyXtkKzKw2H/roKDH5+W/dtkDR2Zxm9UqO58j?=
+ =?us-ascii?Q?bUGyV7O3VNy+NLOj+jQm0IarBkHI/cV9h4UNm4kPC118+pBCJGdAZXYkqdxS?=
+ =?us-ascii?Q?nTPbgV2026s9JtZnQWAUecNaOhzqhg4RP70ziLtQu10vhUr4S4ZihpwXnTbt?=
+ =?us-ascii?Q?B+JxOidAc9WzqHSbDNsfksaixw430KggClYcuxCd7gfwzRK3Gh4ZzI+tY4na?=
+ =?us-ascii?Q?t4KL421N4Jx137H5KDHB+XJLIgMzFB3oYEmb7biCmC061CkqFNZMgYPuG5WI?=
+ =?us-ascii?Q?rJ3p8OVRTEDX/6rw/Gim4RTIO6v0+8dMYScQrjMP+NhVzS05scnWNI7D9Ev3?=
+ =?us-ascii?Q?rOUtmhQIT59tsvlbvCTL8nWG4U+3wi/3uiS4n2r9NGNKIDxffH0nYuaGAUJJ?=
+ =?us-ascii?Q?x0axhjE7S/WazBQReEN3V8LXWv+AgWuK8cUgibryfp/RZstMpp8XL+pt5+jY?=
+ =?us-ascii?Q?sU/9hPpcCp6A22H+zD3MksgngRqY0equlUr+2NPgc1m/KgJLKoubZlnJZCHh?=
+ =?us-ascii?Q?GuBkI/vUgFg=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?lt1lM/oD6z4/p1iwSBoVc55uF5fFrjVr2Pw25BdkfJtfZnX/04RgB76o/nIP?=
+ =?us-ascii?Q?v+EacbbwToWNq2e/oIZ3DOUC7MC9iduj5ZGivuRuGHT/fc8YkNY7YqlPzLB4?=
+ =?us-ascii?Q?tF7vSiTYiHiPYXUtflagQEDleNLSKSk0nDzCbtfEeRDag4RT2WLpbMIMRzkI?=
+ =?us-ascii?Q?iT/Jc7/KEBZNp+VI7yQ47VEcEda2cDRSnVF1OXOhgJwvK2VHgnxB6Oy0Ujzr?=
+ =?us-ascii?Q?J/uZSwImj9DB3orepcV/FiAzYqD/kgCwfyzP+Gsa4tv2Nyt1XhpgItHgJet/?=
+ =?us-ascii?Q?wAFfndtX3MwhYvCq6HxefJPy+25UDyIp5lNpmNJ7zcoAtd+Op0REyl/DLUFx?=
+ =?us-ascii?Q?QLxTiffY3YnPMyePsuCm8DraOUfdnay2ND8r/O+i5Od5OOIho40acCgo/9sK?=
+ =?us-ascii?Q?aSLxZtAlnZ+rchfkN13RJ5dLq5QRpFQ5J8pjA3DixJOENDMlTDi6YI6e+YrV?=
+ =?us-ascii?Q?XvdpZt8mDM1XPzLMtEGTSjbs54VvqSu1rN9+zBaya6VEXNTFkpdBGcjA+X6Q?=
+ =?us-ascii?Q?04zdXN4ct/B3pK9lontV+nDUrdGF1C+JPqAAkm8uRgAwCdv5GmofjMW/Py6p?=
+ =?us-ascii?Q?CRspS8+hczc0vxWomjfQL/0Fj1dR20AZwDjd79eJ4dRb3cU/ODy77xcHJRxS?=
+ =?us-ascii?Q?f4CiYtmcFYyXkpOxY4ysxD/DWKRyczh0HMkZgoC5tWfb3vn/pRF8HurOaiVW?=
+ =?us-ascii?Q?EunCCnVTKSggvwR6M+XbYltlclVp1D7HWt2MbdKomUw3xKJyCZYcox5Z6xCb?=
+ =?us-ascii?Q?9Dyma/ctEaTCKLjCF9Ao13uP9GVI39aRVRwab37DKDFqOmzFRLElsqlGkmsg?=
+ =?us-ascii?Q?4Uznc4nTUvuHBFzDU0MLyhjVHS4d/egIhgmmGrLR7aQJy//FCvXwOA7sQKBQ?=
+ =?us-ascii?Q?1buA2eNA4w/WnGASTai9Ra3lp8D78njM2jINf+pxhqS68l/E8iffXprubE5r?=
+ =?us-ascii?Q?eQuu6UeDLlu1/pAGER1xXNSX2ZwFRsmHZCA8aYzhvME7pxb9NBXXw4cDySXu?=
+ =?us-ascii?Q?Ffg76z36BoXDzHzdUEwePcLMkXUlcsPFjT+lIufWC5DfiRE4hv4OZp7ZGhhj?=
+ =?us-ascii?Q?9GV/u6mqr4iPcmG5yUsXir7mFp8Kb2zLyYzTaFE3SAriiyUEAHWxaIGO3/sd?=
+ =?us-ascii?Q?gqKyuQm+zRrNN0MjCDdLDbbNkWbg5gfIaeWvl8Gjbr6m04o5xLXiHlzOdhgC?=
+ =?us-ascii?Q?h+YDcsas0vyzeiecmRzXB8MQehuJ5UjG8/w74cvtD9F3KsAN2D8Sbp68ElwM?=
+ =?us-ascii?Q?hjPUwkP38HEbk9ZWT0PS+MiR9NpL9BHaXf0emwy0uUJBGj84lKi6sAuesTzS?=
+ =?us-ascii?Q?SX91RW9ywu0/b88hwD+dK6tFeUbXIbFdZE9ayl8hKak0J4cABL9/WATHzAcM?=
+ =?us-ascii?Q?qxytRfLgW92vPpx9rCGce6/engjIAOC54t3E1ydqk9vaTi1seT/bQviqTeg3?=
+ =?us-ascii?Q?fRPCCgSVRJiMBcrjzGu8cXnvqQwmHyr0ALY/HJ8W3n9HYYGDcjbBJe4bOt6v?=
+ =?us-ascii?Q?v+zDslVkEojNV/gyIG9mlHN79E0KBdTXt6AwxIku4NlSXRNbotLOrnSQzoCD?=
+ =?us-ascii?Q?78gT9xSIqEZ+iHuytpnri1h8Yu1zydh2CJ6td/1c?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b51301c1-97a5-404b-c667-08ddebb255cd
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2025 12:55:33.4272
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 62bWTlm8Lf5VTerS1DAcMuT3CiGOsQtt0wiffH4JlHJsLAUWMeS2zMILyUfJi43v53zqI5pvXT3BZD4iOJXPbA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6342
 
-On 03/09/25 22:05, Peter Zijlstra wrote:
-> On Wed, Sep 03, 2025 at 04:53:59PM +0200, Juri Lelli wrote:
-> > Hi,
-> > 
-> > On 03/09/25 11:33, Andrea Righi wrote:
-> > > From: Joel Fernandes <joelagnelf@nvidia.com>
-> > > 
-> > > Hotplugged CPUs coming online do an enqueue but are not a part of any
-> > > root domain containing cpu_active() CPUs. So in this case, don't mess
-> > > with accounting and we can retry later. Without this patch, we see
-> > > crashes with sched_ext selftest's hotplug test due to divide by zero.
-> > > 
-> > > Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-> > > ---
-> > >  kernel/sched/deadline.c | 7 ++++++-
-> > >  1 file changed, 6 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-> > > index 3c478a1b2890d..753e50b1e86fc 100644
-> > > --- a/kernel/sched/deadline.c
-> > > +++ b/kernel/sched/deadline.c
-> > > @@ -1689,7 +1689,12 @@ int dl_server_apply_params(struct sched_dl_entity *dl_se, u64 runtime, u64 perio
-> > >  	cpus = dl_bw_cpus(cpu);
-> > >  	cap = dl_bw_capacity(cpu);
-> > >  
-> > > -	if (__dl_overflow(dl_b, cap, old_bw, new_bw))
-> > > +	/*
-> > > +	 * Hotplugged CPUs coming online do an enqueue but are not a part of any
-> > > +	 * root domain containing cpu_active() CPUs. So in this case, don't mess
-> > > +	 * with accounting and we can retry later.
-> > > +	 */
-> > > +	if (!cpus || __dl_overflow(dl_b, cap, old_bw, new_bw))
-> > >  		return -EBUSY;
-> > >  
-> > >  	if (init) {
-> > 
-> > Yuri is proposing to ignore dl-servers bandwidth contribution from
-> > admission control (as they essentially operate on the remaining
-> > bandwidth portion not available to RT/DEADLINE tasks):
-> > 
-> > https://lore.kernel.org/lkml/20250903114448.664452-1-yurand2000@gmail.com/
-> > 
-> > His patch should make this patch not required. Would you be able and
-> > willing to test this assumption?
-> > 
-> > I don't believe Peter already expressed his opinion on what Yuri is
-> > proposing, so this might be moot. 
-> 
-> Urgh, yeah, I don't like that at all. That reasoning makes no sense what
-> so ever. That 5% is not lost time, that 5% is being very optimistic and
-> 'models' otherwise unaccountable time like IRQ and random overheads.
+When printing the deprecation warning for scx_bpf_cpu_rq(), we may hit a
+NULL pointer dereference if the kfunc is called before a BPF scheduler
+is fully attached, for example, when invoked from a BPF timer or during
+ops.init():
 
-But, wait. For dealing with IRQs and random overheads we usually say
-'inflate your reservations', e.g. add a 3-5% to your runtime so that it
-is sound against reality. And that gets included already in the 95%
-default max cap and schedulability tests.
+ [   50.752775] BUG: kernel NULL pointer dereference, address: 0000000000000331
+ ...
+ [   50.764205] RIP: 0010:scx_bpf_cpu_rq+0x30/0xa0
+ ...
+ [   50.787661] Call Trace:
+ [   50.788398]  <TASK>
+ [   50.789061]  bpf_prog_08f7fd2dcb187aaf_wakeup_timerfn+0x75/0x1a8
+ [   50.792477]  bpf_timer_cb+0x7e/0x140
+ [   50.796003]  hrtimer_run_softirq+0x91/0xe0
+ [   50.796952]  handle_softirqs+0xce/0x3c0
+ [   50.799087]  run_ksoftirqd+0x3e/0x70
+ [   50.800197]  smpboot_thread_fn+0x133/0x290
+ [   50.802320]  kthread+0x115/0x220
+ [   50.804984]  ret_from_fork+0x17a/0x1d0
+ [   50.806920]  ret_from_fork_asm+0x1a/0x30
+ [   50.807799]  </TASK>
 
-I believe what Yuri is saying is that dl-servers are different, because
-they are only a safety net and don't provide any guarantees. With RT
-throttling we used to run non-RT on the remaining 5% (from 95%) and with
-Yuri's change we are going to go back at doing the same, but with
-dl-server(s). If we don't do that we are somewhat going to pay overheads
-twice, first we must inflate real reservations or your tasks gets
-prematurely throttled, second we remove 5% of overall bandwidth if
-dl-servers are accounted for with the rest of real reservation.
+Fix this by only printing the warning once the scheduler is fully
+registered.
 
-What do you think? :)
+Fixes: 5c48d88fe0049 ("sched_ext: deprecation warn for scx_bpf_cpu_rq()")
+Cc: Christian Loehle <christian.loehle@arm.com>
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+---
+ kernel/sched/ext.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 489462290142a..04fefd34db238 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6362,17 +6362,20 @@ __bpf_kfunc s32 scx_bpf_task_cpu(const struct task_struct *p)
+  */
+ __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
+ {
+-	struct scx_sched *sch = scx_root;
++	struct scx_sched *sch;
+ 
+ 	if (!kf_cpu_valid(cpu, NULL))
+ 		return NULL;
+ 
+-	if (!sch->warned_deprecated_rq) {
++	rcu_read_lock();
++	sch = rcu_dereference(scx_root);
++	if (sch && sch->warned_deprecated_rq) {
+ 		printk_deferred(KERN_WARNING "sched_ext: %s() is deprecated; "
+ 				"use scx_bpf_locked_rq() when holding rq lock "
+ 				"or scx_bpf_cpu_curr() to read remote curr safely.\n", __func__);
+ 		sch->warned_deprecated_rq = true;
+ 	}
++	rcu_read_unlock();
+ 
+ 	return cpu_rq(cpu);
+ }
+-- 
+2.51.0
 
