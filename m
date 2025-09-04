@@ -1,46 +1,53 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BB64301037
-	for <sched-ext@lists.linux.dev>; Thu,  4 Sep 2025 13:15:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F15E31354F;
+	Thu,  4 Sep 2025 17:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756991710; cv=none; b=YqjUmqZWysQUYzGx0YNz3+B/eccNAXtQmuzXMUcb3j/c4EXokDW0jciL/gdHAOs5QP76cagt7prAQeOIA9/iwf1zietc6jSYnFsbN72MMqS0pfmrnoVjtkdKt4Et+EhcMPgBx84dTEA0TAvJrpLEQEUBqvpIrh9WbogdzEjbLWQ=
+	t=1757007576; cv=none; b=ZLIJ+7F+MezlR8AsFIuDlfcHLyq90Ebz+9pgob1v4m4SkfVY3LBz6na1Bv+8EwmYI4nHhdHx5XdABraBMmPTCDcX1KPmDaEV38qeHSbZjZFdk1j0XZBjMhbbr7SwEDSnvTypxUpAtFxov/nXWs8O47R2NQqgO0Zrxx5ta0c/dVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756991710; c=relaxed/simple;
-	bh=yuK2F22uNiu3WpPR/1wG4I0Pa9KpQmCvCZIlxl4EiVo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tONoLju5s9DMRaZim2in4JNNyVZ1EfOLPuAJ0kA6OB8LYAhwhgZVi9NANbonTHb2rku9gH2GMs3Y5RPbVQIZaBYa8skk6bMbI5VR3uMhJQrxKF5wuceT0wRX35cj+eTf+kIjfVbFBeNIbvndc3/ON273qiKoFko2DuU5wqO83Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8C84F1756;
-	Thu,  4 Sep 2025 06:14:59 -0700 (PDT)
-Received: from [10.1.26.85] (e127648.arm.com [10.1.26.85])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0A7213F6A8;
-	Thu,  4 Sep 2025 06:15:06 -0700 (PDT)
-Message-ID: <3dae6610-7a1f-459d-8280-3c8d00117495@arm.com>
-Date: Thu, 4 Sep 2025 14:15:05 +0100
+	s=arc-20240116; t=1757007576; c=relaxed/simple;
+	bh=ZMi8STu4rwUVTI5LI7m6pQhVZR8qQSyjjKTnEsVSHL4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hiCeSskRulFHDP54V10gM44gEs6NKergr+0kQMCQ2odhthULqkCDIeXMhKNTe70v2rS/QNIs7XvTKupKuBCdzhl9zCjGotmOPNqRyigd+tTwLIUveqPExGcqgBSFpYYl0ufudNFNKV0XgpuYJ8gDaHfYwqP6AOiHvVdL4Aer1wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exGMUlsp; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exGMUlsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8341DC4CEF0;
+	Thu,  4 Sep 2025 17:39:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757007575;
+	bh=ZMi8STu4rwUVTI5LI7m6pQhVZR8qQSyjjKTnEsVSHL4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=exGMUlspUpPITgayvmKL9lVku8eR2I9HlnZZwKCfT75tyBtCC+GYElaN/4vXKkfLI
+	 pfDZexwqQnX0j+bfX8442jvFv8aSQZ2R6+kj6ScIgqHTNRT3Cd9K9x6tAm1dXlvMgx
+	 SsnHabMld4s3aDl/vov+26Hw1UJEmqTV7nqykSeAxIxfZ0VSSfqoidapN0hMwaT/dY
+	 n406TYTcz+NLe8Aq88SqwewnyQ7fTPjXVzonAi5MFmAD9wssdTcEVScxm+sL8JWcBN
+	 eGgZxmtQY7YKBWeq6uzzb1skrgQnh4EkOlnYJ/f3rh2xfQKWfTFiiPJW4Aqex0rvBD
+	 uW6RxF+f34i3A==
+Date: Thu, 4 Sep 2025 07:39:34 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Jake Hillion <jakehillion@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-6.18] sched_ext: Fix NULL dereference in
+ scx_bpf_cpu_rq() warning
+Message-ID: <aLnO1r5X265Knl0W@slm.duckdns.org>
+References: <20250904125522.561737-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH sched_ext/for-6.18] sched_ext: Fix NULL dereference in
- scx_bpf_cpu_rq() warning
-To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>,
- David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
-Cc: Jake Hillion <jakehillion@meta.com>, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250904125522.561737-1-arighi@nvidia.com>
-Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250904125522.561737-1-arighi@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 9/4/25 13:55, Andrea Righi wrote:
+On Thu, Sep 04, 2025 at 02:55:22PM +0200, Andrea Righi wrote:
 > When printing the deprecation warning for scx_bpf_cpu_rq(), we may hit a
 > NULL pointer dereference if the kfunc is called before a BPF scheduler
 > is fully attached, for example, when invoked from a BPF timer or during
@@ -91,17 +98,10 @@ On 9/4/25 13:55, Andrea Righi wrote:
 > +	rcu_read_lock();
 > +	sch = rcu_dereference(scx_root);
 > +	if (sch && sch->warned_deprecated_rq) {
->  		printk_deferred(KERN_WARNING "sched_ext: %s() is deprecated; "
->  				"use scx_bpf_locked_rq() when holding rq lock "
->  				"or scx_bpf_cpu_curr() to read remote curr safely.\n", __func__);
->  		sch->warned_deprecated_rq = true;
->  	}
-> +	rcu_read_unlock();
->  
->  	return cpu_rq(cpu);
->  }
 
-Ah yes of course.
-I guess the other ones that can happen during the actual lifetime
-of the scheduler have a likely(sch) around it, which we could
-add here as well.
+This drops ! from the condition.
+
+Thanks.
+
+-- 
+tejun
