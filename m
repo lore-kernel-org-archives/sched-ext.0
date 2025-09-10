@@ -1,267 +1,228 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2077.outbound.protection.outlook.com [40.107.102.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985723314AD;
-	Wed, 10 Sep 2025 16:07:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757520464; cv=none; b=SiZBzgosqd8d5dYKSrfeQeei0OkBxVL58sj9YWhGEWm/8Jfg67V8asa8zlxx6OzCeECtw0L/7xhakGrQLfh836qTMH3zJvycIhMXj7j7+TVpxsCwKEEI4eZjHje2/0daCbnExEyTYUaL+8pl7yOqX+RbkdTKORIpEq70GvPf4lM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757520464; c=relaxed/simple;
-	bh=vnr7Yn/LF1nmeDcnkSrKqXZxGgvEmeejaxtTb6L6Cko=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tfenLzjGWohS+hxBGvTi1SKR3z6qh8MvpXlGkagU9Syd6fzkb3OEE9b+hhSpFa5ObA1QJQvxwmYJ/lVhdh/XbUysLg0lqdruRdhw8YunI9b8LQcyWhlno/znTkB8VPAXNvVGC9R/E00yPFd5xJXDVaoUWTBzKNAT1Q5TMa3F/xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=kb57JO2P; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3620031D367
+	for <sched-ext@lists.linux.dev>; Wed, 10 Sep 2025 17:32:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757525551; cv=fail; b=cmGlBQxt3WULQ7AN9qn787S1oZCUGI7qrQYc/kXgtAHI9zDSUpf/BgxXo14jX582o/smcEn65hTdpcZ9WdLx+lrFPfBQgVdoEwRye9nuv4YlDG+hOK5/49VbX3PlkxGzviYiuJ5b6sL6ToC+witB8m4upPmTRtNDuJGNmC9tXFU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757525551; c=relaxed/simple;
+	bh=9SqaUiQsiWeVAg3S4tCP2eUuet+i4W4dVU9/GqymHqI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=L8JBzC8nPEoKeUTni5LHLY67cyLwZhG+7vncSpfHuVQ4ImWq/9WUMtMYbXj1fXi6YxgPKFAvYMKp5jRYT3jm6EALK5KQYEZ6V16wmDYmmMvKg8MQL5qLCQVh5KNe0MrLCUtRsQ3wByUwA9EfR3/Qd2JmAOAlfIQx70cS5Yb7cz0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DMQGIhCG; arc=fail smtp.client-ip=40.107.102.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="kb57JO2P"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=aaKUvKU+fuYGWavAqR21ZPjRxWQno6rfqWXkeznq6N4=; b=kb57JO2PxYhLXsBHIWn/k6sjn9
-	ZKXF4vFGbXWw55b/ZlfpKePmdnfnrTFoij9PA2K5aDmPKTvGEuSGh2oIGidVSTHhAWt/nu5ag0jUJ
-	p574AhcD62QeYWylUj/3x4OVsm0TNbLz0mHHnC2GSLsJYD98R4QP8UlmpF7RbF+eh+ihPSrn0Khcf
-	9gO5zao8fYAbIctRy7V3W69cd8UUL2zttdAU75WaLBCt60N3j/kc12VJioXoGf0nhe/gkRhI3csc+
-	Ytbtw/ZYcCI2GW6Q/lCqsRc1j5wE9GdgK/2hjXdiHP+113dVMWbY4oFUlDKQ4ikj5HUbo5Krj/ymN
-	/bB26W3A==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uwNM8-0000000Bcrp-1Alu;
-	Wed, 10 Sep 2025 16:07:36 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id CD754302D42; Wed, 10 Sep 2025 18:07:35 +0200 (CEST)
-Date: Wed, 10 Sep 2025 18:07:35 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: tj@kernel.org
-Cc: linux-kernel@vger.kernel.org, mingo@redhat.com, juri.lelli@redhat.com,
-	vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
-	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DMQGIhCG"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yC8A+yPruI+ZeLXyzg4cq/qXhIgb822oKlQ5JS8ylAfsJbCDK8t/zRzEQdOqMLYg2rwWMkw+4QJODvp6qbwXzdloRniW1z2+TuC+lXpHjTOCDzZDDgVEKBK0F17slx3I8+0x0JHdZL7CbTa+VjlhK+VdGKCz4UtFwjAsG4vpqTrasRG9gZOFXF2kgwkQ7T0dHT2bjdTBTVhyFEnHPs0dLf0iXvyjwMMxvDC/TutpzxZk6G4Cpxo1koD3U9jBiTwYFdV2yYAFcprVHy2s/mx+vBpCddLZFc8L61mm575yI7cKiZ+nFu5ZA+flRsovc87DgiZxeMHZnU1Olw9seMQfiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8RjPaec7o2Nv16e9Dj6U5w6RvbYd/Jlcsl2JUO9LM4c=;
+ b=qp+9EYqc1SKIX4gnyxkCYVcNSJun/uLZIswr6jGtLemvOF/Gj1flubRe4BKCMTbjl4A23Jt1jHSwSwRCkg5ftvczOKYHG3567bBWuTSOGumiMZDWgkMHIPF7mlDJgeoNpRqDibhTRZJwTdsTCQGLDiWx41c3H5HQPBkhHOPDDyO2ZEK4S9Zkg9XrboNbUGUbH1qAYP0YEgsSHpyV7s2UyeDuzVKEvTEQYnBiAhm+uow2V3/b6RIvjWO5OxYsDWv0PNeaxvHoEokx3mvx7j/HJC7r5kfFBZ2YAXumpZBCDfyFRFIIR3gcIkdoVtr86mrTJ/sdrmZi67neFUjQex0oHA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8RjPaec7o2Nv16e9Dj6U5w6RvbYd/Jlcsl2JUO9LM4c=;
+ b=DMQGIhCGetsBJZT999VrF1KgEjx+0iHmalSuJxnEDQGOr/kKsB/e/nffwS9KrfM8qfs9UAjNhHF3WVSeP1plZ7ikJxLuOtz4840RINDZQh3qVwT0be2ymnHOyIHyY1+S/gvHE0T8ojrng99sqrNOPqyuQwBQO8wU1YpkUc3ncOD+uEKNmtgBf2ChrizfAHueXbl3oNTFPZ4JGJa4zZK81M9QSdqypBgBfcbD3Jk1RRxb6R5q36z/yFpUWbQyH8G7zewNdp61fP79w0UEExQu7+h82KU8OsKvATmyGNEZ9NOnhN97KI0r4yEdiK159dams8sYFPNxrxf56CgDO0VmbA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by CY5PR12MB6574.namprd12.prod.outlook.com (2603:10b6:930:42::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 10 Sep
+ 2025 17:32:25 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%5]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
+ 17:32:25 +0000
+Date: Wed, 10 Sep 2025 19:32:12 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@redhat.com,
+	juri.lelli@redhat.com, vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, longman@redhat.com,
+	hannes@cmpxchg.org, mkoutny@suse.com, void@manifault.com,
 	changwoo@igalia.com, cgroups@vger.kernel.org,
 	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
-Subject: Re: [PATCH 14/14] sched/ext: Implement p->srq_lock support
-Message-ID: <20250910160735.GL4067720@noisy.programming.kicks-ass.net>
+Subject: Re: [PATCH 00/14] sched: Support shared runqueue locking
+Message-ID: <aMG2HAWhgAYBdh6Q@gpd4>
 References: <20250910154409.446470175@infradead.org>
- <20250910155809.916720757@infradead.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250910154409.446470175@infradead.org>
+X-ClientProxiedBy: MI1P293CA0025.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:3::11) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250910155809.916720757@infradead.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CY5PR12MB6574:EE_
+X-MS-Office365-Filtering-Correlation-Id: 91603434-8e84-4b4a-6c91-08ddf0900138
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?zrGAcNlgU/AqLn34D6Lax1gD5JZi1yu3rborSBvUnyVfdIXeOxaunsIIeJkU?=
+ =?us-ascii?Q?xY5bVhNpBGYNJh/K4r/LYcSPJv0lWXLdEtMvguFnXaoJFjJpmbKK3t5uvQ43?=
+ =?us-ascii?Q?nHGhoJFv6Chu5hmsWmfBPn2MB+KnTHQBHwiMPDOUEMYYOBKJrkR5DUFcrkpJ?=
+ =?us-ascii?Q?tVphwPNdlyXOdt8xaBIfvGipdtP4PeGvDhok7QDf3+254AkQu/Mbw4HNuLXN?=
+ =?us-ascii?Q?83slMsZmWOTY+HJpqaUaFSZbJufqNE35oonN5KHrx1vf609ynrSzSMV9F/ll?=
+ =?us-ascii?Q?syTtLT+PsuqBA83wm8AkpHwHP4Ha1y67cjhqKVqYL4ErV7JQhlTevFwdMIpD?=
+ =?us-ascii?Q?6ga7Bh836FsXaAir6z+YO5D2sGGUXRfBqUZSGAj6WB2Q/a7QVe4NqAe3NvuD?=
+ =?us-ascii?Q?OUbF/xarg2FWxEKkFd2zdvuzzCI9xpEzp2K6VeGd2FxHN1Vp2gKN79sZsogI?=
+ =?us-ascii?Q?4+GAZU2lvOOV/nhpygfopQRFI+YvWQZHAQ9NS3U4Vdkj97FyObbp8FrUnlRk?=
+ =?us-ascii?Q?U/3tPxhZ5JP7yMyTJlVWpB84lNuN1llMd3Z+K1QSdGhAS1+d6JtMrVdFEsZS?=
+ =?us-ascii?Q?aEYBgqOhVc4/N4Mrvl7IN6tnXAoUOIo29XzKB0TuQmdUrLYxhKgynN27UiWy?=
+ =?us-ascii?Q?oKnBcRMlThqz1SgaDVHg8SQxix7NCjtqiyX73Km3b4n0kXIrZpfTzjxsQMIu?=
+ =?us-ascii?Q?2HeEMmm6EaqnzrhiH3E7IUtOdjs3lHdBTkgOc46XUMSHkFd2t0Zyfu5AGgL/?=
+ =?us-ascii?Q?QyVKouEQQb28pD63I7hlAjv6XMtCYcYxlZeriocUZn+yHoDtPB5oSkZCb5/2?=
+ =?us-ascii?Q?UwritPqCDyjBaq4+Al6rqfhNz4r358Tv4sVR7YrpFBmCliAotOkVq9mY9YUg?=
+ =?us-ascii?Q?Sg7oT7KnMkCMq9xGfQTioa2beKVY51gsx4Jj8mBQQhLZfmsJHFiZuUXV/uJa?=
+ =?us-ascii?Q?gUZ61ZwcwDQjGHDQRAYUAYA0HTPwEgjiMQAck/348ok0BjIf729XYyhQvvnG?=
+ =?us-ascii?Q?+FA2sUy/EJsB6xFmRCYSFEgbsDQxi+jOu0IIj/bLITkx+h03gmuw+r9SjTno?=
+ =?us-ascii?Q?m1co+ihLbmqE6zHpaghVu6CYCntu4Hkqm5WatgLF12X9/omN3enkKWbqWyqP?=
+ =?us-ascii?Q?f6h/kUf8pBFDzAGdH6NeKHkAskE43ACaoZ3OStGlHCYzCRvitwMt1MKvwTDj?=
+ =?us-ascii?Q?bq64gJ4+NzGOuT74oYfklIDOYLyy8a7UBA07Hzijq/eyEoxJAeDRCXtyfDQ3?=
+ =?us-ascii?Q?tYEDnZ5E1XzqmOb8H6YNyPSX+jsQW+lbTiAMkWys0dlLERsf93e6JfxhXMrh?=
+ =?us-ascii?Q?q3K7qPOn/T3nhBqG9mW1q3LEthma1eywteQ+ZSE9oVhoEi7SGReefKtIO/6W?=
+ =?us-ascii?Q?9FQxaRMA1CmiV624kXI42wFmCduI56clzFySZ01qg36AFjOSWVa4xbIUkkb2?=
+ =?us-ascii?Q?rPgwdDUKJeg=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Web3D72i/IY2vSMUSuRFnO6f16MVCNvAo007AF9ketIsG95W/KTWNgHT+qP8?=
+ =?us-ascii?Q?DRG88W5zatw3542NRnXNJL8V2HuRgc0Kz8OC6CvjH1rlvH5UEvhA7gfOYbD5?=
+ =?us-ascii?Q?VEmAePwGJodniUuSsuoTdBUw1CM14DepVFCuNV0JOkNGUKk76vQ37G0QnHXT?=
+ =?us-ascii?Q?yHKJUVXx5kYPAob2dZK/mh3SpMyfl1jUoxN0ctSU+VTF2k7arjGKq4ObwwGo?=
+ =?us-ascii?Q?s6gkRrWmckJXveC9v2cz9XH/0su397B5plAoy+a9L3ekN7QHf+WmR2WRY/1C?=
+ =?us-ascii?Q?n5tNHmxOW6JV3dBX24gGdJNN7cg8eYahciEMk2IpbYMD6W8wXZGJz9tcYYNB?=
+ =?us-ascii?Q?tgD4JTv8FJFn/rbMgmtPVfEaxM6Td+83dwbmpHWc0GWTO20dpz+GIgygkI1b?=
+ =?us-ascii?Q?vVlofXVOqd+iKcbsEblDs74THZ2WHtA5JT/y4YokWBNs1wKUsugByFTjpViu?=
+ =?us-ascii?Q?KU9ts5wt4hI600AphYiu98pcCizG08+ZAKEbDg0T5nXiz42zi+t1P/vqRRos?=
+ =?us-ascii?Q?n+P8HieiAaDOTMbBQ74dRq2uWuW0kUmA6OZMAxw3YkC9xQwkAAsu8rdc2y4t?=
+ =?us-ascii?Q?r8497vQJW/NrPUPV7PMrtQo9cawXx40ig/DLHhHb12r2CAx47UhyNU0fHfZR?=
+ =?us-ascii?Q?aSlslhf2dIHCQDZOQWCCTTaynqFi9CdgUQCo41fyPD/lh4cw/DTNpD64OIG6?=
+ =?us-ascii?Q?GccVrlVbxU2Y5P4OkENMotntAVbbaF3Y7DwgXeTx07HEiVLqWo4IUNPdl4I/?=
+ =?us-ascii?Q?MBm4KOJueFp/oTe39t3qMYMXefByt0/bTjrpbCjlprT6E/OujCU03ULPTjC9?=
+ =?us-ascii?Q?872kZEtnIHgJYYWK7ktYGRG4p4Y0PkFwHkbWn9PSLd9f7PDkjB3YEENNwMB/?=
+ =?us-ascii?Q?oSqt9hFp4jc1RGlolKeRZDk5Y7hyCLyAeUqRkbjSptZDuVxgjwAPH63Y0DcJ?=
+ =?us-ascii?Q?kCVZmgNK5WoYYTshnAmrKyb0NYkzj/zJlBBNFj6m4XV3t03pgzpbQ8ceB17i?=
+ =?us-ascii?Q?k5RCx0Lq8fqJzVIVwtkfoTsZlkE0nlWEH4fzAWrEvrHgR7oBQwHtGraVTu5e?=
+ =?us-ascii?Q?/vYI4TUt5SHAYHUONFGSK0xaPi4kYZTplGInPa4d6oHmLd0njsLAQZDfXVtt?=
+ =?us-ascii?Q?IGfjgZ4Fi1GIFG0W7/jNMm9Hy/rKKpaWLMv5AgSrkHOyx8CqW75U/oV0wO3N?=
+ =?us-ascii?Q?0o67osgWNw65BzNuj6t/6UcYD0Up3k+eNLQoXDuMINgBkzGeP5VE2QajQlhn?=
+ =?us-ascii?Q?pukzXb6NTxrAcyF9DNHqEowigAt8i4Pu1bhNF+SZtc4A9LucVU9nVENk43hQ?=
+ =?us-ascii?Q?+uI0/AToPS7BSNpIZd4sUq2wAZ8yORZktT8EmYOAS7J9s59DzLHEkIKpXt0H?=
+ =?us-ascii?Q?pwjHKHzob2auqnjetH9nEXNjTsc7gvldL30XcM2oGlSyXSScCB3E0dQLKHMP?=
+ =?us-ascii?Q?HKES1h9aZFUCuBlR8HBJMETbv4VNJbiQNOk77Z4orIdeRh35kyXlaushfQS1?=
+ =?us-ascii?Q?N9Ka6w995QYBvO17tTkWjLUT+p5atuVAL11rM9d62t7+2JIBQY4+qCS7pvdS?=
+ =?us-ascii?Q?tDeHt27X6uSvnOFKngSIcbxLlCrXYqMl6PKy6LLk?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 91603434-8e84-4b4a-6c91-08ddf0900138
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 17:32:24.8110
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: N0+5wwQqhh/zI+NPPONp47JnJGvOC8tX0jRrZRzHhtKgJKa91NgqaO+Tbn6G57sqWVUWXyi1Yjm+nUjBl28jtg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6574
 
-On Wed, Sep 10, 2025 at 05:44:23PM +0200, Peter Zijlstra wrote:
-> Have enqueue set p->srq_lock to &dsq->lock and have dequeue clear it,
-> when dst is non-local.
-> 
-> When enqueue sees ENQUEUE_LOCKED, it must lock dsq->lock (since
-> p->srq_lock will be NULL on entry) but must not unlock on exit when it
-> sets p->srq_lock.
-> 
-> When dequeue sees DEQUEUE_LOCKED, it must not lock dsq->lock when
-> p->srq_lock is set (instead it must verify they are the same), but it
-> must unlock on exit, since it will have cleared p->srq_lock.
-> 
-> For DEQUEUE_SAVE/ENQUEUE_RESTORE it can retain p->srq_lock, since
-> the extra unlock+lock cycle is pointless.
-> 
-> Note: set_next_task_scx() relies on LOCKED to avoid self-recursion on
-> dsq->lock in the enqueue_task/set_next_task case.
-> 
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Hi Peter,
 
-*groan* and obviously I lost a refresh on this patch...
+thanks for jumping on this. Comment below.
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1952,13 +1952,16 @@ static void dispatch_enqueue(struct scx_
- 			     struct task_struct *p, u64 enq_flags)
- {
- 	bool is_local = dsq->id == SCX_DSQ_LOCAL;
-+	bool locked = enq_flags & ENQUEUE_LOCKED;
-+	bool restore = enq_flags & ENQUEUE_RESTORE;
- 
- 	WARN_ON_ONCE(p->scx.dsq || !list_empty(&p->scx.dsq_list.node));
- 	WARN_ON_ONCE((p->scx.dsq_flags & SCX_TASK_DSQ_ON_PRIQ) ||
- 		     !RB_EMPTY_NODE(&p->scx.dsq_priq));
- 
- 	if (!is_local) {
--		raw_spin_lock(&dsq->lock);
-+		if (!locked || !p->srq_lock)
-+			raw_spin_lock(&dsq->lock);
- 		if (unlikely(dsq->id == SCX_DSQ_INVALID)) {
- 			scx_error(sch, "attempting to dispatch to a destroyed dsq");
- 			/* fall back to the global dsq */
-@@ -2028,6 +2031,10 @@ static void dispatch_enqueue(struct scx_
- 
- 	dsq_mod_nr(dsq, 1);
- 	p->scx.dsq = dsq;
-+	if (!is_local) {
-+		WARN_ON_ONCE(locked && restore && p->srq_lock && p->srq_lock != &dsq->lock);
-+		p->srq_lock = &dsq->lock;
-+	}
- 
- 	/*
- 	 * scx.ddsp_dsq_id and scx.ddsp_enq_flags are only relevant on the
-@@ -2059,13 +2066,17 @@ static void dispatch_enqueue(struct scx_
- 						 rq->curr->sched_class))
- 			resched_curr(rq);
- 	} else {
--		raw_spin_unlock(&dsq->lock);
-+		if (!locked)
-+			raw_spin_unlock(&dsq->lock);
- 	}
- }
- 
- static void task_unlink_from_dsq(struct task_struct *p,
--				 struct scx_dispatch_q *dsq)
-+				 struct scx_dispatch_q *dsq,
-+				 int deq_flags)
- {
-+	bool save = deq_flags & DEQUEUE_SAVE;
-+
- 	WARN_ON_ONCE(list_empty(&p->scx.dsq_list.node));
- 
- 	if (p->scx.dsq_flags & SCX_TASK_DSQ_ON_PRIQ) {
-@@ -2076,12 +2087,15 @@ static void task_unlink_from_dsq(struct
- 
- 	list_del_init(&p->scx.dsq_list.node);
- 	dsq_mod_nr(dsq, -1);
-+	if (!save)
-+		p->srq_lock = NULL;
- }
- 
--static void dispatch_dequeue(struct rq *rq, struct task_struct *p)
-+static void dispatch_dequeue(struct rq *rq, struct task_struct *p, int deq_flags)
- {
- 	struct scx_dispatch_q *dsq = p->scx.dsq;
- 	bool is_local = dsq == &rq->scx.local_dsq;
-+	bool locked = deq_flags & DEQUEUE_LOCKED;
- 
- 	if (!dsq) {
- 		/*
-@@ -2103,8 +2117,10 @@ static void dispatch_dequeue(struct rq *
- 		return;
- 	}
- 
--	if (!is_local)
--		raw_spin_lock(&dsq->lock);
-+	if (!is_local) {
-+		if (!locked)
-+			raw_spin_lock(&dsq->lock);
-+	}
- 
- 	/*
- 	 * Now that we hold @dsq->lock, @p->holding_cpu and @p->scx.dsq_* can't
-@@ -2112,7 +2128,8 @@ static void dispatch_dequeue(struct rq *
- 	*/
- 	if (p->scx.holding_cpu < 0) {
- 		/* @p must still be on @dsq, dequeue */
--		task_unlink_from_dsq(p, dsq);
-+		WARN_ON_ONCE(!is_local && !p->srq_lock);
-+		task_unlink_from_dsq(p, dsq, deq_flags);
- 	} else {
- 		/*
- 		 * We're racing against dispatch_to_local_dsq() which already
-@@ -2125,8 +2142,10 @@ static void dispatch_dequeue(struct rq *
- 	}
- 	p->scx.dsq = NULL;
- 
--	if (!is_local)
--		raw_spin_unlock(&dsq->lock);
-+	if (!is_local) {
-+		if (!locked || !p->srq_lock)
-+			raw_spin_unlock(&dsq->lock);
-+	}
- }
- 
- static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
-@@ -2508,7 +2527,7 @@ static bool dequeue_task_scx(struct rq *
- 	rq->scx.nr_running--;
- 	sub_nr_running(rq, 1);
- 
--	dispatch_dequeue(rq, p);
-+	dispatch_dequeue(rq, p, deq_flags);
- 	return true;
- }
- 
-@@ -2697,7 +2716,7 @@ static bool unlink_dsq_and_lock_src_rq(s
- 	lockdep_assert_held(&dsq->lock);
- 
- 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
--	task_unlink_from_dsq(p, dsq);
-+	task_unlink_from_dsq(p, dsq, 0);
- 	p->scx.holding_cpu = cpu;
- 
- 	raw_spin_unlock(&dsq->lock);
-@@ -2769,7 +2788,7 @@ static struct rq *move_task_between_dsqs
- 	if (dst_dsq->id == SCX_DSQ_LOCAL) {
- 		/* @p is going from a non-local DSQ to a local DSQ */
- 		if (src_rq == dst_rq) {
--			task_unlink_from_dsq(p, src_dsq);
-+			task_unlink_from_dsq(p, src_dsq, 0);
- 			move_local_task_to_local_dsq(p, enq_flags,
- 						     src_dsq, dst_rq);
- 			raw_spin_unlock(&src_dsq->lock);
-@@ -2783,7 +2802,7 @@ static struct rq *move_task_between_dsqs
- 		 * @p is going from a non-local DSQ to a non-local DSQ. As
- 		 * $src_dsq is already locked, do an abbreviated dequeue.
- 		 */
--		task_unlink_from_dsq(p, src_dsq);
-+		task_unlink_from_dsq(p, src_dsq, 0);
- 		p->scx.dsq = NULL;
- 		raw_spin_unlock(&src_dsq->lock);
- 
-@@ -2849,7 +2868,7 @@ static bool consume_dispatch_q(struct sc
- 		struct rq *task_rq = task_rq(p);
- 
- 		if (rq == task_rq) {
--			task_unlink_from_dsq(p, dsq);
-+			task_unlink_from_dsq(p, dsq, 0);
- 			move_local_task_to_local_dsq(p, 0, dsq, rq);
- 			raw_spin_unlock(&dsq->lock);
- 			return true;
-@@ -3253,7 +3272,7 @@ static void set_next_task_scx(struct rq
- 		 * dispatched. Call ops_dequeue() to notify the BPF scheduler.
- 		 */
- 		ops_dequeue(rq, p, SCX_DEQ_CORE_SCHED_EXEC);
--		dispatch_dequeue(rq, p);
-+		dispatch_dequeue(rq, p, flags);
- 	}
- 
- 	p->se.exec_start = rq_clock_task(rq);
-@@ -4999,7 +5018,8 @@ static void scx_disable_workfn(struct kt
- 
- 	scx_task_iter_start(&sti);
- 	while ((p = scx_task_iter_next_locked(&sti))) {
--		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
-+		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE |
-+					   DEQUEUE_NOCLOCK | DEQUEUE_LOCKED;
- 		const struct sched_class *old_class = p->sched_class;
- 		const struct sched_class *new_class =
- 			__setscheduler_class(p->policy, p->prio);
-@@ -5743,7 +5763,8 @@ static int scx_enable(struct sched_ext_o
- 	percpu_down_write(&scx_fork_rwsem);
- 	scx_task_iter_start(&sti);
- 	while ((p = scx_task_iter_next_locked(&sti))) {
--		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
-+		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE |
-+					   DEQUEUE_NOCLOCK | DEQUEUE_LOCKED;
- 		const struct sched_class *old_class = p->sched_class;
- 		const struct sched_class *new_class =
- 			__setscheduler_class(p->policy, p->prio);
-@@ -6795,7 +6816,7 @@ __bpf_kfunc u32 scx_bpf_reenqueue_local(
- 		if (p->migration_pending || is_migration_disabled(p) || p->nr_cpus_allowed == 1)
- 			continue;
- 
--		dispatch_dequeue(rq, p);
-+		dispatch_dequeue(rq, p, 0);
- 		list_add_tail(&p->scx.dsq_list.node, &tasks);
- 	}
- 
+On Wed, Sep 10, 2025 at 05:44:09PM +0200, Peter Zijlstra wrote:
+> Hi,
+> 
+> As mentioned [1], a fair amount of sched ext weirdness (current and proposed)
+> is down to the core code not quite working right for shared runqueue stuff.
+> 
+> Instead of endlessly hacking around that, bite the bullet and fix it all up.
+> 
+> With these patches, it should be possible to clean up pick_task_scx() to not
+> rely on balance_scx(). Additionally it should be possible to fix that RT issue,
+> and the dl_server issue without further propagating lock breaks.
+> 
+> As is, these patches boot and run/pass selftests/sched_ext with lockdep on.
+> 
+> I meant to do more sched_ext cleanups, but since this has all already taken
+> longer than I would've liked (real life interrupted :/), I figured I should
+> post this as is and let TJ/Andrea poke at it.
+> 
+> Patches are also available at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git sched/cleanup
+> 
+> 
+> [1] https://lkml.kernel.org/r/20250904202858.GN4068168@noisy.programming.kicks-ass.net
+
+I've done a quick test with this patch set applied and I was able to
+trigger this:
+
+[   49.746281] ============================================
+[   49.746457] WARNING: possible recursive locking detected
+[   49.746559] 6.17.0-rc4-virtme #85 Not tainted
+[   49.746666] --------------------------------------------
+[   49.746763] stress-ng-race-/5818 is trying to acquire lock:
+[   49.746856] ffff890e0adacc18 (&dsq->lock){-.-.}-{2:2}, at: dispatch_dequeue+0x125/0x1f0
+[   49.747052]
+[   49.747052] but task is already holding lock:
+[   49.747234] ffff890e0adacc18 (&dsq->lock){-.-.}-{2:2}, at: task_rq_lock+0x6c/0x170
+[   49.747416]
+[   49.747416] other info that might help us debug this:
+[   49.747557]  Possible unsafe locking scenario:
+[   49.747557]
+[   49.747689]        CPU0
+[   49.747740]        ----
+[   49.747793]   lock(&dsq->lock);
+[   49.747867]   lock(&dsq->lock);
+[   49.747950]
+[   49.747950]  *** DEADLOCK ***
+[   49.747950]
+[   49.748086]  May be due to missing lock nesting notation
+[   49.748086]
+[   49.748197] 3 locks held by stress-ng-race-/5818:
+[   49.748335]  #0: ffff890e0f0fce70 (&p->pi_lock){-.-.}-{2:2}, at: task_rq_lock+0x38/0x170
+[   49.748474]  #1: ffff890e3b6bcc98 (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x20/0xa0
+[   49.748652]  #2: ffff890e0adacc18 (&dsq->lock){-.-.}-{2:2}, at: task_rq_lock+0x6c/0x170
+
+Reproducer:
+
+ $ cd tools/sched_ext
+ $ make scx_simple
+ $ sudo ./build/bin/scx_simple
+ ... and in another shell
+ $ stress-ng --race-sched 0
+
+I added an explicit BUG_ON() to see where the double locking is happening:
+
+[   15.160400] Call Trace:
+[   15.160706]  dequeue_task_scx+0x14a/0x270
+[   15.160857]  move_queued_task+0x7d/0x2d0
+[   15.160952]  affine_move_task+0x6ca/0x700
+[   15.161210]  __set_cpus_allowed_ptr+0x64/0xa0
+[   15.161348]  __sched_setaffinity+0x72/0x100
+[   15.161459]  sched_setaffinity+0x261/0x2f0
+[   15.161569]  __x64_sys_sched_setaffinity+0x50/0x80
+[   15.161705]  do_syscall_64+0xbb/0x370
+[   15.161816]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Are we missing a DEQUEUE_LOCKED in the sched_setaffinity() path?
+
+Thanks,
+-Andrea
