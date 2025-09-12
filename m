@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5074622759C;
-	Thu, 11 Sep 2025 20:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2DE2DC779;
+	Fri, 12 Sep 2025 00:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757623208; cv=none; b=cPkyFt7oRuB0NkoPWQ8aV8fMqobe0DxdV/qWsjHBkEYBsGpoYau4+aHEHFrWdLnsCQ1zcB3Fq59IoyYXAVJPhgmd2T3vfqniGtlSwIoPnXEKJYQtAquoeReZaQmIEKjzsRqXHv0BiqAYs/pPkfySKc2kfIfCi3L2GjNfgKdJKIw=
+	t=1757636399; cv=none; b=B649SPUZum4FRSGeW/lIft9NOt+84Mh2zVHeJ0vWRs+VW9Uc3e1Ev2FVN7gIUXMym+YuK02/DjQi5mbJjT63aK+uz+M/DTFeIB8ns2cFLfekMB7fH5c4Wl5Le8Si7uQou2ko95LUWn3qcp8Z/7j9MAIoENj8pBVKuqV5lczM16o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757623208; c=relaxed/simple;
-	bh=8hnQ06uJnhREH5akTgfN6vsYLtIKYGhKoV9nBO8LIzM=;
+	s=arc-20240116; t=1757636399; c=relaxed/simple;
+	bh=u4FEke0ydQjSjz04Ux4SWmVQR4jg0KE0VTpOSi+ssD0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rh1KVfxYs7WKvfgWUNIwWHBQ87g9oStGwNmi2yROVDU8NzdRFosB0F6vqoyN3qCTuAgXA63qS4dpZPZzi9f1ktogb9gUNjEHmH4790A1UynxIQhW40QB9b3HiJtkUUJ/9dyg5KEGKO7IcG2+dm7cgL1vylxA+/T/ibpz1UWFgOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AftvDV8J; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=PbvlJQdLWlCXTS1CeEQzLSqcZyCegDmbouWG3Nwksvn9qIhW0YjpVSjf3zou4IpB6FGraY8SlGi6pypuZgqrEfGQhHWPso/rvo//ufl+zqV9ybR4GcwYRCU67WBcWxKlKqk+r2CUPZzRANu16BLNXJjNV0Rjuj8esRQniXsq6T0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HsC0OTMU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AftvDV8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68BDC4CEF0;
-	Thu, 11 Sep 2025 20:40:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HsC0OTMU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886ACC4CEF1;
+	Fri, 12 Sep 2025 00:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757623207;
-	bh=8hnQ06uJnhREH5akTgfN6vsYLtIKYGhKoV9nBO8LIzM=;
+	s=k20201202; t=1757636398;
+	bh=u4FEke0ydQjSjz04Ux4SWmVQR4jg0KE0VTpOSi+ssD0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AftvDV8JrnN/pCxzs4ZYnz8PrF01oECxqlncRV1as21fsghKqbpIzgvRawFRTkC+a
-	 bYxye24rnIMCudF2SywiTfNYDAAceCCelN45DU6mwtKpvkFphI6oqEjwvFT8eBwUQb
-	 b8WDoaSOdeAkDE2ZztzDu0PBn3hIJ4lg9uVMYyedKiisAUDtlZI5bPNxa9PQdshRrT
-	 UDI0AwHsdhaGTvfSNGxCHE2e2ViWvmTVseXwmKQTambLGDEmBegnj7W9Zw5cDPdOL2
-	 nvxQr3ZUPGEoiTQC0mFPdayF3rSomp98t5dyGuOTP1jA319zMDqWX0BgXhgq6u5VJO
-	 pb9ZQFRontAXg==
-Date: Thu, 11 Sep 2025 10:40:06 -1000
+	b=HsC0OTMURwcxesMWGxQASvYxOqIKgehJjgEEOYkpa+XBdgRfw/dfPson1rWXNyIZn
+	 4s5EscgTXyHeN0t96mPwzYjAal4hfbE/6oI999bI3IYBik2w/szkIUqwAWOVuRke4L
+	 OoOnpsYSK147PPi/eWfUdGcf8EshR7f9q6HbDoQLZicBkX/yxQSEpUUnErPsYksDik
+	 cDapOxAKhDprpQuFGwdzLuWosiBKvyMS8KypwWZaw4ShVM2LHXfqoPRwQ3jgRjE14+
+	 wstBCQbnlJ0QcLPWgZL07spAE/+/qPuP5LWlGctLjMm9PuMKTRt7HDLxOk4aD45NX+
+	 E7rJu14dPDp/w==
+Date: Thu, 11 Sep 2025 14:19:57 -1000
 From: Tejun Heo <tj@kernel.org>
 To: Peter Zijlstra <peterz@infradead.org>
 Cc: linux-kernel@vger.kernel.org, mingo@redhat.com, juri.lelli@redhat.com,
@@ -36,12 +36,11 @@ Cc: linux-kernel@vger.kernel.org, mingo@redhat.com, juri.lelli@redhat.com,
 	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
 	changwoo@igalia.com, cgroups@vger.kernel.org,
 	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
-Subject: Re: [PATCH 13/14] sched: Add {DE,EN}QUEUE_LOCKED
-Message-ID: <aMMzpnyx__ZgZGRc@slm.duckdns.org>
+Subject: Re: [PATCH 12/14] sched: Add shared runqueue locking to
+ __task_rq_lock()
+Message-ID: <aMNnLenCytO_KEKg@slm.duckdns.org>
 References: <20250910154409.446470175@infradead.org>
- <20250910155809.800554594@infradead.org>
- <aMItk3c5H6Z2CD4X@slm.duckdns.org>
- <20250911094240.GW3289052@noisy.programming.kicks-ass.net>
+ <20250910155809.684653538@infradead.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -50,65 +49,71 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250911094240.GW3289052@noisy.programming.kicks-ass.net>
+In-Reply-To: <20250910155809.684653538@infradead.org>
 
 Hello,
 
-On Thu, Sep 11, 2025 at 11:42:40AM +0200, Peter Zijlstra wrote:
-...
-> I didn't immediately see how to do that. Doesn't that
-> list_for_each_entry_safe_reverse() rely on rq->lock to retain integrity?
+On Wed, Sep 10, 2025 at 05:44:21PM +0200, Peter Zijlstra wrote:
+> @@ -703,17 +703,24 @@ void double_rq_lock(struct rq *rq1, stru
+>  struct rq *__task_rq_lock(struct task_struct *p, struct rq_flags *rf)
+>  	__acquires(rq->lock)
+>  {
+> +	raw_spinlock_t *slock;
+>  	struct rq *rq;
+>  
+>  	lockdep_assert_held(&p->pi_lock);
+>  
+>  	for (;;) {
+>  		rq = task_rq(p);
+> +		slock = p->srq_lock;
+>  		raw_spin_rq_lock(rq);
+> -		if (likely(rq == task_rq(p) && !task_on_rq_migrating(p))) {
+> +		if (slock)
+> +			raw_spin_lock(slock);
+> +		if (likely(rq == task_rq(p) && !task_on_rq_migrating(p) &&
+> +			   (!slock || p->srq_lock == slock))) {
+>  			rq_pin_lock(rq, rf);
+>  			return rq;
+>  		}
 
-Ah, sorry, I was thinking it was iterating scx_tasks list. Yes, as
-implemented, it needs to hold rq lock throughout.
+With the !slock condition, the following scenario is possible:
 
-> Moreover, since the goal is to allow:
-> 
->  __schedule()
->    lock(rq->lock);
->    next = pick_task() := pick_task_scx()
->      lock(dsq->lock);
->      p = some_dsq_task(dsq);
->      task_unlink_from_dsq(p, dsq);
->      set_task_cpu(p, cpu_of(rq));
->      move_task_to_local_dsq(p, ...);
->      return p;
-> 
-> without dropping rq->lock, by relying on dsq->lock to serialize things,
-> I don't see how we can retain the runnable list at all.
->
-> And at this point, I'm not sure I understand ext well enough to know
-> what this bypass stuff does at all, let alone suggest means to
-> re architect this.
+  __task_rq_lock()
+     slock = p->srq_lock; /* NULL */
+                                                dispatch_enqueue()
+                                                  p->srq_lock = &dsq->lock;
+                                                enqueue finishes
+     raw_spin_rq_lock(rq);
+     rq is the same, $slock is NULL, return
+  do something assuming p is locked down        p gets dispatched to another rq
 
-Bypass mode is enabled when the kernel side can't trust the BPF scheduling
-anymore and wants to fall back to dumb FIFO scheduling to guarantee forward
-progress (e.g. so that we can switch back to fair).
+I'm unclear on when p->srq_lock would be safe to set and clear, so the goal
+is that whoever does [__]task_rq_lock() ends up waiting on the dsq lock that
+the task is queued on, and if we can exclude other sched operations that
+way, we don't have to hold source rq lock when moving the task to another rq
+for execution, right?
 
-It comes down to flipping scx_rq_bypassing() on, which makes scheduling
-paths bypass most BPF parts and fall back to FIFO behavior, and then making
-sure every thread is on FIFO behavior. The latter part is what the loop is
-doing. It scans all currently runnable tasks and dequeues and re-enqueues
-them. As scx_rq_bypass() is true at this point, if a task were queued on the
-BPF side, the cycling takes it out of the BPF side and puts it on the
-fallback FIFO queue.
+In the last patch, it's set on dispatch_enqueue() and cleared when the task
+leaves the DSQ. Let's consider a simple scenario where a task gets enqueued,
+gets put on a non-local DSQ and then dispatched to a local DSQ, Assuming
+everything works out and we don't have to lock the source rq for migration,
+we'd be depending on task_rq_lock() reliably hitting p->srq_lock to avoid
+races, but I'm not sure how this would work. Let's say p is currently
+associated with CPU1 on a non-local DSQ w/ p->srq_lock set to its source
+DSQ.
 
-If we want to get rid of the locking requirement:
+  pick_task_ext() on CPU0               task property change on CPU1
+    locks the DSQ
+    picks p      
+    task_unlink_from_dsq()              task_rq_lock();
+      p->srq_lock = NULL;                 lock rq on CPU1
+    p is moved to local DSQ               sees p->src_lock == NULL
+                                          return
+  p starts running
+  anything can happen
+                                        proceed with property change
 
-- Walk scx_tasks list which is iterated with a cursor and allows dropping
-  locks while iterating. However, on some hardware, there are cases where
-  CPUs are extremely slowed down from BPF scheduler making bad decisions and
-  causing a lot of sync cacheline pingponging across e.g. NUMA nodes. As
-  scx_bypass() is what's supposed to extricate the system from this state,
-  walking all tasks while going through each's locking probably isn't going
-  to be great.
-
-- We can update ->runnable_list iteration to allow dropping rq lock e.g.
-  with a cursor based iteration. Maybe some code can be shared with
-  scx_tasks iteration. Cycling through locks still isn't going to be great
-  but here it's likely a lot fewer of them at least.
-
-Neither option is great. Leave it as-is for now?
+What am I missing?
 
 Thanks.
 
