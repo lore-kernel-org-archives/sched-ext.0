@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360C125392A;
-	Tue, 16 Sep 2025 20:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F3131BC8A;
+	Tue, 16 Sep 2025 21:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758054728; cv=none; b=R5rka1uwcM2qJw5PqtvbfzfZuoNW4342eSIeoCvbrbmZemfDlrFjztL7A440BlJ/cengsPm3ch3GMWvDNSgMSBoPOHoiih/aCfkTe5r26mSNO90zjW9GRTzVbDtButKyGEgeQ48sSQCFDbVsGDa9UCemA+n8oX7z2Z9aw4pIUUQ=
+	t=1758056803; cv=none; b=Yk1lOjvrkIAgeCssFhIpXNMpyIbsMHf/zDJtjZXkbHkkSZfxQFqKbEeJYYpJfjv1n34SWzk5LhxdwTywUr3y6iDD5Jo/SOOefwSgZsxURFKUiAoExGywI8US5tdwE5eA9mNTVYBpJKTeMwZqdIURic/G/3AWQzHB0nBMWswKBrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758054728; c=relaxed/simple;
-	bh=HcWizezMA5klvnYnQpS0v8oBjlRPRuFgpJFp2cNBiK4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LgXQ3T0aA9NlypyhDsHwgE31/p2bOKJeb57yX8zkgNEPYUacFDqZAEXDtqhfEmC2GSuaDQQp5btL/d4heRx1Gz38MSP89JvXMeKCpAITy17X/IgOxeA/vc+R3WwORXV1cmS08i0fzppqFoDSRM49F8GTHSXOYRrnqvObZjA5D/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JrDXhaJj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758056803; c=relaxed/simple;
+	bh=FKML9B+xutopDFpliFQu8+zNb4BvyiQsZ0gb3XSNvlo=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=GM5f80k2xgWGgeyVd6QvWdCBjQnnG/z0lo+4GgAa6c3dAw+W0CsHgrWm6G3SQd6ekGVHMNoE/7Kpw4kVPjxNvy5E861zO1SKMQih963Ujokdccl9Ajy6bxsmQMNT6y3dnDh0x8l1sHLFs9PwKK39K08HOYEXbtSAbFLvWrCZI8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YkgvyzH7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JrDXhaJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954A1C4CEF7;
-	Tue, 16 Sep 2025 20:32:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YkgvyzH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4119AC4CEEB;
+	Tue, 16 Sep 2025 21:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758054727;
-	bh=HcWizezMA5klvnYnQpS0v8oBjlRPRuFgpJFp2cNBiK4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JrDXhaJjRoA5NAx7sI1jD+177fF4EHbJKbNF02yo5CMbGMfSsfuybdJ7/FWpWz5pp
-	 MESqfMVlKphwNoTeprihFc+CI4t6/kYiRklvaej5u8Fh+bBbHhODzvKwUelZZmbMRt
-	 ipiFF4L9KklpSRHjAR6qjxLDuIBDiYGCEUGtp7ZV71TqDKM/YllZ/OpfdNFkrdUm/P
-	 OTv5rBb8kbw0EvVdI3ZxduswnozK6EFf3e4ZK7VqzVf+XGjlM/7yMRKK+KPsFucLvb
-	 qixQNib13K4Yhu6KlwHPD8uFJm+8lcIsDFyJmHbPLGkHuVpGRR8K4zlTxki/HSf3rZ
-	 YN3ht4L4YQklA==
-Date: Tue, 16 Sep 2025 10:32:06 -1000
+	s=k20201202; t=1758056803;
+	bh=FKML9B+xutopDFpliFQu8+zNb4BvyiQsZ0gb3XSNvlo=;
+	h=Date:From:To:Cc:Subject:From;
+	b=YkgvyzH7h4oIYIZqK4VlPI7lvX/aPg7Nydan1K0rJKtBXM47LgRSroPFkzsfrRftD
+	 l3eCitq+Ny8yTZkiGieU7lVOBCB9b9x0feBmqyOpKm7qZXPisWzthkPUcChmaD1iQa
+	 bOhze5yRM0PB300OuyBBj0Bnho2T9bk9l+wgWcQIyPhRNq+qZWiAqSAzvIDWvtS4Bs
+	 Xg4HmTVMYXwkwlUDQu9eXmpnlatM/d4p9cpo6Qbrizf6K4pRu3ru8ATa9BF3hoMJb/
+	 dKuGKoZ4FyUROOnmF8lwOItyejj7Xzx8L2sscol9Gd8wlZrFDnhCuro4l8LZ3GLJyI
+	 Dgdi3S8TXiPjg==
+Date: Tue, 16 Sep 2025 11:06:42 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Changwoo Min <changwoo@igalia.com>
-Cc: void@manifault.com, arighi@nvidia.com, kernel-dev@igalia.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: allow scx_bpf_task_cgroup() in ops.dispatch()
-Message-ID: <aMnJRn8qdiFaqQXU@slm.duckdns.org>
-References: <20250915065236.13669-1-changwoo@igalia.com>
+To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
+Subject: [PATCH sched_ext/for-6.17-fixes] sched_ext, sched/core: Fix build
+ failure when !FAIR_GROUP_SCHED && EXT_GROUP_SCHED
+Message-ID: <aMnRYuUvbYsc9S2L@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -42,30 +43,35 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250915065236.13669-1-changwoo@igalia.com>
 
-Hello,
+While collecting SCX related fields in struct task_group into struct
+scx_task_group, 6e6558a6bc41 ("sched_ext, sched/core: Factor out struct
+scx_task_group") forgot update tg->scx_weight usage in tg_weight(), which
+leads to build failure when CONFIG_FAIR_GROUP_SCHED is disabled but
+CONFIG_EXT_GROUP_SCHED is enabled. Fix it.
 
-On Mon, Sep 15, 2025 at 03:52:36PM +0900, Changwoo Min wrote:
-...
-> Fix this by adding the prev task to scx.kf_tasks so that task-related
-> BPF helpers such as scx_bpf_task_cgroup() can be called safely. Since
-> the SCX_CALL_OP_TASK family assumes the first argument is the task,
-> introduce a new SCX_CALL_OP_TASK_ANY macro without that restriction.
-> Also update __SCX_KF_TERMINAL to include SCX_KF_DISPATCH.
-
-I'm not sure this is safe tho. ops.dispatch() can release the rq lock it's
-holding to migrate tasks across rq's, which means that other operations can
-nest inside - ie. there can be an irq which triggers ops.enqueue() while
-ops.dispatch() is in progress. That can in turn overwrite
-current->scx.kf_tasks[].
-
-I wonder whether a better approach would be tracking cgroup membership from
-BPF side. ops.init_task() tells you the initial cgroup it's joining and if
-the task later moves to another cgroup, ops.cgroup_move() will be invoked.
-Would that work?
+Fixes: 6e6558a6bc41 ("sched_ext, sched/core: Factor out struct scx_task_group")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202509170230.MwZsJSWa-lkp@intel.com/
+---
+Peter, I'll apply this to sched_ext/for-6.17-fixes and send it Linus' way.
+Please let me know for any concerns.
 
 Thanks.
 
--- 
-tejun
+ kernel/sched/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index be00629f0ba4..ccba6fc3c3fe 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9551,7 +9551,7 @@ static unsigned long tg_weight(struct task_group *tg)
+ #ifdef CONFIG_FAIR_GROUP_SCHED
+ 	return scale_load_down(tg->shares);
+ #else
+-	return sched_weight_from_cgroup(tg->scx_weight);
++	return sched_weight_from_cgroup(tg->scx.weight);
+ #endif
+ }
+ 
