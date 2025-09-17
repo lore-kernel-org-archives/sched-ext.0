@@ -1,105 +1,83 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7C92192F2;
-	Wed, 17 Sep 2025 02:12:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14FD263889;
+	Wed, 17 Sep 2025 05:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758075158; cv=none; b=QGczmwtY3aE88bxcn+TN+wpIShkgIQ3zTbjMSzH4Afru8fawZeIKmxL2dosQ4trIbaBiCyjXGCurUWBn3UdvSXoL96h4qQrXTsJ3m+rpYLVRtwOkmJr2WGBJ0qbBI/KVf1CDtjTXjRASP5AWpSPGeAOhmjMf5mr5ezTYVhsWe/4=
+	t=1758085225; cv=none; b=WJHnKLg8aR773z3rp4CnXCwkpF9uOm0RuHnECaoCSUHXc7RULa14ppbIPWAkJ0W3JT1M2bngyar35XfQ2aXzNxMI/D8rqG5MjsTuNDY8DPTEmkuEHWMrsHoyLYheqlPy+R88F6SQlSPbB6jwHwxfGl67UwhLnsFkWAY7k+e0PBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758075158; c=relaxed/simple;
-	bh=o7B2mZHPWT/aZdNVmEU0SN6olLzQWfJsVaSsEW6Dp44=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eDfSzd9iI+EAmP0O/gO3JPTk6UFn+Dfnq11fqToMfhSGiAFNFXTjfBU4pXyjZX9aqCpTL+ReM5Na2ZtFSWoh/9rWH9hKR8PXml3nVagB0q+1mfmqI78LVtwV8c9+aWz8aScpmCh21CMgjOWZqpBovQOd4wZop1XkjdIPH9Futxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=aXV2X5Kf; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1758085225; c=relaxed/simple;
+	bh=NTlDCmwOjQ6Fl9+bfqZguIsw/+1A0nQYdRFatNqYrBI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gNXUIH/zx1ybPXYZ2n7tewieB/b+cNNKXxDKp0gFKN8hlknwR6HHmMt1GBO9P7XAbGwDr5bP5IvIqy9j/81QUpFdi9awx0qg+jbBKsXnBtroRzFw9iZKxOMhsxQ80vvEOwOFKl/Bq9K2JvQg45LxC3/tmBmseo5mw83fnszWHig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cFhARYhx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="aXV2X5Kf"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=oTAMKDMleRnfi2Q+zweyRqDXxRH9gs+cg8KcwQjTdOk=; b=aXV2X5KfybjG+NdBAlSbb1geMi
-	PapCNN5AlvZuKC96YbVn6VMFwr4xu/DRBNoMV18Bkfwpw/cRM0+RM0SZMmrFZI7re3Udc70kHz9DP
-	C2+b1cuLR9N0WNFBXaqekw9DWpL3i0y6q2ZIJnJ4Hd3nnNVxAvit0hld+Sb+eUqGCJc/WIVAAANGI
-	1h/ZxoR2NID3RfF1Jb/6Nh9Pp7k12ym6Ls568YevSY8c7Ow1Y7r1sd+cSLJiOaQsFaU1EHUfN7pwx
-	sV+IXhU8XqUy9iaeQt4+4lRcsuzRlCIA0+ad31qrWgONCRzRWD5cOthceBRfDqb3Q7Aq15xjCkh5O
-	FytUT5iA==;
-Received: from [58.29.143.236] (helo=[192.168.1.7])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1uyhej-00CWDi-KH; Wed, 17 Sep 2025 04:12:26 +0200
-Message-ID: <2ef92808-42c9-4f8b-9d58-11e5d2c89fc3@igalia.com>
-Date: Wed, 17 Sep 2025 11:12:18 +0900
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cFhARYhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF8BC4CEF0;
+	Wed, 17 Sep 2025 05:00:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758085225;
+	bh=NTlDCmwOjQ6Fl9+bfqZguIsw/+1A0nQYdRFatNqYrBI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cFhARYhxPhBes+wQUjdXNrThGDXVOY4IPcqzbvMSJ4iWCkeadJbwKVY6gzYsOHA+F
+	 Q+0pmGkUecLfIu3bKSUHy0alapR+FovWEoDODAM994ECrZgsPDARQrQb+jjtQWJ1x0
+	 bGqV1RGHX378oz1XfLnGU+/gCFsfy1Rmkka9qjh0DvrkMHhxOBDYU5HjNHMhOuAift
+	 uXgy09bR/wbI7lRI1PhjOV6r0iuyzY6ZdNiUHfGDOSgF/AMq+geHEOYkhl+3wvLWeM
+	 tR2G4xQk9442lG98j8WXWiUKRmioGDhfJNJ/4slHIE5zcGRwT9Vl9Bf7wdWjdpqDRJ
+	 JVJDs8Kf/UN+w==
+Date: Tue, 16 Sep 2025 19:00:24 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Changwoo Min <changwoo@igalia.com>
+Cc: void@manifault.com, arighi@nvidia.com, kernel-dev@igalia.com,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: allow scx_bpf_task_cgroup() in ops.dispatch()
+Message-ID: <aMpAaLZ_UF6qwTGM@slm.duckdns.org>
+References: <20250915065236.13669-1-changwoo@igalia.com>
+ <aMnJRn8qdiFaqQXU@slm.duckdns.org>
+ <2ef92808-42c9-4f8b-9d58-11e5d2c89fc3@igalia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sched_ext: allow scx_bpf_task_cgroup() in ops.dispatch()
-To: Tejun Heo <tj@kernel.org>
-Cc: void@manifault.com, arighi@nvidia.com, kernel-dev@igalia.com,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20250915065236.13669-1-changwoo@igalia.com>
- <aMnJRn8qdiFaqQXU@slm.duckdns.org>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <aMnJRn8qdiFaqQXU@slm.duckdns.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ef92808-42c9-4f8b-9d58-11e5d2c89fc3@igalia.com>
 
-Hello Tejun,
+Hello,
 
-Thanks for the feedback.
-
-On 9/17/25 05:32, Tejun Heo wrote:
-> Hello,
+On Wed, Sep 17, 2025 at 11:12:18AM +0900, Changwoo Min wrote:
+> > I'm not sure this is safe tho. ops.dispatch() can release the rq lock it's
+> > holding to migrate tasks across rq's, which means that other operations can
+> > nest inside - ie. there can be an irq which triggers ops.enqueue() while
+> > ops.dispatch() is in progress. That can in turn overwrite
+> > current->scx.kf_tasks[].
 > 
-> On Mon, Sep 15, 2025 at 03:52:36PM +0900, Changwoo Min wrote:
-> ...
->> Fix this by adding the prev task to scx.kf_tasks so that task-related
->> BPF helpers such as scx_bpf_task_cgroup() can be called safely. Since
->> the SCX_CALL_OP_TASK family assumes the first argument is the task,
->> introduce a new SCX_CALL_OP_TASK_ANY macro without that restriction.
->> Also update __SCX_KF_TERMINAL to include SCX_KF_DISPATCH.
+> I thought that ops.dispatch() always holds an rq lock since there
+> is a lockdep_assert_rq_held(rq) check at the beginning of
+> balance_one(), which invokes the BPF scheduler's dispatch.
+> I guess I am missing an edge case?
+
+ops.dispatch() is always called and returns with rq locked; however, it
+sometimes needs to migrate tasks across rq boundaries and thus can
+temporarily release the rq lock it was called with. Please take a look at
+dispatch_to_local_dsq() which is called from balance_one() ->
+flush_dispatch_buf() -> finish_dispatch().
+
+> > I wonder whether a better approach would be tracking cgroup membership from
+> > BPF side. ops.init_task() tells you the initial cgroup it's joining and if
 > 
-> I'm not sure this is safe tho. ops.dispatch() can release the rq lock it's
-> holding to migrate tasks across rq's, which means that other operations can
-> nest inside - ie. there can be an irq which triggers ops.enqueue() while
-> ops.dispatch() is in progress. That can in turn overwrite
-> current->scx.kf_tasks[].
+> Currently, it is also not allowed to call scx_bpf_task_cgroup()
+> at ops.init_task() because the rq lock is not held at
+> ops.init_task(). The earliest possible moment to get a task's
+> cgroup ID is ops.enable().
 
-I thought that ops.dispatch() always holds an rq lock since there
-is a lockdep_assert_rq_held(rq) check at the beginning of
-balance_one(), which invokes the BPF scheduler's dispatch.
-I guess I am missing an edge case?
+ops.init_task() is called with scx_init_task_args, which contains .cgroup
+which points to the CPU controller cgroup the task belongs to.
 
-> 
-> I wonder whether a better approach would be tracking cgroup membership from
-> BPF side. ops.init_task() tells you the initial cgroup it's joining and if
+Thanks.
 
-Currently, it is also not allowed to call scx_bpf_task_cgroup()
-at ops.init_task() because the rq lock is not held at
-ops.init_task(). The earliest possible moment to get a task's
-cgroup ID is ops.enable().
-
-> the task later moves to another cgroup, ops.cgroup_move() will be invoked.
-> Would that work?
-
-Checking cgroup ID at ops.enable() is not ideal because there
-would be no cgroup ID changes between ops.enable() calls.
-However, the additional overhead should be marginal. So tracking
-cgroup ID at ops.enable() and ops.cgroup_move() will work.
-
-Regards,
-Changwoo Min
-
-
-
-
-
+-- 
+tejun
