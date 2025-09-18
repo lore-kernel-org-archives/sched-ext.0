@@ -1,95 +1,79 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C65A923B616
-	for <sched-ext@lists.linux.dev>; Thu, 18 Sep 2025 15:48:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B044130CD90;
+	Thu, 18 Sep 2025 15:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758210499; cv=none; b=nge/p361TQa9xY84b04lFk6L9UEaBLyjjITPtY9sgN5ami0cfaIuYJ5Re1VBNL3Wyi9I8MqdHimVi50PnGY21HmqxUSWAjWH0RTzFRN61dGiiKGai5Kd/SWJHIXdiXPprDajohMKAGpNdeDIQh0b+aKTA/mgHGI62TZ9DSxtd+Y=
+	t=1758210561; cv=none; b=U3k0KVGmkH/eyp7wJp8E+BsJXTdX2Gl/m0GVU98xE0wPtrS9c0nXCuw/dTnnJ/qpafCDaTNU6RqnraX3i5vqqM0as+oGaM7aN5ud7DFTnn9LJrpr9HIlPgq6DevupI924fVrji/6RcL8wau+Lt5GTFXFYFDnRoqmBAtibuE0bSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758210499; c=relaxed/simple;
-	bh=CI2okDp9/TNL7Ccfdjlt4gvJNkkOgX4xvVHgBSnIAlQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MdEhzVZLZiJGSCOfJJB5u6LXdxoMvdG0AMXtrlLaND4h4NGU31lQ1L9fj0czeNvsqaG28HgAWqpJjnpjZXGfTLYRbhPfrfe6Ciqu6i4mBJZfoSbjOx1VATRwo565xZvIDqyaT2s2qDKtgmN5hqChH3DwfyFJG8Cu9uuON5zTaSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0C0CD176C;
-	Thu, 18 Sep 2025 08:48:09 -0700 (PDT)
-Received: from [10.1.32.55] (e127648.arm.com [10.1.32.55])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 379C43F694;
-	Thu, 18 Sep 2025 08:48:16 -0700 (PDT)
-Message-ID: <16b9e714-e6f8-49e5-a885-3c9e85f873b7@arm.com>
-Date: Thu, 18 Sep 2025 16:48:14 +0100
+	s=arc-20240116; t=1758210561; c=relaxed/simple;
+	bh=f6pQ5rszWvYz9Kr0Qsa7yu+vrTbHKBxJzeBAVPLmT28=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iyk/CYhX2GvOnux3FizmxQ60JdJCAIyxZvCIId26m5TdbTHEhWpUTdzH0SUYvv2WQc1u2k3kWzg4oK1O+8ShSD7dSWcf9kcahuitvamx6HPdqpM7GRL5IVBO5pH2wM4B2s997LvLrme08B8W6nG3B9c2b8O0Bclf9twxPysqnnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=beoIJ7+O; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="beoIJ7+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CCFC4CEE7;
+	Thu, 18 Sep 2025 15:49:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758210561;
+	bh=f6pQ5rszWvYz9Kr0Qsa7yu+vrTbHKBxJzeBAVPLmT28=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=beoIJ7+OcO5Q2MUNxSrOo35JEyJcrj4eVZtmEK+JQAJmPaY3UeL3LbQOR36ocp4BL
+	 6VzOc2Xw+q/nXR3ZP1+OJwfv+GNxDT0znZhCxITI5ClU7ixC0OkD9Pp4jeAiKFSHQN
+	 YvIBBO6p4kFQ3KwRjIkQ8Ix5QstyKfBvy8O5taZzEYfZefOyVXq+olNl+TlhCO3YT7
+	 xzGnYfYr+OGnnX+H6vWVirdtCSxjVtDsVUyGU9nl2Yl8exS2rfkP9TkAgaClksUiUY
+	 n/1O0Mdu9GZN9vL/68TfR+YK4cOsxfz7xTxBgyBfrL+fWpB0jgmUplahBatGBvE7BE
+	 y3JA5bEPkhTkQ==
+Date: Thu, 18 Sep 2025 05:49:20 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-6.18] sched_ext: Add migration-disabled
+ counter to error state dump
+Message-ID: <aMwqAP76eVSIIIDn@slm.duckdns.org>
+References: <20250918092928.402242-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH sched_ext/for-6.18] sched_ext: Acquire task reference in
- scx_bpf_cpu_curr()
-To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20250909195709.92669-1-arighi@nvidia.com>
- <aMCHjFwwjqvKsZBg@slm.duckdns.org> <aMCRzXgDv6PGqLwp@gpd4>
-Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
-In-Reply-To: <aMCRzXgDv6PGqLwp@gpd4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250918092928.402242-1-arighi@nvidia.com>
 
-On 9/9/25 21:45, Andrea Righi wrote:
-> Hi Tejun,
+Hello,
+
+On Thu, Sep 18, 2025 at 11:29:28AM +0200, Andrea Righi wrote:
+> Include the task's migration-disabled counter when dumping task state
+> during an error exit.
 > 
-> On Tue, Sep 09, 2025 at 10:01:16AM -1000, Tejun Heo wrote:
->> Hello, Andrea.
->>
->> On Tue, Sep 09, 2025 at 09:57:09PM +0200, Andrea Righi wrote:
->>> scx_bpf_cpu_curr() has been introduced to retrieve the current task of a
->>> given runqueue, allowing schedulers to interact with that task.
->>>
->>> The kfunc assumes that it is always called in an RCU context, but this
->>> is not always guaranteed and some BPF schedulers can trigger the
->>> following warning:
->>>
->>>   WARNING: suspicious RCU usage
->>>   sched_ext: BPF scheduler "cosmos_1.0.2_gd0e71ca_x86_64_unknown_linux_gnu_debug" enabled
->>>   6.17.0-rc1 #1-NixOS Not tainted
->>>   -----------------------------
->>>   kernel/sched/ext.c:6415 suspicious rcu_dereference_check() usage!
->>>
->>> The correct behavior is to acquire a reference to the returned task, so
->>> the scheduler can safely access it and then release it with
->>> bpf_task_release().
->>>
->>> Update the kfunc and the corresponding compatibility helper to implement
->>> reference acquisition and prevent potential RCU warnings.
->>
->> I think KF_RCU likely fits better for peeking kernel data structures than
->> having to acquire/release them. Can you post the full backtrace? Is it being
->> called from a sleepable bpf prog? Or is it that we just need to expand the
->> rcu check scope to cover regular rcu, bh and sched? And, everything aside,
->> if KF_RCU, should we be tripping on rcu_dereference() in the first place?
+> This can help diagnose cases where tasks can get stuck, because they're
+> unable to migrate elsewhere.
 > 
-> For the records, as discussed offline, we should be fine marking the kfunc
-> as KF_RCU_PROTECTED instead of acquiring the reference to the task.
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> ---
+>  kernel/sched/ext.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> Right now the kfunc is marked as KF_RCU, which is not really necessary,
-> because KF_RCU ensures the kfunc *arguments* are either RCU-protected or
-> trusted.
-> 
-> KF_RCU_PROTECTED, instead, should ensure that the kfunc is called inside an
-> RCU read-side critical section, that is what we need.
-> 
-> In this way the kfunc can safely return a pointer to the task and sleepable
-> BPF programs can wrap the call in a bpf_rcu_read_lock/unlock() section.
-> This should prevent the RCU warning while still letting schedulers safely
-> use the returned task.
-> 
-> I'll send a new patch with a proper fix.
-> 
-Hi Andrea,
-is this patch still outstanding or am I out of the loop now?
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 477eccf023388..e03bb51364661 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -4167,7 +4167,8 @@ static void scx_dump_task(struct seq_buf *s, struct scx_dump_ctx *dctx,
+>  		  p->scx.sticky_cpu, p->scx.holding_cpu, dsq_id_buf);
+>  	dump_line(s, "      dsq_vtime=%llu slice=%llu weight=%u",
+>  		  p->scx.dsq_vtime, p->scx.slice, p->scx.weight);
+> -	dump_line(s, "      cpus=%*pb", cpumask_pr_args(p->cpus_ptr));
+> +	dump_line(s, "      cpus=%*pb migration_disabled=%u", cpumask_pr_args(p->cpus_ptr),
+
+Can you abbreviate this a bit? We have limited dump buffer size and real
+estate. Wouldn't e.g. no_mig= achieve the same with a lot less space?
+
+Thanks.
+
+-- 
+tejun
