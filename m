@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7804219D8BC;
-	Mon, 22 Sep 2025 01:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756A212CD8B;
+	Mon, 22 Sep 2025 01:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758504771; cv=none; b=JmLZyBhIzLviidycK0kAL+ZOO6iXFkiL521CQkDlvN8RYRXdLaG5fklZGjuo4ws4hS6D22zNVSGm2twK6W0mL2nVLiQgycdHXGVTMETMVmzn+DeH3psfUjpB9NOrC/CzFVARWlluNlMs7wbd2DbH9Lt9Yz5gET7JqFv8+W/BaN8=
+	t=1758504772; cv=none; b=roR1N9htBD/iqOFQQB+55pw1BBLnjXneeV2O4btn7pndT5s+Zf4qnwGkV16Eb8eHm7QKO99Ut0HJ0W2hGbGzogD8+nC1QJBjV0VU6C8k1xa1PjkJpYzR0kYC9dt7YSVDfmAgKA8nkBkUlfU1IxmEX6Qv0bP7nS54R41vN+nBC6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758504771; c=relaxed/simple;
-	bh=PG7649qzgTnimZO0ESCzvakNOlbFx2LGdGUs31BVO00=;
+	s=arc-20240116; t=1758504772; c=relaxed/simple;
+	bh=7nU5v03BftWPqTaAzZYbuDLW9wu1WkEYWzembEyvQ24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGjaHmtWmWAUhbP7ud9kXg5OgDzw6naF5Pv6ZMQvpZQw+FEvb9o4oHCWc1yiBrcv5fxxNh8LDy7dTxyeQs6WIWBxcBbFSfFgzzNrQcd7L4NQXHYtG6TXJYcXdKF5alTzIpwroLpzKCRrhjDJcfPSpas1BiYeEJ08w25OZb78sEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tcfPioy3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdIl0SVxC+k+wehz+I4r6SpNyhN3L0LzOL8ZlATOT0baXaz56lzagsAO/S3oLQJCACUw2GWjWhffMHOCzTNMZNJRiGq10Jkm93c2XBKiR1V4r+qxw4wpi7v5nXTPOShrr4QEUmdQ/JinxxhXI1buWF2v/RWsE1gAmoinRBjcfZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7g89Fet; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tcfPioy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DF2C116C6;
-	Mon, 22 Sep 2025 01:32:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7g89Fet"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D33C4CEE7;
+	Mon, 22 Sep 2025 01:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758504771;
-	bh=PG7649qzgTnimZO0ESCzvakNOlbFx2LGdGUs31BVO00=;
+	s=k20201202; t=1758504772;
+	bh=7nU5v03BftWPqTaAzZYbuDLW9wu1WkEYWzembEyvQ24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcfPioy3pdwvl2CEEZ6jcJxhgeDD8wDgufWkUu3ukyXakGbb68i/Tc3f/yi80bTGo
-	 VUV6g/BOxFai1EI36SDgWHiogVP4YF7yUcVq/ni0kJouBs7ErTFb78yg2k5FPWpcRs
-	 ejJTGMGKX9m9KweKegxsv5qiVp6Zmn3oZP2WCQB7G97H1dwVw4T8BeM31v5YWsNZO5
-	 cuc3XvURTlWTy6jjrTvn5rdxAdtgSEv0VqAwii8jmmVIYTfFVbf7OVQlsD2CY0FL1R
-	 dQ9UIaoFliGL6Kl0fX/q07Dih3J0XKBTaxXuXM5mq5Fc3Bd6FGtfs2ldOjTt82Z4eS
-	 LPdsoX/v3q82A==
+	b=q7g89FetMVslgvJgUhlDn5STxH1tJ260ClzJIz0Zn+Q2DHK9cSxXxJOnfCRTmbkba
+	 6VbXn0zpu1Ue+OR7gdG4nH9b7pJ4QUKcQegx3EqdNa9eaghzriaWI+8oWgLhNElDTK
+	 NX/AC8b0/6hhf417vIdEqnZKXmXQ+Hz080vYy0g1qlhdeaLixrzLyRW165XGD9Rfrl
+	 LbDIeWornewJfHGLcNFQEz7b1SjQwbi91a1FHAjb0XDb/KeDt1mMt0yP4y1J8mzeoP
+	 VXvROslJueAQ9sLNtrBmHWQ765N9Xjun8G/BMOakDRpuL4/TmPSOmSEBjsLDf/oXRG
+	 YzL+0guKzj9Kg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -33,9 +33,9 @@ To: David Vernet <void@manifault.com>,
 Cc: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4/7] sched_ext: Use bitfields for boolean warning flags
-Date: Sun, 21 Sep 2025 15:32:43 -1000
-Message-ID: <20250922013246.275031-4-tj@kernel.org>
+Subject: [PATCH 5/7] sched_ext: Add SCX_EFLAG_INITIALIZED to indicate successful ops.init()
+Date: Sun, 21 Sep 2025 15:32:44 -1000
+Message-ID: <20250922013246.275031-5-tj@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922013246.275031-1-tj@kernel.org>
 References: <20250922013246.275031-1-tj@kernel.org>
@@ -47,29 +47,63 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Convert warned_zero_slice and warned_deprecated_rq in scx_sched struct to
-single-bit bitfields to reduce struct size.
+ops.exit() may be called even if the loading failed before ops.init()
+finishes successfully. This is because ops.exit() allows rich exit info
+communication. Add SCX_EFLAG_INITIALIZED flag to scx_exit_info.flags to
+indicate whether ops.init() finished successfully.
+
+This enables BPF schedulers to distinguish between exit scenarios and
+handle cleanup appropriately based on initialization state.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext_internal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/ext.c          |  1 +
+ kernel/sched/ext_internal.h | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 5801ac676d59..d131e98156ac 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4554,6 +4554,7 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 			scx_error(sch, "ops.init() failed (%d)", ret);
+ 			goto err_disable;
+ 		}
++		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
+ 	}
+ 
+ 	for (i = SCX_OPI_CPU_HOTPLUG_BEGIN; i < SCX_OPI_CPU_HOTPLUG_END; i++)
 diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 2e289931e567..1a80d01b1f0c 100644
+index 1a80d01b1f0c..b3617abed510 100644
 --- a/kernel/sched/ext_internal.h
 +++ b/kernel/sched/ext_internal.h
-@@ -871,8 +871,8 @@ struct scx_sched {
- 	struct scx_dispatch_q	**global_dsqs;
- 	struct scx_sched_pcpu __percpu *pcpu;
+@@ -62,6 +62,16 @@ enum scx_exit_code {
+ 	SCX_ECODE_ACT_RESTART	= 1LLU << 48,
+ };
  
--	bool			warned_zero_slice;
--	bool			warned_deprecated_rq;
-+	bool			warned_zero_slice:1;
-+	bool			warned_deprecated_rq:1;
++enum scx_exit_flags {
++	/*
++	 * ops.exit() may be called even if the loading failed before ops.init()
++	 * finishes successfully. This is because ops.exit() allows rich exit
++	 * info communication. The following flag indicates whether ops.init()
++	 * finished successfully.
++	 */
++	SCX_EFLAG_INITIALIZED,
++};
++
+ /*
+  * scx_exit_info is passed to ops.exit() to describe why the BPF scheduler is
+  * being disabled.
+@@ -73,6 +83,9 @@ struct scx_exit_info {
+ 	/* exit code if gracefully exiting */
+ 	s64			exit_code;
  
- 	atomic_t		exit_kind;
- 	struct scx_exit_info	*exit_info;
++	/* %SCX_EFLAG_* */
++	u64			flags;
++
+ 	/* textual representation of the above */
+ 	const char		*reason;
+ 
 -- 
 2.51.0
 
