@@ -1,244 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D8231197D;
-	Mon, 22 Sep 2025 16:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15994192B66;
+	Mon, 22 Sep 2025 16:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758557685; cv=none; b=c9qPDmReSe0JXOmKJMCvgCPied11+mtvvIyqMc4LJNRlwCmeeosCwmrag4onTz2XuDzey8KKGkQk9N5W9aMQxFZ8zv6+W9uCbKOqdFudPW7Y9BUOwG7O+o/ezLzDvN5KdCOlX3oLCXXPUk0W+tw0SKnvCpRSAY0d5UEHuWmzisU=
+	t=1758559796; cv=none; b=Bc73Z+56ZQWqwtFTSSiMD8XTy1SLuCaHhY/gL1qanBIR7ugb5aehF04cOT0ARoO+iPoRgkA/OTx9WhjG38fs+XJSfL+SfxIxUuUTD/1sVSDEnD3Oi0AZxEUyWkOHnQ7VQeepNv8/Jc+xL4ue+/Jeri9szXaLJtHXmm1yB+NG+hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758557685; c=relaxed/simple;
-	bh=fjF/wzE63+fDOVGjbw4C2GjQY6O0hB6fbYPYd6ttus0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYFbM45QlpCyu/mVvF2DrO0GMzEw9G6NRBEYRkPimdIbkFTILfDFTmCvVAXgr3kTVdZnrHT8xEXo1+IEK6cUZ6/867SReZEms/v5tfe3Q3NSiYgU7do0N4P6CgvfInwy+9xKdih6/DMEk7K8D3IROUd1YZT9Qltt9l+aFiDUyuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRqzP5s6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758559796; c=relaxed/simple;
+	bh=M7MktnQrthEKslUvnhBlxODlj2uRrxXhtbIGEz90OfI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=MgMWF2EKUk3+rAj0d+P0jMCitG9XGu9dBQSINthMV5NViN9ajXJN1wfftUg5pwhQ4X4Mlo2tOfeMcxHGhJ0HtxrlnnT/qsys4c/3COtm8aa/Wf241uWkFQlkOhY/j84amcYSU11b1F/PlYeEDstQ6zQzcNaWgEu2DHr0++mNRm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lOnjzeMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRqzP5s6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FC1C4CEF7;
-	Mon, 22 Sep 2025 16:14:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lOnjzeMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EEAC4CEF0;
+	Mon, 22 Sep 2025 16:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758557684;
-	bh=fjF/wzE63+fDOVGjbw4C2GjQY6O0hB6fbYPYd6ttus0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRqzP5s65l2QwKZat1WEKi0w//3fX1geA5RKJXPWh110wX0YuFWooz5vSQ7Ko6G3g
-	 eXiyQh4sRWv9n/bA2JBDw0kb0NyYBfWfJItS9411JjwAJhe5tqsqzOSERpoBEGeuKa
-	 bNCnTiF247gY85ZhD3qxRr2C2WWjKK897m3u53BM90jYpgzIY+u6JNRcMm0DdmkHm+
-	 mlfSIdITyCzU3pwb+e7tW2N1MX0UBv1OKUM5JeE2zNMJiECnvcBz5exMjfMLqgwKVV
-	 9sPTdeyvSdDscDf8f5j+z6l08lz+QJ7P7U8PVLSNpOKO9eQ/lBkkSF2mrySN7yAAf2
-	 nyMtLEFp3/f1w==
+	s=k20201202; t=1758559795;
+	bh=M7MktnQrthEKslUvnhBlxODlj2uRrxXhtbIGEz90OfI=;
+	h=Date:From:To:Cc:Subject:From;
+	b=lOnjzeMnVIy9QyQtjz8hVdKZmitTRn1JJgxmksWcYJwOTdnOSZGCTR9Me0aYKFJfl
+	 FDByrMa1VltgGuNHqTb8MhqyYp45pFoV1PbUFW+c8cw+NSp0iOMrLcNZvJ/C7SjnNB
+	 8nOJ60WrM0cDkLnsSoEWAka0lcJQtEsmg5pkCHH2SDV4PIbkRNwGh9L++MOhpj65Mi
+	 9A83bnEdDmoIVuulwuinZsEisJdhU7OBP0b+66wCvYp04Sl1TQ3u9yeqKQRMFif6oO
+	 fEoFK9VrQ7sK8xJsVS095CFVpc7aA2092rSyUSrC7A2ikQKijNGj6Jl6iKUyZ/ixOV
+	 8N7KDg3+a0o2w==
+Date: Mon, 22 Sep 2025 06:49:54 -1000
 From: Tejun Heo <tj@kernel.org>
-To: void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Cc: linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7/7] sched_ext: Misc updates around scx_sched instance pointer
-Date: Mon, 22 Sep 2025 06:14:36 -1000
-Message-ID: <20250922161436.358949-8-tj@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250922161436.358949-1-tj@kernel.org>
-References: <20250922161436.358949-1-tj@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linux-kernel@vger.kernel.org, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev
+Subject: [GIT PULL] sched_ext: Fixes for v6.17-rc7
+Message-ID: <aNF-Mqjnu_phEgvP@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-In preparation for multiple scheduler support:
+The following changes since commit a1eab4d813f7b6e606ed21381b8cfda5c59a87e5:
 
-- Add the @sch parameter to find_global_dsq() and refill_task_slice_dfl().
+  sched_ext, sched/core: Fix build failure when !FAIR_GROUP_SCHED && EXT_GROUP_SCHED (2025-09-16 23:07:27 -1000)
 
-- Restructure scx_allow_ttwu_queue() and make it read scx_root into $sch.
+are available in the Git repository at:
 
-- Make RCU protection in scx_dsq_move() and scx_bpf_dsq_move_to_local()
-  explicit.
+  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-6.17-rc7-fixes
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext.c | 62 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 40 insertions(+), 22 deletions(-)
+for you to fetch changes up to 55ed11b181c43d81ce03b50209e4e7c4a14ba099:
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0c99a55f199b..32306203fba5 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -181,10 +181,9 @@ static bool u32_before(u32 a, u32 b)
- 	return (s32)(a - b) < 0;
- }
- 
--static struct scx_dispatch_q *find_global_dsq(struct task_struct *p)
-+static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch,
-+					      struct task_struct *p)
- {
--	struct scx_sched *sch = scx_root;
--
- 	return sch->global_dsqs[cpu_to_node(task_cpu(p))];
- }
- 
-@@ -880,10 +879,10 @@ static void dsq_mod_nr(struct scx_dispatch_q *dsq, s32 delta)
- 	WRITE_ONCE(dsq->nr, dsq->nr + delta);
- }
- 
--static void refill_task_slice_dfl(struct task_struct *p)
-+static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
- {
- 	p->scx.slice = SCX_SLICE_DFL;
--	__scx_add_event(scx_root, SCX_EV_REFILL_SLICE_DFL, 1);
-+	__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
- }
- 
- static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
-@@ -901,7 +900,7 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 			scx_error(sch, "attempting to dispatch to a destroyed dsq");
- 			/* fall back to the global dsq */
- 			raw_spin_unlock(&dsq->lock);
--			dsq = find_global_dsq(p);
-+			dsq = find_global_dsq(sch, p);
- 			raw_spin_lock(&dsq->lock);
- 		}
- 	}
-@@ -1080,20 +1079,20 @@ static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
- 		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
- 
- 		if (!ops_cpu_valid(sch, cpu, "in SCX_DSQ_LOCAL_ON dispatch verdict"))
--			return find_global_dsq(p);
-+			return find_global_dsq(sch, p);
- 
- 		return &cpu_rq(cpu)->scx.local_dsq;
- 	}
- 
- 	if (dsq_id == SCX_DSQ_GLOBAL)
--		dsq = find_global_dsq(p);
-+		dsq = find_global_dsq(sch, p);
- 	else
- 		dsq = find_user_dsq(sch, dsq_id);
- 
- 	if (unlikely(!dsq)) {
- 		scx_error(sch, "non-existent DSQ 0x%llx for %s[%d]",
- 			  dsq_id, p->comm, p->pid);
--		return find_global_dsq(p);
-+		return find_global_dsq(sch, p);
- 	}
- 
- 	return dsq;
-@@ -1272,15 +1271,15 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	 * higher priority it becomes from scx_prio_less()'s POV.
- 	 */
- 	touch_core_sched(rq, p);
--	refill_task_slice_dfl(p);
-+	refill_task_slice_dfl(sch, p);
- local_norefill:
- 	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
- 	return;
- 
- global:
- 	touch_core_sched(rq, p);	/* see the comment in local: */
--	refill_task_slice_dfl(p);
--	dispatch_enqueue(sch, find_global_dsq(p), p, enq_flags);
-+	refill_task_slice_dfl(sch, p);
-+	dispatch_enqueue(sch, find_global_dsq(sch, p), p, enq_flags);
- }
- 
- static bool task_runnable(const struct task_struct *p)
-@@ -1692,7 +1691,7 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
- 		if (src_rq != dst_rq &&
- 		    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
--			dst_dsq = find_global_dsq(p);
-+			dst_dsq = find_global_dsq(sch, p);
- 			dst_rq = src_rq;
- 		}
- 	} else {
-@@ -1848,7 +1847,7 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 
- 	if (src_rq != dst_rq &&
- 	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
--		dispatch_enqueue(sch, find_global_dsq(p), p,
-+		dispatch_enqueue(sch, find_global_dsq(sch, p), p,
- 				 enq_flags | SCX_ENQ_CLEAR_OPSS);
- 		return;
- 	}
-@@ -2380,7 +2379,7 @@ static struct task_struct *pick_task_scx(struct rq *rq)
- 	if (keep_prev) {
- 		p = prev;
- 		if (!p->scx.slice)
--			refill_task_slice_dfl(p);
-+			refill_task_slice_dfl(rcu_dereference_sched(scx_root), p);
- 	} else {
- 		p = first_local_task(rq);
- 		if (!p) {
-@@ -2391,14 +2390,14 @@ static struct task_struct *pick_task_scx(struct rq *rq)
- 		}
- 
- 		if (unlikely(!p->scx.slice)) {
--			struct scx_sched *sch = scx_root;
-+			struct scx_sched *sch = rcu_dereference_sched(scx_root);
- 
- 			if (!scx_rq_bypassing(rq) && !sch->warned_zero_slice) {
- 				printk_deferred(KERN_WARNING "sched_ext: %s[%d] has zero slice in %s()\n",
- 						p->comm, p->pid, __func__);
- 				sch->warned_zero_slice = true;
- 			}
--			refill_task_slice_dfl(p);
-+			refill_task_slice_dfl(sch, p);
- 		}
- 	}
- 
-@@ -2487,7 +2486,7 @@ static int select_task_rq_scx(struct task_struct *p, int prev_cpu, int wake_flag
- 
- 		cpu = scx_select_cpu_dfl(p, prev_cpu, wake_flags, NULL, 0);
- 		if (cpu >= 0) {
--			refill_task_slice_dfl(p);
-+			refill_task_slice_dfl(sch, p);
- 			p->scx.ddsp_dsq_id = SCX_DSQ_LOCAL;
- 		} else {
- 			cpu = prev_cpu;
-@@ -3572,9 +3571,22 @@ bool task_should_scx(int policy)
- 
- bool scx_allow_ttwu_queue(const struct task_struct *p)
- {
--	return !scx_enabled() ||
--		(scx_root->ops.flags & SCX_OPS_ALLOW_QUEUED_WAKEUP) ||
--		p->sched_class != &ext_sched_class;
-+	struct scx_sched *sch;
-+
-+	if (!scx_enabled())
-+		return true;
-+
-+	sch = rcu_dereference_sched(scx_root);
-+	if (unlikely(!sch))
-+		return true;
-+
-+	if (scx_root->ops.flags & SCX_OPS_ALLOW_QUEUED_WAKEUP)
-+		return true;
-+
-+	if (unlikely(p->sched_class != &ext_sched_class))
-+		return true;
-+
-+	return false;
- }
- 
- /**
-@@ -5537,9 +5549,15 @@ __bpf_kfunc void scx_bpf_dispatch_cancel(void)
-  */
- __bpf_kfunc bool scx_bpf_dsq_move_to_local(u64 dsq_id)
- {
--	struct scx_sched *sch = scx_root;
- 	struct scx_dsp_ctx *dspc = this_cpu_ptr(scx_dsp_ctx);
- 	struct scx_dispatch_q *dsq;
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return false;
- 
- 	if (!scx_kf_allowed(sch, SCX_KF_DISPATCH))
- 		return false;
+  sched_ext: idle: Handle migration-disabled tasks in BPF code (2025-09-22 06:24:44 -1000)
+
+----------------------------------------------------------------
+sched_ext: Fixes for v6.17-rc7
+
+This contains a fix for sched_ext idle CPU selection that likely fixes
+a substantial performance regression.
+
+The scx_bpf_select_cpu_dfl/and() kfuncs were incorrectly detecting all
+tasks as migration-disabled when called outside ops.select_cpu(), causing
+them to always return -EBUSY instead of finding idle CPUs. The fix properly
+distinguishes between genuinely migration-disabled tasks vs. the current
+task whose migration is temporarily disabled by BPF execution.
+
+----------------------------------------------------------------
+Andrea Righi (1):
+      sched_ext: idle: Handle migration-disabled tasks in BPF code
+
+ kernel/sched/ext_idle.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
+
 -- 
-2.51.0
-
+tejun
