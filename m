@@ -1,55 +1,41 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB41248F64;
-	Sun, 21 Sep 2025 03:20:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484FCDF59;
+	Mon, 22 Sep 2025 01:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758424837; cv=none; b=tFzbbR6S+nGEILLhryHq9Uv0z0UOvSXEn0D8BwMlFdZW8X9dK3U/27WjDeejg4XIAfTz2R4em5+mLasAIIZKkhXDwX6j/axN6BGw9SSN739iNkFVtYfxCC6C0JaIsp2NzZXQpwedaQchUQWxAwVdi2XoeiG4Mu6kCCb6jGPKAh4=
+	t=1758504768; cv=none; b=MR/9q7v5Cm/MaqmqxeRMqtRL11ykF0WSfHJ43SX16YTJ9ogOwxtRhw+OSMKVnydNR12ihBtaiW2utQToiH1XSVqI4iutg2BnGKQDG/QuHjIAzo6RjAH9F/ypQlrLny+rAUlG2fCFCdPDSGHTKSxfYWCtj/+Ek5haZQS3PbIyZVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758424837; c=relaxed/simple;
-	bh=y+FOHX/go9wekysNkMc1iPBG8Iy8ApZybO4toHO6X/Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctTfgGLCmSsub60K+jaGe9e97ZYOxA3lu/SyY/keqkp9tsfRG+xktkqZIVQMCb7VPfd5GMg3V89+y3fWJ2H6cPC3/bI2GYtyfy8mDMzFSEPUjmmU4j6vkvT/aXOFDCdmHe1FL6P95FWBNhjD2PWpsA2kHoAj8MmkEOehJjqv0Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=B6cincJY; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1758504768; c=relaxed/simple;
+	bh=uxjzFijAGUqRJoJXtzBFbfoa3JxlkIJaaNsClV+5oUM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ljn04MMZlcIXAkNshDSQNjrqYjVZZ/OurEbq9P9viQW3Mb5qaSVgLtSDKbFga6YZ6FG4Y9Qelj0+tfIkfeYmgNsC7O+cvwDk/iQz19lPuVkkOzXtkBiFxTbMHfnwnk6tezVBZFKYTDPn0iYIlp8QYKC8o1pTY9qqSHkumpv0hqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8e5Ejvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="B6cincJY"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=XzaDD1CcznY9UobS3SjpP6e1pWU64vfZ9Xs7KBz8zS4=; b=B6cincJYUySoF3WP5tE1SKk49n
-	YwQb+Hk8fVC6Fa1w1t3IOx8bzcAvD6HyW4CnpxXR9rvXwrf3m/xoEdg3XLuTYwg1+OttWItT7SNmQ
-	KKrUhwik/S9Ww5239Ubojk9JbvaK4vtIcY7lIGKWrpHhL4b21Nw2n753r/ay0BJDPZ291PY/RjT8K
-	/8YL4TenyeZtJaod+y8OiZRnwJ6XcduUvjzI+xFwSaUbBhib7K6jaAPR9IrL+rLce6yqW7Gw+de/O
-	N9FV+Z+ixQAboImBzOz1rXs5vYXjbv5lm6urf8JrO1q5gSUecR+nmMBNpvbIzid5AKDeiisvheMgw
-	Sos6VYuA==;
-Received: from [58.29.143.236] (helo=localhost)
-	by fanzine2.igalia.com with utf8esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1v0Acm-00Ecjh-Rj; Sun, 21 Sep 2025 05:20:29 +0200
-From: Changwoo Min <changwoo@igalia.com>
-To: lukasz.luba@arm.com,
-	rafael@kernel.org,
-	len.brown@intel.com,
-	pavel@kernel.org
-Cc: christian.loehle@arm.com,
-	tj@kernel.org,
-	kernel-dev@igalia.com,
-	linux-pm@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8e5Ejvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A846DC4CEE7;
+	Mon, 22 Sep 2025 01:32:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758504767;
+	bh=uxjzFijAGUqRJoJXtzBFbfoa3JxlkIJaaNsClV+5oUM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=c8e5EjvtNHOttZJGdG4m7ixWYvMqWXPjJydQyusD3JW7JWxb5GV9biTaL3RC+zlAB
+	 RJaITzxuVmuUfDMe24GDKUTVxV7jPsH9JcsYhdf9fxooov/Nn/nNwYWMqPbZl1j2gA
+	 T/JwrpJ/p5dkvH82i6qb6zNdH55EAasr5K9d4jJoSadbnLjDHQzZUP85KPhJJDnRAf
+	 FuLNSad809mtmnOcinUkF5hje3hAxsVgXgZNpN9lwixFaisdw28VSz6tA0JXKJDU8L
+	 1rL/0xoGcai4KpX9vuPQ240xvbRlxv2iMvfE9tvfPEXOfnnK253gpInpLRaVe/vg9y
+	 eiPTCGDge5aEw==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>
-Subject: [PATCH RESEND v4 10/10] PM: EM: Notify an event when the performance domain changes
-Date: Sun, 21 Sep 2025 12:19:28 +0900
-Message-ID: <20250921031928.205869-11-changwoo@igalia.com>
+Cc: linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 1/7] sched_ext: Use rhashtable_lookup() instead of rhashtable_lookup_fast()
+Date: Sun, 21 Sep 2025 15:32:40 -1000
+Message-ID: <20250922013246.275031-1-tj@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250921031928.205869-1-changwoo@igalia.com>
-References: <20250921031928.205869-1-changwoo@igalia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -58,53 +44,28 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Send an event to userspace when a performance domain is created or deleted,
-or its energy model is updated.
+The find_user_dsq() function is called from contexts that are already
+under RCU read lock protection. Switch from rhashtable_lookup_fast() to
+rhashtable_lookup() to avoid redundant RCU locking.
 
-Signed-off-by: Changwoo Min <changwoo@igalia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/power/energy_model.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
-index 740076d24479..fca32d1c6661 100644
---- a/kernel/power/energy_model.c
-+++ b/kernel/power/energy_model.c
-@@ -17,6 +17,8 @@
- #include <linux/sched/topology.h>
- #include <linux/slab.h>
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index f5873f8ed669..df433f6fab4b 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -207,7 +207,7 @@ static struct scx_dispatch_q *find_global_dsq(struct task_struct *p)
  
-+#include "em_netlink.h"
-+
+ static struct scx_dispatch_q *find_user_dsq(struct scx_sched *sch, u64 dsq_id)
+ {
+-	return rhashtable_lookup_fast(&sch->dsq_hash, &dsq_id, dsq_hash_params);
++	return rhashtable_lookup(&sch->dsq_hash, &dsq_id, dsq_hash_params);
+ }
+ 
  /*
-  * Mutex serializing the registrations of performance domains and letting
-  * callbacks defined by drivers sleep.
-@@ -350,6 +352,8 @@ int em_dev_update_perf_domain(struct device *dev,
- 	em_table_free(old_table);
- 
- 	mutex_unlock(&em_pd_mutex);
-+
-+	em_notify_pd_updated(pd);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(em_dev_update_perf_domain);
-@@ -697,6 +701,7 @@ int em_dev_register_pd_no_update(struct device *dev, unsigned int nr_states,
- 	list_add_tail(&dev->em_pd->node, &em_pd_list);
- 	mutex_unlock(&em_pd_list_mutex);
- 
-+	em_notify_pd_created(dev->em_pd);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(em_dev_register_pd_no_update);
-@@ -719,6 +724,8 @@ void em_dev_unregister_perf_domain(struct device *dev)
- 	list_del_init(&dev->em_pd->node);
- 	mutex_unlock(&em_pd_list_mutex);
- 
-+	em_notify_pd_deleted(dev->em_pd);
-+
- 	/*
- 	 * The mutex separates all register/unregister requests and protects
- 	 * from potential clean-up/setup issues in the debugfs directories.
 -- 
 2.51.0
 
