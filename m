@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084DA3115A3;
-	Mon, 22 Sep 2025 16:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58C1311943;
+	Mon, 22 Sep 2025 16:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758557681; cv=none; b=IjD84tt8Iqcq/OzLDU8g+Myp9QeOm6/MXHzBOa/X72Nds7naauvr9sOkdlypVp5wfa3KsD05+I610IlMGAFiOI0Osd9G+e1hqtQdA4kybRUIlRdsm/pwn/mtkcDWf98/WqSk4ufo4Vhrqma62nNeunBIAa6Zhz1eNSE2zg+aF1k=
+	t=1758557681; cv=none; b=BnuEABoYVIDqhHdqo7NMgcHazeyUXBp9du1Nu6vfKlfQs7avwUnKI59T7bMGPNSvP4rgN3C9lNwENpGamJzRLkyJ0X9l3vTP7c/CEiZrfo65lXp2qq8ewjhwMsrGmIQfPoGFh/WVwUlK6mGmNHQTyQaUMocgw6BY5M9PA8+4V2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758557681; c=relaxed/simple;
-	bh=N8NdxfmZXIcYOUKNsEt/ZUcRXN1TPpQdfGuEhvDG+QE=;
+	bh=mgQQ+IUl7NiiL7dQwjSJsrD1B091MyDgy6vpzLjygy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2mSrBU8C47JZ+Ph2EPa5Qa/2b4bkOqrTwuvC3GjAhJh075FeSygLUelXwSnHB8BtqqGlv/sGYo6QjbQYh2b4Ga5KtSk97Hq+cIZZr+jWW837exwPH8Y574wXiPulrzt4fXWOgsVpJ85xvo+kFsgqLQZszTiFCA8dQ0AJrTT0Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OIo1ZTsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SQS9AypdCY+50IgbFp8RHa/F2FWUvIMdajXpnGE+6vmARt47uGHOPD8uqQC7vKoVrb7pFM9LIaGoUr9JDRRyG5ZX60AVQyI65Bynn5A88Ejl6WlEYAoNjGjCFG1uR5P/dkZ3XnvXLA8NTSlWxZjNymlM5Uour1oJhT1vm5EBlug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oFeenpxx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OIo1ZTsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7115EC4CEF0;
-	Mon, 22 Sep 2025 16:14:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oFeenpxx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4B7C4CEF7;
+	Mon, 22 Sep 2025 16:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758557680;
-	bh=N8NdxfmZXIcYOUKNsEt/ZUcRXN1TPpQdfGuEhvDG+QE=;
+	s=k20201202; t=1758557681;
+	bh=mgQQ+IUl7NiiL7dQwjSJsrD1B091MyDgy6vpzLjygy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIo1ZTspYOYVbTQF9vbdoRwV5HLaCLsI9xlEIi83rjmEf2y4HyMdnnJbODGQw38K8
-	 GcUOP7sFoKqQvHgPnyMaBEz0E0OteN/RwuRueLcpTd7EaWsCIxAKbaHq41hwZrpFsk
-	 hxna8oVljjCmlZQddAxS2Yp2VnAFQbrBCUFcGPP5froIcJ+URIUQPY8mcKJhW3stx7
-	 XezXW0vy6HL4YUaZunHs3/q8BLh+yRs9UYrpmbwIkCxCpNUCwmAN2NduEvFRr2dcNR
-	 qAqc9/yIgf6F+QMKRMzZAIdEWgQms/rS3i2gViFBZhl5SqgwKUiPUPKVYEEoqih9+T
-	 QN/bVWdInX7jA==
+	b=oFeenpxxqudU1Is7xRv91LrEIB1xaG7EkslMqw24Kd/K0NUYe1A+iVRFO7sfV6X8n
+	 GtstMy2lb54wfg5+MXtTw0HPs96dufa3rpLwiQQ+Cyta1vlZNmKi1UAKYlpq6Q/8VX
+	 3REvzdy2DpyEDeihHo8Gr01SNhClEULkMx5GFqIWAk32kfMk4OD4PdZuxVTb2Wcf32
+	 7VsNJbZmDEJG02cNKgA1VmKGWrPamdCQ6lJUEUoQzCAOZNU6Shr8PV805vpfjr9ItX
+	 h0U3hpgnD1/d13VJbkL3qMJsT4KlYQYxf/ARMa5nGx8zB6l2a4dJJxs9HT3BEwXRmf
+	 irunODI4Ei25Q==
 From: Tejun Heo <tj@kernel.org>
 To: void@manifault.com,
 	arighi@nvidia.com,
@@ -33,9 +33,9 @@ To: void@manifault.com,
 Cc: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/7] sched_ext: Add the @sch parameter to ext_idle helpers
-Date: Mon, 22 Sep 2025 06:14:32 -1000
-Message-ID: <20250922161436.358949-4-tj@kernel.org>
+Subject: [PATCH 4/7] sched_ext: Drop kf_cpu_valid()
+Date: Mon, 22 Sep 2025 06:14:33 -1000
+Message-ID: <20250922161436.358949-5-tj@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250922161436.358949-1-tj@kernel.org>
 References: <20250922161436.358949-1-tj@kernel.org>
@@ -47,251 +47,196 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In preparation for multiple scheduler support, add the @sch parameter to
-validate_node(), check_builtin_idle_enabled() and select_cpu_from_kfunc(),
-and update their callers to read $scx_root, verify that it's not NULL and
-pass it in. The passed in @sch parameter is not used yet.
+The intention behind kf_cpu_valid() was that when called from kfuncs,
+kf_cpu_valid() would be able to implicitly determine the scx_sched instance
+being operated on and thus wouldn't need @sch passed in explicitly. This
+turned out to be unnecessarily complicated to implement and not have
+justifiable practical benefits. Replace kf_cpu_valid() usages with
+ops_cpu_valid() which takes explicit @sch.
+
+Callers which don't have $sch available in the context are updated to read
+$scx_root under RCU read lock, verify that it's not NULL and pass it in.
+
+scx_bpf_cpu_rq() is restructured to use guard(rcu)() instead of explicit
+rcu_read_[un]lock().
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext_idle.c | 109 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 94 insertions(+), 15 deletions(-)
+ kernel/sched/ext.c      | 67 ++++++++++++++++++++++++-----------------
+ kernel/sched/ext_idle.c | 12 +++++---
+ 2 files changed, 48 insertions(+), 31 deletions(-)
 
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 373146154829..56ca09f46d1e 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -736,23 +736,6 @@ static bool ops_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where)
+ 	}
+ }
+ 
+-/**
+- * kf_cpu_valid - Verify a CPU number, to be used on kfunc input args
+- * @cpu: cpu number which came from a BPF ops
+- * @where: extra information reported on error
+- *
+- * The same as ops_cpu_valid() but @sch is implicit.
+- */
+-static bool kf_cpu_valid(u32 cpu, const char *where)
+-{
+-	if (__cpu_valid(cpu)) {
+-		return true;
+-	} else {
+-		scx_kf_error("invalid CPU %d%s%s", cpu, where ? " " : "", where ?: "");
+-		return false;
+-	}
+-}
+-
+ /**
+  * ops_sanitize_err - Sanitize a -errno value
+  * @sch: scx_sched to error out on error
+@@ -5815,7 +5798,7 @@ static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 	struct rq *this_rq;
+ 	unsigned long irq_flags;
+ 
+-	if (!kf_cpu_valid(cpu, NULL))
++	if (!ops_cpu_valid(sch, cpu, NULL))
+ 		return;
+ 
+ 	local_irq_save(irq_flags);
+@@ -6224,7 +6207,12 @@ __bpf_kfunc void scx_bpf_dump_bstr(char *fmt, unsigned long long *data,
+  */
+ __bpf_kfunc u32 scx_bpf_cpuperf_cap(s32 cpu)
+ {
+-	if (kf_cpu_valid(cpu, NULL))
++	struct scx_sched *sch;
++
++	guard(rcu)();
++
++	sch = rcu_dereference(scx_root);
++	if (likely(sch) && ops_cpu_valid(sch, cpu, NULL))
+ 		return arch_scale_cpu_capacity(cpu);
+ 	else
+ 		return SCX_CPUPERF_ONE;
+@@ -6246,7 +6234,12 @@ __bpf_kfunc u32 scx_bpf_cpuperf_cap(s32 cpu)
+  */
+ __bpf_kfunc u32 scx_bpf_cpuperf_cur(s32 cpu)
+ {
+-	if (kf_cpu_valid(cpu, NULL))
++	struct scx_sched *sch;
++
++	guard(rcu)();
++
++	sch = rcu_dereference(scx_root);
++	if (likely(sch) && ops_cpu_valid(sch, cpu, NULL))
+ 		return arch_scale_freq_capacity(cpu);
+ 	else
+ 		return SCX_CPUPERF_ONE;
+@@ -6268,12 +6261,20 @@ __bpf_kfunc u32 scx_bpf_cpuperf_cur(s32 cpu)
+  */
+ __bpf_kfunc void scx_bpf_cpuperf_set(s32 cpu, u32 perf)
+ {
++	struct scx_sched *sch;
++
++	guard(rcu)();
++
++	sch = rcu_dereference(sch);
++	if (unlikely(!sch))
++		return;
++
+ 	if (unlikely(perf > SCX_CPUPERF_ONE)) {
+ 		scx_kf_error("Invalid cpuperf target %u for CPU %d", perf, cpu);
+ 		return;
+ 	}
+ 
+-	if (kf_cpu_valid(cpu, NULL)) {
++	if (ops_cpu_valid(sch, cpu, NULL)) {
+ 		struct rq *rq = cpu_rq(cpu), *locked_rq = scx_locked_rq();
+ 		struct rq_flags rf;
+ 
+@@ -6379,18 +6380,21 @@ __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu)
+ {
+ 	struct scx_sched *sch;
+ 
+-	if (!kf_cpu_valid(cpu, NULL))
+-		return NULL;
++	guard(rcu)();
+ 
+-	rcu_read_lock();
+ 	sch = rcu_dereference(scx_root);
+-	if (likely(sch) && !sch->warned_deprecated_rq) {
++	if (unlikely(!sch))
++		return NULL;
++
++	if (!ops_cpu_valid(sch, cpu, NULL))
++		return NULL;
++
++	if (!sch->warned_deprecated_rq) {
+ 		printk_deferred(KERN_WARNING "sched_ext: %s() is deprecated; "
+ 				"use scx_bpf_locked_rq() when holding rq lock "
+ 				"or scx_bpf_cpu_curr() to read remote curr safely.\n", __func__);
+ 		sch->warned_deprecated_rq = true;
+ 	}
+-	rcu_read_unlock();
+ 
+ 	return cpu_rq(cpu);
+ }
+@@ -6425,8 +6429,17 @@ __bpf_kfunc struct rq *scx_bpf_locked_rq(void)
+  */
+ __bpf_kfunc struct task_struct *scx_bpf_cpu_curr(s32 cpu)
+ {
+-	if (!kf_cpu_valid(cpu, NULL))
++	struct scx_sched *sch;
++
++	guard(rcu)();
++
++	sch = rcu_dereference(scx_root);
++	if (unlikely(!sch))
+ 		return NULL;
++
++	if (!ops_cpu_valid(sch, cpu, NULL))
++		return NULL;
++
+ 	return rcu_dereference(cpu_rq(cpu)->curr);
+ }
+ 
 diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-index 7174e1c1a392..6e2504ae7357 100644
+index 6e2504ae7357..a576ec10522e 100644
 --- a/kernel/sched/ext_idle.c
 +++ b/kernel/sched/ext_idle.c
-@@ -819,7 +819,7 @@ void scx_idle_disable(void)
-  * Helpers that can be called from the BPF scheduler.
-  */
+@@ -864,7 +864,7 @@ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+ 	struct rq_flags rf;
+ 	s32 cpu;
  
--static int validate_node(int node)
-+static int validate_node(struct scx_sched *sch, int node)
- {
- 	if (!static_branch_likely(&scx_builtin_idle_per_node)) {
- 		scx_kf_error("per-node idle tracking is disabled");
-@@ -847,7 +847,7 @@ static int validate_node(int node)
- 
- __bpf_kfunc_start_defs();
- 
--static bool check_builtin_idle_enabled(void)
-+static bool check_builtin_idle_enabled(struct scx_sched *sch)
- {
- 	if (static_branch_likely(&scx_builtin_idle_enabled))
- 		return true;
-@@ -856,7 +856,8 @@ static bool check_builtin_idle_enabled(void)
- 	return false;
- }
- 
--static s32 select_cpu_from_kfunc(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
-+static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
-+				 s32 prev_cpu, u64 wake_flags,
- 				 const struct cpumask *allowed, u64 flags)
- {
- 	struct rq *rq;
-@@ -866,7 +867,7 @@ static s32 select_cpu_from_kfunc(struct task_struct *p, s32 prev_cpu, u64 wake_f
- 	if (!kf_cpu_valid(prev_cpu, NULL))
+-	if (!kf_cpu_valid(prev_cpu, NULL))
++	if (!ops_cpu_valid(sch, prev_cpu, NULL))
  		return -EINVAL;
  
--	if (!check_builtin_idle_enabled())
-+	if (!check_builtin_idle_enabled(sch))
- 		return -EBUSY;
- 
- 	/*
-@@ -946,15 +947,21 @@ __bpf_kfunc int scx_bpf_cpu_node(s32 cpu)
- __bpf_kfunc s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
- 				       u64 wake_flags, bool *is_idle)
+ 	if (!check_builtin_idle_enabled(sch))
+@@ -923,9 +923,13 @@ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+  */
+ __bpf_kfunc int scx_bpf_cpu_node(s32 cpu)
  {
+-	if (!kf_cpu_valid(cpu, NULL))
+-		return NUMA_NO_NODE;
 +	struct scx_sched *sch;
- 	s32 cpu;
- 
--	cpu = select_cpu_from_kfunc(p, prev_cpu, wake_flags, NULL, 0);
++
 +	guard(rcu)();
-+
+ 
 +	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return -ENODEV;
-+
-+	cpu = select_cpu_from_kfunc(sch, p, prev_cpu, wake_flags, NULL, 0);
- 	if (cpu >= 0) {
- 		*is_idle = true;
- 		return cpu;
- 	}
- 	*is_idle = false;
--
- 	return prev_cpu;
++	if (unlikely(!sch) || !ops_cpu_valid(sch, cpu, NULL))
++		return NUMA_NO_NODE;
+ 	return cpu_to_node(cpu);
  }
  
-@@ -981,7 +988,16 @@ __bpf_kfunc s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
- __bpf_kfunc s32 scx_bpf_select_cpu_and(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
- 				       const struct cpumask *cpus_allowed, u64 flags)
- {
--	return select_cpu_from_kfunc(p, prev_cpu, wake_flags, cpus_allowed, flags);
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return -ENODEV;
-+
-+	return select_cpu_from_kfunc(sch, p, prev_cpu, wake_flags,
-+				     cpus_allowed, flags);
- }
- 
- /**
-@@ -995,7 +1011,15 @@ __bpf_kfunc s32 scx_bpf_select_cpu_and(struct task_struct *p, s32 prev_cpu, u64
-  */
- __bpf_kfunc const struct cpumask *scx_bpf_get_idle_cpumask_node(int node)
- {
--	node = validate_node(node);
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return cpu_none_mask;
-+
-+	node = validate_node(sch, node);
- 	if (node < 0)
- 		return cpu_none_mask;
- 
-@@ -1011,12 +1035,20 @@ __bpf_kfunc const struct cpumask *scx_bpf_get_idle_cpumask_node(int node)
-  */
- __bpf_kfunc const struct cpumask *scx_bpf_get_idle_cpumask(void)
- {
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return cpu_none_mask;
-+
- 	if (static_branch_unlikely(&scx_builtin_idle_per_node)) {
- 		scx_kf_error("SCX_OPS_BUILTIN_IDLE_PER_NODE enabled");
- 		return cpu_none_mask;
- 	}
- 
--	if (!check_builtin_idle_enabled())
-+	if (!check_builtin_idle_enabled(sch))
- 		return cpu_none_mask;
- 
- 	return idle_cpumask(NUMA_NO_NODE)->cpu;
-@@ -1034,7 +1066,15 @@ __bpf_kfunc const struct cpumask *scx_bpf_get_idle_cpumask(void)
-  */
- __bpf_kfunc const struct cpumask *scx_bpf_get_idle_smtmask_node(int node)
- {
--	node = validate_node(node);
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return cpu_none_mask;
-+
-+	node = validate_node(sch, node);
- 	if (node < 0)
- 		return cpu_none_mask;
- 
-@@ -1054,12 +1094,20 @@ __bpf_kfunc const struct cpumask *scx_bpf_get_idle_smtmask_node(int node)
-  */
- __bpf_kfunc const struct cpumask *scx_bpf_get_idle_smtmask(void)
- {
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return cpu_none_mask;
-+
- 	if (static_branch_unlikely(&scx_builtin_idle_per_node)) {
- 		scx_kf_error("SCX_OPS_BUILTIN_IDLE_PER_NODE enabled");
- 		return cpu_none_mask;
- 	}
- 
--	if (!check_builtin_idle_enabled())
-+	if (!check_builtin_idle_enabled(sch))
- 		return cpu_none_mask;
- 
- 	if (sched_smt_active())
-@@ -1095,7 +1143,15 @@ __bpf_kfunc void scx_bpf_put_idle_cpumask(const struct cpumask *idle_mask)
-  */
- __bpf_kfunc bool scx_bpf_test_and_clear_cpu_idle(s32 cpu)
- {
--	if (!check_builtin_idle_enabled())
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return false;
-+
-+	if (!check_builtin_idle_enabled(sch))
+@@ -1154,7 +1158,7 @@ __bpf_kfunc bool scx_bpf_test_and_clear_cpu_idle(s32 cpu)
+ 	if (!check_builtin_idle_enabled(sch))
  		return false;
  
- 	if (!kf_cpu_valid(cpu, NULL))
-@@ -1126,7 +1182,15 @@ __bpf_kfunc bool scx_bpf_test_and_clear_cpu_idle(s32 cpu)
- __bpf_kfunc s32 scx_bpf_pick_idle_cpu_node(const struct cpumask *cpus_allowed,
- 					   int node, u64 flags)
- {
--	node = validate_node(node);
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return -ENODEV;
-+
-+	node = validate_node(sch, node);
- 	if (node < 0)
- 		return node;
+-	if (!kf_cpu_valid(cpu, NULL))
++	if (!ops_cpu_valid(sch, cpu, NULL))
+ 		return false;
  
-@@ -1158,12 +1222,20 @@ __bpf_kfunc s32 scx_bpf_pick_idle_cpu_node(const struct cpumask *cpus_allowed,
- __bpf_kfunc s32 scx_bpf_pick_idle_cpu(const struct cpumask *cpus_allowed,
- 				      u64 flags)
- {
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return -ENODEV;
-+
- 	if (static_branch_maybe(CONFIG_NUMA, &scx_builtin_idle_per_node)) {
- 		scx_kf_error("per-node idle tracking is enabled");
- 		return -EBUSY;
- 	}
- 
--	if (!check_builtin_idle_enabled())
-+	if (!check_builtin_idle_enabled(sch))
- 		return -EBUSY;
- 
- 	return scx_pick_idle_cpu(cpus_allowed, NUMA_NO_NODE, flags);
-@@ -1193,9 +1265,16 @@ __bpf_kfunc s32 scx_bpf_pick_idle_cpu(const struct cpumask *cpus_allowed,
- __bpf_kfunc s32 scx_bpf_pick_any_cpu_node(const struct cpumask *cpus_allowed,
- 					  int node, u64 flags)
- {
-+	struct scx_sched *sch;
- 	s32 cpu;
- 
--	node = validate_node(node);
-+	guard(rcu)();
-+
-+	sch = rcu_dereference(scx_root);
-+	if (unlikely(!sch))
-+		return -ENODEV;
-+
-+	node = validate_node(sch, node);
- 	if (node < 0)
- 		return node;
- 
+ 	return scx_idle_test_and_clear_cpu(cpu);
 -- 
 2.51.0
 
