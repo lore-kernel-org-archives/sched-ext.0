@@ -1,60 +1,69 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1322D301713
-	for <sched-ext@lists.linux.dev>; Mon, 29 Sep 2025 11:42:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B17211290
+	for <sched-ext@lists.linux.dev>; Tue, 30 Sep 2025 06:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759146164; cv=none; b=TKh26AG0NMUGQxsyeps0xvZkn4MKk41RakTqWxSHnG93TggBvO0+1d7OYeIRQ3bOd4gW0QfJozyUQtWB/BU/NXUkLQTVaI9WtacwFtqTwd+7rpLBiUSOB8No+j8Fkwpk1C74KOkrF5KAONAb9gwrEgJEhJmd0dewUu/Ji7t9B9w=
+	t=1759212672; cv=none; b=aDcck3sQ3Q4vPwAzX9UU50CvaeVOXyZaReKWwF1BdU1+YxC4CrriJyRbXLaY9KWeNdfKYH4XvdTIF5LP+q9fBoRCUFVLyRle7ynAWRNcxQxMn0EUyYe0feSC6HWYcF7U6gbvbZK/vFV6SO5QtJnkRvTOxkTmLW3JgoGMaSKtlNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759146164; c=relaxed/simple;
-	bh=qr/trcihkG+XrW9xDQRtoLcrPWFzaIqNEFnGLgE07M8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jC5WmZhe4PqEitFhuzqVIXbXwDtChPUeatnpC3idj68FfnV3c+xXdE/cqq4lZoLu208fwQmKfLb4Eb9w3MknY+rDY5b7CK0u0HXs7vB/7oSRhDzSGSfdJMHIZrRQYFdK4L2TOfJpknq8c3IGyvIiQ0gEc5aIvDnuDxY5X+RWglI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=c78aQZ6R; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1759212672; c=relaxed/simple;
+	bh=OKtwzObm746UbmyVAjpVwKeRZvohe4n/dLhJxbUjSa0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d70zOh2s5WZAqT43ZlG7wAIKUh3U9MQ8M8RqZYX7fPQPEsG0SNXXdzFf++u41OyySsxIEPejRtJjAiRqJPFq43SJFWoRIj5S87yOrGfNNRnuUHJGhrkiIKiA5AbBPXIHLer9CyTSQ/yaidfqHnXHq6L03pWSjt9QThqWABjII84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CplzIEqj; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="c78aQZ6R"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1759146162;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Q7CDCxarxuDZf7gpcfd/wrLBO5nbTQ99uYCOatcpUvM=;
-	b=c78aQZ6R3yig9Bw8UWgSdDSnDCATmXQoMQr8yY7DbT7pt++kT32CD+/LLwoc/fT3FQINNn
-	mZe7AIDhQjewakhqwWCWw9ig2WB8f9/DF+DSxW6vzS/rgWLTaR1w+nM/UfXRWarHWvNN05
-	P3vcNdK6eqd2kMRpKwhqjTumnTNoO70=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-MfkUXi85OjOTAJLLwQbfAQ-1; Mon,
- 29 Sep 2025 07:42:39 -0400
-X-MC-Unique: MfkUXi85OjOTAJLLwQbfAQ-1
-X-Mimecast-MFC-AGG-ID: MfkUXi85OjOTAJLLwQbfAQ_1759146158
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id A13AA1800370;
-	Mon, 29 Sep 2025 11:42:37 +0000 (UTC)
-Received: from gmonaco-thinkpadt14gen3.rmtit.csb (unknown [10.44.32.41])
-	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id C227E19560A2;
-	Mon, 29 Sep 2025 11:42:33 +0000 (UTC)
-From: Gabriele Monaco <gmonaco@redhat.com>
-To: linux-kernel@vger.kernel.org,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	sched-ext@lists.linux.dev
-Cc: Gabriele Monaco <gmonaco@redhat.com>
-Subject: [PATCH v3 1/4] sched: Add prev_sum_exec_runtime support for RT, DL and SCX classes
-Date: Mon, 29 Sep 2025 13:42:22 +0200
-Message-ID: <20250929114225.36172-2-gmonaco@redhat.com>
-In-Reply-To: <20250929114225.36172-1-gmonaco@redhat.com>
-References: <20250929114225.36172-1-gmonaco@redhat.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CplzIEqj"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7835321bc98so2633307b3a.2
+        for <sched-ext@lists.linux.dev>; Mon, 29 Sep 2025 23:11:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759212670; x=1759817470; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nR2uIZObkTs1yBjw4Xmy+f8XsVDHniquW/u7nHFG3VE=;
+        b=CplzIEqjrlNAn87reM04AWDU5RzYYwvWMPxwxtLONlU84LdRb8cmaYtI2hEjaVGDYp
+         vbo5lmdGHiJTYWLuqt3N0fVNEdp0Jhr6ETj7tJrPTGkDlF1q/ifp6sm6NvVHJ4jc7qqJ
+         x9vtDHVdKGjxeFaRt/d/LxnU0dvZ+o0mxU/UPS7z8YFfN+74sa9SLSTHYW4rGoRYVf6O
+         ltgnXO+8I/nGZ2wvdoQWy9DCkcK26u8NklwS0mNPu5z2jpLXm3C2NrLMI+SMYssHEK6g
+         xLdqKipsM0vKmcxZbDtvTNCjq5X+74tSJJCsabTzeJtxqhaP0dDGC7ZMAAr0NhDlh2BZ
+         D0LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759212670; x=1759817470;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nR2uIZObkTs1yBjw4Xmy+f8XsVDHniquW/u7nHFG3VE=;
+        b=PjYO5+fkg8zqrYFCyq6WAuxwNxASJpfTHOpUOfcl9Is0YkQ4Fdsi/DIrQUEWjb5anX
+         Fhk6DmQeXkrJPmo2dmScRkO+qS0CPff/AjcfGgO6Ka0iq6dcrhex52A/QREPoEJU1krg
+         /v9BDjO4l4Ka0dFMkDYCO7aM9mE6RTgrNXc6rsslbZxD+Ez/heuAwKfjKdyTLDRgCJDY
+         3cal1qoC2fuHA/2sNblmu8IoX4V9qQ76TBAj6NRXWROjiE9TMz//SqmycMKU7X7Lk+9v
+         SmV+xtiHcjIc9+7DFJiMUe7JUfz0U8fkgt96ZTtF6MdciyFlc4q6n5rhtRG8y4OnoRa5
+         +sXw==
+X-Gm-Message-State: AOJu0YyNTAc8qUuIAV5kx/+PhTqY12fadEhoJ4M996RK6A6mFAmJzcr2
+	XwOrYbUWvqXNIuBz7cSVKo6WU8ZeP6n37M0bKoPrZVNMAarLYutjX76D++YigtSDIjA=
+X-Gm-Gg: ASbGncsQufkNahhw84PU1JWBeAqWBTuMsrqFHbh/O7xDRHR/mluAOTwcn2IU+jKxwmW
+	pM7rxmDP21jadna5fDTGNNM0osolBTtuaKuIvqq9KRH6TrJLWM0RjER+lTWfchn55eHSikF/C/v
+	wp8HSr57C/CmyJ+X/NhDzv1+jenDsk0IIFAyLME5e+MgNAqBEA2gtGzB9ogtrC5m7csxYNPk82R
+	WflppALIsZq62VqixFBGycG/gm+/5ks2T61qjuTRWR+eDQhi6+8nny/KV+ZGquuEIE02SJtwlM1
+	MFTJqPaWgM76VPFaJfqUy/DMimA2rCAtXcfW1ZEyz1BNX3cGAG4LGFVbFBojpwU97J4mhyffunb
+	7Q70s3/Lc5CcNSrv8qSYDFfYv3Dm1NAszZniiUbnvpognp46JiAQ98qGDklFBta3o49gcftOYcn
+	+nwqLgkFFI77LyY8nu21VKaaY=
+X-Google-Smtp-Source: AGHT+IFj32i97hNN4vZKEtpSEbZ6MFOWNVr26DvcSnKPsixSzW4wCKwPBewPZ1GUjVPfjqycQmXFgg==
+X-Received: by 2002:a17:902:f60f:b0:262:661d:eb1d with SMTP id d9443c01a7336-27ed49b301amr218395185ad.1.1759212669862;
+        Mon, 29 Sep 2025 23:11:09 -0700 (PDT)
+Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed69ab0aesm146964515ad.113.2025.09.29.23.11.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Sep 2025 23:11:09 -0700 (PDT)
+From: zhidao su <soolaugust@gmail.com>
+To: sched-ext@lists.linux.dev
+Cc: tj@kernel.org,
+	zhidao su <suzhidao@xiaomi.com>
+Subject: [PATCH] sched/ext: Implement cgroup_set_idle() callback
+Date: Tue, 30 Sep 2025 14:10:45 +0800
+Message-ID: <20250930061045.743507-1-soolaugust@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -62,61 +71,88 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 
-The fair scheduling class relies on prev_sum_exec_runtime to compute the
-duration of the task's runtime since it was last scheduled. This value
-is currently not required by other scheduling classes but can be useful
-to understand long running tasks and take certain actions (e.g. during a
-scheduler tick).
+From: zhidao su <suzhidao@xiaomi.com>
 
-Add support for prev_sum_exec_runtime to the RT, deadline and sched_ext
-classes by simply assigning the sum_exec_runtime at each set_next_task.
+Implement the missing cgroup_set_idle() callback that was marked as a
+TODO. This allows BPF schedulers to be notified when a cgroup's idle
+state changes, enabling them to adjust their scheduling behavior
+accordingly.
 
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+The implementation follows the same pattern as other cgroup callbacks
+like cgroup_set_weight() and cgroup_set_bandwidth(). It checks if the
+BPF scheduler has implemented the callback and invokes it with the
+appropriate parameters.
+
+Fixes a spelling error in the cgroup_set_bandwidth() documentation.
+
+Signed-off-by: zhidao su <suzhidao@xiaomi.com>
 ---
- kernel/sched/deadline.c | 1 +
- kernel/sched/ext.c      | 1 +
- kernel/sched/rt.c       | 1 +
- 3 files changed, 3 insertions(+)
+ kernel/sched/ext.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index e2d51f4306b3..212d6bf5a732 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2342,6 +2342,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_dl_rq(&p->dl))
- 		update_stats_wait_end_dl(dl_rq, dl_se);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
- 
- 	/* You can't push away the running task */
- 	dequeue_pushable_dl_task(rq, p);
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 7dedc9a16281..7c2d23e6d0df 100644
+index 088ceff38c8a..72bf2ad382fb 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -3257,6 +3257,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
- 	}
+@@ -688,12 +688,23 @@ struct sched_ext_ops {
+ 	 * 2_500_000. @cgrp is entitled to 2.5 CPUs. @burst_us can be
+ 	 * interpreted in the same fashion and specifies how much @cgrp can
+ 	 * burst temporarily. The specific control mechanism and thus the
+-	 * interpretation of @period_us and burstiness is upto to the BPF
++	 * interpretation of @period_us and burstiness is up to the BPF
+ 	 * scheduler.
+ 	 */
+ 	void (*cgroup_set_bandwidth)(struct cgroup *cgrp,
+ 				     u64 period_us, u64 quota_us, u64 burst_us);
  
- 	p->se.exec_start = rq_clock_task(rq);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
++	/**
++	 * @cgroup_set_idle: A cgroup's idle state is being changed
++	 * @cgrp: cgroup whose idle state is being updated
++	 * @idle: whether the cgroup is entering or exiting idle state
++	 *
++	 * Update @cgrp's idle state to @idle. This callback is invoked when
++	 * a cgroup transitions between idle and non-idle states, allowing the
++	 * BPF scheduler to adjust its behavior accordingly.
++	 */
++	void (*cgroup_set_idle)(struct cgroup *cgrp, bool idle);
++
+ #endif	/* CONFIG_EXT_GROUP_SCHED */
  
- 	/* see dequeue_task_scx() on why we skip when !QUEUED */
- 	if (SCX_HAS_OP(sch, running) && (p->scx.flags & SCX_TASK_QUEUED))
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 7936d4333731..8c713d74672a 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1644,6 +1644,7 @@ static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool f
- 	p->se.exec_start = rq_clock_task(rq);
- 	if (on_rt_rq(&p->rt))
- 		update_stats_wait_end_rt(rt_rq, rt_se);
-+	p->se.prev_sum_exec_runtime = p->se.sum_exec_runtime;
+ 	/*
+@@ -4258,7 +4269,15 @@ void scx_group_set_weight(struct task_group *tg, unsigned long weight)
  
- 	/* The running task is never eligible for pushing */
- 	dequeue_pushable_task(rq, p);
+ void scx_group_set_idle(struct task_group *tg, bool idle)
+ {
+-	/* TODO: Implement ops->cgroup_set_idle() */
++	struct scx_sched *sch = scx_root;
++
++	percpu_down_read(&scx_cgroup_rwsem);
++
++	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_set_idle))
++		SCX_CALL_OP(sch, SCX_KF_UNLOCKED, cgroup_set_idle, NULL,
++			    tg_cgrp(tg), idle);
++
++	percpu_up_read(&scx_cgroup_rwsem);
+ }
+ 
+ void scx_group_set_bandwidth(struct task_group *tg,
+@@ -6004,6 +6023,7 @@ static void sched_ext_ops__cgroup_move(struct task_struct *p, struct cgroup *fro
+ static void sched_ext_ops__cgroup_cancel_move(struct task_struct *p, struct cgroup *from, struct cgroup *to) {}
+ static void sched_ext_ops__cgroup_set_weight(struct cgroup *cgrp, u32 weight) {}
+ static void sched_ext_ops__cgroup_set_bandwidth(struct cgroup *cgrp, u64 period_us, u64 quota_us, u64 burst_us) {}
++static void sched_ext_ops__cgroup_set_idle(struct cgroup *cgrp, bool idle) {}
+ #endif
+ static void sched_ext_ops__cpu_online(s32 cpu) {}
+ static void sched_ext_ops__cpu_offline(s32 cpu) {}
+@@ -6042,6 +6062,7 @@ static struct sched_ext_ops __bpf_ops_sched_ext_ops = {
+ 	.cgroup_cancel_move	= sched_ext_ops__cgroup_cancel_move,
+ 	.cgroup_set_weight	= sched_ext_ops__cgroup_set_weight,
+ 	.cgroup_set_bandwidth	= sched_ext_ops__cgroup_set_bandwidth,
++	.cgroup_set_idle	= sched_ext_ops__cgroup_set_idle,
+ #endif
+ 	.cpu_online		= sched_ext_ops__cpu_online,
+ 	.cpu_offline		= sched_ext_ops__cpu_offline,
 -- 
-2.51.0
+2.43.0
 
