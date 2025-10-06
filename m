@@ -1,67 +1,25 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426E6299927
-	for <sched-ext@lists.linux.dev>; Mon,  6 Oct 2025 15:27:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D6632D879C
+	for <sched-ext@lists.linux.dev>; Mon,  6 Oct 2025 15:43:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759764443; cv=none; b=OxN+a+HZ4YNxvx1ZpAtI5OK/Ei1oql75vw3oX/AJ3sWQEMdrXnJw4v66VacA2OKncv0JNe1gZ+4iVoKxU6i1Ndnnjtq1lQpMXkLNxcajqvLdQuyjKdl1vASkd1rzW4Y8T2xkbC48eFNrRylp3IoN4KyvjsuFqn02l11vffFxH2M=
+	t=1759765432; cv=none; b=S4/VXBdYu+LtR/UBEmJoREi5O3MABf4XZlihyxSVxh4u6RfIOhbYboh1XwA1P8v1Gj8X1SobZFDVCG2hDcx2n8mRnmwhbvAIkdnOJTmRQ+DMS8XivNNm3vxKYrgHX4w+kGmjzBOvhaYqhkGdGFIuUPLle2gexnL0eMuEd6nPsNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759764443; c=relaxed/simple;
-	bh=MoS6ImqYcoCG5XsgUemtdrS0YKZ+fPGBtCYoedZyEcw=;
+	s=arc-20240116; t=1759765432; c=relaxed/simple;
+	bh=9TS8mvHfI1X9G76iPlEBCH6KiBzdkL1LBmUhaIltqjE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gTtQ25L6Aag+2RCSt0GKYaVJDcHz1G1HgloXLMg2Z8d0ZbJxDqlHsv+2oE++ihWVuoNZlAVpliujk2uHQq7aLOxB2AjUqOxNROrXAb2GRDxsBZsHcORwThI3QZaqQjt+2LUNZwvPCBKs/1yyQtHyk2wuhltXHohWHo0QiEyeMBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=eOe+6Rt5; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="eOe+6Rt5"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5968U6DD013752;
-	Mon, 6 Oct 2025 15:21:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=BGTTua
-	/GjXQXBBYK78wLNyLke//ig1ARcXJHik9zE20=; b=eOe+6Rt5jf3NL5jroF+RYp
-	Pc6QINRrCb15aZFy4cfhBgkYsPtwVLQFt3gHGYz/VSBWarKcE4Qy17EtlM7V0luN
-	NzdmjIB+INSD7fnzyJb/IfNz9lEZvY7+9Gcv4kEmvHDPpa3MlmZhyjgxAeDJvOz/
-	YJKVT6yiJexnsX9zW2Dt6PN3XXet2TKShwFSJ7c7eFUzZESFqV5sNMVNMcl2+GL9
-	mIVwREEHR8DbpJHQheDIw0dFQrPfTC5LbkkSbgc6XSnrP3kI+IhRYABEax0fxyLL
-	nsaVPLiYX73WBmI/DnjEUTUEVHEtNMItMmt0E/h2UGZM/aSLYOtttnbHlbLQifqg
-	==
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49ju3gt6vx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Oct 2025 15:21:37 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 596Eqs69015698;
-	Mon, 6 Oct 2025 15:21:37 GMT
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49ju3gt6vv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Oct 2025 15:21:37 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 596DSr6T031419;
-	Mon, 6 Oct 2025 15:21:35 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49kfdjxkxy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Oct 2025 15:21:35 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 596FLXCR30999030
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 6 Oct 2025 15:21:33 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8776720043;
-	Mon,  6 Oct 2025 15:21:33 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CBA7720040;
-	Mon,  6 Oct 2025 15:21:28 +0000 (GMT)
-Received: from [9.124.214.120] (unknown [9.124.214.120])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Mon,  6 Oct 2025 15:21:28 +0000 (GMT)
-Message-ID: <fee0edd5-86d1-4dff-9e07-70fd2208b073@linux.ibm.com>
-Date: Mon, 6 Oct 2025 20:51:27 +0530
+	 In-Reply-To:Content-Type; b=BAflJU+zTn24/rLiKAhTH7X0TCQMcuw1K2bsd+kFuRb4RBXMIB8q0f/Rsnjmkqa/CAOrtGTvZlRI8eic82CuYS0iuBm7BZS1hW/GjUZnFDtAd0YDIWta/Oq75DAuPM7M+tOv1V6i0DJFzxbKJ5x+AZFk0QPK5+8GAGSaHtFbK64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B54221515;
+	Mon,  6 Oct 2025 08:43:42 -0700 (PDT)
+Received: from [10.57.81.187] (unknown [10.57.81.187])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE4953F66E;
+	Mon,  6 Oct 2025 08:43:48 -0700 (PDT)
+Message-ID: <2be75031-e7a6-44e8-a096-945947d73631@arm.com>
+Date: Mon, 6 Oct 2025 16:44:10 +0100
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -69,93 +27,138 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] sched: Employ sched_change guards
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: linux-kernel@vger.kernel.org, mingo@redhat.com, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-        vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
-        mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
-        changwoo@igalia.com, cgroups@vger.kernel.org,
-        sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de,
-        tj@kernel.org
-References: <20250910154409.446470175@infradead.org>
- <20250910155808.415580225@infradead.org>
+Subject: Re: [PATCH RESEND v4 05/10] PM: EM: Add a skeleton code for netlink
+ notification
+To: Changwoo Min <changwoo@igalia.com>
+Cc: christian.loehle@arm.com, tj@kernel.org, pavel@kernel.org,
+ len.brown@intel.com, rafael@kernel.org, kernel-dev@igalia.com,
+ linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20250921031928.205869-1-changwoo@igalia.com>
+ <20250921031928.205869-6-changwoo@igalia.com>
 Content-Language: en-US
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
-In-Reply-To: <20250910155808.415580225@infradead.org>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20250921031928.205869-6-changwoo@igalia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxOCBTYWx0ZWRfX19dQ+iwBtKSY
- RZYC63N/LKEDG4lvHmvFk4kqeUdiKTUkoeEydIQj0gERIPYb7wzu/dT3ruYfzf0tqk6hSEPnSJj
- vAceTL/D9jZp5YcHo5/G2yjcE/7XmF1v6nE6NAkYgZ6tDoR0jpPyotWtdVuKa2+VLswggC2e5aM
- wkOBU6yYwsfngbRIOOikjDuah2PY3FhN0G/RycWSMvphVFMQ2ydddJ0JrfDYoMfkl8NBoVhmP5a
- B4bxump1C9JbRjLmdH28j2Hm+k8erlXktgMgwIhqZFW+ew57epmRULGEpyL0Q+vqyhgabfuvw/Y
- 3OP2j05K18HHNX1Y69N+8Bmb7l9iAq77MpkwPey4rD80S0Wa5dDtdYAj/RkTbi8eGzwwD4M16TX
- kCpJp80qt5/9NnlUxs1edOuughRksg==
-X-Authority-Analysis: v=2.4 cv=I4dohdgg c=1 sm=1 tr=0 ts=68e3de81 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=hKsuor804cSa_We8IwkA:9
- a=QEXdDO2ut3YA:10 a=nl4s5V0KI7Kw-pW0DWrs:22 a=pHzHmUro8NiASowvMSCR:22
- a=xoEH_sTeL_Rfw54TyV31:22
-X-Proofpoint-GUID: 05FclDpPzSC4xn8YbrD0TJ5uabLK3hwr
-X-Proofpoint-ORIG-GUID: eWovQ_0FPZV6sBTIKMBJldvpkfSp2N_a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-06_05,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 suspectscore=0 clxscore=1011 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040018
 
 
 
-On 9/10/25 9:14 PM, Peter Zijlstra wrote:
-> As proposed a long while ago -- and half done by scx -- wrap the
-> scheduler's 'change' pattern in a guard helper.
+On 9/21/25 04:19, Changwoo Min wrote:
+> Add a boilerplate code for netlink notification to register the new
+> protocol family. Also, initialize and register the netlink during booting.
+> The initialization is called at the postcore level, which is late enough
+> after the generic netlink is initialized.
 > 
-[...]>   		put_task_struct(p);
-> --- a/kernel/sched/sched.h
-> +++ b/kernel/sched/sched.h
-> @@ -3860,23 +3860,22 @@ extern void check_class_changed(struct r
->   extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
->   extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
+> Finally, update MAINTAINERS to include new files.
+> 
+> Signed-off-by: Changwoo Min <changwoo@igalia.com>
+> ---
+>   MAINTAINERS               |  2 +-
+>   kernel/power/Makefile     |  5 ++++-
+>   kernel/power/em_netlink.c | 35 +++++++++++++++++++++++++++++++++++
+>   kernel/power/em_netlink.h | 16 ++++++++++++++++
+>   4 files changed, 56 insertions(+), 2 deletions(-)
+>   create mode 100644 kernel/power/em_netlink.c
+>   create mode 100644 kernel/power/em_netlink.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 0992029d271d..ba528836eac1 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -9034,7 +9034,7 @@ F:	include/linux/energy_model.h
+>   F:	Documentation/power/energy-model.rst
+>   F:	Documentation/netlink/specs/em.yaml
+>   F:	include/uapi/linux/energy_model.h
+> -F:	kernel/power/em_netlink_autogen.*
+> +F:	kernel/power/em_netlink*.*
 >   
-> -#ifdef CONFIG_SCHED_CLASS_EXT
-> -/*
-> - * Used by SCX in the enable/disable paths to move tasks between sched_classes
-> - * and establish invariants.
-> - */
-> -struct sched_enq_and_set_ctx {
-> +struct sched_change_ctx {
->   	struct task_struct	*p;
-> -	int			queue_flags;
-> +	int			flags;
->   	bool			queued;
->   	bool			running;
->   };
+>   EPAPR HYPERVISOR BYTE CHANNEL DEVICE DRIVER
+>   M:	Laurentiu Tudor <laurentiu.tudor@nxp.com>
+> diff --git a/kernel/power/Makefile b/kernel/power/Makefile
+> index 874ad834dc8d..284a760aade7 100644
+> --- a/kernel/power/Makefile
+> +++ b/kernel/power/Makefile
+> @@ -21,4 +21,7 @@ obj-$(CONFIG_PM_WAKELOCKS)	+= wakelock.o
 >   
-> -void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
-> -			    struct sched_enq_and_set_ctx *ctx);
-> -void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx);
-> +struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags);
-> +void sched_change_end(struct sched_change_ctx *ctx);
+>   obj-$(CONFIG_MAGIC_SYSRQ)	+= poweroff.o
 >   
-> -#endif /* CONFIG_SCHED_CLASS_EXT */
-> +DEFINE_CLASS(sched_change, struct sched_change_ctx *,
-> +	     sched_change_end(_T),
-> +	     sched_change_begin(p, flags),
-> +	     struct task_struct *p, unsigned int flags)
+> -obj-$(CONFIG_ENERGY_MODEL)	+= energy_model.o
+> +obj-$(CONFIG_ENERGY_MODEL)	+= em.o
+> +em-y				:= energy_model.o
+> +em-$(CONFIG_NET)		+= em_netlink_autogen.o em_netlink.o
 > +
-> +DEFINE_CLASS_IS_UNCONDITIONAL(sched_change)
->   
->   #include "ext.h"
->   
-could you please add a comment on matching flags on dequeue/enqueue
-here?
+> diff --git a/kernel/power/em_netlink.c b/kernel/power/em_netlink.c
+> new file mode 100644
+> index 000000000000..f3fbfeff29a4
+> --- /dev/null
+> +++ b/kernel/power/em_netlink.c
+> @@ -0,0 +1,35 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + *
+> + * Generic netlink for energy model.
+> + *
+> + * Copyright (c) 2025 Valve Corporation.
+> + * Author: Changwoo Min <changwoo@igalia.com>
+> + */
+> +
+> +#define pr_fmt(fmt) "energy_model: " fmt
+> +
+> +#include <linux/energy_model.h>
+> +#include <net/sock.h>
+> +#include <net/genetlink.h>
+> +#include <uapi/linux/energy_model.h>
+> +
+> +#include "em_netlink.h"
+> +#include "em_netlink_autogen.h"
+> +
+> +int em_nl_get_pds_doit(struct sk_buff *skb, struct genl_info *info)
+> +{
+> +	return -EOPNOTSUPP;
+> +}
+> +
+> +int em_nl_get_pd_table_doit(struct sk_buff *skb, struct genl_info *info)
+> +{
+> +	return -EOPNOTSUPP;
+> +}
+> +
+> +static int __init em_netlink_init(void)
+> +{
+> +	return genl_register_family(&em_nl_family);
+> +}
+> +postcore_initcall(em_netlink_init);
+> +
+> diff --git a/kernel/power/em_netlink.h b/kernel/power/em_netlink.h
+> new file mode 100644
+> index 000000000000..acd186c92d6b
+> --- /dev/null
+> +++ b/kernel/power/em_netlink.h
+> @@ -0,0 +1,16 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + *
+> + * Generic netlink for energy model.
+> + *
+> + * Copyright (c) 2025 Valve Corporation.
+> + * Author: Changwoo Min <changwoo@igalia.com>
+> + */
+> +#ifndef _EM_NETLINK_H
+> +#define _EM_NETLINK_H
+> +
+> +#if defined(CONFIG_ENERGY_MODEL) && defined(CONFIG_NET)
+> +#else
+> +#endif
+> +
+> +#endif /* _EM_NETLINK_H */
 
-Since the ctx->flags don't get cleared, one could be left wondering how
-does the enqueue happens(exp: ENQUEUE_RESTORE) until they see it works 
-since flags match.
+Actually, those declarations of functions from patch 3/10 can
+live in this header. We would avoid creating more local headers
+in such case.
+
+Then the patch 3/10 would have to go after this patch when
+this header is introduced.
+
+Please ignore the comment in the patch 3/10 and try to
+use this header. It is also logically linked to the
+notifications, so belongs to such header IMHO.
