@@ -1,160 +1,122 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C2F23BCEE
-	for <sched-ext@lists.linux.dev>; Mon,  6 Oct 2025 17:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93DE38FA6;
+	Mon,  6 Oct 2025 18:14:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759772109; cv=none; b=LwmetVGRgDuRzJSEyUnL9bzsutZ820h7a7GWYfZq64pbi8YC/5MkF7VMNIWSAAhsFVfLJEX1d5wolBYYUZYOfE1dJ5WY1AjXOG/bJEJK2bSosunEPE1dlvs4s40sSiZiU1bM71nkRIeZ5lD76BMNZdmtWaQW+YUQjsxUunBjbIA=
+	t=1759774487; cv=none; b=pOZ1tARYZX+pTDORnPJXpUBiVbas/54r+RN7asRH6jAGMgZBZFfcnMqZmcupseE9CyqeWsOpCNRPL5qiPWowOdROSr4ucHL5+xrM8GLFcdqH2YT4UM6Y5bgEqXDhjEzs71EbGZbdofld8hTGKgZTIwCtJuFL7KesoAu8+mBmyHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759772109; c=relaxed/simple;
-	bh=7G7lEHsdRFuPWTJ+Bg1G2NIO8iAqFG5hf7M2mDU7cUQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iXsTehB6zB6INg/9qwvfAU6voaHN6F3envegscx4pNQoqMPKNqpAWODEdRbXcwn2ATo5dBLER3CwzBkoeYVznEOY4dhn/uVQyZ4jXqD8BzsvlRmi1Ias8FuZ9Ucxe3slZP2Aj0ZPwo7ZdcC5jNExTDAx9WiQP7AzrOdeQlyntGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L6s4eEZE; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1759774487; c=relaxed/simple;
+	bh=3uRNiWVly4CAnAg3uAC85gdadwgEoKVbIoyClmEJbK8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=P5I2rwqOl3d6l7PfwbZsAVsP3A8DtHR1pC9FdwvFLdwNRNsIWAJ/nKxJRP7O9vCTKMzNxD2rhTZ827d2CR6d5k2+9PAvROhKPGkKndh8U8F/P4ycicEeH7hZUTPfDSCZOJw/aDxhTi2S6MLMTY7ioGRF3CS5lG+D+Tsje+KNJ8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=CS5gBvo9; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L6s4eEZE"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b553412a19bso3770882a12.1
-        for <sched-ext@lists.linux.dev>; Mon, 06 Oct 2025 10:35:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759772107; x=1760376907; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3SYJP5oOId3gJHWkwqUX6EUfjqic+Th68f73mKwYp6Y=;
-        b=L6s4eEZE30FRfoRfCNJucQimODeCNg3fCUq/Ub18/ULBcZtsakvLGSHYiS4YbEtOXm
-         kFiJHF3Gdr007rZP29AhcGE6e1S/yZRELQmaVCi2K6dBjLKwdo+42ZL/1u4752Cp1no1
-         2e+2W888HCdCTv6X5Zcw7zQ1O87eC1mhZsD3Gu4n4PW0ef/jKAx25M9OiyawQUIiJGBj
-         /I7qlhPB2pA2gU6zGs0EydJJ3XfNO+o2XmeAtwFaJUfjUzfQm25dNeuvfZoZrd9T7smB
-         13aE7z+8t/z5ig0hkhlv/0PkYTnLdI90khs7OprpPnK+ESmKYR+otYvpa/IIi/4D6LpD
-         hOzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759772107; x=1760376907;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3SYJP5oOId3gJHWkwqUX6EUfjqic+Th68f73mKwYp6Y=;
-        b=R4zy9gEwzIBY6KNlhSvBXlBnZkvxcpsaqDifL3mCAFufOwUIN0ZcuktEpy0ksITmi+
-         QQWHCJgSDqiLJoxgwsfkFz74HS1E0D8I9gFKAPRbY/aX3+q5wJCErG6R0vvNR3XhwOum
-         lXpiwKLAWCp+ve8iwEFfjWvFjcuBxjzQCdXH58AK3Wf3xfylwYb7zk6dctfKXz/TUC75
-         BH/bvlsNB4sR35RYuKprZEIIGDGzVr9BCsDdkG6ztFdZl4xapIXFMjiPZctFgZNw9fSF
-         Ah6aZA8/36gQV1rMZbNvgWjKrFKO0FyyU2s3Qk3FBiTZuuixHSEx4ZpCbcxiEHOyWAjr
-         Uftw==
-X-Forwarded-Encrypted: i=1; AJvYcCUngWkfV+g9QF0NhXJQl/c0JY36Pqjmhe8/BJC9w1QiJpE0XATEa/im9USCe6u2BG2ZS0edc1dKjG8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwkMnrJwQYZcQF0aRFfFKOV2UxooO6ZBTmAe5bH3H2Ac+cxj1q7
-	pdqUCTE5Sr/WtFQerebdG3j2Vgommokh1bpIsTFZaHmNKOJWDnFzmY/C7QZQTecZnUdzSLc83Ql
-	OyOi+np2ZxyYV4D1b6bvDqgoh1P2UGMc=
-X-Gm-Gg: ASbGnctsZGUPmBxPMmgJH82uhklv0GZlzOWUnpIZNmD/6hUC0VCwvwwICzWTqST2Lzq
-	EWk6eiloGlYF+h4PiJnY7AlR4Wj3L93tHo7wavg52Y9tLElbtVsiXrARqHmEcC+yHV72N31slPy
-	cuCHkXokCp+dIePr324GMHrj000u0uNsbijszkO3IKsZ0RKy16TjqgspfvzvdjjxNiFcmqx4K0T
-	xHQQAgzxNY/bEj++qcUHd9rmSnUwRW7jE/Gc/kXC6Nj6TKo6oOX8A0Md2/oAlkt0tPWwu31
-X-Google-Smtp-Source: AGHT+IF7t/5uimt4spMXHcCSvFX3PWO+3xbZeZW/6BTEqZvA6CGHFJvw6CuEVbkxxqCTitoWh5b/CNIY1RkDf+GFkFE=
-X-Received: by 2002:a17:902:ccca:b0:27f:1c1a:ee57 with SMTP id
- d9443c01a7336-28e9a574b8emr150187535ad.16.1759772107216; Mon, 06 Oct 2025
- 10:35:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="CS5gBvo9"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=xaUexNMvUYJY72kamRxZMI7KBSdMfJKNfOgDc1kRXDw=; b=CS5gBvo9jMBljOpCsFx5Zwh95q
+	CT2/DA4FLbY+lWr3EbLy2XrTUlQ85h3xMzSq8NGqJLyNbUTT5LJN6EthVm4Smgn0IJv3qr7DXdEeq
+	wWLBWrbDeX3+ha/pMSuew4xs0uwt0//W21XJm+3EvhFtgsDju7PdchGnsVgD3puPbK47plvIEi8dB
+	+VnzgzR9382/sg1CTO4hLc/ECNv8078qlKKgdJaykChW/sEoD55DQIbAN83YehYxhNTiuvks/bFgv
+	o/ChssjCCmnoboDsAbq/aLb7rYV/Tqy2Lm0tgsVcziZ/lSKev7aXc58XxA9ePE/cLKhDsDWJJ6O13
+	jegZRMbw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1v5pjG-0000000H6Cb-0C5Z;
+	Mon, 06 Oct 2025 18:14:34 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 1EAA1300212; Mon, 06 Oct 2025 20:14:29 +0200 (CEST)
+Date: Mon, 6 Oct 2025 20:14:29 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Shrikanth Hegde <sshegde@linux.ibm.com>
+Cc: linux-kernel@vger.kernel.org, mingo@redhat.com, juri.lelli@redhat.com,
+	vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
+	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
+	changwoo@igalia.com, cgroups@vger.kernel.org,
+	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de,
+	tj@kernel.org
+Subject: Re: [PATCH 01/14] sched: Employ sched_change guards
+Message-ID: <20251006181429.GV3245006@noisy.programming.kicks-ass.net>
+References: <20250910154409.446470175@infradead.org>
+ <20250910155808.415580225@infradead.org>
+ <fee0edd5-86d1-4dff-9e07-70fd2208b073@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251006170403.3584204-1-rrnewton@gmail.com> <cbc8d5bc-4ae7-4b61-81f4-9629857736f3@arm.com>
-In-Reply-To: <cbc8d5bc-4ae7-4b61-81f4-9629857736f3@arm.com>
-Reply-To: rrnewton@gmail.com
-From: Ryan Newton <rrnewton@gmail.com>
-Date: Mon, 6 Oct 2025 13:34:40 -0400
-X-Gm-Features: AS18NWAICzboon-dCcAZVmLAwb0KjDAxIb0J9x4vN2jrS0oGI-oB8eLAAivDRiA
-Message-ID: <CACYs5AbjoLKSv7SasUyJH=j6XF+3Zuyp_0CJUrnsA=8XDDW6bw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] sched_ext: lockless peek operation for DSQs
-To: Christian Loehle <christian.loehle@arm.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, tj@kernel.org, 
-	arighi@nvidia.com, newton@meta.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fee0edd5-86d1-4dff-9e07-70fd2208b073@linux.ibm.com>
 
-Hello Christian,
+On Mon, Oct 06, 2025 at 08:51:27PM +0530, Shrikanth Hegde wrote:
+> 
+> 
+> On 9/10/25 9:14 PM, Peter Zijlstra wrote:
+> > As proposed a long while ago -- and half done by scx -- wrap the
+> > scheduler's 'change' pattern in a guard helper.
+> > 
+> [...]>   		put_task_struct(p);
+> > --- a/kernel/sched/sched.h
+> > +++ b/kernel/sched/sched.h
+> > @@ -3860,23 +3860,22 @@ extern void check_class_changed(struct r
+> >   extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
+> >   extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
+> > -#ifdef CONFIG_SCHED_CLASS_EXT
+> > -/*
+> > - * Used by SCX in the enable/disable paths to move tasks between sched_classes
+> > - * and establish invariants.
+> > - */
+> > -struct sched_enq_and_set_ctx {
+> > +struct sched_change_ctx {
+> >   	struct task_struct	*p;
+> > -	int			queue_flags;
+> > +	int			flags;
+> >   	bool			queued;
+> >   	bool			running;
+> >   };
+> > -void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
+> > -			    struct sched_enq_and_set_ctx *ctx);
+> > -void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx);
+> > +struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags);
+> > +void sched_change_end(struct sched_change_ctx *ctx);
+> > -#endif /* CONFIG_SCHED_CLASS_EXT */
+> > +DEFINE_CLASS(sched_change, struct sched_change_ctx *,
+> > +	     sched_change_end(_T),
+> > +	     sched_change_begin(p, flags),
+> > +	     struct task_struct *p, unsigned int flags)
+> > +
+> > +DEFINE_CLASS_IS_UNCONDITIONAL(sched_change)
+> >   #include "ext.h"
+> could you please add a comment on matching flags on dequeue/enqueue
+> here?
 
-Sure, the lavd with peek is here:
-https://github.com/sched-ext/scx/pull/2675
+Would something like so be okay? This assumes at least the second patch
+is applied as well.
 
-Beerland with peek is here:
-https://github.com/sched-ext/scx/commit/c2a0f185051c06cc1ebae1dc40e5fe2bd30=
-22c1e
+---
 
-The qmap one was not a meaningful change to the scheduler but just
-extra peeks thrown in with debug prints.
-
-Cheers,
-  -Ryan
-
-P.S. Good catch on the two newlines being split into the wrong diff.
-Argh, I was playing with Sapling's `sl absorb` and I swear it said it
-amended the earlier commit. Apologies for not catching it. FWIW here's
-a tip with that correction:
-  https://github.com/rrnewton/linux/commit/db426f852813e2b6deeae0869d20df1b=
-ea647a07
-
-
-
-
-On Mon, Oct 6, 2025 at 1:20=E2=80=AFPM Christian Loehle
-<christian.loehle@arm.com> wrote:
->
-> On 10/6/25 18:04, Ryan Newton wrote:
-> > This allows sched_ext schedulers an inexpensive operation to peek
-> > at the first element in a queue (DSQ), without creating an iterator
-> > and acquiring the lock on that queue.
-> >
-> > Note that manual testing has thus far included a modified version of th=
-e
-> > example qmap scheduler that exercises peek, as well as a modified
-> > modified LAVD (from the SCX repo) that exercises peek. The attached tes=
-t
-> > passes >1000 stress tests when run in concurrent VMs, and when run
-> > sequentially on the host kernel. Presently, tested on the below
-> > workstation and server processors.
-> > - AMD Ryzen Threadripper PRO 7975WX 32-Cores
-> > - AMD EPYC 9D64 88-Core Processor
->
-> Is the adapted qmap and lavd available somewhere?
->
-> >
-> > Initial experiments indicate a substantial speedup (on schbench) when
-> > running an SCX scheduler with per-cpu DSQs and peeking each queue to
-> > retrieve the task with the minimum vruntime across all the CPUs.
-> >
-> > ---
-> > Changes in v3:
-> >  - inline helpers and simplify
-> >  - coding style tweaks
-> >
-> > Changes in v2:
-> >  - make peek() only work for user DSQs and error otherwise
-> >  - added a stress test component to the selftest that performs many pee=
-ks
-> >  - responded to review comments from tj@kernel.org and arighi@nvidia.co=
-m
-> >  - link: https://lore.kernel.org/lkml/20251003195408.675527-1-rrnewton@=
-gmail.com/
-> >
-> > v1 link: https://lore.kernel.org/lkml/20251002025722.3420916-1-rrnewton=
-@gmail.com/
-> >
-> > Ryan Newton (2):
-> >   sched_ext: Add lockless peek operation for DSQs
-> >   sched_ext: Add a selftest for scx_bpf_dsq_peek
-> >
-> >  include/linux/sched/ext.h                     |   1 +
-> >  kernel/sched/ext.c                            |  56 +++-
-> >  tools/sched_ext/include/scx/common.bpf.h      |   1 +
-> >  tools/sched_ext/include/scx/compat.bpf.h      |  19 ++
-> >  tools/testing/selftests/sched_ext/Makefile    |   1 +
-> >  .../selftests/sched_ext/peek_dsq.bpf.c        | 265 ++++++++++++++++++
-> >  tools/testing/selftests/sched_ext/peek_dsq.c  | 230 +++++++++++++++
-> >  7 files changed, 571 insertions(+), 2 deletions(-)
-> >  create mode 100644 tools/testing/selftests/sched_ext/peek_dsq.bpf.c
-> >  create mode 100644 tools/testing/selftests/sched_ext/peek_dsq.c
-> >
->
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -10783,6 +10783,12 @@ struct sched_change_ctx *sched_change_be
+ 	struct sched_change_ctx *ctx = this_cpu_ptr(&sched_change_ctx);
+ 	struct rq *rq = task_rq(p);
+ 
++	/*
++	 * Must exclusively use matched flags since this is both dequeue and
++	 * enqueue.
++	 */
++	WARN_ON_ONCE(flags & 0xFFFF0000);
++
+ 	lockdep_assert_rq_held(rq);
+ 
+ 	if (!(flags & DEQUEUE_NOCLOCK)) {
