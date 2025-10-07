@@ -1,71 +1,71 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FBA2E542B
-	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 15:22:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC102E5B32
+	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 15:23:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759850540; cv=none; b=KvogrHw4oZELUCFXeCW7/s4pPp72VtHthv3UhudZET2bPRXIhl8ezUspqMNA2hMYfZraWLFlgSPDbVXD6gvmsSY+mjZPGx9gRIEL34o87LMEW2N73HvieicjKI3DTg02uiaYdgRmK9lwwlkPgYkMmJlwhB1+g47TAihkzGIjMvI=
+	t=1759850611; cv=none; b=jXQIs6M0Q4pAC8yp1z3B6UYbb02b3TdxQhtyPQp5u9VaRq+8CHieblzUQpirKsDr6B1BAy10MWT+lzNc0uQNn7Gk/9zBnBCnn75jTIawY8sycnNK++thwbVdIvLizYU7Y08uRc2Q7by2UlwOErKordXp+2QYzdZI6zJixmqT3ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759850540; c=relaxed/simple;
-	bh=WM6hgH1P8GcEwnp4CSHs/x3JAUOpqZrrbyxYf6RpLPk=;
+	s=arc-20240116; t=1759850611; c=relaxed/simple;
+	bh=Qaixh/0h0CexTahBH/Nbesb7dLvjfql5jNJYxSlQ13U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OhhYBvjj9CRAloX9a5CivWBcsPFI01p/HO0xn0UpPTRJfJtEc9fHkE8HnpUq3v5hA9RMBe4nyBpQqsk/YHM76EvmesEZmZTPKIlK6i40dqwsnUwyWyF0lOXqcCKYlCpw33Bx6evQ37HNdm6Ujd9J4fOGqle6xWVJftb1M0Cj614=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B85m63Ci; arc=none smtp.client-ip=209.85.208.54
+	 To:Cc:Content-Type; b=lmXFD+LrsSCqmOw/jT3/HXe7uy+OB+F1epQvE4fRd6o3XOpelEaPX8bdteOk331f/FID8E3ZonFTKtVQYPpKSXoRFsWl5couCDwBjJw9OeonGLTn9Eth6TUgFBoMY7cFtfOQ3tAGXIGASBVvmJ50efo4UYtodBxHChV3pkqLeTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qnXMcfdc; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B85m63Ci"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-637e9f9f9fbso10301945a12.0
-        for <sched-ext@lists.linux.dev>; Tue, 07 Oct 2025 08:22:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qnXMcfdc"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-afcb78ead12so1160073966b.1
+        for <sched-ext@lists.linux.dev>; Tue, 07 Oct 2025 08:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759850536; x=1760455336; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1759850608; x=1760455408; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sj+6bWQslfiTLa+4PHpgmn9y75LNrAViNjvut2qJSfk=;
-        b=B85m63CiCRx54ixsvbndRsGpRFsciVs2pnqVAZrR6sVhETDL5ZZ1WMD5jOexIzb7Uq
-         lixnD0TJ5WfKsJp/FkEbHo29zXhGJ160ZKHWTxz0x3TXllcjuhce9kW547oMM2+VHGTD
-         unMFLHxCC3pBlkvzgHUU771U3dz3fJfC8Aab/7PuHHNo0pWsLi/3k9La6F8ecCszb5bi
-         v3XjLvZF/cR7JKfaYm5AytRiy6eDs5Vgzr462+jApv6+PO4WDg2Pej2pZL86COCpPG7y
-         Cl8KbxYZC2VJyxqgHcEIZ0WxJ3hbAgz9ctZXRAquSduX9LORjTohRgive0i9qDldvNGS
-         2zgQ==
+        bh=UwG9PZuipETG7rnRpTzxcF+1B6JYfXyf2MeSzyquatI=;
+        b=qnXMcfdcwGluqlvJKwCtVSU++jTh8R46SfoutcJyI6K2m5cVAhNof8rFJH35l8Sdq9
+         Tr7PyV5IsaBS27f7puWLccnKd8yG447qwngSmTl4VF1j2g2lqZoojsczyotEktNTuqXj
+         tos2FKHS1MLQKkIH+1JlO42QTZ35ZSvPF7EDgOy9yOLPHwk2t2RGZpNh6aHfAA/OzVjS
+         V+FQBDtvfcjLhhOM7khSgLgGS57r0dA/5zBm9x6jWlPC+eRfO1LRHe4xdxq/2b8c3lfZ
+         0KPtBEXHnQlFmOzTITbV7o/3hgSaQlLgvtZaTmunhV/RhM8pk9JM/hWY5nHU2rrK+bQv
+         7WdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759850536; x=1760455336;
+        d=1e100.net; s=20230601; t=1759850608; x=1760455408;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Sj+6bWQslfiTLa+4PHpgmn9y75LNrAViNjvut2qJSfk=;
-        b=MQGGW8pfYqOR8GELv4Id04BK4FwZfZQXWuMhYHru/yMkcxjElwfjuXN0UnOz8l5vr3
-         NgE8hCXT/1oU2yv4GC/2UScuO5RmaMDLVjzw4FIP/UHtsyhnZ1xVROiwPj0qK9G/TL0U
-         jPBY89fEzsJUkOhE2LkfbE186dqRl2ODh2xUYBQvU23JuF9ADLzViU5K7zJqYKtU8u03
-         GPJIRN02p31FazupXxV6WAsOmBwb9fIHsUnsYUPULXXpkq3huq8fhDgwX0mJttQZ7AgP
-         P6yOC2+ciYCtT4/T3Z5rLIWmBUMRqS3RLnVWbBSlf+551VUAx/hQKKEPNZp8Z8/I5kmG
-         qL2A==
-X-Forwarded-Encrypted: i=1; AJvYcCU6Fk6tK+6hwHN2NDYNiOIyftBkvjx+O9qNfPSivQ5osTTXlzdRSBj/b8rJ/R6h/F6f7FBW2jHF2Nw=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw9euylnMruEOyNAHGMQJneAr8RAYNEaqBvsk1Oa9PMeUYTgdZV
-	RmNdBTESYh4gP6UEcg0fRF8ZWr0b0AQ5FTkvoaYWKFhU6xkYFkpShGEyVdSIYnDUtZNsulQRdxw
-	1pOIH7lHfFCM8VzsWvt2cZn9mgz1c8uGNa67cLH1RuA==
-X-Gm-Gg: ASbGncuXfff8rmjhZ7Snuug8lXrDfvZlmF7ZAfLE75yYaC4CZ45lAvcidrTzhlwxEeq
-	QNKg/FYxI+yPAUNTY/ngrBTwg3x7cUY3h/HSfUjYEXuITx2Qa8bK4aNroHJpeBxDDT0wP13HOAO
-	Kaig/zNH1G2iv+MBDdMsDcywgEx9RXHSgCmHF/zG2tphLlWo1XkyyhhCZ/3J9smUpsI2WE8zgNW
-	BQko98tlX9DFaNTefADXFIjuEKZCBVbjInIs8/hF8KXcCx6HkM+mHzN1CQKOAI=
-X-Google-Smtp-Source: AGHT+IEOLX7r/tKzGoeeZy9wOj+XUlBEOxx8L5IKIwy+J8iOESDBaK6+dbXRpt6rG0Ux0Pp6UBfDLtppzsDqp59rsPk=
-X-Received: by 2002:a17:907:dac:b0:b49:5103:c0b4 with SMTP id
- a640c23a62f3a-b49c32554f5mr2167080366b.56.1759850536235; Tue, 07 Oct 2025
- 08:22:16 -0700 (PDT)
+        bh=UwG9PZuipETG7rnRpTzxcF+1B6JYfXyf2MeSzyquatI=;
+        b=rOx+73wYibZqQHekjoxbZwDKSLemSGiN5fyB6MR2wfmBNPs9XLmQLXNmQ93HLOysbx
+         R+B/vaPZ0wxabnkQ8wAo63lCcsW2q0BgPtxG4uJdYjTsCh9M2eZD93QEKDos18hnQ1x1
+         mzjugfsQox9XW8KNu/CifiFsckX7oUWTkMNLs5ldhWwrqKM3r3sm8aa8Pv/S+bOySzIk
+         LuHQ3Fz9rDoJFf7E3loichxRioqN4LYn3HWLwgA9bBeZ2RysagIsI4wKvj88FfMxFWeE
+         Jw1mREE60ts6WnGG7R1Jeb3wvgPvwRfH2EWjKkg1kPQJDhxTXy/riwruiVrA1Jd1I388
+         lLIg==
+X-Forwarded-Encrypted: i=1; AJvYcCWipkrSLruQc+fiqG+NpqoK95R/nyjM7tWG3uDdKWN/52TPHFV63gHvV/tQBdw4FYnWDzKBZ4C4z+s=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxipjtyM0NWd9v4ZZp7wwzjJAJfhkKymDy50S8AbMFVfG+D3dQc
+	KXmfCoLFHDihO0KKxFyuQqkHfreRfhNAC3k7BOntwzqz/8r6X7LABGex0Sy+L5U4t5JHhfbNCU8
+	8pn5FPyhN5WthtKABwmznsu8XLYGIep9uQC7A5izwtA==
+X-Gm-Gg: ASbGncsEQkky+L9gcPE8d14RhEwSAEvD1BmcQUSi33Ef+QXVCX390yjZpAAp5If9U40
+	yCnePLlsMvhlrErqZy2IEG9XkQlagaqtC/ZY6WMWZX72EA43OKniO3iUzo9y8XqZf3zcBy78iuL
+	tPD9fXHdIqrtFsJnbOVXqTTh6f58fFthBed4BKVUnwNvi2aJXiJVHmQ9YjuS883q43yiE15/X3W
+	x2z3gnjbHAa6g8rqSFA8wnziZ8pwzveI3z2XA/xIGfWVCBO6znk3iogGME1/zEpIny0Bk4xew==
+X-Google-Smtp-Source: AGHT+IFY9nkxh1XrpxsOJhE6hryneAH5gLOUnE5EpF4NzhHNwlkHm8SbyiGn3ZVrorhgVsPBNdhy5CzpeJS0xykTtj8=
+X-Received: by 2002:a17:907:97d3:b0:b04:67f3:890f with SMTP id
+ a640c23a62f3a-b49c3d753d4mr2301349966b.33.1759850607427; Tue, 07 Oct 2025
+ 08:23:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251006104402.946760805@infradead.org> <20251006104526.964100769@infradead.org>
-In-Reply-To: <20251006104526.964100769@infradead.org>
+References: <20251006104402.946760805@infradead.org>
+In-Reply-To: <20251006104402.946760805@infradead.org>
 From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Tue, 7 Oct 2025 17:22:05 +0200
-X-Gm-Features: AS18NWBp67oekCA5wJuqsWfMSlc_Mr63BTHm_H8SM2ppgSw678wieZ4yFPZoLog
-Message-ID: <CAKfTPtAY5Py=rmzbT+e7p5Em2eU0Do25ZKfcKZ2ZTjf6jFFOCg@mail.gmail.com>
-Subject: Re: [PATCH 04/12] sched: Cleanup sched_delayed handling for class switches
+Date: Tue, 7 Oct 2025 17:23:13 +0200
+X-Gm-Features: AS18NWAxqcxGakptEBnQb48nrcpm15RhoPtf2PjFIcOjN0vV7OYV5xWrjVCaxFw
+Message-ID: <CAKfTPtB5i+5rqkuU8Q4D9fUGAnjKCqNR_y82ZAHHgJdFgcOTnw@mail.gmail.com>
+Subject: Re: [PATCH 00/12] sched: Cleanup the change-pattern and related locking
 To: Peter Zijlstra <peterz@infradead.org>
 Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org, 
 	juri.lelli@redhat.com, dietmar.eggemann@arm.com, rostedt@goodmis.org, 
@@ -75,108 +75,42 @@ Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org,
 	liuwenfang@honor.com, tglx@linutronix.de
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 6 Oct 2025 at 12:45, Peter Zijlstra <peterz@infradead.org> wrote:
+On Mon, 6 Oct 2025 at 12:46, Peter Zijlstra <peterz@infradead.org> wrote:
 >
-> Use the new sched_class::switching_from() method to dequeue delayed
-> tasks before switching to another class.
 >
-> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Acked-by: Tejun Heo <tj@kernel.org>
+> Hi,
+>
+> There here patches clean up the scheduler 'change' pattern and related locking
+> some. They are the less controversial bit of some proposed sched_ext changes
+> and stand on their own.
+>
+> I would like to queue them into sched/core after the merge window.
 
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org> for the serie
+in addition to the reviewed-by for patch 4
 
+>
+>
+> Also in:
+>
+>   git://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git sched/cleanup
+>
 > ---
->  kernel/sched/core.c     |   12 ++++++++----
->  kernel/sched/ext.c      |    6 ------
->  kernel/sched/fair.c     |    7 +++++++
->  kernel/sched/syscalls.c |    3 ---
->  4 files changed, 15 insertions(+), 13 deletions(-)
+>  include/linux/cleanup.h  |   5 +
+>  include/linux/sched.h    |   4 +-
+>  kernel/cgroup/cpuset.c   |   2 +-
+>  kernel/kthread.c         |  15 +--
+>  kernel/sched/core.c      | 327 ++++++++++++++++++-----------------------------
+>  kernel/sched/deadline.c  |  20 +--
+>  kernel/sched/ext.c       |  47 +++----
+>  kernel/sched/fair.c      |  15 ++-
+>  kernel/sched/idle.c      |   9 +-
+>  kernel/sched/rt.c        |   7 +-
+>  kernel/sched/sched.h     | 198 ++++++++++++++++++++--------
+>  kernel/sched/stats.h     |   2 +-
+>  kernel/sched/stop_task.c |   9 +-
+>  kernel/sched/syscalls.c  |  84 ++++--------
+>  14 files changed, 373 insertions(+), 371 deletions(-)
 >
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -7368,9 +7368,6 @@ void rt_mutex_setprio(struct task_struct
->                 queue_flag &= ~(DEQUEUE_SAVE | DEQUEUE_MOVE);
->         }
->
-> -       if (prev_class != next_class && p->se.sched_delayed)
-> -               dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
-> -
->         scoped_guard (sched_change, p, queue_flag) {
->                 /*
->                  * Boosting condition are:
-> @@ -10845,8 +10842,15 @@ struct sched_change_ctx *sched_change_be
->                 if (WARN_ON_ONCE(flags & (DEQUEUE_SAVE | DEQUEUE_MOVE)))
->                         flags &= ~(DEQUEUE_SAVE | DEQUEUE_MOVE);
->
-> -               if (p->sched_class->switching_from)
-> +               if (p->sched_class->switching_from) {
-> +                       /*
-> +                        * switching_from_fair() assumes CLASS implies NOCLOCK;
-> +                        * fixing this assumption would mean switching_from()
-> +                        * would need to be able to change flags.
-> +                        */
-> +                       WARN_ON(!(flags & DEQUEUE_NOCLOCK));
->                         p->sched_class->switching_from(rq, p);
-> +               }
->         }
->
->         *ctx = (struct sched_change_ctx){
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -3924,9 +3924,6 @@ static void scx_disable_workfn(struct kt
->                         queue_flags &= ~(DEQUEUE_SAVE | DEQUEUE_MOVE);
->                 }
->
-> -               if (old_class != new_class && p->se.sched_delayed)
-> -                       dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
-> -
->                 scoped_guard (sched_change, p, queue_flags) {
->                         p->sched_class = new_class;
->                 }
-> @@ -4677,9 +4674,6 @@ static int scx_enable(struct sched_ext_o
->                         queue_flags &= ~(DEQUEUE_SAVE | DEQUEUE_MOVE);
->                 }
->
-> -               if (old_class != new_class && p->se.sched_delayed)
-> -                       dequeue_task(task_rq(p), p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
-> -
->                 scoped_guard (sched_change, p, queue_flags) {
->                         p->scx.slice = SCX_SLICE_DFL;
->                         p->sched_class = new_class;
-> --- a/kernel/sched/fair.c
-> +++ b/kernel/sched/fair.c
-> @@ -13237,6 +13237,12 @@ static void attach_task_cfs_rq(struct ta
->         attach_entity_cfs_rq(se);
->  }
->
-> +static void switching_from_fair(struct rq *rq, struct task_struct *p)
-> +{
-> +       if (p->se.sched_delayed)
-> +               dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
-> +}
-> +
->  static void switched_from_fair(struct rq *rq, struct task_struct *p)
->  {
->         detach_task_cfs_rq(p);
-> @@ -13638,6 +13644,7 @@ DEFINE_SCHED_CLASS(fair) = {
->
->         .reweight_task          = reweight_task_fair,
->         .prio_changed           = prio_changed_fair,
-> +       .switching_from         = switching_from_fair,
->         .switched_from          = switched_from_fair,
->         .switched_to            = switched_to_fair,
->
-> --- a/kernel/sched/syscalls.c
-> +++ b/kernel/sched/syscalls.c
-> @@ -689,9 +689,6 @@ int __sched_setscheduler(struct task_str
->                 queue_flags &= ~(DEQUEUE_SAVE | DEQUEUE_MOVE);
->         }
->
-> -       if (prev_class != next_class && p->se.sched_delayed)
-> -               dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
-> -
->         scoped_guard (sched_change, p, queue_flags) {
->
->                 if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
 >
 >
