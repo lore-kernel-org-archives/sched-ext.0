@@ -1,192 +1,306 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013011.outbound.protection.outlook.com [40.93.196.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0D120ED
-	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 05:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759814001; cv=none; b=oAOm23b7hfmWLfaS+GnsByKrdz6Ac4AHin433E8B8M09u5TmRygOlJH3iayqR/ybPLFES8kp7/98CmwHMLGQLDDgaQN2eCZIrcLYKc0tqJ9EjmR5jHbJdcS3DCVZnTZthvD/iMxDGqnlImF5qdbBtypQX+3eFyBUN9L3pBYH7yY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759814001; c=relaxed/simple;
-	bh=8jMOyjPcJW5s0EO4a4tzQbHaQlEKwAsbkBUuQ52Z2L8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UuNZf2QeatQvtg03FExf9kwlSLjlfMXJDyyfbM47M0EJsvYD5IBfoeNfbCNfvtT8Ngj5ZGnZWLh53o0W89FfOkXq/yKQ2S0u71fhZuX6lgkUjICrZbOFiVbzMDEmcVBZGhjAudbVL5hjBilFb6JVa5m4lTo9xvsidUC601lcblY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=dxzAiwBk; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6BA253F1A
+	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 08:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759825271; cv=fail; b=seDUO8aVz5mXRoCqnIS7ZoXpEqV5F/UhlSi65wckowrHtWxGt7PS/pX8nCsrW+oRnokbVcp/mpr3tPRBgqNjuc1yHki0lTMY0U7ejOMh9thNtnUaSE/yXMt3nQPCEoPieI0HbNp7p0dPkcKHDm9Am2Tt3yiaubSERSej/DFE7/o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759825271; c=relaxed/simple;
+	bh=30f2xpNAVp/4hNQPXrITQVqqQqICWTQAuWKSSO+lIVs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=NzenSIg87Xsf3hxPzkSsx4/ttAVfYA+7AmwN+W5G6awSi5qf/xa3g2bMtoIbXXPkNxTQrYJVbeC1UW12XqCRLY2Cr0J6ASlOpDn34sop+OKVp7kvFqePA0mNTbjVNYzFW5fzOCzfb562lLpR7aoUu05ofugCZTvNRuzMdqUV/Tk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=GX336C+G; arc=fail smtp.client-ip=40.93.196.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="dxzAiwBk"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 596KJBxc002750;
-	Tue, 7 Oct 2025 05:12:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=XVq5AB
-	Kv33NUVY4bWap2D/BLFM1M8DnbRXmDWdd32HI=; b=dxzAiwBkqcA1o5kDRORsEL
-	Af6dP78M1li9Jc4I9YJKSI04DfkiWp/iiqKgkXaQ5QnCx53wMTJsHHxq9rT8TqQx
-	oHBoLldTak8PVZ5O3BSih/O8exfjLZLxvqTWwYS/MVqCH6lzmKMoel8Vo0020/33
-	CnQV8qCE1kUFh5KOQv2QOhCQADMRy9nmbPvfmo7qzAH3/hTNBRBJzoqZuLewwBJd
-	WGYne6BUnfWRzzx5V57JY/oEyy6qgaIyb3/xESooys7AruFjX8lSi6fWn5vSfENm
-	E27Tpcm2brcPjII68HxANAFx7oR214e+xDcNrfXcpR6dNBzUXPGEpXexyt0RA8uQ
-	==
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49js0scwx7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Oct 2025 05:12:38 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 59755rBY025638;
-	Tue, 7 Oct 2025 05:12:38 GMT
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 49js0scwx5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Oct 2025 05:12:38 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5974tc8C000882;
-	Tue, 7 Oct 2025 05:12:37 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 49ke9y1s34-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Oct 2025 05:12:37 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 5975CZ7S45744420
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 7 Oct 2025 05:12:35 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5946320040;
-	Tue,  7 Oct 2025 05:12:35 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D04A220043;
-	Tue,  7 Oct 2025 05:12:30 +0000 (GMT)
-Received: from [9.39.21.122] (unknown [9.39.21.122])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  7 Oct 2025 05:12:30 +0000 (GMT)
-Message-ID: <2b37d74f-7a5d-486b-98df-679bd7e2b0c2@linux.ibm.com>
-Date: Tue, 7 Oct 2025 10:42:29 +0530
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="GX336C+G"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Mt+EwwKquCLZiiue78POI+Tl24AtN02/fkUCkkCmOB2+uObmMLodmyNvd61hWfbbZWOm4nf3ADnFezz+t2QodVnrI4nlEMcrHR9bjiHunUK4RW8fovX2bvZyZqcx/tDfRqTWj9QMPSgE/KjYW+4DXK4nYQIcTupoJi4jnEzhvk48dBWyck4NSRefPfecHHAGlL8NWJcRewMgmx/1KSNy2Y//afgqj9WJU61gwnzfiMXJKfw9ooOOPZVEzXWmGkr50TI1Ail6XxTfzl201lenyxb1/nkQM9BNvV32odO584xVyLt5ze823nLEawJILpDPOUmOQDUS0Avu8uj9noG9ug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AdTRSb8Vs+X1dFIvoA016rlVXnbXM+FvgX4qnV7yoZo=;
+ b=uHoOZeGgo/+GtFqg5a8Ou0YgAhXlBclTVqDnLmOFjnnyp8K7hBEtk/dxryxQC7Ix7Hm6/tP5kGtmLyaBN3YeLyuVYVl5xzx6MpDcFU3zI8uZE7NaR5PxTokO2ESMqy0lDxCkrOKyhRstuvMByWqeSjY9w/ePNxhKhAju9NyOlnFfuZKzN0mLt36rt6FwrdTXz9ZMq1TC3niaKuSkgBrKSCEYo0nKfzjboo79Uvb4fHstXChRq7faYGR7c5z+5XZMsRw5qf729BvaxH/19uj+qexYcI7QUkHcFCzR7Mp2wb7ccvlHs0+mOuwV7opy+lTIy6R8QaiiY1VN72UaeKvwEQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AdTRSb8Vs+X1dFIvoA016rlVXnbXM+FvgX4qnV7yoZo=;
+ b=GX336C+GAbtV7XjQQ/xm5l7uYArzCcuzEPsp5fJf8AHBe62RkKbceB1PZ2LmrM0nUwcUN5LBqWDStuStk1h3tlc/ULo41z6buyqkXnwccdszD6FO40tlLbRMre7BhS3YfXet9Azdknzw+L43fKkK3AbzezZ6x78nco2BsCwLqFgo6sozUMewh86Eom+IjmP97mmrwDf70wvrNR4ZXDsv2hKVgq6jdeJpZhZVk8GVq1QV2tuOmfqG1qqOlTXjYXIKU+BAd6rScZaMU+MZEz8zgt0bgwJIrnOWK6yZIwD/gWxpU19MotFdwUSM1pd6jUUNeHtm6ZZDwcXDtZnL9uik5A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SJ0PR12MB6783.namprd12.prod.outlook.com (2603:10b6:a03:44e::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.16; Tue, 7 Oct
+ 2025 08:21:00 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9182.017; Tue, 7 Oct 2025
+ 08:21:00 +0000
+Date: Tue, 7 Oct 2025 10:20:44 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org,
+	juri.lelli@redhat.com, vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, longman@redhat.com,
+	hannes@cmpxchg.org, mkoutny@suse.com, void@manifault.com,
+	changwoo@igalia.com, cgroups@vger.kernel.org,
+	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
+Subject: Re: [PATCH 01/12] sched: Employ sched_change guards
+Message-ID: <aOTNXPTyk4zth-1C@gpd4>
+References: <20251006104402.946760805@infradead.org>
+ <20251006104526.613879143@infradead.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251006104526.613879143@infradead.org>
+X-ClientProxiedBy: ZR0P278CA0150.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:41::14) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] sched: Employ sched_change guards
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: linux-kernel@vger.kernel.org, mingo@redhat.com, juri.lelli@redhat.com,
-        vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-        rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-        vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
-        mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
-        changwoo@igalia.com, cgroups@vger.kernel.org,
-        sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de,
-        tj@kernel.org
-References: <20250910154409.446470175@infradead.org>
- <20250910155808.415580225@infradead.org>
- <fee0edd5-86d1-4dff-9e07-70fd2208b073@linux.ibm.com>
- <20251006181429.GV3245006@noisy.programming.kicks-ass.net>
-Content-Language: en-US
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
-In-Reply-To: <20251006181429.GV3245006@noisy.programming.kicks-ass.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=EqnfbCcA c=1 sm=1 tr=0 ts=68e4a147 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=qX6ajofIpXMs4fIIw1kA:9
- a=QEXdDO2ut3YA:10 a=nl4s5V0KI7Kw-pW0DWrs:22 a=pHzHmUro8NiASowvMSCR:22
- a=xoEH_sTeL_Rfw54TyV31:22
-X-Proofpoint-GUID: cAqOOaCKutzRGHdSxvZApmpDB_dpjxLd
-X-Proofpoint-ORIG-GUID: euvDvoERsB13dXaex28twqgFbv7-s7Ba
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAzMDIwMSBTYWx0ZWRfX32bytjmGzGCV
- UjpUqZMEWxRLOY1FL939p/tPFpycFWvvjDJDzsR4KycttyTHbQYa4OoMvsQMOs7zBuM9nitRwQs
- PT1t1OhhYoQzFgug9w9SWc6CaoCha8EBxdz0Cqf7tcSENBQJcR1kw/JujHtem1EkfKL/3XRQPCg
- kBRssF+nr52FI08nuAvCvqSfhz8UUwR9syE+4nUKmFGsGk9c0dBfSGDNbJUO7sEViryWf7bfeLL
- MsFssEmH07hcWNnkQivz/5j0xbRYossatwPrinkaHCl1y3dUyjv/C0SjnDq2QFYtIyF+W45GNvi
- BvcTr1RbeeNyI4UCFmkN2oerfX1fJ2ZwRIoqTGYm/JUq6ztlDUF9Y1AnKdPENmlZPK4U8Lh/x1o
- eE1uAA0HsB132IpaqyedhF9lRk5TMQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 impostorscore=0 adultscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510030201
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ0PR12MB6783:EE_
+X-MS-Office365-Filtering-Correlation-Id: e9816338-ab14-4a93-ee5f-08de057a72d1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?OQDR9e/0TlZQiAIt2a4ZOWyhZQuJiqGL/fu10tAp8ZqcNMgDtryA0a4prbsU?=
+ =?us-ascii?Q?uiglEw/CVztjMhoc9wgDT9JSwZKFCO3hrUAXQc9sekEunH5C/pN36H4BZrOH?=
+ =?us-ascii?Q?5jvsD96cjuM/gRcokGySgHjrQstLe7x+eg9cPiZEBZx5+N4EAs5XTjL1vLxJ?=
+ =?us-ascii?Q?Xi+WVLqFNeOdmeArJ+ptnAzATlDNH6PmY2ARHxFEwNElbmJUnzj4PdFZoZvL?=
+ =?us-ascii?Q?RBSpma3gmDFpX9SXFQ59jlFGb39SaZgOBtq6o78tY7D+HkqQV4PeTKO/C+1q?=
+ =?us-ascii?Q?y6gFDlmxBos8kxegLQC2dLuihP1IJXSFnFbattl1bcqupYGWmebgBT1wZ7Rd?=
+ =?us-ascii?Q?IYIoAe/5SGnUwTQk+0tP3HX4o0y6GkZjgs3HDG9ji4k9+A4hKs9MRV1DCFj/?=
+ =?us-ascii?Q?Jzvu4rzwit54Bf3lMQTu+FG4O6trWdIFaUstEWjN3uhCVRD1FRNBoM26xGUa?=
+ =?us-ascii?Q?dx/GR4bfmAc8BWzjsPME/szq0rwE4lIzI2LEk6n8leyjZIs/kjgnv5VPOW5M?=
+ =?us-ascii?Q?CgQyrCetuQzeYd56S8vM/WiOQTbByszuokdezWt30n+9CviVCVeGKv7EojyG?=
+ =?us-ascii?Q?AvfyBELWMiGUy6Mtzu0xZS8tdAhDB/Dw6VHk+3z+M7mw5pdEbCTOdFtpX08R?=
+ =?us-ascii?Q?Uy+I/SnghFPJ8MNIEaHqcdm2SMjNQYj/m44Y7OtqvVpc4SHIXeFVaq7SUoZS?=
+ =?us-ascii?Q?Xnx8fpeIhsU3A/Ru71eAtMCFWli96MfnVTumVW2LHxLhbrjRfj64+3WheBa5?=
+ =?us-ascii?Q?vaRvKPovqeJIxZVXkc1cUE5nM9odyFNFOxmgdIRAvXrRrQK1b59xqc4PJptc?=
+ =?us-ascii?Q?nZmGx5ZsB0AX6or1jd7VfANBouqORDElNZpDcQuFb1YcMn1lOoteKrrDcQIk?=
+ =?us-ascii?Q?mlaD6/6YxRkJwlvxk3NXWqlEfMtrBqnHvkb/bJFSOhMA3xz+xgGqjt2bOdrl?=
+ =?us-ascii?Q?N37PTKdq385hQnZ9uLIXuIvtA4gnQptrANZ7bQnz+C0PcOCd2Db636vWG/1J?=
+ =?us-ascii?Q?D0Pf8WVRIgCqSyblbxTwHuBlSWx1vf6GPv2bTp6uINgmi2IZ4D1ZcUzxGvHi?=
+ =?us-ascii?Q?MeG6k/Pi9ttQeNHQIb7br4SRWYtnyRiZblzLll6AoOvUl1gfWaEC29ci29v/?=
+ =?us-ascii?Q?vq7eDTYpONJdld/qLZx2u8/iB19smXfKeu3fTOI/WyjVyLMqwyNOczOySQEC?=
+ =?us-ascii?Q?F7/0wejs4IALssovPKXS6oAbZwt0IShqnWEA0bSzTgFNdqW/VjVMw/lNu1kt?=
+ =?us-ascii?Q?F0quhvvZd7d1l9kHSEzE5Tl3OlOQwGsnMiwG0M473u04kwupJT547Xx6EM8Q?=
+ =?us-ascii?Q?X8CGPWcVc8vpnpXaNY8moL50rChRr4csdJQuYNunho23HsPLpLPwtIrrBoQ1?=
+ =?us-ascii?Q?lq6ikFpZOxHYnn4SMAO69+VbYvmjiu59r4wSVyS4UBMey6XQwrIi0m44NMPx?=
+ =?us-ascii?Q?zOGEMa8VFiLCQwguVY9FlnxF9jm/38+i?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ZZelJSGYLJmHOeDsCFuE5GldHaNhE7hwMhqOP6Qu4pOJ7+8BaViJ/+rfEvx9?=
+ =?us-ascii?Q?wLRM0L8Ab5v/kZgDv9vP6bKYmT1VGZE9kG9L+br02/bA1Pa6hQQqxpeYx+2Q?=
+ =?us-ascii?Q?yfLM0rMgSphlUkc85YugIk9MI0LZTmky2+PB+gsOxENNw/i/iAF59SyOvxmd?=
+ =?us-ascii?Q?V5qTlXSNtrwCkzHQGed534x24AVqG8de8dEcGZ5is0MxVedw53Ih6oUN7Nem?=
+ =?us-ascii?Q?3lJRielBkAxZhPfxpz0h4n0Z5cLnuS1Qu9xBDT4iD29FM/CG5Isc1LmSzXpy?=
+ =?us-ascii?Q?bk9oSRB/i+2IMTvzfWO+hNkftiP3qhM+bNAiPRPz0Bk3wgPO8MF5GJNZYCMI?=
+ =?us-ascii?Q?ZOTvCNAn42Q2CL/MLmbtFBnJQsT6uxilNy+Q0IjvC+nH1IX2MeWQLpD0wIxV?=
+ =?us-ascii?Q?BoeI0u+8CW7JQtNWKzOHsIG1uIa5luqmiIb1QiQQkEC7cZ9r/MlNIP6l+pgE?=
+ =?us-ascii?Q?/EUL/nHM/Mf/Csgv7b+X87n2TKZrkuhO4tRK4bFEOVpmXwEUTHHjXW9hQkwh?=
+ =?us-ascii?Q?r0ZuDH7Q1dvogy9ah1ZL/dwM/1YSN5nWuzAY5PTp+CM9QvgxyH3oy5salHVY?=
+ =?us-ascii?Q?lkQqCHcBdwqRDisoHsDyjpq2oUyfAm4Q6zPRl7EAdyNhmaOYB8Yka5GrTOUF?=
+ =?us-ascii?Q?mRUNcR12SwwC5GwZIT7iCe7MogO/2NKB3UIboyDZlOhXlN3GthfbG8oflEqZ?=
+ =?us-ascii?Q?wWiKVAWtCH+JJzUi/rVY+TVw/jHmPxyMxMI4iz7kyqJFCQobvUdfHyB8E5Jn?=
+ =?us-ascii?Q?NAZjXc5WzGIdB1ppoobR3RM2toVXO/vqWuzxY2XJXb1LQaQSzt6C15mY5xtr?=
+ =?us-ascii?Q?HSri8AXyswd2Yh7ZJcAZkrEqXC2Y2wk6Wl5Foy4coeCduUOjJQwYxQqYTjMN?=
+ =?us-ascii?Q?laJnCcYpWZVy0O7AY/F1GkxHJug3FeFDUB6OPUD3tqYr3a5q4EKiYabJFwPt?=
+ =?us-ascii?Q?M5QoaO5jNGV0kaKLsgDUx567eSAeyAr89Om5K2vv8Se5TmjcljgNFqMWA+Ns?=
+ =?us-ascii?Q?9AyMVacBuCMIhgGV7AboxmTf9Ka8khC+Q5wJvcX7eQdbfkBWmBUEcWSM8X8b?=
+ =?us-ascii?Q?uGvP+Cb3PgPrR58gL1dzVy3S6sQItbK6SjcCv7kLA3V0J8cERisIRGjnsTCU?=
+ =?us-ascii?Q?tlZaymJ9l8jAZ3FlT10CWBnQsdlqpR6uRjgBrwr7zO51yD3SlNsh13o16D5E?=
+ =?us-ascii?Q?Ip4LZpNv4Sc3Ju5VN30E4lacDyBIcaZ6Q3NK2zu9GUkf5VrrzCsK3i/rLgFB?=
+ =?us-ascii?Q?UEFQVIyF1bVaDCHGYdupEgaKJZnlIMAeTURJWXUk1jFxPT8Lb8eq9xIGa07h?=
+ =?us-ascii?Q?zZqJsHZGj6pLkJ55sbpP11qjbFdzzN/cE/aVGc1lmqfv4AUESp2l7AuIEfft?=
+ =?us-ascii?Q?VAvr4pNKyhhd0J1ztmaW4VlxU+fK4F2+3w5LLxCmwLSdEZB17ZwMr7Wa7x0Q?=
+ =?us-ascii?Q?rJEQ4KHWpVd0q+9Fdpq15+aSmqjsVsWbYN5jb0pu5zlscNUhR3EUjJrepQ2m?=
+ =?us-ascii?Q?E9JyxBthe79TmNRqTap6ykIms7qettIpy3qVxfrym24Lj/7bx2G01/qR7UHv?=
+ =?us-ascii?Q?Qdo8P4LfXRx9j1gdx06v60sDTnFtgcIEAyfIGBc2?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e9816338-ab14-4a93-ee5f-08de057a72d1
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2025 08:21:00.5333
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2qs6NhTMuRmiC1tHvySF1Z7OlmwRtjtxKZaet4/pr7hfLICn3/EGPuDGhKkbEZnCQ4K0PL1i0j/V8ANa/Uxicg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6783
 
+Hi Peter,
 
-
-On 10/6/25 11:44 PM, Peter Zijlstra wrote:
-> On Mon, Oct 06, 2025 at 08:51:27PM +0530, Shrikanth Hegde wrote:
->>
->>
->> On 9/10/25 9:14 PM, Peter Zijlstra wrote:
->>> As proposed a long while ago -- and half done by scx -- wrap the
->>> scheduler's 'change' pattern in a guard helper.
->>>
->> [...]>   		put_task_struct(p);
->>> --- a/kernel/sched/sched.h
->>> +++ b/kernel/sched/sched.h
->>> @@ -3860,23 +3860,22 @@ extern void check_class_changed(struct r
->>>    extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
->>>    extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
->>> -#ifdef CONFIG_SCHED_CLASS_EXT
->>> -/*
->>> - * Used by SCX in the enable/disable paths to move tasks between sched_classes
->>> - * and establish invariants.
->>> - */
->>> -struct sched_enq_and_set_ctx {
->>> +struct sched_change_ctx {
->>>    	struct task_struct	*p;
->>> -	int			queue_flags;
->>> +	int			flags;
->>>    	bool			queued;
->>>    	bool			running;
->>>    };
->>> -void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
->>> -			    struct sched_enq_and_set_ctx *ctx);
->>> -void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx);
->>> +struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags);
->>> +void sched_change_end(struct sched_change_ctx *ctx);
->>> -#endif /* CONFIG_SCHED_CLASS_EXT */
->>> +DEFINE_CLASS(sched_change, struct sched_change_ctx *,
->>> +	     sched_change_end(_T),
->>> +	     sched_change_begin(p, flags),
->>> +	     struct task_struct *p, unsigned int flags)
->>> +
->>> +DEFINE_CLASS_IS_UNCONDITIONAL(sched_change)
->>>    #include "ext.h"
->> could you please add a comment on matching flags on dequeue/enqueue
->> here?
+On Mon, Oct 06, 2025 at 12:44:03PM +0200, Peter Zijlstra wrote:
+> As proposed a long while ago -- and half done by scx -- wrap the
+> scheduler's 'change' pattern in a guard helper.
 > 
-> Would something like so be okay? This assumes at least the second patch
-> is applied as well.
-> 
+> Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+> Acked-by: Tejun Heo <tj@kernel.org>
 > ---
-> 
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -10783,6 +10783,12 @@ struct sched_change_ctx *sched_change_be
->   	struct sched_change_ctx *ctx = this_cpu_ptr(&sched_change_ctx);
->   	struct rq *rq = task_rq(p);
->   
-> +	/*
-> +	 * Must exclusively use matched flags since this is both dequeue and
-> +	 * enqueue.
-> +	 */
+...
+> --- a/kernel/sched/sched.h
+> +++ b/kernel/sched/sched.h
+> @@ -3885,23 +3885,22 @@ extern void check_class_changed(struct r
+>  extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
+>  extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
+>  
+> -#ifdef CONFIG_SCHED_CLASS_EXT
+> -/*
+> - * Used by SCX in the enable/disable paths to move tasks between sched_classes
+> - * and establish invariants.
+> - */
+> -struct sched_enq_and_set_ctx {
 
-yes. Something like that. Unless callsites explicitly change the flags using
-the scope, enqueue will happen with matching flags.
+Not necessarily for this patch, we can add it later, but I kinda liked the
+comment that briefly explained how the context is used. Maybe having
+something along these lines could be helpful?
 
-> +	WARN_ON_ONCE(flags & 0xFFFF0000);
+/*
+ * Used to ensure the correct sequence of task state transitions, such as
+ * switching between sched_classes, changing CPU affinity, priority, or
+ * updating the queued/running state.
+ */
+
+> +struct sched_change_ctx {
+>  	struct task_struct	*p;
+> -	int			queue_flags;
+> +	int			flags;
+>  	bool			queued;
+>  	bool			running;
+>  };
+>  
+> -void sched_deq_and_put_task(struct task_struct *p, int queue_flags,
+> -			    struct sched_enq_and_set_ctx *ctx);
+> -void sched_enq_and_set_task(struct sched_enq_and_set_ctx *ctx);
+> +struct sched_change_ctx *sched_change_begin(struct task_struct *p, unsigned int flags);
+> +void sched_change_end(struct sched_change_ctx *ctx);
+>  
+> -#endif /* CONFIG_SCHED_CLASS_EXT */
+> +DEFINE_CLASS(sched_change, struct sched_change_ctx *,
+> +	     sched_change_end(_T),
+> +	     sched_change_begin(p, flags),
+> +	     struct task_struct *p, unsigned int flags)
 > +
+> +DEFINE_CLASS_IS_UNCONDITIONAL(sched_change)
+>  
+>  #include "ext.h"
+>  
+> --- a/kernel/sched/syscalls.c
+> +++ b/kernel/sched/syscalls.c
+> @@ -64,7 +64,6 @@ static int effective_prio(struct task_st
+>  
+>  void set_user_nice(struct task_struct *p, long nice)
+>  {
+> -	bool queued, running;
+>  	struct rq *rq;
+>  	int old_prio;
+>  
+> @@ -90,22 +89,12 @@ void set_user_nice(struct task_struct *p
+>  		return;
+>  	}
+>  
+> -	queued = task_on_rq_queued(p);
+> -	running = task_current_donor(rq, p);
+> -	if (queued)
+> -		dequeue_task(rq, p, DEQUEUE_SAVE | DEQUEUE_NOCLOCK);
+> -	if (running)
+> -		put_prev_task(rq, p);
+> -
+> -	p->static_prio = NICE_TO_PRIO(nice);
+> -	set_load_weight(p, true);
+> -	old_prio = p->prio;
+> -	p->prio = effective_prio(p);
+> -
+> -	if (queued)
+> -		enqueue_task(rq, p, ENQUEUE_RESTORE | ENQUEUE_NOCLOCK);
+> -	if (running)
+> -		set_next_task(rq, p);
+> +	scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_NOCLOCK) {
+> +		p->static_prio = NICE_TO_PRIO(nice);
+> +		set_load_weight(p, true);
+> +		old_prio = p->prio;
+> +		p->prio = effective_prio(p);
+> +	}
+>  
+>  	/*
+>  	 * If the task increased its priority or is running and
+> @@ -515,7 +504,7 @@ int __sched_setscheduler(struct task_str
+>  			 bool user, bool pi)
+>  {
+>  	int oldpolicy = -1, policy = attr->sched_policy;
+> -	int retval, oldprio, newprio, queued, running;
+> +	int retval, oldprio, newprio;
+>  	const struct sched_class *prev_class, *next_class;
+>  	struct balance_callback *head;
+>  	struct rq_flags rf;
+> @@ -698,33 +687,25 @@ int __sched_setscheduler(struct task_str
+>  	if (prev_class != next_class && p->se.sched_delayed)
+>  		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
+>  
+> -	queued = task_on_rq_queued(p);
+> -	running = task_current_donor(rq, p);
+> -	if (queued)
+> -		dequeue_task(rq, p, queue_flags);
+> -	if (running)
+> -		put_prev_task(rq, p);
+> -
+> -	if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
+> -		__setscheduler_params(p, attr);
+> -		p->sched_class = next_class;
+> -		p->prio = newprio;
+> -	}
+> -	__setscheduler_uclamp(p, attr);
+> -	check_class_changing(rq, p, prev_class);
+> +	scoped_guard (sched_change, p, queue_flags) {
+>  
+> -	if (queued) {
+> -		/*
+> -		 * We enqueue to tail when the priority of a task is
+> -		 * increased (user space view).
+> -		 */
+> -		if (oldprio < p->prio)
+> -			queue_flags |= ENQUEUE_HEAD;
+> +		if (!(attr->sched_flags & SCHED_FLAG_KEEP_PARAMS)) {
+> +			__setscheduler_params(p, attr);
+> +			p->sched_class = next_class;
+> +			p->prio = newprio;
+> +		}
+> +		__setscheduler_uclamp(p, attr);
+> +		check_class_changing(rq, p, prev_class);
+>  
+> -		enqueue_task(rq, p, queue_flags);
+> +		if (scope->queued) {
+> +			/*
+> +			 * We enqueue to tail when the priority of a task is
+> +			 * increased (user space view).
+> +			 */
+> +			if (oldprio < p->prio)
+> +				scope->flags |= ENQUEUE_HEAD;
+> +		}
+>  	}
+> -	if (running)
+> -		set_next_task(rq, p);
+>  
+>  	check_class_changed(rq, p, prev_class, oldprio);
+>  
+> 
+> 
 
-A mythical example:
-scope_guard(sched_change, p, DEQUEUE_THROTTLE)
-	scope->flags &= ~DEQUEUE_THROTTLE;
-	scope->flags |= ENQUEUE_HEAD;
-
-But, One could still do this right? for such users the warning may be wrong.
-
->   	lockdep_assert_rq_held(rq);
->   
->   	if (!(flags & DEQUEUE_NOCLOCK)) {
-
+Thanks,
+-Andrea
