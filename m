@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F005323370F
-	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 19:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA29042A80;
+	Tue,  7 Oct 2025 20:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759864507; cv=none; b=hnl8odeuvilo2nEAttnhelxxHkzoo2vC4drlA6KYh1+SsFtB9wp9SXS++hwdc7ow/lyKZ8Cj3M6kRTNWFqx0erywVVRcdblU+FqC2U4x+ngSNQnIAXtrjb/BIe8RV369mxex7qQN/zjbN5VJrlgQmjhxOOm771P/GVF+zEQte1s=
+	t=1759869848; cv=none; b=qqLcJXxPU4lI8sjr1JItT52JP6T0OFUhbw4UWONouyI99QTOtT2B3lykhD/9tA2LtUandvPUetqW3PC1QsjvZcuYDNFuA9AF1W9clzYJM5n9nK+zXrCmbMvU5p/gtCK1LJhLEEn6FAc0319JcU/HZ+gs1xjYIBP+zmaex93yIj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759864507; c=relaxed/simple;
-	bh=VyyF5rzqOmescBTk14qOJ1qFTsw19uhHghX2+3rxGE8=;
+	s=arc-20240116; t=1759869848; c=relaxed/simple;
+	bh=zTa4e6WH7DBvW/Pu4qXQlmyCPUVs15E3RIqGPwcCq3w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G3dZdi1hGSy/4FqbI1m+FG2egIB9c7iMFFuAsUjeaCJTzkwl6zsRVX2WAQmfg9AVR/K6Tp9ogVeg2DCIlW3Xvl7+OCBUKmGOHTDNVHBm/dxHxN7C5KZRW3VssClYG8RpfJhP8k0MsmvpjDrepr0lJk8vXNgqHlmmGSm0+ApgcbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vQVIB23P; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=kVK4u0/gbT//dnecQ/Hwh+U7xmTZlbOXzF5DEXEMPgrY9ZUTBHglKVjbC6ZJIbRKjXLtqJnlTKD7/1qAF/WvSen/9WA2e+/BRIqOfMdTz2FKHRppt4xUG7qLNo6PPripGfGQMEQV3tLzylYSFYwKy1R5QrI5WCjG+HzKskrJJWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lz6Zrtqk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vQVIB23P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D80C4CEFF;
-	Tue,  7 Oct 2025 19:15:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lz6Zrtqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0DDC4CEF1;
+	Tue,  7 Oct 2025 20:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759864506;
-	bh=VyyF5rzqOmescBTk14qOJ1qFTsw19uhHghX2+3rxGE8=;
+	s=k20201202; t=1759869845;
+	bh=zTa4e6WH7DBvW/Pu4qXQlmyCPUVs15E3RIqGPwcCq3w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vQVIB23PtcUg4OjEZxJjb9l9KG60X2z40QIWJm1C4uFAbpe8F/h9JOoitnH1aDndq
-	 jd5bMLka/1G823eXTnWDaMXN5j2ctiJ0zIjTm8rysgXa6XKzaPk2NTOXiQuXy9R1HG
-	 g9UMPoZEg2qjG3S/aM2RbTYi1KAuKY50U3tfGFB4Dnvac/oDtU96Ok4ugWc+vlF43f
-	 2DmfV0LswhtmEYQT7shLCS5JwMx9IKATWrA+jvkLUAC5eySZWwWCy60KMP1DSNNgtK
-	 uieSuMqP2uci2ZjUdV1tTj5VDXIoCFb3O498L1CEua4IZ1rsSaMc9wXGfnwu6UCksG
-	 /iaY/OmpIm0GQ==
-Date: Tue, 7 Oct 2025 09:15:05 -1000
+	b=lz6ZrtqkwAZKmO2fxsKgLuTRc2rbEsGRiyTibZZvkQT6KXrT3gEQIakzn/Hn4ZDGr
+	 pp7veliee33E3TpSPaM5D/lu4gry9E1OMPRm8V0Hsq3AnF6LSq+S5wLI3BhLKlvIl6
+	 jq7MY/pIz2UX1ON75mVTH/TM2nXYUTb2Dsg+CAQgi/R5NkR/AfUFRcdkKHZnDoCXa5
+	 J5wVGZxk/man3U6XnnEM2ABu7A+scJdjleuW2Xqyz+am7gW2yXL3sCBe+Mo2mx0Jti
+	 GvLbN6zAsLU+vmcd+QBigCWRY+mDHBLu2KhM8jws/lx+2X+gKGW5ZOVC/Zk3Wiwb26
+	 OOw/bUnyC7yeQ==
+Date: Tue, 7 Oct 2025 10:44:04 -1000
 From: Tejun Heo <tj@kernel.org>
-To: zhidao su <soolaugust@gmail.com>
-Cc: sched-ext@lists.linux.dev, zhidao su <suzhidao@xiaomi.com>
-Subject: Re: [PATCH] sched/ext: Implement cgroup_set_idle() callback
-Message-ID: <aOVmuWwyLUNkPG7S@slm.duckdns.org>
-References: <20250930061045.743507-1-soolaugust@gmail.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: linux-kernel@vger.kernel.org, mingo@kernel.org, juri.lelli@redhat.com,
+	vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
+	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
+	changwoo@igalia.com, cgroups@vger.kernel.org,
+	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
+Subject: Re: [PATCH 11/12] sched: Match __task_rq_{,un}lock()
+Message-ID: <aOV7lHUhn3BnViKT@slm.duckdns.org>
+References: <20251006104402.946760805@infradead.org>
+ <20251006104527.813272361@infradead.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -41,24 +48,13 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250930061045.743507-1-soolaugust@gmail.com>
+In-Reply-To: <20251006104527.813272361@infradead.org>
 
-Hello,
-
-On Tue, Sep 30, 2025 at 02:10:45PM +0800, zhidao su wrote:
-> From: zhidao su <suzhidao@xiaomi.com>
-> 
-> Implement the missing cgroup_set_idle() callback that was marked as a
-> TODO. This allows BPF schedulers to be notified when a cgroup's idle
-> state changes, enabling them to adjust their scheduling behavior
-> accordingly.
-> 
-> The implementation follows the same pattern as other cgroup callbacks
-> like cgroup_set_weight() and cgroup_set_bandwidth(). It checks if the
-> BPF scheduler has implemented the callback and invokes it with the
-> appropriate parameters.
-
-Can you please add tg->scx.idle which tracks the current state?
+On Mon, Oct 06, 2025 at 12:44:13PM +0200, Peter Zijlstra wrote:
+> In preparation to adding more rules to __task_rq_lock(), such that
+> __task_rq_unlock() will no longer be requivalent to rq_unlock(),
+                                       ^
+                                       typo
 
 Thanks.
 
