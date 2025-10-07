@@ -1,262 +1,105 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA564316E;
-	Tue,  7 Oct 2025 16:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187011D432D
+	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 16:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759855671; cv=none; b=BVP4CEPLZK3zyGmvDURC1U/sRo0Gq1CkusqxtJt+z1fkluSif1WUbN0OuR33aYPXKZdj+9ulOMh2qJntXU2AvBJgfQMOcCwVfwjq9J1jOGqsMXTwCkSujhlWsfsCuzznXaOteDacyCRFfuRj3aySTbhiEYSro83WSlUiDEyCMLo=
+	t=1759856332; cv=none; b=Lqy+TBxnAilk+UmG3XCr4vC8GwzsWyv32P2k1NR5fV2IPwYMwaY2o3i5GMFCx5sY5XwKHsUtBoGk9PKZJ6vy0ollHevYvyePQDXlmcS9Rupae3sir2Dgnu+2lcONZtslkaZLpG8BdlORrtopOk1bx7/Uj5WWghpmfcFYXCW1Skc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759855671; c=relaxed/simple;
-	bh=AnQPvORkMfFIrLtm1OwQcGJ4F1LisjXo4BbSMM2PHG0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A4/TE6mehR+iLeOM3SUZEfDMVaI9mT1qZzlqKqtjyvT1VCKUOuLLVfUtQ6V0UlIGzzqCg/ZzTwOC73WaZF5At1A1x9XXw6Th3KLcV38xFSNYXkvz2yQTfPps4H8TONzCUJs2KTdv104OYPDgD7rp2k+yojPmATh14Yio1cx7qBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=P82dITe/; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1759856332; c=relaxed/simple;
+	bh=jGRdwrk0WiFSH1LDOpIbZJ7IaN2969IhOnXv8zywGVI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cj+rN3ncXVl9A/lrbHZmI4XJ+pHwwWuzUIr+DVEWIElEAE4O0hs0Jb8H22HIK3J9jwB8V028lyLF1L+nbIIkVBfWqOs7haCJKiO8/LBCgungydl56SWKOaA/WJ1cp9vXiKiRJOHPtjOdq5A1sclM2SfHzM+YYMu2FDT+rELc9Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=X3IUhfCl; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="P82dITe/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=+Q6kuk1BSWKuld3b7wnE+3xvam0vxOKcqnOWNWJle5I=; b=P82dITe/i8/v/fY7qNgH9OgwIg
-	39RFEZQreiQ5sqgESBWN4TdCa3PIuQB9MF/bDiZ8ySyOuLsNgR0TJjUWQtv2Y83+wjoxtuHKnQfxC
-	JlRAznTnqQrqEhW7bpIciohif4JTny8z8FjgHKd9niD+yLcMAHgBhCv2Eh713t45RJClNIbhgRQ+s
-	nhvkqsJDUdPErrYKdmq7XLu9TF8dLfD+6T4W0bFF2d+QFLVOm3k5+n0OJO3rIDWAh3yvhNQD38Yf+
-	c24Lk46GFGkM/M8WH/anmh3xpHEfVOtPjlPvx755WNiLRWFYJE2RVgdhq94czwuS7JCYR0oIpeDEy
-	G8H0r79g==;
-Received: from [58.29.143.236] (helo=[192.168.1.7])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1v6Aqj-006HNs-TR; Tue, 07 Oct 2025 18:47:42 +0200
-Message-ID: <4b91c6f0-8325-4eee-9a7a-e3f78f0d550a@igalia.com>
-Date: Wed, 8 Oct 2025 01:47:37 +0900
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="X3IUhfCl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1759856330;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VI49gLtrLPJJ2pYL6x4CUqavDWlalTmVp/UAdCT3bf8=;
+	b=X3IUhfClXM97pZQeLbFqBybkdZbBHtc9m8LXq4WXaapBJhPVi3igONAbzX46OR0wIKmQGe
+	CkL5uFdXmCcO13BY5A2VbybEL0O7eZuIYT5JsKUls1wXbdOWy6kOuhpdiwl+sKcafsHnkq
+	7WcwSDU0VKaQ8WNoV8R1qT4cm7v0SHg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-61-4HrkvmqHNaetDikLfqq5ug-1; Tue, 07 Oct 2025 12:58:48 -0400
+X-MC-Unique: 4HrkvmqHNaetDikLfqq5ug-1
+X-Mimecast-MFC-AGG-ID: 4HrkvmqHNaetDikLfqq5ug_1759856327
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-46e2d845ebeso34838015e9.1
+        for <sched-ext@lists.linux.dev>; Tue, 07 Oct 2025 09:58:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759856327; x=1760461127;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VI49gLtrLPJJ2pYL6x4CUqavDWlalTmVp/UAdCT3bf8=;
+        b=e5TWLyK2zYUAIa9aokXOfxtG08eekxgGeDjUEL/FwKFfAXnFyykEnpsqZ00+dZ/xP3
+         w7Ia8SmNqcMosbPCne3GWh+n+Dms8ZxhBKWdvt/Ks2stb+RjQL3GoWILvcViN60XH+e7
+         HMDt6wTw23Be/7mXgZKupuVgycmz5gTVuggW+GcJmh0gCpAuuljVvLJ17UyC1ZMNpE+F
+         xM7XXkkp6olfTZQCN1geKygE65F+9lmXppgXLL2ARAeOvAX0iO4ekGw2IShmsxWcfDjr
+         NhL8eWLBuGoYPwLAGy2NeJLZR9zrtxBTu1PF+j+Gy+Idd3XBOSUY07kIj0b6RknwuiZh
+         nQ7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVBSfP9CPA9fwmt85zQoaQJQ00FDg0eJcm7GWnCSHl5D3AtNlDuX3Cl6CKqY/mfVoLlr1h5Zx35Od0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxH9wiiApP8rMnInEY1TWanI/PeughL6ePXtzOlcWML/6G2fyJD
+	zAZwop0zvvP9PXRANhGaswbFq+ZW1a3LPDsLx3plgg3SFZP45eHs+t2T56cVPZtIEr6bbzatRIK
+	kmo5JMusmf3ge06PvpMDMcV65i2UYATru9LPoTypv49rIbzslLwKyshoQ5EpMxw==
+X-Gm-Gg: ASbGncvRWEOdi5BcEddQe+XpwSLur/bMILgZBamxxE1Fbp4fM6bWhaKY24Mjia+x8y7
+	/YDPMrRYk4dmaI1FEiJT8L/AcXJu7m/2NvLY50VN1MWB/btnQg2PKjMI8lWbF/8y9CHyjqyu6XH
+	4YiCzqfOivVnt+IdS2G3JTc6tzVZZA/vSU8R/g8HYf1YjuAwyb03BPdKKc4DDxIaaxhWsOPmx03
+	XyP0C/fKPPx6NWbEJXiJvjX7qwUpZTyLa6CDCWF63htgcO0Lle5M9id3ZPq5YhkloFpN90TwLRv
+	G0+CW02TgYsYRlKFEKIDH/Qy6O6ofO/Ha97LAW0D1AwLoMnFC09Y2EP2n33D6a3amAr/63l6+7V
+	jPVamyAGjlXzamkatLzag939Wfdk2QE4=
+X-Received: by 2002:a05:600c:1384:b0:46e:3cd9:e56f with SMTP id 5b1f17b1804b1-46fa9a89286mr2689895e9.6.1759856327263;
+        Tue, 07 Oct 2025 09:58:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEwECPkX1ww7TuvN8jwk7t/3HaNmLFBxphplQDqgkXaFZv+r5HSiHGWEg5jQHe1bx3Y1Vl/Hw==
+X-Received: by 2002:a05:600c:1384:b0:46e:3cd9:e56f with SMTP id 5b1f17b1804b1-46fa9a89286mr2689785e9.6.1759856326877;
+        Tue, 07 Oct 2025 09:58:46 -0700 (PDT)
+Received: from vschneid-thinkpadt14sgen2i.remote.csb (213-44-135-146.abo.bbox.fr. [213.44.135.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fa2d67e97sm21615545e9.1.2025.10.07.09.58.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Oct 2025 09:58:46 -0700 (PDT)
+From: Valentin Schneider <vschneid@redhat.com>
+To: Peter Zijlstra <peterz@infradead.org>, tj@kernel.org
+Cc: linux-kernel@vger.kernel.org, peterz@infradead.org, mingo@kernel.org,
+ juri.lelli@redhat.com, vincent.guittot@linaro.org,
+ dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+ mgorman@suse.de, longman@redhat.com, hannes@cmpxchg.org, mkoutny@suse.com,
+ void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+ cgroups@vger.kernel.org, sched-ext@lists.linux.dev, liuwenfang@honor.com,
+ tglx@linutronix.de
+Subject: Re: [PATCH 01/12] sched: Employ sched_change guards
+In-Reply-To: <20251006104526.613879143@infradead.org>
+References: <20251006104402.946760805@infradead.org>
+ <20251006104526.613879143@infradead.org>
+Date: Tue, 07 Oct 2025 18:58:44 +0200
+Message-ID: <xhsmhecrehcmz.mognet@vschneid-thinkpadt14sgen2i.remote.csb>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] sched_ext: Make scx_bpf_dsq_insert*() return bool
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20251007015147.2496026-1-tj@kernel.org>
- <20251007015147.2496026-5-tj@kernel.org>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <20251007015147.2496026-5-tj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 8dpnVjPUJwHO2VXzsdQhquID-libr7YUzcS0Fcc_do0_1759856327
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
+
+On 06/10/25 12:44, Peter Zijlstra wrote:
+> @@ -7391,52 +7391,42 @@ void rt_mutex_setprio(struct task_struct
+>       if (prev_class != next_class && p->se.sched_delayed)
+>               dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
+>
+> -	queued = task_on_rq_queued(p);
+> -	running = task_current_donor(rq, p);
 
 
-
-On 10/7/25 10:51, Tejun Heo wrote:
-> In preparation for hierarchical schedulers, change scx_bpf_dsq_insert() and
-> scx_bpf_dsq_insert_vtime() to return bool instead of void. With
-> sub-schedulers, there will be no reliable way to guarantee a task is still
-> owned by the sub-scheduler at insertion time (e.g., the task may have been
-> migrated to another scheduler). The bool return value will enable
-> sub-schedulers to detect and gracefully handle insertion failures.
-> 
-> For the root scheduler, insertion failures will continue to trigger scheduler
-> abort via scx_error(), so existing code doesn't need to check the return
-> value. Backward compatibility is maintained through compat wrappers.
-> 
-> Also update scx_bpf_dsq_move() documentation to clarify that it can return
-> false for sub-schedulers when @dsq_id points to a disallowed local DSQ.
-> 
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-
-Looks good to me.
-
-Reviewed-by: Changwoo Min <changwoo@igalia.com>
-
-Regards,
-Changwoo Min
-
-
-> ---
->   kernel/sched/ext.c                       | 45 ++++++++++++++++++------
->   tools/sched_ext/include/scx/common.bpf.h |  3 +-
->   tools/sched_ext/include/scx/compat.bpf.h | 23 ++++++++++--
->   3 files changed, 56 insertions(+), 15 deletions(-)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index a34e731229de..399e53c8939c 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -5323,8 +5323,12 @@ __bpf_kfunc_start_defs();
->    * exhaustion. If zero, the current residual slice is maintained. If
->    * %SCX_SLICE_INF, @p never expires and the BPF scheduler must kick the CPU with
->    * scx_bpf_kick_cpu() to trigger scheduling.
-> + *
-> + * Returns %true on successful insertion, %false on failure. On the root
-> + * scheduler, %false return triggers scheduler abort and the caller doesn't need
-> + * to check the return value.
->    */
-> -__bpf_kfunc void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice,
-> +__bpf_kfunc bool scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice,
->   				    u64 enq_flags)
->   {
->   	struct scx_sched *sch;
-> @@ -5332,10 +5336,10 @@ __bpf_kfunc void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice
->   	guard(rcu)();
->   	sch = rcu_dereference(scx_root);
->   	if (unlikely(!sch))
-> -		return;
-> +		return false;
->   
->   	if (!scx_dsq_insert_preamble(sch, p, enq_flags))
-> -		return;
-> +		return false;
->   
->   	if (slice)
->   		p->scx.slice = slice;
-> @@ -5343,13 +5347,24 @@ __bpf_kfunc void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice
->   		p->scx.slice = p->scx.slice ?: 1;
->   
->   	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags);
-> +
-> +	return true;
-> +}
-> +
-> +/*
-> + * COMPAT: Will be removed in v6.23.
-> + */
-> +__bpf_kfunc void scx_bpf_dsq_insert___compat(struct task_struct *p, u64 dsq_id,
-> +					     u64 slice, u64 enq_flags)
-> +{
-> +	scx_bpf_dsq_insert(p, dsq_id, slice, enq_flags);
->   }
->   
-> -static void scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
-> +static bool scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
->   				 u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags)
->   {
->   	if (!scx_dsq_insert_preamble(sch, p, enq_flags))
-> -		return;
-> +		return false;
->   
->   	if (slice)
->   		p->scx.slice = slice;
-> @@ -5359,6 +5374,8 @@ static void scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
->   	p->scx.dsq_vtime = vtime;
->   
->   	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
-> +
-> +	return true;
->   }
->   
->   struct scx_bpf_dsq_insert_vtime_args {
-> @@ -5394,8 +5411,12 @@ struct scx_bpf_dsq_insert_vtime_args {
->    * function must not be called on a DSQ which already has one or more FIFO tasks
->    * queued and vice-versa. Also, the built-in DSQs (SCX_DSQ_LOCAL and
->    * SCX_DSQ_GLOBAL) cannot be used as priority queues.
-> + *
-> + * Returns %true on successful insertion, %false on failure. On the root
-> + * scheduler, %false return triggers scheduler abort and the caller doesn't need
-> + * to check the return value.
->    */
-> -__bpf_kfunc void
-> +__bpf_kfunc bool
->   __scx_bpf_dsq_insert_vtime(struct task_struct *p,
->   			   struct scx_bpf_dsq_insert_vtime_args *args)
->   {
-> @@ -5405,10 +5426,10 @@ __scx_bpf_dsq_insert_vtime(struct task_struct *p,
->   
->   	sch = rcu_dereference(scx_root);
->   	if (unlikely(!sch))
-> -		return;
-> +		return false;
->   
-> -	scx_dsq_insert_vtime(sch, p, args->dsq_id, args->slice, args->vtime,
-> -			     args->enq_flags);
-> +	return scx_dsq_insert_vtime(sch, p, args->dsq_id, args->slice,
-> +				    args->vtime, args->enq_flags);
->   }
->   
->   /*
-> @@ -5432,6 +5453,7 @@ __bpf_kfunc_end_defs();
->   
->   BTF_KFUNCS_START(scx_kfunc_ids_enqueue_dispatch)
->   BTF_ID_FLAGS(func, scx_bpf_dsq_insert, KF_RCU)
-> +BTF_ID_FLAGS(func, scx_bpf_dsq_insert___compat, KF_RCU)
->   BTF_ID_FLAGS(func, __scx_bpf_dsq_insert_vtime, KF_RCU)
->   BTF_ID_FLAGS(func, scx_bpf_dsq_insert_vtime, KF_RCU)
->   BTF_KFUNCS_END(scx_kfunc_ids_enqueue_dispatch)
-> @@ -5686,8 +5708,9 @@ __bpf_kfunc void scx_bpf_dsq_move_set_vtime(struct bpf_iter_scx_dsq *it__iter,
->    * Can be called from ops.dispatch() or any BPF context which doesn't hold a rq
->    * lock (e.g. BPF timers or SYSCALL programs).
->    *
-> - * Returns %true if @p has been consumed, %false if @p had already been consumed
-> - * or dequeued.
-> + * Returns %true if @p has been consumed, %false if @p had already been
-> + * consumed, dequeued, or, for sub-scheds, @dsq_id points to a disallowed local
-> + * DSQ.
->    */
->   __bpf_kfunc bool scx_bpf_dsq_move(struct bpf_iter_scx_dsq *it__iter,
->   				  struct task_struct *p, u64 dsq_id,
-> diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-> index b1c2a0dde76e..522c90d0ced2 100644
-> --- a/tools/sched_ext/include/scx/common.bpf.h
-> +++ b/tools/sched_ext/include/scx/common.bpf.h
-> @@ -62,8 +62,7 @@ s32 scx_bpf_create_dsq(u64 dsq_id, s32 node) __ksym;
->   s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags, bool *is_idle) __ksym;
->   s32 __scx_bpf_select_cpu_and(struct task_struct *p, const struct cpumask *cpus_allowed,
->   			     struct scx_bpf_select_cpu_and_args *args) __ksym __weak;
-> -void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
-> -void __scx_bpf_dsq_insert_vtime(struct task_struct *p, struct scx_bpf_dsq_insert_vtime_args *args) __ksym __weak;
-> +bool __scx_bpf_dsq_insert_vtime(struct task_struct *p, struct scx_bpf_dsq_insert_vtime_args *args) __ksym __weak;
->   u32 scx_bpf_dispatch_nr_slots(void) __ksym;
->   void scx_bpf_dispatch_cancel(void) __ksym;
->   bool scx_bpf_dsq_move_to_local(u64 dsq_id) __ksym __weak;
-> diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-> index e172de696f99..33c26928f4e9 100644
-> --- a/tools/sched_ext/include/scx/compat.bpf.h
-> +++ b/tools/sched_ext/include/scx/compat.bpf.h
-> @@ -196,7 +196,7 @@ scx_bpf_select_cpu_and(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
->    * Inline wrapper that packs scalar arguments into a struct and calls
->    * __scx_bpf_dsq_insert_vtime(). See __scx_bpf_dsq_insert_vtime() for details.
->    */
-> -static inline void
-> +static inline bool
->   scx_bpf_dsq_insert_vtime(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime,
->   			 u64 enq_flags)
->   {
-> @@ -208,10 +208,29 @@ scx_bpf_dsq_insert_vtime(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime
->   			.enq_flags = enq_flags,
->   		};
->   
-> -		__scx_bpf_dsq_insert_vtime(p, &args);
-> +		return __scx_bpf_dsq_insert_vtime(p, &args);
->   	} else {
->   		scx_bpf_dsq_insert_vtime___compat(p, dsq_id, slice, vtime,
->   						  enq_flags);
-> +		return true;
-> +	}
-> +}
-> +
-> +/*
-> + * v6.19: scx_bpf_dsq_insert() now returns bool instead of void. Move
-> + * scx_bpf_dsq_insert() decl to common.bpf.h and drop compat helper after v6.22.
-> + */
-> +bool scx_bpf_dsq_insert___new(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
-> +void scx_bpf_dsq_insert___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
-> +
-> +static inline bool
-> +scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags)
-> +{
-> +	if (bpf_ksym_exists(scx_bpf_dsq_insert___new)) {
-> +		return scx_bpf_dsq_insert___new(p, dsq_id, slice, enq_flags);
-> +	} else {
-> +		scx_bpf_dsq_insert___compat(p, dsq_id, slice, enq_flags);
-> +		return true;
->   	}
->   }
->   
+I'm not sure how that plays with sched_ext, but for the "standard" change
+pattern such as this one & the others in core.c, that becomes a
+task_current() per sched_change_begin(). I'm guessing we want to make
+sched_change_begin() use task_current_donor() instead?
 
