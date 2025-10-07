@@ -1,62 +1,62 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010024.outbound.protection.outlook.com [52.101.46.24])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012046.outbound.protection.outlook.com [40.107.200.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D2D26059F
-	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 09:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087071DF73A
+	for <sched-ext@lists.linux.dev>; Tue,  7 Oct 2025 09:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759830154; cv=fail; b=hxj5oj5M+WS527xVUPlkU4yyPhz45tq/FIbdjqShurvkiHXGCAfXLu9xxFiCdh+aqOtrmqtKNrgmUe3/lJYUmfCV03UNa09WFHu29V5wL6pyL9QxdRHTWoyZhSaeCyvdvyYD5Sq/2DRU9VP+Cb2RcNVPKK74FFDtI791w7lkzHA=
+	t=1759830542; cv=fail; b=hUILit/kN06R5dt8uyHtWpvdMX2rvmDLKx3eofmgm0T67Bh5A8ZtzPMTjmC/XRvSB5lp38WPyb8O1wa/PZRZaGkcIzE9P3vMyWKC2j3IGFwIY3sDUNor+MSZkdRrqLEczwJIusuQNz3fJWzFYzz4VyEOErRBcssjtbvuci1O3CY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759830154; c=relaxed/simple;
-	bh=YqWaAbFQQomSdHASdjSzY8jiWRPEIUl1E6suoIW8ESQ=;
+	s=arc-20240116; t=1759830542; c=relaxed/simple;
+	bh=0gaMXazfsEwaE0/R5+yNNpiOErWxHg9nYrKW0hJCzdE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ByvFAnnhuVdXrFG/CYiSITGx2fGgJ/HWfilx+NpqRdf8NoY3OoYMtDW/wOpOfAarTHOu/O/PnqeBiBu7w+6IG6d9PUcXAg/An4S4+gJxyIlxFWueX6cEgzSFQAvN+Exi1wq52cIodh/UgL0rOQy3bB5y3BsvWIGhVamw2ytZ1uI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=WQQsqtut; arc=fail smtp.client-ip=52.101.46.24
+	 Content-Disposition:In-Reply-To:MIME-Version; b=cMIAwN6Ju2iXC1DpXsSVTiauSOafurqAVVJweinR1kShQgnxdd53J667ncAMsasUTVYR/BaU8eEOP4qEa6RI0DDbxiyX4Q8lWj3fZb5QPLmr2oeOJe+bP00T5rAci+JPXjjaC60kYjRb4pT5aqXOx+xyKetfkf42Sj/Gd9pUBWw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LHGZaBTp; arc=fail smtp.client-ip=40.107.200.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="WQQsqtut"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LHGZaBTp"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uGkSvpFG2/dbwy2dQur4psuYPG292U/scHMxvnvfNaVULFg3l9+qr00wK8BbwbMsMccwPTDWoZopHCiZBy4OZ6VGRQpuOb/ejFsFOzoweYxIQYYa2oytMzH4eU7INuiTtUji+miImdky6Q7AjGAn2uobhUGJE69Vs7WycbqCZ91H6pB2t2TucfylW3S84mGExWSzprOKrJdEvWSH+wB4q59NaBs4wxBqg19MklID0rnqc4I8M7ZHfmcHzDdoTn11akbpo5iwuUPxBpxGqGRfY14ggh1ez2Wr2gUiBsRYqz3Zcm5l5VgnxATBYEcFC9pKrtrLjQ6p93q2tDuJCVSubw==
+ b=zF9HE3tTdRvgYXcf+xF6f6Uj7Cqi8UJvghjlpeMA579BcsWbYxQH0/EZw8kQgA4zUCk7D/0JXWeboMYOkn92nOkRGKTuTBipadaxASdirVH53RNORwmdnAc7cyW8Ax8m8Ecw9JRSPA+n98foSvlwGZWwrURUD/MF9GxSe9ExbN864x3bj5F1ojQi1K4kqADbs7F2k3KrqaW1WIuDr62qUY9HC244el+VSqpv1veSAGc7AFDG6d5Crl6nCqP5jEOZv2zwun1ncwj5aAQoZ/XbH/zx52A/v96vcAaYSHNqOfP4K4/Vtn45Y7v5z4xTZeYC0jMzf5KiCZtstMVw1xso2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Wwv/J1qSzIlFmqSIv1rzbTToAIMRRUlTUw5hDWPIgPc=;
- b=XBleRopO7X8vA1l8U3vB5jOfWBnr3KNAQs1qt8/P2gHK2fzs9GLgF/o7QsCN4jsuIeiaUG4ubmc8rWEyEowK9HYCsym3fuPasqszro27XosAPmE/9P5VDE86XPMmaFK87GpbzFm3ZTOd47q16MQMJj7m6/xHqnEMKK+OZlaorIrevLI931UhPh7CcG7t21KcjI3oM306IgFRZObD7hE7WofIlfieB7UFuE7InOfT48saV3e10z2iqM4/qrB6OEhAnD/IxVnZyvdzTE/e+coyrCqbi1VF8TqfR26xHOq+XcPUykslyJCz7rcBNKtngrbFDPTMlTdPY9f+Hje10dRJ9A==
+ bh=hN0wie9AgzjmKddpGhZfRGORk5b8eGxKxZyF6EJ/D74=;
+ b=a1NpbwhPax02IkP6u3c1+g105iKEU36lf822tt2PaZD7i/dDrzmahnohPVcV72WbNRBNIY4kKoNKF2AQPnwXWhBRKUiayjt0ZsLR3xMMUlKfFeCia+aE8+Uw9y4YoDjXnvh1dgpPIkgJjUveq36hEEB1eSPES4+rR+uS081Rr1pVSmnctx6sX4fMUKedW8yjSVOBLnbF8SbZBGabj+l47nMjCDH0ixIxR9v4SXuWEsUAoKg8XgsTrxr3oLeQuR85zZ6BgzhiAgUGQ7MaL/RibHhvNOTdqf0VNC6JebwJdGWALZAxqkJV3qRkknB3h1aNC3z9xdbjE3TA91H1yWqGfg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wwv/J1qSzIlFmqSIv1rzbTToAIMRRUlTUw5hDWPIgPc=;
- b=WQQsqtutLM10bRV/NJH1e/LCGxjfJ/8VsWlTBn+ORZ9bhgvTsxK9FJEzVbKUxjyDvScO2WW5QgSZFExfFuXluO9GNmF/cp5fXa4QgOCt2s1lzpH9xRAGjlld7KiZI811HmO4ewKA1i4lwUxXadrbgahO73F2v9vjevldbmoFSbfGkpC+qWhgRuToMjuGpjbskB1434gR3D5JFlsjjy3fHXYzgSlakgdTLnbOdhal9pziBI46sBuvNu9Tw2580CL2wYRvteC6yUkdU1c5Vvb78zVSRTjbwRZ7vSIGsEoGhw6aVFN9DoH7F0FSuH2jVLM2aaI9S+KN6K22SIWCR2DJEQ==
+ bh=hN0wie9AgzjmKddpGhZfRGORk5b8eGxKxZyF6EJ/D74=;
+ b=LHGZaBTpKoRN6xB/quRcuesI4SvLLNnl1fzTvv93ihc3u3LKRI0ueAHRVbABidoMdhhkkVKbZXIOUdp93RyVcmTusFsfof/UKY7/37buulLbm4bx5Enh635PkdLHIHge/SXRRAZbdt2HPXIV68D+HthMBbO+posVsEbwxnnzkvp9C0RV9lHlhdPiLxTNiprM6SxdZLdIQc53+xpklF8sVgsf0fMLY4Fyr96RwRTdRfQZ42dOEpHgj7yBG2a1zxdH0bobrPwydqAhvsRZKiaAACcOdhAzukCmeBpsjcPZzOlZ5VOxiw3Rm9uQ2bFoSvLjZnNtIoMcLkudIhCJOi20kw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA1PR12MB6554.namprd12.prod.outlook.com (2603:10b6:208:3a2::15) with
+ by DS7PR12MB6167.namprd12.prod.outlook.com (2603:10b6:8:98::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9203.9; Tue, 7 Oct
- 2025 09:42:25 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9182.20; Tue, 7 Oct
+ 2025 09:48:52 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9182.017; Tue, 7 Oct 2025
- 09:42:25 +0000
-Date: Tue, 7 Oct 2025 11:42:17 +0200
+ 09:48:52 +0000
+Date: Tue, 7 Oct 2025 11:48:44 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 1/4] tools/sched_ext: Strip compatibility macros for
- cgroup and dispatch APIs
-Message-ID: <aOTgeakQYcCIk-QO@gpd4>
+Subject: Re: [PATCH 3/4] sched_ext: Wrap kfunc args in struct to prepare for
+ aux__prog
+Message-ID: <aOTh_PAGkX9y2Tsy@gpd4>
 References: <20251007015147.2496026-1-tj@kernel.org>
- <20251007015147.2496026-2-tj@kernel.org>
+ <20251007015147.2496026-4-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251007015147.2496026-2-tj@kernel.org>
-X-ClientProxiedBy: MI1P293CA0005.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:2::12) To LV8PR12MB9620.namprd12.prod.outlook.com
+In-Reply-To: <20251007015147.2496026-4-tj@kernel.org>
+X-ClientProxiedBy: ZR2P278CA0086.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:65::16) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -65,307 +65,245 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA1PR12MB6554:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44210565-8ee3-40fc-cf69-08de0585d224
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS7PR12MB6167:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2dda6b80-7b3e-4f2a-af5b-08de0586b8d2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?KHBtxdylD7Cv82jxNOJQ33oTnIyJ+aPe83AfUqC0ywm+hkRMgWfPrW8wc11d?=
- =?us-ascii?Q?H5WfnYNnq/j1MLix16xA9KCm9/oP2paDVZReRN5wWYxvyA37h+GxWLeSUbld?=
- =?us-ascii?Q?XHIhHcqBCoEAXRNUnx22jPRsAEOruiR/GFQfEB+JYULySQitsBAN40Bg8gXe?=
- =?us-ascii?Q?0z4ImxAizuOUHegKi24OZZJ1HTXafBIwb+5cYGRas6d5IFC83HxHAFW3ckPY?=
- =?us-ascii?Q?FGkG5plrKAX/8tP+okS5XtHInYOroAaor7jN2wmS8ABOwXVgsVCEfiefL3qu?=
- =?us-ascii?Q?4laY//ToJTZMktHOZIiJN8iJwmMX9p+1UQe+ZvWq9eWjQXWnfMho/X+0uMkx?=
- =?us-ascii?Q?Ni6FvLuDAH/MEsSsAknpOYOYH4tMRzOhtoH6R6879vXHJbo2nic7aWVsznf+?=
- =?us-ascii?Q?jbXgZxzz+tGpZpQxUbQ8TG4xBCMQbLBswOHw6jo72DAeD529S3F6ECUvM3yf?=
- =?us-ascii?Q?h+aGB0yx1kJGvehvtB54U83VhbGbaj8rYDHmhhiA6Rcr7pz+GHhBHhzetgIq?=
- =?us-ascii?Q?3lNMMIMiAdayccvgI8R3VkDHS3KWUQg1bkaQSBwpmpJcgsJduFIA3/96pKAo?=
- =?us-ascii?Q?PQWUPGhCqj5lCrojZWiWTj/drrsDwt+JjB26hGMQmbUA61jaxxCZcbO/ueHL?=
- =?us-ascii?Q?YCC01WfVNSl9OeWinNIb5wr8wjAovvHHcYgIbDkKDCXSac9yMSQaIJTn/s23?=
- =?us-ascii?Q?iltgrr9auZfhQGm3YDsWicRYb/4J36C4bz1Q+ADSYZrbASpCXmvOXYWrD3Lm?=
- =?us-ascii?Q?59wCwr3D93SLbsmGsOi39p+SbinfDSUA3ShG5Uj/HZCChB5DjCILfnhP7DOB?=
- =?us-ascii?Q?yHzHZygeTLouSCEymCGal18Lu0jUu6eT6IP06U+UqzrAN8An5zjJsHYp1i2x?=
- =?us-ascii?Q?Be4zefksFRRyj9LVfJgRTY1FG5DH7zsxtzIFk79zap6a76OpQYVWt1GGtel7?=
- =?us-ascii?Q?Y0k2HJm2Q4sd/VXUA08zh1J3JOW6lq1cekqZrI2MFVhihEguOK4i8lkw0i5Z?=
- =?us-ascii?Q?ljkSd39GTZyG7h10MSRv6oFaALg+TQPI6WWNQIcx/HC7aG7gjYPpKa/lVOcn?=
- =?us-ascii?Q?/FjX2pIU0hEPJzIhy2cUDiKL+T4/HCy//e6o+aHUO7E4QmVskYv42mbYHI42?=
- =?us-ascii?Q?Ycn8jxSpI0eJABZgRQCBvAyva4jywdKNRHxkV3sbGBiMIBJDPteQZ1tzTW2C?=
- =?us-ascii?Q?sX19ZoF03jUVDcyPgTapKwB6kSjHJkRrY70dgvLm04B7zxCcXhX6WWdv6dAX?=
- =?us-ascii?Q?/rzii67FjsVyMPi/yHv+4AtrwjnQQbkfZ+3fHiRfZqE6PXV74buyLfnHSz6m?=
- =?us-ascii?Q?+HSh2dpVt/ZYNVHcIA2jCEGWs022K67BO07xfLZYpvlO9Cupx3rvN4M2Jil7?=
- =?us-ascii?Q?Z53Jj/+fbChf51hpWgh+KVF65EUr/e19zorEK6gQ0fL2KL2WchwuoaMQi3wV?=
- =?us-ascii?Q?DrPPJyRpWmpAZfJKnoe5fz33AKAyXNrL?=
+	=?us-ascii?Q?Mwck1RkGIhW8tRxF2gjEAmvDXK13OBP8FCD9346R6oIGLDw/G0kMeEFDAGil?=
+ =?us-ascii?Q?uAaNhulVHXvHyGT5U3+qTjvIiCO1QeX6/O4f50xbT2qn4WUJWDL+Favi68m5?=
+ =?us-ascii?Q?ISO7mRBnLpvAh7wPoLlSAigQcdOv/jGkaEBstukDAtz+pguqb4krigjqz83c?=
+ =?us-ascii?Q?BRgZcEGgJuTREqnnMRYWZCKcz1f5Bguklx8OPdmG1X8Nf+g0Phy1TZsr/7IU?=
+ =?us-ascii?Q?yFNT4RFi0u6FO+0p4fM1wHiTf8u38+qjUmhUc5Ab8zqnsvQV/3ZJoo6NT0FW?=
+ =?us-ascii?Q?cWVjJJOLhd5pxIN9KhJHg6ZGuGxFuzAfNqm3rql7Qk7U6HQQ61RbkQj4dGSn?=
+ =?us-ascii?Q?AiXSN7l8SYEw1kuWPgCMZWMBw1QSI4RvrnwydZpW6kBkTe1UM8T3a+SFioSV?=
+ =?us-ascii?Q?4zHQoJkh90HH4spLF5Spmm6zpAkze9pU20hvgUI02JAd8qoOn5uKCJFtfDqS?=
+ =?us-ascii?Q?oOmU5Ih6jRwryRaMXlBaRJzlJjxrL4zezEdieVVEVMpN2oZfUZH5YcZBDbDl?=
+ =?us-ascii?Q?5+YsR5Z2xQ1aUczaGRV9jGYEFQn2fVysg9DGl8+EuiWgBiG6mVefxYPjVPAs?=
+ =?us-ascii?Q?L/2zQh5nyPkkHzGZdfO0x5uaGZNcGBiAANHgHIn4VUF1JjKUoObno35OitQR?=
+ =?us-ascii?Q?TqcuMZ8LhpIENm9bKF6GjduRXV32T/O1DTbCcRDB3MZ0VGaxJTy2jGmmePO9?=
+ =?us-ascii?Q?TWg/iojIe4z+tWQvCzS950KKuGMuj9w8U9uDNbgomjYvcvrWsDGhsfVRa62m?=
+ =?us-ascii?Q?VCUt6QGmR1DhlxaVlcJNPSEUbTb9eCJDyCBRI21SvBLCGoHhgFxv8YWP6BXk?=
+ =?us-ascii?Q?q9QJ/qjoFEmvW2gGajUwORHsNf4FLtLawXdPvM53l6HrKDyvToWByWmeFhKl?=
+ =?us-ascii?Q?Ya8T10vnVZccxKGdthMYhZiE9newUuKLv7Rgbpw03svT55q/f3Amk8MDFoJf?=
+ =?us-ascii?Q?UeRpb+F3zz4jttNNVOzCaJnIT/gIxsp6oN6XE5xFeKItrcy21Jl31qQhY2Gl?=
+ =?us-ascii?Q?OkeYYaExwYwfF0gV7/uaTBpiG2PdmeRsJZN/o6XdMBYufvUw+hZWUNG2b84X?=
+ =?us-ascii?Q?VP2K4U+YaBHR4r8YzEtFPcxQT/Obomj5NCNYtzRE/BZv4B37PreLMfTXCiCg?=
+ =?us-ascii?Q?3iDhvjL+u0DpdM12lnyxl1POeK8dUaCjKa4b+NJnolMebQOFHx7h4+Lm/BkY?=
+ =?us-ascii?Q?Rz363VbSmAFBwBvYigHY6o8iUkZM0KXXqpVmqFBRSPoojeC2xai0U3wwT8YS?=
+ =?us-ascii?Q?voWpk1fBSR2ELEWCDE5CJAJlYKRnLnn6FCuVF7A733e1eAToPEoSBCtxNQgn?=
+ =?us-ascii?Q?F3FBB7Gstg6MgfVflFVjNNqA3OgV46VNtkhmXmirUvIhZBAxEYLCHPpGaalB?=
+ =?us-ascii?Q?LpWZFjJeyV2mxJizMlZVZ/0Dl+Dq3mXsCFr8IAxq4CO7lljIoWX53JbT+5/h?=
+ =?us-ascii?Q?KB3gldRP8lwZynYurz6KIl8AygjZBz0o?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7053199007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?30C/Nvg/8kSRXwb5nwPbthmJD9iM9M5PQch9pMiZhnHcxsigfty35CDFj820?=
- =?us-ascii?Q?2r8ioCvwcr86kcbXHKaChwKW8awWjYN5JveOyxUPX+lRMYHhm/8XMTsgJyyH?=
- =?us-ascii?Q?LBlc6GzGeN3/JuK3cAJa7iOzbXYDB5hrqcg4XQTzht+6QFqKNw7sda+iCCA+?=
- =?us-ascii?Q?5v/Rvhbne2iFBZTmVbWD5auIyB2ax1dC8DOFUYVJQy3hYFruRxWG1a5psRgX?=
- =?us-ascii?Q?+IB3ypw6hZYbyZ0tqRa4LBDx6gRfzbZv06xQ+BDJrjoNoyDzYW7qw6PPUeTF?=
- =?us-ascii?Q?CcfxdNTBYSAsBx947Qoio/jNwTzhVphf5UePmO8sowjPK3OpeCXlwqBehqiz?=
- =?us-ascii?Q?AF/G7AhciqvB16xxEekph/ukT/WzXiqQQyIbmeb/hfEiENssZUnJG662D+Ik?=
- =?us-ascii?Q?qyxarhmS5i1obSTDRp5Jyo/ndw884xylMnIUhXa6pVBFjCDCNA4Wlwl0CUSb?=
- =?us-ascii?Q?f8Rl21K9KuLqWwBC2uRVx+1lFczknzBkkpAOkCjiXO3RyyUWOs0ppm1adeL2?=
- =?us-ascii?Q?SYHXnWqZBSl+PfJDK6iv4Qv4VfynEIrC89FZUN971654EHTnlUHo297eBNIb?=
- =?us-ascii?Q?gIUoB3DyB1BMab5uIN568/Bq/hAVQgnX/KZpWmF7kFHA5a8QKkzkGQhzxuee?=
- =?us-ascii?Q?C5/zXtH3R2VszTFOnrimiFyBJAiBEItP+L/ycZFfhahGIkBbKN57wS10/iPt?=
- =?us-ascii?Q?LOpjiLvUOCpKo3wngIGpvQ8OhVmCJklUatzR/xV5j9vqvSj0p3zbMaEy491o?=
- =?us-ascii?Q?zLmBUymIoUv6eqqxcSnQa9Z3Zt8pwVEG1Kz/JHJcEZXIopq6SIAyTqH5pZ7g?=
- =?us-ascii?Q?FnP9LXMB/tGUWQQNupcNH2y3wLnT7FDt2gZqoC3CVG+aLtEMj6ObZ1u6VliA?=
- =?us-ascii?Q?CiCW+EZe+z81mjQsHLQaJqf9pgzPC7qCRgLKaXEKT2Jl7fQIjTsMzCHF1YQW?=
- =?us-ascii?Q?fVHQaI7YheTfVtaqTcLNWjdmcChJcXl+aRycAKbMzmVxRgDxidDwSZRRx9rx?=
- =?us-ascii?Q?CeWf5RThnNsR12K73+9Q0kARJcFpUxPCie/Eg/1cTqcZb2mMfoIY2Q+0cmNP?=
- =?us-ascii?Q?FjN7A58oYCNgFt44ptJTV/PQLFetVMXJPGrdKtFRqXkYT5SoEniJ+lRUEN56?=
- =?us-ascii?Q?kn4uO9GspB5y6xLgRmCglQS8H5GBgq7ivjYtN1KKLfXszejcA+IMF6d4LLXg?=
- =?us-ascii?Q?rKZasgipzcMoIaIksNk5tN1TI5GtFco1dzE56ZPnkZFgM+wZ3NXFrU5W/3mS?=
- =?us-ascii?Q?BqFGAfvGVkz+wcSXwo+0XxFGyZc0AAlhb5FR92W8qvgigI5LVrRnzOr2Owlw?=
- =?us-ascii?Q?cw9ypL2X31IhyKURS0TetEQy6/ZErSCyy6s0Zwm5i8Z9HLRhIxJqZNxsr1uK?=
- =?us-ascii?Q?/E38oM4Yi0k+GYLriZpFz9vjade9QYV/nnd5E1Wk6BF4bF1WRZkhy8eNoUPL?=
- =?us-ascii?Q?1SGenZMNqmYRCOvg6ci1nT+BoYYAfRb3rViIwFIsS0zWc9WBcxupwIaqE2z2?=
- =?us-ascii?Q?kPSPyP3hPWtJUe4EwLS0qasSrJbZLzbmgoIQkHdraq5+eC1wllQmDM4ILRCy?=
- =?us-ascii?Q?hU8m9D3YKhQqGSmqKPPmX3aC1VYQT3ewbj+oBHgv?=
+	=?us-ascii?Q?PjmPEp/3iKZWrHP/yCgamW0dcvMU2LALkH8m6Ga9y+69mg/SmiiL54r0wfFM?=
+ =?us-ascii?Q?lbf+YkQJ+irCzd1z7G4fJeDCREppjNQVVUpyporNS0Epjerc4kqQDfMXCd/N?=
+ =?us-ascii?Q?uJGF/1syuJ/Cx2Kf7XLb8QCER2Pf7ABB0pY/bAOMVP3BnE4lpPZdLJ7rfpQC?=
+ =?us-ascii?Q?DXwqS3WQMObof8LRIIcdlQevo7vAqR8f/9+gwpWx6RnHDk28nZxWHD/Y9vft?=
+ =?us-ascii?Q?2mgcnUjyFvcb3R9C625o58rwilY4dtKG8tCSuefiIfVxbfh+3XV9kFBFMwdr?=
+ =?us-ascii?Q?45FgvI8u+OryV31I+XKDOltfgopschwKjSri6MR6JyiUYfPY8rBakcpFnyaW?=
+ =?us-ascii?Q?/0vv7eN+DwE4fJssBajLIP85pCGj2MlgmtEeo/hKptn4AiXbJfAPf8vlENqh?=
+ =?us-ascii?Q?Dx8gFXof1vxOWCCZ4oOAAra1bVeHs4qMDPquT5mtN9D0sYaZ1fq5ZEqptQ0C?=
+ =?us-ascii?Q?kPUpE+mI3tff0GtH5cECk/pSOYu3uHh7lBRVVmZKPjo8HVlFFFl0ItxIGu8z?=
+ =?us-ascii?Q?6mWvRHgRIye8gyTt2LSdt0zZK5kFzG2wL9oUl6P4bvOvfDUyplsrS7kDLINl?=
+ =?us-ascii?Q?RHExMCC+wsa2bbACcqWzsSAdjza9V3KaREiasWsnZFAPJojvnLIaUuYMaFOS?=
+ =?us-ascii?Q?kLWPA3xtjM4OvkHzgfuF91yBG+y8UX+0Bgzf9rCF0R4ACUiViIz8PEncr/cQ?=
+ =?us-ascii?Q?N5aFzXks6sI4vAwqCUvj9mN2mHCP1zW6o8vRcXkKmafzVgp8K8JMhxRXuXOf?=
+ =?us-ascii?Q?bxKsSEDRNSVGuZzT6gYTX2A+0U6aXssJAlSjhx1jZC29QOrj7GdygEI2MzDP?=
+ =?us-ascii?Q?v1cAVpivRD87xtp2gW1GDJDmv4DafwQ/uLiquSpDUVx8I5XNf0WYC/IzZJMz?=
+ =?us-ascii?Q?wL7qrilAf92R5TeX3axAlVlA3XVNOjOBU8LsG11Jyy9GVx9Pck0YZPdp5MC1?=
+ =?us-ascii?Q?icr0ORxLaQ4UGDN+eOOCkzNrz2rQlTOxBUu7oNxMbKMM1WerwbOA4k8k+2Vo?=
+ =?us-ascii?Q?U+ya4QwJgvrqJ+jl/Itze2MVdRvOeUe7G73R2YFCp5J3bEmupffSNiZi4M01?=
+ =?us-ascii?Q?ZuvoUlnwd0oJklAPbkBio8ciBwqmrlDpd1ZJUwtRWLvCUfrs1bt3Mrv3GGLf?=
+ =?us-ascii?Q?gPqISZ0ttwIoYyadK/+TOMRiomr9EoRoniMeIXFyV6GopKSsckOuj6eUSSlo?=
+ =?us-ascii?Q?23SmKCOChGk5mSZb5FBmC50IzZFeZdLCsEKOmBsFu0+vRVpHJ4SWr3SzDxuu?=
+ =?us-ascii?Q?aWAXsDgzktji0Giar9EBhs1O/3sIqdwQT6K3KrYQkR6g39r3th9Pb0h6qcmo?=
+ =?us-ascii?Q?rOvG7m0ZVmlQxJgV79Q8N9JddyYZScTj6CNRknJKZiphpARhCbErS7WabmpA?=
+ =?us-ascii?Q?XH5x5b/0rdZgk01uLP7hArp+j2AkesSuRiHX2rCKzyFmby9tR48k+Y+3Yvg+?=
+ =?us-ascii?Q?YZg+9xshqzB9fn0729MmH0pKRS4dSN3/T7J2vqAYyk2iAbkM16bqta2lNWHt?=
+ =?us-ascii?Q?McEvXPTLCM26AdXqPalc7uRLnml8K+rBNB7hifo6BDXMg1BwvJ3O0/cKVCvH?=
+ =?us-ascii?Q?yLOWP2gQkY7TfA/hN4Ipb2FpVAS/bQksqWrYpsTk?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44210565-8ee3-40fc-cf69-08de0585d224
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2dda6b80-7b3e-4f2a-af5b-08de0586b8d2
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2025 09:42:24.9719
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2025 09:48:52.0946
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XCt6AUYmNaRlmd5opkuAID5HDPh3XmsmiQB0mZWchdLM8dYFRH5kQaaoeI+0g8rRTRuaucezAVofPvVFpB6YVw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6554
+X-MS-Exchange-CrossTenant-UserPrincipalName: i7ey+wbucmznB/4YItIoSOY3Ge9RwMtL5KxZJIMYArlMaQEtlKXMCgHfDZpDFAk5mDPatmVpBdqXBv+L/t/Ijw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6167
 
-On Mon, Oct 06, 2025 at 03:51:44PM -1000, Tejun Heo wrote:
-> Enough time has passed since the introduction of scx_bpf_task_cgroup() and
-> the scx_bpf_dispatch* -> scx_bpf_dsq* kfunc renaming. Strip the compatibility
-> macros.
+Hi Tejun,
+
+On Mon, Oct 06, 2025 at 03:51:46PM -1000, Tejun Heo wrote:
+> scx_bpf_dsq_insert_vtime() and scx_bpf_select_cpu_and() currently have 5
+> parameters. An upcoming change will add aux__prog parameter which will exceed
+> BPF's 5 argument limit.
+> 
+> Prepare by adding new kfuncs __scx_bpf_dsq_insert_vtime() and
+> __scx_bpf_select_cpu_and() that take args structs. The existing kfuncs are
+> kept as compatibility wrappers. BPF programs use inline wrappers that detect
+> kernel API version via bpf_core_type_exists() and use the new struct-based
+> kfuncs when available, falling back to compat kfuncs otherwise. This allows
+> BPF programs to work with both old and new kernels.
 > 
 > Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
+>  kernel/sched/ext.c                       | 82 ++++++++++++++++++------
+>  kernel/sched/ext_idle.c                  | 43 +++++++++++--
+>  tools/sched_ext/include/scx/common.bpf.h |  6 +-
+>  tools/sched_ext/include/scx/compat.bpf.h | 72 +++++++++++++++++++++
+>  4 files changed, 173 insertions(+), 30 deletions(-)
+> 
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 6d76efaaa9b2..a34e731229de 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -5345,54 +5345,94 @@ __bpf_kfunc void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice
+>  	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags);
+>  }
+>  
+> +static void scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
+> +				 u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags)
+> +{
+> +	if (!scx_dsq_insert_preamble(sch, p, enq_flags))
+> +		return;
+> +
+> +	if (slice)
+> +		p->scx.slice = slice;
+> +	else
+> +		p->scx.slice = p->scx.slice ?: 1;
+> +
+> +	p->scx.dsq_vtime = vtime;
+> +
+> +	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
+> +}
+> +
+> +struct scx_bpf_dsq_insert_vtime_args {
+> +	/* @p can't be packed together as KF_RCU is not transitive */
+> +	u64			dsq_id;
+> +	u64			slice;
+> +	u64			vtime;
+> +	u64			enq_flags;
+> +};
 
-Acked-by: Andrea Righi <arighi@nvidia.com>
+With PATCH 2/4 introducing scx_bpf_task_set_slice() and
+scx_bpf_task_set_dsq_vtime(), would it be reasonable to use those to set
+these task properties and then completely get rid of these args in
+scx_bpf_dsq_insert[_vtime]()?
+
+> +
+>  /**
+> - * scx_bpf_dsq_insert_vtime - Insert a task into the vtime priority queue of a DSQ
+> + * __scx_bpf_dsq_insert_vtime - Arg-wrapped vtime DSQ insertion
+>   * @p: task_struct to insert
+> - * @dsq_id: DSQ to insert into
+> - * @slice: duration @p can run for in nsecs, 0 to keep the current value
+> - * @vtime: @p's ordering inside the vtime-sorted queue of the target DSQ
+> - * @enq_flags: SCX_ENQ_*
+> + * @args: struct containing the rest of the arguments
+> + *       @args->dsq_id: DSQ to insert into
+> + *       @args->slice: duration @p can run for in nsecs, 0 to keep the current value
+> + *       @args->vtime: @p's ordering inside the vtime-sorted queue of the target DSQ
+> + *       @args->enq_flags: SCX_ENQ_*
+>   *
+> - * Insert @p into the vtime priority queue of the DSQ identified by @dsq_id.
+> - * Tasks queued into the priority queue are ordered by @vtime. All other aspects
+> - * are identical to scx_bpf_dsq_insert().
+> + * Wrapper kfunc that takes arguments via struct to work around BPF's 5 argument
+> + * limit. BPF programs should use scx_bpf_dsq_insert_vtime() which is provided
+> + * as an inline wrapper in common.bpf.h.
+>   *
+> - * @vtime ordering is according to time_before64() which considers wrapping. A
+> - * numerically larger vtime may indicate an earlier position in the ordering and
+> - * vice-versa.
+> + * Insert @p into the vtime priority queue of the DSQ identified by
+> + * @args->dsq_id. Tasks queued into the priority queue are ordered by
+> + * @args->vtime. All other aspects are identical to scx_bpf_dsq_insert().
+> + *
+> + * @args->vtime ordering is according to time_before64() which considers
+> + * wrapping. A numerically larger vtime may indicate an earlier position in the
+> + * ordering and vice-versa.
+>   *
+>   * A DSQ can only be used as a FIFO or priority queue at any given time and this
+>   * function must not be called on a DSQ which already has one or more FIFO tasks
+>   * queued and vice-versa. Also, the built-in DSQs (SCX_DSQ_LOCAL and
+>   * SCX_DSQ_GLOBAL) cannot be used as priority queues.
+>   */
+> -__bpf_kfunc void scx_bpf_dsq_insert_vtime(struct task_struct *p, u64 dsq_id,
+> -					  u64 slice, u64 vtime, u64 enq_flags)
+> +__bpf_kfunc void
+> +__scx_bpf_dsq_insert_vtime(struct task_struct *p,
+> +			   struct scx_bpf_dsq_insert_vtime_args *args)
+>  {
+>  	struct scx_sched *sch;
+>  
+>  	guard(rcu)();
+> +
+>  	sch = rcu_dereference(scx_root);
+>  	if (unlikely(!sch))
+>  		return;
+>  
+> -	if (!scx_dsq_insert_preamble(sch, p, enq_flags))
+> -		return;
+> +	scx_dsq_insert_vtime(sch, p, args->dsq_id, args->slice, args->vtime,
+> +			     args->enq_flags);
+> +}
+>  
+> -	if (slice)
+> -		p->scx.slice = slice;
+> -	else
+> -		p->scx.slice = p->scx.slice ?: 1;
+> +/*
+> + * COMPAT: Will be removed in v6.23.
+> + */
+> +__bpf_kfunc void scx_bpf_dsq_insert_vtime(struct task_struct *p, u64 dsq_id,
+> +					  u64 slice, u64 vtime, u64 enq_flags)
+> +{
+> +	struct scx_sched *sch;
+>  
+> -	p->scx.dsq_vtime = vtime;
+> +	guard(rcu)();
+>  
+> -	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
+> +	sch = rcu_dereference(scx_root);
+> +	if (unlikely(!sch))
+> +		return;
+> +
+> +	scx_dsq_insert_vtime(sch, p, dsq_id, slice, vtime, enq_flags);
+>  }
+>  
+>  __bpf_kfunc_end_defs();
+>  
+>  BTF_KFUNCS_START(scx_kfunc_ids_enqueue_dispatch)
+>  BTF_ID_FLAGS(func, scx_bpf_dsq_insert, KF_RCU)
+> +BTF_ID_FLAGS(func, __scx_bpf_dsq_insert_vtime, KF_RCU)
+>  BTF_ID_FLAGS(func, scx_bpf_dsq_insert_vtime, KF_RCU)
+>  BTF_KFUNCS_END(scx_kfunc_ids_enqueue_dispatch)
+>  
+> diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
+> index d2434c954848..3d9d404d5cd2 100644
+> --- a/kernel/sched/ext_idle.c
+> +++ b/kernel/sched/ext_idle.c
+> @@ -995,26 +995,56 @@ __bpf_kfunc s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu,
+>  	return prev_cpu;
+>  }
+>  
+> +struct scx_bpf_select_cpu_and_args {
+> +	/* @p and @cpus_allowed can't be packed together as KF_RCU is not transitive */
+> +	s32			prev_cpu;
+> +	u64			wake_flags;
+> +	u64			flags;
+> +};
+
+And for this one, would it make sense to pack flags and wake_flags in a
+single u64?
 
 Thanks,
 -Andrea
-
-> ---
->  tools/sched_ext/include/scx/compat.bpf.h | 108 +----------------------
->  tools/sched_ext/scx_flatcg.bpf.c         |  10 +--
->  tools/sched_ext/scx_qmap.bpf.c           |  14 ++-
->  3 files changed, 12 insertions(+), 120 deletions(-)
-> 
-> diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-> index dd9144624dc9..d979f16a3ae2 100644
-> --- a/tools/sched_ext/include/scx/compat.bpf.h
-> +++ b/tools/sched_ext/include/scx/compat.bpf.h
-> @@ -15,121 +15,17 @@
->  	__ret;									\
->  })
->  
-> -/* v6.12: 819513666966 ("sched_ext: Add cgroup support") */
-> -#define __COMPAT_scx_bpf_task_cgroup(p)						\
-> -	(bpf_ksym_exists(scx_bpf_task_cgroup) ?					\
-> -	 scx_bpf_task_cgroup((p)) : NULL)
-> -
->  /*
-> - * v6.13: The verb `dispatch` was too overloaded and confusing. kfuncs are
-> - * renamed to unload the verb.
-> - *
-> - * Build error is triggered if old names are used. New binaries work with both
-> - * new and old names. The compat macros will be removed on v6.15 release.
-> + * v6.15: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
->   *
-> - * scx_bpf_dispatch_from_dsq() and friends were added during v6.12 by
-> - * 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()").
-> - * Preserve __COMPAT macros until v6.15.
-> + * Compat macro will be dropped on v6.19 release.
->   */
-> -void scx_bpf_dispatch___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
-> -void scx_bpf_dispatch_vtime___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags) __ksym __weak;
-> -bool scx_bpf_consume___compat(u64 dsq_id) __ksym __weak;
-> -void scx_bpf_dispatch_from_dsq_set_slice___compat(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
-> -void scx_bpf_dispatch_from_dsq_set_vtime___compat(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
-> -bool scx_bpf_dispatch_from_dsq___compat(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
-> -bool scx_bpf_dispatch_vtime_from_dsq___compat(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
->  int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym __weak;
->  
-> -#define scx_bpf_dsq_insert(p, dsq_id, slice, enq_flags)				\
-> -	(bpf_ksym_exists(scx_bpf_dsq_insert) ?					\
-> -	 scx_bpf_dsq_insert((p), (dsq_id), (slice), (enq_flags)) :		\
-> -	 scx_bpf_dispatch___compat((p), (dsq_id), (slice), (enq_flags)))
-> -
-> -#define scx_bpf_dsq_insert_vtime(p, dsq_id, slice, vtime, enq_flags)		\
-> -	(bpf_ksym_exists(scx_bpf_dsq_insert_vtime) ?				\
-> -	 scx_bpf_dsq_insert_vtime((p), (dsq_id), (slice), (vtime), (enq_flags)) : \
-> -	 scx_bpf_dispatch_vtime___compat((p), (dsq_id), (slice), (vtime), (enq_flags)))
-> -
-> -#define scx_bpf_dsq_move_to_local(dsq_id)					\
-> -	(bpf_ksym_exists(scx_bpf_dsq_move_to_local) ?				\
-> -	 scx_bpf_dsq_move_to_local((dsq_id)) :					\
-> -	 scx_bpf_consume___compat((dsq_id)))
-> -
-> -#define __COMPAT_scx_bpf_dsq_move_set_slice(it__iter, slice)			\
-> -	(bpf_ksym_exists(scx_bpf_dsq_move_set_slice) ?				\
-> -	 scx_bpf_dsq_move_set_slice((it__iter), (slice)) :			\
-> -	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_slice___compat) ?	\
-> -	  scx_bpf_dispatch_from_dsq_set_slice___compat((it__iter), (slice)) :	\
-> -	  (void)0))
-> -
-> -#define __COMPAT_scx_bpf_dsq_move_set_vtime(it__iter, vtime)			\
-> -	(bpf_ksym_exists(scx_bpf_dsq_move_set_vtime) ?				\
-> -	 scx_bpf_dsq_move_set_vtime((it__iter), (vtime)) :			\
-> -	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_vtime___compat) ?	\
-> -	  scx_bpf_dispatch_from_dsq_set_vtime___compat((it__iter), (vtime)) :	\
-> -	  (void) 0))
-> -
-> -#define __COMPAT_scx_bpf_dsq_move(it__iter, p, dsq_id, enq_flags)		\
-> -	(bpf_ksym_exists(scx_bpf_dsq_move) ?					\
-> -	 scx_bpf_dsq_move((it__iter), (p), (dsq_id), (enq_flags)) :		\
-> -	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq___compat) ?			\
-> -	  scx_bpf_dispatch_from_dsq___compat((it__iter), (p), (dsq_id), (enq_flags)) : \
-> -	  false))
-> -
-> -#define __COMPAT_scx_bpf_dsq_move_vtime(it__iter, p, dsq_id, enq_flags)		\
-> -	(bpf_ksym_exists(scx_bpf_dsq_move_vtime) ?				\
-> -	 scx_bpf_dsq_move_vtime((it__iter), (p), (dsq_id), (enq_flags)) :	\
-> -	 (bpf_ksym_exists(scx_bpf_dispatch_vtime_from_dsq___compat) ?		\
-> -	  scx_bpf_dispatch_vtime_from_dsq___compat((it__iter), (p), (dsq_id), (enq_flags)) : \
-> -	  false))
-> -
->  #define __COMPAT_bpf_cpumask_populate(cpumask, src, size__sz)		\
->  	(bpf_ksym_exists(bpf_cpumask_populate) ?			\
->  	 (bpf_cpumask_populate(cpumask, src, size__sz)) : -EOPNOTSUPP)
->  
-> -#define scx_bpf_dispatch(p, dsq_id, slice, enq_flags)				\
-> -	_Static_assert(false, "scx_bpf_dispatch() renamed to scx_bpf_dsq_insert()")
-> -
-> -#define scx_bpf_dispatch_vtime(p, dsq_id, slice, vtime, enq_flags)		\
-> -	_Static_assert(false, "scx_bpf_dispatch_vtime() renamed to scx_bpf_dsq_insert_vtime()")
-> -
-> -#define scx_bpf_consume(dsq_id) ({						\
-> -	_Static_assert(false, "scx_bpf_consume() renamed to scx_bpf_dsq_move_to_local()"); \
-> -	false;									\
-> -})
-> -
-> -#define scx_bpf_dispatch_from_dsq_set_slice(it__iter, slice)		\
-> -	_Static_assert(false, "scx_bpf_dispatch_from_dsq_set_slice() renamed to scx_bpf_dsq_move_set_slice()")
-> -
-> -#define scx_bpf_dispatch_from_dsq_set_vtime(it__iter, vtime)		\
-> -	_Static_assert(false, "scx_bpf_dispatch_from_dsq_set_vtime() renamed to scx_bpf_dsq_move_set_vtime()")
-> -
-> -#define scx_bpf_dispatch_from_dsq(it__iter, p, dsq_id, enq_flags) ({	\
-> -	_Static_assert(false, "scx_bpf_dispatch_from_dsq() renamed to scx_bpf_dsq_move()"); \
-> -	false;									\
-> -})
-> -
-> -#define scx_bpf_dispatch_vtime_from_dsq(it__iter, p, dsq_id, enq_flags) ({  \
-> -	_Static_assert(false, "scx_bpf_dispatch_vtime_from_dsq() renamed to scx_bpf_dsq_move_vtime()"); \
-> -	false;									\
-> -})
-> -
-> -#define __COMPAT_scx_bpf_dispatch_from_dsq_set_slice(it__iter, slice)		\
-> -	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq_set_slice() renamed to __COMPAT_scx_bpf_dsq_move_set_slice()")
-> -
-> -#define __COMPAT_scx_bpf_dispatch_from_dsq_set_vtime(it__iter, vtime)		\
-> -	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq_set_vtime() renamed to __COMPAT_scx_bpf_dsq_move_set_vtime()")
-> -
-> -#define __COMPAT_scx_bpf_dispatch_from_dsq(it__iter, p, dsq_id, enq_flags) ({	\
-> -	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq() renamed to __COMPAT_scx_bpf_dsq_move()"); \
-> -	false;									\
-> -})
-> -
-> -#define __COMPAT_scx_bpf_dispatch_vtime_from_dsq(it__iter, p, dsq_id, enq_flags) ({  \
-> -	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_vtime_from_dsq() renamed to __COMPAT_scx_bpf_dsq_move_vtime()"); \
-> -	false;									\
-> -})
-> -
->  /**
->   * __COMPAT_is_enq_cpu_selected - Test if SCX_ENQ_CPU_SELECTED is on
->   * in a compatible way. We will preserve this __COMPAT helper until v6.16.
-> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-> index 2c720e3ecad5..43126858b8e4 100644
-> --- a/tools/sched_ext/scx_flatcg.bpf.c
-> +++ b/tools/sched_ext/scx_flatcg.bpf.c
-> @@ -382,7 +382,7 @@ void BPF_STRUCT_OPS(fcg_enqueue, struct task_struct *p, u64 enq_flags)
->  		return;
->  	}
->  
-> -	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-> +	cgrp = scx_bpf_task_cgroup(p);
->  	cgc = find_cgrp_ctx(cgrp);
->  	if (!cgc)
->  		goto out_release;
-> @@ -508,7 +508,7 @@ void BPF_STRUCT_OPS(fcg_runnable, struct task_struct *p, u64 enq_flags)
->  {
->  	struct cgroup *cgrp;
->  
-> -	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-> +	cgrp = scx_bpf_task_cgroup(p);
->  	update_active_weight_sums(cgrp, true);
->  	bpf_cgroup_release(cgrp);
->  }
-> @@ -521,7 +521,7 @@ void BPF_STRUCT_OPS(fcg_running, struct task_struct *p)
->  	if (fifo_sched)
->  		return;
->  
-> -	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-> +	cgrp = scx_bpf_task_cgroup(p);
->  	cgc = find_cgrp_ctx(cgrp);
->  	if (cgc) {
->  		/*
-> @@ -564,7 +564,7 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
->  	if (!taskc->bypassed_at)
->  		return;
->  
-> -	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-> +	cgrp = scx_bpf_task_cgroup(p);
->  	cgc = find_cgrp_ctx(cgrp);
->  	if (cgc) {
->  		__sync_fetch_and_add(&cgc->cvtime_delta,
-> @@ -578,7 +578,7 @@ void BPF_STRUCT_OPS(fcg_quiescent, struct task_struct *p, u64 deq_flags)
->  {
->  	struct cgroup *cgrp;
->  
-> -	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-> +	cgrp = scx_bpf_task_cgroup(p);
->  	update_active_weight_sums(cgrp, false);
->  	bpf_cgroup_release(cgrp);
->  }
-> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-> index 3072b593f898..c67dac78a4c6 100644
-> --- a/tools/sched_ext/scx_qmap.bpf.c
-> +++ b/tools/sched_ext/scx_qmap.bpf.c
-> @@ -320,12 +320,9 @@ static bool dispatch_highpri(bool from_timer)
->  
->  		if (tctx->highpri) {
->  			/* exercise the set_*() and vtime interface too */
-> -			__COMPAT_scx_bpf_dsq_move_set_slice(
-> -				BPF_FOR_EACH_ITER, slice_ns * 2);
-> -			__COMPAT_scx_bpf_dsq_move_set_vtime(
-> -				BPF_FOR_EACH_ITER, highpri_seq++);
-> -			__COMPAT_scx_bpf_dsq_move_vtime(
-> -				BPF_FOR_EACH_ITER, p, HIGHPRI_DSQ, 0);
-> +			scx_bpf_dsq_move_set_slice(BPF_FOR_EACH_ITER, slice_ns * 2);
-> +			scx_bpf_dsq_move_set_vtime(BPF_FOR_EACH_ITER, highpri_seq++);
-> +			scx_bpf_dsq_move_vtime(BPF_FOR_EACH_ITER, p, HIGHPRI_DSQ, 0);
->  		}
->  	}
->  
-> @@ -342,9 +339,8 @@ static bool dispatch_highpri(bool from_timer)
->  		else
->  			cpu = scx_bpf_pick_any_cpu(p->cpus_ptr, 0);
->  
-> -		if (__COMPAT_scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p,
-> -					      SCX_DSQ_LOCAL_ON | cpu,
-> -					      SCX_ENQ_PREEMPT)) {
-> +		if (scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | cpu,
-> +				     SCX_ENQ_PREEMPT)) {
->  			if (cpu == this_cpu) {
->  				dispatched = true;
->  				__sync_fetch_and_add(&nr_expedited_local, 1);
-> -- 
-> 2.51.0
-> 
