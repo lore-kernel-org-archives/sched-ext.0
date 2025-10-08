@@ -1,132 +1,242 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2671253944;
-	Wed,  8 Oct 2025 10:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF3D225791
+	for <sched-ext@lists.linux.dev>; Wed,  8 Oct 2025 11:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759918021; cv=none; b=IepCfmv6HNFeziQWi39tHDdlX+FMnHws3y2A2A5xlKxIcRf+yslrg9pdawqqguCh6CIIfzXM6wHWGt08ikzo1jXtkgh6iRB+Nw5lb3aIClsiW7+j0pQNskLkKu5ek/wiVVLUK4CEPz08svWQvPjuZGev0Qov/xRzNdn0oXk0klA=
+	t=1759922601; cv=none; b=VqaoixRHP3tdQEomxUU6mEzUgU6zr9FyjTSnLOeOLYniH0/FNsJ9eFi9Jot8V4L3iVGAF/65obsIHQVU22VtIT4A3xXSy3A5ZLXPFK/5rI8kQtY3vxhfZswO4dULDWiHPIwQG+iejAy40RMkZN1+mdrzKLVrKqQVTDJpV1M0U7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759918021; c=relaxed/simple;
-	bh=KQXZN/ofW0OKkLGaG3YnpairLb8pItAMJg4NG+XRaQI=;
+	s=arc-20240116; t=1759922601; c=relaxed/simple;
+	bh=KxxbJPJreNgpREsl+UIMou7zPfsQ7i/KcDifHUEaR/g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aWFDa3WUaTw4NHfYOVMbkTrV1OJdYecT05OrSuBt+QlaKYDd6bMPGUUWroPgzNDocCvQw3Vhjm4GOiXxMgRWSzbs/Colu0XaBTnaEhRAkSYHVsf3/X69nPbPE30PGgNz5Ytl6GOmJXZeoXMInM7RZ7QeBjCfXqJMu8nSULTEI5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Z0AtejY; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type:Content-Disposition; b=SlVMBz0zl6tEp9NvMmLhyoxwvc2o0RlfkBqFblghyRU7UqR9selwHyhMiznsv2GaNhaCbJ2VijTIcml3OOZpdEGWMkzOp4NxskMJTc9c6TG8ZkV5W+cPBgklmFkqZIsXLtyWEUWbYfgrxbwOAbFcOk4SyL8AYvWuVNTJckUPkmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Vp/5vkmF; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Z0AtejY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2106C4CEF4;
-	Wed,  8 Oct 2025 10:06:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759918019;
-	bh=KQXZN/ofW0OKkLGaG3YnpairLb8pItAMJg4NG+XRaQI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2Z0AtejYv/gO11P+YePtAAXSpl9OfNpwjNrkG/8IlcEcWlOVaSfWRtQXkgVp+a6pV
-	 Ycb0mON+I88I1GC5puf1wIFNQTT3OgHYhKXkqQuR17xcv+/1zfAy9x2pYDAx588ba8
-	 wYHwYyFDF+a9sT//mCTG9qHd9pfQn6o9zzCOlmi4=
-Date: Wed, 8 Oct 2025 12:06:56 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Juri Lelli <juri.lelli@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, tj@kernel.org,
-	linux-kernel@vger.kernel.org, mingo@kernel.org,
-	vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
-	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
-	changwoo@igalia.com, cgroups@vger.kernel.org,
-	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
-Subject: Re: [PATCH 10/12] sched: Add locking comments to sched_class methods
-Message-ID: <2025100838-undermine-zit-83b6@gregkh>
-References: <20251006104402.946760805@infradead.org>
- <20251006104527.694841522@infradead.org>
- <aOTjSla1Yr3kz7op@jlelli-thinkpadt14gen4.remote.csb>
- <20251008070419.GR4067720@noisy.programming.kicks-ass.net>
- <2025100822-drained-foe-2426@gregkh>
- <aOYyOYrzoKDLCl7F@jlelli-thinkpadt14gen4.remote.csb>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Vp/5vkmF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1759922598;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XjK0x7VkR55zw2tDVfBXgmVZOJtRweevFKYIMOvdWcE=;
+	b=Vp/5vkmF8BhbBCAayTiTHIs/XyIkpVzrMRtC9Q3hf6GxoRp23HN6+3DSw9a9CJbG8YZ7yJ
+	nPjihKChY0UuqfubBH06hmCuyzMG4Qt4k1n+8aExH1WcHGYItffEbJoUH/c5sOxhMW6zHR
+	/Mje0fsor3b5qND7mO7ZdMOap/q90/Y=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-QTqSDJMNOGO29Z7AsojmoA-1; Wed,
+ 08 Oct 2025 07:23:13 -0400
+X-MC-Unique: QTqSDJMNOGO29Z7AsojmoA-1
+X-Mimecast-MFC-AGG-ID: QTqSDJMNOGO29Z7AsojmoA_1759922592
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9B4671800451;
+	Wed,  8 Oct 2025 11:23:11 +0000 (UTC)
+Received: from pauld.westford.csb (unknown [10.22.88.80])
+	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 3B7BA19560A2;
+	Wed,  8 Oct 2025 11:23:09 +0000 (UTC)
+Date: Wed, 8 Oct 2025 07:23:06 -0400
+From: Phil Auld <pauld@redhat.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev
+Subject: Re: sched_ext and large cpu counts
+Message-ID: <20251008112306.GA177858@pauld.westford.csb>
+References: <20251007133523.GA93086@pauld.westford.csb>
+ <d1c0eda5206b01fd670e148bd5ea0d56@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <d1c0eda5206b01fd670e148bd5ea0d56@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: -a6JqBgFQAWyirfYe1CPZuSDj96ENUcHzudLtFADAp8_1759922592
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aOYyOYrzoKDLCl7F@jlelli-thinkpadt14gen4.remote.csb>
 
-On Wed, Oct 08, 2025 at 11:43:21AM +0200, Juri Lelli wrote:
-> On 08/10/25 09:33, Greg Kroah-Hartman wrote:
-> > On Wed, Oct 08, 2025 at 09:04:19AM +0200, Peter Zijlstra wrote:
-> > > On Tue, Oct 07, 2025 at 11:54:18AM +0200, Juri Lelli wrote:
-> > > 
-> > > > Not for this patch, but I wondered if, while we are at it, we wanted to
-> > > > complete documentation of these flags. My new AI friend is suggesting
-> > > > the following, is it very much garbage? :)
-> > > 
-> > > Heh; its not terrible. I've been playing with local LLMs, but mostly
-> > > I've found they struggle with getting enough context to not be utterly
-> > > demented. And when you up the context window, they get unusable slow :/
-> > > 
-> > > Setting up and configuring the whole pile of subtly interlocking stacks
-> > > of software to get anything useful out of this stuff is non-trivial (it
-> > > reminds me of the sendmail m4 days).
-> > > 
-> > > > ---
-> > > > 
-> > > > From: Claude <claude-sonnet-4-5@anthropic.com>
-> > > > Date: Mon, 7 Oct 2025 12:44:13 +0200
-> > > > Subject: sched: Document remaining DEQUEUE/ENQUEUE flags
-> > > > 
-> > > > Complete the flag documentation by adding descriptions for the three
-> > > > previously undocumented flags: DEQUEUE_SPECIAL, DEQUEUE_THROTTLE, and
-> > > > ENQUEUE_INITIAL.
-> > > > 
-> > > > DEQUEUE_SPECIAL is used when dequeuing tasks in special states (stopped,
-> > > > traced, parked, dead, or frozen) that don't use the normal wait-loop
-> > > > pattern and must not use delayed dequeue.
-> > > > 
-> > > > DEQUEUE_THROTTLE is used when removing tasks from the runqueue due to
-> > > > CFS bandwidth throttling, preventing delayed dequeue to ensure proper
-> > > > throttling behavior.
-> > > > 
-> > > > ENQUEUE_INITIAL is used when enqueueing newly created tasks in
-> > > > wake_up_new_task(), allowing the fair scheduler to give them preferential
-> > > > initial placement (half vslice when PLACE_DEADLINE_INITIAL is enabled).
-> > > > 
-> > > > Signed-off-by: Claude <claude-sonnet-4-5@anthropic.com>
-> > > > Not-so-sure-yet: Juri Lelli <juri.lelli@redhat.com>
-> > > 
-> > > Is this the generally acceptable form of attribution for these things?
-> > > I'm not sure what the official guidance is on using these AI tools.
-> > > 
-> > > Greg, you have any insights here?
-> > 
-> > First off, Claude can NOT sign off on anything, so that's a non-starter.
-> > All Red Hat people should know that :)
+On Tue, Oct 07, 2025 at 04:37:24PM -1000 Tejun Heo wrote:
+> Hello,
 > 
-> Yep, knew that. But I felt guilty nontheless as I didn't touch the
-> change at all. Current SoB was kind of a (silly) joke. :)
+> Can you please see whether the following patch resolves the problem?
+>
+
+Yes, thanks, I'll do that. It may take a little time since they have
+not given me such a machine.  I'll built it and pass it on to the
+partner to test it.  My take a few days to turn around. 
+
+
+Cheers,
+Phil
+
+> Thanks.
 > 
-> > Otherwise, there is a draft of something that was going to address stuff
-> > like this floating around by Dave Hansen, I'll go poke him to see what
-> > the status of that is.
+> --
+> tejun
 > 
-> I believe it was suggested something like Co-developed-by: <model> and
-> then Signed-off-by: <human>, but indeed curious to know how that
-> discussion ended.
+> ----- 8< -----
+> From 4d7f7d24e90fba47bb08ddbeb8668123b4bbab1b Mon Sep 17 00:00:00 2001
+> From: Tejun Heo <tj@kernel.org>
+> Date: Tue, 7 Oct 2025 16:23:43 -1000
+> Subject: [PATCH] sched_ext: Allocate scx_kick_cpus_pnt_seqs lazily using
+>  kvzalloc()
+> 
+> On systems with >4096 CPUs, scx_kick_cpus_pnt_seqs allocation fails during
+> boot because it exceeds the 32,768 byte percpu allocator limit. The allocation
+> size is sizeof(unsigned long) * nr_cpu_ids, which becomes 33,792 bytes with
+> 4224 CPUs.
+> 
+> Restructure scx_kick_cpus_pnt_seqs to use DEFINE_PER_CPU() for the per-CPU
+> pointers, with each CPU pointing to its own kvzalloc'd array. This avoids
+> percpu allocator size limits. Additionally, move allocation from boot time to
+> scx_enable() and free in scx_disable(), so the O(nr_cpu_ids^2) memory is only
+> consumed when sched_ext is active.
+> 
+> Reported-by: Phil Auld <pauld@redhat.com>
+> Link: http://lkml.kernel.org/r/20251007133523.GA93086@pauld.westford.csb
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
+>  kernel/sched/ext.c | 59 ++++++++++++++++++++++++++++++++++++++--------
+>  1 file changed, 49 insertions(+), 10 deletions(-)
+> 
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 2b0e88206d07..042fc73fb141 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -67,8 +67,13 @@ static unsigned long scx_watchdog_timestamp = INITIAL_JIFFIES;
+>  
+>  static struct delayed_work scx_watchdog_work;
+>  
+> -/* for %SCX_KICK_WAIT */
+> -static unsigned long __percpu *scx_kick_cpus_pnt_seqs;
+> +/*
+> + * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of sequence numbers.
+> + * The arrays are allocated with kvzalloc() as size can exceed percpu allocator
+> + * limits on large machines. O(nr_cpu_ids^2) allocation, allocated lazily when
+> + * enabling and freed when disabling to avoid waste when sched_ext isn't active.
+> + */
+> +static DEFINE_PER_CPU(unsigned long *, scx_kick_cpus_pnt_seqs);
+>  
+>  /*
+>   * Direct dispatch marker.
+> @@ -3850,6 +3855,16 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
+>  	}
+>  }
+>  
+> +static void free_kick_cpus_pnt_seqs(void)
+> +{
+> +	int cpu;
+> +
+> +	for_each_possible_cpu(cpu) {
+> +		kvfree(per_cpu(scx_kick_cpus_pnt_seqs, cpu));
+> +		per_cpu(scx_kick_cpus_pnt_seqs, cpu) = NULL;
+> +	}
+> +}
+> +
+>  static void scx_disable_workfn(struct kthread_work *work)
+>  {
+>  	struct scx_sched *sch = container_of(work, struct scx_sched, disable_work);
+> @@ -3986,6 +4001,7 @@ static void scx_disable_workfn(struct kthread_work *work)
+>  	free_percpu(scx_dsp_ctx);
+>  	scx_dsp_ctx = NULL;
+>  	scx_dsp_max_batch = 0;
+> +	free_kick_cpus_pnt_seqs();
+>  
+>  	mutex_unlock(&scx_enable_mutex);
+>  
+> @@ -4348,6 +4364,28 @@ static void scx_vexit(struct scx_sched *sch,
+>  	irq_work_queue(&sch->error_irq_work);
+>  }
+>  
+> +static int alloc_kick_cpus_pnt_seqs(void)
+> +{
+> +	int cpu;
+> +
+> +	/*
+> +	 * Allocate per-CPU arrays sized by nr_cpu_ids. Use kvzalloc as size
+> +	 * can exceed percpu allocator limits on large machines.
+> +	 */
+> +	for_each_possible_cpu(cpu) {
+> +		WARN_ON_ONCE(per_cpu(scx_kick_cpus_pnt_seqs, cpu));
+> +		per_cpu(scx_kick_cpus_pnt_seqs, cpu) =
+> +			kvzalloc_node(sizeof(unsigned long) * nr_cpu_ids,
+> +				      GFP_KERNEL, cpu_to_node(cpu));
+> +		if (!per_cpu(scx_kick_cpus_pnt_seqs, cpu)) {
+> +			free_kick_cpus_pnt_seqs();
+> +			return -ENOMEM;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops)
+>  {
+>  	struct scx_sched *sch;
+> @@ -4490,15 +4528,19 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+>  
+>  	mutex_lock(&scx_enable_mutex);
+>  
+> +	ret = alloc_kick_cpus_pnt_seqs();
+> +	if (ret)
+> +		goto err_unlock;
+> +
+>  	if (scx_enable_state() != SCX_DISABLED) {
+>  		ret = -EBUSY;
+> -		goto err_unlock;
+> +		goto err_free_pseqs;
+>  	}
+>  
+>  	sch = scx_alloc_and_add_sched(ops);
+>  	if (IS_ERR(sch)) {
+>  		ret = PTR_ERR(sch);
+> -		goto err_unlock;
+> +		goto err_free_pseqs;
+>  	}
+>  
+>  	/*
+> @@ -4701,6 +4743,8 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+>  
+>  	return 0;
+>  
+> +err_free_pseqs:
+> +	free_kick_cpus_pnt_seqs();
+>  err_unlock:
+>  	mutex_unlock(&scx_enable_mutex);
+>  	return ret;
+> @@ -5082,7 +5126,7 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+>  {
+>  	struct rq *this_rq = this_rq();
+>  	struct scx_rq *this_scx = &this_rq->scx;
+> -	unsigned long *pseqs = this_cpu_ptr(scx_kick_cpus_pnt_seqs);
+> +	unsigned long *pseqs = __this_cpu_read(scx_kick_cpus_pnt_seqs);
+>  	bool should_wait = false;
+>  	s32 cpu;
+>  
+> @@ -5208,11 +5252,6 @@ void __init init_sched_ext_class(void)
+>  
+>  	scx_idle_init_masks();
+>  
+> -	scx_kick_cpus_pnt_seqs =
+> -		__alloc_percpu(sizeof(scx_kick_cpus_pnt_seqs[0]) * nr_cpu_ids,
+> -			       __alignof__(scx_kick_cpus_pnt_seqs[0]));
+> -	BUG_ON(!scx_kick_cpus_pnt_seqs);
+> -
+>  	for_each_possible_cpu(cpu) {
+>  		struct rq *rq = cpu_rq(cpu);
+>  		int  n = cpu_to_node(cpu);
+> -- 
+> 2.51.0
+> 
 
-The general answer is "you better know the copyright ownership
-information of the output of the tool you use" before you do anything
-with any of these tools.  Be careful about this, because adding your
-signed-off-by to a patch like makes it your responsibility :)
+-- 
 
-After that, treat it like any other tool that you use to generate a
-patch, document what you used and why/how, and you should be fine.  You
-have to do this today if you were to use any type of tool, so in that
-way, "AI" is no different, with the exception of the ownership of the
-output result (again, consult the terms of the tool used.)
-
-Hopefully documentation updates to our process documents will reflect
-this in the near future.
-
-thanks,
-
-greg k-h
