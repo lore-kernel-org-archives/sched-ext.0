@@ -1,74 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410F11C27;
-	Tue,  7 Oct 2025 21:48:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90A529B229
+	for <sched-ext@lists.linux.dev>; Wed,  8 Oct 2025 02:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759873697; cv=none; b=gAlVYwJWe7yD5wuWNnTlF++pWXhQW/kCL7juT9QMNDVhkBqPCM7Hp9NzsGUsbW/2hzN/swZ5tBqKGWxKTd20wQlq2yvyVvx1BMB2K4YmGpHEsVJoeDUdA/EDxXe+qTpwOexdHurgQDZyXXi0+OdfdCzcQKbQGEUhtqVT4d2oEb8=
+	t=1759889524; cv=none; b=jfmXejPeQ7WTYvDcXxxAJBS7k37/ekOTUHoTYx7gqvAEhCsLR+Eblz2h69tmVBnpMhDX11TRHK+NP68bUNGEJ7dmkqDWbf5ecxyVUtbH1rn+7HXbfbuMJc7GUAuIXgizM7AkqwyXagqluEn2QDfDcjf32PaW02LqkKtRK65hupE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759873697; c=relaxed/simple;
-	bh=5Ig+av4i4SKHSui0i5lVRlHtwzs39uFpEM4GQ8HVxDw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e0iV/fuLODAmKzSi9qqcAK3mhjyldRcuISCoP59w1xIhucM9H3nC2zHAg9p0u94sbcY0UZew3zLOWAv5qY5A6hpebjLLiblWZHZql7KICKTdbPG7l+PjP6OAQPqQNCmCjwpnERw4jpxiyYklZ90sXFkc3xKoHABZtnqUSwqQW7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HO+GjigU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1759889524; c=relaxed/simple;
+	bh=J3zMhXU0CzOWpbVDm1VW6EdK/QN2flKoygDN2tmdj4Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=L8iNKKO2il3Xi6d+DQ+FMiRlhwe4/BLUdOT5Mz4oqv/0TQFGCK3SGYRkAHXddTuxPnOz9/3E1PhGl+ajhxqpSb5fP1MSAjKdM/2n2iwqcksVySsQIMjV1x/uByb5COpvlVhjgYkwbe5rnslzoI5faKM3qN9b1Rpc3wQLvi1drVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hqpqpnC2; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HO+GjigU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EBCC4CEF1;
-	Tue,  7 Oct 2025 21:48:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759873696;
-	bh=5Ig+av4i4SKHSui0i5lVRlHtwzs39uFpEM4GQ8HVxDw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HO+GjigUTr6Sx2ixGx7Gp819k1SjA0hVt1j2AembZIhonpfLEeBkeUGdQ/fJbwKYr
-	 s/zBdmV97xxrQi3S4nsi3TZBmhC1T+dzwaNQ5ccJCOJ3e4SyIGeASOir5s9PcgBggt
-	 ufOhuCvRT0/oF67NamvJ+5cNDf64Mej35qhYprVh2w2Xy1KrfuNFHXYCp3+q43N+Va
-	 OTG78C1oXt9qGBYlWygsarVaqxEDhvM+z0xqV/plCEFFoO2H/WV8E1MjT0G/k0Rgx6
-	 l+wMhIAa/S8ML1TOuL0f+ZLsoAB6PFwsyMNgELUJy3PmNqmcGso9a8e0GQBMHn+giO
-	 6YY1XqOEn37Vg==
-Date: Tue, 7 Oct 2025 11:48:15 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: linux-kernel@vger.kernel.org, mingo@kernel.org, juri.lelli@redhat.com,
-	vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
-	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
-	changwoo@igalia.com, cgroups@vger.kernel.org,
-	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
-Subject: Re: [RFC][PATCH 0/3] sched/ext: Cleanup pick_task_scx()
-Message-ID: <aOWKn6f0OtegV1q0@slm.duckdns.org>
-References: <20251006104652.630431579@infradead.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hqpqpnC2"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2698384978dso49994705ad.0
+        for <sched-ext@lists.linux.dev>; Tue, 07 Oct 2025 19:12:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759889522; x=1760494322; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/QdhCz/LHAaQk2hiuK6Em6SkG+DuB6O3nhZrmrilNP0=;
+        b=hqpqpnC2U4VizZjtrAgztpoaGIsnoeN89kNItUb839OBI91OJQ2gSjCBjD8CGkasUc
+         eus11LbG6nq5pjuKJ4QjL2cltLn1p2xHXDjF0XkIRf+qabORCj0V8P0+iGMQFk7fBzE8
+         i6ODbhR+W/47KBTxu+Lah8WrO4Z+m7YuUiRmGH/pTvYuRicaxIUufW9UbRJnas9Pwik9
+         cEz5Y8D1oAY1BxvH56WZY0bBKtbAgdDX3zXoGVZi0+epOLxa2Lg0G6fIYOn/XKsy59mA
+         bq8GGNtT7K+oOy5SaXtCw0l24Q+CUcaTl+jA+tsrgGx/tNRzM9vZ02tmVsVoWVo/DisT
+         VE9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759889522; x=1760494322;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/QdhCz/LHAaQk2hiuK6Em6SkG+DuB6O3nhZrmrilNP0=;
+        b=nfZtCOK7RllSHKcBy2IwWejy/M+rKQcIJFgnDQdBAQO0WHUv+0aJFBU2kPDgMzU/bN
+         0R9EShUoFA1JH1retA1/LJq+H1iF1aS0Ie4wUFbBRwhn+42MNAg2SnDWYmTAQrRSkOPv
+         f94G4nmRUmHrCHUp9zwDD972E7VJQAyf7I/sroLAa/t5f6oS+U/A3vTyoqS5vtThIc5B
+         PxylY4NLm5LoziYVWpywQRjjjj++qXafadTDKnMLmaCfJKQzVr2Bk7T2bR3ggetmv3eM
+         SFNCtBTeO4Oo3rYLlvuqJzCbokecY/i58Kt3cdXO7ycGSUfKpIz9b2IcRJzooUIcQU18
+         6WBg==
+X-Gm-Message-State: AOJu0Yz08+SCUlqWo+3wKTy31GBc+2pczKr24iSGlENQSgbS9xsbtfFW
+	mN4j2fS8A43BC9lhX9+4p9tfgIvfeMTtRFvpLueGygu2NzyoqQREMwTy
+X-Gm-Gg: ASbGncs0YEaFQMUlJ9FBcH0YPGnTw0BtaPTkWV+98sbq+Ru5DbeJwJThK9IktAWMR/H
+	J93U6j7iUkJ1lSaOcSG7vnj66f5UaBqkvXfLnFaJQPQU3lqaYfNk+zxZP6qOVdlbiWi1E/wOo4U
+	fPV+avx0/KsW0a7A710zVIH5pTxUx4r2k2I/cBhXQnfSDIKtvEaSn6hR6RqbUA+06kg2ayS8ASj
+	+W3OHorG99+Wz0hMhzDSIcrOSJwhRfnwSx8M6noMnYS2j+jFjQlY8OIwKeYZoHdlSc/n3sPomd6
+	NIomHzxu/J2P0jGTpmKW5dYgbxOZT8qrJiXVA4Fwpz+FSKYGzGKSlE6XQNPpqElwPq/alCcSvBZ
+	ZcVRLUlcgJdoHyyZqcLVD+yf7owXjI4s7Ms0Vy84wJBz7SWtHmetQhNiIn/VxGSEqnr76xkSwSp
+	K//huj3vDBqMTNPyjCji9jpMJIzZupxK4UqQ==
+X-Google-Smtp-Source: AGHT+IFKOoqgxArCn0gjdkt9n4XFKdHMqs7Bnwb0O/kKDypCoqugMI/6u6tioxeMH6WJWUAmj9EdAg==
+X-Received: by 2002:a17:903:1aae:b0:273:7d52:e510 with SMTP id d9443c01a7336-290273038c3mr21978175ad.58.1759889521991;
+        Tue, 07 Oct 2025 19:12:01 -0700 (PDT)
+Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d125e9fsm180030465ad.36.2025.10.07.19.11.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Oct 2025 19:12:01 -0700 (PDT)
+From: zhidao su <soolaugust@gmail.com>
+To: tj@kernel.org
+Cc: sched-ext@lists.linux.dev,
+	suzhidao@xiaomi.com
+Subject: Re: [PATCH v2] sched/ext: Add tg->scx.idle which tracks the current state
+Date: Wed,  8 Oct 2025 10:09:38 +0800
+Message-ID: <20251008021031.630303-1-soolaugust@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <aOVmuWwyLUNkPG7S@slm.duckdns.org>
+References: <aOVmuWwyLUNkPG7S@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251006104652.630431579@infradead.org>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 06, 2025 at 12:46:52PM +0200, Peter Zijlstra wrote:
-> Hi,
-> 
-> So I had a poke at 'give @rf to pick_task() and fold balance_scx() into
-> pick_task_scx()' option to see how terrible it was. Turns out, not terrible at
-> all.
-> 
-> I've ran the sched_ext selftest and stress-ng --race-sched 0 thing with various
-> scx_* thingies on.
+v2: Add tg->scx.idle which tracks the current state  
 
-This is great. I was thinking that I needed to call pick_task() of other
-classes to detect the retry conditions but yeah enqueue() must be the
-triggering event and this is way neater. Does this mean that balance() can
-be dropped from other classes too?
-
-For the whole series:
-
- Acked-by: Tejun Heo <tj@kernel.org>
-
-Thanks.
-
--- 
-tejun
+FYI, thanks
