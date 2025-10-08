@@ -1,111 +1,79 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57AA2868B0
-	for <sched-ext@lists.linux.dev>; Wed,  8 Oct 2025 13:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0BD235C01;
+	Wed,  8 Oct 2025 13:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759931664; cv=none; b=HyxYD67PJQ+N4S4vIsf5zl2KBxBhd7QU/jqWvG/1R+0BmmNTYe14C0wOPBIlHDRBv1r53k3P0aTM3XqUMHjjo4cstj8DUeENMrHg7W/PvlPDOjHCPXt2dzW8DeLD9p0tB2bbUi4Q67qzWBGdip+Vkrh4d2vK1WOglcIT5cV2qZk=
+	t=1759931921; cv=none; b=AulX8vsVUvlvDt6FUWOY6ekak0csyCtpBoFROnjlWwRxsKrkacUAFE4ezGEtxfPjxgXIcpuBWY5+0IX+wKXa7uU7WU4q2brCsMf/IYsVO05/LZgRzNQMMYrAE2ko3RjuQ+kbksbXZnqtkkFOstysLyEolCNvpIFMLXzYh++SsD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759931664; c=relaxed/simple;
-	bh=Q2YXGjIR+rL8BrcfhhvKfyIjtqjvZ8rgOU/s92qDdFA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TmnmkN4CAwWeYK8WkbMrGdTHHphOINjxfsUzHd3asbJtqfsD5I4Bx/Z9QOYX92sXES5J7IDO8Fho8eCnkxnFczbjtERlnoRiShdcSwIBfhLrFSZyklbWTM62PNwdphsPhLzH+R/Di/oi+xov6XKMvkogO2IMelVSrGp2SPrNBxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BOIB6p9a; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1759931921; c=relaxed/simple;
+	bh=bIS3CECsL9SwkAipfM5moGJaHurPrBbwODg4g5wtQHM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XJN1pqGDUlW1zyewzIOS7QOpwo3d9KLns7HGlb4IZGZXfVW21fAnFb92SLdEvpG8xD9hJV0RTJ5svUcC6XTf2D70Clxc1cIQdB5Blx0XBxjvPCkZhmJMSkTFajL3kAujhYSNox4djpz2ALuG+GXeS3efXEl2D6Gxa1Krt7yeISs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SdaM1Ygh; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BOIB6p9a"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1759931661;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wdnPFA69fVX6wV/RaP40yhmuIxfn43fw2JAle9ryo2I=;
-	b=BOIB6p9aOtnRSdDUKW1S/EkmQkA+IcEVwgZAEWXF6Tw4X4HIW3WA2tpgcLyw4dfWfKUb+u
-	d/SKIUSjo4X7wQVPZcgKBcP4Si4rvgHt65fwasBi800BjQNIuG1vFvtN2uqeYWGXOP4MLy
-	zm4qwRNiGsNUcpUdadfFyCmwNrFFSQY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-myTEAEuCPSyRCD06o2fw1w-1; Wed, 08 Oct 2025 09:54:19 -0400
-X-MC-Unique: myTEAEuCPSyRCD06o2fw1w-1
-X-Mimecast-MFC-AGG-ID: myTEAEuCPSyRCD06o2fw1w_1759931658
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3efa77de998so4642292f8f.0
-        for <sched-ext@lists.linux.dev>; Wed, 08 Oct 2025 06:54:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759931658; x=1760536458;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wdnPFA69fVX6wV/RaP40yhmuIxfn43fw2JAle9ryo2I=;
-        b=sMCALxfAYD+9LhaONtScsqGJh5BRMikHiTdw0heWWLt6ySWZCakM1ys47bhxT0FcSU
-         t+R7a7s3JmIeZgIBSiNv4KGy00q+/M4XcfnLMA/Z9sMI642wA8ZX1eEVQM91jbcQhT9Z
-         Oq8ct3V6KMUC+y4LaalQ2o33HEMaSSl2evns5gnfqJjUT0H87laqUeq/e4nYKZlYmuXE
-         oHVhO+eVAFGnCA+K4ul9SYqSWNzjnq5oUH4BdRho1Q9b7wAiGk7lkKpRkmFSH8cHhHng
-         EY0XXrCtTBT+sXk+iqIet9rHD3CIhY5KwNNgTmWv/owmj5/lNkAQyylY4ElVpHdAXJz5
-         QGLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVZHpyw4ZXK2WlqFqMhJh+QxOF+AFrBBDcpSFfZIu4k1OLntItfRpGogvEeVfsIH5nJbvjdKIH3hmc=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx4uqMwAa8qFv/8DMR3VxqKf9Esu4KBWXA/rz5lfa7wzfpDXU/P
-	WQ3GXrnjtGjYMnjbmalopjM+LjHby1qSoH/hBZYdOa0dB8rnYgydSI7sVA5rHLgIztcJuSpnITz
-	yYrFT/mWvQAR00qgUGDhSmIGfQpoWfrV3mYS93KWqeSwdnYccAeeZCA6Q2n0L+w==
-X-Gm-Gg: ASbGncvOg4QwrP6pmzT0SeGoeOmPfWOfJy+t3wcvRVfaRVugWZp4vIKZYx8+1U7Am4k
-	1/fD0qQak5sBohGVF/MTBuAuQC9BTMP4qDDzCYYfIPDb81wqLTpYblCCn1SX3BcB0JUbVaZzdNo
-	XQNpA3uqC8tTBkRS/l1allQs8rgcQlJGPaSr0icWtm4I3BJo4DDJKvWPiRBmlfRGMwACeghvj0z
-	j6FI6EejSoA2qO2RPgWXCFPWSPRQPqiip+rrLFCOabMoBrm9pUeBq5HeFegarsB+a89RXBCap6H
-	fvZi852SqhtgBPclsI+eL/hqTivJnEC8aMT2iyfuFjYd6yRXbdqwSDmpArU0TiSBEVcZEImpjiy
-	+r7gC62kfyoUPx60JvhrgrZiQYbJpTSg=
-X-Received: by 2002:a05:6000:208a:b0:3ec:42ad:597 with SMTP id ffacd0b85a97d-4266e7dff52mr2172159f8f.37.1759931658008;
-        Wed, 08 Oct 2025 06:54:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6pPCr5ooWIlJwPz5RcCzOYg/HVdYm9VLX5s4KNvCsNHbATSOR8rWb5OHNt2RclD3WmUKfOw==
-X-Received: by 2002:a05:6000:208a:b0:3ec:42ad:597 with SMTP id ffacd0b85a97d-4266e7dff52mr2172132f8f.37.1759931657552;
-        Wed, 08 Oct 2025 06:54:17 -0700 (PDT)
-Received: from vschneid-thinkpadt14sgen2i.remote.csb (213-44-135-146.abo.bbox.fr. [213.44.135.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8ab8b0sm30003416f8f.18.2025.10.08.06.54.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 06:54:17 -0700 (PDT)
-From: Valentin Schneider <vschneid@redhat.com>
-To: Peter Zijlstra <peterz@infradead.org>, tj@kernel.org
-Cc: linux-kernel@vger.kernel.org, peterz@infradead.org, mingo@kernel.org,
- juri.lelli@redhat.com, vincent.guittot@linaro.org,
- dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
- mgorman@suse.de, longman@redhat.com, hannes@cmpxchg.org, mkoutny@suse.com,
- void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
- cgroups@vger.kernel.org, sched-ext@lists.linux.dev, liuwenfang@honor.com,
- tglx@linutronix.de
-Subject: Re: [PATCH 00/12] sched: Cleanup the change-pattern and related
- locking
-In-Reply-To: <20251006104402.946760805@infradead.org>
-References: <20251006104402.946760805@infradead.org>
-Date: Wed, 08 Oct 2025 15:54:16 +0200
-Message-ID: <xhsmhbjmhh52v.mognet@vschneid-thinkpadt14sgen2i.remote.csb>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SdaM1Ygh"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=ipkIo97WbfBXRfA6Awwdt/Zt8vCBI383wL+H18F9oN8=; b=SdaM1Ygh/wofs08waEwgi2Ygfh
+	aowIUPM0qhNBaW7nEsPjVFpsZLgqsDebSdN4+zgzNR51oTyD08eYfhgDK++m5T3vPg6V1off2CPYA
+	HyIS+grnasQCBoViBmGQz/Lv5cOfikc8MYJ5jJ1JiBeXef4FJR4tuuqcl0OtOvdQJbaHo1iuv37iT
+	cDw71CqJyI3IxwSe+PSwjV9uXMQM1o1QdumtEQQMoLcR1mcMbak4i/XhQ4ACOO3KLOTKAIXUS4Wtx
+	wrjx+lMFVd+oTOiFa03/v8NCxYSgG7nlfMAF9xnJm4UIjK7bCFNp9yg5o7p/mNRSZm7cb6SSIfvdj
+	Sve5RPZw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1v6UgY-00000006LBg-03HX;
+	Wed, 08 Oct 2025 13:58:31 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id BBA19300400; Wed, 08 Oct 2025 15:58:30 +0200 (CEST)
+Date: Wed, 8 Oct 2025 15:58:30 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org,
+	juri.lelli@redhat.com, dietmar.eggemann@arm.com,
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
+	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
+	changwoo@igalia.com, cgroups@vger.kernel.org,
+	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de,
+	Joel Fernandes <joelagnelf@nvidia.com>
+Subject: Re: [RFC][PATCH 2/3] sched: Add support to pick functions to take rf
+Message-ID: <20251008135830.GW4067720@noisy.programming.kicks-ass.net>
+References: <20251006104652.630431579@infradead.org>
+ <20251006105453.648473106@infradead.org>
+ <CAKfTPtCC3QF5DBn0u2zpYgaCWcoP2nXcvyKMf-aGomoH08NPbA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: kiYUMOGOJ4PnKT7Ax8Ti_m8DcUSIOh7cxgab_iJ1WCs_1759931658
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKfTPtCC3QF5DBn0u2zpYgaCWcoP2nXcvyKMf-aGomoH08NPbA@mail.gmail.com>
 
-On 06/10/25 12:44, Peter Zijlstra wrote:
-> Hi,
->
-> There here patches clean up the scheduler 'change' pattern and related locking
-> some. They are the less controversial bit of some proposed sched_ext changes
-> and stand on their own.
->
-> I would like to queue them into sched/core after the merge window.
->
->
-> Also in:
->
->   git://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git sched/cleanup
->
+On Wed, Oct 08, 2025 at 03:16:58PM +0200, Vincent Guittot wrote:
 
-Other than what's already been said, that LGTM. It's good to finally have a
-canonical change pattern... pattern? :-)
+> > +static struct task_struct *
+> > +fair_server_pick_task(struct sched_dl_entity *dl_se, struct rq_flags *rf)
+> >  {
+> > -       return pick_next_task_fair(rq, prev, NULL);
+> 
+> The special case of a NULL rf pointer is used to skip
+> sched_balance_newidle() at the end of pick_next_task_fair() in the
+> pick_next_task() slo path when prev_balance has already it. This means
+> that it will be called twice if prev is not a fair task.
 
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Oh right. I suppose we can simply remove balance_fair.
 
+> While reviewing this series, I also noticed an older issue that we
+> have with check pelt lost idle time [1]
+> [1] https://lore.kernel.org/all/20251008131214.3759798-1-vincent.guittot@linaro.org/
+
+Let me go have a look.
