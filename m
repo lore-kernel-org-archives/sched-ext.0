@@ -1,109 +1,82 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4502F3609
-	for <sched-ext@lists.linux.dev>; Wed,  8 Oct 2025 15:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D161A2545
+	for <sched-ext@lists.linux.dev>; Wed,  8 Oct 2025 18:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759936978; cv=none; b=F+PFrzeDXBxtrAMPc8DssXRXhauM23uYBU7hJ+kfSTqoa/feg6ePHmIXoes/faPL8Ziuq5rXeW+1yqtuHOG14jFvUB94okTSpi46eJW5nsf4eCphicFl/7FTwNvWL1UaWpZKu2fQw/ZBhENX/XMlERtisNFasd5mwSco902KA0U=
+	t=1759947646; cv=none; b=gG73vTIFlW5TGxJceSSWb2hmW2cJdQpjkGEPBtKOy2OCmmLvNB1kTawvj7KJL5pqDWe33qC1NILDDwvl3VDgahKZfWaAQc7tabkI+fOLI5ns+HW12MoxGvy19AJLXUHXGawOnczF+yeJ50BRa/JwmPqLSAMfqVbgYW0pxurqOPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759936978; c=relaxed/simple;
-	bh=2siM9yREqhk1evwBBV05rvjedon6J208mF1lxh+zAWA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ToRhopvNU/d6vxZjXHnVX4Bao1DbqyJSVCogRhYLIcFJTPLKN5o+yWU96GpFWUd10m4hQrSVXMjDd+Z4wZQ7AnQvDOs0IzZ7fXJPLmU9V1rz6LL8HZf8xCE9r6gyYutzpMxQwzGQPXjFb33NPU1ubsvaT7FwB2ZboALD1aFM3V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ypixQkvX; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1759947646; c=relaxed/simple;
+	bh=BIer1vahMoSTNf/8VQeJIF0T9DRb8ixp0DXUjfiI/pY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kiC3qi+hE1K9JhYRdUUczFEzuM8ZiticEXjhhdyqdEWeG0mjYC0cCuYSa1efLRdMJzsbcDE7iw5c14uiek/LiOMFhiPXyVF0znQn9PuDYRH5Ma6bL91/Epayx16wJbeMbKGHxiYiNWFOF+td4dd9Eg+4E9P8y2wgj5gsUBES5ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6m3tVzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ypixQkvX"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-afcb78ead12so1375736566b.1
-        for <sched-ext@lists.linux.dev>; Wed, 08 Oct 2025 08:22:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759936975; x=1760541775; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=u8IL1MJVZcL+yeXHblmq6i6BaDGI2XMDGXwWjrVz72g=;
-        b=ypixQkvXyVV9PQA5ziFU/cdjIOS3s8Rjnc2CmC2tk5u7VzQispBsvyFRo1/mFagQhf
-         Z9mEoeAcXFzEbWOowDj0iCHd/b2nqVn8b7e8aF+IO11pLF6u5pZinFfPCR4T5Sfu8Y2V
-         1onQRi4pQyF/Mp060uEoDtzKLXVKJAZc5pEK6EZU2DtnrvGQF7lRgwp++zj2yWpfq7qZ
-         mERgRjTKplpLij/XzAUMX4CMEib1txb9JSWbA82JuzYR0bGG9+5LoUtLEjHupqClqOPN
-         eC1EDdjTsfHBlVwC89ZKxs8QHO2ERuWBmSkFrG1pv3CwUCKbvbFoWUhPugWLjCGxFweI
-         CR7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759936975; x=1760541775;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u8IL1MJVZcL+yeXHblmq6i6BaDGI2XMDGXwWjrVz72g=;
-        b=vXrz3v3XyBd0+clzCe3mliDjozGeazeAwL3qh5DvIdaHEnzFETJeFFW7YkZfJtsXQN
-         BHaFBey/Em7RIf5kkcdBX95QhoWvI09/liHleIxVUAuAXK7e6hh7C7ef1DGSYGMYWLUu
-         LBOaZNNDmM11BsXNnRRuxcgF5WmjIsMnhShvSxwu5YHvA/NKlYC4eqAOB5lt7QHlGgnl
-         /Eq9cY8Eu98ozYil+YEZ9Eid/bhNghG4NKeiLe4HGUYFtyeWK2YE+vnon2eaCEBhMEE0
-         jekNw1MMOX6z5o5yvV4QxMrs0MOzyJgyNbtSet98PeLIevAy6StK8laqAl15C3tyXSFA
-         wxcA==
-X-Forwarded-Encrypted: i=1; AJvYcCX15nqhaCryjnztgd437K+sm107oWTWOKmO11B3qVx6I1ru12faKq0eR8HJ98iYwvZk3U6mFyNz1bY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwUuSRcHcUXMy7U8Yj23/6UhnmMLV7o/MfVaW8rl+NWaUUdylqi
-	59Xq78khH1EtEuB+ko//V5uUUTn9439lmsAhRnExu42+tUDkdHrV+LCaqZ8VYOX80RWuBZKwV2o
-	GsIJ77Ym/NgdLa1iKewFNh82AIJ1NKTnh+1UdN2vg+A==
-X-Gm-Gg: ASbGncvzrW/Gt4BHvii6jIBGeK6IPkN+D+Xv1P+CXTPm+dNqIgCj9nfsfFs5gmvpg5G
-	BkCWbulaWmRn7JXQpIgeJeL0CAFy4Nf8ma0seUY3rXt0JFUyjktyr+a5PY6t8QuTRHuKOYoiDSc
-	cO6JA14IMYcWPpzB1WKL3OPC50vCcrSPCEW4qInhitLLOVLvr3vFRu96RX4bU+108jjMZEzwrDR
-	e3B62Vso8GJSnZvjr166djYKS3T3gE7/IyDEbhiUvnTC19SlyTXrOIjtxMN9HNX
-X-Google-Smtp-Source: AGHT+IEv9slRsfR5X3TXspH/uXKr0CnvgtVOqHiGOTJdOEngGu5NvMTv0CV3ST5SsNBcsjOejLZBA905vSFz/HXp7oo=
-X-Received: by 2002:a17:907:9404:b0:b07:c1df:875 with SMTP id
- a640c23a62f3a-b50acc2f5camr471007566b.56.1759936975069; Wed, 08 Oct 2025
- 08:22:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6m3tVzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34B1C4CEE7;
+	Wed,  8 Oct 2025 18:20:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759947645;
+	bh=BIer1vahMoSTNf/8VQeJIF0T9DRb8ixp0DXUjfiI/pY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=A6m3tVzkfpgn3SU4MTcpBXwaSznWF5wHyhAo9UeHkm5a4igXdeWIbuTUydP1oHM06
+	 96S1mFwcivpPAahvyfdUa/dHWV6zb5j60MFSqmMakpM88LYqsjM4WG4oUistTl7r0g
+	 1bZkVPiDXjEoCjNWBSDWaGNj/giCIo9uoLNZ4VRManqtxBjwGCTuf0EptM9E6T92PP
+	 9ji02zePiIn2BOjrEhY4HTcM2CJkefH2UaAFYRaAZKJywyjqKOe65fFu3Dm0/OQuY1
+	 ygbJd5e0S+5nW3CLIOPczKx6dCKbZbBYA75NeJTiEFHiQG02Pv2n0ovQVkG/UbWCFq
+	 bsjroz2M95R2A==
+Date: Wed, 8 Oct 2025 08:20:45 -1000
+From: Tejun Heo <tj@kernel.org>
+To: zhidao su <soolaugust@gmail.com>
+Cc: sched-ext@lists.linux.dev, suzhidao@xiaomi.com
+Subject: Re: [PATCH] sched/ext: Add tg->scx.idle which tracks the current
+ state
+Message-ID: <aOarfQm218sITkrG@slm.duckdns.org>
+References: <aOVmuWwyLUNkPG7S@slm.duckdns.org>
+ <20251008021031.630303-2-soolaugust@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251006104652.630431579@infradead.org> <20251006105453.648473106@infradead.org>
- <CAKfTPtCC3QF5DBn0u2zpYgaCWcoP2nXcvyKMf-aGomoH08NPbA@mail.gmail.com> <20251008135830.GW4067720@noisy.programming.kicks-ass.net>
-In-Reply-To: <20251008135830.GW4067720@noisy.programming.kicks-ass.net>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Wed, 8 Oct 2025 17:22:42 +0200
-X-Gm-Features: AS18NWCMZ89A2Uc8OjuCKIj0t-GYofpct9xdmPVvK_SHfZZWp3n4tWEOwjGeIvE
-Message-ID: <CAKfTPtDG9Fz8o1TVPe3w2eNA+Smhmq2utSA_c6X4GJJgt_dAJA@mail.gmail.com>
-Subject: Re: [RFC][PATCH 2/3] sched: Add support to pick functions to take rf
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org, 
-	juri.lelli@redhat.com, dietmar.eggemann@arm.com, rostedt@goodmis.org, 
-	bsegall@google.com, mgorman@suse.de, vschneid@redhat.com, longman@redhat.com, 
-	hannes@cmpxchg.org, mkoutny@suse.com, void@manifault.com, arighi@nvidia.com, 
-	changwoo@igalia.com, cgroups@vger.kernel.org, sched-ext@lists.linux.dev, 
-	liuwenfang@honor.com, tglx@linutronix.de, 
-	Joel Fernandes <joelagnelf@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251008021031.630303-2-soolaugust@gmail.com>
 
-On Wed, 8 Oct 2025 at 15:58, Peter Zijlstra <peterz@infradead.org> wrote:
->
-> On Wed, Oct 08, 2025 at 03:16:58PM +0200, Vincent Guittot wrote:
->
-> > > +static struct task_struct *
-> > > +fair_server_pick_task(struct sched_dl_entity *dl_se, struct rq_flags *rf)
-> > >  {
-> > > -       return pick_next_task_fair(rq, prev, NULL);
-> >
-> > The special case of a NULL rf pointer is used to skip
-> > sched_balance_newidle() at the end of pick_next_task_fair() in the
-> > pick_next_task() slo path when prev_balance has already it. This means
-> > that it will be called twice if prev is not a fair task.
->
-> Oh right. I suppose we can simply remove balance_fair.
+On Wed, Oct 08, 2025 at 10:09:39AM +0800, zhidao su wrote:
+> Add an idle field to the scx_task_group structure to track the current
+> idle state of a task group. This field is initialized to false in
+> scx_tg_init() and updated in scx_group_set_idle() when the idle state
+> changes.
+> 
+> This allows BPF schedulers to check the current idle state of a task
+> group directly from the scx_task_group structure.
+> 
+> v2: Add tg->scx.idle which tracks the current state
 
-That was the option that I also had in mind but this will change from
-current behavior and I'm afraid that sched_ext people will complain.
-Currently, if prev is sched_ext, we don't call higher class.balance()
-which includes the fair class balance_fair->sched_balance_newidle.  If
-we now always call sched_balance_newidle() at the end
-pick_next_task_fair(), we will try to pull a fair task at each
-schedule between sched_ext tasks
+Hmm... maybe a blank line here? I don't know whether there actually is an
+established convention but I don't think we usually put version delta
+descriptions in the tag section.
 
->
-> > While reviewing this series, I also noticed an older issue that we
-> > have with check pelt lost idle time [1]
-> > [1] https://lore.kernel.org/all/20251008131214.3759798-1-vincent.guittot@linaro.org/
->
-> Let me go have a look.
+> Signed-off-by: zhidao su <soolaugust@gmail.com>
+...
+> @@ -4273,6 +4274,9 @@ void scx_group_set_idle(struct task_group *tg, bool idle)
+>  
+>  	percpu_down_read(&scx_cgroup_rwsem);
+>  
+> +	/* Update the task group's idle state */
+> +	tg->scx.idle = idle;
+> +
+>  	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_set_idle))
+>  		SCX_CALL_OP(sch, SCX_KF_UNLOCKED, cgroup_set_idle, NULL,
+>  			    tg_cgrp(tg), idle);
+
+This can be either way but scx_group_set_weight() sets the weight after
+calling the ops.cgroup_set_weight() is called, so let's match that.
+
+Thanks.
+
+-- 
+tejun
