@@ -1,287 +1,167 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F262C3274
-	for <sched-ext@lists.linux.dev>; Thu,  9 Oct 2025 12:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E6A62557A
+	for <sched-ext@lists.linux.dev>; Thu,  9 Oct 2025 13:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760011609; cv=none; b=GqviVeHxWMUa05fuRf7+f4N2bjzBtJGO1NYhHkchCxPsxjlbnTwmU7OW1ZUyabDVZi0T6IFMsCfo1kDuJDL5f5PStqZ76mkKBqyrJ3eSXqwyTzCZw4vT9iiKYD7+FWdqxpj+fBAabbPQShKJMMf9LovoRCw2YP/qNJ1Va/MYpyc=
+	t=1760016611; cv=none; b=OkmbcPzg54uiybGq80gKCr3dPs0DTZqZ4fKUKhP2WBK38GkNtMdlNXuWtMLGFRVRStM78CUUubhFBeK7pzBjCuU3g7GOZmOSy9O4KmROeL7y2WpJpeSIJe3RHiNagmJFg78zgNaLVe8Fv6oDSjj42u8/x+m6qpl2F+Js6SHBx3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760011609; c=relaxed/simple;
-	bh=89K07C1Hq7BDBmwMwFxWezu//GJKfouksmEtm0Afqx8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=mjCw65l68ekHxUfS0V3bb+uPCrJXZ2EG4tRZSuVnNwkGYFanA0KCS8fcen0heEgUPPSz3tObIvKK+LOZEwyNZEW6K5cYFetBb0d/pF/ORLLdU0Rjn3Zc7deintiqabxRulQcuyxQtQ8CBcniMwGzoHBqCcG+QZKIDE7CmV+9Vek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YmQO3ShI; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YmQO3ShI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760011604;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tCTgGh6DAcGNsFfdRhvMtBpBlg0joPYjuskOZcHKICE=;
-	b=YmQO3ShI0gxo+jB0QHIQ8hc12t86zhWq+gy0FzSi2iSghjkSDC7BTuU6oEFmFaDuchJLCC
-	SzF6uiKNxgfoJ2Z0LfZv8uuYV429yffBiu7808rk8EzJxKSrez+m50tojAteVHZRsLUWHD
-	eXdYFxE1qe4Nggd2LBcgQfKZhjcgnow=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-wlnj0u1QNqCacaAXnowkWQ-1; Thu,
- 09 Oct 2025 08:06:41 -0400
-X-MC-Unique: wlnj0u1QNqCacaAXnowkWQ-1
-X-Mimecast-MFC-AGG-ID: wlnj0u1QNqCacaAXnowkWQ_1760011600
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 1CA651800378;
-	Thu,  9 Oct 2025 12:06:40 +0000 (UTC)
-Received: from pauld.westford.csb (unknown [10.22.80.162])
-	by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 600F6180035E;
-	Thu,  9 Oct 2025 12:06:38 +0000 (UTC)
-Date: Thu, 9 Oct 2025 08:06:35 -0400
-From: Phil Auld <pauld@redhat.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev
-Subject: Re: [PATCH v3] sched_ext: Allocate scx_kick_cpus_pnt_seqs lazily
- using kvzalloc()
-Message-ID: <20251009120635.GA277792@pauld.westford.csb>
-References: <20251007133523.GA93086@pauld.westford.csb>
- <d1c0eda5206b01fd670e148bd5ea0d56@kernel.org>
- <aOYAV2ZQvMt5aZxu@gpd4>
- <aObPQF1-o-Uek7bd@slm.duckdns.org>
- <aObcIMFpUoMy7vJI@slm.duckdns.org>
- <aObkkKf_UCHySRGz@gpd4>
- <aOb1e7R1lAGVGH-2@slm.duckdns.org>
- <aOb3Hv0uPv9G7N33@slm.duckdns.org>
+	s=arc-20240116; t=1760016611; c=relaxed/simple;
+	bh=N7HoqQExRcLPi/a/OT37UWSWJ51fMskEpk6eCLaiU/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=R7MRPYQZPzqQ5sVPbcwolbJYIMTvsFV1LmwYQabpIwNy4rxhFifzXnbe61M/X7goskd1PRIVzHM+5+o9t6tfmmtaXI7lDcurKZRHSJUQboSJkjzAT2JHCXW3hel0LBip3fEph2HZsW9uKO3yMh8OpNjGQlDUDKqYfnc2553XWdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 197C0176A;
+	Thu,  9 Oct 2025 06:30:00 -0700 (PDT)
+Received: from [192.168.178.6] (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 91F893F59E;
+	Thu,  9 Oct 2025 06:30:04 -0700 (PDT)
+Message-ID: <02452879-8998-47e0-9679-d2ff00503901@arm.com>
+Date: Thu, 9 Oct 2025 15:30:02 +0200
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <aOb3Hv0uPv9G7N33@slm.duckdns.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: MEZeXD-cMKWkxsqx7g2ccgWr-_RkIKLm5I3j0e8mxdc_1760011600
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/12] sched: Fold sched_class::switch{ing,ed}_{to,from}()
+ into the change pattern
+To: Peter Zijlstra <peterz@infradead.org>, tj@kernel.org
+Cc: linux-kernel@vger.kernel.org, mingo@kernel.org, juri.lelli@redhat.com,
+ vincent.guittot@linaro.org, rostedt@goodmis.org, bsegall@google.com,
+ mgorman@suse.de, vschneid@redhat.com, longman@redhat.com,
+ hannes@cmpxchg.org, mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
+ changwoo@igalia.com, cgroups@vger.kernel.org, sched-ext@lists.linux.dev,
+ liuwenfang@honor.com, tglx@linutronix.de
+References: <20251006104402.946760805@infradead.org>
+ <20251006104526.861755244@infradead.org>
+Content-Language: en-GB
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+In-Reply-To: <20251006104526.861755244@infradead.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Tejun,
-
-On Wed, Oct 08, 2025 at 01:43:26PM -1000 Tejun Heo wrote:
-> On systems with >4096 CPUs, scx_kick_cpus_pnt_seqs allocation fails during
-> boot because it exceeds the 32,768 byte percpu allocator limit.
+On 06.10.25 12:44, Peter Zijlstra wrote:
+> Add {DE,EN}QUEUE_CLASS and fold the sched_class::switch* methods into
+> the change pattern. This completes and makes the pattern more
+> symmetric.
 > 
-> Restructure to use DEFINE_PER_CPU() for the per-CPU pointers, with each CPU
-> pointing to its own kvzalloc'd array. Move allocation from boot time to
-> scx_enable() and free in scx_disable(), so the O(nr_cpu_ids^2) memory is only
-> consumed when sched_ext is active.
+> This changes the order of callbacks slightly:
 > 
-> Use RCU to guard against racing with free. Arrays are freed via call_rcu()
-> and kick_cpus_irq_workfn() uses rcu_dereference_bh() with a NULL check.
+> 				|
+> 				|  switching_from()
+>   dequeue_task();		|  dequeue_task()
+>   put_prev_task();		|  put_prev_task()
+> 				|  switched_from()
+> 				|
+>   ... change task ...		|  ... change task ...
+> 				|
+>   switching_to();		|  switching_to()
+>   enqueue_task();		|  enqueue_task()
+>   set_next_task();		|  set_next_task()
+>   prev_class->switched_from()	|
+>   switched_to()			|  switched_to()
+> 				|
 > 
-> While at it, rename to scx_kick_pseqs for brevity and update comments to
-> clarify these are pick_task sequence numbers.
+> Notably, it moves the switched_from() callback right after the
+> dequeue/put. Existing implementations don't appear to be affected by
+> this change in location -- specifically the task isn't enqueued on the
+> class in question in either location.
 > 
-> v2: RCU protect scx_kick_seqs to manage kick_cpus_irq_workfn() racing
->     against disable as per Andrea.
-> 
-> v3: Fix bugs notcied by Andrea.
+> Make (CLASS)^(SAVE|MOVE), because there is nothing to save-restore
+> when changing scheduling classes.
 
-This looks good to me.  The original patch of course did solve
-the boot issue. They aren't using scx so there were no other issues
-seen. I've kicked off a build with this version and will try to
-get that booted on the large system as well. It should solve that
-problem just as well as the original one obviously.
+This one causes a DL bw related warning when I run a simple 1 DL task
+rt-app workload:
 
-Thanks for the quick turn around.
+# rt-app ./rt-app/dl10.json 
 
-I'm not going to offer a Tested tag since it was only boot tested
-(with no scx use) on the large system. And all that really tests
-is the 5 lines removed from init_sched_ext_class...
+[rt-app] <notice> thread_data_set_unique_name 0 thread0-0
+[rt-app] <notice> [0] starting thread ...
 
-Reviewed-by: Phil Auld <pauld@redhat.com>
+[rt-app] <notice> [0] Starting with SCHED_DEADLINE policy with priority 0
+[   16.390272] sched: DL replenish lagged too much
+[   16.390327] ------------[ cut here ]------------
+[   16.390329] WARNING: CPU: 2 PID: 591 at kernel/sched/deadline.c:239 sub_running_bw.isra.0+0xf4/0x150
+[   16.391849] Modules linked in:
+[   16.392107] CPU: 2 UID: 0 PID: 591 Comm: thread0-0 Not tainted 6.17.0-rc4-00020-ga6b63e5ce187 #46 PREEMPT 
+[   16.392885] Hardware name: linux,dummy-virt (DT)
+[   16.393265] pstate: 014000c5 (nzcv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   16.393783] pc : sub_running_bw.isra.0+0xf4/0x150
+[   16.394153] lr : sub_running_bw.isra.0+0x118/0x150
+[   16.394636] sp : ffff80008137bb10
+[   16.394864] x29: ffff80008137bb10 x28: ffff0000ff7b39c0 x27: ffff0000ce73dd60
+[   16.395333] x26: 0000000000000000 x25: ffffa1134d945000 x24: ffff0000ff7b42c8
+[   16.395805] x23: ffffa1134d944000 x22: ffffa1134d944000 x21: 000000000000cccc
+[   16.396267] x20: 0000000000060000 x19: ffff0000ff7b42c8 x18: fffffffffffe6f58
+[   16.396742] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
+[   16.397202] x14: fffffffffffc6f57 x13: 0a6863756d206f6f x12: ffffa1134e743f60
+[   16.397674] x11: 00000000000000c0 x10: 0000000000000001 x9 : 0000000000000000
+[   16.398130] x8 : ffff0000c001e490 x7 : 0000000000000008 x6 : ffff0000c0029968
+[   16.398883] x5 : 00000000ffffffff x4 : 0000000000000064 x3 : ffff0000c0029fa8
+[   16.399432] x2 : ffff5eedb1f6e000 x1 : 000000000000cccc x0 : fffffffffffacccc
+[   16.399962] Call trace:
+[   16.400147]  sub_running_bw.isra.0+0xf4/0x150 (P)
+[   16.400510]  task_non_contending+0x248/0x2ac
+[   16.400831]  dequeue_task_dl+0x178/0x2d4
+[   16.401122]  __schedule+0x6ac/0x1038
+[   16.401401]  schedule+0x4c/0x164
+[   16.401627]  do_nanosleep+0x6c/0x190
+[   16.401862]  hrtimer_nanosleep+0xbc/0x200
+[   16.402156]  common_nsleep_timens+0x50/0x90
+[   16.402522]  __arm64_sys_clock_nanosleep+0xd0/0x150
+[   16.402813]  invoke_syscall+0x48/0x104
+[   16.403043]  el0_svc_common.constprop.0+0x40/0xe0
+[   16.403327]  do_el0_svc+0x1c/0x28
+[   16.403520]  el0_svc+0x4c/0x160
+[   16.403711]  el0t_64_sync_handler+0xa0/0xf0
+[   16.403950]  el0t_64_sync+0x198/0x19c
+[   16.404226] irq event stamp: 196
+[   16.404451] hardirqs last  enabled at (195): [<ffffa1134c8021d8>] _raw_spin_unlock_irqrestore+0x6c/0x74
+[   16.405086] hardirqs last disabled at (196): [<ffffa1134c7f7850>] __schedule+0x4e8/0x1038
+[   16.405629] softirqs last  enabled at (154): [<ffffa1134b4e157c>] handle_softirqs+0x44c/0x498
+[   16.406218] softirqs last disabled at (145): [<ffffa1134b410774>] __do_softirq+0x14/0x20
 
+with extra logging and removing underflow WARN_ON_ONCE:
 
-Cheers,
-Phil
+# rt-app ./rt-app/dl10.json 
 
-> 
-> Reported-by: Phil Auld <pauld@redhat.com>
-> Link: http://lkml.kernel.org/r/20251007133523.GA93086@pauld.westford.csb
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> Cc: Andrea Righi <arighi@nvidia.com>
-> ---
->  kernel/sched/ext.c | 89 ++++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 79 insertions(+), 10 deletions(-)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 2b0e88206d07..01010c3378b0 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -67,8 +67,19 @@ static unsigned long scx_watchdog_timestamp = INITIAL_JIFFIES;
->  
->  static struct delayed_work scx_watchdog_work;
->  
-> -/* for %SCX_KICK_WAIT */
-> -static unsigned long __percpu *scx_kick_cpus_pnt_seqs;
-> +/*
-> + * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of pick_task sequence
-> + * numbers. The arrays are allocated with kvzalloc() as size can exceed percpu
-> + * allocator limits on large machines. O(nr_cpu_ids^2) allocation, allocated
-> + * lazily when enabling and freed when disabling to avoid waste when sched_ext
-> + * isn't active.
-> + */
-> +struct scx_kick_pseqs {
-> +	struct rcu_head		rcu;
-> +	unsigned long		seqs[];
-> +};
-> +
-> +static DEFINE_PER_CPU(struct scx_kick_pseqs __rcu *, scx_kick_pseqs);
->  
->  /*
->   * Direct dispatch marker.
-> @@ -3850,6 +3861,27 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
->  	}
->  }
->  
-> +static void free_kick_pseqs_rcu(struct rcu_head *rcu)
-> +{
-> +	struct scx_kick_pseqs *pseqs = container_of(rcu, struct scx_kick_pseqs, rcu);
-> +
-> +	kvfree(pseqs);
-> +}
-> +
-> +static void free_kick_pseqs(void)
-> +{
-> +	int cpu;
-> +
-> +	for_each_possible_cpu(cpu) {
-> +		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
-> +		struct scx_kick_pseqs *to_free;
-> +
-> +		to_free = rcu_replace_pointer(*pseqs, NULL, true);
-> +		if (to_free)
-> +			call_rcu(&to_free->rcu, free_kick_pseqs_rcu);
-> +	}
-> +}
-> +
->  static void scx_disable_workfn(struct kthread_work *work)
->  {
->  	struct scx_sched *sch = container_of(work, struct scx_sched, disable_work);
-> @@ -3986,6 +4018,7 @@ static void scx_disable_workfn(struct kthread_work *work)
->  	free_percpu(scx_dsp_ctx);
->  	scx_dsp_ctx = NULL;
->  	scx_dsp_max_batch = 0;
-> +	free_kick_pseqs();
->  
->  	mutex_unlock(&scx_enable_mutex);
->  
-> @@ -4348,6 +4381,33 @@ static void scx_vexit(struct scx_sched *sch,
->  	irq_work_queue(&sch->error_irq_work);
->  }
->  
-> +static int alloc_kick_pseqs(void)
-> +{
-> +	int cpu;
-> +
-> +	/*
-> +	 * Allocate per-CPU arrays sized by nr_cpu_ids. Use kvzalloc as size
-> +	 * can exceed percpu allocator limits on large machines.
-> +	 */
-> +	for_each_possible_cpu(cpu) {
-> +		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
-> +		struct scx_kick_pseqs *new_pseqs;
-> +
-> +		WARN_ON_ONCE(rcu_access_pointer(*pseqs));
-> +
-> +		new_pseqs = kvzalloc_node(struct_size(new_pseqs, seqs, nr_cpu_ids),
-> +					  GFP_KERNEL, cpu_to_node(cpu));
-> +		if (!new_pseqs) {
-> +			free_kick_pseqs();
-> +			return -ENOMEM;
-> +		}
-> +
-> +		rcu_assign_pointer(*pseqs, new_pseqs);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops)
->  {
->  	struct scx_sched *sch;
-> @@ -4490,15 +4550,19 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
->  
->  	mutex_lock(&scx_enable_mutex);
->  
-> +	ret = alloc_kick_pseqs();
-> +	if (ret)
-> +		goto err_unlock;
-> +
->  	if (scx_enable_state() != SCX_DISABLED) {
->  		ret = -EBUSY;
-> -		goto err_unlock;
-> +		goto err_free_pseqs;
->  	}
->  
->  	sch = scx_alloc_and_add_sched(ops);
->  	if (IS_ERR(sch)) {
->  		ret = PTR_ERR(sch);
-> -		goto err_unlock;
-> +		goto err_free_pseqs;
->  	}
->  
->  	/*
-> @@ -4701,6 +4765,8 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
->  
->  	return 0;
->  
-> +err_free_pseqs:
-> +	free_kick_pseqs();
->  err_unlock:
->  	mutex_unlock(&scx_enable_mutex);
->  	return ret;
-> @@ -5082,10 +5148,18 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
->  {
->  	struct rq *this_rq = this_rq();
->  	struct scx_rq *this_scx = &this_rq->scx;
-> -	unsigned long *pseqs = this_cpu_ptr(scx_kick_cpus_pnt_seqs);
-> +	struct scx_kick_pseqs __rcu *pseqs_pcpu = __this_cpu_read(scx_kick_pseqs);
->  	bool should_wait = false;
-> +	unsigned long *pseqs;
->  	s32 cpu;
->  
-> +	if (unlikely(!pseqs_pcpu)) {
-> +		pr_warn_once("kick_cpus_irq_workfn() called with NULL scx_kick_pseqs");
-> +		return;
-> +	}
-> +
-> +	pseqs = rcu_dereference_bh(pseqs_pcpu)->seqs;
-> +
->  	for_each_cpu(cpu, this_scx->cpus_to_kick) {
->  		should_wait |= kick_one_cpu(cpu, this_rq, pseqs);
->  		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
-> @@ -5208,11 +5282,6 @@ void __init init_sched_ext_class(void)
->  
->  	scx_idle_init_masks();
->  
-> -	scx_kick_cpus_pnt_seqs =
-> -		__alloc_percpu(sizeof(scx_kick_cpus_pnt_seqs[0]) * nr_cpu_ids,
-> -			       __alignof__(scx_kick_cpus_pnt_seqs[0]));
-> -	BUG_ON(!scx_kick_cpus_pnt_seqs);
-> -
->  	for_each_possible_cpu(cpu) {
->  		struct rq *rq = cpu_rq(cpu);
->  		int  n = cpu_to_node(cpu);
-> -- 
-> 2.51.0
-> 
+[rt-app] <notice> thread_data_set_unique_name 0 thread0-0
+[rt-app] <notice> [0] starting thread ...
 
--- 
+[rt-app] <notice> [0] Starting with SCHED_DEADLINE policy with priority 0
+[   18.494469] sched: DL replenish lagged too much
+[   18.494483] cpu=3 p->comm=thread0-0 p->pid=592
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[   18.494486] __sub_running_bw() cpu=3 dl_rq->running_bw=18446744073709210828 dl_bw=393216 old=52428
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                        dl_rq->running_bw underflow in task_non_contending()
 
+[   18.494492] CPU: 3 UID: 0 PID: 592 Comm: thread0-0 Not tainted 6.17.0-rc4-00020-ga6b63e5ce187-dirty #44 PREEMPT 
+[   18.494495] Hardware name: linux,dummy-virt (DT)
+[   18.494497] Call trace:
+[   18.494498]  show_stack+0x18/0x24 (C)
+[   18.494510]  dump_stack_lvl+0x70/0x98
+[   18.494514]  dump_stack+0x18/0x24
+[   18.494516]  sub_running_bw.isra.0+0x164/0x180
+[   18.494539]  task_non_contending+0x298/0x2e8
+[   18.494541]  dequeue_task_dl+0x188/0x31c
+[   18.494544]  __schedule+0x6ac/0x1038
+[   18.494574]  schedule+0x4c/0x164
+[   18.494578]  do_nanosleep+0x6c/0x190
+[   18.494580]  hrtimer_nanosleep+0xbc/0x200
+[   18.494594]  common_nsleep_timens+0x50/0x90
+[   18.494599]  __arm64_sys_clock_nanosleep+0xd0/0x150
+[   18.494602]  invoke_syscall+0x48/0x104
+[   18.494610]  el0_svc_common.constprop.0+0x40/0xe0
+[   18.494612]  do_el0_svc+0x1c/0x28
+[   18.494615]  el0_svc+0x4c/0x160
+[   18.494617]  el0t_64_sync_handler+0xa0/0xf0
+[   18.494620]  el0t_64_sync+0x198/0x19c
+
+Not sure yet how this is related to switched_from_dl() being now called earlier?
+
+[...]
