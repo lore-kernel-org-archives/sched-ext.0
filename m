@@ -1,104 +1,299 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3668E2E9EA9;
-	Thu,  9 Oct 2025 13:54:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300B82E9759
+	for <sched-ext@lists.linux.dev>; Thu,  9 Oct 2025 13:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760018063; cv=none; b=eQc58azlYJ7fvyUFhKJqWY5BgLZPtZkzotY5fpCrw/Y6ihvhaBREJ89JlM2XhqoYsUuN8hlQI0j59ZnB3xtUfiOmm03muOPp1EYOHp3aPGJZfjaFF8uc/RFvHpDsQIH8Tb1TKc02pE9QHhEL2c3vH9AyiTwh49VYOnmvHDH4kAI=
+	t=1760018333; cv=none; b=AQiBPRVEc624PcUDSd8VTOpeyjFyHAzO234kPPuk3OpEJI7JGtJrpOhm4QtMEwAOl7zCnY/VJPKL4II8HWMgScE/RA5mCujhYSJ52TvK4+9hXxNndlftcXHJ0lGRnY8YdtCmkj8oUfeXiE9d/I4hc+3aeq5ZZbo7++VSH2IVT2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760018063; c=relaxed/simple;
-	bh=QtXc8ESkwpZEhqGealqs1YU7jMM9lHkaFm2L48lnLcg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D0PzM6IRZCpkODzkY2KAhW3iMtKc5mpFwfDT4PX9nIiBYecdXWz+75u/6MeGaZ5C/b6rzGuicOQLNkL0b54dmfsjlESeM/TEsoGrkqd6e3Bbe9E/iYtQ2ovPaIt6KsgR5Myu94uvqfREXjsSG/rFDkf5Qqa5s2/Qj4LZ2VXlvsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SxAjVnxb; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1760018333; c=relaxed/simple;
+	bh=mFDkA3eRwtzhsFJaBh7nx8oskCERd+ZxLdLjciLTNTM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Rs7+zNbtMgmW0oRwWL//SVQz7fclqL175+XoN0gKfqKkNUvPiAy6ggXG3gHLrXXv5uBTAYeiCUIH1BhIfKIrGSkZusn/s17QkyA9gZoYUEdWF9GpwifAscIIIWrCuMH15UUtAa9ILN5j1Gc40KDLbRpoYBVXmSqZmfNexAMM0aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=RTkgJefP; arc=none smtp.client-ip=74.125.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SxAjVnxb"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=iEcPPHQnhpaxY6WSqV84aGI8Fn5PdIquY/j42KoeHTg=; b=SxAjVnxb948i+fQGF6yVCzpKLX
-	YTBpVI2+jn7Pb/4z8xa4PjwZTL1pU8pcd5ad186U7/mIOFwJs7ZrUo8RquXHFFYUJpdrrzs8OxaGg
-	0ZDXDeP5oIyFV/nkNVFDlvP75HGtsp/TeGxzFcwD9SQ1VFqUPtrQMZ/PiWYUkzRxYao/IP30yiFtU
-	R+Uhnk+1fAaLz5T/vtQDN/KgQpogK7YeIRMDF3okPXXBI6b0jonfRKR8X4vOpHHAUOJjyWiomxgtW
-	W8PJEUiXx6rDCBtUZlXBGwGG3J94JmA/rVae050LvLGykx4sk9CR6U1ndqV/lgAW7rvNvm8VRaavN
-	m4/XePoA==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1v6r5s-00000008XE6-17lR;
-	Thu, 09 Oct 2025 13:54:09 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 641C5300342; Thu, 09 Oct 2025 15:54:08 +0200 (CEST)
-Date: Thu, 9 Oct 2025 15:54:08 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org,
-	juri.lelli@redhat.com, vincent.guittot@linaro.org,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
-	mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
-	changwoo@igalia.com, cgroups@vger.kernel.org,
-	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
-Subject: Re: [PATCH 03/12] sched: Fold
- sched_class::switch{ing,ed}_{to,from}() into the change pattern
-Message-ID: <20251009135408.GD4067720@noisy.programming.kicks-ass.net>
-References: <20251006104402.946760805@infradead.org>
- <20251006104526.861755244@infradead.org>
- <02452879-8998-47e0-9679-d2ff00503901@arm.com>
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="RTkgJefP"
+Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-6353e91a04aso1001574d50.2
+        for <sched-ext@lists.linux.dev>; Thu, 09 Oct 2025 06:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1760018330; x=1760623130; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hfooPXAeOAU1EAeHNqlfk3ucybzzfKIfk6lw1CAk8xo=;
+        b=RTkgJefPBSqZQTb9NPOtjP7ZJyf2G4oQ434kooPxM9tP/9SYngJW/rrxwqqA/Ql6tr
+         SYw1gKB9xrU6Nv2N3cYpfrvLJuGUvZaTLWCKBDZaqyjMCVACxykYvBdRzDrRPK5f1uYm
+         68RVz2OzsGOz5yhWMGRvylt/fHhZqaQ8qtOi74fm/pg6ajP+qVjsArc3VqksQmkw7fHZ
+         4ovw9/sALLBzhJ/yH1v1SjNpMI4ys1Hm/UsjvkKfCzXOKECCGCvxw9znVYMWYuoPT87x
+         Ca/O51g3JzFL8L68N6eIxT2vkYdEUVkNWLgkyak8u9kFeK5sASQSTH8aZdS7FY6CvvTo
+         l/vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760018330; x=1760623130;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hfooPXAeOAU1EAeHNqlfk3ucybzzfKIfk6lw1CAk8xo=;
+        b=dAA1T5v8LM+P8RY+MsLMcsi39Py3m8CoF0uRxRd9i9kouHw3u+4lovC06Kiz7WR5hb
+         5GE2qZF9TUpArvxDZk5O2mAcoCCcQbcXoweKMbD7lS37i5WGOHrdMMYXuBy6hNYMtHDr
+         3llpHsSzHGF20BpnOvATroCE4WaWy5tkNn4iOmQL2Ub1WGCGr4MQlHV/pf1GSurmgkmS
+         OD0kjBdKICkK0LpBNMYoivSw1F5CsVeFbWv9///8mgikTbku4BgBQhbxOYeo/1Qrh8Mo
+         oHSmmqGWwdraHHPMdZAOqkVmG92vbIhQwl1aKk44eTrMyxFvZfU2yorpOZ6X+hTlrKv2
+         niKA==
+X-Forwarded-Encrypted: i=1; AJvYcCWNy13JhBlijlr1QHXDATk9Jh2gXpqTcPNmn32Dr2VWL/WyLo8l8kx0ZN5tqsprBiqJx1DwbTYAvkI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxkSVgDSa0nPNEQRLizZSk71qYdOkQUUeliyASOj0ZSHRhrIIiY
+	ArbMHxqWQ0DloztIiFV3s7GPSD/KyVwAjyPLpNs4bZBY62FXiDkFIepFtFMcmteoVkATxXrIgK5
+	bLTpHJa+PYdrvR1zb2CF0MlwfuYeZruJKleyMqiczeA==
+X-Gm-Gg: ASbGncv1WHdRbYCZsd7ZiTWO5Hqyc71A7oMB+M8WW1tE0jahEsRcl9gDNrTA5MTDs0J
+	br3+LQ62qHGqaOkH28Yf1W9tnfn3Po6Y3Tpx578a3TLjqOdkkc0SA3awafvc1weRrxQf4KebhUU
+	XsYIMRVavVlfcjnx6tqJd6mr/a6KL8ZJB6p49wJfosRcslf6RlFjQEVcbACqwEmuG/TiNyXstPT
+	zRT6TXfGw2E7hGHv68RgBg34ayBj2V8Cg==
+X-Google-Smtp-Source: AGHT+IHkPGAxGlSPC8L2qbq4CZVTIrt640mZND+W++IoHDDHTQhtPenSIEwYh1FoFvuw/JvofJ355ETeoV3+Lss5AIo=
+X-Received: by 2002:a05:690c:3206:b0:762:9a58:b334 with SMTP id
+ 00721157ae682-780e16d54b2mr124289457b3.42.1760018329661; Thu, 09 Oct 2025
+ 06:58:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <02452879-8998-47e0-9679-d2ff00503901@arm.com>
+References: <20251007133523.GA93086@pauld.westford.csb> <d1c0eda5206b01fd670e148bd5ea0d56@kernel.org>
+ <aOYAV2ZQvMt5aZxu@gpd4> <aObPQF1-o-Uek7bd@slm.duckdns.org>
+ <aObcIMFpUoMy7vJI@slm.duckdns.org> <aObkkKf_UCHySRGz@gpd4>
+ <aOb1e7R1lAGVGH-2@slm.duckdns.org> <aOb3Hv0uPv9G7N33@slm.duckdns.org>
+In-Reply-To: <aOb3Hv0uPv9G7N33@slm.duckdns.org>
+From: Emil Tsalapatis <linux-lists@etsalapatis.com>
+Date: Thu, 9 Oct 2025 09:58:37 -0400
+X-Gm-Features: AS18NWB4fsi58i1BxtcyFkuka9DzyuC5iyFPdl7zmzx5eoymRK5EiuczOMtxtCs
+Message-ID: <CABFh=a54KWB16BpaddpegzZjSY4bN8gfNvBA4DCj-fO2s4YR3w@mail.gmail.com>
+Subject: Re: [PATCH v3] sched_ext: Allocate scx_kick_cpus_pnt_seqs lazily
+ using kvzalloc()
+To: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>, Phil Auld <pauld@redhat.com>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 09, 2025 at 03:30:02PM +0200, Dietmar Eggemann wrote:
-> On 06.10.25 12:44, Peter Zijlstra wrote:
-> > Add {DE,EN}QUEUE_CLASS and fold the sched_class::switch* methods into
-> > the change pattern. This completes and makes the pattern more
-> > symmetric.
-> > 
-> > This changes the order of callbacks slightly:
-> > 
-> > 				|
-> > 				|  switching_from()
-> >   dequeue_task();		|  dequeue_task()
-> >   put_prev_task();		|  put_prev_task()
-> > 				|  switched_from()
-> > 				|
-> >   ... change task ...		|  ... change task ...
-> > 				|
-> >   switching_to();		|  switching_to()
-> >   enqueue_task();		|  enqueue_task()
-> >   set_next_task();		|  set_next_task()
-> >   prev_class->switched_from()	|
-> >   switched_to()			|  switched_to()
-> > 				|
-> > 
-> > Notably, it moves the switched_from() callback right after the
-> > dequeue/put. Existing implementations don't appear to be affected by
-> > this change in location -- specifically the task isn't enqueued on the
-> > class in question in either location.
-> > 
-> > Make (CLASS)^(SAVE|MOVE), because there is nothing to save-restore
-> > when changing scheduling classes.
-> 
-> This one causes a DL bw related warning when I run a simple 1 DL task
-> rt-app workload:
+On Wed, Oct 8, 2025 at 7:43=E2=80=AFPM Tejun Heo <tj@kernel.org> wrote:
+>
+> On systems with >4096 CPUs, scx_kick_cpus_pnt_seqs allocation fails durin=
+g
+> boot because it exceeds the 32,768 byte percpu allocator limit.
+>
+> Restructure to use DEFINE_PER_CPU() for the per-CPU pointers, with each C=
+PU
+> pointing to its own kvzalloc'd array. Move allocation from boot time to
+> scx_enable() and free in scx_disable(), so the O(nr_cpu_ids^2) memory is =
+only
+> consumed when sched_ext is active.
+>
+> Use RCU to guard against racing with free. Arrays are freed via call_rcu(=
+)
+> and kick_cpus_irq_workfn() uses rcu_dereference_bh() with a NULL check.
+>
+> While at it, rename to scx_kick_pseqs for brevity and update comments to
+> clarify these are pick_task sequence numbers.
+>
+> v2: RCU protect scx_kick_seqs to manage kick_cpus_irq_workfn() racing
+>     against disable as per Andrea.
+>
+> v3: Fix bugs notcied by Andrea.
+>
+> Reported-by: Phil Auld <pauld@redhat.com>
+> Link: http://lkml.kernel.org/r/20251007133523.GA93086@pauld.westford.csb
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> Cc: Andrea Righi <arighi@nvidia.com>
+> ---
 
-> Not sure yet how this is related to switched_from_dl() being now called earlier?
 
-Ooh, I might see a problem. task_non_contending() uses dl_task(), which
-uses p->prio. The move above means it is now called using the 'old'
-prio, whereas it used to run with the 'new' prio.
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
-I suppose it does this to distinguish 'real' DL tasks from PI boosted DL
-tasks.
-
-Let me see if I can figure out something for this.
+>  kernel/sched/ext.c | 89 ++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 79 insertions(+), 10 deletions(-)
+>
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 2b0e88206d07..01010c3378b0 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -67,8 +67,19 @@ static unsigned long scx_watchdog_timestamp =3D INITIA=
+L_JIFFIES;
+>
+>  static struct delayed_work scx_watchdog_work;
+>
+> -/* for %SCX_KICK_WAIT */
+> -static unsigned long __percpu *scx_kick_cpus_pnt_seqs;
+> +/*
+> + * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of pick_task s=
+equence
+> + * numbers. The arrays are allocated with kvzalloc() as size can exceed =
+percpu
+> + * allocator limits on large machines. O(nr_cpu_ids^2) allocation, alloc=
+ated
+> + * lazily when enabling and freed when disabling to avoid waste when sch=
+ed_ext
+> + * isn't active.
+> + */
+> +struct scx_kick_pseqs {
+> +       struct rcu_head         rcu;
+> +       unsigned long           seqs[];
+> +};
+> +
+> +static DEFINE_PER_CPU(struct scx_kick_pseqs __rcu *, scx_kick_pseqs);
+>
+>  /*
+>   * Direct dispatch marker.
+> @@ -3850,6 +3861,27 @@ static const char *scx_exit_reason(enum scx_exit_k=
+ind kind)
+>         }
+>  }
+>
+> +static void free_kick_pseqs_rcu(struct rcu_head *rcu)
+> +{
+> +       struct scx_kick_pseqs *pseqs =3D container_of(rcu, struct scx_kic=
+k_pseqs, rcu);
+> +
+> +       kvfree(pseqs);
+> +}
+> +
+> +static void free_kick_pseqs(void)
+> +{
+> +       int cpu;
+> +
+> +       for_each_possible_cpu(cpu) {
+> +               struct scx_kick_pseqs **pseqs =3D per_cpu_ptr(&scx_kick_p=
+seqs, cpu);
+> +               struct scx_kick_pseqs *to_free;
+> +
+> +               to_free =3D rcu_replace_pointer(*pseqs, NULL, true);
+> +               if (to_free)
+> +                       call_rcu(&to_free->rcu, free_kick_pseqs_rcu);
+> +       }
+> +}
+> +
+>  static void scx_disable_workfn(struct kthread_work *work)
+>  {
+>         struct scx_sched *sch =3D container_of(work, struct scx_sched, di=
+sable_work);
+> @@ -3986,6 +4018,7 @@ static void scx_disable_workfn(struct kthread_work =
+*work)
+>         free_percpu(scx_dsp_ctx);
+>         scx_dsp_ctx =3D NULL;
+>         scx_dsp_max_batch =3D 0;
+> +       free_kick_pseqs();
+>
+>         mutex_unlock(&scx_enable_mutex);
+>
+> @@ -4348,6 +4381,33 @@ static void scx_vexit(struct scx_sched *sch,
+>         irq_work_queue(&sch->error_irq_work);
+>  }
+>
+> +static int alloc_kick_pseqs(void)
+> +{
+> +       int cpu;
+> +
+> +       /*
+> +        * Allocate per-CPU arrays sized by nr_cpu_ids. Use kvzalloc as s=
+ize
+> +        * can exceed percpu allocator limits on large machines.
+> +        */
+> +       for_each_possible_cpu(cpu) {
+> +               struct scx_kick_pseqs **pseqs =3D per_cpu_ptr(&scx_kick_p=
+seqs, cpu);
+> +               struct scx_kick_pseqs *new_pseqs;
+> +
+> +               WARN_ON_ONCE(rcu_access_pointer(*pseqs));
+> +
+> +               new_pseqs =3D kvzalloc_node(struct_size(new_pseqs, seqs, =
+nr_cpu_ids),
+> +                                         GFP_KERNEL, cpu_to_node(cpu));
+> +               if (!new_pseqs) {
+> +                       free_kick_pseqs();
+> +                       return -ENOMEM;
+> +               }
+> +
+> +               rcu_assign_pointer(*pseqs, new_pseqs);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+>  static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *o=
+ps)
+>  {
+>         struct scx_sched *sch;
+> @@ -4490,15 +4550,19 @@ static int scx_enable(struct sched_ext_ops *ops, =
+struct bpf_link *link)
+>
+>         mutex_lock(&scx_enable_mutex);
+>
+> +       ret =3D alloc_kick_pseqs();
+> +       if (ret)
+> +               goto err_unlock;
+> +
+>         if (scx_enable_state() !=3D SCX_DISABLED) {
+>                 ret =3D -EBUSY;
+> -               goto err_unlock;
+> +               goto err_free_pseqs;
+>         }
+>
+>         sch =3D scx_alloc_and_add_sched(ops);
+>         if (IS_ERR(sch)) {
+>                 ret =3D PTR_ERR(sch);
+> -               goto err_unlock;
+> +               goto err_free_pseqs;
+>         }
+>
+>         /*
+> @@ -4701,6 +4765,8 @@ static int scx_enable(struct sched_ext_ops *ops, st=
+ruct bpf_link *link)
+>
+>         return 0;
+>
+> +err_free_pseqs:
+> +       free_kick_pseqs();
+>  err_unlock:
+>         mutex_unlock(&scx_enable_mutex);
+>         return ret;
+> @@ -5082,10 +5148,18 @@ static void kick_cpus_irq_workfn(struct irq_work =
+*irq_work)
+>  {
+>         struct rq *this_rq =3D this_rq();
+>         struct scx_rq *this_scx =3D &this_rq->scx;
+> -       unsigned long *pseqs =3D this_cpu_ptr(scx_kick_cpus_pnt_seqs);
+> +       struct scx_kick_pseqs __rcu *pseqs_pcpu =3D __this_cpu_read(scx_k=
+ick_pseqs);
+>         bool should_wait =3D false;
+> +       unsigned long *pseqs;
+>         s32 cpu;
+>
+> +       if (unlikely(!pseqs_pcpu)) {
+> +               pr_warn_once("kick_cpus_irq_workfn() called with NULL scx=
+_kick_pseqs");
+> +               return;
+> +       }
+> +
+> +       pseqs =3D rcu_dereference_bh(pseqs_pcpu)->seqs;
+> +
+>         for_each_cpu(cpu, this_scx->cpus_to_kick) {
+>                 should_wait |=3D kick_one_cpu(cpu, this_rq, pseqs);
+>                 cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
+> @@ -5208,11 +5282,6 @@ void __init init_sched_ext_class(void)
+>
+>         scx_idle_init_masks();
+>
+> -       scx_kick_cpus_pnt_seqs =3D
+> -               __alloc_percpu(sizeof(scx_kick_cpus_pnt_seqs[0]) * nr_cpu=
+_ids,
+> -                              __alignof__(scx_kick_cpus_pnt_seqs[0]));
+> -       BUG_ON(!scx_kick_cpus_pnt_seqs);
+> -
+>         for_each_possible_cpu(cpu) {
+>                 struct rq *rq =3D cpu_rq(cpu);
+>                 int  n =3D cpu_to_node(cpu);
+> --
+> 2.51.0
+>
+>
