@@ -1,25 +1,25 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C49826B97E
-	for <sched-ext@lists.linux.dev>; Fri, 10 Oct 2025 09:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B52D870830
+	for <sched-ext@lists.linux.dev>; Fri, 10 Oct 2025 10:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760088739; cv=none; b=fnwBzUUm2npH/R/Q8YJfJNvJJs42Fzd3gvvX1ltWswlRsrTy0Lttg2VScKxcVOc94CuMBzKh7rhEot4dvCRjYI6kRrNWi/PKHpWBuTP0fFip/zQPIbqWRTxj9gqUUknz/DJ12X+WiVP8UFR4FM1SzkafcNUVTD9W55No2lFek1E=
+	t=1760090481; cv=none; b=EYU5JD8P16/BX1hgAdyonCjgXJrQcTXZDpxp0vwDSfhGXH/rKA+djaaJm/5S3KdsZPym2JC1NqZj6C6Kk61JMN9ZIGQDMJdJA5hMqQvx4avbDWh+gZDL3FFq2YN6gGONwl2qC410zwSsyM87msf1X1QMHU2YGI/qLpS8OjS1XE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760088739; c=relaxed/simple;
-	bh=zvXQ3aAsM/PqS0XEz0tavtBpshfkfSFCqC31NPz018E=;
+	s=arc-20240116; t=1760090481; c=relaxed/simple;
+	bh=nh+5ldkaSuy38QmIqKEwVo2k/48eAkJJamMWDKHe5F0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YYh6IkPuVzI+3SA/fGIwKvMuijO9d91xicVjqZgMN3M+L7uqMjq/aYNZHTpCw3t+LeHQwB+AHD1gVEvreW3dItmKd/Skye4+3U7UScUouPdi0SyTa+rTv6o8W2ccFM+sMQh4TXXLIZxXQL0EquDJQ2W6YaxmpYnHr2zT/LjTnx4=
+	 In-Reply-To:Content-Type; b=vEP8pqSxwX9zN+cKvRqsJbdlEaPBMhJ9eqctAeECGNkRolXyriiNNRRgFnbUKDyuVF6ass4aOn2dU4lKZajtF5DK3Kq8x7bdPVZtFY6rHHQ0qttSb9Z8BQGrdGIMTivV4L4EmIRJU2d1vxH4YPFmONaCiRX0kvJDUQdDwweRkOg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CC0261595;
-	Fri, 10 Oct 2025 02:32:02 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 246901595;
+	Fri, 10 Oct 2025 03:01:10 -0700 (PDT)
 Received: from [10.57.84.93] (unknown [10.57.84.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A78D73F738;
-	Fri, 10 Oct 2025 02:32:08 -0700 (PDT)
-Message-ID: <716995b1-2d70-4053-a929-2f94e696a025@arm.com>
-Date: Fri, 10 Oct 2025 10:32:28 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 780F63F66E;
+	Fri, 10 Oct 2025 03:01:15 -0700 (PDT)
+Message-ID: <23fe1144-eecc-4e7d-aef7-9b6370d0e24a@arm.com>
+Date: Fri, 10 Oct 2025 11:01:35 +0100
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -27,110 +27,149 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v4 06/10] PM: EM: Implement em_nl_get_pds_doit()
+Subject: Re: [PATCH RESEND v4 07/10] PM: EM: Implement
+ em_nl_get_pd_table_doit()
 To: Changwoo Min <changwoo@igalia.com>
 Cc: christian.loehle@arm.com, tj@kernel.org, pavel@kernel.org,
  len.brown@intel.com, rafael@kernel.org, kernel-dev@igalia.com,
  linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org
 References: <20250921031928.205869-1-changwoo@igalia.com>
- <20250921031928.205869-7-changwoo@igalia.com>
+ <20250921031928.205869-8-changwoo@igalia.com>
 Content-Language: en-US
 From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <20250921031928.205869-7-changwoo@igalia.com>
+In-Reply-To: <20250921031928.205869-8-changwoo@igalia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
 On 9/21/25 04:19, Changwoo Min wrote:
-> When a userspace requests EM_CMD_GET_PDS, the kernel responds with
-> information on all performance domains. The message format of the
-> response is as follows:
+> When a userspace requests EM_CMD_GET_PD_TABLE with an ID of a performancei
+
+s/performancei/performance/
+
+> domain, the kernel reports back the energy model table of the specified
+> performance domain. The message format of the response is as follows:
 > 
-> EM_A_PDS_PD (NLA_NESTED)*
->      EM_A_PD_PD_ID (NLA_U32)
->      EM_A_PD_FLAGS (NLA_U64)
->      EM_A_PD_CPUS (NLA_STRING)
+> EM_A_PD_TABLE_PD_ID (NLA_U32)
+> EM_A_PD_TABLE_PS (NLA_NESTED)*
+>      EM_A_PS_PERFORMANCE (NLA_U64)
+>      EM_A_PS_FREQUENCY (NLA_U64)
+>      EM_A_PS_POWER (NLA_U64)
+>      EM_A_PS_COST (NLA_U64)
+>      EM_A_PS_FLAGS (NLA_U64)
 > 
-> where EM_A_PDS_PD can be repeated as many times as there are performance
-> domains, and EM_A_PD_CPUS is a hexadecimal string representing a CPU
-> bitmask.
+> where EM_A_PD_TABLE_PS can be repeated as many times as there are
+> performance states (struct em_perf_state).
 > 
 > Signed-off-by: Changwoo Min <changwoo@igalia.com>
 > ---
->   kernel/power/em_netlink.c | 82 ++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 81 insertions(+), 1 deletion(-)
+>   kernel/power/em_netlink.c | 108 +++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 107 insertions(+), 1 deletion(-)
 > 
 > diff --git a/kernel/power/em_netlink.c b/kernel/power/em_netlink.c
-> index f3fbfeff29a4..31b27c6fe3c9 100644
+> index 31b27c6fe3c9..59953cfedf78 100644
 > --- a/kernel/power/em_netlink.c
 > +++ b/kernel/power/em_netlink.c
-> @@ -17,9 +17,89 @@
->   #include "em_netlink.h"
->   #include "em_netlink_autogen.h"
+> @@ -102,9 +102,115 @@ int em_nl_get_pds_doit(struct sk_buff *skb, struct genl_info *info)
+>   	return ret;
+>   }
 >   
-> +#define EM_A_PD_CPUS_LEN		256
-> +
-> +/*************************** Command encoding ********************************/
-> +static int __em_nl_get_pd_size(struct em_perf_domain *pd, void *data)
+> +static struct em_perf_domain *__em_nl_get_pd_table_id(struct nlattr **attrs)
 > +{
-> +	char cpus_buf[EM_A_PD_CPUS_LEN];
-> +	int *tot_msg_sz = data;
-> +	int msg_sz, cpus_sz;
+> +	struct em_perf_domain *pd;
+> +	int id;
 > +
-> +	cpus_sz = snprintf(cpus_buf, sizeof(cpus_buf), "%*pb",
-> +			   cpumask_pr_args(to_cpumask(pd->cpus)));
+> +	if (!attrs[EM_A_PD_TABLE_PD_ID])
+> +		return NULL;
 > +
-> +	msg_sz = nla_total_size(0) +			/* EM_A_PDS_PD */
-> +		 nla_total_size(sizeof(u32)) +		/* EM_A_PD_PD_ID */
-> +		 nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PD_FLAGS */
-> +		 nla_total_size(cpus_sz);		/* EM_A_PD_CPUS */
-> +
-> +	*tot_msg_sz += nlmsg_total_size(genlmsg_msg_size(msg_sz));
-> +	return 0;
+> +	id = nla_get_u32(attrs[EM_A_PD_TABLE_PD_ID]);
+> +	pd = em_perf_domain_get_by_id(id);
+> +	return pd;
 > +}
 > +
-> +static int __em_nl_get_pd(struct em_perf_domain *pd, void *data)
+> +static int __em_nl_get_pd_table_size(const struct em_perf_domain *pd)
 > +{
-> +	char cpus_buf[EM_A_PD_CPUS_LEN];
-> +	struct sk_buff *msg = data;
+> +	int id_sz, ps_sz;
+> +
+> +	id_sz = nla_total_size(sizeof(u32));		/* EM_A_PD_TABLE_PD_ID */
+> +	ps_sz = nla_total_size(0) +			/* EM_A_PD_TABLE_PS */
+> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_PERFORMANCE */
+> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_FREQUENCY */
+> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_POWER */
+> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_COST */
+> +		nla_total_size_64bit(sizeof(u64));	/* EM_A_PS_FLAGS */
+> +	ps_sz *= pd->nr_perf_states;
+> +
+> +	return nlmsg_total_size(genlmsg_msg_size(id_sz + ps_sz));
+> +}
+> +
+> +static int __em_nl_get_pd_table(struct sk_buff *msg, const struct em_perf_domain *pd)
+> +{
+> +	struct em_perf_state *table, *ps;
 > +	struct nlattr *entry;
+> +	int i;
 > +
-> +	entry = nla_nest_start(msg, EM_A_PDS_PD);
-> +	if (!entry)
-> +		goto out_cancel_nest;
+> +	if (nla_put_u32(msg, EM_A_PD_TABLE_PD_ID, pd->id))
+> +		goto out_err;
 > +
-> +	if (nla_put_u32(msg, EM_A_PD_PD_ID, pd->id))
-> +		goto out_cancel_nest;
+> +	rcu_read_lock();
+> +	table = em_perf_state_from_pd((struct em_perf_domain *)pd);
 > +
-> +	if (nla_put_u64_64bit(msg, EM_A_PD_FLAGS, pd->flags, EM_A_PD_PAD))
-> +		goto out_cancel_nest;
+> +	for (i = 0; i < pd->nr_perf_states; i++) {
+> +		ps = &table[i];
 > +
-> +	snprintf(cpus_buf, sizeof(cpus_buf), "%*pb",
-> +		 cpumask_pr_args(to_cpumask(pd->cpus)));
-> +	if (nla_put_string(msg, EM_A_PD_CPUS, cpus_buf))
-> +		goto out_cancel_nest;
+> +		entry = nla_nest_start(msg, EM_A_PD_TABLE_PS);
+> +		if (!entry)
+> +			goto out_unlock_ps;
 > +
-> +	nla_nest_end(msg, entry);
+> +		if (nla_put_u64_64bit(msg, EM_A_PS_PERFORMANCE,
+> +				      ps->performance, EM_A_PS_PAD))
+> +			goto out_cancel_ps_nest;
+> +		if (nla_put_u64_64bit(msg, EM_A_PS_FREQUENCY,
+> +				      ps->frequency, EM_A_PS_PAD))
+> +			goto out_cancel_ps_nest;
+> +		if (nla_put_u64_64bit(msg, EM_A_PS_POWER,
+> +				      ps->power, EM_A_PS_PAD))
+> +			goto out_cancel_ps_nest;
+> +		if (nla_put_u64_64bit(msg, EM_A_PS_COST,
+> +				      ps->cost, EM_A_PS_PAD))
+> +			goto out_cancel_ps_nest;
+> +		if (nla_put_u64_64bit(msg, EM_A_PS_FLAGS,
+> +				      ps->flags, EM_A_PS_PAD))
+> +			goto out_cancel_ps_nest;
 > +
+> +		nla_nest_end(msg, entry);
+> +	}
+> +	rcu_read_unlock();
 > +	return 0;
 > +
-> +out_cancel_nest:
+> +out_cancel_ps_nest:
 > +	nla_nest_cancel(msg, entry);
-> +
+> +out_unlock_ps:
+> +	rcu_read_unlock();
+> +out_err:
 > +	return -EMSGSIZE;
 > +}
 > +
->   int em_nl_get_pds_doit(struct sk_buff *skb, struct genl_info *info)
+>   int em_nl_get_pd_table_doit(struct sk_buff *skb, struct genl_info *info)
 >   {
 > -	return -EOPNOTSUPP;
 > +	struct sk_buff *msg;
+> +	struct em_perf_domain *pd;
 > +	void *hdr;
 > +	int cmd = info->genlhdr->cmd;
-> +	int ret = -EMSGSIZE, msg_sz = 0;
+> +	int msg_sz, ret = -EMSGSIZE;
+
+Please put them in the reverse christmas tree order.
+
 > +
-> +	for_each_em_perf_domain(__em_nl_get_pd_size, &msg_sz);
+> +	pd = __em_nl_get_pd_table_id(info->attrs);
+> +	if (!pd)
+> +		return -EINVAL;
+> +
+> +	msg_sz = __em_nl_get_pd_table_size(pd);
 > +
 > +	msg = genlmsg_new(msg_sz, GFP_KERNEL);
 > +	if (!msg)
@@ -140,25 +179,20 @@ On 9/21/25 04:19, Changwoo Min wrote:
 > +	if (!hdr)
 > +		goto out_free_msg;
 > +
-> +	ret = for_each_em_perf_domain(__em_nl_get_pd, msg);
+> +	ret = __em_nl_get_pd_table(msg, pd);
 > +	if (ret)
-> +		goto out_cancel_msg;
+> +		goto out_free_msg;
 > +
 > +	genlmsg_end(msg, hdr);
-> +
 > +	return genlmsg_reply(msg, info);
 > +
-> +out_cancel_msg:
-> +	genlmsg_cancel(msg, hdr);
 > +out_free_msg:
 > +	nlmsg_free(msg);
-> +
 > +	return ret;
 >   }
 >   
->   int em_nl_get_pd_table_doit(struct sk_buff *skb, struct genl_info *info)
+>   static int __init em_netlink_init(void)
 
-LGTM,
+After fixing that cosmetic thing you can add:
 
 Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-
