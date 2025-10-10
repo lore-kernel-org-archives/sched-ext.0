@@ -1,25 +1,25 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B52D870830
-	for <sched-ext@lists.linux.dev>; Fri, 10 Oct 2025 10:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3800F26CE1A
+	for <sched-ext@lists.linux.dev>; Fri, 10 Oct 2025 10:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760090481; cv=none; b=EYU5JD8P16/BX1hgAdyonCjgXJrQcTXZDpxp0vwDSfhGXH/rKA+djaaJm/5S3KdsZPym2JC1NqZj6C6Kk61JMN9ZIGQDMJdJA5hMqQvx4avbDWh+gZDL3FFq2YN6gGONwl2qC410zwSsyM87msf1X1QMHU2YGI/qLpS8OjS1XE0=
+	t=1760091449; cv=none; b=FgBYtp7mhslT3UzNDpfAMo+opFBpwCXtjutN9GuaAwBp4GMN+7zusy3ph5gKypj24/U07JCnNsgrFjPDOA1n+lUzx4MdVdBoVMlYYbIlpPVfZh4D0rK6SZ9zZoOVf7JBKE9Bc1oOQa5QzhEQsPOaonOxOG04kYaeFKCGr9BSXjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760090481; c=relaxed/simple;
-	bh=nh+5ldkaSuy38QmIqKEwVo2k/48eAkJJamMWDKHe5F0=;
+	s=arc-20240116; t=1760091449; c=relaxed/simple;
+	bh=Te5zx+I8ZGzATf8fVoQHHROklL7hc8sZQMuNJyj4QfM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=vEP8pqSxwX9zN+cKvRqsJbdlEaPBMhJ9eqctAeECGNkRolXyriiNNRRgFnbUKDyuVF6ass4aOn2dU4lKZajtF5DK3Kq8x7bdPVZtFY6rHHQ0qttSb9Z8BQGrdGIMTivV4L4EmIRJU2d1vxH4YPFmONaCiRX0kvJDUQdDwweRkOg=
+	 In-Reply-To:Content-Type; b=IyLkp59gHKkDWuL/As+NiR4BonglaF3k/U7RHeegw23GeM7OzQGi+83NFzDB+aM7OqjPw1mAztlnaiO3LdoVrm9akWVHo6NiLMfoSI6hGucrhWyCBNot1y53wMdOc2v/vyGk3CqwJKLGeyWghhWSUkSU4kdVqhEyia1/yPmQr18=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 246901595;
-	Fri, 10 Oct 2025 03:01:10 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7F6A71595;
+	Fri, 10 Oct 2025 03:17:18 -0700 (PDT)
 Received: from [10.57.84.93] (unknown [10.57.84.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 780F63F66E;
-	Fri, 10 Oct 2025 03:01:15 -0700 (PDT)
-Message-ID: <23fe1144-eecc-4e7d-aef7-9b6370d0e24a@arm.com>
-Date: Fri, 10 Oct 2025 11:01:35 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 54FAC3F66E;
+	Fri, 10 Oct 2025 03:17:24 -0700 (PDT)
+Message-ID: <9c07dd28-e40d-4212-8b26-2909e0179ab0@arm.com>
+Date: Fri, 10 Oct 2025 11:17:44 +0100
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -27,172 +27,108 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v4 07/10] PM: EM: Implement
- em_nl_get_pd_table_doit()
+Subject: Re: [PATCH RESEND v4 08/10] PM: EM: Implement em_notify_pd_deleted()
 To: Changwoo Min <changwoo@igalia.com>
 Cc: christian.loehle@arm.com, tj@kernel.org, pavel@kernel.org,
  len.brown@intel.com, rafael@kernel.org, kernel-dev@igalia.com,
  linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org
 References: <20250921031928.205869-1-changwoo@igalia.com>
- <20250921031928.205869-8-changwoo@igalia.com>
+ <20250921031928.205869-9-changwoo@igalia.com>
 Content-Language: en-US
 From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <20250921031928.205869-8-changwoo@igalia.com>
+In-Reply-To: <20250921031928.205869-9-changwoo@igalia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
 On 9/21/25 04:19, Changwoo Min wrote:
-> When a userspace requests EM_CMD_GET_PD_TABLE with an ID of a performancei
-
-s/performancei/performance/
-
-> domain, the kernel reports back the energy model table of the specified
-> performance domain. The message format of the response is as follows:
+> Add the event notification infrastructure and implement the event
+> notification for when a performance domain is deleted (EM_CMD_PD_DELETED).
 > 
-> EM_A_PD_TABLE_PD_ID (NLA_U32)
-> EM_A_PD_TABLE_PS (NLA_NESTED)*
->      EM_A_PS_PERFORMANCE (NLA_U64)
->      EM_A_PS_FREQUENCY (NLA_U64)
->      EM_A_PS_POWER (NLA_U64)
->      EM_A_PS_COST (NLA_U64)
->      EM_A_PS_FLAGS (NLA_U64)
-> 
-> where EM_A_PD_TABLE_PS can be repeated as many times as there are
-> performance states (struct em_perf_state).
+> The event contains the ID of the performance domain (EM_A_PD_TABLE_PD_ID)
+> so the userspace can identify the changed performance domain for further
+> processing.
 > 
 > Signed-off-by: Changwoo Min <changwoo@igalia.com>
 > ---
->   kernel/power/em_netlink.c | 108 +++++++++++++++++++++++++++++++++++++-
->   1 file changed, 107 insertions(+), 1 deletion(-)
+>   kernel/power/em_netlink.c | 56 +++++++++++++++++++++++++++++++++++++++
+>   kernel/power/em_netlink.h | 18 +++++++++++++
+>   2 files changed, 74 insertions(+)
 > 
 > diff --git a/kernel/power/em_netlink.c b/kernel/power/em_netlink.c
-> index 31b27c6fe3c9..59953cfedf78 100644
+> index 59953cfedf78..ff6aa848d998 100644
 > --- a/kernel/power/em_netlink.c
 > +++ b/kernel/power/em_netlink.c
-> @@ -102,9 +102,115 @@ int em_nl_get_pds_doit(struct sk_buff *skb, struct genl_info *info)
+> @@ -213,6 +213,62 @@ int em_nl_get_pd_table_doit(struct sk_buff *skb, struct genl_info *info)
 >   	return ret;
 >   }
 >   
-> +static struct em_perf_domain *__em_nl_get_pd_table_id(struct nlattr **attrs)
+> +
+> +/**************************** Event encoding *********************************/
+> +int em_notify_pd_created(const struct em_perf_domain *pd)
 > +{
-> +	struct em_perf_domain *pd;
-> +	int id;
-> +
-> +	if (!attrs[EM_A_PD_TABLE_PD_ID])
-> +		return NULL;
-> +
-> +	id = nla_get_u32(attrs[EM_A_PD_TABLE_PD_ID]);
-> +	pd = em_perf_domain_get_by_id(id);
-> +	return pd;
+> +	return -EOPNOTSUPP;
 > +}
 > +
-> +static int __em_nl_get_pd_table_size(const struct em_perf_domain *pd)
+> +int em_notify_pd_updated(const struct em_perf_domain *pd)
 > +{
-> +	int id_sz, ps_sz;
+> +	return -EOPNOTSUPP;
+> +}
+
+Those two functions doesn't belong to this patch $subject.
+I would recommend adding them in the following patch where they
+are properly defined.
+
 > +
-> +	id_sz = nla_total_size(sizeof(u32));		/* EM_A_PD_TABLE_PD_ID */
-> +	ps_sz = nla_total_size(0) +			/* EM_A_PD_TABLE_PS */
-> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_PERFORMANCE */
-> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_FREQUENCY */
-> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_POWER */
-> +		nla_total_size_64bit(sizeof(u64)) +	/* EM_A_PS_COST */
-> +		nla_total_size_64bit(sizeof(u64));	/* EM_A_PS_FLAGS */
-> +	ps_sz *= pd->nr_perf_states;
+> +static int __em_notify_pd_deleted_size(const struct em_perf_domain *pd)
+> +{
+> +	int id_sz = nla_total_size(sizeof(u32)); /* EM_A_PD_TABLE_PD_ID */
 > +
-> +	return nlmsg_total_size(genlmsg_msg_size(id_sz + ps_sz));
+> +	return nlmsg_total_size(genlmsg_msg_size(id_sz));
 > +}
 > +
-> +static int __em_nl_get_pd_table(struct sk_buff *msg, const struct em_perf_domain *pd)
+> +int em_notify_pd_deleted(const struct em_perf_domain *pd)
 > +{
-> +	struct em_perf_state *table, *ps;
-> +	struct nlattr *entry;
-> +	int i;
-> +
-> +	if (nla_put_u32(msg, EM_A_PD_TABLE_PD_ID, pd->id))
-> +		goto out_err;
-> +
-> +	rcu_read_lock();
-> +	table = em_perf_state_from_pd((struct em_perf_domain *)pd);
-> +
-> +	for (i = 0; i < pd->nr_perf_states; i++) {
-> +		ps = &table[i];
-> +
-> +		entry = nla_nest_start(msg, EM_A_PD_TABLE_PS);
-> +		if (!entry)
-> +			goto out_unlock_ps;
-> +
-> +		if (nla_put_u64_64bit(msg, EM_A_PS_PERFORMANCE,
-> +				      ps->performance, EM_A_PS_PAD))
-> +			goto out_cancel_ps_nest;
-> +		if (nla_put_u64_64bit(msg, EM_A_PS_FREQUENCY,
-> +				      ps->frequency, EM_A_PS_PAD))
-> +			goto out_cancel_ps_nest;
-> +		if (nla_put_u64_64bit(msg, EM_A_PS_POWER,
-> +				      ps->power, EM_A_PS_PAD))
-> +			goto out_cancel_ps_nest;
-> +		if (nla_put_u64_64bit(msg, EM_A_PS_COST,
-> +				      ps->cost, EM_A_PS_PAD))
-> +			goto out_cancel_ps_nest;
-> +		if (nla_put_u64_64bit(msg, EM_A_PS_FLAGS,
-> +				      ps->flags, EM_A_PS_PAD))
-> +			goto out_cancel_ps_nest;
-> +
-> +		nla_nest_end(msg, entry);
-> +	}
-> +	rcu_read_unlock();
-> +	return 0;
-> +
-> +out_cancel_ps_nest:
-> +	nla_nest_cancel(msg, entry);
-> +out_unlock_ps:
-> +	rcu_read_unlock();
-> +out_err:
-> +	return -EMSGSIZE;
-> +}
-> +
->   int em_nl_get_pd_table_doit(struct sk_buff *skb, struct genl_info *info)
->   {
-> -	return -EOPNOTSUPP;
 > +	struct sk_buff *msg;
-> +	struct em_perf_domain *pd;
+> +	int ret = -EMSGSIZE;
 > +	void *hdr;
-> +	int cmd = info->genlhdr->cmd;
-> +	int msg_sz, ret = -EMSGSIZE;
-
-Please put them in the reverse christmas tree order.
-
+> +	int msg_sz;
 > +
-> +	pd = __em_nl_get_pd_table_id(info->attrs);
-> +	if (!pd)
-> +		return -EINVAL;
+> +	if (!genl_has_listeners(&em_nl_family, &init_net, EM_NLGRP_EVENT))
+> +		return 0;
 > +
-> +	msg_sz = __em_nl_get_pd_table_size(pd);
+> +	msg_sz = __em_notify_pd_deleted_size(pd);
 > +
 > +	msg = genlmsg_new(msg_sz, GFP_KERNEL);
 > +	if (!msg)
 > +		return -ENOMEM;
 > +
-> +	hdr = genlmsg_put_reply(msg, info, &em_nl_family, 0, cmd);
+> +	hdr = genlmsg_put(msg, 0, 0, &em_nl_family, 0, EM_CMD_PD_DELETED);
 > +	if (!hdr)
 > +		goto out_free_msg;
 > +
-> +	ret = __em_nl_get_pd_table(msg, pd);
-> +	if (ret)
+> +	if (nla_put_u32(msg, EM_A_PD_TABLE_PD_ID, pd->id)) {
+> +		ret = -EMSGSIZE;
 > +		goto out_free_msg;
+> +	}
 > +
 > +	genlmsg_end(msg, hdr);
-> +	return genlmsg_reply(msg, info);
+> +
+> +	genlmsg_multicast(&em_nl_family, msg, 0, EM_NLGRP_EVENT, GFP_KERNEL);
+> +
+> +	return 0;
 > +
 > +out_free_msg:
 > +	nlmsg_free(msg);
 > +	return ret;
->   }
->   
->   static int __init em_netlink_init(void)
+> +}
 
-After fixing that cosmetic thing you can add:
+It looks like we don't handle the error outputs of those
+em_notify_* function (based on last patch in the set.
 
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Can we just simply change the function to void?
+It would also avoid some spurious static analysis tools checking the
+code in future.
+
