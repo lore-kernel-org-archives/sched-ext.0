@@ -1,99 +1,63 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08F882727E7
-	for <sched-ext@lists.linux.dev>; Tue, 14 Oct 2025 08:54:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF2A306B01;
+	Tue, 14 Oct 2025 20:28:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760432062; cv=none; b=SRuLhA25BcL53CfuX7JiSYleF8oY9KOjKamnFmROprIsMpbrtwhrmLz0J098qPxxHYd5Vh8H63NjCQBMwfaTljL//khyhRENgZqfmcUbx+5ItfoIGxVPiyOgg2rLfIUdN6WV1zE0uQt42XQUzjUwSPpBwQvO5XNtgLNkU2bxBN4=
+	t=1760473729; cv=none; b=GercUMzvgo0JsxoXO4o1VjIwS8TgPQrPeCvpmoAPv8E0K1ytr50RBeN/56clLLTRRSeZL2a8SNRLu1hDyURWmfdsyOgGli7tVPmcKGDE87eIYKbY1PTErwr9Cln1FJjeMZoJcKq4D/EaA9p9Sp5xXdwlex+/P+ihoVKjWrM52qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760432062; c=relaxed/simple;
-	bh=ldoVgEtLTSuT2PC8rBrTT5l7e+FwKnT/6v0P27C0KVQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DHh9QxdN1iFo7NbMPic1AmHVfnpOaU4xwk+KRvAwspk++/NpRaYXCBSTCQL+h40huKhjBSw7oKvgPsDMcBMEsuZVbwgcPCpkd3WhPux3AwD4wTTyzInUSxv7f9DLn57rnhn+W2xvmvo7M8inXdW/7Nu4JL2AIbfkCvqjMhyMqHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 817801A9A;
-	Tue, 14 Oct 2025 01:54:12 -0700 (PDT)
-Received: from [10.57.5.128] (unknown [10.57.5.128])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9E2AF3F66E;
-	Tue, 14 Oct 2025 01:54:18 -0700 (PDT)
-Message-ID: <80611bb8-2ea4-4f6c-9dad-774cb65abcf1@arm.com>
-Date: Tue, 14 Oct 2025 09:54:41 +0100
+	s=arc-20240116; t=1760473729; c=relaxed/simple;
+	bh=fJ/ys0qq6ObV5ATLM65qotXjGPQbo8vqMpF6gGpatvA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VzcTe1x8dMVvx/GEshn8pLqzocPrmN6MOlCoxMolQsZU2tJOjxNUj9iX5VxI4TzvqsUHmZ3vnElIb89W2nvhphoTvxjrZshmtI8qZBJyPwCIqs4qOpy2TM/7yhx0/ox1owAEXLLI9/2sa12zcgeI8r036eK1aOByr0/7UfEtarE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEzC3AZW; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEzC3AZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFEEC4CEE7;
+	Tue, 14 Oct 2025 20:28:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760473728;
+	bh=fJ/ys0qq6ObV5ATLM65qotXjGPQbo8vqMpF6gGpatvA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UEzC3AZW2liLbRp18pZpw/YQ0XpWx85Wc6OOeSmLXVer4V80eRRkejrhk9fLVDRO/
+	 cZoafQvhpOUvcdRV2c49BUJF/+qBwZ3M0oA0Si9s5bWgg7RYaQCzJKDwzyc7ABGgEK
+	 1okCi4vK8MMMK/Omcxaj7y5n9An/eP3QkRbJ22guFnb1Mlq7cBKCGEDK+yR+ZfWbt4
+	 LlRHNJzTJvwllaYG9QvLosVh3yhRqTgbW7zEiX0EkNZjD6aNk+/8LSw/4wr0MbRA5e
+	 520vqhJENQlng9LG0AG4MH0cNdyZXWneFB9gxBcW6R+ul8K7+WKVpN9Ze9PL7CQ8p8
+	 rpRqDlcHuc5MQ==
+Date: Tue, 14 Oct 2025 10:28:46 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-6.19] sched_ext: Fix build error in
+ cgroup_set_idle()
+Message-ID: <aO6yfrXzTBIhrUU-@slm.duckdns.org>
+References: <20251013193003.36215-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/10] PM: EM: Add netlink support for the energy model
-To: Changwoo Min <changwoo@igalia.com>
-Cc: christian.loehle@arm.com, tj@kernel.org, pavel@kernel.org,
- len.brown@intel.com, rafael@kernel.org, kernel-dev@igalia.com,
- linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20251014001055.772422-1-changwoo@igalia.com>
-Content-Language: en-US
-From: Lukasz Luba <lukasz.luba@arm.com>
-In-Reply-To: <20251014001055.772422-1-changwoo@igalia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251013193003.36215-1-arighi@nvidia.com>
 
+On Mon, Oct 13, 2025 at 09:30:03PM +0200, Andrea Righi wrote:
+> Commit a5bd6ba30b336 ("sched_ext: Use cgroup_lock/unlock() to
+> synchronize against cgroup operations") renamed scx_cgroup_rwsem to
+> scx_cgroup_ops_rwsem.
+> 
+> Update cgroup_set_idle() accordingly to fix the resulting build error.
+> 
+> Fixes: d579dc6eb4fd0 ("sched/ext: Implement cgroup_set_idle() callback")
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
 
+Oh, I fixed this by updating the top of the tree. Sorry about the breakage.
 
-On 10/14/25 01:10, Changwoo Min wrote:
-> Addressed all the comments from Lukasz and rebased the code to the head
-> of the linus tree.
-> 
-> There is a need to access the energy model from the userspace. One such
-> example is the sched_ext schedulers [1]. The userspace part of the
-> sched_ext schedules could feed the (post-processed) energy-model
-> information to the BPF part of the scheduler.
-> 
-> Currently, debugfs is the only way to read the energy model from userspace;
-> however, it lacks proper notification mechanisms when a performance domain
-> and its associated energy model change.
-> 
-> This patch set introduces a generic netlink for the energy model, as
-> discussed in [2]. It allows a userspace program to read the performance
-> domain and its energy model. It notifies the userspace program when a
-> performance domain is created or deleted or its energy model is updated
-> through a multicast interface.
-> 
-> Specifically, it supports two commands:
->    - EM_CMD_GET_PDS: Get the list of information for all performance
->      domains.
->    - EM_CMD_GET_PD_TABLE: Get the energy model table of a performance
->      domain.
-> 
-> Also, it supports three notification events:
->    - EM_CMD_PD_CREATED: When a performance domain is created.
->    - EM_CMD_PD_DELETED: When a performance domain is deleted.
->    - EM_CMD_PD_UPDATED: When the energy model table of a performance domain
->      is updated.
-> 
-> This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for example,
-> with the following commands:
-> 
->    $> tools/net/ynl/pyynl/cli.py \
->       --spec Documentation/netlink/specs/em.yaml \
->       --do get-pds
->    $> tools/net/ynl/pyynl/cli.py \
->       --spec Documentation/netlink/specs/em.yaml \
->       --do get-pd-table --json '{"pd-id": 0}'
->    $> tools/net/ynl/pyynl/cli.py \
->       --spec Documentation/netlink/specs/em.yaml \
->       --subscribe event  --sleep 10
-> 
-> [1] https://lwn.net/Articles/922405/
-> [2] https://lore.kernel.org/lkml/a82423bc-8c38-4d57-93da-c4f20011cc92@arm.com/
-> [3] https://lore.kernel.org/lkml/202506140306.tuIoz8rN-lkp@intel.com/#t
+Thanks.
 
-Thank you Changwoo, it looks good.
-
-The patches can go now into some PM testing branches so we can check the
-integration/testing in wider configurations.
-
-Regards,
-Lukasz
+-- 
+tejun
