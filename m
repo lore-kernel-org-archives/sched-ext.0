@@ -1,63 +1,64 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692172E9EDF;
-	Wed, 15 Oct 2025 04:17:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEDF2FDC5A;
+	Wed, 15 Oct 2025 04:50:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760501841; cv=none; b=ELW2TCdH6AtdxSAAZq/RhG8lc+GwHCzl8YiyW221++xSsOWFP9mtHd0EmKtqvhGchzpuaH6dBHwWMNoEmwE6CRpdYbTDciXmdbbolqfO9VrSqM5FkLkVIkm3RHZWdxTYdbQF1i412G01+Yj/jbvVoy/6sXTRYi2LQfg09zf3lOk=
+	t=1760503825; cv=none; b=FFa55dkqNpc5hbmt6DZixWUgo9rwOAJqtXVwcmnCyKndIbB84g58kPezuGK0DgjM6mtq2eaciPhvCKyCT8lD5ajyAKW/ufVFgrunDFaJlFzjff0JcXPZ+Wf+6grCOU6hNbEoaJmORuyZ6ID6/xSpq9ER1S4ACgb1T6d2PdTZgt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760501841; c=relaxed/simple;
-	bh=ovqQe7GOvD0OcEx7/AkCnQHKdx2amFS8fzjSEwxqnMY=;
+	s=arc-20240116; t=1760503825; c=relaxed/simple;
+	bh=LqQqWnML8DclCbVCtkFguG/McePDuiseyX71RGUghcQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o7aI+OWwd4MxQ0cVvExaGxgILiSrMryqKGVpNUrOO9eX8eUBzjyL+J9SPMHz4J0EzOn+LzdZgDhSMbHh6H/VfZIaHeP4a2iF7a0cH0EHTMIAAHshCZ2v2ST3q86VRTvVKJ5IJBXOOn5rxh+9YIbcguPxNElw8BHkYaEMehTALCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VqyBiZYZ; arc=none smtp.client-ip=198.175.65.20
+	 Content-Type:Content-Disposition:In-Reply-To; b=uglr2cxrBklFZr0XHb9Ez53Co4H5W995ltcUpc1v/weTScL5VQWVY/9xuFEaqqtozg0CsfTII8viTFTVI4X14L1O38AUZ38hyf6iufP3+w+lHAbG1Yfv7EehRTFPcpn96yxZk0xgbjb2AVYmqEQ9nvspu3Sy0rOnrplk0mhrozQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VIWWG9xi; arc=none smtp.client-ip=192.198.163.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VqyBiZYZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VIWWG9xi"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1760501840; x=1792037840;
+  t=1760503823; x=1792039823;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=ovqQe7GOvD0OcEx7/AkCnQHKdx2amFS8fzjSEwxqnMY=;
-  b=VqyBiZYZ3HZbeBTmZRxnFNmqclPuI6Zktqhsgu0bSjt4Iz26/dPW9wDh
-   gkkVOo3EX9lGrIojwWyTlNz4y1SyRX6v8w2QPfNn6evYt3M34oQkOfIi7
-   5f1wnq1IEzpKDNPkPvvPzr6vUKCyFsYGnAVItGBBQnoJQn9JWYsq15/pl
-   nTAtxo6X2qIW79OunYNHtzXgjyqaszf6OKtqD2rU4+ZmYj8CdlpiKhgnL
-   rs5BlRV4R/7S1P06hyFiOBif2iqtp4HD0JdXf0DLUCVmh1ZhxwbUJhYfK
-   EuILFLiA72E88QSgN35gRGyncqQnsi9i3lAkmTrNt7Kl6ssBX90Rqncny
-   Q==;
-X-CSE-ConnectionGUID: YfkGzuC8TFC22uQNj7poMw==
-X-CSE-MsgGUID: 13UPm/uzTky0+JvlCMORfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11582"; a="62376354"
+  bh=LqQqWnML8DclCbVCtkFguG/McePDuiseyX71RGUghcQ=;
+  b=VIWWG9xij1i9qcnh0U2jFiBK0F52rWkC2ZMy5hTWwQAXyyKIEeZajJ0F
+   xPVsCE+CzruE7TXRW8JNKAPMIBZBIXWRF78AnJ3dFLEdKmt+Mia+gb0/c
+   QvvpccBJAL4FLhYc41js7T8GPLwxuTELNFj6LZ2X0RJzCLk4/VA7Deb3T
+   FvUgHjt73Bx9UxagPBfnXo3Ki0miehjYYFCLhGptUHLb8bhnpsMuWZnlv
+   T+Kv8LtpdeBMlKq5i15O9s4g8+VSK7Gf3lVFrpUNc4QUNI5x/HvJN0B+0
+   rUhB+kqIQ3qj6zRU95I+Y3nmXCwlUx2yrCpnHRL5OmA1doqUMfzK6dDLN
+   A==;
+X-CSE-ConnectionGUID: 4sR5/jWOTrqgw/sKvuyyGA==
+X-CSE-MsgGUID: iB6f8fV6SOO+MAYQTif+uw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11582"; a="50234698"
 X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; 
-   d="scan'208";a="62376354"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2025 21:17:19 -0700
-X-CSE-ConnectionGUID: lp6rFhTRQyKawdXxI3Y7wA==
-X-CSE-MsgGUID: bmvJ/X1rS+iEHMBm+SThKw==
+   d="scan'208";a="50234698"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2025 21:50:23 -0700
+X-CSE-ConnectionGUID: SMWUyt40S7OMWDVvD/jLuQ==
+X-CSE-MsgGUID: J3aQ1pfEQXWAR4GohqDU3A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.19,230,1754982000"; 
-   d="scan'208";a="186067579"
+   d="scan'208";a="182847741"
 Received: from lkp-server02.sh.intel.com (HELO 66d7546c76b2) ([10.239.97.151])
-  by orviesa003.jf.intel.com with ESMTP; 14 Oct 2025 21:17:15 -0700
+  by fmviesa010.fm.intel.com with ESMTP; 14 Oct 2025 21:50:20 -0700
 Received: from kbuild by 66d7546c76b2 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1v8swr-0003RM-11;
-	Wed, 15 Oct 2025 04:17:13 +0000
-Date: Wed, 15 Oct 2025 12:16:10 +0800
+	id 1v8tSr-0003SD-1b;
+	Wed, 15 Oct 2025 04:50:17 +0000
+Date: Wed, 15 Oct 2025 12:49:54 +0800
 From: kernel test robot <lkp@intel.com>
 To: Changwoo Min <changwoo@igalia.com>, lukasz.luba@arm.com,
 	rafael@kernel.org, len.brown@intel.com, pavel@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	christian.loehle@arm.com, tj@kernel.org, kernel-dev@igalia.com,
-	linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Changwoo Min <changwoo@igalia.com>
-Subject: Re: [PATCH v5 08/10] PM: EM: Implement em_notify_pd_deleted()
-Message-ID: <202510151223.THlBK6QR-lkp@intel.com>
-References: <20251014001055.772422-9-changwoo@igalia.com>
+Cc: oe-kbuild-all@lists.linux.dev, christian.loehle@arm.com, tj@kernel.org,
+	kernel-dev@igalia.com, linux-pm@vger.kernel.org,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Changwoo Min <changwoo@igalia.com>
+Subject: Re: [PATCH v5 05/10] PM: EM: Add an iterator and accessor for the
+ performance domain
+Message-ID: <202510151232.UNZ2J7TZ-lkp@intel.com>
+References: <20251014001055.772422-6-changwoo@igalia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,78 +67,71 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251014001055.772422-9-changwoo@igalia.com>
+In-Reply-To: <20251014001055.772422-6-changwoo@igalia.com>
 
 Hi Changwoo,
 
-kernel test robot noticed the following build warnings:
+kernel test robot noticed the following build errors:
 
-[auto build test WARNING on amd-pstate/linux-next]
-[also build test WARNING on amd-pstate/bleeding-edge linus/master v6.18-rc1 next-20251014]
+[auto build test ERROR on amd-pstate/linux-next]
+[also build test ERROR on amd-pstate/bleeding-edge linus/master v6.18-rc1 next-20251014]
 [If your patch is applied to the wrong git tree, kindly drop us a note.
 And when submitting patch, we suggest to use '--base' as documented in
 https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
 url:    https://github.com/intel-lab-lkp/linux/commits/Changwoo-Min/PM-EM-Assign-a-unique-ID-when-creating-a-performance-domain/20251014-082420
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/superm1/linux.git linux-next
-patch link:    https://lore.kernel.org/r/20251014001055.772422-9-changwoo%40igalia.com
-patch subject: [PATCH v5 08/10] PM: EM: Implement em_notify_pd_deleted()
-config: i386-buildonly-randconfig-004-20251015 (https://download.01.org/0day-ci/archive/20251015/202510151223.THlBK6QR-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251015/202510151223.THlBK6QR-lkp@intel.com/reproduce)
+patch link:    https://lore.kernel.org/r/20251014001055.772422-6-changwoo%40igalia.com
+patch subject: [PATCH v5 05/10] PM: EM: Add an iterator and accessor for the performance domain
+config: i386-buildonly-randconfig-001-20251015 (https://download.01.org/0day-ci/archive/20251015/202510151232.UNZ2J7TZ-lkp@intel.com/config)
+compiler: gcc-13 (Debian 13.3.0-16) 13.3.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251015/202510151232.UNZ2J7TZ-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202510151223.THlBK6QR-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202510151232.UNZ2J7TZ-lkp@intel.com/
 
-All warnings (new ones prefixed by >>):
+All errors (new ones prefixed by >>):
 
->> kernel/power/em_netlink.c:228:6: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
-     228 |         int ret = -EMSGSIZE;
-         |             ^
-   1 warning generated.
+>> kernel/power/energy_model.c:1003:5: error: redefinition of 'for_each_em_perf_domain'
+    1003 | int for_each_em_perf_domain(int (*cb)(struct em_perf_domain*, void *),
+         |     ^~~~~~~~~~~~~~~~~~~~~~~
+   In file included from kernel/power/energy_model.c:20:
+   kernel/power/em_netlink.h:18:5: note: previous definition of 'for_each_em_perf_domain' with type 'int(int (*)(struct em_perf_domain *, void *), void *)'
+      18 | int for_each_em_perf_domain(int (*cb)(struct em_perf_domain*, void *),
+         |     ^~~~~~~~~~~~~~~~~~~~~~~
+>> kernel/power/energy_model.c:1022:24: error: redefinition of 'em_perf_domain_get_by_id'
+    1022 | struct em_perf_domain *em_perf_domain_get_by_id(int id)
+         |                        ^~~~~~~~~~~~~~~~~~~~~~~~
+   kernel/power/em_netlink.h:24:24: note: previous definition of 'em_perf_domain_get_by_id' with type 'struct em_perf_domain *(int)'
+      24 | struct em_perf_domain *em_perf_domain_get_by_id(int id)
+         |                        ^~~~~~~~~~~~~~~~~~~~~~~~
 
 
-vim +/ret +228 kernel/power/em_netlink.c
+vim +/for_each_em_perf_domain +1003 kernel/power/energy_model.c
 
-   224	
-   225	void em_notify_pd_deleted(const struct em_perf_domain *pd)
-   226	{
-   227		struct sk_buff *msg;
- > 228		int ret = -EMSGSIZE;
-   229		void *hdr;
-   230		int msg_sz;
-   231	
-   232		if (!genl_has_listeners(&em_nl_family, &init_net, EM_NLGRP_EVENT))
-   233			return;
-   234	
-   235		msg_sz = __em_notify_pd_deleted_size(pd);
-   236	
-   237		msg = genlmsg_new(msg_sz, GFP_KERNEL);
-   238		if (!msg)
-   239			return;
-   240	
-   241		hdr = genlmsg_put(msg, 0, 0, &em_nl_family, 0, EM_CMD_PD_DELETED);
-   242		if (!hdr)
-   243			goto out_free_msg;
-   244	
-   245		if (nla_put_u32(msg, EM_A_PD_TABLE_PD_ID, pd->id)) {
-   246			ret = -EMSGSIZE;
-   247			goto out_free_msg;
-   248		}
-   249	
-   250		genlmsg_end(msg, hdr);
-   251	
-   252		genlmsg_multicast(&em_nl_family, msg, 0, EM_NLGRP_EVENT, GFP_KERNEL);
-   253	
-   254		return;
-   255	
-   256	out_free_msg:
-   257		nlmsg_free(msg);
-   258		return;
-   259	}
-   260	
+  1002	
+> 1003	int for_each_em_perf_domain(int (*cb)(struct em_perf_domain*, void *),
+  1004				    void *data)
+  1005	{
+  1006		struct em_perf_domain *pd;
+  1007	
+  1008		lockdep_assert_not_held(&em_pd_mutex);
+  1009		guard(mutex)(&em_pd_list_mutex);
+  1010	
+  1011		list_for_each_entry(pd, &em_pd_list, node) {
+  1012			int ret;
+  1013	
+  1014			ret = cb(pd, data);
+  1015			if (ret)
+  1016				return ret;
+  1017		}
+  1018	
+  1019		return 0;
+  1020	}
+  1021	
+> 1022	struct em_perf_domain *em_perf_domain_get_by_id(int id)
 
 -- 
 0-DAY CI Kernel Test Service
