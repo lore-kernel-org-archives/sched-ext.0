@@ -1,248 +1,130 @@
-Received: from mx1.mythic-beasts.com (mx1.mythic-beasts.com [46.235.224.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE5A2DE6F5
-	for <sched-ext@lists.linux.dev>; Tue, 14 Oct 2025 23:14:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.224.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E47C23D7D3
+	for <sched-ext@lists.linux.dev>; Wed, 15 Oct 2025 01:57:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760483665; cv=none; b=Wtn+WTFEkimpmmzduGOfOXXoijQa82YEdZ9KrrTtULTkthIcVvZ2jz7X+JK0GhVvVoDiZAxnR2X7XUlblnk7ZGJAEGHQ+udm6G8LpTSqm33Yvyifyh5+pEd/7lusl8DHECRpMQ0z/LDW3Xl8ltPAZOm2My0JTR4DGleJvhdDxIM=
+	t=1760493445; cv=none; b=TBOqPaifgHSmnK2vl8OfnqXH6+5MSEitZ15Z1XPPKFFqQ7KNek7ZaZG8+lDCPSkFdVg72mncI2utxfKfi9Q6uCK08FBPRpPwTYS1PlJS3L0K4D5DQsiY+4TQnilAvSPSIlSFdW2BjneNk+EALj4WPzA3jU0yJ7bcFo8jbDCFWlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760483665; c=relaxed/simple;
-	bh=EClcHiBVnCp7dWHLzwzW330HQK8qfwjfP1HQwE9nVWI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p+hrO5UYOVSpFRHhzlwQxGOHA48DztwIbq/Sj2Zcxu4ZOc7d/uzysuI9EqflLz9Z1gaVNQeaVtYAkg53ysfb/Jr5EhFsJE5Jko7F2yZFcbqVdQACcJsRHsWTam3yDrZANMSg6KVOgTeT4K2F3zBnDK01xj1AiLnqfUA+TwwTmo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hillion.co.uk; spf=pass smtp.mailfrom=hillion.co.uk; dkim=pass (2048-bit key) header.d=hillion.co.uk header.i=@hillion.co.uk header.b=gkLazxRj; arc=none smtp.client-ip=46.235.224.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hillion.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hillion.co.uk
+	s=arc-20240116; t=1760493445; c=relaxed/simple;
+	bh=/cVyorIkMsFWVSCnGKCrbbEYTu4fe5GBf2CabcXfTrA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N0aMo+pyFL3s0EsThXAjkkEPkfC/x5/BzKga2i/RdjEHF6WifrjK+hldVYlAUuaxslEcgJtNJVpC/pgz7gZrD/mC578D5EMM6dzdn5+LiwUfuL+W9eDHOXtlC+qe1a4/lztUCoTkamDOl7DfIBYU9wJaZusHzdqx724i5UYXWaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d+2yKinZ; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hillion.co.uk header.i=@hillion.co.uk header.b="gkLazxRj"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=hillion.co.uk; s=mythic-beasts-k1; h=Subject:To:From:Date;
-	bh=AJdFH2sz/jA18mHmAfPZMPPk9tfrCqPZrJ4AUwUoi58=; b=gkLazxRjXFA3JIU1fy61/r9rPw
-	xyOSomqDrkZp7Pv5MM6k+xX03+jdZoORS4/p6PgVSCt1d2COw4WtizBFHD8y8cmwQkBXbej+XDedT
-	/V6PlUirQR46m3izKaHnMGOzh9nkILMzlyRVRGGfWPi1TODab4Lff+lmucJe8oiInFOuIdljJVbPD
-	vAZjAXHcXHEkpfe2BybR15OKK5y9M/xahcWR/nuIxoODK9wEme5uDpTOBRDLPlShFYhaUz2xNPZ+8
-	6Bj90SroLG3qWfTxr70T6+NR0JRjfUvDvuvt0QurqN98CipCenHWv1jU1CccDmCIBBTS8by7jwXon
-	AI/S/Gtw==;
-Received: by mailhub-cam-d.mythic-beasts.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <jake@hillion.co.uk>)
-	id 1v8nVB-00HV6o-0I;
-	Tue, 14 Oct 2025 23:28:17 +0100
-Date: Tue, 14 Oct 2025 23:27:57 +0100
-From: Jake Hillion <jake@hillion.co.uk>
-To: Ryan Newton <rrnewton@gmail.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, tj@kernel.org, 
-	arighi@nvidia.com, newton@meta.com
-Subject: Re: [PATCH v3 1/2] sched_ext: Add lockless peek operation for DSQs
-Message-ID: <ccbxwwb26ttq2jrgsie7uf4l5vy7mwe2a4yi7t3khllgfhuh75@hq4jdate7kyf>
-References: <20251006170403.3584204-1-rrnewton@gmail.com>
- <t8b-vwUhQyqC7uNXUsOCnC3pGMBTSqhIZuWqdx20sYVIriGXnnJVD9UP7K2ye1vrnyXglcpU14hevzw_xfCnMA==@protonmail.internalid>
- <20251006170403.3584204-2-rrnewton@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+2yKinZ"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-93607aec358so108110439f.0
+        for <sched-ext@lists.linux.dev>; Tue, 14 Oct 2025 18:57:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760493442; x=1761098242; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zeaP8NLxfmWjn/koiHnTCdCJDPT9I5Q4QaBgGQBf3WQ=;
+        b=d+2yKinZeV0FsKNcfZfHPIRc2Br/WBt/8VEcD67zl9iLm7qyvZc+2KXphIvtEGCjpF
+         J2X6HsTvPkDf3XFEQC3g41gYM1JleHPbHRaEr3a2YrVQVA5Ah1JxWks3RAnbekg/0jR4
+         5QHEnolACi/sblpfXTl14ZG5rt1hWsTE9JTsaKq1iJIxSQhOFg/a87W+WVKiZi89Ul80
+         dDjL/ucQNYM705NLm2dZp9lLkTidDBymPbppmW3TWWNJ288KP0kPlVantH9DMteQoLxi
+         8NbrqO9W9zvzuZRTnTogcKFAzygvBYBQEdw2Itr462CjFYcG4k2pq90VB9KRLDem1iRi
+         g+dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760493442; x=1761098242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zeaP8NLxfmWjn/koiHnTCdCJDPT9I5Q4QaBgGQBf3WQ=;
+        b=GduiH6RMkfL0A1ekmYdwyQEcAZWNSw+AHwSJm1ArWvv3G9l54F81UJs9AjrgSJiTNF
+         4dvyWimWoFb/NREqdLWStYd5JXRDBCelvfiQ+VVixGAdBpwVRzAxCqYIYiFXTBQ7rq6x
+         GuPl477C6pg7In3K4tgPGhek8IU3tkbxtzTVw4M4QCBT/BadWfbzMnNByOuWzCdZy9HX
+         Lf2jpo1aX9NG+5WrMMMcNodzBjDfiYek1qn+gAen/gUnv5T8o36uBYjFB0EeRGFw0tei
+         v9T3n17psEsWboiRMHZLPfjP0T8o9FDdBfBIc049OBoj2n6TCcXsv0o+DbtQl6JNkwL/
+         /1og==
+X-Gm-Message-State: AOJu0Yyan8XdF2fdLANUq5oYgH65x4d3ZCIQ3gWOGvDbwyNkHo+iqnG3
+	xoIU7wy2F5pDey2ceo+/685TBE+YDNvY2VElJ/NlGnUfnogOkQuo96DM
+X-Gm-Gg: ASbGnctP4i1fIPVLucF9KxC7AzAPfdrFXD0F67rJ35+aIvTvHtjKFA+j+q3rIcl/sPv
+	706D/QMhmHbo63Pmy7N31CxYxl99mKK4mDNVkoDZuLq0CaWRPVsmJ0ZN0FIcFz0F8OJo/PfCz34
+	gWkzexKVD7cfMN1Xnmh2Njitj6Fez6tUn7/TthG7bXJd/JhB8uz+sbU+AOuzfZiLuASPsTAFdyf
+	LZhMcnTycKl1DDDCAWmFM6yxzsilTszMqzbnRjAqBtl0LdH0Mlw1dBrsPqjJH2y9A70rhNdLDr/
+	Lu3PvjQM4sdLrC96wGpbxPkZIvdT99MGwF/QRha2tAgh4sEczXywa/1QAS8vmADJgLDxJC9rLJ0
+	3JicqethW0ocKnU9IuHL+tLOvgwhTEvueVSlVF9A8kCDGT4wxFQcuTJPfLCZPoKpsNxNizd+dG+
+	Pr/S/JxVLAahB4NWuoao6L6zmdAXcsyFu7NiN4+TOI
+X-Google-Smtp-Source: AGHT+IHONv40Afq4USs4oFY8rp4xprbCzgrbv1IRyEssSifN3C6Iy08xejlgJRMY3XfSG8EFLXW1Rw==
+X-Received: by 2002:a05:6e02:184d:b0:430:ae26:7c28 with SMTP id e9e14a558f8ab-430ae2680aemr2267505ab.1.1760493442295;
+        Tue, 14 Oct 2025 18:57:22 -0700 (PDT)
+Received: from newton-fedora-MZ01GC9H (c-68-45-22-229.hsd1.in.comcast.net. [68.45.22.229])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-58f6c496ed8sm5254772173.13.2025.10.14.18.57.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Oct 2025 18:57:20 -0700 (PDT)
+From: Ryan Newton <rrnewton@gmail.com>
+To: linux-kernel@vger.kernel.org
+Cc: sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	arighi@nvidia.com,
+	rrnewton@gmail.com,
+	newton@meta.com
+Subject: [PATCH v4 0/2] sched_ext: lockless peek operation for DSQs
+Date: Tue, 14 Oct 2025 21:57:10 -0400
+Message-ID: <20251015015712.3996346-1-rrnewton@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251006170403.3584204-2-rrnewton@gmail.com>
-X-BlackCat-Spam-Score: 4
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 06, 2025 at 01:04:02PM -0400, Ryan Newton wrote:
-> From: Ryan Newton <newton@meta.com>
+This allows sched_ext schedulers an inexpensive operation to peek
+at the first element in a queue (DSQ), without creating an iterator 
+and acquiring the lock on that queue.
 
-Hi Ryan,
+Note that manual testing has thus far included a modified version of the
+example qmap scheduler that exercises peek, as well as a modified
+modified LAVD (from the SCX repo) that exercises peek. The attached test
+passes >1000 stress tests when run in concurrent VMs, and when run
+sequentially on the host kernel. Presently, tested on the below
+workstation and server processors.
+- AMD Ryzen Threadripper PRO 7975WX 32-Cores
+- AMD EPYC 9D64 88-Core Processor
 
-> The builtin DSQ queue data structures are meant to be used by a wide
-> range of different sched_ext schedulers with different demands on these
-> data structures. They might be per-cpu with low-contention, or
-> high-contention shared queues. Unfortunately, DSQs have a coarse-grained
-> lock around the whole data structure. Without going all the way to a
-> lock-free, more scalable implementation, a small step we can take to
-> reduce lock contention is to allow a lockless, small-fixed-cost peek at
-> the head of the queue.
-> 
-> This change allows certain custom SCX schedulers to cheaply peek at
-> queues, e.g. during load balancing, before locking them. But it
-> represents a few extra memory operations to update the pointer each
-> time the DSQ is modified, including a memory barrier on ARM so the write
-> appears correctly ordered.
-> 
-> This commit adds a first_task pointer field which is updated
-> atomically when the DSQ is modified, and allows any thread to peek at
-> the head of the queue without holding the lock.
-> 
-> Signed-off-by: Ryan Newton <newton@meta.com>
+Initial experiments indicate a substantial speedup (on schbench) when
+running an SCX scheduler with per-cpu DSQs and peeking each queue to
+retrieve the task with the minimum vruntime across all the CPUs.
 
-Applied to my local kernel and modified my scheduler to use this
-feature. dmesg is clean and it works great.
+---
+Changes in v4:
+ - review comments (from arighi@nvidia.com) addressed
+ - make the test much lighter weight with 4 rather than 100 workers
 
-Tested-by: Jake Hillion <jake@hillion.co.uk>
+Changes in v3:
+ - inline helpers and simplify
+ - coding style tweaks
+ - link: https://lore.kernel.org/lkml/20251006170403.3584204-1-rrnewton@gmail.com/
 
-Thanks!
-Jake.
+Changes in v2:
+ - make peek() only work for user DSQs and error otherwise
+ - added a stress test component to the selftest that performs many peeks
+ - responded to review comments from tj@kernel.org and arighi@nvidia.com 
+ - link: https://lore.kernel.org/lkml/20251003195408.675527-1-rrnewton@gmail.com/
+ 
+v1 link: https://lore.kernel.org/lkml/20251002025722.3420916-1-rrnewton@gmail.com/
 
-> ---
->  include/linux/sched/ext.h                |  1 +
->  kernel/sched/ext.c                       | 54 +++++++++++++++++++++++-
->  tools/sched_ext/include/scx/common.bpf.h |  1 +
->  tools/sched_ext/include/scx/compat.bpf.h | 19 +++++++++
->  4 files changed, 73 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-> index d82b7a9b0658..81478d4ae782 100644
-> --- a/include/linux/sched/ext.h
-> +++ b/include/linux/sched/ext.h
-> @@ -58,6 +58,7 @@ enum scx_dsq_id_flags {
->   */
->  struct scx_dispatch_q {
->  	raw_spinlock_t		lock;
-> +	struct task_struct __rcu *first_task; /* lockless peek at head */
->  	struct list_head	list;	/* tasks in dispatch order */
->  	struct rb_root		priq;	/* used to order by p->scx.dsq_vtime */
->  	u32			nr;
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 2b0e88206d07..6d3537e65001 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -944,8 +944,11 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
->  				container_of(rbp, struct task_struct,
->  					     scx.dsq_priq);
->  			list_add(&p->scx.dsq_list.node, &prev->scx.dsq_list.node);
-> +			/* first task unchanged - no update needed */
->  		} else {
->  			list_add(&p->scx.dsq_list.node, &dsq->list);
-> +			/* not builtin and new task is at head - use fastpath */
-> +			rcu_assign_pointer(dsq->first_task, p);
->  		}
->  	} else {
->  		/* a FIFO DSQ shouldn't be using PRIQ enqueuing */
-> @@ -953,10 +956,19 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
->  			scx_error(sch, "DSQ ID 0x%016llx already had PRIQ-enqueued tasks",
->  				  dsq->id);
-> 
-> -		if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
-> +		if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT)) {
->  			list_add(&p->scx.dsq_list.node, &dsq->list);
-> -		else
-> +			/* new task inserted at head - use fastpath */
-> +			if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN))
-> +				rcu_assign_pointer(dsq->first_task, p);
-> +		} else {
-> +			bool was_empty;
-> +
-> +			was_empty = list_empty(&dsq->list);
->  			list_add_tail(&p->scx.dsq_list.node, &dsq->list);
-> +			if (was_empty && !(dsq->id & SCX_DSQ_FLAG_BUILTIN))
-> +				rcu_assign_pointer(dsq->first_task, p);
-> +		}
->  	}
-> 
->  	/* seq records the order tasks are queued, used by BPF DSQ iterator */
-> @@ -1011,6 +1023,13 @@ static void task_unlink_from_dsq(struct task_struct *p,
->  		p->scx.dsq_flags &= ~SCX_TASK_DSQ_ON_PRIQ;
->  	}
-> 
-> +	if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN) && dsq->first_task == p) {
-> +		struct task_struct *first_task;
-> +
-> +		first_task = nldsq_next_task(dsq, NULL, false);
-> +		rcu_assign_pointer(dsq->first_task, first_task);
-> +	}
-> +
->  	list_del_init(&p->scx.dsq_list.node);
->  	dsq_mod_nr(dsq, -1);
->  }
-> @@ -6084,6 +6103,36 @@ __bpf_kfunc void bpf_iter_scx_dsq_destroy(struct bpf_iter_scx_dsq *it)
->  	kit->dsq = NULL;
->  }
-> 
-> +/**
-> + * scx_bpf_dsq_peek - Lockless peek at the first element.
-> + * @dsq_id: DSQ to examine.
-> + *
-> + * Read the first element in the DSQ. This is semantically equivalent to using
-> + * the DSQ iterator, but is lockfree.
-> + *
-> + * Returns the pointer, or NULL indicates an empty queue OR internal error.
-> + */
-> +__bpf_kfunc struct task_struct *scx_bpf_dsq_peek(u64 dsq_id)
-> +{
-> +	struct scx_sched *sch;
-> +	struct scx_dispatch_q *dsq;
-> +
-> +	sch = rcu_dereference(scx_root);
-> +	if (unlikely(!sch))
-> +		return NULL;
-> +	if (unlikely(dsq_id & SCX_DSQ_FLAG_BUILTIN)) {
-> +		scx_error(sch, "peek disallowed on builtin DSQ 0x%llx", dsq_id);
-> +		return NULL;
-> +	}
-> +
-> +	dsq = find_user_dsq(sch, dsq_id);
-> +	if (unlikely(!dsq)) {
-> +		scx_error(sch, "peek on non-existent DSQ 0x%llx", dsq_id);
-> +		return NULL;
-> +	}
-> +	return rcu_dereference(dsq->first_task);
-> +}
-> +
->  __bpf_kfunc_end_defs();
-> 
->  static s32 __bstr_format(struct scx_sched *sch, u64 *data_buf, char *line_buf,
-> @@ -6641,6 +6690,7 @@ BTF_KFUNCS_START(scx_kfunc_ids_any)
->  BTF_ID_FLAGS(func, scx_bpf_kick_cpu)
->  BTF_ID_FLAGS(func, scx_bpf_dsq_nr_queued)
->  BTF_ID_FLAGS(func, scx_bpf_destroy_dsq)
-> +BTF_ID_FLAGS(func, scx_bpf_dsq_peek, KF_RCU_PROTECTED | KF_RET_NULL)
->  BTF_ID_FLAGS(func, bpf_iter_scx_dsq_new, KF_ITER_NEW | KF_RCU_PROTECTED)
->  BTF_ID_FLAGS(func, bpf_iter_scx_dsq_next, KF_ITER_NEXT | KF_RET_NULL)
->  BTF_ID_FLAGS(func, bpf_iter_scx_dsq_destroy, KF_ITER_DESTROY)
-> diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-> index 06e2551033cb..fbf3e7f9526c 100644
-> --- a/tools/sched_ext/include/scx/common.bpf.h
-> +++ b/tools/sched_ext/include/scx/common.bpf.h
-> @@ -75,6 +75,7 @@ u32 scx_bpf_reenqueue_local(void) __ksym;
->  void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
->  s32 scx_bpf_dsq_nr_queued(u64 dsq_id) __ksym;
->  void scx_bpf_destroy_dsq(u64 dsq_id) __ksym;
-> +struct task_struct *scx_bpf_dsq_peek(u64 dsq_id) __ksym __weak;
->  int bpf_iter_scx_dsq_new(struct bpf_iter_scx_dsq *it, u64 dsq_id, u64 flags) __ksym __weak;
->  struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *it) __ksym __weak;
->  void bpf_iter_scx_dsq_destroy(struct bpf_iter_scx_dsq *it) __ksym __weak;
-> diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-> index dd9144624dc9..97b10c184b2c 100644
-> --- a/tools/sched_ext/include/scx/compat.bpf.h
-> +++ b/tools/sched_ext/include/scx/compat.bpf.h
-> @@ -130,6 +130,25 @@ int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym
->  	false;									\
->  })
-> 
-> +
-> +/*
-> + * v6.19: Introduce lockless peek API for user DSQs.
-> + *
-> + * Preserve the following macro until v6.21.
-> + */
-> +static inline struct task_struct *__COMPAT_scx_bpf_dsq_peek(u64 dsq_id)
-> +{
-> +	struct task_struct *p = NULL;
-> +	struct bpf_iter_scx_dsq it;
-> +
-> +	if (bpf_ksym_exists(scx_bpf_dsq_peek))
-> +		return scx_bpf_dsq_peek(dsq_id);
-> +	if (!bpf_iter_scx_dsq_new(&it, dsq_id, 0))
-> +		p = bpf_iter_scx_dsq_next(&it);
-> +	bpf_iter_scx_dsq_destroy(&it);
-> +	return p;
-> +}
-> +
->  /**
->   * __COMPAT_is_enq_cpu_selected - Test if SCX_ENQ_CPU_SELECTED is on
->   * in a compatible way. We will preserve this __COMPAT helper until v6.16.
-> --
-> 2.51.0
-> 
-> 
+Ryan Newton (2):
+  sched_ext: Add lockless peek operation for DSQs
+  sched_ext: Add a selftest for scx_bpf_dsq_peek
+
+ include/linux/sched/ext.h                     |   1 +
+ kernel/sched/ext.c                            |  56 +++-
+ tools/sched_ext/include/scx/common.bpf.h      |   1 +
+ tools/sched_ext/include/scx/compat.bpf.h      |  18 ++
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/peek_dsq.bpf.c        | 251 ++++++++++++++++++
+ tools/testing/selftests/sched_ext/peek_dsq.c  | 222 ++++++++++++++++
+ 7 files changed, 548 insertions(+), 2 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/peek_dsq.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/peek_dsq.c
+
+-- 
+2.51.0
+
