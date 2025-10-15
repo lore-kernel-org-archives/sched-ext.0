@@ -1,143 +1,136 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066F221CC6A
-	for <sched-ext@lists.linux.dev>; Wed, 15 Oct 2025 14:05:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48116F06B
+	for <sched-ext@lists.linux.dev>; Wed, 15 Oct 2025 15:50:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760537159; cv=none; b=dmx/Oi94bTufLzQ9p6WlrfeGwVVc740+PYN1AeGwNwbgv+JhQLbCTjNYYZqck8vluHTwVEsuwVTJknmCs0qIbuIKYNOR4pJXIsCRfoO5ucrqF+yTfntYikXKMLVZ0Hrsqe5W2OTcNMSLVeZvcKomlExDq/v4q8+sKQGuN4t0KyA=
+	t=1760543442; cv=none; b=h00QxUO/w0I9Q0bDlefeM2hs2GNI+3oTxI3ssfChA+zC9ncVEOBQDAnQunOSKT0h50MRxPiXqNagJiY/iMJGWm2Od/BdE7iQEphWYIxKobYyy3AK1dAl+Nt/LuRFlMLKXfdrpxCX0+z5v0mNNAEVjz/HptZt1qbQP5ZCmFDpeJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760537159; c=relaxed/simple;
-	bh=LyufV/Oxmd5czwod8MbqOItND5kZumwbyc5sLHjKcZs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uU8SIIPv0VBzBjm7FoXQUFAWbbm6mt873IgGulRitRbbeapqZi1b21mG4TIJf9MXwng+99k1QSe7C1RDvpxkR3e/hui3mMJeLVAOR6IBJoVqrt/CAPw3V3SVfFLJ+7ZMGJQTd4QGFKF41KJEZFeUSLiiaMXLukdOJ18kLofuBWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyRtorRv; arc=none smtp.client-ip=209.85.215.177
+	s=arc-20240116; t=1760543442; c=relaxed/simple;
+	bh=3MYPajuQ2QWtBRwvH2nbfeYSKwoEPh79fX4y0wqgQoI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aIOSxBHnZic+u/ItsvgjLkP3RAn6Sceeq93I5bbYD9G/NjQpIk8Vohz3T96bjzJCTKsqDA5C/GXgvIAkqbkvydD+arOawX8Imif5q+Ej++VuIXXpnrOqLQ6nOaXR3FDo3rKUoc7xGBlJyVaRbziijx1yxxcaqV8ikte0eYA/SzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LVFUA038; arc=none smtp.client-ip=209.85.166.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyRtorRv"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b62e7221351so5424479a12.1
-        for <sched-ext@lists.linux.dev>; Wed, 15 Oct 2025 07:05:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LVFUA038"
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-91122373653so294359939f.1
+        for <sched-ext@lists.linux.dev>; Wed, 15 Oct 2025 08:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760537157; x=1761141957; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Izxb3W52HRiZqSQiVAIiwV9HWtk23rrXM2SEP63D5wg=;
-        b=fyRtorRvRYjzrbbNy4o5TsybGpYUQgY7XKVyPa0sjtcSF1MNvtJZthFIr4O6FNEoTU
-         bIXHwdWiB98oQ8Uh14wpkQcn+LAltXJt6f6/M9ygN5NugXvULPZyNQ+A5Bq3xkMMsvzh
-         6eZVmJypAVemaIRISO7x8NO34sdI3zaye3aWU4vh0RO1C6hhhb8pK31B6f7bEbxL7/M4
-         lPm4rS2mTaz4icphfuB3Gr4fiaL9nAuXNGKtDctad+bmDZEFplk2H8C53hGXOAnVBoCi
-         UBuEBpGAES7ioykt6K/BUvL8zszTIsq74I1Hm0dkbo92cbc5hTNrWyB+19I4W7T2WDMm
-         SeYw==
+        d=gmail.com; s=20230601; t=1760543440; x=1761148240; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FPrAKu/IWOXmM5CfcFxeiP+a3NmUz9xQBz3ZjE+QAfY=;
+        b=LVFUA0380XXYuTKG6sqYga6Inc7BucDieWyDP7Bxe2F9q+k1Q5AuwsFSFcCe9/7aaO
+         wnoC2agSt0per7EG5z1XFiTeK5GwUeBjDK01alayr2pQuJgY16VlkEZkQ221KzKKuDyS
+         hRKC9lUB0Ddu2zi/qoLSKYJWxpRdv/U66Jc2ppJ4axitopLOZMUksSf0v8BegEWl296I
+         koS0kqtUPTKBn952YC4tXSqr2vr+dNe63siZ+dmaz1xDCtL4ANhcRYuKbyEnSaNHNTDP
+         ZAkkVBq9Y5mM0p6stx1rPo31H+pcznkc7B/DMvIeWUc92h8eJKZel3ZoxMsgevurM5OX
+         8UwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760537157; x=1761141957;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Izxb3W52HRiZqSQiVAIiwV9HWtk23rrXM2SEP63D5wg=;
-        b=rtwLpgXP46vI4vENNhFXBQfGEK9rqQbZXyulFLgh9dq1ZxUygsSNECejEhXWdKRwM1
-         UMvl47jZniFNKwOKkObhXmp5zTsxbUZT1jplDFvSxGMi0bMjp3QvnH5py8LEu+wjTFFN
-         N5Qos+IwF8kXwQi4Yv+FcR8YMF1sZEfEfPIc2qrhdttqauta0BCAz4DW7MSpeeK3F44H
-         c6B4YamRwpeM5Tb/FndYiHSUDQwRjLNQ2W0LDww9uQhk4EHtbkuyRouWyw5n4k2Apvq4
-         c39pfwKODexT3SW63Cl6aIzZnL9bMGzAArLUIAmlQBV4dw/1Sct6tGn6zaZbrXSUdUwD
-         IwSA==
-X-Forwarded-Encrypted: i=1; AJvYcCVg9z8pBSF+R8mVD94+sc41cdJ/uah9eRhXTqr2RNUWc1CW7fimL0KKRaEhL1NARj5xjdULEQdCR6M=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzrvHfCelVnb34OgKDkX539FNmjiokHPTw+84PJHIpiJEnsm6OK
-	p9xelv1KrazU9s8zPaKsTaTXtEpzt2kv2hT6MxXesEqWmNn6gYZ1fvLskHmQY/LXuKWt4O4TB4m
-	7qLjeqfvzjblw0rt37R6GjoMj9TEkH3GYpSF7emc=
-X-Gm-Gg: ASbGncuyS3GXSj5fKy5Ka9FPLwkZDx0lSbjQ6Dy/pTWX9r/zj4/QRC4mHFkjkviDPVk
-	jcrVKjr2yAiKWDDboa7ZERw/OZwlb1JaOV/NxZk8+Dk9ayQUR1lTuFq6XJ4QjKHAVD77I5qdCwV
-	o6H/FxPgOVflHLIWutRiu3DnVr9yc/WkI76ROS1Uy1+FnbBnpwMruarQFpLiDq7++fdz++I+GuZ
-	T80nd/5k4mHOBOfW+PzVwx/+zHETxBOCYQnyzT5vHxW9OApWyWi2fST
-X-Google-Smtp-Source: AGHT+IH80BdRo+6CXpDD4C5IS3FGJwcCjZorcKzoOP4xMkMEbleLUevb8W36dulFWLdsi+QxlI8j9qgAZsAP3mY+ua0=
-X-Received: by 2002:a17:903:1b0b:b0:25c:d4b6:f117 with SMTP id
- d9443c01a7336-290272c1ab0mr388440805ad.35.1760537156603; Wed, 15 Oct 2025
- 07:05:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760543440; x=1761148240;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FPrAKu/IWOXmM5CfcFxeiP+a3NmUz9xQBz3ZjE+QAfY=;
+        b=MUkd7J6ZOc/sDdcL08/qohOtoapfpqglkvoATcfMVeagA3r7Wy9Hyh/JbBQQM4JaL9
+         G2b0nCtimg9q9Du3duJvrw/lu286hQ/Fjc8oV5c5IJNHG4yrj0XjBaFdH5kmvNvqLhth
+         VqQTe2wD9vJ37PBN8wIBszR5pmd5wAEQfrNtGddJumMe29YBr67baS+5JlKe5NHcgET4
+         sHecN/F5K4L6ZFmH/jeJACtCeKF19HwF9I5e4rfCmxz+l9fcD4MWDbf9ON4E9cTryxrD
+         hLHuvoSmO2GZNLDOKIkpxtyyyaj12dXrQJMuBeXSnBpyXg0wftPmTeNaM6Hl/U+lxhYW
+         SJMg==
+X-Gm-Message-State: AOJu0YzxH2JATUVE0h8fHHhDud9MTGLcKDglSCVSEqVDzZaD8JpAfKOn
+	u+krqd5GScacOEOXDsKoLIrUFLtQA/MrxZlCSB9PE48QwCLoIkmG8W1F
+X-Gm-Gg: ASbGncsf3E6aSu6FFVgL3oH5+KGlfWYe/SE3DpahZK9O3PxWXWRQO5fECG/p7o4OGwe
+	ZbORSdIMwqZIvYEuxp130S72Nf/HBCa7tXMls+/AxYOMwdOGLvwyvUipemo6tfSr+6AsD+680nU
+	bmlDrVarXU3wvjAfn4Z0y7kpZfcFFKWmjn5Drzeoi3peYmLFiDWYrG9DIR0qtao2tWQDg0BzZKZ
+	wIEyERcS1OTS1T4CXWh7ZQVgP/25C+KSKa9TUaM2Q9EvRJ9b18yY/hzswTnGOmGnJp/WeKFFX7e
+	a0XUYpJsjX1uI2WxKmyVlOr4dmGU+qIk5avymKygN3D3dq42QgXrXUoPxUcJQRID1hEbaQpUAFK
+	cQF/KhVnGe+vQmvm/ofziypQqTNT09ibEIV8VTNf56zris0K5S6OCpMJqEf+SDQGozDoGFk19nG
+	EEcAz0iRNM5pea/kk8xOIKze8/HAa6azTaJavqbT7NmFcpurFUX4E=
+X-Google-Smtp-Source: AGHT+IF18Fh+dNim3Y+u/hzFLdFyF918bdyCY6/WjkMfV7iZC3Up53vEzOUqWIK53pLRVcDJJ5zPxQ==
+X-Received: by 2002:a05:6602:2b82:b0:927:44ad:739b with SMTP id ca18e2360f4ac-93bd1989d4dmr3828327839f.16.1760543439895;
+        Wed, 15 Oct 2025 08:50:39 -0700 (PDT)
+Received: from newton-fedora-MZ01GC9H (c-68-45-22-229.hsd1.in.comcast.net. [68.45.22.229])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-93e25a67790sm617361639f.21.2025.10.15.08.50.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Oct 2025 08:50:38 -0700 (PDT)
+From: Ryan Newton <rrnewton@gmail.com>
+To: linux-kernel@vger.kernel.org
+Cc: sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	arighi@nvidia.com,
+	christian.loehle@arm.com,
+	rrnewton@gmail.com,
+	newton@meta.com
+Subject: [PATCH v5 0/2] sched_ext: lockless peek operation for DSQs
+Date: Wed, 15 Oct 2025 11:50:34 -0400
+Message-ID: <20251015155036.420486-1-rrnewton@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251015015712.3996346-1-rrnewton@gmail.com> <20251015015712.3996346-2-rrnewton@gmail.com>
- <a469d0fb-62f2-4286-901f-b7a634d3e0c4@arm.com>
-In-Reply-To: <a469d0fb-62f2-4286-901f-b7a634d3e0c4@arm.com>
-Reply-To: rrnewton@gmail.com
-From: Ryan Newton <rrnewton@gmail.com>
-Date: Wed, 15 Oct 2025 10:05:28 -0400
-X-Gm-Features: AS18NWDd9xa7otKnSJo4hIQc7ltt0-qgZkcRUOmzit0PnMit8CE93FLvuAfl8oA
-Message-ID: <CACYs5Aax6X_8hrYtjC4yAMy5K6e3CwxSjEiW3mK8wfePq3oyBg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] sched_ext: Add lockless peek operation for DSQs
-To: Christian Loehle <christian.loehle@arm.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, tj@kernel.org, 
-	arighi@nvidia.com, newton@meta.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 15, 2025 at 5:46=E2=80=AFAM Christian Loehle
-<christian.loehle@arm.com> wrote:
-> > +/**
-> > + * scx_bpf_dsq_peek - Lockless peek at the first element.
-> > + * @dsq_id: DSQ to examine.
-> > + *
-> > + * Read the first element in the DSQ. This is semantically equivalent =
-to using
-> > + * the DSQ iterator, but is lockfree.
-> > + *
-> > + * Returns the pointer, or NULL indicates an empty queue OR internal e=
-rror.
-> > + */
-> > +__bpf_kfunc struct task_struct *scx_bpf_dsq_peek(u64 dsq_id)
-> > +{
->
-> Obviously there's no guarantee that scx_bpf_dsq_peek() will return the ta=
-sk you're gonna
-> get when moving a task to another DSQ or a local one. It's pretty obvious=
- from the kernel
-> perspective, but I wonder if it's worth documenting here too.
+This allows sched_ext schedulers an inexpensive operation to peek
+at the first element in a queue (DSQ), without creating an iterator 
+and acquiring the lock on that queue.
 
-Hello Christian, thanks for looking at the patches.
+Note that manual testing has thus far included a modified version of the
+example qmap scheduler that exercises peek, as well as a modified
+modified LAVD (from the SCX repo) that exercises peek. The attached test
+passes >1000 stress tests when run in concurrent VMs, and when run
+sequentially on the host kernel. Presently, tested on the below
+workstation and server processors.
+- AMD Ryzen Threadripper PRO 7975WX 32-Cores
+- AMD EPYC 9D64 88-Core Processor
 
-Absolutely, whenever using a lockless operation you have to watch out
-for TOCTOU bugs. In the schedulers we've experimented with, doing a
-sweep of peeks just gives you a higher chance of getting what you're
-looking for when you subsequently lock the remote DSQ for
-popping/stealing a task. I can add a reminder in the comment on the
-function.
+Initial experiments indicate a substantial speedup (on schbench) when
+running an SCX scheduler with per-cpu DSQs and peeking each queue to
+retrieve the task with the minimum vruntime across all the CPUs.
 
-> > +/*
-> > + * v6.19: Introduce lockless peek API for user DSQs.
-> > + *
-> > + * Preserve the following macro until v6.21.
-> > + */
-> > +static inline struct task_struct *__COMPAT_scx_bpf_dsq_peek(u64 dsq_id=
-)
-> > +{
-> > +     struct task_struct *p =3D NULL;
-> > +     struct bpf_iter_scx_dsq it;
-> > +
-> > +     if (bpf_ksym_exists(scx_bpf_dsq_peek))
-> > +             return scx_bpf_dsq_peek(dsq_id);
-> > +     if (!bpf_iter_scx_dsq_new(&it, dsq_id, 0))
-> > +             p =3D bpf_iter_scx_dsq_next(&it);
-> > +     bpf_iter_scx_dsq_destroy(&it);
-> > +     return p;
-> > +}
-> > +
-> I think there's an argument to be made for this to just return NULL on
-> !bpf_ksym_exists(scx_bpf_dsq_peek), the caller needs to handle that anywa=
-y
-> and at least it's guaranteed to be lockfree then?
-> I don't have a strong leaning either way, probably is fine if documented.
+---
+Changes in v5:
+ - minor comment tweak requested in review
+ - add Reviewed-bys christian.loehle@arm.com
 
-We went back and forth on this patch a lot, and did explore versions
-where peek is "best effort" and its semantics allow it to return NULL
-for any reason. But that provides much less information to the caller,
-because now NULL is supposed to indicate that the queue was empty at a
-point in time. For that reason we ended up with this version where
-peek provides both positive info (something is/was there) and negative
-(nothing is/was there).
+Changes in v4:
+ - review comments (from arighi@nvidia.com) addressed, add Reviewed-by
+ - make the test much lighter weight with 4 rather than 100 workers
+ - link: https://lore.kernel.org/lkml/20251015015712.3996346-1-rrnewton@gmail.com/
 
-Best,
- -Ryan
+Changes in v3:
+ - inline helpers and simplify
+ - coding style tweaks
+ - link: https://lore.kernel.org/lkml/20251006170403.3584204-1-rrnewton@gmail.com/
+
+Changes in v2:
+ - make peek() only work for user DSQs and error otherwise
+ - added a stress test component to the selftest that performs many peeks
+ - responded to review comments from tj@kernel.org and arighi@nvidia.com 
+ - link: https://lore.kernel.org/lkml/20251003195408.675527-1-rrnewton@gmail.com/
+ 
+v1 link: https://lore.kernel.org/lkml/20251002025722.3420916-1-rrnewton@gmail.com/
+
+Ryan Newton (2):
+  sched_ext: Add lockless peek operation for DSQs
+  sched_ext: Add a selftest for scx_bpf_dsq_peek
+
+ include/linux/sched/ext.h                     |   1 +
+ kernel/sched/ext.c                            |  58 +++-
+ tools/sched_ext/include/scx/common.bpf.h      |   1 +
+ tools/sched_ext/include/scx/compat.bpf.h      |  18 ++
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/peek_dsq.bpf.c        | 251 ++++++++++++++++++
+ tools/testing/selftests/sched_ext/peek_dsq.c  | 224 ++++++++++++++++
+ 7 files changed, 552 insertions(+), 2 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/peek_dsq.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/peek_dsq.c
+
+-- 
+2.51.0
+
