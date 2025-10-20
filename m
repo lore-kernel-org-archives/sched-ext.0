@@ -1,110 +1,186 @@
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8EB21ABD7;
-	Mon, 20 Oct 2025 21:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB3C1EDA3C;
+	Mon, 20 Oct 2025 22:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760996147; cv=none; b=HdYeSTKR43VMdchVYuScNPr38O+vN+hmqrtv9M7hq2sGu5FCJaj2x8mYoR0rminIyD6nP+PFm+I8e6edZEMVVOk7wYRbR+LHxQ/Dezchhe0U2RJvFq+4eyweU2uZ82Gy3IgL4Rq3RXnkD9zvhC/8UwUu/Zj6e7nUIWScSYV9hmw=
+	t=1760998176; cv=none; b=pcSw64/LJ8xGfWV7OVIXidqJSArUwInWiz4JaaYyMyh7MrXppKqQNPYfPHLjCq6AhQ+fxHJ+gXQHR+dtKr0gzN0wjF4Yb83zBwkjZjDl1aSBbt+mDXGPIRzqELRCGywpUAASDXwtkcnXd9Tv1aH5mixZBs5oRWvQmgcG7hWYV8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760996147; c=relaxed/simple;
-	bh=O3gKx5Rj2VOWiy+K0H59IGE1QBF6cjEbBSIJ2Vxbkns=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bDUFVi3z1386202LP8dZCU3QNCBRte8KSj1BFtRtTmUNCXZDsaU4moXnTcaMt+LWzoy88MkgiyOwMs6INiQHuS9tEue1Te05jOSY3GSbOClUyUVjqaANcODFUYIAz1lUL7yEKYcSJMnpi+o47xaeyUccoEZc+q7Ol3DTUBfSZ9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=KJ7t5kIS; arc=none smtp.client-ip=213.97.179.56
+	s=arc-20240116; t=1760998176; c=relaxed/simple;
+	bh=BaAQfwR7hnH39Re+w1xoI7JlwBZnbgG3v+okkJt2oLg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eJpDSyKGKKzv5Dto3LEZk77+pMGLJaK5QlTwm1QFvV9z+d0Oi5n7KxyfaZO5rWLTnnlF8wCrb/YMfV4OVaop641E9Vs1DoYL4CtuBZIerOl8b5bP8fFAx0pRe64sAthbM8UpYx1MKl54YOorBHe1bws5KugC6N2s8sQlChyLh54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=KN46Cddf; arc=none smtp.client-ip=213.97.179.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="KJ7t5kIS"
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="KN46Cddf"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Apw2ko+AxH0CsXs7vBtTeoN9MrrD1jme4QTPmBSX9yA=; b=KJ7t5kIS0nuNSItWb5IMKwFEEb
-	xd0Jah9HUvMknufapOJo3x+MpBXpdrA/1uV9QWhneBUCmjF0qW6QPohN0uHSrQRoSMsQ4zLn+dWuR
-	9c+IVTrwGFri/X62NsZJQJWpJIMrJOlUuv207ZEcr0ho0SZ60mM6A5If9P9d+31tJn0TKkK+xG+dE
-	3YmOJ0OS3T0JFcxZgGFeKk5BSGRwDQqAedT+Zjwjcx/0CyyN2ZFssp5tS6FXhxAR/3HWZ6Q9K5bzo
-	HbE/NbjfYyTf3Y5D6LjN2g+o61ZCGj30+lp6abHVR7PLDTMdXHCCqhkF4UKnNh1wIbqj+JFOy0bm9
-	AljfkgFw==;
-Received: from [58.29.143.236] (helo=[192.168.1.7])
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=hmGZIc4OcZcwXFs14bVJjp426YqngqKJft4i67JF6J4=; b=KN46Cddfsxbxx4ptkXd3IlJ10t
+	pGgrL32AUVDk9PXHZ6cB2qcBIWcDVxclcGLiLWvzz0ObioKOqBRaILTuz1yS4dncZV7GBJ0/2S+da
+	QQeR8G2R1eD8leOVeSoESJ4AR9uBRMigPtbtHcNsQp+LMor3c9uoARlW5xvaFb7e27XkJ4JZ0m9Fz
+	Vy8HpEDSZaRH/Lu1czda8d9N5DRNAtX0Okj0m4522a03p6kdTrd2oPSLqV1Opt8KNEuFnY3rQVB6g
+	/p8Qr7PEj+XActQ7ZaQDa1CYfGG5s3gz1wv+idnw5szN7AKyBpxYn2ADeakVpyIQN3z4KsfVjrW0i
+	6ug+BLWg==;
+Received: from [58.29.143.236] (helo=localhost)
 	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1vAxXW-00CGru-9Z; Mon, 20 Oct 2025 23:35:38 +0200
-Message-ID: <57a19531-de5f-44ee-bff0-d3a956131d29@igalia.com>
-Date: Tue, 21 Oct 2025 06:35:31 +0900
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1vAy48-00CHWW-TF; Tue, 21 Oct 2025 00:09:22 +0200
+From: Changwoo Min <changwoo@igalia.com>
+To: lukasz.luba@arm.com,
+	rafael@kernel.org,
+	len.brown@intel.com,
+	pavel@kernel.org
+Cc: christian.loehle@arm.com,
+	tj@kernel.org,
+	kernel-dev@igalia.com,
+	linux-pm@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Changwoo Min <changwoo@igalia.com>
+Subject: [PATCH v6 00/10] PM: EM: Add netlink support for the energy model
+Date: Tue, 21 Oct 2025 07:09:04 +0900
+Message-ID: <20251020220914.320832-1-changwoo@igalia.com>
+X-Mailer: git-send-email 2.51.1.dirty
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/10] PM: EM: Add an iterator and accessor for the
- performance domain
-To: "Rafael J. Wysocki" <rafael@kernel.org>, kernel test robot <lkp@intel.com>
-Cc: lukasz.luba@arm.com, len.brown@intel.com, pavel@kernel.org,
- oe-kbuild-all@lists.linux.dev, christian.loehle@arm.com, tj@kernel.org,
- kernel-dev@igalia.com, linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20251014001055.772422-6-changwoo@igalia.com>
- <202510151232.UNZ2J7TZ-lkp@intel.com>
- <CAJZ5v0hAnKEUP7n_d3bzVEi0HGmgZXC-+U=_RmS1n0wGniv8qQ@mail.gmail.com>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <CAJZ5v0hAnKEUP7n_d3bzVEi0HGmgZXC-+U=_RmS1n0wGniv8qQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Rafael,
+Addressed all the comments from Lukasz and rebased the code to the head
+of the linus tree.
 
-On 10/21/25 02:44, Rafael J. Wysocki wrote:
-> On Wed, Oct 15, 2025 at 6:50 AM kernel test robot <lkp@intel.com> wrote:
->>
->> Hi Changwoo,
->>
->> kernel test robot noticed the following build errors:
->>
->> [auto build test ERROR on amd-pstate/linux-next]
->> [also build test ERROR on amd-pstate/bleeding-edge linus/master v6.18-rc1 next-20251014]
->> [If your patch is applied to the wrong git tree, kindly drop us a note.
->> And when submitting patch, we suggest to use '--base' as documented in
->> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->>
->> url:    https://github.com/intel-lab-lkp/linux/commits/Changwoo-Min/PM-EM-Assign-a-unique-ID-when-creating-a-performance-domain/20251014-082420
->> base:   https://git.kernel.org/pub/scm/linux/kernel/git/superm1/linux.git linux-next
->> patch link:    https://lore.kernel.org/r/20251014001055.772422-6-changwoo%40igalia.com
->> patch subject: [PATCH v5 05/10] PM: EM: Add an iterator and accessor for the performance domain
->> config: i386-buildonly-randconfig-001-20251015 (https://download.01.org/0day-ci/archive/20251015/202510151232.UNZ2J7TZ-lkp@intel.com/config)
->> compiler: gcc-13 (Debian 13.3.0-16) 13.3.0
->> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20251015/202510151232.UNZ2J7TZ-lkp@intel.com/reproduce)
->>
->> If you fix the issue in a separate patch/commit (i.e. not just a new version of
->> the same patch/commit), kindly add following tags
->> | Reported-by: kernel test robot <lkp@intel.com>
->> | Closes: https://lore.kernel.org/oe-kbuild-all/202510151232.UNZ2J7TZ-lkp@intel.com/
->>
->> All errors (new ones prefixed by >>):
->>
->>>> kernel/power/energy_model.c:1003:5: error: redefinition of 'for_each_em_perf_domain'
->>      1003 | int for_each_em_perf_domain(int (*cb)(struct em_perf_domain*, void *),
->>           |     ^~~~~~~~~~~~~~~~~~~~~~~
->>     In file included from kernel/power/energy_model.c:20:
->>     kernel/power/em_netlink.h:18:5: note: previous definition of 'for_each_em_perf_domain' with type 'int(int (*)(struct em_perf_domain *, void *), void *)'
->>        18 | int for_each_em_perf_domain(int (*cb)(struct em_perf_domain*, void *),
->>           |     ^~~~~~~~~~~~~~~~~~~~~~~
->>>> kernel/power/energy_model.c:1022:24: error: redefinition of 'em_perf_domain_get_by_id'
->>      1022 | struct em_perf_domain *em_perf_domain_get_by_id(int id)
->>           |                        ^~~~~~~~~~~~~~~~~~~~~~~~
->>     kernel/power/em_netlink.h:24:24: note: previous definition of 'em_perf_domain_get_by_id' with type 'struct em_perf_domain *(int)'
->>        24 | struct em_perf_domain *em_perf_domain_get_by_id(int id)
->>           |                        ^~~~~~~~~~~~~~~~~~~~~~~~
->>
-> 
-> Please update the patch to address this report and resend it, thanks!
+There is a need to access the energy model from the userspace. One such
+example is the sched_ext schedulers [1]. The userspace part of the
+sched_ext schedules could feed the (post-processed) energy-model
+information to the BPF part of the scheduler.
 
-Sure, I will send v6 with these two fixes in.
+Currently, debugfs is the only way to read the energy model from userspace;
+however, it lacks proper notification mechanisms when a performance domain
+and its associated energy model change.
 
-Regards,
-Changwoo Min
+This patch set introduces a generic netlink for the energy model, as
+discussed in [2]. It allows a userspace program to read the performance
+domain and its energy model. It notifies the userspace program when a
+performance domain is created or deleted or its energy model is updated
+through a multicast interface.
+
+Specifically, it supports two commands:
+  - EM_CMD_GET_PDS: Get the list of information for all performance
+    domains.
+  - EM_CMD_GET_PD_TABLE: Get the energy model table of a performance
+    domain.
+
+Also, it supports three notification events:
+  - EM_CMD_PD_CREATED: When a performance domain is created.
+  - EM_CMD_PD_DELETED: When a performance domain is deleted.
+  - EM_CMD_PD_UPDATED: When the energy model table of a performance domain
+    is updated.
+
+This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for example,
+with the following commands:
+
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --do get-pds
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --do get-pd-table --json '{"pd-id": 0}'
+  $> tools/net/ynl/pyynl/cli.py \
+     --spec Documentation/netlink/specs/em.yaml \
+     --subscribe event  --sleep 10
+
+[1] https://lwn.net/Articles/922405/
+[2] https://lore.kernel.org/lkml/a82423bc-8c38-4d57-93da-c4f20011cc92@arm.com/
+[3] https://lore.kernel.org/lkml/202506140306.tuIoz8rN-lkp@intel.com/#t
+
+ChangeLog v5 -> v6:
+  - Fix two problems reported by the kernel test robot.
+  - Conditionally include the iterator/accessor code for the performance
+    domain when both CONFIG_ENERGY_MODEL and CONFIG_NET are set to avoid
+    the compilation errors (patch 5).
+  - Remove an unused variable, `ret`, in em_notify_pd_deleted() to avoid
+    a warning (patch 8).
+
+ChangeLog v4 -> v5:
+  - Rebase the code to the head of the linus tree.
+  - Remove the redundant em_check_capacity_update() call from
+    em_dev_register_pd_no_update().
+  - Move patch 3 ("PM: EM: Add an iterator and accessor for the
+    performance domain") after patch 5 ("PM: EM: Add a skeleton code for
+    netlink notification").
+  - Move the declaration of for_each_em_perf_domain() and
+    em_perf_domain_get_by_id() from energy_model.h to em_netlink.h.
+  - Fix a typo in patch 7 ("PM: EM: Implement
+    em_nl_get_pd_table_doit()") and change the variable declaration
+    order in em_nl_get_pd_table_doit() following the reverse Christmas
+    tree order.
+  - Remove the empty skeleton code of em_notify_pd_created/updated() from
+    patch 8 ("PM: EM: Implement em_notify_pd_deleted()") and introduce
+    them later where they are actually implemented.
+  - Change the return type of em_notify_pd_created/updated/deleted()
+    from int to void, since we don't check it anyway.
+
+ChangeLog v3 -> v4:
+  - Move patches [3-5] to the first.
+  - Remove the ending period (".") from all of the patch subjects.
+  - Rebase the code to v6.17-rc4.
+
+ChangeLog v2 -> v3:
+  - Properly initialize a return variable in
+    em_notify_pd_created/updated() at an error path (09/10), reported by
+    the kernel test robot [3].
+  - Remove redundant initialization of a return variable in
+    em_notify_pd_deleted() at an error path (08/10).
+
+ChangeLog v1 -> v2:
+  - Use YNL to generate boilerplate code. Overhaul the naming conventions
+    (command, event, notification, attribute) to follow the typical
+    conventions of other YNL-based netlink implementations.
+  - Calculate the exact message size instead of using NLMSG_GOODSIZE
+    when allocating a message (genlmsg_new). This avoids the reallocation
+    of a message.
+  - Remove an unnecessary function, em_netlink_exit(), and initialize the
+    netlink (em_netlink_init) at em_netlink.c without touching energy_model.c.
+
+Changwoo Min (10):
+  PM: EM: Assign a unique ID when creating a performance domain
+  PM: EM: Expose the ID of a performance domain via debugfs
+  PM: EM: Add em.yaml and autogen files
+  PM: EM: Add a skeleton code for netlink notification
+  PM: EM: Add an iterator and accessor for the performance domain
+  PM: EM: Implement em_nl_get_pds_doit()
+  PM: EM: Implement em_nl_get_pd_table_doit()
+  PM: EM: Implement em_notify_pd_deleted()
+  PM: EM: Implement em_notify_pd_created/updated()
+  PM: EM: Notify an event when the performance domain changes
+
+ Documentation/netlink/specs/em.yaml | 113 ++++++++++
+ MAINTAINERS                         |   3 +
+ include/linux/energy_model.h        |   4 +
+ include/uapi/linux/energy_model.h   |  62 ++++++
+ kernel/power/Makefile               |   5 +-
+ kernel/power/em_netlink.c           | 309 ++++++++++++++++++++++++++++
+ kernel/power/em_netlink.h           |  39 ++++
+ kernel/power/em_netlink_autogen.c   |  48 +++++
+ kernel/power/em_netlink_autogen.h   |  23 +++
+ kernel/power/energy_model.c         |  85 +++++++-
+ 10 files changed, 689 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/netlink/specs/em.yaml
+ create mode 100644 include/uapi/linux/energy_model.h
+ create mode 100644 kernel/power/em_netlink.c
+ create mode 100644 kernel/power/em_netlink.h
+ create mode 100644 kernel/power/em_netlink_autogen.c
+ create mode 100644 kernel/power/em_netlink_autogen.h
+
+-- 
+2.51.1.dirty
+
