@@ -1,404 +1,120 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C05F1632DD
-	for <sched-ext@lists.linux.dev>; Sun, 19 Oct 2025 19:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF352EB86E
+	for <sched-ext@lists.linux.dev>; Mon, 20 Oct 2025 08:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760900676; cv=none; b=sp32p4sTTuiWsXgIf7JYdN6rvbSy3cFGqONoC9Zld6UnrdjoaY5l//d+l/N05ElJboTuLO3PomY32DWARF/Ya/WALJ5ARcaItC/vUPup8zOQSM3ggddbnkuSQmiOGRIp+jhsBH3N5zk0UuSoOVDFiSfj0YWc/gB/Tintkm9v5YE=
+	t=1760949384; cv=none; b=samVQwZPsDGK7HnEtyNyCnuAhdxwYzwEfjvdbwVN/V9w4vQs7UBdvu9EOd9tBsBZpDjDIdcHbqigC7ip+DrWUZFdNt+alkf+HtHJPC8vEhxs+cEMUnF5duYpKLcvzliegUC7BRUsuaW9oTXiuX6NLPGekNAzopxEUivTITWeRrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760900676; c=relaxed/simple;
-	bh=BpRp6fgEgQJuVGW3a0ocxmCp7ucLIm4d1XmPkFqcwOk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HBA/S07cxMuMNHh47WWilotbAJv2wtYOAhFP6hWgOQ+ZzozB8z9eQJCAQRg2POIcQfsiyaJITIZ/famJTXEel+JaEgeDw6Z4jkMB7pK/fHz/Nc5I+Kq3ezlRbcCXRTKNlKcz/W+nhetcGdAJAc2FgCrwpw35RvoXDgnJqKyZI7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=puCzb00S; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	s=arc-20240116; t=1760949384; c=relaxed/simple;
+	bh=wzYeKe8llsS8xH05UqQBqkk5pJepcdnzGoYD0EgvANs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=by46KJiDL679zOIhQtexgTj444FSt2QZzfY/+P3jejnmrkt2W1y0+d8zi0Q71h06FDdeHZOSFcNlfVpTnrzohaMzNLjdGCZFzjH8a6zmt9AjkipuY9lvW2R+gv1e225rl4h8X7Dg6RR9QMTuOjWK/iwsYJp9Bs/zfx82cUoXtqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JE+T+XCA; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="puCzb00S"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-781421f5be6so45364637b3.0
-        for <sched-ext@lists.linux.dev>; Sun, 19 Oct 2025 12:04:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1760900673; x=1761505473; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MeYCvC20ICozsgTwQqf2izmvTctGrn01AWEb3/XCnqw=;
-        b=puCzb00SV20eJkDzd/L2FY6246XfVVsKEDt+4lZK7OE/yxzdVACwWZw541584PPQQx
-         D7ZT7A9VU8aVKMlsakWN6iSzlsr/6V1D8jgktt102BaKJ2Kmt1b4cyIJU6YJagovCDzP
-         cOrEa1aqsK6Qfy2rYeUsPuZdrANnbEclxKKQNa9NfuZ2bjFVMsd9DvmSkD3RK9jL7vEY
-         d3X/DyZkFOCFtiYuP5ioe9eseTtEKg7CyqEI7yeTiFg7/ZUASwx608Gs5WxskkGGe4at
-         QlIvBj4iMbmeaRwHby9hScH6jImujHp4qSS7ulSjs7utN4GzVLVRM/4PjGdvniAP025E
-         tKuA==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JE+T+XCA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1760949382;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LDPZ0ul7eThbecq+UNdvM4KlBx5eDgTRibaStyKpTWQ=;
+	b=JE+T+XCApnvv31aq5BvuV65PVpgUeen3+KaEzi97ptpHJn2BP9vaNG0j/Oqhx9GDWS1prq
+	/FU/qLkRTRloi4Vae+1VlXRIvf4r7XdWqKsEIiiWs6sl1xxmZPZTHppEaNSLegqwQgVdM8
+	G8DEBYa8qQsc2RANavpO+gntlW2gn5c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-443-dNrSjDaENreONJ2eu3jloA-1; Mon, 20 Oct 2025 04:36:20 -0400
+X-MC-Unique: dNrSjDaENreONJ2eu3jloA-1
+X-Mimecast-MFC-AGG-ID: dNrSjDaENreONJ2eu3jloA_1760949379
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-471168953bdso29212965e9.1
+        for <sched-ext@lists.linux.dev>; Mon, 20 Oct 2025 01:36:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760900673; x=1761505473;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MeYCvC20ICozsgTwQqf2izmvTctGrn01AWEb3/XCnqw=;
-        b=pCaHdcCImdyJ5tGzItKTbYt1A14L5wOYrJfPWBU3UiIiTpWcwebHbflwBvCepxy4MF
-         uYtDhwtHtNa3oJBFJc1XBe8//beJmv97wCifPqMis8MOs5gQTTHIW3SZ1B1GEte2/piz
-         zligxHdihY1527iowx373RrtNQMhQwRsxCpKf0t/9nWhEHZzvzCukAMHQKtMIkFCrPra
-         WqFVIkgNkbRiBfLtZ4RVbBXnUBSexD+KGTeSBZfgpfwYVI+jcGhQ62a28Z1+HI2CtioN
-         8miPEspIoDPo5aXYCIvWtnbGubO6QzmfVEWRaIG0ltpa9h6sOmkuBroZfF5SPLiRwz57
-         XCSg==
-X-Forwarded-Encrypted: i=1; AJvYcCUvV4k5h8Sm1UK5g+J6Eu6f6E13w2bJL8NHZ4QwEIFPuG03rOtSHNeqilN/zARVoy2rIxe+jausy2o=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzem3Heza4gG0HYX89fnqUusJ5KeG/JkYXBOzujiF7QO4qz37UO
-	fnner3QBXG81RYqEJh7rwz1EgoDIB6S4TxIa0vTmnBDe2ZJZckF8sNjl6WG44jj/byX10K65gf1
-	jEBaw3wUBc2g7o10IoIMEaljkm/eNZA5RTJHDVZpmig==
-X-Gm-Gg: ASbGncswnhR1grcbalMOCPVmzKFBj6NMlatDsKuiZui8E8g4RFbzwqZ4AxmXT+f9lSm
-	0jT6Iu9ggobBBOeZZBRAUY39Fpr8B8YIJTtlusTQe5zXAKcMrcvnLCsNwZgfEHIAa4BSfHURoYv
-	dS+aMaS2unQN5BXThLAuimRRT1a4F05oz63DdEvjyXZ3/5XTz8phZeuRjGPdMO8dA2rc5TrlPYs
-	moBjr/KWyztvua/do8KkTIYNyH7Op8iCodfEGKOLeMM3LA63hOk5hDrQmrRgL4=
-X-Google-Smtp-Source: AGHT+IER9KulLoujMk2GEbTzX3NN7vIbveUsxcHTAqM55q0WXEH/l6DxMF/VhDwwNIq1+MDih3R7dyO0bS7rvmSbtgE=
-X-Received: by 2002:a05:690e:408b:b0:63e:2284:83c6 with SMTP id
- 956f58d0204a3-63e22848539mr6620905d50.49.1760900672686; Sun, 19 Oct 2025
- 12:04:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760949379; x=1761554179;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LDPZ0ul7eThbecq+UNdvM4KlBx5eDgTRibaStyKpTWQ=;
+        b=I/GXNXd2+NqkRSlDng1dDhdWDRCpK/9EPozAgfXPa8TGhrqwpYOE1R3TBBv4UWDtWB
+         8XDU7CRZ9hoKQBtJn9RKP1+PgddG2XpnMNt02DaU3JMr2bMldofTH1MQH3+spU/Dhihw
+         4dQ1gC8uMuIUHtyJRm/4HJteWfv/O342ylxEYbuMw1w5UpDL0rQJ4y0i/FjWNLPz/geN
+         oW90VUWraGddnldJ6Qh1gNraKR5dKcQTDgDTTSSDge5XnixvdjliNKEKaJJKkW/9O/JW
+         DmxiM6x+oah+Os41N+0me9JFuZXdDMyefKyrHZQ3gkreB0kXV5NmZ8FijtzLGG/9CKoe
+         vmoA==
+X-Forwarded-Encrypted: i=1; AJvYcCWOq2l/oX/PzCNht/9E8W+Wsabtr/pGvnnIOxc6xrdrI6odKtI+NkzMRw3gOJ9tvQe6ZYFrEdL8Mkg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzoztIlv4z7L6h6J4rUQtLtAWGKB9F7X0g+YkDNySfHdVghwrFg
+	3VZCSBLmuP5kGXBSjRAS6v7vEWzFHazQZICHEehn7JYxV96iu5AyhB6zJcWxJASUl4IgxMIOKli
+	1bJfsRpCTGFhyvfyFjLE33jSAosTLeVQM/eTQICE4VyiXCfedXeMm2NROBD3tsw==
+X-Gm-Gg: ASbGncvVzOGxGaZatpF9ut25a28yRFEsu2tsEOVrR/Zr0/RevQPKelfGjWEhFFEI2yG
+	/gUGdcH1dRomc8bZYZpEk1fY5enx77r6H0fqQerRzU/H8BVan9SrRV+AqL9CMYeSctlUudMkHPC
+	nM2aMl5EyOoWgaGuelKQ1Uuv9po8Dhv62VQReb8EhVLL8x3AHkl0KInblMyxvGF/2S/wkQmGG1W
+	P9SsphCEGvASBKb6MzGfA53oWuL86wO/ZMOLJfeWsfiGU77nTzaK2nExGjVe5o34T7O8kFUT0mg
+	rzfL2+X2o1dbXYzijzEqgh8afm4gA4eUiqWsixn8NrHFU3aQICfb4H1EWEaIon1CjLMrfdIdJ5I
+	tOyDYuGz/a9rzQASBL8NSNPFWZVVYf8Y=
+X-Received: by 2002:a05:600c:6290:b0:46f:b42e:e38f with SMTP id 5b1f17b1804b1-47117345ffdmr107954685e9.19.1760949378902;
+        Mon, 20 Oct 2025 01:36:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9PwoSk43ABFo5essiejYiBkUkNUIQWrYCuPXPAmRDQtUNGUR37Zqt6yI37QTO1Cp76s6VKA==
+X-Received: by 2002:a05:600c:6290:b0:46f:b42e:e38f with SMTP id 5b1f17b1804b1-47117345ffdmr107954455e9.19.1760949378471;
+        Mon, 20 Oct 2025 01:36:18 -0700 (PDT)
+Received: from jlelli-thinkpadt14gen4.remote.csb ([176.206.13.103])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4710ed9e7d7sm112564395e9.3.2025.10.20.01.36.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Oct 2025 01:36:17 -0700 (PDT)
+Date: Mon, 20 Oct 2025 10:36:15 +0200
+From: Juri Lelli <juri.lelli@redhat.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>, Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
+	sched-ext@lists.linux.dev, bpf@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/14] sched/debug: Fix updating of ppos on server write
+ ops
+Message-ID: <aPX0fwMfPi1M9SL_@jlelli-thinkpadt14gen4.remote.csb>
+References: <20251017093214.70029-1-arighi@nvidia.com>
+ <20251017093214.70029-2-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251017093214.70029-1-arighi@nvidia.com> <20251017093214.70029-14-arighi@nvidia.com>
-In-Reply-To: <20251017093214.70029-14-arighi@nvidia.com>
-From: Emil Tsalapatis <linux-lists@etsalapatis.com>
-Date: Sun, 19 Oct 2025 15:04:22 -0400
-X-Gm-Features: AS18NWDx67qGjf5v9glUm72CG0k0R38tXMBBhQDUtWSKsUuHHmtNZ9AKmos4kEI
-Message-ID: <CABFh=a578RNXxjtze1TxAcPBkx9_M58qBc=6E4o-uFJx0DB4Jg@mail.gmail.com>
-Subject: Re: [PATCH 13/14] selftests/sched_ext: Add test for sched_ext dl_server
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, 
-	Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, 
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
-	Valentin Schneider <vschneid@redhat.com>, Joel Fernandes <joelagnelf@nvidia.com>, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>, 
-	sched-ext@lists.linux.dev, bpf@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20251017093214.70029-2-arighi@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: b9d0cbphCgRYYSoPiOmEauAuBcqtl6SLLusLCCfMmHM_1760949379
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Fri, Oct 17, 2025 at 5:38=E2=80=AFAM Andrea Righi <arighi@nvidia.com> wr=
-ote:
->
-> Add a selftest to validate the correct behavior of the deadline server
-> for the ext_sched_class.
->
-> [ Joel: Replaced occurences of CFS in the test with EXT. ]
->
-> Co-developed-by: Joel Fernandes <joelagnelf@nvidia.com>
+Hi!
+
+On 17/10/25 11:25, Andrea Righi wrote:
+> From: Joel Fernandes <joelagnelf@nvidia.com>
+> 
+> Updating "ppos" on error conditions does not make much sense. The pattern
+> is to return the error code directly without modifying the position, or
+> modify the position on success and return the number of bytes written.
+> 
+> Since on success, the return value of apply is 0, there is no point in
+> modifying ppos either. Fix it by removing all this and just returning
+> error code or number of bytes written on success.
+> 
+> Acked-by: Tejun Heo <tj@kernel.org>
+> Reviewed-by: Andrea Righi <arighi@nvidia.com>
 > Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> ---
 
-Nits listed below, but otherwise:
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
 
-Code review aside, on my VM the test alternates between 4.81% and 5.20% for=
- me
-so it's working as expected.
+Thanks,
+Juri
 
->  tools/testing/selftests/sched_ext/Makefile    |   1 +
->  .../selftests/sched_ext/rt_stall.bpf.c        |  23 ++
->  tools/testing/selftests/sched_ext/rt_stall.c  | 214 ++++++++++++++++++
->  3 files changed, 238 insertions(+)
->  create mode 100644 tools/testing/selftests/sched_ext/rt_stall.bpf.c
->  create mode 100644 tools/testing/selftests/sched_ext/rt_stall.c
->
-> diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/s=
-elftests/sched_ext/Makefile
-> index 5fe45f9c5f8fd..c9255d1499b6e 100644
-> --- a/tools/testing/selftests/sched_ext/Makefile
-> +++ b/tools/testing/selftests/sched_ext/Makefile
-> @@ -183,6 +183,7 @@ auto-test-targets :=3D                        \
->         select_cpu_dispatch_bad_dsq     \
->         select_cpu_dispatch_dbl_dsp     \
->         select_cpu_vtime                \
-> +       rt_stall                        \
->         test_example                    \
->
->  testcase-targets :=3D $(addsuffix .o,$(addprefix $(SCXOBJ_DIR)/,$(auto-t=
-est-targets)))
-> diff --git a/tools/testing/selftests/sched_ext/rt_stall.bpf.c b/tools/tes=
-ting/selftests/sched_ext/rt_stall.bpf.c
-> new file mode 100644
-> index 0000000000000..80086779dd1eb
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/rt_stall.bpf.c
-> @@ -0,0 +1,23 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * A scheduler that verified if RT tasks can stall SCHED_EXT tasks.
-> + *
-> + * Copyright (c) 2025 NVIDIA Corporation.
-> + */
-> +
-> +#include <scx/common.bpf.h>
-> +
-> +char _license[] SEC("license") =3D "GPL";
-> +
-> +UEI_DEFINE(uei);
-> +
-> +void BPF_STRUCT_OPS(rt_stall_exit, struct scx_exit_info *ei)
-> +{
-> +       UEI_RECORD(uei, ei);
-> +}
-> +
-> +SEC(".struct_ops.link")
-> +struct sched_ext_ops rt_stall_ops =3D {
-> +       .exit                   =3D (void *)rt_stall_exit,
-> +       .name                   =3D "rt_stall",
-> +};
-> diff --git a/tools/testing/selftests/sched_ext/rt_stall.c b/tools/testing=
-/selftests/sched_ext/rt_stall.c
-> new file mode 100644
-> index 0000000000000..e9a0def9ee323
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/rt_stall.c
-> @@ -0,0 +1,214 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2025 NVIDIA Corporation.
-> + */
-> +#define _GNU_SOURCE
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <unistd.h>
-> +#include <sched.h>
-> +#include <sys/prctl.h>
-> +#include <sys/types.h>
-> +#include <sys/wait.h>
-> +#include <time.h>
-> +#include <linux/sched.h>
-> +#include <signal.h>
-> +#include <bpf/bpf.h>
-> +#include <scx/common.h>
-> +#include <sys/wait.h>
-> +#include <unistd.h>
-> +#include "rt_stall.bpf.skel.h"
-> +#include "scx_test.h"
-> +#include "../kselftest.h"
-> +
-> +#define CORE_ID                0       /* CPU to pin tasks to */
-> +#define RUN_TIME        5      /* How long to run the test in seconds */
-> +
-> +/* Simple busy-wait function for test tasks */
-> +static void process_func(void)
-> +{
-> +       while (1) {
-> +               /* Busy wait */
-> +               for (volatile unsigned long i =3D 0; i < 10000000UL; i++)
-> +                       ;
-> +       }
-> +}
-> +
-> +/* Set CPU affinity to a specific core */
-> +static void set_affinity(int cpu)
-> +{
-> +       cpu_set_t mask;
-> +
-> +       CPU_ZERO(&mask);
-> +       CPU_SET(cpu, &mask);
-> +       if (sched_setaffinity(0, sizeof(mask), &mask) !=3D 0) {
-> +               perror("sched_setaffinity");
-> +               exit(EXIT_FAILURE);
-> +       }
-> +}
-> +
-> +/* Set task scheduling policy and priority */
-> +static void set_sched(int policy, int priority)
-> +{
-> +       struct sched_param param;
-> +
-> +       param.sched_priority =3D priority;
-> +       if (sched_setscheduler(0, policy, &param) !=3D 0) {
-> +               perror("sched_setscheduler");
-> +               exit(EXIT_FAILURE);
-> +       }
-> +}
-> +
-> +/* Get process runtime from /proc/<pid>/stat */
-> +static float get_process_runtime(int pid)
-> +{
-> +       char path[256];
-> +       FILE *file;
-> +       long utime, stime;
-> +       int fields;
-> +
-> +       snprintf(path, sizeof(path), "/proc/%d/stat", pid);
-> +       file =3D fopen(path, "r");
-> +       if (file =3D=3D NULL) {
-> +               perror("Failed to open stat file");
-> +               return -1;
-> +       }
-> +
-> +       /* Skip the first 13 fields and read the 14th and 15th */
-> +       fields =3D fscanf(file,
-> +                       "%*d %*s %*c %*d %*d %*d %*d %*d %*u %*u %*u %*u =
-%*u %lu %lu",
-> +                       &utime, &stime);
-> +       fclose(file);
-> +
-> +       if (fields !=3D 2) {
-> +               fprintf(stderr, "Failed to read stat file\n");
-> +               return -1;
-> +       }
-> +
-> +       /* Calculate the total time spent in the process */
-> +       long total_time =3D utime + stime;
-> +       long ticks_per_second =3D sysconf(_SC_CLK_TCK);
-> +       float runtime_seconds =3D total_time * 1.0 / ticks_per_second;
-> +
-> +       return runtime_seconds;
-> +}
-> +
-> +static enum scx_test_status setup(void **ctx)
-> +{
-> +       struct rt_stall *skel;
-> +
-> +       skel =3D rt_stall__open();
-> +       SCX_FAIL_IF(!skel, "Failed to open");
-> +       SCX_ENUM_INIT(skel);
-> +       SCX_FAIL_IF(rt_stall__load(skel), "Failed to load skel");
-> +
-> +       *ctx =3D skel;
-> +
-> +       return SCX_TEST_PASS;
-> +}
-> +
-> +static bool sched_stress_test(void)
-> +{
-> +       float cfs_runtime, rt_runtime, actual_ratio;
-> +       int cfs_pid, rt_pid;
-
-I think it should be cfs_pid -> ext_pid, cfs_runtime -> ext_runtime
-
-> +       float expected_min_ratio =3D 0.04; /* 4% */
-
-Maybe add a comment that explains the 4% value? As in, we're expecting
-it to be around 5% so 0.04 accounts for values close enough but
-below < 5%.
-
-> +
-> +       ksft_print_header();
-> +       ksft_set_plan(1);
-> +
-> +       /* Create and set up a EXT task */
-> +       cfs_pid =3D fork();
-> +       if (cfs_pid =3D=3D 0) {
-> +               set_affinity(CORE_ID);
-> +               process_func();
-> +               exit(0);
-> +       } else if (cfs_pid < 0) {
-> +               perror("fork for EXT task");
-> +               ksft_exit_fail();
-> +       }
-> +
-> +       /* Create an RT task */
-> +       rt_pid =3D fork();
-> +       if (rt_pid =3D=3D 0) {
-> +               set_affinity(CORE_ID);
-> +               set_sched(SCHED_FIFO, 50);
-> +               process_func();
-> +               exit(0);
-> +       } else if (rt_pid < 0) {
-> +               perror("fork for RT task");
-> +               ksft_exit_fail();
-> +       }
-> +
-> +       /* Let the processes run for the specified time */
-> +       sleep(RUN_TIME);
-> +
-> +       /* Get runtime for the EXT task */
-> +       cfs_runtime =3D get_process_runtime(cfs_pid);
-> +       if (cfs_runtime !=3D -1)
-> +               ksft_print_msg("Runtime of EXT task (PID %d) is %f second=
-s\n",
-> +                              cfs_pid, cfs_runtime);
-> +       else
-> +               ksft_exit_fail_msg("Error getting runtime for EXT task (P=
-ID %d)\n", cfs_pid);
-> +
-> +       /* Get runtime for the RT task */
-> +       rt_runtime =3D get_process_runtime(rt_pid);
-> +       if (rt_runtime !=3D -1)
-> +               ksft_print_msg("Runtime of RT task (PID %d) is %f seconds=
-\n", rt_pid, rt_runtime);
-> +       else
-> +               ksft_exit_fail_msg("Error getting runtime for RT task (PI=
-D %d)\n", rt_pid);
-> +
-
-Minor, but why not
-
-if (rt_runtime =3D=3D -1)
-        ksft_exit_fail_msg("Error getting runtime for RT task (PID
-%d)\n", rt_pid);
-ksft_print_msg("Runtime of RT task (PID %d) is %f seconds\n", rt_pid,
-rt_runtime);
-
-since ksft_exit_fail_msg never returns?
-
-> +       /* Kill the processes */
-> +       kill(cfs_pid, SIGKILL);
-> +       kill(rt_pid, SIGKILL);
-> +       waitpid(cfs_pid, NULL, 0);
-> +       waitpid(rt_pid, NULL, 0);
-> +
-> +       /* Verify that the scx task got enough runtime */
-> +       actual_ratio =3D cfs_runtime / (cfs_runtime + rt_runtime);
-> +       ksft_print_msg("EXT task got %.2f%% of total runtime\n", actual_r=
-atio * 100);
-> +
-> +       if (actual_ratio >=3D expected_min_ratio) {
-> +               ksft_test_result_pass("PASS: EXT task got more than %.2f%=
-% of runtime\n",
-> +                                     expected_min_ratio * 100);
-> +               return true;
-> +       }
-> +       ksft_test_result_fail("FAIL: EXT task got less than %.2f%% of run=
-time\n",
-> +                             expected_min_ratio * 100);
-> +       return false;
-> +}
-> +
-> +static enum scx_test_status run(void *ctx)
-> +{
-> +       struct rt_stall *skel =3D ctx;
-> +       struct bpf_link *link;
-> +       bool res;
-> +
-> +       link =3D bpf_map__attach_struct_ops(skel->maps.rt_stall_ops);
-> +       SCX_FAIL_IF(!link, "Failed to attach scheduler");
-> +
-> +       res =3D sched_stress_test();
-> +
-> +       SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_NONE));
-> +       bpf_link__destroy(link);
-> +
-> +       if (!res)
-> +               ksft_exit_fail();
-> +
-> +       return SCX_TEST_PASS;
-> +}
-> +
-> +static void cleanup(void *ctx)
-> +{
-> +       struct rt_stall *skel =3D ctx;
-> +
-> +       rt_stall__destroy(skel);
-> +}
-> +
-> +struct scx_test rt_stall =3D {
-> +       .name =3D "rt_stall",
-> +       .description =3D "Verify that RT tasks cannot stall SCHED_EXT tas=
-ks",
-> +       .setup =3D setup,
-> +       .run =3D run,
-> +       .cleanup =3D cleanup,
-> +};
-> +REGISTER_SCX_TEST(&rt_stall)
-> --
-> 2.51.0
->
->
