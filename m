@@ -1,72 +1,50 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011023.outbound.protection.outlook.com [52.101.57.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C863F2DCF4D
-	for <sched-ext@lists.linux.dev>; Mon, 20 Oct 2025 13:46:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760968017; cv=none; b=X7JYunkzxCh7ZpuO3LGgouYu0NwsCe9C9cbI3PvHo/lsLoaYT6QyuYfHZB0tohriH5lcdS/zuX/wuLayyuJ/KtJNvdv4j/Ewdw7ocbt3Na4437s0ovTQUXaOK9QW0dh+30QE5jHRhYuA9AxXPFPqgIpSRwbObLkFR1e+lTm2GtU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760968017; c=relaxed/simple;
-	bh=Sq5libX+JM3WPG7zqMDxrV8+aH4+q3XRl1ghvIEgb7Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=ku9+iZxBeYOYHd19UFC4Im+EkIzywUJYXr/1wxrB7FspUR34DT5ixv4V/D73kKh+/2NxnLuvVAvzzqysHS3BJEJLKm/XDAyP03GoBuwCRKOR3GoAOf2lGsFUopNmhER9Ly4GeAYlacJ8xeVZCVzR8WBOBAbBMQOcAp1xaZotzTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=W7hZD76J; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF427B3E1
+	for <sched-ext@lists.linux.dev>; Mon, 20 Oct 2025 13:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.23
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1760968279; cv=fail; b=a1235/jWmc5WzB/xvhySiyqFwrQy95agtxUod8ZdxoD5A+zYdxUtF3WqLc0v1DU6Jo8ozpnHYquBMO9NGcerEx3OkdvASn/m4s+NpLrFboRBG0KYAvB8hQ70kahyA66bvvTVvEXX9n/sU91MZMQe+djmEkijr9r7QP3GetMU1dY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1760968279; c=relaxed/simple;
+	bh=Hp1JzN1T3elYwpVbevImfVjQmZ6Gz6wJuc6BwPAtYys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=LEdTlB1E4RsJ06pi1WS5v8fDHwYNxH1Avn2IaGjBXBNjP6iXDQmk7Y9yh5krb9fcj1oULC8BZjQ/PhKeMwJVopqIKeSwH7fc+vhdXadU7DnL3FkddcRi9SSnPUt1+so/E62eTpVZds0ppbVm7wBj8E3SHAhqqGJPqdhMOohqJC4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hPhuEEQ8; arc=fail smtp.client-ip=52.101.57.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="W7hZD76J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760968014;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PeJ1Du+aCXhUYBm58dq+DSQq/mNgrM7c9de43cjduZY=;
-	b=W7hZD76Jf8i2NHg1Euy+rfuwZCSCLUjpFGWDJSeGd6s3CvnpkyP3XAnvGJCMwx+TAvckV2
-	L6ru1o3VkMUDnupRmC7l4K7U4EupOv/w9mmSvSlw+FTvn4cuxfiiUW6qwYAaTvFVvHXqiS
-	rACUIhGo2Wn/4eHV+aEYxt4jmrGWTT8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-KnNg5r-TN4ankAabgSHZOA-1; Mon, 20 Oct 2025 09:46:53 -0400
-X-MC-Unique: KnNg5r-TN4ankAabgSHZOA-1
-X-Mimecast-MFC-AGG-ID: KnNg5r-TN4ankAabgSHZOA_1760968012
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-3f924ae2a89so5415958f8f.3
-        for <sched-ext@lists.linux.dev>; Mon, 20 Oct 2025 06:46:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760968012; x=1761572812;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PeJ1Du+aCXhUYBm58dq+DSQq/mNgrM7c9de43cjduZY=;
-        b=n7KcIF/q8GfdFQ/Aaoqf5c6uvPMHwkbK6agEQguFpW64XsRWTB7aMmKtgARFKENIrD
-         dbui6hrtd0SFbb7O0+yuwhgtu+0qpUrG3gMG+nerttEeQrjqDFiKzkbQHAu3EGk336KY
-         HD4Kfk/iKma7lxVFYHWB/E1X8ab7jK7PNqZXsYh2OJiTO4o+Xz/Cue2F7aLNmMYnnN0i
-         ufP5/9a3QXsGDD4iI5ldoSsyLh/C4tCimWLenddu+gAEJL9yC6iEIFrIXCHTfP6ECrAT
-         VVHDjf30lKonA+muf+wMDMX47he+/weHhs2jBBnXbEeg8uI7vQdjqHL3IPEsItPJtVtL
-         VrXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUWS9BFEhnZwSyjmQxX1Pd+AuPQITK6yR7OhtTMP5uBjvCH59lCjY6Dh5+kNet8Pl/ayFA7XVEiwtY=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy1cY1IL4wng5aNDP5YpqOL1JHXfoDvrF38ueMcCNP6LhDBev9L
-	6C5SkOjtjPVyNHnJn0zcf0cUkhCqCOLnT3ZWZcMzKwfQfsCNla8YDBejdV5GaciHNV8Kw4bjuIl
-	qPFnqrmDO6+154uEb9aEr1ZyJjJqbuor/JKTpbLJEf4t1GV6dGzxVmxHRQqbkEQ==
-X-Gm-Gg: ASbGnct95S7BzrklNgYPOtkUk6ip2Q2KtzvvmPhZ/OMXoLZQkrbje4lorszf8zMHqBo
-	UMyS0LLRaSu7EQLP0APGsxKnMKGmVyvI0aa2lLXYVOuRqtcospDGUOSNFq+A0pKnhRFQ8zoEmSL
-	gw6251mCLNwdPZYcIr+S7NzeemVWhPtZxz8wcyJSLJseWJPGFqYMlheOzU0kXCUbSKWh18KPMbn
-	kFLoqPsAiM7V4WKQFfZbwZ/WjFexQrlJpI9KruGgj7Zuaf0hV9cCjjAakdO0QA+wDzxIXugPgHo
-	YVTeFw3tjeSpUp0//Vrhqo2FDAFxWuMhZLHELOSuvGFnggS/cQIczRjq96xrXfk8G7dH+QQ4a1R
-	XowWsakXqRk13Z0JmAqTFwrcqGF92RA==
-X-Received: by 2002:a05:6000:4285:b0:3ea:80ec:855d with SMTP id ffacd0b85a97d-42704d6c57amr8277574f8f.19.1760968012135;
-        Mon, 20 Oct 2025 06:46:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYsUAywsoBSSavZPjR8dWhxCz2PQ6rM3m8YxB0dm+4iLqXx6iaMKdrToBp9kl1vWXEwcQwuA==
-X-Received: by 2002:a05:6000:4285:b0:3ea:80ec:855d with SMTP id ffacd0b85a97d-42704d6c57amr8277550f8f.19.1760968011693;
-        Mon, 20 Oct 2025 06:46:51 -0700 (PDT)
-Received: from jlelli-thinkpadt14gen4.remote.csb ([151.29.131.20])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47154d3843csm146424245e9.11.2025.10.20.06.46.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Oct 2025 06:46:51 -0700 (PDT)
-Date: Mon, 20 Oct 2025 15:46:49 +0200
-From: Juri Lelli <juri.lelli@redhat.com>
-To: Andrea Righi <arighi@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hPhuEEQ8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=N6CLU+rsrjdGbih7EPyZUvd7ssxOv3SJs8kCBZARZESfsAKH/63Y8fQwwKRwxJcN/dZtd96B2cuDJ93BJYFZrNZrqoHX0U9YYekoV9vaq0JDgEuqsBE90qDmlWUIbAwUYB4LVeqE5ITJNfjDN4LrlUEVlaAslsozWuMlDCJsBWalnOPqDcgi6eEj4fI9yA7xc+fLjBJmEZ0gfb+IUcTEBvj2iOSleKYjhOO7STFA4YZHnsBcKGQ1JcDTpR3dzeci7tgq8QZCxPLnEMUQN7biReNEeX06hBkARQGiskh9D2grlj6NV2/uP0DNl+Uw4x6nL8wV/phlWr+1pRo/An/wCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=P0faKgUt1J0zQk0reutBB2CRGdht91tGBUejcA0aqko=;
+ b=LP2ctBgYHLjxlBaKdA8wHelaHJ6g6VZ5aeUuq0ef3MH9DqAqxXyk3XpGKozOGQKDOxT0u2QwM0CW2fPG/9b1jGTyjuDOw7V/xgri0K+/XpGtlqP1UZ762S4/QnzK1K9H2OQyAK2NH5BgaAIwFJrPqCj3zkS3R4p9RI+QP7PnFVfy3ccpqdVpaThCbpgEzVI7VHQcDtDLXvN2xug9vVoo3D1vNdf9W/SKq42rIcvXuVpc9PEyZqSfZ3iuC0B/6+XIyUFG0RX9/dL7BxWxkwvjY3U7+/Z6mh3F1vp846QCPytkwISUy6aeczAa9AOm9VLzev9l7ieLuhe5antghTOGjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=P0faKgUt1J0zQk0reutBB2CRGdht91tGBUejcA0aqko=;
+ b=hPhuEEQ8DrfNLXgZJQnsi1l1H6OwpYXILEPtavHIZvJuQOn/DmzPSgZzmylj03i+IDzw0c5Dkrs5JOdAtXeWEgJMYtnzRIzGo0Ixy2uKvNLApwaQXPb7sHa/kSMF4kc1zaIio2iGHLor16pqMrLd7bWJO08Aiew1ZkEDv/cs0F7gyagDUEoLAnmaFGp33kNIfPUaUaL9K9irMpbvT10TGFXx4RS+iJutXaneiGP6sa3pS/l96onu2AbjcHxbptFeLYnbM57CZ9W3g+6U+xGsVRZJMc2th7LfJjlRux8Wq5w2Dn6mdx461ALu5i/yAeAumfCqFrzPcjayZktTKToOoQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DS7PR12MB5840.namprd12.prod.outlook.com (2603:10b6:8:7b::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9228.16; Mon, 20 Oct
+ 2025 13:51:12 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9228.015; Mon, 20 Oct 2025
+ 13:51:12 +0000
+Date: Mon, 20 Oct 2025 15:50:56 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Juri Lelli <juri.lelli@redhat.com>
 Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	Dietmar Eggemann <dietmar.eggemann@arm.com>,
@@ -77,106 +55,191 @@ Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
 	David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev, bpf@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/14] sched/deadline: Add support to remove DL server's
- bandwidth contribution
-Message-ID: <aPY9STUzTnNwKZ9V@jlelli-thinkpadt14gen4.remote.csb>
+	linux-kernel@vger.kernel.org,
+	Luigi De Matteis <ldematteis123@gmail.com>
+Subject: Re: [PATCH 06/14] sched_ext: Add a DL server for sched_ext tasks
+Message-ID: <aPY-QOXV5USEHVIq@gpd4>
 References: <20251017093214.70029-1-arighi@nvidia.com>
- <20251017093214.70029-9-arighi@nvidia.com>
+ <20251017093214.70029-7-arighi@nvidia.com>
+ <aPYj-iOdvgUYQFpn@jlelli-thinkpadt14gen4.remote.csb>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aPYj-iOdvgUYQFpn@jlelli-thinkpadt14gen4.remote.csb>
+X-ClientProxiedBy: ZR0P278CA0031.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:1c::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20251017093214.70029-9-arighi@nvidia.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: rRhFWtLdbLqjIX6xbvF9izERhYGMAMJd5pl4trsgQKE_1760968012
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS7PR12MB5840:EE_
+X-MS-Office365-Filtering-Correlation-Id: f0b5a873-717c-45a1-2b8d-08de0fdfbb25
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?WC9srpTXTyyncuip8+ezFkVz248JYRvmKdU7Cz5lGRB9PNEQBv548dSpqCS4?=
+ =?us-ascii?Q?VnVCye3+JRnNEk7cQRKHy9AXYAX5U5cGjFYrdmCEt5AagaGJjlYJPtga+Kdp?=
+ =?us-ascii?Q?wyfNuh5SkU6d1HbNyRrE8Potm9Hhjsxp0Yl1lEzkkIcxM9oylSpCcTBFF2K+?=
+ =?us-ascii?Q?IOFhmoFUAkhg58qIi5geIlYqXDNPW/Ax8BdR9b6wJpE4wqgU45/NsEZMQQh8?=
+ =?us-ascii?Q?NGmAyNr8fJDpNbhy3YNOqWDc0rfuVSiEWsIP8KgNDd0mR5w5YmJVmqfrlaJo?=
+ =?us-ascii?Q?zrjCNFi3OVFivL8QAai2uXHWYFc9nYzK4lGqxUVAXwJ8hUertX0vxXeho6i0?=
+ =?us-ascii?Q?qFHBNhaB7o6J27f9j4XwJApcYOIxoe/dpeLzgoVm/FteseyrHCTtdzyDnMS3?=
+ =?us-ascii?Q?noJfKsK+cisjEYiwZEGlY8LgqS6F0+jDz2zKTQdN+Fo5gfcxLMCxkWf9AdOd?=
+ =?us-ascii?Q?K+x2Sp3MWb7OqQqhRs5iQ2T/z78jQe1F6weFWe8l1PY8WCWrucYzMAmnB+qm?=
+ =?us-ascii?Q?Klzd36lkdMMpzY22HEsj8kciiTJ/3GqlWaE6uWkgLEweawqE6M65nlyBYJhk?=
+ =?us-ascii?Q?YYy7dNcWY+fJKt5porHieN/H/ypmNyhe6ZPWONDDLn+dKcjxVOn3cst8bt9J?=
+ =?us-ascii?Q?XnDywkn5okrP688MliEZaEB9qdDifxyjbboqkUSLAm8ERnAZFw1DS/o+R6fJ?=
+ =?us-ascii?Q?b8rPdqHo1xzOYSG+1fFA2iHgfxei5tvvDT5E8yo/GKEccGFinlL3BbqlRGC+?=
+ =?us-ascii?Q?Ekf4DvOif5eZGgN0jel54E2gPDnSjkgojIZ4GXLRcG7R3co/rDhUK4GbT9fm?=
+ =?us-ascii?Q?R/CMQDBJCYHpWyRJPa5cGgEtWYhSUUxbpPbKbSxJEUUcOBHg1L3S/2Dj18hw?=
+ =?us-ascii?Q?m1XR8RNEB0BcpH4Sb+ClcjNIy9mLKlBhnd/HolPiVFrlvSNR5phTScwG7mcX?=
+ =?us-ascii?Q?+cEWPJD+M/oqV3w5L2NindLGeGUuVXMPU+nFMQReaNIhyZxfP5RlQkKAomVA?=
+ =?us-ascii?Q?AiRMkG3uJg3jMW8iETvyfpjfRz0ytti2AZ+CJZjOszuFyaiOeJJd22k4hGZT?=
+ =?us-ascii?Q?KWNEG+Gdr5Jj91xKREhA6z0eHNNbbFOerFr21P0b5Bau7HXgSPMiFTRkYxpg?=
+ =?us-ascii?Q?Voiue5cGgOC+L5NwyKafIkn9QLInacaf3/jo9qbN4LW1yuydQX323Eq3/bmj?=
+ =?us-ascii?Q?7ezm522zScTNV78MgN+rHJ7UPd5ZEFXbhjWouTgdKx/kdJ9fUEQeZwsbXOeH?=
+ =?us-ascii?Q?KO16HkBOIXZiwZIT7il61/Ra8DrMeDMaZGkiSpqq+XZ/j+EkcmCwO9ZBXmc3?=
+ =?us-ascii?Q?9mABSafdhJ6hY2Cx2gP7WhetJWiuBq7jNYyQxOLtPUfnZdKeR7xKqnwPXwxE?=
+ =?us-ascii?Q?XdvA3BWVwE/FP72vUx1ZkMVbFZaHpEmtVnj3EubWfjzSS9Fj8RDNTV19mK80?=
+ =?us-ascii?Q?I2lQRA508pQWcRu4LZIDPHIjV+bPNK4+?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?5YmPemrlvuSvqgm6XlCt/UUVhZNqAaUU+opxhm83LukZeWocgKAHh5QOCBIz?=
+ =?us-ascii?Q?xiZ4GlYnsrORkNAbzgMlaL188dee1okA0hv9h0LGImLEo5S9pAl20KwGI07Z?=
+ =?us-ascii?Q?mhyo19XB/qXyIZgjP2WoQ4lbRum7JAvrSbWBQwX4ghmMGr9WyNn4GcwsxVa5?=
+ =?us-ascii?Q?E8MdmHyuKJouQgaiPnMI45idZxvS0pcXCxbn/hzfPGBuMiR4j9OZQ8JgKJH/?=
+ =?us-ascii?Q?GKl1UiavYS1MZUd/kwKCZrFpeVtd8FfCVbWO6gwzQGlRRsLkj1zEUYankN7K?=
+ =?us-ascii?Q?OtFY1kJRQbLKKpf7vf907ajuYfDcHcQFPQSoRuyXevI1R5p7ps2JcV9JFGuu?=
+ =?us-ascii?Q?q9kA17NHljFc71b9S20310tL1uHlKqvwf9o6cYl1ZuWEn/BQAncHfMOtYaXY?=
+ =?us-ascii?Q?1aBIUQGj0cRrqVXbf1QWzVBGG70rhRmBZCJavw9aoVR0x5U5tdRSRiDyqnY1?=
+ =?us-ascii?Q?FVGcxjVEkhnJrefWHC7E46gv7Rz76zeMXK4TfsOCyaksfNVLdSDBiR+NQkuL?=
+ =?us-ascii?Q?pD6k3y7vj0ukQs54iCz+AR3dZmueufX1VbDzUIP0nUVKfeoM9u/TH8P4RKJk?=
+ =?us-ascii?Q?AYfp1nkaoNNWZbRWhe9UUZPIN7Na5BSmCWae61J5cgM5F0xMYdwhVUs6YFKV?=
+ =?us-ascii?Q?I7X1H1HQ+6sSjs4Wm3T0q5U9jxvsJuCnSOs2RBaZ34WAE/deyNujKYyAZrB0?=
+ =?us-ascii?Q?+u4xixC8T8zGY3pSOCffmCw1kgptZ/PjL1DQCb0XGUt8mcJQClA7J6S6t+bQ?=
+ =?us-ascii?Q?RBRLkZ4Yul5ikt33v74pNTfQ8jSSB1yTKlFTBsbmCt0ZCc3WjtFh8XGHFuPN?=
+ =?us-ascii?Q?8fc1cx1xULf/1AT0DQjkbvcbWcLS+9wVU9mAwB75aPEYym5w9NYDNCXyf0i/?=
+ =?us-ascii?Q?/Bm+Sg7jh/X6TrNEp8zw+4b+NFSXfU4lpi+o/Hq8ycf6/MYCZ0d5ZfaGCJYv?=
+ =?us-ascii?Q?zwFbYNIfOmBBknWwBcDwDdSMz4IiuN749RiYtqUsmUEw+9iiRnuGBVKQGt/+?=
+ =?us-ascii?Q?fXKsDJo4Du6gPtd3B9pxiSea72GSgYM5jDmUsiWGeULorHhOQl6Nw/qee6aK?=
+ =?us-ascii?Q?hD3OKL9m0+VM5RBRhpV/1ETgaHbMxz5VgX1Welkbs+KraXdr1AGCGUJvOK+u?=
+ =?us-ascii?Q?aoiBUKlnNq/X9D0rdkKJq+2AFh8wZrYBDoKTJWgkcgDKb86OJG4px4fDyzLQ?=
+ =?us-ascii?Q?BlpLlHv9MLtFTYWTmadwNzYv7ks+Tc5F5DJ2dspA6g1Sxao26D4N5aeeK6C7?=
+ =?us-ascii?Q?hvXshcu0Z4dyBW6eZ9BS4PaDn0n6zArqh6mYOXiZwCaBxC9KKaSYOCene0sC?=
+ =?us-ascii?Q?oT4DRdfYNRnPivnv1wVgeLySZrENqJCUmLOkEva+KqZtUpIW+Mc6efsI9C3g?=
+ =?us-ascii?Q?Qog3v/T8Rtb1RZhS51k+xr8MGIPKiSHQCyWfxEN3cC2msAw7og42SOYCGT4C?=
+ =?us-ascii?Q?A4DsyFITVzV0X02D+LWOKb4FiKr2FGhFh5i+uhGkCJorfuFQnsxNp4Ep/P6h?=
+ =?us-ascii?Q?LROxz3ECd/ygjtZpqEbxVsHwEdkMpoU2brxl5O1HT+gFFEX/7WSwbMZG/Xpd?=
+ =?us-ascii?Q?qxxZ0stM3uQzlkzOWfLz+zJo4TQJQnyLgrBw/0db?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f0b5a873-717c-45a1-2b8d-08de0fdfbb25
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2025 13:51:12.6776
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JyRl1isKMp/ihBeM8wuY989T4tscxKT7ETAVGtMA5FFgMnWlArprqLohhvQQPchcFFxwsL+ULIMbU7Ao7SJf0A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5840
 
-Hi!
+Hi Juri,
 
-On 17/10/25 11:25, Andrea Righi wrote:
-> During switching from sched_ext to FAIR tasks and vice-versa, we need
-> support for removing the bandwidth contribution of either DL server. Add
-> support for the same.
+On Mon, Oct 20, 2025 at 01:58:50PM +0200, Juri Lelli wrote:
+> Hi!
 > 
-> Co-developed-by: Joel Fernandes <joelagnelf@nvidia.com>
-> Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> ---
->  kernel/sched/deadline.c | 31 +++++++++++++++++++++++++++++++
->  kernel/sched/sched.h    |  1 +
->  2 files changed, 32 insertions(+)
+> On 17/10/25 11:25, Andrea Righi wrote:
+> > From: Joel Fernandes <joelagnelf@nvidia.com>
+> > 
+> > sched_ext currently suffers starvation due to RT. The same workload when
+> > converted to EXT can get zero runtime if RT is 100% running, causing EXT
+> > processes to stall. Fix it by adding a DL server for EXT.
+> > 
+> > A kselftest is also provided later to verify:
+> > 
+> > ./runner -t rt_stall
+> > ===== START =====
+> > TEST: rt_stall
+> > DESCRIPTION: Verify that RT tasks cannot stall SCHED_EXT tasks
+> > OUTPUT:
+> > TAP version 13
+> > 1..1
+> > ok 1 PASS: CFS task got more than 4.00% of runtime
+> > 
+> > [ arighi: drop ->balance() now that pick_task() has an rf argument ]
+> > 
+> > Cc: Luigi De Matteis <ldematteis123@gmail.com>
+> > Co-developed-by: Andrea Righi <arighi@nvidia.com>
+> > Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> > Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+> > ---
+> >  kernel/sched/core.c     |  3 +++
+> >  kernel/sched/deadline.c |  2 +-
+> >  kernel/sched/ext.c      | 51 +++++++++++++++++++++++++++++++++++++++--
+> >  kernel/sched/sched.h    |  2 ++
+> >  4 files changed, 55 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> > index 096e8d03d85e7..31a9c9381c63f 100644
+> > --- a/kernel/sched/core.c
+> > +++ b/kernel/sched/core.c
+> > @@ -8679,6 +8679,9 @@ void __init sched_init(void)
+> >  		hrtick_rq_init(rq);
+> >  		atomic_set(&rq->nr_iowait, 0);
+> >  		fair_server_init(rq);
+> > +#ifdef CONFIG_SCHED_CLASS_EXT
+> > +		ext_server_init(rq);
+> > +#endif
+> >  
+> >  #ifdef CONFIG_SCHED_CORE
+> >  		rq->core = rq;
+> > diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+> > index 0680e0186577a..3c1fd2190949e 100644
+> > --- a/kernel/sched/deadline.c
+> > +++ b/kernel/sched/deadline.c
+> > @@ -1504,7 +1504,7 @@ static void update_curr_dl_se(struct rq *rq, struct sched_dl_entity *dl_se, s64
+> >  	 * The fair server (sole dl_server) does not account for real-time
 > 
-> diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-> index 3c1fd2190949e..d585be4014427 100644
-> --- a/kernel/sched/deadline.c
-> +++ b/kernel/sched/deadline.c
-> @@ -1684,6 +1684,12 @@ int dl_server_apply_params(struct sched_dl_entity *dl_se, u64 runtime, u64 perio
->  		dl_rq_change_utilization(rq, dl_se, new_bw);
->  	}
->  
-> +	/* Clear these so that the dl_server is reinitialized */
-> +	if (new_bw == 0) {
-> +		dl_se->dl_defer = 0;
-> +		dl_se->dl_server = 0;
-> +	}
-> +
->  	dl_se->dl_runtime = runtime;
->  	dl_se->dl_deadline = period;
->  	dl_se->dl_period = period;
-> @@ -1697,6 +1703,31 @@ int dl_server_apply_params(struct sched_dl_entity *dl_se, u64 runtime, u64 perio
->  	return retval;
->  }
->  
-> +/**
-> + * dl_server_remove_params - Remove bandwidth reservation for a DL server
-> + * @dl_se: The DL server entity to remove bandwidth for
-> + *
-> + * This function removes the bandwidth reservation for a DL server entity,
-> + * cleaning up all bandwidth accounting and server state.
-> + *
-> + * Returns: 0 on success, negative error code on failure
-> + */
-> +int dl_server_remove_params(struct sched_dl_entity *dl_se)
-> +{
-> +	if (!dl_se->dl_server)
-> +		return 0; /* Already disabled */
-> +
-> +	/*
-> +	 * First dequeue if still queued. It should not be queued since
-> +	 * we call this only after the last dl_server_stop().
-> +	 */
-> +	if (WARN_ON_ONCE(on_dl_rq(dl_se)))
-> +		dequeue_dl_entity(dl_se, DEQUEUE_SLEEP);
-> +
-> +	/* Remove bandwidth reservation */
-> +	return dl_server_apply_params(dl_se, 0, dl_se->dl_period, false);
-> +}
+> Fair server is not alone anymore. :))
+> 
+> Please update the comment as well.
+> 
+> >  	 * workload because it is running fair work.
+> >  	 */
+> > -	if (dl_se == &rq->fair_server)
+> > +	if (dl_se->dl_server)
+> >  		return;
+> >  
+> >  #ifdef CONFIG_RT_GROUP_SCHED
+> 
+> ...
+> 
+> > @@ -1487,6 +1499,11 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int deq_flags
+> >  	sub_nr_running(rq, 1);
+> >  
+> >  	dispatch_dequeue(rq, p);
+> > +
+> > +	/* Stop the server if this was the last task */
+> > +	if (rq->scx.nr_running == 0)
+> > +		dl_server_stop(&rq->ext_server);
+> > +
+> 
+> Do we want to use the delayed stop behavior for scx-server as we have
+> for fair-server? Wonder if it's a matter of removing this explicit stop
+> and wait for a full period to elapse as we do for fair. It should reduce
+> timer reprogramming overhead for scx as well.
 
-I am not sure this is correct wrt inactive_task_timer and
-task_non_contending. I fear that removing bw immediately might break
-other deadline entities guarantees (especially if one then maliciously
-add/removes dl-servers quickly). I kind of think (but again not sure,
-please Peter and other keep me honest :) we should be waiting for
-inactive_task_timer to fire (if stopping before 0-lag) and let it clean
-things up at that point (like we do for simple tasks).
+So, IIUC we could just remove this explicit dl_server_stop() and the server
+would naturally stop at the end of its current deadline period, if there
+are still no runnable tasks, right?
 
-You seem to have additional fixes later on in the series that might be
-caused by what I describe above.
-
-Thinking more about this I actually wonder if we need this (well it's
-coming up with later patches) mechanism for automatically removing
-servers based on fair vs. scx state (full/partial). If we are going to
-manage dl-servers bw explicitly and separately [1], maybe we can just
-leave the burden to the user (or middleware) of doing that via the
-configuration interface?
+In that case it's worth a try.
 
 Thanks,
-Juri
-
-1 - https://lore.kernel.org/lkml/aPYDhjqe99F91FTW@jlelli-thinkpadt14gen4.remote.csb/ 
-
+-Andrea
