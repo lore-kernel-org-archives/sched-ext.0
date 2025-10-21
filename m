@@ -1,47 +1,47 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013015.outbound.protection.outlook.com [40.107.201.15])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010007.outbound.protection.outlook.com [52.101.85.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B51340A4F
-	for <sched-ext@lists.linux.dev>; Tue, 21 Oct 2025 14:57:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F5134164C
+	for <sched-ext@lists.linux.dev>; Tue, 21 Oct 2025 14:57:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.7
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761058660; cv=fail; b=qN8CgllF4lKhqd0pR3pG6X2agp/EzTUmkpcwyp1u51WvA4FqJENjDgE+5j6JeeRfAP5dUdH6ljCJVrWW0V+nkNPr8Nt2Od1ZMaiuCx73wGTGloEO2ym/9Au3Hh45sbto0mz/wWkXC1awWIk4QLUAd8HHEyq1dPUlMZoRO7alzrA=
+	t=1761058665; cv=fail; b=SHf5Vq1oAERLdTUfoC08lQfRO/nI9/L/GyIYZSSBtnH+csrSbJdhFQB6OuHMlA+WvBbyhiHjnq/WMpFoCivdgIps6OW6ZoUs1bU9FxG/LY/BWLVhV7rL4SrBbpKCCtTzES8AEPTCeLIIb7i1ucXgJA+5CboY/gj4jKqE7KnBkvg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761058660; c=relaxed/simple;
-	bh=05Wk+m7DD9ZF6PeYSH4Ry3HZjMQAxHyERym2Hg430aM=;
+	s=arc-20240116; t=1761058665; c=relaxed/simple;
+	bh=7g76afPNH0hgc67rH7xgs7Iv14UbvQ+Ikyl/u26H/3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CF3BcNRVgQJV6tJxxV7G1LOYJNXgec3OxB2PaoFaTjVnr+hMjiSVTz3V2XSlZcvCoYKZxWkf4ahHiHXafCahLZgsE+z/y9aY19C7UrYxD7himpwOcpZfN/U0X8K3z562xVctgxqmvEoprC1PI38JHhIZMJRZ8/NmFCIKQmTAKNA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=VB9ir/Pu; arc=fail smtp.client-ip=40.107.201.15
+	 Content-Type:MIME-Version; b=HRPWan4snsbadLwmCeRkw0jCNi0AETb23Q7hl6+fDaMO78Yq+q/YEouhXOtZQBe3+VgYer7lsL9XJMUPAN097/lC9OuSuPcOFI7UYq1X+ECphHom+x7wme3eLLMlu7BMYhM8ABwmRQOz6KmSR1kbTSOykvPsKP1yWkVNgGaMMf4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rKG79Za5; arc=fail smtp.client-ip=52.101.85.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="VB9ir/Pu"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rKG79Za5"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aUsskFhTatXuG5YmBEvKizmNz2Np7SKrFWNE5hxKca4SRQ1zb+DvLnJ/yIwS/p+GaKoLSAax/HD+J5M00IemyF9GJ8OvwqTHKjnSnV0YHnnCDIhXWUYB9IW1pn4uSQhTosaFy/SjYQ3Q/VJzqdGRX7+/zT6P5XD4MZ8VXbZaWrV8b0zidvmn87SVbohgygGc+DCAATFnSbkfbv68D8pdrLggmnCt1xjT4+Z8GwMtJsAXDPg0SWO+TFLg6/nWQjsQSuJh1rPl8XvR4gOivhMbi3epZi+AM0w0ffxIo/2MypfCunDRfMvhj5LPU4Iqxm2jdu1r+dADYpmx1HtPveUT5Q==
+ b=O2X7lzr6L2XHG4BFVaHsgacWVKDs7DPTr3WBQ8JdClnGDvfSHcvymRIFdEcbDl/uXZgEjyWCBcLxFzyb9NI23NEKJaDPapxsFswZZWH3Z0QRlxUpOKX2jOSetIVIKiPJWhAlFZ8mYr0ql5GbZ9fEPh6fI/QQ5GSQ4vIsmn5n/aTQosZheZMB/CT/4bgkAHKb5vM/p02kXtfpGREo1Bgsj8NTl0SWt8fUFebVIaEfrSraKzLsVxFqvsybXNmprB0cE5+3t7gQl0f/RKQiHHGAiF6s7AJ+t5/aw90dSkDanWhLocuadGlEFvZsIN8UterkAWKBeVVMPmfNZg0oeqvEag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QFTJffiZXV2QVAUbx2q3GpLS2Gyhki6Qgh7/B5lXhgo=;
- b=moYQDbBX75ykGTzDjNJHf/IiDeu+aaleR0ITTYsRe+QaLjxujsS5NKKQ0IpQ/U9Ri/TSb87jKmwKHM4or9fyYYib2F8N6WCg731hRGzeQnMSag7elX8Ki65fXg3RxxyDcwRHwl/bK7EdA/pylbI0zwL2bDgC2NwEYXethltIXCFJx5zShLaj2jHO/xDVVoTyJkh3JXZX8n9wpmGt7sOsyypxnmOKfz2wa0PPEOdEJnoQRmooCdqMMbdXINhWNS3JsHAMjkbQ6CSWjq6cg84priTPkgdMNNYv97YrX+ygpvz1zIIh2qCYOAh0DaAuI3ffTjIflC/5JWy9sgy+7JzDqQ==
+ bh=tljl0puf8rwEWkpb1tDSUmfDWL/pxVORAzS719Ei8cE=;
+ b=IWKm9/Kpm01u3fKX2F7OYpRCVtWoA0zq8QuJ4IDf82KbsAZJLEiurlqtcXStK25MU++tw01rGR8hnA8O6vKf7MzmxYBGhLe36BPXqve1udWBq+01/lvCXlvou5aiHcK/wfpV+9T2WkHzI/17LVCv5rDcqDetnmN/KMo3Rg3XW2RYe1PXtJCxL+YCFkQQTwRl/6uC7pa2l77pDAGpt62AwDLg01VaHHyoOy6OUIO6pVIUpJOoHTlU+/DFmy9JbGc7HUtOCAF68ysQbEtWSgqd8SzsZr1G0//v68Jvyo/T2zsOuamD+l92fJ7W56USBqJDuuGP+v7bBzy6wtHeC1LN6w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QFTJffiZXV2QVAUbx2q3GpLS2Gyhki6Qgh7/B5lXhgo=;
- b=VB9ir/Pu/nZtSH4Q1bL4AoOMUu8XSCBtURJYetUboPpHw2q2hQIkh+WML7R1KTPdNv70UOxLwGAzAQZXT33Caahx1CQs8uTzplEaTRyQCcvrkQZXrNOQrt8oyqYlJKtZRlOUfXzsAJGKRt5GR2QUFVhRigqjrp9VosLCKkJIqp6UA7heb4qiIfcINoD1ZzQDwzbcKXBnzVTvViiAvvRio8k6esjOAIREHgtribNa3wf8aQ+ASmiDv6VVU+HYcvSgyxu11j5yrt0nMPRB1BUCdxhzVgZ5Or9skcx11B3XnZPRJqp1VCnA1BNGLf80VZa3R3KgQIYZVmbnfSm9XhPI2w==
+ bh=tljl0puf8rwEWkpb1tDSUmfDWL/pxVORAzS719Ei8cE=;
+ b=rKG79Za592S2Cl/WqQc1rUdg42U4TNyIiEWO+Q8YFYVgW1YHsNAIjYgIwi2xRTcXS4xjTAyUnwuHxK0uUMzLKieO8i1sQT8KZ3cAXfO0iRnI4sCflXjkw3RMBdUN3eOQyzggM9dt/O38kH4pWyojhLFsZo2h4CG77KKguHmlTlPPFuTw3bgfcyS81fkrtSBsk6OJjX3KNGoM09qdfQGyvmWuYamjpzVhjsiP7sTBnvO0hBWXOpFwW+SfzZqwNI5m91K3tDmKzrmNy7luiWqWa/UsxIUyVBCBoBR4hqmKzIY4efOofBZZvNzFMzsVQE+yZulWbFZK20+yXdYF4OKaBQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by CY8PR12MB8299.namprd12.prod.outlook.com (2603:10b6:930:6c::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.12; Tue, 21 Oct
- 2025 14:57:35 +0000
+ 2025 14:57:40 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9228.015; Tue, 21 Oct 2025
- 14:57:35 +0000
+ 14:57:40 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Ingo Molnar <mingo@redhat.com>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -58,16 +58,16 @@ Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Joel Fernandes <joelagnelf@nvidia.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/3] sched: Relocate sched_smt_present definition to core.c
-Date: Tue, 21 Oct 2025 16:55:42 +0200
-Message-ID: <20251021145706.61534-2-arighi@nvidia.com>
+Subject: [PATCH 2/3] sched: Expose sd_llc_shared->has_idle_cores to other sched classes
+Date: Tue, 21 Oct 2025 16:55:43 +0200
+Message-ID: <20251021145706.61534-3-arighi@nvidia.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251021145706.61534-1-arighi@nvidia.com>
 References: <20251021145706.61534-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: ZR2P278CA0006.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:50::12) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: BYAPR08CA0007.namprd08.prod.outlook.com
+ (2603:10b6:a03:100::20) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -77,120 +77,298 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CY8PR12MB8299:EE_
-X-MS-Office365-Filtering-Correlation-Id: abf22602-7c3d-49e2-26dc-08de10b22b7b
+X-MS-Office365-Filtering-Correlation-Id: 73839ea0-3d44-4fd1-3108-08de10b22e9b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?quGy7ftkxDqS/80hl21EuXIHff3o9JEY4k3HKaKDYX5HU2MO5LG4xnBxEOe6?=
- =?us-ascii?Q?5f0Ekv5yMl682mLmLuAeK3vhdVDdNtxLir2Is7NAbwECc9HRqYrhiwZ6pEle?=
- =?us-ascii?Q?aPZ28DODGnS+olMyskmtszq3UsntF3lhMyvOcVyWGeRoNcvBe2AJ9bOpALAS?=
- =?us-ascii?Q?ZRdALZUC9bwIT6u9pXkTP1J6xMx5dOkn5jyZghGGY+SuMkBZK4xX/wWvZki3?=
- =?us-ascii?Q?poGbSg+N0Zrd9pHpzImvRCh2BioQb+c1FJxpdIdsIEnCzC+pwSu+UF37XzD9?=
- =?us-ascii?Q?nzZ9LoP2Cs/O6zOTuM9nNKbzlp1oduXR5vetsGqVH9UuoToIAJtEaR7r5F4M?=
- =?us-ascii?Q?l3MwRS2K8f1EVpLiynOClPiOdlupBMGJ1t/ohEzrOEKxINWjhNt0LKJvK/bM?=
- =?us-ascii?Q?LLYGwqOA65Ca1pNWaupkk8h0599YYkF5ItR3nV3G1R/aexJHmEgllX4FA8Rt?=
- =?us-ascii?Q?qPmMuaS/DC1YmllCsksWCuKlQPO4RSwQPmO/pSZeFPEJAvD4wYV6Me+ga2RH?=
- =?us-ascii?Q?02449uw8GxxNGBO+GJoQNxel0XiMYueKSl27Ec7alWrptJY6cB8B9EQZLlbu?=
- =?us-ascii?Q?rNwz1jKnihHjRha6jocJcY9OQPcIJGIUY/wi9CqYqoaN0IDl8zXia7z9isC+?=
- =?us-ascii?Q?NrDNt+XNL0Rfw1TY8dmHMQ1feU6AHm0jIFQ6fJXFTiOjBsnPkVhJX2FejhWK?=
- =?us-ascii?Q?C++D8aeK7vyQcPSJgCCLKQdV7zH+TlGP6RT/hJPCEpCqz3MXiNBEnFzNzM7b?=
- =?us-ascii?Q?owAZhxzgekjxADeuyIQ7Q3K2mhdhBQok81/cqxblF0YcIJgp0tSdm8/2EtOV?=
- =?us-ascii?Q?Ll8zr343SJi9c2wgCa/CHUTlryTu3GlGBptP5vqU9U+qnWR2p276GL0KO5CZ?=
- =?us-ascii?Q?2tr1w8+8kzf2ofOp5vNolVhC+PBvNC41TXiYLecLQnBSziT+R5rRgQ15WZr7?=
- =?us-ascii?Q?fwH3MZ7F7O6korie5zi+Km6redj9WW0D1/8Qz1HdB87PhXxkE292vUa+XhUD?=
- =?us-ascii?Q?7UR/85/GhRs1oYu6/7GI4sQ19FrnNg7+BL14IA5A+8gcvnUWUpUUK1+9ACpj?=
- =?us-ascii?Q?rJUGxs+qDQUUzjR5MZidAflLwnCRxiUbxpnQOf2iGWxHS1d00DK9cQWSlaVd?=
- =?us-ascii?Q?ufMtfCaJM9squfULZ6Rblau/zfrLL+dhuOPb0xNBwlyFURCwnwQn8NTKGHph?=
- =?us-ascii?Q?9FeKjrBth+/6moDxXUylwvrAoYarA7fmmqsncwTuKBWyFJZvv2Z4qidP9mL1?=
- =?us-ascii?Q?SMPT68NcwWCivfYfCwA1IW396s4FiIwnFNDi1tNXDgOWGGw0NhueJ+tbcLJ2?=
- =?us-ascii?Q?QlH5crD+Zi9GxIFir7rAZfd0vg54nHELFnl+HBQy3kBtIstPumU8K/Frym0O?=
- =?us-ascii?Q?ossM53aRcyHXOVdOe4u1KI/aHW4Z7QBrchGAQQTaODZlOyKlS011CuYwMMzZ?=
- =?us-ascii?Q?kONf4ptAD0tKYZi4W1yq0BCm2GyMT3ZH?=
+	=?us-ascii?Q?DqBuJx1oy7DdVN4oUSEC3hIHkL0dQMow4yRyHzurGIx4drbqoKkXp5/w6KW1?=
+ =?us-ascii?Q?BTXgFfvk2Heza7j30h59HbCS31+zNbgCj65UFBrxtHQispuLfxXI9LhiZiHK?=
+ =?us-ascii?Q?G4K1AuEnJStK1f041nmMwJNSyBnEbW0LhBoofjpYgcSDZmfI+UVKrs8pMQ2+?=
+ =?us-ascii?Q?xb1Rma2wLiMTUiUQjmfQfsGY7CDnD875Xe9KBpEeXwBE5b51/M2vIxD4gR5/?=
+ =?us-ascii?Q?6kEQVMZw0dCmsIBhTM0+YhavsVhR9Mqc7jyeM16l9mCVFZla0geHTT8iuewP?=
+ =?us-ascii?Q?UqjqzZmPpuonjvo+dVayJ/yba1SKP52nryoZOC85mmPoVmsML5jdoyAuBVve?=
+ =?us-ascii?Q?b1MAoetx6nLmhrIM9Qpv3o1qyQpyHpnPEixMex3R9sCEWk1wtcuQOSOs/DiR?=
+ =?us-ascii?Q?/BE3ciwpFfz4+jSidmRc3Y7QaSbE9Pfv3Lz/K1e8IXAaitLfZvt9JElZ+3Uj?=
+ =?us-ascii?Q?mAKw9ZwGco8UAPmCCBM0wDwCEBhI9KZNbMBgiR+44GyEWx3KU3Sq82XmEnTw?=
+ =?us-ascii?Q?49hRbgeKItaM/cmceFAuWQCZrwhBq4MjjxG/odYq0bv4X9qpshPrQ9u5LPEx?=
+ =?us-ascii?Q?ifWLKh3ZnjobwRtnzxus+Sg0ae+LL7McHa5RhFOuAhP27YJiGMOsHP0Gd9lg?=
+ =?us-ascii?Q?QcozXqgsijdwqGpMUn/yOvayvErsRtUIMGxxdQIQCQmbo0CliO7Aouz3mZqx?=
+ =?us-ascii?Q?tsatHmVnQl8AFm6KmpxBmP9OBMP9RGjsEyHaq8y5gtzdcyreXattB5D29PPS?=
+ =?us-ascii?Q?/jNsB8WuqmJfZ4D1SGB30naXkREh4/8A88YTpFDR0nkl1UwTKAUMsRkqKK0l?=
+ =?us-ascii?Q?+C89b6PYrdi2qZfWndj59xz63lL5yNBnlO1EoqWLL5B3ZPI22h12FSwT2upS?=
+ =?us-ascii?Q?H9b5AqEWIjmVTMQ8d1dkgxo193kCPBJQkYh5hpbSn7xxddtwjPtZpHuNiPRk?=
+ =?us-ascii?Q?JGtimDzcWf6QM6SsFKDoSLhhnzZ9iMMn4WtxhMiXaakKoSL0Cyt6aFlZbOdy?=
+ =?us-ascii?Q?6csMuUgomMf8ddg1nKFNNx7oxxqrb+R39b8Wht+CqiWv99RQ7D9J4TlXTEdM?=
+ =?us-ascii?Q?mXf20ga9Q0A5vU51M00QSHEUwKUYtGhqi7EufgAATVNB1jVL9J1Aaavjpbx2?=
+ =?us-ascii?Q?ey2iyqQjqs88YCS4Y8Nwpeua9vABX9YyXENLRB4TpKzu3qJkzNsrqqjNy8yb?=
+ =?us-ascii?Q?WHCkrDa6Wuc0zL3BjVAbb7bQBs/g19fRa9twuQK7Rfv1u1DhttwprDe8ARTP?=
+ =?us-ascii?Q?DvpnhosjEXdu+5i/r8NbHbAF+xSOzM4jQHpAigt2MeRG2RV1/TmwACDUmTqq?=
+ =?us-ascii?Q?QNd+vd+8Phuc9iulEoHn44AerATkeWi7F7jbC5UCY3dyQUgJOsguHPagOUud?=
+ =?us-ascii?Q?9Unrw0RA025MIl2nPURIFd40TPTjqEgBmBPAFtfKPFocQ3UWgPJCCCP2gPDm?=
+ =?us-ascii?Q?7DWE93ZGpb1Eh6E/Eo/yisEJFVKw/BWP?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?slwzplHplfngVCMjd8Pk2YF9MNG9VCHfiWGnSxEIe3PKKfbZiCTOZVZevBvV?=
- =?us-ascii?Q?0JE9vNQ/xAIscRjbVqOkUdWipw0ipB29vI3aG5IDwebsBx7QOZ9OFj8xyckP?=
- =?us-ascii?Q?92nl9dqyXmHvEnJGF4YXH/CqCu3lcAMoEuIqUnrNuXehoAykDu2JU9eE+Wt7?=
- =?us-ascii?Q?hIynRNwh/LwuGZImajxApdblHZDL0HUrFLV+bz7cVO9lqp8035I3gqzRv01u?=
- =?us-ascii?Q?wXfeZar26M8F5460sF+29PxtuhDt1vWDSsgI/vTQb77oWH8y1EoLcFEsTpSF?=
- =?us-ascii?Q?1F4eVeN4BgQzRWXMG2chkdsSQ9eCjNQgqo1Z13PatndC2/o27eRdDN/PAU1+?=
- =?us-ascii?Q?UWWS6LrGQpmlUaHUIa9tqT8xq5L6eQezwOpuEdT6H9U1tz2Xq9UWkqG/TclB?=
- =?us-ascii?Q?uDa+K3X8KS+/1I7150Py84bPOPDJry6C0CKR4uOfeZaWoPWC2q8t5yituLN7?=
- =?us-ascii?Q?SmKyiVWelxMuO9VpcRcNceshpTAXqAORt0SXeWxg7kX1PyEDL0RcoSwFwyeM?=
- =?us-ascii?Q?6hg3TrL0sbnCcY+G1l3URmr8sM/bcO/MTzwuh3+EXKfFIhjas8xj6KO532T+?=
- =?us-ascii?Q?vuS+RLRoeFfHAKKC0RCtG51dmXxdhfcJu7f/l/wIGaIMKerk6sqr8SR2HYj6?=
- =?us-ascii?Q?UKV7rcDbKLilvRFKn6X2E0tm6qJImgx6DUTf7XOVEZuQ68nW/yhpeE/jgalt?=
- =?us-ascii?Q?53BX20cizLe3aw4UZMpl0V5xnaXesbNKVs4JjZkwRjjZWFih+R/ScArs0UpQ?=
- =?us-ascii?Q?eT80938mPX8YpjWO8EB97VpRnp5IoIucvZ9OhDs0a1JcCocVsf7rZS8H8uRO?=
- =?us-ascii?Q?tgi/Sds+9375/KyY1Hx8lu1Z6R1k6s5kQfk2+IgcMo8rJaEd7MpY3WE3Df9q?=
- =?us-ascii?Q?y3iRNVsl3dMLp7gxocgqq4VDv696p8LJFh0o0+vcAJkesi+/Tyk3cHDTYRLF?=
- =?us-ascii?Q?n8DzR04d2SSQAYBl0EkpP6rYhF40WUWCQqbaqgzddaQEgCv/dGYMQ/8jvWXx?=
- =?us-ascii?Q?L1DsuSoRsyfnTEZGaqNly9nYzI8Dys/aKmtHzYs8RxaueHxO3hbbqRA2sumn?=
- =?us-ascii?Q?UmFAM8II1z9h1dpkkkVINk9BkNS4ZQot9ch62d65fwagZ/mHnQWx/L/C2ZyG?=
- =?us-ascii?Q?dyveaMRlzB06wmWNsNV7kTRG2gGOI3Y6u+Bv1WWluZATfgKM4TiJjTcVNFXu?=
- =?us-ascii?Q?mKdvWlcOSpIZd6JmIksvF3QSXWjKgvFXpf5gb/grS9Qb9RGzAlHv36UQb2Kd?=
- =?us-ascii?Q?K1wA+64vkJE1ehGq+i4/If/WZRgZzILKa0V1nRY5Q7MbDdRPwbUBt7yVXJ17?=
- =?us-ascii?Q?fMH06LTS9aGFzlsGQicA1Bsq6dkZUyj8y/G8lC8t1m8b82BNIJ5kLM9YY7m1?=
- =?us-ascii?Q?cUGwOFwKSSR+d4bDuZp8Mq9/UR+MLmmnT3Ul1jkJJmS/T9nUPP9WVmj7AWOU?=
- =?us-ascii?Q?TLZJNN7iobzclAMHOFpYwT6Evc3zuAR4gvGxcMfZsVLdGu+j9sxHXu1p/E9n?=
- =?us-ascii?Q?78KMhV4aIoMwe0g5bO9TFyrg0fm0BvU6ETowYtcbeYnesNBFRXQ/pi7MfS6l?=
- =?us-ascii?Q?W4JKN41v6g3YTAmJGg5vz3QDDkL8qCvL8dwBbWbd?=
+	=?us-ascii?Q?mCK1XwMPZCwxFgJSFK9mJOgqGq7VCUIdlAIRGudpfziNmi8S3WDfaGkP/4vR?=
+ =?us-ascii?Q?2FnIOD6erLnXM9hfi/SEmwGWjeOSQJgXI6YJ1Jw7OEq/Ft6/42F0qWVXPl00?=
+ =?us-ascii?Q?noTNTVGEX9lkuHoGb8tj1dyY8tnxzWA3fOt/LNqKL8SbK0BxgudyfGAWqv23?=
+ =?us-ascii?Q?7joNBHhIDCDZYy02PiWQSu4QY8tjm8fxqNq0Oje4vjLgCPqjEXn9RcXKBz+8?=
+ =?us-ascii?Q?EINOhsCZVdt/tE3Y1CZbB0+6xALmUKZvCeC5Cjvy1Lsr7VBc22sTzO2cWHWL?=
+ =?us-ascii?Q?T8+d+QrBMID69ptS99Oe9eCSTT+L/WeSQavTJVA/saEMVUBR7l7J8xY9f6XH?=
+ =?us-ascii?Q?5Q/jW9KEubfCST5BDsiKACk7swKgb+C9MB7aoe+zJs4AMRQIgoAehZxYstUq?=
+ =?us-ascii?Q?7rOmeuxzO/7pumQ6YRnvNQZC8boKULCT1FRtj4mx7QABL/bL+S/YPKz9DwA+?=
+ =?us-ascii?Q?Am5CY6/eCXtbpxib546WmBvC4ckCu3X4PcgN3WoNbVX+r1Y1R0mY4b6ak9/g?=
+ =?us-ascii?Q?7fVo7D1axsZ0DeeUshI/Ku4YhXin5f7qNi6/Dp/CmVpMpqpjdgdHjTszKvju?=
+ =?us-ascii?Q?40jeMngwcr+Nxkn970FhGyMmFzTxmzVcFISYfE1Bb5xxdKHR+jv2R1aDnRkL?=
+ =?us-ascii?Q?wzr/N2UtJQ+i82YhJZN6MdvRXp0a+ga/FxJw/OGDI9axngWZhQZOf86JTAHR?=
+ =?us-ascii?Q?R5PbFqoi2qdEz0mC42rQxo95k2xLVpyLzGigEkmm1tfKvNLgyLJH3ceMa82y?=
+ =?us-ascii?Q?Sme65tqhpys8+EvUnkOz3pOFeIozCr7E7d/fn1OGA7Ud8yGO5h/D7EdomxJQ?=
+ =?us-ascii?Q?tbL0qPjIbjhq3Nf8hVCwEftuExaI9BwgHKJBn/mbYWmZAf8lmw6/byPQYTDl?=
+ =?us-ascii?Q?iKibloUPMrDcOH5x1DTnWiTsdHzwVFhctJJXcT+aVTnCx4mRgO8nf3ULc9kN?=
+ =?us-ascii?Q?mzmUCnv6UUZ+NS9iSy4DNP2e4tgXizkWY48sFvGlSXU2lBQhBInif3Et02Oc?=
+ =?us-ascii?Q?Zc8NdfxrkWlN2pCzukvD335h5qe5n7gYy8RGzzRd9pxyEhIMZcersIOuuMk1?=
+ =?us-ascii?Q?Dr1OphtXJBQ/KMGKkIG/yn0/7yBCkF8ghk5XTfkHlgWKFnTICUeDSAHRhNXs?=
+ =?us-ascii?Q?bw6ApIrw9peo7sdIwsJwLagv9jzi3QDcDxbJdChqClkUZ1BVEZhxpZiev9/+?=
+ =?us-ascii?Q?v0FTSueHbJSmpSE+5bDuT+HcfnbKGCyPpMVhVzSj+s6K6bhReB0LTLRXkbxP?=
+ =?us-ascii?Q?bQbu2fwZbL4dDPOpSvB68+myiXMszMDq6+NJ23A4U7WkATqyXbaNg+l9TZVU?=
+ =?us-ascii?Q?IrcF+3S8qlEWeMDfgA3j3wxO15BD2S8lYCWa5xw8yPWy00kV8g6GWP9kSaeD?=
+ =?us-ascii?Q?xpp1JT+ifGvSpylBIjqHrjwIpH0MbnsdPQoZLpz0yo2yIrTIjhY9We+1kARF?=
+ =?us-ascii?Q?0ZgepfpK6TnqlpB2CK+7Z61b6C+767Gawg8QWmFwUPqfx8OgG6c2/z2mgBVE?=
+ =?us-ascii?Q?oNo3A+U0q1KyXMjI/ZmgClvWYO2U7ZZomnC1hXvg/GFCOeP5LKWX2slA6ghI?=
+ =?us-ascii?Q?hFJ71BtzJRx1nZA5MIq3OlXOVccGq0oS0UTcXmum?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: abf22602-7c3d-49e2-26dc-08de10b22b7b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 73839ea0-3d44-4fd1-3108-08de10b22e9b
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2025 14:57:35.4645
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2025 14:57:40.6888
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 67W+Jgrtw0G+3S+Ig/SmHNrYQmPl2zhqe1OhVLoezIgNTkipRr1dwdJviEAow39Cmlq3y7XtzmC08UPmMbAvIw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: AC9ASzuSXqsNJvyP+CYOjgjN3slx7uWxlX7Aa5s4kTHvWZ8zyV6hJm0O31FlVTFD8L7xce6Iz52pe0VMt8qkJw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8299
 
-Multiple sched classes are using sched_smt_present, so move it from
-fair.c to core.c, next to the helpers that update its state.
+Move the logic to manage sd_llc_shared->has_idle_cores to sched/idle.c
+and relocate the set/test/update helpers to sched.h so they can be
+reused by other sched classes (e.g., sched_ext).
 
 No functional changes.
 
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- kernel/sched/core.c | 5 +++++
- kernel/sched/fair.c | 3 ---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ kernel/sched/fair.c  | 63 +-------------------------------------------
+ kernel/sched/idle.c  | 31 ++++++++++++++++++++++
+ kernel/sched/sched.h | 55 +++++++++++++++++++++++++++++---------
+ 3 files changed, 74 insertions(+), 75 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index f1ebf67b48e21..87387f3e04dd0 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8376,6 +8376,11 @@ static void cpuset_cpu_inactive(unsigned int cpu)
- 	}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index ef0a1bd26450b..64ec1527d1af4 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -2080,8 +2080,6 @@ numa_type numa_classify(unsigned int imbalance_pct,
+ }
+ 
+ #ifdef CONFIG_SCHED_SMT
+-/* Forward declarations of select_idle_sibling helpers */
+-static inline bool test_idle_cores(int cpu);
+ static inline int numa_idle_core(int idle_core, int cpu)
+ {
+ 	if (!static_branch_likely(&sched_smt_present) ||
+@@ -7539,59 +7537,10 @@ static inline int __select_idle_cpu(int cpu, struct task_struct *p)
+ }
+ 
+ #ifdef CONFIG_SCHED_SMT
+-static inline void set_idle_cores(int cpu, int val)
+-{
+-	struct sched_domain_shared *sds;
+-
+-	sds = rcu_dereference(per_cpu(sd_llc_shared, cpu));
+-	if (sds)
+-		WRITE_ONCE(sds->has_idle_cores, val);
+-}
+-
+-static inline bool test_idle_cores(int cpu)
+-{
+-	struct sched_domain_shared *sds;
+-
+-	sds = rcu_dereference(per_cpu(sd_llc_shared, cpu));
+-	if (sds)
+-		return READ_ONCE(sds->has_idle_cores);
+-
+-	return false;
+-}
+-
+-/*
+- * Scans the local SMT mask to see if the entire core is idle, and records this
+- * information in sd_llc_shared->has_idle_cores.
+- *
+- * Since SMT siblings share all cache levels, inspecting this limited remote
+- * state should be fairly cheap.
+- */
+-void __update_idle_core(struct rq *rq)
+-{
+-	int core = cpu_of(rq);
+-	int cpu;
+-
+-	rcu_read_lock();
+-	if (test_idle_cores(core))
+-		goto unlock;
+-
+-	for_each_cpu(cpu, cpu_smt_mask(core)) {
+-		if (cpu == core)
+-			continue;
+-
+-		if (!available_idle_cpu(cpu))
+-			goto unlock;
+-	}
+-
+-	set_idle_cores(core, 1);
+-unlock:
+-	rcu_read_unlock();
+-}
+-
+ /*
+  * Scan the entire LLC domain for idle cores; this dynamically switches off if
+  * there are no idle cores left in the system; tracked through
+- * sd_llc->shared->has_idle_cores and enabled through update_idle_core() above.
++ * sd_llc->shared->has_idle_cores and enabled through update_idle_core().
+  */
+ static int select_idle_core(struct task_struct *p, int core, struct cpumask *cpus, int *idle_cpu)
+ {
+@@ -7645,16 +7594,6 @@ static int select_idle_smt(struct task_struct *p, struct sched_domain *sd, int t
+ }
+ 
+ #else /* !CONFIG_SCHED_SMT: */
+-
+-static inline void set_idle_cores(int cpu, int val)
+-{
+-}
+-
+-static inline bool test_idle_cores(int cpu)
+-{
+-	return false;
+-}
+-
+ static inline int select_idle_core(struct task_struct *p, int core, struct cpumask *cpus, int *idle_cpu)
+ {
+ 	return __select_idle_cpu(core, p);
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index c39b089d4f09b..06b67c88e70e6 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -452,6 +452,37 @@ static void wakeup_preempt_idle(struct rq *rq, struct task_struct *p, int flags)
+ 	resched_curr(rq);
  }
  
 +#ifdef CONFIG_SCHED_SMT
-+DEFINE_STATIC_KEY_FALSE(sched_smt_present);
-+EXPORT_SYMBOL_GPL(sched_smt_present);
-+#endif
++/*
++ * Scans the local SMT mask to see if the entire core is idle, and records this
++ * information in sd_llc_shared->has_idle_cores.
++ *
++ * Since SMT siblings share all cache levels, inspecting this limited remote
++ * state should be fairly cheap.
++ */
++void __update_idle_core(struct rq *rq)
++{
++	int core = cpu_of(rq);
++	int cpu;
 +
- static inline void sched_smt_present_inc(int cpu)
++	rcu_read_lock();
++	if (test_idle_cores(core))
++		goto unlock;
++
++	for_each_cpu(cpu, cpu_smt_mask(core)) {
++		if (cpu == core)
++			continue;
++
++		if (!available_idle_cpu(cpu))
++			goto unlock;
++	}
++
++	set_idle_cores(core, 1);
++unlock:
++	rcu_read_unlock();
++}
++#endif /* !CONFIG_SCHED_SMT: */
++
+ static void put_prev_task_idle(struct rq *rq, struct task_struct *prev, struct task_struct *next)
  {
- #ifdef CONFIG_SCHED_SMT
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index cee1793e8277a..ef0a1bd26450b 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7539,9 +7539,6 @@ static inline int __select_idle_cpu(int cpu, struct task_struct *p)
- }
+ 	dl_server_update_idle_time(rq, prev);
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 1f5d07067f60a..b943ebbc3fcb1 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1579,19 +1579,6 @@ do {						\
+ 	flags = _raw_spin_rq_lock_irqsave(rq);	\
+ } while (0)
  
- #ifdef CONFIG_SCHED_SMT
--DEFINE_STATIC_KEY_FALSE(sched_smt_present);
--EXPORT_SYMBOL_GPL(sched_smt_present);
+-#ifdef CONFIG_SCHED_SMT
+-extern void __update_idle_core(struct rq *rq);
 -
- static inline void set_idle_cores(int cpu, int val)
+-static inline void update_idle_core(struct rq *rq)
+-{
+-	if (static_branch_unlikely(&sched_smt_present))
+-		__update_idle_core(rq);
+-}
+-
+-#else /* !CONFIG_SCHED_SMT: */
+-static inline void update_idle_core(struct rq *rq) { }
+-#endif /* !CONFIG_SCHED_SMT */
+-
+ #ifdef CONFIG_FAIR_GROUP_SCHED
+ 
+ static inline struct task_struct *task_of(struct sched_entity *se)
+@@ -2069,6 +2056,48 @@ DECLARE_PER_CPU(struct sched_domain __rcu *, sd_asym_cpucapacity);
+ extern struct static_key_false sched_asym_cpucapacity;
+ extern struct static_key_false sched_cluster_active;
+ 
++#ifdef CONFIG_SCHED_SMT
++static inline void set_idle_cores(int cpu, int val)
++{
++	struct sched_domain_shared *sds;
++
++	sds = rcu_dereference(per_cpu(sd_llc_shared, cpu));
++	if (sds)
++		WRITE_ONCE(sds->has_idle_cores, val);
++}
++
++static inline bool test_idle_cores(int cpu)
++{
++	struct sched_domain_shared *sds;
++
++	sds = rcu_dereference(per_cpu(sd_llc_shared, cpu));
++	if (sds)
++		return READ_ONCE(sds->has_idle_cores);
++
++	return false;
++}
++
++extern void __update_idle_core(struct rq *rq);
++
++static inline void update_idle_core(struct rq *rq)
++{
++	if (static_branch_unlikely(&sched_smt_present))
++		__update_idle_core(rq);
++}
++
++#else /* !CONFIG_SCHED_SMT: */
++static inline void set_idle_cores(int cpu, int val)
++{
++}
++
++static inline bool test_idle_cores(int cpu)
++{
++	return false;
++}
++
++static inline void update_idle_core(struct rq *rq) { }
++#endif /* CONFIG_SCHED_SMT */
++
+ static __always_inline bool sched_asym_cpucap_active(void)
  {
- 	struct sched_domain_shared *sds;
+ 	return static_branch_unlikely(&sched_asym_cpucapacity);
 -- 
 2.51.1
 
