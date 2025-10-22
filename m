@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08850302173;
-	Wed, 22 Oct 2025 20:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADB5303A2E;
+	Wed, 22 Oct 2025 20:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761166593; cv=none; b=NWUxjnezddTDl95AlTG4j8O0FtMbFhXaqktQZuzNEj0Jqr8DeEFJhU7vliCT124k/E3JIQ9144wJILw2zy6e4W6h01TdFdlZkn5vfei1ZhEneFMld4LZzPZcaQLF81LEVs1g2uPW/gHUxe3jqGYFJKkIP5fb41NMyvoyk5CmbJw=
+	t=1761166594; cv=none; b=uYtckQrvcNTJ0kuMtgT1g/CAL6G4S7tnAV2aUvF/Df1p5VMH2m8Ig7nTQJmIp32/iX+xSpLbPLkHp1qh0CqkElheRLoqYJa0aq6HcuNteBbiRBn6fJ62JtXFH5v5yHpP1HeOXgxYlmxJM1dkj+IVb1aYdyXkJCUFMDB+NkTbW1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761166593; c=relaxed/simple;
-	bh=wiFsAGfPQZS6AbrzF3ZX5VDhSPVim2QDxPty3IbTSkg=;
+	s=arc-20240116; t=1761166594; c=relaxed/simple;
+	bh=VKWFVy7XCQrFd2DdX5VPfAMp0XUdeIkTX4YYGvHGvD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pihuGDYQTNAPHQeX98Yhs+S4xRav9Shb6nPSp0lXFWV2EGN0hbKzEsyWE9Fa1lgXik6w3fmYi78dMJHoNQm4G0Y6UJ2NPfu5mMQNiYbRK2Yf1xTi9mp7WqMOgbYLWs5KHlHr+S3zvEG6iXF5ZmX+7CBnmwERY0ZgEEV2mabzfVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lSUSz/Vp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIuk1XAUbzYVh2NfFlZnWxaDUGt4VOKZewRmSssyvlPXmDrnucBiSdCcjehdtPXwCEJXstmd7zlqQFk7ZM5jFhnnwF9u1bfGKe8p253Hc/2a+wZ1rLm0DYfDzsN2wPhkyJVL247/WqB2rPuLwGIrV/Dc6iEBQZTTDpmwZf9jucg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VzFlzQpR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lSUSz/Vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81920C4CEE7;
-	Wed, 22 Oct 2025 20:56:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VzFlzQpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FFFC4CEFF;
+	Wed, 22 Oct 2025 20:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761166592;
-	bh=wiFsAGfPQZS6AbrzF3ZX5VDhSPVim2QDxPty3IbTSkg=;
+	s=k20201202; t=1761166593;
+	bh=VKWFVy7XCQrFd2DdX5VPfAMp0XUdeIkTX4YYGvHGvD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSUSz/VpzZzpZ+iteTpRRScwwTsIIyjPk3PAEMUxvz7O7YEixzOKQyTzgslbXss2p
-	 wfRF0Zazp6i2Ba+dsY8k4Z/CHfHLKxTfn45fCHe8fGPsj3X+1Y/pmFJoanIadPglN+
-	 fwfWtSJd0rMKefYQD7v2xavPAZt3n1cONpQFI92rAf9c35TC14nHudvFsoKLsIIBF3
-	 DEBLMzuvdoeJSUPSQXlQXKdzWv71xIMBNBaHiD0D2FkBukZ192gNiw37kJjkdgj0Io
-	 QjynxEXbYAb+DQrWxU6ovcEAwc9PfaleXyisjIKUaCC4dZKans2/Zfhp29UwuAeNnO
-	 h3lfjNUL59nWg==
+	b=VzFlzQpRsGN96aDCwHJbf4FZyY2AagSDyf0SOjeemI6JeAnJBMsoYaxzrA2KTqt9Z
+	 DKzzeVemopKdAqifS9PCOa24ZVYP30ZfiLBYsz59X5YMZ1Az25hKvIDcsey/j/k63o
+	 /wddOzG15mzGVOGJ5u/l9q6XMI6L4+IvtWS0bhSiHMB0YouIniJVTvgT6EoedKbgZN
+	 3+za9KLbnn51j/RzzAOiRG8579GAsVyMvWm7+iI5LV9ivhvIlA6Sxzr1DCLjZyKrWf
+	 1Eem5a1G012FHUfSmOLc8cSPm/zfkwBMQKQrIn2a4wmENMGJ3vDkicSRUntX5ePDNz
+	 br8oBIvmzwA8Q==
 From: Tejun Heo <tj@kernel.org>
 To: void@manifault.com,
 	arighi@nvidia.com,
@@ -33,11 +33,10 @@ To: void@manifault.com,
 Cc: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev,
 	peterz@infradead.org,
-	Tejun Heo <tj@kernel.org>,
-	Wen-Fang Liu <liuwenfang@honor.com>
-Subject: [PATCH RESEND v2 2/3] sched_ext: Fix SCX_KICK_WAIT to work reliably
-Date: Wed, 22 Oct 2025 10:56:28 -1000
-Message-ID: <20251022205629.845930-3-tj@kernel.org>
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH RESEND v2 3/3] sched_ext: Rename pnt_seq to kick_sync
+Date: Wed, 22 Oct 2025 10:56:29 -1000
+Message-ID: <20251022205629.845930-4-tj@kernel.org>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251022205629.845930-1-tj@kernel.org>
 References: <20251022205629.845930-1-tj@kernel.org>
@@ -49,147 +48,264 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SCX_KICK_WAIT is used to synchronously wait for the target CPU to complete
-a reschedule and can be used to implement operations like core scheduling.
+The pnt_seq field and related infrastructure were originally named for
+"pick next task sequence", reflecting their original implementation in
+scx_next_task_picked(). However, the sequence counter is now incremented in
+both put_prev_task_scx() and pick_task_scx() and its purpose is to
+synchronize kick operations via SCX_KICK_WAIT, not specifically to track
+pick_next_task events.
 
-This used to be implemented by scx_next_task_picked() incrementing pnt_seq,
-which was always called when a CPU picks the next task to run, allowing
-SCX_KICK_WAIT to reliably wait for the target CPU to enter the scheduler and
-pick the next task.
+Rename to better reflect the actual semantics:
+- pnt_seq -> kick_sync
+- scx_kick_pseqs -> scx_kick_syncs
+- pseqs variables -> ksyncs
+- Update comments to refer to "kick_sync sequence" instead of "pick_task
+  sequence"
 
-However, commit b999e365c298 ("sched_ext: Replace scx_next_task_picked()
-with switch_class()") replaced scx_next_task_picked() with the
-switch_class() callback, which is only called when switching between sched
-classes. This broke SCX_KICK_WAIT because pnt_seq would no longer be
-reliably incremented unless the previous task was SCX and the next task was
-not.
+This is a pure renaming with no functional changes.
 
-This fix leverages commit 4c95380701f5 ("sched/ext: Fold balance_scx() into
-pick_task_scx()") which refactored the pick path making put_prev_task_scx()
-the natural place to track task switches for SCX_KICK_WAIT. The fix moves
-pnt_seq increment to put_prev_task_scx() and also increments it in
-pick_task_scx() to handle cases where the same task is re-selected, whether
-by BPF scheduler decision or slice refill. The semantics: If the current
-task on the target CPU is SCX, SCX_KICK_WAIT waits until the CPU enters the
-scheduling path. This provides sufficient guarantee for use cases like core
-scheduling while keeping the operation self-contained within SCX.
-
-v2: - Also increment pnt_seq in pick_task_scx() to handle same-task
-      re-selection (Andrea Righi).
-    - Use smp_cond_load_acquire() for the busy-wait loop for better
-      architecture optimization (Peter Zijlstra).
-
-Reported-by: Wen-Fang Liu <liuwenfang@honor.com>
-Link: http://lkml.kernel.org/r/228ebd9e6ed3437996dffe15735a9caa@honor.com
-Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c          | 46 +++++++++++++++++++++----------------
- kernel/sched/ext_internal.h |  6 +++--
- 2 files changed, 30 insertions(+), 22 deletions(-)
+ kernel/sched/ext.c   | 80 ++++++++++++++++++++++++++--------------------------
+ kernel/sched/sched.h |  2 +-
+ 2 files changed, 41 insertions(+), 41 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 7db43a14a6fc..3f87f3d31ccd 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -2260,12 +2260,6 @@ static void switch_class(struct rq *rq, struct task_struct *next)
- 	struct scx_sched *sch = scx_root;
- 	const struct sched_class *next_class = next->sched_class;
+@@ -68,18 +68,18 @@ static unsigned long scx_watchdog_timest
+ static struct delayed_work scx_watchdog_work;
  
--	/*
--	 * Pairs with the smp_load_acquire() issued by a CPU in
--	 * kick_cpus_irq_workfn() who is waiting for this CPU to perform a
--	 * resched.
--	 */
+ /*
+- * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of pick_task sequence
++ * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of kick_sync sequence
+  * numbers. The arrays are allocated with kvzalloc() as size can exceed percpu
+  * allocator limits on large machines. O(nr_cpu_ids^2) allocation, allocated
+  * lazily when enabling and freed when disabling to avoid waste when sched_ext
+  * isn't active.
+  */
+-struct scx_kick_pseqs {
++struct scx_kick_syncs {
+ 	struct rcu_head		rcu;
+-	unsigned long		seqs[];
++	unsigned long		syncs[];
+ };
+ 
+-static DEFINE_PER_CPU(struct scx_kick_pseqs __rcu *, scx_kick_pseqs);
++static DEFINE_PER_CPU(struct scx_kick_syncs __rcu *, scx_kick_syncs);
+ 
+ /*
+  * Direct dispatch marker.
+@@ -2301,7 +2301,7 @@ static void put_prev_task_scx(struct rq
+ 	struct scx_sched *sch = scx_root;
+ 
+ 	/* see kick_cpus_irq_workfn() */
 -	smp_store_release(&rq->scx.pnt_seq, rq->scx.pnt_seq + 1);
- 	if (!(sch->ops.flags & SCX_OPS_HAS_CPU_PREEMPT))
- 		return;
++	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
  
-@@ -2305,6 +2299,10 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 			      struct task_struct *next)
- {
- 	struct scx_sched *sch = scx_root;
-+
-+	/* see kick_cpus_irq_workfn() */
-+	smp_store_release(&rq->scx.pnt_seq, rq->scx.pnt_seq + 1);
-+
  	update_curr_scx(rq);
  
- 	/* see dequeue_task_scx() on why we skip when !QUEUED */
-@@ -2358,6 +2356,9 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf)
- 	bool keep_prev, kick_idle = false;
+@@ -2357,7 +2357,7 @@ do_pick_task_scx(struct rq *rq, struct r
  	struct task_struct *p;
  
-+	/* see kick_cpus_irq_workfn() */
-+	smp_store_release(&rq->scx.pnt_seq, rq->scx.pnt_seq + 1);
-+
+ 	/* see kick_cpus_irq_workfn() */
+-	smp_store_release(&rq->scx.pnt_seq, rq->scx.pnt_seq + 1);
++	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
+ 
  	rq_modified_clear(rq);
  
- 	rq_unpin_lock(rq, rf);
-@@ -5144,8 +5145,12 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *pseqs)
+@@ -3883,24 +3883,24 @@ static const char *scx_exit_reason(enum
+ 	}
+ }
+ 
+-static void free_kick_pseqs_rcu(struct rcu_head *rcu)
++static void free_kick_syncs_rcu(struct rcu_head *rcu)
+ {
+-	struct scx_kick_pseqs *pseqs = container_of(rcu, struct scx_kick_pseqs, rcu);
++	struct scx_kick_syncs *ksyncs = container_of(rcu, struct scx_kick_syncs, rcu);
+ 
+-	kvfree(pseqs);
++	kvfree(ksyncs);
+ }
+ 
+-static void free_kick_pseqs(void)
++static void free_kick_syncs(void)
+ {
+ 	int cpu;
+ 
+ 	for_each_possible_cpu(cpu) {
+-		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
+-		struct scx_kick_pseqs *to_free;
++		struct scx_kick_syncs **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
++		struct scx_kick_syncs *to_free;
+ 
+-		to_free = rcu_replace_pointer(*pseqs, NULL, true);
++		to_free = rcu_replace_pointer(*ksyncs, NULL, true);
+ 		if (to_free)
+-			call_rcu(&to_free->rcu, free_kick_pseqs_rcu);
++			call_rcu(&to_free->rcu, free_kick_syncs_rcu);
+ 	}
+ }
+ 
+@@ -4038,7 +4038,7 @@ static void scx_disable_workfn(struct kt
+ 	free_percpu(scx_dsp_ctx);
+ 	scx_dsp_ctx = NULL;
+ 	scx_dsp_max_batch = 0;
+-	free_kick_pseqs();
++	free_kick_syncs();
+ 
+ 	mutex_unlock(&scx_enable_mutex);
+ 
+@@ -4287,10 +4287,10 @@ static void scx_dump_state(struct scx_ex
+ 		seq_buf_init(&ns, buf, avail);
+ 
+ 		dump_newline(&ns);
+-		dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu pnt_seq=%lu",
++		dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu ksync=%lu",
+ 			  cpu, rq->scx.nr_running, rq->scx.flags,
+ 			  rq->scx.cpu_released, rq->scx.ops_qseq,
+-			  rq->scx.pnt_seq);
++			  rq->scx.kick_sync);
+ 		dump_line(&ns, "          curr=%s[%d] class=%ps",
+ 			  rq->curr->comm, rq->curr->pid,
+ 			  rq->curr->sched_class);
+@@ -4401,7 +4401,7 @@ static void scx_vexit(struct scx_sched *
+ 	irq_work_queue(&sch->error_irq_work);
+ }
+ 
+-static int alloc_kick_pseqs(void)
++static int alloc_kick_syncs(void)
+ {
+ 	int cpu;
+ 
+@@ -4410,19 +4410,19 @@ static int alloc_kick_pseqs(void)
+ 	 * can exceed percpu allocator limits on large machines.
+ 	 */
+ 	for_each_possible_cpu(cpu) {
+-		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
+-		struct scx_kick_pseqs *new_pseqs;
++		struct scx_kick_syncs **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
++		struct scx_kick_syncs *new_ksyncs;
+ 
+-		WARN_ON_ONCE(rcu_access_pointer(*pseqs));
++		WARN_ON_ONCE(rcu_access_pointer(*ksyncs));
+ 
+-		new_pseqs = kvzalloc_node(struct_size(new_pseqs, seqs, nr_cpu_ids),
+-					  GFP_KERNEL, cpu_to_node(cpu));
+-		if (!new_pseqs) {
+-			free_kick_pseqs();
++		new_ksyncs = kvzalloc_node(struct_size(new_ksyncs, syncs, nr_cpu_ids),
++					   GFP_KERNEL, cpu_to_node(cpu));
++		if (!new_ksyncs) {
++			free_kick_syncs();
+ 			return -ENOMEM;
  		}
+ 
+-		rcu_assign_pointer(*pseqs, new_pseqs);
++		rcu_assign_pointer(*ksyncs, new_ksyncs);
+ 	}
+ 
+ 	return 0;
+@@ -4578,14 +4578,14 @@ static int scx_enable(struct sched_ext_o
+ 		goto err_unlock;
+ 	}
+ 
+-	ret = alloc_kick_pseqs();
++	ret = alloc_kick_syncs();
+ 	if (ret)
+ 		goto err_unlock;
+ 
+ 	sch = scx_alloc_and_add_sched(ops);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
+-		goto err_free_pseqs;
++		goto err_free_ksyncs;
+ 	}
+ 
+ 	/*
+@@ -4788,8 +4788,8 @@ static int scx_enable(struct sched_ext_o
+ 
+ 	return 0;
+ 
+-err_free_pseqs:
+-	free_kick_pseqs();
++err_free_ksyncs:
++	free_kick_syncs();
+ err_unlock:
+ 	mutex_unlock(&scx_enable_mutex);
+ 	return ret;
+@@ -5119,7 +5119,7 @@ static bool can_skip_idle_kick(struct rq
+ 	return !is_idle_task(rq->curr) && !(rq->scx.flags & SCX_RQ_IN_BALANCE);
+ }
+ 
+-static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *pseqs)
++static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
+ {
+ 	struct rq *rq = cpu_rq(cpu);
+ 	struct scx_rq *this_scx = &this_rq->scx;
+@@ -5146,7 +5146,7 @@ static bool kick_one_cpu(s32 cpu, struct
  
  		if (cpumask_test_cpu(cpu, this_scx->cpus_to_wait)) {
--			pseqs[cpu] = rq->scx.pnt_seq;
--			should_wait = true;
-+			if (cur_class == &ext_sched_class) {
-+				pseqs[cpu] = rq->scx.pnt_seq;
-+				should_wait = true;
-+			} else {
-+				cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
-+			}
- 		}
+ 			if (cur_class == &ext_sched_class) {
+-				pseqs[cpu] = rq->scx.pnt_seq;
++				ksyncs[cpu] = rq->scx.kick_sync;
+ 				should_wait = true;
+ 			} else {
+ 				cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
+@@ -5182,20 +5182,20 @@ static void kick_cpus_irq_workfn(struct
+ {
+ 	struct rq *this_rq = this_rq();
+ 	struct scx_rq *this_scx = &this_rq->scx;
+-	struct scx_kick_pseqs __rcu *pseqs_pcpu = __this_cpu_read(scx_kick_pseqs);
++	struct scx_kick_syncs __rcu *ksyncs_pcpu = __this_cpu_read(scx_kick_syncs);
+ 	bool should_wait = false;
+-	unsigned long *pseqs;
++	unsigned long *ksyncs;
+ 	s32 cpu;
  
- 		resched_curr(rq);
-@@ -5206,18 +5211,19 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+-	if (unlikely(!pseqs_pcpu)) {
+-		pr_warn_once("kick_cpus_irq_workfn() called with NULL scx_kick_pseqs");
++	if (unlikely(!ksyncs_pcpu)) {
++		pr_warn_once("kick_cpus_irq_workfn() called with NULL scx_kick_syncs");
+ 		return;
+ 	}
+ 
+-	pseqs = rcu_dereference_bh(pseqs_pcpu)->seqs;
++	ksyncs = rcu_dereference_bh(ksyncs_pcpu)->syncs;
+ 
+ 	for_each_cpu(cpu, this_scx->cpus_to_kick) {
+-		should_wait |= kick_one_cpu(cpu, this_rq, pseqs);
++		should_wait |= kick_one_cpu(cpu, this_rq, ksyncs);
+ 		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
+ 		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
+ 	}
+@@ -5209,7 +5209,7 @@ static void kick_cpus_irq_workfn(struct
+ 		return;
+ 
  	for_each_cpu(cpu, this_scx->cpus_to_wait) {
- 		unsigned long *wait_pnt_seq = &cpu_rq(cpu)->scx.pnt_seq;
+-		unsigned long *wait_pnt_seq = &cpu_rq(cpu)->scx.pnt_seq;
++		unsigned long *wait_kick_sync = &cpu_rq(cpu)->scx.kick_sync;
  
--		if (cpu != cpu_of(this_rq)) {
--			/*
--			 * Pairs with smp_store_release() issued by this CPU in
--			 * switch_class() on the resched path.
--			 *
--			 * We busy-wait here to guarantee that no other task can
--			 * be scheduled on our core before the target CPU has
--			 * entered the resched path.
--			 */
--			while (smp_load_acquire(wait_pnt_seq) == pseqs[cpu])
--				cpu_relax();
--		}
-+		/*
-+		 * Busy-wait until the task running at the time of kicking is no
-+		 * longer running. This can be used to implement e.g. core
-+		 * scheduling.
-+		 *
-+		 * smp_cond_load_acquire() pairs with store_releases in
-+		 * pick_task_scx() and put_prev_task_scx(). The former breaks
-+		 * the wait if SCX's scheduling path is entered even if the same
-+		 * task is picked subsequently. The latter is necessary to break
-+		 * the wait when $cpu is taken by a higher sched class.
-+		 */
-+		if (cpu != cpu_of(this_rq))
-+			smp_cond_load_acquire(wait_pnt_seq, VAL != pseqs[cpu]);
+ 		/*
+ 		 * Busy-wait until the task running at the time of kicking is no
+@@ -5223,7 +5223,7 @@ static void kick_cpus_irq_workfn(struct
+ 		 * the wait when $cpu is taken by a higher sched class.
+ 		 */
+ 		if (cpu != cpu_of(this_rq))
+-			smp_cond_load_acquire(wait_pnt_seq, VAL != pseqs[cpu]);
++			smp_cond_load_acquire(wait_kick_sync, VAL != ksyncs[cpu]);
  
  		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
  	}
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 87e5e22bfade..21c0ccaf9c71 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -997,8 +997,10 @@ enum scx_kick_flags {
- 	SCX_KICK_PREEMPT	= 1LLU << 1,
- 
- 	/*
--	 * Wait for the CPU to be rescheduled. The scx_bpf_kick_cpu() call will
--	 * return after the target CPU finishes picking the next task.
-+	 * The scx_bpf_kick_cpu() call will return after the current SCX task of
-+	 * the target CPU switches out. This can be used to implement e.g. core
-+	 * scheduling. This has no effect if the current task on the target CPU
-+	 * is not on SCX.
- 	 */
- 	SCX_KICK_WAIT		= 1LLU << 2,
- };
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -803,7 +803,7 @@ struct scx_rq {
+ 	cpumask_var_t		cpus_to_kick_if_idle;
+ 	cpumask_var_t		cpus_to_preempt;
+ 	cpumask_var_t		cpus_to_wait;
+-	unsigned long		pnt_seq;
++	unsigned long		kick_sync;
+ 	struct balance_callback	deferred_bal_cb;
+ 	struct irq_work		deferred_irq_work;
+ 	struct irq_work		kick_cpus_irq_work;
 -- 
 2.47.1
-
