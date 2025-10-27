@@ -1,93 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC7E23EAA1;
-	Mon, 27 Oct 2025 16:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7763195FE;
+	Mon, 27 Oct 2025 17:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761583890; cv=none; b=XkTG/1w0otC6VWoJbFYyqi36MDVkhrRfwW3wvxEgVYlTYL3XeqlDHPHMLWzcqSJ0MJlqZnK7s82aBa57410rkvjk22lKGIQsgAYKWj7zQeduJlC6OjB4rXB6wqEmlNh7tNv5sBr52cbagctSzwo/KXkKCnX4mBofaW86+YRePSI=
+	t=1761587406; cv=none; b=DLHraR+jemGsERNFg6PLGjB3i+I70R3IxCKpcVpnr/kmIxTBOuOoLe5s0CoAUEMFr/N6HWHps75hT3R1eAGt7aIUB2H/dsDOzsPdlHq/g3/ZHuDs5MVB7j8c6rdOLZE0VOyZDUqB2bWrSzFOEA4fQAChBcDWSjZq4spiMIO5T9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761583890; c=relaxed/simple;
-	bh=RDmvO9UFbT/B6ZnxOAcif5m6qwax2YE/VP1el5dfD2s=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=Se462GQhD8c8OhRpT0SXMFRXZFh421gDFnXl+uEMluayh+J/8GScbnrXj16PzTylrnKXjxvPxcZBiAjWf7CbLjoajm0cx/BSoIrfqhx0v+IHs+DtyMyr7stUYDk/XgewIaE36O/IE7EMNXPR0Pmdm3IezOnI8f3TwqgCV68OaKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LHcBwXRl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761587406; c=relaxed/simple;
+	bh=ML4Zbq7pgwMKMFkw+kohK1LhsbPJGd+tAqes06vWZck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nZ4oLsTAak8ItCR/uAD1pabywsWHLyoehpAr9jtuNPuyVa9/ISMpM4NNYQd/pY8UkwXnThoag8PZj21h1bkQYxA4737SxU+Lh1ezDfKCDZoW4iiwknsJVgxpggnKVQlVng0X9gekmJWk3/+Y0QUHFVMm6UtQaa5ItF3iIjnfAbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=UyuvtGk1; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LHcBwXRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B457EC116B1;
-	Mon, 27 Oct 2025 16:51:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761583889;
-	bh=RDmvO9UFbT/B6ZnxOAcif5m6qwax2YE/VP1el5dfD2s=;
-	h=Date:From:To:Cc:Subject:From;
-	b=LHcBwXRlsqB147SUjBMBJ3NDFAUmkpoke1OLpDYwvBTYN9aU2rZWJphsiHxxpuNBl
-	 teRo3FsapkRVW2TbnkH1MsMLUX1ML6SoBoHAX8mSIfbDh16RAw99Q3Mh4royUGsMEO
-	 sPdvHXyFPLlf3ZHx0mwLglCuUjODxMmJ9/Fs36TuPxDStXX8cAs5Ck+Wj2fXH+3nTx
-	 MoZfwqGPnzHH28rc0I7lRnhUKBrV2nrwDa3JYKB1Hc+6w1XWFRfpNTTvsk5ij2/0bV
-	 yNIDx77b2kLwY4MrRygsKCOp7/RZK1ktpjmWvJLuS1NLOKNHicjZE+veYroHcnSBtd
-	 1DziWintaegHw==
-Date: Mon, 27 Oct 2025 06:51:28 -1000
-Message-ID: <36450bebbc782be498d762fcbcd99451@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
-Subject: [GIT PULL] sched_ext: Fixes for v6.18-rc3
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="UyuvtGk1"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=MmdzWYIHrQBywyvqVb/dJ5qHfDuXNYE/IdRhHxcX4MI=; b=UyuvtGk1xM6wL+qRdGOBDUMKHD
+	jYKxHZpU2qil5wiLQAiUqUwiG14KIwmE52M7zmxI9imbP4wrQY6QwBzNp3MUTZYYqgb5xh2ujLqY8
+	1tCcDhSnPsq2e+Q/x7vk1Hj2c4GltenKW3SANEcH6Dxgbb+/lVzsxgvM377zQtfxnTVaf4gCVQ0m6
+	j5k/0bS1jcfnYo3H4+utyAGR0pTg5S6en7j5vTpCyKsA4K6Jc89J8xmWyJMVMIYGbvMKhLbpMj/ao
+	j/r3ieZnMVaMHI1bR/pE2sW8G/B4LoasKAUSmjr2PDm9eSGnpiFTco2aJgLEEYxhMN+YnPtEq9IPz
+	YCZDL0ng==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vDRLt-00000008PDt-3DNL;
+	Mon, 27 Oct 2025 17:49:55 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 885B0300323; Mon, 27 Oct 2025 18:49:53 +0100 (CET)
+Date: Mon, 27 Oct 2025 18:49:53 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <andrea.righi@linux.dev>,
+	Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev, Wen-Fang Liu <liuwenfang@honor.com>
+Subject: Re: [PATCH 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be
+ called from anywhere
+Message-ID: <20251027174953.GB3419281@noisy.programming.kicks-ass.net>
+References: <20251025001849.1915635-1-tj@kernel.org>
+ <20251025001849.1915635-4-tj@kernel.org>
+ <20251027091822.GH3245006@noisy.programming.kicks-ass.net>
+ <aP-XAGrWQY1d6Bq9@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aP-XAGrWQY1d6Bq9@slm.duckdns.org>
 
-Hi Linus,
+On Mon, Oct 27, 2025 at 06:00:00AM -1000, Tejun Heo wrote:
+> Hello,
+> 
+> On Mon, Oct 27, 2025 at 10:18:22AM +0100, Peter Zijlstra wrote:
+> ...
+> > > The main use case for cpu_release() was calling scx_bpf_reenqueue_local() when
+> > > a CPU gets preempted by a higher priority scheduling class. However, the old
+> > > scx_bpf_reenqueue_local() could only be called from cpu_release() context.
+> > 
+> > I'm a little confused. Isn't this the problem where balance_one()
+> > migrates a task to the local rq and we end up having to RETRY_TASK
+> > because another (higher) rq gets modified?
+> 
+> That's what I thought too and the gap between balance() and pick_task() can
+> be closed that way. However, while plugging that, I realized there's another
+> bigger gap between ttwu() and pick_task() because ttwu() can directly
+> dispatch a task into the local DSQ of a CPU. That one, there's no way to
+> close without a global hook.
 
-The following changes since commit 3a8660878839faadb4f1a6dd72c3179c1df56787:
+This would've been prime Changelog material. As is the Changelog was so
+vague I wasn't even sure it was that particular problem.
 
-  Linux 6.18-rc1 (2025-10-12 13:42:36 -0700)
+Please update the changelog to be clearer.
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-6.18-rc3-fixes
-
-for you to fetch changes up to a3c4a0a42e61aad1056a3d33fd603c1ae66d4288:
-
-  sched_ext: fix flag check for deferred callbacks (2025-10-16 08:34:00 -1000)
-
-----------------------------------------------------------------
-sched_ext: Fixes for v6.18-rc3
-
-- Fix scx_kick_pseqs corruption when multiple schedulers are loaded
-  concurrently
-
-- Allocate scx_kick_cpus_pnt_seqs lazily using kvzalloc() to handle systems
-  with large CPU counts
-
-- Defer queue_balance_callback() until after ops.dispatch to fix callback
-  ordering issues
-
-- Sync error_irq_work before freeing scx_sched to prevent use-after-free
-
-- Mark scx_bpf_dsq_move_set_[slice|vtime]() with KF_RCU for proper RCU
-  protection
-
-- Fix flag check for deferred callbacks
-
-----------------------------------------------------------------
-Andrea Righi (1):
-      sched_ext: Fix scx_kick_pseqs corruption on concurrent scheduler loads
-
-Emil Tsalapatis (2):
-      sched_ext: defer queue_balance_callback() until after ops.dispatch
-      sched_ext: fix flag check for deferred callbacks
-
-Tejun Heo (3):
-      sched_ext: Mark scx_bpf_dsq_move_set_[slice|vtime]() with KF_RCU
-      sched_ext: Sync error_irq_work before freeing scx_sched
-      sched_ext: Allocate scx_kick_cpus_pnt_seqs lazily using kvzalloc()
-
- kernel/sched/ext.c   | 126 +++++++++++++++++++++++++++++++++++++++++++++------
- kernel/sched/sched.h |   1 +
- 2 files changed, 112 insertions(+), 15 deletions(-)
-
-Thanks.
-
---
-tejun
+Also, why is this patch already in a pull request to Linus? what's the
+hurry.
