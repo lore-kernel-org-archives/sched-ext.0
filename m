@@ -1,87 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA05285058;
-	Tue, 28 Oct 2025 17:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB19E27464F;
+	Tue, 28 Oct 2025 21:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761671239; cv=none; b=fRpep7vscg5i4diRNpV3lNeuWw8gZGLQdFBujNC1cp/SMT/H2aLkcjGED88Nh1Jz0jrmyqf9vA26rt8jB/c5vK3ZsLXuuXEeWXGWRddLplKPdL10GyXWD883cVNgATkGXk8YmLFzdEXwtEEfNcPiMuOS86umhiIj2zNgKk7qPFg=
+	t=1761685459; cv=none; b=MzJlkfBx8D3yj1qCcWNpcFgYZ7XhqC4H5MJ0K7fsL/Yd0kANHdPlgHcDip21Okk79Yqd3gJWwdTJHlgphHO/UvlkuyrTcJw3ePQ3PZSYJeezKTMHWt+jnhSSWuD+V8Tn8CW1G89O1nu/GWad+nupyXWZG3weIPPrFt7KDi+rsEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761671239; c=relaxed/simple;
-	bh=OnSAW2zDw/OL5sivcbq0+RLhJsVfKn5l3mZ8G8eZoKE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U8w5d0SuYNxlyIIjzllFIvQrZ++CSblmANSezBPszvZPydvffhBJwMEVl/bZ7neiSm7mto8ij8y6N4yOaCDxlAZTmjuXXUFFWUNRmMecA2JeqC+rkQoWwdRrU97VkAw0voTiFXfxq1QYLq3Yr4kpnNznSxzb4s60+mU7aD+kr38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=svg/GQM+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761685459; c=relaxed/simple;
+	bh=yPTiSmkFy0L2ygt5n7CY9W5kU9yg9YW2BtOaGQKJYU4=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=rQ7n0Wo+GQLHDc404RWjW2N7tqVCoffn378bjpvUDKWhjhBGDLKBovb+FXlvuHYW2pvpCymBKxA1dxkv6JGL24A52uNu4QKqLVL0bdsRU7EFZH69KHnWdXQaB49O7mz+1Vce/H7VAcjoKGgGn1kw7ChMDDOnKyxu1/Dyx/n2jXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jg54qwLd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="svg/GQM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62564C113D0;
-	Tue, 28 Oct 2025 17:07:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jg54qwLd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CECAC4CEE7;
+	Tue, 28 Oct 2025 21:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761671238;
-	bh=OnSAW2zDw/OL5sivcbq0+RLhJsVfKn5l3mZ8G8eZoKE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=svg/GQM+6x0MHFM3Z90/JuijOfzGnjYHRKNqwpEnWZRILCM8U3tcbFAOiBrlrHlfj
-	 BFPAnGVORNE9iTswPi5EKSwkOp0XlMuxMN+YJuOK6bOdd5HJRn5InMVHvR2EKMqfKA
-	 ofVGdxEfm5T5x0VsT6oidibdgV43JScAKGgPazdkQoPxv77cxfM8wkcdG8BxwhQgGZ
-	 Nb8ZTCFJzEkcWzpSEhlbLGYqm7e2ejcpQIItV54wR8RNZ26ldWQTQx2IbN94biPybK
-	 w0jSAFTtTpJiYAz3HvYD9e4w+EFKJm+N5Hi6K8ztD7FM/lOcCQqm2jBudNjp3gsOu6
-	 UMjQqFRZfXiSQ==
-Date: Tue, 28 Oct 2025 07:07:17 -1000
+	s=k20201202; t=1761685459;
+	bh=yPTiSmkFy0L2ygt5n7CY9W5kU9yg9YW2BtOaGQKJYU4=;
+	h=Date:From:To:Cc:Subject:From;
+	b=Jg54qwLdNAJ9dJQDTesLdPqUu7nTvxLTLXaM+rrsY84I0RQ1J0wW5J6/oEpRqySwK
+	 vRVnucYSAeaONpn/Sg9HWalOFfxVYy4jslI7S7FEwIonSac+9+GN1o4CMMito4XLcg
+	 QQjW2yeVV2Xxwl8WU2i9j9ZdGzzq2XbDgR00l3fe34GIa/xDMelYwOq2bhzAF5A5rd
+	 KnQ+z//eUykDXMyrJdmRP2RKKdakIEOBBh2q9tnffBqRHkrDDLnIGMNcUF43nj0SXy
+	 4xdZX/951bQyJR+l2koUS7deviTtKd/KwDoH705HGj6PMq+VaexBIzl+QBs6OuVPSV
+	 tRDIQYG5WY4lg==
+Date: Tue, 28 Oct 2025 11:04:18 -1000
+Message-ID: <31c2ba69c73dc25b022533ca00300256@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <andrea.righi@linux.dev>,
-	Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev, Wen-Fang Liu <liuwenfang@honor.com>
-Subject: Re: [PATCH 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be
- called from anywhere
-Message-ID: <aQD4RdAEpBSeI7nQ@slm.duckdns.org>
-References: <20251025001849.1915635-1-tj@kernel.org>
- <20251025001849.1915635-4-tj@kernel.org>
- <20251027091822.GH3245006@noisy.programming.kicks-ass.net>
- <aP-XAGrWQY1d6Bq9@slm.duckdns.org>
- <20251027181028.GB988547@noisy.programming.kicks-ass.net>
- <aP-3QsygWJRn6Z2u@slm.duckdns.org>
- <20251028110153.GZ4067720@noisy.programming.kicks-ass.net>
+To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
+Subject: [PATCH sched_ext/for-6.19] sched_ext: Use SCX_TASK_READY test instead of tryget_task_struct() during class switch
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251028110153.GZ4067720@noisy.programming.kicks-ass.net>
 
-Hello, Peter.
+ddf7233fcab6 ("sched/ext: Fix invalid task state transitions on class
+switch") added tryget_task_struct() test during scx_enable()'s class
+switching loop. The reason for the addition was to avoid enabling tasks which
+skipped prep in the previous loop due to being dead.
 
-On Tue, Oct 28, 2025 at 12:01:53PM +0100, Peter Zijlstra wrote:
-> On Mon, Oct 27, 2025 at 08:17:38AM -1000, Tejun Heo wrote:
-> > Hello,
-> > 
-> > On Mon, Oct 27, 2025 at 07:10:28PM +0100, Peter Zijlstra wrote:
-> > ...
-> > > Just for my elucidation and such.. This is when ttwu() happens and the
-> > > CPU is idle and you dispatch directly to it, expecting it to then go run
-> > > that task. After which another wakeup/balance movement happens which
-> > > places/moves a task from a higher priority class to that CPU, such that
-> > > your initial (ext) task doesn't get to run after all. Right?
-> > 
-> > Yes, that's the scenario that I was thinking.
-> 
-> So I've been pondering this a bit, and came up with the below. I'm not
-> quite happy with it, I meant to share that new queue_mask variable, but
-> this came out.
+While tryget_task_struct() does work for this purpose as tasks that fail
+tryget always will fail it, it's a bit roundabout. A more direct way is
+testing whether the task is in READY state. Switch to testing SCX_TASK_READY
+directly.
 
-Yeah, something like this that creates global state tracking from wakeup to
-dispatch would work. However, from sched_ext POV, I think TP route probably
-is a better route at least for now. Once reenqueue_local is allowed from
-anywhere, which is useful no matter what, there just aren't good reasons to
-maintain ops.cpu_acuire/release(). It doesn't allow anything more or make
-things noticeably more performant or easier. It's always nice to be able to
-reduce API surface after all.
+Cc: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Thanks.
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4662,7 +4662,7 @@ static int scx_enable(struct sched_ext_o
+ 			__setscheduler_class(p->policy, p->prio);
+ 		struct sched_enq_and_set_ctx ctx;
 
--- 
-tejun
+-		if (!tryget_task_struct(p))
++		if (scx_get_task_state(p) != SCX_TASK_READY)
+ 			continue;
+
+ 		if (old_class != new_class && p->se.sched_delayed)
+@@ -4677,7 +4677,6 @@ static int scx_enable(struct sched_ext_o
+ 		sched_enq_and_set_task(&ctx);
+
+ 		check_class_changed(task_rq(p), p, old_class, p->prio);
+-		put_task_struct(p);
+ 	}
+ 	scx_task_iter_stop(&sti);
+ 	percpu_up_write(&scx_fork_rwsem);
