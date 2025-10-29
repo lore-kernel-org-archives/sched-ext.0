@@ -1,155 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79E73090D7;
-	Wed, 29 Oct 2025 06:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23BC24293C;
+	Wed, 29 Oct 2025 10:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761718764; cv=none; b=uArzMtG+FpJV4hxT7Px8zAT5CQsBMIYZNAALLNwvis26E67kO+dGuqqVYE5W1id8NupcxrTrzQZY9OqBB9oBbRxauWHpdrPDwZbSPaXo11jmDRZb+6h3ndqxKJjs7zuenbWEVSfcrWbnlYetbvjrvB4HFzWa5omxfa/mpvY8a2g=
+	t=1761734753; cv=none; b=LaEnXsDyeWQg2mll9xErIFk3ivVkT2w2hFcaVr/dfoMiaPwNW6u+fJqb3A6WFXh1Q7OrXS//HAILySdQ5j531DFxxaguHlhwVzFOlN35j12rkKpdozBa2YPxnH4D/Kx37BmBakAg206CnrxROYBgX7ZzmQn5fSm2r7SvZJmUn9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761718764; c=relaxed/simple;
-	bh=dki8nbEv4ptLcRQV89oVJKBG9e0Mf4cnUWQSzd2iXDo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csYX8MoTiOp6kY71SGljxwLqteN7x5+Nifcd7S1aouI8kdqkSWKpvnVDNKbVyKYVWO80mwfHiliro2Vq/W7FNn35meEP0ekv4ij2M/awMkun6aGFpGxxoi4d9odK3wsRc0RWEOCGxEfejo8nToF5X/z7PeNLPdqVtfj3QKrmOyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WW2j3Lpl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761734753; c=relaxed/simple;
+	bh=gp1J/3XvL43QuO/PbnJy0L/Um1JZ738iV4lNmjvkcIU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LDho7P+kgGFutz4NCtphp19GusORIuRZNMkPHAcclxdzAsZCh2INUSmkACVeOR5NlDiV68UY/XIzqw/XAY2ZDPNE6pWr8Y41twnW6sZAdAa8d8FpbfOFTvsLhZHv1pgKbPAWy/zQsM5q0r5B6mfWAOPz8yB4OitngxjTsw7QNFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=MV3K0OsY; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WW2j3Lpl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37238C4CEFB;
-	Wed, 29 Oct 2025 06:19:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761718764;
-	bh=dki8nbEv4ptLcRQV89oVJKBG9e0Mf4cnUWQSzd2iXDo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WW2j3Lpl0ywQwK42Njugukie2hynAJSok5DBhtbtB8DV3MGgSvGbya6NQVSTaLWxJ
-	 1u6USythLZvxCXW2kTVyXrO3Mlw669uh3BD2SnCTWP+K45WeXlmT/8yIUEZORz0j+R
-	 eOoCtozhoFksLgauzWXw2gyupxM46le70Qq/K3o+dpbvy60KkCt4cjMzBnZ0ZvRKRi
-	 jfxoTPk3LwRXG8+0haeaDnGfpI2MAs5EcvsCyMFCW3bZ9uzygWQ02XFwNfLitN3k3/
-	 Trr8BM7VQmqW5vNUZtBEcip7lltZBZqFZ0JQSlpXpjqEF49AHjrW3DvhyGob5lFLF0
-	 jEzXOApas9BaQ==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Dan Schatzberg <dschatzberg@meta.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	cgroups@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4/4] sched_ext: Fix cgroup exit ordering by moving sched_ext_free() to finish_task_switch()
-Date: Tue, 28 Oct 2025 20:19:18 -1000
-Message-ID: <20251029061918.4179554-5-tj@kernel.org>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251029061918.4179554-1-tj@kernel.org>
-References: <20251029061918.4179554-1-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="MV3K0OsY"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=OLEcKOx+r/E6W6c62wz9ndwid6HQuJrvFy2p+wBounI=; b=MV3K0OsYRnrK1Rr/Pbqu/uPwNc
+	5Kt9NRV4bli4gteiGL5eMwMdvT0+e6ioIlk/VYB1rFt8sZMiUAqUfMOB5IKjPWVD66NiRJnh63HGV
+	YkqVTixFwk3ov98ZkA7NGspmfpGbgq0vOdj4Qusw/4ISvkIh5wDDEcB6U9qzS75XEDuc1siOxrN2x
+	KMWXHbPJsizooWvAz4NvrHsNwRKdVc7couXfYBR9sSDzvyX+hNJjUI5FD/lUxG+IrcQ8hbwol9cAh
+	19YOAUOy4Q1Pye+/A028MIL96RqQKdpLUe9cy9ZpObGBXn98cdv/nBNythqW1nP1Rft0+Pe0Ujsjp
+	d4TGm0Sw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vE3gY-00000007k01-1TcV;
+	Wed, 29 Oct 2025 10:45:48 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 57694300323; Wed, 29 Oct 2025 11:45:46 +0100 (CET)
+Date: Wed, 29 Oct 2025 11:45:46 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <andrea.righi@linux.dev>,
+	Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev, Wen-Fang Liu <liuwenfang@honor.com>
+Subject: Re: [PATCH v2 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be
+ called from anywhere
+Message-ID: <20251029104546.GI3419281@noisy.programming.kicks-ass.net>
+References: <20251025001849.1915635-1-tj@kernel.org>
+ <20251025001849.1915635-4-tj@kernel.org>
+ <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
 
-sched_ext_free() was called from __put_task_struct() when the last reference
-to the task is dropped, which could be long after the task has finished
-running. This causes cgroup-related problems:
+On Mon, Oct 27, 2025 at 08:19:40AM -1000, Tejun Heo wrote:
+> The ops.cpu_acquire/release() callbacks are broken - they miss events under
+> multiple conditions and can't be fixed without adding global sched core hooks
+> that sched maintainers don't want.
 
-- ops.task_init() can be called on a cgroup which didn't get ops.cgroup_init()'d
-  during scheduler load.
+I think I'll object to that statement just a wee bit. I think we can
+make it work -- just not with the things proposed earlier.
 
-- ops.cgroup_exit() could be called before ops.exit_task() is called on all
-  member tasks, leading to incorrect exit ordering.
+Anyway, if you want to reduce the sched_ext interface and remove
+cpu_acquire/release entirely, this is fine too.
 
-Fix by moving it to finish_task_switch() to be called right after the final
-context switch away from the dying task, matching when sched_class->task_dead()
-is called. Rename it to sched_ext_dead() to match the new calling context.
+I might still do that wakeup_preempt() change if I can merge / replace
+the queue_mask RETRY_TASK logic -- I have vague memories the RT people
+also wanted something like this a while ago and it isn't that big of a
+change.
 
-By calling sched_ext_dead() before cgroup_task_dead(), we ensure that:
+> There are two distinct task dispatch gaps that can cause cpu_released flag
+> desynchronization:
+> 
+> 1. balance-to-pick_task gap: This is what was originally reported. balance_scx()
+>    can enqueue a task, but during consume_remote_task() when the rq lock is
+>    released, a higher priority task can be enqueued and ultimately picked while
+>    cpu_released remains false. This gap is closeable via RETRY_TASK handling.
+> 
+> 2. ttwu-to-pick_task gap: ttwu() can directly dispatch a task to a CPU's local
+>    DSQ. By the time the sched path runs on the target CPU, higher class tasks may
+>    already be queued. In such cases, nothing on sched_ext side will be invoked,
+>    and the only solution would be a hook invoked regardless of sched class, which
+>    isn't desirable.
+> 
+> Rather than adding invasive core hooks, BPF schedulers can use generic BPF
+> mechanisms like tracepoints. From SCX scheduler's perspective, this is congruent
+> with other mechanisms it already uses and doesn't add further friction.
+> 
+> The main use case for cpu_release() was calling scx_bpf_reenqueue_local() when
+> a CPU gets preempted by a higher priority scheduling class. However, the old
+> scx_bpf_reenqueue_local() could only be called from cpu_release() context.
+> 
+> Add a new version of scx_bpf_reenqueue_local() that can be called from any
+> context by deferring the actual re-enqueue operation. This eliminates the need
+> for cpu_acquire/release() ops entirely. Schedulers can now use standard BPF
+> mechanisms like the sched_switch tracepoint to detect and handle CPU preemption.
+> 
+> Update scx_qmap to demonstrate the new approach using sched_switch instead of
+> cpu_release, with compat support for older kernels. Mark cpu_acquire/release()
+> as deprecated. The old scx_bpf_reenqueue_local() variant will be removed in
+> v6.23.
+> 
+> Reported-by: Wen-Fang Liu <liuwenfang@honor.com>
+> Link: https://lore.kernel.org/all/8d64c74118c6440f81bcf5a4ac6b9f00@honor.com/
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
-- Tasks visible on scx_tasks list have valid cgroups during scheduler load,
-  as cgroup_mutex prevents cgroup destruction while the task is still linked.
+Yeah, this Changelog is much better, thanks!
 
-- All member tasks have ops.exit_task() called and are removed from scx_tasks
-  before the cgroup can be destroyed and trigger ops.cgroup_exit().
-
-This fix is made possible by the cgroup_task_dead() split in the previous patch.
-
-This also makes more sense resource-wise as there's no point in keeping
-scheduler side resources around for dead tasks.
-
-Reported-by: Dan Schatzberg <dschatzberg@meta.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- include/linux/sched/ext.h | 4 ++--
- kernel/fork.c             | 1 -
- kernel/sched/core.c       | 6 ++++++
- kernel/sched/ext.c        | 2 +-
- 4 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index d82b7a9b0658..d7dd77be571f 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -207,14 +207,14 @@ struct sched_ext_entity {
- 	struct list_head	tasks_node;
- };
- 
--void sched_ext_free(struct task_struct *p);
-+void sched_ext_dead(struct task_struct *p);
- void print_scx_info(const char *log_lvl, struct task_struct *p);
- void scx_softlockup(u32 dur_s);
- bool scx_rcu_cpu_stall(void);
- 
- #else	/* !CONFIG_SCHED_CLASS_EXT */
- 
--static inline void sched_ext_free(struct task_struct *p) {}
-+static inline void sched_ext_dead(struct task_struct *p) {}
- static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
- static inline void scx_softlockup(u32 dur_s) {}
- static inline bool scx_rcu_cpu_stall(void) { return false; }
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 960c39c9c264..5ae37909a813 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -736,7 +736,6 @@ void __put_task_struct(struct task_struct *tsk)
- 	WARN_ON(tsk == current);
- 
- 	unwind_task_free(tsk);
--	sched_ext_free(tsk);
- 	io_uring_free(tsk);
- 	cgroup_task_free(tsk);
- 	task_numa_free(tsk, true);
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 40f12e37f60f..d4dbffb27a66 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5222,6 +5222,12 @@ static struct rq *finish_task_switch(struct task_struct *prev)
- 		if (prev->sched_class->task_dead)
- 			prev->sched_class->task_dead(prev);
- 
-+		/*
-+		 * sched_ext_dead() must come before cgroup_task_dead() to
-+		 * prevent cgroups from being removed while its member tasks are
-+		 * visible to SCX schedulers.
-+		 */
-+		sched_ext_dead(prev);
- 		cgroup_task_dead(prev);
- 
- 		/* Task is done with its stack. */
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 2b0e88206d07..840bc76210c8 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2926,7 +2926,7 @@ void scx_cancel_fork(struct task_struct *p)
- 	percpu_up_read(&scx_fork_rwsem);
- }
- 
--void sched_ext_free(struct task_struct *p)
-+void sched_ext_dead(struct task_struct *p)
- {
- 	unsigned long flags;
- 
--- 
-2.51.1
-
+6.23 is a long time, can't we throw this out quicker? This thing wasn't
+supposed to be an ABI after all. A 1 release cycle seems fine to me ;-)
