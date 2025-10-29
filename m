@@ -1,300 +1,258 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094D1345CA3;
-	Wed, 29 Oct 2025 15:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04012F6190;
+	Wed, 29 Oct 2025 18:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761752947; cv=none; b=rSM0WJvR83S3cgyEcsQe+du0tcpqtBTO9SnWWqyMvfXNqybZH4iI+YgO+4UzXwiMxU/9kNv6k24BSc4Qs0ooqJPoyyHj03wBEcLvNTKfftW8/fgLHLj2w+8dEvbhvtiRxw0KePD/0sqSq+PebF+MJ7lViPWAO+HI8IZ+ecobYuY=
+	t=1761762926; cv=none; b=qYg2YgxXv1PwptITQUcK4sxyGCRHfyi0d5h5xPw5ho33/7Hk13eBvMxFgkuGX0XFoJouD7nHiB3liHp9MJucHe8eHc36kCkjKf2U7GVxeXak5kgF2kcEx+CvRuNMDyUh/6gCpMRqubKZXhfjmJH8HvJnc34xqWaWJOp3IZeZ6kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761752947; c=relaxed/simple;
-	bh=ftulnBq5KqEbe4YEfaqagXhnIGh6yPNmwHKJydanaoE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=CMK9T49U4ULKpw5B+CAlPXudErqTUBqh0OqP3xPjAScBWOTVEYDwz449A4PrcyY7wjSVLSNUbpQZixxbXZ5F+C+PWYFAgfYHJPJSo3GbTL3yBglVpxVqXDC+pFp4V7FX6+toJgKexDwa7OQAOTjOXAH/R33K88XneLyYhR2QAUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQ+xK1At; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761762926; c=relaxed/simple;
+	bh=YqYFEM6sU+bVnLh0MCyQQXAhE49af6qZDocNaiAryLs=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=uhb6Afr5e8d8Zgl0uSdC8aI1OpamiV8wXTJ2cJOaXUD+OJ99wOPLlJT7nelO5QR0AQyCEcHWqyZRmwPnjM87IUkKLnskKzWIlegqe9uVj20PvNZhxaOTzDCmVSIWcgqiKaG0ySwPZvToSEt/EbmbbPZm0PcOrsABgaLxCh7lgAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rQZ78YJs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQ+xK1At"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B4AC4CEF7;
-	Wed, 29 Oct 2025 15:49:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rQZ78YJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED39C4CEF7;
+	Wed, 29 Oct 2025 18:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761752946;
-	bh=ftulnBq5KqEbe4YEfaqagXhnIGh6yPNmwHKJydanaoE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=BQ+xK1At70A0przTXqgZEIpHZ/XKCyq9Kdg7nm3San7KNYHoQPBOA1VbEVKML7odv
-	 20q79C5mJ/Pamho5U7/231cBzpF9X76+mRgWJCt6paWdcG8hIAk4h19sj2OsdWpSaG
-	 j5RD8jQa7kYi4dM39mh0+WMZDCnviSDCT9WsABrx2fzjMdUKLs9jIXLKB0WowfJtrN
-	 KnhVSBB8QtIbjWix7SisQQI5OJsJvoSa6ZhIa1u2X2f55TH6Y3kP9gNRQjZsud/ve8
-	 q16pa7KWB/Hd1sVz5qIaUa2WTe74lqFQcRfaxbMHklbHoWnJPLKlN8/MX2kYtj/xg7
-	 T2ZBwwN/hLpdg==
-Date: Wed, 29 Oct 2025 05:49:05 -1000
-Message-ID: <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
+	s=k20201202; t=1761762926;
+	bh=YqYFEM6sU+bVnLh0MCyQQXAhE49af6qZDocNaiAryLs=;
+	h=Date:From:To:Cc:Subject:From;
+	b=rQZ78YJs5MlhgbzYsiaS2cNk0NCgJHmzItXQs1WX9ETnrSyeo/Sau0O70UAzqbeM+
+	 8Op8DQgYZAFpB4iNEGHvkrFcxM//+aA3AjAl2tpvHoSm3XyY3XFD+eQTA2sdxzVFo1
+	 wBLzaqCKSBF8p86qXaLqBuRx+5TZfGoI4mjAlBceKenqN2l0fBGcZgKgB21V/CZHsR
+	 RgYD60X6tnszok9quI71YoPH7FTIynYbYRcut6Hym6quTmRuTYRctEJqVulhl5K0jU
+	 Fg53sJgXxVxQ0qo3fXlQDXkCzrWmA/a+YTukCQRcfpP55H3As8gSoe5QgkOqndJ9nH
+	 2J0MMvtHVoqGw==
+Date: Wed, 29 Oct 2025 08:35:25 -1000
+Message-ID: <33d319a7063f59638ae1be709f4e10e9@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>, Andrea Righi <andrea.righi@linux.dev>, Changwoo Min <changwoo@igalia.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, Peter Zijlstra <peterz@infradead.org>, Wen-Fang Liu <liuwenfang@honor.com>
-Subject: [PATCH v3 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be called from anywhere
-In-Reply-To: <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
-References: <20251025001849.1915635-1-tj@kernel.org> <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
+To: David Vernet <void@manifault.com>
+Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: [PATCH sched_ext/for-6.19] sched_ext/tools: Restore backward compat with v6.12 kernels
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-The ops.cpu_acquire/release() callbacks miss events under multiple conditions.
-There are two distinct task dispatch gaps that can cause cpu_released flag
-desynchronization:
+Commit 111a79800aed ("tools/sched_ext: Strip compatibility macros for
+cgroup and dispatch APIs") removed the compat layer for v6.12-v6.13 kfunc
+renaming, but v6.12 is the current LTS kernel and will remain supported
+through 2026. Restore backward compatibility so schedulers built with v6.19+
+headers can run on v6.12 kernels.
 
-1. balance-to-pick_task gap: This is what was originally reported. balance_scx()
-   can enqueue a task, but during consume_remote_task() when the rq lock is
-   released, a higher priority task can be enqueued and ultimately picked while
-   cpu_released remains false. This gap is closeable via RETRY_TASK handling.
+The restored compat differs from the original in two ways:
 
-2. ttwu-to-pick_task gap: ttwu() can directly dispatch a task to a CPU's local
-   DSQ. By the time the sched path runs on the target CPU, higher class tasks may
-   already be queued. In such cases, nothing on sched_ext side will be invoked,
-   and the only solution would be a hook invoked regardless of sched class, which
-   isn't desirable.
+1. Uses ___new/___old suffixes instead of ___compat for clarity. The new
+   macros check for v6.13+ names (scx_bpf_dsq_move*), fall back to v6.12
+   names (scx_bpf_dispatch_from_dsq*, scx_bpf_consume), then return safe
+   no-ops for missing symbols.
 
-Rather than adding invasive core hooks, BPF schedulers can use generic BPF
-mechanisms like tracepoints. From SCX scheduler's perspective, this is congruent
-with other mechanisms it already uses and doesn't add further friction.
+2. Integrates with the args-struct-packing changes added in c0d630ba347c
+   ("sched_ext: Wrap kfunc args in struct to prepare for aux__prog").
+   scx_bpf_dsq_insert_vtime() now tries __scx_bpf_dsq_insert_vtime (args
+   struct), then scx_bpf_dsq_insert_vtime___compat (v6.13-v6.18), then
+   scx_bpf_dispatch_vtime___compat (pre-v6.13).
 
-The main use case for cpu_release() was calling scx_bpf_reenqueue_local() when
-a CPU gets preempted by a higher priority scheduling class. However, the old
-scx_bpf_reenqueue_local() could only be called from cpu_release() context.
+Forward compatibility is not restored - binaries built against v6.13 or
+earlier headers won't run on v6.19+ kernels, as the old kfunc names are not
+exported. This is acceptable since the priority is new binaries running on
+older kernels.
 
-Add a new version of scx_bpf_reenqueue_local() that can be called from any
-context by deferring the actual re-enqueue operation. This eliminates the need
-for cpu_acquire/release() ops entirely. Schedulers can now use standard BPF
-mechanisms like the sched_switch tracepoint to detect and handle CPU preemption.
+Also add missing compat checks for ops.cgroup_set_bandwidth() (added v6.17)
+and ops.cgroup_set_idle() (added v6.19). These need to be NULLed out in
+userspace on older kernels.
 
-Update scx_qmap to demonstrate the new approach using sched_switch instead of
-cpu_release, with compat support for older kernels. Mark cpu_acquire/release()
-as deprecated. The old scx_bpf_reenqueue_local() variant will be removed in
-v6.23.
-
-Reported-by: Wen-Fang Liu <liuwenfang@honor.com>
-Link: https://lore.kernel.org/all/8d64c74118c6440f81bcf5a4ac6b9f00@honor.com/
-Cc: Peter Zijlstra <peterz@infradead.org>
+Reported-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
-v2: Description updated w/ justifications on taking this approach instead of
-    fixing ops.cpu_acquire/release().
+ tools/sched_ext/include/scx/common.bpf.h |    6 --
+ tools/sched_ext/include/scx/compat.bpf.h |   81 ++++++++++++++++++++++++++++++-
+ tools/sched_ext/include/scx/compat.h     |   14 +++++
+ 3 files changed, 93 insertions(+), 8 deletions(-)
 
-v3: Dropped "can't be fixed without adding global sched core hooks that sched
-    maintainers don't want" from description per Peter's feedback.
-
- kernel/sched/ext.c                       | 31 +++++++++++++++++++
- kernel/sched/sched.h                     |  1 +
- tools/sched_ext/include/scx/common.bpf.h |  1 -
- tools/sched_ext/include/scx/compat.bpf.h | 23 ++++++++++++++
- tools/sched_ext/scx_qmap.bpf.c           | 38 +++++++++++++++++-------
- 5 files changed, 83 insertions(+), 11 deletions(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index d13ce92c3f01..d1ef5bda95ae 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -147,6 +147,7 @@ static struct kset *scx_kset;
- #include <trace/events/sched_ext.h>
- 
- static void process_ddsp_deferred_locals(struct rq *rq);
-+static u32 reenq_local(struct rq *rq);
- static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
- static void scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
- 		      s64 exit_code, const char *fmt, va_list args);
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -147,6 +147,7 @@ static struct kset *scx_kset;
- #include <trace/events/sched_ext.h>
- 
- static void process_ddsp_deferred_locals(struct rq *rq);
-+static u32 reenq_local(struct rq *rq);
- static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
- static void scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
- 		      s64 exit_code, const char *fmt, va_list args);
-@@ -755,6 +756,11 @@ static int ops_sanitize_err(struct scx_sched *sch, const char *ops_name, s32 err
- static void run_deferred(struct rq *rq)
- {
- 	process_ddsp_deferred_locals(rq);
-+
-+	if (local_read(&rq->scx.reenq_local_deferred)) {
-+		local_set(&rq->scx.reenq_local_deferred, 0);
-+		reenq_local(rq);
-+	}
- }
- 
- static void deferred_bal_cb_workfn(struct rq *rq)
-@@ -4569,6 +4575,9 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
- 	if (ops->flags & SCX_OPS_HAS_CGROUP_WEIGHT)
- 		pr_warn("SCX_OPS_HAS_CGROUP_WEIGHT is deprecated and a noop\n");
- 
-+	if (ops->cpu_acquire || ops->cpu_release)
-+		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
-+
- 	return 0;
- }
- 
-@@ -5929,6 +5938,9 @@ __bpf_kfunc_start_defs();
-  * Iterate over all of the tasks currently enqueued on the local DSQ of the
-  * caller's CPU, and re-enqueue them in the BPF scheduler. Returns the number of
-  * processed tasks. Can only be called from ops.cpu_release().
-+ *
-+ * COMPAT: Will be removed in v6.23 along with the ___v2 suffix on the void
-+ * returning variant that can be called from anywhere.
-  */
- __bpf_kfunc u32 scx_bpf_reenqueue_local(void)
- {
-@@ -6487,6 +6499,24 @@ __bpf_kfunc void scx_bpf_dump_bstr(char *fmt, unsigned long long *data,
- 		ops_dump_flush();
- }
- 
-+/**
-+ * scx_bpf_reenqueue_local - Re-enqueue tasks on a local DSQ
-+ *
-+ * Iterate over all of the tasks currently enqueued on the local DSQ of the
-+ * caller's CPU, and re-enqueue them in the BPF scheduler. Can be called from
-+ * anywhere.
-+ */
-+__bpf_kfunc void scx_bpf_reenqueue_local___v2(void)
-+{
-+	struct rq *rq;
-+
-+	guard(preempt)();
-+
-+	rq = this_rq();
-+	local_set(&rq->scx.reenq_local_deferred, 1);
-+	schedule_deferred(rq);
-+}
-+
- /**
-  * scx_bpf_cpuperf_cap - Query the maximum relative capacity of a CPU
-  * @cpu: CPU of interest
-@@ -6900,6 +6930,7 @@ BTF_ID_FLAGS(func, bpf_iter_scx_dsq_destroy, KF_ITER_DESTROY)
- BTF_ID_FLAGS(func, scx_bpf_exit_bstr, KF_TRUSTED_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_error_bstr, KF_TRUSTED_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_dump_bstr, KF_TRUSTED_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_reenqueue_local___v2)
- BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap)
- BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur)
- BTF_ID_FLAGS(func, scx_bpf_cpuperf_set)
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 909e94794f8a..27aae2a298f8 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -804,6 +804,7 @@ struct scx_rq {
- 	cpumask_var_t		cpus_to_preempt;
- 	cpumask_var_t		cpus_to_wait;
- 	unsigned long		kick_sync;
-+	local_t			reenq_local_deferred;
- 	struct balance_callback	deferred_bal_cb;
- 	struct irq_work		deferred_irq_work;
- 	struct irq_work		kick_cpus_irq_work;
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index e65b1eb668ea..82a798c3fb22 100644
 --- a/tools/sched_ext/include/scx/common.bpf.h
 +++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -70,7 +70,6 @@ void scx_bpf_dsq_move_set_slice(struct bpf_iter_scx_dsq *it__iter, u64 slice) __
- void scx_bpf_dsq_move_set_vtime(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
- bool scx_bpf_dsq_move(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
- bool scx_bpf_dsq_move_vtime(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
--u32 scx_bpf_reenqueue_local(void) __ksym;
+@@ -65,11 +65,6 @@ s32 __scx_bpf_select_cpu_and(struct task
+ bool __scx_bpf_dsq_insert_vtime(struct task_struct *p, struct scx_bpf_dsq_insert_vtime_args *args) __ksym __weak;
+ u32 scx_bpf_dispatch_nr_slots(void) __ksym;
+ void scx_bpf_dispatch_cancel(void) __ksym;
+-bool scx_bpf_dsq_move_to_local(u64 dsq_id) __ksym __weak;
+-void scx_bpf_dsq_move_set_slice(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
+-void scx_bpf_dsq_move_set_vtime(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
+-bool scx_bpf_dsq_move(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
+-bool scx_bpf_dsq_move_vtime(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
  void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
  s32 scx_bpf_dsq_nr_queued(u64 dsq_id) __ksym;
  void scx_bpf_destroy_dsq(u64 dsq_id) __ksym;
-diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-index 26bead92fa04..0bfb8abe2a46 100644
+@@ -104,7 +99,6 @@ s32 scx_bpf_task_cpu(const struct task_s
+ struct rq *scx_bpf_cpu_rq(s32 cpu) __ksym;
+ struct rq *scx_bpf_locked_rq(void) __ksym;
+ struct task_struct *scx_bpf_cpu_curr(s32 cpu) __ksym __weak;
+-struct cgroup *scx_bpf_task_cgroup(struct task_struct *p) __ksym __weak;
+ u64 scx_bpf_now(void) __ksym __weak;
+ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __weak;
+ 
 --- a/tools/sched_ext/include/scx/compat.bpf.h
 +++ b/tools/sched_ext/include/scx/compat.bpf.h
-@@ -278,6 +278,29 @@ static inline void scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime)
- 		p->scx.dsq_vtime = vtime;
- }
+@@ -15,6 +15,68 @@
+ 	__ret;									\
+ })
  
++/* v6.12: 819513666966 ("sched_ext: Add cgroup support") */
++struct cgroup *scx_bpf_task_cgroup___new(struct task_struct *p) __ksym __weak;
++
++#define scx_bpf_task_cgroup(p)							\
++	(bpf_ksym_exists(scx_bpf_task_cgroup___new) ?				\
++	 scx_bpf_task_cgroup___new((p)) : NULL)
++
 +/*
-+ * v6.19: The new void variant can be called from anywhere while the older v1
-+ * variant can only be called from ops.cpu_release(). The double ___ prefixes on
-+ * the v2 variant need to be removed once libbpf is updated to ignore ___ prefix
-+ * on kernel side. Drop the wrapper and move the decl to common.bpf.h after
-+ * v6.22.
++ * v6.13: The verb `dispatch` was too overloaded and confusing. kfuncs are
++ * renamed to unload the verb.
++ *
++ * Build error is triggered if old names are used. New binaries work with both
++ * new and old names. The compat macros will be removed on v6.15 release.
++ *
++ * scx_bpf_dispatch_from_dsq() and friends were added during v6.12 by
++ * 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()").
 + */
-+u32 scx_bpf_reenqueue_local___v1(void) __ksym __weak;
-+void scx_bpf_reenqueue_local___v2___compat(void) __ksym __weak;
++bool scx_bpf_dsq_move_to_local___new(u64 dsq_id) __ksym __weak;
++void scx_bpf_dsq_move_set_slice___new(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
++void scx_bpf_dsq_move_set_vtime___new(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
++bool scx_bpf_dsq_move___new(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
++bool scx_bpf_dsq_move_vtime___new(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
 +
-+static inline bool __COMPAT_scx_bpf_reenqueue_local_from_anywhere(void)
-+{
-+	return bpf_ksym_exists(scx_bpf_reenqueue_local___v2___compat);
-+}
++bool scx_bpf_consume___old(u64 dsq_id) __ksym __weak;
++void scx_bpf_dispatch_from_dsq_set_slice___old(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
++void scx_bpf_dispatch_from_dsq_set_vtime___old(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
++bool scx_bpf_dispatch_from_dsq___old(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
++bool scx_bpf_dispatch_vtime_from_dsq___old(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
 +
-+static inline void scx_bpf_reenqueue_local(void)
-+{
-+	if (__COMPAT_scx_bpf_reenqueue_local_from_anywhere())
-+		scx_bpf_reenqueue_local___v2___compat();
-+	else
-+		scx_bpf_reenqueue_local___v1();
-+}
++#define scx_bpf_dsq_move_to_local(dsq_id)					\
++	(bpf_ksym_exists(scx_bpf_dsq_move_to_local___new) ?			\
++	 scx_bpf_dsq_move_to_local___new((dsq_id)) :				\
++	 scx_bpf_consume___old((dsq_id)))
++
++#define scx_bpf_dsq_move_set_slice(it__iter, slice)				\
++	(bpf_ksym_exists(scx_bpf_dsq_move_set_slice___new) ?			\
++	 scx_bpf_dsq_move_set_slice___new((it__iter), (slice)) :		\
++	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_slice___old) ?		\
++	  scx_bpf_dispatch_from_dsq_set_slice___old((it__iter), (slice)) :	\
++	  (void)0))
++
++#define scx_bpf_dsq_move_set_vtime(it__iter, vtime)				\
++	(bpf_ksym_exists(scx_bpf_dsq_move_set_vtime___new) ?			\
++	 scx_bpf_dsq_move_set_vtime___new((it__iter), (vtime)) :		\
++	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_vtime___old) ?		\
++	  scx_bpf_dispatch_from_dsq_set_vtime___old((it__iter), (vtime)) :	\
++	  (void)0))
++
++#define scx_bpf_dsq_move(it__iter, p, dsq_id, enq_flags)			\
++	(bpf_ksym_exists(scx_bpf_dsq_move___new) ?				\
++	 scx_bpf_dsq_move___new((it__iter), (p), (dsq_id), (enq_flags)) :	\
++	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq___old) ?			\
++	  scx_bpf_dispatch_from_dsq___old((it__iter), (p), (dsq_id), (enq_flags)) : \
++	  false))
++
++#define scx_bpf_dsq_move_vtime(it__iter, p, dsq_id, enq_flags)			\
++	(bpf_ksym_exists(scx_bpf_dsq_move_vtime___new) ?			\
++	 scx_bpf_dsq_move_vtime___new((it__iter), (p), (dsq_id), (enq_flags)) : \
++	 (bpf_ksym_exists(scx_bpf_dispatch_vtime_from_dsq___old) ?		\
++	  scx_bpf_dispatch_vtime_from_dsq___old((it__iter), (p), (dsq_id), (enq_flags)) : \
++	  false))
 +
  /*
-  * Define sched_ext_ops. This may be expanded to define multiple variants for
-  * backward compatibility. See compat.h::SCX_OPS_LOAD/ATTACH().
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index c67dac78a4c6..df21fad0c438 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -202,6 +202,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	void *ring;
- 	s32 cpu;
+  * v6.15: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
+  *
+@@ -166,12 +228,16 @@ static inline struct task_struct *__COMP
+  * replaced with variants that pack scalar arguments in a struct. Wrappers are
+  * provided to maintain source compatibility.
+  *
++ * v6.13: scx_bpf_dsq_insert_vtime() renaming is also handled here. See the
++ * block on dispatch renaming above for more details.
++ *
+  * The kernel will carry the compat variants until v6.23 to maintain binary
+  * compatibility. After v6.23 release, remove the compat handling and move the
+  * wrappers to common.bpf.h.
+  */
+ s32 scx_bpf_select_cpu_and___compat(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
+ 				    const struct cpumask *cpus_allowed, u64 flags) __ksym __weak;
++void scx_bpf_dispatch_vtime___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags) __ksym __weak;
+ void scx_bpf_dsq_insert_vtime___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags) __ksym __weak;
  
-+	if (enq_flags & SCX_ENQ_REENQ)
-+		__sync_fetch_and_add(&nr_reenqueued, 1);
-+
- 	if (p->flags & PF_KTHREAD) {
- 		if (stall_kernel_nth && !(++kernel_cnt % stall_kernel_nth))
- 			return;
-@@ -529,20 +532,35 @@ bool BPF_STRUCT_OPS(qmap_core_sched_before,
- 	return task_qdist(a) > task_qdist(b);
+ /**
+@@ -227,10 +293,14 @@ scx_bpf_dsq_insert_vtime(struct task_str
+ 		};
+ 
+ 		return __scx_bpf_dsq_insert_vtime(p, &args);
+-	} else {
++	} else if (bpf_ksym_exists(scx_bpf_dsq_insert_vtime___compat)) {
+ 		scx_bpf_dsq_insert_vtime___compat(p, dsq_id, slice, vtime,
+ 						  enq_flags);
+ 		return true;
++	} else {
++		scx_bpf_dispatch_vtime___compat(p, dsq_id, slice, vtime,
++						enq_flags);
++		return true;
+ 	}
  }
  
--void BPF_STRUCT_OPS(qmap_cpu_release, s32 cpu, struct scx_cpu_release_args *args)
-+SEC("tp_btf/sched_switch")
-+int BPF_PROG(qmap_sched_switch, bool preempt, struct task_struct *prev,
-+	     struct task_struct *next, unsigned long prev_state)
+@@ -239,18 +309,25 @@ scx_bpf_dsq_insert_vtime(struct task_str
+  * scx_bpf_dsq_insert() decl to common.bpf.h and drop compat helper after v6.22.
+  * The extra ___compat suffix is to work around libbpf not ignoring __SUFFIX on
+  * kernel side. The entire suffix can be dropped later.
++ *
++ * v6.13: scx_bpf_dsq_insert() renaming is also handled here. See the block on
++ * dispatch renaming above for more details.
+  */
+ bool scx_bpf_dsq_insert___v2___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
+ void scx_bpf_dsq_insert___v1(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
++void scx_bpf_dispatch___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
+ 
+ static inline bool
+ scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags)
  {
--	u32 cnt;
-+	if (!__COMPAT_scx_bpf_reenqueue_local_from_anywhere())
-+		return 0;
- 
- 	/*
--	 * Called when @cpu is taken by a higher priority scheduling class. This
--	 * makes @cpu no longer available for executing sched_ext tasks. As we
--	 * don't want the tasks in @cpu's local dsq to sit there until @cpu
--	 * becomes available again, re-enqueue them into the global dsq. See
--	 * %SCX_ENQ_REENQ handling in qmap_enqueue().
-+	 * If @cpu is taken by a higher priority scheduling class, it is no
-+	 * longer available for executing sched_ext tasks. As we don't want the
-+	 * tasks in @cpu's local dsq to sit there until @cpu becomes available
-+	 * again, re-enqueue them into the global dsq. See %SCX_ENQ_REENQ
-+	 * handling in qmap_enqueue().
- 	 */
--	cnt = scx_bpf_reenqueue_local();
--	if (cnt)
--		__sync_fetch_and_add(&nr_reenqueued, cnt);
-+	switch (next->policy) {
-+	case 1: /* SCHED_FIFO */
-+	case 2: /* SCHED_RR */
-+	case 6: /* SCHED_DEADLINE */
-+		scx_bpf_reenqueue_local();
-+	}
-+
-+	return 0;
-+}
-+
-+void BPF_STRUCT_OPS(qmap_cpu_release, s32 cpu, struct scx_cpu_release_args *args)
-+{
-+	/* see qmap_sched_switch() to learn how to do this on newer kernels */
-+	if (!__COMPAT_scx_bpf_reenqueue_local_from_anywhere())
-+		scx_bpf_reenqueue_local();
+ 	if (bpf_ksym_exists(scx_bpf_dsq_insert___v2___compat)) {
+ 		return scx_bpf_dsq_insert___v2___compat(p, dsq_id, slice, enq_flags);
+-	} else {
++	} else if (bpf_ksym_exists(scx_bpf_dsq_insert___v1)) {
+ 		scx_bpf_dsq_insert___v1(p, dsq_id, slice, enq_flags);
+ 		return true;
++	} else {
++		scx_bpf_dispatch___compat(p, dsq_id, slice, enq_flags);
++		return true;
+ 	}
  }
  
- s32 BPF_STRUCT_OPS(qmap_init_task, struct task_struct *p,
--- 
-2.51.1
-
+--- a/tools/sched_ext/include/scx/compat.h
++++ b/tools/sched_ext/include/scx/compat.h
+@@ -151,6 +151,10 @@ static inline long scx_hotplug_seq(void)
+  *
+  * ec7e3b0463e1 ("implement-ops") in https://github.com/sched-ext/sched_ext is
+  * the current minimum required kernel version.
++ *
++ * COMPAT:
++ * - v6.17: ops.cgroup_set_bandwidth()
++ * - v6.19: ops.cgroup_set_idle()
+  */
+ #define SCX_OPS_OPEN(__ops_name, __scx_name) ({					\
+ 	struct __scx_name *__skel;						\
+@@ -162,6 +166,16 @@ static inline long scx_hotplug_seq(void)
+ 	SCX_BUG_ON(!__skel, "Could not open " #__scx_name);			\
+ 	__skel->struct_ops.__ops_name->hotplug_seq = scx_hotplug_seq();		\
+ 	SCX_ENUM_INIT(__skel);							\
++	if (__skel->struct_ops.__ops_name->cgroup_set_bandwidth &&		\
++	    !__COMPAT_struct_has_field("sched_ext_ops", "cgroup_set_bandwidth")) { \
++		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_bandwidth()\n"); \
++		__skel->struct_ops.__ops_name->cgroup_set_bandwidth = NULL;	\
++	}									\
++	if (__skel->struct_ops.__ops_name->cgroup_set_idle &&			\
++	    !__COMPAT_struct_has_field("sched_ext_ops", "cgroup_set_idle")) { \
++		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_idle()\n"); \
++		__skel->struct_ops.__ops_name->cgroup_set_idle = NULL;	\
++	}									\
+ 	__skel; 								\
+ })
+ 
