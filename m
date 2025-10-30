@@ -1,40 +1,34 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB34B2EF646;
-	Thu, 30 Oct 2025 09:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E88340281;
+	Thu, 30 Oct 2025 12:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761815252; cv=none; b=OGtwmaS4rGrvaRSB4p8eDVZpqMbYGIIZvHYeXalSCiIq9woAknUMV9becgsw8z4zNC4poyPJNIDKe/F9JJbmXJJv9tgivGS7sGoLRZSZxC0gZ2LnL7tyiSZWmOHxjYEkadvKEfCGp4YfnpVcaWyJGTymscxMOkaExk2okdx2XQE=
+	t=1761828485; cv=none; b=T55JNC6UAlEGZGkM0VrnQGoMlee2dwvVOctNj7IdFILpOzeldrGPlTE0VWm5bAS6fRRiTU/mAjmtNPmmPQmq+SHhVQqUJrfmdyF7FkNzf9DWvmkGYRw971eJwAEF/va0goKa05+flNUR+L5FQOgyGf6Lv1A2rIEz0SQATt5VH9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761815252; c=relaxed/simple;
-	bh=l1viRMC/UmwSuDDuvBE2zGgXvumdL/Ls7gVexkoy3K4=;
+	s=arc-20240116; t=1761828485; c=relaxed/simple;
+	bh=z/TmCLUEKXNCbQR2FR3bsCd/PFGIFQxm5MYX5nhHiYk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j2xxlpBgSsowXMlmyxipY9/Ht1oAQrxo8Yux6K4OdReK55OJxB+xZqUZLadHoKEanFkx9QSWmgq9uBTD41KeUkHSTW2Xj3LVkst20KrjoC67XUjjiggMK7TgXWLqWoYih/pExB/ZNMMGyDvEFJPxRy1Fs2BV4zDP78KJHu2g3gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=NyQmXPBW; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=VxzBX34g2+JITfj3ljZpglP5zNiTIfhqxiV0Icm32IYz7K5i0lfPObwBlH5UFKzYRbCYCwk6F8KBeAJYK2AejHq1fvKWs9I7fnwHZ5DkEeKhd2ek3i8W6URo4pmEhtbsCpojwIZDo5Ex952ADRDJrD6zF8Os/EG4Du86GslB8Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bXQIkmhJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="NyQmXPBW"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description;
-	bh=c2jqJvelZ1hYmz7asbMfIdSEjayi1eF7SkgIc3nH9G8=; b=NyQmXPBWuzXksesCUhML6S47F7
-	d4sh5asusrkHqeWZdIZBKm3lARUaHgSkqQ2jjpmoF5lHUEe/f4khSkrnTWJNRswo4N27Cufmc2KKy
-	9oOTPwWHTIVdZOu+iMiPL/4MxAgcw7+ig4N5EKdrnZvZaarohqH3bCqC1qUUR1iIHUZ3vF5ydAzbw
-	LGrOGZUZfaaEHEosbbBDZl7uPgkKsJaaCDV/Wx/MaQqEzfwE9dZ3oN+MCQekzSlz1tfpXZbLH05vc
-	x4/b5LJsc3OYPsrJJHDb5SrqGber647sJbn3be3d6mYsGSs83updmcgM74m7qnSk9D/p7RMiUPKbK
-	jFqxFuTw==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vENl3-00000008jZI-0NhC;
-	Thu, 30 Oct 2025 08:11:45 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id AE094300343; Thu, 30 Oct 2025 10:07:15 +0100 (CET)
-Date: Thu, 30 Oct 2025 10:07:15 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Mark Brown <broonie@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bXQIkmhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A024C4CEF1;
+	Thu, 30 Oct 2025 12:48:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761828484;
+	bh=z/TmCLUEKXNCbQR2FR3bsCd/PFGIFQxm5MYX5nhHiYk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bXQIkmhJhyNbHD/vH4ojMOBpjiEHIEsGq7axLac9Wfb5ZzMNyyjBmdmK+OVZwrdrj
+	 TGN+DYg5JF3BRx+lxG1z+rLLo3yEUnY41Br7up8Wni/NKj4eb9/MtEQC5ZWkY9+liQ
+	 ROwe8TrtFAxbGJOpCwWfCevQSEIyA33BfEEeJ9BNvN9aYWg12cLyBrCpo5ywF21IS2
+	 OY+ZJ88YupWL6/9YDnUVO9VmbEmL6JRz1I6uKEhHgT4y8bfytlizs2ahdACWJpLcCy
+	 XXFGkyXRjTKYJaf6VqSnDOQOT2WnrAWmIQrsuWTXpHJJ99vzjXfN+vdnHS3kJguPkq
+	 6NoaDauw5FL6A==
+Date: Thu, 30 Oct 2025 12:47:57 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Peter Zijlstra <peterz@infradead.org>
 Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@redhat.com,
 	juri.lelli@redhat.com, vincent.guittot@linaro.org,
 	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
@@ -43,34 +37,55 @@ Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@redhat.com,
 	arighi@nvidia.com, changwoo@igalia.com, cgroups@vger.kernel.org,
 	sched-ext@lists.linux.dev, liuwenfang@honor.com, tglx@linutronix.de
 Subject: Re: [PATCH 07/14] sched: Fix do_set_cpus_allowed() locking
-Message-ID: <20251030090715.GQ3245006@noisy.programming.kicks-ass.net>
+Message-ID: <990f3ce9-d7df-4344-863a-e4b71fe957c9@sirena.org.uk>
 References: <20250910154409.446470175@infradead.org>
  <20250910155809.103475671@infradead.org>
  <29d7b92b-594e-4835-9dd3-3c9e2b02ada3@sirena.org.uk>
+ <20251030090715.GQ3245006@noisy.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="w7/3MAhEllohHjTX"
+Content-Disposition: inline
+In-Reply-To: <20251030090715.GQ3245006@noisy.programming.kicks-ass.net>
+X-Cookie: Is there life before breakfast?
+
+
+--w7/3MAhEllohHjTX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <29d7b92b-594e-4835-9dd3-3c9e2b02ada3@sirena.org.uk>
 
-On Thu, Oct 30, 2025 at 12:12:01AM +0000, Mark Brown wrote:
-> On Wed, Sep 10, 2025 at 05:44:16PM +0200, Peter Zijlstra wrote:
->=20
-> > All callers of do_set_cpus_allowed() only take p->pi_lock, which is
-> > not sufficient to actually change the cpumask. Again, this is mostly
-> > ok in these cases, but it results in unnecessarily complicated
-> > reasoning.
->=20
-> We're seeing lockups on some arm64 platforms in -next with the LTP
-> cpuhotplug02 test, the machine sits there repeatedly complaining that
-> RCU is stalled on IPIs:
+On Thu, Oct 30, 2025 at 10:07:15AM +0100, Peter Zijlstra wrote:
+> On Thu, Oct 30, 2025 at 12:12:01AM +0000, Mark Brown wrote:
 
-Did not this help?
+> > We're seeing lockups on some arm64 platforms in -next with the LTP
+> > cpuhotplug02 test, the machine sits there repeatedly complaining that
+> > RCU is stalled on IPIs:
 
-  https://lkml.kernel.org/r/20251027110133.GI3245006@noisy.programming.kick=
-s-ass.net
+> Did not this help?
+
+>   https://lkml.kernel.org/r/20251027110133.GI3245006@noisy.programming.kicks-ass.net
+
+It looks like that hadn't landed in yesterday's -next - it showed up
+today and things do indeed look a lot happier, thanks!
+
+--w7/3MAhEllohHjTX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmkDXnwACgkQJNaLcl1U
+h9CkSgf+MBexVKsLYF9KOOfxlRxNgU3VjK+zpctbbqvVj7cgaBu15pdOgguhX8pY
+FMsAWORE70ktq7z/M5Q63I9bSZ6ecqvMHqfz3co4IxWJn0f0P+iK+PMsqfvJOU8z
+wIEe7xfFY0PzYX58ZaO3MQXUMkQxhipaLUO97mPLgdB4Y8f0EJxuJbpSuHkVHBX5
+GBoBl/HbkJGvOeGCDF3hRY7wa72ww+8LDNPqzdxiM4avg2fXtsFmiTYBq/pyKkuh
+Htd5JrkeJKcZLb3zx/+m/J+LnLsxOpuTc5J0vZ/7Q2mn+1CWCAGEWm5xEBm8ygWm
+iEQ4Ne7Ac5+qb0AsbyIztfUFOWZ9DA==
+=G62n
+-----END PGP SIGNATURE-----
+
+--w7/3MAhEllohHjTX--
