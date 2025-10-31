@@ -1,225 +1,268 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011010.outbound.protection.outlook.com [40.107.208.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB89F279DB1
-	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 02:25:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761877538; cv=none; b=QPhUWikIMmLVsUkv89cxT5tNx3ZsEk/tqhNdGixxzgK6L2Mh1GjdXk1M4m11w+yL+O6VMcDSo7xrRUPVz2KZZ4L0wvAwFBxiLmM3CRmXr3axB1fa3jvwUySBUyuM5xMrPEhdUxoKJVMBf10okS0ygvHStSVt43M5mz3xPyhPIFA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761877538; c=relaxed/simple;
-	bh=FCMDZpo+zPOaucjsv5ocR/PPIqQlRU1b4RGM6RBMBDo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mcgWU00QoEYpRJGcw3JJ2RUOvjK+SdaVj+orvifsrO8sSMaPOLPybDKBdC7X/b4gmxVJISgVl8zLh3z0GiQXNfMgErm2phGyHuGsmXuD8Q92CF7sI3tzPz8hZJf9j2f2coVfVcQSXHAJEvdWNAATtze3uplbVO5JKDj9akXwlrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.216])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4cyPw55F4mzYQtLS
-	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 10:25:25 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 6BA371A173C
-	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 10:25:33 +0800 (CST)
-Received: from [10.67.111.176] (unknown [10.67.111.176])
-	by APP2 (Coremail) with SMTP id Syh0CgA32EAcHgRpbQXDCA--.35193S2;
-	Fri, 31 Oct 2025 10:25:33 +0800 (CST)
-Message-ID: <bb99364a-3143-4911-9b86-81fe5a11e1eb@huaweicloud.com>
-Date: Fri, 31 Oct 2025 10:25:31 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F391D2EFD9F
+	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 19:32:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761939156; cv=fail; b=ZogCqSlauexqs0zGVXZfb/mKkWEK2gtGejPuRz6e/pNxyoW7a+WoQdw01lxGK5/BvROZrrxLQ6/tGwkSBDLFM8yxxLes7E4kn+2wSZ/raCOA192sUO4nwkMc7uHVXKaT7YW+UyKfrCHZ0cIGtjtLMM5SZF7o6aAb1dnuAeG7s4A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761939156; c=relaxed/simple;
+	bh=UrCr6+yoewRvbv2UZL6Ru86tR48Hrak11xpcueLtZJ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=t/Pa9koyPR20jXkhbgWx6Pd9bCoH9h0ofVRfRqVB2InArqN6SSNyQr8UE0/ovGUIxJ1rMOr+caB1zZF27dm+NkZ2bVg/wZdSyBp5mBKbcZ15RNbgLfECPuREJP6krFAkB4iPsDdxITCZ4647mbNrSnoxV7L0EZB/xNVoGOyj4W8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=KR8TEn8u; arc=fail smtp.client-ip=40.107.208.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="KR8TEn8u"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VJyE9b0XP9e1xvK7nv7XQzfqH6EA13OE10xGNcOHsgn3bI6f7axUhdvwwwxCxRcn4bJZ63+PVeNSskK9PhmIPs/2DrD86NS4WmGavfB1Zsn1N09NLbATmJ2ALaI7kS0lg2JzY/hY0NuV0fba3gUJ5o9lR0vzB5UU1kRuYlIaKVz9+9zZo7Q69nMdtw0IZ7pxY4ohLvgnq5paLqwFu7WFOPQw+Z9ZXYX4xKSVHXBc0FP7IaNDUwxIEcUdMcs1KrjhJ5xy2zP1yWCiaQLHl96BQcFx6RSXbrq2kpZRyBZbNACLsK9Seyq4SvmJjRY6cFyTiujVm6nnbFAQqkQfNEza8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dn0M++OuyT6dI+ZvvICrvdl6nD7Hs7ETqy5nQw6Y1H8=;
+ b=yr09TQjWTLytLzs3m0h+grYfr40gynJt01IDdI/frH4l/MwC1MvzAYsAZstu4GC7Qj4Nk4kI4dkB19urm2s8xo6AEIANDtqXS1m2ecUhw0JMuWyF2fh72s0pBm9OJ09g5/FZu7MHk9FRtXJZwPX0YjbtaBaOEtboS43OcSbL5d72tl0LkL7JJ/gOXoChi1SsrRzhmRroTW6I6YdvHb0PTUnmUGP1pHVT3FodNOQJ2EXv59lhpfXHrM7O3EoDEAZGDSd+76WDOwdnkjGjv5fFWsTl9Z7X/YPABy5amtpiE+tvhezSu8WPpDkw1iXq2vKssh5wT7yqkJSsmLWW2kgEtA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dn0M++OuyT6dI+ZvvICrvdl6nD7Hs7ETqy5nQw6Y1H8=;
+ b=KR8TEn8uij3PLuvcohYRJACrPX++Z5yHVeZCkqFizjORPbINwLwfauxLiftDeP0DxAVKJc1JP3oP+5m2P5mTZjQsimeJgTBCGaRwxOUsop5AAaO9ZpkVI4V0Tml0v+3BRX04spZG0Rz/4ytNrO8hGWEWWgzt0UjSrmCOwYwmqVFx2YoUjmVp0/7+9rkztm3sRnzqf9H59/HKXVnIXESQRJ60TI9lcb3O7MKDFu4IokcczuMlvL3yFFJ43Hg7NDzOVMXUcoZpyPD+wFkbL6lv5uktBeLdGjOGSb3U89zwgYtI8NRaH7OLtmW04UsKcM3N8nEruHDChLogLACueWriTQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DS7PR12MB8276.namprd12.prod.outlook.com (2603:10b6:8:da::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9275.14; Fri, 31 Oct
+ 2025 19:32:25 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9275.013; Fri, 31 Oct 2025
+ 19:32:23 +0000
+Date: Fri, 31 Oct 2025 20:32:16 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Dan Schatzberg <dschatzberg@meta.com>,
+	Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
+	cgroups@vger.kernel.org, sched-ext@lists.linux.dev
+Subject: Re: [PATCH 4/4] sched_ext: Fix cgroup exit ordering by moving
+ sched_ext_free() to finish_task_switch()
+Message-ID: <aQUOwC0qHvifqmuA@gpd4>
+References: <20251029061918.4179554-1-tj@kernel.org>
+ <20251029061918.4179554-5-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251029061918.4179554-5-tj@kernel.org>
+X-ClientProxiedBy: MI1P293CA0026.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:3::10) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] cgroup: Rename cgroup lifecycle hooks to
- cgroup_task_*()
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
-Cc: Dan Schatzberg <dschatzberg@meta.com>,
- Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
- cgroups@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20251029061918.4179554-1-tj@kernel.org>
- <20251029061918.4179554-2-tj@kernel.org>
-Content-Language: en-US
-From: Chen Ridong <chenridong@huaweicloud.com>
-In-Reply-To: <20251029061918.4179554-2-tj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:Syh0CgA32EAcHgRpbQXDCA--.35193S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3WFy8Xw18Xr43XrW7KFW5GFg_yoW7KFW3pa
-	yDC3WUGw43Ja4jgFn7t3yqvFySgws7W3W5Gryrt3yFyr43tr10qF9rCry7ur4rt3Z2gF1a
-	qrsYkr47Kr4Dtr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUyGb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAK
-	I48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7
-	xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xII
-	jxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw2
-	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x02
-	67AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU17KsUUUUUU==
-X-CM-SenderInfo: hfkh02xlgr0w46kxt4xhlfz01xgou0bp/
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS7PR12MB8276:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6edafcaa-926f-4c2a-4f1d-08de18b4375d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?JLeem/n495ctyVradmgVbAfeC5zGNmw5609MFVBpE8MGkfEN9n3VRFMSLHEB?=
+ =?us-ascii?Q?zk8lpWXDUKyKodrvD6pzfUm/6CbjVNgkpxnqOciK/LoCRnRyIwjSCIIc91kK?=
+ =?us-ascii?Q?SLWyjmyjdEMZWk+WmfpLLr6uaf1jZN2yGR3oEB6+OIUCg/iQWJgTArlH/HjI?=
+ =?us-ascii?Q?MrOq6GgWkGjEGTy1L+pLY5orJPkqLa8Cnfrh8rg9+UF2/IbF0C9jCWIgvtJL?=
+ =?us-ascii?Q?1s/n1a5VfphwTbvWij/HBJvQ+BSwIK23jgT5MIbX/9qrCEYYIVY42Dl5Kcs3?=
+ =?us-ascii?Q?9ap8jhJRlj8+oOHHwDZ1DoGsmKljQgoFraDgog6NGi2fRD9+dKE3NYqHotTf?=
+ =?us-ascii?Q?mG7Q1NUwHrt6ekewpgtC3imSg/0lAgEnZaQbDJt3PU2IMBIshkiNVk40knJz?=
+ =?us-ascii?Q?dJZSCOyG7kLFswnpq9V4K/eHY8ztSmMls4aO+xBmFyZT/72h6Mhrk2zLg3AX?=
+ =?us-ascii?Q?FIrP9B1saPZJIxIl6JuRqVOYTdcMeZN/G95qVUWnqXQUsDAHuiAK6TTo5Z6j?=
+ =?us-ascii?Q?Q6PDgKQlVOTTRzSk4teUkIvGE+RwX/nFveNNkfCG0z1oklafGO5NhTvJAr+o?=
+ =?us-ascii?Q?xCRPQJhldXZAzYBMs3AJOzfjiCEHcsLxYWKtJUbramF6EGl+657+fNbqprPA?=
+ =?us-ascii?Q?nFp+jqFd18nYMJeovoO1LHaf1tI78CJPViQ3fpAaLUA39uAxdE4S3z9yVQi0?=
+ =?us-ascii?Q?UJORpQb0g9yaA8DK8qJfJly0HXon1VPsv4k/Z6EkCcNk98oGYzME6eSzR41Q?=
+ =?us-ascii?Q?w/aTDm+3tpA22R5sWgCVCjr9CmCXgJeDV81GoTFxIVr4UM877j1+mFS8B6z3?=
+ =?us-ascii?Q?D3wcFrgal81wvamGTiSjlPWB0dngdegeewINSwr8nB0vIba8/AxRUWimM8hq?=
+ =?us-ascii?Q?+vGua3iQ5/4NSf/zvqwOTfLXupR/oft1dyrEirpiM1SLtAGP1G4myz2rFgwY?=
+ =?us-ascii?Q?+9T4mW+YD2KHq62fnraJokjRLRSvAswOunuLBRIhYEdGzcBeysRgIX69ONnh?=
+ =?us-ascii?Q?hbmv4mNu3+Ab3qUkgflwmaadGXk3tXnW3P8F9YsfN0rGi4Muvx832J3GO19C?=
+ =?us-ascii?Q?ljDZjfQbWzJM5uhZt1j4MbUpZ5K8MOOGVcV95yT495pV/NiW+sqqwUkhAYZE?=
+ =?us-ascii?Q?2o6z198IOfx9W484Yb6ZfqFQ4NrMUhOzkGsqHTNlpfH3o316hWUskPKylj1j?=
+ =?us-ascii?Q?lKq1aZM4IvUUhquSiUmuukLUrmuJb8Cc2mxDEM8tBGQc2d7U9p31REbnG6u3?=
+ =?us-ascii?Q?Hy6ekBV61KcMVRozB3aB7xm0SKjES8lYPAnzEvgOydk8xlYBRLhsSSzDy3r5?=
+ =?us-ascii?Q?FbH+utVHL2/6I2hcs5oPRIDWZaPJJxbb3iXDKWuC0RsFDfu8+McCTl8uo6K2?=
+ =?us-ascii?Q?cgWRCH0zKBVbBpz9y5SqiM/EU7MAxS+akhBclhFMdJ6TIgnuagHLUGDZsjHq?=
+ =?us-ascii?Q?qImx/pnZAxn1Xg4Fjzfl4Y1vOAfl/leI?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?JYlPC+2O6pMjyfGvcFMsrVSIYOGGh7lzqNgQeDyatPm8R3V//E48MS7R7ngH?=
+ =?us-ascii?Q?MQRgeNyuKtxt29e554ZZc5VeP3wbAxxxkWzKOecrU03XAZM79zDLI+reJGeu?=
+ =?us-ascii?Q?Ujvho+LnYU0sfzJiZlT9YdRWu3V7KCBoTG5CaCjBJKUxTH6eztkmuXj2C/3X?=
+ =?us-ascii?Q?0E/SHiAYIN6/oR1/bQWTbhxuxQ6rWn/Ygv4iPwcQJfRYyLk/GBC4pSltbhAC?=
+ =?us-ascii?Q?EGEb+QKVmhgaWYQVpjs0mdueYFPWpZip6HYwAYm+hA7AYTLHI51uJQPn72pX?=
+ =?us-ascii?Q?9zXolv4Q4j9/EnqqQeH8RHtkOT/DeRzeMo1M6eNHg9xjvNkFlDkcAlJmtevG?=
+ =?us-ascii?Q?TN/R6xMHZu+U5cCtbTHsdXIRZpUSwnlYWl1FA/zCopeqc28NcRD4BisIoCCD?=
+ =?us-ascii?Q?4gVdflR3diSNxPX9VdoReg1UfBZNZK940IubQXcyqFuRU+gb8XusgQQanlgY?=
+ =?us-ascii?Q?xF7YNFqv0NhpMHdXYFRC0V2LSRxKLzOh8YR/TvsdUADz2Lu1VnJFmsCgVVmd?=
+ =?us-ascii?Q?bp0kzl1dsp8D0Bg7Dp4Vt3uoNzPhIS9RZzft2OpycKIfBAQe54wm5GkHHlPM?=
+ =?us-ascii?Q?4f2pw0bWFI6jI+9yeApUx3fosXnfkQ2gROeBmv09VYCimPtHNNF9Qev6vck0?=
+ =?us-ascii?Q?MGt0eO5WZ/Ih4utSXRUxMR/nHtLbQIDEJk8kaCYM6vf9iR9sb/WWFv7GPGt8?=
+ =?us-ascii?Q?F+j6u+X2PoNSjvOVNUoFWRQdPOouN39oRbMgl48lSGhtsXtyIBdDfUTdAzYH?=
+ =?us-ascii?Q?Flqlk6UEvAzW+3ahf37CO5WlSkh9MOX4SaP8/ye8c24Yd/Eaw/2glScoCUyD?=
+ =?us-ascii?Q?oQH5gsoNuDQrEAUeGfCdXjMgy8Ra7Pn5mzk+YVa3OPnOkEOmM26qssO/pJ4E?=
+ =?us-ascii?Q?GPcy8GQFMTCZJCsFjNxsg94RpMEQcdrvLgGV9ve2MepidGBXtJG7NZm/xrWq?=
+ =?us-ascii?Q?DZEb4d73SmF/SPk/RxUUUcYzOu1Koqp56qWQPZin/gkjYzMCiyxuVHJiMxJf?=
+ =?us-ascii?Q?hFDLwwfyO8K6cjmS/HbARDJsH35sybtTO7MVneDgZZ+qvG9qvOVlRo6l/ioY?=
+ =?us-ascii?Q?TyzQ27qkrUsoMfDLAv8qF9KmxaRxPE0eM3ugv3rw5E4um3XFCJO9tGwpWu7e?=
+ =?us-ascii?Q?ladRooa/8N/ZdWkV/D/t5gi2UUiuS5g6Ln5PaDqpGKlgr+rE7oVEaduG5MWP?=
+ =?us-ascii?Q?ls2MlMO4TEFUxhoz305QHoM6RAKfZSjDjUhSa5i5PIK4r/EpAN1+jgb8GTQ2?=
+ =?us-ascii?Q?pz4Ad3Mv6+Ukox9OC6qaKAFOp/KstSDmn3kigomeLJbBZDcKYf5/weJPWOIf?=
+ =?us-ascii?Q?s4Dfmjg0a4EtLUJfYtpgjiFgbgk74Qtb579+B/Qr/zIgl8GkVK/HKvCln3p4?=
+ =?us-ascii?Q?srvPPgfQj71dDM/5p+tLRLQ0jZ6krG1jU1L+ny/BZC/79rTdaovjOZcB1Alg?=
+ =?us-ascii?Q?9+SDpUJKDamWMmMQuHONDx7kRsI2fbc3q0mtM7jVtnpL42b6b3y0V9Fx8e+m?=
+ =?us-ascii?Q?H6HZz1X+b2mGBMN2r3meLxvbROMZeu6K2Fz5t/BPl6js88xqZavW7vayXVXr?=
+ =?us-ascii?Q?OS3gLK8c5r4VB74tBRtFVQdBa/yTqyC15HKYjrWf?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6edafcaa-926f-4c2a-4f1d-08de18b4375d
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2025 19:32:23.7741
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: FbOzGvb9wDu3U1xsSb/ysTO5Rh77qhzvuJ9GkCfxRXiX5tePgejd/VmBgA7gZNmVAvRG/Ilx7dUz26W+gJWlMg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8276
 
+Hi Tejun,
 
-
-On 2025/10/29 14:19, Tejun Heo wrote:
-> The current names cgroup_exit(), cgroup_release(), and cgroup_free() are
-> confusing because they look like they're operating on cgroups themselves when
-> they're actually task lifecycle hooks. For example, cgroup_init() initializes
-> the cgroup subsystem while cgroup_exit() is a task exit notification to
-> cgroup. Rename them to cgroup_task_exit(), cgroup_task_release(), and
-> cgroup_task_free() to make it clear that these operate on tasks.
+On Tue, Oct 28, 2025 at 08:19:18PM -1000, Tejun Heo wrote:
+> sched_ext_free() was called from __put_task_struct() when the last reference
+> to the task is dropped, which could be long after the task has finished
+> running. This causes cgroup-related problems:
 > 
+> - ops.task_init() can be called on a cgroup which didn't get ops.cgroup_init()'d
+>   during scheduler load.
 
-This makes sense.
+s/task_init/init_task/
 
-> Cc: Dan Schatzberg <dschatzberg@meta.com>
+Also, it took me a bit to understand this point, maybe we could add
+something like this to make it more clear:
+
+ - ops.init_task() can be called on a cgroup which didn't get ops.cgroup_init()'d
+   during scheduler load, because the cgroup might be destroyed/unlinked
+   while the zombie task is still lingering on the scx_tasks list.
+
+> 
+> - ops.cgroup_exit() could be called before ops.exit_task() is called on all
+>   member tasks, leading to incorrect exit ordering.
+> 
+> Fix by moving it to finish_task_switch() to be called right after the final
+> context switch away from the dying task, matching when sched_class->task_dead()
+> is called. Rename it to sched_ext_dead() to match the new calling context.
+> 
+> By calling sched_ext_dead() before cgroup_task_dead(), we ensure that:
+> 
+> - Tasks visible on scx_tasks list have valid cgroups during scheduler load,
+>   as cgroup_mutex prevents cgroup destruction while the task is still linked.
+> 
+> - All member tasks have ops.exit_task() called and are removed from scx_tasks
+>   before the cgroup can be destroyed and trigger ops.cgroup_exit().
+> 
+> This fix is made possible by the cgroup_task_dead() split in the previous patch.
+> 
+> This also makes more sense resource-wise as there's no point in keeping
+> scheduler side resources around for dead tasks.
+> 
+> Reported-by: Dan Schatzberg <dschatzberg@meta.com>
 > Cc: Peter Zijlstra <peterz@infradead.org>
 > Signed-off-by: Tejun Heo <tj@kernel.org>
+
+Apart from the minor comment in the description above, everything else
+looks good to me.
+
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+
+Thanks,
+-Andrea
+
 > ---
->  include/linux/cgroup.h   | 12 ++++++------
->  kernel/cgroup/cgroup.c   | 11 ++++++-----
->  kernel/exit.c            |  4 ++--
->  kernel/fork.c            |  2 +-
->  kernel/sched/autogroup.c |  4 ++--
->  5 files changed, 17 insertions(+), 16 deletions(-)
+>  include/linux/sched/ext.h | 4 ++--
+>  kernel/fork.c             | 1 -
+>  kernel/sched/core.c       | 6 ++++++
+>  kernel/sched/ext.c        | 2 +-
+>  4 files changed, 9 insertions(+), 4 deletions(-)
 > 
-> diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-> index 6ed477338b16..4068035176c4 100644
-> --- a/include/linux/cgroup.h
-> +++ b/include/linux/cgroup.h
-> @@ -137,9 +137,9 @@ extern void cgroup_cancel_fork(struct task_struct *p,
->  			       struct kernel_clone_args *kargs);
->  extern void cgroup_post_fork(struct task_struct *p,
->  			     struct kernel_clone_args *kargs);
-> -void cgroup_exit(struct task_struct *p);
-> -void cgroup_release(struct task_struct *p);
-> -void cgroup_free(struct task_struct *p);
-> +void cgroup_task_exit(struct task_struct *p);
-> +void cgroup_task_release(struct task_struct *p);
-> +void cgroup_task_free(struct task_struct *p);
+> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> index d82b7a9b0658..d7dd77be571f 100644
+> --- a/include/linux/sched/ext.h
+> +++ b/include/linux/sched/ext.h
+> @@ -207,14 +207,14 @@ struct sched_ext_entity {
+>  	struct list_head	tasks_node;
+>  };
 >  
->  int cgroup_init_early(void);
->  int cgroup_init(void);
-> @@ -680,9 +680,9 @@ static inline void cgroup_cancel_fork(struct task_struct *p,
->  				      struct kernel_clone_args *kargs) {}
->  static inline void cgroup_post_fork(struct task_struct *p,
->  				    struct kernel_clone_args *kargs) {}
-> -static inline void cgroup_exit(struct task_struct *p) {}
-> -static inline void cgroup_release(struct task_struct *p) {}
-> -static inline void cgroup_free(struct task_struct *p) {}
-> +static inline void cgroup_task_exit(struct task_struct *p) {}
-> +static inline void cgroup_task_release(struct task_struct *p) {}
-> +static inline void cgroup_task_free(struct task_struct *p) {}
+> -void sched_ext_free(struct task_struct *p);
+> +void sched_ext_dead(struct task_struct *p);
+>  void print_scx_info(const char *log_lvl, struct task_struct *p);
+>  void scx_softlockup(u32 dur_s);
+>  bool scx_rcu_cpu_stall(void);
 >  
->  static inline int cgroup_init_early(void) { return 0; }
->  static inline int cgroup_init(void) { return 0; }
-> diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-> index 6ae5f48cf64e..826b7fd2f85d 100644
-> --- a/kernel/cgroup/cgroup.c
-> +++ b/kernel/cgroup/cgroup.c
-> @@ -944,7 +944,8 @@ static void css_set_move_task(struct task_struct *task,
->  		/*
->  		 * We are synchronized through cgroup_threadgroup_rwsem
->  		 * against PF_EXITING setting such that we can't race
-> -		 * against cgroup_exit()/cgroup_free() dropping the css_set.
-> +		 * against cgroup_task_exit()/cgroup_task_free() dropping
-> +		 * the css_set.
->  		 */
->  		WARN_ON_ONCE(task->flags & PF_EXITING);
+>  #else	/* !CONFIG_SCHED_CLASS_EXT */
 >  
-> @@ -6972,13 +6973,13 @@ void cgroup_post_fork(struct task_struct *child,
->  }
->  
->  /**
-> - * cgroup_exit - detach cgroup from exiting task
-> + * cgroup_task_exit - detach cgroup from exiting task
->   * @tsk: pointer to task_struct of exiting process
->   *
->   * Description: Detach cgroup from @tsk.
->   *
->   */
-> -void cgroup_exit(struct task_struct *tsk)
-> +void cgroup_task_exit(struct task_struct *tsk)
->  {
->  	struct cgroup_subsys *ss;
->  	struct css_set *cset;
-> @@ -7010,7 +7011,7 @@ void cgroup_exit(struct task_struct *tsk)
->  	} while_each_subsys_mask();
->  }
->  
-> -void cgroup_release(struct task_struct *task)
-> +void cgroup_task_release(struct task_struct *task)
->  {
->  	struct cgroup_subsys *ss;
->  	int ssid;
-> @@ -7027,7 +7028,7 @@ void cgroup_release(struct task_struct *task)
->  	}
->  }
->  
-> -void cgroup_free(struct task_struct *task)
-> +void cgroup_task_free(struct task_struct *task)
->  {
->  	struct css_set *cset = task_css_set(task);
->  	put_css_set(cset);
-> diff --git a/kernel/exit.c b/kernel/exit.c
-> index 9f74e8f1c431..46173461e8de 100644
-> --- a/kernel/exit.c
-> +++ b/kernel/exit.c
-> @@ -257,7 +257,7 @@ void release_task(struct task_struct *p)
->  	rcu_read_unlock();
->  
->  	pidfs_exit(p);
-> -	cgroup_release(p);
-> +	cgroup_task_release(p);
->  
->  	/* Retrieve @thread_pid before __unhash_process() may set it to NULL. */
->  	thread_pid = task_pid(p);
-> @@ -967,7 +967,7 @@ void __noreturn do_exit(long code)
->  	exit_thread(tsk);
->  
->  	sched_autogroup_exit_task(tsk);
-> -	cgroup_exit(tsk);
-> +	cgroup_task_exit(tsk);
->  
->  	/*
->  	 * FIXME: do that only when needed, using sched_exit tracepoint
+> -static inline void sched_ext_free(struct task_struct *p) {}
+> +static inline void sched_ext_dead(struct task_struct *p) {}
+>  static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
+>  static inline void scx_softlockup(u32 dur_s) {}
+>  static inline bool scx_rcu_cpu_stall(void) { return false; }
 > diff --git a/kernel/fork.c b/kernel/fork.c
-> index 3da0f08615a9..960c39c9c264 100644
+> index 960c39c9c264..5ae37909a813 100644
 > --- a/kernel/fork.c
 > +++ b/kernel/fork.c
-> @@ -738,7 +738,7 @@ void __put_task_struct(struct task_struct *tsk)
+> @@ -736,7 +736,6 @@ void __put_task_struct(struct task_struct *tsk)
+>  	WARN_ON(tsk == current);
+>  
 >  	unwind_task_free(tsk);
->  	sched_ext_free(tsk);
+> -	sched_ext_free(tsk);
 >  	io_uring_free(tsk);
-> -	cgroup_free(tsk);
-> +	cgroup_task_free(tsk);
+>  	cgroup_task_free(tsk);
 >  	task_numa_free(tsk, true);
->  	security_task_free(tsk);
->  	exit_creds(tsk);
-> diff --git a/kernel/sched/autogroup.c b/kernel/sched/autogroup.c
-> index cdea931aae30..954137775f38 100644
-> --- a/kernel/sched/autogroup.c
-> +++ b/kernel/sched/autogroup.c
-> @@ -178,8 +178,8 @@ autogroup_move_group(struct task_struct *p, struct autogroup *ag)
->  	 * this process can already run with task_group() == prev->tg or we can
->  	 * race with cgroup code which can read autogroup = prev under rq->lock.
->  	 * In the latter case for_each_thread() can not miss a migrating thread,
-> -	 * cpu_cgroup_attach() must not be possible after cgroup_exit() and it
-> -	 * can't be removed from thread list, we hold ->siglock.
-> +	 * cpu_cgroup_attach() must not be possible after cgroup_task_exit()
-> +	 * and it can't be removed from thread list, we hold ->siglock.
->  	 *
->  	 * If an exiting thread was already removed from thread list we rely on
->  	 * sched_autogroup_exit_task().
-
-Reviewed-by: Chen Ridong<chenridong@huawei.com>
-
--- 
-Best regards,
-Ridong
-
+> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> index 40f12e37f60f..d4dbffb27a66 100644
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -5222,6 +5222,12 @@ static struct rq *finish_task_switch(struct task_struct *prev)
+>  		if (prev->sched_class->task_dead)
+>  			prev->sched_class->task_dead(prev);
+>  
+> +		/*
+> +		 * sched_ext_dead() must come before cgroup_task_dead() to
+> +		 * prevent cgroups from being removed while its member tasks are
+> +		 * visible to SCX schedulers.
+> +		 */
+> +		sched_ext_dead(prev);
+>  		cgroup_task_dead(prev);
+>  
+>  		/* Task is done with its stack. */
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 2b0e88206d07..840bc76210c8 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -2926,7 +2926,7 @@ void scx_cancel_fork(struct task_struct *p)
+>  	percpu_up_read(&scx_fork_rwsem);
+>  }
+>  
+> -void sched_ext_free(struct task_struct *p)
+> +void sched_ext_dead(struct task_struct *p)
+>  {
+>  	unsigned long flags;
+>  
+> -- 
+> 2.51.1
+> 
