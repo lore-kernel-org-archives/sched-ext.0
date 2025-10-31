@@ -1,25 +1,30 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97FCB2D9496
-	for <sched-ext@lists.linux.dev>; Thu, 30 Oct 2025 17:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB89F279DB1
+	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 02:25:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761843631; cv=none; b=W8+8HFMiOTvJNRVGoSud6n4T6D0Yjg3fqubqDYzXWu48Ip+NlQpgcEDtYxbWnJ6+UrBM4KU85hD5u6u7z21x1mfRvd8IIHQCbf0Kc0/G5dZSdQj16CGoaddEVtzdf/6noIcwKV8Veb3h1sAtK/GaTU+3Zkn2pUI9dyziPHLsNxI=
+	t=1761877538; cv=none; b=QPhUWikIMmLVsUkv89cxT5tNx3ZsEk/tqhNdGixxzgK6L2Mh1GjdXk1M4m11w+yL+O6VMcDSo7xrRUPVz2KZZ4L0wvAwFBxiLmM3CRmXr3axB1fa3jvwUySBUyuM5xMrPEhdUxoKJVMBf10okS0ygvHStSVt43M5mz3xPyhPIFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761843631; c=relaxed/simple;
-	bh=Us7RqJUdMWhpC26w+AHuMmRgNQ+ROlw8AWfw4V26NZs=;
+	s=arc-20240116; t=1761877538; c=relaxed/simple;
+	bh=FCMDZpo+zPOaucjsv5ocR/PPIqQlRU1b4RGM6RBMBDo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ao5SVHjXVfsr4TelSyIzEz9//89BP7/DUBB0+TMNvRB5ABkJXsaJ0KMm5PfcW2gEpis72s7xmiOnLOgLwY+n1SwwfDe5GAVeWAkxSYKbD2YSwz+nnHqPT/4HbgQnNw4jk73JKNvzTzk/ITYVSoW10lgPd1mczec6BDPRRHSJvoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1D3882C40;
-	Thu, 30 Oct 2025 10:00:21 -0700 (PDT)
-Received: from [10.57.36.244] (unknown [10.57.36.244])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8D79E3F673;
-	Thu, 30 Oct 2025 10:00:25 -0700 (PDT)
-Message-ID: <c978e3ed-054f-4849-a4ff-d0fba07e3c19@arm.com>
-Date: Thu, 30 Oct 2025 17:00:24 +0000
+	 In-Reply-To:Content-Type; b=mcgWU00QoEYpRJGcw3JJ2RUOvjK+SdaVj+orvifsrO8sSMaPOLPybDKBdC7X/b4gmxVJISgVl8zLh3z0GiQXNfMgErm2phGyHuGsmXuD8Q92CF7sI3tzPz8hZJf9j2f2coVfVcQSXHAJEvdWNAATtze3uplbVO5JKDj9akXwlrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.216])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4cyPw55F4mzYQtLS
+	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 10:25:25 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 6BA371A173C
+	for <sched-ext@lists.linux.dev>; Fri, 31 Oct 2025 10:25:33 +0800 (CST)
+Received: from [10.67.111.176] (unknown [10.67.111.176])
+	by APP2 (Coremail) with SMTP id Syh0CgA32EAcHgRpbQXDCA--.35193S2;
+	Fri, 31 Oct 2025 10:25:33 +0800 (CST)
+Message-ID: <bb99364a-3143-4911-9b86-81fe5a11e1eb@huaweicloud.com>
+Date: Fri, 31 Oct 2025 10:25:31 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -27,170 +32,194 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHSET v10 sched_ext/for-6.19] Add a deadline server for
- sched_ext tasks
-To: Andrea Righi <arighi@nvidia.com>, Ingo Molnar <mingo@redhat.com>,
- Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>,
- Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>,
- Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
- Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
- Joel Fernandes <joelagnelf@nvidia.com>,
- Emil Tsalapatis <emil@etsalapatis.com>,
- Luigi De Matteis <ldematteis123@gmail.com>, sched-ext@lists.linux.dev,
- bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20251029191111.167537-1-arighi@nvidia.com>
+Subject: Re: [PATCH 1/4] cgroup: Rename cgroup lifecycle hooks to
+ cgroup_task_*()
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
+Cc: Dan Schatzberg <dschatzberg@meta.com>,
+ Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
+ cgroups@vger.kernel.org, sched-ext@lists.linux.dev
+References: <20251029061918.4179554-1-tj@kernel.org>
+ <20251029061918.4179554-2-tj@kernel.org>
 Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
-In-Reply-To: <20251029191111.167537-1-arighi@nvidia.com>
+From: Chen Ridong <chenridong@huaweicloud.com>
+In-Reply-To: <20251029061918.4179554-2-tj@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgA32EAcHgRpbQXDCA--.35193S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3WFy8Xw18Xr43XrW7KFW5GFg_yoW7KFW3pa
+	yDC3WUGw43Ja4jgFn7t3yqvFySgws7W3W5Gryrt3yFyr43tr10qF9rCry7ur4rt3Z2gF1a
+	qrsYkr47Kr4Dtr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUyGb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAK
+	I48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7
+	xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xII
+	jxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw2
+	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x02
+	67AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU17KsUUUUUU==
+X-CM-SenderInfo: hfkh02xlgr0w46kxt4xhlfz01xgou0bp/
 
-On 10/29/25 19:08, Andrea Righi wrote:
-> sched_ext tasks can be starved by long-running RT tasks, especially since
-> RT throttling was replaced by deadline servers to boost only SCHED_NORMAL
-> tasks.
-> 
-> Several users in the community have reported issues with RT stalling
-> sched_ext tasks. This is fairly common on distributions or environments
-> where applications like video compositors, audio services, etc. run as RT
-> tasks by default.
-> 
-> Example trace (showing a per-CPU kthread stalled due to the sway Wayland
-> compositor running as an RT task):
-> 
->  runnable task stall (kworker/0:0[106377] failed to run for 5.043s)
->  ...
->  CPU 0   : nr_run=3 flags=0xd cpu_rel=0 ops_qseq=20646200 pnt_seq=45388738
->            curr=sway[994] class=rt_sched_class
->    R kworker/0:0[106377] -5043ms
->        scx_state/flags=3/0x1 dsq_flags=0x0 ops_state/qseq=0/0
->        sticky/holding_cpu=-1/-1 dsq_id=0x8000000000000002 dsq_vtime=0 slice=20000000
->        cpus=01
-> 
-> This is often perceived as a bug in the BPF schedulers, but in reality
-> schedulers can't do much: RT tasks run outside their control and can
-> potentially consume 100% of the CPU bandwidth.
-> 
-> Fix this by adding a sched_ext deadline server, so that sched_ext tasks are
-> also boosted and do not suffer starvation.
-> 
-> Two kselftests are also provided to verify the starvation fixes and
-> bandwidth allocation is correct.
-> 
-> == Highlights in this version ==
-> 
->  - wait for inactive_task_timer() to fire before removing the bandwidth
->    reservation (Juri/Peter: please check if this new
->    dl_server_remove_params() implementation makes sense to you)
->  - removed the explicit dl_server_stop() from dequeue_task_scx() and rely
->    on the delayed stop behavior (Juri/Peter: ditto)
-> 
-> This patchset is also available in the following git branch:
-> 
->  git://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git scx-dl-server
-> 
-> Changes in v10:
->  - reordered patches to better isolate sched_ext changes vs sched/deadline
->    changes (Andrea Righi)
->  - define ext_server only with CONFIG_SCHED_CLASS_EXT=y (Andrea Righi)
->  - add WARN_ON_ONCE(!cpus) check in dl_server_apply_params() (Andrea Righi)
->  - wait for inactive_task_timer to fire before removing the bandwidth
->    reservation (Juri Lelli)
->  - remove explicit dl_server_stop() in dequeue_task_scx() to reduce timer
->    reprogramming overhead (Juri Lelli)
->  - do not restart pick_task() when invoked by the dl_server (Tejun Heo)
->  - rename rq_dl_server to dl_server (Peter Zijlstra)
->  - fixed a missing dl_server start in dl_server_on() (Christian Loehle)
->  - add a comment to the rt_stall selftest to better explain the 4%
->    threshold (Emil Tsalapatis)
-> 
-> Changes in v9:
->  - Drop the ->balance() logic as its functionality is now integrated into
->    ->pick_task(), allowing dl_server to call pick_task_scx() directly
->  - Link to v8: https://lore.kernel.org/all/20250903095008.162049-1-arighi@nvidia.com/
-> 
-> Changes in v8:
->  - Add tj's patch to de-couple balance and pick_task and avoid changing
->    sched/core callbacks to propagate @rf
->  - Simplify dl_se->dl_server check (suggested by PeterZ)
->  - Small coding style fixes in the kselftests
->  - Link to v7: https://lore.kernel.org/all/20250809184800.129831-1-joelagnelf@nvidia.com/
-> 
-> Changes in v7:
->  - Rebased to Linus master
->  - Link to v6: https://lore.kernel.org/all/20250702232944.3221001-1-joelagnelf@nvidia.com/
-> 
-> Changes in v6:
->  - Added Acks to few patches
->  - Fixes to few nits suggested by Tejun
->  - Link to v5: https://lore.kernel.org/all/20250620203234.3349930-1-joelagnelf@nvidia.com/
-> 
-> Changes in v5:
->  - Added a kselftest (total_bw) to sched_ext to verify bandwidth values
->    from debugfs
->  - Address comment from Andrea about redundant rq clock invalidation
->  - Link to v4: https://lore.kernel.org/all/20250617200523.1261231-1-joelagnelf@nvidia.com/
-> 
-> Changes in v4:
->  - Fixed issues with hotplugged CPUs having their DL server bandwidth
->    altered due to loading SCX
->  - Fixed other issues
->  - Rebased on Linus master
->  - All sched_ext kselftests reliably pass now, also verified that the
->    total_bw in debugfs (CONFIG_SCHED_DEBUG) is conserved with these patches
->  - Link to v3: https://lore.kernel.org/all/20250613051734.4023260-1-joelagnelf@nvidia.com/
-> 
-> Changes in v3:
->  - Removed code duplication in debugfs. Made ext interface separate
->  - Fixed issue where rq_lock_irqsave was not used in the relinquish patch
->  - Fixed running bw accounting issue in dl_server_remove_params
->  - Link to v2: https://lore.kernel.org/all/20250602180110.816225-1-joelagnelf@nvidia.com/
-> 
-> Changes in v2:
->  - Fixed a hang related to using rq_lock instead of rq_lock_irqsave
->  - Added support to remove BW of DL servers when they are switched to/from EXT
->  - Link to v1: https://lore.kernel.org/all/20250315022158.2354454-1-joelagnelf@nvidia.com/
-> 
-> Andrea Righi (5):
->       sched/deadline: Add support to initialize and remove dl_server bandwidth
->       sched_ext: Add a DL server for sched_ext tasks
->       sched/deadline: Account ext server bandwidth
->       sched_ext: Selectively enable ext and fair DL servers
->       selftests/sched_ext: Add test for sched_ext dl_server
-> 
-> Joel Fernandes (6):
->       sched/debug: Fix updating of ppos on server write ops
->       sched/debug: Stop and start server based on if it was active
->       sched/deadline: Clear the defer params
->       sched/deadline: Add a server arg to dl_server_update_idle_time()
->       sched/debug: Add support to change sched_ext server params
->       selftests/sched_ext: Add test for DL server total_bw consistency
-> 
->  kernel/sched/core.c                              |   3 +
->  kernel/sched/deadline.c                          | 169 +++++++++++---
->  kernel/sched/debug.c                             | 171 +++++++++++---
->  kernel/sched/ext.c                               | 144 +++++++++++-
->  kernel/sched/fair.c                              |   2 +-
->  kernel/sched/idle.c                              |   2 +-
->  kernel/sched/sched.h                             |   8 +-
->  kernel/sched/topology.c                          |   5 +
->  tools/testing/selftests/sched_ext/Makefile       |   2 +
->  tools/testing/selftests/sched_ext/rt_stall.bpf.c |  23 ++
->  tools/testing/selftests/sched_ext/rt_stall.c     | 222 ++++++++++++++++++
->  tools/testing/selftests/sched_ext/total_bw.c     | 281 +++++++++++++++++++++++
->  12 files changed, 955 insertions(+), 77 deletions(-)
->  create mode 100644 tools/testing/selftests/sched_ext/rt_stall.bpf.c
->  create mode 100644 tools/testing/selftests/sched_ext/rt_stall.c
->  create mode 100644 tools/testing/selftests/sched_ext/total_bw.c
 
-Thanks Andrea, I've tested a few things I had in mind with no complaints.
-Most importantly it a) it doesn't break the existing fair_server and b)
-Ensures BPF schedulers don't stall even with something like:
-sudo chrt -r 95 stress-ng --cpu 0 --taskset 0-$(($(nproc)-1)) -t 30m
 
-For patches 0 to 9:
-Tested-by: Christian Loehle <christian.loehle@arm.com>
+On 2025/10/29 14:19, Tejun Heo wrote:
+> The current names cgroup_exit(), cgroup_release(), and cgroup_free() are
+> confusing because they look like they're operating on cgroups themselves when
+> they're actually task lifecycle hooks. For example, cgroup_init() initializes
+> the cgroup subsystem while cgroup_exit() is a task exit notification to
+> cgroup. Rename them to cgroup_task_exit(), cgroup_task_release(), and
+> cgroup_task_free() to make it clear that these operate on tasks.
+> 
+
+This makes sense.
+
+> Cc: Dan Schatzberg <dschatzberg@meta.com>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
+>  include/linux/cgroup.h   | 12 ++++++------
+>  kernel/cgroup/cgroup.c   | 11 ++++++-----
+>  kernel/exit.c            |  4 ++--
+>  kernel/fork.c            |  2 +-
+>  kernel/sched/autogroup.c |  4 ++--
+>  5 files changed, 17 insertions(+), 16 deletions(-)
+> 
+> diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
+> index 6ed477338b16..4068035176c4 100644
+> --- a/include/linux/cgroup.h
+> +++ b/include/linux/cgroup.h
+> @@ -137,9 +137,9 @@ extern void cgroup_cancel_fork(struct task_struct *p,
+>  			       struct kernel_clone_args *kargs);
+>  extern void cgroup_post_fork(struct task_struct *p,
+>  			     struct kernel_clone_args *kargs);
+> -void cgroup_exit(struct task_struct *p);
+> -void cgroup_release(struct task_struct *p);
+> -void cgroup_free(struct task_struct *p);
+> +void cgroup_task_exit(struct task_struct *p);
+> +void cgroup_task_release(struct task_struct *p);
+> +void cgroup_task_free(struct task_struct *p);
+>  
+>  int cgroup_init_early(void);
+>  int cgroup_init(void);
+> @@ -680,9 +680,9 @@ static inline void cgroup_cancel_fork(struct task_struct *p,
+>  				      struct kernel_clone_args *kargs) {}
+>  static inline void cgroup_post_fork(struct task_struct *p,
+>  				    struct kernel_clone_args *kargs) {}
+> -static inline void cgroup_exit(struct task_struct *p) {}
+> -static inline void cgroup_release(struct task_struct *p) {}
+> -static inline void cgroup_free(struct task_struct *p) {}
+> +static inline void cgroup_task_exit(struct task_struct *p) {}
+> +static inline void cgroup_task_release(struct task_struct *p) {}
+> +static inline void cgroup_task_free(struct task_struct *p) {}
+>  
+>  static inline int cgroup_init_early(void) { return 0; }
+>  static inline int cgroup_init(void) { return 0; }
+> diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+> index 6ae5f48cf64e..826b7fd2f85d 100644
+> --- a/kernel/cgroup/cgroup.c
+> +++ b/kernel/cgroup/cgroup.c
+> @@ -944,7 +944,8 @@ static void css_set_move_task(struct task_struct *task,
+>  		/*
+>  		 * We are synchronized through cgroup_threadgroup_rwsem
+>  		 * against PF_EXITING setting such that we can't race
+> -		 * against cgroup_exit()/cgroup_free() dropping the css_set.
+> +		 * against cgroup_task_exit()/cgroup_task_free() dropping
+> +		 * the css_set.
+>  		 */
+>  		WARN_ON_ONCE(task->flags & PF_EXITING);
+>  
+> @@ -6972,13 +6973,13 @@ void cgroup_post_fork(struct task_struct *child,
+>  }
+>  
+>  /**
+> - * cgroup_exit - detach cgroup from exiting task
+> + * cgroup_task_exit - detach cgroup from exiting task
+>   * @tsk: pointer to task_struct of exiting process
+>   *
+>   * Description: Detach cgroup from @tsk.
+>   *
+>   */
+> -void cgroup_exit(struct task_struct *tsk)
+> +void cgroup_task_exit(struct task_struct *tsk)
+>  {
+>  	struct cgroup_subsys *ss;
+>  	struct css_set *cset;
+> @@ -7010,7 +7011,7 @@ void cgroup_exit(struct task_struct *tsk)
+>  	} while_each_subsys_mask();
+>  }
+>  
+> -void cgroup_release(struct task_struct *task)
+> +void cgroup_task_release(struct task_struct *task)
+>  {
+>  	struct cgroup_subsys *ss;
+>  	int ssid;
+> @@ -7027,7 +7028,7 @@ void cgroup_release(struct task_struct *task)
+>  	}
+>  }
+>  
+> -void cgroup_free(struct task_struct *task)
+> +void cgroup_task_free(struct task_struct *task)
+>  {
+>  	struct css_set *cset = task_css_set(task);
+>  	put_css_set(cset);
+> diff --git a/kernel/exit.c b/kernel/exit.c
+> index 9f74e8f1c431..46173461e8de 100644
+> --- a/kernel/exit.c
+> +++ b/kernel/exit.c
+> @@ -257,7 +257,7 @@ void release_task(struct task_struct *p)
+>  	rcu_read_unlock();
+>  
+>  	pidfs_exit(p);
+> -	cgroup_release(p);
+> +	cgroup_task_release(p);
+>  
+>  	/* Retrieve @thread_pid before __unhash_process() may set it to NULL. */
+>  	thread_pid = task_pid(p);
+> @@ -967,7 +967,7 @@ void __noreturn do_exit(long code)
+>  	exit_thread(tsk);
+>  
+>  	sched_autogroup_exit_task(tsk);
+> -	cgroup_exit(tsk);
+> +	cgroup_task_exit(tsk);
+>  
+>  	/*
+>  	 * FIXME: do that only when needed, using sched_exit tracepoint
+> diff --git a/kernel/fork.c b/kernel/fork.c
+> index 3da0f08615a9..960c39c9c264 100644
+> --- a/kernel/fork.c
+> +++ b/kernel/fork.c
+> @@ -738,7 +738,7 @@ void __put_task_struct(struct task_struct *tsk)
+>  	unwind_task_free(tsk);
+>  	sched_ext_free(tsk);
+>  	io_uring_free(tsk);
+> -	cgroup_free(tsk);
+> +	cgroup_task_free(tsk);
+>  	task_numa_free(tsk, true);
+>  	security_task_free(tsk);
+>  	exit_creds(tsk);
+> diff --git a/kernel/sched/autogroup.c b/kernel/sched/autogroup.c
+> index cdea931aae30..954137775f38 100644
+> --- a/kernel/sched/autogroup.c
+> +++ b/kernel/sched/autogroup.c
+> @@ -178,8 +178,8 @@ autogroup_move_group(struct task_struct *p, struct autogroup *ag)
+>  	 * this process can already run with task_group() == prev->tg or we can
+>  	 * race with cgroup code which can read autogroup = prev under rq->lock.
+>  	 * In the latter case for_each_thread() can not miss a migrating thread,
+> -	 * cpu_cgroup_attach() must not be possible after cgroup_exit() and it
+> -	 * can't be removed from thread list, we hold ->siglock.
+> +	 * cpu_cgroup_attach() must not be possible after cgroup_task_exit()
+> +	 * and it can't be removed from thread list, we hold ->siglock.
+>  	 *
+>  	 * If an exiting thread was already removed from thread list we rely on
+>  	 * sched_autogroup_exit_task().
+
+Reviewed-by: Chen Ridong<chenridong@huawei.com>
+
+-- 
+Best regards,
+Ridong
+
