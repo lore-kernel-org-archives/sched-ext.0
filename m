@@ -1,78 +1,52 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215DF2BEC55;
-	Mon,  3 Nov 2025 20:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6090535979;
+	Mon,  3 Nov 2025 22:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762202290; cv=none; b=usT61abZNRk4NBrj3iEAFQaLmQ0AzgmTzeunnRzJsrVpBttsUrO05iqUYP009LswuFOdYwq8j/vs+qcWORbNsxBqHxz89drZXocWAM09CPuBc/Ukqk+HpsTjkeS+P79WKMsZcrQSMQMTdUEZE37PteZ2tQjLMkizOd5D7qiVTzs=
+	t=1762207492; cv=none; b=NwmtWyIeExGmCHOxcJmC20JWD/qaFSO4+vafEijIiZPvXwDWnlvwFQhXhx4DzeuGlCW4TwrTTtcHlYa06X0KGo2dtAmRo/3cUulIGv5o0DSptSIUdtCDyePclh5d2G3brRzE2ua90uYQgCyS/YG2N95zbtQqX11GNsui1+PhJR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762202290; c=relaxed/simple;
-	bh=d8F8UsdnvnUaoWsHfsOrnVhY0t5k0fgj3679PdZsIgw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fF5VCqwtYS+as0EDC2EYRDbKLNYau4mQn2JK7uzK/xzkG+yxsOtIIpoy9s4nNzB+BPU8KIAqb21E9YDQRMkmQALlc5Qv5dReXng8WRcLWgiGCCqYDaUno9T5mzcrpGpgk/CMtZGj4MjQkXxEBDeplhAIeMkMaCvGMc7C4ccmsYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SA4SnDMc; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1762207492; c=relaxed/simple;
+	bh=q1KnAwOqhZ12LbhelGvpWpLtVrGFm8BctW+uZmoSZMw=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=rD6zp22/fbVwQA8ydan/AVZ7CGglhRO45eU0jw4vGOvm+x/58SeVESANtfMkIBLmKDcdMpSCAjPkLMg2HbZx7nOMsHm3Ti/p7nUwnCR7F+yabsi2ODdw1LhXYFTAIFx4u1yYhWFu6StCdC5q3SjSpXADY9CVDfykUm004y1kjRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NMqyr6CK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SA4SnDMc"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=HgugKP+2Af+SGnfyPg20MYT0WaZn1lZL22X8t1CwrtA=; b=SA4SnDMcf9d9Gy8fXmB6zQqsi0
-	Kk9GK9ozxMCRr8OJPra4qeiXvL7IfOiR1mgZdp3LXzq36Kt7yzoRNZxFE+c8VApcB11LfM6nafl3K
-	8v4U6c8kVfPFq4L9jkC5DAXl6GFuwvrLktEYAVHlFdsJ0NzAAsC6jhibbRi9buvSFeanqU5xa4NX9
-	LDzylYByveQH+hiXHCTC6yW+t7h+ImDtEUE7OvDHVZhAbyGXPzPzBbNIsvuPuAL4VBPmaJ4ICxT8T
-	35pTokqifFp3g7O+24qFKZOLlsixKuAkCs+lbCbkGDtX50RMrxH69Sq9zuWwWMEo/x28Fobfwp4IX
-	leKFSl8A==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vG1JU-00000000AjS-2ENs;
-	Mon, 03 Nov 2025 20:38:05 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 3D66D300230; Mon, 03 Nov 2025 21:38:05 +0100 (CET)
-Date: Mon, 3 Nov 2025 21:38:05 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Dan Schatzberg <dschatzberg@meta.com>, linux-kernel@vger.kernel.org,
-	cgroups@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH v2 4/4] sched_ext: Fix cgroup exit ordering by moving
- sched_ext_free() to finish_task_switch()
-Message-ID: <20251103203805.GH3245006@noisy.programming.kicks-ass.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NMqyr6CK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16B5C4CEE7;
+	Mon,  3 Nov 2025 22:04:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762207491;
+	bh=q1KnAwOqhZ12LbhelGvpWpLtVrGFm8BctW+uZmoSZMw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=NMqyr6CKBc68xyKXaO3dz5y7pmejbIt7B0Ywu0OVyGnkTQBcwAkcSikgGfudh10WW
+	 qiftr/JzXDHIZkRSUGPyk28xVXKKJFOUJ2LsgljActe+rFr+Glr73l56bn4rJ+AHkY
+	 OAloBrZoFf0m12UoI+WhVxRJGsyMaeDAmNm6BhlUb43jvPLsj62D+Itxfab9lqU7V7
+	 Yw+uLKxDgi+I1VB2r/APa6O3qFnneVkBRJeCtZckK+320eR7PjFUfUa/O4H6kqmJhQ
+	 sTJMEqS+g7KRw7SZBxCr1iAQIAYhYnwUCiskVtjDF1vgUn6b6psvxEnFVn3a1Hlebf
+	 Axnhd5mjyigSw==
+Date: Mon, 03 Nov 2025 12:04:50 -1000
+Message-ID: <be1d60422cf5b4a7d707e97c879cc533@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>
+Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Dan Schatzberg <schatzberg.dan@gmail.com>, Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, sched-ext@lists.linux.dev
+Subject: Re: [PATCH v2 0/4] cgroup: Fix task exit ordering
+In-Reply-To: <20251029061918.4179554-1-tj@kernel.org>
 References: <20251029061918.4179554-1-tj@kernel.org>
- <20251029061918.4179554-5-tj@kernel.org>
- <aQkPqUSMr5L0spd8@slm.duckdns.org>
- <20251103202843.GF3245006@noisy.programming.kicks-ass.net>
- <aQkRKC15ta5Wo-lU@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aQkRKC15ta5Wo-lU@slm.duckdns.org>
 
-On Mon, Nov 03, 2025 at 10:31:36AM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> On Mon, Nov 03, 2025 at 09:28:43PM +0100, Peter Zijlstra wrote:
-> > > @@ -5222,6 +5222,12 @@ static struct rq *finish_task_switch(str
-> > >  		if (prev->sched_class->task_dead)
-> > >  			prev->sched_class->task_dead(prev);
-> > 
-> > ^^^ can you not use task_dead_scx() ?
-> 
-> Unfortunately not. Because sched class switches are atomic infallible
-> operations, all tasks in the system must be prepped on scheduler attach &
-> fork regardless of their current sched class and thus have to be cleaned up
-> in the same way on detach & exit.
+> Tejun Heo (4):
+>   cgroup: Rename cgroup_{exit|release|free}() to cgroup_task_{exit|release|free}()
+>   cgroup: Move dying_tasks cleanup from cgroup_task_release() to cgroup_task_free()
+>   cgroup: Defer task unlinking from cgroup during exit to finish_task_switch()
+>   sched_ext: Rename sched_ext_free() to sched_ext_dead() and move earlier in finish_task_switch()
 
-Ah, I see scx_post_fork() and sched_ext_free^H^H^H^Hdead() effectively
-duplicate the tasklist.
+Applied 1-3 to cgroup/for-6.19 and 4 to sched_ext/for-6.19.
 
-Oh well.
+Thanks.
+--
+tejun
