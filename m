@@ -1,74 +1,73 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E4D23504B
-	for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 23:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8C2268C40
+	for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 23:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762817193; cv=none; b=mmPJhOMWZmIj6HJpz7QO4tkqKIPuyOBFlMqTncJnHXNLIJXeE+RaWXKH1Pajm9hAqREOU95UdUcnSeXcK/sDgASQTcsrobhH0XwBPEue5vKI5YtLIHPIhWbyfKjeNHib9xc0WsrTgjCBpxfCfLASipAHere/hberR0sISviYMko=
+	t=1762819023; cv=none; b=jdZtF8rx7Wof2xwKEXdxB4udIbXEFjiGTOuCYL6PXZDvYrIXDXK0gGy8QZvaxKvcCIuQpUwr40sRywjy7YWjX3q6X3iPq855o3MLWqbDcE4oWrGIIws74utjerC26gcCFGUFOanj0N3zlgA721TGm+D2/iz8KRGFLX1oJapMTHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762817193; c=relaxed/simple;
-	bh=VCB2ZMxLVCEaLhJ0PJgWPd2j0GgeMo+gFkURpClM/7E=;
+	s=arc-20240116; t=1762819023; c=relaxed/simple;
+	bh=tgfiS9cTra3MjR8Qx3EjT2AU898OkeuQf4TpjzJhbkw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cQqY+7/3gIIQVDgsJgBG4W6nx1xVgU120W1oNlSqD/0nIS697bbQ+X/KiqqmRt5YbblASIaU4uw/0ltfoA+f9SuBijv7LZy9WnRd6YQnPrv+ZBvQXXQfkXo6V3OQiZzT+brsIWWElmzaKLQD1Gm6G2eR+/ewPducT1OpusUpt4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=S7ZZGywC; arc=none smtp.client-ip=209.85.128.176
+	 To:Cc:Content-Type; b=gjLu0CpphD8vynKm0RclOC4ZkLw25ifIuakZi9qFxw8NL3NH6AuPo2qSBREBVAHppYdCklsyv4lzFNCp28Zq+rUTRQbp8SLX2EblbxOdpMjFGvgAtYM6s3gWBmRTD1Zg1x2SawIiRculiWTOGsAsGlaTmejepuw5jT0nRyDOiKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=KFDV7uns; arc=none smtp.client-ip=74.125.224.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="S7ZZGywC"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7815092cd0bso34371677b3.2
-        for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 15:26:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="KFDV7uns"
+Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-63f9beb2730so2992846d50.0
+        for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 15:56:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1762817190; x=1763421990; darn=lists.linux.dev;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1762819019; x=1763423819; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KipecrXhqUgdfrMDxFBmzG4ENSV0qjCiG+IUf6NbfOU=;
-        b=S7ZZGywCeK2kznLwaq4kmy8YXGsk1UVX4LgU6vlAM9sZ2hFTydWYMsnDVBcrFdQFU2
-         yroMg05NTm0j3CNMSIY/1+NNZA+3rsHMJaAFGceKH6mNNrJ2t/cpEki2oqW2b/fNda+I
-         eW8c0BJuu7wjnIupzWCsY+vIps3bQsAUk28ktizYTUTIpkHDwII5nW4W354hq2Q25EaR
-         L9Lxx3OaSwA4Q5Eu6QDFv7hgonaV5DKquwAZjvqXxL05Nm+UlZcH+5UzZFIeExAkE4FM
-         NlUSp+1yd5arNgoRGP4DdRbw3ELuKAFEWjMPdLfoL2XGGo2PEEns418+0XkppqZUI9YD
-         Duyg==
+        bh=5Nj1q0mNcasYTnvKP6x35pxta4p3k2au3FFGEe/4tvQ=;
+        b=KFDV7uns3RVnVmYB9kjvz67fTKYUHqT8AoVRoDRqdaYaSXgBx45icoVyAWeUlXkRZg
+         kVqLt4ybIVlo+EtgoeXgcoF3NcZcaJYSojyudIcUeAXL9PbM5jbXiPTVebHZN0tt9M9F
+         tl1tlhA2X/v2lq/+exQITexVOn6gX2afTzrP2LNmgMsFe8CQPEC9uFUrViGAdpUxipo+
+         Al6CUnC0LFJhEqjwMsjt51usMH/glMT73tpCdiZM9JHQySrDHwIzlAkXCDIL7fT/L4PS
+         l9PQaEF4pKbo2Ql6nWqwNZsdhou1Aa9E7CE0MkotsTnF+RynS7Fzepxk7d2JyUc9TmQW
+         7syg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762817190; x=1763421990;
+        d=1e100.net; s=20230601; t=1762819019; x=1763423819;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=KipecrXhqUgdfrMDxFBmzG4ENSV0qjCiG+IUf6NbfOU=;
-        b=Is2rZKVVcPlytp1oKf33CL6vEm/eaizteXRN51KngMvPjiPfQ20lD/c3q9CFg+Pn4X
-         2t5gl/x30CAsGDzTTcXrumY8H1r1lzUw76HMbic/gk9fCeVkgBxpwAlhQNMGKmj4qJrf
-         7a3Oay6b3baG6RSRQd0mRHM7qEyaxLcM/cbp1QdWFJ5wpIor1MwYES2z9C42t7PwgRFE
-         M+p5n8A4RyYlWYmr0QZYibNvHyheQ2XbMNOVS+uEDwrIV18UCr6fvop9yzbIe/+f3w0Z
-         C5eQ6F0zjVO8X65f5C2Y8pYAV4+RCU+P+QAhyfSypVEa9GTXUBFxqnlIeQy//qeQDQZb
-         8/bw==
-X-Forwarded-Encrypted: i=1; AJvYcCX+FNEp31S4iWS0sVaJltps+0o224bAlATfqAkjr1bcYQB9aqmGjC9sjS64jVABeBcI/px/6yq9ayg=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzix2z+M3iKtM2X0xlYaZZygtLaes4SQ9rpU+DruixVYzaIl6a2
-	6DFM26kImMu6zJVDwF1R1jQzY3I4tYBwCa4RU31cRIBM9iKz3TfEKAYM0I6cYMc8sAuF9hnc2lu
-	UufQyXn9m0FBSyRHK4JM0o0HpQ89biNXi2rQZ/DP7cw9dXTBOFmhb
-X-Gm-Gg: ASbGncttKlJqdpXerPrsNT9L+kFR7vHicZJXjZ1FV2ZykP3iPVr3WkO68Q8JwpscXWY
-	Wwh1vFXMloDFe8eJ//BLhCE7RWNodd2l/IrvNSpVX7dMM4gUW4dHD3IKs8tdEoB4J3AoR3JOpGy
-	50aw2jtZFbMaSUYH6d3XrrNMFhfgta46jQ7pya2NKdTcCdF/dG0Ot9aqg1qBoSvwtItOoF5EpNX
-	eKOC4CX/IrD+ffXgOCgfvexBxatZXEvMLEXkd2jP7yJH7wtLbFGs0ifZ3yThca/OgSsal9yqQ==
-X-Google-Smtp-Source: AGHT+IHXBlAUFCR85xg+f0kdLjBezojNFyqd6xRE/D47CmRf5ykj9eoFr7t1LpF96qjxOpV6+cmjH5ejJYIsrZgrwxA=
-X-Received: by 2002:a05:690c:6011:b0:786:4fd5:e5db with SMTP id
- 00721157ae682-787d543a779mr176879927b3.49.1762817190409; Mon, 10 Nov 2025
- 15:26:30 -0800 (PST)
+        bh=5Nj1q0mNcasYTnvKP6x35pxta4p3k2au3FFGEe/4tvQ=;
+        b=r0jCQrt7ACBOvQiM6GS4ACR3wdF0od/3zcJSwkh6ssVOVJ73xjy7fpMn3xZj+5oJ4u
+         r4hfvH+OVkIp8w7Ry9LIyDmUwRPZ9CB+bxkHCn/FDky8SWKMHOZHKg30S+Goy7ftj8dU
+         sS7JnHrSkYt1yu44phl28Tdn9Jq1sveQFhBqGaAzQUSQ8bm54572z1VsmTlB16a3igt+
+         m881g43QPxpuYXZigUDrR3EIejGnLwwuH6Rn4THpXqSEjsUDZcfe/CcLtRZy8CkCS115
+         rhOMTrpI2ijlGyzsoXYkhYPPa7rFPR3RmjJBXIydN/6CXnsFRS9dKIQ+z3PiqMxJLCD1
+         sKpg==
+X-Forwarded-Encrypted: i=1; AJvYcCU6myYnN8FD4TOCq/UXbih7sP7ddXYPWGu3kRIXOB8LV4nr6GB6w6DqFgxuIEox9t+2vs/ZQ3j+D+0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwpPrsnbJPYGwWwLoB7tyVAvXXxsr+Fms3SNivbTI9dvgDIOWnh
+	PEvczoOv86llZ9iECdJSZ21PATUBJkue+FJSuhf6UTHD8gYjmA0PbG0fxYFvhNDnvJ0Di8R99AH
+	PljbOpSVPqlhbAE9N2HMDLt25qfT6b4RK8G7SRspPXFbUFEcb92r9
+X-Gm-Gg: ASbGnctVbbbH6ZxOzQWsMum47LQmydEX593XKjOsaAWiIeXhG2HvcWiRCYTlODdDo6P
+	Gz49AxK75bNE0JCb8FZ+wKTmR4bKRBSdpqU55mbCf+FwrHwjNcRBIg0YXgATUlEmMMvHHGv2Phe
+	lvlIdIMNEK18i8xE3HCP50/MZJSODN8AyjKK33BZHPcma+aGT+MXd4qQfwcaKkUl7Tyr/bn6YVw
+	/e1Do1gDsvDNxVuMcah1+8ZY3996B1WTgCmyx3d3BLRATo0Ti3MKkOKwRtWvkI=
+X-Google-Smtp-Source: AGHT+IEYS9SgK5WzsgyfFw2SD3xybWKtZXTp6PZoYwrkPfKwTSmMkqLzXwB/JbmTscVTXPcbHxNw0AfHx1HwzeaUldc=
+X-Received: by 2002:a05:690c:4681:b0:786:4ed4:24ff with SMTP id
+ 00721157ae682-787d5350164mr91957387b3.1.1762819018909; Mon, 10 Nov 2025
+ 15:56:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110205636.405592-1-tj@kernel.org> <20251110205636.405592-5-tj@kernel.org>
- <CABFh=a6rP08+vsK11Ubi5qv2o2yOYFSoiMMM8ZahSVy=LzXpow@mail.gmail.com> <aRJgTTiAnHzrMN8y@slm.duckdns.org>
-In-Reply-To: <aRJgTTiAnHzrMN8y@slm.duckdns.org>
+References: <20251110205636.405592-1-tj@kernel.org> <20251110205636.405592-13-tj@kernel.org>
+In-Reply-To: <20251110205636.405592-13-tj@kernel.org>
 From: Emil Tsalapatis <linux-lists@etsalapatis.com>
-Date: Mon, 10 Nov 2025 18:26:19 -0500
-X-Gm-Features: AWmQ_bn0JzQ8IqDTywdTWUHBnmbWv0P-aVwCXoPIRl2avHsOVuwvIbUg5a73Ys0
-Message-ID: <CABFh=a6GNZSzrLzyonv5aYn8Rh06YquVoGHJfJnYL8rMOymZ+Q@mail.gmail.com>
-Subject: Re: [PATCH v2 04/14] sched_ext: Use per-CPU DSQs instead of per-node
- global DSQs in bypass mode
+Date: Mon, 10 Nov 2025 18:56:48 -0500
+X-Gm-Features: AWmQ_bnZeNnUS9oP_2Fx4DPImpvH26pzs7x9mbIoeSRMS41rpiNw8pWfz58gD0Y
+Message-ID: <CABFh=a7x4rXergkASTr2T8c20Yu1E0+_5ZaPijLhzGEkM_Pmrw@mail.gmail.com>
+Subject: Re: [PATCH v2 12/14] sched_ext: Factor out scx_dsq_list_node cursor
+ initialization into INIT_DSQ_LIST_CURSOR
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Andrea Righi <andrea.righi@linux.dev>, 
 	Changwoo Min <changwoo@igalia.com>, Dan Schatzberg <schatzberg.dan@gmail.com>, 
@@ -77,53 +76,67 @@ Cc: David Vernet <void@manifault.com>, Andrea Righi <andrea.righi@linux.dev>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Tejun,
+On Mon, Nov 10, 2025 at 3:56=E2=80=AFPM Tejun Heo <tj@kernel.org> wrote:
+>
+> Factor out scx_dsq_list_node cursor initialization into INIT_DSQ_LIST_CUR=
+SOR
+> macro in preparation for additional users.
+>
+> Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
+> Cc: Emil Tsalapatis <etsal@meta.com>
+> Acked-by: Andrea Righi <arighi@nvidia.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
 
-On Mon, Nov 10, 2025 at 4:59=E2=80=AFPM Tejun Heo <tj@kernel.org> wrote:
->
-> Hello, Emil.
->
-> On Mon, Nov 10, 2025 at 04:43:23PM -0500, Emil Tsalapatis wrote:
-> > > @@ -1298,7 +1298,7 @@ static void do_enqueue_task(struct rq *rq, stru=
-ct task_struct *p, u64 enq_flags,
-> > >
-> > >         if (scx_rq_bypassing(rq)) {
-> > >                 __scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
-> >
-> > Nit: The bypass label has a single statement, and there is no fallthrou=
-gh to it.
-> > Can we just add the logic here:
-> >
-> > dsq =3D &task_rq(p)->scx.bypass_dsq;
-> > goto enqueue;
-> >
-> > and remove the new label?
-> >
-> > > -               goto global;
-> > > +               goto bypass;
-> > >         }
-> > >
-> > >         if (p->scx.ddsp_dsq_id !=3D SCX_DSQ_INVALID)
-> > > @@ -1356,6 +1356,9 @@ static void do_enqueue_task(struct rq *rq, stru=
-ct task_struct *p, u64 enq_flags,
-> > >  global:
-> > >         dsq =3D find_global_dsq(sch, p);
-> > >         goto enqueue;
-> > > +bypass:
-> > > +       dsq =3D &task_rq(p)->scx.bypass_dsq;
-> >
-> > Nit: If we keep the bypass label, we can remove the goto since the
-> > label is right below. Otherwise, we could remove it
->
-> This is really subjective but I like the fact that the local, global and
-> bypass labels look symmetric. It doesn't make any different to compilers =
-and
-> I think keeping them so is less likely to trip up people.
->
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
-Ack, makes total sense.
-
-> Thanks.
+>  include/linux/sched/ext.h | 7 +++++++
+>  kernel/sched/ext.c        | 5 ++---
+>  2 files changed, 9 insertions(+), 3 deletions(-)
 >
+> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> index 4b501ad7a3fc..3f6bf2875431 100644
+> --- a/include/linux/sched/ext.h
+> +++ b/include/linux/sched/ext.h
+> @@ -149,6 +149,13 @@ struct scx_dsq_list_node {
+>         u32                     priv;           /* can be used by iter cu=
+rsor */
+>  };
+>
+> +#define INIT_DSQ_LIST_CURSOR(__node, __flags, __priv)                   =
+       \
+> +       (struct scx_dsq_list_node) {                                     =
+       \
+> +               .node =3D LIST_HEAD_INIT((__node).node),                 =
+         \
+> +               .flags =3D SCX_DSQ_LNODE_ITER_CURSOR | (__flags),        =
+         \
+> +               .priv =3D (__priv),                                      =
+         \
+> +       }
+> +
+>  /*
+>   * The following is embedded in task_struct and contains all fields nece=
+ssary
+>   * for a task to be scheduled by SCX.
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index d16525abf9e0..82f0d2202b99 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -6249,9 +6249,8 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(struct bpf_ite=
+r_scx_dsq *it, u64 dsq_id,
+>         if (!kit->dsq)
+>                 return -ENOENT;
+>
+> -       INIT_LIST_HEAD(&kit->cursor.node);
+> -       kit->cursor.flags =3D SCX_DSQ_LNODE_ITER_CURSOR | flags;
+> -       kit->cursor.priv =3D READ_ONCE(kit->dsq->seq);
+> +       kit->cursor =3D INIT_DSQ_LIST_CURSOR(kit->cursor, flags,
+> +                                          READ_ONCE(kit->dsq->seq));
+>
+>         return 0;
+>  }
 > --
-> tejun
+> 2.51.2
+>
+>
