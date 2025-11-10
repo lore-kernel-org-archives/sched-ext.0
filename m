@@ -1,130 +1,217 @@
 Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8592DEA80
-	for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 21:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B1E199E89
+	for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 21:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762809713; cv=none; b=BtwPQH6k1eimFHgceveTH+8uNGR/DDS6utnAhBk934ffeEVnOgwfcTLyRiL/sH2woiSfySgFftjfLEjDx6zoV875yYZSYyB0VCIVN6bc8yWwhAFcF6SrSteQjHPtVzmjhphPM/UVlBcYxwOCQN37Hwua4jbKqOFN/ZtebOlayfA=
+	t=1762811017; cv=none; b=bEWMKslzwFHbjKGJwaWlB7jVyEdSvvM7axnM4+mCS1dFh+fpHfGG7AfJc2yxjt/pMvDC6mVUAfX3PSKSOxaXablUHVr1xxI6xr3A1NWjKI3vANIQMNvShhcgaXeyWVZJ5wVwZw/JuDOXUWf6kmwzVp0i2WzVVIXZjkeU45faORw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762809713; c=relaxed/simple;
-	bh=lT0bETKBrtamVm1uBBj/h7Vn58enr7FjC9rwg4SQvGc=;
+	s=arc-20240116; t=1762811017; c=relaxed/simple;
+	bh=ly0mOtDUxX4tWKt/IjWg13ihHqNVJ1ciiWMf2fJAHVU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Qk71k7yzWdkfV767yHNKwgt8ZfmRwVtrNh62X1FEqaeEUQS9E+0xulQAwP78XzeB1LXxCtDZQNALYqv/d47X8OVUGXVZ/b7BmtsAtftpnWEbQFCQ1W83y2r36w8EncXoFE9FVLyXI/hPS+gDxQRDyFJuSwNtKwL6rRRAqm2vSTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=CDisdVcH; arc=none smtp.client-ip=74.125.224.47
+	 To:Cc:Content-Type; b=Hip4LXGm/Q9Zzlk2sKHffSrOUOIzNQv57RgdK6VflZbznpSQfEdmfGyJk0S+D9fxNYadYi/ZvflQdSjLrf1/Y6X2JrJXUeSo0Nf+gMqBal+u+WplZ0l8keOcO41upL8ueKI8wq6yu9j+WDHcCOIAkESUsM1ssSUDujJqbCR7XbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=tyuhK6CX; arc=none smtp.client-ip=74.125.224.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="CDisdVcH"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-63e2cc1ac4aso3159209d50.2
-        for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 13:21:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="tyuhK6CX"
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-640f2c9cc72so691710d50.3
+        for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 13:43:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1762809710; x=1763414510; darn=lists.linux.dev;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1762811014; x=1763415814; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sesGHprX+1WlbXXlnwmIK+NqQik2TI8q+6Ij8J/CIOg=;
-        b=CDisdVcHDWIyeYhatJCssM50OzJqKYadLrIY8VY2JcGU6pfvlckPbSgb5FRBUmZj5m
-         RDjFHsWP8z/XBOjMh+QViNs9mriCvwFkQ2QQkFKtoLF5FxbbYHTWHzO3ZrCElDmev37C
-         OwnZo5u/43YEFFtLoHmBBEfYm1HD+QX+ryGY/lRY+gsxRzHCwihqv9X3fr/ggTJk6Dj3
-         4yQmFjokn1FuLexbgldna/3IE8DAcjkGK90JWjcdS+WOewluUvuery8m39iHpSfch4Qy
-         eSZepXYBzfXZEe8SBpGY98Gs4wUPHmAZAfSMLG4ykeUp/SGyHWD+xlPa3mRht0VjS9WL
-         31Mw==
+        bh=R91J38Rt95DFLbNanTrQ2Sogh6MvPxM64piJrtd8qMs=;
+        b=tyuhK6CX+9Nqf+3Ck+eTHWhANHOWfJ2+0cH/md780Z6L3FAnOEI/gDEduR+f7DZdVu
+         cqq0c8/7f4KOOLdu7O+ze+jvbMn3/uNcXSonOzwfZ9P1i87DjBJSQ9qDu4FMz+El0xjS
+         nM4AbsqySJ2DX4mLb5H75RH04buuokmz6jBGBY/7h5XVO2aw/F4Jn6qKrAIJM1+Cluz2
+         dhkQ40r/AIoyuP/pfXrURxS9dv/ao3rfWumkRYSbcIFG8J2sxc5gypYUquIngQUhdpky
+         wJAQ8MQFaPIJbduDSu2JYAU7Y4ESit2OLbUE65sC58xlUR/HcuXdRvw8oaeiHUnES7IN
+         6pnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762809710; x=1763414510;
+        d=1e100.net; s=20230601; t=1762811014; x=1763415814;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=sesGHprX+1WlbXXlnwmIK+NqQik2TI8q+6Ij8J/CIOg=;
-        b=H4TfcoPgEE6zJEEca4Ygf3PfIY1NOZASbbHR6dSyKHXoeVNQ4JP6mtjsq2hOUSp6L5
-         LWTX2tLq4BesDqzKcwEt6n3JQRj6tscpSnkLCrIq6nHgzPZyhaHhpb5EQtI6nBSf2RfG
-         8DlL3WnadRIQSaw5deipr5P5IjBbSb5ySltCjFfwL2OBGd2PZ6Yr9P3uydvj7je9npun
-         VON2FojV/brkd99wK2qZk+25HIl6MnDcJQCXvAIm5w0gSGATrUHpSUjmPmU52AVz4QdL
-         d6tL1r/9Q6m6O0p8lglZrgaGBY38Mv94id+W08rLH81qdm5yu4ZTocYNq/LyteVvWwBC
-         ThQA==
-X-Forwarded-Encrypted: i=1; AJvYcCUue0ZX8PPB7xqlTdtTsFuM6K3WQmNZKrDBx1ECvurzc7Ba1DeVTroxd9LCdO4Ze3CtZ+0TuhgKXwk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YymPvmCxo3I66J+EEqysr2YEyQCRwDk2903AeI4vSb1RnpXELqV
-	7EEMkP35axpKA97kjXHEZE4XppceQ+wxAF+iaGNqwWunXcA6gwYmYpc9C5sNWncR2pZt6m2p/3Y
-	WRCprYeAr9f2S9ldbfJTBOwW/7GyJtHJ90WBspZScjA==
-X-Gm-Gg: ASbGncvetHdunVIH2YklXtsE6Rpeh/vtDhWQPbTVTqLE9ArF8hHIYS0EdNmjlNsguQ1
-	arIZqkGvCp09qpDLpx8AX4+H1IC9tY1ge3m3Z/zH8g/A2RvPszp5PJpcigpPPToFtjfHCs/LUTk
-	Tpr6SbBE+Tr6qju74k1QXFJoy8JDg1uk5jC5TxdDUdjNzxYuerLED2QM1nbyFKAKwgyoj0Vnnxk
-	IX6BNB6nSctr4/jaoSGiFoR6ktrKQ1VDTmYAVyUmnm2Y+vKlPFKJxBmR5v6LnI=
-X-Google-Smtp-Source: AGHT+IFMWauJYg/+Hxf6FOiIbgd7lsrxFeiDNEwY8YbAc/vKRrFFeNS0GHTj94ZvI8kEc8OUG+156cOYC9eXjYym2+k=
-X-Received: by 2002:a05:690c:4d09:b0:787:cad1:bdbd with SMTP id
- 00721157ae682-787d5473907mr104028257b3.65.1762809710480; Mon, 10 Nov 2025
- 13:21:50 -0800 (PST)
+        bh=R91J38Rt95DFLbNanTrQ2Sogh6MvPxM64piJrtd8qMs=;
+        b=PgQSZfNvWI7b6qKdsX2nTUorvuD4JwFXEaUgFL1P3iQvZTr+/VuuTgefA38dvOHhlK
+         qoT+efyrnEyqXdYhD14U4y4Py09PGum1bMPI3bAw2wC+e9yjDSDGUlvHQJyFEKixAqy5
+         Nm+bHlmUv998+anvj4HIIG5+uAZhI53+HM2RwOsvVOebUiNSdqjCmC443rpwSidrZXIh
+         QM88uAlJidb6QnVHZatmZ7xQNVF+CT//+HoSuwczXajQI/mhMXIqqt1RYLJt7MZf26+W
+         vx+MPhIRvXVZPXaBEAis1rzn2RDrXRyHQXkDSWASnhwg+y+V6C9h2+1VZfspdgVaipfW
+         sKGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXluMAX4CFpAbb06kiaEEBoRBJpmLoWh9UCzskk+Js5KDkPn8FeEv7j42u1Ywp0PjjHOtUgKDqPrMo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZaDEAjeSpD5djFKTmx5yiwbngxkjgBxtwVYzVEWgVmIlMkD7d
+	uwaPFy6c9xtnM7x+PolWi5WZnV4qRp2yNry4AoTuLsSADq6c7/c44MzjxZIl9H+REhCDe+cWhxV
+	/ZGyDkFxxO2izyR0EhV0kTVW2Pq+W3dILEI3m7JwvBA==
+X-Gm-Gg: ASbGnctcUwSJmI0oo5vmM24k8icEaav/1EOqMCVlDHehrqDW7/6ATItpN2LkEGwFNVa
+	xxpuq2QyyfM4PX1zZJ680b6YbM+DKdc0dD+RGfdBBycqN2GbKquPF205v/vVetWK7sFjovkMRKq
+	t2s/R7BiyNLIxYobc0GK2m28PDLXQYASYjQQqQ3goQmkvoTSb/6uPLNZGSLfuFSOZIhjQojch4y
+	UqnsqzJubOpuhoUT4W41YI9C5yl+ygy4ZvXxb+lOFtMAgyOIA1DBKBvPvSCW4pO8eNpgrtv8g==
+X-Google-Smtp-Source: AGHT+IFm7fT23uFvjsyYyTFiMGYENtJY5fIpQe9drynzp+/2LbShu0VQNgJLN7iovx2xtPyFQG/WqLQIy+6ziKMWBtw=
+X-Received: by 2002:a05:690c:6ac9:b0:787:ca87:595c with SMTP id
+ 00721157ae682-787d53527cemr163023057b3.9.1762811014498; Mon, 10 Nov 2025
+ 13:43:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251110205636.405592-1-tj@kernel.org> <20251110205636.405592-2-tj@kernel.org>
-In-Reply-To: <20251110205636.405592-2-tj@kernel.org>
+References: <20251110205636.405592-1-tj@kernel.org> <20251110205636.405592-5-tj@kernel.org>
+In-Reply-To: <20251110205636.405592-5-tj@kernel.org>
 From: Emil Tsalapatis <linux-lists@etsalapatis.com>
-Date: Mon, 10 Nov 2025 16:21:38 -0500
-X-Gm-Features: AWmQ_blAi8FOoVppDnM5enbLhfoiA5Nt_BRDMI3YlXMQjTOkmLWDkjIHUFecRoA
-Message-ID: <CABFh=a5Y8b9Ke2e=Cjdirjzz95bNEJf1SjEOtT3OVG8ZPPBk3w@mail.gmail.com>
-Subject: Re: [PATCH v2 01/14] sched_ext: Don't set ddsp_dsq_id during
- select_cpu in bypass mode
+Date: Mon, 10 Nov 2025 16:43:23 -0500
+X-Gm-Features: AWmQ_blnzkBg837GPO32wah8Id-a_1xg9pBvasKGI39IKeqxzCA1Y_g3Kae1WzY
+Message-ID: <CABFh=a6rP08+vsK11Ubi5qv2o2yOYFSoiMMM8ZahSVy=LzXpow@mail.gmail.com>
+Subject: Re: [PATCH v2 04/14] sched_ext: Use per-CPU DSQs instead of per-node
+ global DSQs in bypass mode
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Andrea Righi <andrea.righi@linux.dev>, 
 	Changwoo Min <changwoo@igalia.com>, Dan Schatzberg <schatzberg.dan@gmail.com>, 
-	Emil Tsalapatis <etsal@meta.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+	Emil Tsalapatis <etsal@meta.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Andrea Righi <arighi@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, Nov 10, 2025 at 3:56=E2=80=AFPM Tejun Heo <tj@kernel.org> wrote:
 >
-> In the default CPU selection path used during bypass mode, select_task_rq=
-_scx()
-> sets p->scx.ddsp_dsq_id to SCX_DSQ_LOCAL to emulate direct dispatch. Howe=
-ver,
-> do_enqueue_task() ignores ddsp_dsq_id in bypass mode and queues to the gl=
-obal
-> DSQ instead, rendering the setting unnecessary.
+> Bypass mode routes tasks through fallback dispatch queues. Originally a s=
+ingle
+> global DSQ, b7b3b2dbae73 ("sched_ext: Split the global DSQ per NUMA node"=
+)
+> changed this to per-node DSQs to resolve NUMA-related livelocks.
 >
-> Don't set ddsp_dsq_id from bypass. Just return the selected CPU, which ha=
-s the
-> effect of waking up the picked idle CPU. Later patches will implement per=
--CPU
-> bypass DSQs to resolve this issue in a more proper way.
+> Dan Schatzberg found per-node DSQs can still livelock when many threads a=
+re
+> pinned to different small CPU subsets: each CPU must scan many incompatib=
+le
+> tasks to find runnable ones, causing severe contention with high CPU coun=
+ts.
 >
-> v2: Removed incorrect bug fix claim about dangling ddsp_dsq_id triggering
->     WARN_ON_ONCE(). dispatch_enqueue() always clears ddsp_dsq_id even in =
-bypass
->     mode (Andrea).
+> Switch to per-CPU bypass DSQs. Each task queues on its current CPU. Defau=
+lt
+> idle CPU selection and direct dispatch handle most cases well.
 >
+> This introduces a failure mode when tasks concentrate on one CPU in
+> over-saturated systems. If the BPF scheduler severely skews placement bef=
+ore
+> triggering bypass, that CPU's queue may be too long to drain, causing RCU
+> stalls. A load balancer in a future patch will address this. The bypass D=
+SQ is
+> separate from local DSQ to enable load balancing: local DSQs use rq locks=
+,
+> preventing efficient scanning and transfer across CPUs, especially proble=
+matic
+> when systems are already contended.
+>
+> v2: Clarified why bypass DSQ is separate from local DSQ (Andrea Righi).
+>
+> Reported-by: Dan Schatzberg <schatzberg.dan@gmail.com>
+> Cc: Emil Tsalapatis <etsal@meta.com>
+> Reviewed-by: Andrea Righi <arighi@nvidia.com>
 > Signed-off-by: Tejun Heo <tj@kernel.org>
-> Cc: Andrea Righi <andrea.righi@linux.dev>
 > ---
 
-Reviewed-by: Emil Tsalapatis (Meta) <emil@etsalapatis.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
->  kernel/sched/ext.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
+>  include/linux/sched/ext.h |  1 +
+>  kernel/sched/ext.c        | 16 +++++++++++++---
+>  kernel/sched/sched.h      |  1 +
+>  3 files changed, 15 insertions(+), 3 deletions(-)
 >
+> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> index 60285c3d07cf..3d3216ff9188 100644
+> --- a/include/linux/sched/ext.h
+> +++ b/include/linux/sched/ext.h
+> @@ -57,6 +57,7 @@ enum scx_dsq_id_flags {
+>         SCX_DSQ_INVALID         =3D SCX_DSQ_FLAG_BUILTIN | 0,
+>         SCX_DSQ_GLOBAL          =3D SCX_DSQ_FLAG_BUILTIN | 1,
+>         SCX_DSQ_LOCAL           =3D SCX_DSQ_FLAG_BUILTIN | 2,
+> +       SCX_DSQ_BYPASS          =3D SCX_DSQ_FLAG_BUILTIN | 3,
+>         SCX_DSQ_LOCAL_ON        =3D SCX_DSQ_FLAG_BUILTIN | SCX_DSQ_FLAG_L=
+OCAL_ON,
+>         SCX_DSQ_LOCAL_CPU_MASK  =3D 0xffffffffLLU,
+>  };
 > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 652a364e9e4c..cf8d86a2585c 100644
+> index b18864655d3a..4e128b139e7c 100644
 > --- a/kernel/sched/ext.c
 > +++ b/kernel/sched/ext.c
-> @@ -2521,12 +2521,8 @@ static int select_task_rq_scx(struct task_struct *=
-p, int prev_cpu, int wake_flag
->                 s32 cpu;
+> @@ -1298,7 +1298,7 @@ static void do_enqueue_task(struct rq *rq, struct t=
+ask_struct *p, u64 enq_flags,
 >
->                 cpu =3D scx_select_cpu_dfl(p, prev_cpu, wake_flags, NULL,=
- 0);
-> -               if (cpu >=3D 0) {
-> -                       refill_task_slice_dfl(sch, p);
-> -                       p->scx.ddsp_dsq_id =3D SCX_DSQ_LOCAL;
-> -               } else {
-> +               if (cpu < 0)
->                         cpu =3D prev_cpu;
-> -               }
->                 p->scx.selected_cpu =3D cpu;
+>         if (scx_rq_bypassing(rq)) {
+>                 __scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
+
+Nit: The bypass label has a single statement, and there is no fallthrough t=
+o it.
+Can we just add the logic here:
+
+dsq =3D &task_rq(p)->scx.bypass_dsq;
+goto enqueue;
+
+and remove the new label?
+
+> -               goto global;
+> +               goto bypass;
+>         }
 >
->                 if (rq_bypass)
+>         if (p->scx.ddsp_dsq_id !=3D SCX_DSQ_INVALID)
+> @@ -1356,6 +1356,9 @@ static void do_enqueue_task(struct rq *rq, struct t=
+ask_struct *p, u64 enq_flags,
+>  global:
+>         dsq =3D find_global_dsq(sch, p);
+>         goto enqueue;
+> +bypass:
+> +       dsq =3D &task_rq(p)->scx.bypass_dsq;
+
+Nit: If we keep the bypass label, we can remove the goto since the
+label is right below. Otherwise, we could remove it
+
+> +       goto enqueue;
+>
+>  enqueue:
+>         /*
+> @@ -2154,8 +2157,14 @@ static int balance_one(struct rq *rq, struct task_=
+struct *prev)
+>         if (consume_global_dsq(sch, rq))
+>                 goto has_tasks;
+>
+> -       if (unlikely(!SCX_HAS_OP(sch, dispatch)) ||
+> -           scx_rq_bypassing(rq) || !scx_rq_online(rq))
+> +       if (scx_rq_bypassing(rq)) {
+> +               if (consume_dispatch_q(sch, rq, &rq->scx.bypass_dsq))
+> +                       goto has_tasks;
+> +               else
+> +                       goto no_tasks;
+> +       }
+> +
+> +       if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
+>                 goto no_tasks;
+>
+>         dspc->rq =3D rq;
+> @@ -5367,6 +5376,7 @@ void __init init_sched_ext_class(void)
+>                 int  n =3D cpu_to_node(cpu);
+>
+>                 init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL);
+> +               init_dsq(&rq->scx.bypass_dsq, SCX_DSQ_BYPASS);
+>                 INIT_LIST_HEAD(&rq->scx.runnable_list);
+>                 INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
+>
+> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+> index 27aae2a298f8..5991133a4849 100644
+> --- a/kernel/sched/sched.h
+> +++ b/kernel/sched/sched.h
+> @@ -808,6 +808,7 @@ struct scx_rq {
+>         struct balance_callback deferred_bal_cb;
+>         struct irq_work         deferred_irq_work;
+>         struct irq_work         kick_cpus_irq_work;
+> +       struct scx_dispatch_q   bypass_dsq;
+>  };
+>  #endif /* CONFIG_SCHED_CLASS_EXT */
+>
 > --
 > 2.51.2
 >
