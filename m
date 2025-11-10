@@ -1,209 +1,170 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010064.outbound.protection.outlook.com [40.93.198.64])
+Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF1B28A701
-	for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 07:21:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.64
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762759302; cv=fail; b=ewKprnLB9N4MOtcHv6STjshYzFZMNh8eRC0Tkqc3dF/ymID2CLzdOifuond8/c06bCPtBmTUD2dDOhbG6bnWQeTrS8iBAsc9NVVeUuGOXhEcO3G8c8wwDcDWXgX+OBfbTT0mQVigkJtOaPfpMF1drDhFNvEq0VMeBEDNlYXohH8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762759302; c=relaxed/simple;
-	bh=F8NUNJeCyOpF/XYti/Sd1l8h3G7FtWOz/xaqqCLv72I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=CFmUEgmELUelKbpnEmabbgH0UxEo+XST6I531rlg8OiseeTsBkr+gTFcObDuZvGrX03mffin9LE0M43FTVyQZj98cX1fXiH2LfvcegSMygNbuk884YSnzIZwtlwD/JmP3xCUgLlEUEOdaUf3iPMnBdfu+Vfbp5gZhaM/BBadyi8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qmoYbyF0; arc=fail smtp.client-ip=40.93.198.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC932853F1
+	for <sched-ext@lists.linux.dev>; Mon, 10 Nov 2025 07:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1762760578; cv=none; b=VS2KVAJAF7e7aJf7eKq+HTTREbAk0oAEJThmNuK2l0WRexev6GNn1y+HLyMKXGDq4o8m4UUBy8UuM7PZPajy1nhejjPMqe569F/QdCL6IX9oC6snf5LL+ivhlqfGH5TB4LrzbHJt7Ab+44+dQiuA+twieY8BXeD7d+c8GUrVttc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1762760578; c=relaxed/simple;
+	bh=ruqLsJjdIQxz7AVjcrQBfTCzdPG3yyrUqqSRjr9Ve8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gIKLgYPNL3MztfGMv2jtHuQe+XnWUc7SbOg9bYsDeyd2S/ktEGbybthsVPOOsbIrm0Qm+lSS6CzwwgJweO2Yf3uH+q+UBKkDZBNCw6EPoY4um5LRSSb5HgCCLWKnz8ZJ7386N00VDuvPGdaONHT8IoF2B31T8+3p+cWAlLEA6BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ei6nvdkA; arc=none smtp.client-ip=91.218.175.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qmoYbyF0"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hrL+lZOG3xoyE6GcgK06f58liC3yQKMy3+U2vAEZog3lPSz+iZ96jkcd7iXvTKJk6OcfhPpOu/I+3C5l6WWO0W5Y7AMjGNHvJQkDiRj3TMZSOZUqd0nHLHAXQDqDaqyMUsW1215XlB+LbaXVlupMoPME4GbYyrsndNXz+dAUFPw7gZSQyh+ZEpPyQD5PrwIaohwWwuaW6jXovxcz3CpDCdL+W2qKqKta193Alf+cjArq5W24VebOr2RIGN/XZTWLe1FYDhVC/L9OJqw2+rqxAb6hwnKpDFty5EgW22quaBKS1AR9A5ipF4auRv8PZrJb9g2o7027erzD11MnoOauuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mGVm7LgN2YimQOd6hIpkJz3cxCEWTHUPktk0f+ZbFRs=;
- b=Akt396CuYSujk2xpmWSn8T1hnYhYthr9x67+a0HxXmDZbTnx0U0SO2fo1+m1DkJr6vtUdZ/N8L+9fHXcz9NkVg1qiQ0zpDGbN/XhIJ51pzJiOxZnhdXI5wstGjwHm2DWjwwr3KdOtw5T+ANyMhmn2PNi7RtK7BxP96AG/2oNmZIIeMW3GwWp6THXjRiCaRTDFT+lv1v8qczCZOSFFzYyoDhTRXtRnykQTP+z/AedJGqHo5EQWzjf98TRkVFDJV6Cv03djCmrYkf1XGOHppZ+/HgWQafteGx6P7W+To7yOkg950HRLfFm/P+RdgW0pC5LKmpj4PZYo4XWx7Y7XeYvtw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mGVm7LgN2YimQOd6hIpkJz3cxCEWTHUPktk0f+ZbFRs=;
- b=qmoYbyF0N7y3KKpYZjf6GXKzpdakAoIu7pko7KFkX/cC9RkT5Icn7V8dGUtiaRgf+Z9ZD4eVxMBsMpORcOisQ58U6yTWY7g2q/0niZmFv3STD3NtA5OFK9ORaUBHmjYhqoHN41dmSm7BOjEQnvZdON/fNTKaETk1qZ6dH+9zS/D6/71X/yuBcSPP4Zn7nxnZzjj3oxprifpQhEBmNvU5tmwuJ3iPc07hc9KVtf9Wdj43j5xf+aYjIz3PjyRxCmVK8HZ0Gnz4yQ1Rq/tXkrv5BJJ38XBFhk20FA6JqXcmRPym5UJJQmOys580087klydyVxTj/TjbdDtnfhRvQnujgQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DM4PR12MB8497.namprd12.prod.outlook.com (2603:10b6:8:180::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.16; Mon, 10 Nov
- 2025 07:21:37 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9298.015; Mon, 10 Nov 2025
- 07:21:35 +0000
-Date: Mon, 10 Nov 2025 08:21:27 +0100
-From: Andrea Righi <arighi@nvidia.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ei6nvdkA"
+Date: Mon, 10 Nov 2025 08:42:47 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1762760572;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CxdwBD01h+H+/g2ckIpFnqJSery2fQVOPvtSHzTtpvI=;
+	b=ei6nvdkAQ79s//QsIokWni9i96YAyXK8JgQIWBftWA2hg6pvuUqvgiyFd1qO+zLjgU+WU3
+	QqH3wYidbX/Yw4NtWri4f9X56HYwnKm9Hn5C0r0iR8YYt6qc6/BL1PcJcJbv1HKHPff3/M
+	k1iDpubycgsttmOHNv30TdCfctCdAMY=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Andrea Righi <andrea.righi@linux.dev>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	Dan Schatzberg <schatzberg.dan@gmail.com>,
 	Emil Tsalapatis <etsal@meta.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/13] sched_ext: Refactor do_enqueue_task() local and
- global DSQ paths
-Message-ID: <aRGSd7kqynnhRAWk@gpd4>
+Subject: Re: [PATCH 04/13] sched_ext: Use per-CPU DSQs instead of per-node
+ global DSQs in bypass mode
+Message-ID: <aRGXd0QwgqBVu7Gq@gpd4>
 References: <20251109183112.2412147-1-tj@kernel.org>
- <20251109183112.2412147-4-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251109183112.2412147-4-tj@kernel.org>
-X-ClientProxiedBy: MI1P293CA0030.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:3::17) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+ <20251109183112.2412147-5-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB8497:EE_
-X-MS-Office365-Filtering-Correlation-Id: fe648a49-116c-44e3-1dfb-08de2029c7eb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?fbZLI1Wzybg4GxX6fDt/t8IwDzIjXNIOwjTT0oQ50Jr2jvDfxHMg9WJOeTXH?=
- =?us-ascii?Q?9IPWWnmzqxiQRMO7Hm8lF0KEpOvUGqUgc6AYZYHtmPSvJjxnGrhZWf7ajmFA?=
- =?us-ascii?Q?xAJVYdXB46RoV3E3RjlseCeaaYh4I8f+eFINZoeWYRyGqGWLrpZ3bIg+rBBB?=
- =?us-ascii?Q?Jo39/WHb61arEPWwuFMx5e6fnigmVEzLPFnQwilQ38ndO5eIb359c7VAfSPF?=
- =?us-ascii?Q?wXQNZwEj0DRqJKp8x+pKLntQoEgCYP6Wx47KC4oJpRTbz/rPw5x64Q4UB0qM?=
- =?us-ascii?Q?KpkzrnZJFwgPoH3l8nnvld+uFsyqyJ0jIhbNWxWalBojVgVcR5iqPxoYEEp8?=
- =?us-ascii?Q?alsbfh1SCOk6mpXwOGX4Nk2mNNa3Hpce27AnnXwFViESMSIvEwRVeTDIK5UT?=
- =?us-ascii?Q?YGzcCvBwXQI0UwTdAbeBjRuHXLmOCG7GO3XzPBdG3UEphKG/oRagdade6UpN?=
- =?us-ascii?Q?XfyD4GP9r7gmIWMfH1K41Hso8MEgxE2nv9JLuF2rzllIpgBT0/5gxpX55ZI0?=
- =?us-ascii?Q?b01kfomEA3sNR2j0IGFE/T96yetWwcQZ4UGCRJkvvkO2R6MFycdsJ23fcSRA?=
- =?us-ascii?Q?M2hiGlqOhGzblLxwpJMdVXIMOAtbnJnacwsg0St/jBB0Q81bHzujg7gHmPyv?=
- =?us-ascii?Q?mpXag8+fMml768lDr2c+ClK1xA0oUDfeS1dezvQcQvdMHnXjgOK/M+z+vque?=
- =?us-ascii?Q?jqK0N6z02VqLxAUTPuKgImNFzQ73frHXQ+4E0KCzn3T+XJRGlHnz4FalN8Ny?=
- =?us-ascii?Q?meeyVhkiWzKCuYvEQDFBtxVlVzu2aT+r9hyFqCS7LPoqWw8c8AZGaq8UtTN5?=
- =?us-ascii?Q?bT4yuto+MkcFKcBCKBQVdhJN5Q+Vbxssryvbxglrzfhe81e10+toXWGSQKGh?=
- =?us-ascii?Q?UmBQM9JgSf4RCIrOzI6NfBxm0rdxIeuKFWeLRlCvP7EN1zrQf7r9k3c7PSVd?=
- =?us-ascii?Q?wD6RK/pBfHzGk0uJMnfSUY7OaS+n8IqbRtbCTRmRn4L82Ma2ZeZm+tc7qriE?=
- =?us-ascii?Q?On0IiP6hhaJCxJiM0IPZucTIcToznSRf/C6ox0i2jPI6H1M3OPwxu7VP88UO?=
- =?us-ascii?Q?ZDQWKNdvMAzep0tFFX+zfad+wGKYQwirb5KTnoBfieZF36A+FYMg8ovvPDs5?=
- =?us-ascii?Q?yTxnDbofWjrbDXDVAr1pdynNhprbOf4DVeHY1tsOGdYz2SH0bVMAJU4zrVEt?=
- =?us-ascii?Q?hhKMu349YLtnJHRuT68u/I78zSWVoiG/cmisvU4m3DsOH3QoNLDgmpJO2gir?=
- =?us-ascii?Q?/QkvYOjuWCcQt5j4c/piaM2cn1y42lVignHfdtghA8q0sjl4WBdaWL4F7n8y?=
- =?us-ascii?Q?QeS2/3DmEWe5qHS9UOkySAxOv/ylU5EyjHQ5TKyTCy8lKp5a8EP4+0MhCZzg?=
- =?us-ascii?Q?NLbpzNVF1/OTiFaXMmBYjO/4zYd3jU9LC+AmLKgDPMb76zXwsDVDyfREDeZZ?=
- =?us-ascii?Q?Z1MteTdUqAfPWLS8hVILZ9kzgNvLCmSx?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?galcJVF13NDOUw5TxWiFeCfSZEstCEeylgVu4W1kBR/QEMvhTU7wNcSLQpld?=
- =?us-ascii?Q?rubNRkWT6jSnVExKVp5ZGw3EtSTSBcL0nQq34rAqiY27NVT7VZ3UmTS6xrl0?=
- =?us-ascii?Q?DiumKl5+gHbXWrrnbAER0Qf6rUU8dv3wctp3u6p7Aow1qWlSKGbyA7jHMELE?=
- =?us-ascii?Q?adLfaw9uuqiVL6JeEbi/om5mtxRssEFmnIf+6AIXK7kiHgwD9xuiLQ0qpKLI?=
- =?us-ascii?Q?aIwHUjx71hvfAVWopvlCXHT3qwmU3awuSSEnK0V3662Qbp34ceEIB5sZBASl?=
- =?us-ascii?Q?lfGRF7hPLpmRRRYzjHBKwKDsmWpdU3PXjbYaO5gswq1WMvlAxMH2J/CozbvP?=
- =?us-ascii?Q?LJVD0yE9lv3xjE5uOr1/IOHz4NRQp7zLulPflaFelc/GsRWL8I2hlUjBHkBP?=
- =?us-ascii?Q?rS8ocWRjR2r7fzOEe1C7m5qY4IoB6S9dv2cwD4nYVIAgu9XZ5GGBmxyDjOld?=
- =?us-ascii?Q?uiqCTL9NtFV1ad0WaziII3QRqoJUKKV9/mwsuXwAHwXPsx+X4qbzY6Hifvn9?=
- =?us-ascii?Q?rFO4aet4imSuS/A9dNDLJKI+Kywcrl2RLQ/m2zp73SzDxfBI2/9bj2kU4cgF?=
- =?us-ascii?Q?mGUfW5X4Ia9UoFa0mUKGhFl8O9SY4cihqHrvLPXa9mFV6U/OyDpcKxsYQnZT?=
- =?us-ascii?Q?euC1uIRCqHWqszi/0yXjQKWKPDaZi/L8QKA1UrUaUD9xFBD5MkfaOtCwu+p1?=
- =?us-ascii?Q?OET8I/dQ8p7uq+tU+TpUPfd5UerIWOTqQ0MMb+pvagRncJpAnSkuLF5aKciQ?=
- =?us-ascii?Q?sW1aENyVoYZ+KzqixZfchAjOvtW8p2MoUKGFIwRruxde/Apg+VL+rMsoK8Po?=
- =?us-ascii?Q?6K6FRG5hk/kpz+ymNmx0pNUCTp4F44OZnNlMdW2T62GwM0bBHKI9sVlPn/Vc?=
- =?us-ascii?Q?CcxZ5aOQafv3Hgq54mxpLZslswV6Ui69tly+e78yp8I4DTdKQNeszOx70/r7?=
- =?us-ascii?Q?DRFXLfTS9HzFwbWzANd7AOcpwloqupSLZJvZsh+PTrJ32MDfSaqbVNcI6Fpk?=
- =?us-ascii?Q?+5XE+UJTQtk6MRZqV6QUYqDzbQPcALp0tIkkORJK0S8RnbpOBW8B1bJ4dXFR?=
- =?us-ascii?Q?1Uj20aSj6BkkQf5K9re1e3oXK+ukB+dYHtB0JR/sKUM2vTDzJCBMccLjebW4?=
- =?us-ascii?Q?mzYfq6yAm8jUCQooIlyS/ek8CEzbZqy6sdqE9OnrOGpshH2nVemUSwHlBPBx?=
- =?us-ascii?Q?kiUjEtUIMyb+07GPISF4SvY3ZmiNvs6mUWbolV2bcKrfoixR+fhGg27AHXOj?=
- =?us-ascii?Q?EhsNb8dIFnNcIW2uccria9DWwUQak7+mzaMVPQfIoKwRPGpltMiTsNU3U/Qt?=
- =?us-ascii?Q?jT/FWHFwWxRfsuQtFl11MJD2KOtvu8CE4XeOw95c+ZyDET44rocfsqrkONjw?=
- =?us-ascii?Q?gGlpZpJ6cjGYO/WctvgZV/k/nVE26ym77tMPfVbnZZA6Cw3ZvMX7Ctce3IR0?=
- =?us-ascii?Q?kGxnvBEbXg+3wWx7lc1ZzinmP9Engz2ZCvkinxx+OHOrmTA+KJlzxMXOJmRq?=
- =?us-ascii?Q?har8HQ9kYoYrWapgrih1Kvrip6yKaa3NXkLZz/FepfcyfPCW97FBy/pp9vox?=
- =?us-ascii?Q?sBW3nvBYOCS53kQIeU8rK/82zGlcyDdww3Y4uDng?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe648a49-116c-44e3-1dfb-08de2029c7eb
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2025 07:21:35.7286
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d9v2TX5sJVdfLOJIsCywY6y84IljhbYwGCGxy904g5bCO7OUfhZnaDyRHBjJdF34iBmZv/rDOn7euIL8l7nhSQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8497
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251109183112.2412147-5-tj@kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Sun, Nov 09, 2025 at 08:31:02AM -1000, Tejun Heo wrote:
-> The local and global DSQ enqueue paths in do_enqueue_task() share the same
-> slice refill logic. Factor out the common code into a shared enqueue label.
-> This makes adding new enqueue cases easier. No functional changes.
+Hi Tejun,
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+On Sun, Nov 09, 2025 at 08:31:03AM -1000, Tejun Heo wrote:
+> When bypass mode is activated, tasks are routed through a fallback dispatch
+> queue instead of the BPF scheduler. Originally, bypass mode used a single
+> global DSQ, but this didn't scale well on NUMA machines and could lead to
+> livelocks. In b7b3b2dbae73 ("sched_ext: Split the global DSQ per NUMA node"),
+> this was changed to use per-node global DSQs, which resolved the
+> cross-node-related livelocks.
+> 
+> However, Dan Schatzberg found that per-node global DSQ can also livelock in a
+> different scenario: On a NUMA node with many CPUs and many threads pinned to
+> different small subsets of CPUs, each CPU often has to scan through many tasks
+> it cannot run to find the one task it can run. With a high number of CPUs,
+> this scanning overhead can easily cause livelocks.
+> 
+> Change bypass mode to use dedicated per-CPU bypass DSQs. Each task is queued
+> on the CPU that it's currently on. Because the default idle CPU selection
+> policy and direct dispatch are both active during bypass, this works well in
+> most cases including the above.
+
+Is there any reason not to reuse rq->scx.local_dsq for this?
 
 Thanks,
 -Andrea
 
 > 
+> However, this does have a failure mode in highly over-saturated systems where
+> tasks are concentrated on a single CPU. If the BPF scheduler places most tasks
+> on one CPU and then triggers bypass mode, bypass mode will keep those tasks on
+> that one CPU, which can lead to failures such as RCU stalls as the queue may be
+> too long for that CPU to drain in a reasonable time. This will be addressed
+> with a load balancer in a future patch. The bypass DSQ is kept separate from
+> the local DSQ to allow the load balancer to move tasks between bypass DSQs.
+> 
+> Reported-by: Dan Schatzberg <schatzberg.dan@gmail.com>
+> Cc: Emil Tsalapatis <etsal@meta.com>
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 > ---
->  kernel/sched/ext.c | 21 ++++++++++++---------
->  1 file changed, 12 insertions(+), 9 deletions(-)
+>  include/linux/sched/ext.h |  1 +
+>  kernel/sched/ext.c        | 16 +++++++++++++---
+>  kernel/sched/sched.h      |  1 +
+>  3 files changed, 15 insertions(+), 3 deletions(-)
 > 
+> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> index 9f5b0f2be310..e1502faf6241 100644
+> --- a/include/linux/sched/ext.h
+> +++ b/include/linux/sched/ext.h
+> @@ -57,6 +57,7 @@ enum scx_dsq_id_flags {
+>  	SCX_DSQ_INVALID		= SCX_DSQ_FLAG_BUILTIN | 0,
+>  	SCX_DSQ_GLOBAL		= SCX_DSQ_FLAG_BUILTIN | 1,
+>  	SCX_DSQ_LOCAL		= SCX_DSQ_FLAG_BUILTIN | 2,
+> +	SCX_DSQ_BYPASS		= SCX_DSQ_FLAG_BUILTIN | 3,
+>  	SCX_DSQ_LOCAL_ON	= SCX_DSQ_FLAG_BUILTIN | SCX_DSQ_FLAG_LOCAL_ON,
+>  	SCX_DSQ_LOCAL_CPU_MASK	= 0xffffffffLLU,
+>  };
 > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 2ce226018dbe..a29bfadde89d 100644
+> index a29bfadde89d..4b8b91494947 100644
 > --- a/kernel/sched/ext.c
 > +++ b/kernel/sched/ext.c
-> @@ -1282,6 +1282,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
->  {
->  	struct scx_sched *sch = scx_root;
->  	struct task_struct **ddsp_taskp;
-> +	struct scx_dispatch_q *dsq;
->  	unsigned long qseq;
+> @@ -1301,7 +1301,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
 >  
->  	WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_QUEUED));
-> @@ -1349,8 +1350,17 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
->  direct:
->  	direct_dispatch(sch, p, enq_flags);
->  	return;
-> -
-> +local_norefill:
-> +	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
-> +	return;
->  local:
-> +	dsq = &rq->scx.local_dsq;
+>  	if (scx_rq_bypassing(rq)) {
+>  		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
+> -		goto global;
+> +		goto bypass;
+>  	}
+>  
+>  	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
+> @@ -1359,6 +1359,9 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+>  global:
+>  	dsq = find_global_dsq(sch, p);
+>  	goto enqueue;
+> +bypass:
+> +	dsq = &task_rq(p)->scx.bypass_dsq;
 > +	goto enqueue;
-> +global:
-> +	dsq = find_global_dsq(sch, p);
-> +	goto enqueue;
-> +
-> +enqueue:
+>  
+>  enqueue:
 >  	/*
->  	 * For task-ordering, slice refill must be treated as implying the end
->  	 * of the current slice. Otherwise, the longer @p stays on the CPU, the
-> @@ -1358,14 +1368,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
->  	 */
->  	touch_core_sched(rq, p);
->  	refill_task_slice_dfl(sch, p);
-> -local_norefill:
-> -	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
-> -	return;
-> -
-> -global:
-> -	touch_core_sched(rq, p);	/* see the comment in local: */
-> -	refill_task_slice_dfl(sch, p);
-> -	dispatch_enqueue(sch, find_global_dsq(sch, p), p, enq_flags);
-> +	dispatch_enqueue(sch, dsq, p, enq_flags);
->  }
+> @@ -2157,8 +2160,14 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+>  	if (consume_global_dsq(sch, rq))
+>  		goto has_tasks;
 >  
->  static bool task_runnable(const struct task_struct *p)
+> -	if (unlikely(!SCX_HAS_OP(sch, dispatch)) ||
+> -	    scx_rq_bypassing(rq) || !scx_rq_online(rq))
+> +	if (scx_rq_bypassing(rq)) {
+> +		if (consume_dispatch_q(sch, rq, &rq->scx.bypass_dsq))
+> +			goto has_tasks;
+> +		else
+> +			goto no_tasks;
+> +	}
+> +
+> +	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
+>  		goto no_tasks;
+>  
+>  	dspc->rq = rq;
+> @@ -5370,6 +5379,7 @@ void __init init_sched_ext_class(void)
+>  		int  n = cpu_to_node(cpu);
+>  
+>  		init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL);
+> +		init_dsq(&rq->scx.bypass_dsq, SCX_DSQ_BYPASS);
+>  		INIT_LIST_HEAD(&rq->scx.runnable_list);
+>  		INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
+>  
+> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+> index 27aae2a298f8..5991133a4849 100644
+> --- a/kernel/sched/sched.h
+> +++ b/kernel/sched/sched.h
+> @@ -808,6 +808,7 @@ struct scx_rq {
+>  	struct balance_callback	deferred_bal_cb;
+>  	struct irq_work		deferred_irq_work;
+>  	struct irq_work		kick_cpus_irq_work;
+> +	struct scx_dispatch_q	bypass_dsq;
+>  };
+>  #endif /* CONFIG_SCHED_CLASS_EXT */
+>  
 > -- 
 > 2.51.1
 > 
