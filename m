@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC66332E730;
-	Mon, 10 Nov 2025 20:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F93331A4F;
+	Mon, 10 Nov 2025 20:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762808210; cv=none; b=GWDQa5LsmNa/RWVtRA5H1yqPTiyLJYQRiw73TVU9maGFJPjsuCmOeyXImU5TSalOd8qpSJAk5nfaSbb9ST/dXhIr9AKLN9zE8S4Fr2hNkF+P0S8u+p41O8YZj+bhBprKZ1FDn7C74cLPFdcbO63qf7q+b1+5g2zl7XM8r8QZXcw=
+	t=1762808211; cv=none; b=gm42/feYiT9hR4IYBBbohZ/9XXswYnhelpzXHL2Pt/Xm4Z0u4fH+iDLyjoAFhEjpZ8J7e5WIT2uAUvB9DIIsW3cbkQMFGkUbfvGnjv+AC7Ag1YTzgAk5OTCU5vaEH4GXazazXbY7AquonamtQwfjmzAW2RkRypuvXRGcGlAHpdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762808210; c=relaxed/simple;
-	bh=CO3Q4VfDcEwb5cYRvfkaUl9hA+CEb50dhXsFbgpMVWs=;
+	s=arc-20240116; t=1762808211; c=relaxed/simple;
+	bh=Xdp8yvSa/eU1lzUi/lbdX3fqdzXdYLCBxBd+AS0g1AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6gFBRAi3xNj8FGx7ZaJvdO3MsHaZdA8cUJPtpNsdO/hndPK81fXGRfvKpvmhvqqs6UFhbGIK7YlwlXKCM2lED8E+9cuHWn57Fmfs84x9g0tn+HZhdKakeYQp/cip6EfxLFX4uRcVsnVORhk09WziiiWCvk880QMO4Y63X8e/T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NAJ6kcaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbROuqBPKmtDsGUvzC9k3gntKaptxVFSvzW35WLwlEfULgHgxHmxtci94IjZPhRLjrUHm7EtHSmsETR3vnwFrlJpDV0OsWbl+Pim4KaclLqQ14OV7vVgvsYC5zlW/fqsVbemit9oUy4+179aYJq/ObStfLcHsYA2rNgFHvld8Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ol4qRsKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NAJ6kcaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0001FC19424;
-	Mon, 10 Nov 2025 20:56:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ol4qRsKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1903DC116B1;
+	Mon, 10 Nov 2025 20:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762808210;
-	bh=CO3Q4VfDcEwb5cYRvfkaUl9hA+CEb50dhXsFbgpMVWs=;
+	s=k20201202; t=1762808211;
+	bh=Xdp8yvSa/eU1lzUi/lbdX3fqdzXdYLCBxBd+AS0g1AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NAJ6kcaY2WRpwSgLpsE8xj3m64bYBeHbs5PoFfzOhZDSVDXSQWFHKrhZ+Kx6xsLkU
-	 6drlMu2N3JbFCcba3J5omNHj4cH8qCR7UtwWr2ao5ZhB61IQIhoqSD0QBSt8Ptg+BL
-	 YNqyKY82uTXiDcl32VgHPSNRMmaojCNEpyrfZgKiFJk4hUXF6d8YrBscXLZSZ4CoeW
-	 3NuIOejRsK4/DfIi/BIPkrh6z6iqm60EA9zbJZq7yMEs2IMrbjT/4rWMTpkZA1D1Kq
-	 yU6Vfnw3TObjlIJgxSnKBjZe5QuQPccCE/LQldRYzTBPQH9dYwvEu2Jo5N1EnoN1X3
-	 FHPU1rOPQU5zg==
+	b=Ol4qRsKO4eJSAcXQ6jXdRYyIgLhzLS3+O7e58aZ8kZ4Py481rQ7jQKpDTn3hFzKVo
+	 zSMi92sr428t5uXZW1JRdDoWBVDIQIjZNHV781xg0vhluujluzw2puyD7Lm1mqa6P+
+	 TWBNwE+aetRoMF3qpPJifQw2oLAYImuEM1IB/T1nP3pMWEktDkDF8wDs/jSheMHgJ+
+	 2CJ72Pw0hQoY+XjV3VQvtiDn4bydoenRxExu8nLU4UphetxXqS+BTVa4KPyTroh6OE
+	 gginEgXQLChh1KlU7u08YILqHLeCSUVsVFq2rveXCNjgOuJblfE7juMQfX5Na0nm6c
+	 yz1o65nEMMooA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <andrea.righi@linux.dev>,
@@ -36,9 +36,9 @@ Cc: Dan Schatzberg <schatzberg.dan@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>,
 	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH v2 12/14] sched_ext: Factor out scx_dsq_list_node cursor initialization into INIT_DSQ_LIST_CURSOR
-Date: Mon, 10 Nov 2025 10:56:34 -1000
-Message-ID: <20251110205636.405592-13-tj@kernel.org>
+Subject: [PATCH v2 13/14] sched_ext: Factor out abbreviated dispatch dequeue into dispatch_dequeue_locked()
+Date: Mon, 10 Nov 2025 10:56:35 -1000
+Message-ID: <20251110205636.405592-14-tj@kernel.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251110205636.405592-1-tj@kernel.org>
 References: <20251110205636.405592-1-tj@kernel.org>
@@ -50,52 +50,67 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Factor out scx_dsq_list_node cursor initialization into INIT_DSQ_LIST_CURSOR
-macro in preparation for additional users.
+move_task_between_dsqs() contains open-coded abbreviated dequeue logic when
+moving tasks between non-local DSQs. Factor this out into
+dispatch_dequeue_locked() which can be used when both the task's rq and dsq
+locks are already held. Add lockdep assertions to both dispatch_dequeue() and
+the new helper to verify locking requirements.
 
+This prepares for the load balancer which will need the same abbreviated
+dequeue pattern.
+
+Cc: Andrea Righi <arighi@nvidia.com>
 Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
 Cc: Emil Tsalapatis <etsal@meta.com>
-Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h | 7 +++++++
- kernel/sched/ext.c        | 5 ++---
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ kernel/sched/ext.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 4b501ad7a3fc..3f6bf2875431 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -149,6 +149,13 @@ struct scx_dsq_list_node {
- 	u32			priv;		/* can be used by iter cursor */
- };
- 
-+#define INIT_DSQ_LIST_CURSOR(__node, __flags, __priv)				\
-+	(struct scx_dsq_list_node) {						\
-+		.node = LIST_HEAD_INIT((__node).node),				\
-+		.flags = SCX_DSQ_LNODE_ITER_CURSOR | (__flags),			\
-+		.priv = (__priv),						\
-+	}
-+
- /*
-  * The following is embedded in task_struct and contains all fields necessary
-  * for a task to be scheduled by SCX.
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index d16525abf9e0..82f0d2202b99 100644
+index 82f0d2202b99..3bb0e179b512 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -6249,9 +6249,8 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(struct bpf_iter_scx_dsq *it, u64 dsq_id,
- 	if (!kit->dsq)
- 		return -ENOENT;
+@@ -1106,6 +1106,8 @@ static void dispatch_dequeue(struct rq *rq, struct task_struct *p)
+ 	struct scx_dispatch_q *dsq = p->scx.dsq;
+ 	bool is_local = dsq == &rq->scx.local_dsq;
  
--	INIT_LIST_HEAD(&kit->cursor.node);
--	kit->cursor.flags = SCX_DSQ_LNODE_ITER_CURSOR | flags;
--	kit->cursor.priv = READ_ONCE(kit->dsq->seq);
-+	kit->cursor = INIT_DSQ_LIST_CURSOR(kit->cursor, flags,
-+					   READ_ONCE(kit->dsq->seq));
- 
- 	return 0;
++	lockdep_assert_rq_held(rq);
++
+ 	if (!dsq) {
+ 		/*
+ 		 * If !dsq && on-list, @p is on @rq's ddsp_deferred_locals.
+@@ -1152,6 +1154,20 @@ static void dispatch_dequeue(struct rq *rq, struct task_struct *p)
+ 		raw_spin_unlock(&dsq->lock);
  }
+ 
++/*
++ * Abbreviated version of dispatch_dequeue() that can be used when both @p's rq
++ * and dsq are locked.
++ */
++static void dispatch_dequeue_locked(struct task_struct *p,
++				    struct scx_dispatch_q *dsq)
++{
++	lockdep_assert_rq_held(task_rq(p));
++	lockdep_assert_held(&dsq->lock);
++
++	task_unlink_from_dsq(p, dsq);
++	p->scx.dsq = NULL;
++}
++
+ static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
+ 						    struct rq *rq, u64 dsq_id,
+ 						    struct task_struct *p)
+@@ -1812,8 +1828,7 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+ 		 * @p is going from a non-local DSQ to a non-local DSQ. As
+ 		 * $src_dsq is already locked, do an abbreviated dequeue.
+ 		 */
+-		task_unlink_from_dsq(p, src_dsq);
+-		p->scx.dsq = NULL;
++		dispatch_dequeue_locked(p, src_dsq);
+ 		raw_spin_unlock(&src_dsq->lock);
+ 
+ 		dispatch_enqueue(sch, dst_dsq, p, enq_flags);
 -- 
 2.51.2
 
