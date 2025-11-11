@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C007326D62;
-	Tue, 11 Nov 2025 19:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330163271F6;
+	Tue, 11 Nov 2025 19:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762888701; cv=none; b=b4ucC3X01ypunuy3pUyRkur86N1gyyBOyqa9/AM1m4+hPHO45gYl5Ya+lmRwv4z6dp+AC6Yp95hTxllEQwr9Tj4rNGHyAJ0+F//cw2+CilbvokBIFeh3efva/r1JV4MFwfmatpH08J5s1POSKrx4yGEZB/yi6kfxI7thNHTq/Ps=
+	t=1762888702; cv=none; b=EVLVyi2+QOrc7BPAYH0ezxWAJgMCVB3T7Cby6QRpvxbUBWp4BfEzKVbSCDylYlenFd+XkFe/CA3jTKXfZO2bXjt+xgfeMFvvnYJO60E95hAA+JvVbtJ7fLTdmAz98qhjpR4wtJ9eH0m/FrvpOejVjbSz1ok8XpRpF9hXdGfYeP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762888701; c=relaxed/simple;
-	bh=NTnhOVNZd+o9seNA7S1c7Bn5RIXPmwTS4O2S2QvS9ww=;
+	s=arc-20240116; t=1762888702; c=relaxed/simple;
+	bh=oxRoS5/lpkeUo3JEb5NWkGJZLTeffyI3ZP/xPdNWvRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icV++WIue1cK8cTAqHUwSrtZjq3JJMUvzvFiGTk17iHBnFJ7o9Aw3QJdprnyY51+Ca3JvZzXX3u/H3PkHZ1OjBRTp1vxCCclgT2BSRwdupdVJw4sBzWHjZvpQUrtzaBL5U+XnIJmtQlzoVO2ulUZsVmy9yRMhzBEbR73F7BOLY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTnrBbIW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ObaFZw4BB+75wFfWWtzjLe9TvH0Ib9KJmTRze2UbMim5smT25+tt5riO9dnmF9u89EYsjpBGbY06Hk65L9gTIIv1yD/8+rwqWJOU1narezMbh1sEQo5I5Myuhk9udCVonQ1Q9hmTzGubagmD9fACKu46UgLBsc8cQWfNeNBKS80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FPlaXayF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTnrBbIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04B0C4CEF7;
-	Tue, 11 Nov 2025 19:18:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FPlaXayF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6BE6C2BC86;
+	Tue, 11 Nov 2025 19:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762888700;
-	bh=NTnhOVNZd+o9seNA7S1c7Bn5RIXPmwTS4O2S2QvS9ww=;
+	s=k20201202; t=1762888701;
+	bh=oxRoS5/lpkeUo3JEb5NWkGJZLTeffyI3ZP/xPdNWvRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTnrBbIWvZfmbq/vOemhR2oQYVbFSA/2YDo/76fMulGX/JX0bTQaDXr0qfVAPhOBD
-	 zGYd9WQCMUaxsi9n3t356H+6od0SRBa14/lXlRiLmySrcGYlIgpfne+L/HhA1hcfb4
-	 SSEcNu5E1+g3E6DYHUWzvWzUR0g/1rnmPrGo7v96s9uvqTJvV0pJzNgWuG5qLUJIQo
-	 QkrnME051Q9Fy3UjwznffRDs0PSO8pEh6gJxVyIwl1UEFhEG8iHQWeZBKnRci6y462
-	 qF56xOpwpA8AyMNvoYC866nWp26HEv4egnzz2hV1lVwRV1LHbxKqGhbBLBBhVHiluV
-	 DnDZ26XGy+NZg==
+	b=FPlaXayFZS2xCvGso7ZDyJtKdCde8j8C0RoSoYhTJB/q1FHd6p4kAkokkiHJOjpdX
+	 X/LT54leIPKedvbB62XWNErdLiVO807grJ+Iu/RAkbyWqsaC5PR3wQAFKrIU949Vyj
+	 BWoYde3nv12cHdFgvvpimXLkGsLfdCVBcOYfeSiFJVef76f2G9qC6fEGSLKjHtHe9E
+	 jO9wq4bmqFbl7hGpGZ39RLqfLJzjsbbHts8Dk/OrK3gOEX9Q5yK0Qm+rknRTlitwlv
+	 bpMHbF+IbyYl+5xmpPD9/P+7iSf+i5sLkQ24V0hRPMEJbvkzx7cqWl3cCbfTSs8zBJ
+	 uFbN09woaaRxw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <andrea.righi@linux.dev>,
@@ -35,11 +35,11 @@ Cc: Dan Schatzberg <schatzberg.dan@gmail.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>
-Subject: [PATCH 03/13] sched_ext: Use per-CPU DSQs instead of per-node global DSQs in bypass mode
-Date: Tue, 11 Nov 2025 09:18:06 -1000
-Message-ID: <20251111191816.862797-4-tj@kernel.org>
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Andrea Righi <arighi@nvidia.com>
+Subject: [PATCH 04/13] sched_ext: Simplify breather mechanism with scx_aborting flag
+Date: Tue, 11 Nov 2025 09:18:07 -1000
+Message-ID: <20251111191816.862797-5-tj@kernel.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111191816.862797-1-tj@kernel.org>
 References: <20251111191816.862797-1-tj@kernel.org>
@@ -51,109 +51,179 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Bypass mode routes tasks through fallback dispatch queues. Originally a single
-global DSQ, b7b3b2dbae73 ("sched_ext: Split the global DSQ per NUMA node")
-changed this to per-node DSQs to resolve NUMA-related livelocks.
+The breather mechanism was introduced in 62dcbab8b0ef ("sched_ext: Avoid
+live-locking bypass mode switching") and e32c260195e6 ("sched_ext: Enable the
+ops breather and eject BPF scheduler on softlockup") to prevent live-locks by
+injecting delays when CPUs are trapped in dispatch paths.
 
-Dan Schatzberg found per-node DSQs can still livelock when many threads are
-pinned to different small CPU subsets: each CPU must scan many incompatible
-tasks to find runnable ones, causing severe contention with high CPU counts.
+Currently, it uses scx_breather_depth (atomic_t) and scx_in_softlockup
+(unsigned long) with separate increment/decrement and cleanup operations. The
+breather is only activated when aborting, so tie it directly to the exit
+mechanism. Replace both variables with scx_aborting flag set when exit is
+claimed and cleared after bypass is enabled. Introduce scx_claim_exit() to
+consolidate exit_kind claiming and breather enablement. This eliminates
+scx_clear_softlockup() and simplifies scx_softlockup() and scx_bypass().
 
-Switch to per-CPU bypass DSQs. Each task queues on its current CPU. Default
-idle CPU selection and direct dispatch handle most cases well.
+The breather mechanism will be replaced by a different abort mechanism in a
+future patch. This simplification prepares for that change.
 
-This introduces a failure mode when tasks concentrate on one CPU in
-over-saturated systems. If the BPF scheduler severely skews placement before
-triggering bypass, that CPU's queue may be too long to drain, causing RCU
-stalls. A load balancer in a future patch will address this. The bypass DSQ is
-separate from local DSQ to enable load balancing: local DSQs use rq locks,
-preventing efficient scanning and transfer across CPUs, especially problematic
-when systems are already contended.
-
-v2: Clarified why bypass DSQ is separate from local DSQ (Andrea Righi).
-
-Reported-by: Dan Schatzberg <schatzberg.dan@gmail.com>
 Reviewed-by: Dan Schatzberg <schatzberg.dan@gmail.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h |  1 +
- kernel/sched/ext.c        | 16 +++++++++++++---
- kernel/sched/sched.h      |  1 +
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ kernel/sched/ext.c | 54 +++++++++++++++++++++-------------------------
+ 1 file changed, 25 insertions(+), 29 deletions(-)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 60285c3d07cf..3d3216ff9188 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -57,6 +57,7 @@ enum scx_dsq_id_flags {
- 	SCX_DSQ_INVALID		= SCX_DSQ_FLAG_BUILTIN | 0,
- 	SCX_DSQ_GLOBAL		= SCX_DSQ_FLAG_BUILTIN | 1,
- 	SCX_DSQ_LOCAL		= SCX_DSQ_FLAG_BUILTIN | 2,
-+	SCX_DSQ_BYPASS		= SCX_DSQ_FLAG_BUILTIN | 3,
- 	SCX_DSQ_LOCAL_ON	= SCX_DSQ_FLAG_BUILTIN | SCX_DSQ_FLAG_LOCAL_ON,
- 	SCX_DSQ_LOCAL_CPU_MASK	= 0xffffffffLLU,
- };
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 43083602c15e..747391a3f6e3 100644
+index 747391a3f6e3..5da699cacde1 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -1298,7 +1298,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+@@ -33,9 +33,8 @@ static DEFINE_MUTEX(scx_enable_mutex);
+ DEFINE_STATIC_KEY_FALSE(__scx_enabled);
+ DEFINE_STATIC_PERCPU_RWSEM(scx_fork_rwsem);
+ static atomic_t scx_enable_state_var = ATOMIC_INIT(SCX_DISABLED);
+-static unsigned long scx_in_softlockup;
+-static atomic_t scx_breather_depth = ATOMIC_INIT(0);
+ static int scx_bypass_depth;
++static bool scx_aborting;
+ static bool scx_init_task_enabled;
+ static bool scx_switching_all;
+ DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
+@@ -1831,7 +1830,7 @@ static void scx_breather(struct rq *rq)
  
- 	if (scx_rq_bypassing(rq)) {
- 		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
--		goto global;
-+		goto bypass;
+ 	lockdep_assert_rq_held(rq);
+ 
+-	if (likely(!atomic_read(&scx_breather_depth)))
++	if (likely(!READ_ONCE(scx_aborting)))
+ 		return;
+ 
+ 	raw_spin_rq_unlock(rq);
+@@ -1840,9 +1839,9 @@ static void scx_breather(struct rq *rq)
+ 
+ 	do {
+ 		int cnt = 1024;
+-		while (atomic_read(&scx_breather_depth) && --cnt)
++		while (READ_ONCE(scx_aborting) && --cnt)
+ 			cpu_relax();
+-	} while (atomic_read(&scx_breather_depth) &&
++	} while (READ_ONCE(scx_aborting) &&
+ 		 time_before64(ktime_get_ns(), until));
+ 
+ 	raw_spin_rq_lock(rq);
+@@ -3741,30 +3740,14 @@ void scx_softlockup(u32 dur_s)
+ 		goto out_unlock;
  	}
  
- 	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
-@@ -1356,6 +1356,9 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- global:
- 	dsq = find_global_dsq(sch, p);
- 	goto enqueue;
-+bypass:
-+	dsq = &task_rq(p)->scx.bypass_dsq;
-+	goto enqueue;
+-	/* allow only one instance, cleared at the end of scx_bypass() */
+-	if (test_and_set_bit(0, &scx_in_softlockup))
+-		goto out_unlock;
+-
+ 	printk_deferred(KERN_ERR "sched_ext: Soft lockup - CPU%d stuck for %us, disabling \"%s\"\n",
+ 			smp_processor_id(), dur_s, scx_root->ops.name);
  
- enqueue:
+-	/*
+-	 * Some CPUs may be trapped in the dispatch paths. Enable breather
+-	 * immediately; otherwise, we might even be able to get to scx_bypass().
+-	 */
+-	atomic_inc(&scx_breather_depth);
+-
+ 	scx_error(sch, "soft lockup - CPU#%d stuck for %us", smp_processor_id(), dur_s);
+ out_unlock:
+ 	rcu_read_unlock();
+ }
+ 
+-static void scx_clear_softlockup(void)
+-{
+-	if (test_and_clear_bit(0, &scx_in_softlockup))
+-		atomic_dec(&scx_breather_depth);
+-}
+-
+ /**
+  * scx_bypass - [Un]bypass scx_ops and guarantee forward progress
+  * @bypass: true for bypass, false for unbypass
+@@ -3827,8 +3810,6 @@ static void scx_bypass(bool bypass)
+ 				      ktime_get_ns() - bypass_timestamp);
+ 	}
+ 
+-	atomic_inc(&scx_breather_depth);
+-
  	/*
-@@ -2154,8 +2157,14 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
- 	if (consume_global_dsq(sch, rq))
- 		goto has_tasks;
+ 	 * No task property is changing. We just need to make sure all currently
+ 	 * queued tasks are re-queued according to the new scx_rq_bypassing()
+@@ -3884,10 +3865,8 @@ static void scx_bypass(bool bypass)
+ 		raw_spin_rq_unlock(rq);
+ 	}
  
--	if (unlikely(!SCX_HAS_OP(sch, dispatch)) ||
--	    scx_rq_bypassing(rq) || !scx_rq_online(rq))
-+	if (scx_rq_bypassing(rq)) {
-+		if (consume_dispatch_q(sch, rq, &rq->scx.bypass_dsq))
-+			goto has_tasks;
-+		else
-+			goto no_tasks;
-+	}
+-	atomic_dec(&scx_breather_depth);
+ unlock:
+ 	raw_spin_unlock_irqrestore(&bypass_lock, flags);
+-	scx_clear_softlockup();
+ }
+ 
+ static void free_exit_info(struct scx_exit_info *ei)
+@@ -3982,6 +3961,7 @@ static void scx_disable_workfn(struct kthread_work *work)
+ 
+ 	/* guarantee forward progress by bypassing scx_ops */
+ 	scx_bypass(true);
++	WRITE_ONCE(scx_aborting, false);
+ 
+ 	switch (scx_set_enable_state(SCX_DISABLING)) {
+ 	case SCX_DISABLING:
+@@ -4104,9 +4084,24 @@ static void scx_disable_workfn(struct kthread_work *work)
+ 	scx_bypass(false);
+ }
+ 
+-static void scx_disable(enum scx_exit_kind kind)
++static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
+ {
+ 	int none = SCX_EXIT_NONE;
 +
-+	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
- 		goto no_tasks;
++	if (!atomic_try_cmpxchg(&sch->exit_kind, &none, kind))
++		return false;
++
++	/*
++	 * Some CPUs may be trapped in the dispatch paths. Enable breather
++	 * immediately; otherwise, we might not even be able to get to
++	 * scx_bypass().
++	 */
++	WRITE_ONCE(scx_aborting, true);
++	return true;
++}
++
++static void scx_disable(enum scx_exit_kind kind)
++{
+ 	struct scx_sched *sch;
  
- 	dspc->rq = rq;
-@@ -5371,6 +5380,7 @@ void __init init_sched_ext_class(void)
- 		int  n = cpu_to_node(cpu);
+ 	if (WARN_ON_ONCE(kind == SCX_EXIT_NONE || kind == SCX_EXIT_DONE))
+@@ -4115,7 +4110,7 @@ static void scx_disable(enum scx_exit_kind kind)
+ 	rcu_read_lock();
+ 	sch = rcu_dereference(scx_root);
+ 	if (sch) {
+-		atomic_try_cmpxchg(&sch->exit_kind, &none, kind);
++		scx_claim_exit(sch, kind);
+ 		kthread_queue_work(sch->helper, &sch->disable_work);
+ 	}
+ 	rcu_read_unlock();
+@@ -4436,9 +4431,8 @@ static void scx_vexit(struct scx_sched *sch,
+ 		      const char *fmt, va_list args)
+ {
+ 	struct scx_exit_info *ei = sch->exit_info;
+-	int none = SCX_EXIT_NONE;
  
- 		init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL);
-+		init_dsq(&rq->scx.bypass_dsq, SCX_DSQ_BYPASS);
- 		INIT_LIST_HEAD(&rq->scx.runnable_list);
- 		INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
+-	if (!atomic_try_cmpxchg(&sch->exit_kind, &none, kind))
++	if (!scx_claim_exit(sch, kind))
+ 		return;
  
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 27aae2a298f8..5991133a4849 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -808,6 +808,7 @@ struct scx_rq {
- 	struct balance_callback	deferred_bal_cb;
- 	struct irq_work		deferred_irq_work;
- 	struct irq_work		kick_cpus_irq_work;
-+	struct scx_dispatch_q	bypass_dsq;
- };
- #endif /* CONFIG_SCHED_CLASS_EXT */
+ 	ei->exit_code = exit_code;
+@@ -4654,6 +4648,8 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 	 */
+ 	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
+ 	WARN_ON_ONCE(scx_root);
++	if (WARN_ON_ONCE(READ_ONCE(scx_aborting)))
++		WRITE_ONCE(scx_aborting, false);
+ 
+ 	atomic_long_set(&scx_nr_rejected, 0);
  
 -- 
 2.51.2
