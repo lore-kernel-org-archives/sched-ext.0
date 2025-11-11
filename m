@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C16B328278;
-	Tue, 11 Nov 2025 19:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E215261B8D;
+	Tue, 11 Nov 2025 19:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762888703; cv=none; b=HmfTT9nixb7cRvbAAk6T5/KGWfcO3ewtdZJrXzFGzEWfE2aMEMuHtwnE+XjRYLBj+8Cg56C3VgH6a1h3G1+IyN1Arr0jyqGo4yOxGhoxTQXnHW20oXrpLbycHG3zWmlm8GT3zahYpZeTA+WGdDjEWNFkYP4GU2/zUC120qMKyJM=
+	t=1762888704; cv=none; b=jgVVan19AmbZG+yg51t5IbvOrQuHJk45pupzTI1Cx6VpS2xKZa65yVI1SdGv37jMQRA1q9snE/kVb1/PHiyS5Xha+WUqirVfn6tvFZ0aKpzGUDkoD6D+z8PE4ulrZYAA9aqijw17EVNf3N7RRNVn5xyCCHHttF2OpzH58unWuc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762888703; c=relaxed/simple;
-	bh=KbWeYc4WfB1h7Kb2jw5inRSnBHtZAXgPWO8if/DfbdA=;
+	s=arc-20240116; t=1762888704; c=relaxed/simple;
+	bh=vcvYchVdgxL+DU/MXUX3PAFZjptbDISFJLnpHeS1VDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjenqcGCIKk7n7IwfxG8Q5v0qwGuLzae4ZA2GxwQhJDyOV1FGiKZivbx+M4fO2TXWc3YTZHkGd/C5UxPWFC0TXZO9YGDtGCqcCYYjoFrcRMs93gyAq/3Llfk9IIAFvsKsFAlWnEL8alGUHSB+sGIUH+JSt03XZLJlpdrFP0tsyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ksb6Rkwp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oiHEk36s3BSz9dqTTi91uJrcLvYq+RuFRxGwNovNMvI4Vn3jl7ZZhBjtjIHCjiOJPMlV9istZ1Y3kkB3W9fdLO9vAIZ2nhm+dGyhmmmz1rF0cL5EwFEj3H5F6ZSDqEBh9WBdMKtmkP2vKJEtIGhSEiWZsqXyhymqDdr5vHclPC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=COOF52aE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ksb6Rkwp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD841C4CEF7;
-	Tue, 11 Nov 2025 19:18:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="COOF52aE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35ACC16AAE;
+	Tue, 11 Nov 2025 19:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762888702;
-	bh=KbWeYc4WfB1h7Kb2jw5inRSnBHtZAXgPWO8if/DfbdA=;
+	s=k20201202; t=1762888704;
+	bh=vcvYchVdgxL+DU/MXUX3PAFZjptbDISFJLnpHeS1VDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ksb6RkwpmGRDTkLpweVGc2Sico2jvwz+rZB8FBxFVIeO4rICqtQqj7pM8BlcSR8HF
-	 9/C66Is8w2V8yr/ZUg3CXWHdohPKTwYtg1H2im3Wy4SURe8ENQpBkTtUrtUOV2+lAc
-	 rpk9OhiLKwHEsVc+7a8FId6vekHFU1otl6giEv1yACdkJ2HDACVKWLgIPozZzmnqgR
-	 7x/8aQtnh6sUF7MFurFCRbC7ZwFzRs8n4DBBa2Di/d4SqXfs7Vc8EeIK1+gGHqvQ0Y
-	 ctGr8z1zQi5ssIN21vsWqNqCnus4FUEa6igvyPSmM49bA7b39l4qgD+2DrlM1U6Rgv
-	 MgWkwKfrkzGiw==
+	b=COOF52aEXD0UNBnjLdx/oA3bBCTFYX4RYdVStDjbwAhdE2SbIXW34hAC/2JYesEwU
+	 MgX4G5mcUP4rjoJfmSzuX5vI5OODI1+QS5PLOQc3Zqq8Sbg7CSZdZE5Zzv2JjJjb9O
+	 cbUUAZ6jH71ANdNiJgAajbX5a8bBRg3/4sEIMWuBWlbyuPvXJSZFm/ed9SIsvurO5Q
+	 iPvsQca8c/KV8GkcB4f8eKrppc0eYg0FQuySPZ+FzAUz9R4akts1ut+kjKuTndgAof
+	 axkskKVLD9aIADWzxKQW8JfVgy7VwO0yQVrTsVV5c86VGZHBO8ovnBJzp0ZIZVznxS
+	 nr1PpUs3QMLdg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <andrea.righi@linux.dev>,
@@ -36,9 +36,9 @@ Cc: Dan Schatzberg <schatzberg.dan@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>,
 	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH 05/13] sched_ext: Exit dispatch and move operations immediately when aborting
-Date: Tue, 11 Nov 2025 09:18:08 -1000
-Message-ID: <20251111191816.862797-6-tj@kernel.org>
+Subject: [PATCH 06/13] sched_ext: Make scx_exit() and scx_vexit() return bool
+Date: Tue, 11 Nov 2025 09:18:09 -1000
+Message-ID: <20251111191816.862797-7-tj@kernel.org>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20251111191816.862797-1-tj@kernel.org>
 References: <20251111191816.862797-1-tj@kernel.org>
@@ -50,138 +50,72 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-62dcbab8b0ef ("sched_ext: Avoid live-locking bypass mode switching") introduced
-the breather mechanism to inject delays during bypass mode switching. It
-maintains operation semantics unchanged while reducing lock contention to avoid
-live-locks on large NUMA systems.
+Make scx_exit() and scx_vexit() return bool indicating whether the calling
+thread successfully claimed the exit. This will be used by the abort mechanism
+added in a later patch.
 
-However, the breather only activates when exiting the scheduler, so there's no
-need to maintain operation semantics. Simplify by exiting dispatch and move
-operations immediately when scx_aborting is set. In consume_dispatch_q(), break
-out of the task iteration loop. In scx_dsq_move(), return early before
-acquiring locks.
-
-This also fixes cases the breather mechanism cannot handle. When a large system
-has many runnable threads affinitized to different CPU subsets and the BPF
-scheduler places them all into a single DSQ, many CPUs can scan the DSQ
-concurrently for tasks they can run. This can cause DSQ and RQ locks to be held
-for extended periods, leading to various failure modes. The breather cannot
-solve this because once in the consume loop, there's no exit. The new mechanism
-fixes this by exiting the loop immediately.
-
-The bypass DSQ is exempted to ensure the bypass mechanism itself can make
-progress.
-
-v2: Use READ_ONCE() when reading scx_aborting (Andrea Righi).
-
-Reported-by: Dan Schatzberg <schatzberg.dan@gmail.com>
 Reviewed-by: Dan Schatzberg <schatzberg.dan@gmail.com>
-Cc: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Cc: Emil Tsalapatis <etsal@meta.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c | 62 ++++++++++++++--------------------------------
- 1 file changed, 18 insertions(+), 44 deletions(-)
+ kernel/sched/ext.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 5da699cacde1..56a6d453543a 100644
+index 56a6d453543a..e6e69a7fe105 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -1818,48 +1818,11 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 	return dst_rq;
+@@ -174,18 +174,21 @@ MODULE_PARM_DESC(slice_bypass_us, "bypass slice in microseconds, applied on [un]
+ static void process_ddsp_deferred_locals(struct rq *rq);
+ static u32 reenq_local(struct rq *rq);
+ static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
+-static void scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
++static bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
+ 		      s64 exit_code, const char *fmt, va_list args);
+ 
+-static __printf(4, 5) void scx_exit(struct scx_sched *sch,
++static __printf(4, 5) bool scx_exit(struct scx_sched *sch,
+ 				    enum scx_exit_kind kind, s64 exit_code,
+ 				    const char *fmt, ...)
+ {
+ 	va_list args;
++	bool ret;
+ 
+ 	va_start(args, fmt);
+-	scx_vexit(sch, kind, exit_code, fmt, args);
++	ret = scx_vexit(sch, kind, exit_code, fmt, args);
+ 	va_end(args);
++
++	return ret;
  }
  
--/*
-- * A poorly behaving BPF scheduler can live-lock the system by e.g. incessantly
-- * banging on the same DSQ on a large NUMA system to the point where switching
-- * to the bypass mode can take a long time. Inject artificial delays while the
-- * bypass mode is switching to guarantee timely completion.
-- */
--static void scx_breather(struct rq *rq)
--{
--	u64 until;
--
--	lockdep_assert_rq_held(rq);
--
--	if (likely(!READ_ONCE(scx_aborting)))
--		return;
--
--	raw_spin_rq_unlock(rq);
--
--	until = ktime_get_ns() + NSEC_PER_MSEC;
--
--	do {
--		int cnt = 1024;
--		while (READ_ONCE(scx_aborting) && --cnt)
--			cpu_relax();
--	} while (READ_ONCE(scx_aborting) &&
--		 time_before64(ktime_get_ns(), until));
--
--	raw_spin_rq_lock(rq);
--}
--
- static bool consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
- 			       struct scx_dispatch_q *dsq)
+ #define scx_error(sch, fmt, args...)	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
+@@ -4400,14 +4403,14 @@ static void scx_error_irq_workfn(struct irq_work *irq_work)
+ 	kthread_queue_work(sch->helper, &sch->disable_work);
+ }
+ 
+-static void scx_vexit(struct scx_sched *sch,
++static bool scx_vexit(struct scx_sched *sch,
+ 		      enum scx_exit_kind kind, s64 exit_code,
+ 		      const char *fmt, va_list args)
  {
- 	struct task_struct *p;
- retry:
--	/*
--	 * This retry loop can repeatedly race against scx_bypass() dequeueing
--	 * tasks from @dsq trying to put the system into the bypass mode. On
--	 * some multi-socket machines (e.g. 2x Intel 8480c), this can live-lock
--	 * the machine into soft lockups. Give a breather.
--	 */
--	scx_breather(rq);
--
- 	/*
- 	 * The caller can't expect to successfully consume a task if the task's
- 	 * addition to @dsq isn't guaranteed to be visible somehow. Test
-@@ -1873,6 +1836,17 @@ static bool consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
- 	nldsq_for_each_task(p, dsq) {
- 		struct rq *task_rq = task_rq(p);
+ 	struct scx_exit_info *ei = sch->exit_info;
  
-+		/*
-+		 * This loop can lead to multiple lockup scenarios, e.g. the BPF
-+		 * scheduler can put an enormous number of affinitized tasks into
-+		 * a contended DSQ, or the outer retry loop can repeatedly race
-+		 * against scx_bypass() dequeueing tasks from @dsq trying to put
-+		 * the system into the bypass mode. This can easily live-lock the
-+		 * machine. If aborting, exit from all non-bypass DSQs.
-+		 */
-+		if (unlikely(READ_ONCE(scx_aborting)) && dsq->id != SCX_DSQ_BYPASS)
-+			break;
-+
- 		if (rq == task_rq) {
- 			task_unlink_from_dsq(p, dsq);
- 			move_local_task_to_local_dsq(p, 0, dsq, rq);
-@@ -5636,6 +5610,13 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 	    !scx_kf_allowed(sch, SCX_KF_DISPATCH))
- 		return false;
- 
-+	/*
-+	 * If the BPF scheduler keeps calling this function repeatedly, it can
-+	 * cause similar live-lock conditions as consume_dispatch_q().
-+	 */
-+	if (unlikely(READ_ONCE(scx_aborting)))
+ 	if (!scx_claim_exit(sch, kind))
+-		return;
 +		return false;
-+
- 	/*
- 	 * Can be called from either ops.dispatch() locking this_rq() or any
- 	 * context where no rq lock is held. If latter, lock @p's task_rq which
-@@ -5656,13 +5637,6 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 		raw_spin_rq_lock(src_rq);
- 	}
  
--	/*
--	 * If the BPF scheduler keeps calling this function repeatedly, it can
--	 * cause similar live-lock conditions as consume_dispatch_q(). Insert a
--	 * breather if necessary.
--	 */
--	scx_breather(src_rq);
--
- 	locked_rq = src_rq;
- 	raw_spin_lock(&src_dsq->lock);
+ 	ei->exit_code = exit_code;
+ #ifdef CONFIG_STACKTRACE
+@@ -4424,6 +4427,7 @@ static void scx_vexit(struct scx_sched *sch,
+ 	ei->reason = scx_exit_reason(ei->kind);
  
+ 	irq_work_queue(&sch->error_irq_work);
++	return true;
+ }
+ 
+ static int alloc_kick_syncs(void)
 -- 
 2.51.2
 
