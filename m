@@ -1,165 +1,46 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F60B27603F
-	for <sched-ext@lists.linux.dev>; Wed, 12 Nov 2025 07:33:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77E4328636;
+	Wed, 12 Nov 2025 16:34:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762932830; cv=none; b=SMNhRXNMu+bXPkyDpM3D1lV3G7rnF2lfGWB0DCRSHsGvg7Yf7WrF/qP+/FW4dL94D/2CgfK55YptybwalIMXnOgA2mez0bEGb65HNkjva7cM7bPMeuiCGOdXmZcvfLEVTmqEOTZY46cnphTEWZTKKBNfAxAExv06PuhWuD9uaek=
+	t=1762965242; cv=none; b=rQ6Z2tsYg5ib8jLqMkEaoHV7hNcOVOPdaDyAR0NMaYEtee53rW7X2X9AtdiHJKfY05IMwZupcbONw0LCcIVuJ/+As/cZ5bq5XGqSQtFs9kN8lycDr8lhHJZPTPakfH614s4zwIKjbx8EoW43cVg6XtASafoUBwjAGu36d+Qn1cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762932830; c=relaxed/simple;
-	bh=rXD3VmAilJLI4TcMWlWUA9bQp0c9F9/4ZDQKml2RB/M=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=S+tulefSbbel8IObxcEcz+7+VG7OgA2USo3KYPAcxVxc425Sv53hm+3w283wa8K5QG6hbF8gJ54rt70kS296ooPG3AJYTqaAIp0pVjzjXUSXySBPrq/TWNoZq4p6vjDO+WsgBeMFX54SkrhNz+T1SjL5xM/+VGCsAhocZoxGhSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=NYHSuyUR; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1762965242; c=relaxed/simple;
+	bh=NBplsh0624Kjxvu8SMTCt/4O0tSu1lpyz5XBuZRcxiM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=gVrOVW3OQ5tNF/4ouPXo2sqwOnlFuECRWvrn6M9K21R/BRzbCDhR6xGSK5CKDpGrXezPQfVJZu4X/tZx0DDT+gd3g7ljRIg2T2ZBp1YLjVY+Ho3D/akBSCOxmoE/ftdBuD0d/URFsfv2EhpGV3Doycc0U2K3O4UMdQtEqkNbHk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vtp6zaFf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="NYHSuyUR"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1762932816;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc; bh=eekNvxuCeOiOWDI8SsYmLtpX3192vqXtTU8rshEX5LA=;
-	b=NYHSuyURe5T0rm+1P/U0zZ9LydcJEktQ5VnktnDkV3GbcMEZzGLjqx+BZmJCotbj1bsxtX
-	TjjtVVs7E5Ii8exp2O2TW7by2F2HWH/CEwMhhJigijbxvJ/yuufYoxK7voYsTdGtq6NDsg
-	VmhgWQKo2t7RXncYjVAE4882toR6/xM=
-From: Zqiang <qiang.zhang@linux.dev>
-To: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	qiang.zhang@linux.dev
-Subject: [PATCH] sched_ext: Fix unsafe locking in the scx_dump_state()
-Date: Wed, 12 Nov 2025 15:33:28 +0800
-Message-Id: <20251112073328.14303-1-qiang.zhang@linux.dev>
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vtp6zaFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A83EC4CEF5;
+	Wed, 12 Nov 2025 16:34:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762965242;
+	bh=NBplsh0624Kjxvu8SMTCt/4O0tSu1lpyz5XBuZRcxiM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Vtp6zaFfCG/8wB2rosTWXKsC2EFAYkz4cAPI2WIDgpyZoBNUXagfqCV2d/sOnAxw2
+	 NBmeijGWaRZxgMBNLUfSRXWx6Z3Z39NSnlnLorcSH3hsOyRKTPOBDwSMtMddTWrd4I
+	 6vo24/SSCJVs51afVeDEe8BdK9BNPEOir/204uyYDKhP2KkxYe7zwkng+euxFj18w7
+	 D6QXJDelULvzK+eLkYAkEvwbm2bYjP2TwJLdP1ergtQSwdoitaBHCIE7Lu+FGauGg4
+	 TW1uRfWP8h8oCB8Rrr2JXonc1g/a8WuCDtDMQvplQ8YPDDIknMvI4YcbNUVa+kRm/w
+	 GUaRXn/iGGPkA==
+Date: Wed, 12 Nov 2025 06:34:01 -1000
+Message-ID: <74da46d928cb25b9e0a892f20e0323c3@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Zqiang <qiang.zhang@linux.dev>
+Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: Fix unsafe locking in the scx_dump_state()
+In-Reply-To: <20251112073328.14303-1-qiang.zhang@linux.dev>
+References: <20251112073328.14303-1-qiang.zhang@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-For built with CONFIG_PREEMPT_RT=y kernels, the dump_lock will be converted
-sleepable spinlock and not disable-irq, so the following scenarios occur:
+Applied to sched_ext/for-6.18-fixes.
 
-inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-irq_work/0/27 [HC0[0]:SC0[0]:HE1:SE1] takes:
-(&rq->__lock){?...}-{2:2}, at: raw_spin_rq_lock_nested+0x2b/0x40
-{IN-HARDIRQ-W} state was registered at:
-   lock_acquire+0x1e1/0x510
-   _raw_spin_lock_nested+0x42/0x80
-   raw_spin_rq_lock_nested+0x2b/0x40
-   sched_tick+0xae/0x7b0
-   update_process_times+0x14c/0x1b0
-   tick_periodic+0x62/0x1f0
-   tick_handle_periodic+0x48/0xf0
-   timer_interrupt+0x55/0x80
-   __handle_irq_event_percpu+0x20a/0x5c0
-   handle_irq_event_percpu+0x18/0xc0
-   handle_irq_event+0xb5/0x150
-   handle_level_irq+0x220/0x460
-   __common_interrupt+0xa2/0x1e0
-   common_interrupt+0xb0/0xd0
-   asm_common_interrupt+0x2b/0x40
-   _raw_spin_unlock_irqrestore+0x45/0x80
-   __setup_irq+0xc34/0x1a30
-   request_threaded_irq+0x214/0x2f0
-   hpet_time_init+0x3e/0x60
-   x86_late_time_init+0x5b/0xb0
-   start_kernel+0x308/0x410
-   x86_64_start_reservations+0x1c/0x30
-   x86_64_start_kernel+0x96/0xa0
-   common_startup_64+0x13e/0x148
-
- other info that might help us debug this:
- Possible unsafe locking scenario:
-
-        CPU0
-        ----
-   lock(&rq->__lock);
-   <Interrupt>
-     lock(&rq->__lock);
-
-  *** DEADLOCK ***
-
- stack backtrace:
- CPU: 0 UID: 0 PID: 27 Comm: irq_work/0
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x8c/0xd0
-  dump_stack+0x14/0x20
-  print_usage_bug+0x42e/0x690
-  mark_lock.part.44+0x867/0xa70
-  ? __pfx_mark_lock.part.44+0x10/0x10
-  ? string_nocheck+0x19c/0x310
-  ? number+0x739/0x9f0
-  ? __pfx_string_nocheck+0x10/0x10
-  ? __pfx_check_pointer+0x10/0x10
-  ? kvm_sched_clock_read+0x15/0x30
-  ? sched_clock_noinstr+0xd/0x20
-  ? local_clock_noinstr+0x1c/0xe0
-  __lock_acquire+0xc4b/0x62b0
-  ? __pfx_format_decode+0x10/0x10
-  ? __pfx_string+0x10/0x10
-  ? __pfx___lock_acquire+0x10/0x10
-  ? __pfx_vsnprintf+0x10/0x10
-  lock_acquire+0x1e1/0x510
-  ? raw_spin_rq_lock_nested+0x2b/0x40
-  ? __pfx_lock_acquire+0x10/0x10
-  ? dump_line+0x12e/0x270
-  ? raw_spin_rq_lock_nested+0x20/0x40
-  _raw_spin_lock_nested+0x42/0x80
-  ? raw_spin_rq_lock_nested+0x2b/0x40
-  raw_spin_rq_lock_nested+0x2b/0x40
-  scx_dump_state+0x3b3/0x1270
-  ? finish_task_switch+0x27e/0x840
-  scx_ops_error_irq_workfn+0x67/0x80
-  irq_work_single+0x113/0x260
-  irq_work_run_list.part.3+0x44/0x70
-  run_irq_workd+0x6b/0x90
-  ? __pfx_run_irq_workd+0x10/0x10
-  smpboot_thread_fn+0x529/0x870
-  ? __pfx_smpboot_thread_fn+0x10/0x10
-  kthread+0x305/0x3f0
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x40/0x70
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-
-This commit therefore use rq_lock_irqsave/irqrestore() to replace
-rq_lock/unlock() in the scx_dump_state().
-
-Fixes: 07814a9439a3 ("sched_ext: Print debug dump after an error exit")
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
----
- kernel/sched/ext.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 2b0e88206d07..56aa8e6d335b 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4216,7 +4216,7 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
- 		size_t avail, used;
- 		bool idle;
- 
--		rq_lock(rq, &rf);
-+		rq_lock_irqsave(rq, &rf);
- 
- 		idle = list_empty(&rq->scx.runnable_list) &&
- 			rq->curr->sched_class == &idle_sched_class;
-@@ -4285,7 +4285,7 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
- 		list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node)
- 			scx_dump_task(&s, &dctx, p, ' ');
- 	next:
--		rq_unlock(rq, &rf);
-+		rq_unlock_irqrestore(rq, &rf);
- 	}
- 
- 	dump_newline(&s);
--- 
-2.17.1
-
+Thanks.
+--
+tejun
