@@ -1,60 +1,77 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012023.outbound.protection.outlook.com [52.101.48.23])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012055.outbound.protection.outlook.com [52.101.53.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC43C34575D
-	for <sched-ext@lists.linux.dev>; Wed, 12 Nov 2025 17:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6881633AD95
+	for <sched-ext@lists.linux.dev>; Wed, 12 Nov 2025 17:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762968609; cv=fail; b=J+J5gL7tOcCwfHjLH8JkQUgbPRvXJq3l2JGe8JA3wIvU4dn+8pVSh7DFvuAYuU7zIlN5leDu1sTe+NTCgnMqJfA1xL+VY/ADNDHynPCjZBvanKyBqG6WJzws1rQayOoA2aixdCHLHKHmz+Ft8s8A8qQD1HOlw4hNdlZTRolvRt4=
+	t=1762968935; cv=fail; b=NiKn4c59kZp1Xekl6ZFvk5r7/lLBZRv4wCjOcoWfAsgEfI+B7r35ZzeKlyCAaV+z8f9PYPC55ezsyEu9pTUnhiOrCtJPxL8M57X0FVxEEKqiynhGiOp8XAEXdv9IurNAqX4qieVA35leuSF96HtpMQdDtqeXmpy6RbR/1acQwR8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762968609; c=relaxed/simple;
-	bh=xVdW/ju6M2S2W6Xt5m0Nk7bqm+eunAy8jwNpuswkwv0=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=S7W2im3pYEc7TAfk+J0z7QDx1oHunrY4QiJiox0F6SLyX9Zk5YwtH4AYTCcZhPrlxEWgMNR8YsxxXCQ6w6pCdi5rEs43SybTgT1yrNLbQZkiAZaGpY3gq5i911CzMMzBk2R4VveccVhqMMLmM9mnTrXRV85G1Qwr4/1HzDkwW68=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DpaMM+iO; arc=fail smtp.client-ip=52.101.48.23
+	s=arc-20240116; t=1762968935; c=relaxed/simple;
+	bh=8aqnjt1QINcSunhibwJ9RTZzcWaTV4r/QkUBdUIzk08=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=s66rpdvf+pJJGEr09dT+ekDy7pSGRB/t/VbDzR1BH7iz4YEwsetdzxHttE2MQQjyApqWt+A8VAm6Tub5tVjOFtrVzVun8WVtXsc9F6snmRfABG+K75ALtLjFICdwQ6FRjDR/dtWsNPmWHuBGbnU/unQrYObqCDc2OEqEJBFDw4Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=crI3bkCH; arc=fail smtp.client-ip=52.101.53.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DpaMM+iO"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="crI3bkCH"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aMBvIbOoygi410EU72fVbo/h5ULlZfrq9zUVwjdRkaboXUtuHG5rEZS3qcKrwNjv2L9XaItOCf/auAXLHEYY6H4oRbTNjp+4kw7xdKDIX9LBRVDE/8c+g6Ka0Fh+TnS2t+rJmWIgJ6U4qdmSQGTGIADsMf5V3sqoMINkuYV7Cqh9KDakbQpuYZOYOo3Ca/ofoDfM2xNEgdetwpfUzO6+QgaL6IOqXiUECriH/FflEjfhM5ts1jyfUfPQNq1tkeNF2Q49vueo5cEVTVqjWP8kC3Sm8WggpMoggTLrvV6BdfvjyObimnl5IgZQCOVonotbBhXxR5MX3W7R0zN68PVo3w==
+ b=Y9eGwVEna0dwCTQ0A+/y8/eIXjSiVLiJBMIleku+q7ICyNAd7nHIGBhVQwuFtQ+k7ny8S3I9KF/JIuEQlo7IlqopGpVe7s1T7GK+AnGqKGaTXX0o0rDHNl28nx3oPHc7JpUHnUvKha9GjzJMIWbvoSkXK78nuUlW6ZyDlJFYIqhLWPhoA7S48RogrWWG+RUQoRE+lQ4cMU1tO2Dy76u+n1+EV6Uj2Fu3I/hX2tUaFLQ3fCrKwlQ3QPz3/BVHFVJuVOW6zhF38MYk5/i/y2g04Vrzvif3wqjMU1m4vaab5oqoO998TYSR5BvFsmn2nP7wSKGVVW86wLncqcGYwQwRaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=USLQNf7ov7Ud7GFFqT79t0YCPGWt3tJk/9UDShrBEDE=;
- b=AONonaJ13u7FBHTa/EwqwOZZjLIJWhtyMftyx+kN8k0J7c9Gz2yrlfbxhywQI+YEAzLA6RJDR8WWTj+JoS+uEaCsf8V0CcYwIzJr1VZsuseajfiwR6dO2SWN3RvjIPZ1p5UmWilYFmlChk0upi7XZUMomVoCwz6JKqaFZ++9goMVU9XonV9v3FpQ25NtvRGU+6QNtZno2SD539zc97Z660Ma4HGgj9kN1mhn5hOuqXmRedykN3lsQFldn065i4li3WnK8JfHQ7747IKdDuZsEuPXwTyQxA8t0phKONlMD4+LakYFzQFhk9iHvo4CHtrL6YZ6E7+dwnIB1OQYTJaVtw==
+ bh=4DLmBB+uX9yvS29E2/w3Xd8FiP8zUNiusupBJZGa6Bg=;
+ b=o5nB828FoRmK9KGaqMqatgYPcQrEkwDiGsEF4LgG0wh5HuYMZsLIiJBLhieXpj3OkEnFjZ/EMSnMcwWTv/po/O078gV54dAfaib9fKXrrKvjN21NbMP0gBejrEAWBhY7l4WX9rT9W8TBT74pjjqWWkVo5w6h+UhoPZ87nm4RF9NcjR2aSTXGbezS/2pl4Gw7c4I0WduGk3Y4Yeei1GH37eIOFJtX4/cIQ5Ax6OKL9G5+f+JUJJG157IcWwb1chONGcwceaUBJc5LnZ3ZQOQqsvemKhElWpFkeUJvkjO5FzcRtwH12vMGVyPCs8Ax2pnQPgg3Kwnvw2WjHqUUrIaHpQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=USLQNf7ov7Ud7GFFqT79t0YCPGWt3tJk/9UDShrBEDE=;
- b=DpaMM+iOkvxf7ZvNzhollyojXAYYnH2N5g1kTJsw43xHFxOazWOuclODzGjtWV42xNQSrhD6dOLHME0VgxDkEIVI79+Ddt4C/oJnHAVMEJurFJVUaogONoXPWWyXiBfJfdkLh1dMd3ExUWlq7g1DoWMlu+fh6GGHk6rit99AmSpKtn88WF4Wtjnp8JcYtJUHrK+ZuMBPDre2uO6A44xh87Rkj85EdiSQYoWvaBZ2CVtU3S6dQtOcUahuMus2afVEBXz7mL/SscMrE5iZWar7xpOkcm8MujCO9tyPr6iT9CCeD8/m9KWBIJv86Ypsjd+NuXb9uTxXVVUhSFBOeRpOHw==
+ bh=4DLmBB+uX9yvS29E2/w3Xd8FiP8zUNiusupBJZGa6Bg=;
+ b=crI3bkCHMfQ0+h5jDD95l9JJkTeVt+qxE8CvIlsdUyydmGymdG6UkZidlb3908OBmly8c0mOydEAtCE/nmMJXpQijOvo71wqM1YVKqYMlU4aP73/pHk465dZfscfsoGQOZNkowVbuc7h+vY3/MEQhxnw+5j3wdsW4VJphVYQ9XzKanIQlDYCdrfrmgIonsJaTM7IPl/Cxuwz6mQhcyTwXQfvr79c3qp67k69xVBgZ02O+W52sKsLELhuviciT1ttltPCYfIsZJ74OaIQLjFEKmu2JUGK9Zk8pDapX9j10VZk6np3H/CwgDXW9smKYkRnSPXurg16mzQhm57qW3Zyfg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS0PR12MB7678.namprd12.prod.outlook.com (2603:10b6:8:135::22) with
+ by DS4PR12MB9633.namprd12.prod.outlook.com (2603:10b6:8:27f::16) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.16; Wed, 12 Nov
- 2025 17:29:53 +0000
+ 2025 17:35:27 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9298.015; Wed, 12 Nov 2025
- 17:29:53 +0000
+ 17:35:27 +0000
+Date: Wed, 12 Nov 2025 18:35:19 +0100
 From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>,
+To: Juri Lelli <juri.lelli@redhat.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH sched_ext/for-6.19] sched_ext: Update comments replacing breather with aborting mechanism
-Date: Wed, 12 Nov 2025 18:29:45 +0100
-Message-ID: <20251112172945.299874-1-arighi@nvidia.com>
-X-Mailer: git-send-email 2.51.2
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MI0P293CA0005.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::19) To LV8PR12MB9620.namprd12.prod.outlook.com
+	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Luigi De Matteis <ldematteis123@gmail.com>,
+	sched-ext@lists.linux.dev, bpf@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/11] sched/debug: Stop and start server based on if it
+ was active
+Message-ID: <aRTFVzQlph4VwbiW@gpd4>
+References: <20251029191111.167537-1-arighi@nvidia.com>
+ <20251029191111.167537-3-arighi@nvidia.com>
+ <aQxKo68TJge5dRZI@jlelli-thinkpadt14gen4.remote.csb>
+ <aQzPVuI-dHEfee4W@gpd4>
+ <aQ2XBQ4vGGFWaykj@jlelli-thinkpadt14gen4.remote.csb>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aQ2XBQ4vGGFWaykj@jlelli-thinkpadt14gen4.remote.csb>
+X-ClientProxiedBy: MI1P293CA0006.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:2::16) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -63,118 +80,131 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS0PR12MB7678:EE_
-X-MS-Office365-Filtering-Correlation-Id: f827e155-5d58-4a2c-ae93-08de22111782
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS4PR12MB9633:EE_
+X-MS-Office365-Filtering-Correlation-Id: 691081e1-0ff1-4a44-074f-08de2211de69
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?QDltBUQ1T0Ku7ax5AnUDxvN5jp1dBQztaeU2OJYMraArlU/vDgwyYXbWIcYO?=
- =?us-ascii?Q?US3fVZqFLHM/66qPsqRy02XVvDiKTgVHcqdTux1BmyMyGxXPQnt91BpwaZmI?=
- =?us-ascii?Q?jZHgpz4SEUF6ZLOhBj6rtCHT9VpvGCsSyPvFgNio9pcD/x68p5FAILwgdp75?=
- =?us-ascii?Q?pvBPRqQOR0rdI2W5TQRQJGte1mqMSkGpSx/6zpbTJxXebF3d+iiF9XS0k53O?=
- =?us-ascii?Q?22a8wDtaCjR4MFZfNnmjFYG7bSr4jFR2IoGXxEFbh2JNRn1aDPmEDVYysyHP?=
- =?us-ascii?Q?AQ6NB9f+Wv9iaQbXYqtzQKt9Pg8mCLVYEk7yBMKK3cHvcXkAU/sORE+JybCV?=
- =?us-ascii?Q?eIf908r4rbTr/LzefsomMVwpfGdLbl9ifgXqEMskFtu49UewM7dkbBaRmKc4?=
- =?us-ascii?Q?5d6CTEK3O2vrNnHvkuEzMJRq91dZLJsSVNYDP1/CPBnlBsWZxU3QZ4Ah8nYu?=
- =?us-ascii?Q?14RtH9YAOmIXKRJnd2qWbDdrjhaCuWXzicWdzC+KXXfDj9H45atEkgyNV+Fp?=
- =?us-ascii?Q?ibFIzoLVHtAcQWG23TEtyKTSsWI3eLCimkZg9DZ+UW2V+OD4wkeUpBb8vhg9?=
- =?us-ascii?Q?Kbew74r4auIZsflEKmK0biVt0RbUhleiakK2SbY8Cvp765gM9dO5mvF0Sqt3?=
- =?us-ascii?Q?FfGduvf1T7snAJYLi7zoEYE7GoJl9B13CLOaM8oU261+nxyfNFdFj5Dm02s3?=
- =?us-ascii?Q?+XaBaz44MM/323f6PPurXzK86QacHNJo0p2VrvRirevc//UmiEtjBVAz5BTy?=
- =?us-ascii?Q?2JK1P8TMAiQpVhLJ0UDF0Lnirkr2Hr016avL0c8oCFzlmih1/y32BxavSGCE?=
- =?us-ascii?Q?o7JRnz2moRPagyg1p3xmUQ8F5I/udQhnkUgZ8UNsfqXsGVGb1aAgnyjOQCH2?=
- =?us-ascii?Q?33J29gS17K3otIAe4fQVLkbVqz8xuI+uh7kshIyOcaIhLW0lL9muHz0YQy8v?=
- =?us-ascii?Q?22H12Tb/NMOKHRcijMx7GuvgcSS3mBGIC6uC8NSiw4nS66Pc8HzoaZaF0W1H?=
- =?us-ascii?Q?PkeFww5OWzql1i/1MYrncU4fYoqxll5pSIDaNIMkKi7W9TirOvtFh2D+x3IM?=
- =?us-ascii?Q?lDR+JdTTjjLQFjZiBvFkhb6iJjHKGzm6KrOZjpwgRBy2ldSZzj8r2hpeDN/p?=
- =?us-ascii?Q?DFIhgXJVd9ZNilSSW5Giu7QNa6wWbJdEY4QinIy/wzBzcmsU7avihSleTfsw?=
- =?us-ascii?Q?uyPPEVlj4/B/M+vC8Bq1BxXUXtcfGpl+u5X4nBVODUdg4yFvvBZ5ucgF+MAz?=
- =?us-ascii?Q?I8kK50m6ExlQwZTuQpfQRj+r5CELQzAZKeTobO6P512oUI+TjP/WFKuY8v9P?=
- =?us-ascii?Q?ZGz+vMWr8/AyBHUpAYYDfo+5Dedfn/GswBqY0O/kWd2SwnwH5CO4RyAIhrbE?=
- =?us-ascii?Q?EV6oK1rAK8nQ5GZvJ2pfgo2tWdKSsJpigkreH/69+v13+I90x5xiXIEZe049?=
- =?us-ascii?Q?FY6hbBjkZZDhcXi699l5lZPjMKF+Os18?=
+	=?us-ascii?Q?bpql+G4YG5bUMZyjCWSvXyVlVf/QPZD0TVcAy6WzwQJf/A6HLh+KzWB3VVxO?=
+ =?us-ascii?Q?rIUKSL5i09bI2QXniYoSIf/IryjWa/Ml13QpyhbCLzW6FlsnIK3gmKvlzuHg?=
+ =?us-ascii?Q?tMA0ZQwaawbOgVFlN3w83Zd5+PSnBLd5vOljUOUoWnFX9o5kleleRd5SRCWf?=
+ =?us-ascii?Q?/6ZDLY2Ti+D+/WMU9rwvBd3apgz7qItyyrLo5ZUQAFvPZ/Mth/BwPkMjXb6v?=
+ =?us-ascii?Q?53I+ypUG5fhx2OR6oAuV9N+325dqU/GX01mvZCAJ6ZLUZsmTb6VQ3cVuYZVK?=
+ =?us-ascii?Q?C/NzFvYqwkq9rqOcatXMRne2IxOf+YTHpbR4BT5ZE+sgqKdNDK6dt4+YVtmj?=
+ =?us-ascii?Q?/0sHwjcLdqHuTaQ222ulKMqUtFIbiTCOWnqxYolFP6Dcelwh0rS5VQybPq3a?=
+ =?us-ascii?Q?MyVY+cegn78G5zJZlbs7lKAbnzvJtdGN2JrnJdZSg14fSdTlIvQGmsfk0QiH?=
+ =?us-ascii?Q?Ah2N27zn25a0aSh7ZfCQJotS9b/y3QVwLhDUxqmzyHp1K7SpeSeq5kL4msHk?=
+ =?us-ascii?Q?eVvVD4sgM2Uo9437Saf+0dOkW+z8yBvWG/rWJPUlj6S+wLnNNvxkbqhkOGVZ?=
+ =?us-ascii?Q?rSy0A2/e8r2SDWZeU6NWbJYH7K+hRlc+3KeRlfQtRTNoSK9JMaoclZHUQ+X6?=
+ =?us-ascii?Q?B26PlxMjlU8OD1fUL46J3XFlBtlO21s3uvyU4fQ7rroIKjkOmjdDIfw8UO8B?=
+ =?us-ascii?Q?EwuEZ45PrHg5QqzWt2MNvl1dQEvQLbrEE+3K3Nzf4m26Nf7I/dl/2tENOpYG?=
+ =?us-ascii?Q?mlmHT0vrd/uDmc+V8508QU/FI6BgAXRNlE2NtgXvdTY50Kt6/b69SDErJlO9?=
+ =?us-ascii?Q?m6KOG6AFh2Wae+NExgkNnCY6oP5E2yjc9M8Klr/C0D7h4/XIS+8dVezHb2U/?=
+ =?us-ascii?Q?DfkIWwvn0gngmFuD7peq8avVx5ubV9hz2Qme9uEErbhTA8msld7sd6CmKATC?=
+ =?us-ascii?Q?IZ3mjI8Tgoz72lZgziuaC0YcdjSMROzearxD7JNgDnE07dzOKnTeiDFEDQpy?=
+ =?us-ascii?Q?EHLTKivPDFBR7dfzd6GQl/IgimaM18Wmr91oMQzwKX5IP6RBjrfYocKo8y/Y?=
+ =?us-ascii?Q?6cim7LXR3WuZXbnCOquzq+tBSqduubzL0fmOHcEZwR5TBYCxoTP4WmKaK4Rb?=
+ =?us-ascii?Q?BvsXtt/zLCVKTGv4jd0Posk/Wk5LO4505xebAXMPzE6NGj0Cgh/lPv/wkd1y?=
+ =?us-ascii?Q?cFieiti3w65jX9vcZdQgQmBEU7LsY0UH4sF3LrUlYTQmPKRJZhxXIfXkuEuu?=
+ =?us-ascii?Q?/0SvU4mQx5wrsawqrY8tLAoiqEZGAkgKQw7/n5CIfJk2Lc/iHvBHj9Cflyzz?=
+ =?us-ascii?Q?czf0xcGwv71w2dcL41rqISJDHznUiXG3Rs5IwjmZbdIcFO9xPopPssp7RNHA?=
+ =?us-ascii?Q?GngbuKHVFL/HvyCxnK8tTBQpffq6JYZ2U6MCDqSQug0XtQETQIrKW8U+MjYk?=
+ =?us-ascii?Q?+8bvtIGrTVuNU2+gQNUdIYQ0mZe9QOlx?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?bNSIxF9MD3dihEenGCGOSnBDJrzVgDdiwFlUnLb+lk+ow0TJ+xFGaCsYu2T8?=
- =?us-ascii?Q?ksooZd4Fw1EPQM05RdGCIg9JhdZTyIUg5k5rimkDqAEloNtAPG3z+KfawAIQ?=
- =?us-ascii?Q?034QBJYtP0MwxTP35JxxkUN4u4/V1188T6ohN2O7AdRAyrzC8zAlj7NFRvt1?=
- =?us-ascii?Q?Ej/TNOoRvZ6NiE/72YK/8kXrFEEGPHr8tDhDNu+lkgUMXaP6KDCh4Xlj+VKY?=
- =?us-ascii?Q?aIlTNZAn0I6xliE/C53prpdVMnMai+6hBAoqwFhRQVn+WvID5eg41MsM3FXh?=
- =?us-ascii?Q?R8k809atEiAkmHBuYMJKveSRWV01A62ng+KrttDfMdOHNLO8nIVLznkcSPFE?=
- =?us-ascii?Q?CCA09qjCAybQ8F4o0AY0Ht45FMq9EIwx8vQS5Nlu7WJgnRtTmdrBKmmsFQcW?=
- =?us-ascii?Q?8L+uXTB8iFHbxgg30Ebx1m77k1YrkKrqHCQvMcZhKkLVBkxHf3fbMINBLumR?=
- =?us-ascii?Q?AdbwaBc7eEykOiiHjlhnd8TekROrR0scHulQf37uxET8BWrHbUu873fPLwFe?=
- =?us-ascii?Q?BdUmZoLDrtDMvbSQ81h2IQGKs6w8C+h0HHhMOYwc3kzHVqgEbryXRR4VPFR8?=
- =?us-ascii?Q?tnLuHGRT9d1hPzr9APN/KBGxm2BXh90RJQHPQk5F9FU3IYyN7wq85opjGD6/?=
- =?us-ascii?Q?zsYUIY8S2eJN/Pxf6AyzK7DB+Pl9pSb0ECJrnjBIUeDhgDCCOlYtkFHbeiVL?=
- =?us-ascii?Q?czFVKZSwurGBPW9+/mXGYgF6M66MzBf/B0m9y2flDYxTTZhXwrYeCKQSimLx?=
- =?us-ascii?Q?WB2wNT4JoorcR0U3osW8Ug8Apy8Fn6AY+mF1GuSol6p0k1mL5EvfHFKP6JH3?=
- =?us-ascii?Q?sJrZ56IaJHtKVebbLWm7JYUUNH7JFtxLBM8R1Uzy3VRUkKl2DtH6Kudshgy7?=
- =?us-ascii?Q?g3MeafXGKYkyfUy2xqSPfblbs17u7TjBDDsc7mHO+kaVcVmkYT3CR2PmrgWB?=
- =?us-ascii?Q?2r1hKhFbKlcZQiqzIn9KSTx5p6uBPmfssyrAAqbQVpTcx0AarSEHQMvqxexS?=
- =?us-ascii?Q?m5czeeA+rs80YFaGkR4wLtVMJ+JHkpr0uEROj5/mePgOKuUOxN+5TGD4GO8A?=
- =?us-ascii?Q?l1qKPvpWFBzmhTnxLQqeTR//5SXUnyTVU+/+BNSa+5YBeJSwCtEztiCgHpio?=
- =?us-ascii?Q?f5Kfe+dQtQxpaEhBSbXRnflykQvMmfXaniSo22+XI5sYZiZjQMItsUJSU2m7?=
- =?us-ascii?Q?lir7CoZeIxv3+osjgTHvfaVpGMgNf/v1KhIH2iVS81mocmbGb9IhLfMt2tzi?=
- =?us-ascii?Q?DJBpENnNX8Qaz0WnaPnP8cTNj8G8l6T00vLt+NPMpuCJIvFu2k4O4oY9MrSq?=
- =?us-ascii?Q?ppAaYIlZHB5RhJfaJqV7gch6AGAm/suP/uXACLJHXxLgWcreO7uLwC8QAEYS?=
- =?us-ascii?Q?jN0KCxLVnpnBGDsbbiwonWcJteO8S98Ms75T5eWKQoZ9Me9Mazx2nBnuHH5W?=
- =?us-ascii?Q?5XZufw8IobwtvkLBCKI8l7Ct+D3M9XpoyRFCM7p3Vdos4WCZucC4JlPe2Ma/?=
- =?us-ascii?Q?PfvcvkljTqTWsSVL/PdvKu5QURiQlKOFweBR6loVB4Ve3B7VzhS8EVWVUJ5M?=
- =?us-ascii?Q?9DS5HwzdKpr0zFLOwD/YrREv98QYv/e8B6jKzScu?=
+	=?us-ascii?Q?2iB8hMbwdWf+tbXTQY5mfleEj+qThIeSehtUVHIK4DVenNvwqB9QqmVFJtT8?=
+ =?us-ascii?Q?7ayLwqnDVrVf+O6m2nBPEp0cC2fnB88+JQWT11sKBe0b5FTvW3SbfC17h2Ha?=
+ =?us-ascii?Q?RCs39kANINmfGmd8ptCsiRs6jEAcKWorJVZdRswxxjFKRQyea5BFfHJ+w2My?=
+ =?us-ascii?Q?sxJvW42Ow6rhMOSpjOGR6Dm2UaJsBeSXqiA4Si43NftMx1/iJocZ/t5NL5z+?=
+ =?us-ascii?Q?VRBI4y7WldlvV7HTzf+Z3yLTOfhoIsqd4NGVg3kjwY/XXaX+2KhzF4aqtzQj?=
+ =?us-ascii?Q?BfyQWn5ijT/HtZonOSABOdWY2v/vaCYYq6h3D0y4Pzm862eYA+Ml4ZFvguDx?=
+ =?us-ascii?Q?yBlRie0B39RzCDZYEt6yrWWp6As24WnCdL1Go9jIcQ4hqyRWhZbGmopUNm2m?=
+ =?us-ascii?Q?RQBBXhVz7+uYNY7+vwgGuYBd3f1l7HnSkemQEpnJ6kCsyPKeefRE/n6mx/4L?=
+ =?us-ascii?Q?eDzhLbofpfcr4PM4KM5B65P1iJD/bFIn7sx7KjBoSTfSAQeL7/Az2ALnmIxe?=
+ =?us-ascii?Q?EIEJ3SEzfyI/0IWTJ+Xvx0NgoM5S1Ao9WYch6xxrnxIshXdFWestA6srB0C2?=
+ =?us-ascii?Q?ZEvUns2vB7KX+CRt1mUpRtVAUOB18R7Jf80tUKXb6ewsixiG+g7VDHVRQvEq?=
+ =?us-ascii?Q?lk2GpIzHFUQDxn2yQLuO6WbiIwtEEuip/gzdfQCtq7k1zpGSrDOml2oz/URY?=
+ =?us-ascii?Q?k92TefLtjV92CfW7pQZqDlBVw/lymtexxVS7MAQOz5UOTIRP1fExyxaKNI/X?=
+ =?us-ascii?Q?Rt7cWAh89dFISwU21plSqEtmvyCONMF+IjK1Nmn/T5bxJpARDdeFq7CXyOXd?=
+ =?us-ascii?Q?fAsQdELUWEHsSOMrklZ4fQ+a6DnhWiOb9nW0HKW5QI1fB3/2eXFpTpm1w4e6?=
+ =?us-ascii?Q?Dz1t8vXjSr2BIodA8vRxscTUf7j+a9qDwGMtPq+gneGFebTHcYHPtPw/E59M?=
+ =?us-ascii?Q?GJuiJEDA2DkD0OCaOA+dRLtR2QuxK0/HQ37G6jwN4YENhD+irWH04a7OvTK1?=
+ =?us-ascii?Q?6KH8E/vZ63aR359f2hUJbdHyT566tON/VQGG9CPvCcfwVzg6MSSxlSKhGr7g?=
+ =?us-ascii?Q?fhmY5XYYfRqwV3AFkJCNOcBDgxFYj82pjUT1jI76Zz9YF0+ssGPH/bUsBOqO?=
+ =?us-ascii?Q?ljhup8ZCWFhwvd7F4GB63wmR6ZWdVmyLd6h11lzI1HuXAd9OyWNJcTDDkYLm?=
+ =?us-ascii?Q?u+WC93vtX7qYhDShgBL2tNmmiAuHYZ92pFvRLxo9pZqRnmXRykWYy6OZ/P/M?=
+ =?us-ascii?Q?ocAE5xDOkH3o206KPfGxPSgyMV1hIPr8n/pu7leznE6BEfxdIzkCoJPRV5uK?=
+ =?us-ascii?Q?qPMcEA7IL5Yi/QOA+WzuFvN6SboVZzF94EvRuWr/KoI1tKcr5uOTnCZRZt5v?=
+ =?us-ascii?Q?Z5JdQKT9psB04oEQ/8htsLs2zilevPh6eR10s4x6zuy91xb6+I0QKBA9a7si?=
+ =?us-ascii?Q?CLuai2P63O3U1/qbneboZHkHGvcqFsxY/s1VqjjANuTa/ylPNsXyLIRrV7mC?=
+ =?us-ascii?Q?T0djlzQSOwVdDIn/8WljTx0BoArRwzaE8fxiCiHuEOm8D2hPB7kVAwxPaECu?=
+ =?us-ascii?Q?ai4ShD0PGEGNvwmkXGasdhaVryWAMODTSYPdxWdB?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f827e155-5d58-4a2c-ae93-08de22111782
+X-MS-Exchange-CrossTenant-Network-Message-Id: 691081e1-0ff1-4a44-074f-08de2211de69
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2025 17:29:53.9036
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2025 17:35:27.6795
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RP5MLkpz7eJa4BP52IvT5Pvt9I7QrwNp/MV1GIlMTtUTxgQOLGMIYHCAxWTTLEtSBm+9TDsRk2bLFsWh4VG6QA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7678
+X-MS-Exchange-CrossTenant-UserPrincipalName: aBE6sxxdqsJFlHIqpIaJNTh/y1kP3FHsbDagzY1pJy33K6R8H25Hqw2QYS97bS/c94/i4LImc0bHS4cz0oRTLA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9633
 
-Commit 5ebec443fb96a ("sched_ext: Exit dispatch and move operations
-immediately when aborting") replaced the breather mechanism with the
-scx_aborting flag.
+On Fri, Nov 07, 2025 at 07:51:49AM +0100, Juri Lelli wrote:
+> On 06/11/25 17:39, Andrea Righi wrote:
+> > On Thu, Nov 06, 2025 at 08:13:39AM +0100, Juri Lelli wrote:
+> 
+> ...
+> 
+> > > > @@ -376,8 +378,11 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
+> > > >  			return  -EINVAL;
+> > > >  		}
+> > > >  
+> > > > -		update_rq_clock(rq);
+> > > > -		dl_server_stop(&rq->fair_server);
+> > > > +		is_active = dl_server_active(&rq->fair_server);
+> > > > +		if (is_active) {
+> > > > +			update_rq_clock(rq);
+> > > > +			dl_server_stop(&rq->fair_server);
+> > > > +		}
+> > > >  
+> > > >  		retval = dl_server_apply_params(&rq->fair_server, runtime, period, 0);
+> > > >  
+> > > > @@ -385,7 +390,7 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
+> > > >  			printk_deferred("Fair server disabled in CPU %d, system may crash due to starvation.\n",
+> > > >  					cpu_of(rq));
+> > > >  
+> > > > -		if (rq->cfs.h_nr_queued)
+> > > > +		if (is_active)
+> > > >  			dl_server_start(&rq->fair_server);
+> > > 
+> > > Something that I noticed while reviewing this series is that we still
+> > > start back a server even if the user put its runtime to zero (disabling
+> > > it) and I don't think we want to do that. It's not of course related to
+> > > this change or this series per-se, but something we probably want to fix
+> > > independently.
+> > 
+> > Should we just call dl_server_remove_params() when runtime is zero?
+> 
+> Looking again at it I actually wonder if wouldn't it be better to use
+> dl_server_apply_params(dl_se, 0, dl_se->dl_period, false) in both cases.
+> dl_rq_change_utilization() deals with dl_non_contending (inactive_timer
+> armed) case already (even though sub-optimally, but we can fix/change it
+> later), so we can probably remove the special handling you do in
+> dl_server_remove_params(). The WARN_ON_ONCE(on_dl_rq()) could be moved
+> to dl_server_apply_params() as well.
+> 
+> What do you think?
 
-Update comments removing references to the breather mechanism to avoid
-confusion.
+As you said, it's probably sub-optimal, but I think it's still better than
+missing scx dl_server entirely. :)
 
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
----
- kernel/sched/ext.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+I'll give this approach a try and check if everything works as expected.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index c900667b25b88..8a3b8f64a06be 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3732,7 +3732,7 @@ bool scx_rcu_cpu_stall(void)
-  * live-lock the system by making many CPUs target the same DSQ to the point
-  * where soft-lockup detection triggers. This function is called from
-  * soft-lockup watchdog when the triggering point is close and tries to unjam
-- * the system by enabling the breather and aborting the BPF scheduler.
-+ * the system and aborting the BPF scheduler.
-  */
- void scx_softlockup(u32 dur_s)
- {
-@@ -4315,9 +4315,9 @@ static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
- 		return false;
- 
- 	/*
--	 * Some CPUs may be trapped in the dispatch paths. Enable breather
--	 * immediately; otherwise, we might not even be able to get to
--	 * scx_bypass().
-+	 * Some CPUs may be trapped in the dispatch paths. Set the aborting
-+	 * flag to break potential live-lock scenarios, ensuring we can
-+	 * successfully reach scx_bypass().
- 	 */
- 	WRITE_ONCE(scx_aborting, true);
- 	return true;
--- 
-2.51.2
+Thanks (and sorry for the late response)!
 
+-Andrea
