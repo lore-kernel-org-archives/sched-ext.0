@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4778C2222B2;
-	Fri, 14 Nov 2025 01:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B662221FBA;
+	Fri, 14 Nov 2025 01:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763083503; cv=none; b=dntXF/6I6/VJBmL54l81XUiOomyNATyAJgUgfY0ZMPKQGqI7SutBwtRgvn8joEaGrm8wBovij7ebbIF4XNp175zSWrOx3y9TxTFtVupwShgpnCvBfPGdeSyKKSUuwdnuisW/++JMERhO+dZ8O39hCUYfOlesf4eXI0kqEkBXgFA=
+	t=1763084023; cv=none; b=NcOA3P7GctsWwMcy4AGyr8S4WBmCZWV92mp+1D+ZV/IBDVaWNaHqR84KQDZeS0COA3L1+dp8181Szg2D1mTPWLZqxNfm4NZF8/Qz72eroqEK1BTDmiouJzOl4cA6sE1uu/I95fLy15B2A7Xp2If8EtdHbK45/SE/d+3QDJZtQyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763083503; c=relaxed/simple;
-	bh=rXdovdy8AmEKdm1Iem17KqyJwPGKWYIGCXm/1hGqe0Q=;
+	s=arc-20240116; t=1763084023; c=relaxed/simple;
+	bh=A7abiV9wvTFDaM0sqOLHfnN4ia/2tok2GZk8WPgtDko=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dZ2U8F3bA05QCYV7x8f34u5Ad3C0KRB5YDryuD/9jJ9KyP1eqannW7NSRi+3uuHhzQgmVCz9f8IbSAK1FLkEh7oxx9iXGHBajefzQ8FU26eIttNw8pqeZU/ufs3Crtn64wT0iKJTLeKU856ASdhlpOx25k/cECyuTWfrAdaeqTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LwGUCxJi; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=KCefxlqpTb9E0o0v6t1XsOyIa4L2Zqa+vnGBlgXmYwt/12nC120lUXAxy3qtYRnR26PX/AU9/0+DtLfBRGBi2Sv3Szv/NQ4aRxIDkkGQvxlyhSQdDE1ma2hUO/h3bEDWuJetphRG5JSMAkkeFyvsvIZ/1350c2/Np1+Nj8K7Qks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G8q5/tep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LwGUCxJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF61CC113D0;
-	Fri, 14 Nov 2025 01:25:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G8q5/tep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED46C4CEF5;
+	Fri, 14 Nov 2025 01:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763083502;
-	bh=rXdovdy8AmEKdm1Iem17KqyJwPGKWYIGCXm/1hGqe0Q=;
+	s=k20201202; t=1763084023;
+	bh=A7abiV9wvTFDaM0sqOLHfnN4ia/2tok2GZk8WPgtDko=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LwGUCxJiICQIxs+eSIRce7Sa8AZDC0Ah9Qw9cFkBCjPXH/AWLdOjK9t+t+FtI99Ak
-	 Bzxn3a2G/hXkNxLJIrMK++5QW3uYwaE390EEc1Amgj6kPXuVO/Ax3/fo/CgcI+RkTk
-	 2+x+tH3WlgQSsxHPvW+g4unrZ0JU09KcUo8/BRADFZfjFI0Um00yEi0b6j0rzRIZvk
-	 Y0wjl92IeehSduoox+MClm96Mnjyl3C/8SuWauoEWwTpP/IcVoN2eI29KzdZtQdvQH
-	 HxTfflPh9yFOLZWnVBt7NbURqTxTy6zGyiRXkEnETUnIoZwVaFuMJMInjMtv1/RRKG
-	 tn0H7Ek6zOMCw==
-Date: Thu, 13 Nov 2025 15:25:01 -1000
+	b=G8q5/tepgEoPPQphV/bNoguFaeSFj7DIRdcWUpndIYIYTEnbPWwoyQYoDVR7X15qY
+	 cZvcM+++OW6z3V8aZpOmoCssVT5dhwfVCKTFnE9tt5strrfQZm6ISlZFxEG5wD44Nd
+	 nR/+Lzx7iBF8s6CHRHcItDeSxIJDtcmzX8it82TNWwxhQ6pv+SIzVprPQzwg8l7KfT
+	 A7Mo0Qw7OY3rGI3+jrs5r/LswFUGZbl3T6fv/mI7G+4V5YW7u7iMd/gq0JYPy1eJnz
+	 aQnJ8GbYUMey/00+0xRRhTumKebRoyDJWVOGwWxNSRUXT3eDlAAsX4B9ecQJW7qazI
+	 4qXqX00fsM9Vw==
+Date: Thu, 13 Nov 2025 15:33:41 -1000
 From: Tejun Heo <tj@kernel.org>
 To: Doug Anderson <dianders@chromium.org>
 Cc: David Vernet <void@manifault.com>,
@@ -37,8 +37,9 @@ Cc: David Vernet <void@manifault.com>,
 	linux-kernel@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Andrea Righi <arighi@nvidia.com>
-Subject: Re: [PATCH 09/13] sched_ext: Hook up hardlockup detector
-Message-ID: <aRaE7ckOxUtDCcqU@slm.duckdns.org>
+Subject: [PATCH sched_ext/for-6.19] sched_ext: Pass locked CPU parameter to
+ scx_hardlockup() and add docs
+Message-ID: <aRaG9X9xfS_QL2QF@slm.duckdns.org>
 References: <20251111191816.862797-1-tj@kernel.org>
  <20251111191816.862797-10-tj@kernel.org>
  <CAD=FV=Ujf7PJxBANGv4e6oVa9YMS4sNLvxp=u+=5n5aaAAn9Cw@mail.gmail.com>
@@ -52,84 +53,108 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <CAD=FV=Ujf7PJxBANGv4e6oVa9YMS4sNLvxp=u+=5n5aaAAn9Cw@mail.gmail.com>
 
-Hello,
+With the buddy lockup detector, smp_processor_id() returns the detecting CPU,
+not the locked CPU, making scx_hardlockup()'s printouts confusing. Pass the
+locked CPU number from watchdog_hardlockup_check() as a parameter instead.
 
-On Thu, Nov 13, 2025 at 02:33:08PM -0800, Doug Anderson wrote:
-> > +bool scx_hardlockup(void)
-> 
-> It's really not obvious what the return value for this function means
-> and it's not documented in the kernel doc. Could you put it there?
-...
-> handle_lockup() and its return values also don't appear to be
-> documented and it's not super obvious (since it goes on to propogate
-> to scx_verror()).
-> 
-> I spent 5 minutes looking, and my best guess for handle_lockup() behavior:
+Also add kerneldoc comments to handle_lockup(), scx_hardlockup(), and
+scx_rcu_cpu_stall() documenting their return value semantics.
 
-Will add documentation.
+Suggested-by: Doug Anderson <dianders@chromium.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ include/linux/sched/ext.h |    4 ++--
+ kernel/sched/ext.c        |   25 ++++++++++++++++++++++---
+ kernel/watchdog.c         |    2 +-
+ 3 files changed, 25 insertions(+), 6 deletions(-)
 
-> If it does nothing, it doesn't print anything and returns false. Then
-> we'll continue to do a hard lockup.
->
-> If it has previously kicked scx, it prints the passed message and
-> returns false. Then we'll continue to do a hard lockup. Why does it
-> need to print a message in this case, though, since we'll print the
-> message once we return "false"?
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 70ee5c28a74d..bcb962d5ee7d 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -230,7 +230,7 @@ struct sched_ext_entity {
+ void sched_ext_dead(struct task_struct *p);
+ void print_scx_info(const char *log_lvl, struct task_struct *p);
+ void scx_softlockup(u32 dur_s);
+-bool scx_hardlockup(void);
++bool scx_hardlockup(int cpu);
+ bool scx_rcu_cpu_stall(void);
 
-If abort was already initiated, it does nothing. No message printed. The
-message passed into handle_lockup() is for reporting on sched_ext side.
+ #else	/* !CONFIG_SCHED_CLASS_EXT */
+@@ -238,7 +238,7 @@ bool scx_rcu_cpu_stall(void);
+ static inline void sched_ext_dead(struct task_struct *p) {}
+ static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
+ static inline void scx_softlockup(u32 dur_s) {}
+-static inline bool scx_hardlockup(void) { return false; }
++static inline bool scx_hardlockup(int cpu) { return false; }
+ static inline bool scx_rcu_cpu_stall(void) { return false; }
 
-> If it disables scx it doesn't print anything and returns true. Then
-> we'll print a message about scx getting disabled and skip the hard
-> lockup actions.
+ #endif	/* CONFIG_SCHED_CLASS_EXT */
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 8a3b8f64a06b..918573f3f088 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3687,6 +3687,17 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
+ 	return false;
+ }
 
-If it iniates disabling, it prints out that sched_ext is being disabled.
++/**
++ * handle_lockup - sched_ext common lockup handler
++ * @fmt: format string
++ *
++ * Called on system stall or lockup condition and initiates abort of sched_ext
++ * if enabled, which may resolve the reported lockup.
++ *
++ * Returns %true if sched_ext is enabled and abort was initiated, which may
++ * resolve the lockup. %false if sched_ext is not enabled or abort was already
++ * initiated by someone else.
++ */
+ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
+ {
+ 	struct scx_sched *sch;
+@@ -3718,6 +3729,10 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
+  * that may not be caused by the current BPF scheduler, try kicking out the
+  * current scheduler in an attempt to recover the system to a good state before
+  * issuing panics.
++ *
++ * Returns %true if sched_ext is enabled and abort was initiated, which may
++ * resolve the reported RCU stall. %false if sched_ext is not enabled or someone
++ * else already initiated abort.
+  */
+ bool scx_rcu_cpu_stall(void)
+ {
+@@ -3750,14 +3765,18 @@ void scx_softlockup(u32 dur_s)
+  * numerous affinitized tasks in a single queue and directing all CPUs at it.
+  * Try kicking out the current scheduler in an attempt to recover the system to
+  * a good state before taking more drastic actions.
++ *
++ * Returns %true if sched_ext is enabled and abort was initiated, which may
++ * resolve the reported hardlockdup. %false if sched_ext is not enabled or
++ * someone else already initiated abort.
+  */
+-bool scx_hardlockup(void)
++bool scx_hardlockup(int cpu)
+ {
+-	if (!handle_lockup("hard lockup - CPU %d", smp_processor_id()))
++	if (!handle_lockup("hard lockup - CPU %d", cpu))
+ 		return false;
 
-> Also note that the CPU number you print here is a bit confusing. With
-> the buddy lockup detector the CPU that's locked and the CPU that's
-> running are different. Shouldn't you pass the locked CPU into this
-> function if you need to include it in your printouts?
+ 	printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
+-			smp_processor_id());
++			cpu);
+ 	return true;
+ }
 
-Good point. Will update.
+diff --git a/kernel/watchdog.c b/kernel/watchdog.c
+index 8dfac4a8f587..873020a2a581 100644
+--- a/kernel/watchdog.c
++++ b/kernel/watchdog.c
+@@ -203,7 +203,7 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs)
+ 		 * only once when sched_ext is enabled and will immediately
+ 		 * abort the BPF scheduler and print out a warning message.
+ 		 */
+-		if (scx_hardlockup())
++		if (scx_hardlockup(cpu))
+ 			return;
 
-> > +       printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
-> > +                       smp_processor_id());
-> 
-> Should the above be "disabled" instead of "disabling"? Mostly because
-> (I think) it already happened. Otherwise as a reader of the code I'm
-> looking to see where the disable happens in the future and I don't see
-> it.
-
-It initiates disabling but disabling is asynchronous. The first step of
-disabling - aborting in-flight operations and falling back to safe in-kernel
-scheduling is done synchronously by scx_claim_exit(), so there's an
-immediate effect; however, there's whole lot more that happens
-asynchronously in scx_disable_workfn() afterwards.
-
-> > @@ -196,6 +196,15 @@ void watchdog_hardlockup_check(unsigned int cpu, struct pt_regs *regs)
-> >  #ifdef CONFIG_SYSFS
-> >                 ++hardlockup_count;
-> >  #endif
-> > +               /*
-> > +                * A poorly behaving BPF scheduler can trigger hard lockup by
-> > +                * e.g. putting numerous affinitized tasks in a single queue and
-> > +                * directing all CPUs at it. The following call can return true
-> > +                * only once when sched_ext is enabled and will immediately
-> > +                * abort the BPF scheduler and print out a warning message.
-> > +                */
-> > +               if (scx_hardlockup())
-> > +                       return;
-> 
-> Should your test be before the "++hardlockup_count". If you return
-> early it doesn't seem like you should increment the count?
-
-I don't know. It is still a hardlockup event. We just first try to abort
-sched_ext as that has a reasonable chance to resolve the condition, and, if
-that succeeds, there will be messages indicating hardlockup occurred and
-sched_ext was disabled. Wouldn't it be confusing if the reported hardlockup
-count doesn't reflect that?
-
-Thanks.
-
--- 
-tejun
+ 		/* Only print hardlockups once. */
