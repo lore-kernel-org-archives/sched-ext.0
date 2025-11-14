@@ -1,212 +1,225 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4865641C72
-	for <sched-ext@lists.linux.dev>; Fri, 14 Nov 2025 02:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763085667; cv=none; b=MECWqC8xGu/7QkpNLc0L+WJQlDBxZuWlsf+a2i/5CPm/gkhVp9zlOSwpv7kQH1VGPZcKtY+E+KWsG4gd8UeV5sFUcGAewIFnosg7B6ol3JQVM5koXTuabAY/pSpycYizYw2pDrLSAQsSXCzO+FfVyURV84DTwVhEM/sSaWie1oM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763085667; c=relaxed/simple;
-	bh=Ptwj/jKFzSqEHee0r1Z2dr8I/pYZzSwZL0MWDldJBx8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=af7rbEOjOWfvaJqMpEF4DK7fHiLUXhQiCyznskF/3aXeQYfSFQ82lqBltd0V4ro7UfQdE+S+UFPx7ST2KJMAJGA4ji0nvtmPtUw4v7RB63ePvdtKmMyb4sNEgsdtkGS212bJV5Bmv1jcd5/yrwgrBQJ6rWW8/+jZs3Ejds4e98o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=UtL7iBjD; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEC51F5842;
+	Fri, 14 Nov 2025 02:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763086887; cv=fail; b=kbm9sF/bP9WYf9/15HlAae8XMg8AKJ1/YsSm1T/ub/dNXE5HSGc7GcZiFvz88iCJDbM605fyok+O7NuuuyHeDo+9eQCFNCisRzja3DzxX0XoAH3Wf+YY1/0nT5ZSJq4iAe42c8WVvCNs+d9nAej83S4+iPahvrJM2GO5OoNYsg4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763086887; c=relaxed/simple;
+	bh=DCXX3OEYhOwrgo/mJ79j9W0i3rWASzUluC4YeA0/yaY=;
+	h=Date:From:To:CC:Subject:Message-ID:Content-Type:
+	 Content-Disposition:MIME-Version; b=L+lWU9c4TqpTmwMdMSa+xgvadbQTeAcTdQSV0oBLflRMIObf0NNei1JrPQOPjv83LznLJJleVyT4c0MVd4qBIFIqNxiwtSZYj1pTYNOUCANFttyZOn6pAnAKukd7zjrxvSvCSP4ovtgwCJKd3Gu5Nu+4Y2l6ZoHmwi5SuPh4Szo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Wr/ZDCum; arc=fail smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="UtL7iBjD"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-787e7aa1631so27423517b3.1
-        for <sched-ext@lists.linux.dev>; Thu, 13 Nov 2025 18:01:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1763085662; x=1763690462; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WKtIAtK9GSTuKKAh/nnPGHpyzwreHBcPkr+/g+4GNNc=;
-        b=UtL7iBjDPqpXOJDUr6CyL2UUcH2QGnyUAMWR5QWTWyJFLgu5abAmfYYIvfmlvAu3yq
-         9BIojcYGU+AfqT/gFduwDSBc9hWx0qiWGyraoeETGdPfBsTp1BXTFGMqifDllmvFQ3ss
-         jIFNE+F/zCzd0JDNMToXlKgJmkA2/1bLAxfQgX0Hmkv/KuPPLSuYhtp5BWZuok+UejYu
-         lZOzre2CNbuyf8F6KfRajUOv03CnxXuQTr/ot5TU/VahfyaoC+k/5ZTj9516wvn9jXv+
-         FRUpDYA37czLNOsCc4hauyxfMPCeEr8JLk2+9Ta50dVurgEsvilnNtZVgJ8dbNRLhMqy
-         E+HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763085662; x=1763690462;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WKtIAtK9GSTuKKAh/nnPGHpyzwreHBcPkr+/g+4GNNc=;
-        b=fLgPncKYeyHEEAr7OT9cSbhaN3E1mZa5mHBh27pFq47JQEJ22nW6GoWHJVs20Lryk1
-         7Tg3lxec2kB/2kUaToPqT/1uuIlMZmZFlbGOfbHENJEc09UOveqd2BLAuj3e+ZvY7p4O
-         tkutuCdbYUuITdxOM/4J7xtmQe24NZH2eXp2SmkQOBYitf8JSp+rIIica7HYhXtDbGss
-         J1cNOnU9Ehyf+sXg6nMZbSFjOOoaeBHgniF7kcSxDaBjjWQ14uKGthsq45+N9FcT/Gaf
-         TsuhX1I3zQ7Jeksc2lI15JmRMjVNdSwsxyfUVtqDNCLHpRIeplPHziWYUc0fvSGSVATE
-         xvnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWd0QI3lYM9tx+oR9+V/iWWXgPpy0xsCql5f9L3gBA1s6sI+f67IdRf1l8iHO9uj7AIX3dmaUOheoE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzyEJCd2VErE5b4pcAEZlVwC4/U1OIyPf+BR+KIeHnOkdy3cMGU
-	UUpnF1lWdp0Pm2WRKaam0VpagH/gyq/5vA+ERLhUjbbVqpJwobDc/EOrB0IN+n8CxvNxCqOaEKN
-	6RPTMLlt7s+PrWGFaZeP30mKqhCuzKD3UJpMz3nVjng==
-X-Gm-Gg: ASbGncuO014eNZzDKuQAIQGEIRMxW1Xl0nH0LeUg9ycp2SeEDmw31QGVcEvGy4Hpnm9
-	Bf5dyWI5LpRO/XmYRl1BYrHxLBd69PfU+9fbljSCymC0/+N7bfihi8iumfpnFNIlDj3yNiGJVtL
-	z8QXL3A/UFSH1P87jG672rosnXj7TQchjsF3z8ZXRmlgJweW4cGUlemzle6h2+vEM3j+W9dQH95
-	QE4wN/NW6NWicbXdWYP16WFTG70+KhEWk8yvfA+2/iTDCQx1blaYlJa8USLpeY=
-X-Google-Smtp-Source: AGHT+IHoh15YcosnFdk7jzKBNGtF0rAES0wm9xoPxpXzolGwEYCPvmkuI4B7PHCBHDelMZ3Iez+BCVxvLSRp3HyMVao=
-X-Received: by 2002:a05:690c:d95:b0:783:7768:55e6 with SMTP id
- 00721157ae682-788205edd86mr50060637b3.13.1763085661898; Thu, 13 Nov 2025
- 18:01:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Wr/ZDCum"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1763086886; x=1794622886;
+  h=date:from:to:cc:subject:message-id:mime-version;
+  bh=DCXX3OEYhOwrgo/mJ79j9W0i3rWASzUluC4YeA0/yaY=;
+  b=Wr/ZDCum8vRKWBXdINYSdbPLiTKIVDIk5wlzDXqNwb5jjONL+rQsfZgJ
+   4O1DiSkPQkn7020YVn7VY9Fd84Zflj/HlcdR+58spRzwTi51OvVNWBOID
+   rin3mm18reogkTpQHoPheuLfLIsfOKPhiKu6REx4fYrT23szO9ekA9PsE
+   AhJ6WEX+28ujsVjgi+yZdMF0m7OZj9ZvReQz94BmlvlzwhuI9ddAoFND0
+   kaQTCs8rnFBt0Zs/mbMjfpSz56HIK3AbWHwrfyIoMF9w6tjdfXBVNoD0f
+   yQ6XQUWODBHXDX5DZCg5m+Fh2O3qcKqNRsXpacMCw86sx2AOL9kEP+yn0
+   Q==;
+X-CSE-ConnectionGUID: LRo/fTjXQn+gQr1MVymaiw==
+X-CSE-MsgGUID: MOOiEQipS42/JuRkbmlqHA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="65117731"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
+   d="scan'208";a="65117731"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 18:21:25 -0800
+X-CSE-ConnectionGUID: ygAi1wR9Ss62hL1Oc5EehQ==
+X-CSE-MsgGUID: fMd4/ZENTTaqartFIUSH5g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,303,1754982000"; 
+   d="scan'208";a="213063467"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2025 18:21:25 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 13 Nov 2025 18:21:24 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Thu, 13 Nov 2025 18:21:24 -0800
+Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.9) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Thu, 13 Nov 2025 18:21:24 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LG1h3zlvFyA9KHk/FMndHIg61o0gmr3YxRWia7HM25vppkshHbIPJGNiMo8hPH9xzCNaCT21ReTS8EFzssoo4KPCCsuQxH0qJ7wQllYTEBTvY8DsqaG/acIVM9FBzWmF2po2JyU0ElpIgb8ALsQ1rGCI0SEyptr7PAuaqRGbx8PrOA+IsRNYCxg1QBypPHAADkn/iqhqk48RdZdIAbVX3iPX+svenpZbbstsspyfJhmflyaAT+LDKTf2bVQ6dZOat8pUcb1gIcCJHqvts5xAGLlcyIjbFaOgIRJ0VBWZqE+ySF8KOz9DsLfxrMu/X3ybxMUKea/NSaBT2WnkSWBM+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ffrfSq9SFnVBUAJBBsFLInSUZWikkTNEdlrf6axJPwI=;
+ b=o085X4uDqRI887jvZmmmVGAAN8RdFuIImK75lFhaPDoo2y7e6tuI+obWKiscfBmqy9SHCVPdwQUsU1UPeooZgbJQoSHUW1u5oGlBIl5zYIUK/Lx9Nb+Go6fcer1xBVr2jY1fZHKSE8L7D5FBKkwPNPQTY2Ux95XTuiapbcMPBM6ksePJ/mw/69SFek8SwvwM/++4KM6kXE/ODZbmzJnRlfsbaevQKizUB1/sxIxfdPeNoA9kdDqFqn+Fk6gY6xNm+KLl0GtQyk260qwQQPfjMcKMpwsGmzdh82vmAZx68b6BYL4fuKxt0B/XeB8EEz9LPptpGaGH3bv8WZt6Gv2oTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB8587.namprd11.prod.outlook.com (2603:10b6:a03:568::21)
+ by MW5PR11MB5906.namprd11.prod.outlook.com (2603:10b6:303:1a0::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.17; Fri, 14 Nov
+ 2025 02:21:21 +0000
+Received: from SJ2PR11MB8587.namprd11.prod.outlook.com
+ ([fe80::fc95:158a:24ce:885b]) by SJ2PR11MB8587.namprd11.prod.outlook.com
+ ([fe80::fc95:158a:24ce:885b%4]) with mapi id 15.20.9320.013; Fri, 14 Nov 2025
+ 02:21:21 +0000
+Date: Fri, 14 Nov 2025 10:21:12 +0800
+From: kernel test robot <oliver.sang@intel.com>
+To: Tejun Heo <tj@kernel.org>
+CC: <oe-lkp@lists.linux.dev>, <lkp@intel.com>, Dan Schatzberg
+	<dschatzberg@meta.com>, Peter Zijlstra <peterz@infradead.org>, Andrea Righi
+	<arighi@nvidia.com>, <sched-ext@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <oliver.sang@intel.com>
+Subject: [tj-sched-ext:for-next] [sched_ext]  7900aa699c:
+ kernel-selftests-bpf.sched_ext.runner.init_enable_count_#.fail
+Message-ID: <202511141028.39aed7d5-lkp@intel.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+X-ClientProxiedBy: KL1P15301CA0054.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:820:3d::8) To SJ2PR11MB8587.namprd11.prod.outlook.com
+ (2603:10b6:a03:568::21)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251111191816.862797-1-tj@kernel.org> <20251111191816.862797-10-tj@kernel.org>
- <CAD=FV=Ujf7PJxBANGv4e6oVa9YMS4sNLvxp=u+=5n5aaAAn9Cw@mail.gmail.com> <aRaG9X9xfS_QL2QF@slm.duckdns.org>
-In-Reply-To: <aRaG9X9xfS_QL2QF@slm.duckdns.org>
-From: Emil Tsalapatis <linux-lists@etsalapatis.com>
-Date: Thu, 13 Nov 2025 21:00:51 -0500
-X-Gm-Features: AWmQ_bkiCXwKJYfDtHom4gHUG5fqKpkr09SmxmyoF36oLe-EJLn_w-q-6XZxn9w
-Message-ID: <CABFh=a7WYYmhO-q_VbSCc8c5E24gRzB05MG2Yc9+ev5TM14sMQ@mail.gmail.com>
-Subject: Re: [PATCH sched_ext/for-6.19] sched_ext: Pass locked CPU parameter
- to scx_hardlockup() and add docs
-To: Tejun Heo <tj@kernel.org>
-Cc: Doug Anderson <dianders@chromium.org>, David Vernet <void@manifault.com>, 
-	Andrea Righi <andrea.righi@linux.dev>, Changwoo Min <changwoo@igalia.com>, 
-	Dan Schatzberg <schatzberg.dan@gmail.com>, Emil Tsalapatis <etsal@meta.com>, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>, 
-	Andrea Righi <arighi@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB8587:EE_|MW5PR11MB5906:EE_
+X-MS-Office365-Filtering-Correlation-Id: ee6aa554-c198-4295-c4a0-08de2324803a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?l7ZHHaRXWDwH32kVrFv1aDbu2JdPHwbLuQYvhaoB/kDJBll5v2nTGhzajUuJ?=
+ =?us-ascii?Q?dXf0lzSiLb4zeSEgeLiFM3q2+eCO1UEZKy9FVoPfOS0qAQ5fzbOAQ2BJCW6/?=
+ =?us-ascii?Q?szJGubI7oIMjMlY3SxenVqIo6YVEbgIrjyYjijI0h3VVEYaOs+qDkM+Ek2rT?=
+ =?us-ascii?Q?V3o64D7UDVW+fhQLn2ScvqonHb4oIo4UmuOfIAp4DfpHcAycA63Uv6y5iGWs?=
+ =?us-ascii?Q?n7ruqDpKXNgBTcKoYVBp/mOsK0ZQjDbWv3hCwgNQQzlAvYVLc0A3vFSn9uui?=
+ =?us-ascii?Q?H0quShIQOTXvklnDk4VDnPhPygBQj5FKXbmf9oqunSCqlM5BBi9ZrKgqiYa2?=
+ =?us-ascii?Q?p5FA/i9vJe52PHAHfsJarVQ0w+WDgWQKK/cVGsrNeHffssNPn9Iw6+2zqvdR?=
+ =?us-ascii?Q?r+NWzKcNcvMdJ60nP/1OKVvo3YBMRKVCtS02eXhFJNOfXXaLpOQOW9rsZYmN?=
+ =?us-ascii?Q?G98zUnq6SyTwSm+ivN22j9297l5iqa+z9IC3XjwLfYNLdDwW5Lwuk12aqtvK?=
+ =?us-ascii?Q?Zl6XutVUYmheEW3jxKPgwlxoTOS7REo7Sa8xKsKDKSOT9BVqYNp8GXSEHvVr?=
+ =?us-ascii?Q?n/d7X3m4csWTfTfstIp8yksoxYcrBJt9OKJdFxwI6kjcqq0lcT5rgGo5Af/I?=
+ =?us-ascii?Q?Bqae+bgVUzluPZhUm+DMkaV0alICWq9d9jeJE+JJdNRLs/OLtBDcboAZtXdS?=
+ =?us-ascii?Q?QH4NJFjtSyXwJQW4dYwoId6j97dQ4kD213rlRcntoiEx/jdEnUoBOiQkMsMo?=
+ =?us-ascii?Q?2/yvqCOPbwNceTjNnaARnd8N9VmZxIqtZ88mIK72IlguEhCgOVa1Dg+Z2Bau?=
+ =?us-ascii?Q?C8OXODGTsOQ/JktGPxMP0g/fpmSe1Q/RZAxmIALo9jJsALi8sJXZMptsZex6?=
+ =?us-ascii?Q?a0K8FqX8AiPHCzzKfZPq9qrHJTZxvhJXTWXBS0fotzIKV7WDKhCMVwiTdKzr?=
+ =?us-ascii?Q?PBmD3mSmCi6+ZdYkN+raIzXXnWFH7wD0l4qC67pcMyA9bmfZdDfqZTL1+W70?=
+ =?us-ascii?Q?RtRI/KgrTZOUCjcw86aGldfsXtH1JiiV/kVIgBiF9eP3V7Ue//JxFPKtKE7S?=
+ =?us-ascii?Q?Hhjhdak9bwVo6JKjrL0VxJ60MC0zQIuuiPtEe+lwYS6I7DuevRQZOy2aYky2?=
+ =?us-ascii?Q?JB0+N3f8uQ+mRfOJ3qf+yxkA9mrFkMIvYbyca6VFpVmcXz+cfhAuyVvia9py?=
+ =?us-ascii?Q?UY2pEOKh2GOTXXoD75wNfoAmZe4PtbhFF8lO4yybzqNPrn8InVT/h5cxm9jA?=
+ =?us-ascii?Q?4gXrAwrf5NP25DbSPbcQk7Gh+Zrmw73oKXSgWhw1NY3SkuMx4jRrJeOnujTK?=
+ =?us-ascii?Q?wE2iz9fw6FmmKgX6GepE41hPH8/YqeQgHdx7nuIxArt50wPEhNZ8ZRDTeJPG?=
+ =?us-ascii?Q?KtiJ2fJmv7nZ0zGrwSmQfpzDvQO7c2bZP+42W9YwMsCpnuncqvqEpA/jZpdc?=
+ =?us-ascii?Q?8T7APHpihZyXgzgLbgt+hnXbeE0rKRuSmOYlyEYuT1Np1X01ygzzlw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8587.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LUkKv1FvLIyxSLf1P5CFruytJ2Mi9ennhteT/qrQhrfjIZuFSlaC04aVTHc2?=
+ =?us-ascii?Q?PRAn/nR4VjsM5Z9CJn3ufhq0LZkjNEL/RaBa+4HLKzO8WwINwSf8ru+Gjnvd?=
+ =?us-ascii?Q?VEBsyoHXtjSpio8TR6BNarjXtfHwdQp8C94wBoGQDzqosnNvcn7BtyRQGwtc?=
+ =?us-ascii?Q?aikNVo3TLH2QP0D270Qu0rJ+Oe+StBo9LQRNrn/iG1hAWqYDHgQXCyXW3e40?=
+ =?us-ascii?Q?RecqRBhU4T+dRsRtPr57rCt8AOsm0oGnh9rm2V8sE/l3oRENoBANwzUdzFrj?=
+ =?us-ascii?Q?NVmrTsdcpxzlkw4uuDyKz+LmNBgjVu/mha/9nLE76l+Jeuu2Cn12Rwe8yRUT?=
+ =?us-ascii?Q?3ojX1l1pJoT2s5l8W4x24c/ZuDmIMyk3ErpCno7T+8MAnowi2bE+YGXZWwjr?=
+ =?us-ascii?Q?P6UuD86USlISBHpQ2pn+Xuv/xa9vem0hgcK2PHnNQXLB6E2maBIAM25NowNU?=
+ =?us-ascii?Q?Ek+SF9Ji7OJCMi29ncBqRMxFhpYY5/0dPzXjvrdv4X0B1rKpb7ltLGZXDtgv?=
+ =?us-ascii?Q?2voUpL/PaU3O06xYPMKNTBeTb8ioE1vKnEfKkoL5eZgvVSBOahlMIcX0TqeO?=
+ =?us-ascii?Q?tlJC3U8zGaHhWBo6rfN/6zNfRk9bEHeJuRKh0CVbdoKwWgMw/K1gSVsRHh0m?=
+ =?us-ascii?Q?X7+z30E8htIc5JraVuzbWXdUEkHx8q8NHWCmJ0atl8cF0l2A3eWxuYppM1tg?=
+ =?us-ascii?Q?/ytO3NA56W6Xw1LpyIFICeVEZZ2u5uo4oBr3tFTSM5YStZGO+F7y+azDELmt?=
+ =?us-ascii?Q?14cYHE8Ev39OlNpcPORxlJzuLkkT62CGyFrVwPb7HVR/PaeaH+eFHqRuuown?=
+ =?us-ascii?Q?a8eOHRU1nHIpJTETSP3A/TiecWR2m+OO0NV1+F+6u1IVPrNCdGpzqkJNTUH3?=
+ =?us-ascii?Q?K32PYeCJwn2Al/KjpqGPBiRn74ii9Su0KYb2u1QxfLD1wuisRfr/wbeciCX9?=
+ =?us-ascii?Q?Sg7UR4sDrZ6YwvR4mTCgRqpWPavDOEEmMQQ+HM+pxHtf2cgNSM57P3ActaK6?=
+ =?us-ascii?Q?FsEXTYuIUNbRV+uKCSt6sNEi2niHL//I5CVBdrwfuIfJfhlmUWECv0TlXi0Y?=
+ =?us-ascii?Q?bRWrHsc8ITlgjfwnSQW03/UbloZ+r4hJI+lySsiJ0oxbdjelQieG2jGkCEva?=
+ =?us-ascii?Q?ZuQjjzXHwSxL90so/XrJ4WNpZ2IVCBIzBBjAzDxTC+YFFgCrncrxtEWjwmoq?=
+ =?us-ascii?Q?HrfTpC3aOQDbEfSM+S3hLSqyjsBMknxOTwdkAyxZiUM5usoKuaFOyyuLNY9S?=
+ =?us-ascii?Q?O3LHbrtzxjExEz1g8cI4AQB/PjUr91dQHltMlDsu8P5fRz+AaiKp0/4d//c6?=
+ =?us-ascii?Q?BuP3TlYsfQX5MZcsgOhRKSQjFSaHLjXSu7w84hCnguA8QUqINucyOEoQlbdn?=
+ =?us-ascii?Q?vq9Ewn5TSxJZMnLX6RE586u7KJBeP+pNRZ7COMHP4I6izZb9ks/kzywlnKml?=
+ =?us-ascii?Q?39+nakZ/3GWHKSE1MnRag7ppKraCYFWXI6geOeXLnEpLj4Sr2iLo3PMCQUmS?=
+ =?us-ascii?Q?NWqtS5UtYp6nVvGSRsvjO7KfgEtoZKAEudTGlYGOAuV84m2HKcBD0Vt5JdBo?=
+ =?us-ascii?Q?4kYLTx6PAx0eYYDg7aUSfk0n7wfufYwM2I5lPr0x+A4wsS+Roh/RiSbu+xFc?=
+ =?us-ascii?Q?bg=3D=3D?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee6aa554-c198-4295-c4a0-08de2324803a
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8587.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2025 02:21:21.3507
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6RPquxf7KHb/uqpyDj0TgmRquSiSBC902E3Qu5xVOecBFwtGbFYMJdpGxQCD1iE4IDlwdagjChtpv2BhanzrEQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR11MB5906
+X-OriginatorOrg: intel.com
 
-On Thu, Nov 13, 2025 at 8:34=E2=80=AFPM Tejun Heo <tj@kernel.org> wrote:
->
-> With the buddy lockup detector, smp_processor_id() returns the detecting =
-CPU,
-> not the locked CPU, making scx_hardlockup()'s printouts confusing. Pass t=
-he
-> locked CPU number from watchdog_hardlockup_check() as a parameter instead=
-.
->
-> Also add kerneldoc comments to handle_lockup(), scx_hardlockup(), and
-> scx_rcu_cpu_stall() documenting their return value semantics.
->
-> Suggested-by: Doug Anderson <dianders@chromium.org>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
 
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
->  include/linux/sched/ext.h |    4 ++--
->  kernel/sched/ext.c        |   25 ++++++++++++++++++++++---
->  kernel/watchdog.c         |    2 +-
->  3 files changed, 25 insertions(+), 6 deletions(-)
->
-> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-> index 70ee5c28a74d..bcb962d5ee7d 100644
-> --- a/include/linux/sched/ext.h
-> +++ b/include/linux/sched/ext.h
-> @@ -230,7 +230,7 @@ struct sched_ext_entity {
->  void sched_ext_dead(struct task_struct *p);
->  void print_scx_info(const char *log_lvl, struct task_struct *p);
->  void scx_softlockup(u32 dur_s);
-> -bool scx_hardlockup(void);
-> +bool scx_hardlockup(int cpu);
->  bool scx_rcu_cpu_stall(void);
->
->  #else  /* !CONFIG_SCHED_CLASS_EXT */
-> @@ -238,7 +238,7 @@ bool scx_rcu_cpu_stall(void);
->  static inline void sched_ext_dead(struct task_struct *p) {}
->  static inline void print_scx_info(const char *log_lvl, struct task_struc=
-t *p) {}
->  static inline void scx_softlockup(u32 dur_s) {}
-> -static inline bool scx_hardlockup(void) { return false; }
-> +static inline bool scx_hardlockup(int cpu) { return false; }
->  static inline bool scx_rcu_cpu_stall(void) { return false; }
->
->  #endif /* CONFIG_SCHED_CLASS_EXT */
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 8a3b8f64a06b..918573f3f088 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -3687,6 +3687,17 @@ bool scx_allow_ttwu_queue(const struct task_struct=
- *p)
->         return false;
->  }
->
-> +/**
-> + * handle_lockup - sched_ext common lockup handler
-> + * @fmt: format string
-> + *
-> + * Called on system stall or lockup condition and initiates abort of sch=
-ed_ext
-> + * if enabled, which may resolve the reported lockup.
-> + *
-> + * Returns %true if sched_ext is enabled and abort was initiated, which =
-may
-> + * resolve the lockup. %false if sched_ext is not enabled or abort was a=
-lready
-> + * initiated by someone else.
-> + */
->  static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
->  {
->         struct scx_sched *sch;
-> @@ -3718,6 +3729,10 @@ static __printf(1, 2) bool handle_lockup(const cha=
-r *fmt, ...)
->   * that may not be caused by the current BPF scheduler, try kicking out =
-the
->   * current scheduler in an attempt to recover the system to a good state=
- before
->   * issuing panics.
-> + *
-> + * Returns %true if sched_ext is enabled and abort was initiated, which =
-may
-> + * resolve the reported RCU stall. %false if sched_ext is not enabled or=
- someone
-> + * else already initiated abort.
->   */
->  bool scx_rcu_cpu_stall(void)
->  {
-> @@ -3750,14 +3765,18 @@ void scx_softlockup(u32 dur_s)
->   * numerous affinitized tasks in a single queue and directing all CPUs a=
-t it.
->   * Try kicking out the current scheduler in an attempt to recover the sy=
-stem to
->   * a good state before taking more drastic actions.
-> + *
-> + * Returns %true if sched_ext is enabled and abort was initiated, which =
-may
-> + * resolve the reported hardlockdup. %false if sched_ext is not enabled =
-or
-> + * someone else already initiated abort.
->   */
-> -bool scx_hardlockup(void)
-> +bool scx_hardlockup(int cpu)
->  {
-> -       if (!handle_lockup("hard lockup - CPU %d", smp_processor_id()))
-> +       if (!handle_lockup("hard lockup - CPU %d", cpu))
->                 return false;
->
->         printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabl=
-ing BPF scheduler\n",
-> -                       smp_processor_id());
-> +                       cpu);
->         return true;
->  }
->
-> diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-> index 8dfac4a8f587..873020a2a581 100644
-> --- a/kernel/watchdog.c
-> +++ b/kernel/watchdog.c
-> @@ -203,7 +203,7 @@ void watchdog_hardlockup_check(unsigned int cpu, stru=
-ct pt_regs *regs)
->                  * only once when sched_ext is enabled and will immediate=
-ly
->                  * abort the BPF scheduler and print out a warning messag=
-e.
->                  */
-> -               if (scx_hardlockup())
-> +               if (scx_hardlockup(cpu))
->                         return;
->
->                 /* Only print hardlockups once. */
->
+Hello,
+
+kernel test robot noticed "kernel-selftests-bpf.sched_ext.runner.init_enable_count_#.fail" on:
+
+commit: 7900aa699c34401cf5d0c701d9ef72880ddc1a83 ("sched_ext: Fix cgroup exit ordering by moving sched_ext_free() to finish_task_switch()")
+https://git.kernel.org/cgit/linux/kernel/git/tj/sched_ext.git for-next
+
+[test failed on linux-next/master b179ce312bafcb8c68dc718e015aee79b7939ff0]
+
+in testcase: kernel-selftests-bpf
+version: 
+with following parameters:
+
+	group: sched_ext
+
+
+
+config: x86_64-rhel-9.4-bpf
+compiler: gcc-14
+test machine: 8 threads 1 sockets Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz (Kaby Lake) with 32G memory
+
+(please refer to attached dmesg/kmsg for entire log/backtrace)
+
+
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <oliver.sang@intel.com>
+| Closes: https://lore.kernel.org/oe-lkp/202511141028.39aed7d5-lkp@intel.com
+
+
+
+# ===== START =====
+# TEST: init_enable_count
+# DESCRIPTION: Verify we correctly count the occurrences of init, enable, etc callbacks.
+# OUTPUT:
+# ERR: init_enable_count.c:63
+# Expected skel->bss->init_task_cnt >= num_pre_forks (611 >= 1024)
+# not ok 9 init_enable_count # 
+# =====  END  =====
+
+
+
+The kernel config and materials to reproduce are available at:
+https://download.01.org/0day-ci/archive/20251114/202511141028.39aed7d5-lkp@intel.com
+
+
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
