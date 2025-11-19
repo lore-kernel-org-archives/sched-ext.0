@@ -1,61 +1,75 @@
-Received: from out203-205-221-240.mail.qq.com (out203-205-221-240.mail.qq.com [203.205.221.240])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A2127F747
-	for <sched-ext@lists.linux.dev>; Tue, 18 Nov 2025 05:37:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.240
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B03734B198
+	for <sched-ext@lists.linux.dev>; Wed, 19 Nov 2025 10:38:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763444259; cv=none; b=gfAPImQlsMtcUPp7uIzIcle9aGneLyXwEAhb8RmrO6o5wfpu2LMEFXz1msfcTe8bjUASDOkXLQG7EjiEmdJGTc23bgDWT6xBrbfdFoqkkrKyEMgIGrAjRurN32x17WN5fz3Wt2nvYVHxMN+X5MKXJm9DKySjR28sZ2YMdmcTWZo=
+	t=1763548692; cv=none; b=H6ajXIHTIYsmY9h1y2NBdxBswiFpMPCPacMAQU7j2W23ZiCrxwy+clD3qVL8ypFAJZyp317iYCQJwrsXE4G1bixf3rjMBWQT9N3yGQXVmhUJ7IyxfGBNoXCmW8FWMXi+MO1E2Un4+lorfk1XM/yRtS16R+4GttK69rrYiG4wW7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763444259; c=relaxed/simple;
-	bh=n/cUmJDk0OKYBckf46z+2otpAC/4kOunSFCNjNugoPQ=;
-	h=Message-ID:From:To:Subject:Date:MIME-Version; b=u/desvySvmez986C0RqjXJJM9kR3qtWsMlegAWKITDQzjHdjF6x0vQHMg1+/XLsL1mD7VxF1KLJ6SpVXQR7Nbdugd+r6RfQPzdRdq+JPWkpI7IKuDTn84ed4mCBidputV9PP4VZdbLfXewE7rbxSYDSr5FnEIw0keQtezzQL42w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com; spf=pass smtp.mailfrom=foxmail.com; dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b=sJSIMLAj; arc=none smtp.client-ip=203.205.221.240
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foxmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foxmail.com
+	s=arc-20240116; t=1763548692; c=relaxed/simple;
+	bh=eiog3ndfOqDIeJBLItbgULk373m+BKkCisDEYozuKzY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WIVsKEerD0OJY/qVS0k3muC9hozIXkrI9w0OYcKqhii1eXayG9S5iSpx0ITKBSuksdij+3NZbZm5uBAlo0fK1xOm9oatSJF6/XV2p8i/4eXAkqA94L1IYnfe/C9gvQnKtKJwrfxXSnOlus4gQLgzjearS6Mi9e9mWIwSH2cK+L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=UJps2FLr; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=foxmail.com header.i=@foxmail.com header.b="sJSIMLAj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
-	s=s201512; t=1763444247;
-	bh=vFMVKfX9+Jfnn8VKl/qnwzHrjVniWxjNW6U63GD24j8=;
-	h=From:To:Subject:Date;
-	b=sJSIMLAjFUQYZxa33v9u9reX1I/yy1A02uiqxgT7R3uGAVLDA33rGxbbfL+bFku+m
-	 jsexw5MLrssao78H/sEQGv7S0Y71Kr3KTBlSCtK4tqLpcsZzFFKQWL+2Z9cL8PMs6s
-	 wxNNoJxytJsPkq6VxNIxlcyRJ4NicZwYuU4UdEEI=
-Received: from NUC10 ([39.156.73.10])
-	by newxmesmtplogicsvrszc41-0.qq.com (NewEsmtp) with SMTP
-	id 958B085D; Tue, 18 Nov 2025 13:37:24 +0800
-X-QQ-mid: xmsmtpt1763444244txxnmh1hy
-Message-ID: <tencent_67540C5FC5463910910C6E855AB3402FEB09@qq.com>
-X-QQ-XMAILINFO: MRMtjO3A6C9XAhgI8NAjEOkRyVkWVg7Tdg+wVr3lf/Ap8MlTG7k3QOcs8zYdbw
-	 y5SkGLuUaxwu+pEqcgWY4qp1hMuRfhLGL6tph5mcYzs++c7dFS7hEVfgNEePQzcK93QYFcECHXBv
-	 GiFa94Yzf8hZmoW7c7QlV5OSVsbwpvMlZJoMdzq/pVtKsznANU1ki3AvF7oErCJV+B9er5y8L511
-	 B+7Azi9fk2gb2Uq78KeaJ/74mLWQ8TFba6TyhNITY+ut8ZoMlDs0BM9kaAyQl24aH5uUfJA0G5uP
-	 SG4uutYabaEn3/kYAfs8Ae5Z+eg9GutWHDx0cs6IaqOqTPU/Rz98kEynX613AkPLVsJJBHCrsIJK
-	 /FSpOkTUVJIvBaXjptZO5V2ko/gbCVhIjs55k69G9mjTfb2uCBdYaPB1R6sZG3HPwiHn+IRdhJnc
-	 sjR+RM2z/ErCxrEsGI5+UrCU50ycOMpCoNNubkqc5Yqo9Yr8AiRzAstS4qViXqaScRmhO+6kXp7o
-	 unbNAV0pfEtWxBbNsbKU3Xgh6VJpR7sCX2sVyshp2yOmPmN9iekxLw00KTWmcqGfd7+jh3qG2OUG
-	 Br1WrnyNtaXB3X/ZHCF/AoVr9wI7tR2YRxDTDNOYDJHUXU1KX+s2vt9BiJsXr+ke3hp48BquSxEt
-	 ypwvBu+jjgBBzMFf9uyefe8UCnZ/XRRNbIq1xnmN1RxlOt0pl238rJbfs/xgovx+XC54FiJ1T/ko
-	 kuc8E7F71EizRu68yAr6fwoitOPZAa8q8r7Y18TIrsr3pjfOcBa9z/v3q6Vefum2LSVHiCONwDTu
-	 dUPFAvtrfZnzg+iyWueQT31aQkfLV19lvqm/cvoFVeKhDEd0CqyfmA6doDZCmB4Yd8Z+u9X37XBb
-	 xAZyruJ64GaH2pzk6LPUdIWsm6wO3qOcfzT7n7TfXyiMUVLO5gGe4S8243ZWv+uXPzWIqZnusL1Y
-	 xA5Q/QfG1S/mikR1wamX2xxhJQJRISYqQ8w5xsyqiEksYx8Q7Zr96V7VMetCyT2ibJOZTSLx60E6
-	 KH963PHftOrJzkyfS/zMPoOqedtdMwSvMJ3RxQythIBNzzHLD2
-X-QQ-XMRINFO: N+gupeqCsbX287b6dEawhJA=
-From: Rong Tao <rtoax@foxmail.com>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Rong Tao <rongtao@cestc.cn>,
-	yangsonghua <jluyangsonghua@gmail.com>,
-	sched-ext@lists.linux.dev (open list:SCHEDULER - SCHED_EXT),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] sched_ext: tools: Removing duplicate targets during non-cross compilation
-Date: Tue, 18 Nov 2025 13:37:13 +0800
-X-OQ-MSGID: <20251118053715.1748796-1-rtoax@foxmail.com>
-X-Mailer: git-send-email 2.51.1
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="UJps2FLr"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ8Vwlj021316;
+	Wed, 19 Nov 2025 10:37:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=W+9tCQxLSI/hfhj3zXtbxh24I1jQwyniw6z+cxVcl
+	/Q=; b=UJps2FLrovX1JXd8/SzUpMZRLcZEwWmFftFbDr2joNbs7w0CnP819LmOP
+	0LeF1X2Yy1yfl/U4F6oSVf3GSO+y3x3z1ncm63p3g20budx/wKJHsjkhcRK2SYVx
+	L+Os/8GI5Bz1FQD6uZpNgjj3LzT5/xDQFVtF9CHJJ8+JD0AF22mxR8aDa6pTnk8n
+	J6tX86zbrxqfoA9Zf2rdxbfaurs5SClWcjfP3Xu4l3zYwJfcOX0G6/V401ayb+Fn
+	9qzP25f4nat3JWHo+8fNLyukGlEAe/I4K0KTL0wivGH9qwXBi+G/exSAAUS+oA6m
+	OQW7ZibZXWU3GoTPLIalTPvR8Ingg==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejmsq5ym-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Nov 2025 10:37:40 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5AJAbdc1027927;
+	Wed, 19 Nov 2025 10:37:39 GMT
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejmsq5yh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Nov 2025 10:37:39 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ7AEGs010506;
+	Wed, 19 Nov 2025 10:37:38 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4af3us88af-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 19 Nov 2025 10:37:36 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 5AJAbWxx36634884
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 19 Nov 2025 10:37:32 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9E7F220043;
+	Wed, 19 Nov 2025 10:37:32 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B743420040;
+	Wed, 19 Nov 2025 10:37:24 +0000 (GMT)
+Received: from li-621bac4c-27c7-11b2-a85c-c2bf7c4b3c07.ibm.com.com (unknown [9.43.120.199])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 19 Nov 2025 10:37:24 +0000 (GMT)
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+To: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Cc: hbathini@linux.ibm.com, samir@linux.ibm.com, sachinpb@linux.ibm.com,
+        tj@kernel.org, void@manifault.com, arighi@nvidia.com,
+        changwoo@igalia.com, mingo@redhat.com, peterz@infradead.org,
+        juri.lelli@redhat.com, vincent.guittot@linaro.org,
+        dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+        mgorman@suse.de, vschneid@redhat.com
+Subject: [PATCH] sched_ext: Fix scx_enable() crash on helper kthread creation failure
+Date: Wed, 19 Nov 2025 16:07:22 +0530
+Message-ID: <20251119103722.309211-1-skb99@linux.ibm.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -63,37 +77,76 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: KvVMsPEZ_7ZRxtT4zFzVhQzypPfY-rih
+X-Authority-Analysis: v=2.4 cv=Rv3I7SmK c=1 sm=1 tr=0 ts=691d9df4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=z3hIvhuMv-q9_2ygNyAA:9
+X-Proofpoint-GUID: 1Wmn5-AbUAK69HsbJU3eppPy_WsEV1UG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfX/w+6aUQ+kD2s
+ M1+qNBTQriH8pEeV41oNm3yLL0IFQ6AK0RodqUh3UND6bIWkzWaQ5naQiDjefcPXLLmXIEThRVP
+ zC5pVU89clSIxzAIThwDlSOiIq7NRv8I5HOOFnTmzfewj6HYIVIVI0hPp7XnpRLtfdiQ1l7Ytlm
+ P9flfPTx/jFAG7yrdVsUNpFp0xqvl3sAG1Rnp14cCamDR8/f2KRI6zky2NVhsMJxTwSLQHqJhqs
+ h7YPdG7G6rLFyEdSwzWE5JR6d8huKcrjomClMdC3ZSN/Rblj/IAIdfNzXSQwd4Nn8rORsxt3ccL
+ moWBsAr3qNH59W5uoLf63MXumv1hpAag7Yoo+18Xk7tfuT9Moa1eB51UZA7uHZjSA89YfnzpSQd
+ 5dB1i6ZwkktbK590zxFJqGJmDvE9ZA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-19_02,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 clxscore=1011 phishscore=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
 
-From: Rong Tao <rongtao@cestc.cn>
+A crash was observed when the sched_ext selftests runner was
+terminated with Ctrl+\ while test 15 was running:
 
-When cross-compilation is not used, BPFOBJ and HOST_BPFOBJ are identical
-files, libbpf.a, and duplicate libbpf.a files should be removed.
+NIP [c00000000028fa58] scx_enable.constprop.0+0x358/0x12b0
+LR [c00000000028fa2c] scx_enable.constprop.0+0x32c/0x12b0
+Call Trace:
+scx_enable.constprop.0+0x32c/0x12b0 (unreliable)
+bpf_struct_ops_link_create+0x18c/0x22c
+__sys_bpf+0x23f8/0x3044
+sys_bpf+0x2c/0x6c
+system_call_exception+0x124/0x320
+system_call_vectored_common+0x15c/0x2ec
 
-Signed-off-by: Rong Tao <rongtao@cestc.cn>
+kthread_run_worker() returns an ERR_PTR() on failure rather than NULL,
+but the current code in scx_alloc_and_add_sched() only checks for a NULL
+helper. Incase of failure on SIGQUIT, the error is not handled in
+scx_alloc_and_add_sched() and scx_enable() ends up dereferencing an
+error pointer.
+
+Error handling is fixed in scx_alloc_and_add_sched() to propagate
+PTR_ERR() into ret, so that scx_enable() jumps to the existing error
+path, avoiding random dereference on failure.
+
+Fixes: bff3b5aec1b7 ("sched_ext: Move disable machinery into scx_sched")
+Reported-by: Samir Mulani <samir@linux.ibm.com>
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 ---
- tools/sched_ext/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/sched/ext.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/sched_ext/Makefile b/tools/sched_ext/Makefile
-index d68780e2e03d..0f2bffa3365a 100644
---- a/tools/sched_ext/Makefile
-+++ b/tools/sched_ext/Makefile
-@@ -133,6 +133,7 @@ $(MAKE_DIRS):
- 	$(call msg,MKDIR,,$@)
- 	$(Q)mkdir -p $@
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 2b0e88206d07..7fc0cce68a1b 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4392,8 +4392,11 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops)
+ 		goto err_free_gdsqs;
  
-+ifneq ($(CROSS_COMPILE),)
- $(BPFOBJ): $(wildcard $(BPFDIR)/*.[ch] $(BPFDIR)/Makefile)			\
- 	   $(APIDIR)/linux/bpf.h						\
- 	   | $(OBJ_DIR)/libbpf
-@@ -141,6 +142,7 @@ $(BPFOBJ): $(wildcard $(BPFDIR)/*.[ch] $(BPFDIR)/Makefile)			\
- 		    EXTRA_CFLAGS='-g -O0 -fPIC'					\
- 		    LDFLAGS="$(LDFLAGS)"					\
- 		    DESTDIR=$(OUTPUT_DIR) prefix= all install_headers
-+endif
+ 	sch->helper = kthread_run_worker(0, "sched_ext_helper");
+-	if (!sch->helper)
++	if (IS_ERR(sch->helper)) {
++		ret = PTR_ERR(sch->helper);
+ 		goto err_free_pcpu;
++	}
++
+ 	sched_set_fifo(sch->helper->task);
  
- $(HOST_BPFOBJ): $(wildcard $(BPFDIR)/*.[ch] $(BPFDIR)/Makefile)		\
- 	   $(APIDIR)/linux/bpf.h						\
+ 	atomic_set(&sch->exit_kind, SCX_EXIT_NONE);
 -- 
-2.51.1
+2.51.0
 
