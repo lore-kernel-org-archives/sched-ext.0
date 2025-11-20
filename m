@@ -1,50 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866183B2BA;
-	Thu, 20 Nov 2025 17:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF68328C00C;
+	Thu, 20 Nov 2025 19:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763658120; cv=none; b=GBYRYtvo0rFVJFAsXGHp/jSX10EpXuD1YPYy3FfjV/t2y7dlBa4An8lS7Ar7heG5pKByR8Y8wEBiWGxOyRaWUj3RUeaex1f309EfLBTC1UocLfEYdOwrDR3CDrqrUoL/asfKQc2FzcDLOOUqfbnpJUoS+tEqlt8JcU7cqonhL2k=
+	t=1763665294; cv=none; b=cjCDRlR7e1pvuH8wzydYsTlGlegVqHVpG4gsKyFamYK8TzW/+tivwN5L+ir9+7n6fEgJbd+/69EVEE8S20JRxMl9FreQzisdAXheAOlcH0uVizvPq3saUO4F18Ynodtm/pBot50rjDEQngcT9I1l9+nYK4Pt3Vh27/g8yVa/BQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763658120; c=relaxed/simple;
-	bh=KlxQwxQiOyaOmfqlFrMqSOenDkOWYeInFu7SxGIC7qI=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=mmh0tF2BQo75JJDiqBRNR04vxrLgpYrhXjzciEdwCLoiZ1G8QJZn6SOsOzKNn+o9K+H2XIiARnHpIjm18H6hFVenZD3ebOr6X5BI9hzBC5+Dah5uUibB3YMWPUadm4PvcoX0prdxkqJZ/lws1IgYJRWGVXF+yON4fSYG/2guowU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qBct64e1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763665294; c=relaxed/simple;
+	bh=cheSiGlPBRxdUCkOYdzh5ZwcjAluG+PfAjpdaOWi0Ys=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=FWPGfYN5QYFwE5szye9l8fvvyISzcK/w9SP2kB0She2fHCoa1OEBaV0EAw3WEIYiF7gCmyJtY26sr4vuk7mryZaAANHgpypWU5y6l0k+cFp2uOYNHaQFrZmaMxBr+dj+9jK+F/XVslB2ioXEwlNkq+ZomarZd2WjxLj00s+4S6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oERGa0ff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qBct64e1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0493BC4CEF1;
-	Thu, 20 Nov 2025 17:01:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oERGa0ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DD6C4CEF1;
+	Thu, 20 Nov 2025 19:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763658120;
-	bh=KlxQwxQiOyaOmfqlFrMqSOenDkOWYeInFu7SxGIC7qI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=qBct64e1jqdY0SlQujwFGZ3vG3Zi0Grc/q0M9Z5mw6LHVSwNNllngtzYLPxH1t2gl
-	 DkODVzY0s+7g0btGhoRMdr8izEmE0WtcjX7YizPcHpP3P8CQT/kK6kpAVKCL1eCAr1
-	 aPQaSEuzPjxnoBLhKrP5LTU6VN/yggXLVAO6j5LmZ6yOeuMrMR9Ngu2ICjc1ztQfiY
-	 BVNs7+/lll62DEytNRgLyU8359xM0W2SWsJf0UMIg4HW+idSTV1U8gZ0kuiSPvxJOP
-	 e5nV1Ucf7rdN6NNcFRYG3iPxKK00tSyf+dttK4prDcwDbF5oQzBmEaLpNYwZcfd+Wp
-	 b6aQl7tRanasQ==
-Date: Thu, 20 Nov 2025 07:01:59 -1000
-Message-ID: <ad32baee809d34e3d9427994335b6c76@kernel.org>
+	s=k20201202; t=1763665293;
+	bh=cheSiGlPBRxdUCkOYdzh5ZwcjAluG+PfAjpdaOWi0Ys=;
+	h=Date:From:To:Cc:Subject:From;
+	b=oERGa0ffG8wEt9MKd/JUPWO6uGbVQ0LhC4gtZMCB3lxgjzGpjtiis2biKVD5wUJ9C
+	 ntroORHM24KEY/Kr2jBqFch9GtUMk9o4IXRDdEE5Uq9MDtvSWcDPm5kRyhVtvA9Q5f
+	 hZDF+FSFD73j3PXFz9y/yd8omiE94nfPVvZKfnoxCrd597d/8mx1hWQ7Ja3d3kHtFB
+	 Xu1ak+bcX+52jqGsKGAlR1/sFft27TYsXGytQb4j+aBUGxCrvX2FIayQ6d6aQi2jkQ
+	 mg/BgSBlUkWxVzWbFDyHnl2DfiWi4DVkMm/mxg0bjNMAy+wYeBOadMKXSZBF8qD27Y
+	 VZiUqolLUMaLA==
+Date: Thu, 20 Nov 2025 09:01:32 -1000
+Message-ID: <6f7a101d95d9bc9ff02662c35f45911c@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Rong Tao <rtoax@foxmail.com>
-Cc: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
- Rong Tao <rongtao@cestc.cn>, yangsonghua <jluyangsonghua@gmail.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: tools: Removing duplicate targets during
- non-cross compilation
-In-Reply-To: <tencent_67540C5FC5463910910C6E855AB3402FEB09@qq.com>
-References: <tencent_67540C5FC5463910910C6E855AB3402FEB09@qq.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: [GIT PULL] sched_ext: Another fix for v6.18-rc6
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Applied to sched_ext/for-6.19.
+Hi Linus,
+
+The following changes since commit 36c6f3c03d104faf1aa90922f2310549c175420f:
+
+  sched_ext: Use IRQ_WORK_INIT_HARD() to initialize rq->scx.kick_cpus_irq_work (2025-11-17 05:07:22 -1000)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-6.18-rc6-fixes-2
+
+for you to fetch changes up to 7b6216baae751369195fa3c83d434d23bcda406a:
+
+  sched_ext: Fix scx_enable() crash on helper kthread creation failure (2025-11-20 08:45:43 -1000)
+
+----------------------------------------------------------------
+sched_ext: Fixes for v6.18-rc6
+
+One low risk and obvious fix:
+
+- scx_enable() was dereferencing error pointer on helper kthread creation
+  failure. Fixed.
+
+----------------------------------------------------------------
+Saket Kumar Bhaskar (1):
+      sched_ext: Fix scx_enable() crash on helper kthread creation failure
+
+ kernel/sched/ext.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 Thanks.
+
 --
 tejun
