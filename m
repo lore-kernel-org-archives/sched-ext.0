@@ -1,94 +1,120 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4940F3233F4
-	for <sched-ext@lists.linux.dev>; Thu, 27 Nov 2025 10:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3323FC41;
+	Thu, 27 Nov 2025 15:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764239979; cv=none; b=HH9WmCh2tLoaf1eLODXXL+3A/48jQoIKAy7FZc7OBjC4Qh50wILxCf/l1xRmHABwuQLiBGPxsKSkjqrhf8KcWsPUxLX7lgIyhM2BM6Pl55T/WzbTx3WH/73J5KsHP2Qd5/mCOrM+qUYT/K4v1eHugBIDbMHYm9LsRdRVh2ZGTwc=
+	t=1764258496; cv=none; b=Jq9rRnxlryG3Cp8kOzrRHzcrAv144pO9DbehidYTYugjVha9j6CP70fgOL2+oKWi6zS91LwS4RExpfT8LOeL/X3oiTMdUTiC0f2cdNTrGgRrSs77Oqrhbna0uQF11vtAvcACQvui1Gnc54eZzaqGf0hpAaw2E/VWWZfGsDwG9u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764239979; c=relaxed/simple;
-	bh=9psqYrIv0eFQ6vtEA+yo7se3T74TLPtnsKpZBy8r/v0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=mC8KN13c/Oxv/I7NyXnZCf6/IuwydPDnOetx+YxdmaaVpYsYHtKORdn1NcRzH0Mmy9PR4HOP9oZmCtfnCC/XmxDk2vgemE6MqydB3lENGRyaTx6XXoQTHa4Wz1h1yVgSBpMYfFyZ8GgWCVFAZxTGkrm+IBtTH9jXmPyQ8JNyM1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CBXTui/O; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1764258496; c=relaxed/simple;
+	bh=IqyVfWu40ZLMUdC0ro/AyQRRI5FJiBLB0sei0TEvx64=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type; b=Uwffpe5iyoPbPE3/qsUNTqlJekODsH2VOAcDVn2Mv0YycuHVcWrf9KwGrgxu5QcSDO8pCtEpDRZCgFBNI2dcjYoEEYYCYUcUZamQn+1KddO1GLymkKJ8lwcm89tJxYLPQALiWOOl6ioz6rdmi+AksoJgZ7mUC8NUAZ1HNOf1F08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=QIZ1DJGO; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CBXTui/O"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-47797caba11so3045715e9.3
-        for <sched-ext@lists.linux.dev>; Thu, 27 Nov 2025 02:39:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1764239976; x=1764844776; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lqAp9KVCPquz913n77B6yJ7OoUi8d/Wkn+xOGKClAHw=;
-        b=CBXTui/Of9HlSlqGS6R6JvmR10zrxdizNemP80mTSIUKA6aRlAAgaweHQ+6em+auls
-         +3WY1heo8rRKUDleGVpFB8FbezXXHJzGziw8Qh1EGv0TdewogZ+JXMYxibnOHkpmE1UC
-         REmug7FcenrzLy1mwwpiw3320vpi3HSq3ZCyC+B1U4cIY9j3DpfylGZH6jhQdNKbpJNK
-         dO0R/oCTzjK3IdCfNrzxHJTrV5snW+qy8oYqVuuh4BroMRoyGUqilp/eZp/Z7ksCkYXU
-         vxtnVR+tk+EWuMUTyg7BBvbHGQj4BqWsf72jcflQjKONbMJiPdwpyDqj5uqoemzSipAX
-         PZbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764239976; x=1764844776;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lqAp9KVCPquz913n77B6yJ7OoUi8d/Wkn+xOGKClAHw=;
-        b=f2sigmrjBAEIm+uhLw6Gr4WKyfbX9aQby3bSlYW7zcdyIGfFeOGLgmzzsHsOr1wo9o
-         e5kW4v7i+jdRetovKvRvg1kAqgbS7AFcQStUOJDSFoUMmYK1GuImCWRvsgAx6t7X/d2W
-         ychcVoR1hn083zLLiv5Nx2qhUHVbod8IKawLjFLIKuJXgh/wvghd1BAjx+yYdfLk2at3
-         R2HAARmqvNxXiFOhjQAr5rx0mzmHc+WDaZNSy56SCUTKKg8BU0X8v6HGdA84IpcXC7kX
-         RLlXsA5595zgLJaVPC1MA/3GW2hcOyJptAX6YZefkUKxWy6g3jyIrElkszjAqJ5yIx7I
-         cIew==
-X-Forwarded-Encrypted: i=1; AJvYcCUEZF41VixLauFEv4ED4DKniReTL2Ks/Iv6WvfluoZuUwHK3iQv2TDBT3YlRb0nHGL3a1Pu36Qn28Q=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6Riq0Y4pNDV4opcLy6rlwRc5KbVGAtLEg4DRQDBC+s0B+YOB/
-	w4zUZcnG+HP1l2cunwDs4LuJ3vjH9uUX+rCifWRObH16D9Fb6RDW6m/248l+TTh3ySejWsY5rLy
-	3RczpK0i5k9hGXg==
-X-Google-Smtp-Source: AGHT+IFOu1KDxS4wOpjUJIiOlRei4monHQlN4TXIIv6EXMYnI0d7/4TU+UcTmPQbCkMIeBY6k7kgsQpI859Wlw==
-X-Received: from wmbjp25.prod.google.com ([2002:a05:600c:5599:b0:477:a181:1922])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:46cf:b0:477:561f:6fc8 with SMTP id 5b1f17b1804b1-477c1103015mr202856565e9.5.1764239976616;
- Thu, 27 Nov 2025 02:39:36 -0800 (PST)
-Date: Thu, 27 Nov 2025 10:39:35 +0000
-In-Reply-To: <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="QIZ1DJGO"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=Content-Type:MIME-Version:References:
+	Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To;
+	bh=dnCfp3L62pj9DutfreyucA8+0cAoopcZko6tHzka0nM=; b=QIZ1DJGOf4fdowOurudefi2LSh
+	QyMSKJH95T4AGH4uR67wYLjJoN4Wp1EgT/nGj2zi0NTMLvnjZcZachbFXEiVDDe2hdbT+pl9vior4
+	wgXLrTXjZVuB03pTUaWtJ/ShhBUHvUmQALGn1X5rwz5YiG1TsehrhWn31vvWgiG3+NSbyDq4UT/1q
+	hcTCTVbIHI8w71V++tFeHgV38yxVWG28X2y5yuLVY0dx1soiNIac27XVNURQExLnCHAAxbi5r3jK6
+	arTzleoX640v7dkHCeUEx7gBmuooWskah6G7Z5lglWigKLAQjxH7gHO78r7Ov3Pf143ZhJwxuklcQ
+	Odx7H04Q==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vOdMT-0000000AP1z-3KQd;
+	Thu, 27 Nov 2025 14:52:46 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 0)
+	id B3AA7302FD7; Thu, 27 Nov 2025 16:48:06 +0100 (CET)
+Message-ID: <20251127154725.771691954@infradead.org>
+User-Agent: quilt/0.68
+Date: Thu, 27 Nov 2025 16:39:47 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: mingo@kernel.org,
+ vincent.guittot@linaro.org
+Cc: linux-kernel@vger.kernel.org,
+ peterz@infradead.org,
+ juri.lelli@redhat.com,
+ dietmar.eggemann@arm.com,
+ rostedt@goodmis.org,
+ bsegall@google.com,
+ mgorman@suse.de,
+ vschneid@redhat.com,
+ tj@kernel.org,
+ void@manifault.com,
+ arighi@nvidia.com,
+ changwoo@igalia.com,
+ sched-ext@lists.linux.dev
+Subject: [PATCH 4/5] sched: Add assertions to QUEUE_CLASS
+References: <20251127153943.696191429@infradead.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20251025001849.1915635-1-tj@kernel.org> <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
- <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
-X-Mailer: aerc 0.20.1
-Message-ID: <DEJEVK0YKMWY.116BVU5P5G91L@google.com>
-Subject: Re: [PATCH v3 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be
- called from anywhere
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Andrea Righi <andrea.righi@linux.dev>, Changwoo Min <changwoo@igalia.com>
-Cc: <linux-kernel@vger.kernel.org>, <sched-ext@lists.linux.dev>, 
-	Peter Zijlstra <peterz@infradead.org>, Wen-Fang Liu <liuwenfang@honor.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 
-On Wed Oct 29, 2025 at 3:49 PM UTC, Tejun Heo wrote:
-> Schedulers can now use standard BPF mechanisms like the sched_switch tracepoint
-> to detect and handle CPU preemption.
+Add some checks to the sched_change pattern to validate assumptions
+around changing classes.
 
-Correct me if I'm wrong, but I think using the sched_switch tracepoint still
-leaves us with no preemption notification in the following scenario:
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+---
+ kernel/sched/core.c  |   13 +++++++++++++
+ kernel/sched/sched.h |    1 +
+ 2 files changed, 14 insertions(+)
 
-1. An RT task is running on the CPU and blocks.
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -10806,6 +10806,7 @@ struct sched_change_ctx *sched_change_be
+ 
+ 	*ctx = (struct sched_change_ctx){
+ 		.p = p,
++		.class = p->sched_class,
+ 		.flags = flags,
+ 		.queued = task_on_rq_queued(p),
+ 		.running = task_current_donor(rq, p),
+@@ -10836,6 +10837,11 @@ void sched_change_end(struct sched_chang
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
++	/*
++	 * Changing class without *QUEUE_CLASS is bad.
++	 */
++	WARN_ON_ONCE(p->sched_class != ctx->class && !(ctx->flags & ENQUEUE_CLASS));
++
+ 	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switching_to)
+ 		p->sched_class->switching_to(rq, p);
+ 
+@@ -10847,6 +10853,13 @@ void sched_change_end(struct sched_chang
+ 	if (ctx->flags & ENQUEUE_CLASS) {
+ 		if (p->sched_class->switched_to)
+ 			p->sched_class->switched_to(rq, p);
++
++		/*
++		 * If this was a degradation in class someone should have set
++		 * need_resched by now.
++		 */
++		WARN_ON_ONCE(sched_class_above(ctx->class, p->sched_class) &&
++			     !test_tsk_need_resched(p));
+ 	} else {
+ 		p->sched_class->prio_changed(rq, p, ctx->prio);
+ 	}
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -4027,6 +4027,7 @@ extern void balance_callbacks(struct rq
+ struct sched_change_ctx {
+ 	u64			prio;
+ 	struct task_struct	*p;
++	const struct sched_class *class;
+ 	int			flags;
+ 	bool			queued;
+ 	bool			running;
 
-2. pick_task_scx() briefly drops the rq lock in balance_one() and the RT task
-   is woken up.
-
-3. SCX sees the enqueue and returns RETRY_TASK from pick_task_scx().
-
-4. The RT task is picked.
-
-5. Since prev == next, we don't enter the is_switch branch in __schedule()
-   and the sched_switch tracepoint isn't reached.
-
-The BPF scheduler could hook into trace_sched_exit_tp() to work around this,
-but that tracepoint seems to be for testing and debugging purposes only.
 
