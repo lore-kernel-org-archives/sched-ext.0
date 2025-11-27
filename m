@@ -1,154 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978AB2ED846;
-	Mon, 24 Nov 2025 08:07:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4940F3233F4
+	for <sched-ext@lists.linux.dev>; Thu, 27 Nov 2025 10:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971626; cv=none; b=VbyWnpQUuILWL8MHoumcDYuD4cqGTrgomVUUhe/skY+jSC1kqHXspFSgkvIcpVXmJmBJd1ZoPlV9QWXhdGVC+hdEWVsh3jwKX8DH0JXFZ/gQRXU7JVwQg6iAs45YFp/mXnMiznMBKBtUw/xqffCLWWdE3TKuHPgldqSJF3sIkUo=
+	t=1764239979; cv=none; b=HH9WmCh2tLoaf1eLODXXL+3A/48jQoIKAy7FZc7OBjC4Qh50wILxCf/l1xRmHABwuQLiBGPxsKSkjqrhf8KcWsPUxLX7lgIyhM2BM6Pl55T/WzbTx3WH/73J5KsHP2Qd5/mCOrM+qUYT/K4v1eHugBIDbMHYm9LsRdRVh2ZGTwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971626; c=relaxed/simple;
-	bh=DSATK1uPZBocRZED2xN65djjVz1+Zb2O/in0y1YltZY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+jB5LQQ0lOmGyrwlvjjXT1a4f6HZ9ASLFFUlwVpG8vFa6TadJqk0tH/7unrdIwrVrbzMpPgSPlck1oNoMlhi2z99ZgFdAoONmxH85T4jCpESDEHlWEwhD7wcqZfyxhBRHViVFDYD9I0ugbOgrOn/zvh5zAkeJjW9isLkpKL/dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMVgSLoL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764239979; c=relaxed/simple;
+	bh=9psqYrIv0eFQ6vtEA+yo7se3T74TLPtnsKpZBy8r/v0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=mC8KN13c/Oxv/I7NyXnZCf6/IuwydPDnOetx+YxdmaaVpYsYHtKORdn1NcRzH0Mmy9PR4HOP9oZmCtfnCC/XmxDk2vgemE6MqydB3lENGRyaTx6XXoQTHa4Wz1h1yVgSBpMYfFyZ8GgWCVFAZxTGkrm+IBtTH9jXmPyQ8JNyM1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CBXTui/O; arc=none smtp.client-ip=209.85.128.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMVgSLoL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0024C116D0;
-	Mon, 24 Nov 2025 08:07:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971626;
-	bh=DSATK1uPZBocRZED2xN65djjVz1+Zb2O/in0y1YltZY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMVgSLoLE9c4uh20tjEDVBYmoGHPjWGBaASBcAsw3hp6V8jxYwlWWWdPM8yQE6ITN
-	 RduulTYv/NVM9tCKJMosgreJRKcVdj8N+sc9se/bPk4q+nV6f1lswM4DXHX1Z2RYLw
-	 Nxd8H/9r4fbLrUx96zYcvygobahxIc2frlQ16DF/vyhgQ89nADa5egaT3Bh12uIK+n
-	 RFDYoA7JixjK9PUA4KIMOMFwXV9PuDqBcc9/IfgEQrhKxzorXUOlC7itE3AAcTP3ob
-	 5wt8Cl//g6IGl54fSMJV1KfWSPFvMG6utSrFaCEsJHj/GaiGeZdbakZLlb5SvBr1tu
-	 5GMyIhoMjNtFQ==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Zqiang <qiang.zhang@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	bigeasy@linutronix.de,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.17] sched_ext: Use IRQ_WORK_INIT_HARD() to initialize rq->scx.kick_cpus_irq_work
-Date: Mon, 24 Nov 2025 03:06:26 -0500
-Message-ID: <20251124080644.3871678-12-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
-References: <20251124080644.3871678-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CBXTui/O"
+Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-47797caba11so3045715e9.3
+        for <sched-ext@lists.linux.dev>; Thu, 27 Nov 2025 02:39:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1764239976; x=1764844776; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lqAp9KVCPquz913n77B6yJ7OoUi8d/Wkn+xOGKClAHw=;
+        b=CBXTui/Of9HlSlqGS6R6JvmR10zrxdizNemP80mTSIUKA6aRlAAgaweHQ+6em+auls
+         +3WY1heo8rRKUDleGVpFB8FbezXXHJzGziw8Qh1EGv0TdewogZ+JXMYxibnOHkpmE1UC
+         REmug7FcenrzLy1mwwpiw3320vpi3HSq3ZCyC+B1U4cIY9j3DpfylGZH6jhQdNKbpJNK
+         dO0R/oCTzjK3IdCfNrzxHJTrV5snW+qy8oYqVuuh4BroMRoyGUqilp/eZp/Z7ksCkYXU
+         vxtnVR+tk+EWuMUTyg7BBvbHGQj4BqWsf72jcflQjKONbMJiPdwpyDqj5uqoemzSipAX
+         PZbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764239976; x=1764844776;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lqAp9KVCPquz913n77B6yJ7OoUi8d/Wkn+xOGKClAHw=;
+        b=f2sigmrjBAEIm+uhLw6Gr4WKyfbX9aQby3bSlYW7zcdyIGfFeOGLgmzzsHsOr1wo9o
+         e5kW4v7i+jdRetovKvRvg1kAqgbS7AFcQStUOJDSFoUMmYK1GuImCWRvsgAx6t7X/d2W
+         ychcVoR1hn083zLLiv5Nx2qhUHVbod8IKawLjFLIKuJXgh/wvghd1BAjx+yYdfLk2at3
+         R2HAARmqvNxXiFOhjQAr5rx0mzmHc+WDaZNSy56SCUTKKg8BU0X8v6HGdA84IpcXC7kX
+         RLlXsA5595zgLJaVPC1MA/3GW2hcOyJptAX6YZefkUKxWy6g3jyIrElkszjAqJ5yIx7I
+         cIew==
+X-Forwarded-Encrypted: i=1; AJvYcCUEZF41VixLauFEv4ED4DKniReTL2Ks/Iv6WvfluoZuUwHK3iQv2TDBT3YlRb0nHGL3a1Pu36Qn28Q=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz6Riq0Y4pNDV4opcLy6rlwRc5KbVGAtLEg4DRQDBC+s0B+YOB/
+	w4zUZcnG+HP1l2cunwDs4LuJ3vjH9uUX+rCifWRObH16D9Fb6RDW6m/248l+TTh3ySejWsY5rLy
+	3RczpK0i5k9hGXg==
+X-Google-Smtp-Source: AGHT+IFOu1KDxS4wOpjUJIiOlRei4monHQlN4TXIIv6EXMYnI0d7/4TU+UcTmPQbCkMIeBY6k7kgsQpI859Wlw==
+X-Received: from wmbjp25.prod.google.com ([2002:a05:600c:5599:b0:477:a181:1922])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:46cf:b0:477:561f:6fc8 with SMTP id 5b1f17b1804b1-477c1103015mr202856565e9.5.1764239976616;
+ Thu, 27 Nov 2025 02:39:36 -0800 (PST)
+Date: Thu, 27 Nov 2025 10:39:35 +0000
+In-Reply-To: <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20251025001849.1915635-1-tj@kernel.org> <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
+ <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
+X-Mailer: aerc 0.20.1
+Message-ID: <DEJEVK0YKMWY.116BVU5P5G91L@google.com>
+Subject: Re: [PATCH v3 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be
+ called from anywhere
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <andrea.righi@linux.dev>, Changwoo Min <changwoo@igalia.com>
+Cc: <linux-kernel@vger.kernel.org>, <sched-ext@lists.linux.dev>, 
+	Peter Zijlstra <peterz@infradead.org>, Wen-Fang Liu <liuwenfang@honor.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Zqiang <qiang.zhang@linux.dev>
+On Wed Oct 29, 2025 at 3:49 PM UTC, Tejun Heo wrote:
+> Schedulers can now use standard BPF mechanisms like the sched_switch tracepoint
+> to detect and handle CPU preemption.
 
-[ Upstream commit 36c6f3c03d104faf1aa90922f2310549c175420f ]
+Correct me if I'm wrong, but I think using the sched_switch tracepoint still
+leaves us with no preemption notification in the following scenario:
 
-For PREEMPT_RT kernels, the kick_cpus_irq_workfn() be invoked in
-the per-cpu irq_work/* task context and there is no rcu-read critical
-section to protect. this commit therefore use IRQ_WORK_INIT_HARD() to
-initialize the per-cpu rq->scx.kick_cpus_irq_work in the
-init_sched_ext_class().
+1. An RT task is running on the CPU and blocks.
 
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
+2. pick_task_scx() briefly drops the rq lock in balance_one() and the RT task
+   is woken up.
 
-LLM Generated explanations, may be completely bogus:
+3. SCX sees the enqueue and returns RETRY_TASK from pick_task_scx().
 
-1. **Commit Message Analysis**
-    - **Problem:** On `PREEMPT_RT` kernels, `irq_work` initialized with
-      `init_irq_work()` executes in a threaded context where RCU read-
-      side critical sections are not implicit. The function
-      `kick_cpus_irq_workfn` accesses per-CPU request queues
-      (`rq->scx`), which requires RCU protection or preemption disabling
-      to be safe.
-    - **Solution:** The commit changes the initialization to
-      `IRQ_WORK_INIT_HARD()`. This macro sets the `IRQ_WORK_HARD_IRQ`
-      flag, forcing the work item to execute in hard interrupt context
-      even on `PREEMPT_RT` kernels.
-    - **Keywords:** "PREEMPT_RT", "RCU-read critical section",
-      "initialize".
-    - **Tags:** No explicit `Cc: stable` or `Fixes` tag in the provided
-      text, but the nature of the fix (correctness on RT) is a strong
-      candidate for stable.
+4. The RT task is picked.
 
-2. **Deep Code Research**
-    - **Code Context:** The affected file `kernel/sched/ext.c` belongs
-      to the `sched_ext` (Extensible Scheduler Class) subsystem.
-    - **Technical Mechanism:** In standard kernels, `irq_work` usually
-      runs in contexts where RCU is safe. In `PREEMPT_RT`, the default
-      behavior changes to threaded IRQs to reduce latency, but this
-      removes the implicit RCU protection. Accessing scheduler runqueues
-      (`rq`) without this protection can lead to Use-After-Free (UAF)
-      bugs or data corruption if a CPU goes offline or the task
-      structure changes.
-    - **The Fix:** `IRQ_WORK_INIT_HARD` is the standard mechanism to
-      opt-out of threaded execution for specific work items that require
-      hard IRQ semantics (atomic execution, implicit RCU protection).
-      This is a well-understood pattern in the kernel.
-    - **Subsystem Status:** `sched_ext` was merged in v6.12. Therefore,
-      this fix is applicable to stable kernels v6.12 and newer.
+5. Since prev == next, we don't enter the is_switch branch in __schedule()
+   and the sched_switch tracepoint isn't reached.
 
-3. **Stable Kernel Rules Evaluation**
-    - **Fixes a real bug?** Yes. It fixes a race condition/correctness
-      issue on `PREEMPT_RT` kernels which could lead to crashes.
-    - **Obviously correct?** Yes. The fix uses standard kernel
-      primitives to enforce the required execution context.
-    - **Small and contained?** Yes. It is a one-line change to an
-      initialization function.
-    - **No new features?** Yes. It only corrects the behavior of
-      existing code.
-    - **Regression Risk:** Low. It forces hard IRQ context, which is
-      generally safe for `irq_work` provided the work function is fast
-      (which `kick_cpus` typically is).
-
-4. **Conclusion**
-  This commit is a text-book example of a stable backport candidate. It
-  addresses a correctness issue in the interaction between a specific
-  subsystem (`sched_ext`) and the `PREEMPT_RT` configuration. The fix is
-  minimal, surgical, and necessary to prevent potential crashes. While
-  it applies only to kernels containing `sched_ext` (6.12+), it is
-  critical for users running that configuration.
-
-**YES**
-
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index fa64fdb6e9796..6f8ef62c8216c 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5281,7 +5281,7 @@ void __init init_sched_ext_class(void)
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
- 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
--		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
-+		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
- 
- 		if (cpu_online(cpu))
- 			cpu_rq(cpu)->scx.flags |= SCX_RQ_ONLINE;
--- 
-2.51.0
+The BPF scheduler could hook into trace_sched_exit_tp() to work around this,
+but that tracepoint seems to be for testing and debugging purposes only.
 
