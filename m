@@ -1,40 +1,39 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3323FC41;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78B9274FDB;
 	Thu, 27 Nov 2025 15:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764258496; cv=none; b=Jq9rRnxlryG3Cp8kOzrRHzcrAv144pO9DbehidYTYugjVha9j6CP70fgOL2+oKWi6zS91LwS4RExpfT8LOeL/X3oiTMdUTiC0f2cdNTrGgRrSs77Oqrhbna0uQF11vtAvcACQvui1Gnc54eZzaqGf0hpAaw2E/VWWZfGsDwG9u0=
+	t=1764258496; cv=none; b=Js6ypAQan8rpicvi4/feEEkPGhdE/wIw87ipXoo/3p+GQ36C7n0wIXvoAafEVLz1FRn0zcGzkdxb2GBiR5d2vrzu3na06kijrbC0L5lLzmUpl13TcCVnNKYsBwwZIR2KeCdABRU7wYfd2sBrtC5sUjZZ2H0X4GwBvO+tCjTkXnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764258496; c=relaxed/simple;
-	bh=IqyVfWu40ZLMUdC0ro/AyQRRI5FJiBLB0sei0TEvx64=;
-	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type; b=Uwffpe5iyoPbPE3/qsUNTqlJekODsH2VOAcDVn2Mv0YycuHVcWrf9KwGrgxu5QcSDO8pCtEpDRZCgFBNI2dcjYoEEYYCYUcUZamQn+1KddO1GLymkKJ8lwcm89tJxYLPQALiWOOl6ioz6rdmi+AksoJgZ7mUC8NUAZ1HNOf1F08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=QIZ1DJGO; arc=none smtp.client-ip=90.155.92.199
+	bh=sgRMHsbZNwWL05nnBZJ30zCT9th0pwdThCNxbiTqudE=;
+	h=Message-ID:Date:From:To:Cc:Subject; b=cb2GM5AY+1E76FkxCX1j6/L4l2olwQl8jPejLLKzz+2TsxqTxUbgGlS9SE/2Q+lpEdb9SIe1gPR4z4gJZYwj11pDoEeVseOoUGVUg6x5DrN+QbxGRxPkhfJ4/DjFDaa26Mi+fyOlfD5YK6LqI+tIBo5CZg1mCZkfj1dlnODI7Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=aG0szm+I; arc=none smtp.client-ip=90.155.50.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="QIZ1DJGO"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="aG0szm+I"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=Content-Type:MIME-Version:References:
-	Subject:Cc:To:From:Date:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:In-Reply-To;
-	bh=dnCfp3L62pj9DutfreyucA8+0cAoopcZko6tHzka0nM=; b=QIZ1DJGOf4fdowOurudefi2LSh
-	QyMSKJH95T4AGH4uR67wYLjJoN4Wp1EgT/nGj2zi0NTMLvnjZcZachbFXEiVDDe2hdbT+pl9vior4
-	wgXLrTXjZVuB03pTUaWtJ/ShhBUHvUmQALGn1X5rwz5YiG1TsehrhWn31vvWgiG3+NSbyDq4UT/1q
-	hcTCTVbIHI8w71V++tFeHgV38yxVWG28X2y5yuLVY0dx1soiNIac27XVNURQExLnCHAAxbi5r3jK6
-	arTzleoX640v7dkHCeUEx7gBmuooWskah6G7Z5lglWigKLAQjxH7gHO78r7Ov3Pf143ZhJwxuklcQ
-	Odx7H04Q==;
+	d=infradead.org; s=casper.20170209; h=Subject:Cc:To:From:Date:Message-ID:
+	Sender:Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=sgRMHsbZNwWL05nnBZJ30zCT9th0pwdThCNxbiTqudE=; b=aG0szm+IbkF0cKLufClw3EDX7F
+	JYap/K9BNa1OSx0pyzS+5+lm9AOJFmk87yOAVEbWOOlk/K00RBjd6FoAgGVwGpV9Be2j0uhB6PtMD
+	Euid1U0O9FXuYbRkQrdEFhyPq9e4xZEDS54YJy7bWFsSn7nOzpnHb91aKYV8MNuZ1nV1Fz4TUi27E
+	zfTyXFeCfTDmCPaHqrnRPV2kxz3en2CK99OWWhIsza27GWgsCKjBeb4jHVBLDFEG4WxqtlRyRZwFy
+	v76eN5FMWW68TnDbEu4EtyiT7F4pq/obJjoSUkXyIBmkjTdm+07+QD8A1hSrPJrFYom9SlA9mHYD2
+	7Vvz5q6w==;
 Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vOdMT-0000000AP1z-3KQd;
-	Thu, 27 Nov 2025 14:52:46 +0000
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vOeE3-0000000BwrA-3xO8;
+	Thu, 27 Nov 2025 15:48:08 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 0)
-	id B3AA7302FD7; Thu, 27 Nov 2025 16:48:06 +0100 (CET)
-Message-ID: <20251127154725.771691954@infradead.org>
+	id A1D1B300342; Thu, 27 Nov 2025 16:48:06 +0100 (CET)
+Message-ID: <20251127153943.696191429@infradead.org>
 User-Agent: quilt/0.68
-Date: Thu, 27 Nov 2025 16:39:47 +0100
+Date: Thu, 27 Nov 2025 16:39:43 +0100
 From: Peter Zijlstra <peterz@infradead.org>
 To: mingo@kernel.org,
  vincent.guittot@linaro.org
@@ -51,70 +50,23 @@ Cc: linux-kernel@vger.kernel.org,
  arighi@nvidia.com,
  changwoo@igalia.com,
  sched-ext@lists.linux.dev
-Subject: [PATCH 4/5] sched: Add assertions to QUEUE_CLASS
-References: <20251127153943.696191429@infradead.org>
+Subject: [PATCH 0/5] sched: Random collection of patches
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 
-Add some checks to the sched_change pattern to validate assumptions
-around changing classes.
+Hi!
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
----
- kernel/sched/core.c  |   13 +++++++++++++
- kernel/sched/sched.h |    1 +
- 2 files changed, 14 insertions(+)
+Here a fairly eclectic mix of patches.
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -10806,6 +10806,7 @@ struct sched_change_ctx *sched_change_be
- 
- 	*ctx = (struct sched_change_ctx){
- 		.p = p,
-+		.class = p->sched_class,
- 		.flags = flags,
- 		.queued = task_on_rq_queued(p),
- 		.running = task_current_donor(rq, p),
-@@ -10836,6 +10837,11 @@ void sched_change_end(struct sched_chang
- 
- 	lockdep_assert_rq_held(rq);
- 
-+	/*
-+	 * Changing class without *QUEUE_CLASS is bad.
-+	 */
-+	WARN_ON_ONCE(p->sched_class != ctx->class && !(ctx->flags & ENQUEUE_CLASS));
-+
- 	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switching_to)
- 		p->sched_class->switching_to(rq, p);
- 
-@@ -10847,6 +10853,13 @@ void sched_change_end(struct sched_chang
- 	if (ctx->flags & ENQUEUE_CLASS) {
- 		if (p->sched_class->switched_to)
- 			p->sched_class->switched_to(rq, p);
-+
-+		/*
-+		 * If this was a degradation in class someone should have set
-+		 * need_resched by now.
-+		 */
-+		WARN_ON_ONCE(sched_class_above(ctx->class, p->sched_class) &&
-+			     !test_tsk_need_resched(p));
- 	} else {
- 		p->sched_class->prio_changed(rq, p, ctx->prio);
- 	}
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -4027,6 +4027,7 @@ extern void balance_callbacks(struct rq
- struct sched_change_ctx {
- 	u64			prio;
- 	struct task_struct	*p;
-+	const struct sched_class *class;
- 	int			flags;
- 	bool			queued;
- 	bool			running;
+The first is a very old patch I recently re-discovered in my patch cabinet.
 
+The next two are cleanups that came about from the recent newidle patches.
+
+And the final two are from an earlier discussion with TJ about tracking wakeups
+across classes. This informs a sched_class it no longer has access to the CPU
+and can look at pushing tasks away. The case in point was sched_ext, but IIRC
+this very same point once came up for sched_rt as well.
 
