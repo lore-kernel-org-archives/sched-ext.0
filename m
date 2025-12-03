@@ -1,78 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D54A200C2;
-	Tue,  2 Dec 2025 23:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C90322A15;
+	Wed,  3 Dec 2025 21:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764718063; cv=none; b=Qy3yZKRZ3EsMvoVqK1yCXsekAj93/IfTdZxVm8q3jiJj2cTYfKbp7ltoNje/YpQmRqiAk8MzTofUhTKQjYcTXL8ahVjIQBrmkxERDbOivDeqa7Lt3OVbpnbTptdSdJFiK2zP3lgCgRgDpi3vqHBCQ43TYMirElTIW/F8Oedc1pY=
+	t=1764798796; cv=none; b=J6qreBo2/lSbZvpSi62B99QP63KO8AxJPNrhKj0N9AgZWMApQ8wzaC0k/l/dsG9CmEzo5r7RtmCYdaxesE5cfVoKxMOlXu2FVzriA6mKmafTEjThsJdq/6zB8kmKyI09UH/UWgc8jSAtxeoNDOXS8OnJpvujVDjxMHSrI4qynao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764718063; c=relaxed/simple;
-	bh=O/U11dN/+NbSiRqMPD4eOF9bGBd9MKuMeD1JmV1T8/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gALCAVeryFIc3vjRcOFz/u4N2KOMBNSviQ4NVZZWSIrZPzkcKx1/YLTQgbppXlkDXaUP3ly7kjnYlmUgoemhKP/BYKzfJyYte6ew8ezYeNO2OJZvjc/ErsqXz1LwlNXgnrn5JT4LhAc8Ze44oOyBcpAzFeQcc92r6Bw/rjQO7Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bs3ebSes; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764798796; c=relaxed/simple;
+	bh=8e8S27K5PFGsx69nKV/PM5gbRwleIj7avQUf1X7JUv0=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=e1+IBXXRArX3hIx/c36K/403S9HTbT51PjWIGel8GVUBt4KEzIwpDn+LQtY6NfEHJ/f6GARZ5/G7F813gqxp0RX53PnOkx++aU2/0mmUVOgM00oR8zNBBA114Fls3STZmdO7tLTn2hbB0e6B84i/wzBAt/3bjaq3BzdjYnSrJLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HyQv+bm7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bs3ebSes"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4403C4CEF1;
-	Tue,  2 Dec 2025 23:27:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HyQv+bm7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39688C116B1;
+	Wed,  3 Dec 2025 21:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764718062;
-	bh=O/U11dN/+NbSiRqMPD4eOF9bGBd9MKuMeD1JmV1T8/o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bs3ebSesxryK5YHPBS8dzCyYWCeJW8fMBssfWf1rIRTXcj0xCmEbBy3jpcdNecSsu
-	 nbsicNKb9L9oICMYvbd87QZidsPom3pKiyKs5B6M8bqbLMcGckN8kEZMlYrYno5EMd
-	 zLigk1tBRVpi4+d8VKLa502EXQ3we9h7QvVNyqh8czvb/6MxMVrirBCZ5loSxXo+pZ
-	 lhZqufU3JqQ1nQuwczKOlZEyv5luwf3jEMGuu1IbXnPcuvUoLppBSjI9laEZVMrPEf
-	 tIP1kxNC9BShw/Kg054xZn7j25toLX68WsVJiK+eidTOEy7DNhB30owCpjv6Umsc2v
-	 MLh7mLlpA3CqQ==
-Date: Tue, 2 Dec 2025 13:27:41 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: mingo@kernel.org, vincent.guittot@linaro.org,
-	linux-kernel@vger.kernel.org, juri.lelli@redhat.com,
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
-	mgorman@suse.de, vschneid@redhat.com, void@manifault.com,
-	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 5/5] sched: Rework sched_class::wakeup_preempt() and
- rq_modified_*()
-Message-ID: <aS917UwBI20pBOQe@slm.duckdns.org>
-References: <20251127153943.696191429@infradead.org>
- <20251127154725.901391274@infradead.org>
+	s=k20201202; t=1764798796;
+	bh=8e8S27K5PFGsx69nKV/PM5gbRwleIj7avQUf1X7JUv0=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=HyQv+bm7RXMa3JIMwoO9SzgYmxgFRJ+HVektEBh4FztScwtDdY5Pj1WFMHQF3H+Oc
+	 /Dh2BmYx65FCDCwNYNFjluWFZLI8YevM9cK+uKomI6A8eQcrsrK5Kt3i5x+cmjWbuq
+	 0n6GIto5YRvSHaIXmBTL+caJ85B9lLsUis8Rpk3t6fouNOyxgQ34+JOnEuNsJFtMfk
+	 zpn66wq/USo28sL1Rsp5KWzcGoLcqXH18t6lJJo5PCggqTgqX1wnzhKdE5Vt4Im6Bn
+	 /CblEMcJ4zpRdyvYiCK3mfaNJN+jJrX58B3p4W0nCoBCuuXxB+B+2GiOpcQr/R5UPk
+	 wAO3Ps6SgB/Tg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3B9CE3AA9A81;
+	Wed,  3 Dec 2025 21:50:16 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Changes for v6.19
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <ca8ceefd49d27fa71aed4859c0037b2f@kernel.org>
+References: <ca8ceefd49d27fa71aed4859c0037b2f@kernel.org>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <ca8ceefd49d27fa71aed4859c0037b2f@kernel.org>
+X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-6.19
+X-PR-Tracked-Commit-Id: 1dd6c84f1c544e552848a8968599220bd464e338
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 02baaa67d9afc2e56c6e1ac6a1fb1f1dd2be366f
+Message-Id: <176479861511.93177.8818252305163012789.pr-tracker-bot@kernel.org>
+Date: Wed, 03 Dec 2025 21:50:15 +0000
+To: Tejun Heo <tj@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <multics69@gmail.com>, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251127154725.901391274@infradead.org>
 
-Hello,
+The pull request you sent on Mon, 01 Dec 2025 13:48:47 -1000:
 
-On Thu, Nov 27, 2025 at 04:39:48PM +0100, Peter Zijlstra wrote:
-> @@ -2174,10 +2172,14 @@ void wakeup_preempt(struct rq *rq, struc
->  {
->  	struct task_struct *donor = rq->donor;
->  
-> -	if (p->sched_class == donor->sched_class)
-> -		donor->sched_class->wakeup_preempt(rq, p, flags);
-> -	else if (sched_class_above(p->sched_class, donor->sched_class))
-> +	if (p->sched_class == rq->next_class) {
-> +		rq->next_class->wakeup_preempt(rq, p, flags);
-> +
-> +	} else if (sched_class_above(p->sched_class, rq->next_class)) {
-> +		rq->next_class->wakeup_preempt(rq, p, flags);
->  		resched_curr(rq);
-> +		rq->next_class = p->sched_class;
-> +	}
+> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-6.19
 
-I wonder whether this is a bit subtle. Wouldn't it be clearer to add a
-separate method which takes an explicit next_class argument for the second
-case?
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/02baaa67d9afc2e56c6e1ac6a1fb1f1dd2be366f
 
-Thanks.
+Thank you!
 
 -- 
-tejun
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
