@@ -1,54 +1,54 @@
 Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6DF1487E9
-	for <sched-ext@lists.linux.dev>; Sat,  6 Dec 2025 00:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E906F1EF36E
+	for <sched-ext@lists.linux.dev>; Sat,  6 Dec 2025 02:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764980101; cv=none; b=jaoC2/keZokGP4zxrZSS/pEuw+ECEoeLqQ+xIFiE+tmX7k4JqbaxkD9x2VOl7K/ClEQF00YrOwom3gcmsukTSpf2Q/cLb+m4C7CkogUmzwkrbYksQsUjVOGj1+j/D664h6uAD03TFoEEPg5zagdarpzi6KTHowr98Mgk4xClQIA=
+	t=1764987748; cv=none; b=hG7yLjSFaw3GLdxqsdvA/58VUezUSKh9lfoVN0Pkzlga7nTT1SrIilYjsMvQO7BkEosQlLWHbcmbw4T8zd8WSEknNMu9qtxeT2U1k5vTsGa7UsVtnl/pVmxW6hYEQAI3dVqG5EDE9sYt+yaB2yHP73nYipxkZlegk+uBnqtCS48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764980101; c=relaxed/simple;
-	bh=5WtD6k98BxZm1ugxEKncG6MTBPADYFrbytB4YGdeiB0=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=O9w9fV5StJQ6Y+oN8mQM9DetyAOdfqImkwMRZZxgrx5ibUqt4V9j/Wnlr16Vf3Fi0DIjKrbdBF1feVSkMMGQZaZCi98ElTJWCpRN3hZ3Y6VTUL60uSMDtiqqrc0efbaNxK9K72KlsC6Q9wg3s1jmq7iYiAhKSI3SSdJF7tujW/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jstultz.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fENpsMiz; arc=none smtp.client-ip=209.85.210.201
+	s=arc-20240116; t=1764987748; c=relaxed/simple;
+	bh=XVCsyOGJdweid+Hkrs1mnBjSZEfhBqgCs1WaMylpkIU=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=QJaqRoraVrScKK+NkRLz4dRHUUDjJQXeWiLa8T+Cs/Q/CWfRImOLaQDCYgoNSqTIQXEnrJrcTP0nAQaFOY+t3P7YwEmhmwRV+DmNCn5FMznMSJci6wzYvK7yOeqoP8lvV0u6U/FjFj7oijDTBt0eHVDHZM/yR5hMJ3LTv17ggK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jstultz.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=anyN4oAN; arc=none smtp.client-ip=209.85.210.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jstultz.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fENpsMiz"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-7d481452732so4326882b3a.1
-        for <sched-ext@lists.linux.dev>; Fri, 05 Dec 2025 16:14:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="anyN4oAN"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-7b9090d9f2eso5028521b3a.0
+        for <sched-ext@lists.linux.dev>; Fri, 05 Dec 2025 18:22:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1764980099; x=1765584899; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1764987746; x=1765592546; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=o3cEtc6f0/lfF9FXuA+00G32aR06pcVYGdnh6khS/0c=;
-        b=fENpsMizHgi7tApYAJl/sHkRK6sS7hdHHHDlEbGxzTARAnZ3XB9LillffobPNfvTUq
-         gU8+PYNJ7udkEF/4iFOHwwJlvqpRGNwa3BbXmyL8wV3S4avvHeY3dnJIgKT2XbR62ubs
-         0fuQmvwrz/xX61EvHFPkNskHbXJ8K4PX/ksVEYSXOQr/KP7RQEeGT3wHghz/mtbtE5Sk
-         I5Ka5MQGZol/nMOmWPS1G4afEqfM6tpDMhsSV4Hr/fzlkFwXc41Yg3VMCtL8vGE/joXi
-         FGiZqkuKjgEvSMvngF7xrUg26tpvo2tt79vP3gIUp3GXXHZ+hfQf2MIKSkNx6QS6uXKg
-         Pp9w==
+        bh=jdV7N4pfSKAse/61258VLDqIWR7NsSJT3WSRlwQOzKI=;
+        b=anyN4oANncFRmMMEYLEeMfGNqSIj7RMF8MtVv6xB/w86nZ7i0Wq2mxElHreksy08Fs
+         3zrUdmrx43eRTTcTXko4NQEwn9ErNHTvh9StTODJDiXBliXnAxx0zRbigULqrb1XuFgp
+         o8T4RerqLU2ES45uoGVAxlT9SPoc6GCRfQEiCBiefOIccHTiL2bYV4M8DweaZZNz1vLF
+         W1ysF/rh4tUBqvZ2gzJhv3DkkdngWlRDMn7js2mT5hhN880GwVTg8DjveRELFNpUcCuZ
+         iZ6BNDOziGHwV5fvB7xL5pH5ir/X+rhm+IF6js2uIcFenxFOUqf2YQYEggLUKnO6vD9w
+         T2OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764980099; x=1765584899;
+        d=1e100.net; s=20230601; t=1764987746; x=1765592546;
         h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=o3cEtc6f0/lfF9FXuA+00G32aR06pcVYGdnh6khS/0c=;
-        b=ZlNrxa1mJmE6tZNzQF1qYlTziwHLHsbMKhNRyRpuXFrTFnfxgdm3DXKAZs/NPajh+b
-         MxEmgUpsK7FMQvKy/zZbAzpbu2uBKlMrVt9m/xiP6poDMJ/XnvD2mE3mScZO1L429rXa
-         RnVALe5JRSgTMCnhKtbugfxLw51dI56TM1VDfWYJyJvX+1RTIehn4N2l7Yc+EkFj2tx4
-         tBEjnEaYJYcA95NUDfFQgTwXvbzT3ZryQnZJjsYNJSuKarHBs9RrNa/SQmqT4sFm5uaL
-         PyobJQTRe3eWBXx7lYalpx3v4IULMra3iocYJwun92G5cnqPOT/1IHOjmGHiNdCvoX7z
-         J4zw==
-X-Forwarded-Encrypted: i=1; AJvYcCWZq9SKkZaUZ9+NU2SJCIRQ4KP0bDBKF28jVVWSIEIpLOcScy4PJGx5b4iMlPFBklff4tNJUv1DvPY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YySVBxEzA3qg94lWzueG+khXfroAPIPDuLAyU3KcoL78yC6DqSt
-	BYEvt8MDZQmcWaXxG5jAPTezgluZ+rXAGY9xwn8NOiq03CfeaNQRNADhYWNI5ajZVvvSAAlJMVj
-	rvSCrVj/0
-X-Google-Smtp-Source: AGHT+IGrs2qWvcvxyvWaNiLVsxZBIvEtG/ed8axGpcta2J0frmLvOYGpO6eMaTfYs/IhnIUT/11156Kdav4t
-X-Received: from pfblu2.prod.google.com ([2002:a05:6a00:7482:b0:7ae:a150:ac8])
- (user=jstultz job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:94c1:b0:7e8:450c:61cc
- with SMTP id d2e1a72fcca58-7e8c60de799mr778041b3a.60.1764980098770; Fri, 05
- Dec 2025 16:14:58 -0800 (PST)
-Date: Sat,  6 Dec 2025 00:14:45 +0000
+        bh=jdV7N4pfSKAse/61258VLDqIWR7NsSJT3WSRlwQOzKI=;
+        b=N2FMCg7BWvbIBpdE9Q/6/nwoUW/9FxNJfUufEFQ/hCXE2NwA3qsi24UVU5RGHIBt78
+         gTMir7uidBSwy5TSCEESNuT2VRvEQE/CkWXsR+yJ2+fWoVEgdZwL2tk+2fHHK67I+C0j
+         liDTBbQ7K/MYOcFyu5TJnAViUb0pKBYblMF0MD4O9B7DQoAdz6riOGmUFmHq4D1kUCqC
+         Nwxd+byMoIP3WXX6TcGXgPsqVIXD7sSf/Lr0vxlbJsgKCyTRK7UV25nwFwJKSGGTjMnF
+         VKlGEHT7Oseg5CV6lkvpIuX7PUJk1ZSCS2FAp6OAnRI/EmLjqMKLHr0ZrvlLkmZ2zRgg
+         uINQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWdKEXq5cnBbpVUnU7wbJgYaGk0nqosvwBvmUeZ5VeTnFavpUWDE3kPL7dZ3vwncuH7e05gonuL+LU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx8uQqPVKRG2fU2vcQV/+LIemKA/pO1rNKSBFZWEEdXC7tBf+gD
+	oC5W3ZhcYYXQyh0AF8OxF9YjaKBcpm2gk3pjm/UURFjUsE+rRe6amwRAzvNX9MYyYrJQzNuO3p8
+	6DkpGvUoE
+X-Google-Smtp-Source: AGHT+IFxrNvkNeRuDCNG+ZcWkFhXmvzU4P3pH7Pgn3ovztAsqVSl3V0pw8OUcWVAybxQomfezKOcPyThv5SD
+X-Received: from pgah22.prod.google.com ([2002:a05:6a02:4e96:b0:bac:ef38:605c])
+ (user=jstultz job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:e211:b0:366:14af:9bb8
+ with SMTP id adf61e73a8af0-36618017e9cmr1315282637.66.1764987746096; Fri, 05
+ Dec 2025 18:22:26 -0800 (PST)
+Date: Sat,  6 Dec 2025 02:22:03 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -56,11 +56,12 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.52.0.223.gf5cc29aaa4-goog
-Message-ID: <20251206001451.1418225-1-jstultz@google.com>
-Subject: [RFC][PATCH] sched/ext: Split curr|donor references properly
+Message-ID: <20251206022218.1541878-1-jstultz@google.com>
+Subject: [RFC][PATCH] sched/ext: Avoid null ptr traversal when
+ ->put_prev_task() is called with NULL next
 From: John Stultz <jstultz@google.com>
 To: LKML <linux-kernel@vger.kernel.org>
-Cc: John Stultz <jstultz@google.com>, Joel Fernandes <joelaf@google.com>, 
+Cc: John Stultz <jstultz@google.com>, Joel Fernandes <joelagnelf@nvidia.com>, 
 	Qais Yousef <qyousef@layalina.io>, Ingo Molnar <mingo@redhat.com>, 
 	Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
 	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
@@ -70,31 +71,34 @@ Cc: John Stultz <jstultz@google.com>, Joel Fernandes <joelaf@google.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>, Metin Kaya <Metin.Kaya@arm.com>, 
 	Xuewen Yan <xuewen.yan94@gmail.com>, K Prateek Nayak <kprateek.nayak@amd.com>, 
 	Thomas Gleixner <tglx@linutronix.de>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Suleiman Souhlal <suleiman@google.com>, kuyo chang <kuyo.chang@mediatek.com>, hupu <hupu.gm@gmail.com>, 
 	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev, kernel-team@android.com
 Content-Type: text/plain; charset="UTF-8"
 
-With proxy-exec, we want to do the accounting against the donor
-most of the time. Without proxy-exec, there should be no
-difference as the rq->donor and rq->curr are the same.
+Early when trying to get sched_ext and proxy-exe working together,
+I kept tripping over NULL ptr in put_prev_task_scx() on the line:
+  if (sched_class_above(&ext_sched_class, next->sched_class)) {
 
-So rework the logic to reference the rq->donor where appropriate.
+Which was due to put_prev_task() passes a NULL next, calling:
+  prev->sched_class->put_prev_task(rq, prev, NULL);
 
-Also add donor info to scx_dump_state()
+put_prev_task_scx() already guards for a NULL next in the
+switch_class case, but doesn't seem to have a guard for
+sched_class_above() check.
 
-Since CONFIG_SCHED_PROXY_EXEC currently depends on
-!CONFIG_SCHED_CLASS_EXT, this should have no effect
-(other then the extra donor output in scx_dump_state),
-but this is one step needed to eventually remove that
-constraint for proxy-exec.
+I can't say I understand why this doesn't trip usually without
+proxy-exec. And in newer kernels there are way fewer
+put_prev_task(), and I can't easily reproduce the issue now
+even with proxy-exec.
 
-Just wanted to send this out for early review prior to LPC.
-
-Feedback or thoughts would be greatly appreciated!
+But we still have one put_prev_task() call left in core.c that
+seems like it could trip this, so I wanted to send this out for
+consideration.
 
 Signed-off-by: John Stultz <jstultz@google.com>
 ---
-Cc: Joel Fernandes <joelaf@google.com>
+Cc: Joel Fernandes <joelagnelf@nvidia.com>
 Cc: Qais Yousef <qyousef@layalina.io>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
@@ -115,6 +119,9 @@ Cc: Xuewen Yan <xuewen.yan94@gmail.com>
 Cc: K Prateek Nayak <kprateek.nayak@amd.com>
 Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Suleiman Souhlal <suleiman@google.com>
+Cc: kuyo chang <kuyo.chang@mediatek.com>
+Cc: hupu <hupu.gm@gmail.com>
 Cc: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>
 Cc: Andrea Righi <arighi@nvidia.com>
@@ -122,110 +129,22 @@ Cc: Changwoo Min <changwoo@igalia.com>
 Cc: sched-ext@lists.linux.dev
 Cc: kernel-team@android.com
 ---
- kernel/sched/ext.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 05f5a49e9649a..446091cba4429 100644
+index 446091cba4429..598552f58f5ec 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -938,17 +938,17 @@ static void touch_core_sched_dispatch(struct rq *rq, struct task_struct *p)
- 
- static void update_curr_scx(struct rq *rq)
- {
--	struct task_struct *curr = rq->curr;
-+	struct task_struct *donor = rq->donor;
- 	s64 delta_exec;
- 
- 	delta_exec = update_curr_common(rq);
- 	if (unlikely(delta_exec <= 0))
- 		return;
- 
--	if (curr->scx.slice != SCX_SLICE_INF) {
--		curr->scx.slice -= min_t(u64, curr->scx.slice, delta_exec);
--		if (!curr->scx.slice)
--			touch_core_sched(rq, curr);
-+	if (donor->scx.slice != SCX_SLICE_INF) {
-+		donor->scx.slice -= min_t(u64, donor->scx.slice, delta_exec);
-+		if (!donor->scx.slice)
-+			touch_core_sched(rq, donor);
- 	}
- }
- 
-@@ -1090,14 +1090,14 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 		struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
- 		bool preempt = false;
- 
--		if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
--		    rq->curr->sched_class == &ext_sched_class) {
--			rq->curr->scx.slice = 0;
-+		if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->donor &&
-+		    rq->donor->sched_class == &ext_sched_class) {
-+			rq->donor->scx.slice = 0;
- 			preempt = true;
- 		}
- 
- 		if (preempt || sched_class_above(&ext_sched_class,
--						 rq->curr->sched_class))
-+						 rq->donor->sched_class))
- 			resched_curr(rq);
- 	} else {
- 		raw_spin_unlock(&dsq->lock);
-@@ -2001,7 +2001,7 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 		}
- 
- 		/* if the destination CPU is idle, wake it up */
--		if (sched_class_above(p->sched_class, dst_rq->curr->sched_class))
-+		if (sched_class_above(p->sched_class, dst_rq->donor->sched_class))
- 			resched_curr(dst_rq);
- 	}
- 
-@@ -2424,7 +2424,7 @@ static struct task_struct *first_local_task(struct rq *rq)
- static struct task_struct *
- do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- {
--	struct task_struct *prev = rq->curr;
-+	struct task_struct *prev = rq->donor;
- 	bool keep_prev, kick_idle = false;
- 	struct task_struct *p;
- 
-@@ -3093,7 +3093,7 @@ int scx_check_setscheduler(struct task_struct *p, int policy)
- #ifdef CONFIG_NO_HZ_FULL
- bool scx_can_stop_tick(struct rq *rq)
- {
--	struct task_struct *p = rq->curr;
-+	struct task_struct *p = rq->donor;
- 
- 	if (scx_rq_bypassing(rq))
- 		return false;
-@@ -4587,6 +4587,9 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
- 		dump_line(&ns, "          curr=%s[%d] class=%ps",
- 			  rq->curr->comm, rq->curr->pid,
- 			  rq->curr->sched_class);
-+		dump_line(&ns, "          donor=%s[%d] class=%ps",
-+			  rq->donor->comm, rq->donor->pid,
-+			  rq->donor->sched_class);
- 		if (!cpumask_empty(rq->scx.cpus_to_kick))
- 			dump_line(&ns, "  cpus_to_kick   : %*pb",
- 				  cpumask_pr_args(rq->scx.cpus_to_kick));
-@@ -5426,7 +5429,7 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
- 	unsigned long flags;
- 
- 	raw_spin_rq_lock_irqsave(rq, flags);
--	cur_class = rq->curr->sched_class;
-+	cur_class = rq->donor->sched_class;
- 
- 	/*
- 	 * During CPU hotplug, a CPU may depend on kicking itself to make
-@@ -5438,7 +5441,7 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
- 	    !sched_class_above(cur_class, &ext_sched_class)) {
- 		if (cpumask_test_cpu(cpu, this_scx->cpus_to_preempt)) {
- 			if (cur_class == &ext_sched_class)
--				rq->curr->scx.slice = 0;
-+				rq->donor->scx.slice = 0;
- 			cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
- 		}
- 
+@@ -2402,7 +2402,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 		 * ops.enqueue() that @p is the only one available for this cpu,
+ 		 * which should trigger an explicit follow-up scheduling event.
+ 		 */
+-		if (sched_class_above(&ext_sched_class, next->sched_class)) {
++		if (next && sched_class_above(&ext_sched_class, next->sched_class)) {
+ 			WARN_ON_ONCE(!(sch->ops.flags & SCX_OPS_ENQ_LAST));
+ 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
+ 		} else {
 -- 
 2.52.0.223.gf5cc29aaa4-goog
 
