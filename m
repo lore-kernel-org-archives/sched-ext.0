@@ -1,63 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D89281376;
-	Mon,  8 Dec 2025 18:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE2630C342;
+	Tue,  9 Dec 2025 21:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765218223; cv=none; b=d5oCyCGcUW8RI3QA1/zodEIIjzI5nwx8JZ5uLZiQSJPT/w71v9ccEqwuVz/UKP5CbXUfGtuSqz/KXQe77L11aftD5a4NVYLLcYVcRj0yz0EPJon1FYXH+yk9wsbdH6rS+SWT7tQn314m+O3QkuIJmLZ4XxIXoiIz4HVc8PQKV7E=
+	t=1765314275; cv=none; b=qM20+RMfUhUPp57PZ9DWuwNVFNXFMdtGqCnOiQTvUghhe9smgMwjDO9HqNNiQ8JSOT3nAIDn7u+GFzjtQ5zvv/83ZSfu2PPNwtzrNKYua94dPnW/8oNkUoXPimSsYSOuBeE21ViM1MWxhvnoi0EBeQnNnoyh8oF8giYf44dHemg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765218223; c=relaxed/simple;
-	bh=NfNamV85A6gOn/SvQS+YIqVsTtR8U4k4zlCh6PFdbOk=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=OixZad72S5Azi4IG+Chn/bidp13TWXcKT9Ggpz5VHJxIcuPX95Iq2rYjsPxG2olJm3a8iN5TdFG0WAMbJF+bRMs+VEVtmJ9hsMvHleHUk97BLvyMqZz90K+4FfFqoGFr0EENqQL9DhM8dT9BagOV7bQsSFl3KCbruP8y4wwWKP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOrIWHOG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765314275; c=relaxed/simple;
+	bh=a39aZRYG4GuuNjVKn0c9PuWXsD2hsaYYnAPxt3wMqHI=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=f3zGN1aUGpc4nQEY530GJ0h0tHviPqcN2h+BO124mFGy7etUB0Lz5Cg9iW/l2+ZHcatVoR0CRB1cj36evNUJ9zLx+pCzxymJMaM7YuwzBGvjOmcz2j+cMxUQM6WlAH+RgD3YJCpgQlGZn8ergu/iAW9VhdgTW6t9oKWtkcV3hno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fCc0dr+p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOrIWHOG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2253CC4CEF1;
-	Mon,  8 Dec 2025 18:23:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fCc0dr+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EC9C4CEF5;
+	Tue,  9 Dec 2025 21:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765218223;
-	bh=NfNamV85A6gOn/SvQS+YIqVsTtR8U4k4zlCh6PFdbOk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=FOrIWHOGUC6ejF9ifnsI9CSHkZ/T3m2F69Xy9OT65Ob6rRrtI28VoIPGDTbS/jGet
-	 6hioayMBQlBVfG6aiJUNnEGTc1xQbGMzpTl+pYg1MfT1bA3/qIGbHrkdqUrlfNzJCc
-	 qrsbPA23JjuGn1VtWkj7D5Qq6cgHMD2u/EhaYvNi7LkZHhMI33NW/A3MglTnhwwXI+
-	 JzwPuoF2V676dkhNdMJoCPR34uVbEov14sAv0NCE56s6X9QOYdl3Dr9S1g2T82lo/s
-	 iERCeIQJFEj0dLSy0LjEuCqFyuS2F5wX3Lo5Qjd7g7KJ+oF87iiHlQw7UVI8xTHCpY
-	 SAZCYQGx4maig==
-Date: Mon, 08 Dec 2025 08:23:42 -1000
-Message-ID: <27372221f161f90a698311662db55d9d@kernel.org>
+	s=k20201202; t=1765314274;
+	bh=a39aZRYG4GuuNjVKn0c9PuWXsD2hsaYYnAPxt3wMqHI=;
+	h=Date:From:To:Cc:Subject:From;
+	b=fCc0dr+pvO612rC42KadLOL7coWJjNsR7Qto5AsgMYTViQMfYwoCugECEny0F1DLH
+	 SSHUzINWZ/gjvZZg+9K4qyjwbAFopJuz2ho7NPPgFfyasQta9+E4ZxRa20A8OFmWoI
+	 YAqMVba7ZW1o5eK+wfDhk4Gm6EUYc2BnodCEWXsSb6bJqSH7WmvJTAto7BFv/w0+Sv
+	 VfhY9azJ4fBnlPJpt+goyXRUdkav6AhScM2bvKgkqbuQzmm2mD5Lj017Yyh3LG2ULI
+	 VdaJwhzmDZnaeEUKOedeA7JQfZ9txZMw0SP6KleaRnyX0pgL4QYqrTltPWstvk2Mul
+	 D2xYAKfQIbYKA==
+Date: Tue, 09 Dec 2025 11:04:33 -1000
+Message-ID: <286e6f7787a81239e1ce2989b52391ce@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: John Stultz <jstultz@google.com>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Joel Fernandes <joelagnelf@nvidia.com>, Qais Yousef <qyousef@layalina.io>,
- Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
- Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>, Valentin Schneider <vschneid@redhat.com>,
- Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>,
- Zimuzo Ezeozue <zezeozue@google.com>, Mel Gorman <mgorman@suse.de>,
- Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
- Boqun Feng <boqun.feng@gmail.com>, Paul E. McKenney <paulmck@kernel.org>,
- Metin Kaya <Metin.Kaya@arm.com>, Xuewen Yan <xuewen.yan94@gmail.com>,
- K Prateek Nayak <kprateek.nayak@amd.com>, Thomas Gleixner <tglx@linutronix.de>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Suleiman Souhlal <suleiman@google.com>,
- kuyo chang <kuyo.chang@mediatek.com>, hupu <hupu.gm@gmail.com>,
- David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
- kernel-team@android.com
-Subject: Re: [RFC][PATCH] sched/ext: Avoid null ptr traversal when
- ->put_prev_task() is called with NULL next
-In-Reply-To: <20251206022218.1541878-1-jstultz@google.com>
-References: <20251206022218.1541878-1-jstultz@google.com>
+To: David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
+Cc: Chris Mason <clm@meta.com>,
+ sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+Subject: [PATCH sched_ext/for-6.19-fixes] sched_ext: Fix bypass depth leak on
+ scx_enable() failure
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Applied to sched_ext/for-6.19-fixes with a note.
+scx_enable() calls scx_bypass(true) to initialize in bypass mode and then
+scx_bypass(false) on success to exit. If scx_enable() fails during task
+initialization - e.g. scx_cgroup_init() or scx_init_task() returns an error -
+it jumps to err_disable while bypass is still active. scx_disable_workfn()
+then calls scx_bypass(true/false) for its own bypass, leaving the bypass depth
+at 1 instead of 0. This causes the system to remain permanently in bypass mode
+after a failed scx_enable().
 
-Thanks.
+Failures after task initialization is complete - e.g. scx_tryset_enable_state()
+at the end - already call scx_bypass(false) before reaching the error path and
+are not affected. This only affects a subset of failure modes.
 
+Fix it by tracking whether scx_enable() called scx_bypass(true) in a bool and
+having scx_disable_workfn() call an extra scx_bypass(false) to clear it. This
+is a temporary measure as the bypass depth will be moved into the sched
+instance, which will make this tracking unnecessary.
+
+Fixes: 8c2090c504e9 ("sched_ext: Initialize in bypass mode")
+Cc: stable@vger.kernel.org # v6.12+
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -41,6 +41,13 @@ static bool scx_init_task_enabled;
+ static bool scx_switching_all;
+ DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
+
++/*
++ * Tracks whether scx_enable() called scx_bypass(true). Used to balance bypass
++ * depth on enable failure. Will be removed when bypass depth is moved into the
++ * sched instance.
++ */
++static bool scx_bypassed_for_enable;
++
+ static atomic_long_t scx_nr_rejected = ATOMIC_LONG_INIT(0);
+ static atomic_long_t scx_hotplug_seq = ATOMIC_LONG_INIT(0);
+
+@@ -4318,6 +4325,11 @@ static void scx_disable_workfn(struct kt
+ 	scx_dsp_max_batch = 0;
+ 	free_kick_syncs();
+
++	if (scx_bypassed_for_enable) {
++		scx_bypassed_for_enable = false;
++		scx_bypass(false);
++	}
++
+ 	mutex_unlock(&scx_enable_mutex);
+
+ 	WARN_ON_ONCE(scx_set_enable_state(SCX_DISABLED) != SCX_DISABLING);
+@@ -4970,6 +4982,7 @@ static int scx_enable(struct sched_ext_o
+ 	 * Init in bypass mode to guarantee forward progress.
+ 	 */
+ 	scx_bypass(true);
++	scx_bypassed_for_enable = true;
+
+ 	for (i = SCX_OPI_NORMAL_BEGIN; i < SCX_OPI_NORMAL_END; i++)
+ 		if (((void (**)(void))ops)[i])
+@@ -5067,6 +5080,7 @@ static int scx_enable(struct sched_ext_o
+ 	scx_task_iter_stop(&sti);
+ 	percpu_up_write(&scx_fork_rwsem);
+
++	scx_bypassed_for_enable = false;
+ 	scx_bypass(false);
+
+ 	if (!scx_tryset_enable_state(SCX_ENABLED, SCX_ENABLING)) {
 --
 tejun
