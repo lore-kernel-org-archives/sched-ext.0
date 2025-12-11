@@ -1,119 +1,122 @@
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4381E304980
-	for <sched-ext@lists.linux.dev>; Thu, 11 Dec 2025 14:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D912C15AB
+	for <sched-ext@lists.linux.dev>; Thu, 11 Dec 2025 15:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765463048; cv=none; b=L5O3YNWOIOSDPm5H/1l8XCdK9CDxAZlzcxtja3EAX2nMOaCJU9nvWr1ChvkzG3IKhly1yR0JvicdrdfWxnF+j8pbom33x8iR+8M5P79TvHtFqIP8VfLmAUMzEjAnZzXe2rkKniVENMyrqyPE6gqfXj1XcwAAQM2/3eM2bjf2jZE=
+	t=1765468508; cv=none; b=ElJNLcM7uTJWv//ifVmSHNu5X+c8ctGypf0FomKDugNAYNMfkXcbF6AQskfMgXDUfXpz6hstA1QA4NPww+iatHwCMQ0889CgaoORvU5/st1Vrdk0VMaSVBQ5IUDJSzuhjkiHO8i6G0ray1CzVPRUgS7Fb/oi8rcCB7QGzzkSfL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765463048; c=relaxed/simple;
-	bh=e1XHdI3f932TjkztfbxisSyCsKvisyhKnU3z5nE3GGE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=rLzQexwwetmTkgJjGEyfUCBvSR6So5S/pB6+0GVcEr2L9ZbXVCZCI4fF/lFRNzbvuCnsMXFClW6AErL3AJas6O/jdjSN+AsKquxuxV3HUogQlokcb7lAjyTIrWGFKe/FGU5BXAgMvYzWgN0rs2fF+gsdwzp1l5JkAUu61Ij/SQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CUyupJua; arc=none smtp.client-ip=209.85.128.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1765468508; c=relaxed/simple;
+	bh=fwJlp95bBAG7kWYEepDiexqrENbAswzXKepyzd027WM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VlU+21F5SH82JO6joPmMboVfMnKux9EBpxeUodItTD6Wf5H1Ctg/JZc1mJdDqPaP7R9N2Li/ZapKOLxOjFioOC2u19C2c5tuW5JzxJE36zOJd+XXdFc4KTy2hbh22qvoWoLcelikvPsjvgdEPKTxBkftXwUc0ld8CL2sFQryl0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NI8ifwo3; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CUyupJua"
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-47921784b97so1111995e9.0
-        for <sched-ext@lists.linux.dev>; Thu, 11 Dec 2025 06:24:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NI8ifwo3"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-7c52fa75cd3so193722a34.3
+        for <sched-ext@lists.linux.dev>; Thu, 11 Dec 2025 07:55:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1765463045; x=1766067845; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hGf8tytkhcfK83uzRhmu6L15V1EuZ+Gq3Gzcf0Y+UOw=;
-        b=CUyupJuabD6iZF/j1CUhjcdwQG6jez2ns68XlEbAzP3+vaDvkyqmiFoM40b4Yj2IzD
-         PX+B+tV+0QzvgCBfKVSI/ELYb79QU8WE+aTL83acSeO144+YItAUQMHKLZJ1N4qX5XEe
-         SZHXhe0Eldo2EN5+QZDLDFKqU9BkmDOAEnZHygWkaM8DsXjfivhqgANEvoSjWDPr/eS6
-         tXFcA0dEutSiSYu13L8khg4QfqhB3OtnZH35y/rCTpa4kZP9efli0iXGbGJ9K8rsbi+n
-         J7dtVCv4nrAEbR46ZH72AgxMa8c0GanT+6vTNhxfGI+MvI3hEn5bhTOz6nJKVPElbU5n
-         GD5w==
+        d=gmail.com; s=20230601; t=1765468504; x=1766073304; darn=lists.linux.dev;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ie7TKY4J0xZBKToVZGBoQ4XnO54sW4jqYAqWGv0+/io=;
+        b=NI8ifwo3eR+AbeTHmKShjnTe6WDBgvtl5sSfOscgOY7zcn13nbxQvqPoyxt+Z6sGQt
+         BHUhLc06nhFXlK0mINyAB8qDpzR+qsYi89Y4dudR/T5HLpLb7YQFVMhvsg1RSZgANb5q
+         QppYogIDxVI7hY5rjaU9/2TKYbSXB+JjkXoVRPiuvMv1OIE+hjXDYUayqwJdD6xwH3JR
+         kdU+zudUKlMNVzw1TJPMYKWpkHHKNa4KT6FwkZROuiwNB+LAERGi0bPhYVjU+zNO50Wu
+         EUZq/fNVl43Tvi+6f3ZdVdW875bfdWarvr82HBvHMiCrkYxV/X+uPZ2mAwawyyEnhdVG
+         wpxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765463045; x=1766067845;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hGf8tytkhcfK83uzRhmu6L15V1EuZ+Gq3Gzcf0Y+UOw=;
-        b=ETA6BFRGZg4pOVhgSZ8qlAizs63Moq2RLlOgEayGYSVyz7U+LWhNYAsOtscMI0kZk/
-         UhAhsSrpONR7u+jxSjlnfHqeMQzRKFGoYuofMk7Hdo+gApLTZvLSPR/yn9qgnx1N616J
-         RXQo0n7pf3Bb/2V8KSB54rLDyDfwDbrO3pFkRhGqpvElUlkYav5vbkCxX4BNqTr6B3gv
-         NwRWJnaHlOw1OsQgR1InYyZjfSeFSISyVeGBD2GSohTIvLDclgB9oSYKeklDBhLkcJ/n
-         gljdjryD6nGvo2bSZAJvjho6OqyYukThLCwwdhMLF7QrZF4u6S2RUKDS6q+ugwAsrJE0
-         mI2g==
-X-Forwarded-Encrypted: i=1; AJvYcCX4uDGE2yAfml2o+fINBFtOp5c4IJw1LqnMLTu84ShGUp4HAgyN2aPOa+xoFJNAkaDp0XFocaE3kKg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzV+zLsvyDyALw8NtscchAIdqegumqTAzoXlo3qH/OoZrk5WimA
-	5gAJFY7gv972jq8m6sd5ma4qwAdVtZYqgo99n8tJrJrWwzMsL176VMiroRa/+ui8A0hwpqk3mea
-	6nxt3pFAjxtks8A==
-X-Google-Smtp-Source: AGHT+IHhEGxqJ0vj402qs74xX1FoqzH/A2sThKIHEVsgGHDvQN9bgz38z6DTsIhRjbqIENF9nS1kve9ss0axzg==
-X-Received: from wmbgx1.prod.google.com ([2002:a05:600c:8581:b0:477:9856:8f53])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:310d:b0:479:3a88:de5f with SMTP id 5b1f17b1804b1-47a8385903emr51674065e9.36.1765463045634;
- Thu, 11 Dec 2025 06:24:05 -0800 (PST)
-Date: Thu, 11 Dec 2025 14:24:04 +0000
-In-Reply-To: <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
+        d=1e100.net; s=20230601; t=1765468504; x=1766073304;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ie7TKY4J0xZBKToVZGBoQ4XnO54sW4jqYAqWGv0+/io=;
+        b=lvTgWsXhz4NHAdXcPERo9RwlOirLmHabV5GYEnjC480o8r+PP0+0CN+ZJGTIyQwQkd
+         Te57QGPsrIFYxgHgreAbH611K6FOkebnof7CWhnrggO6U6mW1ibsMOglu9bH1B16xhSF
+         p8RAWnjTsAGKHxrDN8s4kj5UmJtdYA+AYcMJob0kazIx/qpuryeXdyLGgUFXoHbT7y7C
+         9xIwuBVmEElGEARrktUHyI602NQ9b7N8v00aWFtjjN4pmP2f9do+n3qJ8208FKQn+z5S
+         qRoKd7W6JMmhu7p2fmaYzfOXle6yQnYnd1ZGnX+1+bjhNiunrQAQ8MouqZuoW6B+cvhu
+         nQJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXPfviCWYk8sc9L61w1MQ0LJ4A1kFcJ2yFHjwXYhauFJZtw7aTQ2uAWSdsarIYGNTf0wwe6Qg1dhq4=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyy45br0I5MP/z1iNHRj8IIFeIxKgg7SHH6mkojcEPmGAte3cDI
+	UuRrYqBDHMVP9hOTGsdSp6004+XC8SwmBlfxrkViHsU/CsBpkZqyTueOjesCxx86ii1+FvEDH8a
+	xcSUG7X4l6nZ1qpfBA6vQ38fg/bqIf7c=
+X-Gm-Gg: AY/fxX6ibFLJYf+f87h+niIfEGMRO//V0wxIU3hjKaKyeZyNYSIzsV/waZg8DO0vxs4
+	hIv1DwowfWZsXBLNfIgwxE5egLRlXZBwYTDWzUcn7vvxPe5XiYK455rmN+IKdgJUbMRiK9B1NdC
+	vtovaEgp5qrG4dRVgzeEyS4kc49Lbb4tR1ltcfSJNP0DH+5h3ofM0h2BfcJ0sA047CgJaK7V5u2
+	f/ZFi0MzdZ5XZs+grLGy6YlsHLsSOn2osNbe+g5r6XMikrAlyjooQsh3+6dETJfBI8MtpILEEwk
+	UEWEvpcPCcSeD65JxU84guNNpg==
+X-Google-Smtp-Source: AGHT+IHXmInc6hNUIZUoLpP+BYGgYAGze6nb2R2ueRO5VxDEQRxgtOjiPMFdP1lK2Otb1LgPycnughbDIgBoXGBKCXE=
+X-Received: by 2002:a05:6808:1490:b0:439:af2f:d1d5 with SMTP id
+ 5614622812f47-455866d189amr3237813b6e.39.1765468504472; Thu, 11 Dec 2025
+ 07:55:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20251025001849.1915635-1-tj@kernel.org> <aP-3vOtH9Dyg_R9w@slm.duckdns.org>
- <7e9b27d70e31c243da3ce77e622b0af5@kernel.org>
-X-Mailer: aerc 0.20.1
-Message-ID: <DEVGF29ONM1A.CCTFEV5OZI9D@google.com>
-Subject: Re: [PATCH v3 3/3] sched_ext: Allow scx_bpf_reenqueue_local() to be
- called from anywhere
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Andrea Righi <andrea.righi@linux.dev>, Changwoo Min <changwoo@igalia.com>
-Cc: <linux-kernel@vger.kernel.org>, <sched-ext@lists.linux.dev>, 
-	Peter Zijlstra <peterz@infradead.org>, Wen-Fang Liu <liuwenfang@honor.com>
+MIME-Version: 1.0
+From: Donald Hunter <donald.hunter@gmail.com>
+Date: Thu, 11 Dec 2025 15:54:53 +0000
+X-Gm-Features: AQt7F2ougg8Kbtn1zopP4MM0jMFAvN_Q8zACcGkXN_X9ACZRAZQLHfVWaA3hLE0
+Message-ID: <CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com>
+Subject: Concerns with em.yaml YNL spec
+To: Changwoo Min <changwoo@igalia.com>, Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org, 
+	sched-ext@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>, 
+	Network Development <netdev@vger.kernel.org>, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Tejun,
+Hi,
 
-I think with the proposed implementation, using scx_bpf_reenqueue_local()
-from arbitrary contexts can have highly non-intuitive effects.
+I just spotted the new em.yaml YNL spec that got merged in
+bd26631ccdfd ("PM: EM: Add em.yaml and autogen files") as part of [1]
+because it introduced new yamllint reports:
 
-For example, consider ops.enqueue() for a hypothetical userspace scheduler:
+make -C tools/net/ynl/ lint
+make: Entering directory '/home/donaldh/net-next/tools/net/ynl'
+yamllint ../../../Documentation/netlink/specs
+../../../Documentation/netlink/specs/em.yaml
+  3:1       warning  missing document start "---"  (document-start)
+  107:13    error    wrong indentation: expected 10 but found 12  (indentation)
 
-void BPF_STRUCT_OPS(example_enqueue, struct task_struct *p, u64 enq_flags)
-{
-	if (p->pid == user_scheduler_pid()) {
-		/*
-		 * Remove existing tasks from the local DSQ so that
-		 * the userspace scheduler can schedule different tasks
-		 * before them.
-		 */
-		scx_bpf_reenqueue_local();
-		/*
-		 * Dispatch the user scheduler directly to the local DSQ.
-		 */
-		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
-	}
-	...
-}
+I guess the patch series was never cced to netdev or the YNL
+maintainers so this is my first opportunity to review it.
 
-I'm not arguing this is the way it should be written, but AFAIK it's perfectly
-legal.
+Other than the lint messages, there are a few concerns with the
+content of the spec:
 
-Since we're doing a direct dispatch, the user scheduler task will be
-inserted into the dispatch queue in enable_task_scx(), without dropping the rq
-lock between example_enqueue() and the insertion, which means reenq_local()
-will run afterwards (since it's deferred using irq_work), removing all tasks
-from the DSQ, including the userspace scheduler.
+- pds, pd and ps might be meaningful to energy model experts but they
+are pretty meaningless to the rest of us. I see they are spelled out
+in the energy model header file so it would be better to use
+perf-domain, perf-table and perf-state here.
 
-A similar problem arises even if we don't do direct dispatch and drop the rq
-lock after example_enqueue(): since dispatching and reenq_local() are deferred
-using different irq_work entries, and irq_work_run() processes entries from
-newest to oldest, dispatching will be handled before reenq_local(), yielding
-the same result.
+- I think the spec could have been called energy-model.yaml and the
+family called "energy-model" instead of "em".
 
-The user may be unaware of this behavior (it's not mentioned anywhere) and
-expect the reenqueue to happen before dispatching the new task.
+- the get-pds should probably be both do and dump which would give
+multi responses without the need for the pds attribute set (unless I'm
+missing something).
 
-I think at the very least we should make users aware of this in the comment
-for scx_bpf_reenqueue_local___v2().
+- there are 2 flags attributes that are bare u64 which should have
+flags definitions in the YNL. Have a look at e.g. netdev.yaml to see
+examples of flags definitions.
 
-Best,
-Kuba
+- the cpus attribute is a string which would appear to be a "%*pb"
+stringification of a bitmap. That's not very consumable for a UAPI and
+should probably use netlink bitmask or an array of cpu numbers or
+something.
+
+- there are no doc strings for any of the attributes. It would be
+great to do better for new YNL specs, esp. since there is better
+information in energy_model.h
+
+Given that netlink is UAPI, I think we need to address these issues
+before v6.19 gets released.
+
+Thanks,
+Donald Hunter.
+
+[1] https://lore.kernel.org/all/20251020220914.320832-4-changwoo@igalia.com/
