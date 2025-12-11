@@ -1,70 +1,61 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372A9266B6B;
-	Thu, 11 Dec 2025 17:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91230173;
+	Thu, 11 Dec 2025 22:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765475242; cv=none; b=lqsfZp5vFu3kaypre1vQnZ3vd6HETw+K4wDQNm7mx1fiEn9ZmZ14iu97OpwIPOgztWOJ/vhtk6QnmA1Ic3koUfFm3tJkXsFY+WcuJGJaKd+NLfHSaery9Xzg/H9yx3zTEUFPpmslhuzICDwVCx1RS6TVUK/Qre7L6yDgP5saRTs=
+	t=1765493291; cv=none; b=Ewmkh7YfG/OYhEBIEIQIna/+EnOPuxu9cuCcIg1yaDfn0WCCzbDzbj4t+W2rPDMF1nMKokS12mpJInGA8EvuQ65xmXIUDeH1Y/50irlSRzS7Jlsk691H4qCLPgKYyeTYhobpVcWy+YqX6rHSNa7LSjHXacQU+8LUMOquidBbSZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765475242; c=relaxed/simple;
-	bh=6flwxWfNNvYMrc/WLrBKbuzI9j7O6XiXgrcAl/2S80Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=olValu9WFfAX//AyqUxjD0TbkigevrQ7hXk9t2N+Tf0stkwxONLEJ7CrzVOSkonX/3Y26p/0iKZBJgzQLD8vqA8owfV1WJWSSfitA/llYxiiao317nPkcO7o1jYIWRmxj65omGbHw2Ddy36XTo4p0hXWvDVqNRNrMMNJ4uv/Zv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=bsWeeSFS; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1765493291; c=relaxed/simple;
+	bh=n1Zsol2d+/ExJuLPhBabWaN2RrF0E39ruLFZHD3YEBc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cGDoCXjtQz5jPsNAriRRlTo+CdD6cOB01F6kX/dngcxa6PRtbxUQJXqGzLGX9dnAmL0t3y8fIIfUmaFLvuIl86vfKFOfu6k/WP4BgPHDaxY2yslh1diAR1qQphiWKfc9x9JJt94oHzJIq2L1AsdAYH3cYe8YDgAmN1jYDkBrpGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ckjBOjS5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="bsWeeSFS"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=XUkjzl23OkQ3deMTipBJkV5D9W9M+dPdbSMNcpDkOMo=; b=bsWeeSFSVS4kI3qfn9XJviBh1k
-	ZYamqnYuJOFeuNnAcvhe3WmwEUMh0JgFjScb1ez1bX819jprM+UkbvxNMYdRS9LpveXnymSgKDoJa
-	6FvGrPURcBlCXi5SrPn7OFmdlfN7drUH2R+cl+HbdcYu0vD+T7KGYPQMg1rkoUEgKnzk=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vTkl2-00GfYR-Ls; Thu, 11 Dec 2025 18:47:16 +0100
-Date: Thu, 11 Dec 2025 18:47:16 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Donald Hunter <donald.hunter@gmail.com>
-Cc: Changwoo Min <changwoo@igalia.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	linux-pm@vger.kernel.org, sched-ext@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Network Development <netdev@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Re: Concerns with em.yaml YNL spec
-Message-ID: <8a0dbc9d-0ed4-4a4c-8b5d-5779d07761a2@lunn.ch>
-References: <CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com>
- <fc7dede0-30a4-4b37-9d4c-af9e67e762c7@lunn.ch>
- <CAD4GDZxYVwzxHBRnpG1RnkaD3wPW+-GUozhBg7hzO-_3X_PPpA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ckjBOjS5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF60AC4CEF7;
+	Thu, 11 Dec 2025 22:48:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765493291;
+	bh=n1Zsol2d+/ExJuLPhBabWaN2RrF0E39ruLFZHD3YEBc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ckjBOjS5cpFHi3rLRJTfc7ZFQtKeU1e+dO06Z1OU+icrCuT+fftBY249zhNDNOuC2
+	 omAqaHrQ4Tt0nR46MyxXQQUbwMeUHoyf7Hv986NNDmJb9E92fitr/ruIamfVDX1elc
+	 fn9dabAsZ8vPuxQeDLJTdKMX5b/HiKhobQmyAPOVcTBW/2nJjk0qq7qrr55rS98Dc2
+	 KG4z6I5Dh+VxAiPrYJn12KFmXQzeVMv53llsAAAbGhXgS8GJrzGj2JKe2t+BxE7PyT
+	 fFE5ufzJnmA9VvUUbdVUxgmczcOF3QP+pKq0sGCyBAHv91UHbF0YjY5buasW4Eg2Ju
+	 CxQY7gNnmb+kQ==
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	David Vernet <void@manifault.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-6.19-fixes] sched_ext: Fix missing post-enqueue handling in move_local_task_to_local_dsq()
+Date: Thu, 11 Dec 2025 12:48:07 -1000
+Message-ID: <20251211224809.3383633-1-tj@kernel.org>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD4GDZxYVwzxHBRnpG1RnkaD3wPW+-GUozhBg7hzO-_3X_PPpA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-> It is covered by the Documentation/netlink/ entry:
-> 
-> ./scripts/get_maintainer.pl Documentation/netlink/specs/em.yaml
-> Lukasz Luba <lukasz.luba@arm.com> (maintainer:ENERGY MODEL)
-> "Rafael J. Wysocki" <rafael@kernel.org> (maintainer:ENERGY MODEL)
-> Donald Hunter <donald.hunter@gmail.com> (maintainer:YAML NETLINK (YNL))
-> Jakub Kicinski <kuba@kernel.org> (maintainer:YAML NETLINK (YNL))
+Hello,
 
-Yep. So it should of gone flying passed on the netdev list.
+move_local_task_to_local_dsq() was missing post-enqueue handling which
+matters now that scx_bpf_dsq_move() can be called while the CPU is busy.
 
-But it did not:
+ 0001-sched_ext-Factor-out-local_dsq_post_enq-from-dispatc.patch
+ 0002-sched_ext-Fix-missing-post-enqueue-handling-in-move_.patch
 
-https://lore.kernel.org/all/20251014001055.772422-4-changwoo@igalia.com/
+diffstat:
+ kernel/sched/ext.c | 44 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 15 deletions(-)
 
-Very little of what get_maintainers suggest should be in Cc: is
-actually in Cc: :-(
-
-	Andrew
+--
+tejun
