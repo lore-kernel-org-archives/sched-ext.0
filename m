@@ -1,63 +1,62 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012018.outbound.protection.outlook.com [52.101.53.18])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012034.outbound.protection.outlook.com [52.101.48.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E947A1DDC1B
-	for <sched-ext@lists.linux.dev>; Thu, 11 Dec 2025 23:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B97F27703A
+	for <sched-ext@lists.linux.dev>; Thu, 11 Dec 2025 23:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.34
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765495658; cv=fail; b=nQnnTATOH7933W77BtB4X8oNs9AJ2GX/wf+YjCbCHN/ScNxtMaxN59CnUrNQMFhCK9Jx6qiTIc0TIYVp72s7Y+t9eaAIrXDSBHQyS0fY43FKPFO+GEo87+rGAuDwyBbsx2/MSGferTudJLcdkFGIn7SkmhQwHE/HsaYtGHSP3do=
+	t=1765495780; cv=fail; b=rOxigKZ7fCvSnJsI1NFA9HZ7C26Aq45QzuSOfgb21qf0tFmpqCJ4OF/myFeVi5PQXZoPEp0EccKzGqu97W6TX7fghBmHCyBazeGoxdTXJTvlGSnt0Cz30e23KCepR6wn+kpTh/SFw2viXF1/+gxi29zw16xPxxA3iUMnx5BameA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765495658; c=relaxed/simple;
-	bh=V8KFjRMbnYlvCvaNfOLfw5T9IrRYAVwOqgLsg8M/TdM=;
+	s=arc-20240116; t=1765495780; c=relaxed/simple;
+	bh=CEMLPbtRSeeC7DI2kYLkoxzh5eYGVUDhVNYCkB1RtMY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Ig6fH4DAdQ1FVWgIHnlPsiBmx+e+A/JFS9kAL3JR6ORaJGT6uteLNkMazYp1YZh+U1KdjJF0IY/o+LamZCMski31ofuxu+KN3QkcTXLwoS81wMxn24ObGv3mVVuvAiYRm4n+d7A0Ten2XsCAZU46Wyen1X/Dw8CA8ZGpchbQRg0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=GNc/FNdC; arc=fail smtp.client-ip=52.101.53.18
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ZVbWYrGbJjv2UEr9e5GJUp0ROzQiDxpt6seRD5BwWYvkqtGoceZfqRMnXGJmbhgCjGjieibiS3EJSiDrSgc6fpq78YQy7UL1+e08P1gyhQnfHV49ZU/4h7sll9Vw7tN+wlsEwotMaJ4Y93ptzAxpFDRUbOauuNp1Bnl0SgM9E0s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=RWmdaTWH; arc=fail smtp.client-ip=52.101.48.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="GNc/FNdC"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="RWmdaTWH"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=guoapJdwFkrc3u8GHP1l7gX90pxingRb8TXBJ8qeSKCPrZ+zKCB5pdH8Z5PNz4uA2kcBba0UrxqY/YIfFr3TapGbeDrXMag60oH3yM10+x7RtN/sRYu30zurIYJ6AS5OYiEcY/EvD3Q4Ie3qXxggy3XEDbiA4iKJh9tLzayT7vBs4R7fBFBbKOyhISDnpy+mQvKh6qEHpFOc4c+qaDgeM6TyWofC9O2CBOlYvC6FbnE3OgALPxzM+kXMOi/1Eq0+uGigoWeYife89NaOuQ00gVrFpZVOZz5Z9CO4nCkuT8PY9n2JNF7yd8GnSZLlt/1aa1w/YCQ/xRNY+G4B1tznjA==
+ b=Z+7DYzrm7yKzwuh0NMMq+MKQPEqWET7mSkxyNLGGxRXR80Hb3vqXvfW1g9Gw8dUHBoj81dI8iks1NKXDkpaylSIj8oINtJjNnExw4MFtNsAMvtQbWPDlUaqJqGklsckMTIZteTg1lCUFLBZBQ7JrJGJXe+ho/vpQMX23ALAbd7D3eT93xPkk1WROow+4Fm8iCjCCM6vMZt0KX4vCwON3pHyaSaRH6FlqzjwpVP4xW02ot6bT32G9VikHAthJ/EODusfinyMSX+YYmUSTPfffeB6cVKYNbNIVp60A5LGchkoWW2x6Sk7dF689bNzsL4QYwVaZpinEzAT4T9ROuC9AJA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/2FsDc3telb+tMqfI2p0GzNnyidTAbb5shz4hnHykcQ=;
- b=NW7BiHrp6ps8KstqtwIxEuUFyZr0b7rRJXZQfBoSCt6CiSmQsZ2PsOyqwGHjsmQRty/0H/CHJLZ6du0q34rSKbCaE/tAxjMjxyyxT8VFgT6Q42FyO3A/4xqVFUxdvASOQk8KohSXHyUEB07WeDpvFrdkeoLNHPztYC7u52fJoj5mePMJs8adjbLH7/lneeuCtzD0g5ajlwRP6wV/0q25ZCLrU9YuWziGFUokxFZPjo3k3eS7jiBzqwwCat89nvenn2EBpf9uA0v5/FmQdAyML6wqYA7cJISuwEKr+XlOU//o8lZ5U6AMLmZ+cHGwsL9nR7/EttoueGcAHTzUGzPGiQ==
+ bh=xi71kMpXE3++nsmmfkSWeWgarktMX3MD82QqilymL80=;
+ b=NpjNovOcYmgspkICKhhqQKd4Mh4+ntTjnTIhQ7yVjLq8grN8xbLJRMZ9XWPFowaXqxhl9J4fqry/K/tEx+qeH5WaNzJZiMs4mqhenoHF+BoWpoiaqERtCUYrwA7+qqIw2uuMqcZpgISuFGxEILYARn5wghSTKSACeluLzl20AtSPkrYd9FO470+/jCH43Viu+2s2OdAdZ4KoQ6mNPv9Ua3+DCzwQ92J6v1SHkoqtrvLpkL/yR8NfjSFsQDZtKMCUikThU8tO5r65KsM87XviWU/XhoulYWLlUeBh8/L42tc4CwGjHuVzg+Svy78TAIFRMwGkT2a6G1uCF1KIoR+5Wg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/2FsDc3telb+tMqfI2p0GzNnyidTAbb5shz4hnHykcQ=;
- b=GNc/FNdCdU22YTvhqQSj01nTZcOAIUVnB+v9ehi/uE5eIpl27ay0AORjJFCY4ED67eoKYKztRw80ju6aEo0iCyvl/x1VpsFSg+tNl0QIPR3DVD8xSKcsPSDFm+Rch9CE8bNRi7JnopWduLfENsps+VrtCwsoTyENrJ4J4sJoN3SM/ja76wicBn206GdYcsPgGUum/4T1rd11wTUANhWEvNu4DfrAQPcxQdWVleqBYxLdioeY3Z8N9bK/GQgWeNl6/Y1Iwo19uSa35PSd484cvjGTLi71W1UGYHc49SLLY2szuac7K6M+SUd1e8wXSf7lLUxIQT/lYLB1FSBPIa8cLQ==
+ bh=xi71kMpXE3++nsmmfkSWeWgarktMX3MD82QqilymL80=;
+ b=RWmdaTWHqUpUZusADF6XjyxyRl80kYt5bz7rrJH4Jc93dYbeZCkL2Vwa2Ki+ZX9YazT3CYZnTo7e1FxK2nhiGsvIqSJBc/g4TRRCa5aXhDerBdumaXql/HijHV7piHs7942nHKkWdukMNvas7DR0cdmcW0GJnJ3PAnKTpcxCdksqGPXP1FxQLntJDpJvSBxO3+o9iRAIIZQYA5Lvyh6c2sRO8h6oDGflOV6wOyFh1xyBh54EegvVrO50RcC0N4yzd+Z7XuR2BQU43rgO9nQo5Tp02cDuMqTlvQp0hivcZIv3n9ktU98q8JyzFIH4LSAUqA1rn7xDVB0L0rLzXWW8qQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DS2PR12MB9615.namprd12.prod.outlook.com (2603:10b6:8:275::18)
  by LV9PR12MB9758.namprd12.prod.outlook.com (2603:10b6:408:2bd::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.9; Thu, 11 Dec
- 2025 23:27:34 +0000
+ 2025 23:29:37 +0000
 Received: from DS2PR12MB9615.namprd12.prod.outlook.com
  ([fe80::ae0:e4b5:9c68:2ea4]) by DS2PR12MB9615.namprd12.prod.outlook.com
  ([fe80::ae0:e4b5:9c68:2ea4%5]) with mapi id 15.20.9412.005; Thu, 11 Dec 2025
- 23:27:34 +0000
-Date: Fri, 12 Dec 2025 00:27:28 +0100
+ 23:29:37 +0000
+Date: Fri, 12 Dec 2025 00:29:31 +0100
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: Changwoo Min <changwoo@igalia.com>, David Vernet <void@manifault.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 2/2] sched_ext: Fix missing post-enqueue handling in
- move_local_task_to_local_dsq()
-Message-ID: <aTtTYGJ6XxDpbmob@gpd4>
+Subject: Re: [PATCHSET sched_ext/for-6.19-fixes] sched_ext: Fix missing
+ post-enqueue handling in move_local_task_to_local_dsq()
+Message-ID: <aTtT22FI5MfSa_xf@gpd4>
 References: <20251211224809.3383633-1-tj@kernel.org>
- <20251211224809.3383633-3-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251211224809.3383633-3-tj@kernel.org>
-X-ClientProxiedBy: TYCP286CA0274.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:3c9::10) To DS2PR12MB9615.namprd12.prod.outlook.com
+In-Reply-To: <20251211224809.3383633-1-tj@kernel.org>
+X-ClientProxiedBy: TYCP286CA0143.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:31b::19) To DS2PR12MB9615.namprd12.prod.outlook.com
  (2603:10b6:8:275::18)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,133 +66,103 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DS2PR12MB9615:EE_|LV9PR12MB9758:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb4cf605-876e-4eb1-d9d1-08de390cdcc6
+X-MS-Office365-Filtering-Correlation-Id: ab01f019-6338-4bb0-4876-08de390d2622
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|376014|366016|1800799024|7053199007;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|10070799003|376014|366016|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?iTbOJTMN51jMjxtyqwdjC7bWaqcYJicFh4Ze30fNFk8EK0yjWGPQsvDrKb8B?=
- =?us-ascii?Q?q8gOKnsU6ZG7S0av6aV+mq8e6aR4LMc1baCdk9kzLr1ijgYObV+ssOdV3uuJ?=
- =?us-ascii?Q?oaAJc1hOBsQXM+hKvxqLWz2uhHLWCvf1/4PtzW5oZWmCR5anEStBhGtcpALd?=
- =?us-ascii?Q?iX6QAS9mcKfUFDJKrYL9hvTCT9hCmfpTt26Bx8vCV9/ZLuWT68BKT4oY/xQP?=
- =?us-ascii?Q?Rom5kqkH2r4GWIjn94nc/7dcQ9PytiGGTiMAaa1JdjgZBuUXlwD4GFCtxiVN?=
- =?us-ascii?Q?PufE+oNg3AFmLuPCTd+mT3jcu4dTaTLvN1Squ+NY15aQSj+WWA6/DpuQSp3U?=
- =?us-ascii?Q?4kwiQEvCLzKRolgOhCyqiI58zDaNZshiMPVHBUtv8WBBCyHVx88gbGCr4vGP?=
- =?us-ascii?Q?ustEpyc3dh14/uSv9QhzVfTYldaH2aRYh7CslUYyMnVLP96YK4CMVUC4I+ei?=
- =?us-ascii?Q?ZjY6HtwLLWUiEVD2dP2dWc3bQ2wLBNZMGy4M+gZmM/LdTN9AZ/4ZzT9HGSOh?=
- =?us-ascii?Q?YF3Vutsbms4UdsOQcJPf9sABbWS9Bho1xCPiT/tnL5kQXbsPj0JEG6mRZkSe?=
- =?us-ascii?Q?d0mYI6Vbc7AyXGVkTagr1uhr5mMm/MFvQ3BxMcJ3UpoB9+NXOPAd02SUVTye?=
- =?us-ascii?Q?WNTfnq3XVCks66bw3yM5tiQrv18cVDNfEamZ15cpxk1pGVUOqYenz7r6NuvM?=
- =?us-ascii?Q?xley+jDin7els1prXsjckIZr8mEDccXq1H0mMFbG9da3FqDkHagSDGVPvl0Z?=
- =?us-ascii?Q?hD0UXo+aWZIbRqzGf0E6u1Q0vou/Lr8dvEblX/v7Upe+0/5hV2LcMn7aEwi7?=
- =?us-ascii?Q?WhG/PrX++fE0Ml2mhiM+qSkxvBBbIlKfHCoUhVHORhLOAEC2Kv0Nee5Bp89f?=
- =?us-ascii?Q?anzL+a96e53q9TCCfEXphtivI9JF7Z55LpnK1Qatrx6YQpdtChpgSZaKDx99?=
- =?us-ascii?Q?7LTf1rE3SET7bAUK/tL9Vo3Za0Jypi0V8QAnGTwvwtmbriDiCgipCjfFkDz5?=
- =?us-ascii?Q?ccnW3mSO/9TvJ0NBxvtOr1BqhVt8SUOFj2SH22KLFTHgrI5/L9rGHSC5DN9P?=
- =?us-ascii?Q?9P2RXy4WFXQsDClmujus0/HtXPnJQjKIs6nV1M6CVyIPbJWmU1dtCkKp71/K?=
- =?us-ascii?Q?7pLi+1sgUo74I2zECiXmOFPKxDr4gNbotQ5I+I9oUoHoENKAzPxvRrKkdOz5?=
- =?us-ascii?Q?6CtcOWsAprJbKArOSgiYpzo4WnJIGNeQIjnlwjPDCGq6UlaN8WtpcR09LUqG?=
- =?us-ascii?Q?pti2LxhXU5ElAiVzBQ+oOAe6dI/xfRgDPIVpYtaz3l3bEMGHtV5UjF27ijhm?=
- =?us-ascii?Q?5gLegD7YbR1Se3BO7TWvIVbGSXvHaMYrSAhcQX/4v6x8uf9bpHml9iiA5jvW?=
- =?us-ascii?Q?9ODLIerOul/ZmQu4zPXBwdgvYj3EMphUgWkXwQEx5Og3noy13GCYrnP3WgN+?=
- =?us-ascii?Q?z+mgvJYvM209rI+kSOpLGAv6o6yPG677?=
+	=?us-ascii?Q?B+Fe+p1+Afwey9q4Vn8aWMKbtn9N/AEbd/7yAmqKrcHx6NPmy3aZnEZjY9Gl?=
+ =?us-ascii?Q?GaAYxHcd0hOpBObTySgvrO7pGvJXSo0JvxhPyGfJuSQWLxVYF5ZgHzXDSyDx?=
+ =?us-ascii?Q?QbxWpLVOaZISzZkPyRaOaiLAqAoB5EksjMHSBYIAHmWcsQCX0yOyjM6645RY?=
+ =?us-ascii?Q?dWU1uYcitK+Hf7z228XT7A9wk6v6M9SztDfq8wRIBDCiRywS79CQNsC5somv?=
+ =?us-ascii?Q?jpQzgRbegARQ55SZZ0pFUk+HnS/ZzcnFaWfyEOCpPhTKzDlhIB1LItUFW591?=
+ =?us-ascii?Q?qdfexB+gqMC/MXdM+5xiaT8sZv8RKtjoOExWB8OcvNizCBvsPLGXjChhosCg?=
+ =?us-ascii?Q?ZgP1iVELbzrJToxA82iXbkRrQR8IICJibEHKZ+0UbpxWtZ8rOkPmGlN7hOL2?=
+ =?us-ascii?Q?n+lP0tddDSiETzlYGqw6/lUpXgrCiBKU5bzivKdCNB0stP9O/wmtTWkEv9vB?=
+ =?us-ascii?Q?WBgbvycNu3/b6iZfBfcg/ykA+WWFR+YZXDv2ZDNqC7iDV0xGyaz2VeoJcFJy?=
+ =?us-ascii?Q?BRdU6up+cyBPeLemFjE3vYXlF4ewSK0FcVbo8r6QswpS0bewunh5DFt08i3L?=
+ =?us-ascii?Q?UluxG3En7bZ2PHD85l3mCu/wjxZKhD3hrdadN1zNBzvMnky+uWc91XOjaT0W?=
+ =?us-ascii?Q?2wY6LfcrYwqWMFSou9o5puoFVrNrk0XjtCCj/rghyO6NJs1kaoZt+qeI+ZwH?=
+ =?us-ascii?Q?NWTUVTf010t5cFGltDnyzW+UG8aG9jaEBhdi3Hje37TFh9XEvjs2IAgIQpJN?=
+ =?us-ascii?Q?ryGqfgwUN13qBHTMLGi/byMzUT3UWJyvrFZV2II+CQQBiqf6cHQOZIbK4t9P?=
+ =?us-ascii?Q?mKR1it6jZyOofRH4np6UgzNBkIo3iabErwKR4qNLpVtsteDtdLnB2kZqs7Cl?=
+ =?us-ascii?Q?P4vobTkkfFxDkha5SiuIqsqDQxQ3bhVCPWw8GWp2eVf7b1zXzbca19OgVSlm?=
+ =?us-ascii?Q?VLpiOR5yE5vDAaTOK0YodZc4+71bff2Kf6MPT6icVzlQw2mSKMCZmO/HB3tK?=
+ =?us-ascii?Q?E4I5brBlsLlNOkLv4hkwyvJT35pjkwQxMMexsBKFOa2u4NZhVIhybHgm+9Ph?=
+ =?us-ascii?Q?tpOVwpyLDdvciG5vjhyoPXjVWY7x/7qp5JcphmNSJ753DdsBAw0RPTlaPunv?=
+ =?us-ascii?Q?T14ydjSlbCQglS0W4fZc5UamDoZrS/cFHX1xG101Br6tiLbWclSKJykxSWx+?=
+ =?us-ascii?Q?GgufnpS4vPYZ5J0zl33jLr9YGvGIV+rY0Tan8svlgHv/+C4rmQClKcuuPIZF?=
+ =?us-ascii?Q?AJbR4oOSPP1RwdVxrSK1vQ9sKXJaZADTi3YJBoiMsYfKEoch6vAp0b4CHbCN?=
+ =?us-ascii?Q?20XTUiGWG6iVURX+Rpbs+hGCAwj9HNHTcrP+s0x726z2mfhXWsbXCxbyBI4+?=
+ =?us-ascii?Q?Nvcp+OUkMzRUyTFz3eZRja4PIc8ccmeEJC2YXyZyvQbs0XgeovjQl/TtCqU4?=
+ =?us-ascii?Q?VECbOk0GwTMbCjPqPjN6MY5XcGeLDyfB?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS2PR12MB9615.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(376014)(366016)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS2PR12MB9615.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?XeNe80ytD6d+ZaoFRrCQFeY9jHee3NQE0/mlr69oPDHxpAVA/L0AUyC/4A+B?=
- =?us-ascii?Q?wg9DAtqNTPQXxugLkdYMEFtlQBY9E9CwIv8hqNjRNT91dpdv75dNbDkNtYSO?=
- =?us-ascii?Q?xbTZlP+PikzA/pX6Gf+iZ/JwRo13XdwzVuM5JpYGr+GJOL03ajnlQ0LbPTkY?=
- =?us-ascii?Q?HyFn9+td2k36a60s2IsS8uHHzm4i0iucfhvIZn8AGN9FIh5YI5GpfjT5zd2a?=
- =?us-ascii?Q?YZjwM6rP2q0Kr+ywU0WI9fjzSksknmKHrwdR/5o/+5C6OSK0yXtyQhC+1r8h?=
- =?us-ascii?Q?em/7yBDc9NNPmKis2uFI/zgi4xuda0z6eA13tS1EqoyAbKR+/MZK0m/EbMKd?=
- =?us-ascii?Q?vEBVGOjbX4493dHmObKhxYi5HIFfopeAX8t9ZTEy/M/j92gJ/dffOm69eCPv?=
- =?us-ascii?Q?V7KqfppCONIW8x3lk8bdvOk+uIzGi4Pzacreu2MfPGLnxORSqtYTb0l1sEH9?=
- =?us-ascii?Q?VuViLVmuK27qdYwsZx0d8Q4257Tm7WMYYyn6z4R0V35zAw3LouvOV0oZJ34w?=
- =?us-ascii?Q?3rBBmEQC7GmR3OvUBnuAwguny+wf5Xc8DIQgNvAzQurniw5oE9A5QMuil6gY?=
- =?us-ascii?Q?l6SBBG7zltL619dR+gMupXRlMTYLizQXbCrNGib6WThiteThjCBYjhLfrxvR?=
- =?us-ascii?Q?35CAB+p8qQGRQf6SqyaVHXI+w7JogZS9zD13fsUV8PJFZFcT8h9JRHqr1J7N?=
- =?us-ascii?Q?qw6sFM3jpvrEUE7bbv0KRctQN3o0X8cqBrj1hBJGZE/S/cXNnWvCvEGgvC74?=
- =?us-ascii?Q?C9yE0FdctdCyM9zoY0kXklwyb5ETEOsGmbeX/wZQO5cKHA1ipSdlTE7JKkae?=
- =?us-ascii?Q?zPeeQha/Y7wlTUAiHfNnig+VJFkw6kJPTiZDbN+Yw4jfDu0w5kVLfybxZ63X?=
- =?us-ascii?Q?wE3uRXPsk/HemnZy4TOR7bVfL2EtIG20H45y6wwtUf/CHVAfPsKKh9aoLiWN?=
- =?us-ascii?Q?EZMYUjVqQotBoaNVM8Gk8xFqFiox/GpkB9WZSvotiyBDIGhZRzEpkRw8tngQ?=
- =?us-ascii?Q?yGg8xUsziHP+5xPhKkZ0RCAM8ZD+rL0pkWT6qbQCUa4oqPH8fXkevpl8ZrTS?=
- =?us-ascii?Q?/NrOgyJJ/QlUyToaqMtt14pTaT0jh9r6ADHalvYEN9MLHpXsf0Lj153ChuhQ?=
- =?us-ascii?Q?nPD2++yWEWq/1cmgBNL4NwQ/ALH8j5ZZk4EYMNh6dlh/VLloBaHO1u6YdcZS?=
- =?us-ascii?Q?Hya6WZcV5nfyWl1MgAAQVarQqJZUjWHSeF8KtTGlYvhSw5UCCa57AZCFW3O/?=
- =?us-ascii?Q?Jold36vvBFEfKXf2gjadgB2TD5N9Mdb+79cMWCQfI6S8qMfh3cJo7gkbBOTe?=
- =?us-ascii?Q?iia56vL+o2wxzGYBnaLDdo9BlPQyOdykZ8NsFCBayN3DpJylj/v3zFd7QH5h?=
- =?us-ascii?Q?RKmqz+TjHkiS/hIFY+lvSpR01+NmfWftKD1Bm+e1wPy/Efar1N6yWal5WSp7?=
- =?us-ascii?Q?7uOuH30sZJgZ+rdEFmSA0QtistUuzZzAbNkbnqS0/xaOXr5/fcl8z102jiJG?=
- =?us-ascii?Q?X4CkreoP4tiHeIhYZfkw9CeihL+jOeXX5pBBdT9hFj047GH8bZuOzb1j2aCe?=
- =?us-ascii?Q?50JapRRR3IHnpiy8qHApWghefXpWDDNjaYpfOANxxap4CcJc4/W6E+YG9T47?=
- =?us-ascii?Q?6/0NYQ1koTmPl7OfWbGEuHxVqdIyJi0oVZzh2kWwm7to?=
+	=?us-ascii?Q?yzYWAaFCHufCTNSASGvLwQifA8R6TTSz1mNbXENdm1ul5fB0pwmcrHzzmXeG?=
+ =?us-ascii?Q?RLDH6dYckH9rzIxowCTyrBcX/3mg1gCb99TKIDIcs7kv0oHf3xPtabow6iny?=
+ =?us-ascii?Q?S7oD1Ut37a5HhGsNyIM0RHlG4WaTXcZigBJA7g/jcAvGX2sY5L1s8Ll41m5V?=
+ =?us-ascii?Q?oFwwqpS+6gFZGHxiBqDKgrUHadouJTkYChZiQH88lav2vNoZ9Z/JwKIbKOms?=
+ =?us-ascii?Q?I3nWb1yHeEfXOutS1ax42+cD2nLq/GCo1PInLiO1dwdnY0HYcsRppwYcajaZ?=
+ =?us-ascii?Q?KKkQ4LBiaqQLTIIMB6wV+xbAHhusywfu993OmcKYaim2+CAtsDX2iPG+hRFa?=
+ =?us-ascii?Q?PlCvEm51GXH5M6+iZJaX9bqWkTTWhmsvl00mKFY3oL3pUJWMMWJWlW9y/8CW?=
+ =?us-ascii?Q?zjBHQEQHtcQRlpnaEtShEIGTRBOcLIRB8rt09a2R2wb81OgbCIfcAYP6jLqK?=
+ =?us-ascii?Q?qQoK2eXialJrjbXZHWbbCeo1qo/ZkLYgVWjkB1R+rtgJWGPgPU6+1fjBepip?=
+ =?us-ascii?Q?53+SzxIBsWdhJWhXDjwYPYxU/OSohmS6bGTdCCK9kfqUL8rgBGTZxT9oVOWI?=
+ =?us-ascii?Q?iR0PBjwjNEghYMgNuaohUTB3lTyiUne2jqA+dSVFso6NHbDf5I9Gu3eoA0IC?=
+ =?us-ascii?Q?SzovIIb7NISry3oADzjuHD0qBBRtZcCHFd0Cnn4GYsIyO7GhiXbaZiiM/I8v?=
+ =?us-ascii?Q?KKz3xOVEzd5JfFwN3tGrOu3GqhyceUPKK6KvtAVmxtwksE6Rx2dQ/15dQPEX?=
+ =?us-ascii?Q?WojVF/bZEpDXKpOSvJ7YTvM/NetZcgmrjHc0qYML06i7RSb7tP8cH/Ig8oXr?=
+ =?us-ascii?Q?V7xxlyxho7AjaXE4fzbDAgIf44diTCsaf6EWrPrydn4VV3R+l5DEL6UJgiDo?=
+ =?us-ascii?Q?d2qB3S+LIj1K16z0D9rnj9//J+pzdjCQoWSqp8cvOabsZHOhBbsqoLfJl9gf?=
+ =?us-ascii?Q?XyOfuRfK5cOHEuMpRV6yDUhbDflDzIhRwHrJdDCu5ssEKzTmVMokFeWYryPw?=
+ =?us-ascii?Q?g+FN+CairMVMHP6pi4X8YzI+pmpnvwhqjAzIoJjlTCjiJUOKg1pevD/BGCx0?=
+ =?us-ascii?Q?DHFli5VNA4973SHR/l4fbIB3Gnb8Ya6lrB2tjVJ6NfBczbZzg9faN30taIba?=
+ =?us-ascii?Q?J6lryNMsrhSITBQ1i5aRTBqW8HDy1iQdoY4EnztjXXXkYrs8spCESoZD9WON?=
+ =?us-ascii?Q?Lb6SiUcrrWLs0bJH+kZA6vW5FINCstZf2oYP3+IxxZeDKoERYQ282FI3J6+v?=
+ =?us-ascii?Q?MOTQzJrhrHPqyOfodMpS0o5t9bD0ngXXEeeHbc7Y7kt+eU8k2XqhUt9NulEm?=
+ =?us-ascii?Q?4Wng2+MSqGaX+LVV7aeTJyKkvdvLi1px3iDc1uTi9QUmpGhwEtggXGlFXXin?=
+ =?us-ascii?Q?Yy+SkZFCnK9Z16gptc3t94FMq3GzozIA37BjL1aY4V2wPYCGlX29OAhFAYVf?=
+ =?us-ascii?Q?cgVxMpXNlbI2TLT4S3xakS+vcYOhLSJoVIrjIOykN7UUJUrFlZ3XuwHuE5WC?=
+ =?us-ascii?Q?qe2g9Rx/choCTOPgTQgatu6xTroB7VQkipywhU6DPdUN6dhk6l8OCcqu2+Vx?=
+ =?us-ascii?Q?PM2Jd4FoaU/iZ+nMlNfQMVs8QAA536WF/0opodXDjlWYiJYBlxn1dfqkF25t?=
+ =?us-ascii?Q?t3+nYAtJJqtYXun3vi/InIPwznWKzSmXBxf3Wd8PhVyF?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb4cf605-876e-4eb1-d9d1-08de390cdcc6
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab01f019-6338-4bb0-4876-08de390d2622
 X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9615.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2025 23:27:34.2472
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2025 23:29:37.1702
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ooE4gfSPVUw52uSMK0mPbBKWGXquYSfVtoQeJBi9YrOidsBFZRrcjoSYvqO2w8vQUjabjtFFyJxfM9IiHIMB1w==
+X-MS-Exchange-CrossTenant-UserPrincipalName: /sB+0l2GwDE1MF3gmLQ/sTLmC9BBbo8RdkrfyCP60aNibgzSjxHtzdRJafmniVcbX2fq1lueO6+EX9HYvDSv/Q==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV9PR12MB9758
 
-On Thu, Dec 11, 2025 at 12:48:09PM -1000, Tejun Heo wrote:
-> move_local_task_to_local_dsq() is used when moving a task from a non-local
-> DSQ to a local DSQ on the same CPU. It directly manipulates the local DSQ
-> without going through dispatch_enqueue() and was missing the post-enqueue
-> handling that triggers preemption when SCX_ENQ_PREEMPT is set or the
-> enqueued task should preempt a lower priority task.
+Hi Tejun,
 
-Ditto, lower sched class / idle task maybe?
+On Thu, Dec 11, 2025 at 12:48:07PM -1000, Tejun Heo wrote:
+> Hello,
+> 
+> move_local_task_to_local_dsq() was missing post-enqueue handling which
+> matters now that scx_bpf_dsq_move() can be called while the CPU is busy.
+> 
+>  0001-sched_ext-Factor-out-local_dsq_post_enq-from-dispatc.patch
+>  0002-sched_ext-Fix-missing-post-enqueue-handling-in-move_.patch
+
+A couple of comments about the commit description, but overall looks good
+to me.
+
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
 Thanks,
 -Andrea
 
 > 
-> This was fine when the function was only used from consume_dispatch_q()
-> where the CPU is already vacant and looking for the next task. However, the
-> function is now also used by move_task_between_dsqs() which backs
-> scx_bpf_dsq_move() which may be called while the CPU is busy.
+> diffstat:
+>  kernel/sched/ext.c | 44 +++++++++++++++++++++++++++++---------------
+>  1 file changed, 29 insertions(+), 15 deletions(-)
 > 
-> Add local_dsq_post_enq() call to move_local_task_to_local_dsq(). As the
-> dispatch path doesn't need post-enqueue handling, add SCX_RQ_IN_BALANCE
-> early exit to keep consume_dispatch_q() behavior unchanged and avoid
-> triggering unnecessary resched when scx_bpf_dsq_move() is used from the
-> dispatch path.
-> 
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
->  kernel/sched/ext.c |   10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -981,6 +981,14 @@ static void local_dsq_post_enq(struct sc
->  	struct rq *rq = container_of(dsq, struct rq, scx.local_dsq);
->  	bool preempt = false;
->  
-> +	/*
-> +	 * If @rq is in balance, the CPU is already vacant and looking for the
-> +	 * next task to run. No need to preempt or trigger resched after moving
-> +	 * @p into its local DSQ.
-> +	 */
-> +	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
-> +		return;
-> +
->  	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
->  	    rq->curr->sched_class == &ext_sched_class) {
->  		rq->curr->scx.slice = 0;
-> @@ -1629,6 +1637,8 @@ static void move_local_task_to_local_dsq
->  
->  	dsq_mod_nr(dst_dsq, 1);
->  	p->scx.dsq = dst_dsq;
-> +
-> +	local_dsq_post_enq(dst_dsq, p, enq_flags);
->  }
->  
->  /**
+> --
+> tejun
