@@ -1,77 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7302BCF5;
-	Fri, 12 Dec 2025 01:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4542E283CB1;
+	Fri, 12 Dec 2025 01:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765503246; cv=none; b=UG1r8YjoKjb7E0xQ4Wt1ri3F+5X5xkCwGy8B8H0aykwCJ/5NnQIUO4lA8wvm1kEj371LRKxjtc1z61W416C8fh372ObmME9JuCIQn/DjeRqkDRlY0MGUW+Kejz7O1pnhQjPvkvo07huK24BOpclmOC1zus+f3sycER0R1FboNGE=
+	t=1765503906; cv=none; b=YliBQMnTjaZ5QE5S0/Ztl+oYSzn+K7bszHXQeVUgma18SDXeK41uIHUIlt415Qev6CuAC3eltQsWM5ej2H1B45GweMQrOH9wwY9N47UQ1Qgx4Ih3CEkoU50glhtEjvTrl32EeDANurAAph7uNjarzcSfOqzLRmG+0BuYHtPdeDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765503246; c=relaxed/simple;
-	bh=CK/1Q8HMdsbQp32kTF4C+p1ivYADrNGxq9HZZZbgT3w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R2XXZsEEvfaGigE6MFNfJiVGVW+jLh7ZYZm8MALBgDkcyhFf585gkO/MsGB6t13coflN84ivtykiMVhNKtRUJsEk/s6FIKuCdJzX2rjrYP3m1xPwSkQ4nNbjN2NlJwqAZ0Oavf+bWDwPmJp6Hy0BXBqYGE4Cex/n6tc3irm5yPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=asCPHV2A; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765503906; c=relaxed/simple;
+	bh=Rme1Yd+yBSkREnYv1FYRepLp5BllXAfMmJ5a/NYWGHg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dbsekt8Rj6yaTt1oCGBpEQkjNMOY7RnU5ucigdFn7kbzmae41bV5bD7Cd2RYL4OXjvaSuRdWXUSGtDdi2Ztm7c3AP8MRuK3/Pu2ORnMwlyfM7GN3F6H630lr95uK0ajUrrfmHQRBOZvsJbUwFxnaIxJLT1zaOVnuihSUOpgZXxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RlEk1mMQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="asCPHV2A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888CFC113D0;
-	Fri, 12 Dec 2025 01:34:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RlEk1mMQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C738C4CEF7;
+	Fri, 12 Dec 2025 01:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765503245;
-	bh=CK/1Q8HMdsbQp32kTF4C+p1ivYADrNGxq9HZZZbgT3w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=asCPHV2Amjdr6+Sc+eeMrHpwD8SitwGNVaTSHtml9tuueb+qpDij4peUW8sE6djI1
-	 ukUPMIwBTStUTyHMbBmbuHjpENh7oJe1ZmCk2ooPIoU8FmJFqNRbtDl9/pDOY1u9Nt
-	 MXMBICncAOlP+jUqt/a2GJcXiX6IjNnYCNKBsYbL5Pn5njsR8dgVUB5m/wIrU3RaE2
-	 cfGGdCP8jpdU2EgnPnsWFAEt8EVB/NagMsYJU9pVVItYJFxgRk46dLkVXt70SPpgzv
-	 17vk8pGK8skuf11d5LKQXgjgqjsXO4lEgFmtV+s4ewYr1hiMk+KaoES0h3oOUF/tVo
-	 GMFzT5ZVBO/MA==
-Date: Thu, 11 Dec 2025 15:34:04 -1000
+	s=k20201202; t=1765503905;
+	bh=Rme1Yd+yBSkREnYv1FYRepLp5BllXAfMmJ5a/NYWGHg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=RlEk1mMQBzaWrzFS3lemZFTO1E3JpNlAY2FlJfiINXo2aTkv0sISk6EadP3jyHod8
+	 EBsCMgqv9u2tQeHQXHR4oqi7Yybl42wnAnqL2UaYW0bOpoOd6qMmOx6s4H+YD6qjpu
+	 IXr1mgVK+sW+d1fnMOZVjeI5AFSq8tLOVfBtVGBiT09KFxZkD/YTWMj2iPFFdON+o0
+	 tZCjhkcT766aYyiMuXk3BOP8HRFVZvzdJ2ln4DS7iC5ZMcVn9DniqMNoFo6EAWSmpi
+	 2i9j8D21Ta99zIhO6wU1gCuYqUB+7XxIyAmoFBSpTOGqgC93/k8beC4JpycrGy26fU
+	 bPIyujeLFIIXg==
 From: Tejun Heo <tj@kernel.org>
-To: Christian Loehle <christian.loehle@arm.com>
-Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
-	David Vernet <void@manifault.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 2/2] sched_ext: Fix missing post-enqueue handling in
- move_local_task_to_local_dsq()
-Message-ID: <aTtxDOZ2nehjFwbL@slm.duckdns.org>
+To: Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	David Vernet <void@manifault.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	stable@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-6.19-fixes] sched_ext: Fix missing post-enqueue handling in move_local_task_to_local_dsq()
+Date: Thu, 11 Dec 2025 15:45:02 -1000
+Message-ID: <20251212014504.3431169-1-tj@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251211224809.3383633-1-tj@kernel.org>
 References: <20251211224809.3383633-1-tj@kernel.org>
- <20251211224809.3383633-3-tj@kernel.org>
- <b53f8ef6-9cac-4b95-8ebb-0f498d02f4ac@arm.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b53f8ef6-9cac-4b95-8ebb-0f498d02f4ac@arm.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 11, 2025 at 11:35:17PM +0000, Christian Loehle wrote:
-> On 12/11/25 22:48, Tejun Heo wrote:
-> > move_local_task_to_local_dsq() is used when moving a task from a non-local
-> > DSQ to a local DSQ on the same CPU. It directly manipulates the local DSQ
-> > without going through dispatch_enqueue() and was missing the post-enqueue
-> > handling that triggers preemption when SCX_ENQ_PREEMPT is set or the
-> > enqueued task should preempt a lower priority task.
-> > 
-> > This was fine when the function was only used from consume_dispatch_q()
-> > where the CPU is already vacant and looking for the next task. However, the
-> > function is now also used by move_task_between_dsqs() which backs
-> > scx_bpf_dsq_move() which may be called while the CPU is busy.
-> 
-> When was this changed? I couldn't find the commit when looking briefly :/
+Hello,
 
-4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
-which was v6.12, so upstream history-wise, the above paragraph isn't
-accurate. It was broken from get-go. Will update the commit message. I'm
-split on whether I should tag stable for it given that the usage pattern
-isn't very common and there's some risk in the behavior change. Hmm... might
-as well.
+move_local_task_to_local_dsq() was missing post-enqueue handling which
+matters now that scx_bpf_dsq_move() can be called while the CPU is busy.
 
-Thanks.
+v2: Updated commit messages and added Cc stable.
 
--- 
+v1: http://lkml.kernel.org/r/20251211224809.3383633-1-tj@kernel.org
+
+ 0001-sched_ext-Factor-out-local_dsq_post_enq-from-dispatc.patch
+ 0002-sched_ext-Fix-missing-post-enqueue-handling-in-move_.patch
+
+Based on sched_ext/for-6.19-fixes (9f769637a93f).
+
+diffstat:
+ kernel/sched/ext.c | 44 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 15 deletions(-)
+
+--
 tejun
