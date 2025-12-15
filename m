@@ -1,194 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C73C337B97
-	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 15:06:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2E6334C27
+	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 15:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765811209; cv=none; b=cdcrUJIyHiGl/VdUY4wzlrsJp+y1D+HZbfUKcvWG2+ORLfTbnlZYxoQIUZd8I7yoaNpMxsi6w02Cb26UHaLPGoPxBi8EiC7FRQRci1bRYT9XSe1Br1gjMKOOaKM/gHXwfvLtxRHWxqykiuIF/GR6vE8Vf6vdWM2UmuOLXOKvvKI=
+	t=1765811209; cv=none; b=UBtTGHJPJL+idLktyzw2cgQ86TLVrrrmRUSliruO3SZeeRDs3iog/a1woYqIW4LBgxaQEGiodrqjGD4frHX/p+RbsyLcDVJ/qHvDCZsBJ3ixC9GuPs2b9IENmHwM77gY1wvZD6MmTwL0HJfCyy3RuW8NAXrEYE2dPs5RmrnvxZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1765811209; c=relaxed/simple;
-	bh=FDobN7Z8Y+X8tbX1BBeUKpew6JTrowJDtN92pTS3aCA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hJBAxJY2Pg1wgoxj15qHSebwCq/W2h+3bggRUeN8y4r40hC8jyM4aFBkLE1GkRLjTvst2Yd3qtn27BtF9RmIVDdbU2mwEo+dJavKr3G7WojF7F4Tzk/ireHVEnfbcnqswML4AljLaUYtOXdYoq3yXApa/xMpwuTaRjGSL9JFMRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VgAvIcrK; arc=none smtp.client-ip=10.30.226.201
+	bh=OjWyaveieyQFwEuXihYRsT8yTNIoJywqA/5FdNOoCs4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=RztkH3PlmCsWM8GFHy/wJSLUHtRo7WW3CA1jYhrghJok+CPGr1AS5CjvV0DRX+zUrsN7bEOPqSWipw2xIeY7IOFeL1QrpHahicfb2lzh+rlObtnjuxraUdvc63QLoOq876oDHdamZlaicSm3nTWnPlBO+MSut2UZCVo0KBKpYgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=wszNJget; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VgAvIcrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8CCC2BC86
-	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 15:06:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765811209;
-	bh=FDobN7Z8Y+X8tbX1BBeUKpew6JTrowJDtN92pTS3aCA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=VgAvIcrK4N03oQN/K6dMpTSP0V78veP8E2MDirYJijSCd52XkH3OHBVNW74QYhe3X
-	 yCcxqvhZLfFr3le1f1tj8z0NAG3ZJBYoIk7+iUX/HnfT6JIuA8W6vfJ6R10+Mzk99H
-	 dmdymNBlgyJJ1Hasd2ki6FxAHr//6OoaLjEp5kmU7elJa6jZHEb1fdE61cYOkPHNZL
-	 kMFo0EaKjtlW+DiUdes1Tux5u2uDHh7FfSwfP4WLJ1lWmu/eM7ki2shPMsVj7OYa9i
-	 00UjI3hG7IGuxK5nziv1jwkI46Elqh9jvEcWcJLRlcSr0UaOOZZtFe5BmcUMITqgOv
-	 4ZJK5FLCyAiRQ==
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-65b395ca332so2076959eaf.3
-        for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 07:06:49 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXmW4QwsZsTtCOMIH1aWpZlT/AjyGtqX+Dbk2LMBL5RRbiCqUtQgbvHFuZmrct0JT3aFhQB12bLDEE=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw3ITJWCyeJ43xLrNAZGFnPXZrmyXqw1Ff9CteBGf08Sa2O370G
-	dBvyn/jPWXO00DjDnzb8AJf9GKl6XdzdtO8SSFYLiJ96QmcierZqYsypJReeNWsFLOQdFXnyHH0
-	dqV/1RkyBGHSuqw4/csB2oVouHlp+iV0=
-X-Google-Smtp-Source: AGHT+IEaMrt9lz0x198Ij3nAB6XXysm1VXszRlYg30bOGzcrHyJjfZX9RcXwwS5a+vUUOshs8u2mH4T3TLuAeM3V35g=
-X-Received: by 2002:a05:6820:a0b:b0:654:f691:9da8 with SMTP id
- 006d021491bc7-65b4511e8d9mr4607698eaf.7.1765811208285; Mon, 15 Dec 2025
- 07:06:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="wszNJget"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8b29ff9d18cso401862185a.3
+        for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 07:06:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1765811205; x=1766416005; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=79+wzmXa71VTx6agEVBXAhqr4t3bPb9GBjmcnaSZdD4=;
+        b=wszNJgetO3Y5mMX0GAobicjPEjrkoYLreHarwkCEGOq9iUG5YKmthYkaPhV43clx3O
+         zq40FoHUtC9pr/rRiHXrZRjglC/9VHXdMxQcm1AQflYSTP35QGDekfHEfgdH4/Svn4Ce
+         R6RdPFGsihc1l7MxCYRdR84PRbRAPSOM7ZHipriQcPzkpKaMcARzrTw9INPff26O1XZn
+         7wZJnTotlJmYoTKaviz3yaYrfpTEPOGB3vx0S6mkiAi6hK1K/Fj52TEp2Q6meV7VxiZF
+         9CIRugFmwxIwfNNwRm1jOhoGxmKIrRW0iU9xm6bwTOI0xl/4odyJO7yVH9a8cu5djr9+
+         zn8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765811205; x=1766416005;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=79+wzmXa71VTx6agEVBXAhqr4t3bPb9GBjmcnaSZdD4=;
+        b=CbBGprjKIGYhhdPuV2D4gUGVug4pixRxDYldPZgG8y/6AkQKI3bhR7S91gJxZW4Ds1
+         1scym4KQp4oqGkJbfbUN18BOUx8u9dgdHehiytNfuEh5RQRuDMZnWcJ3W1R9M7MbgwMi
+         s/3MlWPv/Fl8VJ2Bqi8MxJ7yM9zq56Y3268j917yfOB1pYVVMopM59LB1H0XMwZoL3Sf
+         rN8KE/t5nrpMuenxddzugDVjujA+cUhjzQX6d2x+j+aRWvhc7R023w6OqNZqrGA3RWlV
+         PtNwDnVBHg9J1YBvbyF5XNcZSYpUuvDmmKKjAtpvvo6CzPNgjopLJCwb+DdaNItsJ+CG
+         zOxA==
+X-Gm-Message-State: AOJu0YyY1m22J+STXFVyfCYAeTb9hBlm1FgaQRMcSh7/vmer+RPomxc3
+	AQM//Qy7j1XiF48FgjSm0XKSQSyz+4rK906zu2hWrwCUQHr4eMX0xf/hoqZp1hNpKBQ=
+X-Gm-Gg: AY/fxX5Y4Z8w6wmUwD+fiCfDpJN+TMh1AzsBVTXHIXmvKg3UyIVh23v3uFMfU/uTiSX
+	0LcEKirg4w6hpNaxwIDUNO7zcEJNf9j55MJ0UFie23Oi8gDnKdbayLhXaK2bZiIM/oHegpeqaF7
+	7JA8F417gKt3bbzVV7/JlQq62hRKuSSmlsnOndk6FTvWFB+36aE4rODgR0DiPmPZYKd2tWKSRDA
+	SYt34iM97SV4HN4qPC1Af3XS4T+bpwWROc6/KndkkEdxqfaUG+KhYxxbSdj9GI8ASUivUegMtru
+	d3t5mI16Ds7S8h09expnznQWRt8n4b1J5Yd1p7sykT3BrED+zZo45beP+R1W5wIZ+H352NTOAHK
+	Oz8l2sZyWtMtHfHhi5M0UbjAxL0tX9YPsTkqhaQW4n1ak83YVeZc5na06G6bHNVrWToc4MEjVDS
+	2UVqQ6Ar5+KrU=
+X-Google-Smtp-Source: AGHT+IGbxYRqlHlBsLcHTx/J0KOfAKQ1jXoSnZf/7OIJzM1fXf3Ycfphh2QqPatWllCjKZJ4YyHFgQ==
+X-Received: by 2002:a05:620a:4015:b0:8b2:dccd:7315 with SMTP id af79cd13be357-8bb3a39e901mr1472596185a.88.1765811203619;
+        Mon, 15 Dec 2025 07:06:43 -0800 (PST)
+Received: from localhost ([140.174.219.137])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8bab47f6f15sm1121603685a.0.2025.12.15.07.06.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Dec 2025 07:06:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com>
- <081e0ba7-055c-4243-8b39-e2c0cb9a8c5a@lunn.ch> <4bb1ea43-ef52-47ae-8009-6a2944dbf92b@igalia.com>
- <bb7871f1-3ea7-4bf7-baa9-a306a2371e4b@lunn.ch> <c65961d2-d31b-4ff9-ac1c-b5e3c06a46ba@igalia.com>
- <CAJZ5v0iX39rvdaoha18N-rpKLinGZ1cjTb1rV1Azh0Y7kYdaJQ@mail.gmail.com> <d5b50da2-bc1f-4138-9733-218688bc1838@igalia.com>
-In-Reply-To: <d5b50da2-bc1f-4138-9733-218688bc1838@igalia.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 15 Dec 2025 16:06:37 +0100
-X-Gmail-Original-Message-ID: <CAJZ5v0gpYQwC=1piaX-PNoyeoYJ7uw=DtAGdTVEXAsi4bnSdbA@mail.gmail.com>
-X-Gm-Features: AQt7F2qByuegiAKQOPI-mIV1VRdZEAkb5KgCAMPEAmz5qXr2_IJptgNblF0fy2I
-Message-ID: <CAJZ5v0gpYQwC=1piaX-PNoyeoYJ7uw=DtAGdTVEXAsi4bnSdbA@mail.gmail.com>
-Subject: Re: Concerns with em.yaml YNL spec
-To: Changwoo Min <changwoo@igalia.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
-	Donald Hunter <donald.hunter@gmail.com>, Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org, 
-	sched-ext@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>, 
-	Network Development <netdev@vger.kernel.org>, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 15 Dec 2025 10:06:41 -0500
+Message-Id: <DEYVTV95347Z.14PG6TGXWB4XE@etsalapatis.com>
+Cc: <sched-ext@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] sched_ext: Remove unused code in the do_pick_task_scx()
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Emil Tsalapatis" <emil@etsalapatis.com>, "Zqiang"
+ <qiang.zhang@linux.dev>, <tj@kernel.org>, <void@manifault.com>,
+ <arighi@nvidia.com>, <changwoo@igalia.com>
+X-Mailer: aerc 0.20.1
+References: <20251215112940.23640-1-qiang.zhang@linux.dev>
+ <DEYVT9MLT9MB.2GOBKYGZJ495Z@etsalapatis.com>
+In-Reply-To: <DEYVT9MLT9MB.2GOBKYGZJ495Z@etsalapatis.com>
 
-On Mon, Dec 15, 2025 at 4:01=E2=80=AFPM Changwoo Min <changwoo@igalia.com> =
-wrote:
+On Mon Dec 15, 2025 at 10:05 AM EST, Emil Tsalapatis wrote:
+> On Mon Dec 15, 2025 at 6:29 AM EST, Zqiang wrote:
+>> The kick_idle variable is no longer used, this commit therefore remove
+>> it and also remove associated code in the do_pick_task_scx().
+>>
+>> Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()=
+"),
+>> Signed-off-by: Zqiang <qiang.zhang@linux.dev>
 >
-> Thanks, Rafael, for the comments.
+> The change seems reasonable, but why is there a fixes up? This is
+> followup cleanup, the original patch is perfectly fine.
 >
-> On 12/15/25 19:30, Rafael J. Wysocki wrote:
-> > On Mon, Dec 15, 2025 at 2:57=E2=80=AFAM Changwoo Min <changwoo@igalia.c=
-om> wrote:
-> >>
-> >> Hi  Andrew,
-> >>
-> >> On 12/15/25 01:21, Andrew Lunn wrote:
-> >>>>> We also need to watch out for other meaning of these letters. In th=
-e
-> >>>>> context of networking and Power over Ethernet, PD means Powered
-> >>>>> Device. We generally don't need to enumerate the PD, we are more
-> >>>>> interested in the Power Sourcing Equipment, PSE.
-> >>>>>
-> >>>>> And a dumb question. What is an energy model? A PSE needs some leve=
-l
-> >>>>> of energy model, it needs to know how much energy each PD can consu=
-me
-> >>>>> in order that it is not oversubscribed.Is the energy model generic
-> >>>>> enough that it could be used for this? Or should this energy model =
-get
-> >>>>> a prefix to limit its scope to a performance domain? The suggested
-> >>>>> name of this file would then become something like
-> >>>>> performance-domain-energy-model.yml?
-> >>>>>
-> >>>>
-> >>>> Lukasz might be the right person for this question. In my view, the
-> >>>> energy model essentially provides the performance-versus-power-
-> >>>> consumption curve for each performance domain.
-> >>>
-> >>> The problem here is, you are too narrowly focused. My introduction
-> >>> said:
-> >>>
-> >>>>> In the context of networking and Power over Ethernet, PD means
-> >>>>> Powered Device.
-> >>>
-> >>> You have not given any context. Reading the rest of your email, it
-> >>> sounds like you are talking about the energy model/performance domain
-> >>> for a collection of CPU cores?
-> >>>
-> >>> Now think about Linux as a whole, not the little corner you are
-> >>> interested in. Are there energy models anywhere else in Linux? What
-> >>> about the GPU cores? What about Linux regulators controlling power to
-> >>> peripherals? I pointed out the use case of Power over Ethernet needin=
-g
-> >>> an energy model.
-> >>>
-> >>>> Conceptually, the energy model covers the system-wide information; a
-> >>>> performance domain is information about one domain (e.g., big/medium=
-/
-> >>>> little CPU blocks), so it is under the energy model; a performance s=
-tate
-> >>>> is one dot in the performance-versus-power-consumption curve of a
-> >>>> performance domain.
-> >>>>
-> >>>> Since the energy model covers the system-wide information, energy-
-> >>>> model.yaml (as Donald suggested) sounds better to me.
-> >>>
-> >>> By system-wide, do you mean the whole of Linux? I could use it for
-> >>> GPUs, regulators, PoE? Is it sufficiently generic? I somehow doubt it
-> >>> is. So i think you need some sort of prefix to indicate the domain it
-> >>> is applicable to. We can then add GPU energy models, PoE energy
-> >>> models, etc by the side without getting into naming issues.
-> >>>
-> >>
-> >> This is really the question for the energy model maintainers. In my
-> >> understanding, the energy model can cover any device in the system,
-> >> including GPUs.
-> >
-> > That's correct.
-> >
-> >> But, in my limited experience, I haven=E2=80=99t seen such cases beyon=
-d CPUs.
-> >>
-> >> @Lukasz =E2=80=94 What do you think? The focus here is on the scope of=
- the
-> >> =E2=80=9Cenergy model=E2=80=9D and its proper naming in the NETLINK.
-> >
-> > I think you need to frame your question more specifically.
-> >
->
-> Let me provide the context of what has been discussed. Essentially, the
-> question is what the proper name of the netlink protocol is and its file
-> name for the energy model.
->
-> Donald raised concerns that =E2=80=9Cem=E2=80=9D is too cryptic, so it sh=
-ould be
-> =E2=80=9Cenergy-model=E2=80=9D. The following is Donald=E2=80=99s comment=
-:
->
->
->    =E2=80=9C- I think the spec could have been called energy-model.yaml a=
-nd the
->     family called "energy-model" instead of "em".=E2=80=9D
->
->
-> Andrew=E2=80=99s opinion is that it would be appropriate to limit the sco=
-pe of
-> =E2=80=9Cenergy-model=E2=80=9D by adding a prefix, for example, =E2=80=9C=
-performance-domain-
-> energy-model=E2=80=9D. Andrew=E2=80=99s comment is as follows:
->
->    =E2=80=9CAnd a dumb question. What is an energy model? A PSE needs som=
-e level
->    of energy model, it needs to know how much energy each PD can consume
->    in order that it is not oversubscribed. Is the energy model generic
->    enough that it could be used for this? Or should this energy model get
->    a prefix to limit its scope to a performance domain? The suggested
->    name of this file would then become something like
->    performance-domain-energy-model.yml?=E2=80=9D
->
-> For me, =E2=80=9Cperformance-domain-energy-model=E2=80=9D sounds weird be=
-cause the
-> performance domain is conceptually under the energy model. If adding a
-> prefix to limit the scope, it should be something like =E2=80=9Csystem-en=
-ergy-
-> model=E2=80=9D, and the =E2=80=9Csystem=E2=80=9D prefix looks redundant t=
-o me.
->
-> So, the question is what the proper name is for the energy model
-> protocol: =E2=80=9Cem=E2=80=9D, =E2=80=9Cenergy-model=E2=80=9D, =E2=80=9C=
-performance-domain-energy-model=E2=80=9D, or
-> something else?
 
-I personally would be for something like "device-energy-model", where
-"device" may mean any kind of device including CPU devices.
+Oh and of course tag aside:
+
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+
+>> ---
+>>  kernel/sched/ext.c | 8 ++------
+>>  1 file changed, 2 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+>> index 695503a2f7d1..94164f2dec6d 100644
+>> --- a/kernel/sched/ext.c
+>> +++ b/kernel/sched/ext.c
+>> @@ -2446,7 +2446,7 @@ static struct task_struct *
+>>  do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+>>  {
+>>  	struct task_struct *prev =3D rq->curr;
+>> -	bool keep_prev, kick_idle =3D false;
+>> +	bool keep_prev;
+>>  	struct task_struct *p;
+>> =20
+>>  	/* see kick_cpus_irq_workfn() */
+>> @@ -2488,12 +2488,8 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *=
+rf, bool force_scx)
+>>  			refill_task_slice_dfl(rcu_dereference_sched(scx_root), p);
+>>  	} else {
+>>  		p =3D first_local_task(rq);
+>> -		if (!p) {
+>> -			if (kick_idle)
+>> -				scx_kick_cpu(rcu_dereference_sched(scx_root),
+>> -					     cpu_of(rq), SCX_KICK_IDLE);
+>> +		if (!p)
+>>  			return NULL;
+>> -		}
+>> =20
+>>  		if (unlikely(!p->scx.slice)) {
+>>  			struct scx_sched *sch =3D rcu_dereference_sched(scx_root);
+
