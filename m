@@ -1,73 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6721729E11D;
-	Mon, 15 Dec 2025 07:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B736115E97
+	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 10:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765782740; cv=none; b=Of/zud4fCIvk4wa7WaBSWGEesyHTGoYqfXZOH3H37xlscj3RAtrRYHoGHUnQ4DBUe35G6R/1PfqN4U+h9CknqmRaDH7yJKgRPNtWa5UlaOKc3B8IL7eRLdZ9/F0P1k869OCGSaNuKZzDEGEP+lz6Zuj/zAaSvlajwcPldZTmP/M=
+	t=1765794654; cv=none; b=ImqOADl8yT0NAcguJ5QPSJiV9LEv/NEzTEb/4aI7Uc/s20doj0K+T2L94DWoRgdStWKMOvDntbwpiLPiZfSIXtLQkl9gVJ5GIInm8SpE6wW1j/PYQqcVrp2OSflT1xlXlpcYjH2HmCwxPyJhckdp5lg77XMwCP2xWbEcLUafQ7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765782740; c=relaxed/simple;
-	bh=YZFnRn2PxD+AU1GU5kdIEL4qXVMAdU98b4qFonxpl08=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KqLhjpYlLKXbUaQN+/bUlIm3lQru+rlx+nS1krmumCTSo9rZXLx03sL1Yg5SpTgig2hqgYPish8ZB7+0r2myPvFwPdnzlruU7g7QiHSFfUV0rzrYb0D2ZJUs9wuoBK7VVdGFpEgtHwcez1glLzbc4DcaEeYtMq6oTIm3KEyEC+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhHMY64Z; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765794654; c=relaxed/simple;
+	bh=lJbEumrw1RnGbVillJylf+DruSz2R9MFbavbJPGtHzM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E63uwslX2B2TlwZEVLeMtgbe1b4lb0BbysiCM0TaZEW04Ldmd2ckbR8RFfpm6oMP8SSGTnRI5UNP9+7FggU5JOCnZS53xGqLtejLOlc/c2oquT22NSntMUJisZ4OfiZsSTPei7h9h8+aftmhfzzdCG1DS5JQ6bCtSzJFB4BBFtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uzU6N05p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhHMY64Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0592C4CEF5;
-	Mon, 15 Dec 2025 07:12:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uzU6N05p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70993C2BC86
+	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 10:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765782739;
-	bh=YZFnRn2PxD+AU1GU5kdIEL4qXVMAdU98b4qFonxpl08=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qhHMY64ZNHZFA8JhYaKLbg//Yln0weYuTTvyvEtAsRsOsi8xqtWjyPmLAK72dL2LC
-	 GhQxEBXmVgCSGGqao8J21uibCgRcwTua1A9ayjI0H7qvpNUrCNKguSb9dN7zIpBRjM
-	 Hp0UFboxRjrwoL+FmvLGML7pv/h/vcYItZ99CSBbDO1vI0BGumQ4j9vlDpu5rOwrLS
-	 FBLSCFxVggMNWtWJH//51im69XPg05pTDut2Vz1U6OUru3B+17WLqLyw3poYNtYDGZ
-	 Pk0jy+P2IE1EUXYHZinbZdRomKoXVDZ0Hkzz0escBcyKnWis9lTLNXnZqIa8HQDLh8
-	 Je4jWfoYAzVFg==
-Date: Mon, 15 Dec 2025 08:12:13 +0100
-From: Ingo Molnar <mingo@kernel.org>
-To: Thorsten Leemhuis <linux@leemhuis.info>
-Cc: Peter Zijlstra <peterz@infradead.org>, vincent.guittot@linaro.org,
-	linux-kernel@vger.kernel.org, juri.lelli@redhat.com,
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
-	mgorman@suse.de, vschneid@redhat.com, tj@kernel.org,
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev,
-	Linux Next Mailing List <linux-next@vger.kernel.org>
-Subject: Re: error: implicit =?utf-8?Q?declaration_?=
- =?utf-8?B?b2YgZnVuY3Rpb24g4oCYcnFfbW9kaWZpZWRfY2xlYXLigJkgKHdhcyBbUEFU?=
- =?utf-8?Q?CH_5=2F5=5D_sched?= =?utf-8?Q?=3A?= Rework
- sched_class::wakeup_preempt() and rq_modified_*())
-Message-ID: <aT-0zW7vOrJv6pA6@gmail.com>
-References: <20251127153943.696191429@infradead.org>
- <20251127154725.901391274@infradead.org>
- <3dd19f67-1132-41b3-bf6a-ec9a430424e6@leemhuis.info>
+	s=k20201202; t=1765794654;
+	bh=lJbEumrw1RnGbVillJylf+DruSz2R9MFbavbJPGtHzM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=uzU6N05pS6b1GdEt7Dy2QiDpafrteyxiaMjfFf3YXNp+psH1WL0idFhGlJ14s3l4s
+	 VPlTSq90z7wkqBOtLeH7BcpK213acZHIpwf+PBi23bFvWWWHkH+ykipNDCL5UXLpsV
+	 /mimMGSmzYv1cKmGaAZ2+cqdymTW1OGAQIJ8cW0UbE/YKBaRkc4JLitGdWSNpjPs+V
+	 ohj5GXYfrDVW5ODJyU9yS6sXYbobju0icB+nHYE8OgtloiuMVeEgKlKwUQo5CSm5X0
+	 pzHzHwkOYrUx78Jmxm50ofZVwGPj5rvWCtknqwKLHvwdJjmchmy4cGsGBqYHQlFhjV
+	 brixSc/JB9Cng==
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-3e37ad3d95aso2367978fac.3
+        for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 02:30:54 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXhnkfjA22xEnYgH0CW0qlMlwUNyMbfhAkwE4N3HRKecBrdy74JOG4SPpbobsTN34GgCm3kYgK/5gY=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw2S1nXyHh4zHWtYThKMjHMN81hRVHDy5ZJApX6P4wL03QEpqpC
+	4WaoXejjITGImXODzZGVkY5aGbzHTPlIvqvOr4SHYtnnQY8jLjtgR8Kogrgw1NvcG8YeCAzkokT
+	6lvdwESegnd20W9sOKXRRDXcRV41QbcY=
+X-Google-Smtp-Source: AGHT+IEoBpCjoSps8D+YgdCDShE9GQ0VNljBKFeTmfnEM6ZQwgOcZKzgv9BvCfPOUEqlcRH85eHG+nMTVNwYGJwcvSg=
+X-Received: by 2002:a05:6820:1b05:b0:659:9a49:8ebf with SMTP id
+ 006d021491bc7-65b45280c29mr5558461eaf.67.1765794653666; Mon, 15 Dec 2025
+ 02:30:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3dd19f67-1132-41b3-bf6a-ec9a430424e6@leemhuis.info>
+References: <CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com>
+ <081e0ba7-055c-4243-8b39-e2c0cb9a8c5a@lunn.ch> <4bb1ea43-ef52-47ae-8009-6a2944dbf92b@igalia.com>
+ <bb7871f1-3ea7-4bf7-baa9-a306a2371e4b@lunn.ch> <c65961d2-d31b-4ff9-ac1c-b5e3c06a46ba@igalia.com>
+In-Reply-To: <c65961d2-d31b-4ff9-ac1c-b5e3c06a46ba@igalia.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Mon, 15 Dec 2025 11:30:41 +0100
+X-Gmail-Original-Message-ID: <CAJZ5v0iX39rvdaoha18N-rpKLinGZ1cjTb1rV1Azh0Y7kYdaJQ@mail.gmail.com>
+X-Gm-Features: AQt7F2oqYG9Tt0dNzgC-8tRKT4CJtDwCvddIJZFUdGN8qw17Y5dsEOJ6fuuZZGg
+Message-ID: <CAJZ5v0iX39rvdaoha18N-rpKLinGZ1cjTb1rV1Azh0Y7kYdaJQ@mail.gmail.com>
+Subject: Re: Concerns with em.yaml YNL spec
+To: Changwoo Min <changwoo@igalia.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Donald Hunter <donald.hunter@gmail.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Jakub Kicinski <kuba@kernel.org>, Network Development <netdev@vger.kernel.org>, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-* Thorsten Leemhuis <linux@leemhuis.info> wrote:
-
-> On 11/27/25 16:39, Peter Zijlstra wrote:
-> > Change sched_class::wakeup_preempt() to also get called for
-> > cross-class wakeups, specifically those where the woken task is of a
-> > higher class than the previous highest class.
+On Mon, Dec 15, 2025 at 2:57=E2=80=AFAM Changwoo Min <changwoo@igalia.com> =
+wrote:
 >
-> I suspect you might be aware of this already, but this patch afaics
-> broke compilation of today's -next for me, as reverting fixed things.
+> Hi  Andrew,
+>
+> On 12/15/25 01:21, Andrew Lunn wrote:
+> >>> We also need to watch out for other meaning of these letters. In the
+> >>> context of networking and Power over Ethernet, PD means Powered
+> >>> Device. We generally don't need to enumerate the PD, we are more
+> >>> interested in the Power Sourcing Equipment, PSE.
+> >>>
+> >>> And a dumb question. What is an energy model? A PSE needs some level
+> >>> of energy model, it needs to know how much energy each PD can consume
+> >>> in order that it is not oversubscribed.Is the energy model generic
+> >>> enough that it could be used for this? Or should this energy model ge=
+t
+> >>> a prefix to limit its scope to a performance domain? The suggested
+> >>> name of this file would then become something like
+> >>> performance-domain-energy-model.yml?
+> >>>
+> >>
+> >> Lukasz might be the right person for this question. In my view, the
+> >> energy model essentially provides the performance-versus-power-
+> >> consumption curve for each performance domain.
+> >
+> > The problem here is, you are too narrowly focused. My introduction
+> > said:
+> >
+> >>> In the context of networking and Power over Ethernet, PD means
+> >>> Powered Device.
+> >
+> > You have not given any context. Reading the rest of your email, it
+> > sounds like you are talking about the energy model/performance domain
+> > for a collection of CPU cores?
+> >
+> > Now think about Linux as a whole, not the little corner you are
+> > interested in. Are there energy models anywhere else in Linux? What
+> > about the GPU cores? What about Linux regulators controlling power to
+> > peripherals? I pointed out the use case of Power over Ethernet needing
+> > an energy model.
+> >
+> >> Conceptually, the energy model covers the system-wide information; a
+> >> performance domain is information about one domain (e.g., big/medium/
+> >> little CPU blocks), so it is under the energy model; a performance sta=
+te
+> >> is one dot in the performance-versus-power-consumption curve of a
+> >> performance domain.
+> >>
+> >> Since the energy model covers the system-wide information, energy-
+> >> model.yaml (as Donald suggested) sounds better to me.
+> >
+> > By system-wide, do you mean the whole of Linux? I could use it for
+> > GPUs, regulators, PoE? Is it sufficiently generic? I somehow doubt it
+> > is. So i think you need some sort of prefix to indicate the domain it
+> > is applicable to. We can then add GPU energy models, PoE energy
+> > models, etc by the side without getting into naming issues.
+> >
+>
+> This is really the question for the energy model maintainers. In my
+> understanding, the energy model can cover any device in the system,
+> including GPUs.
 
-Yeah, sorry about that, I fumbled a conflict resolution - should be
-fixed for tomorrow's -next.
+That's correct.
 
-Thanks,
+> But, in my limited experience, I haven=E2=80=99t seen such cases beyond C=
+PUs.
+>
+> @Lukasz =E2=80=94 What do you think? The focus here is on the scope of th=
+e
+> =E2=80=9Cenergy model=E2=80=9D and its proper naming in the NETLINK.
 
-	Ingo
+I think you need to frame your question more specifically.
