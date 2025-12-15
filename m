@@ -1,188 +1,174 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010055.outbound.protection.outlook.com [40.93.198.55])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02252315793
-	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 13:58:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.55
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765807121; cv=fail; b=EHsEqyDHNU9NNzQYFhDhFNZFa2w2L9J4STAEHaVJ3+64B7nW+5BOdEGZGwePvJjU5fK2RA1nrezGaffIq3HQrDeMaa5E7HtffEUpTVG9DNfIw61qXt9ZUaJ7p9SezLcTJf53IHi/uC70gkClvE8A8CamO1Gb1WeNpU8tE2R2JgM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765807121; c=relaxed/simple;
-	bh=w/ynC9IM1IiKbdgdFMGjoerfVFHxfYfEfat6zrwiRBc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hGRIV63G2ROm5+A4ieDUk5hMS1toxwqXiydNLC51clQaMGQLq3fukE3SN60PwRDBW67HNROJXqJoqxFaCs9dvEerAxmpTqWoprnHihZG2KxOHW96ENqoF6pjslc/ur1ckP6rE63BdHspi+Hti4jV4FcWAgbq+SmF7GAtCgdOuP4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dnay8cqb; arc=fail smtp.client-ip=40.93.198.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E667730B51A;
+	Mon, 15 Dec 2025 15:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765810902; cv=none; b=ICiW7LcCmD4rYJbvCLTAsAcIFo1AVRYIJWi7uWLNM3Ekf/z0hVAVYILaSrSSKqcHVXDOVn0AHF8mWUq0lBMismjRFwsTNT67dm/HeS9HyhXjD+ocNLsT6pCRp0pg2WimpufEhYt4iaFQRcUc9vaTjP7nshWpWP8mAK7KgOAvb4E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765810902; c=relaxed/simple;
+	bh=Br7ZtHWqeIn4lK/n8zGIv1KNoZrKj+RIUkwAmWsZpoc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rR//H/HA1H5gxnpgqptiKiVnp0bZ4Ql27Hco86u/gVS5emaAg7cfWSF5AWWZ2vSTvS9wG6WTxFaFGZx/Abw0LCEzeVf7qsfjDQvE7N18wC1ojtXIzbb7xUn66WsYdNamf1Lq9mrYYvh/3EjsixeSbQz+241bYLR3RHE4s4rkm84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Wv6BWm5a; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dnay8cqb"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=snSVzP5chDCxnHicwlGwhVuCdPTt6arrYUBaj12roeBHX1Pxkuw6QHFFcDz63paGFNzqAPN4vTda8s2Pnlb/LzAkgDHKDhg3FbkQTst9szUz4eoDOL9EcFZcYPHOOcS4lqGd6emN9ME8sFa8Nk1AlPs1iWAE2W79+6ePuj2Bcupw3nHOwsiu2GHTRSZGaWeNYuGiT1jPSF5zGBcOt8KMJQBc28mn2QQCxnUdJis9DcFA/qh8swN0Oi57Z6T5fdB8RJyj4nnqFiHIW6K0Z5ILggJhXB6UZebpfLiwYrj46CHi1F8TWrA9pOJVGLfSCvWzxsQSpUm1XVYwcp1E6sZ9Tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C3LW7+/pqNVOy2YSOT7Kbijof4/MJB2ZsAqxtJYaLWc=;
- b=XZdscHNlhYB9h6ptDdTqCdsnsChKsG/y81LdEamXrcHQN18fJxqr2C+DGvsYgbTDBHGYeO9zRqVWKPbWkIGCsnNqmsRsLZXLTNRyFxIo3XahOiTdwX8bbVNvKwtcdFKH9WL36L40VdMlfI1vThg33paA7+Tw5VpoVAhXI6AQHA6Acks1sYGHEi7NsVwGQ39amYGsx+DfpysB8FdGrLiKpbQWauRBiFRd3okUmolHqyXF57ux6S5aiD8Ak5yMs7C57hvSEhppYoqK7vsSUDeCmrB5RlOJvXwp6VmVeJBl/G9XCaS+3n0UQLbDxDuvidgC4Oj7YM1l+EzfGQC1PT4DHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C3LW7+/pqNVOy2YSOT7Kbijof4/MJB2ZsAqxtJYaLWc=;
- b=dnay8cqbIJo7Bxb2NenFjGKIc4ASFx9sBsixJt8wi856Q368tL2snz6ryDl20C0osVamQvJscZW+PTz/4BDcgunZvHC+2i0O8GR5ZLp24ls/vH6ijjwIWOWa8PPqe6xUqQCS8lCckZRM/uh6cgv86EE25suXFsIO/UU7Dmq8WHSy/Bt59oGzGNqNlmVS7rqiynehkFHNoicuxKH2XHiID39mAwBsLxnU4n7x5CKMi6CrMSLTJwIVNAZxLq/8REIvvPLGZuQldP3EBbrM/qOlvvmdSa7qBiwIHKZnT8MX5bD2BzxtI8RCD1eRmux3JthyiQi1scFN8jZcIQlTTiq2PA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SA1PR12MB9004.namprd12.prod.outlook.com (2603:10b6:806:388::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.12; Mon, 15 Dec
- 2025 13:58:36 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9412.011; Mon, 15 Dec 2025
- 13:58:36 +0000
-Date: Mon, 15 Dec 2025 14:58:24 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Zqiang <qiang.zhang@linux.dev>
-Cc: tj@kernel.org, void@manifault.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Remove unused code in the do_pick_task_scx()
-Message-ID: <aUAUAP9micR5F9oj@gpd4>
-References: <20251215112940.23640-1-qiang.zhang@linux.dev>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251215112940.23640-1-qiang.zhang@linux.dev>
-X-ClientProxiedBy: ZR2P278CA0001.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:50::9) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Wv6BWm5a"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=fkdD8ZWkNIYfxMsPfYnrCv/yh8YXAEPgYx1w5ZHz3OM=; b=Wv6BWm5acHLkA7DZRafmKqacc7
+	LPFaNBvf82iqz9snLcpXRUg572LQmPxM6HQrC8Xr+nVqVma6T+NSHhs6KPkIM6DbRVZX6HO8/eJu8
+	52Mo1eeWiZGZy42XN9B35MHjduqLTITqDUE/DASpPzcNIZcONjYVoyWLgnEDwQ+oWXQh6vu5MmJN6
+	icJoUeKldOqC4Q7M+D/kmfoIjLpAHftEMe+FHGJTGkIRW3ZyccNeCVpqx6OucVc780jc+tzjYg074
+	5XBPE7zbGY7oza3OSYPRmziyZbftpPO0vGoYnQ5L+evCcZk3j1QTMp2In0jgxbeArcr8FBJ1ooQgZ
+	ZhV/mQTA==;
+Received: from [58.29.143.236] (helo=[192.168.1.6])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1vVA4p-00Cz0C-H4; Mon, 15 Dec 2025 16:01:31 +0100
+Message-ID: <d5b50da2-bc1f-4138-9733-218688bc1838@igalia.com>
+Date: Tue, 16 Dec 2025 00:01:25 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA1PR12MB9004:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89b7ffe0-4a6a-4017-009e-08de3be20ae5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?csDE9TCCDL/xpOJkllgm2zqe72SjwUyiM2CYRMiDb3NpPL+hsfZvyGnHCGxQ?=
- =?us-ascii?Q?dD3mB1QTS/J9E9zN3o8OPLkqZ7cDuXXODYUUFez44q9f/GrVCLqqT2Wdj/fy?=
- =?us-ascii?Q?2pHYsyD2nCBNC+SIQX2fSn6Mg8aNcAFoi7pDi6fV1mJqh7ApGHQKlURGukT+?=
- =?us-ascii?Q?uI/iw7Fit572OZ94xhosBnq7eogiw/ptkPRvuNcnrR+VqKiEmqX7aWkWS1Hc?=
- =?us-ascii?Q?te0a9c1x3Hcfz25WxTd0KA8Tk84dKpWfgWz56drWAbSf8r8iUUzWcJm8PHbN?=
- =?us-ascii?Q?8TjdTLsWs/dI5ZpHDApmZbjS5AA3V266RMKzWzDXNXNFdG7s3nZVegPlo/m2?=
- =?us-ascii?Q?1QQzi0b354m2Jg+t8FMKwLMMaawNJMrCIEmN3TH5Q8j4SRRAnITEUFOM4Wxo?=
- =?us-ascii?Q?FFAW92CByMQcmw2MHshmQwuc5u/DVhQxja590Bu4vLC7rkLHeZPmtNATo8Uq?=
- =?us-ascii?Q?ZMCCN4YcZQOnIWOaUBv3NkYVorlH4wQlTbSc2GuesHNrqAQrK9wpGK2omkOO?=
- =?us-ascii?Q?/x5Vrgu/yOXwqyTZZpd6SC6L8kffZzEIAxeTt80VVR5kDpXe4Tpq/lTg50Rb?=
- =?us-ascii?Q?0zNC+aVkRG63BtUKaI+U9prXK+IpFFLKcIAEvR0bks/2l8qMwTP401kf+dTp?=
- =?us-ascii?Q?gfG+TITtaoc/eXtgQfDV1HJm0i6zXemvp1H23yZCP8BMsIi/VDbi+WnB0yEo?=
- =?us-ascii?Q?M+peBpDc4WMZQAE0TncSlp8n29gofFnUZgeER1PVHS00VCOVDERv6sqwVMOA?=
- =?us-ascii?Q?t+LYWas/Xzi7PKLEI9v/ozdCC5/wKeANG+ryI224v9FYsplh+qUCK06JkEpr?=
- =?us-ascii?Q?PgWiOz4rmBjU8jM/21m7f74kro0k6dn+8xrnO7rFR1wu41ZVReNU+hsuU2Wq?=
- =?us-ascii?Q?MuiKPvJGu6WNzEEud6p4QiEf1A61EazC/mFlSkb1dNceLW2WLfaMIwxBQ5J0?=
- =?us-ascii?Q?5oS1OCRMi17DfLwOQNJSp/ZMSrY3gjyDpocuXGQYRw+YoQ0BCXNJmwBrJvBe?=
- =?us-ascii?Q?n6k77eHvPLWMJ89SeJf6afReBUXMjr4fIekgLLN1VMG0fFXgGr/y+x+RvJOO?=
- =?us-ascii?Q?0MvPGmMNNP8BZUQA9Lrw6yMqzhhWFpECvhfLP9v1KDJuAPTiyYfWrltmwP2n?=
- =?us-ascii?Q?SeclEviQIfQVIfXdM0OquEf7k0PAW7BZXxyFo1M5vh+9FaR1WxW+sVLr+f+p?=
- =?us-ascii?Q?a5d+jb1QR8gppgBhtokiAhU8zrGdZGslWDi25mLAuiXvr2mRZ2opGCfQsxsT?=
- =?us-ascii?Q?xWYeqHvaFEzRan2AgOnX0u/CpdMDqZrxPgXkYwUoqsJBMbNjGP2w/lQF4WS4?=
- =?us-ascii?Q?yFvOFtGvDHAVrvibr3TCXTLhLPuitEnGpmoHbHTRT3NIQR7JYhcSnuegpkDA?=
- =?us-ascii?Q?wafXJ1cdgB08APwvptorN4AVRRwlj1QNugTIovc983Ut/QpI356SDpI/wvI1?=
- =?us-ascii?Q?j/6R6EK8NgyHN9QDD9Z2Zov38yu3tkWU?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7053199007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ai2k2e4o0MG4md0zGJlGeybFc+EFHfu0LJ7tDJI7gDduHsQSwpVMK3sRGHll?=
- =?us-ascii?Q?iuTPt5jygBn5bMSg2ppLu1p045ERgZzeP5pObykf6XDjoKPU57Ui3mDdcgCy?=
- =?us-ascii?Q?UKY/FllM0uQ/F8Ei6mE1FQEJ5jqdsDnQ/Inf9EGqv1tdVQutbvIVkvikcZto?=
- =?us-ascii?Q?JSVdznHKO2/psMeSHZJez56OdflqjiuPff4ALSdhdypKBT5z5C09EZrUVJKD?=
- =?us-ascii?Q?6K0XDXZUMtBSVapJtWPvPtCMDvkD4bQBIhHI3vQbR4xmGgR0RTlhD3K5MWXT?=
- =?us-ascii?Q?bPEkeZXKjlJIcIkKi7lcT7FZHxsiHWQZimq+sz8c5yZMWVYz46U8KXCEMpy4?=
- =?us-ascii?Q?jWbiIx26umRKVq2nxKlO39FwUJaJkqs+NQn4/2JlA//dR/Dc7h2Vlyk4WfFZ?=
- =?us-ascii?Q?SLPwAE8Nq3jGz3IzTh8qH60ASCzcnN8jVIkrkyYAIvmTqWt12uqsrs43Ojs5?=
- =?us-ascii?Q?zIZiRl/1saj3TRbGX7eH7yjoZ59fDAXekGJKREMcNdCf5NB6oil677y6mILt?=
- =?us-ascii?Q?cy3/SNYBYoSClci8RPefbBUSSmOLkHudP/4hrLdafZ1qU66Wm9xuvu5FSHXA?=
- =?us-ascii?Q?Q9M43UV5aoLABHz256VIXWUpkC4OD5vZ1eKzTzlXSUToe++s4ip4nCFIKpN1?=
- =?us-ascii?Q?oFFBBaSgPQi78eXR/PQLPnB62NwycHz4rB4pQkZ1BNmlA7+hYwtvfWhIrd3e?=
- =?us-ascii?Q?xXNKDKNFSNd+pH/NpEQaH2gRKVta/5m84+GT+K1i20uNXB8R2Agz2UiHZFIA?=
- =?us-ascii?Q?aecLYhfYsZw1VvZTNTQ8PMzf0s4CwuiYAdkwoh055kxzxAk043Q4QNyd/osx?=
- =?us-ascii?Q?KyfBMg466pWxWMb2mK/nuvgBdZC96BulkRjMAu6Z1Nmz/pzDuG7JYVhe1L0C?=
- =?us-ascii?Q?n3Nc/VKb09hArc9Lz5kW3ftzZVEwYwicBSW7xXbvXrFb+Dg8L8zJ3GIVhcVD?=
- =?us-ascii?Q?/+UfK+38iuBF/arqfBv9auhhXry0RZCz+Q0PAxTGJFEQs+Vd+dI2zou3xVpY?=
- =?us-ascii?Q?8SYKFiobduWqXhBxkdBsS8KhP5nhfVgAVhweRpQh210810ybSfjtSxMPyJAw?=
- =?us-ascii?Q?qODKVitkHeFZgDqbpS40qxHY/ddI+AdB192B+JiDxj1un/YoyVmg7aO3e2c4?=
- =?us-ascii?Q?QF/QaGLGtOy+D5nLOwCC3T4f3fI/UjUsYnZDpJIt0nes6iu8C0oF/VqWdrjH?=
- =?us-ascii?Q?1vlW3KqJUejMtokHdphVWZmr85DWmPWOErpLNyVNDEqYg/95VjOD1c0jV6Mv?=
- =?us-ascii?Q?wTwK6pq0O69zEC8j1VvIn4alwQUlTgPgQQVIfk+n5bMe+V9i/+EwTm9gVFgh?=
- =?us-ascii?Q?21CSJOCuF5aKdq95xKIzCLbPdBeZuj8Z0TR16fsQjNVspQUFQOQ6SRPhSF3L?=
- =?us-ascii?Q?GCnGOgKQZy5kDFSgYNTd2ThNPV4IjMegOBpgluk1YfRPCTgZlq3ePfXP8ZWf?=
- =?us-ascii?Q?RAwXIwy7G1GrpLFnXFEvG6n1EBftvSxEPhT+NLhGuVWusL4TnIVif3Hyk4aY?=
- =?us-ascii?Q?tc08UN4d+/yKLrlHv9Bqzuziqzotquvahfn10zMnI1e4S7bVuiupaoIP92Mr?=
- =?us-ascii?Q?jhYLYlISE/9uL3e5B17Ldt0M5tah2C26Y6YSGuDF?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89b7ffe0-4a6a-4017-009e-08de3be20ae5
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Dec 2025 13:58:36.6670
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QSBurH4OLwZfuGtkzHBtW7H+eI+fmyoDASQ71Lg4rsdEv77FLodTDwIn3oqod5FDm0hkOg9pciF/S6mHhamIHA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB9004
+User-Agent: Mozilla Thunderbird
+Subject: Re: Concerns with em.yaml YNL spec
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Andrew Lunn <andrew@lunn.ch>, Donald Hunter <donald.hunter@gmail.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, linux-pm@vger.kernel.org,
+ sched-ext@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>,
+ Network Development <netdev@vger.kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com>
+ <081e0ba7-055c-4243-8b39-e2c0cb9a8c5a@lunn.ch>
+ <4bb1ea43-ef52-47ae-8009-6a2944dbf92b@igalia.com>
+ <bb7871f1-3ea7-4bf7-baa9-a306a2371e4b@lunn.ch>
+ <c65961d2-d31b-4ff9-ac1c-b5e3c06a46ba@igalia.com>
+ <CAJZ5v0iX39rvdaoha18N-rpKLinGZ1cjTb1rV1Azh0Y7kYdaJQ@mail.gmail.com>
+From: Changwoo Min <changwoo@igalia.com>
+Content-Language: en-US, ko-KR, en-US-large, ko
+In-Reply-To: <CAJZ5v0iX39rvdaoha18N-rpKLinGZ1cjTb1rV1Azh0Y7kYdaJQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 15, 2025 at 07:29:40PM +0800, Zqiang wrote:
-> The kick_idle variable is no longer used, this commit therefore remove
-> it and also remove associated code in the do_pick_task_scx().
+Thanks, Rafael, for the comments.
+
+On 12/15/25 19:30, Rafael J. Wysocki wrote:
+> On Mon, Dec 15, 2025 at 2:57 AM Changwoo Min <changwoo@igalia.com> wrote:
+>>
+>> Hi  Andrew,
+>>
+>> On 12/15/25 01:21, Andrew Lunn wrote:
+>>>>> We also need to watch out for other meaning of these letters. In the
+>>>>> context of networking and Power over Ethernet, PD means Powered
+>>>>> Device. We generally don't need to enumerate the PD, we are more
+>>>>> interested in the Power Sourcing Equipment, PSE.
+>>>>>
+>>>>> And a dumb question. What is an energy model? A PSE needs some level
+>>>>> of energy model, it needs to know how much energy each PD can consume
+>>>>> in order that it is not oversubscribed.Is the energy model generic
+>>>>> enough that it could be used for this? Or should this energy model get
+>>>>> a prefix to limit its scope to a performance domain? The suggested
+>>>>> name of this file would then become something like
+>>>>> performance-domain-energy-model.yml?
+>>>>>
+>>>>
+>>>> Lukasz might be the right person for this question. In my view, the
+>>>> energy model essentially provides the performance-versus-power-
+>>>> consumption curve for each performance domain.
+>>>
+>>> The problem here is, you are too narrowly focused. My introduction
+>>> said:
+>>>
+>>>>> In the context of networking and Power over Ethernet, PD means
+>>>>> Powered Device.
+>>>
+>>> You have not given any context. Reading the rest of your email, it
+>>> sounds like you are talking about the energy model/performance domain
+>>> for a collection of CPU cores?
+>>>
+>>> Now think about Linux as a whole, not the little corner you are
+>>> interested in. Are there energy models anywhere else in Linux? What
+>>> about the GPU cores? What about Linux regulators controlling power to
+>>> peripherals? I pointed out the use case of Power over Ethernet needing
+>>> an energy model.
+>>>
+>>>> Conceptually, the energy model covers the system-wide information; a
+>>>> performance domain is information about one domain (e.g., big/medium/
+>>>> little CPU blocks), so it is under the energy model; a performance state
+>>>> is one dot in the performance-versus-power-consumption curve of a
+>>>> performance domain.
+>>>>
+>>>> Since the energy model covers the system-wide information, energy-
+>>>> model.yaml (as Donald suggested) sounds better to me.
+>>>
+>>> By system-wide, do you mean the whole of Linux? I could use it for
+>>> GPUs, regulators, PoE? Is it sufficiently generic? I somehow doubt it
+>>> is. So i think you need some sort of prefix to indicate the domain it
+>>> is applicable to. We can then add GPU energy models, PoE energy
+>>> models, etc by the side without getting into naming issues.
+>>>
+>>
+>> This is really the question for the energy model maintainers. In my
+>> understanding, the energy model can cover any device in the system,
+>> including GPUs.
 > 
-> Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()"),
-
-nit: drop the comma at the end of the line.
-
-Apart than that, looks good to me, thanks for the cleanup.
-
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-
--Andrea
-
-> Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-> ---
->  kernel/sched/ext.c | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
+> That's correct.
 > 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 695503a2f7d1..94164f2dec6d 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -2446,7 +2446,7 @@ static struct task_struct *
->  do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
->  {
->  	struct task_struct *prev = rq->curr;
-> -	bool keep_prev, kick_idle = false;
-> +	bool keep_prev;
->  	struct task_struct *p;
->  
->  	/* see kick_cpus_irq_workfn() */
-> @@ -2488,12 +2488,8 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
->  			refill_task_slice_dfl(rcu_dereference_sched(scx_root), p);
->  	} else {
->  		p = first_local_task(rq);
-> -		if (!p) {
-> -			if (kick_idle)
-> -				scx_kick_cpu(rcu_dereference_sched(scx_root),
-> -					     cpu_of(rq), SCX_KICK_IDLE);
-> +		if (!p)
->  			return NULL;
-> -		}
->  
->  		if (unlikely(!p->scx.slice)) {
->  			struct scx_sched *sch = rcu_dereference_sched(scx_root);
-> -- 
-> 2.17.1
+>> But, in my limited experience, I haven’t seen such cases beyond CPUs.
+>>
+>> @Lukasz — What do you think? The focus here is on the scope of the
+>> “energy model” and its proper naming in the NETLINK.
 > 
+> I think you need to frame your question more specifically.
+> 
+
+Let me provide the context of what has been discussed. Essentially, the
+question is what the proper name of the netlink protocol is and its file
+name for the energy model.
+
+Donald raised concerns that “em” is too cryptic, so it should be
+“energy-model”. The following is Donald’s comment:
+
+
+   “- I think the spec could have been called energy-model.yaml and the
+    family called "energy-model" instead of "em".”
+
+
+Andrew’s opinion is that it would be appropriate to limit the scope of
+“energy-model” by adding a prefix, for example, “performance-domain-
+energy-model”. Andrew’s comment is as follows:
+
+   “And a dumb question. What is an energy model? A PSE needs some level
+   of energy model, it needs to know how much energy each PD can consume
+   in order that it is not oversubscribed. Is the energy model generic
+   enough that it could be used for this? Or should this energy model get
+   a prefix to limit its scope to a performance domain? The suggested
+   name of this file would then become something like
+   performance-domain-energy-model.yml?”
+
+For me, “performance-domain-energy-model” sounds weird because the
+performance domain is conceptually under the energy model. If adding a
+prefix to limit the scope, it should be something like “system-energy-
+model”, and the “system” prefix looks redundant to me.
+
+So, the question is what the proper name is for the energy model
+protocol: “em”, “energy-model”, “performance-domain-energy-model”, or
+something else?
+
+Regards,
+changwoo Min
+
+
+
+
+
