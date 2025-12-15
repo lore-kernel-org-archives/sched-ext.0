@@ -1,124 +1,82 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5BE3164A1
-	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 10:59:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E47F330335
+	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 11:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765796350; cv=none; b=iAqYYQZ5b+FFe/FZAHTDCmTQraOYf+Fr0ke5JCmASQLKo8sZ/M/GDdRWpaCMkNd88pl8MqGpjhcvH+2DLl0UrM+ycBR67njZO5NXBg0ugKSGUOoTnT0KkmixBI2/Nl1Pg4wl2KDiyscKqLhsv6BgdvhYfghZhoHfBqeVQkJE+hI=
+	t=1765798205; cv=none; b=ahX4YFlXdsXv+vLtsY4jh/1lAdFL1wRAYLnqvxlC08zHaBA5k1rFxM3AJUfFyobtRL87BABb5dc1jGlzUz9kumrdds6XIsATsXJwOpMDUHS1Gl6p5B3mGg5asNFg6T7julKRH7c9gRnhgpyNkYLsUn9ODV5tnq9A7NNLcOOBHYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765796350; c=relaxed/simple;
-	bh=S4rPeEDIZIwVJq/NhrUpwMxIVRW5R+/pHkM/PxZ/krQ=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=usrAdK8SnZQKIOugfgVDvok4hM65S8Sfp4OhPP4JRZIRSm7jUzEktPfqCpJ8VTuuJdpg8WAXDQydaJgB6om2+hTRi1+14InrdzQwscZVdPm0bX/CMw+6lNIaqt9lwUG0GqVrU90kGL/mM0Hnw0JckRrBu3KthkvchEmwzjY3Vn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fn5d6Mzg; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1765798205; c=relaxed/simple;
+	bh=7VLHSdzKxUCRStujZLx5p59uRGdezuyyTYT8jDvVGIc=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=gfDkLKumNjObGdQt5yNkQO9vV+pRub5DuI0A4r+vIYzi+Ax95kJfXwsVEfo5x4rMdCR3LgGNf0NfvGmRmPsUWOC6585iQOPgeLCWfPIz3cVHmlu85KVexZrEc4Jn5ZKIIRyNOTgoN33HvAHPNjIlQvReVQ4w0D0gUqFyHvTjLN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=R1el3xBm; arc=none smtp.client-ip=95.215.58.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fn5d6Mzg"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4779aa4f928so41751985e9.1
-        for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 02:59:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765796346; x=1766401146; darn=lists.linux.dev;
-        h=mime-version:user-agent:references:message-id:date:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PFFtPLWt5GXwFQD6gQTfn7/fmcFvMDxSdb3CyQqoRRc=;
-        b=Fn5d6MzgV2j1al73Hy7j9PyY0tFAqa1j5NwJ8OAtMlA3v2T5t8eaA8+9dN/Ff2vYSg
-         +hwDHonHiqwf58adpj2TgX4E9ziHWMRyjJTiLfHifGj84NwKQRELr4YVi/kwttpeK90K
-         doZnAyQJMSZfKODZfCGTHzPAAXrbQi3OgcQHkrEk7zsQnDB9/hdUKAuk4JcanYpc2wrT
-         D2kHIx8gWe5e5V2MQrtNUBDDHmtAvu6J9SH8o1g+jQKWVWTxuccawDB4nqbS+gr+47IP
-         mBiCDjR4s1YxO426c4b64VhFio3KDbThALZ16Ew3r4KD0qfnu/Rcm4MUjbuNp0B/QQOH
-         WbDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765796346; x=1766401146;
-        h=mime-version:user-agent:references:message-id:date:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PFFtPLWt5GXwFQD6gQTfn7/fmcFvMDxSdb3CyQqoRRc=;
-        b=cMpQ3RSFokReJ6+IK6iIU8AVJrpNg7T0uw5a6KWmkRfLgVy4pDMPb+DZ7jB5aplFl8
-         Z2uKiZAWQp42GK29m/fVOP4DGta46qGMn8hHQBiEh02LNzvsy+DLEM/UDrfP5kmaN6sH
-         zGfY41iPzHOx2SApEExviNKgDFhU35UWVOOt3l4UWfUCb02lwdkw7Bi0DQTB0oeOZyXA
-         g4uqtz9l716fLJrWIeshQCppmtiwDNCCe5RdAV6kW8onPzBQ8Er5eM0zkLws1p6RdXpM
-         +TjlOKHs61qJKxbHgJA7KCfsgFuf1Q1NmIGpX3FkDtpB9D/JyZzLruSDsxpOaa8QCJub
-         2/yA==
-X-Forwarded-Encrypted: i=1; AJvYcCXvesYzlhB0LNoLlPYzboFaUPl3DJ27GhMOix5vIEbFGJHaw0y5taoz3AiR1SC6XUUMYAb83+HDGGw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxiYnSkW3yvJ8JNH1nz+TkRX/W2qM8BZpDDcjW/PKqlXMjV2I4M
-	91ZmRBST6uCCYiuecuyfKMoypE51MVRmNJhlTON5NjYAt/yUiaI88jBg
-X-Gm-Gg: AY/fxX5nTT07RKROEkmIo9b1aZFn2cd8+KdsBiTY240xBymzEvGkCQ12MHz9Y4CZaKs
-	Ao6342oQkwVS9OvJGRxX75RuLbWnLa5X9wauHRkipIa4jJI2j7uEbFrlNtnJCHa/cG3mqrvtaC4
-	RbqhWzyTz/6bNywDwvcef+U4/F3Ftp0VluAlTWv5BrHGfgXbapMekhWj3Ktfj6ENRTWPM9to+4M
-	FTL0uD9hgyquHIsU9RUvz4mYdLvetuEV84mZW6VYsgJXYWzB5JaEI1BXcnuZ9ES/DGfgHuYthLa
-	n2UgAMBo+mPEK74Wyz1QH0ZH2rbOG0q2kKhRDavo/CzXyo2D8kziyuJmAjBeYNvft5h6CsR2IIQ
-	pNirRkEbCKOhaZzi5Z/5W+OkQkD1lB6G46tIC6biaZY1PD9qoIlIKRZyTEgTFVf7jzqz6PuEPAQ
-	W3qizvKmt+K61bX/WCl2NOLLU=
-X-Google-Smtp-Source: AGHT+IFaWJrWyBE9GIVvce2XyPwUKqAlGkmLp8oPaVrPoTGxqsS9OcEy2fJ4pY8O1VJB9+e56d6ihA==
-X-Received: by 2002:a05:600c:8b6d:b0:479:3a87:2093 with SMTP id 5b1f17b1804b1-47a8f914528mr96729885e9.37.1765796346286;
-        Mon, 15 Dec 2025 02:59:06 -0800 (PST)
-Received: from imac ([2a02:8010:60a0:0:c497:8f2f:d889:ca1a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47a8f74b44csm178004835e9.3.2025.12.15.02.59.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Dec 2025 02:59:05 -0800 (PST)
-From: Donald Hunter <donald.hunter@gmail.com>
-To: Changwoo Min <changwoo@igalia.com>
-Cc: Lukasz Luba <lukasz.luba@arm.com>,  linux-pm@vger.kernel.org,
-  sched-ext@lists.linux.dev,  Jakub Kicinski <kuba@kernel.org>,  Network
- Development <netdev@vger.kernel.org>,  Linux Kernel Mailing List
- <linux-kernel@vger.kernel.org>
-Subject: Re: Concerns with em.yaml YNL spec
-In-Reply-To: <5d3c37c0-d956-410d-83c8-24323d6f2aea@igalia.com>
-Date: Mon, 15 Dec 2025 10:51:01 +0000
-Message-ID: <m25xa8qaqy.fsf@gmail.com>
-References: <CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com>
-	<5d3c37c0-d956-410d-83c8-24323d6f2aea@igalia.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="R1el3xBm"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1765798199;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc; bh=4W1FedU1RCa0yAwIRVGo/nEgetuazo+TJ9dRvMEdbmA=;
+	b=R1el3xBm7GNVhp2En5/WeY532zXNVZxN3mRgZUpknNjhZzKMNHYn3iL9E+u0F7aD6W5F4K
+	s+AAskWsrJue0qY6P1vWXD4W1MNl1K4hI2SfO3Kic8Bq6mdWQrtzNjxyGbLDsSVXT4QIJw
+	SN+vgmLtr8vZnfqrqCXzQO96VEWvYvc=
+From: Zqiang <qiang.zhang@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	qiang.zhang@linux.dev
+Subject: [PATCH] sched_ext: Remove unused code in the do_pick_task_scx()
+Date: Mon, 15 Dec 2025 19:29:40 +0800
+Message-Id: <20251215112940.23640-1-qiang.zhang@linux.dev>
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
 
-Changwoo Min <changwoo@igalia.com> writes:
+The kick_idle variable is no longer used, this commit therefore remove
+it and also remove associated code in the do_pick_task_scx().
 
-> Hi Donald,
->
-> Thanks for the feedback. I rearranged a paragraph in the original email
-> for easier reply.
->
-> On 12/12/25 00:54, Donald Hunter wrote:
->> Hi,
->>
->> I guess the patch series was never cced to netdev or the YNL
->> maintainers so this is my first opportunity to review it.
->>
->
-> You are right. I think I ran get_maintainer.pl only before adding
-> em.yaml. That's my bad.
->
->> I just spotted the new em.yaml YNL spec that got merged in
->> bd26631ccdfd ("PM: EM: Add em.yaml and autogen files") as part of [1]
->> because it introduced new yamllint reports:
->> make -C tools/net/ynl/ lint
->> make: Entering directory '/home/donaldh/net-next/tools/net/ynl'
->> yamllint ../../../Documentation/netlink/specs
->> ../../../Documentation/netlink/specs/em.yaml
->>    3:1       warning  missing document start "---"  (document-start)
->>    107:13    error    wrong indentation: expected 10 but found 12  (indentation)
->>
->
-> I will fix these lint warnings. Besides fixing those warnings, it would
-> be useful to mention running lint somewhere. If there is a general
-> guideline for adding a new netlink YAML, I will revise it in a separate
-> patch.
+Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()"),
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+---
+ kernel/sched/ext.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-I have a patch ready for the next merge window that adds a lint target.
-For now you can run:
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 695503a2f7d1..94164f2dec6d 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -2446,7 +2446,7 @@ static struct task_struct *
+ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ {
+ 	struct task_struct *prev = rq->curr;
+-	bool keep_prev, kick_idle = false;
++	bool keep_prev;
+ 	struct task_struct *p;
+ 
+ 	/* see kick_cpus_irq_workfn() */
+@@ -2488,12 +2488,8 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 			refill_task_slice_dfl(rcu_dereference_sched(scx_root), p);
+ 	} else {
+ 		p = first_local_task(rq);
+-		if (!p) {
+-			if (kick_idle)
+-				scx_kick_cpu(rcu_dereference_sched(scx_root),
+-					     cpu_of(rq), SCX_KICK_IDLE);
++		if (!p)
+ 			return NULL;
+-		}
+ 
+ 		if (unlikely(!p->scx.slice)) {
+ 			struct scx_sched *sch = rcu_dereference_sched(scx_root);
+-- 
+2.17.1
 
-yamllint Documentation/netlink/specs
-
-You're right, we don't have a guide for adding new netlink YAML but
-that's something I should add to the series I have pending.
-
-Thanks,
-Donald.
