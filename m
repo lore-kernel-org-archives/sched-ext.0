@@ -1,82 +1,78 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E47F330335
-	for <sched-ext@lists.linux.dev>; Mon, 15 Dec 2025 11:30:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBD829A9C8;
+	Mon, 15 Dec 2025 11:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765798205; cv=none; b=ahX4YFlXdsXv+vLtsY4jh/1lAdFL1wRAYLnqvxlC08zHaBA5k1rFxM3AJUfFyobtRL87BABb5dc1jGlzUz9kumrdds6XIsATsXJwOpMDUHS1Gl6p5B3mGg5asNFg6T7julKRH7c9gRnhgpyNkYLsUn9ODV5tnq9A7NNLcOOBHYE=
+	t=1765799488; cv=none; b=RjlNDMDz2iP4LAF4U2xOoOAh2k/z6ZlanHo/PQQ2xCNg3vTkVUlhhlFaum4h8Sm+mwskDdKeCXz3wtCuBl0WXXBnXwRUKfzqGhjK0kZYO3SAiFdeXuIE5B1Ulr9gHKg/hce63iDI2LnyzqU0Z6o1F26S1a4TAp7Bkk6uqjEGiJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765798205; c=relaxed/simple;
-	bh=7VLHSdzKxUCRStujZLx5p59uRGdezuyyTYT8jDvVGIc=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=gfDkLKumNjObGdQt5yNkQO9vV+pRub5DuI0A4r+vIYzi+Ax95kJfXwsVEfo5x4rMdCR3LgGNf0NfvGmRmPsUWOC6585iQOPgeLCWfPIz3cVHmlu85KVexZrEc4Jn5ZKIIRyNOTgoN33HvAHPNjIlQvReVQ4w0D0gUqFyHvTjLN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=R1el3xBm; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1765799488; c=relaxed/simple;
+	bh=7aNHdGyRFKuUykD19O+YYYLqKJB4wB5emFZqqPE05lI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HARfKjqIsmT+J8xFVlXaEOrKHt71iNHALJEyW07ak+oWvonDmf0/qagBPcSBdZERrO1J7PhEY+8XECz2F3Pb3LPW/b5SZ05s3OVzhZ7jvvqLopPDMOtySqHfbxhuhz2U/YWriyA8E0tXv1u1CalDudsvfyia7jWmoqTncUdhBcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmADnTfF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="R1el3xBm"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1765798199;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc; bh=4W1FedU1RCa0yAwIRVGo/nEgetuazo+TJ9dRvMEdbmA=;
-	b=R1el3xBm7GNVhp2En5/WeY532zXNVZxN3mRgZUpknNjhZzKMNHYn3iL9E+u0F7aD6W5F4K
-	s+AAskWsrJue0qY6P1vWXD4W1MNl1K4hI2SfO3Kic8Bq6mdWQrtzNjxyGbLDsSVXT4QIJw
-	SN+vgmLtr8vZnfqrqCXzQO96VEWvYvc=
-From: Zqiang <qiang.zhang@linux.dev>
-To: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	qiang.zhang@linux.dev
-Subject: [PATCH] sched_ext: Remove unused code in the do_pick_task_scx()
-Date: Mon, 15 Dec 2025 19:29:40 +0800
-Message-Id: <20251215112940.23640-1-qiang.zhang@linux.dev>
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmADnTfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA37C4CEFB;
+	Mon, 15 Dec 2025 11:51:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765799487;
+	bh=7aNHdGyRFKuUykD19O+YYYLqKJB4wB5emFZqqPE05lI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jmADnTfFRDtwERHboafEAH9B+5yakvOaN5UVTQDc/g8gCZmHMrz2zJGHNU5Q0pygN
+	 KPvGF6lCxqmwdJZ6JHsd2jV8NXxRn7/h+Q2SNXb5v484x3F8Mc/bO/M8RzDJgh9pVf
+	 sHyTiN5/pMu9ytKEerQFbbnS/cNS2XeNTk8bvRnh619pMVmc0uyEQ+e4dllan4xlqU
+	 k0UH9U6MeGHHxByK3EQ8Hlfq8XzoEGAYBP+k6hU7hHRvWFujwlt0PfcGeY1IUEW3ur
+	 wW0nc7BPD3n/WwrfdUdHcG9AoT2LwR+kksY3dH1yDXhL3ZZjRltlLfwG3hK8OPXGFD
+	 PT0naNlAsoBmg==
+Date: Mon, 15 Dec 2025 20:51:21 +0900
+From: Nathan Chancellor <nathan@kernel.org>
+To: Ingo Molnar <mingo@kernel.org>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>,
+	Peter Zijlstra <peterz@infradead.org>, vincent.guittot@linaro.org,
+	linux-kernel@vger.kernel.org, juri.lelli@redhat.com,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, tj@kernel.org,
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	sched-ext@lists.linux.dev,
+	Linux Next Mailing List <linux-next@vger.kernel.org>
+Subject: Re: error: implicit =?utf-8?Q?declaration_?=
+ =?utf-8?B?b2YgZnVuY3Rpb24g4oCYcnFfbW9kaWZpZWRfY2xlYXLigJkgKHdhcyBbUEFU?=
+ =?utf-8?Q?CH_5=2F5=5D_sched?= =?utf-8?Q?=3A?= Rework
+ sched_class::wakeup_preempt() and rq_modified_*())
+Message-ID: <20251215115121.GA505816@ax162>
+References: <20251127153943.696191429@infradead.org>
+ <20251127154725.901391274@infradead.org>
+ <3dd19f67-1132-41b3-bf6a-ec9a430424e6@leemhuis.info>
+ <aT-0zW7vOrJv6pA6@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aT-0zW7vOrJv6pA6@gmail.com>
 
-The kick_idle variable is no longer used, this commit therefore remove
-it and also remove associated code in the do_pick_task_scx().
+On Mon, Dec 15, 2025 at 08:12:13AM +0100, Ingo Molnar wrote:
+> 
+> * Thorsten Leemhuis <linux@leemhuis.info> wrote:
+> 
+> > On 11/27/25 16:39, Peter Zijlstra wrote:
+> > > Change sched_class::wakeup_preempt() to also get called for
+> > > cross-class wakeups, specifically those where the woken task is of a
+> > > higher class than the previous highest class.
+> >
+> > I suspect you might be aware of this already, but this patch afaics
+> > broke compilation of today's -next for me, as reverting fixed things.
+> 
+> Yeah, sorry about that, I fumbled a conflict resolution - should be
+> fixed for tomorrow's -next.
 
-Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()"),
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
----
- kernel/sched/ext.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+It looks like you cleared up the rq_modified_clear() error but
+rq_modified_above() is still present in kernel/sched/ext.c.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 695503a2f7d1..94164f2dec6d 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2446,7 +2446,7 @@ static struct task_struct *
- do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- {
- 	struct task_struct *prev = rq->curr;
--	bool keep_prev, kick_idle = false;
-+	bool keep_prev;
- 	struct task_struct *p;
- 
- 	/* see kick_cpus_irq_workfn() */
-@@ -2488,12 +2488,8 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- 			refill_task_slice_dfl(rcu_dereference_sched(scx_root), p);
- 	} else {
- 		p = first_local_task(rq);
--		if (!p) {
--			if (kick_idle)
--				scx_kick_cpu(rcu_dereference_sched(scx_root),
--					     cpu_of(rq), SCX_KICK_IDLE);
-+		if (!p)
- 			return NULL;
--		}
- 
- 		if (unlikely(!p->scx.slice)) {
- 			struct scx_sched *sch = rcu_dereference_sched(scx_root);
--- 
-2.17.1
-
+Cheers,
+Nathan
