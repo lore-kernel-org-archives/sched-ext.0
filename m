@@ -1,56 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834A428D82A;
-	Tue, 16 Dec 2025 19:18:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2652C3276;
+	Tue, 16 Dec 2025 21:42:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765912697; cv=none; b=rvuUXR0hVnbfeY7VgcEq8x/IwNdf6eee/vNk+RXWayqstYBfMP43t+aJRacAfjyB8DXLKSAC4qaViJbT1l5v1UyUCGL0F00v1IFjtKacH8x1No3C6LbBxOwjaIyDhP6h+Q1s8oXt5bd0piVLbK7hPj47y7gO6xztWV5jPxWtm50=
+	t=1765921368; cv=none; b=GnqSZMNsHCgTbioFMCXKioZKh7toAw71DJS40C47AkxKOCNIwbjgw6l1+NeMbNPomjbyE9MEC1E9bRVc0XlgaToVIj/hP6f/CfR134yzEbq4y8+EyyunM+LxpSmbZ9LBDJjDc5K1/OkPhFJNblJgY7AC+Q7NLC2vqPNWuRjXWGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765912697; c=relaxed/simple;
-	bh=D11VZpRhmNiomMaDcpqQBghBTZIUSrMB1joo2gaaf7s=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=WLDNA+HueypNWo3TFsARYa49t93hel/OTKYXWVePznpCopBAKi2Yt1CHgqSY5hMdn2IKMRbLG1PH7vweyzHqdugjf0zG2XIuEoj78LgCSOgsVUWiL38X+Qpw0Q2xEV9vFk8F0YYh9jxCP3JCY9iuBYy6RZ0bZRKRK3/Ltnaox/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rAhCSBRO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765921368; c=relaxed/simple;
+	bh=+YiGSKG4CYREq9oFBx3QSQPYDtO+NRjycgIIOWqUvtY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gBs/uEDVawoe4DWyeyZDDHNh5NEGxNLm1wfr0P3Y2jn2veZb6ta9hL3B8PkT1e/p8MeNCWaauX1GUaU4a6HbEtO2tIGG5shVNue+04ws++oBg5Vq5Ggp06Rz12KEdz9wb4etYUaZYwBmqoLHGskLjXweX5PmjaxDkrtXfZFCzkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SQPLeddY; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rAhCSBRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC60C4CEF1;
-	Tue, 16 Dec 2025 19:18:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765912696;
-	bh=D11VZpRhmNiomMaDcpqQBghBTZIUSrMB1joo2gaaf7s=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=rAhCSBROWA05/e3CjDdBxjJkE46H/gmv9mMloX/ybXYRZiMKoCrJ9pNquaS+djxZ1
-	 uV/p8kaPsFpahEGyGDVTaGsQonxiZA7jrrH/DO2IWa7pqAdEzKbKG1MlDskeU2eFiG
-	 nwdWAFMlHIYvwlKtYSrg3NK8mM88wJSdv/z3HjTqZP/o7Xg+wl5bK4Aj6CEpQcXMbS
-	 blbukxg102qIra6R/XAo1pXFkSOZZTIZAytFYIWEDpGIQ+WG8wwAvmJXVCjFyVuwxg
-	 K2mZHyxdrnAr0/z0+zITZiNlL/VbNjaEttxvmi2wSTbDL4fwqHTblkCYwzeuSV0zff
-	 oqAvSKTC7bnEA==
-Date: Tue, 16 Dec 2025 09:18:15 -1000
-Message-ID: <95094cb8eb72687fd2559fd64382a695@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Liang Jie <buaajxlj@163.com>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
- Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>,
- Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>,
- Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- liangjie@lixiang.com, kernel test robot <lkp@intel.com>,
- Dan Carpenter <error27@gmail.com>, Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH] sched_ext: fix uninitialized ret on alloc_percpu() failure
-In-Reply-To: <20251216093955.2928453-1-buaajxlj@163.com>
-References: <20251216093955.2928453-1-buaajxlj@163.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SQPLeddY"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=+YiGSKG4CYREq9oFBx3QSQPYDtO+NRjycgIIOWqUvtY=; b=SQPLeddYfb8Il6pOVGNj/c32db
+	vFxz9Nhy1LXZbgu580WLrUqp5OHMY+6AlTI1z1omlh/47+aDqpTu021s6Rou1Ttbr1U0wzjgkDadK
+	nTIxaCL9aWl8EHEmipTddK0U1rMIh23zpefuxYHpX6HXdemGZJ9bgqhOjD/5W5ZTYhJ+Q4V/4e1Io
+	w1uR7TdvWcPSF6033W5GCZrhjPIHDWISM9CKl4w8LOojgMyELUaDuMeFJLiWhW8RN4xkR14+ZRL24
+	7HrkhZczcymxej0B6VPOXRlPafyfbTJKVRJzZ1ec1TOv4JsNn9paoF/OzSwx96bh9vgvgxUvessbm
+	AShkA04Q==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vVcoR-00000003ovL-0cFL;
+	Tue, 16 Dec 2025 21:42:31 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id ACD0430029E; Tue, 16 Dec 2025 22:42:29 +0100 (CET)
+Date: Tue, 16 Dec 2025 22:42:29 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: Thorsten Leemhuis <linux@leemhuis.info>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>, vincent.guittot@linaro.org,
+	linux-kernel@vger.kernel.org, juri.lelli@redhat.com,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, void@manifault.com,
+	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
+	Linux Next Mailing List <linux-next@vger.kernel.org>
+Subject: Re: error: implicit =?utf-8?Q?declaration_?=
+ =?utf-8?B?b2YgZnVuY3Rpb24g4oCYcnFfbW9kaWZpZWRfY2xlYXLigJkgKHdhcyBbUEFU?=
+ =?utf-8?Q?CH_5=2F5=5D_sched?= =?utf-8?Q?=3A?= Rework
+ sched_class::wakeup_preempt() and rq_modified_*())
+Message-ID: <20251216214229.GR3911114@noisy.programming.kicks-ass.net>
+References: <20251127153943.696191429@infradead.org>
+ <20251127154725.901391274@infradead.org>
+ <3dd19f67-1132-41b3-bf6a-ec9a430424e6@leemhuis.info>
+ <aT-0zW7vOrJv6pA6@gmail.com>
+ <20251215115121.GA505816@ax162>
+ <fdf21e40-b504-4122-a072-2c546b1f8237@leemhuis.info>
+ <aUGnpH-WAneT-4RE@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aUGnpH-WAneT-4RE@slm.duckdns.org>
 
-Applied to sched_ext/for-6.19-fixes.
+On Tue, Dec 16, 2025 at 08:40:36AM -1000, Tejun Heo wrote:
 
-Thanks.
+> Ingo, Peter, I can pull tip and resolve this from sched_ext side too but it
+> would probably be cleaner to resolve from tip side?
 
---
-tejun
+Yeah, I'll fix it up tomorrow morning if Ingo hasn't yet. Sorry for the
+mess.
