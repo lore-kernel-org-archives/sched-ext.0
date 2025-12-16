@@ -1,195 +1,175 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F4C132F743
-	for <sched-ext@lists.linux.dev>; Tue, 16 Dec 2025 17:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D559463
+	for <sched-ext@lists.linux.dev>; Tue, 16 Dec 2025 18:12:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765905840; cv=none; b=ZKEFG7ORRql7ItgPPbeE7erVvtJ9wpCzEW5B+mChb1Om2AQ3vgD7qNb1N4g8llR+jO8U48PXSYrr9MSEg6fXt6VOQWRpoToZyE7apKQdY+mLQDQ6dg8cZd4ymg+KCUDVxWuItKi3t4WFeXnNDexLae01UOVXDyHncEhcMt96ew8=
+	t=1765908756; cv=none; b=hT7UIdgAuPB3MNeR/1NAeDcwq9R5BkGKg9FGIMKnJoDfjFuZMUfjNl/W4efMZNmNFyqAB3sNLnE27mEusLOLijvRD/IL3Bu+dMwwkCNx0/KRn5zfbShqoRhCruD6B3A8+mmoiDsW3kG7Sm7ZuZuJ641voNGIeVm+oh1Ob16z2tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765905840; c=relaxed/simple;
-	bh=RuGy/mOZxbUiOWW2dQnzHSEe1henkHdcwZNMg89NjPo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aKkktvewOf4HzaLnnE3mj90c7SJaCz8DZM2L8tTVK7UI+E+lQpD6GGetvnVvJZv+yxMwM7gZA14C1mjWPdP1bHemyJbLJ6kSBFggJqGMnP/UtyVsRHNCBIX0xEczHFkQhxLuNIuMkVPe/DPO9/jVGB9bK60xz1gfww+P6wflOWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 27FB8FEC;
-	Tue, 16 Dec 2025 09:23:48 -0800 (PST)
-Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ACD9D3F73B;
-	Tue, 16 Dec 2025 09:23:52 -0800 (PST)
-Date: Tue, 16 Dec 2025 17:23:47 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: sched-ext@lists.linux.dev, open list <linux-kernel@vger.kernel.org>,
-	lkft-triage@lists.linaro.org, Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com
-Subject: Re: Boot regression: arm64: WARNING: kernel/sched/core.c:10851 at
- sched_change_end
-Message-ID: <aUGVACX9sd4IUR9k@J2N7QTR9R3>
-References: <CA+G9fYuphjUO2x6qP2qPBFGSYz2WPp8fdGdiNGtyd1PmEVJrmQ@mail.gmail.com>
+	s=arc-20240116; t=1765908756; c=relaxed/simple;
+	bh=orNmBWQYDQX2Iyd2Wfw+eIEURD2sZfnmHBS1cLn5HV8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=I3ugCasj9z7BKI8a23Jk83IiBMCvNPr2iPOAMCJTh3+otVC1Jbf6WmNoKcuojx8ZYLj37cTyUvZtR67iflthYcPJYY3+Nx8xw8Wn3bCb12mhEE7hbBeRfa82Hq6zii+u01lvHMI4ViEUjCBLvi7oYQd1bzfpRXwtv2Fb6WDok30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bPqAk1Fy; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bPqAk1Fy"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c03eb31db80so3482915a12.2
+        for <sched-ext@lists.linux.dev>; Tue, 16 Dec 2025 10:12:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1765908754; x=1766513554; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZsGQBcQVSuN0hd4yFcJ6HCAqnhcHxfYgZdavfeipf0E=;
+        b=bPqAk1Fy04dpE2bmgzGahNnl3Mx+3cOAyOXcsH+toJ0PFlsjUuetfnrKT7VqjeNRso
+         1Jv1g7gLvazGN7o1i7DY15CbtD3xMvXMf9t3xtdooRnEBXUCBn25tCUKU9NrNQBvRIWu
+         bYjZ+oeFmkj3gRBazp2ZpqqmmtiQAjXunVskZH2vEdAIrkkNUcmzjdjg4aC6KA0W74Gz
+         jy1+/Fzk7RZdxnTHUT78njqQPEevbuPybAhptSlZ7BhWR3v4wb7cdWZryivh28pyGRDS
+         VMufGFu1z/4XSPzCb9Om9RpV3xUN+7tuxzm06uEi2yT9KLJK7H654yCiEJrYW5dwc3eQ
+         nZ/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765908754; x=1766513554;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZsGQBcQVSuN0hd4yFcJ6HCAqnhcHxfYgZdavfeipf0E=;
+        b=T2xuu8k8kKdvqN4UN9zEA4Dl3JUqTQ4RuxeFJpdNqx7RpTi/Dg7UW861TEu/i49OiJ
+         4JUmDfIjAFRZm5U/KHvDNlDz9VGEK/J+9c1jxpq16eERxO8/ppA6aBUZVbLN9SyTuRKf
+         CCTOWDzVv89QKzeHykfEpbDhPkmEx1FKfjKglTdlOPPrxucV7E2rs3DRgemk0kyvJWR9
+         ZFoxWUQcSDB49hkfbs5AM4CD5MBMmFsF/SVPFVKpEl3AW4lLtAOuFj1dmu3sbhmzLL/x
+         z8nDABxfaSn46FB20TcPLiB+0pCyuXH0winp2EEWnDxxoFgz8AAVzHmSijL9ZBzmSpGH
+         +r3g==
+X-Gm-Message-State: AOJu0YzKNzawIWDiC+rP5MGkF3YHBDQKS8zAIr9Umliv2zhA8werDE+V
+	Xp3TX9v/Yq4jiizBYd+2LcnX6TVigZ2c84wR83tULxTiIf5C1KtoRenQCOg/5ktUN72L5OsqDkD
+	TjGioMOxqJgVNw9Hdhn8g03U7om6m1cVALra1evHfgA==
+X-Gm-Gg: AY/fxX5p2tKKwX0xP9ZjZuuQeqafRzhvb/ms1Hwbh/ChHV9kMjJtL15nV9xCKG6siJ7
+	Qf9la/1SC0RH5zk2f0WwNE0r878p86k+FSqhxOeA1UJ7Y3yxIY47Wm+9LgPqUWx6oGNkv4FLeXp
+	y3WdtsA5333rSiIsbLRrdup1WMMVyJ+WkCGOXBkhfwXdvs6BiMUTXs0HRh5QbEHvxNsTy13M++K
+	hWVSXvLTcN75Vp/uaeUC4wUb+T9DY8GdyiZaCLfyxBjQ+1StE6AFwQppDdqBVC8KKn4DFsldO+D
+	n0ZsptoEFDEw2Vi3xmcn0SAT8BBQ55nRTeRwkiA=
+X-Google-Smtp-Source: AGHT+IFztaoUBHe+m7C6rCvcXV0bwIfZbdALDzVf8ZZHufZSXNlImzsRsD6WWTT8J31ESi3J2dzBqBKAuhcoq/HIZvw=
+X-Received: by 2002:a05:7301:df44:b0:2a4:7fb3:7a96 with SMTP id
+ 5a478bee46e88-2ac3014694emr9206619eec.36.1765908754363; Tue, 16 Dec 2025
+ 10:12:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYuphjUO2x6qP2qPBFGSYz2WPp8fdGdiNGtyd1PmEVJrmQ@mail.gmail.com>
+References: <CA+G9fYuUYboYg9Kq24NL+LY3XqCELWkwbGZ8bh9EjQdoj2k7yg@mail.gmail.com>
+ <20251216141725.GW3707837@noisy.programming.kicks-ass.net>
+In-Reply-To: <20251216141725.GW3707837@noisy.programming.kicks-ass.net>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 16 Dec 2025 23:42:21 +0530
+X-Gm-Features: AQt7F2pxgbjyljfpiTLIBLTdqS5DCUVRD8teIn6lnB2ad9R-faCegw5-CW2XQRo
+Message-ID: <CA+G9fYt3x1C1u7_xe5zUXgOY-fr5O25tFTgffyrxG1avncRzbA@mail.gmail.com>
+Subject: Re: Boot regression: next-20251215: arm64: WARNING:
+ kernel/sched/core.c:10851 at sched_change_end
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: sched-ext@lists.linux.dev, open list <linux-kernel@vger.kernel.org>, 
+	lkft-triage@lists.linaro.org, Ingo Molnar <mingo@kernel.org>, 
+	Vincent Guittot <vincent.guittot@linaro.org>, Juri Lelli <juri.lelli@redhat.com>, 
+	Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>, void@manifault.com, 
+	arighi@nvidia.com, changwoo@igalia.com, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Dec 16, 2025 at 05:09:52PM +0530, Naresh Kamboju wrote:
-> The following boot warning is noticed on qemu-arm64 devices booting
-> Linux next-20251215 on wards.
+On Tue, 16 Dec 2025 at 19:47, Peter Zijlstra <peterz@infradead.org> wrote:
+>
+> On Tue, Dec 16, 2025 at 06:11:11PM +0530, Naresh Kamboju wrote:
+> > [Re-sending with unwrapping]
+> >
+> > The following boot warning is noticed on qemu-arm64 booting the
+> > Linux next-20251215 and next-20251216.
+> >
+> > Regression Analysis:
+> > - New regression? Yes
+> > - Reproducibility? Yes
+> >
+> > First seen on next-20251215
+> > Bad:  next-20251215 and next-20251216
+> > Good: next-20251212
+> >
+> > Boot regression: arm64: WARNING: kernel/sched/core.c:10851 at sched_change_end
+> >
+> > Are these expected warnings ? Anyone noticed ?
+> >
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>
+> Still a wrapped mess :/
+>
+> Anyway, afaik you're the first to notice.
 
-I didn't realise LKFT was operating from a hospital!
+<trim>
 
-> Regression Analysis:
-> - New regression? yes
-> - Reproducibility? yes
-> 
-> First seen on next-20251215
-> Bad:  next-20251215 and next-20251216
-> Good: next-20251212
-> 
-> Boot regression: arm64: WARNING: kernel/sched/core.c:10851 at sched_change_end
+> This is:
+>
+>         WARN_ON_ONCE(sched_class_above(ctx->class, p->sched_class) &&
+>                         !test_tsk_need_resched(p));
+>
+> And rt_mutex_setprio() doesn't set need_resched() on demotion; but
+> worse, reading it now, I realize that if p != current, nobody ever will.
+>
+> I suppose something like so will cure things?
 
-This email is really painful to read, because the information is
-out-of-order and has random words added to obscure relevant information.
+I have tested this patch and did not encounter any regressions.
 
-The warning you quote should be the *FIRST* line after you mention "The
-following boot warning".
+Tested-by:  Linux Kernel Functional Testing <lkft@linaro.org>
 
-That should be quoted *exactly* as the kernel logged it, without being
-prefixed by "Boot regression: arm64:", which the kernel didn't log, and
-which is redundant given the title and surrounding context.
+>
+> ---
+> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> index 7d0a862a8c75..5b17d8e3cb55 100644
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -10833,23 +10833,24 @@ void sched_change_end(struct sched_change_ctx *ctx)
+>                 if (p->sched_class->switched_to)
+>                         p->sched_class->switched_to(rq, p);
+>
+> -               /*
+> -                * If this was a class promotion; let the old class know it
+> -                * got preempted. Note that none of the switch*_from() methods
+> -                * know the new class and none of the switch*_to() methods
+> -                * know the old class.
+> -                */
+> -               if (ctx->running && sched_class_above(p->sched_class, ctx->class)) {
+> -                       rq->next_class->wakeup_preempt(rq, p, 0);
+> -                       rq->next_class = p->sched_class;
+> +               if (ctx->running) {
+> +                       /*
+> +                        * If this was a class promotion; let the old class
+> +                        * know it got preempted. Note that none of the
+> +                        * switch*_from() methods know the new class and none
+> +                        * of the switch*_to() methods know the old class.
+> +                        */
+> +                       if (sched_class_above(p->sched_class, ctx->class)) {
+> +                               rq->next_class->wakeup_preempt(rq, p, 0);
+> +                               rq->next_class = p->sched_class;
+> +                       }
+> +                       /*
+> +                        * If this was a degradation in class; make sure to
+> +                        * reschedule.
+> +                        */
+> +                       if (sched_class_above(ctx->class, p->sched_class))
+> +                               resched_curr(rq);
+>                 }
+> -
+> -               /*
+> -                * If this was a degradation in class someone should have set
+> -                * need_resched by now.
+> -                */
+> -               WARN_ON_ONCE(sched_class_above(ctx->class, p->sched_class) &&
+> -                            !test_tsk_need_resched(p));
+>         } else {
+>                 p->sched_class->prio_changed(rq, p, ctx->prio);
+>         }
+>
 
-It'd be *significantly* clearer to have:
+ - https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/36wC2DzDokQEutv2FqXwjRjSv82
 
-| I'm seeing the following warning consistently on qemu-arm64 when
-| booting next-20251215 and later:
-|
-|   WARNING: kernel/sched/core.c:10851 at sched_change_end
-|
-| Note: full splat at the end of this mail.
-|
-| First seen on next-20251215
-| Bad:  next-20251215 and next-20251216
-| Good: next-20251212
-|
-| This looks to be a regression.
-
-... where someone can see all the relevant details at a glance.
-
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> $ git blame  -L 10842  kernel/sched/core.c
-> 5d1f0b2f278eb (Peter Zijlstra 2025-12-10 09:06:50 +0100 10842)  ---->
->       if (ctx->running && sched_class_above(p->sched_class,
-> ctx->class)) {
-> 5d1f0b2f278eb (Peter Zijlstra 2025-12-10 09:06:50 +0100 10843)
->          rq->next_class->wakeup_preempt(rq, p, 0);
-> 5d1f0b2f278eb (Peter Zijlstra 2025-12-10 09:06:50 +0100 10844)
->          rq->next_class = p->sched_class;
-> 5d1f0b2f278eb (Peter Zijlstra 2025-12-10 09:06:50 +0100 10845)          }
-> 5d1f0b2f278eb (Peter Zijlstra 2025-12-10 09:06:50 +0100 10846)
-> 47efe2ddccb1f (Peter Zijlstra 2025-10-30 12:56:34 +0100 10847)          /*
-> 47efe2ddccb1f (Peter Zijlstra 2025-10-30 12:56:34 +0100 10848)
->   * If this was a degradation in class someone should have set
-> 47efe2ddccb1f (Peter Zijlstra 2025-10-30 12:56:34 +0100 10849)
->   * need_resched by now.
-> 47efe2ddccb1f (Peter Zijlstra 2025-10-30 12:56:34 +0100 10850)           */
-> 47efe2ddccb1f (Peter Zijlstra 2025-10-30 12:56:34 +0100 10851)  ---->
->       WARN_ON_ONCE(sched_class_above(ctx->class, p->sched_class) &&
-> 47efe2ddccb1f (Peter Zijlstra 2025-10-30 12:56:34 +0100 10852)
->               !test_tsk_need_resched(p));
-> 6455ad5346c9c (Peter Zijlstra 2024-11-01 14:16:10 +0100 10853)  } else {
-> 6455ad5346c9c (Peter Zijlstra 2024-11-01 14:16:10 +0100 10854)
->  p->sched_class->prio_changed(rq, p, ctx->prio);
-> 6455ad5346c9c (Peter Zijlstra 2024-11-01 14:16:10 +0100 10855)  }
-> f0e1a0643a59b (Tejun Heo      2024-06-18 10:09:17 -1000 10856) }
-
-This is all formatted illegibly since it was line-wrapped, and you
-didn't mention why you're dumping this. AFAICT the only relevant bit is
-that the warning is from:
-
-	WARN_ON_ONCE(sched_class_above(ctx->class, p->sched_class) &&
-		     !test_tsk_need_resched(p));
-
-... which Peter added in commit:
-
-  47efe2ddccb1f ("sched/core: Add assertions to QUEUE_CLASS")
-
-Have you tried looking around that commit, or bisecting?
-
-[...]
-
-Note: I've fixed the line-wrapping for the below. Please fix that in
-future.
-
-> [   14.696414] ------------[ cut here ]------------
-> [   14.696418] WARNING: kernel/sched/core.c:10851 at sched_change_end+0x168/0x188, CPU#12: ktimers/12/117
-> [   14.729321] Modules linked in: cppc_cpufreq(+) arm_dsu_pmu(+) fuse drm backlight
-> [   14.736718] CPU: 12 UID: 0 PID: 117 Comm: ktimers/12 Not tainted 6.19.0-rc1-next-20251216 #1 PREEMPT_RT
-> [   14.746190] Hardware name: WIWYNN Mt.Jade Server System B81.030Z1.0010/Mt.Jade Motherboard, BIOS 2.10.20250506-1P (SCP: 2.10.20250506) 2025/05/06
-
-This doesn't look like a "qemu-arm64 device" to me. Are you *sure* this
-wasn't bare-metal on a "WIWYNN Mt.Jade Server System"?
-
-If not, why is QEMU passing that gunk to the guest!?
-
-Mark.
-
-> [   14.759217] pstate: 804000c9 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [   14.766169] pc : sched_change_end (kernel/sched/core.c:10851 (discriminator 7))
-> [   14.770519] lr : sched_change_end (kernel/sched/core.c:10842 (discriminator 1))
-> [   14.774781] sp : ffff800080d33b90
-> [   14.778084] x29: ffff800080d33b90 x28: ffff07ff822f5500 x27: ffff80008e0c3660
-> [   14.785213] x26: 00000000000000f0 x25: ffff07ff822f5500 x24: 0000000000000000
-> [   14.792342] x23: 00000000ffffffff x22: ffffb4099c0d64d0 x21: ffff07ff822f5500
-> [   14.799469] x20: ffff083e5eeaf140 x19: ffff083e5ee9b290 x18: 0000000000000000
-> [   14.806597] x17: 0000000000000000 x16: ffffb4099a40ee68 x15: 0000000000000000
-> [   14.813725] x14: 0000000000000000 x13: 0000000000000000 x12: 0000020000000000
-> [   14.820853] x11: 00000000000000c0 x10: 0000000000000c60 x9 : ffffb40999b8d640
-> [   14.827981] x8 : 000000000000000c x7 : ffff07ff92ad8400 x6 : 00000000ffffffff
-> [   14.835109] x5 : 00000000000000ee x4 : 000000036b338800 x3 : 000000036b33b800
-> [   14.842238] x2 : 0000000000000001 x1 : ffffb4099c0d63d8 x0 : 0000000000000010
-> [   14.849366] Call trace:
-> [   14.851802]  sched_change_end (kernel/sched/core.c:10851 (discriminator 7)) (P)
-> [   14.856153]  rt_mutex_setprio (kernel/sched/sched.h:1813 kernel/sched/core.c:7368)
-> [   14.860157]  rt_mutex_slowunlock (kernel/locking/rtmutex.c:1341 kernel/locking/rtmutex.c:1466)
-> [   14.864422]  rt_spin_unlock (kernel/locking/spinlock_rt.c:86)
-> [   14.868165]  __hrtimer_run_queues (include/linux/spinlock_rt.h:44 kernel/time/hrtimer.c:1398 kernel/time/hrtimer.c:1843)
-> [   14.872513]  hrtimer_run_softirq (kernel/time/hrtimer.c:579 kernel/time/hrtimer.c:1193 kernel/time/hrtimer.c:1861)
-> [   14.876600]  handle_softirqs.isra.0 (arch/arm64/include/asm/jump_label.h:36 include/trace/events/irq.h:142 kernel/softirq.c:627)
-> [   14.881125]  run_ktimerd (kernel/softirq.c:325 kernel/softirq.c:1144)
-> [   14.884520]  smpboot_thread_fn (kernel/smpboot.c:160)
-> [   14.888608]  kthread (kernel/kthread.c:463)
-> [   14.891828]  ret_from_fork (arch/arm64/kernel/entry.S:861)
-> [   14.895396] ---[ end trace 0000000000000000 ]---
-> 
-> ## Source
-> * Kernel version: 6.19.0-rc1
-> * Git tree: https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next.git
-> * Git commit: 4a5663c04bb679631985a15efab774da58c37815
-> * Git Describe: next-20251215
-> * Test Details: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20251215
-> 
-> ## Boot details
-> * Boot log: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20251215/testrun/30561916/suite/log-parser-test/test/exception-warning-kernelschedcore-at-sched_change_end/log
-> * Test details: https://qa-reports.linaro.org/lkft/linux-next-master/build/next-20251215/testrun/30561916/suite/log-parser-test/test/exception-warning-kernelschedcore-at-sched_change_end/details/
-> * Test plan: https://tuxapi.tuxsuite.com/v1/groups/linaro/projects/lkft/tests/36sbHUVfnUKPzZ4LNkOCLdiFOin
-> * Build link: https://storage.tuxsuite.com/public/linaro/lkft/builds/36sbH5DQckAagO0V1UEWBBkOB54/
-> * Kernel config: https://storage.tuxsuite.com/public/linaro/lkft/builds/36sbH5DQckAagO0V1UEWBBkOB54/config
-> 
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
-> 
+- Naresh
