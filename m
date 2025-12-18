@@ -1,80 +1,162 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900AC33CE8D;
-	Thu, 18 Dec 2025 10:12:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C4619D8BC
+	for <sched-ext@lists.linux.dev>; Thu, 18 Dec 2025 17:47:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766052754; cv=none; b=XfKEy1nqRoWgvVBk6y1SK3Aboa5yI9F6h+o+PKhBs6xwZVyvKuwlNukuUh1SS8R6y8Idn5+0LAHLurgZkrjJOi/J+EYL8v0kmfNNb1jnGhchQdD6YkVygsLmQkM8ggqQvUcEjx3kP5kaWgDCGG5vW7EGxcVAuZEobQISZJT7qn0=
+	t=1766080056; cv=none; b=UyROsTPxh62tL+M3vDkXyIn7lN6qAJlD932XPfMrth3FyReSJeptGapJhhswEwB7lvLAxowe6WvjJ7aT7vtAvCPhT45upz3FaqAbUFQtt8akFS0f4iZq4RVUqWnfa9MPMJI5KqfF1gXmso63KVLGgSjNGFcqzqBVe4c33hHdDdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766052754; c=relaxed/simple;
-	bh=Q2j1pI2gbnZ6Er1qOLlLRw0WtqWwqQYSASs3eDFRQtM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bXCA69TMU5oc3C1G8jLfRVEFZIbzIzvQ6r5ybYRLFRs4VEYRZ3mDJEpgJakLc0hOVv7aXRpSHWLi+ypw9pkri9ttEulQEa4G/D1Hb6J4Uze85/QIBR6iQHjLCFzdRMRVPzZVk9zSLzr7q8To9Auy4afvVGEn+s6dS1XXfrQzJok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ocVfmz9A; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1766080056; c=relaxed/simple;
+	bh=5ViQi7mwghCiXIMF1t1NV68g5oN/hKIMhDraT72mmus=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Oc1aPGpeQR+jK0EywPvSJgf0wFDXSNQvN92DAh+kNyu6axgXY8zjSHVPpVusrUL2XwIeIbqc4p4amM1nptKIG7A9Bx50jX8MuSCFWoAdLbVIqrTcZNvQpNpCKR6yGxWb86URZyvpOXBk04ehBxhmzs3UDcCX/iiBxg9q//Wew40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AZh/DD/m; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ocVfmz9A"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=cFttlWF0jgG52QNDRCCrAUH/tOMpNN661+8S5v4EyIc=; b=ocVfmz9AGIaeIiqfBMe8QGL8IF
-	fdCF7zrB/ULoBVkSLspw2aRhZJxuWViuH7yUPuGHQQX6R9tBpfWkGHeN8uaK5PrQkvoNwNOZKJVrs
-	0VKxXsZAd7lGMOyYakJr+s5hRYWiklMm6WAT81qm2YNwzDpYjr5A54dwIhZuPXPOMKp5Q7XYXMrHe
-	LSB3aRJ0cuEVAzJdBpo15FLjGynOBxpDrps5qKp36AICSfXnUQNplTRnkWqFZ83vgTkgZMNRRtSj+
-	aQbpNUtBL8RCPMEghDvfQEJS+ptJMx5DS0jL1vXRiYDhomOuyZVob7H+SDxnpAmPqeMRPZwmHHtge
-	RN9p4vPg==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vWAzh-00000005yLv-0o7c;
-	Thu, 18 Dec 2025 10:12:25 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 2E388300578; Thu, 18 Dec 2025 11:12:24 +0100 (CET)
-Date: Thu, 18 Dec 2025 11:12:24 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: mingo@kernel.org, vincent.guittot@linaro.org,
-	linux-kernel@vger.kernel.org, juri.lelli@redhat.com,
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
-	mgorman@suse.de, vschneid@redhat.com, tj@kernel.org,
-	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev, Heiko Stuebner <heiko@sntech.de>,
-	linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH 4/5] sched: Add assertions to QUEUE_CLASS
-Message-ID: <20251218101224.GN3707891@noisy.programming.kicks-ass.net>
-References: <20251127153943.696191429@infradead.org>
- <20251127154725.771691954@infradead.org>
- <CGME20251218100916eucas1p2258bd5447be988f61f3358963de1cebf@eucas1p2.samsung.com>
- <a6150003-7f87-4f24-9156-bec10dfb70ce@samsung.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AZh/DD/m"
+Message-ID: <d9b9e129-349b-4510-bf33-01b831c2174b@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1766080051;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HB++E3E6r46WQuwBh9XXcMAuVJ8INhZP5ZHmjXyJtDc=;
+	b=AZh/DD/mU1b3vRHrw8i+4nCb4AOJv7ewUUM3CfnPf5c9gJEXFlkidjX/ITCrgAEK6Hdxsn
+	uQ0peoLHngYesrV7FuUIlJAcKYwVx+f67DDM32vU7I32AyLjzfb6m0a2Cz+LsrC6QLvx/w
+	H9snbQQLOc+JAn4qkIJlF1SlqKoXOPc=
+Date: Thu, 18 Dec 2025 09:46:14 -0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a6150003-7f87-4f24-9156-bec10dfb70ce@samsung.com>
+Subject: Re: [PATCH bpf-next v4 3/8] resolve_btfids: Introduce enum
+ btf_id_kind
+To: bot+bpf-ci@kernel.org, alan.maguire@oracle.com, ast@kernel.org,
+ arighi@nvidia.com, akpm@linux-foundation.org, andrii@kernel.org,
+ morbo@google.com, changwoo@igalia.com, daniel@iogearbox.net,
+ void@manifault.com, dolinux.peng@gmail.com, eddyz87@gmail.com,
+ haoluo@google.com, jolsa@kernel.org, john.fastabend@gmail.com,
+ corbet@lwn.net, justinstitt@google.com, kpsingh@kernel.org,
+ martin.lau@linux.dev, nathan@kernel.org, nick.desaulniers+lkml@gmail.com,
+ nsc@kernel.org, shuah@kernel.org, song@kernel.org, sdf@fomichev.me,
+ tj@kernel.org, yonghong.song@linux.dev
+Cc: bpf@vger.kernel.org, dwarves@vger.kernel.org,
+ linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
+ sched-ext@lists.linux.dev, martin.lau@kernel.org, clm@meta.com
+References: <20251218003314.260269-4-ihor.solodrai@linux.dev>
+ <106b6e71bce75b8f12a85f2f99e75129e67af7287f6d81fa912589ece14044f9@mail.kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <106b6e71bce75b8f12a85f2f99e75129e67af7287f6d81fa912589ece14044f9@mail.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, Dec 18, 2025 at 11:09:13AM +0100, Marek Szyprowski wrote:
-> On 27.11.2025 16:39, Peter Zijlstra wrote:
-> > Add some checks to the sched_change pattern to validate assumptions
-> > around changing classes.
-> >
-> > Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+On 12/17/25 4:47 PM, bot+bpf-ci@kernel.org wrote:
+>> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+>> index b4caae1170dd..da8c7d127632 100644
+>> --- a/tools/bpf/resolve_btfids/main.c
+>> +++ b/tools/bpf/resolve_btfids/main.c
 > 
+> [ ... ]
 > 
-> This patch landed recently in linux-next as commit 47efe2ddccb1 
-> ("sched/core: Add assertions to QUEUE_CLASS"). In my tests it turned out 
-> that it triggers the following warning during simple 'rtcwake' test on 
-> Hardkernel's Odroid-M1 board 
-> (arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts):
+>> @@ -260,22 +279,36 @@ static char *get_id(const char *prefix_end)
+>>  	return id;
+>>  }
+>>
+>> -static struct btf_id *add_set(struct object *obj, char *name, bool is_set8)
+>> +static struct btf_id *add_set(struct object *obj, char *name, enum btf_id_kind kind)
+>>  {
+>> +	int len = strlen(name);
+>> +	int prefixlen;
+>> +	char *id;
+>> +
+>>  	/*
+>>  	 * __BTF_ID__set__name
+>>  	 * name =    ^
+>>  	 * id   =         ^
+>>  	 */
+>> -	char *id = name + (is_set8 ? sizeof(BTF_SET8 "__") : sizeof(BTF_SET "__")) - 1;
+>> -	int len = strlen(name);
+>> +	switch (kind) {
+>> +	case BTF_ID_KIND_SET:
+>> +		prefixlen = sizeof(BTF_SET "__") - 1;
+>> +		break;
+>> +	case BTF_ID_KIND_SET8:
+>> +		prefixlen = sizeof(BTF_SET8 "__") - 1;
+>> +		break;
+>> +	default:
+>> +		pr_err("Unexpected kind %d passed to %s() for symbol %s\n", kind, __func__, name);
+>> +		return NULL;
+>> +	}
+>> +
+>> +	id = name + prefixlen - 1;
 > 
-> root@target:~# time rtcwake -s5 -mon
-> rtcwake: wakeup using /dev/rtc0 at Thu Dec 18 10:01:28 2025
-> ------------[ cut here ]------------
-> WARNING: kernel/sched/core.c:10837 at sched_change_end+0x160/0x168, 
+> Is this off by one? The original code computed:
+> 
+>     id = name + sizeof(BTF_SET "__") - 1
+> 
+> For BTF_SET ("set"), this gives: name + sizeof("set__") - 1 = name + 6 - 1 = name + 5
+> 
+> The new code computes:
+> 
+>     prefixlen = sizeof(BTF_SET "__") - 1 = 6 - 1 = 5
+>     id = name + prefixlen - 1 = name + 5 - 1 = name + 4
+> 
+> The -1 appears to be applied twice now, once in the prefixlen assignment and
+> again when computing id. Should this line be:
+> 
+>     id = name + prefixlen;
 
-https://lkml.kernel.org/r/176596899373.510.17191516261088315233.tip-bot2@tip-bot2
+Yes, this is an off-by-one bug.
+
+Good catch, Opus 4.5. Sonnet 4.5 missed this in v3.
+
+This was "harmless", since the names stored in the trees don't affect
+the output.  The comparison between the names still works, as they all
+simply got a "_" prefix.  But this only makes the bug sneaky, which is
+very bad.
+
+The suggested fix is meh though, IMO a better one is:
+
+diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+index 3e88dc862d87..ffc15c249ed4 100644
+--- a/tools/bpf/resolve_btfids/main.c
++++ b/tools/bpf/resolve_btfids/main.c
+@@ -295,10 +295,10 @@ static struct btf_id *add_set(struct object *obj, char *name, enum btf_id_kind k
+         */
+        switch (kind) {
+        case BTF_ID_KIND_SET:
+-               prefixlen = sizeof(BTF_SET "__") - 1;
++               prefixlen = sizeof(BTF_SET "__");
+                break;
+        case BTF_ID_KIND_SET8:
+-               prefixlen = sizeof(BTF_SET8 "__") - 1;
++               prefixlen = sizeof(BTF_SET8 "__");
+                break;
+        default:
+                pr_err("Unexpected kind %d passed to %s() for symbol %s\n", kind, __func__, name);
+
+> 
+>>  	if (id >= name + len) {
+>>  		pr_err("FAILED to parse set name: %s\n", name);
+>>  		return NULL;
+>>  	}
+>>
+>> -	return btf_id__add(&obj->sets, id, true);
+>> +	return btf_id__add_unique(&obj->sets, id, kind);
+>>  }
+> 
+> 
+> ---
+> AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+> See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
+> 
+> CI run summary: https://github.com/kernel-patches/bpf/actions/runs/20321956014
+
