@@ -1,138 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109B12D8DDF;
-	Fri, 19 Dec 2025 07:55:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B142E2DECC5
+	for <sched-ext@lists.linux.dev>; Fri, 19 Dec 2025 09:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766130910; cv=none; b=TnsJxxe9NkuCAVk7ftwIGxkvBQp/YVacJZmhckalw3h4KG6/zwbH8Qv4guBMSkivwu9BPo+MCuTKXpnTop0HASdZ6XKvaymjJQx9ZqtQMXMrrVGUtfLdU8vRZ6jV8MRVDqiSLB87f2o9ugjYSRlMykkQv0Tzx3lwuXtVfz6ZXMM=
+	t=1766136858; cv=none; b=ns8a8CLq8hHh3/XtFRigSX8wQVOKMY6KJ3+WetibR3tQTuMbALOOHSve4p4lE5ObX5V8xI3Q/H8O9DXMCtQ81J4bzTh8ghO4eJKZVrvz4dL1gtFlDQaX0yk0uLSKlLOTCUfL3Eb6ZZt7vwNHe7PBySyZ5rhWLcSkEAkz1Dzk+RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766130910; c=relaxed/simple;
-	bh=i6jm3TrdmbiSkM3odFdOiqa8jcKmRK3jnHNaNoxvwao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iA0HJXY5McT0zBmunaFhmTdmhyAF1X5UgKRy/qnLtJObvk68VKiMd0k6gOUNKAJalwV5TS8PLMf2keiWKOzAnu9K6ey6g3QQdW0gHQ40hCue6pm6brsFqpvPTVRmA8y7c5VTOKNIDTGlVvuRmoUl78hhp7Tric4nGSsID64ylYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QeS78exI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766136858; c=relaxed/simple;
+	bh=nxUYB9bqmYOl9fM9HYD5HSqTmkyt29pKiLs8ahnoMS4=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=lLIgE03ZvyGWEzSaNq3q5k/sdvbfEQllDTcLSm2NU47RliRITeTY0EsdCaX2SIR+iS7rzjNYmMtUULp8AEgKbBGPGl8hwOfvz/gCQp47gFqV+vPvsNsE+kWci627nC3eUsma5M3Nm+4oaH1uVQ3pusQ4+20IqcMoPgWrwuZx9m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=n+Cbivw4; arc=none smtp.client-ip=91.218.175.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QeS78exI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E115C4CEF1;
-	Fri, 19 Dec 2025 07:55:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766130909;
-	bh=i6jm3TrdmbiSkM3odFdOiqa8jcKmRK3jnHNaNoxvwao=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QeS78exI7ljtsGluX4FQLpXYVyMVaIryW2kIVAAVaIkS1SWKl5nOct0TGriEmsdCl
-	 PqjZfq5+9CGJsNgEDX75zFtHguzGFrzK4C3L1NpHIOSdr/6hRGFF4js3Fu+R914ua+
-	 sqhAo3BNujOWcMKnVnNgOHFXqFy1WVL2UB8afzvbo6F4h6HVnm7OaiRRubXpGBaDDY
-	 4MS7LuiHa5EbD+AhyFHSS2XkSyxaKvcMUmkIXaqRvyNL8O8WhDaBCeYkWtpQQT40YX
-	 1moUz9pU9Ny1IBz7tXOdOtV0Ji8mqiXd73Tc7rMm8CXNGnoXDAm/kVrEOxGxBLRdM/
-	 LPBVZRvJHWRoQ==
-Date: Fri, 19 Dec 2025 08:54:50 +0100
-From: Nicolas Schier <nsc@kernel.org>
-To: Ihor Solodrai <ihor.solodrai@linux.dev>
-Cc: Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>,
-	Hao Luo <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Donglin Peng <dolinux.peng@gmail.com>, bpf@vger.kernel.org,
-	dwarves@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kbuild@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH bpf-next v6 6/8] lib/Kconfig.debug: Set the minimum
- required pahole version to v1.22
-Message-ID: <aUUEyncduBLl8k4n@derry.ads.avm.de>
-Mail-Followup-To: Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>,
-	Hao Luo <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, Shuah Khan <shuah@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Donglin Peng <dolinux.peng@gmail.com>, bpf@vger.kernel.org,
-	dwarves@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kbuild@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20251219020006.785065-1-ihor.solodrai@linux.dev>
- <20251219020006.785065-7-ihor.solodrai@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="n+Cbivw4"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1766136849;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc; bh=Rv6Y57lYMKS6k2RZidGxtPimU5NCiVa3mvKMYxltF44=;
+	b=n+Cbivw4vK5I4T+ANPf1ptF0ukn3WO88OFFclX/soUVxmlNRtEhNNzz+B/q2B9qKODfdOJ
+	CJA5mCLMReiZf8c2Qa+2QG4TsYkIsDmT37iWhlYCgFVUvqjKCKfpcatmwB3skt5oVrISjZ
+	LWfHT1fkiAfkvu318IkzHiyYmKfDJBM=
+From: Zqiang <qiang.zhang@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	qiang.zhang@linux.dev
+Subject: [PATCH] sched_ext: Fix some comments in ext.c
+Date: Fri, 19 Dec 2025 17:34:04 +0800
+Message-Id: <20251219093404.382-1-qiang.zhang@linux.dev>
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251219020006.785065-7-ihor.solodrai@linux.dev>
 
-On Thu, Dec 18, 2025 at 06:00:04PM -0800, Ihor Solodrai wrote:
-> Subsequent patches in the series change vmlinux linking scripts to
-> unconditionally pass --btf_encode_detached to pahole, which was
-> introduced in v1.22 [1][2].
-> 
-> This change allows to remove PAHOLE_HAS_SPLIT_BTF Kconfig option and
-> other checks of older pahole versions.
-> 
-> [1] https://github.com/acmel/dwarves/releases/tag/v1.22
-> [2] https://lore.kernel.org/bpf/cbafbf4e-9073-4383-8ee6-1353f9e5869c@oracle.com/
-> 
-> Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-> ---
->  Documentation/scheduler/sched-ext.rst |  1 -
->  lib/Kconfig.debug                     | 13 ++++---------
->  scripts/Makefile.btf                  |  9 +--------
->  tools/sched_ext/README.md             |  1 -
->  4 files changed, 5 insertions(+), 19 deletions(-)
-> 
-> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-> index 404fe6126a76..9e2882d937b4 100644
-> --- a/Documentation/scheduler/sched-ext.rst
-> +++ b/Documentation/scheduler/sched-ext.rst
-> @@ -43,7 +43,6 @@ options should be enabled to use sched_ext:
->      CONFIG_DEBUG_INFO_BTF=y
->      CONFIG_BPF_JIT_ALWAYS_ON=y
->      CONFIG_BPF_JIT_DEFAULT_ON=y
-> -    CONFIG_PAHOLE_HAS_SPLIT_BTF=y
->      CONFIG_PAHOLE_HAS_BTF_TAG=y
->  
->  sched_ext is used only when the BPF scheduler is loaded and running.
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index ba36939fda79..60281c4f9e99 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -388,18 +388,13 @@ config DEBUG_INFO_BTF
->  	depends on !DEBUG_INFO_SPLIT && !DEBUG_INFO_REDUCED
->  	depends on !GCC_PLUGIN_RANDSTRUCT || COMPILE_TEST
->  	depends on BPF_SYSCALL
-> -	depends on PAHOLE_VERSION >= 116
-> -	depends on DEBUG_INFO_DWARF4 || PAHOLE_VERSION >= 121
-> +	depends on PAHOLE_VERSION >= 122
+This commit update balance_scx() in the comments to balance_one().
 
-As CONFIG_DEBUG_INFO_BTF was the reason for 'pahole' being listed in
-Documentation/process/changes.rst, does it make sense to update the
-minimum pahole version there, too?
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+---
+ kernel/sched/ext.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Acked-by: Nicolas Schier <nsc@kernel.org>
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 7a53d1cf8e82..5ebf8a740847 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1577,7 +1577,7 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int deq_flags
+ 	 *
+ 	 * @p may go through multiple stopping <-> running transitions between
+ 	 * here and put_prev_task_scx() if task attribute changes occur while
+-	 * balance_scx() leaves @rq unlocked. However, they don't contain any
++	 * balance_one() leaves @rq unlocked. However, they don't contain any
+ 	 * information meaningful to the BPF scheduler and can be suppressed by
+ 	 * skipping the callbacks if the task is !QUEUED.
+ 	 */
+@@ -2372,7 +2372,7 @@ static void switch_class(struct rq *rq, struct task_struct *next)
+ 	 * preempted, and it regaining control of the CPU.
+ 	 *
+ 	 * ->cpu_release() complements ->cpu_acquire(), which is emitted the
+-	 *  next time that balance_scx() is invoked.
++	 *  next time that balance_one() is invoked.
+ 	 */
+ 	if (!rq->scx.cpu_released) {
+ 		if (SCX_HAS_OP(sch, cpu_release)) {
+@@ -2478,7 +2478,7 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 	}
+ 
+ 	/*
+-	 * If balance_scx() is telling us to keep running @prev, replenish slice
++	 * If balance_one() is telling us to keep running @prev, replenish slice
+ 	 * if necessary and keep running @prev. Otherwise, pop the first one
+ 	 * from the local DSQ.
+ 	 */
+@@ -4025,7 +4025,7 @@ static DEFINE_TIMER(scx_bypass_lb_timer, scx_bypass_lb_timerfn);
+  *
+  * - ops.dispatch() is ignored.
+  *
+- * - balance_scx() does not set %SCX_RQ_BAL_KEEP on non-zero slice as slice
++ * - balance_one() does not set %SCX_RQ_BAL_KEEP on non-zero slice as slice
+  *   can't be trusted. Whenever a tick triggers, the running task is rotated to
+  *   the tail of the queue with core_sched_at touched.
+  *
+@@ -6069,7 +6069,7 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local(u64 dsq_id)
+ 		/*
+ 		 * A successfully consumed task can be dequeued before it starts
+ 		 * running while the CPU is trying to migrate other dispatched
+-		 * tasks. Bump nr_tasks to tell balance_scx() to retry on empty
++		 * tasks. Bump nr_tasks to tell balance_one() to retry on empty
+ 		 * local DSQ.
+ 		 */
+ 		dspc->nr_tasks++;
+-- 
+2.17.1
+
