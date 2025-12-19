@@ -1,32 +1,32 @@
-Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
+Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2909733CEAF
-	for <sched-ext@lists.linux.dev>; Fri, 19 Dec 2025 18:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9868634403F
+	for <sched-ext@lists.linux.dev>; Fri, 19 Dec 2025 18:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766168039; cv=none; b=Pm89e2wjPY259kItVWYIXAevETFt6BJFr/1nQMOcg3cWOrQcNbc56vMWoZQfJQI7JsVHHN/aWoPtfgs9Dhv8EvuwcpdMbW2tvepg4IUD8WBU/GUqbORxXgvPCVVCop+Zoo6u4GtljO8Z3b0QVRUPklCJMVV02pomfr+Vl+FTsy0=
+	t=1766168046; cv=none; b=XBV3LWrRFipONuzPiBWOcPsGhP0DL+2vatFv/zNHR6nBmnCnb6inZpmyBOqCJgFkPdOPBX5919FkcvQ4A/E5S3GXmAWVMWBAN5pk1yG7mLKoPd/OyXq4ddD2d47FrWSC3mR7ok976hBBJftNYOL2DqurTGugB/ZE5JIumPd00mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766168039; c=relaxed/simple;
-	bh=xwdCmNBq4UArbLWiiMi29/rI19AL51F13PUJKOOtxjA=;
+	s=arc-20240116; t=1766168046; c=relaxed/simple;
+	bh=fsr1NCL1XG1YOww1CyVhPIPffRtDrW+g9/2H818QDFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L26DGZ5lkUInE/L9QKef7OMb8s8jlmbPb0ynIfZ4Srw2Y1kTm046Iiw2T3cJvC9XVKrbsIYb5Q3NdG7e1or/Wb1I1AKGSIJNwn2qSRYbaieuX3b3q5YUh33zGkuWA0/BsiuJw8FFzbKvOfQ83IXIGTqhxYHJBDKOUL+vgz8mMZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PAOHF2TW; arc=none smtp.client-ip=95.215.58.172
+	 MIME-Version; b=BvvalD0f0xJE0eMQEN6DJxZXYspBZqM2v5v46pZNFLw9uIXpseEAYDdRgxzlMCRABi8HeSlJ8U3aSsQ+yLCKcH0egoY5QTcrPAgAnD1dgnxwNFNHT+yECc4Cu5xjSGTUpZ2tmHdDiM+IMZFe5N/eUByoLWfrTiCtKXfS/6GfYco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tKWzsoWj; arc=none smtp.client-ip=95.215.58.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PAOHF2TW"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tKWzsoWj"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1766168035;
+	t=1766168041;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=4zunZq07cIUHpgGkUrroZ/jV28TJVmVXjL61x/8YIV8=;
-	b=PAOHF2TWFTq49Ty0PMvixwFcvzPGV1k1I/WcNQ8ZZn2rPj0jNpeMafbCLiImAf7cMmVVMG
-	MjBtk2m7PBTW4PkW6KFXgf7G5nOnKwxsQSjs1F7/smlV3TIEWcZbXGWQVgpEKynHNn5i2p
-	F++UeCRHeNBhrL+6vabyVDC4+/mZMyA=
+	bh=UxzJ0Nv35xuTXj8PN+Km++OEEPFTc51zUbdo5xe0WEk=;
+	b=tKWzsoWj3o8B8cKcKgt931m7HypLOQ6Zoy2OF7lABcgc0sbNGMV9R8rIeaJRJ6t/8nPb9M
+	4dulbBaT95mYxGFOkPY40DMRHqFgufiDfAsU3J5OJTqG86ryw0zkD+qXRpV5GuC6Yr0Zpd
+	ytNYqF/NONaq7lTR+v8lIv2w+YR4WxM=
 From: Ihor Solodrai <ihor.solodrai@linux.dev>
 To: Alexei Starovoitov <ast@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
@@ -59,9 +59,9 @@ Cc: bpf@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-kbuild@vger.kernel.org,
 	sched-ext@lists.linux.dev
-Subject: [PATCH bpf-next v7 1/8] resolve_btfids: Rename object btf field to btf_path
-Date: Fri, 19 Dec 2025 10:13:14 -0800
-Message-ID: <20251219181321.1283664-2-ihor.solodrai@linux.dev>
+Subject: [PATCH bpf-next v7 2/8] resolve_btfids: Factor out load_btf()
+Date: Fri, 19 Dec 2025 10:13:15 -0800
+Message-ID: <20251219181321.1283664-3-ihor.solodrai@linux.dev>
 In-Reply-To: <20251219181321.1283664-1-ihor.solodrai@linux.dev>
 References: <20251219181321.1283664-1-ihor.solodrai@linux.dev>
 Precedence: bulk
@@ -73,54 +73,120 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Rename the member of `struct object` holding the path to BTF data if
-provided via --btf arg. `btf_path` is less ambiguous.
+Increase the lifetime of parsed BTF in resolve_btfids by factoring
+load_btf() routine out of symbols_resolve() and storing the base_btf
+and btf pointers in the struct object.
 
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Tested-by: Alan Maguire <alan.maguire@oracle.com>
 Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
 ---
- tools/bpf/resolve_btfids/main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/bpf/resolve_btfids/main.c | 47 ++++++++++++++++++++++++---------
+ 1 file changed, 34 insertions(+), 13 deletions(-)
 
 diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
-index d47191c6e55e..164f0c941f04 100644
+index 164f0c941f04..b4caae1170dd 100644
 --- a/tools/bpf/resolve_btfids/main.c
 +++ b/tools/bpf/resolve_btfids/main.c
-@@ -113,7 +113,7 @@ struct btf_id {
- 
- struct object {
- 	const char *path;
--	const char *btf;
-+	const char *btf_path;
+@@ -116,6 +116,9 @@ struct object {
+ 	const char *btf_path;
  	const char *base_btf_path;
  
++	struct btf *btf;
++	struct btf *base_btf;
++
  	struct {
-@@ -550,11 +550,11 @@ static int symbols_resolve(struct object *obj)
+ 		int		 fd;
+ 		Elf		*elf;
+@@ -529,16 +532,10 @@ static int symbols_collect(struct object *obj)
+ 	return 0;
+ }
+ 
+-static int symbols_resolve(struct object *obj)
++static int load_btf(struct object *obj)
+ {
+-	int nr_typedefs = obj->nr_typedefs;
+-	int nr_structs  = obj->nr_structs;
+-	int nr_unions   = obj->nr_unions;
+-	int nr_funcs    = obj->nr_funcs;
+-	struct btf *base_btf = NULL;
+-	int err, type_id;
+-	struct btf *btf;
+-	__u32 nr_types;
++	struct btf *base_btf = NULL, *btf = NULL;
++	int err;
+ 
+ 	if (obj->base_btf_path) {
+ 		base_btf = btf__parse(obj->base_btf_path, NULL);
+@@ -546,7 +543,7 @@ static int symbols_resolve(struct object *obj)
+ 		if (err) {
+ 			pr_err("FAILED: load base BTF from %s: %s\n",
+ 			       obj->base_btf_path, strerror(-err));
+-			return -1;
++			goto out_err;
  		}
  	}
  
--	btf = btf__parse_split(obj->btf ?: obj->path, base_btf);
-+	btf = btf__parse_split(obj->btf_path ?: obj->path, base_btf);
- 	err = libbpf_get_error(btf);
+@@ -555,9 +552,30 @@ static int symbols_resolve(struct object *obj)
  	if (err) {
  		pr_err("FAILED: load BTF from %s: %s\n",
--			obj->btf ?: obj->path, strerror(-err));
-+			obj->btf_path ?: obj->path, strerror(-err));
- 		goto out;
+ 			obj->btf_path ?: obj->path, strerror(-err));
+-		goto out;
++		goto out_err;
  	}
  
-@@ -790,8 +790,8 @@ int main(int argc, const char **argv)
- 	struct option btfid_options[] = {
- 		OPT_INCR('v', "verbose", &verbose,
- 			 "be more verbose (show errors, etc)"),
--		OPT_STRING(0, "btf", &obj.btf, "BTF data",
--			   "BTF data"),
-+		OPT_STRING(0, "btf", &obj.btf_path, "file",
-+			   "path to a file with input BTF data"),
- 		OPT_STRING('b', "btf_base", &obj.base_btf_path, "file",
- 			   "path of file providing base BTF"),
- 		OPT_BOOLEAN(0, "fatal_warnings", &fatal_warnings,
++	obj->base_btf = base_btf;
++	obj->btf = btf;
++
++	return 0;
++
++out_err:
++	btf__free(base_btf);
++	btf__free(btf);
++	return err;
++}
++
++static int symbols_resolve(struct object *obj)
++{
++	int nr_typedefs = obj->nr_typedefs;
++	int nr_structs  = obj->nr_structs;
++	int nr_unions   = obj->nr_unions;
++	int nr_funcs    = obj->nr_funcs;
++	struct btf *btf = obj->btf;
++	int err, type_id;
++	__u32 nr_types;
++
+ 	err = -1;
+ 	nr_types = btf__type_cnt(btf);
+ 
+@@ -615,8 +633,6 @@ static int symbols_resolve(struct object *obj)
+ 
+ 	err = 0;
+ out:
+-	btf__free(base_btf);
+-	btf__free(btf);
+ 	return err;
+ }
+ 
+@@ -824,6 +840,9 @@ int main(int argc, const char **argv)
+ 	if (symbols_collect(&obj))
+ 		goto out;
+ 
++	if (load_btf(&obj))
++		goto out;
++
+ 	if (symbols_resolve(&obj))
+ 		goto out;
+ 
+@@ -833,6 +852,8 @@ int main(int argc, const char **argv)
+ 	if (!(fatal_warnings && warnings))
+ 		err = 0;
+ out:
++	btf__free(obj.base_btf);
++	btf__free(obj.btf);
+ 	if (obj.efile.elf) {
+ 		elf_end(obj.efile.elf);
+ 		close(obj.efile.fd);
 -- 
 2.52.0
 
