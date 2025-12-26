@@ -1,60 +1,61 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com [44.246.68.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC531A3179;
-	Thu, 25 Dec 2025 04:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC8017BA2
+	for <sched-ext@lists.linux.dev>; Fri, 26 Dec 2025 08:47:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.246.68.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766635312; cv=none; b=i7/oo5iWZF16ofK4uYbKy7tfvoN1IFRxVgcBn8nkRprJabbgIVC9/ik6VY1JCKmaCzVGwvdUHpDtlLrivQu4pHgfz46OYgp1DIRW02cTU0KrwQSqd73YbslNQPSbQL2q6XAseAm8ZaBgKwyHdY9pnjXGg23xxc4MekNGuvL9RKo=
+	t=1766738833; cv=none; b=oK9iFlWKECyu5KRBh0OYsbORMKVfjrjEF5oeUI/QU2mwUbBx4xscPUB1oGnENV2LArCvZInoCpuSZ+VZpPl34u8NQ5tSL570xkQhYCsCD7CCXY598QVg/gAOTYn74nw23WoBTMe4B/nWtRySEWKklJN7i9VJW4owZrRnvtAPmJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766635312; c=relaxed/simple;
-	bh=a0iq1sd1jBM9Q1ibIFRv0NxghMqTfNf4aPuL2PGlptU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6vMNCW8AU5Hg0+L0RVM1Atx6eMWzd+G1hUHaceUn3OUYtQhvNt1GDqkaSPD/3DzdNGrY84wkhYn+lujKPiDyXxLEJLOy5TJDXY82YZOegtAApppJjxDbuaRAyeTch4fZrMSBgzBUb8HDeBc6FZM58I2ri3ARKM+X2tMXOyxp94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=bOd3Boiv; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1766738833; c=relaxed/simple;
+	bh=eeksswpX+cZxnC17bUKN7GNUBgriCePvixjJzveURjw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aB7MWrO7fud4QRD1fA60zYpWCsdnZTnZAJtozjlZ4eoydDs1rRV7O2AwMvYwBXoMUduEvLAy7CJUScwtxSnYJBCWTajBAaOeznfa6c0/M96Qh23hNjk0GYHgYgCgscuFEOFWT9kGFOHcuPdOb16+xvU46GNEyJtpAHrEKJ3zNs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.co.jp; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=qo3eE9rS; arc=none smtp.client-ip=44.246.68.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="bOd3Boiv"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=lwltwGqxiKq/BS1zwHOtRLooQae3Ubuni+ZvF375urk=; b=bOd3BoivYefmQg185t+3yXn/tN
-	KUk4ZkQer5Ngpw36nT7mKkD2t+Wi8ZD1KJJwE6RruOnhpaak65VEO5f+wwld9uu1F/vzI70BxcwUR
-	bR4BkB4AYtVkJr/mfw+LJR49JoI4NFiQ8ROcYqfES8aupTychHZ6DXHGEIkMCHlJyBA0mIsZOG9uK
-	913nxQ9+px99h/gbH3G6Qi0pQictX7fhrTQM7HGe8qjJvP5Btu5IgmUKOEaMCHVjF4RdfqMjV+mMO
-	MyMO3DmD03lypMU9Gu40kOKw+uLXc0MG4evVpfqzFlc6yKww6TSXUewxp5cggfxMf3PBsFFvkm81M
-	Y0XtYhXg==;
-Received: from [58.29.143.236] (helo=localhost)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1vYcXj-00GLlf-1l; Thu, 25 Dec 2025 05:01:40 +0100
-From: Changwoo Min <changwoo@igalia.com>
-To: lukasz.luba@arm.com,
-	rafael@kernel.org,
-	donald.hunter@gmail.com,
-	kuba@kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	lenb@kernel.org,
-	pavel@kernel.org,
-	changwoo@igalia.com
-Cc: kernel-dev@igalia.com,
-	linux-pm@vger.kernel.org,
-	netdev@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH for 6.19 4/4] PM: EM: Add dump to get-perf-domains in the EM YNL spec
-Date: Thu, 25 Dec 2025 13:01:04 +0900
-Message-ID: <20251225040104.982704-5-changwoo@igalia.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251225040104.982704-1-changwoo@igalia.com>
-References: <20251225040104.982704-1-changwoo@igalia.com>
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="qo3eE9rS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1766738831; x=1798274831;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=NLE0+ManJEJ7faRl2PxvYd5k4pMSahBLHzmroEnCur0=;
+  b=qo3eE9rSb5s+CRrT6vRPFi2mUWcx4J53oqJJnRQPS2+skIVKb/c4IN9R
+   Ifou3xx9O0VtcxtM5DBptkChFZ7VguDVsNIsWZv1muzgnUJG973IKss2F
+   A1Yrzj6iNOEvICadfAYiqBpPDAzF0hMlSl/pLulik2kFcimKp9kes4zVI
+   u5uUQBAbtPhvHncNXWXVeO+M2Fz6GnoDuSxogWdXHH5dZJwOsLFySX/l6
+   PiMJZqzm2biKnPgSf1KMp8nPibL7v6D/AjhrFhKxbhplTQrkPm3WCFfce
+   rNllwHtu8LGCGo6SjhGy3nyx/fj9i8S6KmtXazoj88ffIVoeFrm/TsTsZ
+   A==;
+X-CSE-ConnectionGUID: sqScfHS0RliRvFHl2QX8Vg==
+X-CSE-MsgGUID: 3pXZiJd7Twi8ixumI0NxHg==
+X-IronPort-AV: E=Sophos;i="6.21,177,1763424000"; 
+   d="scan'208";a="9771030"
+Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
+  by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Dec 2025 08:47:09 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.234:4561]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.11.166:2525] with esmtp (Farcaster)
+ id b10c3eff-fbc8-454c-8496-dae3d1fc1fc1; Fri, 26 Dec 2025 08:47:09 +0000 (UTC)
+X-Farcaster-Flow-ID: b10c3eff-fbc8-454c-8496-dae3d1fc1fc1
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
+ Fri, 26 Dec 2025 08:47:08 +0000
+Received: from localhost.localdomain (10.37.244.7) by
+ EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.35;
+ Fri, 26 Dec 2025 08:47:07 +0000
+From: Kohei Enju <enjuk@amazon.com>
+To: <sched-ext@lists.linux.dev>
+CC: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi
+	<arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Kohei Enju
+	<enjuk@amazon.com>, Emil Tsalapatis <emil@etsalapatis.com>, Dan Schatzberg
+	<schatzberg.dan@gmail.com>, <kohei@enjuk.jp>
+Subject: [PATCH v1 0/2] tools/sched_ext: fix issues in scx_show_state.py
+Date: Fri, 26 Dec 2025 17:46:48 +0900
+Message-ID: <20251226084657.75567-1-enjuk@amazon.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -62,217 +63,24 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: EX19D037UWB003.ant.amazon.com (10.13.138.115) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-Add dump to get-perf-domains, so that a user can fetch either information
-about a specific performance domain with do or information about all
-performance domains with dump. The YNL spec, autogenerated files, and
-the do implementation are updated, and the dump implementation is added.
+Due to recent changes in kernel/sched/ext.c,
+tools/sched_ext/scx_show_state.py no longer works properly.
 
-Suggested-by: Donald Hunter <donald.hunter@gmail.com>
-Signed-off-by: Changwoo Min <changwoo@igalia.com>
----
- .../netlink/specs/dev-energymodel.yaml        | 12 ++++
- include/uapi/linux/dev_energymodel.h          |  3 +-
- kernel/power/em_netlink.c                     | 58 +++++++++++++++++--
- kernel/power/em_netlink_autogen.c             | 16 ++++-
- kernel/power/em_netlink_autogen.h             |  2 +
- 5 files changed, 82 insertions(+), 9 deletions(-)
+Fix these issues:
+1. Use 'scx_root' instead of 'scx_ops'
+2. Use scx_aborting instead of scx_in_softlockup and scx_breather_depth
 
-diff --git a/Documentation/netlink/specs/dev-energymodel.yaml b/Documentation/netlink/specs/dev-energymodel.yaml
-index af8b8f72f722..1843e68faacf 100644
---- a/Documentation/netlink/specs/dev-energymodel.yaml
-+++ b/Documentation/netlink/specs/dev-energymodel.yaml
-@@ -47,6 +47,11 @@ attribute-sets:
-     doc: >-
-       Information on all the performance domains.
-     attributes:
-+      -
-+        name: perf-domain-id
-+        type: u32
-+        doc: >-
-+          A unique ID number for each performance domain.
-       -
-         name: perf-domain
-         type: nest
-@@ -136,6 +141,13 @@ operations:
-       attribute-set: perf-domains
-       doc: Get the list of information for all performance domains.
-       do:
-+        request:
-+          attributes:
-+            - perf-domain-id
-+        reply:
-+          attributes:
-+            - perf-domain
-+      dump:
-         reply:
-           attributes:
-             - perf-domain
-diff --git a/include/uapi/linux/dev_energymodel.h b/include/uapi/linux/dev_energymodel.h
-index 3399967e1f93..e8e133b5a797 100644
---- a/include/uapi/linux/dev_energymodel.h
-+++ b/include/uapi/linux/dev_energymodel.h
-@@ -37,7 +37,8 @@ enum dev_energymodel_perf_domain_flags {
- };
- 
- enum {
--	DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN = 1,
-+	DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN_ID = 1,
-+	DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN,
- 
- 	__DEV_ENERGYMODEL_A_PERF_DOMAINS_MAX,
- 	DEV_ENERGYMODEL_A_PERF_DOMAINS_MAX = (__DEV_ENERGYMODEL_A_PERF_DOMAINS_MAX - 1)
-diff --git a/kernel/power/em_netlink.c b/kernel/power/em_netlink.c
-index b6edb018c65a..9412f1666007 100644
---- a/kernel/power/em_netlink.c
-+++ b/kernel/power/em_netlink.c
-@@ -18,6 +18,13 @@
- #include "em_netlink_autogen.h"
- 
- /*************************** Command encoding ********************************/
-+struct dump_ctx {
-+	int idx;
-+	int start;
-+	struct sk_buff *skb;
-+	struct netlink_callback *cb;
-+};
-+
- static int __em_nl_get_pd_size(struct em_perf_domain *pd, void *data)
- {
- 	int nr_cpus, msg_sz, cpus_sz;
-@@ -76,16 +83,44 @@ static int __em_nl_get_pd(struct em_perf_domain *pd, void *data)
- 	return -EMSGSIZE;
- }
- 
-+static int __em_nl_get_pd_for_dump(struct em_perf_domain *pd, void *data)
-+{
-+	const struct genl_info *info;
-+	struct dump_ctx *ctx = data;
-+	void *hdr;
-+	int ret;
-+
-+	if (ctx->idx++ < ctx->start)
-+		return 0;
-+
-+	info = genl_info_dump(ctx->cb);
-+	hdr = genlmsg_iput(ctx->skb, info);
-+	if (!hdr) {
-+		genlmsg_cancel(ctx->skb, hdr);
-+		return -EMSGSIZE;
-+	}
-+
-+	ret = __em_nl_get_pd(pd, ctx->skb);
-+	genlmsg_end(ctx->skb, hdr);
-+	return ret;
-+}
-+
- int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
- 					      struct genl_info *info)
- {
-+	int id, ret = -EMSGSIZE, msg_sz = 0;
-+	int cmd = info->genlhdr->cmd;
-+	struct em_perf_domain *pd;
- 	struct sk_buff *msg;
- 	void *hdr;
--	int cmd = info->genlhdr->cmd;
--	int ret = -EMSGSIZE, msg_sz = 0;
- 
--	for_each_em_perf_domain(__em_nl_get_pd_size, &msg_sz);
-+	if (!info->attrs[DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN_ID])
-+		return -EINVAL;
-+
-+	id = nla_get_u32(info->attrs[DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN_ID]);
-+	pd = em_perf_domain_get_by_id(id);
- 
-+	__em_nl_get_pd_size(pd, &msg_sz);
- 	msg = genlmsg_new(msg_sz, GFP_KERNEL);
- 	if (!msg)
- 		return -ENOMEM;
-@@ -94,10 +129,9 @@ int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
- 	if (!hdr)
- 		goto out_free_msg;
- 
--	ret = for_each_em_perf_domain(__em_nl_get_pd, msg);
-+	ret = __em_nl_get_pd(pd, msg);
- 	if (ret)
- 		goto out_cancel_msg;
--
- 	genlmsg_end(msg, hdr);
- 
- 	return genlmsg_reply(msg, info);
-@@ -106,10 +140,22 @@ int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
- 	genlmsg_cancel(msg, hdr);
- out_free_msg:
- 	nlmsg_free(msg);
--
- 	return ret;
- }
- 
-+int dev_energymodel_nl_get_perf_domains_dumpit(struct sk_buff *skb,
-+						struct netlink_callback *cb)
-+{
-+	struct dump_ctx ctx = {
-+		.idx = 0,
-+		.start = cb->args[0],
-+		.skb = skb,
-+		.cb = cb,
-+	};
-+
-+	return for_each_em_perf_domain(__em_nl_get_pd_for_dump, &ctx);
-+}
-+
- static struct em_perf_domain *__em_nl_get_pd_table_id(struct nlattr **attrs)
- {
- 	struct em_perf_domain *pd;
-diff --git a/kernel/power/em_netlink_autogen.c b/kernel/power/em_netlink_autogen.c
-index 44acef0e7df2..16a59200c6a4 100644
---- a/kernel/power/em_netlink_autogen.c
-+++ b/kernel/power/em_netlink_autogen.c
-@@ -11,6 +11,11 @@
- 
- #include <uapi/linux/dev_energymodel.h>
- 
-+/* DEV_ENERGYMODEL_CMD_GET_PERF_DOMAINS - do */
-+static const struct nla_policy dev_energymodel_get_perf_domains_nl_policy[DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN_ID + 1] = {
-+	[DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN_ID] = { .type = NLA_U32, },
-+};
-+
- /* DEV_ENERGYMODEL_CMD_GET_PERF_TABLE - do */
- static const struct nla_policy dev_energymodel_get_perf_table_nl_policy[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID + 1] = {
- 	[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID] = { .type = NLA_U32, },
-@@ -18,10 +23,17 @@ static const struct nla_policy dev_energymodel_get_perf_table_nl_policy[DEV_ENER
- 
- /* Ops table for dev_energymodel */
- static const struct genl_split_ops dev_energymodel_nl_ops[] = {
-+	{
-+		.cmd		= DEV_ENERGYMODEL_CMD_GET_PERF_DOMAINS,
-+		.doit		= dev_energymodel_nl_get_perf_domains_doit,
-+		.policy		= dev_energymodel_get_perf_domains_nl_policy,
-+		.maxattr	= DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN_ID,
-+		.flags		= GENL_CMD_CAP_DO,
-+	},
- 	{
- 		.cmd	= DEV_ENERGYMODEL_CMD_GET_PERF_DOMAINS,
--		.doit	= dev_energymodel_nl_get_perf_domains_doit,
--		.flags	= GENL_CMD_CAP_DO,
-+		.dumpit	= dev_energymodel_nl_get_perf_domains_dumpit,
-+		.flags	= GENL_CMD_CAP_DUMP,
- 	},
- 	{
- 		.cmd		= DEV_ENERGYMODEL_CMD_GET_PERF_TABLE,
-diff --git a/kernel/power/em_netlink_autogen.h b/kernel/power/em_netlink_autogen.h
-index f7e4bddcbd53..5caf2f7e18a5 100644
---- a/kernel/power/em_netlink_autogen.h
-+++ b/kernel/power/em_netlink_autogen.h
-@@ -14,6 +14,8 @@
- 
- int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
- 					     struct genl_info *info);
-+int dev_energymodel_nl_get_perf_domains_dumpit(struct sk_buff *skb,
-+					       struct netlink_callback *cb);
- int dev_energymodel_nl_get_perf_table_doit(struct sk_buff *skb,
- 					   struct genl_info *info);
- 
+Kohei Enju (2):
+  tools/sched_ext: fix scx_show_state.py for scx_root change
+  tools/sched_ext: update scx_show_state.py for scx_aborting change
+
+ tools/sched_ext/scx_show_state.py | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
 -- 
-2.52.0
+2.51.0
 
