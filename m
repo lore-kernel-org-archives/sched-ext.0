@@ -1,64 +1,64 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B237E2F85B
-	for <sched-ext@lists.linux.dev>; Sun, 28 Dec 2025 03:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8617E8287E
+	for <sched-ext@lists.linux.dev>; Sun, 28 Dec 2025 03:28:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766892012; cv=none; b=bAn6A0V6VbxQ/k/Fk0f/Iq1pGbi3yKIYMWRCQc8BH9m7pCJiPKJgs9I/gvnLpwgOOqrGT6Yfrhr4mElp/qinFZ5VAXXhq+vPHAvYPZ6PgN7apxljxhlVKk+0+fSSh1G/wHNP+LAmQ7f22vInloK2sxnnmLkxSGJ8A4wY6ib3tHk=
+	t=1766892497; cv=none; b=lcaRRQmNhg56KWPqW4XYluJkezLFtpHwODrDM7peyy/wH64qnLHbyasasJXKSqlMs4Z2LQnElqO7ZExDpbkNfsKzDkF3MgRL0mAP01faP/sIqqVJXHkwffbcZpD3DoiFjiDIkiYdAEGFhPuNL8HpfEFriAuDRBJdWfnBremO1XQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766892012; c=relaxed/simple;
-	bh=cpCTMbAcPnQZsioZKbMUtxol7JbAiUWx/Oakn47Ha5g=;
+	s=arc-20240116; t=1766892497; c=relaxed/simple;
+	bh=UiyNu/itFSk5RoPlo40JKZoQHav/R7jPZwUIIIns/DA=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ORP+uwsUbiqQ20ZSDl48OBMAyHWI7T/SDBxvW14gWWBEb0Ni6UMTFZCiOtcDvCi1tfdbww4S+q8pZhS43pTnJVQ23dlTZhqhRvX0Zd+er9XmxzqRi6p3SxwnQaTjJndm1WlQ649DeVxr+SmUTB/tga9LyIARKWhiYaPCYIn90Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=rdizOJwn; arc=none smtp.client-ip=209.85.219.51
+	 References:In-Reply-To; b=Hm2rUB4aEP+X8tEJV8ABJ4oStsJ1BCHmEFvLpS7iYCOXulqAKeC8ibxQZMZodoZ2k2dd0W5OAuuUk58RgrhVP9VBPpDLLxY44rjSE37eTLIGBpU9P+gQrokaQA0gM10o6mDtHA/KVJeSTT8v2qO0V1yUOBQADL5o60Lsz1rjY+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=gba6KerY; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="rdizOJwn"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-88fe44cce7eso29629556d6.3
-        for <sched-ext@lists.linux.dev>; Sat, 27 Dec 2025 19:20:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="gba6KerY"
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-88888c41a13so103076576d6.3
+        for <sched-ext@lists.linux.dev>; Sat, 27 Dec 2025 19:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1766892007; x=1767496807; darn=lists.linux.dev;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1766892493; x=1767497293; darn=lists.linux.dev;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KfrEOhtEBr1ie3VfDCrv0YEmwUSpSaCz6Ve5l6JncRY=;
-        b=rdizOJwnlvUsoUF/ra57REdOxLt/36+BCNopRdYYmNjfKG3pY6809BMDEgzOb6MTT5
-         TgmsC0smh0KnDGrk3z21bni5V9woElTlljCTVPCMfv+5UEgszhD4psc+qFS8SyR/PXO7
-         D2g3Vsvat/27i922IBc7IKOz9pJdhzNq0jJh97Y3rl6WERL1UGePDURbQ1iw7iDPKkDj
-         de/kBrh7+j+92RpQyOvBArEBZhm9Sv6HI7fUdTWx+hqfKiBPURcqIRMQEfYDSXdGFN7t
-         ThisU2f6qfM0zURQVpgbiLXHjw0YBob4FSYk0ekaS/1fE8MTvhG3fvRtFVUhZNmin31i
-         O9Bw==
+        bh=H1GJKnlFvsBc0DJz2nZmZKmRyHqx8pv0saxySKmboAc=;
+        b=gba6KerYaw5hHRNE14QVzQ3PMQ1oVOb4s8YD8kE7Dw51allamueFWwLQESISrpTB+B
+         z+6rZDVKezE2C4W0bsFDcMQssQvPICWDLCRMfSoBrLArryIHK5Qqvhsn6hGD2V8WwXwg
+         JrbZ5SomI/oXgylFVad4ZChasZxLOOIh6PKt7OOXiHSw+OFd05Y72C93Nwx/j4ShQdga
+         yXZO2ASHDeytvcl89lvFewRk8Z55pV1L1wXcajLNMYb9jCU236KZVAn5fltr5jfj0I1c
+         qp0sXZPHu/UVonSpEoLTU7Q51T5f/DbJePlhmRRieSGj27Yxlvmedib380s4ZixtbyX8
+         Iemg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766892007; x=1767496807;
+        d=1e100.net; s=20230601; t=1766892493; x=1767497293;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KfrEOhtEBr1ie3VfDCrv0YEmwUSpSaCz6Ve5l6JncRY=;
-        b=UNJq871gRQM342yiWVsznNOE8s0MC7ni/feDqA5Cca9w55Atg2U4PDSasWvpAF3SMS
-         tIJVGVoD/oCNDnrGs9Bx3tDoe9kokoUWMPrK1KAqjstrlALqSy+Ia/H4CdPT4aOG/wVv
-         07o4/ucbJlteplrgRs770QObvObti384GQQCBRFPK4SVvQf64UmUyjgfmmCrforOyHWM
-         D/ac3F/TJJsrfIW8xFe/XfueeqvrCJocJ8qgF4dEVuk4zBQfUyI55yg1jCD5/IFC+WoN
-         y0IGnmONEKQswwRUoOFeVg1/8lOUxUJLZ1I6qxkXviIJ82whBaDCTn1xA3hKjM/aTedt
-         zfqQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+SFydhuQA/d2WWxZrMgTqTFKpmfCgsEuBhonEQhEZcSC2f7Wrk40EmoBRXHarVAIQ4b6z/S29z4A=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywq26BajloymnnMwLiEOVAn5zzYPHkjU/hLNuNW0M/Ean/T94kx
-	uewjiNitK+Sv7OnCfH0Q8VhlVE3+bK1P6I7HVOtgu5k09HHrTrqr3MCyfHsYkBNBpm4=
-X-Gm-Gg: AY/fxX4ZTAMFMYRiTgq3Ho/KpoZpTTJyHgHcxKEyw+ou+umkNgCk1p4QN1OFpkPhQCJ
-	2XPjgGRQbN46T6lbXnLQNVj8ceWJ4mmIAc45c6gKjLBuaXBEXo7FM4dHZ9svJuZrIyWLIwp7uk3
-	z8B9BlTUlVbgEI3zjl9/ghuNGVfx2X3Orx9k+FVGYZcfS7HoIPqNf/44GhbOdtHAfiAMc5yHk01
-	8ZPA8o6U/2X9sIcdIcrSTAxEO8YIMLiy9YUohHpxGv5nTMuJZ0Hbf5N1kw72k8qiSacrT7F/lB6
-	0sWEyjfVrepusIMl5C6UBmnZIiFnH1skq4Iju89x/x8idQPXDzS0AnjzfebHzu0jyiSBsLVBtjj
-	jynQ/FdSc9zbLwkB2CDepeOg9NxevBC+a9WFiwuF9BnwwbMSO3TG6OA7D6fOLRd6dVDLg4VnhAS
-	YXNhDU40SF10g=
-X-Google-Smtp-Source: AGHT+IGF6QooQDK1+5jHPTftG1Uk1gASgacdOvVV8T31Sr9ut3FsF9ejF1ygJ4rdqjGuJxBIHJ4WIQ==
-X-Received: by 2002:a05:6214:5346:b0:88a:577b:fa4f with SMTP id 6a1803df08f44-88d816677dbmr363334056d6.12.1766892007469;
-        Sat, 27 Dec 2025 19:20:07 -0800 (PST)
+        bh=H1GJKnlFvsBc0DJz2nZmZKmRyHqx8pv0saxySKmboAc=;
+        b=TV40FsRm1WIeqGXnO2NAKW6OavwP4Ur6AIPbXTJzIVDB3+KV7nAkm0FN/rvf2hoNxH
+         VjzOge/RpvPjhsPyJZ7ijRDV3phdQ5EvjtYr1q23wDoaRwH9qp3OvaYlqL3aA80AazZc
+         aqNfZgAG7yCOj1cDp8UNLHaKLqx4Ie/ly3WMD1eDtp8OIX1HqVO+K2QtWP87mNsIV6Pz
+         FVbPBrI3tM++doyQvOU60p1/SCJsf3OKlOrPnGh78aHIEVrZTKQJrrgaVzJ6wPyflJdJ
+         hs571Z4DEwUtnehve/2dGEq1fVt15HRyvdNpSqGBGhw+uQKW9aL9MJ6oI7DkgocDUwAd
+         92zQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVKVn/YONOq3oF4ob0XnDmRspOk0vNCGXFMFWX9JMXzppJ8jiecdvH2Ls7cZQbIBTNZtLQbi618XzI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxTlJiUPhWFO7C7aYRDyj/5lREQCnFvJa7HYNTuLZacfa51HIRm
+	uu90KzIropHW/ZgPARIv102LcAFVdesYKvavSWylnIEbgDR4Pp6i1uNnqqo2AGkoiAg=
+X-Gm-Gg: AY/fxX7pNp5NR4EZaike0mT8sYCzZhcaHLv1wtqZ/Tx/ZAlPq/pmTboWi8CcN+i2roF
+	VrqEUPA27+PhZdi0IAdMi5vuiq8F8tS5idjiSp6VGbUySjhproULb8XUDuC99YkRlmUQ+p8zYI1
+	7x6plCf/q56xHAR2VHBvnCe70v37E1rZJ0BS6BgE2gSrxvkjgbhZxfPcnhjhW6PgV2qW/zNKw8r
+	eerLpCQ4Mpjpo7GOyTek3mejBB71xlkiorb7nrtg/PgKOF+KtU+5yz7SG9aCUdAPPzc+IG5NnbE
+	jrH23s5XsSpzPi0XEYMj4lx65KDlRIMC79DOAvb+D+zmUK7OFtTxDLM5W6RU+0T9uFNobyGBRzo
+	9LVeogoGtlCoibfvwbXc53t11P2jW2J/tIbc1vPQ3X7ga+pi7NC29OaKFFSNDbMc/GZUamIZ0DA
+	2L+q+9SYwzi5d3VLkc0Cy1Nw==
+X-Google-Smtp-Source: AGHT+IFzKaRU9VhOR2GreSWFUbJNutLvzh1trPwA4ZZBwsnI7hfQJyWne+B1Ni/HKWborvfD2g/zqA==
+X-Received: by 2002:a05:6214:5a02:b0:882:8746:b047 with SMTP id 6a1803df08f44-88d81278ab3mr440363906d6.10.1766892493219;
+        Sat, 27 Dec 2025 19:28:13 -0800 (PST)
 Received: from localhost ([140.174.219.137])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d99d7dbdcsm201315296d6.43.2025.12.27.19.20.06
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-88d96bec097sm200074966d6.16.2025.12.27.19.28.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 27 Dec 2025 19:20:07 -0800 (PST)
+        Sat, 27 Dec 2025 19:28:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -67,187 +67,393 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 27 Dec 2025 22:20:06 -0500
-Message-Id: <DF9IXXXOIXP7.LILBQBLDYVM7@etsalapatis.com>
+Date: Sat, 27 Dec 2025 22:28:11 -0500
+Message-Id: <DF9J45056GT3.9VDAT91SZW7T@etsalapatis.com>
 Cc: "Daniel Hodges" <hodgesd@meta.com>, <sched-ext@lists.linux.dev>,
  <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
+Subject: Re: [PATCH 2/2] selftests/sched_ext: Add test to validate
+ ops.dequeue()
 From: "Emil Tsalapatis" <emil@etsalapatis.com>
 To: "Andrea Righi" <arighi@nvidia.com>, "Tejun Heo" <tj@kernel.org>, "David
  Vernet" <void@manifault.com>, "Changwoo Min" <changwoo@igalia.com>
 X-Mailer: aerc 0.20.1
 References: <20251219224450.2537941-1-arighi@nvidia.com>
- <20251219224450.2537941-2-arighi@nvidia.com>
-In-Reply-To: <20251219224450.2537941-2-arighi@nvidia.com>
+ <20251219224450.2537941-3-arighi@nvidia.com>
+In-Reply-To: <20251219224450.2537941-3-arighi@nvidia.com>
 
 On Fri Dec 19, 2025 at 5:43 PM EST, Andrea Righi wrote:
-> Properly implement ops.dequeue() to ensure every ops.enqueue() is
-> balanced by a corresponding ops.dequeue() call, regardless of whether
-> the task is on a BPF data structure or already dispatched to a DSQ.
->
-> A task is considered enqueued when it is owned by the BPF scheduler.
-> This ownership persists until the task is either dispatched (moved to a
-> local DSQ for execution) or removed from the BPF scheduler, such as when
-> it blocks waiting for an event or when its properties (for example, CPU
-> affinity or priority) are updated.
->
-> When the task enters the BPF scheduler ops.enqueue() is invoked, when it
-> leaves BPF scheduler ownership, ops.dequeue() is invoked.
->
-> This allows BPF schedulers to reliably track task ownership and maintain
-> accurate accounting.
+> Add a kselftest to validate ops.dequeue() semantics with direct
+> dispatch, user DSQ dispatch, affinity changes and verify that any
+> ops.enqueue() is balanced by a corresponding ops.dequeue().
 >
 > Cc: Emil Tsalapatis <emil@etsalapatis.com>
 > Signed-off-by: Andrea Righi <arighi@nvidia.com>
 > ---
 
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
 Hi Andrea,
 
-	This change looks reasonable to me. Some comments inline:
-
->  Documentation/scheduler/sched-ext.rst | 22 ++++++++++++++++++++++
->  include/linux/sched/ext.h             |  1 +
->  kernel/sched/ext.c                    | 27 ++++++++++++++++++++++++++-
->  3 files changed, 49 insertions(+), 1 deletion(-)
+>  tools/testing/selftests/sched_ext/Makefile    |   1 +
+>  .../testing/selftests/sched_ext/dequeue.bpf.c | 139 ++++++++++++++
+>  tools/testing/selftests/sched_ext/dequeue.c   | 172 ++++++++++++++++++
+>  3 files changed, 312 insertions(+)
+>  create mode 100644 tools/testing/selftests/sched_ext/dequeue.bpf.c
+>  create mode 100644 tools/testing/selftests/sched_ext/dequeue.c
 >
-> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/schedu=
-ler/sched-ext.rst
-> index 404fe6126a769..3ed4be53f97da 100644
-> --- a/Documentation/scheduler/sched-ext.rst
-> +++ b/Documentation/scheduler/sched-ext.rst
-> @@ -252,6 +252,26 @@ The following briefly shows how a waking task is sch=
-eduled and executed.
+> diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/s=
+elftests/sched_ext/Makefile
+> index 5fe45f9c5f8fd..764e91edabf93 100644
+> --- a/tools/testing/selftests/sched_ext/Makefile
+> +++ b/tools/testing/selftests/sched_ext/Makefile
+> @@ -161,6 +161,7 @@ all_test_bpfprogs :=3D $(foreach prog,$(wildcard *.bp=
+f.c),$(INCLUDE_DIR)/$(patsubs
 > =20
->     * Queue the task on the BPF side.
-> =20
-> +   Once ``ops.enqueue()`` is called, the task is considered "enqueued" a=
-nd
-> +   is owned by the BPF scheduler. Ownership is retained until the task i=
-s
-> +   either dispatched (moved to a local DSQ for execution) or dequeued
-> +   (removed from the scheduler due to a blocking event, or to modify a
-> +   property, like CPU affinity, priority, etc.). When the task leaves th=
-e
-> +   BPF scheduler ``ops.dequeue()`` is invoked.
+>  auto-test-targets :=3D			\
+>  	create_dsq			\
+> +	dequeue				\
+>  	enq_last_no_enq_fails		\
+>  	ddsp_bogus_dsq_fail		\
+>  	ddsp_vtimelocal_fail		\
+> diff --git a/tools/testing/selftests/sched_ext/dequeue.bpf.c b/tools/test=
+ing/selftests/sched_ext/dequeue.bpf.c
+> new file mode 100644
+> index 0000000000000..aae19bfd42f04
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/dequeue.bpf.c
+> @@ -0,0 +1,139 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * A scheduler that validates ops.dequeue() is called correctly:
+> + * - For tasks on BPF data structures (not yet dispatched)
+> + * - For tasks already on DSQs (local or shared)
+> + * - That every ops.enqueue() is followed by ops.dequeue()
+> + *
+> + * Copyright (c) 2025 NVIDIA Corporation.
+> + */
 > +
-
-Can we say "leaves the scx class" instead? On direct dispatch we
-technically never insert the task into the BPF scheduler.
-
-> +   **Important**: ``ops.dequeue()`` is called for *any* enqueued task,
-> +   regardless of whether the task is still on a BPF data structure, or i=
-t
-> +   is already dispatched to a DSQ (global, local, or user DSQ)
+> +#include <scx/common.bpf.h>
 > +
-> +   This guarantees that every ``ops.enqueue()`` will eventually be follo=
-wed
-> +   by a ``ops.dequeue()``. This makes it reliable for BPF schedulers to
-> +   track task ownership and maintain accurate accounting, such as per-DS=
-Q
-> +   queued runtime sums.
+> +#define SHARED_DSQ	0
 > +
-> +   BPF schedulers can choose not to implement ``ops.dequeue()`` if they
-> +   don't need to track these transitions. The sched_ext core will safely
-> +   handle all dequeue operations regardless.
+> +char _license[] SEC("license") =3D "GPL";
 > +
->  3. When a CPU is ready to schedule, it first looks at its local DSQ. If
->     empty, it then looks at the global DSQ. If there still isn't a task t=
-o
->     run, ``ops.dispatch()`` is invoked which can use the following two
-> @@ -319,6 +339,8 @@ by a sched_ext scheduler:
->                  /* Any usable CPU becomes available */
-> =20
->                  ops.dispatch(); /* Task is moved to a local DSQ */
+> +UEI_DEFINE(uei);
 > +
-> +                ops.dequeue(); /* Exiting BPF scheduler */
->              }
->              ops.running();      /* Task starts running on its assigned C=
-PU */
->              while (task->scx.slice > 0 && task is runnable)
-> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-> index bcb962d5ee7d8..334c3692a9c62 100644
-> --- a/include/linux/sched/ext.h
-> +++ b/include/linux/sched/ext.h
-> @@ -84,6 +84,7 @@ struct scx_dispatch_q {
->  /* scx_entity.flags */
->  enum scx_ent_flags {
->  	SCX_TASK_QUEUED		=3D 1 << 0, /* on ext runqueue */
-> +	SCX_TASK_OPS_ENQUEUED	=3D 1 << 1, /* ops.enqueue() was called */
-
-Can we rename this flag? For direct dispatch we never got enqueued.
-Something like "DEQ_ON_DISPATCH" would show the purpose of the
-flag more clearly.
-
->  	SCX_TASK_RESET_RUNNABLE_AT =3D 1 << 2, /* runnable_at should be reset *=
-/
->  	SCX_TASK_DEQD_FOR_SLEEP	=3D 1 << 3, /* last dequeue was for SLEEP */
-> =20
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 94164f2dec6dc..985d75d374385 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -1390,6 +1390,9 @@ static void do_enqueue_task(struct rq *rq, struct t=
-ask_struct *p, u64 enq_flags,
->  	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) !=3D SCX_OPSS_NONE);
->  	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
-> =20
-> +	/* Mark that ops.enqueue() is being called for this task */
-> +	p->scx.flags |=3D SCX_TASK_OPS_ENQUEUED;
+> +/*
+> + * Counters to track the lifecycle of tasks:
+> + * - enqueue_cnt: Number of times ops.enqueue() was called
+> + * - dequeue_cnt: Number of times ops.dequeue() was called
+> + */
+> +u64 enqueue_cnt, dequeue_cnt;
 > +
+> +/*
+> + * Test scenarios:
+> + * - 0: Dispatch to local DSQ
+> + * - 1: Dispatch to shared DSQ
+> + */
+> +u32 test_scenario;
+> +
+> +/* Per-task state */
+> +struct task_ctx {
+> +	u64 enqueued;	/* was this task enqueued? */
 
-Can we avoid setting this flag when we have no .dequeue() method?
-Otherwise it stays set forever AFAICT, even after the task has been
-sent to the runqueues.
+Do we use this for anything? If not, can we remove it?
+We can also just do an extra sanity check with it during
+enqueues/dequeues to ensure we have no double operations.
 
->  	ddsp_taskp =3D this_cpu_ptr(&direct_dispatch_task);
->  	WARN_ON_ONCE(*ddsp_taskp);
->  	*ddsp_taskp =3D p;
-> @@ -1522,6 +1525,21 @@ static void ops_dequeue(struct rq *rq, struct task=
-_struct *p, u64 deq_flags)
-> =20
->  	switch (opss & SCX_OPSS_STATE_MASK) {
->  	case SCX_OPSS_NONE:
-> +		/*
-> +		 * Task is not currently being enqueued or queued on the BPF
-> +		 * scheduler. Check if ops.enqueue() was called for this task.
-> +		 */
-> +		if ((p->scx.flags & SCX_TASK_OPS_ENQUEUED) &&
-> +		    SCX_HAS_OP(sch, dequeue)) {
-> +			/*
-> +			 * ops.enqueue() was called and the task was dispatched.
-> +			 * Call ops.dequeue() to notify the BPF scheduler that
-> +			 * the task is leaving.
-> +			 */
-> +			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq,
-> +					 p, deq_flags);
-> +			p->scx.flags &=3D ~SCX_TASK_OPS_ENQUEUED;
+
+> +};
+> +
+> +struct {
+> +	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
+> +	__uint(map_flags, BPF_F_NO_PREALLOC);
+> +	__type(key, int);
+> +	__type(value, struct task_ctx);
+> +} task_ctx_stor SEC(".maps");
+> +
+> +static struct task_ctx *try_lookup_task_ctx(struct task_struct *p)
+> +{
+> +	return bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
+> +}
+> +
+> +s32 BPF_STRUCT_OPS(dequeue_select_cpu, struct task_struct *p,
+> +		   s32 prev_cpu, u64 wake_flags)
+> +{
+> +	/* Always bounce to ops.enqueue() */
+> +	return prev_cpu;
+> +}
+> +
+> +void BPF_STRUCT_OPS(dequeue_enqueue, struct task_struct *p, u64 enq_flag=
+s)
+> +{
+> +	struct task_ctx *tctx;
+> +
+> +	__sync_fetch_and_add(&enqueue_cnt, 1);
+> +
+> +	tctx =3D try_lookup_task_ctx(p);
+> +	if (!tctx)
+> +		return;
+> +
+> +	tctx->enqueued =3D 1;
+> +
+> +	switch (test_scenario) {
+> +	case 0:
+> +		/* Scenario 0: Direct dispatch to the local DSQ */
+> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, enq_flags);
+> +		break;
+> +
+> +	case 1:
+> +		/* Scenario 1: Dispatch to shared DSQ */
+> +		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, enq_flags);
+> +		break;
+> +	}
+> +}
+> +
+> +void BPF_STRUCT_OPS(dequeue_dequeue, struct task_struct *p, u64 deq_flag=
+s)
+> +{
+> +	struct task_ctx *tctx;
+> +
+> +	__sync_fetch_and_add(&dequeue_cnt, 1);
+> +
+> +	tctx =3D try_lookup_task_ctx(p);
+> +	if (!tctx)
+> +		return;
+> +
+> +	tctx->enqueued =3D 0;
+> +}
+> +
+> +void BPF_STRUCT_OPS(dequeue_dispatch, s32 cpu, struct task_struct *prev)
+> +{
+> +	scx_bpf_dsq_move_to_local(SHARED_DSQ);
+> +}
+> +
+> +s32 BPF_STRUCT_OPS(dequeue_init_task, struct task_struct *p,
+> +		   struct scx_init_task_args *args)
+> +{
+> +	struct task_ctx *tctx;
+> +
+> +	tctx =3D bpf_task_storage_get(&task_ctx_stor, p, 0,
+> +				   BPF_LOCAL_STORAGE_GET_F_CREATE);
+> +	if (!tctx)
+> +		return -ENOMEM;
+> +
+> +	return 0;
+> +}
+> +
+> +s32 BPF_STRUCT_OPS_SLEEPABLE(dequeue_init)
+> +{
+> +	s32 ret;
+> +
+> +	ret =3D scx_bpf_create_dsq(SHARED_DSQ, -1);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +void BPF_STRUCT_OPS(dequeue_exit, struct scx_exit_info *ei)
+> +{
+> +	UEI_RECORD(uei, ei);
+> +}
+> +
+> +SEC(".struct_ops.link")
+> +struct sched_ext_ops dequeue_ops =3D {
+> +	.select_cpu		=3D (void *)dequeue_select_cpu,
+> +	.enqueue		=3D (void *)dequeue_enqueue,
+> +	.dequeue		=3D (void *)dequeue_dequeue,
+> +	.dispatch		=3D (void *)dequeue_dispatch,
+> +	.init_task		=3D (void *)dequeue_init_task,
+> +	.init			=3D (void *)dequeue_init,
+> +	.exit			=3D (void *)dequeue_exit,
+> +	.name			=3D "dequeue_test",
+> +};
+> diff --git a/tools/testing/selftests/sched_ext/dequeue.c b/tools/testing/=
+selftests/sched_ext/dequeue.c
+> new file mode 100644
+> index 0000000000000..0fd6748786079
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/dequeue.c
+> @@ -0,0 +1,172 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2025 NVIDIA Corporation.
+> + */
+> +#define _GNU_SOURCE
+> +#include <stdio.h>
+> +#include <unistd.h>
+> +#include <signal.h>
+> +#include <bpf/bpf.h>
+> +#include <scx/common.h>
+> +#include <sys/wait.h>
+> +#include <sched.h>
+> +#include <pthread.h>
+> +#include "scx_test.h"
+> +#include "dequeue.bpf.skel.h"
+> +
+> +#define NUM_WORKERS 8
+> +
+> +/*
+> + * Worker function that creates enqueue/dequeue events. It alternates
+> + * between CPU work, sleeping, and affinity changes to trigger dequeues.
+> + */
+> +static void worker_fn(int id)
+> +{
+> +	cpu_set_t cpuset;
+> +	int i;
+> +	volatile int sum =3D 0;
+> +
+> +	for (i =3D 0; i < 1000; i++) {
+> +		int j;
+> +
+> +		/* Do some work to trigger scheduling events */
+> +		for (j =3D 0; j < 10000; j++)
+> +			sum +=3D j;
+> +
+> +		/* Change affinity to trigger dequeue */
+> +		if (i % 10 =3D=3D 0) {
+> +			CPU_ZERO(&cpuset);
+> +			/* Rotate through the first 4 CPUs */
+> +			CPU_SET(i % 4, &cpuset);
+> +			sched_setaffinity(0, sizeof(cpuset), &cpuset);
 > +		}
->  		break;
->  	case SCX_OPSS_QUEUEING:
->  		/*
-> @@ -1530,9 +1548,16 @@ static void ops_dequeue(struct rq *rq, struct task=
-_struct *p, u64 deq_flags)
->  		 */
->  		BUG();
->  	case SCX_OPSS_QUEUED:
-> -		if (SCX_HAS_OP(sch, dequeue))
-> +		/*
-> +		 * Task is owned by the BPF scheduler. Call ops.dequeue()
-> +		 * to notify the BPF scheduler that the task is being
-> +		 * removed.
-> +		 */
-> +		if (SCX_HAS_OP(sch, dequeue)) {
-
-Edge case, but if we have a .dequeue() method but not an .enqueue() we
-still make this call. Can we add flags & SCX_TASK_OPS_ENQUEUED as an=20
-extra condition to be consistent with the SCX_OPSS_NONE case above?
-
->  			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq,
->  					 p, deq_flags);
-> +			p->scx.flags &=3D ~SCX_TASK_OPS_ENQUEUED;
+> +
+> +		/* Do additional work */
+> +		for (j =3D 0; j < 10000; j++)
+> +			sum +=3D j;
+> +
+> +		/* Sleep to trigger dequeue */
+> +		usleep(1000 + (id * 100));
+> +	}
+> +
+> +	exit(0);
+> +}
+> +
+> +static enum scx_test_status run_scenario(struct dequeue *skel, u32 scena=
+rio,
+> +					 const char *scenario_name)
+> +{
+> +	struct bpf_link *link;
+> +	pid_t pids[NUM_WORKERS];
+> +	int i, status;
+> +	u64 enq_start, deq_start;
+> +	u64 enq_delta, deq_delta;
+> +
+> +	/* Set the test scenario */
+> +	skel->bss->test_scenario =3D scenario;
+> +
+> +	/* Record starting counts */
+> +	enq_start =3D skel->bss->enqueue_cnt;
+> +	deq_start =3D skel->bss->dequeue_cnt;
+> +
+> +	link =3D bpf_map__attach_struct_ops(skel->maps.dequeue_ops);
+> +	SCX_FAIL_IF(!link, "Failed to attach struct_ops for scenario %s", scena=
+rio_name);
+> +
+> +	/* Fork worker processes to generate enqueue/dequeue events */
+> +	for (i =3D 0; i < NUM_WORKERS; i++) {
+> +		pids[i] =3D fork();
+> +		SCX_FAIL_IF(pids[i] < 0, "Failed to fork worker %d", i);
+> +
+> +		if (pids[i] =3D=3D 0) {
+> +			worker_fn(i);
+> +			/* Should not reach here */
+> +			exit(1);
 > +		}
-> =20
->  		if (atomic_long_try_cmpxchg(&p->scx.ops_state, &opss,
->  					    SCX_OPSS_NONE))
+> +	}
+> +
+> +	/* Wait for all workers to complete */
+> +	for (i =3D 0; i < NUM_WORKERS; i++) {
+> +		SCX_FAIL_IF(waitpid(pids[i], &status, 0) !=3D pids[i],
+> +			    "Failed to wait for worker %d", i);
+> +		SCX_FAIL_IF(status !=3D 0, "Worker %d exited with status %d", i, statu=
+s);
+> +	}
+> +
+> +	bpf_link__destroy(link);
+> +
+> +	SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
+> +
+> +	/* Calculate deltas */
+> +	enq_delta =3D skel->bss->enqueue_cnt - enq_start;
+> +	deq_delta =3D skel->bss->dequeue_cnt - deq_start;
+> +
+> +	printf("%s:\n", scenario_name);
+> +	printf("  enqueues: %lu\n", (unsigned long)enq_delta);
+> +	printf("  dequeues: %lu\n", (unsigned long)deq_delta);
+> +
+> +	/* Validate that we got enqueue and dequeue events */
+> +	SCX_GT(enq_delta, 0);
+> +	SCX_GT(deq_delta, 0);
+> +
+> +	if (enq_delta > deq_delta)
+> +		SCX_FAIL("Too many enqueues without dequeues: %lu enqueues, %lu dequeu=
+es",
+> +			    (unsigned long)enq_delta, (unsigned long)deq_delta);
+> +	else if (deq_delta > enq_delta)
+> +		SCX_FAIL("More dequeues than enqueues: %lu enqueues, %lu dequeues",
+> +			    (unsigned long)enq_delta, (unsigned long)deq_delta);
+> +
+> +	return SCX_TEST_PASS;
+> +}
+> +
+> +static enum scx_test_status setup(void **ctx)
+> +{
+> +	struct dequeue *skel;
+> +
+> +	skel =3D dequeue__open();
+> +	SCX_FAIL_IF(!skel, "Failed to open skel");
+> +	SCX_ENUM_INIT(skel);
+> +	SCX_FAIL_IF(dequeue__load(skel), "Failed to load skel");
+> +
+> +	*ctx =3D skel;
+> +
+> +	return SCX_TEST_PASS;
+> +}
+> +
+> +static enum scx_test_status run(void *ctx)
+> +{
+> +	struct dequeue *skel =3D ctx;
+> +	enum scx_test_status status;
+> +
+> +	status =3D run_scenario(skel, 0, "Local DSQ");
+> +	if (status !=3D SCX_TEST_PASS)
+> +		return status;
+> +
+> +	status =3D run_scenario(skel, 1, "User DSQ");
+> +	if (status !=3D SCX_TEST_PASS)
+> +		return status;
+> +
+> +	printf("\n=3D=3D=3D Summary =3D=3D=3D\n");
+> +	printf("Total enqueues: %lu\n", (unsigned long)skel->bss->enqueue_cnt);
+> +	printf("Total dequeues: %lu\n", (unsigned long)skel->bss->dequeue_cnt);
+> +	printf("\nAll scenarios passed\n");
+> +	printf("-> Validated: ops.dequeue() is called for tasks on local DSQ\n"=
+);
+> +	printf("-> Validated: ops.dequeue() is called for tasks on user DSQ\n")=
+;
+> +	printf("-> Validated: Every enqueue is balanced with dequeue or executi=
+on\n");
+> +
+> +	return SCX_TEST_PASS;
+> +}
+> +
+> +static void cleanup(void *ctx)
+> +{
+> +	struct dequeue *skel =3D ctx;
+> +
+> +	dequeue__destroy(skel);
+> +}
+> +
+> +struct scx_test dequeue_test =3D {
+> +	.name =3D "dequeue",
+> +	.description =3D "Verify that ops.enqueue() is balanced with ops.dequeu=
+e()",
+> +	.setup =3D setup,
+> +	.run =3D run,
+> +	.cleanup =3D cleanup,
+> +};
+> +
+> +REGISTER_SCX_TEST(&dequeue_test)
 
