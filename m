@@ -1,64 +1,66 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010010.outbound.protection.outlook.com [52.101.61.10])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010058.outbound.protection.outlook.com [52.101.193.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AF0331A45
-	for <sched-ext@lists.linux.dev>; Mon, 29 Dec 2025 16:36:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D64431D726
+	for <sched-ext@lists.linux.dev>; Mon, 29 Dec 2025 17:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.58
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767026180; cv=fail; b=p/dt+kCampy7hc+TP96WH6EYTjO34rwn8EX7SjeDWFxqYfjjrXPa/6MIz9VGyY6EfNq34FqxGp89/xIov2aFr3zADRSPDv787OTD5rh1TwkVNkQIVsQT7Oonks/5vHsUCjTrZhObE+9odaOWMaTr4Ov4f/wWm5IN9g1f10AFEAw=
+	t=1767028084; cv=fail; b=DUY9ZNO7cOSQWwI8jA0Y6XG7D6KwmJLegam0bJ+6EUA5SXcQlYgV34HuMbaz1pDoc0S+6gYIoHcqF5F2Ia8fU3vmDOOgveZeW0p/8ZTOsKsxFdC7ng5xpAXJ0wrd3bXPw0AUzdojschFDiyD6iXmzAWwUgm9qplSa1wTWkpLO7U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767026180; c=relaxed/simple;
-	bh=wZgY/T3K1RyKr7MprIg6J8l4OEIMYdqiMNX0BSTJXlI=;
+	s=arc-20240116; t=1767028084; c=relaxed/simple;
+	bh=YdWDxNm8GLmKaWbUrHb4QLn24GYXpi0CMyFc7SVAGd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=CwJb2wsgJr9Gr/pXkbcDHy4hc+OiDO+OT6Vgu1zkzvfmvqpjqALFxX2XJwuY1Jfhd2wze6HYoa4wPd5V24tpE+OSuub7I5cBitm+pUsqysySykrwdX+MQ1atIlP4JyjE5T+eBlPD5PqRAP8apdULovGbIh98k/acs7RuN8JY6M8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kgAbby8T; arc=fail smtp.client-ip=52.101.61.10
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Q7T26CnLGXXYxCa0V8wqc/kyXsQy87NsxvR/Xi35raWNk5YYWu26ffeYcts87kzDRjVW+EulAVbx9+2UJzNUcNOXuISq9kDFsa65OV7m7Uf6R/oQD3UC6JspuZZqnKbR0WJUEQkihavHJQAHMMvhI70dRa0WpkNmRyyobAO1g94=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=EDZwldm9; arc=fail smtp.client-ip=52.101.193.58
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kgAbby8T"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="EDZwldm9"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tkD07IfsK2wVgstPIjc3OjhIr9jzgX8AjFzabKnAGxBveTLzffBtQkx1lD1HJGkaAQ3zOSiF+5sBzNL4WefbdNPiTsk6UWBLMuooBLTOI9Fgb7jX5ZQZsQ/VcTACvXhQ9rov+q61MRJYXLlNZeij6Uk75kfQQYhUskuKKcbIongUXGfHWDatQxvR931CQ+P6195Ly9pVNPF6J2PTsm4XwewKjHY3eBa7PRB8b/qmHWeuzeqq+VIAVzgA/OCs1bZO6PMA7rV2oBj1dn2E3judn6Jganh9hZ8RO7GbV7NJDDPY8snw+6FUo23GJVY460dGa+7+pnw3ih0G3rVRYAEM4w==
+ b=YFLY+mHzjJX4As+I9pgn0ca4GTrZY2CNXgIL9y+5OLZ7QkpGG6Q5VklkbVZbwlerOHuhoiGi7dVWE4jahHw5hl/6Bi0L1B4EoD7SHbMevOi0OnbSW9UTUB8OIcVdh6iXt9Mdiu45uVzLoJMJjeSsa2yQoWCWag5EjJa4ztHEnubpTRO+TmOlS7UsGjWxeWef3CAioVRH/1GDAubYNO/XZghZv7113Kail4Z6ltAS84a9QwYaHrCPUmzHhvUG5BZhnbm/XpFMN5OI7VBIxEmzrtfSHGQG86EpEpuBKH2ZAuzQ/sP8y70CFqVUdZHmuVNuSJVWvw1WIavnR4orwoxuaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CW1XCNwCf9Z8qptXIRuBFSGy6bKW1jowdgUmFVFEHiU=;
- b=Ap3CIwxfxkFFisXee0BVyJi8C5Xnr03Rhyw/v/aZMVxENPs957dnB8J+FwepteuBGTWNcXomHlTYupxiV7MkB9GvDuSWoaaU8pZu9gt1ukakeEO2q092GlAzBMK1nxtrd7lrbnEPs1hhO42fTNIAnb52qVa6jjbrGo9587Maqqly7Zv/j3NGQaJ0Ek4oHuALMABpLsvg8wXHOTN8m5+Fm0BRzya6HG154ez6eGTHAhd+4uRFgsS+G7YIDBtGGOQtaUEGtFi+uPFOUJ9csAuq67SOXYVAOKRYwQnn6A7eAioktpGVK4tU/BCgPor2syuny6zeHI/5c9b+n3xWvzZIlA==
+ bh=EuBS85GVV6PSAnTGA6GT5U4QOUbMSHFjvpPjmuoChcA=;
+ b=aODcu4DACAWDfZuF9BYOgFRViloU9xjD1d+ytbTdudMGAGba8FQfhglvJtVvJSgLJkxg1nOjIvKY1/5JDZVlOLuyITgJN0vXQI62asfjUYZtkFxoiyJZ0d3EC+mCgUmKLa/HqEeGV+fqlUNi4tAFRWu/sWn0Xr20VxcbLzZw9/Eb5g+xu66n6OAmJd3Swj2VYVj5UQS3OyK5lvpy9DaFoXIZSiGX4D2xmlLUgIM1dmiDFSF0rTM3nGgLc9ZaHA96bSrq7/dGJNOFiwXTbzaxi3faPuvuzk3vq7AuHLPOiSZuairKChJMQbisEvEhU5zS1aOj3OrMkMIftXoHL/EEkQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CW1XCNwCf9Z8qptXIRuBFSGy6bKW1jowdgUmFVFEHiU=;
- b=kgAbby8TeSZNWLn5E9rQ9x+Qsi37ZZMyzpUkZJgC3Au8jkEid4uC4P+ie9pav/0HjD8hD9606110/owQ+xpUkDhsF6McO8Z2e4xCAF8rqPMkHz3m14QmuBXDvAWHRdH6Y+FgJua0dDylM7fvDVV2Sr1bBZ21V8PywRE3udbUHJmglaZ3qJBULug0yri849dRUCmStw9mTWXjNtbeKPh5rAcL0aNvtnm+Oo/bk3EFFI5T7jvT8kKFFlV6sD5tADy003bq2emt81ZaY9Wd6wdANrvOkhasZ4E9Jw0Y7CPLLso4LPfT0uQPbyeRojfSjsrVbQqMEzlIlyDG7fcEHzJf6w==
+ bh=EuBS85GVV6PSAnTGA6GT5U4QOUbMSHFjvpPjmuoChcA=;
+ b=EDZwldm9BKDNJ2Z3bsTh8j8VFETF7D9bBWyXwM34+OR8nIbS/3Ff2lhUU+XzGmU33dwL+MRVLthhzsg8EUmu53KWFwbadLwxXmFJThwIJAXRDKwn2/zlC83GXvxQd99iz80KH9Mo8qGmjCQIdo3IwzSvHz2bxnWOGTHSdlqeFEOo/4ViDgLkICcWVoUBiF83DsRAhrM2CDgLAHNssGTOq8r431arpvPNOj/nGwi8uokTPKUKy5aHjj+OBH4ly0XWLn6A0HCN7RZE3NnMHI1MlJjmNHKJvJgnxAfBZ06kRt/Rl0FYs1URD3r+QTrib2YyNk8htY//JFWDuMAveUMejg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SJ5PPF6375781D1.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::995) with
+ by IA1PR12MB6115.namprd12.prod.outlook.com (2603:10b6:208:3e9::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9456.14; Mon, 29 Dec
- 2025 16:36:13 +0000
+ 2025 17:07:59 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9456.013; Mon, 29 Dec 2025
- 16:36:12 +0000
-Date: Mon, 29 Dec 2025 17:36:09 +0100
+ 17:07:59 +0000
+Date: Mon, 29 Dec 2025 18:07:55 +0100
 From: Andrea Righi <arighi@nvidia.com>
-To: Emil Tsalapatis <emil@etsalapatis.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
-Message-ID: <aVKt-cmkOxPe3MI6@gpd4>
+Message-ID: <aVK1a3pnCHnMWOWY@gpd4>
 References: <20251219224450.2537941-1-arighi@nvidia.com>
  <20251219224450.2537941-2-arighi@nvidia.com>
- <DF9IXXXOIXP7.LILBQBLDYVM7@etsalapatis.com>
+ <aVFmstVjLW_QIQis@slm.duckdns.org>
+ <aVG9BBWIQLL8uJrQ@slm.duckdns.org>
+ <aVG_WZCq5QlRgrqK@slm.duckdns.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DF9IXXXOIXP7.LILBQBLDYVM7@etsalapatis.com>
-X-ClientProxiedBy: MI2P293CA0011.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:45::11) To LV8PR12MB9620.namprd12.prod.outlook.com
+In-Reply-To: <aVG_WZCq5QlRgrqK@slm.duckdns.org>
+X-ClientProxiedBy: MI0P293CA0005.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:44::19) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,273 +69,113 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ5PPF6375781D1:EE_
-X-MS-Office365-Filtering-Correlation-Id: ae0a7f92-a0c2-48f5-80e1-08de46f8608b
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA1PR12MB6115:EE_
+X-MS-Office365-Filtering-Correlation-Id: e5403aac-55c7-43ac-647d-08de46fcd121
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ZibXBSoh7mSLIWm1Gjzy0Q7SebNo1HzRQgI/y8eYYVG5sNsZPASv/6NGyJ09?=
- =?us-ascii?Q?QmWtVV3Q59W8yCBcW02MnAj4rq6ucu5fnZuCseqf6mVPkgzMnIaDcfZp87Y3?=
- =?us-ascii?Q?of4luKXMxRgRCxOqsEHlFBtv+oCCLKr+3wQCCBEvkmZb5lIaWPQC7QrCo+LV?=
- =?us-ascii?Q?tnOyEbgbGjXa4n+cZ5ph9AAGZSNZo5tz6GIWdK51Nd0FYHDQIWwZkz+FP1EI?=
- =?us-ascii?Q?JTvyIoR1OS4dFKhhImMQc7bRI4Q71ARHYDfEsvbXniWj0iXcnvhPDBsZ2s+A?=
- =?us-ascii?Q?dsA7LrGlMSvwqSNUK/sgKKAjgO3yXamznm/bIyLas8wn2I2YZQRb6yk+OKis?=
- =?us-ascii?Q?ZR/MoCcbB9Un3ZL3OoXoN6rQVSo5Th7GihkZtDxW8Jx+FJe1kMAybOFaYWF8?=
- =?us-ascii?Q?Yl00YOSNYjFEdU/Wy94em1on3/CzupHtKXh/6Fw7icbnw0rZkL4ZtQmpInev?=
- =?us-ascii?Q?eDEHux0gQMdCcLtDpPdygomye/giAchxTr9eYSh9pkAIVtRXH0spw0wwrDoi?=
- =?us-ascii?Q?j2ectld2o5O1DR1QX0fN9EghSnE43ED8ebzv4kz+BLjNhTDrOXRftTcrd0ff?=
- =?us-ascii?Q?8fxC0mGypZ+i2bkmJ5jbs+fT3gGSOypa37pbyUoN9rvk9glaC1+WvtKiRFVB?=
- =?us-ascii?Q?Ob/stunNfhd0I4+cZGwLkKR3r1gONDItRU3gr1FFKj/kh3liG4GWHakBGqXu?=
- =?us-ascii?Q?HBWflqzaX3lZXzIAwBbCJ5W+DdQ4TtWWWDgX4Y6m+WYFKsh0u3niXhmX6UdQ?=
- =?us-ascii?Q?BuIVDKRTWFnSZIIJG2WGRoscN1ozPPokHLRa5qFeyyYWIzEY5F/1fdPHZ/YY?=
- =?us-ascii?Q?tQnWv5m07+FcNM5pEZElV3b/SNeFif2XXL5Wrny9TKw27Xp5VD19Ij8mXYCI?=
- =?us-ascii?Q?FEcxLuc6vZmU9brLcEQB1RaBLY0x2wAcKQhF6HVUeVCAGio85RedfixzIoA/?=
- =?us-ascii?Q?GHY4rwHPvmaAmUE04xdVsK0Cvky1YiwxVnyCYZN+8eSocGccctdfqdzayNgq?=
- =?us-ascii?Q?fMwygU1mf0qU/ru0nSVcw9IXBY0vr3ohKBNJ5E++PoHKExAskSYrmPwV3flN?=
- =?us-ascii?Q?MaTmB3G+rwnLsnMR6w2iE8B8G0QIMN2b9+WGW6CSBsD6lNrZmBi0b9hk4GNh?=
- =?us-ascii?Q?dd0xj7KAsT+1tHudzn3zSpTNM8gp2pqfJhlrfMDLEswp9I3/0+9xXA6dBEV6?=
- =?us-ascii?Q?BLzPPcySI0FM3aMBQOSmYNw85ce+xuUOsUG128HfQsUaaxKEQ4I2i5waFKRM?=
- =?us-ascii?Q?G90Q1zluP3fWYaX9LlAQ1DOUcEfKdSKMe1owudlOIntkUC//Pz+/ZDRRptFs?=
- =?us-ascii?Q?yOq+0v/ZciR2fuESUaV76lxNkN+F2dWZJdKKXTEKsogQUKNjMFIJA3zxNd9V?=
- =?us-ascii?Q?tfWielpkuSQH2lqkZbXj7Gm3GzIOZm23b5aj4KxUv8w30G+lBf9I+jwL0UqS?=
- =?us-ascii?Q?GKEQooTZnWS2FvmejWAVpKLoY1aYsfxe?=
+	=?us-ascii?Q?c5LoEwoupJK4QKxKnCcNx6wnPizgHo6gYQJPi3EqpTCp3MY1Mj4QXkespkIB?=
+ =?us-ascii?Q?YJb7l69sydJGg7kmTc4/OtbTbm+u9Inz61o1WCag8M8ypbTj8FmViINM4upF?=
+ =?us-ascii?Q?aqITt6vPs7haqJmOisfS2uCMWLRbXMs6PjeMvUNwGDhVYs8JcM7aht0aQQGa?=
+ =?us-ascii?Q?rQ/8g+ghMl1o2mBGjnroEpGsCNrLdktyvAbYos3Yx/Mn28uMA8boYX6sIBnj?=
+ =?us-ascii?Q?VJ3BPuS8FZArw4HrBCtNwXh+jHn11kQEzKgeW/FbfNq0JRQGknBbY3gEoOIy?=
+ =?us-ascii?Q?an/isFmkQFdl3d6JcVzV8yNRMtnWrx6i+ixYVSSUGVP+Fr9d8VTJvSGn7aTA?=
+ =?us-ascii?Q?hzFXtxsce3Ixj1zriqjzulPqZHWDGvKhwX/vGQQzmzvom44jYyyrO/bCT7An?=
+ =?us-ascii?Q?/HkTcAFgZpTq9VbRCf7AC6+VD8AAFxCvrMKSBzJfNtLytND0Qk0ZYhemU7WI?=
+ =?us-ascii?Q?mEMP6L9wc+ef3x4roSJz8TjcssRQkz4wTF5fAKO635Glj4TCP9DSZE+k1RTG?=
+ =?us-ascii?Q?ChoNkY3OafQlgF8Ek74sJMp8B7thy44kHbAo++nOrwJXezBBBuFD0vnJ+VRk?=
+ =?us-ascii?Q?DCxK3jsNqIcv2wqfCCmX4p/nX7OT16GpIEaI3cMuE1lzesTdZ4gmubJKYyVn?=
+ =?us-ascii?Q?118TGMZXYN1xw7OKJWyfzBim3y3I1L9ffTRWaBs2Ak5N7h5ZI+wzc5ImL7QZ?=
+ =?us-ascii?Q?00o0f5JZXokyW5eXL9tq+1MMJu33kmdo1DKcgxl+jIhRQUmm/pgTHZcPfxsw?=
+ =?us-ascii?Q?DG7xZsfQw26p23SmoO2422V4uNXCh2DklcEusYq4ZPN3rpr4aHDMhASoHOmM?=
+ =?us-ascii?Q?4f3vPSBHRXjUqbQFvJYG7K3EVrBfiLSD65xKlqBIz3d24hBn3Klh/x+pHe9W?=
+ =?us-ascii?Q?1BrtpPkj0TusAsB14Mnf8Y2b5DNMXH2DVrW2zbD5XrBobGJZqwQxRcIixK1Y?=
+ =?us-ascii?Q?yg0GMq0ETUX8ndZbRB+tKRsKwsCqpxp6SMFAmxlxJu6KHGrPs4AXTSGJ5Okn?=
+ =?us-ascii?Q?EsTdZFblwcPFrcchgpSfLX3yqhIUnRhhQb0OZjdqM0myAVfLuzXYxtjcTheH?=
+ =?us-ascii?Q?av7/ikuYc8bijm48DRbvFYabY5FgTs3x3IvyT79voMC1yuB6dZhnjKFJZc42?=
+ =?us-ascii?Q?wDZFIWFVA9Mimb2qm5EbkWEYAZgbyP4N4rwnRxm2Yri0P1pUsecfX6pYUmvm?=
+ =?us-ascii?Q?C7YkedRBVoeMZq4neFIBYDlvAppU6/h7lgPGrreDQD3uNFT5XC9jcWsyCZki?=
+ =?us-ascii?Q?vlpBrdVbuPrDo3AfdmQh+40IKS4fLvfMPtiRakgt7d93c5zqDb022IhLcNdr?=
+ =?us-ascii?Q?CWa+mOztQEczGHshT+MvY76DwE6KrYuRWiAGgMsqW9dkec7Xz1Kv5GjVqnWr?=
+ =?us-ascii?Q?ubg4ZegxeYGfPVwPQZ98kCZahsYI52FfYWW/KA8y08XbpEhTM1k+3Rw6AFg2?=
+ =?us-ascii?Q?45xAR2PeNX8b7XFbyIyJeJt1HN8M9wr+?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?nrbIQjOFHy+7j5PMt30DmMiZtPAfxaPdzv5l0vEE+fbL6EWpu22IRzlps4c3?=
- =?us-ascii?Q?RS8nAV8Y/WPTr+W5BMubiJnI8p96sU1Ifrz6NLRlL60s6acIsuWV5LxsT7eT?=
- =?us-ascii?Q?6KL8gvriIwx7hBQNeDtiw1OEgRDSLEm5d8Sws6FDdl/Upsy2PeGEKj9M/C67?=
- =?us-ascii?Q?KHJSZ1RykiYlFFgWC8WJd/cFja/Lan/oh5Y93mGNJ0QjDT1WcRVlxdg+zngW?=
- =?us-ascii?Q?p0N+++0N8Meyl1Q0YTih7O+6FFFfEJsDGQInev6OaVY/GAlFsrFBzKmebW6R?=
- =?us-ascii?Q?thPFHSIzvhIR+Vq6DmZjTKaxpO0F6PgNTNYN8UXJxeW5PZJ+cJyVRDu3pDjQ?=
- =?us-ascii?Q?QukpyXTyY0z6tu/f65ED+UmmMni8FouZ7f5yDcIqt3D2nJIRPhky5JM4IwYv?=
- =?us-ascii?Q?1lIg8UyQAGcmyaZrs1mmgXJcB51uc40SGL8IyE2KhWGNKsWPfDiXtYrjVIwa?=
- =?us-ascii?Q?RvtVC46AqLh8HZ4ngXtesG9f12Eb2A7/uEFNrfobJ/YQNGpyvfnnV8oEzCcb?=
- =?us-ascii?Q?MHcIQ1Goj8T5rzpD3Op7oxb4UGTjvQUfmB8cj7LXZYNXZ39hcTWbNT/ncc7P?=
- =?us-ascii?Q?XKrANM0KyKTTsPp6HD3A3KW1+dFIs02gaL4yWjumF9tpFsRniKBectlwm3AB?=
- =?us-ascii?Q?q0Oz42HfDLUy7Tdz5fgv8IopluqE5RaVK7sy8xxc+d8cg6euJh4sRKJq5jV0?=
- =?us-ascii?Q?fzDuqV4OQMnOmdv7WXYjUVBLo6kR9UQSYlIEOqNi2DUqHx76zz1hx6/SanZN?=
- =?us-ascii?Q?9zkKG+ntrtF6ckOfYjCpbdaWs1RczutiMZ5oUl5RqCwYN3eJZUSMueNwMShP?=
- =?us-ascii?Q?VboQG8tcOEz4IOKSlCMm8PYVa1vQ2C2JBMxZ+AhrnVk4vHPI2pE51scQLDh+?=
- =?us-ascii?Q?vEaVz5aN/a88hsJo/XZMbLUF5xFrVtZ5K3ypAVbsAnbXwcH//zA7YZV8zbXn?=
- =?us-ascii?Q?aPLBSCC0/wyb41N4iIuFyiSWiIRJrzNQLC1oDUXTFOeOVs0VJp7kkFEH/7H0?=
- =?us-ascii?Q?T3SZ1NsJBXJSWVxeD91l/Epimf644Yu2QF0ezibiqeen2XEiMM6UBq2ZceyL?=
- =?us-ascii?Q?VYOANhgrI1GVw6iP541xRQ24VIbdNZtiDfD6gkndYTOHjuU8dWyN0JfuJZpu?=
- =?us-ascii?Q?1rS9zD3kErNb4Ik1I4YosbRfjTq2XlNSbPtSsB4Frrz9/n5maps1h1xqPYai?=
- =?us-ascii?Q?ZDVUd62Q+bhaKvEqq4C4lcV+mTmHAX4n7m5Xbbtxg5HsD+k8/Gtgp0u/lHhX?=
- =?us-ascii?Q?fNsUI4PDCE8xm6m+g+gxLQRdp27DDwRQ9h09TAqJFQ+xymBQZTuemSDWpxQw?=
- =?us-ascii?Q?L3KRhV13ibXwjXBSz3HgsEhjyENp+MdFxpV3qqCKHf0eQCB2CHjm9zdsXrRI?=
- =?us-ascii?Q?lFuj7b5d2Funhf2U7zE3Q8BsrHE39H3ugy/pXxxbXpN+Zk4qGdhTbA0U3pwI?=
- =?us-ascii?Q?Biactu2n0OMxoK1Fj0tv2DrRsC71HYW6XhfJTj8/AIalGw5+RjNzWDoykKo3?=
- =?us-ascii?Q?CSmou8i4OVqH7fIdIfqB/pjnM/Qn4/DA8AqkANahbn9RaAU9EdfWXNpJ3mTy?=
- =?us-ascii?Q?Mz+v/zTgeaQj7M1Nb6ENruUMTZEn0kGh3ytzP+nilrjJMy1IS/l4N4iuzimj?=
- =?us-ascii?Q?PupQ4LTR4RokZbCSaGCcmikI1xmvdVpDajnmrfvtrS3LhPQAWIEU5YQX+Eae?=
- =?us-ascii?Q?/wLJTCFbCBDQ203EXqg+bH6j67ceVGbNb3b9ZcPKYdFGd5Tob8t1FZlo3tYN?=
- =?us-ascii?Q?LJKOCaHnRA=3D=3D?=
+	=?us-ascii?Q?WxVVArVhzpPYOC231cI3zhvwZjUOPA1eK/sXHoF4VXFEiByACV1BvjiB4Ypl?=
+ =?us-ascii?Q?QNkWwllNMc68Y6wAS1lnROZaaXsS6q40G8p9gh7jVhcfjz05mxcIQQJjMmS1?=
+ =?us-ascii?Q?AGP8CJjNcxH3Sgi9uD+LbeCpuQ2VxyQ+y7AIGxhuvHpjoMN2eGhgG2ZZwpzJ?=
+ =?us-ascii?Q?6yBseAPOFhxdWmS754MVg/nEk/rnVJF3BBzDsCuHy50z/ZQzWjUbTtHaSdUm?=
+ =?us-ascii?Q?Egt8999GZPl13eZo7F8bpfCsLh0M2ApIIaCsffBwoVah8DCGcK46e5mJWAoB?=
+ =?us-ascii?Q?aNiGHyfAGmjwBOmN0SqSMFwg4w9T56fSBmpR1qDMhdG3x/FggJuAKpEMKy6/?=
+ =?us-ascii?Q?JdTVDAjoiHDDrxmpmo9/ndUJnwbrgCeLJhM/kCVMv0DXlViHOVkg042jfjyt?=
+ =?us-ascii?Q?qAH9gLEY6Gy3COk6I1RP2mNOVnKvrMF/VQ2nZeaTwtGwnS0uNMQpDsD2XL3W?=
+ =?us-ascii?Q?0ZL1QU60lx52EcfXBketUcYLl/WOOOph9BVvM56YVhw7b0NNoZ2saHMpIAO/?=
+ =?us-ascii?Q?GSLRJKXfCiF3tsNbAZFecVZPSnMRfYKatAcuCV8KowJiMHqUUaxUQEPDIa8l?=
+ =?us-ascii?Q?YpzGH3IZkneb7WAEjoPtPN8XsDVTZUffCj7eYZNML5HTuiIzqMtz3e4HJj4K?=
+ =?us-ascii?Q?IAzUVe3M/QRsL6lEBGxDwn4boFOG3zzh6oMHOK24YYbx0DGnz4GkUiebWm88?=
+ =?us-ascii?Q?pn0riMZclkjiPsketoV/SDUhLWCxb0gbpZz73ScGd0iVps50t6yunlY/AcbG?=
+ =?us-ascii?Q?WPvVcchKhyp1J/9T0fFKWKbaubdEJMwk6lj+LALzgzlXy+ZdsNhCJOhWnMnA?=
+ =?us-ascii?Q?Kp0WO6RSht2qmxMCsd7X7OMYQ8P223G4MR/YyQjIfujq8feSaf2IjqNraG2k?=
+ =?us-ascii?Q?1XKZ4C1I1Kf5IQBXe5wttrwNsucH2i3ZkAWrkEur7A6/glX4QwsYwow5rPOa?=
+ =?us-ascii?Q?HMmaNw1tFhjLTRDWhdyvB+uJYwK0PvaIAIUSd7aCZmb1/vgptc+G7bKtkDH9?=
+ =?us-ascii?Q?cRFm3Xnn9hlQlZiZzBpxOwfnuh44tPvmgKuCTkpuF01tgxy3ZPg/y4FWr2Th?=
+ =?us-ascii?Q?Uq1lfV1g4QLnfLHEAFezAvTFA/mGDBeDRWPynqBN9e1SjFdmYkYuJHG7ZT0e?=
+ =?us-ascii?Q?OfgFnD+izwIWS1G1fNErzvVfG4ndI6qEq8OSNGYz4h5s+ZEjTAqxsesAfooz?=
+ =?us-ascii?Q?rJNcfyGpTmVK2NreJ+jHiVyGWCfYQCcs297AknzrG4ddzCSR9AcmEzdJIi4o?=
+ =?us-ascii?Q?FyeavVD9mFZC1nF5Vz9/rLCwq0fZ1oPeYvXVIwRUx+dZwd7PRg6Lvrdidghn?=
+ =?us-ascii?Q?mAc+jODqm1YnXta2LLeqaYEwwsv2MSZ0bbjYv63hwoeAEX0uhOEmXkRBcQKA?=
+ =?us-ascii?Q?QlracEVRLnRe8YOdLv1z0xNwolAslXnSg1qifnmKPso3f9VtfzZJLLVXcbw7?=
+ =?us-ascii?Q?Ib3yfatmHc83LKJMkMDz/VBadPP9O5x+B9WhuZmHEgDcSZ/4SDUACCHiQoWo?=
+ =?us-ascii?Q?0Kcw/y2Rc2JNCLrjCrxKY2bI+u0UUPzCKKFaWBj2dTdSGvXV3HIvOghdnyTH?=
+ =?us-ascii?Q?pg54SFclVWkIaUgBSqY0GqyivMMYmizviYhYjO0uvPkLjih7P+JK6vlbw8fQ?=
+ =?us-ascii?Q?1hfEX6ZgbKWi8HqpUM853bJz/094I+BWfKScj2wtILwbVg3PovbAY+u6HZhT?=
+ =?us-ascii?Q?op/cA/Y1s3qJs+55JVeLsTuYOGXKD9bbAJDoPzLsL8N57/F9WmpgjR3pU67S?=
+ =?us-ascii?Q?KAMhtY4ffA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae0a7f92-a0c2-48f5-80e1-08de46f8608b
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5403aac-55c7-43ac-647d-08de46fcd121
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 16:36:12.1849
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2025 17:07:59.2188
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DkxZ3vnQ/aqIuE3uFL16z9//rfkqHHgP3lpaR2eP8kn0sGoI0+vZBCDgFYUaQHmNDbJv27Uukt4vczoqwQ8zDA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF6375781D1
+X-MS-Exchange-CrossTenant-UserPrincipalName: s57eL9mF6mFNEOjRCeWwo4864BEobKhbN+4B889AD5R76j5Cj917gU63v5/99ZTwSU9zCd0uprO3l+0H6dPc1A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6115
 
-Hi Emil,
+Hi Tejun,
 
-On Sat, Dec 27, 2025 at 10:20:06PM -0500, Emil Tsalapatis wrote:
-> On Fri Dec 19, 2025 at 5:43 PM EST, Andrea Righi wrote:
-> > Properly implement ops.dequeue() to ensure every ops.enqueue() is
-> > balanced by a corresponding ops.dequeue() call, regardless of whether
-> > the task is on a BPF data structure or already dispatched to a DSQ.
-> >
-> > A task is considered enqueued when it is owned by the BPF scheduler.
-> > This ownership persists until the task is either dispatched (moved to a
-> > local DSQ for execution) or removed from the BPF scheduler, such as when
-> > it blocks waiting for an event or when its properties (for example, CPU
-> > affinity or priority) are updated.
-> >
-> > When the task enters the BPF scheduler ops.enqueue() is invoked, when it
-> > leaves BPF scheduler ownership, ops.dequeue() is invoked.
-> >
-> > This allows BPF schedulers to reliably track task ownership and maintain
-> > accurate accounting.
-> >
-> > Cc: Emil Tsalapatis <emil@etsalapatis.com>
-> > Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> > ---
+On Sun, Dec 28, 2025 at 01:38:01PM -1000, Tejun Heo wrote:
+> Hello again, again.
 > 
+> On Sun, Dec 28, 2025 at 01:28:04PM -1000, Tejun Heo wrote:
+> ...
+> > So, please ignore that part. That's non-sense. I still wonder whether we can
+> > create some interlocking between scx_bpf_dsq_insert() and ops.dequeue()
+> > without making hot path slower. I'll think more about it.
 > 
-> Hi Andrea,
-> 
-> 	This change looks reasonable to me. Some comments inline:
-> 
-> >  Documentation/scheduler/sched-ext.rst | 22 ++++++++++++++++++++++
-> >  include/linux/sched/ext.h             |  1 +
-> >  kernel/sched/ext.c                    | 27 ++++++++++++++++++++++++++-
-> >  3 files changed, 49 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-> > index 404fe6126a769..3ed4be53f97da 100644
-> > --- a/Documentation/scheduler/sched-ext.rst
-> > +++ b/Documentation/scheduler/sched-ext.rst
-> > @@ -252,6 +252,26 @@ The following briefly shows how a waking task is scheduled and executed.
-> >  
-> >     * Queue the task on the BPF side.
-> >  
-> > +   Once ``ops.enqueue()`` is called, the task is considered "enqueued" and
-> > +   is owned by the BPF scheduler. Ownership is retained until the task is
-> > +   either dispatched (moved to a local DSQ for execution) or dequeued
-> > +   (removed from the scheduler due to a blocking event, or to modify a
-> > +   property, like CPU affinity, priority, etc.). When the task leaves the
-> > +   BPF scheduler ``ops.dequeue()`` is invoked.
-> > +
-> 
-> Can we say "leaves the scx class" instead? On direct dispatch we
-> technically never insert the task into the BPF scheduler.
+> And we can't create an interlocking between scx_bpf_dsq_insert() and
+> ops.dequeue() without adding extra atomic operations in hot paths. The only
+> thing shared is task rq lock and dispatch path can't do that synchronously.
+> So, yeah, it looks like the best we can do is always letting the BPF sched
+> know and let it figure out locking and whether the task needs to be
+> dequeued from BPF side.
 
-Hm.. I agree that'd be more accurate, but it might also be slightly
-misleading, as it could be interpreted as the task being moved to a
-different scheduling class. How about saying "leaves the enqueued state"
-instead, where enqueued means ops.enqueue() being called... I can't find a
-better name for this state, like "ops_enqueued", but that's be even more
-confusing. :)
+How about setting a flag in deq_flags to distinguish between a "dispatch"
+dequeue vs a real dequeue (due to property changes or other reasons)?
 
-> 
-> > +   **Important**: ``ops.dequeue()`` is called for *any* enqueued task,
-> > +   regardless of whether the task is still on a BPF data structure, or it
-> > +   is already dispatched to a DSQ (global, local, or user DSQ)
-> > +
-> > +   This guarantees that every ``ops.enqueue()`` will eventually be followed
-> > +   by a ``ops.dequeue()``. This makes it reliable for BPF schedulers to
-> > +   track task ownership and maintain accurate accounting, such as per-DSQ
-> > +   queued runtime sums.
-> > +
-> > +   BPF schedulers can choose not to implement ``ops.dequeue()`` if they
-> > +   don't need to track these transitions. The sched_ext core will safely
-> > +   handle all dequeue operations regardless.
-> > +
-> >  3. When a CPU is ready to schedule, it first looks at its local DSQ. If
-> >     empty, it then looks at the global DSQ. If there still isn't a task to
-> >     run, ``ops.dispatch()`` is invoked which can use the following two
-> > @@ -319,6 +339,8 @@ by a sched_ext scheduler:
-> >                  /* Any usable CPU becomes available */
-> >  
-> >                  ops.dispatch(); /* Task is moved to a local DSQ */
-> > +
-> > +                ops.dequeue(); /* Exiting BPF scheduler */
-> >              }
-> >              ops.running();      /* Task starts running on its assigned CPU */
-> >              while (task->scx.slice > 0 && task is runnable)
-> > diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-> > index bcb962d5ee7d8..334c3692a9c62 100644
-> > --- a/include/linux/sched/ext.h
-> > +++ b/include/linux/sched/ext.h
-> > @@ -84,6 +84,7 @@ struct scx_dispatch_q {
-> >  /* scx_entity.flags */
-> >  enum scx_ent_flags {
-> >  	SCX_TASK_QUEUED		= 1 << 0, /* on ext runqueue */
-> > +	SCX_TASK_OPS_ENQUEUED	= 1 << 1, /* ops.enqueue() was called */
-> 
-> Can we rename this flag? For direct dispatch we never got enqueued.
-> Something like "DEQ_ON_DISPATCH" would show the purpose of the
-> flag more clearly.
+We should be able to pass this information in a reliable way without any
+additional synchronization in the hot paths. This would let schedulers that
+use arena data structures check the flag instead of doing their own
+internal lookups.
 
-Good point. However, ops.dequeue() isn't only called on dispatch, it can
-also be triggered when a task property is changed.
-
-So the flag should represent the "enqueued state" in the sense that
-ops.enqueue() has been called and a corresponding ops.dequeue() is
-expected. This is a lifecycle state, not an indication that the task is in
-any queue.
-
-Would a more descriptive comment clarify this? Something like:
-
-  SCX_TASK_OPS_ENQUEUED = 1 << 1, /* Task in enqueued state: ops.enqueue()
-                                     called, ops.dequeue() will be called
-                                     when task leaves this state. */
-
-> 
-> >  	SCX_TASK_RESET_RUNNABLE_AT = 1 << 2, /* runnable_at should be reset */
-> >  	SCX_TASK_DEQD_FOR_SLEEP	= 1 << 3, /* last dequeue was for SLEEP */
-> >  
-> > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> > index 94164f2dec6dc..985d75d374385 100644
-> > --- a/kernel/sched/ext.c
-> > +++ b/kernel/sched/ext.c
-> > @@ -1390,6 +1390,9 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
-> >  	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
-> >  	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
-> >  
-> > +	/* Mark that ops.enqueue() is being called for this task */
-> > +	p->scx.flags |= SCX_TASK_OPS_ENQUEUED;
-> > +
-> 
-> Can we avoid setting this flag when we have no .dequeue() method?
-> Otherwise it stays set forever AFAICT, even after the task has been
-> sent to the runqueues.
-
-Good catch! Definitely we don't need to set this for schedulers that don't
-implement ops.dequeue().
-
-> 
-> >  	ddsp_taskp = this_cpu_ptr(&direct_dispatch_task);
-> >  	WARN_ON_ONCE(*ddsp_taskp);
-> >  	*ddsp_taskp = p;
-> > @@ -1522,6 +1525,21 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
-> >  
-> >  	switch (opss & SCX_OPSS_STATE_MASK) {
-> >  	case SCX_OPSS_NONE:
-> > +		/*
-> > +		 * Task is not currently being enqueued or queued on the BPF
-> > +		 * scheduler. Check if ops.enqueue() was called for this task.
-> > +		 */
-> > +		if ((p->scx.flags & SCX_TASK_OPS_ENQUEUED) &&
-> > +		    SCX_HAS_OP(sch, dequeue)) {
-> > +			/*
-> > +			 * ops.enqueue() was called and the task was dispatched.
-> > +			 * Call ops.dequeue() to notify the BPF scheduler that
-> > +			 * the task is leaving.
-> > +			 */
-> > +			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq,
-> > +					 p, deq_flags);
-> > +			p->scx.flags &= ~SCX_TASK_OPS_ENQUEUED;
-> > +		}
-> >  		break;
-> >  	case SCX_OPSS_QUEUEING:
-> >  		/*
-> > @@ -1530,9 +1548,16 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
-> >  		 */
-> >  		BUG();
-> >  	case SCX_OPSS_QUEUED:
-> > -		if (SCX_HAS_OP(sch, dequeue))
-> > +		/*
-> > +		 * Task is owned by the BPF scheduler. Call ops.dequeue()
-> > +		 * to notify the BPF scheduler that the task is being
-> > +		 * removed.
-> > +		 */
-> > +		if (SCX_HAS_OP(sch, dequeue)) {
-> 
-> Edge case, but if we have a .dequeue() method but not an .enqueue() we
-> still make this call. Can we add flags & SCX_TASK_OPS_ENQUEUED as an 
-> extra condition to be consistent with the SCX_OPSS_NONE case above?
-
-Also good catch. Will add that.
-
-> 
-> >  			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq,
-> >  					 p, deq_flags);
-> > +			p->scx.flags &= ~SCX_TASK_OPS_ENQUEUED;
-> > +		}
-> >  
-> >  		if (atomic_long_try_cmpxchg(&p->scx.ops_state, &opss,
-> >  					    SCX_OPSS_NONE))
-> 
+And it would also allow us to provide both semantics:
+1) Catch real dequeues that need special BPF-side actions (check the flag)
+2) Track all ops.enqueue()/ops.dequeue() pairs for accounting purposes
+   (ignore the flag)
 
 Thanks,
 -Andrea
