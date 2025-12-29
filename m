@@ -1,79 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7326D10F1;
-	Mon, 29 Dec 2025 00:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E611A1A8F84;
+	Mon, 29 Dec 2025 00:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766966782; cv=none; b=XxgCvzygonyZwvcAfBiF4+0phUK0wykKfN47A1p0Dt2W61jvUw3UujuDXxeM9emdNAHIhTx883HkfPDLwOUIMXNEZ6/3ichs0RPuxANE+thYPBkDV8dg7YLTcTjwR1CvXU5NZnaL+ju5+o2BrDxYtaOgS5FVDoTweYXXKQL/2vU=
+	t=1766969475; cv=none; b=jREks0Zpy52nNKk1TJ/qREBsnkzLZdQd/XKRe1qMecLcvGs6IwNIinvEx5/aWA4VXIO98HI6/yyWsPpxBUa2LbeqQALl3ERaLRw3lWgcsXbcLei4TQ2jEcVivMe7bb4m62Oak2I3lQYLr/LTtryMwF2+oc2JuhbsuZ02uYn3sdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766966782; c=relaxed/simple;
-	bh=yB4T9TgPBvHSFJzKwDHARSGtAZDwmIwXnMDVi1mxyvI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G3MClvalkNWqX2QySeKr3firgtsjCFotXJCFOL36q8FwFbPbMkhOcDN/mgiJso4nicHpgJCHpYOwAcpvPyMNh2mj6nzqoFSJTwewlRueR/vMnJa5wE828BPxshY3G6YUeEkMZDZO5ixdQlYuSVPGpsaJeLXy7OXhcwwjjkFLzFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K696OGOK; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1766969475; c=relaxed/simple;
+	bh=3aGKb2t4bqry3ubWVkbMe5Cpg7Z7feNWMZdLqQfCKyI=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=ITSG7Hrx3//idFWwJvR6XOsacpLLHgisgHQq+b1aFJofwanRdvnLGNZY9TZSkoAqaalLcmNnl4NHnBsfV121Ku7rgbrbnMr+ZK7RY00VAEeJUYqiLT80EFA1HYiPNwgNpf/XBh9AXCbspo8otOUJHXWdAqZ22ZJhNtYu+jjQgXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVf3WK5z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K696OGOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF63C4CEFB;
-	Mon, 29 Dec 2025 00:06:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mVf3WK5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68ECAC4CEFB;
+	Mon, 29 Dec 2025 00:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1766966781;
-	bh=yB4T9TgPBvHSFJzKwDHARSGtAZDwmIwXnMDVi1mxyvI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K696OGOK/esCSI5ghFinQ2q5pK+mWOrgAlLtDn8ZSQ4YConhsEhYjiAcUMbVNEntN
-	 nb75Fr8vYYxeTrKua4/5FX3AgdiGidvQkcCiTtUIRax1hTvSDv38y9cU3eca0ffl2W
-	 gfAch4LdW06k4Bc9qbp/AZ92fptvvXXW++7yvoGQVoAIYJBu39hYwmiANm1GVrdusM
-	 BHTN8On5rkfqXljV07dqla2IO0UjHHRq1dV1Ot+0FTQ2r9eNWandsmJHQiLQgkDqrQ
-	 wtHZX9Mm8dkVShbiCsyiwxOZiQEsYeb7CjMdM4GwfRFrboPefreWb2dTlYd7c9mEwq
-	 V62kQ96MqhAXA==
-Date: Sun, 28 Dec 2025 14:06:19 -1000
+	s=k20201202; t=1766969473;
+	bh=3aGKb2t4bqry3ubWVkbMe5Cpg7Z7feNWMZdLqQfCKyI=;
+	h=Date:From:To:Cc:Subject:From;
+	b=mVf3WK5zANkRvBL2P13xSpfI0NyKP79DN3OHDdss6O7vjoFthwcmPZV5lNCJfS+0n
+	 Czj9zvz3zU/x1x2bjH1insyqqNy6/LeclG+jKWj0/qwShtQsYhwMIlc/IxnmtW1Yam
+	 wD9oeogtN141sS59Yo9DMFYpXkHEVXaK0vdqMzbQvxKupEKKQN/SP3MO4f9+/bd0fI
+	 Xki6i6+Hn/1FKTct1d97M3Ltih1HkxzjzU/AJTOE0QABHPzsKf+dxkon+a9KtSSKnI
+	 NhgrcPC5BdbeBWPr5AJxR2UPlv9HhYFSJK0OWjWxl3AAGo0qHlsT1VEB+rjlC/f91Y
+	 xJY1swx0EAecA==
+Date: Sun, 28 Dec 2025 14:51:12 -1000
+Message-ID: <311f420a9bebc537ef84f66b0de04129@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
-Message-ID: <aVHF-72-6yRcFZ8x@slm.duckdns.org>
-References: <20251219224450.2537941-1-arighi@nvidia.com>
- <20251219224450.2537941-2-arighi@nvidia.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: [GIT PULL] sched_ext: Fixes for v6.19-rc3
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251219224450.2537941-2-arighi@nvidia.com>
 
-Sorry about the million replies. Pretty squirrel brained right now.
+Hi Linus,
 
-On Fri, Dec 19, 2025 at 11:43:14PM +0100, Andrea Righi wrote:
-> @@ -1390,6 +1390,9 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
->  	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
->  	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
->  
-> +	/* Mark that ops.enqueue() is being called for this task */
-> +	p->scx.flags |= SCX_TASK_OPS_ENQUEUED;
-
-Is this guaranteed to be cleared after dispatch? ops_dequeue() is called
-from dequeue_task_scx() and set_next_task_scx(). It looks like the call from
-set_next_task_scx() may end up calling ops.dequeue() when the task starts
-running, this seems mostly accidental.
-
-- The BPF sched probably expects ops.dequeue() call immediately after
-  dispatch rather than on the running transition. e.g. imagine a scenario
-  where a BPF sched dispatches multiple tasks to a local DSQ. Wouldn't the
-  expectation be that ops.dequeue() is called as soon as a task is
-  dispatched into a local DSQ?
-
-- If this depends on the ops_dequeue() call from set_next_task_scx(), it'd
-  also be using the wrong DEQ flag - SCX_DEQ_CORE_SCHED_EXEC - for regular
-  ops.dequeue() following a dispatch. That call there is that way only
-  because ops_dequeue() didn't do anything when OPSS_NONE.
+Miscellaneous sched_ext fixes.
 
 Thanks.
 
--- 
+The following changes since commit bb27226f0d00588ac53be8825e021ae80aa43371:
+
+  sched_ext: Remove unused code in the do_pick_task_scx() (2025-12-15 05:53:49 -1000)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-6.19-rc3-fixes
+
+for you to fetch changes up to c9894e6f0160414b57e895332c580cf5c8da6780:
+
+  tools/sched_ext: update scx_show_state.py for scx_aborting change (2025-12-28 06:11:26 -1000)
+
+----------------------------------------------------------------
+sched_ext: Fixes for v6.19-rc3
+
+- Fix uninitialized @ret on alloc_percpu() failure leading to ERR_PTR(0).
+
+- Fix PREEMPT_RT warning when bypass load balancer sends IPI to offline
+  CPU by using resched_cpu() instead of resched_curr().
+
+- Fix comment referring to renamed function.
+
+- Update scx_show_state.py for scx_root and scx_aborting changes.
+
+----------------------------------------------------------------
+Kohei Enju (2):
+      tools/sched_ext: fix scx_show_state.py for scx_root change
+      tools/sched_ext: update scx_show_state.py for scx_aborting change
+
+Liang Jie (1):
+      sched_ext: fix uninitialized ret on alloc_percpu() failure
+
+Zqiang (2):
+      sched_ext: Fix some comments in ext.c
+      sched_ext: Use the resched_cpu() to replace resched_curr() in the bypass_lb_node()
+
+ kernel/sched/ext.c                | 23 ++++++++++-------------
+ tools/sched_ext/scx_show_state.py | 10 ++++++----
+ 2 files changed, 16 insertions(+), 17 deletions(-)
+
+--
 tejun
