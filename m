@@ -1,70 +1,70 @@
-Received: from mail-yx1-f99.google.com (mail-yx1-f99.google.com [74.125.224.99])
+Received: from mail-pj1-f100.google.com (mail-pj1-f100.google.com [209.85.216.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94932BDC0B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99A52BDC10
 	for <sched-ext@lists.linux.dev>; Wed, 31 Dec 2025 17:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.99
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767202647; cv=none; b=ahgmKmsoDHR4EJ63WCZwr0LeIeWEJH+bsK6XQyAeoLgLqlslEaDV7z5CeS0Cdz7O2Z3ETLW/vKziID8zTCQ0/VNEVHwdl1DaYelb/Dhivz2fJwkbmg4E6nhzApQn1aA17nvBAy2wtOmpChh6K+uUhOrHWRkchzwOX08TJ3rLHj0=
+	t=1767202647; cv=none; b=Fasz4u8NEOVj1jymuEJz+NOgksxxSFY/mjrmUQndIhapsl4CSX2t91Sr69450HcHw6GHrVFCJnYEKdFpXt9WdKXyoGCPiGLsH+S/fDWarnlMgCqvUHHQf+yx5fhsB6JgE3oQ3oDFRZKwtY3NqGckwE3wysGN1uYDkEclHiQvfx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1767202647; c=relaxed/simple;
-	bh=j34IflS+eKTJabK0NTs8ebKaiD8zpNvLHhM3IHbHvyM=;
+	bh=+qs2O0p6JSmasUPfUb0PrNjt2zEzZFmnX/PzeN+aGlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WB4GSwpGg2n+uSwh67vs1Y+7IrQrR5EV/9d3Nh5Vyq6yWIk8spR2xf4jajJHsyknf/Ah3uQ7+S/cNQakUURc7UIUIlT1Mani12GWYAIrGuD3YQ4EWXWRgLENN0MGliLKwr28xEgNSTC7uQIOD6uzQOZ4JZPIDTqV7CUDlHkeYDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com; spf=fail smtp.mailfrom=purestorage.com; dkim=pass (2048-bit key) header.d=purestorage.com header.i=@purestorage.com header.b=Q8kQSGIc; arc=none smtp.client-ip=74.125.224.99
+	 MIME-Version; b=QPvNxYICYchAg5V2aXMmMo0666mz9vy5ENzwyhyX9KFzIMSsSe33lwtgynI3b0b3PFQm1G3P/zRhzcMC0iQHeCg4F5F9uFi2zg6QWhD+cQ5NhBEZZmJsb8SnersNHDnYHdKEF9AodkRJvWvJrnrGu59vUTlPXPUHd2MHTOt6Iak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com; spf=fail smtp.mailfrom=purestorage.com; dkim=pass (2048-bit key) header.d=purestorage.com header.i=@purestorage.com header.b=Ti2rL+EI; arc=none smtp.client-ip=209.85.216.100
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=purestorage.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=purestorage.com header.i=@purestorage.com header.b="Q8kQSGIc"
-Received: by mail-yx1-f99.google.com with SMTP id 956f58d0204a3-63f9fa715c6so1606739d50.2
+	dkim=pass (2048-bit key) header.d=purestorage.com header.i=@purestorage.com header.b="Ti2rL+EI"
+Received: by mail-pj1-f100.google.com with SMTP id 98e67ed59e1d1-34ce100aec4so974483a91.0
         for <sched-ext@lists.linux.dev>; Wed, 31 Dec 2025 09:37:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=purestorage.com; s=google2022; t=1767202644; x=1767807444; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mnMrXoOdHpUw8dswWZLzwCvPJsKuA+x+IPeEnhc/WiU=;
-        b=Q8kQSGIc+k7vVe/O3ZTLC9T62Umo6ORhFRA8SFahnGAUuUFKDxSfZVxH12YAqceyJ3
-         9jtrWERFF+rD0mD0TOQqY1h2Vf0JZ9hSpkuFe0krBKaLA8kJz2S+Heg+Yfnhf/Pvp1pm
-         o92chk3ET1j2ovUU1xjnmlDeYsDI/o+vGevsFesfn3pnY7KW+jBEaMSr7VpND6u9KOiB
-         yp2MwJNvTSa+UyQBrck+OjpI1uzmhAyT3UoS48+tjjvmTv3O2ujceJ5JCHOrKtukesic
-         dABXqyc3P2Fyh44/o2qiFBWA/vITxUxnnKNMKypoFcebqrHJ5O6p798o1Qqr+23R20FS
-         IaKQ==
+        bh=evGP5W8eaS0gGQmtryNYpPPxNCoy7QWmqYRyuLboZRo=;
+        b=Ti2rL+EIABYapLMHNafLM+xrHEo3opfVbT9l9LCo3S3ZAvoWDabewSeI3W6a+Fo58Q
+         HlUIaRlP5PQ03W9U7jHt+zAMyS7UkGuyPRXNrszSSY0ILWOWwPy0ImtV+BVpodOCtdYW
+         Ibp16HbNSpStTjr6/8CduZKwcSVAQ0KC53Q/XPt+2JQb90wiVjUTen0caAE7TjCOay4W
+         EAoTjtTRTOMJ2394ZHmGf2YvGNt0nJzTZ5UCLO/4Ys7oegMor4A+d3Ud32jBC6TxiOKo
+         c5pKCBgr3Rk8x1+nxsrU6+SXc2dInHjsxOXGxX/SXG4+ZORmlUdGhcGHfDmckCLjrss7
+         fv8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1767202644; x=1767807444;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=mnMrXoOdHpUw8dswWZLzwCvPJsKuA+x+IPeEnhc/WiU=;
-        b=VC3qWAhw/9IIGFjx1msQYCdXkQXYOAWOEwbPb3oo8ElfsDzmxS++S07jSKmnknqJsy
-         ihZo/yPiVRpNP3XjHc6zKZUW1fvkwH8GCKoDo6JSIM5s5mngyy5szoSpqIcdkoM3Dpxz
-         7kO9wtU8zNs3laE4rNgJI7tjLOck9+ps3tZvSIJpjriXLQXF2ZPVpgKaU2ec8s43bMky
-         wXajuv3I+ZaR8evrsuZfD6DOrL8zxvdz1jqvbt4GaTUk+2TolBXDXeg7URcI0PVdUrBc
-         b4JTDg4WHKfEx//Wg2/OQE7yNOPJdsff1yRGTZSs8MdTub7Jw9h2BtSI+8LpiWSBbegu
-         eVMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXyehpJzdKylDsRMHGtUamSQSR1AwyvY7sKY7m+Ioe8BvECM8BqMGLBfRRvWqm6d1S4pEOUcOaeC4U=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxUtmaKTRjXqKL6/KiFD2uNXBu4hUoaCVCwZ47p+UynpoRSOxfZ
-	XsinhWI5wLyw4KCjwSalLMAG0MDYcD/YCfGQpTFsBJHEZfFeUgqOuphICUBHJfyzI+RTRSelseB
-	3SA+9Wzbe1lqod5unJC0LhHMS0iXpx5AVfpwH4nEVR1pz5lLqqzQa
-X-Gm-Gg: AY/fxX5XHrsrk+vTwOb8LE22Y2dApqpyY9yvGZ5YNxBscUwZ2xWWjDU1SdsMmhpwn7X
-	BJqpFZQ6Lb33DmW1mMArLqi9b0SMMUWcGIvGnOWjMD8bLncRtTrTC5X+6kUAy6QsXRUcz1YEQ7n
-	E9WBf/bvitC48RDmW5X2aoIXOWQEdOOqOx3/uKt0IUolVOWeaWDxtcyUuASGvJmVdfnJUZHkC9q
-	px05DMkFIMwzzuM2XfmaMskjEibXVRO+ZTWKXerMvtvycBKghbQV6uYGC+gLbV9hLay2b4K21MT
-	nRxOuU9v1Pw2CxmIDWLbYmmLTB5uzimofM+if9cFTinCEv+FViGrfshZR/R9K5LdCAHTO7R9nQa
-	BFP5KoKauwI61OS8izGPxRAIpq3k=
-X-Google-Smtp-Source: AGHT+IFzNZ9/B42ZZcWKGBbfHMMt1MITs0v7q3q/4nZwuxereT20JgdLMhgZVahogWsIsE+x/yAB+mtzvoKa
-X-Received: by 2002:a05:690e:144e:b0:644:49be:4b8e with SMTP id 956f58d0204a3-6466a7b2ee5mr25783568d50.0.1767202643860;
-        Wed, 31 Dec 2025 09:37:23 -0800 (PST)
+        bh=evGP5W8eaS0gGQmtryNYpPPxNCoy7QWmqYRyuLboZRo=;
+        b=R1WXhLOpQXT0xN0kYrmH1zzrHLDzPYB0EuwC+mUBjQzoq6/43UjGVV55zLmUPelwdq
+         V6JjAG5B9dbgbODE9r8Cami2EnskyWDrHVrnjXhknYQllY1nggZDfqfJ5rXIcpkRbgli
+         6kv9vRfkFbF6sSIZG442OUGWLy/HZt5THG14l9S4vg03QnU9eqSjAEkKtjcWGSyE9b7Y
+         rg38w9eEs4PtEEBazMR+bDK1iiX4FK4imJbRN/9y0GAwzmPTQ+DGAMvdWlXH3JmRBkNL
+         FGlDKWMmWWlcFmRu+FfzLf1RxIr4gwxrmavIXKMpiOyZ6hFXeonlfXdolD4g6IWHcKpX
+         zIJw==
+X-Forwarded-Encrypted: i=1; AJvYcCUvyJgUYHPHea4jeW15J+vFfVrdsqPRNbfPEUa6EKVxguz027BufrNxDiWJ9pYMp+4Z6rrxSqyXYlA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyKxE0hJYhjFEwaNuALBtjySp7UTL17Zmy+j/89j2YQfvkyX7K+
+	yqXSnIWKgGemQiIiWXIigXTvjAApUVHJ3TitySHbZa/MTKFXjHpEGYI1mfgTDtdCBFZp0Ac9IaS
+	bn+P2El4ykDlvuXj1FYBWKS/CMLa9RXn/1LwXZyA4s+5tyhNzkWJI
+X-Gm-Gg: AY/fxX6obs0VP5mERqQyHrf55w06h6aDpCouD9bkw5vxkMQibv0acslO0L/WVDbej/z
+	+DuH4pbj5nW5pjEBM08GWvnVN7M2DRoNldKrGSHZuZV2fdpFyU14Ndc4Jb1ARy619cZS7rABcFM
+	MJcx9cRoIGIBP4LKCIblOdrP7GmbIPzNZ/60VsrhYI1BfJLHEs+Iwj196zJ3so98hUcsE5yW7QD
+	LgciokAjCcPjuQm+tlFitrFQ6Fm2cSs5fTR4jTaI+7xAhZcd+kPR+Vl7Qbk3gIzM3/5nIXGoqr7
+	86DPjVlck9pJWL7lyTB9rlb97AwZAvc6oj7k2+x1ms6Yl0RSZay+uyebqJzxyxWnw6JH+biRxEX
+	ird7UxtnemBB3yaIfLn54+bcYIiA=
+X-Google-Smtp-Source: AGHT+IE23PFN99NQKL9O+zJCZJj+5szPasN7ULi0swfy4CNHFw+Olu7RghBbYFrAySDYSvrr9RuRB4qHunQX
+X-Received: by 2002:a17:90b:3903:b0:341:88ba:c632 with SMTP id 98e67ed59e1d1-34e91f702ccmr23041237a91.0.1767202644137;
+        Wed, 31 Dec 2025 09:37:24 -0800 (PST)
 Received: from c7-smtp-2023.dev.purestorage.com ([2620:125:9017:12:36:3:5:0])
-        by smtp-relay.gmail.com with ESMTPS id 00721157ae682-78fb4520077sm17026207b3.26.2025.12.31.09.37.23
+        by smtp-relay.gmail.com with ESMTPS id 41be03b00d2f7-c1e7b784812sm2287052a12.9.2025.12.31.09.37.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Dec 2025 09:37:23 -0800 (PST)
+        Wed, 31 Dec 2025 09:37:24 -0800 (PST)
 X-Relaying-Domain: purestorage.com
 Received: from dev-csander.dev.purestorage.com (dev-csander.dev.purestorage.com [10.49.34.222])
-	by c7-smtp-2023.dev.purestorage.com (Postfix) with ESMTP id 740E834223B;
+	by c7-smtp-2023.dev.purestorage.com (Postfix) with ESMTP id C9BDA340681;
 	Wed, 31 Dec 2025 10:37:22 -0700 (MST)
 Received: by dev-csander.dev.purestorage.com (Postfix, from userid 1557716354)
-	id 6E501E4234A; Wed, 31 Dec 2025 10:37:22 -0700 (MST)
+	id C3D39E4234A; Wed, 31 Dec 2025 10:37:22 -0700 (MST)
 From: Caleb Sander Mateos <csander@purestorage.com>
 To: Jiri Kosina <jikos@kernel.org>,
 	Benjamin Tissoires <bentiss@kernel.org>,
@@ -123,9 +123,9 @@ Cc: linux-input@vger.kernel.org,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	Caleb Sander Mateos <csander@purestorage.com>
-Subject: [PATCH 4/5] net: make cfi_stubs globals const
-Date: Wed, 31 Dec 2025 10:36:32 -0700
-Message-ID: <20251231173633.3981832-5-csander@purestorage.com>
+Subject: [PATCH 5/5] selftests/bpf: make cfi_stubs globals const
+Date: Wed, 31 Dec 2025 10:36:33 -0700
+Message-ID: <20251231173633.3981832-6-csander@purestorage.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20251231173633.3981832-1-csander@purestorage.com>
 References: <20251231173633.3981832-1-csander@purestorage.com>
@@ -138,87 +138,103 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 Now that struct bpf_struct_ops's cfi_stubs field is a const pointer,
-declare the __bpf_bpf_dummy_ops, __bpf_ops_tcp_congestion_ops,
-__bpf_ops_qdisc_ops, and __smc_bpf_hs_ctrl global variables it points to
-as const. This allows the global variables to be placed in readonly
-memory.
+declare the __test_no_cif_ops, __bpf_testmod_ops*, st_ops_cfi_stubs, and
+multi_st_ops_cfi_stubs global variables it points to as const. This
+tests that BPF struct_ops implementations are allowed to declare
+cfi_stubs global variables as const.
 
 Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
 ---
- net/bpf/bpf_dummy_struct_ops.c | 2 +-
- net/ipv4/bpf_tcp_ca.c          | 2 +-
- net/sched/bpf_qdisc.c          | 2 +-
- net/smc/smc_hs_bpf.c           | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ .../testing/selftests/bpf/test_kmods/bpf_test_no_cfi.c |  2 +-
+ tools/testing/selftests/bpf/test_kmods/bpf_testmod.c   | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/bpf/bpf_dummy_struct_ops.c b/net/bpf/bpf_dummy_struct_ops.c
-index 812457819b5a..198152dbce9a 100644
---- a/net/bpf/bpf_dummy_struct_ops.c
-+++ b/net/bpf/bpf_dummy_struct_ops.c
-@@ -296,11 +296,11 @@ static int bpf_dummy_test_2(struct bpf_dummy_ops_state *cb, int a1, unsigned sho
- static int bpf_dummy_test_sleepable(struct bpf_dummy_ops_state *cb)
+diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_test_no_cfi.c b/tools/testing/selftests/bpf/test_kmods/bpf_test_no_cfi.c
+index 948eb3962732..1d76912f1a45 100644
+--- a/tools/testing/selftests/bpf/test_kmods/bpf_test_no_cfi.c
++++ b/tools/testing/selftests/bpf/test_kmods/bpf_test_no_cfi.c
+@@ -39,11 +39,11 @@ static void bpf_test_no_cfi_ops__fn_1(void)
+ 
+ static void bpf_test_no_cfi_ops__fn_2(void)
+ {
+ }
+ 
+-static struct bpf_test_no_cfi_ops __test_no_cif_ops = {
++static const struct bpf_test_no_cfi_ops __test_no_cif_ops = {
+ 	.fn_1 = bpf_test_no_cfi_ops__fn_1,
+ 	.fn_2 = bpf_test_no_cfi_ops__fn_2,
+ };
+ 
+ static struct bpf_struct_ops test_no_cif_ops = {
+diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+index 90c4b1a51de6..5e460b1dbdb6 100644
+--- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
++++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+@@ -295,11 +295,11 @@ static int bpf_testmod_test_3(void)
+ static int bpf_testmod_test_4(void)
  {
  	return 0;
  }
  
--static struct bpf_dummy_ops __bpf_bpf_dummy_ops = {
-+static const struct bpf_dummy_ops __bpf_bpf_dummy_ops = {
- 	.test_1 = bpf_dummy_ops__test_1,
- 	.test_2 = bpf_dummy_test_2,
- 	.test_sleepable = bpf_dummy_test_sleepable,
+-static struct bpf_testmod_ops3 __bpf_testmod_ops3 = {
++static const struct bpf_testmod_ops3 __bpf_testmod_ops3 = {
+ 	.test_1 = bpf_testmod_test_3,
+ 	.test_2 = bpf_testmod_test_4,
  };
  
-diff --git a/net/ipv4/bpf_tcp_ca.c b/net/ipv4/bpf_tcp_ca.c
-index e01492234b0b..bd2ce4ff1762 100644
---- a/net/ipv4/bpf_tcp_ca.c
-+++ b/net/ipv4/bpf_tcp_ca.c
-@@ -306,11 +306,11 @@ static void __bpf_tcp_ca_init(struct sock *sk)
- 
- static void __bpf_tcp_ca_release(struct sock *sk)
+ static void bpf_testmod_test_struct_ops3(void)
+@@ -1273,11 +1273,11 @@ bpf_testmod_ops__test_return_ref_kptr(int dummy, struct task_struct *task__ref,
+ 				      struct cgroup *cgrp)
  {
+ 	return NULL;
  }
  
--static struct tcp_congestion_ops __bpf_ops_tcp_congestion_ops = {
-+static const struct tcp_congestion_ops __bpf_ops_tcp_congestion_ops = {
- 	.ssthresh = bpf_tcp_ca_ssthresh,
- 	.cong_avoid = bpf_tcp_ca_cong_avoid,
- 	.set_state = bpf_tcp_ca_set_state,
- 	.cwnd_event = bpf_tcp_ca_cwnd_event,
- 	.in_ack_event = bpf_tcp_ca_in_ack_event,
-diff --git a/net/sched/bpf_qdisc.c b/net/sched/bpf_qdisc.c
-index adcb618a2bfc..8f9a6440f113 100644
---- a/net/sched/bpf_qdisc.c
-+++ b/net/sched/bpf_qdisc.c
-@@ -427,11 +427,11 @@ static void Qdisc_ops__reset(struct Qdisc *sch)
+-static struct bpf_testmod_ops __bpf_testmod_ops = {
++static const struct bpf_testmod_ops __bpf_testmod_ops = {
+ 	.test_1 = bpf_testmod_test_1,
+ 	.test_2 = bpf_testmod_test_2,
+ 	.test_maybe_null = bpf_testmod_ops__test_maybe_null,
+ 	.test_refcounted = bpf_testmod_ops__test_refcounted,
+ 	.test_return_ref_kptr = bpf_testmod_ops__test_return_ref_kptr,
+@@ -1300,11 +1300,11 @@ static int bpf_dummy_reg2(void *kdata, struct bpf_link *link)
  
- static void Qdisc_ops__destroy(struct Qdisc *sch)
- {
+ 	ops->test_1();
+ 	return 0;
  }
  
--static struct Qdisc_ops __bpf_ops_qdisc_ops = {
-+static const struct Qdisc_ops __bpf_ops_qdisc_ops = {
- 	.enqueue = Qdisc_ops__enqueue,
- 	.dequeue = Qdisc_ops__dequeue,
- 	.init = Qdisc_ops__init,
- 	.reset = Qdisc_ops__reset,
- 	.destroy = Qdisc_ops__destroy,
-diff --git a/net/smc/smc_hs_bpf.c b/net/smc/smc_hs_bpf.c
-index 063d23d85850..5c562e2a15be 100644
---- a/net/smc/smc_hs_bpf.c
-+++ b/net/smc/smc_hs_bpf.c
-@@ -60,11 +60,11 @@ static int __smc_bpf_stub_set_tcp_option_cond(const struct tcp_sock *tp,
- 					      struct inet_request_sock *ireq)
- {
- 	return 1;
- }
- 
--static struct smc_hs_ctrl __smc_bpf_hs_ctrl = {
-+static const struct smc_hs_ctrl __smc_bpf_hs_ctrl = {
- 	.syn_option	= __smc_bpf_stub_set_tcp_option,
- 	.synack_option	= __smc_bpf_stub_set_tcp_option_cond,
+-static struct bpf_testmod_ops2 __bpf_testmod_ops2 = {
++static const struct bpf_testmod_ops2 __bpf_testmod_ops2 = {
+ 	.test_1 = bpf_testmod_test_1,
  };
  
- static int smc_bpf_hs_ctrl_init(struct btf *btf) { return 0; }
+ struct bpf_struct_ops bpf_testmod_ops2 = {
+ 	.verifier_ops = &bpf_testmod_verifier_ops,
+@@ -1547,11 +1547,11 @@ static const struct bpf_verifier_ops st_ops_verifier_ops = {
+ 	.gen_prologue = st_ops_gen_prologue,
+ 	.gen_epilogue = st_ops_gen_epilogue,
+ 	.get_func_proto = bpf_base_func_proto,
+ };
+ 
+-static struct bpf_testmod_st_ops st_ops_cfi_stubs = {
++static const struct bpf_testmod_st_ops st_ops_cfi_stubs = {
+ 	.test_prologue = bpf_test_mod_st_ops__test_prologue,
+ 	.test_epilogue = bpf_test_mod_st_ops__test_epilogue,
+ 	.test_pro_epilogue = bpf_test_mod_st_ops__test_pro_epilogue,
+ };
+ 
+@@ -1715,11 +1715,11 @@ static void multi_st_ops_unreg(void *kdata, struct bpf_link *link)
+ static int bpf_testmod_multi_st_ops__test_1(struct st_ops_args *args)
+ {
+ 	return 0;
+ }
+ 
+-static struct bpf_testmod_multi_st_ops multi_st_ops_cfi_stubs = {
++static const struct bpf_testmod_multi_st_ops multi_st_ops_cfi_stubs = {
+ 	.test_1 = bpf_testmod_multi_st_ops__test_1,
+ };
+ 
+ struct bpf_struct_ops testmod_multi_st_ops = {
+ 	.verifier_ops = &bpf_testmod_verifier_ops,
 -- 
 2.45.2
 
