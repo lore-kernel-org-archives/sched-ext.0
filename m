@@ -1,118 +1,147 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C712C08D9
-	for <sched-ext@lists.linux.dev>; Mon,  5 Jan 2026 18:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F3A30ACEB;
+	Tue,  6 Jan 2026 08:25:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767637355; cv=none; b=qJ8JhLwdDC22jliPRO2L2XKs0sUZyqFmOkG/5xLH/vmBE/3Qbz1VxD6930HgkstVhBVaD6tGlWxfPDK0eUVNyJYGStMGON4c9NXPmr9zm9b2RyNykg5Kgq4/F2q29gZQuttFyJ9KifYLzU95ESVr1Ts9/8oZfRi5ZsKF+rP9YcQ=
+	t=1767687931; cv=none; b=SNFWx89F54LqktW0BpFbF7lqKh2L493BY7mRsgtOEAFNyUP3nXSAYjfgItpBAnX4elX3JyE3CVW/O7OSGUVHu06wU54lZcmf5/zCjQES+cI/kxrlQJ7qFFq5wYwoJYGIzkftyhTByovziu/Znn1DDfdwYqweA0NBjBXcGwcWolY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767637355; c=relaxed/simple;
-	bh=t66+7KOAPUPEKD/IgPT6Ru7OImztlruilpFCWBeGF8Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oYlrgljIxZsZmqdU8dH4iqnuWdh7xUsxBZq4iFmwcUUGH6D/8n/vgLuAVfzBK3zXg+ASl+9xZquI9Si6v61Xz7GRpeD/mrKjx2Ks8OlExZ7MP1tODXF5YUqX28WVRw3YFh0cyZ1L1Xx2xxTUykqHK0rlvhXjTSN6e908bieL6+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H3v75Vej; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767687931; c=relaxed/simple;
+	bh=DgI8Fc4rTrkUhHVxfd4nsPZshZ915CBlnpO6gpVE4DA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nGWYc4TflDYzuaI+LRNR31ysRdVXEzFX3C/MI9y0BtqmCoRNucMJLgl6k1Pb6wxVBa2mi9mQVhKvq2YitsMZk4wRjR67RQE+K6v78gHeWrnDDvNNYBKGm+cgb9u0Dg/Y9orx7Tm6y4VdQQ95X5JbcCfPGNR8wMEO5fRnfh/ZKP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=g0Kkb94X; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H3v75Vej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DA5C2BC9E
-	for <sched-ext@lists.linux.dev>; Mon,  5 Jan 2026 18:22:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767637354;
-	bh=t66+7KOAPUPEKD/IgPT6Ru7OImztlruilpFCWBeGF8Y=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=H3v75VejZiNrQbIst6HHnXoO52ZM3Tx8ntiu3O/Msz5wcDsrWEc8ezPVnk8ri0yd0
-	 Rh4pTt3Y1cWmiQ+8Zqz8DMt6AS9L5KNl2AoTVCpLRVC55oTfl5yxL1WaxTN89d3qFI
-	 4nFGjxtFGBe1jeg5Zz2wK2BVB6yaLHaoFWgmC6b8QqTukyRg/VwujlzdlcSCcxeb2K
-	 IAyF4kf3P4BYFZzngnRRpQgVrJOLagl7A5Vb6d+TwEj/biXuDn0GVZA7P5PUbHnjDv
-	 153+Wyzg1IPiPc0lh5P84q+BSjuuAd9Fve1sNFowy8o9tn9TdtW2/7wqYzOeO6rg+D
-	 N8IFIInNNFTgw==
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-65749fe614bso67199eaf.1
-        for <sched-ext@lists.linux.dev>; Mon, 05 Jan 2026 10:22:34 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUG/mFSiRfjRkOYiPPdRnldKhVQAiRW6ZLLc5JbY8nLTWvw8SwqEBd5l7ZasvCCaHDUaQvUHARJQTk=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+Tvb1b/UFquAxLqUsjz3X6rQjQYOKppiN14wEAGd9sh8uwjzW
-	l1r5UyrN8wzUzmr+1f3HS9b6mMLfalTj/b0unEjbadk8yQXNvvtENjCFnDdzYoJsF5L4J6qC0k2
-	sW1FTunWOvElxWni2EmeKK8Qg0D2QTTw=
-X-Google-Smtp-Source: AGHT+IHB172ZQGOi9ZR1u9PjyV58cNhnXMvGGbP/9JKsqng7N5nz0M5cIctutXbciJi9XeHJlW5h6fuqEMIqm3oSi7E=
-X-Received: by 2002:a05:6820:7802:b0:659:9a49:8e74 with SMTP id
- 006d021491bc7-65f47a463d7mr130879eaf.68.1767637353760; Mon, 05 Jan 2026
- 10:22:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="g0Kkb94X"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=F/TRE4AJ7/DxDFGbDd7kjbKCM/sSy4a/Cr0X7sMo+2w=; b=g0Kkb94Xtcpxcp1Av2CaR0kHEB
+	/zcJBuYG2pHeKunn9cziy61Ufb+DwZQM9VBp0SqTFP2V34eo3WbByB7W0qR0vaYPL+sX65FaZGJzk
+	bwy8f9XJgbYrY8FHxNy8vebiWe/LaDd3rtY79GjhigSvN9cpn5gfkkYcXlVPoEZWZkHBWyZcoqLfu
+	18EVzaoRT8bfWmYIBnfFAcb16DmnSDWwRYnojctsYWqDac/uHDYHWo559Ui9ejPiEfqD5j96qyIag
+	e+zy5h+G4UCQFhE5HZWFUVw/XffZzRqYZiND0qnfNIQXo9FImgEEkALNazeKsLGreKSrdUoPzqHri
+	3CR0Osow==;
+Received: from [49.174.255.4] (helo=[192.168.100.20])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1vd2NR-0025fj-Cb; Tue, 06 Jan 2026 09:25:17 +0100
+Message-ID: <61c00aaf-1920-4f60-93ee-68e25f90218a@igalia.com>
+Date: Tue, 6 Jan 2026 17:25:06 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251225040104.982704-1-changwoo@igalia.com> <849b576e-9563-42ae-bd5c-756fb6dfd8de@arm.com>
-In-Reply-To: <849b576e-9563-42ae-bd5c-756fb6dfd8de@arm.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 5 Jan 2026 19:22:22 +0100
-X-Gmail-Original-Message-ID: <CAJZ5v0imU_DkW5-Pip3ze-MaHj+CAvc0LNkaLsTZuFbj33R0aA@mail.gmail.com>
-X-Gm-Features: AQt7F2rIqrdl4_Lfta-tfUzoW3gXGzlizLu8a9j9KJ9CU01qQlc9bEEV4GjzNSk
-Message-ID: <CAJZ5v0imU_DkW5-Pip3ze-MaHj+CAvc0LNkaLsTZuFbj33R0aA@mail.gmail.com>
-Subject: Re: [PATCH for 6.19 0/4] Revise the EM YNL spec to be clearer
-To: Lukasz Luba <lukasz.luba@arm.com>
-Cc: Changwoo Min <changwoo@igalia.com>, kernel-dev@igalia.com, linux-pm@vger.kernel.org, 
-	horms@kernel.org, pabeni@redhat.com, rafael@kernel.org, 
-	netdev@vger.kernel.org, edumazet@google.com, davem@davemloft.net, 
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, lenb@kernel.org, 
-	pavel@kernel.org, donald.hunter@gmail.com, kuba@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for 6.19 4/4] PM: EM: Add dump to get-perf-domains in the
+ EM YNL spec
+To: Donald Hunter <donald.hunter@gmail.com>
+Cc: lukasz.luba@arm.com, rafael@kernel.org, kuba@kernel.org,
+ davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+ horms@kernel.org, lenb@kernel.org, pavel@kernel.org, kernel-dev@igalia.com,
+ linux-pm@vger.kernel.org, netdev@vger.kernel.org, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20251225040104.982704-1-changwoo@igalia.com>
+ <20251225040104.982704-5-changwoo@igalia.com> <m2bjj8i9xn.fsf@gmail.com>
+From: Changwoo Min <changwoo@igalia.com>
+Content-Language: en-US, ko-KR, en-US-large, ko
+In-Reply-To: <m2bjj8i9xn.fsf@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 30, 2025 at 10:44=E2=80=AFAM Lukasz Luba <lukasz.luba@arm.com> =
-wrote:
->
-> Hi Changwoo,
->
-> On 12/25/25 04:01, Changwoo Min wrote:
-> > This patch set addresses all the concerns raised at [1] to make the EM =
-YNL spec
-> > clearer. It includes the following changes:
-> >
-> > - Fix the lint errors (1/4).
-> > - Rename em.yaml to dev-energymodel.yaml (2/4).  =E2=80=9Cdev-energymod=
-el=E2=80=9D was used
-> >    instead of =E2=80=9Cdevice-energy-model=E2=80=9D, which was original=
-ly proposed [2], because
-> >    the netlink protocol name cannot exceed GENL_NAMSIZ(16). In addition=
-, docs
-> >    strings and flags attributes were added.
-> > - Change cpus' type from string to u64 array of CPU ids (3/4).
-> > - Add dump to get-perf-domains in the EM YNL spec (4/4). A user can fet=
-ch
-> >    either information about a specific performance domain with do or in=
-formation
-> >    about all performance domains with dump.
-> >
-> > This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for exam=
-ple,
-> > with the following commands:
-> >
-> >    $> tools/net/ynl/pyynl/cli.py \
-> >       --spec Documentation/netlink/specs/dev-energymodel.yaml \
-> >       --dump get-perf-domains
-> >    $> tools/net/ynl/pyynl/cli.py \
-> >       --spec Documentation/netlink/specs/dev-energymodel.yaml \
-> >       --do get-perf-domains --json '{"perf-domain-id": 0}'
-> >    $> tools/net/ynl/pyynl/cli.py \
-> >       --spec Documentation/netlink/specs/dev-energymodel.yaml \
-> >       --do get-perf-table --json '{"perf-domain-id": 0}'
-> >    $> tools/net/ynl/pyynl/cli.py \
-> >       --spec Documentation/netlink/specs/dev-energymodel.yaml \
-> >       --subscribe event  --sleep 10
-> >
-> > [1] https://lore.kernel.org/lkml/CAD4GDZy-aeWsiY=3D-ATr+Y4PzhMX71DFd_mm=
-dMk4rxn3YG8U5GA@mail.gmail.com/
-> > [2] https://lore.kernel.org/lkml/CAJZ5v0gpYQwC=3D1piaX-PNoyeoYJ7uw=3DDt=
-AGdTVEXAsi4bnSdbA@mail.gmail.com/
->
-> My apologies, I've missed those conversations (not the best season).
->
-> So what would be the procedure here for the review?
-> Could Folks from netlink help here?
->
-> I will do my bit for the EM related stuff (to double-check them).
+Hi Donald,
 
-I think that it'll be good to have this in 6.19 to avoid making a
-major release with an outdated EM YNL spec and I see that the review
-on the net side is complete, so are there any concerns about this?
+On 1/5/26 8:19 PM, Donald Hunter wrote:
+> Changwoo Min <changwoo@igalia.com> writes:
+> 
+>> Add dump to get-perf-domains, so that a user can fetch either information
+>> about a specific performance domain with do or information about all
+>> performance domains with dump. The YNL spec, autogenerated files, and
+>> the do implementation are updated, and the dump implementation is added.
+>>
+>> Suggested-by: Donald Hunter <donald.hunter@gmail.com>
+>> Signed-off-by: Changwoo Min <changwoo@igalia.com>
+>> ---
+>>   .../netlink/specs/dev-energymodel.yaml        | 12 ++++
+>>   include/uapi/linux/dev_energymodel.h          |  3 +-
+>>   kernel/power/em_netlink.c                     | 58 +++++++++++++++++--
+>>   kernel/power/em_netlink_autogen.c             | 16 ++++-
+>>   kernel/power/em_netlink_autogen.h             |  2 +
+>>   5 files changed, 82 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/Documentation/netlink/specs/dev-energymodel.yaml b/Documentation/netlink/specs/dev-energymodel.yaml
+>> index af8b8f72f722..1843e68faacf 100644
+>> --- a/Documentation/netlink/specs/dev-energymodel.yaml
+>> +++ b/Documentation/netlink/specs/dev-energymodel.yaml
+>> @@ -47,6 +47,11 @@ attribute-sets:
+>>       doc: >-
+>>         Information on all the performance domains.
+>>       attributes:
+>> +      -
+>> +        name: perf-domain-id
+>> +        type: u32
+>> +        doc: >-
+>> +          A unique ID number for each performance domain.
+>>         -
+>>           name: perf-domain
+>>           type: nest
+>> @@ -136,6 +141,13 @@ operations:
+>>         attribute-set: perf-domains
+> 
+> I think this can be changed to 'perf-domain' and you could remove
+> the 'perf-domains' attribute-set.
+> 
+>>         doc: Get the list of information for all performance domains.
+>>         do:
+>> +        request:
+>> +          attributes:
+>> +            - perf-domain-id
+>> +        reply:
+>> +          attributes:
+>> +            - perf-domain
+> 
+> If you use 'perf-domain' then the reply attributes would be:
+> 
+>    reply:
+>      attributes: &perf-domain-attrs
+>        - pad
+>        - perf-domain-id
+>        - flags
+>        - cpus
+> 
+>> +      dump:
+>>           reply:
+>>             attributes:
+>>               - perf-domain
+> 
+> You can then change the dump reply to be:
+> 
+>    dump:
+>      reply:
+>        attributes: *perf-domain-attrs
+> 
+> The dump reply for multiple perf domains would then look like this, no
+> need for the 'perf-domains' wrapper:
+> 
+> [{'perf-domain-id': ...,
+>    'flags': ...,
+>    'cpus': [1, 2, 3]},
+>   {'perf-domain-id': ...,
+>    'flags': ...,
+>    'cpus': [1, 2, 3]}]
+> 
+
+Thank you for the suggestion. I will send v2 soon with your suggested 
+changes.
+
+Regards,
+Changwoo Min
+
