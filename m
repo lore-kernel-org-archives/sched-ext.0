@@ -1,157 +1,103 @@
-Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890C62836E
-	for <sched-ext@lists.linux.dev>; Wed,  7 Jan 2026 06:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 211A2312837
+	for <sched-ext@lists.linux.dev>; Wed,  7 Jan 2026 11:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767767343; cv=none; b=iLwgoV4//ntGYrftO3Fcw+dg++mLFPYhvp8Ci6K4zoO75qAyGOh3x7NYjLGcBWsq8ux8aicNBgQDWsxOpR+6bT5NdqnYXJflmJXxaodECzPs5wEQ6y1eupjn+yq8pDMR1o279aq+8gKSRRCxSFueJD69G3lx8/BqlcOpOby8W3U=
+	t=1767786732; cv=none; b=dwds5F2aAYdHFuPXSIDmB0whQfoR2RGTJM1OEQxxmc4lupsSmgSkTwmpe4iI/fSQHAMRzmW2aKFuLvH4gYog6sZ5cikI5S08RvIpKgkuEKmrUjxne8sZaEQOOW0UG3HODWacFwwpxp2ICWCRzohsfl+iq9Fq0M22R5dHtRY/tSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767767343; c=relaxed/simple;
-	bh=bccEfQZSo2wIz03lmxTzLUXYkJk2mu8JxCkaKrw/Edc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Fz+fveVplqxmsEnLxmCftMTYT3sc+MPplpd3IQg72Dx5qDl+SN/VyVkRY3bUaivBzf3T5ppUSOUVbkezuo0ltuHakphOyJjrSzEdWZOOcs04/snx749O8eLiZVDoz6B00/nCDGW5K4cY3Jw9qp+BKgHjoipeQckCS5nEetxDSrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Wxe12LBb; arc=none smtp.client-ip=95.215.58.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Wxe12LBb"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1767767338;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=/oiYJ2Ws2ogCF0FGMb165sNKAEX9DhUjMnSrw8Es4UI=;
-	b=Wxe12LBbbtZsc05b6uzAfVGbxgLdQdH6znYB2uhMgMujoCrY1QrAh2tL67tGb5FpHpuBcf
-	6yEDyAZPwt+J8ipcyXTIWe6SjqUVlUBS2YXpa2q/1WCQk2r1CLFwIPdHggT6q6ya1jgh8D
-	ju7s6fiF0TH1duFYq+kYf0se4JFpSWU=
-From: George Guo <dongtai.guo@linux.dev>
-To: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	George Guo <guodongtai@kylinos.cn>
-Subject: [PATCH 1/1] sched_ext: Add error logging for dsq creation failures
-Date: Wed,  7 Jan 2026 14:28:51 +0800
-Message-ID: <20260107062851.82471-1-dongtai.guo@linux.dev>
+	s=arc-20240116; t=1767786732; c=relaxed/simple;
+	bh=1Fchlxf4hNZLgwVE8WYe2dz3lUN9r/xoRIw5B7bqDRE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dO/2Tqu5GdcpqAsnjaEUXC2/YaIQwmYfqJSI9bAcw/dtLRNLXnGZgs+DlqV75oPaXMENhIfj4XOwOh1YKL4v2nrEd9WDZMQYswoUcV2fIQ/oAwzCL89OgI5usLkb6SkfJf9xpe08mb6xZUNW6dfm6niaXIITbDGDfk7FIlA3icE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A1DF6497;
+	Wed,  7 Jan 2026 03:52:02 -0800 (PST)
+Received: from [10.57.12.220] (unknown [10.57.12.220])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2FDD63F6A8;
+	Wed,  7 Jan 2026 03:52:07 -0800 (PST)
+Message-ID: <08b09d21-0c59-4c0d-8b21-3883e76964d2@arm.com>
+Date: Wed, 7 Jan 2026 11:52:06 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for 6.19 0/4] Revise the EM YNL spec to be clearer
+To: "Rafael J. Wysocki" <rafael@kernel.org>
+Cc: Changwoo Min <changwoo@igalia.com>, kernel-dev@igalia.com,
+ linux-pm@vger.kernel.org, horms@kernel.org, pabeni@redhat.com,
+ netdev@vger.kernel.org, edumazet@google.com, davem@davemloft.net,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, lenb@kernel.org,
+ pavel@kernel.org, donald.hunter@gmail.com, kuba@kernel.org
+References: <20251225040104.982704-1-changwoo@igalia.com>
+ <849b576e-9563-42ae-bd5c-756fb6dfd8de@arm.com>
+ <CAJZ5v0imU_DkW5-Pip3ze-MaHj+CAvc0LNkaLsTZuFbj33R0aA@mail.gmail.com>
+Content-Language: en-US
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <CAJZ5v0imU_DkW5-Pip3ze-MaHj+CAvc0LNkaLsTZuFbj33R0aA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-From: George Guo <guodongtai@kylinos.cn>
+Hi Rafael,
 
-Add scx_bpf_error() calls when scx_bpf_create_dsq() fails in multiple
-schedulers to improve debuggability:
+On 1/5/26 18:22, Rafael J. Wysocki wrote:
+> On Tue, Dec 30, 2025 at 10:44 AM Lukasz Luba <lukasz.luba@arm.com> wrote:
+>>
+>> Hi Changwoo,
+>>
+>> On 12/25/25 04:01, Changwoo Min wrote:
+>>> This patch set addresses all the concerns raised at [1] to make the EM YNL spec
+>>> clearer. It includes the following changes:
+>>>
+>>> - Fix the lint errors (1/4).
+>>> - Rename em.yaml to dev-energymodel.yaml (2/4).  “dev-energymodel” was used
+>>>     instead of “device-energy-model”, which was originally proposed [2], because
+>>>     the netlink protocol name cannot exceed GENL_NAMSIZ(16). In addition, docs
+>>>     strings and flags attributes were added.
+>>> - Change cpus' type from string to u64 array of CPU ids (3/4).
+>>> - Add dump to get-perf-domains in the EM YNL spec (4/4). A user can fetch
+>>>     either information about a specific performance domain with do or information
+>>>     about all performance domains with dump.
+>>>
+>>> This can be tested using the tool, tools/net/ynl/pyynl/cli.py, for example,
+>>> with the following commands:
+>>>
+>>>     $> tools/net/ynl/pyynl/cli.py \
+>>>        --spec Documentation/netlink/specs/dev-energymodel.yaml \
+>>>        --dump get-perf-domains
+>>>     $> tools/net/ynl/pyynl/cli.py \
+>>>        --spec Documentation/netlink/specs/dev-energymodel.yaml \
+>>>        --do get-perf-domains --json '{"perf-domain-id": 0}'
+>>>     $> tools/net/ynl/pyynl/cli.py \
+>>>        --spec Documentation/netlink/specs/dev-energymodel.yaml \
+>>>        --do get-perf-table --json '{"perf-domain-id": 0}'
+>>>     $> tools/net/ynl/pyynl/cli.py \
+>>>        --spec Documentation/netlink/specs/dev-energymodel.yaml \
+>>>        --subscribe event  --sleep 10
+>>>
+>>> [1] https://lore.kernel.org/lkml/CAD4GDZy-aeWsiY=-ATr+Y4PzhMX71DFd_mmdMk4rxn3YG8U5GA@mail.gmail.com/
+>>> [2] https://lore.kernel.org/lkml/CAJZ5v0gpYQwC=1piaX-PNoyeoYJ7uw=DtAGdTVEXAsi4bnSdbA@mail.gmail.com/
+>>
+>> My apologies, I've missed those conversations (not the best season).
+>>
+>> So what would be the procedure here for the review?
+>> Could Folks from netlink help here?
+>>
+>> I will do my bit for the EM related stuff (to double-check them).
+> 
+> I think that it'll be good to have this in 6.19 to avoid making a
+> major release with an outdated EM YNL spec and I see that the review
+> on the net side is complete, so are there any concerns about this?
 
-- scx_central.bpf.c: central_init()
-- scx_flatcg.bpf.c: fcg_cgroup_init() and fcg_init()
-- scx_qmap.bpf.c: qmap_init()
-- scx_simple.bpf.c: simple_init()
+I'm sorry for delay.
+I don't see concerns. It LGTM so far, I can see that there will be v2
+with minor change.
 
-Signed-off-by: George Guo <guodongtai@kylinos.cn>
----
- tools/sched_ext/scx_central.bpf.c |  4 +++-
- tools/sched_ext/scx_flatcg.bpf.c  | 12 ++++++++++--
- tools/sched_ext/scx_qmap.bpf.c    |  8 ++++++--
- tools/sched_ext/scx_simple.bpf.c  |  8 +++++++-
- 4 files changed, 26 insertions(+), 6 deletions(-)
-
-diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
-index 55df8b798865..1c2376b75b5d 100644
---- a/tools/sched_ext/scx_central.bpf.c
-+++ b/tools/sched_ext/scx_central.bpf.c
-@@ -301,8 +301,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(central_init)
- 	int ret;
- 
- 	ret = scx_bpf_create_dsq(FALLBACK_DSQ_ID, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
- 		return ret;
-+	}
- 
- 	timer = bpf_map_lookup_elem(&central_timer, &key);
- 	if (!timer)
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 2c720e3ecad5..f7830e14b9af 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -842,8 +842,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(fcg_cgroup_init, struct cgroup *cgrp,
- 	 * unlikely case that it breaks.
- 	 */
- 	ret = scx_bpf_create_dsq(cgid, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
- 		return ret;
-+	}
- 
- 	cgc = bpf_cgrp_storage_get(&cgrp_ctx, cgrp, 0,
- 				   BPF_LOCAL_STORAGE_GET_F_CREATE);
-@@ -927,7 +929,13 @@ void BPF_STRUCT_OPS(fcg_cgroup_move, struct task_struct *p,
- 
- s32 BPF_STRUCT_OPS_SLEEPABLE(fcg_init)
- {
--	return scx_bpf_create_dsq(FALLBACK_DSQ, -1);
-+	s32 ret;
-+
-+	ret = scx_bpf_create_dsq(FALLBACK_DSQ, -1);
-+	if (ret)
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
-+
-+	return ret;
- }
- 
- void BPF_STRUCT_OPS(fcg_exit, struct scx_exit_info *ei)
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 3072b593f898..16ed8f867ad9 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -852,12 +852,16 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 		print_cpus();
- 
- 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
- 		return ret;
-+	}
- 
- 	ret = scx_bpf_create_dsq(HIGHPRI_DSQ, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
- 		return ret;
-+	}
- 
- 	timer = bpf_map_lookup_elem(&monitor_timer, &key);
- 	if (!timer)
-diff --git a/tools/sched_ext/scx_simple.bpf.c b/tools/sched_ext/scx_simple.bpf.c
-index e6de99dba7db..50e4555459de 100644
---- a/tools/sched_ext/scx_simple.bpf.c
-+++ b/tools/sched_ext/scx_simple.bpf.c
-@@ -131,7 +131,13 @@ void BPF_STRUCT_OPS(simple_enable, struct task_struct *p)
- 
- s32 BPF_STRUCT_OPS_SLEEPABLE(simple_init)
- {
--	return scx_bpf_create_dsq(SHARED_DSQ, -1);
-+	s32 ret;
-+
-+	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
-+	if (ret)
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
-+
-+	return ret;
- }
- 
- void BPF_STRUCT_OPS(simple_exit, struct scx_exit_info *ei)
--- 
-2.43.0
+Regards,
+Lukasz
 
