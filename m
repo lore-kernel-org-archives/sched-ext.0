@@ -1,147 +1,157 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F3A30ACEB;
-	Tue,  6 Jan 2026 08:25:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890C62836E
+	for <sched-ext@lists.linux.dev>; Wed,  7 Jan 2026 06:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767687931; cv=none; b=SNFWx89F54LqktW0BpFbF7lqKh2L493BY7mRsgtOEAFNyUP3nXSAYjfgItpBAnX4elX3JyE3CVW/O7OSGUVHu06wU54lZcmf5/zCjQES+cI/kxrlQJ7qFFq5wYwoJYGIzkftyhTByovziu/Znn1DDfdwYqweA0NBjBXcGwcWolY=
+	t=1767767343; cv=none; b=iLwgoV4//ntGYrftO3Fcw+dg++mLFPYhvp8Ci6K4zoO75qAyGOh3x7NYjLGcBWsq8ux8aicNBgQDWsxOpR+6bT5NdqnYXJflmJXxaodECzPs5wEQ6y1eupjn+yq8pDMR1o279aq+8gKSRRCxSFueJD69G3lx8/BqlcOpOby8W3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767687931; c=relaxed/simple;
-	bh=DgI8Fc4rTrkUhHVxfd4nsPZshZ915CBlnpO6gpVE4DA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nGWYc4TflDYzuaI+LRNR31ysRdVXEzFX3C/MI9y0BtqmCoRNucMJLgl6k1Pb6wxVBa2mi9mQVhKvq2YitsMZk4wRjR67RQE+K6v78gHeWrnDDvNNYBKGm+cgb9u0Dg/Y9orx7Tm6y4VdQQ95X5JbcCfPGNR8wMEO5fRnfh/ZKP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=g0Kkb94X; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1767767343; c=relaxed/simple;
+	bh=bccEfQZSo2wIz03lmxTzLUXYkJk2mu8JxCkaKrw/Edc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Fz+fveVplqxmsEnLxmCftMTYT3sc+MPplpd3IQg72Dx5qDl+SN/VyVkRY3bUaivBzf3T5ppUSOUVbkezuo0ltuHakphOyJjrSzEdWZOOcs04/snx749O8eLiZVDoz6B00/nCDGW5K4cY3Jw9qp+BKgHjoipeQckCS5nEetxDSrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Wxe12LBb; arc=none smtp.client-ip=95.215.58.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="g0Kkb94X"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=F/TRE4AJ7/DxDFGbDd7kjbKCM/sSy4a/Cr0X7sMo+2w=; b=g0Kkb94Xtcpxcp1Av2CaR0kHEB
-	/zcJBuYG2pHeKunn9cziy61Ufb+DwZQM9VBp0SqTFP2V34eo3WbByB7W0qR0vaYPL+sX65FaZGJzk
-	bwy8f9XJgbYrY8FHxNy8vebiWe/LaDd3rtY79GjhigSvN9cpn5gfkkYcXlVPoEZWZkHBWyZcoqLfu
-	18EVzaoRT8bfWmYIBnfFAcb16DmnSDWwRYnojctsYWqDac/uHDYHWo559Ui9ejPiEfqD5j96qyIag
-	e+zy5h+G4UCQFhE5HZWFUVw/XffZzRqYZiND0qnfNIQXo9FImgEEkALNazeKsLGreKSrdUoPzqHri
-	3CR0Osow==;
-Received: from [49.174.255.4] (helo=[192.168.100.20])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1vd2NR-0025fj-Cb; Tue, 06 Jan 2026 09:25:17 +0100
-Message-ID: <61c00aaf-1920-4f60-93ee-68e25f90218a@igalia.com>
-Date: Tue, 6 Jan 2026 17:25:06 +0900
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Wxe12LBb"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1767767338;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=/oiYJ2Ws2ogCF0FGMb165sNKAEX9DhUjMnSrw8Es4UI=;
+	b=Wxe12LBbbtZsc05b6uzAfVGbxgLdQdH6znYB2uhMgMujoCrY1QrAh2tL67tGb5FpHpuBcf
+	6yEDyAZPwt+J8ipcyXTIWe6SjqUVlUBS2YXpa2q/1WCQk2r1CLFwIPdHggT6q6ya1jgh8D
+	ju7s6fiF0TH1duFYq+kYf0se4JFpSWU=
+From: George Guo <dongtai.guo@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	George Guo <guodongtai@kylinos.cn>
+Subject: [PATCH 1/1] sched_ext: Add error logging for dsq creation failures
+Date: Wed,  7 Jan 2026 14:28:51 +0800
+Message-ID: <20260107062851.82471-1-dongtai.guo@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 6.19 4/4] PM: EM: Add dump to get-perf-domains in the
- EM YNL spec
-To: Donald Hunter <donald.hunter@gmail.com>
-Cc: lukasz.luba@arm.com, rafael@kernel.org, kuba@kernel.org,
- davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
- horms@kernel.org, lenb@kernel.org, pavel@kernel.org, kernel-dev@igalia.com,
- linux-pm@vger.kernel.org, netdev@vger.kernel.org, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20251225040104.982704-1-changwoo@igalia.com>
- <20251225040104.982704-5-changwoo@igalia.com> <m2bjj8i9xn.fsf@gmail.com>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <m2bjj8i9xn.fsf@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-Hi Donald,
+From: George Guo <guodongtai@kylinos.cn>
 
-On 1/5/26 8:19 PM, Donald Hunter wrote:
-> Changwoo Min <changwoo@igalia.com> writes:
-> 
->> Add dump to get-perf-domains, so that a user can fetch either information
->> about a specific performance domain with do or information about all
->> performance domains with dump. The YNL spec, autogenerated files, and
->> the do implementation are updated, and the dump implementation is added.
->>
->> Suggested-by: Donald Hunter <donald.hunter@gmail.com>
->> Signed-off-by: Changwoo Min <changwoo@igalia.com>
->> ---
->>   .../netlink/specs/dev-energymodel.yaml        | 12 ++++
->>   include/uapi/linux/dev_energymodel.h          |  3 +-
->>   kernel/power/em_netlink.c                     | 58 +++++++++++++++++--
->>   kernel/power/em_netlink_autogen.c             | 16 ++++-
->>   kernel/power/em_netlink_autogen.h             |  2 +
->>   5 files changed, 82 insertions(+), 9 deletions(-)
->>
->> diff --git a/Documentation/netlink/specs/dev-energymodel.yaml b/Documentation/netlink/specs/dev-energymodel.yaml
->> index af8b8f72f722..1843e68faacf 100644
->> --- a/Documentation/netlink/specs/dev-energymodel.yaml
->> +++ b/Documentation/netlink/specs/dev-energymodel.yaml
->> @@ -47,6 +47,11 @@ attribute-sets:
->>       doc: >-
->>         Information on all the performance domains.
->>       attributes:
->> +      -
->> +        name: perf-domain-id
->> +        type: u32
->> +        doc: >-
->> +          A unique ID number for each performance domain.
->>         -
->>           name: perf-domain
->>           type: nest
->> @@ -136,6 +141,13 @@ operations:
->>         attribute-set: perf-domains
-> 
-> I think this can be changed to 'perf-domain' and you could remove
-> the 'perf-domains' attribute-set.
-> 
->>         doc: Get the list of information for all performance domains.
->>         do:
->> +        request:
->> +          attributes:
->> +            - perf-domain-id
->> +        reply:
->> +          attributes:
->> +            - perf-domain
-> 
-> If you use 'perf-domain' then the reply attributes would be:
-> 
->    reply:
->      attributes: &perf-domain-attrs
->        - pad
->        - perf-domain-id
->        - flags
->        - cpus
-> 
->> +      dump:
->>           reply:
->>             attributes:
->>               - perf-domain
-> 
-> You can then change the dump reply to be:
-> 
->    dump:
->      reply:
->        attributes: *perf-domain-attrs
-> 
-> The dump reply for multiple perf domains would then look like this, no
-> need for the 'perf-domains' wrapper:
-> 
-> [{'perf-domain-id': ...,
->    'flags': ...,
->    'cpus': [1, 2, 3]},
->   {'perf-domain-id': ...,
->    'flags': ...,
->    'cpus': [1, 2, 3]}]
-> 
+Add scx_bpf_error() calls when scx_bpf_create_dsq() fails in multiple
+schedulers to improve debuggability:
 
-Thank you for the suggestion. I will send v2 soon with your suggested 
-changes.
+- scx_central.bpf.c: central_init()
+- scx_flatcg.bpf.c: fcg_cgroup_init() and fcg_init()
+- scx_qmap.bpf.c: qmap_init()
+- scx_simple.bpf.c: simple_init()
 
-Regards,
-Changwoo Min
+Signed-off-by: George Guo <guodongtai@kylinos.cn>
+---
+ tools/sched_ext/scx_central.bpf.c |  4 +++-
+ tools/sched_ext/scx_flatcg.bpf.c  | 12 ++++++++++--
+ tools/sched_ext/scx_qmap.bpf.c    |  8 ++++++--
+ tools/sched_ext/scx_simple.bpf.c  |  8 +++++++-
+ 4 files changed, 26 insertions(+), 6 deletions(-)
+
+diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
+index 55df8b798865..1c2376b75b5d 100644
+--- a/tools/sched_ext/scx_central.bpf.c
++++ b/tools/sched_ext/scx_central.bpf.c
+@@ -301,8 +301,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(central_init)
+ 	int ret;
+ 
+ 	ret = scx_bpf_create_dsq(FALLBACK_DSQ_ID, -1);
+-	if (ret)
++	if (ret) {
++		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
+ 		return ret;
++	}
+ 
+ 	timer = bpf_map_lookup_elem(&central_timer, &key);
+ 	if (!timer)
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 2c720e3ecad5..f7830e14b9af 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -842,8 +842,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(fcg_cgroup_init, struct cgroup *cgrp,
+ 	 * unlikely case that it breaks.
+ 	 */
+ 	ret = scx_bpf_create_dsq(cgid, -1);
+-	if (ret)
++	if (ret) {
++		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
+ 		return ret;
++	}
+ 
+ 	cgc = bpf_cgrp_storage_get(&cgrp_ctx, cgrp, 0,
+ 				   BPF_LOCAL_STORAGE_GET_F_CREATE);
+@@ -927,7 +929,13 @@ void BPF_STRUCT_OPS(fcg_cgroup_move, struct task_struct *p,
+ 
+ s32 BPF_STRUCT_OPS_SLEEPABLE(fcg_init)
+ {
+-	return scx_bpf_create_dsq(FALLBACK_DSQ, -1);
++	s32 ret;
++
++	ret = scx_bpf_create_dsq(FALLBACK_DSQ, -1);
++	if (ret)
++		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
++
++	return ret;
+ }
+ 
+ void BPF_STRUCT_OPS(fcg_exit, struct scx_exit_info *ei)
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 3072b593f898..16ed8f867ad9 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -852,12 +852,16 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
+ 		print_cpus();
+ 
+ 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
+-	if (ret)
++	if (ret) {
++		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
+ 		return ret;
++	}
+ 
+ 	ret = scx_bpf_create_dsq(HIGHPRI_DSQ, -1);
+-	if (ret)
++	if (ret) {
++		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
+ 		return ret;
++	}
+ 
+ 	timer = bpf_map_lookup_elem(&monitor_timer, &key);
+ 	if (!timer)
+diff --git a/tools/sched_ext/scx_simple.bpf.c b/tools/sched_ext/scx_simple.bpf.c
+index e6de99dba7db..50e4555459de 100644
+--- a/tools/sched_ext/scx_simple.bpf.c
++++ b/tools/sched_ext/scx_simple.bpf.c
+@@ -131,7 +131,13 @@ void BPF_STRUCT_OPS(simple_enable, struct task_struct *p)
+ 
+ s32 BPF_STRUCT_OPS_SLEEPABLE(simple_init)
+ {
+-	return scx_bpf_create_dsq(SHARED_DSQ, -1);
++	s32 ret;
++
++	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
++	if (ret)
++		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
++
++	return ret;
+ }
+ 
+ void BPF_STRUCT_OPS(simple_exit, struct scx_exit_info *ei)
+-- 
+2.43.0
 
