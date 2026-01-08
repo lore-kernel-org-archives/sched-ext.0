@@ -1,60 +1,62 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011069.outbound.protection.outlook.com [52.101.52.69])
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010024.outbound.protection.outlook.com [52.101.46.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D321C5D7D
-	for <sched-ext@lists.linux.dev>; Thu,  8 Jan 2026 06:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB678275844
+	for <sched-ext@lists.linux.dev>; Thu,  8 Jan 2026 06:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.24
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767853318; cv=fail; b=GqhvPLfTHHBp+brj8ygMsTq1fe/iTAs4zZqRgBceqBeYRRpnSMwxAmMjTBPr33MjcpQm+7ixwxh+PfJNzImTJSqDENzhhEXa9aBGP2JhUev+Bbo/JDuiZBYz1fv0bebislfDfHuqZiZhr05y/M6K0SXxw3k5d82SGYbm69r/w6E=
+	t=1767853550; cv=fail; b=XCJhkSpxdjsbNlOTkZXMl6v82HmBDUGT0SFYGDNrR57zaUaXTfKtG//+TH5hh9HAJCuiY1OGqB9nXzRFdse7ObcvCO3nUlGozdpTQj9gasJpdleyjhw+Grq6jeqgDZ/qsPvATkY5PJgT/wpXuU/lhWN69wiWOsdWBuv34+uTL5A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767853318; c=relaxed/simple;
-	bh=bjyzg0Nsm/joHBxBzoDsEWuY6oO1ZGgT3WKwAuvcjOg=;
+	s=arc-20240116; t=1767853550; c=relaxed/simple;
+	bh=eiAM0cKFkSRKZhCOJU5SIVEAI09sO4E606JHEFlipkU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rCeHVURxfogbOSx68eKNKgaTO+jSAfWq+HieamxOVJdfFvBdlMgn7U6gD+pdokXX5KBXkUtaCGHPnUQea0EMNHHHXLoSqW3W3mwR5HMoJLNAt+yhkEwK5hmZoZ1BhiE3Ezp72xayQ4+SJxKBGJ9M4SEHlo3T0o+ova5PSHCEeI8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=VsN8klbt; arc=fail smtp.client-ip=52.101.52.69
+	 Content-Disposition:In-Reply-To:MIME-Version; b=OtW++bAh0Ps32YrCoYzUi7NjINdaNpfwa2oHrZBKcKVncFESLPLCGvaPpMBXK+li5OOSxPhauuD11f8So0rQ3OwA4DMJGt0N7sRz5+Bzzuy0EioYVsi7Gbtm3bBrM7JmZx1G9bqdK/NSIv/U33PMAq9NaCEJ4MABjyY81z8BlyI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=L+82Xe1J; arc=fail smtp.client-ip=52.101.46.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="VsN8klbt"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="L+82Xe1J"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q1MvNSSN/0c/IIkpmGIPrlqMO5SnGz38Ej8/MGUjI968JAO0Q4poxZnzqFaxgS9l0tLv4Xvosk10SaSJ5dnz+2euaPi6nRfpOIsgsAUbagwYkce9iJmSBliLndy8n4+lLsXgn60lJdyDNz4eN5tCaZ3ZcK8dJhCYckP07FwdhsfwwL7yLSq91zWZwSvImYGTNPYXTYXDO/hE7rLH/MYVQwLPYyZT1sJRs5PXTvWFA5FI7+CexZp+4Ljm8tmrLThymbcZFz9IEhhtP8xST8aLbMllEs0tIUWIt2ZFt415CPiFrMwA8NzmZRFJ9otbLpTM18OPqdFp4SD1zhq7YuLe3g==
+ b=u9fRTNRs5kntW7XPQwbas02QpJNJCIwVceNlv+yfN1nERJ5KGM5G4uxXGV/3KCZmosPVWkvoPZGSTx7yACA9HWw8hqVU2VuVflwRV5AWhCJFvBNgpobUlpGzM0+mjyAahz9OFx1jYAfouP/098r/tQTr4yKw5ESdv0VMXVf1ibE/M9BsO+3fi6mqpSY63/EaSYPLgJLdZ5OyTapDgixMXBv1kQ9LZdgVEIW5s8yZPC5VAu7uFFl6w9l28UMvuf4iVtPdQaoizeCcWl/ae/TIKE5gWYqKnFRuXrryjEENcW/3by0RjknKycfbnTeCKBJuhq8fFMG8GSPRBMz1QxhoUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xuQFMmF9VpiCL6ljFfUMbTWRG/f5RLkiVeM+udOTo1E=;
- b=ZnbWPC/FToDpCVZ5GAgJqFd4MTjP055dBAx2KyvhMk+IjskTNYxiwCEGf654FLQTIx1Kucq6ayYgRFAWPTzFxGc9UGolzO6x+zV/liCKzpuJ5BtVfg8FwukCC222GzqXbse8CLfGIkUthWLoKCwu5xnaMjXbdw7Uc8Th00nYQGrmR9PVEtZDDoZWMcC2v6woecxAy6dSKp8jvO6cMjb9MHMLSb1QZJZE3svZRvUgERHswrnOCNA3zKMdXrCkpj2UYvEULXM/uSmYvfLcGkJSIBrt0eUZliJMnNGGt7BCAGuGR/ZGJPY1ps7qgdqw+OL32Lj3VNkRo02s7GJsva1coA==
+ bh=aep5hOCZjvUGzlmo3ajhEUpfkJUOC6mp2NBoWyrnlvM=;
+ b=BvJRGfHGREmtiY2HCHNcIP/YgU7Bc162v2bYnqX2vmEujT313OrdzxKv9DfsuQ9Wa6TUaB1kN+cz61TbP6OntQ63Pq0ABhpCQVCKWB8nYhGE2yMccBovNhYO5e++R5MGT3M/G5x4KfjLuUUXEdXXaEI4MgQB0ZA2rty4rmqMs/h8Hush6D393b6N8Ul6tm1DldCKcVy9Z6vZNHXexFFio+x+uRui73pa9c3kxtmD16Nd5bEBs7FJ/igC5w/yvUb6lpsHPvOkGYg8Co0NElUVNlKwakRze3b9MIFUJtBxpIgYayON/CY3Z3hcTsxMgit8g4p6FTbJe8MpS6KEToWmQg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xuQFMmF9VpiCL6ljFfUMbTWRG/f5RLkiVeM+udOTo1E=;
- b=VsN8klbt+yiSx9hwOpCnOK8563sA77awaueGQx7JtTnHuxOBkP7FMcuP+DsjhAk6bl2XQtIQYnnUd236zT9Q109bTGAzXoYTg39zi0ujwv9czKFM0JoWF8Sv6LotT8A2hAhv+c+eglUsVtPvkFYdnnIf1HFnoVkPYISUuw1mB3phU/HRIDCrJ2KUIHkB4CO43ae/kk4K7KTWvXEjppkVBWE/00U2QteJTdpIGAd3+L8jcfMHfa136Vv65xEI6HqihviY/tYH8OKiLp1uNnrievXViK3HofSDC2OZ3CxxCWnFBBuC+8Trp13lPjjzT7SbjrVmZkkKR4x+2uTbLnxAAQ==
+ bh=aep5hOCZjvUGzlmo3ajhEUpfkJUOC6mp2NBoWyrnlvM=;
+ b=L+82Xe1J+PTUendbP5b++/CrMROq05qYH6C8XeswYOJB6TVI+Zd+hAZRny/N3t2dcnRtIcprCzvk8TIWknkAnH1TKqjWzg33e+RE0y6o4udFhQqVOjZhageXwurFjWxB0jpzjHf1Abl66aI86i3pcyiVfGoet5ClDE47LkEh9Le8gvzPxfbg3x+YX8k57zAqtAjmheRLDr2AvtQoyplK20EMmwODhfRUFdv9I/PD8LhuODn+dZ2yfAv0Kkh3OJH8Ywaej1pAKSCZoN5khheBZKI8O0kUR4fTDJeX1gkdJe55d9oojkN5Dzcn+sBvvmE54IPGGcDnTJTQMhJ8iFgVUg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by DM4PR12MB6110.namprd12.prod.outlook.com (2603:10b6:8:ad::7) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9499.2; Thu, 8 Jan 2026 06:21:50 +0000
+ 15.20.9499.2; Thu, 8 Jan 2026 06:25:45 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9499.002; Thu, 8 Jan 2026
- 06:21:50 +0000
-Date: Thu, 8 Jan 2026 07:21:41 +0100
+ 06:25:45 +0000
+Date: Thu, 8 Jan 2026 07:25:41 +0100
 From: Andrea Righi <arighi@nvidia.com>
-To: zhidao su <soolaugust@gmail.com>
-Cc: tj@kernel.org, void@manifault.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
-	zhidao su <suzhidao@xiaomi.com>
-Subject: Re: [PATCH] sched_ext: Add DSQ statistics collection functionality
-Message-ID: <aV9M9RlSt28ljqCG@gpd4>
-References: <20260108023554.1735052-1-suzhidao@xiaomi.com>
+To: George Guo <dongtai.guo@linux.dev>
+Cc: etsal@meta.com, changwoo@igalia.com, guodongtai@kylinos.cn,
+	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	tj@kernel.org, void@manifault.com
+Subject: Re: [PATCH 1/1] sched_ext: Add error logging for dsq creation
+ failures
+Message-ID: <aV9N5UxymrzJ9jSP@gpd4>
+References: <BL1PR15MB531447D39DAACF121532E6A8C784A@BL1PR15MB5314.namprd15.prod.outlook.com>
+ <20260108032328.85947-1-dongtai.guo@linux.dev>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260108023554.1735052-1-suzhidao@xiaomi.com>
-X-ClientProxiedBy: MI1P293CA0020.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:3::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+In-Reply-To: <20260108032328.85947-1-dongtai.guo@linux.dev>
+X-ClientProxiedBy: MI2P293CA0004.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:45::15) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -64,650 +66,156 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB6110:EE_
-X-MS-Office365-Filtering-Correlation-Id: 07ca3957-7799-4ca1-82c4-08de4e7e3572
+X-MS-Office365-Filtering-Correlation-Id: 709c0956-9413-41df-53f0-08de4e7ec13a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?b8gp9pNi2UWxeBfAqpqgTCrjnGAJUvyLjXGdGICKQXkMe5jm1Me5pEDQwKd+?=
- =?us-ascii?Q?WOpf/EOV3oSZniK6wcSnD8zO/7isNIStbITM8lePq+LI/riSvIIYEeAi1+0N?=
- =?us-ascii?Q?+1UEf5iIqOsBpFrlZAC5fdvMM1HvuEQ89OM88poiSfJvrH9C1OigUmLwInF+?=
- =?us-ascii?Q?EOQBJbVK3LeVQ2jTWwFI0d+TJvg2RKZGc6R2Hb1w2Aiu9RuNOyUSl3wTUx4n?=
- =?us-ascii?Q?ps/ODamzIGjHkweh8gP+xrqsVYOe/vDsDd/P0DDI+o9cmDk1Y4BtDZaZxXPD?=
- =?us-ascii?Q?k7oHB444cx/utYMH6m8upq7S6atJTbNzMutkx+V+P3MTJHFO/3fzWBQxyawP?=
- =?us-ascii?Q?eZsx/81gnQ/Mx7Ql3rxwrp+DLg8FYntA/ID4xYi3g2VKwlOTTNIhdweZNQCI?=
- =?us-ascii?Q?rvrw/OLrYBfMXsxzKwRG+tHm687+XADlH3XKGQdZtkzQTE5cF1RTVgrYXIAJ?=
- =?us-ascii?Q?++tXG8MOu0lfIHO5IWouv4/UBPmSXC5eiKHrMe/dfR4M5kPNhiZvBU7aOA+O?=
- =?us-ascii?Q?sDFGpcWj9ND11N1C/h8i1t318i/U4WqGyvSFykKM3okYwqsJ5gJC4R9R5gix?=
- =?us-ascii?Q?DKfk4sgwfLlZxszlFikVIccjAOPq6AyI/Pbw8aS2qVDdIMaTBMnIxH0T62O4?=
- =?us-ascii?Q?mEglo56SuQGyjlUmZDiRzXKvPcf2xsCZplKdjkmhSERC3kcGpgIWFuG1325u?=
- =?us-ascii?Q?FC+NebrbNsWPCI2COanIE+OtAuLnaczYFBpDHPGR/8IxaobjGcmBrqMhhTqW?=
- =?us-ascii?Q?pquq6VXKpqmzHtPRK94PmCgwY8J5RlsKg7Dp1gag8IBdVz9p44FOjFoqpReC?=
- =?us-ascii?Q?CcVAGFW2CmNmc1mNTVK+ANk/OAqwvQx6aYP7yNOBEXb5apniCf9DfKfe+h4y?=
- =?us-ascii?Q?Z7WCY/NIA5FSgFO6o0Bq0VxzMEkDUbZQ7mTz4mu7DmJb5T7PCAgnWmN/Ti19?=
- =?us-ascii?Q?zzYGpW1yhbmvNRCZoRMy/3H6/hs/jPcGdSGDGKJBuo44c8HEnUVPwRWdaqLB?=
- =?us-ascii?Q?Wpns2HLZtQWI5LZaCXvc54Tu+BwOcN7DCVLq2aYbDfoaQMaMJGef2zNbAZ1X?=
- =?us-ascii?Q?4S5ADAXBkySscagxMA4X8fG8rrHINzRZPG+imKKmXgvfrIRP2xtEtZZjmKwL?=
- =?us-ascii?Q?wOXY96rd0FwGV7h2mfceoS7EJSFPnbsmlw3gp9lNXSPr++CyXzBT6gYAGKJz?=
- =?us-ascii?Q?Cfh1okzEp4U/qPRZJSoEbyyHS76j4iMg0C2CdIj/cUfOAyOKRECmn3DgLmNE?=
- =?us-ascii?Q?+RDdluIutTDJ3mWAp30lnN2AeOLFEXRXnbFwdjWuI3caE+qkIj++SipfG7bn?=
- =?us-ascii?Q?SIuXBe5vyC3n0WErnHjWQmKAS8lmLB4lGk0qUTQs4GWBME1u1laU7EY247O4?=
- =?us-ascii?Q?H40H4l0u8eG2qchbMWfTphpJ23TFkKHsuJL4r25707E8jHu9ayTT0/E+67mP?=
- =?us-ascii?Q?N1nk7EGM2mbWbGE7VSc5XyN+u5C8Ckqn?=
+	=?us-ascii?Q?QGdtaDnRNIzbdLD3CG6Bo7Gp4ALmJrb56cvh92a7Jd+IbSm9gJF0/SbVGvz0?=
+ =?us-ascii?Q?fri48KL1Ci/OOM3wDOq2dBqkkgUrwTgmxDgsP6ctG0u+nesjwPc4Ve77hoJL?=
+ =?us-ascii?Q?gsPXWNff6tW6syrnYmhvmZK2EPU3/dJMO3QQKLivLnkca3ZKCoHgIWem0C9/?=
+ =?us-ascii?Q?irSLxQCOyDZn3nE2sRghQ0Dc0NlIjQrC8pCrRa5bDwnqoG7ruDP8F/ii/3Sv?=
+ =?us-ascii?Q?C58y6lIxjrYmGkvJQEz8MwBFdRp+vtqOB+e1ApeI+SmYN7vfLTxzIYoZ9xtq?=
+ =?us-ascii?Q?sYBQm4GwP33DpBHC7lvLnHxRY5bD/vv+kSLBYlT7Fd9fSZBi6eOzs0+KsSrh?=
+ =?us-ascii?Q?DPSpLAiAaDrd8qQyEZpYLa0f7r3jD1QdARM4E6Jrycsq281JsMggyObIKfWJ?=
+ =?us-ascii?Q?x+mQb6K5l7qseP4SCjBgL3hMDf7GCanODakoYvBebGS8BTOTCFqGhd5kIk92?=
+ =?us-ascii?Q?A9C0xFGOZNP/eCS2oxd8wGEKy+HSb7kpewy/JcIKUooUOV8wMrFOcp+BpRVE?=
+ =?us-ascii?Q?JbTvpSlGkYfvwx+YkzDaMU4oBWq6Idv99PF3lUykiOuXY0IH3q3W7jbn56z8?=
+ =?us-ascii?Q?y5FWFu6B/PA35fylKuXrT9PA5wAJyI18L1COKtf1z912AOEsexdpekQW3AFw?=
+ =?us-ascii?Q?mZNLohVRooqIKl8KjHTY8HilIBX+DGuuzlC7MEDj4REMW87BrtpRaegQWukv?=
+ =?us-ascii?Q?S2gKi8d0RhoJOd39HnHHUzXkwOK8em12X3kSn+XUw8vnsYH/nciAUeIrmCn4?=
+ =?us-ascii?Q?4wim0Z9Tk38vWCWc1akM/DqialIHNCkaVDIaRN6OZu47oRq5107gBw1bDxUp?=
+ =?us-ascii?Q?TSkU/CiN57GeIU5e8dr8CUpvcXxN1PfLEqcRReWZLOiqO3Dt0uPyRb7ZDHHH?=
+ =?us-ascii?Q?6Ip8kuVCwFnA4gTERanXra85Jf09dy0n9GGSslkUBeSjAQlQLeEpxG9TQS8C?=
+ =?us-ascii?Q?RRD0IVjjtF1NlbS+dvisjyjNJkbbfj6XXFTG7fDc7fYlPmfmsOGQA7SxU+RW?=
+ =?us-ascii?Q?vjb27vNExvCgG/YMP59ecJxZE1G/jCylx84JRQlBXh36Tk8wRsunstjDnIak?=
+ =?us-ascii?Q?7XaaTh+/vpFSyGl1ru6ZMp3MVimdB/O5bqAl7faauxdL73V6e9otoCOovvcO?=
+ =?us-ascii?Q?3NqSFLR7+OmkXAe07Ru9qrKi4HdfTgfLhdewIG79io7fcXq4Mp3Ax5CR7gja?=
+ =?us-ascii?Q?xy2LRW3VncndOMs+UGZTdZPbt5NwJCpvRoVXyBLovEb1mRteqZQ0ibWB6IQG?=
+ =?us-ascii?Q?sIT+kPzm4dwyWVwSgWwwPMizVAQNLU5eE7hKODoPY7DhL2jezuhzHdl6eNjC?=
+ =?us-ascii?Q?RJpDNlbSHc7X1xXEK+7hKxMNyhQUPLWGDjbpSJUaOa4i3h8Pu9/j9AVN7LBh?=
+ =?us-ascii?Q?5Sw5hs4l1ZE2zS+pofPDp4IjFlvRIS8SOrTlcguYfZvNaYBly2cbMTYufETX?=
+ =?us-ascii?Q?yTNDpOVM9EictrvGJJJqy1qssNOhnVkR?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?mj5ZfXT0VYCmZcI/SqXehAm3K4bdFcb1zkyUH4qgjOhYwtX0sBP5d+OM4NBy?=
- =?us-ascii?Q?O0AibtBWPWLEuJOKzlBN2dwoSqdWMliLFZmohegObRoxOdkIxaskBFrsK0TF?=
- =?us-ascii?Q?mzjhRp7SkVF7cLwO4/Zi9bg34EeGG3o3Bm50tumVThHpLi5abTiofFvuj/Dg?=
- =?us-ascii?Q?yYZ6q2+wZ0LQB8w+A0xU6/YvNb1ZUfYXQ7c5XWaLiB2aPlfUo+c3VhRCjYrG?=
- =?us-ascii?Q?tLhcQ7e1wZlIAT0u24eb0/2JOEJlpad93L4qzyXJERBDAM/NGlH40xwjwZJ1?=
- =?us-ascii?Q?RmOENuHo5yCtVNBP5lf5BP8gordFApbfnBgCccb3S3cxNBfPFajScdcs7cEG?=
- =?us-ascii?Q?9FnP5Jnu1PIph9NX6crdCPwGCawUkWuWM/Er7PD5DyO0cokIeP3bPwpnEKLA?=
- =?us-ascii?Q?MKoOhe/x7RjURDTxE91ylBKspg14yS/xywNje1WZt8feIiLNxkp0XRBIOeyg?=
- =?us-ascii?Q?INBGc7OB5TsAbuxb20LRXwNsKS1FHQTzHuazdiqNdwcAGZJsms9fxdx9yH8k?=
- =?us-ascii?Q?cXwqZq3o3MOMTAsB0fbEOjeaZcxFkB88/z6eoBU8lyR1qZJBq1vCkTMmVqio?=
- =?us-ascii?Q?7WB9c8tN5aJ6ETPHSHD5SvlXd88MZ6Yu7wPM8UwzMzRyG/FDAgrQfJXvEaBR?=
- =?us-ascii?Q?rkloGuTupdRMefgf81hIIBoGYTpBdn4/5MY9DcCyKlNa0CNnPP2KeJy5TntH?=
- =?us-ascii?Q?B1FC7Eviv1G5vHPe0WoxqCTf0rWFvM471Keh0pVdn16HBWs37LcK1Od2MQg8?=
- =?us-ascii?Q?XInOy/UfFkWrzN1Akaiv78VESs4T7yf1zBgWejY01TPFfM1wjgkoja4Pjh9n?=
- =?us-ascii?Q?z46QGViAydRi9wTY3Z8x6IVnP4uyAoQtyoXBdwkmb7RXZilrc9KpeS/7BQrU?=
- =?us-ascii?Q?iogu/atG3eEnhB/0Q34Sc8gJpPq0oBA/6fNOb6bkAFg/8bV1+phq26j7sB4e?=
- =?us-ascii?Q?de0F3eDAP1l4C5YeMLAeKmA5o0kpx605IyaN1rruBCFC/gyweHmTTMlLWuOF?=
- =?us-ascii?Q?rpZIASyl2RQZ+tQ1J/+u7tz7q//P8fjXHFd6JY5W91tIytJEcl9YO/38CBJR?=
- =?us-ascii?Q?c3tC7IxILtv3SEvET+zWnN57yosIZw6BtVHB7JGImg8zNG7i9wlWwfWWXNtk?=
- =?us-ascii?Q?zWGL9E2u/iJ3dFtJdNY6rBtf2dxpJllek+GhNTrzaetRYr1cAJM3CmlMbkx7?=
- =?us-ascii?Q?cu6XuQsVXHz7HssBeuM8kaVx1B1k0/elGq7HyHO0nZNKRyZ52jQUcv0kApUN?=
- =?us-ascii?Q?b3nK3UraWYgH5QzrInhTE2P7B0LRV2/gvs6oIqNpJhHYE2YSfDdqrDN6jkBt?=
- =?us-ascii?Q?ds5RI0eSyRnaZBXyI4N2vzkHJrY0lRdbWp/Y9DLNAbHh9kMpKT1GVATxIlUp?=
- =?us-ascii?Q?x717tzKRCEb3tLgI3nBsmXipW8GNTKuWmY6QzpoNPPuffkvsAQtMDFqvrGuZ?=
- =?us-ascii?Q?TqMW41NSlFGmoWlhA7iZAZPiaumDo9LB+WOtWeCi58e3bdNftW1TlQYHIRHt?=
- =?us-ascii?Q?Do4n/bHZUX2A5LYjLrJwzVbi1jCjIHuJPw5H7WE/8olvFKzBLu1e4PUSZ1r1?=
- =?us-ascii?Q?kF0K95ccOg0T7Eg7BOcTLb52xfVznwOmgJwtjY2ESWarQjr/mcSwPZShO5oh?=
- =?us-ascii?Q?y3tdmD+NA38qIQOSTONU4PVTHmnWYrcbcK+uJPNg/jqn4TzgdII89lF3P6PN?=
- =?us-ascii?Q?e9X6Cy+cwwvd/iyWMxsX9/BUkBd0HoIO9ehXlboJakY4MIAs?=
+	=?us-ascii?Q?fh2/CbXa/C96POkGtjL7Xy7c1NMn5jiSkW9Hm8LhbmESZDCskhrJznhGR2zR?=
+ =?us-ascii?Q?1PCK3w3PmloG/mj4/U9uh0ygd9xUNDUh9IN3e+loCX/rtth0khs6Hyf68lAq?=
+ =?us-ascii?Q?KrnYKEbnTOMNATOmBl1LG8apO7wJPjx4UngHarEaYSQVb3lT/92eBMHQ1ujf?=
+ =?us-ascii?Q?hy/LhvuYgsRC9tVfTtoUMooNDRN4zftRI9kxv1SEZOB17v6OU+H7r2JAiKBC?=
+ =?us-ascii?Q?t6ffAaWPsz8PWyZGqgE2RJd5E3VQxogeBjIjj0/7em1lONc0Ly2XF8VkvA/p?=
+ =?us-ascii?Q?JD6jcBRq1u0irmhYKZvXIoztA3W8lbgkFzNi8m6cU78Nzg4GGZtluUR9tIx1?=
+ =?us-ascii?Q?2jm3mvMuqZmBDJBtrn2XsMWSbY7rV368i/2uEZ6859P0PrxuM6d+k9ylTEvg?=
+ =?us-ascii?Q?YlkxtoUEvYTidhpKjmWTxJl6yJ2N7JRlB+ErapNDT0Rirfe43hPd2QXbUVS5?=
+ =?us-ascii?Q?Ps3W6jBEcg5Ez+FtpbWQ8C4gAUzZ2VKdrVlWBYyJfLugMROqFxVuyaF6hMXI?=
+ =?us-ascii?Q?3kOLad9TWNjGT777gDAZieTDvWWW1CrDM9iJVZTwC0wg4dXjDyWvR4cHinNL?=
+ =?us-ascii?Q?rURtpMpt9i8dQUxs42KaJb8UVG7jt+7qFNAac/7Sa711CuS/AjXi4jPDIzLb?=
+ =?us-ascii?Q?tuAK5i8hbhyMGTEhLd/JnmrArSkIl8JQ9sWrn6eNmpGwX2hMVO5EsWXM69td?=
+ =?us-ascii?Q?YoXtd43GuL8gbEPvDsWZmWn9AyzTkFG3vZ/O2mN0Ib+gNt+HoCoacGoSlW+j?=
+ =?us-ascii?Q?kkaIkDvREctRt6DkAOJWJhn9IEBCGAlyRmkp619uYoWZ6FvmPMeZrtWgxNT5?=
+ =?us-ascii?Q?C7UZOBnICjkd22qQvnNR8kAozaRdeInfEWZMMGXLnOAjmElxaFoxXc7xNfEy?=
+ =?us-ascii?Q?sOueBs4OZo22bKDLg9DjMF4fxPlZNC+RgJdN5AME30r4GSmlvWsQS71JOh3s?=
+ =?us-ascii?Q?Gt5/7fJcvU/7zgk5rJqSDpqCQPzSJmWDqe9oj3+tQ/uL0hE44RMdnSOtEKtZ?=
+ =?us-ascii?Q?gnnXGMJOvLj+r4jzc9P4TEIgcfQktcbkWuugmGwJy+1nuhvMnd5bJGwonwBi?=
+ =?us-ascii?Q?+F4KHtGehAhrqAtfI20I65hM9ofXRAfij7r85BDCzr1mCg4QnSzZgnYcEPOA?=
+ =?us-ascii?Q?dk0egANfzZRMXts6azh6OZPmllJm3evOTwNx8++fSqEX8B6Hruo4oj7QZZPC?=
+ =?us-ascii?Q?XOTCRb4vyzCz2/2jMyhvp5bWuja//dY7NNz7h0W7sCwnYUlmtstQNblxV5Mh?=
+ =?us-ascii?Q?l1eYwoGzQ/RsS1JpBx50bplGCRTJtQQDs6pcMeAvrbns/hbaWHg3v4+dGPGs?=
+ =?us-ascii?Q?PjqT1j7t4hs+PagrSZkjjDLlRueoAjcdKLyyJNdpZAIyC3yYcWuoeuGxqQNs?=
+ =?us-ascii?Q?XQRSYT5D2/PP2e8K1dNhaA1Lh84+4z04d2TXzYNh90mFLo/kdCLTNNfPtp9W?=
+ =?us-ascii?Q?CE3rOR3oE4Clu9U2RVZi/+dxheR7VRlGoa1RDjyAuhqRXGN0efCkH8XekX0z?=
+ =?us-ascii?Q?KrF8WDMCSbtPdhXRC2YGw1cge1Dn2WyN90Wa7q/uXIcUynBW5qGzxJEezY4g?=
+ =?us-ascii?Q?5paCPqYyk7pTvPOCyh0TdJPHoIenKsHsrIjQfJPdr2gqTBEKNZe4jKtfhsxT?=
+ =?us-ascii?Q?OvIpJlJOWv3MKXLliUJk2y8RC8ZHCg0yAmsTUg/8IzQx4ejcm1MYmahN0m0U?=
+ =?us-ascii?Q?jWM1+0vqNfPe2+tv0DBGvBclnV3j1BOG2bvLp553UL6IGjON?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 07ca3957-7799-4ca1-82c4-08de4e7e3572
+X-MS-Exchange-CrossTenant-Network-Message-Id: 709c0956-9413-41df-53f0-08de4e7ec13a
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2026 06:21:50.5959
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jan 2026 06:25:44.9454
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: z9V8BL3imcVTokdnxfvPhpWCtIpzBcWNOkfzYAEKuPyhAL7lruGRkzQ3xgtzM6QLDcbjgL7XwtASPfs59HEmmg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1j2Ox8iuFQzkdCmaWrjxA1VOYGtOgiQBZDkDRHdpKvXuyW1pXmf4BR7eKNN/qLRhIpi5tX7VbxG+NdEurDWrBg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6110
 
-Hi,
+Hi George,
 
-On Thu, Jan 08, 2026 at 10:35:54AM +0800, zhidao su wrote:
-> This patch adds statistics collection to the Dispatch Queue (DSQ) system in
-> the sched_ext scheduler. Statistics tracked:
+On Thu, Jan 08, 2026 at 11:23:28AM +0800, George Guo wrote:
+> Hi Etsal,
+> Thanks for reviewing!
 > 
-> 1. Total enqueue count (number of tasks enqueued to a DSQ)
-> 2. Total dequeue count (number of tasks dequeued from a DSQ)
-> 3. Peak queue length (maximum number of tasks simultaneously queued)
+> > While the change looks correct, is there any benefit to it?
+> Yes, definitely. I found this issue while adding sched_ext support for
+> LoongArch. When scx_bpf_create_dsq() failed during my development, there
+> were no error messages at all, which made debugging difficult.
 > 
-> New BPF interface functions:
-> - scx_bpf_dsq_enqueue_count(dsq_id): Get total enqueue count
-> - scx_bpf_dsq_dequeue_count(dsq_id): Get total dequeue count
-> - scx_bpf_dsq_peak_nr(dsq_id): Get peak queue length
-> 
-> Implementation uses atomic operations for concurrency safety and follows
-> existing kernel patterns for statistics collection. Compatibility macros
-> are provided in compat.bpf.h for backward compatibility.
+> Specifically:
+> 1. The failure was silent - no log, no error message in dmesg
 
-I think there's a cost in adding all these atomic ops in the hot paths.
+Which kernel is that?
 
-Also, why implementing this in the kernel? These statistics can be easily
-determined directly in BPF.
+In theory you should get a clear message in dmesg. For example, if I try to
+create an invalid DSQ in scx_simple I get this in dmesg:
+
+  [690301.673313] sched_ext: BPF scheduler "simple" disabled (runtime error)
+  [690301.673324] sched_ext: simple: ops.init() failed (-22)
+  [690301.673327]    scx_enable.isra.0+0xc8b/0x11f0
+  [690301.673343]    bpf_struct_ops_link_create+0x141/0x1b0
+  [690301.673352]    __sys_bpf+0x1c0c/0x2de0
+  [690301.673357]    __x64_sys_bpf+0x21/0x30
+  [690301.673359]    do_syscall_64+0x81/0x820
+  [690301.673368]    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+And in stdout:
+
+DEBUG DUMP
+================================================================================
+
+scx_simple[364999] triggered exit kind 1024:
+  runtime error (ops.init() failed (-22))
+
+Backtrace:
+  scx_enable.isra.0+0xc8b/0x11f0
+  bpf_struct_ops_link_create+0x141/0x1b0
+  __sys_bpf+0x1c0c/0x2de0
+  __x64_sys_bpf+0x21/0x30
+  do_syscall_64+0x81/0x820
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+CPU states
+----------
+
+CPU 2   : nr_run=0 flags=0x1 cpu_rel=0 ops_qseq=87907495 pnt_seq=66861592
+          curr=scx_simple[364999] class=fair_sched_class
+
+CPU 3   : nr_run=0 flags=0x1 cpu_rel=0 ops_qseq=85461608 pnt_seq=64229201
+          curr=pacman[364201] class=fair_sched_class
+
+Event counters
+--------------
+              SCX_EV_SELECT_CPU_FALLBACK:                0
+       SCX_EV_DISPATCH_LOCAL_DSQ_OFFLINE:                0
+               SCX_EV_DISPATCH_KEEP_LAST:                0
+                 SCX_EV_ENQ_SKIP_EXITING:                0
+      SCX_EV_ENQ_SKIP_MIGRATION_DISABLED:                0
+                 SCX_EV_REFILL_SLICE_DFL:                0
+                  SCX_EV_BYPASS_DURATION:                0
+                  SCX_EV_BYPASS_DISPATCH:                0
+                  SCX_EV_BYPASS_ACTIVATE:                0
+
+================================================================================
+
+EXIT: runtime error (ops.init() failed (-22))
+
+> 2. I had to add bpf_printk() temporarily to confirm it was dsq creation failing
+> 
+> So the benefit is improved debuggability and faster issue diagnosis.
+> 
+> Thanks!
+> 
 
 Thanks,
 -Andrea
-
-> 
-> A comprehensive test case (dsq_stats) is included to verify functionality.
-> 
-> Signed-off-by: zhidao su <suzhidao@xiaomi.com>
-> ---
->  include/linux/sched/ext.h                     |   6 +
->  kernel/sched/ext.c                            | 156 +++++++++++++++++-
->  tools/sched_ext/include/scx/compat.bpf.h      |  17 ++
->  tools/testing/selftests/sched_ext/Makefile    |   1 +
->  .../selftests/sched_ext/dsq_stats.bpf.c       | 101 ++++++++++++
->  tools/testing/selftests/sched_ext/dsq_stats.c | 147 +++++++++++++++++
->  6 files changed, 427 insertions(+), 1 deletion(-)
->  create mode 100644 tools/testing/selftests/sched_ext/dsq_stats.bpf.c
->  create mode 100644 tools/testing/selftests/sched_ext/dsq_stats.c
-> 
-> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-> index bcb962d5ee7d..b79bedc26388 100644
-> --- a/include/linux/sched/ext.h
-> +++ b/include/linux/sched/ext.h
-> @@ -13,6 +13,7 @@
->  
->  #include <linux/llist.h>
->  #include <linux/rhashtable-types.h>
-> +#include <linux/atomic.h>
->  
->  enum scx_public_consts {
->  	SCX_OPS_NAME_LEN	= 128,
-> @@ -79,6 +80,11 @@ struct scx_dispatch_q {
->  	struct rhash_head	hash_node;
->  	struct llist_node	free_node;
->  	struct rcu_head		rcu;
-> +
-> +	/* Statistics fields */
-> +	atomic64_t		enqueue_count;
-> +	atomic64_t		dequeue_count;
-> +	atomic_t		peak_nr;
->  };
->  
->  /* scx_entity.flags */
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 136b01950a62..a025d68acdef 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -972,8 +972,20 @@ static bool scx_dsq_priq_less(struct rb_node *node_a,
->  
->  static void dsq_mod_nr(struct scx_dispatch_q *dsq, s32 delta)
->  {
-> +	u32 new_nr;
-> +
->  	/* scx_bpf_dsq_nr_queued() reads ->nr without locking, use WRITE_ONCE() */
-> -	WRITE_ONCE(dsq->nr, dsq->nr + delta);
-> +	new_nr = dsq->nr + delta;
-> +	WRITE_ONCE(dsq->nr, new_nr);
-> +
-> +	/* Update peak queue length */
-> +	if (delta > 0) {
-> +
-> +		u32 peak = atomic_read(&dsq->peak_nr);
-> +
-> +		if (new_nr > peak)
-> +			atomic_set(&dsq->peak_nr, new_nr);
-> +	}
->  }
->  
->  static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
-> @@ -1099,6 +1111,7 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
->  	p->scx.dsq_seq = dsq->seq;
->  
->  	dsq_mod_nr(dsq, 1);
-> +	atomic64_inc(&dsq->enqueue_count);  /* Increment enqueue count */
->  	p->scx.dsq = dsq;
->  
->  	/*
-> @@ -1136,6 +1149,7 @@ static void task_unlink_from_dsq(struct task_struct *p,
->  
->  	list_del_init(&p->scx.dsq_list.node);
->  	dsq_mod_nr(dsq, -1);
-> +	atomic64_inc(&dsq->dequeue_count);  /* Increment dequeue count */
->  
->  	if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN) && dsq->first_task == p) {
->  		struct task_struct *first_task;
-> @@ -3396,6 +3410,11 @@ static void init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id)
->  	raw_spin_lock_init(&dsq->lock);
->  	INIT_LIST_HEAD(&dsq->list);
->  	dsq->id = dsq_id;
-> +
-> +	/* Initialize statistics */
-> +	atomic64_set(&dsq->enqueue_count, 0);
-> +	atomic64_set(&dsq->dequeue_count, 0);
-> +	atomic_set(&dsq->peak_nr, 0);
->  }
->  
->  static void free_dsq_irq_workfn(struct irq_work *irq_work)
-> @@ -6476,6 +6495,138 @@ __bpf_kfunc s32 scx_bpf_dsq_nr_queued(u64 dsq_id)
->  	return ret;
->  }
->  
-> +/**
-> + * scx_bpf_dsq_enqueue_count - Return the total number of enqueued tasks
-> + * @dsq_id: id of the DSQ
-> + *
-> + * Return the total number of tasks that have been enqueued to the DSQ
-> + * matching @dsq_id. If not found, -%ENOENT is returned.
-> + */
-> +__bpf_kfunc s64 scx_bpf_dsq_enqueue_count(u64 dsq_id)
-> +{
-> +	struct scx_sched *sch;
-> +	struct scx_dispatch_q *dsq;
-> +	s64 ret;
-> +
-> +	preempt_disable();
-> +
-> +	sch = rcu_dereference_sched(scx_root);
-> +	if (unlikely(!sch)) {
-> +		ret = -ENODEV;
-> +		goto out;
-> +	}
-> +
-> +	if (dsq_id == SCX_DSQ_LOCAL) {
-> +		ret = atomic64_read(&this_rq()->scx.local_dsq.enqueue_count);
-> +		goto out;
-> +	} else if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
-> +		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
-> +
-> +		if (ops_cpu_valid(sch, cpu, NULL)) {
-> +			ret = atomic64_read(&cpu_rq(cpu)->scx.local_dsq.enqueue_count);
-> +			goto out;
-> +		}
-> +	} else {
-> +		dsq = find_user_dsq(sch, dsq_id);
-> +		if (dsq) {
-> +			ret = atomic64_read(&dsq->enqueue_count);
-> +			goto out;
-> +		}
-> +	}
-> +	ret = -ENOENT;
-> +out:
-> +	preempt_enable();
-> +	return ret;
-> +}
-> +
-> +/**
-> + * scx_bpf_dsq_dequeue_count - Return the total number of dequeued tasks
-> + * @dsq_id: id of the DSQ
-> + *
-> + * Return the total number of tasks that have been dequeued from the DSQ
-> + * matching @dsq_id. If not found, -%ENOENT is returned.
-> + */
-> +__bpf_kfunc s64 scx_bpf_dsq_dequeue_count(u64 dsq_id)
-> +{
-> +	struct scx_sched *sch;
-> +	struct scx_dispatch_q *dsq;
-> +	s64 ret;
-> +
-> +	preempt_disable();
-> +
-> +	sch = rcu_dereference_sched(scx_root);
-> +	if (unlikely(!sch)) {
-> +		ret = -ENODEV;
-> +		goto out;
-> +	}
-> +
-> +	if (dsq_id == SCX_DSQ_LOCAL) {
-> +		ret = atomic64_read(&this_rq()->scx.local_dsq.dequeue_count);
-> +		goto out;
-> +	} else if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
-> +		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
-> +
-> +		if (ops_cpu_valid(sch, cpu, NULL)) {
-> +			ret = atomic64_read(&cpu_rq(cpu)->scx.local_dsq.dequeue_count);
-> +			goto out;
-> +		}
-> +	} else {
-> +		dsq = find_user_dsq(sch, dsq_id);
-> +		if (dsq) {
-> +			ret = atomic64_read(&dsq->dequeue_count);
-> +			goto out;
-> +		}
-> +	}
-> +	ret = -ENOENT;
-> +out:
-> +	preempt_enable();
-> +	return ret;
-> +}
-> +
-> +/**
-> + * scx_bpf_dsq_peak_nr - Return the peak number of queued tasks
-> + * @dsq_id: id of the DSQ
-> + *
-> + * Return the peak number of tasks that have been simultaneously queued in
-> + * the DSQ matching @dsq_id. If not found, -%ENOENT is returned.
-> + */
-> +__bpf_kfunc s32 scx_bpf_dsq_peak_nr(u64 dsq_id)
-> +{
-> +	struct scx_sched *sch;
-> +	struct scx_dispatch_q *dsq;
-> +	s32 ret;
-> +
-> +	preempt_disable();
-> +
-> +	sch = rcu_dereference_sched(scx_root);
-> +	if (unlikely(!sch)) {
-> +		ret = -ENODEV;
-> +		goto out;
-> +	}
-> +
-> +	if (dsq_id == SCX_DSQ_LOCAL) {
-> +		ret = atomic_read(&this_rq()->scx.local_dsq.peak_nr);
-> +		goto out;
-> +	} else if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
-> +		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
-> +
-> +		if (ops_cpu_valid(sch, cpu, NULL)) {
-> +			ret = atomic_read(&cpu_rq(cpu)->scx.local_dsq.peak_nr);
-> +			goto out;
-> +		}
-> +	} else {
-> +		dsq = find_user_dsq(sch, dsq_id);
-> +		if (dsq) {
-> +			ret = atomic_read(&dsq->peak_nr);
-> +			goto out;
-> +		}
-> +	}
-> +	ret = -ENOENT;
-> +out:
-> +	preempt_enable();
-> +	return ret;
-> +}
-> +
->  /**
->   * scx_bpf_destroy_dsq - Destroy a custom DSQ
->   * @dsq_id: DSQ to destroy
-> @@ -7221,6 +7372,9 @@ BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_RCU);
->  BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_RCU);
->  BTF_ID_FLAGS(func, scx_bpf_kick_cpu)
->  BTF_ID_FLAGS(func, scx_bpf_dsq_nr_queued)
-> +BTF_ID_FLAGS(func, scx_bpf_dsq_enqueue_count)
-> +BTF_ID_FLAGS(func, scx_bpf_dsq_dequeue_count)
-> +BTF_ID_FLAGS(func, scx_bpf_dsq_peak_nr)
->  BTF_ID_FLAGS(func, scx_bpf_destroy_dsq)
->  BTF_ID_FLAGS(func, scx_bpf_dsq_peek, KF_RCU_PROTECTED | KF_RET_NULL)
->  BTF_ID_FLAGS(func, bpf_iter_scx_dsq_new, KF_ITER_NEW | KF_RCU_PROTECTED)
-> diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-> index f2969c3061a7..8222ef8055df 100644
-> --- a/tools/sched_ext/include/scx/compat.bpf.h
-> +++ b/tools/sched_ext/include/scx/compat.bpf.h
-> @@ -375,6 +375,23 @@ static inline void scx_bpf_reenqueue_local(void)
->  		scx_bpf_reenqueue_local___v1();
->  }
->  
-> +/*
-> + * v6.20: Add DSQ statistics functions.
-> + *
-> + * Preserve the following macros until v6.22.
-> + */
-> +#define __COMPAT_scx_bpf_dsq_enqueue_count(dsq_id)		\
-> +	(bpf_ksym_exists(scx_bpf_dsq_enqueue_count) ?		\
-> +	 scx_bpf_dsq_enqueue_count(dsq_id) : -ENOENT)
-> +
-> +#define __COMPAT_scx_bpf_dsq_dequeue_count(dsq_id)		\
-> +	(bpf_ksym_exists(scx_bpf_dsq_dequeue_count) ?		\
-> +	 scx_bpf_dsq_dequeue_count(dsq_id) : -ENOENT)
-> +
-> +#define __COMPAT_scx_bpf_dsq_peak_nr(dsq_id)			\
-> +	(bpf_ksym_exists(scx_bpf_dsq_peak_nr) ?			\
-> +	 scx_bpf_dsq_peak_nr(dsq_id) : -ENOENT)
-> +
->  /*
->   * Define sched_ext_ops. This may be expanded to define multiple variants for
->   * backward compatibility. See compat.h::SCX_OPS_LOAD/ATTACH().
-> diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-> index 5fe45f9c5f8f..546534159d74 100644
-> --- a/tools/testing/selftests/sched_ext/Makefile
-> +++ b/tools/testing/selftests/sched_ext/Makefile
-> @@ -161,6 +161,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
->  
->  auto-test-targets :=			\
->  	create_dsq			\
-> +	dsq_stats			\
->  	enq_last_no_enq_fails		\
->  	ddsp_bogus_dsq_fail		\
->  	ddsp_vtimelocal_fail		\
-> diff --git a/tools/testing/selftests/sched_ext/dsq_stats.bpf.c b/tools/testing/selftests/sched_ext/dsq_stats.bpf.c
-> new file mode 100644
-> index 000000000000..bd3f8ac78456
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/dsq_stats.bpf.c
-> @@ -0,0 +1,101 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * A BPF program for testing DSQ statistics functionality.
-> + *
-> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-> + */
-> +
-> +#include <scx/common.bpf.h>
-> +#include <scx/compat.bpf.h>
-> +
-> +char _license[] SEC("license") = "GPL";
-> +
-> +UEI_DEFINE(uei); /* Error handling */
-> +
-> +#define TEST_DSQ_ID 1234
-> +
-> +/* Test variables to store results */
-> +s64 test_enqueue_count = -1;
-> +s64 test_dequeue_count = -1;
-> +s32 test_peak_nr = -1;
-> +s32 current_nr = -1;
-> +
-> +/* Test completion flag */
-> +int test_completed;
-> +
-> +/* Test task */
-> +int test_pid = -1;
-> +
-> +static void test_dsq_stats(void)
-> +{
-> +	s64 enqueue_count, dequeue_count;
-> +	s32 peak_nr, nr;
-> +
-> +	/* Test the new statistics functions */
-> +	enqueue_count = __COMPAT_scx_bpf_dsq_enqueue_count(TEST_DSQ_ID);
-> +	dequeue_count = __COMPAT_scx_bpf_dsq_dequeue_count(TEST_DSQ_ID);
-> +	peak_nr = __COMPAT_scx_bpf_dsq_peak_nr(TEST_DSQ_ID);
-> +	nr = scx_bpf_dsq_nr_queued(TEST_DSQ_ID);
-> +
-> +	/* Store results */
-> +	test_enqueue_count = enqueue_count;
-> +	test_dequeue_count = dequeue_count;
-> +	test_peak_nr = peak_nr;
-> +	current_nr = nr;
-> +
-> +	test_completed = 1;
-> +}
-> +
-> +void BPF_STRUCT_OPS(dsq_stats_enqueue, struct task_struct *p, u64 enq_flags)
-> +{
-> +	/* Create DSQ on first task */
-> +	if (test_pid == -1) {
-> +		test_pid = p->pid;
-> +
-> +		/* Create test DSQ */
-> +		if (scx_bpf_create_dsq(TEST_DSQ_ID, -1)) {
-> +			bpf_printk("Failed to create test DSQ\n");
-> +			return;
-> +		}
-> +
-> +		/* Insert task into DSQ to test statistics */
-> +		scx_bpf_dsq_insert(p, TEST_DSQ_ID, 0, enq_flags);
-> +	}
-> +}
-> +
-> +void BPF_STRUCT_OPS(dsq_stats_dispatch, s32 cpu, struct task_struct *prev)
-> +{
-> +	/* Run test if not completed */
-> +	if (!test_completed && test_pid != -1) {
-> +		test_dsq_stats();
-> +
-> +		/* Consume the task to complete the test */
-> +		scx_bpf_dsq_move_to_local(TEST_DSQ_ID);
-> +	}
-> +}
-> +
-> +s32 BPF_STRUCT_OPS_SLEEPABLE(dsq_stats_init)
-> +{
-> +	/* Initialize test variables */
-> +	test_pid = -1;
-> +	test_completed = 0;
-> +
-> +	return 0;
-> +}
-> +
-> +void BPF_STRUCT_OPS(dsq_stats_exit, struct scx_exit_info *ei)
-> +{
-> +	/* Destroy test DSQ */
-> +	scx_bpf_destroy_dsq(TEST_DSQ_ID);
-> +
-> +	UEI_RECORD(uei, ei);
-> +}
-> +
-> +SEC(".struct_ops.link")
-> +struct sched_ext_ops dsq_stats_ops = {
-> +	.enqueue = (void *)dsq_stats_enqueue,
-> +	.dispatch = (void *)dsq_stats_dispatch,
-> +	.init = (void *)dsq_stats_init,
-> +	.exit = (void *)dsq_stats_exit,
-> +	.name = "dsq_stats",
-> +};
-> diff --git a/tools/testing/selftests/sched_ext/dsq_stats.c b/tools/testing/selftests/sched_ext/dsq_stats.c
-> new file mode 100644
-> index 000000000000..b54912a0d2ca
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/dsq_stats.c
-> @@ -0,0 +1,147 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Test for DSQ statistics functionality.
-> + *
-> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-> + */
-> +#include <bpf/bpf.h>
-> +#include <scx/common.h>
-> +#include <sys/wait.h>
-> +#include <unistd.h>
-> +#include <pthread.h>
-> +#include <string.h>
-> +#include <sched.h>
-> +#include "dsq_stats.bpf.skel.h"
-> +#include "scx_test.h"
-> +
-> +#define NUM_WORKERS 2
-> +
-> +static bool workload_running = true;
-> +static pthread_t workload_threads[NUM_WORKERS];
-> +
-> +/**
-> + * Background workload thread that exercises the scheduler to trigger
-> + * DSQ operations and statistics collection.
-> + */
-> +static void *workload_thread_fn(void *arg)
-> +{
-> +	while (workload_running) {
-> +		/* Sleep for a very short time to trigger scheduler activity */
-> +		usleep(1000); /* 1ms sleep */
-> +		/* Yield to ensure we go through the scheduler */
-> +		sched_yield();
-> +	}
-> +	return NULL;
-> +}
-> +
-> +static enum scx_test_status setup(void **ctx)
-> +{
-> +	struct dsq_stats *skel;
-> +	int i, ret;
-> +
-> +	skel = dsq_stats__open();
-> +	SCX_FAIL_IF(!skel, "Failed to open");
-> +
-> +	SCX_ENUM_INIT(skel);
-> +	SCX_FAIL_IF(dsq_stats__load(skel), "Failed to load skel");
-> +
-> +	/* Start background workload threads */
-> +	for (i = 0; i < NUM_WORKERS; i++) {
-> +		ret = pthread_create(&workload_threads[i], NULL, workload_thread_fn, NULL);
-> +		SCX_FAIL_IF(ret, "Failed to create workload thread %d", i);
-> +	}
-> +
-> +	*ctx = skel;
-> +
-> +	return SCX_TEST_PASS;
-> +}
-> +
-> +static enum scx_test_status run(void *ctx)
-> +{
-> +	struct dsq_stats *skel = ctx;
-> +	struct bpf_link *link;
-> +	int duration = 2; /* Run test for 2 seconds */
-> +
-> +	link = bpf_map__attach_struct_ops(skel->maps.dsq_stats_ops);
-> +	SCX_FAIL_IF(!link, "Failed to attach scheduler");
-> +
-> +	/* Let the scheduler run for a while to collect statistics */
-> +	sleep(duration);
-> +
-> +	workload_running = false;
-> +
-> +	bpf_link__destroy(link);
-> +
-> +	return SCX_TEST_PASS;
-> +}
-> +
-> +static enum scx_test_status check_results(void *ctx)
-> +{
-> +	struct dsq_stats *skel = ctx;
-> +
-> +	/* Wait for test to complete */
-> +	int timeout = 50; /* 5 seconds timeout */
-> +
-> +	while (!skel->bss->test_completed && timeout > 0) {
-> +		usleep(100000); /* 100ms */
-> +		timeout--;
-> +	}
-> +
-> +	SCX_FAIL_IF(timeout <= 0, "Test timed out waiting for completion");
-> +
-> +	/* Check that statistics were collected */
-> +	SCX_FAIL_IF(skel->bss->test_enqueue_count < 0,
-> +		   "Enqueue count not collected: %lld",
-> +		   (long long)skel->bss->test_enqueue_count);
-> +
-> +	SCX_FAIL_IF(skel->bss->test_dequeue_count < 0,
-> +		   "Dequeue count not collected: %lld",
-> +		   (long long)skel->bss->test_dequeue_count);
-> +
-> +	SCX_FAIL_IF(skel->bss->test_peak_nr < 0,
-> +		   "Peak NR not collected: %d",
-> +		   skel->bss->test_peak_nr);
-> +
-> +	/* Basic sanity checks */
-> +	SCX_FAIL_IF(skel->bss->test_enqueue_count != skel->bss->test_dequeue_count,
-> +		   "Enqueue count (%lld) != Dequeue count (%lld)",
-> +		   (long long)skel->bss->test_enqueue_count,
-> +		   (long long)skel->bss->test_dequeue_count);
-> +
-> +	SCX_FAIL_IF(skel->bss->test_peak_nr < skel->bss->current_nr,
-> +		   "Peak NR (%d) < Current NR (%d)",
-> +		   skel->bss->test_peak_nr, skel->bss->current_nr);
-> +
-> +	bpf_printk("DSQ Stats Test Results:\n");
-> +	bpf_printk("  Enqueue Count: %lld\n", (long long)skel->bss->test_enqueue_count);
-> +	bpf_printk("  Dequeue Count: %lld\n", (long long)skel->bss->test_dequeue_count);
-> +	bpf_printk("  Peak NR: %d\n", skel->bss->test_peak_nr);
-> +	bpf_printk("  Current NR: %d\n", skel->bss->current_nr);
-> +
-> +	return SCX_TEST_PASS;
-> +}
-> +
-> +static void cleanup(void *ctx)
-> +{
-> +	struct dsq_stats *skel = ctx;
-> +	int i;
-> +
-> +	/* Stop workload threads */
-> +	workload_running = false;
-> +	for (i = 0; i < NUM_WORKERS; i++) {
-> +		if (workload_threads[i])
-> +			pthread_join(workload_threads[i], NULL);
-> +	}
-> +
-> +	dsq_stats__destroy(skel);
-> +}
-> +
-> +struct scx_test dsq_stats = {
-> +	.name = "dsq_stats",
-> +	.description = "Test DSQ statistics functionality",
-> +	.setup = setup,
-> +	.run = run,
-> +	.check_results = check_results,
-> +	.cleanup = cleanup,
-> +};
-> +REGISTER_SCX_TEST(&dsq_stats)
-> -- 
-> 2.43.0
-> 
