@@ -1,43 +1,48 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AB33563CB
-	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 16:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6800D287517
+	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 18:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767975152; cv=none; b=pvbXPc4sEc2MYb0fO1ztnWg8sa2XGrl6KEQx7l4F8uiP8Kisp6UEZPiI8w1Zmk/MxwqsKpEpVJBL97r5A/oaeFV/9bD1bnimg3KorTdCNp9vBQa7UtCmt12b3hVXinWI7tMAXKjQw8ZM2hoC8U9pJGuomsiZ8SMvv7g6DnlUsW4=
+	t=1767984569; cv=none; b=UCfLxBetxJjC64Oo+ZS9UoP5SQ+o9qWEA2kBfs23q0CqrU3wrYoxz/2nYxRRoU0BSLY/cJNF0Zg2zgwrOBN6X+AILLunhOQ7xxBKaN2JtjjwPivXhCtzT7dmXo0i5tKWL1dCtQfOND49oasf0moXpGI8ShNrKXmJwhqRqr7pFss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767975152; c=relaxed/simple;
-	bh=YIrpUC+oeOE4ylHDYX2DLU4ie4KcMcSSo19SJwV6rvE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f2/fb4r6XaVsj0aJQrP0l2ZZzvCBsSX92CKOHTMr7tHDjoo6sK0Q8G21MWTrIBTX9pOHnpzgBRhud7hFKzoGX52VwzB6cgLPKL5UrGsxgRr/UV9PCMq3PSeksuS2CAjkQ/ri6Qn3GoEqtizP3VaswtTqhcTIzAt5Fk3Nw+/Ra/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rdgASSVQ; arc=none smtp.client-ip=91.218.175.181
+	s=arc-20240116; t=1767984569; c=relaxed/simple;
+	bh=vK2UmMO8h7KVieYaIxTUrkuf30QyV/hQOQhzVsKcz6w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EudU31gPFi8kNjT58OGx/6grYHtg3UsHfmqLCHsD/DLLjNfSDGhNtLlFPBLKX4hOH/7/PG6GNaT/K3jhg5JnBA3zYfL4GdTNZVqGXtAKI451p0P1t/kQYromf1NQObouEMDztLKXnfqh3Ot082yXgkmNGcMcjbricrmosVuiHvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AmbduUQt; arc=none smtp.client-ip=95.215.58.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rdgASSVQ"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AmbduUQt"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1767975148;
+	t=1767984565;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding;
-	bh=LpBKJHmZTTL5RnDb67ycBCxAn2yjK2Wyu+bDg+yrQx4=;
-	b=rdgASSVQpLvybRHbeMPEglDcUsH1+lMvRcpBSEdpCCjRae+1jrBX6tPPqiZ7kP+ESoHmtP
-	KxLNhZzID30t5NSeWU+syQ6qGqJa6V8R7ZMJ9K1uGhw6AJtqpp1vherZ1ITuyseeI4G7Qx
-	LNfpSipKggzoL+/XQC3Tu95jN5mRxnA=
-From: George Guo <dongtai.guo@linux.dev>
-To: arighi@nvidia.com
-Cc: changwoo@igalia.com,
-	dongtai.guo@linux.dev,
-	etsal@meta.com,
-	guodongtai@kylinos.cn,
+	bh=ab5DkkNPh3SFtvknH3++tX6PIlvk40xERYOZ8UrmrN4=;
+	b=AmbduUQtPh/D8uUnQGUzRe2hpBXk0v4iKYf/caeuSve+DZ2gBmiYjnC/c+bvNc5zn5YrVi
+	yfnEnsT7c6s3xxvD1Us9PX5XvJywHqesFGwJzkj96enWanqZ6cxLnmOT2k/KaFK+rv/L2C
+	6c1s2Mi2fxa8n/FLeROj8bf19IuIRYw=
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+To: Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>
+Cc: Mykyta Yatsenko <yatsenko@meta.com>,
+	Tejun Heo <tj@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	bpf@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	tj@kernel.org,
-	void@manifault.com
-Subject: [PATCH v3 1/1] sched_ext: Add error logging for dsq creation failures
-Date: Sat, 10 Jan 2026 00:12:14 +0800
-Message-ID: <20260109161214.94419-1-dongtai.guo@linux.dev>
+	linux-input@vger.kernel.org,
+	sched-ext@lists.linux.dev
+Subject: [PATCH bpf-next v1 00/10] bpf: Kernel functions with KF_IMPLICIT_ARGS
+Date: Fri,  9 Jan 2026 10:48:42 -0800
+Message-ID: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,77 +52,104 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-From: George Guo <guodongtai@kylinos.cn>
+This series implements a generic "implicit arguments" feature for BPF
+kernel functions.
 
-Add scx_bpf_error() calls when scx_bpf_create_dsq() fails in multiple
-schedulers to improve debuggability:
+This is the next iteration of previous work [1][2], although it's not
+really a v3, as parts of the implementation have changed
+significantly.
 
-- scx_central.bpf.c: central_init()
-- scx_flatcg.bpf.c: fcg_cgroup_init() and fcg_init()
-- scx_qmap.bpf.c: qmap_init()
+A mechanism is created for kfuncs to have arguments that are not
+visible to the BPF programs, and are provided to the kernel function
+implementation by the verifier.
 
-Signed-off-by: George Guo <guodongtai@kylinos.cn>
+This mechanism is then used to define new APIs, that use
+KF_IMPLICIT_ARGS flag, for the kfuncs that have a parameter with
+__prog annotation [3], which is the current way of passing struct
+bpf_prog_aux pointer to kfuncs.
+
+The key difference in comparison to earlier work is that the necessary
+BTF modifications are done by resolve_btfids (patch #4) instead of
+pahole. The groundwork for this to be possible has been landed
+recently [4].
+
+This approach simplifies the implementation and future maintenance as
+pahole is an out-of-tree tool, while resolve_btfids is not.
+
+Another difference is in handling of the "legacy" case. This
+implementation is more strict: the usage of <kfunc>_impl functions in
+BPF is only allowed for kfuncs with an explicit kernel (or kmodule)
+declaration (that is, existing _impl functions [5]). A <kfunc>_impl
+function generated in BTF for a kfunc with implicit args does not have
+a "bpf_kfunc" decl tag, and a kernel address. The verifier will reject
+a program trying to call such an _impl kfunc.
+
+The function with implicit arguments is defined by KF_IMPLICIT_ARGS
+flag in BTF_IDS_FLAGS set. In this series, only a pointer to struct
+bpf_prog_aux can be implicit, although it is simple to extend this to
+more types.
+
+The verifier handles a kfunc with KF_IMPLICIT_ARGS by resolving it to
+a different (actual) BTF prototype early in verification (patch #3).
+
+The series consists of the following patches:
+  - patches #1 and #2 are non-functional refactoring in kernel/bpf
+  - patch #3 defines KF_IMPLICIT_ARGS flag and teaches the verifier
+    about it, enabling __prog args to also be implicit
+  - patch #4 implements the necessary btf2btf transformation in
+    resolve_btfids
+  - patch #5 adds selftests specific to KF_IMPLICIT_ARGS feature
+  - patches #6-#9 update the current users of __prog argument to use
+    KF_IMPLICIT_ARGS
+  - patch #10 updates relevant documentation
+
+[1] https://lore.kernel.org/bpf/20251029190113.3323406-1-ihor.solodrai@linux.dev/
+[2] https://lore.kernel.org/bpf/20250924211716.1287715-1-ihor.solodrai@linux.dev/
+[3] https://docs.kernel.org/bpf/kfuncs.html#prog-annotation
+[4] https://lore.kernel.org/bpf/20251219181321.1283664-1-ihor.solodrai@linux.dev/
+[5] https://lore.kernel.org/bpf/20251104-implv2-v3-0-4772b9ae0e06@meta.com/
+
 ---
- tools/sched_ext/scx_central.bpf.c | 4 +++-
- tools/sched_ext/scx_flatcg.bpf.c  | 4 +++-
- tools/sched_ext/scx_qmap.bpf.c    | 8 ++++++--
- 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
-index 55df8b798865..1c2376b75b5d 100644
---- a/tools/sched_ext/scx_central.bpf.c
-+++ b/tools/sched_ext/scx_central.bpf.c
-@@ -301,8 +301,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(central_init)
- 	int ret;
- 
- 	ret = scx_bpf_create_dsq(FALLBACK_DSQ_ID, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
- 		return ret;
-+	}
- 
- 	timer = bpf_map_lookup_elem(&central_timer, &key);
- 	if (!timer)
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 2c720e3ecad5..06def9121f39 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -842,8 +842,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(fcg_cgroup_init, struct cgroup *cgrp,
- 	 * unlikely case that it breaks.
- 	 */
- 	ret = scx_bpf_create_dsq(cgid, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("scx_bpf_create_dsq failed (%d)", ret);
- 		return ret;
-+	}
- 
- 	cgc = bpf_cgrp_storage_get(&cgrp_ctx, cgrp, 0,
- 				   BPF_LOCAL_STORAGE_GET_F_CREATE);
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 8962dd4ace25..ebab55f36e48 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -852,12 +852,16 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 		print_cpus();
- 
- 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("failed to create DSQ %d (%d)", SHARED_DSQ, ret);
- 		return ret;
-+	}
- 
- 	ret = scx_bpf_create_dsq(HIGHPRI_DSQ, -1);
--	if (ret)
-+	if (ret) {
-+		scx_bpf_error("failed to create DSQ %d (%d)", HIGHPRI_DSQ, ret);
- 		return ret;
-+	}
- 
- 	timer = bpf_map_lookup_elem(&monitor_timer, &key);
- 	if (!timer)
+Ihor Solodrai (10):
+  bpf: Refactor btf_kfunc_id_set_contains
+  bpf: Introduce struct bpf_kfunc_meta
+  bpf: Verifier support for KF_IMPLICIT_ARGS
+  resolve_btfids: Support for KF_IMPLICIT_ARGS
+  selftests/bpf: Add tests for KF_IMPLICIT_ARGS
+  bpf: Add bpf_wq_set_callback kfunc with KF_IMPLICIT_ARGS
+  HID: Use bpf_wq_set_callback kernel function
+  bpf: Add bpf_task_work_schedule_* kfuncs with KF_IMPLICIT_ARGS
+  bpf: Add bpf_stream_vprintk with KF_IMPLICIT_ARGS
+  bpf,docs: Document KF_IMPLICIT_ARGS flag
+
+ Documentation/bpf/kfuncs.rst                  |  44 ++-
+ drivers/hid/bpf/progs/hid_bpf_helpers.h       |   8 +-
+ include/linux/btf.h                           |   5 +-
+ kernel/bpf/btf.c                              |  70 +++--
+ kernel/bpf/helpers.c                          |  47 ++-
+ kernel/bpf/stream.c                           |  11 +-
+ kernel/bpf/verifier.c                         | 247 ++++++++++-----
+ tools/bpf/resolve_btfids/main.c               | 282 ++++++++++++++++++
+ tools/lib/bpf/bpf_helpers.h                   |   6 +-
+ .../testing/selftests/bpf/bpf_experimental.h  |   5 -
+ .../bpf/prog_tests/kfunc_implicit_args.c      |  10 +
+ .../testing/selftests/bpf/progs/file_reader.c |   4 +-
+ .../selftests/bpf/progs/kfunc_implicit_args.c |  41 +++
+ .../testing/selftests/bpf/progs/stream_fail.c |   6 +-
+ tools/testing/selftests/bpf/progs/task_work.c |  11 +-
+ .../selftests/bpf/progs/task_work_fail.c      |  16 +-
+ .../selftests/bpf/progs/task_work_stress.c    |   5 +-
+ .../bpf/progs/verifier_async_cb_context.c     |   6 +-
+ tools/testing/selftests/bpf/progs/wq.c        |   2 +-
+ .../testing/selftests/bpf/progs/wq_failures.c |   4 +-
+ .../selftests/bpf/test_kmods/bpf_testmod.c    |  26 ++
+ tools/testing/selftests/hid/Makefile          |   4 +-
+ .../selftests/hid/progs/hid_bpf_helpers.h     |   8 +-
+ 23 files changed, 724 insertions(+), 144 deletions(-)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/kfunc_implicit_args.c
+ create mode 100644 tools/testing/selftests/bpf/progs/kfunc_implicit_args.c
+
 -- 
-2.43.0
+2.52.0
 
