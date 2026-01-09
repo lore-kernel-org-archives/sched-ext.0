@@ -1,104 +1,98 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328141F151C
-	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 19:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A205F35E55E
+	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 19:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767987298; cv=none; b=WYTCm9F3cOcPZ6Aywh0py7JJuiMRmS1PigMISCEtxUPrbvLsFF5TKVpCsXjpYFZIizni7u9NmaunLYcHKzeqe3pUcj3IzmSvEoHPNs2TsX3HmlaUyBZ/U6WyjEnNePamwS/+7cIfd3ZKouMwLsF9gAOLWV8rIKZCbuLD8HyMWEY=
+	t=1767988507; cv=none; b=CDIstGwup2I2nQ5/qKa8CbxLL5d9K5ykSdlbVDwS3alsqfSAkwGaAE+i4IVF685NBtR54U1jc57VbHxBkftHx8m4wVKPCCPgsx7MZyEFEmohjKZEiLMzUt14OEW7LxrLxzLXsVDSqTi+OL2OnP8FEP2BqQ2V2BCNC1PQgBNXGiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767987298; c=relaxed/simple;
-	bh=1LYPlAuuSKe87kSWcWwfw07rnIjC7+5DOoOpWTyd90g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=myJW6upPwH6IzVN5YRnBLoNagiUoIJXVU5RYtXSUZjnzGUeZ+ExMcqbu1ahbU1TU7IM1bfyl6bnTIRlJJkfDnHXsKIrQnuY5dVxC7Ib6a1UGq40KGvAOuscJZTcptzKLTKJI0S4H4aggJQ0X9IRgXLtsbcqKwouHBISVR4TNqDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=U4tjFHp2; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1767988507; c=relaxed/simple;
+	bh=MhElfQne+j9lBSOteOTAImcd5y7CE11SkL50jXSh4kU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Vy5o7t7VCndrqH0yPEgosktmNEleX4mclBq9Y5Fj1FoMyP9ewDDPUUa8HGLJN3cSyCHpI5/PthgkayN+/SUD7gXc5bDIumFF9E70SiUI9gy4RlnTMov/FzUXdUtY15ACMH3kM/S5dKoYNn/nkXBa9cmZgoFrvMHA/8RpTNY+uLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AUy4A9Ek; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="U4tjFHp2"
-Message-ID: <959cbc0f-6ec9-440e-96cb-64bb2cc26817@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1767987294;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IRQAvj0Fe38gDGKQiHCGy2Q/83lfJaDQOBTGVSZfwDc=;
-	b=U4tjFHp2WMerzMT4jif1pQ99jKZ/hjfBapw4rsscbVAAkvf8I9Ox7wwZMo+vTwMPf9zHnV
-	FtNejbXyzUF016CL7YMxN+GGdgBHN4XH4Y9YQqDYNasDD/MjQa6t01EfZ0KOq2biI4yYIl
-	zhmlVjhxd43u+DAVWc3F3a7ETD+MSOU=
-Date: Fri, 9 Jan 2026 11:34:46 -0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AUy4A9Ek"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-430f2ee2f00so2602436f8f.3
+        for <sched-ext@lists.linux.dev>; Fri, 09 Jan 2026 11:55:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767988504; x=1768593304; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jBkPDONatTuGPl5aY/TAYsLDoFrF+bCOUtSOi52c1ug=;
+        b=AUy4A9EkelGrmT7Qm5wvEY27Kfnkav1exNsS8bCyaeDbU1ufD9qdBpOQ42AhzNgG52
+         0eGfXJge9HYNUwCZtKdEpiQudmcvGQO+Z43nSPRSzpPaVOaWxYFDGuwsAROi1UgLct5e
+         zR8OTaWZx/4o6n/IGUDnKJIci/R1pjSnP0MPPBeL925oZ+Fcse6zeekim4sae+VyyEJ2
+         9xA+xYO7lWxRYvjgr+N9mVwq+pVF8zX1bIuFIm+Zz3XghGkv6GTk+sRs6vPBS1EbWd+O
+         GkhFsq14IRQZGQyLavRWCD5m/qLrR0CaAhzeOO+bUIFvfwfiwghJWfBueEkqxdTQySTO
+         JV7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767988504; x=1768593304;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jBkPDONatTuGPl5aY/TAYsLDoFrF+bCOUtSOi52c1ug=;
+        b=oHFpfM+W8uONfCHl5PTDOenc+80KbCqGkYonnrFXRGVT2bQW2FkUmZVoZpd3Np+rEL
+         moGfDZlWPMV0oUmvcG+35KPV7BCmgApKXWGbq/YdMtUXOREvIK2AQn6LaYOhvGGhAv62
+         mn4+YkKY0UKkIqq6xWxyBF5zPo43waogXy6EkverYEK7+XGPx6/4avMEsrMLe04+Kz3B
+         pI6hHpmLiQM4SA9cUalGDFpLnDBs+Vxirjkd+NcCfqtd+ZYrRo3Q9pW8L7ZJG48KtyaZ
+         pACNejr4S9+Nh8cYQ9l8x1rCaxanNDbniAcReGofCqzk9iZdO1fLvWZWLDwgxg9o4Lm4
+         4utw==
+X-Forwarded-Encrypted: i=1; AJvYcCXD1CYomXz1Em6QqngjO9aTQCRju5WjT61R38V7BRmztYMYzAVxVEe0qPeswOGs49v+L1TPnMXKIAI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzdyMxUIdzxi13qplKOiYfySM5/K+hc5d1/FerIPxEJykaB2egL
+	iKigPOjStMSeeF4H8JUSISuoHNY1/GJJPQLVEwMiTRZs3cRSpqgRt1BRlOIoJPe5GCWPvTQP2KZ
+	M6EqocZCKfpacYzjw4ouLqYIAccEmMY8=
+X-Gm-Gg: AY/fxX7uIx67VmRk/gvRwiQIQtSI6amFK7HCaxsGLt6jixhjeeEucc7yv8skNKb56nM
+	yueWKZZeRHGUj3fIqa4h/aPsq2wOWGpcENvcaeoLt3/JcUgLMya2howzDVUxAjdZNVIYbT2hznl
+	BOoy70lEDyVZYDKwbb05+xQwxgS+RAPI6H7Q0rCLUKkD71HByr68lvacfklPRepgG+ApQCJeKmW
+	QbHKz+8wQEjzJTU/5ilk52HgonYaJRBcDFGlO3nFtdJMrbu/rWNA2PGd4oa5ahVoBQYRJf/+Sx9
+	QV2JUIoop8HEKq2qo2eTg+qP3Zdg
+X-Google-Smtp-Source: AGHT+IG/EZRLQONxvapFw3RQndcGZicYBoimPYye5AFD2yn9qZIvRV/9nvD07Us9CjbpRX96Rtf3b1sKeTS6kQdLu+M=
+X-Received: by 2002:a05:6000:2f81:b0:401:5ad1:682 with SMTP id
+ ffacd0b85a97d-432c377c19emr13483755f8f.14.1767988503788; Fri, 09 Jan 2026
+ 11:55:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v1 04/10] resolve_btfids: Support for
- KF_IMPLICIT_ARGS
-To: bot+bpf-ci@kernel.org, ast@kernel.org, andrii@kernel.org,
- daniel@iogearbox.net, martin.lau@linux.dev, eddyz87@gmail.com
-Cc: yatsenko@meta.com, tj@kernel.org, alan.maguire@oracle.com,
- bentiss@kernel.org, jikos@kernel.org, bpf@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-input@vger.kernel.org,
- sched-ext@lists.linux.dev, martin.lau@kernel.org, yonghong.song@linux.dev,
- clm@meta.com
-References: <20260109184852.1089786-5-ihor.solodrai@linux.dev>
- <614a1ac62ade1a2c93f3669dea78d37d1fba159f1f00e79c5e8047047a772d75@mail.kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <614a1ac62ade1a2c93f3669dea78d37d1fba159f1f00e79c5e8047047a772d75@mail.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+References: <20260109184852.1089786-1-ihor.solodrai@linux.dev> <20260109184852.1089786-4-ihor.solodrai@linux.dev>
+In-Reply-To: <20260109184852.1089786-4-ihor.solodrai@linux.dev>
+From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Date: Fri, 9 Jan 2026 11:54:52 -0800
+X-Gm-Features: AZwV_QgQhMZNtddtaPEGfXd-u2d00hNwXFesS-EHcJxSG5vDE12dKLQL2hWx4Io
+Message-ID: <CAADnVQKAfFe3=1-D9heEsya-v+bX-GnUbaqe_nYf0tkZNde_pA@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for KF_IMPLICIT_ARGS
+To: Ihor Solodrai <ihor.solodrai@linux.dev>
+Cc: Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>, 
+	Daniel Borkmann <daniel@iogearbox.net>, Martin KaFai Lau <martin.lau@linux.dev>, 
+	Eduard Zingerman <eddyz87@gmail.com>, Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, 
+	Alan Maguire <alan.maguire@oracle.com>, Benjamin Tissoires <bentiss@kernel.org>, 
+	Jiri Kosina <jikos@kernel.org>, bpf <bpf@vger.kernel.org>, 
+	LKML <linux-kernel@vger.kernel.org>, 
+	"open list:HID CORE LAYER" <linux-input@vger.kernel.org>, sched-ext@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/9/26 11:15 AM, bot+bpf-ci@kernel.org wrote:
->> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
->> index df39982f51df..b361e726fa36 100644
->> --- a/tools/bpf/resolve_btfids/main.c
->> +++ b/tools/bpf/resolve_btfids/main.c
-> 
-> [ ... ]
-> 
->> +static s64 btf__collect_decl_tags(const struct btf *btf, s32 *decl_tags, u32 decl_tags_sz)
->> +{
->> +	const u32 type_cnt = btf__type_cnt(btf);
->> +	const struct btf_type *t;
->> +	s64 nr_decl_tags = 0;
->> +
->> +	for (u32 id = 1; id < type_cnt; id++) {
->> +		t = btf__type_by_id(btf, id);
->> +		if (!btf_is_decl_tag(t))
->> +			continue;
->> +		if (nr_decl_tags >= decl_tags_sz) {
->> +			pr_err("ERROR: resolve_btfids: too many decl tags in BTF - limit %s\n",
->> +				decl_tags_sz);
->                                 ^^^^^^^^^^^^^^^^^
-> 
-> Should this be %u instead of %s? The decl_tags_sz parameter is a u32, but
-> the format specifier %s expects a string pointer. When the error path is
-> triggered (more than MAX_DECL_TAGS decl tags in BTF), this will cause
-> undefined behavior as printf tries to interpret the integer value as a
-> memory address to read a string from.
+On Fri, Jan 9, 2026 at 10:49=E2=80=AFAM Ihor Solodrai <ihor.solodrai@linux.=
+dev> wrote:
+>
+> +       if (unlikely(kfunc_flags && KF_IMPLICIT_ARGS & *kfunc_flags))
 
-Correct, it should be %u or %d.
+Please add extra () around &
 
-> 
->> +			return -E2BIG;
->> +		}
->> +		decl_tags[nr_decl_tags++] = id;
->> +	}
->> +
->> +	return nr_decl_tags;
->> +}
-> 
-> [ ... ]
-> 
-> 
-> ---
-> AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
-> See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
-> 
-> CI run summary: https://github.com/kernel-patches/bpf/actions/runs/20862592244
+that's the style we use elsewhere. Like:
+if (!first && (env->log.level & BPF_LOG_LEVEL2))
 
+> +               if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
+> +                               && is_kfunc_arg_implicit(desc_btf, &args[=
+i])))
+
+same
+
+pw-bot: cr
