@@ -1,97 +1,154 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BDA17A2F6
-	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 20:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7496C31B133;
+	Fri,  9 Jan 2026 21:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767991761; cv=none; b=cbcpSS0LcrorK6Mttx0EVeTHXvKuabDCJB0xa71GldIPE3B5Cob49459XIMIQYKJsMA5snexRLx2Ig8hmUA3yQ/v5RSfJQ/ZS13fOYscaU+x9dycU71lelwoecwOwqwxyzcDtvIMmnW//T4UAhi8K66wAicVUpxaidWSCn6r2Vo=
+	t=1767994458; cv=none; b=GeqSWS3P5+EmwQjHF7T3uzb9wCzCUob1Dr80HehnSEuLxDxVxuN6YS1oLNpW/lcK6XbneqZM+WS+BDmz5YqvRI8ESfKV75AAV42uaV8SmR2XcHw36zLx+0MNFjsAfgsCEF0XArsFK2/xonkL7W/4Bo+iZBQj/wrUxY1Lo+WBZSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767991761; c=relaxed/simple;
-	bh=lmSrngha8S1iodqCQ5ibvWry8cc5krov+0Wn+POWbVQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U0teTK6d3eokISQEFYE8nEig/C8cLv52CSzAGCSXtpa0hAKT+rOCxWoY5E6WhW/LG1zudRf1OkZJKCzNEWmGfz2x3h/rhEL8Pf4ZlZ5C6wMOIc3Rj7FD2PSsVvqC3OG7+GA5QTL8oWj7s8BSXkLBSlJERp+VgDQnoAfVPZsz+ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oB0W8OXy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1767994458; c=relaxed/simple;
+	bh=O1z7mjpOke5bocjNdQ/DFQ2hI1k1t1Kx9JNBeNNHJ7o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H/30fgmjwiDjGhq4dVjSHwexWAAmqVq9Wwml8Rmc8PuqKHjbAYxWBYdinonGQztoG5se/Zs8tJpaHCwGIkS/pwyAsPOL58MG8akuvknJlsGhPm2fCQbJPwjLJF5H70u66eK2d+17aEGODyXmmSHsjKzX68jafZMxHBPknHPXyxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GnQES+yn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oB0W8OXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61244C4CEF1
-	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 20:49:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GnQES+yn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63242C4CEF1;
+	Fri,  9 Jan 2026 21:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767991761;
-	bh=lmSrngha8S1iodqCQ5ibvWry8cc5krov+0Wn+POWbVQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=oB0W8OXyq/KSnIJvf4FGUedAWPpqIwNJky6k+b1sGrKMp9FY3jiU3ndvB4pPYWt+B
-	 YIOyi0vbewYiIDcV3Icta+lSmQlIvX5iBbt6TXGqLx7AE8bocIgIC3ldNu6ZjEpXMR
-	 NeNiMj0LD1b2Z6lEuJyx2frCTLDyz/WVv1T1JDROi2dMyojmX3f2eDumv9m6p8GlAv
-	 QWaEX2SJ5F+5jbCIERr7mdaNLNwk7mqmbJIPEw22KLD5Av4Nsv7cu2vSlnfOPhf+3/
-	 bCcUQxK7kMsMxrCnNTUC7RlMPOh+kkw01+K6e+yIJaOEs6Hwd1IgDDIs4+2CmJFVzu
-	 LwcHLVYj/b3zA==
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-4511f736011so1947687b6e.0
-        for <sched-ext@lists.linux.dev>; Fri, 09 Jan 2026 12:49:21 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXbD7bjY88EuksYAetDfq+oArnMx+nAuHFGXDnfeTSFdhcNpUL8bEZMY8kV6v18v+LwtNLqi2TcDqQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzz259bM3at2A5i/nPp0AF/DvPOuV2hwR5vr9w4MgOu8brLbKOw
-	A3sDOysVS6BdD5uCR7qk81mmP4EauVaNRoqR7l5ZWN5+RPLEnDA4Sqt7rzLxpsvKd6UrX6LmQFC
-	WdT1mR6QpHinxzk+YD+VazVAiSvmBMNA=
-X-Google-Smtp-Source: AGHT+IH2AF2IKp3+x/fUQIk0eMsiHqZAfSKwVKAtfksfYxjvWvqIHKaIJEvWLlnhDTe+vhJvEnjraHEmyq1ON0yk/7U=
-X-Received: by 2002:a4a:d131:0:b0:659:9a49:8eec with SMTP id
- 006d021491bc7-65f54697151mr4920100eaf.32.1767991760513; Fri, 09 Jan 2026
- 12:49:20 -0800 (PST)
+	s=k20201202; t=1767994458;
+	bh=O1z7mjpOke5bocjNdQ/DFQ2hI1k1t1Kx9JNBeNNHJ7o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GnQES+ynIcoNO+2c0ex19j3XxEa7jMX3EeNFpMGM+9wPA8rHoBYZkT6+aA2A9nppW
+	 JVZp08hnesLU8y4d7iJZmWtrlgRnj+P7yOn7yWHhsyYQSCEDJ9gvFurxM49g/x52qk
+	 IRxJpvrQ9HRwbVIeg7l537i+inLmSM28NrI1/Rk8YFaApkJhgpH11VfxRZDaoGB8GP
+	 n0yN1sczxEIDiUsr8kKQccBrTLrFN9F7nB6yBKoKrlrMQA9pwGP8NRJXMnrXkBz7Vy
+	 VLLG4GBoIlLwf2pA9TENTe+Jr6SZKNMTDTwxNwMVHQ8vD5D5NJ+RkQyGzaUiWemspC
+	 e7GeuNK50snkg==
+Date: Fri, 9 Jan 2026 22:34:12 +0100
+From: Benjamin Tissoires <bentiss@kernel.org>
+To: Ihor Solodrai <ihor.solodrai@linux.dev>
+Cc: Alexei Starovoitov <ast@kernel.org>, 
+	Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
+	Martin KaFai Lau <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>, 
+	Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, 
+	Alan Maguire <alan.maguire@oracle.com>, Jiri Kosina <jikos@kernel.org>, bpf@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-input@vger.kernel.org, sched-ext@lists.linux.dev
+Subject: Re: [PATCH bpf-next v1 07/10] HID: Use bpf_wq_set_callback kernel
+ function
+Message-ID: <orvnpqolvwpbalpwcqp2izn5r2otkyikzk7jqbu6mynbizsm2b@iodguv7xvd3x>
+References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
+ <20260109184852.1089786-8-ihor.solodrai@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260108053212.642478-1-changwoo@igalia.com> <m27btswij3.fsf@gmail.com>
-In-Reply-To: <m27btswij3.fsf@gmail.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Fri, 9 Jan 2026 21:49:09 +0100
-X-Gmail-Original-Message-ID: <CAJZ5v0hPHttsxSS=dfBV4_2ANKuqUYvBnLko++ie5nKwRwbrtA@mail.gmail.com>
-X-Gm-Features: AQt7F2reoHMKcruymvgt9rJybyawGlPF4XAwW4ghPDph-T_U-vdBHDWri3QQcts
-Message-ID: <CAJZ5v0hPHttsxSS=dfBV4_2ANKuqUYvBnLko++ie5nKwRwbrtA@mail.gmail.com>
-Subject: Re: [PATCH v2 for 6.19 0/4] Revise the EM YNL spec to be clearer
-To: Donald Hunter <donald.hunter@gmail.com>, Changwoo Min <changwoo@igalia.com>
-Cc: lukasz.luba@arm.com, kuba@kernel.org, davem@davemloft.net, 
-	edumazet@google.com, pabeni@redhat.com, horms@kernel.org, 
-	kernel-dev@igalia.com, linux-pm@vger.kernel.org, netdev@vger.kernel.org, 
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260109184852.1089786-8-ihor.solodrai@linux.dev>
 
-On Thu, Jan 8, 2026 at 10:39=E2=80=AFAM Donald Hunter <donald.hunter@gmail.=
-com> wrote:
->
-> Changwoo Min <changwoo@igalia.com> writes:
->
-> > This patch set addresses all the concerns raised at [1] to make the EM =
-YNL spec
-> > clearer. It includes the following changes:
-> >
-> > - Fix the lint errors (1/4).
-> > - Rename em.yaml to dev-energymodel.yaml (2/4).  =E2=80=9Cdev-energymod=
-el=E2=80=9D was used
-> >   instead of =E2=80=9Cdevice-energy-model=E2=80=9D, which was originall=
-y proposed [2], because
-> >   the netlink protocol name cannot exceed GENL_NAMSIZ(16). In addition,=
- docs
-> >   strings and flags attributes were added.
-> > - Change cpus' type from string to u64 array of CPU ids (3/4).
-> > - Add dump to get-perf-domains in the EM YNL spec (4/4). A user can fet=
-ch
-> >   either information about a specific performance domain with do or inf=
-ormation
-> >   about all performance domains with dump.
-> >
-> > ChangeLog v1 -> v2:
-> > - Remove perf-domains in the YNL spec, as do and dump of get-perf-domai=
-ns
-> >   share the reply format using perf-domain-attrs (4/4).
-> > - Add example outputs of get-perf-domains and get-perf-table for ease o=
-f
-> >   understanding (cover letter).
->
-> v2 looks good, thanks!
->
-> Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+On Jan 09 2026, Ihor Solodrai wrote:
+> Remove extern declaration of bpf_wq_set_callback_impl() from
+> hid_bpf_helpers.h and replace bpf_wq_set_callback macro with a
+> corresponding new declaration.
+> 
+> Fix selftests/hid build failure caused by missing BPF_CFLAGS.
 
-Applied as 6.19-rc material, thanks!
+Already fixed in e03fb369b083 ("selftests/hid: fix bpf compilations due to -fms-extensions")
+
+> 
+> Tested with:
+>   # append tools/testing/selftests/hid/config and build the kernel
+>   $ make -C tools/testing/selftests/hid
+>   # in built kernel
+>   $ ./tools/testing/selftests/hid/hid_bpf -t test_multiply_events_wq
+> 
+>   TAP version 13
+>   1..1
+>   # Starting 1 tests from 1 test cases.
+>   #  RUN           hid_bpf.test_multiply_events_wq ...
+>   [    2.575520] hid-generic 0003:0001:0A36.0001: hidraw0: USB HID v0.00 Device [test-uhid-device-138] on 138
+>   #            OK  hid_bpf.test_multiply_events_wq
+>   ok 1 hid_bpf.test_multiply_events_wq
+>   # PASSED: 1 / 1 tests passed.
+>   # Totals: pass:1 fail:0 xfail:0 xpass:0 skip:0 error:0
+>   PASS
+> 
+> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+> ---
+>  drivers/hid/bpf/progs/hid_bpf_helpers.h             | 8 +++-----
+>  tools/testing/selftests/hid/Makefile                | 4 +++-
+>  tools/testing/selftests/hid/progs/hid_bpf_helpers.h | 8 +++-----
+>  3 files changed, 9 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/hid/bpf/progs/hid_bpf_helpers.h b/drivers/hid/bpf/progs/hid_bpf_helpers.h
+> index bf19785a6b06..228f8d787567 100644
+> --- a/drivers/hid/bpf/progs/hid_bpf_helpers.h
+> +++ b/drivers/hid/bpf/progs/hid_bpf_helpers.h
+> @@ -33,11 +33,9 @@ extern int hid_bpf_try_input_report(struct hid_bpf_ctx *ctx,
+>  /* bpf_wq implementation */
+>  extern int bpf_wq_init(struct bpf_wq *wq, void *p__map, unsigned int flags) __weak __ksym;
+>  extern int bpf_wq_start(struct bpf_wq *wq, unsigned int flags) __weak __ksym;
+> -extern int bpf_wq_set_callback_impl(struct bpf_wq *wq,
+> -		int (callback_fn)(void *map, int *key, void *value),
+> -		unsigned int flags__k, void *aux__ign) __ksym;
+> -#define bpf_wq_set_callback(wq, cb, flags) \
+> -	bpf_wq_set_callback_impl(wq, cb, flags, NULL)
+> +extern int bpf_wq_set_callback(struct bpf_wq *wq,
+> +		int (*callback_fn)(void *, int *, void *),
+> +		unsigned int flags) __weak __ksym;
+
+FWIW, if I'm the only one using bpf_wq_set_callback_impl() that you are
+aware of, I'm fine removing the _impl kfunc from the kernel, I can deal
+with this when loading the programs.
+
+>  
+>  #define HID_MAX_DESCRIPTOR_SIZE	4096
+>  #define HID_IGNORE_EVENT	-1
+> diff --git a/tools/testing/selftests/hid/Makefile b/tools/testing/selftests/hid/Makefile
+> index 2839d2612ce3..4c01bb649913 100644
+> --- a/tools/testing/selftests/hid/Makefile
+> +++ b/tools/testing/selftests/hid/Makefile
+> @@ -184,7 +184,9 @@ MENDIAN=$(if $(IS_LITTLE_ENDIAN),-mlittle-endian,-mbig-endian)
+>  
+>  CLANG_SYS_INCLUDES = $(call get_sys_includes,$(CLANG))
+>  BPF_CFLAGS = -g -Werror -D__TARGET_ARCH_$(SRCARCH) $(MENDIAN) 		\
+> -	     -I$(INCLUDE_DIR)
+> +	     -I$(INCLUDE_DIR)						\
+> +	     -Wno-microsoft-anon-tag					\
+> +	     -fms-extensions
+
+Already in Linus' tree.
+
+>  
+>  CLANG_CFLAGS = $(CLANG_SYS_INCLUDES) \
+>  	       -Wno-compare-distinct-pointer-types
+> diff --git a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+> index 531228b849da..80ab60905865 100644
+> --- a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+> +++ b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+> @@ -116,10 +116,8 @@ extern int hid_bpf_try_input_report(struct hid_bpf_ctx *ctx,
+>  /* bpf_wq implementation */
+>  extern int bpf_wq_init(struct bpf_wq *wq, void *p__map, unsigned int flags) __weak __ksym;
+>  extern int bpf_wq_start(struct bpf_wq *wq, unsigned int flags) __weak __ksym;
+> -extern int bpf_wq_set_callback_impl(struct bpf_wq *wq,
+> -		int (callback_fn)(void *map, int *key, void *wq),
+> -		unsigned int flags__k, void *aux__ign) __weak __ksym;
+> -#define bpf_wq_set_callback(timer, cb, flags) \
+> -	bpf_wq_set_callback_impl(timer, cb, flags, NULL)
+> +extern int bpf_wq_set_callback(struct bpf_wq *wq,
+> +		int (*callback_fn)(void *, int *, void *),
+> +		unsigned int flags) __weak __ksym;
+>  
+>  #endif /* __HID_BPF_HELPERS_H */
+> -- 
+> 2.52.0
+> 
+
+Acked-by: Benjamin Tissoires <bentiss@kernel.org>
+
+Cheers,
+Benjamin
