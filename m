@@ -1,73 +1,73 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2912833986B
-	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 23:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D4333A01B
+	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 23:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768001124; cv=none; b=L5nLr++xeT4dt7cclxF9nVOY08VX101+EFfz4ISmdJatD3rOKbun02a6m8RyyhgJwjZbaldHk9Lo853hgfaO2239TvZMetbamPNbDALeexNN9w8YKlvXYJfUPjkPvg46Huz4n+jSwPwT87oINikdFy5bw2aw4hYdBVE2W6Qh7VI=
+	t=1768001132; cv=none; b=CiiLMv+1Hv8dEjldITs4urGI56jDuz3WAf5VnRpduFFcuvqeeFPhWJL7A9gnZOedE4n8r4Ovn0eUrGaBlG9tSbZPjB+soBz/Vh48HPBNE9E/fsSUaawTz6f6uyXkeYdRTJa/3kptSVqHbO7zfqLVymIv6SkBl7draOT19ZxwUPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768001124; c=relaxed/simple;
-	bh=iwmpH8iocSbCReiZR1ElIhFSqJoSw8Tt4Jqoav/hyys=;
+	s=arc-20240116; t=1768001132; c=relaxed/simple;
+	bh=8FBCaCyqX/5p8ep+B0jVqiUxXqivjleWkIuWb9+6tdk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pV8vDSgcspZsL0kA9HXo4XEjT4ijycPHXaFpx448p+nnMijxlUtpjZfdoINoZYrl+RtuQ3jZkX757sGudYGuY6smajdSqbo2CZ8DLclgKT8QT8QYHjKNGdgWEUuOD/ZwHJg47W9V90pU8hPq28yudAxGEx5f7hLNl3Kx3m44xJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bWJ6MtVA; arc=none smtp.client-ip=209.85.210.176
+	 To:Cc:Content-Type; b=PrK6IKQzK+TFX0HNFR5qtQnaqTT21dWF4vpUILBUq5gZutBoV60HdVgTQ4nqQF/r39962vywVGsmXiUZG1r5OfMSlwr0sC7ZppKE70wd9HFjy+5RpLxmMFxXnJ88FfA/DQCOIEDfzivc7zYmK4adfzWSc7O6of4V0Kqru5B2+J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h6GQvADz; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bWJ6MtVA"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7ade456b6abso3126520b3a.3
-        for <sched-ext@lists.linux.dev>; Fri, 09 Jan 2026 15:25:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h6GQvADz"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-34c213f7690so3169318a91.2
+        for <sched-ext@lists.linux.dev>; Fri, 09 Jan 2026 15:25:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768001122; x=1768605922; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768001127; x=1768605927; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y7sp0N3Dnmn1JQgIiii6nynRQWaOfDVX6qO6eQ+XVU0=;
-        b=bWJ6MtVAhidwso7ND4+9BHjemyt3T1IwUGN0EX4LQXsHILxAJEYH3J9JItLa8W5ON0
-         qncxh7wdEWgIbSkNkYVj3emNRQub5vraX6ks9KbtCR9wT5+wRYtXkWKYh/imyzAsc8LC
-         Z5H3DB+XjoRjOoCfrIh4FteEh9aeL86CUa5ceGYnbtYa88NdGCYXD5VSe9N7NZ1yLdOq
-         O2yHl12xJvoOlJjHj/J0Q9uu0eljrcmwsRNxwN+5N14mclbav3UJLTJ/PxaMyxJTJW5W
-         nmEm1b1VfOrpBqGBKWWV88yJR0NaSfIPo5/kHe7X9QDGLPCpSD9LMUihNiD+oNK/jb1o
-         ZouQ==
+        bh=E3smSj4yq761xJEdfeIzyD9mGpI5b5lkPuDabJ4mNTY=;
+        b=h6GQvADz8TylV4Q0cWGSV1M3kTuAXTxuMGgeoYqxvaz3rDDUD9kjJj0QxKo4XwaiVV
+         L8SL4zwMeJIO6OdJ7psPqXB2QjhlXyJ68T89uLH0qG4CZuyH4Zc7oMBx+XTitLYd6/95
+         Q01tnbwQ/hJw2CHrumyTMqaRq1c0P7v0NME6eRuGHP5j8FgufWAhdZKc+IJdJZXWZsPi
+         W8S9fIkF8ukWjOQEd+51Bjpd/Y9oOFfAaPpncX2ccSvLbSvKAaZxhW2yLgem/33ppF7q
+         Y2rDO1CDn14SmCwKjT340dfcV2SGt5i9uk7FADbeACm7EpUuYRT2WcWq1Au0L5+sFlsv
+         lVxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768001122; x=1768605922;
+        d=1e100.net; s=20230601; t=1768001127; x=1768605927;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Y7sp0N3Dnmn1JQgIiii6nynRQWaOfDVX6qO6eQ+XVU0=;
-        b=gSjBd1Sqrw6VcTexXBaV8M4iuDmvsQNGjQ26R5UGpnXLg/xuipLPU/qMB/9ob2my5A
-         SuixNX5zWuG1Y6QHodpesyPz8EeeoX9gakCDcZefnWK+rGP1Eu+7bkd5vyPbNBeDJqtv
-         D456SggpSLW4d7nWx+g+zhPMGVQoYOlD8qOOIesfEx8lDg0g5Ve5BLSXHqmXJDfFIOGI
-         L5g3wjGU9uhNer26Oo//wt+jWpdeeeosCH7b8JCi9ih6u6njI18JBeUmufCdQLv5hbNb
-         TdKO70rOfLfJ9QyMRD5xNBlo2UizsmxEbrQ8s1iAGm+EOK68Tm5J8rbK8aFpLHWyjvrJ
-         H2uQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXIjSFtPqrqVnZQ8Urs1jq9YtW5ttuPnEeTY9LWqmrz6W1t4rNeGFb7Ad1yynb51Li+7rWF797lOP8=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxuhe5L0duRiD7b0sANECrAu7qPAMffIQXWREmPGtutWiEUDduV
-	YmKYjfqtxVr78qzza+YTGSzqB//IJh66QpXTRu7Gh5mYwAZuHvGW9fS9tX8+KHVl52sRUjckaK+
-	PNl2SLxJlSF2F9EfC4aqb1hNKVbN288Y=
-X-Gm-Gg: AY/fxX7H5w+7VEHribB3T4vZKLRQRXf+wQlapJ6iqKAWkLvQu2sV1qoQ4G2ZMM1cKhm
-	QuLjXon641+rVBAQ6kFw0J74DQxAt6fqXzeaXsLzIo9MOfq5rshxJqyjJfqXaRWBCtYfIG8oq7b
-	ukC9DNfcmvuqAjtsVtbfMWJIv8PKHx6MmE97O8yZ80HVbkwREruHph7Jd1yAcoXskSOjiui4RH1
-	J10e3c8oZSabkT149a7sozZXWzSkp0oYYAEwuJrbDDOpuay/639nRwXNyZjNEHIcG1w/+rWC1FW
-	sNH02g1i
-X-Google-Smtp-Source: AGHT+IHzGkHt014F4jyZJRL6KZqgTC0rk2hBWiSwMGIQS09ajNp4vSbMD1ZYpebcAcySO5O37mi2rWXGPjNyj/2bBuI=
-X-Received: by 2002:a05:6a20:e290:b0:366:14b0:4b12 with SMTP id
- adf61e73a8af0-3898f9bde9fmr11009711637.78.1768001122334; Fri, 09 Jan 2026
- 15:25:22 -0800 (PST)
+        bh=E3smSj4yq761xJEdfeIzyD9mGpI5b5lkPuDabJ4mNTY=;
+        b=ZK8E0/fzY6E6zhTfu+GiYYalUP5Kls6R3dAPciNvlm9OPK3eXnpT36NGYHLA2c/0nE
+         fEiYBs86/8+V+Wb4Yh8llr4DAXl1MoNlcjOwK3DIZ0c5cLKgr66ts6AgjLH9g+I8JJgA
+         RWKQypHyoCXrcf9wPkePNQmC6NgBYHJCNP5v6BplAl+m/ig/r14FieFCWBv9UBYP//KK
+         Iv7TvtoTe54S/hIkQWhsNgqZ2TBVgPBj9KPVKyUR6ebxTjzEF4Yamcj9+qHj6SuqQ5ML
+         T2NlJcs86NXy494KHGndb5MsMSmkqjPefhGlDjrZM2SOENzPyxdrA/MkMFdzHQd74aRC
+         bz+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXnarjTOzhJ1pOI9Q54E3EopY5wpdLIgwRsIO0pcL/YwlyVaSg+oMuk/oD5UV3wlyHimx7A2dtOYs4=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxkaCSq4WAeIcinsMPeahVQiCjDT/Pq4IyuqgycEDkJ1wKO+FQj
+	SxHDhN2jOc3Zefa4MkwtI8/nmk0Q5jSUaylI8ESAHbwVTCciFcEoV4RcG+4XrE+JUVNt0LGqJW5
+	t8iE6fogVlUXaiUrsOEIoKdDnT5Z8krg=
+X-Gm-Gg: AY/fxX7rwYcvHew/SK5JOOw6jfkIkvJdsAq0MVpQ3MHhRQIpPHJ1V8TswSgQB9YN8H2
+	sGI/XUv+FfQkc4+Az4w4xWyi33XY2bgUEr+S0uq1lJYQkkaklPAQiByOPE04g5bfmdKi1mBLmpz
+	+9BxX6OjExFCZA5JGYaf1uSfHq+WYpJt6mionry7Zt0r+4rOlfw1anezGXEdaaB0jgbiI4IriVY
+	Kq6olD6y3ebU48oWsYUjvET7YJTbpp68hFjz8Y5dN4J11pORe39YNskydjnl+czzx4s+rau6G5x
+	4sPOtrY5
+X-Google-Smtp-Source: AGHT+IGph+InObp8GZWAvDke/lgRnu3hqucWuw9wj4XP4b7Bo+rVtRgvL1z5U8Nhknv5ZSXf3xpcVYzY5A65utP8Gqw=
+X-Received: by 2002:a17:90b:5867:b0:32e:e18a:3691 with SMTP id
+ 98e67ed59e1d1-34f68c47f70mr10911650a91.35.1768001127004; Fri, 09 Jan 2026
+ 15:25:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260109184852.1089786-1-ihor.solodrai@linux.dev> <20260109184852.1089786-4-ihor.solodrai@linux.dev>
-In-Reply-To: <20260109184852.1089786-4-ihor.solodrai@linux.dev>
+References: <20260109184852.1089786-1-ihor.solodrai@linux.dev> <20260109184852.1089786-5-ihor.solodrai@linux.dev>
+In-Reply-To: <20260109184852.1089786-5-ihor.solodrai@linux.dev>
 From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Fri, 9 Jan 2026 15:25:09 -0800
-X-Gm-Features: AQt7F2olKeEcZ-_O5kgIEStukCBUIxTmulE9ezgNy2zz2phakh8YecbP2fBcnck
-Message-ID: <CAEf4Bza-ar8vFWdWf1Krtyg8zLNYBUxLSJ5mHYLniqNBJhBXqw@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for KF_IMPLICIT_ARGS
+Date: Fri, 9 Jan 2026 15:25:12 -0800
+X-Gm-Features: AQt7F2q4hGQ9ktOaWH95bMsFjqdRiC4JC3b0cbvTrYrLtv95_AHDkxtq0G5LotM
+Message-ID: <CAEf4BzYcZ5pLCvfn8uWiKCjpBXBw9dxR_WZnKxVz1Bhf96xOGg@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v1 04/10] resolve_btfids: Support for KF_IMPLICIT_ARGS
 To: Ihor Solodrai <ihor.solodrai@linux.dev>
 Cc: Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>, 
 	Daniel Borkmann <daniel@iogearbox.net>, Martin KaFai Lau <martin.lau@linux.dev>, 
@@ -81,146 +81,265 @@ Content-Transfer-Encoding: quoted-printable
 On Fri, Jan 9, 2026 at 10:49=E2=80=AFAM Ihor Solodrai <ihor.solodrai@linux.=
 dev> wrote:
 >
-> A kernel function bpf_foo marked with KF_IMPLICIT_ARGS flag is
-> expected to have two associated types in BTF:
->   * `bpf_foo` with a function prototype that omits implicit arguments
->   * `bpf_foo_impl` with a function prototype that matches the kernel
->      declaration of `bpf_foo`, but doesn't have a ksym associated with
->      its name
+> Implement BTF modifications in resolve_btfids to support BPF kernel
+> functions with implicit arguments.
 >
-> In order to support kfuncs with implicit arguments, the verifier has
-> to know how to resolve a call of `bpf_foo` to the correct BTF function
-> prototype and address.
+> For a kfunc marked with KF_IMPLICIT_ARGS flag, a new function
+> prototype is added to BTF that does not have implicit arguments. The
+> kfunc's prototype is then updated to a new one in BTF. This prototype
+> is the intended interface for the BPF programs.
 >
-> To implement this, in add_kfunc_call() kfunc flags are checked for
-> KF_IMPLICIT_ARGS. For such kfuncs a BTF func prototype is adjusted to
-> the one found for `bpf_foo_impl` (func_name + "_impl" suffix, by
-> convention) function in BTF.
+> A <func_name>_impl function is added to BTF to make the original kfunc
+> prototype searchable for the BPF verifier. If a <func_name>_impl
+> function already exists in BTF, its interpreted as a legacy case, and
+> this step is skipped.
 >
-> This effectively changes the signature of the `bpf_foo` kfunc in the
-> context of verification: from one without implicit args to the one
-> with full argument list.
+> Whether an argument is implicit is determined by its type:
+> currently only `struct bpf_prog_aux *` is supported.
 >
-> Whether a kfunc argument is implicit or not is determined by
-> is_kfunc_arg_implicit(). The values of implicit arguments by design
-> are provided by the verifier, and so they can only be of particular
-> types. In this patch the only allowed implicit arg type is a pointer
-> to struct bpf_prog_aux. The __prog args (usually void *) are also
-> considered implicit for backwards compatibility.
+> As a result, the BTF associated with kfunc is changed from
 >
-> In order to enable the verifier to correctly set an implicit
-> bpf_prog_aux arg value at runtime, is_kfunc_arg_prog() is extended to
-> check for the arg type. At a point when prog arg is determined in
-> check_kfunc_args() the kfunc with implicit args already has a
-> prototype with full argument list, so the existing value patch
-> mechanism just works.
+>     __bpf_kfunc bpf_foo(int arg1, struct bpf_prog_aux *aux);
 >
-> If a new kfunc with KF_IMPLICIT_ARG is declared for an existing kfunc
-> that uses a __prog argument (a legacy case), the prototype
-> substitution works in exactly the same way, assuming the kfunc follows
-> the _impl naming convention. The difference is only in how _impl
-> prototype is added to the BTF, which is not the verifier's
-> concern. See a subsequent resolve_btfids patch for details.
+> into
 >
-> In check_kfunc_call() reset the subreg_def of registers holding
-> implicit arguments to correctly track zero extensions.
+>     bpf_foo_impl(int arg1, struct bpf_prog_aux *aux);
+>     __bpf_kfunc bpf_foo(int arg1);
+>
+> For more context see previous discussions and patches [1][2].
+>
+> [1] https://lore.kernel.org/dwarves/ba1650aa-fafd-49a8-bea4-bdddee7c38c9@=
+linux.dev/
+> [2] https://lore.kernel.org/bpf/20251029190113.3323406-1-ihor.solodrai@li=
+nux.dev/
 >
 > Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
 > ---
->  include/linux/btf.h   |  1 +
->  kernel/bpf/verifier.c | 70 +++++++++++++++++++++++++++++++++++++++++--
->  2 files changed, 69 insertions(+), 2 deletions(-)
+>  tools/bpf/resolve_btfids/main.c | 282 ++++++++++++++++++++++++++++++++
+>  1 file changed, 282 insertions(+)
 >
+> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/m=
+ain.c
+> index df39982f51df..b361e726fa36 100644
+> --- a/tools/bpf/resolve_btfids/main.c
+> +++ b/tools/bpf/resolve_btfids/main.c
+> @@ -152,6 +152,18 @@ struct object {
+>         int nr_typedefs;
+>  };
+>
+> +#define KF_IMPLICIT_ARGS (1 << 16)
+> +#define KF_IMPL_SUFFIX "_impl"
+> +#define MAX_BPF_FUNC_REG_ARGS 5
+> +#define MAX_KFUNCS 256
+> +#define MAX_DECL_TAGS (MAX_KFUNCS * 4)
 
-[...]
+can't we get that from include/linux/bpf.h? seems like
+resolve_btfids's main.c include internal headers just fine, so why
+duplicate definitions?
 
-> +       impl_id =3D btf_find_by_name_kind(btf, impl_name, BTF_KIND_FUNC);
-> +       if (impl_id <=3D 0) {
-> +               verbose(env, "cannot find function %s in BTF\n", impl_nam=
-e);
-> +               return NULL;
+> +
+> +struct btf2btf_context {
+> +       struct btf *btf;
+> +       u32 nr_decl_tags;
+> +       s32 decl_tags[MAX_DECL_TAGS];
+> +};
+> +
+>  static int verbose;
+>  static int warnings;
+>
+> @@ -972,6 +984,273 @@ static int patch_btfids(const char *btfids_path, co=
+nst char *elf_path)
+>         return err;
+>  }
+>
+> +static s64 collect_kfunc_ids_by_flags(struct object *obj,
+> +                                     u32 flags,
+> +                                     s32 kfunc_ids[],
+> +                                     const u32 kfunc_ids_sz)
+> +{
+> +       Elf_Data *data =3D obj->efile.idlist;
+> +       struct rb_node *next;
+> +       s64 nr_kfuncs =3D 0;
+> +       int i;
+> +
+> +       next =3D rb_first(&obj->sets);
+> +       while (next) {
+> +               struct btf_id_set8 *set8 =3D NULL;
+> +               unsigned long addr, off;
+> +               struct btf_id *id;
+> +
+> +               id =3D rb_entry(next, struct btf_id, rb_node);
+> +
+> +               if (id->kind !=3D BTF_ID_KIND_SET8)
+> +                       goto skip;
+> +
+> +               addr =3D id->addr[0];
+> +               off =3D addr - obj->efile.idlist_addr;
+> +               set8 =3D data->d_buf + off;
+> +
+> +               for (i =3D 0; i < set8->cnt; i++) {
+> +                       if (set8->pairs[i].flags & flags) {
+
+invert condition and continue, reduce nesting?
+
+> +                               if (nr_kfuncs >=3D kfunc_ids_sz) {
+
+it's silly to set static limits like this: we are not in NMI, you have
+memory allocator, use it
+
+> +                                       pr_err("ERROR: resolve_btfids: to=
+o many kfuncs with flags %u - limit %d\n",
+> +                                              flags, kfunc_ids_sz);
+> +                                       return -E2BIG;
+> +                               }
+> +                               kfunc_ids[nr_kfuncs++] =3D set8->pairs[i]=
+.id;
+> +                       }
+> +               }
+> +skip:
+> +               next =3D rb_next(next);
 > +       }
 > +
-> +       func =3D btf_type_by_id(btf, impl_id);
-> +       if (!func || !btf_type_is_func(func)) {
-
-btf_find_by_name_kind() above guarantees that we both will have
-non-NULL func and it will be BTF_KIND_FUNC, drop these defensive
-checks.
-
-> +               verbose(env, "%s (btf_id %d) is not a function\n", impl_n=
-ame, impl_id);
-> +               return NULL;
-> +       }
-> +
-> +       return btf_type_by_id(btf, func->type);
+> +       return nr_kfuncs;
 > +}
 > +
->  static int fetch_kfunc_meta(struct bpf_verifier_env *env,
->                             s32 func_id,
->                             s16 offset,
-> @@ -3308,7 +3340,16 @@ static int fetch_kfunc_meta(struct bpf_verifier_en=
-v *env,
->         }
->
->         func_name =3D btf_name_by_offset(btf, func->name_off);
-> -       func_proto =3D btf_type_by_id(btf, func->type);
+> +static const struct btf_type *btf__unqualified_type_by_id(const struct b=
+tf *btf, s32 type_id)
+> +{
+> +       const struct btf_type *t =3D btf__type_by_id(btf, type_id);
 > +
-> +       /*
-> +        * An actual prototype of a kfunc with KF_IMPLICIT_ARGS flag
-> +        * can be found through the counterpart _impl kfunc.
-> +        */
-> +       if (unlikely(kfunc_flags && KF_IMPLICIT_ARGS & *kfunc_flags))
-
-drop unlikely(), it's unnecessary micro-optimization (if at all)
-
-(I'd also swap order to more conventional: `*kfunc_flags & KF_IMPLICIT_ARGS=
-`)
-
-> +               func_proto =3D find_kfunc_impl_proto(env, btf, func_name)=
-;
-> +       else
-> +               func_proto =3D btf_type_by_id(btf, func->type);
+> +       while (btf_is_mod(t))
+> +               t =3D btf__type_by_id(btf, t->type);
 > +
->         if (!func_proto || !btf_type_is_func_proto(func_proto)) {
->                 verbose(env, "kernel function btf_id %d does not have a v=
-alid func_proto\n",
->                         func_id);
+> +       return t;
+> +}
+> +
+> +/* Implicit BPF kfunc arguments can only be of particular types */
+> +static bool btf__is_kf_implicit_arg(const struct btf *btf, const struct =
+btf_param *p)
+
+nit: not sure why you use double underscore convention, this is not
+really an "API" of btf, it's just a helper... I'd just call it
+"is_kf_implicit_arg", btf is just and input argument
+
+> +{
+> +       static const char *const kf_implicit_arg_types[] =3D {
+> +               "bpf_prog_aux",
+> +       };
+> +       const struct btf_type *t;
+> +       const char *name;
+> +
 
 [...]
 
-> @@ -14303,6 +14358,17 @@ static int check_kfunc_call(struct bpf_verifier_=
-env *env, struct bpf_insn *insn,
->         for (i =3D 0; i < nargs; i++) {
->                 u32 regno =3D i + 1;
->
-> +               /*
-> +                * Implicit kfunc arguments are set after main verificati=
-on pass.
-> +                * For correct tracking of zero-extensions we have to res=
-et subreg_def for such
-> +                * args. Otherwise mark_btf_func_reg_size() will be inspe=
-cting subreg_def of regs
-> +                * from an earlier (irrelevant) point in the program, whi=
-ch may lead to an error
-> +                * in opt_subreg_zext_lo32_rnd_hi32().
-> +                */
-> +               if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
-> +                               && is_kfunc_arg_implicit(desc_btf, &args[=
-i])))
-> +                       regs[regno].subreg_def =3D DEF_NOT_SUBREG;
+> +       /* Copy all decl tags except "bpf_kfunc" from the original kfunc =
+to the new one */
+> +       for (int i =3D 0; i < ctx->nr_decl_tags; i++) {
+> +               t =3D (struct btf_type *)btf__type_by_id(btf, ctx->decl_t=
+ags[i]);
+> +               if (t->type !=3D kfunc_id)
+> +                       continue;
+> +
+> +               tag_name =3D btf__name_by_offset(btf, t->name_off);
+> +               if (strcmp(tag_name, "bpf_kfunc") =3D=3D 0)
+> +                       continue;
+> +
+> +               err =3D btf__add_decl_tag(btf, tag_name, new_func_id, -1)=
+;
 
-ditto about unlikely(), this is used for rare cases where performance
-matters a lot (and it's obvious which case is "common", so should be
-kept linear in assembly code)
+decl_tag can apply to arguments as well (that -1 will be actually >=3D
+0), we should copy those as well, no?
 
+> +               if (err < 0) {
+> +                       pr_err("ERROR: resolve_btfids: failed to add decl=
+ tag %s for %s\n",
+> +                              tag_name, tmp_name);
+> +                       return -EINVAL;
+> +               }
+> +       }
+> +
+> +add_new_proto:
+> +       /*
+> +        * Drop the _impl suffix and point kfunc_name to the local buffer=
+ for later use.
+> +        * When BTF is modified the original pointer is invalidated.
+> +        */
+> +       tmp_name[name_len] =3D '\0';
+> +       kfunc_name =3D tmp_name;
+> +
+> +       /* Load non-implicit args from the original prototype */
+> +       t =3D (struct btf_type *)btf__type_by_id(btf, proto_id);
+> +       params =3D btf_params(t);
+> +       nr_params =3D 0;
+> +       for (int i =3D 0; i < btf_vlen(t); i++) {
+> +               if (btf__is_kf_implicit_arg(btf, &params[i]))
+> +                       break;
+> +               new_params[nr_params++] =3D params[i];
+> +       }
+
+this is unnecessary, just when you working with original prototype and
+its arguments, just re-fetch it back from IDs, all those pointers will
+be valid until next btf__add_xxx() invocation, no need for this
+awkward local copies
 
 > +
->                 t =3D btf_type_skip_modifiers(desc_btf, args[i].type, NUL=
-L);
->                 if (btf_type_is_ptr(t))
->                         mark_btf_func_reg_size(env, regno, sizeof(void *)=
-);
-> --
-> 2.52.0
->
+> +       new_proto_id =3D btf__add_func_proto(btf, t->type);
+> +       if (new_proto_id < 0) {
+> +               pr_err("ERROR: resolve_btfids: failed to add func proto f=
+or %s\n", kfunc_name);
+> +               return new_proto_id;
+> +       }
+> +
+> +       /* Add non-implicit args to the new prototype */
+> +       for (int i =3D 0; i < nr_params; i++) {
+> +               param_name =3D btf__name_by_offset(btf, new_params[i].nam=
+e_off);
+> +               err =3D btf__add_func_param(btf, param_name, new_params[i=
+].type);
+> +               if (err < 0) {
+> +                       pr_err("ERROR: resolve_btfids: failed to add para=
+m %s for %s\n",
+> +                              param_name, kfunc_name);
+> +                       return err;
+> +               }
+> +       }
+> +
+> +       /* Finally change the prototype of the original kfunc to the new =
+one */
+> +       t =3D (struct btf_type *)btf__type_by_id(btf, kfunc_id);
+> +       t->type =3D new_proto_id;
+> +
+> +       pr_debug("resolve_btfids: updated BTF for kfunc with implicit arg=
+s %s\n", kfunc_name);
+> +
+> +       return 0;
+> +}
+> +
+> +static s64 btf__collect_decl_tags(const struct btf *btf, s32 *decl_tags,=
+ u32 decl_tags_sz)
+> +{
+> +       const u32 type_cnt =3D btf__type_cnt(btf);
+> +       const struct btf_type *t;
+> +       s64 nr_decl_tags =3D 0;
+> +
+> +       for (u32 id =3D 1; id < type_cnt; id++) {
+> +               t =3D btf__type_by_id(btf, id);
+> +               if (!btf_is_decl_tag(t))
+> +                       continue;
+> +               if (nr_decl_tags >=3D decl_tags_sz) {
+> +                       pr_err("ERROR: resolve_btfids: too many decl tags=
+ in BTF - limit %s\n",
+
+realloc is your friend, no fixed-sized arrays
+
+> +                               decl_tags_sz);
+> +                       return -E2BIG;
+> +               }
+> +               decl_tags[nr_decl_tags++] =3D id;
+> +       }
+> +
+> +       return nr_decl_tags;
+> +}
+> +
+
+[...]
