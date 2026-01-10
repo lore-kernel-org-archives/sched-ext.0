@@ -1,202 +1,339 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCBA33A703
-	for <sched-ext@lists.linux.dev>; Fri,  9 Jan 2026 23:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1C61C4A24
+	for <sched-ext@lists.linux.dev>; Sat, 10 Jan 2026 01:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768001134; cv=none; b=FcilOkLdSTh7KZKJEwfD7uObRMm+LMoQxwkka+hntMU7aYXvIBUrpBCIkgFT7a/kuvX/St6EYB/jDoD0qtZdfgDecwy8rM874lC9woT6I3umZFwkZKF3fmOVUGvEN18jTOGrEtLNcJ2zIpvXkkVZONa8U6/JLZSwl9P/KwPm2YA=
+	t=1768007714; cv=none; b=Iu20UeTNoWqEKzcjQxOx9pYqDtNChxUhhgfaOXy80eG5RBABpAATPd8MrUVJoyZRGBDTKmakz4tEac8pn+7laEHBdXufQrQRuIgxBKHbuesrDB+Yy0QOYdTnMHQztE7H62L+zvala2wRRyJtWyHLYrPtaD/fe9fwzBuanZkacNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768001134; c=relaxed/simple;
-	bh=u7obPu1pBmzU0WGrbzd5pVmCa0nTdZyqTHXFpTUeBuM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m0y/mDWA+HdpwwcZgYCXoW0P4Wz1jyPmgwUcnJSH687sDpuYSa2qrZQwQcTKzHR4VV6utzvpJrqEItZtdLnPJX+doYfFuA2KEtdXKEsy81sscLB855LlA6e6bSAt/Y+t+EELobvbpYiUfHCNkjwuWSn5xpQ7WxxUVbI74ap24CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dGsYi4sO; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768007714; c=relaxed/simple;
+	bh=LKcHJ98y04o62fTJkAbYH1SsK3Ta4Ieq+XFm9usbtNk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kvjCZJHP4JNnzlbyvYf8N+tvanWEpPoDIGrRu62/D4Gde0UQDBXPBkVYUehzRLA/Ig3DqpD2StCrtuPliZ8/32vyf1HIj8uH6vVcHRfuQOyS9f/ALPwzA4ACc/CI5/2vp023XHnaAjS13LrG/k4oREJt/8ylDRP4SomLZmvmKZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JXaW1P5N; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dGsYi4sO"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c54f700b5b1so1005625a12.0
-        for <sched-ext@lists.linux.dev>; Fri, 09 Jan 2026 15:25:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768001130; x=1768605930; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nCUQNo7mxSC8vkmePvOCKj2aGkP0nJSpQiMFJJI16iQ=;
-        b=dGsYi4sOb3U5qqWFyxk3CvnavaBNVLP1luyvGaEnlfziL2BJkEFBDOFudwLFa8HiGI
-         +fxqmQPFj1QrOGsfoBfxvobBOO2Ek7F1KioohfXYxaLs2XDdMYxEy7EdIFyk3un9b5af
-         lncvTjrHnKH89V1hz+kNK1ug+pgLwXJlU0ceONKERftQCRocpQ/U+ZXE6iWTxBVqQ20b
-         CxNvVZuQcUwJhuYxaDluLXG2byXdmUrOfteVmWXvHoM84psLHibEG26P9fSN+RpFT/LL
-         DVKZf5TDQjncSQoLWiiTlwun29OOBIgtzMGloeGEXwDiUSuLo5+nIx6LW12qo8bnoq/w
-         fG+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768001130; x=1768605930;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nCUQNo7mxSC8vkmePvOCKj2aGkP0nJSpQiMFJJI16iQ=;
-        b=uYmkwPePMp1ddYh7O5pLSFTkjgBicp6wVpxXbwbu8hLXzpW7GtGn1h5QJR+TzVTWuj
-         OGPQaAn/EVJqOiWNIjRElOmQa+y6cQFmgXJpQcQzu1K6XgKKez9JvEOBpc/AuehODFAF
-         l1F0uIcPHx+udmfDk6Y+puBjfQmdOCVPu0B3j/bIAbUmdMd4JySA3hEKDkuon9TOSuYY
-         rMLmQwlaJvse+AKLTHJOH2WJOLZgamxzAsFGcHk2goTxH2XL6IFL4PIPs058g/rI6Xkf
-         OPmVHVPuUwO3OfTtZgG0Ny3P1ebA769siQ1xOR70eUtvnoD7CEqqfllSV/Pbwi0GD9tk
-         UpdA==
-X-Forwarded-Encrypted: i=1; AJvYcCXiUAuuNdSt9RJBqSSUqUp1iGmSdbGXc3DFXKoGn6yq+/jY4KfCpvHhKSszcdQZg7mDqYsoY6KWOGI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxpcHY+epBzBxcIgnqXzhhA+GwA1K404nxA64cQAHFtTi5a3OUS
-	kwr6c8jPuIdhXasOk2i5CbTLh9SMMgQAAzcmvQZLdO7dzpRGz/xKT65v/+wYbKR/gRLNJbxVdml
-	b8sHDZttlSlxbqUWdYuwkWrnYxlfE4ec=
-X-Gm-Gg: AY/fxX4QVBfyzOFdKJfAc5pwKbKck2+d7/p8xdStWE5A/AZsMk0Ed3X2pZnjmXTQmBI
-	bKp/3bIq7VKX3HMP3Xk1LQz+HSL9i6uZt5nwdDeOJtfDe+hXhXZ5jaCrsDvdt6cVYurUKLXqzX0
-	MdUEoDpL9kZMlujf0Z+uKWzCakCpuE/40nNXsQ3lJNEvrBUH0KnhPF5I2JAEXCCKguYj/4+ZjHL
-	ieAJNCjPrLpxuCJKuRGgJ6gCAQTw3KptH1f9W8eBnqAGD0MbCeOUpVAg7zrZwNvJLci++PM1+LE
-	qVkrg6NH
-X-Google-Smtp-Source: AGHT+IHfdl0DFFsHTVhHGn4++xm9XHvLJknpf551hc1xetbMq7EEy0O5Y6tQKD9GLsiH/IFDZTNgO/HkHtmxCHtZE78=
-X-Received: by 2002:a05:6a20:a10c:b0:366:5d1a:c736 with SMTP id
- adf61e73a8af0-3898f88f211mr9018589637.9.1768001130450; Fri, 09 Jan 2026
- 15:25:30 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JXaW1P5N"
+Message-ID: <2ea17ba8-3248-4a01-8fed-183ce66aa39c@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1768007708;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ahAH3rzPdL93igYQW+98YrKZjud91Tlnt5ogrhyCeBY=;
+	b=JXaW1P5NyD+BjdacN8mfxxBxgPknRVW2761h4FMTuDftKZykTsdgL0P5mMtFDuDEEmvlpf
+	B+wQ7jh3oxmP9w6R3sqVwKfA4+qAUd5OFWe93XYnMqMpKvdRxNT1ExGjIIs2o77Ow8dIqe
+	6tCY6KuFPApxFu6fkDf7XtNSOvnKrCA=
+Date: Fri, 9 Jan 2026 17:15:02 -0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260109184852.1089786-1-ihor.solodrai@linux.dev> <20260109184852.1089786-6-ihor.solodrai@linux.dev>
-In-Reply-To: <20260109184852.1089786-6-ihor.solodrai@linux.dev>
-From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Fri, 9 Jan 2026 15:25:16 -0800
-X-Gm-Features: AQt7F2qzahhwWoxdH0F1ChmrKpOGZlbkzZ4pxxwq63_4u0Nd-h9NKx5gelr7ptA
-Message-ID: <CAEf4BzZfuqpdwghCZ_TJJyt3Dm=xCBJLz3H0bbtabgToNV7V+A@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v1 05/10] selftests/bpf: Add tests for KF_IMPLICIT_ARGS
-To: Ihor Solodrai <ihor.solodrai@linux.dev>
-Cc: Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>, 
-	Daniel Borkmann <daniel@iogearbox.net>, Martin KaFai Lau <martin.lau@linux.dev>, 
-	Eduard Zingerman <eddyz87@gmail.com>, Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, 
-	Alan Maguire <alan.maguire@oracle.com>, Benjamin Tissoires <bentiss@kernel.org>, 
-	Jiri Kosina <jikos@kernel.org>, bpf@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-input@vger.kernel.org, sched-ext@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH bpf-next v1 04/10] resolve_btfids: Support for
+ KF_IMPLICIT_ARGS
+To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>, Eduard Zingerman
+ <eddyz87@gmail.com>, Mykyta Yatsenko <yatsenko@meta.com>,
+ Tejun Heo <tj@kernel.org>, Alan Maguire <alan.maguire@oracle.com>,
+ Benjamin Tissoires <bentiss@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+ bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org, sched-ext@lists.linux.dev
+References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
+ <20260109184852.1089786-5-ihor.solodrai@linux.dev>
+ <CAEf4BzYcZ5pLCvfn8uWiKCjpBXBw9dxR_WZnKxVz1Bhf96xOGg@mail.gmail.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <CAEf4BzYcZ5pLCvfn8uWiKCjpBXBw9dxR_WZnKxVz1Bhf96xOGg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, Jan 9, 2026 at 10:49=E2=80=AFAM Ihor Solodrai <ihor.solodrai@linux.=
-dev> wrote:
->
-> Add trivial end-to-end tests to validate that KF_IMPLICIT_ARGS flag is
-> properly handled by both resolve_btfids and the verifier.
->
-> Declare kfuncs in bpf_testmod. Check that bpf_prog_aux pointer is set
-> in the kfunc implementation. Verify that calls with implicit args and
-> a legacy case all work.
->
-> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-> ---
->  .../bpf/prog_tests/kfunc_implicit_args.c      | 10 +++++
->  .../selftests/bpf/progs/kfunc_implicit_args.c | 41 +++++++++++++++++++
->  .../selftests/bpf/test_kmods/bpf_testmod.c    | 26 ++++++++++++
->  3 files changed, 77 insertions(+)
->  create mode 100644 tools/testing/selftests/bpf/prog_tests/kfunc_implicit=
-_args.c
->  create mode 100644 tools/testing/selftests/bpf/progs/kfunc_implicit_args=
-.c
->
+On 1/9/26 3:25 PM, Andrii Nakryiko wrote:
+> On Fri, Jan 9, 2026 at 10:49 AM Ihor Solodrai <ihor.solodrai@linux.dev> wrote:
+>>
+>> Implement BTF modifications in resolve_btfids to support BPF kernel
+>> functions with implicit arguments.
+>>
+>> For a kfunc marked with KF_IMPLICIT_ARGS flag, a new function
+>> prototype is added to BTF that does not have implicit arguments. The
+>> kfunc's prototype is then updated to a new one in BTF. This prototype
+>> is the intended interface for the BPF programs.
+>>
+>> A <func_name>_impl function is added to BTF to make the original kfunc
+>> prototype searchable for the BPF verifier. If a <func_name>_impl
+>> function already exists in BTF, its interpreted as a legacy case, and
+>> this step is skipped.
+>>
+>> Whether an argument is implicit is determined by its type:
+>> currently only `struct bpf_prog_aux *` is supported.
+>>
+>> As a result, the BTF associated with kfunc is changed from
+>>
+>>     __bpf_kfunc bpf_foo(int arg1, struct bpf_prog_aux *aux);
+>>
+>> into
+>>
+>>     bpf_foo_impl(int arg1, struct bpf_prog_aux *aux);
+>>     __bpf_kfunc bpf_foo(int arg1);
+>>
+>> For more context see previous discussions and patches [1][2].
+>>
+>> [1] https://lore.kernel.org/dwarves/ba1650aa-fafd-49a8-bea4-bdddee7c38c9@linux.dev/
+>> [2] https://lore.kernel.org/bpf/20251029190113.3323406-1-ihor.solodrai@linux.dev/
+>>
+>> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+>> ---
+>>  tools/bpf/resolve_btfids/main.c | 282 ++++++++++++++++++++++++++++++++
+>>  1 file changed, 282 insertions(+)
+>>
+>> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+>> index df39982f51df..b361e726fa36 100644
+>> --- a/tools/bpf/resolve_btfids/main.c
+>> +++ b/tools/bpf/resolve_btfids/main.c
+>> @@ -152,6 +152,18 @@ struct object {
+>>         int nr_typedefs;
+>>  };
+>>
+>> +#define KF_IMPLICIT_ARGS (1 << 16)
+>> +#define KF_IMPL_SUFFIX "_impl"
+>> +#define MAX_BPF_FUNC_REG_ARGS 5
+>> +#define MAX_KFUNCS 256
+>> +#define MAX_DECL_TAGS (MAX_KFUNCS * 4)
+> 
+> can't we get that from include/linux/bpf.h? seems like
+> resolve_btfids's main.c include internal headers just fine, so why
+> duplicate definitions?
 
-[...]
+Hi Andrii, thank you for a quick review.
 
-> @@ -0,0 +1,41 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (c) 2026 Meta Platforms, Inc. and affiliates. */
-> +
-> +#include <vmlinux.h>
-> +#include <bpf/bpf_helpers.h>
-> +#include "bpf_misc.h"
-> +
-> +extern int bpf_kfunc_implicit_arg(int a) __weak __ksym;
-> +extern int bpf_kfunc_implicit_arg_impl(int a, void *aux__prog) __weak __=
-ksym; // illegal
+Including internal include/linux/btf.h directly doesn't work, which is
+probably expected.
 
-C++ comment
+resolve_btfids is currently built with:
 
-> +extern int bpf_kfunc_implicit_arg_legacy(int a, int b) __weak __ksym;
-> +extern int bpf_kfunc_implicit_arg_legacy_impl(int a, int b, void *aux__p=
-rog) __weak __ksym;
-> +
-> +char _license[] SEC("license") =3D "GPL";
-> +
+HOSTCFLAGS_resolve_btfids += -g \
+          -I$(srctree)/tools/include \
+          -I$(srctree)/tools/include/uapi \
+          -I$(LIBBPF_INCLUDE) \
+          -I$(SUBCMD_INCLUDE) \
+          $(LIBELF_FLAGS) \
+          -Wall -Werror
 
-[...]
+If I add -I$(srctree)/include option and then
 
-> diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c b/tools=
-/testing/selftests/bpf/test_kmods/bpf_testmod.c
-> index 1c41d03bd5a1..503451875d33 100644
-> --- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-> +++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-> @@ -1136,6 +1136,10 @@ __bpf_kfunc int bpf_kfunc_st_ops_inc10(struct st_o=
-ps_args *args)
->  __bpf_kfunc int bpf_kfunc_multi_st_ops_test_1(struct st_ops_args *args, =
-u32 id);
->  __bpf_kfunc int bpf_kfunc_multi_st_ops_test_1_impl(struct st_ops_args *a=
-rgs, void *aux_prog);
->
-> +__bpf_kfunc int bpf_kfunc_implicit_arg(int a, struct bpf_prog_aux *aux);
-> +__bpf_kfunc int bpf_kfunc_implicit_arg_legacy(int a, int b, struct bpf_p=
-rog_aux *aux);
-> +__bpf_kfunc int bpf_kfunc_implicit_arg_legacy_impl(int a, int b, void *a=
-ux__prog);
-> +
->  BTF_KFUNCS_START(bpf_testmod_check_kfunc_ids)
->  BTF_ID_FLAGS(func, bpf_testmod_test_mod_kfunc)
->  BTF_ID_FLAGS(func, bpf_kfunc_call_test1)
-> @@ -1178,6 +1182,9 @@ BTF_ID_FLAGS(func, bpf_kfunc_st_ops_test_pro_epilog=
-ue, KF_SLEEPABLE)
->  BTF_ID_FLAGS(func, bpf_kfunc_st_ops_inc10)
->  BTF_ID_FLAGS(func, bpf_kfunc_multi_st_ops_test_1)
->  BTF_ID_FLAGS(func, bpf_kfunc_multi_st_ops_test_1_impl)
-> +BTF_ID_FLAGS(func, bpf_kfunc_implicit_arg, KF_IMPLICIT_ARGS)
-> +BTF_ID_FLAGS(func, bpf_kfunc_implicit_arg_legacy, KF_IMPLICIT_ARGS)
-> +BTF_ID_FLAGS(func, bpf_kfunc_implicit_arg_legacy_impl)
+    #include <linux/btf.h>
 
-(irrelevant, now that I saw patch #8 discussion, but for the future
-the point will stand and we can decide how resolve_btfids handles this
-upfront)
+A bunch of build errors happen.
 
-I'm wondering, should we add KF_IMPLICIT_ARGS to legacy xxx_impl
-kfuncs as well to explicitly mark them to resolve_btfids as legacy
-implementations? And if we somehow find xxx_impl without it, then
-resolve_btfids complains louds and fails, this should never happen?
+AFAIU we'd have to create a stripped copy of relevant headers in
+tools/include first.  Is that what you're suggesting?
 
+> 
+>> +
+>> +struct btf2btf_context {
+>> +       struct btf *btf;
+>> +       u32 nr_decl_tags;
+>> +       s32 decl_tags[MAX_DECL_TAGS];
+>> +};
+>> +
+>>  static int verbose;
+>>  static int warnings;
+>>
+>> @@ -972,6 +984,273 @@ static int patch_btfids(const char *btfids_path, const char *elf_path)
+>>         return err;
+>>  }
+>>
+>> +static s64 collect_kfunc_ids_by_flags(struct object *obj,
+>> +                                     u32 flags,
+>> +                                     s32 kfunc_ids[],
+>> +                                     const u32 kfunc_ids_sz)
+>> +{
+>> +       Elf_Data *data = obj->efile.idlist;
+>> +       struct rb_node *next;
+>> +       s64 nr_kfuncs = 0;
+>> +       int i;
+>> +
+>> +       next = rb_first(&obj->sets);
+>> +       while (next) {
+>> +               struct btf_id_set8 *set8 = NULL;
+>> +               unsigned long addr, off;
+>> +               struct btf_id *id;
+>> +
+>> +               id = rb_entry(next, struct btf_id, rb_node);
+>> +
+>> +               if (id->kind != BTF_ID_KIND_SET8)
+>> +                       goto skip;
+>> +
+>> +               addr = id->addr[0];
+>> +               off = addr - obj->efile.idlist_addr;
+>> +               set8 = data->d_buf + off;
+>> +
+>> +               for (i = 0; i < set8->cnt; i++) {
+>> +                       if (set8->pairs[i].flags & flags) {
+> 
+> invert condition and continue, reduce nesting?
+> 
+>> +                               if (nr_kfuncs >= kfunc_ids_sz) {
+> 
+> it's silly to set static limits like this: we are not in NMI, you have
+> memory allocator, use it
 
+I kinda like that btf2btf_context is stack allocated, but I see your
+point. It's not necessary to set hard limits in resolve_btfids.
 
->  BTF_KFUNCS_END(bpf_testmod_check_kfunc_ids)
->
->  static int bpf_testmod_ops_init(struct btf *btf)
-> @@ -1669,6 +1676,25 @@ int bpf_kfunc_multi_st_ops_test_1_impl(struct st_o=
-ps_args *args, void *aux__prog
->         return ret;
->  }
->
-> +int bpf_kfunc_implicit_arg(int a, struct bpf_prog_aux *aux)
-> +{
-> +       if (aux && a > 0)
-> +               return a;
-> +       return -EINVAL;
-> +}
-> +
-> +int bpf_kfunc_implicit_arg_legacy(int a, int b, struct bpf_prog_aux *aux=
-)
-> +{
-> +       if (aux)
-> +               return a + b;
-> +       return -EINVAL;
-> +}
-> +
-> +int bpf_kfunc_implicit_arg_legacy_impl(int a, int b, void *aux__prog)
-> +{
-> +       return bpf_kfunc_implicit_arg_legacy(a, b, aux__prog);
-> +}
-> +
->  static int multi_st_ops_reg(void *kdata, struct bpf_link *link)
->  {
->         struct bpf_testmod_multi_st_ops *st_ops =3D
-> --
-> 2.52.0
->
+> 
+>> +                                       pr_err("ERROR: resolve_btfids: too many kfuncs with flags %u - limit %d\n",
+>> +                                              flags, kfunc_ids_sz);
+>> +                                       return -E2BIG;
+>> +                               }
+>> +                               kfunc_ids[nr_kfuncs++] = set8->pairs[i].id;
+>> +                       }
+>> +               }
+>> +skip:
+>> +               next = rb_next(next);
+>> +       }
+>> +
+>> +       return nr_kfuncs;
+>> +}
+>> +
+>> +static const struct btf_type *btf__unqualified_type_by_id(const struct btf *btf, s32 type_id)
+>> +{
+>> +       const struct btf_type *t = btf__type_by_id(btf, type_id);
+>> +
+>> +       while (btf_is_mod(t))
+>> +               t = btf__type_by_id(btf, t->type);
+>> +
+>> +       return t;
+>> +}
+>> +
+>> +/* Implicit BPF kfunc arguments can only be of particular types */
+>> +static bool btf__is_kf_implicit_arg(const struct btf *btf, const struct btf_param *p)
+> 
+> nit: not sure why you use double underscore convention, this is not
+> really an "API" of btf, it's just a helper... I'd just call it
+> "is_kf_implicit_arg", btf is just and input argument
+> 
+>> +{
+>> +       static const char *const kf_implicit_arg_types[] = {
+>> +               "bpf_prog_aux",
+>> +       };
+>> +       const struct btf_type *t;
+>> +       const char *name;
+>> +
+> 
+> [...]
+> 
+>> +       /* Copy all decl tags except "bpf_kfunc" from the original kfunc to the new one */
+>> +       for (int i = 0; i < ctx->nr_decl_tags; i++) {
+>> +               t = (struct btf_type *)btf__type_by_id(btf, ctx->decl_tags[i]);
+>> +               if (t->type != kfunc_id)
+>> +                       continue;
+>> +
+>> +               tag_name = btf__name_by_offset(btf, t->name_off);
+>> +               if (strcmp(tag_name, "bpf_kfunc") == 0)
+>> +                       continue;
+>> +
+>> +               err = btf__add_decl_tag(btf, tag_name, new_func_id, -1);
+> 
+> decl_tag can apply to arguments as well (that -1 will be actually >=
+> 0), we should copy those as well, no?
+
+I think you're right. Technically decl_tags can point to parameters as
+well.  Is this actually used in kernel BTF?
+
+For the type tags we don't have to do anything though, because the
+param type should point to the top type tag, right?
+
+> 
+>> +               if (err < 0) {
+>> +                       pr_err("ERROR: resolve_btfids: failed to add decl tag %s for %s\n",
+>> +                              tag_name, tmp_name);
+>> +                       return -EINVAL;
+>> +               }
+>> +       }
+>> +
+>> +add_new_proto:
+>> +       /*
+>> +        * Drop the _impl suffix and point kfunc_name to the local buffer for later use.
+>> +        * When BTF is modified the original pointer is invalidated.
+>> +        */
+>> +       tmp_name[name_len] = '\0';
+>> +       kfunc_name = tmp_name;
+>> +
+>> +       /* Load non-implicit args from the original prototype */
+>> +       t = (struct btf_type *)btf__type_by_id(btf, proto_id);
+>> +       params = btf_params(t);
+>> +       nr_params = 0;
+>> +       for (int i = 0; i < btf_vlen(t); i++) {
+>> +               if (btf__is_kf_implicit_arg(btf, &params[i]))
+>> +                       break;
+>> +               new_params[nr_params++] = params[i];
+>> +       }
+> 
+> this is unnecessary, just when you working with original prototype and
+> its arguments, just re-fetch it back from IDs, all those pointers will
+> be valid until next btf__add_xxx() invocation, no need for this
+> awkward local copies
+> 
+>> +
+>> +       new_proto_id = btf__add_func_proto(btf, t->type);
+>> +       if (new_proto_id < 0) {
+>> +               pr_err("ERROR: resolve_btfids: failed to add func proto for %s\n", kfunc_name);
+>> +               return new_proto_id;
+>> +       }
+>> +
+>> +       /* Add non-implicit args to the new prototype */
+>> +       for (int i = 0; i < nr_params; i++) {
+>> +               param_name = btf__name_by_offset(btf, new_params[i].name_off);
+>> +               err = btf__add_func_param(btf, param_name, new_params[i].type);
+>> +               if (err < 0) {
+>> +                       pr_err("ERROR: resolve_btfids: failed to add param %s for %s\n",
+>> +                              param_name, kfunc_name);
+>> +                       return err;
+>> +               }
+>> +       }
+>> +
+>> +       /* Finally change the prototype of the original kfunc to the new one */
+>> +       t = (struct btf_type *)btf__type_by_id(btf, kfunc_id);
+>> +       t->type = new_proto_id;
+>> +
+>> +       pr_debug("resolve_btfids: updated BTF for kfunc with implicit args %s\n", kfunc_name);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static s64 btf__collect_decl_tags(const struct btf *btf, s32 *decl_tags, u32 decl_tags_sz)
+>> +{
+>> +       const u32 type_cnt = btf__type_cnt(btf);
+>> +       const struct btf_type *t;
+>> +       s64 nr_decl_tags = 0;
+>> +
+>> +       for (u32 id = 1; id < type_cnt; id++) {
+>> +               t = btf__type_by_id(btf, id);
+>> +               if (!btf_is_decl_tag(t))
+>> +                       continue;
+>> +               if (nr_decl_tags >= decl_tags_sz) {
+>> +                       pr_err("ERROR: resolve_btfids: too many decl tags in BTF - limit %s\n",
+> 
+> realloc is your friend, no fixed-sized arrays
+> 
+>> +                               decl_tags_sz);
+>> +                       return -E2BIG;
+>> +               }
+>> +               decl_tags[nr_decl_tags++] = id;
+>> +       }
+>> +
+>> +       return nr_decl_tags;
+>> +}
+>> +
+> 
+> [...]
+
