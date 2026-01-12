@@ -1,63 +1,63 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE626342500
-	for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 21:42:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E8D33F360
+	for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 21:42:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768254153; cv=none; b=mbBrVQn1JTphFG+IgmrU+irI1hgHSiwOpAjUCDt66F/6/2ARyGA0tEeXrWmIM4tAKrgVlYjMeGwj2H53RwktESs7YqF9ArlSWTcZ1ubs9z635K6uSpvEeznNGdgfAjY4MHJSmSlPnFdKdXoKz6vzYTWBuSAhNxLJOqc8SgRvdjU=
+	t=1768254155; cv=none; b=RBJBSFpKpN7JYvw3h3PwUkvZyuTxR7QE+zeqx9kgmXlwMiHT4ZmzZsemTD4PIq+cCKG2F8zk0YC2dENBVnHT/8Tk5KfM9P1omibjbtjA1dVzJVhK+/GOwuSZhIoaVP2pAUkXVy1ARe0aPoAoZSUVdvObsOZ2yb7ySX6ogU2Bgnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768254153; c=relaxed/simple;
-	bh=iRsk1AHBsdWrw59zjS40CdR3Si4kdBeqfv+99ukA8gM=;
+	s=arc-20240116; t=1768254155; c=relaxed/simple;
+	bh=/K5zzc4ix4++ZRKZqm2nxDwQs1y4LAuq0DBYCpclujM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jqa4/5rFCBNX5CuCA6Rjn9Vwy0uTmkgIOiZgvdX3eVZrYmX+VI82E6TWxq7hhaay46I4G02kHyEq/XwcSLREA45sYqDWrGphrjxpxElwSKRtkm0yI4T3ae5nIXt52xpPC/qo9gdZpG4aKdq0N7FsUMHHr2lrzIhzXkgnY6LCtUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=eRHO/Pgh; arc=none smtp.client-ip=209.85.219.43
+	 MIME-Version; b=ZQIetRD7KGhpyDFgufVCmlYSNnAM6DN0KNZq4SHJZ3wE1yoAj5V+ip7RB7s2uaY8kBn8Rg2U+52MBIRuC2SGIB0wpK4XPzp7cCWQotgEA5+aIH4zc4IrIwMWEDXQAXBqUIHAKDvsIeQh/Q6C/P3noIqToosvE76hXzDXkbHWwmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=Y4E9bgEx; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="eRHO/Pgh"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-88a2e3bd3cdso55150896d6.0
-        for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 13:42:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="Y4E9bgEx"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-888310b91c5so44791926d6.1
+        for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 13:42:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1768254151; x=1768858951; darn=lists.linux.dev;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1768254152; x=1768858952; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lMsGLw/3vlxnhHfxKc/OkmeRLnWRESTe+v9wMI/zC/4=;
-        b=eRHO/Pghln6cZ8qXaZJHmsGHOWW4ojHTW+Sen8kv9Uz2WXVWhwIFxkuosrNt3OvC56
-         9lbRtX5nod5CRCys026rOhw6IMRMitiSTd29R3170+BSl0oDHi3Jmn5lwixUliUFH0YI
-         aF/R9EKCJgRetWC9ZIRZtsyf0ahVgokTa0mO5JUvQCWbI39xh7AZcWy4lD9pEPYPG8ov
-         vGyRPaQwlSgE8r1OLOWBqnfC0KC8kZ8DuH+HDrmMxpXc+TRUqwLOFwBpfNWZMQQAFnoz
-         xoL4cQ6pCgH/kQ+SNR5wf0lizp3Zefo76lDkdKcZjOcC4JlyA9CfUoLWXM0cNtGXzXkO
-         Z2qw==
+        bh=QbjTQR1Mcu8AwP76ti7s2iB2lEZDCJhtV8UUb1HPMSI=;
+        b=Y4E9bgExyReQ5uQ5RoX+gE8IY4/etNyiWCOcx4JPeV5mQ/BizKRvojbEebooYZe/wG
+         dF1EWMbRPSUz0rnntQsa2aV6U5+9jKly/nLVoD38CWyFRGYbuaDtgZe47EqN34QWOQZu
+         TT6g2Aze6HTXYZy7xSU6YLSg5o8r8xKd8RYdcWV1F1rqh/1kICdPJbitjkpU6Iazc8hZ
+         in2Dcz+fwUUc3BNqhitRKSXYGL+hXXpUu3vjNtnmBrreER24Zp5a2kZq0ZWM02PzWlwF
+         ZG15zz/VvGLtS/5OeMzAHeECbSJDlI+UhBJtUvstpro+aF8IiRigtneaVdChdXSZuCtX
+         /h1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768254151; x=1768858951;
+        d=1e100.net; s=20230601; t=1768254152; x=1768858952;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=lMsGLw/3vlxnhHfxKc/OkmeRLnWRESTe+v9wMI/zC/4=;
-        b=wN6DhKn9xCHmb/xFN5NDjKxeknQxnKV2PUc7CrbvexQU8gS7wt+KHOHINJhYO0fwd6
-         JmrxXh8XpgtsXedcjGG5s16V2O38NGNcak0KJtou5UUmN3UoY7LE8QI34NzVxmN2Jpuf
-         C/LUo5cQp6Pq+OhDpRhaFJ3JGn+yZSJdPFWWpzTe1i1uDEhWWMEjFObOrZ3jMruM7YZk
-         IBrxQHgl+FfhxQaNzOh1cQf0mIGWSkfHK/XrgZ8EbE+XdhgxL8R9BVu1L9TP61ZcE3hQ
-         EW3NYsVH45MP3wwneHCFhWWJrvL4l26hl1f0c4aE2wDk0kYXVTMdvaEEYXWrJDXHifr6
-         sdZA==
-X-Gm-Message-State: AOJu0YxoWBuvLqKunPKV7aIXO31E3EOmLSVnUN1HzOWfSCAyUriNXJsh
-	qvMQJWj/6/VPR81IKg8lACqsis+SzdfYQsiDE9GcV9Cxl/mkxFVDFI3T//SGEutM+So8CxCWngI
-	ihY8bcRM=
-X-Gm-Gg: AY/fxX6D5NDETaK0VO2wV4RcTADcxpyJcqvas/XSE6fiPY9jFdeIWWUuEU6NhfHTu20
-	FlPbMzfZ2MD9lCVsr595qmppDEQf9Bj7CTPxuuIKENYfMvIItyI+R8UEC1+aM4M0JxMzHoE+5e8
-	kfHCLHDY1ow3AqbLO2PwMH5TIp00+EYz8elN43SOsJSWdtZZuEGrxsExJH32FA+h3ZKaw1N9UtK
-	iXzYvpehhzL8oxPsSFIDpsRYe83BFQ4qmKJwfM1W/bH0QSXM2p8b3qkwfSsGR5cvTnKToYqMFvR
-	pzmwSPIihI9BQegepi9tq76UkfB4owMusEnq9qSBM7MlunjWK4rSped0QfwD1HJQ4aDkVrXcg6s
-	TBAKOo2PbBAjI84HBqXBznZjMWjgCSF7aJFrdFc7mm8m/vMuj78PmuhR2GhRrbb93wcTh2k37KK
-	BUOCko0yl5vN3qT7l0j8Mf
-X-Received: by 2002:a05:6214:2a8b:b0:87c:19af:4b76 with SMTP id 6a1803df08f44-892661fcd2amr12409706d6.17.1768254150305;
-        Mon, 12 Jan 2026 13:42:30 -0800 (PST)
+        bh=QbjTQR1Mcu8AwP76ti7s2iB2lEZDCJhtV8UUb1HPMSI=;
+        b=EDHD/dOAevIRSX6E9qbZcDUjypnCLB4mInXURQ3dHAfW+0zn+lfad5gciX2+avZxR0
+         LVIk23nuWOy21yqo6xFRoXo66dP98gY67PGTWSek6G01UiJAWwsjfJr7cmIcaimv1mD1
+         s14JjG6gYU/huq89XE1N9DXbvOK4QGo9bCxqZYcRng35peb57eSGKgFzcdRFpHWz4lu6
+         fmGf1DYWcyJre5UosTfpSs02W1Kui9lAdaEDM0869DUPPmhrFOpEUwYLm6paq9sbBvKV
+         rrmfIaO/uew88M0Lk8lzxOcPjTtQ9KxzjboYF9JfV68l8aSKVaDOHRINPKpoalnabgkK
+         PhMQ==
+X-Gm-Message-State: AOJu0YyQburFtLETBbHVGiSGe5XB1Hgg+000Fn2P/35bWAc6hZzWRv4x
+	Ne3CBIwmVUaXfTGsqp+1SSdQKRM0/VEGXEtm0z943jgIqCLG0cna/QIBtznwCa6y8XAxLRVdi/5
+	Vf28J2vM=
+X-Gm-Gg: AY/fxX4x1cSeTZwak19hVN2DD18f74wx+sP+bE4GgS8VCKgLo890zFiAJ7Z5S52lr2d
+	aAHalKwC+stcUXfxgL1ifmWLR7pYS/0PfYoOv3NOlXRMZgW/1oBdY7UW1lBmD9mAlrcUV7cjFcA
+	qgI0vqyyoGvywzyw5TUVIpnbp2F0Mq1X/jUzyRIyq8A6u5lGHRxHSeHXraLB1c/g5PSibgwva3b
+	GBrc02luw8eNIJdoP/MRwugHyKd8ntf/uSzx2bJIDAg8pqLXnYC4Dru0+btTUXEMPIy9k1IheQF
+	x9y8eY0J+hZ4z+JGD3pmXYB56RS/SZx/uqWpV9thr6TYD2/96410Ix25/07hWORL4iV79i3SQ+o
+	vGZIhXWGKGnpulLaGcA0LyP5leg5PeaDQVJzVp1wJ7vX0NVzq1kSJ1FalTYXOCZx5aAKOm+xiDE
+	zEl+1TPTyWog==
+X-Received: by 2002:ad4:5be5:0:b0:88a:2f52:cc3 with SMTP id 6a1803df08f44-892661ac162mr12990006d6.14.1768254151608;
+        Mon, 12 Jan 2026 13:42:31 -0800 (PST)
 Received: from boreas.. ([140.174.219.137])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770d17a3sm143643336d6.9.2026.01.12.13.42.29
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770d17a3sm143643336d6.9.2026.01.12.13.42.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 13:42:30 -0800 (PST)
+        Mon, 12 Jan 2026 13:42:31 -0800 (PST)
 From: Emil Tsalapatis <emil@etsalapatis.com>
 To: sched-ext@lists.linux.dev
 Cc: changwoo@igalia.com,
@@ -66,9 +66,9 @@ Cc: changwoo@igalia.com,
 	void@manifault.com,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	David Vernet <dvernet@meta.com>
-Subject: [PATCH 2/4] tools/sched_ext: add scx_userland scheduler
-Date: Mon, 12 Jan 2026 16:41:29 -0500
-Message-ID: <20260112214131.50236-3-emil@etsalapatis.com>
+Subject: [PATCH 3/4] tools/sched_ext: add scx_pair scheduler
+Date: Mon, 12 Jan 2026 16:41:30 -0500
+Message-ID: <20260112214131.50236-4-emil@etsalapatis.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260112214131.50236-1-emil@etsalapatis.com>
 References: <20260112214131.50236-1-emil@etsalapatis.com>
@@ -80,492 +80,687 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add in the scx_userland scheduler that does vruntime-based
-scheduling in userspace code and communicates scheduling
-decisions to BPF by accessing and modifying globals through
-the skeleton.
+Add the scx_pair cgroup-based core scheduler.
 
 Cc: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <dvernet@meta.com>
 Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
 ---
- tools/sched_ext/Makefile           |   2 +-
- tools/sched_ext/scx_userland.bpf.c | 344 +++++++++++++++++++++++
- tools/sched_ext/scx_userland.c     | 437 +++++++++++++++++++++++++++++
- tools/sched_ext/scx_userland.h     |  17 ++
- 4 files changed, 799 insertions(+), 1 deletion(-)
- create mode 100644 tools/sched_ext/scx_userland.bpf.c
- create mode 100644 tools/sched_ext/scx_userland.c
- create mode 100644 tools/sched_ext/scx_userland.h
+ tools/sched_ext/Makefile       |   2 +-
+ tools/sched_ext/scx_pair.bpf.c | 610 +++++++++++++++++++++++++++++++++
+ tools/sched_ext/scx_pair.c     | 180 ++++++++++
+ tools/sched_ext/scx_pair.h     |   9 +
+ 4 files changed, 800 insertions(+), 1 deletion(-)
+ create mode 100644 tools/sched_ext/scx_pair.bpf.c
+ create mode 100644 tools/sched_ext/scx_pair.c
+ create mode 100644 tools/sched_ext/scx_pair.h
 
 diff --git a/tools/sched_ext/Makefile b/tools/sched_ext/Makefile
-index 2439a311723c..2f06e0587fbb 100644
+index 2f06e0587fbb..32867f468db2 100644
 --- a/tools/sched_ext/Makefile
 +++ b/tools/sched_ext/Makefile
 @@ -189,7 +189,7 @@ $(INCLUDE_DIR)/%.bpf.skel.h: $(SCXOBJ_DIR)/%.bpf.o $(INCLUDE_DIR)/vmlinux.h $(BP
  
  SCX_COMMON_DEPS := include/scx/common.h include/scx/user_exit_info.h | $(BINDIR)
  
--c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest
-+c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland
+-c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland
++c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland scx_pair
  
  $(addprefix $(BINDIR)/,$(c-sched-targets)): \
  	$(BINDIR)/%: \
-diff --git a/tools/sched_ext/scx_userland.bpf.c b/tools/sched_ext/scx_userland.bpf.c
+diff --git a/tools/sched_ext/scx_pair.bpf.c b/tools/sched_ext/scx_pair.bpf.c
 new file mode 100644
-index 000000000000..f29862b89386
+index 000000000000..267011b57cba
 --- /dev/null
-+++ b/tools/sched_ext/scx_userland.bpf.c
-@@ -0,0 +1,344 @@
++++ b/tools/sched_ext/scx_pair.bpf.c
+@@ -0,0 +1,610 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
-+ * A minimal userland scheduler.
++ * A demo sched_ext core-scheduler which always makes every sibling CPU pair
++ * execute from the same CPU cgroup.
 + *
-+ * In terms of scheduling, this provides two different types of behaviors:
-+ * 1. A global FIFO scheduling order for _any_ tasks that have CPU affinity.
-+ *    All such tasks are direct-dispatched from the kernel, and are never
-+ *    enqueued in user space.
-+ * 2. A primitive vruntime scheduler that is implemented in user space, for all
-+ *    other tasks.
++ * This scheduler is a minimal implementation and would need some form of
++ * priority handling both inside each cgroup and across the cgroups to be
++ * practically useful.
 + *
-+ * Some parts of this example user space scheduler could be implemented more
-+ * efficiently using more complex and sophisticated data structures. For
-+ * example, rather than using BPF_MAP_TYPE_QUEUE's,
-+ * BPF_MAP_TYPE_{USER_}RINGBUF's could be used for exchanging messages between
-+ * user space and kernel space. Similarly, we use a simple vruntime-sorted list
-+ * in user space, but an rbtree could be used instead.
++ * Each CPU in the system is paired with exactly one other CPU, according to a
++ * "stride" value that can be specified when the BPF scheduler program is first
++ * loaded. Throughout the runtime of the scheduler, these CPU pairs guarantee
++ * that they will only ever schedule tasks that belong to the same CPU cgroup.
++ *
++ * Scheduler Initialization
++ * ------------------------
++ *
++ * The scheduler BPF program is first initialized from user space, before it is
++ * enabled. During this initialization process, each CPU on the system is
++ * assigned several values that are constant throughout its runtime:
++ *
++ * 1. *Pair CPU*: The CPU that it synchronizes with when making scheduling
++ *		  decisions. Paired CPUs always schedule tasks from the same
++ *		  CPU cgroup, and synchronize with each other to guarantee
++ *		  that this constraint is not violated.
++ * 2. *Pair ID*:  Each CPU pair is assigned a Pair ID, which is used to access
++ *		  a struct pair_ctx object that is shared between the pair.
++ * 3. *In-pair-index*: An index, 0 or 1, that is assigned to each core in the
++ *		       pair. Each struct pair_ctx has an active_mask field,
++ *		       which is a bitmap used to indicate whether each core
++ *		       in the pair currently has an actively running task.
++ *		       This index specifies which entry in the bitmap corresponds
++ *		       to each CPU in the pair.
++ *
++ * During this initialization, the CPUs are paired according to a "stride" that
++ * may be specified when invoking the user space program that initializes and
++ * loads the scheduler. By default, the stride is 1/2 the total number of CPUs.
++ *
++ * Tasks and cgroups
++ * -----------------
++ *
++ * Every cgroup in the system is registered with the scheduler using the
++ * pair_cgroup_init() callback, and every task in the system is associated with
++ * exactly one cgroup. At a high level, the idea with the pair scheduler is to
++ * always schedule tasks from the same cgroup within a given CPU pair. When a
++ * task is enqueued (i.e. passed to the pair_enqueue() callback function), its
++ * cgroup ID is read from its task struct, and then a corresponding queue map
++ * is used to FIFO-enqueue the task for that cgroup.
++ *
++ * If you look through the implementation of the scheduler, you'll notice that
++ * there is quite a bit of complexity involved with looking up the per-cgroup
++ * FIFO queue that we enqueue tasks in. For example, there is a cgrp_q_idx_hash
++ * BPF hash map that is used to map a cgroup ID to a globally unique ID that's
++ * allocated in the BPF program. This is done because we use separate maps to
++ * store the FIFO queue of tasks, and the length of that map, per cgroup. This
++ * complexity is only present because of current deficiencies in BPF that will
++ * soon be addressed. The main point to keep in mind is that newly enqueued
++ * tasks are added to their cgroup's FIFO queue.
++ *
++ * Dispatching tasks
++ * -----------------
++ *
++ * This section will describe how enqueued tasks are dispatched and scheduled.
++ * Tasks are dispatched in pair_dispatch(), and at a high level the workflow is
++ * as follows:
++ *
++ * 1. Fetch the struct pair_ctx for the current CPU. As mentioned above, this is
++ *    the structure that's used to synchronize amongst the two pair CPUs in their
++ *    scheduling decisions. After any of the following events have occurred:
++ *
++ * - The cgroup's slice run has expired, or
++ * - The cgroup becomes empty, or
++ * - Either CPU in the pair is preempted by a higher priority scheduling class
++ *
++ * The cgroup transitions to the draining state and stops executing new tasks
++ * from the cgroup.
++ *
++ * 2. If the pair is still executing a task, mark the pair_ctx as draining, and
++ *    wait for the pair CPU to be preempted.
++ *
++ * 3. Otherwise, if the pair CPU is not running a task, we can move onto
++ *    scheduling new tasks. Pop the next cgroup id from the top_q queue.
++ *
++ * 4. Pop a task from that cgroup's FIFO task queue, and begin executing it.
++ *
++ * Note again that this scheduling behavior is simple, but the implementation
++ * is complex mostly because this it hits several BPF shortcomings and has to
++ * work around in often awkward ways. Most of the shortcomings are expected to
++ * be resolved in the near future which should allow greatly simplifying this
++ * scheduler.
++ *
++ * Dealing with preemption
++ * -----------------------
++ *
++ * SCX is the lowest priority sched_class, and could be preempted by them at
++ * any time. To address this, the scheduler implements pair_cpu_release() and
++ * pair_cpu_acquire() callbacks which are invoked by the core scheduler when
++ * the scheduler loses and gains control of the CPU respectively.
++ *
++ * In pair_cpu_release(), we mark the pair_ctx as having been preempted, and
++ * then invoke:
++ *
++ * scx_bpf_kick_cpu(pair_cpu, SCX_KICK_PREEMPT | SCX_KICK_WAIT);
++ *
++ * This preempts the pair CPU, and waits until it has re-entered the scheduler
++ * before returning. This is necessary to ensure that the higher priority
++ * sched_class that preempted our scheduler does not schedule a task
++ * concurrently with our pair CPU.
++ *
++ * When the CPU is re-acquired in pair_cpu_acquire(), we unmark the preemption
++ * in the pair_ctx, and send another resched IPI to the pair CPU to re-enable
++ * pair scheduling.
 + *
 + * Copyright (c) 2022 Meta Platforms, Inc. and affiliates.
 + * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
 + * Copyright (c) 2022 David Vernet <dvernet@meta.com>
 + */
 +#include <scx/common.bpf.h>
-+#include "scx_userland.h"
-+
-+/*
-+ * Maximum amount of tasks enqueued/dispatched between kernel and user-space.
-+ */
-+#define MAX_ENQUEUED_TASKS 4096
++#include "scx_pair.h"
 +
 +char _license[] SEC("license") = "GPL";
 +
-+const volatile s32 usersched_pid;
-+
 +/* !0 for veristat, set during init */
-+const volatile u32 num_possible_cpus = 64;
++const volatile u32 nr_cpu_ids = 1;
 +
-+/* Stats that are printed by user space. */
-+u64 nr_failed_enqueues, nr_kernel_enqueues, nr_user_enqueues;
++/* a pair of CPUs stay on a cgroup for this duration */
++const volatile u32 pair_batch_dur_ns;
++
++/* cpu ID -> pair cpu ID */
++const volatile s32 RESIZABLE_ARRAY(rodata, pair_cpu);
++
++/* cpu ID -> pair_id */
++const volatile u32 RESIZABLE_ARRAY(rodata, pair_id);
++
++/* CPU ID -> CPU # in the pair (0 or 1) */
++const volatile u32 RESIZABLE_ARRAY(rodata, in_pair_idx);
++
++struct pair_ctx {
++	struct bpf_spin_lock	lock;
++
++	/* the cgroup the pair is currently executing */
++	u64			cgid;
++
++	/* the pair started executing the current cgroup at */
++	u64			started_at;
++
++	/* whether the current cgroup is draining */
++	bool			draining;
++
++	/* the CPUs that are currently active on the cgroup */
++	u32			active_mask;
++
++	/*
++	 * the CPUs that are currently preempted and running tasks in a
++	 * different scheduler.
++	 */
++	u32			preempted_mask;
++};
++
++struct {
++	__uint(type, BPF_MAP_TYPE_ARRAY);
++	__type(key, u32);
++	__type(value, struct pair_ctx);
++} pair_ctx SEC(".maps");
++
++/* queue of cgrp_q's possibly with tasks on them */
++struct {
++	__uint(type, BPF_MAP_TYPE_QUEUE);
++	/*
++	 * Because it's difficult to build strong synchronization encompassing
++	 * multiple non-trivial operations in BPF, this queue is managed in an
++	 * opportunistic way so that we guarantee that a cgroup w/ active tasks
++	 * is always on it but possibly multiple times. Once we have more robust
++	 * synchronization constructs and e.g. linked list, we should be able to
++	 * do this in a prettier way but for now just size it big enough.
++	 */
++	__uint(max_entries, 4 * MAX_CGRPS);
++	__type(value, u64);
++} top_q SEC(".maps");
++
++/* per-cgroup q which FIFOs the tasks from the cgroup */
++struct cgrp_q {
++	__uint(type, BPF_MAP_TYPE_QUEUE);
++	__uint(max_entries, MAX_QUEUED);
++	__type(value, u32);
++};
 +
 +/*
-+ * Number of tasks that are queued for scheduling.
++ * Ideally, we want to allocate cgrp_q and cgrq_q_len in the cgroup local
++ * storage; however, a cgroup local storage can only be accessed from the BPF
++ * progs attached to the cgroup. For now, work around by allocating array of
++ * cgrp_q's and then allocating per-cgroup indices.
 + *
-+ * This number is incremented by the BPF component when a task is queued to the
-+ * user-space scheduler and it must be decremented by the user-space scheduler
-+ * when a task is consumed.
++ * Another caveat: It's difficult to populate a large array of maps statically
++ * or from BPF. Initialize it from userland.
 + */
-+volatile u64 nr_queued;
++struct {
++	__uint(type, BPF_MAP_TYPE_ARRAY_OF_MAPS);
++	__uint(max_entries, MAX_CGRPS);
++	__type(key, s32);
++	__array(values, struct cgrp_q);
++} cgrp_q_arr SEC(".maps");
++
++static u64 cgrp_q_len[MAX_CGRPS];
 +
 +/*
-+ * Number of tasks that are waiting for scheduling.
-+ *
-+ * This number must be updated by the user-space scheduler to keep track if
-+ * there is still some scheduling work to do.
++ * This and cgrp_q_idx_hash combine into a poor man's IDR. This likely would be
++ * useful to have as a map type.
 + */
-+volatile u64 nr_scheduled;
++static u32 cgrp_q_idx_cursor;
++static u64 cgrp_q_idx_busy[MAX_CGRPS];
++
++/*
++ * All added up, the following is what we do:
++ *
++ * 1. When a cgroup is enabled, RR cgroup_q_idx_busy array doing cmpxchg looking
++ *    for a free ID. If not found, fail cgroup creation with -EBUSY.
++ *
++ * 2. Hash the cgroup ID to the allocated cgrp_q_idx in the following
++ *    cgrp_q_idx_hash.
++ *
++ * 3. Whenever a cgrp_q needs to be accessed, first look up the cgrp_q_idx from
++ *    cgrp_q_idx_hash and then access the corresponding entry in cgrp_q_arr.
++ *
++ * This is sadly complicated for something pretty simple. Hopefully, we should
++ * be able to simplify in the future.
++ */
++struct {
++	__uint(type, BPF_MAP_TYPE_HASH);
++	__uint(max_entries, MAX_CGRPS);
++	__uint(key_size, sizeof(u64));		/* cgrp ID */
++	__uint(value_size, sizeof(s32));	/* cgrp_q idx */
++} cgrp_q_idx_hash SEC(".maps");
++
++/* statistics */
++u64 nr_total, nr_dispatched, nr_missing, nr_kicks, nr_preemptions;
++u64 nr_exps, nr_exp_waits, nr_exp_empty;
++u64 nr_cgrp_next, nr_cgrp_coll, nr_cgrp_empty;
 +
 +UEI_DEFINE(uei);
 +
-+/*
-+ * The map containing tasks that are enqueued in user space from the kernel.
-+ *
-+ * This map is drained by the user space scheduler.
-+ */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_QUEUE);
-+	__uint(max_entries, MAX_ENQUEUED_TASKS);
-+	__type(value, struct scx_userland_enqueued_task);
-+} enqueued SEC(".maps");
-+
-+/*
-+ * The map containing tasks that are dispatched to the kernel from user space.
-+ *
-+ * Drained by the kernel in userland_dispatch().
-+ */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_QUEUE);
-+	__uint(max_entries, MAX_ENQUEUED_TASKS);
-+	__type(value, s32);
-+} dispatched SEC(".maps");
-+
-+/* Per-task scheduling context */
-+struct task_ctx {
-+	bool force_local; /* Dispatch directly to local DSQ */
-+};
-+
-+/* Map that contains task-local storage. */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
-+	__uint(map_flags, BPF_F_NO_PREALLOC);
-+	__type(key, int);
-+	__type(value, struct task_ctx);
-+} task_ctx_stor SEC(".maps");
-+
-+/*
-+ * Flag used to wake-up the user-space scheduler.
-+ */
-+static volatile u32 usersched_needed;
-+
-+/*
-+ * Set user-space scheduler wake-up flag (equivalent to an atomic release
-+ * operation).
-+ */
-+static void set_usersched_needed(void)
++void BPF_STRUCT_OPS(pair_enqueue, struct task_struct *p, u64 enq_flags)
 +{
-+	__sync_fetch_and_or(&usersched_needed, 1);
-+}
++	struct cgroup *cgrp;
++	struct cgrp_q *cgq;
++	s32 pid = p->pid;
++	u64 cgid;
++	u32 *q_idx;
++	u64 *cgq_len;
 +
-+/*
-+ * Check and clear user-space scheduler wake-up flag (equivalent to an atomic
-+ * acquire operation).
-+ */
-+static bool test_and_clear_usersched_needed(void)
-+{
-+	return __sync_fetch_and_and(&usersched_needed, 0) == 1;
-+}
++	__sync_fetch_and_add(&nr_total, 1);
 +
-+static bool is_usersched_task(const struct task_struct *p)
-+{
-+	return p->pid == usersched_pid;
-+}
++	cgrp = scx_bpf_task_cgroup(p);
++	cgid = cgrp->kn->id;
++	bpf_cgroup_release(cgrp);
 +
-+static bool keep_in_kernel(const struct task_struct *p)
-+{
-+	return p->nr_cpus_allowed < num_possible_cpus;
-+}
-+
-+static struct task_struct *usersched_task(void)
-+{
-+	struct task_struct *p;
-+
-+	p = bpf_task_from_pid(usersched_pid);
-+	/*
-+	 * Should never happen -- the usersched task should always be managed
-+	 * by sched_ext.
-+	 */
-+	if (!p)
-+		scx_bpf_error("Failed to find usersched task %d", usersched_pid);
-+
-+	return p;
-+}
-+
-+s32 BPF_STRUCT_OPS(userland_select_cpu, struct task_struct *p,
-+		   s32 prev_cpu, u64 wake_flags)
-+{
-+	if (keep_in_kernel(p)) {
-+		s32 cpu;
-+		struct task_ctx *tctx;
-+
-+		tctx = bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
-+		if (!tctx) {
-+			scx_bpf_error("Failed to look up task-local storage for %s", p->comm);
-+			return -ESRCH;
-+		}
-+
-+		if (p->nr_cpus_allowed == 1 ||
-+		    scx_bpf_test_and_clear_cpu_idle(prev_cpu)) {
-+			tctx->force_local = true;
-+			return prev_cpu;
-+		}
-+
-+		cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
-+		if (cpu >= 0) {
-+			tctx->force_local = true;
-+			return cpu;
-+		}
-+	}
-+
-+	return prev_cpu;
-+}
-+
-+static void dispatch_user_scheduler(void)
-+{
-+	struct task_struct *p;
-+
-+	p = usersched_task();
-+	if (p) {
-+		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
-+		bpf_task_release(p);
-+	}
-+}
-+
-+static void enqueue_task_in_user_space(struct task_struct *p, u64 enq_flags)
-+{
-+	struct scx_userland_enqueued_task task = {};
-+
-+	task.pid = p->pid;
-+	task.sum_exec_runtime = p->se.sum_exec_runtime;
-+	task.weight = p->scx.weight;
-+
-+	if (bpf_map_push_elem(&enqueued, &task, 0)) {
-+		/*
-+		 * If we fail to enqueue the task in user space, put it
-+		 * directly on the global DSQ.
-+		 */
-+		__sync_fetch_and_add(&nr_failed_enqueues, 1);
-+		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+	} else {
-+		__sync_fetch_and_add(&nr_user_enqueues, 1);
-+		set_usersched_needed();
-+	}
-+}
-+
-+void BPF_STRUCT_OPS(userland_enqueue, struct task_struct *p, u64 enq_flags)
-+{
-+	if (keep_in_kernel(p)) {
-+		u64 dsq_id = SCX_DSQ_GLOBAL;
-+		struct task_ctx *tctx;
-+
-+		tctx = bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
-+		if (!tctx) {
-+			scx_bpf_error("Failed to lookup task ctx for %s", p->comm);
-+			return;
-+		}
-+
-+		if (tctx->force_local)
-+			dsq_id = SCX_DSQ_LOCAL;
-+		tctx->force_local = false;
-+		scx_bpf_dsq_insert(p, dsq_id, SCX_SLICE_DFL, enq_flags);
-+		__sync_fetch_and_add(&nr_kernel_enqueues, 1);
++	/* find the cgroup's q and push @p into it */
++	q_idx = bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
++	if (!q_idx) {
++		scx_bpf_error("failed to lookup q_idx for cgroup[%llu]", cgid);
 +		return;
-+	} else if (!is_usersched_task(p)) {
-+		enqueue_task_in_user_space(p, enq_flags);
++	}
++
++	cgq = bpf_map_lookup_elem(&cgrp_q_arr, q_idx);
++	if (!cgq) {
++		scx_bpf_error("failed to lookup q_arr for cgroup[%llu] q_idx[%u]",
++			      cgid, *q_idx);
++		return;
++	}
++
++	if (bpf_map_push_elem(cgq, &pid, 0)) {
++		scx_bpf_error("cgroup[%llu] queue overflow", cgid);
++		return;
++	}
++
++	/* bump q len, if going 0 -> 1, queue cgroup into the top_q */
++	cgq_len = MEMBER_VPTR(cgrp_q_len, [*q_idx]);
++	if (!cgq_len) {
++		scx_bpf_error("MEMBER_VTPR malfunction");
++		return;
++	}
++
++	if (!__sync_fetch_and_add(cgq_len, 1) &&
++	    bpf_map_push_elem(&top_q, &cgid, 0)) {
++		scx_bpf_error("top_q overflow");
++		return;
 +	}
 +}
 +
-+void BPF_STRUCT_OPS(userland_dispatch, s32 cpu, struct task_struct *prev)
++static int lookup_pairc_and_mask(s32 cpu, struct pair_ctx **pairc, u32 *mask)
 +{
-+	if (test_and_clear_usersched_needed())
-+		dispatch_user_scheduler();
++	u32 *vptr;
 +
-+	bpf_repeat(MAX_ENQUEUED_TASKS) {
-+		s32 pid;
-+		struct task_struct *p;
++	vptr = (u32 *)ARRAY_ELEM_PTR(pair_id, cpu, nr_cpu_ids);
++	if (!vptr)
++		return -EINVAL;
 +
-+		if (bpf_map_pop_elem(&dispatched, &pid))
-+			break;
++	*pairc = bpf_map_lookup_elem(&pair_ctx, vptr);
++	if (!(*pairc))
++		return -EINVAL;
++
++	vptr = (u32 *)ARRAY_ELEM_PTR(in_pair_idx, cpu, nr_cpu_ids);
++	if (!vptr)
++		return -EINVAL;
++
++	*mask = 1U << *vptr;
++
++	return 0;
++}
++
++__attribute__((noinline))
++static int try_dispatch(s32 cpu)
++{
++	struct pair_ctx *pairc;
++	struct bpf_map *cgq_map;
++	struct task_struct *p;
++	u64 now = scx_bpf_now();
++	bool kick_pair = false;
++	bool expired, pair_preempted;
++	u32 *vptr, in_pair_mask;
++	s32 pid, q_idx;
++	u64 cgid;
++	int ret;
++
++	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
++	if (ret) {
++		scx_bpf_error("failed to lookup pairc and in_pair_mask for cpu[%d]",
++			      cpu);
++		return -ENOENT;
++	}
++
++	bpf_spin_lock(&pairc->lock);
++	pairc->active_mask &= ~in_pair_mask;
++
++	expired = time_before(pairc->started_at + pair_batch_dur_ns, now);
++	if (expired || pairc->draining) {
++		u64 new_cgid = 0;
++
++		__sync_fetch_and_add(&nr_exps, 1);
 +
 +		/*
-+		 * The task could have exited by the time we get around to
-+		 * dispatching it. Treat this as a normal occurrence, and simply
-+		 * move onto the next iteration.
++		 * We're done with the current cgid. An obvious optimization
++		 * would be not draining if the next cgroup is the current one.
++		 * For now, be dumb and always expire.
 +		 */
-+		p = bpf_task_from_pid(pid);
-+		if (!p)
++		pairc->draining = true;
++
++		pair_preempted = pairc->preempted_mask;
++		if (pairc->active_mask || pair_preempted) {
++			/*
++			 * The other CPU is still active, or is no longer under
++			 * our control due to e.g. being preempted by a higher
++			 * priority sched_class. We want to wait until this
++			 * cgroup expires, or until control of our pair CPU has
++			 * been returned to us.
++			 *
++			 * If the pair controls its CPU, and the time already
++			 * expired, kick.  When the other CPU arrives at
++			 * dispatch and clears its active mask, it'll push the
++			 * pair to the next cgroup and kick this CPU.
++			 */
++			__sync_fetch_and_add(&nr_exp_waits, 1);
++			bpf_spin_unlock(&pairc->lock);
++			if (expired && !pair_preempted)
++				kick_pair = true;
++			goto out_maybe_kick;
++		}
++
++		bpf_spin_unlock(&pairc->lock);
++
++		/*
++		 * Pick the next cgroup. It'd be easier / cleaner to not drop
++		 * pairc->lock and use stronger synchronization here especially
++		 * given that we'll be switching cgroups significantly less
++		 * frequently than tasks. Unfortunately, bpf_spin_lock can't
++		 * really protect anything non-trivial. Let's do opportunistic
++		 * operations instead.
++		 */
++		bpf_repeat(BPF_MAX_LOOPS) {
++			u32 *q_idx;
++			u64 *cgq_len;
++
++			if (bpf_map_pop_elem(&top_q, &new_cgid)) {
++				/* no active cgroup, go idle */
++				__sync_fetch_and_add(&nr_exp_empty, 1);
++				return 0;
++			}
++
++			q_idx = bpf_map_lookup_elem(&cgrp_q_idx_hash, &new_cgid);
++			if (!q_idx)
++				continue;
++
++			/*
++			 * This is the only place where empty cgroups are taken
++			 * off the top_q.
++			 */
++			cgq_len = MEMBER_VPTR(cgrp_q_len, [*q_idx]);
++			if (!cgq_len || !*cgq_len)
++				continue;
++
++			/*
++			 * If it has any tasks, requeue as we may race and not
++			 * execute it.
++			 */
++			bpf_map_push_elem(&top_q, &new_cgid, 0);
++			break;
++		}
++
++		bpf_spin_lock(&pairc->lock);
++
++		/*
++		 * The other CPU may already have started on a new cgroup while
++		 * we dropped the lock. Make sure that we're still draining and
++		 * start on the new cgroup.
++		 */
++		if (pairc->draining && !pairc->active_mask) {
++			__sync_fetch_and_add(&nr_cgrp_next, 1);
++			pairc->cgid = new_cgid;
++			pairc->started_at = now;
++			pairc->draining = false;
++			kick_pair = true;
++		} else {
++			__sync_fetch_and_add(&nr_cgrp_coll, 1);
++		}
++	}
++
++	cgid = pairc->cgid;
++	pairc->active_mask |= in_pair_mask;
++	bpf_spin_unlock(&pairc->lock);
++
++	/* again, it'd be better to do all these with the lock held, oh well */
++	vptr = bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
++	if (!vptr) {
++		scx_bpf_error("failed to lookup q_idx for cgroup[%llu]", cgid);
++		return -ENOENT;
++	}
++	q_idx = *vptr;
++
++	/* claim one task from cgrp_q w/ q_idx */
++	bpf_repeat(BPF_MAX_LOOPS) {
++		u64 *cgq_len, len;
++
++		cgq_len = MEMBER_VPTR(cgrp_q_len, [q_idx]);
++		if (!cgq_len || !(len = *(volatile u64 *)cgq_len)) {
++			/* the cgroup must be empty, expire and repeat */
++			__sync_fetch_and_add(&nr_cgrp_empty, 1);
++			bpf_spin_lock(&pairc->lock);
++			pairc->draining = true;
++			pairc->active_mask &= ~in_pair_mask;
++			bpf_spin_unlock(&pairc->lock);
++			return -EAGAIN;
++		}
++
++		if (__sync_val_compare_and_swap(cgq_len, len, len - 1) != len)
 +			continue;
 +
++		break;
++	}
++
++	cgq_map = bpf_map_lookup_elem(&cgrp_q_arr, &q_idx);
++	if (!cgq_map) {
++		scx_bpf_error("failed to lookup cgq_map for cgroup[%llu] q_idx[%d]",
++			      cgid, q_idx);
++		return -ENOENT;
++	}
++
++	if (bpf_map_pop_elem(cgq_map, &pid)) {
++		scx_bpf_error("cgq_map is empty for cgroup[%llu] q_idx[%d]",
++			      cgid, q_idx);
++		return -ENOENT;
++	}
++
++	p = bpf_task_from_pid(pid);
++	if (p) {
++		__sync_fetch_and_add(&nr_dispatched, 1);
 +		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
 +		bpf_task_release(p);
++	} else {
++		/* we don't handle dequeues, retry on lost tasks */
++		__sync_fetch_and_add(&nr_missing, 1);
++		return -EAGAIN;
++	}
++
++out_maybe_kick:
++	if (kick_pair) {
++		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
++		if (pair) {
++			__sync_fetch_and_add(&nr_kicks, 1);
++			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT);
++		}
++	}
++	return 0;
++}
++
++void BPF_STRUCT_OPS(pair_dispatch, s32 cpu, struct task_struct *prev)
++{
++	bpf_repeat(BPF_MAX_LOOPS) {
++		if (try_dispatch(cpu) != -EAGAIN)
++			break;
 +	}
 +}
 +
-+/*
-+ * A CPU is about to change its idle state. If the CPU is going idle, ensure
-+ * that the user-space scheduler has a chance to run if there is any remaining
-+ * work to do.
-+ */
-+void BPF_STRUCT_OPS(userland_update_idle, s32 cpu, bool idle)
++void BPF_STRUCT_OPS(pair_cpu_acquire, s32 cpu, struct scx_cpu_acquire_args *args)
 +{
-+	/*
-+	 * Don't do anything if we exit from and idle state, a CPU owner will
-+	 * be assigned in .running().
-+	 */
-+	if (!idle)
++	int ret;
++	u32 in_pair_mask;
++	struct pair_ctx *pairc;
++	bool kick_pair;
++
++	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
++	if (ret)
 +		return;
-+	/*
-+	 * A CPU is now available, notify the user-space scheduler that tasks
-+	 * can be dispatched, if there is at least one task waiting to be
-+	 * scheduled, either queued (accounted in nr_queued) or scheduled
-+	 * (accounted in nr_scheduled).
-+	 *
-+	 * NOTE: nr_queued is incremented by the BPF component, more exactly in
-+	 * enqueue(), when a task is sent to the user-space scheduler, then
-+	 * the scheduler drains the queued tasks (updating nr_queued) and adds
-+	 * them to its internal data structures / state; at this point tasks
-+	 * become "scheduled" and the user-space scheduler will take care of
-+	 * updating nr_scheduled accordingly; lastly tasks will be dispatched
-+	 * and the user-space scheduler will update nr_scheduled again.
-+	 *
-+	 * Checking both counters allows to determine if there is still some
-+	 * pending work to do for the scheduler: new tasks have been queued
-+	 * since last check, or there are still tasks "queued" or "scheduled"
-+	 * since the previous user-space scheduler run. If the counters are
-+	 * both zero it is pointless to wake-up the scheduler (even if a CPU
-+	 * becomes idle), because there is nothing to do.
-+	 *
-+	 * Keep in mind that update_idle() doesn't run concurrently with the
-+	 * user-space scheduler (that is single-threaded): this function is
-+	 * naturally serialized with the user-space scheduler code, therefore
-+	 * this check here is also safe from a concurrency perspective.
-+	 */
-+	if (nr_queued || nr_scheduled) {
-+		/*
-+		 * Kick the CPU to make it immediately ready to accept
-+		 * dispatched tasks.
-+		 */
-+		set_usersched_needed();
-+		scx_bpf_kick_cpu(cpu, 0);
++
++	bpf_spin_lock(&pairc->lock);
++	pairc->preempted_mask &= ~in_pair_mask;
++	/* Kick the pair CPU, unless it was also preempted. */
++	kick_pair = !pairc->preempted_mask;
++	bpf_spin_unlock(&pairc->lock);
++
++	if (kick_pair) {
++		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
++
++		if (pair) {
++			__sync_fetch_and_add(&nr_kicks, 1);
++			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT);
++		}
 +	}
 +}
 +
-+s32 BPF_STRUCT_OPS(userland_init_task, struct task_struct *p,
-+		   struct scx_init_task_args *args)
++void BPF_STRUCT_OPS(pair_cpu_release, s32 cpu, struct scx_cpu_release_args *args)
 +{
-+	if (bpf_task_storage_get(&task_ctx_stor, p, 0,
-+				 BPF_LOCAL_STORAGE_GET_F_CREATE))
-+		return 0;
-+	else
-+		return -ENOMEM;
++	int ret;
++	u32 in_pair_mask;
++	struct pair_ctx *pairc;
++	bool kick_pair;
++
++	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
++	if (ret)
++		return;
++
++	bpf_spin_lock(&pairc->lock);
++	pairc->preempted_mask |= in_pair_mask;
++	pairc->active_mask &= ~in_pair_mask;
++	/* Kick the pair CPU if it's still running. */
++	kick_pair = pairc->active_mask;
++	pairc->draining = true;
++	bpf_spin_unlock(&pairc->lock);
++
++	if (kick_pair) {
++		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
++
++		if (pair) {
++			__sync_fetch_and_add(&nr_kicks, 1);
++			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT | SCX_KICK_WAIT);
++		}
++	}
++	__sync_fetch_and_add(&nr_preemptions, 1);
 +}
 +
-+s32 BPF_STRUCT_OPS(userland_init)
++s32 BPF_STRUCT_OPS(pair_cgroup_init, struct cgroup *cgrp)
 +{
-+	if (num_possible_cpus == 0) {
-+		scx_bpf_error("User scheduler # CPUs uninitialized (%d)",
-+			      num_possible_cpus);
-+		return -EINVAL;
-+	}
++	u64 cgid = cgrp->kn->id;
++	s32 i, q_idx;
 +
-+	if (usersched_pid <= 0) {
-+		scx_bpf_error("User scheduler pid uninitialized (%d)",
-+			      usersched_pid);
-+		return -EINVAL;
++	bpf_for(i, 0, MAX_CGRPS) {
++		q_idx = __sync_fetch_and_add(&cgrp_q_idx_cursor, 1) % MAX_CGRPS;
++		if (!__sync_val_compare_and_swap(&cgrp_q_idx_busy[q_idx], 0, 1))
++			break;
++	}
++	if (i == MAX_CGRPS)
++		return -EBUSY;
++
++	if (bpf_map_update_elem(&cgrp_q_idx_hash, &cgid, &q_idx, BPF_ANY)) {
++		u64 *busy = MEMBER_VPTR(cgrp_q_idx_busy, [q_idx]);
++		if (busy)
++			*busy = 0;
++		return -EBUSY;
 +	}
 +
 +	return 0;
 +}
 +
-+void BPF_STRUCT_OPS(userland_exit, struct scx_exit_info *ei)
++void BPF_STRUCT_OPS(pair_cgroup_exit, struct cgroup *cgrp)
++{
++	u64 cgid = cgrp->kn->id;
++	s32 *q_idx;
++
++	q_idx = bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
++	if (q_idx) {
++		u64 *busy = MEMBER_VPTR(cgrp_q_idx_busy, [*q_idx]);
++		if (busy)
++			*busy = 0;
++		bpf_map_delete_elem(&cgrp_q_idx_hash, &cgid);
++	}
++}
++
++void BPF_STRUCT_OPS(pair_exit, struct scx_exit_info *ei)
 +{
 +	UEI_RECORD(uei, ei);
 +}
 +
-+SCX_OPS_DEFINE(userland_ops,
-+	       .select_cpu		= (void *)userland_select_cpu,
-+	       .enqueue			= (void *)userland_enqueue,
-+	       .dispatch		= (void *)userland_dispatch,
-+	       .update_idle		= (void *)userland_update_idle,
-+	       .init_task		= (void *)userland_init_task,
-+	       .init			= (void *)userland_init,
-+	       .exit			= (void *)userland_exit,
-+	       .flags			= SCX_OPS_ENQ_LAST |
-+					  SCX_OPS_KEEP_BUILTIN_IDLE,
-+	       .name			= "userland");
-diff --git a/tools/sched_ext/scx_userland.c b/tools/sched_ext/scx_userland.c
++SCX_OPS_DEFINE(pair_ops,
++	       .enqueue			= (void *)pair_enqueue,
++	       .dispatch		= (void *)pair_dispatch,
++	       .cpu_acquire		= (void *)pair_cpu_acquire,
++	       .cpu_release		= (void *)pair_cpu_release,
++	       .cgroup_init		= (void *)pair_cgroup_init,
++	       .cgroup_exit		= (void *)pair_cgroup_exit,
++	       .exit			= (void *)pair_exit,
++	       .name			= "pair");
+diff --git a/tools/sched_ext/scx_pair.c b/tools/sched_ext/scx_pair.c
 new file mode 100644
-index 000000000000..10b31020f44f
+index 000000000000..d3e97faa6334
 --- /dev/null
-+++ b/tools/sched_ext/scx_userland.c
-@@ -0,0 +1,437 @@
++++ b/tools/sched_ext/scx_pair.c
+@@ -0,0 +1,180 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
-+ * A demo sched_ext user space scheduler which provides vruntime semantics
-+ * using a simple ordered-list implementation.
-+ *
-+ * Each CPU in the system resides in a single, global domain. This precludes
-+ * the need to do any load balancing between domains. The scheduler could
-+ * easily be extended to support multiple domains, with load balancing
-+ * happening in user space.
-+ *
-+ * Any task which has any CPU affinity is scheduled entirely in BPF. This
-+ * program only schedules tasks which may run on any CPU.
-+ *
 + * Copyright (c) 2022 Meta Platforms, Inc. and affiliates.
 + * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
 + * Copyright (c) 2022 David Vernet <dvernet@meta.com>
 + */
 +#include <stdio.h>
 +#include <unistd.h>
-+#include <sched.h>
++#include <inttypes.h>
 +#include <signal.h>
 +#include <assert.h>
 +#include <libgen.h>
-+#include <pthread.h>
 +#include <bpf/bpf.h>
-+#include <sys/mman.h>
-+#include <sys/queue.h>
-+#include <sys/syscall.h>
-+
 +#include <scx/common.h>
-+#include "scx_userland.h"
-+#include "scx_userland.bpf.skel.h"
++#include "scx_pair.h"
++#include "scx_pair.bpf.skel.h"
 +
 +const char help_fmt[] =
-+"A minimal userland sched_ext scheduler.\n"
++"A demo sched_ext core-scheduler which always makes every sibling CPU pair\n"
++"execute from the same CPU cgroup.\n"
 +"\n"
 +"See the top-level comment in .bpf.c for more details.\n"
 +"\n"
-+"Try to reduce `sysctl kernel.pid_max` if this program triggers OOMs.\n"
++"Usage: %s [-S STRIDE]\n"
 +"\n"
-+"Usage: %s [-b BATCH]\n"
-+"\n"
-+"  -b BATCH      The number of tasks to batch when dispatching (default: 8)\n"
++"  -S STRIDE     Override CPU pair stride (default: nr_cpus_ids / 2)\n"
 +"  -v            Print libbpf debug messages\n"
 +"  -h            Display this help and exit\n";
 +
-+/* Defined in UAPI */
-+#define SCHED_EXT 7
-+
-+/* Number of tasks to batch when dispatching to user space. */
-+static __u32 batch_size = 8;
-+
 +static bool verbose;
 +static volatile int exit_req;
-+static int enqueued_fd, dispatched_fd;
-+
-+static struct scx_userland *skel;
-+static struct bpf_link *ops_link;
-+
-+/* Stats collected in user space. */
-+static __u64 nr_vruntime_enqueues, nr_vruntime_dispatches, nr_vruntime_failed;
-+
-+/* Number of tasks currently enqueued. */
-+static __u64 nr_curr_enqueued;
-+
-+/* The data structure containing tasks that are enqueued in user space. */
-+struct enqueued_task {
-+	LIST_ENTRY(enqueued_task) entries;
-+	__u64 sum_exec_runtime;
-+	double vruntime;
-+};
-+
-+/*
-+ * Use a vruntime-sorted list to store tasks. This could easily be extended to
-+ * a more optimal data structure, such as an rbtree as is done in CFS. We
-+ * currently elect to use a sorted list to simplify the example for
-+ * illustrative purposes.
-+ */
-+LIST_HEAD(listhead, enqueued_task);
-+
-+/*
-+ * A vruntime-sorted list of tasks. The head of the list contains the task with
-+ * the lowest vruntime. That is, the task that has the "highest" claim to be
-+ * scheduled.
-+ */
-+static struct listhead vruntime_head = LIST_HEAD_INITIALIZER(vruntime_head);
-+
-+/*
-+ * The main array of tasks. The array is allocated all at once during
-+ * initialization, based on /proc/sys/kernel/pid_max, to avoid having to
-+ * dynamically allocate memory on the enqueue path, which could cause a
-+ * deadlock. A more substantive user space scheduler could e.g. provide a hook
-+ * for newly enabled tasks that are passed to the scheduler from the
-+ * .prep_enable() callback to allows the scheduler to allocate on safe paths.
-+ */
-+struct enqueued_task *tasks;
-+static int pid_max;
-+
-+static double min_vruntime;
 +
 +static int libbpf_print_fn(enum libbpf_print_level level, const char *format, va_list args)
 +{
@@ -574,359 +769,162 @@ index 000000000000..10b31020f44f
 +	return vfprintf(stderr, format, args);
 +}
 +
-+static void sigint_handler(int userland)
++static void sigint_handler(int dummy)
 +{
 +	exit_req = 1;
 +}
 +
-+static int get_pid_max(void)
++int main(int argc, char **argv)
 +{
-+	FILE *fp;
-+	int pid_max;
-+
-+	fp = fopen("/proc/sys/kernel/pid_max", "r");
-+	if (fp == NULL) {
-+		fprintf(stderr, "Error opening /proc/sys/kernel/pid_max\n");
-+		return -1;
-+	}
-+	if (fscanf(fp, "%d", &pid_max) != 1) {
-+		fprintf(stderr, "Error reading from /proc/sys/kernel/pid_max\n");
-+		fclose(fp);
-+		return -1;
-+	}
-+	fclose(fp);
-+
-+	return pid_max;
-+}
-+
-+static int init_tasks(void)
-+{
-+	pid_max = get_pid_max();
-+	if (pid_max < 0)
-+		return pid_max;
-+
-+	tasks = calloc(pid_max, sizeof(*tasks));
-+	if (!tasks) {
-+		fprintf(stderr, "Error allocating tasks array\n");
-+		return -ENOMEM;
-+	}
-+
-+	return 0;
-+}
-+
-+static __u32 task_pid(const struct enqueued_task *task)
-+{
-+	return ((uintptr_t)task - (uintptr_t)tasks) / sizeof(*task);
-+}
-+
-+static int dispatch_task(__s32 pid)
-+{
-+	int err;
-+
-+	err = bpf_map_update_elem(dispatched_fd, NULL, &pid, 0);
-+	if (err) {
-+		nr_vruntime_failed++;
-+	} else {
-+		nr_vruntime_dispatches++;
-+	}
-+
-+	return err;
-+}
-+
-+static struct enqueued_task *get_enqueued_task(__s32 pid)
-+{
-+	if (pid >= pid_max)
-+		return NULL;
-+
-+	return &tasks[pid];
-+}
-+
-+static double calc_vruntime_delta(__u64 weight, __u64 delta)
-+{
-+	double weight_f = (double)weight / 100.0;
-+	double delta_f = (double)delta;
-+
-+	return delta_f / weight_f;
-+}
-+
-+static void update_enqueued(struct enqueued_task *enqueued, const struct scx_userland_enqueued_task *bpf_task)
-+{
-+	__u64 delta;
-+
-+	delta = bpf_task->sum_exec_runtime - enqueued->sum_exec_runtime;
-+
-+	enqueued->vruntime += calc_vruntime_delta(bpf_task->weight, delta);
-+	if (min_vruntime > enqueued->vruntime)
-+		enqueued->vruntime = min_vruntime;
-+	enqueued->sum_exec_runtime = bpf_task->sum_exec_runtime;
-+}
-+
-+static int vruntime_enqueue(const struct scx_userland_enqueued_task *bpf_task)
-+{
-+	struct enqueued_task *curr, *enqueued, *prev;
-+
-+	curr = get_enqueued_task(bpf_task->pid);
-+	if (!curr)
-+		return ENOENT;
-+
-+	update_enqueued(curr, bpf_task);
-+	nr_vruntime_enqueues++;
-+	nr_curr_enqueued++;
-+
-+	/*
-+	 * Enqueue the task in a vruntime-sorted list. A more optimal data
-+	 * structure such as an rbtree could easily be used as well. We elect
-+	 * to use a list here simply because it's less code, and thus the
-+	 * example is less convoluted and better serves to illustrate what a
-+	 * user space scheduler could look like.
-+	 */
-+
-+	if (LIST_EMPTY(&vruntime_head)) {
-+		LIST_INSERT_HEAD(&vruntime_head, curr, entries);
-+		return 0;
-+	}
-+
-+	LIST_FOREACH(enqueued, &vruntime_head, entries) {
-+		if (curr->vruntime <= enqueued->vruntime) {
-+			LIST_INSERT_BEFORE(enqueued, curr, entries);
-+			return 0;
-+		}
-+		prev = enqueued;
-+	}
-+
-+	LIST_INSERT_AFTER(prev, curr, entries);
-+
-+	return 0;
-+}
-+
-+static void drain_enqueued_map(void)
-+{
-+	while (1) {
-+		struct scx_userland_enqueued_task task;
-+		int err;
-+
-+		if (bpf_map_lookup_and_delete_elem(enqueued_fd, NULL, &task)) {
-+			skel->bss->nr_queued = 0;
-+			skel->bss->nr_scheduled = nr_curr_enqueued;
-+			return;
-+		}
-+
-+		err = vruntime_enqueue(&task);
-+		if (err) {
-+			fprintf(stderr, "Failed to enqueue task %d: %s\n",
-+				task.pid, strerror(err));
-+			exit_req = 1;
-+			return;
-+		}
-+	}
-+}
-+
-+static void dispatch_batch(void)
-+{
-+	__u32 i;
-+
-+	for (i = 0; i < batch_size; i++) {
-+		struct enqueued_task *task;
-+		int err;
-+		__s32 pid;
-+
-+		task = LIST_FIRST(&vruntime_head);
-+		if (!task)
-+			break;
-+
-+		min_vruntime = task->vruntime;
-+		pid = task_pid(task);
-+		LIST_REMOVE(task, entries);
-+		err = dispatch_task(pid);
-+		if (err) {
-+			/*
-+			 * If we fail to dispatch, put the task back to the
-+			 * vruntime_head list and stop dispatching additional
-+			 * tasks in this batch.
-+			 */
-+			LIST_INSERT_HEAD(&vruntime_head, task, entries);
-+			break;
-+		}
-+		nr_curr_enqueued--;
-+	}
-+	skel->bss->nr_scheduled = nr_curr_enqueued;
-+}
-+
-+static void *run_stats_printer(void *arg)
-+{
-+	while (!exit_req) {
-+		__u64 nr_failed_enqueues, nr_kernel_enqueues, nr_user_enqueues, total;
-+
-+		nr_failed_enqueues = skel->bss->nr_failed_enqueues;
-+		nr_kernel_enqueues = skel->bss->nr_kernel_enqueues;
-+		nr_user_enqueues = skel->bss->nr_user_enqueues;
-+		total = nr_failed_enqueues + nr_kernel_enqueues + nr_user_enqueues;
-+
-+		printf("o-----------------------o\n");
-+		printf("| BPF ENQUEUES          |\n");
-+		printf("|-----------------------|\n");
-+		printf("|  kern:     %10llu |\n", nr_kernel_enqueues);
-+		printf("|  user:     %10llu |\n", nr_user_enqueues);
-+		printf("|  failed:   %10llu |\n", nr_failed_enqueues);
-+		printf("|  -------------------- |\n");
-+		printf("|  total:    %10llu |\n", total);
-+		printf("|                       |\n");
-+		printf("|-----------------------|\n");
-+		printf("| VRUNTIME / USER       |\n");
-+		printf("|-----------------------|\n");
-+		printf("|  enq:      %10llu |\n", nr_vruntime_enqueues);
-+		printf("|  disp:     %10llu |\n", nr_vruntime_dispatches);
-+		printf("|  failed:   %10llu |\n", nr_vruntime_failed);
-+		printf("o-----------------------o\n");
-+		printf("\n\n");
-+		fflush(stdout);
-+		sleep(1);
-+	}
-+
-+	return NULL;
-+}
-+
-+static int spawn_stats_thread(void)
-+{
-+	pthread_t stats_printer;
-+
-+	return pthread_create(&stats_printer, NULL, run_stats_printer, NULL);
-+}
-+
-+static void pre_bootstrap(int argc, char **argv)
-+{
-+	int err;
-+	__u32 opt;
-+	struct sched_param sched_param = {
-+		.sched_priority = sched_get_priority_max(SCHED_EXT),
-+	};
-+
-+	err = init_tasks();
-+	if (err)
-+		exit(err);
++	struct scx_pair *skel;
++	struct bpf_link *link;
++	__u64 seq = 0, ecode;
++	__s32 stride, i, opt, outer_fd;
 +
 +	libbpf_set_print(libbpf_print_fn);
 +	signal(SIGINT, sigint_handler);
 +	signal(SIGTERM, sigint_handler);
++restart:
++	skel = SCX_OPS_OPEN(pair_ops, scx_pair);
 +
-+	/*
-+	 * Enforce that the user scheduler task is managed by sched_ext. The
-+	 * task eagerly drains the list of enqueued tasks in its main work
-+	 * loop, and then yields the CPU. The BPF scheduler only schedules the
-+	 * user space scheduler task when at least one other task in the system
-+	 * needs to be scheduled.
-+	 */
-+	err = syscall(__NR_sched_setscheduler, getpid(), SCHED_EXT, &sched_param);
-+	SCX_BUG_ON(err, "Failed to set scheduler to SCHED_EXT");
++	skel->rodata->nr_cpu_ids = libbpf_num_possible_cpus();
++	assert(skel->rodata->nr_cpu_ids > 0);
++	skel->rodata->pair_batch_dur_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
 +
-+	while ((opt = getopt(argc, argv, "b:vh")) != -1) {
++	/* pair up the earlier half to the latter by default, override with -s */
++	stride = skel->rodata->nr_cpu_ids / 2;
++
++	while ((opt = getopt(argc, argv, "S:vh")) != -1) {
 +		switch (opt) {
-+		case 'b':
-+			batch_size = strtoul(optarg, NULL, 0);
++		case 'S':
++			stride = strtoul(optarg, NULL, 0);
 +			break;
 +		case 'v':
 +			verbose = true;
 +			break;
 +		default:
 +			fprintf(stderr, help_fmt, basename(argv[0]));
-+			exit(opt != 'h');
++			return opt != 'h';
 +		}
 +	}
 +
-+	/*
-+	 * It's not always safe to allocate in a user space scheduler, as an
-+	 * enqueued task could hold a lock that we require in order to be able
-+	 * to allocate.
-+	 */
-+	err = mlockall(MCL_CURRENT | MCL_FUTURE);
-+	SCX_BUG_ON(err, "Failed to prefault and lock address space");
-+}
++	bpf_map__set_max_entries(skel->maps.pair_ctx, skel->rodata->nr_cpu_ids / 2);
 +
-+static void bootstrap(char *comm)
-+{
-+	skel = SCX_OPS_OPEN(userland_ops, scx_userland);
++	/* Resize arrays so their element count is equal to cpu count. */
++	RESIZE_ARRAY(skel, rodata, pair_cpu, skel->rodata->nr_cpu_ids);
++	RESIZE_ARRAY(skel, rodata, pair_id, skel->rodata->nr_cpu_ids);
++	RESIZE_ARRAY(skel, rodata, in_pair_idx, skel->rodata->nr_cpu_ids);
 +
-+	skel->rodata->num_possible_cpus = libbpf_num_possible_cpus();
-+	assert(skel->rodata->num_possible_cpus > 0);
-+	skel->rodata->usersched_pid = getpid();
-+	assert(skel->rodata->usersched_pid > 0);
++	for (i = 0; i < skel->rodata->nr_cpu_ids; i++)
++		skel->rodata_pair_cpu->pair_cpu[i] = -1;
 +
-+	SCX_OPS_LOAD(skel, userland_ops, scx_userland, uei);
++	printf("Pairs: ");
++	for (i = 0; i < skel->rodata->nr_cpu_ids; i++) {
++		int j = (i + stride) % skel->rodata->nr_cpu_ids;
 +
-+	enqueued_fd = bpf_map__fd(skel->maps.enqueued);
-+	dispatched_fd = bpf_map__fd(skel->maps.dispatched);
-+	assert(enqueued_fd > 0);
-+	assert(dispatched_fd > 0);
++		if (skel->rodata_pair_cpu->pair_cpu[i] >= 0)
++			continue;
 +
-+	SCX_BUG_ON(spawn_stats_thread(), "Failed to spawn stats thread");
++		SCX_BUG_ON(i == j,
++			   "Invalid stride %d - CPU%d wants to be its own pair",
++			   stride, i);
 +
-+	ops_link = SCX_OPS_ATTACH(skel, userland_ops, scx_userland);
-+}
++		SCX_BUG_ON(skel->rodata_pair_cpu->pair_cpu[j] >= 0,
++			   "Invalid stride %d - three CPUs (%d, %d, %d) want to be a pair",
++			   stride, i, j, skel->rodata_pair_cpu->pair_cpu[j]);
 +
-+static void sched_main_loop(void)
-+{
-+	while (!exit_req) {
-+		/*
-+		 * Perform the following work in the main user space scheduler
-+		 * loop:
-+		 *
-+		 * 1. Drain all tasks from the enqueued map, and enqueue them
-+		 *    to the vruntime sorted list.
-+		 *
-+		 * 2. Dispatch a batch of tasks from the vruntime sorted list
-+		 *    down to the kernel.
-+		 *
-+		 * 3. Yield the CPU back to the system. The BPF scheduler will
-+		 *    reschedule the user space scheduler once another task has
-+		 *    been enqueued to user space.
-+		 */
-+		drain_enqueued_map();
-+		dispatch_batch();
-+		sched_yield();
++		skel->rodata_pair_cpu->pair_cpu[i] = j;
++		skel->rodata_pair_cpu->pair_cpu[j] = i;
++		skel->rodata_pair_id->pair_id[i] = i;
++		skel->rodata_pair_id->pair_id[j] = i;
++		skel->rodata_in_pair_idx->in_pair_idx[i] = 0;
++		skel->rodata_in_pair_idx->in_pair_idx[j] = 1;
++
++		printf("[%d, %d] ", i, j);
 +	}
-+}
++	printf("\n");
 +
-+int main(int argc, char **argv)
-+{
-+	__u64 ecode;
++	SCX_OPS_LOAD(skel, pair_ops, scx_pair, uei);
 +
-+	pre_bootstrap(argc, argv);
-+restart:
-+	bootstrap(argv[0]);
-+	sched_main_loop();
++	/*
++	 * Populate the cgrp_q_arr map which is an array containing per-cgroup
++	 * queues. It'd probably be better to do this from BPF but there are too
++	 * many to initialize statically and there's no way to dynamically
++	 * populate from BPF.
++	 */
++	outer_fd = bpf_map__fd(skel->maps.cgrp_q_arr);
++	SCX_BUG_ON(outer_fd < 0, "Failed to get outer_fd: %d", outer_fd);
 +
-+	exit_req = 1;
-+	bpf_link__destroy(ops_link);
++	printf("Initializing");
++        for (i = 0; i < MAX_CGRPS; i++) {
++		__s32 inner_fd;
++
++		if (exit_req)
++			break;
++
++		inner_fd = bpf_map_create(BPF_MAP_TYPE_QUEUE, NULL, 0,
++					  sizeof(__u32), MAX_QUEUED, NULL);
++		SCX_BUG_ON(inner_fd < 0, "Failed to get inner_fd: %d",
++			   inner_fd);
++		SCX_BUG_ON(bpf_map_update_elem(outer_fd, &i, &inner_fd, BPF_ANY),
++			   "Failed to set inner map");
++		close(inner_fd);
++
++		if (!(i % 10))
++			printf(".");
++		fflush(stdout);
++        }
++	printf("\n");
++
++	/*
++	 * Fully initialized, attach and run.
++	 */
++	link = SCX_OPS_ATTACH(skel, pair_ops, scx_pair);
++
++	while (!exit_req && !UEI_EXITED(skel, uei)) {
++		printf("[SEQ %llu]\n", seq++);
++		printf(" total:%10" PRIu64 " dispatch:%10" PRIu64 "   missing:%10" PRIu64 "\n",
++		       skel->bss->nr_total,
++		       skel->bss->nr_dispatched,
++		       skel->bss->nr_missing);
++		printf(" kicks:%10" PRIu64 " preemptions:%7" PRIu64 "\n",
++		       skel->bss->nr_kicks,
++		       skel->bss->nr_preemptions);
++		printf("   exp:%10" PRIu64 " exp_wait:%10" PRIu64 " exp_empty:%10" PRIu64 "\n",
++		       skel->bss->nr_exps,
++		       skel->bss->nr_exp_waits,
++		       skel->bss->nr_exp_empty);
++		printf("cgnext:%10" PRIu64 "   cgcoll:%10" PRIu64 "   cgempty:%10" PRIu64 "\n",
++		       skel->bss->nr_cgrp_next,
++		       skel->bss->nr_cgrp_coll,
++		       skel->bss->nr_cgrp_empty);
++		fflush(stdout);
++		sleep(1);
++	}
++
++	bpf_link__destroy(link);
 +	ecode = UEI_REPORT(skel, uei);
-+	scx_userland__destroy(skel);
++	scx_pair__destroy(skel);
 +
 +	if (UEI_ECODE_RESTART(ecode))
 +		goto restart;
 +	return 0;
 +}
-diff --git a/tools/sched_ext/scx_userland.h b/tools/sched_ext/scx_userland.h
+diff --git a/tools/sched_ext/scx_pair.h b/tools/sched_ext/scx_pair.h
 new file mode 100644
-index 000000000000..684fb2dd5de9
+index 000000000000..d9666a447d3f
 --- /dev/null
-+++ b/tools/sched_ext/scx_userland.h
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/* Copyright (c) 2022 Meta, Inc */
++++ b/tools/sched_ext/scx_pair.h
+@@ -0,0 +1,9 @@
++#ifndef __SCX_EXAMPLE_PAIR_H
++#define __SCX_EXAMPLE_PAIR_H
 +
-+#ifndef __SCX_USERLAND_COMMON_H
-+#define __SCX_USERLAND_COMMON_H
-+
-+/*
-+ * An instance of a task that has been enqueued by the kernel for consumption
-+ * by a user space global scheduler thread.
-+ */
-+struct scx_userland_enqueued_task {
-+	__s32 pid;
-+	u64 sum_exec_runtime;
-+	u64 weight;
++enum {
++	MAX_QUEUED		= 4096,
++	MAX_CGRPS		= 4096,
 +};
 +
-+#endif  // __SCX_USERLAND_COMMON_H
++#endif /* __SCX_EXAMPLE_PAIR_H */
 -- 
 2.49.0
 
