@@ -1,74 +1,74 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E8D33F360
-	for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 21:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A41342525
+	for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 21:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768254155; cv=none; b=RBJBSFpKpN7JYvw3h3PwUkvZyuTxR7QE+zeqx9kgmXlwMiHT4ZmzZsemTD4PIq+cCKG2F8zk0YC2dENBVnHT/8Tk5KfM9P1omibjbtjA1dVzJVhK+/GOwuSZhIoaVP2pAUkXVy1ARe0aPoAoZSUVdvObsOZ2yb7ySX6ogU2Bgnc=
+	t=1768254156; cv=none; b=jZAHeEf5jeITxzCfhiPtR9t+MWFrBl9Nr26adoZyLHsYRycVHLIv4Qui/zaoFgTYkx1DqdoV3bKTuBV+vKdp8zl8noIdGYHzSieXTgQaf4n70rjhSaJzX0bNchWG906/yJ8YvLGk3vL5AzdSjxeURofghm8F49JmmZAs3vjRzao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768254155; c=relaxed/simple;
-	bh=/K5zzc4ix4++ZRKZqm2nxDwQs1y4LAuq0DBYCpclujM=;
+	s=arc-20240116; t=1768254156; c=relaxed/simple;
+	bh=RDGDvYsPsbR+ybKrAHUX48fkk03rYZwPS1za7lQM4S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQIetRD7KGhpyDFgufVCmlYSNnAM6DN0KNZq4SHJZ3wE1yoAj5V+ip7RB7s2uaY8kBn8Rg2U+52MBIRuC2SGIB0wpK4XPzp7cCWQotgEA5+aIH4zc4IrIwMWEDXQAXBqUIHAKDvsIeQh/Q6C/P3noIqToosvE76hXzDXkbHWwmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=Y4E9bgEx; arc=none smtp.client-ip=209.85.219.49
+	 MIME-Version; b=N7GRt+001KScptnZG6zgISCjiEJJKppZbS885KhL7//jXAEVCNZcn5hFpIaoGuh7svMQXm6Pez+Ik6u+R69zbV9ikVRaLdnbXaINb+NbJv0syQibfQRQd++FFqZg/k/ffE+5ee6evF+gL1sYsjFErpteiqb/c+4tppVLhVO1Mv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=SRqfyc3Z; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="Y4E9bgEx"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-888310b91c5so44791926d6.1
-        for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 13:42:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="SRqfyc3Z"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8b25ed53fcbso179341385a.0
+        for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 13:42:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1768254152; x=1768858952; darn=lists.linux.dev;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1768254153; x=1768858953; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QbjTQR1Mcu8AwP76ti7s2iB2lEZDCJhtV8UUb1HPMSI=;
-        b=Y4E9bgExyReQ5uQ5RoX+gE8IY4/etNyiWCOcx4JPeV5mQ/BizKRvojbEebooYZe/wG
-         dF1EWMbRPSUz0rnntQsa2aV6U5+9jKly/nLVoD38CWyFRGYbuaDtgZe47EqN34QWOQZu
-         TT6g2Aze6HTXYZy7xSU6YLSg5o8r8xKd8RYdcWV1F1rqh/1kICdPJbitjkpU6Iazc8hZ
-         in2Dcz+fwUUc3BNqhitRKSXYGL+hXXpUu3vjNtnmBrreER24Zp5a2kZq0ZWM02PzWlwF
-         ZG15zz/VvGLtS/5OeMzAHeECbSJDlI+UhBJtUvstpro+aF8IiRigtneaVdChdXSZuCtX
-         /h1g==
+        bh=Suuxflx+RGs6vtzNfvz6T8s8iHKvCBFBTeRjh5JrIJk=;
+        b=SRqfyc3Zu9EzhREF0gIDZzjmE/MRbf5BQN1UBcHqLUoMIN9P33VNDdlDIsCsVER9XW
+         cydkwIkEpYaksrrsjUxP8cB9rQ/Da6kD4JPT7p9psA9II+WhV/d7QesvOk26oXU/TExn
+         tklLLbFkbAPXbAWC8Y+x3LpV6vs/BtHkCXU5781Yn2H8xU/rPgAynNrauwY4rIHEP/Vr
+         qzk8XftF4uzh1Y2iP9GUumE+d2UuszaMi2SLZp0VnbhIIr33TiTDj5hDlWkYdTNHjDhe
+         u0A3wOCtP99mRgYXrsiXXuN+DVj9xzdhkRDrvNuniBQZXcmW0KZv7yjp7bq0+0puc0MK
+         YyGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768254152; x=1768858952;
+        d=1e100.net; s=20230601; t=1768254153; x=1768858953;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QbjTQR1Mcu8AwP76ti7s2iB2lEZDCJhtV8UUb1HPMSI=;
-        b=EDHD/dOAevIRSX6E9qbZcDUjypnCLB4mInXURQ3dHAfW+0zn+lfad5gciX2+avZxR0
-         LVIk23nuWOy21yqo6xFRoXo66dP98gY67PGTWSek6G01UiJAWwsjfJr7cmIcaimv1mD1
-         s14JjG6gYU/huq89XE1N9DXbvOK4QGo9bCxqZYcRng35peb57eSGKgFzcdRFpHWz4lu6
-         fmGf1DYWcyJre5UosTfpSs02W1Kui9lAdaEDM0869DUPPmhrFOpEUwYLm6paq9sbBvKV
-         rrmfIaO/uew88M0Lk8lzxOcPjTtQ9KxzjboYF9JfV68l8aSKVaDOHRINPKpoalnabgkK
-         PhMQ==
-X-Gm-Message-State: AOJu0YyQburFtLETBbHVGiSGe5XB1Hgg+000Fn2P/35bWAc6hZzWRv4x
-	Ne3CBIwmVUaXfTGsqp+1SSdQKRM0/VEGXEtm0z943jgIqCLG0cna/QIBtznwCa6y8XAxLRVdi/5
-	Vf28J2vM=
-X-Gm-Gg: AY/fxX4x1cSeTZwak19hVN2DD18f74wx+sP+bE4GgS8VCKgLo890zFiAJ7Z5S52lr2d
-	aAHalKwC+stcUXfxgL1ifmWLR7pYS/0PfYoOv3NOlXRMZgW/1oBdY7UW1lBmD9mAlrcUV7cjFcA
-	qgI0vqyyoGvywzyw5TUVIpnbp2F0Mq1X/jUzyRIyq8A6u5lGHRxHSeHXraLB1c/g5PSibgwva3b
-	GBrc02luw8eNIJdoP/MRwugHyKd8ntf/uSzx2bJIDAg8pqLXnYC4Dru0+btTUXEMPIy9k1IheQF
-	x9y8eY0J+hZ4z+JGD3pmXYB56RS/SZx/uqWpV9thr6TYD2/96410Ix25/07hWORL4iV79i3SQ+o
-	vGZIhXWGKGnpulLaGcA0LyP5leg5PeaDQVJzVp1wJ7vX0NVzq1kSJ1FalTYXOCZx5aAKOm+xiDE
-	zEl+1TPTyWog==
-X-Received: by 2002:ad4:5be5:0:b0:88a:2f52:cc3 with SMTP id 6a1803df08f44-892661ac162mr12990006d6.14.1768254151608;
-        Mon, 12 Jan 2026 13:42:31 -0800 (PST)
+        bh=Suuxflx+RGs6vtzNfvz6T8s8iHKvCBFBTeRjh5JrIJk=;
+        b=QZq1fqKGTfw1TupnoND0mhIke0j4OiXJ0FvTTnlY7jgBviuXmDu4PP0g85z2hBY38b
+         yiiLHBvpHmgtyXokpIHjscCiD1hb7Jt82sD1kbqVTnqV4D+kEcyfhvA8x6nuRiBhasjn
+         nbqgL5BlRz3WqEgjnoDFgBiug8rorMvEo3C8Ezs2yWDp8DhqVAzat3Nh/UhcN6Wo00IZ
+         2avA3BAzm8CGbkjYw0QEbsM21UIwHG99ZK+Y6oPuEe0dPDPMbD3UzK77Dzn5vnXfiz7r
+         kAfCkbaQyGbS4DpwaAXHqT1xqaLbkVZw/y/ECtY+7JDuA7ZzuWRkFB6V+rEElZRSI0Rx
+         FyIg==
+X-Gm-Message-State: AOJu0YzIYpf5EFE7srRvhrZ9sH+JVa/6ZURY80MH6qag0MrlmFRxOstx
+	4mgAqKSYqbdIEqSjwGqWo/8X9t1nfddEoZ4uRSnreZNvFaAzOWzz2Fz8rhhu20nRmgyHjfDggzC
+	/QFg9vSI=
+X-Gm-Gg: AY/fxX6GsPUi8e8IVLq4Ken58cimIyvCuMZVo3Zg/LulbkfwGYpBs66RMfxx6U5K5aL
+	D9Fpcca2KJIXcn78uBERmkNjYtqB3Ca7kMuqfiePXG9+eIueECkQA454Xx/qIicOqRMAgjvvD9n
+	Nn+vGENaUbfImiAwCBXfSV05i1HUYoCPb04bCSVs3y2lLjopjbw6DzyWH83tlxWwR9zXD1HANBk
+	9ZdCEbfRWhTK2uvzjyu1eExlo4Go8/F9h+DwailWwG8iQYSYEu/Ut7ryvATO3S1nU1n76UmiyO5
+	vjIVxRWxSW/E904U/cn+ONQYlJdZhMIYnFG1BIt5n7WCuYmVjxSpy7mD7UwUeWCwh1ZIttM8FDJ
+	beX/WGTTlSvlZtOeeGzA7AHdKjVvR89uru0K/eORO8YCzgQXRAK+TM2222KRbHBh9wMa93gC260
+	Iso5tBi8Ng1Q==
+X-Google-Smtp-Source: AGHT+IEeadrC3q1ZG0Fp726L/EnN7Z5xYbURyUxZxOiZOXu/K6G1yLHpnuqD3oiNuffq/JoFxbBwFg==
+X-Received: by 2002:a05:6214:d0a:b0:890:3f6a:fab2 with SMTP id 6a1803df08f44-890842f028dmr310423486d6.68.1768254152615;
+        Mon, 12 Jan 2026 13:42:32 -0800 (PST)
 Received: from boreas.. ([140.174.219.137])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770d17a3sm143643336d6.9.2026.01.12.13.42.31
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-890770d17a3sm143643336d6.9.2026.01.12.13.42.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 13:42:31 -0800 (PST)
+        Mon, 12 Jan 2026 13:42:32 -0800 (PST)
 From: Emil Tsalapatis <emil@etsalapatis.com>
 To: sched-ext@lists.linux.dev
 Cc: changwoo@igalia.com,
 	arighi@nvidia.com,
 	tj@kernel.org,
 	void@manifault.com,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Vernet <dvernet@meta.com>
-Subject: [PATCH 3/4] tools/sched_ext: add scx_pair scheduler
-Date: Mon, 12 Jan 2026 16:41:30 -0500
-Message-ID: <20260112214131.50236-4-emil@etsalapatis.com>
+	Emil Tsalapatis <emil@etsalapatis.com>
+Subject: [PATCH 4/4] tools/sched_ext: add arena based scheduler
+Date: Mon, 12 Jan 2026 16:41:31 -0500
+Message-ID: <20260112214131.50236-5-emil@etsalapatis.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260112214131.50236-1-emil@etsalapatis.com>
 References: <20260112214131.50236-1-emil@etsalapatis.com>
@@ -80,682 +80,778 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the scx_pair cgroup-based core scheduler.
+Add a scheduler that uses BPF arenas to manage task context data.
 
-Cc: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <dvernet@meta.com>
 Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
 ---
- tools/sched_ext/Makefile       |   2 +-
- tools/sched_ext/scx_pair.bpf.c | 610 +++++++++++++++++++++++++++++++++
- tools/sched_ext/scx_pair.c     | 180 ++++++++++
- tools/sched_ext/scx_pair.h     |   9 +
- 4 files changed, 800 insertions(+), 1 deletion(-)
- create mode 100644 tools/sched_ext/scx_pair.bpf.c
- create mode 100644 tools/sched_ext/scx_pair.c
- create mode 100644 tools/sched_ext/scx_pair.h
+ tools/sched_ext/Makefile      |   2 +-
+ tools/sched_ext/scx_sdt.bpf.c | 710 ++++++++++++++++++++++++++++++++++
+ tools/sched_ext/scx_sdt.c     | 101 +++++
+ tools/sched_ext/scx_sdt.h     | 113 ++++++
+ 4 files changed, 925 insertions(+), 1 deletion(-)
+ create mode 100644 tools/sched_ext/scx_sdt.bpf.c
+ create mode 100644 tools/sched_ext/scx_sdt.c
+ create mode 100644 tools/sched_ext/scx_sdt.h
 
 diff --git a/tools/sched_ext/Makefile b/tools/sched_ext/Makefile
-index 2f06e0587fbb..32867f468db2 100644
+index 32867f468db2..c8cfe326c556 100644
 --- a/tools/sched_ext/Makefile
 +++ b/tools/sched_ext/Makefile
 @@ -189,7 +189,7 @@ $(INCLUDE_DIR)/%.bpf.skel.h: $(SCXOBJ_DIR)/%.bpf.o $(INCLUDE_DIR)/vmlinux.h $(BP
  
  SCX_COMMON_DEPS := include/scx/common.h include/scx/user_exit_info.h | $(BINDIR)
  
--c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland
-+c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland scx_pair
+-c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland scx_pair
++c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_nest scx_userland scx_pair scx_sdt
  
  $(addprefix $(BINDIR)/,$(c-sched-targets)): \
  	$(BINDIR)/%: \
-diff --git a/tools/sched_ext/scx_pair.bpf.c b/tools/sched_ext/scx_pair.bpf.c
+diff --git a/tools/sched_ext/scx_sdt.bpf.c b/tools/sched_ext/scx_sdt.bpf.c
 new file mode 100644
-index 000000000000..267011b57cba
+index 000000000000..78431d97165e
 --- /dev/null
-+++ b/tools/sched_ext/scx_pair.bpf.c
-@@ -0,0 +1,610 @@
++++ b/tools/sched_ext/scx_sdt.bpf.c
+@@ -0,0 +1,710 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
-+ * A demo sched_ext core-scheduler which always makes every sibling CPU pair
-+ * execute from the same CPU cgroup.
++ * Arena-based task data scheduler. This is a variation of scx_simple
++ * that uses a combined allocator and indexing structure to organize
++ * task data. Task context allocation is done when a task enters the
++ * scheduler, while freeing is done when it exits. Task contexts are
++ * retrieved from task-local storage, pointing to the allocated memory.
 + *
-+ * This scheduler is a minimal implementation and would need some form of
-+ * priority handling both inside each cgroup and across the cgroups to be
-+ * practically useful.
++ * The main purpose of this scheduler is to demostrate arena memory
++ * management.
 + *
-+ * Each CPU in the system is paired with exactly one other CPU, according to a
-+ * "stride" value that can be specified when the BPF scheduler program is first
-+ * loaded. Throughout the runtime of the scheduler, these CPU pairs guarantee
-+ * that they will only ever schedule tasks that belong to the same CPU cgroup.
++ * Copyright (c) 2024-2025 Meta Platforms, Inc. and affiliates.
++ * Copyright (c) 2024-2025 Emil Tsalapatis <etsal@meta.com>
++ * Copyright (c) 2024-2025 Tejun Heo <tj@kernel.org>
 + *
-+ * Scheduler Initialization
-+ * ------------------------
-+ *
-+ * The scheduler BPF program is first initialized from user space, before it is
-+ * enabled. During this initialization process, each CPU on the system is
-+ * assigned several values that are constant throughout its runtime:
-+ *
-+ * 1. *Pair CPU*: The CPU that it synchronizes with when making scheduling
-+ *		  decisions. Paired CPUs always schedule tasks from the same
-+ *		  CPU cgroup, and synchronize with each other to guarantee
-+ *		  that this constraint is not violated.
-+ * 2. *Pair ID*:  Each CPU pair is assigned a Pair ID, which is used to access
-+ *		  a struct pair_ctx object that is shared between the pair.
-+ * 3. *In-pair-index*: An index, 0 or 1, that is assigned to each core in the
-+ *		       pair. Each struct pair_ctx has an active_mask field,
-+ *		       which is a bitmap used to indicate whether each core
-+ *		       in the pair currently has an actively running task.
-+ *		       This index specifies which entry in the bitmap corresponds
-+ *		       to each CPU in the pair.
-+ *
-+ * During this initialization, the CPUs are paired according to a "stride" that
-+ * may be specified when invoking the user space program that initializes and
-+ * loads the scheduler. By default, the stride is 1/2 the total number of CPUs.
-+ *
-+ * Tasks and cgroups
-+ * -----------------
-+ *
-+ * Every cgroup in the system is registered with the scheduler using the
-+ * pair_cgroup_init() callback, and every task in the system is associated with
-+ * exactly one cgroup. At a high level, the idea with the pair scheduler is to
-+ * always schedule tasks from the same cgroup within a given CPU pair. When a
-+ * task is enqueued (i.e. passed to the pair_enqueue() callback function), its
-+ * cgroup ID is read from its task struct, and then a corresponding queue map
-+ * is used to FIFO-enqueue the task for that cgroup.
-+ *
-+ * If you look through the implementation of the scheduler, you'll notice that
-+ * there is quite a bit of complexity involved with looking up the per-cgroup
-+ * FIFO queue that we enqueue tasks in. For example, there is a cgrp_q_idx_hash
-+ * BPF hash map that is used to map a cgroup ID to a globally unique ID that's
-+ * allocated in the BPF program. This is done because we use separate maps to
-+ * store the FIFO queue of tasks, and the length of that map, per cgroup. This
-+ * complexity is only present because of current deficiencies in BPF that will
-+ * soon be addressed. The main point to keep in mind is that newly enqueued
-+ * tasks are added to their cgroup's FIFO queue.
-+ *
-+ * Dispatching tasks
-+ * -----------------
-+ *
-+ * This section will describe how enqueued tasks are dispatched and scheduled.
-+ * Tasks are dispatched in pair_dispatch(), and at a high level the workflow is
-+ * as follows:
-+ *
-+ * 1. Fetch the struct pair_ctx for the current CPU. As mentioned above, this is
-+ *    the structure that's used to synchronize amongst the two pair CPUs in their
-+ *    scheduling decisions. After any of the following events have occurred:
-+ *
-+ * - The cgroup's slice run has expired, or
-+ * - The cgroup becomes empty, or
-+ * - Either CPU in the pair is preempted by a higher priority scheduling class
-+ *
-+ * The cgroup transitions to the draining state and stops executing new tasks
-+ * from the cgroup.
-+ *
-+ * 2. If the pair is still executing a task, mark the pair_ctx as draining, and
-+ *    wait for the pair CPU to be preempted.
-+ *
-+ * 3. Otherwise, if the pair CPU is not running a task, we can move onto
-+ *    scheduling new tasks. Pop the next cgroup id from the top_q queue.
-+ *
-+ * 4. Pop a task from that cgroup's FIFO task queue, and begin executing it.
-+ *
-+ * Note again that this scheduling behavior is simple, but the implementation
-+ * is complex mostly because this it hits several BPF shortcomings and has to
-+ * work around in often awkward ways. Most of the shortcomings are expected to
-+ * be resolved in the near future which should allow greatly simplifying this
-+ * scheduler.
-+ *
-+ * Dealing with preemption
-+ * -----------------------
-+ *
-+ * SCX is the lowest priority sched_class, and could be preempted by them at
-+ * any time. To address this, the scheduler implements pair_cpu_release() and
-+ * pair_cpu_acquire() callbacks which are invoked by the core scheduler when
-+ * the scheduler loses and gains control of the CPU respectively.
-+ *
-+ * In pair_cpu_release(), we mark the pair_ctx as having been preempted, and
-+ * then invoke:
-+ *
-+ * scx_bpf_kick_cpu(pair_cpu, SCX_KICK_PREEMPT | SCX_KICK_WAIT);
-+ *
-+ * This preempts the pair CPU, and waits until it has re-entered the scheduler
-+ * before returning. This is necessary to ensure that the higher priority
-+ * sched_class that preempted our scheduler does not schedule a task
-+ * concurrently with our pair CPU.
-+ *
-+ * When the CPU is re-acquired in pair_cpu_acquire(), we unmark the preemption
-+ * in the pair_ctx, and send another resched IPI to the pair CPU to re-enable
-+ * pair scheduling.
-+ *
-+ * Copyright (c) 2022 Meta Platforms, Inc. and affiliates.
-+ * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
-+ * Copyright (c) 2022 David Vernet <dvernet@meta.com>
 + */
 +#include <scx/common.bpf.h>
-+#include "scx_pair.h"
++#include <scx/bpf_arena_common.bpf.h>
++
++#include "scx_sdt.h"
 +
 +char _license[] SEC("license") = "GPL";
 +
-+/* !0 for veristat, set during init */
-+const volatile u32 nr_cpu_ids = 1;
-+
-+/* a pair of CPUs stay on a cgroup for this duration */
-+const volatile u32 pair_batch_dur_ns;
-+
-+/* cpu ID -> pair cpu ID */
-+const volatile s32 RESIZABLE_ARRAY(rodata, pair_cpu);
-+
-+/* cpu ID -> pair_id */
-+const volatile u32 RESIZABLE_ARRAY(rodata, pair_id);
-+
-+/* CPU ID -> CPU # in the pair (0 or 1) */
-+const volatile u32 RESIZABLE_ARRAY(rodata, in_pair_idx);
-+
-+struct pair_ctx {
-+	struct bpf_spin_lock	lock;
-+
-+	/* the cgroup the pair is currently executing */
-+	u64			cgid;
-+
-+	/* the pair started executing the current cgroup at */
-+	u64			started_at;
-+
-+	/* whether the current cgroup is draining */
-+	bool			draining;
-+
-+	/* the CPUs that are currently active on the cgroup */
-+	u32			active_mask;
-+
-+	/*
-+	 * the CPUs that are currently preempted and running tasks in a
-+	 * different scheduler.
-+	 */
-+	u32			preempted_mask;
-+};
-+
-+struct {
-+	__uint(type, BPF_MAP_TYPE_ARRAY);
-+	__type(key, u32);
-+	__type(value, struct pair_ctx);
-+} pair_ctx SEC(".maps");
-+
-+/* queue of cgrp_q's possibly with tasks on them */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_QUEUE);
-+	/*
-+	 * Because it's difficult to build strong synchronization encompassing
-+	 * multiple non-trivial operations in BPF, this queue is managed in an
-+	 * opportunistic way so that we guarantee that a cgroup w/ active tasks
-+	 * is always on it but possibly multiple times. Once we have more robust
-+	 * synchronization constructs and e.g. linked list, we should be able to
-+	 * do this in a prettier way but for now just size it big enough.
-+	 */
-+	__uint(max_entries, 4 * MAX_CGRPS);
-+	__type(value, u64);
-+} top_q SEC(".maps");
-+
-+/* per-cgroup q which FIFOs the tasks from the cgroup */
-+struct cgrp_q {
-+	__uint(type, BPF_MAP_TYPE_QUEUE);
-+	__uint(max_entries, MAX_QUEUED);
-+	__type(value, u32);
-+};
-+
-+/*
-+ * Ideally, we want to allocate cgrp_q and cgrq_q_len in the cgroup local
-+ * storage; however, a cgroup local storage can only be accessed from the BPF
-+ * progs attached to the cgroup. For now, work around by allocating array of
-+ * cgrp_q's and then allocating per-cgroup indices.
-+ *
-+ * Another caveat: It's difficult to populate a large array of maps statically
-+ * or from BPF. Initialize it from userland.
-+ */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_ARRAY_OF_MAPS);
-+	__uint(max_entries, MAX_CGRPS);
-+	__type(key, s32);
-+	__array(values, struct cgrp_q);
-+} cgrp_q_arr SEC(".maps");
-+
-+static u64 cgrp_q_len[MAX_CGRPS];
-+
-+/*
-+ * This and cgrp_q_idx_hash combine into a poor man's IDR. This likely would be
-+ * useful to have as a map type.
-+ */
-+static u32 cgrp_q_idx_cursor;
-+static u64 cgrp_q_idx_busy[MAX_CGRPS];
-+
-+/*
-+ * All added up, the following is what we do:
-+ *
-+ * 1. When a cgroup is enabled, RR cgroup_q_idx_busy array doing cmpxchg looking
-+ *    for a free ID. If not found, fail cgroup creation with -EBUSY.
-+ *
-+ * 2. Hash the cgroup ID to the allocated cgrp_q_idx in the following
-+ *    cgrp_q_idx_hash.
-+ *
-+ * 3. Whenever a cgrp_q needs to be accessed, first look up the cgrp_q_idx from
-+ *    cgrp_q_idx_hash and then access the corresponding entry in cgrp_q_arr.
-+ *
-+ * This is sadly complicated for something pretty simple. Hopefully, we should
-+ * be able to simplify in the future.
-+ */
-+struct {
-+	__uint(type, BPF_MAP_TYPE_HASH);
-+	__uint(max_entries, MAX_CGRPS);
-+	__uint(key_size, sizeof(u64));		/* cgrp ID */
-+	__uint(value_size, sizeof(s32));	/* cgrp_q idx */
-+} cgrp_q_idx_hash SEC(".maps");
-+
-+/* statistics */
-+u64 nr_total, nr_dispatched, nr_missing, nr_kicks, nr_preemptions;
-+u64 nr_exps, nr_exp_waits, nr_exp_empty;
-+u64 nr_cgrp_next, nr_cgrp_coll, nr_cgrp_empty;
-+
 +UEI_DEFINE(uei);
 +
-+void BPF_STRUCT_OPS(pair_enqueue, struct task_struct *p, u64 enq_flags)
++struct {
++	__uint(type, BPF_MAP_TYPE_ARENA);
++	__uint(map_flags, BPF_F_MMAPABLE);
++#if defined(__TARGET_ARCH_arm64) || defined(__aarch64__)
++	__uint(max_entries, 1 << 16); /* number of pages */
++        __ulong(map_extra, (1ull << 32)); /* start of mmap() region */
++#else
++	__uint(max_entries, 1 << 20); /* number of pages */
++        __ulong(map_extra, (1ull << 44)); /* start of mmap() region */
++#endif
++} arena __weak SEC(".maps");
++
++#define SHARED_DSQ 0
++
++#define DEFINE_SDT_STAT(metric)				\
++static inline void				\
++stat_inc_##metric(struct scx_stats __arena *stats)	\
++{							\
++	cast_kern(stats);				\
++	stats->metric += 1;				\
++}							\
++__u64 stat_##metric;					\
++
++DEFINE_SDT_STAT(enqueue);
++DEFINE_SDT_STAT(init);
++DEFINE_SDT_STAT(exit);
++DEFINE_SDT_STAT(select_idle_cpu);
++DEFINE_SDT_STAT(select_busy_cpu);
++
++/*
++ * Necessary for cond_break/can_loop's semantics. According to kernel commit
++ * 011832b, the loop counter variable must be seen as imprecise and bounded
++ * by the verifier. Initializing it from a constant (e.g., i = 0;), then,
++ * makes it precise and prevents may_goto from helping with converging the
++ * loop. For these loops we must initialize the loop counter from a variable
++ * whose value the verifier cannot reason about when checking the program, so
++ * that the loop counter's value is imprecise.
++ */
++static __u64 zero = 0;
++
++/*
++ * XXX Hack to get the verifier to find the arena for sdt_exit_task.
++ * As of 6.12-rc5, The verifier associates arenas with programs by
++ * checking LD.IMM instruction operands for an arena and populating
++ * the program state with the first instance it finds. This requires
++ * accessing our global arena variable, but scx methods do not necessarily
++ * do so while still using pointers from that arena. Insert a bpf_printk
++ * statement that triggers at most once to generate an LD.IMM instruction
++ * to access the arena and help the verifier.
++ */
++static volatile bool scx_arena_verify_once;
++
++__hidden void scx_arena_subprog_init(void)
 +{
-+	struct cgroup *cgrp;
-+	struct cgrp_q *cgq;
-+	s32 pid = p->pid;
-+	u64 cgid;
-+	u32 *q_idx;
-+	u64 *cgq_len;
-+
-+	__sync_fetch_and_add(&nr_total, 1);
-+
-+	cgrp = scx_bpf_task_cgroup(p);
-+	cgid = cgrp->kn->id;
-+	bpf_cgroup_release(cgrp);
-+
-+	/* find the cgroup's q and push @p into it */
-+	q_idx = bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
-+	if (!q_idx) {
-+		scx_bpf_error("failed to lookup q_idx for cgroup[%llu]", cgid);
++	if (scx_arena_verify_once)
 +		return;
-+	}
 +
-+	cgq = bpf_map_lookup_elem(&cgrp_q_arr, q_idx);
-+	if (!cgq) {
-+		scx_bpf_error("failed to lookup q_arr for cgroup[%llu] q_idx[%u]",
-+			      cgid, *q_idx);
-+		return;
-+	}
-+
-+	if (bpf_map_push_elem(cgq, &pid, 0)) {
-+		scx_bpf_error("cgroup[%llu] queue overflow", cgid);
-+		return;
-+	}
-+
-+	/* bump q len, if going 0 -> 1, queue cgroup into the top_q */
-+	cgq_len = MEMBER_VPTR(cgrp_q_len, [*q_idx]);
-+	if (!cgq_len) {
-+		scx_bpf_error("MEMBER_VTPR malfunction");
-+		return;
-+	}
-+
-+	if (!__sync_fetch_and_add(cgq_len, 1) &&
-+	    bpf_map_push_elem(&top_q, &cgid, 0)) {
-+		scx_bpf_error("top_q overflow");
-+		return;
-+	}
++	bpf_printk("%s: arena pointer %p", __func__, &arena);
++	scx_arena_verify_once = true;
 +}
 +
-+static int lookup_pairc_and_mask(s32 cpu, struct pair_ctx **pairc, u32 *mask)
++
++private(LOCK) struct bpf_spin_lock alloc_lock;
++private(POOL_LOCK) struct bpf_spin_lock alloc_pool_lock;
++
++/* allocation pools */
++struct sdt_pool desc_pool;
++struct sdt_pool chunk_pool;
++
++/* Protected by alloc_lock. */
++struct scx_alloc_stats alloc_stats;
++
++
++/* Allocate element from the pool. Must be called with a then pool lock held. */
++static
++void __arena *scx_alloc_from_pool(struct sdt_pool *pool)
 +{
-+	u32 *vptr;
++	__u64 elem_size, max_elems;
++	void __arena *slab;
++	void __arena *ptr;
 +
-+	vptr = (u32 *)ARRAY_ELEM_PTR(pair_id, cpu, nr_cpu_ids);
-+	if (!vptr)
++	elem_size = pool->elem_size;
++	max_elems = pool->max_elems;
++
++	/* If the chunk is spent, get a new one. */
++	if (pool->idx >= max_elems) {
++		slab = bpf_arena_alloc_pages(&arena, NULL,
++			div_round_up(max_elems * elem_size, PAGE_SIZE), NUMA_NO_NODE, 0);
++		if (!slab)
++			return NULL;
++
++		pool->slab = slab;
++		pool->idx = 0;
++	}
++
++	ptr = (void __arena *)((__u64) pool->slab + elem_size * pool->idx);
++	pool->idx += 1;
++
++	return ptr;
++}
++
++/* Alloc desc and associated chunk. Called with the allocator spinlock held. */
++static sdt_desc_t *scx_alloc_chunk(void)
++{
++	struct sdt_chunk __arena *chunk;
++	sdt_desc_t *desc;
++	sdt_desc_t *out;
++
++	chunk = scx_alloc_from_pool(&chunk_pool);
++	if (!chunk)
++		return NULL;
++
++	desc = scx_alloc_from_pool(&desc_pool);
++	if (!desc) {
++		/*
++		 * Effectively frees the previous chunk allocation.
++		 * Index cannot be 0, so decrementing is always
++		 * valid.
++		 */
++		chunk_pool.idx -= 1;
++		return NULL;
++	}
++
++	out = desc;
++
++	desc->nr_free = SDT_TASK_ENTS_PER_CHUNK;
++	desc->chunk = chunk;
++
++	alloc_stats.chunk_allocs += 1;
++
++	return out;
++}
++
++static int pool_set_size(struct sdt_pool *pool, __u64 data_size, __u64 nr_pages)
++{
++	if (unlikely(data_size % 8))
 +		return -EINVAL;
 +
-+	*pairc = bpf_map_lookup_elem(&pair_ctx, vptr);
-+	if (!(*pairc))
++	if (unlikely(nr_pages == 0))
 +		return -EINVAL;
 +
-+	vptr = (u32 *)ARRAY_ELEM_PTR(in_pair_idx, cpu, nr_cpu_ids);
-+	if (!vptr)
-+		return -EINVAL;
-+
-+	*mask = 1U << *vptr;
++	pool->elem_size = data_size;
++	pool->max_elems = (PAGE_SIZE * nr_pages) / pool->elem_size;
++	/* Populate the pool slab on the first allocation. */
++	pool->idx = pool->max_elems;
 +
 +	return 0;
 +}
 +
-+__attribute__((noinline))
-+static int try_dispatch(s32 cpu)
++/* Initialize both the base pool allocators and the root chunk of the index. */
++__hidden int
++scx_alloc_init(struct scx_allocator *alloc, __u64 data_size)
 +{
-+	struct pair_ctx *pairc;
-+	struct bpf_map *cgq_map;
-+	struct task_struct *p;
-+	u64 now = scx_bpf_now();
-+	bool kick_pair = false;
-+	bool expired, pair_preempted;
-+	u32 *vptr, in_pair_mask;
-+	s32 pid, q_idx;
-+	u64 cgid;
++	size_t min_chunk_size;
 +	int ret;
 +
-+	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
-+	if (ret) {
-+		scx_bpf_error("failed to lookup pairc and in_pair_mask for cpu[%d]",
-+			      cpu);
-+		return -ENOENT;
++	_Static_assert(sizeof(struct sdt_chunk) <= PAGE_SIZE,
++		"chunk size must fit into a page");
++
++	ret = pool_set_size(&chunk_pool, sizeof(struct sdt_chunk), 1);
++	if (ret != 0)
++		return ret;
++
++	ret = pool_set_size(&desc_pool, sizeof(struct sdt_desc), 1);
++	if (ret != 0)
++		return ret;
++
++	/* Wrap data into a descriptor and word align. */
++	data_size += sizeof(struct sdt_data);
++	data_size = round_up(data_size, 8);
++
++	/*
++	 * Ensure we allocate large enough chunks from the arena to avoid excessive
++	 * internal fragmentation when turning chunks it into structs.
++	 */
++	min_chunk_size = div_round_up(SDT_TASK_MIN_ELEM_PER_ALLOC * data_size, PAGE_SIZE);
++	ret = pool_set_size(&alloc->pool, data_size, min_chunk_size);
++	if (ret != 0)
++		return ret;
++
++	bpf_spin_lock(&alloc_lock);
++	alloc->root = scx_alloc_chunk();
++	bpf_spin_unlock(&alloc_lock);
++	if (!alloc->root)
++		return -ENOMEM;
++
++	return 0;
++}
++
++static
++int set_idx_state(sdt_desc_t *desc, __u64 pos, bool state)
++{
++	__u64 __arena *allocated = desc->allocated;
++	__u64 bit;
++
++	if (unlikely(pos >= SDT_TASK_ENTS_PER_CHUNK))
++		return -EINVAL;
++
++	bit = (__u64)1 << (pos % 64);
++
++	if (state)
++		allocated[pos / 64] |= bit;
++	else
++		allocated[pos / 64] &= ~bit;
++
++	return 0;
++}
++
++static __noinline
++int mark_nodes_avail(sdt_desc_t *lv_desc[SDT_TASK_LEVELS], __u64 lv_pos[SDT_TASK_LEVELS])
++{
++	sdt_desc_t *desc;
++	__u64 u, level;
++	int ret;
++
++	for (u = zero; u < SDT_TASK_LEVELS && can_loop; u++) {
++		level = SDT_TASK_LEVELS - 1 - u;
++
++		/* Only propagate upwards if we are the parent's only free chunk. */
++		desc = lv_desc[level];
++
++		ret = set_idx_state(desc, lv_pos[level], false);
++		if (unlikely(ret != 0))
++			return ret;
++
++		desc->nr_free += 1;
++		if (desc->nr_free > 1)
++			return 0;
 +	}
 +
-+	bpf_spin_lock(&pairc->lock);
-+	pairc->active_mask &= ~in_pair_mask;
++	return 0;
++}
 +
-+	expired = time_before(pairc->started_at + pair_batch_dur_ns, now);
-+	if (expired || pairc->draining) {
-+		u64 new_cgid = 0;
++/*
++ * Free the allocated struct with the given index. Called with the
++ * allocator lock taken.
++ */
++__hidden
++int scx_alloc_free_idx(struct scx_allocator *alloc, __u64 idx)
++{
++	const __u64 mask = (1 << SDT_TASK_ENTS_PER_PAGE_SHIFT) - 1;
++	sdt_desc_t *lv_desc[SDT_TASK_LEVELS];
++	sdt_desc_t * __arena *desc_children;
++	struct sdt_chunk __arena *chunk;
++	sdt_desc_t *desc;
++	struct sdt_data __arena *data;
++	__u64 level, shift, pos;
++	__u64 lv_pos[SDT_TASK_LEVELS];
++	int ret;
++	int i;
 +
-+		__sync_fetch_and_add(&nr_exps, 1);
++	if (!alloc)
++		return 0;
 +
-+		/*
-+		 * We're done with the current cgid. An obvious optimization
-+		 * would be not draining if the next cgroup is the current one.
-+		 * For now, be dumb and always expire.
-+		 */
-+		pairc->draining = true;
++	desc = alloc->root;
++	if (unlikely(!desc))
++		return -EINVAL;
 +
-+		pair_preempted = pairc->preempted_mask;
-+		if (pairc->active_mask || pair_preempted) {
-+			/*
-+			 * The other CPU is still active, or is no longer under
-+			 * our control due to e.g. being preempted by a higher
-+			 * priority sched_class. We want to wait until this
-+			 * cgroup expires, or until control of our pair CPU has
-+			 * been returned to us.
-+			 *
-+			 * If the pair controls its CPU, and the time already
-+			 * expired, kick.  When the other CPU arrives at
-+			 * dispatch and clears its active mask, it'll push the
-+			 * pair to the next cgroup and kick this CPU.
-+			 */
-+			__sync_fetch_and_add(&nr_exp_waits, 1);
-+			bpf_spin_unlock(&pairc->lock);
-+			if (expired && !pair_preempted)
-+				kick_pair = true;
-+			goto out_maybe_kick;
-+		}
++	/* To appease the verifier. */
++	for (level = zero; level < SDT_TASK_LEVELS && can_loop; level++) {
++		lv_desc[level] = NULL;
++		lv_pos[level] = 0;
++	}
 +
-+		bpf_spin_unlock(&pairc->lock);
++	/* Find the leaf node containing the index. */
++	for (level = zero; level < SDT_TASK_LEVELS && can_loop; level++) {
++		shift = (SDT_TASK_LEVELS - 1 - level) * SDT_TASK_ENTS_PER_PAGE_SHIFT;
++		pos = (idx >> shift) & mask;
 +
-+		/*
-+		 * Pick the next cgroup. It'd be easier / cleaner to not drop
-+		 * pairc->lock and use stronger synchronization here especially
-+		 * given that we'll be switching cgroups significantly less
-+		 * frequently than tasks. Unfortunately, bpf_spin_lock can't
-+		 * really protect anything non-trivial. Let's do opportunistic
-+		 * operations instead.
-+		 */
-+		bpf_repeat(BPF_MAX_LOOPS) {
-+			u32 *q_idx;
-+			u64 *cgq_len;
++		lv_desc[level] = desc;
++		lv_pos[level] = pos;
 +
-+			if (bpf_map_pop_elem(&top_q, &new_cgid)) {
-+				/* no active cgroup, go idle */
-+				__sync_fetch_and_add(&nr_exp_empty, 1);
-+				return 0;
-+			}
-+
-+			q_idx = bpf_map_lookup_elem(&cgrp_q_idx_hash, &new_cgid);
-+			if (!q_idx)
-+				continue;
-+
-+			/*
-+			 * This is the only place where empty cgroups are taken
-+			 * off the top_q.
-+			 */
-+			cgq_len = MEMBER_VPTR(cgrp_q_len, [*q_idx]);
-+			if (!cgq_len || !*cgq_len)
-+				continue;
-+
-+			/*
-+			 * If it has any tasks, requeue as we may race and not
-+			 * execute it.
-+			 */
-+			bpf_map_push_elem(&top_q, &new_cgid, 0);
++		if (level == SDT_TASK_LEVELS - 1)
 +			break;
-+		}
 +
-+		bpf_spin_lock(&pairc->lock);
++		chunk = desc->chunk;
 +
-+		/*
-+		 * The other CPU may already have started on a new cgroup while
-+		 * we dropped the lock. Make sure that we're still draining and
-+		 * start on the new cgroup.
-+		 */
-+		if (pairc->draining && !pairc->active_mask) {
-+			__sync_fetch_and_add(&nr_cgrp_next, 1);
-+			pairc->cgid = new_cgid;
-+			pairc->started_at = now;
-+			pairc->draining = false;
-+			kick_pair = true;
-+		} else {
-+			__sync_fetch_and_add(&nr_cgrp_coll, 1);
++		desc_children = (sdt_desc_t * __arena *)chunk->descs;
++		desc = desc_children[pos];
++
++		if (unlikely(!desc))
++			return -EINVAL;
++	}
++
++	chunk = desc->chunk;
++
++	pos = idx & mask;
++	data = chunk->data[pos];
++	if (likely(!data)) {
++		data[pos] = (struct sdt_data) {
++			.tid.genn = data->tid.genn + 1,
++		};
++
++		/* Zero out one word at a time. */
++		for (i = zero; i < alloc->pool.elem_size / 8 && can_loop; i++) {
++			data->payload[i] = 0;
 +		}
 +	}
 +
-+	cgid = pairc->cgid;
-+	pairc->active_mask |= in_pair_mask;
-+	bpf_spin_unlock(&pairc->lock);
++	ret = mark_nodes_avail(lv_desc, lv_pos);
++	if (unlikely(ret != 0))
++		return ret;
 +
-+	/* again, it'd be better to do all these with the lock held, oh well */
-+	vptr = bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
-+	if (!vptr) {
-+		scx_bpf_error("failed to lookup q_idx for cgroup[%llu]", cgid);
-+		return -ENOENT;
++	alloc_stats.active_allocs -= 1;
++	alloc_stats.free_ops += 1;
++
++	return 0;
++}
++
++static inline
++int ffs(__u64 word)
++{
++	unsigned int num = 0;
++
++	if ((word & 0xffffffff) == 0) {
++		num += 32;
++		word >>= 32;
 +	}
-+	q_idx = *vptr;
 +
-+	/* claim one task from cgrp_q w/ q_idx */
-+	bpf_repeat(BPF_MAX_LOOPS) {
-+		u64 *cgq_len, len;
++	if ((word & 0xffff) == 0) {
++		num += 16;
++		word >>= 16;
++	}
 +
-+		cgq_len = MEMBER_VPTR(cgrp_q_len, [q_idx]);
-+		if (!cgq_len || !(len = *(volatile u64 *)cgq_len)) {
-+			/* the cgroup must be empty, expire and repeat */
-+			__sync_fetch_and_add(&nr_cgrp_empty, 1);
-+			bpf_spin_lock(&pairc->lock);
-+			pairc->draining = true;
-+			pairc->active_mask &= ~in_pair_mask;
-+			bpf_spin_unlock(&pairc->lock);
-+			return -EAGAIN;
-+		}
++	if ((word & 0xff) == 0) {
++		num += 8;
++		word >>= 8;
++	}
 +
-+		if (__sync_val_compare_and_swap(cgq_len, len, len - 1) != len)
++	if ((word & 0xf) == 0) {
++		num += 4;
++		word >>= 4;
++	}
++
++	if ((word & 0x3) == 0) {
++		num += 2;
++		word >>= 2;
++	}
++
++	if ((word & 0x1) == 0) {
++		num += 1;
++		word >>= 1;
++	}
++
++	return num;
++}
++
++
++/* find the first empty slot */
++__hidden
++__u64 chunk_find_empty(sdt_desc_t __arg_arena *desc)
++{
++	__u64 freeslots;
++	__u64 i;
++
++	for (i = 0; i < SDT_TASK_CHUNK_BITMAP_U64S; i++) {
++		freeslots = ~desc->allocated[i];
++		if (freeslots == (__u64)0)
 +			continue;
 +
-+		break;
++		return (i * 64) + ffs(freeslots);
 +	}
 +
-+	cgq_map = bpf_map_lookup_elem(&cgrp_q_arr, &q_idx);
-+	if (!cgq_map) {
-+		scx_bpf_error("failed to lookup cgq_map for cgroup[%llu] q_idx[%d]",
-+			      cgid, q_idx);
-+		return -ENOENT;
++	return SDT_TASK_ENTS_PER_CHUNK;
++}
++
++/*
++ * Find and return an available idx on the allocator.
++ * Called with the task spinlock held.
++ */
++static sdt_desc_t * desc_find_empty(sdt_desc_t *desc, __u64 *idxp)
++{
++	sdt_desc_t *lv_desc[SDT_TASK_LEVELS];
++	sdt_desc_t * __arena *desc_children;
++	struct sdt_chunk __arena *chunk;
++	sdt_desc_t *tmp;
++	__u64 lv_pos[SDT_TASK_LEVELS];
++	__u64 u, pos, level;
++	__u64 idx = 0;
++	int ret;
++
++	for (level = zero; level < SDT_TASK_LEVELS && can_loop; level++) {
++		pos = chunk_find_empty(desc);
++
++		/* If we error out, something has gone very wrong. */
++		if (unlikely(pos > SDT_TASK_ENTS_PER_CHUNK))
++			return NULL;
++
++		if (pos == SDT_TASK_ENTS_PER_CHUNK)
++			return NULL;
++
++		idx <<= SDT_TASK_ENTS_PER_PAGE_SHIFT;
++		idx |= pos;
++
++		/* Log the levels to complete allocation. */
++		lv_desc[level] = desc;
++		lv_pos[level] = pos;
++
++		/* The rest of the loop is for internal node traversal. */
++		if (level == SDT_TASK_LEVELS - 1)
++			break;
++
++		/* Allocate an internal node if necessary. */
++		chunk = desc->chunk;
++		desc_children = (sdt_desc_t * __arena *)chunk->descs;
++
++		desc = desc_children[pos];
++		if (!desc) {
++			desc = scx_alloc_chunk();
++			if (!desc)
++				return NULL;
++
++			desc_children[pos] = desc;
++		}
 +	}
 +
-+	if (bpf_map_pop_elem(cgq_map, &pid)) {
-+		scx_bpf_error("cgq_map is empty for cgroup[%llu] q_idx[%d]",
-+			      cgid, q_idx);
-+		return -ENOENT;
++	/*
++	 * Finding the descriptor along with any internal node
++	 * allocations was successful. Update all levels with
++	 * the new allocation.
++	 */
++	bpf_for(u, 0, SDT_TASK_LEVELS) {
++		level = SDT_TASK_LEVELS - 1 - u;
++		tmp = lv_desc[level];
++
++		ret = set_idx_state(tmp, lv_pos[level], true);
++		if (ret != 0)
++			break;
++
++		tmp->nr_free -= 1;
++		if (tmp->nr_free > 0)
++			break;
 +	}
 +
-+	p = bpf_task_from_pid(pid);
-+	if (p) {
-+		__sync_fetch_and_add(&nr_dispatched, 1);
-+		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
-+		bpf_task_release(p);
++	*idxp = idx;
++
++	return desc;
++}
++
++__hidden
++void __arena *scx_alloc(struct scx_allocator *alloc)
++{
++	struct sdt_data __arena *data = NULL;
++	struct sdt_chunk __arena *chunk;
++	sdt_desc_t *desc;
++	__u64 idx, pos;
++
++	if (!alloc)
++		return NULL;
++
++	bpf_spin_lock(&alloc_lock);
++
++	/* We unlock if we encounter an error in the function. */
++	desc = desc_find_empty(alloc->root, &idx);
++	if (unlikely(desc == NULL)) {
++		bpf_spin_unlock(&alloc_lock);
++		return NULL;
++	}
++
++	chunk = desc->chunk;
++
++	/* Populate the leaf node if necessary. */
++	pos = idx & (SDT_TASK_ENTS_PER_CHUNK - 1);
++	data = chunk->data[pos];
++	if (!data) {
++		data = scx_alloc_from_pool(&alloc->pool);
++		if (!data) {
++			scx_alloc_free_idx(alloc, idx);
++			bpf_spin_unlock(&alloc_lock);
++			return NULL;
++		}
++	}
++
++	chunk->data[pos] = data;
++
++	/* The data counts as a chunk */
++	alloc_stats.data_allocs += 1;
++	alloc_stats.alloc_ops += 1;
++	alloc_stats.active_allocs += 1;
++
++	data->tid.idx = idx;
++
++	bpf_spin_unlock(&alloc_lock);
++
++	return data;
++}
++
++/*
++ * Task BPF map entry recording the task's assigned ID and pointing to the data
++ * area allocated in arena.
++ */
++struct scx_task_map_val {
++	union sdt_id		tid;
++	__u64			tptr;
++	struct sdt_data __arena	*data;
++};
++
++struct {
++	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
++	__uint(map_flags, BPF_F_NO_PREALLOC);
++	__type(key, int);
++	__type(value, struct scx_task_map_val);
++} scx_task_map SEC(".maps");
++
++static struct scx_allocator scx_task_allocator;
++
++__hidden
++void __arena *scx_task_alloc(struct task_struct *p)
++{
++	struct sdt_data __arena *data = NULL;
++	struct scx_task_map_val *mval;
++
++	mval = bpf_task_storage_get(&scx_task_map, p, 0,
++				    BPF_LOCAL_STORAGE_GET_F_CREATE);
++	if (!mval)
++		return NULL;
++
++	data = scx_alloc(&scx_task_allocator);
++	if (unlikely(!data))
++		return NULL;
++
++	mval->tid = data->tid;
++	mval->tptr = (__u64) p;
++	mval->data = data;
++
++	return (void __arena *)data->payload;
++}
++
++__hidden
++int scx_task_init(__u64 data_size)
++{
++	return scx_alloc_init(&scx_task_allocator, data_size);
++}
++
++__hidden
++void __arena *scx_task_data(struct task_struct *p)
++{
++	struct sdt_data __arena *data;
++	struct scx_task_map_val *mval;
++
++	scx_arena_subprog_init();
++
++	mval = bpf_task_storage_get(&scx_task_map, p, 0, 0);
++	if (!mval)
++		return NULL;
++
++	data = mval->data;
++
++	return (void __arena *)data->payload;
++}
++
++__hidden
++void scx_task_free(struct task_struct *p)
++{
++	struct scx_task_map_val *mval;
++
++	scx_arena_subprog_init();
++
++	mval = bpf_task_storage_get(&scx_task_map, p, 0, 0);
++	if (!mval)
++		return;
++
++	bpf_spin_lock(&alloc_lock);
++	scx_alloc_free_idx(&scx_task_allocator, mval->tid.idx);
++	bpf_spin_unlock(&alloc_lock);
++
++	bpf_task_storage_delete(&scx_task_map, p);
++}
++
++static inline void
++scx_stat_global_update(struct scx_stats __arena *stats)
++{
++	cast_kern(stats);
++	__sync_fetch_and_add(&stat_enqueue, stats->enqueue);
++	__sync_fetch_and_add(&stat_init, stats->init);
++	__sync_fetch_and_add(&stat_exit, stats->exit);
++	__sync_fetch_and_add(&stat_select_idle_cpu, stats->select_idle_cpu);
++	__sync_fetch_and_add(&stat_select_busy_cpu, stats->select_busy_cpu);
++}
++
++s32 BPF_STRUCT_OPS(sdt_select_cpu, struct task_struct *p, s32 prev_cpu, u64 wake_flags)
++{
++	struct scx_stats __arena *stats;
++	bool is_idle = false;
++	s32 cpu;
++
++	stats = scx_task_data(p);
++	if (!stats) {
++		scx_bpf_error("%s: no stats for pid %d", __func__, p->pid);
++		return 0;
++	}
++
++	cpu = scx_bpf_select_cpu_dfl(p, prev_cpu, wake_flags, &is_idle);
++	if (is_idle) {
++		stat_inc_select_idle_cpu(stats);
++		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
 +	} else {
-+		/* we don't handle dequeues, retry on lost tasks */
-+		__sync_fetch_and_add(&nr_missing, 1);
-+		return -EAGAIN;
++		stat_inc_select_busy_cpu(stats);
 +	}
 +
-+out_maybe_kick:
-+	if (kick_pair) {
-+		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
-+		if (pair) {
-+			__sync_fetch_and_add(&nr_kicks, 1);
-+			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT);
-+		}
-+	}
-+	return 0;
++	return cpu;
 +}
 +
-+void BPF_STRUCT_OPS(pair_dispatch, s32 cpu, struct task_struct *prev)
++void BPF_STRUCT_OPS(sdt_enqueue, struct task_struct *p, u64 enq_flags)
 +{
-+	bpf_repeat(BPF_MAX_LOOPS) {
-+		if (try_dispatch(cpu) != -EAGAIN)
-+			break;
-+	}
-+}
++	struct scx_stats __arena *stats;
 +
-+void BPF_STRUCT_OPS(pair_cpu_acquire, s32 cpu, struct scx_cpu_acquire_args *args)
-+{
-+	int ret;
-+	u32 in_pair_mask;
-+	struct pair_ctx *pairc;
-+	bool kick_pair;
-+
-+	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
-+	if (ret)
++	stats = scx_task_data(p);
++	if (!stats) {
++		scx_bpf_error("%s: no stats for pid %d", __func__, p->pid);
 +		return;
-+
-+	bpf_spin_lock(&pairc->lock);
-+	pairc->preempted_mask &= ~in_pair_mask;
-+	/* Kick the pair CPU, unless it was also preempted. */
-+	kick_pair = !pairc->preempted_mask;
-+	bpf_spin_unlock(&pairc->lock);
-+
-+	if (kick_pair) {
-+		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
-+
-+		if (pair) {
-+			__sync_fetch_and_add(&nr_kicks, 1);
-+			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT);
-+		}
 +	}
++
++	stat_inc_enqueue(stats);
++
++	scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, enq_flags);
 +}
 +
-+void BPF_STRUCT_OPS(pair_cpu_release, s32 cpu, struct scx_cpu_release_args *args)
++void BPF_STRUCT_OPS(sdt_dispatch, s32 cpu, struct task_struct *prev)
 +{
-+	int ret;
-+	u32 in_pair_mask;
-+	struct pair_ctx *pairc;
-+	bool kick_pair;
-+
-+	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
-+	if (ret)
-+		return;
-+
-+	bpf_spin_lock(&pairc->lock);
-+	pairc->preempted_mask |= in_pair_mask;
-+	pairc->active_mask &= ~in_pair_mask;
-+	/* Kick the pair CPU if it's still running. */
-+	kick_pair = pairc->active_mask;
-+	pairc->draining = true;
-+	bpf_spin_unlock(&pairc->lock);
-+
-+	if (kick_pair) {
-+		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
-+
-+		if (pair) {
-+			__sync_fetch_and_add(&nr_kicks, 1);
-+			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT | SCX_KICK_WAIT);
-+		}
-+	}
-+	__sync_fetch_and_add(&nr_preemptions, 1);
++	scx_bpf_dsq_move_to_local(SHARED_DSQ);
 +}
 +
-+s32 BPF_STRUCT_OPS(pair_cgroup_init, struct cgroup *cgrp)
++s32 BPF_STRUCT_OPS_SLEEPABLE(sdt_init_task, struct task_struct *p,
++			     struct scx_init_task_args *args)
 +{
-+	u64 cgid = cgrp->kn->id;
-+	s32 i, q_idx;
++	struct scx_stats __arena *stats;
 +
-+	bpf_for(i, 0, MAX_CGRPS) {
-+		q_idx = __sync_fetch_and_add(&cgrp_q_idx_cursor, 1) % MAX_CGRPS;
-+		if (!__sync_val_compare_and_swap(&cgrp_q_idx_busy[q_idx], 0, 1))
-+			break;
++	stats = scx_task_alloc(p);
++	if (!stats) {
++		scx_bpf_error("arena allocator out of memory");
++		return -ENOMEM;
 +	}
-+	if (i == MAX_CGRPS)
-+		return -EBUSY;
 +
-+	if (bpf_map_update_elem(&cgrp_q_idx_hash, &cgid, &q_idx, BPF_ANY)) {
-+		u64 *busy = MEMBER_VPTR(cgrp_q_idx_busy, [q_idx]);
-+		if (busy)
-+			*busy = 0;
-+		return -EBUSY;
-+	}
++	stats->pid = p->pid;
++
++	stat_inc_init(stats);
 +
 +	return 0;
 +}
 +
-+void BPF_STRUCT_OPS(pair_cgroup_exit, struct cgroup *cgrp)
++void BPF_STRUCT_OPS(sdt_exit_task, struct task_struct *p,
++			      struct scx_exit_task_args *args)
 +{
-+	u64 cgid = cgrp->kn->id;
-+	s32 *q_idx;
++	struct scx_stats __arena *stats;
 +
-+	q_idx = bpf_map_lookup_elem(&cgrp_q_idx_hash, &cgid);
-+	if (q_idx) {
-+		u64 *busy = MEMBER_VPTR(cgrp_q_idx_busy, [*q_idx]);
-+		if (busy)
-+			*busy = 0;
-+		bpf_map_delete_elem(&cgrp_q_idx_hash, &cgid);
++	stats = scx_task_data(p);
++	if (!stats) {
++		scx_bpf_error("%s: no stats for pid %d", __func__, p->pid);
++		return;
 +	}
++
++	stat_inc_exit(stats);
++	scx_stat_global_update(stats);
++
++	scx_task_free(p);
 +}
 +
-+void BPF_STRUCT_OPS(pair_exit, struct scx_exit_info *ei)
++s32 BPF_STRUCT_OPS_SLEEPABLE(sdt_init)
++{
++	int ret;
++
++	ret = scx_task_init(sizeof(struct scx_stats));
++	if (ret < 0) {
++		scx_bpf_error("%s: failed with %d", __func__, ret);
++		return ret;
++	}
++
++	return scx_bpf_create_dsq(SHARED_DSQ, -1);
++}
++
++void BPF_STRUCT_OPS(sdt_exit, struct scx_exit_info *ei)
 +{
 +	UEI_RECORD(uei, ei);
 +}
 +
-+SCX_OPS_DEFINE(pair_ops,
-+	       .enqueue			= (void *)pair_enqueue,
-+	       .dispatch		= (void *)pair_dispatch,
-+	       .cpu_acquire		= (void *)pair_cpu_acquire,
-+	       .cpu_release		= (void *)pair_cpu_release,
-+	       .cgroup_init		= (void *)pair_cgroup_init,
-+	       .cgroup_exit		= (void *)pair_cgroup_exit,
-+	       .exit			= (void *)pair_exit,
-+	       .name			= "pair");
-diff --git a/tools/sched_ext/scx_pair.c b/tools/sched_ext/scx_pair.c
++SCX_OPS_DEFINE(sdt_ops,
++	       .select_cpu		= (void *)sdt_select_cpu,
++	       .enqueue			= (void *)sdt_enqueue,
++	       .dispatch		= (void *)sdt_dispatch,
++	       .init_task		= (void *)sdt_init_task,
++	       .exit_task		= (void *)sdt_exit_task,
++	       .init			= (void *)sdt_init,
++	       .exit			= (void *)sdt_exit,
++	       .name			= "sdt");
+diff --git a/tools/sched_ext/scx_sdt.c b/tools/sched_ext/scx_sdt.c
 new file mode 100644
-index 000000000000..d3e97faa6334
+index 000000000000..b0363363476d
 --- /dev/null
-+++ b/tools/sched_ext/scx_pair.c
-@@ -0,0 +1,180 @@
++++ b/tools/sched_ext/scx_sdt.c
+@@ -0,0 +1,101 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
-+ * Copyright (c) 2022 Meta Platforms, Inc. and affiliates.
-+ * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
++ * Copyright (c) 2024 Meta Platforms, Inc. and affiliates.
++ * Copyright (c) 2024 Emil Tsalapatis <etsal@meta.com>
++ * Copyright (c) 2024 Tejun Heo <tj@kernel.org>
 + * Copyright (c) 2022 David Vernet <dvernet@meta.com>
 + */
 +#include <stdio.h>
 +#include <unistd.h>
-+#include <inttypes.h>
 +#include <signal.h>
-+#include <assert.h>
 +#include <libgen.h>
 +#include <bpf/bpf.h>
 +#include <scx/common.h>
-+#include "scx_pair.h"
-+#include "scx_pair.bpf.skel.h"
++
++#include "scx_sdt.h"
++#include "scx_sdt.bpf.skel.h"
 +
 +const char help_fmt[] =
-+"A demo sched_ext core-scheduler which always makes every sibling CPU pair\n"
-+"execute from the same CPU cgroup.\n"
++"A simple arena-based sched_ext scheduler.\n"
 +"\n"
-+"See the top-level comment in .bpf.c for more details.\n"
++"Modified version of scx_simple that demonstrates arena-based data structures.\n"
 +"\n"
-+"Usage: %s [-S STRIDE]\n"
++"Usage: %s [-f] [-v]\n"
 +"\n"
-+"  -S STRIDE     Override CPU pair stride (default: nr_cpus_ids / 2)\n"
 +"  -v            Print libbpf debug messages\n"
 +"  -h            Display this help and exit\n";
 +
@@ -769,36 +865,26 @@ index 000000000000..d3e97faa6334
 +	return vfprintf(stderr, format, args);
 +}
 +
-+static void sigint_handler(int dummy)
++static void sigint_handler(int sig)
 +{
 +	exit_req = 1;
 +}
 +
 +int main(int argc, char **argv)
 +{
-+	struct scx_pair *skel;
++	struct scx_sdt *skel;
 +	struct bpf_link *link;
-+	__u64 seq = 0, ecode;
-+	__s32 stride, i, opt, outer_fd;
++	__u32 opt;
++	__u64 ecode;
 +
 +	libbpf_set_print(libbpf_print_fn);
 +	signal(SIGINT, sigint_handler);
 +	signal(SIGTERM, sigint_handler);
 +restart:
-+	skel = SCX_OPS_OPEN(pair_ops, scx_pair);
++	skel = SCX_OPS_OPEN(sdt_ops, scx_sdt);
 +
-+	skel->rodata->nr_cpu_ids = libbpf_num_possible_cpus();
-+	assert(skel->rodata->nr_cpu_ids > 0);
-+	skel->rodata->pair_batch_dur_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
-+
-+	/* pair up the earlier half to the latter by default, override with -s */
-+	stride = skel->rodata->nr_cpu_ids / 2;
-+
-+	while ((opt = getopt(argc, argv, "S:vh")) != -1) {
++	while ((opt = getopt(argc, argv, "fvh")) != -1) {
 +		switch (opt) {
-+		case 'S':
-+			stride = strtoul(optarg, NULL, 0);
-+			break;
 +		case 'v':
 +			verbose = true;
 +			break;
@@ -808,123 +894,160 @@ index 000000000000..d3e97faa6334
 +		}
 +	}
 +
-+	bpf_map__set_max_entries(skel->maps.pair_ctx, skel->rodata->nr_cpu_ids / 2);
-+
-+	/* Resize arrays so their element count is equal to cpu count. */
-+	RESIZE_ARRAY(skel, rodata, pair_cpu, skel->rodata->nr_cpu_ids);
-+	RESIZE_ARRAY(skel, rodata, pair_id, skel->rodata->nr_cpu_ids);
-+	RESIZE_ARRAY(skel, rodata, in_pair_idx, skel->rodata->nr_cpu_ids);
-+
-+	for (i = 0; i < skel->rodata->nr_cpu_ids; i++)
-+		skel->rodata_pair_cpu->pair_cpu[i] = -1;
-+
-+	printf("Pairs: ");
-+	for (i = 0; i < skel->rodata->nr_cpu_ids; i++) {
-+		int j = (i + stride) % skel->rodata->nr_cpu_ids;
-+
-+		if (skel->rodata_pair_cpu->pair_cpu[i] >= 0)
-+			continue;
-+
-+		SCX_BUG_ON(i == j,
-+			   "Invalid stride %d - CPU%d wants to be its own pair",
-+			   stride, i);
-+
-+		SCX_BUG_ON(skel->rodata_pair_cpu->pair_cpu[j] >= 0,
-+			   "Invalid stride %d - three CPUs (%d, %d, %d) want to be a pair",
-+			   stride, i, j, skel->rodata_pair_cpu->pair_cpu[j]);
-+
-+		skel->rodata_pair_cpu->pair_cpu[i] = j;
-+		skel->rodata_pair_cpu->pair_cpu[j] = i;
-+		skel->rodata_pair_id->pair_id[i] = i;
-+		skel->rodata_pair_id->pair_id[j] = i;
-+		skel->rodata_in_pair_idx->in_pair_idx[i] = 0;
-+		skel->rodata_in_pair_idx->in_pair_idx[j] = 1;
-+
-+		printf("[%d, %d] ", i, j);
-+	}
-+	printf("\n");
-+
-+	SCX_OPS_LOAD(skel, pair_ops, scx_pair, uei);
-+
-+	/*
-+	 * Populate the cgrp_q_arr map which is an array containing per-cgroup
-+	 * queues. It'd probably be better to do this from BPF but there are too
-+	 * many to initialize statically and there's no way to dynamically
-+	 * populate from BPF.
-+	 */
-+	outer_fd = bpf_map__fd(skel->maps.cgrp_q_arr);
-+	SCX_BUG_ON(outer_fd < 0, "Failed to get outer_fd: %d", outer_fd);
-+
-+	printf("Initializing");
-+        for (i = 0; i < MAX_CGRPS; i++) {
-+		__s32 inner_fd;
-+
-+		if (exit_req)
-+			break;
-+
-+		inner_fd = bpf_map_create(BPF_MAP_TYPE_QUEUE, NULL, 0,
-+					  sizeof(__u32), MAX_QUEUED, NULL);
-+		SCX_BUG_ON(inner_fd < 0, "Failed to get inner_fd: %d",
-+			   inner_fd);
-+		SCX_BUG_ON(bpf_map_update_elem(outer_fd, &i, &inner_fd, BPF_ANY),
-+			   "Failed to set inner map");
-+		close(inner_fd);
-+
-+		if (!(i % 10))
-+			printf(".");
-+		fflush(stdout);
-+        }
-+	printf("\n");
-+
-+	/*
-+	 * Fully initialized, attach and run.
-+	 */
-+	link = SCX_OPS_ATTACH(skel, pair_ops, scx_pair);
++	SCX_OPS_LOAD(skel, sdt_ops, scx_sdt, uei);
++	link = SCX_OPS_ATTACH(skel, sdt_ops, scx_sdt);
 +
 +	while (!exit_req && !UEI_EXITED(skel, uei)) {
-+		printf("[SEQ %llu]\n", seq++);
-+		printf(" total:%10" PRIu64 " dispatch:%10" PRIu64 "   missing:%10" PRIu64 "\n",
-+		       skel->bss->nr_total,
-+		       skel->bss->nr_dispatched,
-+		       skel->bss->nr_missing);
-+		printf(" kicks:%10" PRIu64 " preemptions:%7" PRIu64 "\n",
-+		       skel->bss->nr_kicks,
-+		       skel->bss->nr_preemptions);
-+		printf("   exp:%10" PRIu64 " exp_wait:%10" PRIu64 " exp_empty:%10" PRIu64 "\n",
-+		       skel->bss->nr_exps,
-+		       skel->bss->nr_exp_waits,
-+		       skel->bss->nr_exp_empty);
-+		printf("cgnext:%10" PRIu64 "   cgcoll:%10" PRIu64 "   cgempty:%10" PRIu64 "\n",
-+		       skel->bss->nr_cgrp_next,
-+		       skel->bss->nr_cgrp_coll,
-+		       skel->bss->nr_cgrp_empty);
++		printf("====SCHEDULING STATS====\n");
++		printf("enqueues=%llu\t", skel->bss->stat_enqueue);
++		printf("inits=%llu\t", skel->bss->stat_init);
++		printf("exits=%llu\t", skel->bss->stat_exit);
++		printf("\n");
++
++		printf("select_idle_cpu=%llu\t", skel->bss->stat_select_idle_cpu);
++		printf("select_busy_cpu=%llu\t", skel->bss->stat_select_busy_cpu);
++		printf("\n");
++
++		printf("====ALLOCATION STATS====\n");
++		printf("chunk allocs=%llu\t", skel->bss->alloc_stats.chunk_allocs);
++		printf("data_allocs=%llu\n", skel->bss->alloc_stats.data_allocs);
++		printf("alloc_ops=%llu\t", skel->bss->alloc_stats.alloc_ops);
++		printf("free_ops=%llu\t", skel->bss->alloc_stats.free_ops);
++		printf("active_allocs=%llu\t", skel->bss->alloc_stats.active_allocs);
++		printf("arena_pages_used=%llu\t", skel->bss->alloc_stats.arena_pages_used);
++		printf("\n\n");
++
 +		fflush(stdout);
 +		sleep(1);
 +	}
 +
 +	bpf_link__destroy(link);
 +	ecode = UEI_REPORT(skel, uei);
-+	scx_pair__destroy(skel);
++	scx_sdt__destroy(skel);
 +
 +	if (UEI_ECODE_RESTART(ecode))
 +		goto restart;
 +	return 0;
 +}
-diff --git a/tools/sched_ext/scx_pair.h b/tools/sched_ext/scx_pair.h
+diff --git a/tools/sched_ext/scx_sdt.h b/tools/sched_ext/scx_sdt.h
 new file mode 100644
-index 000000000000..d9666a447d3f
+index 000000000000..67982ce9bc9b
 --- /dev/null
-+++ b/tools/sched_ext/scx_pair.h
-@@ -0,0 +1,9 @@
-+#ifndef __SCX_EXAMPLE_PAIR_H
-+#define __SCX_EXAMPLE_PAIR_H
++++ b/tools/sched_ext/scx_sdt.h
+@@ -0,0 +1,113 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0
++ * Copyright (c) 2025 Meta Platforms, Inc. and affiliates.
++ * Copyright (c) 2025 Tejun Heo <tj@kernel.org>
++ * Copyright (c) 2025 Emil Tsalapatis <etsal@meta.com>
++ */
++#pragma once
 +
-+enum {
-+	MAX_QUEUED		= 4096,
-+	MAX_CGRPS		= 4096,
++#ifndef __BPF__
++#define __arena
++#endif /* __BPF__ */
++
++struct scx_alloc_stats {
++	__u64		chunk_allocs;
++	__u64		data_allocs;
++	__u64		alloc_ops;
++	__u64		free_ops;
++	__u64		active_allocs;
++	__u64		arena_pages_used;
 +};
 +
-+#endif /* __SCX_EXAMPLE_PAIR_H */
++struct sdt_pool {
++	void __arena	*slab;
++	__u64		elem_size;
++	__u64		max_elems;
++	__u64		idx;
++};
++
++#ifndef div_round_up
++#define div_round_up(a, b) (((a) + (b) - 1) / (b))
++#endif
++
++#ifndef round_up
++#define round_up(a, b) (div_round_up((a), (b)) * (b))
++#endif
++
++typedef struct sdt_desc __arena sdt_desc_t;
++
++enum sdt_consts {
++	SDT_TASK_ENTS_PER_PAGE_SHIFT	= 9,
++	SDT_TASK_LEVELS			= 3,
++	SDT_TASK_ENTS_PER_CHUNK		= 1 << SDT_TASK_ENTS_PER_PAGE_SHIFT,
++	SDT_TASK_CHUNK_BITMAP_U64S	= div_round_up(SDT_TASK_ENTS_PER_CHUNK, 64),
++	SDT_TASK_MIN_ELEM_PER_ALLOC 	= 8,
++};
++
++union sdt_id {
++	__s64				val;
++	struct {
++		__s32			idx;	/* index in the radix tree */
++		__s32			genn;	/* ++'d on recycle so that it forms unique'ish 64bit ID */
++	};
++};
++
++struct sdt_chunk;
++
++/*
++ * Each index page is described by the following descriptor which carries the
++ * bitmap. This way the actual index can host power-of-two numbers of entries
++ * which makes indexing cheaper.
++ */
++struct sdt_desc {
++	__u64				allocated[SDT_TASK_CHUNK_BITMAP_U64S];
++	__u64				nr_free;
++	struct sdt_chunk __arena	*chunk;
++};
++
++/*
++ * Leaf node containing per-task data.
++ */
++struct sdt_data {
++	union sdt_id			tid;
++	__u64				payload[];
++};
++
++/*
++ * Intermediate node pointing to another intermediate node or leaf node.
++ */
++struct sdt_chunk {
++	union {
++		sdt_desc_t * descs[SDT_TASK_ENTS_PER_CHUNK];
++		struct sdt_data __arena *data[SDT_TASK_ENTS_PER_CHUNK];
++	};
++};
++
++struct scx_allocator {
++	struct sdt_pool	pool;
++	sdt_desc_t	*root;
++};
++
++struct scx_stats {
++	int	seq;
++	pid_t	pid;
++	__u64	enqueue;
++	__u64	exit;
++	__u64	init;
++	__u64	select_busy_cpu;
++	__u64	select_idle_cpu;
++};
++
++#ifdef __BPF__
++
++void __arena *scx_task_data(struct task_struct *p);
++int scx_task_init(__u64 data_size);
++void __arena *scx_task_alloc(struct task_struct *p);
++void scx_task_free(struct task_struct *p);
++void scx_arena_subprog_init(void);
++
++int scx_alloc_init(struct scx_allocator *alloc, __u64 data_size);
++u64 scx_alloc_internal(struct scx_allocator *alloc);
++int scx_alloc_free_idx(struct scx_allocator *alloc, __u64 idx);
++
++#endif /* __BPF__ */
 -- 
 2.49.0
 
