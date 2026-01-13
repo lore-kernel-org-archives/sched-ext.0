@@ -1,256 +1,156 @@
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011038.outbound.protection.outlook.com [52.101.65.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6682938FF01
-	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 13:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.38
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768309885; cv=fail; b=AWK1KpNzuHh8dXy2gH+BXQ6lAJPVw0TrWKMnoNI4h9jJ8PTRBdV4ci/Xfc0AvWoDCY2mQMOCyiscFGSBI5uBf+zdfaudaJJBXjwS/KcqLBzI7axfzhMj/6RdACuh+2APdDaK2gykEUvDOhlmG5Odd+ixtg+SHPAyBrcCEi9AFBs=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768309885; c=relaxed/simple;
-	bh=cRWNX3c3KHo1tStmND4z7F3yi54WrP+ZMfb6Hk4qv+o=;
-	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=jZEz21ZBajo0y17KgSuCAWV8CGX0mbiv+Ks/03eAwZHWQQeJ0Gr+O8/UflXs65pNeOlvtka7Idhp/rGWySGfG/0sMf+2auTtq3dmo6+APolnhZxNBvERnc+FwRrvfcPcwoQ7GDxklZhIAdb1gTcS7a+F+v/8r0Djlv25Mtt8LsY=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=TlQ8HRDK; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=TlQ8HRDK; arc=fail smtp.client-ip=52.101.65.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF21182B7
+	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 16:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768320366; cv=none; b=rv5N5SlsozHFL23HweFjD2xZJBp4hFZIyLkD00KlgQKluQ3sF9jERkTB2ryjtcGt6urTNyfIUA9L6t5hv+jEtRQBpShALW6bWW9ASojFefluPIHTIhJZ4ejZgUnVs6UEh0e7y9GoDML3jAvJSl8cB3YhS2QMQix9kgDpzDBF1X8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768320366; c=relaxed/simple;
+	bh=kUjsyfh9FOZguuBCbog+RcCXb37tigv68HrwxCJnx9U=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=fhe40vPqKq4uvsjyQO3hkk2X7IgKslzO5aXWver/W3rk7S6APPUAlMAKFigUUmNCgoKRis7BlCWPG4vAAd/QTtr/jU8nR5D7Q+dwOsbCOjpm8f/TLTEGNnWmxd+O9sa4IRbMiaYeJ+cXB8zwxWZrdgTdSQ8LBEEw22j15nKZA8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=Xcir6Dkb; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="TlQ8HRDK";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="TlQ8HRDK"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=NM5o3T9Vu6HLdRV/cWFii4Kn1fV66rMloZZOnk1Bj7hgQzlbngH7S8Jis5nNJfdhvrr+8MFWVJBUlvvtBPmjBmlpqkdMuCNlgBWnL6DsHA2vpf+S2STGihQUMdpZiyKAQGtmOh9pA2Z/Bw6QgjUjWHUfkRSKoDXUK3cyuD0aRaRh+6By1jd9DvGw1yNvZ6J8+uuKYPdgfGx7bp5LqXOgGa83tEbwmEnsWm5Vkw2F5alZgbwG+GifefKQ0oqzFiiKLmab/RS2Yo3d37W6EyelXWZQTCcuD9gSCaJZMfe3ABXZ3uDA3SwfySCoJAyCAG65NuGZUGMl+MDDJmfEW0wVoQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FPbFgyEvgpNtLP+MHPEuqyT2xMOCGQJrWajT2Sj9BvU=;
- b=NLP2/DL0kr1HkCHmr9hQtbIpe37+xM5dQyHXglUviO4HngNM3FIRkKGyvd9t/H4jNLjHeoXgzoJL59swo+H4sjKPdea3hog+qxrZqRsjJVlsGpSae6GQ18NkVH9pCKhEVSWcbKdJX41qxKHJILwSfFfS+t45z7qi+V2DNiEg5BAhp83RRvDHk4lbBCmnQhr7GsvLlevJ1djMTl2SNpPRWtx/VzfgF780Z6EHiarI9gDOS/vxVPHxchnoDP7nk/3qo/P/2ys7BfAOT+YzLEcIAmXX4lJwtMNjgUTP6u5ziA+ouIY0GHDmjHoYrnangltb1FAF1F+Cn2Hx2NdxbpFWhQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=infradead.org smtp.mailfrom=arm.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
- dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FPbFgyEvgpNtLP+MHPEuqyT2xMOCGQJrWajT2Sj9BvU=;
- b=TlQ8HRDKIp/yw+FaK+dbPSheL+bO2UYkfcDc257ofeDnqR6Yyiu4y0WCkhYwhIufdAPcI2s+dRvz8ffyXcvMYbk5yil4HyAQTfiya7UDZ8VTtIEHiSO0D/V/tZrsYe6on9dLbfsSmzWdLAWQIbDl7vS5wK4EFE0ZFg4y5/QP2JY=
-Received: from DU6P191CA0055.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:53e::26)
- by GVXPR08MB11610.eurprd08.prod.outlook.com (2603:10a6:150:326::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.5; Tue, 13 Jan
- 2026 13:11:13 +0000
-Received: from DU2PEPF00028D0C.eurprd03.prod.outlook.com
- (2603:10a6:10:53e:cafe::f1) by DU6P191CA0055.outlook.office365.com
- (2603:10a6:10:53e::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.4 via Frontend Transport; Tue,
- 13 Jan 2026 13:11:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- DU2PEPF00028D0C.mail.protection.outlook.com (10.167.242.20) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.1
- via Frontend Transport; Tue, 13 Jan 2026 13:11:13 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JUdppNR8do7pAG7P1zrFnf1neUyXkArrh0+oqNUHfzcVQWXslJY8KRVEXyEh+Ak8ZoKb78iHZWCQRxsDb0cQFnc8cqKYVqeyVP+0ZflBPyoGYlG1hSChQquB1RUAcS90DzdWr+fYy4mZFAUJRANtuc6273cB787L3R/EdnufF54fq00YmTYV1VTinCOd/vxsQEMfX+ctGsUu4WlOPoOUWcY8dVS2styE9HbTqRZVoROuZNCpwzG78HTIFskqNmHdWSBiGxT9sbufLRIZifh4z+jkoe6RwoKwk5OdtwZrwTJNhlpvu7+FvxIrJhq/WwrAHVFALzOvMVQJtdz2V3XPFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FPbFgyEvgpNtLP+MHPEuqyT2xMOCGQJrWajT2Sj9BvU=;
- b=mGwQ/Ch0SJIJIE8OhL+2gYGdxyIwak8Pc2eblp7VKf72dxDacl/6XAsEWkoKt2pPl6j7f796E3GD4NnEIiDsmxDoKWy8jKLeyMjmxQzVhXCywhMgoprSXhR9tNZNudNfkYgmqSbcLUxZf3gHHOar+otaQKIliHjY5zuz1RJHUM58GTgGTyloXPGwJiF5//fVi+7U1O90NzMV8RvvwE91UahGJLZlp59T18qO3JeD185vjCMvcJvh3jlG+YwRmZ9DM9l30cercSdJf7bRiRUGngpVk3NcxzYs7a+AYm7xVs6/jUDhcqXfOo4WjltT2HgdzcanD+iK2yXbqVlNqPr43A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FPbFgyEvgpNtLP+MHPEuqyT2xMOCGQJrWajT2Sj9BvU=;
- b=TlQ8HRDKIp/yw+FaK+dbPSheL+bO2UYkfcDc257ofeDnqR6Yyiu4y0WCkhYwhIufdAPcI2s+dRvz8ffyXcvMYbk5yil4HyAQTfiya7UDZ8VTtIEHiSO0D/V/tZrsYe6on9dLbfsSmzWdLAWQIbDl7vS5wK4EFE0ZFg4y5/QP2JY=
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-Received: from VI0PR08MB10391.eurprd08.prod.outlook.com (2603:10a6:800:20c::6)
- by GVXPR08MB10762.eurprd08.prod.outlook.com (2603:10a6:150:152::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.5; Tue, 13 Jan
- 2026 13:10:11 +0000
-Received: from VI0PR08MB10391.eurprd08.prod.outlook.com
- ([fe80::fa6b:9ba8:5c2f:ac91]) by VI0PR08MB10391.eurprd08.prod.outlook.com
- ([fe80::fa6b:9ba8:5c2f:ac91%4]) with mapi id 15.20.9499.005; Tue, 13 Jan 2026
- 13:10:11 +0000
-Message-ID: <5f3223ad-42f0-4175-8f09-596b5edda00a@arm.com>
-Date: Tue, 13 Jan 2026 14:10:07 +0100
-User-Agent: Mozilla Thunderbird
-From: Pierre Gondois <pierre.gondois@arm.com>
-Subject: Re: [PATCH 05/12] sched: Move sched_class::prio_changed() into the
- change pattern
-To: Peter Zijlstra <peterz@infradead.org>,
- K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: tj@kernel.org, linux-kernel@vger.kernel.org, mingo@kernel.org,
- juri.lelli@redhat.com, vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
- rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
- vschneid@redhat.com, longman@redhat.com, hannes@cmpxchg.org,
- mkoutny@suse.com, void@manifault.com, arighi@nvidia.com,
- changwoo@igalia.com, cgroups@vger.kernel.org, sched-ext@lists.linux.dev,
- liuwenfang@honor.com, tglx@linutronix.de,
- Christian Loehle <christian.loehle@arm.com>
-References: <20251006104402.946760805@infradead.org>
- <20251006104527.083607521@infradead.org>
- <ab9b37c9-e826-44db-a6b8-a789fcc1582d@arm.com>
- <caa2329c-d985-4a7c-b83a-c4f96d5f154a@amd.com>
- <717a0743-6d8f-4e35-8f2f-70a158b31147@arm.com>
- <ef8d8e46-06eb-46c1-9402-d292c2eb51f9@amd.com>
- <20260113115309.GB831050@noisy.programming.kicks-ass.net>
- <20260113115622.GA831285@noisy.programming.kicks-ass.net>
-Content-Language: en-US
-In-Reply-To: <20260113115622.GA831285@noisy.programming.kicks-ass.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PR3P191CA0011.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:102:54::16) To VI0PR08MB10391.eurprd08.prod.outlook.com
- (2603:10a6:800:20c::6)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="Xcir6Dkb"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8907f0b447aso86725516d6.0
+        for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 08:06:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1768320363; x=1768925163; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I0AcZKbWg+QUyLfzKd99VBD2tXthdBDKeMSY799CSjM=;
+        b=Xcir6DkbZghjeihio7zmpPXRhUp6mWTs3T+Jv/rze0ypB22nli5vTrT58UvzRc1vk5
+         NEPwKlCHpC90oURsbYNoQlK5/3prcTqnhv8UY7U1M/C5aF/oc0XYtgvKlkxSDZVBcNgO
+         1aTcZn0rydq1BjP8NuV/KakLZl+wIrCkg3aDV1Y7H23aBJHYEJTMZUkD4Y+xVV0ElcaK
+         6UFCcJtZHkHeHn0QLLjQJw+Gy393LTCADewLPmXKqa8OsCZBtgHyMIX9fo0B5u8HkAE0
+         jMUwqqztUttAyYhThXDQVxoGA6Hsd32kTZqG3ILIU88d6grjGIWT/CxrmIh6lKCGcZMp
+         5smw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768320363; x=1768925163;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I0AcZKbWg+QUyLfzKd99VBD2tXthdBDKeMSY799CSjM=;
+        b=hzDR0y9yZf3FXKFKEIk9ORNzAf0NRBj/fLfwIvtCP+Rlm5MffXZqE91d8AVUl1o9AH
+         iZLLSaxCZVsfz8wDIBlNiJoqdVhShgpqD7oTgBz26iljPFh3jLB8Ue3j+OOcWt/RgXM5
+         vddL1rHflE+mDVO1HHYCsAFCozgPaVYVMG4Bfr1v9aiydltPMYVZV6LhZukE0OrzPe9Y
+         3N3jHl4XvNJpLGjChPdSaWgxiRrvFyf6NMup45LJU9S8S/QJfk574cOQdX0dWVExmfpV
+         cy5NxJZs9IfH336GPErm/fzWcezhct1VmRBT+9+0p7CRuupnY5SjJVrCeIYB6I2MWVOf
+         zEsA==
+X-Gm-Message-State: AOJu0Ywk1ts2E/KsXtsnnovomIog4BDI1mz+uSX0gjf+ZKvtRk1dFUzh
+	OaNNKfIHQ9cxbVPhmwyxo1oKi13QD/C6fcaMEQ5URKDjhFZI6p7gQHh/h1QFyQj45xY=
+X-Gm-Gg: AY/fxX5/fOEdqqkLTn1bfIMJ1fX/PcZ99ww1UqfAttHqd8I1W/cENLP+QS2u05o9V/i
+	QgM1Bg/qAQwoIE2qBK702NOBGHuxITTmetoYBHTteDzbKtUvS5nT73FMqM4R18hU+d5ObMuJaK7
+	rtWUFp+xoMaFjAoOWoArTdB7V/rG9Ei2sASY1fqdu9TAApmRaR+92+alkgNKaUQy40PYe9t+sZ5
+	vCd/G2XAn8MNX6spg3H2WQCf9BrEYPyoDDSiBjFU29Qd6GdDbxMgyC8dWsLARfpuOfGor5bqU/M
+	D46mJ3jkFrtQQVkAOtmeE3WOduaVkNd+OGrA9z2IJDCNyjeTJRqivmUANUx3uuBxtnzNdhOELLe
+	bAK0Dd2wrf2k12zSvDVbDzJaoVJNdp1xpbzk5rqr6nm1sIqkemehJrJRsTG2wqAi7RYd+loYmFL
+	7DAT1EqfKVDLw=
+X-Google-Smtp-Source: AGHT+IECb+fU9htwWDxZwRPAJzKN2ct6XhP0lF/Ck+rQC5YBRReQ0NPPgzlPotZx/0RK2/StdKnhcg==
+X-Received: by 2002:a05:6214:1ccd:b0:890:3f67:307a with SMTP id 6a1803df08f44-8908418f77fmr320485226d6.17.1768320362253;
+        Tue, 13 Jan 2026 08:06:02 -0800 (PST)
+Received: from localhost ([140.174.219.137])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89077267b9esm170003446d6.48.2026.01.13.08.06.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jan 2026 08:06:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic:
-	VI0PR08MB10391:EE_|GVXPR08MB10762:EE_|DU2PEPF00028D0C:EE_|GVXPR08MB11610:EE_
-X-MS-Office365-Filtering-Correlation-Id: 05158c35-0afe-49b8-e1e5-08de52a53a34
-x-checkrecipientrouted: true
-NoDisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|1800799024|366016|10070799003|7416014|376014;
-X-Microsoft-Antispam-Message-Info-Original:
- =?utf-8?B?MEpjM1hYU1ZxUytBTnVCa3ZMUC9wN3U0M0JOaGNHMTR6TUIvRG5SblZrOVpE?=
- =?utf-8?B?aVBoNUIraGp2eldrT2FzSEwxZG83RjMySjk2ZnlOMzg2R0JOWStrRDB0WUV4?=
- =?utf-8?B?UWdzdmIxSHk5QkhYTGhvcWFEaVBTMU0wdGdIUXJoMnBJdm9WQ1l5aUFwai9B?=
- =?utf-8?B?L29NbUwyQUpTYmcvMzZIT2Q5TlhMZnRCd2hJQ0NjNDlpQXdMQkNueFNmM2dM?=
- =?utf-8?B?azYyN0F1OGROelRieDVxUnVWOW5EdmJQVkJZT2xwcEY4amY0bDlLcFAvMkRh?=
- =?utf-8?B?d2l0Wjd5dm1NaENkcEFhN0UzZlRVdW44MVRiWmJDeUdLMFJEdnpqU1c2WFhw?=
- =?utf-8?B?QmtYekQwcWRtcTJ6QlJiRmF1Vi8xT2d2QWs4SlhNbFN4K3R2SUFhczRnbEVw?=
- =?utf-8?B?eCtqenNGTkhGR1BueFZxVzNiTE5pUkZBbzFhNFpBR2N5Ymp0ZWUzZjlIUVQ3?=
- =?utf-8?B?Qms1K1h3ZS94czk3S3o2ZGZqRFRXN2Z1akc0MGpIdTkxdzZ5eGZVOUtOREpK?=
- =?utf-8?B?TlJZd2QrRTU1Vnptd3BrNk9KMlBMRW5IS3EybmtVSitCVXJkc2FoMTBvYUQ5?=
- =?utf-8?B?NWZiaSttbUdaeHJuQVlCZ1hJTjlSRTdkQ2VKTklsOTYzWGxLKy9hL21ZUFgy?=
- =?utf-8?B?ZlZyR0RHWlFjNlRidkZ6Sk5ScjBwdDBNTTBCVWhraXZzYzRrWS9XT3N1VGE4?=
- =?utf-8?B?ajJXdjFkUXQvOVVPR1VmSFUxdnF1VVN3TlQxZjN6cWNzNmhtajBoOU9GY2t3?=
- =?utf-8?B?aVFQVTdWSUsrMlM1NTE3YUxzMExMRGlubFdjSExtYU9zaE0xL0NIMnNVN1Ur?=
- =?utf-8?B?VXB1bTJBNXF2cERwSVBlT3BYQklaeGFvY21IbGM1YnZkeXlnM241eEVBb012?=
- =?utf-8?B?U2pEUUlBOXE5eS92YUd2ZlFyT3I2Q1FBSm5kYjE0SlFFQ0N1R0tIb0hsVWxX?=
- =?utf-8?B?bjdkWC9kb29BL0dzRVF1bk9UZ0hwelRwRktEYk5EYkVYZkw4Qm5qRktubXBo?=
- =?utf-8?B?dUVvNFcvS0JDUnFFaW1YeDNGYVZFUUEyV0xuVUYyUk9ETTMwVVgxYy9oT1hZ?=
- =?utf-8?B?eWI1RE1vQk1ua25yY3o3WEsxS3F4aHpnT1R3b3pHZzYvQTRaYkdraHdLcGNJ?=
- =?utf-8?B?anpQd0xSalR1ei82Yy8zaFpCK01mdEdGeDNsV3RBN3IwM2FETkhRR1daZDN0?=
- =?utf-8?B?aGhOSUkyV0tJS0JxL05YUXE3VjZEVkZvY1VJMmRrc1lQTmNxNDVteFBJTlcx?=
- =?utf-8?B?anBxMWFsWExPZjBOZGMvOEgvNkdDSXp2S0lIaTVuRlYwNkdTVnBSSDArMEdu?=
- =?utf-8?B?ZGl1KzlhRWRsWHdRQTdja1BFdGh4STl3c21VNDNjZWRlaS9JczV5Vks1cEtE?=
- =?utf-8?B?UUJ2SkRGQXhsa0F5QWpCeUozNGpNRHRDcjFKSytmL25LTytCK05nQ1ZLWldq?=
- =?utf-8?B?UmpEUG1KMGVpd3RHMzhGUTh6YXFvVjV4cm5ZdGFObzZmeXJsOG0yRWxtY0dD?=
- =?utf-8?B?RUlyWFdTN0tScnM4cTZTUXVQSXQ0Q0VweHFPUWFaUlc2b1IwN1JlbkVHNWxk?=
- =?utf-8?B?eWxWdGh0Q2N2cFdIcW9md1BIc1FtWHJPUkFFeE9RaVhtK0xITEcxZjduK2hT?=
- =?utf-8?B?K1dBVm95cmNtVlAvb2pVMXFjQ1NZMlV0b2cxajJ5Rnpab1dscGJRYUY2bkxt?=
- =?utf-8?B?YklMR1ZiWWREcFNzakczK1ZmYlVBVlBmU1ZydDIvOUJxeml6TmFxRXEya3BC?=
- =?utf-8?B?bXJ5YVhiNkpUc0lVV25Mdm9YVGdKaGlUMlVyTkZVd05VSzB0YU5YRklYS1Np?=
- =?utf-8?B?d2hCM1lnZHpXRWdNT3h2dlVyYWpKWkZFeWc2eTN1ZlJqVzlHZ25PUmZtdVYy?=
- =?utf-8?B?bkNKN2tHcHIvY1AwMFhob1kxcFZoM1cydnlVVjlmVzZIK0hqcC9lVHM5cmdU?=
- =?utf-8?Q?52QQBinbRxrS7vFWH/NdkP0tgrLv7VfC?=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI0PR08MB10391.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(10070799003)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR08MB10762
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- DU2PEPF00028D0C.eurprd03.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	1d55f53f-9341-466f-aad3-08de52a51428
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|14060799003|1800799024|36860700013|35042699022|82310400026|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?YXFPWTVCbWg0Zk9VcXV1NCtmdlVCL3VtcktlaFAzR2ovZWhOWnBkUGJlM3NY?=
- =?utf-8?B?YnpGNzlhdnRGcU9TN0FvT3l0WkJoVzRXbDhncHU3WHFhMi95bFdwbjZPSnVH?=
- =?utf-8?B?TGY2bTl2Nk1yKzBwd1ZLTmV0S0xYNTloYUowdjlaK2tWTW0zRDF4LzYzN0NK?=
- =?utf-8?B?VGNROVQrQmV2cEd6NEp1TTlwT2Fub1VleGFSbjJnL2cxREJ6SDRqZTRWdzZz?=
- =?utf-8?B?NHBuYUQ3MXdPQ3g0U3huUHN6b201WGFsUkU1c1BGemhTTXFRYVlXUzZqN1F2?=
- =?utf-8?B?WnZ4VkpJM216eWhrTUJod2hlRE5LZkFOL1IyMEdMak0yK2Q1UVVWdmZQTWpp?=
- =?utf-8?B?WCtBMEdkbnJUOXRUK01XQk1uQUdKL2dmU1dHL25wZGtDdlRSc1A4MVE1dHN1?=
- =?utf-8?B?QnlDSlJqVVBpMlJCOG1OMmc0TlUwbURXUURvMnRWUnQ2MDU2NGhmV09zOW1S?=
- =?utf-8?B?ekNqMndYNnc4TkZaS3V2NVVrUTFMSHMvQVdhdHRJeTBhRXJId2prUjJKbG8v?=
- =?utf-8?B?T284Tm9Cek4yK3JpUk5EdmppZ1E5TzA0Slp5NUxtcUlHczhKRnRlcGh4dWtu?=
- =?utf-8?B?NmpHWHR2QXBEY3BVdkdXNDJ6SHl4ZXVxeFc4WWdaMUN6ZzlNUW9reTdRVWFi?=
- =?utf-8?B?eTloOThIazRPTEdhbVhXeFhZRzlXbmJMbDNvTkpDc0xYUWZnRFRwWnVwenU3?=
- =?utf-8?B?V2xCZ29Rb3hXb0lYNzdnMk1pd1lkQ0FaMUtGUkIrWi9Pc2s5bnlCQTRQdm5Z?=
- =?utf-8?B?VG9CVi8xTkFOSGZQTlQ0QUtxV3ZGNnVsUnk1ajkxZmw0VkE1dVlNV0VnZG5S?=
- =?utf-8?B?blFOdUVTWDZMR0VqLyswSUpnUEx1aUEvVFg5ZTV5UnVyb3U0Q1NnS2o2VTh4?=
- =?utf-8?B?aFhOTGtWK1VOMEZMQ0JDU2I2ZVBFcEE2UStuVUFJSkp3YlhEUFdxc2pLQVBY?=
- =?utf-8?B?NHNWMVkvdVNWNVMrdzlCdUZQSFRFS25CdVJDR2hlc05yTlVZM2xkUG8ybzU5?=
- =?utf-8?B?TFYramJTT2p3bXd2dFZtWFNSa2FXMEhCejdwTnd5V2laeUQwK0xsR0JzZ1Iw?=
- =?utf-8?B?RG0ydFF6OWF2TklTZ3RhQTBhd0JVQmQ3ZG43cFFEZTZYY3VHdndpVzJVQjBB?=
- =?utf-8?B?VjRrSnA4YlNtYXlZd25oc004aVlvdmtMVS80bjIzTUlYdU4vZTlJdDJsYVhV?=
- =?utf-8?B?UFlSdjFCclBMVWgxdlA3ZlA3d3lEYjNMUCt4RFJxdFRSNHFIclkxdEw0aGxO?=
- =?utf-8?B?VHA5b09rbWVsZTVvV0tYUlpBVnN1VlNVdVB5bGJCQmY1dk4yT0tab2FwSnlq?=
- =?utf-8?B?NmFrRDNHa2tYZVJLQW9aK0ZNUU1MeDJhZ0xpbDZ4amw2SnRBQ0x3ZE45cTBU?=
- =?utf-8?B?aDVYb2N5UEJBa3dPa01oUGViMHhUamZ2cm44YjV4ZGowWm1wYy9hTDc1MTNT?=
- =?utf-8?B?VmpLZ3ZyV1llOU8yU1c5eFVmMkxleWp6ZU5EaGx3QzhrcFRWUHFRNFUyTHdC?=
- =?utf-8?B?MCtUMTBCdHpxMEs3ZjVka0dCaHVDNEluRE9UK0VxYWdCcXJ3NzVQU0ZYaFdS?=
- =?utf-8?B?RlpJenNGZGZVbWxjcTVxL21VMmtQZ2VVK0QyVkxrSTFkSkdxYTZ2UHNnY2hR?=
- =?utf-8?B?ODVMTlpwbGY3bkYzNmd0OEkwb09XamFYRGFENTl4QUh2VnFoN0xKaUJxdVBj?=
- =?utf-8?B?Vm5sMXZReXc4VU9PejlKam9JRzRoTjg2TDB2UVdYdTVDRHlPcitZazV6blhn?=
- =?utf-8?B?a05HM3l2cjFENmwvOGZWV08zcWZBcy9hQmRsdTBVUk1IckUwUHpYc2x4WU1Q?=
- =?utf-8?B?TTNYTDM3azJ1Y2VhRnFTT0l2cmJRNVRQeHB0UUM4bEg2VUc2V0dHWTFBT2Vp?=
- =?utf-8?B?Q1dzcmZ5ZXgxRCtUYWZUV1BNWFBOdDBzR1hmVUlwSU5zOEJJTm0zdEo3NXl0?=
- =?utf-8?B?MXZsSmcxcGlpZXV6Qnh6TmMzQ1dJTWFvT2t0NFpuSUZSL0ZRVVRqd05oZW9z?=
- =?utf-8?B?ek9wbUJNSU8xNzRVcTdGbjZ1Y2ExQXpDdnZaOGZZblo1UWZWQzN0andreVVl?=
- =?utf-8?B?K3NnNUgxbERaVmFmZE5NcHA2SldvQmNVc0JCbnAveUQ5RGxNZDFaQW5BVnNJ?=
- =?utf-8?Q?AiKw=3D?=
-X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(14060799003)(1800799024)(36860700013)(35042699022)(82310400026)(7416014)(376014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2026 13:11:13.1730
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05158c35-0afe-49b8-e1e5-08de52a53a34
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DU2PEPF00028D0C.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR08MB11610
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 13 Jan 2026 11:05:58 -0500
+Message-Id: <DFNL926T4XG6.OKU0AB1NG254@etsalapatis.com>
+Cc: <sched-ext@lists.linux.dev>, <tj@kernel.org>, <void@manifault.com>
+Subject: Re: [PATCH 0/4] tools/sched_ext: Add example C schedulers
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Andrea Righi" <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>
+X-Mailer: aerc 0.20.1
+References: <20260112214131.50236-1-emil@etsalapatis.com>
+ <77b165ff-0cc4-44bd-b3ef-9221f8238f20@igalia.com> <aWXnTUC1kXitcpTw@gpd4>
+In-Reply-To: <aWXnTUC1kXitcpTw@gpd4>
+
+On Tue Jan 13, 2026 at 1:33 AM EST, Andrea Righi wrote:
+> On Tue, Jan 13, 2026 at 02:57:13PM +0900, Changwoo Min wrote:
+>> Hi Emil,
+>>=20
+>> On 1/13/26 6:41 AM, Emil Tsalapatis wrote:
+>> > Add to the tree several C sched-ext schedulers developed and maintaine=
+d
+>> > out-of-tree by the sched-ext project over the years. These schedulers
+>> > demonstrate sched-ext's feature set and provide a starting point for
+>> > scheduler development. Place the schedulers together with the existing
+>> > examples in tools/sched_ext.
+>>=20
+>> In general, I am okay to include more examples of C schedulers in the
+>> kernel tree. However, I am doubtful whether it is worth including the
+>> nest scheduler, as it has been barely maintained in recent times.
+>
+> +1 on that, even if it's a good example, it's still unmaintained code.
+> Maybe we should just move it in a separate github repo.
+>
+> For the rest of the schedulers I'm ok to include them in-tree (still unde=
+r
+> the assumption that they should be considered examples).
+>
+> Thanks,
+> -Andrea
+>
+
+Makes sense, I will remove the nest schedulers and resubmit. Also wrt
+testing, I'd like to note scx_sdt depends on changes in the current
+bpf-next to verify, so it should be fine by the end of the merge window.
 
 
-On 1/13/26 12:56, Peter Zijlstra wrote:
-> On Tue, Jan 13, 2026 at 12:53:09PM +0100, Peter Zijlstra wrote:
->> On Tue, Jan 13, 2026 at 04:35:02PM +0530, K Prateek Nayak wrote:
->>
->>> Does enabling WARN_DOUBLE_CLOCK warn of a double clock update before
->>> hitting this warning?
->> setup_new_dl_entity() -> update_rq_clock() seems like it will trip that
->> in this case.
-> Something like so to fix: 9f239df55546 ("sched/deadline: Initialize dl_servers after SMP")
->
->
-> --- a/kernel/sched/deadline.c
-> +++ b/kernel/sched/deadline.c
-> @@ -752,8 +752,6 @@ static inline void setup_new_dl_entity(s
->   	struct dl_rq *dl_rq = dl_rq_of_se(dl_se);
->   	struct rq *rq = rq_of_dl_rq(dl_rq);
->   
-> -	update_rq_clock(rq);
-> -
->   	WARN_ON(is_dl_boosted(dl_se));
->   	WARN_ON(dl_time_before(rq_clock(rq), dl_se->deadline));
->   
-> @@ -1834,6 +1832,7 @@ void sched_init_dl_servers(void)
->   		rq = cpu_rq(cpu);
->   
->   		guard(rq_lock_irq)(rq);
-> +		update_rq_clock(rq);
->   
->   		dl_se = &rq->fair_server;
->   
-Yes right, enabling WARN_DOUBLE_CLOCK detects the double clock update 
-and this fixes it.
+>>=20
+>> Regards,
+>> Changwoo Min
+>>=20
+>> >=20
+>> > Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
+>> >=20
+>> > Emil Tsalapatis (4):
+>> >    tools/sched_ext: add scx_nest scheduler
+>> >    tools/sched_ext: add scx_userland scheduler
+>> >    tools/sched_ext: add scx_pair scheduler
+>> >    tools/sched_ext: add arena based scheduler
+>> >=20
+>> >   tools/sched_ext/Makefile               |   2 +-
+>> >   tools/sched_ext/scx_nest.bpf.c         | 652 +++++++++++++++++++++++
+>> >   tools/sched_ext/scx_nest.c             | 240 +++++++++
+>> >   tools/sched_ext/scx_nest.h             |  18 +
+>> >   tools/sched_ext/scx_nest_stats_table.h |  20 +
+>> >   tools/sched_ext/scx_pair.bpf.c         | 610 +++++++++++++++++++++
+>> >   tools/sched_ext/scx_pair.c             | 180 +++++++
+>> >   tools/sched_ext/scx_pair.h             |   9 +
+>> >   tools/sched_ext/scx_sdt.bpf.c          | 710 +++++++++++++++++++++++=
+++
+>> >   tools/sched_ext/scx_sdt.c              | 101 ++++
+>> >   tools/sched_ext/scx_sdt.h              | 113 ++++
+>> >   tools/sched_ext/scx_userland.bpf.c     | 344 ++++++++++++
+>> >   tools/sched_ext/scx_userland.c         | 437 +++++++++++++++
+>> >   tools/sched_ext/scx_userland.h         |  17 +
+>> >   14 files changed, 3452 insertions(+), 1 deletion(-)
+>> >   create mode 100644 tools/sched_ext/scx_nest.bpf.c
+>> >   create mode 100644 tools/sched_ext/scx_nest.c
+>> >   create mode 100644 tools/sched_ext/scx_nest.h
+>> >   create mode 100644 tools/sched_ext/scx_nest_stats_table.h
+>> >   create mode 100644 tools/sched_ext/scx_pair.bpf.c
+>> >   create mode 100644 tools/sched_ext/scx_pair.c
+>> >   create mode 100644 tools/sched_ext/scx_pair.h
+>> >   create mode 100644 tools/sched_ext/scx_sdt.bpf.c
+>> >   create mode 100644 tools/sched_ext/scx_sdt.c
+>> >   create mode 100644 tools/sched_ext/scx_sdt.h
+>> >   create mode 100644 tools/sched_ext/scx_userland.bpf.c
+>> >   create mode 100644 tools/sched_ext/scx_userland.c
+>> >   create mode 100644 tools/sched_ext/scx_userland.h
+>> >=20
+>>=20
+
