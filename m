@@ -1,33 +1,33 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229B4318BAB
-	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 22:03:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599242773FC
+	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 23:48:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768341799; cv=none; b=CuhpUZxg6oN0rkL/n63HrS3dZmMTaH/PdahHw+VpjCTe/yCKiTbSFg2S2PWK/aUlGoYRrnvIONV8kAUujQbdtQdPc9O8vQriDTn/ZFiBs2xlH+5W5bxJv0YIyPClyAXtHHjmDH6jklQC46zhTdsbZU0BWC0GnyoifbjES+0pots=
+	t=1768348137; cv=none; b=Mqxswx3bGnX/8xegsUluynD9hhjhma6x3hVXx+To+upXqrJkpf6KJlJenhUK04BOaP27JRlGbx6r0HRuMi9LlzJhKHT1KYLN1OZaGgUlo7+Wv4gu995OK73lk2l+E7OWfn9212M4/1sgW0vHU1XnI8ea6H7jPO8ADQQgUMOda84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768341799; c=relaxed/simple;
-	bh=zWgeOzkHWbUnOGy9lzs8A4WO+6iwOfUjhJDj+GuY7Vs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VVA5dLy+F8H+GQnDg1HLTML4M9K/zuEQlHIsUoNHNysdRNcIX+FcjGabARAx3yMqKUiboR8+eiOgK0zc7ust4D01/DDosCJCCOecxpKfuc0+Z/SoS2C0NAa2s/R9tRJiiJIT3D7hcFI5vDhNTy6/Ea8w/bbavM9H2wCrbZb2NNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nD8b1xSf; arc=none smtp.client-ip=91.218.175.178
+	s=arc-20240116; t=1768348137; c=relaxed/simple;
+	bh=DUH76cB8+wNy9ug2fjFCXnYtm17ft1rTAtoxq8rCmww=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mrRBZb+L6TSLcISMED2VSthZoSawChmdmqYbkZOrJTqfCpwBTT7slqzAN6EL/wpxTOqhZ8o47UIB5HqBWXM6wvY6d9Qw6hSN73B8XnVRQzEX9OWB/8247x7CY8iTQ8jHH2C0YP3LILsOv8GB+/hQvdqSvIb82fLpLlTuFBPue5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Xmpahncb; arc=none smtp.client-ip=91.218.175.186
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nD8b1xSf"
-Message-ID: <93ecdc25-aa5e-485b-8ff4-a9db3b585861@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Xmpahncb"
+Message-ID: <c7e2a776-52f9-46ad-8422-3a9202bbd9f1@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1768341796;
+	t=1768348133;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=MZE+DFQEijKauPk9j7KAXgeZ4o6kVJeDdPUaXV+RBwo=;
-	b=nD8b1xSf1wwe1ZHIrh1U6Wgk494o/U3108fTJshJqTpCJCqrIeMdO2/h0QvduJQ8LhM2y0
-	1Hl/Ungpc/1/hSEsC+azX8O+xC1cSv68YndnaTWReelZm+//VrNM2qzUvNDjXgw9DTrLnE
-	W6LlPRtNVAWkEUdhf5a9Y0qkemXTT6c=
-Date: Tue, 13 Jan 2026 14:03:04 -0800
+	bh=OXsX80XR+FtGMycqqbMbOn/mhho8xAVX0B2c+Pifl9Y=;
+	b=Xmpahncb8n6gnl0jviTGKHQ4eR/qUtK5TyZQiWrJwkF8bbeJsj/wP/qTbEgNgzYrvOVqAc
+	N5hHvzir/M8mqYo2T8EjnJyJIMv4gXR78xio4wmdoTylJKhog2xHBEWNBPaTyUSyLTCUUk
+	1rQu10dqZ17K3nP83beoqm21fvh72LI=
+Date: Tue, 13 Jan 2026 15:48:46 -0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -36,6 +36,8 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for
  KF_IMPLICIT_ARGS
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 To: Eduard Zingerman <eddyz87@gmail.com>, Alexei Starovoitov
  <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
  Daniel Borkmann <daniel@iogearbox.net>,
@@ -48,197 +50,98 @@ Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>,
 References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
  <20260109184852.1089786-4-ihor.solodrai@linux.dev>
  <952853dd064d5303a7e7ec8e58028e9ee88f2fad.camel@gmail.com>
+ <93ecdc25-aa5e-485b-8ff4-a9db3b585861@linux.dev>
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <952853dd064d5303a7e7ec8e58028e9ee88f2fad.camel@gmail.com>
+In-Reply-To: <93ecdc25-aa5e-485b-8ff4-a9db3b585861@linux.dev>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
-On 1/13/26 12:39 PM, Eduard Zingerman wrote:
-> On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
->> A kernel function bpf_foo marked with KF_IMPLICIT_ARGS flag is
->> expected to have two associated types in BTF:
->>   * `bpf_foo` with a function prototype that omits implicit arguments
->>   * `bpf_foo_impl` with a function prototype that matches the kernel
->>      declaration of `bpf_foo`, but doesn't have a ksym associated with
->>      its name
+On 1/13/26 2:03 PM, Ihor Solodrai wrote:
+> On 1/13/26 12:39 PM, Eduard Zingerman wrote:
+>> On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
+>>> 
 >>
->> In order to support kfuncs with implicit arguments, the verifier has
->> to know how to resolve a call of `bpf_foo` to the correct BTF function
->> prototype and address.
+>> [...]
 >>
->> To implement this, in add_kfunc_call() kfunc flags are checked for
->> KF_IMPLICIT_ARGS. For such kfuncs a BTF func prototype is adjusted to
->> the one found for `bpf_foo_impl` (func_name + "_impl" suffix, by
->> convention) function in BTF.
+>>> @@ -14303,6 +14358,17 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+>>>  	for (i = 0; i < nargs; i++) {
+>>>  		u32 regno = i + 1;
+>>>  
+>>> +		/*
+>>> +		 * Implicit kfunc arguments are set after main verification pass.
+>>> +		 * For correct tracking of zero-extensions we have to reset subreg_def for such
+>>> +		 * args. Otherwise mark_btf_func_reg_size() will be inspecting subreg_def of regs
+>>> +		 * from an earlier (irrelevant) point in the program, which may lead to an error
+>>> +		 * in opt_subreg_zext_lo32_rnd_hi32().
+>>> +		 */
+>>> +		if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
+>>> +				&& is_kfunc_arg_implicit(desc_btf, &args[i])))
+>>> +			regs[regno].subreg_def = DEF_NOT_SUBREG;
+>>> +
 >>
->> This effectively changes the signature of the `bpf_foo` kfunc in the
->> context of verification: from one without implicit args to the one
->> with full argument list.
->>
->> Whether a kfunc argument is implicit or not is determined by
->> is_kfunc_arg_implicit(). The values of implicit arguments by design
->> are provided by the verifier, and so they can only be of particular
->> types. In this patch the only allowed implicit arg type is a pointer
->> to struct bpf_prog_aux. The __prog args (usually void *) are also
->> considered implicit for backwards compatibility.
->>
->> In order to enable the verifier to correctly set an implicit
->> bpf_prog_aux arg value at runtime, is_kfunc_arg_prog() is extended to
->> check for the arg type. At a point when prog arg is determined in
->> check_kfunc_args() the kfunc with implicit args already has a
->> prototype with full argument list, so the existing value patch
->> mechanism just works.
->>
->> If a new kfunc with KF_IMPLICIT_ARG is declared for an existing kfunc
->> that uses a __prog argument (a legacy case), the prototype
->> substitution works in exactly the same way, assuming the kfunc follows
->> the _impl naming convention. The difference is only in how _impl
->> prototype is added to the BTF, which is not the verifier's
->> concern. See a subsequent resolve_btfids patch for details.
->>
->> In check_kfunc_call() reset the subreg_def of registers holding
->> implicit arguments to correctly track zero extensions.
->>
->> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
->> ---
+>> Did you try doing this in `mark_reg_not_init()`?
+>> This function is called for R1-R5 some time prior this hunk.
 > 
-> Overall lgtm.
+>> Did you try doing this in `mark_reg_not_init()`?
 > 
+> Just tried, it doesn't work because REG0 is considered a caller saved
+> register, and so it breaks the zext tracking:
+> 
+>         #define CALLER_SAVED_REGS 6
+>         static const int caller_saved[CALLER_SAVED_REGS] = {
+> 	     BPF_REG_0, BPF_REG_1, BPF_REG_2, BPF_REG_3, BPF_REG_4, BPF_REG_5
+>         };
+> 
+>         [...]
+> 
+> 	for (i = 0; i < CALLER_SAVED_REGS; i++)
+> 		mark_reg_not_init(env, regs, caller_saved[i]);
+> 
+> CI run for the diff below (on top of this series):
+> https://github.com/kernel-patches/bpf/actions/runs/20972520708
+> 
+>
 > [...]
 > 
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> ---
 > 
-> [...]
+> Resetting all reg args appears to be working however (see below).
+> CI: https://github.com/kernel-patches/bpf/actions/runs/20973490221
 > 
->> @@ -14303,6 +14358,17 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
->>  	for (i = 0; i < nargs; i++) {
->>  		u32 regno = i + 1;
->>  
->> +		/*
->> +		 * Implicit kfunc arguments are set after main verification pass.
->> +		 * For correct tracking of zero-extensions we have to reset subreg_def for such
->> +		 * args. Otherwise mark_btf_func_reg_size() will be inspecting subreg_def of regs
->> +		 * from an earlier (irrelevant) point in the program, which may lead to an error
->> +		 * in opt_subreg_zext_lo32_rnd_hi32().
->> +		 */
->> +		if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
->> +				&& is_kfunc_arg_implicit(desc_btf, &args[i])))
->> +			regs[regno].subreg_def = DEF_NOT_SUBREG;
->> +
-> 
-> Did you try doing this in `mark_reg_not_init()`?
-> This function is called for R1-R5 some time prior this hunk.
 
-> Did you try doing this in `mark_reg_not_init()`?
+A follow up after a chat with Eduard.
 
-Just tried, it doesn't work because REG0 is considered a caller saved
-register, and so it breaks the zext tracking:
-
-        #define CALLER_SAVED_REGS 6
-        static const int caller_saved[CALLER_SAVED_REGS] = {
-	     BPF_REG_0, BPF_REG_1, BPF_REG_2, BPF_REG_3, BPF_REG_4, BPF_REG_5
-        };
-
-        [...]
-
-	for (i = 0; i < CALLER_SAVED_REGS; i++)
-		mark_reg_not_init(env, regs, caller_saved[i]);
-
-CI run for the diff below (on top of this series):
-https://github.com/kernel-patches/bpf/actions/runs/20972520708
-
+This change in check_kfunc_call() appears to be working:
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index b4e40b87e8fa..8bbcd1466815 100644
+index 092003cc7841..ff743335111c 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -2784,6 +2784,8 @@ static void __reg_assign_32_into_64(struct bpf_reg_state *reg)
-        }
- }
+@@ -13958,8 +13958,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+                regs = branch->frame[branch->curframe]->regs;
  
-+#define DEF_NOT_SUBREG (0)
-+
- /* Mark a register as having a completely unknown (scalar) value. */
- static void __mark_reg_unknown_imprecise(struct bpf_reg_state *reg)
- {
-@@ -2798,6 +2800,7 @@ static void __mark_reg_unknown_imprecise(struct bpf_reg_state *reg)
-        reg->var_off = tnum_unknown;
-        reg->frameno = 0;
-        reg->precise = false;
-+       reg->subreg_def = DEF_NOT_SUBREG;
-        __mark_reg_unbounded(reg);
- }
+                /* Clear r0-r5 registers in forked state */
+-               for (i = 0; i < CALLER_SAVED_REGS; i++)
+-                       mark_reg_not_init(env, regs, caller_saved[i]);
++               for (i = 0; i < CALLER_SAVED_REGS; i++) {
++                       u32 regno = caller_saved[i];
++                       mark_reg_not_init(env, regs, regno);
++                       regs[regno].subreg_def = DEF_NOT_SUBREG;
++               }
  
-@@ -2892,7 +2895,6 @@ static int mark_btf_ld_reg(struct bpf_verifier_env *env,
-        }
- }
- 
--#define DEF_NOT_SUBREG (0)
- static void init_reg_state(struct bpf_verifier_env *env,
-                           struct bpf_func_state *state)
- {
-@@ -14363,17 +14365,6 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
-        for (i = 0; i < nargs; i++) {
-                u32 regno = i + 1;
- 
--               /*
--                * Implicit kfunc arguments are set after main verification pass.
--                * For correct tracking of zero-extensions we have to reset subreg_def for such
--                * args. Otherwise mark_btf_func_reg_size() will be inspecting subreg_def of regs
--                * from an earlier (irrelevant) point in the program, which may lead to an error
--                * in opt_subreg_zext_lo32_rnd_hi32().
--                */
--               if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
--                               && is_kfunc_arg_implicit(desc_btf, &args[i])))
--                       regs[regno].subreg_def = DEF_NOT_SUBREG;
--
-                t = btf_type_skip_modifiers(desc_btf, args[i].type, NULL);
-                if (btf_type_is_ptr(t))
-                        mark_btf_func_reg_size(env, regno, sizeof(void *));
+                mark_reg_unknown(env, regs, BPF_REG_0);
+                err = __mark_reg_s32_range(env, regs, BPF_REG_0, -MAX_ERRNO, -1);
 
----
+https://github.com/kernel-patches/bpf/actions/runs/20975419422
 
-Resetting all reg args appears to be working however (see below).
-CI: https://github.com/kernel-patches/bpf/actions/runs/20973490221
+Apparently, doing .subreg_def = DEF_NOT_SUBREG in mark_reg_not_init()
+breaks zero-extension tracking somewhere else.  But this is not
+directly relevant to the series.
 
-Should I send this as a separate patch?
-
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8bbcd1466815..9dfcf3149841 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2800,7 +2800,6 @@ static void __mark_reg_unknown_imprecise(struct bpf_reg_state *reg)
-        reg->var_off = tnum_unknown;
-        reg->frameno = 0;
-        reg->precise = false;
--       reg->subreg_def = DEF_NOT_SUBREG;
-        __mark_reg_unbounded(reg);
- }
- 
-@@ -14241,6 +14240,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
-        for (i = 0; i < CALLER_SAVED_REGS; i++)
-                mark_reg_not_init(env, regs, caller_saved[i]);
- 
-+       for (i = 0; i < MAX_BPF_FUNC_REG_ARGS; i++) {
-+               u32 regno = i + 1;
-+               regs[regno].subreg_def = DEF_NOT_SUBREG;
-+       }
-+
-        /* Check return type */
-        t = btf_type_skip_modifiers(desc_btf, meta.func_proto->type, NULL);
+Eduard, Alexei, any concerns with this diff? Should I send a separate
+patch?
 
 
-> What I don't like from structural point of view is:
-> - `is_kfunc_arg_implicit()` depends on KF_IMPLICIT_ARGS, but that
->   check is done externally. Hence, the naming is misleading or 'meta'
->   should be passed to `is_kfunc_arg_implicit()`.
-> - doing DEF_NOT_SUBREG logically has not much to do with implicit args,
->   so it is a bit confusing that is pre-conditioned like that.
-> 
->>  		t = btf_type_skip_modifiers(desc_btf, args[i].type, NULL);
->>  		if (btf_type_is_ptr(t))
->>  			mark_btf_func_reg_size(env, regno, sizeof(void *));
+>  [...]
 
