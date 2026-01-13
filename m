@@ -1,121 +1,244 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3D0350D57
-	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 21:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229B4318BAB
+	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 22:03:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768341588; cv=none; b=faz8XukaJ4QTedC1vohaILpSB3+m6gLCMV7W34R0dwcoqQ2+zpCI8C861xj4AQhel0p2K3kEri9u7CV2+q4XF7VruDVsz3Um5cID/6jtgFddogVM7Utb7ySM3AlMQQ6WjRm3m2BCHISAY+/Dp7NUV8yT4YlLxgzAn2Na2u95W5w=
+	t=1768341799; cv=none; b=CuhpUZxg6oN0rkL/n63HrS3dZmMTaH/PdahHw+VpjCTe/yCKiTbSFg2S2PWK/aUlGoYRrnvIONV8kAUujQbdtQdPc9O8vQriDTn/ZFiBs2xlH+5W5bxJv0YIyPClyAXtHHjmDH6jklQC46zhTdsbZU0BWC0GnyoifbjES+0pots=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768341588; c=relaxed/simple;
-	bh=JMKPIWgq8b9DBCFSMppOOhRohcyexWNss6iyCclDIgo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=sKPTFiA4BmBq9BvldLqqZdhQm+xl/ld5Tr4Nz3hgyqfIFzZlgq5hcQ3+p7ILaeK1H5ja1HQTJwDo8lMDQIhg8TdpKh75MImmidGAYWGPFYle2vVyDnRfC9KBrYZ55fxC/mmp7TU9QWBk+jU4eEtjdry+kEz5TBmfJHxi0P1adwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gWh1lKi9; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768341799; c=relaxed/simple;
+	bh=zWgeOzkHWbUnOGy9lzs8A4WO+6iwOfUjhJDj+GuY7Vs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VVA5dLy+F8H+GQnDg1HLTML4M9K/zuEQlHIsUoNHNysdRNcIX+FcjGabARAx3yMqKUiboR8+eiOgK0zc7ust4D01/DDosCJCCOecxpKfuc0+Z/SoS2C0NAa2s/R9tRJiiJIT3D7hcFI5vDhNTy6/Ea8w/bbavM9H2wCrbZb2NNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nD8b1xSf; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWh1lKi9"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c5e051a47ddso122450a12.1
-        for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 13:59:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768341587; x=1768946387; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=JTlRjbsQTQjHMPHLzcQF6C84Ga9JaD/ogkGGtY0cAkU=;
-        b=gWh1lKi9ncxWMNZ6BbdUOJkrwymw2j8VamsQARh6acA4W8TJyajDa7MSyRNuc0Gyz+
-         JBSSHMXa/YXrnahgoy1ZYqL48XfLioQ3mEnsZu8ZTgK1+ygWFv87mVjPVPgPLEoXz3yO
-         m7w3Amu4xs/jlNbLZATaNxGbvhVnI7WZieRcYJfghB7r/Rm7Ng5qyusUh2ed01GSCaLN
-         ZNKuXvqKQlLPSLf98VG+Wiff6EswRHSod7VfX/LgvPcK5s3uSlgC7WJBQIJyjOcurztx
-         wp8FlYSma3nYQtcSjOyGOTpEHXnUPk/kR5p3V0t9niYWWV1M7wb3MlcjsInr4Kj6baWi
-         ptAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768341587; x=1768946387;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JTlRjbsQTQjHMPHLzcQF6C84Ga9JaD/ogkGGtY0cAkU=;
-        b=nlOG3IpGwzkefISdXJ0EI+CMZYinsH/IJ09UlR/7Tt4gEDj6cXrk0rHUJ3DVP4nGX/
-         O7ym11oiNJvUA6NgUnwx6Ydws5XQsm+YBc+XVTXelOvL/Luy8oplF3xwp9ke66GPkH6J
-         sYvTMqg8WzWutXzV6rU0m4a7/b15Jh9Ga9gCxrS23Y+N7mZRXWT8n+B+6emIBfDzOEsJ
-         q97SWAGTPIwsSttSwBH41U1i/qkvapNzgNiR4vWNinCFyUSM6jlp1sB6Pd2iI9MYx6/j
-         vE7aFH7V0amtugrKQ7u4V7pcWJCZP2nhVaJ/dunpgcQBhKf/0NSocpXn403yyaClko45
-         wmbw==
-X-Forwarded-Encrypted: i=1; AJvYcCW3dkjK0sbCUs0prBlaVCLkcDCv05sMjGuoGLH/oEq+k0AD5ztJ/Slm7oYzWpoZ3FFVIVFPtbfeD+o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxmhBcEolZML7S/6/++NuSKOXczCk7fRVXFda+zdheVZKyKSI2I
-	28nDIKLhzm9xOne9Q+aZLQSuNfdVc6VqSZeMjyNQ5+iiLKgqlg+Conav
-X-Gm-Gg: AY/fxX5HGO1XV0Y4NPl0jxDsfYO17WU5sgu6eC4CIHFUnwd7/kPdxDQfFmKDcIXqAYW
-	Y7IL6AppO8EJoofeJJK5QbcRIBQo+1wMHkR86RwysjI+roB9GKIO8DYchDihwT057JUzqNdiHxw
-	JmS8Ftt2N+fvGzF+yzKLyBDtUG7riebARQNMioRnNZ8IAiQ3F36/RSsL9h6tysMBRh/A+tT1xm7
-	CN5njojiqb09xrUArK97k6UZoOn9icvx3O1oy8YrcFvVBTdtcXkGyCX7IMpy9fZQ69ScAMlFUf8
-	GOoSREKvxZoDuSjhFDK9YyqpXKBclvGfDkA0zPzvbQr0e/d9k89h6nCWj3K5CebsqLjatZAfhnD
-	rzAic5zTo3LrZz5epSB7bHQVh7pF+292ZX41vimv53L2ohHFx20hHW34VLe8uhsn8flDxyeseQv
-	b45S6dqUYJsUW3Bmn5cjUbuDIJGZSWpSj2uhx12qrSgQkiNbcWVv4=
-X-Received: by 2002:a05:6a20:2445:b0:384:f573:42bf with SMTP id adf61e73a8af0-38bed1c96b9mr512725637.53.1768341586883;
-        Tue, 13 Jan 2026 13:59:46 -0800 (PST)
-Received: from [192.168.0.226] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c4cc05cd87asm20802106a12.15.2026.01.13.13.59.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 13:59:46 -0800 (PST)
-Message-ID: <18d9b15319bf8d71a3cd5b08239529505714dc96.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for
- KF_IMPLICIT_ARGS
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: Ihor Solodrai <ihor.solodrai@linux.dev>, Alexei Starovoitov
- <ast@kernel.org>,  Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann
- <daniel@iogearbox.net>, Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, Alan
- Maguire <alan.maguire@oracle.com>, Benjamin Tissoires <bentiss@kernel.org>,
- Jiri Kosina	 <jikos@kernel.org>, bpf@vger.kernel.org,
- linux-kernel@vger.kernel.org, 	linux-input@vger.kernel.org,
- sched-ext@lists.linux.dev
-Date: Tue, 13 Jan 2026 13:59:43 -0800
-In-Reply-To: <20260109184852.1089786-4-ihor.solodrai@linux.dev>
-References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
-	 <20260109184852.1089786-4-ihor.solodrai@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nD8b1xSf"
+Message-ID: <93ecdc25-aa5e-485b-8ff4-a9db3b585861@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1768341796;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MZE+DFQEijKauPk9j7KAXgeZ4o6kVJeDdPUaXV+RBwo=;
+	b=nD8b1xSf1wwe1ZHIrh1U6Wgk494o/U3108fTJshJqTpCJCqrIeMdO2/h0QvduJQ8LhM2y0
+	1Hl/Ungpc/1/hSEsC+azX8O+xC1cSv68YndnaTWReelZm+//VrNM2qzUvNDjXgw9DTrLnE
+	W6LlPRtNVAWkEUdhf5a9Y0qkemXTT6c=
+Date: Tue, 13 Jan 2026 14:03:04 -0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for
+ KF_IMPLICIT_ARGS
+To: Eduard Zingerman <eddyz87@gmail.com>, Alexei Starovoitov
+ <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>,
+ Alan Maguire <alan.maguire@oracle.com>,
+ Benjamin Tissoires <bentiss@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+ bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org, sched-ext@lists.linux.dev
+References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
+ <20260109184852.1089786-4-ihor.solodrai@linux.dev>
+ <952853dd064d5303a7e7ec8e58028e9ee88f2fad.camel@gmail.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <952853dd064d5303a7e7ec8e58028e9ee88f2fad.camel@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
+On 1/13/26 12:39 PM, Eduard Zingerman wrote:
+> On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
+>> A kernel function bpf_foo marked with KF_IMPLICIT_ARGS flag is
+>> expected to have two associated types in BTF:
+>>   * `bpf_foo` with a function prototype that omits implicit arguments
+>>   * `bpf_foo_impl` with a function prototype that matches the kernel
+>>      declaration of `bpf_foo`, but doesn't have a ksym associated with
+>>      its name
+>>
+>> In order to support kfuncs with implicit arguments, the verifier has
+>> to know how to resolve a call of `bpf_foo` to the correct BTF function
+>> prototype and address.
+>>
+>> To implement this, in add_kfunc_call() kfunc flags are checked for
+>> KF_IMPLICIT_ARGS. For such kfuncs a BTF func prototype is adjusted to
+>> the one found for `bpf_foo_impl` (func_name + "_impl" suffix, by
+>> convention) function in BTF.
+>>
+>> This effectively changes the signature of the `bpf_foo` kfunc in the
+>> context of verification: from one without implicit args to the one
+>> with full argument list.
+>>
+>> Whether a kfunc argument is implicit or not is determined by
+>> is_kfunc_arg_implicit(). The values of implicit arguments by design
+>> are provided by the verifier, and so they can only be of particular
+>> types. In this patch the only allowed implicit arg type is a pointer
+>> to struct bpf_prog_aux. The __prog args (usually void *) are also
+>> considered implicit for backwards compatibility.
+>>
+>> In order to enable the verifier to correctly set an implicit
+>> bpf_prog_aux arg value at runtime, is_kfunc_arg_prog() is extended to
+>> check for the arg type. At a point when prog arg is determined in
+>> check_kfunc_args() the kfunc with implicit args already has a
+>> prototype with full argument list, so the existing value patch
+>> mechanism just works.
+>>
+>> If a new kfunc with KF_IMPLICIT_ARG is declared for an existing kfunc
+>> that uses a __prog argument (a legacy case), the prototype
+>> substitution works in exactly the same way, assuming the kfunc follows
+>> the _impl naming convention. The difference is only in how _impl
+>> prototype is added to the BTF, which is not the verifier's
+>> concern. See a subsequent resolve_btfids patch for details.
+>>
+>> In check_kfunc_call() reset the subreg_def of registers holding
+>> implicit arguments to correctly track zero extensions.
+>>
+>> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+>> ---
+> 
+> Overall lgtm.
+> 
+> [...]
+> 
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> 
+> [...]
+> 
+>> @@ -14303,6 +14358,17 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+>>  	for (i = 0; i < nargs; i++) {
+>>  		u32 regno = i + 1;
+>>  
+>> +		/*
+>> +		 * Implicit kfunc arguments are set after main verification pass.
+>> +		 * For correct tracking of zero-extensions we have to reset subreg_def for such
+>> +		 * args. Otherwise mark_btf_func_reg_size() will be inspecting subreg_def of regs
+>> +		 * from an earlier (irrelevant) point in the program, which may lead to an error
+>> +		 * in opt_subreg_zext_lo32_rnd_hi32().
+>> +		 */
+>> +		if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
+>> +				&& is_kfunc_arg_implicit(desc_btf, &args[i])))
+>> +			regs[regno].subreg_def = DEF_NOT_SUBREG;
+>> +
+> 
+> Did you try doing this in `mark_reg_not_init()`?
+> This function is called for R1-R5 some time prior this hunk.
 
-[...]
+> Did you try doing this in `mark_reg_not_init()`?
 
-> --- a/kernel/bpf/verifier.c
-> +++ b/kernel/bpf/verifier.c
-> @@ -3271,6 +3271,38 @@ static struct btf *find_kfunc_desc_btf(struct bpf_=
-verifier_env *env, s16 offset)
->  	return btf_vmlinux ?: ERR_PTR(-ENOENT);
->  }
-> =20
-> +#define KF_IMPL_SUFFIX "_impl"
-> +
-> +static const struct btf_type *find_kfunc_impl_proto(struct bpf_verifier_=
-env *env,
-> +						    struct btf *btf,
-> +						    const char *func_name)
-> +{
-> +	char impl_name[KSYM_SYMBOL_LEN];
+Just tried, it doesn't work because REG0 is considered a caller saved
+register, and so it breaks the zext tracking:
 
-Oh, as we discussed already, this should use env->tmp_str_buf.
+        #define CALLER_SAVED_REGS 6
+        static const int caller_saved[CALLER_SAVED_REGS] = {
+	     BPF_REG_0, BPF_REG_1, BPF_REG_2, BPF_REG_3, BPF_REG_4, BPF_REG_5
+        };
 
-> +	const struct btf_type *func;
-> +	s32 impl_id;
-> +	int len;
-> +
-> +	len =3D snprintf(impl_name, sizeof(impl_name), "%s%s", func_name, KF_IM=
-PL_SUFFIX);
-> +	if (len < 0 || len >=3D sizeof(impl_name)) {
-> +		verbose(env, "function name %s%s is too long\n", func_name, KF_IMPL_SU=
-FFIX);
-> +		return NULL;
-> +	}
+        [...]
 
-[...]
+	for (i = 0; i < CALLER_SAVED_REGS; i++)
+		mark_reg_not_init(env, regs, caller_saved[i]);
+
+CI run for the diff below (on top of this series):
+https://github.com/kernel-patches/bpf/actions/runs/20972520708
+
+
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index b4e40b87e8fa..8bbcd1466815 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2784,6 +2784,8 @@ static void __reg_assign_32_into_64(struct bpf_reg_state *reg)
+        }
+ }
+ 
++#define DEF_NOT_SUBREG (0)
++
+ /* Mark a register as having a completely unknown (scalar) value. */
+ static void __mark_reg_unknown_imprecise(struct bpf_reg_state *reg)
+ {
+@@ -2798,6 +2800,7 @@ static void __mark_reg_unknown_imprecise(struct bpf_reg_state *reg)
+        reg->var_off = tnum_unknown;
+        reg->frameno = 0;
+        reg->precise = false;
++       reg->subreg_def = DEF_NOT_SUBREG;
+        __mark_reg_unbounded(reg);
+ }
+ 
+@@ -2892,7 +2895,6 @@ static int mark_btf_ld_reg(struct bpf_verifier_env *env,
+        }
+ }
+ 
+-#define DEF_NOT_SUBREG (0)
+ static void init_reg_state(struct bpf_verifier_env *env,
+                           struct bpf_func_state *state)
+ {
+@@ -14363,17 +14365,6 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+        for (i = 0; i < nargs; i++) {
+                u32 regno = i + 1;
+ 
+-               /*
+-                * Implicit kfunc arguments are set after main verification pass.
+-                * For correct tracking of zero-extensions we have to reset subreg_def for such
+-                * args. Otherwise mark_btf_func_reg_size() will be inspecting subreg_def of regs
+-                * from an earlier (irrelevant) point in the program, which may lead to an error
+-                * in opt_subreg_zext_lo32_rnd_hi32().
+-                */
+-               if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
+-                               && is_kfunc_arg_implicit(desc_btf, &args[i])))
+-                       regs[regno].subreg_def = DEF_NOT_SUBREG;
+-
+                t = btf_type_skip_modifiers(desc_btf, args[i].type, NULL);
+                if (btf_type_is_ptr(t))
+                        mark_btf_func_reg_size(env, regno, sizeof(void *));
+
+---
+
+Resetting all reg args appears to be working however (see below).
+CI: https://github.com/kernel-patches/bpf/actions/runs/20973490221
+
+Should I send this as a separate patch?
+
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 8bbcd1466815..9dfcf3149841 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2800,7 +2800,6 @@ static void __mark_reg_unknown_imprecise(struct bpf_reg_state *reg)
+        reg->var_off = tnum_unknown;
+        reg->frameno = 0;
+        reg->precise = false;
+-       reg->subreg_def = DEF_NOT_SUBREG;
+        __mark_reg_unbounded(reg);
+ }
+ 
+@@ -14241,6 +14240,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+        for (i = 0; i < CALLER_SAVED_REGS; i++)
+                mark_reg_not_init(env, regs, caller_saved[i]);
+ 
++       for (i = 0; i < MAX_BPF_FUNC_REG_ARGS; i++) {
++               u32 regno = i + 1;
++               regs[regno].subreg_def = DEF_NOT_SUBREG;
++       }
++
+        /* Check return type */
+        t = btf_type_skip_modifiers(desc_btf, meta.func_proto->type, NULL);
+
+
+> What I don't like from structural point of view is:
+> - `is_kfunc_arg_implicit()` depends on KF_IMPLICIT_ARGS, but that
+>   check is done externally. Hence, the naming is misleading or 'meta'
+>   should be passed to `is_kfunc_arg_implicit()`.
+> - doing DEF_NOT_SUBREG logically has not much to do with implicit args,
+>   so it is a bit confusing that is pre-conditioned like that.
+> 
+>>  		t = btf_type_skip_modifiers(desc_btf, args[i].type, NULL);
+>>  		if (btf_type_is_ptr(t))
+>>  			mark_btf_func_reg_size(env, regno, sizeof(void *));
+
