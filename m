@@ -1,182 +1,269 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C37C2BEC55
-	for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 22:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4FC281357
+	for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 01:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768257810; cv=none; b=BGWAVxFVjUevrPE4OtIGT0o0IEdE6Uolk8qySyPxqdMVUKZw8Tt8CsRrvFnF5JADuIBQmU6RW6s1PuIPHCvi3edCsO43Dgg1V1kKiXS2H1vi0okL7fQSif3docptl4DtcR8NvyUznmMogPfEX6aNyup/tsUzzqP04d/9qrM6mr8=
+	t=1768268977; cv=none; b=V80QYLOmq4wdsMz0Efq9/UgTr8QPsIfWgQA2MBWbUReau8qohzcMyi/knvtIsQzlW51jZyE9G1GuhSJeOoKMUKCzh3i79E8zqR6kx8/1M1pVl5KHnsAiS+45vZEGj4E9KpeNxMtsxi3OopebS75aRa7XyCUspY4mWBkRt2KV8SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768257810; c=relaxed/simple;
-	bh=0Ga4046PoD1QjORJ8x9YGyeaqSw2W7pHCfFHrwB+sqs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OgvTs3FVDPrDNEu6DPNsDkxEW+ZWkNSOelpd+Vq4r/FuDO7ufqvHPt386NChTkOaPIqdDlc4zmoeG/0VmklmS7ciXNt5zn+F40sHnabZu5ycu5bcW8EI0atqiX3lSZPFZaZPMqHVshDvAkIxV+YrM0yedZOyXbz92BeZ6Z7nr9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZjL+hHv; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768268977; c=relaxed/simple;
+	bh=bSK4CcnScNRHMalMCjYSwEi6oFia9/n/YNRFraGXq/w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QxLCf5jWDpHoi54XF+8n+b/yQZTpf6Qq89+0IBMl4m52BMupH3nN9W9/Oy01RonoSLlDbzdfTXvllxp3SwPAke/RKfPAXo007TmIstvi/evx3NxFiDR3ZSoKfO1LPMBQXebLa6MOj9z5qrUnOgPRXiczQAk0ufCeUyeFZCWyA6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lSWEdAlb; arc=none smtp.client-ip=95.215.58.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZjL+hHv"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-34c565b888dso5856349a91.0
-        for <sched-ext@lists.linux.dev>; Mon, 12 Jan 2026 14:43:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768257808; x=1768862608; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PGobhM5gknftRAivxeGEAO6mhAVtTPpcYFMxFViT17s=;
-        b=VZjL+hHvKZaszsv/Em5O+DaqMz94MSVushTv8+llnRfyV++jdRXc8ECOYvN01jAekG
-         Jgy1WBSUQZ5DyKz3+i1TyUpw6QSt9AASI3RKF/Aw2opvYg50YJY7wIMTKNe1g7Uvhzhp
-         ajPb6ZJqaVpoqbjgrJ8z3kP2HJXQ0rGiU5fiMXkNIWBQl7sDnV3mXwf0AqzEQ+4NfxSW
-         xXbpCGzsCegeFVHl81+Jn5/lvqrlKlGcEO+/sYOtpX9G2m7FPqFk0vnA7zEwfgPNCFJG
-         yoony1twZroeqfTaTRkg7Nie69ooeMLkJj3Z1lYWBfcbb+8Q+kOE8uBHnzpK7ztwzeei
-         Q6fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768257808; x=1768862608;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PGobhM5gknftRAivxeGEAO6mhAVtTPpcYFMxFViT17s=;
-        b=tJs5SRKLmmj2SRKOcRbOnYP7ABS9PAOGpGDOnQSQiaP4b/ggltpPxwoC12kq/sfiTj
-         zCFDzbLXh0SfkfU9QoZcYAWmcuHQf5/gNHesmGZSwdyttxqKdrB1rE7Xbbt1Xa+9CZ7Z
-         mU6x/TlJvY1I9HBRVcxClrlrI41mTBcjmpUwTELvHPWpOxuB5+3X38HahnyP7FMuH73L
-         Oq802/eLZ7UrbU4IIPmcamnmVZ1ZSCFlg37dNqvlwInSKJxw/EGjhXLc5ieR7vm3c96P
-         S36w/V3aDAP8YAPPGFd1D0aeVne20b+BN1F4Pn38K5HsplCLd0kuZlYhvwWqp9hYrHJh
-         QX6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUqoQ4Ol5Um4DvJff8yOC5xg567TjdaASPvt+HX6/uhyB1qt5WMiV5Z86XIW81obll0SRP/Nou81Hk=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyu4yLYBQHDPh6rZOipblqAS30F9tQwFuv2lVzCjJIHCALg07ac
-	OiIcytUfeNq+lA4rQcM6JAj4tlUQbqC2fo8YAjEtGxaH0209CdQ4gLrwckhLeC8u5k1OsW28FF+
-	OQRMDwAm4VV86naWPDnkBVPtf5tQ1jtA=
-X-Gm-Gg: AY/fxX5IAj0tuMFiCc4e2iitMpv+3B23Z0ZEdleDlctJaQg2Fx2u4DJWMmvpWr7rahG
-	XYlSulP5iadRmuSN3ZjHc/2Rrar6bP6AFaRKtvDYXa7wNM+qb6S6aaS+0ahh0dDG77dXo2Vxtk3
-	tEKEP8w++J29Vy+vVm8H9cLl5sZdQQ9o2FBcNhtU98dABURXGma47B27fnNueCMeNJPjKPzhA1P
-	UQeZBpx+/dvLDyK4H4R0AuXhcoP1aoBNEq3elcjGT3B/uTfAAeE4Icdd//olT+9IC6IrlRVy1pE
-	1CepPSB9eb0=
-X-Google-Smtp-Source: AGHT+IHUazrPlEet43khWdyf1XxNCYUu5w5+tqtqvaSnOm9KMVvJkpgW6G3rA/Hm6dlK5sFlWJd5odNJwJX0gdLy7xE=
-X-Received: by 2002:a17:90b:38cd:b0:340:ad5e:cb with SMTP id
- 98e67ed59e1d1-34f68b8325amr16854677a91.8.1768257808289; Mon, 12 Jan 2026
- 14:43:28 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lSWEdAlb"
+Message-ID: <5bcd3bb1-6ed0-4ad8-9de8-46385de908cb@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1768268972;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YxMG4i3aLl1pLM38OkkjaumzApF3ephBc54bqt60bRs=;
+	b=lSWEdAlb2ZVSXIpcS2cZyhiEazdQBF/83oz5ygbEmYo2duCR5qjPd0HK8rl1+v0TSZnl4s
+	QuRyixMLPRo1mVSkf5lqlr7ZCu3AQd+v8pH44RDPdRH2EkOisqy9quC59TlCH83Wbw/8Ec
+	sfxC7QJo96Ei/+GbXAyeg99DQwYf+fc=
+Date: Mon, 12 Jan 2026 17:49:14 -0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next v1 04/10] resolve_btfids: Support for
+ KF_IMPLICIT_ARGS
+To: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>, Eduard Zingerman
+ <eddyz87@gmail.com>, Mykyta Yatsenko <yatsenko@meta.com>,
+ Tejun Heo <tj@kernel.org>, Alan Maguire <alan.maguire@oracle.com>,
+ Benjamin Tissoires <bentiss@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+ bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org, sched-ext@lists.linux.dev
 References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
- <20260109184852.1089786-9-ihor.solodrai@linux.dev> <CAADnVQJDv80_T+1jz=7_8y+8hRTjMqqkm38in2er8iRU-p9W+g@mail.gmail.com>
- <b099a95e-5e69-4eeb-a2c9-9a52b8042a85@linux.dev> <CAADnVQ+_AmiwuupkVJTGyKY3KOp68GLuivs2LMEr0M_yaHPUUg@mail.gmail.com>
- <0c4d84ab-1725-45bc-9c1c-8bdc1f5fc032@linux.dev> <CAADnVQ+k-nbq-2PGRSPJDRZ3G9sp9zu3Owqsj7zqO_G+3OQEww@mail.gmail.com>
- <f0e63b55-65c3-4367-b3da-275df18147a1@linux.dev> <3a697699-ffcb-4e2f-a7a4-9e3f571aa402@linux.dev>
-In-Reply-To: <3a697699-ffcb-4e2f-a7a4-9e3f571aa402@linux.dev>
-From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Mon, 12 Jan 2026 14:43:15 -0800
-X-Gm-Features: AZwV_QjU-ODZg1GeGIyYt8QDqUW_SFHA2LTq3XVJjopePVE88KAjYA43jKP0aL4
-Message-ID: <CAEf4BzbgPfRm9BX=TsZm-TsHFAHcwhPY4vTt=9OT-uhWqf8tqw@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v1 08/10] bpf: Add bpf_task_work_schedule_*
- kfuncs with KF_IMPLICIT_ARGS
-To: Ihor Solodrai <ihor.solodrai@linux.dev>
-Cc: Alexei Starovoitov <alexei.starovoitov@gmail.com>, Alexei Starovoitov <ast@kernel.org>, 
-	Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
-	Martin KaFai Lau <martin.lau@linux.dev>, Eduard Zingerman <eddyz87@gmail.com>, 
-	Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, 
-	Alan Maguire <alan.maguire@oracle.com>, Benjamin Tissoires <bentiss@kernel.org>, 
-	Jiri Kosina <jikos@kernel.org>, bpf <bpf@vger.kernel.org>, 
-	LKML <linux-kernel@vger.kernel.org>, 
-	"open list:HID CORE LAYER" <linux-input@vger.kernel.org>, sched-ext@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <20260109184852.1089786-5-ihor.solodrai@linux.dev>
+ <CAEf4BzYcZ5pLCvfn8uWiKCjpBXBw9dxR_WZnKxVz1Bhf96xOGg@mail.gmail.com>
+ <2ea17ba8-3248-4a01-8fed-183ce66aa39c@linux.dev>
+ <CAEf4BzYuchyyw9M6eQo0Gou=09PcM-o_Ay7D8DM1gDitiG6Tbg@mail.gmail.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <CAEf4BzYuchyyw9M6eQo0Gou=09PcM-o_Ay7D8DM1gDitiG6Tbg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Jan 12, 2026 at 10:54=E2=80=AFAM Ihor Solodrai <ihor.solodrai@linux=
-.dev> wrote:
->
-> On 1/9/26 1:56 PM, Ihor Solodrai wrote:
-> > On 1/9/26 1:49 PM, Alexei Starovoitov wrote:
-> >> On Fri, Jan 9, 2026 at 1:39=E2=80=AFPM Ihor Solodrai <ihor.solodrai@li=
-nux.dev> wrote:
-> >>>
-> >>> [...]
-> >>>
-> >>>> I feel bpf_task_work_schedule_resume() is ok to break, since it's so=
- new.
-> >>>> We can remove bpf_task_work_schedule_[resume|singal]_impl()
-> >>>> to avoid carrying forward forever.
-> >>>>
-> >>>> bpf_stream_vprintk_impl() is not that clear. I would remove it too.
-> >>>
-> >>> That leaves only bpf_wq_set_callback_impl(). Can we break that too?
-> >>
-> >> Sounds like Benjamin is ok removing it.
-> >> So I think we can indeed remove them all.
-> >>
-> >>> Then there won't be legacy cases at all. It was introduced in v6.16
-> >>> along the with __prog suffix [1][2].
-> >>>
-> >>> If we go this route, we could clean up __prog support/docs too.
-> >>>
-> >>> I think it's worth it to make an "all or nothing" decision here:
-> >>> either break all 4 existing kfuncs, or backwards-support all of them.
-> >>
-> >> I don't see why "all or nothing" is a good thing.
-> >> It won't be "all" anyway.
-> >> We have bpf_rbtree_add_impl(), bpf_list_push_front_impl(), etc.
-> >> And those we cannot remove. sched-ext is using them.
-> >> Another few categories are bpf_obj_new_impl(), bpf_obj_drop_impl().
-> >> There are not __prog type, but conceptually the same thing and
-> >> KF_IMPLICIT_ARGS should support them too eventually.
-> >
-> > I was thinking we could remove/simplify code relevant to backwards
-> > compat of existing _impl kfuncs. But you're right, if we start using
-> > implicit args for other types/kfuncs, the "legacy" case still has to
-> > work.
-> >
-> > Ok, in the next revision I'll remove all the __prog users, but leave
-> > the "legacy" case support in place for future use.
->
-> I just had an off-list chat with Andrii, and we agreed that leaving
-> the existing _impl kfuncs supported may be a good idea.
->
-> It doesn't cost us much: we keep the mechanism for legacy functions
-> anyways, so supporting bpf_wq_set_callback_impl() and co only requires
-> keeping definitions in the kernel.
->
-> The only benefit of *removing* these _impl functions is that we could
-> clean up __prog support.
->
-> But having backwards compat seems like a better deal.
-> What do you think?
->
+On 1/12/26 8:51 AM, Andrii Nakryiko wrote:
+> On Fri, Jan 9, 2026 at 5:15 PM Ihor Solodrai <ihor.solodrai@linux.dev> wrote:
+>>
+>> [...]
+>>>>
+>>>> diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
+>>>> index df39982f51df..b361e726fa36 100644
+>>>> --- a/tools/bpf/resolve_btfids/main.c
+>>>> +++ b/tools/bpf/resolve_btfids/main.c
+>>>> @@ -152,6 +152,18 @@ struct object {
+>>>>         int nr_typedefs;
+>>>>  };
+>>>>
+>>>> +#define KF_IMPLICIT_ARGS (1 << 16)
+>>>> +#define KF_IMPL_SUFFIX "_impl"
+>>>> +#define MAX_BPF_FUNC_REG_ARGS 5
+>>>> +#define MAX_KFUNCS 256
+>>>> +#define MAX_DECL_TAGS (MAX_KFUNCS * 4)
+>>>
+>>> can't we get that from include/linux/bpf.h? seems like
+>>> resolve_btfids's main.c include internal headers just fine, so why
+>>> duplicate definitions?
+>>
+>> Hi Andrii, thank you for a quick review.
+>>
+>> Including internal include/linux/btf.h directly doesn't work, which is
+>> probably expected.
+>>
+>> resolve_btfids is currently built with:
+>>
+>> HOSTCFLAGS_resolve_btfids += -g \
+>>           -I$(srctree)/tools/include \
+>>           -I$(srctree)/tools/include/uapi \
+> 
+> so I don't know if that will solve the issue, but I don't think it
+> makes sense to build resolve_btfids using tools' version of includes.
+> tools/include is mostly for perf's benefit (maybe so that they don't
+> accidentally take some kernel-internal dependency, not sure). But
+> resolve_btfids is built for the kernel during the kernel build, we
+> should have access to full kernel headers. Try changing this and see
+> if build errors go away?
+> 
+>>           -I$(LIBBPF_INCLUDE) \
+>>           -I$(SUBCMD_INCLUDE) \
+>>           $(LIBELF_FLAGS) \
+>>           -Wall -Werror
+>>
+>> If I add -I$(srctree)/include option and then
+>>
+>>     #include <linux/btf.h>
+>>
+>> A bunch of build errors happen.
+>>
+>> AFAIU we'd have to create a stripped copy of relevant headers in
+>> tools/include first.  Is that what you're suggesting?
+> 
+> see above, the opposite -- just use -I$(srctree)/include directly
 
-I think that bit of __prog clean up might be worth doing after all.
-The biggest difference for users if we remove _impl stuff from new
-kernels would be an extra explicit xxx_impl kfunc declaration (it
-won't come from vmlinux.h anymore) and then the following call pattern
-(which probably will be hidden in the macro anyways):
+Andrii,
 
-if (xxx_impl)
-    xxx_impl(..., NULL);
-else
-    xxx(...);
+I made a low-effort attempt to switch away from tools/include and it
+looks like too much trouble. See a sample splat below.
+
+I think the issue is that resolve_btfids uses a couple of inherently
+user-space things (stdlib, libelf), which themselves may include
+system headers. And there is actually a difference between the kernel
+and tools/include headers. For example, check
+
+  ./include/linux/rbtree.h
+vs
+  ./tools/include/linux/rbtree.h
+
+Maybe we can make it work (with our own local tools/include?), but it
+doesn't look worth it for just a couple of constant #define-s.
+
+Let me know if I am missing something.
 
 
-This will work on old and new kernels alike, so ok, let's just drop
-all the _impl stuff. Can't do that for bpf_obj_new_impl() because
-that's already used more widely, but for task_work, wq, stream -- they
-are all fresh and not yet properly used in production.
+$ make
+  INSTALL libsubcmd_headers
+  HOSTCC  /home/isolodrai/workspace/prog-aux/linux/tools/bpf/resolve_btfids/main.o
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:20:33: error: conflicting types for ‘fd_set’; have ‘__kernel_fd_set’
+   20 | typedef __kernel_fd_set         fd_set;
+      |                                 ^~~~~~
+In file included from /usr/include/sys/types.h:179,
+                 from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/sys/select.h:70:5: note: previous declaration of ‘fd_set’ with type ‘fd_set’
+   70 |   } fd_set;
+      |     ^~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:21:33: error: conflicting types for ‘dev_t’; have ‘__kernel_dev_t’ {aka ‘unsigned int’}
+   21 | typedef __kernel_dev_t          dev_t;
+      |                                 ^~~~~
+In file included from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/sys/types.h:59:17: note: previous declaration of ‘dev_t’ with type ‘dev_t’ {aka ‘long unsigned int’}
+   59 | typedef __dev_t dev_t;
+      |                 ^~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:25:33: error: conflicting types for ‘nlink_t’; have ‘u32’ {aka ‘unsigned int’}
+   25 | typedef u32                     nlink_t;
+      |                                 ^~~~~~~
+In file included from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/sys/types.h:74:19: note: previous declaration of ‘nlink_t’ with type ‘nlink_t’ {aka ‘long unsigned int’}
+   74 | typedef __nlink_t nlink_t;
+      |                   ^~~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:31:33: error: conflicting types for ‘timer_t’; have ‘__kernel_timer_t’ {aka ‘int’}
+   31 | typedef __kernel_timer_t        timer_t;
+      |                                 ^~~~~~~
+In file included from /usr/include/sys/types.h:130,
+                 from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/bits/types/timer_t.h:7:19: note: previous declaration of ‘timer_t’ with type ‘timer_t’ {aka ‘void *’}
+    7 | typedef __timer_t timer_t;
+      |                   ^~~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:52:33: error: conflicting types for ‘loff_t’; have ‘__kernel_loff_t’ {aka ‘long long int’}
+   52 | typedef __kernel_loff_t         loff_t;
+      |                                 ^~~~~~
+In file included from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/sys/types.h:42:18: note: previous declaration of ‘loff_t’ with type ‘loff_t’ {aka ‘long int’}
+   42 | typedef __loff_t loff_t;
+      |                  ^~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:53:9: error: unknown type name ‘__kernel_uoff_t’
+   53 | typedef __kernel_uoff_t         uoff_t;
+      |         ^~~~~~~~~~~~~~~
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:115:33: error: conflicting types for ‘uint64_t’; have ‘u64’ {aka ‘long long unsigned int’}
+  115 | typedef u64                     uint64_t;
+      |                                 ^~~~~~~~
+In file included from /usr/include/stdint.h:37,
+                 from /usr/lib/gcc/x86_64-redhat-linux/11/include/stdint.h:9,
+                 from /usr/include/libelf.h:32,
+                 from main.c:68:
+/usr/include/bits/stdint-uintn.h:27:20: note: previous declaration of ‘uint64_t’ with type ‘uint64_t’ {aka ‘long unsigned int’}
+   27 | typedef __uint64_t uint64_t;
+      |                    ^~~~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:116:33: error: conflicting types for ‘u_int64_t’; have ‘u64’ {aka ‘long long unsigned int’}
+  116 | typedef u64                     u_int64_t;
+      |                                 ^~~~~~~~~
+In file included from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/sys/types.h:161:20: note: previous declaration of ‘u_int64_t’ with type ‘u_int64_t’ {aka ‘long unsigned int’}
+  161 | typedef __uint64_t u_int64_t;
+      |                    ^~~~~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:117:33: error: conflicting types for ‘int64_t’; have ‘s64’ {aka ‘long long int’}
+  117 | typedef s64                     int64_t;
+      |                                 ^~~~~~~
+In file included from /usr/include/sys/types.h:155,
+                 from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/bits/stdint-intn.h:27:19: note: previous declaration of ‘int64_t’ with type ‘int64_t’ {aka ‘long int’}
+   27 | typedef __int64_t int64_t;
+      |                   ^~~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:138:13: error: conflicting types for ‘blkcnt_t’; have ‘u64’ {aka ‘long long unsigned int’}
+  138 | typedef u64 blkcnt_t;
+      |             ^~~~~~~~
+In file included from /usr/include/stdlib.h:394,
+                 from main.c:67:
+/usr/include/sys/types.h:192:20: note: previous declaration of ‘blkcnt_t’ with type ‘blkcnt_t’ {aka ‘long int’}
+  192 | typedef __blkcnt_t blkcnt_t;     /* Type to count number of disk blocks.  */
+      |                    ^~~~~~~~
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/uapi/linux/stat.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:7,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/linux/types.h:266:34: error: expected ‘:’, ‘,’, ‘;’, ‘}’ or ‘__attribute__’ before ‘*’ token
+  266 |         struct task_struct __rcu *task;
+      |                                  ^
+In file included from /home/isolodrai/workspace/prog-aux/linux/include/linux/cache.h:6,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/time.h:5,
+                 from /home/isolodrai/workspace/prog-aux/linux/include/linux/stat.h:19,
+                 from main.c:70:
+/home/isolodrai/workspace/prog-aux/linux/include/vdso/cache.h:5:10: fatal error: asm/cache.h: No such file or directory
+    5 | #include <asm/cache.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [/home/isolodrai/workspace/prog-aux/linux/tools/build/Makefile.build:86: /home/isolodrai/workspace/prog-aux/linux/tools/bpf/resolve_btfids/main.o] Error 1
+make: *** [Makefile:81: /home/isolodrai/workspace/prog-aux/linux/tools/bpf/resolve_btfids//resolve_btfids-in.o] Error 2
 
 
->
-> >
-> >>
-> >>
-> >>> git tag --contains bc049387b41f | grep -v rc
-> >>> v6.16
-> >>> v6.17
-> >>> v6.18
-> >>>
-> >>> [1] https://lore.kernel.org/all/20250513142812.1021591-1-memxor@gmail=
-.com/
-> >>> [2] https://lore.kernel.org/all/20240420-bpf_wq-v2-13-6c986a5a741f@ke=
-rnel.org/
-> >>>
-> >>>
-> >
->
+> 
+> [...]
+> 
