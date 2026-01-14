@@ -1,118 +1,205 @@
-Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011061.outbound.protection.outlook.com [52.101.62.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299A11448D5
-	for <sched-ext@lists.linux.dev>; Wed, 14 Jan 2026 04:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768363691; cv=none; b=H66Lcbs0wjScN9qifan9juu16utuCrqwNshAqIy2MULzQ5oOK0dfiXl+yBoUAGVn/FkvmwdsfqCTWKnM0UkrS8pJ35pYY5mFRN7NcaodGCqoNSa5k5PzKnAIrVCuujdLp9wou2Q2NNNWMXQWKBfyKVDUmqejwqp97T66cERDpbo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768363691; c=relaxed/simple;
-	bh=Aum4e75q/c3WD6beapNhk9vDmdL2F+An3dcb9kVyPNw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mroMx0q8qPMu5O4NB/R8UYeuC4MTK5NCMCLOuiPp5EfxJBpBVVUnS88MuI3U+jQM7Xhm//XUTKvpPeueHtArMy1+q0KQXpf3Hv0n2sXRMlCldQalHfGy7hi6V9IW82dSsYIvXAcHq7YYkf6bHO/mYzcJNmp9DoJVtMaHsc3une8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=r8aqhHFK; arc=none smtp.client-ip=91.218.175.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CB036AB43
+	for <sched-ext@lists.linux.dev>; Wed, 14 Jan 2026 06:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.61
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768373253; cv=fail; b=e2LTgeRXUPjdYrrMjlep9AkJqKR9hB/8kOieg/NHBSGm0nqe+CShtAy3Oi/5XEfxNgZe94ikzW8y4sXqWSsQrYBxBA3X/Bvo9tKSKz+UL1yO0JtPe0Aozzu87t2UvNS2D9cwo7OmXcDtElhAe1pdlBrG69olzzH8Y107V2228SQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768373253; c=relaxed/simple;
+	bh=K5DfkAO9O91cYppwzjSlmnd6vi+PwSnV/sWWdn3E/30=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tGc3YJw8bQ9C/QGfR3ncAQ0FlT5JsJhSZUp5zHofgwgmfo1kApQ5u+a3os4ENGsttavRJzF/yVihKwYElfViF3KINEgA4O/NF2JR4Ia8bd5PtNiZSpsp4Ya+8X5oys1MMtc9D61b/wWQRzWDbZFZ8GaRbGOYLprmEj9Dps08fpM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=duuVDALo; arc=fail smtp.client-ip=52.101.62.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="r8aqhHFK"
-Message-ID: <e796df2b-6dd9-4b45-b8fb-9ef9f7fceab6@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1768363688;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vjgazky+ZRtvPL75QtxyxWAG7S1HJNuCDfOmdekMQb4=;
-	b=r8aqhHFKIgqYlt4KzfjTy42NxtLo8k/QdluHHs/RtNdt/NIJ1m9DeINM0hCi/p8oIJ7EQ9
-	SS0iMcFC04uEk91NrPICu2cgPtTp8mP56PXd7dV2je5gGjl2PHH5HLi7S/F47J/hzEe27k
-	XkePeuCi6/ZCGEOsZUZyw0DIIH+fU0U=
-Date: Tue, 13 Jan 2026 20:08:02 -0800
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="duuVDALo"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iikTxRcZ1/DPEe2V+IEg5BKmN+u2nnISGMbU8OTEuE+VQF1AIHGX4SmOBZDqImiUEOQc3orAOrLwHRnT5KqUdCLTHyC2q11DACXyRNTHxXvR+QR4Zg5tDv3pokK7/CAFZic6RCxdzcFW/lDAYJuh6HYsTNAu4aC6oY0BpqnTLVI5AXXl6UW/CqdhT8HsJFACZHsHP7+dy65QBzVtXKU02h5Gd3+BFRbeyTLDAGLb1Uw0lt4KBPZS91+6rfPsgAlxqpxyi3pIPqpiAL9tbDtWIrD6GHBQUXwTK3S0F5Af5r0iBnHg8ufAf8qh8sFXvSEfWDCkWkARtESuqzK0xb2P/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kvCkYiexx50e0Navry2IteYzqghozLjw0C5PEs/Ytfs=;
+ b=uGhGhmtGR7D5ggG176Kbnw7iYHHh7FUdbzxIOnd8cNMxiw9/JbeLqTPHvW2vFbfz9B7PtbfVe6wAPwhpu+9OGxSogNyQb/+0nhW6bEbapNedn+3rWlpTs7HyFWmEc5N4uRWOrm7hz8ANBxJuMo9imL6LFhu4ZjKdntDwVdDrXb5uaHbQCybIF2eSNg754o3fTWnCroG3XySa4dzU31IuqMnOxYE/NcyZaP5jpabf9GTFEV93SkXip54ftB32c/a+V53I2dUfMiHAqd+/EmPT3uZaSXeNweiz74wm3j3UPBnMYb9MjBJA0PvMY5lYDMUZGFHS+AA/37i6TMKBX0O4Wg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=infradead.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kvCkYiexx50e0Navry2IteYzqghozLjw0C5PEs/Ytfs=;
+ b=duuVDALosRx3L4n3zLkHFwzBQIB4Aai2GBuRdzyvvwC/dzwVbw6h2edbe/kh9yrExvrk5JkAKnIGYGgS4LakIHI6XRAFL+qIV0jrvLxjrzp/dON72O8LQ9y2nsWTh7VMZaYQGcaLXvWCY3QfSlG4DbwcPcq32jaotW+ybOH+YsQ=
+Received: from SN1PR12CA0068.namprd12.prod.outlook.com (2603:10b6:802:20::39)
+ by MW3PR12MB4395.namprd12.prod.outlook.com (2603:10b6:303:5c::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.5; Wed, 14 Jan
+ 2026 06:47:19 +0000
+Received: from SA2PEPF00001507.namprd04.prod.outlook.com
+ (2603:10b6:802:20:cafe::6d) by SN1PR12CA0068.outlook.office365.com
+ (2603:10b6:802:20::39) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.5 via Frontend Transport; Wed,
+ 14 Jan 2026 06:47:19 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SA2PEPF00001507.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9520.1 via Frontend Transport; Wed, 14 Jan 2026 06:47:18 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 14 Jan
+ 2026 00:47:18 -0600
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 13 Jan
+ 2026 22:47:18 -0800
+Received: from [10.136.46.14] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Tue, 13 Jan 2026 22:47:12 -0800
+Message-ID: <f9e4e4a2-dadd-4f79-a83e-48ac4663f91c@amd.com>
+Date: Wed, 14 Jan 2026 12:17:11 +0530
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for
- KF_IMPLICIT_ARGS
-To: Eduard Zingerman <eddyz87@gmail.com>, Alexei Starovoitov
- <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>,
- Alan Maguire <alan.maguire@oracle.com>,
- Benjamin Tissoires <bentiss@kernel.org>, Jiri Kosina <jikos@kernel.org>,
- bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-input@vger.kernel.org, sched-ext@lists.linux.dev
-References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
- <20260109184852.1089786-4-ihor.solodrai@linux.dev>
- <18d9b15319bf8d71a3cd5b08239529505714dc96.camel@gmail.com>
- <aff8eeed-414c-49b3-b7f0-c8c328ed5199@linux.dev>
- <5027595d4eff50d423af8ebc5fecd6a0f7229d60.camel@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/12] sched: Move sched_class::prio_changed() into the
+ change pattern
+To: Peter Zijlstra <peterz@infradead.org>, Pierre Gondois
+	<pierre.gondois@arm.com>
+CC: <tj@kernel.org>, <linux-kernel@vger.kernel.org>, <mingo@kernel.org>,
+	<juri.lelli@redhat.com>, <vincent.guittot@linaro.org>,
+	<dietmar.eggemann@arm.com>, <rostedt@goodmis.org>, <bsegall@google.com>,
+	<mgorman@suse.de>, <vschneid@redhat.com>, <longman@redhat.com>,
+	<hannes@cmpxchg.org>, <mkoutny@suse.com>, <void@manifault.com>,
+	<arighi@nvidia.com>, <changwoo@igalia.com>, <cgroups@vger.kernel.org>,
+	<sched-ext@lists.linux.dev>, <liuwenfang@honor.com>, <tglx@linutronix.de>,
+	Christian Loehle <christian.loehle@arm.com>
+References: <20251006104402.946760805@infradead.org>
+ <20251006104527.083607521@infradead.org>
+ <ab9b37c9-e826-44db-a6b8-a789fcc1582d@arm.com>
+ <caa2329c-d985-4a7c-b83a-c4f96d5f154a@amd.com>
+ <717a0743-6d8f-4e35-8f2f-70a158b31147@arm.com>
+ <20260113114718.GA831050@noisy.programming.kicks-ass.net>
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <5027595d4eff50d423af8ebc5fecd6a0f7229d60.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: K Prateek Nayak <kprateek.nayak@amd.com>
+In-Reply-To: <20260113114718.GA831050@noisy.programming.kicks-ass.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00001507:EE_|MW3PR12MB4395:EE_
+X-MS-Office365-Filtering-Correlation-Id: e6b3564e-8f31-4375-9029-08de5338c312
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|1800799024|82310400026|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?MEZoaWZ5UGYwcTdWL3NlZlYxbHR4WmF0ekNXQTQvUXY1NXJQZzdtYkZBc2cz?=
+ =?utf-8?B?cUkxcFl4dmRKaTNVcGY3U1FmSlNQUkw2Tzg4WTVNMmZxOTcwMXpVenZpRWc0?=
+ =?utf-8?B?Qk1Lb2M2RDVxSlBZK2ZYQ3J6SHJuckgza3RLZ05SUWVPY1VHNEs5TW9rYmps?=
+ =?utf-8?B?RHZrZFJYSk1LRlB5VXRFUmUzVlpoOGZ5MmdjMTA2YTdrVlNpaUVmOVVDUjQ2?=
+ =?utf-8?B?emFyZEpYYXlJSnRyVXpIOVpPcXI1ZUJGYjhpa3loZVJUMElKK2hYMVZVV0Vu?=
+ =?utf-8?B?dDhvd2ZEVEpMbzU4bDZiOHIzQTFWcVlXNjFmajNQTUYvZ01NaVVJYlZ0VGFU?=
+ =?utf-8?B?Z0tNVkkrck1BZVdoSUw4ZHhJNXBwUEVBU0lKZTlpWC9kTGd1ZEpZdnVuSDJ0?=
+ =?utf-8?B?OUZDYmNsQm13a2RvVTE2dkFpbk1JTVE4UTduOGV4dXVRVFBWcHU0bU9nSWhV?=
+ =?utf-8?B?UjlJN3YvQ1hJTVBCRGNlc0JDdHFtUGJiWmV6aWdFZnIvN3JIb2NMWTErb0o3?=
+ =?utf-8?B?TENSbE14em9LU0RucHlwemRaZkNaU09Ub0pIeUUvR3AvQzZsNUFMWlpBdHd6?=
+ =?utf-8?B?RnhIWXo1MnVjOUlXWEgyZ3VOMFNjRDFjQzhCSTB5bjIzMHNDNEhCUVRmTlM3?=
+ =?utf-8?B?Q2xMWGl6NFBtcEx6NlZKNDNmVE9kL3k4ZHdpdmU5Qk5VL0JrZHhJVVJsekpF?=
+ =?utf-8?B?OVVkamNiKzg3L2RVdEJTcGhVRWRsS2RULzF5eGJuTVpaTGZwdC80SkhRMzNM?=
+ =?utf-8?B?QjJLTFJPbVVQcnpIUGtnUnJRTDFJb1JwU0Z5b0RyWGE0b2N5VCtEM3ppbVo2?=
+ =?utf-8?B?bFQvVG9aVU9ZMmlFUGxPQUlaWFFSNlJOZ3FYMzlkQ2NoMEYybFlZWjlrcU12?=
+ =?utf-8?B?cFl1bmNvM0EzNW9pcUl1a1ZsWWNjTFNadnNYWUxjZHZ5VXZ6UzUzS2RYVVp3?=
+ =?utf-8?B?VE5OTXRrdS8xY3UxY2xKUktzS21oREJIYm0xVlBTU0hid2dQWTAxdzFjUDQy?=
+ =?utf-8?B?TzB2L2VMdnplTE5LZWk3WENxVVBBdldYV1ZGMFhaNDJ2OGljaThBeWEzYU5j?=
+ =?utf-8?B?T0VSUFF0eFpFcDNUd0hOMFNyZmhhcE5CU29QNytGYXhVb0RpbUJIRXBpdmpN?=
+ =?utf-8?B?MkViRmV0cWRIcU9ISzVmWWE2M2I1U2dTbmVJSzZmSWNwM09yajBoQjNDSUZB?=
+ =?utf-8?B?eDFWVEdGM1g3Y1lDYmVkeXU0ait5TjVHRWJtRnBGMTV5ZU5VWFV1eXl1WE0x?=
+ =?utf-8?B?ditubE81aXIyN05CYittakRMMWFuRmpvY1A4Vlc4aXhkNndiOVRMVytKb1d1?=
+ =?utf-8?B?TDF0a1JRS2dTQWJLbXZieW1sNjdhUEUweGNEZUhVUWtsY2YrdDUrMGNLTmMv?=
+ =?utf-8?B?UUhWdWxoMnBrU25oRmFjMVdlNEd2KzdKRllNeFpUNzV2U3MzbkFpcC84Yklo?=
+ =?utf-8?B?Ty9QS1ljNUJsUGwzWnRRemo5bm9kRVZYQ3dzckZ1NzFTMTFjZGNnUjhMTGJZ?=
+ =?utf-8?B?WmFVR2Rlbk9peFJ6b05WTHg5R2R0NDJRcWpPTjlDc3pONXJQbE50b3pnaXFk?=
+ =?utf-8?B?QmhxSXJ6emxteVVJd2RncDhsL1dlV0Q2WEpMWVFnV1NrMmx6b2FxVWowV01W?=
+ =?utf-8?B?akhRRGpEUEs2VzNtSDJJUkNFbGhOK0VRV09jQUNCRDVueGZxcmhVNWZSNDBo?=
+ =?utf-8?B?NHpidWl5dVB0OG9XL2RUSXRrSjljZ0JxOUx0K2EwYjBmWVlPd3FySVFCY0lx?=
+ =?utf-8?B?U0NzYTRSVmRFcU9td2x1NU5pc0NMelh1cDFWc3dZcVYrYUtBK25RNDN0Z1RI?=
+ =?utf-8?B?NDIyOS9LVndYK2daRG9laFU4cDZEZ0xZeHNmME1uUXB4ck5PdTdXc1VkNDcy?=
+ =?utf-8?B?R1puU29DdUJrc3ExR2NsNVliRlpadU1LOGU1VGttTGRiKzlRcDBkVFF2a1dw?=
+ =?utf-8?B?Q1QvVHR0cGo1cEx2RmtzQVljc0FrVnZ3MHdUQlJxNE40ck1XZFVhTDJrWUFw?=
+ =?utf-8?B?cHN1SytTdktmbW5jQjJrZE9Ia0dkOC9ZZmZIM0tjY05kaitDTEdFb1lCd3pM?=
+ =?utf-8?B?WndUYmhTMzB2OUZGTXFoZTQ1QkF4T1hxblN5RWRFNUltVEtkSEx0d1NOeGZx?=
+ =?utf-8?Q?GelE=3D?=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(82310400026)(7416014)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jan 2026 06:47:18.8510
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e6b3564e-8f31-4375-9029-08de5338c312
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SA2PEPF00001507.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4395
 
+Hello Peter,
 
+On 1/13/2026 5:17 PM, Peter Zijlstra wrote:
+> Hum... so this one is a little more tricky.
+> 
+> So the normal rules are that DEQUEUE_SAVE + ENQUEUE_RESTORE should be as
+> invariant as possible.
+> 
+> But what I think happens here is that at the point of dequeue we are
+> effectively ready to throttle/replenish, but we don't.
+> 
+> Then at enqueue, we do. The replenish changes the deadline and we're up
+> a creek.
 
-On 1/13/26 5:06 PM, Eduard Zingerman wrote:
-> On Tue, 2026-01-13 at 16:03 -0800, Ihor Solodrai wrote:
->> On 1/13/26 1:59 PM, Eduard Zingerman wrote:
->>> On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
->>>
->>> [...]
->>>
->>>> --- a/kernel/bpf/verifier.c
->>>> +++ b/kernel/bpf/verifier.c
->>>> @@ -3271,6 +3271,38 @@ static struct btf *find_kfunc_desc_btf(struct bpf_verifier_env *env, s16 offset)
->>>>  	return btf_vmlinux ?: ERR_PTR(-ENOENT);
->>>>  }
->>>>  
->>>> +#define KF_IMPL_SUFFIX "_impl"
->>>> +
->>>> +static const struct btf_type *find_kfunc_impl_proto(struct bpf_verifier_env *env,
->>>> +						    struct btf *btf,
->>>> +						    const char *func_name)
->>>> +{
->>>> +	char impl_name[KSYM_SYMBOL_LEN];
->>>
->>> Oh, as we discussed already, this should use env->tmp_str_buf.
->>
->> The env->tmp_str_buf size is smaller:
->>
->> 	#define TMP_STR_BUF_LEN 320
->>
->> *And* there is already a local char buffer of size KSYM_SYMBOL_LEN
->> already in use in verifier.c:
->>
->> 	int bpf_check_attach_target(...) {
->> 		bool prog_extension = prog->type == BPF_PROG_TYPE_EXT;
->> 		bool prog_tracing = prog->type == BPF_PROG_TYPE_TRACING;
->> 		char trace_symbol[KSYM_SYMBOL_LEN];
->> 	[...]
->>
->> Since these are function names, the real limit is KSYM_SYMBOL_LEN,
->> right?
->>
->> Sure >320 chars long kfunc name is unlikely, but technically possible.
-> 
-> 320 is good enough, you'll be able to cover this:
-> 
-> kfunc_trace_long_descriptive_kernel_symbol_for_tracing_scheduler_memory_io_and_interrupt_paths_during_runtime_analysis_of_latency_throughput_and_resource_contention_on_large_scale_multiprocessor_linux_systems_using_bpf_and_kprobes_without_requiring_kernel_recompilation_or_system_restart_for_production_use_cases_v2x
-> 
-> But not this:
-> 
-> kfunc_trace_kernel_scheduler_and_memory_management_path_for_observing_task_lifecycle_events_context_switches_page_fault_handling_and_io_wait_states_while_debugging_performance_regressions_on_large_multiprocessor_systems_running_preemptible_linux_kernels_with_bpf_tracing_and_dynamic_instrumentation_enabled_for_deep_visibility_into_runtime_behavior_and_latency_sensitive_code_paths_without_recompilation.
-> 
-> Should suffice, I think.
+I've the following data from the scenario in which I observe
+the same splat as Pierre splat wit the two fixes on top of tip:
 
-I will laugh for at least 321 seconds when the size of this buffer
-will have to be increased, and will make sure you hear it :)
+    yes-4108    [194] d..2.    53.396872: get_prio_dl: get_prio_dl: clock(53060728757)
+    yes-4108    [194] d..2.    53.396873: update_curr_dl_se: update_curr_dl_se: past throttle label
+    yes-4108    [194] d..2.    53.396873: update_curr_dl_se: dl_throttled(0) dl_overrun(0) timer_queued(0) server?(0)
+    yes-4108    [194] d..2.    53.396873: update_curr_dl_se: dl_se->runtime(190623) rq->dl.overloaded(0)
+    yes-4108    [194] d..2.    53.396874: get_prio_dl: get_prio_dl: deadline(53060017809)
 
-They thought 640K of memory is enough, you know.
+    yes-4108    [194] d..2.    53.396878: enqueue_dl_entity: ENQUEUE_RESTORE update_dl_entity
+    yes-4108    [194] d..2.    53.396878: enqueue_dl_entity: setup_new_dl_entity
+    yes-4108    [194] d..2.    53.396878: enqueue_dl_entity: Replenish: Old: 53060017809 dl_deadline(1000000)
+    yes-4108    [194] d..2.    53.396879: enqueue_dl_entity: Replenish: New: 53061728757
+    yes-4108    [194] d..2.    53.396882: prio_changed_dl.part.0: Woops! prio_changed_dl: CPU(194) clock(53060728757) overloaded(0): Task: yes(4108), Curr: yes(4108) deadline: 53060017809 -> 53061728757
+
+get_prio_dl() sees "deadline < rq->clock" but dl_se->runtime is still
+positive so update_curr_dl_se() doesn't fiddle with the deadline.
+
+ENQUEUE_RESTORE sees "deadline" before "rq->clock" and calls
+setup_new_dl_entity() which calls replenish.
+
+sched_change_end() will call prio_changed() with the old deadline from
+get_prio_dl() but enqueue advanced the deadline so we land in a
+pickle.
+
+> 
+> Let me think about this for a bit...
+
+Should prio_changed_dl() care about "dl_se->dl_deadline" having changed
+within the sched_change guard since that is the attribute that can be
+changed using sched_setattr() right?
+
+-- 
+Thanks and Regards,
+Prateek
 
