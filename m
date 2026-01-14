@@ -1,64 +1,64 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C81E1DEC
-	for <sched-ext@lists.linux.dev>; Wed, 14 Jan 2026 01:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538B32DC764
+	for <sched-ext@lists.linux.dev>; Wed, 14 Jan 2026 01:35:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768352767; cv=none; b=hIfC+Dwo+Op39+L6xZHI8mSrKMJbNfL52j0C6fOnPXDvHNxLchgECrF5Hq/hD1SXpu4lk21ZAbuJrOMEbDRNtUbtGEZQZgnxapvxoPh8vIesOZ+N48amvjWvslqV9SLS5xAh7LOg/PuHwqpe6ra6t4u+oIrtFvYDt8muMOzEIMw=
+	t=1768354514; cv=none; b=u35eK2Iuy6nqFSseZPiIX/D73dVmBd/gh+3zIFHd8NeXiiUU151fcYXtmf7sJDcdx/dWqdD2qZEfl6c/nQs1UncYw9kVvXuNlPBcwW8n/xFX/dEIoSdj/KfziAY2eh1bIjVgzuc3y8P+fduHaXTrHCi4bjZQChfS025t0a35c+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768352767; c=relaxed/simple;
-	bh=F0MA++L1zSE6cZA/Gd+u1+s2DraR/NZOJLoDeRsNESw=;
+	s=arc-20240116; t=1768354514; c=relaxed/simple;
+	bh=0PILchQj3J76ZAr261KJtaEQ2QxT7WEQn+1Ge6Oxu6A=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=uQw4HPzYD99Cup9DMD2nHdJmuO4aHOKdaVlzgEcuQzINHq5YNqZyjiwRvyVhJNRctzSyx6iA1lfHyTwj2I0NnUGHX0PDJ3dc7noJF8bQIoynXrfD7WHR+XkH7fgPy+zYfiP4nKv3FFv+/wV8MbicGSkuTyjNH4gSuHw4eAUd7wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cp7DLOeS; arc=none smtp.client-ip=209.85.216.52
+	 Content-Type:MIME-Version; b=ZVzY3OVgVpe5mMpTbZPCZuiDqsXTOAvuQKH6kjuofFO/2FPbACe6uEP4a8YQO6pf/6VObW1Walat2L1AvNNVmejTKo0iOSj5l0q+dGA8qWCmGnbYKxn+iRXeTNm2ZSYJl+444bkwEjzj/qG4I6yL1lZxNobeJxtRscUtV7UrGgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P0LIhJax; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cp7DLOeS"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-34c1d98ba11so6339131a91.3
-        for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 17:06:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P0LIhJax"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-29f1bc40b35so88884925ad.2
+        for <sched-ext@lists.linux.dev>; Tue, 13 Jan 2026 17:35:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768352765; x=1768957565; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768354512; x=1768959312; darn=lists.linux.dev;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=c3zz/uR4XC6DTt4ifQZ0dcMHOsCy5LDTuF26jxx7ZX8=;
-        b=Cp7DLOeSpoQKC/+WrzYkgZExYeJqXwCekoVsVsXEwGm4852xKFpHbQ3lY6H8jdiXkF
-         Yk/4KuRu5XG0CMhm4Qi8H2Fpe4+oGhKmWrZS4cmtJ+JuzhuqzwvYaxx9BJR/xGhTbEIe
-         1+cAgnSfcXA8qk947+zPGh7boRm0X+SJ3nDkuIiJxb3Yu56NdISrwQWL3anBqLZk/W5i
-         Nfh4HG/ms7nvYlUzXzrp4OvEC2v4b36AfO2A/OikTSlysxWRHEamV9U8scQPQeWeM5C7
-         Lx531YNDrs4L0Zxa+TJN8bGQtJdJ6+FMtXDfst36r/kad352AQLBKf5oob8YQeIogKp2
-         etEA==
+        bh=ieZaHREaNUdn6zv47XqVz3diRO7gdSg8y8kBpzF75Sk=;
+        b=P0LIhJaxZ+5dXT5veWJuVuqgPUVQraSkIwQkPFu6PoGCC/Wl2HQvlkguFr2Vg9YquS
+         Ti/WXPFwd63nxb/SDBAZ/JGhXT+6m4AFFOKA2kF7wpLy9DRh/N7lF44FyLqLoqO1wnn6
+         ic9Rn9pLXeXpCNIbcgnJs5V2ROCcEAYjGHlgEOg6a5eiKL2CBP1KQ4KlCVkmcTkIgghY
+         AKmqE32Irj03Aszng+IrlLNcfSGY5ASOEMQBpvh0OTu7acfhkXHrKr5+XjvfE/F0pP7/
+         kdenPwtBQdMottS6lfJ7aohKDMl1Cv87MesVkgvXf22R0oWb5pe21s3dYXTWUzEoBPLW
+         MYlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768352765; x=1768957565;
+        d=1e100.net; s=20230601; t=1768354512; x=1768959312;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c3zz/uR4XC6DTt4ifQZ0dcMHOsCy5LDTuF26jxx7ZX8=;
-        b=Fwa3P7kqQ/TbWnqsJkp4Fm/Igw5pwBThFM6pBjWokhEoyoRDY3KIm6qXAW4CqIO6eG
-         c2w6EfPqxbW/hBGEH6DzbeTOmu4Ei/y9IOAFBv0vWVwJMK9r9F/xKoGQXB6dY0LEPW7B
-         q8AlhM2J0erg60YzwJea1LLGOjZJSAJLTvaQbOu1e4uDIUG+PvVg9dralkDPSA4kH7/5
-         tNXXUmsDYezMPeHr9u6eUPxdD5jobu1zIDmAS4lZJvzSDwL8M4nTRLr3y2sAjyluhRpT
-         qdJvMgzIMcTOvuKsSIj2QOxutXPndEwpMd3DKx9TP09FYZ2JV/R7srrU8H9AlbiNjc+N
-         Lpkg==
-X-Forwarded-Encrypted: i=1; AJvYcCUocR5yQedCehq/aQHabeHHLFnD3zEEuZwjIiBtRsOpJRQMKkK1XJQGM4LLSVl6Ao6gSFP59R5MJoY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YypNTIsGNfRum8PFXKuNcHfeT2aFilvAIBk3W1uXfBZoQAA1A4B
-	ndNYyuhYcUMV4OCzJZtQhuWxcuoI9V40qCpQtWLIMj75AL+oxIcTSs9J
-X-Gm-Gg: AY/fxX6BxHL/lCxLWBXERA4VQMsETWZTsrgh8VrpHgSo402fv1sS2evZVMEWNS8KL3V
-	6NPwMRBInDCb+il4GJxpQXCi/ZV+EGEWkmVrrsHuoZr5xzqyNTGHiVxZcrFwC50Wg/FPZX4UQ0o
-	Of4bVdJBJjBMV5HEdlXV7psQN1pMvg61EUovqG8yhzxNBKO/7ML26fWk5a0LpmZ+pfhiRQJ5yBP
-	vWKD4wVqRFd7hJV75FbvObUbt64QTGBOGenqHCCwUqEmJoS7MiJaA2crxtLmsW0M0vCWOpYLBqY
-	u0lixozqkH/n3fc8IftxbzEHxUBYFuGNlwWgL0qDGkxIe26+b0Oj3Vv7UvE5lWAuPvLfM8i2fWN
-	DhGsSiPV8OzJLXJ7pPvZs6n5dNYVgNFeCPJL0qlGA8GKvrO+/utZVo32Sp3L9bS4jB3semD1E8e
-	Y98cV5R5CzbvONmdEFJw6X2zV+D1CvqshLwergDBHx
-X-Received: by 2002:a17:90b:3890:b0:330:a454:c31a with SMTP id 98e67ed59e1d1-3510913e139mr874413a91.32.1768352765322;
-        Tue, 13 Jan 2026 17:06:05 -0800 (PST)
+        bh=ieZaHREaNUdn6zv47XqVz3diRO7gdSg8y8kBpzF75Sk=;
+        b=ZinkDSuaSjTY9KCacyuU3p5JqYIVyi7j1n0HTpw+PvkzFneo/vYVASrB/e68tpoXbG
+         OjyFHGaCoeFrRBGqsTxDgIfRxPwAv6zuzt/gTjPyvMdHtIyzLUG1NBa+rH//BZSTF3pX
+         siamMBvFCKqdlvaEozEZE+gEV/4rPYCjwt/VqCxhXxjCNoS3/njpoSNReztnfSi7/nc4
+         eB9r5CNk3fnBdln6UE0Sh7rn/jYfQWwEd3SzG/7r1Lik7lpXwTovmx/zuvguzxRsW5bw
+         +HtJkHVZ+xa9qfoNxtc2JEYkWBhjTz98UUAAt52EjMC2ZhoDKB58ZkA3eUItv77KLzYF
+         3pXw==
+X-Forwarded-Encrypted: i=1; AJvYcCVxoAsP61xfjNMVTst4puI6BFy7aaHE86X1ei0nmfTao52FkxiGh/V6U+WORVU60rUXR4+m9iSL01U=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwpjqSRy/ILeL5WHnhUakeMoSXf9pFkB/tuW21FvQkRQh0eJPHf
+	W55ub1Coj8RJyU3N5szEZQbcSRXRRfhkEZ1kwb61Tl2nUglQLJX1kBNN
+X-Gm-Gg: AY/fxX5R8bn4NvmHakvow8ZOHcXmJ+h2ivYojtQpMO5pR1xyN7KCnZnxkbVvzkqETgN
+	6SrIySRvzpCQR/7u9UI5g1zaAQiL0b87i5mGhXcDePLe3OZMDf4G+rXOshLmlR7iv6nqnyH6SWo
+	zRv65yjC5pgUCpzqbubfoSC8MImqCkGNmgh+BjtZ4OwhTCPhZuZ25e1UVILuIczFd32/t+/Vfh+
+	fUc1IlIdr4qosqnqreP8v0oVg/H293kqMeYQVnG2HSrTqpHtZCJwUS8HTdj/PJG2FCKyWRIvFd0
+	20sz/srXY7KpyIP3bK6qE9ebpT9VF/gVt8F9a126wi0Kvma3w9cXu74YYDDDYYGMhydSkJaHD8d
+	5l8S1oJHPXjre+JDH8m31f6PBuGkfQTaKBND4xlp6y+7bF75CqDgZL4IdG/5IvDuAxgymA740+C
+	I7noO+AJHcZpL46BPGjIL4pE2GGMqcFATn4AL3MX3Q
+X-Received: by 2002:a17:902:d58a:b0:2a1:5d2:2e45 with SMTP id d9443c01a7336-2a599e7cc41mr11109465ad.59.1768354512488;
+        Tue, 13 Jan 2026 17:35:12 -0800 (PST)
 Received: from [192.168.0.226] ([38.34.87.7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-351099d0913sm322048a91.0.2026.01.13.17.06.04
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd492fsm89974945ad.98.2026.01.13.17.35.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 17:06:04 -0800 (PST)
-Message-ID: <5027595d4eff50d423af8ebc5fecd6a0f7229d60.camel@gmail.com>
+        Tue, 13 Jan 2026 17:35:12 -0800 (PST)
+Message-ID: <b4a760ef828d40dac7ea6074d39452bb0dc82caa.camel@gmail.com>
 Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for
  KF_IMPLICIT_ARGS
 From: Eduard Zingerman <eddyz87@gmail.com>
@@ -70,12 +70,13 @@ Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, Alan
  Jiri Kosina	 <jikos@kernel.org>, bpf@vger.kernel.org,
  linux-kernel@vger.kernel.org, 	linux-input@vger.kernel.org,
  sched-ext@lists.linux.dev
-Date: Tue, 13 Jan 2026 17:06:02 -0800
-In-Reply-To: <aff8eeed-414c-49b3-b7f0-c8c328ed5199@linux.dev>
+Date: Tue, 13 Jan 2026 17:35:09 -0800
+In-Reply-To: <c7e2a776-52f9-46ad-8422-3a9202bbd9f1@linux.dev>
 References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
 	 <20260109184852.1089786-4-ihor.solodrai@linux.dev>
-	 <18d9b15319bf8d71a3cd5b08239529505714dc96.camel@gmail.com>
-	 <aff8eeed-414c-49b3-b7f0-c8c328ed5199@linux.dev>
+	 <952853dd064d5303a7e7ec8e58028e9ee88f2fad.camel@gmail.com>
+	 <93ecdc25-aa5e-485b-8ff4-a9db3b585861@linux.dev>
+	 <c7e2a776-52f9-46ad-8422-3a9202bbd9f1@linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
@@ -86,63 +87,52 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
-On Tue, 2026-01-13 at 16:03 -0800, Ihor Solodrai wrote:
-> On 1/13/26 1:59 PM, Eduard Zingerman wrote:
-> > On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
-> >=20
-> > [...]
-> >=20
-> > > --- a/kernel/bpf/verifier.c
-> > > +++ b/kernel/bpf/verifier.c
-> > > @@ -3271,6 +3271,38 @@ static struct btf *find_kfunc_desc_btf(struct =
-bpf_verifier_env *env, s16 offset)
-> > >  	return btf_vmlinux ?: ERR_PTR(-ENOENT);
-> > >  }
-> > > =20
-> > > +#define KF_IMPL_SUFFIX "_impl"
-> > > +
-> > > +static const struct btf_type *find_kfunc_impl_proto(struct bpf_verif=
-ier_env *env,
-> > > +						    struct btf *btf,
-> > > +						    const char *func_name)
-> > > +{
-> > > +	char impl_name[KSYM_SYMBOL_LEN];
-> >=20
-> > Oh, as we discussed already, this should use env->tmp_str_buf.
->=20
-> The env->tmp_str_buf size is smaller:
->=20
-> 	#define TMP_STR_BUF_LEN 320
->=20
-> *And* there is already a local char buffer of size KSYM_SYMBOL_LEN
-> already in use in verifier.c:
->=20
-> 	int bpf_check_attach_target(...) {
-> 		bool prog_extension =3D prog->type =3D=3D BPF_PROG_TYPE_EXT;
-> 		bool prog_tracing =3D prog->type =3D=3D BPF_PROG_TYPE_TRACING;
-> 		char trace_symbol[KSYM_SYMBOL_LEN];
-> 	[...]
->=20
-> Since these are function names, the real limit is KSYM_SYMBOL_LEN,
-> right?
->=20
-> Sure >320 chars long kfunc name is unlikely, but technically possible.
+On Tue, 2026-01-13 at 15:48 -0800, Ihor Solodrai wrote:
 
-320 is good enough, you'll be able to cover this:
+[...]
 
-kfunc_trace_long_descriptive_kernel_symbol_for_tracing_scheduler_memory_io_=
-and_interrupt_paths_during_runtime_analysis_of_latency_throughput_and_resou=
-rce_contention_on_large_scale_multiprocessor_linux_systems_using_bpf_and_kp=
-robes_without_requiring_kernel_recompilation_or_system_restart_for_producti=
-on_use_cases_v2x
+> A follow up after a chat with Eduard.
+>=20
+> This change in check_kfunc_call() appears to be working:
+>=20
+> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> index 092003cc7841..ff743335111c 100644
+> --- a/kernel/bpf/verifier.c
+> +++ b/kernel/bpf/verifier.c
+> @@ -13958,8 +13958,11 @@ static int check_kfunc_call(struct bpf_verifier_=
+env *env, struct bpf_insn *insn,
+>                 regs =3D branch->frame[branch->curframe]->regs;
+> =20
+>                 /* Clear r0-r5 registers in forked state */
+> -               for (i =3D 0; i < CALLER_SAVED_REGS; i++)
+> -                       mark_reg_not_init(env, regs, caller_saved[i]);
+> +               for (i =3D 0; i < CALLER_SAVED_REGS; i++) {
+> +                       u32 regno =3D caller_saved[i];
+> +                       mark_reg_not_init(env, regs, regno);
+> +                       regs[regno].subreg_def =3D DEF_NOT_SUBREG;
+> +               }
+> =20
+>                 mark_reg_unknown(env, regs, BPF_REG_0);
+>                 err =3D __mark_reg_s32_range(env, regs, BPF_REG_0, -MAX_E=
+RRNO, -1);
+>=20
+> https://github.com/kernel-patches/bpf/actions/runs/20975419422
+>=20
+> Apparently, doing .subreg_def =3D DEF_NOT_SUBREG in mark_reg_not_init()
+> breaks zero-extension tracking somewhere else.  But this is not
+> directly relevant to the series.
+>=20
+> Eduard, Alexei, any concerns with this diff? Should I send a separate
+> patch?
 
-But not this:
+Imo this is acceptable to land this series but follow up investigation
+is definitely needed. Either there is a bug and mark_reg_not_init() is
+called in a context where upper 32-bits are still significant, or zero
+extension related code can be improved to avoid patching in some cases.
 
-kfunc_trace_kernel_scheduler_and_memory_management_path_for_observing_task_=
-lifecycle_events_context_switches_page_fault_handling_and_io_wait_states_wh=
-ile_debugging_performance_regressions_on_large_multiprocessor_systems_runni=
-ng_preemptible_linux_kernels_with_bpf_tracing_and_dynamic_instrumentation_e=
-nabled_for_deep_visibility_into_runtime_behavior_and_latency_sensitive_code=
-_paths_without_recompilation.
+Additional context for other reviewers, Ihor did two experiments:
+- added '.subreg_def =3D DEF_NOT_SUBREG' to mark_reg_not_init(),
+  which resulted in selftests failure;
+- added '.subreg_def =3D DEF_NOT_SUBREG' as above, which worked fine.
 
-Should suffice, I think.
+Meaning that code in check_kfunc_call() is not a culprit.
