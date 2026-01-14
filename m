@@ -1,33 +1,33 @@
-Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA0C239E9D
-	for <sched-ext@lists.linux.dev>; Wed, 14 Jan 2026 03:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299A11448D5
+	for <sched-ext@lists.linux.dev>; Wed, 14 Jan 2026 04:08:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768363092; cv=none; b=bvx4YfD0uxHCDNU6zZuwlBL9M5k5f/lRP1zk4IT3xhg4MAO/EtMiVW2IfTqo3mXOCMaIeEA4JT2f5DPnKclBqJSz9qs1GttrWPK+fVMptyYFtqZwHPMkN8VlRJM1F2DanwbuJULyo8s8d02Sbd9DoGVCvEw51msrIPyGaPW0L6g=
+	t=1768363691; cv=none; b=H66Lcbs0wjScN9qifan9juu16utuCrqwNshAqIy2MULzQ5oOK0dfiXl+yBoUAGVn/FkvmwdsfqCTWKnM0UkrS8pJ35pYY5mFRN7NcaodGCqoNSa5k5PzKnAIrVCuujdLp9wou2Q2NNNWMXQWKBfyKVDUmqejwqp97T66cERDpbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768363092; c=relaxed/simple;
-	bh=MCDN8flxLquTUPEz+Ko6ciZOlX7+BRuMaRD0vZpxDXg=;
+	s=arc-20240116; t=1768363691; c=relaxed/simple;
+	bh=Aum4e75q/c3WD6beapNhk9vDmdL2F+An3dcb9kVyPNw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZCu8ZwXMpLlx1GeoB/JXy+i7cz7NUk6XOhlVxnR8/4hAOWLE/Hp3f20xfqmmVYnH/QABZP4dhPGA/2fpEYswDVeJTz6MS+3Z/POl0a0ToBhusfM+LL4OtQw+vn2+ve6gpAHVGoBBqkAi5NHcoSn93BBcqNYNF2TTNqftPZNYSd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=dRMkPZQg; arc=none smtp.client-ip=91.218.175.183
+	 In-Reply-To:Content-Type; b=mroMx0q8qPMu5O4NB/R8UYeuC4MTK5NCMCLOuiPp5EfxJBpBVVUnS88MuI3U+jQM7Xhm//XUTKvpPeueHtArMy1+q0KQXpf3Hv0n2sXRMlCldQalHfGy7hi6V9IW82dSsYIvXAcHq7YYkf6bHO/mYzcJNmp9DoJVtMaHsc3une8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=r8aqhHFK; arc=none smtp.client-ip=91.218.175.185
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="dRMkPZQg"
-Message-ID: <e501b557-5220-43d2-be19-3a939df0439c@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="r8aqhHFK"
+Message-ID: <e796df2b-6dd9-4b45-b8fb-9ef9f7fceab6@linux.dev>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1768363087;
+	t=1768363688;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=mzy7fr0C5AI0nkgfQZNX+ZDEBppbKPD7uT6faQ1cxto=;
-	b=dRMkPZQgUIf1lZu/GXVKUznU9HhiPKrkI23aXFRCs92ONsmPe/H/3JbPMSqmUdtxsh8RlN
-	wAukdQdjgKayl9pYecO6DADvMUYr0MtHER53ndlUcZ/OUaVNM334KPzI/k5+RDMPvU9Lpo
-	9UcwsQBfS88rM3DUBHDNMcJegf3XvN4=
-Date: Tue, 13 Jan 2026 19:57:59 -0800
+	bh=vjgazky+ZRtvPL75QtxyxWAG7S1HJNuCDfOmdekMQb4=;
+	b=r8aqhHFKIgqYlt4KzfjTy42NxtLo8k/QdluHHs/RtNdt/NIJ1m9DeINM0hCi/p8oIJ7EQ9
+	SS0iMcFC04uEk91NrPICu2cgPtTp8mP56PXd7dV2je5gGjl2PHH5HLi7S/F47J/hzEe27k
+	XkePeuCi6/ZCGEOsZUZyw0DIIH+fU0U=
+Date: Tue, 13 Jan 2026 20:08:02 -0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -36,136 +36,83 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Subject: Re: [PATCH bpf-next v1 03/10] bpf: Verifier support for
  KF_IMPLICIT_ARGS
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: Eduard Zingerman <eddyz87@gmail.com>, Alexei Starovoitov
+To: Eduard Zingerman <eddyz87@gmail.com>, Alexei Starovoitov
  <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
  Daniel Borkmann <daniel@iogearbox.net>,
- Martin KaFai Lau <martin.lau@linux.dev>, Mykyta Yatsenko
- <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>,
+ Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>,
  Alan Maguire <alan.maguire@oracle.com>,
  Benjamin Tissoires <bentiss@kernel.org>, Jiri Kosina <jikos@kernel.org>,
- bpf <bpf@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- "open list:HID CORE LAYER" <linux-input@vger.kernel.org>,
- sched-ext@lists.linux.dev
+ bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org, sched-ext@lists.linux.dev
 References: <20260109184852.1089786-1-ihor.solodrai@linux.dev>
  <20260109184852.1089786-4-ihor.solodrai@linux.dev>
- <952853dd064d5303a7e7ec8e58028e9ee88f2fad.camel@gmail.com>
- <93ecdc25-aa5e-485b-8ff4-a9db3b585861@linux.dev>
- <c7e2a776-52f9-46ad-8422-3a9202bbd9f1@linux.dev>
- <CAADnVQLizVA16Q-wVMd5-00YSPZtyuu7Exn9B8c_r1rn2cztkg@mail.gmail.com>
+ <18d9b15319bf8d71a3cd5b08239529505714dc96.camel@gmail.com>
+ <aff8eeed-414c-49b3-b7f0-c8c328ed5199@linux.dev>
+ <5027595d4eff50d423af8ebc5fecd6a0f7229d60.camel@gmail.com>
 Content-Language: en-US
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <CAADnVQLizVA16Q-wVMd5-00YSPZtyuu7Exn9B8c_r1rn2cztkg@mail.gmail.com>
+In-Reply-To: <5027595d4eff50d423af8ebc5fecd6a0f7229d60.camel@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Migadu-Flow: FLOW_OUT
 
 
 
-On 1/13/26 4:55 PM, Alexei Starovoitov wrote:
-> On Tue, Jan 13, 2026 at 3:48 PM Ihor Solodrai <ihor.solodrai@linux.dev> wrote:
->>
->> On 1/13/26 2:03 PM, Ihor Solodrai wrote:
->>> On 1/13/26 12:39 PM, Eduard Zingerman wrote:
->>>> On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
->>>>>
->>>>
->>>> [...]
->>>>
->>>>> @@ -14303,6 +14358,17 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
->>>>>     for (i = 0; i < nargs; i++) {
->>>>>             u32 regno = i + 1;
->>>>>
->>>>> +           /*
->>>>> +            * Implicit kfunc arguments are set after main verification pass.
->>>>> +            * For correct tracking of zero-extensions we have to reset subreg_def for such
->>>>> +            * args. Otherwise mark_btf_func_reg_size() will be inspecting subreg_def of regs
->>>>> +            * from an earlier (irrelevant) point in the program, which may lead to an error
->>>>> +            * in opt_subreg_zext_lo32_rnd_hi32().
->>>>> +            */
->>>>> +           if (unlikely(KF_IMPLICIT_ARGS & meta.kfunc_flags
->>>>> +                           && is_kfunc_arg_implicit(desc_btf, &args[i])))
->>>>> +                   regs[regno].subreg_def = DEF_NOT_SUBREG;
->>>>> +
->>>>
->>>> Did you try doing this in `mark_reg_not_init()`?
->>>> This function is called for R1-R5 some time prior this hunk.
->>>
->>>> Did you try doing this in `mark_reg_not_init()`?
->>>
->>> Just tried, it doesn't work because REG0 is considered a caller saved
->>> register, and so it breaks the zext tracking:
->>>
->>>         #define CALLER_SAVED_REGS 6
->>>         static const int caller_saved[CALLER_SAVED_REGS] = {
->>>            BPF_REG_0, BPF_REG_1, BPF_REG_2, BPF_REG_3, BPF_REG_4, BPF_REG_5
->>>         };
->>>
->>>         [...]
->>>
->>>       for (i = 0; i < CALLER_SAVED_REGS; i++)
->>>               mark_reg_not_init(env, regs, caller_saved[i]);
->>>
->>> CI run for the diff below (on top of this series):
->>> https://github.com/kernel-patches/bpf/actions/runs/20972520708
->>>
+On 1/13/26 5:06 PM, Eduard Zingerman wrote:
+> On Tue, 2026-01-13 at 16:03 -0800, Ihor Solodrai wrote:
+>> On 1/13/26 1:59 PM, Eduard Zingerman wrote:
+>>> On Fri, 2026-01-09 at 10:48 -0800, Ihor Solodrai wrote:
 >>>
 >>> [...]
 >>>
->>> ---
+>>>> --- a/kernel/bpf/verifier.c
+>>>> +++ b/kernel/bpf/verifier.c
+>>>> @@ -3271,6 +3271,38 @@ static struct btf *find_kfunc_desc_btf(struct bpf_verifier_env *env, s16 offset)
+>>>>  	return btf_vmlinux ?: ERR_PTR(-ENOENT);
+>>>>  }
+>>>>  
+>>>> +#define KF_IMPL_SUFFIX "_impl"
+>>>> +
+>>>> +static const struct btf_type *find_kfunc_impl_proto(struct bpf_verifier_env *env,
+>>>> +						    struct btf *btf,
+>>>> +						    const char *func_name)
+>>>> +{
+>>>> +	char impl_name[KSYM_SYMBOL_LEN];
 >>>
->>> Resetting all reg args appears to be working however (see below).
->>> CI: https://github.com/kernel-patches/bpf/actions/runs/20973490221
->>>
+>>> Oh, as we discussed already, this should use env->tmp_str_buf.
 >>
->> A follow up after a chat with Eduard.
+>> The env->tmp_str_buf size is smaller:
 >>
->> This change in check_kfunc_call() appears to be working:
+>> 	#define TMP_STR_BUF_LEN 320
 >>
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 092003cc7841..ff743335111c 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -13958,8 +13958,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
->>                 regs = branch->frame[branch->curframe]->regs;
+>> *And* there is already a local char buffer of size KSYM_SYMBOL_LEN
+>> already in use in verifier.c:
 >>
->>                 /* Clear r0-r5 registers in forked state */
->> -               for (i = 0; i < CALLER_SAVED_REGS; i++)
->> -                       mark_reg_not_init(env, regs, caller_saved[i]);
->> +               for (i = 0; i < CALLER_SAVED_REGS; i++) {
->> +                       u32 regno = caller_saved[i];
->> +                       mark_reg_not_init(env, regs, regno);
->> +                       regs[regno].subreg_def = DEF_NOT_SUBREG;
->> +               }
+>> 	int bpf_check_attach_target(...) {
+>> 		bool prog_extension = prog->type == BPF_PROG_TYPE_EXT;
+>> 		bool prog_tracing = prog->type == BPF_PROG_TYPE_TRACING;
+>> 		char trace_symbol[KSYM_SYMBOL_LEN];
+>> 	[...]
 >>
->>                 mark_reg_unknown(env, regs, BPF_REG_0);
->>                 err = __mark_reg_s32_range(env, regs, BPF_REG_0, -MAX_ERRNO, -1);
+>> Since these are function names, the real limit is KSYM_SYMBOL_LEN,
+>> right?
 >>
->> https://github.com/kernel-patches/bpf/actions/runs/20975419422
->>
->> Apparently, doing .subreg_def = DEF_NOT_SUBREG in mark_reg_not_init()
->> breaks zero-extension tracking somewhere else.  But this is not
->> directly relevant to the series.
->>
->> Eduard, Alexei, any concerns with this diff? Should I send a separate
->> patch?
+>> Sure >320 chars long kfunc name is unlikely, but technically possible.
 > 
-> This is odd. Clear it only for res_spin_lock() processing?!
-> Should be around lines 14149 instead?
-
-Yes. Sorry, this was a messed up local diff. The commits tested on CI
-are correct though. I'll have this fix in v2, since it is necessary
-for KF_IMPLICIT_ARGS to work.
-
-I'll look into this problem more after implicit args land, unless
-someone beats me to it.
-
+> 320 is good enough, you'll be able to cover this:
 > 
-> First, need to investigate why clearing it in mark_reg_not_init()
-> breaks things.
-> That's what clear_caller_saved_regs() is doing already.
-> Maybe these two loops in check_kfunc_call() should be doing
-> clear_caller_saved_regs() instead...
-> Needs proper investigation.
+> kfunc_trace_long_descriptive_kernel_symbol_for_tracing_scheduler_memory_io_and_interrupt_paths_during_runtime_analysis_of_latency_throughput_and_resource_contention_on_large_scale_multiprocessor_linux_systems_using_bpf_and_kprobes_without_requiring_kernel_recompilation_or_system_restart_for_production_use_cases_v2x
+> 
+> But not this:
+> 
+> kfunc_trace_kernel_scheduler_and_memory_management_path_for_observing_task_lifecycle_events_context_switches_page_fault_handling_and_io_wait_states_while_debugging_performance_regressions_on_large_multiprocessor_systems_running_preemptible_linux_kernels_with_bpf_tracing_and_dynamic_instrumentation_enabled_for_deep_visibility_into_runtime_behavior_and_latency_sensitive_code_paths_without_recompilation.
+> 
+> Should suffice, I think.
+
+I will laugh for at least 321 seconds when the size of this buffer
+will have to be increased, and will make sure you hear it :)
+
+They thought 640K of memory is enough, you know.
 
