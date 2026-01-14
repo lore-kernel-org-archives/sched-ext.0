@@ -1,38 +1,38 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB29D38A295;
-	Wed, 14 Jan 2026 10:23:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE3734A771;
+	Wed, 14 Jan 2026 13:05:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768386239; cv=none; b=AmCc9Otpm8lgaKS3MMudlUTyasHnjhYnWBCLZNtlRHz+RLL+7jYvYmAmLkcr2+2bnQJ5okyNKdiSuFuvqmYXrvQHb+BwsqAeqO4/AQQbtQDV1orWTkdoXtV0Z6THZDdl0VmHSVRrl5PVfT2otpRa9yZhFvq5GhhKWOZm46ARcNI=
+	t=1768395944; cv=none; b=azHTbtoD1+/sCajS/wNcP8FXZNNafGh8qJflTlyNbrCWRSWqgVwitPVAJ6Va9Uo4hB+XmlRmsxDsnJOouTtvCFkH+zXoD++RB5nkGF/6i/+fpBK5OXFUUg3TvMgHF9XL6Kymzk2CNN5apwexZYSG/YRLlJj9Z5KqaMvUU+Q7+bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768386239; c=relaxed/simple;
-	bh=3Ix4afPeQjdcWE9fZR4jtymub+Jury9YoLN/FdFXaPg=;
+	s=arc-20240116; t=1768395944; c=relaxed/simple;
+	bh=OJT3kacMzD2i6MS4DmnGuRnuZ6eSPXs9y0PjMS89Z78=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t2kcFPZszADfTxlrHIwD5gF24zYdXRXG+BvfUgFKJbwkZxye6L6FYZFHkMyc+vOiuduVXm3vvLaYVmyd7pi3I2mZE2jQxaWUyuh4ozFNGSw93xW9iIy/QMiDiYoWqLdrKQ17CpJN6Mf6kO0g36s5DHH/Lr67csamfajGvmiyQ5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=YT96lzgj; arc=none smtp.client-ip=90.155.50.34
+	 Content-Type:Content-Disposition:In-Reply-To; b=SsrgME6Ydz10520SxwXWRjyHqgEVkzCkqkZA/snUiwvv3gMHJyxwMxSwlkg3/REtJ8jdK44mX1ReKnwRq4Fgk1/RkO3R0e3164Rt3DmGaxJYqZ6topM4ZK2BScnZ7LG+y12ST/1OCUNuvpWMqT1yHR5NJrczY6yo7juwv4rBkVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=m/ygW/6q; arc=none smtp.client-ip=90.155.92.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="YT96lzgj"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="m/ygW/6q"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=6Ak/cbXseHYJCWkQ2A879bSxoxmTdXya+GIiGj/y6Co=; b=YT96lzgjeNUVaEST9HzCPOXFvF
-	/w179ickZa81QrlG1OAvHhZ/bqtsFU8pfI6cR5VMfr5XTubvsi9/T5z4zS336TyV2pIMBk98mKrlY
-	dx6lgLwm3krt2595G0URvrCnDF5dRo3/3DATKoXC1eSGa5YdLX6N22+Bg8UFSg/0vXV6bN28m+wkK
-	hoXz9pQE+UzzMh4sO5UISrQEtRRDWdh0SYC4qQhQ6xEaUc8A67TN5dQX/UPaw3NH1VKSY+QZl1Tng
-	zrOn9YkhK4Pgp2EXqBGGjxqxcxMTPcN5hQqJyMhvZiczgJq29XkcGschwO/mRNnWQ8IHjqo4zBx8t
-	mJkb1fkQ==;
+	bh=tODLtdiGSKxK0kWbMHcLOtgbmEBKlanOhIhkHxE5FDc=; b=m/ygW/6qXK3p3ZPoZWlpWAYJNJ
+	ri8f0a0iQJ0ogZxPiLOMjPj7l437QDFFiF/BEf9Kk6f8ZpgoE5G7eWW8myGH28lPV3BG6HqEAdgkC
+	AL7znhxOfq9QXqjoUgJ5N+5pVzxcuvCNuUqmLRNxlI3xMszT031x23avbnbYCIH1XtriwqAZ811e8
+	H00pagAdsiIVhw5LzV4QVUABG98BVBIb579C9bJ4mpgnIFFSZYrR4JYZTSobKotdBD6/S9XVseRSD
+	No0w/pWyjY76AfHKJBwZKI0Nqc2sHhSad2L8AP8Aw5faTwSvinawJEHuC5LjS5HRdF5zUtFsWP+a2
+	Yem+P5/A==;
 Received: from 2001-1c00-8d85-5700-266e-96ff-fe07-7dcc.cable.dynamic.v6.ziggo.nl ([2001:1c00:8d85:5700:266e:96ff:fe07:7dcc] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vfy2R-000000062kC-37jk;
-	Wed, 14 Jan 2026 10:23:43 +0000
+	by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vg0Z0-00000004sey-2WUq;
+	Wed, 14 Jan 2026 13:05:30 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 98F423005AA; Wed, 14 Jan 2026 11:23:36 +0100 (CET)
-Date: Wed, 14 Jan 2026 11:23:36 +0100
+	id C53803005AA; Wed, 14 Jan 2026 14:05:28 +0100 (CET)
+Date: Wed, 14 Jan 2026 14:05:28 +0100
 From: Peter Zijlstra <peterz@infradead.org>
 To: K Prateek Nayak <kprateek.nayak@amd.com>
 Cc: Pierre Gondois <pierre.gondois@arm.com>, tj@kernel.org,
@@ -47,7 +47,7 @@ Cc: Pierre Gondois <pierre.gondois@arm.com>, tj@kernel.org,
 	luca.abeni@santannapisa.it
 Subject: Re: [PATCH 05/12] sched: Move sched_class::prio_changed() into the
  change pattern
-Message-ID: <20260114102336.GZ830755@noisy.programming.kicks-ass.net>
+Message-ID: <20260114130528.GB831285@noisy.programming.kicks-ass.net>
 References: <20251006104402.946760805@infradead.org>
  <20251006104527.083607521@infradead.org>
  <ab9b37c9-e826-44db-a6b8-a789fcc1582d@arm.com>
@@ -55,6 +55,7 @@ References: <20251006104402.946760805@infradead.org>
  <717a0743-6d8f-4e35-8f2f-70a158b31147@arm.com>
  <20260113114718.GA831050@noisy.programming.kicks-ass.net>
  <f9e4e4a2-dadd-4f79-a83e-48ac4663f91c@amd.com>
+ <20260114102336.GZ830755@noisy.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -63,84 +64,176 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f9e4e4a2-dadd-4f79-a83e-48ac4663f91c@amd.com>
+In-Reply-To: <20260114102336.GZ830755@noisy.programming.kicks-ass.net>
 
-On Wed, Jan 14, 2026 at 12:17:11PM +0530, K Prateek Nayak wrote:
-> Hello Peter,
+On Wed, Jan 14, 2026 at 11:23:36AM +0100, Peter Zijlstra wrote:
+
+> Juri, Luca, I'm tempted to suggest to simply remove the replenish on
+> RESTORE entirely -- that would allow the task to continue as it had
+> been, irrespective of it being 'late'.
 > 
-> On 1/13/2026 5:17 PM, Peter Zijlstra wrote:
-> > Hum... so this one is a little more tricky.
-> > 
-> > So the normal rules are that DEQUEUE_SAVE + ENQUEUE_RESTORE should be as
-> > invariant as possible.
-> > 
-> > But what I think happens here is that at the point of dequeue we are
-> > effectively ready to throttle/replenish, but we don't.
-> > 
-> > Then at enqueue, we do. The replenish changes the deadline and we're up
-> > a creek.
+> Something like so -- what would this break?
 > 
-> I've the following data from the scenario in which I observe
-> the same splat as Pierre splat wit the two fixes on top of tip:
-> 
->     yes-4108    [194] d..2.    53.396872: get_prio_dl: get_prio_dl: clock(53060728757)
->     yes-4108    [194] d..2.    53.396873: update_curr_dl_se: update_curr_dl_se: past throttle label
->     yes-4108    [194] d..2.    53.396873: update_curr_dl_se: dl_throttled(0) dl_overrun(0) timer_queued(0) server?(0)
->     yes-4108    [194] d..2.    53.396873: update_curr_dl_se: dl_se->runtime(190623) rq->dl.overloaded(0)
->     yes-4108    [194] d..2.    53.396874: get_prio_dl: get_prio_dl: deadline(53060017809)
-> 
->     yes-4108    [194] d..2.    53.396878: enqueue_dl_entity: ENQUEUE_RESTORE update_dl_entity
->     yes-4108    [194] d..2.    53.396878: enqueue_dl_entity: setup_new_dl_entity
->     yes-4108    [194] d..2.    53.396878: enqueue_dl_entity: Replenish: Old: 53060017809 dl_deadline(1000000)
->     yes-4108    [194] d..2.    53.396879: enqueue_dl_entity: Replenish: New: 53061728757
->     yes-4108    [194] d..2.    53.396882: prio_changed_dl.part.0: Woops! prio_changed_dl: CPU(194) clock(53060728757) overloaded(0): Task: yes(4108), Curr: yes(4108) deadline: 53060017809 -> 53061728757
-> 
-> get_prio_dl() sees "deadline < rq->clock" but dl_se->runtime is still
-> positive so update_curr_dl_se() doesn't fiddle with the deadline.
-> 
-> ENQUEUE_RESTORE sees "deadline" before "rq->clock" and calls
-> setup_new_dl_entity() which calls replenish.
+> --- a/kernel/sched/deadline.c
+> +++ b/kernel/sched/deadline.c
+> @@ -2214,10 +2214,6 @@ enqueue_dl_entity(struct sched_dl_entity
+>  		update_dl_entity(dl_se);
+>  	} else if (flags & ENQUEUE_REPLENISH) {
+>  		replenish_dl_entity(dl_se);
+> -	} else if ((flags & ENQUEUE_RESTORE) &&
+> -		   !is_dl_boosted(dl_se) &&
+> -		   dl_time_before(dl_se->deadline, rq_clock(rq_of_dl_se(dl_se)))) {
+> -		setup_new_dl_entity(dl_se);
+>  	}
+>  
+>  	/*
 
-Right this. That's more or less where I ended up as well. Just don't
-know what to do about that. It doesn't feel right.
+Ah, this is de-boost, right? Boosting allows one to break the CBS rules
+and then we have to rein in the excesses.
 
-That is, it means that a task behaves differently depending on if a
-(unrelated) sched_change comes in between.
+But we have {DE,EN}QUEUE_MOVE for this, that explicitly allows priority
+to change and is set for rt_mutex_setprio() (among others).
 
-If undisturbed it will be allowed to exhaust its runtime, irrespective
-of it missing its deadline (valid for G-EDF); while when it gets
-disturbed it will be forced to replenish.
+So doing s/RESTORE/MOVE/ above.
 
-Juri, Luca, I'm tempted to suggest to simply remove the replenish on
-RESTORE entirely -- that would allow the task to continue as it had
-been, irrespective of it being 'late'.
+The corollary to all this is that everybody that sets MOVE must be able
+to deal with balance callbacks, so audit that too.
 
-Something like so -- what would this break?
+This then gives something like so.. which builds and boots for me, but
+clearly I haven't been able to trigger these funny cases.
 
+---
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -4969,9 +4969,13 @@ struct balance_callback *splice_balance_
+ 	return __splice_balance_callbacks(rq, true);
+ }
+ 
+-static void __balance_callbacks(struct rq *rq)
++void __balance_callbacks(struct rq *rq, struct rq_flags *rf)
+ {
++	if (rf)
++		rq_unpin_lock(rq, rf);
+ 	do_balance_callbacks(rq, __splice_balance_callbacks(rq, false));
++	if (rf)
++		rq_repin_lock(rq, rf);
+ }
+ 
+ void balance_callbacks(struct rq *rq, struct balance_callback *head)
+@@ -5018,7 +5022,7 @@ static inline void finish_lock_switch(st
+ 	 * prev into current:
+ 	 */
+ 	spin_acquire(&__rq_lockp(rq)->dep_map, 0, 0, _THIS_IP_);
+-	__balance_callbacks(rq);
++	__balance_callbacks(rq, NULL);
+ 	raw_spin_rq_unlock_irq(rq);
+ }
+ 
+@@ -6901,7 +6905,7 @@ static void __sched notrace __schedule(i
+ 			proxy_tag_curr(rq, next);
+ 
+ 		rq_unpin_lock(rq, &rf);
+-		__balance_callbacks(rq);
++		__balance_callbacks(rq, NULL);
+ 		raw_spin_rq_unlock_irq(rq);
+ 	}
+ 	trace_sched_exit_tp(is_switch);
+@@ -7350,7 +7354,7 @@ void rt_mutex_setprio(struct task_struct
+ 	trace_sched_pi_setprio(p, pi_task);
+ 	oldprio = p->prio;
+ 
+-	if (oldprio == prio)
++	if (oldprio == prio && !dl_prio(prio))
+ 		queue_flag &= ~DEQUEUE_MOVE;
+ 
+ 	prev_class = p->sched_class;
+@@ -7396,9 +7400,7 @@ void rt_mutex_setprio(struct task_struct
+ out_unlock:
+ 	/* Caller holds task_struct::pi_lock, IRQs are still disabled */
+ 
+-	rq_unpin_lock(rq, &rf);
+-	__balance_callbacks(rq);
+-	rq_repin_lock(rq, &rf);
++	__balance_callbacks(rq, &rf);
+ 	__task_rq_unlock(rq, p, &rf);
+ }
+ #endif /* CONFIG_RT_MUTEXES */
+@@ -9167,6 +9169,8 @@ void sched_move_task(struct task_struct
+ 
+ 	if (resched)
+ 		resched_curr(rq);
++
++	__balance_callbacks(rq, &rq_guard.rf);
+ }
+ 
+ static struct cgroup_subsys_state *
+@@ -10891,6 +10895,9 @@ void sched_change_end(struct sched_chang
+ 				resched_curr(rq);
+ 		}
+ 	} else {
++		/*
++		 * XXX validate prio only really changed when ENQUEUE_MOVE is set.
++		 */
+ 		p->sched_class->prio_changed(rq, p, ctx->prio);
+ 	}
+ }
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
-@@ -2214,10 +2214,6 @@ enqueue_dl_entity(struct sched_dl_entity
+@@ -2214,9 +2214,14 @@ enqueue_dl_entity(struct sched_dl_entity
  		update_dl_entity(dl_se);
  	} else if (flags & ENQUEUE_REPLENISH) {
  		replenish_dl_entity(dl_se);
 -	} else if ((flags & ENQUEUE_RESTORE) &&
--		   !is_dl_boosted(dl_se) &&
--		   dl_time_before(dl_se->deadline, rq_clock(rq_of_dl_se(dl_se)))) {
--		setup_new_dl_entity(dl_se);
++	} else if ((flags & ENQUEUE_MOVE) &&
+ 		   !is_dl_boosted(dl_se) &&
+ 		   dl_time_before(dl_se->deadline, rq_clock(rq_of_dl_se(dl_se)))) {
++		/*
++		 * Deals with the de-boost case, and ENQUEUE_MOVE explicitly
++		 * allows us to change priority. Callers are expected to deal
++		 * with balance_callbacks.
++		 */
+ 		setup_new_dl_entity(dl_se);
  	}
  
- 	/*
-
-> > Let me think about this for a bit...
-> 
-> Should prio_changed_dl() care about "dl_se->dl_deadline" having changed
-> within the sched_change guard since that is the attribute that can be
-> changed using sched_setattr() right?
-
-__setparam_dl() changes dl_se->dl_deadline, as you say, but that does
-not immediately affect the current dl_se->deadline. It will take effect
-the next replenish.
-
-That is, changing dl task attributes changes the next activation, not
-the current. And since DL is a dynamic priority scheme, it doesn't
-affect the current priority.
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -545,6 +545,7 @@ static void scx_task_iter_start(struct s
+ static void __scx_task_iter_rq_unlock(struct scx_task_iter *iter)
+ {
+ 	if (iter->locked_task) {
++		__balance_callbacks(iter->rq, &iter->rf);
+ 		task_rq_unlock(iter->rq, iter->locked_task, &iter->rf);
+ 		iter->locked_task = NULL;
+ 	}
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -2430,7 +2430,8 @@ extern const u32		sched_prio_to_wmult[40
+  *                should preserve as much state as possible.
+  *
+  * MOVE - paired with SAVE/RESTORE, explicitly does not preserve the location
+- *        in the runqueue.
++ *        in the runqueue. IOW the priority is allowed to change. Callers
++ *        must expect to deal with balance callbacks.
+  *
+  * NOCLOCK - skip the update_rq_clock() (avoids double updates)
+  *
+@@ -4019,6 +4020,8 @@ extern void enqueue_task(struct rq *rq,
+ extern bool dequeue_task(struct rq *rq, struct task_struct *p, int flags);
+ 
+ extern struct balance_callback *splice_balance_callbacks(struct rq *rq);
++
++extern void __balance_callbacks(struct rq *rq, struct rq_flags *rf);
+ extern void balance_callbacks(struct rq *rq, struct balance_callback *head);
+ 
+ /*
+--- a/kernel/sched/syscalls.c
++++ b/kernel/sched/syscalls.c
+@@ -639,7 +639,7 @@ int __sched_setscheduler(struct task_str
+ 		 * itself.
+ 		 */
+ 		newprio = rt_effective_prio(p, newprio);
+-		if (newprio == oldprio)
++		if (newprio == oldprio && !dl_prio(newprio))
+ 			queue_flags &= ~DEQUEUE_MOVE;
+ 	}
+ 
