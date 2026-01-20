@@ -1,32 +1,32 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E6647884D
-	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 22:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2726647CC6A
+	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 22:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768948048; cv=none; b=tfbBBwCf7YPT0QcDRNIhOCcJ4Gxsiarz/DIP7GQkZukotwnPaOHPBmTpaFW7Pc6OUwHHXK3X7cRmtMvGkWAFUQe+3O0dwODsOXUQ7s+Y8E9dUDRJMNxCqD7UY8STzbBcSDI+TNBIq0mVkjyp5V6P9MJDAXWy8IPPPTO9s1SSXS8=
+	t=1768948055; cv=none; b=T6IDRlDxrYP8NQqk5BXNJpOLcoWbHVm8E8PrxzfW1/LUhsnAmxANfkllq4wKw0zweRRxB9r1jOyAKFqtDlFzoeqokkqfn7y/3CPfeYjXooKHJREj8ldeaqthdkGwBBzTlPTnZbWs+Pc7kLxtxebQGwoKZaCsRHyEJzYkM/31AME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768948048; c=relaxed/simple;
-	bh=LaSLqTLC+52AmZQuvPmTKGKfv9zzUuHxTQqRecVZW9Q=;
+	s=arc-20240116; t=1768948055; c=relaxed/simple;
+	bh=gj6reRIBenGEhVSvuRPrvqy7Cr2UXz1ceVpyEXVAJhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cb3TZnEMZ0jHKbymiv34CnH0SOoGhUnJp9E3ecEKb+v5PELdq4eGfdkG6/4f1+9LDbd2Uld7TsZyyv/dkx/gni1vcfJ5KEbAXldR+RgUtrcTPm2+9uo0C2vwsxfjU8vXaqjtULfOIC2W2aSb6L0oMTbzePMpJrV4qta8uNcpxCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=A81CLly5; arc=none smtp.client-ip=95.215.58.174
+	 MIME-Version; b=Jh8syKm5phosBMqaoLyADIw1ZLbHO8Pf5yhcqGO9GbrhZ6eL3dGxlRY9rqm8pTTn/yq5wVoHPRA+0PF3Tkio9BF2orhNvj3FsgOAlURxSe8gIaS/oc1I+hC6W5N+cfACd3780RQViffUFIqcxs/NoYLR9XxFUC7QqDHwLuAt7HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pi/UPrTK; arc=none smtp.client-ip=95.215.58.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="A81CLly5"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pi/UPrTK"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1768948037;
+	t=1768948046;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=S8rXVT8szTylnQ1cbFbHbwAY4hvSAAFSTav54K5qwoE=;
-	b=A81CLly5VmtShCzW8ohn31G2feKTZ2LSZ/kxzA8mkB5WwkZybRV2ukRfAmBq10ah1lb+d9
-	5DuNFqvR0GKPEUwCxnf/zZ4Io02TvRQbQ1CBenUkC0hQ0JLHBdQ1dSG+fitBVxjiW/CDi/
-	yo4Zua4cQKI+ZfSlrlVkjRfLelTytWU=
+	bh=97FuF/fff1eb0jGFSo1fap5QARKBSb9jyQQD9qR9ADI=;
+	b=pi/UPrTKmm7MFk9AnERixri2hRMwstafTZNFtYaWjAb5eBGehYdixvnp8mENcC+VAYjG5P
+	1l5xT/Iw/g8xRDJlLFDKQQMfW9xABOqgXg5Efkf0nstn+LPy8lN2H3cqidBvBlhf6hR6H5
+	xjFS4A+4VoFavaG8wepcZYEhXVbzK1Y=
 From: Ihor Solodrai <ihor.solodrai@linux.dev>
 To: Alexei Starovoitov <ast@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
@@ -43,9 +43,9 @@ Cc: Mykyta Yatsenko <yatsenko@meta.com>,
 	linux-kernel@vger.kernel.org,
 	linux-input@vger.kernel.org,
 	sched-ext@lists.linux.dev
-Subject: [PATCH bpf-next v3 04/13] resolve_btfids: Introduce finalize_btf() step
-Date: Tue, 20 Jan 2026 14:26:29 -0800
-Message-ID: <20260120222638.3976562-5-ihor.solodrai@linux.dev>
+Subject: [PATCH bpf-next v3 06/13] selftests/bpf: Add tests for KF_IMPLICIT_ARGS
+Date: Tue, 20 Jan 2026 14:26:31 -0800
+Message-ID: <20260120222638.3976562-7-ihor.solodrai@linux.dev>
 In-Reply-To: <20260120222638.3976562-1-ihor.solodrai@linux.dev>
 References: <20260120222638.3976562-1-ihor.solodrai@linux.dev>
 Precedence: bulk
@@ -57,156 +57,137 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Since recently [1][2] resolve_btfids executes final adjustments to the
-kernel/module BTF before it's embedded into the target binary.
+Add trivial end-to-end tests to validate that KF_IMPLICIT_ARGS flag is
+properly handled by both resolve_btfids and the verifier.
 
-To keep the implementation simple, a clear and stable "pipeline" of
-how BTF data flows through resolve_btfids would be helpful. Some BTF
-modifications may change the ids of the types, so it is important to
-maintain correct order of operations with respect to .BTF_ids
-resolution too.
-
-This patch refactors the BTF handling to establish the following
-sequence:
-  - load target ELF sections
-  - load .BTF_ids symbols
-    - this will be a dependency of btf2btf transformations in
-      subsequent patches
-  - load BTF and its base as is
-  - (*) btf2btf transformations will happen here
-  - finalize_btf(), introduced in this patch
-    - does distill base and sort BTF
-  - resolve and patch .BTF_ids
-
-This approach helps to avoid fixups in .BTF_ids data in case the ids
-change at any point of BTF processing, because symbol resolution
-happens on the finalized, ready to dump, BTF data.
-
-This also gives flexibility in BTF transformations, because they will
-happen on BTF that is not distilled and/or sorted yet, allowing to
-freely add, remove and modify BTF types.
-
-[1] https://lore.kernel.org/bpf/20251219181321.1283664-1-ihor.solodrai@linux.dev/
-[2] https://lore.kernel.org/bpf/20260109130003.3313716-1-dolinux.peng@gmail.com/
+Declare kfuncs in bpf_testmod. Check that bpf_prog_aux pointer is set
+in the kfunc implementation. Verify that calls with implicit args and
+a legacy case all work.
 
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
 ---
- tools/bpf/resolve_btfids/main.c | 69 +++++++++++++++++++++++----------
- 1 file changed, 48 insertions(+), 21 deletions(-)
+ .../bpf/prog_tests/kfunc_implicit_args.c      | 10 +++++
+ .../selftests/bpf/progs/kfunc_implicit_args.c | 41 +++++++++++++++++++
+ .../selftests/bpf/test_kmods/bpf_testmod.c    | 26 ++++++++++++
+ 3 files changed, 77 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/kfunc_implicit_args.c
+ create mode 100644 tools/testing/selftests/bpf/progs/kfunc_implicit_args.c
 
-diff --git a/tools/bpf/resolve_btfids/main.c b/tools/bpf/resolve_btfids/main.c
-index 343d08050116..1fcf37af6764 100644
---- a/tools/bpf/resolve_btfids/main.c
-+++ b/tools/bpf/resolve_btfids/main.c
-@@ -563,19 +563,6 @@ static int load_btf(struct object *obj)
- 	obj->base_btf = base_btf;
- 	obj->btf = btf;
- 
--	if (obj->base_btf && obj->distill_base) {
--		err = btf__distill_base(obj->btf, &base_btf, &btf);
--		if (err) {
--			pr_err("FAILED to distill base BTF: %s\n", strerror(errno));
--			goto out_err;
--		}
--
--		btf__free(obj->base_btf);
--		btf__free(obj->btf);
--		obj->base_btf = base_btf;
--		obj->btf = btf;
--	}
--
- 	return 0;
- 
- out_err:
-@@ -911,6 +898,41 @@ static int sort_btf_by_name(struct btf *btf)
- 	return err;
- }
- 
-+static int finalize_btf(struct object *obj)
+diff --git a/tools/testing/selftests/bpf/prog_tests/kfunc_implicit_args.c b/tools/testing/selftests/bpf/prog_tests/kfunc_implicit_args.c
+new file mode 100644
+index 000000000000..5e4793c9c29a
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/kfunc_implicit_args.c
+@@ -0,0 +1,10 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright (c) 2026 Meta Platforms, Inc. and affiliates. */
++
++#include <test_progs.h>
++#include "kfunc_implicit_args.skel.h"
++
++void test_kfunc_implicit_args(void)
 +{
-+	struct btf *base_btf = obj->base_btf, *btf = obj->btf;
-+	int err;
++	RUN_TESTS(kfunc_implicit_args);
++}
+diff --git a/tools/testing/selftests/bpf/progs/kfunc_implicit_args.c b/tools/testing/selftests/bpf/progs/kfunc_implicit_args.c
+new file mode 100644
+index 000000000000..89b6a47e22dd
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/kfunc_implicit_args.c
+@@ -0,0 +1,41 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright (c) 2026 Meta Platforms, Inc. and affiliates. */
 +
-+	if (obj->base_btf && obj->distill_base) {
-+		err = btf__distill_base(obj->btf, &base_btf, &btf);
-+		if (err) {
-+			pr_err("FAILED to distill base BTF: %s\n", strerror(errno));
-+			goto out_err;
-+		}
++#include <vmlinux.h>
++#include <bpf/bpf_helpers.h>
++#include "bpf_misc.h"
 +
-+		btf__free(obj->base_btf);
-+		btf__free(obj->btf);
-+		obj->base_btf = base_btf;
-+		obj->btf = btf;
-+	}
++extern int bpf_kfunc_implicit_arg(int a) __weak __ksym;
++extern int bpf_kfunc_implicit_arg_impl(int a, struct bpf_prog_aux *aux) __weak __ksym; /* illegal */
++extern int bpf_kfunc_implicit_arg_legacy(int a, int b) __weak __ksym;
++extern int bpf_kfunc_implicit_arg_legacy_impl(int a, int b, struct bpf_prog_aux *aux) __weak __ksym;
 +
-+	err = sort_btf_by_name(obj->btf);
-+	if (err) {
-+		pr_err("FAILED to sort BTF: %s\n", strerror(errno));
-+		goto out_err;
-+	}
++char _license[] SEC("license") = "GPL";
 +
-+	return 0;
-+
-+out_err:
-+	btf__free(base_btf);
-+	btf__free(btf);
-+	obj->base_btf = NULL;
-+	obj->btf = NULL;
-+
-+	return err;
++SEC("syscall")
++__retval(5)
++int test_kfunc_implicit_arg(void *ctx)
++{
++	return bpf_kfunc_implicit_arg(5);
 +}
 +
- static inline int make_out_path(char *buf, u32 buf_sz, const char *in_path, const char *suffix)
++SEC("syscall")
++__failure __msg("cannot find address for kernel function bpf_kfunc_implicit_arg_impl")
++int test_kfunc_implicit_arg_impl_illegal(void *ctx)
++{
++	return bpf_kfunc_implicit_arg_impl(5, NULL);
++}
++
++SEC("syscall")
++__retval(7)
++int test_kfunc_implicit_arg_legacy(void *ctx)
++{
++	return bpf_kfunc_implicit_arg_legacy(3, 4);
++}
++
++SEC("syscall")
++__retval(11)
++int test_kfunc_implicit_arg_legacy_impl(void *ctx)
++{
++	return bpf_kfunc_implicit_arg_legacy_impl(5, 6, NULL);
++}
+diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+index bc07ce9d5477..a996b816ecc4 100644
+--- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
++++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+@@ -1142,6 +1142,10 @@ __bpf_kfunc int bpf_kfunc_st_ops_inc10(struct st_ops_args *args)
+ __bpf_kfunc int bpf_kfunc_multi_st_ops_test_1(struct st_ops_args *args, u32 id);
+ __bpf_kfunc int bpf_kfunc_multi_st_ops_test_1_impl(struct st_ops_args *args, void *aux_prog);
+ 
++__bpf_kfunc int bpf_kfunc_implicit_arg(int a, struct bpf_prog_aux *aux);
++__bpf_kfunc int bpf_kfunc_implicit_arg_legacy(int a, int b, struct bpf_prog_aux *aux);
++__bpf_kfunc int bpf_kfunc_implicit_arg_legacy_impl(int a, int b, struct bpf_prog_aux *aux);
++
+ BTF_KFUNCS_START(bpf_testmod_check_kfunc_ids)
+ BTF_ID_FLAGS(func, bpf_testmod_test_mod_kfunc)
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test1)
+@@ -1184,6 +1188,9 @@ BTF_ID_FLAGS(func, bpf_kfunc_st_ops_test_pro_epilogue, KF_SLEEPABLE)
+ BTF_ID_FLAGS(func, bpf_kfunc_st_ops_inc10)
+ BTF_ID_FLAGS(func, bpf_kfunc_multi_st_ops_test_1)
+ BTF_ID_FLAGS(func, bpf_kfunc_multi_st_ops_test_1_impl)
++BTF_ID_FLAGS(func, bpf_kfunc_implicit_arg, KF_IMPLICIT_ARGS)
++BTF_ID_FLAGS(func, bpf_kfunc_implicit_arg_legacy, KF_IMPLICIT_ARGS)
++BTF_ID_FLAGS(func, bpf_kfunc_implicit_arg_legacy_impl)
+ BTF_KFUNCS_END(bpf_testmod_check_kfunc_ids)
+ 
+ static int bpf_testmod_ops_init(struct btf *btf)
+@@ -1675,6 +1682,25 @@ int bpf_kfunc_multi_st_ops_test_1_impl(struct st_ops_args *args, void *aux__prog
+ 	return ret;
+ }
+ 
++int bpf_kfunc_implicit_arg(int a, struct bpf_prog_aux *aux)
++{
++	if (aux && a > 0)
++		return a;
++	return -EINVAL;
++}
++
++int bpf_kfunc_implicit_arg_legacy(int a, int b, struct bpf_prog_aux *aux)
++{
++	if (aux)
++		return a + b;
++	return -EINVAL;
++}
++
++int bpf_kfunc_implicit_arg_legacy_impl(int a, int b, struct bpf_prog_aux *aux)
++{
++	return bpf_kfunc_implicit_arg_legacy(a, b, aux);
++}
++
+ static int multi_st_ops_reg(void *kdata, struct bpf_link *link)
  {
- 	int len = snprintf(buf, buf_sz, "%s%s", in_path, suffix);
-@@ -1054,6 +1076,7 @@ int main(int argc, const char **argv)
- 	};
- 	const char *btfids_path = NULL;
- 	bool fatal_warnings = false;
-+	bool resolve_btfids = true;
- 	char out_path[PATH_MAX];
- 
- 	struct option btfid_options[] = {
-@@ -1083,12 +1106,6 @@ int main(int argc, const char **argv)
- 	if (btfids_path)
- 		return patch_btfids(btfids_path, obj.path);
- 
--	if (load_btf(&obj))
--		goto out;
--
--	if (sort_btf_by_name(obj.btf))
--		goto out;
--
- 	if (elf_collect(&obj))
- 		goto out;
- 
-@@ -1099,12 +1116,22 @@ int main(int argc, const char **argv)
- 	if (obj.efile.idlist_shndx == -1 ||
- 	    obj.efile.symbols_shndx == -1) {
- 		pr_debug("Cannot find .BTF_ids or symbols sections, skip symbols resolution\n");
--		goto dump_btf;
-+		resolve_btfids = false;
- 	}
- 
--	if (symbols_collect(&obj))
-+	if (resolve_btfids)
-+		if (symbols_collect(&obj))
-+			goto out;
-+
-+	if (load_btf(&obj))
- 		goto out;
- 
-+	if (finalize_btf(&obj))
-+		goto out;
-+
-+	if (!resolve_btfids)
-+		goto dump_btf;
-+
- 	if (symbols_resolve(&obj))
- 		goto out;
- 
+ 	struct bpf_testmod_multi_st_ops *st_ops =
 -- 
 2.52.0
 
