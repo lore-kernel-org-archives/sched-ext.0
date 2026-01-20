@@ -1,66 +1,67 @@
-Received: from mail-dy1-f193.google.com (mail-dy1-f193.google.com [74.125.82.193])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB57925A321
-	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 01:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598A92B9A4
+	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 02:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768874357; cv=none; b=nvWYTIKRRMwF/3SZpgCXaPUKcPiT9WzoxDCeIyzvBupGJXYJNSHfgSt773jRu7UuL82JMrDmaLEeXcjY8XQ+V7POQ3lBjXs+5QeVfd700oKh2j92p+tC4KODLnO67LhN5LdDB4eYSvhK3UXC5yiBQLemJuXLDnhEif8fy/iboVI=
+	t=1768874439; cv=none; b=X/MyvVS8ZHm2Mu7Ad+t4p9NDALs3gKFvfYVjnpxdMExipAvAu/vMxSadwjDsQW2UErdSW08Ea+3RG0QyN5Rse9Q81VyZmOl0wOco9gGQ+jGjWQAFye44KFBak4ab+G9aox5CLeTJse7ulIDBIZWndOkeyfMKHzY9h5gy1LICbrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768874357; c=relaxed/simple;
-	bh=/ypGC+WkDvaV86uL7voGQH80EohW3oPSiZBDDyKUGiU=;
+	s=arc-20240116; t=1768874439; c=relaxed/simple;
+	bh=h1bzrV3t+W8hh2TRR/gZqlbk4hfM8u7QilZdJ5qMIjs=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hZD/m3kVBTtOQ9j2DtcnBUCShT6v3WUUHhOpFIgCgCTU61PptGAPhbJG7WwejFssmfN8oQkjC0drczkTGyyV/+DHY5xjlA+foutci1wAw+X8AANPaHp7jTDAyJiEVBAfgyeW+pmV5Q0RhNzyhpB0L3N9aSlNDYiJkDQ30Ez6yCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TTbJIiaj; arc=none smtp.client-ip=74.125.82.193
+	 Content-Type:MIME-Version; b=pWil6NgRFrNCR9zF+LUXiPwE05K4OePDt3+EcFvzZOLV6nwxF2Gq09updq6JC9uoOoR5hcKmg/ctflnuGNUJ/ZEcs3rZGaSnZ+HYA8gJ7fAch6n71PkWfo9g0y1JJ1ATjFinVY0pbTbYGSrtJqbOO+TKFxzO8cevCJ1bWN09+4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nqMekGBx; arc=none smtp.client-ip=209.85.160.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTbJIiaj"
-Received: by mail-dy1-f193.google.com with SMTP id 5a478bee46e88-2b6fd5bec41so252885eec.1
-        for <sched-ext@lists.linux.dev>; Mon, 19 Jan 2026 17:59:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nqMekGBx"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-502acd495feso35798991cf.2
+        for <sched-ext@lists.linux.dev>; Mon, 19 Jan 2026 18:00:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768874355; x=1769479155; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768874437; x=1769479237; darn=lists.linux.dev;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ro4K9Yk3fPlcxbI6QmI+2ZscW+L6ew8kitsc7QheUG0=;
-        b=TTbJIiajK77Fjgyr+Yg+2vTeHO0bTAFOSnhcdsfqeSBsWnMVeaXvA4HucyD5IzXKmD
-         h7o8GBcEK2zry2VQSFK+77vsRKKZjlJDp6kuOhniI/qoJWdH1+wq/GoGXsepnbnn0ONb
-         ++EAIfZB+PS9TJHA4FFwWUKw7rk6RQD9A9SJQISp2JP8LxJLFtD/MvaIoUM29oRWXgr0
-         ehrYEH/WlwY801G7pDOUEmLIoSav1wx7aTQF5AuFxzCWpsMoEOzrlfQKTh1s0Tuk0nxY
-         k9vWKkeu/dBTWsSDoJcXDcNLbFchTIAAFS/7519izrbDiR6roxTf0htMPKLgv3K1DKIB
-         tDAg==
+        bh=C5BHzdBy9bZIqFc6VCkjIoouQALwj1cU2ODrGGe4Wds=;
+        b=nqMekGBxsaZBLD/qFrIAVOjCASwC9cVYPny/fb2TntziDK3lUxuZRqY5fJtdHxoI0b
+         JVfth1PyrCfDZN8k/NmnhUpkUc0n/czZqqzMJFsD0VzRgJ0baft9Mwep8PMzRQT+O5AN
+         IwCgsUqR+ZVB1K1xHkvm0DpQ2KOsIcRULK9fZYtfKLWmg/D27vRt8yW81tJ/8tkrqV+0
+         PPZzJa8iRJsosyzYEyqCneRLeN0DNkTPVMk5LbUm8lhxVvo5vxkrtEZZHw3L1Ha/DkLH
+         G6XYWyw6jFzvrm5lzKjeFn1RwRuy0kgJRafiy9DUegP4XFunvL5PqUVRU9mairod4paA
+         uNiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768874355; x=1769479155;
+        d=1e100.net; s=20230601; t=1768874437; x=1769479237;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ro4K9Yk3fPlcxbI6QmI+2ZscW+L6ew8kitsc7QheUG0=;
-        b=dUGciTLiDNgUPzG3GtcHQ05zrHHZ4O+xD+iCm9mSR9UVGTbsLFfVsa2hDB9N4s9mCT
-         9bXQojivSCMlzpMVzMV3Z8rhItsiAuT4MmQmRyksUI76JbvQNQUlFPOjw5vI+SxRlhQ0
-         8Z1b7PpHnjI9xHqeoTk5vnqgo6moWIWHstol4auVAF4AF4NPpg2QHDlj7uXI0lrR/f0V
-         lk+i4407Z+PG0kdSiFFp+HxYmROBxWkBuWouZD1UnHMMxlKypBWs234E7tGwUgph+Rck
-         QYsjaJY6ziWfJXkRgK+GAkTzhiBg6W7ObIt14pkch1HcI5VuHVl8VpwmEdWr69wFJYcp
-         wTNA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRhLnipe4d84MmP+n1879pf7+gzlv0FV9dV4ZmS52lMM+TKoPbpJrbAJE/kTv6GBmdCBBbSNkleiw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwVylSOkGk13uX5/TnPcrvBCERAGM76/rnSx00q9ZerdaAQ+3yl
-	K7mFzo4Z35/Gopg+XR/qSoAuGhKFkrEIzKIFNn5nYcWSFxG5UUicvl+/
-X-Gm-Gg: AZuq6aJ02hyX4ZR4XkqkT+x7ZY9kToMs6S711uLatX05zOfMaWSD5TjHfK0z9nGcvOS
-	0O7wEd2YxcETuFQ0OgEtSqNHVy9tg2v3eEbHcpmr7BS5xKbjw+PPXB8Kig4jLJN7LiyhOkbc6zA
-	+tOKIN0sk8z21GcPrr2GEtTvRFBSwEybDsgh9e82Od3IhDXJ5HISJi7/YGESq9PXCYDR4Hi6F/z
-	xVSPSwfynEGM5zI6fdSQ9XDZW6wSWWF6M0HTnPNr8/Hmw2ghFVR2YvAyeGCyk3UZc9CxYg9LNN+
-	g/4Ih9kCa4yDs9a5lYdQt7K5hbAkF5y0lnvzFN9mLzt/nmkkWW5l98cZVUjxJ+Rt4zbdLW7jA6E
-	ne1AMa0HxPhipNcy/EPSPjcqCZYRhxGbO+1OSIOTsKMw2JRXDSzKHn6pjOPNzmLrGs1vxKzzoh7
-	ev9m0xpfMR6esaK3/godFp4siETynVAAxawo15/ZZBwSRT/xWqq2tax8GV2sYdISEZqQ==
-X-Received: by 2002:a05:7300:7c13:b0:2af:7ee:5300 with SMTP id 5a478bee46e88-2b6b3f30eb7mr9885041eec.14.1768874354858;
-        Mon, 19 Jan 2026 17:59:14 -0800 (PST)
+        bh=C5BHzdBy9bZIqFc6VCkjIoouQALwj1cU2ODrGGe4Wds=;
+        b=C37s3b4cMsPUH9Wruv2VDZI+tsG5xNBYnb4MM+GDHWuXb0q0eklOfWM8YI8gQZ11Ux
+         bBLcEIv5gkIZn4r6pICIUK10XTLU8kuDaVcHAVAKB/L/D8QRA1KozAaZUe3j3YEF8JT1
+         zapEs77IGKJUGH0xWHe7B9SLRUYghvgbujSmfj4XV/xHr+Esr/7HILTOWZDepH+vOePm
+         fGtOmuYh984yUU3kD24ZkThowlO6IdodDhEkibpQOYB3DG1L1Aa2QYP+/ZURVWFxQPIN
+         HVoJsVrn7jeVfHQkHRPJdFJ4jwfeTq9Soba0NXOqh0enGssEdfvO15llZ2IHahbvkYMZ
+         d42w==
+X-Forwarded-Encrypted: i=1; AJvYcCWmcXDh1QUZ/U4194bFL4+X4XGBySdVPLTb14UJintSAwiXO70uIjyg4hRr2asgUYPsz3F991Ohzn0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWHYS3LRCM8rQvCftE2I8O45U7JA/s1eq9oOFAaRLYuTp1qpKV
+	hw2vh8L0natLMkDvCIxZ4RcB9XTRJNgdDLp24m8ygI/2XoS96A9jpC2j
+X-Gm-Gg: AY/fxX6/S4tx5qVEqL1Mqv9XcK/GlzmkR2ZVGEPgxyXGveeXm8g/EEMXWaQzmLf9kWm
+	3VhRMn3TwkoOoofsk0vuxPcHzK0foJpOzeq+vnsn22JduwxdmqvXuZdyVBSfbYn961dvhYsSYX6
+	bzCUOdtp8vvvb5lgdHykEG17TI+GUPLBOJvcteWMZXS5VafkdL52WHGpSQoB2xx3rk9k3bqC5MF
+	Pq/qZ+UzeETj/03D04oMdAenDDM7aF+rinYJ3dlIF0Uzje4AddJE+UCQpmcR7ri+3+cBU6ZjzYq
+	IfpmxwJCzFLwosiPEOCB3Dh4jGPysClRfrFJgH+5goL1pDgEGJGN1HTtI0PYvnDc9I0KQ6gK8eD
+	Cdts+5xCOgo4ROps+J2u7tSlo8EQeojiV0tDuVsyWmXPQpiKM37UUheYI2odN5NYdxNH4oC+jaS
+	zlR5QKa1eisUpiRae8e+WuHCqFAn3oivBDdOF/dmPmL/EZak9gToC1ZZ/qbOEShc/qZmNTR+3B2
+	xdb
+X-Received: by 2002:a05:7300:6c89:b0:2ae:4f61:892e with SMTP id 5a478bee46e88-2b6b4eaddf6mr9036820eec.36.1768868006151;
+        Mon, 19 Jan 2026 16:13:26 -0800 (PST)
 Received: from ?IPv6:2a03:83e0:115c:1:4cd6:17bf:3333:255f? ([2620:10d:c090:500::aa81])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b3503a30sm16898801eec.13.2026.01.19.17.59.13
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b3502c91sm14832564eec.9.2026.01.19.16.13.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 17:59:14 -0800 (PST)
-Message-ID: <b5fef9672be4395b76619b8bd39697bf28b93350.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v2 11/13] selftests/bpf: Migrate
- struct_ops_assoc test to KF_IMPLICIT_ARGS
+        Mon, 19 Jan 2026 16:13:25 -0800 (PST)
+Message-ID: <c404446ab6d344338592dfa44f5a7e1b95492564.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v2 04/13] resolve_btfids: Introduce
+ finalize_btf() step
 From: Eduard Zingerman <eddyz87@gmail.com>
 To: Ihor Solodrai <ihor.solodrai@linux.dev>, Alexei Starovoitov
  <ast@kernel.org>,  Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko
@@ -70,10 +71,10 @@ Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, Alan
  Jiri Kosina	 <jikos@kernel.org>, Amery Hung <ameryhung@gmail.com>,
  bpf@vger.kernel.org, 	linux-kernel@vger.kernel.org,
  linux-input@vger.kernel.org, 	sched-ext@lists.linux.dev
-Date: Mon, 19 Jan 2026 17:59:12 -0800
-In-Reply-To: <20260116201700.864797-12-ihor.solodrai@linux.dev>
+Date: Mon, 19 Jan 2026 16:13:23 -0800
+In-Reply-To: <20260116201700.864797-5-ihor.solodrai@linux.dev>
 References: <20260116201700.864797-1-ihor.solodrai@linux.dev>
-	 <20260116201700.864797-12-ihor.solodrai@linux.dev>
+	 <20260116201700.864797-5-ihor.solodrai@linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
@@ -85,28 +86,73 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
 On Fri, 2026-01-16 at 12:16 -0800, Ihor Solodrai wrote:
+> Since recently [1][2] resolve_btfids executes final adjustments to the
+> kernel/module BTF before it's embedded into the target binary.
+>=20
+> To keep the implementation simple, a clear and stable "pipeline" of
+> how BTF data flows through resolve_btfids would be helpful. Some BTF
+> modifications may change the ids of the types, so it is important to
+> maintain correct order of operations with respect to .BTF_ids
+> resolution too.
+>=20
+> This patch refactors the BTF handling to establish the following
+> sequence:
+>   - load target ELF sections
+>   - load .BTF_ids symbols
+>     - this will be a dependency of btf2btf transformations in
+>       subsequent patches
+>   - load BTF and its base as is
+>   - (*) btf2btf transformations will happen here
+>   - finalize_btf(), introduced in this patch
+>     - does distill base and sort BTF
+>   - resolve and patch .BTF_ids
+>=20
+> This approach helps to avoid fixups in .BTF_ids data in case the ids
+> change at any point of BTF processing, because symbol resolution
+> happens on the finalized, ready to dump, BTF data.
+>=20
+> This also gives flexibility in BTF transformations, because they will
+> happen on BTF that is not distilled and/or sorted yet, allowing to
+> freely add, remove and modify BTF types.
+>=20
+> [1] https://lore.kernel.org/bpf/20251219181321.1283664-1-ihor.solodrai@li=
+nux.dev/
+> [2] https://lore.kernel.org/bpf/20260109130003.3313716-1-dolinux.peng@gma=
+il.com/
+>=20
+> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+> ---
 
-[...]
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 
-> diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h b=
-/tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h
-> index 2357a0340ffe..225ea30c4e3d 100644
-> --- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h
-> +++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h
-> @@ -161,7 +161,9 @@ void bpf_kfunc_rcu_task_test(struct task_struct *ptr)=
- __ksym;
->  struct task_struct *bpf_kfunc_ret_rcu_test(void) __ksym;
->  int *bpf_kfunc_ret_rcu_test_nostruct(int rdonly_buf_size) __ksym;
+> @@ -1099,12 +1116,22 @@ int main(int argc, const char **argv)
+>  	if (obj.efile.idlist_shndx =3D=3D -1 ||
+>  	    obj.efile.symbols_shndx =3D=3D -1) {
+>  		pr_debug("Cannot find .BTF_ids or symbols sections, skip symbols resol=
+ution\n");
+> -		goto dump_btf;
+> +		resolve_btfids =3D false;
+>  	}
 > =20
-> -int bpf_kfunc_multi_st_ops_test_1(struct st_ops_args *args, u32 id) __ks=
-ym;
-> -int bpf_kfunc_multi_st_ops_test_1_impl(struct st_ops_args *args, void *a=
-ux__prog) __ksym;
-> +#ifndef __KERNEL__
-> +extern int bpf_kfunc_multi_st_ops_test_1(struct st_ops_args *args, u32 i=
-d) __weak __ksym;
-> +extern int bpf_kfunc_multi_st_ops_test_1_assoc(struct st_ops_args *args)=
- __weak __ksym;
-> +#endif
+> -	if (symbols_collect(&obj))
+> +	if (resolve_btfids)
+> +		if (symbols_collect(&obj))
+> +			goto out;
 
-Nit: wbpf_kfunc_multi_st_ops_test_1 change is not necessary, right?
+Nit: check obj.efile.idlist_shndx and obj.efile.symbols_shndx inside symbol=
+s_collect()?
+     To avoid resolve_btfids flag and the `goto dump_btf;` below.
+
+> +
+> +	if (load_btf(&obj))
+>  		goto out;
+> =20
+> +	if (finalize_btf(&obj))
+> +		goto out;
+> +
+> +	if (!resolve_btfids)
+> +		goto dump_btf;
+> +
+>  	if (symbols_resolve(&obj))
+>  		goto out;
+> =20
