@@ -1,32 +1,32 @@
-Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF6D47DD65
-	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 22:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0D647CC6A
+	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 22:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768948072; cv=none; b=UDGtgmUyalDBMCdIJa6+kTlnjF16DCVWlpdj1uz8cD+7e3THSDkJhY9N9Q7J9ub1+nO68rUO8dCaUscuLphuc3qiJg6nleIpUZ9ks/WVTSTPQa3vD2P8PZU4F7O5q78v3IqyOeGrqDINUMZI48wwOAzlo8ymqY0g9fqywXZsIwg=
+	t=1768948080; cv=none; b=RXvQ0OSiITQ3SnlFSWs5a9sG62HtnoN+nc/985isruXdJaKaIY81O186HTXkOi4N3tnxqGQyRK0iltFnq0ThCXOD3NznazCsg1Ms/Xco0mel0su6I6aIBOF2EIBUZblh8saHCWD2fFmextq9Edg3nKV9wgD43yrBtvZraiIJgEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768948072; c=relaxed/simple;
-	bh=JwJzvMy7t6Bym3XLKYy9hhRG1sL7QLGhuwoH0yBctVA=;
+	s=arc-20240116; t=1768948080; c=relaxed/simple;
+	bh=eUAfPdGXyQRz0rjVGmi96XftVSrHwzVs3caJiX5V8UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wfr7cv3j07C7FkbxLWivwbLjuc3KRt1/e7qX6aaVSeZKbQmqZj8WgNXHmsPwYov5D8sKleBZnOT25I9ZCVCqZDyZgPqaf2RZ72+JIk5VCKgoKqnmTtGP66oQbjee+xO+NldNz3CjsPPIZUci7HdDwmREidsq8ixwF4w8FcNvIMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=THatfcFp; arc=none smtp.client-ip=95.215.58.188
+	 MIME-Version; b=WMyBMf1jwrRcb72rBKHN9qOIXzewUagLHvXQRlsoc4vvluu55RGAC+o708BtiU7Qo7QDGjYCjTNq8nz2Fpt+0hZNl6wSU8/sGxO2NBTfmM/jX+TzHkrz8WphZe0Jz5jlmYx9a2yX7wmwAcwwaCPSsR58WzKPZqu4ZMUSuFbOP6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=W8Vk+SYW; arc=none smtp.client-ip=95.215.58.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="THatfcFp"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="W8Vk+SYW"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1768948058;
+	t=1768948070;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jdYaZly8BkvD2lLkN8gmAgkNWcrOmX0IS14rZ87ztkU=;
-	b=THatfcFpluAZf49KMA+TV59ly0dzhTHXQ2frnCYx6dkdEDLLA2ArK4jklcZ+tMQHqwplz9
-	uY1xTBkh4VMP57f+SNqYpYokD9kFw5nkY0m5BHjpIkkeMKKH63Cf9zT1ST/OLbH/ShYScW
-	j5dUUTClMldPS25XpH+pcBzYE/45NOQ=
+	bh=wGoBQkuCKCEj5+fAzaxNTPG8h5blUlfGkfdUxh4ZxsQ=;
+	b=W8Vk+SYWYzOqW+DjUgah8PAGO9XIZ97fQSF33bF6AxpTUfrFRTvQrRwEBCLgeYXCR1e3nD
+	dcIyrywUSNKJZXj6gvb+3LSe51XoECNefwW7RjUcdishYYh+sjQKmBFJt4gaocDhf8C/4Y
+	bKP+M+RysOsCM0czUY9ZLoLyi+6mM2k=
 From: Ihor Solodrai <ihor.solodrai@linux.dev>
 To: Alexei Starovoitov <ast@kernel.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
@@ -43,9 +43,9 @@ Cc: Mykyta Yatsenko <yatsenko@meta.com>,
 	linux-kernel@vger.kernel.org,
 	linux-input@vger.kernel.org,
 	sched-ext@lists.linux.dev
-Subject: [PATCH bpf-next v3 09/13] bpf: Migrate bpf_task_work_schedule_* kfuncs to KF_IMPLICIT_ARGS
-Date: Tue, 20 Jan 2026 14:26:34 -0800
-Message-ID: <20260120222638.3976562-10-ihor.solodrai@linux.dev>
+Subject: [PATCH bpf-next v3 12/13] bpf: Remove __prog kfunc arg annotation
+Date: Tue, 20 Jan 2026 14:26:37 -0800
+Message-ID: <20260120222638.3976562-13-ihor.solodrai@linux.dev>
 In-Reply-To: <20260120222638.3976562-1-ihor.solodrai@linux.dev>
 References: <20260120222638.3976562-1-ihor.solodrai@linux.dev>
 Precedence: bulk
@@ -57,266 +57,48 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Implement bpf_task_work_schedule_* with an implicit bpf_prog_aux
-argument, and remove corresponding _impl funcs from the kernel.
+Now that all the __prog suffix users in the kernel tree migrated to
+KF_IMPLICIT_ARGS, remove it from the verifier.
 
-Update special kfunc checks in the verifier accordingly.
+See prior discussion for context [1].
 
-Update the selftests to use the new API with implicit argument.
+[1] https://lore.kernel.org/bpf/CAEf4BzbgPfRm9BX=TsZm-TsHFAHcwhPY4vTt=9OT-uhWqf8tqw@mail.gmail.com/
 
-Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
 ---
- kernel/bpf/helpers.c                          | 30 +++++++++----------
- kernel/bpf/verifier.c                         | 12 ++++----
- .../testing/selftests/bpf/progs/file_reader.c |  4 ++-
- tools/testing/selftests/bpf/progs/task_work.c | 11 +++++--
- .../selftests/bpf/progs/task_work_fail.c      | 16 +++++++---
- .../selftests/bpf/progs/task_work_stress.c    |  5 ++--
- .../bpf/progs/verifier_async_cb_context.c     |  6 ++--
- 7 files changed, 50 insertions(+), 34 deletions(-)
+ kernel/bpf/verifier.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index c76a9003b221..f2f974b5fb3b 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -4274,41 +4274,39 @@ static int bpf_task_work_schedule(struct task_struct *task, struct bpf_task_work
- }
- 
- /**
-- * bpf_task_work_schedule_signal_impl - Schedule BPF callback using task_work_add with TWA_SIGNAL
-+ * bpf_task_work_schedule_signal - Schedule BPF callback using task_work_add with TWA_SIGNAL
-  * mode
-  * @task: Task struct for which callback should be scheduled
-  * @tw: Pointer to struct bpf_task_work in BPF map value for internal bookkeeping
-  * @map__map: bpf_map that embeds struct bpf_task_work in the values
-  * @callback: pointer to BPF subprogram to call
-- * @aux__prog: user should pass NULL
-+ * @aux: pointer to bpf_prog_aux of the caller BPF program, implicitly set by the verifier
-  *
-  * Return: 0 if task work has been scheduled successfully, negative error code otherwise
-  */
--__bpf_kfunc int bpf_task_work_schedule_signal_impl(struct task_struct *task,
--						   struct bpf_task_work *tw, void *map__map,
--						   bpf_task_work_callback_t callback,
--						   void *aux__prog)
-+__bpf_kfunc int bpf_task_work_schedule_signal(struct task_struct *task, struct bpf_task_work *tw,
-+					      void *map__map, bpf_task_work_callback_t callback,
-+					      struct bpf_prog_aux *aux)
- {
--	return bpf_task_work_schedule(task, tw, map__map, callback, aux__prog, TWA_SIGNAL);
-+	return bpf_task_work_schedule(task, tw, map__map, callback, aux, TWA_SIGNAL);
- }
- 
- /**
-- * bpf_task_work_schedule_resume_impl - Schedule BPF callback using task_work_add with TWA_RESUME
-+ * bpf_task_work_schedule_resume - Schedule BPF callback using task_work_add with TWA_RESUME
-  * mode
-  * @task: Task struct for which callback should be scheduled
-  * @tw: Pointer to struct bpf_task_work in BPF map value for internal bookkeeping
-  * @map__map: bpf_map that embeds struct bpf_task_work in the values
-  * @callback: pointer to BPF subprogram to call
-- * @aux__prog: user should pass NULL
-+ * @aux: pointer to bpf_prog_aux of the caller BPF program, implicitly set by the verifier
-  *
-  * Return: 0 if task work has been scheduled successfully, negative error code otherwise
-  */
--__bpf_kfunc int bpf_task_work_schedule_resume_impl(struct task_struct *task,
--						   struct bpf_task_work *tw, void *map__map,
--						   bpf_task_work_callback_t callback,
--						   void *aux__prog)
-+__bpf_kfunc int bpf_task_work_schedule_resume(struct task_struct *task, struct bpf_task_work *tw,
-+					      void *map__map, bpf_task_work_callback_t callback,
-+					      struct bpf_prog_aux *aux)
- {
--	return bpf_task_work_schedule(task, tw, map__map, callback, aux__prog, TWA_RESUME);
-+	return bpf_task_work_schedule(task, tw, map__map, callback, aux, TWA_RESUME);
- }
- 
- static int make_file_dynptr(struct file *file, u32 flags, bool may_sleep,
-@@ -4536,8 +4534,8 @@ BTF_ID_FLAGS(func, bpf_strncasestr);
- BTF_ID_FLAGS(func, bpf_cgroup_read_xattr, KF_RCU)
- #endif
- BTF_ID_FLAGS(func, bpf_stream_vprintk_impl)
--BTF_ID_FLAGS(func, bpf_task_work_schedule_signal_impl)
--BTF_ID_FLAGS(func, bpf_task_work_schedule_resume_impl)
-+BTF_ID_FLAGS(func, bpf_task_work_schedule_signal, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, bpf_task_work_schedule_resume, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, bpf_dynptr_from_file)
- BTF_ID_FLAGS(func, bpf_dynptr_file_discard)
- BTF_KFUNCS_END(common_btf_ids)
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 51e8c9f70868..8e8570e9d167 100644
+index 8e8570e9d167..919556614505 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -12457,8 +12457,8 @@ enum special_kfunc_type {
- 	KF_bpf_dynptr_from_file,
- 	KF_bpf_dynptr_file_discard,
- 	KF___bpf_trap,
--	KF_bpf_task_work_schedule_signal_impl,
--	KF_bpf_task_work_schedule_resume_impl,
-+	KF_bpf_task_work_schedule_signal,
-+	KF_bpf_task_work_schedule_resume,
- 	KF_bpf_arena_alloc_pages,
- 	KF_bpf_arena_free_pages,
- 	KF_bpf_arena_reserve_pages,
-@@ -12534,16 +12534,16 @@ BTF_ID(func, bpf_res_spin_unlock_irqrestore)
- BTF_ID(func, bpf_dynptr_from_file)
- BTF_ID(func, bpf_dynptr_file_discard)
- BTF_ID(func, __bpf_trap)
--BTF_ID(func, bpf_task_work_schedule_signal_impl)
--BTF_ID(func, bpf_task_work_schedule_resume_impl)
-+BTF_ID(func, bpf_task_work_schedule_signal)
-+BTF_ID(func, bpf_task_work_schedule_resume)
- BTF_ID(func, bpf_arena_alloc_pages)
- BTF_ID(func, bpf_arena_free_pages)
- BTF_ID(func, bpf_arena_reserve_pages)
- 
- static bool is_task_work_add_kfunc(u32 func_id)
- {
--	return func_id == special_kfunc_list[KF_bpf_task_work_schedule_signal_impl] ||
--	       func_id == special_kfunc_list[KF_bpf_task_work_schedule_resume_impl];
-+	return func_id == special_kfunc_list[KF_bpf_task_work_schedule_signal] ||
-+	       func_id == special_kfunc_list[KF_bpf_task_work_schedule_resume];
+@@ -12211,13 +12211,6 @@ static bool is_kfunc_arg_irq_flag(const struct btf *btf, const struct btf_param
+ 	return btf_param_match_suffix(btf, arg, "__irq_flag");
  }
  
- static bool is_kfunc_ret_null(struct bpf_kfunc_call_arg_meta *meta)
-diff --git a/tools/testing/selftests/bpf/progs/file_reader.c b/tools/testing/selftests/bpf/progs/file_reader.c
-index 4d756b623557..ff3270a0cb9b 100644
---- a/tools/testing/selftests/bpf/progs/file_reader.c
-+++ b/tools/testing/selftests/bpf/progs/file_reader.c
-@@ -77,7 +77,9 @@ int on_open_validate_file_read(void *c)
- 		err = 1;
- 		return 0;
- 	}
--	bpf_task_work_schedule_signal_impl(task, &work->tw, &arrmap, task_work_callback, NULL);
-+
-+	bpf_task_work_schedule_signal(task, &work->tw, &arrmap, task_work_callback);
-+
- 	return 0;
- }
+-static bool is_kfunc_arg_prog_aux(const struct btf *btf, const struct btf_param *arg);
+-
+-static bool is_kfunc_arg_prog(const struct btf *btf, const struct btf_param *arg)
+-{
+-	return btf_param_match_suffix(btf, arg, "__prog") || is_kfunc_arg_prog_aux(btf, arg);
+-}
+-
+ static bool is_kfunc_arg_scalar_with_name(const struct btf *btf,
+ 					  const struct btf_param *arg,
+ 					  const char *name)
+@@ -13280,8 +13273,8 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 		if (is_kfunc_arg_ignore(btf, &args[i]))
+ 			continue;
  
-diff --git a/tools/testing/selftests/bpf/progs/task_work.c b/tools/testing/selftests/bpf/progs/task_work.c
-index 663a80990f8f..eec422af20b8 100644
---- a/tools/testing/selftests/bpf/progs/task_work.c
-+++ b/tools/testing/selftests/bpf/progs/task_work.c
-@@ -66,7 +66,8 @@ int oncpu_hash_map(struct pt_regs *args)
- 	if (!work)
- 		return 0;
- 
--	bpf_task_work_schedule_resume_impl(task, &work->tw, &hmap, process_work, NULL);
-+	bpf_task_work_schedule_resume(task, &work->tw, &hmap, process_work);
-+
- 	return 0;
- }
- 
-@@ -80,7 +81,9 @@ int oncpu_array_map(struct pt_regs *args)
- 	work = bpf_map_lookup_elem(&arrmap, &key);
- 	if (!work)
- 		return 0;
--	bpf_task_work_schedule_signal_impl(task, &work->tw, &arrmap, process_work, NULL);
-+
-+	bpf_task_work_schedule_signal(task, &work->tw, &arrmap, process_work);
-+
- 	return 0;
- }
- 
-@@ -102,6 +105,8 @@ int oncpu_lru_map(struct pt_regs *args)
- 	work = bpf_map_lookup_elem(&lrumap, &key);
- 	if (!work || work->data[0])
- 		return 0;
--	bpf_task_work_schedule_resume_impl(task, &work->tw, &lrumap, process_work, NULL);
-+
-+	bpf_task_work_schedule_resume(task, &work->tw, &lrumap, process_work);
-+
- 	return 0;
- }
-diff --git a/tools/testing/selftests/bpf/progs/task_work_fail.c b/tools/testing/selftests/bpf/progs/task_work_fail.c
-index 1270953fd092..557bdf9eb0fc 100644
---- a/tools/testing/selftests/bpf/progs/task_work_fail.c
-+++ b/tools/testing/selftests/bpf/progs/task_work_fail.c
-@@ -53,7 +53,9 @@ int mismatch_map(struct pt_regs *args)
- 	work = bpf_map_lookup_elem(&arrmap, &key);
- 	if (!work)
- 		return 0;
--	bpf_task_work_schedule_resume_impl(task, &work->tw, &hmap, process_work, NULL);
-+
-+	bpf_task_work_schedule_resume(task, &work->tw, &hmap, process_work);
-+
- 	return 0;
- }
- 
-@@ -65,7 +67,9 @@ int no_map_task_work(struct pt_regs *args)
- 	struct bpf_task_work tw;
- 
- 	task = bpf_get_current_task_btf();
--	bpf_task_work_schedule_resume_impl(task, &tw, &hmap, process_work, NULL);
-+
-+	bpf_task_work_schedule_resume(task, &tw, &hmap, process_work);
-+
- 	return 0;
- }
- 
-@@ -76,7 +80,9 @@ int task_work_null(struct pt_regs *args)
- 	struct task_struct *task;
- 
- 	task = bpf_get_current_task_btf();
--	bpf_task_work_schedule_resume_impl(task, NULL, &hmap, process_work, NULL);
-+
-+	bpf_task_work_schedule_resume(task, NULL, &hmap, process_work);
-+
- 	return 0;
- }
- 
-@@ -91,6 +97,8 @@ int map_null(struct pt_regs *args)
- 	work = bpf_map_lookup_elem(&arrmap, &key);
- 	if (!work)
- 		return 0;
--	bpf_task_work_schedule_resume_impl(task, &work->tw, NULL, process_work, NULL);
-+
-+	bpf_task_work_schedule_resume(task, &work->tw, NULL, process_work);
-+
- 	return 0;
- }
-diff --git a/tools/testing/selftests/bpf/progs/task_work_stress.c b/tools/testing/selftests/bpf/progs/task_work_stress.c
-index 55e555f7f41b..0cba36569714 100644
---- a/tools/testing/selftests/bpf/progs/task_work_stress.c
-+++ b/tools/testing/selftests/bpf/progs/task_work_stress.c
-@@ -51,8 +51,9 @@ int schedule_task_work(void *ctx)
- 		if (!work)
- 			return 0;
- 	}
--	err = bpf_task_work_schedule_signal_impl(bpf_get_current_task_btf(), &work->tw, &hmap,
--						 process_work, NULL);
-+	err = bpf_task_work_schedule_signal(bpf_get_current_task_btf(), &work->tw, &hmap,
-+					    process_work);
-+
- 	if (err)
- 		__sync_fetch_and_add(&schedule_error, 1);
- 	else
-diff --git a/tools/testing/selftests/bpf/progs/verifier_async_cb_context.c b/tools/testing/selftests/bpf/progs/verifier_async_cb_context.c
-index 5d5e1cd4d51d..f47c78719639 100644
---- a/tools/testing/selftests/bpf/progs/verifier_async_cb_context.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_async_cb_context.c
-@@ -156,7 +156,8 @@ int task_work_non_sleepable_prog(void *ctx)
- 	if (!task)
- 		return 0;
- 
--	bpf_task_work_schedule_resume_impl(task, &val->tw, &task_work_map, task_work_cb, NULL);
-+	bpf_task_work_schedule_resume(task, &val->tw, &task_work_map, task_work_cb);
-+
- 	return 0;
- }
- 
-@@ -176,6 +177,7 @@ int task_work_sleepable_prog(void *ctx)
- 	if (!task)
- 		return 0;
- 
--	bpf_task_work_schedule_resume_impl(task, &val->tw, &task_work_map, task_work_cb, NULL);
-+	bpf_task_work_schedule_resume(task, &val->tw, &task_work_map, task_work_cb);
-+
- 	return 0;
- }
+-		if (is_kfunc_arg_prog(btf, &args[i])) {
+-			/* Used to reject repeated use of __prog. */
++		if (is_kfunc_arg_prog_aux(btf, &args[i])) {
++			/* Reject repeated use bpf_prog_aux */
+ 			if (meta->arg_prog) {
+ 				verifier_bug(env, "Only 1 prog->aux argument supported per-kfunc");
+ 				return -EFAULT;
 -- 
 2.52.0
 
