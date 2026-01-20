@@ -1,65 +1,65 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861061E487
-	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 01:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B1A285C89
+	for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 01:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768873632; cv=none; b=X1qqQA/HgjPkNaSxDLNFYtFXmnZEldsFJlqfqWQb3EbZOLJkm/AnLCgNEIq5A1jszjnA/E2G7wzZi+ueMNPsTZIUDpvrxFXpahiYDyuxJxy2eH7WNFj/nXQLOTCGv7+NLXYLe8I7DTNz7N49xNljZ4vJxo37oz0jFKDq/LZRW2M=
+	t=1768873766; cv=none; b=VC1uqNGsZYAQcuNCjA0rb0HAtyJFANJUSadMngEpHdbByBkRx9DFeZTQOzR7HINPtfIT2ofq3a1StzcSb8PRerPeUOEhoWH9aao0YeUFlqaCsLeNQxBbQmH5BReJbFBTiq1riBba5/Lsf0Az/cAXer3xKvNnFSAjDrgsoh27lUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768873632; c=relaxed/simple;
-	bh=DFMDqIBxWMeUoPAyaqN8hr45MYvMg+GV75NoJCt74uw=;
+	s=arc-20240116; t=1768873766; c=relaxed/simple;
+	bh=P4vH0k+7XsEwT791gaUby6dSyltbIn6BS1tA5QY+bp0=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Ymqvo5KjGtWLi+WStGXJ5v6HiaxDThoh7ETb2N0DkIfrPExZWekIonSKyQUbdzG5gkAWcwrfgWwOn5uMhPXaAhTkbA9vBvCm21fg4yGdTuzr4RD+GO1/xeGTBRHW0roFKOo7C3P6j9kclLopbWUY+qMvuVbuX4GGX7eFgjjtL3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rsm7QlaU; arc=none smtp.client-ip=74.125.82.48
+	 Content-Type:MIME-Version; b=On4H8GrU1yPpvWFrEqTji6WM+Q3lRsrIZjGF8dHLOXRDYyBbLMHN/VUkONXxN7pDeJFTh8396H8dqHEuzgKHCMEQ76UrmajeXXBTa/2yBuus6aO8TG8yDJoALwQST8691oOg0LOXZsZinpBaIMuK/jymdSEPvFBwTKUc3a899Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rb1uAIAQ; arc=none smtp.client-ip=74.125.82.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rsm7QlaU"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-1232d9f25e9so9485863c88.0
-        for <sched-ext@lists.linux.dev>; Mon, 19 Jan 2026 17:47:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rb1uAIAQ"
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2b6f5a9cecaso824499eec.0
+        for <sched-ext@lists.linux.dev>; Mon, 19 Jan 2026 17:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768873631; x=1769478431; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768873748; x=1769478548; darn=lists.linux.dev;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Bs/xgeR13/qdRJT1LBeIlLMVbrV4KZcmi7z58cgPbxU=;
-        b=Rsm7QlaUQbICyrWJFDGzU5PEllPtYanW6t29fwnng5Wli+mmMAjHkGviTUMiBzon5x
-         sodhcdpndsxyUgc1VQzchTsldvIKfHSbaXYlWtfmyjsK2FA1r6iUuL6/O7q1O2rca3oG
-         GnJqhQ2YZMub3ATb4Upj8qG1nN2MuA6sm8sPu2Uy6C6+hYQPIRGQcbFMirIL+/581HiX
-         ioJ48477fshfSu7FbM+adnV31/1jBdtAHKFRYhtQwmFeYtKvtn958/QUsuzNEO8vOCic
-         CAaiUCsgfftyhD3x1FF/FUTcYVr9o0hMju4yX8B90x0JSHcsJDzgemxlmJhaJrfxaGtx
-         Uw7A==
+        bh=xjg5AkPxw0MOdaWLN3zWHsbO0Z52mOb9jRmich2qKiA=;
+        b=Rb1uAIAQTL3IpX/RXrQaURYpfJT+kwL7C4Mh5Hnbd3ebawrt/3deLeVreOAFD0W/Zu
+         xDYZ0t9UNeoXKgX6NSIBCCtYFvDlMOyFoKpouR2WBebSXidbsVt3LfJ/yHOcEO5mTNv9
+         65/N8l5el7VxEI4hn5sBae33eYorZTz/ce0H5GfA0JwidMMx9CC18E4AEBxT+0LCrn9N
+         g/LyqSIAPrIgftldxW8iAvQEwQql0lhluMle/E7x4Xf7Q4KCscIxx3JSqWDyZyLtr+la
+         n8zYjzfor/Tc1PDbs/sWr2XX7lV3HZkaDWX+RvvJKUZhdJKcFYyofIbH5o5jIbnHax50
+         KPmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768873631; x=1769478431;
+        d=1e100.net; s=20230601; t=1768873748; x=1769478548;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bs/xgeR13/qdRJT1LBeIlLMVbrV4KZcmi7z58cgPbxU=;
-        b=RmFoengoWPhkzeoVe8HQgAO2RAfzv7TX6Nvo3D5GTyceP6sFfxZr4+G8PE0tQN/Fi5
-         3fwvGXO1GKOBVGv2W8o33rCKnp3mL7FTeCIIfJO93BjlYRi9NXJgfjCC0SNVNWwwMpa9
-         EM1d0nEBKEaO956VVkvQ3Vybs/FbOQPObbYF8W3UHompTjX6rODaAaTX+wqIclEa917V
-         bzlMs8PW0F0bQMNwSrsgBZNx5sp2z/EF7h07aJOTAjZ9oec+to+KTNfT/NCO/FIBuFkt
-         jU50+1BTUlepXZ8Br1pYicc/zhymrZQO8aYaRpSZodq6x69jOtGgbkm/IRS1go52VDV3
-         Z5gA==
-X-Forwarded-Encrypted: i=1; AJvYcCVGpSXSdXnbk9JSblahC+JbinQskdWpxSXsj2xbC4HodA9z1Fk/lqUqv/ER9fbvIl3p5rv2KsO86GQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwXyyBTchQBasDPizWwkkvdFViwTU4dX6RLKJFjsjPzLUp6Z5yJ
-	wxOyYptXLI9bvtRcT4762U5z+sr0Uo+a/hGIbGNtrmPZerhvePfbXpGS
-X-Gm-Gg: AY/fxX6WdAc7q08EauH0VcM2D8P+tvfVuDiWPFOAj/hlBylDb7xIZY03kl/uH+lABB4
-	QCpOv61Q1G9RQVL4s0q6tRMJILRHRpS4kLbzzKdvPHj9s1dnPOiJKH7e/n8pxtcngYxkDKznxh3
-	BP7rew+LsSoFAMsQWojt5SNrtvoIIEGjh2y1ohBJap7GvTXBX75gGpia+Tr8y7Ed6iByhZ4X1QD
-	xazVWeImKz3XELy2m5nWbKTd3ErTIrjqt+WgfjBUG+dv+TkTIyDAA4CdQgQn5GLVXG5QpeaPpNJ
-	pADfKq/7WpdjG75jrGBboJHeBvJfRqFEWHzmwC1OrAaHUM6ohiO17CCumwd4In6Tjy2xXQi4C/V
-	sfDuZ4IwQzBFLCGB/dBq6hRDrJ1FNLAEzQGMknsS2L+5/Wn4VYrMrRm3lzsn/66cQVBMWW1kHSS
-	AuwTif1NJ6Z6D3kzf4A1NX2VoWAXzDsW1K7e0NG/EGpuoePikKtFq+tFC7uPUvoo5fEw==
-X-Received: by 2002:a05:7300:dc85:b0:2ac:2480:f0ac with SMTP id 5a478bee46e88-2b6b40d991cmr8107963eec.23.1768867408672;
-        Mon, 19 Jan 2026 16:03:28 -0800 (PST)
+        bh=xjg5AkPxw0MOdaWLN3zWHsbO0Z52mOb9jRmich2qKiA=;
+        b=wxsxqkCJKriywbCCRoZ8Hh/E6D3xJ2RdpMLHWIEM6cngOvowb4nL+EC70puEYllSJ3
+         MhFrVoP+NcmEiNTBNgq6R2P1enzoRCBv7uXvzA32s2l60JBV/4WSkMCTwe/Svojv+GAW
+         kRfKfjx8/U5lq8BMMsQlbpHPfOdoqjy/WfruAHdf8YsCL8VMrif6as85a9OtkHRU8eOu
+         zrpQ9il8SYVAIoTdKSS+zyNG2ZuGR0qCeSOd2CihPOPJ/M5moz/dd21xF/3nxguouXcA
+         PTZaNGa8AzBYnZGHRYCHZ8KTplKTClYicaM7IYHN/5W8g1sZdjUD7j5L3TfjPmkOe7Bj
+         CfIw==
+X-Forwarded-Encrypted: i=1; AJvYcCXlTEQ2wUge/etOiro9XVpL2dzzIy0Elpv+GFAcSZ8a4Ct6RsDizRqsRsPjvfHjAwjNRPS/HxtdYOc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzmARB6T74yzrhmKcRjHIR2QV/4ty8mMcwXqXL762SZYSqZclad
+	Hme2an3mP2hlpA8/DONkAH4Di3n3HSwSEnvOqN4R4uhgWSN/iR/AV8+i
+X-Gm-Gg: AZuq6aLVyliWGfwgf+sBzva52o5j89SfmGx3nnkn5pBPJZ1WXyEkKL4+hnvVajphauf
+	nWtihvvT9SmCrMVKX6HyRzkvuZvXsv0QT6YD8IIL8UQ4qv8ErTY4WXWd87GH60iwedOSS8nvzSr
+	BsQrO9VZSkrJ//UCzkp/yOa+yYSvZgMNfOcQQySktp18P4KX5fmc5xqXEREyN5c/jk0lFqsg28U
+	zX8Rp+wlJMDCtPLMhKfMvJ+naXuNu0EfA2PCBoFbT/z5fQRELiXgwwJzjTk+71urUu1JPtLQDO0
+	uut0UHnDIQR8gEItiC3vujWw5qX12RMqVz8hOvV82KigJSLkJeSUUiLdy4jr5SSfZN5uA7/tXsm
+	NEqsKp2r+kK40Jhd7yrFdRSQMt15HxNISJeQrct+8HtnrAujWy8gXX9dQy6YWHYJD/u4IIQVhC8
+	Pf7zudKMxGIxT7HOeTU0TlBVzNl/lAMfRBxXLYSmU3nZ/FvlvyKLNYOFa/4x4cswt/2w==
+X-Received: by 2002:a05:7300:c608:b0:2ab:c279:9dce with SMTP id 5a478bee46e88-2b6fd623ef7mr293270eec.7.1768873747978;
+        Mon, 19 Jan 2026 17:49:07 -0800 (PST)
 Received: from ?IPv6:2a03:83e0:115c:1:4cd6:17bf:3333:255f? ([2620:10d:c090:500::aa81])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b3679980sm15230498eec.31.2026.01.19.16.03.26
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b3502d22sm15327177eec.10.2026.01.19.17.49.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 16:03:28 -0800 (PST)
-Message-ID: <e2d174e79c4550fb7251f29351f1fe5afb812328.camel@gmail.com>
-Subject: Re: [PATCH bpf-next v2 03/13] bpf: Verifier support for
+        Mon, 19 Jan 2026 17:49:07 -0800 (PST)
+Message-ID: <088b071d1a43b403123d772f56ce033e91cb4252.camel@gmail.com>
+Subject: Re: [PATCH bpf-next v2 00/13] bpf: Kernel functions with
  KF_IMPLICIT_ARGS
 From: Eduard Zingerman <eddyz87@gmail.com>
 To: Ihor Solodrai <ihor.solodrai@linux.dev>, Alexei Starovoitov
@@ -70,10 +70,9 @@ Cc: Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, Alan
  Jiri Kosina	 <jikos@kernel.org>, Amery Hung <ameryhung@gmail.com>,
  bpf@vger.kernel.org, 	linux-kernel@vger.kernel.org,
  linux-input@vger.kernel.org, 	sched-ext@lists.linux.dev
-Date: Mon, 19 Jan 2026 16:03:25 -0800
-In-Reply-To: <20260116201700.864797-4-ihor.solodrai@linux.dev>
+Date: Mon, 19 Jan 2026 17:49:05 -0800
+In-Reply-To: <20260116201700.864797-1-ihor.solodrai@linux.dev>
 References: <20260116201700.864797-1-ihor.solodrai@linux.dev>
-	 <20260116201700.864797-4-ihor.solodrai@linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
@@ -85,78 +84,20 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
 On Fri, 2026-01-16 at 12:16 -0800, Ihor Solodrai wrote:
-> A kernel function bpf_foo marked with KF_IMPLICIT_ARGS flag is
-> expected to have two associated types in BTF:
->   * `bpf_foo` with a function prototype that omits implicit arguments
->   * `bpf_foo_impl` with a function prototype that matches the kernel
->      declaration of `bpf_foo`, but doesn't have a ksym associated with
->      its name
->=20
-> In order to support kfuncs with implicit arguments, the verifier has
-> to know how to resolve a call of `bpf_foo` to the correct BTF function
-> prototype and address.
->=20
-> To implement this, in add_kfunc_call() kfunc flags are checked for
-> KF_IMPLICIT_ARGS. For such kfuncs a BTF func prototype is adjusted to
-> the one found for `bpf_foo_impl` (func_name + "_impl" suffix, by
-> convention) function in BTF.
->=20
-> This effectively changes the signature of the `bpf_foo` kfunc in the
-> context of verification: from one without implicit args to the one
-> with full argument list.
->=20
-> The values of implicit arguments by design are provided by the
-> verifier, and so they can only be of particular types. In this patch
-> the only allowed implicit arg type is a pointer to struct
-> bpf_prog_aux.
->=20
-> In order for the verifier to correctly set an implicit bpf_prog_aux
-> arg value at runtime, is_kfunc_arg_prog() is extended to check for the
-> arg type. At a point when prog arg is determined in check_kfunc_args()
-> the kfunc with implicit args already has a prototype with full
-> argument list, so the existing value patch mechanism just works.
->=20
-> If a new kfunc with KF_IMPLICIT_ARG is declared for an existing kfunc
-> that uses a __prog argument (a legacy case), the prototype
-> substitution works in exactly the same way, assuming the kfunc follows
-> the _impl naming convention. The difference is only in how _impl
-> prototype is added to the BTF, which is not the verifier's
-> concern. See a subsequent resolve_btfids patch for details.
->=20
-> __prog suffix is still supported at this point, but will be removed in
-> a subsequent patch, after current users are moved to KF_IMPLICIT_ARGS.
->=20
-> Introduction of KF_IMPLICIT_ARGS revealed an issue with zero-extension
-> tracking, because an explicit rX =3D 0 in place of the verifier-supplied
-> argument is now absent if the arg is implicit (the BPF prog doesn't
-> pass a dummy NULL anymore). To mitigate this, reset the subreg_def of
-> all caller saved registers in check_kfunc_call() [1].
->=20
-> [1] https://lore.kernel.org/bpf/b4a760ef828d40dac7ea6074d39452bb0dc82caa.=
-camel@gmail.com/
->=20
-> Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-> ---
-
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 
 [...]
 
-> @@ -14177,8 +14223,12 @@ static int check_kfunc_call(struct bpf_verifier_=
-env *env, struct bpf_insn *insn,
->  		}
->  	}
-> =20
-> -	for (i =3D 0; i < CALLER_SAVED_REGS; i++)
-> -		mark_reg_not_init(env, regs, caller_saved[i]);
-> +	for (i =3D 0; i < CALLER_SAVED_REGS; i++) {
-> +		u32 regno =3D caller_saved[i];
-> +
-> +		mark_reg_not_init(env, regs, regno);
-> +		regs[regno].subreg_def =3D DEF_NOT_SUBREG;
-> +	}
+> v1->v2:
+>   - Replace the following kernel functions with KF_IMPLICIT_ARGS version:
+>     - bpf_stream_vprintk_impl -> bpf_stream_vprintk
+>     - bpf_task_work_schedule_resume_impl -> bpf_task_work_schedule_resume
+>     - bpf_task_work_schedule_signal_impl -> bpf_task_work_schedule_signal
+>     - bpf_wq_set_callback_impl -> bpf_wq_set_callback_impl
 
-But we still need to understand why .subreg_def assignment can't be
-moved inside mark_reg_not_init().
+Just to clarify my understanding, this is a breaking change, right?
+E.g. bpf_stream_vprintk_impl is no longer in vmlinux.h and on a load
+attempt an error is reported:
 
-[...]
+  kfunc 'bpf_stream_vprintk_impl' is referenced but wasn't resolved
+
+Maybe call it out explicitly in the cover letter?
