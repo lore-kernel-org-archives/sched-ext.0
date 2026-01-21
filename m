@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D2B376BD0;
-	Wed, 21 Jan 2026 23:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC2E318B86;
+	Wed, 21 Jan 2026 23:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769037132; cv=none; b=JbdmVjCmM7kHsgJS7JuUp/lVlUoVtU7S3xWmnM17M/olia2QdBnjX/wsBoqC2nPq13aJJkeqCiO/5y8VllaPepoX4DzPDWdJtxlphczwViE86IVqFWOMrr+bwunAbC+acREj4qv0gVNYtr44QWjRifVVAt3KfkLxHACLX6K2Fds=
+	t=1769037135; cv=none; b=Ct4/08P/quXg0ulFVdWWegC1ViJFNG5LSGdMJd8sLw7kAzELyVXSYpV0E9p4x7TjfsGLqbC3PFFpLBfD3oJmKr91UI3faY07+85rhHf32DmHxPb1BfwE53yuBbB1yfULRXaU+q0og918mBJAwZSnRNKQa5NGNANw62HV7oJX6bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769037132; c=relaxed/simple;
-	bh=DUdQSG01l4LrLosRIdqEQqQB2bysBjgSpLFLV3jnvjI=;
+	s=arc-20240116; t=1769037135; c=relaxed/simple;
+	bh=F3fsl1UR+M2JQhVotMTIEHIEhKwaW4FtrLRcaSrpVdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvp+2SPrv7rblBKv280NV9Xc+mLY6RCbjyxb697DTP9EegxQh+BpXHTXyKUCq4FJxCxCwgPdF4ViIqkN6KHLpk29fRqpBx7TU2Bw7/JPG3eJLyzSj1tYcHiyCbjZZ9oQnPtaDIj1kOKOhOTdnJYDwFt/Esa4QXi3ekE/8aKOEEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E91ReH9u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g4v5Ow2RSUtRczY1M1F0kt+7B+aJfbJGYArhtNiEZHsnCBjRTdF9hVF1D3T838CqJxNYPizYQpVAIwT4h1kza7K74XJ86oJqBoHDjglOsv5owN0xFItpTZ+RNeHTVU32EY86y1zT6Q1gytJCDq09SmSzD3PhuEZmujZSMuL+XIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MSYlH+CL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E91ReH9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB947C16AAE;
-	Wed, 21 Jan 2026 23:12:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MSYlH+CL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B7AC4CEF1;
+	Wed, 21 Jan 2026 23:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769037131;
-	bh=DUdQSG01l4LrLosRIdqEQqQB2bysBjgSpLFLV3jnvjI=;
+	s=k20201202; t=1769037134;
+	bh=F3fsl1UR+M2JQhVotMTIEHIEhKwaW4FtrLRcaSrpVdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E91ReH9uqXr7OLKP6g4Z1q91GjcOLiwULovdYI9wdGOiMHgogUnRVGl1zIbAJ9Xcj
-	 NbLnfDp31R+JAjMEAoFKkVy5GJqiIcgxzwDOXLqibruG41faBU/VzUaeLUIhN8jkDg
-	 ZNmUDNqO+o9mzzUgDAeqsUeQNUC4PAAK/F4oCuostS7K+7Qx80HT0wE0kaa3p7kfsY
-	 LutiAq/jwX43i1esORIkjrUloNOqXBf7MDLgLuGmTpdubysFh4esRYtF2UwN/ZNyfa
-	 X2UYvqSVrJUy7jHzR+sDf9sEy6RCw6lnNEZP3vzDY6sXOcOkFP0BU5j7TYdpbkzvoE
-	 j4Giag9dF0bHg==
+	b=MSYlH+CL6SIMkYFDYP85IW6bLtj7YM4wETHIrpCLwHMkSsmPC+Cs41vyVCwPyfwKJ
+	 ZKkrFBRU45dZnv9HoQuuwfoiKt1puVbhx4JtXGr4J6zIS3S0HylxuWJYvkG2+AVvuS
+	 2r//N9fiKv6P9afeFqqYzsQRNGUJoLD73tOwIQctlr/23ZhaPLTQ1TFO5tb6nLcjTT
+	 9oZO2vw+KAClaiJZm76ynZLJ07c0SjvpLDxl9T4377tD+AdnAlInEqdcH5pBdIYM4I
+	 o+9igmlO7m7TA6sv+De2QIWTKWyrw514ml/B3P1xhsJTqoXUaa16DTUaR/sQh5AYZ2
+	 w6fQD2rmk30tw==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 28/34] sched_ext: Support dumping multiple schedulers and add scheduler identification
-Date: Wed, 21 Jan 2026 13:11:34 -1000
-Message-ID: <20260121231140.832332-29-tj@kernel.org>
+Subject: [PATCH 31/34] sched_ext: Make scx_bpf_reenqueue_local() sub-sched aware
+Date: Wed, 21 Jan 2026 13:11:37 -1000
+Message-ID: <20260121231140.832332-32-tj@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121231140.832332-1-tj@kernel.org>
 References: <20260121231140.832332-1-tj@kernel.org>
@@ -48,144 +48,219 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend scx_dump_state() to support multiple schedulers and improve task
-identification in dumps. The function now takes a specific scheduler to
-dump and can optionally filter tasks by scheduler.
+scx_bpf_reenqueue_local() currently re-enqueues all tasks on the local DSQ
+regardless of which sub-scheduler owns them. With multiple sub-schedulers,
+each should only re-enqueue tasks it owns or are owned by its descendants.
 
-scx_dump_task() now displays which scheduler each task belongs to, using
-"*" to mark tasks owned by the scheduler being dumped. Sub-schedulers
-are identified with their level and cgroup ID.
-
-The SysRq-D handler now iterates through all active schedulers under
-scx_sched_lock and dumps each one separately. For SysRq-D dumps, only
-tasks owned by each scheduler are dumped to avoid redundancy since all
-schedulers are being dumped. Error-triggered dumps continue to dump all
-tasks since only that specific scheduler is being dumped.
+Replace the per-rq boolean flag with a lock-free linked list to track
+per-scheduler reenqueue requests. Filter tasks in reenq_local() using
+hierarchical ownership checks and block deferrals during bypass to prevent
+use on dead schedulers.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c | 54 ++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 43 insertions(+), 11 deletions(-)
+ kernel/sched/ext.c          | 73 ++++++++++++++++++++++++++++++-------
+ kernel/sched/ext_internal.h |  1 +
+ kernel/sched/sched.h        |  2 +-
+ 3 files changed, 62 insertions(+), 14 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index e8d7ad0a8a6b..be049ab1fbcc 100644
+index d21a3f805704..469fcbe4611c 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -4969,22 +4969,34 @@ static void ops_dump_exit(void)
- 	scx_dump_data.cpu = -1;
- }
+@@ -182,7 +182,7 @@ MODULE_PARM_DESC(bypass_lb_intv_us, "bypass load balance interval in microsecond
+ #include <trace/events/sched_ext.h>
  
--static void scx_dump_task(struct seq_buf *s, struct scx_dump_ctx *dctx,
-+static void scx_dump_task(struct scx_sched *sch,
-+			  struct seq_buf *s, struct scx_dump_ctx *dctx,
- 			  struct task_struct *p, char marker)
+ static void process_ddsp_deferred_locals(struct rq *rq);
+-static u32 reenq_local(struct rq *rq);
++static u32 reenq_local(struct scx_sched *sch, struct rq *rq);
+ static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
+ static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind);
+ static bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
+@@ -987,9 +987,16 @@ static void run_deferred(struct rq *rq)
  {
- 	static unsigned long bt[SCX_EXIT_BT_LEN];
--	struct scx_sched *sch = scx_root;
-+	struct scx_sched *task_sch = scx_task_sched(p);
-+	const char *own_marker;
-+	char sch_id_buf[32];
- 	char dsq_id_buf[19] = "(n/a)";
- 	unsigned long ops_state = atomic_long_read(&p->scx.ops_state);
- 	unsigned int bt_len = 0;
+ 	process_ddsp_deferred_locals(rq);
  
-+	own_marker = task_sch == sch ? "*" : "";
+-	if (local_read(&rq->scx.reenq_local_deferred)) {
+-		local_set(&rq->scx.reenq_local_deferred, 0);
+-		reenq_local(rq);
++	if (!llist_empty(&rq->scx.deferred_reenq_locals)) {
++		struct llist_node *llist =
++			llist_del_all(&rq->scx.deferred_reenq_locals);
++		struct scx_sched_pcpu *pos, *next;
 +
-+	if (task_sch->level == 0)
-+		scnprintf(sch_id_buf, sizeof(sch_id_buf), "root");
-+	else
-+		scnprintf(sch_id_buf, sizeof(sch_id_buf), "sub%d-%llu",
-+			  task_sch->level, task_sch->ops.sub_cgroup_id);
-+
- 	if (p->scx.dsq)
- 		scnprintf(dsq_id_buf, sizeof(dsq_id_buf), "0x%llx",
- 			  (unsigned long long)p->scx.dsq->id);
- 
- 	dump_newline(s);
--	dump_line(s, " %c%c %s[%d] %+ldms",
-+	dump_line(s, " %c%c %s[%d] %s%s %+ldms",
- 		  marker, task_state_to_char(p), p->comm, p->pid,
-+		  own_marker, sch_id_buf,
- 		  jiffies_delta_msecs(p->scx.runnable_at, dctx->at_jiffies));
- 	dump_line(s, "      scx_state/flags=%u/0x%x dsq_flags=0x%x ops_state/qseq=%lu/%lu",
- 		  scx_get_task_state(p), p->scx.flags & ~SCX_TASK_STATE_MASK,
-@@ -5012,11 +5024,18 @@ static void scx_dump_task(struct seq_buf *s, struct scx_dump_ctx *dctx,
++		llist_for_each_entry_safe(pos, next, llist,
++					  deferred_reenq_locals_node) {
++			init_llist_node(&pos->deferred_reenq_locals_node);
++			reenq_local(pos->sch, rq);
++		}
  	}
  }
  
--static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
-+/*
-+ * Dump scheduler state. If @dump_all_tasks is true, dump all tasks regardless
-+ * of which scheduler they belong to. If false, only dump tasks owned by @sch.
-+ * For SysRq-D dumps, @dump_all_tasks=false since all schedulers are dumped
-+ * separately. For error dumps, @dump_all_tasks=true since only the failing
-+ * scheduler is dumped.
-+ */
-+static void scx_dump_state(struct scx_sched *sch, struct scx_exit_info *ei,
-+			   size_t dump_len, bool dump_all_tasks)
+@@ -3884,7 +3891,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 	struct scx_sched *sch = container_of(rcu_work, struct scx_sched, rcu_work);
+ 	struct rhashtable_iter rht_iter;
+ 	struct scx_dispatch_q *dsq;
+-	int node;
++	int cpu, node;
+ 
+ 	irq_work_sync(&sch->error_irq_work);
+ 	kthread_destroy_worker(sch->helper);
+@@ -3896,6 +3903,17 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 		cgroup_put(sch->cgrp);
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
++	/*
++	 * $sch would have entered bypass mode before the RCU grace period. As
++	 * that blocks new deferrals, all deferred_reenq_locals_node's must be
++	 * off-list by now.
++	 */
++	for_each_possible_cpu(cpu) {
++		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
++
++		WARN_ON_ONCE(llist_on_list(&pcpu->deferred_reenq_locals_node));
++	}
++
+ 	free_percpu(sch->pcpu);
+ 
+ 	for_each_node_state(node, N_POSSIBLE)
+@@ -5443,8 +5461,12 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 	for_each_possible_cpu(cpu)
+ 		init_dsq(bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
+ 
+-	for_each_possible_cpu(cpu)
+-		per_cpu_ptr(sch->pcpu, cpu)->sch = sch;
++	for_each_possible_cpu(cpu) {
++		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
++
++		pcpu->sch = sch;
++		init_llist_node(&pcpu->deferred_reenq_locals_node);
++	}
+ 
+ 	sch->helper = kthread_run_worker(0, "sched_ext_helper");
+ 	if (IS_ERR(sch->helper)) {
+@@ -6695,6 +6717,7 @@ void __init init_sched_ext_class(void)
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
++		init_llist_head(&rq->scx.deferred_reenq_locals);
+ 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
+ 		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
+ 
+@@ -7266,7 +7289,7 @@ static const struct btf_kfunc_id_set scx_kfunc_set_dispatch = {
+ 	.set			= &scx_kfunc_ids_dispatch,
+ };
+ 
+-static u32 reenq_local(struct rq *rq)
++static u32 reenq_local(struct scx_sched *sch, struct rq *rq)
  {
- 	static DEFINE_RAW_SPINLOCK(dump_lock);
- 	static const char trunc_marker[] = "\n\n~~~~ TRUNCATED ~~~~\n";
--	struct scx_sched *sch = scx_root;
- 	struct scx_dump_ctx dctx = {
- 		.kind = ei->kind,
- 		.exit_code = ei->exit_code,
-@@ -5033,6 +5052,14 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
+ 	LIST_HEAD(tasks);
+ 	u32 nr_enqueued = 0;
+@@ -7281,6 +7304,8 @@ static u32 reenq_local(struct rq *rq)
+ 	 */
+ 	list_for_each_entry_safe(p, n, &rq->scx.local_dsq.list,
+ 				 scx.dsq_list.node) {
++		struct scx_sched *task_sch = scx_task_sched(p);
++
+ 		/*
+ 		 * If @p is being migrated, @p's current CPU may not agree with
+ 		 * its allowed CPUs and the migration_cpu_stop is about to
+@@ -7295,6 +7320,9 @@ static u32 reenq_local(struct rq *rq)
+ 		if (p->migration_pending)
+ 			continue;
  
- 	seq_buf_init(&s, ei->dump, dump_len);
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	if (sch->level == 0)
-+		dump_line(&s, "%s: root", sch->ops.name);
-+	else
-+		dump_line(&s, "%s: sub%d-%llu %s",
-+			  sch->ops.name, sch->level, sch->ops.sub_cgroup_id,
-+			  sch->cgrp_path);
-+#endif
- 	if (ei->kind == SCX_EXIT_NONE) {
- 		dump_line(&s, "Debug dump triggered by %s", ei->reason);
- 	} else {
-@@ -5125,11 +5152,13 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
- 				seq_buf_set_overflow(&s);
- 		}
- 
--		if (rq->curr->sched_class == &ext_sched_class)
--			scx_dump_task(&s, &dctx, rq->curr, '*');
-+		if (rq->curr->sched_class == &ext_sched_class &&
-+		    (dump_all_tasks || scx_task_on_sched(sch, rq->curr)))
-+			scx_dump_task(sch, &s, &dctx, rq->curr, '*');
- 
- 		list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node)
--			scx_dump_task(&s, &dctx, p, ' ');
-+			if (dump_all_tasks || scx_task_on_sched(sch, p))
-+				scx_dump_task(sch, &s, &dctx, p, ' ');
- 	next:
- 		rq_unlock_irqrestore(rq, &rf);
++		if (!scx_is_descendant(task_sch, sch))
++			continue;
++
+ 		dispatch_dequeue(rq, p);
+ 		list_add_tail(&p->scx.dsq_list.node, &tasks);
  	}
-@@ -5162,7 +5191,7 @@ static void scx_error_irq_workfn(struct irq_work *irq_work)
- 	struct scx_exit_info *ei = sch->exit_info;
+@@ -7337,7 +7365,7 @@ __bpf_kfunc u32 scx_bpf_reenqueue_local(const struct bpf_prog_aux *aux)
+ 	rq = cpu_rq(smp_processor_id());
+ 	lockdep_assert_rq_held(rq);
  
- 	if (ei->kind >= SCX_EXIT_ERROR)
--		scx_dump_state(ei, sch->ops.exit_dump_len);
-+		scx_dump_state(sch, ei, sch->ops.exit_dump_len, true);
- 
- 	kthread_queue_work(sch->helper, &sch->disable_work);
+-	return reenq_local(rq);
++	return reenq_local(sch, rq);
  }
-@@ -6145,9 +6174,12 @@ static const struct sysrq_key_op sysrq_sched_ext_reset_op = {
- static void sysrq_handle_sched_ext_dump(u8 key)
+ 
+ __bpf_kfunc_end_defs();
+@@ -7908,20 +7936,39 @@ __bpf_kfunc void scx_bpf_dump_bstr(char *fmt, unsigned long long *data,
+ 
+ /**
+  * scx_bpf_reenqueue_local - Re-enqueue tasks on a local DSQ
++ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+  *
+  * Iterate over all of the tasks currently enqueued on the local DSQ of the
+  * caller's CPU, and re-enqueue them in the BPF scheduler. Can be called from
+  * anywhere.
+  */
+-__bpf_kfunc void scx_bpf_reenqueue_local___v2(void)
++__bpf_kfunc void scx_bpf_reenqueue_local___v2(const struct bpf_prog_aux *aux)
  {
- 	struct scx_exit_info ei = { .kind = SCX_EXIT_NONE, .reason = "SysRq-D" };
++	unsigned long flags;
 +	struct scx_sched *sch;
+ 	struct rq *rq;
++	struct llist_node *lnode;
  
--	if (scx_enabled())
--		scx_dump_state(&ei, 0);
-+	guard(raw_spinlock_irqsave)(&scx_sched_lock);
+-	guard(preempt)();
++	raw_local_irq_save(flags);
 +
-+	list_for_each_entry_rcu(sch, &scx_sched_all, all)
-+		scx_dump_state(sch, &ei, 0, false);
++	sch = scx_prog_sched(aux);
++	if (unlikely(!sch))
++		goto out_irq_restore;
++
++	/*
++	 * Allowing reenqueue-locals doesn't make sense while bypassing. This
++	 * also blocks from new reenqueues to be scheduled on dead scheds.
++	 */
++	if (unlikely(sch->bypass_depth))
++		goto out_irq_restore;
+ 
+ 	rq = this_rq();
+-	local_set(&rq->scx.reenq_local_deferred, 1);
++	lnode = &this_cpu_ptr(sch->pcpu)->deferred_reenq_locals_node;
++	if (!llist_on_list(lnode))
++		llist_add(lnode, &rq->scx.deferred_reenq_locals);
+ 	schedule_deferred(rq);
++out_irq_restore:
++	raw_local_irq_restore(flags);
  }
  
- static const struct sysrq_key_op sysrq_sched_ext_dump_op = {
+ /**
+@@ -8346,7 +8393,7 @@ BTF_ID_FLAGS(func, bpf_iter_scx_dsq_destroy, KF_ITER_DESTROY)
+ BTF_ID_FLAGS(func, scx_bpf_exit_bstr, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_error_bstr, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_dump_bstr, KF_IMPLICIT_ARGS)
+-BTF_ID_FLAGS(func, scx_bpf_reenqueue_local___v2)
++BTF_ID_FLAGS(func, scx_bpf_reenqueue_local___v2, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_cpuperf_set, KF_IMPLICIT_ARGS)
+diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+index cbe10672f6a4..688be11ab9eb 100644
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -965,6 +965,7 @@ struct scx_sched_pcpu {
+ 	 */
+ 	struct scx_event_stats	event_stats;
+ 
++	struct llist_node	deferred_reenq_locals_node;
+ 	struct scx_dispatch_q	bypass_dsq;
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	u32			bypass_host_seq;
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 07aaa09df7ed..f5bfe1029ee3 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -803,7 +803,7 @@ struct scx_rq {
+ 	cpumask_var_t		cpus_to_preempt;
+ 	cpumask_var_t		cpus_to_wait;
+ 	unsigned long		kick_sync;
+-	local_t			reenq_local_deferred;
++	struct llist_head	deferred_reenq_locals;
+ 	struct balance_callback	deferred_bal_cb;
+ 	struct irq_work		deferred_irq_work;
+ 	struct irq_work		kick_cpus_irq_work;
 -- 
 2.52.0
 
