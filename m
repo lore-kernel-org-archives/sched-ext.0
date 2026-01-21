@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8093D7D7F;
-	Wed, 21 Jan 2026 23:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC984534BE;
+	Wed, 21 Jan 2026 23:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769037114; cv=none; b=Tl7xcD/VHF8YL4JuknwcfrOxTo8Nk4HWJr6B3ZmAYDpjF8+cCNxuE7BJ7gSukeZ7r3tL0t8u6MQfXaz+TiXGRwc5J+E+gr+GN8jmQkUHFLz3RV5d8kN/c4YnMkOPWBE58FwAo/VWNMSMGQCJ4untEg7idvusuPCa/Gkq9EFhwAA=
+	t=1769037115; cv=none; b=cWH2xBXzRe0/1+AIG/y39u1L2R2uZ35vrwgMf6ZqexXsZ8WQzzs6hyJTblle1Qu0fZTUKnaD/lZHz02VjoKyBJLRdF1MuYWYy9MEALGRzesZXKKvlSzs7T6bpVfcbaPT884Akgifkuf0jzsaeAlVvK15dfEfBBlq90dWg5OF9+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769037114; c=relaxed/simple;
-	bh=fVGwUHm6yH7yJE+ApdLhQqOSbUzeq5Ly1ZfpZPul2Hc=;
+	s=arc-20240116; t=1769037115; c=relaxed/simple;
+	bh=Z3y19F6fI9KHCp1/Vo5Gdy7VEMVR9Cl/kby8qMzcq4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkzIkjEyhutXgdO2j7X+SNTL4qd+RjR/jRfoBIOMGY4N20QYgLFMt+zdGoDdzmjFbGYqYyhla86KEuGyKjKZAV/lGe3SvuooNmaf3b1x5f1AzJzGiEqA6HiB6oVtjmDYHzdgBH8+gqj+8Qs97zGv+OmBZXPtbqwKF88hrwOyPWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MDHl6VUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fa+k4nd3S1qQr+snN738fpqPm8KHbegYPnphiqX/L1CyE/CceGZ3R4R3xtCgREsYR+PTn94UPrwrqc+3GDsnIGMBQPr0UJXXUltwbHN21ZhIAWg3/Diuuu8RG/YX6s4DtlHkmTGsvF2oKdueFVNA67ZcyfbfcrCwTzBG9VpYjOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QqQNrtTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MDHl6VUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00740C4CEF1;
-	Wed, 21 Jan 2026 23:11:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QqQNrtTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A0DC4CEF1;
+	Wed, 21 Jan 2026 23:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769037113;
-	bh=fVGwUHm6yH7yJE+ApdLhQqOSbUzeq5Ly1ZfpZPul2Hc=;
+	s=k20201202; t=1769037115;
+	bh=Z3y19F6fI9KHCp1/Vo5Gdy7VEMVR9Cl/kby8qMzcq4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MDHl6VUlXY1p6q9pwPfuB9IpCej8QjZpVqIaSGmVAraXF1P6k+Xm3Q8hzpJIbX4/V
-	 czAGMXaGsJUwxEkgOj/i/hoT7fXrXhw+N/G0mpFCcbQ9Z9w40hC0ItkBJItkAVBDzX
-	 mjdGS5PuGAQzkxdPUzBfY6ukGudDSodVfJcogQsGDdfAub+gwo5AzPO/2zFPmBZI0d
-	 0DWFxjV7h0XbeXDBkeD0nmiIVBYxxKAzfAlOFrnmMMRaX2yfRrWT0FmRgT7hjViUxN
-	 tgpkmHGKSp/HxYPkyenl48dbVhU6uWUjdFtysjojjt8NQzRShKyee1fL7nXwustExs
-	 wo3hTAfX4pFyg==
+	b=QqQNrtTFHBMxbgH2VXis/Pp4euGOSJMlWxTSMBz5mjlaUjb83SNuBxkoSTxVDTDz/
+	 SCJ5phDoMsU9Pi+T7ZSsez+28JpB/vuNWERVPwYBXLsjIMhNF207anSn79RUV8GEIX
+	 U4M73PxseAgYnBZtZB2G7VZQkFxc2SdA8njhvDzXpKMJFVqBLnvilr/GX0GpT/aEVO
+	 DQMDtqHP/d/eYjbcXPieLbdu5HzxjPFg8B/mtUVQCTUxJGMa9gCblO1vUJFFuk/j8k
+	 l66TgFcdeLOfhN4UHxwh7VXjOdPBoizzoM9CV1+/ZkPY9kGnVlIzuPeZuF1FiT1HRz
+	 Z9p3HTLfOr4mg==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 11/34] sched_ext: Enforce scheduler ownership when updating slice and dsq_vtime
-Date: Wed, 21 Jan 2026 13:11:17 -1000
-Message-ID: <20260121231140.832332-12-tj@kernel.org>
+Subject: [PATCH 13/34] sched_ext: Refactor task init/exit helpers
+Date: Wed, 21 Jan 2026 13:11:19 -1000
+Message-ID: <20260121231140.832332-14-tj@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121231140.832332-1-tj@kernel.org>
 References: <20260121231140.832332-1-tj@kernel.org>
@@ -48,103 +48,224 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_task_set_slice() and scx_bpf_task_set_dsq_vtime() now verify that
-the calling scheduler has authority over the task before allowing updates.
-This prevents schedulers from modifying tasks that don't belong to them in
-hierarchical scheduling configurations.
+- Add the @sch parameter to scx_init_task() and drop @tg as it can be
+  obtained from @p. Separate out __scx_init_task() which does everything
+  except for the task state transition.
 
-Direct writes to p->scx.slice and p->scx.dsq_vtime are deprecated and now
-trigger warnings. They will be disallowed in a future release.
+- Add the @sch parameter to scx_enable_task(). Separate out
+  __scx_enable_task() which does everything except for the task state
+  transition.
+
+- Add the @sch parameter to scx_disable_task().
+
+- Rename scx_exit_task() to scx_disable_and_exit_task() and separate out
+  __scx_disable_and_exit_task() which does everything except for the task
+  state transition.
+
+While some task state transitions are relocated, no meaningful behavior
+changes are expected.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c | 41 ++++++++++++++++++++++++++++++++---------
- 1 file changed, 32 insertions(+), 9 deletions(-)
+ kernel/sched/ext.c | 67 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 45 insertions(+), 22 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index bdcb46f42625..aad3af8e8377 100644
+index 07cd130f62fb..a834da7701df 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -5684,12 +5684,17 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
+@@ -2987,9 +2987,9 @@ static void scx_set_task_state(struct task_struct *p, enum scx_task_state state)
+ 	p->scx.flags |= state << SCX_TASK_STATE_SHIFT;
+ }
  
- 	t = btf_type_by_id(reg->btf, reg->btf_id);
- 	if (t == task_struct_type) {
--		if (off >= offsetof(struct task_struct, scx.slice) &&
--		    off + size <= offsetofend(struct task_struct, scx.slice))
--			return SCALAR_VALUE;
--		if (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
--		    off + size <= offsetofend(struct task_struct, scx.dsq_vtime))
+-static int scx_init_task(struct task_struct *p, struct task_group *tg, bool fork)
++static int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
+ {
+-	struct scx_sched *sch = scx_root;
++	struct task_group *tg = task_group(p);
+ 	int ret;
+ 
+ 	p->scx.disallow = false;
+@@ -3008,8 +3008,6 @@ static int scx_init_task(struct task_struct *p, struct task_group *tg, bool fork
+ 		}
+ 	}
+ 
+-	scx_set_task_state(p, SCX_TASK_INIT);
+-
+ 	if (p->scx.disallow) {
+ 		if (unlikely(scx_parent(sch))) {
+ 			scx_error(sch, "non-root ops.init_task() set task->scx.disallow for %s[%d]",
+@@ -3039,13 +3037,27 @@ static int scx_init_task(struct task_struct *p, struct task_group *tg, bool fork
+ 		}
+ 	}
+ 
+-	p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
+ 	return 0;
+ }
+ 
+-static void scx_enable_task(struct task_struct *p)
++static int scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
++{
++	int ret;
++
++	ret = __scx_init_task(sch, p, fork);
++	if (!ret) {
 +		/*
-+		 * COMPAT: Will be removed in v6.23.
++		 * While @p's rq is not locked. @p is not visible to the rest of
++		 * SCX yet and it's safe to update the flags and state.
 +		 */
-+		if ((off >= offsetof(struct task_struct, scx.slice) &&
-+		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
-+		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
-+		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
-+			pr_warn("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()");
- 			return SCALAR_VALUE;
-+		}
++		p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
++		scx_set_task_state(p, SCX_TASK_INIT);
++	}
++	return ret;
++}
 +
- 		if (off >= offsetof(struct task_struct, scx.disallow) &&
- 		    off + size <= offsetofend(struct task_struct, scx.disallow))
- 			return SCALAR_VALUE;
-@@ -6908,12 +6913,21 @@ __bpf_kfunc_start_defs();
-  * scx_bpf_task_set_slice - Set task's time slice
-  * @p: task of interest
-  * @slice: time slice to set in nsecs
-+ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-  * Set @p's time slice to @slice. Returns %true on success, %false if the
-  * calling scheduler doesn't have authority over @p.
-  */
--__bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice)
-+__bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
-+					const struct bpf_prog_aux *aux)
++static void __scx_enable_task(struct scx_sched *sch, struct task_struct *p)
  {
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+	sch = scx_prog_sched(aux);
-+	if (unlikely(!scx_task_on_sched(sch, p)))
-+		return false;
-+
- 	p->scx.slice = slice;
- 	return true;
- }
-@@ -6922,12 +6936,21 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice)
-  * scx_bpf_task_set_dsq_vtime - Set task's virtual time for DSQ ordering
-  * @p: task of interest
-  * @vtime: virtual time to set
-+ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-  * Set @p's virtual time to @vtime. Returns %true on success, %false if the
-  * calling scheduler doesn't have authority over @p.
-  */
--__bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime)
-+__bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime,
-+					    const struct bpf_prog_aux *aux)
- {
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+	sch = scx_prog_sched(aux);
-+	if (unlikely(!scx_task_on_sched(sch, p)))
-+		return false;
-+
- 	p->scx.dsq_vtime = vtime;
- 	return true;
- }
-@@ -7807,8 +7830,8 @@ __bpf_kfunc void scx_bpf_events(struct scx_event_stats *events,
- __bpf_kfunc_end_defs();
+-	struct scx_sched *sch = scx_root;
+ 	struct rq *rq = task_rq(p);
+ 	u32 weight;
  
- BTF_KFUNCS_START(scx_kfunc_ids_any)
--BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_RCU);
--BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_RCU);
-+BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_IMPLICIT_ARGS | KF_RCU);
-+BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_IMPLICIT_ARGS | KF_RCU);
- BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_dsq_nr_queued)
- BTF_ID_FLAGS(func, scx_bpf_destroy_dsq)
+@@ -3064,16 +3076,20 @@ static void scx_enable_task(struct task_struct *p)
+ 
+ 	if (SCX_HAS_OP(sch, enable))
+ 		SCX_CALL_OP_TASK(sch, SCX_KF_REST, enable, rq, p);
+-	scx_set_task_state(p, SCX_TASK_ENABLED);
+ 
+ 	if (SCX_HAS_OP(sch, set_weight))
+ 		SCX_CALL_OP_TASK(sch, SCX_KF_REST, set_weight, rq,
+ 				 p, p->scx.weight);
+ }
+ 
+-static void scx_disable_task(struct task_struct *p)
++static void scx_enable_task(struct scx_sched *sch, struct task_struct *p)
++{
++	__scx_enable_task(sch, p);
++	scx_set_task_state(p, SCX_TASK_ENABLED);
++}
++
++static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
+ {
+-	struct scx_sched *sch = scx_root;
+ 	struct rq *rq = task_rq(p);
+ 
+ 	lockdep_assert_rq_held(rq);
+@@ -3084,9 +3100,9 @@ static void scx_disable_task(struct task_struct *p)
+ 	scx_set_task_state(p, SCX_TASK_READY);
+ }
+ 
+-static void scx_exit_task(struct task_struct *p)
++static void __scx_disable_and_exit_task(struct scx_sched *sch,
++					struct task_struct *p)
+ {
+-	struct scx_sched *sch = scx_task_sched(p);
+ 	struct scx_exit_task_args args = {
+ 		.cancelled = false,
+ 	};
+@@ -3103,7 +3119,7 @@ static void scx_exit_task(struct task_struct *p)
+ 	case SCX_TASK_READY:
+ 		break;
+ 	case SCX_TASK_ENABLED:
+-		scx_disable_task(p);
++		scx_disable_task(sch, p);
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(true);
+@@ -3113,6 +3129,13 @@ static void scx_exit_task(struct task_struct *p)
+ 	if (SCX_HAS_OP(sch, exit_task))
+ 		SCX_CALL_OP_TASK(sch, SCX_KF_REST, exit_task, task_rq(p),
+ 				 p, &args);
++}
++
++static void scx_disable_and_exit_task(struct scx_sched *sch,
++				      struct task_struct *p)
++{
++	__scx_disable_and_exit_task(sch, p);
++
+ 	scx_set_task_sched(p, NULL);
+ 	scx_set_task_state(p, SCX_TASK_NONE);
+ }
+@@ -3148,7 +3171,7 @@ int scx_fork(struct task_struct *p, struct kernel_clone_args *kargs)
+ 	percpu_rwsem_assert_held(&scx_fork_rwsem);
+ 
+ 	if (scx_init_task_enabled) {
+-		ret = scx_init_task(p, task_group(p), true);
++		ret = scx_init_task(scx_root, p, true);
+ 		if (!ret)
+ 			scx_set_task_sched(p, scx_root);
+ 		return ret;
+@@ -3172,7 +3195,7 @@ void scx_post_fork(struct task_struct *p)
+ 			struct rq *rq;
+ 
+ 			rq = task_rq_lock(p, &rf);
+-			scx_enable_task(p);
++			scx_enable_task(scx_task_sched(p), p);
+ 			task_rq_unlock(rq, p, &rf);
+ 		}
+ 	}
+@@ -3192,7 +3215,7 @@ void scx_cancel_fork(struct task_struct *p)
+ 
+ 		rq = task_rq_lock(p, &rf);
+ 		WARN_ON_ONCE(scx_get_task_state(p) >= SCX_TASK_READY);
+-		scx_exit_task(p);
++		scx_disable_and_exit_task(scx_task_sched(p), p);
+ 		task_rq_unlock(rq, p, &rf);
+ 	}
+ 
+@@ -3216,7 +3239,7 @@ void sched_ext_dead(struct task_struct *p)
+ 		struct rq *rq;
+ 
+ 		rq = task_rq_lock(p, &rf);
+-		scx_exit_task(p);
++		scx_disable_and_exit_task(scx_task_sched(p), p);
+ 		task_rq_unlock(rq, p, &rf);
+ 	}
+ }
+@@ -3242,7 +3265,7 @@ static void switching_to_scx(struct rq *rq, struct task_struct *p)
+ {
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 
+-	scx_enable_task(p);
++	scx_enable_task(sch, p);
+ 
+ 	/*
+ 	 * set_cpus_allowed_scx() is not called while @p is associated with a
+@@ -3255,7 +3278,7 @@ static void switching_to_scx(struct rq *rq, struct task_struct *p)
+ 
+ static void switched_from_scx(struct rq *rq, struct task_struct *p)
+ {
+-	scx_disable_task(p);
++	scx_disable_task(scx_task_sched(p), p);
+ }
+ 
+ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p,int wake_flags) {}
+@@ -4485,7 +4508,7 @@ static void scx_root_disable(struct scx_sched *sch)
+ 
+ 	/*
+ 	 * Shut down cgroup support before tasks so that the cgroup attach path
+-	 * doesn't race against scx_exit_task().
++	 * doesn't race against scx_disable_and_exit_task().
+ 	 */
+ 	scx_cgroup_lock();
+ 	scx_cgroup_exit(sch);
+@@ -4514,7 +4537,7 @@ static void scx_root_disable(struct scx_sched *sch)
+ 			p->sched_class = new_class;
+ 		}
+ 
+-		scx_exit_task(p);
++		scx_disable_and_exit_task(scx_task_sched(p), p);
+ 	}
+ 	scx_task_iter_stop(&sti);
+ 
+@@ -5379,7 +5402,7 @@ static s32 scx_root_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 
+ 		scx_task_iter_unlock(&sti);
+ 
+-		ret = scx_init_task(p, task_group(p), false);
++		ret = scx_init_task(sch, p, false);
+ 		if (ret) {
+ 			put_task_struct(p);
+ 			scx_task_iter_stop(&sti);
 -- 
 2.52.0
 
