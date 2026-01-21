@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8CA44E045;
-	Wed, 21 Jan 2026 23:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB7444E05D;
+	Wed, 21 Jan 2026 23:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769037115; cv=none; b=SiRWS/LETyBUVD7OqmnLUebB4FmjsHHMnr04AincSz+2hFGAWoW/UDZMluLuFrtknFXucqabVjiHkFAPrWhLibqHyuWr+X5dcs4ufPMxectMqx6bMc7e8GlgBBTUrI14j3KAbOH7xP6/5izUoEczdvHrTseRFh9nOo1/YWabQ4o=
+	t=1769037117; cv=none; b=ef4xJknE1HkRZM3EYTLq2xuCxTmgE6eSEnfdxZf8/WwrrQu4gYFIK5rayaADTDpWnyY9RPLpMWEA3IS4i4Tk03jmTuqXAN6yLv7HZM6aGtUt3xGhhCRHSsRIj1D+Jwg6E2cE0ilTQwrxDqvqM13xhcRu99pEb2D0qDb+vAXWNGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769037115; c=relaxed/simple;
-	bh=C/Y4hUHIvAXYWz1dKkRKihlgeUbRO1EcIFmjBPShaGA=;
+	s=arc-20240116; t=1769037117; c=relaxed/simple;
+	bh=poPiQiO7M618xaNw3h9q8b8vfZjHbw31N2l9fGglZr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RFT7Uvc9bAruczzY15hpq1hwHwri0uHjjiuSeULNcfHojNM7/qrBjcU/6aRtQQg6vOmE/PfW0D98IRdnpV0LxPfuJrIF689mwA1KtSGktcaKCyGaInWUXnRVFHIdvVAqmZCU5iA6igMHkQcp/v8oRUNzJJxqQAg/ZCcOSM5/b1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5DhL6J1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kpjz9ZKyL5byxna22Z66w5cpLHNc0xOyi7kQfSlaO/LMbD0o6u/u2M6YDAPPivaW+34wYg/vy+r4XNedAC1UPbiH0HB3Y246QNy6ygMSkOhHx6Wh7YncWPZRksHluzd1U7cKriR5KkeuSyb06EjHqeFxzBvPlpoZ3N0QzrXr9sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJbuvT04; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P5DhL6J1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B06EC19422;
-	Wed, 21 Jan 2026 23:11:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJbuvT04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261DCC4CEF1;
+	Wed, 21 Jan 2026 23:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769037114;
-	bh=C/Y4hUHIvAXYWz1dKkRKihlgeUbRO1EcIFmjBPShaGA=;
+	s=k20201202; t=1769037116;
+	bh=poPiQiO7M618xaNw3h9q8b8vfZjHbw31N2l9fGglZr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5DhL6J1Iv6nuKfsZkmiklb3vH1jVDlh0nw7YUpGSonk4/hHbuiqFGwvXvp6/ZIUc
-	 LW9cg+OqqbSORwR3df5qUMDT8lls7tvKOQI3TKEMd8WL4dn/R0BVLxV/D9/hRW4WI/
-	 pok298c8QewbyFKPmssB+94SIIdlxSHHF4tit+7kaaz3tk+L369Xy+NePdFykCLAT+
-	 CprMh+dKX87ZlIo1ju3SNL1iHBKgeZXvixSMTSveFIFE7sC0w0PUnuYGfyWSj+RyoF
-	 9VbWbJfk0mixrggvqzwop77gbaC2J1jsAtBP0shj0TCoLQXM3zNsGCNymjEsMEpJtV
-	 LdTqwosJnoq8A==
+	b=OJbuvT04mcWNLDtiDrsx7t4EE18hsFBuxaCA2O0eA8L41apLL2XxVImWxUCOSgg5V
+	 xlY/nssU4+dwQ6vRrW4N8jt275L+Dw4J0ucuLWqW8cMcEa8erZdFYEC/Im7jpaHElU
+	 0/fwSrNF0WhnOuSi9iMP3z0HzgtfFJf/C42SFLx+IYraSeBlYnfMozark3tpMT/Uw3
+	 GdmgSUwguNPOUz9J2fdCu6cYS0IYaI4GGOj4QnxTgKLyRjDspzWc9JhQaeuxbtb65x
+	 nCEPcl1zgTe5IV3OORLszbMbNWF0OB8jSJnp+uv9JJcHsdCL2g9aHZoW89jqTN/FmB
+	 4fZEAizKtlAqQ==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 12/34] sched_ext: scx_dsq_move() should validate the task belongs to the right scheduler
-Date: Wed, 21 Jan 2026 13:11:18 -1000
-Message-ID: <20260121231140.832332-13-tj@kernel.org>
+Subject: [PATCH 14/34] sched_ext: Make scx_prio_less() handle multiple schedulers
+Date: Wed, 21 Jan 2026 13:11:20 -1000
+Message-ID: <20260121231140.832332-15-tj@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121231140.832332-1-tj@kernel.org>
 References: <20260121231140.832332-1-tj@kernel.org>
@@ -48,42 +48,39 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_dsq_move[_vtime]() calls scx_dsq_move() to move task from a DSQ to
-another. However, @p doesn't necessarily have to come form the containing
-iteration and can thus be a task which belongs to another scx_sched. Verify
-that @p is on the same scx_sched as the DSQ being iterated.
+Call ops.core_sched_before() iff both tasks belong to the same scx_sched.
+Otherwise, use timestamp based ordering.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/sched/ext.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index aad3af8e8377..07cd130f62fb 100644
+index a834da7701df..ad4f8fbc0f24 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -6463,8 +6463,8 @@ static const struct btf_kfunc_id_set scx_kfunc_set_enqueue_dispatch = {
- static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 			 struct task_struct *p, u64 dsq_id, u64 enq_flags)
+@@ -2688,16 +2688,17 @@ static struct task_struct *pick_task_scx(struct rq *rq, struct rq_flags *rf)
+ bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
+ 		   bool in_fi)
  {
 -	struct scx_sched *sch = scx_root;
- 	struct scx_dispatch_q *src_dsq = kit->dsq, *dst_dsq;
-+	struct scx_sched *sch = src_dsq->sched;
- 	struct rq *this_rq, *src_rq, *locked_rq;
- 	bool dispatched = false;
- 	bool in_balance;
-@@ -6481,6 +6481,11 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 	if (unlikely(READ_ONCE(scx_aborting)))
- 		return false;
++	struct scx_sched *sch_a = scx_task_sched(a);
++	struct scx_sched *sch_b = scx_task_sched(b);
  
-+	if (unlikely(!scx_task_on_sched(sch, p))) {
-+		scx_error(sch, "scx_bpf_dsq_move[_vtime]() on %s[%d] but the task belongs to a different scheduler",
-+			  p->comm, p->pid);
-+	}
-+
  	/*
- 	 * Can be called from either ops.dispatch() locking this_rq() or any
- 	 * context where no rq lock is held. If latter, lock @p's task_rq which
+ 	 * The const qualifiers are dropped from task_struct pointers when
+ 	 * calling ops.core_sched_before(). Accesses are controlled by the
+ 	 * verifier.
+ 	 */
+-	if (SCX_HAS_OP(sch, core_sched_before) &&
++	if (sch_a == sch_b && SCX_HAS_OP(sch_a, core_sched_before) &&
+ 	    !scx_rq_bypassing(task_rq(a)))
+-		return SCX_CALL_OP_2TASKS_RET(sch, SCX_KF_REST, core_sched_before,
++		return SCX_CALL_OP_2TASKS_RET(sch_a, SCX_KF_REST, core_sched_before,
+ 					      NULL,
+ 					      (struct task_struct *)a,
+ 					      (struct task_struct *)b);
 -- 
 2.52.0
 
