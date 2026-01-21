@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A18F46AED1;
-	Wed, 21 Jan 2026 23:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797A946AF2A;
+	Wed, 21 Jan 2026 23:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769037128; cv=none; b=H/xfQYGw8SuyUzLHu1PAcP3KImbNKtDyoxC7XuUrLWuytWatLyn18GMiXCOvdTrrsd+lcKGFl+ACCS6bjQLv9vw2gpcKzAreB50IXxq5k519pDZOIMl7OTC9I+mIUv9NrK0vMGxieDHqkEShXO8HNDvJ410T4C/8DxK8yR2fVkY=
+	t=1769037129; cv=none; b=iu5UVk+NEao5t9gdPHJfmLk3H9kHBR05m7HNmK2HK1Mu7glODH6GoaoJuG/lQs/uUojaT8CEkKvHL8LwrHA8/C8Jh06IOvKx1dK7V6s5jxlpuqR4RzeJy5bfbB5jT7b6XQt3O2pfuPMGCDl5X+XyzRliBQX0nMIHH10kdU6gZeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769037128; c=relaxed/simple;
-	bh=qWBk+sC6DyOKcbdFYxV4ylWzcYKhsi0EiG9w+tsODFA=;
+	s=arc-20240116; t=1769037129; c=relaxed/simple;
+	bh=WOuB6IcYnRLoz+ilnYH6Yb/SxKfc/rbKIRE5H+zfW8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIrW78SyvJ/4LdT50vJOX0gxCZzvLSkGlHa3C9EeeVXUUhu4qJY5cTlqB8knBzzn7K7y6tUhDczgy5AcUzv9cQSyn7BZRaKMcB8M5pOrcO/byNpTMBGmszMoytf3xlxbKBpqwr+3lWurAY858f8tmnyyBrOEsH6F+xtbQWpXFl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mG/kg00/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JK+MygJfF8pXbG5YlIxuk0P5qKmRD4NBgyINGQ1f83PPpVbm4pJOLBgSRhyYSaIQAADBfzAy6yblO2sFOc9WIyREg5VLKQEMdWKpG7RQeoL8z+R/fi5pMTvp4fVd7BAEhsnU75yEhd820r4bV3jpk4ogmLD/YBEW9YyEFQinQoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=if0iSIL2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mG/kg00/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF62BC2BCB3;
-	Wed, 21 Jan 2026 23:12:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="if0iSIL2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9612C16AAE;
+	Wed, 21 Jan 2026 23:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769037127;
-	bh=qWBk+sC6DyOKcbdFYxV4ylWzcYKhsi0EiG9w+tsODFA=;
+	s=k20201202; t=1769037128;
+	bh=WOuB6IcYnRLoz+ilnYH6Yb/SxKfc/rbKIRE5H+zfW8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mG/kg00/5g8x9WzM2mW1XcfREqf3sWZH4QTjmBxCdXO0AnEFzK+S7tkHIVVoB85nU
-	 ehaFBpDRB+Y2B6xkpRN8abTaZU9gs9Y6Nt6hQFCM0mcXv5kYR5/Vle9FpaOob05O7l
-	 4rgF8z4SLoQJaxvfU20yHdR6Q/p+QP+iSBmRs5LLsqAwMVeZ8BrSMYduUArCbsMfKU
-	 Eq8XGPNTbHskFOuBqmMCnlZkLEkOlxfyfkEDR/8ZKm3jfWtrhqOUM97tURs+kN6DXF
-	 6+9i8TDzRdtUBts9c4483peyDlt5apL6GRKNml2ksx/cVoNIu94tNq5zQxlUAMhI57
-	 SHcK/fLzmTIgQ==
+	b=if0iSIL2ZbKCgi91wMvTbGMBbd1gO/xokgSXzO1WXNSJ/72ZVwLCVKH2s1xhr+UHF
+	 ksstyGw4idg6yVwEcaoNaRUlICMiHG2xubuor1aB8UVLv+gyWTzKvT5kp0TVu7RQ67
+	 csOlcnJNw1rF0e0WmAj6Y7scVKj1yt8UoY3ea8p+8T78jd7WS1e6kjXSWS2J3qotWH
+	 UUhDvZhiQrPL2s4lOLuGyrbINjSoH4Fm4FyZ+IRBf5mzCYPnXYeH+9CAApO+pMjEwe
+	 kWu31mx5fBELOskky9ShXUt8jpK1RwhtHqC1PYAVD0ov2Vgg4e/BCNXu4u+hjUFhdk
+	 56dn9OZssfEsg==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 25/34] sched_ext: Move scx_dsp_ctx and scx_dsp_max_batch into scx_sched
-Date: Wed, 21 Jan 2026 13:11:31 -1000
-Message-ID: <20260121231140.832332-26-tj@kernel.org>
+Subject: [PATCH 26/34] sched_ext: Make watchdog sub-sched aware
+Date: Wed, 21 Jan 2026 13:11:32 -1000
+Message-ID: <20260121231140.832332-27-tj@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121231140.832332-1-tj@kernel.org>
 References: <20260121231140.832332-1-tj@kernel.org>
@@ -48,214 +48,223 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_dsp_ctx and scx_dsp_max_batch are global variables used in the dispatch
-path. In prepration for multiple scheduler support, move the former into
-scx_sched_pcpu and the latter into scx_sched. No user-visible behavior
-changes intended.
+Currently, the watchdog checks all tasks as if they are all on scx_root.
+Move scx_watchdog_timeout inside scx_sched and make check_rq_for_timeouts()
+use the timeout from the scx_sched associated with each task.
+refresh_watchdog() is added, which determines the timer interval as half of
+the shortest watchdog timeouts of all scheds and arms or disarms it as
+necessary. Every scx_sched instance has equivalent or better detection
+latency while sharing the same timer.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c          | 55 ++++++++++---------------------------
- kernel/sched/ext_internal.h | 19 +++++++++++++
- 2 files changed, 34 insertions(+), 40 deletions(-)
+ kernel/sched/ext.c          | 74 ++++++++++++++++++++++++-------------
+ kernel/sched/ext_internal.h |  7 ++++
+ 2 files changed, 56 insertions(+), 25 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 69158c01f308..9c474a6dc2cc 100644
+index 9c474a6dc2cc..e34896a57780 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -106,25 +106,6 @@ static const struct rhashtable_params dsq_hash_params = {
+@@ -59,11 +59,10 @@ static atomic_long_t scx_hotplug_seq = ATOMIC_LONG_INIT(0);
+ static atomic_long_t scx_enable_seq = ATOMIC_LONG_INIT(0);
  
- static LLIST_HEAD(dsqs_to_free);
+ /*
+- * The maximum amount of time in jiffies that a task may be runnable without
+- * being scheduled on a CPU. If this timeout is exceeded, it will trigger
+- * scx_error().
++ * Watchdog interval. All scx_sched's share a single watchdog timer and the
++ * interval is half of the shortest sch->watchdog_timeout.
+  */
+-static unsigned long scx_watchdog_timeout;
++static unsigned long scx_watchdog_interval;
  
--/* dispatch buf */
--struct scx_dsp_buf_ent {
--	struct task_struct	*task;
--	unsigned long		qseq;
--	u64			dsq_id;
--	u64			enq_flags;
--};
--
--static u32 scx_dsp_max_batch;
--
--struct scx_dsp_ctx {
--	struct rq		*rq;
--	u32			cursor;
--	u32			nr_tasks;
--	struct scx_dsp_buf_ent	buf[];
--};
--
--static struct scx_dsp_ctx __percpu *scx_dsp_ctx;
--
- /* string formatting from BPF */
- struct scx_bstr_buf {
- 	u64			data[MAX_BPRINTF_VARARGS];
-@@ -2308,7 +2289,7 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
+ /*
+  * The last time the delayed work was run. This delayed work relies on
+@@ -2912,10 +2911,11 @@ static bool check_rq_for_timeouts(struct rq *rq)
+ 		goto out_unlock;
  
- static void flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
+ 	list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node) {
++		struct scx_sched *sch = scx_task_sched(p);
+ 		unsigned long last_runnable = p->scx.runnable_at;
+ 
+ 		if (unlikely(time_after(jiffies,
+-					last_runnable + scx_watchdog_timeout))) {
++					last_runnable + sch->watchdog_timeout))) {
+ 			u32 dur_ms = jiffies_to_msecs(jiffies - last_runnable);
+ 
+ 			scx_exit(sch, SCX_EXIT_ERROR_STALL, 0,
+@@ -2932,6 +2932,7 @@ static bool check_rq_for_timeouts(struct rq *rq)
+ 
+ static void scx_watchdog_workfn(struct work_struct *work)
  {
--	struct scx_dsp_ctx *dspc = this_cpu_ptr(scx_dsp_ctx);
-+	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 	u32 u;
++	unsigned long intv;
+ 	int cpu;
  
- 	for (u = 0; u < dspc->cursor; u++) {
-@@ -2338,7 +2319,7 @@ static inline void maybe_queue_balance_callback(struct rq *rq)
- static bool scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 			       struct task_struct *prev)
- {
--	struct scx_dsp_ctx *dspc = this_cpu_ptr(scx_dsp_ctx);
-+	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 	int nr_loops = SCX_DSP_MAX_LOOPS;
- 	s32 cpu = cpu_of(rq);
- 	bool prev_on_sch = (prev->sched_class == &ext_sched_class) &&
-@@ -4776,9 +4757,6 @@ static void scx_root_disable(struct scx_sched *sch)
- 	 */
- 	kobject_del(&sch->kobj);
+ 	WRITE_ONCE(scx_watchdog_timestamp, jiffies);
+@@ -2942,28 +2943,31 @@ static void scx_watchdog_workfn(struct work_struct *work)
  
--	free_percpu(scx_dsp_ctx);
--	scx_dsp_ctx = NULL;
--	scx_dsp_max_batch = 0;
- 	free_kick_syncs();
- 
- 	mutex_unlock(&scx_enable_mutex);
-@@ -5262,7 +5240,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 		sch->global_dsqs[node] = dsq;
+ 		cond_resched();
  	}
+-	queue_delayed_work(system_unbound_wq, to_delayed_work(work),
+-			   scx_watchdog_timeout / 2);
++
++	intv = READ_ONCE(scx_watchdog_interval);
++	if (intv < ULONG_MAX)
++		queue_delayed_work(system_unbound_wq, to_delayed_work(work),
++				   intv);
+ }
  
--	sch->pcpu = alloc_percpu(struct scx_sched_pcpu);
-+	sch->dsp_max_batch = ops->dispatch_max_batch ?: SCX_DSP_DFL_MAX_BATCH;
-+	sch->pcpu = __alloc_percpu(struct_size_t(struct scx_sched_pcpu,
-+						 dsp_ctx.buf, sch->dsp_max_batch),
-+				   __alignof__(struct scx_sched_pcpu));
- 	if (!sch->pcpu) {
- 		ret = -ENOMEM;
- 		goto err_free_gdsqs;
-@@ -5500,16 +5481,6 @@ static s32 scx_root_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ void scx_tick(struct rq *rq)
+ {
+-	struct scx_sched *sch;
++	struct scx_sched *root;
+ 	unsigned long last_check;
+ 
+ 	if (!scx_enabled())
+ 		return;
+ 
+-	sch = rcu_dereference_bh(scx_root);
+-	if (unlikely(!sch))
++	root = rcu_dereference_bh(scx_root);
++	if (unlikely(!root))
+ 		return;
+ 
+ 	last_check = READ_ONCE(scx_watchdog_timestamp);
+ 	if (unlikely(time_after(jiffies,
+-				last_check + READ_ONCE(scx_watchdog_timeout)))) {
++				last_check + READ_ONCE(root->watchdog_timeout)))) {
+ 		u32 dur_ms = jiffies_to_msecs(jiffies - last_check);
+ 
+-		scx_exit(sch, SCX_EXIT_ERROR_STALL, 0,
++		scx_exit(root, SCX_EXIT_ERROR_STALL, 0,
+ 			 "watchdog failed to check in for %u.%03us",
+ 			 dur_ms / 1000, dur_ms % 1000);
+ 	}
+@@ -4564,6 +4568,26 @@ static void free_kick_syncs(void)
+ 	}
+ }
+ 
++static void refresh_watchdog(void)
++{
++	struct scx_sched *sch;
++	unsigned long intv = ULONG_MAX;
++
++	/* take the shortest timeout and use its half for watchdog interval */
++	rcu_read_lock();
++	list_for_each_entry_rcu(sch, &scx_sched_all, all)
++		intv = max(min(intv, sch->watchdog_timeout / 2), 1);
++	rcu_read_unlock();
++
++	WRITE_ONCE(scx_watchdog_timestamp, jiffies);
++	WRITE_ONCE(scx_watchdog_interval, intv);
++
++	if (intv < ULONG_MAX)
++		mod_delayed_work(system_unbound_wq, &scx_watchdog_work, intv);
++	else
++		cancel_delayed_work_sync(&scx_watchdog_work);
++}
++
+ #ifdef CONFIG_EXT_SUB_SCHED
+ static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
+ 
+@@ -4602,6 +4626,8 @@ static void scx_sub_disable(struct scx_sched *sch)
+ 	list_del_rcu(&sch->all);
+ 	raw_spin_unlock_irq(&scx_sched_lock);
+ 
++	refresh_watchdog();
++
+ 	mutex_unlock(&scx_enable_mutex);
+ 
+ 	/*
+@@ -4736,12 +4762,12 @@ static void scx_root_disable(struct scx_sched *sch)
+ 	if (sch->ops.exit)
+ 		SCX_CALL_OP(sch, SCX_KF_UNLOCKED, exit, NULL, ei);
+ 
+-	cancel_delayed_work_sync(&scx_watchdog_work);
+-
+ 	raw_spin_lock_irq(&scx_sched_lock);
+ 	list_del_rcu(&sch->all);
+ 	raw_spin_unlock_irq(&scx_sched_lock);
+ 
++	refresh_watchdog();
++
+ 	/*
+ 	 * scx_root clearing must be inside cpus_read_lock(). See
+ 	 * handle_hotplug().
+@@ -5266,6 +5292,11 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 	sch->ancestors[level] = sch;
+ 	sch->level = level;
+ 
++	if (ops->timeout_ms)
++		sch->watchdog_timeout = msecs_to_jiffies(ops->timeout_ms);
++	else
++		sch->watchdog_timeout = SCX_WATCHDOG_MAX_TIMEOUT;
++
+ 	sch->slice_dfl = SCX_SLICE_DFL;
+ 	atomic_set(&sch->exit_kind, SCX_EXIT_NONE);
+ 	init_irq_work(&sch->error_irq_work, scx_error_irq_workfn);
+@@ -5393,7 +5424,6 @@ static s32 scx_root_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 	struct scx_sched *sch;
+ 	struct scx_task_iter sti;
+ 	struct task_struct *p;
+-	unsigned long timeout;
+ 	s32 i, cpu, ret;
+ 
+ 	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
+@@ -5451,6 +5481,8 @@ static s32 scx_root_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 	list_add_tail_rcu(&sch->all, &scx_sched_all);
+ 	raw_spin_unlock_irq(&scx_sched_lock);
+ 
++	refresh_watchdog();
++
+ 	scx_idle_enable(ops);
+ 
+ 	if (sch->ops.init) {
+@@ -5481,16 +5513,6 @@ static s32 scx_root_enable(struct sched_ext_ops *ops, struct bpf_link *link)
  	if (ret)
  		goto err_disable;
  
--	WARN_ON_ONCE(scx_dsp_ctx);
--	scx_dsp_max_batch = ops->dispatch_max_batch ?: SCX_DSP_DFL_MAX_BATCH;
--	scx_dsp_ctx = __alloc_percpu(struct_size_t(struct scx_dsp_ctx, buf,
--						   scx_dsp_max_batch),
--				     __alignof__(struct scx_dsp_ctx));
--	if (!scx_dsp_ctx) {
--		ret = -ENOMEM;
--		goto err_disable;
--	}
+-	if (ops->timeout_ms)
+-		timeout = msecs_to_jiffies(ops->timeout_ms);
+-	else
+-		timeout = SCX_WATCHDOG_MAX_TIMEOUT;
 -
- 	if (ops->timeout_ms)
- 		timeout = msecs_to_jiffies(ops->timeout_ms);
- 	else
-@@ -6448,7 +6419,7 @@ static bool scx_dsq_insert_preamble(struct scx_sched *sch, struct task_struct *p
- static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
- 				  u64 dsq_id, u64 enq_flags)
- {
--	struct scx_dsp_ctx *dspc = this_cpu_ptr(scx_dsp_ctx);
-+	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 	struct task_struct *ddsp_task;
+-	WRITE_ONCE(scx_watchdog_timeout, timeout);
+-	WRITE_ONCE(scx_watchdog_timestamp, jiffies);
+-	queue_delayed_work(system_unbound_wq, &scx_watchdog_work,
+-			   scx_watchdog_timeout / 2);
+-
+ 	/*
+ 	 * Once __scx_enabled is set, %current can be switched to SCX anytime.
+ 	 * This can lead to stalls as some BPF schedulers (e.g. userspace
+@@ -5708,6 +5730,8 @@ static s32 scx_sub_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 	list_add_tail_rcu(&sch->all, &scx_sched_all);
+ 	raw_spin_unlock_irq(&scx_sched_lock);
  
- 	ddsp_task = __this_cpu_read(direct_dispatch_task);
-@@ -6457,7 +6428,7 @@ static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
- 		return;
- 	}
- 
--	if (unlikely(dspc->cursor >= scx_dsp_max_batch)) {
-+	if (unlikely(dspc->cursor >= sch->dsp_max_batch)) {
- 		scx_error(sch, "dispatch buffer overflow");
- 		return;
- 	}
-@@ -6775,7 +6746,7 @@ __bpf_kfunc u32 scx_bpf_dispatch_nr_slots(const struct bpf_prog_aux *aux)
- 	if (!scx_kf_allowed(sch, SCX_KF_DISPATCH))
- 		return 0;
- 
--	return scx_dsp_max_batch - __this_cpu_read(scx_dsp_ctx->cursor);
-+	return sch->dsp_max_batch - __this_cpu_read(sch->pcpu->dsp_ctx.cursor);
- }
- 
- /**
-@@ -6787,8 +6758,8 @@ __bpf_kfunc u32 scx_bpf_dispatch_nr_slots(const struct bpf_prog_aux *aux)
-  */
- __bpf_kfunc void scx_bpf_dispatch_cancel(const struct bpf_prog_aux *aux)
- {
--	struct scx_dsp_ctx *dspc = this_cpu_ptr(scx_dsp_ctx);
- 	struct scx_sched *sch;
-+	struct scx_dsp_ctx *dspc;
- 
- 	guard(rcu)();
- 
-@@ -6799,6 +6770,8 @@ __bpf_kfunc void scx_bpf_dispatch_cancel(const struct bpf_prog_aux *aux)
- 	if (!scx_kf_allowed(sch, SCX_KF_DISPATCH))
- 		return;
- 
-+	dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
++	refresh_watchdog();
 +
- 	if (dspc->cursor > 0)
- 		dspc->cursor--;
- 	else
-@@ -6822,9 +6795,9 @@ __bpf_kfunc void scx_bpf_dispatch_cancel(const struct bpf_prog_aux *aux)
-  */
- __bpf_kfunc bool scx_bpf_dsq_move_to_local(u64 dsq_id, const struct bpf_prog_aux *aux)
- {
--	struct scx_dsp_ctx *dspc = this_cpu_ptr(scx_dsp_ctx);
- 	struct scx_dispatch_q *dsq;
- 	struct scx_sched *sch;
-+	struct scx_dsp_ctx *dspc;
- 
- 	guard(rcu)();
- 
-@@ -6835,6 +6808,8 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local(u64 dsq_id, const struct bpf_prog_aux
- 	if (!scx_kf_allowed(sch, SCX_KF_DISPATCH))
- 		return false;
- 
-+	dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
-+
- 	flush_dispatch_buf(sch, dspc->rq);
- 
- 	dsq = find_user_dsq(sch, dsq_id);
+ 	if (sch->level >= SCX_SUB_MAX_DEPTH) {
+ 		scx_error(sch, "max nesting depth %d violated",
+ 			  SCX_SUB_MAX_DEPTH);
 diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index db2065ec94ee..93ab6e0b0f74 100644
+index 93ab6e0b0f74..6ad1c00a72ba 100644
 --- a/kernel/sched/ext_internal.h
 +++ b/kernel/sched/ext_internal.h
-@@ -937,6 +937,21 @@ enum scx_sched_pcpu_flags {
- 	SCX_SCHED_PCPU_BYPASSING	= 1LLU << 0,
- };
+@@ -1019,6 +1019,13 @@ struct scx_sched {
+ 	bool			sub_attached;
+ #endif	/* CONFIG_EXT_SUB_SCHED */
  
-+/* dispatch buf */
-+struct scx_dsp_buf_ent {
-+	struct task_struct	*task;
-+	unsigned long		qseq;
-+	u64			dsq_id;
-+	u64			enq_flags;
-+};
++	/*
++	 * The maximum amount of time in jiffies that a task may be runnable
++	 * without being scheduled on a CPU. If this timeout is exceeded, it
++	 * will trigger scx_error().
++	 */
++	unsigned long		watchdog_timeout;
 +
-+struct scx_dsp_ctx {
-+	struct rq		*rq;
-+	u32			cursor;
-+	u32			nr_tasks;
-+	struct scx_dsp_buf_ent	buf[];
-+};
-+
- struct scx_sched_pcpu {
- 	u64			flags;	/* protected by rq lock */
+ 	atomic_t		exit_kind;
+ 	struct scx_exit_info	*exit_info;
  
-@@ -951,6 +966,9 @@ struct scx_sched_pcpu {
- #ifdef CONFIG_EXT_SUB_SCHED
- 	u32			bypass_host_seq;
- #endif
-+
-+	/* must be the last entry - contains flex array */
-+	struct scx_dsp_ctx	dsp_ctx;
- };
- 
- struct scx_sched {
-@@ -978,6 +996,7 @@ struct scx_sched {
- 	atomic_t		bypass_dsp_enable_depth;
- 
- 	bool			aborting;
-+	u32			dsp_max_batch;
- 	s32			level;
- 
- 	/*
 -- 
 2.52.0
 
