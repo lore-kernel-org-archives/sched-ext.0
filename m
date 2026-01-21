@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B8E36828B;
-	Wed, 21 Jan 2026 23:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2133044D6BB;
+	Wed, 21 Jan 2026 23:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769037107; cv=none; b=iUQqfIe5fagoi3sqZYzUOvMtOm97ccMwm5DdkKg3i3UFAsvkPk4XoKGK8DqI/TVgKu7aKP82UPSqanNbGSrMuRTXY/PVSUYYMWrG38F8iuja0dJRLdx56BuKkBOW59SS9PB2Dir1Zaevml+/Fzop7IsSu3Jc/gITAneCo9B5CaY=
+	t=1769037108; cv=none; b=XATjRIKggnjeX27FRKmZrM+zbCFPfUTfcD8LvehVLS1I8k17vHLynBjs9nMU8UXS/Um02nlxZU+uXuoAP/rmpVXwNmtiFG4n5+JNsMFVlWv+vNaLRbAt4IT7JYCFYSHvrSYGieucvmhknvxFpM95hufMAc0YMub3+4lJ0dg11w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769037107; c=relaxed/simple;
-	bh=lLujUcF6TxK30RolRlyM3VjjaHYE2iO+sf5t5wp/vhI=;
+	s=arc-20240116; t=1769037108; c=relaxed/simple;
+	bh=HjQgIdDIxyx1uPdwvSa6MUZW1bh+8Du8uQaqUmH7Zm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iz4LUPnCtLSow8ThLOKVjLfLzrYIJlHuBGXiMVoBbg0kEEdrqX5kwZyM4uGNo5yGDTcWecjLGuMNNKfs44oH15DX/UthymNCJnns5ATTfoLF4fIjCl2OMG9X5fd8PRS0FTib8wUl18tEo0HuHsXR3PCUpKPhErPnl1straim05g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j3NXjkvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oTasdUTyuB02XprvmOrG4gD3oqhu7Rulc4lAaUb0CTt6dZBUTRs0O5l79v5jVhFG3tsWXQsbgWiAyl1uPOjMAm/Mm3VKmzFZaYeirakJkkmgkrqgV9gQ712O+/XJ2ZbqxlIzchwJpbvrOBSqo2kIT5P+Yliu2oPuPru0o2dXcww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qzy3aGHQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j3NXjkvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C51C19422;
-	Wed, 21 Jan 2026 23:11:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qzy3aGHQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EF1C4CEF1;
+	Wed, 21 Jan 2026 23:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769037105;
-	bh=lLujUcF6TxK30RolRlyM3VjjaHYE2iO+sf5t5wp/vhI=;
+	s=k20201202; t=1769037106;
+	bh=HjQgIdDIxyx1uPdwvSa6MUZW1bh+8Du8uQaqUmH7Zm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3NXjkvS+Fz8aHAso43Lm/7sHJU/D8y3ZGv9Wetz7+FzIaHl15RE2HorprzdGBlNj
-	 InYOmWr2yIUl9RZGsA/RaZ2k12qufKy++Uf8q9uICdRLhXeMlxglFJID/6cKT/SujQ
-	 ERNj/4KJjt7jHPNaeOJ0aycv3rJirFKrm3HNxZdS6o7AfSo/XFZC+lyqM9K03Y09GP
-	 ltHj6mz3W9uLesbPIx3C8JxjJeexkoerMggYirQtvg2Q4Zo7xTnk7MejfbgoyyzqML
-	 +JsYl5JjMAWwGztbt7nTYIBOfTXtvyGBL3dginKcEOxZ1r2XeaxuP6eIIiXqFCWLfU
-	 mIuuByox8eU7g==
+	b=qzy3aGHQctCFsaL0JS5sxo71V06neIDQWIJ1x9FXOla3OajOithRfV6jXSOvsn/Jx
+	 qje6NzrjHMwrZMMk5flxUpNIpAUQ89g2q3Ytil+PK7XNwj2IcBZPucPTNN2k+7k1QB
+	 wrDeF9lzjWt30u3oDBmPYTJvkibv7rWtBybi8o7wOJRNi19qGMhn5A9A0J2PXKzoDn
+	 3vKog2Rs6dDCFG+HQMtBECM5NlrDWgDwz0r2q/w0mCZhYqWQOJ8PeGMPPNTXYeyP6w
+	 zVwJOJMpCuowS5USi1L5/VqhRaYM7eWsmBx9Mq/hWrKwZ3LjbqAitZjOd7Urq3Zrou
+	 QS8RPENZy3MhA==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 04/34] cgroup: Expose some cgroup helpers
-Date: Wed, 21 Jan 2026 13:11:10 -1000
-Message-ID: <20260121231140.832332-5-tj@kernel.org>
+Subject: [PATCH 05/34] sched_ext: Update p->scx.disallow warning in scx_init_task()
+Date: Wed, 21 Jan 2026 13:11:11 -1000
+Message-ID: <20260121231140.832332-6-tj@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121231140.832332-1-tj@kernel.org>
 References: <20260121231140.832332-1-tj@kernel.org>
@@ -48,248 +48,42 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Expose the following through cgroup.h:
+- Always trigger the warning if p->scx.disallow is set for fork inits. There
+  is no reason to set it during forks.
 
-- cgroup_on_dfl()
-- cgroup_is_dead()
-- cgroup_for_each_live_child()
-- cgroup_for_each_live_descendant_pre()
-- cgroup_for_each_live_descendant_post()
-
-Until now, these didn't need to be exposed because controllers only cared
-about the css hierarchy. The planned sched_ext hierarchical scheduler
-support will be based on the default cgroup hierarchy, which is in line
-with the existing BPF cgroup support, and thus needs these exposed.
+- Flip the positions of if/else arms to ease adding error conditions.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/cgroup.h          | 65 ++++++++++++++++++++++++++++++++-
- kernel/cgroup/cgroup-internal.h |  6 ---
- kernel/cgroup/cgroup.c          | 55 ----------------------------
- 3 files changed, 63 insertions(+), 63 deletions(-)
+ kernel/sched/ext.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-index bc892e3b37ee..e52160e85af4 100644
---- a/include/linux/cgroup.h
-+++ b/include/linux/cgroup.h
-@@ -42,6 +42,14 @@ struct kernel_clone_args;
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 213f421b00e5..e61af4b0961c 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -2908,7 +2908,10 @@ static int scx_init_task(struct task_struct *p, struct task_group *tg, bool fork
+ 	scx_set_task_state(p, SCX_TASK_INIT);
  
- #ifdef CONFIG_CGROUPS
+ 	if (p->scx.disallow) {
+-		if (!fork) {
++		if (unlikely(fork)) {
++			scx_error(sch, "ops.init_task() set task->scx.disallow for %s[%d] during fork",
++				  p->comm, p->pid);
++		} else {
+ 			struct rq *rq;
+ 			struct rq_flags rf;
  
-+/*
-+ * To avoid confusing the compiler (and generating warnings) with code
-+ * that attempts to access what would be a 0-element array (i.e. sized
-+ * to a potentially empty array when CGROUP_SUBSYS_COUNT == 0), this
-+ * constant expression can be added.
-+ */
-+#define CGROUP_HAS_SUBSYS_CONFIG	(CGROUP_SUBSYS_COUNT > 0)
-+
- enum css_task_iter_flags {
- 	CSS_TASK_ITER_PROCS    = (1U << 0),  /* walk only threadgroup leaders */
- 	CSS_TASK_ITER_THREADED = (1U << 1),  /* walk all threaded css_sets in the domain */
-@@ -76,6 +84,7 @@ enum cgroup_lifetime_events {
- extern struct file_system_type cgroup_fs_type;
- extern struct cgroup_root cgrp_dfl_root;
- extern struct css_set init_css_set;
-+extern struct mutex cgroup_mutex;
- extern spinlock_t css_set_lock;
- extern struct blocking_notifier_head cgroup_lifetime_notifier;
+@@ -2927,9 +2930,6 @@ static int scx_init_task(struct task_struct *p, struct task_group *tg, bool fork
+ 			}
  
-@@ -103,6 +112,8 @@ extern struct blocking_notifier_head cgroup_lifetime_notifier;
- #define cgroup_subsys_on_dfl(ss)						\
- 	static_branch_likely(&ss ## _on_dfl_key)
+ 			task_rq_unlock(rq, p, &rf);
+-		} else if (p->policy == SCHED_EXT) {
+-			scx_error(sch, "ops.init_task() set task->scx.disallow for %s[%d] during fork",
+-				  p->comm, p->pid);
+ 		}
+ 	}
  
-+bool cgroup_on_dfl(const struct cgroup *cgrp);
-+
- bool css_has_online_children(struct cgroup_subsys_state *css);
- struct cgroup_subsys_state *css_from_id(int id, struct cgroup_subsys *ss);
- struct cgroup_subsys_state *cgroup_e_css(struct cgroup *cgroup,
-@@ -274,6 +285,32 @@ void css_task_iter_end(struct css_task_iter *it);
- 	for ((pos) = css_next_descendant_post(NULL, (css)); (pos);	\
- 	     (pos) = css_next_descendant_post((pos), (css)))
- 
-+/* iterate over child cgrps, lock should be held throughout iteration */
-+#define cgroup_for_each_live_child(child, cgrp)				\
-+	list_for_each_entry((child), &(cgrp)->self.children, self.sibling) \
-+		if (({ lockdep_assert_held(&cgroup_mutex);		\
-+		       cgroup_is_dead(child); }))			\
-+			;						\
-+		else
-+
-+/* walk live descendants in pre order */
-+#define cgroup_for_each_live_descendant_pre(dsct, d_css, cgrp)		\
-+	css_for_each_descendant_pre((d_css), cgroup_css((cgrp), NULL))	\
-+		if (({ lockdep_assert_held(&cgroup_mutex);		\
-+		       (dsct) = (d_css)->cgroup;			\
-+		       cgroup_is_dead(dsct); }))			\
-+			;						\
-+		else
-+
-+/* walk live descendants in postorder */
-+#define cgroup_for_each_live_descendant_post(dsct, d_css, cgrp)		\
-+	css_for_each_descendant_post((d_css), cgroup_css((cgrp), NULL))	\
-+		if (({ lockdep_assert_held(&cgroup_mutex);		\
-+		       (dsct) = (d_css)->cgroup;			\
-+		       cgroup_is_dead(dsct); }))			\
-+			;						\
-+		else
-+
- /**
-  * cgroup_taskset_for_each - iterate cgroup_taskset
-  * @task: the loop cursor
-@@ -336,6 +373,27 @@ static inline u64 cgroup_id(const struct cgroup *cgrp)
- 	return cgrp->kn->id;
- }
- 
-+/**
-+ * cgroup_css - obtain a cgroup's css for the specified subsystem
-+ * @cgrp: the cgroup of interest
-+ * @ss: the subsystem of interest (%NULL returns @cgrp->self)
-+ *
-+ * Return @cgrp's css (cgroup_subsys_state) associated with @ss.  This
-+ * function must be called either under cgroup_mutex or rcu_read_lock() and
-+ * the caller is responsible for pinning the returned css if it wants to
-+ * keep accessing it outside the said locks.  This function may return
-+ * %NULL if @cgrp doesn't have @subsys_id enabled.
-+ */
-+static inline struct cgroup_subsys_state *cgroup_css(struct cgroup *cgrp,
-+						     struct cgroup_subsys *ss)
-+{
-+	if (CGROUP_HAS_SUBSYS_CONFIG && ss)
-+		return rcu_dereference_check(cgrp->subsys[ss->id],
-+					lockdep_is_held(&cgroup_mutex));
-+	else
-+		return &cgrp->self;
-+}
-+
- /**
-  * css_is_dying - test whether the specified css is dying
-  * @css: target css
-@@ -372,6 +430,11 @@ static inline bool css_is_self(struct cgroup_subsys_state *css)
- 	return false;
- }
- 
-+static inline bool cgroup_is_dead(const struct cgroup *cgrp)
-+{
-+	return !(cgrp->self.flags & CSS_ONLINE);
-+}
-+
- static inline void cgroup_get(struct cgroup *cgrp)
- {
- 	css_get(&cgrp->self);
-@@ -387,8 +450,6 @@ static inline void cgroup_put(struct cgroup *cgrp)
- 	css_put(&cgrp->self);
- }
- 
--extern struct mutex cgroup_mutex;
--
- static inline void cgroup_lock(void)
- {
- 	mutex_lock(&cgroup_mutex);
-diff --git a/kernel/cgroup/cgroup-internal.h b/kernel/cgroup/cgroup-internal.h
-index 22051b4f1ccb..e4a872e2e08c 100644
---- a/kernel/cgroup/cgroup-internal.h
-+++ b/kernel/cgroup/cgroup-internal.h
-@@ -184,11 +184,6 @@ extern bool cgrp_dfl_visible;
- 	for ((ssid) = 0; (ssid) < CGROUP_SUBSYS_COUNT &&		\
- 	     (((ss) = cgroup_subsys[ssid]) || true); (ssid)++)
- 
--static inline bool cgroup_is_dead(const struct cgroup *cgrp)
--{
--	return !(cgrp->self.flags & CSS_ONLINE);
--}
--
- static inline bool notify_on_release(const struct cgroup *cgrp)
- {
- 	return test_bit(CGRP_NOTIFY_ON_RELEASE, &cgrp->flags);
-@@ -222,7 +217,6 @@ static inline void get_css_set(struct css_set *cset)
- }
- 
- bool cgroup_ssid_enabled(int ssid);
--bool cgroup_on_dfl(const struct cgroup *cgrp);
- 
- struct cgroup_root *cgroup_root_from_kf(struct kernfs_root *kf_root);
- struct cgroup *task_cgroup_from_root(struct task_struct *task,
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 554a02ee298b..6759c6ee0dc6 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -71,14 +71,6 @@
- /* let's not notify more than 100 times per second */
- #define CGROUP_FILE_NOTIFY_MIN_INTV	DIV_ROUND_UP(HZ, 100)
- 
--/*
-- * To avoid confusing the compiler (and generating warnings) with code
-- * that attempts to access what would be a 0-element array (i.e. sized
-- * to a potentially empty array when CGROUP_SUBSYS_COUNT == 0), this
-- * constant expression can be added.
-- */
--#define CGROUP_HAS_SUBSYS_CONFIG	(CGROUP_SUBSYS_COUNT > 0)
--
- /*
-  * cgroup_mutex is the master lock.  Any modification to cgroup or its
-  * hierarchy must be performed while holding it.
-@@ -512,27 +504,6 @@ static u16 cgroup_ss_mask(struct cgroup *cgrp)
- 	return cgrp->root->subsys_mask;
- }
- 
--/**
-- * cgroup_css - obtain a cgroup's css for the specified subsystem
-- * @cgrp: the cgroup of interest
-- * @ss: the subsystem of interest (%NULL returns @cgrp->self)
-- *
-- * Return @cgrp's css (cgroup_subsys_state) associated with @ss.  This
-- * function must be called either under cgroup_mutex or rcu_read_lock() and
-- * the caller is responsible for pinning the returned css if it wants to
-- * keep accessing it outside the said locks.  This function may return
-- * %NULL if @cgrp doesn't have @subsys_id enabled.
-- */
--static struct cgroup_subsys_state *cgroup_css(struct cgroup *cgrp,
--					      struct cgroup_subsys *ss)
--{
--	if (CGROUP_HAS_SUBSYS_CONFIG && ss)
--		return rcu_dereference_check(cgrp->subsys[ss->id],
--					lockdep_is_held(&cgroup_mutex));
--	else
--		return &cgrp->self;
--}
--
- /**
-  * cgroup_e_css_by_mask - obtain a cgroup's effective css for the specified ss
-  * @cgrp: the cgroup of interest
-@@ -744,32 +715,6 @@ EXPORT_SYMBOL_GPL(of_css);
- 	}								\
- } while (false)
- 
--/* iterate over child cgrps, lock should be held throughout iteration */
--#define cgroup_for_each_live_child(child, cgrp)				\
--	list_for_each_entry((child), &(cgrp)->self.children, self.sibling) \
--		if (({ lockdep_assert_held(&cgroup_mutex);		\
--		       cgroup_is_dead(child); }))			\
--			;						\
--		else
--
--/* walk live descendants in pre order */
--#define cgroup_for_each_live_descendant_pre(dsct, d_css, cgrp)		\
--	css_for_each_descendant_pre((d_css), cgroup_css((cgrp), NULL))	\
--		if (({ lockdep_assert_held(&cgroup_mutex);		\
--		       (dsct) = (d_css)->cgroup;			\
--		       cgroup_is_dead(dsct); }))			\
--			;						\
--		else
--
--/* walk live descendants in postorder */
--#define cgroup_for_each_live_descendant_post(dsct, d_css, cgrp)		\
--	css_for_each_descendant_post((d_css), cgroup_css((cgrp), NULL))	\
--		if (({ lockdep_assert_held(&cgroup_mutex);		\
--		       (dsct) = (d_css)->cgroup;			\
--		       cgroup_is_dead(dsct); }))			\
--			;						\
--		else
--
- /*
-  * The default css_set - used by init and its children prior to any
-  * hierarchies being mounted. It contains a pointer to the root state
 -- 
 2.52.0
 
