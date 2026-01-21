@@ -1,131 +1,103 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EABA27703C
-	for <sched-ext@lists.linux.dev>; Wed, 21 Jan 2026 00:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768955309; cv=pass; b=j1p/WIALe39TLrpF6jRpwPq2WMWTpHjfYW7th8itxndHI3PJh4TBIfwz4WdGGzyed5XrRoXxx9ekCqyiePfEWsHswaKUKsVdNOvjJLy+9uPpYWmszuWe136exy1P/2g0NmHHiF4PTYo+EZQxpOr0a8O9vwGX1WF9h/fpb/QEUic=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768955309; c=relaxed/simple;
-	bh=ykwRyuIkN7dQxXWoW01+uvJ/5EsJIeCfEW7aZ9T9joQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KAXwSnRxJjqDadx1NOqmE9aIkTJjL7M1A3jJy403HzOgVc5DGVfLtsk0adB3irq16v1TOmak2EMtjh0qbP8GfkUWl9TWaGxpKBZ6A/c54EjoslWnhQviuBy7Ptxd0cfqcW3TUAKINBtmYh+4pKbgXN4Isu4k1IdYOrCxw/R1jfU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJL/IM4v; arc=pass smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FE828CF52;
+	Wed, 21 Jan 2026 00:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768955423; cv=none; b=M/E90NYu/t0Fe32lpjjdJ+vcRpJIEcxvlNvO/E0FOLlM7GognW/6sxkPQSe3AuLVi0v5sBh2ibYBbN4MwpiYIcCpi6FVnm3cJ702wfbcNGDNcjKqna+yAXJvaiN+1+eB77vGqs8BK65ysjVFHu2l5QAHGrYkICcrc4773sCOLeM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768955423; c=relaxed/simple;
+	bh=7ew0OeFA5OWg7NT/ep6GgikhWR8sE1QTqvlos0exUls=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=keeO/MM49vftxONOj6j4fC/qQy/dZIUog/CmT/vDuAujh7yeK/thLAWdJd637IpSLgN0VdzHqyu1mKa87bQ0nxdl8Y9vIy/6RPvNTkmcrfNGmpP8YuP7ZPQhkGli4vpjKHxQCaU1RTFpIypKcSYq41ih1VgL+Y9oJOerPtLb784=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C2meccM4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJL/IM4v"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-432755545fcso3446110f8f.1
-        for <sched-ext@lists.linux.dev>; Tue, 20 Jan 2026 16:28:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768955306; cv=none;
-        d=google.com; s=arc-20240605;
-        b=eo6XKrcfQGPGRfbTaxUHdSsMXh4Gh63LTD98pGYJGZ1G/40x/NLLKpg9DpOWwRDyOB
-         u+YB274/Q5oX0UEXC0ARHmD0E+CmZC6CFOx68w/1EL1gjxK/F7VZcKleBslyqsHACfhy
-         BdD46qaw9Mv8lIaE95VFKASc3mDuiLDaioMP13lCDy6ZzXx9SVTZZPqkYmS2Jg9r3Ixa
-         K1bvMzNNOzYeA/0I8hcJxLGu8Z+y8PebJQ2M62MTmzPSvbdC6k82L0M/FbkqlEI1JvRh
-         EQjleUhyC4eeJOhpztBMBSJkwW2crT39ibMAk1WGRsxPakHGH5qk2p9DVbcZhIjF7LgH
-         krgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=YTxxZRuya7/Gi3hLrrFK3AMW7Li4wzwhrblZHCa6ZEo=;
-        fh=hRAtrRENe6hSM7PfKakODK9vq49dR4G9ey+0VpsFvH4=;
-        b=f8hJ0pcZlQx12gNa6ghHFcygjQ9kTwFZv9XgB5JgZ1bXR6ynyfFUZ2QTX6IISbMDaf
-         DJO/8zoIRtLjAq1JRFiOKRAo/q/kl8DuZ98Bmkg/O93SqZ7NlPqAbyjRAZjGIeZhZYW/
-         BE0R9RypGJ7vlQtJ9d597dFEW1GZrPw/+Sic7HRDvGBHjSe3kQTzqbL9o7Ll3jhSshaf
-         UnXqWMfHySPP681EBM1AoZ76ZFtMPOocjyfwhQHMVAFnBz3TH0CesUgG7BISwY2tgFnf
-         m+sfaat84Y8YmUFCrc/yPvcI16JWTG8S5ypA4nALk7vsiB7TqplGCO0FBSJdgWLQ62+F
-         lGZw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768955306; x=1769560106; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YTxxZRuya7/Gi3hLrrFK3AMW7Li4wzwhrblZHCa6ZEo=;
-        b=MJL/IM4vVA5XYQu+XNHR6qiV0z867nEib32vecKK0DX5Nq0pctZI2akQHDPjlDlzEr
-         34D5o3IZogCRPYpQcD48v0625wqLSEw3x0JC67507IfhdTZSh+K/yGEYFfAfDTn846AR
-         vcIVHVERvwa/WdCFArQltBJy7EAUVzPcS/JN7kFqtgbXUUCQq4cqghxqPNJowWt/3DJe
-         r0mPL5bh3NmME/XiKXWHfl716DhzPgtPD7+03n68f/5Q4racRnerTR5qXw6HeY6N1usL
-         Os2c3Ad60POyhlLiMzOwZk6aZVE3PLL0+ktgS+H5g3CAExjpOxZnvVcIFg7UNPpaNF60
-         zpdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768955306; x=1769560106;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=YTxxZRuya7/Gi3hLrrFK3AMW7Li4wzwhrblZHCa6ZEo=;
-        b=weyOkSHV9PAfNbZWp+BAJFMO9zgNT7rdUS3U8/GlkjtdtwjixUJhzWbTrDeweYRfbU
-         01wwkxVhVcbWWk+vP1s1wQSf0kXlbgqmHQMWyRdni+edZb/8FGyintpoAmXx2z4AAg48
-         U10xKNgZqzXuByR52KI0Dw1hGA4GY13yXku1CzqcGt39WK6VMmGGfoTl6WmT7QO9mvsp
-         s/VjmZGF6MLWCNSoAcTXtIwmTIMHxmyoamvaMwYrKotHqlYcSKg3RIMQIcZisxhMB0EN
-         L1Ia20JHRhxfF7N/PiGELjtpE5sSXcfRr6Yt/ESDBiAG2zdJ8ZbLJZ7IZuHxxSlNkmwA
-         CTIg==
-X-Forwarded-Encrypted: i=1; AJvYcCXiSf/jNqiybjORf2dVX9JP4eBrWu5FeimjBDxrHV/4B1qWT3DrxkTZXby82C8KtjnRHATm9u4RVBo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzeZPqvYKs1feJnWknlgk7RvMR3O1fllXmsuSV7KbhOOOGnIEEH
-	OMS3JZaE4gswP8I47TqibN8GkCF1K1xiUYdx0dciFeMFOSG56LafABTGAGs5qfvIDMkyXzBXfz/
-	smfwet5cFLoeIOLPtkxu+vgndgZVYBDs=
-X-Gm-Gg: AZuq6aIWFdfBjiMBdq3N9APYmIaknk6x0kcujf/C/tH773R8r1jy4AHBdl3E6RvXen5
-	vtt+X6/TXoxLKHygbgM1ZfCEBN2AMs0uzbvX+WIek03UqtB6VrouGXnU/4BO2Dp4EcXL6InQkNz
-	o/uU4YKhjkOXwDRsQjWxN8L2zjCJ/ASPa+bZ+hkoqAU/JL0rg7+irew0s7xvfiORXrFQmj3TmqO
-	Nxf2fXcmwQgiRM74hFAXbsS0eFUX38X75Wmd9y79c8yPbvfQ8wZdUoI2YuIMLDyUwG84EOVKFfM
-	sGTJAuCVwG0dHSNDHzaj/yPzFU7ROInZaMU84lpjtug1y/tMU5ctp0u32QbpZCPNbwb6K54pOI0
-	phEH7DcY5lguy9Q==
-X-Received: by 2002:a5d:5887:0:b0:431:2b2:9628 with SMTP id
- ffacd0b85a97d-43569bc791bmr23387063f8f.52.1768955305540; Tue, 20 Jan 2026
- 16:28:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C2meccM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8328C16AAE;
+	Wed, 21 Jan 2026 00:30:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768955422;
+	bh=7ew0OeFA5OWg7NT/ep6GgikhWR8sE1QTqvlos0exUls=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=C2meccM4kxo4xRmmRErh43h/g4YPKKnioPjFgbvTp2kj6qrSKFMjfWYj2wV+uuDXZ
+	 z8NbkRSSrMmsHL2yboS+IsZZglX6lmwBDfGNM7bEfLa1M4CJ7+SUawtt8yhrDnFjyK
+	 IHETW0Aw28W6ly7CqJha2eZGe6kmRbdmXx4PqhZNaJM2ZrY1wILSZgCuXNJnLTELjF
+	 /scSPgXjUj+gw6YtE39Et3Ymu9NWmqVnWYKbnaaI9scIq4ptvyVo5UQT/4aKj/dtn1
+	 8KwF6VmxnVGUfWP/kQIfiMNhoioQGBxAdZAxS26RbIePS7KW3IwbistIKWjjDty03f
+	 mtntCcdWwRPQQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 4EBCE380820D;
+	Wed, 21 Jan 2026 00:30:21 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260120222638.3976562-1-ihor.solodrai@linux.dev> <20260120222638.3976562-10-ihor.solodrai@linux.dev>
-In-Reply-To: <20260120222638.3976562-10-ihor.solodrai@linux.dev>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Tue, 20 Jan 2026 16:28:14 -0800
-X-Gm-Features: AZwV_QirZ7by-RSgel-23msL5t8z84yNv4bEqKzD1qVtVLw3zvjD9Oq_RbOOeic
-Message-ID: <CAADnVQLm7kOxTa47POtNGYcjHm-S3neKWKAgjZL_5uw--syMCg@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v3 09/13] bpf: Migrate bpf_task_work_schedule_*
- kfuncs to KF_IMPLICIT_ARGS
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH bpf-next v3 00/13] bpf: Kernel functions with
+ KF_IMPLICIT_ARGS
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <176895542010.663774.16633470038935987737.git-patchwork-notify@kernel.org>
+Date: Wed, 21 Jan 2026 00:30:20 +0000
+References: <20260120222638.3976562-1-ihor.solodrai@linux.dev>
+In-Reply-To: <20260120222638.3976562-1-ihor.solodrai@linux.dev>
 To: Ihor Solodrai <ihor.solodrai@linux.dev>
-Cc: Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
-	Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <martin.lau@linux.dev>, 
-	Eduard Zingerman <eddyz87@gmail.com>, Mykyta Yatsenko <yatsenko@meta.com>, Tejun Heo <tj@kernel.org>, 
-	Alan Maguire <alan.maguire@oracle.com>, Benjamin Tissoires <bentiss@kernel.org>, 
-	Jiri Kosina <jikos@kernel.org>, Amery Hung <ameryhung@gmail.com>, bpf <bpf@vger.kernel.org>, 
-	LKML <linux-kernel@vger.kernel.org>, 
-	"open list:HID CORE LAYER" <linux-input@vger.kernel.org>, sched-ext@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org,
+ martin.lau@linux.dev, eddyz87@gmail.com, yatsenko@meta.com, tj@kernel.org,
+ alan.maguire@oracle.com, bentiss@kernel.org, jikos@kernel.org,
+ ameryhung@gmail.com, bpf@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org, sched-ext@lists.linux.dev
 
-On Tue, Jan 20, 2026 at 2:27=E2=80=AFPM Ihor Solodrai <ihor.solodrai@linux.=
-dev> wrote:
->
->                 return 0;
-> -       bpf_task_work_schedule_signal_impl(task, &work->tw, &arrmap, proc=
-ess_work, NULL);
-> +
-> +       bpf_task_work_schedule_signal(task, &work->tw, &arrmap, process_w=
-ork);
-> +
->         return 0;
->  }
->
-> @@ -102,6 +105,8 @@ int oncpu_lru_map(struct pt_regs *args)
->         work =3D bpf_map_lookup_elem(&lrumap, &key);
->         if (!work || work->data[0])
->                 return 0;
-> -       bpf_task_work_schedule_resume_impl(task, &work->tw, &lrumap, proc=
-ess_work, NULL);
-> +
-> +       bpf_task_work_schedule_resume(task, &work->tw, &lrumap, process_w=
-ork);
-> +
->         return 0;
+Hello:
 
-I removed extra empty lines, since they don't fit the style
-of these tests.
-While applying.
+This series was applied to bpf/bpf-next.git (master)
+by Alexei Starovoitov <ast@kernel.org>:
+
+On Tue, 20 Jan 2026 14:26:25 -0800 you wrote:
+> This series implements a generic "implicit arguments" feature for BPF
+> kernel functions. For context see prior work [1][2].
+> 
+> A mechanism is created for kfuncs to have arguments that are not
+> visible to the BPF programs, and are provided to the kernel function
+> implementation by the verifier.
+> 
+> [...]
+
+Here is the summary with links:
+  - [bpf-next,v3,01/13] bpf: Refactor btf_kfunc_id_set_contains
+    https://git.kernel.org/bpf/bpf-next/c/ea073d1818e2
+  - [bpf-next,v3,02/13] bpf: Introduce struct bpf_kfunc_meta
+    https://git.kernel.org/bpf/bpf-next/c/08ca87d63243
+  - [bpf-next,v3,03/13] bpf: Verifier support for KF_IMPLICIT_ARGS
+    https://git.kernel.org/bpf/bpf-next/c/64e1360524b9
+  - [bpf-next,v3,04/13] resolve_btfids: Introduce finalize_btf() step
+    https://git.kernel.org/bpf/bpf-next/c/2583e81fd885
+  - [bpf-next,v3,05/13] resolve_btfids: Support for KF_IMPLICIT_ARGS
+    https://git.kernel.org/bpf/bpf-next/c/9d199965990c
+  - [bpf-next,v3,06/13] selftests/bpf: Add tests for KF_IMPLICIT_ARGS
+    https://git.kernel.org/bpf/bpf-next/c/e939f3d16d77
+  - [bpf-next,v3,07/13] bpf: Migrate bpf_wq_set_callback_impl() to KF_IMPLICIT_ARGS
+    https://git.kernel.org/bpf/bpf-next/c/b97931a25a4b
+  - [bpf-next,v3,08/13] HID: Use bpf_wq_set_callback kernel function
+    https://git.kernel.org/bpf/bpf-next/c/8157cc739ad3
+  - [bpf-next,v3,09/13] bpf: Migrate bpf_task_work_schedule_* kfuncs to KF_IMPLICIT_ARGS
+    (no matching commit)
+  - [bpf-next,v3,10/13] bpf: Migrate bpf_stream_vprintk() to KF_IMPLICIT_ARGS
+    https://git.kernel.org/bpf/bpf-next/c/d806f3101276
+  - [bpf-next,v3,11/13] selftests/bpf: Migrate struct_ops_assoc test to KF_IMPLICIT_ARGS
+    https://git.kernel.org/bpf/bpf-next/c/bd06b977e02d
+  - [bpf-next,v3,12/13] bpf: Remove __prog kfunc arg annotation
+    https://git.kernel.org/bpf/bpf-next/c/aed57a363871
+  - [bpf-next,v3,13/13] bpf,docs: Document KF_IMPLICIT_ARGS flag
+    https://git.kernel.org/bpf/bpf-next/c/74bc4f612720
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
