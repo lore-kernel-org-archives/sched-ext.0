@@ -1,480 +1,225 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011000.outbound.protection.outlook.com [40.93.194.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300CC355025
-	for <sched-ext@lists.linux.dev>; Tue, 27 Jan 2026 12:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769517650; cv=none; b=SZ/Qx2KaUVLVd342eh1NNUf4zKfFjf87hppGGUzSZfg2Fj5TPJhKp49r+m9Hkpp7GR9LtTyKiqJyBwep/QALUz3ZPuJFKjFprap+uC5AZRIU/WThsmcizs2nCL3MBlUBQesnRzHyxn0NSZv9A/axJ4ss5NC2c5GdzXkb4W/fgE4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769517650; c=relaxed/simple;
-	bh=Pk9BaCSYWTL34kArksEQ7zusmyhi7lPpqYOwXRWTJKI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W/mu+0/keInM1SURsxefXkSubzzDsbjSy4TfGEBqoNB13lpdWOSbE52UQqKBFfUpLHfCGfsW1lRFFXIx2xsVVKytPBHghAvDDO1gmkcxvZxjshWAYDYI/3sEqzK254HgQSqiHwo9n17mRN67TTbOz1pqHya5j1SzK5KsxpVDvvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ncj/8cfM; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F023B2BE051
+	for <sched-ext@lists.linux.dev>; Tue, 27 Jan 2026 14:18:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.0
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769523502; cv=fail; b=tr6hpIAlieuS3B0EgYQGfN8VtONf/qw+MW1pIM4QGPqR5DTNYO9KBnpPHeKR3CBs0Ou+Q/u5gxb5OX3ubE/Xa7YGOLetSkFgXXLPh1Fb2Buy/mwxj/Ou8B8IzAl4AZbJcHAsuAe2C3Cvxyfm7LP+JkD7GB5PkH6ZO7628tJDORw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769523502; c=relaxed/simple;
+	bh=pHqix/bYf7ZDnXrWzTFKGos5TpG1Y5hnr5DEYAEucKI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=L25JEzSubWoG+tKTOL4UrLzfOlfSGzkpjGscCITPHf+7y1trzEiZFEU7kJyN4+MYUYbSyBBx6aDt/3LOckDnQZH7OZhUic/yhbBjmSYA92kyx+BB4eSqi348tUSVXfdZC81fsB0BJA4+Mp2H/7N53/Etlo8P33rFCDfhGgHx0iI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LXE0vUFn; arc=fail smtp.client-ip=40.93.194.0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ncj/8cfM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1769517648; x=1801053648;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Pk9BaCSYWTL34kArksEQ7zusmyhi7lPpqYOwXRWTJKI=;
-  b=Ncj/8cfM1QH1224RvxVLHi1xR/wQO5fUA6hIybq3niQc80TalP2uxw3H
-   aAnYEUv2Cwt+oxiSAx36Mfll5Lf8yDeZc/jx2Wy3cLCEEcTPZPU3T1mOD
-   uFvbvmB54O7tBfqzZTpSiHR2qkgl3TzhlUzhRt/TodshjfJeJMgV1yjrr
-   3tsMkgKi16XuY1RbKRHYqU19hOF/xw83MvVMjkikqTNpL4zCxBZRRYefD
-   hM+vdCHDs5NojeGsFgXrWOCdIvVOQbVqUcHSJmtv0wdqlX42c1Tf5kzKA
-   sRINXbEKCLxjOjJzFDwL2YXKHWHK6h7IOvsqXu2XjiI1uncmwTlw+9dxn
-   g==;
-X-CSE-ConnectionGUID: 1W+Tq9dOQuqIQRV9s2mLoQ==
-X-CSE-MsgGUID: ODebvZ1CThqx1ESSmZyXtg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11684"; a="81343380"
-X-IronPort-AV: E=Sophos;i="6.21,257,1763452800"; 
-   d="scan'208";a="81343380"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2026 04:40:47 -0800
-X-CSE-ConnectionGUID: wPxRd7xlT4+HlVIuh8Cd+Q==
-X-CSE-MsgGUID: OE1kwsSSR5GKff1XzUJOyg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,257,1763452800"; 
-   d="scan'208";a="207985200"
-Received: from ly-workstation.sh.intel.com (HELO ly-workstation) ([10.239.182.64])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2026 04:40:43 -0800
-Date: Tue, 27 Jan 2026 20:40:40 +0800
-From: "Lai, Yi" <yi1.lai@linux.intel.com>
-To: Changwoo Min <changwoo@igalia.com>
-Cc: lukasz.luba@arm.com, rafael@kernel.org, donald.hunter@gmail.com,
-	kuba@kernel.org, davem@davemloft.net, edumazet@google.com,
-	pabeni@redhat.com, horms@kernel.org, lenb@kernel.org,
-	pavel@kernel.org, kernel-dev@igalia.com, linux-pm@vger.kernel.org,
-	netdev@vger.kernel.org, sched-ext@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LXE0vUFn"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=s89Y5aAfM1iO/fPTetRedLuUQMVVXvgaZQU7z4kg/Pzewil7ksDUJ1VT1DIiXMkuKKlV6Vs/jS4wC2MzXTeEUCM3Wjw1VON9rxqnehmDCNdyiJ3qG4S1blsImoxxJUfR4XPdSjLTo8Hcfnu7ptRfdTIJ3RzW2/DGbXYn87dpgc3SyHgDLdnCLfNCjGHQhyDNhNNP1LSTBFbtjz0MJAbQUtzTKPAOIgdCNCL2P9DIaQpoAvQwKNjoc/08dpQZ2fK1DZosLg3PIReBSUTaMFZMwfigAfoJzNuLkQw9uwNDZGc1xrcJGqdSG6fB8a8jPncxGQWFxzRpkrVz3TpPPIK/lQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mvcrYy4FzXU6V02zfyg0ooeyoDoEa2LhLqn5c13b+9Y=;
+ b=xfId5lZBKiOVmYZNFeI59ofSi9incrKHWlJeCRE5lF5mIwjGnGsB1iI/8Pd+BZmVL+S1SoB7+SgLBCFbVoRmfnFoz/Ec8RA9g/WgnIsPBK1Aqx9uK3gaK30S+Z75tkZyL2HpM5ij9+VfbllBrzt03EzUNn98V+pa/zn5jdUW9qFwqgq8UAhJuMnt8SrW9Us09R6IRsHozyYYIjhcBqYm4ohQqx+3/WzwNMHva7RDT914+SNtlKrCTovaoJrHrxdkraTciC4hFhgPPYhBqaBXuBozSFYm/cpJzGPk5/vWzFH7tlEP+dFZvKj5SJe7h8ygeFqz6B2XPUJXgCKu1WKpaw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mvcrYy4FzXU6V02zfyg0ooeyoDoEa2LhLqn5c13b+9Y=;
+ b=LXE0vUFnefqxtzzE5OdSKpLCju/nWO+MvEagYYEuIsGNwb25nfMej8eHkw+RVp7lobd77gOJhdmafTNhYxR7N/5cbpfhCQEYUNDNqPwrCnZNGW913PtnuUCuOn917KqgGEJ65xMSFEGiS9SfW/mehwP8MbCf77FcVYdxinUh9wdRyg3Hy14xzoT8cs7KSSfKSzSMgafFLBNYa8VSaEnOE0Kzs7Vt29CL20kfHc5EWG5tdOOVAXDWFEAQEBmFRooxpylqAA2dxlTPQAGgocixbkfUZMwo+jRU8sheYoDvP0Z0yBwkCW0aUAivpM61BHmLD0Y/7+zPD0e33E6mzZTODg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DS2PR12MB9800.namprd12.prod.outlook.com (2603:10b6:8:2b5::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Tue, 27 Jan
+ 2026 14:18:17 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9542.015; Tue, 27 Jan 2026
+ 14:18:17 +0000
+Date: Tue, 27 Jan 2026 15:18:03 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Gabriele Monaco <gmonaco@redhat.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 for 6.19 4/4] PM: EM: Add dump to get-perf-domains in
- the EM YNL spec
-Message-ID: <aXiySM79UYfk+ytd@ly-workstation>
-References: <20260108053212.642478-1-changwoo@igalia.com>
- <20260108053212.642478-5-changwoo@igalia.com>
+Subject: Re: [PATCH v2] sched/deadline: Reset dl_server execution state on
+ stop
+Message-ID: <aXjJG-72XEqvaVtL@gpd4>
+References: <20260123161645.2181752-1-arighi@nvidia.com>
+ <f99f63b4a777ff990832a27fa6d171aaf1206a75.camel@redhat.com>
+ <aXeWnzI3ymUSm3Cu@gpd4>
+ <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com>
+ <aXfcGynN92kyw5Co@gpd4>
+ <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
+X-ClientProxiedBy: MI0P293CA0009.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:44::6) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260108053212.642478-5-changwoo@igalia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS2PR12MB9800:EE_
+X-MS-Office365-Filtering-Correlation-Id: a592a2e7-84d3-4a6b-2039-08de5daeea4c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?6EHdBpCh6WILw+ZBErVbaVh6LE+WZsD4RvAoGorFejYOgVmPgkhAhzJxPPTi?=
+ =?us-ascii?Q?OeuP//SdUeIUeQlUL5MNpX/zE/tDkOrQIYZe98ylTGVs3Ct8wRTTRD+HtTDy?=
+ =?us-ascii?Q?gogVXCU+LPjZRJZjZElqs9AO3FTTOh4Q0udp98QRWBmext+wEfnrLMxdfZdj?=
+ =?us-ascii?Q?UNVA8o54crn3o2APgOBod0PennCQdFg1uds38oL9UzLiQ/j9kG73hPolanet?=
+ =?us-ascii?Q?IOffX39Q7yZkkB7ZBNi3K3yBfF1m3lRvufdDcOj89c5RvIpDGaUFJiBONjW2?=
+ =?us-ascii?Q?W96WJKpd0CI+rfXDio+wQLU9wn4mWCgdFgiosLzfVueCbKEaHNACUX/+/q5S?=
+ =?us-ascii?Q?gSCYQ3CiUM6KkyvTKg65QuQdRyH5jwXcwWdGVIMk2aIdlVZf0/VutkbomAyP?=
+ =?us-ascii?Q?gJEwjxQObjRvASphkCcaFVh7uI50b/6XGTAMTNRYLjlJeArqMTyenZwmDy4M?=
+ =?us-ascii?Q?KnfUkmZ9b+sVZFH5S4E5MkKzFkkXFfX43aWKcwiP3dKV8p8uCoBV2yh9vjJu?=
+ =?us-ascii?Q?LM3hyxrJVsVrC5DQgmUyMuyCOiFvAoOMdHhhr7gapm4gP0oN9ows0Xxxm6YY?=
+ =?us-ascii?Q?hY7qs5slkG7anB4Jad4u4tdcOxr9hasaKJTy7ZSLxxwnAP1OMFkAh0xG4uJn?=
+ =?us-ascii?Q?FwmMk7WdMPUqo9V635HRfQBYkvmnYdx/+WSuOSn+qkExWGGsJ99Gr4b1sXkt?=
+ =?us-ascii?Q?kFO61MQsie58QFY8ALa40Mi5NNwrH+CaGom4rzzWLeRv2PCIhkrSjMYgUlmN?=
+ =?us-ascii?Q?Np22zqfVxsbdSY/Y1sRHUmkGdNNblvGIgUC1D7HwSu2knbp1Ag/fT/8px4iO?=
+ =?us-ascii?Q?8jSZurXQXccm7uqerm//zHp+fJuaGHX9kHwguf4VNZwpxIp+U/7b1elhf/Up?=
+ =?us-ascii?Q?+P/idBt0c1agCdtm44EqWmPqh7uhHwKwPlCKOClJpFr3FeJ3ch54zXadkmP1?=
+ =?us-ascii?Q?URQf+z98ltUfl/ruhjdKuIchARjlvTk52q/EiQZJCtsi4Ju8cORd3JpK2CO+?=
+ =?us-ascii?Q?OxC+Ef92+LtB+cSPS0HzgzGbQsKUaHWLCkqn12Q5lX5j3BwXIEQNZ/grb01i?=
+ =?us-ascii?Q?CHaR1LFINPWEbReOEZz8IDz/2vBVmUSUjmRAfxeiJtyk9/MpmzQ8GXr0ZH2U?=
+ =?us-ascii?Q?+H5O0JLWUCfIZXCEw7/Z7ZZoUzNeI/39M5P4QQlD1la1vPudAXvLwbtj+JUV?=
+ =?us-ascii?Q?ysWnc0KEt1NhBQax4ZIS5Vjk8Iv33FAcxNdJGeDa7eOjtjv9OM/o13jk+jhl?=
+ =?us-ascii?Q?EIaYBV18DvrbDERfaL5fBjS8FhgQR8KaKhMjXoMTN/kzFHadC0DzwUKqIZch?=
+ =?us-ascii?Q?tL3wgJF7CEyjkKQ67a32FNmvLuM3u6bfaqkL4BWd9LyDsW5P99dDMvId/f5I?=
+ =?us-ascii?Q?3RFNzIJ1L+XF/K1p1F0i+7CONBK/yaN8XgPf9tDQnYgzrCBtptpog7u5jhCm?=
+ =?us-ascii?Q?5vW/fsGq5Y5SYYySac+j5fMCcGzurih74F+4WAZUz60V+0iGZbGiK2WJyTag?=
+ =?us-ascii?Q?yIFBBbpO0VMNjKXwVag/OIptJVP1gQrsR0lY8BRwkACRvQA6wKuE0xo//TCD?=
+ =?us-ascii?Q?YFpnLyibfflVyGERH9s=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?3QLq0N2KxFGTuFvnRS59gNI9EeZxr23SZo5A5obb0f8S5emGCV7vNVHxMOqE?=
+ =?us-ascii?Q?JVP3tjv6ZwM0JUTewuYd4vwiiqQ1/KSUmb02zTnZiPPMGqmcEgS+nrdmz66l?=
+ =?us-ascii?Q?QeA1E1El2qO7hEAGKjYJJI/nRzg8FVaYDUSaqX2IQTDnU+eW+pvkfcs2CAlB?=
+ =?us-ascii?Q?cPu+MFKQ/aPc1I0eYc2zGXqwFAxvt6fGxbCnt1UKgbdypXbT52akk4zQs22C?=
+ =?us-ascii?Q?688CPBlsjX7UJ3SXjrnAHVuMNWn3firFiCS93TQx3ty84BmYEkNSZ1hS+3Vc?=
+ =?us-ascii?Q?HTJQiZm00EimST9O4woq9eHuctyGEzEjSrTnwfDIPuVYMAPT8jB/3klluR4u?=
+ =?us-ascii?Q?8SXYXgkywxBstO2wtRNTsE0vx14xyv0/FDYzXEPpjbG+ZCYlF2FIfAT3aJSe?=
+ =?us-ascii?Q?zG+OlIvShltQP8pkHuZjXxX82hEHYLC1EFiO8Tc0kIsz8BsETB4kzZJ5svZo?=
+ =?us-ascii?Q?z7p9NcTt/sDXAp9MU27HQ727aO/UDtrL2IuoCdzT6AQvRyDCZHutU72FZ5ui?=
+ =?us-ascii?Q?9hsFF1ZJCERFbjb+tHUpyx2hhLru50QVA7ItDB5XMye5iNVj7gZOBv0a4LB/?=
+ =?us-ascii?Q?sscwXoHEUaQJXvFOWPPnKkHZ9dSgcSB9OpqDUX6XmxQkf040vCT1BZZjXmX4?=
+ =?us-ascii?Q?EbkO2MCGPjJQzTGrcW8KJnUeui4l3Ih/6qsbmENnEP48VQ5RGBqouropdMLH?=
+ =?us-ascii?Q?r8n+tHjMnuH4fruUeo7CPCcU+ZrH21jBcZeUHT2odICe6hJ065KDLvZdyxCT?=
+ =?us-ascii?Q?Iv9cEHjJMMJ9OZnhFBG9WgDxg+HnH6ppa0jj4W2nDcWEPkgBl2ok5/tREpY8?=
+ =?us-ascii?Q?cxXaWArheAndv184R4NU806G4gH6Iiy0GjyId9qsdeDW5vNzPUoxvbgZQ6ny?=
+ =?us-ascii?Q?fbzg74c29NoScH8NXSxOGNpQgmof678tPZyXgCdE5rla/s5izCrWx0PNfe15?=
+ =?us-ascii?Q?LsjJkKZht9howalsfH6YOCxVF/fUQ/Ay7lWg2BhcyLY8i0MRXM0nW7zZxoWG?=
+ =?us-ascii?Q?cO6UvYIUE50gKLdaakLHGIbvkdED0DQ10F4c+7emgmXTTE7WdWc4mdKYuuHZ?=
+ =?us-ascii?Q?djMe2FNLsU0CGgU+6sJlnx+iFnYJSZZ83eIGDOdayJadv0VBGIGz4nI8dAU1?=
+ =?us-ascii?Q?LTPRqh3h56dWRDohpAPDqr8oNvf5swp30NjUfim4MFtV4m/fDfrWL0/BQ9SM?=
+ =?us-ascii?Q?EnlvbwxuXf6UozwClbNEeWzCLvu8DPvoJfPbZKS/eKe1BDfKo7oaBjR7y65+?=
+ =?us-ascii?Q?Njs3JfQbs0XObH8tPcvp4lCReL8kzKW7llUwj3qZqBzsg1qptY91DX0bWiWR?=
+ =?us-ascii?Q?DF6IkvcVfkdz9bZDbCEsIJjrNdrNHhC0ot16M4Iqn6Ar51KeUbyELaA5ANa+?=
+ =?us-ascii?Q?wC2pmzhHHfuY0nx1depPA4ErEzl7pPwny4eUVp1VZlo1fThbm4q3OPPqgyuV?=
+ =?us-ascii?Q?/aEmGI4ikyo0UTNe9m4cVSH2LdOR/41Up+OBf0/OS4IC/OPon+KOfBCcvnOX?=
+ =?us-ascii?Q?kBNPuKQSn8AdJsUjLJS08mqLo0Ko5lrlyo604wLSENTIZ8o2e4Vaqlo+Tnl4?=
+ =?us-ascii?Q?FODSu0zXS+c/V1UN0bUkcuYKQ1DDxYlvxm9Y/8cU7d9crNhxRVfJJvxrkzwT?=
+ =?us-ascii?Q?sjYtpqVDwaPBZVLSn3cJnRXrJufZiA4TzG3lqaFNSRh5GOJZHgNpi9U/vlFl?=
+ =?us-ascii?Q?ZM8tKRH0OWbR73WgalNiNLop+6DHuhUM03vS3bsoUFNvXVTYGDursBIqfEJb?=
+ =?us-ascii?Q?JUgw4O6bHA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a592a2e7-84d3-4a6b-2039-08de5daeea4c
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2026 14:18:17.3605
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 77B8slMMVV720ShirCnxItO5Lnvq8ixe8lyrtms9OzNLdl6+fOvu9vi49qssCd1YwP5Z2YGS6DbUHFlRpbgm5A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9800
 
-Hi Changwoo Min,
-
-Greetings!
-
-I used Syzkaller and found that there is general protection fault in __bitmap_weight in linux-next next-20260126.
-
-After bisection and the first bad commit is:
-"
-380ff27af25e PM: EM: Add dump to get-perf-domains in the EM YNL spec
-"
-
-All detailed into can be found at:
-https://github.com/laifryiee/syzkaller_logs/tree/main/260127_162751___bitmap_weight
-Syzkaller repro code:
-https://github.com/laifryiee/syzkaller_logs/tree/main/260127_162751___bitmap_weight/repro.c
-Syzkaller repro syscall steps:
-https://github.com/laifryiee/syzkaller_logs/tree/main/260127_162751___bitmap_weight/repro.prog
-Syzkaller report:
-https://github.com/laifryiee/syzkaller_logs/tree/main/260127_162751___bitmap_weight/repro.report
-Kconfig(make olddefconfig):
-https://github.com/laifryiee/syzkaller_logs/tree/main/260127_162751___bitmap_weight/kconfig_origin
-Bisect info:
-https://github.com/laifryiee/syzkaller_logs/tree/main/260127_162751___bitmap_weight/bisect_info.log
-bzImage:
-https://github.com/laifryiee/syzkaller_logs/raw/refs/heads/main/260127_162751___bitmap_weight/bzImage_v6.19-rc7
-Issue dmesg:
-https://github.com/laifryiee/syzkaller_logs/blob/main/260127_162751___bitmap_weight/v6.19-rc7_dmesg.log
-
-"
-[   19.746792] Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 I
-[   19.747509] KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-[   19.747982] CPU: 0 UID: 0 PID: 710 Comm: repro Not tainted 6.19.0-rc7-v6.19-rc7 #1 PREEMPT(voluntary)
-[   19.748561] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org4
-[   19.749261] RIP: 0010:__bitmap_weight+0xb9/0x110
-[   19.749574] Code: 89 ee e8 3a cb 64 fe 45 85 ed 74 3e e8 30 d1 64 fe 48 8b 45 c8 48 8d 1c d8 48 b8 00 00 00 00 00 fc8
-[   19.750681] RSP: 0018:ff110000151ef488 EFLAGS: 00010206
-[   19.750982] RAX: dffffc0000000000 RBX: 0000000000000030 RCX: ffffffff8324fe06
-[   19.751388] RDX: 0000000000000006 RSI: ffffffff8324fe10 RDI: 0000000000000005
-[   19.751779] RBP: ff110000151ef4c0 R08: 0000000000000001 R09: ffe21c0002a3de7b
-[   19.752188] R10: 0000000000000002 R11: 0000000000000000 R12: 0000000000000000
-[   19.752585] R13: 0000000000000002 R14: 0000000000000030 R15: ff1100001e531a00
-[   19.752984] FS:  00007f0bbbba3740(0000) GS:ff110000e34b5000(0000) knlGS:0000000000000000
-[   19.753441] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   19.753779] CR2: 0000000020000b00 CR3: 000000001e6bd006 CR4: 0000000000771ef0
-[   19.754194] PKRU: 55555554
-[   19.754357] Call Trace:
-[   19.754505]  <TASK>
-[   19.754639]  dev_energymodel_nl_get_perf_domains_doit+0x140/0x4b0
-[   19.754997]  genl_family_rcv_msg_doit+0x23d/0x330
-[   19.755285]  ? __pfx_genl_family_rcv_msg_doit+0x10/0x10
-[   19.755594]  ? genl_get_cmd+0x1c9/0x630
-[   19.755832]  genl_rcv_msg+0x580/0x840
-[   19.756058]  ? __pfx_genl_rcv_msg+0x10/0x10
-[   19.756315]  ? __pfx_dev_energymodel_nl_get_perf_domains_doit+0x10/0x10
-[   19.756698]  netlink_rcv_skb+0x174/0x450
-[   19.756934]  ? __pfx_genl_rcv_msg+0x10/0x10
-[   19.757192]  ? __pfx_netlink_rcv_skb+0x10/0x10
-[   19.757460]  ? netlink_deliver_tap+0x1b9/0xca0
-[   19.757734]  genl_rcv+0x32/0x50
-[   19.757928]  netlink_unicast+0x7e2/0xc80
-[   19.758179]  ? __pfx_netlink_unicast+0x10/0x10
-[   19.758446]  ? __virt_addr_valid+0x10a/0x5f0
-[   19.758707]  ? __check_object_size+0x3c/0x9b0
-[   19.758973]  netlink_sendmsg+0x957/0xe80
-[   19.759219]  ? __pfx_netlink_sendmsg+0x10/0x10
-[   19.759481]  ? __import_iovec+0x1df/0x660
-[   19.759729]  ? __might_fault+0xe0/0x1b0
-[   19.759963]  ? __pfx_netlink_sendmsg+0x10/0x10
-[   19.760236]  ____sys_sendmsg+0xaa3/0xc70
-[   19.760479]  ? __pfx_____sys_sendmsg+0x10/0x10
-[   19.760754]  ? __this_cpu_preempt_check+0x21/0x30
-[   19.761032]  ? lock_release+0x14f/0x2a0
-[   19.761283]  ___sys_sendmsg+0x121/0x1c0
-[   19.761516]  ? do_anonymous_page+0x4c0/0x1a30
-[   19.761784]  ? __pfx____sys_sendmsg+0x10/0x10
-[   19.762051]  ? __handle_mm_fault+0x656/0x2d60
-[   19.762334]  ? __lock_acquire+0x412/0x2210
-[   19.762590]  __sys_sendmsg+0x177/0x220
-[   19.762813]  ? __pfx___sys_sendmsg+0x10/0x10
-[   19.763074]  ? lockdep_hardirqs_on+0x85/0x110
-[   19.763346]  ? seqcount_lockdep_reader_access.constprop.0+0xb4/0xd0
-[   19.763729]  ? __audit_syscall_entry+0x393/0x4f0
-[   19.764023]  __x64_sys_sendmsg+0x80/0xc0
-[   19.764274]  ? syscall_trace_enter+0x14d/0x240
-[   19.764551]  x64_sys_call+0x1d98/0x21b0
-[   19.764787]  do_syscall_64+0x6d/0x1180
-[   19.765020]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   19.765324] RIP: 0033:0x7f0bbb83ee5d
-[   19.765546] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d8
-[   19.766615] RSP: 002b:00007ffdd5009908 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-[   19.767059] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f0bbb83ee5d
-[   19.767485] RDX: 0000000000000004 RSI: 0000000020000b00 RDI: 0000000000000003
-[   19.767897] RBP: 00007ffdd5009920 R08: 00007ffdd5009920 R09: 00007ffdd5009920
-[   19.768322] R10: 00007ffdd5009390 R11: 0000000000000246 R12: 00007ffdd5009a78
-[   19.768746] R13: 0000000000401829 R14: 0000000000403e08 R15: 00007f0bbbbf0000
-[   19.769176]  </TASK>
-[   19.769316] Modules linked in:
-[   19.769547] ---[ end trace 0000000000000000 ]---
-"
-
-Hope this cound be insightful to you.
-
-Regards,
-Yi Lai
-
----
-
-If you don't need the following environment to reproduce the problem or if you
-already have one reproduced environment, please ignore the following information.
-
-How to reproduce:
-git clone https://gitlab.com/xupengfe/repro_vm_env.git
-cd repro_vm_env
-tar -xvf repro_vm_env.tar.gz
-cd repro_vm_env; ./start3.sh  // it needs qemu-system-x86_64 and I used v7.1.0
-  // start3.sh will load bzImage_2241ab53cbb5cdb08a6b2d4688feb13971058f65 v6.2-rc5 kernel
-  // You could change the bzImage_xxx as you want
-  // Maybe you need to remove line "-drive if=pflash,format=raw,readonly=on,file=./OVMF_CODE.fd \" for different qemu version
-You could use below command to log in, there is no password for root.
-ssh -p 10023 root@localhost
-
-After login vm(virtual machine) successfully, you could transfer reproduced
-binary to the vm by below way, and reproduce the problem in vm:
-gcc -pthread -o repro repro.c
-scp -P 10023 repro root@localhost:/root/
-
-Get the bzImage for target kernel:
-Please use target kconfig and copy it to kernel_src/.config
-make olddefconfig
-make -jx bzImage           //x should equal or less than cpu num your pc has
-
-Fill the bzImage file into above start3.sh to load the target kernel in vm.
-
-
-Tips:
-If you already have qemu-system-x86_64, please ignore below info.
-If you want to install qemu v7.1.0 version:
-git clone https://github.com/qemu/qemu.git
-cd qemu
-git checkout -f v7.1.0
-mkdir build
-cd build
-yum install -y ninja-build.x86_64
-yum -y install libslirp-devel.x86_64
-../configure --target-list=x86_64-softmmu --enable-kvm --enable-vnc --enable-gtk --enable-sdl --enable-usb-redir --enable-slirp
-make
-make install 
-
-On Thu, Jan 08, 2026 at 02:32:12PM +0900, Changwoo Min wrote:
-> Add dump to get-perf-domains, so that a user can fetch either information
-> about a specific performance domain with do or information about all
-> performance domains with dump. Share the reply format of do and dump using
-> perf-domain-attrs, so remove perf-domains. The YNL spec, autogenerated
-> files, and the do implementation are updated, and the dump implementation
-> is added.
+On Tue, Jan 27, 2026 at 08:52:48AM +0000, Gabriele Monaco wrote:
+> 2026-01-26T21:27:11Z Andrea Righi <arighi@nvidia.com>:
+> > On Mon, Jan 26, 2026 at 04:56:52PM +0000, Gabriele Monaco wrote:
+> >> Still if it starts before the deadline, the server is going to get throttled as you observed, and perhaps since in your tests the CPU isn't idle, we don't stop the server after that dequeue and then we never replenish after the deadline (because we never start and as you mentioned, the timer is not armed).
+> >>
+> >> Can this be what you're observing?
+> >
+> > Yes, I think it matches what I'm observing.
+> >
+> > In my case the server is (re)started before the deadline, so it immediately
+> > runs with exhausted runtime, gets throttled, and is dequeued. Since the CPU
+> > isn't idle, we don't hit a path that would stop the server cleanly and
+> > reset its execution state.
+> >
+> > At that point, because dl_defer_running is still set, the restart path
+> > assumes the server is already in the running phase and skips arming the
+> > deferral/replenishment timer. Therefore, once the deadline passes there is
+> > no remaining trigger to replenish a new period and the server gets stuck in
+> > a throttled-but-running state.
+> >
 > 
-> Suggested-by: Donald Hunter <donald.hunter@gmail.com>
-> Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-> Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
-> Signed-off-by: Changwoo Min <changwoo@igalia.com>
-> ---
->  .../netlink/specs/dev-energymodel.yaml        | 25 ++++---
->  include/uapi/linux/dev_energymodel.h          |  7 --
->  kernel/power/em_netlink.c                     | 68 ++++++++++++++-----
->  kernel/power/em_netlink_autogen.c             | 16 ++++-
->  kernel/power/em_netlink_autogen.h             |  2 +
->  5 files changed, 80 insertions(+), 38 deletions(-)
+> Alright thanks. I believe your fix would work even if you reset the defer_running only when the runtime is exhausted.
 > 
-> diff --git a/Documentation/netlink/specs/dev-energymodel.yaml b/Documentation/netlink/specs/dev-energymodel.yaml
-> index af8b8f72f722..11faabfdfbe8 100644
-> --- a/Documentation/netlink/specs/dev-energymodel.yaml
-> +++ b/Documentation/netlink/specs/dev-energymodel.yaml
-> @@ -42,16 +42,6 @@ definitions:
->            missing real power information.
->  
->  attribute-sets:
-> -  -
-> -    name: perf-domains
-> -    doc: >-
-> -      Information on all the performance domains.
-> -    attributes:
-> -      -
-> -        name: perf-domain
-> -        type: nest
-> -        nested-attributes: perf-domain
-> -        multi-attr: true
->    -
->      name: perf-domain
->      doc: >-
-> @@ -133,12 +123,21 @@ operations:
->    list:
->      -
->        name: get-perf-domains
-> -      attribute-set: perf-domains
-> +      attribute-set: perf-domain
->        doc: Get the list of information for all performance domains.
->        do:
-> -        reply:
-> +        request:
->            attributes:
-> -            - perf-domain
-> +            - perf-domain-id
-> +        reply:
-> +          attributes: &perf-domain-attrs
-> +            - pad
-> +            - perf-domain-id
-> +            - flags
-> +            - cpus
-> +      dump:
-> +        reply:
-> +          attributes: *perf-domain-attrs
->      -
->        name: get-perf-table
->        attribute-set: perf-table
-> diff --git a/include/uapi/linux/dev_energymodel.h b/include/uapi/linux/dev_energymodel.h
-> index 3399967e1f93..355d8885c9a0 100644
-> --- a/include/uapi/linux/dev_energymodel.h
-> +++ b/include/uapi/linux/dev_energymodel.h
-> @@ -36,13 +36,6 @@ enum dev_energymodel_perf_domain_flags {
->  	DEV_ENERGYMODEL_PERF_DOMAIN_FLAGS_PERF_DOMAIN_ARTIFICIAL = 4,
->  };
->  
-> -enum {
-> -	DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN = 1,
-> -
-> -	__DEV_ENERGYMODEL_A_PERF_DOMAINS_MAX,
-> -	DEV_ENERGYMODEL_A_PERF_DOMAINS_MAX = (__DEV_ENERGYMODEL_A_PERF_DOMAINS_MAX - 1)
-> -};
-> -
->  enum {
->  	DEV_ENERGYMODEL_A_PERF_DOMAIN_PAD = 1,
->  	DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID,
-> diff --git a/kernel/power/em_netlink.c b/kernel/power/em_netlink.c
-> index b6edb018c65a..5a611d3950fd 100644
-> --- a/kernel/power/em_netlink.c
-> +++ b/kernel/power/em_netlink.c
-> @@ -18,6 +18,13 @@
->  #include "em_netlink_autogen.h"
->  
->  /*************************** Command encoding ********************************/
-> +struct dump_ctx {
-> +	int idx;
-> +	int start;
-> +	struct sk_buff *skb;
-> +	struct netlink_callback *cb;
-> +};
-> +
->  static int __em_nl_get_pd_size(struct em_perf_domain *pd, void *data)
->  {
->  	int nr_cpus, msg_sz, cpus_sz;
-> @@ -43,14 +50,8 @@ static int __em_nl_get_pd(struct em_perf_domain *pd, void *data)
->  {
->  	struct sk_buff *msg = data;
->  	struct cpumask *cpumask;
-> -	struct nlattr *entry;
->  	int cpu;
->  
-> -	entry = nla_nest_start(msg,
-> -			       DEV_ENERGYMODEL_A_PERF_DOMAINS_PERF_DOMAIN);
-> -	if (!entry)
-> -		goto out_cancel_nest;
-> -
->  	if (nla_put_u32(msg, DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID,
->  			pd->id))
->  		goto out_cancel_nest;
-> @@ -66,26 +67,50 @@ static int __em_nl_get_pd(struct em_perf_domain *pd, void *data)
->  			goto out_cancel_nest;
->  	}
->  
-> -	nla_nest_end(msg, entry);
-> -
->  	return 0;
->  
->  out_cancel_nest:
-> -	nla_nest_cancel(msg, entry);
-> -
->  	return -EMSGSIZE;
->  }
->  
-> +static int __em_nl_get_pd_for_dump(struct em_perf_domain *pd, void *data)
-> +{
-> +	const struct genl_info *info;
-> +	struct dump_ctx *ctx = data;
-> +	void *hdr;
-> +	int ret;
-> +
-> +	if (ctx->idx++ < ctx->start)
-> +		return 0;
-> +
-> +	info = genl_info_dump(ctx->cb);
-> +	hdr = genlmsg_iput(ctx->skb, info);
-> +	if (!hdr) {
-> +		genlmsg_cancel(ctx->skb, hdr);
-> +		return -EMSGSIZE;
-> +	}
-> +
-> +	ret = __em_nl_get_pd(pd, ctx->skb);
-> +	genlmsg_end(ctx->skb, hdr);
-> +	return ret;
-> +}
-> +
->  int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
->  					      struct genl_info *info)
->  {
-> +	int id, ret = -EMSGSIZE, msg_sz = 0;
-> +	int cmd = info->genlhdr->cmd;
-> +	struct em_perf_domain *pd;
->  	struct sk_buff *msg;
->  	void *hdr;
-> -	int cmd = info->genlhdr->cmd;
-> -	int ret = -EMSGSIZE, msg_sz = 0;
->  
-> -	for_each_em_perf_domain(__em_nl_get_pd_size, &msg_sz);
-> +	if (!info->attrs[DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID])
-> +		return -EINVAL;
->  
-> +	id = nla_get_u32(info->attrs[DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID]);
-> +	pd = em_perf_domain_get_by_id(id);
-> +
-> +	__em_nl_get_pd_size(pd, &msg_sz);
->  	msg = genlmsg_new(msg_sz, GFP_KERNEL);
->  	if (!msg)
->  		return -ENOMEM;
-> @@ -94,10 +119,9 @@ int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
->  	if (!hdr)
->  		goto out_free_msg;
->  
-> -	ret = for_each_em_perf_domain(__em_nl_get_pd, msg);
-> +	ret = __em_nl_get_pd(pd, msg);
->  	if (ret)
->  		goto out_cancel_msg;
-> -
->  	genlmsg_end(msg, hdr);
->  
->  	return genlmsg_reply(msg, info);
-> @@ -106,10 +130,22 @@ int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
->  	genlmsg_cancel(msg, hdr);
->  out_free_msg:
->  	nlmsg_free(msg);
-> -
->  	return ret;
->  }
->  
-> +int dev_energymodel_nl_get_perf_domains_dumpit(struct sk_buff *skb,
-> +						struct netlink_callback *cb)
-> +{
-> +	struct dump_ctx ctx = {
-> +		.idx = 0,
-> +		.start = cb->args[0],
-> +		.skb = skb,
-> +		.cb = cb,
-> +	};
-> +
-> +	return for_each_em_perf_domain(__em_nl_get_pd_for_dump, &ctx);
-> +}
-> +
->  static struct em_perf_domain *__em_nl_get_pd_table_id(struct nlattr **attrs)
->  {
->  	struct em_perf_domain *pd;
-> diff --git a/kernel/power/em_netlink_autogen.c b/kernel/power/em_netlink_autogen.c
-> index 44acef0e7df2..fedd473e4244 100644
-> --- a/kernel/power/em_netlink_autogen.c
-> +++ b/kernel/power/em_netlink_autogen.c
-> @@ -11,6 +11,11 @@
->  
->  #include <uapi/linux/dev_energymodel.h>
->  
-> +/* DEV_ENERGYMODEL_CMD_GET_PERF_DOMAINS - do */
-> +static const struct nla_policy dev_energymodel_get_perf_domains_nl_policy[DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID + 1] = {
-> +	[DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID] = { .type = NLA_U32, },
-> +};
-> +
->  /* DEV_ENERGYMODEL_CMD_GET_PERF_TABLE - do */
->  static const struct nla_policy dev_energymodel_get_perf_table_nl_policy[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID + 1] = {
->  	[DEV_ENERGYMODEL_A_PERF_TABLE_PERF_DOMAIN_ID] = { .type = NLA_U32, },
-> @@ -18,10 +23,17 @@ static const struct nla_policy dev_energymodel_get_perf_table_nl_policy[DEV_ENER
->  
->  /* Ops table for dev_energymodel */
->  static const struct genl_split_ops dev_energymodel_nl_ops[] = {
-> +	{
-> +		.cmd		= DEV_ENERGYMODEL_CMD_GET_PERF_DOMAINS,
-> +		.doit		= dev_energymodel_nl_get_perf_domains_doit,
-> +		.policy		= dev_energymodel_get_perf_domains_nl_policy,
-> +		.maxattr	= DEV_ENERGYMODEL_A_PERF_DOMAIN_PERF_DOMAIN_ID,
-> +		.flags		= GENL_CMD_CAP_DO,
-> +	},
->  	{
->  		.cmd	= DEV_ENERGYMODEL_CMD_GET_PERF_DOMAINS,
-> -		.doit	= dev_energymodel_nl_get_perf_domains_doit,
-> -		.flags	= GENL_CMD_CAP_DO,
-> +		.dumpit	= dev_energymodel_nl_get_perf_domains_dumpit,
-> +		.flags	= GENL_CMD_CAP_DUMP,
->  	},
->  	{
->  		.cmd		= DEV_ENERGYMODEL_CMD_GET_PERF_TABLE,
-> diff --git a/kernel/power/em_netlink_autogen.h b/kernel/power/em_netlink_autogen.h
-> index f7e4bddcbd53..5caf2f7e18a5 100644
-> --- a/kernel/power/em_netlink_autogen.h
-> +++ b/kernel/power/em_netlink_autogen.h
-> @@ -14,6 +14,8 @@
->  
->  int dev_energymodel_nl_get_perf_domains_doit(struct sk_buff *skb,
->  					     struct genl_info *info);
-> +int dev_energymodel_nl_get_perf_domains_dumpit(struct sk_buff *skb,
-> +					       struct netlink_callback *cb);
->  int dev_energymodel_nl_get_perf_table_doit(struct sk_buff *skb,
->  					   struct genl_info *info);
->  
-> -- 
-> 2.52.0
+> This way we'd still keep a bit of benefits of the start-running sequence if fair/scx tasks sleep and run back when the server still has runtime.
 > 
+> We could even keep the defer_running as it is and mark the server as defer_armed (with laxity timer and stuff) only if it starts in this exact condition (runtime = 0 and deadline not expired). But this may just be overly complex for little benefit.
+> 
+> What do you think?
+
+I think my case should work also doing something like this (I'll run some
+tests later to double check):
+
+	if (dl_se->runtime <= 0)
+		dl_se->dl_defer_running = 0;
+
+In this way:
+ - short sleep + remaining runtime > 0
+   - dl_defer_running stays set
+   - restart can go A->D directly
+   - no extra defer / zero-laxity penalty
+
+ - stop with exhausted (or negative) runtime
+   - dl_defer_running is cleared
+   - restart must re-establish eligibility
+   - deferral / timer is armed again
+   - no stale "already running" server
+
+However, I think the right assumption should be that both runtime **and**
+deadline are still coherent, so we should probably do something like this
+to be fully correct:
+
+	if (dl_se->runtime <= 0 ||
+	    dl_time_before(dl_se->deadline, rq_clock(dl_se->rq)))
+		dl_se->dl_defer_running = 0;
+
+This makes the stop path slightly more complex, so I'm not sure whether
+it's preferable to go in this direction or just unconditionally clearing
+dl_defer_running, which is simpler and more explicit from a state-machine
+point of view.
+
+Which one do we prefer? Happy to go with whatever approach you think makes
+more sense.
+
+Thanks,
+-Andrea
