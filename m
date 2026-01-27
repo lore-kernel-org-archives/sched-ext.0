@@ -1,50 +1,72 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011000.outbound.protection.outlook.com [40.93.194.0])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F023B2BE051
-	for <sched-ext@lists.linux.dev>; Tue, 27 Jan 2026 14:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.0
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769523502; cv=fail; b=tr6hpIAlieuS3B0EgYQGfN8VtONf/qw+MW1pIM4QGPqR5DTNYO9KBnpPHeKR3CBs0Ou+Q/u5gxb5OX3ubE/Xa7YGOLetSkFgXXLPh1Fb2Buy/mwxj/Ou8B8IzAl4AZbJcHAsuAe2C3Cvxyfm7LP+JkD7GB5PkH6ZO7628tJDORw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769523502; c=relaxed/simple;
-	bh=pHqix/bYf7ZDnXrWzTFKGos5TpG1Y5hnr5DEYAEucKI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=L25JEzSubWoG+tKTOL4UrLzfOlfSGzkpjGscCITPHf+7y1trzEiZFEU7kJyN4+MYUYbSyBBx6aDt/3LOckDnQZH7OZhUic/yhbBjmSYA92kyx+BB4eSqi348tUSVXfdZC81fsB0BJA4+Mp2H/7N53/Etlo8P33rFCDfhGgHx0iI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LXE0vUFn; arc=fail smtp.client-ip=40.93.194.0
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6632E62B7
+	for <sched-ext@lists.linux.dev>; Tue, 27 Jan 2026 16:00:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769529653; cv=none; b=jf+jv4lPhBeMdoxHHXmGnxh2Q96yNHb/+viP0P2X9nVGgwl58+D3NmE0XGeQZBGgMn1n7Hct+nrGjtk+Y5jx2eToHOnTj9d1yvFryRPI2DydjlxCrXzzj5sv6lajT9qwogkNoFp4SNPZbZGag6zpJAhXn9DMdw9zniN82SdS9cA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769529653; c=relaxed/simple;
+	bh=bCEyxMDbMXjcD5Q4ndMCEOt8U5L9TJj6jcgUsqmd2D8=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=RHZokGiRGD2XxSkpYYVRCmBBeX0DOl9mL9dsUgXiAzCwxxttzZWOp8Q8vP1P/IOk7ETr8SKpIMpG1wvhO2qGrXfrS8vAPRy6omId3oDCDyRn6vtI2O2acyVrZCoEooSTcTCE/Kfwe0rRBw5t0xAJ3biG4xwkuzFWqCrCba9vZ0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dvWiWn7s; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LXE0vUFn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s89Y5aAfM1iO/fPTetRedLuUQMVVXvgaZQU7z4kg/Pzewil7ksDUJ1VT1DIiXMkuKKlV6Vs/jS4wC2MzXTeEUCM3Wjw1VON9rxqnehmDCNdyiJ3qG4S1blsImoxxJUfR4XPdSjLTo8Hcfnu7ptRfdTIJ3RzW2/DGbXYn87dpgc3SyHgDLdnCLfNCjGHQhyDNhNNP1LSTBFbtjz0MJAbQUtzTKPAOIgdCNCL2P9DIaQpoAvQwKNjoc/08dpQZ2fK1DZosLg3PIReBSUTaMFZMwfigAfoJzNuLkQw9uwNDZGc1xrcJGqdSG6fB8a8jPncxGQWFxzRpkrVz3TpPPIK/lQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mvcrYy4FzXU6V02zfyg0ooeyoDoEa2LhLqn5c13b+9Y=;
- b=xfId5lZBKiOVmYZNFeI59ofSi9incrKHWlJeCRE5lF5mIwjGnGsB1iI/8Pd+BZmVL+S1SoB7+SgLBCFbVoRmfnFoz/Ec8RA9g/WgnIsPBK1Aqx9uK3gaK30S+Z75tkZyL2HpM5ij9+VfbllBrzt03EzUNn98V+pa/zn5jdUW9qFwqgq8UAhJuMnt8SrW9Us09R6IRsHozyYYIjhcBqYm4ohQqx+3/WzwNMHva7RDT914+SNtlKrCTovaoJrHrxdkraTciC4hFhgPPYhBqaBXuBozSFYm/cpJzGPk5/vWzFH7tlEP+dFZvKj5SJe7h8ygeFqz6B2XPUJXgCKu1WKpaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mvcrYy4FzXU6V02zfyg0ooeyoDoEa2LhLqn5c13b+9Y=;
- b=LXE0vUFnefqxtzzE5OdSKpLCju/nWO+MvEagYYEuIsGNwb25nfMej8eHkw+RVp7lobd77gOJhdmafTNhYxR7N/5cbpfhCQEYUNDNqPwrCnZNGW913PtnuUCuOn917KqgGEJ65xMSFEGiS9SfW/mehwP8MbCf77FcVYdxinUh9wdRyg3Hy14xzoT8cs7KSSfKSzSMgafFLBNYa8VSaEnOE0Kzs7Vt29CL20kfHc5EWG5tdOOVAXDWFEAQEBmFRooxpylqAA2dxlTPQAGgocixbkfUZMwo+jRU8sheYoDvP0Z0yBwkCW0aUAivpM61BHmLD0Y/7+zPD0e33E6mzZTODg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS2PR12MB9800.namprd12.prod.outlook.com (2603:10b6:8:2b5::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Tue, 27 Jan
- 2026 14:18:17 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9542.015; Tue, 27 Jan 2026
- 14:18:17 +0000
-Date: Tue, 27 Jan 2026 15:18:03 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Gabriele Monaco <gmonaco@redhat.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dvWiWn7s"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1769529647;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bCEyxMDbMXjcD5Q4ndMCEOt8U5L9TJj6jcgUsqmd2D8=;
+	b=dvWiWn7sAoQmbDZCE1zRY7HchTWsCpLK6UkmJ+Tj4DkWtuphgH9bU2VO0TKe0rz7ZnOP/x
+	G+/u/kf1/Me+/kqIPj/kr/2jPhHteCTDmAEhIlEa/t9rQXY+M9cnt59At/hyoDWBO7rzvy
+	Gaew62tuWd03dHvRW1SttUju1QFLoGM=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-31-ajyBkrZSPmyNL_hDDd1lOg-1; Tue, 27 Jan 2026 11:00:36 -0500
+X-MC-Unique: ajyBkrZSPmyNL_hDDd1lOg-1
+X-Mimecast-MFC-AGG-ID: ajyBkrZSPmyNL_hDDd1lOg_1769529635
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-b8773bf3ddbso501411866b.1
+        for <sched-ext@lists.linux.dev>; Tue, 27 Jan 2026 08:00:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769529635; x=1770134435;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bCEyxMDbMXjcD5Q4ndMCEOt8U5L9TJj6jcgUsqmd2D8=;
+        b=EOlS6sVEOb2x9vLMghfirkPIcLk2ZXXBaTr01zxkzO4WB8x/M96FbxTgk3jq9FPplv
+         NwXRTHndLkzZV/PQ0OvxgltOZ7QoxUG6A5Wq58IN4jUPH25iGufOjKBzTooajiyrCIXQ
+         RpS76TUI8GhBwVETkpo4/QdBd665F3fHufkX3XekbcF+Yr1iuoLh8jCG2SvV3CqdDPAZ
+         a1oUd27+ziLRu9CZ2kk9IG+Is/g/Yz5n7FOXAPfgJiRxmkOnB10f4MndE5d8LRqfb0Ys
+         KN4dnoMwqQPuY7qBlq+me/CT0S0fQddn1wVkDy+Rp3OuoHwEORZiEDg1uBzZEbqUeHv3
+         b/Ig==
+X-Forwarded-Encrypted: i=1; AJvYcCXJ/voCJFkzUmYp6oanJqAy7lsdZjPK/UKjIqeQPcjP3ylyEU+lxY3h5hPmcYABXj7cwWFnE8P6WeQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyELkAMDLARQVgApkHmCD8iVzBTvscON4LmqakzjAv3DqYHAdrx
+	jsCdFC5cnpnxuoYd7L4VQ0vZjoHh1AdofOHMSbb57/g5HaZeXT/ZSGjRsL4m4I0HtMVuajgsoWX
+	FVKvnVoofM5haGzJqR12Z3JyjB54rdb2+OJr9S9QiXHwkecPXzBQ0v2E2TfmoAA==
+X-Gm-Gg: AZuq6aKJyhGzNQc1/ptqklGE/taeY4VQ0byCyBg/lqvPWaX5VsRRESKsLfxDZaxuZf/
+	T4HO78r4SKadOQwt5cwe2ofTVnMV0oZoGrcVA8Wu6VP5ccwpJQx+l27UvWrN72PFcbUKDcJnXmg
+	kEzDqYW2BeqDO5enVCh1lauRXC9syoAAfZ5PNMycY5PUy33RY4SfWmGQz2smSEDrfgGt2+0UkDF
+	s3NcH8lunuGBhQAPc9AQGgRau1dn77qhKmlAv+dIMw3nSd9sbuPNYcydgKqLckZuYnnRwonhjdl
+	whsozYpAuIYdOpUslO4D8FR4DnfV4iUp4qnWtj/581M7jeGQn1pwAUJzYrOJyHKeX5JDah0cDLj
+	2yJ43ow==
+X-Received: by 2002:a17:906:c108:b0:b80:751:ee62 with SMTP id a640c23a62f3a-b8dab3048a2mr175431366b.14.1769529634934;
+        Tue, 27 Jan 2026 08:00:34 -0800 (PST)
+X-Received: by 2002:a17:906:c108:b0:b80:751:ee62 with SMTP id a640c23a62f3a-b8dab3048a2mr175427966b.14.1769529634427;
+        Tue, 27 Jan 2026 08:00:34 -0800 (PST)
+Received: from [127.0.0.1] ([185.168.96.228])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b885b445747sm802335766b.30.2026.01.27.08.00.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jan 2026 08:00:34 -0800 (PST)
+Date: Tue, 27 Jan 2026 16:00:31 +0000
+From: Gabriele Monaco <gmonaco@redhat.com>
+To: Andrea Righi <arighi@nvidia.com>
 Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
 	Juri Lelli <juri.lelli@redhat.com>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
@@ -54,172 +76,71 @@ Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
 	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
 	Joel Fernandes <joelagnelf@nvidia.com>,
 	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
+	Changwoo Min <changwoo@igalia.com>, Daniel Hodges <hodgesd@meta.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Message-ID: <be763631-f677-4bad-8285-69dbfe29db54@redhat.com>
+In-Reply-To: <aXjJG-72XEqvaVtL@gpd4>
+References: <20260123161645.2181752-1-arighi@nvidia.com> <f99f63b4a777ff990832a27fa6d171aaf1206a75.camel@redhat.com> <aXeWnzI3ymUSm3Cu@gpd4> <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com> <aXfcGynN92kyw5Co@gpd4> <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com> <aXjJG-72XEqvaVtL@gpd4>
 Subject: Re: [PATCH v2] sched/deadline: Reset dl_server execution state on
  stop
-Message-ID: <aXjJG-72XEqvaVtL@gpd4>
-References: <20260123161645.2181752-1-arighi@nvidia.com>
- <f99f63b4a777ff990832a27fa6d171aaf1206a75.camel@redhat.com>
- <aXeWnzI3ymUSm3Cu@gpd4>
- <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com>
- <aXfcGynN92kyw5Co@gpd4>
- <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
-X-ClientProxiedBy: MI0P293CA0009.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::6) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS2PR12MB9800:EE_
-X-MS-Office365-Filtering-Correlation-Id: a592a2e7-84d3-4a6b-2039-08de5daeea4c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?6EHdBpCh6WILw+ZBErVbaVh6LE+WZsD4RvAoGorFejYOgVmPgkhAhzJxPPTi?=
- =?us-ascii?Q?OeuP//SdUeIUeQlUL5MNpX/zE/tDkOrQIYZe98ylTGVs3Ct8wRTTRD+HtTDy?=
- =?us-ascii?Q?gogVXCU+LPjZRJZjZElqs9AO3FTTOh4Q0udp98QRWBmext+wEfnrLMxdfZdj?=
- =?us-ascii?Q?UNVA8o54crn3o2APgOBod0PennCQdFg1uds38oL9UzLiQ/j9kG73hPolanet?=
- =?us-ascii?Q?IOffX39Q7yZkkB7ZBNi3K3yBfF1m3lRvufdDcOj89c5RvIpDGaUFJiBONjW2?=
- =?us-ascii?Q?W96WJKpd0CI+rfXDio+wQLU9wn4mWCgdFgiosLzfVueCbKEaHNACUX/+/q5S?=
- =?us-ascii?Q?gSCYQ3CiUM6KkyvTKg65QuQdRyH5jwXcwWdGVIMk2aIdlVZf0/VutkbomAyP?=
- =?us-ascii?Q?gJEwjxQObjRvASphkCcaFVh7uI50b/6XGTAMTNRYLjlJeArqMTyenZwmDy4M?=
- =?us-ascii?Q?KnfUkmZ9b+sVZFH5S4E5MkKzFkkXFfX43aWKcwiP3dKV8p8uCoBV2yh9vjJu?=
- =?us-ascii?Q?LM3hyxrJVsVrC5DQgmUyMuyCOiFvAoOMdHhhr7gapm4gP0oN9ows0Xxxm6YY?=
- =?us-ascii?Q?hY7qs5slkG7anB4Jad4u4tdcOxr9hasaKJTy7ZSLxxwnAP1OMFkAh0xG4uJn?=
- =?us-ascii?Q?FwmMk7WdMPUqo9V635HRfQBYkvmnYdx/+WSuOSn+qkExWGGsJ99Gr4b1sXkt?=
- =?us-ascii?Q?kFO61MQsie58QFY8ALa40Mi5NNwrH+CaGom4rzzWLeRv2PCIhkrSjMYgUlmN?=
- =?us-ascii?Q?Np22zqfVxsbdSY/Y1sRHUmkGdNNblvGIgUC1D7HwSu2knbp1Ag/fT/8px4iO?=
- =?us-ascii?Q?8jSZurXQXccm7uqerm//zHp+fJuaGHX9kHwguf4VNZwpxIp+U/7b1elhf/Up?=
- =?us-ascii?Q?+P/idBt0c1agCdtm44EqWmPqh7uhHwKwPlCKOClJpFr3FeJ3ch54zXadkmP1?=
- =?us-ascii?Q?URQf+z98ltUfl/ruhjdKuIchARjlvTk52q/EiQZJCtsi4Ju8cORd3JpK2CO+?=
- =?us-ascii?Q?OxC+Ef92+LtB+cSPS0HzgzGbQsKUaHWLCkqn12Q5lX5j3BwXIEQNZ/grb01i?=
- =?us-ascii?Q?CHaR1LFINPWEbReOEZz8IDz/2vBVmUSUjmRAfxeiJtyk9/MpmzQ8GXr0ZH2U?=
- =?us-ascii?Q?+H5O0JLWUCfIZXCEw7/Z7ZZoUzNeI/39M5P4QQlD1la1vPudAXvLwbtj+JUV?=
- =?us-ascii?Q?ysWnc0KEt1NhBQax4ZIS5Vjk8Iv33FAcxNdJGeDa7eOjtjv9OM/o13jk+jhl?=
- =?us-ascii?Q?EIaYBV18DvrbDERfaL5fBjS8FhgQR8KaKhMjXoMTN/kzFHadC0DzwUKqIZch?=
- =?us-ascii?Q?tL3wgJF7CEyjkKQ67a32FNmvLuM3u6bfaqkL4BWd9LyDsW5P99dDMvId/f5I?=
- =?us-ascii?Q?3RFNzIJ1L+XF/K1p1F0i+7CONBK/yaN8XgPf9tDQnYgzrCBtptpog7u5jhCm?=
- =?us-ascii?Q?5vW/fsGq5Y5SYYySac+j5fMCcGzurih74F+4WAZUz60V+0iGZbGiK2WJyTag?=
- =?us-ascii?Q?yIFBBbpO0VMNjKXwVag/OIptJVP1gQrsR0lY8BRwkACRvQA6wKuE0xo//TCD?=
- =?us-ascii?Q?YFpnLyibfflVyGERH9s=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3QLq0N2KxFGTuFvnRS59gNI9EeZxr23SZo5A5obb0f8S5emGCV7vNVHxMOqE?=
- =?us-ascii?Q?JVP3tjv6ZwM0JUTewuYd4vwiiqQ1/KSUmb02zTnZiPPMGqmcEgS+nrdmz66l?=
- =?us-ascii?Q?QeA1E1El2qO7hEAGKjYJJI/nRzg8FVaYDUSaqX2IQTDnU+eW+pvkfcs2CAlB?=
- =?us-ascii?Q?cPu+MFKQ/aPc1I0eYc2zGXqwFAxvt6fGxbCnt1UKgbdypXbT52akk4zQs22C?=
- =?us-ascii?Q?688CPBlsjX7UJ3SXjrnAHVuMNWn3firFiCS93TQx3ty84BmYEkNSZ1hS+3Vc?=
- =?us-ascii?Q?HTJQiZm00EimST9O4woq9eHuctyGEzEjSrTnwfDIPuVYMAPT8jB/3klluR4u?=
- =?us-ascii?Q?8SXYXgkywxBstO2wtRNTsE0vx14xyv0/FDYzXEPpjbG+ZCYlF2FIfAT3aJSe?=
- =?us-ascii?Q?zG+OlIvShltQP8pkHuZjXxX82hEHYLC1EFiO8Tc0kIsz8BsETB4kzZJ5svZo?=
- =?us-ascii?Q?z7p9NcTt/sDXAp9MU27HQ727aO/UDtrL2IuoCdzT6AQvRyDCZHutU72FZ5ui?=
- =?us-ascii?Q?9hsFF1ZJCERFbjb+tHUpyx2hhLru50QVA7ItDB5XMye5iNVj7gZOBv0a4LB/?=
- =?us-ascii?Q?sscwXoHEUaQJXvFOWPPnKkHZ9dSgcSB9OpqDUX6XmxQkf040vCT1BZZjXmX4?=
- =?us-ascii?Q?EbkO2MCGPjJQzTGrcW8KJnUeui4l3Ih/6qsbmENnEP48VQ5RGBqouropdMLH?=
- =?us-ascii?Q?r8n+tHjMnuH4fruUeo7CPCcU+ZrH21jBcZeUHT2odICe6hJ065KDLvZdyxCT?=
- =?us-ascii?Q?Iv9cEHjJMMJ9OZnhFBG9WgDxg+HnH6ppa0jj4W2nDcWEPkgBl2ok5/tREpY8?=
- =?us-ascii?Q?cxXaWArheAndv184R4NU806G4gH6Iiy0GjyId9qsdeDW5vNzPUoxvbgZQ6ny?=
- =?us-ascii?Q?fbzg74c29NoScH8NXSxOGNpQgmof678tPZyXgCdE5rla/s5izCrWx0PNfe15?=
- =?us-ascii?Q?LsjJkKZht9howalsfH6YOCxVF/fUQ/Ay7lWg2BhcyLY8i0MRXM0nW7zZxoWG?=
- =?us-ascii?Q?cO6UvYIUE50gKLdaakLHGIbvkdED0DQ10F4c+7emgmXTTE7WdWc4mdKYuuHZ?=
- =?us-ascii?Q?djMe2FNLsU0CGgU+6sJlnx+iFnYJSZZ83eIGDOdayJadv0VBGIGz4nI8dAU1?=
- =?us-ascii?Q?LTPRqh3h56dWRDohpAPDqr8oNvf5swp30NjUfim4MFtV4m/fDfrWL0/BQ9SM?=
- =?us-ascii?Q?EnlvbwxuXf6UozwClbNEeWzCLvu8DPvoJfPbZKS/eKe1BDfKo7oaBjR7y65+?=
- =?us-ascii?Q?Njs3JfQbs0XObH8tPcvp4lCReL8kzKW7llUwj3qZqBzsg1qptY91DX0bWiWR?=
- =?us-ascii?Q?DF6IkvcVfkdz9bZDbCEsIJjrNdrNHhC0ot16M4Iqn6Ar51KeUbyELaA5ANa+?=
- =?us-ascii?Q?wC2pmzhHHfuY0nx1depPA4ErEzl7pPwny4eUVp1VZlo1fThbm4q3OPPqgyuV?=
- =?us-ascii?Q?/aEmGI4ikyo0UTNe9m4cVSH2LdOR/41Up+OBf0/OS4IC/OPon+KOfBCcvnOX?=
- =?us-ascii?Q?kBNPuKQSn8AdJsUjLJS08mqLo0Ko5lrlyo604wLSENTIZ8o2e4Vaqlo+Tnl4?=
- =?us-ascii?Q?FODSu0zXS+c/V1UN0bUkcuYKQ1DDxYlvxm9Y/8cU7d9crNhxRVfJJvxrkzwT?=
- =?us-ascii?Q?sjYtpqVDwaPBZVLSn3cJnRXrJufZiA4TzG3lqaFNSRh5GOJZHgNpi9U/vlFl?=
- =?us-ascii?Q?ZM8tKRH0OWbR73WgalNiNLop+6DHuhUM03vS3bsoUFNvXVTYGDursBIqfEJb?=
- =?us-ascii?Q?JUgw4O6bHA=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a592a2e7-84d3-4a6b-2039-08de5daeea4c
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2026 14:18:17.3605
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 77B8slMMVV720ShirCnxItO5Lnvq8ixe8lyrtms9OzNLdl6+fOvu9vi49qssCd1YwP5Z2YGS6DbUHFlRpbgm5A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9800
+X-Correlation-ID: <be763631-f677-4bad-8285-69dbfe29db54@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: w8ul_vig-FuVl8xXDZIXc5Fb_GVsXYrpe8ZsiWZTR0Y_1769529635
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 27, 2026 at 08:52:48AM +0000, Gabriele Monaco wrote:
-> 2026-01-26T21:27:11Z Andrea Righi <arighi@nvidia.com>:
-> > On Mon, Jan 26, 2026 at 04:56:52PM +0000, Gabriele Monaco wrote:
-> >> Still if it starts before the deadline, the server is going to get throttled as you observed, and perhaps since in your tests the CPU isn't idle, we don't stop the server after that dequeue and then we never replenish after the deadline (because we never start and as you mentioned, the timer is not armed).
-> >>
-> >> Can this be what you're observing?
-> >
-> > Yes, I think it matches what I'm observing.
-> >
-> > In my case the server is (re)started before the deadline, so it immediately
-> > runs with exhausted runtime, gets throttled, and is dequeued. Since the CPU
-> > isn't idle, we don't hit a path that would stop the server cleanly and
-> > reset its execution state.
-> >
-> > At that point, because dl_defer_running is still set, the restart path
-> > assumes the server is already in the running phase and skips arming the
-> > deferral/replenishment timer. Therefore, once the deadline passes there is
-> > no remaining trigger to replenish a new period and the server gets stuck in
-> > a throttled-but-running state.
-> >
-> 
-> Alright thanks. I believe your fix would work even if you reset the defer_running only when the runtime is exhausted.
-> 
-> This way we'd still keep a bit of benefits of the start-running sequence if fair/scx tasks sleep and run back when the server still has runtime.
-> 
-> We could even keep the defer_running as it is and mark the server as defer_armed (with laxity timer and stuff) only if it starts in this exact condition (runtime = 0 and deadline not expired). But this may just be overly complex for little benefit.
-> 
-> What do you think?
+2026-01-27T14:18:29Z Andrea Righi <arighi@nvidia.com>:
+> I think my case should work also doing something like this (I'll run some
+> tests later to double check):
+>
+> =C2=A0=C2=A0=C2=A0 if (dl_se->runtime <=3D 0)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dl_se->dl_defer_running =3D 0;
+>
+> In this way:
+> - short sleep + remaining runtime > 0
+> =C2=A0=C2=A0 - dl_defer_running stays set
+> =C2=A0=C2=A0 - restart can go A->D directly
+> =C2=A0=C2=A0 - no extra defer / zero-laxity penalty
+>
+> - stop with exhausted (or negative) runtime
+> =C2=A0=C2=A0 - dl_defer_running is cleared
+> =C2=A0=C2=A0 - restart must re-establish eligibility
+> =C2=A0=C2=A0 - deferral / timer is armed again
+> =C2=A0=C2=A0 - no stale "already running" server
 
-I think my case should work also doing something like this (I'll run some
-tests later to double check):
+Yeah that looks like the neatest to me.
+Fair tasks are a bit more penalised than now but won't be if they really sl=
+eep before consuming the runtime, which I think was the whole point of this=
+ logic.
 
-	if (dl_se->runtime <= 0)
-		dl_se->dl_defer_running = 0;
+> However, I think the right assumption should be that both runtime **and**
+> deadline are still coherent, so we should probably do something like this
+> to be fully correct:
+>
+> =C2=A0=C2=A0=C2=A0 if (dl_se->runtime <=3D 0 ||
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dl_time_before(dl_se->deadline=
+, rq_clock(dl_se->rq)))
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dl_se->dl_defer_running =3D 0;
+>
+> This makes the stop path slightly more complex, so I'm not sure whether
+> it's preferable to go in this direction or just unconditionally clearing
+> dl_defer_running, which is simpler and more explicit from a state-machine
+> point of view.
 
-In this way:
- - short sleep + remaining runtime > 0
-   - dl_defer_running stays set
-   - restart can go A->D directly
-   - no extra defer / zero-laxity penalty
+I think it's trickier than that. The state machine is coherent as long as t=
+he the server is restarted after the deadline, no matter when it was stoppe=
+d.
 
- - stop with exhausted (or negative) runtime
-   - dl_defer_running is cleared
-   - restart must re-establish eligibility
-   - deferral / timer is armed again
-   - no stale "already running" server
-
-However, I think the right assumption should be that both runtime **and**
-deadline are still coherent, so we should probably do something like this
-to be fully correct:
-
-	if (dl_se->runtime <= 0 ||
-	    dl_time_before(dl_se->deadline, rq_clock(dl_se->rq)))
-		dl_se->dl_defer_running = 0;
-
-This makes the stop path slightly more complex, so I'm not sure whether
-it's preferable to go in this direction or just unconditionally clearing
-dl_defer_running, which is simpler and more explicit from a state-machine
-point of view.
-
-Which one do we prefer? Happy to go with whatever approach you think makes
-more sense.
+This check should probably be done at some point during dl_server_start().
+But yeah it's probably an overkill.
 
 Thanks,
--Andrea
+Gabriele
+
