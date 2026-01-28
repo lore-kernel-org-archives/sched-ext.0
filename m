@@ -1,131 +1,130 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833ED3033F4;
-	Wed, 28 Jan 2026 21:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEF026B77D;
+	Wed, 28 Jan 2026 22:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769635270; cv=none; b=umhVazrIFMOPHgdogRj+taNCpwFBouGbvxWBVQzSsj842qZz1wZ7mJ5ldLS3U7mj3XY++MNbOzkX4nU4aTcOTKAt2AnhPovpCpLhedoNj017sHwwNKzyJsH6e4uYc5dU4NSqED2Ddyu891rEaPHp1l5IUmjoPzaew95Cslqu2f0=
+	t=1769639094; cv=none; b=QiqwgU1vdt54aXEgRkU4G/42hdb3BNP3Huyhm0yXMDUsaMN4JNh2zFjd7kLgDBzikgGKP3ZSbMCKd4LwpmNrfK5j13aHHbdN5lw3Umzz7Lf1UQYheX49sMkMWas09hW/ek//Y1fqA34GZ+Lqge3an3fJDsd3bx3CB3YuVq9Axv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769635270; c=relaxed/simple;
-	bh=xL4iWToRfzzAGO/pEbWp6kOErE9kS07td9k8UslbXkg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f+75WgZkMyy9CUQOmY/+HPI6ZFKQs3gvnyObqmKM0JsOWDQVaIkl0yOxdjLrrWmoi1OD9rcLz7vS+mJwaeEWVg7NxQfUEZ0j+9AGYxkdxRE/WElQ2vvq6CEqLxfhd43sP8Fvt8+0llrIXrHxgDdO0hWN1e62hM7ilKQbrTYXdAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HuM0nHtI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769639094; c=relaxed/simple;
+	bh=c+XKRO+gGrMtBjuS12k/iR4p/hIlFt0mtK46g9rhORE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aJLQs8PBzuiUbCjWl/A04L37WXvaK0UpAke0f07yc6kAaIgkfL5ivL0m9bfsMDxD9GBW+JED68s6slrkchQ7WYstHI5CIWjQqgCPdIbBPhTg5II89mxSbAW6VrL8B9of9cp1LiHDTitgUzu6WEXOJwp22TRlj3Nk8f3jvqR6RfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NYWcKiAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HuM0nHtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E86C4CEF7;
-	Wed, 28 Jan 2026 21:21:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NYWcKiAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2B7C4CEF1;
+	Wed, 28 Jan 2026 22:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769635270;
-	bh=xL4iWToRfzzAGO/pEbWp6kOErE9kS07td9k8UslbXkg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HuM0nHtIqllS/FUUTSv5458CQL0vhcJ1cUe+xFgflSQI/6AJbP7Lla+vFwvtO0AcX
-	 ROEzu/BQvfRpuqr3AyzWC4w8PuH3KfAlSSRPLuVq4NXHxt1K2DHupbrtwpfcuuPIvL
-	 WV3iYUjovzYBZlpOVJQUaXh3zGCp9OIEZx/RFM7HMoHSCAfz3p8DIOOQB/j3URUgZT
-	 Kw7bsR62yVFaAV5RLZVMidWZHtdJYkF0j3Ve5cXsFw0Gfxz8Bpgw9diCVPJckX7893
-	 YrHVtmbYAWLuOfExCBw/HKWmWw443s43O/qhwB4WhnucJtAV5yhiaZrB9zTRnG4SUx
-	 UqLQAAlcQGaWg==
-Date: Wed, 28 Jan 2026 11:21:09 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Kuba Piecuch <jpiecuch@google.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
-Message-ID: <aXp9xSpYhaysBLQ2@slm.duckdns.org>
-References: <20260126084258.3798129-1-arighi@nvidia.com>
- <20260126084258.3798129-2-arighi@nvidia.com>
+	s=k20201202; t=1769639094;
+	bh=c+XKRO+gGrMtBjuS12k/iR4p/hIlFt0mtK46g9rhORE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=NYWcKiAEqAzCy5o24EsuT6heJKvZ2Km8ANm9oXxLEbAl2fI1q5W7t0UCjvfgeaQs1
+	 MD1aplzQ1k/2FOhshvcvRId/twTM0FigHwR0wm32bUr/u02YX1MsxSSDV/QvBRcqI6
+	 1CVG+P7GqBJa9W+H64WhKXALS6nsdvVck3tmVY98C1Pg0kz3XhYeOfLmT3aQ5ybJW0
+	 r/R4us3PDRp9u2u5a0Xe0chpbRzqjkd3mroFJFQ35PV9BTnWcJbOJc4cAIzUC9twxk
+	 fJ0ez9gJE1FVFX+BDX4s6ZdP1LOROZqMo64zMLtnqoJo4W9GHCxztrDtBo0uaEc00m
+	 19Md/ESAXKsPA==
+From: Thomas Gleixner <tglx@kernel.org>
+To: Shrikanth Hegde <sshegde@linux.ibm.com>, Peter Zijlstra
+ <peterz@infradead.org>, Ihor Solodrai <ihor.solodrai@linux.dev>, LKML
+ <linux-kernel@vger.kernel.org>
+Cc: Gabriele Monaco <gmonaco@redhat.com>, Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Michael Jeanson <mjeanson@efficios.com>,
+ Jens Axboe <axboe@kernel.dk>, "Paul E. McKenney" <paulmck@kernel.org>,
+ "Gautham R. Shenoy" <gautham.shenoy@amd.com>, Florian Weimer
+ <fweimer@redhat.com>, Tim Chen <tim.c.chen@intel.com>, Yury Norov
+ <yury.norov@gmail.com>, bpf <bpf@vger.kernel.org>,
+ sched-ext@lists.linux.dev, Kernel Team <kernel-team@meta.com>, Alexei
+ Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>, Daniel
+ Borkmann <daniel@iogearbox.net>, Puranjay Mohan <puranjay@kernel.org>,
+ Tejun Heo <tj@kernel.org>
+Subject: Re: [patch V5 00/20] sched: Rewrite MM CID management
+In-Reply-To: <87y0lh96xo.ffs@tglx>
+References: <20251119171016.815482037@linutronix.de>
+ <2b7463d7-0f58-4e34-9775-6e2115cfb971@linux.dev> <877bt29cgv.ffs@tglx>
+ <bdfea828-4585-40e8-8835-247c6a8a76b0@linux.ibm.com> <87y0lh96xo.ffs@tglx>
+Date: Wed, 28 Jan 2026 23:24:50 +0100
+Message-ID: <87jyx1ml3h.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260126084258.3798129-2-arighi@nvidia.com>
+Content-Type: text/plain
 
-Hello,
+On Wed, Jan 28 2026 at 14:56, Thomas Gleixner wrote:
+> On Wed, Jan 28 2026 at 18:28, Shrikanth Hegde wrote:
+>> On 1/28/26 5:27 PM, Thomas Gleixner wrote:
+>>   watchdog: CPU 23 self-detected hard LOCKUP @ mm_get_cid+0xe8/0x188
+>>   watchdog: CPU 23 TB:1434903268401795, last heartbeat TB:1434897252302837 (11750ms ago)
+>>   NIP [c0000000001b7134] mm_get_cid+0xe8/0x188
+>>   LR [c0000000001b7154] mm_get_cid+0x108/0x188
+>>   Call Trace:
+>>   [c000000004c37db0] [c000000001145d84] cpuidle_enter_state+0xf8/0x6a4 (unreliable)
+>>   [c000000004c37e00] [c0000000001b95ac] mm_cid_switch_to+0x3c4/0x52c
+>>   [c000000004c37e60] [c000000001147264] __schedule+0x47c/0x700
+>
+> So if the above spins in mm_get_cid() then the below is just a consequence.
+>
+>>   watchdog: CPU 11 self-detected hard LOCKUP @ plpar_hcall_norets_notrace+0x18/0x2c
+>>   watchdog: CPU 11 TB:1434903340004919, last heartbeat TB:1434897249749892 (11895ms ago)
+>>   NIP [c0000000000f84fc] plpar_hcall_norets_notrace+0x18/0x2c
+>>   LR [c000000001152588] queued_spin_lock_slowpath+0xd88/0x15d0
+>>   Call Trace:
+>>   [c00000056b69fb10] [c00000056b69fba0] 0xc00000056b69fba0 (unreliable)
+>>   [c00000056b69fc30] [c000000001153ce0] _raw_spin_lock+0x80/0xa0
+>>   [c00000056b69fc50] [c0000000001b9a34] raw_spin_rq_lock_nested+0x3c/0xf8
+>>   [c00000056b69fc80] [c0000000001b9bb8] mm_cid_fixup_cpus_to_tasks+0xc8/0x28c
+>>   [c00000056b69fd00] [c0000000001bff34] sched_mm_cid_exit+0x108/0x22c
+>>   [c00000056b69fd40] [c000000000167b08] do_exit+0xf4/0x5d0
+>>   [c00000056b69fdf0] [c00000000016800c] make_task_dead+0x0/0x178
+>>   [c00000056b69fe10] [c0000000000316c8] system_call_exception+0x128/0x390
+>>   [c00000056b69fe50] [c00000000000cedc] system_call_vectored_common+0x15c/0x2ec
+>
+>> I am wondering if it this loop in mm_get_cid, which may not be getting a cid
+>> for a long time? Is that possible?
+>
+> It shouldn't be possible by design, but it seems there is a corner case
+> lurking somewhere which hasn't been covered. Let me stare at the logic
+> in the transition functions once more. That's where CPU11 comes from:
+>
+>>   [c00000056b69fc80] [c0000000001b9bb8] mm_cid_fixup_cpus_to_tasks+0xc8/0x28c
+>
+> The exiting it initiated a transition back from per CPU to per task mode
+> and that seems to make things unhappy for mysterious reasons.
 
-On Mon, Jan 26, 2026 at 09:41:49AM +0100, Andrea Righi wrote:
-> @@ -1287,6 +1287,20 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
->  
->  	p->scx.ddsp_enq_flags |= enq_flags;
->  
-> +	/*
-> +	 * The task is about to be dispatched. If ops.enqueue() was called,
-> +	 * notify the BPF scheduler by calling ops.dequeue().
-> +	 *
-> +	 * Keep %SCX_TASK_OPS_ENQUEUED set so that subsequent property
-> +	 * changes can trigger ops.dequeue() with %SCX_DEQ_SCHED_CHANGE.
-> +	 * Mark that the dispatch dequeue has been called to distinguish
-> +	 * from property change dequeues.
-> +	 */
-> +	if (SCX_HAS_OP(sch, dequeue) && (p->scx.flags & SCX_TASK_OPS_ENQUEUED)) {
-> +		SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq, p, 0);
-> +		p->scx.flags |= SCX_TASK_DISPATCH_DEQUEUED;
-> +	}
+I stared at it for a while and found the below stupidity. But when I
+actually sat down after a while away from the keyboard and tried to
+write a concise changelog explaining the root cause I failed to come up
+with a coherent explanation why this would prevent the above scenario,
+which hints at a situation of MMCID exhaustion.
 
-1. When to call ops.dequeue()?
+@Ihor: Is the BPF CI fallout reproducible? If so, can you please provide
+       it?
 
-I'm not sure whether deciding whether to call ops.dequeue() solely onwhether
-ops.enqueue() was called. Direct dispatch has been expanded to include other
-DSQs but was originally added as a way to shortcut the dispatch path and
-"dispatch directly" for execution from ops.select_cpu/enqueue() paths. ie.
-When a task is dispatched directly to a local DSQ, the BPF scheduler is done
-with that task - the task is now in the same state with tasks that get
-dispatched to a local DSQ from ops.dispatch().
+Thanks,
 
-ie. What effectively decides whether a task left the BPF scheduler is
-whether the task reached a local DSQ or not, and direct dispatching into a
-local DSQ shouldn't trigger ops.dequeue() - the task never really "queues"
-on the BPF scheduler.
-
-This creates another discrepancy - From ops.enqueue(), direct dispatching
-into a non-local DSQ clearly makes the task enter the BPF scheduler and thus
-its departure should trigger ops.dequeue(). What about a task which is
-direct dispatched to a non-local DSQ from ops.select_cpu()? Superficially,
-the right thing to do seems to skip ops.dequeue(). After all, the task has
-never been ops.enqueue()'d. However, I think this is another case where
-what's obvious doesn't agree with what's happening underneath.
-
-ops.select_cpu() cannot actually queue anything. It's too early. Direct
-dispatch from ops.select_cpu() is a shortcut to schedule direct dispatch
-once the enqueue path is invoked so that the BPF scheudler can avoid
-invocation of ops.enqueue() when the decision has already been made. While
-this shortcut was added for convenience (so that e.g. the BPF scheduler
-doesn't have to pass a note from ops.select_cpu() to ops.enqueue()), it has
-real performance implications as it does save a roundtrip through
-ops.enqueue() and we know that such overheads do matter for some use cases
-(e.g. maximizing FPS on certain games).
-
-So, while more subtle on the surface, I think the right thing to do is
-basing the decision to call ops.dequeue() on the task's actual state -
-ops.dequeue() should be called if the task is "on" the BPF scheduler - ie.
-if the task ran ops.select_cpu/enqueue() paths and ended up in a non-local
-DSQ or on the BPF side.
-
-The subtlety would need clear documentation and we probably want to allow
-ops.dequeue() to distinguish different cases. If you boil it down to the
-actual task state, I don't think it's that subtle - if a task is in the
-custody of the BPF scheduler, ops.dequeue() will be called. Otherwise, not.
-Note that, this way, whether ops.dequeue() needs to be called agrees with
-whether the task needs to be dispatched to run.
-
-2. Why keep %SCX_TASK_OPS_ENQUEUED for %SCX_DEQ_SCHED_CHANGE?
-
-Wouldn't that lead to calling ops.dequeue() more than once for the same
-enqueue event? If the BPF scheduler is told that the task has left it
-already, why does it matter whether the task gets dequeued for sched change
-afterwards? e.g. from the BPF sched's POV, it shouldn't matter whether the
-task is still on the local DSQ or already running, in which case the sched
-class's dequeue() wouldn't be called in the first place, no?
-
-Thanks.
-
--- 
-tejun
+        tglx
+---
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -10664,8 +10664,14 @@ void sched_mm_cid_exit(struct task_struc
+ 			scoped_guard(raw_spinlock_irq, &mm->mm_cid.lock) {
+ 				if (!__sched_mm_cid_exit(t))
+ 					return;
+-				/* Mode change required. Transfer currents CID */
+-				mm_cid_transit_to_task(current, this_cpu_ptr(mm->mm_cid.pcpu));
++				/*
++				 * Mode change. The task has the CID unset
++				 * already. The CPU CID is still valid and
++				 * does not have MM_CID_TRANSIT set as the
++				 * mode change has just taken effect under
++				 * mm::mm_cid::lock. Drop it.
++				 */
++				mm_drop_cid_on_cpu(mm, this_cpu_ptr(mm->mm_cid.pcpu));
+ 			}
+ 			mm_cid_fixup_cpus_to_tasks(mm);
+ 			return;
