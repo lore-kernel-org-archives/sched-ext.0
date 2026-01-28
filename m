@@ -1,154 +1,175 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011026.outbound.protection.outlook.com [52.101.52.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E86B2FF169
-	for <sched-ext@lists.linux.dev>; Wed, 28 Jan 2026 09:50:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769593843; cv=none; b=OsKV0ds++cPI4WiuIoueTYOTAXkfkrVdhOv3Ez7yuUrUYFcoSOJabWg7XsdNd0WzRf1IyPm0+glzSwi8MBQ8gfNBPI9uiKiBUZ29K7jznC7TZQzYB8UKGOwuLg4RUVU61oecLj8P/uaQ/TTUj9PdUUELZLvh/XT4q7G4y8a1W6Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769593843; c=relaxed/simple;
-	bh=PQEiF8r8P9hGm/afNAaoJ7wn7IiuGrfi3afaM/Wvt28=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=nC8jcFxRf/OFo6H3JcG7T0kUTE7IgmXOgyICSIh+pLRhyEtAyrNADhG1NNnaZfIqj8JVvPQ0YhDYSvxYGewB0V4SsBTGcyMeUHWwhVKmsoYmTVAIFYkzhuDkIvEdwmkbd01PSu1Eeg5/v8pwas1EFSEIxeUr7XJugRnIDZsxk4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MXAiFLSM; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B802DC798
+	for <sched-ext@lists.linux.dev>; Wed, 28 Jan 2026 10:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.26
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769597627; cv=fail; b=gNYXyE6PR5uHjpE/gTdLoK1Gxz40IgEH9pRezruF64J7I3ueUT98igAcG1sUpkesvQEfO3Zh6CzKfqpfW7SA+SMoqdLTU4h9pKFGT9CFGnhQHBfKW4FfQ4IAsvbknwVAhuwgfVPDBQPvO6Je/bzw1ny05xgJbuK6vyYdjfQbrMg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769597627; c=relaxed/simple;
+	bh=Gkz+/SwZOsHdnXbA806xLWZlBVknYiPaw2c3x/FUmsw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WVPt/eS1tE5sQ31/MIiUGt3M9ATTX0yFGBILaun0ffuHwtYMIWXuFaRhmVJsvUSz1rhj6ll6KHk1ZY1GiOvKdzhErlkEHCHKTbJpSUPjULjyMVG3tZ284FFcOJr+M3afbGDTHq38hEuD0lJx7cOSHRhHK3ofavCCksdJ7bw+Dns=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=adtLE98Q; arc=fail smtp.client-ip=52.101.52.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MXAiFLSM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1769593841;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=PQEiF8r8P9hGm/afNAaoJ7wn7IiuGrfi3afaM/Wvt28=;
-	b=MXAiFLSMvti0d3Vft/SeGG04cHwrB/hV83CfZlRwOgVvMg8xtDU6ummKmNsVYUpqkxhqui
-	BxIs/wgfZ4swD1bRIwhKjc+BKbBoIQ+D1MdKmMhsokTy3YgUHftprVkzjc4PwQgMWQYe5W
-	XXSTCPWuhm+K3vjIZ8xcwjb5l3AP+1M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-2GxxyuNMO5mljOgwdpw1NA-1; Wed, 28 Jan 2026 04:50:40 -0500
-X-MC-Unique: 2GxxyuNMO5mljOgwdpw1NA-1
-X-Mimecast-MFC-AGG-ID: 2GxxyuNMO5mljOgwdpw1NA_1769593839
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-47ee1fe7b24so58025335e9.1
-        for <sched-ext@lists.linux.dev>; Wed, 28 Jan 2026 01:50:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769593839; x=1770198639;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PQEiF8r8P9hGm/afNAaoJ7wn7IiuGrfi3afaM/Wvt28=;
-        b=IUM7WsB14ow4HdguLiHusIonyX36F13Os8A+j5F8+Gi4em2x9icebPSsiaSB90QPuk
-         ZdRIzgBTb+J15k02cGVQaoGjoADle//AMqazt+pI5VMl2Kjz9IOvNLGYKD7G3dvQ1K05
-         KTy8ESOHKqaaNSQkxOiS1pEoTuQzmyQ3UtKyELg/hF3qAaT93rhOLHiKuXWa4o+q67IJ
-         v4csySJojSI5e4TQLUFpt7jS6LSRpssettrrcWt3K81AAokDZJPLPMAJCoc3rojRzpFp
-         YLhJEMn36yrrvWLrvrmiox/90nwCnn0+VSCSbebC2XwLwLAfat4WOhovi9uZTDLGbEnu
-         wRoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWcZDTprEuC5USFaGOYqguLwm3lTDvGOHjNnV4bEem0q9YCF/QkWKXLFCP9GCAIohvVtvhVCAYPsJk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyhSMivIpO9lZt2f1fBdGc3equp6RWJvMoJ7n1g44GjEEAOebz6
-	11mEYkDMC1Z7jC64/OjhQbwxjwCeVkxofDMNyBdbJn5f76wP5hvFXGOFyyESiYDPugo/PyV+T9V
-	msgSWFthVqzFScwV4kiGuFw+yDcAhEOjNIO6D1yAfo6MTpFtByQ8dgPDjCEKF/w==
-X-Gm-Gg: AZuq6aIgSJSF2oMenf1B7f0h3iD/2RJa7xRTihBDNU12Ie68xLEIV1b8vh5y1B3Hiaz
-	PaMLr5tejpQ6ObbCUDbMLkqV6+hBo3+sfu8WBNUaIYMJE266O6IgSDBguWLvj0XA28tor7LovNZ
-	dOWZZW6yXA0Id1FSmX2HwM8Hik4JkMsvBn5mxoXum+ItKBWocZRs4ztUDR4+nlVJUamdHhR4zvl
-	Ql6ONOtrzS+JWLSB4OkbIDv37kb4/QbeDEemMN66LvcA264B5hLcxcP6Wgo3quli95HDQW8YH3b
-	z3uoyka+5NomMdjoXErDW6+keE9sUmVYBGYd3C0jpM5DkHYoK9EXVBxfLVItZBLV3zYU2lKx6DI
-	z0TOjWQ==
-X-Received: by 2002:a05:600c:4689:b0:477:c71:1fc1 with SMTP id 5b1f17b1804b1-48069c55610mr51648705e9.19.1769593838644;
-        Wed, 28 Jan 2026 01:50:38 -0800 (PST)
-X-Received: by 2002:a05:600c:4689:b0:477:c71:1fc1 with SMTP id 5b1f17b1804b1-48069c55610mr51647885e9.19.1769593838043;
-        Wed, 28 Jan 2026 01:50:38 -0800 (PST)
-Received: from [127.0.0.1] ([185.168.96.228])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10edfccsm5488885f8f.17.2026.01.28.01.50.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 01:50:37 -0800 (PST)
-Date: Wed, 28 Jan 2026 09:50:36 +0000
-From: Gabriele Monaco <gmonaco@redhat.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Daniel Hodges <hodgesd@meta.com>,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="adtLE98Q"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ctdcKTVZ3jompnvSfkUOtBEMq59Lt2QmI4/zVa0fMu+foIH5zin7blH0Fa8jmYnySU/q2X5o79mpicYoj8CQS3a8lPquRTwJc4+mG8r9GmTPiDgVFka5MDhoQJCpdVY6MdQGii1ihzJk8cF3VhMKL62+jeVkTlPSPervWnlLn9ncDhf2EvH5LBudnkjK7TOUIUknJnjBAXUNNFTrMsSymGvNLva01u97A26glS9S5ChNsgkyOZaoxwpGysd5aS8OjjIgfW9BBp2Ma0ENatLr9YoJ3n9dN9qsbIEv3cWiNoa6Hc7Y4pwv2qDlxOkBCgerRQGrMiZeZf9U36Km002a7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=asUyLKXvYQlyhjXJ8f5PTBitwPUvTUS2lB8DO2qGSSE=;
+ b=qXx2rYcr//NohsSu77nIrH3SDIakqYgV7BxsDEgGyp2h3rU7qV7vmTu5A2FrgtaCngw5QRU7ifC8H4IpBVGNgkWZa9OgY2aHR6LZN+4f4ENc2tYbClpx4THaPsmO7X5kxc6YyOt4yfVInPQKR2J1JRQr0VaveS97HwXmsiFMBnIwUkcrz4nlnQTuT096ajqNYcd0FeSMuAUDRl7E/aMEDvgwXaHlE+ozG/ja+MF5bp86L1a8YdE/b4lPJ3bNmAJSuIxa0MHySWPTAQdxmjNAy/9f67GvLTMkytl/BjjjKNojk8dMuAGcBNqdTC2RJJsrHtzWh0YbalIbqROIqV221Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=asUyLKXvYQlyhjXJ8f5PTBitwPUvTUS2lB8DO2qGSSE=;
+ b=adtLE98Ql8ONWiXn1vV51EdGw5Dc6lND//wX1LKsJoZjTi6iBq9FR2PeeBrmUQd5502zfolG2ygilRwEklRSDrTXHkhWbIF8t/jvJW3XH5jtBKwcEI5UQ2pH+GqK925Bn7EiXP7GgJyxW4j7rspUIWFgS33SsuRkO3YRqWepC9IZIUo8zuh4MEFhJoruP4ZgN2yuciHzYNXHCnzYaP8sZp8ENQlbZn6gx6lbDs+yvsy+O17qrD6DiY5xORle6KT0fiFRrCcTI5aPYjeWiklr0Hwo8zdBD6IkVeCy/I3HlSaotb6/AnUEvuJcOle7NofL+rYiqLtMrYbKZ3Kp2G6dfg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by LV2PR12MB5918.namprd12.prod.outlook.com (2603:10b6:408:174::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.16; Wed, 28 Jan
+ 2026 10:53:43 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9542.015; Wed, 28 Jan 2026
+ 10:53:43 +0000
+Date: Wed, 28 Jan 2026 11:53:36 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Daniel Hodges <hodgesd@meta.com>
+Cc: tj@kernel.org, void@manifault.com, changwoo@igalia.com,
 	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Message-ID: <45e4dc7a-f261-46ec-8973-0fb8d1f7b0b9@redhat.com>
-In-Reply-To: <aXkJ8_zLVSuToLxe@gpd4>
-References: <20260123161645.2181752-1-arighi@nvidia.com> <f99f63b4a777ff990832a27fa6d171aaf1206a75.camel@redhat.com> <aXeWnzI3ymUSm3Cu@gpd4> <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com> <aXfcGynN92kyw5Co@gpd4> <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com> <aXjJG-72XEqvaVtL@gpd4> <be763631-f677-4bad-8285-69dbfe29db54@redhat.com> <aXkJ8_zLVSuToLxe@gpd4>
-Subject: Re: [PATCH v2] sched/deadline: Reset dl_server execution state on
- stop
+Subject: Re: [PATCH] sched_ext: Clear direct dispatch state on dequeue when
+ dsq is NULL
+Message-ID: <aXnqsCeN--uzQQ8V@gpd4>
+References: <20260121155602.598130-1-hodgesd@meta.com>
+ <aXFA4-b4WLPjxCME@gpd4>
+ <aXFukGjN0F7W3Hoa@fb.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aXFukGjN0F7W3Hoa@fb.com>
+X-ClientProxiedBy: ZR0P278CA0067.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:21::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Correlation-ID: <45e4dc7a-f261-46ec-8973-0fb8d1f7b0b9@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 022qfg25IToAs873pQxd7tqNc9lvQBBurDOSyu-3148_1769593839
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|LV2PR12MB5918:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9e323cea-f6b2-4cd4-a396-08de5e5b80a2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?lXuJ7WM5ivLECz/BbndJLxe1xFjSyvd1tT3eUOPMG2tAghQ+R2F0EiqLTXD7?=
+ =?us-ascii?Q?ZmflvfUHWl/yvPoRW/2yYF5udlfWAcjkQIo+M0ueUuhCePRYGZ0uGHzZNBQl?=
+ =?us-ascii?Q?uHTqOTCGRVtA6Jg0uN2fJI5NiOxpm8d5Nq41RRP+8ZbDO2bFNJR3euFKUFuV?=
+ =?us-ascii?Q?vQmvfouC9fRImhb/3Ey+QgPWavsXstO/rZhHanZ0/YIoBAxM5rvM2VHEFJmM?=
+ =?us-ascii?Q?9+El8Jw4x8ahzu1aHJ324XUj6SaFdtRlFKDAcCaRN5eCWolgl+yxhBJfMyqd?=
+ =?us-ascii?Q?8B0xsrWq1w1mwqPcPGS2SYWzDRcDL6GK0Oc5v90sKTk4LKfN04xOGYaOpPRE?=
+ =?us-ascii?Q?SgLZzQmf9UytBiAzNynCfrNkAsMrwgb7Z3YyiDzDpnwGqTJp5SJVxeDIIoxN?=
+ =?us-ascii?Q?PBJfCii++xV9TmdkjD7xAw+wRXmGhmeuBhbkv+JakQDhQUB6FL6YWt8qW7qZ?=
+ =?us-ascii?Q?+L+hAnk5OmXWfoQNMC1gwRJqetkSncsXjRCifUNq8AP7Gd5Y+iDrnu5HtZz5?=
+ =?us-ascii?Q?INNlXgs17kWHncLgy2YbMZa6NNdQMbFH9mmyDUFfY71srmrX+9aMcHFA3/pX?=
+ =?us-ascii?Q?VD+h7Cc598dD/jqUM7H+NjMGxaRzKSHCD2QxpPB+sA9Y8fTn6bR5ARbaSYop?=
+ =?us-ascii?Q?FkXK8AKOULHU0YgH/pcgu6bVfUPUopYPgmNURDOa5aGi/w39Ei+EI9BVK5cu?=
+ =?us-ascii?Q?wCm35QxRYOF+8udnxruKieWNe2y+QRHGZeOKtUNGKUrn+s3kRcVASecjh+6I?=
+ =?us-ascii?Q?IL4+P1kWqxGXLxD/jleRubnbdC4RIUXSc1nzU4tkmZjLbB4SyiIpUWWF4QnR?=
+ =?us-ascii?Q?VbL/rpFmS5UvmC0UzlcPab5+mYhOoVYFv8tdai0WQKO4exjWL+M3OkOM7jPT?=
+ =?us-ascii?Q?7Fbv9DhA7iO+6unqI6gGqYSMWNAnsPjdYaxs/TWkBYYluz1Oic9LP1DoZucJ?=
+ =?us-ascii?Q?D8KqJnSJ6caTxHH0/SJKGhh2rNgiKRZlRXFFpZeZHA/Di4h11N8d7sAGQIHV?=
+ =?us-ascii?Q?t6e6gAOPcZ0LhMKLtnNhJMgaMDXrVYNAPmZmKYxKpU63SuMJPHs4sVAdTL5g?=
+ =?us-ascii?Q?xLOEqFrNku5P5CB6F/603WIRQrMaSh/AziNU29zRttOkeLB3hGrzjjY9/MZP?=
+ =?us-ascii?Q?WwBbngC+la0fI0g+mHxwxqbKxCxI4VNTysLaWrT//m3ECEZIiq0/WBh6+1Rp?=
+ =?us-ascii?Q?fN72UM2PxEtWog+Q1du1APF+hL52znrfzKGW8jBlTPNCxab30ZfylxS87g9X?=
+ =?us-ascii?Q?3/o9FVDJ0fNmJIy6c//07lt4b+l8rzWrke4sYuGMXY/hpGaipxJPFcd7/BPM?=
+ =?us-ascii?Q?BSb3IaO/yXbU5VASI2+xuBmms5TbIWt1I6n9v8KGPgC0NT5qO37kt8SN20Dy?=
+ =?us-ascii?Q?kka4dLTpygFbjrzI2MGb1N1WPtBxuZfHhyxJOw1AwRlzKD2ohHJbkhZ7fxxQ?=
+ =?us-ascii?Q?YPKe8n++iwDxE+t2yqDgus46Z3w/J24XHGjI6BicHE4jY3FgTRW6t+IXpIK+?=
+ =?us-ascii?Q?Ehh4xfbTt/ikZUtvOmCo5cv2Ynacovr7lmZyubLHOkOFWnQ/oHsxZBM8EGCC?=
+ =?us-ascii?Q?hLedFL4OlTbh2rThugw=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ITdZJBbUuTzEGMiu5OSCorOo77oyPAvBX1NYL3lro0fdL6Dyn0SWyVQ78GH0?=
+ =?us-ascii?Q?U+jSAPiUlcX8Semwzjn5fhGFoNbHStJtAcvalYbMDErR19s1/18EGcLSF84B?=
+ =?us-ascii?Q?JKF+oE+StBMYBHsmkkvbpjVzDiNBMed5MN3hRQJmSaw61fBbjTDXtWKxvoVO?=
+ =?us-ascii?Q?Q6nAckwVd/JprZckUR/ZFcNUjmNhKRI63Y3aVQ/9FMh3lt8czj78v6nifzak?=
+ =?us-ascii?Q?AKYMR5slNvzVM8gUt7GGQwdtc/o1Cyu8C9xHtTC02Ct+QmC9lhbZti7R6S1Z?=
+ =?us-ascii?Q?o/nW+5SPxkvO4DiaIPfcSGLooMDEnJ5Gd3YbV64Oa5EirhtsMKdTpNNsmKDu?=
+ =?us-ascii?Q?lisa03TRk8D5UwqC/YG+kKOpv84TLHXUAqWzm+33fm98ZoHvl3jJp/RSe3Vy?=
+ =?us-ascii?Q?Jiz04LGE+ctq1ySDA7EUXe1NKa6+2wV4wsrohwnUwD+EjJKECMAMMZs0r4U2?=
+ =?us-ascii?Q?bbnbF/1G+TFNd60iRSM6eBNoqC5uhuAJAexmHgHB361MWmWzY4AgMrEol4Lj?=
+ =?us-ascii?Q?jYQP0A7aUcBMVOdTntkpSsj0kc4AaRNesTGpsmA2Q43V1I/0KnGnEU6b5kZ0?=
+ =?us-ascii?Q?J9jvDpnZ+uJv+K60q/+cKvf80XX9eZrQ7cfsqPIJqt3W4ECjSEtuDsCxwPqp?=
+ =?us-ascii?Q?Ab4tkN88LygYE0Ncd9kGO1vW4ChnGqUScXCik2ckPRpeY1rq64S2uR/FYpBx?=
+ =?us-ascii?Q?vdtYCnV/ffoSFnu3XXBq4V0mxP5IdqWMaaHbqmh13POGbnKn4emldXGDHNO0?=
+ =?us-ascii?Q?B0szE3VCMoKY8wkpA/71DFov9a7NybzffcKXoD9cokTfbS5dW44nDtXvJaAQ?=
+ =?us-ascii?Q?65tHZURJ0LYoniMr6jGXFdrvODM77wsqVRxow/jRkd2Dl04SLTSWOIQgJBNs?=
+ =?us-ascii?Q?HP5LFqMfYV1LkHbdUMjotMHnVAYiRW31GNvCuyi8yODUlPFUPWyAFIV+2jxh?=
+ =?us-ascii?Q?XWsnnqFHpIuVbd3OPManOaVubbEJkAl9LZxzM8IMjPdAVrXi3ifILNHeefEs?=
+ =?us-ascii?Q?ft4WVz4u1CD9Px9KkDJLjxzPhmCxbYU38roLIYVWwzHOflkDvtqjb8v2B8qF?=
+ =?us-ascii?Q?dk2nfithzLnDKy2TKm91o2/89ysm4LmBTXuKQEYHOjL5+N0UFfi/+jTXZp5y?=
+ =?us-ascii?Q?lEe07tUW4tAhRea3zgwPT7OSnM3ddNj3kytEvBGtMoUrVirqyBYyPuefVc9M?=
+ =?us-ascii?Q?zTwWTTDcN3pqg2Hh+/TS3aNmdJDQdBhZt+kOms3iBUQunqr7b5/+qY8LNxai?=
+ =?us-ascii?Q?J55lYxBVBjQKtYEQisd5ElgK7bS97cMnkLcPo3XJGzeetYcEvy1svQpHitGh?=
+ =?us-ascii?Q?Oa5sG0wE4XlP51DM09HKizt1uBz0JPTZDhLsA7d48RIzBANxYs04yqekgR3t?=
+ =?us-ascii?Q?IZDRNnKzM58Q1PyJhmAIttmZ/JKNhQa5lHxew1fkTdilzEAe2SW2ccwVQ6ww?=
+ =?us-ascii?Q?V1qRZZh00XzzNq6NqzyO4fariQfuNWMg7nG3X1h+5ZolBZC1pPxKIALPFYHg?=
+ =?us-ascii?Q?W90iYk+0oYVguyhj1FnXqKOa3YTPmeMp9AE0drplYRXKGDkpSCyOYcnNL5fu?=
+ =?us-ascii?Q?x9R6p3WD8HB56ppuLr1pKwli8IAI4ip6D/81ebFHDqsm1xFAQKv9lKl/LpyV?=
+ =?us-ascii?Q?kczxyHKiOdMaEvGb+pePxs8GTHzqUo775PbFt7IZk7H4saFItDaxOyZzzws8?=
+ =?us-ascii?Q?B40DS2VxIe3osUKlXr5v1dTSAfUlqyzyHC+fUp+ODcDUQm+F?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e323cea-f6b2-4cd4-a396-08de5e5b80a2
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 10:53:43.0316
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sq7qSqcvdtJdERgfpc0K0jGtKYBhGZuYG2Ch5eKDSE0KfzmTT4NtzWWwyhs3vkotpmymQMMYpF6Ne2sQqMFPrA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5918
 
-2026-01-27T18:55:02Z Andrea Righi <arighi@nvidia.com>:
-> Unfortunately checking only runtime <= 0 isn't enough for the sched_ext DL
-> server case:
->
-> # Runtime of EXT task (PID 2025) is 0.000000 seconds
-> # Runtime of RT task (PID 2026) is 4.990000 seconds
-> # EXT task got 0.00% of total runtime
-> not ok 2 FAIL: EXT task got less than 4.00% of runtime
->
-> With the unconditional reset the EXT task gets 5% of the bandwidth. I'll
-> add some debugging to figure out exactly what is happening.
+On Wed, Jan 21, 2026 at 04:31:02PM -0800, Daniel Hodges wrote:
+...
+> > Long story short, the only thing that was working reliably for me was to
+> > clear ddsp_dsq_id and ddsp_enq_flags in select_task_rq_scx(), but I thought
+> > it was a bit too overkill and then I've never finished to investigate the
+> > real issue...
+> > 
+> > In conclusion, I think this is fixing some of these warnings that we see
+> > and it's probably good to apply it, but it's not fixing all of them.
+> > 
+> > Anyway, I'll do some tests with this patch and report back!
+> > 
+> > Thanks,
+> > -Andrea
+> 
+> Sounds good, I hit this running cosmos on a moderately loaded machine.
+> I'll see if I can get a reproducer made and do some more testing.
 
-Thanks for testing it. That's quite strange..
+This is with 6.19.0-rc7 + this fix on top:
 
-I run your test on a kernel without ext server, as far as I understand, the test is kinda indirectly checking also the fair server and that does not fail, right?
-At least that's what I get on an arm64 machine with 128 CPUs.
+ WARNING: kernel/sched/ext.c:1282 at scx_dsq_insert_commit+0xf2/0x120, CPU#13: alacritty/6070
 
-After letting the test continue on failure I get:
+Which is WARN_ON_ONCE(p->scx.ddsp_dsq_id != SCX_DSQ_INVALID) in
+mark_direct_dispatch().
 
-# # Runtime of FAIR task (PID 22503) is 0.240000 seconds
-# # Runtime of RT task (PID 22504) is 4.750000 seconds
-# # FAIR task got 4.81% of total runtime
-# ok 1 PASS: FAIR task got more than 4.00% of runtime
-# TAP version 13
-# 1..1
-# # Runtime of EXT task (PID 22511) is 0.020000 seconds
-# # Runtime of RT task (PID 22512) is 4.970000 seconds
-# # EXT task got 0.40% of total runtime
-# not ok 2 FAIL: EXT task got less than 4.00% of runtime
-# TAP version 13
-# 1..1
-# # Runtime of FAIR task (PID 22518) is 0.240000 seconds
-# # Runtime of RT task (PID 22519) is 4.750000 seconds
-# # FAIR task got 4.81% of total runtime
-# ok 3 PASS: FAIR task got more than 4.00% of runtime
-# TAP version 13
-# 1..1
-# # Runtime of EXT task (PID 22525) is 0.000000 seconds
-# # Runtime of RT task (PID 22526) is 4.990000 seconds
-# # EXT task got 0.00% of total runtime
-# not ok 4 FAIL: EXT task got less than 4.00% of runtime
-# ok 24 rt_stall #
+Triggered almost immediately after loading scx_cosmos on my laptop. I'll
+also try to find a better reproducer (ideally inside a VM).
 
-Mind that it's expected for the ext task to starve (I didn't apply the patches enabling the server).
-
-After adding all your patches [1], also the ext passes the test (i.e. gets boosted just fine).
-
-I tried disabling all CPUs but CPU0 and run the same test and it hung (bad sign), then I also enabled CPU1 (total 2 CPUs online) and again I see both fair and ext getting their share.
-
-What am I missing here?
-
-Thanks,
-Gabriele
-
-[1] - https://lore.kernel.org/lkml/20260126100050.3854740-1-arighi@nvidia.com
-
+-Andrea
