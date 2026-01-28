@@ -1,247 +1,325 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010026.outbound.protection.outlook.com [52.101.193.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D10352944
-	for <sched-ext@lists.linux.dev>; Wed, 28 Jan 2026 12:59:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769605157; cv=none; b=mo+/JK4ALQSgt08xXFdfpH2cruAKjsdb/ZdjBCMn3lJpUXpC10GRGp1NjHWi4FbE4033bcnx0EjDyLlhpxn7OktnzhWLRtYMB+QeN5hDFpbbZIKQQMkD5iZ8saT2LD0oC6GkLd/UGolJUGeL90rexHLLLS4t2StRDzoY8a/tAok=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769605157; c=relaxed/simple;
-	bh=Cg2HYnETzh1iDd9/Q6DpiwfP5gVe39kO+1rIn3/8HuE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VR+ssw3KsUCfRvU5/Q0SSMm/NH+HMD3QnZXtR8yV/zoODMYfzTqD24gZ2XBfBlmZ36H0fK89ZCvSdzxUM8rbl6MCqvmYGZkYBOJgkosXczkJnBd+GiyLxFpF7MklsaXXm44yVeTuNHcdyVR7wapIEIIIrWySgFR9Kgsj8yJ6N5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZVV8XBTj; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E24352FAF
+	for <sched-ext@lists.linux.dev>; Wed, 28 Jan 2026 13:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.26
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769607713; cv=fail; b=g7kQyR+apryu1z4NE8gTgyTirHFx4uVIE723jfvItD6Vz/LOH+v69yXt9lFfNl1RZXHuD8nbJozxTMiqW56BKCSXFyVT3aN0iMjPazDzCakYtO1L3ZporXEPaj/Ukr5rNLHAD9eDzlNrsIo6vqnRjC9BA+/gBrob+swViQ6Ec+E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769607713; c=relaxed/simple;
+	bh=Ky+5KclwblCuUUYDvo0c1JfB/hxWrjYa3EEgyCZmykk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=dyNakvR3XagD70CUf4lRPOOjjGvgn4S2NbLs4mWQBeJWIKj/f8OZeM0Hzak/7prV608kpp69M0Yna/kkVfq21OnaaTs4AmYrlV+OZNjh9YLiwwprMc5ZjFczNgKdgQORZgu0GecBAA/l7PdYJYYM7Eef6OL6K6P2epRVsKbgl4k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mYFUQtBq; arc=fail smtp.client-ip=52.101.193.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZVV8XBTj"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60S8JTLw015740;
-	Wed, 28 Jan 2026 12:58:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=ulXCHv
-	ySv1fgDAg1+CAeePqRPrkV9A1mnE1QTLpexeA=; b=ZVV8XBTj/9wWDnqFSQ/ram
-	cTk4K1wurBRx6ybq28d2x3sskD3wvwj9l2/Zj2uqV2QLPJUt+TQcZoayHec+jzjd
-	3pypX+aRwxzzySrYOnRRpaaFR1rUwbHo4faeORhsg1zpxU0tlIOTNcTasqnn7hCv
-	oxOI59qtcEh5boQIPCLSVf22SDqZ61rbnzuXfIjNDbPUMAwJe5eDrMBr0SMFKcwY
-	RE/YrPaqvIuhRDzENfCTNSn7fo9udkIqs8BxoRk2/qlXaOLCbL3to7TqLtPokamb
-	eEnuhMG1bDTsQBGoWmnnXbtKpmECeilDsmBGvDtV826e9lxiakJm6pAPwSCQ6rLQ
-	==
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgmsa91-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Jan 2026 12:58:34 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60SCwXWv002560;
-	Wed, 28 Jan 2026 12:58:33 GMT
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgmsa8w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Jan 2026 12:58:33 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60SBMQM9006711;
-	Wed, 28 Jan 2026 12:58:33 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw8sydfsw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Jan 2026 12:58:32 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 60SCwVOe40239610
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 28 Jan 2026 12:58:31 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 00F1420043;
-	Wed, 28 Jan 2026 12:58:31 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id EBE2D2004B;
-	Wed, 28 Jan 2026 12:58:24 +0000 (GMT)
-Received: from [9.87.144.4] (unknown [9.87.144.4])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 28 Jan 2026 12:58:24 +0000 (GMT)
-Message-ID: <bdfea828-4585-40e8-8835-247c6a8a76b0@linux.ibm.com>
-Date: Wed, 28 Jan 2026 18:28:23 +0530
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mYFUQtBq"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Rl4YCsH2xSnEC3i6ILpuhq4P9veIVFu5k0Trfvd+/dqKEEVetufiWo67gnbrKryo7SOGhgItGsm8JQBWmff86MqNqvybG9NZryvN9OBo+deguL3PxzdMjikHVRHb6Xekmi5ziYfR3D5+Tgm4KQTGfm2Pxprp1fNl5paGNpr32bsDq9PlCs1ziJsjM5KoBAfOHqx9WPLs2FPoE+WeMEjnijfbp22xeaapDnVWWfeC4cSaJmdvTYfKYMl1i3qkUCKVxuiD86HQsZ53xybfESnsQLHcAKdz0s1ZehcRfeGHjJPKoA9R3NL+i09v5KNCovThBsC45N3bCYD2M4e+te0OFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=96e39KkCo5NHMfG/hjeLdxFio/XroVfOXwmG/0oc6bk=;
+ b=UQDoB5b8f7DFERWv6gdCMUWSw1cadRfX/i8d6oVRbZLhqQmOHNNkonaT3MdF9gmMalW87jnO3P5mWVkE3CAqzN9oMmmOcRVVZBVWEnKklVZVtuYmsAea8VB/ABcj3ptTYXHGmBeyn7O1bFgpBIj52Kqp0zcdK8+4S5lWxKCaskv7lh5LrUzHAXs+B9jOP3iKNqHx8ZaJmdUeA4nioPd0tWib86O0ui8CUYNanXBymYzL/SNmTPXt37dk+pJNeGOMPMeHKtO11gQXtitzqBXotE0g7+FxNYs8HCClpxDv66cf5ubC1Gm+wpHXnIWzjA0uhH2zXzzP+kYS1kip76q1lQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=96e39KkCo5NHMfG/hjeLdxFio/XroVfOXwmG/0oc6bk=;
+ b=mYFUQtBq0HXjJUQShxvm30gvkE7D+SRbfBczahO6xAIaCwavJTN6xKjccNg225tyfKiWH0+rnysCBn9/fyVgF6nK315go30Ma3MuOp+fQ4mT8nZsXjdcWgpScUVdaf+Qc1fIbj8MJ/5mZzZGmycANu56FKlIKZE4hjySfnPsONUIA+3jEtQ5BknMDNi0sFa+SoyNBw9BEcPYuoIZtwE/ljf72rYMzFTiTg7GVZsKg6IG95g2t40ywR9iFxM1O+7azXlOdDOIGRzQs8RBwVi89+mfbbzqVAXRrGDv23Ipiri6IceFydx/XmFFTguOwrWvN3F5U89i4cueafpLATAXTQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by CY8PR12MB7492.namprd12.prod.outlook.com (2603:10b6:930:93::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Wed, 28 Jan
+ 2026 13:41:44 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9542.015; Wed, 28 Jan 2026
+ 13:41:44 +0000
+Date: Wed, 28 Jan 2026 14:41:40 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Gabriele Monaco <gmonaco@redhat.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] sched/deadline: Reset dl_server execution state on
+ stop
+Message-ID: <aXoSFOONWJmdyCQB@gpd4>
+References: <20260123161645.2181752-1-arighi@nvidia.com>
+ <f99f63b4a777ff990832a27fa6d171aaf1206a75.camel@redhat.com>
+ <aXeWnzI3ymUSm3Cu@gpd4>
+ <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com>
+ <aXfcGynN92kyw5Co@gpd4>
+ <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
+ <aXjJG-72XEqvaVtL@gpd4>
+ <be763631-f677-4bad-8285-69dbfe29db54@redhat.com>
+ <aXkJ8_zLVSuToLxe@gpd4>
+ <45e4dc7a-f261-46ec-8973-0fb8d1f7b0b9@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <45e4dc7a-f261-46ec-8973-0fb8d1f7b0b9@redhat.com>
+X-ClientProxiedBy: ZR0P278CA0078.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:22::11) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [patch V5 00/20] sched: Rewrite MM CID management
-To: Thomas Gleixner <tglx@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
-        Ihor Solodrai <ihor.solodrai@linux.dev>,
-        LKML <linux-kernel@vger.kernel.org>
-Cc: Gabriele Monaco <gmonaco@redhat.com>,
-        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-        Michael Jeanson <mjeanson@efficios.com>, Jens Axboe <axboe@kernel.dk>,
-        "Paul E. McKenney" <paulmck@kernel.org>,
-        "Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-        Florian Weimer <fweimer@redhat.com>, Tim Chen <tim.c.chen@intel.com>,
-        Yury Norov <yury.norov@gmail.com>, bpf <bpf@vger.kernel.org>,
-        sched-ext@lists.linux.dev, Kernel Team <kernel-team@meta.com>,
-        Alexei Starovoitov <ast@kernel.org>,
-        Andrii Nakryiko <andrii@kernel.org>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        Puranjay Mohan
- <puranjay@kernel.org>, Tejun Heo <tj@kernel.org>
-References: <20251119171016.815482037@linutronix.de>
- <2b7463d7-0f58-4e34-9775-6e2115cfb971@linux.dev> <877bt29cgv.ffs@tglx>
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <877bt29cgv.ffs@tglx>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=697a07fa cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=5AEkyd_M30QB2NY0R_IA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: dblyhcgNSNe2-rim6YI8Ary4NhCkUdvK
-X-Proofpoint-ORIG-GUID: GoY9ZqloEf9sSqqLQgleOc5jB3HuYKhu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDEwNSBTYWx0ZWRfXxLIyPnq6oJ3h
- 8mn7M4w8wBamqRy6Zy27Yo/LN4wlT2O5Sj8Jvq4tkj24zegLEzaCzLVVi++iCrq/kqkt08xhLyk
- JEYgscOP8CGi7iV7KhBKNxI36XZYAJXyft/3oEbpmuMO+Jye+TXsx24Y2ZsGRL5mzt+7ADMR9M8
- Mb2K0mvSa2YiQpJMf5xNQedoFJ9gGMiK+6QKyP0VK4gnYMHzPGsTfSSsoaYnKLQ2Dk2BM+wsKOD
- uMjP/UhQVGsyLYzNokRaYWrEI/lXMEPY8zA+auwyp7jEj0Zw/xl/no47oO/6kMQ22A1GTDgjCxD
- or+TUiNfqQaS0t5gQZzri3IHZ4XZDjqMwT0rhknBNg21FqAiwOLlXA1sC+c5L31L/Qpo+FX88uq
- h4uCOMnVZFsJ7NEi+si37GQrx+wAzD4by4em1XG7hRpBNWftTAAp8qzU47PnTX8U3spJtY6cEeH
- Sqwhd6uheiaqg5EfFjw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_02,2026-01-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1011 lowpriorityscore=0 suspectscore=0
- impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601280105
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CY8PR12MB7492:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8a9c1e84-2d4e-4807-eb1a-08de5e72f98f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?nN3krntbQWzHwhMWAq7BRmxjDxFtJcEXvgrLdH5J9ZDJ+J3P2XmAuaBxNtRM?=
+ =?us-ascii?Q?jjn99Xt8yrjd5S/A/4bGlxPYuhlxrwJ5Q8R7BnVkwGAqkgOyKwSETsL1ynuA?=
+ =?us-ascii?Q?w/PvtmBEZePAi13fP3jL4+7XmnUZvCylofdWR3IcSgPJDDsoE8tN4RWn+VXt?=
+ =?us-ascii?Q?APNXJrLkPMV77b7KOuRRWLXp+0A979VL8LfFgdx8+inPW4R++7ppVpICdw0F?=
+ =?us-ascii?Q?uHFg5+7tmkKm6kKa05QS1UXoi+pGxpUIqOlmlmxcqxRKu9hfeL9+sJobaq8M?=
+ =?us-ascii?Q?UYXM/vhSP3t0pikupedNLOJX5y4kypWq3EA/quC0/PDwbr91wou1XbUxs1ec?=
+ =?us-ascii?Q?sQRLwZ0Y+VOqmjKuJ6rxz9F6BsJc0JgtguKzVTahwFBa2pVPTpAMj0F0+WjW?=
+ =?us-ascii?Q?6NOAwImCazvy1KF4Yn1nRvo7KOvwbt7nherlClMjufV9ly9vzWyuE0J6kcvS?=
+ =?us-ascii?Q?IYgrc8DbLHd509BsshHEPgeUL6ebebejeOdZdBGAbObM0CII0ok+AMDrDQjw?=
+ =?us-ascii?Q?awNoMX6dFgVPEJdw5bp2+4H02T3+SDUvtp7RSYyKoaoxkSJS3W8O6xgKBD3J?=
+ =?us-ascii?Q?MYh9j9TNvKwnepo/bP0iPpX92yukiADxBPsAPV1o/nBkmhmOU5JsqGCasJgk?=
+ =?us-ascii?Q?FjBLBNRmbhXlW0hioKUHWJr+hkyTqJENLXc/IhQegxxZOMIN1JihooTF3un5?=
+ =?us-ascii?Q?f2fhpOTxD+Cey/tcnbRLFpdjfCNT34wuQBjedXpinOtC38iBdPbpcLiHD/YC?=
+ =?us-ascii?Q?PkDi5RFXYmxcWy3310ClFgV0gdeQuilQk+Oj8UzRyKTyjmKbE2jPjaVLwpkN?=
+ =?us-ascii?Q?vuoXCCl69Etg7h3IhkAshUMfSLW+EuGY227f54N55EwBZmsNC3vFMgG2BFoz?=
+ =?us-ascii?Q?gN2mzix6BTmnGwL+HQ6C5/kED1Xy7nmwCr7wUxx7YA/AYZlPg+LHzglSFINk?=
+ =?us-ascii?Q?3lHqeYpI36cqBBcoZV7lSofG7IX9x5W1Q01t3xIRhj0QCXhhluRZ3x7Hxjj2?=
+ =?us-ascii?Q?d5wbts1VmFerkbHGXW1IVgeUYUVE9RXCYZaazEjxjZJeO1pJUYS/MkzdyxPJ?=
+ =?us-ascii?Q?IGF2uoyNkWlA0U/eyGvWyk+YDhhKmfoi7Nu5ox4iN31ZoBbuUDhKFoZura9I?=
+ =?us-ascii?Q?gJ08qWzXUJklvoyvDuX4OHor+vpTtOtlBTfbbm5K8XsXZBd3jIPNCTx7abDn?=
+ =?us-ascii?Q?42ZqqsagUy9q9yEx/FHYT+Z9dofniwyySJBqcimgIR380HyCAPydQ4JVVQKL?=
+ =?us-ascii?Q?mF0af8ziUKPEOkOLPq147ADmqfJh6K30R4o9TMfYLiIigepH4w4eNZw9i418?=
+ =?us-ascii?Q?D4MOywjRIccZ1h2m5wGhraV4P+n3gaK1NXQSpPuX+3Ca29tmOCe4pTNjprsa?=
+ =?us-ascii?Q?dg8G6/KYEsF9blZnsQbPJl/uf0p5l6hr67UjL7exzX9UFflLt5GylYV5fDJf?=
+ =?us-ascii?Q?1GPLY8I++PAG7Er3hF950z/KhYzwFjYoqfBE1QfW2T5l2t3ETdghJQWEVIp3?=
+ =?us-ascii?Q?tmoaR1rIrLtolNW9rQNZQ2nP0tQnwkH/MnhFHyr5bIizEQbRvYBeEOPnsFvS?=
+ =?us-ascii?Q?d71+xi+448IQMcYWmJ0=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?u/k1TJBSAjDpqev7vZSqj8W3oT2bxJYmgcQn39Qff2OFIGbzybLhd693bcTK?=
+ =?us-ascii?Q?vY/P8wm/zRaCAjrNnRpO5xbbzTvP6Zk7Ipr0Z9CGir48OtXYXfsXxINO7Pso?=
+ =?us-ascii?Q?MKGJt0iVlfHqwZP41vNfUT9/+O/KUxxMM+iSDbKokUHj02tpczHrZ+IT0bXc?=
+ =?us-ascii?Q?edING/ryCmedV4XFonybYjmED4K7j0k62sIE3bkQw4TRuBobB10DvDrzGYBt?=
+ =?us-ascii?Q?l71JiC43r3L+52ulJ1j72ny73hkbt8UVuvAbaoZhgl2rtEpHUbhJ3A4BfRw4?=
+ =?us-ascii?Q?seM4pJQN+5fgg5bq707UDV1JGcidxcUdcWlaX/ryQkSt2MxjioarpktgaV5M?=
+ =?us-ascii?Q?4h2Ou4xTkEL8KO6K6390xM3Qdf6igNgY7hB5/CVr/kX4zr+NI7fL6ZXRR4nE?=
+ =?us-ascii?Q?sr5B0WT7LFRXdSv0jDrw+E2qiWHVvqVUMt5un6APlP8qHYaM4v3ftOmgFahB?=
+ =?us-ascii?Q?vBh3DCWzZdph/wsUguEZnsR9zi6Wimis72W/YRDTDYvLwkxU4nZcHoZt8gHK?=
+ =?us-ascii?Q?xh7xtvG2KbzZC0pp55IGzA0z1qZQkfp6S4vO4eMtNKVdycVqMjrLpIZDP0+t?=
+ =?us-ascii?Q?77OyRv5U1xram4sKDO03S65aeYKXqZynxdxT+8gnRPa+wBNVyFbeO9nO91ci?=
+ =?us-ascii?Q?hj3jdXqPqg8Ppo5FbgJ7NQoY97Qkze+RcZjmdtj6A0QgDQbOM8sb4vSrqxwU?=
+ =?us-ascii?Q?TEnXfAcnTRxukzc96jJZfLvT7/+eyAOtCCXDJMGcuaROxsDgT4MGC4VN4yY3?=
+ =?us-ascii?Q?GsZr0MFre8YfGtPCimUDHCGg28rSMy/nEwuUwTM/jnXLmv8LWdVIK86fbrnZ?=
+ =?us-ascii?Q?EYBQvIvEy7LsYnwL+U2esyXxMhQs1KDNPMyRnskS/0aHVKsNJ3c4GUj6j7La?=
+ =?us-ascii?Q?YVedD1YBU7u4Z08hN2NO5fmfRvZc4NRkdtVAiLYxUIXB0urIiLED57ZEBqYv?=
+ =?us-ascii?Q?gxqW56SZ+6aHpdy58npHsjQn1CzE/SWLhygOUAZn2D/D+tzy98fV0R9yTBBD?=
+ =?us-ascii?Q?UOh61cEHv1RaCUNeFVxNrT5GlU2fui0oDPovfkt2nRi6fXZUvKguzcPtDAO4?=
+ =?us-ascii?Q?iw7Wg4RcV7sE0tUk/ENvn5WrjhjK7iNkV6W97BaK+iaSeUVY2y0auPw+J3cz?=
+ =?us-ascii?Q?sTCSY+ST4k+GQaTAFrRl7xWLhnXCMziPfxNu9O6Q43HAVzpfUtD2NwvpBxKX?=
+ =?us-ascii?Q?MxbsqjWxJOs+TnbD7nJmBTLgvS4i0137Y85dIF12TA1i2ksTgtUfDkSwGIZ+?=
+ =?us-ascii?Q?LK8nIe2AzQaWeI0jKlDpgTrrBna5Xf+R/AK+8dTrdxVkwUzT4eHrvn147e4q?=
+ =?us-ascii?Q?iaYdpyEPFfDd6N0HGSXAINWFaChop4WiqnZY+QUcryY+IMYVB5lAx5WCbomg?=
+ =?us-ascii?Q?mwYCR+EBSqq8PcyFOKcoA8jNzZd8lwW4I2CBQt7PAJ0o4hp/terfA5HvCjIK?=
+ =?us-ascii?Q?8JbDKg7lrUBatThWBQ4330p+sbnNZGblTSXUGJ1S2Yjsl1kg1NMmKiGXeJGF?=
+ =?us-ascii?Q?eJ49XwfRLvNcP09KbFV9f/JoX642apYdBNTXdKNOPJLQNYqWTfHc4zha78O5?=
+ =?us-ascii?Q?avyofNxNu3K3o0O9easG8kLz6cvmjBhD50NbH12ukpsj0mJKWt2/tWT+YoZa?=
+ =?us-ascii?Q?gPv3745fIIuZaamjwdb/SHPQDJEsDxB48qXogaftFQs0JDZAgkpnTyNNte9p?=
+ =?us-ascii?Q?a724K6KoeHQVWBWfSnSBw7XPWTysazQVgEaCV/YYdPVr2nJK?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8a9c1e84-2d4e-4807-eb1a-08de5e72f98f
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 13:41:44.1943
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RAaT/iLKpxLL59bFm4sX885BPdJDDnNI/6fNeMqr3m8YTer4TX7QewvpWXrNt0bXUP9OX03nQB7UBE6OnjBNoA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7492
 
-
-
-On 1/28/26 5:27 PM, Thomas Gleixner wrote:
-> On Tue, Jan 27 2026 at 16:01, Ihor Solodrai wrote:
->> BPF CI caught a deadlock on current bpf-next tip (35538dba51b4).
->> Job: https://github.com/kernel-patches/bpf/actions/runs/21417415035/job/61670254640
->>
->> It appears to be related to this series. Pasting a splat below.
+On Wed, Jan 28, 2026 at 09:50:36AM +0000, Gabriele Monaco wrote:
+> 2026-01-27T18:55:02Z Andrea Righi <arighi@nvidia.com>:
+> > Unfortunately checking only runtime <= 0 isn't enough for the sched_ext DL
+> > server case:
+> >
+> > # Runtime of EXT task (PID 2025) is 0.000000 seconds
+> > # Runtime of RT task (PID 2026) is 4.990000 seconds
+> > # EXT task got 0.00% of total runtime
+> > not ok 2 FAIL: EXT task got less than 4.00% of runtime
+> >
+> > With the unconditional reset the EXT task gets 5% of the bandwidth. I'll
+> > add some debugging to figure out exactly what is happening.
 > 
-> The deadlock splat is completely unrelated as it is a consequence of the
-> panic which is triggered by the watchdog:
+> Thanks for testing it. That's quite strange..
 > 
->> [   45.009755] watchdog: CPU2: Watchdog detected hard LOCKUP on cpu 2
+> I run your test on a kernel without ext server, as far as I understand, the test is kinda indirectly checking also the fair server and that does not fail, right?
+> At least that's what I get on an arm64 machine with 128 CPUs.
+
+That's right, withtout the ext server, the EXT task is supposed to starve.
+
+And yes, the test is also checking the fair server, just to make sure we're
+not breaking anything in fair while we're loading / unloading the BPF
+scheduler.
+
 > 
-> ...
+> After letting the test continue on failure I get:
 > 
->> [   46.053170]   lock(&nmi_desc[NMI_LOCAL].lock);
->> [   46.053172]   <Interrupt>
->> [   46.053173]     lock(&nmi_desc[NMI_LOCAL].lock);
+> # # Runtime of FAIR task (PID 22503) is 0.240000 seconds
+> # # Runtime of RT task (PID 22504) is 4.750000 seconds
+> # # FAIR task got 4.81% of total runtime
+> # ok 1 PASS: FAIR task got more than 4.00% of runtime
+> # TAP version 13
+> # 1..1
+> # # Runtime of EXT task (PID 22511) is 0.020000 seconds
+> # # Runtime of RT task (PID 22512) is 4.970000 seconds
+> # # EXT task got 0.40% of total runtime
+> # not ok 2 FAIL: EXT task got less than 4.00% of runtime
+> # TAP version 13
+> # 1..1
+> # # Runtime of FAIR task (PID 22518) is 0.240000 seconds
+> # # Runtime of RT task (PID 22519) is 4.750000 seconds
+> # # FAIR task got 4.81% of total runtime
+> # ok 3 PASS: FAIR task got more than 4.00% of runtime
+> # TAP version 13
+> # 1..1
+> # # Runtime of EXT task (PID 22525) is 0.000000 seconds
+> # # Runtime of RT task (PID 22526) is 4.990000 seconds
+> # # EXT task got 0.00% of total runtime
+> # not ok 4 FAIL: EXT task got less than 4.00% of runtime
+> # ok 24 rt_stall #
 > 
-> ...
+> Mind that it's expected for the ext task to starve (I didn't apply the patches enabling the server).
+
+Correct, this makes sense.
+
 > 
->> Any ideas what might be going on?
+> After adding all your patches [1], also the ext passes the test (i.e. gets boosted just fine).
 > 
-> Without a full backtrace of all CPUs it's hard to tell because it's
-> unclear what is holding the runqueue lock of CPU2 long enough to trigger
-> the hard lockup watchdog.
+> I tried disabling all CPUs but CPU0 and run the same test and it hung (bad sign), then I also enabled CPU1 (total 2 CPUs online) and again I see both fair and ext getting their share.
 > 
-> I'm pretty sure the CID changes are unrelated, that new code just happen
-> to show up as the messenger which gets stuck on the lock forever.
+> What am I missing here?
+
+With the ext server patchset [1], without resetting dl_defer_running in
+dl_server_stop() I get this:
+
+$ sudo ./runner -t rt_stall
+===== START =====
+TEST: rt_stall
+DESCRIPTION: Verify that RT tasks cannot stall SCHED_EXT tasks
+OUTPUT:
+TAP version 13
+1..1
+# Runtime of FAIR task (PID 1993) is 0.250000 seconds
+# Runtime of RT task (PID 1994) is 4.740000 seconds
+# FAIR task got 5.01% of total runtime
+ok 1 PASS: FAIR task got more than 4.00% of runtime
+[   28.494515] sched_ext: BPF scheduler "rt_stall" enabled
+TAP version 13
+1..1
+# Runtime of EXT task (PID 1996) is 0.240000 seconds
+# Runtime of RT task (PID 1997) is 4.740000 seconds
+# EXT task got 4.82% of total runtime
+ok 2 PASS: EXT task got more than 4.00% of runtime
+[   33.538466] sched_ext: BPF scheduler "rt_stall" disabled (unregistered from user space)
+TAP version 13
+1..1
+# Runtime of FAIR task (PID 1999) is 0.000000 seconds
+# Runtime of RT task (PID 2000) is 4.990000 seconds
+# FAIR task got 0.00% of total runtime
+not ok 3 FAIL: FAIR task got less than 4.00% of runtime
+# Planned tests != run tests (1 != 3)
+# Totals: pass:2 fail:1 xfail:0 xpass:0 skip:0 error:0
+
+The fair server works, ext server works, but once the ext server is
+unloaded, the fair server is broken.
+
+If I apply the fix to reset dl_defer_running in dl_server_stop() on top of
+[1], the test is passing:
+
+$ sudo ./runner -t rt_stall
+===== START =====
+TEST: rt_stall
+DESCRIPTION: Verify that RT tasks cannot stall SCHED_EXT tasks
+OUTPUT:
+TAP version 13
+1..1
+# Runtime of FAIR task (PID 1965) is 0.240000 seconds
+# Runtime of RT task (PID 1966) is 4.740000 seconds
+# FAIR task got 4.82% of total runtime
+ok 1 PASS: FAIR task got more than 4.00% of runtime
+[   25.307989] sched_ext: BPF scheduler "rt_stall" enabled
+TAP version 13
+1..1
+[   26.257788] hrtimer: interrupt took 112519 ns
+# Runtime of EXT task (PID 1968) is 0.250000 seconds
+# Runtime of RT task (PID 1969) is 4.750000 seconds
+# EXT task got 5.00% of total runtime
+ok 2 PASS: EXT task got more than 4.00% of runtime
+[   30.344700] sched_ext: BPF scheduler "rt_stall" disabled (unregistered from user space)
+TAP version 13
+1..1
+# Runtime of FAIR task (PID 1971) is 0.250000 seconds
+# Runtime of RT task (PID 1972) is 4.750000 seconds
+# FAIR task got 5.00% of total runtime
+ok 3 PASS: FAIR task got more than 4.00% of runtime
+[   35.373585] sched_ext: BPF scheduler "rt_stall" enabled
+TAP version 13
+1..1
+# Runtime of EXT task (PID 1975) is 0.240000 seconds
+# Runtime of RT task (PID 1976) is 4.740000 seconds
+# EXT task got 4.82% of total runtime
+ok 4 PASS: EXT task got more than 4.00% of runtime
+[   40.403697] sched_ext: BPF scheduler "rt_stall" disabled (unregistered from user space)
+ok 1 rt_stall #
+=====  END  =====
+
+
+=============================
+
+RESULTS:
+
+PASSED:  1
+SKIPPED: 0
+FAILED:  0
+
 > 
->> [   46.053209] CPU: 2 UID: 0 PID: 126 Comm: test_progs Tainted: G           OE       6.19.0-rc5-g748c6d52700a-dirty #1 PREEMPT(full)
->> [   46.053214] Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
->> [   46.053215] Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
->> [   46.053217] Call Trace:
->> [   46.053220]  <NMI>
->> [   46.053223]  dump_stack_lvl+0x5d/0x80
->> [   46.053227]  print_usage_bug.part.0+0x22b/0x2c0
->> [   46.053231]  lock_acquire+0x272/0x2b0
->> [   46.053235]  ? __register_nmi_handler+0x83/0x350
->> [   46.053240]  _raw_spin_lock_irqsave+0x39/0x60
->> [   46.053242]  ? __register_nmi_handler+0x83/0x350
->> [   46.053246]  __register_nmi_handler+0x83/0x350
->> [   46.053250]  native_stop_other_cpus+0x31c/0x460
->> [   46.053255]  ? __pfx_native_stop_other_cpus+0x10/0x10
->> [   46.053260]  vpanic+0x1c5/0x3f0
+> Thanks,
+> Gabriele
 > 
-> vpanic() really should disable lockdep here before taking that lock in
-> NMI context. The resulting lockdep splat is not really useful.
+> [1] - https://lore.kernel.org/lkml/20260126100050.3854740-1-arighi@nvidia.com
 > 
-> Thanks.
-> 
->          tglx
 
-Hi Thomas, Peter.
+Just to make sure we're testing the same thing, I'm currently using
+https://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git, branch
+scx-dl-server.
 
+I'm running this test inside virtme-ng:
+  $ vng -vb --config tools/testing/selftests/sched_ext/config
+  $ vng -v -- tools/testing/selftests/sched_ext/runner -t rt_stall
 
-I remember running into this panic, once. But it wasn't consistent and i
-couldn't hit it again. And it had vcpu overcommit, and fair bit of steal time.
-
-
-The trace was like below from different CPUs.
-------------------------
-
-  watchdog: CPU 23 self-detected hard LOCKUP @ mm_get_cid+0xe8/0x188
-  watchdog: CPU 23 TB:1434903268401795, last heartbeat TB:1434897252302837 (11750ms ago)
-  NIP [c0000000001b7134] mm_get_cid+0xe8/0x188
-  LR [c0000000001b7154] mm_get_cid+0x108/0x188
-  Call Trace:
-  [c000000004c37db0] [c000000001145d84] cpuidle_enter_state+0xf8/0x6a4 (unreliable)
-  [c000000004c37e00] [c0000000001b95ac] mm_cid_switch_to+0x3c4/0x52c
-  [c000000004c37e60] [c000000001147264] __schedule+0x47c/0x700
-  [c000000004c37ee0] [c000000001147a70] schedule_idle+0x3c/0x64
-  [c000000004c37f10] [c0000000001f6d70] do_idle+0x160/0x1b0
-  [c000000004c37f60] [c0000000001f7084] cpu_startup_entry+0x48/0x50
-  [c000000004c37f90] [c00000000005f570] start_secondary+0x284/0x288
-  [c000000004c37fe0] [c00000000000e158] start_secondary_prolog+0x10/0x14
-
-
-  watchdog: CPU 11 self-detected hard LOCKUP @ plpar_hcall_norets_notrace+0x18/0x2c
-  watchdog: CPU 11 TB:1434903340004919, last heartbeat TB:1434897249749892 (11895ms ago)
-  NIP [c0000000000f84fc] plpar_hcall_norets_notrace+0x18/0x2c
-  LR [c000000001152588] queued_spin_lock_slowpath+0xd88/0x15d0
-  Call Trace:
-  [c00000056b69fb10] [c00000056b69fba0] 0xc00000056b69fba0 (unreliable)
-  [c00000056b69fc30] [c000000001153ce0] _raw_spin_lock+0x80/0xa0
-  [c00000056b69fc50] [c0000000001b9a34] raw_spin_rq_lock_nested+0x3c/0xf8
-  [c00000056b69fc80] [c0000000001b9bb8] mm_cid_fixup_cpus_to_tasks+0xc8/0x28c
-  [c00000056b69fd00] [c0000000001bff34] sched_mm_cid_exit+0x108/0x22c
-  [c00000056b69fd40] [c000000000167b08] do_exit+0xf4/0x5d0
-  [c00000056b69fdf0] [c00000000016800c] make_task_dead+0x0/0x178
-  [c00000056b69fe10] [c0000000000316c8] system_call_exception+0x128/0x390
-  [c00000056b69fe50] [c00000000000cedc] system_call_vectored_common+0x15c/0x2ec
-
-
-  watchdog: CPU 65 self-detected hard LOCKUP @ queued_spin_lock_slowpath+0x10ec/0x15d0
-  watchdog: CPU 65 TB:1434905824977447, last heartbeat TB:1434899309522065 (12725ms ago)
-  NIP [c0000000011528ec] queued_spin_lock_slowpath+0x10ec/0x15d0
-  LR [c000000001152d0c] queued_spin_lock_slowpath+0x150c/0x15d0
-  Call Trace:
-  [c000000777e27a60] [0000000000000009] 0x9 (unreliable)
-  [c000000777e27b80] [c000000001153ce0] _raw_spin_lock+0x80/0xa0
-  [c000000777e27ba0] [c0000000001b9a34] raw_spin_rq_lock_nested+0x3c/0xf8
-  [c000000777e27bd0] [c0000000001babb8] ___task_rq_lock+0x64/0x140
-  [c000000777e27c20] [c0000000001c8294] wake_up_new_task+0x180/0x484
-  [c000000777e27ca0] [c00000000015bea4] kernel_clone+0x120/0x5bc
-  [c000000777e27d30] [c00000000015c4c0] __do_sys_clone+0x88/0xc8
-  [c000000777e27e10] [c0000000000316c8] system_call_exception+0x128/0x390
-  [c000000777e27e50] [c00000000000cedc] system_call_vectored_common+0x15c/0x2ec
-
-
-
-
-I am wondering if it this loop in mm_get_cid, which may not be getting a cid
-for a long time? Is that possible?
-
-static inline unsigned int mm_get_cid(struct mm_struct *mm)
-{
-         unsigned int cid = __mm_get_cid(mm, READ_ONCE(mm->mm_cid.max_cids));
-
-         while (cid == MM_CID_UNSET) {
-                 cpu_relax();
-                 cid = __mm_get_cid(mm, num_possible_cpus());
-         }
-         return cid;
-}
-
+Thanks,
+-Andrea
