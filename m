@@ -1,181 +1,220 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010037.outbound.protection.outlook.com [52.101.193.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F11A32ED24
-	for <sched-ext@lists.linux.dev>; Thu, 29 Jan 2026 17:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F9034DCE0
+	for <sched-ext@lists.linux.dev>; Thu, 29 Jan 2026 17:33:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769707308; cv=pass; b=DcwXGT6H7YI8ZBPT+mlpkPOW7xZwS2y+cJ9c+O4NE2C6Dr6ZS6h8qNi+9umkqEOEaIiy6ezy4mvKR22vCSQh1hsD+eNwChnuNP94O6Sy2ozmCByGsbuPk8m1m+lz/wmtpLpTeS+Tk4VErQO3AptgpA8BwIhzTiKHw5hQOQ6+MEA=
+	t=1769707999; cv=fail; b=E29d57WSx8obJv8n2c42vNxAVCZ7XtEhJVd+D65q9GBvJ7LjcLHxvIUQibT4fVsneSzCyQ38AOWnSAXLxMqO2iaqThAigYtuSv1NOE4t1IvAjTNoP8cqL04GqWUS4mWmtbO3ElB/FsloE+OKY8+yHmAAMX+A/eNz802m1PPZXZI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769707308; c=relaxed/simple;
-	bh=B/Z6oc7nhVZLZTSl8l3OJXcNI+VHpZ9v5E73ZIi4/a4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g5utKvrY6JQ1DiY8muApLVAATWTnf0kmSCfqASTxo0CARWfu8A7wGJ6gKsJbp/eW7xJK0IQlrZngJxBpbDSNxJzqejatCeTGM0J93vNoGEABd6dcdhatvGnJZoWusiKUobr+YbIE2569SrdfC1bXKeq6NokfUEUt7xgpLaXZHZA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bbIk40M0; arc=pass smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1769707999; c=relaxed/simple;
+	bh=Lix697pLm4M4Oxtp1Ye91fOvwKlH6wiBzorT3qQYtGE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gkyimv4+L0pk8IAu4bmo1rCDU4d5Syy/PMdAjcwG2tx0DZtV/hjcaWKfqAheCWD8wZh3PjhxjNSYbZ5QxSUXW7czzbfZ8J3rcmeNR3exGVCewmLQkynl2VVR8bHPJMpUGTe9LRog4wys+sY33MHdg/3Ff232IroJH4u9Yc7ZT+A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=PwiJ4psf reason="signature verification failed"; arc=fail smtp.client-ip=52.101.193.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bbIk40M0"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-48039fdc8aeso7534625e9.3
-        for <sched-ext@lists.linux.dev>; Thu, 29 Jan 2026 09:21:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769707303; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SkElxstHs9D4OzfvNK+OBajrBqZH3pSKDgR0ay30/eUXk16JAbn3LO4pkTr1HdOpwr
-         G+CoPmtgQkkTGQF3/ccbkx4kgwzruHvBCzKo33b+HRUplqYtylC6bPFV8SipgFLED/Nc
-         CM1HBhCz0RBmmJtZrXPtjK9RLjENfXczKqgYmv8sq9KBQOTddGHd25BCg9K/zQK1KgI0
-         1X2plxJv8eTNS4sSzCXEhwxBNRMJmjDCuL5Di7RKVdQe2MkKhTVOjsWaGukWeuxXFiQH
-         qEw3GZg2fRyw6G1Q/DDGtZBodUPlIJaFUCvTEcGxCU7L1XMEheSpTTdrhN8+iUYF29wZ
-         IEPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cikD0DW64ATmIS3V1f2k1Y72bgL6wosY2UHz3lIPFuY=;
-        fh=5e7hsXP1SPcYnpqU9oPS7kvpQRG4FQpwjdOnkY1ShwU=;
-        b=DeKIOIkFSx2b9ftMimsJHwCscawNdUhs51R1pCI5ZQTUSIuBZaIB/rx+wYTg6VPly7
-         Lh7B1JGst2x5W1IQotncPbs66yttdrbvwtcisMJ1XBK9BjyzppptP5LpWlE7VqJ6GzYk
-         ZDd3VvhEAxEEIPIQzlBSBq3a69SI1LDo3HKk5n8ULYpupUjWWt/eD4dMIEP9Rch0nP5Z
-         VpKWBWWNfLPCm7F/dnDTv9+ek5rhjouxELwhJAaRfNaOsC4MAtoUlSxY2uEnGsQPexx5
-         8alo8Xsa6YlksXeIG04vhheIA88NEUcsZKZ4VheY9ibRto1sIsEzVkfqzQsw4oz/WRnI
-         bH/Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769707303; x=1770312103; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cikD0DW64ATmIS3V1f2k1Y72bgL6wosY2UHz3lIPFuY=;
-        b=bbIk40M0hSwJthY+oWTD8SKTpUdr9kj8pqIXFMvkO7ayxMhUiGOTxFn0VrsVKRa2Ui
-         xnidePTfpyZp8fvPw8aX+desDduArTk6vja0RMEQU+QrfUy0RJtSouVNA2LfKmHrTwdo
-         O4YVuUmKEtPuxf0V6aPFOi29s8uBLWL9JxQvLFI4vsJRSW5yMY8iZYLHYNJAC5f96s0t
-         OaLecwu8zUW3UXLqV6WNvyWPSydqqwvcY25xXsCOTHpNBmtEZKwraPOJqeNPBp9rEjUZ
-         ZevLVmvwyhycwepkXdqT4StkNz5kfed+FHkTfLG5cCh3+QbmkTwCtp6lTj3c54Swl8v9
-         s6Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769707303; x=1770312103;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cikD0DW64ATmIS3V1f2k1Y72bgL6wosY2UHz3lIPFuY=;
-        b=HlEaDU/8MYo69RZh/tp9nlzmD+j8RacgHPq9k0IYRh+2BJgShtF6tJ6jSIFNGDBZVj
-         AF95Nnt80mafy59upqodMQWfqCHeGbEprnfJwtvP25rvb/yqdmnwUGpiuMwNMQ1SodFe
-         3ZaP1RsaeI6W7JCRW+ZEXbPKdfWRYM1e5fv4CkDnbJSuzPfa4m2cTRVr0izEWQw9ccXf
-         VW4sMQ8HocbmrYcgV6VST+4fxZl/YPw1qOkLjuWQ8swCbM44w/0hOXCRJJ6S3U3Pjr/q
-         zvDnZb45T0vbBCNvHgwzuhBD+nCXs/MWlB5hKz/z17E3M2UnV4GAajV6N6soVWQ7aMsT
-         68iA==
-X-Forwarded-Encrypted: i=1; AJvYcCVSxSPZPGYTpb/q6w6nwQIM1fKMv7/9KkfvXJEB4L1oHUkK5CBNWfA+ouOn3marAhxGZxsHSz8/948=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzkDF2umRMX5xe972I3yrXpiLHm5GoqvEA3ZI7YJD7mn3JGf41s
-	5aIQEYNzeXiz55HdJsxNE/ZOz+4D3romx8kSmTA1zMYrYVSKPvkHap8jaabd4y7vrF9vm5ZrvSl
-	cFI/8TJE5MlBaHQPzNy7TOr1mGMcW4aI=
-X-Gm-Gg: AZuq6aKa1ln25PJXbrznrFcOtFB9qMzqgh21SKDp+CRlmqC8LiOuEbbddRLGR7ecuHD
-	eQNyBCcQu1ETX4NY1TyA+7RJdvKa6BAgU7JqU6K4K1pNRKvAx9xIatpAn1jplz9D1Vum53NiA+F
-	ei8KLg3XoB0qBA2+MBM2sftvOaHr+lZNYbLHl3oH/l+QVV3CGb7RGsv5GaTHn47rFGK5gHfsm1L
-	mQ6Lgg5zKQsgY5txw7KEu1/Lep0j8RSQsnNFiA6VHSMkJPZOYqeGWHfb/j1WG+z7Cgdhmhdtzld
-	AZGh5Jck27DtR3ecC4rHJSyyywKWkRKsq4kHzfvko7n5dmcQQC89qQ4WD/U2TBcD5fUMoh7a
-X-Received: by 2002:a05:600c:4ed0:b0:480:4a90:1b00 with SMTP id
- 5b1f17b1804b1-48069c69584mr116465305e9.20.1769707303333; Thu, 29 Jan 2026
- 09:21:43 -0800 (PST)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PwiJ4psf"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=U+n2qup5/89oEklEwNdphZ+GGIEUxgUI7e3vVvAEN8OJyN3lzaKZ7k85eo/dscYSfEnsbdc6p9yXE59GeP2O8jAJArBv2uaOzKNAdzK2+es7Ij/YqeBTn96PLHZtRZcqCCBhMLR9LMLN6xeROmOA+w/guB7p8RKmy50dtktgYlYKRqL0MZ4+7igyRLpk0wDk9VmLhCIiRv3ful/MtvgcKou3CEJVF3GpUo9S5IwuZhJ5fTbL0AUtsVCBireGZVZvl3JFzkeTuxzs5FDmayVEfSmy8H59oni06hgl9Ur9enMDhwbOVYl6+Y2WbkupZ7xRi6hJPYrtZwFjCSy99UX72A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aFgHOPdQnmt6VBF9wS6hZBkhQw6AYZj4yjNKK40jMhc=;
+ b=KUUF4rFt+hvitPk+0yUQ/qDJsDdAY0cPtCjfs1pYOmc+10W/qpVhjhefQOl9kN8fWQdX+sMO5sBHKHf3awAAlmKpwlUHOmA1xY0GPJAmP5b6rrFgBCP+u/rYWZGQX/pPmil97ISWiqC4bOMXsj8QmXhvY1pkJQJqDg6oKxteovLB84asXxs5AB0hm57i6W/xzbDuvWKMOpc0DXckh8xMCsDq1VjP1nT2cY6Anvx6spq1o6in+KYFDk6frHZ8ugQzI2gPvAVYgCE4E+O+REPa20Rj1e8vjEozU9J2Lh4l9ACXXbM9fqZZOe9Qq6EzL4fsahYvj9xLfwDAnCw+5ipRrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aFgHOPdQnmt6VBF9wS6hZBkhQw6AYZj4yjNKK40jMhc=;
+ b=PwiJ4psfyRiiUQ0mz2q6MNq6fgp1pabNUcwkQ+nT2go8+bV1KHzVM77Nw6G/wD9Byo0h0YBDk51g4MybQITf3VXqV8nkb7gxcM68LAIIRFkhJTAp/hysg5M2/k5F7DnK6c1gUDrJ3w00uz/X9kX3YSrHcUXLxg8PnYi7kIWl3CGkXmmPnwmtcct5UlRle3f2sE1HMa4AWSvNOWBKOPmq5Y/82sU3b08t2q2FxyEigzcnHnHrXjYjl114qzAcxXrBK3qBPchluXa4ESJscJaGGIRcnTHlAp0LeGYvn51830ycSxwd2uHhzZjQDQLSPCUTKhmvgeCuQ1+aqNV1rdsxoA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SN7PR12MB6838.namprd12.prod.outlook.com (2603:10b6:806:266::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Thu, 29 Jan
+ 2026 17:33:11 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9564.010; Thu, 29 Jan 2026
+ 17:33:11 +0000
+Date: Thu, 29 Jan 2026 18:32:58 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: gmonaco@redhat.com
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] sched/deadline: Reset dl_server execution state on
+ stop
+Message-ID: <aXuZysNQCVrfFzx7@gpd4>
+References: <aXeWnzI3ymUSm3Cu@gpd4>
+ <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com>
+ <aXfcGynN92kyw5Co@gpd4>
+ <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
+ <aXjJG-72XEqvaVtL@gpd4>
+ <be763631-f677-4bad-8285-69dbfe29db54@redhat.com>
+ <aXkJ8_zLVSuToLxe@gpd4>
+ <45e4dc7a-f261-46ec-8973-0fb8d1f7b0b9@redhat.com>
+ <aXoSFOONWJmdyCQB@gpd4>
+ <b7ffc7e6121320d29cedcff0e2b68ad76c8e2775.camel@redhat.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b7ffc7e6121320d29cedcff0e2b68ad76c8e2775.camel@redhat.com>
+X-ClientProxiedBy: ZR0P278CA0103.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:23::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260129135426.93424-1-changwoo@igalia.com>
-In-Reply-To: <20260129135426.93424-1-changwoo@igalia.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Thu, 29 Jan 2026 09:21:30 -0800
-X-Gm-Features: AZwV_QieIcsJO1VA71VFB7TRPCNl-paSdxCtbBMb_Zd5Q7mc_krsW0CoTdbFns4
-Message-ID: <CAADnVQL2huFSNAn4Pkbx2GOqAB=Z-rtd+Fp3BnJTZ-tbzOhgmw@mail.gmail.com>
-Subject: Re: [PATCH] selftests/bpf: Make x86 preempt_count access compatible
- across v6.14+
-To: Changwoo Min <changwoo@igalia.com>
-Cc: Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
-	Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <martin.lau@linux.dev>, 
-	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, 
-	Yonghong Song <yonghong.song@linux.dev>, John Fastabend <john.fastabend@gmail.com>, 
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>, 
-	Jiri Olsa <jolsa@kernel.org>, Shuah Khan <shuah@kernel.org>, kernel-dev@igalia.com, 
-	bpf <bpf@vger.kernel.org>, sched-ext@lists.linux.dev, 
-	LKML <linux-kernel@vger.kernel.org>, 
-	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SN7PR12MB6838:EE_
+X-MS-Office365-Filtering-Correlation-Id: d189378b-a770-4acc-7a35-08de5f5c7950
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?hNujFi3h4ADpkO2qvdwxcvlHMd2F32AAIoM+IQ0PVH6+7QyB30z6+ovC7T?=
+ =?iso-8859-1?Q?tuTWAJNqCTgGGhbUxKRf/JGmgY7BMgdu2zdFaZv4XVXMp8/C/e5OoxrRBm?=
+ =?iso-8859-1?Q?xvMBHkU+EnF6d2tiYGyjKG/8zkzfkxsND27/LnVEyFrdooXVtFvG+OT00z?=
+ =?iso-8859-1?Q?LEXGq1xSG0kR/P2zhr/1vgyiQAn0/6ALrqwMRZ7AFyGEhOwLL6Djan9jTG?=
+ =?iso-8859-1?Q?Im0EPChwF5goVLiH4CM0ME0JI3xxliYrUlmlzud53I4/lS3WYBm9a8/vlv?=
+ =?iso-8859-1?Q?lwFOqhhwUZzKfLxrw/O0R/mq83JRT0nL43U774Hs4Lxx0QP6YzQiv5uUD5?=
+ =?iso-8859-1?Q?ft96askt1GqNmg8/7bn+nD2xfI/7vQnDcEMY2mZyS1hPr8l4pG5kFp0Qm6?=
+ =?iso-8859-1?Q?Rc6Un4BIs9jzwKrGxNp+NaAiRymKnCbSD/AfEm35mVvzl1y0veJs4MdXl9?=
+ =?iso-8859-1?Q?JxOf5KuusLwODfAYoeOoSs2EHGFfb0Pt230s2/wJXGXihfT4an49CEEtyj?=
+ =?iso-8859-1?Q?p9yMnlNCY2lBBKzW5QA+dY4bzw0SsxJXJ0i7Tl2EO9OcQXCQRKqAN49NRJ?=
+ =?iso-8859-1?Q?Rmqr0ljqfzthOZB/fmVSlA8JHH2lEyWmi7xBhOeKVwHONwODU1mVaVaJC3?=
+ =?iso-8859-1?Q?PwjeEt4NzSujjFtNKuXfSIzZPh92QnmzdQrn3BEGaUbcbmTyZDptiML3/z?=
+ =?iso-8859-1?Q?s+bHbhTYQeDLc0sLGdbTIP7PI7XOpe0KyNROcb7zjEXvIuCSdQcApsJCR8?=
+ =?iso-8859-1?Q?uGDYw1eRvL7si5HjPrHBGjwil40rfn6R4pj/j7bu6ZZP/Xt8JM0mn1Xprm?=
+ =?iso-8859-1?Q?D+CyHKCjahkvZ0iPyu/u5JExUp6qEOvGYkRATJw+rpCqiQDNLvEmOqeQu3?=
+ =?iso-8859-1?Q?2u5rP1QmNMcHfe/DS30sZ1OXDHeX4R1D3SS2ceAwTH7H12TxGDxmr/J9Oq?=
+ =?iso-8859-1?Q?G+ThuV9EtF0SS+amKEArfP8VtiFeDwwRdNQat65U8xVRQlNDg23P4y7wm6?=
+ =?iso-8859-1?Q?BMSD+NGRgfkYewHEtLmhzj7Q+3w0IwIIA4q2HEJDqG7HMbHXGEehrSY4t2?=
+ =?iso-8859-1?Q?Rmh3EQFq02c2SM4PoUpBwKhK+0TNA4nISIIuxZtTQBW81Cg/yqNDpbLx9v?=
+ =?iso-8859-1?Q?d7Ry9XJCmqXcZ13mulIhKd1fJGCO1WZrA2wMEnvBi7HBXPwHa1KHdMjzLO?=
+ =?iso-8859-1?Q?WbejuZcNjyppTsqdMEf0AkVu0lTGF0DgCK5lhEwaA7LquhIpmOohezUYho?=
+ =?iso-8859-1?Q?G5w8Wklfxu2TkX6eYvjACM757flh7kXnVOIRizfGUrgGUI6eXyzTs2RoYG?=
+ =?iso-8859-1?Q?o85vV+F3m8EDgxPH6ga8RqRFzVT7CSqP69ACLcMfjXfRYjaN8ZzKh+EYxw?=
+ =?iso-8859-1?Q?RBT1RrNmFskQPJG3fCmRS9b9+TeXKiEe+lz05FcoYT7fRqRJS3Xte6Mh83?=
+ =?iso-8859-1?Q?J0RC3kEpV3i3Cyqjk3HAuSMXQSumwDWNRPB2sbHMUYDGPT+WrG15nK3Y6M?=
+ =?iso-8859-1?Q?8tnmbPiwVzWp//pFC+tknojObM6KEAwPKReRVBIaMgmkVtfg5JdBCrNsjZ?=
+ =?iso-8859-1?Q?W0XvwQm6ZeIPeW4fuKhP4RWawAq0D8KylkJeC0gWD6/T8EbnqQPmJjttUc?=
+ =?iso-8859-1?Q?hAZ7fEClXTLs8RxOFMPySosJAv9gxl3Nop?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?YRRaif3+kH0BJqSQpRvGsquYWUQcMZCJLR+Ao5ymfpiOrcYj6feN7NxgM+?=
+ =?iso-8859-1?Q?IuPjlidaRI2Qb3X834qtsttqoInZfoCD32fs4DjPOPEo/gkWwlwaBcNkxS?=
+ =?iso-8859-1?Q?qHF/FUe/WmrQvQCTLFP22KRIjwa+CqMmH0VjHbVH1rg8Z5RL+ot8YqGOmK?=
+ =?iso-8859-1?Q?9wmhrbAYQccYhxUjikKFxOkMaqpRLNtPo8pfcdL311c23WRZvgfMFeA8Bd?=
+ =?iso-8859-1?Q?agTuHfsMoCYo+WiWHKndGYFv0f4YPPFCQvx+LU3XHFq3nrsA/ifUYlFdaW?=
+ =?iso-8859-1?Q?Dmfkmzd/U8i+lJEDVxXkExNwzMz6GVPwZZYHvVyUxiKpDLnE0f3tO8ofq4?=
+ =?iso-8859-1?Q?3twrRgBQuSJYoOyVINeGPHyQ61F2EZs3phjqnp1CucKhb5F7SJ357V0B19?=
+ =?iso-8859-1?Q?iNbnUL3Cvtx1XGUvkHKAB2Y4V4EOExFjdcANsOVy3b8Jsj3lc0hnnm3yxo?=
+ =?iso-8859-1?Q?iJSy8dbMoDghyS9ZQASxTB7BrzT6/NXcwlRr6zhwSCO9eMcaSh1GO3phV/?=
+ =?iso-8859-1?Q?7ob29hUODorY1om9SAFHULPm697mL3AS8jylhGWkiCcUQ8REHUaa05P1W6?=
+ =?iso-8859-1?Q?RZ5LfieMHrq7rOBn+gNpjJPdYvST5AFTZuB391/GdABYXXfSte/Z/MZRyP?=
+ =?iso-8859-1?Q?0Bppx4gySb9YTooPxGkj1oqb7r8j6ZPjbYFl9NxsGgPSKO5OV7WyEIHgbG?=
+ =?iso-8859-1?Q?CqgAboVRwof8gBt8hjtESJPjv825E2vxytYDFSSC3x+jFOa0K2AiaZNB6f?=
+ =?iso-8859-1?Q?nNVKJm3nV/oAOQVrL1YcEdXgRzN4+XaLGj3QZVO8PjOopGZ0QZ2vRv5mqj?=
+ =?iso-8859-1?Q?1CB8CAxXpQRum0PLvaLxryRbnKjpVI3UWTubHuAjDH0+IVSdeBZ2Bc9MYr?=
+ =?iso-8859-1?Q?wcaL5Pm5S3fLZHJPR9YDUo8UefgLUq49/RunC2cChACfSJZ/6oOK+QoPFo?=
+ =?iso-8859-1?Q?ygWo+Rc1F/PLkG4ByXIvibC55A18QLNQKZZY2HiWhQJVObVLC3XDpgiAxr?=
+ =?iso-8859-1?Q?gQQhqmWWzag5gPcsCx9pS98Oav0l1L7UQpwefrQBui1e4GbsErwNrbR8rA?=
+ =?iso-8859-1?Q?E9yE4bTN3aiqMPg7m01knQD55be1gWsWR1n5A0Xg/QhkM04cl4xk1T+Ymn?=
+ =?iso-8859-1?Q?ZlXbPJul6LWuHeTp9EDKoFDByQTghXHSxIgZBl1w2xZ3U9OQ3GA5peHGUZ?=
+ =?iso-8859-1?Q?gv+WGmUpb5bJaqSOorWzN7/ntxJtPExZOIyJRjm8fGfXG6If43PamsmCI5?=
+ =?iso-8859-1?Q?X1jAQxeZZ4l91P5Eru9hdr5jWl4UrlXkN8TbBZpl1qnHuL5keIhD2MMXD4?=
+ =?iso-8859-1?Q?KKiG1nj1HurkYJaHkHzzSmFD3QKuVO37HvWner12cOnnvGgIjGGzt+/bqc?=
+ =?iso-8859-1?Q?VBSQ+3JhQoH59BGRSjB3OBMi6NN/V0c2PzaAdvpHaDMXFaqpjlIq8JMvO4?=
+ =?iso-8859-1?Q?CQyQKCSZnxFTDccgLN6VG8wsIgozff6BuagcIj4RR41Ham8cWq8Qe5Rj9U?=
+ =?iso-8859-1?Q?IQTCUPcVnN9fdbPAwlFCFdkQzVK3GXbCOhqtzlUp387vGDAi5Y75c9mSXo?=
+ =?iso-8859-1?Q?bgsXOFRaTKYnj4Zd0+xHH0Mj7i/Ae2C1epNozNlWbrkhOpuCgnmaAhAV+g?=
+ =?iso-8859-1?Q?QZGGsXmOlAaWcn7Hh/hNibjc6WAIuYOD93pir1sUMedls7zCMlpDM+pKgx?=
+ =?iso-8859-1?Q?36L78pyj7GC8+GYawxI5gr2DkM6huX3o9iihxxu/td1A52RtWMKVSG3i/W?=
+ =?iso-8859-1?Q?iEAAf4h44McpS63Jg8Bc0os8RPpGTvLuQKWpbjmeJMT3a3+/pHHcO/HAsz?=
+ =?iso-8859-1?Q?WYCeL/9rtw=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d189378b-a770-4acc-7a35-08de5f5c7950
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jan 2026 17:33:11.3237
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MWt8ly6cDqwybFjHvJDdW6oi8yK3ccFZS5sJSTCFd++Hvb0bnfIIcTWDiabsViQQSN0dsjkjS0KdqcoTrLmhNw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6838
 
-On Thu, Jan 29, 2026 at 5:54=E2=80=AFAM Changwoo Min <changwoo@igalia.com> =
-wrote:
->
-> Recent x86 kernels (v6.15+) export __preempt_count as a ksym, while older
-> kernels expose the preemption counter via pcpu_hot.preempt_count. The
-> existing selftest helper unconditionally dereferenced __preempt_count,
-> which breaks BPF program loading on older kernels.
->
-> Make the x86 preemption count lookup version-agnostic by:
-> - Marking __preempt_count and pcpu_hot as weak ksyms.
-> - Introducing a BTF-described pcpu_hot___local layout with
->   preserve_access_index.
-> - Selecting the appropriate access path at runtime using ksym availabilit=
-y
->   and bpf_core_field_exists().
->
-> This allows a single BPF binary to run correctly on both v6.14-and-older
-> and v6.15-and-newer kernels without relying on compile-time version check=
-s.
+Hi Gabriele,
 
-See.. with bpf approach instead of kfunc this new helpers
-can work on old kernels without backporting kfuncs :)
+On Thu, Jan 29, 2026 at 12:48:35PM +0100, gmonaco@redhat.com wrote:
+> On Wed, 2026-01-28 at 14:41 +0100, Andrea Righi wrote:
+> > Just to make sure we're testing the same thing, I'm currently using
+> > https://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git,
+> > branch
+> > scx-dl-server.
+> > 
+> > I'm running this test inside virtme-ng:
+> >   $ vng -vb --config tools/testing/selftests/sched_ext/config
+> >   $ vng -v -- tools/testing/selftests/sched_ext/runner -t rt_stall
+> 
+> Well, that's a fun one, I could reproduce the same failure you
+> described in vng on another x86 box.
+> 
+> The arm box (bare metal) I used initially still passes just fine all 4
+> iterations of the test.
+> 
+> 
+> On the x86 box (vng) I tried different orders of iterations (where the
+> original is fair-ext-fair-ext) with and without the ext server active.
+> 
+> No ext-server: the ext iteration fails and breaks also fair (unlike the
+> arm64 box where the fair was intact)
+> ext-server active: a sequence fair-ext breaks both (like you observe).
+> 
+> I don't have time to look further into this right now, but it looks
+> like an interesting pattern.
 
-> Fixes: 4b69e31329b6 ("selftests/bpf: Introduce experimental bpf_in_interr=
-upt()")
+Thanks for checking and reproducing it.
 
-fixes tag is not appropriate. It's not a bug fix.
+Considering that these issues around DL server stop/start transitions can
+be triggered introducing an additional DL server (EXT) makes me wonder
+whether this could become even more problematic as we add more DL servers
+(hierarchical DL servers?).
 
-> Signed-off-by: Changwoo Min <changwoo@igalia.com>
-> ---
->  tools/testing/selftests/bpf/bpf_experimental.h | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/tools/testing/selftests/bpf/bpf_experimental.h b/tools/testi=
-ng/selftests/bpf/bpf_experimental.h
-> index a39576c8ba04..0194c0090e50 100644
-> --- a/tools/testing/selftests/bpf/bpf_experimental.h
-> +++ b/tools/testing/selftests/bpf/bpf_experimental.h
-> @@ -614,7 +614,13 @@ extern int bpf_cgroup_read_xattr(struct cgroup *cgro=
-up, const char *name__str,
->
->  extern bool CONFIG_PREEMPT_RT __kconfig __weak;
->  #ifdef bpf_target_x86
-> -extern const int __preempt_count __ksym;
-> +extern const int __preempt_count __ksym __weak;
-> +
-> +struct pcpu_hot___local {
-> +       int preempt_count;
-> +} __attribute__((preserve_access_index));
-> +
-> +extern struct pcpu_hot___local pcpu_hot __ksym __weak;
->  #endif
->
->  struct task_struct___preempt_rt {
-> @@ -624,7 +630,13 @@ struct task_struct___preempt_rt {
->  static inline int get_preempt_count(void)
->  {
->  #if defined(bpf_target_x86)
-> -       return *(int *) bpf_this_cpu_ptr(&__preempt_count);
-> +       /* v6.15 or later */
-> +       if (&__preempt_count)
-> +               return *(int *) bpf_this_cpu_ptr(&__preempt_count);
+Considering that unconditionally clearing dl_defer_running in
+dl_server_stop() seems to re-establish a clear state-machine workflow,
+I think we should go with that fix for now, so we can unblock the EXT DL
+server patch set. With that change in place, all the server combinations
+and sequences I've tested seem to behave consistently.
 
-please use bpf_ksym_exists().
-It helps to catch missing __weak. This patch adds it,
-but let's demonstrate best coding practices.
+We can always revisit preserving the short-sleep optimization later if we
+find a way to do it with stronger guarantees (and I'll keep investigating
+on this), but for now the unconditional reset seems like the most robust
+fix to me.
 
-> +       /* v6.14 or older */
-> +       if (bpf_core_field_exists(pcpu_hot.preempt_count))
-> +               return ((struct pcpu_hot___local *)
-> +                       bpf_this_cpu_ptr(&pcpu_hot))->preempt_count;
+Opinions? Peter / Juri?
 
-iirc pcpu_hot approach was there for a short time.
-Like 5.x kernel didn't have it. It was per-cpu var too.
-Pls adjust the comment.
-
-pw-bot: cr
+Thanks,
+-Andrea
