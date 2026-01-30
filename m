@@ -1,123 +1,221 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B9436C0D9;
-	Fri, 30 Jan 2026 12:41:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6A727472
+	for <sched-ext@lists.linux.dev>; Fri, 30 Jan 2026 13:14:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769776870; cv=none; b=C5qEdgQLhj4my9vL8dwWn2r5YQAWB4gBR4gxuK/nOJWNlpYJ9Jlam1MnTSN3zaOC4Zyv0e8EQUA7O8n7wxQB29j8xuT4oVqX2+mLG5stYGMzc5lrg78oHvVz02NkFtcu02JAHzsmolw7hNmmbRMxmVQQxD2dTjEoLRQzN5JAfEk=
+	t=1769778867; cv=none; b=nsMMPjj+JgIZSW8GDh5ceutvwsWgrCHXFy0r/d1DCinW770UC1cNgilJR9ZjyCE0k3t8Q8Nl/J0tzvEB1g85Xnwv0MpQTyHJ8oepD1BlNSZFE6rQ6gPqa0BNclRug4xfGrB2Lt1tWqCIP6cy3hlzY8f5NUrVtLoUDmuUMFGLfPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769776870; c=relaxed/simple;
-	bh=/bnf7Um4yw5uSYLrBZyEad2Rkh39Lo/4F4LY/O1adIk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hBPhK0HaHDFN8NhDKut5tmDHNv4mwQ4jtSqcLmi71EML4ZKwOefET6Gg4HMBjwn4jO/CmqGLqzv/WMWk5TUynZ/+uTGUmR9PRbi3sPtbn4shBBMtbiGIUAAUITbEtEXtHUHfhrj87/KCLeblH3vzfohnr8PNfvIpoK1qc1F2vvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=GIaUyvts; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1769778867; c=relaxed/simple;
+	bh=kgjraFd/b7bkVTZN9pBegmDt0NEaIf6AHFjbzb+JspA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=dIHcer9vzOFnV+QgJh4cWS1X4t2LVbYy74A3DBX3HwvnhcL5SuxDiU09jgbw81hQXX493iFrCFGI3Xtv1mLRiYq+7vPAsKMqiiGWSvIaA0rsY0y/NNImupR1paj7jAIaPud41qZo/Ny4r+RV+waMvJB8CtUN/SVYrxSdn8d5wg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KLkU212N; arc=none smtp.client-ip=209.85.208.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="GIaUyvts"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=CBxGMWJyuuY8FbTh0s5cNeX5uQWsrplZ213ErXSQgXk=; b=GIaUyvtsg/PB76eGB9+fScgg1j
-	fE5VBApCb/DIFQB1kIPHds7oxDaQHMj5hUFqHlEjJ+uuFYJbOLRSsJ0GUMSM0GAg0pCtfO5p4aXK0
-	ZShm9yZxUoDqcgDbBo72uvBajo1tY2oBPxoNnRthnCRI1wSqjR/dpmuABx6SV5sRCO/ky4YoaHC1e
-	li3SXnQ+8qM5ePAx4U+pfd2CJgpujams96NQhLosYnLQAp4JRUYB2MW0o+jXf1QtJIHTVOqUikCnU
-	qPxHwiCvrMEBlaTztk7QjAUuM3g7HxvNb9gw+2JnICY09td0HSznBFiQCXAOLOxYgE80j+5ccPBv/
-	VWnWpKNQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1vlno5-0000000CAxj-3IFV;
-	Fri, 30 Jan 2026 12:41:01 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 7FB98300BD2; Fri, 30 Jan 2026 13:41:00 +0100 (CET)
-Date: Fri, 30 Jan 2026 13:41:00 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Gabriele Monaco <gmonaco@redhat.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>, Tejun Heo <tj@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] sched/deadline: Reset dl_server execution state on
- stop
-Message-ID: <20260130124100.GC1079264@noisy.programming.kicks-ass.net>
-References: <cc33e6e3-3ffe-4ebc-a2e3-7dd7afe13538@redhat.com>
- <aXfcGynN92kyw5Co@gpd4>
- <9b8c90b1-9247-4159-9bf6-72bd71bb74a2@redhat.com>
- <aXjJG-72XEqvaVtL@gpd4>
- <be763631-f677-4bad-8285-69dbfe29db54@redhat.com>
- <aXkJ8_zLVSuToLxe@gpd4>
- <45e4dc7a-f261-46ec-8973-0fb8d1f7b0b9@redhat.com>
- <aXoSFOONWJmdyCQB@gpd4>
- <20260130122413.GA3306656@noisy.programming.kicks-ass.net>
- <20260130122620.GB1079264@noisy.programming.kicks-ass.net>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KLkU212N"
+Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-64d3c4deb88so2059382a12.1
+        for <sched-ext@lists.linux.dev>; Fri, 30 Jan 2026 05:14:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1769778864; x=1770383664; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bsrSLDvphyJEXDIAqEtr8vQzt5FPr9nPxQw076RMPtA=;
+        b=KLkU212NPfTRb6AbPPywntQqS0f6tcmjCWTnEJvpxN4iSmP7uk+DqRP5dEpmQvflKp
+         XX7n1pPAATgTOEQH4T+zbq4w9+PXtnUQvCREE+huuznjx14LJluVqvROyFcWHUmIJAWy
+         cetmvB85RGoVSJC9vZ5WSGsq8zL80Fb7Jaj3HRK/Lkv+KFshLdmuL5KKZZfAECgC2OJB
+         kMWc/7NFyf10ZXE123o5ty3KvJBDWsSC3LBq9ds3x/WTlY4Dxjb2gSq87QJd3diBDo03
+         GYC64Vj9AAicrK79aK/Oxha7jHiBWVSw83s42Q6qYtP3TjySc6+nzKNdI8QGSeDgsXlC
+         xKAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769778864; x=1770383664;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bsrSLDvphyJEXDIAqEtr8vQzt5FPr9nPxQw076RMPtA=;
+        b=Cn0vBGoszKmvmDzoUYM3uEV2hFOPQZUWGJHhqO2W5SsilnJwC1HPjLS8CytjclHLaX
+         0dMXhD/66Zyl0MzNTI5wihhlnm+DChe8eagdCz2kjShnYyo/hKCDiJbOfsGXPnHnvKTb
+         BU37/74kvUtmDxgNCu5va2y8jPmTcFhiRZ+mJuJOGbWRlg2wgam5Ar9c2vZJcI6K5yCb
+         Ye6B8bTLJXhGtOap4uKNmT+4pHRq5Zy+dTF3zqeYaZCs1P0P+yhiFCcM/XVbIwml2xDW
+         y6TvNqhfqPFtEdVvgcs4N1ji40KQJjSgh7+NVriDoVc5n+QTXZlmTVItVbgcbXrrPWYE
+         CqRg==
+X-Forwarded-Encrypted: i=1; AJvYcCW+GFGEmXhesU/5kDIuIaW4d2FKnVO9au81rGK5gKNeYlBlt4Ldg4FH2wShvLilumOpi2nAAc5tQSg=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw50fvKdJADIKtX8fcjJcOPOPyawgtC+IhLvrJtkZC3Z0un3bbQ
+	7a2hZRTu9H+sHaFec65rWd9LO9PaQ61rl6dTMspYF0MQThZg/AB3QMvj6+UlLHUDRxaOJVTbHWg
+	a50Ja7oI4q5oJ6w==
+X-Received: from edwj17.prod.google.com ([2002:a05:6402:11d1:b0:658:a15:1c9a])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6402:1ed5:b0:658:b76f:da7a with SMTP id 4fb4d7f45d1cf-658de5536femr1984724a12.12.1769778864187;
+ Fri, 30 Jan 2026 05:14:24 -0800 (PST)
+Date: Fri, 30 Jan 2026 13:14:23 +0000
+In-Reply-To: <aXxfBnzs5Xnwm8PS@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260130122620.GB1079264@noisy.programming.kicks-ass.net>
+Mime-Version: 1.0
+References: <20260126084258.3798129-1-arighi@nvidia.com> <20260126084258.3798129-2-arighi@nvidia.com>
+ <DFZIS1RRE219.3EWCQVQBFIWHZ@google.com> <aXxfBnzs5Xnwm8PS@gpd4>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DG1Y8XVKWV9O.24LWXW2G4RF63@google.com>
+Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Andrea Righi <arighi@nvidia.com>, Kuba Piecuch <jpiecuch@google.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Changwoo Min <changwoo@igalia.com>, Christian Loehle <christian.loehle@arm.com>, 
+	Daniel Hodges <hodgesd@meta.com>, <sched-ext@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>, Emil Tsalapatis <emil@etsalapatis.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jan 30, 2026 at 01:26:20PM +0100, Peter Zijlstra wrote:
-> On Fri, Jan 30, 2026 at 01:24:13PM +0100, Peter Zijlstra wrote:
-> > On Wed, Jan 28, 2026 at 02:41:40PM +0100, Andrea Righi wrote:
-> > 
-> > > Just to make sure we're testing the same thing, I'm currently using
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git, branch
-> > > scx-dl-server.
-> > > 
-> > > I'm running this test inside virtme-ng:
-> > >   $ vng -vb --config tools/testing/selftests/sched_ext/config
-> > >   $ vng -v -- tools/testing/selftests/sched_ext/runner -t rt_stall
-> > 
-> > Apparently you also have to actually have that runner thing built from
-> > that tree.
-> > 
-> > Anyway, all I seem to be able to get (on x86) is PASS: 1 :/
-> 
-> Argh, that tree has the dodgy 'fix' in. Let me go revert that.
+Hi Andrea,
 
-This seems to work?
+On Fri Jan 30, 2026 at 7:34 AM UTC, Andrea Righi wrote:
+...
+> Good point, the confusion is on my side, the documentation overloads the
+> term "enqueued" and doesn't clearly distinguish the different contexts.
+>
+> In that paragraph, "enqueued" refers to the ops lifecycle (i.e., a task for
+> which ops.enqueue() has been called and whose scheduler-visible state is
+> being tracked), not to the task being queued on a DSQ or having
+> SCX_TASK_QUEUED set.
+>
+> The intent is to treat ops.enqueue() and ops.dequeue() as the boundaries of
+> a scheduler-visible lifecycle, regardless of whether the task is eventually
+> queued on a DSQ or dispatched directly.
+>
+> And as noted by Tejun in his last email, skipping ops.dequeue() for direct
+> dispatches also makes sense, since in that case no new ops lifecycle is
+> established (direct dispatch in ops.select_cpu() or ops.enqueue() can be
+> seen as a shortcut to bypass the scheduler).
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 80c9559a3e30..aa3da4d3b8e3 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1036,6 +1036,12 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
- 			return;
- 		}
- 
-+		/*
-+		 * When [4] D->A is followed by [1] A->B, dl_defer_running
-+		 * needs to be cleared, otherwise it will fail to properly
-+		 * start the zero-laxity timer.
-+		 */
-+		dl_se->dl_defer_running = 0;
- 		replenish_dl_new_period(dl_se, rq);
- 	} else if (dl_server(dl_se) && dl_se->dl_defer) {
- 		/*
-@@ -1654,6 +1660,12 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
-  *   dl_server_active = 1;
-  *   enqueue_dl_entity()
-  *     update_dl_entity(WAKEUP)
-+ *       if (dl_time_before() || dl_entity_overflow)
-+ *         dl_defer_running = 0;
-+ *         replenish_dl_new_period();
-+ *           // fwd period
-+ *           dl_throttled = 1;
-+ *           dl_defer_armed = 1;
-  *       if (!dl_defer_running)
-  *         dl_defer_armed = 1;
-  *         dl_throttled = 1;
+Right, skipping ops.dequeue() for direct dispatches makes sense, provided
+the task is being dispatched to a local/global DSQ. Or at least that's my
+takeaway after reading Tejun's email.
+
+...
+>> 
+>> If I understand the logic correctly, ops.dequeue(SCHED_CHANGE) will be called
+>> for a task at most once between it being dispatched and taken off the CPU,
+>> even if its properties are changed multiple times while it's on CPU.
+>> Is that intentional? I don't see it documented.
+>> 
+>> To illustrate, assume we have a task p that has been enqueued, dispatched, and
+>> is currently running on the CPU, so we have both SCX_TASK_OPS_ENQUEUE and
+>> SCX_TASK_DISPATCH_DEQUEUED set in p->scx.flags.
+>> 
+>> When a property of p is changed while it runs on the CPU,
+>> the sequence of calls is:
+>>   dequeue_task_scx(p, DEQUEUE_SAVE) => put_prev_task_scx(p) =>
+>>   (change property) => enqueue_task_scx(p, ENQUEUE_RESTORE) =>
+>>   set_next_task_scx(p).
+>> 
+>> dequeue_task_scx(p, DEQUEUE_SAVE) calls ops_dequeue() which calls
+>> ops.dequeue(p, ... | SCHED_CHANGE) and clears
+>> SCX_TASK_{OPS_ENQUEUED,DISPATCH_DEQUEUED} from p->scx.flags.
+>> 
+>> put_prev_task_scx(p) doesn't do much because SCX_TASK_QUEUED was cleared by
+>> dequeue_task_scx().
+>> 
+>> enqueue_task_scx(p, ENQUEUE_RESTORE) sets sticky_cpu because the task is
+>> currently running and ENQUEUE_RESTORE is set. This causes do_enqueue_task() to
+>> jump straight to local_norefill, skipping the call to ops.enqueue(), leaving
+>> SCX_TASK_OPS_ENQUEUED unset, and then enqueueing the task on the local DSQ.
+>> 
+>> set_next_task_scx(p) calls ops_dequeue(p, SCX_DEQ_CORE_SCHED_EXEC) even though
+>> this is not a core-sched pick, but it won't do much because the ops_state is
+>> SCX_OPSS_NONE and SCX_TASK_OPS_ENQUEUED is unset. It also calls
+>> dispatch_dequeue(p) which the removes the task from the local DSQ it was just
+>> inserted into.
+>> 
+>> 
+>> So, we end up in a state where any subsequent property change while the task is
+>> still on CPU will not result in ops.dequeue(p, ... | SCHED_CHANGE) being
+>> called, because both SCX_TASK_OPS_ENQUEUED and SCX_TASK_DISPATCH_DEQUEUED are
+>> unset in p->scx.flags.
+>> 
+>> I really hope I didn't mess anything up when tracing the code, but of course
+>> I'm happy to be corrected.
+>
+> Correct. And the enqueue/dequeue balancing is preserved here. In the
+> scenario you describe, subsequent property changes while the task remains
+> running go through ENQUEUE_RESTORE, which intentionally skips
+> ops.enqueue(). Since no new enqueue cycle is started, there is no
+> corresponding ops.dequeue() to deliver either.
+>
+> In other words, SCX_DEQ_SCHED_CHANGE is associated with invalidating the
+> scheduler state established by the last ops.enqueue(), not with every
+> individual property change. Multiple property changes while the task stays
+> on CPU are coalesced and the enqueue/dequeue pairing remains balanced.
+
+Ok, I think I understand the logic behind this, here's how I understand it:
+
+The BPF scheduler is naturally going to have some internal per-task state.
+That state may be expensive to compute from scratch, so we don't want to
+completely discard it when the BPF scheduler loses ownership of the task.
+
+ops.dequeue(SCHED_CHANGE) serves as a notification to the BPF scheduler:
+"Hey, some scheduling properties of the task are about to change, so you
+probably should invalidate whatever state you have for that task which depends
+on these properties."
+
+That way, the BPF scheduler will know to recompute the invalidated state on
+the next ops.enqueue(). If there was no call to ops.dequeue(SCHED_CHANGE), the
+BPF scheduler knows that none of the task's fundamental scheduling properties
+(priority, cpu, cpumask, etc.) changed, so it can potentially skip recomputing
+the state. Of course, the potential for savings depends on the particular
+scheduler's policy.
+
+This also explains why we only get one call to ops.dequeue(SCHED_CHANGE) while
+a task is running: for subsequent calls, the BPF scheduler had already been
+notified to invalidate its state, so there's no use in notifying it again.
+
+However, I feel like there's a hidden assumption here that the BPF scheduler
+doesn't recompute its state for the task before the next ops.enqueue().
+What if the scheduler wanted to immediately react to the priority of a task
+being decreased by preempting it? You might say "hook into
+ops.set_weight()", but then doesn't that obviate the need for
+ops.dequeue(SCHED_CHANGE)?
+
+I guess it could be argued that ops.dequeue(SCHED_CHANGE) covers property
+changes that happen under ``scoped_guard (sched_change, ...)`` which don't have
+a dedicated ops callback, but I wasn't able to find any such properties which
+would be relevant to SCX.
+
+Another thought on the design: currently, the exact meaning of
+ops.dequeue(SCHED_CHANGE) depends on whether the task is owned by the BPF
+scheduler:
+
+* When it's owned, it combines two notifications: BPF scheduler losing
+  ownership AND that it should invalidate task state.
+* When it's not owned, it only serves as an "invalidate" notification,
+  the ownership status doesn't change.
+
+Wouldn't it be more elegant to have another callback, say
+ops.property_change(), which would only serve as the "invalidate" notification,
+and leave ops.dequeue() only for tracking ownership?
+That would mean calling ops.dequeue() followed by ops.property_change() when
+changing properties of a task owned by the BPF scheduler, as opposed to a
+single call to ops.dequeue(SCHED_CHANGE).
+
+But honestly, when I put it like this, it gets harder to justify having this
+callback over just using ops.set_weight() etc.
+
+>
+> I agree this distinction isn't obvious from the current documentation, I'll
+> clarify that SCX_DEQ_SCHED_CHANGE is edge-triggered per enqueue/run cycle,
+> not per property change.
+>
+> Do you see any practical use case where it'd be beneficial to tie
+> individual ops.dequeue() calls to every property change, as opposed to the
+> current coalesced behavior??
+
+I don't know how practical it is, but in my comment above I mention a BPF
+scheduler wanting to immediately preempt a running task on priority decrease,
+but in that case we need to hook into ops.set_weight() anyway to find out
+whether the priority was decreased.
+
+Thanks,
+Kuba
+
