@@ -1,49 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865682749D9;
-	Sun,  1 Feb 2026 17:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D94C1CAA7D;
+	Sun,  1 Feb 2026 17:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769966018; cv=none; b=YA1k4OAKLbwkpRlyAWttY0EKGxhB9LunRE6CQMT3MQf7MVCHpvaTHafqtSsHTi5V1TkQKulQiSp+cRvhIbEbLNoV8MqiKgMS5g9r31SVr8u2vsiKMYxv67YzgoGppV+aNqm1bsLAel1GXuM6PqeVireG1D7Wgw0Spxcm8Aqc6Y0=
+	t=1769967815; cv=none; b=YnbI9zgq4Hf/WTMozDGjkZns08x0QmdifwJOoj2cGEz6xuElD1AGymMMy7h6QlMIHsOkiO/tCSB3bGMIHxN5uCXf5H+v4NdbqaZ6QWJBy0TT1krVcHI2d78pPCnQ1QmiXRBmHEuW8yKp4nFPEA5s9SyyAlJyyvqHZzRqn6VbeSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769966018; c=relaxed/simple;
-	bh=JWRtGvaldPT5AzaEDuiJc4RwiNP3k/NJWW3tBYg5vOc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=tcAymF2yZphfQ4OFmuu7Gd7HRMSkv9xbE6VHoHrTBljlu4PNQPtuuVl0VKdzEpJhaLjRAwgQ5YSIsTNeO6mPZkhkmxcMiclpQNXA7IedOmy0Y7zQrJFGLj7BgHWAt+pdLUW84Gldc5RUwqwk2czejVrovM73sAY4aat5Prx4y5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DYy8OgaV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769967815; c=relaxed/simple;
+	bh=RU90Hhf4Yr5Sz+sMGH2QRHqIakMsAvwg1YfnlMziPCs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iwH5PsGgBjWyhi3R5URSbYxLw/eBUm379EXpx8NZY7zkR4SlouLxj3gsgKAbZqJkWS3wIDjlI2r+52fbPrLLZNBTSi6tm/sC/amP5Pqf17YFAaZkF/wx9Ejz0Dq8p5DR8a5D2t6wI94ephyoA7hvOyJy+hzgwshW3N01tqP97ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xdcu86Wh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DYy8OgaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8639C2BC86;
-	Sun,  1 Feb 2026 17:13:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xdcu86Wh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FCFC4CEF7;
+	Sun,  1 Feb 2026 17:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769966018;
-	bh=JWRtGvaldPT5AzaEDuiJc4RwiNP3k/NJWW3tBYg5vOc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=DYy8OgaVxJbaNBCEvnTBRdimoBbE51cAwZC3ucLXjpsO3sXIZhtoEBWiyuR6Z9xNu
-	 Daa2C+NZ4052MZr4fyyRmkb4LcewVPXbzh88PiUs6j2FUkib8fyI4bnKKiPi69msaT
-	 9T8z1L0+biU5uHdSl4xxUt18niR1Z1ePl5akZwV9/iZ2gTcDKdiG467bqnON12DPK6
-	 xtQ891LTM2guzyUsg9akk1/Jgl1HuwmQTdhAoNUDEN8pyqnWknHQ/j1xnDHVOUD+iW
-	 U+9JbLQ6yDDcKeOLUMDksQ7fY9lB485aZ/Zrs3u8F9ZjMqM2zniMai71qUwt5M+acl
-	 rI4S8qjHzrlZQ==
-Date: Sun, 01 Feb 2026 07:13:37 -1000
-Message-ID: <b88bcd332e9096b07c42d4e85d7eaf65@kernel.org>
+	s=k20201202; t=1769967815;
+	bh=RU90Hhf4Yr5Sz+sMGH2QRHqIakMsAvwg1YfnlMziPCs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Xdcu86Wh0leZu4shq/KYoO4DuJ2zZBxzTnTXqgpSVM65j78qk6LTb/1Xqcd3PApqv
+	 CEghasHo7LtxnJLz0YPwBdOi299XwbzzTc12qBdy9roaX3v4qIRApFgTHkFpFf5k+3
+	 Rv0oLiEavjZLqEA7kZDFFhNpQ2XW1kFdVfV+jgS5xyExRBEjoDFNzf8aCib7TSh4Li
+	 dsjWIMaRoXjKp6lQ4shu4I3q+JbTcKsBaabZbnd202vUOJV/FHEJRCRiCZ5sDBaYcv
+	 xuqZ2mFSNidHj3mOTeezMMFKGw05K45R3JrIUYkWVt+yNOuSL4I11rIV5SIcghkkpX
+	 0mp+r9M+7OzzA==
+Date: Sun, 1 Feb 2026 07:43:33 -1000
 From: Tejun Heo <tj@kernel.org>
-To: zhidao su <soolaugust@gmail.com>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- suzhidao@xiaomi.com
-Subject: Re: [PATCH] tools/sched_ext: Add error logging for dsq creation
- failures in remaining schedulers
-In-Reply-To: <20260130105511.250947-1-suzhidao@xiaomi.com>
-References: <20260130105511.250947-1-suzhidao@xiaomi.com>
+To: Kuba Piecuch <jpiecuch@google.com>
+Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Emil Tsalapatis <emil@etsalapatis.com>
+Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
+Message-ID: <aX-QxWngrRcOj3PT@slm.duckdns.org>
+References: <20260126084258.3798129-1-arighi@nvidia.com>
+ <20260126084258.3798129-2-arighi@nvidia.com>
+ <aXp9xSpYhaysBLQ2@slm.duckdns.org>
+ <DG1WJEB6B0AC.151EBIUYXCR55@google.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DG1WJEB6B0AC.151EBIUYXCR55@google.com>
 
-Applied to sched_ext/for-6.20.
+Hello,
+
+Sorry about tardiness.
+
+On Fri, Jan 30, 2026 at 11:54:00AM +0000, Kuba Piecuch wrote:
+> Is "local" short for "local or global", i.e. not user-created?
+
+Yes, maybe it'd be useful to come up with a terminology for them. e.g.
+terminal - once a task reaches a terminal DSQ, the only way that the BPF
+scheduler can affect the task is by triggering re-enqueue (although we don't
+yet support reenqueueing global DSQs).
 
 Thanks.
---
+
+-- 
 tejun
