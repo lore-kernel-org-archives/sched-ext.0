@@ -1,150 +1,187 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDCB52DE711
-	for <sched-ext@lists.linux.dev>; Mon,  2 Feb 2026 10:10:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6A83587D5
+	for <sched-ext@lists.linux.dev>; Mon,  2 Feb 2026 11:56:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770027004; cv=none; b=S6NzA4jGdlhO21II8MGxVy5rtxwfSl3NiPO8nJRVQaN3bL9jN7lq8mLFLsvaff1tJiVxY/YuDWnQ5d++N7KpoyPUQ3d8s6iiAoSCqUBnzP6bybZBHUDIStU7DvYaXsIDa08DAgDXRVEtTWRGQcSvH5cxZjPEK9wahub2vIa1ML0=
+	t=1770033407; cv=none; b=TbLk12Plr0I8mrJKLILPDtFKl1C6mvseRlNcEC3Ds6ggogwkSxS00ImMUVO5YVTwxTeQwKmnwjwMWUuIq0ERN3oyVIAMQAZ8iX7D0EXYQ2c7LYCWAgNU6XX+QppQvoryL878lqB86PD8P6MozSOEGpA9cFF2wxsD/VpC4636Sfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770027004; c=relaxed/simple;
-	bh=zHV3AVkQfQNpdCRtdan6ywHwfhiVVK7ghWaBze67hPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QydoJwii0vpwPnYIgj7yubVNhguqYON9Xxjt7p49nt2ZTll+/ku/lMd6LauWSSysWH8BrnO+9JV7Dvzk2UqIYvTAOV5fr3NgsByhAvy00NKnZLkouyul82Z9u0QyjkkVyyZFkTmDfWm39w/0s8jBW+mF45cDgx6N9EzFeWE1Qzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C60B6339;
-	Mon,  2 Feb 2026 02:09:55 -0800 (PST)
-Received: from [10.1.35.46] (unknown [10.1.35.46])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EAC563F740;
-	Mon,  2 Feb 2026 02:10:00 -0800 (PST)
-Message-ID: <bc4be033-74f6-4370-8848-1944e8ba143c@arm.com>
-Date: Mon, 2 Feb 2026 10:09:59 +0000
+	s=arc-20240116; t=1770033407; c=relaxed/simple;
+	bh=SqjFn3qAKLYSqCuKCyb7oRXsC9IqVUuDCkk0+QQBstk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=iJGNKBhOQz2AAIrqEjU1TrmdmyQ67I+Ma+rOmbyUvediAUrWChvLj/2U82fsuZ8c8F5TbE8zr5oCLOZTlBnh4KmI8NF4uLSlo61nKxCaoS2K1e+ds8E86wyG5J7eAnYPFyRLrp+I68U8WcHdkUT7fIR1+VOWZ7rEwFRYgndXktQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rzb3v4MB; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rzb3v4MB"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-4801d21c280so31898675e9.1
+        for <sched-ext@lists.linux.dev>; Mon, 02 Feb 2026 03:56:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1770033404; x=1770638204; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BZUoYy8IEkA31ohPOBBy58Tlll3q5I6OE1tZ/Ea3DyI=;
+        b=rzb3v4MBjTk7z4A/cbVWuJK3YEJ5RL18P3uDPHkf5yB/Ptk7uLiyRZRrNj0cAHFcbd
+         HQAeTVVKkPeohIlsso7H1Ot0rr9XawQVNzq7icwHMyA9SaKrqSqcWbP0LgzoyIt9rwKz
+         zw1jLErrJYX7s7gjSwt89jzCr0NUL8IJxL044ySjlASPRIiGZKAUmZdHjX7s+01q/Q/X
+         K974MC/8VDPe6hotbhbVHw0lKL6xjPnJK0nE8I1vfxar3kMRUxzmBgT9h4SZkVpqLh2y
+         Yoz/4ZmW0+krhAcQ4HokUTzknZdqhO5soWqCzWttm9F0ofh0TNundjvnD7hukQwOSlK3
+         XbZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770033404; x=1770638204;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BZUoYy8IEkA31ohPOBBy58Tlll3q5I6OE1tZ/Ea3DyI=;
+        b=bp2q5BWMjRWN2Cg+mGSGqAYwYtGqzFu09wbl8WipRRKDl/8qdVli0uxg3fZqJHrayD
+         eeCpb6hoKhhJ+2N3rItOD03FPsdsyIWWtWy6bgkEhw7GXfGZtb5uO1gb8nA69vsCVJSE
+         9U90ML940Isbee+BbmxsBnYRf4cb/MrZhaQFedOrMTrorycPCyENWDAhvPvcllBJ39DB
+         MsuFl2Nym9+OKgWOCXWXOAcctZ1RH8LUbj6DBOIvDDmrxfRuCfbB3kkliTNBTwAHjsqY
+         mvw0fqhIUdxdUV5UakFVhupVzSwo2HUNvLGgpexHc/Crb2bIo9b/KRcKeAY6guXL+h5m
+         5DwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV4e6WwG9QzCVBwNYBdvKnOBeduXdJjGyhkq1CO81EGKWHvtIan3j55CZTYI0hEiUuw1fXk8HKOzj0=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw43E9pEhMXZuj/Xr3NcJELcNNjIMxann71F6jC2ZR/EhTXQdt1
+	N0Yby5Gvmg/35LdzNzgZETMYUkFj8t1YF/YprwJTEOOzBKpN9orD+b8qTcRNDNFYP0aIEmTkAiz
+	mxhCPd6kIWzh5jA==
+X-Received: from wmxa5-n2.prod.google.com ([2002:a05:600d:6445:20b0:480:6b05:6b8e])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:b99:b0:480:1e40:3d2 with SMTP id 5b1f17b1804b1-482db49a4a6mr159401605e9.29.1770033404519;
+ Mon, 02 Feb 2026 03:56:44 -0800 (PST)
+Date: Mon, 02 Feb 2026 11:56:43 +0000
+In-Reply-To: <20260201091318.178710-2-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Mime-Version: 1.0
+References: <20260201091318.178710-1-arighi@nvidia.com> <20260201091318.178710-2-arighi@nvidia.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DG4GH47JCNH5.36CX78QFOYVS6@google.com>
 Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Changwoo Min <changwoo@igalia.com>, Kuba Piecuch <jpiecuch@google.com>,
- Emil Tsalapatis <emil@etsalapatis.com>, Daniel Hodges <hodgesd@meta.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20260201091318.178710-1-arighi@nvidia.com>
- <20260201091318.178710-2-arighi@nvidia.com>
- <b868ee48-4545-4b1b-b313-d5863d65608d@arm.com> <aYBWAzFDX8Rv-paN@gpd4>
-Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
-In-Reply-To: <aYBWAzFDX8Rv-paN@gpd4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
+	Christian Loehle <christian.loehle@arm.com>, Daniel Hodges <hodgesd@meta.com>, <sched-ext@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2/2/26 07:45, Andrea Righi wrote:
-> Hi Christian,
-> 
-> On Sun, Feb 01, 2026 at 10:47:22PM +0000, Christian Loehle wrote:
->> On 2/1/26 09:08, Andrea Righi wrote:
->>> Currently, ops.dequeue() is only invoked when the sched_ext core knows
->>> that a task resides in BPF-managed data structures, which causes it to
->>> miss scheduling property change events. In addition, ops.dequeue()
->>> callbacks are completely skipped when tasks are dispatched to non-local
->>> DSQs from ops.select_cpu(). As a result, BPF schedulers cannot reliably
->>> track task state.
->>>
->>> Fix this by guaranteeing that each task entering the BPF scheduler's
->>> custody triggers exactly one ops.dequeue() call when it leaves that
->>> custody, whether the exit is due to a dispatch (regular or via a core
->>> scheduling pick) or to a scheduling property change (e.g.
->>> sched_setaffinity(), sched_setscheduler(), set_user_nice(), NUMA
->>> balancing, etc.).
->>>
->>> BPF scheduler custody concept: a task is considered to be in "BPF
->>> scheduler's custody" when it has been queued in BPF-managed data
->>> structures and the BPF scheduler is responsible for its lifecycle.
->>> Custody ends when the task is dispatched to a local DSQ, selected by
->>> core scheduling, or removed due to a property change.
->>>
->>> Tasks directly dispatched to local DSQs (via %SCX_DSQ_LOCAL or
->>> %SCX_DSQ_LOCAL_ON) bypass the BPF scheduler entirely and are not in its
->>> custody. As a result, ops.dequeue() is not invoked for these tasks.
->>>
->>> To identify dequeues triggered by scheduling property changes, introduce
->>> the new ops.dequeue() flag %SCX_DEQ_SCHED_CHANGE: when this flag is set,
->>> the dequeue was caused by a scheduling property change.
->>>
->>> New ops.dequeue() semantics:
->>>  - ops.dequeue() is invoked exactly once when the task leaves the BPF
->>>    scheduler's custody, in one of the following cases:
->>>    a) regular dispatch: task was dispatched to a non-local DSQ (global
->>>       or user DSQ), ops.dequeue() called without any special flags set
->>>    b) core scheduling dispatch: core-sched picks task before dispatch,
->>>       dequeue called with %SCX_DEQ_CORE_SCHED_EXEC flag set
->>>    c) property change: task properties modified before dispatch,
->>>       dequeue called with %SCX_DEQ_SCHED_CHANGE flag set
->>>
->>> This allows BPF schedulers to:
->>>  - reliably track task ownership and lifecycle,
->>>  - maintain accurate accounting of managed tasks,
->>>  - update internal state when tasks change properties.
->>>
->>
->> So I have finally gotten around updating scx_storm to the new semantics,
->> see:
->> https://github.com/cloehle/scx/tree/cloehle/scx-storm-qmap-insert-local-dequeue-semantics
->>
->> I don't think the new ops.dequeue() are enough to make inserts to local-on
->> from anywhere safe, because it's still racing with dequeue from another CPU?
-> 
-> Yeah, with this patch set BPF schedulers get proper ops.dequeue()
-> callbacks, but we're not fixing the usage of SCX_DSQ_LOCAL_ON from
-> ops.dispatch().
-> 
-> When task properties change between scx_bpf_dsq_insert() and the actual
-> dispatch, task_can_run_on_remote_rq() can still trigger a fatal
-> scx_error().
-> 
-> The ops.dequeue(SCX_DEQ_SCHED_CHANGE) notifications happens after the
-> property change, so it can't prevent already-queued dispatches from
-> failing. The race window is between ops.dispatch() returning and
-> dispatch_to_local_dsq() executing.
-> 
-> We can address this in a separate patch set. One thing at a time. :)
-> 
->>
->> Furthermore I can reproduce the following with this patch applied quite easily
->> with something like
->>
->> hackbench -l 1000 & timeout 10 ./build/scheds/c/scx_storm
->>
->> [   44.356878] sched_ext: BPF scheduler "simple" enabled
->> [   59.315370] sched_ext: BPF scheduler "simple" disabled (unregistered from user space)
->> [   85.366747] sched_ext: BPF scheduler "storm" enabled
->> [   85.371324] ------------[ cut here ]------------
->> [   85.373370] WARNING: kernel/sched/sched.h:1571 at update_locked_rq+0x64/0x6c, CPU#5: gmain/1111
-> 
-> Ah yes! I think I see it, can you try this on top?
-> 
-> Thanks,
-> -Andrea
-> 
->  kernel/sched/ext.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 6d6f1253039d8..d8fed4a49195d 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -2248,7 +2248,7 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
->  			p->scx.flags |= SCX_TASK_OPS_ENQUEUED;
->  		} else {
->  			if (p->scx.flags & SCX_TASK_OPS_ENQUEUED)
-> -				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, task_rq(p), p, 0);
-> +				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq, p, 0);
+Hi Andrea,
+
+Looks good overall, but we need to settle on the global DSQ semantics, plus
+some edge cases that need clearing up.
+
+On Sun Feb 1, 2026 at 9:08 AM UTC, Andrea Righi wrote:
+> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+> index 404fe6126a769..6d9e82e6ca9d4 100644
+> --- a/Documentation/scheduler/sched-ext.rst
+> +++ b/Documentation/scheduler/sched-ext.rst
+> @@ -252,6 +252,80 @@ The following briefly shows how a waking task is scheduled and executed.
 >  
->  			p->scx.flags &= ~SCX_TASK_OPS_ENQUEUED;
->  		}
+>     * Queue the task on the BPF side.
+>  
+> +   **Task State Tracking and ops.dequeue() Semantics**
+> +
+> +   Once ``ops.select_cpu()`` or ``ops.enqueue()`` is called, the task may
+> +   enter the "BPF scheduler's custody" depending on where it's dispatched:
+> +
+> +   * **Direct dispatch to local DSQs** (``SCX_DSQ_LOCAL`` or
+> +     ``SCX_DSQ_LOCAL_ON | cpu``): The task bypasses the BPF scheduler
+> +     entirely and goes straight to the CPU's local run queue. The task
+> +     never enters BPF custody, and ``ops.dequeue()`` will not be called.
+> +
+> +   * **Dispatch to non-local DSQs** (``SCX_DSQ_GLOBAL`` or custom DSQs):
+> +     the task enters the BPF scheduler's custody. When the task later
+> +     leaves BPF custody (dispatched to a local DSQ, picked by core-sched,
+> +     or dequeued for sleep/property changes), ``ops.dequeue()`` will be
+> +     called exactly once.
+> +
+> +   * **Queued on BPF side**: The task is in BPF data structures and in BPF
+> +     custody, ``ops.dequeue()`` will be called when it leaves.
+> +
+> +   The key principle: **ops.dequeue() is called when a task leaves the BPF
+> +   scheduler's custody**. A task is in BPF custody if it's on a non-local
+> +   DSQ or in BPF data structures. Once dispatched to a local DSQ or after
+> +   ops.dequeue() is called, the task is out of BPF custody and the BPF
+> +   scheduler no longer needs to track it.
+> +
+> +   This works correctly with the ``ops.select_cpu()`` direct dispatch
+> +   optimization: even though it skips ``ops.enqueue()`` invocation, if the
+> +   task is dispatched to a non-local DSQ, it enters BPF custody and will
+> +   get ``ops.dequeue()`` when it leaves. This provides the performance
+> +   benefit of avoiding the ``ops.enqueue()`` roundtrip while maintaining
+> +   correct state tracking.
+> +
+> +   The dequeue can happen for different reasons, distinguished by flags:
+> +
+> +   1. **Regular dispatch workflow**: when the task is dispatched from a
+> +      non-local DSQ to a local DSQ (leaving BPF custody for execution),
+> +      ``ops.dequeue()`` is triggered without any special flags.
 
-Yup, that fixes it!
+Maybe add a note that this can happen asynchronously, without the BPF
+scheduler explicitly dispatching the task to a local DSQ, when the task
+is on a global DSQ? Or maybe make that case into a separate dequeue reason
+with its own flag, e.g. SCX_DEQ_PICKED_FROM_GLOBAL_DSQ?
+
+> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> index bcb962d5ee7d8..0d003d2845393 100644
+> --- a/include/linux/sched/ext.h
+> +++ b/include/linux/sched/ext.h
+> @@ -84,6 +84,7 @@ struct scx_dispatch_q {
+>  /* scx_entity.flags */
+>  enum scx_ent_flags {
+>  	SCX_TASK_QUEUED		= 1 << 0, /* on ext runqueue */
+> +	SCX_TASK_OPS_ENQUEUED	= 1 << 1, /* under ext scheduler's custody */
+
+Nit: I think "in BPF scheduler's custody" would be a bit clearer, as
+"ext scheduler" could potentially be interpreted to mean SCHED_CLASS_EXT
+as a whole.
+
+> @@ -1523,6 +1603,30 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
+>  
+>  	switch (opss & SCX_OPSS_STATE_MASK) {
+>  	case SCX_OPSS_NONE:
+> +		/*
+> +		 * Task is not in BPF data structures (either dispatched to
+> +		 * a DSQ or running). Only call ops.dequeue() if the task
+> +		 * is still in BPF scheduler's custody
+> +		 * (%SCX_TASK_OPS_ENQUEUED is set).
+> +		 *
+> +		 * If the task has already been dispatched to a local DSQ
+> +		 * (left BPF custody), the flag will be clear and we skip
+> +		 * ops.dequeue()
+> +		 *
+> +		 * If this is a property change (not sleep/core-sched) and
+> +		 * the task is still in BPF custody, set the
+> +		 * %SCX_DEQ_SCHED_CHANGE flag.
+> +		 */
+> +		if (SCX_HAS_OP(sch, dequeue) &&
+> +		    p->scx.flags & SCX_TASK_OPS_ENQUEUED) {
+> +			u64 flags = deq_flags;
+> +
+> +			if (!(deq_flags & (DEQUEUE_SLEEP | SCX_DEQ_CORE_SCHED_EXEC)))
+> +				flags |= SCX_DEQ_SCHED_CHANGE;
+
+I think this logic will result in ops.dequeue(SCHED_CHANGE) being called for
+tasks being picked from a global DSQ being migrated from a remote rq to the
+local rq, which, while technically correct since the task is migrating rqs,
+may be confusing, since it fits two cases in the documentation:
+
+* Since the task is leaving BPF custody for execution, ops.dequeue() should be
+  called without any special flags.
+* Since the task is being migrated between rqs, ops.dequeue() should be called
+  with SCX_DEQ_SCHED_CHANGE.
+
+> +
+> +			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq, p, flags);
+> +			p->scx.flags &= ~SCX_TASK_OPS_ENQUEUED;
+> +		}
+>  		break;
+>  	case SCX_OPSS_QUEUEING:
+>  		/*
+
+Thanks,
+Kuba
+
