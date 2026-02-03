@@ -1,107 +1,136 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024C73806DD
-	for <sched-ext@lists.linux.dev>; Tue,  3 Feb 2026 06:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1441368293
+	for <sched-ext@lists.linux.dev>; Tue,  3 Feb 2026 06:57:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770101062; cv=none; b=HTYBQlB+3BSUmj2OZg2uEfUwHIPSR1hNlkmSpIFM5Ove55o6khB62taD5tVg1DJdtT3ABUvbRZVm0dTUOPsDujCsLdWUJx2DSCB2t0IuQEAX3XsFkig+Nygq4iOZfhEAZkfyA8gmTFUF7JAKWn4DPnbTTSc6y5RDNl25+Q0lnz0=
+	t=1770101875; cv=none; b=CzRLlRe/8TxemWqSgBqfxmmIgA6OsxtHDPEpn9Lxr9QNGEwMsguio3z9EE6rNh0ovmFtNCPf4Fs2kHRES6/e3cSlK068ejJ7rq2lzl/iKCRpBXGSdAE9Yh/QMTYPJTyeL2BhZUoyEN5ClIGyuKornugGrerfmeqAu6NIrteIRl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770101062; c=relaxed/simple;
-	bh=xPrjfL5UwqvxmZ4Tuyb8DauipHhBBgFFs2A3jGN9xGw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ZfgfF4IYNWlgoVO6doTTZS6ZvcMxyqKYsjfElEO6nG8uGUwfssH8ad6W+fEXRRIm2cLKPeBYnh9M/yovaHL+/NX16A7r4RuGoUp+82uObbuDtrOWc0IsYjsMhlCZ8g+nXL8Rsg1n3F/mFM+OvdZDUZXssjDAi2zxS/4Ggg/b5qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CnsI7GJN; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1770101875; c=relaxed/simple;
+	bh=vvEVKjJCtQo4nmuo3z04CydsrpGhwrX7+I/UCM695oM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YRXGr3as/d4HCC/EcXxT/pH6ihQs6weYystvlJhN6ni1CidNGpLodZq+nSkP6OEcD5lIpHQNEguXkKPwQSGluGDGe3UuWG4oMhgi//PxGMr9uauCHZt+frKRwSjjFpFt74F4nwZaVyeeTcGOzt3Zw9PfK+BYvPFstrL4wtsLnXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OTEdBoS+; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CnsI7GJN"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-81f39438187so3054608b3a.2
-        for <sched-ext@lists.linux.dev>; Mon, 02 Feb 2026 22:44:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTEdBoS+"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-81df6a302b1so5024358b3a.2
+        for <sched-ext@lists.linux.dev>; Mon, 02 Feb 2026 22:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770101056; x=1770705856; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770101873; x=1770706673; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xPrjfL5UwqvxmZ4Tuyb8DauipHhBBgFFs2A3jGN9xGw=;
-        b=CnsI7GJNuszcdJH0wvAyX62KPjLvHOoIJuguvaG1oka0AGnTLglNiyYs4EQcTwGs0/
-         Nom5t9EIkBCcFdXQaofS/KnWUKWIxmqdUZrc4Uuh7M1BjTjai6HYsmg8YOhq7OlBxx7O
-         6C5un1W2GZBP/RCadMM//bxWLLmNDL6Zl2oQCREwoJF3VeNQdinvEK2gAZHEkhj7CJKF
-         dvWJHpshmlvRY/VXJz5HBh8nDPQBC39JD39vTZmfn18OeQPmgbKHeAV5HKSybOSLo7vv
-         nYaWVxvL5aMC9OXSQcNA+Ph5h0b7FTKupjn1l8F+jQI3HOjIaqJLXqQgaBDRAsGtR7fd
-         yLXA==
+        bh=NtxdwbyBhJCjJN9Ud01S5+F/PCx615rL1edEy0Sb+qY=;
+        b=OTEdBoS+caMn0Q8RBV8UvmYwAijaxuJ7AfhQs0JLx5coJ31M/n1E89TsCY1HcPFr6i
+         KoCgOSlVdq+9aixNUpst1/GgnviWNIiYB92kst5rZqFisMP0Wc318Zs6U9fEXAQf4mmU
+         5AlUchKDDiwzF0ZYMnoVeE+WBHeMDIjPimdM/WXs7mdfG5NYh6xyQ1R2nrzXwjqhjLWM
+         dE9atQcljsl78GrsiLXc4qQKU7B1ye/kvhxl8CXb3M1vdxZbTqENsiNCGWvt5QiJ/y5l
+         bwkiE8OrljAoDAD8TCqPsox091s2pnSybH9H8XYzfZP/hgrKMlJd27JGzoC0GGX5+cxE
+         pr1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770101056; x=1770705856;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xPrjfL5UwqvxmZ4Tuyb8DauipHhBBgFFs2A3jGN9xGw=;
-        b=YF+EIfKCSJgZkOvmjJbZSFDWLok5BN+khb6KRfLzrxHn7s+tDeAuC5kG/OjmNID59U
-         r+FBgf7+w6FPfLYtyumYk8LD6HyqXZh13MedRHrF1W4T9KYEXmTJZGecsoEZgUF01+7o
-         +fOVjZrGh3etiSJ6CDGq26VApMIHi++TUJtTaFctn1BMtXbHZIdMZQnq8yzMu6Vi3aNH
-         umdDm4Srr1IDMbZdWphE3KYE/kgKC/sN6ElieluAF4+iXoJYJObGLfcvKea1+dV83Wwt
-         T+h1pydYnGXaap4o62zhBuUWAQl0diYNRQia/mMWx1nqWaddwAg26kWfRFEnnsq4b7Tr
-         NR3g==
-X-Forwarded-Encrypted: i=1; AJvYcCXZo/WNe/DHIDLCkUs8vj4HGHk8/aK8Dc5oLtOQbq014HcHFsUIt5rCy98m6JbQ2py5iZpOkZg4UHw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyClm7olqpS/9a/MRH2uqD1nocjD9UMNMx4Y484yOZ4fLu9wbYO
-	HH6DM/Z4C6IWUAGlHAKREw55psr6nKBhPSARWF7/SVp22ve4fSMJNca0
-X-Gm-Gg: AZuq6aKhvdv+yshWLi49y3lsk/LEM3N5/7D9waHaWIUqMSIlhtnNkDomleyACA/9sO3
-	oiKoFHT5j53yjdY25A5h97D4XMruqKTvKBg1/8/t+yrJ5mnaHaGhsrVF372WWoWqAekCOqk6Iu5
-	4eldHAmQwZW/OtedfRI35CwcrsK6b2N1UjSKP3v3GiSwY+wm96LFXVP9caUUqjLubXEV+TBTsFc
-	e9X9R0nFJyrJiRWTpabPC00184Gahic/roQF1veNWI0epFhHD8OsUsYoSLEjipe4E5Djy2lahnJ
-	37NkCzRHWKkKagpWyYoPRk63fDx82TPup1c+M7BNfK/FRPBX6OhY3PfMzhDowURRYGPSLis6nrG
-	+moLNhBGTzLquNsud09MWQF818sL8pQBZaNPPVPgrGXQsE3hPqTp3D0NoxsroZxJN9MxNgtqYCb
-	lZPu0huaa2z3UP8uXrVY2LjqItcNsH
-X-Received: by 2002:a05:6a00:1aca:b0:823:efa:a657 with SMTP id d2e1a72fcca58-823ab7204cdmr12952396b3a.40.1770101055740;
-        Mon, 02 Feb 2026 22:44:15 -0800 (PST)
-Received: from smtpclient.apple ([43.224.245.237])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379c64b4esm17544174b3a.69.2026.02.02.22.44.13
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Feb 2026 22:44:15 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20230601; t=1770101873; x=1770706673;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NtxdwbyBhJCjJN9Ud01S5+F/PCx615rL1edEy0Sb+qY=;
+        b=xSF3+HfWa62gyJ77cnuD3Y4ZZ+uyo0UI5k2YnkNL927KIZPDZmg+mDhULKYvfx4OaM
+         Nr2BOCa921Ywgc1ItQKHMZQO+3QxBVoeojexNFjPA+jq29R6FnETqzWPN2ucEokDNyku
+         QUtsUzH5JhrRd1d1DQklcEHxWvrfCENFU9kteo4u/ydAi5yDBG6ZU3BcV9wN8iAg/0e8
+         xKRkA7nuSghGJRs7BmbUTMY0dfDU45i6uAPWgaYeXT+V8Cs9W8XtyZxuW+jUcVloOa/G
+         p6bTyQCVHJo+1dIyn+sGZzdSjoS/9eWp7NN+OrEw9vI034TfRNyv7Y5eXNtsnY9+stHs
+         zSzA==
+X-Forwarded-Encrypted: i=1; AJvYcCWh9hcGtPvsWcHOrC1JB8Tnd+AL2CCutdL7CyZdnJFMQqy3rKy1Wm7fIcVcI8E+NPA0CjbeOGBpbyI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YysIWJTf23Wtd0Wc20q70t5/oFOt0XkJgc8vBfrdwrz4PoFW+0m
+	PQEWTdmgrAXQWxZ0UIs7rli0zbrIthKl0P5GTvXeGXrJJDdKTBNCJni+
+X-Gm-Gg: AZuq6aK5GTog1HyqP8mP4GZaCA6Y91JBBxfpDvqsp1AgvoFiypCmuL2QgzD48UOwCTC
+	xSm/XgR8aHBWQ+HaPrKzVx4Oi/PpPe17piru1EsiZOkf0FOUd49DPMxg9ob2wotIMD/B+OqWJBb
+	JfiqCZ5w1/Vjy9l0rWnq0cWdixh9g74l71wMDjMJa6mKwHiyDDyCGpT3XJN9Tq0DWWD3ZKDCCgE
+	EO6VEbs4M6oW3jQhgyfomqmS3tp5nWjmfIBTzdYqvJhqqEdw3EmWMT1lDS8uUyBL21QlBFYL29e
+	iwq6J8IIa5noehQu8iFxR/35WfyCzJcRm9qaOeZl0wm0AzqGKB3anJxgzmFpgkEeazAvtcOcd5t
+	qHXCrHGIdnTz0tQpI9gdFv8ITsZNs9lrekL+0jL2tXg6RvOl7mvALiJHeisq9jeJlgoItqebaJa
+	M5KZQdU9x/LP8FoFZDZlh5LJoVzLtGiTTQPjvDrzql/OtlGOSqer47mNYBZ9ZguCI=
+X-Received: by 2002:a05:6a00:1d9e:b0:7ef:3f4e:9176 with SMTP id d2e1a72fcca58-823ab72e98dmr15316865b3a.49.1770101873258;
+        Mon, 02 Feb 2026 22:57:53 -0800 (PST)
+Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379c32944sm18114225b3a.57.2026.02.02.22.57.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Feb 2026 22:57:52 -0800 (PST)
+From: zhidao su <soolaugust@gmail.com>
+X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
+To: soolaugust@gmail.com
+Cc: arighi@nvidia.com,
+	changwoo@igalia.com,
+	emil@etsalapatis.com,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	void@manifault.com,
+	zhidao su <suzhidao@xiaomi.com>
+Subject: [PATCH] tools/sched_ext: Improve BPF verifier arena detection workaround
+Date: Tue,  3 Feb 2026 14:57:21 +0800
+Message-ID: <20260203065721.46089-1-suzhidao@xiaomi.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <F3AA31BB-AC18-4CD7-B3BC-9A39CF9959B9@gmail.com>
+References: <F3AA31BB-AC18-4CD7-B3BC-9A39CF9959B9@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH] tools/sched_ext: Improve BPF verifier arena detection
- workaround
-From: zhidao su <soolaugust@gmail.com>
-In-Reply-To: <DG50UKIT01F0.13MHQV8KYVF0D@etsalapatis.com>
-Date: Tue, 3 Feb 2026 14:44:00 +0800
-Cc: tj@kernel.org,
- void@manifault.com,
- arighi@nvidia.com,
- changwoo@igalia.com,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F3AA31BB-AC18-4CD7-B3BC-9A39CF9959B9@gmail.com>
-References: <20260203031954.915681-1-suzhidao@xiaomi.com>
- <DG50UKIT01F0.13MHQV8KYVF0D@etsalapatis.com>
-To: Emil Tsalapatis <emil@etsalapatis.com>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thanks for catching this.To be honest, this change was primarily a =
-result of my attempt to comb through and reorganize the code logic. I =
-mistakenly thought it was applicable here and did not perform a complete =
-runtime test for this specific modification.I apologize for the =
-breakage. I will revert/fix this logic in the next revision to ensure =
-the scheduler loads correctly.
+Replace bpf_printk() with volatile access in scx_sdt scheduler's
+BPF verifier workaround to eliminate console output while maintaining
+the required LD.IMM instruction generation for arena detection.
 
-> 2026=E5=B9=B42=E6=9C=883=E6=97=A5 11:54=EF=BC=8CEmil Tsalapatis =
-<emil@etsalapatis.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> This code change is a bit of a non-sequitur =
-(BPF_FEATURE_ADDR_SPACE_CAST
-> is unrelated to the problem scx_arena_subprog_init solves) and causes=20=
+This addresses the side effect issue of the previous hack while
+preserving the essential functionality needed by the BPF verifier.
 
-> the scheduler to fail to load for me. Could you please explain the =
-logic behind=20
-> this patch? Does it work on your machine and if so could you let me =
-know what
-> toolchain and kernel you're using?
+Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+---
+ tools/sched_ext/scx_sdt.bpf.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/tools/sched_ext/scx_sdt.bpf.c b/tools/sched_ext/scx_sdt.bpf.c
+index 31b09958e8d5..13d3060c99ff 100644
+--- a/tools/sched_ext/scx_sdt.bpf.c
++++ b/tools/sched_ext/scx_sdt.bpf.c
+@@ -64,14 +64,10 @@ DEFINE_SDT_STAT(select_busy_cpu);
+ static __u64 zero = 0;
+ 
+ /*
+- * XXX Hack to get the verifier to find the arena for sdt_exit_task.
+- * As of 6.12-rc5, The verifier associates arenas with programs by
+- * checking LD.IMM instruction operands for an arena and populating
+- * the program state with the first instance it finds. This requires
+- * accessing our global arena variable, but scx methods do not necessarily
+- * do so while still using pointers from that arena. Insert a bpf_printk
+- * statement that triggers at most once to generate an LD.IMM instruction
+- * to access the arena and help the verifier.
++ * Workaround to help BPF verifier track arena usage.
++ * The verifier needs to see an explicit reference to the arena variable
++ * to properly track arena memory usage. This generates the required
++ * LD.IMM instruction without producing unnecessary output.
+  */
+ static volatile bool scx_arena_verify_once;
+ 
+@@ -80,7 +76,11 @@ __hidden void scx_arena_subprog_init(void)
+ 	if (scx_arena_verify_once)
+ 		return;
+ 
+-	bpf_printk("%s: arena pointer %p", __func__, &arena);
++	/*
++	 * Use volatile access to generate LD.IMM instruction without
++	 * producing console output like bpf_printk does.
++	 */
++	(void)*(volatile void **)&arena;
+ 	scx_arena_verify_once = true;
+ }
+ 
+-- 
+2.43.0
 
