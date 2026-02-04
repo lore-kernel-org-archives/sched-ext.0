@@ -1,136 +1,243 @@
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0153DA7CE
-	for <sched-ext@lists.linux.dev>; Wed,  4 Feb 2026 11:16:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA702773DA
+	for <sched-ext@lists.linux.dev>; Wed,  4 Feb 2026 13:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770203785; cv=none; b=GQBw0tou/bNGWwzge3dGZKRBvnLW/vXTr7qZmBrkB8/Yt+spcKqKs8XfKwlrwE3CDx2jzFEqLvTNDihIPoDKUryOcRZCBlrvp6FkNXicM6Xk5LcfJhLVfXVv/cLnYe3XTPU3kFkA7SPgMV/D1/MKoklJ7Ft+TxLFFQQ+JFk949g=
+	t=1770211254; cv=none; b=q/xz4XmXeiV2ZCywoi0iEWaJ8vGx34/IbezR7iyQ2WW4xi42lK9uHXsgsETA8hEJOXO4pIQzFeZKg6jTrzbGBqWvyc9x/+yvcsQx9fYQ0btdr1/MXyN9t8QoKddBSeIR5X72V5NNGCYLzyi3b2Vv8GMWi9bW8trLFFAY0dC06Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770203785; c=relaxed/simple;
-	bh=RknE2qaMvd+Ec3BSU4pR4Us57yVfETvAFmPmZxmCSUc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwHmbpig0RN+Aj8gO099zmN2eAMldkXFGNxlAfBtMyPnT6VF/3HhjtYM2PVPrEsOGcVq0E9RJlaNRMs6lnVw5/1M/I3eSKNobH1ntHohV9UQrQEfMwz+WCOWvhqjho0kEqN4JApUTvzo0/TP55696ATvfHM7br9sgcAZYIsP8DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LIFOU8op; arc=none smtp.client-ip=209.85.167.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770211254; c=relaxed/simple;
+	bh=E+tRdIza0uH7+GcbMKAdHVJfzr8XQp3vQ1IsQsFZfxQ=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=E4kJ+p2FA3VAo+p2LwRVXYihG3V6nY8tHyqyAdnUH/vc8w1V9RgqDJA10dTiyh5MzC0SoJ0yRA8HO3V5/HLyR/+bSxClYuGy25eC+wnvbaOs1hRr4TCsInyqckmzmCDupAgEi5ncIjLBUGVMeOff1ytHSMG0sUea8seahLSBoOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pSbDf0bs; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIFOU8op"
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-45f171cb842so521148b6e.1
-        for <sched-ext@lists.linux.dev>; Wed, 04 Feb 2026 03:16:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pSbDf0bs"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-483129eb5ccso6341425e9.2
+        for <sched-ext@lists.linux.dev>; Wed, 04 Feb 2026 05:20:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770203783; x=1770808583; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RknE2qaMvd+Ec3BSU4pR4Us57yVfETvAFmPmZxmCSUc=;
-        b=LIFOU8oppZuz20KU/10knq0NBCqS6V1VhY/nTiOuqurnc5NZP2OrNXq9to781Cw0VQ
-         a1AHrZsjAX5Ok4hC91xvFBa6qbmmn26gIhev23Fgwnz/uFlg4JG7KNu5XInjGx2toNV+
-         bsb3koSaSWiugkO6bfNXrr5TYQS4NRUCuJNCERf5KyrsAO2Tq54psEpWxjAGmn5Em1Yu
-         vAG0FS8Hp6uK5OwbwVLkG96koEDRtqobMCLRnl3due3Nmma6sjtiReEyBnlVEoEPAK65
-         20SHX7mlRl7cGipCR/V1OQch09CLtULSZyYXHYF3XikFVpbS5XnW/SK8cA51cKbZVRfU
-         I08g==
+        d=google.com; s=20230601; t=1770211253; x=1770816053; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ymv65Xyno+7NjCaHi9XmRO2wu7ALnGGTcPzb/GjzNQc=;
+        b=pSbDf0bsuQy8fneWJmDWV/ymVbc3LwHfxw0PqsPZIp+BDlLClw5QJCHukL2zjfGrUs
+         eGwqktuvmBU+GN4gATFCQYKm2jSjFWTdQ/QP2Cutb3AmsFkAFP4j4kH7IhOhTBjVCS/i
+         BH5HNEHzKjJNp6tyWV9uLBYNbFytnLg/a8fnPetISjushJKz/BFcru+u4D8iD4u1Y92c
+         vWt1YQ9Hw+NiSD6AVqLxVXOuT/PuBSiTGj3RGFwI3gDwM6O4jgwViz6VoDysw5fqAVQ8
+         peG+wxA2pxG5u0ZlCHzRCeekbDYhCYTJjFEa9nLKqCmWACdDqM25JXBmCNQIeha9I33X
+         SFoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770203783; x=1770808583;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RknE2qaMvd+Ec3BSU4pR4Us57yVfETvAFmPmZxmCSUc=;
-        b=mpFuut9eLshQ9OtwAChMs4v0Gcxf1iU988PxTpyJ8ncdmUiA588IuICAZmlREYjHvk
-         fIEW0d6IeA5rT8iJzPGDIG+9/Zu24RQnY7ANG03HaJY9bOch17GY8JuQsFI5CFFX+a0s
-         9RrOa6iq3I9E3Z0iKaoT9QmIQl44H86hm90fEZRZvL2livMTNpKpf+OubCuKQYQGXDqg
-         URfbd6b8ti0QohwrOEfOBYZU3Ln6cr3eZXahP8FyZ0Y8ydrA6fwnl/dhlEeZ2CUqXid5
-         DrHs0bL/9P0QTUsTiXhqNSyTd/8Xsu+LV3HEwl+7nqOkmYbHT0HOeG2ngBItITe1rbar
-         FMTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXTCfMw+Rw/SOJK9uP4myHSM+xGE1MsOaiLuTbMVRmzgIfGV57i6LVPSLIP2GDdSfOcCmQB4DndduU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwCe30Z3QHrL30XAtIrvs6r1i51TBNIJW4g9vr+/6lFxIS+il82
-	AMkEwbm2gJf+3/vLSI2XzBt75SUbXoZdFFzmsV9PiEytBfUAbGnB0fflNatLvdTYIrqJ/w==
-X-Gm-Gg: AZuq6aIQWmS2hgWM5CZp/cd0NPEulHu+X6aWEfmAAajViTM/wJAO/6SFaa8YORu95q6
-	Dw65F7wDzJ4Nrh4dnrHFp9Cegclizz81fzcRvrOAvlZz0Em4WMqNdVp+pENO44Gbau3bgKQ7WiV
-	EdTLSWcGW26jGuYH8ay+gumRjEQVltMmIPbl2E0TRkDJyg7n6TYNVTDnJ3X365UNinHaBi1FDXJ
-	nahJlpy9kPBp/cQQWhb6cFWI501MILCJw1puYNLQD1x2JmaP/2YV2KNYjiyGHzPOKe80dxfScIX
-	r1fFBoUdt7+QalXp2LS2vmjAVcIDuhdIVcgKg27oxGGUXlmc5FL7FSQpi/XrJGFvpmfqtnCn+wz
-	2ZTC64FkrXLlebyInQmLt9hUIeKg1QwY/dy4Lx2vmKP8KxYdrN7GavzrQ3VOCKqCrg2HLs40hco
-	wKirg=
-X-Received: by 2002:a05:7300:1802:b0:2ab:9d23:f0b1 with SMTP id 5a478bee46e88-2b820efade0mr2048673eec.13.1770198132127;
-        Wed, 04 Feb 2026 01:42:12 -0800 (PST)
-Received: from debian ([74.48.213.230])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b832e1296dsm1265103eec.4.2026.02.04.01.42.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 01:42:11 -0800 (PST)
-From: Qiliang Yuan <realwujing@gmail.com>
-To: arighi@nvidia.com
-Cc: bsegall@google.com,
-	changwoo@igalia.com,
-	david.dai@linux.dev,
-	dietmar.eggemann@arm.com,
-	emil@etsalapatis.com,
-	jake@hillion.co.uk,
-	juri.lelli@redhat.com,
-	linux-kernel@vger.kernel.org,
-	mgorman@suse.de,
-	mingo@redhat.com,
-	newton@meta.com,
-	peterz@infradead.org,
-	realwujing@gmail.com,
-	rostedt@goodmis.org,
-	schatzberg.dan@gmail.com,
-	sched-ext@lists.linux.dev,
-	suzhidao@xiaomi.com,
-	tj@kernel.org,
-	vincent.guittot@linaro.org,
-	void@manifault.com,
-	vschneid@redhat.com,
-	yuanql9@chinatelecom.cn
-Subject: Re: [PATCH] sched/ext: Add cpumask to skip unsuitable dispatch queues
-Date: Wed,  4 Feb 2026 04:41:58 -0500
-Message-ID: <20260204094202.3917675-1-realwujing@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <aYGzumDW2sQ8xQSD@gpd4>
-References: <aYGzumDW2sQ8xQSD@gpd4>
+        d=1e100.net; s=20230601; t=1770211253; x=1770816053;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ymv65Xyno+7NjCaHi9XmRO2wu7ALnGGTcPzb/GjzNQc=;
+        b=Wh9+sLlnz7UhUDnxnf7SK4zJWVGDHkT5kS8sipSV1xZd2Zeyhe18azgPPsH6SFwHIo
+         dYc0f7+X8zpNNQ1R4N0laTyqVMmAj6pDyp00sw9KMrAEBpe+5fe9ynBBCdZNq+bKZxwj
+         LOgXOewbppVG2Q03dtMzGQBGQwjDOLAwprSsfcvprXWx8OO3JzpTGmpWDcx07fFbffZh
+         Stz0q42vlbauKSdZE1Vjpt+j6ab2J8vtx/InsYbimG3RIb9cXNYS4Rz7Qv/6fvhRNgmT
+         vfQjuF+rLbJW6ZoFmKcz8O6ZRx5wZWCCxutttCSj+D/zT24Yt+pkydTZIIns+epNJMle
+         Y9Xw==
+X-Forwarded-Encrypted: i=1; AJvYcCUkxT9DXdweeYIBF2RpaSeqQaOPCrGyeQ1LME3HFW16eOYi8dtvWUu+nZmzBQPDiOrIJIj0DqQ2Clk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YygqVQckCO7RAx5SHAOIdpOcS4z1yjAXiBV5uvP8AAyg9d2EK3z
+	7vikI55Tb6SajoP6glpAm/cklCFJwYKakt5AJDXre59p8EYIlcujXwx5ILdFYtqY6wSVVHVoVgj
+	xOEH2CobtkRE+Mg==
+X-Received: from wmbd6.prod.google.com ([2002:a05:600c:58c6:b0:480:6afd:1fd0])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600d:844f:10b0:480:7162:fa48 with SMTP id 5b1f17b1804b1-4830e9492aamr29370825e9.13.1770211253116;
+ Wed, 04 Feb 2026 05:20:53 -0800 (PST)
+Date: Wed, 04 Feb 2026 13:20:52 +0000
+In-Reply-To: <20260203230639.1259869-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260203230639.1259869-1-arighi@nvidia.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DG67IMOVU2GX.2CKP769EXJS12@google.com>
+Subject: Re: [PATCH] sched_ext: Invalidate dispatch decisions on CPU affinity changes
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
+Cc: Christian Loehle <christian.loehle@arm.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
+	Daniel Hodges <hodgesd@meta.com>, <sched-ext@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Andrea, I have fixed those issues in v2:
+Hi Andrea,
 
-https://lore.kernel.org/all/20260204093435.3915393-1-realwujing@gmail.com/
+On Tue Feb 3, 2026 at 11:06 PM UTC, Andrea Righi wrote:
+> A BPF scheduler may rely on p->cpus_ptr from ops.dispatch() to select a
+> target CPU. However, task affinity can change between the dispatch
+> decision and its finalization in finish_dispatch(). When this happens,
+> the scheduler may attempt to dispatch a task to a CPU that is no longer
+> allowed, resulting in fatal errors such as:
+>
+>  EXIT: runtime error (SCX_DSQ_LOCAL[_ON] target CPU 10 not allowed for stress-ng-race-[13565])
+>
+> This race exists because ops.dispatch() runs without holding the task's
+> run queue lock, allowing a concurrent set_cpus_allowed() to update
+> p->cpus_ptr while the BPF scheduler is still using it. The dispatch is
+> then finalized using stale affinity information.
+>
+> Example timeline:
+>
+>   CPU0                                      CPU1
+>   ----                                      ----
+>                                             task_rq_lock(p)
+>   if (cpumask_test_cpu(cpu, p->cpus_ptr))
+>                                             set_cpus_allowed_scx(p, new_mask)
+>                                             task_rq_unlock(p)
+>       scx_bpf_dsq_insert(p,
+>               SCX_DSQ_LOCAL_ON | cpu, 0)
+>
+> Fix this by extending the existing qseq invalidation mechanism to also
+> cover CPU affinity changes, in addition to task dequeues/re-enqueues,
+> occurring between dispatch decision and finalization.
 
-On Tue, Feb 03, 2026 at 09:37:14AM +0100, Andrea Righi wrote:
-> Did you run some benchmarks / have some numbers?
+I'm not convinced this will prevent the exact race scenario you describe.
+For the qseq increment inside set_cpus_allowed_scx() to be noticed, it needs
+to happen _after_ scx_bpf_dsq_insert() reads the qseq and stores it in the
+dispatch buffer entry.
 
-I'm working on collecting more detailed benchmark numbers. However, theoretically,
-the bitwise cpumask_or() should be much cheaper than a DSQ scan that results in
-multiple cache misses during task structure dereferencing, even for small queues.
+We can still have the cpumask change and qseq increment on CPU1 happen between
+cpumask_test_cpu() and scx_bpf_dsq_insert() on CPU0, and it will not be
+detected because the dispatch buffer entry will contain the incremented value.
 
-> It's true that we save the O(N) scan when the DSQ has no eligible tasks, but we're
-> adding cost on every enqueue: cpumask_or() on potentially large cpumasks can be
-> expensive.
-> ... for small queues or mixed workloads, the cpumask overhead probably exceeds
-> the savings...
+>
+> When finish_dispatch() detects a qseq mismatch, the dispatch is dropped
+> and the task is returned to the SCX_OPSS_QUEUED state, allowing it to be
+> re-dispatched using up-to-date affinity information.
 
-To minimize the enqueue overhead, I've optimized the dispatch_enqueue() path in v2:
-- Use cpumask_copy() instead of cpumask_or() when the task is the first one in the DSQ.
-- Skip the cpumask_or() update if the DSQ's cpus_allowed mask is already full.
+How will the scheduler know that the dispatch was dropped? Is the scheduler
+expected to infer it from the ops.enqueue() that follows set_cpus_allowed_scx()
+on CPU1?
 
-> The cpumask is only updated during enqueue and cleared when the queue empties. If a
-> task's affinity changes while it's already in the queue (i.e., sched_setaffinity()),
-> the cpus_allowed mask becomes stale.
+>
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> ---
+>  kernel/sched/ext.c | 58 +++++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 47 insertions(+), 11 deletions(-)
+>
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 0ab994180f655..6128a2529a7c7 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -1828,8 +1828,9 @@ static bool consume_remote_task(struct rq *this_rq, struct task_struct *p,
+>   * will change. As @p's task_rq is locked, this function doesn't need to use the
+>   * holding_cpu mechanism.
+>   *
+> - * On return, @src_dsq is unlocked and only @p's new task_rq, which is the
+> - * return value, is locked.
+> + * On success, @src_dsq is unlocked and only @p's new task_rq, which is the
+> + * return value, is locked. On failure (affinity change invalidated the move),
+> + * returns NULL with @src_dsq unlocked and task remaining in @src_dsq.
+>   */
+>  static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+>  					 struct task_struct *p, u64 enq_flags,
+> @@ -1845,9 +1846,13 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+>  	if (dst_dsq->id == SCX_DSQ_LOCAL) {
+>  		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
+>  		if (src_rq != dst_rq &&
+> -		    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+> -			dst_dsq = find_global_dsq(sch, p);
+> -			dst_rq = src_rq;
+> +		    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, false))) {
+> +			/*
+> +			 * Task affinity changed after dispatch decision:
+> +			 * drop the dispatch, caller will handle returning
+> +			 * the task to its original DSQ.
+> +			 */
+> +			return NULL;
+>  		}
+>  	} else {
+>  		/* no need to migrate if destination is a non-local DSQ */
+> @@ -1974,9 +1979,15 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
+>  	}
+>  
+>  	if (src_rq != dst_rq &&
+> -	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+> -		dispatch_enqueue(sch, find_global_dsq(sch, p), p,
+> -				 enq_flags | SCX_ENQ_CLEAR_OPSS);
+> +	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, false))) {
+> +		/*
+> +		 * Task affinity changed after dispatch decision: drop the
+> +		 * dispatch, task remains in its current state and will be
+> +		 * dispatched again in a future cycle.
+> +		 */
+> +		atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_QUEUED |
+> +					(atomic_long_read(&p->scx.ops_state) &
+> +					 SCX_OPSS_QSEQ_MASK));
+>  		return;
+>  	}
+>  
+> @@ -2616,12 +2627,30 @@ static void set_cpus_allowed_scx(struct task_struct *p,
+>  				 struct affinity_context *ac)
+>  {
+>  	struct scx_sched *sch = scx_root;
+> +	struct rq *rq = task_rq(p);
+> +
+> +	lockdep_assert_rq_held(rq);
+>  
+>  	set_cpus_allowed_common(p, ac);
+>  
+>  	if (unlikely(!sch))
+>  		return;
+>  
+> +	/*
+> +	 * Affinity changes invalidate any pending dispatch decisions made
+> +	 * with the old affinity. Increment the runqueue's ops_qseq and
+> +	 * update the task's qseq to invalidate in-flight dispatches.
+> +	 */
+> +	if (p->scx.flags & SCX_TASK_QUEUED) {
+> +		unsigned long opss;
+> +
+> +		rq->scx.ops_qseq++;
+> +		opss = atomic_long_read(&p->scx.ops_state);
+> +		atomic_long_set(&p->scx.ops_state,
+> +				(opss & SCX_OPSS_STATE_MASK) |
+> +				(rq->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT));
+> +	}
 
-Fixed in v2. I've added a hook in set_cpus_allowed_scx() to update the DSQ's
-cpus_allowed mask whenever a task's affinity changes while it is enqueued in a DSQ.
+Will we ever enter this if statement? IIUC set_cpus_allowed_scx() is always
+called under `scoped_guard (sched_change, p, DEQUEUE_SAVE)`, so assuming the
+task is on a runqueue, set_cpus_allowed_scx() will always be preceded by
+dequeue_task_scx(), which clears SCX_TASK_QUEUED.
 
-> I don't see the corresponding kfree() in the cleanup path.
-
-Fixed in v2. I've added an RCU callback (free_dsq_rcu_callback) to explicitly free
-dsq->cpus_allowed before freeing the DSQ structure itself.
-
-Also, I've restricted the cpumask allocation to user-defined DSQs only, as built-in
-DSQs (local, global, bypass) don't need this optimization.
+> +
+>  	/*
+>  	 * The effective cpumask is stored in @p->cpus_ptr which may temporarily
+>  	 * differ from the configured one in @p->cpus_mask. Always tell the bpf
+> @@ -6013,14 +6042,21 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+>  
+>  	/* execute move */
+>  	locked_rq = move_task_between_dsqs(sch, p, enq_flags, src_dsq, dst_dsq);
+> -	dispatched = true;
+> +	if (locked_rq) {
+> +		dispatched = true;
+> +	} else {
+> +		/* Move failed: task stays in src_dsq */
+> +		raw_spin_unlock(&src_dsq->lock);
+> +		locked_rq = in_balance ? this_rq : NULL;
+> +	}
+>  out:
+>  	if (in_balance) {
+>  		if (this_rq != locked_rq) {
+> -			raw_spin_rq_unlock(locked_rq);
+> +			if (locked_rq)
+> +				raw_spin_rq_unlock(locked_rq);
+>  			raw_spin_rq_lock(this_rq);
+>  		}
+> -	} else {
+> +	} else if (locked_rq) {
+>  		raw_spin_rq_unlock_irqrestore(locked_rq, flags);
+>  	}
+>  
 
 Thanks,
-Qiliang
+Kuba
+
