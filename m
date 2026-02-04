@@ -1,46 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51E332860C;
-	Wed,  4 Feb 2026 20:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28453314A4;
+	Wed,  4 Feb 2026 20:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770235741; cv=none; b=m6qmwa1iim5i0l8X9h7b0mJlIv0eyl+jTPzmW3rkJ08Bz3pHw9f3iK4vK6FujrOn10KZSx2BwKtiLw6iCielCHDc85LTciZNxchfHUoJZ/s8Ug7OuBf2f/nolya1Tab5O5ntGhrQ372UPyTyeGlEuwFWlJboA1B4JTIAOljfEoM=
+	t=1770237310; cv=none; b=jZyhLM4UM2sPV7/Jij5AnSe+DwaR+G9x2VUOAwkthlux6QigrWh1mOixLYQh1gw8PhrDCKEZO8Smbs6Env6GCHhmrqgjCeppc2u2gjlywwH8QGG4M8ObpA8GevU/GNVdbZri7AuMTMsbOf0ynChwqO7lrygpOyk8jscBEbvecMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770235741; c=relaxed/simple;
-	bh=ZhALBC5cEvfIYW+PyEWdmiKuK15teYMz9joi3prVWQ4=;
+	s=arc-20240116; t=1770237310; c=relaxed/simple;
+	bh=+dl+qRFSKU27rrTtvQzFeQr6KnCLJZ7C/WC2ZXdmjf4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JDr84cwBjVASor8Q8DP/0EY3gU5aqmzT5iFhpzCzdE5lep4Q23k75XTMMgt+biz1qRJ2EvQFYOg6uKwNEZgHP89x69GYDQLrwr0EtKsUNJVAV3ttAE7YwBFjYp0rYSg11kIeUaYgDu0i4BCX5QPldBVzdAfCjLMWLMbv2Bz4+oM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VgSS1/LL; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=fwTntGgGJ/QSv+bQmzLtncP/pS8s91Lvf8LZxqE5n+fAa8d9eP53fhVUMX2T3ZC8WpcDTA2Pbh1a5OT3I1m0q3cqBWL4ajUqMnl5TmeLFcyM3qiGpnk/sUEJrDbXBN8hy4EFRXzksicTMZ1NU/PyVTKtDI59T/AOC+dLfymgu20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OlgPwqwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VgSS1/LL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F3EC4CEF7;
-	Wed,  4 Feb 2026 20:09:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OlgPwqwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71524C4CEF7;
+	Wed,  4 Feb 2026 20:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770235740;
-	bh=ZhALBC5cEvfIYW+PyEWdmiKuK15teYMz9joi3prVWQ4=;
+	s=k20201202; t=1770237309;
+	bh=+dl+qRFSKU27rrTtvQzFeQr6KnCLJZ7C/WC2ZXdmjf4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VgSS1/LLO0srN0pyioUWsfG5ay1fmeHQMTw8Y2KbW1T9WrUJE92W7noCviZU0rc2z
-	 ImqmqVWMIIxJAhD9qUmWQf+YspBgW8IeklLhH56M5zHVgyCsmygRkYz9VR2BOzVod6
-	 r+dMA50gVBSIfeziCbSGGirVtVsTV9tK4fD2czHOpe7Z+W4UMhgKnxlYhmXbPVW6XV
-	 fgkmds2netZwy0L9PbRrTnt3KPqbz58JdTWLfuQzcQskuUiFoLuYTOjoDDD37kZM7r
-	 iDSwSVz9Z4Hy6NPVhoRikQyW/JD5AwGaUCyIRFWrG9wXUix5D3AP3J6cHfmTFEI5xi
-	 coqESD512Sdvg==
-Date: Wed, 4 Feb 2026 10:08:59 -1000
+	b=OlgPwqwFh8s+gDSh9sXJ1D0fMZ3EZ6nY4Z+U2tgNp8vyfXmGJV0yy30uLzkr7fsju
+	 ROJU2v/1KeTXIoRv/wBxx2bn2URFFKvYrQSSOl2p/smq0YGDPIxcBIh+0xa8GxJA6T
+	 SbYi9BRz5CbQyNjz9UncdrTXqVML29yibn51Dw9KaO7Jmz7V3Zm6gHsXacmq9j4dtZ
+	 gmYeknRqC62yRNN7vkwUXHdyyLuJJAd81fvYKS2rwg1l3JxUk8Et7nak3LZwdRfrjK
+	 6ykDoUz98rd1Ep4LS1UOrnMn5QdqZtfEqJvxV+k4mwRGeJ0ARHb0ecO0trrFJA3DS5
+	 +dn6748DdWIxA==
+Date: Wed, 4 Feb 2026 10:35:08 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+To: Qiliang Yuan <realwujing@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Jake Hillion <jake@hillion.co.uk>, zhidao su <suzhidao@xiaomi.com>,
+	David Dai <david.dai@linux.dev>,
+	Qiliang Yuan <yuanql9@chinatelecom.cn>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Ryan Newton <newton@meta.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Fix NULL pointer deref and warnings during
- scx teardown
-Message-ID: <aYOnW5z72oduefZx@slm.duckdns.org>
-References: <20260202151341.796959-1-arighi@nvidia.com>
- <aYDaao9Xb_Bkv0NH@slm.duckdns.org>
- <aYDy-tCqsH990lW9@gpd4>
- <aYEOdPEkgA2eUcTE@slm.duckdns.org>
- <aYEqGSGzxrYU5PZt@gpd4>
- <aYH_urViwKNiamo0@gpd4>
+Subject: Re: [PATCH v2] sched/ext: Add cpumask to skip unsuitable dispatch
+ queues
+Message-ID: <aYOtfCoL2vfvFprQ@slm.duckdns.org>
+References: <20260204093435.3915393-1-realwujing@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,26 +59,35 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aYH_urViwKNiamo0@gpd4>
+In-Reply-To: <20260204093435.3915393-1-realwujing@gmail.com>
 
-On Tue, Feb 03, 2026 at 03:01:30PM +0100, Andrea Righi wrote:
-> > Nope, I can still trigger this (with the same modified scx_simple +
-> > stress-ng --race-sched 0:
+On Wed, Feb 04, 2026 at 04:34:18AM -0500, Qiliang Yuan wrote:
+> Add a cpus_allowed cpumask to struct scx_dispatch_q to track the union
+> of affinity masks for all tasks enqueued in a user-defined DSQ. This
+> allows a CPU to quickly skip DSQs that contain no tasks runnable on the
+> current CPU, avoiding wasteful O(N) scans.
 > 
-> A quick reproducer:
-> https://github.com/sched-ext/scx/tree/scx-bug
+> - Allocate/free cpus_allowed only for user-defined DSQs.
+> - Use free_dsq_rcu_callback to safely free the DSQ and its nested mask.
+> - Update the mask in dispatch_enqueue() using cpumask_copy() for the
+>   first task and cpumask_or() for subsequent ones. Skip updates if the
+>   mask is already full.
+> - Update the DSQ mask in set_cpus_allowed_scx() when a task's affinity
+>   changes while enqueued.
+> - Handle allocation failures in scx_create_dsq() to prevent memory leaks.
 > 
->  $ make
->  $ vng -vr -- "stress-ng --race-sched 0 & ./build/scheds/c/scx_bug"
->  ...
->  [    3.375119] BUG: kernel NULL pointer dereference, address: 00000000000001c0
->  [    3.375836] RIP: 0010:set_cpus_allowed_scx+0x1a/0xa0
+> This optimization improves performance with many DSQs and tight affinity
+> constraints. The bitwise overhead is significantly lower than potential
+> cache misses during task iteration.
 > 
-> It happens almost immediately.
+> Signed-off-by: Qiliang Yuan <yuanql9@chinatelecom.cn>
+> Signed-off-by: Qiliang Yuan <realwujing@gmail.com>
 
-This should fix it:
-
-  http://lkml.kernel.org/r/fc034891cef55029c16122f4279e4057@kernel.org
+As Emil pointed out earlier, this adds overhead in general path which scales
+with the number of CPUs and the benefit isn't that generic. Similar
+optimizations can be done from BPF side and throwing a lot of tasks with
+varying affinity restrictions into a single queue frequently scanned by
+multiple CPUs is not scalable to begin with.
 
 Thanks.
 
