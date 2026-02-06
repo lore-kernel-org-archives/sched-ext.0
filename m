@@ -1,63 +1,63 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FED304BDE
-	for <sched-ext@lists.linux.dev>; Fri,  6 Feb 2026 20:10:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A747923B62B
+	for <sched-ext@lists.linux.dev>; Fri,  6 Feb 2026 20:35:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770408658; cv=none; b=osWgwy443oKfeNFFAILf1QUXNQIwA2VUZWdlaeLnCaUe8TkUFoG31ozvtdDPLg/2Y3VXFTa+2l0UmRNEFCReNlv8X7viNn3JaNyO55lCdOeBHFYY9/G9kggfG4YdvKuo2GPLJc50jqK5qUeKQH1HwVBqzqYlQD0gq4QP6gBiCmY=
+	t=1770410137; cv=none; b=WJU+8FIIvSQw1i8W9Pwif1J4osaQAXi0bAMuXm3KYlqIlYjkVnhHjSCo09cireMSOtjZOrDvQ05ctJQQCg+ozzJtcmwRYDGym3RtE8q32FGKPqMMKPJ9eS6tpX+z5X5YVJMf3jGgDLmjjx3YeYcXlS/yPkj0ZDqzbkRaUQPL4CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770408658; c=relaxed/simple;
-	bh=fOgcvdHcwE7Cc85kjFL/XUSzGtnz4b8M8XEA0Ckrrqg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ezL2ZBDcrUva1jwqcZXfx0tuNvxcnzmCxeeJK0/O7S1Uq6Ldv/MdZdB2tIsm2jvHJ8SLq7jVk5o86+pvwZxxXDSF/pW/A2mgc+918rv95BcVONKuXifiNc3i2MDwcL9KR1+dc4b5OCg1i/xOaQFidKiyrCe1keuXixHcbhPKEjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=TnffFQrO; arc=none smtp.client-ip=209.85.222.170
+	s=arc-20240116; t=1770410137; c=relaxed/simple;
+	bh=3kTZKn9B8kBn1liPMZZEIZII4l+0ndbmQDoWIDTEmQg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=gVw04YA8zPKVGR028Aeri4PzBGRnXhTV87IjoJmjRh+/5cE7rV12YmyFk4QCDFpJUCKSk4f6xEAxTAQqTFAXgdMvzQxZ/HyphyI56W3HlSNqbwWA+INsGwfJ4+/312TD1a8DDfKcK8oSuvJLWOtciJQTxUErwlTMM00YX8AbZvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=TJsSesWM; arc=none smtp.client-ip=209.85.219.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="TnffFQrO"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8c711959442so294003285a.0
-        for <sched-ext@lists.linux.dev>; Fri, 06 Feb 2026 12:10:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="TJsSesWM"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-894676e6863so27676876d6.2
+        for <sched-ext@lists.linux.dev>; Fri, 06 Feb 2026 12:35:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1770408657; x=1771013457; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1770410136; x=1771014936; darn=lists.linux.dev;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Urnk78pimz8iK8WydoY5TYTqAi0MT+OQ2hKUCSJ7bXg=;
-        b=TnffFQrOsmYDpNM+tFoGBC5m6Tz+4sKXRvnKCerKOczViBnU/O98eUyQePS8N3PPdF
-         k5h3liJ2kl/yaEyzcFWzJ+URLe5MjjCObftGi1bpiVmsVDs57Fl52GXOaiigOoUVfVDS
-         YAZi5ut9FoONOizIIf/7zIifmu0HacIju5E6VMxX+byhGn9Ui8sjuhRGDRNVxLoSoe2o
-         iBCPEGb4F+/CiZ94duu1DXkNveSDrKC14+8x25Hj4ohW7BcBm/BrYAq6vWKFdAytI5zM
-         h4jpwurSn6bu/FPtq+g+W+NcxOzPcl+bSWFOalx+vScoMqZHt70lbhhAm3tBViDIN6eb
-         rB3g==
+        bh=unYB2rIEAW9rlnfxUIn2GgKSP8WoJ45ur/Fwo5yvoLE=;
+        b=TJsSesWM+kH+Fz+2XhFsApPJRj25729sRtbxGG4QbJWDTV3acc01hDxCJQ7SfbnTBV
+         2A5qHdkaZeYKSDtRsox22mHpES5HbvwPJUcuC0Lj6Yi/CretflKOb1SVLyikfJxlT8cu
+         id/JNrsCFwbrBVkblMkoxUa+W4c9izBIv6do9DE7wMRJTcsympcQdD7YWxBCF262NrC3
+         oRavzCqM4VHZ2hrLOD7qAccAZJux4ZN4m5zIOohjTsMvkKnLkLk8gbHxTum9yy4sxv15
+         7kM/Z/TrgCFIW5/Y/9YFQIIBUy30ChD1UqufJCBlY6zppAM3ru/pN/aVm7VhQ1JMgg8a
+         0R0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770408657; x=1771013457;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20230601; t=1770410136; x=1771014936;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Urnk78pimz8iK8WydoY5TYTqAi0MT+OQ2hKUCSJ7bXg=;
-        b=AjHJ/YNH2ZAZfEFYnhxaZc037ttaX24rPjYzlE2T6ncsR3AZR3ECYecMD/tTwHBcsK
-         ugpb4Ump++q/jfBkzAchPNeOpeAdDJQCRpnDtDV4pakxYQqMjMA/8YhGvZDt57eRqO44
-         Y6OE0z/hdEutYo3yTjq/aX9xiDyrFcFkOiHj8yDAkI8KGcwhFrrGT5yPOIsHxBY/HXye
-         3te8Pw+LOxjNU02uLqJxLegmZCImRmVh9wGQJyaxOrUSVHDzoLEkE0WLinZvAEAtqigW
-         OT7NgdTAC8ahgLl61Gi6jgWsQYB3dj3oi3Z3mI0EuF1WuFK39G3lEHMugwC+UERkmFJ1
-         ZpOg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4jL/IPArqlkHg2yAAn9MWjwfAuylKaRkWsLVwl+gSMFN382Mct5/3fACV5cvSmLghROyaa78pluY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwnBTRkplQMTLTw4tMilzloCDMyhVYznw4R58JqlmM+AQEUBhRr
-	/TF8BIGTh260jRTfwaYpASQUn6jmiAuAr4oklDaqBR/S3ItzACRfT6y2T/OGpDbnero=
-X-Gm-Gg: AZuq6aLSWjf0KjazlLe9QB8hsCh/6iC7/T2eGG4anJD2zp1NMahOpkH6kH1WvKoaUyn
-	ayC9pR1ddMAROJYedf6ZKK2lPMP58NzRXsdZir3m0Xyu4NkrB+JeOtC+HG4Xd7P4Ej8p0CeSvU+
-	LCmztei7zmIkRIEfxXj06Wt9KbkYWWQNcdxbk9kGs7FdC+lZJFlH4EnRm3JlKJyi7WbU29visUi
-	DbdzDTPTRBNdPtz/BsyJkp76yU7QUR/GhpxOQY+J26UiAfAM+P9rzCPsIqzHA8ZTN3rlTK9TvWW
-	oAZOlfL7+Ml1Su6Dj4DAErCOzuVSFQWgVSvwLZr7EEMJH5F4x7r+kqVhcRlPwoqOgAkUrvlqoiW
-	jW8wH76dsfvnTRBz7DoJelFglC4sEPn0LyTpQMkX+sJYM+M5mcH/M4vUm0p3kfe981DM7FcoApl
-	/s9sAChc68Nbo=
-X-Received: by 2002:a05:620a:4004:b0:8ac:70cd:8727 with SMTP id af79cd13be357-8ca40b82db6mr1085437785a.11.1770408656721;
-        Fri, 06 Feb 2026 12:10:56 -0800 (PST)
+        bh=unYB2rIEAW9rlnfxUIn2GgKSP8WoJ45ur/Fwo5yvoLE=;
+        b=csWZZUy+iZ62A6ArXGJ0nauXbXQ2iycFBqavoZlgDn34C1FdCyU/J6vjy222mgvlY2
+         ncDXufaacA2Sg5rUaDgqHOaAL2a4+oJ7CsftqyWWKlC2unKhMTdPtc+cRiG34cmpW885
+         QZgR95zWb1Zf0+NSLdg1BH0C4x0EmNlO5wZ+9IsvB6/tZW2F9FrmSdRm/rSlgpLmwSRb
+         /mWlo1vwu3t8ZRlIqDvDDhfMNyFO77yHq8kCILxm0j12U457rrgPL7CyxKJRvswi95n7
+         +1ebzU9j31gkCfOEfD2StzquCfOk21jghm2jMOMpDSVxSp94o41dBRFvpc1YIrxjzdmc
+         f52A==
+X-Forwarded-Encrypted: i=1; AJvYcCX35enTQBldECfinQf0C8Y4BptioNZTSp6lhYOIHRZo0PQyjm1jkFYSEsDY9G0zA5X4DQ90xPoErH4=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyskcJPDRozXLO4bicP3SWSn9qqhxMyDMuxBKntcV2qA76xUtjU
+	AVvaEJKLGdKfOvqf1VbdmRtJ00Pl4oHMkPeChCex02KT+i5GBUOcHBgQvILd0zIiH2o=
+X-Gm-Gg: AZuq6aJ+KkUVpgxOPBnvVFRFBJsOR1OUjsD8o2+3hwMZfb2iq7hBMrUwD+WobcRhIdi
+	Exha6A5VsXUTUeOhfIy9Nv/EpyVIPdCCJUe488K59vHiVY1deDTNEZRLBBFgdRSQFw+pDFWCwte
+	U/gEmld5UB3u4MVubntjS03Zqe24DmmHJNG92GOxDRm3/e45xAvLXlZkwnz7bHPlj3Xog7cN086
+	Vtn0a7Mv5HRG7RiT044+/MR/IBnP0yI3ioLLz0mAxRIWouAuysQN74c8sNDry/g27ueKYImuC+m
+	w3N/KaebnZ9C65JW+Hir0Qf4yyO9PDx2Z8723Yj3l1UW8gVDwqp43lQXg4DziqXkb5t5KZKhtnW
+	TsYRrvuxE8smWU91I0IsoGUpL55fIbnRUyJ9ESkk2tygqBhazNRo4aRb/YYEvOv9pEc8S1coj2q
+	OWIzkHagjZB+o=
+X-Received: by 2002:a05:6214:1cc9:b0:894:71b0:6afd with SMTP id 6a1803df08f44-8953cd83f7bmr60876816d6.59.1770410136442;
+        Fri, 06 Feb 2026 12:35:36 -0800 (PST)
 Received: from localhost ([140.174.219.137])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8caf9a16558sm220731185a.27.2026.02.06.12.10.56
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8953bf35102sm25270486d6.10.2026.02.06.12.35.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Feb 2026 12:10:56 -0800 (PST)
+        Fri, 06 Feb 2026 12:35:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,834 +66,601 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 06 Feb 2026 15:10:55 -0500
-Message-Id: <DG85HO9OMIUH.278JKOJEN6QPL@etsalapatis.com>
-Cc: "Kuba Piecuch" <jpiecuch@google.com>, "Christian Loehle"
- <christian.loehle@arm.com>, "Daniel Hodges" <hodgesd@meta.com>,
- <sched-ext@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Add test to validate
- ops.dequeue() semantics
+Date: Fri, 06 Feb 2026 15:35:34 -0500
+Message-Id: <DG860JW64VVD.31BS2QTEB8XZQ@etsalapatis.com>
 From: "Emil Tsalapatis" <emil@etsalapatis.com>
 To: "Andrea Righi" <arighi@nvidia.com>, "Tejun Heo" <tj@kernel.org>, "David
  Vernet" <void@manifault.com>, "Changwoo Min" <changwoo@igalia.com>
+Cc: "Kuba Piecuch" <jpiecuch@google.com>, "Christian Loehle"
+ <christian.loehle@arm.com>, "Daniel Hodges" <hodgesd@meta.com>,
+ <sched-ext@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
 X-Mailer: aerc 0.20.1
 References: <20260206135742.2339918-1-arighi@nvidia.com>
- <20260206135742.2339918-3-arighi@nvidia.com>
-In-Reply-To: <20260206135742.2339918-3-arighi@nvidia.com>
+ <20260206135742.2339918-2-arighi@nvidia.com>
+In-Reply-To: <20260206135742.2339918-2-arighi@nvidia.com>
 
 On Fri Feb 6, 2026 at 8:54 AM EST, Andrea Righi wrote:
-
-Hi Andrea,
-
-> Add a new kselftest to validate that the new ops.dequeue() semantics
-> work correctly for all task lifecycle scenarios, including the
-> distinction between terminal DSQs (where BPF scheduler is done with the
-> task), user DSQs (where BPF scheduler manages the task lifecycle) and
-> BPF data structures, regardless of which event performs the dispatch.
+> Currently, ops.dequeue() is only invoked when the sched_ext core knows
+> that a task resides in BPF-managed data structures, which causes it to
+> miss scheduling property change events. In addition, ops.dequeue()
+> callbacks are completely skipped when tasks are dispatched to non-local
+> DSQs from ops.select_cpu(). As a result, BPF schedulers cannot reliably
+> track task state.
 >
-> The test validates the following scenarios:
+> Fix this by guaranteeing that each task entering the BPF scheduler's
+> custody triggers exactly one ops.dequeue() call when it leaves that
+> custody, whether the exit is due to a dispatch (regular or via a core
+> scheduling pick) or to a scheduling property change (e.g.
+> sched_setaffinity(), sched_setscheduler(), set_user_nice(), NUMA
+> balancing, etc.).
 >
->  - From ops.select_cpu():
->      - scenario 0 (local DSQ): tasks dispatched to the local DSQ bypass
->        the BPF scheduler entirely; they never enter BPF custody, so
->        ops.dequeue() is not called,
->      - scenario 1 (global DSQ): tasks dispatched to SCX_DSQ_GLOBAL also
->        bypass the BPF scheduler, like the local DSQ; ops.dequeue() is
->        not called,
->      - scenario 2 (user DSQ): tasks enter BPF scheduler custody with full
->        enqueue/dequeue lifecycle tracking and state machine validation
->        (expects 1:1 enqueue/dequeue pairing).
-
-Could you add a note here about why there's no equivalent to scenario 6?
-The differentiating factor between that and scenario 2 (nonterminal queue) =
-is=20
-that scx_dsq_insert_commit() is called regardless of whether the queue is t=
-erminal.
-And this makes sense since for non-DSQ queues the BPF scheduler can do its
-own tracking of enqueue/dequeue (plus it does not make too much sense to
-do BPF-internal enqueueing in select_cpu).
-
-What do you think? If the above makes sense, maybe we should spell it out=
-=20
-in the documentation too. Maybe also add it makes no sense to enqueue
-in an internal BPF structure from select_cpu - the task is not yet
-enqueued, and would have to go through enqueue anyway.
-
+> BPF scheduler custody concept: a task is considered to be in the BPF
+> scheduler's custody when the scheduler is responsible for managing its
+> lifecycle. This includes tasks dispatched to user-created DSQs or stored
+> in the BPF scheduler's internal data structures. Custody ends when the
+> task is dispatched to a terminal DSQ (such as the local DSQ or
+> %SCX_DSQ_GLOBAL), selected by core scheduling, or removed due to a
+> property change.
 >
->    - From ops.enqueue():
->      - scenario 3 (local DSQ): same behavior as scenario 0,
->      - scenario 4 (global DSQ): same behavior as scenario 1,
->      - scenario 5 (user DSQ): same behavior as scenario 2,
->      - scenario 6 (BPF internal queue): tasks are stored in a BPF queue
->        in ops.enqueue() and consumed in ops.dispatch(); they remain in
->        BPF custody until dispatch, with full lifecycle tracking and 1:1
->        enqueue/dequeue validation.
+> Tasks directly dispatched to terminal DSQs bypass the BPF scheduler
+> entirely and are never in its custody. Terminal DSQs include:
+>  - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON): per-CPU queues
+>    where tasks go directly to execution.
+>  - Global DSQ (%SCX_DSQ_GLOBAL): the built-in fallback queue where the
+>    BPF scheduler is considered "done" with the task.
 >
-> This verifies that:
->  - terminal DSQ dispatch (local, global) don't trigger ops.dequeue(),
->  - user DSQ / internal BPF data structure dispatch has exact 1:1
->    ops.enqueue()/dequeue() pairing,
->  - dispatch dequeues have no flags (normal workflow),
->  - property change dequeues have the %SCX_DEQ_SCHED_CHANGE flag set,
->  - no duplicate enqueues or invalid state transitions are happening,
->  - ops.enqueue() and ops.select_cpu() dispatch paths behave identically.
+> As a result, ops.dequeue() is not invoked for tasks directly dispatched
+> to terminal DSQs.
+>
+> To identify dequeues triggered by scheduling property changes, introduce
+> the new ops.dequeue() flag %SCX_DEQ_SCHED_CHANGE: when this flag is set,
+> the dequeue was caused by a scheduling property change.
+>
+> New ops.dequeue() semantics:
+>  - ops.dequeue() is invoked exactly once when the task leaves the BPF
+>    scheduler's custody, in one of the following cases:
+>    a) regular dispatch: a task dispatched to a user DSQ or stored in
+>       internal BPF data structures is moved to a terminal DSQ
+>       (ops.dequeue() called without any special flags set),
+>    b) core scheduling dispatch: core-sched picks task before dispatch
+>       (ops.dequeue() called with %SCX_DEQ_CORE_SCHED_EXEC flag set),
+>    c) property change: task properties modified before dispatch,
+>       (ops.dequeue() called with %SCX_DEQ_SCHED_CHANGE flag set).
+>
+> This allows BPF schedulers to:
+>  - reliably track task ownership and lifecycle,
+>  - maintain accurate accounting of managed tasks,
+>  - update internal state when tasks change properties.
 >
 > Cc: Tejun Heo <tj@kernel.org>
 > Cc: Emil Tsalapatis <emil@etsalapatis.com>
 > Cc: Kuba Piecuch <jpiecuch@google.com>
 > Signed-off-by: Andrea Righi <arighi@nvidia.com>
 > ---
->  tools/testing/selftests/sched_ext/Makefile    |   1 +
->  .../testing/selftests/sched_ext/dequeue.bpf.c | 403 ++++++++++++++++++
->  tools/testing/selftests/sched_ext/dequeue.c   | 258 +++++++++++
->  3 files changed, 662 insertions(+)
->  create mode 100644 tools/testing/selftests/sched_ext/dequeue.bpf.c
->  create mode 100644 tools/testing/selftests/sched_ext/dequeue.c
+
+Hi Andrea,
+
+>  Documentation/scheduler/sched-ext.rst         |  58 +++++++
+>  include/linux/sched/ext.h                     |   1 +
+>  kernel/sched/ext.c                            | 157 ++++++++++++++++--
+>  kernel/sched/ext_internal.h                   |   7 +
+>  .../sched_ext/include/scx/enum_defs.autogen.h |   1 +
+>  .../sched_ext/include/scx/enums.autogen.bpf.h |   2 +
+>  tools/sched_ext/include/scx/enums.autogen.h   |   1 +
+>  7 files changed, 213 insertions(+), 14 deletions(-)
 >
-> diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/s=
-elftests/sched_ext/Makefile
-> index 5fe45f9c5f8fd..764e91edabf93 100644
-> --- a/tools/testing/selftests/sched_ext/Makefile
-> +++ b/tools/testing/selftests/sched_ext/Makefile
-> @@ -161,6 +161,7 @@ all_test_bpfprogs :=3D $(foreach prog,$(wildcard *.bp=
-f.c),$(INCLUDE_DIR)/$(patsubs
+> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/schedu=
+ler/sched-ext.rst
+> index 404fe6126a769..fe8c59b0c1477 100644
+> --- a/Documentation/scheduler/sched-ext.rst
+> +++ b/Documentation/scheduler/sched-ext.rst
+> @@ -252,6 +252,62 @@ The following briefly shows how a waking task is sch=
+eduled and executed.
 > =20
->  auto-test-targets :=3D			\
->  	create_dsq			\
-> +	dequeue				\
->  	enq_last_no_enq_fails		\
->  	ddsp_bogus_dsq_fail		\
->  	ddsp_vtimelocal_fail		\
-> diff --git a/tools/testing/selftests/sched_ext/dequeue.bpf.c b/tools/test=
-ing/selftests/sched_ext/dequeue.bpf.c
-> new file mode 100644
-> index 0000000000000..4ba657ba1bff5
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/dequeue.bpf.c
-> @@ -0,0 +1,403 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * A scheduler that validates ops.dequeue() is called correctly:
-> + * - Tasks dispatched to terminal DSQs (local, global) bypass the BPF
-> + *   scheduler entirely: no ops.dequeue() should be called
-> + * - Tasks dispatched to user DSQs enter BPF custody: ops.dequeue() must=
- be
-> + *   called when they leave custody
-> + * - Every ops.enqueue() for non-terminal DSQs is followed by exactly on=
-e
-> + *   ops.dequeue() (validate 1:1 pairing and state machine)
-> + *
-> + * Copyright (c) 2026 NVIDIA Corporation.
-> + */
+>     * Queue the task on the BPF side.
+> =20
+> +   **Task State Tracking and ops.dequeue() Semantics**
 > +
-> +#include <scx/common.bpf.h>
+> +   A task is in the "BPF scheduler's custody" when the BPF scheduler is
+> +   responsible for managing its lifecycle. That includes tasks dispatche=
+d
+> +   to user-created DSQs or stored in the BPF scheduler's internal data
+> +   structures. Once ``ops.select_cpu()`` or ``ops.enqueue()`` is called,
+> +   the task may or may not enter custody depending on what the scheduler
+> +   does:
 > +
-> +#define SHARED_DSQ	0
-> +
-> +/*
-> + * Scenario 6: BPF internal queue. Tasks are stored here from ops.enqueu=
-e()
-> + * and consumed from ops.dispatch(), validating that tasks not on a user=
- DSQ
-> + * (only on BPF internal structures) still get ops.dequeue() when they l=
-eave.
-> + */
-> +struct {
-> +	__uint(type, BPF_MAP_TYPE_QUEUE);
-> +	__uint(max_entries, 4096);
-
-Nit: Can we make this larger? I don't think there's any downsides. I know
-there's a mitigation for if the queue gets full, please see nit below.
-
-> +	__type(value, s32);
-> +} global_queue SEC(".maps");
-> +
-> +char _license[] SEC("license") =3D "GPL";
-> +
-> +UEI_DEFINE(uei);
-> +
-> +/*
-> + * Counters to track the lifecycle of tasks:
-> + * - enqueue_cnt: Number of times ops.enqueue() was called
-> + * - dequeue_cnt: Number of times ops.dequeue() was called (any type)
-> + * - dispatch_dequeue_cnt: Number of regular dispatch dequeues (no flag)
-> + * - change_dequeue_cnt: Number of property change dequeues
-> + */
-> +u64 enqueue_cnt, dequeue_cnt, dispatch_dequeue_cnt, change_dequeue_cnt;
-> +
-> +/*
-> + * Test scenarios (0-2: ops.select_cpu(), 3-6: ops.enqueue()):
-> + * 0) Dispatch to local DSQ from ops.select_cpu() (terminal DSQ, bypasse=
-s BPF
-> + *    scheduler, no dequeue callbacks)
-> + * 1) Dispatch to global DSQ from ops.select_cpu() (terminal DSQ, bypass=
-es BPF
-> + *    scheduler, no dequeue callbacks)
-> + * 2) Dispatch to shared user DSQ from ops.select_cpu() (enters BPF sche=
-duler,
-> + *    dequeue callbacks expected)
-> + * 3) Dispatch to local DSQ from ops.enqueue() (terminal DSQ, bypasses B=
-PF
-> + *    scheduler, no dequeue callbacks)
-> + * 4) Dispatch to global DSQ from ops.enqueue() (terminal DSQ, bypasses =
-BPF
-> + *    scheduler, no dequeue callbacks)
-> + * 5) Dispatch to shared user DSQ from ops.enqueue() (enters BPF schedul=
-er,
-> + *    dequeue callbacks expected)
-> + * 6) BPF internal queue: store task PIDs in ops.enqueue(), consume in
-> + *    ops.dispatch() and dispatch to local DSQ (validates dequeue for ta=
-sks
-> + *    in BPF custody but not on a user DSQ)
-> + */
-> +u32 test_scenario;
-> +
-> +/*
-> + * Per-task state to track lifecycle and validate workflow semantics.
-> + * State transitions:
-> + *   NONE -> ENQUEUED (on enqueue)
-> + *   ENQUEUED -> DISPATCHED (on dispatch dequeue)
-> + *   DISPATCHED -> NONE (on property change dequeue or re-enqueue)
-> + *   ENQUEUED -> NONE (on property change dequeue before dispatch)
-> + */
-> +enum task_state {
-> +	TASK_NONE =3D 0,
-> +	TASK_ENQUEUED,
-> +	TASK_DISPATCHED,
-> +};
-> +
-> +struct task_ctx {
-> +	enum task_state state; /* Current state in the workflow */
-> +	u64 enqueue_seq;       /* Sequence number for debugging */
-> +};
-> +
-> +struct {
-> +	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
-> +	__uint(map_flags, BPF_F_NO_PREALLOC);
-> +	__type(key, int);
-> +	__type(value, struct task_ctx);
-> +} task_ctx_stor SEC(".maps");
-> +
-> +static struct task_ctx *try_lookup_task_ctx(struct task_struct *p)
-> +{
-> +	return bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
-> +}
-> +
-> +s32 BPF_STRUCT_OPS(dequeue_select_cpu, struct task_struct *p,
-> +		   s32 prev_cpu, u64 wake_flags)
-> +{
-> +	struct task_ctx *tctx;
-> +
-> +	tctx =3D try_lookup_task_ctx(p);
-> +	if (!tctx)
-> +		return prev_cpu;
-> +
-> +	switch (test_scenario) {
-> +	case 0:
-> +		/*
-> +		 * Scenario 0: Direct dispatch to local DSQ from select_cpu.
-> +		 *
-> +		 * Task bypasses BPF scheduler entirely: no enqueue
-> +		 * tracking, no dequeue callbacks. Behavior should be
-> +		 * identical to scenario 3.
-> +		 */
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
-> +		return prev_cpu;
-> +
-> +	case 1:
-> +		/*
-> +		 * Scenario 1: Direct dispatch to global DSQ from select_cpu.
-> +		 *
-> +		 * Like scenario 0, task bypasses BPF scheduler entirely.
-> +		 * Behavior should be identical to scenario 4.
-> +		 */
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
-> +		return prev_cpu;
-> +
-> +	case 2:
-> +		/*
-> +		 * Scenario 2: Dispatch to shared user DSQ from select_cpu.
-> +		 *
-> +		 * Task enters BPF scheduler management: track
-> +		 * enqueue/dequeue lifecycle and validate state transitions.
-> +		 * Behavior should be identical to scenario 5.
-> +		 */
-> +		__sync_fetch_and_add(&enqueue_cnt, 1);
-> +
-> +		/*
-> +		 * Validate state transition: enqueue is only valid from
-> +		 * NONE or DISPATCHED states. Getting enqueue while in
-> +		 * ENQUEUED state indicates a missing dequeue.
-> +		 */
-> +		if (tctx->state =3D=3D TASK_ENQUEUED)
-> +			scx_bpf_error("%d (%s): enqueue while in ENQUEUED state seq=3D%llu",
-> +				      p->pid, p->comm, tctx->enqueue_seq);
-> +
-> +		/* Transition to ENQUEUED state */
-> +		tctx->state =3D TASK_ENQUEUED;
-> +		tctx->enqueue_seq++;
-> +
-> +		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, 0);
-> +		return prev_cpu;
-> +
-> +	default:
-> +		/*
-> +		 * Force all tasks through ops.enqueue().
-> +		 */
-> +		return prev_cpu;
-> +	}
-> +}
-> +
-> +void BPF_STRUCT_OPS(dequeue_enqueue, struct task_struct *p, u64 enq_flag=
-s)
-> +{
-> +	struct task_ctx *tctx;
-> +
-> +	tctx =3D try_lookup_task_ctx(p);
-> +	if (!tctx)
-> +		return;
-> +
-> +	switch (test_scenario) {
-> +	case 3:
-> +		/*
-> +		 * Scenario 3: Direct dispatch to the local DSQ.
-> +		 *
-> +		 * Task bypasses BPF scheduler entirely: no enqueue
-> +		 * tracking, no dequeue callbacks. Don't increment counters
-> +		 * or validate state since the task never enters BPF
-> +		 * scheduler management.
-> +		 */
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, enq_flags);
-> +		break;
-> +
-> +	case 4:
-> +		/*
-> +		 * Scenario 4: Direct dispatch to the global DSQ.
-> +		 *
-> +		 * Like scenario 3, task bypasses BPF scheduler entirely.
-> +		 * SCX_DSQ_GLOBAL is a terminal DSQ, tasks dispatched to it
-> +		 * leave BPF custody immediately, so no dequeue callbacks
-> +		 * should be triggered.
-> +		 */
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-> +		break;
-> +
-> +	case 5:
-> +		/*
-> +		 * Scenario 5: Dispatch to shared user DSQ.
-> +		 *
-> +		 * Task enters BPF scheduler management: track
-> +		 * enqueue/dequeue lifecycle and validate state
-> +		 * transitions.
-> +		 */
-> +		__sync_fetch_and_add(&enqueue_cnt, 1);
-> +
-> +		/*
-> +		 * Validate state transition: enqueue is only valid from
-> +		 * NONE or DISPATCHED states. Getting enqueue while in
-> +		 * ENQUEUED state indicates a missing dequeue (or stale state
-> +		 * from a previous scenario when the scheduler was unregistered
-> +		 * with tasks still on a DSQ). Reset and proceed to avoid false
-> +		 * positives across scenario switches.
-> +		 */
-> +		if (tctx->state =3D=3D TASK_ENQUEUED)
-> +			tctx->state =3D TASK_NONE;
-> +
-> +		/* Transition to ENQUEUED state */
-> +		tctx->state =3D TASK_ENQUEUED;
-> +		tctx->enqueue_seq++;
-> +
-> +		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, enq_flags);
-> +		break;
-> +
-> +	case 6:
-> +		/*
-> +		 * Scenario 6: Store task in BPF internal queue. Task enters
-> +		 * BPF custody (kernel sets SCX_TASK_NEED_DEQ). When
-> +		 * ops.dispatch() later pops and inserts to local DSQ,
-> +		 * ops.dequeue() must be called.
-> +		 *
-> +		 * If the queue is full, fallback to local DSQ. The task still
-> +		 * goes through QUEUED in the kernel and gets ops.dequeue()
-> +		 * when moved to the terminal DSQ, so we track it the same.
-> +		 *
-> +		 * If state is already ENQUEUED (e.g. task was on a DSQ when
-> +		 * the scheduler was unregistered in a previous scenario),
-> +		 * reset to NONE and proceed to avoid false positives.
-> +		 */
-> +		{
-> +			s32 pid =3D p->pid;
-> +
-> +			if (tctx->state =3D=3D TASK_ENQUEUED)
-> +				tctx->state =3D TASK_NONE;
-> +
-> +			tctx->state =3D TASK_ENQUEUED;
-> +			tctx->enqueue_seq++;
-> +
-> +			/* Queue full: fallback to the global DSQ */
-Nit: Can we remove this fallback? This silently changes the behavior of
-the test, and even though it makes sense to avoid overflowing the queue,
-it causes the test to succeed even if for some reason the
-bpf_map_push_elem fails. Why not just bump the queue number to a
-reasonably large number amount instead?
-
-> +			if (bpf_map_push_elem(&global_queue, &pid, 0))
-> +				scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-> +			else
-> +				__sync_fetch_and_add(&enqueue_cnt, 1);
-> +
-> +			scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
-> +		}
-> +		break;
-> +
-> +	default:
-> +		/* For scenarios 0-2 dispatch to the global DSQ */
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-> +	}
-> +}
-> +
-> +void BPF_STRUCT_OPS(dequeue_dequeue, struct task_struct *p, u64 deq_flag=
-s)
-> +{
-> +	struct task_ctx *tctx;
-> +
-> +	__sync_fetch_and_add(&dequeue_cnt, 1);
-> +
-> +	tctx =3D try_lookup_task_ctx(p);
-> +	if (!tctx)
-> +		return;
-> +
-> +	/*
-> +	 * For scenarios 0, 1, 3, and 4 (terminal DSQs: local and global),
-> +	 * ops.dequeue() should never be called because tasks bypass the
-> +	 * BPF scheduler entirely. If we get here, it's a kernel bug.
-> +	 */
-> +	if (test_scenario =3D=3D 0 || test_scenario =3D=3D 3) {
-> +		scx_bpf_error("%d (%s): dequeue called for local DSQ scenario - kernel=
- bug!",
-> +			      p->pid, p->comm);
-> +		return;
-> +	}
-> +	if (test_scenario =3D=3D 1 || test_scenario =3D=3D 4) {
-> +		scx_bpf_error("%d (%s): dequeue called for global DSQ scenario - kerne=
-l bug!",
-> +			      p->pid, p->comm);
-> +		return;
-> +	}
-> +
-> +	/*
-> +	 * Validate state: dequeue should only happen from ENQUEUED or
-> +	 * DISPATCHED states. Getting dequeue from NONE indicates a bug.
-> +	 */
-> +	if (tctx->state =3D=3D TASK_NONE) {
-> +		scx_bpf_error("%d (%s): dequeue from NONE state seq=3D%llu",
-> +			      p->pid, p->comm, tctx->enqueue_seq);
-> +		return;
-> +	}
-> +
-> +	if (deq_flags & SCX_DEQ_SCHED_CHANGE) {
-> +		/*
-> +		 * Property change interrupting the workflow. Valid from
-> +		 * both ENQUEUED and DISPATCHED states. Transitions task
-> +		 * back to NONE state.
-> +		 */
-> +		__sync_fetch_and_add(&change_dequeue_cnt, 1);
-> +
-> +		/* Validate state transition */
-> +		if (tctx->state !=3D TASK_ENQUEUED && tctx->state !=3D TASK_DISPATCHED=
-)
-> +			scx_bpf_error("%d (%s): invalid property change dequeue state=3D%d se=
-q=3D%llu",
-> +				      p->pid, p->comm, tctx->state, tctx->enqueue_seq);
-> +
-> +		/* Transition back to NONE: task outside scheduler control */
-> +		tctx->state =3D TASK_NONE;
-> +	} else {
-> +		/*
-> +		 * Regular dispatch dequeue: normal workflow step. Valid
-> +		 * only from ENQUEUED state (after enqueue, before dispatch
-> +		 * dequeue). Transitions to DISPATCHED state.
-> +		 */
-> +		__sync_fetch_and_add(&dispatch_dequeue_cnt, 1);
-> +
-> +		/*
-> +		 * Dispatch dequeue should not have %SCX_DEQ_SCHED_CHANGE
-> +		 * flag.
-> +		 */
-> +		if (deq_flags & SCX_DEQ_SCHED_CHANGE)
-> +			scx_bpf_error("%d (%s): SCX_DEQ_SCHED_CHANGE in dispatch dequeue seq=
-=3D%llu",
-> +				      p->pid, p->comm, tctx->enqueue_seq);
-> +
-> +		/*
-> +		 * Must be in ENQUEUED state.
-> +		 */
-> +		if (tctx->state !=3D TASK_ENQUEUED)
-> +			scx_bpf_error("%d (%s): dispatch dequeue from state %d seq=3D%llu",
-> +				      p->pid, p->comm, tctx->state, tctx->enqueue_seq);
-> +
-> +		/*
-> +		 * Transition to DISPATCHED: normal cycle completed
-> +		 * dispatch.
-> +		 */
-> +		tctx->state =3D TASK_DISPATCHED;
-> +	}
-> +}
-> +
-> +void BPF_STRUCT_OPS(dequeue_dispatch, s32 cpu, struct task_struct *prev)
-> +{
-> +	if (test_scenario =3D=3D 6) {
-> +		s32 pid;
-> +		struct task_struct *p;
-> +
-> +		if (bpf_map_pop_elem(&global_queue, &pid))
-> +			return;
-> +
-> +		p =3D bpf_task_from_pid(pid);
-> +		if (!p)
-> +			return;
-> +
-> +		if (!bpf_cpumask_test_cpu(cpu, p->cpus_ptr))
-> +			cpu =3D scx_bpf_task_cpu(p);
-> +
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cpu, SCX_SLICE_DFL, 0);
-> +		bpf_task_release(p);
-> +	} else {
-> +		scx_bpf_dsq_move_to_local(SHARED_DSQ);
-> +	}
-> +}
-> +
-> +s32 BPF_STRUCT_OPS(dequeue_init_task, struct task_struct *p,
-> +		   struct scx_init_task_args *args)
-> +{
-> +	struct task_ctx *tctx;
-> +
-> +	tctx =3D bpf_task_storage_get(&task_ctx_stor, p, 0,
-> +				   BPF_LOCAL_STORAGE_GET_F_CREATE);
-> +	if (!tctx)
-> +		return -ENOMEM;
-> +
-> +	return 0;
-> +}
-> +
-> +s32 BPF_STRUCT_OPS_SLEEPABLE(dequeue_init)
-> +{
-> +	s32 ret;
-> +
-> +	ret =3D scx_bpf_create_dsq(SHARED_DSQ, -1);
-> +	if (ret)
-> +		return ret;
-> +
-> +	return 0;
-> +}
-> +
-> +void BPF_STRUCT_OPS(dequeue_exit, struct scx_exit_info *ei)
-> +{
-> +	UEI_RECORD(uei, ei);
-> +}
-> +
-> +SEC(".struct_ops.link")
-> +struct sched_ext_ops dequeue_ops =3D {
-> +	.select_cpu		=3D (void *)dequeue_select_cpu,
-> +	.enqueue		=3D (void *)dequeue_enqueue,
-> +	.dequeue		=3D (void *)dequeue_dequeue,
-> +	.dispatch		=3D (void *)dequeue_dispatch,
-> +	.init_task		=3D (void *)dequeue_init_task,
-> +	.init			=3D (void *)dequeue_init,
-> +	.exit			=3D (void *)dequeue_exit,
-> +	.name			=3D "dequeue_test",
-> +};
-> diff --git a/tools/testing/selftests/sched_ext/dequeue.c b/tools/testing/=
-selftests/sched_ext/dequeue.c
-> new file mode 100644
-> index 0000000000000..b0add2a516ab8
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/dequeue.c
-> @@ -0,0 +1,258 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2025 NVIDIA Corporation.
-> + */
-> +#define _GNU_SOURCE
-> +#include <stdio.h>
-> +#include <unistd.h>
-> +#include <signal.h>
-> +#include <time.h>
-> +#include <bpf/bpf.h>
-> +#include <scx/common.h>
-> +#include <sys/wait.h>
-> +#include <sched.h>
-> +#include <pthread.h>
-> +#include "scx_test.h"
-> +#include "dequeue.bpf.skel.h"
-> +
-> +#define NUM_WORKERS 8
-> +#define AFFINITY_HAMMER_MS 50   /* How long affinity hammer runs (scenar=
-io 6) */
-> +
-> +/*
-> + * Worker function that creates enqueue/dequeue events via CPU work and
-> + * sleeping. Property-change dequeues are triggered by the affinity hamm=
+> +   * **Directly dispatched to terminal DSQs** (``SCX_DSQ_LOCAL``,
+> +     ``SCX_DSQ_LOCAL_ON | cpu``, or ``SCX_DSQ_GLOBAL``): The BPF schedul=
 er
-> + * thread (external sched_setaffinity on worker PIDs).
-> + */
-> +static void worker_fn(int id)
-> +{
-> +	int i;
-> +	volatile int sum =3D 0;
+> +     is done with the task - it either goes straight to a CPU's local ru=
+n
+> +     queue or to the global DSQ as a fallback. The task never enters (or
+> +     exits) BPF custody, and ``ops.dequeue()`` will not be called.
 > +
-> +	for (i =3D 0; i < 1000; i++) {
-> +		int j;
+> +   * **Dispatch to user-created DSQs** (custom DSQs): the task enters th=
+e
+> +     BPF scheduler's custody. When the task later leaves BPF custody
+> +     (dispatched to a terminal DSQ, picked by core-sched, or dequeued fo=
+r
+> +     sleep/property changes), ``ops.dequeue()`` will be called exactly o=
+nce.
 > +
-> +		/* Do some work to trigger scheduling events */
-> +		for (j =3D 0; j < 10000; j++)
-> +			sum +=3D j;
+> +   * **Queued on BPF side** (e.g., internal queues, no DSQ): The task is=
+ in
+> +     BPF custody. ``ops.dequeue()`` will be called when it leaves (e.g.
+> +     when ``ops.dispatch()`` moves it to a terminal DSQ, or on property
+> +     change / sleep).
 > +
-> +		/* Sleep to trigger dequeue */
-> +		usleep(1000 + (id * 100));
-> +	}
+> +   **NOTE**: this concept is valid also with the ``ops.select_cpu()``
+> +   direct dispatch optimization. Even though it skips ``ops.enqueue()``
+> +   invocation, if the task is dispatched to a user-created DSQ or intern=
+al
+> +   BPF structure, it enters BPF custody and will get ``ops.dequeue()`` w=
+hen
+> +   it leaves. If dispatched to a terminal DSQ, the BPF scheduler is done
+> +   with it immediately. This provides the performance benefit of avoidin=
+g
+> +   the ``ops.enqueue()`` roundtrip while maintaining correct state
+> +   tracking.
 > +
-> +	exit(0);
-> +}
+> +   The dequeue can happen for different reasons, distinguished by flags:
 > +
-> +/*
-> + * For scenario 6, tasks sit in the BPF queue until dispatch consumes th=
-em.
-> + * Property-change dequeues only happen when a task gets a property chan=
-ge
-> + * while still in the queue (SCX_OPSS_QUEUED), not after it has been
-> + * dispatched. This thread changes workers' affinity from outside so tha=
+> +   1. **Regular dispatch**: when a task in BPF custody is dispatched to =
+a
+> +      terminal DSQ from ``ops.dispatch()`` (leaving BPF custody for
+> +      execution), ``ops.dequeue()`` is triggered without any special fla=
+gs.
+> +
+> +   2. **Core scheduling pick**: when ``CONFIG_SCHED_CORE`` is enabled an=
+d
+> +      core scheduling picks a task for execution while it's still in BPF
+> +      custody, ``ops.dequeue()`` is called with the
+> +      ``SCX_DEQ_CORE_SCHED_EXEC`` flag.
+> +
+> +   3. **Scheduling property change**: when a task property changes (via
+> +      operations like ``sched_setaffinity()``, ``sched_setscheduler()``,
+> +      priority changes, CPU migrations, etc.) while the task is still in
+> +      BPF custody, ``ops.dequeue()`` is called with the
+> +      ``SCX_DEQ_SCHED_CHANGE`` flag set in ``deq_flags``.
+> +
+> +   **Important**: Once a task has left BPF custody (e.g. after being
+> +   dispatched to a terminal DSQ), property changes will not trigger
+> +   ``ops.dequeue()``, since the task is no longer being managed by the B=
+PF
+> +   scheduler.
+> +
+>  3. When a CPU is ready to schedule, it first looks at its local DSQ. If
+>     empty, it then looks at the global DSQ. If there still isn't a task t=
+o
+>     run, ``ops.dispatch()`` is invoked which can use the following two
+> @@ -319,6 +375,8 @@ by a sched_ext scheduler:
+>                  /* Any usable CPU becomes available */
+> =20
+>                  ops.dispatch(); /* Task is moved to a local DSQ */
+> +
+> +                ops.dequeue(); /* Exiting BPF scheduler */
+>              }
+>              ops.running();      /* Task starts running on its assigned C=
+PU */
+>              while (task->scx.slice > 0 && task is runnable)
+> diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> index bcb962d5ee7d8..c48f818eee9b8 100644
+> --- a/include/linux/sched/ext.h
+> +++ b/include/linux/sched/ext.h
+> @@ -84,6 +84,7 @@ struct scx_dispatch_q {
+>  /* scx_entity.flags */
+>  enum scx_ent_flags {
+>  	SCX_TASK_QUEUED		=3D 1 << 0, /* on ext runqueue */
+> +	SCX_TASK_NEED_DEQ	=3D 1 << 1, /* in BPF custody, needs ops.dequeue() wh=
+en leaving */
+
+Can we make this "SCX_TASK_IN_BPF"? Since we've now defined what it means t=
+o be
+in BPF custody vs the core scx scheduler (terminal DSQs) this is a more
+general property that can be useful to check in the future. An example:
+We can now assert that a task's BPF state is consistent with its actual=20
+kernel state when using BPF-based data structures to manage tasks.
+
+>  	SCX_TASK_RESET_RUNNABLE_AT =3D 1 << 2, /* runnable_at should be reset *=
+/
+>  	SCX_TASK_DEQD_FOR_SLEEP	=3D 1 << 3, /* last dequeue was for SLEEP */
+> =20
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 0bb8fa927e9e9..d17fd9141adf4 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -925,6 +925,27 @@ static void touch_core_sched(struct rq *rq, struct t=
+ask_struct *p)
+>  #endif
+>  }
+> =20
+> +/**
+> + * is_terminal_dsq - Check if a DSQ is terminal for ops.dequeue() purpos=
+es
+> + * @dsq_id: DSQ ID to check
+> + *
+> + * Returns true if @dsq_id is a terminal/builtin DSQ where the BPF
+> + * scheduler is considered "done" with the task.
+> + *
+> + * Builtin DSQs include:
+> + *  - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON): per-CPU queues
+> + *    where tasks go directly to execution,
+> + *  - Global DSQ (%SCX_DSQ_GLOBAL): built-in fallback queue,
+> + *  - Bypass DSQ: used during bypass mode.
+> + *
+> + * Tasks dispatched to builtin DSQs exit BPF scheduler custody and do no=
 t
-> + * some changes hit tasks while they are still in the queue.
+> + * trigger ops.dequeue() when they are later consumed.
 > + */
-> +static void *affinity_hammer_fn(void *arg)
+> +static inline bool is_terminal_dsq(u64 dsq_id)
 > +{
-> +	pid_t *pids =3D arg;
-> +	cpu_set_t cpuset;
-> +	int i, n =3D NUM_WORKERS;
-> +	struct timespec ts =3D { .tv_sec =3D 0, .tv_nsec =3D 1000000 }; /* 1ms =
-*/
-> +
-> +	for (i =3D 0; i < (AFFINITY_HAMMER_MS * 1000 / 100); i++) {
-> +		int w =3D i % n;
-> +		int cpu =3D (i / n) % 4;
-> +
-> +		CPU_ZERO(&cpuset);
-> +		CPU_SET(cpu, &cpuset);
-> +		sched_setaffinity(pids[w], sizeof(cpuset), &cpuset);
-> +		nanosleep(&ts, NULL);
-> +	}
-> +	return NULL;
+> +	return dsq_id & SCX_DSQ_FLAG_BUILTIN;
 > +}
 > +
-> +static enum scx_test_status run_scenario(struct dequeue *skel, u32 scena=
-rio,
-> +					 const char *scenario_name)
-> +{
-> +	struct bpf_link *link;
-> +	pid_t pids[NUM_WORKERS];
-> +	pthread_t hammer;
-> +
-> +	int i, status;
-> +	u64 enq_start, deq_start, dispatch_deq_start, change_deq_start;
-> +	u64 enq_delta, deq_delta, dispatch_deq_delta, change_deq_delta;
-> +
-> +	/* Set the test scenario */
-> +	skel->bss->test_scenario =3D scenario;
-> +
-> +	/* Record starting counts */
-> +	enq_start =3D skel->bss->enqueue_cnt;
-> +	deq_start =3D skel->bss->dequeue_cnt;
-> +	dispatch_deq_start =3D skel->bss->dispatch_dequeue_cnt;
-> +	change_deq_start =3D skel->bss->change_dequeue_cnt;
-> +
-> +	link =3D bpf_map__attach_struct_ops(skel->maps.dequeue_ops);
-> +	SCX_FAIL_IF(!link, "Failed to attach struct_ops for scenario %s", scena=
-rio_name);
-> +
-> +	/* Fork worker processes to generate enqueue/dequeue events */
-> +	for (i =3D 0; i < NUM_WORKERS; i++) {
-> +		pids[i] =3D fork();
-> +		SCX_FAIL_IF(pids[i] < 0, "Failed to fork worker %d", i);
-> +
-> +		if (pids[i] =3D=3D 0) {
-> +			worker_fn(i);
-> +			/* Should not reach here */
-> +			exit(1);
+>  /**
+>   * touch_core_sched_dispatch - Update core-sched timestamp on dispatch
+>   * @rq: rq to read clock from, must be locked
+> @@ -1008,7 +1029,8 @@ static void local_dsq_post_enq(struct scx_dispatch_=
+q *dsq, struct task_struct *p
+>  		resched_curr(rq);
+>  }
+> =20
+> -static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_=
+q *dsq,
+> +static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+> +			     struct scx_dispatch_q *dsq,
+>  			     struct task_struct *p, u64 enq_flags)
+>  {
+>  	bool is_local =3D dsq->id =3D=3D SCX_DSQ_LOCAL;
+> @@ -1103,6 +1125,27 @@ static void dispatch_enqueue(struct scx_sched *sch=
+, struct scx_dispatch_q *dsq,
+>  	dsq_mod_nr(dsq, 1);
+>  	p->scx.dsq =3D dsq;
+> =20
+> +	/*
+> +	 * Handle ops.dequeue() and custody tracking.
+> +	 *
+> +	 * Builtin DSQs (local, global, bypass) are terminal: the BPF
+> +	 * scheduler is done with the task. If it was in BPF custody, call
+> +	 * ops.dequeue() and clear the flag.
+> +	 *
+> +	 * User DSQs: Task is in BPF scheduler's custody. Set the flag so
+> +	 * ops.dequeue() will be called when it leaves.
+> +	 */
+> +	if (SCX_HAS_OP(sch, dequeue)) {
+> +		if (is_terminal_dsq(dsq->id)) {
+> +			if (p->scx.flags & SCX_TASK_NEED_DEQ)
+> +				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue,
+> +						 rq, p, 0);
+> +			p->scx.flags &=3D ~SCX_TASK_NEED_DEQ;
+> +		} else {
+> +			p->scx.flags |=3D SCX_TASK_NEED_DEQ;
 > +		}
 > +	}
 > +
-> +	/*
-> +	 * Run an "affinity hammer" so that some property changes hit tasks
-> +	 * while they are still in BPF custody (e.g. in user DSQ or BPF queue),
-> +	 * triggering SCX_DEQ_SCHED_CHANGE dequeues in scenarios 2, 5 and 6.
-> +	 */
-> +	SCX_FAIL_IF(pthread_create(&hammer, NULL, affinity_hammer_fn, pids) !=
-=3D 0,
-> +		    "Failed to create affinity hammer thread");
-> +
-> +	/* Wait for all workers to complete */
-> +	for (i =3D 0; i < NUM_WORKERS; i++) {
-> +		SCX_FAIL_IF(waitpid(pids[i], &status, 0) !=3D pids[i],
-> +			    "Failed to wait for worker %d", i);
-> +		SCX_FAIL_IF(status !=3D 0, "Worker %d exited with status %d", i, statu=
-s);
-> +	}
-> +
-> +	pthread_join(hammer, NULL);
-> +
-> +	bpf_link__destroy(link);
-> +
-> +	SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
-> +
-> +	/* Calculate deltas */
-> +	enq_delta =3D skel->bss->enqueue_cnt - enq_start;
-> +	deq_delta =3D skel->bss->dequeue_cnt - deq_start;
-> +	dispatch_deq_delta =3D skel->bss->dispatch_dequeue_cnt - dispatch_deq_s=
-tart;
-> +	change_deq_delta =3D skel->bss->change_dequeue_cnt - change_deq_start;
-> +
-> +	printf("%s:\n", scenario_name);
-> +	printf("  enqueues: %lu\n", (unsigned long)enq_delta);
-> +	printf("  dequeues: %lu (dispatch: %lu, property_change: %lu)\n",
-> +	       (unsigned long)deq_delta,
-> +	       (unsigned long)dispatch_deq_delta,
-> +	       (unsigned long)change_deq_delta);
+>  	/*
+>  	 * scx.ddsp_dsq_id and scx.ddsp_enq_flags are only relevant on the
+>  	 * direct dispatch path, but we clear them here because the direct
+> @@ -1323,7 +1366,7 @@ static void direct_dispatch(struct scx_sched *sch, =
+struct task_struct *p,
+>  		return;
+>  	}
+> =20
+> -	dispatch_enqueue(sch, dsq, p,
+> +	dispatch_enqueue(sch, rq, dsq, p,
+>  			 p->scx.ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
+>  }
+> =20
+> @@ -1407,13 +1450,22 @@ static void do_enqueue_task(struct rq *rq, struct=
+ task_struct *p, u64 enq_flags,
+>  	 * dequeue may be waiting. The store_release matches their load_acquire=
+.
+>  	 */
+>  	atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_QUEUED | qseq);
 > +
 > +	/*
-> +	 * Validate enqueue/dequeue lifecycle tracking.
-> +	 *
-> +	 * For scenarios 0, 1, 3, 4 (local and global DSQs from
-> +	 * ops.select_cpu() and ops.enqueue()), both enqueues and dequeues
-> +	 * should be 0 because tasks bypass the BPF scheduler entirely: tasks
-> +	 * never enter BPF scheduler's custody.
-> +	 *
-> +	 * For scenarios 2, 5, and 6 (user DSQ or BPF internal queue from
-> +	 * ops.select_cpu() / ops.enqueue()), we expect both enqueues and
-> +	 * dequeues.
-> +	 *
-> +	 * The BPF code does strict state machine validation with
-> +	 * scx_bpf_error() to ensure the workflow semantics are correct. If
-> +	 * we reach this point without errors, the semantics are validated
-> +	 * correctly.
+> +	 * Task is now in BPF scheduler's custody (queued on BPF internal
+> +	 * structures). Set %SCX_TASK_NEED_DEQ so ops.dequeue() is called
+> +	 * when it leaves custody (e.g. dispatched to a terminal DSQ or on
+> +	 * property change).
 > +	 */
-> +	if (scenario =3D=3D 0 || scenario =3D=3D 1 || scenario =3D=3D 3 || scen=
-ario =3D=3D 4) {
-> +		/* Terminal DSQs: tasks bypass BPF scheduler completely */
-> +		SCX_EQ(enq_delta, 0);
-> +		SCX_EQ(deq_delta, 0);
-> +		SCX_EQ(dispatch_deq_delta, 0);
-> +		SCX_EQ(change_deq_delta, 0);
-> +	} else {
-> +		/* User DSQ: tasks enter BPF scheduler's custody */
-> +		SCX_GT(enq_delta, 0);
-> +		SCX_GT(deq_delta, 0);
-> +		/* Validate 1:1 enqueue/dequeue pairing */
-> +		SCX_EQ(enq_delta, deq_delta);
+> +	if (SCX_HAS_OP(sch, dequeue))
+
+Related to the rename: Can we remove the guards and track the flag
+regardless of whether ops.dequeue() is present?
+
+There is no reason not to track whether a task is in BPF or the core,=20
+and it is a property that's independent of whether we implement ops.dequeue=
+().=20
+This also simplifies the code since we now just guard the actual ops.dequeu=
+e()
+call.
+
+> +		p->scx.flags |=3D SCX_TASK_NEED_DEQ;
+>  	return;
+> =20
+>  direct:
+>  	direct_dispatch(sch, p, enq_flags);
+>  	return;
+>  local_norefill:
+> -	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
+> +	dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, enq_flags);
+>  	return;
+>  local:
+>  	dsq =3D &rq->scx.local_dsq;
+> @@ -1433,7 +1485,7 @@ static void do_enqueue_task(struct rq *rq, struct t=
+ask_struct *p, u64 enq_flags,
+>  	 */
+>  	touch_core_sched(rq, p);
+>  	refill_task_slice_dfl(sch, p);
+> -	dispatch_enqueue(sch, dsq, p, enq_flags);
+> +	dispatch_enqueue(sch, rq, dsq, p, enq_flags);
+>  }
+> =20
+>  static bool task_runnable(const struct task_struct *p)
+> @@ -1511,6 +1563,22 @@ static void enqueue_task_scx(struct rq *rq, struct=
+ task_struct *p, int enq_flags
+>  		__scx_add_event(sch, SCX_EV_SELECT_CPU_FALLBACK, 1);
+>  }
+> =20
+> +/*
+> + * Call ops.dequeue() for a task leaving BPF custody. Adds %SCX_DEQ_SCHE=
+D_CHANGE
+> + * when the dequeue is due to a property change (not sleep or core-sched=
+ pick).
+> + */
+> +static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
+> +			      struct task_struct *p, u64 deq_flags)
+> +{
+> +	u64 flags =3D deq_flags;
+> +
+> +	if (!(deq_flags & (DEQUEUE_SLEEP | SCX_DEQ_CORE_SCHED_EXEC)))
+> +		flags |=3D SCX_DEQ_SCHED_CHANGE;
+> +
+> +	SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq, p, flags);
+> +	p->scx.flags &=3D ~SCX_TASK_NEED_DEQ;
+> +}
+> +
+>  static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_fl=
+ags)
+>  {
+>  	struct scx_sched *sch =3D scx_root;
+> @@ -1524,6 +1592,24 @@ static void ops_dequeue(struct rq *rq, struct task=
+_struct *p, u64 deq_flags)
+> =20
+>  	switch (opss & SCX_OPSS_STATE_MASK) {
+>  	case SCX_OPSS_NONE:
+> +		/*
+> +		 * Task is not in BPF data structures (either dispatched to
+> +		 * a DSQ or running). Only call ops.dequeue() if the task
+> +		 * is still in BPF scheduler's custody (%SCX_TASK_NEED_DEQ
+> +		 * is set).
+> +		 *
+> +		 * If the task has already been dispatched to a terminal
+> +		 * DSQ (local DSQ or %SCX_DSQ_GLOBAL), it has left the BPF
+> +		 * scheduler's custody and the flag will be clear, so we
+> +		 * skip ops.dequeue().
+> +		 *
+> +		 * If this is a property change (not sleep/core-sched) and
+> +		 * the task is still in BPF custody, set the
+> +		 * %SCX_DEQ_SCHED_CHANGE flag.
+> +		 */
+> +		if (SCX_HAS_OP(sch, dequeue) &&
+> +		    (p->scx.flags & SCX_TASK_NEED_DEQ))
+> +			call_task_dequeue(sch, rq, p, deq_flags);
+>  		break;
+>  	case SCX_OPSS_QUEUEING:
+>  		/*
+> @@ -1532,9 +1618,14 @@ static void ops_dequeue(struct rq *rq, struct task=
+_struct *p, u64 deq_flags)
+>  		 */
+>  		BUG();
+>  	case SCX_OPSS_QUEUED:
+> -		if (SCX_HAS_OP(sch, dequeue))
+> -			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq,
+> -					 p, deq_flags);
+> +		/*
+> +		 * Task is still on the BPF scheduler (not dispatched yet).
+> +		 * Call ops.dequeue() to notify it is leaving BPF custody.
+> +		 */
+> +		if (SCX_HAS_OP(sch, dequeue)) {
+> +			WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_NEED_DEQ));
+> +			call_task_dequeue(sch, rq, p, deq_flags);
+> +		}
+> =20
+>  		if (atomic_long_try_cmpxchg(&p->scx.ops_state, &opss,
+>  					    SCX_OPSS_NONE))
+> @@ -1631,6 +1722,7 @@ static void move_local_task_to_local_dsq(struct tas=
+k_struct *p, u64 enq_flags,
+>  					 struct scx_dispatch_q *src_dsq,
+>  					 struct rq *dst_rq)
+>  {
+> +	struct scx_sched *sch =3D scx_root;
+>  	struct scx_dispatch_q *dst_dsq =3D &dst_rq->scx.local_dsq;
+> =20
+>  	/* @dsq is locked and @p is on @dst_rq */
+> @@ -1639,6 +1731,15 @@ static void move_local_task_to_local_dsq(struct ta=
+sk_struct *p, u64 enq_flags,
+> =20
+>  	WARN_ON_ONCE(p->scx.holding_cpu >=3D 0);
+> =20
+> +	/*
+> +	 * Task is moving from a non-local DSQ to a local (terminal) DSQ.
+> +	 * Call ops.dequeue() if the task was in BPF custody.
+> +	 */
+> +	if (SCX_HAS_OP(sch, dequeue) && (p->scx.flags & SCX_TASK_NEED_DEQ)) {
+> +		SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, dst_rq, p, 0);
+> +		p->scx.flags &=3D ~SCX_TASK_NEED_DEQ;
 > +	}
 > +
-> +	return SCX_TEST_PASS;
-> +}
+>  	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+>  		list_add(&p->scx.dsq_list.node, &dst_dsq->list);
+>  	else
+> @@ -1879,7 +1980,7 @@ static struct rq *move_task_between_dsqs(struct scx=
+_sched *sch,
+>  		dispatch_dequeue_locked(p, src_dsq);
+>  		raw_spin_unlock(&src_dsq->lock);
+> =20
+> -		dispatch_enqueue(sch, dst_dsq, p, enq_flags);
+> +		dispatch_enqueue(sch, dst_rq, dst_dsq, p, enq_flags);
+>  	}
+> =20
+>  	return dst_rq;
+> @@ -1969,14 +2070,14 @@ static void dispatch_to_local_dsq(struct scx_sche=
+d *sch, struct rq *rq,
+>  	 * If dispatching to @rq that @p is already on, no lock dancing needed.
+>  	 */
+>  	if (rq =3D=3D src_rq && rq =3D=3D dst_rq) {
+> -		dispatch_enqueue(sch, dst_dsq, p,
+> +		dispatch_enqueue(sch, rq, dst_dsq, p,
+>  				 enq_flags | SCX_ENQ_CLEAR_OPSS);
+>  		return;
+>  	}
+> =20
+>  	if (src_rq !=3D dst_rq &&
+>  	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+> -		dispatch_enqueue(sch, find_global_dsq(sch, p), p,
+> +		dispatch_enqueue(sch, rq, find_global_dsq(sch, p), p,
+>  				 enq_flags | SCX_ENQ_CLEAR_OPSS);
+>  		return;
+>  	}
+> @@ -2014,9 +2115,21 @@ static void dispatch_to_local_dsq(struct scx_sched=
+ *sch, struct rq *rq,
+>  		 */
+>  		if (src_rq =3D=3D dst_rq) {
+>  			p->scx.holding_cpu =3D -1;
+> -			dispatch_enqueue(sch, &dst_rq->scx.local_dsq, p,
+> +			dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
+>  					 enq_flags);
+>  		} else {
+> +			/*
+> +			 * Moving to a remote local DSQ. dispatch_enqueue() is
+> +			 * not used (we go through deactivate/activate), so
+> +			 * call ops.dequeue() here if the task was in BPF
+> +			 * custody.
+> +			 */
+> +			if (SCX_HAS_OP(sch, dequeue) &&
+> +			    (p->scx.flags & SCX_TASK_NEED_DEQ)) {
+> +				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue,
+> +						 src_rq, p, 0);
+> +				p->scx.flags &=3D ~SCX_TASK_NEED_DEQ;
+> +			}
+>  			move_remote_task_to_local_dsq(p, enq_flags,
+>  						      src_rq, dst_rq);
+>  			/* task has been moved to dst_rq, which is now locked */
+> @@ -2113,7 +2226,7 @@ static void finish_dispatch(struct scx_sched *sch, =
+struct rq *rq,
+>  	if (dsq->id =3D=3D SCX_DSQ_LOCAL)
+>  		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
+>  	else
+> -		dispatch_enqueue(sch, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
+> +		dispatch_enqueue(sch, rq, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
+>  }
+> =20
+>  static void flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
+> @@ -2414,7 +2527,7 @@ static void put_prev_task_scx(struct rq *rq, struct=
+ task_struct *p,
+>  		 * DSQ.
+>  		 */
+>  		if (p->scx.slice && !scx_rq_bypassing(rq)) {
+> -			dispatch_enqueue(sch, &rq->scx.local_dsq, p,
+> +			dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p,
+>  					 SCX_ENQ_HEAD);
+>  			goto switch_class;
+>  		}
+> @@ -2898,6 +3011,14 @@ static void scx_enable_task(struct task_struct *p)
+> =20
+>  	lockdep_assert_rq_held(rq);
+> =20
+> +	/*
+> +	 * Verify the task is not in BPF scheduler's custody. If flag
+> +	 * transitions are consistent, the flag should always be clear
+> +	 * here.
+> +	 */
+> +	if (SCX_HAS_OP(sch, dequeue))
+> +		WARN_ON_ONCE(p->scx.flags & SCX_TASK_NEED_DEQ);
 > +
-> +static enum scx_test_status setup(void **ctx)
-> +{
-> +	struct dequeue *skel;
+>  	/*
+>  	 * Set the weight before calling ops.enable() so that the scheduler
+>  	 * doesn't see a stale value if they inspect the task struct.
+> @@ -2929,6 +3050,14 @@ static void scx_disable_task(struct task_struct *p=
+)
+>  	if (SCX_HAS_OP(sch, disable))
+>  		SCX_CALL_OP_TASK(sch, SCX_KF_REST, disable, rq, p);
+>  	scx_set_task_state(p, SCX_TASK_READY);
 > +
-> +	skel =3D dequeue__open();
-> +	SCX_FAIL_IF(!skel, "Failed to open skel");
-> +	SCX_ENUM_INIT(skel);
-> +	SCX_FAIL_IF(dequeue__load(skel), "Failed to load skel");
+> +	/*
+> +	 * Verify the task is not in BPF scheduler's custody. If flag
+> +	 * transitions are consistent, the flag should always be clear
+> +	 * here.
+> +	 */
+> +	if (SCX_HAS_OP(sch, dequeue))
+> +		WARN_ON_ONCE(p->scx.flags & SCX_TASK_NEED_DEQ);
+>  }
+> =20
+>  static void scx_exit_task(struct task_struct *p)
+> @@ -3919,7 +4048,7 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, str=
+uct rq *rq,
+>  		 * between bypass DSQs.
+>  		 */
+>  		dispatch_dequeue_locked(p, donor_dsq);
+> -		dispatch_enqueue(sch, donee_dsq, p, SCX_ENQ_NESTED);
+> +		dispatch_enqueue(sch, donee_rq, donee_dsq, p, SCX_ENQ_NESTED);
+> =20
+>  		/*
+>  		 * $donee might have been idle and need to be woken up. No need
+> diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+> index 386c677e4c9a0..befa9a5d6e53f 100644
+> --- a/kernel/sched/ext_internal.h
+> +++ b/kernel/sched/ext_internal.h
+> @@ -982,6 +982,13 @@ enum scx_deq_flags {
+>  	 * it hasn't been dispatched yet. Dequeue from the BPF side.
+>  	 */
+>  	SCX_DEQ_CORE_SCHED_EXEC	=3D 1LLU << 32,
 > +
-> +	*ctx =3D skel;
-> +
-> +	return SCX_TEST_PASS;
-> +}
-> +
-> +static enum scx_test_status run(void *ctx)
-> +{
-> +	struct dequeue *skel =3D ctx;
-> +	enum scx_test_status status;
-> +
-> +	/* Scenarios 0-2: ops.select_cpu(), 3-6: ops.enqueue() */
-> +	status =3D run_scenario(skel, 0, "Scenario 0: Local DSQ from ops.select=
-_cpu()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	status =3D run_scenario(skel, 1, "Scenario 1: Global DSQ from ops.selec=
-t_cpu()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	status =3D run_scenario(skel, 2, "Scenario 2: User DSQ from ops.select_=
-cpu()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	status =3D run_scenario(skel, 3, "Scenario 3: Local DSQ from ops.enqueu=
-e()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	status =3D run_scenario(skel, 4, "Scenario 4: Global DSQ from ops.enque=
-ue()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	status =3D run_scenario(skel, 5, "Scenario 5: User DSQ from ops.enqueue=
-()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	status =3D run_scenario(skel, 6,
-> +			     "Scenario 6: BPF internal queue from ops.enqueue(), consumed in =
-ops.dispatch()");
-> +	if (status !=3D SCX_TEST_PASS)
-> +		return status;
-> +
-> +	printf("\n=3D=3D=3D Summary =3D=3D=3D\n");
-> +	printf("Total enqueues: %lu\n", (unsigned long)skel->bss->enqueue_cnt);
-> +	printf("Total dequeues: %lu\n", (unsigned long)skel->bss->dequeue_cnt);
-> +	printf("  Dispatch dequeues: %lu (no flag, normal workflow)\n",
-> +	       (unsigned long)skel->bss->dispatch_dequeue_cnt);
-> +	printf("  Property change dequeues: %lu (SCX_DEQ_SCHED_CHANGE flag)\n",
-> +	       (unsigned long)skel->bss->change_dequeue_cnt);
-> +	printf("\nAll scenarios passed - no state machine violations detected\n=
-");
-> +	printf("-> Validated: Local DSQ dispatch bypasses BPF scheduler (both p=
-aths)\n");
-> +	printf("-> Validated: Global DSQ dispatch bypasses BPF scheduler (both =
-paths)\n");
-> +	printf("-> Validated: User DSQ dispatch triggers dequeue callbacks (bot=
-h paths)\n");
-> +	printf("-> Validated: BPF internal queue triggers dequeue when leaving =
-custody\n");
-> +	printf("-> Validated: ops.enqueue() and ops.select_cpu() behave identic=
-ally\n");
-> +	printf("-> Validated: Dispatch dequeues have no flags (normal workflow)=
-\n");
-> +	printf("-> Validated: Property change dequeues have SCX_DEQ_SCHED_CHANG=
-E flag\n");
-> +	printf("-> Validated: No duplicate enqueues or invalid state transition=
-s\n");
-> +
-> +	return SCX_TEST_PASS;
-> +}
-> +
-> +static void cleanup(void *ctx)
-> +{
-> +	struct dequeue *skel =3D ctx;
-> +
-> +	dequeue__destroy(skel);
-> +}
-> +
-> +struct scx_test dequeue_test =3D {
-> +	.name =3D "dequeue",
-> +	.description =3D "Verify ops.dequeue() semantics",
-> +	.setup =3D setup,
-> +	.run =3D run,
-> +	.cleanup =3D cleanup,
-> +};
-> +
-> +REGISTER_SCX_TEST(&dequeue_test)
+> +	/*
+> +	 * The task is being dequeued due to a property change (e.g.,
+> +	 * sched_setaffinity(), sched_setscheduler(), set_user_nice(),
+> +	 * etc.).
+> +	 */
+> +	SCX_DEQ_SCHED_CHANGE	=3D 1LLU << 33,
+>  };
+> =20
+>  enum scx_pick_idle_cpu_flags {
+> diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sche=
+d_ext/include/scx/enum_defs.autogen.h
+> index c2c33df9292c2..dcc945304760f 100644
+> --- a/tools/sched_ext/include/scx/enum_defs.autogen.h
+> +++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+> @@ -21,6 +21,7 @@
+>  #define HAVE_SCX_CPU_PREEMPT_UNKNOWN
+>  #define HAVE_SCX_DEQ_SLEEP
+>  #define HAVE_SCX_DEQ_CORE_SCHED_EXEC
+> +#define HAVE_SCX_DEQ_SCHED_CHANGE
+>  #define HAVE_SCX_DSQ_FLAG_BUILTIN
+>  #define HAVE_SCX_DSQ_FLAG_LOCAL_ON
+>  #define HAVE_SCX_DSQ_INVALID
+> diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sche=
+d_ext/include/scx/enums.autogen.bpf.h
+> index 2f8002bcc19ad..5da50f9376844 100644
+> --- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
+> +++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+> @@ -127,3 +127,5 @@ const volatile u64 __SCX_ENQ_CLEAR_OPSS __weak;
+>  const volatile u64 __SCX_ENQ_DSQ_PRIQ __weak;
+>  #define SCX_ENQ_DSQ_PRIQ __SCX_ENQ_DSQ_PRIQ
+> =20
+> +const volatile u64 __SCX_DEQ_SCHED_CHANGE __weak;
+> +#define SCX_DEQ_SCHED_CHANGE __SCX_DEQ_SCHED_CHANGE
+> diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ex=
+t/include/scx/enums.autogen.h
+> index fedec938584be..fc9a7a4d9dea5 100644
+> --- a/tools/sched_ext/include/scx/enums.autogen.h
+> +++ b/tools/sched_ext/include/scx/enums.autogen.h
+> @@ -46,4 +46,5 @@
+>  	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_LAST); \
+>  	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_CLEAR_OPSS); \
+>  	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_DSQ_PRIQ); \
+> +	SCX_ENUM_SET(skel, scx_deq_flags, SCX_DEQ_SCHED_CHANGE); \
+>  } while (0)
 
