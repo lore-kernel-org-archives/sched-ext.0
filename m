@@ -1,145 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E41732ED54;
-	Thu,  5 Feb 2026 22:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD9B2D9782
+	for <sched-ext@lists.linux.dev>; Fri,  6 Feb 2026 04:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770332225; cv=none; b=fjB31cJhm/z8mL2xFX23Hv5ciRMFiJFfDAmZaXP/wmf/WvJ2JhJ9RV2K54yqqGvrP3NRgGzOA6hsbo6WQ1sU3rCj8jH5WwhNBMy1R1gd3Eg+mB0OWV6gWznjvB1S1lVWHnUZhLIQuLwUXGSOdFKJYN4qujeaIRSXm6P5Kqg+s8A=
+	t=1770351545; cv=none; b=JQxvWGgw6KA8nCd8lhhn9vk26v7Qb75XONf+1yBtZsXtdA9GdHiT39C4sfkty+rp1HB2alyALLeHHJ+IRzhZPVHYuegI54ca0AgEMZodZicMer35GBZTkTWP4CDpX4CZTVX3ABJPYOPJJNXX7LPaVFx0dP2dvqcyt77xD0MMYr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770332225; c=relaxed/simple;
-	bh=AWg//+9hGHmsMie8cqVo7J6PjSr/7pD9tIZbQtNXQsM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hc/9E2FhEVm5JOmMMeIoQ723BePF02QGP27PFnigTdvSxuQxd4/+42w/jyMWnM4VaeK3sihrBVxOVikyN1Vp+UmSvwd07J3INqtpTbMJWCCL9sNEjqFnmp+RqSxc5Y0sxrD0PqIlfKiReXqfKo4OAe9G6Ey1RpAhl7ItEEVI4Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LEGuf9Tf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770351545; c=relaxed/simple;
+	bh=vvEVKjJCtQo4nmuo3z04CydsrpGhwrX7+I/UCM695oM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sm6KCRH0z1bSnVKNV2Bp6NdscWvsogPbnKB2R2ppj9qB7638tY4G11LwILkr8zAhmE3qErHBwGMKzrsmCANWVkPPTYvSmfeoiyP0rXhXhUSJADbYkgBFCtj9/PHYJYzVTG5WMGHul1FX0BzFw6A+yCShA+qPRr7y+LdQ4e4MhRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KhV8VST1; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LEGuf9Tf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043F4C4CEF7;
-	Thu,  5 Feb 2026 22:57:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770332225;
-	bh=AWg//+9hGHmsMie8cqVo7J6PjSr/7pD9tIZbQtNXQsM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LEGuf9TfbhxuJpHosxUX4UYLlOT3Bw5EGffAyugQZpJnJm9mbrw5DwGh7JBIrm1Zp
-	 /SLbLZ7t+9ZhRykf6OdnUpWxDJaNbrwwz3olb/L/IQTyXYRVf/5+grRaTBAWXCT2VR
-	 M+U4oBAZe39fitnaBC6Q6hN0KEjXYI9ioAgmuQc2LBMdoPWHYQh8skLX61Vg2Qq5A4
-	 0s9R12Uq/+wSj+hkb8SX6E6c75UrTd7vtdb8dI71xgwWzjgVduiXwGPK52vTNGOpTL
-	 BGeso+fu5e2ME3ltJcOWbBG3n0L7uMaZ19Zg5B9+q3AyIrCxMoadA2fT+FWgOX38Ke
-	 hDyof6O/MEmsw==
-Date: Thu, 5 Feb 2026 12:57:04 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Invalidate dispatch decisions on CPU affinity
- changes
-Message-ID: <aYUgQGvzJsoEaDZL@slm.duckdns.org>
-References: <20260203230639.1259869-1-arighi@nvidia.com>
- <aYPW121Y6vGtmtST@slm.duckdns.org>
- <aYTH5XT0YFkznqvv@gpd4>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KhV8VST1"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a9296b3926so13193705ad.1
+        for <sched-ext@lists.linux.dev>; Thu, 05 Feb 2026 20:19:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770351545; x=1770956345; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NtxdwbyBhJCjJN9Ud01S5+F/PCx615rL1edEy0Sb+qY=;
+        b=KhV8VST1JTSR3IZr97oa4ryfJ+wz1zK1axzAPdTlFQoDfzfn/4vxHFZegOVqbK4ET9
+         vojjM8ceIHEX73SHqKLHPuD7iThavmlcqC7Hb3pXItuRgC2v04EtvoC8D96fErXe4EpZ
+         6ScwLZcs7hQxkQ33YCx+1NReW18pZzUogbOh0a5rD5e9ykMQNfug09A2vsXha4XwiFYP
+         Tkgj15Znwilwbh7oQSosI+1OnmkjbsFBIskXNwPrmiAskEl6gnXAbA3Eciorx/FSVsN+
+         bo8eElL6XMv8wB+GS0i0ft/Oxn9z1liXVhrZnbYrqgZrXrHo92PuJAdos8TL/E2EhT++
+         A09A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770351545; x=1770956345;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NtxdwbyBhJCjJN9Ud01S5+F/PCx615rL1edEy0Sb+qY=;
+        b=mzHizBzZdvqJ2QQQomCjE+9yWRj1anifMwhNHtRdqsr6ZK6EFmV5bBkfFnj3uKag0y
+         DPSnQm6hCEkIM0UWHXwPqzBglCmB/xeZmIyk70UrUD6BAvP38TPI3uYYqKoV9GQLgDhf
+         pzIzGtZOIjoJKL7ArBwgbUcMgJHKfoVxohTqhBpFYwFsYAWppZEswgZj11fNNivk7tei
+         LfyD2ifLYM30/359zPlkMxNzO5v7JiUjMJO6GNLpnWSkpmEmQ7HMGz2H4HVfGXpaQ8Kd
+         U7NbCED0NgfKvlCQ12RmUwZgXCvosDxDFeCLiWWTsS4hnp1NuA2cFAEjSsbYDjwd+qv5
+         yEog==
+X-Gm-Message-State: AOJu0YyfKB5VitXQTp6feme/KYPMIou8UklRZu0QOHEkv4y/JUx+RqIF
+	2YJ7zHNw3nxJJyI1ApwriF/64dJE0hQVyvAa/yOZE0Aj1AMPrBL2b4+X
+X-Gm-Gg: AZuq6aIoM3IIlVd5dOhvBBMyxsM8TF4ljuSz2UYrjaTOE1Wxko+yCDCbpb4TX5FZaCQ
+	mYRC+7at0Gttx6VITUcRYxaGqWLtUWfSk8x6c2N4CrLyP36gWH8fj13ZCkV2wKPZ5PFudxCyt6r
+	g7jSRJNnDuBAZbVEoZJOef36FZfE8S6PR7y/qmmQQtKSkeyP9HjdwxFTJbtuWbFk65bxPG9VuSD
+	MGuwl/LjTve1ZKJ2d+OFXuWDm2fk+4C/vH7ZoZzuYfclBnYePpuKU6WA/gx0T4hu0EjK+ssZBr7
+	2OELrbApov/A5lh1VYboswaJh+I9JqwmMIWjj+j/vLc4GhhwSTrP5kGppSpP0r25fgqgEiUjRjS
+	H8Q2+yiK5sI46eu3QtVyj76abWeuO14dl9aa/gBoNkIR51jw9xVhLSQUqE+w1NdLIMEN4gH/iEz
+	dqO2fOpFCq4Ted5o/HLWDVhc2zbJ+j1WID6AC9Q99AkCfdjpbcOqZXK4od3Spoe7l6mztKoipUP
+	w==
+X-Received: by 2002:a17:902:eccd:b0:295:86a1:5008 with SMTP id d9443c01a7336-2a951709bafmr16003355ad.38.1770351545074;
+        Thu, 05 Feb 2026 20:19:05 -0800 (PST)
+Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a951a6449asm9291985ad.3.2026.02.05.20.19.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Feb 2026 20:19:04 -0800 (PST)
+From: zhidao su <soolaugust@gmail.com>
+X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	suzhidao@xiaomi.com
+Subject: [PATCH] tools/sched_ext: Improve BPF verifier arena detection workaround
+Date: Fri,  6 Feb 2026 12:18:08 +0800
+Message-ID: <20260206041808.170926-1-suzhidao@xiaomi.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aYTH5XT0YFkznqvv@gpd4>
+Content-Transfer-Encoding: 8bit
 
-Hello,
+Replace bpf_printk() with volatile access in scx_sdt scheduler's
+BPF verifier workaround to eliminate console output while maintaining
+the required LD.IMM instruction generation for arena detection.
 
-On Thu, Feb 05, 2026 at 05:40:05PM +0100, Andrea Righi wrote:
-...
-> > It shouldn't be returned, right? set_cpus_allowed() dequeues and
-> > re-enqueues. What the seq invalidation detected is dequeue racing the async
-> > dispatch and the invalidation means that the task was dequeued while on the
-> > async buffer (to be re-enqueued once the property change is complete). It
-> > should just be ignored.
-> 
-> Yeah, the only downside is that the scheduler doesn't know that the task
-> has been re-enqueued due to a failed dispatch, but that's probably fine for
-> now.
+This addresses the side effect issue of the previous hack while
+preserving the essential functionality needed by the BPF verifier.
 
-Yeah, but does that matter? Consider the following three scenarios:
+Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+---
+ tools/sched_ext/scx_sdt.bpf.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-A. Task gets dispatched into local DSQ, CPU mask gets updated while in async
-   buffer, the dispatch is ignored and then the task gets re-enqueued later.
-
-B. The same as A but the CPU mask update happens after the task lands in the
-   local DSQ but before starts executing.
-
-C. Task gets dispatched into local DSQ and starts running, CPU mask gets
-   updated so that the task can't run on the current CPU anymore, migration
-   task preempts the task and it gets enqueued.
-
-A and B woould be indistinguishible from BPF sched's POV. C would be a bit
-different in that the task would transition through ops->running/stopping().
-
-I don't see anything significantly different across the three scenarios -
-the task was dispatched but cpumask got updated and the scheduler needs to
-place it again.
-
-...
-> > Now, maybe we want to allow BPF schedulre to be lax about ops.dequeue()
-> > synchronization and let things slide (probably optionally w/ an OPS flag),
-> > but for that, falling back to global DSQ is fine, no?
-> 
-> I think the problem with the global DSQ fallback is that we're essentially
-> ignoring a request from the BPF scheduler to dispatch a task to a specific
-> CPU. Moreover, the global DSQ can potentially introduce starvation: if a
-> task is silently dispatched to the global DSQ and the BPF scheduler keeps
-> dispatching tasks to the local DSQs, the task waiting in the global DSQ
-> will never be consumed.
-
-While starvation is possible, it's not very likely:
-
-- ops.select_cpu/enqueue() usually don't direct dispatch to local CPUs
-  unless they're idle.
-
-- ops.dispatch() is only called after global DSQ is drained.
-
-If ops.select_cpu/enqueue() keeps DD'ing to local CPUs while there are other
-tasks waiting, it's gonna stall whether we fall back to global DSQ or not.
-
-But, taking a step back, the sloppy fallback behavior is secondary. What
-really matters is once we fix ops.dequeue(), can the BPF scheduler properly
-synchronize dequeue against scx_bpf_dsq_insert() to avoid triggering cpumask
-or migration disabled state mismatches? If so, ops.dequeue() would be the
-primary way to deal with these issues.
-
-Maybe not implementing ops.dequeue() can enable sloppy fallbacks as that
-indicates the scheduler isn't taking property changes into account at all,
-but that's really secondary. Let's first focus on making ops.dequeue()
-working properly so that the BPF scheduler can synchronize correctly.
-
-...
-> > I wonder whether we should define an invalid qseq and use that instead. The
-> > queueing instance really is invalid after this and it would help catching
-> > cases where BPF scheduler makes mistakes w/ synchronization. Also, wouldn't
-> > dequeue_task_scx() or ops_dequeue() be a better place to shoot down the
-> > enqueued instances? While the symptom we most immediately see are through
-> > cpumask changes, the underlying problem is dequeue not shooting down
-> > existing enqueued tasks.
-> 
-> I think I like the idea of having an INVALID_QSEQ or similar, it'd also
-> make debugging easier.
->
-> I'm not sure about moving the logic to dequeue_task_scx(), more exactly,
-> I'm not sure if there're nasty locking implications. I'll do some
-> experiments, if it works, sure, dequeue would be a better place to cancel
-> invalid enqueued instances.
-
-I was confused while writing above. All of the above is already happening.
-When a task is dequeued, it's OPSS is cleared and the task won't be eligible
-for dispatching anymore. The only "confused" case is where the task finishes
-reenqueueing before the previous dispatch attempt is finished, which the BPF
-scheduler should be able to handle once ops.dequeue() is fixed.
-
-Thanks.
-
+diff --git a/tools/sched_ext/scx_sdt.bpf.c b/tools/sched_ext/scx_sdt.bpf.c
+index 31b09958e8d5..13d3060c99ff 100644
+--- a/tools/sched_ext/scx_sdt.bpf.c
++++ b/tools/sched_ext/scx_sdt.bpf.c
+@@ -64,14 +64,10 @@ DEFINE_SDT_STAT(select_busy_cpu);
+ static __u64 zero = 0;
+ 
+ /*
+- * XXX Hack to get the verifier to find the arena for sdt_exit_task.
+- * As of 6.12-rc5, The verifier associates arenas with programs by
+- * checking LD.IMM instruction operands for an arena and populating
+- * the program state with the first instance it finds. This requires
+- * accessing our global arena variable, but scx methods do not necessarily
+- * do so while still using pointers from that arena. Insert a bpf_printk
+- * statement that triggers at most once to generate an LD.IMM instruction
+- * to access the arena and help the verifier.
++ * Workaround to help BPF verifier track arena usage.
++ * The verifier needs to see an explicit reference to the arena variable
++ * to properly track arena memory usage. This generates the required
++ * LD.IMM instruction without producing unnecessary output.
+  */
+ static volatile bool scx_arena_verify_once;
+ 
+@@ -80,7 +76,11 @@ __hidden void scx_arena_subprog_init(void)
+ 	if (scx_arena_verify_once)
+ 		return;
+ 
+-	bpf_printk("%s: arena pointer %p", __func__, &arena);
++	/*
++	 * Use volatile access to generate LD.IMM instruction without
++	 * producing console output like bpf_printk does.
++	 */
++	(void)*(volatile void **)&arena;
+ 	scx_arena_verify_once = true;
+ }
+ 
 -- 
-tejun
+2.43.0
+
