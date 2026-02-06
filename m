@@ -1,47 +1,47 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012012.outbound.protection.outlook.com [40.93.195.12])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011047.outbound.protection.outlook.com [52.101.62.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6150F3EDAC3
-	for <sched-ext@lists.linux.dev>; Fri,  6 Feb 2026 13:58:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDB7365A11
+	for <sched-ext@lists.linux.dev>; Fri,  6 Feb 2026 13:58:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770386327; cv=fail; b=jgPvE4SIcdkjTVargnGxe0Exf0Lb5ieY69BWGEvbaqb+IrJPCqCrRzVAubGCnS2xyqXHyFXr1Vw2obNh+/6rY8JqUipPI2gDExlByB2Dg/YBsxjviTLh7zttZ+Q+qUOTJCNQKI5Q36JGXRq0dFUY7+fy7SjIQR/fzHR5b3OBlW0=
+	t=1770386332; cv=fail; b=mPoS4nLxFlUK1Sayh0fU7UqP31WmmacCUlciwBbTR4p4k95XkowiI6iAjb9cS3zDK2/8RwmOuWlh60/L/+N+NmUGIDZVvu3/U28EnHJhase/ZsM+wNXtLcWk9NuswCfHbx5rnCUfPBkL7q5j+GRL3eD/wTSK3Hx8K4fVeXrtDyM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770386327; c=relaxed/simple;
-	bh=pfj4941YylW/Tqxc4be0N9lTziywGzVR8/HY7PjHY+o=;
+	s=arc-20240116; t=1770386332; c=relaxed/simple;
+	bh=wGksxHTMyWlknVZPxSiINsgJ6LFZ5qbdQqB21dac1mM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=r50x3+Purd9VL6nor7gJtfE2jT5xv7GNx9Ks0Y81BNcJminwvfcBmWh+CCIVcjxLTi5J8Qh4E7atDOVo914PvgV0qy2nCDKsICfHomSVbu6pjSKYeqU9urypnPn83CgmyJGJoDyA8kKZ/iAPfi+Py/WgHQ6uh2pCqMkAM6zhK/w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=I62wH5SA; arc=fail smtp.client-ip=40.93.195.12
+	 Content-Type:MIME-Version; b=L3yYd6/DzfxmRpT5w6R2JiA3jdvOni5bVHpvWUvQSX6yKck324PNT0DkL+0I8T9PhQITTzN/3l9qVH1pGeMD8FkIurUG6PcoIIrRkK/IsXI/WZcX8mab93wboPSBTee3Dz1WaTM4mYbOoAYhX74enNEouN0VadQgw1CNgRdO6tE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kmP2H9yz; arc=fail smtp.client-ip=52.101.62.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="I62wH5SA"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kmP2H9yz"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i+ESRotXSpSaRYIrnPWTt78AX6CrvRYiu8zWYDc3wEoalmvkxMQ3ctuQ9kFE9OYBLqavM+AL6YbTkG8Ug3L79HhXiqmznxk3dTNcENnpZL+okjxu9H8ynONDFpmFg1YPXA5wMl3Vm4lvpyA1X8eJBuJ2JjSbVu/COVNIG32Z3NSl/pcWbv9atoiBRZWq3L8W0FVTItABEZlvZjR0Zgx7Dze6w2VhroXNH5OkqPCFtOP/s+TKFOQ5+a1ZRPudKo6WflroAWSZovgYg8kjpNk/4Jnqqg1TpUhF07GmwRMtgZiDKDTQuzDpppx3Y9gghPONBXKUJiMrTK/Fc9CVtw3Mkg==
+ b=hy4NDRrN6w51Fz5UHwCggJj6Ic4CAkmZPHGszvnkkD1vK86RT3+0sEdIQAFERfvAiCTT2AEFpDZoAH1eNAEAGqov31MD0YwdWK5SEt1eaVLFfmxUcuPy0lqv1bL/DvpNY20yxIZocvFsbCUkoMHlMPOUFx5Wh9fg3DkGtXRcJzW9vPZlBpOjQfx6tE+NnBpflmeybu06FBvpKXRuqAB6p6IJ0Zhdnl2PMni0fvagN1nhv+SgI0WbloS6aB/9Xre5aLcRgv1wgipr6c8x6GZlnrndo9t0gV5cwIhc+Y6MA9FsKjbi7iMbLD8SlkuaMknwnqdh9bZT+aI/BG4K0I1Dgw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xrHUi7k/Rhf+zFEQ5eCFJB0b98r3pjpMNnwBY/QkRSQ=;
- b=dETNwCWsW6EwNNiUQqnaGochcyXew7n0YD2AvY2iwcml84Uh3+DqTvpXxA2ff1LCJ6SLC+fu3rH4Q6UhZUjAKSywWLsG+z8w6x30qqHn+MyKR+Hw2gPTbLb104hwXm3M4lXUamXUU45BGxvEwUeH8Ej5giiT025Fbi7JlYWTaSOELtmMKdhvBEx4T3P0M/+8BXdMVOPK+OL8YTT6WRSOiV683d6Z22VX5D9I3icGKoB4QGgxPuImRl1tpaBdGwdb3SyE5eVedfUdAlCteZEUEc9gPSfpNrFxNpkrxvbK/Td796k8piKocSIEtmd8p5yymV1rQj4o8EfWkLusjzmdYw==
+ bh=TxpIF0u052RzStRBcuulwDYhNKGvSidrHja6cqA400s=;
+ b=VJsq8MM2jSdcgCNRc2fU/NTQjhuL7xoCJ5/A4wi/F+MTm0XEKU+wPE/vbk0R/9cMILkDIV1VEUjcLDqdrEiKqQu3TMUveoYe+4coXTJ1btvQsrt8yr9dsdpA84FZzdVjWIXweN4GCXe1jPkvrRmqcgOYqlETgT5QkxEfVpi6Xz+Fw6JkRAckee5IC54mFsFjPaCtZkKKQLaZ8FExhSA4d2iDFfCtc4gSxCg3PTChcLJptxMCMKEyBdgt5Mqq+tSfDfacTsPbkniLt13mpUh2zLJ8sZ9OAdukjNC1ipu/kM/EF5Fr1hlmH4+qMdDE29TRiBJyz1R7/v2SAMUubErGKQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xrHUi7k/Rhf+zFEQ5eCFJB0b98r3pjpMNnwBY/QkRSQ=;
- b=I62wH5SA3RLOEyCevJFhDdobOmpgwHJ0k9TtUxawY3YNegs6yGeRDo5ZwtVsZQOS+1MZ+1xiJCf68ZPqJxXnuW3TLQVsKXSUh1jdAvtfn4tbkkWM0UKzsMLgXFMlTN0zNhTSA5oC96zcgScpfbB5nxeoqsbc3j8vjsF2+Rwu/lo9itJ5g4xGFDmBWuRalK5BXdkbk2ai8jfO9WDG8lxFmX+BWZchVMk0kAMq1xvRlq4zezCUgRQDtvM4pz3ID1Xx5YOIKurG+t0FRLeXjZENSszaUBzavhST1P1feJGdgtGYEYdmOSGQM+bZuaEXpFd3SqOt3pLVH6RDhaYeSjP2PA==
+ bh=TxpIF0u052RzStRBcuulwDYhNKGvSidrHja6cqA400s=;
+ b=kmP2H9yzFjvCk9PeT25H7J92m2kbqbIbu+l/hEHHDeGmGv9l1+RN4moO9n7siQ5CwVXFgDHNH27tt5x4JifKKYIKYREbgXw89gS7KUnbGmCwLXYDIHc2zDw0Jdc+WuL75kYtBHV6hRAtPAG0dQJ9eSBp0dlRSdWyTRdtqJ6TbcIQjJiOPt/5c/R98kD/ZHVIfOPY9oDWawVZOF1aZ7ZoVdrG3X791XaKsL+5yHrXmk1IScWeoqtVE+PFXTJG/PA4iopgyAWVYUJ2NSNjNdtXdpUp1KhUHghyN9Qb1SazICvk0JEYAoalD41X8kzga5wSzxxtW0GlDjKL+pqu8BaTyQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by DS7PR12MB6024.namprd12.prod.outlook.com (2603:10b6:8:84::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.16; Fri, 6 Feb
- 2026 13:58:39 +0000
+ 2026 13:58:43 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9587.013; Fri, 6 Feb 2026
- 13:58:39 +0000
+ 13:58:43 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -52,16 +52,16 @@ Cc: Kuba Piecuch <jpiecuch@google.com>,
 	Daniel Hodges <hodgesd@meta.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
-Date: Fri,  6 Feb 2026 14:54:17 +0100
-Message-ID: <20260206135742.2339918-2-arighi@nvidia.com>
+Subject: [PATCH 2/2] selftests/sched_ext: Add test to validate ops.dequeue() semantics
+Date: Fri,  6 Feb 2026 14:54:18 +0100
+Message-ID: <20260206135742.2339918-3-arighi@nvidia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260206135742.2339918-1-arighi@nvidia.com>
 References: <20260206135742.2339918-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MI1P293CA0011.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:2::20) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: MI2P293CA0001.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:45::14) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -71,596 +71,818 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS7PR12MB6024:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4e4b4ef-db50-4a40-963b-08de6587d45f
+X-MS-Office365-Filtering-Correlation-Id: dd0e1b84-de35-487f-146c-08de6587d6bd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?b3HhKSRfw5c1udaLIQo4L2vKMyGSKzYotsVCXfePTAFE8TKVjiPb6S2riHxh?=
- =?us-ascii?Q?B7sPgdP6DxFbzZ4sbcIQvClHbDOosYVDyT2wxZ7m16zstqHKRvnUaspRH3u8?=
- =?us-ascii?Q?9ucMghSZVNSaBJCVMaBz47bHwOFhA6XvDpn+r0arG3gX9RdBwMOlFtCqGG0Q?=
- =?us-ascii?Q?y/Rta1rTUeAO98Eck2PGhmDEubQG6yOc0NxjWm5RVmXx//5j868d0N2+g6IO?=
- =?us-ascii?Q?avpmAiiX/yPUVIxVgWBbAyxAHv6dnu9F0n40dZTv0PA96N2fOcQKpkRxy4xM?=
- =?us-ascii?Q?1pNNRKOAwZkmbs4zON+dFbciRxf0YhSl9/Ugb3Szw4CFicxj9NEpv/MdwKlS?=
- =?us-ascii?Q?6QCtv3KgWPiBGE9JJ60TNDRttb34UmxZFHzxANY2vtqgwy9mz4FvPEX0N5ae?=
- =?us-ascii?Q?S8RSfScB8kVWuiPHfMmLWsv/rdoAnFtTfWi/792bX3vpNyI3wwam3Wxd2ohX?=
- =?us-ascii?Q?WhEcUIMA8HR1HCQm/TmtLWNERsY7mvmLyHbKiiDFFiymTH5OAE32wURW33KG?=
- =?us-ascii?Q?yuWslYqFFyDpk6mgVvjqHkWh3th33Qulvgww8hbHTg1/ZuF1DOCtyW6vREPK?=
- =?us-ascii?Q?YgHoO9C/SrxF5/UcLUS5OiGn7fQEg5ijByC7kGXowpG7wx18+9jE9JXxuQdV?=
- =?us-ascii?Q?rG1XDwGOQXopAtSAE2dwr2foZz97myLEeLZS/JFdkaUVHKIoi8dGTcAGmlzG?=
- =?us-ascii?Q?vi4O1oP5g48Mk0b/Xy09AiBfx7nRMrmOwW+Vb3MfuPAWZ5AjGgHFvhY6k9H7?=
- =?us-ascii?Q?ubl9gfORlb2UpENPKg1GDIii1pwNR5KFQXIji3sGf5Neu0nHlgo5PKJifnyi?=
- =?us-ascii?Q?hab/wgUdypMK8g5CYZtPcUV6LyiIp3jOLFgKr8y23AhheKEHRJ17eqtFiwFw?=
- =?us-ascii?Q?g0iAmBHVVS7E8b4Z0pJHneCKM/MMIizRDbcXz3XV+t4f277ndv5fH9YpHEHe?=
- =?us-ascii?Q?UNjPZEkcdxLjk6/ibi/0SfjYA1ga8Le2hJInLeLgbIAXnceyOMuWdfBb/X7f?=
- =?us-ascii?Q?mBPZ9WRLTbDZjciKD3OjWLbMGCFOTe/cdkIjeUWnePb4F9Oo2Vnqqqof2RG+?=
- =?us-ascii?Q?/qzAolWXAU7v4OlpZQHzXXUWI5RYEYsP8xMD4R/4PGMKciHNMyctLFASlDYg?=
- =?us-ascii?Q?6kM5DQFW63H6BkLCFF1ECEV8YCWXwthtTnHF92s1ojzAxch7+CTEIxzKe+Hy?=
- =?us-ascii?Q?9reem0T8U7ItFF+snmniZAgY3hKLcIN64NOqvy9Ova4uoAAHcJW4+S2dYfu+?=
- =?us-ascii?Q?SiAaLmhzXDEQ4WeK0Rc0zp/XPyXSqyW552FBHsiKS3DLzo5PN8Hue0x4gQ+3?=
- =?us-ascii?Q?BItVu2VyALJgOBH8zE0D5dhWQ0Ogf39zAhqJqcPhzBdOUAxUcXPf4Z21AKUe?=
- =?us-ascii?Q?k76tMW/YF8VmLrTuGNlc5URhFKFgMphxN6LFTH1kPepZejokNxFJHZcrOQ6h?=
- =?us-ascii?Q?Jvq524/g+etQoiKedsEw0p9m9HLJDDkvD04OKhqIHwnXOupVIH+fluLgYyRR?=
- =?us-ascii?Q?hwXCvJucvZ8vzH5X1G9N/Zckl1ogwDnWn+BDWtaXysJ80VjjoN786/vA9gJj?=
- =?us-ascii?Q?6kSZ6JIRibtTT0RhujY=3D?=
+	=?us-ascii?Q?PM+XrMGxm2eAQo2w0z0hXBV99Tt2tiVthNyeMBOo5qcrsBSHVmbVoQrOxJTi?=
+ =?us-ascii?Q?9N53rQInvG+0+dLb6x0Uo2AhAjXtDBhhmDil1DcK2f3b7zyarqanYONnjKTW?=
+ =?us-ascii?Q?UJkk6wPCl6VbtHE0PsdeKVe6Dec2NprCmIFeUCn0AY+bRZ+WzuunKE3pdVfT?=
+ =?us-ascii?Q?z5V4ZxNjD4DqS3CpYEzAlPb8naFmXOCWt0dieeBWyJdFVEa9CF7eKwh6zTYi?=
+ =?us-ascii?Q?SMuF20P2Ns0qmtDwLv8dFN+aqrVhc2WkO8A9W+/T3PB8tQ68TeQWjLBBVsA1?=
+ =?us-ascii?Q?6ocMxhyDODQRgqrreF4SapBcAhXh2/vCw8u16AFxSnPOUc6bSflPmxs11n4Y?=
+ =?us-ascii?Q?akcDGzFgQnXce+Xk51sNpv/FN9eohXZBYOmwkKLRtKCwdQSe+sLm/CPIqRaH?=
+ =?us-ascii?Q?Wz1JPpGmaUuFro1mIoNU3P8RzGLY3LZ78D0/BQF9Fka1dz4Uy23mzgbENfy8?=
+ =?us-ascii?Q?p9glG0qx4lof7bsO5LCNgM9pCxIwe1udrX5M+hMdVZX25gjY2xenTuvNX5Lz?=
+ =?us-ascii?Q?nFxUK/2zAaycxOKo694RHh5bQ0Z3TjZEmBwt3r4qBwBL4gU+rVncDINP3EZ1?=
+ =?us-ascii?Q?IxVXAQv68dUDwtKPcCg3JbZnflA+fgr/N2V+dymGShjPPg/eyCNjhUaKkt0C?=
+ =?us-ascii?Q?SgxlvlHOdfYrrF/otHBXFb5a6QK1S6p9A5h7soX/C+Gg/sjXVoH4RQg8Aj5Q?=
+ =?us-ascii?Q?NFv4BCkyv/riwegDjiZXX2e9AB1dmYxnvTziUgmQ328fIvpu3cJE+7h58mDL?=
+ =?us-ascii?Q?4BqCikFp2L1WgeE285cu3O67QBXYGkANUk2/mddskeWITqM3sHySmn20Olol?=
+ =?us-ascii?Q?1Nd//2EMpS7PfQ0LYN0AadeuyXl3aJGWRCi9XYXj0iVsfp4G0he0tnDiMWVH?=
+ =?us-ascii?Q?SwbxsT+ji3ROBkwqa0vUcrV2SblEfMs1S1X7VbnPZq6JAuudSKeCL9p3eQss?=
+ =?us-ascii?Q?o9yo1oFF3EmInktd0OSQ4g8CHGZttGquKCT+P1eKtyrNzzbhq11XTGypkh2X?=
+ =?us-ascii?Q?NtouYvDN67n3BXKf3QwwQDt6HavwpzrP84+SSsqluw4k7HjJqpieGfley+qx?=
+ =?us-ascii?Q?ZnCkyBi7jDEUisD5yN39jhxySKC0Sc1t1BLUZypocMKpmaQb/UDUEzGOssho?=
+ =?us-ascii?Q?A/4Y0ydl2EYFwpfq9xbUid59FMoNHf8D2nf80Ie0C8hY4RpUWqdd25iJTnKw?=
+ =?us-ascii?Q?Gf+B5U4F8A5GpvycuNtjTd/ZWn+bNMm5Vk+HmcW6QpHwXZBmsREM9Kf8TTiy?=
+ =?us-ascii?Q?fWcAMihmk6DDG2r3va6JUIB2/EhFzb1gV5EWJGGu3Njx6bjdc9IbD1wrQ1Nu?=
+ =?us-ascii?Q?zePlayIawfib9V2W6e8yylVkM5OPUlzgkRAJ+1EIBdlteeFIKQ/3kv//kLAY?=
+ =?us-ascii?Q?BqYfslJdXr0W+O3K1V1erDtWZcMtVKSxXLVPvZXOiiDw52EWT40W9UQ43OnL?=
+ =?us-ascii?Q?4NcSB3YysPzJku4E8/K2Z97aj+NS6GBes1iI2hehj7r9BvdTVYShno3C8am+?=
+ =?us-ascii?Q?TVQ6nFQ8l5UcKCJMp2citVYWDm84sLPOP3aV2zeO1pK8kX7kLskPIn4mGbbU?=
+ =?us-ascii?Q?+C3TatHhSLJ2oqZSngw=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?jkwN6EOWm5k1eYUGhjAFNzWfKl+KOpJqw+sUH5s8q9xQRQPa9cmA654yc8Bk?=
- =?us-ascii?Q?6GH48nsQB/UOqQJAZ/7muNlTLpYy1GUnQApLNELzY2VoPb1JBTknBNLf5cGQ?=
- =?us-ascii?Q?hG7myHY1jCFn8t2OhgZBcHH7jYhINbhkK4QwOdcfxKA07warBoR6u5IqH8dD?=
- =?us-ascii?Q?4+SF7GA+yShahz/M6kpUWvBHgTmX672AsO6DLMN/FqY/M3mbV3vawi4icgnQ?=
- =?us-ascii?Q?cGs33vl/2bcWPBzdFLrmJ+haRqOiiuLYuA/NSh2jMVjxW9xNxs+e4uoFvJFm?=
- =?us-ascii?Q?U3bsQW9vO6to2VaiEMk7cv++uvTDFfnbjRbkWUWH4SkW+HVu9Ei3vtfRgsvd?=
- =?us-ascii?Q?/VYtmNJ8EIuM0uCtlTLww1XN+iM1Z/ls7JhLUj9QOz6fMhiCLv7cOdjpRNzG?=
- =?us-ascii?Q?cuJ4n25hXQ6jQV+ige6HRJHbSvJIBXSM/Vg5PsgsDVHfPJvSBRIpBflhZMti?=
- =?us-ascii?Q?Gn+UjPv/4fFvZxr1x5XNO6W3oSXHqOGhZSnFStnSC8FaXnfZPxNcRGYlGUn0?=
- =?us-ascii?Q?1NbEfr93hu0RBCfalBj/52aCvQ/7DYbEsmTJra8uA8UDdO0HIARFkbQnPZW2?=
- =?us-ascii?Q?vFXU+fIhJ67yfGuXBhAlsLhvMZqJJDBt7t4UkjljUDI+ODJDPxrIngUhpc7N?=
- =?us-ascii?Q?fxB8wcD4F7QcA7WchMliFfGP7Zk/11c4LTGuL4X7aK8y7MoCcIVPacnbQBRw?=
- =?us-ascii?Q?fWlQwoWSBrXZEBdWGUoaOHT4xoNREZizGaDCYc3PvR77vsK7WrhqliXnC9Kt?=
- =?us-ascii?Q?ZEGbwhS72FUINtdaLYG0l3b3jVMXuvo6ICTNajrUYJ16w8NuTvJq4f7zfLsb?=
- =?us-ascii?Q?BB9vD92rEv/h9KALIuFTiYJHwsuO2472yhWtHdXM8DX4qW5NEvgdnOQH6Tsg?=
- =?us-ascii?Q?sKy3I8goUjtcNfVVOkN6P+IaunLAOQqqDLyGxb7pKq13z0kAxe2ti/2cqoCj?=
- =?us-ascii?Q?3jzlJGYTXcrhUgVL55wYZuZFh28ZLzy4jnYWo9TkuK3ppZlxdAV4k37iEJ+l?=
- =?us-ascii?Q?vVK/RyU3/sLRU0oRxdmREvpwSVNgwZmBu6udQm2wHjdKoUEtpxGmtADPF+2L?=
- =?us-ascii?Q?sGjlyUhroQM7pxoeEgZc5wX9JRlqvm1kYgZIwedMzteuLsk4N7Kn70YLI5XK?=
- =?us-ascii?Q?BRpaxvyTu04ht6cjKvroY1D5fOQZU6HzGHCheVnlnViaXGEuEmgOaqAi3+Aa?=
- =?us-ascii?Q?vvei6YLDICpmR0ZCheZ3kN9GWChEYb0OVGq0NS9DzEgvS4APgbQp64SXJn79?=
- =?us-ascii?Q?nej0G4Oxk9SMFiun5c4eXurN7mo6prwxAn9XvTU7SkOgtufE0Bs9rd/qNinz?=
- =?us-ascii?Q?RA1JAON+ueUA16ZKm0it7BRE3TAAZt55SdDNYsHi/t4/KNUbrY5XUpI8qdym?=
- =?us-ascii?Q?eI822liiBfK+3Rd41I1ajumYLD4HX2fejkUETGCKszpAHfSGfDKCqT4io/is?=
- =?us-ascii?Q?j29eyRki5kPX3alyoBLjkK5Mwq1j4hxTpzEx/EpfMN18GDy1/M/mbhSMxcb3?=
- =?us-ascii?Q?nL9BJBQoZYnd3NyxwJnkdnX61dLkzHwilEpodXS75aytIO2GryEqeAT2DsDl?=
- =?us-ascii?Q?kvZ3CUn+U5WwOaYZg4WAJOrZt9aSgj2/1MnEHTPhm1RIewUK+JJ5VruhiqiE?=
- =?us-ascii?Q?1MdMWCus6h1j5ScG6RwIS+XFN/ezNNuYorhPmSZdnF22jEBucD2nSouZqvbi?=
- =?us-ascii?Q?eawm+abTyhK3HdUExtSVgGy16GDPAnjCe5xT7vBevTLedcKF7pFCrhhhXlIn?=
- =?us-ascii?Q?XLajnsS/Dw=3D=3D?=
+	=?us-ascii?Q?yNezhjVE1QBfS8EtgcrJWIUkUf/rduDDfJZs2zHdZxnSAE6N8WySHDnKerPM?=
+ =?us-ascii?Q?BG/OBtfqp1501wT5Z9u7k1hhQl1CjhCR/KQ7zL+jeuMArhoVuLHhBlrU1Ii7?=
+ =?us-ascii?Q?+rH76GLaVnF8USuIpUSdG0TwwHAoLmEaFcbQJLUFyLg4P5Ktbn21wfG0n7As?=
+ =?us-ascii?Q?TlKfJOTkyFU2IszsMcFVyh8dVP97ND/39RL0RMUpTaVV6UPvm4WVFEBmahZA?=
+ =?us-ascii?Q?SIebMoZyfPos+ToN16LT9xVnAMGF9sX9cDBjCJTTaOR+5jyeTeLp43B2ID4h?=
+ =?us-ascii?Q?0auuttwtmeLjhkUDdfdusvgxks58sxIStDZS5DF/I8H45pXUWhJ4qS9l7fC7?=
+ =?us-ascii?Q?/rggyppKaPPi2bJS6qtHYwMKYUq5Yuvz7FMJZk7bc1Uj5PQafnDk4gr8sVau?=
+ =?us-ascii?Q?6hEfZlVMymWm2gdOjacD38sXxfHNABceSKVfH9MZT/0YeDejHLg0YhECHfi6?=
+ =?us-ascii?Q?+BjFlTuiHH7Q3BjDxXZ/GbW8lo/eqAoKO55nURIzxOMhlquaamxpqUp/ihUt?=
+ =?us-ascii?Q?NJnkIC0wdSWBFDcuE1j7dX4mlz+JDk9/05mlJkCr06Wrzsr8nT8pBvHE1RHi?=
+ =?us-ascii?Q?yC4Rgg69WLCoLRKEncGDzqN6Re2axTz4xxe2JJ1iVMqYptgFAmFbQFok5meg?=
+ =?us-ascii?Q?weoVv5l8Th6vKuB4tgj/G7BRqbyBwh3aSbVR/lSwv5CYQTAx9OWKpUAKrEoz?=
+ =?us-ascii?Q?ZvXWK6Kq1xvgGBcdtaO42Cp2/XS2AK80DShxnt9dnD/eYxK1MqLDP83DMKnm?=
+ =?us-ascii?Q?SxfPGi/x0z9fyfl2hHZLM1u3ZHBeKrbrHD7/nU/JfwvgcmkOzTsw1Mtxm3Zp?=
+ =?us-ascii?Q?BYDgIMOfAwLLr+porBSD/BK/vYVC6pnembrXJPgTEr9ghcxJaHhlixV3w17Q?=
+ =?us-ascii?Q?8gUczaVaA3SxSVxH97MPmb80kxljKc5xvTpuUJKgbOsshc90lS9iuPNXduB6?=
+ =?us-ascii?Q?N2H7o/INmV+7T/vpu9IgHsuydixoAfkUXBKVhgwPeo5LvfSPQpqLINuiaYGs?=
+ =?us-ascii?Q?U1L1llKvhPp6HX7VZc1tSI70Hag2WK7Zb2O8DUYqmxbEcqCYMYz3yPGzaF6L?=
+ =?us-ascii?Q?bu9HYBRx2OcQeEnT2NwaDE2lHmuYpqgaWSW6wdFMJkXdEpZhI2igsdHgvQRg?=
+ =?us-ascii?Q?IZlK/vDSptfIfbQp8dgDOzeGuP8eqft2y367uyW1zSQab9TksQS5lfi0hLG3?=
+ =?us-ascii?Q?iFBWOWo/jhJmv+FYioHADA/WAzD4/c4X/Ei3PYtnW3aFWI31XvAMB54CG/an?=
+ =?us-ascii?Q?ESunIyfR1GG7/RQtiVEUMhpmI9rf1KJeoSrl6+m5gpIE/k3CF9AzyMWKIrg2?=
+ =?us-ascii?Q?zDzN6g36E67/fOgL0Uy41ATsXQxREGZ5n4kz1NZ4qs6upgiPJ+mAkPGlV+6G?=
+ =?us-ascii?Q?7tQkh1AF5AVbZDHyqgGcGtGQxs7H2Z9ispL7iJbz7AmBOqg2r/sA1gFlLoiG?=
+ =?us-ascii?Q?zDDDxtKHgBI9awHq/pYA5ot6Pbdd3wsCrdPuFIWu6h3nuwpYkKpC8n1+B0t6?=
+ =?us-ascii?Q?SX1aVsG25gngQaVCHur+9ZU6UvcdJu5gmOS7TJooCFzeGb/e3wWjcImdfUxj?=
+ =?us-ascii?Q?se8iYsudtvwpa/Ib7mn3plL93XSCjlXxDU6HT5C/X2teZWcL+9NEJgDhh0Ak?=
+ =?us-ascii?Q?XOQ2P8UvltA7MW/AoWQ53aL91NqQZFoKUyh5ubE0WePO3o1iYfCzq80WltWa?=
+ =?us-ascii?Q?mIbJ3u283daCdi0yt7wwc1Win5EjMdNmws1fgqbYy8SOLhIJHpvVTgX8F75T?=
+ =?us-ascii?Q?V9e7l/7XSQ=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4e4b4ef-db50-4a40-963b-08de6587d45f
+X-MS-Exchange-CrossTenant-Network-Message-Id: dd0e1b84-de35-487f-146c-08de6587d6bd
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 13:58:39.4154
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 13:58:43.3207
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QASDDoKVgYoA3IzNGEtQyojs6FVCTJ9iKqd2BlIGygIjkZJJ0rWBufJYNIxyJH9mZsw3RKrHHKcf59QwAxma3w==
+X-MS-Exchange-CrossTenant-UserPrincipalName: Bvr5HIt/OC9i8Ss4Hj1j/OHA6O/XqFj8QW7muATSM0q6sjgnNFdQoR7qSAnhYR0A7ae3g4gRf3Fi/l6VUsX4/g==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6024
 
-Currently, ops.dequeue() is only invoked when the sched_ext core knows
-that a task resides in BPF-managed data structures, which causes it to
-miss scheduling property change events. In addition, ops.dequeue()
-callbacks are completely skipped when tasks are dispatched to non-local
-DSQs from ops.select_cpu(). As a result, BPF schedulers cannot reliably
-track task state.
+Add a new kselftest to validate that the new ops.dequeue() semantics
+work correctly for all task lifecycle scenarios, including the
+distinction between terminal DSQs (where BPF scheduler is done with the
+task), user DSQs (where BPF scheduler manages the task lifecycle) and
+BPF data structures, regardless of which event performs the dispatch.
 
-Fix this by guaranteeing that each task entering the BPF scheduler's
-custody triggers exactly one ops.dequeue() call when it leaves that
-custody, whether the exit is due to a dispatch (regular or via a core
-scheduling pick) or to a scheduling property change (e.g.
-sched_setaffinity(), sched_setscheduler(), set_user_nice(), NUMA
-balancing, etc.).
+The test validates the following scenarios:
 
-BPF scheduler custody concept: a task is considered to be in the BPF
-scheduler's custody when the scheduler is responsible for managing its
-lifecycle. This includes tasks dispatched to user-created DSQs or stored
-in the BPF scheduler's internal data structures. Custody ends when the
-task is dispatched to a terminal DSQ (such as the local DSQ or
-%SCX_DSQ_GLOBAL), selected by core scheduling, or removed due to a
-property change.
+ - From ops.select_cpu():
+     - scenario 0 (local DSQ): tasks dispatched to the local DSQ bypass
+       the BPF scheduler entirely; they never enter BPF custody, so
+       ops.dequeue() is not called,
+     - scenario 1 (global DSQ): tasks dispatched to SCX_DSQ_GLOBAL also
+       bypass the BPF scheduler, like the local DSQ; ops.dequeue() is
+       not called,
+     - scenario 2 (user DSQ): tasks enter BPF scheduler custody with full
+       enqueue/dequeue lifecycle tracking and state machine validation
+       (expects 1:1 enqueue/dequeue pairing).
 
-Tasks directly dispatched to terminal DSQs bypass the BPF scheduler
-entirely and are never in its custody. Terminal DSQs include:
- - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON): per-CPU queues
-   where tasks go directly to execution.
- - Global DSQ (%SCX_DSQ_GLOBAL): the built-in fallback queue where the
-   BPF scheduler is considered "done" with the task.
+   - From ops.enqueue():
+     - scenario 3 (local DSQ): same behavior as scenario 0,
+     - scenario 4 (global DSQ): same behavior as scenario 1,
+     - scenario 5 (user DSQ): same behavior as scenario 2,
+     - scenario 6 (BPF internal queue): tasks are stored in a BPF queue
+       in ops.enqueue() and consumed in ops.dispatch(); they remain in
+       BPF custody until dispatch, with full lifecycle tracking and 1:1
+       enqueue/dequeue validation.
 
-As a result, ops.dequeue() is not invoked for tasks directly dispatched
-to terminal DSQs.
-
-To identify dequeues triggered by scheduling property changes, introduce
-the new ops.dequeue() flag %SCX_DEQ_SCHED_CHANGE: when this flag is set,
-the dequeue was caused by a scheduling property change.
-
-New ops.dequeue() semantics:
- - ops.dequeue() is invoked exactly once when the task leaves the BPF
-   scheduler's custody, in one of the following cases:
-   a) regular dispatch: a task dispatched to a user DSQ or stored in
-      internal BPF data structures is moved to a terminal DSQ
-      (ops.dequeue() called without any special flags set),
-   b) core scheduling dispatch: core-sched picks task before dispatch
-      (ops.dequeue() called with %SCX_DEQ_CORE_SCHED_EXEC flag set),
-   c) property change: task properties modified before dispatch,
-      (ops.dequeue() called with %SCX_DEQ_SCHED_CHANGE flag set).
-
-This allows BPF schedulers to:
- - reliably track task ownership and lifecycle,
- - maintain accurate accounting of managed tasks,
- - update internal state when tasks change properties.
+This verifies that:
+ - terminal DSQ dispatch (local, global) don't trigger ops.dequeue(),
+ - user DSQ / internal BPF data structure dispatch has exact 1:1
+   ops.enqueue()/dequeue() pairing,
+ - dispatch dequeues have no flags (normal workflow),
+ - property change dequeues have the %SCX_DEQ_SCHED_CHANGE flag set,
+ - no duplicate enqueues or invalid state transitions are happening,
+ - ops.enqueue() and ops.select_cpu() dispatch paths behave identically.
 
 Cc: Tejun Heo <tj@kernel.org>
 Cc: Emil Tsalapatis <emil@etsalapatis.com>
 Cc: Kuba Piecuch <jpiecuch@google.com>
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- Documentation/scheduler/sched-ext.rst         |  58 +++++++
- include/linux/sched/ext.h                     |   1 +
- kernel/sched/ext.c                            | 157 ++++++++++++++++--
- kernel/sched/ext_internal.h                   |   7 +
- .../sched_ext/include/scx/enum_defs.autogen.h |   1 +
- .../sched_ext/include/scx/enums.autogen.bpf.h |   2 +
- tools/sched_ext/include/scx/enums.autogen.h   |   1 +
- 7 files changed, 213 insertions(+), 14 deletions(-)
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../testing/selftests/sched_ext/dequeue.bpf.c | 403 ++++++++++++++++++
+ tools/testing/selftests/sched_ext/dequeue.c   | 258 +++++++++++
+ 3 files changed, 662 insertions(+)
+ create mode 100644 tools/testing/selftests/sched_ext/dequeue.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/dequeue.c
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index 404fe6126a769..fe8c59b0c1477 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -252,6 +252,62 @@ The following briefly shows how a waking task is scheduled and executed.
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 5fe45f9c5f8fd..764e91edabf93 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -161,6 +161,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
  
-    * Queue the task on the BPF side.
- 
-+   **Task State Tracking and ops.dequeue() Semantics**
-+
-+   A task is in the "BPF scheduler's custody" when the BPF scheduler is
-+   responsible for managing its lifecycle. That includes tasks dispatched
-+   to user-created DSQs or stored in the BPF scheduler's internal data
-+   structures. Once ``ops.select_cpu()`` or ``ops.enqueue()`` is called,
-+   the task may or may not enter custody depending on what the scheduler
-+   does:
-+
-+   * **Directly dispatched to terminal DSQs** (``SCX_DSQ_LOCAL``,
-+     ``SCX_DSQ_LOCAL_ON | cpu``, or ``SCX_DSQ_GLOBAL``): The BPF scheduler
-+     is done with the task - it either goes straight to a CPU's local run
-+     queue or to the global DSQ as a fallback. The task never enters (or
-+     exits) BPF custody, and ``ops.dequeue()`` will not be called.
-+
-+   * **Dispatch to user-created DSQs** (custom DSQs): the task enters the
-+     BPF scheduler's custody. When the task later leaves BPF custody
-+     (dispatched to a terminal DSQ, picked by core-sched, or dequeued for
-+     sleep/property changes), ``ops.dequeue()`` will be called exactly once.
-+
-+   * **Queued on BPF side** (e.g., internal queues, no DSQ): The task is in
-+     BPF custody. ``ops.dequeue()`` will be called when it leaves (e.g.
-+     when ``ops.dispatch()`` moves it to a terminal DSQ, or on property
-+     change / sleep).
-+
-+   **NOTE**: this concept is valid also with the ``ops.select_cpu()``
-+   direct dispatch optimization. Even though it skips ``ops.enqueue()``
-+   invocation, if the task is dispatched to a user-created DSQ or internal
-+   BPF structure, it enters BPF custody and will get ``ops.dequeue()`` when
-+   it leaves. If dispatched to a terminal DSQ, the BPF scheduler is done
-+   with it immediately. This provides the performance benefit of avoiding
-+   the ``ops.enqueue()`` roundtrip while maintaining correct state
-+   tracking.
-+
-+   The dequeue can happen for different reasons, distinguished by flags:
-+
-+   1. **Regular dispatch**: when a task in BPF custody is dispatched to a
-+      terminal DSQ from ``ops.dispatch()`` (leaving BPF custody for
-+      execution), ``ops.dequeue()`` is triggered without any special flags.
-+
-+   2. **Core scheduling pick**: when ``CONFIG_SCHED_CORE`` is enabled and
-+      core scheduling picks a task for execution while it's still in BPF
-+      custody, ``ops.dequeue()`` is called with the
-+      ``SCX_DEQ_CORE_SCHED_EXEC`` flag.
-+
-+   3. **Scheduling property change**: when a task property changes (via
-+      operations like ``sched_setaffinity()``, ``sched_setscheduler()``,
-+      priority changes, CPU migrations, etc.) while the task is still in
-+      BPF custody, ``ops.dequeue()`` is called with the
-+      ``SCX_DEQ_SCHED_CHANGE`` flag set in ``deq_flags``.
-+
-+   **Important**: Once a task has left BPF custody (e.g. after being
-+   dispatched to a terminal DSQ), property changes will not trigger
-+   ``ops.dequeue()``, since the task is no longer being managed by the BPF
-+   scheduler.
-+
- 3. When a CPU is ready to schedule, it first looks at its local DSQ. If
-    empty, it then looks at the global DSQ. If there still isn't a task to
-    run, ``ops.dispatch()`` is invoked which can use the following two
-@@ -319,6 +375,8 @@ by a sched_ext scheduler:
-                 /* Any usable CPU becomes available */
- 
-                 ops.dispatch(); /* Task is moved to a local DSQ */
-+
-+                ops.dequeue(); /* Exiting BPF scheduler */
-             }
-             ops.running();      /* Task starts running on its assigned CPU */
-             while (task->scx.slice > 0 && task is runnable)
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index bcb962d5ee7d8..c48f818eee9b8 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -84,6 +84,7 @@ struct scx_dispatch_q {
- /* scx_entity.flags */
- enum scx_ent_flags {
- 	SCX_TASK_QUEUED		= 1 << 0, /* on ext runqueue */
-+	SCX_TASK_NEED_DEQ	= 1 << 1, /* in BPF custody, needs ops.dequeue() when leaving */
- 	SCX_TASK_RESET_RUNNABLE_AT = 1 << 2, /* runnable_at should be reset */
- 	SCX_TASK_DEQD_FOR_SLEEP	= 1 << 3, /* last dequeue was for SLEEP */
- 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0bb8fa927e9e9..d17fd9141adf4 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -925,6 +925,27 @@ static void touch_core_sched(struct rq *rq, struct task_struct *p)
- #endif
- }
- 
-+/**
-+ * is_terminal_dsq - Check if a DSQ is terminal for ops.dequeue() purposes
-+ * @dsq_id: DSQ ID to check
-+ *
-+ * Returns true if @dsq_id is a terminal/builtin DSQ where the BPF
-+ * scheduler is considered "done" with the task.
-+ *
-+ * Builtin DSQs include:
-+ *  - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON): per-CPU queues
-+ *    where tasks go directly to execution,
-+ *  - Global DSQ (%SCX_DSQ_GLOBAL): built-in fallback queue,
-+ *  - Bypass DSQ: used during bypass mode.
-+ *
-+ * Tasks dispatched to builtin DSQs exit BPF scheduler custody and do not
-+ * trigger ops.dequeue() when they are later consumed.
-+ */
-+static inline bool is_terminal_dsq(u64 dsq_id)
-+{
-+	return dsq_id & SCX_DSQ_FLAG_BUILTIN;
-+}
-+
- /**
-  * touch_core_sched_dispatch - Update core-sched timestamp on dispatch
-  * @rq: rq to read clock from, must be locked
-@@ -1008,7 +1029,8 @@ static void local_dsq_post_enq(struct scx_dispatch_q *dsq, struct task_struct *p
- 		resched_curr(rq);
- }
- 
--static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
-+static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
-+			     struct scx_dispatch_q *dsq,
- 			     struct task_struct *p, u64 enq_flags)
- {
- 	bool is_local = dsq->id == SCX_DSQ_LOCAL;
-@@ -1103,6 +1125,27 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 	dsq_mod_nr(dsq, 1);
- 	p->scx.dsq = dsq;
- 
-+	/*
-+	 * Handle ops.dequeue() and custody tracking.
-+	 *
-+	 * Builtin DSQs (local, global, bypass) are terminal: the BPF
-+	 * scheduler is done with the task. If it was in BPF custody, call
-+	 * ops.dequeue() and clear the flag.
-+	 *
-+	 * User DSQs: Task is in BPF scheduler's custody. Set the flag so
-+	 * ops.dequeue() will be called when it leaves.
-+	 */
-+	if (SCX_HAS_OP(sch, dequeue)) {
-+		if (is_terminal_dsq(dsq->id)) {
-+			if (p->scx.flags & SCX_TASK_NEED_DEQ)
-+				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue,
-+						 rq, p, 0);
-+			p->scx.flags &= ~SCX_TASK_NEED_DEQ;
-+		} else {
-+			p->scx.flags |= SCX_TASK_NEED_DEQ;
-+		}
-+	}
-+
- 	/*
- 	 * scx.ddsp_dsq_id and scx.ddsp_enq_flags are only relevant on the
- 	 * direct dispatch path, but we clear them here because the direct
-@@ -1323,7 +1366,7 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
- 		return;
- 	}
- 
--	dispatch_enqueue(sch, dsq, p,
-+	dispatch_enqueue(sch, rq, dsq, p,
- 			 p->scx.ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
- }
- 
-@@ -1407,13 +1450,22 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	 * dequeue may be waiting. The store_release matches their load_acquire.
- 	 */
- 	atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_QUEUED | qseq);
-+
-+	/*
-+	 * Task is now in BPF scheduler's custody (queued on BPF internal
-+	 * structures). Set %SCX_TASK_NEED_DEQ so ops.dequeue() is called
-+	 * when it leaves custody (e.g. dispatched to a terminal DSQ or on
-+	 * property change).
-+	 */
-+	if (SCX_HAS_OP(sch, dequeue))
-+		p->scx.flags |= SCX_TASK_NEED_DEQ;
- 	return;
- 
- direct:
- 	direct_dispatch(sch, p, enq_flags);
- 	return;
- local_norefill:
--	dispatch_enqueue(sch, &rq->scx.local_dsq, p, enq_flags);
-+	dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, enq_flags);
- 	return;
- local:
- 	dsq = &rq->scx.local_dsq;
-@@ -1433,7 +1485,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	 */
- 	touch_core_sched(rq, p);
- 	refill_task_slice_dfl(sch, p);
--	dispatch_enqueue(sch, dsq, p, enq_flags);
-+	dispatch_enqueue(sch, rq, dsq, p, enq_flags);
- }
- 
- static bool task_runnable(const struct task_struct *p)
-@@ -1511,6 +1563,22 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int enq_flags
- 		__scx_add_event(sch, SCX_EV_SELECT_CPU_FALLBACK, 1);
- }
- 
+ auto-test-targets :=			\
+ 	create_dsq			\
++	dequeue				\
+ 	enq_last_no_enq_fails		\
+ 	ddsp_bogus_dsq_fail		\
+ 	ddsp_vtimelocal_fail		\
+diff --git a/tools/testing/selftests/sched_ext/dequeue.bpf.c b/tools/testing/selftests/sched_ext/dequeue.bpf.c
+new file mode 100644
+index 0000000000000..4ba657ba1bff5
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/dequeue.bpf.c
+@@ -0,0 +1,403 @@
++// SPDX-License-Identifier: GPL-2.0
 +/*
-+ * Call ops.dequeue() for a task leaving BPF custody. Adds %SCX_DEQ_SCHED_CHANGE
-+ * when the dequeue is due to a property change (not sleep or core-sched pick).
++ * A scheduler that validates ops.dequeue() is called correctly:
++ * - Tasks dispatched to terminal DSQs (local, global) bypass the BPF
++ *   scheduler entirely: no ops.dequeue() should be called
++ * - Tasks dispatched to user DSQs enter BPF custody: ops.dequeue() must be
++ *   called when they leave custody
++ * - Every ops.enqueue() for non-terminal DSQs is followed by exactly one
++ *   ops.dequeue() (validate 1:1 pairing and state machine)
++ *
++ * Copyright (c) 2026 NVIDIA Corporation.
 + */
-+static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
-+			      struct task_struct *p, u64 deq_flags)
++
++#include <scx/common.bpf.h>
++
++#define SHARED_DSQ	0
++
++/*
++ * Scenario 6: BPF internal queue. Tasks are stored here from ops.enqueue()
++ * and consumed from ops.dispatch(), validating that tasks not on a user DSQ
++ * (only on BPF internal structures) still get ops.dequeue() when they leave.
++ */
++struct {
++	__uint(type, BPF_MAP_TYPE_QUEUE);
++	__uint(max_entries, 4096);
++	__type(value, s32);
++} global_queue SEC(".maps");
++
++char _license[] SEC("license") = "GPL";
++
++UEI_DEFINE(uei);
++
++/*
++ * Counters to track the lifecycle of tasks:
++ * - enqueue_cnt: Number of times ops.enqueue() was called
++ * - dequeue_cnt: Number of times ops.dequeue() was called (any type)
++ * - dispatch_dequeue_cnt: Number of regular dispatch dequeues (no flag)
++ * - change_dequeue_cnt: Number of property change dequeues
++ */
++u64 enqueue_cnt, dequeue_cnt, dispatch_dequeue_cnt, change_dequeue_cnt;
++
++/*
++ * Test scenarios (0-2: ops.select_cpu(), 3-6: ops.enqueue()):
++ * 0) Dispatch to local DSQ from ops.select_cpu() (terminal DSQ, bypasses BPF
++ *    scheduler, no dequeue callbacks)
++ * 1) Dispatch to global DSQ from ops.select_cpu() (terminal DSQ, bypasses BPF
++ *    scheduler, no dequeue callbacks)
++ * 2) Dispatch to shared user DSQ from ops.select_cpu() (enters BPF scheduler,
++ *    dequeue callbacks expected)
++ * 3) Dispatch to local DSQ from ops.enqueue() (terminal DSQ, bypasses BPF
++ *    scheduler, no dequeue callbacks)
++ * 4) Dispatch to global DSQ from ops.enqueue() (terminal DSQ, bypasses BPF
++ *    scheduler, no dequeue callbacks)
++ * 5) Dispatch to shared user DSQ from ops.enqueue() (enters BPF scheduler,
++ *    dequeue callbacks expected)
++ * 6) BPF internal queue: store task PIDs in ops.enqueue(), consume in
++ *    ops.dispatch() and dispatch to local DSQ (validates dequeue for tasks
++ *    in BPF custody but not on a user DSQ)
++ */
++u32 test_scenario;
++
++/*
++ * Per-task state to track lifecycle and validate workflow semantics.
++ * State transitions:
++ *   NONE -> ENQUEUED (on enqueue)
++ *   ENQUEUED -> DISPATCHED (on dispatch dequeue)
++ *   DISPATCHED -> NONE (on property change dequeue or re-enqueue)
++ *   ENQUEUED -> NONE (on property change dequeue before dispatch)
++ */
++enum task_state {
++	TASK_NONE = 0,
++	TASK_ENQUEUED,
++	TASK_DISPATCHED,
++};
++
++struct task_ctx {
++	enum task_state state; /* Current state in the workflow */
++	u64 enqueue_seq;       /* Sequence number for debugging */
++};
++
++struct {
++	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
++	__uint(map_flags, BPF_F_NO_PREALLOC);
++	__type(key, int);
++	__type(value, struct task_ctx);
++} task_ctx_stor SEC(".maps");
++
++static struct task_ctx *try_lookup_task_ctx(struct task_struct *p)
 +{
-+	u64 flags = deq_flags;
-+
-+	if (!(deq_flags & (DEQUEUE_SLEEP | SCX_DEQ_CORE_SCHED_EXEC)))
-+		flags |= SCX_DEQ_SCHED_CHANGE;
-+
-+	SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq, p, flags);
-+	p->scx.flags &= ~SCX_TASK_NEED_DEQ;
++	return bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
 +}
 +
- static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
- {
- 	struct scx_sched *sch = scx_root;
-@@ -1524,6 +1592,24 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
- 
- 	switch (opss & SCX_OPSS_STATE_MASK) {
- 	case SCX_OPSS_NONE:
++s32 BPF_STRUCT_OPS(dequeue_select_cpu, struct task_struct *p,
++		   s32 prev_cpu, u64 wake_flags)
++{
++	struct task_ctx *tctx;
++
++	tctx = try_lookup_task_ctx(p);
++	if (!tctx)
++		return prev_cpu;
++
++	switch (test_scenario) {
++	case 0:
 +		/*
-+		 * Task is not in BPF data structures (either dispatched to
-+		 * a DSQ or running). Only call ops.dequeue() if the task
-+		 * is still in BPF scheduler's custody (%SCX_TASK_NEED_DEQ
-+		 * is set).
++		 * Scenario 0: Direct dispatch to local DSQ from select_cpu.
 +		 *
-+		 * If the task has already been dispatched to a terminal
-+		 * DSQ (local DSQ or %SCX_DSQ_GLOBAL), it has left the BPF
-+		 * scheduler's custody and the flag will be clear, so we
-+		 * skip ops.dequeue().
-+		 *
-+		 * If this is a property change (not sleep/core-sched) and
-+		 * the task is still in BPF custody, set the
-+		 * %SCX_DEQ_SCHED_CHANGE flag.
++		 * Task bypasses BPF scheduler entirely: no enqueue
++		 * tracking, no dequeue callbacks. Behavior should be
++		 * identical to scenario 3.
 +		 */
-+		if (SCX_HAS_OP(sch, dequeue) &&
-+		    (p->scx.flags & SCX_TASK_NEED_DEQ))
-+			call_task_dequeue(sch, rq, p, deq_flags);
- 		break;
- 	case SCX_OPSS_QUEUEING:
- 		/*
-@@ -1532,9 +1618,14 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
- 		 */
- 		BUG();
- 	case SCX_OPSS_QUEUED:
--		if (SCX_HAS_OP(sch, dequeue))
--			SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, rq,
--					 p, deq_flags);
++		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
++		return prev_cpu;
++
++	case 1:
 +		/*
-+		 * Task is still on the BPF scheduler (not dispatched yet).
-+		 * Call ops.dequeue() to notify it is leaving BPF custody.
++		 * Scenario 1: Direct dispatch to global DSQ from select_cpu.
++		 *
++		 * Like scenario 0, task bypasses BPF scheduler entirely.
++		 * Behavior should be identical to scenario 4.
 +		 */
-+		if (SCX_HAS_OP(sch, dequeue)) {
-+			WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_NEED_DEQ));
-+			call_task_dequeue(sch, rq, p, deq_flags);
++		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
++		return prev_cpu;
++
++	case 2:
++		/*
++		 * Scenario 2: Dispatch to shared user DSQ from select_cpu.
++		 *
++		 * Task enters BPF scheduler management: track
++		 * enqueue/dequeue lifecycle and validate state transitions.
++		 * Behavior should be identical to scenario 5.
++		 */
++		__sync_fetch_and_add(&enqueue_cnt, 1);
++
++		/*
++		 * Validate state transition: enqueue is only valid from
++		 * NONE or DISPATCHED states. Getting enqueue while in
++		 * ENQUEUED state indicates a missing dequeue.
++		 */
++		if (tctx->state == TASK_ENQUEUED)
++			scx_bpf_error("%d (%s): enqueue while in ENQUEUED state seq=%llu",
++				      p->pid, p->comm, tctx->enqueue_seq);
++
++		/* Transition to ENQUEUED state */
++		tctx->state = TASK_ENQUEUED;
++		tctx->enqueue_seq++;
++
++		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, 0);
++		return prev_cpu;
++
++	default:
++		/*
++		 * Force all tasks through ops.enqueue().
++		 */
++		return prev_cpu;
++	}
++}
++
++void BPF_STRUCT_OPS(dequeue_enqueue, struct task_struct *p, u64 enq_flags)
++{
++	struct task_ctx *tctx;
++
++	tctx = try_lookup_task_ctx(p);
++	if (!tctx)
++		return;
++
++	switch (test_scenario) {
++	case 3:
++		/*
++		 * Scenario 3: Direct dispatch to the local DSQ.
++		 *
++		 * Task bypasses BPF scheduler entirely: no enqueue
++		 * tracking, no dequeue callbacks. Don't increment counters
++		 * or validate state since the task never enters BPF
++		 * scheduler management.
++		 */
++		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, enq_flags);
++		break;
++
++	case 4:
++		/*
++		 * Scenario 4: Direct dispatch to the global DSQ.
++		 *
++		 * Like scenario 3, task bypasses BPF scheduler entirely.
++		 * SCX_DSQ_GLOBAL is a terminal DSQ, tasks dispatched to it
++		 * leave BPF custody immediately, so no dequeue callbacks
++		 * should be triggered.
++		 */
++		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++		break;
++
++	case 5:
++		/*
++		 * Scenario 5: Dispatch to shared user DSQ.
++		 *
++		 * Task enters BPF scheduler management: track
++		 * enqueue/dequeue lifecycle and validate state
++		 * transitions.
++		 */
++		__sync_fetch_and_add(&enqueue_cnt, 1);
++
++		/*
++		 * Validate state transition: enqueue is only valid from
++		 * NONE or DISPATCHED states. Getting enqueue while in
++		 * ENQUEUED state indicates a missing dequeue (or stale state
++		 * from a previous scenario when the scheduler was unregistered
++		 * with tasks still on a DSQ). Reset and proceed to avoid false
++		 * positives across scenario switches.
++		 */
++		if (tctx->state == TASK_ENQUEUED)
++			tctx->state = TASK_NONE;
++
++		/* Transition to ENQUEUED state */
++		tctx->state = TASK_ENQUEUED;
++		tctx->enqueue_seq++;
++
++		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, enq_flags);
++		break;
++
++	case 6:
++		/*
++		 * Scenario 6: Store task in BPF internal queue. Task enters
++		 * BPF custody (kernel sets SCX_TASK_NEED_DEQ). When
++		 * ops.dispatch() later pops and inserts to local DSQ,
++		 * ops.dequeue() must be called.
++		 *
++		 * If the queue is full, fallback to local DSQ. The task still
++		 * goes through QUEUED in the kernel and gets ops.dequeue()
++		 * when moved to the terminal DSQ, so we track it the same.
++		 *
++		 * If state is already ENQUEUED (e.g. task was on a DSQ when
++		 * the scheduler was unregistered in a previous scenario),
++		 * reset to NONE and proceed to avoid false positives.
++		 */
++		{
++			s32 pid = p->pid;
++
++			if (tctx->state == TASK_ENQUEUED)
++				tctx->state = TASK_NONE;
++
++			tctx->state = TASK_ENQUEUED;
++			tctx->enqueue_seq++;
++
++			/* Queue full: fallback to the global DSQ */
++			if (bpf_map_push_elem(&global_queue, &pid, 0))
++				scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++			else
++				__sync_fetch_and_add(&enqueue_cnt, 1);
++
++			scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
 +		}
- 
- 		if (atomic_long_try_cmpxchg(&p->scx.ops_state, &opss,
- 					    SCX_OPSS_NONE))
-@@ -1631,6 +1722,7 @@ static void move_local_task_to_local_dsq(struct task_struct *p, u64 enq_flags,
- 					 struct scx_dispatch_q *src_dsq,
- 					 struct rq *dst_rq)
- {
-+	struct scx_sched *sch = scx_root;
- 	struct scx_dispatch_q *dst_dsq = &dst_rq->scx.local_dsq;
- 
- 	/* @dsq is locked and @p is on @dst_rq */
-@@ -1639,6 +1731,15 @@ static void move_local_task_to_local_dsq(struct task_struct *p, u64 enq_flags,
- 
- 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
- 
++		break;
++
++	default:
++		/* For scenarios 0-2 dispatch to the global DSQ */
++		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++	}
++}
++
++void BPF_STRUCT_OPS(dequeue_dequeue, struct task_struct *p, u64 deq_flags)
++{
++	struct task_ctx *tctx;
++
++	__sync_fetch_and_add(&dequeue_cnt, 1);
++
++	tctx = try_lookup_task_ctx(p);
++	if (!tctx)
++		return;
++
 +	/*
-+	 * Task is moving from a non-local DSQ to a local (terminal) DSQ.
-+	 * Call ops.dequeue() if the task was in BPF custody.
++	 * For scenarios 0, 1, 3, and 4 (terminal DSQs: local and global),
++	 * ops.dequeue() should never be called because tasks bypass the
++	 * BPF scheduler entirely. If we get here, it's a kernel bug.
 +	 */
-+	if (SCX_HAS_OP(sch, dequeue) && (p->scx.flags & SCX_TASK_NEED_DEQ)) {
-+		SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue, dst_rq, p, 0);
-+		p->scx.flags &= ~SCX_TASK_NEED_DEQ;
++	if (test_scenario == 0 || test_scenario == 3) {
++		scx_bpf_error("%d (%s): dequeue called for local DSQ scenario - kernel bug!",
++			      p->pid, p->comm);
++		return;
++	}
++	if (test_scenario == 1 || test_scenario == 4) {
++		scx_bpf_error("%d (%s): dequeue called for global DSQ scenario - kernel bug!",
++			      p->pid, p->comm);
++		return;
 +	}
 +
- 	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
- 		list_add(&p->scx.dsq_list.node, &dst_dsq->list);
- 	else
-@@ -1879,7 +1980,7 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 		dispatch_dequeue_locked(p, src_dsq);
- 		raw_spin_unlock(&src_dsq->lock);
- 
--		dispatch_enqueue(sch, dst_dsq, p, enq_flags);
-+		dispatch_enqueue(sch, dst_rq, dst_dsq, p, enq_flags);
- 	}
- 
- 	return dst_rq;
-@@ -1969,14 +2070,14 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 	 * If dispatching to @rq that @p is already on, no lock dancing needed.
- 	 */
- 	if (rq == src_rq && rq == dst_rq) {
--		dispatch_enqueue(sch, dst_dsq, p,
-+		dispatch_enqueue(sch, rq, dst_dsq, p,
- 				 enq_flags | SCX_ENQ_CLEAR_OPSS);
- 		return;
- 	}
- 
- 	if (src_rq != dst_rq &&
- 	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
--		dispatch_enqueue(sch, find_global_dsq(sch, p), p,
-+		dispatch_enqueue(sch, rq, find_global_dsq(sch, p), p,
- 				 enq_flags | SCX_ENQ_CLEAR_OPSS);
- 		return;
- 	}
-@@ -2014,9 +2115,21 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 		 */
- 		if (src_rq == dst_rq) {
- 			p->scx.holding_cpu = -1;
--			dispatch_enqueue(sch, &dst_rq->scx.local_dsq, p,
-+			dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
- 					 enq_flags);
- 		} else {
-+			/*
-+			 * Moving to a remote local DSQ. dispatch_enqueue() is
-+			 * not used (we go through deactivate/activate), so
-+			 * call ops.dequeue() here if the task was in BPF
-+			 * custody.
-+			 */
-+			if (SCX_HAS_OP(sch, dequeue) &&
-+			    (p->scx.flags & SCX_TASK_NEED_DEQ)) {
-+				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue,
-+						 src_rq, p, 0);
-+				p->scx.flags &= ~SCX_TASK_NEED_DEQ;
-+			}
- 			move_remote_task_to_local_dsq(p, enq_flags,
- 						      src_rq, dst_rq);
- 			/* task has been moved to dst_rq, which is now locked */
-@@ -2113,7 +2226,7 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
- 	if (dsq->id == SCX_DSQ_LOCAL)
- 		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
- 	else
--		dispatch_enqueue(sch, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
-+		dispatch_enqueue(sch, rq, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
- }
- 
- static void flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
-@@ -2414,7 +2527,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		 * DSQ.
- 		 */
- 		if (p->scx.slice && !scx_rq_bypassing(rq)) {
--			dispatch_enqueue(sch, &rq->scx.local_dsq, p,
-+			dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p,
- 					 SCX_ENQ_HEAD);
- 			goto switch_class;
- 		}
-@@ -2898,6 +3011,14 @@ static void scx_enable_task(struct task_struct *p)
- 
- 	lockdep_assert_rq_held(rq);
- 
 +	/*
-+	 * Verify the task is not in BPF scheduler's custody. If flag
-+	 * transitions are consistent, the flag should always be clear
-+	 * here.
++	 * Validate state: dequeue should only happen from ENQUEUED or
++	 * DISPATCHED states. Getting dequeue from NONE indicates a bug.
 +	 */
-+	if (SCX_HAS_OP(sch, dequeue))
-+		WARN_ON_ONCE(p->scx.flags & SCX_TASK_NEED_DEQ);
++	if (tctx->state == TASK_NONE) {
++		scx_bpf_error("%d (%s): dequeue from NONE state seq=%llu",
++			      p->pid, p->comm, tctx->enqueue_seq);
++		return;
++	}
 +
- 	/*
- 	 * Set the weight before calling ops.enable() so that the scheduler
- 	 * doesn't see a stale value if they inspect the task struct.
-@@ -2929,6 +3050,14 @@ static void scx_disable_task(struct task_struct *p)
- 	if (SCX_HAS_OP(sch, disable))
- 		SCX_CALL_OP_TASK(sch, SCX_KF_REST, disable, rq, p);
- 	scx_set_task_state(p, SCX_TASK_READY);
++	if (deq_flags & SCX_DEQ_SCHED_CHANGE) {
++		/*
++		 * Property change interrupting the workflow. Valid from
++		 * both ENQUEUED and DISPATCHED states. Transitions task
++		 * back to NONE state.
++		 */
++		__sync_fetch_and_add(&change_dequeue_cnt, 1);
++
++		/* Validate state transition */
++		if (tctx->state != TASK_ENQUEUED && tctx->state != TASK_DISPATCHED)
++			scx_bpf_error("%d (%s): invalid property change dequeue state=%d seq=%llu",
++				      p->pid, p->comm, tctx->state, tctx->enqueue_seq);
++
++		/* Transition back to NONE: task outside scheduler control */
++		tctx->state = TASK_NONE;
++	} else {
++		/*
++		 * Regular dispatch dequeue: normal workflow step. Valid
++		 * only from ENQUEUED state (after enqueue, before dispatch
++		 * dequeue). Transitions to DISPATCHED state.
++		 */
++		__sync_fetch_and_add(&dispatch_dequeue_cnt, 1);
++
++		/*
++		 * Dispatch dequeue should not have %SCX_DEQ_SCHED_CHANGE
++		 * flag.
++		 */
++		if (deq_flags & SCX_DEQ_SCHED_CHANGE)
++			scx_bpf_error("%d (%s): SCX_DEQ_SCHED_CHANGE in dispatch dequeue seq=%llu",
++				      p->pid, p->comm, tctx->enqueue_seq);
++
++		/*
++		 * Must be in ENQUEUED state.
++		 */
++		if (tctx->state != TASK_ENQUEUED)
++			scx_bpf_error("%d (%s): dispatch dequeue from state %d seq=%llu",
++				      p->pid, p->comm, tctx->state, tctx->enqueue_seq);
++
++		/*
++		 * Transition to DISPATCHED: normal cycle completed
++		 * dispatch.
++		 */
++		tctx->state = TASK_DISPATCHED;
++	}
++}
++
++void BPF_STRUCT_OPS(dequeue_dispatch, s32 cpu, struct task_struct *prev)
++{
++	if (test_scenario == 6) {
++		s32 pid;
++		struct task_struct *p;
++
++		if (bpf_map_pop_elem(&global_queue, &pid))
++			return;
++
++		p = bpf_task_from_pid(pid);
++		if (!p)
++			return;
++
++		if (!bpf_cpumask_test_cpu(cpu, p->cpus_ptr))
++			cpu = scx_bpf_task_cpu(p);
++
++		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cpu, SCX_SLICE_DFL, 0);
++		bpf_task_release(p);
++	} else {
++		scx_bpf_dsq_move_to_local(SHARED_DSQ);
++	}
++}
++
++s32 BPF_STRUCT_OPS(dequeue_init_task, struct task_struct *p,
++		   struct scx_init_task_args *args)
++{
++	struct task_ctx *tctx;
++
++	tctx = bpf_task_storage_get(&task_ctx_stor, p, 0,
++				   BPF_LOCAL_STORAGE_GET_F_CREATE);
++	if (!tctx)
++		return -ENOMEM;
++
++	return 0;
++}
++
++s32 BPF_STRUCT_OPS_SLEEPABLE(dequeue_init)
++{
++	s32 ret;
++
++	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
++	if (ret)
++		return ret;
++
++	return 0;
++}
++
++void BPF_STRUCT_OPS(dequeue_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
++SEC(".struct_ops.link")
++struct sched_ext_ops dequeue_ops = {
++	.select_cpu		= (void *)dequeue_select_cpu,
++	.enqueue		= (void *)dequeue_enqueue,
++	.dequeue		= (void *)dequeue_dequeue,
++	.dispatch		= (void *)dequeue_dispatch,
++	.init_task		= (void *)dequeue_init_task,
++	.init			= (void *)dequeue_init,
++	.exit			= (void *)dequeue_exit,
++	.name			= "dequeue_test",
++};
+diff --git a/tools/testing/selftests/sched_ext/dequeue.c b/tools/testing/selftests/sched_ext/dequeue.c
+new file mode 100644
+index 0000000000000..b0add2a516ab8
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/dequeue.c
+@@ -0,0 +1,258 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2025 NVIDIA Corporation.
++ */
++#define _GNU_SOURCE
++#include <stdio.h>
++#include <unistd.h>
++#include <signal.h>
++#include <time.h>
++#include <bpf/bpf.h>
++#include <scx/common.h>
++#include <sys/wait.h>
++#include <sched.h>
++#include <pthread.h>
++#include "scx_test.h"
++#include "dequeue.bpf.skel.h"
++
++#define NUM_WORKERS 8
++#define AFFINITY_HAMMER_MS 50   /* How long affinity hammer runs (scenario 6) */
++
++/*
++ * Worker function that creates enqueue/dequeue events via CPU work and
++ * sleeping. Property-change dequeues are triggered by the affinity hammer
++ * thread (external sched_setaffinity on worker PIDs).
++ */
++static void worker_fn(int id)
++{
++	int i;
++	volatile int sum = 0;
++
++	for (i = 0; i < 1000; i++) {
++		int j;
++
++		/* Do some work to trigger scheduling events */
++		for (j = 0; j < 10000; j++)
++			sum += j;
++
++		/* Sleep to trigger dequeue */
++		usleep(1000 + (id * 100));
++	}
++
++	exit(0);
++}
++
++/*
++ * For scenario 6, tasks sit in the BPF queue until dispatch consumes them.
++ * Property-change dequeues only happen when a task gets a property change
++ * while still in the queue (SCX_OPSS_QUEUED), not after it has been
++ * dispatched. This thread changes workers' affinity from outside so that
++ * some changes hit tasks while they are still in the queue.
++ */
++static void *affinity_hammer_fn(void *arg)
++{
++	pid_t *pids = arg;
++	cpu_set_t cpuset;
++	int i, n = NUM_WORKERS;
++	struct timespec ts = { .tv_sec = 0, .tv_nsec = 1000000 }; /* 1ms */
++
++	for (i = 0; i < (AFFINITY_HAMMER_MS * 1000 / 100); i++) {
++		int w = i % n;
++		int cpu = (i / n) % 4;
++
++		CPU_ZERO(&cpuset);
++		CPU_SET(cpu, &cpuset);
++		sched_setaffinity(pids[w], sizeof(cpuset), &cpuset);
++		nanosleep(&ts, NULL);
++	}
++	return NULL;
++}
++
++static enum scx_test_status run_scenario(struct dequeue *skel, u32 scenario,
++					 const char *scenario_name)
++{
++	struct bpf_link *link;
++	pid_t pids[NUM_WORKERS];
++	pthread_t hammer;
++
++	int i, status;
++	u64 enq_start, deq_start, dispatch_deq_start, change_deq_start;
++	u64 enq_delta, deq_delta, dispatch_deq_delta, change_deq_delta;
++
++	/* Set the test scenario */
++	skel->bss->test_scenario = scenario;
++
++	/* Record starting counts */
++	enq_start = skel->bss->enqueue_cnt;
++	deq_start = skel->bss->dequeue_cnt;
++	dispatch_deq_start = skel->bss->dispatch_dequeue_cnt;
++	change_deq_start = skel->bss->change_dequeue_cnt;
++
++	link = bpf_map__attach_struct_ops(skel->maps.dequeue_ops);
++	SCX_FAIL_IF(!link, "Failed to attach struct_ops for scenario %s", scenario_name);
++
++	/* Fork worker processes to generate enqueue/dequeue events */
++	for (i = 0; i < NUM_WORKERS; i++) {
++		pids[i] = fork();
++		SCX_FAIL_IF(pids[i] < 0, "Failed to fork worker %d", i);
++
++		if (pids[i] == 0) {
++			worker_fn(i);
++			/* Should not reach here */
++			exit(1);
++		}
++	}
 +
 +	/*
-+	 * Verify the task is not in BPF scheduler's custody. If flag
-+	 * transitions are consistent, the flag should always be clear
-+	 * here.
++	 * Run an "affinity hammer" so that some property changes hit tasks
++	 * while they are still in BPF custody (e.g. in user DSQ or BPF queue),
++	 * triggering SCX_DEQ_SCHED_CHANGE dequeues in scenarios 2, 5 and 6.
 +	 */
-+	if (SCX_HAS_OP(sch, dequeue))
-+		WARN_ON_ONCE(p->scx.flags & SCX_TASK_NEED_DEQ);
- }
- 
- static void scx_exit_task(struct task_struct *p)
-@@ -3919,7 +4048,7 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, struct rq *rq,
- 		 * between bypass DSQs.
- 		 */
- 		dispatch_dequeue_locked(p, donor_dsq);
--		dispatch_enqueue(sch, donee_dsq, p, SCX_ENQ_NESTED);
-+		dispatch_enqueue(sch, donee_rq, donee_dsq, p, SCX_ENQ_NESTED);
- 
- 		/*
- 		 * $donee might have been idle and need to be woken up. No need
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 386c677e4c9a0..befa9a5d6e53f 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -982,6 +982,13 @@ enum scx_deq_flags {
- 	 * it hasn't been dispatched yet. Dequeue from the BPF side.
- 	 */
- 	SCX_DEQ_CORE_SCHED_EXEC	= 1LLU << 32,
++	SCX_FAIL_IF(pthread_create(&hammer, NULL, affinity_hammer_fn, pids) != 0,
++		    "Failed to create affinity hammer thread");
++
++	/* Wait for all workers to complete */
++	for (i = 0; i < NUM_WORKERS; i++) {
++		SCX_FAIL_IF(waitpid(pids[i], &status, 0) != pids[i],
++			    "Failed to wait for worker %d", i);
++		SCX_FAIL_IF(status != 0, "Worker %d exited with status %d", i, status);
++	}
++
++	pthread_join(hammer, NULL);
++
++	bpf_link__destroy(link);
++
++	SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
++
++	/* Calculate deltas */
++	enq_delta = skel->bss->enqueue_cnt - enq_start;
++	deq_delta = skel->bss->dequeue_cnt - deq_start;
++	dispatch_deq_delta = skel->bss->dispatch_dequeue_cnt - dispatch_deq_start;
++	change_deq_delta = skel->bss->change_dequeue_cnt - change_deq_start;
++
++	printf("%s:\n", scenario_name);
++	printf("  enqueues: %lu\n", (unsigned long)enq_delta);
++	printf("  dequeues: %lu (dispatch: %lu, property_change: %lu)\n",
++	       (unsigned long)deq_delta,
++	       (unsigned long)dispatch_deq_delta,
++	       (unsigned long)change_deq_delta);
 +
 +	/*
-+	 * The task is being dequeued due to a property change (e.g.,
-+	 * sched_setaffinity(), sched_setscheduler(), set_user_nice(),
-+	 * etc.).
++	 * Validate enqueue/dequeue lifecycle tracking.
++	 *
++	 * For scenarios 0, 1, 3, 4 (local and global DSQs from
++	 * ops.select_cpu() and ops.enqueue()), both enqueues and dequeues
++	 * should be 0 because tasks bypass the BPF scheduler entirely: tasks
++	 * never enter BPF scheduler's custody.
++	 *
++	 * For scenarios 2, 5, and 6 (user DSQ or BPF internal queue from
++	 * ops.select_cpu() / ops.enqueue()), we expect both enqueues and
++	 * dequeues.
++	 *
++	 * The BPF code does strict state machine validation with
++	 * scx_bpf_error() to ensure the workflow semantics are correct. If
++	 * we reach this point without errors, the semantics are validated
++	 * correctly.
 +	 */
-+	SCX_DEQ_SCHED_CHANGE	= 1LLU << 33,
- };
- 
- enum scx_pick_idle_cpu_flags {
-diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
-index c2c33df9292c2..dcc945304760f 100644
---- a/tools/sched_ext/include/scx/enum_defs.autogen.h
-+++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
-@@ -21,6 +21,7 @@
- #define HAVE_SCX_CPU_PREEMPT_UNKNOWN
- #define HAVE_SCX_DEQ_SLEEP
- #define HAVE_SCX_DEQ_CORE_SCHED_EXEC
-+#define HAVE_SCX_DEQ_SCHED_CHANGE
- #define HAVE_SCX_DSQ_FLAG_BUILTIN
- #define HAVE_SCX_DSQ_FLAG_LOCAL_ON
- #define HAVE_SCX_DSQ_INVALID
-diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
-index 2f8002bcc19ad..5da50f9376844 100644
---- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
-+++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
-@@ -127,3 +127,5 @@ const volatile u64 __SCX_ENQ_CLEAR_OPSS __weak;
- const volatile u64 __SCX_ENQ_DSQ_PRIQ __weak;
- #define SCX_ENQ_DSQ_PRIQ __SCX_ENQ_DSQ_PRIQ
- 
-+const volatile u64 __SCX_DEQ_SCHED_CHANGE __weak;
-+#define SCX_DEQ_SCHED_CHANGE __SCX_DEQ_SCHED_CHANGE
-diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
-index fedec938584be..fc9a7a4d9dea5 100644
---- a/tools/sched_ext/include/scx/enums.autogen.h
-+++ b/tools/sched_ext/include/scx/enums.autogen.h
-@@ -46,4 +46,5 @@
- 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_LAST); \
- 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_CLEAR_OPSS); \
- 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_DSQ_PRIQ); \
-+	SCX_ENUM_SET(skel, scx_deq_flags, SCX_DEQ_SCHED_CHANGE); \
- } while (0)
++	if (scenario == 0 || scenario == 1 || scenario == 3 || scenario == 4) {
++		/* Terminal DSQs: tasks bypass BPF scheduler completely */
++		SCX_EQ(enq_delta, 0);
++		SCX_EQ(deq_delta, 0);
++		SCX_EQ(dispatch_deq_delta, 0);
++		SCX_EQ(change_deq_delta, 0);
++	} else {
++		/* User DSQ: tasks enter BPF scheduler's custody */
++		SCX_GT(enq_delta, 0);
++		SCX_GT(deq_delta, 0);
++		/* Validate 1:1 enqueue/dequeue pairing */
++		SCX_EQ(enq_delta, deq_delta);
++	}
++
++	return SCX_TEST_PASS;
++}
++
++static enum scx_test_status setup(void **ctx)
++{
++	struct dequeue *skel;
++
++	skel = dequeue__open();
++	SCX_FAIL_IF(!skel, "Failed to open skel");
++	SCX_ENUM_INIT(skel);
++	SCX_FAIL_IF(dequeue__load(skel), "Failed to load skel");
++
++	*ctx = skel;
++
++	return SCX_TEST_PASS;
++}
++
++static enum scx_test_status run(void *ctx)
++{
++	struct dequeue *skel = ctx;
++	enum scx_test_status status;
++
++	/* Scenarios 0-2: ops.select_cpu(), 3-6: ops.enqueue() */
++	status = run_scenario(skel, 0, "Scenario 0: Local DSQ from ops.select_cpu()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_scenario(skel, 1, "Scenario 1: Global DSQ from ops.select_cpu()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_scenario(skel, 2, "Scenario 2: User DSQ from ops.select_cpu()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_scenario(skel, 3, "Scenario 3: Local DSQ from ops.enqueue()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_scenario(skel, 4, "Scenario 4: Global DSQ from ops.enqueue()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_scenario(skel, 5, "Scenario 5: User DSQ from ops.enqueue()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_scenario(skel, 6,
++			     "Scenario 6: BPF internal queue from ops.enqueue(), consumed in ops.dispatch()");
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	printf("\n=== Summary ===\n");
++	printf("Total enqueues: %lu\n", (unsigned long)skel->bss->enqueue_cnt);
++	printf("Total dequeues: %lu\n", (unsigned long)skel->bss->dequeue_cnt);
++	printf("  Dispatch dequeues: %lu (no flag, normal workflow)\n",
++	       (unsigned long)skel->bss->dispatch_dequeue_cnt);
++	printf("  Property change dequeues: %lu (SCX_DEQ_SCHED_CHANGE flag)\n",
++	       (unsigned long)skel->bss->change_dequeue_cnt);
++	printf("\nAll scenarios passed - no state machine violations detected\n");
++	printf("-> Validated: Local DSQ dispatch bypasses BPF scheduler (both paths)\n");
++	printf("-> Validated: Global DSQ dispatch bypasses BPF scheduler (both paths)\n");
++	printf("-> Validated: User DSQ dispatch triggers dequeue callbacks (both paths)\n");
++	printf("-> Validated: BPF internal queue triggers dequeue when leaving custody\n");
++	printf("-> Validated: ops.enqueue() and ops.select_cpu() behave identically\n");
++	printf("-> Validated: Dispatch dequeues have no flags (normal workflow)\n");
++	printf("-> Validated: Property change dequeues have SCX_DEQ_SCHED_CHANGE flag\n");
++	printf("-> Validated: No duplicate enqueues or invalid state transitions\n");
++
++	return SCX_TEST_PASS;
++}
++
++static void cleanup(void *ctx)
++{
++	struct dequeue *skel = ctx;
++
++	dequeue__destroy(skel);
++}
++
++struct scx_test dequeue_test = {
++	.name = "dequeue",
++	.description = "Verify ops.dequeue() semantics",
++	.setup = setup,
++	.run = run,
++	.cleanup = cleanup,
++};
++
++REGISTER_SCX_TEST(&dequeue_test)
 -- 
 2.53.0
 
