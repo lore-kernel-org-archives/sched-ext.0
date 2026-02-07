@@ -1,48 +1,48 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011025.outbound.protection.outlook.com [52.101.62.25])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010026.outbound.protection.outlook.com [52.101.56.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82411E3DED
-	for <sched-ext@lists.linux.dev>; Sat,  7 Feb 2026 09:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C7B17D6
+	for <sched-ext@lists.linux.dev>; Sat,  7 Feb 2026 09:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.26
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770455824; cv=fail; b=EVOUHmVCBKbosKfnP42b1pl1Qc12WSb16epaRUwq4M6j7RmU1ElwLY2hhV/gECL/jzkEEgFTNMLcBCyxYDDfEPhEF/fc5k6zpoI54OoXx5e5ochTNyUqmpm//iQBPalxvO7XcDm/UmMdh9MYiQqVCVPoBUbvwWUgvouob8VQZnc=
+	t=1770456386; cv=fail; b=eNMXhUBZRQyevUEKzSjDAss2DUxoorYqdcwLipKmCD9+LfQbRbrPTFRhb1zKGLGKq6LNM3qPuadCL9a5IwiDVJelYphenQD0IsXRDFk2JSLxNvnPFYsWA/AaK7878SrFe0qfmUhWCykY+l0TyVLcmFWSEolLU2UJUCS/kwAKC6Q=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770455824; c=relaxed/simple;
-	bh=Kxgh3g/3KurvabKqbcA7Qs90k1TYpomZJfivLt823Vc=;
+	s=arc-20240116; t=1770456386; c=relaxed/simple;
+	bh=NeGxd3qjlB/4ht2wfnMdVSU20sgYkNyAU4dlDbRgzZ8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=my0Rpwuf5jjJf4njwa03P1BPfSbGd79JTAfhz6A4WyrC2sA2Za7M1J2XCrYHx4fHpXpkEx6uERg43sTCJVrnI90bV5lB1jJ8+OMS5dl0/6Y1vU+MvDNM4Qln0Kz+qzHEE97sxAJrTJBn63pKxwbHQGW+hR61eR/a//sRMfGen+g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Uz3W7fTx; arc=fail smtp.client-ip=52.101.62.25
+	 Content-Disposition:In-Reply-To:MIME-Version; b=DKt5EyVJ6EgclXllc6TKtpMFeaNBplcnNqbj0tAFhtOuCR8Nz0n/im22JmbmGUSUONq5rFCTfquY4BNBrXEuRgpbBpeu3hq26nJDQThaF3NgpHeG/5tE2Olwr9uOAaewCQPJOes0cbILycpCHcqAm86wzcF0/Ro+9nJ2RXCFE7M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TzyulnQS; arc=fail smtp.client-ip=52.101.56.26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Uz3W7fTx"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TzyulnQS"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V12BqcS+Mq3KPp6AVvPfqiR8sn8/nQo7FlzD2huti/SogIEftwUfhSaZ3iuvlpGD1GNw/XX3ApQkL3pETyPQe5njRt6qJKVy3TkozCM2yPlfVnJLTB4A91LFIk4h3dpB2p+SbejelnLLL4RoqEcfBmyvBOUT3+zk9Yyt1E39FZD18Bm15acxC4EgNGLaZ/94jwuHwPHd7xtJEGTLTlrQqCz8fnSf6ztlOXIf1+PQrql9C1MwT6QQR1r3weP/pLp0T4yXV88Y70o53xKbwgEuWYvg0Volvk9IxUyUMT23380I/m/baY2AnqaDqz5065tBpDnKl/19N7jLJFWmKsLwIw==
+ b=cNUNYNBIA5HMmiUtTtaE3ENMpq5K62yXwcDEQMCzImggNmuMiKJ/LMVI0xBUjdb1EqtTU7NHpiB4LD1aejR525sD95m51ReiHz3aRxVUuetCEUWHB2P9rEblZxMztYrL07ndKheNL5Tf6XCOh0fWgTRr6R06S9pRKBStmNg/Ano49y+0ehp8KfWzrYdDBmvcGzyaCqYpzu6tzIsbfe9EWLoP0jrrmjpu0Oe1YdFp13byJBqJfDkuCbkPKefHisHVulL53sqC2nT8TFn+RbFpMDuikb9kuE360rbBS3HUQ5C7O3HeKSEQMdme+8HuZRZlRfVc0WwEGhPx2jahopQljw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+CKNRbn2ls+WkS3jMpXfz4HSUIfBeeLH3KMsEuJBoQA=;
- b=k+zieQTbLrfKvTbXDqc2/PtDfjnNyjCihtThq/xqJ9c7U93WfCJopoo7OD/6LhmE75zOaViG2peYty+UKaJxDTAQ44I3GIla8Me9NGfHIVjoGsFhfkE36vKMdaPmdppS3SebtLJ3F7AcvrrCl/hHVF0Q+0sJLnd18lvnZSb2MCmYNN2dhdRmGOS3ujEfEt/5p4N1K+aBMP2rHQmEA4WsHkVCfvJaUdh4rmZsWfKo7baCGjAaeA5klDERcQ7qqBa0CNc/38zaaOZC+oD/V3avfRt8g2GLLUKUbu7RhfysUCBkZQVzn3Bc+OJ3pJHrtNLZGFL5Hzbs4yUSgRRhmqptpQ==
+ bh=w6T09UUfRktfCmWU1U6hRjzcd6mnidgLnSBj0IPwBHE=;
+ b=RZ0h7tg/KikzodNpM/WGE+nEB4/VrXQ/QvZRylaTNrqNyifKEFtT1hrhze5+XPjAnFucq6UsjkzN5Dhcn81k+JvIPQMREvdjv+kwpxQuENdCCmVrXn8s350oCBDZ3V4fPv0LkWyEHush6SvLyJRI2LOeA6ooF6taITk9sUtg6E56kYi4Zlrc3/sYxpo+IKGMYLz0dQsFEdev+ruQxQcvMTFYMHivBu9B6SvJwSP0NGR5VlCVgJ7c5wLTn8URdIygWQRli23Og78LKT+Nbt9kckocuoLlBTcDFJJb9ihl2z8Nnq4Ej3XBtYanF0fTpU1moT5liytkkUHExQf0J57GiA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+CKNRbn2ls+WkS3jMpXfz4HSUIfBeeLH3KMsEuJBoQA=;
- b=Uz3W7fTxk+gwKaXtYKqpmapqYI0TgjSMWF+AQEBFzeyceQj5d6utUU1c5D7XjYj34ZGLLgszYDLItqInsv5AxvQYYVc2g3cey9ag94nQSwxbrEZQt2v4CR+cA5KjliHeRwNVdrp36osVwBwBpE5FcDWpwWBBr9uzfaXbCSVG7W+E5ZjjgoyU+ps2x7sSoHn5SXlQ1xeEms2dbxsIi/U3a7KSWFSGMuIbtfFWQUEhc9Y3ISr9MELpoTwQ2PmU4sMAuH0whibNf+wM//Qu3VcFtG1m6sv775pmtkMbHjb6dwb6CE3z262J1wekgKk2vqOSASzIVSB+MmdALM2obN0hhg==
+ bh=w6T09UUfRktfCmWU1U6hRjzcd6mnidgLnSBj0IPwBHE=;
+ b=TzyulnQSWHbF7bcgdcQnKPmhx4PmwuuOejdpX8CZeFtrMb3wp4ece1o1K4kqkuGexyZ9DXjq05hsWRr7pmNBpuB59EnbfYHrUHhRvc9GGjQeCMWpAS+W1nbLYItGlf/ZnZh8DEpOnKrz1oQOAQ17LorV4cZpNWgHxrVbph89V2FA3sxv3fja+HdSuBcOEydRuk73SNzHuf0dOKEuVdBu3WKK3tY4dV2sjhF3KvO86PDoTB8AgECpqhutxvBHLjBBBDasrfyEKzvtqCc1HVUy4UEKTWFQpGgqvXP4BEwk9c6LSf07v7dqx5Gr7/EFTlDnzCFOdXODutD7BbToGEIpQQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS0PR12MB8573.namprd12.prod.outlook.com (2603:10b6:8:162::15) with
+ by DM4PR12MB6471.namprd12.prod.outlook.com (2603:10b6:8:ba::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.13; Sat, 7 Feb
- 2026 09:16:56 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.18; Sat, 7 Feb
+ 2026 09:26:20 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9587.013; Sat, 7 Feb 2026
- 09:16:56 +0000
-Date: Sat, 7 Feb 2026 10:16:45 +0100
+ 09:26:20 +0000
+Date: Sat, 7 Feb 2026 10:26:17 +0100
 From: Andrea Righi <arighi@nvidia.com>
 To: Emil Tsalapatis <emil@etsalapatis.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
@@ -51,17 +51,17 @@ Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
 	Christian Loehle <christian.loehle@arm.com>,
 	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Add test to validate
- ops.dequeue() semantics
-Message-ID: <aYcC_aKj_tO62rXZ@gpd4>
+Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
+Message-ID: <aYcFOVlJhUU5huNd@gpd4>
 References: <20260206135742.2339918-1-arighi@nvidia.com>
- <20260206135742.2339918-3-arighi@nvidia.com>
- <DG85HO9OMIUH.278JKOJEN6QPL@etsalapatis.com>
+ <20260206135742.2339918-2-arighi@nvidia.com>
+ <DG860JW64VVD.31BS2QTEB8XZQ@etsalapatis.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DG85HO9OMIUH.278JKOJEN6QPL@etsalapatis.com>
-X-ClientProxiedBy: MI1P293CA0023.ITAP293.PROD.OUTLOOK.COM (2603:10a6:290:3::9)
- To LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+In-Reply-To: <DG860JW64VVD.31BS2QTEB8XZQ@etsalapatis.com>
+X-ClientProxiedBy: MI2P293CA0008.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:45::19) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -69,441 +69,222 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS0PR12MB8573:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6c947892-bb4a-4051-ba04-08de6629a3e4
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB6471:EE_
+X-MS-Office365-Filtering-Correlation-Id: 77267c63-67c1-4c3f-89c3-08de662af3e2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?QeyvhOgwIwa9VrB8LRxV5TIaEU2kho3DiOo1yA06sf/hhM4qpMBVHcUEJnAO?=
- =?us-ascii?Q?RYg4x1lTTJANVTnpu0NXPdyEinO4hrJ27lB0RaKF6Q6/ej5t6JlcESrY/0IG?=
- =?us-ascii?Q?v873zh7Dx+QUMYVzxTqW2i2KdWaBMb8kC1LoYHr55DIM+rvE5sYXwVnsYngI?=
- =?us-ascii?Q?bezSujLlHWKSlZVUyXCAHHvuD89miFnX50qt19LNH1GJ3YqbK/7hfdYeskDp?=
- =?us-ascii?Q?9plZjyBfDlGvhK6kFDa2PcauQU4W1zr1tI2wCL4iyzbZm/yeIKa8Fand09rj?=
- =?us-ascii?Q?po5kMgwJvtQMJFG18luFBFp3OE/Md+jETor6hVpiCK7YktaDlebc3svjsMQe?=
- =?us-ascii?Q?AorzM8SZDLgDq2J4Q29/bqNHraoTBQYxeRL3jW1FreVsB35v1McthD8lNvVq?=
- =?us-ascii?Q?Hsu8EE4W24ty9PX2LnjohT2Ee54DljX3hQTlskCkRfzvYyhaAGlojaysqH3A?=
- =?us-ascii?Q?JwOPUE4pu6gm96DuyXm8IV2/cSzBIQ+vMe3yE3RPo0KBNlFOEqo5Q85Su4i1?=
- =?us-ascii?Q?EqPfggWI8FNAnsP+CjKNhO3ojgMgq8uvG3boW4YwwMPK3HqCApICoNw2VR1a?=
- =?us-ascii?Q?d77J+BJ746YECvbBJ7soBL7ufWq2T5BFC1vQGLA3smgUU/j8vyniCNkZ1RVV?=
- =?us-ascii?Q?Hlg66PG2yji9QEEqJy4sZ4BYaEIOTyWWupULj4vjxxDeeEMxaiz3bNbvTBiT?=
- =?us-ascii?Q?yUQPezVBzQ99qe5vsn+OiamosE1vgalTC66C+Q54NtFGxvMTXEdtsqOhYOTw?=
- =?us-ascii?Q?/pFwsHq0oyo99CACsiMv6xc331AwAiDEWOyQWWSrN8MzAwRwOUgkJBgavQ03?=
- =?us-ascii?Q?34mdaXEPqfMFeLqCbNX6Ue0pOgsqS6wHAY+mAcBnk0VAiL2fjUNpYRURdy4J?=
- =?us-ascii?Q?530bwTDZ8YTI4CXZ9/eGghiwdbEvesfPtlAp4Fz308ckvjAVrX+gOHrl6P+Q?=
- =?us-ascii?Q?MPsTwPSpdp+R7R7G10wAicnYVDfGgmjaAYz8b+qU03ePJZ5OpLoqf8qqPUsn?=
- =?us-ascii?Q?DaOsnI2R7/cIGhnAo5hthtaSDLSx/r/C/2FQRXTeMIcGdIjDyqiD2M+mGYXR?=
- =?us-ascii?Q?cqmOZwu11HyLj3VzAmI6iLYbvadY65VpRWTo+sXpPJn9lBZTSYHgLJPeIfUS?=
- =?us-ascii?Q?OhDhhHrsa5jJg9yRf4fvCZobmpD2HH2P0lovQF82hwPTr2XML9PUv/Jjmvni?=
- =?us-ascii?Q?U4qrLf+0ccrsco1Mqa70ReJQdfMPRcuUaVxhprdg0XQUSiuGsKm1zr9JpFAX?=
- =?us-ascii?Q?NQC4a9SGjxzsIHFZJHat1Jm2OOvdColsfMU6QWO51eQfwKUngbQR+fh5cDp1?=
- =?us-ascii?Q?nu0G4UUG5EKKvO2A0DlVQ0qJH0403SLiiQyOHk0aRBoIEc/bZS4KSxA/KoqM?=
- =?us-ascii?Q?vnMF5+/GmpIIwr8CgTH57b0T9Dn1pnFRGMtJJm/7qPEmhhlT1Aln8IP2Qey0?=
- =?us-ascii?Q?H7rh/I7J2XpOkBQ4FEpISOKGWhPCp5J/at5zqRNXkBBjIWp3KYo6cV4puqJd?=
- =?us-ascii?Q?q2w+Xe9J7gyIxrM2YCD8fQtV4tWZnvqmkm5xvRoEtxG36IShJ/j5EdWlmeoy?=
- =?us-ascii?Q?ddNrnp5bwFlwpzsfjY4=3D?=
+	=?us-ascii?Q?QXQXafH1ZEaJr5IwZSp3+XHWuDDHBzqhqXNxax2cdT1aSMKdNLunEDSJTOJl?=
+ =?us-ascii?Q?058n/i4zIPs4PomarIrs/Je5wyG2gCupYC840vMhSn9cZaCJ+GViLWVRlqbD?=
+ =?us-ascii?Q?vuP8UfzDF3IJyhSMNl9uJys96Q42xkP1t2nLJhn0q9RCD2DKV631U9ZBI3Jd?=
+ =?us-ascii?Q?BsOTV/51BtJjqfU2f5RVUMZ4TIkcX0yxPt8P1kYIZoaPg74HvAlxEnfFzvdX?=
+ =?us-ascii?Q?pk/S1amwnmnSEVYAnNXzafEsoODuaptW6lw3AO66MpalikYZWTLLNPjPi2Oa?=
+ =?us-ascii?Q?xoy4V1lC/z6Tw00ql0th2/xBEvK3JUGwaJ1EV8gAG70/TFZVWPkFYTlN3UEN?=
+ =?us-ascii?Q?m/HsBDSOYXY8YhrkEreR7IR9MFIkvkm7fAhjmTOxJsGLp2LkCBpPzU+U+wVh?=
+ =?us-ascii?Q?NAIQkZn6e88eRrj+G8NDLss6hSbzcLNuZ3uvaMB90/ZI5ADZS/B8LfCXYtUh?=
+ =?us-ascii?Q?JCaG9hWb7+e3fTHnLKH+i3I8BEgeEmNo4k76j62287a/xFml1mt/M9BA07CJ?=
+ =?us-ascii?Q?ClyzHsGOzu1hjh31v41Pm6bh1Dh/T6qm7VzvbCw74rLEVbidlnjeOC9qwEC/?=
+ =?us-ascii?Q?9m7rPFpaHyKp5kG3wgBABy2JjWyBiI6orJT+I75wc6ACtwcerpdhqRJ2pHCZ?=
+ =?us-ascii?Q?pb10upi7oGXSakb8ULiHu3b7bAv/SFYACR9NArZPDp0tRtrgNqtUdLRPTfgr?=
+ =?us-ascii?Q?yTJOLEtxD632wT+U2nuHgHfT82zclPOysXS7D820phkyK9+QLmqFNDqcwaVw?=
+ =?us-ascii?Q?9UsprZl79RcrNhSB8iuAFIL6Xg23vJBHezLUPJF5QReGncE9HT6muEQXtlkX?=
+ =?us-ascii?Q?83N+H9wChYKl2RwZGZzUfXgNZxXMrZlwsPwWqatkAtWx6jchMLZkbqNyjHTT?=
+ =?us-ascii?Q?+xPD4p65KqgJkmtN2iQpeMvvvT/y1eqEn9NfixECDMvdW+/Qnxn+JBTOMyaz?=
+ =?us-ascii?Q?IkvABm91lRvSYiiJ2bu7gDiadnm+INB1x/toO9Wz/toCU4fGKGGsFtvwijFi?=
+ =?us-ascii?Q?7ZXttChkF4MkXlM0eIjYfLBZS2X+8GuRIZ84yVDo2iNYD6qdFJ7TnNAhLKMb?=
+ =?us-ascii?Q?qm+duFWT0SnRQTvu0QWomgNjY1Y/VC3Q3Kb/cHU43bY3QclWI55KqPRnb+tC?=
+ =?us-ascii?Q?cx4G4FTDM6hcQSmUQ9ajGnyqFo4RFsoOZkG6T3E44jWs4JIUV8WHaodQxJtd?=
+ =?us-ascii?Q?r/d3wA46afY9iS/EfePn6FrNGOGG48nIcuuGbGzxyPHIX15vpm9HPa7dxMMv?=
+ =?us-ascii?Q?O3JZEkMx5x2qXLcZdJKWA8Mx44fKreV7LxDmsuvR5ho4VvhJ7tJy/hYNrWca?=
+ =?us-ascii?Q?A2ZgSy/M1KYxqQfyfwHkTlq6UnKUsBQEbTs5mp+Z3TJkGzGZG1/f3izZOpiZ?=
+ =?us-ascii?Q?ayl25urlApd/01MinMkUZ8alyfXQ9CPYGgCPvXfth691TrXnl+7J070fbL0d?=
+ =?us-ascii?Q?PEm1vM8HJpBYC1Tav0tMOF6h7zCi+N2xDHg1Yfuu17OK07sK0aqkzrdSablc?=
+ =?us-ascii?Q?vxskRBrLsfeY3bJBiWpofSTSQD1GKgHuFbz184jMCyhG0ijH7uowO2w837bs?=
+ =?us-ascii?Q?PDHFdP4/TCYpEkeKKm4=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?KUIK8WX9tyHdMhlwuzGLqgM1ALJ7kbO3diHi+rLwV+HDeNh3zUgRwXkPrbp9?=
- =?us-ascii?Q?9OKrN2R5QoIe/zO1DnquGfNnNV0wT9zQctl5CDVuCQTF2/IinQdwukMa48Z2?=
- =?us-ascii?Q?zjDblPZhtObL7tozXQSnFUqPKERTndHLS2tGiTTFtG9HGvLTb5dXQcKYNi09?=
- =?us-ascii?Q?ddunRNg2jp5PBEAFLZMQzz2w1QZAKCGeAn7yOFj0jUcpDMpveucukqH5vzuF?=
- =?us-ascii?Q?PpEzLVl73e748GZ8d1PTCNFpZfC1AjlrrQBy0VHV3MdwgeabJr9+cS2ZBbm3?=
- =?us-ascii?Q?17AxVEHV0rHj7x6w2B1lG00kTipgh5k87DCoSbu8eH/zVUva/PTLKLeAOt0u?=
- =?us-ascii?Q?4Z2L9e6yu/ZOgXspAk+H5OuHV38xjOFshEcLrxjuV/uDWmxfQWPpNfVXhd1a?=
- =?us-ascii?Q?7kc+phDeLzC7HEsuGrwuWLsbZj92d3kLbD50JJhgRDnybSMVMLTSbItW9VaR?=
- =?us-ascii?Q?S+QBNZwCsd6zMDi97cYZ0WDnfjSnp3wqV7625CRxOcbCnbS7BG4NuQQw49uB?=
- =?us-ascii?Q?Pq7+lTgDTTv7nusD7IL+Uh0OkCplCipVbxf4nyJV2ee6mvTwsmMluHMhRjyR?=
- =?us-ascii?Q?xKZvfrX6f1Zq2dhype48wuJq99zB3bfM6ORlPpwSnIEU8AxsjjLOrw/Ya3Tp?=
- =?us-ascii?Q?y84vaNpS1wrZ5rilzPyiZ2AAgbM5NOrqkScsd3XDUViBEMrHGUjzDvbHZjaX?=
- =?us-ascii?Q?cmqKjYvcEqwTTXxP3BdGGyJewsicvds0QvPDBYD4qsj/ENuvD2RPxXLm7nKg?=
- =?us-ascii?Q?XZQ+OX9fuoCiwhGQl36u8FC9TKaK65+UHgikbujNK/Su31v03WZttncnu4lh?=
- =?us-ascii?Q?etLh6WhgNJhwCFeadPkpaX2rXh/BKUi2qCgigOSO2O4m6+EB7x4boWrgN35j?=
- =?us-ascii?Q?LRuBQj5wg6ehJA6L2bt2UUL2h+Jj3iDhuzcvakVjhYsisRc/w0vLnbZlgSo3?=
- =?us-ascii?Q?zTKgs9fpnvuLKlT2wwjxqKY7QwfCb+5epbTX0xsFnDY4esSHdNkthy/fN0um?=
- =?us-ascii?Q?Azpj4X1MtPUsm2kwR7Tx6q1MIPmBbVB+dgjZGt/tkYTqXmhAZCpFfAVJMxoY?=
- =?us-ascii?Q?s+9Trs/OQUq1MyGP/xxJ3pe8uWJdt+0KNoZLCMxoxcUMsHtJ355dy/iHxLcT?=
- =?us-ascii?Q?puSFK5uu+Atr01y/AnAdoPmQkJbhrJ8idBvDZBFQ6oH4UGChV84VIDLQecBJ?=
- =?us-ascii?Q?rnhfKlQQAmqAfe7NtalLO9piomOBwlXwH4L987XrgAuvjq0K8ZamAd7qhnkZ?=
- =?us-ascii?Q?z1dwC/4cxeF5tI4eA7xuGHwXV3XT6mR2uuBU1lJC6lwHWG6YsT3vcoJlB+5M?=
- =?us-ascii?Q?zdNfO8macN2fPxRn7bhijWpdG3V4e/KRxNG1TX/Vc6/HN08HyE8+Bkm+0gKd?=
- =?us-ascii?Q?PeLHixPI0WujcLm+1s2DiGRxsDfd4X8SLsAfljMyfvcGR5/2gChfJ4c5/BCP?=
- =?us-ascii?Q?EUyISEvo+A1yA1dM1xc2zIrrMExoGHYS+FuvsM7Ff50U8cb0tUQrmNLJqdyq?=
- =?us-ascii?Q?bvZ06s3fQA1lZaug2NuLbjakjIQ5pXlrN9kcJEQ7AnGjSzrcjornWe7jGFrE?=
- =?us-ascii?Q?t2nQSyeAvMF4lhp2Cy9n+SaXUoHTWzcN2wi1TVwUOuzJzFdZaWqb4u/E8EBL?=
- =?us-ascii?Q?V2ExUIMvBaDDT0oCfX9/Aak/HeYt+2PoL5m9evIg2md2YKWCNuqTd+6WK2Mz?=
- =?us-ascii?Q?+iQIHLa7691VyI17D9CgTcvPwoYdRKiHWAZ+JZrzPmyO6fvP?=
+	=?us-ascii?Q?qdiB9sUX5d9ALDVFo35ZBR7cWVo8fNAzs3h8D2CKjzw7YOG0jSa71ivzXitc?=
+ =?us-ascii?Q?X1E58CjU/t5q+YHdK8VcraGk4upRVmTF2uACGlfPnYr0nJvvxI/rioC8RwVn?=
+ =?us-ascii?Q?ee8f7/NyZVd4pSQIH74D1Ge/1I0mrB0nsaH4NN03XvAyQQRsVoHn8m/CCpdf?=
+ =?us-ascii?Q?kboPqNTpUk0XUy4UrDLYsVe/aRHtplQJoJOe7GHfFFXDl1NmLWaDjNHqNQEX?=
+ =?us-ascii?Q?PFntspWqTr7WEZcNDHtJcihWh1EeocVATarS65hRIZSq9zLfi3KzKIEYz12u?=
+ =?us-ascii?Q?U/bdpzd699baKgk0QGvt2swA0n01U6UDx2nz221h3LmyX0KlUqPVFqATtfgX?=
+ =?us-ascii?Q?wBHRzWwpp+Wd5tAZLCHIJ81ZdjZmmHsnFN8hA0QvzIEuL5RgM4eaZUVYBaga?=
+ =?us-ascii?Q?jvtpj10vOZWdR/2r6JO9rxo8GbW1Bd4PBHviai2lM1dEZUYGpMnEwBTg6t7g?=
+ =?us-ascii?Q?jkWIsCDkmbBiW0kFHjqRc20aFVrFYx6rxPtCaE5nTySCAVtHnC7H3oQtSQGs?=
+ =?us-ascii?Q?Lqe1uTqpDd2eI6ZADukHgA7/nqgLuCv9FUdNYhTZbHMQY7Rs4mx0aViog3FH?=
+ =?us-ascii?Q?j+8CGzIbmDqaJRp7pGJ+s+S5xSuTlxmMpz0BdW0Gyt7rmlIn9B1v7Yq26Ypa?=
+ =?us-ascii?Q?l+5r1nxpqSGYM/1vOwTRqVaFEzPBWNMSza/Y0ZbKUeLkvzJvG5ZH97j8mqF5?=
+ =?us-ascii?Q?BHYr5ozgp0JIwdfoml5/rrvzReSzl3rrS303G206F8PCQUqkAYyIj3X095b0?=
+ =?us-ascii?Q?f2X/ZlAWlpmqi+YpD2csTXIJd/cRVwETqt3BAlvjzV7Z/sR/gK3JP92pEZHP?=
+ =?us-ascii?Q?Emeb6Fri0+XzYOZ32EUb3LAGRFtXAC4KP/UsuNu/lpZdhc3zIGDUp/SwtE8o?=
+ =?us-ascii?Q?Hu6+g5HDHRif2CJBVGBK2dY4ChvHjx+7qgHQ94T46QtWxclq2rf/tFka4GsK?=
+ =?us-ascii?Q?5/7ndyaiL+0FZuTWlDmVNE07utH6QCt3KK/UlcIhOfKp2zxEIxlcRm7J/K8H?=
+ =?us-ascii?Q?PMXKAxqEeum41psrA/MMl0KlM4Zz1h8N6wt0tAJqq/p9ugQh3AyRoR4ahWp9?=
+ =?us-ascii?Q?aXVMqXLubC4FNFAIL66pfaaKmv8Soi6kTo0YZU8myfRhMuj2tgq8mHY6F1ow?=
+ =?us-ascii?Q?rdhDVSuQwRwulZkysd4xEa0g+iE6YLIIWpp+eT6RX3zKt+YBqAWdKA5MfQ0J?=
+ =?us-ascii?Q?sY6/epnOuH2C69O29MOcAw47KSIjh7H2D6O7r6K3MgfmXv8UBbE4aysZBACE?=
+ =?us-ascii?Q?t/8Crx0EUcn+lUmlgjLqsaPiJv2gnOlRvW1EUmfgiU5z9dTVagz4Xueay36g?=
+ =?us-ascii?Q?5TCxazx5IN4aO+Z842EvlGQrof3T+N9GnhlsYa5f+l7UES+sNNUuBvEr2RyD?=
+ =?us-ascii?Q?w3akI79fny0gSFUERXwXDJjf3R13KF5CJcXa1HBjMHR0ziTF4GX+PDtQOsM0?=
+ =?us-ascii?Q?t8wu3+ouNTtKbWwRQQrp5EM/1OJP3HPD0rHmxFRt1sVaE9H5PwGtLZNwZ0F/?=
+ =?us-ascii?Q?bRNqV1p+MvIdAUYQuFeYG2gGhgiBnlFBsNqdku3ATKfKzZt/+z33YrP9Qhoj?=
+ =?us-ascii?Q?pyVJFiwSBboiaslSl3wHI9VB67xrdc40Kod/+4zr5aNaK3gdxMfBIgnlIGAT?=
+ =?us-ascii?Q?GZXKLtPonWGnpz3u89FSMM/sS+xQO+K3IPfGhD//3NuVl0AAwvRTZkVp1sUX?=
+ =?us-ascii?Q?d1k4CTjz2bX8bVmkH72Gt5GEfBYmCnLfZkMLP7Qovci2UmaI?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c947892-bb4a-4051-ba04-08de6629a3e4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77267c63-67c1-4c3f-89c3-08de662af3e2
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2026 09:16:56.5795
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2026 09:26:20.2436
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Q90NA5y02y7gXlF1HN/O4nFA7puGbWjrpzzf8dPqzP00jC4azQfomPKtqUidCl5R7iMcxFDDz1TgMVMOoD4ZRg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8573
+X-MS-Exchange-CrossTenant-UserPrincipalName: dXQD5D8cbRgoLss0FNUGUPVbS0/v3QfRkxdbsVRFidZlUT4Fbq2tBWXoo+7vj6K+Sk9P1aTIVGBj4X85yl7mBQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6471
 
 Hi Emil,
 
-On Fri, Feb 06, 2026 at 03:10:55PM -0500, Emil Tsalapatis wrote:
+On Fri, Feb 06, 2026 at 03:35:34PM -0500, Emil Tsalapatis wrote:
 > On Fri Feb 6, 2026 at 8:54 AM EST, Andrea Righi wrote:
+...
+> > diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> > index bcb962d5ee7d8..c48f818eee9b8 100644
+> > --- a/include/linux/sched/ext.h
+> > +++ b/include/linux/sched/ext.h
+> > @@ -84,6 +84,7 @@ struct scx_dispatch_q {
+> >  /* scx_entity.flags */
+> >  enum scx_ent_flags {
+> >  	SCX_TASK_QUEUED		= 1 << 0, /* on ext runqueue */
+> > +	SCX_TASK_NEED_DEQ	= 1 << 1, /* in BPF custody, needs ops.dequeue() when leaving */
 > 
-> Hi Andrea,
-> 
-> > Add a new kselftest to validate that the new ops.dequeue() semantics
-> > work correctly for all task lifecycle scenarios, including the
-> > distinction between terminal DSQs (where BPF scheduler is done with the
-> > task), user DSQs (where BPF scheduler manages the task lifecycle) and
-> > BPF data structures, regardless of which event performs the dispatch.
-> >
-> > The test validates the following scenarios:
-> >
-> >  - From ops.select_cpu():
-> >      - scenario 0 (local DSQ): tasks dispatched to the local DSQ bypass
-> >        the BPF scheduler entirely; they never enter BPF custody, so
-> >        ops.dequeue() is not called,
-> >      - scenario 1 (global DSQ): tasks dispatched to SCX_DSQ_GLOBAL also
-> >        bypass the BPF scheduler, like the local DSQ; ops.dequeue() is
-> >        not called,
-> >      - scenario 2 (user DSQ): tasks enter BPF scheduler custody with full
-> >        enqueue/dequeue lifecycle tracking and state machine validation
-> >        (expects 1:1 enqueue/dequeue pairing).
-> 
-> Could you add a note here about why there's no equivalent to scenario 6?
-> The differentiating factor between that and scenario 2 (nonterminal queue) is 
-> that scx_dsq_insert_commit() is called regardless of whether the queue is terminal.
-> And this makes sense since for non-DSQ queues the BPF scheduler can do its
-> own tracking of enqueue/dequeue (plus it does not make too much sense to
-> do BPF-internal enqueueing in select_cpu).
-> 
-> What do you think? If the above makes sense, maybe we should spell it out 
-> in the documentation too. Maybe also add it makes no sense to enqueue
-> in an internal BPF structure from select_cpu - the task is not yet
-> enqueued, and would have to go through enqueue anyway.
+> Can we make this "SCX_TASK_IN_BPF"? Since we've now defined what it means to be
+> in BPF custody vs the core scx scheduler (terminal DSQs) this is a more
+> general property that can be useful to check in the future. An example:
+> We can now assert that a task's BPF state is consistent with its actual 
+> kernel state when using BPF-based data structures to manage tasks.
 
-Oh, I just didn't think about it, we can definitely add to ops.select_cpu()
-a scenario equivalent to scenario 6 (push task to the BPF queue).
-
-From a practical standpoint the benefits are questionable, but in the scope
-of the kselftest I think it makes sense to better validate the entire state
-machine in all cases. I'll add this scenario as well.
+Ack. I like SCX_TASK_IN_BPF and I also like the idea of resuing the flag
+for other purposes. It can be helpful for debugging as well.
 
 > 
-> >
-> >    - From ops.enqueue():
-> >      - scenario 3 (local DSQ): same behavior as scenario 0,
-> >      - scenario 4 (global DSQ): same behavior as scenario 1,
-> >      - scenario 5 (user DSQ): same behavior as scenario 2,
-> >      - scenario 6 (BPF internal queue): tasks are stored in a BPF queue
-> >        in ops.enqueue() and consumed in ops.dispatch(); they remain in
-> >        BPF custody until dispatch, with full lifecycle tracking and 1:1
-> >        enqueue/dequeue validation.
-> >
-> > This verifies that:
-> >  - terminal DSQ dispatch (local, global) don't trigger ops.dequeue(),
-> >  - user DSQ / internal BPF data structure dispatch has exact 1:1
-> >    ops.enqueue()/dequeue() pairing,
-> >  - dispatch dequeues have no flags (normal workflow),
-> >  - property change dequeues have the %SCX_DEQ_SCHED_CHANGE flag set,
-> >  - no duplicate enqueues or invalid state transitions are happening,
-> >  - ops.enqueue() and ops.select_cpu() dispatch paths behave identically.
-> >
-> > Cc: Tejun Heo <tj@kernel.org>
-> > Cc: Emil Tsalapatis <emil@etsalapatis.com>
-> > Cc: Kuba Piecuch <jpiecuch@google.com>
-> > Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> > ---
-> >  tools/testing/selftests/sched_ext/Makefile    |   1 +
-> >  .../testing/selftests/sched_ext/dequeue.bpf.c | 403 ++++++++++++++++++
-> >  tools/testing/selftests/sched_ext/dequeue.c   | 258 +++++++++++
-> >  3 files changed, 662 insertions(+)
-> >  create mode 100644 tools/testing/selftests/sched_ext/dequeue.bpf.c
-> >  create mode 100644 tools/testing/selftests/sched_ext/dequeue.c
-> >
-> > diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-> > index 5fe45f9c5f8fd..764e91edabf93 100644
-> > --- a/tools/testing/selftests/sched_ext/Makefile
-> > +++ b/tools/testing/selftests/sched_ext/Makefile
-> > @@ -161,6 +161,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
+> >  	SCX_TASK_RESET_RUNNABLE_AT = 1 << 2, /* runnable_at should be reset */
+> >  	SCX_TASK_DEQD_FOR_SLEEP	= 1 << 3, /* last dequeue was for SLEEP */
 > >  
-> >  auto-test-targets :=			\
-> >  	create_dsq			\
-> > +	dequeue				\
-> >  	enq_last_no_enq_fails		\
-> >  	ddsp_bogus_dsq_fail		\
-> >  	ddsp_vtimelocal_fail		\
-> > diff --git a/tools/testing/selftests/sched_ext/dequeue.bpf.c b/tools/testing/selftests/sched_ext/dequeue.bpf.c
-> > new file mode 100644
-> > index 0000000000000..4ba657ba1bff5
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/sched_ext/dequeue.bpf.c
-> > @@ -0,0 +1,403 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * A scheduler that validates ops.dequeue() is called correctly:
-> > + * - Tasks dispatched to terminal DSQs (local, global) bypass the BPF
-> > + *   scheduler entirely: no ops.dequeue() should be called
-> > + * - Tasks dispatched to user DSQs enter BPF custody: ops.dequeue() must be
-> > + *   called when they leave custody
-> > + * - Every ops.enqueue() for non-terminal DSQs is followed by exactly one
-> > + *   ops.dequeue() (validate 1:1 pairing and state machine)
+> > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> > index 0bb8fa927e9e9..d17fd9141adf4 100644
+> > --- a/kernel/sched/ext.c
+> > +++ b/kernel/sched/ext.c
+> > @@ -925,6 +925,27 @@ static void touch_core_sched(struct rq *rq, struct task_struct *p)
+> >  #endif
+> >  }
+> >  
+> > +/**
+> > + * is_terminal_dsq - Check if a DSQ is terminal for ops.dequeue() purposes
+> > + * @dsq_id: DSQ ID to check
 > > + *
-> > + * Copyright (c) 2026 NVIDIA Corporation.
+> > + * Returns true if @dsq_id is a terminal/builtin DSQ where the BPF
+> > + * scheduler is considered "done" with the task.
+> > + *
+> > + * Builtin DSQs include:
+> > + *  - Local DSQs (%SCX_DSQ_LOCAL or %SCX_DSQ_LOCAL_ON): per-CPU queues
+> > + *    where tasks go directly to execution,
+> > + *  - Global DSQ (%SCX_DSQ_GLOBAL): built-in fallback queue,
+> > + *  - Bypass DSQ: used during bypass mode.
+> > + *
+> > + * Tasks dispatched to builtin DSQs exit BPF scheduler custody and do not
+> > + * trigger ops.dequeue() when they are later consumed.
 > > + */
-> > +
-> > +#include <scx/common.bpf.h>
-> > +
-> > +#define SHARED_DSQ	0
-> > +
-> > +/*
-> > + * Scenario 6: BPF internal queue. Tasks are stored here from ops.enqueue()
-> > + * and consumed from ops.dispatch(), validating that tasks not on a user DSQ
-> > + * (only on BPF internal structures) still get ops.dequeue() when they leave.
-> > + */
-> > +struct {
-> > +	__uint(type, BPF_MAP_TYPE_QUEUE);
-> > +	__uint(max_entries, 4096);
-> 
-> Nit: Can we make this larger? I don't think there's any downsides. I know
-> there's a mitigation for if the queue gets full, please see nit below.
-
-Sure, like 32768?
-
-Or we can keep it like this so we can potentially test also the fallback
-path sometimes (mixed BPF queue dispatches + built-in DSQ dispatches).
-
-> 
-> > +	__type(value, s32);
-> > +} global_queue SEC(".maps");
-> > +
-> > +char _license[] SEC("license") = "GPL";
-> > +
-> > +UEI_DEFINE(uei);
-> > +
-> > +/*
-> > + * Counters to track the lifecycle of tasks:
-> > + * - enqueue_cnt: Number of times ops.enqueue() was called
-> > + * - dequeue_cnt: Number of times ops.dequeue() was called (any type)
-> > + * - dispatch_dequeue_cnt: Number of regular dispatch dequeues (no flag)
-> > + * - change_dequeue_cnt: Number of property change dequeues
-> > + */
-> > +u64 enqueue_cnt, dequeue_cnt, dispatch_dequeue_cnt, change_dequeue_cnt;
-> > +
-> > +/*
-> > + * Test scenarios (0-2: ops.select_cpu(), 3-6: ops.enqueue()):
-> > + * 0) Dispatch to local DSQ from ops.select_cpu() (terminal DSQ, bypasses BPF
-> > + *    scheduler, no dequeue callbacks)
-> > + * 1) Dispatch to global DSQ from ops.select_cpu() (terminal DSQ, bypasses BPF
-> > + *    scheduler, no dequeue callbacks)
-> > + * 2) Dispatch to shared user DSQ from ops.select_cpu() (enters BPF scheduler,
-> > + *    dequeue callbacks expected)
-> > + * 3) Dispatch to local DSQ from ops.enqueue() (terminal DSQ, bypasses BPF
-> > + *    scheduler, no dequeue callbacks)
-> > + * 4) Dispatch to global DSQ from ops.enqueue() (terminal DSQ, bypasses BPF
-> > + *    scheduler, no dequeue callbacks)
-> > + * 5) Dispatch to shared user DSQ from ops.enqueue() (enters BPF scheduler,
-> > + *    dequeue callbacks expected)
-> > + * 6) BPF internal queue: store task PIDs in ops.enqueue(), consume in
-> > + *    ops.dispatch() and dispatch to local DSQ (validates dequeue for tasks
-> > + *    in BPF custody but not on a user DSQ)
-> > + */
-> > +u32 test_scenario;
-> > +
-> > +/*
-> > + * Per-task state to track lifecycle and validate workflow semantics.
-> > + * State transitions:
-> > + *   NONE -> ENQUEUED (on enqueue)
-> > + *   ENQUEUED -> DISPATCHED (on dispatch dequeue)
-> > + *   DISPATCHED -> NONE (on property change dequeue or re-enqueue)
-> > + *   ENQUEUED -> NONE (on property change dequeue before dispatch)
-> > + */
-> > +enum task_state {
-> > +	TASK_NONE = 0,
-> > +	TASK_ENQUEUED,
-> > +	TASK_DISPATCHED,
-> > +};
-> > +
-> > +struct task_ctx {
-> > +	enum task_state state; /* Current state in the workflow */
-> > +	u64 enqueue_seq;       /* Sequence number for debugging */
-> > +};
-> > +
-> > +struct {
-> > +	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
-> > +	__uint(map_flags, BPF_F_NO_PREALLOC);
-> > +	__type(key, int);
-> > +	__type(value, struct task_ctx);
-> > +} task_ctx_stor SEC(".maps");
-> > +
-> > +static struct task_ctx *try_lookup_task_ctx(struct task_struct *p)
+> > +static inline bool is_terminal_dsq(u64 dsq_id)
 > > +{
-> > +	return bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
+> > +	return dsq_id & SCX_DSQ_FLAG_BUILTIN;
 > > +}
 > > +
-> > +s32 BPF_STRUCT_OPS(dequeue_select_cpu, struct task_struct *p,
-> > +		   s32 prev_cpu, u64 wake_flags)
-> > +{
-> > +	struct task_ctx *tctx;
-> > +
-> > +	tctx = try_lookup_task_ctx(p);
-> > +	if (!tctx)
-> > +		return prev_cpu;
-> > +
-> > +	switch (test_scenario) {
-> > +	case 0:
-> > +		/*
-> > +		 * Scenario 0: Direct dispatch to local DSQ from select_cpu.
-> > +		 *
-> > +		 * Task bypasses BPF scheduler entirely: no enqueue
-> > +		 * tracking, no dequeue callbacks. Behavior should be
-> > +		 * identical to scenario 3.
-> > +		 */
-> > +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
-> > +		return prev_cpu;
-> > +
-> > +	case 1:
-> > +		/*
-> > +		 * Scenario 1: Direct dispatch to global DSQ from select_cpu.
-> > +		 *
-> > +		 * Like scenario 0, task bypasses BPF scheduler entirely.
-> > +		 * Behavior should be identical to scenario 4.
-> > +		 */
-> > +		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
-> > +		return prev_cpu;
-> > +
-> > +	case 2:
-> > +		/*
-> > +		 * Scenario 2: Dispatch to shared user DSQ from select_cpu.
-> > +		 *
-> > +		 * Task enters BPF scheduler management: track
-> > +		 * enqueue/dequeue lifecycle and validate state transitions.
-> > +		 * Behavior should be identical to scenario 5.
-> > +		 */
-> > +		__sync_fetch_and_add(&enqueue_cnt, 1);
-> > +
-> > +		/*
-> > +		 * Validate state transition: enqueue is only valid from
-> > +		 * NONE or DISPATCHED states. Getting enqueue while in
-> > +		 * ENQUEUED state indicates a missing dequeue.
-> > +		 */
-> > +		if (tctx->state == TASK_ENQUEUED)
-> > +			scx_bpf_error("%d (%s): enqueue while in ENQUEUED state seq=%llu",
-> > +				      p->pid, p->comm, tctx->enqueue_seq);
-> > +
-> > +		/* Transition to ENQUEUED state */
-> > +		tctx->state = TASK_ENQUEUED;
-> > +		tctx->enqueue_seq++;
-> > +
-> > +		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, 0);
-> > +		return prev_cpu;
-> > +
-> > +	default:
-> > +		/*
-> > +		 * Force all tasks through ops.enqueue().
-> > +		 */
-> > +		return prev_cpu;
+> >  /**
+> >   * touch_core_sched_dispatch - Update core-sched timestamp on dispatch
+> >   * @rq: rq to read clock from, must be locked
+> > @@ -1008,7 +1029,8 @@ static void local_dsq_post_enq(struct scx_dispatch_q *dsq, struct task_struct *p
+> >  		resched_curr(rq);
+> >  }
+> >  
+> > -static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+> > +static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+> > +			     struct scx_dispatch_q *dsq,
+> >  			     struct task_struct *p, u64 enq_flags)
+> >  {
+> >  	bool is_local = dsq->id == SCX_DSQ_LOCAL;
+> > @@ -1103,6 +1125,27 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+> >  	dsq_mod_nr(dsq, 1);
+> >  	p->scx.dsq = dsq;
+> >  
+> > +	/*
+> > +	 * Handle ops.dequeue() and custody tracking.
+> > +	 *
+> > +	 * Builtin DSQs (local, global, bypass) are terminal: the BPF
+> > +	 * scheduler is done with the task. If it was in BPF custody, call
+> > +	 * ops.dequeue() and clear the flag.
+> > +	 *
+> > +	 * User DSQs: Task is in BPF scheduler's custody. Set the flag so
+> > +	 * ops.dequeue() will be called when it leaves.
+> > +	 */
+> > +	if (SCX_HAS_OP(sch, dequeue)) {
+> > +		if (is_terminal_dsq(dsq->id)) {
+> > +			if (p->scx.flags & SCX_TASK_NEED_DEQ)
+> > +				SCX_CALL_OP_TASK(sch, SCX_KF_REST, dequeue,
+> > +						 rq, p, 0);
+> > +			p->scx.flags &= ~SCX_TASK_NEED_DEQ;
+> > +		} else {
+> > +			p->scx.flags |= SCX_TASK_NEED_DEQ;
+> > +		}
 > > +	}
-> > +}
 > > +
-> > +void BPF_STRUCT_OPS(dequeue_enqueue, struct task_struct *p, u64 enq_flags)
-> > +{
-> > +	struct task_ctx *tctx;
+> >  	/*
+> >  	 * scx.ddsp_dsq_id and scx.ddsp_enq_flags are only relevant on the
+> >  	 * direct dispatch path, but we clear them here because the direct
+> > @@ -1323,7 +1366,7 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
+> >  		return;
+> >  	}
+> >  
+> > -	dispatch_enqueue(sch, dsq, p,
+> > +	dispatch_enqueue(sch, rq, dsq, p,
+> >  			 p->scx.ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
+> >  }
+> >  
+> > @@ -1407,13 +1450,22 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+> >  	 * dequeue may be waiting. The store_release matches their load_acquire.
+> >  	 */
+> >  	atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_QUEUED | qseq);
 > > +
-> > +	tctx = try_lookup_task_ctx(p);
-> > +	if (!tctx)
-> > +		return;
-> > +
-> > +	switch (test_scenario) {
-> > +	case 3:
-> > +		/*
-> > +		 * Scenario 3: Direct dispatch to the local DSQ.
-> > +		 *
-> > +		 * Task bypasses BPF scheduler entirely: no enqueue
-> > +		 * tracking, no dequeue callbacks. Don't increment counters
-> > +		 * or validate state since the task never enters BPF
-> > +		 * scheduler management.
-> > +		 */
-> > +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, enq_flags);
-> > +		break;
-> > +
-> > +	case 4:
-> > +		/*
-> > +		 * Scenario 4: Direct dispatch to the global DSQ.
-> > +		 *
-> > +		 * Like scenario 3, task bypasses BPF scheduler entirely.
-> > +		 * SCX_DSQ_GLOBAL is a terminal DSQ, tasks dispatched to it
-> > +		 * leave BPF custody immediately, so no dequeue callbacks
-> > +		 * should be triggered.
-> > +		 */
-> > +		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-> > +		break;
-> > +
-> > +	case 5:
-> > +		/*
-> > +		 * Scenario 5: Dispatch to shared user DSQ.
-> > +		 *
-> > +		 * Task enters BPF scheduler management: track
-> > +		 * enqueue/dequeue lifecycle and validate state
-> > +		 * transitions.
-> > +		 */
-> > +		__sync_fetch_and_add(&enqueue_cnt, 1);
-> > +
-> > +		/*
-> > +		 * Validate state transition: enqueue is only valid from
-> > +		 * NONE or DISPATCHED states. Getting enqueue while in
-> > +		 * ENQUEUED state indicates a missing dequeue (or stale state
-> > +		 * from a previous scenario when the scheduler was unregistered
-> > +		 * with tasks still on a DSQ). Reset and proceed to avoid false
-> > +		 * positives across scenario switches.
-> > +		 */
-> > +		if (tctx->state == TASK_ENQUEUED)
-> > +			tctx->state = TASK_NONE;
-> > +
-> > +		/* Transition to ENQUEUED state */
-> > +		tctx->state = TASK_ENQUEUED;
-> > +		tctx->enqueue_seq++;
-> > +
-> > +		scx_bpf_dsq_insert(p, SHARED_DSQ, SCX_SLICE_DFL, enq_flags);
-> > +		break;
-> > +
-> > +	case 6:
-> > +		/*
-> > +		 * Scenario 6: Store task in BPF internal queue. Task enters
-> > +		 * BPF custody (kernel sets SCX_TASK_NEED_DEQ). When
-> > +		 * ops.dispatch() later pops and inserts to local DSQ,
-> > +		 * ops.dequeue() must be called.
-> > +		 *
-> > +		 * If the queue is full, fallback to local DSQ. The task still
-> > +		 * goes through QUEUED in the kernel and gets ops.dequeue()
-> > +		 * when moved to the terminal DSQ, so we track it the same.
-> > +		 *
-> > +		 * If state is already ENQUEUED (e.g. task was on a DSQ when
-> > +		 * the scheduler was unregistered in a previous scenario),
-> > +		 * reset to NONE and proceed to avoid false positives.
-> > +		 */
-> > +		{
-> > +			s32 pid = p->pid;
-> > +
-> > +			if (tctx->state == TASK_ENQUEUED)
-> > +				tctx->state = TASK_NONE;
-> > +
-> > +			tctx->state = TASK_ENQUEUED;
-> > +			tctx->enqueue_seq++;
-> > +
-> > +			/* Queue full: fallback to the global DSQ */
-> Nit: Can we remove this fallback? This silently changes the behavior of
-> the test, and even though it makes sense to avoid overflowing the queue,
-> it causes the test to succeed even if for some reason the
-> bpf_map_push_elem fails. Why not just bump the queue number to a
-> reasonably large number amount instead?
+> > +	/*
+> > +	 * Task is now in BPF scheduler's custody (queued on BPF internal
+> > +	 * structures). Set %SCX_TASK_NEED_DEQ so ops.dequeue() is called
+> > +	 * when it leaves custody (e.g. dispatched to a terminal DSQ or on
+> > +	 * property change).
+> > +	 */
+> > +	if (SCX_HAS_OP(sch, dequeue))
+> 
+> Related to the rename: Can we remove the guards and track the flag
+> regardless of whether ops.dequeue() is present?
+> 
+> There is no reason not to track whether a task is in BPF or the core, 
+> and it is a property that's independent of whether we implement ops.dequeue(). 
+> This also simplifies the code since we now just guard the actual ops.dequeue()
+> call.
 
-Hm... but if for any reason we overflow the queue we'd get a false positive
-error: task is ignored, we trigger a stall and it looks like something is
-wrong in ops.dequeue(). WDYT?
+I was concerned about introducing overhead, with the guard we can save a
+few memory writes to p->scx.flags. But I don't have numbers and probably
+the overhead is negligible.
+
+Also, if we have a working ops.dequeue(), I guess more schedulers will
+start implementing an ops.dequeue() callback, so the guard itself may
+actually become the extra overhead.
+
+So, I guess we can remove the guard and just set/clear the flag even
+without an ops.dequeue() callback...
 
 Thanks,
 -Andrea
