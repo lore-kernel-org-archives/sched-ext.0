@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140D638884A;
-	Mon,  9 Feb 2026 17:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1094D389449;
+	Mon,  9 Feb 2026 17:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770657810; cv=none; b=qHLGtdXjZCbqw0LtIB70iePyBbAUs23mEuE3XHwj6cpHH5JYBMuI1U9r63M6ubyE2tTRywXfI9IUqa72g2pnGxHrXlPrDM47mRll/B/8T9YgoCNbt7wrzpXsVphPFwl9ck5QFiY0cS06wv9IgjVRqKRsWSSAzaX8iPPTyTGX1oI=
+	t=1770658132; cv=none; b=jlxeAJHdXnA7Hs+aG6ocKDXCAZgvzm+GqzVxxeSoJkeci+YOVpYoUg2H35Do98sKghuBTMujfeXRIm4G0VnFPkrcsBo0EmD5BCSJAcwrVkNRANZXO5M9AXPhtkIglTutwwT6XKqMSgFj9XN0zHYKdn8tS/mOtlnIElZzylNFAZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770657810; c=relaxed/simple;
-	bh=DccDVQmCDmi/GXwQ/U0xEE+66o6D0VpgjrF35zMMgZM=;
+	s=arc-20240116; t=1770658132; c=relaxed/simple;
+	bh=r5paYUan2KCbIbx7qF7TvehPLnQsRcqoX092y0UionU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qDF5zGDgAunOd41++jAuOZnJC8ESWh82Axn+HYnQHjtYuJPVRp1bbbYrCVxiBMcluayDHvxdnTeBOC+cA25g3Jmqf2BGl1ebEpEzDJCbKJYsrXLOP1L1i5XQpmSzYLbC3OgxDM3UnEEFe5OZCgU7PNgtoPMIOGmTvsbthKK5GeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=flhBQKdO; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=pazx5vIet5XtSspdWRE1xurNhZt1ZHgev6+tUyrJI3lW38tVBd1Yae+fdcQ/Wp5IX0/AhH2IdAcnAMqY/j7WxVnhEc0koXlWNeCrdZ6HXZPNtlW1hN1926FaOsWb1poGBSFhBavp80FJ6ncLxhca3K7c+JeRZKQNWb9ncYLMoJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uj8A7hM2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="flhBQKdO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958E3C116C6;
-	Mon,  9 Feb 2026 17:23:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uj8A7hM2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E3EC116C6;
+	Mon,  9 Feb 2026 17:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770657809;
-	bh=DccDVQmCDmi/GXwQ/U0xEE+66o6D0VpgjrF35zMMgZM=;
+	s=k20201202; t=1770658131;
+	bh=r5paYUan2KCbIbx7qF7TvehPLnQsRcqoX092y0UionU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=flhBQKdOjiEOkL6rMPZ+SNJn3ystjzB3D2CIiKPbwKMMl38Nt6joVQ5PIgM6Oz4d6
-	 Dx1D5pOHl8PUy3E4zZHtbvisDFeAyyvblxXCWk95TTHymiY4HTbOjWqR7fFR4UTtMt
-	 MfGpfJarOKl/uq9r22PyZIqiJseq4kId0Y5zZw72Xgp4fa9187KAg3vIfOLkejizh6
-	 lWJxgxqhPU0amB81omWCtJFIdizNF8yl8hA0KJoI6UQzDZSahhXehQDLfxSeFmERqw
-	 n/9jLUR0uwg8MBFhyiWc8Ts4r5H42aHhacjEo1cvf6A+xECdUTE8jv9XNWdF8T96OO
-	 WK1X2ZT5ls8Yg==
-Date: Mon, 9 Feb 2026 07:23:28 -1000
+	b=Uj8A7hM21D5ydu6qQns8GSIO6QGVcy06D2DRiVqL3zSNlZ4nu3Y6RIxcbY1xI5od4
+	 GcG8Qn3H0vvZV/KzpBIYs/49xrQ1K9Yjqh1JcSyZl/sWFuSDQo1986u90hFslSCBmy
+	 hoUkq5+hk4UO5atWm4VWmeFCD3/cpeawR81TBipFNrOBkuQf9GDi5/zGr7x04tSQ+z
+	 5XRMb0JHimL5h0X+JUFSiK0tJJIib6T0L0K2E9jcYtE4DcWWMeEaQBHvQd6e+GlKvJ
+	 QhxfN81cwLF+s1tanomOSkam9RDJDetyNbS01f5Ib4YHSyuZk5YZ67Afnn2YQWD8ER
+	 J1J1y7Uyj72Gw==
+Date: Mon, 9 Feb 2026 07:28:50 -1000
 From: Tejun Heo <tj@kernel.org>
 To: Andrea Righi <arighi@nvidia.com>
 Cc: Emil Tsalapatis <emil@etsalapatis.com>,
@@ -36,19 +36,12 @@ Cc: Emil Tsalapatis <emil@etsalapatis.com>,
 	Christian Loehle <christian.loehle@arm.com>,
 	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Add test to validate
- ops.dequeue() semantics
-Message-ID: <aYoYECCY_k1IrGqp@slm.duckdns.org>
-References: <aYcC_aKj_tO62rXZ@gpd4>
- <DG9BLVVE2TJQ.381PKRLX41AM2@etsalapatis.com>
- <aYhRKbkHf-or9lNO@gpd4>
- <aYhkv2K99aqiuwr5@gpd4>
- <aYiVv998mfMGVMCq@gpd4>
- <DG9RY7Y4VMWB.2IL8Y6Z4P5IA8@etsalapatis.com>
- <aYjtOQP0tmGIqoOM@gpd4>
- <aYm00oHl3BRWNFFA@gpd4>
- <DGAIRREHTBTV.E8XTJPHQUAN8@etsalapatis.com>
- <aYoAmES8tKNZJkdx@gpd4>
+Subject: Re: [PATCH 1/2] sched_ext: Fix ops.dequeue() semantics
+Message-ID: <aYoZUoyKCxk2bYiy@slm.duckdns.org>
+References: <20260206135742.2339918-1-arighi@nvidia.com>
+ <20260206135742.2339918-2-arighi@nvidia.com>
+ <DG860JW64VVD.31BS2QTEB8XZQ@etsalapatis.com>
+ <aYcFOVlJhUU5huNd@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -57,61 +50,43 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aYoAmES8tKNZJkdx@gpd4>
+In-Reply-To: <aYcFOVlJhUU5huNd@gpd4>
 
-Hello,
+On Sat, Feb 07, 2026 at 10:26:17AM +0100, Andrea Righi wrote:
+> Hi Emil,
+> 
+> On Fri, Feb 06, 2026 at 03:35:34PM -0500, Emil Tsalapatis wrote:
+> > On Fri Feb 6, 2026 at 8:54 AM EST, Andrea Righi wrote:
+> ...
+> > > diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+> > > index bcb962d5ee7d8..c48f818eee9b8 100644
+> > > --- a/include/linux/sched/ext.h
+> > > +++ b/include/linux/sched/ext.h
+> > > @@ -84,6 +84,7 @@ struct scx_dispatch_q {
+> > >  /* scx_entity.flags */
+> > >  enum scx_ent_flags {
+> > >  	SCX_TASK_QUEUED		= 1 << 0, /* on ext runqueue */
+> > > +	SCX_TASK_NEED_DEQ	= 1 << 1, /* in BPF custody, needs ops.dequeue() when leaving */
+> > 
+> > Can we make this "SCX_TASK_IN_BPF"? Since we've now defined what it means to be
+> > in BPF custody vs the core scx scheduler (terminal DSQs) this is a more
+> > general property that can be useful to check in the future. An example:
+> > We can now assert that a task's BPF state is consistent with its actual 
+> > kernel state when using BPF-based data structures to manage tasks.
+> 
+> Ack. I like SCX_TASK_IN_BPF and I also like the idea of resuing the flag
+> for other purposes. It can be helpful for debugging as well.
 
-On Mon, Feb 09, 2026 at 04:43:20PM +0100, Andrea Righi wrote:
-> > I agree with going with option 1. 
+One problem with the name is that when a task is in the BPF scheduler's
+custody, it can be still be on the kernel side in a DSQ or can be on the BPF
+side on a BPF data structure. This is currently distinguished by SCX_OPSS
+state (queued on the ops side or not). We do say things like "the task is in
+BPF" to note that the task is not on a DSQ but in BPF proper, so I think
+SCX_TASK_IN_BPF can become confusing.
 
-I think this is the only way. The only reason this is a bit murky is because
-we allow direct dispatching from ops.select_cpu() but if you look at how
-that's implemented it doesn't really bypass enqueue path. The task still has
-to enter the enqueue path (as that's when the rq lock is grabbed and task
-state can be updated) while already knowing what to do in the enqueue path.
-I don't think it make sense to consider a task to be in the BPF sched's
-custody before it has passed through enqueue. Note that you can't even set
-the flag - the flag field is protected by the task's rq lock.
-
-> > For the select_cpu() edge case, how about introducing an explicit 
-> > kfunc scx_place_in_bpf_custody() later? Placing a task in BPF custody 
-> > during select_cpu() is already pretty niche, so we can assume the 
-> > scheduler writer knows what they're doing. In that case, let's let 
-> > _them_ decide when in select_cpu() the task is considered "in BPF". 
-> > They can also do their own locking to avoid races with locking on 
-> > the task context. This keeps the state machine clean for the average
-> > scheduler while still handling the edge case. DYT that would work?
-> 
-> Yeah, I was also considering introducing dedicated kfuncs so that the BPF
-> scheduler can explicitly manage the "in BPF custody" state, decoupling the
-> notion of BPF custody from ops.enqueue(). With such interface, a scheduler
-> could do something like:
-> 
-> ops.select_cpu()
-> {
->         s32 pid = p->pid;
-> 
->         scx_bpf_enter_custody(p);
->         if (!bpf_map_push_elem(&bpf_queue, &pid, 0)) {
->                 set_task_state(TASK_ENQUEUED);
->         } else {
->                 scx_bpf_exit_custody(p);
->                 set_task_state(TASK_NONE);
->         }
-> 
->         return prev_cpu;
-> }
-> 
-> On the implementation side, entering / leaving BPF custody is essentially
-> setting / clearing SCX_TASK_IN_BPF, with the scheduler taking full
-> responsibility for ensuring the flag is managed consistently: you set the
-> flag => ops.dequeue() is called when the task leaves custody, you clear the
-> flag => fallback to the default custody behavior.
-> 
-> But I think this is something to explore in the future, for now I'd go with
-> the easier way first. :)
-
-We should just not do it.
+I don't know what the right name is. When we write it out, we say "in BPF
+sched's custody" where "BPF sched" means the whole SCX scheduler. Maybe just
+SCX_TASK_IN_CUSTODY?
 
 Thanks.
 
