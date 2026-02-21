@@ -1,49 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1E63126C0;
-	Sat, 21 Feb 2026 03:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FE5212F98;
+	Sat, 21 Feb 2026 03:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771643989; cv=none; b=V5ESZ+NZEeDuJz8o9Xi75IljEPyB0W+mhzLaWYwB5rQ80pBikT4CumCkR8pAtmSW73wWrwxS6D5LDz/Y8bUiFv9/nBnLQX4/+oG4KrtoQjr4JgqNcZglNJaLReXoO2WgEekKReWp6iIBi3xF7mocdDEYBltSK7UJRqgzLMXce5I=
+	t=1771645309; cv=none; b=D+j1yB3Yj1EWITEDRCg+pDCvn5Xbu6/vUWAKJ8hJyhN3qnPvEOS90x/H3FlW/+pH64Wq++xU+1sGTjcloZtOvT85Kz1lTQkbG+GIvDDpj30xPNAgymn/ObiDB1A8cv35UdqyjdoBN4qxOTHDoi+SYW+Yh80InhPuiulPwFsgkYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771643989; c=relaxed/simple;
-	bh=5/Jg/cpVR7WaUS8y+4lvIsX6pu4+Qt9Jv+1IUK5YwJ4=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=CaGAVys4OVE7Pbj0NFijFrKkQutZ4zNYvWsW2Tv9/5B14E+FlrSXf7cljsgw4sK1pZgaJHxSm61vCRCqOQ5gorqj2kkMNB5X6YYLHefnLZqVfILMLJPSVCEmrbqzKstVFFbwZukHSucJG1xdk8q/fIObdDgEC9ZjQ/DYppggXg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cblJeq70; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771645309; c=relaxed/simple;
+	bh=m3JnmAKqXfa0e2Bu4axFrlysGLe8GSEGDHYNvxqrdfE=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=BwQzNO35z16Clo1erYJ5IFgzkxULrUAhuSO4crwdjiQTCk1GyzsiVYCGV5RHORQpKXeDprsd80gCVPVxT00RCJ3Af3z6xZw+7iwiwhSKDSfO8uuGtsZj+6BihKJ2hAZcm0sREVvMfxJ1ljcS+z+C76x6EbBK8BHnqNx/aCVPrM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lwFzWloq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cblJeq70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C606C19422;
-	Sat, 21 Feb 2026 03:19:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lwFzWloq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE66C4CEF7;
+	Sat, 21 Feb 2026 03:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771643988;
-	bh=5/Jg/cpVR7WaUS8y+4lvIsX6pu4+Qt9Jv+1IUK5YwJ4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=cblJeq709mjUvLe/VCg8wozwvrb0XLHHUDQrFDN4OOTuc2375a122vf+z2AKPNV9p
-	 06R45Hu3iOOaRIXjdAwDXue54QhPsWaaaDBkMaUgIuL0HrUOVsdeXP6/BQWMLXAbt1
-	 PvyGxwQbARTZ2b2WPH6er474Smghd/kC4uysO6xDS7xGqitJon0IQVs/VO7Non1xXq
-	 eooLcTn+Etd3tZSHxz6wxQgDWMVV2yPV0EQLAhtkRZRiJ/UhYMT7l9kzaglAarkASu
-	 xCGZ4ZHkm083ybRbYa6UcXrSTILHC9e+oqaPt+xgNEi6kt4dCwBs/htFsOFY3rk7xl
-	 Qqtr2FsQEbzvQ==
-Date: Fri, 20 Feb 2026 17:19:47 -1000
-Message-ID: <d522456b585409d5586ce897cce8b1a4@kernel.org>
+	s=k20201202; t=1771645308;
+	bh=m3JnmAKqXfa0e2Bu4axFrlysGLe8GSEGDHYNvxqrdfE=;
+	h=Date:From:To:Cc:Subject:From;
+	b=lwFzWloqsD3ZQgEIoZa3ulT6pREbHfNK1OPb76wRkPg9SztrowBNCk5s5ARyNvT3N
+	 KmDJuo6jozvLEWk3SFpMMV2Ri3QABJIcQE8tPHXAdMq/RSTni0/B/IZXib/t0LtPk2
+	 TjcnBs+7wGroz8Z/9rRefn67Q77kCdc2Pvo9ev5c3R6e9Ey3HqXpYkToBcJwoY1cB/
+	 C+9Rm/SLxwYAKWzaW25Nf+SF/Du4eQh0KPbuGOiXelEDp/KjgwMLDwc/F2QOjnJT1v
+	 logH5tJiCJ3hkcNNfxlHzA3I7QJ4XXTdr4xWP2yYJYImqfUibch9rX1Q74YBOFW68F
+	 rmutaxpEE/AaA==
+Date: Fri, 20 Feb 2026 17:41:47 -1000
+Message-ID: <bac5659887fbca95e7159ffb94ec2e43@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: David Carlier <devnexen@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>,
  linux-kernel@vger.kernel.org,
- sched-ext@lists.linux.dev,
- Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH] tools/sched_ext: fix getopt not re-parsed on
- restart
-In-Reply-To: <20260218192235.8699-1-devnexen@gmail.com>
-References: <20260218192235.8699-1-devnexen@gmail.com>
+ sched-ext@lists.linux.dev
+Subject: [GIT PULL] sched_ext: Fixes for v7.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Applied to sched_ext/for-7.0-fixes.
+Hi Linus,
+
+The following changes since commit 37a93dd5c49b5fda807fd204edf2547c3493319c:
+
+  Merge tag 'net-next-7.0' of git://git.kernel.org/pub/scm/linux/kernel/git/netdev/net-next (2026-02-11 19:31:52 -0800)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.0-fixes
+
+for you to fetch changes up to 640c9dc72f21f325700a4b0f839ad568ff21c697:
+
+  tools/sched_ext: fix getopt not re-parsed on restart (2026-02-20 17:17:38 -1000)
+
+----------------------------------------------------------------
+sched_ext: Fixes for v7.0
+
+- Various bug fixes for the example schedulers and selftests.
+
+----------------------------------------------------------------
+David Carlier (9):
+      tools/sched_ext: scx_flatcg: zero-initialize stats counter array
+      tools/sched_ext: scx_central: fix sched_setaffinity() call with the set size
+      tools/sched_ext: scx_userland: fix restart and stats thread lifecycle bugs
+      tools/sched_ext: scx_flatcg: fix potential stack overflow from VLA in fcg_read_stats
+      tools/sched_ext: scx_userland: fix stale data on restart
+      tools/sched_ext: scx_central: fix CPU_SET and skeleton leak on early exit
+      tools/sched_ext: scx_pair: fix stride == 0 crash on single-CPU systems
+      tools/sched_ext: scx_userland: fix data races on shared counters
+      tools/sched_ext: fix getopt not re-parsed on restart
+
+Ihor Solodrai (1):
+      selftests/sched_ext: Fix rt_stall flaky failure
+
+ tools/sched_ext/scx_central.c                | 10 ++++--
+ tools/sched_ext/scx_cpu0.c                   |  1 +
+ tools/sched_ext/scx_flatcg.c                 | 13 ++++++--
+ tools/sched_ext/scx_pair.c                   |  8 ++++-
+ tools/sched_ext/scx_sdt.c                    |  1 +
+ tools/sched_ext/scx_simple.c                 |  1 +
+ tools/sched_ext/scx_userland.c               | 31 +++++++++++-------
+ tools/testing/selftests/sched_ext/rt_stall.c | 49 ++++++++++++++++++++++++++++
+ 8 files changed, 96 insertions(+), 18 deletions(-)
 
 Thanks.
 --
