@@ -1,60 +1,62 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD0A1EB5F8
-	for <sched-ext@lists.linux.dev>; Sun, 22 Feb 2026 13:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E711EB5F8
+	for <sched-ext@lists.linux.dev>; Sun, 22 Feb 2026 13:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771765716; cv=none; b=jzUSxA6vZBMdxRlaGz1KelcTcjcP0cgo9t0CcshAZ8xhUpXMKycS6jAMN545Q7AxlwQhvjwqoWrFjmGeo89evTCQGIY2wAChngkWn8G3GRkJpMvpOXQIR0XrWxRsdeTwS95RKkL+A58pXajQ+UcJ021awnzqZ8raSvx0j7m1fuE=
+	t=1771765717; cv=none; b=hBrXle9vwZdvTgfjb7LBC52yy98WyopF0F1MlUnciIN55M4TmbwWMYK3J89BYUBywCq651mOvu1m4O1exiCXhytM5377WSHPUIoAd3bOfSSpmYX2tTzVePwcPult7sq+J3+DrohtdF2mGQVsixgGddQw4vrLp6goClxOkCRLplU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771765716; c=relaxed/simple;
-	bh=+UKKUdD2yH4ITBMHlAeyK+T/+RXvAV7v/Xy7fkUX7YM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Pc5PH8KL9oU4msrWEmrLjFkoh6L3CLCQjyksQabapCUFxQuR9DXdjuU1VcWnIUtFNJQmzEYKB+mL4OsuRehx0U8INAZbM2EfbvJG8f/XfHoiV0aGre6hPv3CQoTwZv7qxhhbnVxisRDKjAQ7+/5djcRAsoflOtDEK3knUc8ZKNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PsVL8cqc; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1771765717; c=relaxed/simple;
+	bh=093W+aBFDSsGozCiLRITQTRB/Q1wSgOb5Php984e3MQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cX2LJ+Bpcg/8G5ASS1uxTSsVZkLvVJLpcDN0l1kZI82tw5uvE+Pxq2TL5Ff46nG4w6GGY+4Yf2AjLzRuyOGUXFucQO+le9SNOEsyPDaTVqayFu0AKTDmbJop+unD1Y9LJ9g6RxnyQDM91m/PtJ+eRE0fSaM4GaqxcxsGU2tNpCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d8D6bXnB; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PsVL8cqc"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a962230847so34528705ad.3
-        for <sched-ext@lists.linux.dev>; Sun, 22 Feb 2026 05:08:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d8D6bXnB"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ad21f437eeso24449545ad.0
+        for <sched-ext@lists.linux.dev>; Sun, 22 Feb 2026 05:08:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771765714; x=1772370514; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EJwgf6pAFmLAjRyy6iJPt9pz1tnjfmh7sAoPdvP/EFE=;
-        b=PsVL8cqc4u+GUDzfV0gc6eQEso6cMQITK4/d2zyBtEFPh0IbFmheDiO1gIip+HPjkO
-         vaVcnUPpca/RublmIMtrzYiESU+Ha4Pf55z7h/hcj3nXNTtkGgjYqlhmHiOsEciZ/z+U
-         39lUi4zhkz/DyOCMwI5qKlfu9LGGAJ4vILuSNwNW1cMPDN/GtuJtWsUo4Xsca4cLDwZ2
-         Etynq9khxhyLLK0aXE1kSCRUhmHMga3GKGRTQ2Vr5myXTKXVGkYyMfIpAodhCes02SI6
-         d3jWXUwaI/xXX6i9DEa1QpnWeL34wMOcoiNnsD+obDRi61elDs78bskRjg9++IktzMfJ
-         Y4uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771765714; x=1772370514;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1771765716; x=1772370516; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EJwgf6pAFmLAjRyy6iJPt9pz1tnjfmh7sAoPdvP/EFE=;
-        b=n+wJVo41fpK5/MQCPCZQYA6cWs4Cj61B/MmSbE8dstGDCONljavlLPdxUfi0zoqZSW
-         y1/qM7t7Geoh2gVkGI4rQTB1h/wI/xpUIYXdnDOWiyqf8bPIu8oX3iyMXVrbaznKIB0b
-         gRuo+lCzygaKs0GgUffDAI4fOL0sJZJUGl1iIGVXj1q4mXNpRtcdba2WR3EeKLI9DBlc
-         Ry2k6jlZWSPgTCFd1sStjimziNbzh1it4H8iJueH0OUbdNNmisZNLoDd0RZ6Kdzk/UaV
-         wR1SwFyvvq/L1MM0P3SA+vWpCk+oMfmF2Dam+4HUs7M+lNEmU9BY/Lv4GAj3uAEo1RVu
-         XfUw==
-X-Gm-Message-State: AOJu0YzcZNVOTwwzgjG6YTtpstjSQi1alUdj9G0v9sGlUmW6uyFnH/+e
-	VmngUXdcSP6dtfPpYAVx4CqndPEy/iR4r0KDgZFD4l5YqhtNvgWsKeWzekXLyA==
-X-Gm-Gg: AZuq6aIUUw+9mou67TnLqVm7LbSeVC7xatdmLUH515vDTUENYieeCBOEC4m/TfbDsUm
-	Nwlbe36klRHZRqDxyXlHjDRtIcq78jwJwGpFzecfTglmC41/34VjbzEQXEsIA/w99y4O6Ev15n4
-	lXhH/a5fv9hp6Tf0cQeUbYIKvT5zTBt0sEURNrZs1NRAs6L99SHF2SKenY+JqC4oJ5vCOkm3Kv7
-	e97skGTUvVdA9Eqo7xKCf6ld2E7WG4mdHFH4W7+yizPmv3GJxmEUxSZVGr4uwFI2lS5iTpdku3a
-	u6vuo7kehoM2Pg3mSt9o2iHY9G0t/gGsHr/USp45QkBFwgKYvDvjiGkH758u/Mqe9+oaNzW4hJ+
-	yMGZKPutNtA8d4jtrQTXtrY/qr0nRJkSONzUi8kScXig1AozrczgVxBbdQ2X9ymu0fir14MjdHc
-	WAqmeutluJWZ0P+q5A0QubBDsQ7Sq62XYW4oDRu7npjsGb0D+WDcuO
-X-Received: by 2002:a17:903:32c7:b0:2aa:d320:e969 with SMTP id d9443c01a7336-2ad743fb337mr55485665ad.8.1771765714282;
-        Sun, 22 Feb 2026 05:08:34 -0800 (PST)
+        bh=Ujj3Hu6gUFnY9sYjUY12+YU8loRXQ42zO9RNeAwGRv8=;
+        b=d8D6bXnBOxgHGKaEpAT7ZizVDqyFl+SB2cRujhA9Btfp31iVmgA+Gn3RIcd/uNnJAN
+         MPjXD3+X1Xa4ZdYHwChv8cOMIUihtuoenMxPuSqMh/myxQ/4bos7Y5xeYJ3fV1aNXX5X
+         jv5otZQxiVCDOluJc769+MLkHYuVnLtdwz6CZXTzaGXDGymQUQw9hIn+fims2CqpHcSi
+         ubbw6zzgewlIyAmqLbsjze3R5xuUo9rlO+cAAK4w6610yLGkhYD6X1LhbS2xWK4X1cba
+         2TLPCr5iQMGrBjatOIP8BVkqkVP88JgzSOiUzQ8jvb71kDnVcrl13mnH6NrKlA+XbICZ
+         zBKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771765716; x=1772370516;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Ujj3Hu6gUFnY9sYjUY12+YU8loRXQ42zO9RNeAwGRv8=;
+        b=q3FeWlo/eNHnJrcbpuC9DVQdiaAzFDmvbtb2hS/LaN/g3V/oxoYcE/ignEOLZfFl/8
+         OEod05QpMQw8bct2pzxSEX0Qd+fnMUKSmmWLqKWYbdvI0pLdu8/VBFB3F37Sp0xLizMg
+         vA0EZylmfKEhFERUsqP13RXNvlyH/1DDS+9JqeRb7DGQlV+RqPXqIP/mllOOyAI+IH8E
+         uuSdLPXqC5IaerWrydYpzCwOMUWycwTZ21VBA+p71wGoOYmLbSlAgyYmH/1YlErdlWZo
+         lVKdLNu9oRwkI/HmDsgD6XhgfB76wYacjPiVOFUIt28+wBA6uxxDsifGCX+x7bMKWKgv
+         c7XQ==
+X-Gm-Message-State: AOJu0YyLPQB79S2E6R8oyIIKyKIhFaO6LkzIAteQ90+ZwjoswdYfaSdi
+	p78QYmv0Woqp5YgRBJkLE8QeR++RbKmGonOoQBf9g+I9Zrj8KL99KVLPyYj+gw==
+X-Gm-Gg: AZuq6aJtV6V9yiRWmc0pwpe/ty8OHRq/QpUpUVjsVsd2LaOULAgs//EEMq7nD4BSmM2
+	HWP4wArNdY9VYymsAliMoF7FstEduQauyyPTe57c8i5h077lAZkaLQMVICr519ElR0rD8GxbbL6
+	FIownmzz3Osz7OPDi7K2LT/qPQ0dqGE1aAvgAiNW6hMEkslNUqeReky1oPo/eAYYDAMMPCZAQep
+	0GGTpnADZL1BNxjzx5BwDw/Lx6TZHruG9KVtCNElVNv9epcvkLIE411J8JtlhwksIqLNjIcPQ5Q
+	8DZo+bv0y1iP/oX7YheWpo1uhEbufjeCHMLLKOh3OnfYNA3sAYLmvM5wlJKQAlVxQFBRjku/zJf
+	E8X7XDb7lcdq/mVm7HiLu8RWSD2roWqWuhwlLe8pGU5rEgxmmU7S/gfAeGqjusaK/MOxvV4THIq
+	kEqiq5HHnU7DnD7C6kLRzTpAff6QSYsGAO2n64K6+yIHWOW35PHfMP
+X-Received: by 2002:a17:903:19f0:b0:2a7:a6fa:eddf with SMTP id d9443c01a7336-2ad74284322mr56167425ad.17.1771765715919;
+        Sun, 22 Feb 2026 05:08:35 -0800 (PST)
 Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:f3c7:b896:5ac6:4be6])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad75027b0asm48433865ad.67.2026.02.22.05.08.32
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad75027b0asm48433865ad.67.2026.02.22.05.08.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Feb 2026 05:08:34 -0800 (PST)
+        Sun, 22 Feb 2026 05:08:35 -0800 (PST)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: sched-ext@lists.linux.dev
 Cc: tj@kernel.org,
@@ -63,10 +65,12 @@ Cc: tj@kernel.org,
 	changwoo@igalia.com,
 	jserv@ccns.ncku.edu.tw,
 	yphbchou0911@gmail.com
-Subject: [PATCH 0/2] tools/sched_ext: Clean up unused getopt flags
-Date: Sun, 22 Feb 2026 21:08:24 +0800
-Message-ID: <20260222130826.37085-1-yphbchou0911@gmail.com>
+Subject: [PATCH 1/2] tools/sched_ext: scx_central: Remove unused '-p' option
+Date: Sun, 22 Feb 2026 21:08:25 +0800
+Message-ID: <20260222130826.37085-2-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260222130826.37085-1-yphbchou0911@gmail.com>
+References: <20260222130826.37085-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -75,27 +79,30 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series removes unused option characters from the getopt() strings 
-in scx_central and scx_sdt. 
+The '-p' option is defined in getopt() but not handled in the switch
+statement or documented in the help text. Providing '-p' currently
+triggers the default error path.
 
-These flags ('-p' and '-f' respectively) were defined in the optstring 
-but not implemented in the switch logic or documented in the help text. 
-Removing them ensures consistency and prevents user confusion when 
-providing these invalid arguments.
+Remove it to sync the optstring with the actual implementation.
 
-Thanks,
-cheng-yang
-
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
-
-Cheng-Yang Chou (2):
-  tools/sched_ext: scx_central: Remove unused '-p' option
-  tools/sched_ext: scx_sdt: Remove unused '-f' option
-
  tools/sched_ext/scx_central.c | 2 +-
- tools/sched_ext/scx_sdt.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/tools/sched_ext/scx_central.c b/tools/sched_ext/scx_central.c
+index 2a805f1d6c8f..710fa03376e2 100644
+--- a/tools/sched_ext/scx_central.c
++++ b/tools/sched_ext/scx_central.c
+@@ -66,7 +66,7 @@ int main(int argc, char **argv)
+ 	assert(skel->rodata->nr_cpu_ids > 0);
+ 	assert(skel->rodata->nr_cpu_ids <= INT32_MAX);
+ 
+-	while ((opt = getopt(argc, argv, "s:c:pvh")) != -1) {
++	while ((opt = getopt(argc, argv, "s:c:vh")) != -1) {
+ 		switch (opt) {
+ 		case 's':
+ 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
 -- 
 2.48.1
 
