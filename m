@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C57A749C;
-	Wed, 25 Feb 2026 05:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007032AE68;
+	Wed, 25 Feb 2026 05:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771995657; cv=none; b=TDAfWKVeTSrSAGNGtRraCSRyuWpoAtI+vjaJIyKJGkOV48Xzzlk/UO++TStwk1Cb5NL4B36a3L9M1/v5Pbv5sxwo1W7iF2Qyu/CR3FmNA4zYD9uE+gL15gW/q9UsEJ6u8nU6BYZ3nI/e+cDwTfXtEw58GO3OfzzCB/HUJUun1CM=
+	t=1771995671; cv=none; b=pWCKl9Brqg8RgQdKYcln1lY1kS1PEYz6pM6GnbEOFEfbw4E+r4jC/4Lf5XiwalC4qb/i3CcaO+Xm3Qmp7RvAIAuYakIR63UsNPBk2qIOd4/vpdrRn0ipjmoC/QJvJT7Ln+TuDSt3vM2q/JIynp7V5XaqLBp4X3T+rRa1ttaJwa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771995657; c=relaxed/simple;
-	bh=LEg/kvL4+PWzwZZr3vvN0r75U42G46ZWLV2HAR0tIBY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RYLVSVzdL63oBSqQxK3cGAqY7mOiwXq4kyvSWweIZSbnGa+cy3eMFEYr6cPYtQCANCD1aXsQVSBtjpkF3qs7EfAxjpabSZfHNBzGwXvrd+hGYlGOmfQgNq1OFiIA2XQtCrfs6Q+3NtzNAyG4S3HQoSwQrfXd0By3uthD2SBc+Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcwhM5tL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771995671; c=relaxed/simple;
+	bh=It4b+yTeOY43S/HQWf3+BPLLI8XfMhUujDaAMmA/79A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IiL6deBsxdb/k6X239fFC3MXTKCa8eAc6/MrgUARLtD7mxumFxoMERMOruy0zykKAJIVER0C9IeneleVlawAIAp8GZJLUe7/HCppNEbwuzwUFbt6RJKkCtOufrsvfuSubC5wDeT6lAXT8xGjYTKKwwv6FHtNIPUYkQ5dm4Gy1z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m56suI0q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcwhM5tL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0033EC116D0;
-	Wed, 25 Feb 2026 05:00:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m56suI0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82805C116D0;
+	Wed, 25 Feb 2026 05:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771995657;
-	bh=LEg/kvL4+PWzwZZr3vvN0r75U42G46ZWLV2HAR0tIBY=;
+	s=k20201202; t=1771995670;
+	bh=It4b+yTeOY43S/HQWf3+BPLLI8XfMhUujDaAMmA/79A=;
 	h=From:To:Cc:Subject:Date:From;
-	b=hcwhM5tL0T8hzCiINRBnOAupJWtIlnwh7wZ4XBqEFyccvCy/TrfG8PXpOnGBKqQyA
-	 Cy5UWLrW1/rihugCRyxlGYVIYibRUae3+c7S302T/aWhioSS1BZjRsaiDUvzhok5aM
-	 ALYQfwXZ2BCpGLa9Fc8JEcUeSaA+iAoqGnDqrKt85C3VszqiySHvHdaXcFAvneE4qk
-	 6YP12xOzrVaE77Ohya8n7vFG0IEI1QnG/sl156o46QsW2dQtWt12iiXdYqB7o6orOm
-	 WwP3rft8BUqs1tTg/5cZL2o9Lel4EC8iHzP6NqzXON3TZ8BO8jOWyY5yW4lnZ919tp
-	 lhbjOkd8hBGKQ==
+	b=m56suI0q5jNvpfyZwfqQRTB8olAxNNhE/hgQdeh4M0C+hlUc4Tc3C0yBoJRxv8v6i
+	 V0pEp3vOt30+QKFgwEzCve8llcSle6Kf/t8LXp1ZBjRDq/IEgHximOEXa1d0WtHTYO
+	 fofmTwIQF4jtfNds+NqnHqimUU03iRaKZv8plySA09ksjqw5zSNO3AUT0GDg1vh+aB
+	 ZcdV0UAUBhQPNrMlymcU+pbo8FI0Hl+YJnxT1RkKr9u8OBGDKWiMzwydvv/wHmup8Y
+	 mRyosmaDDcGMb4ybOonhHnty+NcbGa9N4eGowD2Cq1bFKVhWz8g2iU5H6hm0TP2si7
+	 HnzhzJl7S1h6Q==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -32,11 +32,13 @@ Cc: void@manifault.com,
 	arighi@nvidia.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
-	stable@vger.kernel.org,
+	hannes@cmpxchg.org,
+	mkoutny@suse.com,
+	cgroups@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH sched_ext/for-7.0-fixes] sched_ext: Disable preemption between scx_claim_exit() and kicking helper work
-Date: Tue, 24 Feb 2026 19:00:55 -1000
-Message-ID: <20260225050055.1069822-1-tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-7.1] sched_ext: Implement cgroup sub-scheduler support
+Date: Tue, 24 Feb 2026 19:00:35 -1000
+Message-ID: <20260225050109.1070059-1-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -46,68 +48,132 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_claim_exit() atomically sets exit_kind, which prevents scx_error() from
-triggering further error handling. After claiming exit, the caller must kick
-the helper kthread work which initiates bypass mode and teardown.
+This patchset implements cgroup sub-scheduler support for sched_ext, enabling
+multiple scheduler instances to be attached to the cgroup hierarchy. This is a
+partial implementation focusing on the dispatch path - select_cpu and enqueue
+paths will be updated in subsequent patchsets. While incomplete, the dispatch
+path changes are sufficient to demonstrate and exercise the core sub-scheduler
+structures.
 
-If the calling task gets preempted between claiming exit and kicking the
-helper work, and the BPF scheduler fails to schedule it back (since error
-handling is now disabled), the helper work is never queued, bypass mode
-never activates, tasks stop being dispatched, and the system wedges.
+Motivation
+==========
 
-Disable preemption across scx_claim_exit() and the subsequent work kicking
-in all callers - scx_disable() and scx_vexit(). Add
-lockdep_assert_preemption_disabled() to scx_claim_exit() to enforce the
-requirement.
+Applications often have domain-specific knowledge that generic schedulers cannot
+possess. Database systems understand query priorities and lock holder
+criticality. Virtual machine monitors can coordinate with guest schedulers and
+handle vCPU placement intelligently. Game engines know rendering deadlines and
+which threads are latency-critical.
 
-Fixes: a69040ed57f5 ("sched_ext: Simplify breather mechanism with scx_aborting flag")
-Cc: stable@vger.kernel.org # v6.19+
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+On multi-tenant systems where multiple such workloads coexist, implementing
+application-customized scheduling is difficult. Hard partitioning with cpuset
+lacks the dynamism needed - users often don't care about specific CPU
+assignments and want optimizations enabled by sharing a larger machine:
+opportunistic over-commit, improving latency-critical workload characteristics
+while maintaining bandwidth fairness, and packing similar workloads on the same
+L3 caches for efficiency.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index c18e81e8ef51..9280381f8923 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4423,10 +4423,19 @@ static void scx_disable_workfn(struct kthread_work *work)
- 	scx_bypass(false);
- }
- 
-+/*
-+ * Claim the exit on @sch. The caller must ensure that the helper kthread work
-+ * is kicked before the current task can be preempted. Once exit_kind is
-+ * claimed, scx_error() can no longer trigger, so if the current task gets
-+ * preempted and the BPF scheduler fails to schedule it back, the helper work
-+ * will never be kicked and the whole system can wedge.
-+ */
- static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
- {
- 	int none = SCX_EXIT_NONE;
- 
-+	lockdep_assert_preemption_disabled();
-+
- 	if (!atomic_try_cmpxchg(&sch->exit_kind, &none, kind))
- 		return false;
- 
-@@ -4449,6 +4458,7 @@ static void scx_disable(enum scx_exit_kind kind)
- 	rcu_read_lock();
- 	sch = rcu_dereference(scx_root);
- 	if (sch) {
-+		guard(preempt)();
- 		scx_claim_exit(sch, kind);
- 		kthread_queue_work(sch->helper, &sch->disable_work);
- 	}
-@@ -4771,6 +4781,8 @@ static bool scx_vexit(struct scx_sched *sch,
- {
- 	struct scx_exit_info *ei = sch->exit_info;
- 
-+	guard(preempt)();
-+
- 	if (!scx_claim_exit(sch, kind))
- 		return false;
- 
--- 
-2.53.0
+Sub-scheduler support addresses this by allowing schedulers to be attached to
+the cgroup hierarchy. Each application domain runs its own BPF scheduler
+tailored to its needs, while a parent scheduler dynamically controls CPU
+allocation to children without static partitioning.
 
+Structure
+=========
+
+Schedulers attach to cgroup nodes forming a hierarchy up to SCX_SUB_MAX_DEPTH
+(4) levels deep. Each scheduler instance maintains its own state including
+default time slice, watchdog, and bypass mode. Tasks belong to exactly one
+scheduler - the one attached to their cgroup or the nearest ancestor with a
+scheduler attached.
+
+A parent scheduler is responsible for allocating CPU time to its children. When
+a parent's ops.dispatch() is invoked, it can call scx_bpf_sub_dispatch() to
+trigger dispatch on a child scheduler, allowing the parent to control when and
+how much CPU time each child receives. Currently only the dispatch path supports
+this - ops.select_cpu() and ops.enqueue() always operate on the task's own
+scheduler. Full support for these paths will follow in subsequent patchsets.
+
+Kfuncs use the new KF_IMPLICIT_ARGS BPF feature to identify their calling
+scheduler - the kernel passes bpf_prog_aux implicitly, from which scx_prog_sched()
+finds the associated scx_sched. This enables authority enforcement ensuring
+schedulers can only manipulate their own tasks, preventing cross-scheduler
+interference.
+
+Bypass mode, used for error recovery and orderly shutdown, propagates
+hierarchically - when a scheduler enters bypass, its descendants follow. This
+ensures forward progress even when nested schedulers malfunction. The dump
+infrastructure supports multiple schedulers, identifying which scheduler each
+task and DSQ belongs to for debugging.
+
+Patches
+=======
+
+0001-0004: Preparatory changes exposing cgroup helpers, adding cgroup subtree
+iteration for sched_ext, passing kernel_clone_args to scx_fork(), and reordering
+sched_post_fork() after cgroup_post_fork().
+
+0005-0006: Reorganize enable/disable paths in preparation for multiple scheduler
+instances.
+
+0007-0009: Core sub-scheduler infrastructure introducing scx_sched structure,
+cgroup attachment, scx_task_sched() for task-to-scheduler mapping, and
+scx_prog_sched() for BPF program-to-scheduler association.
+
+0010-0012: Authority enforcement ensuring schedulers can only manipulate their
+own tasks in dispatch, DSQ operations, and task state updates.
+
+0013-0014: Refactor task init/exit helpers and update scx_prio_less() to handle
+tasks from different schedulers.
+
+0015-0018: Migrate global state to per-scheduler fields: default slice, aborting
+flag, bypass DSQ, and bypass state.
+
+0019-0023: Implement hierarchical bypass mode where bypass state propagates from
+parent to descendants, with proper separation of bypass dispatch enabling.
+
+0024-0028: Multi-scheduler dispatch and diagnostics - dispatching from all
+scheduler instances, per-scheduler dispatch context, watchdog awareness, and
+multi-scheduler dump support.
+
+0029: Implement sub-scheduler enabling and disabling with proper task migration
+between parent and child schedulers.
+
+0030-0034: Building blocks for nested dispatching including scx_sched back
+pointers, reenqueue awareness, scheduler linking helpers, rhashtable lookup, and
+scx_bpf_sub_dispatch() kfunc.
+
+v2: Rebased to sched_ext/for-7.1. This patchset depends on the following fix
+    which is being sent separately targeting sched_ext/for-7.0-fixes:
+
+      sched_ext: Disable preemption between scx_claim_exit() and kicking
+      helper work
+
+v1: http://lkml.kernel.org/r/20260121231140.832332-1-tj@kernel.org
+
+Based on sched_ext/for-7.1 (477174ac35c5) + scx-fix-claim-preempt
+(097f6d24de4a).
+
+Git tree:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-sched-v2
+
+ include/linux/cgroup-defs.h              |    4 +
+ include/linux/cgroup.h                   |   65 +-
+ include/linux/sched/ext.h                |   11 +
+ init/Kconfig                             |    4 +
+ kernel/cgroup/cgroup-internal.h          |    6 -
+ kernel/cgroup/cgroup.c                   |   55 -
+ kernel/fork.c                            |    6 +-
+ kernel/sched/core.c                      |    2 +-
+ kernel/sched/ext.c                       | 2353 +++++++++++++++++++++++-------
+ kernel/sched/ext.h                       |    4 +-
+ kernel/sched/ext_idle.c                  |  104 +-
+ kernel/sched/ext_internal.h              |  248 +++-
+ kernel/sched/sched.h                     |    7 +-
+ tools/sched_ext/include/scx/common.bpf.h |    1 +
+ tools/sched_ext/include/scx/compat.h     |   10 +
+ tools/sched_ext/scx_qmap.bpf.c           |   44 +-
+ tools/sched_ext/scx_qmap.c               |   13 +-
+ 17 files changed, 2294 insertions(+), 643 deletions(-)
+
+--
+tejun
