@@ -1,135 +1,71 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F9F38F248
-	for <sched-ext@lists.linux.dev>; Wed, 25 Feb 2026 09:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CB63AE6E2;
+	Wed, 25 Feb 2026 17:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772013175; cv=none; b=l1u6b0IAkyUFLuSfy3uV5U7wh4xsZPACBcXUpZBK2m2ycqRz0i0QYPlQL59s/CSyqfQqEYf7F98A1OcN1ClOkb7/NPL+rhxE95Dt3cukpS6QuOu2ET0vAHkX+xx+D3pn/V8rvYvmjcVeLgiSRaY0cL3q2z15JKdcm7SqSXBqrUA=
+	t=1772039327; cv=none; b=ShWARCU3Ssw+B5NctWnEPJMsglDNraRLgnwEDaU+jLGPphPa9yIj30YF5lkpg9bvqKiC16d4btSUv60MaLvXEL6PTlo5csFfN8vbPnENdxqVvuBDMwDTcVJ703drRPSza+xiUGOwvIMNO6BAYiscDM8z38hjFMFeqFvkQK/zhnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772013175; c=relaxed/simple;
-	bh=MDrEFgcwxr4RQmTHk+YJ5HbbpzMh6vpOEfDu2mLU91w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=j/feSho3wFaDV5Y2Wi1pdDI9Y86D1+patpLE6ZwLDbCfaKExtFrqiqA2TeNTg+uzkxrefmHrj5iWLY+buhtwnBLSNT4Aa291CrT4obhskrL1fv1F+VirhEm5geQcr+DTblT5N9Lzni/6UboK0xswBN25Sc/I7sZhNvw80L6SlmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RjH6RigK; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1772039327; c=relaxed/simple;
+	bh=pGtTBQnQK9No8Ed6an3som6tWGLbWjpgFUGeWJ+BLFk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZNtdtst+OiW9fDjsOoYyazoR1oXt6bDPKkLgqVFa/xl0v+0XCYw4fvD5kRrbqy/ChmAW8g1VAI+IHIdPl33jdDZOrLNCDrooSTeQSowUv+mqBPvy0eIIu+B+lcL9+qh/+OztxCH9za3f6faCqSm6MIo6KLMDdN5o3wfQwKv+bE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jo+rq19+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RjH6RigK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1772013172;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kO0zoFWYPRbDr8YKYEjZMgyeFmg69CxtJKAzgYm3eLM=;
-	b=RjH6RigKCRwHJLKPC3Wf8stHTJ2XnYsBoegjzG+oiYWDWl3OmIS3jYnhYGHbIS7wRLUjWi
-	HyzwkJsv//GoEVlAtTYFJkl+2FGanz7s4jCcxBomb37YT4n9TCNFXBp4nnC39vOHqfdEpy
-	aIoSuIipA+lO6oaiybrNY6PKeQWIIs4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-ghaZjbg-McKL45C9Q17gmg-1; Wed,
- 25 Feb 2026 04:52:51 -0500
-X-MC-Unique: ghaZjbg-McKL45C9Q17gmg-1
-X-Mimecast-MFC-AGG-ID: ghaZjbg-McKL45C9Q17gmg_1772013169
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id AA8231956088;
-	Wed, 25 Feb 2026 09:52:49 +0000 (UTC)
-Received: from gmonaco-thinkpadt14gen3.rmtit.csb (unknown [10.44.34.216])
-	by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 6F5781800370;
-	Wed, 25 Feb 2026 09:52:44 +0000 (UTC)
-From: Gabriele Monaco <gmonaco@redhat.com>
-To: linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jo+rq19+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF96CC116D0;
+	Wed, 25 Feb 2026 17:08:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772039327;
+	bh=pGtTBQnQK9No8Ed6an3som6tWGLbWjpgFUGeWJ+BLFk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jo+rq19+KP55mHGeJkdYGeSNBHbP5nPM797iC4k6/7/QY1rh0u3WN/Tjb/SPff0W/
+	 wO8DTsfUrm9iLvNZ384BvcN5R1LqSrZe1+2P/yuo4IuMiAp63OyNYXA5otd7KChsU+
+	 A5NizHsu9/WSnck/aaSGKSV55UtC1LHddumfoOMRay9HU5QiLPW3Bx9ldR7wK0Ty8V
+	 UCL3VmwGstGUX0yllhF2+7gHUi2w70OdS9u5GcQQr6CVoCTdYRA9mdZHJl9PPcOGdh
+	 o+cTbpP/6J9WPFgZFsLCwh3GabobkUbzLt0KBZx9t/JjZOYmNGON0J3SM55IGNCBbe
+	 QKht+aCVDPA0Q==
+Date: Wed, 25 Feb 2026 07:08:45 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Gabriele Monaco <gmonaco@redhat.com>
+Cc: linux-kernel@vger.kernel.org, Andrea Righi <arighi@nvidia.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
-	Nam Cao <namcao@linutronix.de>,
-	Juri Lelli <jlelli@redhat.com>,
+	Nam Cao <namcao@linutronix.de>, Juri Lelli <jlelli@redhat.com>,
 	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	sched-ext@lists.linux.dev
-Cc: Gabriele Monaco <gmonaco@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>, sched-ext@lists.linux.dev,
 	Tomas Glozar <tglozar@redhat.com>,
 	Clark Williams <williams@redhat.com>,
-	John Kacur <jkacur@redhat.com>,
-	linux-trace-kernel@vger.kernel.org
-Subject: [PATCH v6 14/16] sched_ext: Export task_is_scx_enabled() for verification
-Date: Wed, 25 Feb 2026 10:51:20 +0100
-Message-ID: <20260225095122.80683-15-gmonaco@redhat.com>
-In-Reply-To: <20260225095122.80683-1-gmonaco@redhat.com>
+	John Kacur <jkacur@redhat.com>, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 14/16] sched_ext: Export task_is_scx_enabled() for
+ verification
+Message-ID: <aZ8snSHWw-U0lVz2@slm.duckdns.org>
 References: <20260225095122.80683-1-gmonaco@redhat.com>
+ <20260225095122.80683-15-gmonaco@redhat.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-X-Mimecast-MFC-PROC-ID: V5Dlj7uKennfk1IHggM3nXLYd_ftHNO2bbw_8P8Ya_k_1772013169
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260225095122.80683-15-gmonaco@redhat.com>
 
-When a sched_ext scheduler is loaded, depending on the configuration, it
-can handle also fair tasks, however it isn't trivial to understand if a
-certain task is currently handled by fair or ext outside of scheduler
-code. This can be a problem when writing verification or observability
-tools like RV monitors.
+On Wed, Feb 25, 2026 at 10:51:20AM +0100, Gabriele Monaco wrote:
+> When a sched_ext scheduler is loaded, depending on the configuration, it
+> can handle also fair tasks, however it isn't trivial to understand if a
+> certain task is currently handled by fair or ext outside of scheduler
+> code. This can be a problem when writing verification or observability
+> tools like RV monitors.
+> 
+> Export a task_is_scx_enabled() to allow quick classification by using
+> the scx state SCX_TASK_ENABLED.
 
-Export a task_is_scx_enabled() to allow quick classification by using
-the scx state SCX_TASK_ENABLED.
+This test already exists - task_on_scx(). Please feel free to move that out
+to include/linux/sched/ext.h.
 
-To: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
----
- include/linux/sched/ext.h | 2 ++
- kernel/sched/ext.c        | 8 ++++++++
- 2 files changed, 10 insertions(+)
+Thanks.
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index bcb962d5ee7d..68e5aff95159 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -232,6 +232,7 @@ void print_scx_info(const char *log_lvl, struct task_struct *p);
- void scx_softlockup(u32 dur_s);
- bool scx_hardlockup(int cpu);
- bool scx_rcu_cpu_stall(void);
-+bool task_is_scx_enabled(struct task_struct *p);
- 
- #else	/* !CONFIG_SCHED_CLASS_EXT */
- 
-@@ -240,6 +241,7 @@ static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
- static inline void scx_softlockup(u32 dur_s) {}
- static inline bool scx_hardlockup(int cpu) { return false; }
- static inline bool scx_rcu_cpu_stall(void) { return false; }
-+static inline bool task_is_scx_enabled(struct task_struct *p) { return false; }
- 
- #endif	/* CONFIG_SCHED_CLASS_EXT */
- 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 62b1f3ac5630..1e48bc3cde15 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3772,6 +3772,14 @@ bool task_should_scx(int policy)
- 	return policy == SCHED_EXT;
- }
- 
-+/*
-+ * Used by verification/observability tools like RV monitors.
-+ */
-+bool task_is_scx_enabled(struct task_struct *p)
-+{
-+	return scx_get_task_state(p) == SCX_TASK_ENABLED;
-+}
-+
- bool scx_allow_ttwu_queue(const struct task_struct *p)
- {
- 	struct scx_sched *sch;
 -- 
-2.53.0
-
+tejun
