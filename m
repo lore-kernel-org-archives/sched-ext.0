@@ -1,107 +1,131 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39493019C5
-	for <sched-ext@lists.linux.dev>; Thu, 26 Feb 2026 06:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8011C37418C
+	for <sched-ext@lists.linux.dev>; Thu, 26 Feb 2026 07:10:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772087238; cv=none; b=EjjQwkYa82+kt8QpWEmsKiH4fi+d+pjlGkilusUH23nCkQnr/BTXL1SE41iAqnofyquAj5ZLxZLYEqleQBPg2M444u/bL5YNVYP27CFPN9VW3XCQxt5XlciydX8d/CDtSjKuJKUY8cqeLyMTdF5GOuaUO47S/Hnp3I6iNjCEJTQ=
+	t=1772089860; cv=none; b=pQYV6yPzj5gTf3q1DX2G6MvicdrLX/B3sC4UJVddhX7FZAo6ahV1gctSoqzx/1vIuCRD/jTm1YqM0oG3I32Nx1bWcHNEO3t6z+GaOndTQ4xa8ti55eHtp54PilXIZeK8j73e+K1YhoKE2AdrxRpUUagha275jeEDr3raJ27y/Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772087238; c=relaxed/simple;
-	bh=V/URV8nKD7ZsszJAD7IBD0z782oGqCPtdF1UfqDk2r8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KX2n/zkwWwxgrhEfcf+VhHM/Bosgiwupl8+zx+y8tiCj6L48bgkFn8Sp86mj/DeAGgn+z7dZu02Z0zmQtM9xLZtKDZyjA8bVojWU1/1LOpA5got9kPyZbgEglBDerF0um/Y/5JcqE4YY40OIhQEZg62AdqiX8uuvEWmgqKXAaRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZA8GZN7; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772089860; c=relaxed/simple;
+	bh=krIXEowH17NJHRuO/jHDILvAfk2uCYZj8/qtCx7rZHc=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WhUnzTkvIF6XdCjwH7mwZTqedfWlP/tuKCq3phmdk6TAvf+QryGQOgHZfsmINtPoErklT9ts6d3+cfc1YCxqZaOXP78xKUHGkR5nC4IFyZ8cFUx6iztSihk2sHcSmcLnRMGvUWXMy+CPBzZ1+l7n8zQ4UpV+kIuDUNrvc4705oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LBsad0Qr; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZA8GZN7"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c6e191c4b8fso155614a12.0
-        for <sched-ext@lists.linux.dev>; Wed, 25 Feb 2026 22:27:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772087237; x=1772692037; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dAnOeScQcMvaXcoHPMASVO+b/3J2w21IHASqSSqMjxk=;
-        b=aZA8GZN7SkY2AQa6H2JbEEv/Ns+tO2mcs1j1I+XoDBzAufFl3BcC1ZPcroGuLAxVpQ
-         uBmRMr+XL8BAEMQyV5dsrfaoEAGP5F6ksDYwtQKqII2CvB8vInwhvWz2cwaGhJs6JgcV
-         i0Q5FZ3GqoMoTxSBxTRtrPA7LOdQQbwGxorTtWwCS3Vrl6IdqKNELyPL2rlgVO5Lci8J
-         fBj5+4lCtuJEScUcXD3m8jEbXLuU1IsoXTKgb4JlcwtvXMsVjFRIrI2NWHYPlrtwt3Le
-         /QS+b4V7+OvAoPZAwbSjnasDTiUmiWHL2VdHDrEtjTH8xfL0DZnbyyMfzw/wRtjAxANY
-         /vmg==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LBsad0Qr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1772089858;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=krIXEowH17NJHRuO/jHDILvAfk2uCYZj8/qtCx7rZHc=;
+	b=LBsad0QrTlFY7HNwJe/aDUlsWTvIHItb+QeoJYXHpJRkr6DQ1NRZViGM7r8QLN8wckUMUj
+	aLfwuaqrB21fhe8AAuEYlxmpYKYfPf6n3A1DXmTxw1J88bwOKdEv9eQcbWwAJqgTvCra3i
+	nQU71ISWAGJdHKE15qNbeKmRwffsOw0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-112-UWKjxUiPMzCBxqfxAWfeMA-1; Thu, 26 Feb 2026 02:10:57 -0500
+X-MC-Unique: UWKjxUiPMzCBxqfxAWfeMA-1
+X-Mimecast-MFC-AGG-ID: UWKjxUiPMzCBxqfxAWfeMA_1772089856
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4806b12ad3fso4486745e9.0
+        for <sched-ext@lists.linux.dev>; Wed, 25 Feb 2026 23:10:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772087237; x=1772692037;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dAnOeScQcMvaXcoHPMASVO+b/3J2w21IHASqSSqMjxk=;
-        b=cPF5Q0YPHEVz9RQW1cidG2zZR2+U2WhoUeOeI6iPBZH0hb3ZnRk1iYEjNbEK7CezEv
-         6ui2Q8cfAT/rlb6SI5LtxPz8a2nole8w3C0lRR72yr4/R7sm5mJfoPY8DSKAwyb/h9VI
-         zgyrCUishsgtsq0uGr9YBUJOerWMq4sI2knahNOKb1gwbGBAq3G9iYNAwNcEWcpnAiXC
-         Ro3qRbj5p4TGTDtXx6oxWXo5LoZmoLupumRpLAZrnWnuAAinxbM7fkqUI0HMXi/lHsPu
-         AJpdLHqCvRWoDKDRbn9Q32nPism6RXJJaAFpY+3lE35hVoAoSGvbCcqCMSjY7gv8RoDi
-         pT6A==
-X-Forwarded-Encrypted: i=1; AJvYcCWUqqwgZmGnCE0b9A6bPnrPIRRIQUPYpCJ7nuUBW+YUB897Gksj+KJmnSC0uiH0GlNI6fMaXBU+S6E=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw487nOwVPwmwJUklk8EDn80XJdLvX4KTcmqYGCTiPXu39JNLv1
-	CoSxD2UnLA/BgH3mSuNkK7DpzrEfm4OmJah+AzlL59nChuGuG17tr6OI
-X-Gm-Gg: ATEYQzxzVV4Y1+Ru8YwXP0/3Q3286UN2eXdKxIyoFG9PRm0Tss0tfMqHwDsg0zJtUYO
-	f3LJlftcI3S16zy8K6kz1KaBy7XAjkEgjwkOYzkvr5IxNb3D2G7l8b6M/Zv4ww8u8Pei/2Fe03S
-	ddP+7sOIAAxdbSg+brNVZZ7yEivX7F3KqwO3qjYgTQDIZ1Hwuj02PxStGF9rJJilAGptsw0cvxD
-	Yr/HO09T2l4WN5hLhDPpXfdpksF1svj64Y3WoC70zZZtwbNA2gfYPp4GH5UUCcNhGpfHKWcce5e
-	CrtD4717Hk/5xfjbP7Zs4inNCzt35Id5vDcfSYn0DTVNtvPVKiRXnegU1tHJRhRPIJLcRk79Cm+
-	llxqFRcQgumX7Pg3BSahbkGGAc/AHvavYWZO0r2ya6+IEXel3ZqcRmTJxWoCQGqIfskBI3g/GWD
-	iqfy9Tyw49bjKHzQTvxCSIPqbxhaOkVXiG6npWM/udnaZ3U1RDpJdrsdR/aMG3
-X-Received: by 2002:a17:90b:3c04:b0:356:2c7b:c010 with SMTP id 98e67ed59e1d1-35928a916bamr2602236a91.11.1772087236962;
-        Wed, 25 Feb 2026 22:27:16 -0800 (PST)
-Received: from eric-acer (36-225-69-192.dynamic-ip.hinet.net. [36.225.69.192])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359019780bfsm4876566a91.8.2026.02.25.22.27.15
+        d=1e100.net; s=20230601; t=1772089856; x=1772694656;
+        h=mime-version:user-agent:content-transfer-encoding:autocrypt
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=krIXEowH17NJHRuO/jHDILvAfk2uCYZj8/qtCx7rZHc=;
+        b=fv3GtRWzZSqp39IgVdaBYc5qBi0/IiRvpCi8jxfYjsl7mgg13XdpMgOrtIr/o/1STf
+         JT7AZ1oKCszRtWkknf8kF23ZOHD4QBjSARjHxgAog+JCURqPtKrk9h3TuhVZCNoeVTO2
+         DBoxLkt/qOa/q4ODR41yT+ymCFfFZMUg6YSdsW5LFqxgNKLRxM6nW8rS5rQpx1GK38kP
+         wpFjQZg6FUnrPyO8y5Ve1dRZEHGd3FVeUdOAseQ4vAlDl8KKXI7QGYhaoMapZtzZwh/E
+         q9zMnnmN6kH6PFInYB30cprYTec4mOJV4sN3DHj+rbhm3nmm44yfpJWlPhLsTJCeaCzi
+         N8yA==
+X-Forwarded-Encrypted: i=1; AJvYcCXjQyloguPFZzPqZRAEUxNw1ZPUVRNChCQIYncHO2LiIqJ2hbPyM+8eUaMrLbY8wiC5JeokmBq4ATo=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx0MZyfMH+GbbUowAGnNMrwY1BbodMM2WrSxEYtHwEPywB3Jv4t
+	SO6X2t7LIAcSq8/3She7ap9kVQXzfOR972o0yTrZoJy5Q+uswor8cCN+8Z+tJDwSHL8ce0eD10/
+	fpNx8TMB9ooPboKOBDfaE39ZFr4aZ4wTZ44shWgv7521Li+j/wnksTINvu998ZQ==
+X-Gm-Gg: ATEYQzyCGQi0EnJyoGQ1fe1Am+E3LEymhxno2lp0nlBMBENchTlOULVIs8vVrFvTEdC
+	Q+IN8CCcQfkkxtx6CKbH8kL38cJYg2nmi99Qku6AoL+nF5aapJx4y1aIjDymDltnrafj18h91m7
+	mTHQrf3iYXyEiHvhAAqTuAN4hxJeT9vpT3ooTaRKNakVGWTA6KftarX+yLncfurOJvr7KEXj+/O
+	JWWDC9S2OOpcGNsKL6dCJKDnSzuk/hxABWLCgXXVKN4JerlWXyw6kpaFlBPTcMKrSXZxfslkmw+
+	zYBgagejRlndkgyGYmbFeMSO1a3uXHhE317D2dUkXeCWHSN5BlhJTttFYQD54CF+b6IHih7wcXJ
+	gNjQrH9dUgFeCsZ545DU8pSdGGyGdB67jUglhF3x1mdridcUdah1t9oQeLr8uMkN6a2XIgk1MTE
+	M0g5bNH7QZV/gVWv0=
+X-Received: by 2002:a05:600c:1411:b0:483:acd9:bd18 with SMTP id 5b1f17b1804b1-483acd9be44mr200825625e9.1.1772089855792;
+        Wed, 25 Feb 2026 23:10:55 -0800 (PST)
+X-Received: by 2002:a05:600c:1411:b0:483:acd9:bd18 with SMTP id 5b1f17b1804b1-483acd9be44mr200825285e9.1.1772089855392;
+        Wed, 25 Feb 2026 23:10:55 -0800 (PST)
+Received: from gmonaco-thinkpadt14gen3.rmtit.csb (212-8-243-115.hosted-by-worldstream.net. [212.8.243.115])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483c3b770c2sm23532555e9.10.2026.02.25.23.10.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 22:27:16 -0800 (PST)
-Date: Thu, 26 Feb 2026 14:27:13 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, sched-ext@lists.linux.dev, 
-	void@manifault.com, changwoo@igalia.com, jserv@ccns.ncku.edu.tw
-Subject: Re: [PATCH] sched_ext: Prevent null deref in scx_dsq_move()
-Message-ID: <hu2vijz3uetqpsj4lxc2d24fph6uo6sawishzzewwn3fcsjyk6@c4sd2zsj4272>
-References: <20260225181624.427916-1-yphbchou0911@gmail.com>
- <aZ89Tyy-oQ7skH7z@slm.duckdns.org>
- <aZ9Cd1uNC5M88jdP@gpd4>
+        Wed, 25 Feb 2026 23:10:54 -0800 (PST)
+Message-ID: <8fbc3ced19fb0c2a2171708073fa51ae308755b5.camel@redhat.com>
+Subject: Re: [PATCH v6 14/16] sched_ext: Export task_is_scx_enabled() for
+ verification
+From: Gabriele Monaco <gmonaco@redhat.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Andrea Righi <arighi@nvidia.com>, Joel
+ Fernandes <joelagnelf@nvidia.com>, Steven Rostedt <rostedt@goodmis.org>,
+ Nam Cao <namcao@linutronix.de>,  Juri Lelli <jlelli@redhat.com>, Ingo
+ Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+	sched-ext@lists.linux.dev, Tomas Glozar <tglozar@redhat.com>, Clark
+ Williams	 <williams@redhat.com>, John Kacur <jkacur@redhat.com>, 
+	linux-trace-kernel@vger.kernel.org
+Date: Thu, 26 Feb 2026 08:10:52 +0100
+In-Reply-To: <aZ8snSHWw-U0lVz2@slm.duckdns.org>
+References: <20260225095122.80683-1-gmonaco@redhat.com>
+	 <20260225095122.80683-15-gmonaco@redhat.com>
+	 <aZ8snSHWw-U0lVz2@slm.duckdns.org>
+Autocrypt: addr=gmonaco@redhat.com; prefer-encrypt=mutual;
+ keydata=mDMEZuK5YxYJKwYBBAHaRw8BAQdAmJ3dM9Sz6/Hodu33Qrf8QH2bNeNbOikqYtxWFLVm0
+ 1a0JEdhYnJpZWxlIE1vbmFjbyA8Z21vbmFjb0BrZXJuZWwub3JnPoiZBBMWCgBBFiEEysoR+AuB3R
+ Zwp6j270psSVh4TfIFAmjKX2MCGwMFCQWjmoAFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgk
+ Q70psSVh4TfIQuAD+JulczTN6l7oJjyroySU55Fbjdvo52xiYYlMjPG7dCTsBAMFI7dSL5zg98I+8
+ cXY1J7kyNsY6/dcipqBM4RMaxXsOtCRHYWJyaWVsZSBNb25hY28gPGdtb25hY29AcmVkaGF0LmNvb
+ T6InAQTFgoARAIbAwUJBaOagAULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBMrKEfgLgd0WcK
+ eo9u9KbElYeE3yBQJoymCyAhkBAAoJEO9KbElYeE3yjX4BAJ/ETNnlHn8OjZPT77xGmal9kbT1bC1
+ 7DfrYVISWV2Y1AP9HdAMhWNAvtCtN2S1beYjNybuK6IzWYcFfeOV+OBWRDQ==
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aZ9Cd1uNC5M88jdP@gpd4>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: giWa-umO73Sonif58LO3d_ckoORwazKnO2mTySarXU4_1772089856
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 25, 2026 at 07:41:59PM +0100, Andrea Righi wrote:
-> > But sch is from src_dsq->sched. Can you describe a scenario where that could
-> > be NULL or do you have repro?
-> 
-> Yeah, scx_dsq_move can only be invoked from scx_bpf_dsq_move() or
-> scx_bpf_dsq_move_vtime(), which in turn may only be called from a BPF
-> scheduler callback.
-> 
-> If the scheduler is inactive, this condition should theoretically never
-> occur. Even during teardown, all tasks are migrated and no CPU can still be
-> executing a BPF callback by the time scx_root is set back to NULL. So, I
-> don't see how sch can be NULL at this point, unless we have a reproducer...
-> 
-> Thanks,
-> -Andrea
+On Wed, 2026-02-25 at 07:08 -1000, Tejun Heo wrote:
+> On Wed, Feb 25, 2026 at 10:51:20AM +0100, Gabriele Monaco wrote:
+> > When a sched_ext scheduler is loaded, depending on the configuration, i=
+t
+> > can handle also fair tasks, however it isn't trivial to understand if a
+> > certain task is currently handled by fair or ext outside of scheduler
+> > code. This can be a problem when writing verification or observability
+> > tools like RV monitors.
+> >=20
+> > Export a task_is_scx_enabled() to allow quick classification by using
+> > the scx state SCX_TASK_ENABLED.
+>=20
+> This test already exists - task_on_scx(). Please feel free to move that o=
+ut
+> to include/linux/sched/ext.h.
 
-I added this purely from a defensive programming perspective, missing
-the fact that the teardown phase guarantees all tasks are migrated
-before scx_root is cleared.
+Mmh, right, thanks for the pointer!
 
-I don't have a reproducer. Since the architecture prevents this
-scenario, the check is indeed unnecessary.
-
-Please drop this patch.
-Thanks for the detailed explanation.
+I see task_on_scx() is used in what looks like some sched core hot paths (
+pick_next_task() -> prio_less()), but I presume not inlining it isn't a big
+issue.
 
 Thanks,
-Cheng-Yang
+Gabriele
+
