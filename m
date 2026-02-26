@@ -1,131 +1,250 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011029.outbound.protection.outlook.com [52.101.62.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8011C37418C
-	for <sched-ext@lists.linux.dev>; Thu, 26 Feb 2026 07:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772089860; cv=none; b=pQYV6yPzj5gTf3q1DX2G6MvicdrLX/B3sC4UJVddhX7FZAo6ahV1gctSoqzx/1vIuCRD/jTm1YqM0oG3I32Nx1bWcHNEO3t6z+GaOndTQ4xa8ti55eHtp54PilXIZeK8j73e+K1YhoKE2AdrxRpUUagha275jeEDr3raJ27y/Ig=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772089860; c=relaxed/simple;
-	bh=krIXEowH17NJHRuO/jHDILvAfk2uCYZj8/qtCx7rZHc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WhUnzTkvIF6XdCjwH7mwZTqedfWlP/tuKCq3phmdk6TAvf+QryGQOgHZfsmINtPoErklT9ts6d3+cfc1YCxqZaOXP78xKUHGkR5nC4IFyZ8cFUx6iztSihk2sHcSmcLnRMGvUWXMy+CPBzZ1+l7n8zQ4UpV+kIuDUNrvc4705oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=LBsad0Qr; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9D43E9580
+	for <sched-ext@lists.linux.dev>; Thu, 26 Feb 2026 15:13:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.29
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772118839; cv=fail; b=VV7kN2VRuJNKyE0JHj6Md2qHZuP6ZTVo1nbzcNGgViqyDaxde8+IaZLrE2GDFmbVip5Ti/CR9P/xo8qtu1+Xx+OipszemDifGOjBIP2dXebsD7Kz65FXWD/5nR3UC4j6fg8p06bFVx7nQ69G5RK4pg1TNvk9puvsRuVZfnNGd2s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772118839; c=relaxed/simple;
+	bh=5RfSEZL9pb5DIZ7qITgWIhIvDdDX/a7yyLsa2c7TaKE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=YMzDltl8PdbyYH9PKimXXgQHyHhW1FLV2DNf66fPAkOuvSXHp2QTDVsvEgWQrz4Zw6XVfqDXSbAIuFw30Cas/EjbKvGny1u4BnKgU1tkbS+Tfo4/kwRL0ti8flujcHqWWoaBd8GniMhFLLWM7ElnY+oy1uA1HdcJswrm7IwV8fA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=myWhZTpA; arc=fail smtp.client-ip=52.101.62.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="LBsad0Qr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1772089858;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=krIXEowH17NJHRuO/jHDILvAfk2uCYZj8/qtCx7rZHc=;
-	b=LBsad0QrTlFY7HNwJe/aDUlsWTvIHItb+QeoJYXHpJRkr6DQ1NRZViGM7r8QLN8wckUMUj
-	aLfwuaqrB21fhe8AAuEYlxmpYKYfPf6n3A1DXmTxw1J88bwOKdEv9eQcbWwAJqgTvCra3i
-	nQU71ISWAGJdHKE15qNbeKmRwffsOw0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-UWKjxUiPMzCBxqfxAWfeMA-1; Thu, 26 Feb 2026 02:10:57 -0500
-X-MC-Unique: UWKjxUiPMzCBxqfxAWfeMA-1
-X-Mimecast-MFC-AGG-ID: UWKjxUiPMzCBxqfxAWfeMA_1772089856
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4806b12ad3fso4486745e9.0
-        for <sched-ext@lists.linux.dev>; Wed, 25 Feb 2026 23:10:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772089856; x=1772694656;
-        h=mime-version:user-agent:content-transfer-encoding:autocrypt
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=krIXEowH17NJHRuO/jHDILvAfk2uCYZj8/qtCx7rZHc=;
-        b=fv3GtRWzZSqp39IgVdaBYc5qBi0/IiRvpCi8jxfYjsl7mgg13XdpMgOrtIr/o/1STf
-         JT7AZ1oKCszRtWkknf8kF23ZOHD4QBjSARjHxgAog+JCURqPtKrk9h3TuhVZCNoeVTO2
-         DBoxLkt/qOa/q4ODR41yT+ymCFfFZMUg6YSdsW5LFqxgNKLRxM6nW8rS5rQpx1GK38kP
-         wpFjQZg6FUnrPyO8y5Ve1dRZEHGd3FVeUdOAseQ4vAlDl8KKXI7QGYhaoMapZtzZwh/E
-         q9zMnnmN6kH6PFInYB30cprYTec4mOJV4sN3DHj+rbhm3nmm44yfpJWlPhLsTJCeaCzi
-         N8yA==
-X-Forwarded-Encrypted: i=1; AJvYcCXjQyloguPFZzPqZRAEUxNw1ZPUVRNChCQIYncHO2LiIqJ2hbPyM+8eUaMrLbY8wiC5JeokmBq4ATo=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx0MZyfMH+GbbUowAGnNMrwY1BbodMM2WrSxEYtHwEPywB3Jv4t
-	SO6X2t7LIAcSq8/3She7ap9kVQXzfOR972o0yTrZoJy5Q+uswor8cCN+8Z+tJDwSHL8ce0eD10/
-	fpNx8TMB9ooPboKOBDfaE39ZFr4aZ4wTZ44shWgv7521Li+j/wnksTINvu998ZQ==
-X-Gm-Gg: ATEYQzyCGQi0EnJyoGQ1fe1Am+E3LEymhxno2lp0nlBMBENchTlOULVIs8vVrFvTEdC
-	Q+IN8CCcQfkkxtx6CKbH8kL38cJYg2nmi99Qku6AoL+nF5aapJx4y1aIjDymDltnrafj18h91m7
-	mTHQrf3iYXyEiHvhAAqTuAN4hxJeT9vpT3ooTaRKNakVGWTA6KftarX+yLncfurOJvr7KEXj+/O
-	JWWDC9S2OOpcGNsKL6dCJKDnSzuk/hxABWLCgXXVKN4JerlWXyw6kpaFlBPTcMKrSXZxfslkmw+
-	zYBgagejRlndkgyGYmbFeMSO1a3uXHhE317D2dUkXeCWHSN5BlhJTttFYQD54CF+b6IHih7wcXJ
-	gNjQrH9dUgFeCsZ545DU8pSdGGyGdB67jUglhF3x1mdridcUdah1t9oQeLr8uMkN6a2XIgk1MTE
-	M0g5bNH7QZV/gVWv0=
-X-Received: by 2002:a05:600c:1411:b0:483:acd9:bd18 with SMTP id 5b1f17b1804b1-483acd9be44mr200825625e9.1.1772089855792;
-        Wed, 25 Feb 2026 23:10:55 -0800 (PST)
-X-Received: by 2002:a05:600c:1411:b0:483:acd9:bd18 with SMTP id 5b1f17b1804b1-483acd9be44mr200825285e9.1.1772089855392;
-        Wed, 25 Feb 2026 23:10:55 -0800 (PST)
-Received: from gmonaco-thinkpadt14gen3.rmtit.csb (212-8-243-115.hosted-by-worldstream.net. [212.8.243.115])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483c3b770c2sm23532555e9.10.2026.02.25.23.10.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 23:10:54 -0800 (PST)
-Message-ID: <8fbc3ced19fb0c2a2171708073fa51ae308755b5.camel@redhat.com>
-Subject: Re: [PATCH v6 14/16] sched_ext: Export task_is_scx_enabled() for
- verification
-From: Gabriele Monaco <gmonaco@redhat.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="myWhZTpA"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WyGQoKu6+HorY0G6cd8Db3SzUE67IEGjwgULEYsi9PS55U6avSjbmeDT4JHeq1D73eLPItD4wdQ27pEr/SbinZeC7lAnwpjq8bW+4G4lyDS7/rgY/LsQFclNkSPdnET4VTYnjf9mlFYNbiY79CWsuITtS1Gr5bRbZi4mvKkZoGGXw6uyF6NzNpBYebeJxoc5d5AWlbx91QJrJBN5pPGuOOvcRHVaOyKdI79WC6o/HF7mnG99SVdundHvd7fTh19SMFiGUI5sm65JNkKGReHf/tmcOhED7+y9+PifLRw9AW3T+6ceu24f70x261zyzh9HBjm8EcAoWZdR7tfB6O4EJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=835n0P0VvXSxETSbV7nf0pdbeNya+1ViI4YepcVI6Ng=;
+ b=fNMQD8h4l4/eKXVhwhAShw0b5edlWpcxJmqOispfH+fNJD6W7hIY7hbU2IyLFxjYpV/Gb2xSi69i8QtmUaOwxdh7zd7dSmAfyMGI2QBqTA3XxCft9xPhge/Yjipd96bkOsGn0UUUgVeH9B3BWMvgXIaMZEd3id96UpJAEVfLJKA9GN8NycuEmvWPE3/6KuLVIwDZMPTnwbEJMRc7cCKDMog+dT2Ki5SKvhzoOD8pvh9UO//fmTOoQkOo605ZKSGl1hI8uH9pe97scSlbdReEjsRoBis8VT00TqJaCniWEdJ/3U2V7FNW8WkKdTPPLewyYVfpTkikspg4+dRsbrEMuA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=835n0P0VvXSxETSbV7nf0pdbeNya+1ViI4YepcVI6Ng=;
+ b=myWhZTpATpZaYc8oBCTuT6qSqJggAp/hUMWHJ+GkyruR+n3NHYslz4MfdDlq+j5BKpcA+DlNNuGYftGBq1Bzh2/9zS930SlpLBqmTk/bW6aLWzVi203JdULCjt1IaGWl9F/my9MolYfV4d1XqPU31oGgtVBg53tAzOc6tKI2QOjr7/iSfvZr88ir1mrZn2XMQ8N5ZyZ6PWD8vXMctMAC1cbWo/F5JRvftN5SUM2afHw6eBr+ELfKX2tbPAn6iYXdIOAhkVM8NTYtRiHFYg2hvLkYOQpDD8F3qczBvFnFuipWLdCbEpGX+iiylLq/2Izwj/aSM4WdUE/cyvTvew/60A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SJ2PR12MB7917.namprd12.prod.outlook.com (2603:10b6:a03:4c7::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Thu, 26 Feb
+ 2026 15:13:52 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.014; Thu, 26 Feb 2026
+ 15:13:52 +0000
+Date: Thu, 26 Feb 2026 16:13:33 +0100
+From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Andrea Righi <arighi@nvidia.com>, Joel
- Fernandes <joelagnelf@nvidia.com>, Steven Rostedt <rostedt@goodmis.org>,
- Nam Cao <namcao@linutronix.de>,  Juri Lelli <jlelli@redhat.com>, Ingo
- Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
-	sched-ext@lists.linux.dev, Tomas Glozar <tglozar@redhat.com>, Clark
- Williams	 <williams@redhat.com>, John Kacur <jkacur@redhat.com>, 
-	linux-trace-kernel@vger.kernel.org
-Date: Thu, 26 Feb 2026 08:10:52 +0100
-In-Reply-To: <aZ8snSHWw-U0lVz2@slm.duckdns.org>
-References: <20260225095122.80683-1-gmonaco@redhat.com>
-	 <20260225095122.80683-15-gmonaco@redhat.com>
-	 <aZ8snSHWw-U0lVz2@slm.duckdns.org>
-Autocrypt: addr=gmonaco@redhat.com; prefer-encrypt=mutual;
- keydata=mDMEZuK5YxYJKwYBBAHaRw8BAQdAmJ3dM9Sz6/Hodu33Qrf8QH2bNeNbOikqYtxWFLVm0
- 1a0JEdhYnJpZWxlIE1vbmFjbyA8Z21vbmFjb0BrZXJuZWwub3JnPoiZBBMWCgBBFiEEysoR+AuB3R
- Zwp6j270psSVh4TfIFAmjKX2MCGwMFCQWjmoAFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgk
- Q70psSVh4TfIQuAD+JulczTN6l7oJjyroySU55Fbjdvo52xiYYlMjPG7dCTsBAMFI7dSL5zg98I+8
- cXY1J7kyNsY6/dcipqBM4RMaxXsOtCRHYWJyaWVsZSBNb25hY28gPGdtb25hY29AcmVkaGF0LmNvb
- T6InAQTFgoARAIbAwUJBaOagAULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBMrKEfgLgd0WcK
- eo9u9KbElYeE3yBQJoymCyAhkBAAoJEO9KbElYeE3yjX4BAJ/ETNnlHn8OjZPT77xGmal9kbT1bC1
- 7DfrYVISWV2Y1AP9HdAMhWNAvtCtN2S1beYjNybuK6IzWYcFfeOV+OBWRDQ==
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43)
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	void@manifault.com, changwoo@igalia.com, emil@etsalapatis.com,
+	hannes@cmpxchg.org, mkoutny@suse.com, cgroups@vger.kernel.org
+Subject: Re: [PATCH 11/34] sched_ext: Enforce scheduler ownership when
+ updating slice and dsq_vtime
+Message-ID: <aaBjHUr29afGuKVh@gpd4>
+References: <20260225050109.1070059-1-tj@kernel.org>
+ <20260225050109.1070059-12-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260225050109.1070059-12-tj@kernel.org>
+X-ClientProxiedBy: ZR2P278CA0023.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:46::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: giWa-umO73Sonif58LO3d_ckoORwazKnO2mTySarXU4_1772089856
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ2PR12MB7917:EE_
+X-MS-Office365-Filtering-Correlation-Id: c56dd4be-9d4b-4bb8-a2f8-08de7549a6ab
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	x0w+FSDdRbIbk2I7CLbRFInPwhwV2fEKdlduzGEgZneH0EDfEIibgCcdo8BmRQN47PusyeDBzKLL5uui2BoQVxcIUciHYdax8ty8haCphD1i3+VYNi+ZWqFzERZ18UDo2r9Qr0gDaRB0MHiRvOirZ2wTcW4ljQoTX9ntUNqkNjUyOBcqDFwzTkdCmb8BbLuvPt+/uzYPWX9XQ4/4AnRp2TIZ1hoQ09TyU4r0V5+11CYzSm2jjk/JnLp7XbT+/nalvw+1f3SoEEzMqF194Sj64Q/NQt9AwbutJGgCCPecYnljKDteT+OiMCFdSltDT6+9A0nj98qH/djByk3IldkNIuD6FRYCtm6LddZP7lG6cGPg3sx+Xdbc1NpWef5WHq9ah0Tp/JBxJ7qdp021l3wVq4lvzspouZ9bMp6+UUrjHj1J0C6I3PRFkfmhKAUlqnN6ZxoZsmOEeJR1gl6MncjBOU8tYZpBAhuAUL5ZSRocgfg11CNhlevF2CHV8j/+x5agegW1LZDNCrlpSSGGY1G2W7spF6gCk2jgRhpFcrGiaznJPm+Walz2KQTNhjdNyyFPBY5k/pBJkYc9NO5eoQwATt9Ee5yaP8hzrNVhAWqiCJ0DM0o/W1gCpmOKGTWss12cjBeiksCcOcUwggMvjCwJWa6f3Z+curAdZO1l6jXOYLPKYYi+9szJ8JrL5o4LLebAbeWBgrfpIzggbP1G9bg0Bsrg15PgB74e32CVF7naygo=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?mz5ykBEKFmoIMVkJnfjUndJrZ3yKGjx8ImsmK7RHWDTR+Lg53Yi7UGPq281C?=
+ =?us-ascii?Q?ID4dWt4idUKv6XgZTLAINpZkXgGEHIv/mYrFj24PVBg6ANTKG6enkfPe7XTw?=
+ =?us-ascii?Q?yk3kv0qGTkQj2priVmNXLUoxXi0PLWrB/fSg6A6ByVVyavurkf0/oiIttC7Q?=
+ =?us-ascii?Q?isyfEfAuZ+lKWENQCRcxWkn9EsTZ5w+ADXfzdKek5LrJHJSgGhSMVzZ4qd8K?=
+ =?us-ascii?Q?dk6ZV2s9ns1ta5aCIJOo9FB698N+GObKS4mg1FWrzKSnZryAgQJalhTU8APf?=
+ =?us-ascii?Q?asSXzO6bKxeRNHEWRBn5peoUpcclKYI3T6ZeqsBrlxdkS63d4dxKqxwFR7YX?=
+ =?us-ascii?Q?SZQJZqn7Uz6AtX6MD0RbIQ3JwsgmgZOQpYiqatg3lBHqFO+pbAeEvjaf5daf?=
+ =?us-ascii?Q?ghYnHIWELcxA1Nq9BXcEk8MOyq9xYHiyNdCSfQ0IshQ8ylWC0pgrPNR7DMUo?=
+ =?us-ascii?Q?QmDTMmEqa653Ig3zwddbDby9XWy1UiqQR5zp/JVSU97CTwBzzYKnNpu+AARD?=
+ =?us-ascii?Q?Tbu5kOmKvnKk+QlkC8SMgDDYAYNK9Oab5khuApv4pVl88PLK1jUF8enHKrHh?=
+ =?us-ascii?Q?RmX1hrEfmySscjS5dQntCVi1eQdlRimSbGJh8BIX55/mVhN+X0MVukCXVPiC?=
+ =?us-ascii?Q?I8UOiF0+NYDTR4Lh5dirTyxnVk8MBCULIaUQm508eu63Q1LorQGjY9VO4cTp?=
+ =?us-ascii?Q?hnxzaKu+rChTnWPi6gkwux0Y+BH5vWLkrNjKjZ8L4nQ64aFuYzFctp36KgFE?=
+ =?us-ascii?Q?Aq2g1lfuK8B8rfPSR0Mu2BFJx2/Txhi4Zg+aFmYVTBQjEgmkbFnYEHF9Iu0R?=
+ =?us-ascii?Q?9F2QHSIb6LJxGmfmu+PyEOzWy+eDKV4I9178lWOm6qcLTqEwWHv025Y6wS8k?=
+ =?us-ascii?Q?X62gGDfDQ35FuIS+Rg7Q6c1Pqxz1+yQIbFOi1SHvUEZOX4Ynzob475nf+bRD?=
+ =?us-ascii?Q?xWLr0K+1A/6vjvxh+I0QhLNMkL5cg7hz4MKwpNdTvMn/dT+mW73mc7CHNmON?=
+ =?us-ascii?Q?9UG3IsuaMDLqJW9ZuTQ8ySO3MoKoAyA8LVzEKqrOgAx29NOvYse+MS+xThQ8?=
+ =?us-ascii?Q?CqxXXu6/01WbSECBhVp1daJ/4bvWiCUHg7OhSKzz2c6SJ8QBNE9g4ZTJYJgU?=
+ =?us-ascii?Q?imYPlKKza1RgfcPak0xWBLzONzGr+aEE/zQ9u834Wc46xN9InfXPWtIjJIUv?=
+ =?us-ascii?Q?rGhz34GM5H+S8+BM0x0ujSx9mIH1XP07sCO6+V2b0nHVYav4bC78dUvie92x?=
+ =?us-ascii?Q?dAlCICTH/gfFvROq9171DnHf9Xgxu+/H1VVq9XNjGGrgpGbqyO792GyocQAE?=
+ =?us-ascii?Q?9nizCKlnm08MIRYa5WeQxXZ7WiDbNoRsRSFCXA8ff9ja+zCsOGxYbuBUZH5G?=
+ =?us-ascii?Q?BfUeKfObq6mAn4b6VD21GsOzLlKnONFqILC1AeejQe6C3gtO611YZ5vBhGLO?=
+ =?us-ascii?Q?GVmV4iSR1zGJHsSTyGeZ5Ch66YOAN+TX8ymJc7iVITSdj7PSavGdcrUuA1Y2?=
+ =?us-ascii?Q?oAPwIzq01vBmpDdEHWuLUsYQzf4vsMFdsYZZJJTKoOi+xOyoRyWeOWVbC70t?=
+ =?us-ascii?Q?XRbABT3116C57ulUIS+pmRX+k8AYEO9ZsrIQ88bCXK0J9jDeIYSfF54bzQOv?=
+ =?us-ascii?Q?cFoybsBA35Gsa4i6rMFY+mXPhOx4pFREwummQ4NjjvYoTaFGzCj9xxS7mpvt?=
+ =?us-ascii?Q?VF3Bqeg944QMpQOGzajhWlXymhlRrfdG01JqoSDrGchABwX6s9vjw4vcijCx?=
+ =?us-ascii?Q?cEWltm86mw=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c56dd4be-9d4b-4bb8-a2f8-08de7549a6ab
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2026 15:13:52.4747
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3jBqar9p77NQEc9VFxQNTDRst5f/jKMMSvMEx4RSgdwWxbB4xQAFqiBlm4tRO/pltkrOlrQVGSZcJldqceh+9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB7917
 
-On Wed, 2026-02-25 at 07:08 -1000, Tejun Heo wrote:
-> On Wed, Feb 25, 2026 at 10:51:20AM +0100, Gabriele Monaco wrote:
-> > When a sched_ext scheduler is loaded, depending on the configuration, i=
-t
-> > can handle also fair tasks, however it isn't trivial to understand if a
-> > certain task is currently handled by fair or ext outside of scheduler
-> > code. This can be a problem when writing verification or observability
-> > tools like RV monitors.
-> >=20
-> > Export a task_is_scx_enabled() to allow quick classification by using
-> > the scx state SCX_TASK_ENABLED.
->=20
-> This test already exists - task_on_scx(). Please feel free to move that o=
-ut
-> to include/linux/sched/ext.h.
+Hi Tejun,
 
-Mmh, right, thanks for the pointer!
+On Tue, Feb 24, 2026 at 07:00:46PM -1000, Tejun Heo wrote:
+> scx_bpf_task_set_slice() and scx_bpf_task_set_dsq_vtime() now verify that
+> the calling scheduler has authority over the task before allowing updates.
+> This prevents schedulers from modifying tasks that don't belong to them in
+> hierarchical scheduling configurations.
+> 
+> Direct writes to p->scx.slice and p->scx.dsq_vtime are deprecated and now
+> trigger warnings. They will be disallowed in a future release.
+> 
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
-I see task_on_scx() is used in what looks like some sched core hot paths (
-pick_next_task() -> prio_less()), but I presume not inlining it isn't a big
-issue.
+My concern with this is that we may introduce some overhead for those
+schedulers that require frequent adjustment of slice / dsq_vtime directly.
+While the scx_task_on_sched() check itself has likely zero impact, the
+kfunc invocations can potentially introduce measurable overhead.
+
+I'm wondering if we could instead delegate the authority check at
+verification time, introducing something similar to PTR_TRUSTED
+(PTR_SCX_AUTH?) to struct task_struct * to represent that the scheduler has
+authority to access the task and allow direct writes to p->scx.slice /
+p->scx.dsq_vtime only when the register has that flag.
+
+Then:
+ - for tasks passed from the core opts (enqueue, dispatch, etc.) we
+   automatically tag them with PTR_SCX_AUTH,
+ - tasks obtained externally (e.g., via bpf_task_from_pid()): they don't
+   have the flag (so no modification allowed) and in this case maybe we
+   provide a scx_bpf_auth_task() kfunc to perform the scx_task_on_sched()
+   check that returns p (or NULL) setting the auth flag if the scheduler
+   has full access to the task.
+
+What do you think?
 
 Thanks,
-Gabriele
+-Andrea
 
+> ---
+>  kernel/sched/ext.c | 41 ++++++++++++++++++++++++++++++++---------
+>  1 file changed, 32 insertions(+), 9 deletions(-)
+> 
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 56ac2d5655a2..f16ce4deed88 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -5872,12 +5872,17 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
+>  
+>  	t = btf_type_by_id(reg->btf, reg->btf_id);
+>  	if (t == task_struct_type) {
+> -		if (off >= offsetof(struct task_struct, scx.slice) &&
+> -		    off + size <= offsetofend(struct task_struct, scx.slice))
+> -			return SCALAR_VALUE;
+> -		if (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
+> -		    off + size <= offsetofend(struct task_struct, scx.dsq_vtime))
+> +		/*
+> +		 * COMPAT: Will be removed in v6.23.
+> +		 */
+> +		if ((off >= offsetof(struct task_struct, scx.slice) &&
+> +		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
+> +		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
+> +		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
+> +			pr_warn("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()");
+>  			return SCALAR_VALUE;
+> +		}
+> +
+>  		if (off >= offsetof(struct task_struct, scx.disallow) &&
+>  		    off + size <= offsetofend(struct task_struct, scx.disallow))
+>  			return SCALAR_VALUE;
+> @@ -7096,12 +7101,21 @@ __bpf_kfunc_start_defs();
+>   * scx_bpf_task_set_slice - Set task's time slice
+>   * @p: task of interest
+>   * @slice: time slice to set in nsecs
+> + * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+>   *
+>   * Set @p's time slice to @slice. Returns %true on success, %false if the
+>   * calling scheduler doesn't have authority over @p.
+>   */
+> -__bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice)
+> +__bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
+> +					const struct bpf_prog_aux *aux)
+>  {
+> +	struct scx_sched *sch;
+> +
+> +	guard(rcu)();
+> +	sch = scx_prog_sched(aux);
+> +	if (unlikely(!scx_task_on_sched(sch, p)))
+> +		return false;
+> +
+>  	p->scx.slice = slice;
+>  	return true;
+>  }
+> @@ -7110,12 +7124,21 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice)
+>   * scx_bpf_task_set_dsq_vtime - Set task's virtual time for DSQ ordering
+>   * @p: task of interest
+>   * @vtime: virtual time to set
+> + * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+>   *
+>   * Set @p's virtual time to @vtime. Returns %true on success, %false if the
+>   * calling scheduler doesn't have authority over @p.
+>   */
+> -__bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime)
+> +__bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime,
+> +					    const struct bpf_prog_aux *aux)
+>  {
+> +	struct scx_sched *sch;
+> +
+> +	guard(rcu)();
+> +	sch = scx_prog_sched(aux);
+> +	if (unlikely(!scx_task_on_sched(sch, p)))
+> +		return false;
+> +
+>  	p->scx.dsq_vtime = vtime;
+>  	return true;
+>  }
+> @@ -7995,8 +8018,8 @@ __bpf_kfunc void scx_bpf_events(struct scx_event_stats *events,
+>  __bpf_kfunc_end_defs();
+>  
+>  BTF_KFUNCS_START(scx_kfunc_ids_any)
+> -BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_RCU);
+> -BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_RCU);
+> +BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_IMPLICIT_ARGS | KF_RCU);
+> +BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_IMPLICIT_ARGS | KF_RCU);
+>  BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
+>  BTF_ID_FLAGS(func, scx_bpf_dsq_nr_queued)
+>  BTF_ID_FLAGS(func, scx_bpf_destroy_dsq)
+> -- 
+> 2.53.0
+> 
