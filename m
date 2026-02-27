@@ -1,51 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ED52C187;
-	Fri, 27 Feb 2026 19:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA4736921B;
+	Fri, 27 Feb 2026 19:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772219942; cv=none; b=Sv4q8b2hgUk6sVvMCviqItX0+fzmDbkK8rtaQGx7BhV3nbqA9aqD6XlW8BGt6vJhXw/VuCew2NkT/ir1+jAO8BkrwAgsaFMca75HL3rM/7pjjjybicijNzItCAGwp/m6JIGROYsP5iP89EPd8Wem1dU7QSulv6IjTXGLWLJ8YQ4=
+	t=1772221808; cv=none; b=L1907kC/sqtvPZkcuT2ZIcuDzmioIj3GhgLqW5mIRQYolXOCJj+SJ5lxEKLr/79RcdePsG4fCEFkmGG2L6H5ThEbLDbWTWPwVR2bm5oEXf8alCdphZrLn24ARbHx4V2jZFYLHRQ06I2SfJKu9zeR73khd87Ta+I4Uv2sD7i3e8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772219942; c=relaxed/simple;
-	bh=JT+RFfTayO5DShJukirFxUaq0lwtYyL+1kZfRbdneeA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=H6DPnphLUy9pREeEW8A3/6Uc6kNxIhI7PWIAuyPctthc0eLZbJtENYveRthMcmrq8ASvF3z7rYk3wGsNPIkEowRqXr65xLxgvIDsnZMuJGik2j7NMbgWEI5VbLlVlzlQei6qJFyUijaxcbujEVHO+NX8aAuoChkHFhZx7ovm6VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oCX+bR8J; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772221808; c=relaxed/simple;
+	bh=AxSwpsDmZB71i2iDeLN0Jw/yz74vwe+juNUzt8qw6iA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W/EBoF3HKqkvzrlFA2WuCZ9AxBANjqW+TSK0y3tEEhC/fniDWVJR7mT0Rp5fdomTAiDHlMV+Fpp85YI+wk4ybmnBG6qKvBT2DtxC9PjSONoE5ANY5N1bhw3+2u3uSAZvH2suPrrWOKS55oiddTZAgldNcFWdJOBVo+eaPsxwrAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P6FWDw0o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oCX+bR8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088F6C116C6;
-	Fri, 27 Feb 2026 19:19:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P6FWDw0o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B63C19421;
+	Fri, 27 Feb 2026 19:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772219942;
-	bh=JT+RFfTayO5DShJukirFxUaq0lwtYyL+1kZfRbdneeA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=oCX+bR8J0FUbbEIFiwtKIdx+E/+iUF3TQbMvX1/ficcKyzcygWH/Yc2WS2SXy7t12
-	 O4eWHawKo5L6SKqwsqSmy+O3UNBEoyof5IKdj2XiMwk9PDd6KCnE2fAm4sP8x7i00Y
-	 LJthp6HkeByi3KYypGjjaAa4I+KU72+uXJzWmVEkC0wG8EqKHF3W9oyaMaadfjmtD4
-	 z63ji7km8GQ7Kra+eEeX5tv8lFpEvBAyKEVuAwi7nOadjlph/1iWFtj8VzWAZpZh2D
-	 ps/5FYivqrZMKFOocm0s6Q37x7rH0NMrJtBMYvSGUfXjurPQnkbTMojrohuutV/VM9
-	 PpofRuS0Nj5gA==
-Date: Fri, 27 Feb 2026 09:19:01 -1000
-Message-ID: <b35762b08ba106938b05c1541677ab2c@kernel.org>
+	s=k20201202; t=1772221808;
+	bh=AxSwpsDmZB71i2iDeLN0Jw/yz74vwe+juNUzt8qw6iA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=P6FWDw0obIHq0Qc4ZQC+Rssv/kX9vJ38WTU1CDwADId+fny/K3Tw15sfPUJ9o0l/Q
+	 +rsP7NPXZHAF+9KD3R8AA46ArLS30aVvRHf3W7ErCNfBEJYgOHlhLKVQS1Q4limEkG
+	 +7jc4gOy4C/NKPZzI3Fp16Ec5ks5wyFJ0xPiIDSWweYobR9YBAC6X3LB2lEaUZuWhs
+	 aE+tdlW8HWFRpQnWs6YcGeTwTpqnF/1KhIHlv03rmXeooS8wUjHtEO4kbsJkpI28eO
+	 FmkZEifSux0OCOPjGaQXiLREOE9/jnuushhZtiyYmV7t1Q5+nf1T7ovDgedsjhnzfY
+	 mghWHFB5MK0Uw==
+Date: Fri, 27 Feb 2026 09:50:07 -1000
 From: Tejun Heo <tj@kernel.org>
-To: David Carlier <devnexen@gmail.com>,
- David Vernet <void@manifault.com>
-Cc: linux-kernel@vger.kernel.org,
- sched-ext@lists.linux.dev,
- Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH] tools/sched_ext: fix strtoul() misuse in
- scx_hotplug_seq()
-In-Reply-To: <20260227184309.13183-1-devnexen@gmail.com>
-References: <20260227184309.13183-1-devnexen@gmail.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	void@manifault.com, changwoo@igalia.com, emil@etsalapatis.com,
+	hannes@cmpxchg.org, mkoutny@suse.com, cgroups@vger.kernel.org
+Subject: Re: [PATCH 13/34] sched_ext: Refactor task init/exit helpers
+Message-ID: <aaH1b9tpCzWG3--x@slm.duckdns.org>
+References: <20260225050109.1070059-1-tj@kernel.org>
+ <20260225050109.1070059-14-tj@kernel.org>
+ <aaE_9YPu3T-pMXfO@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aaE_9YPu3T-pMXfO@gpd4>
 
-Applied to sched_ext/for-7.0-fixes.
+Hello,
+
+On Fri, Feb 27, 2026 at 07:55:49AM +0100, Andrea Righi wrote:
+...
+> Without CONFIG_EXT_GROUP_SCHED we get this:
+> 
+> In file included from kernel/sched/build_policy.c:62:
+> kernel/sched/ext.c: In function ‘__scx_init_task’:
+> kernel/sched/ext.c:3228:28: error: unused variable ‘tg’ [-Werror=unused-variable]
+>  3228 |         struct task_group *tg = task_group(p);
+>       |                            ^~
+> cc1: all warnings being treated as errors
+> 
+> Maybe wrap tg inside an #ifdef CONFIG_EXT_GROUP_SCHED or we can do
+> SCX_INIT_TASK_ARGS_CGROUP(task_group(p)) directly.
+
+Yeah, there were a number of build failures w/o cgroup / cpu control
+enabled. Fixed in my tree. Should be okay on the next posting.
 
 Thanks.
 
---
+-- 
 tejun
