@@ -1,61 +1,63 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BDC331A65
-	for <sched-ext@lists.linux.dev>; Mon,  2 Mar 2026 09:14:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F9B38D014
+	for <sched-ext@lists.linux.dev>; Mon,  2 Mar 2026 09:14:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772442889; cv=none; b=n82YTL4uG20OU9LLZB8p5j8HhwmkLds0fBpOjZQefjZh4nnoiuR9xp8XrSAi+VS+Z35h8DTgD6Qz4HiVb1jGl7cQHPnBOTodGPTZVIGC+k2zJAhJJorW4i7GQSsfoKd2BZkp/A3Sx5LarmFgUIvzJc8FOzn9pmJ6pT7jBCMdBCA=
+	t=1772442892; cv=none; b=ud/FfRP1he5NN9VP4xOqfvcICkdeDyc8qvphvDhhq/d045eNh52ttsFkU5GG8NOFtmc84KT7kQnhPM2yjOYfS8U/ko7rXzTjOP9nkVqrLNpyKq4g0p6dQk6Kk34Mr7EVyaLseMKkKffmP2LZDp6b3WVDKe86ESvykIgGivxyD8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772442889; c=relaxed/simple;
-	bh=jkHaHLPHXNUp5xINEGydB1QE2vGw3qTz1fuWgd/pyQU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TJf2OWqXU4O25/6paCnaZ9VfpQEtXBdndVMzov3xQ3h3IaRwreKadsCqPKdcUpw9En0RBAFJZ+YbbfMUuGyL2/1q5vrPy1NJWGqZ2JaiDx70A2iVqWH8RDN8/pH5TY6Ii38OtcLLXH5uoktnLbKw5oiIv5B38cxz8kAtGEuHBe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hxh6P+dq; arc=none smtp.client-ip=209.85.215.175
+	s=arc-20240116; t=1772442892; c=relaxed/simple;
+	bh=mqQ1xqyijcFk6G2ohzrkaC2WIRmYTASGG+OJDAiXtEY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=INdY5JNx8bPqjIJduNhktMAAlwV5OVhe/xOPhSeTZWXeZliXM+cqnDS5pl+YWVIvdSoF8lVjzF3kuEU24bILj2SoYj5r0RJ76/FCygyscelOsf9UYtoUyOguXneryfBmMbIAALeSVFOUXQnxekA/+Tt9uFFHG9ovEn4xhu9nAu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elY1Zo3K; arc=none smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hxh6P+dq"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c6dd5b01e14so1444686a12.0
-        for <sched-ext@lists.linux.dev>; Mon, 02 Mar 2026 01:14:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elY1Zo3K"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c6e2355739dso1684579a12.2
+        for <sched-ext@lists.linux.dev>; Mon, 02 Mar 2026 01:14:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772442886; x=1773047686; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=s6eLhm2/d8jded2I+Y9ZlUdy+WuZDx9ghyfh4XuLKOk=;
-        b=Hxh6P+dqkRDRbue9Bg0qdw4OxEetZEEXqEN8CSW1fui16Isv8npcz7+80gW0B8vqNT
-         0l31i8gQdpcd7bs4Gm+WGFoRpkgra+DX8apnGJp2Ay7El+MBs9KZ3a7Msunw/dqxYS8g
-         5B/0lsV4bVNye5rzyyjS/aG83RqCQIyyH9suVjVMYaCEaLmOH6u2s22yAe8C3VVYoN3a
-         59sj8D6/3bTJ7lUBphH2B9eW1Su+qm7m2KyovfSukoQ9d+iewn/BJPhO1iKkpPGLKrED
-         48yGTd3v3qTcShBX9Cthxt6AaA0EtYgND7WRw43vBNPPfLo06srXzMDZnxpx2gbjI12U
-         SMhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772442886; x=1773047686;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772442889; x=1773047689; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s6eLhm2/d8jded2I+Y9ZlUdy+WuZDx9ghyfh4XuLKOk=;
-        b=unRcKiehFyDZ8GDJ4Yu/4cs60xHmuMumedIP716fy0q8U2x3olvY/mEc86aFFESYk+
-         KBxoGH7QvxJAwRdDwphC3aTf68goyveVyAUIXvKg1pF3rekjz/fPMDAW8zAkbPrQjaHC
-         JWqiBKpY3ycCc+bB5j3FpeYQtGOkqxJr45oUynRa8XlySJHxUHSrZKwt/T50QvRluBIk
-         i8mYRB6tgmbF4sIY9HKTFsysmZ40bP1Rmkqmf0///Lwc68EcKCShA174vCv4NqxvLq+h
-         aGY7QyxLu9kFPoCcp+He/ZCUd9TLspQTazHkp1i/UU5LS3oNiPV3dAp12oTn6OQdqXXO
-         rPdQ==
-X-Gm-Message-State: AOJu0YzR4k6NHTFXJFR107zkbmY6NYvs1232JzJTMiMhoM1yQk9BkAoy
-	I//Yq+d6C8DVcoBO9lIHQ9lsMGN3ZppGGfQQ4HN/oxgPsDM6ac34mhX4w2DISbfJ
-X-Gm-Gg: ATEYQzyVguGDk1UNDfHgv8/ZEIdHCFRjdqfkAz2LtdOl9S0YTzhwDfIYX1glTI2ASo6
-	d9s0UbI7IVPxT+4oWVXxeY1UCWjuoYicdeeYdNmnbl3k24epIoQBHNODRJRSfFdJZfm3+EVBhg5
-	Tqc6aI9hxM4/m4HjuM0RnzDK2S6DQiC3EaJjPOyyofwa6VZyXB42CMjT3Q7+QYfC0oeuZVz4wCU
-	7jJ1MgXVSBogpUzqczU6qdn3Go12d4CkQt0QWwPJfxzco/psvwSEUkaxhmOYFvcK42OndTDMNl3
-	xZyvHXj8yU0/M9tjWp47zcphp5otUS2GmuxH/zW6Jzd83yQ3OcuAhr59G2Bd7nymzQ+v6gacrT/
-	HPrzkTusCtE9Kds0ohQsg65SeEu9Oqis1Y8HxBJ1u6NajN2bQ98CgZ4s9ZgQxPvMOeNcuU2f4iM
-	zA9mJZ0BXRXteQSbgsvssYcOlfLfM+BpLEXwi+FLfA6o3QLJDJqw0Jt5SRe3m2iLxk8WabTikeN
-	7Jv
-X-Received: by 2002:a17:902:e806:b0:2ae:5a70:476b with SMTP id d9443c01a7336-2ae5a704bf1mr4858395ad.15.1772442886053;
-        Mon, 02 Mar 2026 01:14:46 -0800 (PST)
+        bh=xp4h+20tE5YCAazww+ZGLMD2jeF+NfRy9eju/1nS0pk=;
+        b=elY1Zo3KuCrbuNsq+q0COhTanh8JFUaWVCdzi3LzSdv0DniErLMPORB0JuFAwpoDtm
+         k0ZMSMueRnIDa5EfZbDznEX6mpQd+Ov20vRVM5BtKTq4JYRp5+E32a1z/SETHmfC8cNy
+         bI2sJTiroK/U22HJEBLGu5OCjdAH/5MV8UNJjp5K3qjb4h2IXbImWDEqnIKQF3y7Dz9m
+         HYWsSB7vXT8scpFoEW2mnZeRce47mJ1XMWokY2dx6+t8DrKllZ9nxx61iu4U+Iwmkr4V
+         b+MWpv9g08tZMYd2lLIZAWtB+TJKxhlDtsSVx1r8+GaPjhFo5UdUSWG/HCVNZi1853CR
+         U2Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772442889; x=1773047689;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xp4h+20tE5YCAazww+ZGLMD2jeF+NfRy9eju/1nS0pk=;
+        b=lN3ORndbQy39uv+MmaKl60yVYYO2ZkIJ9w06hqKhHOBAWtAcU4fZrJNegQwCiba4ky
+         h+GGBZ8R77X54q5udGd7zMgJ9fjSjaUEAXw1yuH9h4iZY041SYwEHqveHzOWsJohKIVz
+         APsgmgSXGw4EqJe59ADtG03VHa5RylsIl5KtjJgh1/iNLKKOEHDithEezyjMh2PROMSv
+         zXrvokksUdBu7aK4AfG2DzwGUFHAtA3p3Lvmy7QqXm1k/bdM5iOKecG2G4IhZRAH6zRI
+         BaeXV0jU/4OzAjs2v9JhV52GptRyksb3mLaq2la+/KnnZVbOzd5eh914wO5ugXBwXKBl
+         rDdQ==
+X-Gm-Message-State: AOJu0YxNer6iGV4bOuJfCKsXWXBbNnJduzNz882Lzgsz+8YUx8creEVj
+	L+BSsB/ptOXEgEDdCTaBkYGsjoLXBmAECk0vIG6AJjkB/HpNAM2QRkVpLzlvVkGB
+X-Gm-Gg: ATEYQzw1ij/Rww8sTWfLg2kXZWtkoO2Scqc1KHoO7XD+uTTHYrh+5c11pdmuwAVnDY3
+	Oz7IKAAIDr5Egk8bLJafTk0UOIO5APgQdm6Fe7gYw4Dh3LgXGFIeuaeEipOW48WODISrCgj9Son
+	UgSrPvO3UKD7W9GcxtKKA31tqUniqc5/4jIK+LZiBGCvLiJl0m7xu3ui1dDFPpA1POUU/inNUwd
+	3l8B4RUi3DWy3tnI8WZDuEbC5v5eqqVIStACuaTasz82z6dUY4MxqU1EJAe4Hz06RwL0pn/4vfP
+	3bb618g/Nqm4mSQ1EJdQQSX6dOPWdbx1q3PzXXvH/oTVJxYU6aVtrUUIDW8WmURXQVP5wCgj5ZC
+	vFpNe6YXyqFhK6pnxSQ+gvr2MWLv7JWJ4duOyk6XaI0JivhCbQYbMbf8y4y/y9ZeIoSuI95AvpJ
+	D4QvsU7QSFvhzoSViGgDAx7weti0Agkbpf3VDX0Bs6TP/MK6rxwCoytU41ErW9XbjCKgOiObBaO
+	h2pLIRWdU8AKbI=
+X-Received: by 2002:a17:902:ea02:b0:2ad:c527:e9fd with SMTP id d9443c01a7336-2ae2e4b5a34mr130433495ad.41.1772442889308;
+        Mon, 02 Mar 2026 01:14:49 -0800 (PST)
 Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae496470d3sm39729525ad.15.2026.03.02.01.14.43
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae496470d3sm39729525ad.15.2026.03.02.01.14.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 01:14:45 -0800 (PST)
+        Mon, 02 Mar 2026 01:14:49 -0800 (PST)
 From: zhidao su <soolaugust@gmail.com>
 To: sched-ext@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -66,10 +68,12 @@ Cc: linux-kernel@vger.kernel.org,
 	peterz@infradead.org,
 	mingo@redhat.com,
 	zhidao su <suzhidao@xiaomi.com>
-Subject: [PATCH 1/2] sched_ext: Use READ_ONCE() for the read side of dsq->nr update
-Date: Mon,  2 Mar 2026 17:14:39 +0800
-Message-ID: <20260302091440.3973220-1-soolaugust@gmail.com>
+Subject: [PATCH 2/2] sched_ext: Replace naked scx_root dereferences in kobject callbacks
+Date: Mon,  2 Mar 2026 17:14:40 +0800
+Message-ID: <20260302091440.3973220-2-soolaugust@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260302091440.3973220-1-soolaugust@gmail.com>
+References: <20260302091440.3973220-1-soolaugust@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -80,28 +84,31 @@ Content-Transfer-Encoding: 8bit
 
 From: zhidao su <suzhidao@xiaomi.com>
 
-scx_bpf_dsq_nr_queued() reads dsq->nr via READ_ONCE() without holding
-any lock, making dsq->nr a lock-free concurrently accessed variable.
-However, dsq_mod_nr(), the sole writer of dsq->nr, only uses
-WRITE_ONCE() on the write side without the matching READ_ONCE() on the
-read side:
+scx_attr_ops_show() and scx_uevent() access scx_root->ops.name directly.
+This is problematic for two reasons:
 
-    WRITE_ONCE(dsq->nr, dsq->nr + delta);
-                        ^^^^^^^
-                        plain read -- KCSAN data race
+1. The file-level comment explicitly identifies naked scx_root
+   dereferences as a temporary measure that needs to be replaced
+   with proper per-instance access.
 
-The KCSAN documentation requires that if one accessor uses READ_ONCE()
-or WRITE_ONCE() on a variable to annotate lock-free access, all other
-accesses must also use the appropriate accessor. A plain read on the
-right-hand side of WRITE_ONCE() leaves the pair incomplete and will
-trigger KCSAN warnings.
+2. scx_attr_events_show(), the neighboring sysfs show function in
+   the same group, already uses the correct pattern:
 
-Fix by using READ_ONCE() for the read side of the update:
+       struct scx_sched *sch = container_of(kobj, struct scx_sched, kobj);
 
-    WRITE_ONCE(dsq->nr, READ_ONCE(dsq->nr) + delta);
+   Having inconsistent access patterns in the same sysfs/uevent
+   group is error-prone.
 
-This is consistent with scx_bpf_dsq_nr_queued() and makes the
-concurrent access annotation complete and KCSAN-clean.
+The kobject embedded in struct scx_sched is initialized as:
+
+    kobject_init_and_add(&sch->kobj, &scx_ktype, NULL, "root");
+
+so container_of(kobj, struct scx_sched, kobj) correctly retrieves
+the owning scx_sched instance in both callbacks.
+
+Replace the naked scx_root dereferences with container_of()-based
+access, consistent with scx_attr_events_show() and in preparation
+for proper multi-instance scx_sched support.
 
 Signed-off-by: zhidao su <suzhidao@xiaomi.com>
 ---
@@ -109,24 +116,31 @@ Signed-off-by: zhidao su <suzhidao@xiaomi.com>
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 136b01950a62..718401f4ff2a 100644
+index 718401f4ff2a..f25340ac044a 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -972,8 +972,12 @@ static bool scx_dsq_priq_less(struct rb_node *node_a,
- 
- static void dsq_mod_nr(struct scx_dispatch_q *dsq, s32 delta)
+@@ -3631,7 +3631,9 @@ static void scx_kobj_release(struct kobject *kobj)
+ static ssize_t scx_attr_ops_show(struct kobject *kobj,
+ 				 struct kobj_attribute *ka, char *buf)
  {
--	/* scx_bpf_dsq_nr_queued() reads ->nr without locking, use WRITE_ONCE() */
--	WRITE_ONCE(dsq->nr, dsq->nr + delta);
-+	/*
-+	 * scx_bpf_dsq_nr_queued() reads ->nr without locking. Use READ_ONCE()
-+	 * on the read side and WRITE_ONCE() on the write side to properly
-+	 * annotate the concurrent lockless access and avoid KCSAN warnings.
-+	 */
-+	WRITE_ONCE(dsq->nr, READ_ONCE(dsq->nr) + delta);
+-	return sysfs_emit(buf, "%s\n", scx_root->ops.name);
++	struct scx_sched *sch = container_of(kobj, struct scx_sched, kobj);
++
++	return sysfs_emit(buf, "%s\n", sch->ops.name);
+ }
+ SCX_ATTR(ops);
+ 
+@@ -3675,7 +3677,9 @@ static const struct kobj_type scx_ktype = {
+ 
+ static int scx_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+-	return add_uevent_var(env, "SCXOPS=%s", scx_root->ops.name);
++	const struct scx_sched *sch = container_of(kobj, struct scx_sched, kobj);
++
++	return add_uevent_var(env, "SCXOPS=%s", sch->ops.name);
  }
  
- static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
+ static const struct kset_uevent_ops scx_uevent_ops = {
 -- 
 2.43.0
 
