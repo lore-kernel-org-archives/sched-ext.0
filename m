@@ -1,30 +1,30 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F02F12AF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08C037B01B;
 	Tue,  3 Mar 2026 07:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.9
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772522654; cv=none; b=ZmtsdYD1K5Twdx9dhZMmgz8NlfDWVIo11iVtkicu3GJqECWbiDzporyFH7TU9teyDVgUsDrvdqSvlANgCL+aQZ0AUki2oiEi0qUKy/xmxGHObwgnLq0pnHGcUbzI0J3j19xWW51+ridpQairSrO+i70vjcGQNmm4CuhK044VO4w=
+	t=1772522654; cv=none; b=pEefxQAoW27YxsAGbVyK8XKd/PrBvmcsmeVDt+IK9/tvJaW8Su9ZNMjVrmSiBK0H7O7oa1Ca03ZM7UzxkhOLsOgZgU3pxfOFjv2nb/JK9EA9Yjdnh5tgEtylOiaijxCd+V1nj7XjCaT8+wuLVu/XLOo4CzH9cP1T0tJkxwLMjQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772522654; c=relaxed/simple;
-	bh=O0FV2f9VOHGakL3BdhgKr0O8u27OTBHmjRbv1WyyV10=;
+	bh=Es196YeG+70qw0n2ceX/lhCeIW20rSH3pl2LHQseJDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aw/nbkpdbvSEFwRsDEeEMVbnSE45nFi8oLtgTu9pA6DGt1IAqgxYh3/5THAwOy9u/q0aXBlFWTJJwFTT5bQoubBeQx8EV8Jm7I/UQpnwNKs5gb2FqvAWOxgENkIuFcGSMqCZUasYa5Bbq/zuBvbfUzashCpDS+X0MELRxnn2k2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=hh4xzTVt; arc=none smtp.client-ip=117.135.210.9
+	 MIME-Version; b=gyxdMAcKfjkBEdTadE/YQv8TWvS1M9G/T+Vy97LkwAYXbU0j3VJfbyaMKa/IAhMqx9afWkRcJr2ISbmUYatQIuJGw8Z5bqRgh8CLpHNWDv2tYdL04bDWbk21ASplKYHnGImwTKSpQrNsMC74lm51PZlBxzrkB2cHZSctNuEORpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=o5BTgwgA; arc=none smtp.client-ip=117.135.210.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="hh4xzTVt"
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="o5BTgwgA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=Tv
-	d5JbamKTm8eCSpeOkJ/IJ6Kk9pcl+E2+ZvdRrW8Hs=; b=hh4xzTVtGQy3DtAnGS
-	rX5TzapAZkthb9vqe32BwpoB64jhwifvvttOmRphwWjYO4R004czdL+haMg1S107
-	NDQ5ta9bwjkW2NWhtd2AR/CYIHSldeQEIHPDrHDFT3Ua5jwE13V7FiaoZ+S5IUM7
-	VemTwn4bWo/oej0d0b4zOsfpo=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=x3
+	rn7gZpH9mRjTDX/QjdbmjaJA3AHIVg1ikqiO27ZMk=; b=o5BTgwgAkV50N3oL6W
+	fiUCzwCAApDl1N2NbV99Zn2OMqbozbgCb8h6UyQj0+UOVwOPLdgdM3772/giC9ou
+	Y1pCtrnlwA/38Co2cE5rjRKMkrnU81bojjTE6yQT8CMdbnY1Pgb34U6ro+qY/Fyn
+	BKJDfOqAZvU3Q3fjdxBW8l4/s=
 Received: from localhost.localdomain (unknown [])
-	by gzsmtp5 (Coremail) with SMTP id QCkvCgDnT3h6jKZpVDeAAw--.53445S5;
-	Tue, 03 Mar 2026 15:23:41 +0800 (CST)
+	by gzsmtp5 (Coremail) with SMTP id QCkvCgDnT3h6jKZpVDeAAw--.53445S4;
+	Tue, 03 Mar 2026 15:23:40 +0800 (CST)
 From: Zhao Mengmeng <zhaomzhao@126.com>
 To: tj@kernel.org,
 	void@manifault.com,
@@ -41,9 +41,9 @@ Cc: sched-ext@lists.linux.dev,
 	bpf@vger.kernel.org,
 	llvm@lists.linux.dev,
 	zhaomengmeng@kylinos.cn
-Subject: [PATCH 3/3] selftests/sched_ext: Fix peek_dsq.bpf.c compile error for clang 17
-Date: Tue,  3 Mar 2026 15:23:17 +0800
-Message-ID: <20260303072317.76035-4-zhaomzhao@126.com>
+Subject: [PATCH 2/3] selftests/sched_ext: Add -fms-extensions to bpf build flags
+Date: Tue,  3 Mar 2026 15:23:16 +0800
+Message-ID: <20260303072317.76035-3-zhaomzhao@126.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260303072317.76035-1-zhaomzhao@126.com>
 References: <20260303072317.76035-1-zhaomzhao@126.com>
@@ -54,55 +54,41 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:QCkvCgDnT3h6jKZpVDeAAw--.53445S5
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Ww4fGFyxuFW7XFW3tw45GFg_yoW8Xw13pa
-	18ZF1rAr4ftF43G3W8JrWkJrWUXrsavF4Iga13ZrZFqFWrJw48Jr1xKFW3tryDWr97uFs3
-	Aa4Skw1YkFWDJFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j5wIDUUUUU=
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlx1GvWmmjH2t0wAA3x
+X-CM-TRANSID:QCkvCgDnT3h6jKZpVDeAAw--.53445S4
+X-Coremail-Antispam: 1Uf129KBjvdXoWrurW3Cw4ktFWkGF4DXr1UWrg_yoWkAwbEyw
+	4fWrs7AFWDCFy8tr47ur15Grnakan0grs5ArnIqwnxZw4DZ3Z8Ga1DuF1jvF1FgrWjgr9I
+	vF4vyFyrtFn2gjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU8VT5PUUUUU==
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqhxGvWmmjHwHfAAA3J
 
 From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-When compiling sched_ext selftests using clang 17.0.6, it raised
-compiler crash and build error:
+Similar to commit 835a50753579 ("selftests/bpf: Add -fms-extensions to
+bpf build flags") and commit 639f58a0f480 ("bpftool: Fix build warnings
+due to MS extensions")
 
-Error at line 68: Unsupport signed division for DAG: 0x55b2f9a60240:
-i64 = sdiv 0x55b2f9a609b0, Constant:i64<100>, peek_dsq.bpf.c:68:25 @[
-peek_dsq.bpf.c:95:4 @[ peek_dsq.bpf.c:169:8 @[ peek
-_dsq.bpf.c:140:6 ] ] ]Please convert to unsigned div/mod
-
-After digging, it's not a compiler error, clang supported Signed division
-only when using -mcpu=v4, while we use -mcpu=v3 currently, the better way
-is to use unsigned div, see [1] for details.
-
-[1] https://github.com/llvm/llvm-project/issues/70433
+Fix "declaration does not declare anything" warning by using
+-fms-extensions and -Wno-microsoft-anon-tag flags to build bpf programs
+that #include "vmlinux.h"
 
 Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 ---
- tools/testing/selftests/sched_ext/peek_dsq.bpf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/sched_ext/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/sched_ext/peek_dsq.bpf.c b/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
-index a3faf5bb49d6..784f2f6c1af9 100644
---- a/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
-+++ b/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
-@@ -58,14 +58,14 @@ static void record_peek_result(long pid)
- {
- 	u32 slot_key;
- 	long *slot_pid_ptr;
--	int ix;
-+	u32 ix;
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 2815a875bde2..a3bbe2c7911b 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -93,6 +93,8 @@ BPF_CFLAGS = -g -D__TARGET_ARCH_$(SRCARCH)					\
+ 	     $(CLANG_SYS_INCLUDES) 						\
+ 	     -Wall -Wno-compare-distinct-pointer-types				\
+ 	     -Wno-incompatible-function-pointer-types				\
++	     -Wno-microsoft-anon-tag						\
++	     -fms-extensions							\
+ 	     -O2 -mcpu=v3
  
- 	if (pid <= 0)
- 		return;
- 
- 	/* Find an empty slot or one with the same PID */
- 	bpf_for(ix, 0, 10) {
--		slot_key = (pid + ix) % MAX_SAMPLES;
-+		slot_key = ((u64)pid + ix) % MAX_SAMPLES;
- 		slot_pid_ptr = bpf_map_lookup_elem(&peek_results, &slot_key);
- 		if (!slot_pid_ptr)
- 			continue;
+ # sort removes libbpf duplicates when not cross-building
 -- 
 2.43.0
 
