@@ -1,177 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9C23E9F93;
-	Tue,  3 Mar 2026 11:01:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8B6430BBA
+	for <sched-ext@lists.linux.dev>; Tue,  3 Mar 2026 14:35:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772535677; cv=none; b=lffF88u7rkZyyfEZBjVrMwUJpbNz5/338COxGwj9AuWwKJ7cTKsxNyaQEBfzZ1IFLaE63vh9tkUUoxPZ5RcHMH6NuL1oHRX0IJSfVpY6MgrG3+v6eVUBaLnE5RX7vTyakklXwTWBVEhWQ050kgpdB/e7o/59/V1wq7qvkMJH4Sc=
+	t=1772548540; cv=none; b=rg71BtI1zVeVgdS6Ih4i673taguu7lGC8XCBciyNdEQqWSqE0YAXbDcTTWmCLzcFweCd8iTSRlkNMox9FSKyPg/5DG8GhTkUL5Nc4cEzxi+wsh2voMHp4FRVWxJamqW/yTp8gmZkDnL1Cc5m3BeEvscJuN5gKseHXTX8SZv0lgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772535677; c=relaxed/simple;
-	bh=q5LnMbaB80xwd3/j9l4jKe95mdjbXXcr3a0eioUAyi8=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=k4mcUoaG9XjBVYtbr2f2M8X7sTmazZJLdSZlTmybu9MSBkDvHe4dIrLPN/S96t5M8WpTMh0uGcZIG9PZeBe0t7SH6gBs1JTACTKfnwfU96r+uhYBkR/KLOEKO2bXRDkfUYSSRIl3YrUgd2VYasRK61y8B5CtYa6Wc/Nn/5tYgNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bljmHR7v; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772548540; c=relaxed/simple;
+	bh=HeiYvOGrpYd14ijPafjLzlaHQcy7c46Eu5YNBS2GNS4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uRuHCUv3nlK2eDS47fYYmb4Yrz2/CLjenPwDfHvhvijksjGn7AExZ9ot/V4o0faJjDRK4YbJXyEOg7gJlgz77nrOLG3USPSZHEgzodA1FPniPh38u4OkKJqxAApPrAII2CMohI7qCM2boRUBIGkq6EhdeeJus7m5B/yS35FIpkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJ0mb/Pn; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bljmHR7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C707EC116C6;
-	Tue,  3 Mar 2026 11:01:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772535676;
-	bh=q5LnMbaB80xwd3/j9l4jKe95mdjbXXcr3a0eioUAyi8=;
-	h=Date:From:To:Cc:Subject:From;
-	b=bljmHR7vW0kxKmP0+fEdN4VoxiSHoBHAM/sFLC9zrZ0mgKkNz4OgrmtjWtqrXbi1f
-	 sviMCzNfwKKQqotjKxjN6cdkIuwlF17Cs/NW1LM+SFc2P77969UXHRC5aepVK8y6yJ
-	 Ff6ZWPMyKqBgfACb3+JyNV/iIWuLvIoT2Q6QnHE4oiz0Q9A7siXTSXb0law7UjzQ/e
-	 WVfmEEE5umbyN8kvGevNtaqc/aDP4m6E8NfZ64n9JWCzay7ly+DeotluHsmS+Nv6/F
-	 o5S+31tbQGnM6RHIjzNWuD0VoVgk65C8bD8Z0vznRZfoSExYw04S9uOlLDb74iWZ7e
-	 Fec1MZlYKOohA==
-Date: Tue, 03 Mar 2026 01:01:15 -1000
-Message-ID: <85a171ba1e37f417fbd7e74afe56efc4@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Subject: [PATCH sched_ext/for-7.0-fixes] sched_ext: Fix starvation of
- scx_enable() under fair-class saturation
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJ0mb/Pn"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70f191313cso2261612a12.3
+        for <sched-ext@lists.linux.dev>; Tue, 03 Mar 2026 06:35:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772548538; x=1773153338; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cwr9TWxB+IWof9S5wet3ZOfNWncZ8DLTtAA/wU8FZsU=;
+        b=MJ0mb/PnlcarovXcIQYG6p0HNaXuqi1RVtLdh7dav3XzwjZ3YMOjzPU9gdfJ5yGB0P
+         B9HwMOzy+2+reMVLiHpsXVFYA5gPy0LwyXhzg4Fb47Z/0KX7AfTY8S/IqSsiH5ui/fA0
+         I9M68xmTryQ2SRy+2XC+4ZD9iRT9dxCrYwrTBNo9dKTZyg8ADhS1uvYpDcfJpvlrs6VH
+         KCDKpCSobTjQwUjL879jVtTyDSbbZEHeIdkAZbVOJzgzYsNOBq9t7igGRgD7Eu3WHoZb
+         aFUGZXVXupsxx4UX55rDnOYi6RZM2Spzcz0SG4OadF7ItV2Kdqr5WNygYU2pgJD5DDv3
+         /OUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772548538; x=1773153338;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cwr9TWxB+IWof9S5wet3ZOfNWncZ8DLTtAA/wU8FZsU=;
+        b=Qg2mdMga80KfHaYKZlcewr8/zm/hAyVbvDLwZcDtvpMBoNHRGhtWLDRryG9WyE10KC
+         y8uy0r34iBREG2wfXoaMcpfvjI0kbv/TVLOFryHooPUMVxDysgqeowxlfTWrNwTGqLk5
+         p8hnmz6PZRwz+bkZffk9Ieb3r/dF4TPhYJeGNt/ukWxlWEmRmovx+G1iXGvC1KE1ZG96
+         Tnkoo/uQShiWjPwyUOJrsQ/XmcppIjQv2gGYs96NZ55qffIDyKTxxFbXuCmpEEo+6D9h
+         Wa6NtHxwpnaPceFhUny85MFgnYXYACE2OUadYeg1Rhlel0ytC6Q2icyqs1WDIWG4F9K4
+         S3fg==
+X-Gm-Message-State: AOJu0YymgeqfB7tU8rNuaNrz+t5D2/nXHJF6v7F7cgnWn3uPNIy94Md3
+	6h1BAbBRB7sjKax26WVqIWoxxvx5jCe8OGEABzRdlt1QIwH1O2+4gYQe14Qo9hXz
+X-Gm-Gg: ATEYQzz9Vf+L2fomSOfW/qvzJUNivmviP0rxNUmBN12plEi2/KNsxrqJSvjLGXLHlQw
+	xVzc/X0bhqcxxmaYfcUQ3SSOLaicVySNBgIM3UsjkEWuvCRJSMvUw2C11MVJHHyUoW6xHt5xufk
+	M1oxIPcMvQHiDXP4Mj8BxCp73mc2faAo8HBXjy2s3Qf8WLOsTjrgGOhjMmZvOt4Su99asPVZT9W
+	3T+fmKhHPJKP+aT7KmYm164SCxX6HLKTJWh2b3ksr3FmyEYMAPAG98NR8P9UVSHWqgAhd+5n33N
+	4hPdr0dMVFzBPFCUe8tJT4Sr/cN/sPiDay6z5iB1bKpaBDRGDPWmCWiChr7sbUiCUTS75oG47Cb
+	EVc+hGOYDfOBNfzYDui3y/WZ3AXy7sZb3X2BBAwNYywmY0+3IA+YzruB21GnF5hnDdKgvAnNnNF
+	RppoMROz5ZxHILgRTYr2MFZSGUcOw7ZJOIbLssjvcU5YUUPfwJAjUrI8MThQ5BWA==
+X-Received: by 2002:a17:903:37cc:b0:2ae:61db:7984 with SMTP id d9443c01a7336-2ae61db7cc5mr20066945ad.51.1772548537569;
+        Tue, 03 Mar 2026 06:35:37 -0800 (PST)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:af56:6148:37d:1e5c])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae534088c4sm76847025ad.26.2026.03.03.06.35.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 06:35:37 -0800 (PST)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev
+Cc: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	jserv@ccns.ncku.edu.tw,
+	yphbchou0911@gmail.com
+Subject: [PATCH 0/1] sched_ext: Remove redundant css_put()
+Date: Tue,  3 Mar 2026 22:35:29 +0800
+Message-ID: <20260303143530.135968-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-During scx_enable(), the READY -> ENABLED task switching loop changes the
-calling thread's sched_class from fair to ext. Since fair has higher
-priority than ext, saturating fair-class workloads can indefinitely starve
-the enable thread, hanging the system. This was introduced when the enable
-path switched from preempt_disable() to scx_bypass() which doesn't protect
-against fair-class starvation. Note that the original preempt_disable()
-protection wasn't complete either - in partial switch modes, the calling
-thread could still be starved after preempt_enable() as it may have been
-switched to ext class.
+I noticed a redundant css_put() call in the error path of
+scx_cgroup_init() within ext.c.
 
-Fix it by offloading the enable body to a dedicated system-wide RT
-(SCHED_FIFO) kthread which cannot be starved by either fair or ext class
-tasks. scx_enable() lazily creates the kthread on first use and passes the
-ops pointer through a struct scx_enable_cmd containing the kthread_work,
-then synchronously waits for completion.
+According to the cgroup documentation, css_put() should only be
+used to release a reference obtained via css_get() or
+css_tryget_online().
 
-The workfn runs on a different kthread from sch->helper (which runs
-disable_work), so it can safely flush disable_work on the error path
-without deadlock.
+The current iteration uses css_for_each_descendant_pre(), which
+walks the cgroup hierarchy under cgroup_lock(). This iterator
+does not implicitly acquire a reference on the yielded css
+structures.
 
-Fixes: 8c2090c504e9 ("sched_ext: Initialize in bypass mode")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Since there is no preceding css_get() or css_tryget_online()
+within the loop, calling css_put() when ops.cgroup_init() fails
+appears to cause a refcount underflow. This could potentially
+lead to a Use-After-Free (UAF) vulnerability.
+
+I have tested this patch by building the kernel with `make -j` and
+`CONFIG_EXT_GROUP_SCHED` enabled. However, I do not have specific
+data or a reproducer to test if this error path triggers in a live
+environment.
+
+Could anyone clarify if this css_put() is indeed an unbalanced
+refcount drop, or did I miss a reference acquisition somewhere?
+I have attached a patch that removes the unbalanced call.
+
+Thanks,
+Cheng-Yang
+
 ---
- kernel/sched/ext.c | 66 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 56 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0bb8fa927e9e..deb22c8e25cd 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4924,20 +4924,30 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
- 	return 0;
- }
+Cheng-Yang Chou (1):
+  sched/ext: Remove redundant css_put()
 
--static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
-+/*
-+ * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
-+ * starvation. During the READY -> ENABLED task switching loop, the calling
-+ * thread's sched_class gets switched from fair to ext. As fair has higher
-+ * priority than ext, the calling thread can be indefinitely starved under
-+ * fair-class saturation, leading to a system hang.
-+ */
-+struct scx_enable_cmd {
-+	struct kthread_work	work;
-+	struct sched_ext_ops	*ops;
-+	int			ret;
-+};
-+
-+static void scx_enable_workfn(struct kthread_work *work)
- {
-+	struct scx_enable_cmd *cmd =
-+		container_of(work, struct scx_enable_cmd, work);
-+	struct sched_ext_ops *ops = cmd->ops;
- 	struct scx_sched *sch;
- 	struct scx_task_iter sti;
- 	struct task_struct *p;
- 	unsigned long timeout;
- 	int i, cpu, ret;
+ kernel/sched/ext.c | 1 -
+ 1 file changed, 1 deletion(-)
 
--	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
--			   cpu_possible_mask)) {
--		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
--		return -EINVAL;
--	}
--
- 	mutex_lock(&scx_enable_mutex);
+-- 
+2.48.1
 
- 	if (scx_enable_state() != SCX_DISABLED) {
-@@ -5154,13 +5164,15 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
-
- 	atomic_long_inc(&scx_enable_seq);
-
--	return 0;
-+	cmd->ret = 0;
-+	return;
-
- err_free_ksyncs:
- 	free_kick_syncs();
- err_unlock:
- 	mutex_unlock(&scx_enable_mutex);
--	return ret;
-+	cmd->ret = ret;
-+	return;
-
- err_disable_unlock_all:
- 	scx_cgroup_unlock();
-@@ -5179,7 +5191,41 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
- 	 */
- 	scx_error(sch, "scx_enable() failed (%d)", ret);
- 	kthread_flush_work(&sch->disable_work);
--	return 0;
-+	cmd->ret = 0;
-+}
-+
-+static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
-+{
-+	static struct kthread_worker *helper;
-+	static DEFINE_MUTEX(helper_mutex);
-+	struct scx_enable_cmd cmd;
-+
-+	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
-+			   cpu_possible_mask)) {
-+		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
-+		return -EINVAL;
-+	}
-+
-+	if (!READ_ONCE(helper)) {
-+		mutex_lock(&helper_mutex);
-+		if (!helper) {
-+			helper = kthread_run_worker(0, "scx_enable_helper");
-+			if (IS_ERR_OR_NULL(helper)) {
-+				helper = NULL;
-+				mutex_unlock(&helper_mutex);
-+				return -ENOMEM;
-+			}
-+			sched_set_fifo(helper->task);
-+		}
-+		mutex_unlock(&helper_mutex);
-+	}
-+
-+	kthread_init_work(&cmd.work, scx_enable_workfn);
-+	cmd.ops = ops;
-+
-+	kthread_queue_work(READ_ONCE(helper), &cmd.work);
-+	kthread_flush_work(&cmd.work);
-+	return cmd.ret;
- }
-
-
---
-2.53.0
