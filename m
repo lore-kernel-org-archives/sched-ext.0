@@ -1,57 +1,177 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C08386C20;
-	Tue,  3 Mar 2026 08:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9C23E9F93;
+	Tue,  3 Mar 2026 11:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772525212; cv=none; b=Wrhjqqv4MA6IrcbKNHzbAedRpcNPFHhw9qAO8oY+vTXyeLNYIj/xygD4MjkTfjQpm6cUUSDXt1x5L2mMJWK7jHMNmh9iwp086Pz4XRVz9VK1/oM64Qmrkuh6VQ+ndhwiYboHIwMKcP+pB3KSFsO32YAP+rK8YHf/jKRFf2l4qp8=
+	t=1772535677; cv=none; b=lffF88u7rkZyyfEZBjVrMwUJpbNz5/338COxGwj9AuWwKJ7cTKsxNyaQEBfzZ1IFLaE63vh9tkUUoxPZ5RcHMH6NuL1oHRX0IJSfVpY6MgrG3+v6eVUBaLnE5RX7vTyakklXwTWBVEhWQ050kgpdB/e7o/59/V1wq7qvkMJH4Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772525212; c=relaxed/simple;
-	bh=csNriQBMGjh2HsIQExblqKsd8XAaspsnZDt0xIs7+Jo=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=RwpVt+STNtbu83B4x1p57pJ+v02/aV4Wxpx9MCwbGFx3krp3saMAZTgQrVfFIla+mjgkWK67evZKFxnNsr+8PTZbqvEeXp1SA/NTMKcF7f9UYcoX5oIiP/00XC2KkroCbrm3uqfCyB2J8eaFeQcyLQyt7T5tv5ZOL/vGc3odaiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zpb0cYkZ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772535677; c=relaxed/simple;
+	bh=q5LnMbaB80xwd3/j9l4jKe95mdjbXXcr3a0eioUAyi8=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=k4mcUoaG9XjBVYtbr2f2M8X7sTmazZJLdSZlTmybu9MSBkDvHe4dIrLPN/S96t5M8WpTMh0uGcZIG9PZeBe0t7SH6gBs1JTACTKfnwfU96r+uhYBkR/KLOEKO2bXRDkfUYSSRIl3YrUgd2VYasRK61y8B5CtYa6Wc/Nn/5tYgNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bljmHR7v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zpb0cYkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD70BC2BCB0;
-	Tue,  3 Mar 2026 08:06:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bljmHR7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C707EC116C6;
+	Tue,  3 Mar 2026 11:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772525212;
-	bh=csNriQBMGjh2HsIQExblqKsd8XAaspsnZDt0xIs7+Jo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Zpb0cYkZcUJ+4AwkP0wqGQc88D2lSn3vFqq5vt2oMfH6GgirL0ECQX5eqzp3Uaw8s
-	 jms30YiLzTua1XYrKZ5/NXO67tY/jFezcacr8u9ox7Qv9WYnkppcvLai7kWia/nAJP
-	 jY75U4TDhhNQ585z03gFbQpODWAFu1x7OQ52w5Ow+kdJuL/ekOBdqRaj+eYc7e5bVo
-	 SyUxM1smN6k1ahH15r9zcLGmSr2eNdkL+Le0OSaHsPCf7jS3Ro89FYWokoJavPvscE
-	 sNQhbmu3SARxODBzF/ohy683sYXGb+02X+OiwAPKLyYNyOnyeDNQA0E+FTe52LHT5A
-	 rc21Qf4u7QgWg==
-Date: Mon, 02 Mar 2026 22:06:51 -1000
-Message-ID: <a3db8e7c83cf42834a441e385c2844a9@kernel.org>
+	s=k20201202; t=1772535676;
+	bh=q5LnMbaB80xwd3/j9l4jKe95mdjbXXcr3a0eioUAyi8=;
+	h=Date:From:To:Cc:Subject:From;
+	b=bljmHR7vW0kxKmP0+fEdN4VoxiSHoBHAM/sFLC9zrZ0mgKkNz4OgrmtjWtqrXbi1f
+	 sviMCzNfwKKQqotjKxjN6cdkIuwlF17Cs/NW1LM+SFc2P77969UXHRC5aepVK8y6yJ
+	 Ff6ZWPMyKqBgfACb3+JyNV/iIWuLvIoT2Q6QnHE4oiz0Q9A7siXTSXb0law7UjzQ/e
+	 WVfmEEE5umbyN8kvGevNtaqc/aDP4m6E8NfZ64n9JWCzay7ly+DeotluHsmS+Nv6/F
+	 o5S+31tbQGnM6RHIjzNWuD0VoVgk65C8bD8Z0vznRZfoSExYw04S9uOlLDb74iWZ7e
+	 Fec1MZlYKOohA==
+Date: Tue, 03 Mar 2026 01:01:15 -1000
+Message-ID: <85a171ba1e37f417fbd7e74afe56efc4@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Zhao Mengmeng <zhaomzhao@126.com>
-Cc: sched-ext@lists.linux.dev,
+To: David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org,
- void@manifault.com,
- arighi@nvidia.com,
- changwoo@igalia.com,
- Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Subject: Re: [PATCH 0/3] tools/sched_ext: fix compilation issues
-In-Reply-To: <20260303072317.76035-1-zhaomzhao@126.com>
-References: <20260303072317.76035-1-zhaomzhao@126.com>
+ stable@vger.kernel.org
+Subject: [PATCH sched_ext/for-7.0-fixes] sched_ext: Fix starvation of
+ scx_enable() under fair-class saturation
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-> Zhao Mengmeng (3):
->   tools/sched_ext: Add -fms-extensions to bpf build flags
->   selftests/sched_ext: Add -fms-extensions to bpf build flags
->   selftests/sched_ext: Fix peek_dsq.bpf.c compile error for clang 17
+During scx_enable(), the READY -> ENABLED task switching loop changes the
+calling thread's sched_class from fair to ext. Since fair has higher
+priority than ext, saturating fair-class workloads can indefinitely starve
+the enable thread, hanging the system. This was introduced when the enable
+path switched from preempt_disable() to scx_bypass() which doesn't protect
+against fair-class starvation. Note that the original preempt_disable()
+protection wasn't complete either - in partial switch modes, the calling
+thread could still be starved after preempt_enable() as it may have been
+switched to ext class.
 
-Applied 1-3 to sched_ext/for-7.0-fixes.
+Fix it by offloading the enable body to a dedicated system-wide RT
+(SCHED_FIFO) kthread which cannot be starved by either fair or ext class
+tasks. scx_enable() lazily creates the kthread on first use and passes the
+ops pointer through a struct scx_enable_cmd containing the kthread_work,
+then synchronously waits for completion.
 
-Thanks.
+The workfn runs on a different kthread from sch->helper (which runs
+disable_work), so it can safely flush disable_work on the error path
+without deadlock.
+
+Fixes: 8c2090c504e9 ("sched_ext: Initialize in bypass mode")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c | 66 +++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 56 insertions(+), 10 deletions(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 0bb8fa927e9e..deb22c8e25cd 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4924,20 +4924,30 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+ 	return 0;
+ }
+
+-static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
++/*
++ * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
++ * starvation. During the READY -> ENABLED task switching loop, the calling
++ * thread's sched_class gets switched from fair to ext. As fair has higher
++ * priority than ext, the calling thread can be indefinitely starved under
++ * fair-class saturation, leading to a system hang.
++ */
++struct scx_enable_cmd {
++	struct kthread_work	work;
++	struct sched_ext_ops	*ops;
++	int			ret;
++};
++
++static void scx_enable_workfn(struct kthread_work *work)
+ {
++	struct scx_enable_cmd *cmd =
++		container_of(work, struct scx_enable_cmd, work);
++	struct sched_ext_ops *ops = cmd->ops;
+ 	struct scx_sched *sch;
+ 	struct scx_task_iter sti;
+ 	struct task_struct *p;
+ 	unsigned long timeout;
+ 	int i, cpu, ret;
+
+-	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
+-			   cpu_possible_mask)) {
+-		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
+-		return -EINVAL;
+-	}
+-
+ 	mutex_lock(&scx_enable_mutex);
+
+ 	if (scx_enable_state() != SCX_DISABLED) {
+@@ -5154,13 +5164,15 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+
+ 	atomic_long_inc(&scx_enable_seq);
+
+-	return 0;
++	cmd->ret = 0;
++	return;
+
+ err_free_ksyncs:
+ 	free_kick_syncs();
+ err_unlock:
+ 	mutex_unlock(&scx_enable_mutex);
+-	return ret;
++	cmd->ret = ret;
++	return;
+
+ err_disable_unlock_all:
+ 	scx_cgroup_unlock();
+@@ -5179,7 +5191,41 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 	 */
+ 	scx_error(sch, "scx_enable() failed (%d)", ret);
+ 	kthread_flush_work(&sch->disable_work);
+-	return 0;
++	cmd->ret = 0;
++}
++
++static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
++{
++	static struct kthread_worker *helper;
++	static DEFINE_MUTEX(helper_mutex);
++	struct scx_enable_cmd cmd;
++
++	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
++			   cpu_possible_mask)) {
++		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
++		return -EINVAL;
++	}
++
++	if (!READ_ONCE(helper)) {
++		mutex_lock(&helper_mutex);
++		if (!helper) {
++			helper = kthread_run_worker(0, "scx_enable_helper");
++			if (IS_ERR_OR_NULL(helper)) {
++				helper = NULL;
++				mutex_unlock(&helper_mutex);
++				return -ENOMEM;
++			}
++			sched_set_fifo(helper->task);
++		}
++		mutex_unlock(&helper_mutex);
++	}
++
++	kthread_init_work(&cmd.work, scx_enable_workfn);
++	cmd.ops = ops;
++
++	kthread_queue_work(READ_ONCE(helper), &cmd.work);
++	kthread_flush_work(&cmd.work);
++	return cmd.ret;
+ }
+
 
 --
-tejun
+2.53.0
