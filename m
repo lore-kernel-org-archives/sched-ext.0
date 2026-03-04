@@ -1,366 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9830B3EF0D3;
-	Wed,  4 Mar 2026 22:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED54372EC3;
+	Wed,  4 Mar 2026 22:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772661716; cv=none; b=aBS0Jdc6eMAguRjBqjADqg2nCYvZ8K7YNFUV8bKNfco3HWErrdrkqHPnvedqSETvyGhkREN/tq60lZ4Xz1ojlzIKc0WtUaYBYgToBkj48jxkWXZD0bcY5MaISBSeWRTRdZf90YcUJ+eaApTs8nfMQSzJMvwbSFu2KRxSCxT0WaY=
+	t=1772662190; cv=none; b=Ca0QJnTwsigHRWql95aiGXdnZGpnNbbZ74O8DrFqbP/yPSTThRcdLWe8m8LAa0J+I+CQjFPCrNh4xqCrfJ5d4TBCKFeHZJxZlMmpbOXecfeDMrSGiBQ/mA9dl4+WI4O5IjurEKxbcLb6DU7bDG1hmPSVUSVOO/dit7ZMc1kr6dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772661716; c=relaxed/simple;
-	bh=nyZX+7khCrbzZkcHDI6L/1mhdLm8fx0TkXRM33IbJqw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snGWG2KEZCd3SlRF0Gun/7bZJLFHnR5xUVDHIYnSLu61GwMy4yhkY/yXKyL98VN5vcJpa0NjJbv0768K8RCzsTLlwhh2ESLltRQpyGpxUZ+fmGiavtJzAR0ahKZlopm9XAtgX48VuwqBAe+Dl1u6MtfWNhUvY9grpGgfg26/NVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mb+keChN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772662190; c=relaxed/simple;
+	bh=e1h0174GTM/+x4aq3PSRfcBme/rg+4UKuKBELx3ateU=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Iecu2/h01SfcfTrcpf1GSjCXvlllAR9gj8xqavF5bdxiDpI/RlouAbe7uBSZRG30oTG1DfGdv3OGVk6PKnN1kAuXv2j/oyxuoLUNFeuiaAVfhY3iwac3oms6lr5ZlMZpg5HtSO8FulnbLTPPjzoGwq6VgQRz8PfMAdJ1seQ2vJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VCv7Nd6t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mb+keChN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C893C2BC9E;
-	Wed,  4 Mar 2026 22:01:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VCv7Nd6t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13D2C4CEF7;
+	Wed,  4 Mar 2026 22:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772661716;
-	bh=nyZX+7khCrbzZkcHDI6L/1mhdLm8fx0TkXRM33IbJqw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mb+keChNiL4GpuKbo+SmKT4/4X9RB3l6DkThMITO1IE1eKBoPrKPeq2ZUp4CaahmX
-	 8Wv7tk82gNOmlBe5COtZoor0U1EJeVM0q5ndbS/VRmAeXr71lYzkzn+e1S4KAK2uam
-	 T8VDxUi5/QTRcpm5t8NPLYnJQM7GMj36QZW5VUFn4mIPCj/1qGXUgn0Mn1llbvn8Fh
-	 oln/wKpuzDtRa6QSmRDkOysveBVSyIzU3cwgcGp1S4aQ99+HANrfGCBfIdZ2KWllfc
-	 aLAtKLJOs4Ix5g1bGQpTqR39C4JUJxxbPB+oZSA9nxYa7tzTLRDryQBCR8nlTyN5YZ
-	 5zfHGgUsPT7FQ==
+	s=k20201202; t=1772662189;
+	bh=e1h0174GTM/+x4aq3PSRfcBme/rg+4UKuKBELx3ateU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=VCv7Nd6tP5tmbQKPrbY83oYn1ah+ZofLDYio0E9+9TTtvJDlZtAEi0DoTSvfv2oqE
+	 a5xWF+SDKDTWUdl22j8dc1mp4CJOOWEhsIePCjfpw1PgYL27pI+0+O6ja9JUiQJeXj
+	 h/l0NDK1Dw2aBrQtFyh4Sg4PpyizoYL+kvwRAHWbfHm2HjXghArY+azc6wUbbRRLxf
+	 LFq1RInLAYIa97om4mXCYjSq/IZwwELHb1DDGBlU+hIxx9SjbfTOGC7wW4PaKUcfq0
+	 0H3vmljnAR9U9f9gqcHEtWQxQhgT/xZzknHEkAtJ7eiAlnxUBLtmdRqt9lSNXSij4y
+	 yOvf6t7YStEAw==
+Date: Wed, 04 Mar 2026 12:09:48 -1000
+Message-ID: <c0e903d1fcef15b412a473760ef60188@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Cc: void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	emil@etsalapatis.com,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 34/34] sched_ext: Add basic building blocks for nested sub-scheduler dispatching
-Date: Wed,  4 Mar 2026 12:01:19 -1000
-Message-ID: <20260304220119.4095551-35-tj@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260304220119.4095551-1-tj@kernel.org>
-References: <20260304220119.4095551-1-tj@kernel.org>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: sched-ext@lists.linux.dev,
+ void@manifault.com,
+ arighi@nvidia.com,
+ changwoo@igalia.com,
+ jserv@ccns.ncku.edu.tw,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched_ext/selftests: Fix format specifier and
+ buffer length in file_write_long()
+In-Reply-To: <20260304195757.688275-1-yphbchou0911@gmail.com>
+References: <20260304195757.688275-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
 
-This is an early-stage partial implementation that demonstrates the core
-building blocks for nested sub-scheduler dispatching. While significant
-work remains in the enqueue path and other areas, this patch establishes
-the fundamental mechanisms needed for hierarchical scheduler operation.
+Hello,
 
-The key building blocks introduced include:
+Applied to sched_ext/for-7.0-fixes.
 
-- Private stack support for ops.dispatch() to prevent stack overflow when
-  walking down nested schedulers during dispatch operations
+Thanks.
 
-- scx_bpf_sub_dispatch() kfunc that allows parent schedulers to trigger
-  dispatch operations on their direct child schedulers
-
-- Proper parent-child relationship validation to ensure dispatch requests
-  are only made to legitimate child schedulers
-
-- Updated scx_dispatch_sched() to handle both nested and non-nested
-  invocations with appropriate kf_mask handling
-
-The qmap scheduler is updated to demonstrate the functionality by calling
-scx_bpf_sub_dispatch() on registered child schedulers when it has no
-tasks in its own queues.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext.c                       | 120 ++++++++++++++++++++---
- kernel/sched/sched.h                     |   3 +
- tools/sched_ext/include/scx/common.bpf.h |   1 +
- tools/sched_ext/scx_qmap.bpf.c           |  37 ++++++-
- 4 files changed, 145 insertions(+), 16 deletions(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index ed49962c8d6a..fd6e2173cefe 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2444,8 +2444,14 @@ static inline void maybe_queue_balance_callback(struct rq *rq)
- 	rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
- }
- 
--static bool scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
--			       struct task_struct *prev)
-+/*
-+ * One user of this function is scx_bpf_dispatch() which can be called
-+ * recursively as sub-sched dispatches nest. Always inline to reduce stack usage
-+ * from the call frame.
-+ */
-+static __always_inline bool
-+scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
-+		   struct task_struct *prev, bool nested)
- {
- 	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 	int nr_loops = SCX_DSP_MAX_LOOPS;
-@@ -2499,8 +2505,23 @@ static bool scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 	do {
- 		dspc->nr_tasks = 0;
- 
--		SCX_CALL_OP(sch, SCX_KF_DISPATCH, dispatch, rq, cpu,
--			    prev_on_sch ? prev : NULL);
-+		if (nested) {
-+			/*
-+			 * If nested, don't update kf_mask as the originating
-+			 * invocation would already have set it up.
-+			 */
-+			SCX_CALL_OP(sch, 0, dispatch, rq, cpu,
-+				    prev_on_sch ? prev : NULL);
-+		} else {
-+			/*
-+			 * If not nested, stash @prev so that nested invocations
-+			 * can access it.
-+			 */
-+			rq->scx.sub_dispatch_prev = prev;
-+			SCX_CALL_OP(sch, SCX_KF_DISPATCH, dispatch, rq, cpu,
-+				    prev_on_sch ? prev : NULL);
-+			rq->scx.sub_dispatch_prev = NULL;
-+		}
- 
- 		flush_dispatch_buf(sch, rq);
- 
-@@ -2541,7 +2562,7 @@ static bool scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 
- static int balance_one(struct rq *rq, struct task_struct *prev)
- {
--	struct scx_sched *sch = scx_root, *pos;
-+	struct scx_sched *sch = scx_root;
- 	s32 cpu = cpu_of(rq);
- 
- 	lockdep_assert_rq_held(rq);
-@@ -2585,13 +2606,8 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
- 	if (rq->scx.local_dsq.nr)
- 		goto has_tasks;
- 
--	/*
--	 * TEMPORARY - Dispatch all scheds. This will be replaced by BPF-driven
--	 * hierarchical operation.
--	 */
--	list_for_each_entry_rcu(pos, &scx_sched_all, all)
--		if (scx_dispatch_sched(pos, rq, prev))
--			goto has_tasks;
-+	if (scx_dispatch_sched(sch, rq, prev, false))
-+		goto has_tasks;
- 
- 	/*
- 	 * Didn't find another task to run. Keep running @prev unless
-@@ -4942,9 +4958,8 @@ static void scx_sub_disable(struct scx_sched *sch)
- 
- 	/*
- 	 * Guarantee forward progress and wait for descendants to be disabled.
--	 * To limit
--	 * disruptions, $parent is not bypassed. Tasks are fully prepped and
--	 * then inserted back into $parent.
-+	 * To limit disruptions, $parent is not bypassed. Tasks are fully
-+	 * prepped and then inserted back into $parent.
- 	 */
- 	scx_bypass(sch, true);
- 	drain_descendants(sch);
-@@ -6578,6 +6593,20 @@ static int bpf_scx_init_member(const struct btf_type *t,
- 	return 0;
- }
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+static void scx_pstack_recursion_on_dispatch(struct bpf_prog *prog)
-+{
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+	sch = scx_prog_sched(prog->aux);
-+	if (unlikely(!sch))
-+		return;
-+
-+	scx_error(sch, "dispatch recursion detected");
-+}
-+#endif	/* CONFIG_EXT_SUB_SCHED */
-+
- static int bpf_scx_check_member(const struct btf_type *t,
- 				const struct btf_member *member,
- 				const struct bpf_prog *prog)
-@@ -6603,6 +6632,22 @@ static int bpf_scx_check_member(const struct btf_type *t,
- 			return -EINVAL;
- 	}
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	/*
-+	 * Enable private stack for operations that can nest along the
-+	 * hierarchy.
-+	 *
-+	 * XXX - Ideally, we should only do this for scheds that allow
-+	 * sub-scheds and sub-scheds themselves but I don't know how to access
-+	 * struct_ops from here.
-+	 */
-+	switch (moff) {
-+	case offsetof(struct sched_ext_ops, dispatch):
-+		prog->aux->priv_stack_requested = true;
-+		prog->aux->recursion_detected = scx_pstack_recursion_on_dispatch;
-+	}
-+#endif	/* CONFIG_EXT_SUB_SCHED */
-+
- 	return 0;
- }
- 
-@@ -7581,6 +7626,48 @@ __bpf_kfunc bool scx_bpf_dsq_move_vtime(struct bpf_iter_scx_dsq *it__iter,
- 			    p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
- }
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+/**
-+ * scx_bpf_sub_dispatch - Trigger dispatching on a child scheduler
-+ * @cgroup_id: cgroup ID of the child scheduler to dispatch
-+ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-+ *
-+ * Allows a parent scheduler to trigger dispatching on one of its direct
-+ * child schedulers. The child scheduler runs its dispatch operation to
-+ * move tasks from dispatch queues to the local runqueue.
-+ *
-+ * Returns: true on success, false if cgroup_id is invalid, not a direct
-+ * child, or caller lacks dispatch permission.
-+ */
-+__bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux)
-+{
-+	struct rq *this_rq = this_rq();
-+	struct scx_sched *parent, *child;
-+
-+	guard(rcu)();
-+	parent = scx_prog_sched(aux);
-+	if (unlikely(!parent))
-+		return false;
-+
-+	if (!scx_kf_allowed(parent, SCX_KF_DISPATCH))
-+		return false;
-+
-+	child = scx_find_sub_sched(cgroup_id);
-+
-+	if (unlikely(!child))
-+		return false;
-+
-+	if (unlikely(scx_parent(child) != parent)) {
-+		scx_error(parent, "trying to dispatch a distant sub-sched on cgroup %llu",
-+			  cgroup_id);
-+		return false;
-+	}
-+
-+	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_prev,
-+				  true);
-+}
-+#endif	/* CONFIG_EXT_SUB_SCHED */
-+
- __bpf_kfunc_end_defs();
- 
- BTF_KFUNCS_START(scx_kfunc_ids_dispatch)
-@@ -7591,6 +7678,9 @@ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_slice, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_vtime, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move_vtime, KF_RCU)
-+#ifdef CONFIG_EXT_SUB_SCHED
-+BTF_ID_FLAGS(func, scx_bpf_sub_dispatch, KF_IMPLICIT_ARGS)
-+#endif
- BTF_KFUNCS_END(scx_kfunc_ids_dispatch)
- 
- static const struct btf_kfunc_id_set scx_kfunc_set_dispatch = {
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 7f3b07872e15..ebe971d12cb8 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -805,6 +805,9 @@ struct scx_rq {
- 	cpumask_var_t		cpus_to_preempt;
- 	cpumask_var_t		cpus_to_wait;
- 	unsigned long		kick_sync;
-+
-+	struct task_struct	*sub_dispatch_prev;
-+
- 	struct llist_head	deferred_reenq_locals;
- 	struct balance_callback	deferred_bal_cb;
- 	struct irq_work		deferred_irq_work;
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 821d5791bd42..eba4d87345e0 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -101,6 +101,7 @@ struct rq *scx_bpf_locked_rq(void) __ksym;
- struct task_struct *scx_bpf_cpu_curr(s32 cpu) __ksym __weak;
- u64 scx_bpf_now(void) __ksym __weak;
- void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __weak;
-+bool scx_bpf_sub_dispatch(u64 cgroup_id) __ksym __weak;
- 
- /*
-  * Use the following as @it__iter when calling scx_bpf_dsq_move[_vtime]() from
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index ff6ff34177ab..91b8eac83f52 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -48,6 +48,9 @@ const volatile bool suppress_dump;
- u64 nr_highpri_queued;
- u32 test_error_cnt;
- 
-+#define MAX_SUB_SCHEDS		8
-+u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
-+
- UEI_DEFINE(uei);
- 
- struct qmap {
-@@ -451,6 +454,12 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct task_struct *prev)
- 		cpuc->dsp_cnt = 0;
- 	}
- 
-+	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
-+		if (sub_sched_cgroup_ids[i] &&
-+		    scx_bpf_sub_dispatch(sub_sched_cgroup_ids[i]))
-+			return;
-+	}
-+
- 	/*
- 	 * No other tasks. @prev will keep running. Update its core_sched_seq as
- 	 * if the task were enqueued and dispatched immediately.
-@@ -895,7 +904,32 @@ void BPF_STRUCT_OPS(qmap_exit, struct scx_exit_info *ei)
- 
- s32 BPF_STRUCT_OPS(qmap_sub_attach, struct scx_sub_attach_args *args)
- {
--	return 0;
-+	s32 i;
-+
-+	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
-+		if (!sub_sched_cgroup_ids[i]) {
-+			sub_sched_cgroup_ids[i] = args->ops->sub_cgroup_id;
-+			bpf_printk("attaching sub-sched[%d] on %s",
-+				   i, args->cgroup_path);
-+			return 0;
-+		}
-+	}
-+
-+	return -ENOSPC;
-+}
-+
-+void BPF_STRUCT_OPS(qmap_sub_detach, struct scx_sub_detach_args *args)
-+{
-+	s32 i;
-+
-+	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
-+		if (sub_sched_cgroup_ids[i] == args->ops->sub_cgroup_id) {
-+			sub_sched_cgroup_ids[i] = 0;
-+			bpf_printk("detaching sub-sched[%d] on %s",
-+				   i, args->cgroup_path);
-+			break;
-+		}
-+	}
- }
- 
- SCX_OPS_DEFINE(qmap_ops,
-@@ -914,6 +948,7 @@ SCX_OPS_DEFINE(qmap_ops,
- 	       .cgroup_set_weight	= (void *)qmap_cgroup_set_weight,
- 	       .cgroup_set_bandwidth	= (void *)qmap_cgroup_set_bandwidth,
- 	       .sub_attach		= (void *)qmap_sub_attach,
-+	       .sub_detach		= (void *)qmap_sub_detach,
- 	       .cpu_online		= (void *)qmap_cpu_online,
- 	       .cpu_offline		= (void *)qmap_cpu_offline,
- 	       .init			= (void *)qmap_init,
--- 
-2.53.0
-
+--
+tejun
