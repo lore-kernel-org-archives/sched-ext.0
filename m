@@ -1,72 +1,42 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E1E3DFC60
-	for <sched-ext@lists.linux.dev>; Wed,  4 Mar 2026 19:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CF519ADB0;
+	Wed,  4 Mar 2026 22:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772654292; cv=none; b=cpVh6Nx+7Ft2QVJB2qG8IuhXN0YV+rVGwzMHeqh4qGVqzrmBDm01Ha6/zfdbWXYD/pDTHDixwTZEtPtdw50HGuR8L2Pxl5zhNj4G6QaiSP4Z4DqlKs72WvQOjIMqIaCMx8ttMRBtzJudj9QZM3Gj3UMxMdRpkndyxwIzc0oFfSE=
+	t=1772661680; cv=none; b=J7gMHSiRdWM2CaLvQ2lyy8yZA8se7kS9y/wfqHjK+FkhaVCLMTsvCDJHFkLJgbOd2rFOf2D1+f1Lv3uvWO0EPeG2srvqTxa4xuGIiiFu7czKxvhGrsfoyywjOCftB3woAr6RtXvtU270sIR2QvDwctjTcWPWZwnour5x/W4CAI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772654292; c=relaxed/simple;
-	bh=aaJkB3kUdkyVZpecA5G4vs/6ecYza03hzWlk3hi478M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=k9singMiwJQGX+KIyPSlN7c77L7ABUt5KcISSkweFo137IryaAbfxiW7iwU1RPdP9BhfP1i2DxPfuHY7HHZVGdXgrMAcyGd1LmLBBVbHjiqUggKaHtMIdZsYtyXDfAq5iQGL/rLDxEcSz0wvzp3rYH7q0kj9rYLmDZXXemQw7tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M59mww6l; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772661680; c=relaxed/simple;
+	bh=jZ/lmYEiagGPdIyaiV5ieMPlQJlt7JAfLtAxofY9gAw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ipDaLL7wrNLwWtASvvFDlfrsUTLTTFaL5uWYjdqYvRez8Za4InGAwPQa9eGznD8RTs2fCOok4A4flIllKyjfWIFfP1XTK8D5oW/me/pCRD3kXRHsCme8ZL6D55Bf7TU07BN24WIwOif03GEE//oCV2nfH0OaoHsiZqZPdva4nb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MTs6rIJy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M59mww6l"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-82746ed8cdcso4696006b3a.3
-        for <sched-ext@lists.linux.dev>; Wed, 04 Mar 2026 11:58:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772654291; x=1773259091; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hLR0uc6q6cWVW4IWrcBtZzCYIrN0sWZeODfSdWirgqo=;
-        b=M59mww6lLoV7bO2Q+tItNyVz/ATFQ/fq41gjARGhf/0OzPmLpGAoZK+dBi+HO4zwwT
-         ExeK1Warlau6AxgdYa3NlB65q0NgBItWILVfEKml3J7WM10fdhn6rmgJElGUbXhfTGQZ
-         vmuM5WORP077ZlDp5WtKhIuTXbfCPG++nRu0Gw0qS7Iy6Y6XdPnlt37kOeLA3YVRw56G
-         Xgi72fCvbkCXA5veICkniTUKE3Rsj8QE5ToYB273x7mVXDHNPZkFC9FsO8JfT8ooUTAn
-         d8pOQxCaOnG/qOpf4PMqRkSJu15uU1Sr1+INOnO6PA34XDI1UFyk44AqBWV2xe/007do
-         ppiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772654291; x=1773259091;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hLR0uc6q6cWVW4IWrcBtZzCYIrN0sWZeODfSdWirgqo=;
-        b=HNnRMULYrZOxIpu+r/xIFaucbWBaPlScJ1f1tA5cAszYLRPAsoJHrR8rHOpmuGLR7h
-         eVF9NrG/1wEjxvXHCjeqz8KnGQMUg6jDCne/okFxnY6Asx59pPg8XT212oGJxJftDZZ5
-         aS+dD+GQBYgN2cPYyEPiNrhXxAQdOMnnY3FF+SF2DBE2pYylX2qXyNJQs9iHKy4SQQ3l
-         ffql7SIZ46giWKbXb00GbC8mAX6/7kruMbS9k02joHQrVc3LK7f0J9PdqSQSyW/wijwW
-         BL8rHy0+JP0eS7dEbFhlOmzLtKQacGMKz2p5sW0f2qKp1zgoy2dk3cR+PeNRoUz0wzjM
-         G2fA==
-X-Gm-Message-State: AOJu0YxF9Orm7HvCIWhIGuB4/I+0vwKphG4xo4kOSpCqtOBog7GsYOc8
-	pjEwiHI5nARGMhnxvVOh4r0JHVBYs29pqA2NrXpR3SiowldcLMTzOWVdSyXggjZW
-X-Gm-Gg: ATEYQzwcCdsZHZPne8Pl1BT67EhE7EjJS16maduFSjzgWStTqSVkwGF7waQEwKM1A35
-	hTOaIdZo+nVFPLAoHycQsL4Rnrx88TO1jWXiU3w/1ekVZdFCtpkoPZLWAFUprq2SNg8/cx8YH0F
-	SXxw9IVu4y2z7NULzRGersi4gYAMjgLrc4Wyz7EjwWHNSQo43EUakhcjxOPt1Xx/VlOooxGuaIX
-	C+DWDyS2RM1pUhn1VWVCHOdtExZ4xVYAkj7plcWguv22+jj7fD1n37+xmsxMu6tQ2YXe3G1H8HL
-	1Nhaji0NmZyLO/DHOWRVrnohDR24BiCB0PU+xKAlBaMGEbOMGgnKGNNt6ARoAZ9IvHF4SDOk776
-	4UfTSZUaomyRaYejkKttlXyWHC0WEeNgmhty6l1uSNaF5ByGnZqMyIDY7AlCGbOCq2L6Uhzw6rB
-	TbHhTVTSjZLScVQx0Z0RQpJtd4wgMNgm1CR48TPrbAu4TAcLnrxq7y
-X-Received: by 2002:a05:6a00:894:b0:823:786:1990 with SMTP id d2e1a72fcca58-82972b49a6fmr2611568b3a.21.1772654291102;
-        Wed, 04 Mar 2026 11:58:11 -0800 (PST)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:61f1:eed6:e317:b900])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82739d5689csm24269462b3a.13.2026.03.04.11.58.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 11:58:10 -0800 (PST)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev
-Cc: tj@kernel.org,
-	void@manifault.com,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MTs6rIJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC73C4CEF7;
+	Wed,  4 Mar 2026 22:01:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772661680;
+	bh=jZ/lmYEiagGPdIyaiV5ieMPlQJlt7JAfLtAxofY9gAw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=MTs6rIJy7aaiIKcltYdSDBnQflT6S1532c0rHqx47sIvMnaBqBjUYt2yrKobnGZI9
+	 YMlUbgLkRsAmKcVkOc73jwEtfwcauWX8lj/BUe3nYXbJWbs2MEc6vNplBhTQLn2Dw0
+	 FqJ/kn3ldtSGLbjwCjHWO4RJjG+0C4dHI7HNzai5ixESLDtJppHs2S+5cF2SNzO1wa
+	 vx4u4/v3XPGjDAn3j71yHeZQE4+6/P1QEp1wysZf8hUQntYJW70PlxMn6zVXlixU/a
+	 9G0utE6GzByGEsMGYlbXttSJ52bNI0sM701u+GulNfC/thh4cnwjnZs3CxaJ1BvpSP
+	 fV0xyF2C0MxJA==
+From: Tejun Heo <tj@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev
+Cc: void@manifault.com,
 	arighi@nvidia.com,
 	changwoo@igalia.com,
-	jserv@ccns.ncku.edu.tw,
-	yphbchou0911@gmail.com
-Subject: [PATCH] sched_ext/selftests: Fix format specifier and buffer length in file_write_long()
-Date: Thu,  5 Mar 2026 03:57:57 +0800
-Message-ID: <20260304195757.688275-1-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	emil@etsalapatis.com,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET v3 sched_ext/for-7.1] sched_ext: Implement cgroup sub-scheduler support
+Date: Wed,  4 Mar 2026 12:00:45 -1000
+Message-ID: <20260304220119.4095551-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -75,32 +45,146 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use %ld (not %lu) for signed long, and pass the actual string length
-returned by sprintf() to write_text() instead of sizeof(buf).
+This patchset has been around for a while. I'm planning to apply this soon
+and resolve remaining issues incrementally.
 
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
- tools/testing/selftests/sched_ext/util.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This patchset implements cgroup sub-scheduler support for sched_ext, enabling
+multiple scheduler instances to be attached to the cgroup hierarchy. This is a
+partial implementation focusing on the dispatch path - select_cpu and enqueue
+paths will be updated in subsequent patchsets. While incomplete, the dispatch
+path changes are sufficient to demonstrate and exercise the core sub-scheduler
+structures.
 
-diff --git a/tools/testing/selftests/sched_ext/util.c b/tools/testing/selftests/sched_ext/util.c
-index e47769c91918..2111329ed289 100644
---- a/tools/testing/selftests/sched_ext/util.c
-+++ b/tools/testing/selftests/sched_ext/util.c
-@@ -60,11 +60,11 @@ int file_write_long(const char *path, long val)
- 	char buf[64];
- 	int ret;
- 
--	ret = sprintf(buf, "%lu", val);
-+	ret = sprintf(buf, "%ld", val);
- 	if (ret < 0)
- 		return ret;
- 
--	if (write_text(path, buf, sizeof(buf)) <= 0)
-+	if (write_text(path, buf, ret) <= 0)
- 		return -1;
- 
- 	return 0;
--- 
-2.48.1
+Motivation
+==========
 
+Applications often have domain-specific knowledge that generic schedulers cannot
+possess. Database systems understand query priorities and lock holder
+criticality. Virtual machine monitors can coordinate with guest schedulers and
+handle vCPU placement intelligently. Game engines know rendering deadlines and
+which threads are latency-critical.
+
+On multi-tenant systems where multiple such workloads coexist, implementing
+application-customized scheduling is difficult. Hard partitioning with cpuset
+lacks the dynamism needed - users often don't care about specific CPU
+assignments and want optimizations enabled by sharing a larger machine:
+opportunistic over-commit, improving latency-critical workload characteristics
+while maintaining bandwidth fairness, and packing similar workloads on the same
+L3 caches for efficiency.
+
+Sub-scheduler support addresses this by allowing schedulers to be attached to
+the cgroup hierarchy. Each application domain runs its own BPF scheduler
+tailored to its needs, while a parent scheduler dynamically controls CPU
+allocation to children without static partitioning.
+
+Structure
+=========
+
+Schedulers attach to cgroup nodes forming a hierarchy up to SCX_SUB_MAX_DEPTH
+(4) levels deep. Each scheduler instance maintains its own state including
+default time slice, watchdog, and bypass mode. Tasks belong to exactly one
+scheduler - the one attached to their cgroup or the nearest ancestor with a
+scheduler attached.
+
+A parent scheduler is responsible for allocating CPU time to its children. When
+a parent's ops.dispatch() is invoked, it can call scx_bpf_sub_dispatch() to
+trigger dispatch on a child scheduler, allowing the parent to control when and
+how much CPU time each child receives. Currently only the dispatch path supports
+this - ops.select_cpu() and ops.enqueue() always operate on the task's own
+scheduler. Full support for these paths will follow in subsequent patchsets.
+
+Kfuncs use the new KF_IMPLICIT_ARGS BPF feature to identify their calling
+scheduler - the kernel passes bpf_prog_aux implicitly, from which scx_prog_sched()
+finds the associated scx_sched. This enables authority enforcement ensuring
+schedulers can only manipulate their own tasks, preventing cross-scheduler
+interference.
+
+Bypass mode, used for error recovery and orderly shutdown, propagates
+hierarchically - when a scheduler enters bypass, its descendants follow. This
+ensures forward progress even when nested schedulers malfunction. The dump
+infrastructure supports multiple schedulers, identifying which scheduler each
+task and DSQ belongs to for debugging.
+
+Patches
+=======
+
+0001-0004: Preparatory changes exposing cgroup helpers, adding cgroup subtree
+iteration for sched_ext, passing kernel_clone_args to scx_fork(), and reordering
+sched_post_fork() after cgroup_post_fork().
+
+0005-0006: Reorganize enable/disable paths in preparation for multiple scheduler
+instances.
+
+0007-0009: Core sub-scheduler infrastructure introducing scx_sched structure,
+cgroup attachment, scx_task_sched() for task-to-scheduler mapping, and
+scx_prog_sched() for BPF program-to-scheduler association.
+
+0010-0012: Authority enforcement ensuring schedulers can only manipulate their
+own tasks in dispatch, DSQ operations, and task state updates.
+
+0013-0014: Refactor task init/exit helpers and update scx_prio_less() to handle
+tasks from different schedulers.
+
+0015-0018: Migrate global state to per-scheduler fields: default slice, aborting
+flag, bypass DSQ, and bypass state.
+
+0019-0023: Implement hierarchical bypass mode where bypass state propagates from
+parent to descendants, with proper separation of bypass dispatch enabling.
+
+0024-0028: Multi-scheduler dispatch and diagnostics - dispatching from all
+scheduler instances, per-scheduler dispatch context, watchdog awareness, and
+multi-scheduler dump support.
+
+0029: Implement sub-scheduler enabling and disabling with proper task migration
+between parent and child schedulers.
+
+0030-0034: Building blocks for nested dispatching including scx_sched back
+pointers, reenqueue awareness, scheduler linking helpers, rhashtable lookup, and
+scx_bpf_sub_dispatch() kfunc.
+
+v3:
+- Adapt to for-7.0-fixes change that punts enable path to kthread to avoid
+  starvation. Keep scx_enable() as unified entry dispatching to
+  scx_root_enable_workfn() or scx_sub_enable_workfn() (#6, #7, #29).
+
+- Fix build with various config combinations (Andrea):
+  - !CONFIG_CGROUP: add root_cgroup()/sch_cgroup() accessors with stubs
+    (#7, #29, #31).
+  - !CONFIG_EXT_SUB_SCHED: add null define for scx_enabling_sub_sched,
+    guard unguarded references, use scx_task_on_sched() helper (#21, #23,
+    #29).
+  - !CONFIG_EXT_GROUP_SCHED: remove unused tg variable (#13).
+
+- Note scx_is_descendant() usage by later patch to address bisect concern
+  (#7) (Andrea).
+
+v2: http://lkml.kernel.org/r/20260225050109.1070059-1-tj@kernel.org
+v1: http://lkml.kernel.org/r/20260121231140.832332-1-tj@kernel.org
+
+Based on sched_ext/for-7.1 (0e953de88b92). The scx_claim_exit() preempt
+fix which was a separate prerequisite for v2 has been merged into for-7.1.
+
+Git tree:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-sched-v3
+
+ include/linux/cgroup-defs.h              |    4 +
+ include/linux/cgroup.h                   |   65 +-
+ include/linux/sched/ext.h                |   11 +
+ init/Kconfig                             |    4 +
+ kernel/cgroup/cgroup-internal.h          |    6 -
+ kernel/cgroup/cgroup.c                   |   55 -
+ kernel/fork.c                            |    6 +-
+ kernel/sched/core.c                      |    2 +-
+ kernel/sched/ext.c                       | 2388 +++++++++++++++++++++++-------
+ kernel/sched/ext.h                       |    4 +-
+ kernel/sched/ext_idle.c                  |  104 +-
+ kernel/sched/ext_internal.h              |  248 +++-
+ kernel/sched/sched.h                     |    7 +-
+ tools/sched_ext/include/scx/common.bpf.h |    1 +
+ tools/sched_ext/include/scx/compat.h     |   10 +
+ tools/sched_ext/scx_qmap.bpf.c           |   44 +-
+ tools/sched_ext/scx_qmap.c               |   13 +-
+ 17 files changed, 2321 insertions(+), 651 deletions(-)
+
+--
+tejun
