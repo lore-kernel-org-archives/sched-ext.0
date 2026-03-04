@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CF519ADB0;
-	Wed,  4 Mar 2026 22:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B26384238;
+	Wed,  4 Mar 2026 22:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772661680; cv=none; b=J7gMHSiRdWM2CaLvQ2lyy8yZA8se7kS9y/wfqHjK+FkhaVCLMTsvCDJHFkLJgbOd2rFOf2D1+f1Lv3uvWO0EPeG2srvqTxa4xuGIiiFu7czKxvhGrsfoyywjOCftB3woAr6RtXvtU270sIR2QvDwctjTcWPWZwnour5x/W4CAI4=
+	t=1772661681; cv=none; b=pNITGk166UCVbq4jEKboGt4GaojYngygDG1mQddRtX3O2Fy9RX12guvvqrqDNm98k6QTvZLOKpwrRY3DqJx1PprZ2Vt+m/zGd7cjD/zp6PAcAI8DeXobhM0szcRJD4e1UBLwCE2hZSfmdnZdX/rgHLGZuK7xHHMzpsxhJgkj21Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772661680; c=relaxed/simple;
-	bh=jZ/lmYEiagGPdIyaiV5ieMPlQJlt7JAfLtAxofY9gAw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ipDaLL7wrNLwWtASvvFDlfrsUTLTTFaL5uWYjdqYvRez8Za4InGAwPQa9eGznD8RTs2fCOok4A4flIllKyjfWIFfP1XTK8D5oW/me/pCRD3kXRHsCme8ZL6D55Bf7TU07BN24WIwOif03GEE//oCV2nfH0OaoHsiZqZPdva4nb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MTs6rIJy; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772661681; c=relaxed/simple;
+	bh=oHMnYfp0QkrFMysB7/o+H9TrpnY3meUcdmI6EK/oBFg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FXiPccOE8b/XghQzfKWj6oEhs3mroIN8c6dcYk/9t4oXZA6f+ejttjFJHL2rrWEesJt+E4TEiJAMVZ68/bCoUVmZaCk1qPKKvXrSViGHIRlGECTUA3EA3oWpDybngz2ZblRfEYDCk1yP3Do2QebHto0wm3eVYujBST/MW9MuHtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A3skbwy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MTs6rIJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC73C4CEF7;
-	Wed,  4 Mar 2026 22:01:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A3skbwy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F33C4CEF7;
+	Wed,  4 Mar 2026 22:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772661680;
-	bh=jZ/lmYEiagGPdIyaiV5ieMPlQJlt7JAfLtAxofY9gAw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=MTs6rIJy7aaiIKcltYdSDBnQflT6S1532c0rHqx47sIvMnaBqBjUYt2yrKobnGZI9
-	 YMlUbgLkRsAmKcVkOc73jwEtfwcauWX8lj/BUe3nYXbJWbs2MEc6vNplBhTQLn2Dw0
-	 FqJ/kn3ldtSGLbjwCjHWO4RJjG+0C4dHI7HNzai5ixESLDtJppHs2S+5cF2SNzO1wa
-	 vx4u4/v3XPGjDAn3j71yHeZQE4+6/P1QEp1wysZf8hUQntYJW70PlxMn6zVXlixU/a
-	 9G0utE6GzByGEsMGYlbXttSJ52bNI0sM701u+GulNfC/thh4cnwjnZs3CxaJ1BvpSP
-	 fV0xyF2C0MxJA==
+	s=k20201202; t=1772661681;
+	bh=oHMnYfp0QkrFMysB7/o+H9TrpnY3meUcdmI6EK/oBFg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=A3skbwy1sjSBXgjqgeTpvytVBMqELbKt6NOKL5t4j7FSq1cieerXWbhw5ZSAGU4rP
+	 5Nm7Te3RjjQG2uCpThtKX9EfY3qKBt1oI7kQ04Zje+L8WEQIpXqETR5bc2ftFnS0B8
+	 DVDi3zPmgZJZg+HeS+ePgwi2dAroSRkXmZHRg7fXfQ/JzqkItW6PR/D/JkAFfiHKeX
+	 QUAtkY4zxNgpLiev1mLLhw4qrodv/HqkLIuwFgVMAkQBIff4BasMmHkPz2a093UjBL
+	 SjklqVFVq2Fhvw5qdZquK+/qR1z/lDBQzscuMUNYbMp14fIUc3UbtpqRZRc1Wrtmwf
+	 NkXNmZiAByfGg==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -33,10 +34,12 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET v3 sched_ext/for-7.1] sched_ext: Implement cgroup sub-scheduler support
-Date: Wed,  4 Mar 2026 12:00:45 -1000
-Message-ID: <20260304220119.4095551-1-tj@kernel.org>
+Subject: [PATCH 01/34] sched_ext: Implement cgroup subtree iteration for scx_task_iter
+Date: Wed,  4 Mar 2026 12:00:46 -1000
+Message-ID: <20260304220119.4095551-2-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260304220119.4095551-1-tj@kernel.org>
+References: <20260304220119.4095551-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,146 +48,156 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patchset has been around for a while. I'm planning to apply this soon
-and resolve remaining issues incrementally.
+For the planned cgroup sub-scheduler support, enable/disable operations are
+going to be subtree specific and iterating all tasks in the system for those
+operations can be unnecessarily expensive and disruptive.
 
-This patchset implements cgroup sub-scheduler support for sched_ext, enabling
-multiple scheduler instances to be attached to the cgroup hierarchy. This is a
-partial implementation focusing on the dispatch path - select_cpu and enqueue
-paths will be updated in subsequent patchsets. While incomplete, the dispatch
-path changes are sufficient to demonstrate and exercise the core sub-scheduler
-structures.
+cgroup already has mechanisms to perform subtree task iterations. Implement
+cgroup subtree iteration for scx_task_iter:
 
-Motivation
-==========
+- Add optional @cgrp to scx_task_iter_start() which enables cgroup subtree
+  iteration.
 
-Applications often have domain-specific knowledge that generic schedulers cannot
-possess. Database systems understand query priorities and lock holder
-criticality. Virtual machine monitors can coordinate with guest schedulers and
-handle vCPU placement intelligently. Game engines know rendering deadlines and
-which threads are latency-critical.
+- Make scx_task_iter use css_next_descendant_pre() and css_task_iter to
+  iterate all tasks in the cgroup subtree.
 
-On multi-tenant systems where multiple such workloads coexist, implementing
-application-customized scheduling is difficult. Hard partitioning with cpuset
-lacks the dynamism needed - users often don't care about specific CPU
-assignments and want optimizations enabled by sharing a larger machine:
-opportunistic over-commit, improving latency-critical workload characteristics
-while maintaining bandwidth fairness, and packing similar workloads on the same
-L3 caches for efficiency.
+- Update all existing callers to pass NULL to maintain current behavior.
 
-Sub-scheduler support addresses this by allowing schedulers to be attached to
-the cgroup hierarchy. Each application domain runs its own BPF scheduler
-tailored to its needs, while a parent scheduler dynamically controls CPU
-allocation to children without static partitioning.
+The two iteration mechanisms are independent and duplicate. It's likely that
+scx_tasks can be removed in favor of always using cgroup iteration if
+CONFIG_SCHED_CLASS_EXT depends on CONFIG_CGROUPS.
 
-Structure
-=========
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c | 64 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 58 insertions(+), 6 deletions(-)
 
-Schedulers attach to cgroup nodes forming a hierarchy up to SCX_SUB_MAX_DEPTH
-(4) levels deep. Each scheduler instance maintains its own state including
-default time slice, watchdog, and bypass mode. Tasks belong to exactly one
-scheduler - the one attached to their cgroup or the nearest ancestor with a
-scheduler attached.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 1c3170846c84..0bd86540472d 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -514,14 +514,31 @@ struct scx_task_iter {
+ 	struct rq_flags			rf;
+ 	u32				cnt;
+ 	bool				list_locked;
++#ifdef CONFIG_CGROUPS
++	struct cgroup			*cgrp;
++	struct cgroup_subsys_state	*css_pos;
++	struct css_task_iter		css_iter;
++#endif
+ };
+ 
+ /**
+  * scx_task_iter_start - Lock scx_tasks_lock and start a task iteration
+  * @iter: iterator to init
++ * @cgrp: Optional root of cgroup subhierarchy to iterate
++ *
++ * Initialize @iter. Once initialized, @iter must eventually be stopped with
++ * scx_task_iter_stop().
++ *
++ * If @cgrp is %NULL, scx_tasks is used for iteration and this function returns
++ * with scx_tasks_lock held and @iter->cursor inserted into scx_tasks.
++ *
++ * If @cgrp is not %NULL, @cgrp and its descendants' tasks are walked using
++ * @iter->css_iter. The caller must be holding cgroup_lock() to prevent cgroup
++ * task migrations.
+  *
+- * Initialize @iter and return with scx_tasks_lock held. Once initialized, @iter
+- * must eventually be stopped with scx_task_iter_stop().
++ * The two modes of iterations are largely independent and it's likely that
++ * scx_tasks can be removed in favor of always using cgroup iteration if
++ * CONFIG_SCHED_CLASS_EXT depends on CONFIG_CGROUPS.
+  *
+  * scx_tasks_lock and the rq lock may be released using scx_task_iter_unlock()
+  * between this and the first next() call or between any two next() calls. If
+@@ -532,10 +549,19 @@ struct scx_task_iter {
+  * All tasks which existed when the iteration started are guaranteed to be
+  * visited as long as they are not dead.
+  */
+-static void scx_task_iter_start(struct scx_task_iter *iter)
++static void scx_task_iter_start(struct scx_task_iter *iter, struct cgroup *cgrp)
+ {
+ 	memset(iter, 0, sizeof(*iter));
+ 
++#ifdef CONFIG_CGROUPS
++	if (cgrp) {
++		lockdep_assert_held(&cgroup_mutex);
++		iter->cgrp = cgrp;
++		iter->css_pos = css_next_descendant_pre(NULL, &iter->cgrp->self);
++		css_task_iter_start(iter->css_pos, 0, &iter->css_iter);
++		return;
++	}
++#endif
+ 	raw_spin_lock_irq(&scx_tasks_lock);
+ 
+ 	iter->cursor = (struct sched_ext_entity){ .flags = SCX_TASK_CURSOR };
+@@ -588,6 +614,14 @@ static void __scx_task_iter_maybe_relock(struct scx_task_iter *iter)
+  */
+ static void scx_task_iter_stop(struct scx_task_iter *iter)
+ {
++#ifdef CONFIG_CGROUPS
++	if (iter->cgrp) {
++		if (iter->css_pos)
++			css_task_iter_end(&iter->css_iter);
++		__scx_task_iter_rq_unlock(iter);
++		return;
++	}
++#endif
+ 	__scx_task_iter_maybe_relock(iter);
+ 	list_del_init(&iter->cursor.tasks_node);
+ 	scx_task_iter_unlock(iter);
+@@ -611,6 +645,24 @@ static struct task_struct *scx_task_iter_next(struct scx_task_iter *iter)
+ 		cond_resched();
+ 	}
+ 
++#ifdef CONFIG_CGROUPS
++	if (iter->cgrp) {
++		while (iter->css_pos) {
++			struct task_struct *p;
++
++			p = css_task_iter_next(&iter->css_iter);
++			if (p)
++				return p;
++
++			css_task_iter_end(&iter->css_iter);
++			iter->css_pos = css_next_descendant_pre(iter->css_pos,
++								&iter->cgrp->self);
++			if (iter->css_pos)
++				css_task_iter_start(iter->css_pos, 0, &iter->css_iter);
++		}
++		return NULL;
++	}
++#endif
+ 	__scx_task_iter_maybe_relock(iter);
+ 
+ 	list_for_each_entry(pos, cursor, tasks_node) {
+@@ -4440,7 +4492,7 @@ static void scx_disable_workfn(struct kthread_work *work)
+ 
+ 	scx_init_task_enabled = false;
+ 
+-	scx_task_iter_start(&sti);
++	scx_task_iter_start(&sti, NULL);
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK;
+ 		const struct sched_class *old_class = p->sched_class;
+@@ -5230,7 +5282,7 @@ static void scx_enable_workfn(struct kthread_work *work)
+ 	if (ret)
+ 		goto err_disable_unlock_all;
+ 
+-	scx_task_iter_start(&sti);
++	scx_task_iter_start(&sti, NULL);
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		/*
+ 		 * @p may already be dead, have lost all its usages counts and
+@@ -5272,7 +5324,7 @@ static void scx_enable_workfn(struct kthread_work *work)
+ 	 * scx_tasks_lock.
+ 	 */
+ 	percpu_down_write(&scx_fork_rwsem);
+-	scx_task_iter_start(&sti);
++	scx_task_iter_start(&sti, NULL);
+ 	while ((p = scx_task_iter_next_locked(&sti))) {
+ 		unsigned int queue_flags = DEQUEUE_SAVE | DEQUEUE_MOVE;
+ 		const struct sched_class *old_class = p->sched_class;
+-- 
+2.53.0
 
-A parent scheduler is responsible for allocating CPU time to its children. When
-a parent's ops.dispatch() is invoked, it can call scx_bpf_sub_dispatch() to
-trigger dispatch on a child scheduler, allowing the parent to control when and
-how much CPU time each child receives. Currently only the dispatch path supports
-this - ops.select_cpu() and ops.enqueue() always operate on the task's own
-scheduler. Full support for these paths will follow in subsequent patchsets.
-
-Kfuncs use the new KF_IMPLICIT_ARGS BPF feature to identify their calling
-scheduler - the kernel passes bpf_prog_aux implicitly, from which scx_prog_sched()
-finds the associated scx_sched. This enables authority enforcement ensuring
-schedulers can only manipulate their own tasks, preventing cross-scheduler
-interference.
-
-Bypass mode, used for error recovery and orderly shutdown, propagates
-hierarchically - when a scheduler enters bypass, its descendants follow. This
-ensures forward progress even when nested schedulers malfunction. The dump
-infrastructure supports multiple schedulers, identifying which scheduler each
-task and DSQ belongs to for debugging.
-
-Patches
-=======
-
-0001-0004: Preparatory changes exposing cgroup helpers, adding cgroup subtree
-iteration for sched_ext, passing kernel_clone_args to scx_fork(), and reordering
-sched_post_fork() after cgroup_post_fork().
-
-0005-0006: Reorganize enable/disable paths in preparation for multiple scheduler
-instances.
-
-0007-0009: Core sub-scheduler infrastructure introducing scx_sched structure,
-cgroup attachment, scx_task_sched() for task-to-scheduler mapping, and
-scx_prog_sched() for BPF program-to-scheduler association.
-
-0010-0012: Authority enforcement ensuring schedulers can only manipulate their
-own tasks in dispatch, DSQ operations, and task state updates.
-
-0013-0014: Refactor task init/exit helpers and update scx_prio_less() to handle
-tasks from different schedulers.
-
-0015-0018: Migrate global state to per-scheduler fields: default slice, aborting
-flag, bypass DSQ, and bypass state.
-
-0019-0023: Implement hierarchical bypass mode where bypass state propagates from
-parent to descendants, with proper separation of bypass dispatch enabling.
-
-0024-0028: Multi-scheduler dispatch and diagnostics - dispatching from all
-scheduler instances, per-scheduler dispatch context, watchdog awareness, and
-multi-scheduler dump support.
-
-0029: Implement sub-scheduler enabling and disabling with proper task migration
-between parent and child schedulers.
-
-0030-0034: Building blocks for nested dispatching including scx_sched back
-pointers, reenqueue awareness, scheduler linking helpers, rhashtable lookup, and
-scx_bpf_sub_dispatch() kfunc.
-
-v3:
-- Adapt to for-7.0-fixes change that punts enable path to kthread to avoid
-  starvation. Keep scx_enable() as unified entry dispatching to
-  scx_root_enable_workfn() or scx_sub_enable_workfn() (#6, #7, #29).
-
-- Fix build with various config combinations (Andrea):
-  - !CONFIG_CGROUP: add root_cgroup()/sch_cgroup() accessors with stubs
-    (#7, #29, #31).
-  - !CONFIG_EXT_SUB_SCHED: add null define for scx_enabling_sub_sched,
-    guard unguarded references, use scx_task_on_sched() helper (#21, #23,
-    #29).
-  - !CONFIG_EXT_GROUP_SCHED: remove unused tg variable (#13).
-
-- Note scx_is_descendant() usage by later patch to address bisect concern
-  (#7) (Andrea).
-
-v2: http://lkml.kernel.org/r/20260225050109.1070059-1-tj@kernel.org
-v1: http://lkml.kernel.org/r/20260121231140.832332-1-tj@kernel.org
-
-Based on sched_ext/for-7.1 (0e953de88b92). The scx_claim_exit() preempt
-fix which was a separate prerequisite for v2 has been merged into for-7.1.
-
-Git tree:
-  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-sched-v3
-
- include/linux/cgroup-defs.h              |    4 +
- include/linux/cgroup.h                   |   65 +-
- include/linux/sched/ext.h                |   11 +
- init/Kconfig                             |    4 +
- kernel/cgroup/cgroup-internal.h          |    6 -
- kernel/cgroup/cgroup.c                   |   55 -
- kernel/fork.c                            |    6 +-
- kernel/sched/core.c                      |    2 +-
- kernel/sched/ext.c                       | 2388 +++++++++++++++++++++++-------
- kernel/sched/ext.h                       |    4 +-
- kernel/sched/ext_idle.c                  |  104 +-
- kernel/sched/ext_internal.h              |  248 +++-
- kernel/sched/sched.h                     |    7 +-
- tools/sched_ext/include/scx/common.bpf.h |    1 +
- tools/sched_ext/include/scx/compat.h     |   10 +
- tools/sched_ext/scx_qmap.bpf.c           |   44 +-
- tools/sched_ext/scx_qmap.c               |   13 +-
- 17 files changed, 2321 insertions(+), 651 deletions(-)
-
---
-tejun
