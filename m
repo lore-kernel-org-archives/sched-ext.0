@@ -1,74 +1,75 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37D75477E
-	for <sched-ext@lists.linux.dev>; Thu,  5 Mar 2026 04:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839E0288B8
+	for <sched-ext@lists.linux.dev>; Thu,  5 Mar 2026 06:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772683600; cv=none; b=M14ciQigN1i7nGbg7FA0lofE2XBWRO1kM9tQIr3pd1soxgzA7Pe5Yb69iKuNIDGuyso/i1CDvK5oS/5RtAaLWIZ5Z2d2uackZvxK5ydbqarzrWSBjrnHhxwKTmvq6Af8TOfwqwNVeVkSUuS+/0zm3SckmBy3jHe0VqkE+tLD30A=
+	t=1772691544; cv=none; b=oK9SVOQIM48swYSPskw+r0CLR1P0iTh/FXDIT7qUN9a3FzD5oyeg5chn+Dr0UOa7reD/aL875knvLsfh02i+P4XTrOlZbXRCkVHG+0wa5QAL/OHRfCwWDgFUH15V6X/26C15r7B2m1/mEq9FngeJovSnRm3jzfLVhDmqlNNs6TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772683600; c=relaxed/simple;
-	bh=K3I1WO/XZ12LOjA7uCESl0KE5zvtyoQ+YxgsfnqqN+8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CMFkKwXm+UtIf8FM4TugdRQoHWRkLlgv9gtgqMUI1AE1iY9PtrWfSNI036GkCZjvVuxJJO8mlZ1cB2mSxZzFdD9ayPcrbePjDRe8JRvAG2RBzOLCz+x+Thp97ml1K5w9QjUlhyC7+LuEEcdmhBFFa35xGOpM8chiuRTaaemeIeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zm/lrfV6; arc=none smtp.client-ip=209.85.215.180
+	s=arc-20240116; t=1772691544; c=relaxed/simple;
+	bh=1ydMNjvWWWNJ8MmZbnh9xxYkl1ttV69Z8xgx9T/SRww=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d3PFAEHV4hFfXkk1aY2CPOUi2qkK1cOO6rU33UMAiuDNYqIViLqBWB5NXaeWZwIfbICD2LwaqxTaOCwYigkkzl/uBL1he/j80yDRP8KHEgeCPq64yEMFwqbHcPMU9OvFD7xIeBV84qAF9GqDUipiu+Ij5l2uyzWQ1mXfC+dxDfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Agdk38S+; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zm/lrfV6"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c737d3a51bdso498698a12.3
-        for <sched-ext@lists.linux.dev>; Wed, 04 Mar 2026 20:06:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Agdk38S+"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c7377119453so672452a12.1
+        for <sched-ext@lists.linux.dev>; Wed, 04 Mar 2026 22:19:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772683599; x=1773288399; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1772691543; x=1773296343; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8OQSjVBPYaZXq4l1ZMR/y6g/ReN7WoQx6dDK07M5fRA=;
-        b=Zm/lrfV6G84hDLJv37ItZAQG6dWNvOQnlbQ95MjFOEYzZSfYi4GF9s/B+ackFZ11BC
-         m7Bltc1jSUINyqOc2kv5dsmq/OZhwChEVy8anavVvjzW8GguBNecJnX30PL5gL/Z3Fn8
-         GCZbb0l225rjPyj/ZZFS4ZWb7tsPaaIkW0HIV3Asa6djzO4JHADFdEByP2OOKGjN5rDy
-         kb0+IdnJ9Va5W6TAXGJHWHk9cPI5pn2ygJFialNNDWuYEv56PJQ862POkJ5UDz/bhjYe
-         RS4M2IHLiLnaWneZKO6aV0kKRvq1KSAFb62KA8BHfJ91R8p+EeyDOMXpU6bZDVtsYByn
-         AQGQ==
+        bh=84DLa/5oWrs/xRCG5zCff7/tNADEE4rSWCOZvtWEwC8=;
+        b=Agdk38S+aVGkjQiDeM8YoiRJVz/CLTcj6Cgd+0HgifvTvW2Kg4hU0jmCZ/2LHq280P
+         x37kuATXMHvwH/s/8XvoXnVHTR3dZvKSa9Z6R1uiYGJoo/82CflwwgoPBzhIBTImbboJ
+         0vrvZSWhAEMfNtYZgP51k2tZRg3KRss3964t+qRLQsLrtlra9SbRXzquwZ/Tpzf0m3tJ
+         Ham+yRhGoINdLqFsD9bhcGcoBjh0rZMX9JlIBMG12XG3kCPmyLCFS3qM/+AC7zx4TU8/
+         GT8CNstCa7eKsXISx2y5DRpssRnCvbyJ7SGmc7OgOeYRpcba2n3JxIeQLLF22AzXYlh/
+         Sqew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772683599; x=1773288399;
+        d=1e100.net; s=20230601; t=1772691543; x=1773296343;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8OQSjVBPYaZXq4l1ZMR/y6g/ReN7WoQx6dDK07M5fRA=;
-        b=DLMiddjGMu21Uel+/ByI+rMVj67sO32BTitIm8/NeAS6ufGUj8wVBAw4CQklGA+1qJ
-         AgpNKRPladQmjYH13Rx6rcaArfDnALy3tSRgfVm8fQmxx7czyVZnbNQVEQf750AAwcy5
-         f7B63zgIj6cx3alRPtUBOgQ5LJym8j0/iLCJFNMAN0UAsVZGM6B1DSOCZSLCJMUsauyC
-         iVCdwRWCBMUK5GKOORvHmMTzZOIo7uglyMRbfvLsR29Zhq78FTg4gvZS+zxQbf7RvRz0
-         6ED3HcMdxfaJn/ulgeK1RVLre3NIG198AB6SMjPl0Kh2t/7DF+kpR7KiSERhEBEYNj24
-         g8Hw==
-X-Forwarded-Encrypted: i=1; AJvYcCWJP/+1uL3BBSJqeHMh6ldGCpiu6plvXEzrJQXElTYyUSCsLTE+mibPCm9M4lWBqkvE8vhLJG21aV8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwWBXuCJqIBbeq4w08RWLhojC8ZSAPqEp6weU+eNY4HQUKlal6m
-	pC/EI2D8ea56XjBpRa3LXM2hBxBWiqFWMH55JPIOkU5KeHC9snAYFzr7
-X-Gm-Gg: ATEYQzzGzu1QbpW1juXtAgZFDMjVtJnfCZyASGnsFE+aC/VGNAlK1N7eiu6H+gXhj1K
-	7SYoekWmwOxjxb0+bIUyBj4/wcE0mi+4sNwWGYORhj81vtvJWsXFdbf4wwTQARA/fLy4ladU0Ly
-	/getpZiINQMDoGBpMu4G+vtU95X+ADuu9ItKoRj6Kcrj6DKFs19TRKidVboM486JwRjQYmTTO6y
-	ZDW4CF68wSZ41t/WtevM1kYS206TrAInscBTRxOLSIAUvsbuPxaBobrLXU4LyWzHOnbw8nUV6o+
-	CflGEZxthclYEMeK33XmAMd9djzoizJv4dciaQpAeQSXg8hHuzZNkmFj7bXfxGT1iJP08xJVJIZ
-	cb2NTQzQS4hdgQ9YTwiBmPPCGYlr1NqfqtuF4UMHi746UhfraXIKjcw4xOnp8HMJSYB7ZGtFZtn
-	OQonOk+IcAe3WtbbbrUiGXrPYir9Qt1O/zguEc4iIGG0xwhF04plr2pnKGTyoRMFSJl8PU+gIty
-	7c=
-X-Received: by 2002:a17:903:b83:b0:2ae:62c8:7738 with SMTP id d9443c01a7336-2ae6aa0e414mr41503165ad.22.1772683599049;
-        Wed, 04 Mar 2026 20:06:39 -0800 (PST)
+        bh=84DLa/5oWrs/xRCG5zCff7/tNADEE4rSWCOZvtWEwC8=;
+        b=YuRdRpo61ZJnDrmGbPa7MPBEjb/Njs0OrqHxOr31rt+cnLunV/JUcUhH4yKu9YDiPn
+         0rSIpw9VeqDAS4JNQnEwsMnOtDQxx9716i5pSti6NZCPTS5P9PMU4HcFAZ1jlB/HJIDP
+         7gzXgzTr2kEkXr6t4fD8krddQqNXNLgS7141y8z2jm+k5jt7D/uPZewKCJoZMTDgE2Gn
+         KUYm3NY02G9vijdd0q6uIOtPecCRzzYKa+763HfcLsnl9meXgT/XE1PbZxe20pMQuBGt
+         knTN68E37sslpfvKOk73/alN1sICnHM3g1sOiYn2xPuP4YKPjctW2t2Gr6/mEOkcyv5U
+         S9BQ==
+X-Gm-Message-State: AOJu0Yx0uppqbSi3T2p+wsR4wGkihSsJPw/5GTxGvknW19iqhozhMqXx
+	5FN0cqN/w2Lzi8B8NsCJHwbpx5ozmkGo0IbiWdMM/dnEmMtKeeXCMhdz56rpac2T
+X-Gm-Gg: ATEYQzxkTX/vZX9ooJ6e+eLqHauqBP0N2LfsaoCPXZoeZ57i4hthmTrFnSrmwhEUO2j
+	9yHTKHsPmtLSI/NS24qCNCbAPaH3PwsTutPdDNre9omwAm3jL0NkmwimDpLVotwmz03VpSlSmK4
+	QdnoUZirTcpKAzIldM8kwcgEDiM7xwflDuRMKrFfsFLuam6RqOcbw9ixKfqdts4R5JSrde/1Uvz
+	z7Pzrw0yIRlIKqPEjiLkg6YBPhwEWSNiahDJ1nD24soGCkn8vTIAGEQx7bsUk5n3JYdv6IMslO2
+	MhLUagXGeX9Gdug5K+DGyRj8Hq3Fv0AXj2CnHKjomUP4LTVk2Lg2vx2LN12bkBUhqLuKGSgltIa
+	cWtT11n3OPbrm1As45unWcYTA32583mvc69wrBPDZtMd+VbH5NCViGPdnoN78N3CNzIp0mY2e+I
+	+SAT5uioFkopSMEn46kVeJw3EQClyBVyAiZ40qndXqDj0U5ubBAczEQaM8sirSc+HYnVapXd7Wp
+	yY=
+X-Received: by 2002:a17:90a:d605:b0:343:6108:1712 with SMTP id 98e67ed59e1d1-359a6a21479mr4257139a91.18.1772691542586;
+        Wed, 04 Mar 2026 22:19:02 -0800 (PST)
 Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4cd40e4dsm113204455ad.92.2026.03.04.20.06.36
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359aa21e862sm1438145a91.4.2026.03.04.22.18.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 20:06:38 -0800 (PST)
+        Wed, 04 Mar 2026 22:19:02 -0800 (PST)
 From: zhidao su <soolaugust@gmail.com>
 X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
-To: linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Cc: tj@kernel.org,
+To: sched-ext@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org,
+	tj@kernel.org,
 	void@manifault.com,
 	arighi@nvidia.com,
 	changwoo@igalia.com,
+	peterz@infradead.org,
+	mingo@redhat.com,
 	zhidao su <suzhidao@xiaomi.com>
 Subject: [PATCH] sched_ext: Use READ_ONCE() for lock-free reads of module param variables
-Date: Thu,  5 Mar 2026 12:06:33 +0800
-Message-ID: <20260305040633.1274357-1-suzhidao@xiaomi.com>
+Date: Thu,  5 Mar 2026 14:18:56 +0800
+Message-ID: <20260305061856.1796545-1-suzhidao@xiaomi.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -91,16 +92,12 @@ parameter writes via sysfs can happen concurrently:
                                            plain read -- KCSAN data race
 
 scx_bypass_lb_intv_us already uses READ_ONCE() in scx_bypass_lb_timerfn()
-and scx_bypass() for its other lock-free read sites, leaving bypass_lb_cpu()
-inconsistent. scx_slice_bypass_us has the same lock-free access pattern in
-the same function.
+and scx_bypass() for its other lock-free read sites, leaving
+bypass_lb_cpu() inconsistent. scx_slice_bypass_us has the same
+lock-free access pattern in the same function.
 
 Fix both plain reads by using READ_ONCE() to complete the concurrent
-access annotation and make the code KCSAN-clean:
-
-    min_delta_us = READ_ONCE(scx_bypass_lb_intv_us) / SCX_BYPASS_LB_MIN_DELTA_DIV;
-
-    if (delta < DIV_ROUND_UP(min_delta_us, READ_ONCE(scx_slice_bypass_us)))
+access annotation and make the code KCSAN-clean.
 
 Signed-off-by: zhidao su <suzhidao@xiaomi.com>
 ---
