@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19A7353ED9;
-	Fri,  6 Mar 2026 19:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B2371057;
+	Fri,  6 Mar 2026 19:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823984; cv=none; b=tdUEAWohzJF4jOK59zg96/0MiW5slFmJv7btGDrGvkn64IoQR8PtEXm5aEzvWDhSSpF0Jk0luK24GyJgf0e96xmt4150hJQOOYHKBYWlA9aJeJMs/2XSigcW0BgsvrLEvv9rgMlyuSEObuWPmXCAnGfZ0qNT5Km50sfJQVjJZcw=
+	t=1772823985; cv=none; b=Lq2AP2DbHvEFySUNkenFwxOtSyLODEOgcCEsJhwIk6PFVGW50Epywc8d7HC1u4/kiNpRW+HpxNogEl3KZIZC2qen/yHdTy0RI3Yw/XsgJwWK8FO1gR76Acl0G/+hMCT8X3UzoD0HqyxYm/HrtHMgOmaoJ6VJkT0Tmx3n15AgBlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823984; c=relaxed/simple;
-	bh=8XldS5X3wNC40/5ODBNdAWGvc3NKPnpaz4Tt9so8PRQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Mdwi/eIO0nGmhHADdZzOfkv/Whi9u+NF8VlRFjH85IutqcPeOjz5p1EAF6I8PcB5fk7lYWL/jfz4Ydggzt+67SuqSJatwE8kDZ/ksIW5qXOPFJy4xhLApvdzUDkDKC7NhTUFHkcfw2MqVoiQYcEB01UAMxgAkpylS4X+JLPK71E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lqFEGt29; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772823985; c=relaxed/simple;
+	bh=txnrtzvJWEregd/kzVRgzre4oagqPVy3LG8vyNS1Gfo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rD23js9AlUnR2MPEVL0iV7feX0G+XdcLkk7aFCaCnmF9+2pPA5s9Hf+b/psguuWRsWp5B0fzIziaFZQLvn9joP66kuexK7MOa2m8OjRoP7MXYydmd/q2aOXAZz5OJ7iJf4jTKn7azB7PAhRNME/LM+77j9g7NfjnCidwCe26M8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RUmrfXy/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lqFEGt29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E269C4CEF7;
-	Fri,  6 Mar 2026 19:06:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RUmrfXy/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9A9C2BC86;
+	Fri,  6 Mar 2026 19:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772823984;
-	bh=8XldS5X3wNC40/5ODBNdAWGvc3NKPnpaz4Tt9so8PRQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=lqFEGt29+J40dtAEgrMSZCxnYUIM4k0uH/ZqsO5mQc2onoyCw59LdWLScmi5UdChT
-	 et5Aq1wUSFIVPC6LLJxuPiZzYBjHV5RaWJq6pNPfEiwj8jp1XTPfM8h8hgQnR7+9Wa
-	 2hSj42ZZBLbEKPmnKSuxy4RCO1lf5OVgCl9V6lI57XFpMtR3OKiSzr7zk83jpNXfDf
-	 UIDFUfnp+MsxBtOmz05s1YvXOkuEtZLO6UKdYfX/3p+m9X+fsS67I7vUc7f9655w4W
-	 k/EbQW8WItJsxt4kHamQ3arkMicA3toqeGpgpNtUL/B9iq2emGjH0CKmCFTp/XXrXR
-	 fQNmAHStkCC/Q==
+	s=k20201202; t=1772823985;
+	bh=txnrtzvJWEregd/kzVRgzre4oagqPVy3LG8vyNS1Gfo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=RUmrfXy/Pi9rHDk9WpTSMA3C0r1L7xL/vWJmTdy03uqyXqKG56wF706sZXSw5TyvI
+	 /axBsdmlEm+TDkG3Zmbo3Y9+EUDzjMENSTftdrt+LjelK3b/zfgeUZBtlYKNtFRCvC
+	 fgnlE/XbWuee4dX5y+sl1IBLCP4ENZ5C7Q3kJscz/9g6pl6ydnvUjgVARbt2J/6wD4
+	 Vtc+NCu+bIjvmD/4u16BeU8CZCTXy6yh6m28ToCvezQKFud7F24eH+3b3ge3qtoLU+
+	 GIbVS0tJ0MX26QiYdiGzgo10PaU7konepEA3Lnp7Il+VPRqlOnorWlTKkXljg6azh5
+	 yhP19SGE1CMFQ==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -33,10 +34,12 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET sched_ext/for-7.1] sched_ext: Overhaul DSQ reenqueue infrastructure
-Date: Fri,  6 Mar 2026 09:06:08 -1000
-Message-ID: <20260306190623.1076074-1-tj@kernel.org>
+Subject: [PATCH 01/15] sched_ext: Relocate scx_bpf_task_cgroup() and its BTF_ID to the end of kfunc section
+Date: Fri,  6 Mar 2026 09:06:09 -1000
+Message-ID: <20260306190623.1076074-2-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
+References: <20260306190623.1076074-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,62 +48,123 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_reenqueue_local() currently only supports the current CPU's local
-DSQ and must be called from ops.cpu_release(). This patchset overhauls the
-reenqueue infrastructure to support flexible, remote, and user DSQ reenqueue
-operations through the new scx_bpf_dsq_reenq() kfunc.
+Move scx_bpf_task_cgroup() kfunc definition and its BTF_ID entry to the end
+of the kfunc section before __bpf_kfunc_end_defs() for cleaner code
+organization.
 
-The patchset:
+No functional changes.
 
-- Refactors per-node data structures and DSQ lookup helpers as preparation.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c | 78 +++++++++++++++++++++++-----------------------
+ 1 file changed, 39 insertions(+), 39 deletions(-)
 
-- Converts the deferred reenqueue mechanism from lockless llist to a
-  spinlock-protected regular list to support more complex list operations.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index e25b3593dd30..fe222df1d494 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -8628,43 +8628,6 @@ __bpf_kfunc struct task_struct *scx_bpf_cpu_curr(s32 cpu, const struct bpf_prog_
+ 	return rcu_dereference(cpu_rq(cpu)->curr);
+ }
+ 
+-/**
+- * scx_bpf_task_cgroup - Return the sched cgroup of a task
+- * @p: task of interest
+- * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+- *
+- * @p->sched_task_group->css.cgroup represents the cgroup @p is associated with
+- * from the scheduler's POV. SCX operations should use this function to
+- * determine @p's current cgroup as, unlike following @p->cgroups,
+- * @p->sched_task_group is protected by @p's rq lock and thus atomic w.r.t. all
+- * rq-locked operations. Can be called on the parameter tasks of rq-locked
+- * operations. The restriction guarantees that @p's rq is locked by the caller.
+- */
+-#ifdef CONFIG_CGROUP_SCHED
+-__bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
+-					       const struct bpf_prog_aux *aux)
+-{
+-	struct task_group *tg = p->sched_task_group;
+-	struct cgroup *cgrp = &cgrp_dfl_root.cgrp;
+-	struct scx_sched *sch;
+-
+-	guard(rcu)();
+-
+-	sch = scx_prog_sched(aux);
+-	if (unlikely(!sch))
+-		goto out;
+-
+-	if (!scx_kf_allowed_on_arg_tasks(sch, __SCX_KF_RQ_LOCKED, p))
+-		goto out;
+-
+-	cgrp = tg_cgrp(tg);
+-
+-out:
+-	cgroup_get(cgrp);
+-	return cgrp;
+-}
+-#endif
+-
+ /**
+  * scx_bpf_now - Returns a high-performance monotonically non-decreasing
+  * clock for the current CPU. The clock returned is in nanoseconds.
+@@ -8779,6 +8742,43 @@ __bpf_kfunc void scx_bpf_events(struct scx_event_stats *events,
+ 	memcpy(events, &e_sys, events__sz);
+ }
+ 
++#ifdef CONFIG_CGROUP_SCHED
++/**
++ * scx_bpf_task_cgroup - Return the sched cgroup of a task
++ * @p: task of interest
++ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
++ *
++ * @p->sched_task_group->css.cgroup represents the cgroup @p is associated with
++ * from the scheduler's POV. SCX operations should use this function to
++ * determine @p's current cgroup as, unlike following @p->cgroups,
++ * @p->sched_task_group is protected by @p's rq lock and thus atomic w.r.t. all
++ * rq-locked operations. Can be called on the parameter tasks of rq-locked
++ * operations. The restriction guarantees that @p's rq is locked by the caller.
++ */
++__bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
++					       const struct bpf_prog_aux *aux)
++{
++	struct task_group *tg = p->sched_task_group;
++	struct cgroup *cgrp = &cgrp_dfl_root.cgrp;
++	struct scx_sched *sch;
++
++	guard(rcu)();
++
++	sch = scx_prog_sched(aux);
++	if (unlikely(!sch))
++		goto out;
++
++	if (!scx_kf_allowed_on_arg_tasks(sch, __SCX_KF_RQ_LOCKED, p))
++		goto out;
++
++	cgrp = tg_cgrp(tg);
++
++out:
++	cgroup_get(cgrp);
++	return cgrp;
++}
++#endif	/* CONFIG_CGROUP_SCHED */
++
+ __bpf_kfunc_end_defs();
+ 
+ BTF_KFUNCS_START(scx_kfunc_ids_any)
+@@ -8808,11 +8808,11 @@ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
++BTF_ID_FLAGS(func, scx_bpf_now)
++BTF_ID_FLAGS(func, scx_bpf_events)
+ #ifdef CONFIG_CGROUP_SCHED
+ BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_IMPLICIT_ARGS | KF_RCU | KF_ACQUIRE)
+ #endif
+-BTF_ID_FLAGS(func, scx_bpf_now)
+-BTF_ID_FLAGS(func, scx_bpf_events)
+ BTF_KFUNCS_END(scx_kfunc_ids_any)
+ 
+ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
+-- 
+2.53.0
 
-- Introduces scx_bpf_dsq_reenq() which can target any local DSQ including
-  remote CPUs via SCX_DSQ_LOCAL_ON | cpu, and user-defined DSQs.
-
-- Adds per-CPU data to DSQs and cursor-based iteration helpers to support
-  user DSQ reenqueue with proper multi-rq locking.
-
-- Adds reenqueue flags plumbing and a lockless fast-path optimization.
-
-- Simplifies task state handling and adds SCX_TASK_REENQ_REASON flags so BPF
-  schedulers can distinguish why a task is being reenqueued.
-
-scx_bpf_reenqueue_local() is reimplemented as a wrapper around
-scx_bpf_dsq_reenq(SCX_DSQ_LOCAL, 0) and may be deprecated in the future.
-
-Based on sched_ext/for-7.1 (4f8b122848db).
-
-Tejun Heo (15):
-  sched_ext: Relocate scx_bpf_task_cgroup() and its BTF_ID to the end of kfunc section
-  sched_ext: Wrap global DSQs in per-node structure
-  sched_ext: Factor out pnode allocation and deallocation into helpers
-  sched_ext: Change find_global_dsq() to take CPU number instead of task
-  sched_ext: Relocate reenq_local() and run_deferred()
-  sched_ext: Convert deferred_reenq_locals from llist to regular list
-  sched_ext: Wrap deferred_reenq_local_node into a struct
-  sched_ext: Introduce scx_bpf_dsq_reenq() for remote local DSQ reenqueue
-  sched_ext: Add reenq_flags plumbing to scx_bpf_dsq_reenq()
-  sched_ext: Add per-CPU data to DSQs
-  sched_ext: Factor out nldsq_cursor_next_task() and nldsq_cursor_lost_task()
-  sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs
-  sched_ext: Optimize schedule_dsq_reenq() with lockless fast path
-  sched_ext: Simplify task state handling
-  sched_ext: Add SCX_TASK_REENQ_REASON flags
-
-Git tree:
-  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-reenq
-
- include/linux/sched/ext.h                |  58 +-
- kernel/sched/ext.c                       | 882 ++++++++++++++++++++++---------
- kernel/sched/ext_internal.h              |  32 +-
- kernel/sched/sched.h                     |   4 +-
- tools/sched_ext/include/scx/compat.bpf.h |  21 +
- tools/sched_ext/scx_qmap.bpf.c           |  68 ++-
- tools/sched_ext/scx_qmap.c               |   5 +-
- 7 files changed, 777 insertions(+), 293 deletions(-)
-
---
-tejun
