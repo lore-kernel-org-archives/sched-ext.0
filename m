@@ -1,72 +1,42 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A163F0773
-	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 18:21:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19A7353ED9;
+	Fri,  6 Mar 2026 19:06:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772821271; cv=none; b=S/e1ln9EXoDpR/voR9y0eNk1F6ynaOSEpqDN5alVGhAFDC+W9ohPRkuJ+x3CyLeUDyZnXTaRr/0+XNrdrh7hX36AllhEGmT5Llkq/6JOMCkj/UZ6Pa90XpUxvLPaRNWOuHp92SsZdrJkSyazyucSZthJsC1RmLP9rmTpHxfHAu4=
+	t=1772823984; cv=none; b=tdUEAWohzJF4jOK59zg96/0MiW5slFmJv7btGDrGvkn64IoQR8PtEXm5aEzvWDhSSpF0Jk0luK24GyJgf0e96xmt4150hJQOOYHKBYWlA9aJeJMs/2XSigcW0BgsvrLEvv9rgMlyuSEObuWPmXCAnGfZ0qNT5Km50sfJQVjJZcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772821271; c=relaxed/simple;
-	bh=lYFG4SFwG5lsDXjJpUKT7LVwCKTOyKEi81+tBlAo50U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IAJY83XYwm+QpmsoN2cSoaQ6Z+h1c4OSoqo5ifr8l4IT4Q0UkQu02yMj3skqhT3HW+KZrXsys6junhq2I9qGvwKm00zulTZMX6wiSZpgMb06PrCyw20dy5SmY4+Kpu5o/IYf0mJNi+faPfPyYVgYZdCK8JTqGkCV4uxArlf3bWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTIxWQj0; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772823984; c=relaxed/simple;
+	bh=8XldS5X3wNC40/5ODBNdAWGvc3NKPnpaz4Tt9so8PRQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Mdwi/eIO0nGmhHADdZzOfkv/Whi9u+NF8VlRFjH85IutqcPeOjz5p1EAF6I8PcB5fk7lYWL/jfz4Ydggzt+67SuqSJatwE8kDZ/ksIW5qXOPFJy4xhLApvdzUDkDKC7NhTUFHkcfw2MqVoiQYcEB01UAMxgAkpylS4X+JLPK71E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lqFEGt29; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTIxWQj0"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3590042fa8eso5892096a91.1
-        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 10:21:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772821269; x=1773426069; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cgz/IXywt+dBRTWbksu+iwD9ylAkc6vGeaLBaZqsTnQ=;
-        b=YTIxWQj0bpx49V5IcFoL1pleOGAQtnNcda2OH2ddvlpjpvlgYSAxi78GFZ9i07K7F4
-         yWer/mnhj58vM2b4ceIaIOQEQqZzt+bLC28+xKEiQwqbKkR9ywoFGY+OotBhUk9RgeWF
-         kcumFg+tjYxX0lIXSQ0ixKUzG9Rky8exL3NtXyIp1i+Gqd9fGz5zJD7gkJC/CQoIEpWE
-         cZsc74AgHBpSUWsjrpJmn0BPUaUANFpF5Fcx+IPF2i5jMbl+RFhN3Gt8GyO1tlXPOIk7
-         Rxh0F/i+qPi6UwlNnDUA35xjHfxjPGXFnqyq10I8fITe8P9XXXgbVEXQaRibiC5erqbZ
-         7gBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772821269; x=1773426069;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Cgz/IXywt+dBRTWbksu+iwD9ylAkc6vGeaLBaZqsTnQ=;
-        b=kMVmv2UhPuq2z035voBKMYd+K30sageiV2ueUH/kT71Awo79IFxS/XIQa+Nc5JBtvh
-         ZA2Kp71/oaROgFKbfwOf3hWtw2vqUnDyjgUNIfffbIKuTs0q4HWRsYkEIztVHfnZC+UE
-         cQ9YXTvvp3MSZ42i7bZz/W5WaNikNd2aDUv7TJX6Zr+IZR4H/c/ukgGUAblCQUzMyQ5+
-         QhkY+kVpVaiIbOEpOic0hh4R0tcCXVofHyAEzZ6Gu4wdgX1lZO/4GECe82CUxGSAgcFP
-         woQSseed6CJpNJBSaWynFJDTPRLnW9aswvygUw00q4VcS8mURWmA8d/H+PBZKSHfoKUT
-         lnAw==
-X-Gm-Message-State: AOJu0YxM1SZqjcR3hm2UmpqTnEGS+jVTZ84hr8JgA7VNzgqyCFrv3WTs
-	oQW1M+CU/vCHWQbvJP1wW1Xsg4HnCRGrgQKB61g1qWYxqWjgir1ImQVmR2729r4D
-X-Gm-Gg: ATEYQzxrrVClJx57fOyr2zCnj5nir0gtx5JUD+xvbpM8XOIdRpXU1c6Gab3+L/JtUl8
-	pmGhSCh3z3j8P/plNB0uQgaA102rmaD3ur6glHbh39wXYCustC9aJdWFIw1dBu2jnB3aWNbvm7A
-	QBN3lC11KG/lUdwi8d6cVUbyBmKs1a37NCFlmyx8ck3ns7ZCgoKFWaXjQb19ahd8zG0sxDMcTsb
-	1Rt63aw984kLUwjHsIKfqVX/frCii7Y0lPZF3mMKFPwMXNNigyKJGDeLYxs6vzP9uBiXi9TEP8o
-	jZVtWzO7Ch09r6ni3GGAt6qd5a7SBGqpGrYJa24HTKV27AzHPNofTcZDhfQM9Xtt126xXf0futF
-	vGJRuwP3Ayu8pdVfuDDKRN4DABuXDtx3w2u/9qv4But0R42imiPsrC9nO2w4VlMSGN2KHNU7/AW
-	1q1uGTMR8tP9zUu5LEpfiqD8023VnpwE3MHVPZLayY5dPfCopLw3oa
-X-Received: by 2002:a17:902:cf08:b0:2ad:ad0f:bbc3 with SMTP id d9443c01a7336-2ae824dd271mr32033375ad.33.1772821269183;
-        Fri, 06 Mar 2026 10:21:09 -0800 (PST)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:493d:4ea7:622d:5fe3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83f770ffsm38233755ad.45.2026.03.06.10.21.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 10:21:08 -0800 (PST)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev
-Cc: tj@kernel.org,
-	void@manifault.com,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lqFEGt29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E269C4CEF7;
+	Fri,  6 Mar 2026 19:06:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772823984;
+	bh=8XldS5X3wNC40/5ODBNdAWGvc3NKPnpaz4Tt9so8PRQ=;
+	h=From:To:Cc:Subject:Date:From;
+	b=lqFEGt29+J40dtAEgrMSZCxnYUIM4k0uH/ZqsO5mQc2onoyCw59LdWLScmi5UdChT
+	 et5Aq1wUSFIVPC6LLJxuPiZzYBjHV5RaWJq6pNPfEiwj8jp1XTPfM8h8hgQnR7+9Wa
+	 2hSj42ZZBLbEKPmnKSuxy4RCO1lf5OVgCl9V6lI57XFpMtR3OKiSzr7zk83jpNXfDf
+	 UIDFUfnp+MsxBtOmz05s1YvXOkuEtZLO6UKdYfX/3p+m9X+fsS67I7vUc7f9655w4W
+	 k/EbQW8WItJsxt4kHamQ3arkMicA3toqeGpgpNtUL/B9iq2emGjH0CKmCFTp/XXrXR
+	 fQNmAHStkCC/Q==
+From: Tejun Heo <tj@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev
+Cc: void@manifault.com,
 	arighi@nvidia.com,
 	changwoo@igalia.com,
-	jserv@ccns.ncku.edu.tw,
-	yphbchou0911@gmail.com
-Subject: [PATCH] sched_ext: Documentation: Update sched-ext.rst
-Date: Sat,  7 Mar 2026 02:21:01 +0800
-Message-ID: <20260306182101.3085628-1-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	emil@etsalapatis.com,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.1] sched_ext: Overhaul DSQ reenqueue infrastructure
+Date: Fri,  6 Mar 2026 09:06:08 -1000
+Message-ID: <20260306190623.1076074-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -75,73 +45,62 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-- Remove CONFIG_PAHOLE_HAS_BTF_TAG from required config list
-- Document ext_idle.c as the built-in idle CPU selection policy
-- Add descriptions for example schedulers in tools/sched_ext/
+scx_bpf_reenqueue_local() currently only supports the current CPU's local
+DSQ and must be called from ops.cpu_release(). This patchset overhauls the
+reenqueue infrastructure to support flexible, remote, and user DSQ reenqueue
+operations through the new scx_bpf_dsq_reenq() kfunc.
 
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
- Documentation/scheduler/sched-ext.rst | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+The patchset:
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index 100d45963781..b3c31eb38148 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -43,7 +43,6 @@ options should be enabled to use sched_ext:
-     CONFIG_DEBUG_INFO_BTF=y
-     CONFIG_BPF_JIT_ALWAYS_ON=y
-     CONFIG_BPF_JIT_DEFAULT_ON=y
--    CONFIG_PAHOLE_HAS_BTF_TAG=y
- 
- sched_ext is used only when the BPF scheduler is loaded and running.
- 
-@@ -346,6 +345,8 @@ Where to Look
-   The functions prefixed with ``scx_bpf_`` can be called from the BPF
-   scheduler.
- 
-+* ``kernel/sched/ext_idle.c`` contains the built-in idle CPU selection policy.
-+
- * ``tools/sched_ext/`` hosts example BPF scheduler implementations.
- 
-   * ``scx_simple[.bpf].c``: Minimal global FIFO scheduler example using a
-@@ -354,13 +355,35 @@ Where to Look
-   * ``scx_qmap[.bpf].c``: A multi-level FIFO scheduler supporting five
-     levels of priority implemented with ``BPF_MAP_TYPE_QUEUE``.
- 
-+  * ``scx_central[.bpf].c``: A central FIFO scheduler where all scheduling
-+    decisions are made on one CPU, demonstrating ``LOCAL_ON`` dispatching,
-+    tickless operation, and kthread preemption.
-+
-+  * ``scx_cpu0.[bpf].c``: A scheduler that queues all tasks to a shared DSQ
-+    and only dispatches them on CPU0 in FIFO order. Useful for testing bypass
-+    behavior.
-+
-+  * ``scx_flatcg[.bpf].c``: A flattened cgroup hierarchy scheduler
-+    implementing hierarchical weight-based cgroup CPU control by compounding
-+    each cgroup's share at every level into a single flat scheduling layer.
-+
-+  * ``scx_pair[.bpf].c``: A core-scheduling example that always makes
-+    sibling CPU pairs execute tasks from the same CPU cgroup.
-+
-+  * ``scx_sdt[.bpf].c``: A variation of ``scx_simple`` demonstrating BPF
-+    arena memory management for per-task data.
-+
-+  * ``scx_userland[.bpf].c``: A minimal scheduler demonstrating user space
-+    scheduling. Tasks with CPU affinity are direct-dispatched in FIFO order;
-+    all others are scheduled in user space by a simple vruntime scheduler.
-+
- ABI Instability
- ===============
- 
- The APIs provided by sched_ext to BPF schedulers programs have no stability
- guarantees. This includes the ops table callbacks and constants defined in
- ``include/linux/sched/ext.h``, as well as the ``scx_bpf_`` kfuncs defined in
--``kernel/sched/ext.c``.
-+``kernel/sched/ext.c`` and ``kernel/sched/ext_idle.c``.
- 
- While we will attempt to provide a relatively stable API surface when
- possible, they are subject to change without warning between kernel
--- 
-2.48.1
+- Refactors per-node data structures and DSQ lookup helpers as preparation.
 
+- Converts the deferred reenqueue mechanism from lockless llist to a
+  spinlock-protected regular list to support more complex list operations.
+
+- Introduces scx_bpf_dsq_reenq() which can target any local DSQ including
+  remote CPUs via SCX_DSQ_LOCAL_ON | cpu, and user-defined DSQs.
+
+- Adds per-CPU data to DSQs and cursor-based iteration helpers to support
+  user DSQ reenqueue with proper multi-rq locking.
+
+- Adds reenqueue flags plumbing and a lockless fast-path optimization.
+
+- Simplifies task state handling and adds SCX_TASK_REENQ_REASON flags so BPF
+  schedulers can distinguish why a task is being reenqueued.
+
+scx_bpf_reenqueue_local() is reimplemented as a wrapper around
+scx_bpf_dsq_reenq(SCX_DSQ_LOCAL, 0) and may be deprecated in the future.
+
+Based on sched_ext/for-7.1 (4f8b122848db).
+
+Tejun Heo (15):
+  sched_ext: Relocate scx_bpf_task_cgroup() and its BTF_ID to the end of kfunc section
+  sched_ext: Wrap global DSQs in per-node structure
+  sched_ext: Factor out pnode allocation and deallocation into helpers
+  sched_ext: Change find_global_dsq() to take CPU number instead of task
+  sched_ext: Relocate reenq_local() and run_deferred()
+  sched_ext: Convert deferred_reenq_locals from llist to regular list
+  sched_ext: Wrap deferred_reenq_local_node into a struct
+  sched_ext: Introduce scx_bpf_dsq_reenq() for remote local DSQ reenqueue
+  sched_ext: Add reenq_flags plumbing to scx_bpf_dsq_reenq()
+  sched_ext: Add per-CPU data to DSQs
+  sched_ext: Factor out nldsq_cursor_next_task() and nldsq_cursor_lost_task()
+  sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs
+  sched_ext: Optimize schedule_dsq_reenq() with lockless fast path
+  sched_ext: Simplify task state handling
+  sched_ext: Add SCX_TASK_REENQ_REASON flags
+
+Git tree:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-reenq
+
+ include/linux/sched/ext.h                |  58 +-
+ kernel/sched/ext.c                       | 882 ++++++++++++++++++++++---------
+ kernel/sched/ext_internal.h              |  32 +-
+ kernel/sched/sched.h                     |   4 +-
+ tools/sched_ext/include/scx/compat.bpf.h |  21 +
+ tools/sched_ext/scx_qmap.bpf.c           |  68 ++-
+ tools/sched_ext/scx_qmap.c               |   5 +-
+ 7 files changed, 777 insertions(+), 293 deletions(-)
+
+--
+tejun
