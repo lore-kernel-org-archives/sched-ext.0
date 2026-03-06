@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AB942EED4;
-	Fri,  6 Mar 2026 19:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A721428490;
+	Fri,  6 Mar 2026 19:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823994; cv=none; b=gw+IRvGrDDJmNuQ3o8hOG4AsXblbYh2FY7lmiBgSG78yyrDsuSPpcpjvwDJHnTgVdPVmeI844W0swCs8HLO6bQEIGGkjkeQmblvc2wNiAphgj/1R5Ti+DtNKGqxZBlUrNe/xFRhwMStcuTlk5n8DjDlrdTJ/+A0frh4c8HEhL4U=
+	t=1772823995; cv=none; b=oXHf2o7VUKY/cXE7ZVvfS60eB1h4dnD4YXsPBc51DJSFE++AD+COmi1NBoVBELG9vDWSvmi7S8R4Xl9FUpehpOgiNVS9QivTqTdHuftpoH6Wli+V+enokajmuUO+KITnYcw51P9hKa4Uj1sPq9StpIAX4NejNS5booaDgEq+dzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823994; c=relaxed/simple;
-	bh=+Ortr6U7vhxjmKMMQA/8wQ5q4QL637yFxpWWe3954Gw=;
+	s=arc-20240116; t=1772823995; c=relaxed/simple;
+	bh=QHmURaUvTSSBMVWI0I2WBUEQZckuRunbGob/JsYUWWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QB0WOOwHhzr6xkgf53AZ94+pNC9/RbyNX3MlSF4AmHyaRzqbj2MNpoK0hV3IUPYzqHnUFqk73vP8JdmrJFmSTdKQ75IBRK/CYKGbXYx0oJDJKbowBO0Rmu3+DBjHxLR2aDqQ9m4mPp4+0/Afk/ZVSqZi5PHWGR9Rl8rznLkxnLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5rzxR6u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=px9Dw/XVQbGMyxB6BNdYrbdykzsDHFcWg7XdnpvpQuz6ZiPnSnvV+1Z+N9EZoPn+IJ1RtmW1Ocd0wWuTHzxd9OHUt/KPKXW5kpFuEQ81waCB/YOwwMQCxq37E0B6o4a5TyplIRWSafUa2BWEd6PV2KiiOttuzWUr7HWk/ndFJ+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P4dsg9U0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5rzxR6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3965C4CEF7;
-	Fri,  6 Mar 2026 19:06:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P4dsg9U0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9A9C4CEF7;
+	Fri,  6 Mar 2026 19:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772823994;
-	bh=+Ortr6U7vhxjmKMMQA/8wQ5q4QL637yFxpWWe3954Gw=;
+	s=k20201202; t=1772823995;
+	bh=QHmURaUvTSSBMVWI0I2WBUEQZckuRunbGob/JsYUWWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5rzxR6ugWmJ2SQmndrs6FDia1c/5l7NTE9a8fv/bBsjHEnHj+mP1MWRmdsp+pJvJ
-	 KSMpOa3ml6sMOaPlkq96CcDynZRvIpVcS3Zg+x20P83yQ5bhjmsEcwosqGHpHbp7kI
-	 p8ajXYN5IvWsrAfyptIVtz6hYWuQADRW9RMzWwFTMRo7lmgWX0bbRk6CXYCEoN9GoS
-	 I6o//JKxk2ukkV3H+QWX+JzrGaqSTxxcXxAPVczjmrk8w51gWLONE7yCI+te1d8FGm
-	 iJ4prn//iSHrkiV4SLWFyrqDe/dM3SA88nvGJJFxVTtIRDp8D4gTxY2/C+NGOCzSbs
-	 QXmUVbx75Kpzg==
+	b=P4dsg9U0ZmD/Df8noeuDf9Tf2S4NGK/4Yryyi8XsqS9U2NEmcA5edSTeVsdTTaSex
+	 LihUcgYt/UahG44p3iKrR8dt8/c6D1ixZRYb+bfkIoCA54wKFTb/T+WznYhEhnI9pa
+	 4r8VC6O68bAx0Z2y/sW8Sn+C1kwIGoPbYbfTCbPbvMx7pRuSNgBZPUdcH7uDklv+E2
+	 3js50b4fz6P5Cmfvj52Y1ugpqjCmeJ/3jxF1o1sRIAQEoyLZKN5tUMH/oa4KxJ4NKa
+	 JD6M2gvlwAFv8pX+RWdwFQF6jj5qw+4QN3zKGc9T1p84tEHe3KwnJIjZPcDW6VU1iQ
+	 GFi6jXkVp7frw==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 09/15] sched_ext: Add reenq_flags plumbing to scx_bpf_dsq_reenq()
-Date: Fri,  6 Mar 2026 09:06:17 -1000
-Message-ID: <20260306190623.1076074-10-tj@kernel.org>
+Subject: [PATCH 10/15] sched_ext: Add per-CPU data to DSQs
+Date: Fri,  6 Mar 2026 09:06:18 -1000
+Message-ID: <20260306190623.1076074-11-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
 References: <20260306190623.1076074-1-tj@kernel.org>
@@ -48,142 +48,219 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add infrastructure to pass flags through the deferred reenqueue path.
-reenq_local() now takes a reenq_flags parameter, and scx_sched_pcpu gains a
-deferred_reenq_local_flags field to accumulate flags from multiple
-scx_bpf_dsq_reenq() calls before processing. No flags are defined yet.
+Add per-CPU data structure to dispatch queues. Each DSQ now has a percpu
+scx_dsq_pcpu which contains a back-pointer to the DSQ. This will be used by
+future changes to implement per-CPU reenqueue tracking for user DSQs.
+
+init_dsq() now allocates the percpu data and can fail, so it returns an
+error code. All callers are updated to handle failures. exit_dsq() is added
+to free the percpu data and is called from all DSQ cleanup paths.
+
+In scx_bpf_create_dsq(), init_dsq() is called before rcu_read_lock() since
+alloc_percpu() requires GFP_KERNEL context, and dsq->sched is set
+afterwards.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c          | 33 ++++++++++++++++++++++++++++-----
- kernel/sched/ext_internal.h | 10 ++++++++++
- 2 files changed, 38 insertions(+), 5 deletions(-)
+ include/linux/sched/ext.h |  5 +++
+ kernel/sched/ext.c        | 82 ++++++++++++++++++++++++++++++++-------
+ 2 files changed, 73 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b02143b10f0f..c9b0e94d59bd 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1080,7 +1080,8 @@ static void schedule_deferred_locked(struct rq *rq)
- 	schedule_deferred(rq);
- }
- 
--static void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq)
-+static void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
-+			       u64 reenq_flags)
- {
- 	/*
- 	 * Allowing reenqueues doesn't make sense while bypassing. This also
-@@ -1097,6 +1098,7 @@ static void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq
- 		scoped_guard (raw_spinlock_irqsave, &rq->scx.deferred_reenq_lock) {
- 			if (list_empty(&drl->node))
- 				list_move_tail(&drl->node, &rq->scx.deferred_reenq_locals);
-+			drl->flags |= reenq_flags;
- 		}
- 
- 		schedule_deferred(rq);
-@@ -3618,7 +3620,14 @@ int scx_check_setscheduler(struct task_struct *p, int policy)
- 	return 0;
- }
- 
--static u32 reenq_local(struct scx_sched *sch, struct rq *rq)
-+static bool task_should_reenq(struct task_struct *p, u64 reenq_flags)
-+{
-+	if (reenq_flags & SCX_REENQ_ANY)
-+		return true;
-+	return false;
-+}
-+
-+static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
- {
- 	LIST_HEAD(tasks);
- 	u32 nr_enqueued = 0;
-@@ -3652,6 +3661,9 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq)
- 		if (!scx_is_descendant(task_sch, sch))
- 			continue;
- 
-+		if (!task_should_reenq(p, reenq_flags))
-+			continue;
-+
- 		dispatch_dequeue(rq, p);
- 		list_add_tail(&p->scx.dsq_list.node, &tasks);
- 	}
-@@ -3671,6 +3683,7 @@ static void process_deferred_reenq_locals(struct rq *rq)
- 
- 	while (true) {
- 		struct scx_sched *sch;
-+		u64 reenq_flags = 0;
- 
- 		scoped_guard (raw_spinlock, &rq->scx.deferred_reenq_lock) {
- 			struct scx_deferred_reenq_local *drl =
-@@ -3685,10 +3698,11 @@ static void process_deferred_reenq_locals(struct rq *rq)
- 			sch_pcpu = container_of(drl, struct scx_sched_pcpu,
- 						deferred_reenq_local);
- 			sch = sch_pcpu->sch;
-+			swap(drl->flags, reenq_flags);
- 			list_del_init(&drl->node);
- 		}
- 
--		reenq_local(sch, rq);
-+		reenq_local(sch, rq, reenq_flags);
- 	}
- }
- 
-@@ -7817,7 +7831,7 @@ __bpf_kfunc u32 scx_bpf_reenqueue_local(const struct bpf_prog_aux *aux)
- 	rq = cpu_rq(smp_processor_id());
- 	lockdep_assert_rq_held(rq);
- 
--	return reenq_local(sch, rq);
-+	return reenq_local(sch, rq, 0);
- }
- 
- __bpf_kfunc_end_defs();
-@@ -8255,8 +8269,17 @@ __bpf_kfunc void scx_bpf_dsq_reenq(u64 dsq_id, u64 reenq_flags,
- 	if (unlikely(!sch))
- 		return;
- 
-+	if (unlikely(reenq_flags & ~__SCX_REENQ_USER_MASK)) {
-+		scx_error(sch, "invalid SCX_REENQ flags 0x%llx", reenq_flags);
-+		return;
-+	}
-+
-+	/* not specifying any filter bits is the same as %SCX_REENQ_ANY */
-+	if (!(reenq_flags & __SCX_REENQ_FILTER_MASK))
-+		reenq_flags |= SCX_REENQ_ANY;
-+
- 	dsq = find_dsq_for_dispatch(sch, this_rq(), dsq_id, smp_processor_id());
--	schedule_dsq_reenq(sch, dsq);
-+	schedule_dsq_reenq(sch, dsq, reenq_flags);
- }
- 
- /**
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 1a8d61097cab..d9eda2e8701c 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -956,6 +956,7 @@ struct scx_dsp_ctx {
- 
- struct scx_deferred_reenq_local {
- 	struct list_head	node;
-+	u64			flags;
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index f354d7d34306..98cc1f41b91e 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -62,6 +62,10 @@ enum scx_dsq_id_flags {
+ 	SCX_DSQ_LOCAL_CPU_MASK	= 0xffffffffLLU,
  };
  
- struct scx_sched_pcpu {
-@@ -1128,6 +1129,15 @@ enum scx_deq_flags {
- 	SCX_DEQ_SCHED_CHANGE	= 1LLU << 33,
- };
- 
-+enum scx_reenq_flags {
-+	/* low 16bits determine which tasks should be reenqueued */
-+	SCX_REENQ_ANY		= 1LLU << 0,	/* all tasks */
-+
-+	__SCX_REENQ_FILTER_MASK	= 0xffffLLU,
-+
-+	__SCX_REENQ_USER_MASK	= SCX_REENQ_ANY,
++struct scx_dsq_pcpu {
++	struct scx_dispatch_q	*dsq;
 +};
 +
- enum scx_pick_idle_cpu_flags {
- 	SCX_PICK_IDLE_CORE	= 1LLU << 0,	/* pick a CPU whose SMT siblings are also idle */
- 	SCX_PICK_IDLE_IN_NODE	= 1LLU << 1,	/* pick a CPU in the same target NUMA node */
+ /*
+  * A dispatch queue (DSQ) can be either a FIFO or p->scx.dsq_vtime ordered
+  * queue. A built-in DSQ is always a FIFO. The built-in local DSQs are used to
+@@ -79,6 +83,7 @@ struct scx_dispatch_q {
+ 	struct rhash_head	hash_node;
+ 	struct llist_node	free_node;
+ 	struct scx_sched	*sched;
++	struct scx_dsq_pcpu __percpu *pcpu;
+ 	struct rcu_head		rcu;
+ };
+ 
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index c9b0e94d59bd..996c410cc892 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4021,15 +4021,42 @@ DEFINE_SCHED_CLASS(ext) = {
+ #endif
+ };
+ 
+-static void init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id,
+-		     struct scx_sched *sch)
++static s32 init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id,
++		    struct scx_sched *sch)
+ {
++	s32 cpu;
++
+ 	memset(dsq, 0, sizeof(*dsq));
+ 
+ 	raw_spin_lock_init(&dsq->lock);
+ 	INIT_LIST_HEAD(&dsq->list);
+ 	dsq->id = dsq_id;
+ 	dsq->sched = sch;
++
++	dsq->pcpu = alloc_percpu(struct scx_dsq_pcpu);
++	if (!dsq->pcpu)
++		return -ENOMEM;
++
++	for_each_possible_cpu(cpu) {
++		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
++
++		pcpu->dsq = dsq;
++	}
++
++	return 0;
++}
++
++static void exit_dsq(struct scx_dispatch_q *dsq)
++{
++	free_percpu(dsq->pcpu);
++}
++
++static void free_dsq_rcufn(struct rcu_head *rcu)
++{
++	struct scx_dispatch_q *dsq = container_of(rcu, struct scx_dispatch_q, rcu);
++
++	exit_dsq(dsq);
++	kfree(dsq);
+ }
+ 
+ static void free_dsq_irq_workfn(struct irq_work *irq_work)
+@@ -4038,7 +4065,7 @@ static void free_dsq_irq_workfn(struct irq_work *irq_work)
+ 	struct scx_dispatch_q *dsq, *tmp_dsq;
+ 
+ 	llist_for_each_entry_safe(dsq, tmp_dsq, to_free, free_node)
+-		kfree_rcu(dsq, rcu);
++		call_rcu(&dsq->rcu, free_dsq_rcufn);
+ }
+ 
+ static DEFINE_IRQ_WORK(free_dsq_irq_work, free_dsq_irq_workfn);
+@@ -4235,15 +4262,17 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 		cgroup_put(sch_cgroup(sch));
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
+-	/*
+-	 * $sch would have entered bypass mode before the RCU grace period. As
+-	 * that blocks new deferrals, all deferred_reenq_local_node's must be
+-	 * off-list by now.
+-	 */
+ 	for_each_possible_cpu(cpu) {
+ 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+ 
++		/*
++		 * $sch would have entered bypass mode before the RCU grace
++		 * period. As that blocks new deferrals, all
++		 * deferred_reenq_local_node's must be off-list by now.
++		 */
+ 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
++
++		exit_dsq(bypass_dsq(sch, cpu));
+ 	}
+ 
+ 	free_percpu(sch->pcpu);
+@@ -5788,6 +5817,9 @@ static int alloc_kick_syncs(void)
+ 
+ static void free_pnode(struct scx_sched_pnode *pnode)
+ {
++	if (!pnode)
++		return;
++	exit_dsq(&pnode->global_dsq);
+ 	kfree(pnode);
+ }
+ 
+@@ -5799,7 +5831,10 @@ static struct scx_sched_pnode *alloc_pnode(struct scx_sched *sch, int node)
+ 	if (!pnode)
+ 		return NULL;
+ 
+-	init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
++	if (init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch)) {
++		kfree(pnode);
++		return NULL;
++	}
+ 
+ 	return pnode;
+ }
+@@ -5849,8 +5884,11 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 		goto err_free_pnode;
+ 	}
+ 
+-	for_each_possible_cpu(cpu)
+-		init_dsq(bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
++	for_each_possible_cpu(cpu) {
++		ret = init_dsq(bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
++		if (ret)
++			goto err_free_pcpu;
++	}
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+@@ -5932,6 +5970,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ err_stop_helper:
+ 	kthread_destroy_worker(sch->helper);
+ err_free_pcpu:
++	for_each_possible_cpu(cpu) {
++		if (bypass_dsq(sch, cpu))
++			exit_dsq(bypass_dsq(sch, cpu));
++	}
+ 	free_percpu(sch->pcpu);
+ err_free_pnode:
+ 	for_each_node_state(node, N_POSSIBLE)
+@@ -7174,7 +7216,7 @@ void __init init_sched_ext_class(void)
+ 		int  n = cpu_to_node(cpu);
+ 
+ 		/* local_dsq's sch will be set during scx_root_enable() */
+-		init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL, NULL);
++		BUG_ON(init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL, NULL));
+ 
+ 		INIT_LIST_HEAD(&rq->scx.runnable_list);
+ 		INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
+@@ -7873,11 +7915,21 @@ __bpf_kfunc s32 scx_bpf_create_dsq(u64 dsq_id, s32 node, const struct bpf_prog_a
+ 	if (!dsq)
+ 		return -ENOMEM;
+ 
++	/*
++	 * init_dsq() must be called in GFP_KERNEL context. Init it with NULL
++	 * @sch and update afterwards.
++	 */
++	ret = init_dsq(dsq, dsq_id, NULL);
++	if (ret) {
++		kfree(dsq);
++		return ret;
++	}
++
+ 	rcu_read_lock();
+ 
+ 	sch = scx_prog_sched(aux);
+ 	if (sch) {
+-		init_dsq(dsq, dsq_id, sch);
++		dsq->sched = sch;
+ 		ret = rhashtable_lookup_insert_fast(&sch->dsq_hash, &dsq->hash_node,
+ 						    dsq_hash_params);
+ 	} else {
+@@ -7885,8 +7937,10 @@ __bpf_kfunc s32 scx_bpf_create_dsq(u64 dsq_id, s32 node, const struct bpf_prog_a
+ 	}
+ 
+ 	rcu_read_unlock();
+-	if (ret)
++	if (ret) {
++		exit_dsq(dsq);
+ 		kfree(dsq);
++	}
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
