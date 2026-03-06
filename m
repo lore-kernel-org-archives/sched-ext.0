@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC881421A10;
-	Fri,  6 Mar 2026 19:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C4C3EFD39;
+	Fri,  6 Mar 2026 19:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823987; cv=none; b=i72cosWKZay5Pkf06qXCYKKYgdui3ElB6G2TN6YtGMT8uYZhVcgTOQJQb1bN96j2lj751OYf+ZE7fxnh8STtmV6ZNJ//FOJOENEPmvIVBwua+6Tl7PXYR5p/HGo39z+jhD6jAW9bkKXftru2P22qy+Z5BZxCcNP+FmyKPK4zcqE=
+	t=1772823989; cv=none; b=YUHa0xwIlCY/6V6TQSu3fdagzgdRxT9YDKcn5ZoObYr9TSbsAns1vqNkOd/5tOfqnSv8K+g7f8FQ9EYvlT170/qAMOXQScqAO0QHfWqbFqLM/OWFJc3Yz91KLeEpolhIHSvHQJ7EODmt8cbFMc22fDV+jKv+xoz8qODI8PPFWhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823987; c=relaxed/simple;
-	bh=6TnyFirkOesEQ8Nbpy8yR4CrpapX+9/ceE1KbOPQ1gQ=;
+	s=arc-20240116; t=1772823989; c=relaxed/simple;
+	bh=LOlYV832omMK0N8kd39WsmebW9wLysFbLnOEbrfe3Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4+gIO1FTOg+mWN+QpmOxWQmvR8L6Y5uxHAeiWt077B9ObmvhAR63M7PAwmb79R13qlZ+kwBITLRLs6vjCqVCAJgdyHUFeh9sjhPrYTPqG2kn0EOrAdBDQb0n9DHvVSCk2unshbcGUVVoCcMCE0S2NQhDYGMMUIQzJukXmo8LLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MyTfnYk7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdVsX2SHJljfX5woQ6oJ3JsE1Ga3Wz3Ll/vrFKTdwAocXHUASSFZ/mO3ODmO+8NcG80jqy5qSYGf8EtHTjIWw3+KnboPNEfrdTIlr56DaTaPzdEAI5MVgipEHELcCC8nt+cnhWSoYlo7bvaCqzvFj+MMC8X4U20NBxz3a6VLDDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4pAB29I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MyTfnYk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77887C4CEF7;
-	Fri,  6 Mar 2026 19:06:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4pAB29I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86573C4CEF7;
+	Fri,  6 Mar 2026 19:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772823987;
-	bh=6TnyFirkOesEQ8Nbpy8yR4CrpapX+9/ceE1KbOPQ1gQ=;
+	s=k20201202; t=1772823988;
+	bh=LOlYV832omMK0N8kd39WsmebW9wLysFbLnOEbrfe3Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyTfnYk7gIilmaIkG2xU1O5lsM3f0HOQpPEYpp/SD1CIL6VMWPwVIaN9Xa7u2lKNU
-	 +/HIOT+UT9VDn9M48tfzigGbllMfWTfWqS97MRKoH0ORvrxvSSW4VgHmCiA4/cK5Km
-	 XIyb4E1Yf6GbfS1CAdN+T6relsC2PWmUK/I0tkxhfKMfLRp/6CRgl4+DN7gB/jYmWk
-	 n+qP7cjvoCIq00rTXJUYT5naeIzh5JG/qYwuHkXsdMR7f0Y6GRUTNIYkfK4BVevZZF
-	 zrY7Wq1tWX2aC3CfT9dFeyZapjpMQwE1E4aLo0nEEtOsLVU8Fozhi4Ih3wI7H2thZZ
-	 ZYPoe6Pvv3oBA==
+	b=L4pAB29IqoFBPGSqgP+jsIusoHzDC8sLgpV8zmXnHotGi4zwpnCEvzw8EHxMnNXKC
+	 ibO8YXtDLq1NzPoZjAlUrXKDxjFI7LD2vWwyUrTVjK5xXkGlQGXlWKkPVVWGitF37q
+	 hBGOotZPXA5OlKjPplOuFLLBKGTEGP4ajm9gj6TcoUP90aezVjcTonYjMrwgrGWiiH
+	 ll9irdCv/VmxHFgR2EBI1Ad40gzuyrYEsaX0jX7daYE66+i365ug9TlbzvmnD+xNVw
+	 lDJzNYJHkSYNXtQ3Vik/l2LCl4c84NPqWNN2FGG2krdspo2/xOAAccUA4S9+lCQ0aV
+	 tLqd30DsVBbPA==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 03/15] sched_ext: Factor out pnode allocation and deallocation into helpers
-Date: Fri,  6 Mar 2026 09:06:11 -1000
-Message-ID: <20260306190623.1076074-4-tj@kernel.org>
+Subject: [PATCH 04/15] sched_ext: Change find_global_dsq() to take CPU number instead of task
+Date: Fri,  6 Mar 2026 09:06:12 -1000
+Message-ID: <20260306190623.1076074-5-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
 References: <20260306190623.1076074-1-tj@kernel.org>
@@ -48,91 +48,140 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extract pnode allocation and deallocation logic into alloc_pnode() and
-free_pnode() helpers. This simplifies scx_alloc_and_add_sched() and prepares
-for adding more per-node initialization and cleanup in subsequent patches.
+Change find_global_dsq() to take a CPU number directly instead of a task
+pointer. This prepares for callers where the CPU is available but the task is
+not.
 
 No functional changes.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c | 32 +++++++++++++++++++++++---------
- 1 file changed, 23 insertions(+), 9 deletions(-)
+ kernel/sched/ext.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 9232abea4f22..c36d399bca3e 100644
+index c36d399bca3e..c44893878878 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -4114,6 +4114,7 @@ static const struct attribute_group scx_global_attr_group = {
- 	.attrs = scx_global_attrs,
- };
+@@ -341,10 +341,9 @@ static bool scx_is_descendant(struct scx_sched *sch, struct scx_sched *ancestor)
+ 	for ((pos) = scx_next_descendant_pre(NULL, (root)); (pos);		\
+ 	     (pos) = scx_next_descendant_pre((pos), (root)))
  
-+static void free_pnode(struct scx_sched_pnode *pnode);
- static void free_exit_info(struct scx_exit_info *ei);
- 
- static void scx_sched_free_rcu_work(struct work_struct *work)
-@@ -4148,7 +4149,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 	free_percpu(sch->pcpu);
- 
- 	for_each_node_state(node, N_POSSIBLE)
--		kfree(sch->pnode[node]);
-+		free_pnode(sch->pnode[node]);
- 	kfree(sch->pnode);
- 
- 	rhashtable_walk_enter(&sch->dsq_hash, &rht_iter);
-@@ -5685,6 +5686,24 @@ static int alloc_kick_syncs(void)
- 	return 0;
+-static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch,
+-					      struct task_struct *p)
++static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch, s32 tcpu)
+ {
+-	return &sch->pnode[cpu_to_node(task_cpu(p))]->global_dsq;
++	return &sch->pnode[cpu_to_node(tcpu)]->global_dsq;
  }
  
-+static void free_pnode(struct scx_sched_pnode *pnode)
-+{
-+	kfree(pnode);
-+}
-+
-+static struct scx_sched_pnode *alloc_pnode(struct scx_sched *sch, int node)
-+{
-+	struct scx_sched_pnode *pnode;
-+
-+	pnode = kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
-+	if (!pnode)
-+		return NULL;
-+
-+	init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
-+
-+	return pnode;
-+}
-+
- static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 						 struct cgroup *cgrp,
- 						 struct scx_sched *parent)
-@@ -5714,16 +5733,11 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 	}
- 
- 	for_each_node_state(node, N_POSSIBLE) {
--		struct scx_sched_pnode *pnode;
--
--		pnode = kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
--		if (!pnode) {
-+		sch->pnode[node] = alloc_pnode(sch, node);
-+		if (!sch->pnode[node]) {
- 			ret = -ENOMEM;
- 			goto err_free_pnode;
+ static struct scx_dispatch_q *find_user_dsq(struct scx_sched *sch, u64 dsq_id)
+@@ -1266,7 +1265,7 @@ static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 			scx_error(sch, "attempting to dispatch to a destroyed dsq");
+ 			/* fall back to the global dsq */
+ 			raw_spin_unlock(&dsq->lock);
+-			dsq = find_global_dsq(sch, p);
++			dsq = find_global_dsq(sch, task_cpu(p));
+ 			raw_spin_lock(&dsq->lock);
  		}
--
--		init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
--		sch->pnode[node] = pnode;
+ 	}
+@@ -1474,7 +1473,7 @@ static void dispatch_dequeue_locked(struct task_struct *p,
+ 
+ static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
+ 						    struct rq *rq, u64 dsq_id,
+-						    struct task_struct *p)
++						    s32 tcpu)
+ {
+ 	struct scx_dispatch_q *dsq;
+ 
+@@ -1485,20 +1484,19 @@ static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
+ 		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
+ 
+ 		if (!ops_cpu_valid(sch, cpu, "in SCX_DSQ_LOCAL_ON dispatch verdict"))
+-			return find_global_dsq(sch, p);
++			return find_global_dsq(sch, tcpu);
+ 
+ 		return &cpu_rq(cpu)->scx.local_dsq;
  	}
  
- 	sch->dsp_max_batch = ops->dispatch_max_batch ?: SCX_DSP_DFL_MAX_BATCH;
-@@ -5821,7 +5835,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 	free_percpu(sch->pcpu);
- err_free_pnode:
- 	for_each_node_state(node, N_POSSIBLE)
--		kfree(sch->pnode[node]);
-+		free_pnode(sch->pnode[node]);
- 	kfree(sch->pnode);
- err_free_hash:
- 	rhashtable_free_and_destroy(&sch->dsq_hash, NULL, NULL);
+ 	if (dsq_id == SCX_DSQ_GLOBAL)
+-		dsq = find_global_dsq(sch, p);
++		dsq = find_global_dsq(sch, tcpu);
+ 	else
+ 		dsq = find_user_dsq(sch, dsq_id);
+ 
+ 	if (unlikely(!dsq)) {
+-		scx_error(sch, "non-existent DSQ 0x%llx for %s[%d]",
+-			  dsq_id, p->comm, p->pid);
+-		return find_global_dsq(sch, p);
++		scx_error(sch, "non-existent DSQ 0x%llx", dsq_id);
++		return find_global_dsq(sch, tcpu);
+ 	}
+ 
+ 	return dsq;
+@@ -1540,7 +1538,7 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
+ {
+ 	struct rq *rq = task_rq(p);
+ 	struct scx_dispatch_q *dsq =
+-		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
++		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, task_cpu(p));
+ 
+ 	touch_core_sched_dispatch(rq, p);
+ 
+@@ -1683,7 +1681,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	dsq = &rq->scx.local_dsq;
+ 	goto enqueue;
+ global:
+-	dsq = find_global_dsq(sch, p);
++	dsq = find_global_dsq(sch, task_cpu(p));
+ 	goto enqueue;
+ bypass:
+ 	dsq = bypass_enq_target_dsq(sch, task_cpu(p));
+@@ -2140,7 +2138,7 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+ 		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
+ 		if (src_rq != dst_rq &&
+ 		    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+-			dst_dsq = find_global_dsq(sch, p);
++			dst_dsq = find_global_dsq(sch, task_cpu(p));
+ 			dst_rq = src_rq;
+ 		}
+ 	} else {
+@@ -2269,7 +2267,7 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
+ 
+ 	if (src_rq != dst_rq &&
+ 	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+-		dispatch_enqueue(sch, rq, find_global_dsq(sch, p), p,
++		dispatch_enqueue(sch, rq, find_global_dsq(sch, task_cpu(p)), p,
+ 				 enq_flags | SCX_ENQ_CLEAR_OPSS);
+ 		return;
+ 	}
+@@ -2407,7 +2405,7 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
+ 
+ 	BUG_ON(!(p->scx.flags & SCX_TASK_QUEUED));
+ 
+-	dsq = find_dsq_for_dispatch(sch, this_rq(), dsq_id, p);
++	dsq = find_dsq_for_dispatch(sch, this_rq(), dsq_id, task_cpu(p));
+ 
+ 	if (dsq->id == SCX_DSQ_LOCAL)
+ 		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
+@@ -2647,7 +2645,7 @@ static void process_ddsp_deferred_locals(struct rq *rq)
+ 
+ 		list_del_init(&p->scx.dsq_list.node);
+ 
+-		dsq = find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
++		dsq = find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, task_cpu(p));
+ 		if (!WARN_ON_ONCE(dsq->id != SCX_DSQ_LOCAL))
+ 			dispatch_to_local_dsq(sch, rq, dsq, p,
+ 					      p->scx.ddsp_enq_flags);
+@@ -7410,7 +7408,7 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+ 	}
+ 
+ 	/* @p is still on $src_dsq and stable, determine the destination */
+-	dst_dsq = find_dsq_for_dispatch(sch, this_rq, dsq_id, p);
++	dst_dsq = find_dsq_for_dispatch(sch, this_rq, dsq_id, task_cpu(p));
+ 
+ 	/*
+ 	 * Apply vtime and slice updates before moving so that the new time is
 -- 
 2.53.0
 
