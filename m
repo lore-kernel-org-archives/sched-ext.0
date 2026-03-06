@@ -1,270 +1,153 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013027.outbound.protection.outlook.com [40.107.201.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178BD35F606;
-	Fri,  6 Mar 2026 23:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772838572; cv=none; b=FT1YezbXJzdLFp01Ml7PibkNYitlixxQsQYmi3jQtIYBv+0UMQYMnvAmJmRq9UDSuHWn+kcd6DP6848IT6JVgBrUVSq8fNhgVPxVRb83IR5sFhIcPHujaObYpEiN0Y52UGqg+H9G7FPO6FRxWvQPSfOjs+x4xltTRLMgS96jsrA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772838572; c=relaxed/simple;
-	bh=KCFWd6Iqa+h7PQ1gmmYESjVRz0yST1iUgRggzAORtIQ=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=ViofAMlV/ygjYNXmaBW601vueF9d2kgrD2d8VmOSYhZIdW4AU2eDKJtFuKN/Rm6Me+qWjx8UEur1aNrRXt1T7xZT0NTlZdoXPRAmnGFXZScEz0a/PJirxyErWSsPf/YAedAFO7Y4m4yutK844nTWi6B1g6LXd2ggwfWinV8l6ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ohcb6uHb; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D6636A023
+	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 23:14:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.27
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772838901; cv=fail; b=DLUDLbuDT1BHytDL0SMrZOmvKgaWwysu9k+OBJox320v9VwVI97FYqvPJopJIJnKdLA3FevIvhjzZC/cDCq47645qh6sqMcRnN1Q/YcFf7+/sUmHB1RWE5vkLGVap2F0iPL7RQrSUYabtTDfUv6xBC3ZJix9zCw0iFLK1JEDHDA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772838901; c=relaxed/simple;
+	bh=yuAe9OG3rIH/0NbmbbGHdHX3FKaYWPhItne2f+Fu5W0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=J09NJrsi+6/feXiShwwH9D97cEunpe9fPqqhbxvzrH+JebOLoODP5F0QwMRtmHh4UoWIxzgAVHaWGgICXOFNgTU227c2/Zl71B5hvb6UFr/UwbilBcnqmL8S7oACwRkos6Fo3s1/91k3ZEvoGp0i5mAOq7WY0TUp9fO8EwlmT0o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BAgAXM69; arc=fail smtp.client-ip=40.107.201.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ohcb6uHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0139C4CEF7;
-	Fri,  6 Mar 2026 23:09:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772838572;
-	bh=KCFWd6Iqa+h7PQ1gmmYESjVRz0yST1iUgRggzAORtIQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Ohcb6uHbSSc66XLxdMWLbovkGze3vcTn2nO/eMHuQi3RyCYJLV0BqDwrItFMdX3q+
-	 RyHzOYd3dbNmGPNPAzdDHhBkUWwux5E9lZPq9kEWCr4ZeDydAPaYklCNx0WhCn6PUP
-	 5xzbhajQaR3ZxAL5gnj2twqmquITluoz1Zquk76yPVVDZPOUVwPLWyYmkQFCGjPniV
-	 A858UrbBlZCnZZ0VvIM7HQtH0qX6bvzOM+SXc13GGmmOLYHswPf9LEfuJOl+5eOfcL
-	 mMFxcta2ZG4XqIRBjxYXcoxSLUWRf1AgKLmQNY4zP7PizVlT3v+Q8pmqagDGHkNDYO
-	 UenTOAsErGZzA==
-Date: Fri, 06 Mar 2026 13:09:30 -1000
-Message-ID: <af18f4873ed5d2ef606c55923acc1014@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: linux-kernel@vger.kernel.org,
- sched-ext@lists.linux.dev
-Cc: void@manifault.com,
- arighi@nvidia.com,
- changwoo@igalia.com,
- emil@etsalapatis.com
-Subject: [PATCH v2 10/15] sched_ext: Add per-CPU data to DSQs
-In-Reply-To: <20260306190623.1076074-11-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BAgAXM69"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nGVLZ4DdkS/11oU1HoGalEodb1/x/sO5ZF2Qq0QTm7Py8o3Ain9ROfD4P9BlQ66OSyqcSYU2QcxyDYx2735Kn+6pZVS5IVtUo4PpUmZqtGnPf4uAnmwB6E05I6qio2l7yfTXxvYiijCV/dHP0DRlMauZe2CDpE7tPX7KIzXdGSIqARhbdTd6gP0ZuBhHN2Gngtm9LRLGZwqAKQ6vm/shyNh7F4pUQ8deUZ2p3cpcZaGm7VpdXouREYa2LoxbIBSDB7ZmUrPofIKVQSmv2JxwbAOg4H6r5eJqL4LUhWTU6DQ9mtI44QDy0hLwotTvtLJqa9aMbHTIiLFXCXtxAinC3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lA5sUQtsIzYWYhJ/wJLcyU97alMCpyvZHqsvYPFF4b4=;
+ b=idQ47hIhzavTBs/u3i+4UvRUjAoLjNbbX69pPhr16hvHFU+HioPF47osoJEHtbb3kIueQZAFQIg8VTisAsBc+or0UA5YuHd33CK2oBQHYL3RFmOO9irIf+f74JXJt6Sil8z28MTaOL2pWChFlPq1bagd3DTVzxagwjBf8mn6ES8Av66nkFMGyqLwyzxO0yPJcU/om0IWxCS9MD8hfDDmPRlJnvEiUJSe/6jZPbJwcWcHagcCK/50HzoRZlZ2p7ihV9Bgk5du+Lrzzjb3bDt8dqvJnf526+uOnSeIwSe+28AwYq+ktk2UcuS+GQVvndRr+4x+tDDpV4z4x6Rv7lNc+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lA5sUQtsIzYWYhJ/wJLcyU97alMCpyvZHqsvYPFF4b4=;
+ b=BAgAXM69kfpqHAe344bfG51/3iP+zTNpGZYxwP3X4uhO3EvFgjgXv+FDGHuTZ9MYuSkCI2QcC2ayzJ033DMDrrFmqTXfMjLhHEHKOLYo9S3eYk7UnllYOkUFATmezKTo+U+SLcOstNxsq8kASQ0bYMtk2kWAUx6wOWic3rtGJQCP1FTV4yx3+a7kaNR7BDVpcyxd0TK5QfhAmJWTx7IKnmKAM77lxulkUdiT4SWoG0z4x0qvbOLO4UfBYpu940nUeJrkLkln49NIg8Nke24Po+Sqg0V3DHUwFTKMdKKiOCQ0IDT9vbFKDdgXuZhDcYF46nx3wSdUAxR2j3Z3IaMeOg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by IA1PR12MB8078.namprd12.prod.outlook.com (2603:10b6:208:3f1::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.5; Fri, 6 Mar
+ 2026 23:14:55 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.022; Fri, 6 Mar 2026
+ 23:14:55 +0000
+Date: Sat, 7 Mar 2026 00:14:48 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	void@manifault.com, changwoo@igalia.com, emil@etsalapatis.com
+Subject: Re: [PATCHSET sched_ext/for-7.1] sched_ext: Overhaul DSQ reenqueue
+ infrastructure
+Message-ID: <aatf6GMB3_1138PB@gpd4>
 References: <20260306190623.1076074-1-tj@kernel.org>
- <20260306190623.1076074-11-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
+X-ClientProxiedBy: MI0P293CA0009.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:44::6) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA1PR12MB8078:EE_
+X-MS-Office365-Filtering-Correlation-Id: c3486077-011d-4406-3dcc-08de7bd62de0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	Q2NEyzgeiVdgCcyR0ER4EaaAwHx/6ttpfqFZISLXV+S517QbXoIRpXavVYg9vrVMmrGn/7DEHkZ6N1jCN5gMLTQxVJlX00ma6iHrAf2uA/WseJ5hg+Z7caV91zxcOsjM/TqGo4NTLSRGuXpwkqHj4I0EZau1TO/AXF4vuHiy+OmyojKqwy3s/fQeOIacnpoP7ARr7TZAnZuBhFs1ZyI7xn0HxQWLgL0Z/2vHHFh0FyFAWsYK4JMFICpZh5mlCTrV9MNCo49CK/SDlTp4/ZVQlu9MDlLMxDXvLY8MgV+6gIlkV2ZpJEmDW/+M+l017141rvTz+TG69zUt3zNpqRVE8Oi9T6PS0z2CNmdGsRhHS+cBTgSXHQ/TcJa2shGje6VtglH76q10qyoPUHPgvZtz5VGRkBFwsc+mWKK+0PwQX4v89FRAW8FAAYlvg60hIpyH6yeNsyjQwTmOVEiaFX+inDVMMRLUvJ8Zq6fzedVk1L7ADG+c6NbSRd3jeUHge2gNJ7Sz/8jMyfdGOBTeyvtn64FvYU+ot4y9WBo8CBluOl6ljBAtRKep/dfDididEBirZnGcCWsj87HjQ99GBq+mwn+uQ80oSGlao9LzQB8h9bmuvsy96GOJ1cbdPaW9H4QvBCoGGaBRhQzM7BQSCeOEB8vYEuiSiPrZsYjKo1vJUEaI/Yee/rjrAiHn76o7eFw0dl4BYRoOHUDxNTLU8MEscD3ulq20qFJzwsw7VLEz7Zk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?H9h1lxM0+Bo/9+3WD9Qi164Ew6rhg3Jj9MzAHrgSTNYZfe29fvZPhqVfdYHd?=
+ =?us-ascii?Q?z1PVrrciB2cDVNy9aniV6h4k05AYJ2+1aRn7SbcaDA0icYWJOTi+3WSiCEkc?=
+ =?us-ascii?Q?MrkKrwFTFBVcqxry6qZcUbRPgye/tXCbfc3rfYaV6Zmv/Xi4Eu0fSD9onXBE?=
+ =?us-ascii?Q?FzKzjumVRefqaxcgAfN7W+gtJ4r2UPODjfAZp5leqbusGNpWKYSrcOGBT9CA?=
+ =?us-ascii?Q?J0eBNymnPiG98zFUx/viToyLv9XhyV+NjGjvYbLjx5PnVLXc3+bu0D2Ihpui?=
+ =?us-ascii?Q?LFGFuC2BLd0L1V0OZ4g5CbjogJsssNsXzNSwdTphNReDNgDLmJ32iXkTJPaX?=
+ =?us-ascii?Q?K0/2l8GU4Knut/o047321WhiP0NLDr4m4YejVEQ9O30HRm9+UY3iXCmBMa7W?=
+ =?us-ascii?Q?UxdVW0IeVK2G07EJUCY6cHIegkcEsZLY+IUe4S7c3Nn9YBd6Y4ZqONg/Z69Z?=
+ =?us-ascii?Q?XmjkIOjaPR2pxSGRjx67rxPylG88CeHtuk8NX5oiZKq0tLMeOIeGQEX3kJn5?=
+ =?us-ascii?Q?UjFInb5/JKEDyW9mXolc49XZJNBcmEN3jTm4I8NBJ59flbYD0et8hxz5UQ9n?=
+ =?us-ascii?Q?xXKpEFHK1Sp8cUT1FwkV2ZxGLfd1ErBQIjXlWX2M1czVkQS0Ay2FBYLy5GnJ?=
+ =?us-ascii?Q?+Mnjo20tzfpf1wE7Sk3dI0CgXMQVISsjKZLZLo1dATs9GqxrL5Vyx9GnRSXc?=
+ =?us-ascii?Q?oZl0x1tm/8nUrMpGQ+GQ+hn14Mr+mRPHY9HKC1oF24+rsDvGf9jNHQ4agdjC?=
+ =?us-ascii?Q?cDw+RU+bkAKbCwBFe5r7x6vzZg9WYBGjuOK5VKp8e2efgoIoRZqHGktsA3ig?=
+ =?us-ascii?Q?oy4bFDtkJ9/jXlplJLXgg0b1s4ZgE3TJtWxIJoNmOurXLHlM2fyN02cJCBHM?=
+ =?us-ascii?Q?x1HL2yrVwmhf9v1sBmYItjPy6PaDPN4n7b16dpgf4bPUZD3VpnM5ivxfHRG0?=
+ =?us-ascii?Q?vrm1DPwM+LwV+PVREVXziBtuomYB0Tggjti/O/uoJ4y81sC9dvo2NFyBoznt?=
+ =?us-ascii?Q?lN+WtMC51o6dar4y/WqRomUDZ39QPKZRDvZ18uKr/zixBP6P6DV9ZGuz8C7K?=
+ =?us-ascii?Q?L+OhyKwvD7OuKqjs+wQNq+Xm3EUWfU5M9kWCuVy9nIOfQBJfwRI4add1oby5?=
+ =?us-ascii?Q?8SaajvNalXzRj9e08BQ2gukw371LSXPTpibzpqYduV+h3xmlinsuazSmAeKW?=
+ =?us-ascii?Q?Ta1lvGFSAAU13T8xb4Dg8/VFWcPq45IR0x+Pm7pacBSTojFbA33MPPICzZVx?=
+ =?us-ascii?Q?aV5ALBY1v5aOHiR//VtCUtVuHI6/8HLFjB24Q8OgxeTno7y5zyG0MCV43qd0?=
+ =?us-ascii?Q?2zzpMMY7Ce1Z1TaxCj5KMY/hH7SNQ+G3qtWmAljcfkCT+CtcPIPnL3hEc8YX?=
+ =?us-ascii?Q?1UZoRfe/C+1fTGjRf03/eQU+slBotns7AqJCwGJ1r3kEPggjp5kCI8zTJl4r?=
+ =?us-ascii?Q?Dytwrw7lZ1FooEF0l1FENrhzxo+0evroEiZajRX8P6FywT/fCfuQ4ky4E0bN?=
+ =?us-ascii?Q?YQw9d2dcbK/VFv7qDXTXjb1d6SRJqNbG9rnNJqpkEfbcqQTskvoc64qrCdSC?=
+ =?us-ascii?Q?GYq5AIxPlVHFwKfuc4TsaYyaO87Ul56xb3sexRosiZWF1fUCIQiqIIS2LxAQ?=
+ =?us-ascii?Q?9zg8AXkmPGb63CtCSW3J+dt/oaUPCfaWk/+gR/chkHe04E9CWARgxq9Yqp5E?=
+ =?us-ascii?Q?DTltSz8cXmYxIHkyzpWNjJ5NqL6PjJJ7g42rQQ3Eazu8WBxhfBYh71Y8yR0X?=
+ =?us-ascii?Q?drBBmPHmuQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3486077-011d-4406-3dcc-08de7bd62de0
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 23:14:55.7429
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: adTP8lKqTxT8+0Ql235+tguVfujME/RjiPfrMyQx5QaeqjGpErX2Tksxe/RFN3VqR7ul5L2kuuYm+/1pNK8vkQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8078
 
-Add per-CPU data structure to dispatch queues. Each DSQ now has a percpu
-scx_dsq_pcpu which contains a back-pointer to the DSQ. This will be used by
-future changes to implement per-CPU reenqueue tracking for user DSQs.
+On Fri, Mar 06, 2026 at 09:06:08AM -1000, Tejun Heo wrote:
+> scx_bpf_reenqueue_local() currently only supports the current CPU's local
+> DSQ and must be called from ops.cpu_release(). This patchset overhauls the
+> reenqueue infrastructure to support flexible, remote, and user DSQ reenqueue
+> operations through the new scx_bpf_dsq_reenq() kfunc.
+> 
+> The patchset:
+> 
+> - Refactors per-node data structures and DSQ lookup helpers as preparation.
+> 
+> - Converts the deferred reenqueue mechanism from lockless llist to a
+>   spinlock-protected regular list to support more complex list operations.
+> 
+> - Introduces scx_bpf_dsq_reenq() which can target any local DSQ including
+>   remote CPUs via SCX_DSQ_LOCAL_ON | cpu, and user-defined DSQs.
+> 
+> - Adds per-CPU data to DSQs and cursor-based iteration helpers to support
+>   user DSQ reenqueue with proper multi-rq locking.
+> 
+> - Adds reenqueue flags plumbing and a lockless fast-path optimization.
+> 
+> - Simplifies task state handling and adds SCX_TASK_REENQ_REASON flags so BPF
+>   schedulers can distinguish why a task is being reenqueued.
+> 
+> scx_bpf_reenqueue_local() is reimplemented as a wrapper around
+> scx_bpf_dsq_reenq(SCX_DSQ_LOCAL, 0) and may be deprecated in the future.
 
-init_dsq() now allocates the percpu data and can fail, so it returns an
-error code. All callers are updated to handle failures. exit_dsq() is added
-to free the percpu data and is called from all DSQ cleanup paths.
+This is really useful! Small issue on patch 10/15 (that you've already
+fixed). Everything else looks good to me.
 
-In scx_bpf_create_dsq(), init_dsq() is called before rcu_read_lock() since
-alloc_percpu() requires GFP_KERNEL context, and dsq->sched is set
-afterwards.
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
-v2: Fix err_free_pcpu to only exit_dsq() initialized bypass DSQs (Andrea
-    Righi).
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>
----
- include/linux/sched/ext.h |    5 ++
- kernel/sched/ext.c        |   87 ++++++++++++++++++++++++++++++++++++++--------
- 2 files changed, 77 insertions(+), 15 deletions(-)
-
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -62,6 +62,10 @@ enum scx_dsq_id_flags {
- 	SCX_DSQ_LOCAL_CPU_MASK	= 0xffffffffLLU,
- };
-
-+struct scx_dsq_pcpu {
-+	struct scx_dispatch_q	*dsq;
-+};
-+
- /*
-  * A dispatch queue (DSQ) can be either a FIFO or p->scx.dsq_vtime ordered
-  * queue. A built-in DSQ is always a FIFO. The built-in local DSQs are used to
-@@ -79,6 +83,7 @@ struct scx_dispatch_q {
- 	struct rhash_head	hash_node;
- 	struct llist_node	free_node;
- 	struct scx_sched	*sched;
-+	struct scx_dsq_pcpu __percpu *pcpu;
- 	struct rcu_head		rcu;
- };
-
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4021,15 +4021,42 @@ DEFINE_SCHED_CLASS(ext) = {
- #endif
- };
-
--static void init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id,
--		     struct scx_sched *sch)
-+static s32 init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id,
-+		    struct scx_sched *sch)
- {
-+	s32 cpu;
-+
- 	memset(dsq, 0, sizeof(*dsq));
-
- 	raw_spin_lock_init(&dsq->lock);
- 	INIT_LIST_HEAD(&dsq->list);
- 	dsq->id = dsq_id;
- 	dsq->sched = sch;
-+
-+	dsq->pcpu = alloc_percpu(struct scx_dsq_pcpu);
-+	if (!dsq->pcpu)
-+		return -ENOMEM;
-+
-+	for_each_possible_cpu(cpu) {
-+		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
-+
-+		pcpu->dsq = dsq;
-+	}
-+
-+	return 0;
-+}
-+
-+static void exit_dsq(struct scx_dispatch_q *dsq)
-+{
-+	free_percpu(dsq->pcpu);
-+}
-+
-+static void free_dsq_rcufn(struct rcu_head *rcu)
-+{
-+	struct scx_dispatch_q *dsq = container_of(rcu, struct scx_dispatch_q, rcu);
-+
-+	exit_dsq(dsq);
-+	kfree(dsq);
- }
-
- static void free_dsq_irq_workfn(struct irq_work *irq_work)
-@@ -4038,7 +4065,7 @@ static void free_dsq_irq_workfn(struct i
- 	struct scx_dispatch_q *dsq, *tmp_dsq;
-
- 	llist_for_each_entry_safe(dsq, tmp_dsq, to_free, free_node)
--		kfree_rcu(dsq, rcu);
-+		call_rcu(&dsq->rcu, free_dsq_rcufn);
- }
-
- static DEFINE_IRQ_WORK(free_dsq_irq_work, free_dsq_irq_workfn);
-@@ -4235,15 +4262,17 @@ static void scx_sched_free_rcu_work(stru
- 		cgroup_put(sch_cgroup(sch));
- #endif	/* CONFIG_EXT_SUB_SCHED */
-
--	/*
--	 * $sch would have entered bypass mode before the RCU grace period. As
--	 * that blocks new deferrals, all deferred_reenq_local_node's must be
--	 * off-list by now.
--	 */
- 	for_each_possible_cpu(cpu) {
- 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
-
-+		/*
-+		 * $sch would have entered bypass mode before the RCU grace
-+		 * period. As that blocks new deferrals, all
-+		 * deferred_reenq_local_node's must be off-list by now.
-+		 */
- 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
-+
-+		exit_dsq(bypass_dsq(sch, cpu));
- 	}
-
- 	free_percpu(sch->pcpu);
-@@ -5788,6 +5817,9 @@ static int alloc_kick_syncs(void)
-
- static void free_pnode(struct scx_sched_pnode *pnode)
- {
-+	if (!pnode)
-+		return;
-+	exit_dsq(&pnode->global_dsq);
- 	kfree(pnode);
- }
-
-@@ -5799,7 +5831,10 @@ static struct scx_sched_pnode *alloc_pno
- 	if (!pnode)
- 		return NULL;
-
--	init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
-+	if (init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch)) {
-+		kfree(pnode);
-+		return NULL;
-+	}
-
- 	return pnode;
- }
-@@ -5810,7 +5845,7 @@ static struct scx_sched *scx_alloc_and_a
- {
- 	struct scx_sched *sch;
- 	s32 level = parent ? parent->level + 1 : 0;
--	s32 node, cpu, ret;
-+	s32 node, cpu, ret, bypass_fail_cpu = nr_cpu_ids;
-
- 	sch = kzalloc_flex(*sch, ancestors, level);
- 	if (!sch)
-@@ -5849,8 +5884,13 @@ static struct scx_sched *scx_alloc_and_a
- 		goto err_free_pnode;
- 	}
-
--	for_each_possible_cpu(cpu)
--		init_dsq(bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
-+	for_each_possible_cpu(cpu) {
-+		ret = init_dsq(bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
-+		if (ret) {
-+			bypass_fail_cpu = cpu;
-+			goto err_free_pcpu;
-+		}
-+	}
-
- 	for_each_possible_cpu(cpu) {
- 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
-@@ -5932,6 +5972,11 @@ static struct scx_sched *scx_alloc_and_a
- err_stop_helper:
- 	kthread_destroy_worker(sch->helper);
- err_free_pcpu:
-+	for_each_possible_cpu(cpu) {
-+		if (cpu == bypass_fail_cpu)
-+			break;
-+		exit_dsq(bypass_dsq(sch, cpu));
-+	}
- 	free_percpu(sch->pcpu);
- err_free_pnode:
- 	for_each_node_state(node, N_POSSIBLE)
-@@ -7174,7 +7219,7 @@ void __init init_sched_ext_class(void)
- 		int  n = cpu_to_node(cpu);
-
- 		/* local_dsq's sch will be set during scx_root_enable() */
--		init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL, NULL);
-+		BUG_ON(init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL, NULL));
-
- 		INIT_LIST_HEAD(&rq->scx.runnable_list);
- 		INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
-@@ -7873,11 +7918,21 @@ __bpf_kfunc s32 scx_bpf_create_dsq(u64 d
- 	if (!dsq)
- 		return -ENOMEM;
-
-+	/*
-+	 * init_dsq() must be called in GFP_KERNEL context. Init it with NULL
-+	 * @sch and update afterwards.
-+	 */
-+	ret = init_dsq(dsq, dsq_id, NULL);
-+	if (ret) {
-+		kfree(dsq);
-+		return ret;
-+	}
-+
- 	rcu_read_lock();
-
- 	sch = scx_prog_sched(aux);
- 	if (sch) {
--		init_dsq(dsq, dsq_id, sch);
-+		dsq->sched = sch;
- 		ret = rhashtable_lookup_insert_fast(&sch->dsq_hash, &dsq->hash_node,
- 						    dsq_hash_params);
- 	} else {
-@@ -7885,8 +7940,10 @@ __bpf_kfunc s32 scx_bpf_create_dsq(u64 d
- 	}
-
- 	rcu_read_unlock();
--	if (ret)
-+	if (ret) {
-+		exit_dsq(dsq);
- 		kfree(dsq);
-+	}
- 	return ret;
- }
+Thanks.
+-Andrea
