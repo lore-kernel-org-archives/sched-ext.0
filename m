@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C39371D13;
-	Fri,  6 Mar 2026 19:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CFF421F10;
+	Fri,  6 Mar 2026 19:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772824000; cv=none; b=OGUGHbalHRbhRzj5ZljlWop1mgt63Od2Hb9g23dbbx0yIyD80rmI25OdVRPErHds7Z33MnezPk6tWjRLxRaQvDCvzjKukqrIl8o19ihEXyK+sh7+UNIbzgmBO51iAwnMTKYYudfWGGhclNKd/Gr+jQTUneN/O+bZWM0d7iMYY/s=
+	t=1772824000; cv=none; b=ETF46QHXvz7poIAUvQaB6Qbenu0xSAeBJ534FxgFDkiZfCV3Ntr1OL2PVLgeX4VYA9nWuG0bwSvlDKFGBGeBsCJsZ0pKKDE5CtiWXvkxllfSG1IE1szhVb9Ei5yyE5P/oPt5JqXXjkgel5mfc5TPT14gMRBi9Jn8mStXCfiFKgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772824000; c=relaxed/simple;
-	bh=OoJbJ4cSTH6P70VE5mdudjhWSlOp9CCFfQ9ZN3AN1U8=;
+	bh=TFYywAM/f+xXUDVeL7sQ9iz7QOKrWvoe9JXAoKFbIIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dq2kO93WVcn/W7OeGQ32uh9Ixv753wXmMYk48h+8kQcF+3b0PTg3JtS1oSxkoM6VpJOUz86/ASp3zzZuvRBFaMGlcf4fNMKPZKIxLvg+qf+xVX7ggWAom77eko3Pk7U3FalOh+gjvXQxDhgJGm3ebS4RIpCX/L5rs5InkBwJj9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YwhxA7nX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iuNzWDdSXQ+XKJDC4Hnf373qHWaWzCyA43HCvaONVcGuao/OM3IY+qvCvFaidh3inlJbNC714CdI2NKsSYL2nOe/Rk5PHsWoddgSskFC19W+W84NyeS+361HlUOkltBCXRC5hhiozqRPCrPR5+MLmQ+FwZdgyxYMmZpz+s7F5dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oJE1PcKx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YwhxA7nX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DB0C2BC9E;
-	Fri,  6 Mar 2026 19:06:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oJE1PcKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535FBC19425;
+	Fri,  6 Mar 2026 19:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772823999;
-	bh=OoJbJ4cSTH6P70VE5mdudjhWSlOp9CCFfQ9ZN3AN1U8=;
+	s=k20201202; t=1772824000;
+	bh=TFYywAM/f+xXUDVeL7sQ9iz7QOKrWvoe9JXAoKFbIIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwhxA7nXQVAnRItU5yNDv5XZM6EuJ28lEsiuSSJT+D/+c8vDWKfKz80+JQPJcz8Ij
-	 sNQz3sW3XszaWnHncff8McxGnaRqCXmGVm/mXka4kmZ2o1O7fBi5Ki92afda4r7u/w
-	 /zAaUClQ9hwO3EwwKEL6Dd35724sCyMNdKfstPmtDGmj9Ai9Ym9eBQOxogTKyerthj
-	 jV9MQaxAi/oxgQAclQrrHWozLA7xOxduZCl9NQ32ZoghbjwLmuWV1jTf1lxfqDhBA8
-	 qrZ/W5GqoMjobhKkfgBWZWZS7R6+ZyHV5nbwNUpe3odAbaHmkWCgbpMpiuxKT8HqHN
-	 Kkde2EXyFjp2Q==
+	b=oJE1PcKxf7UE8hYPqfc6rx0RWwFYosGnLO47pGo/MhdNq8eoRZYZeaOHY0tTL308p
+	 mNcW1qLU7tX+jWXvBeZyEjFHYr+Q0fYH6c/naiDiY0NEhEW54qnFeB34ZjKYVHwrNa
+	 +PCEI2u2WxTvzWfUXmcaymDyOcSe9/uuGvDF2rGa2xJaOaAEwToVzVbiRq3rUnv7ka
+	 9BQql4l0I0BInFSqCWdrmX/DYKlNkr+4zKdxMjCtnEcaqDL0IMfXEK1fuTiazO+vf3
+	 K4o6SwKoDcx6dHL+l9ZQ5VNe5e3VW+3wFR+QDwhcSwtrA2u+6evj219JV4EkutqRHG
+	 tmJny7T7aZWvw==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 14/15] sched_ext: Simplify task state handling
-Date: Fri,  6 Mar 2026 09:06:22 -1000
-Message-ID: <20260306190623.1076074-15-tj@kernel.org>
+Subject: [PATCH 15/15] sched_ext: Add SCX_TASK_REENQ_REASON flags
+Date: Fri,  6 Mar 2026 09:06:23 -1000
+Message-ID: <20260306190623.1076074-16-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
 References: <20260306190623.1076074-1-tj@kernel.org>
@@ -48,134 +48,150 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Task states (NONE, INIT, READY, ENABLED) were defined in a separate enum with
-unshifted values and then shifted when stored in scx_entity.flags. Simplify by
-defining them as pre-shifted values directly in scx_ent_flags and removing the
-separate scx_task_state enum. This removes the need for shifting when
-reading/writing state values.
+SCX_ENQ_REENQ indicates that a task is being re-enqueued but doesn't tell the
+BPF scheduler why. Add SCX_TASK_REENQ_REASON flags using bits 12-13 of
+p->scx.flags to communicate the reason during ops.enqueue():
 
-scx_get_task_state() now returns the masked flags value directly.
-scx_set_task_state() accepts the pre-shifted state value. scx_dump_task()
-shifts down for display to maintain readable output.
+- NONE: Not being reenqueued
+- KFUNC: Reenqueued by scx_bpf_dsq_reenq() and friends
 
-No functional changes.
+More reasons will be added.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h | 28 ++++++++++++++++------------
- kernel/sched/ext.c        | 19 +++++++++----------
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ include/linux/sched/ext.h   | 15 +++++++++++++++
+ kernel/sched/ext.c          | 25 ++++++++++++++++++++++---
+ kernel/sched/ext_internal.h | 10 +++-------
+ 3 files changed, 40 insertions(+), 10 deletions(-)
 
 diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index e77504faa0bc..e822b374b17f 100644
+index e822b374b17f..60a4f65d0174 100644
 --- a/include/linux/sched/ext.h
 +++ b/include/linux/sched/ext.h
-@@ -93,7 +93,7 @@ struct scx_dispatch_q {
- 	struct rcu_head		rcu;
- };
+@@ -118,6 +118,21 @@ enum scx_ent_flags {
+ 	SCX_TASK_READY		= 2 << SCX_TASK_STATE_SHIFT,
+ 	SCX_TASK_ENABLED	= 3 << SCX_TASK_STATE_SHIFT,
  
--/* scx_entity.flags */
-+/* sched_ext_entity.flags */
- enum scx_ent_flags {
- 	SCX_TASK_QUEUED		= 1 << 0, /* on ext runqueue */
- 	SCX_TASK_IN_CUSTODY	= 1 << 1, /* in custody, needs ops.dequeue() when leaving */
-@@ -101,21 +101,25 @@ enum scx_ent_flags {
- 	SCX_TASK_DEQD_FOR_SLEEP	= 1 << 3, /* last dequeue was for SLEEP */
- 	SCX_TASK_SUB_INIT	= 1 << 4, /* task being initialized for a sub sched */
- 
--	SCX_TASK_STATE_SHIFT	= 8,	  /* bit 8 and 9 are used to carry scx_task_state */
 +	/*
-+	 * Bits 8 and 9 are used to carry task state:
++	 * Bits 12 and 13 are used to carry reenqueue reason. In addition to
++	 * %SCX_ENQ_REENQ flag, ops.enqueue() can also test for
++	 * %SCX_TASK_REENQ_REASON_NONE to distinguish reenqueues.
 +	 *
-+	 * NONE		ops.init_task() not called yet
-+	 * INIT		ops.init_task() succeeded, but task can be cancelled
-+	 * READY	fully initialized, but not in sched_ext
-+	 * ENABLED	fully initialized and in sched_ext
++	 * NONE		not being reenqueued
++	 * KFUNC	reenqueued by scx_bpf_dsq_reenq() and friends
 +	 */
-+	SCX_TASK_STATE_SHIFT	= 8,	  /* bits 8 and 9 are used to carry task state */
- 	SCX_TASK_STATE_BITS	= 2,
- 	SCX_TASK_STATE_MASK	= ((1 << SCX_TASK_STATE_BITS) - 1) << SCX_TASK_STATE_SHIFT,
- 
--	SCX_TASK_CURSOR		= 1 << 31, /* iteration cursor, not a task */
--};
--
--/* scx_entity.flags & SCX_TASK_STATE_MASK */
--enum scx_task_state {
--	SCX_TASK_NONE,		/* ops.init_task() not called yet */
--	SCX_TASK_INIT,		/* ops.init_task() succeeded, but task can be cancelled */
--	SCX_TASK_READY,		/* fully initialized, but not in sched_ext */
--	SCX_TASK_ENABLED,	/* fully initialized and in sched_ext */
-+	SCX_TASK_NONE		= 0 << SCX_TASK_STATE_SHIFT,
-+	SCX_TASK_INIT		= 1 << SCX_TASK_STATE_SHIFT,
-+	SCX_TASK_READY		= 2 << SCX_TASK_STATE_SHIFT,
-+	SCX_TASK_ENABLED	= 3 << SCX_TASK_STATE_SHIFT,
- 
--	SCX_TASK_NR_STATES,
-+	/* iteration cursor, not a task */
-+	SCX_TASK_CURSOR		= 1 << 31,
++	SCX_TASK_REENQ_REASON_SHIFT = 12,
++	SCX_TASK_REENQ_REASON_BITS = 2,
++	SCX_TASK_REENQ_REASON_MASK = ((1 << SCX_TASK_REENQ_REASON_BITS) - 1) << SCX_TASK_REENQ_REASON_SHIFT,
++
++	SCX_TASK_REENQ_NONE	= 0 << SCX_TASK_REENQ_REASON_SHIFT,
++	SCX_TASK_REENQ_KFUNC	= 1 << SCX_TASK_REENQ_REASON_SHIFT,
++
+ 	/* iteration cursor, not a task */
+ 	SCX_TASK_CURSOR		= 1 << 31,
  };
- 
- /* scx_entity.dsq_flags */
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 8e7dffe4094c..df659e51bd8a 100644
+index df659e51bd8a..66af7a83bb1e 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -3312,18 +3312,16 @@ static struct cgroup *tg_cgrp(struct task_group *tg)
- 
- #endif	/* CONFIG_EXT_GROUP_SCHED */
- 
--static enum scx_task_state scx_get_task_state(const struct task_struct *p)
-+static u32 scx_get_task_state(const struct task_struct *p)
- {
--	return (p->scx.flags & SCX_TASK_STATE_MASK) >> SCX_TASK_STATE_SHIFT;
-+	return p->scx.flags & SCX_TASK_STATE_MASK;
+@@ -3729,8 +3729,10 @@ int scx_check_setscheduler(struct task_struct *p, int policy)
+ 	return 0;
  }
  
--static void scx_set_task_state(struct task_struct *p, enum scx_task_state state)
-+static void scx_set_task_state(struct task_struct *p, u32 state)
+-static bool task_should_reenq(struct task_struct *p, u64 reenq_flags)
++static bool task_should_reenq(struct task_struct *p, u64 reenq_flags, u32 *reason)
  {
--	enum scx_task_state prev_state = scx_get_task_state(p);
-+	u32 prev_state = scx_get_task_state(p);
- 	bool warn = false;
++	*reason = SCX_TASK_REENQ_KFUNC;
++
+ 	if (reenq_flags & SCX_REENQ_ANY)
+ 		return true;
+ 	return false;
+@@ -3752,6 +3754,7 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
+ 	list_for_each_entry_safe(p, n, &rq->scx.local_dsq.list,
+ 				 scx.dsq_list.node) {
+ 		struct scx_sched *task_sch = scx_task_sched(p);
++		u32 reason;
  
--	BUILD_BUG_ON(SCX_TASK_NR_STATES > (1 << SCX_TASK_STATE_BITS));
--
- 	switch (state) {
- 	case SCX_TASK_NONE:
- 		break;
-@@ -3341,11 +3339,11 @@ static void scx_set_task_state(struct task_struct *p, enum scx_task_state state)
- 		return;
+ 		/*
+ 		 * If @p is being migrated, @p's current CPU may not agree with
+@@ -3770,16 +3773,24 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
+ 		if (!scx_is_descendant(task_sch, sch))
+ 			continue;
+ 
+-		if (!task_should_reenq(p, reenq_flags))
++		if (!task_should_reenq(p, reenq_flags, &reason))
+ 			continue;
+ 
+ 		dispatch_dequeue(rq, p);
++
++		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
++			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
++		p->scx.flags |= reason;
++
+ 		list_add_tail(&p->scx.dsq_list.node, &tasks);
  	}
  
--	WARN_ONCE(warn, "sched_ext: Invalid task state transition %d -> %d for %s[%d]",
-+	WARN_ONCE(warn, "sched_ext: Invalid task state transition 0x%x -> 0x%x for %s[%d]",
- 		  prev_state, state, p->comm, p->pid);
+ 	list_for_each_entry_safe(p, n, &tasks, scx.dsq_list.node) {
+ 		list_del_init(&p->scx.dsq_list.node);
++
+ 		do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
++
++		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
+ 		nr_enqueued++;
+ 	}
  
- 	p->scx.flags &= ~SCX_TASK_STATE_MASK;
--	p->scx.flags |= state << SCX_TASK_STATE_SHIFT;
-+	p->scx.flags |= state;
- }
+@@ -3833,12 +3844,13 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
  
- static int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
-@@ -5795,7 +5793,8 @@ static void scx_dump_task(struct scx_sched *sch,
- 		  own_marker, sch_id_buf,
- 		  jiffies_delta_msecs(p->scx.runnable_at, dctx->at_jiffies));
- 	dump_line(s, "      scx_state/flags=%u/0x%x dsq_flags=0x%x ops_state/qseq=%lu/%lu",
--		  scx_get_task_state(p), p->scx.flags & ~SCX_TASK_STATE_MASK,
-+		  scx_get_task_state(p) >> SCX_TASK_STATE_SHIFT,
-+		  p->scx.flags & ~SCX_TASK_STATE_MASK,
- 		  p->scx.dsq_flags, ops_state & SCX_OPSS_STATE_MASK,
- 		  ops_state >> SCX_OPSS_QSEQ_SHIFT);
- 	dump_line(s, "      sticky/holding_cpu=%d/%d dsq_id=%s",
-@@ -6556,7 +6555,7 @@ static struct scx_sched *find_parent_sched(struct cgroup *cgrp)
+ 	while (likely(!READ_ONCE(sch->bypass_depth))) {
+ 		struct rq *task_rq;
++		u32 reason;
  
- static bool assert_task_ready_or_enabled(struct task_struct *p)
- {
--	enum scx_task_state state = scx_get_task_state(p);
-+	u32 state = scx_get_task_state(p);
+ 		p = nldsq_cursor_next_task(&cursor, dsq);
+ 		if (!p)
+ 			break;
  
- 	switch (state) {
- 	case SCX_TASK_READY:
+-		if (!task_should_reenq(p, reenq_flags))
++		if (!task_should_reenq(p, reenq_flags, &reason))
+ 			continue;
+ 
+ 		task_rq = task_rq(p);
+@@ -3861,8 +3873,15 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
+ 		/* @p is on @dsq, its rq and @dsq are locked */
+ 		dispatch_dequeue_locked(p, dsq);
+ 		raw_spin_unlock(&dsq->lock);
++
++		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
++			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
++		p->scx.flags |= reason;
++
+ 		do_enqueue_task(task_rq, p, SCX_ENQ_REENQ, -1);
+ 
++		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
++
+ 		if (!(++nr_enqueued % SCX_TASK_ITER_BATCH)) {
+ 			raw_spin_rq_unlock(locked_rq);
+ 			locked_rq = NULL;
+diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+index d9eda2e8701c..f8df73044515 100644
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -1080,13 +1080,9 @@ enum scx_enq_flags {
+ 	SCX_ENQ_PREEMPT		= 1LLU << 32,
+ 
+ 	/*
+-	 * The task being enqueued was previously enqueued on the current CPU's
+-	 * %SCX_DSQ_LOCAL, but was removed from it in a call to the
+-	 * scx_bpf_reenqueue_local() kfunc. If scx_bpf_reenqueue_local() was
+-	 * invoked in a ->cpu_release() callback, and the task is again
+-	 * dispatched back to %SCX_LOCAL_DSQ by this current ->enqueue(), the
+-	 * task will not be scheduled on the CPU until at least the next invocation
+-	 * of the ->cpu_acquire() callback.
++	 * The task being enqueued was previously enqueued on a DSQ, but was
++	 * removed and is being re-enqueued. See SCX_TASK_REENQ_* flags to find
++	 * out why a given task is being reenqueued.
+ 	 */
+ 	SCX_ENQ_REENQ		= 1LLU << 40,
+ 
 -- 
 2.53.0
 
