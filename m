@@ -1,75 +1,75 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C425933ADA0
-	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 10:59:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB99F392C24
+	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 12:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772794748; cv=none; b=Ziy6WlL0bFyjvdWVp3fzIZ7cD9LRbNLmlvgntlm4+jAEYYmOkpHnop1/f4z51Pn4XlrvHoiVZNU1sQiWk3KL7EyovzK5SgGXaZhw/IIIUe+7siJl1qJt+QWDT7qAXVRkX5UABcyqtpwbwLIgluD9GixSG2DW0FG8wD4QrfwS+kI=
+	t=1772801350; cv=none; b=D5nKISdImDhClBReU0vY3+wDfKW7DwGADqiPWAYRZ3hEiXw33+euA2p4ZDfH1ucy6ESuIVwt9moqB6JSgXZA8KqP26ydb0NXGYwt/x43Lj5dYcqg4EpmkzNSyE/c7g1y3NKEQTrze1B08xDN74/T/BuHZJcpfRJ6/eGX82rLJSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772794748; c=relaxed/simple;
-	bh=U9vfN3aOervp6BiVrSrKKN/8sXJHVbme9yQU946P68M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V87diFccocAw8f4F9QLQZ16aG5d+/TeOqN8wOsha1RLVL2dpK/QBxTcFrwlWiodBrj3OJJ7WHPJoF0PPuVl3By5O4IcZvv60XhrG+sk6mycEMsFDG0ASkXqLV99GkZCLZughVbaDbbMqapnTxZV1TfJcVa+iiQA6/eRGhRcQDMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HWHG89J7; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1772801350; c=relaxed/simple;
+	bh=z3V40F0kGIL8yvCLdRRK98TbuZQ8stHEY3dTCT0ogJk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=etieGg6AVQjYBCs5Wgxfn1JZQJgcDgA9nPxKepT4ge1oBdYBrZmD1A54yLjb7JTUaTDc0bAQondcgmGyA10UkQ9D5crDRJ1dgMTcEbJNevInQXP1iTHMH5sRGmFuaE8ynEBKFwWL8To2I4T3t4TA2DaCajEOxJLA7LunwZn9JqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CzmSoSz7; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWHG89J7"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c70e27e2b74so2884161a12.0
-        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 02:59:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CzmSoSz7"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c70e27e2b74so2918377a12.0
+        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 04:49:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772794747; x=1773399547; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1772801348; x=1773406148; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJX1Q5TDY8tDQM4DxMBMHAJp5Yfs+Kh2ac0xcWiEGwA=;
-        b=HWHG89J76pYloUFlvSHM+CsBtam1jbU9qeRck+ZrkyiBgsk39ym2vc2yUMS8g4dIMH
-         e6bzE86t9vGBOB9zywt5pg4Oalt6YrSXlHoVD/ApTY/Qz8F3jIj07nJkQE2COWLzyxm4
-         6ZNwl2UNqYMEgM4vvtTd4OfX7z8ZRPZilIIqEYCrdLEpQ1jfAaFGg8gfQR3S8J2M+X7A
-         YYolSYXl34mGn0avK7hoU1krypWDxqbDr7kmM9QN2hQZXIjaawbZ2HHJdGuHc0Q8jGRf
-         ZE9h0QR6vdDLDVRoKfXIAMlLMuxMUADPbIDHqiT3OTgRHYQi1jaImKrpcoi7x5p7kJVC
-         zz6A==
+        bh=/ZzuQXuKro+GXBxmmjg8yJdwWTDQZtX+cD1VaFXmUG0=;
+        b=CzmSoSz7tJCR65nZrxknx5xgI0VDvne8iNXQ8FpDQ7d1Bhjz+MHEo65NJvAAT3w1Ir
+         yrOfyQQQZftAtBfah6FV5BratxY8QwwnEQmOrlpxZjvxs3edKQuqEWnaa8dHP1oBPXfz
+         qR/cdJaoeWver3Dx+nWGEX+8mD5y2Q7Fd5xEf3Qzrg8O4p5kXuUV5mPJfLx0d77MceLv
+         q6FotoMEgsK1wKJlIp4SNLoUtPj2Yj445gKj5MxY19ponk1z36cjGIshVimSrcBNE6EK
+         OhoTzTpJmQjwnHfQNH4mQ244bHVhJ6GF1EXKj66gFo7gh+Wi2WnQi9lroS3ai+XqPnwX
+         adNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772794747; x=1773399547;
+        d=1e100.net; s=20230601; t=1772801348; x=1773406148;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VJX1Q5TDY8tDQM4DxMBMHAJp5Yfs+Kh2ac0xcWiEGwA=;
-        b=A5NFCIiSZjCnW72K4D/w5FaX8DTwX9dA6fnC3Fwt6ns6quT15yUgyvFtEj8gaYLKMT
-         xGcTELbYoEPvUcH0HDwpcA2BTzN911Jku8rXAFL+pWI3u0tCyAUNwB/f8NkrOjCiECHs
-         5jsDpPh1NESE3E6V55PHhxEbRTKGELOj7MGDEIxXcT7/T5sdkAnBVOT6j73rIWxWFZHV
-         iIsw93wbd276CEfiEj3kWpNwm5brJvtfMAF1WFatZVkcr8uTL4iWW6hTNjMBKgFAywRt
-         DTYVw1v5Dn8o9U4i8yzdto1ETJttw9O7ZAafB9zJILd1agXj7GgVofGbfY18vWluNNiV
-         zguQ==
-X-Gm-Message-State: AOJu0YznjI23qycepLh8pYg32Kqi70HeeOdM7888uVWn9pCHhO1eY+1D
-	5Mg1cVVhy/k1RFT9HnP+uoUCcAU+J7vrimXV1vsXooMnIkSkA6POKonkUayQAq2y
-X-Gm-Gg: ATEYQzz1ZPx/tNG4ciemFAXkiFee48huWYn+Ucb19IKrewPR2cgCxI8gorPMoe8u4LV
-	e0u60HVOKMd4HlyWi9d6Ikg10sSyBxJKlmdLx+Zig9rXNk95mScjG3j7brI5qxpfuU679rRQW9m
-	AZKS4Yj2GFCd8NuD6Ht2h5p2w3f/15AblODAQ9cer5WryexmloOXpiRPO7f6xviYCRIlFHZpojO
-	v2G7iLfvqmUUipk5xRMyy8vA//olq5VDx/dlc09QFgL44y40jhgWBvQnsFu6Wbn28ZGyAlPzZm7
-	V2rRHa2C73db2e9g13KqfGE+/VVaLLLq6aLWTSmiGDOaRYTlHHEkgkFNE318VCNs0FKeXn7zeZt
-	QcK+cZ8NANfIFc4cPskmUpzmNEFNPAdDPOsUd+dJi1+tYykxQfeqgeZ2mTrL7EupKo2d57zu0MA
-	JDLPUNSN3/ZLYP6mkVvchA2j38uD0CW2y09SkgSIdl6pC/yinT77HFN57ZmYwSOsBMTNhKiE1X0
-	Sg=
-X-Received: by 2002:a05:6a21:7747:b0:398:5f2d:5ae3 with SMTP id adf61e73a8af0-3985f2d6222mr862516637.66.1772794746915;
-        Fri, 06 Mar 2026 02:59:06 -0800 (PST)
+        bh=/ZzuQXuKro+GXBxmmjg8yJdwWTDQZtX+cD1VaFXmUG0=;
+        b=Vq0C6PURXJfss3FbcKFs2RrX9BJylpCxs/Wskk+UPJ8rgXicpY644Cidab8LP9CsrD
+         4QAbMnlxG6K41U4VAl6O6ECdlUqY0GbH/DqBppEXBgO/tiC1LFQgqIJQ90b4QS24YhT1
+         WeF8SrIvxu25egMVYff4YNP60rFexhinppBAQsRfbs+/E9Wc83h3dMT/QnacVarZ8Pqi
+         mB20WmqlsX9IfoY0fytfVVqPsb3JBoUQhV3ZU+rpYbpxfJnAdDfoeye5VeEtNG7dW9fU
+         qka3hWgUdbP09nBmFqFuIUgofWT1Fpm2Xfh9AXVXPpJQjlKuGgqvRB1LEJG/g+ciXL0S
+         kSQw==
+X-Forwarded-Encrypted: i=1; AJvYcCXHMFtw8aGyHKNXfY8xeUP0OMScDkDcvm/rTwHyj/yYDpWG8DItuZL8bk50rVo/pcMLsdrW4xj/RjA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YysXfPaPEjRYBNLu0+GOk6jZ7S93Tt/jsT22gvRNpLZa6GA9g+E
+	SAV8P/IzhmlBYvdpOHvNHtSGMBP5HCSC0hjXiMe/ilQG3ncWxDbkH8Mq
+X-Gm-Gg: ATEYQzxv2CFtzMoECQwM4qGsO0q5Tj+2WTmqY8bt+WPSD8+Mxln4CFOL4cThyCh+pdm
+	pek5eSIfmj2zGeJSUubVnUbdhwL05Kaf5VcnkNkDa7RywRNbpMvzqPgHvB8NjNqCknSFOvjoRTw
+	U6ho/kDo3NS4er0nGA64VdiLUeUxatZvRJC04kCIutKGthBWlIzgAn5dk4XXbBIGDHyoNBbveE8
+	8GA2Qc8kAcrx2COIos6dyWC7w2T8uoFmWphKoZMoep/zfUnQaXssvMorEUSA0Mc9RzOOkAWcALH
+	N4MIV6OULw++NwGK9P/d+ZboD6a68Yl+dh/+uDzB6uTvYZcFcKFYSJTw2/0auf/d932Rp8+zAMU
+	GtQUEcBKY017cSKiO9sQYjGYujV0uizocBc61QDl4kjskZx3NjtMZnSzsuv+xcsGK4IVYliOtdg
+	Q7Yoe9PAxBMJsJAWsUzH+td8wAvx5iFv7GhXkLZqaDqsoxBxpqw16tIesytVrI5o7WvwqhA+W/R
+	GA=
+X-Received: by 2002:a17:903:2f8a:b0:2ae:57cc:63d7 with SMTP id d9443c01a7336-2ae823ff86amr24082965ad.7.1772801348105;
+        Fri, 06 Mar 2026 04:49:08 -0800 (PST)
 Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739dfbf4fesm1427037a12.0.2026.03.06.02.59.03
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83e78f77sm27712845ad.21.2026.03.06.04.49.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 02:59:06 -0800 (PST)
+        Fri, 06 Mar 2026 04:49:07 -0800 (PST)
 From: zhidao su <soolaugust@gmail.com>
 X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
-To: sched-ext@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org,
-	tj@kernel.org,
-	void@manifault.com,
+To: tj@kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Cc: void@manifault.com,
 	arighi@nvidia.com,
 	changwoo@igalia.com,
-	peterz@infradead.org,
-	mingo@redhat.com,
-	zhidao su <suzhidao@xiaomi.com>
-Subject: [PATCH] sched_ext: Use WRITE_ONCE() for the write side of scx_enable helper pointer
-Date: Fri,  6 Mar 2026 18:59:01 +0800
-Message-ID: <20260306105901.2543743-1-suzhidao@xiaomi.com>
+	linux-kselftest@vger.kernel.org,
+	Su Zhidao <suzhidao@xiaomi.com>
+Subject: [PATCH 1/5] sched_ext: Remove deprecated SCX_OPS_HAS_CGROUP_WEIGHT flag
+Date: Fri,  6 Mar 2026 20:48:57 +0800
+Message-ID: <20260306124901.2653465-1-suzhidao@xiaomi.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -79,53 +79,85 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_enable() uses double-checked locking to lazily initialize a static
-kthread_worker pointer:
+From: Su Zhidao <suzhidao@xiaomi.com>
 
-    if (!READ_ONCE(helper)) {
-        mutex_lock(&helper_mutex);
-        if (!helper) {
-            helper = kthread_run_worker(0, "scx_enable_helper");
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                     plain write -- KCSAN data race
+SCX_OPS_HAS_CGROUP_WEIGHT was deprecated in 6.15 with a comment
+'will be removed on 6.18'. Now that we are at 6.18, remove it.
 
-The outer READ_ONCE() annotates the lockless fast-path read, but the
-write side uses a plain assignment without the matching WRITE_ONCE().
-The KCSAN documentation requires that if one accessor uses READ_ONCE()
-or WRITE_ONCE() on a variable to annotate lock-free access, all other
-accesses must also use the appropriate accessor. A plain write leaves
-the pair incomplete and will trigger KCSAN warnings.
+The flag was a no-op and only triggered a pr_warn() on use. Remove
+the flag definition, the warning, and update scx_flatcg which was
+the last in-tree user.
 
-The error path also has the same issue:
-
-            helper = NULL;
-            ^^^^^^^^^^
-            plain write -- KCSAN data race
-
-Fix both plain writes by using WRITE_ONCE() to complete the concurrent
-access annotation and make the code KCSAN-clean.
-
-Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+Signed-off-by: Su Zhidao <suzhidao@xiaomi.com>
 ---
- kernel/sched/ext.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/ext.c                              | 3 ---
+ kernel/sched/ext_internal.h                     | 8 +-------
+ tools/sched_ext/include/scx/enum_defs.autogen.h | 1 -
+ tools/sched_ext/scx_flatcg.bpf.c                | 2 +-
+ 4 files changed, 2 insertions(+), 12 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 9a1471ad5ae7..c4ccd685259f 100644
+index c4ccd685259f..56ff5874af94 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -5355,9 +5355,9 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
- 	if (!READ_ONCE(helper)) {
- 		mutex_lock(&helper_mutex);
- 		if (!helper) {
--			helper = kthread_run_worker(0, "scx_enable_helper");
-+			WRITE_ONCE(helper, kthread_run_worker(0, "scx_enable_helper"));
- 			if (IS_ERR_OR_NULL(helper)) {
--				helper = NULL;
-+				WRITE_ONCE(helper, NULL);
- 				mutex_unlock(&helper_mutex);
- 				return -ENOMEM;
- 			}
+@@ -5061,9 +5061,6 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (ops->flags & SCX_OPS_HAS_CGROUP_WEIGHT)
+-		pr_warn("SCX_OPS_HAS_CGROUP_WEIGHT is deprecated and a noop\n");
+-
+ 	if (ops->cpu_acquire || ops->cpu_release)
+ 		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
+ 
+diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+index bd26811fea99..3c86c53e1975 100644
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -174,19 +174,13 @@ enum scx_ops_flags {
+ 	 */
+ 	SCX_OPS_BUILTIN_IDLE_PER_NODE	= 1LLU << 6,
+ 
+-	/*
+-	 * CPU cgroup support flags
+-	 */
+-	SCX_OPS_HAS_CGROUP_WEIGHT	= 1LLU << 16,	/* DEPRECATED, will be removed on 6.18 */
+-
+ 	SCX_OPS_ALL_FLAGS		= SCX_OPS_KEEP_BUILTIN_IDLE |
+ 					  SCX_OPS_ENQ_LAST |
+ 					  SCX_OPS_ENQ_EXITING |
+ 					  SCX_OPS_ENQ_MIGRATION_DISABLED |
+ 					  SCX_OPS_ALLOW_QUEUED_WAKEUP |
+ 					  SCX_OPS_SWITCH_PARTIAL |
+-					  SCX_OPS_BUILTIN_IDLE_PER_NODE |
+-					  SCX_OPS_HAS_CGROUP_WEIGHT,
++					  SCX_OPS_BUILTIN_IDLE_PER_NODE,
+ 
+ 	/* high 8 bits are internal, don't include in SCX_OPS_ALL_FLAGS */
+ 	__SCX_OPS_INTERNAL_MASK		= 0xffLLU << 56,
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index dcc945304760..80c885f781ba 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -91,7 +91,6 @@
+ #define HAVE_SCX_OPS_SWITCH_PARTIAL
+ #define HAVE_SCX_OPS_ENQ_MIGRATION_DISABLED
+ #define HAVE_SCX_OPS_ALLOW_QUEUED_WAKEUP
+-#define HAVE_SCX_OPS_HAS_CGROUP_WEIGHT
+ #define HAVE_SCX_OPS_ALL_FLAGS
+ #define HAVE_SCX_OPSS_NONE
+ #define HAVE_SCX_OPSS_QUEUEING
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 0e785cff0f24..a8a9234bb41e 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -960,5 +960,5 @@ SCX_OPS_DEFINE(flatcg_ops,
+ 	       .cgroup_move		= (void *)fcg_cgroup_move,
+ 	       .init			= (void *)fcg_init,
+ 	       .exit			= (void *)fcg_exit,
+-	       .flags			= SCX_OPS_HAS_CGROUP_WEIGHT | SCX_OPS_ENQ_EXITING,
++	       .flags			= SCX_OPS_ENQ_EXITING,
+ 	       .name			= "flatcg");
 -- 
 2.43.0
 
