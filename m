@@ -1,63 +1,64 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B6A480342
-	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 20:52:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A896481641
+	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 20:54:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772830378; cv=none; b=PzCmLQb4zGcSqsVYY4/OGhlNoWysSxipjsbuHP3Xt34e5wb92lTbW5QTTVElckmiQt3HZtDDLNcXK49+oeHtV6StpFp5y6GoNEIDlBK+tTjLP53Ldq2dHcF4VPiJIQyH4AO2YpVYT2EiwvQXvWblz8vMhSLWqQSzxIe44T5AEY4=
+	t=1772830486; cv=none; b=ZrpqT1Tvqj5WpycVwcJrvRwH6t/oJdsJOZbJHo8kxmDtpTjUbllZ209JJR3ItYP1Cu8OxHOj0HrwIBEO0cHnTjYzvh2EA5jVaMhQlqUSIfVFAWP5qmmbLjYQ+7iTCVIwy1ZI+e+rbFlxNHCNWPJA286BVa7QRAPbNpBs06Jd4Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772830378; c=relaxed/simple;
-	bh=pBSrh7n9zfC4yRqe4M5RKyuj1n4ovuQev213YWPb1p0=;
+	s=arc-20240116; t=1772830486; c=relaxed/simple;
+	bh=qNo4S1+WkJwdqp+tYHVLUssHQKKKZZAhD4/FolFcVuY=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Va7iTf+boZHVoNM0t2t485tLvSkOvQcaII5qiwNYgpVzC0a0LcPD0yWKDt7yb3yc4IGAIReDyg7MUKJc/bq63UsDArF4+Y1N7Egx7/AmaAyGdRyVjUIxpbSKmYbJDL+QcPeBykaVDLMYrhvCaFz3/6ve58nl4Q9qVeyF4r+c6Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=fBfGqj+y; arc=none smtp.client-ip=209.85.222.181
+	 References:In-Reply-To; b=iQ53yTf87rch3ptwOSl7tB5TyOHBNqL53eICF+pdH4jPgcQjYeqlbWz2jMx/GY2QyCmoZNO5prmfEp/te+SEqPcFqLUn853T8MPnzzOEsqeP0T6y6mqFrGrcz7azyFK5yU80FLrpkXHGtdSBwjgeZlgiYIC5FGKJAjhWFzJxajE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=ypk9TpGt; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="fBfGqj+y"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8cd759f502dso31964185a.3
-        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 12:52:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="ypk9TpGt"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8cd75abd09dso35108085a.0
+        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 12:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1772830375; x=1773435175; darn=lists.linux.dev;
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1772830484; x=1773435284; darn=lists.linux.dev;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2VDCfgcHJ+D4cblCuaPqSDuGNSSw2HHIqymIwPMAZ3s=;
-        b=fBfGqj+y586uCh3okRnhbFA3tTPA0j0QPa4M9f5M1BuyfOphzBPOHJThDVC/RsF7Ci
-         sK70UEOd7WWTgPbKTYJ8FAJ9yQCn/dbDbS0L87v//KBimdI5g6vTB0RDJI4iAelH6KJZ
-         eR930Kay06K2AtKdoIEqkoe6/D8PstXntOzBSyldo1eP4evOaqlTeSGq+Y2zoGlGP1p2
-         wEn05QOgkf+QihfMQeYhmsPRQClcVVVZ9NbpU6OHdUvT78tRlTjCwjQV/rT4326xjlRp
-         xl6xwmikEANmh3DP1DgY5yspSKi3ACxcdBlIEahe+Ohu9gSSCk8raVzR4BCnBP3TlBWe
-         qdZg==
+        bh=XYYb3MTgue6ruqAtTWWQIpjzRV2dEjMOcxssr5ef14s=;
+        b=ypk9TpGtouo347x99Vz3NFcCpiQOuK7amijfgv6VUCLffw5N+SMACPkCA7pnro5g+2
+         U8I7VNI7he3LAE59PrmJI3Y0yJtqxRVsZSoy0cdR6n3UYpiusUA+lA8xwzucEUkTRbSi
+         Om90cuMF6EpJBQ+qDjwQj5RqgF4w/zu/yoecsyJpKBvbTbtUiJc30tP2Veiy+V9EL7JN
+         4VvPqADoTBZ3d/cYOuxYNfahtDe4QUJZXaT3xQBb43+LhcTH9Tp7aeeikOrkVSQzm5gm
+         0XYwxtyZ3Dn7DWMxXIxclWFNLT+geTAP6rT90ZUS1wHYBdjHWfY98ydCG3KzoCPNkIe+
+         Mk5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772830375; x=1773435175;
+        d=1e100.net; s=20230601; t=1772830484; x=1773435284;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2VDCfgcHJ+D4cblCuaPqSDuGNSSw2HHIqymIwPMAZ3s=;
-        b=VF0Ao/6AW0W6pRtYLLAX08GlonekjbZ5FuB1B8Ga1ifdEGnQng0nYOfL3uZa1ShGLP
-         T53WIqAxKexSKvmdB5Z6pXXRI9/DUAE3hbSCxgxKHpfyr5l/vBm9cffKUxej5jYVH16d
-         mA6RuV4EpVIDCr7+0O12lue1gt8Wl5qpOJ2O4q3KL+x22FNh9du0zkMkFmJQFQNOa+ul
-         wT7z+HlqzGctHNvvK94MZczcMLqZxZrkWGOs3V2cjbZZgC6LAjxdwjrYBCv2wsSCf8ug
-         uQQFVE0Y4UoCXxWZ6UQg+/DKUM7Di6qE52Tz+tyTQbdGd8icfqU+OS5le9IQufYbDMny
-         3c2g==
-X-Forwarded-Encrypted: i=1; AJvYcCXCuhUfmMQtVGnBVaJpFiPBdao0HUZsHQBju4ar97/I6n3M57Sm0uBS4t9x7a0MPDQlPTr4rjjfj6o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwAx0UejP4E3mg0Bky1n+BeYNMUfI3N98fG/ygSdSog9N7e3be9
-	89eWrVKnzvxiOpmbDJDy2M+JME2mX5tfxt2yzh/jz1/s8QplDrlSvglMf7e+Gh+w68E=
-X-Gm-Gg: ATEYQzy+no7saLUMFTknZRB7lmyHV1o0GKE09SP1stfFdTUufwhz7mg3eRDuX7Ioxev
-	mAVLatCEB3fue/YhV11ZIu9+OzdkOiE/BrBmzGodkg3ssX2NQFUbRfsu6YTlRCC6X+dBCqzRdF1
-	MtUf5iRPDBXm+qlSwt9yxs6Ecbhj3TfNU9jBEft6jgxoLsZWLPZGcpSbDKTjseD4Yw4sTjAhuku
-	nqbVMEye7giZKRaUrp/Z38BgirerWMlY3SPadBUxYM6SLdMqedadR/qyLm7IA+gU24X7wVy1z1W
-	4voaPZC8rmM2WUNS+Te+Twjdhy52N5hLJqAW+0kyzkkIfpZghLXUoRnNpCVZFunRnOi33uxcV9c
-	Ni5xSf4UiZedrJiAlu0/9/43cdTkuQhh1fQYBSf58qZkXlR6errZYc5ulg0e94hv8/8CT9CB9q5
-	9T5djlwqrmr7uP9hG7WGuJt/I=
-X-Received: by 2002:a05:620a:3f85:b0:8ca:3175:cc72 with SMTP id af79cd13be357-8cd6d3d99c0mr452069985a.15.1772830375332;
-        Fri, 06 Mar 2026 12:52:55 -0800 (PST)
+        bh=XYYb3MTgue6ruqAtTWWQIpjzRV2dEjMOcxssr5ef14s=;
+        b=Frwo5wSXFulRPtT7yti71EK5+OKlPImQUtTOy9FLWWtNc3Wsz4IpwiJ+MZi9zRlW+L
+         cpYXQZXt1grWHhIjfuPG72NJmigh4dEAZcbn8w0+gyZQR5UqgcDW7qM1HCJflZ00GOQj
+         +8UoPhHXN4zzJktjj1aWkWYOJurb2NrB0v20NL7qbCq0Pkbzv/5chfv/ao/mEd79sXbB
+         6uZBuzYrk+mW6sftrd5Zez2npJteZseH6VoFxODyHf4jdan3IR44GxM1DNd6dW8vLJV/
+         554Ks4OjIaqWAi4ZJPoKn5fh/AS852+4w9I7s3Zxm8KXUzfkGlv1khw2adhhpI8EZNXk
+         lsvw==
+X-Forwarded-Encrypted: i=1; AJvYcCXA5IZy3dNy0d74URrIPni5jE8MsEZfTQSk7u1e4aitczPodM5Dnb/InnWEVooguIe7B93yKNLUvic=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzWJ/aX2IySGxkMaAyRoIQFJteUUAJuNMQxrDKmGbPBdZ0KTuP3
+	tIR21FMgF//Z8YMRjgB+aW3xJrbN2DOVucERWiDNEy9UmXZ1VcNdt9AoI6G4pkpTwJ5jYOR9X7I
+	LxuJS
+X-Gm-Gg: ATEYQzwvqvUR0lgjBJK/7nWaX4l4ZaMntrSq8hg3ocRPFil1I0TNpgjxqfwBXqXw0bb
+	Z8albd66SP6KOVBi99ma8NftxaP0ReZ4e1Lvooa158+r0LOL3N1Z6Uc6AONrr5I/vAvmHBiRM+l
+	3b3A4evgfcPVyWurcwsXwlj12vK6TjqCfPTxo8Ss9AonGXZYG27kjRzlOKuBPZlScabvxN1WIa/
+	WFrqNU6yiWXg8sZwu0QXK+yCW+1MBG5DHTgLgIe2llN4yWSJi7nDEpbdfriEjjLezbgw3B76+w+
+	IrIPCgtdkkKId0VaHS0PeMexU4NS58NQAyQUH2JyvWs5Uq2tazUZZ4gmP8pf07EuLRNU77G/0U2
+	r4TOFn7w/WuLsYXR1dRYY+I1DqbjFA1Cz1mixpSkEtDPzJX29J6Ipv+QMcXKo0FYGmgLNf1yvIf
+	gadJ5RNSCoN0x0VkN66PAOYe5CJ1kSvxGxBQ==
+X-Received: by 2002:a05:620a:2587:b0:8b5:5a33:22d2 with SMTP id af79cd13be357-8cd6d4b5a1bmr462953385a.46.1772830484213;
+        Fri, 06 Mar 2026 12:54:44 -0800 (PST)
 Received: from localhost ([140.174.219.137])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cd6f484288sm183999885a.7.2026.03.06.12.52.54
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cd6f566fd5sm188141285a.43.2026.03.06.12.54.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2026 12:52:55 -0800 (PST)
+        Fri, 06 Mar 2026 12:54:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,153 +67,115 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 06 Mar 2026 15:52:53 -0500
-Message-Id: <DGVZX2DNAOAK.183TRISYDAWE5@etsalapatis.com>
+Date: Fri, 06 Mar 2026 15:54:42 -0500
+Message-Id: <DGVZYGBK0H4B.1PT84O0TAQ13L@etsalapatis.com>
 Cc: <void@manifault.com>, <arighi@nvidia.com>, <changwoo@igalia.com>
-Subject: Re: [PATCH 02/15] sched_ext: Wrap global DSQs in per-node structure
+Subject: Re: [PATCH 03/15] sched_ext: Factor out pnode allocation and
+ deallocation into helpers
 From: "Emil Tsalapatis" <emil@etsalapatis.com>
 To: "Tejun Heo" <tj@kernel.org>, <linux-kernel@vger.kernel.org>,
  <sched-ext@lists.linux.dev>
 X-Mailer: aerc 0.20.1
 References: <20260306190623.1076074-1-tj@kernel.org>
- <20260306190623.1076074-3-tj@kernel.org>
-In-Reply-To: <20260306190623.1076074-3-tj@kernel.org>
+ <20260306190623.1076074-4-tj@kernel.org>
+In-Reply-To: <20260306190623.1076074-4-tj@kernel.org>
 
 On Fri Mar 6, 2026 at 2:06 PM EST, Tejun Heo wrote:
-> Global DSQs are currently stored as an array of scx_dispatch_q pointers,
-> one per NUMA node. To allow adding more per-node data structures, wrap th=
-e
-> global DSQ in scx_sched_pnode and replace global_dsqs with pnode array.
+> Extract pnode allocation and deallocation logic into alloc_pnode() and
+> free_pnode() helpers. This simplifies scx_alloc_and_add_sched() and prepa=
+res
+> for adding more per-node initialization and cleanup in subsequent patches=
+.
 >
-> NUMA-aware allocation is maintained. No functional changes.
+> No functional changes.
 >
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
 > ---
->  kernel/sched/ext.c          | 32 ++++++++++++++++----------------
->  kernel/sched/ext_internal.h |  6 +++++-
->  2 files changed, 21 insertions(+), 17 deletions(-)
+>  kernel/sched/ext.c | 32 +++++++++++++++++++++++---------
+>  1 file changed, 23 insertions(+), 9 deletions(-)
 >
 > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index fe222df1d494..9232abea4f22 100644
+> index 9232abea4f22..c36d399bca3e 100644
 > --- a/kernel/sched/ext.c
 > +++ b/kernel/sched/ext.c
-> @@ -344,7 +344,7 @@ static bool scx_is_descendant(struct scx_sched *sch, =
-struct scx_sched *ancestor)
->  static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch,
->  					      struct task_struct *p)
->  {
-> -	return sch->global_dsqs[cpu_to_node(task_cpu(p))];
-> +	return &sch->pnode[cpu_to_node(task_cpu(p))]->global_dsq;
->  }
+> @@ -4114,6 +4114,7 @@ static const struct attribute_group scx_global_attr=
+_group =3D {
+>  	.attrs =3D scx_global_attrs,
+>  };
 > =20
->  static struct scx_dispatch_q *find_user_dsq(struct scx_sched *sch, u64 d=
-sq_id)
-> @@ -2229,7 +2229,7 @@ static bool consume_global_dsq(struct scx_sched *sc=
-h, struct rq *rq)
->  {
->  	int node =3D cpu_to_node(cpu_of(rq));
+> +static void free_pnode(struct scx_sched_pnode *pnode);
+>  static void free_exit_info(struct scx_exit_info *ei);
 > =20
-> -	return consume_dispatch_q(sch, rq, sch->global_dsqs[node]);
-> +	return consume_dispatch_q(sch, rq, &sch->pnode[node]->global_dsq);
->  }
-> =20
->  /**
-> @@ -4148,8 +4148,8 @@ static void scx_sched_free_rcu_work(struct work_str=
+>  static void scx_sched_free_rcu_work(struct work_struct *work)
+> @@ -4148,7 +4149,7 @@ static void scx_sched_free_rcu_work(struct work_str=
 uct *work)
 >  	free_percpu(sch->pcpu);
 > =20
 >  	for_each_node_state(node, N_POSSIBLE)
-> -		kfree(sch->global_dsqs[node]);
-> -	kfree(sch->global_dsqs);
-> +		kfree(sch->pnode[node]);
-> +	kfree(sch->pnode);
+> -		kfree(sch->pnode[node]);
+> +		free_pnode(sch->pnode[node]);
+>  	kfree(sch->pnode);
 > =20
 >  	rhashtable_walk_enter(&sch->dsq_hash, &rht_iter);
->  	do {
-> @@ -5707,23 +5707,23 @@ static struct scx_sched *scx_alloc_and_add_sched(=
-struct sched_ext_ops *ops,
->  	if (ret < 0)
->  		goto err_free_ei;
+> @@ -5685,6 +5686,24 @@ static int alloc_kick_syncs(void)
+>  	return 0;
+>  }
 > =20
-> -	sch->global_dsqs =3D kzalloc_objs(sch->global_dsqs[0], nr_node_ids);
-> -	if (!sch->global_dsqs) {
-> +	sch->pnode =3D kzalloc_objs(sch->pnode[0], nr_node_ids);
-> +	if (!sch->pnode) {
->  		ret =3D -ENOMEM;
->  		goto err_free_hash;
+> +static void free_pnode(struct scx_sched_pnode *pnode)
+> +{
+> +	kfree(pnode);
+> +}
+> +
+> +static struct scx_sched_pnode *alloc_pnode(struct scx_sched *sch, int no=
+de)
+> +{
+> +	struct scx_sched_pnode *pnode;
+> +
+> +	pnode =3D kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
+> +	if (!pnode)
+> +		return NULL;
+> +
+> +	init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
+> +
+> +	return pnode;
+> +}
+> +
+>  static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *o=
+ps,
+>  						 struct cgroup *cgrp,
+>  						 struct scx_sched *parent)
+> @@ -5714,16 +5733,11 @@ static struct scx_sched *scx_alloc_and_add_sched(=
+struct sched_ext_ops *ops,
 >  	}
 > =20
 >  	for_each_node_state(node, N_POSSIBLE) {
-> -		struct scx_dispatch_q *dsq;
-> +		struct scx_sched_pnode *pnode;
-> =20
-> -		dsq =3D kzalloc_node(sizeof(*dsq), GFP_KERNEL, node);
-> -		if (!dsq) {
-> +		pnode =3D kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
-> +		if (!pnode) {
+> -		struct scx_sched_pnode *pnode;
+> -
+> -		pnode =3D kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
+> -		if (!pnode) {
+> +		sch->pnode[node] =3D alloc_pnode(sch, node);
+> +		if (!sch->pnode[node]) {
 >  			ret =3D -ENOMEM;
-> -			goto err_free_gdsqs;
-> +			goto err_free_pnode;
+>  			goto err_free_pnode;
 >  		}
-> =20
-> -		init_dsq(dsq, SCX_DSQ_GLOBAL, sch);
-> -		sch->global_dsqs[node] =3D dsq;
-> +		init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
-> +		sch->pnode[node] =3D pnode;
+> -
+> -		init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
+> -		sch->pnode[node] =3D pnode;
 >  	}
 > =20
 >  	sch->dsp_max_batch =3D ops->dispatch_max_batch ?: SCX_DSP_DFL_MAX_BATCH=
 ;
-> @@ -5732,7 +5732,7 @@ static struct scx_sched *scx_alloc_and_add_sched(st=
+> @@ -5821,7 +5835,7 @@ static struct scx_sched *scx_alloc_and_add_sched(st=
 ruct sched_ext_ops *ops,
->  				   __alignof__(struct scx_sched_pcpu));
->  	if (!sch->pcpu) {
->  		ret =3D -ENOMEM;
-> -		goto err_free_gdsqs;
-> +		goto err_free_pnode;
->  	}
-> =20
->  	for_each_possible_cpu(cpu)
-> @@ -5819,10 +5819,10 @@ static struct scx_sched *scx_alloc_and_add_sched(=
-struct sched_ext_ops *ops,
->  	kthread_destroy_worker(sch->helper);
->  err_free_pcpu:
 >  	free_percpu(sch->pcpu);
-> -err_free_gdsqs:
-> +err_free_pnode:
+>  err_free_pnode:
 >  	for_each_node_state(node, N_POSSIBLE)
-> -		kfree(sch->global_dsqs[node]);
-> -	kfree(sch->global_dsqs);
-> +		kfree(sch->pnode[node]);
-> +	kfree(sch->pnode);
+> -		kfree(sch->pnode[node]);
+> +		free_pnode(sch->pnode[node]);
+>  	kfree(sch->pnode);
 >  err_free_hash:
 >  	rhashtable_free_and_destroy(&sch->dsq_hash, NULL, NULL);
->  err_free_ei:
-> diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-> index 4cb97093b872..9e5ebd00ea0c 100644
-> --- a/kernel/sched/ext_internal.h
-> +++ b/kernel/sched/ext_internal.h
-> @@ -975,6 +975,10 @@ struct scx_sched_pcpu {
->  	struct scx_dsp_ctx	dsp_ctx;
->  };
-> =20
-> +struct scx_sched_pnode {
-> +	struct scx_dispatch_q	global_dsq;
-> +};
-> +
->  struct scx_sched {
->  	struct sched_ext_ops	ops;
->  	DECLARE_BITMAP(has_op, SCX_OPI_END);
-> @@ -988,7 +992,7 @@ struct scx_sched {
->  	 * per-node split isn't sufficient, it can be further split.
->  	 */
->  	struct rhashtable	dsq_hash;
-> -	struct scx_dispatch_q	**global_dsqs;
-> +	struct scx_sched_pnode	**pnode;
->  	struct scx_sched_pcpu __percpu *pcpu;
-> =20
->  	u64			slice_dfl;
 
