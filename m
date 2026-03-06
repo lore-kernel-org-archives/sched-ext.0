@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B2371057;
-	Fri,  6 Mar 2026 19:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D318D40F8DA;
+	Fri,  6 Mar 2026 19:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823985; cv=none; b=Lq2AP2DbHvEFySUNkenFwxOtSyLODEOgcCEsJhwIk6PFVGW50Epywc8d7HC1u4/kiNpRW+HpxNogEl3KZIZC2qen/yHdTy0RI3Yw/XsgJwWK8FO1gR76Acl0G/+hMCT8X3UzoD0HqyxYm/HrtHMgOmaoJ6VJkT0Tmx3n15AgBlo=
+	t=1772823986; cv=none; b=WDNsVrwREQ/UktJce9v1oOJlxxkh67P3VotB4cVDTY/wVTCGRZKcGe4TODuyZDvQ1Y5HhRnyhq6Zgs/AbTeh0tStkDaFRh46YY5//6YTI9WPX/fz/oCFsm8HmVjWABHSWS36qACnUrbjgzVGWjh+dJv/mF0edSIHLDDBdAQl8us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823985; c=relaxed/simple;
-	bh=txnrtzvJWEregd/kzVRgzre4oagqPVy3LG8vyNS1Gfo=;
+	s=arc-20240116; t=1772823986; c=relaxed/simple;
+	bh=MzwsQHLvwckxw+G1+vOzyuuoFe6/vw3VO/Ld23sHi/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rD23js9AlUnR2MPEVL0iV7feX0G+XdcLkk7aFCaCnmF9+2pPA5s9Hf+b/psguuWRsWp5B0fzIziaFZQLvn9joP66kuexK7MOa2m8OjRoP7MXYydmd/q2aOXAZz5OJ7iJf4jTKn7azB7PAhRNME/LM+77j9g7NfjnCidwCe26M8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RUmrfXy/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nsf14PAi4NqId3JsBNDwtcCIVnW5A/VpOkBLcxBfGaftiy2RfnF5YN+kGftqd9E0UqhnYdPfelp6c65TWCEv234BdpNQRiMGbnXBiWuKT08gAcdyCCNJcUOzDlqNNXJ8qt8HJvjtlv9RA9xwlJqXQyR5pypiJRFJJEHPpVQfqtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kZQW9I2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RUmrfXy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9A9C2BC86;
-	Fri,  6 Mar 2026 19:06:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kZQW9I2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B78DC4CEF7;
+	Fri,  6 Mar 2026 19:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772823985;
-	bh=txnrtzvJWEregd/kzVRgzre4oagqPVy3LG8vyNS1Gfo=;
+	s=k20201202; t=1772823986;
+	bh=MzwsQHLvwckxw+G1+vOzyuuoFe6/vw3VO/Ld23sHi/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUmrfXy/Pi9rHDk9WpTSMA3C0r1L7xL/vWJmTdy03uqyXqKG56wF706sZXSw5TyvI
-	 /axBsdmlEm+TDkG3Zmbo3Y9+EUDzjMENSTftdrt+LjelK3b/zfgeUZBtlYKNtFRCvC
-	 fgnlE/XbWuee4dX5y+sl1IBLCP4ENZ5C7Q3kJscz/9g6pl6ydnvUjgVARbt2J/6wD4
-	 Vtc+NCu+bIjvmD/4u16BeU8CZCTXy6yh6m28ToCvezQKFud7F24eH+3b3ge3qtoLU+
-	 GIbVS0tJ0MX26QiYdiGzgo10PaU7konepEA3Lnp7Il+VPRqlOnorWlTKkXljg6azh5
-	 yhP19SGE1CMFQ==
+	b=kZQW9I2coebozjDUghVPAHuR2y7vNOQy0SwE0rRUpDTbUg2RO/l6v0UeNTMzSK9BD
+	 9X8Xyph1NBwnng8E6GoYe75OLR9HXRd5Hwa7jBiuhU+e/9vIuIr5ADxfRnEpiGu1FV
+	 qyTPcyJWmQVW33BOlSrXRAPro9qdIKAzMaz/ftZj0VigwfK7lrp1g0+IpgEH3OpAmL
+	 cFlKD4EcQ7g5avStbrKm5zQFAKGcRzNZzIBHDc12Jj9zJfoXbNZMk0201MmvbqztBq
+	 lIv59ytcKu+3mlc4ZMgJZfz4vDYlleULstAPHAusQhwuglQR5SVEKegZ1OM6//p8S+
+	 eLXirk3G/N4zA==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 01/15] sched_ext: Relocate scx_bpf_task_cgroup() and its BTF_ID to the end of kfunc section
-Date: Fri,  6 Mar 2026 09:06:09 -1000
-Message-ID: <20260306190623.1076074-2-tj@kernel.org>
+Subject: [PATCH 02/15] sched_ext: Wrap global DSQs in per-node structure
+Date: Fri,  6 Mar 2026 09:06:10 -1000
+Message-ID: <20260306190623.1076074-3-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
 References: <20260306190623.1076074-1-tj@kernel.org>
@@ -48,123 +48,130 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Move scx_bpf_task_cgroup() kfunc definition and its BTF_ID entry to the end
-of the kfunc section before __bpf_kfunc_end_defs() for cleaner code
-organization.
+Global DSQs are currently stored as an array of scx_dispatch_q pointers,
+one per NUMA node. To allow adding more per-node data structures, wrap the
+global DSQ in scx_sched_pnode and replace global_dsqs with pnode array.
 
-No functional changes.
+NUMA-aware allocation is maintained. No functional changes.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c | 78 +++++++++++++++++++++++-----------------------
- 1 file changed, 39 insertions(+), 39 deletions(-)
+ kernel/sched/ext.c          | 32 ++++++++++++++++----------------
+ kernel/sched/ext_internal.h |  6 +++++-
+ 2 files changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index e25b3593dd30..fe222df1d494 100644
+index fe222df1d494..9232abea4f22 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -8628,43 +8628,6 @@ __bpf_kfunc struct task_struct *scx_bpf_cpu_curr(s32 cpu, const struct bpf_prog_
- 	return rcu_dereference(cpu_rq(cpu)->curr);
+@@ -344,7 +344,7 @@ static bool scx_is_descendant(struct scx_sched *sch, struct scx_sched *ancestor)
+ static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch,
+ 					      struct task_struct *p)
+ {
+-	return sch->global_dsqs[cpu_to_node(task_cpu(p))];
++	return &sch->pnode[cpu_to_node(task_cpu(p))]->global_dsq;
  }
  
--/**
-- * scx_bpf_task_cgroup - Return the sched cgroup of a task
-- * @p: task of interest
-- * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-- *
-- * @p->sched_task_group->css.cgroup represents the cgroup @p is associated with
-- * from the scheduler's POV. SCX operations should use this function to
-- * determine @p's current cgroup as, unlike following @p->cgroups,
-- * @p->sched_task_group is protected by @p's rq lock and thus atomic w.r.t. all
-- * rq-locked operations. Can be called on the parameter tasks of rq-locked
-- * operations. The restriction guarantees that @p's rq is locked by the caller.
-- */
--#ifdef CONFIG_CGROUP_SCHED
--__bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
--					       const struct bpf_prog_aux *aux)
--{
--	struct task_group *tg = p->sched_task_group;
--	struct cgroup *cgrp = &cgrp_dfl_root.cgrp;
--	struct scx_sched *sch;
--
--	guard(rcu)();
--
--	sch = scx_prog_sched(aux);
--	if (unlikely(!sch))
--		goto out;
--
--	if (!scx_kf_allowed_on_arg_tasks(sch, __SCX_KF_RQ_LOCKED, p))
--		goto out;
--
--	cgrp = tg_cgrp(tg);
--
--out:
--	cgroup_get(cgrp);
--	return cgrp;
--}
--#endif
--
+ static struct scx_dispatch_q *find_user_dsq(struct scx_sched *sch, u64 dsq_id)
+@@ -2229,7 +2229,7 @@ static bool consume_global_dsq(struct scx_sched *sch, struct rq *rq)
+ {
+ 	int node = cpu_to_node(cpu_of(rq));
+ 
+-	return consume_dispatch_q(sch, rq, sch->global_dsqs[node]);
++	return consume_dispatch_q(sch, rq, &sch->pnode[node]->global_dsq);
+ }
+ 
  /**
-  * scx_bpf_now - Returns a high-performance monotonically non-decreasing
-  * clock for the current CPU. The clock returned is in nanoseconds.
-@@ -8779,6 +8742,43 @@ __bpf_kfunc void scx_bpf_events(struct scx_event_stats *events,
- 	memcpy(events, &e_sys, events__sz);
- }
+@@ -4148,8 +4148,8 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 	free_percpu(sch->pcpu);
  
-+#ifdef CONFIG_CGROUP_SCHED
-+/**
-+ * scx_bpf_task_cgroup - Return the sched cgroup of a task
-+ * @p: task of interest
-+ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-+ *
-+ * @p->sched_task_group->css.cgroup represents the cgroup @p is associated with
-+ * from the scheduler's POV. SCX operations should use this function to
-+ * determine @p's current cgroup as, unlike following @p->cgroups,
-+ * @p->sched_task_group is protected by @p's rq lock and thus atomic w.r.t. all
-+ * rq-locked operations. Can be called on the parameter tasks of rq-locked
-+ * operations. The restriction guarantees that @p's rq is locked by the caller.
-+ */
-+__bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
-+					       const struct bpf_prog_aux *aux)
-+{
-+	struct task_group *tg = p->sched_task_group;
-+	struct cgroup *cgrp = &cgrp_dfl_root.cgrp;
-+	struct scx_sched *sch;
-+
-+	guard(rcu)();
-+
-+	sch = scx_prog_sched(aux);
-+	if (unlikely(!sch))
-+		goto out;
-+
-+	if (!scx_kf_allowed_on_arg_tasks(sch, __SCX_KF_RQ_LOCKED, p))
-+		goto out;
-+
-+	cgrp = tg_cgrp(tg);
-+
-+out:
-+	cgroup_get(cgrp);
-+	return cgrp;
-+}
-+#endif	/* CONFIG_CGROUP_SCHED */
-+
- __bpf_kfunc_end_defs();
+ 	for_each_node_state(node, N_POSSIBLE)
+-		kfree(sch->global_dsqs[node]);
+-	kfree(sch->global_dsqs);
++		kfree(sch->pnode[node]);
++	kfree(sch->pnode);
  
- BTF_KFUNCS_START(scx_kfunc_ids_any)
-@@ -8808,11 +8808,11 @@ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
- BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
-+BTF_ID_FLAGS(func, scx_bpf_now)
-+BTF_ID_FLAGS(func, scx_bpf_events)
- #ifdef CONFIG_CGROUP_SCHED
- BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_IMPLICIT_ARGS | KF_RCU | KF_ACQUIRE)
- #endif
--BTF_ID_FLAGS(func, scx_bpf_now)
--BTF_ID_FLAGS(func, scx_bpf_events)
- BTF_KFUNCS_END(scx_kfunc_ids_any)
+ 	rhashtable_walk_enter(&sch->dsq_hash, &rht_iter);
+ 	do {
+@@ -5707,23 +5707,23 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 	if (ret < 0)
+ 		goto err_free_ei;
  
- static const struct btf_kfunc_id_set scx_kfunc_set_any = {
+-	sch->global_dsqs = kzalloc_objs(sch->global_dsqs[0], nr_node_ids);
+-	if (!sch->global_dsqs) {
++	sch->pnode = kzalloc_objs(sch->pnode[0], nr_node_ids);
++	if (!sch->pnode) {
+ 		ret = -ENOMEM;
+ 		goto err_free_hash;
+ 	}
+ 
+ 	for_each_node_state(node, N_POSSIBLE) {
+-		struct scx_dispatch_q *dsq;
++		struct scx_sched_pnode *pnode;
+ 
+-		dsq = kzalloc_node(sizeof(*dsq), GFP_KERNEL, node);
+-		if (!dsq) {
++		pnode = kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
++		if (!pnode) {
+ 			ret = -ENOMEM;
+-			goto err_free_gdsqs;
++			goto err_free_pnode;
+ 		}
+ 
+-		init_dsq(dsq, SCX_DSQ_GLOBAL, sch);
+-		sch->global_dsqs[node] = dsq;
++		init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
++		sch->pnode[node] = pnode;
+ 	}
+ 
+ 	sch->dsp_max_batch = ops->dispatch_max_batch ?: SCX_DSP_DFL_MAX_BATCH;
+@@ -5732,7 +5732,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 				   __alignof__(struct scx_sched_pcpu));
+ 	if (!sch->pcpu) {
+ 		ret = -ENOMEM;
+-		goto err_free_gdsqs;
++		goto err_free_pnode;
+ 	}
+ 
+ 	for_each_possible_cpu(cpu)
+@@ -5819,10 +5819,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 	kthread_destroy_worker(sch->helper);
+ err_free_pcpu:
+ 	free_percpu(sch->pcpu);
+-err_free_gdsqs:
++err_free_pnode:
+ 	for_each_node_state(node, N_POSSIBLE)
+-		kfree(sch->global_dsqs[node]);
+-	kfree(sch->global_dsqs);
++		kfree(sch->pnode[node]);
++	kfree(sch->pnode);
+ err_free_hash:
+ 	rhashtable_free_and_destroy(&sch->dsq_hash, NULL, NULL);
+ err_free_ei:
+diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+index 4cb97093b872..9e5ebd00ea0c 100644
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -975,6 +975,10 @@ struct scx_sched_pcpu {
+ 	struct scx_dsp_ctx	dsp_ctx;
+ };
+ 
++struct scx_sched_pnode {
++	struct scx_dispatch_q	global_dsq;
++};
++
+ struct scx_sched {
+ 	struct sched_ext_ops	ops;
+ 	DECLARE_BITMAP(has_op, SCX_OPI_END);
+@@ -988,7 +992,7 @@ struct scx_sched {
+ 	 * per-node split isn't sufficient, it can be further split.
+ 	 */
+ 	struct rhashtable	dsq_hash;
+-	struct scx_dispatch_q	**global_dsqs;
++	struct scx_sched_pnode	**pnode;
+ 	struct scx_sched_pcpu __percpu *pcpu;
+ 
+ 	u64			slice_dfl;
 -- 
 2.53.0
 
