@@ -1,63 +1,63 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2811837883D
-	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 21:06:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8464B492185
+	for <sched-ext@lists.linux.dev>; Fri,  6 Mar 2026 21:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772831165; cv=none; b=CI2ejlkeuokClUrDe6M/56TFnDBbfhzk0IRiw9O7E2iGQ2WNJm0PK+zIX4wZm8c96FKncWuyN2zrqgQpT7P4funQfFGUYpN9cAEFkzfEOZL5HwP+rcuxX2FoYCm1cRSmVdHR+8HlSL7nMDvsmXTcAWQv6tTjgAR5//7FIBjdvuc=
+	t=1772831361; cv=none; b=O9eCRPycglYnexuTuWOg6uvjoNmQL77Dz7lyLbVwmIhNL6kKwmEyqEwuUGel2xQmVdRtE8neGSK1v550TT/eu5X+QvISh/bvp4cJbkT2WKYh+XmWdOzijch50DR8IY8PonLHBhxMvHQSlVwJLhFUkSckn0U5E4PQ6zPxuId/RCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772831165; c=relaxed/simple;
-	bh=aKeJ+jYVnSc6aUnP88KbsRy2JyOR0iRgjAr+Ltsv00Y=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=t0J+0iHv61T5csDCxWUGUzQPrQ1L2of73Pfa6ITPO7ZybgDZcUM075m/M3w+DYRhujr551ZOSivty5uWcoJBZpeqgv5o2UXUSdfF60DbGBGSynx9p5r5yo/z0HSWUmqS7lISRna1pVyq2uXgcsmCmf/ckZalHFKZI9xWpGW8O54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=Dx0Up5ma; arc=none smtp.client-ip=209.85.160.181
+	s=arc-20240116; t=1772831361; c=relaxed/simple;
+	bh=JDdLDrRCDTZBKVmw3n5NK786r0Eg5MDC/uY74iYc2mo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=ZR7qsRX2v18oBTyCUbVnTsil7c5SxyzHAOmfiLP5ghr3dnD3NoQtf2h/AmCS1BnmZRJtudrIExjBn0fWlV3FoCq0vEx7qp8rJhoPLNvAHhm7NwvxdGARKMcwbJK+hGGNcuRx9IrxS2aiOJA3b52kcqbFmn9sm5bmxsttowv1j5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b=hzRTgLI5; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="Dx0Up5ma"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5069df1dea8so77162281cf.1
-        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 13:06:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20230601.gappssmtp.com header.i=@etsalapatis-com.20230601.gappssmtp.com header.b="hzRTgLI5"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-508fe217a44so4649421cf.2
+        for <sched-ext@lists.linux.dev>; Fri, 06 Mar 2026 13:09:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1772831163; x=1773435963; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=etsalapatis-com.20230601.gappssmtp.com; s=20230601; t=1772831355; x=1773436155; darn=lists.linux.dev;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=k8AhaB/v+2orrJY8LzngoycEWy1G/a6AEmgCr67UnpM=;
-        b=Dx0Up5ma5JTqaVVD/TO/e5RjWxHe4cKLqLq2gMTEySHHEHPjYxMXmoU02BLVncPO0h
-         WD8Xa5aZeaxrOzUSjUs77uydau512xn1hx8f0qL9BZo3T1EmWsjcPwrmHyFQrFMDzn39
-         xQJ3ivND2Hj8rWWLmfSCVCrx1EEKOsjYGnMeKx8SmHLPmOSCvuFQUqPND11HjQ40reJZ
-         XrixSQHCfdOyQ31Ke27cYFv346Gu6gq7foDuiJOeq6f3zC2SeSeQ0ZbOZYao+wLBQKle
-         8cyEmuZ6rpwhC5SbZL60iaN4oGgEacOohZMbbwU5xBNmVqQSZQZ6UMBa+udyvSiokbSH
-         DwBQ==
+        bh=D8PaeZhBJKFwWcc3eumfEq1eMgqmDoF5z6N5AUW84Qs=;
+        b=hzRTgLI5hP1q4yR3o5sFv8pddL6O7BBDZYN/zSLnLA6AEXe1Bf4Y6zxOfZUxCowKiz
+         O1M5cqezzgHDsDDOUgEx9aQ8TqWYJtDHEwVp4nzfv0vVmBFuFSUXMJUyJsCieT3BR4EA
+         tuBNhrvMNC4MmPZMKbrqwGid/FfrXZmVAmipBME1aYN2LTzkLu9t7kWO5grUNR7vLy8g
+         LsZzpiwO7Y2rNipTK+jxsMo8LzlI2yJdSsPuGJQk4P1qbtM3Q9g0C9yYFtwTv39qHQA9
+         mBX4/LqNceG2v4BR1+qboCRvK4OhQa9yXOpWFbGQJfXUPKHH1hUL/xLSElvaFKKWXnl6
+         Y/ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772831163; x=1773435963;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
+        d=1e100.net; s=20230601; t=1772831355; x=1773436155;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=k8AhaB/v+2orrJY8LzngoycEWy1G/a6AEmgCr67UnpM=;
-        b=P8454VurU389JOYExZZZBhtbjXz2+Cx0Cb+AXr3iDIzQk2NCvewW846pa1DZcuVFlc
-         4FFYCqpW19XY7c/7BatV21MLoN2vhn+HQwi9qym6dgkL5byjrc87ppezu7gHc6zkWV6P
-         WZQn4AhPjfhYM7ripPOpl5JHc0ZZBkyBkkK0jMMQP2aaSKEDNvxLC1ATKKg0hjLBKdr5
-         XrFDCVSJYMjda+uqhpRcLTH+DECzOw8p5Mr/G0AvHl1A0Cfaju2CeX2YyxCJySFzib2W
-         WzcT9PmCW8DUuYvbOvRQa+KpiG2Jg5zGPgSRh+ompG9noWbKXTAxuRVc0cvcwFvGIxOU
-         X6gQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXERwE3srZeqPk4uEkyDSfwivAxJZRT4c5r6fhhHSdIJIlnfruTc9/BTKU76YHP67wn8H9LIlvqvqA=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+QhKykOUYLToiyL9lHKeJ0vMiEsWIf1vwKRwyCpX39Y65G7x3
-	yWnRVL3/RZLM03WJcF7z7ij2/IcKUBWxOs8w9zBEmN03E72RSj5z8FX+8re5MqWiGho=
-X-Gm-Gg: ATEYQzyiE+OgIV6x2vAQVEc413BACTugyjc2KXg1aiK8FNGO8kccerJe8FtjrCNAty5
-	19R+//bzRlP9VvHlT2Mex4mZc/uMAz5hOkTv+4EpQHauJb/v7ZGrJdIS4l5e5n+IoXiZUPKeTUb
-	6CHgk4sT3/agPiQcEPsDExBOGoSVUd1HvLn/mHpbGSUEYpm88Xe2g2QobypK2kciXzbcbKhUn1S
-	xHLCiIjayHpulSSRH3VFVJCxhji8NTXuB7XICBWZHXvcBhmHTXW8U2MMDsVw9/MlNQ6Ewd2c5n2
-	B7yFYvfWsrlLKNpTUaOMoN1CpfC+jARZQ2c1/rbcErCa7yjz69rsL9L9q9jdhvignoKIV2N1Bvb
-	vdYmTndFQZ59T1MpJVp8zuJSswgSiSgnIjZ8XlmKiJ8aGzdlndo5FFcy5jZH7EyrTdMcvjQFy/8
-	HCye4rDyElU2tQq+vPJMMo6MM=
-X-Received: by 2002:a05:622a:1aa1:b0:4e8:baad:9875 with SMTP id d75a77b69052e-508f46c84a0mr48281651cf.4.1772831162900;
-        Fri, 06 Mar 2026 13:06:02 -0800 (PST)
+        bh=D8PaeZhBJKFwWcc3eumfEq1eMgqmDoF5z6N5AUW84Qs=;
+        b=n+dhC8HsL3mDq+gGgrQzXF0TO347vKNIqcsAzGVklbtIiiXdTNKbJZRS9XVzUa/bWW
+         LcC50R/dm2OsQzVXKnY/jfpdve+zvEui4xnMPk4VXqqx1bN6gS57xL2cqm56UhbEtcdY
+         W9gXOroNeMsFTarT7LE6/Kvf8BVlqqyI8lvEkkIlzAfVYX3PfuWNjvpVnmwIcZjdNOGs
+         3W7rYNRN31a7cFomH2T368tbsOBLTcKSzZ8F58q3MgLLyvWfZbSJImGoEMzQcVCjGSYg
+         lS0BGlmhAyhhEs/WlzdU0qhdk1kdtsc1KyAgVQ2RZu34ZDy+Oots2JF4+uFEiWD7U1U1
+         cGpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVCYFgG+c4KezNUX37iq7AJtE8dN7kacbZQEn9MMchgMlC/TW+G6vYP7fMLZjF0QO09l0xLqLMMa0k=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwXJxJa+DvZBZ5s24DS/UvFzkN8Xu1sj+5UFAHKDDHt5Id6bpEZ
+	jWy8b8N0nfEyZOhUryUs81EonKpMaJlpcQtB0sPr3toz97+leqJv8kEWSIEpF1rFEk0=
+X-Gm-Gg: ATEYQzw1sA4BTU0osxtHqeUXwxqePGdScgxrb7NWOm4w77OQtCyU27i65+ACGDTJY0T
+	mFFxQ9TUDMQ6STBTsd+bLGY+H52fNgCdP0ySiEQZQstu04KbEK9OUotsASmckzEh3LAR1W0V47U
+	eL1phcZlnkuKwqMD8EUYxmlqOoFDLvqRuofmLyvooeEtuuFuUdLNNFxqsexW4OWtxeWmEVlE8wp
+	RaRXLs64w6Op6ZegQlY6WKOu7tI57M8AmDamn3HtaETJ3ugOKHvTXbmhj/dU9ETB1LEiHVJjL4l
+	sP9dmaGI0Z25gnRuAfQn5h7SpZcnmZc2Wb5POSz6TANQQ/eEBgyfd90VWMtxg44imAEstiHI7dV
+	0xr86ysVaVBcJwlwx3Tr4m+iGTcHaoLV7J56FM2kgDihnp7KPE7j/5+9PJ+hnglopldpOxxKR9O
+	+pEkS4WwCU+oEQuvoEhf1IP60=
+X-Received: by 2002:a05:622a:1ba3:b0:504:3c8f:f9bf with SMTP id d75a77b69052e-508f49697c4mr45505741cf.74.1772831355211;
+        Fri, 06 Mar 2026 13:09:15 -0800 (PST)
 Received: from localhost ([140.174.219.137])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-508f6695738sm20402271cf.16.2026.03.06.13.06.02
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a316da913sm24965146d6.29.2026.03.06.13.09.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2026 13:06:02 -0800 (PST)
+        Fri, 06 Mar 2026 13:09:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,24 +66,26 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 06 Mar 2026 16:06:01 -0500
-Message-Id: <DGW0747O0XMX.1ORTAC5SUVU6Z@etsalapatis.com>
-Cc: <void@manifault.com>, <arighi@nvidia.com>, <changwoo@igalia.com>
-Subject: Re: [PATCH 04/15] sched_ext: Change find_global_dsq() to take CPU
- number instead of task
-From: "Emil Tsalapatis" <emil@etsalapatis.com>
+Date: Fri, 06 Mar 2026 16:09:13 -0500
+Message-Id: <DGW09KIXQWOQ.1ZY3NV5EJO62S@etsalapatis.com>
 To: "Tejun Heo" <tj@kernel.org>, <linux-kernel@vger.kernel.org>,
  <sched-ext@lists.linux.dev>
+Cc: <void@manifault.com>, <arighi@nvidia.com>, <changwoo@igalia.com>
+Subject: Re: [PATCH 05/15] sched_ext: Relocate reenq_local() and
+ run_deferred()
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
 X-Mailer: aerc 0.20.1
 References: <20260306190623.1076074-1-tj@kernel.org>
- <20260306190623.1076074-5-tj@kernel.org>
-In-Reply-To: <20260306190623.1076074-5-tj@kernel.org>
+ <20260306190623.1076074-6-tj@kernel.org>
+In-Reply-To: <20260306190623.1076074-6-tj@kernel.org>
 
 On Fri Mar 6, 2026 at 2:06 PM EST, Tejun Heo wrote:
-> Change find_global_dsq() to take a CPU number directly instead of a task
-> pointer. This prepares for callers where the CPU is available but the tas=
-k is
-> not.
+> Previously, both process_ddsp_deferred_locals() and reenq_local() require=
+d
+> forward declarations. Reorganize so that only run_deferred() needs to be
+> declared. This reduces forward declaration clutter and will ease adding m=
+ore
+> to the run_deferred() path.
 >
 > No functional changes.
 >
@@ -92,150 +94,183 @@ k is
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
 > ---
->  kernel/sched/ext.c | 32 +++++++++++++++-----------------
->  1 file changed, 15 insertions(+), 17 deletions(-)
+>  kernel/sched/ext.c | 132 ++++++++++++++++++++++-----------------------
+>  1 file changed, 65 insertions(+), 67 deletions(-)
 >
 > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index c36d399bca3e..c44893878878 100644
+> index c44893878878..1b6cd1e4f8b9 100644
 > --- a/kernel/sched/ext.c
 > +++ b/kernel/sched/ext.c
-> @@ -341,10 +341,9 @@ static bool scx_is_descendant(struct scx_sched *sch,=
- struct scx_sched *ancestor)
->  	for ((pos) =3D scx_next_descendant_pre(NULL, (root)); (pos);		\
->  	     (pos) =3D scx_next_descendant_pre((pos), (root)))
+> @@ -193,9 +193,8 @@ MODULE_PARM_DESC(bypass_lb_intv_us, "bypass load bala=
+nce interval in microsecond
+>  #define CREATE_TRACE_POINTS
+>  #include <trace/events/sched_ext.h>
 > =20
-> -static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch,
-> -					      struct task_struct *p)
-> +static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch, s32=
- tcpu)
-
-Nit: Maybe rename tcpu to cpu? It's only a task's CPU because we currently =
-use it
-that way, and the name is no longer obvious.
-
->  {
-> -	return &sch->pnode[cpu_to_node(task_cpu(p))]->global_dsq;
-> +	return &sch->pnode[cpu_to_node(tcpu)]->global_dsq;
+> -static void process_ddsp_deferred_locals(struct rq *rq);
+> +static void run_deferred(struct rq *rq);
+>  static bool task_dead_and_done(struct task_struct *p);
+> -static u32 reenq_local(struct scx_sched *sch, struct rq *rq);
+>  static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
+>  static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind);
+>  static bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
+> @@ -1003,23 +1002,6 @@ static int ops_sanitize_err(struct scx_sched *sch,=
+ const char *ops_name, s32 err
+>  	return -EPROTO;
 >  }
 > =20
->  static struct scx_dispatch_q *find_user_dsq(struct scx_sched *sch, u64 d=
-sq_id)
-> @@ -1266,7 +1265,7 @@ static void dispatch_enqueue(struct scx_sched *sch,=
- struct rq *rq,
->  			scx_error(sch, "attempting to dispatch to a destroyed dsq");
->  			/* fall back to the global dsq */
->  			raw_spin_unlock(&dsq->lock);
-> -			dsq =3D find_global_dsq(sch, p);
-> +			dsq =3D find_global_dsq(sch, task_cpu(p));
->  			raw_spin_lock(&dsq->lock);
->  		}
->  	}
-> @@ -1474,7 +1473,7 @@ static void dispatch_dequeue_locked(struct task_str=
-uct *p,
-> =20
->  static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sc=
-h,
->  						    struct rq *rq, u64 dsq_id,
-> -						    struct task_struct *p)
-> +						    s32 tcpu)
+> -static void run_deferred(struct rq *rq)
+> -{
+> -	process_ddsp_deferred_locals(rq);
+> -
+> -	if (!llist_empty(&rq->scx.deferred_reenq_locals)) {
+> -		struct llist_node *llist =3D
+> -			llist_del_all(&rq->scx.deferred_reenq_locals);
+> -		struct scx_sched_pcpu *pos, *next;
+> -
+> -		llist_for_each_entry_safe(pos, next, llist,
+> -					  deferred_reenq_locals_node) {
+> -			init_llist_node(&pos->deferred_reenq_locals_node);
+> -			reenq_local(pos->sch, rq);
+> -		}
+> -	}
+> -}
+> -
+>  static void deferred_bal_cb_workfn(struct rq *rq)
 >  {
->  	struct scx_dispatch_q *dsq;
+>  	run_deferred(rq);
+> @@ -3072,7 +3054,6 @@ static void rq_offline_scx(struct rq *rq)
+>  	rq->scx.flags &=3D ~SCX_RQ_ONLINE;
+>  }
 > =20
-> @@ -1485,20 +1484,19 @@ static struct scx_dispatch_q *find_dsq_for_dispat=
-ch(struct scx_sched *sch,
->  		s32 cpu =3D dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
-> =20
->  		if (!ops_cpu_valid(sch, cpu, "in SCX_DSQ_LOCAL_ON dispatch verdict"))
-> -			return find_global_dsq(sch, p);
-> +			return find_global_dsq(sch, tcpu);
-> =20
->  		return &cpu_rq(cpu)->scx.local_dsq;
->  	}
-> =20
->  	if (dsq_id =3D=3D SCX_DSQ_GLOBAL)
-> -		dsq =3D find_global_dsq(sch, p);
-> +		dsq =3D find_global_dsq(sch, tcpu);
->  	else
->  		dsq =3D find_user_dsq(sch, dsq_id);
-> =20
->  	if (unlikely(!dsq)) {
-> -		scx_error(sch, "non-existent DSQ 0x%llx for %s[%d]",
-> -			  dsq_id, p->comm, p->pid);
-> -		return find_global_dsq(sch, p);
-> +		scx_error(sch, "non-existent DSQ 0x%llx", dsq_id);
-> +		return find_global_dsq(sch, tcpu);
->  	}
-> =20
->  	return dsq;
-> @@ -1540,7 +1538,7 @@ static void direct_dispatch(struct scx_sched *sch, =
-struct task_struct *p,
+> -
+>  static bool check_rq_for_timeouts(struct rq *rq)
 >  {
->  	struct rq *rq =3D task_rq(p);
->  	struct scx_dispatch_q *dsq =3D
-> -		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
-> +		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, task_cpu(p));
+>  	struct scx_sched *sch;
+> @@ -3612,6 +3593,70 @@ int scx_check_setscheduler(struct task_struct *p, =
+int policy)
+>  	return 0;
+>  }
 > =20
->  	touch_core_sched_dispatch(rq, p);
+> +static u32 reenq_local(struct scx_sched *sch, struct rq *rq)
+> +{
+> +	LIST_HEAD(tasks);
+> +	u32 nr_enqueued =3D 0;
+> +	struct task_struct *p, *n;
+> +
+> +	lockdep_assert_rq_held(rq);
+> +
+> +	/*
+> +	 * The BPF scheduler may choose to dispatch tasks back to
+> +	 * @rq->scx.local_dsq. Move all candidate tasks off to a private list
+> +	 * first to avoid processing the same tasks repeatedly.
+> +	 */
+> +	list_for_each_entry_safe(p, n, &rq->scx.local_dsq.list,
+> +				 scx.dsq_list.node) {
+> +		struct scx_sched *task_sch =3D scx_task_sched(p);
+> +
+> +		/*
+> +		 * If @p is being migrated, @p's current CPU may not agree with
+> +		 * its allowed CPUs and the migration_cpu_stop is about to
+> +		 * deactivate and re-activate @p anyway. Skip re-enqueueing.
+> +		 *
+> +		 * While racing sched property changes may also dequeue and
+> +		 * re-enqueue a migrating task while its current CPU and allowed
+> +		 * CPUs disagree, they use %ENQUEUE_RESTORE which is bypassed to
+> +		 * the current local DSQ for running tasks and thus are not
+> +		 * visible to the BPF scheduler.
+> +		 */
+> +		if (p->migration_pending)
+> +			continue;
+> +
+> +		if (!scx_is_descendant(task_sch, sch))
+> +			continue;
+> +
+> +		dispatch_dequeue(rq, p);
+> +		list_add_tail(&p->scx.dsq_list.node, &tasks);
+> +	}
+> +
+> +	list_for_each_entry_safe(p, n, &tasks, scx.dsq_list.node) {
+> +		list_del_init(&p->scx.dsq_list.node);
+> +		do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+> +		nr_enqueued++;
+> +	}
+> +
+> +	return nr_enqueued;
+> +}
+> +
+> +static void run_deferred(struct rq *rq)
+> +{
+> +	process_ddsp_deferred_locals(rq);
+> +
+> +	if (!llist_empty(&rq->scx.deferred_reenq_locals)) {
+> +		struct llist_node *llist =3D
+> +			llist_del_all(&rq->scx.deferred_reenq_locals);
+> +		struct scx_sched_pcpu *pos, *next;
+> +
+> +		llist_for_each_entry_safe(pos, next, llist,
+> +					  deferred_reenq_locals_node) {
+> +			init_llist_node(&pos->deferred_reenq_locals_node);
+> +			reenq_local(pos->sch, rq);
+> +		}
+> +	}
+> +}
+> +
+>  #ifdef CONFIG_NO_HZ_FULL
+>  bool scx_can_stop_tick(struct rq *rq)
+>  {
+> @@ -7702,53 +7747,6 @@ static const struct btf_kfunc_id_set scx_kfunc_set=
+_dispatch =3D {
+>  	.set			=3D &scx_kfunc_ids_dispatch,
+>  };
 > =20
-> @@ -1683,7 +1681,7 @@ static void do_enqueue_task(struct rq *rq, struct t=
-ask_struct *p, u64 enq_flags,
->  	dsq =3D &rq->scx.local_dsq;
->  	goto enqueue;
->  global:
-> -	dsq =3D find_global_dsq(sch, p);
-> +	dsq =3D find_global_dsq(sch, task_cpu(p));
->  	goto enqueue;
->  bypass:
->  	dsq =3D bypass_enq_target_dsq(sch, task_cpu(p));
-> @@ -2140,7 +2138,7 @@ static struct rq *move_task_between_dsqs(struct scx=
-_sched *sch,
->  		dst_rq =3D container_of(dst_dsq, struct rq, scx.local_dsq);
->  		if (src_rq !=3D dst_rq &&
->  		    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
-> -			dst_dsq =3D find_global_dsq(sch, p);
-> +			dst_dsq =3D find_global_dsq(sch, task_cpu(p));
->  			dst_rq =3D src_rq;
->  		}
->  	} else {
-> @@ -2269,7 +2267,7 @@ static void dispatch_to_local_dsq(struct scx_sched =
-*sch, struct rq *rq,
+> -static u32 reenq_local(struct scx_sched *sch, struct rq *rq)
+> -{
+> -	LIST_HEAD(tasks);
+> -	u32 nr_enqueued =3D 0;
+> -	struct task_struct *p, *n;
+> -
+> -	lockdep_assert_rq_held(rq);
+> -
+> -	/*
+> -	 * The BPF scheduler may choose to dispatch tasks back to
+> -	 * @rq->scx.local_dsq. Move all candidate tasks off to a private list
+> -	 * first to avoid processing the same tasks repeatedly.
+> -	 */
+> -	list_for_each_entry_safe(p, n, &rq->scx.local_dsq.list,
+> -				 scx.dsq_list.node) {
+> -		struct scx_sched *task_sch =3D scx_task_sched(p);
+> -
+> -		/*
+> -		 * If @p is being migrated, @p's current CPU may not agree with
+> -		 * its allowed CPUs and the migration_cpu_stop is about to
+> -		 * deactivate and re-activate @p anyway. Skip re-enqueueing.
+> -		 *
+> -		 * While racing sched property changes may also dequeue and
+> -		 * re-enqueue a migrating task while its current CPU and allowed
+> -		 * CPUs disagree, they use %ENQUEUE_RESTORE which is bypassed to
+> -		 * the current local DSQ for running tasks and thus are not
+> -		 * visible to the BPF scheduler.
+> -		 */
+> -		if (p->migration_pending)
+> -			continue;
+> -
+> -		if (!scx_is_descendant(task_sch, sch))
+> -			continue;
+> -
+> -		dispatch_dequeue(rq, p);
+> -		list_add_tail(&p->scx.dsq_list.node, &tasks);
+> -	}
+> -
+> -	list_for_each_entry_safe(p, n, &tasks, scx.dsq_list.node) {
+> -		list_del_init(&p->scx.dsq_list.node);
+> -		do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+> -		nr_enqueued++;
+> -	}
+> -
+> -	return nr_enqueued;
+> -}
+> -
+>  __bpf_kfunc_start_defs();
 > =20
->  	if (src_rq !=3D dst_rq &&
->  	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
-> -		dispatch_enqueue(sch, rq, find_global_dsq(sch, p), p,
-> +		dispatch_enqueue(sch, rq, find_global_dsq(sch, task_cpu(p)), p,
->  				 enq_flags | SCX_ENQ_CLEAR_OPSS);
->  		return;
->  	}
-> @@ -2407,7 +2405,7 @@ static void finish_dispatch(struct scx_sched *sch, =
-struct rq *rq,
-> =20
->  	BUG_ON(!(p->scx.flags & SCX_TASK_QUEUED));
-> =20
-> -	dsq =3D find_dsq_for_dispatch(sch, this_rq(), dsq_id, p);
-> +	dsq =3D find_dsq_for_dispatch(sch, this_rq(), dsq_id, task_cpu(p));
-> =20
->  	if (dsq->id =3D=3D SCX_DSQ_LOCAL)
->  		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
-> @@ -2647,7 +2645,7 @@ static void process_ddsp_deferred_locals(struct rq =
-*rq)
-> =20
->  		list_del_init(&p->scx.dsq_list.node);
-> =20
-> -		dsq =3D find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
-> +		dsq =3D find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, task_cpu(p)=
-);
->  		if (!WARN_ON_ONCE(dsq->id !=3D SCX_DSQ_LOCAL))
->  			dispatch_to_local_dsq(sch, rq, dsq, p,
->  					      p->scx.ddsp_enq_flags);
-> @@ -7410,7 +7408,7 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_ke=
-rn *kit,
->  	}
-> =20
->  	/* @p is still on $src_dsq and stable, determine the destination */
-> -	dst_dsq =3D find_dsq_for_dispatch(sch, this_rq, dsq_id, p);
-> +	dst_dsq =3D find_dsq_for_dispatch(sch, this_rq, dsq_id, task_cpu(p));
-> =20
->  	/*
->  	 * Apply vtime and slice updates before moving so that the new time is
+>  /**
 
