@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D318D40F8DA;
-	Fri,  6 Mar 2026 19:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC881421A10;
+	Fri,  6 Mar 2026 19:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823986; cv=none; b=WDNsVrwREQ/UktJce9v1oOJlxxkh67P3VotB4cVDTY/wVTCGRZKcGe4TODuyZDvQ1Y5HhRnyhq6Zgs/AbTeh0tStkDaFRh46YY5//6YTI9WPX/fz/oCFsm8HmVjWABHSWS36qACnUrbjgzVGWjh+dJv/mF0edSIHLDDBdAQl8us=
+	t=1772823987; cv=none; b=i72cosWKZay5Pkf06qXCYKKYgdui3ElB6G2TN6YtGMT8uYZhVcgTOQJQb1bN96j2lj751OYf+ZE7fxnh8STtmV6ZNJ//FOJOENEPmvIVBwua+6Tl7PXYR5p/HGo39z+jhD6jAW9bkKXftru2P22qy+Z5BZxCcNP+FmyKPK4zcqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823986; c=relaxed/simple;
-	bh=MzwsQHLvwckxw+G1+vOzyuuoFe6/vw3VO/Ld23sHi/M=;
+	s=arc-20240116; t=1772823987; c=relaxed/simple;
+	bh=6TnyFirkOesEQ8Nbpy8yR4CrpapX+9/ceE1KbOPQ1gQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsf14PAi4NqId3JsBNDwtcCIVnW5A/VpOkBLcxBfGaftiy2RfnF5YN+kGftqd9E0UqhnYdPfelp6c65TWCEv234BdpNQRiMGbnXBiWuKT08gAcdyCCNJcUOzDlqNNXJ8qt8HJvjtlv9RA9xwlJqXQyR5pypiJRFJJEHPpVQfqtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kZQW9I2c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4+gIO1FTOg+mWN+QpmOxWQmvR8L6Y5uxHAeiWt077B9ObmvhAR63M7PAwmb79R13qlZ+kwBITLRLs6vjCqVCAJgdyHUFeh9sjhPrYTPqG2kn0EOrAdBDQb0n9DHvVSCk2unshbcGUVVoCcMCE0S2NQhDYGMMUIQzJukXmo8LLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MyTfnYk7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kZQW9I2c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B78DC4CEF7;
-	Fri,  6 Mar 2026 19:06:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MyTfnYk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77887C4CEF7;
+	Fri,  6 Mar 2026 19:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772823986;
-	bh=MzwsQHLvwckxw+G1+vOzyuuoFe6/vw3VO/Ld23sHi/M=;
+	s=k20201202; t=1772823987;
+	bh=6TnyFirkOesEQ8Nbpy8yR4CrpapX+9/ceE1KbOPQ1gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZQW9I2coebozjDUghVPAHuR2y7vNOQy0SwE0rRUpDTbUg2RO/l6v0UeNTMzSK9BD
-	 9X8Xyph1NBwnng8E6GoYe75OLR9HXRd5Hwa7jBiuhU+e/9vIuIr5ADxfRnEpiGu1FV
-	 qyTPcyJWmQVW33BOlSrXRAPro9qdIKAzMaz/ftZj0VigwfK7lrp1g0+IpgEH3OpAmL
-	 cFlKD4EcQ7g5avStbrKm5zQFAKGcRzNZzIBHDc12Jj9zJfoXbNZMk0201MmvbqztBq
-	 lIv59ytcKu+3mlc4ZMgJZfz4vDYlleULstAPHAusQhwuglQR5SVEKegZ1OM6//p8S+
-	 eLXirk3G/N4zA==
+	b=MyTfnYk7gIilmaIkG2xU1O5lsM3f0HOQpPEYpp/SD1CIL6VMWPwVIaN9Xa7u2lKNU
+	 +/HIOT+UT9VDn9M48tfzigGbllMfWTfWqS97MRKoH0ORvrxvSSW4VgHmCiA4/cK5Km
+	 XIyb4E1Yf6GbfS1CAdN+T6relsC2PWmUK/I0tkxhfKMfLRp/6CRgl4+DN7gB/jYmWk
+	 n+qP7cjvoCIq00rTXJUYT5naeIzh5JG/qYwuHkXsdMR7f0Y6GRUTNIYkfK4BVevZZF
+	 zrY7Wq1tWX2aC3CfT9dFeyZapjpMQwE1E4aLo0nEEtOsLVU8Fozhi4Ih3wI7H2thZZ
+	 ZYPoe6Pvv3oBA==
 From: Tejun Heo <tj@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
@@ -34,9 +34,9 @@ Cc: void@manifault.com,
 	changwoo@igalia.com,
 	emil@etsalapatis.com,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 02/15] sched_ext: Wrap global DSQs in per-node structure
-Date: Fri,  6 Mar 2026 09:06:10 -1000
-Message-ID: <20260306190623.1076074-3-tj@kernel.org>
+Subject: [PATCH 03/15] sched_ext: Factor out pnode allocation and deallocation into helpers
+Date: Fri,  6 Mar 2026 09:06:11 -1000
+Message-ID: <20260306190623.1076074-4-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260306190623.1076074-1-tj@kernel.org>
 References: <20260306190623.1076074-1-tj@kernel.org>
@@ -48,130 +48,91 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Global DSQs are currently stored as an array of scx_dispatch_q pointers,
-one per NUMA node. To allow adding more per-node data structures, wrap the
-global DSQ in scx_sched_pnode and replace global_dsqs with pnode array.
+Extract pnode allocation and deallocation logic into alloc_pnode() and
+free_pnode() helpers. This simplifies scx_alloc_and_add_sched() and prepares
+for adding more per-node initialization and cleanup in subsequent patches.
 
-NUMA-aware allocation is maintained. No functional changes.
+No functional changes.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c          | 32 ++++++++++++++++----------------
- kernel/sched/ext_internal.h |  6 +++++-
- 2 files changed, 21 insertions(+), 17 deletions(-)
+ kernel/sched/ext.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index fe222df1d494..9232abea4f22 100644
+index 9232abea4f22..c36d399bca3e 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -344,7 +344,7 @@ static bool scx_is_descendant(struct scx_sched *sch, struct scx_sched *ancestor)
- static struct scx_dispatch_q *find_global_dsq(struct scx_sched *sch,
- 					      struct task_struct *p)
- {
--	return sch->global_dsqs[cpu_to_node(task_cpu(p))];
-+	return &sch->pnode[cpu_to_node(task_cpu(p))]->global_dsq;
- }
+@@ -4114,6 +4114,7 @@ static const struct attribute_group scx_global_attr_group = {
+ 	.attrs = scx_global_attrs,
+ };
  
- static struct scx_dispatch_q *find_user_dsq(struct scx_sched *sch, u64 dsq_id)
-@@ -2229,7 +2229,7 @@ static bool consume_global_dsq(struct scx_sched *sch, struct rq *rq)
- {
- 	int node = cpu_to_node(cpu_of(rq));
++static void free_pnode(struct scx_sched_pnode *pnode);
+ static void free_exit_info(struct scx_exit_info *ei);
  
--	return consume_dispatch_q(sch, rq, sch->global_dsqs[node]);
-+	return consume_dispatch_q(sch, rq, &sch->pnode[node]->global_dsq);
- }
- 
- /**
-@@ -4148,8 +4148,8 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ static void scx_sched_free_rcu_work(struct work_struct *work)
+@@ -4148,7 +4149,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
  	free_percpu(sch->pcpu);
  
  	for_each_node_state(node, N_POSSIBLE)
--		kfree(sch->global_dsqs[node]);
--	kfree(sch->global_dsqs);
-+		kfree(sch->pnode[node]);
-+	kfree(sch->pnode);
+-		kfree(sch->pnode[node]);
++		free_pnode(sch->pnode[node]);
+ 	kfree(sch->pnode);
  
  	rhashtable_walk_enter(&sch->dsq_hash, &rht_iter);
- 	do {
-@@ -5707,23 +5707,23 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 	if (ret < 0)
- 		goto err_free_ei;
+@@ -5685,6 +5686,24 @@ static int alloc_kick_syncs(void)
+ 	return 0;
+ }
  
--	sch->global_dsqs = kzalloc_objs(sch->global_dsqs[0], nr_node_ids);
--	if (!sch->global_dsqs) {
-+	sch->pnode = kzalloc_objs(sch->pnode[0], nr_node_ids);
-+	if (!sch->pnode) {
- 		ret = -ENOMEM;
- 		goto err_free_hash;
++static void free_pnode(struct scx_sched_pnode *pnode)
++{
++	kfree(pnode);
++}
++
++static struct scx_sched_pnode *alloc_pnode(struct scx_sched *sch, int node)
++{
++	struct scx_sched_pnode *pnode;
++
++	pnode = kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
++	if (!pnode)
++		return NULL;
++
++	init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
++
++	return pnode;
++}
++
+ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 						 struct cgroup *cgrp,
+ 						 struct scx_sched *parent)
+@@ -5714,16 +5733,11 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
  	}
  
  	for_each_node_state(node, N_POSSIBLE) {
--		struct scx_dispatch_q *dsq;
-+		struct scx_sched_pnode *pnode;
- 
--		dsq = kzalloc_node(sizeof(*dsq), GFP_KERNEL, node);
--		if (!dsq) {
-+		pnode = kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
-+		if (!pnode) {
+-		struct scx_sched_pnode *pnode;
+-
+-		pnode = kzalloc_node(sizeof(*pnode), GFP_KERNEL, node);
+-		if (!pnode) {
++		sch->pnode[node] = alloc_pnode(sch, node);
++		if (!sch->pnode[node]) {
  			ret = -ENOMEM;
--			goto err_free_gdsqs;
-+			goto err_free_pnode;
+ 			goto err_free_pnode;
  		}
- 
--		init_dsq(dsq, SCX_DSQ_GLOBAL, sch);
--		sch->global_dsqs[node] = dsq;
-+		init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
-+		sch->pnode[node] = pnode;
+-
+-		init_dsq(&pnode->global_dsq, SCX_DSQ_GLOBAL, sch);
+-		sch->pnode[node] = pnode;
  	}
  
  	sch->dsp_max_batch = ops->dispatch_max_batch ?: SCX_DSP_DFL_MAX_BATCH;
-@@ -5732,7 +5732,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 				   __alignof__(struct scx_sched_pcpu));
- 	if (!sch->pcpu) {
- 		ret = -ENOMEM;
--		goto err_free_gdsqs;
-+		goto err_free_pnode;
- 	}
- 
- 	for_each_possible_cpu(cpu)
-@@ -5819,10 +5819,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 	kthread_destroy_worker(sch->helper);
- err_free_pcpu:
+@@ -5821,7 +5835,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
  	free_percpu(sch->pcpu);
--err_free_gdsqs:
-+err_free_pnode:
+ err_free_pnode:
  	for_each_node_state(node, N_POSSIBLE)
--		kfree(sch->global_dsqs[node]);
--	kfree(sch->global_dsqs);
-+		kfree(sch->pnode[node]);
-+	kfree(sch->pnode);
+-		kfree(sch->pnode[node]);
++		free_pnode(sch->pnode[node]);
+ 	kfree(sch->pnode);
  err_free_hash:
  	rhashtable_free_and_destroy(&sch->dsq_hash, NULL, NULL);
- err_free_ei:
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 4cb97093b872..9e5ebd00ea0c 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -975,6 +975,10 @@ struct scx_sched_pcpu {
- 	struct scx_dsp_ctx	dsp_ctx;
- };
- 
-+struct scx_sched_pnode {
-+	struct scx_dispatch_q	global_dsq;
-+};
-+
- struct scx_sched {
- 	struct sched_ext_ops	ops;
- 	DECLARE_BITMAP(has_op, SCX_OPI_END);
-@@ -988,7 +992,7 @@ struct scx_sched {
- 	 * per-node split isn't sufficient, it can be further split.
- 	 */
- 	struct rhashtable	dsq_hash;
--	struct scx_dispatch_q	**global_dsqs;
-+	struct scx_sched_pnode	**pnode;
- 	struct scx_sched_pcpu __percpu *pcpu;
- 
- 	u64			slice_dfl;
 -- 
 2.53.0
 
