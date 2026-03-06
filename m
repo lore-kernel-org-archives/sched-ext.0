@@ -1,128 +1,69 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA87274B44;
-	Fri,  6 Mar 2026 07:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4773793D9;
+	Fri,  6 Mar 2026 08:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772782336; cv=none; b=rj3wx5uJRqWTZCsdPslIQ8Dt/3f5Jqg3aFfrvIjfkaLoITPyDsluQLr3mbWLbG3PIhh3Y628WV4VPeZPbAliEjURKDgnrLZwltPeaiyKmD3xYVDU0NFO3ohUWczN7sZoX+2pZZyaniYmcEOHWVF0YJjjBIZ3JbQGIBPKnnoTxu0=
+	t=1772786685; cv=none; b=n6GNjnwnnTXWjojJCmqHY+68H1zK0bGwLhtUBtPgbY7e8viUBJQRZVSnPRyUrtexPLbJWOYcM7/4fvEKAB2tuScbDiedB9rQfq6KTGgtYNpaE3c3ugKnjrBxe4v7FQu5v8bjkzqjKKJjJ41KDX/0DOXwhgh9p/tOpLsWDEJ7i9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772782336; c=relaxed/simple;
-	bh=nq+gKYvBVh8CCQrMZgS/17fJgAVyRB5bfKBSmYEnThg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieD6Eyto/BLqGjC19NQTmot4YoNTmC9BlEooEexm9MKP7STR1lqoTyzNdbsa4Pg3vcKcGVs96TBrZ2uW8VLVB9M0Jo8OcxJwhHa7S6HYVaGxRnPE2oJUxDXfUM3EiSwoR6BzWVW2ClFLRnLQS3l2P+Z99Fnrj8vsEKTGeDyHx0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=F9sriAIO; arc=none smtp.client-ip=117.135.210.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+	s=arc-20240116; t=1772786685; c=relaxed/simple;
+	bh=UKXon3C/tgvufjmbdWUMDdJFTxHC7o4JDKPJyCf/Dqg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fSmF356/6RaG24OJsE8fpbz6cXpdNreQTN52Ohdo8Fqcq847eoYdPazOdlaqsQ/f9JuIVcazJJ8UPc9uMtd/Keae2XYZWhXxQl4OmE7UMLvrndXsp536QcsBMPQXhxSnaks9vZvdhP7H8yYfw9NuDtIPjmgLWzHNjlZS49gE020=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=P17dfvTg; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="F9sriAIO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=kL
-	9pzxcbWCJ7nrsEz3VRw6n72+rSbWAhFJ7F+/FBEcM=; b=F9sriAIO8bZ9Yz1d/7
-	yl2lVfR0kHbceIx3yf8ObTuMQgdJPWHD7wSUUdUEQaMqZZTjc6F9AuCX9bzf7UzW
-	BCqoClCBj8Rsb12Pqf7IwNt5OkSyTeHfuShIxZe/iLzum3m/01I9eDNzumVjB7Jv
-	Qg/l56K8csOJnR5mprOA8rrns=
-Received: from localhost.localdomain (unknown [])
-	by gzsmtp4 (Coremail) with SMTP id PykvCgCHt9PNgqppuc55BQ--.55212S3;
-	Fri, 06 Mar 2026 15:31:26 +0800 (CST)
-From: Zhao Mengmeng <zhaomzhao@126.com>
-To: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	nathan@kernel.org,
-	nick.desaulniers+lkml@gmail.com,
-	morbo@google.com,
-	justinstitt@google.com,
-	emil@etsalapatis.com
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	llvm@lists.linux.dev,
-	zhaomengmeng@kylinos.cn
-Subject: [PATCH 1/3] sched_ext: remove SCX_OPS_HAS_CGROUP_WEIGHT
-Date: Fri,  6 Mar 2026 15:31:08 +0800
-Message-ID: <20260306073110.229595-2-zhaomzhao@126.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260306073110.229595-1-zhaomzhao@126.com>
-References: <20260306073110.229595-1-zhaomzhao@126.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="P17dfvTg"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=siH8Uay9rsvHZNsURap947AWEgilUL6NWi85Y5ZuyPc=; b=P17dfvTgRXOiD5/5qC2CHu81XX
+	BtZpT9+cINQRo30zt4IE8oRgE1jLyB9qATWCOJaL7uXTJWVqJK7MM4zxo2tr7TsTJSgSt/DrgsVly
+	sx0zr1lOB5xSYkKcr4Sy/pUBX45QAoAXcItef6XB6HFdzIBlmtB2I1PGp0f8zGldvQCiQX5cY8knX
+	czEM0SKriISMHdNivT1vx1BzL+0XBYVL23tz6LZvhPFoo6eLE7/RKQ1nT3arwWKFS0/7CfHxGuO17
+	VNzxnzrXuiE/Bo42wJJWHJ5gMqchTZ9818yZHTn7kGYtec7BJpF1v/HOAJm4qNd744yMIebf/GAjj
+	YzC/E6ag==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1vyQnX-0000000GPk8-2Y7z;
+	Fri, 06 Mar 2026 08:44:39 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id E2BF430316A; Fri, 06 Mar 2026 09:44:32 +0100 (CET)
+Date: Fri, 6 Mar 2026 09:44:32 +0100
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	Ingo Molnar <mingo@redhat.com>, void@manifault.com,
+	arighi@nvidia.com, changwoo@igalia.com, emil@etsalapatis.com
+Subject: Re: [PATCH 03/34] sched/core: Swap the order between
+ sched_post_fork() and cgroup_post_fork()
+Message-ID: <20260306084432.GS1282955@noisy.programming.kicks-ass.net>
+References: <20260304220119.4095551-1-tj@kernel.org>
+ <20260304220119.4095551-4-tj@kernel.org>
+ <9785874e854a32bcd0e393e06357b81e@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PykvCgCHt9PNgqppuc55BQ--.55212S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Ary3ZF1rCry8Aw43Cw1rZwb_yoW8KFW7pF
-	4DuF48tr17try7Ga18ua1vgFyUW3y3Gw42gFWDXr4S9r4kKr1aqwn8tr43ZryYgayrZF4f
-	GF4qka47Gw1UWFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U3ManUUUUU=
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlw7YUGmqgs4FlwAA3M
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9785874e854a32bcd0e393e06357b81e@kernel.org>
 
-From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+On Thu, Mar 05, 2026 at 06:17:30PM -1000, Tejun Heo wrote:
+> Hello, Peter,
+> 
+> How do you want to route this patch? I can take it through sched_ext tree
+> if that works for you, or you can pick it up on the sched/core side. Please
+> let me know.
 
-While running scx_flatcg, dmesg prints "SCX_OPS_HAS_CGROUP_WEIGHT is
-deprecated and a noop", in code, SCX_OPS_HAS_CGROUP_WEIGHT has been
-marked as DEPRECATED, and will be removed on 6.18. Now it's time to do it.
+It seems part of this larger patch set (that I've not seen in its
+entirety), and its mostly about fork.c where I don't foresee significant
+merge conflicts, so it might be best if you just keep the lot together
+and take it through the sched_ext tree.
 
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
----
- kernel/sched/ext.c               | 3 ---
- kernel/sched/ext_internal.h      | 8 +-------
- tools/sched_ext/scx_flatcg.bpf.c | 2 +-
- 3 files changed, 2 insertions(+), 11 deletions(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b9247c9f0430..fd83af17d46d 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5062,9 +5062,6 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
- 		return -EINVAL;
- 	}
- 
--	if (ops->flags & SCX_OPS_HAS_CGROUP_WEIGHT)
--		pr_warn("SCX_OPS_HAS_CGROUP_WEIGHT is deprecated and a noop\n");
--
- 	if (ops->cpu_acquire || ops->cpu_release)
- 		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
- 
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index bd26811fea99..3c86c53e1975 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -174,19 +174,13 @@ enum scx_ops_flags {
- 	 */
- 	SCX_OPS_BUILTIN_IDLE_PER_NODE	= 1LLU << 6,
- 
--	/*
--	 * CPU cgroup support flags
--	 */
--	SCX_OPS_HAS_CGROUP_WEIGHT	= 1LLU << 16,	/* DEPRECATED, will be removed on 6.18 */
--
- 	SCX_OPS_ALL_FLAGS		= SCX_OPS_KEEP_BUILTIN_IDLE |
- 					  SCX_OPS_ENQ_LAST |
- 					  SCX_OPS_ENQ_EXITING |
- 					  SCX_OPS_ENQ_MIGRATION_DISABLED |
- 					  SCX_OPS_ALLOW_QUEUED_WAKEUP |
- 					  SCX_OPS_SWITCH_PARTIAL |
--					  SCX_OPS_BUILTIN_IDLE_PER_NODE |
--					  SCX_OPS_HAS_CGROUP_WEIGHT,
-+					  SCX_OPS_BUILTIN_IDLE_PER_NODE,
- 
- 	/* high 8 bits are internal, don't include in SCX_OPS_ALL_FLAGS */
- 	__SCX_OPS_INTERNAL_MASK		= 0xffLLU << 56,
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 0e785cff0f24..a8a9234bb41e 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -960,5 +960,5 @@ SCX_OPS_DEFINE(flatcg_ops,
- 	       .cgroup_move		= (void *)fcg_cgroup_move,
- 	       .init			= (void *)fcg_init,
- 	       .exit			= (void *)fcg_exit,
--	       .flags			= SCX_OPS_HAS_CGROUP_WEIGHT | SCX_OPS_ENQ_EXITING,
-+	       .flags			= SCX_OPS_ENQ_EXITING,
- 	       .name			= "flatcg");
--- 
-2.43.0
-
+Ack from me and all that.
