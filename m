@@ -1,150 +1,118 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010068.outbound.protection.outlook.com [52.101.46.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B5D241103
-	for <sched-ext@lists.linux.dev>; Sun,  8 Mar 2026 08:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.68
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772960074; cv=fail; b=D9o8Nl3+7XbzrlJcyKsQcWbZdcV9Y2oiSVN2YO+ghj0Fw81TmB/HIM2bRdG6l2rdyU8dePCRrLmcUBreaHhfmnsM5n1GmxUPmD6GJOrhBQgdXcZMjRfdmPfr5lIDt1XEtLqjLTRy1YAkpPESpWgCoDD8uODYOuHOH4N/v1NQ6A4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772960074; c=relaxed/simple;
-	bh=2LM95hIEJnxyWFVDqhhPc4NgvmucrYwXHlLcsvMI27Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=gBHKAjtKsxHOEdei0Qf1+n/owz0FqbGifqgpvZmatm8Eo+2cHOwGUIHiTpTsc3xVDcLS31dHvwjtoGruOd+W75w2eFkE/+vmjtGrzYRLS5/5VgWXarmklNDqElUfxDfZcLsba5ZLnpaGt/UTD6/TM2kNWWGRoPN7AjhalDYvb3E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=W0N4YaVL; arc=fail smtp.client-ip=52.101.46.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56F720C012
+	for <sched-ext@lists.linux.dev>; Sun,  8 Mar 2026 13:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772975208; cv=none; b=nobisc/g8a3tQ+tT2wLNEOw1OtyvKnHvCxB+zBRmQBlfBci7+Q/YnA6ixQy/YNbuk5EkrlzKiSR9x5zWb7X5BIOTb0aULWl+Z4vCJJ9KjbkecexSO9nfGlrbXsglIDApTwn7Yy/8ROl53LfSdzLX1By+f4JzaNTOHrv76d4kbUg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772975208; c=relaxed/simple;
+	bh=aBqnZPB7yXg4yJmhtiZ17I5tNwABbJ6GKvlbzBEB1oo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uVwklyrz8l3dQE7xJgVi8S6TDxDT7x76BRWYDUlaASbPVd4H093S10rHpzCZEQbSYmKyC2IHwDddqCrAOK2SN6Nk7tMOfoMQR3NT2r4kUTr8iSDYpVVPu26VsYPv7q5mhb0J1JTaUcff8x85mP6wCLTtLuxCfWtv/RGhLtMSfYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A04MJeKS; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="W0N4YaVL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aOwFgfEestWa084z6rRzjESvn5cVjmiAIUthdRxg8uWyfUsO1pF7TxDfPDhu1Lu++hjuLimyux+WZMYuvQme9RXDrDKzxmbg4lgDlR3nRcAXKpmzwnJM9DjvLvTKoWn8DjpCQcB+kqLYaA/FYnqxB8IAN6hHG+qHMyY5RzoWn4F7H/RcjlUL4TaYxn5+k3g5/uVZ9tcjuPTRpfzT1QRymjVT/pcEP98l6gB5vD1OzsE0tH6TvWGPUEm8au0Zh9jSG34s5PSqQYB9uQgxvFRiLt2SwQLm/gv49I53SocbRKRHT6lCM1X0IDGTwOWNHn8deWwfYuEfYJWjVuQasCRZrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YFMOOsxZn56KMVj5lxxyxd9gMGvy+5fHR23eVEfj0M0=;
- b=umzcHK2bSD2N7GYgTeCDh4zCIHCBHp4qrA/txVIoGybn9QJf/4u2lGAsgA4OkwBHs32qQVukCshdS1pHfy1eFww0M2eDYuMU0/Ve6APPlbj0WqlHR4YI+xYTtCfzFnG+r0/RpYYhzpmVx9CGhOWhT0Xfz9qmthjXPbPm4spWPBX1WbDqyUleDj0VNzRJ8Fkc+MQTOk/dlQ6+wjxOojTd1mUGnkXf/pYisPBg8btIR7AxT2hLAcgReJnDW2LQacECNU0B+M5AGVUrisl8mlnq+PNGZGvRXl0dzblSDTl758dcdoPjYSeJEG9MrlL8aoOTeDt7uBtDsDkZKcM4d8WclQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YFMOOsxZn56KMVj5lxxyxd9gMGvy+5fHR23eVEfj0M0=;
- b=W0N4YaVLKUpmuRsoDYdP3sbUkPusOy05AaZ0YOXwo1vaWDQYNiMXYEgoPT8cHUsuPAAHeOm97TRjnnwTswauPISon2wNuFbN6qHKdbOzPsFtJ1C9MEA8kK5ULgfn6gfVJyis8lQGR7AfQdIDCjDeMBmXzL1Y8PbpB45z/ondlQNoZSlEJFiUK4PaKd9Y7K2j3X6qn+njh+gSLs0rG/b6hagdf3G+3GWbn2uar3gkFwbJNFeqqHn3Qv+D0lKSj9z+BxKXPCpkBHeyn9e99iuFf44dTi9LYdYGfwSF+l/Y7vdJfS7Ne9Bk2SstT7CfpHRVfMdDIaLb5BWwkvPJ8QvJTw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by LV0PR12MB999091.namprd12.prod.outlook.com (2603:10b6:408:32c::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.7; Sun, 8 Mar
- 2026 08:54:31 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.022; Sun, 8 Mar 2026
- 08:54:31 +0000
-Date: Sun, 8 Mar 2026 09:54:23 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.1] sched_ext: Implement SCX_ENQ_IMMED
-Message-ID: <aa05P3RSII3RoGDj@gpd4>
-References: <20260307002817.1298341-1-tj@kernel.org>
- <aayofhyFFX9jng1h@gpd4>
- <aazAou_Tak-yGYZI@slm.duckdns.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aazAou_Tak-yGYZI@slm.duckdns.org>
-X-ClientProxiedBy: MI1P293CA0027.ITAP293.PROD.OUTLOOK.COM (2603:10a6:290:3::7)
- To LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A04MJeKS"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c7384f5a9cdso1648479a12.0
+        for <sched-ext@lists.linux.dev>; Sun, 08 Mar 2026 06:06:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772975206; x=1773580006; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7MA3qycKPJvpcyKSEySaG3ekXCWfE9L2232ZHOYea9s=;
+        b=A04MJeKSTehfDThjxxUYD55j1KrJFkei9eBPpBeXb2iKh4c/v8gmTIIjrcU3JHCAm/
+         SK8o4vaTbw6y3c0913+TDVWo87HHygavBB/SW9yzpqPr2kffxWLj4dxmmOH2EdLob0Yw
+         /sH8l9CPmhNJLOrETwKzaa5iNpovB95/HECu2cMxGLwsWC2IaaIb5C4XGf8qXNkU8gxC
+         mqM9bP7RYb87XDhrTWY5+S4JqQt7IMaomIAAksazLwQuHHQwda2P3h7OtMEq7BVDC1ad
+         72/Swb2c/vvKYr7GCBKiG8+cRFcOrC6f7SK856azs7eLbMxXKo743b9a5i8Xsw04tcSC
+         FVGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772975206; x=1773580006;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7MA3qycKPJvpcyKSEySaG3ekXCWfE9L2232ZHOYea9s=;
+        b=VLQDlYKSuIBUXycuFG3Oq6i1Cyco4ODL3iuMxip5I5zhXBASSpwf90/URFBWUEahV1
+         a+13WkAq31euwMuGVHyoVaxOeKnmX4MKxPaIvNjKxCHwHsWvg0aIB1Jfuu4om6Qsfpaq
+         08TIF4TLZonPZtEpghs2CjzT0vlsEEhe6YHOwQEYYOm0lSXCf6NI3ZCIUm9zighTOhqE
+         OF9Qys6wplEA/KoQCshn7efyKhZAQaC4rBr21ZxXe1AeddURF/erwF9f+Ly0M1C8pkM3
+         Aro7sT0Y8QZ0ZrjMA8NDYiLug5UVsMRNBXTjw6t5n+IFWReb2+/D1WIo0ofjO036YIz6
+         2QcA==
+X-Gm-Message-State: AOJu0Yy/1DBrvyfVltjv3WrYdmmxfNZs8iuBpzXExC+xrLYViF4OM8xC
+	nTQFwBCZTfDdb9RxlBDkjz6pdghbt5GAOLDPng7Qeu6CB0EuepqvYABhHHe25Al7
+X-Gm-Gg: ATEYQzzXVfnlsltFH7JTonEOFvP+/5SSPzbYkze682ZU71v2B3adJW5LVTywUBtCb0B
+	8pkHaZPX175E5W9MZhFdQ6qDonSE3JsUAW3609hC7Eb1ihJGKjuNpeZtnFn34bquxuWycgms/Hq
+	bwxqEB/ew0Zy2mPmyX/GEr4QuPfA+Lhtc8lXfCYHCu1+VKcfoKIyyiZdP7L0xDsqHbG7LRTvedD
+	trwOOutmlofg29hqL2NwTG+YbKO5mJ1dD19JTK88CwQKgvrTxOuxf2rirf2vGeJnWdnHiQaJN9S
+	4yp4JpPs8WvVS5f+OgINDFLKkxQZEmQji8QsvWLqktFUupqdStKjV4vbEHQD8kzRkJoVgUBDz6O
+	HRF2LaqvhRiwpSHmU3ub+DYayotXmtDB8c5cPZxvPo24/Uy/ZgGDKsLpwlJ4FWNjTyknL5n56nW
+	Px1a45Q4QVC3HW9LE1mBNqnW3RQCfusFWSFyviZl7OT/11704YGtM=
+X-Received: by 2002:a17:903:1986:b0:2aa:d506:d189 with SMTP id d9443c01a7336-2ae8242f5a7mr86073465ad.34.1772975205904;
+        Sun, 08 Mar 2026 06:06:45 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:1163:666:eb8c:915f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae840b2e9dsm108663615ad.85.2026.03.08.06.06.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Mar 2026 06:06:45 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev
+Cc: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	jserv@ccns.ncku.edu.tw,
+	yphbchou0911@gmail.com
+Subject: [PATCH] tools/sched_ext: Fix get_prandom_u64() prototype
+Date: Sun,  8 Mar 2026 21:06:38 +0800
+Message-ID: <20260308130638.719915-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|LV0PR12MB999091:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4b6fc64-82e4-4c58-e1a5-08de7cf0500f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	rGlE7+JZXo3sGbJxb5DUfGYeejZLXvZ/GlA4yOIWwYdiJS65cbzFyoRrzG1rUUfVShqyq0HHGElvKM9nA1kV+JyPQpCKl9zPKlyTcWesOZ7WCf5f+0Rbn/4h4rrt17U+ShIkYWLi1djILfc4QCw4imEH3IiGVW4tAH3LqRVgPulTapdo1S2FT1ucjWMCDmZ5a9wM99j4udYn8KzizvGElBzi5FD/yEvEAMlb/rcCFt0n7sZOCN2KqS3rkwec2JMfD4q0Ot/lUCJUkeMIFZItasHLUN7ma4WpaYIOZXHLLk73ZrT32ExOiEcY+yjKjBZjZ8KXwALyzyccAhD8v7ONJI8laGWsC6sk+Xpp0ghzB02Q7Prgh0oz0L2p4GUSgUGHlnKQmYkY6ffu0u2TalVSbP2UBWr7DdmvRBMzikXhBcqrb3L5xd4EVNstjRlM2+OG0Wserdm60ohGBNNZQL+gBMeHDI6pZ6UN0HlcyPwnWpOido4k5eYrv4b0A1njCHBmEcGpN++LJ45BQn8bTMJysXs/UD7/npapWpml9IFp5exLMwEasd7vZ9TPTalCpBep9tPsI+X3EwlL5UG4qAEzfk2aHVxBBg+4pIKr1j5FcSvC94V/it7zldQDxqiRXZ/20lTPCCjVQcvhEfEY23rB//vsBcPx9if4XMpjt0oJbeHfZzbRqsuKwJNcq3ZTzeG+b2xQS/fHh5QRAR4BLNRHONwjNhwEXvTgMlA1PbUBqLw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?5UVKji/+n+52tOug0VmLOjF5vja724Q7JURswHUwAELdlvADy5xpQKrowh9r?=
- =?us-ascii?Q?dR8ResvTVyQ9kNuWhDZmSVL4ZOVgXcCJZzSAEJIJEWyZAzHKFPB9D4PLb3g6?=
- =?us-ascii?Q?YbCVptYKUiVs8b0/cjcG9l3WD4B2pjgDO3Oo2WPMfwF9YIw/NYhIkKCK7mf5?=
- =?us-ascii?Q?Qf7YgaLAYL46eGiYJ30cjzgQrZhZsMdBI8HhO6rzb8wxOltxEXoVSsppV703?=
- =?us-ascii?Q?+puBgqKY16MctqKkSwGL0TkeC7WTJJkaVAJMIJ+1MBDQBg89GZS8ir93DX/8?=
- =?us-ascii?Q?PjaGOYjA57Zp0AVv7czujHrdE4TeasnKxibuIJXCovigzWm+gJGXJoEUS2kd?=
- =?us-ascii?Q?CTUgyzjviXozUsi/g9RrYuafHdHY5Uyo1x5lXaown3Cs1GvjpLa7ALJIxdq0?=
- =?us-ascii?Q?DLcAJ6IMCfAP2mZAkEFzYxOiWlYUGMHt+HFdIiwjfF3dIIERqYuMw1YjSExr?=
- =?us-ascii?Q?oLQJK6dhSofaIQlCYnLfkISV55fowhSAc7psP3i6PbN33wje+yYcYLY1eqIn?=
- =?us-ascii?Q?NfGvIUCkGOpG7Smkh2j9AG1F4P1rj8+gan8nWmeRm2Fwiq7iEBRvaMuFI2bT?=
- =?us-ascii?Q?GpVpznUTnkOVPq4o0l2XpRmz6ZbAhDNhpra98/MfX6yF6kDuWjItg/NQvSc1?=
- =?us-ascii?Q?qv6WV7x64MsrTJOXR4CC/Fan4ToOlbMhWEHojpIPnsOJIqsg9a4rrXsJsdeR?=
- =?us-ascii?Q?gYLsYIadRaxWjfUVLi4/E9I3hYBcic+hbmAsbE6qvVaRueLkRmUy5kAnMAuC?=
- =?us-ascii?Q?X+bSAsbVCPI8L8ZGpH4pIDzZhkQb4AGj29EpQStlzV8QbQC/m1Sx2HElIAzX?=
- =?us-ascii?Q?pHCQqdg88Rk56GcNsN38qnP4jQhVZssL6+vfWWRJAGzRpUvAlyVBrkFT/8Ty?=
- =?us-ascii?Q?BHvT60bp0fedZHgncvU+xi1Gz0p06q/LNUyJ5nx68kANgD1db4cNqZzRMSj+?=
- =?us-ascii?Q?LuQw0snXg82sghMx8cckOO3l/0BUVx0fS21Sf+0kGmammOwKlZ0hYSaYAj9u?=
- =?us-ascii?Q?TYE8dTT1LUmQVeQxBntDGKr+qNzdu+H+ushnBEvkPgIMlKtma5Z2rEepV2yZ?=
- =?us-ascii?Q?pn4QPu3EtjAuO84n/grgwCCg1fSxKJykvh/1dQxk20wo6VRrIxImoiq0GOeM?=
- =?us-ascii?Q?enNK+OtUZVWjKReqlRHdiB9fsXZdWh5omSIHow5pr5U7kd9cQscaM8gLWbpU?=
- =?us-ascii?Q?AqdpyfyeQTYZJnJgXVY3VioC8/0WcDaPrpBfcljhy0yEh2Sv8gScKm6SV2Yl?=
- =?us-ascii?Q?H0X8kGMsQdSwGMR5HEo2MYqYPLSyaCTZDXsuLCKuOXsnBxI81MtjLOyMZ97n?=
- =?us-ascii?Q?KHj3sm7McIvuE59WgZ/+SR3zU4J7PyxF6Ljq+/pZjADc252lQkC+x/gWYilS?=
- =?us-ascii?Q?UC1VvYozRy9IkQfmmBokoCYtTgGvthSc0FKjFald2CXOVVVQebxyHZrb6+Ac?=
- =?us-ascii?Q?NHiBrsXhBTNFoKayT6MyzY/2CY6Tc9wTBrD3sW3AyShuPfmKxrg9ZKf54b+K?=
- =?us-ascii?Q?sx7nPD0YPjjbpeCkrpmIsqOaMQjQtBgkrl5nN9KA7A0gDZ0i+gOJU/oNCSCx?=
- =?us-ascii?Q?wDk2zupxd3zkbNw9l/gqJPx61GpCDydRyawji51+RM15b7qTH7NTiVOjbmVO?=
- =?us-ascii?Q?0SeepePlQvFHVDBfQ4FQ3za4G69Yf44Z4iziyTrQlBTB6frwKvc8bNVtXqkC?=
- =?us-ascii?Q?BwnHYkD/GeGvL246YYEw8l9GkXPTqhUR/HxQg0gH+PMNH2+wdJvAQ+uOTjRF?=
- =?us-ascii?Q?FTA5Nt3PUg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4b6fc64-82e4-4c58-e1a5-08de7cf0500f
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2026 08:54:31.3522
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BD74ut83gDDeWdsxPtWyASWliAPtBMF+y+FTVohhSPVe6Orm6UMAeGc95BIUqcIXtL1rpIrWWqWpQ4aQwFkEJw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR12MB999091
+Content-Transfer-Encoding: 8bit
 
-On Sat, Mar 07, 2026 at 02:19:46PM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> On Sat, Mar 07, 2026 at 11:36:46PM +0100, Andrea Righi wrote:
-> > This looks interesting, but I'm trying to understand the typical use case
-> > of this feature.
-> > 
-> > I agree that we need some kernel support to "atomically" determine when a
-> > CPU is available (it can't be done fully in BPF). Initially I thought the
-> > main target for ENQ_IMMED was to improve latency-sensitive workloads, but
-> > this actually hurts latency, due to the additional re-enqueue cost and in
-> > this case it might be better to be "less perfect" and not use ENQ_IMMED.
-> 
-> I don't see how it'd worsen latency. You atomically get the CPU or not. If
-> you don't, the only thing you can do is reenqueueing to find an alternate
-> cpu if available. If you don't do that, the task would end up waiting for
-> the CPU which is now busy doing something else to open up in the local DSQ.
+In C99 (Sec 6.7.5.3), an empty parameter list in a declaration leaves
+the parameter types unspecified (K&R style), not explicitly zero.
+Consequently, the compiler would silently accept arbitrary arguments
+passed to the function.
 
-Yeah, I need to do more tests with this. I did a quick test with scx_cosmos
-enabling SCX_OPS_ALWAYS_ENQ_IMMED and in ops.enqueue() taking the migration
-attempt path (find another idle CPU) when SCX_ENQ_REENQ is set, and I'm
-noticing 5-10% regression in avg fps / tail latency.
+Declare the function with (void) to form a proper prototype asserting
+it takes no arguments.
 
-Maybe that's a too simplistic solution. I think with the global
-SCX_OPS_ALWAYS_ENQ_IMMED I may end up skipping some direct dispatches from
-ops.select_cpu(), that is probably what is hurting performance in my case,
-but it's just a guess, I'll investigate more.
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ tools/sched_ext/include/scx/common.bpf.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Thanks,
--Andrea
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index a63a98a96b86..99b1a94097e7 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -621,7 +621,6 @@ static inline bool time_in_range_open(u64 a, u64 b, u64 c)
+ 	return time_after_eq(a, b) && time_before(a, c);
+ }
+ 
+-
+ /*
+  * Other helpers
+  */
+@@ -870,11 +869,10 @@ static inline u64 scale_by_task_weight_inverse(const struct task_struct *p, u64
+ 	return value * 100 / p->scx.weight;
+ }
+ 
+-
+ /*
+  * Get a random u64 from the kernel's pseudo-random generator.
+  */
+-static inline u64 get_prandom_u64()
++static inline u64 get_prandom_u64(void)
+ {
+ 	return ((u64)bpf_get_prandom_u32() << 32) | bpf_get_prandom_u32();
+ }
+-- 
+2.48.1
+
