@@ -1,69 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A909E1643B;
-	Sun,  8 Mar 2026 00:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0074E2868B0;
+	Sun,  8 Mar 2026 02:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772929187; cv=none; b=azD5B7EqeknGFKZyLhE2TtNH9+URLB6dILJOeeFSDGLGAEv0z/MMZhN7a/DsF0axwyYKuyv2XdQYJawH/fZZuU6dtFHxTMsdtS81rtkoA2AWVJ2ESREej9j7KJydjTXuEUQ9va1DU+6idehthQcda5CqqP253jTL0tGAVtRgHzI=
+	t=1772937921; cv=none; b=mO68upOLVVY5LcejVLjl/M6JcJvDb9ZQnlGyHagE6Vz625N9ZL+6+9iB3+qPwbkwx7vGzFpmvHwvrZJoIphec8MdB6mQvYK8KGw4nW3MRHyECCPrus8Rr9VlP5i9igRasKzHFDSjjdsjF5T3WEMiteaNrYWgapkGglYdU1ac7hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772929187; c=relaxed/simple;
-	bh=vMgZXIg6P6xY0MeriolN0qkP7axZCIZRzFdvMsrkQN4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ALLCOXTCBNHiqEMzd5hI3UIvxeVBLpHWUq0S9D1atqxFzjDZK6BAwvY+KSp0Si+SCnVbQVT4xo+Qtq6h4kw6QAQm5jptdjEFYeCjvxKtEnKTjm4gg/mNyPIBBaeSN06TEqrDSqAPQlVLBNIZvwwyF83S+Ta1HhGcCIHW4DZRsLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nv0tdRKn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772937921; c=relaxed/simple;
+	bh=aYVxrHzId0at85SZtcNcCmk1EVgsx57J4L3rErBHErU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N6a/trnD/ifGm/1v9p+QWiVc3qTE1qaVLxhy9r+qzrLJNxprE7K8cZ7ETrHTDLEU8eEs6nFCZfN1v0u6lmAaYu8S2vivClFCmTCdd1loHGaUL2Fxjx2xHj/w0Rd37pgbFudVgp+dzaK/vYARarMNqyGYdm/CR4VhOQLEMMFBiGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FAEkZ9vH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nv0tdRKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0821C19422;
-	Sun,  8 Mar 2026 00:19:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FAEkZ9vH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79669C19422;
+	Sun,  8 Mar 2026 02:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772929187;
-	bh=vMgZXIg6P6xY0MeriolN0qkP7axZCIZRzFdvMsrkQN4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Nv0tdRKny5Jsdp0C6DXi6ltsu9bI0P7Hu1U+cCjEFcT5vL+WbWATO2Ptz44nnfQQ1
-	 HNwyIB5l5Tvkv/fTkKxN6nFAn6yHhqhEXaWBsthgk9XtdYzsB4Tdd99KqKUwY62DFc
-	 WClYSynLs/5yuwkdYQj5SPiYMMFf1uOZkF6K2C4x3yC+YjRNz1Jg3p8VXdkExHStIi
-	 MG9T0FuhIZPW4IGba/xnRMvA+RzBVlyCp7l3fk9G6OuRsL6vui0cb2NKGOrhrFMhax
-	 TZxaOwjW4bboxlPYmhmYFGzBG2XZPH6zxCjb5XU+hqyVWy8uNC/mp3wr1FrzzMLb9X
-	 RtFc48MGKOUjA==
-Date: Sat, 7 Mar 2026 14:19:46 -1000
+	s=k20201202; t=1772937920;
+	bh=aYVxrHzId0at85SZtcNcCmk1EVgsx57J4L3rErBHErU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FAEkZ9vHy+tH2pQzxsB08tUYhMH5aaKXDxm5+suOsMuX8wpfBKHS/AnMxFzalJgds
+	 4Yenn32isSz62RiVILnqipKFimqaBx6yzbScGNsDSuI45hefVRytvPQrLOQCa0edUM
+	 SOiU+TvgBzmx/5WshonCRVmaqYBTwFe3K2rdoFMrtcQsdvMVglkgH4KF/8cxRMPEps
+	 uucPsNZxSSTHcUiWw9JTHzhMlCgTIB4g8buj6nzqzcqIba8xpaDg9SRU+jFT8rhpkG
+	 OOfdP/IShwdS+wpdZx6keI0RNFKLmg5UwI+luWpOR0tzpej3wTuTdB9BqdyKKOq1Nn
+	 kW4r7ElOSO0zA==
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.1] sched_ext: Implement SCX_ENQ_IMMED
-Message-ID: <aazAou_Tak-yGYZI@slm.duckdns.org>
-References: <20260307002817.1298341-1-tj@kernel.org>
- <aayofhyFFX9jng1h@gpd4>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.1] tools/sched_ext/include: Sync include files with scx repo
+Date: Sat,  7 Mar 2026 16:45:13 -1000
+Message-ID: <20260308024519.1980564-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aayofhyFFX9jng1h@gpd4>
+Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Sat, Mar 07, 2026 at 11:36:46PM +0100, Andrea Righi wrote:
-> This looks interesting, but I'm trying to understand the typical use case
-> of this feature.
-> 
-> I agree that we need some kernel support to "atomically" determine when a
-> CPU is available (it can't be done fully in BPF). Initially I thought the
-> main target for ENQ_IMMED was to improve latency-sensitive workloads, but
-> this actually hurts latency, due to the additional re-enqueue cost and in
-> this case it might be better to be "less perfect" and not use ENQ_IMMED.
+Sync tools/sched_ext/include/ with the scx repo. This brings in helpers,
+compat wrappers, and generated files that have accumulated in the scx repo
+since the last sync.
 
-I don't see how it'd worsen latency. You atomically get the CPU or not. If
-you don't, the only thing you can do is reenqueueing to find an alternate
-cpu if available. If you don't do that, the task would end up waiting for
-the CPU which is now busy doing something else to open up in the local DSQ.
+Based on sched_ext/for-7.1 (28c4ef2b2e57).
 
-Thanks.
+ 0001 tools/sched_ext/include: Remove dead sdt_task_defs.h guard from common.h
+ 0002 tools/sched_ext/include: Sync bpf_arena_common.bpf.h with scx repo
+ 0003 tools/sched_ext/include: Add missing helpers to common.bpf.h
+ 0004 tools/sched_ext/include: Add __COMPAT_HAS_scx_bpf_select_cpu_and macro
+ 0005 tools/sched_ext/include: Add libbpf version guard for assoc_struct_ops
+ 0006 tools/sched_ext/include: Regenerate enum_defs.autogen.h
 
--- 
+Git tree:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-include-sync
+
+ tools/sched_ext/include/scx/bpf_arena_common.bpf.h |   8 +-
+ tools/sched_ext/include/scx/common.bpf.h           | 277 +++++++++++++++++++++
+ tools/sched_ext/include/scx/common.h               |   4 -
+ tools/sched_ext/include/scx/compat.bpf.h           |   8 +
+ tools/sched_ext/include/scx/compat.h               |  35 ++-
+ tools/sched_ext/include/scx/enum_defs.autogen.h    |  49 +++-
+ 6 files changed, 357 insertions(+), 24 deletions(-)
+
+--
 tejun
