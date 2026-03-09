@@ -1,68 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267DC3CC9E9;
-	Mon,  9 Mar 2026 16:44:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D5FF4FA;
+	Mon,  9 Mar 2026 17:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773074698; cv=none; b=LF8pYch/opDOJWUZKhImm+6yZyMdGBeRIu3zVOXOfZWIuDtI3HUBlu8/4smIGQAthydRy8PqooRzRi1oQuwqNKInTbzj18/v7wFXzYspcLFhtpzbxD4N+e3CbIwPDN/EdquyJ6DC7wdJW21p5EBo9KKD1MvVJQCzdvZt1jbQIf4=
+	t=1773075638; cv=none; b=YjKuiNdkd8T55cjBFV8XLenhxF4+QgBQT1u7HLv4wrSNGS08o4lVR810yob0Liig/hSOokaGvh63DYkHFck8m9e02+Yah5Bq+Ed5lZ0gmw2eaHPx4arCxRIgljf315ifohT/7M7H60wwMnEjDM5Q6gKxmlcHWLw6DcZa6o1wugs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773074698; c=relaxed/simple;
-	bh=RrWSWkbnyaPLrtYTEafjeh+wWEqYTVgF7BWWWC+jaaw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o9F29MGQDfeCotup15UJg5YkBqSsJjkY3x8j2ASr753+5P/htuIj66eAavsH1NNQT1vICk582NdWqc7UiUWrR4P4hGGw/ofWCcRdfXesZey9bLYKydiwcUIYyzH6aZ1qFcPyxHcCyNuWrV6+3dY/0fQ4yemqDCalRcKGOr+gYsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YoPEIp1C; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773075638; c=relaxed/simple;
+	bh=YjfGGBfXleHUjEIZU6C03gqMFHibd02UrGq5LGn5zUc=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=aAePZgzhiJGDM+sbE8A1i0DNad9R8gNGzw9oj3OKiJF3oaMnBb0KhlcPnbtYZIlRT4Du89BefaTkiHqDayQgTppICA3euxIC5LwUP0G0HMsbspLYipnd2282d24Zv03phMz6qQqOPyFZIiTmSUXYV0uGYn/nnt1c0W3HM7fW76w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=TZl/XoVe; arc=none smtp.client-ip=220.197.31.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YoPEIp1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2DDC4CEF7;
-	Mon,  9 Mar 2026 16:44:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773074697;
-	bh=RrWSWkbnyaPLrtYTEafjeh+wWEqYTVgF7BWWWC+jaaw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YoPEIp1C4VBYQxiVV9rtX/3ex3Pbrnv95wdeQM2FUTvc2MTTKza9A4OMPTurKiKxX
-	 LntyPoy0kAUSPG6Ait6PLbQdZEMFH3I65RUVJCXdiDOkFNRZOLnBkXAEO8SnSnA8A1
-	 ORWm53h5sbzeCsDOysc3d1WTucGVv0Qu5GVkQLzu2TN50nyI+Qy5u5ibQoa2Eman/J
-	 3SxeBVfFxJSskRtVjQu7NtkuTUhXiMMQYLK6HTjA0tb3kW36NN/biQiXGRlJ2jgyZN
-	 Hv1CRVWoVoSZPI63Se8g7vluP+ZcFgyXBMC1AMj39y2+JTu6vPrpVZ4NCxsjmD2EOL
-	 vAktRTgDiYhJg==
-Date: Mon, 9 Mar 2026 06:44:56 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Emil Tsalapatis <emil@etsalapatis.com>
-Cc: Zhao Mengmeng <zhaomzhao@126.com>, void@manifault.com,
-	arighi@nvidia.com, changwoo@igalia.com, nathan@kernel.org,
-	nick.desaulniers+lkml@gmail.com, morbo@google.com,
-	justinstitt@google.com, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
-	llvm@lists.linux.dev, zhaomengmeng@kylinos.cn
-Subject: Re: [PATCH v2 2/2] tools/sched_ext: scx_sdt: Fix BPF verifier
- rejection on older LLVMs
-Message-ID: <aa75CBAMNtK-L-ew@slm.duckdns.org>
-References: <20260309022847.106150-1-zhaomzhao@126.com>
- <20260309022847.106150-3-zhaomzhao@126.com>
- <DGYECIPVC266.25320R7256YJT@etsalapatis.com>
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="TZl/XoVe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:To:Subject:Message-ID:MIME-Version:
+	Content-Type; bh=UMbXCxutRDxcD2UmZTvZwlLDyIxErYFQZ+refN40rlo=;
+	b=TZl/XoVencF8ELmdauqrELkepbwJSsHy0EcUdK7fpQ7JEXJa3laxdHdtRV4t2G
+	h5JDAui2gO8ULA6k9kkbYHR04W5qEv75wfMEENypQh3f0rHoTBBZHgKlodlq/On+
+	UIDrcAl3MFwhIzJcpzBivUuJJEq7CLfw3oZzbrVFxZu54=
+Received: from ehlo.thunderbird.net (unknown [])
+	by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id _____wD3_wFT_K5pPVwIAA--.18239S2;
+	Tue, 10 Mar 2026 00:58:59 +0800 (CST)
+Date: Tue, 10 Mar 2026 00:58:57 +0800
+From: Zhao mengmeng <zhaomzhao@126.com>
+To: Tejun Heo <tj@kernel.org>, Emil Tsalapatis <emil@etsalapatis.com>
+CC: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, nathan@kernel.org,
+ nick.desaulniers+lkml@gmail.com, morbo@google.com, justinstitt@google.com,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
+ llvm@lists.linux.dev, zhaomengmeng@kylinos.cn
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_2/2=5D_tools/sched=5Fext=3A_scx=5Fsdt?=
+ =?US-ASCII?Q?=3A_Fix_BPF_verifier_rejection_on_older_LLVMs?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <aa75CBAMNtK-L-ew@slm.duckdns.org>
+References: <20260309022847.106150-1-zhaomzhao@126.com> <20260309022847.106150-3-zhaomzhao@126.com> <DGYECIPVC266.25320R7256YJT@etsalapatis.com> <aa75CBAMNtK-L-ew@slm.duckdns.org>
+Message-ID: <E01CE742-1B6E-4615-89F8-8C6C360EAB02@126.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DGYECIPVC266.25320R7256YJT@etsalapatis.com>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-CM-TRANSID:_____wD3_wFT_K5pPVwIAA--.18239S2
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Gr4UZr47AF1fuFWUuryrtFb_yoWDJFg_ua
+	yUKa95Ca98Wr4xJFn8GFs0vrW3GFWUJr4kJrZ7Ja4fG34kAFW3t3sYkr97Xw1agr4SqF13
+	ZwsxZrWkXFyUujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7xRR1CJJUUUUU==
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqxNZ0Gmu-FP8NQAA3Q
 
-On Mon, Mar 09, 2026 at 12:36:40PM -0400, Emil Tsalapatis wrote:
-> On the other hand, maybe the extra compatibility is worth re-adding 
-> cast_kern/cast_user to the code. I am slightly in favor of keeping it
-> as-is to avoid churn, but can easily see why we'd go the other way.
-> 
-> @htejun WDYT?
+On March 10, 2026 12:44:56 AM GMT+08:00, Tejun Heo <tj@kernel=2Eorg> wrote:
+>On Mon, Mar 09, 2026 at 12:36:40PM -0400, Emil Tsalapatis wrote:
+>> On the other hand, maybe the extra compatibility is worth re-adding=20
+>> cast_kern/cast_user to the code=2E I am slightly in favor of keeping it
+>> as-is to avoid churn, but can easily see why we'd go the other way=2E
+>>=20
+>> @htejun WDYT?
+>
+>Let's leave it as-is=2E The main purpose is to serve as an example for fu=
+ture
+>arena users=2E The benefit of keeping it simple trumps over supporting ol=
+der
+>compilers=2E
+>
+>thanks=2E
+>
 
-Let's leave it as-is. The main purpose is to serve as an example for future
-arena users. The benefit of keeping it simple trumps over supporting older
-compilers.
+That's reasonable=2E I was hesitated to send this patch because it actuall=
+y is a compiler problem, but I also has seen cast_kern/cast_user macros alr=
+eady defined to address the compatible problem=2E Shall we use __BPF_FEATUR=
+E_ADDR_SPACE_CAST to guard the code or check the llvm version before compil=
+ing these arena based schedules, or add some information on README? After a=
+ll, it  only demands llvm >=3D16 in README=2Emd=20
 
-thanks.
-
--- 
-tejun
