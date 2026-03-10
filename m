@@ -1,59 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2633D16E9;
-	Tue, 10 Mar 2026 17:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FAA3624C4;
+	Tue, 10 Mar 2026 17:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773162123; cv=none; b=HNOfkuJRn/qebo+S4nhvQlq9v/K10MUuu++oa0kZdgZw9erUGRsL0KXFJo53pBFuST4RZoqNfidHG87Szl5ihZWAbEmcosBbnwNrfVGbIH5gNlb7zXzB73yA2zScLwsSGAKBcVLkfiNuaUdOqPNzc3G859/XwPiLRtHCr2ej/Jk=
+	t=1773163069; cv=none; b=K3RS5W2H5mKHepoYPzPZJH9reJhOMQ3bRyqedPB0qYhtKe61/ciUBSb9VIQzNcc0UxYGoAyb9LTbZYpF3eImBIzFUBocrgW8Zu+oXYYPRpbVUxEKtH6Aq9M3W8g36L/Ed/gwtF5X+UNCbk4AbJbIB7kng+32Bb4gzir3m0SS2TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773162123; c=relaxed/simple;
-	bh=+0ix+E8GBUCgIN6jbrba74DKgOITHGZNkoqWjOpimuI=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=uoOmBGTEB4YbolnQAwa7N1v0uyvFEwUCd0k+BzkLw273YwMwhwfCrLZsAlkLcgjrv3Aj/5eUvbpcEV1MYcXxgLuma6M6O5uNpKsNFVhgC/dGcLGAR5/n496YLH1yJDg7T9RUafy+BUHTqtTrkl0XWubUzyqEaNFIEDz77uOaK84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CKT2D/Qf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773163069; c=relaxed/simple;
+	bh=6XsrxXgIMRZ1QkDE4kAEXu1PzyMa77AOK6k8cEXk7Gk=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=cz6xA9lL+EvKnavksy05k4HgkKOIe8x5xIiwMLQonTULb1wnNPrw4z8pesb5sxBf8lSqTECDQJjNXrh1Fw2bkBrT0S8Sf2QXeGA6VXm7NcCHuydcxTzfw9Nuos/uRiG97/0ZADlAF+5sNE2IygGQZmSbETeJKHPc/ASGI3yxBS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJhGV2T+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CKT2D/Qf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D94C19423;
-	Tue, 10 Mar 2026 17:02:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJhGV2T+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94C0C19423;
+	Tue, 10 Mar 2026 17:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773162123;
-	bh=+0ix+E8GBUCgIN6jbrba74DKgOITHGZNkoqWjOpimuI=;
+	s=k20201202; t=1773163068;
+	bh=6XsrxXgIMRZ1QkDE4kAEXu1PzyMa77AOK6k8cEXk7Gk=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=CKT2D/QfDKqzZ8HFMRAqkM++G4/6BbdO5g4id2gW7koLSywOVdZthjH40qgrPLGWg
-	 ymWMW7wXUoMYwEMMR7m6Ks6U8jW1JpYtKY85RmbV8l7yXHu6IMpEHlMVdZHNpvAoQD
-	 +rp7ixyZa2WWZlZTrL41lmFQxVlU6el6AjUe5QEzHsn2myYy0HbIxJiDIm5s+PYWNF
-	 v2SQzDeuOvrpEpxrOlXeSz8lzD7AKyDFVUvRf4xKQgyswcdfxAfM4BonZxkj1ryJnv
-	 jz6zkklm8fn2g60G+mR70J6nDhp1AzoWJd6rCm14eZVomwk67SbKpyF124otFofPZ+
-	 NgNUd0GU+mqHA==
-Date: Tue, 10 Mar 2026 07:02:01 -1000
-Message-ID: <1e76d679cac0be4c09d422d71743c9af@kernel.org>
+	b=OJhGV2T+JJrqn2lrNh03KFiBhP27O2T7rF0nob57zxdZQdd/fDeUmKElv3uBmumZs
+	 bD/C67FINLv+TrtItzJVRMRcRSHU9npAPXhcCtszv2JHj8x1EnklcTWPZuAwnM503J
+	 Z0VKQYfJiJoWJJcWWRmAM7MFYtsDHxzn5AudFgeFSlGxfM9rELPtHKby9cO7YNu6eg
+	 8xJdxHYDOFSmXj/ysbXPc2LP3nuzuz62Jdxnhy70izBbg5Rp2BGWiZS52Rc0xOlvOH
+	 NDfM4oXCK3cP/eTeuPAdG6fMSkFdCHgpu+igHl5yLFX+SCBXUioZxH9WEau9VpT/ik
+	 egIwbJX9Yby1g==
+Date: Tue, 10 Mar 2026 07:17:47 -1000
+Message-ID: <0b022932479ed2d6d0c6cfd8e8d82fd9@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Philipp Hahn <phahn-oss@avm.de>
-Cc: sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- David Vernet <void@manifault.com>,
+To: David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
- Ingo Molnar <mingo@redhat.com>,
- Peter Zijlstra <peterz@infradead.org>,
- Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Dietmar Eggemann <dietmar.eggemann@arm.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Ben Segall <bsegall@google.com>,
- Mel Gorman <mgorman@suse.de>,
- Valentin Schneider <vschneid@redhat.com>
-Subject: Re: [PATCH 16/61] sched: Prefer IS_ERR_OR_NULL over manual
- NULL check
-In-Reply-To: <20260310-b4-is_err_or_null-v1-16-bd63b656022d@avm.de>
-References: <20260310-b4-is_err_or_null-v1-16-bd63b656022d@avm.de>
+ Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ Cheng-Yang Chou <yphbchou0911@gmail.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCHSET sched_ext/for-7.1] Fix sub-sched locking issues
+In-Reply-To: <20260310011653.2993712-1-tj@kernel.org>
+References: <20260310011653.2993712-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Applied to sched_ext/for-7.1.
+Applied to sched_ext/for-7.1 with Andrea's Reviewed-by tags and
+corrected Link tag in patch 4.
 
 Thanks.
 
