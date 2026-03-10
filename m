@@ -1,38 +1,38 @@
 Received: from mail.avm.de (mail.avm.de [212.42.244.94])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B244425CE1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7242F4218B1;
 	Tue, 10 Mar 2026 11:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773143743; cv=none; b=FTulKvuWL1KWuSYe9FMj4ak4AmYbnq6toGnPVEVlPLugTCjt+T6ZZglBxO3Qh1xUf2LOUgT1S487vmWi0SQ9anzQDenYM8yz/MtU/uSr2p2C55Yj90yf4vteGr2Bo911RnIpxA5EJIhvWhq4mXomDHfADcBIx7RsmL0bgAGJF8g=
+	t=1773143742; cv=none; b=B+bt38IkRwdE2KE0EAyyMFy7IsjwvhJLDPdPl8lvXOt8YXLoG0QA8oiVt6JTIoi/xie21fOJPly6Srt2uesEWp8bdMxcJsUb73bkmfZLsXVm3XJHVFdIeApKbke+U/kVI65/jI/eVwvUq8H31NpoAApxAavWT8vis5Fny+onp/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773143743; c=relaxed/simple;
-	bh=/e9fhAri3fvWicTXaGdDwpg1S0XTbSGg5f30RLJZwGo=;
+	s=arc-20240116; t=1773143742; c=relaxed/simple;
+	bh=pDm3lCNTlSjUg9te/2qYAZpsW6tvI+d2q74vAk/3XKc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qVH/u2gLXTBf08s9JZVfYzoyUXsD+khJQ9MfKbo80/iVnGS7J3bFg5QtTcpKDzDelOJKBKBKTVhQ8m+MELaMaR/fyxns2Efro6usO3IBzs3FSQ3+xN4mv1/YQ9qYQOBigVBqaLZB7FrYV940dJPczFrn/OZ8MpuQwusD71qjyUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=P4cFZP/3; arc=none smtp.client-ip=212.42.244.94
+	 In-Reply-To:To:Cc; b=bHXtbpGDTN4AvUwUKjK7swopQTusKegO6mwm72OoClT5E92VEBU50VCIVP2NjlMFQ3pTDY+1gVJatOiOD2rWxF29zHhLlCnVXpz8eccl/ir5OPSwwIBVzNG9mJ4niFSt2kR1UViNjY9/3bP171nHKCgH4/S2u97HUTWI3CFk/DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=fVELfbwv; arc=none smtp.client-ip=212.42.244.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=avm.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="P4cFZP/3"
+	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="fVELfbwv"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
-	t=1773143726; bh=/e9fhAri3fvWicTXaGdDwpg1S0XTbSGg5f30RLJZwGo=;
+	t=1773143726; bh=pDm3lCNTlSjUg9te/2qYAZpsW6tvI+d2q74vAk/3XKc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=P4cFZP/3ySCkqkvFmysB/zTqxbD/PjzdR54YsQWs2B7Ag1WfdJL7tNy9mM+YApj2D
-	 ndVw5Z3V4gfnNIxLGP9hoQNh4xHTmaffyOwYpsHdTRxcA8+K0XD0gxaMwz/nUN0o0X
-	 SCmLqyt5cLBWipGIDG9rrJsNtObMa14/gIb9ntNs=
+	b=fVELfbwvQoehRpaJFY7JhfI6hh7CeBxkQsPfYq55sQ0vUjWp9z+lIlt95Xk2AyEJh
+	 PbXsF1cpAtdhOegTLvrb0S9nq62cukWwwyYrxLjCI0wmTbF+WNMrGuES99sNVPjj/b
+	 EsWE3JQi9cza2Xm4SWbcDWKe4CCvCMWDAHq2lZUk=
 Received: from [2001:bf0:244:244::71] (helo=mail.avm.de)
 	by mail.avm.de with ESMTP (eXpurgate 4.55.2)
 	(envelope-from <phahn-oss@avm.de>)
-	id 69b006ae-e21d-7f0000032729-7f000001da1e-1
+	id 69b006ae-e21d-7f0000032729-7f000001da20-1
 	for <multiple-recipients>; Tue, 10 Mar 2026 12:55:26 +0100
 Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [IPv6:2001:bf0:244:244::71])
 	by mail.avm.de (Postfix) with ESMTPS;
 	Tue, 10 Mar 2026 12:55:26 +0100 (CET)
 From: Philipp Hahn <phahn-oss@avm.de>
-Date: Tue, 10 Mar 2026 12:49:01 +0100
-Subject: [PATCH 35/61] arch/mips: Prefer IS_ERR_OR_NULL over manual NULL
+Date: Tue, 10 Mar 2026 12:49:02 +0100
+Subject: [PATCH 36/61] arch/sh: Prefer IS_ERR_OR_NULL over manual NULL
  check
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -42,7 +42,7 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-b4-is_err_or_null-v1-35-bd63b656022d@avm.de>
+Message-Id: <20260310-b4-is_err_or_null-v1-36-bd63b656022d@avm.de>
 References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
 In-Reply-To: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
 To: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com, 
@@ -72,22 +72,23 @@ To: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com,
  sched-ext@lists.linux.dev, target-devel@vger.kernel.org, 
  tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev, 
  Philipp Hahn <phahn-oss@avm.de>
-Cc: John Crispin <john@phrozen.org>, 
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=861; i=phahn-oss@avm.de;
- h=from:subject:message-id; bh=/e9fhAri3fvWicTXaGdDwpg1S0XTbSGg5f30RLJZwGo=;
- b=owEBbQGS/pANAwAKATQtBlPRrKzbAcsmYgBpsAZM2fTyCYVfDSlmEmcm8t3ybPKD3MDuGKTUj
- vCjhqZWFOmJATMEAAEKAB0WIQQ5bPBtrWDUcDQCppg0LQZT0ays2wUCabAGTAAKCRA0LQZT0ays
- 2z2rCAC7oYhghVATpgjsAoGRn4N5/GCkNEQ5d/YNbMHtku5Ne/hNSs0W+K9kYWVkFPm5TlrH0DE
- 8/RGH1u5MDT7P37KNp17NEpcRPc+zR1hHTpFzNLygQMhigzbVOt/7U+vGXQh1CXjciuY8j7FckI
- dtMHKNN16hVWRN9J7DdvS7Q09vOysbfuZGn+o8hs1SmUg64a9Ig5/41sPHN38J7SQblPeyGhLri
- 3JgxiG8Mz5G70Y5/Rddk73/lgtWO+z4F7ECaPWtfktQ/wSj5ZuFGkTm2dn045+qsqR71gKKNbgQ
- /lgkcaOekPRGDC/jtk9N/uPlc4vBw/GKHnCp8LPegSQzk/iw
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Rich Felker <dalias@libc.org>, 
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1014; i=phahn-oss@avm.de;
+ h=from:subject:message-id; bh=pDm3lCNTlSjUg9te/2qYAZpsW6tvI+d2q74vAk/3XKc=;
+ b=owEBbQGS/pANAwAKATQtBlPRrKzbAcsmYgBpsAZQlhc7PU7tZE01ILV/cgCsTY0g2y915SWo2
+ WOp3PFfMVuJATMEAAEKAB0WIQQ5bPBtrWDUcDQCppg0LQZT0ays2wUCabAGUAAKCRA0LQZT0ays
+ 25iRB/4+DNoMMW2koOlN/DfR0crLtH1nZDxAJOmf/8RHXFfdriIuA3iATU5mx4bxDWjpvaGsmVF
+ sScQl/IREquLsn2WvMNqP8VTO6O5b6dTKbFCMkwD4BQk0G2mg/TcyproVTFFc53eOopbKdhzKTm
+ Isr1LIuVwpZ0FQ6SRPCDxxmnQfxV1v9dSs1qwmVTacxHLQeT5J39Og4hMR9wi3vpAJ5eehJCv9n
+ lR3Su7JxXXqg12+uTsE16DABRCYs7reggRC+HE7/WglPKMOyMs6b/M6GTKoEx8jwE+9yNdG13UM
+ RWdxOZdqo69T8hgV/W9OJAR9jWWipbKE58eiOeRYxFyI6r6y
 X-Developer-Key: i=phahn-oss@avm.de; a=openpgp;
  fpr=58AF7C2E007CDBE62C59E078F50EFDCF8AD04B1A
-X-purgate-ID: 149429::1773143726-86614F2F-8EE3A410/0/0
+X-purgate-ID: 149429::1773143726-35BF0F2F-C3FAD55E/0/0
 X-purgate-type: clean
-X-purgate-size: 863
+X-purgate-size: 1016
 X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
 X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
 X-purgate: clean
@@ -97,28 +98,29 @@ check.
 
 Change generated with coccinelle.
 
-To: John Crispin <john@phrozen.org>
-To: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: linux-mips@vger.kernel.org
+To: Yoshinori Sato <ysato@users.sourceforge.jp>
+To: Rich Felker <dalias@libc.org>
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: linux-sh@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Philipp Hahn <phahn-oss@avm.de>
 ---
- arch/mips/lantiq/clk.c | 2 +-
+ arch/sh/mm/ioremap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/lantiq/clk.c b/arch/mips/lantiq/clk.c
-index 2d5a0bcb0cec156dc5f0daedbdd7c56ff8d62ca4..4ae271a887c39163370d070b49d9e5152a709bd7 100644
---- a/arch/mips/lantiq/clk.c
-+++ b/arch/mips/lantiq/clk.c
-@@ -60,7 +60,7 @@ EXPORT_SYMBOL_GPL(clk_get_ppe);
+diff --git a/arch/sh/mm/ioremap.c b/arch/sh/mm/ioremap.c
+index 5bbde53fb32d785607f8281f9e9cee16d16fc551..06c3bfe2511fd0d5e67e28a8882aa9159991c30a 100644
+--- a/arch/sh/mm/ioremap.c
++++ b/arch/sh/mm/ioremap.c
+@@ -97,7 +97,7 @@ void __iomem __ref *ioremap_prot(phys_addr_t phys_addr, size_t size,
+ 	 */
+ 	mapped = pmb_remap_caller(phys_addr, size, pgprot,
+ 			__builtin_return_address(0));
+-	if (mapped && !IS_ERR(mapped))
++	if (!IS_ERR_OR_NULL(mapped))
+ 		return mapped;
  
- static inline int clk_good(struct clk *clk)
- {
--	return clk && !IS_ERR(clk);
-+	return !IS_ERR_OR_NULL(clk);
- }
- 
- unsigned long clk_get_rate(struct clk *clk)
+ 	return generic_ioremap_prot(phys_addr, size, pgprot);
 
 -- 
 2.43.0
