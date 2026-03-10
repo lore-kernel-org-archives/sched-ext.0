@@ -1,150 +1,407 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012008.outbound.protection.outlook.com [52.101.48.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.avm.de (mail.avm.de [212.42.244.119])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC7934D3B1
-	for <sched-ext@lists.linux.dev>; Tue, 10 Mar 2026 06:50:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773125420; cv=fail; b=UEEmPvyqVOuXVATVwyzUWMsAaIt2FN7oUiSuJWI5+A2E1YU6RTcuGpxz0vvq8sMuXEVCuIJsq0rvJuSjluJ4S69DLj1AjdUp7nK7C5FjUS4Y2umktBVIkUUBD2uJ3G8X3DEoIL9S2nvp7SIjuofkYg81gb06LUVP/4EzRnGtM/w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773125420; c=relaxed/simple;
-	bh=bLqAbBbg+n1Lup5laNLmtKTuTQtTeY3zeUi6gqSSLe4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=JCeQKlh6gKc6otQyMWoVKh+h0WkUCp4EFB8nDwAO0LILOohR0ZrzIXo9h7xGs3qHQbJoGtlNpMGBTnWtuVcbkXHe3PMP0DfKBzBDs86z3CDtg8v2peyITF/cGCcF6lt/1FQfN0T4a3ZsxN6O6hF1Ho00ge0R2Dm7f81P++MGQDM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LKI5v8Xr; arc=fail smtp.client-ip=52.101.48.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4933CD8B2;
+	Tue, 10 Mar 2026 11:55:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.119
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773143735; cv=none; b=jcTmctn28xx3zu/ApasDTVQqBm6Q8q6uG2orsosoLa1BoGj7p1b3b0Z8ayl13VAvoTpXGnYyjnLv7f2TN9G+HwroPcfIapHU719aCX0nIOw4pMK5E9q6VKjYxCE+wsiQ6GYm+orFPVD7pDyG2Wq1OXqilHGQWD2+63ZNj/v3AUI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773143735; c=relaxed/simple;
+	bh=LK3zT21XXqhQvbEwg2nItTFGXqZVrRtI29hZHPSW/Rg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=inR3Yb1KscsU/RhUczh8gG8T9Iw8KsSbAqdpLHryYCXlNDGGEY7GZi91oYd0VhdIZ0s1D3AcHwV9ovi8K3LQoJUz9tmTpSiNS6eo2yQYQ4he0Rt4roOLkaHMFhUD2AxgZm3otXLBH2txI1AhxhrOnc+XEhYVIxJkPikIIUaLQZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=dZcJYTZu; arc=none smtp.client-ip=212.42.244.119
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=avm.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LKI5v8Xr"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FLHvi8oc2w0C21jMAVUQ81Eg2XmVMxCKU3Wv4KnCHTbxCVvOH7X2ugtOoU/WhSg3H6bRhYUDhYnYMLRlbZI2+hCs5P3hojHZmTllmVL/RFmlXDx1FYRdWqQq1yMphqT+GniIx9g3VQLW1OuXCiqMed+ccPKjyYUZuM5DwbxoD/RC9nv74CtuS3txT6LaROHLLfg2qN2rKn8hTIfvWf7d/+eh8fwZmz7e78L3ZPY55x4oiTIRBUXHHkdSgsZiGvq8SnkMxThSI0FTH56zx6d+3ZBzK5bvsvUPxKacpMOibZdU1xVcJt+8tc0eGr0TQVYAGSQdcQr6lWLjusuoMg/fMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yxKlqd62YTwxuE/AXtzt+m0MGefoJo8uJKdqsyhyyJU=;
- b=vKazpzxnE+J4kpBmnGPjmB2OsEkOcKZivhdzsJQuuSHTtzvbTSgZEi6jhi6mNbg5FgUKcrhUtVDOX08oGHJ78CUDjCgVcnE7WbT5y1x+ZxTr8pgWffg2KiCZPzgpWxK5Gc1aRb8YYn31GwznHYL576aWAFS50v8pdiZTfY+6gf0hagR/nVMTGwZZAtOqo43D95TY4JH090PuLcBJAcMO0+FG9qzZOebL5ZcYtiIfw5Dnnv0gggglyjfew1u2nyf0XyFR1FB9i6IIa8buExv0sr0nxitUAFxObgc48v0JkKbXYWGtRw/EwD+AC+YBLf4tfYzO1Vlebk8uEc7hIRmDpw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yxKlqd62YTwxuE/AXtzt+m0MGefoJo8uJKdqsyhyyJU=;
- b=LKI5v8XriMuvyLvPRnFJjZYzhks7pOYo/hVNr/EMn7Aj3LGXZWTdVFM0mBzM2NOM7XccFxTUpj7vtFV9eG/u5UgZhJ6zZehlL9O2eMKDWxfecLE3HICXlVlEtzywH0zTa4hpG+AgbH57q4KYy3aYs9408BTUpEV2uVnzc2ou3L+Js9sv9f0eGYiTjYupxanaonhy5H6l7W/Ovdd5c1ppUKRBm5smYO0MQQoZKHWqSl4OdPFAL9wE9jJCSXbLjM/yqkiZeIhUM8D4J0hbiP+aFoCbAxTGA5mC28UMvfZhwHx7lMEFh03upyeLKDCKhmlvI3g0aFcLn6QtqZAEfSfFgg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH0PR12MB8007.namprd12.prod.outlook.com (2603:10b6:510:28e::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Tue, 10 Mar
- 2026 06:50:17 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.022; Tue, 10 Mar 2026
- 06:50:16 +0000
-Date: Tue, 10 Mar 2026 07:50:08 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.1] Fix sub-sched locking issues
-Message-ID: <aa-_IBM4QwPxVvqf@gpd4>
-References: <20260310011653.2993712-1-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260310011653.2993712-1-tj@kernel.org>
-X-ClientProxiedBy: MI0P293CA0013.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::18) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="dZcJYTZu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+	t=1773143722; bh=LK3zT21XXqhQvbEwg2nItTFGXqZVrRtI29hZHPSW/Rg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=dZcJYTZuZDA4q/3hNz64Owdc1HJABJYJkt99++PaaLbW7gaZD9g2/iS9O5ENS8TqR
+	 Wd0w2FXgMI0uZVVeVPaP0+G8ebTl5PjkrH+/Un6QvZSpSuAmb2VEM0TmWU3qAXNa/R
+	 B92BBimBzpC3ASCEhSshSATaYHjIa50MBa4pF9SU=
+Received: from [212.42.244.71] (helo=mail.avm.de)
+	by mail.avm.de with ESMTP (eXpurgate 4.55.2)
+	(envelope-from <phahn-oss@avm.de>)
+	id 69b006a9-2367-7f0000032729-7f0000019ca8-1
+	for <multiple-recipients>; Tue, 10 Mar 2026 12:55:22 +0100
+Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [212.42.244.71])
+	by mail.avm.de (Postfix) with ESMTPS;
+	Tue, 10 Mar 2026 12:55:21 +0100 (CET)
+From: Philipp Hahn <phahn-oss@avm.de>
+Subject: [PATCH 00/61] treewide: Use IS_ERR_OR_NULL over manual NULL check
+ - refactor
+Date: Tue, 10 Mar 2026 12:48:26 +0100
+Message-Id: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB8007:EE_
-X-MS-Office365-Filtering-Correlation-Id: dc212f96-000e-4999-6a27-08de7e7149ae
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	i7H+aldjJVbtplE9wxGa15EyyJrJNtQzHgt82ChrvKtu55/O1DEgOFErnzcJLrFcu8AcV/TVEt4yvG+rmtbdarpAR2T3R4FbqNezy6On8XJSrRDOlf9K1uXw0AhLZOn75ADuqzMl2xGa0/uQ4ZkNzZ433Mf9LqK7sqOC/hCJ9gP/AJSQkulLkV6smLjni7y1DibXo0zeL4n/eZEsGK017RAJxJ1Mx5OklfYeHAZsmXndz8Em45FCNmnRh5dih/jbCiPnYipwXGqiLdHT7wWV5rE1CaGsQkUPn27gg/NBA8h6M+PMjS4LAkTYS6cCak7YoCjDdnBgJ3Yf34FsG3hglhyzmlzkDyYSp/4aL8hASjYWQEdMivauTotnMkHnwJp/7F23c84xDru75fqRs/7qDycchOL59bvXOp25UuEVTmHi8IXJ391dY8/UxHr0RZsdkY3Qc41HmF4g+jJAFmndLCz1PQd8aCYt+GNm7F0obu4g8Z5yD478AHjLPvupslG0JkcxYit+CrejCxL3CbhXfaxvgkc53AJXD0okviI8XkWYWD/TEY90MGN3awMWdNa9KWnc3/gxB+6lv+endwbPOjeyxV10O3VrrhZ/71tuAF5jklzwxiTLBMGNHgP6LRwQSHQJVtimhzw8Lp1GzTuu4Bglhr757GfNStMHS4loz/fv51DEEiNQzZtjAHp6cOEOxrydeV5lG1wXcl5Ne5vLtHAWx2jQJkzWpdMkTnxIUno=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?N9ySjxUpYcNGcOlNKGD7HxdVS1D3Io8xIdlYcui5xRmqRyYyYcjQ57Uo6byv?=
- =?us-ascii?Q?Y7QfLaV3Gs6PcUzASYJ0aQvnVQDoL5G+z4+UJ0t1dM4Li3/1UWe6talHyAfP?=
- =?us-ascii?Q?x1uQ90hvzHP+wDEJ/x8JLVOy0l9zPaPe0AeeSwTn5Dr+B/1L4DLPCCRIMrDt?=
- =?us-ascii?Q?dXvM6wdiE64nfgoYN0hD4A3mw+Q57geuobg/OkCzaVgtka6v1fFyirWYsYHW?=
- =?us-ascii?Q?7s9UMjmYWWYpRTrJLv50rKto1lDbGGBTx0yhUSvmRoxwIhhEogmmJqasZLaM?=
- =?us-ascii?Q?qlVgBY9+VX3K/acc8UWpG2GTBMo6qi75huRtDRMpDdDzQxQeUzIZacUlipna?=
- =?us-ascii?Q?GG/EY/6yb+noZUmE7/hCwrU8mvChJZkSj855+feSVRAiNTBQk/M6zTJeMDnv?=
- =?us-ascii?Q?nsbyPA64FLWYA14E66UcEiEn+7WUvt4J7QKRvZm9wGx2tiy2i7oHUfg816p/?=
- =?us-ascii?Q?rLhLgVh+mNnVIi1BcI2DFaSQkfx8JMV2YEyMt9j+stanzboZt/c2Y+VTqzv4?=
- =?us-ascii?Q?x1wW4eAiHKbSJPt4+o58GHM5knPhMyqsjcfkTPINpCMd+vSf+x1UtWvUtXzV?=
- =?us-ascii?Q?JsTNvGlibxacsdRA7FYTdPTC35TEj9wZMiUS6EnFzdqUWp/qDS88UAvinL/N?=
- =?us-ascii?Q?jHOOqbUI4c65QMId3dMz8LGe/lUtvTLIwIQE8VrN+ekJrXjTWchLiJCW6aZT?=
- =?us-ascii?Q?7H2bD1E8PVcfFXpBts+fgMvRmDsu0K/lbwSJ0gYUPQNM7DJPw4RRFM4LtvE0?=
- =?us-ascii?Q?hu0bEfFYKAOq+56Zf0b9NNcUOqhaFmbhQOYZTf8bykMqTluUsfyWw7t2pAei?=
- =?us-ascii?Q?BR5XDGrpqQD1L3lgc8M5L0yXOH3Dn2FysxskMMZylZlGhh0czljYAamlcXOh?=
- =?us-ascii?Q?kClTrw8BHPPcvIfxI1s/Kx58uG2jJkAKJvYsczklqkquM1PAqqHyX7i1AzE1?=
- =?us-ascii?Q?24ZRz5ItqAdID6sunfj5EqoZZOolpde5tlRUsES26f1X+OGMfmT4jvXddOwd?=
- =?us-ascii?Q?50jpZSdl0bAmXCbkeJE98tYt//Ucar5m8befB6qAENDOB4QO/Ih8iKEPmQMR?=
- =?us-ascii?Q?N6QbMq8CmfOCHxtDl7flW0QyQorqL2gn0RTlsPd5driy2PyyUWZ9G6pHAMNu?=
- =?us-ascii?Q?dqj9pDvz+2ghyBjq3TdwnvtXYvexdMU50NkXslR6QccoqIZ3t+e1TuArxtD/?=
- =?us-ascii?Q?t0iBvZq8WZuy+FjIYcYqrsludsnERrZgeu7hz+G1LvYlifxnbrWzRBgQEdWI?=
- =?us-ascii?Q?2AkCy4aVyvPriW/wBx2IExMNghsvGUntaBbYXVsmmd60wtpL6ysnS21/8mOV?=
- =?us-ascii?Q?ZIHps0ErvL3+T0YcMgwwpk4nuCi1Dcuw01sofL96TWFbQibmOQ+oGi2xoqvC?=
- =?us-ascii?Q?PRybnq+9Sq0UH22JvUYeCYhuLQiQX1R2xE/TiNRCzxc7zDHTQ/yeoa2UR1UR?=
- =?us-ascii?Q?Hlj0vbGnHcKnj/mwgnTX0ErnCyaZriA6Vu0MG8wIPbOvK7QqzGKgCtoDscia?=
- =?us-ascii?Q?Oe4zfIGbVskrxvHgpX0PjGZ3an000znq7P0BQYZ/QM06Ah87TKRI0aaxALx+?=
- =?us-ascii?Q?mGYmEJ7Lgs1Rb312yXRO8kfvsScN4G6fDaAac6vJhPVRk4S9gkK4Ndr1ZxAl?=
- =?us-ascii?Q?QZ6RAcb+XmmAISqtprFbk1rhtLIstKwsNqRYIeY9eTAzWZSGPZzEhIPKc3Lz?=
- =?us-ascii?Q?D/nL3v2MbtNjdLrytlLc8Y0+brMN+iuFAn+/WAK+P4FGrCbKMwqXNG3B38Zw?=
- =?us-ascii?Q?L0YYNST8lQ=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc212f96-000e-4999-6a27-08de7e7149ae
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 06:50:16.7482
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P4ReD/Xg+AQHHh5mXf1sfkBag8q5GXVzkWeJ9XBdX87RmyjABeknQBr7BPKRH2DbY1GRYLN5BtZNc8zOdelc5w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAsFsGkC/x3M0QpAMBSA4VfRubYaNsyrSIvt4JRGZ5GSd7dcf
+ hf//0BEJozQZQ8wXhRpDwlFnoFbx7CgIJ8MpSxrWUktJiUoWmS2O9twbpvQxph2bLysnILUHYw
+ z3f+zH973A3+QboxjAAAA
+X-Change-ID: 20260305-b4-is_err_or_null-59998a7d03c4
+To: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com, 
+ bpf@vger.kernel.org, ceph-devel@vger.kernel.org, cocci@inria.fr, 
+ dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org, 
+ gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org, 
+ intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev, 
+ kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+ linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org, 
+ linux-clk@vger.kernel.org, linux-erofs@lists.ozlabs.org, 
+ linux-ext4@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-hyperv@vger.kernel.org, 
+ linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-leds@vger.kernel.org, linux-media@vger.kernel.org, 
+ linux-mips@vger.kernel.org, linux-mm@kvack.org, 
+ linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org, 
+ linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
+ linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org, 
+ linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org, 
+ linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+ linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+ ntfs3@lists.linux.dev, samba-technical@lists.samba.org, 
+ sched-ext@lists.linux.dev, target-devel@vger.kernel.org, 
+ tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev, 
+ Philipp Hahn <phahn-oss@avm.de>
+Cc: Julia Lawall <Julia.Lawall@inria.fr>, 
+ Nicolas Palix <nicolas.palix@imag.fr>, Chris Mason <clm@fb.com>, 
+ David Sterba <dsterba@suse.com>, Ilya Dryomov <idryomov@gmail.com>, 
+ Alex Markuze <amarkuze@redhat.com>, Viacheslav Dubeyko <slava@dubeyko.com>, 
+ Theodore Ts'o <tytso@mit.edu>, Andreas Dilger <adilger.kernel@dilger.ca>, 
+ Steve French <sfrench@samba.org>, Paulo Alcantara <pc@manguebit.org>, 
+ Ronnie Sahlberg <ronniesahlberg@gmail.com>, 
+ Shyam Prasad N <sprasad@microsoft.com>, Tom Talpey <tom@talpey.com>, 
+ Bharath SM <bharathsm@microsoft.com>, 
+ Eric Van Hensbergen <ericvh@kernel.org>, 
+ Latchesar Ionkov <lucho@ionkov.net>, 
+ Dominique Martinet <asmadeus@codewreck.org>, 
+ Christian Schoenebeck <linux_oss@crudebyte.com>, 
+ Gao Xiang <xiang@kernel.org>, Chao Yu <chao@kernel.org>, 
+ Yue Hu <zbestahu@gmail.com>, Jeffle Xu <jefflexu@linux.alibaba.com>, 
+ Sandeep Dhavale <dhavale@google.com>, Hongbo Li <lihongbo22@huawei.com>, 
+ Chunhai Guo <guochunhai@vivo.com>, Miklos Szeredi <miklos@szeredi.hu>, 
+ Konstantin Komarov <almaz.alexandrovich@paragon-software.com>, 
+ Andreas Gruenbacher <agruenba@redhat.com>, Kees Cook <kees@kernel.org>, 
+ Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, Jan Kara <jack@suse.com>, 
+ Phillip Lougher <phillip@squashfs.org.uk>, 
+ Alexander Viro <viro@zeniv.linux.org.uk>, 
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
+ Steven Rostedt <rostedt@goodmis.org>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+ Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+ Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+ Juri Lelli <juri.lelli@redhat.com>, 
+ Vincent Guittot <vincent.guittot@linaro.org>, 
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+ Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+ Valentin Schneider <vschneid@redhat.com>, 
+ Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+ Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
+ Aaron Tomlin <atomlin@atomlin.com>, 
+ Sylwester Nawrocki <s.nawrocki@samsung.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ John Johansen <john.johansen@canonical.com>, 
+ Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
+ "Serge E. Hallyn" <serge@hallyn.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, Alasdair Kergon <agk@redhat.com>, 
+ Mike Snitzer <snitzer@kernel.org>, Mikulas Patocka <mpatocka@redhat.com>, 
+ Benjamin Marzinski <bmarzins@redhat.com>, 
+ "David S. Miller" <davem@davemloft.net>, David Ahern <dsahern@kernel.org>, 
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+ Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
+ Marcel Holtmann <marcel@holtmann.org>, 
+ Johan Hedberg <johan.hedberg@gmail.com>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
+ Jesper Dangaard Brouer <hawk@kernel.org>, 
+ John Fastabend <john.fastabend@gmail.com>, 
+ Stanislav Fomichev <sdf@fomichev.me>, Jamal Hadi Salim <jhs@mojatatu.com>, 
+ Jiri Pirko <jiri@resnulli.us>, 
+ Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>, 
+ Xin Long <lucien.xin@gmail.com>, Trond Myklebust <trondmy@kernel.org>, 
+ Anna Schumaker <anna@kernel.org>, Chuck Lever <chuck.lever@oracle.com>, 
+ Jeff Layton <jlayton@kernel.org>, NeilBrown <neil@brown.name>, 
+ Olga Kornievskaia <okorniev@redhat.com>, Dai Ngo <Dai.Ngo@oracle.com>, 
+ Jon Maloy <jmaloy@redhat.com>, Johannes Berg <johannes@sipsolutions.net>, 
+ Catalin Marinas <catalin.marinas@arm.com>, 
+ Russell King <linux@armlinux.org.uk>, John Crispin <john@phrozen.org>, 
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Rich Felker <dalias@libc.org>, 
+ John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, 
+ Andrzej Hajda <andrzej.hajda@intel.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Zhenyu Wang <zhenyuw.linux@gmail.com>, Zhi Wang <zhi.wang.linux@gmail.com>, 
+ Jani Nikula <jani.nikula@linux.intel.com>, 
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+ Tvrtko Ursulin <tursulin@ursulin.net>, 
+ Alex Deucher <alexander.deucher@amd.com>, 
+ =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Sandy Huang <hjc@rock-chips.com>, 
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+ Andy Yan <andy.yan@rock-chips.com>, Igor Russkikh <irusskikh@marvell.com>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ Pavan Chebbi <pavan.chebbi@broadcom.com>, Michael Chan <mchan@broadcom.com>, 
+ Potnuri Bharat Teja <bharat@chelsio.com>, 
+ Tony Nguyen <anthony.l.nguyen@intel.com>, 
+ Przemek Kitszel <przemyslaw.kitszel@intel.com>, 
+ Taras Chornyi <taras.chornyi@plvision.eu>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Iyappan Subramanian <iyappan@os.amperecomputing.com>, 
+ Keyur Chudgar <keyur@os.amperecomputing.com>, 
+ Quan Nguyen <quan@os.amperecomputing.com>, 
+ Heiner Kallweit <hkallweit1@gmail.com>, Marc Zyngier <maz@kernel.org>, 
+ Thomas Gleixner <tglx@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
+ Gregory Clement <gregory.clement@bootlin.com>, 
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, 
+ Vinod Koul <vkoul@kernel.org>, Linus Walleij <linusw@kernel.org>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Heiko Carstens <hca@linux.ibm.com>, 
+ Vasily Gorbik <gor@linux.ibm.com>, 
+ Alexander Gordeev <agordeev@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Sven Schnelle <svens@linux.ibm.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Eduardo Valentin <edubezval@gmail.com>, Keerthy <j-keerthy@ti.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Alex Williamson <alex@shazbot.org>, 
+ Mark Greer <mgreer@animalcreek.com>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
+ Shuah Khan <skhan@linuxfoundation.org>, 
+ Kieran Bingham <kieran.bingham@ideasonboard.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Joerg Roedel <joro@8bytes.org>, 
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, 
+ Dave Penkler <dpenkler@gmail.com>, "K. Y. Srinivasan" <kys@microsoft.com>, 
+ Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>, 
+ Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>, 
+ Justin Sanders <justin@coraid.com>, Jens Axboe <axboe@kernel.dk>, 
+ Georgi Djakov <djakov@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
+ x86@kernel.org, "H. Peter Anvin" <hpa@zytor.com>, 
+ =?utf-8?q?Pali_Roh=C3=A1r?= <pali@kernel.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10360; i=phahn-oss@avm.de;
+ h=from:subject:message-id; bh=LK3zT21XXqhQvbEwg2nItTFGXqZVrRtI29hZHPSW/Rg=;
+ b=kA0DAAoBNC0GU9GsrNsByyZiAGmwBcqh8d5mE3lAkbCCIhk2oWSgNcET++LXgLEGzX+74PInx
+ YkBMwQAAQoAHRYhBDls8G2tYNRwNAKmmDQtBlPRrKzbBQJpsAXKAAoJEDQtBlPRrKzbYqsIAK5d
+ elvBcseQjOmeiD4mSMAZLrcAEl20R9MpPKd4mWL5ml8BfXxNcML8Lnb2x/WwXL0Hqh2kmn+ol5+
+ jwvmVgqFrje1/XM4onDIIomJOYl/rYSo9qoSx+5IKZAy9eiZAEDM2imcIQKtITZKLNjFZpUiemv
+ mdOvazQvY2blxW+Lw4Oka7Gqf4ifxsINodUwI5EJjZnPs1AWGammHryjBSpAgbnOjEtCZ7iJAEM
+ 1l6rZhJZICWoWrt5P/y0CkrMmXMHjvK3or/XW/Oz6/UjFbEuZQMK4Nxx19avU2B1AgjKkKB7gjl
+ xFjM+LS1mYwhLw6sC6tDl2dBVLvscyKlify3SXk=
+X-Developer-Key: i=phahn-oss@avm.de; a=openpgp;
+ fpr=58AF7C2E007CDBE62C59E078F50EFDCF8AD04B1A
+X-purgate-ID: 149429::1773143722-1DCBBF5F-0E465A5B/0/0
+X-purgate-type: clean
+X-purgate-size: 10362
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
+X-purgate: clean
 
-On Mon, Mar 09, 2026 at 03:16:48PM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> Cheng-Yang reported a lockdep circular dependency between scx_sched_lock and
-> rq->__lock. scx_bypass() and sysrq_handle_sched_ext_dump() take
-> scx_sched_lock -> rq lock, while scx_claim_exit() (reachable from many paths
-> with rq lock held) takes rq -> scx_sched_lock. In addition, scx_disable()
-> directly calling kthread_queue_work() under scx_sched_lock creates another
-> chain through worker->lock -> pi_lock -> rq->__lock.
-> 
-> This patchset fixes these issues:
-> 
-> 1. Fix wrong sub_detach op check.
-> 2. Add scx_dump_lock and dump_disabled to decouple dump from scx_sched_lock.
-> 3. Always bounce scx_disable() through irq_work to avoid lock nesting.
-> 4. Flip scx_bypass() lock order and drop scx_sched_lock from sysrq dump.
-> 5. Reject sub-sched attachment to a disabled parent.
-> 
-> Tested on three machines (16-CPU QEMU, 192-CPU dual-socket EPYC, AMD Ryzen)
-> with lockdep trigger tests and an 11-test stress suite covering
-> attach/detach, nesting, reverse teardown, rapid cycling, error injection,
-> SysRq-D/S dump/exit, and combined stress. Lockdep triggered on baseline,
-> clean after patches.
+While doing some static code analysis I stumbled over a common pattern,
+where IS_ERR() is combined with a NULL check. For that there is
+IS_ERR_OR_NULL().
 
-With the comment from Cheng-Yang about fixing the link in patch 4/5.
+I've written a Coccinelle patch to find and patch those instances.
+The patches follow grouped by subsystem.
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Patches 55-58 may be dropped as they have a (minor?) semantic change:
+They use WARN_ON() or WARN_ON_ONCE(), but only in the IS_ERR() path, not
+for the NULL check. Iff it is okay to print the warning also for NULL,
+then the patches can be applied.
 
-Thanks,
--Andrea
+While generating the patch set `checkpatch` complained about mixing
+[un]likely() with IS_ERR_OR_NULL(), which already uses likely()
+internally. I found and fixed several locations, where that combination
+has been used.
+
+Signed-off-by: Philipp Hahn <phahn-oss@avm.de>
+---
+Philipp Hahn (61):
+      Coccinelle: Prefer IS_ERR_OR_NULL over manual NULL check
+      btrfs: Prefer IS_ERR_OR_NULL over manual NULL check
+      ceph: Prefer IS_ERR_OR_NULL over manual NULL check
+      ext4: Prefer IS_ERR_OR_NULL over manual NULL check
+      smb: Prefer IS_ERR_OR_NULL over manual NULl check
+      9p: Prefer IS_ERR_OR_NULL over manual NULL check
+      erofs: Prefer IS_ERR_OR_NULL over manual NULL check
+      fuse: Prefer IS_ERR_OR_NULL over manual NULL check
+      ntfs3: Prefer IS_ERR_OR_NULL over manual NULL check
+      gfs2: Prefer IS_ERR_OR_NULL over manual NULL check
+      pstore: Prefer IS_ERR_OR_NULL over manual NULL check
+      quota: Prefer IS_ERR_OR_NULL over manual NULL check
+      squashfs: Prefer IS_ERR_OR_NULL over manual NULL check
+      seq_file: Prefer IS_ERR_OR_NULL over manual NULL check
+      trace: Prefer IS_ERR_OR_NULL over manual NULL check
+      sched: Prefer IS_ERR_OR_NULL over manual NULL check
+      module: Prefer IS_ERR_OR_NULL over manual NULL check
+      sound: Prefer IS_ERR_OR_NULL over manual NULL check
+      kvm: Prefer IS_ERR_OR_NULL over manual NULL check
+      apparmor: Prefer IS_ERR_OR_NULL over manual NULL check
+      lib/test: Prefer IS_ERR_OR_NULL over manual NULL check
+      md: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/ipv6: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/9p: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/bluetooth: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/core: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/netlink: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/sched: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/sctp: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/sunrpc: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/tipc: Prefer IS_ERR_OR_NULL over manual NULL check
+      net/wireless: Prefer IS_ERR_OR_NULL over manual NULL check
+      mm: Prefer IS_ERR_OR_NULL over manual NULL check
+      arch/arm: Prefer IS_ERR_OR_NULL over manual NULL check
+      arch/mips: Prefer IS_ERR_OR_NULL over manual NULL check
+      arch/sh: Prefer IS_ERR_OR_NULL over manual NULL check
+      drm: Prefer IS_ERR_OR_NULL over manual NULL check
+      net: Prefer IS_ERR_OR_NULL over manual NULL check
+      irqchip: Prefer IS_ERR_OR_NULL over manual NULL check
+      phy: Prefer IS_ERR_OR_NULL over manual NULL check
+      pinctrl: Prefer IS_ERR_OR_NULL over manual NULL check
+      pmdomain: Prefer IS_ERR_OR_NULL over manual NULL check
+      s390: Prefer IS_ERR_OR_NULL over manual NULL check
+      target: Prefer IS_ERR_OR_NULL over manual NULL check
+      thermal: Prefer IS_ERR_OR_NULL over manual NULL check
+      vfio: Prefer IS_ERR_OR_NULL over manual NULL check
+      nfc: Prefer IS_ERR_OR_NULL over manual NULL check
+      mtd: Prefer IS_ERR_OR_NULL over manual NULL check
+      media: Prefer IS_ERR_OR_NULL over manual NULL check
+      iommu: Prefer IS_ERR_OR_NULL over manual NULL check
+      leds: Prefer IS_ERR_OR_NULL over manual NULL check
+      gpib: Prefer IS_ERR_OR_NULL over manual NULL check
+      hyperv: Prefer IS_ERR_OR_NULL over manual NULL check
+      aoe: Prefer IS_ERR_OR_NULL over manual NULL check
+      interconnect: Prefer IS_ERR_OR_NULL over manual NULL check
+      clk: Prefer IS_ERR_OR_NULL over manual NULL check
+      reset: Prefer IS_ERR_OR_NULL over manual NULL check
+      arch/x86: Prefer IS_ERR_OR_NULL over manual NULL check
+      debugobjects: Drop likely() around !IS_ERR_OR_NULL()
+      Input alps: Drop unlikely() around IS_ERR_OR_NULL()
+      file: Drop unlikely() around IS_ERR_OR_NULL()
+
+ arch/arm/common/bL_switcher.c                      |   2 +-
+ arch/mips/lantiq/clk.c                             |   2 +-
+ arch/sh/mm/ioremap.c                               |   2 +-
+ arch/x86/kernel/callthunks.c                       |   2 +-
+ arch/x86/kernel/irq.c                              |   2 +-
+ drivers/block/aoe/aoecmd.c                         |   2 +-
+ drivers/clk/clk.c                                  |   4 +-
+ drivers/clocksource/timer-pxa.c                    |   2 +-
+ drivers/gpib/common/iblib.c                        |   2 +-
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c          |   2 +-
+ drivers/gpu/drm/drm_sysfs.c                        |   2 +-
+ drivers/gpu/drm/i915/gvt/scheduler.c               |   4 +-
+ drivers/gpu/drm/radeon/radeon_test.c               |   2 +-
+ drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c    |   2 +-
+ drivers/hv/mshv_eventfd.c                          |   4 +-
+ drivers/input/mouse/alps.c                         |   2 +-
+ drivers/interconnect/core.c                        |   2 +-
+ drivers/iommu/omap-iommu.c                         |   2 +-
+ drivers/irqchip/irq-gic-v3.c                       |   2 +-
+ drivers/irqchip/irq-mvebu-odmi.c                   |   2 +-
+ drivers/leds/trigger/ledtrig-tty.c                 |   2 +-
+ drivers/md/dm-cache-metadata.c                     |   2 +-
+ drivers/md/dm-crypt.c                              |   4 +-
+ drivers/media/test-drivers/vimc/vimc-streamer.c    |   2 +-
+ drivers/mtd/nand/raw/gpio.c                        |  10 +-
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c   |   2 +-
+ drivers/net/ethernet/broadcom/tg3.c                |   2 +-
+ .../net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c   |   3 +-
+ drivers/net/ethernet/intel/ice/devlink/devlink.c   |   2 +-
+ .../ethernet/marvell/prestera/prestera_router.c    |   2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |   2 +-
+ drivers/net/mdio/mdio-xgene.c                      |   2 +-
+ drivers/net/usb/r8152.c                            |   2 +-
+ drivers/nfc/trf7970a.c                             |   2 +-
+ drivers/phy/phy-core.c                             |   2 +-
+ drivers/pinctrl/core.c                             |   2 +-
+ drivers/pmdomain/rockchip/pm-domains.c             |   2 +-
+ drivers/reset/core.c                               |   2 +-
+ drivers/s390/char/tape_class.c                     |   2 +-
+ drivers/target/target_core_fabric_configfs.c       |   6 +-
+ drivers/thermal/ti-soc-thermal/ti-thermal-common.c |   2 +-
+ drivers/vfio/vfio_main.c                           |   2 +-
+ fs/9p/fid.h                                        |   2 +-
+ fs/btrfs/inode.c                                   |   2 +-
+ fs/btrfs/transaction.c                             |   2 +-
+ fs/btrfs/tree-log.c                                |   2 +-
+ fs/btrfs/uuid-tree.c                               |   2 +-
+ fs/ceph/dir.c                                      |   2 +-
+ fs/ceph/snap.c                                     |   2 +-
+ fs/erofs/zdata.c                                   |   2 +-
+ fs/ext4/fast_commit.c                              |   2 +-
+ fs/ext4/mballoc.c                                  |   2 +-
+ fs/ext4/namei.c                                    |   2 +-
+ fs/ext4/symlink.c                                  |   2 +-
+ fs/fuse/dir.c                                      |   2 +-
+ fs/gfs2/glock.c                                    |   2 +-
+ fs/ntfs3/fsntfs.c                                  |   8 +-
+ fs/pstore/zone.c                                   |   2 +-
+ fs/quota/quota.c                                   |   2 +-
+ fs/seq_file.c                                      |   4 +-
+ fs/smb/client/cifsglob.h                           |   2 +-
+ fs/smb/client/connect.c                            |   2 +-
+ fs/smb/client/readdir.c                            |   2 +-
+ fs/squashfs/cache.c                                |   2 +-
+ include/linux/file.h                               |   2 +-
+ include/net/9p/client.h                            |   2 +-
+ kernel/module/main.c                               |   2 +-
+ kernel/sched/ext.c                                 |   2 +-
+ kernel/trace/fprobe.c                              |   2 +-
+ kernel/trace/kprobe_event_gen_test.c               |   2 +-
+ kernel/trace/trace_events_hist.c                   |   2 +-
+ lib/debugobjects.c                                 |   2 +-
+ lib/test_firmware.c                                |   2 +-
+ lib/test_kmod.c                                    |   4 +-
+ mm/kmemleak.c                                      |  16 +--
+ net/9p/trans_rdma.c                                |   8 +-
+ net/bluetooth/mgmt.c                               |   6 +-
+ net/core/xdp.c                                     |   2 +-
+ net/ipv6/ila/ila_xlat.c                            |   2 +-
+ net/ipv6/ndisc.c                                   |   2 +-
+ net/netlink/af_netlink.c                           |   2 +-
+ net/sched/cls_api.c                                |   6 +-
+ net/sctp/socket.c                                  |   2 +-
+ net/sunrpc/xprtrdma/svc_rdma_transport.c           |  12 +-
+ net/tipc/socket.c                                  |   2 +-
+ net/wireless/reg.c                                 |   2 +-
+ scripts/coccinelle/api/is_err_or_null.cocci        | 125 +++++++++++++++++++++
+ security/apparmor/apparmorfs.c                     |   2 +-
+ sound/soc/samsung/i2s.c                            |   4 +-
+ sound/soc/xtensa/xtfpga-i2s.c                      |   2 +-
+ virt/kvm/eventfd.c                                 |   4 +-
+ 91 files changed, 251 insertions(+), 127 deletions(-)
+---
+base-commit: 1f318b96cc84d7c2ab792fcc0bfd42a7ca890681
+change-id: 20260305-b4-is_err_or_null-59998a7d03c4
+
+Best regards,
+-- 
+Philipp Hahn <phahn-oss@avm.de>
+
