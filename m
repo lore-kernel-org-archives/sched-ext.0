@@ -1,38 +1,38 @@
-Received: from mail.avm.de (mail.avm.de [212.42.244.120])
+Received: from mail.avm.de (mail.avm.de [212.42.244.94])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987AA47B43B;
-	Tue, 10 Mar 2026 11:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B2C47A0C0;
+	Tue, 10 Mar 2026 11:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773143754; cv=none; b=klHZaE8/WNkdmshT5hv9yb5uc6ZkW0kdbceJlYJO0ufbt+AvqeDflk5HTUyDEuCLewFZAnxW0s/WRsrIoz045xeTbN+tCVXrNnNVRff4fj9qshuu1Y7SQNGcJtQJ4yNtqF2lePbFcp0485kIVyZPjbBf65icas2VVEmpOv7mYHo=
+	t=1773143754; cv=none; b=GgGxq7mrj0aYRomP86Ya2LOoz4FCVzum+SG49DRbCw1O9532EP4MXlEb0q5c8MVm/VzEoEX5ib5Ipllw48OjZ23irjIGrvzOAMOmlSjLlsDHIQcvaMD3+kFR4c6Q6FSteUofiuQSDvyATf7OxJEz5zuHgcmK7t2ulp84RP0sIiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773143754; c=relaxed/simple;
-	bh=ljsuTOpGREUyGER98xbD6/ci86SD8pohlonTQBpqGIg=;
+	bh=sIEabNGpfTtaNmN5jdtpnoUYPpUdFMe596BbQNmq6Ew=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GkgikZynWmqLzDO2VrqbNBBzup0Ct+kNaHn4a+IVPXZR/AE7UDJ0Bva9sVYAmVoqR9N5u/yDDb10+s15Y94AOSxjqBPhmjtERrrucCkiCP7Hj6N+zN2o+ps1QahFsMk/lxb1vngVRvMJTwHIZJpdvy99BIHfjMeZ1jc9Gl+sTEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=PqCygKH8; arc=none smtp.client-ip=212.42.244.120
+	 In-Reply-To:To:Cc; b=kk0DKBg9RiO5+xBVAtove1Qz4lyv4qzcEYA17vK7UdffZg0jmU3j5CSlQy9gQY2iOR+QmI4zxUvOmDexoaegHuCda9Na8YhSHFbMB+pBjMh+uxZOjIxYVhJ/DCWxUvSez/UovxL/agzaO3p93V22iWcRAkNzkj4cRf04dUHRwic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=xKnBkg56; arc=none smtp.client-ip=212.42.244.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=avm.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="PqCygKH8"
+	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="xKnBkg56"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
-	t=1773143728; bh=ljsuTOpGREUyGER98xbD6/ci86SD8pohlonTQBpqGIg=;
+	t=1773143728; bh=sIEabNGpfTtaNmN5jdtpnoUYPpUdFMe596BbQNmq6Ew=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=PqCygKH8TUTFzdsVoltpS6V+urh3nKuUaWPGyQ9+G5dBBIMLMlSqFUF2pQu2ztCks
-	 nKjygDeUmN//qOptE9nqaXpkixC5XmuX8GEDJn5HpI8613PWAZldzQgtG5ilRHjEDe
-	 PPv3OqXdqRSmvRO/4sRCoDxU/Kdn2GWugjDbKUbA=
-Received: from [2001:bf0:244:244::71] (helo=mail.avm.de)
+	b=xKnBkg5622xaCaFlGwFQ3bswFSgdcTVbCDHB3k8l65KFt6Ule9kyi3QR8HfOXuW5L
+	 MKbugm+H1wq/E04UmM1cfkP9mUjiEZ3Ws7yzlEjYYTJHZ64lqewOtbO15JI10WApm1
+	 CoPFx+DZxYAYXylALiT4nuOog37Am7eL2zh2ct4Q=
+Received: from [212.42.244.71] (helo=mail.avm.de)
 	by mail.avm.de with ESMTP (eXpurgate 4.55.2)
 	(envelope-from <phahn-oss@avm.de>)
-	id 69b006b0-b734-7f0000032729-7f0000019cb0-1
+	id 69b006b0-e21d-7f0000032729-7f000001bae4-1
 	for <multiple-recipients>; Tue, 10 Mar 2026 12:55:28 +0100
-Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [IPv6:2001:bf0:244:244::71])
+Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [212.42.244.71])
 	by mail.avm.de (Postfix) with ESMTPS;
 	Tue, 10 Mar 2026 12:55:28 +0100 (CET)
 From: Philipp Hahn <phahn-oss@avm.de>
-Date: Tue, 10 Mar 2026 12:49:25 +0100
-Subject: [PATCH 59/61] debugobjects: Drop likely() around !IS_ERR_OR_NULL()
+Date: Tue, 10 Mar 2026 12:49:19 +0100
+Subject: [PATCH 53/61] hyperv: Prefer IS_ERR_OR_NULL over manual NULL check
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -41,7 +41,7 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260310-b4-is_err_or_null-v1-59-bd63b656022d@avm.de>
+Message-Id: <20260310-b4-is_err_or_null-v1-53-bd63b656022d@avm.de>
 References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
 In-Reply-To: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
 To: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com, 
@@ -71,55 +71,61 @@ To: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com,
  sched-ext@lists.linux.dev, target-devel@vger.kernel.org, 
  tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev, 
  Philipp Hahn <phahn-oss@avm.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
- Thomas Gleixner <tglx@kernel.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1116; i=phahn-oss@avm.de;
- h=from:subject:message-id; bh=ljsuTOpGREUyGER98xbD6/ci86SD8pohlonTQBpqGIg=;
- b=owEBbQGS/pANAwAKATQtBlPRrKzbAcsmYgBpsAafUF4Co3bKHEJh1nSPEbGPanpbmXqLGBVTE
- nsli8aGTIqJATMEAAEKAB0WIQQ5bPBtrWDUcDQCppg0LQZT0ays2wUCabAGnwAKCRA0LQZT0ays
- 2/eqCACfKEiwIm4grjaffCaqYK9UtMC/I42k93h5L5QQzw4cYMYd8FGhvLp+Ug9Jk9iQltpydL0
- M021kU+8e5LuC9HNGAP+FvXfKicTrLe4WOGLghTKJxJD0Qnwt87qFBwN4C5TgDS7lK8yPptqdRT
- xavsstUunap8iVxwbzeUWdgcTpG4nsY9KAjliWo7xLgVYhCSEWYrkYbks39zWe9p1rptJWM2IT/
- +/O3p9icHSV3twwgGTFQhBYPys+tvE7XNArxXHhB+XYW7AEdqLgSeLiL6ig5y++9xZFwEIcnWi0
- 5dJklCZYTethhL0MgTuOAEkoSCl0Bk6MDrD8akTrSRkzdCkv
+Cc: "K. Y. Srinivasan" <kys@microsoft.com>, 
+ Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>, 
+ Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1146; i=phahn-oss@avm.de;
+ h=from:subject:message-id; bh=sIEabNGpfTtaNmN5jdtpnoUYPpUdFMe596BbQNmq6Ew=;
+ b=owEBbQGS/pANAwAKATQtBlPRrKzbAcsmYgBpsAaKQPK6RykE0QE2RJD5htL1ZvRNh+zI6jTmu
+ VOYpL5CXyeJATMEAAEKAB0WIQQ5bPBtrWDUcDQCppg0LQZT0ays2wUCabAGigAKCRA0LQZT0ays
+ 29fzB/oCGLAMazrUNiEmwKr9nq0MNT5XdhZH3wkJWE4yJ+UKMd35Xi9PPSb65qZMk+N4uMiZj2H
+ T6Td1MreYgfIRLT7kTJk/n1BuSWWFP55nfvFZFjjhY5aoonvuH6RpMC7x9+9tNKQtJ7ne+y8JUp
+ qmDL3C1GxXXFNKbwYmtZySONDO5gXmgMnGjDdckVFucnIkQYwHywWpIrPTZv3zUS9k6qS6F4HLs
+ npSrcLjQ++9xnCfmtppGIezlVuCbkGtNbWVtJ6RuDAqRXXu4e1NER6f7pIlU/5AgYfpLOxyecDo
+ JLi+d7tyzKhXU/h5ql9oJc0IZPZktOy6eLbVlaElpfc4YFhD
 X-Developer-Key: i=phahn-oss@avm.de; a=openpgp;
  fpr=58AF7C2E007CDBE62C59E078F50EFDCF8AD04B1A
-X-purgate-ID: 149429::1773143728-7AAFCA3D-1B7F7E41/0/0
+X-purgate-ID: 149429::1773143728-95676F2F-E8C255A2/0/0
 X-purgate-type: clean
-X-purgate-size: 1118
+X-purgate-size: 1148
 X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
 X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
 X-purgate: clean
 
-IS_ERR_OR_NULL() already uses likely(!ptr) internally. checkpatch does
-not like nesting it:
-> WARNING: nested (un)?likely() calls, IS_ERR_OR_NULL already uses
-> unlikely() internally
-Remove the explicit use of likely().
+Prefer using IS_ERR_OR_NULL() over using IS_ERR() and a manual NULL
+check.
 
 Change generated with coccinelle.
 
-To: Andrew Morton <akpm@linux-foundation.org>
-To: Thomas Gleixner <tglx@kernel.org>
+To: "K. Y. Srinivasan" <kys@microsoft.com>
+To: Haiyang Zhang <haiyangz@microsoft.com>
+To: Wei Liu <wei.liu@kernel.org>
+To: Dexuan Cui <decui@microsoft.com>
+To: Long Li <longli@microsoft.com>
+Cc: linux-hyperv@vger.kernel.org
 Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Philipp Hahn <phahn-oss@avm.de>
 ---
- lib/debugobjects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hv/mshv_eventfd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 12f50de85b621a743a5b6f2638a308f6162c6fcc..12e2e42e6a31aa8706e859aca41b81c03889cffe 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -1024,7 +1024,7 @@ void debug_object_assert_init(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 	obj = lookup_object_or_alloc(addr, db, descr, false, true);
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (likely(!IS_ERR_OR_NULL(obj)))
-+	if (!IS_ERR_OR_NULL(obj))
- 		return;
+diff --git a/drivers/hv/mshv_eventfd.c b/drivers/hv/mshv_eventfd.c
+index d8471546e6a0c7e6eca933c640459f1d02152cb2..24dff7a498ac9c3edd31f4c9bc2f23729ba2a6ce 100644
+--- a/drivers/hv/mshv_eventfd.c
++++ b/drivers/hv/mshv_eventfd.c
+@@ -516,10 +516,10 @@ static int mshv_irqfd_assign(struct mshv_partition *pt,
+ 	if (irqfd->irqfd_resampler)
+ 		mshv_irqfd_resampler_shutdown(irqfd);
  
- 	/* If NULL the allocation has hit OOM */
+-	if (resamplefd && !IS_ERR(resamplefd))
++	if (!IS_ERR_OR_NULL(resamplefd))
+ 		eventfd_ctx_put(resamplefd);
+ 
+-	if (eventfd && !IS_ERR(eventfd))
++	if (!IS_ERR_OR_NULL(eventfd))
+ 		eventfd_ctx_put(eventfd);
+ 
+ out:
 
 -- 
 2.43.0
