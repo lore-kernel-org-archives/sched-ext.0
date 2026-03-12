@@ -1,60 +1,62 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B7140DFA1
-	for <sched-ext@lists.linux.dev>; Thu, 12 Mar 2026 17:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4429740DFA1
+	for <sched-ext@lists.linux.dev>; Thu, 12 Mar 2026 17:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773338136; cv=none; b=LBHs/D/0VDECzx9iZoNA0UECuJa5l3Ll6cl3gv6kBwv98FGsqKu6HD1QrYZkV8o3JxE+MCuAEIFjrB+MZbytIoAF0rrRi+SULQpd3OhzEFRC4Q0AR7rLPnIybHCuv89trD68qumwjP5hX5vHtqOMR6VBc9CuPYacfya3SYucQwA=
+	t=1773338138; cv=none; b=FTO86Bhtnqb9xeKbSvVeSzB7Zl7o9jc+RZuF37IlNa7aqEGQcuAeBLDXm0tw7/zQClJhbsSw8JbjciZioeKaSpq6PKAX2yu1vLo/H8McvHLW1QQlWc+FcJ9pdpjQNsqt6P+jgGG09ds3/To2CJfSrFyar4dXmrtqTE2v3+tTD6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773338136; c=relaxed/simple;
-	bh=DPp+fDwkF0Lz1DGCzTliX6r6qx+9ai27TTULgX3HOjM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mswgZOawVBzKV0KnfNK/W8TMqzS1mjwLrlVd7fw4F0IvdTlxKP34GaSS/xjbbnV/SOhAPgXng6JMdi6VrU7ICySgSb5LJcbyKxRoXXK1hWaEd9aADXLCW7FGCuJjrJAeFwGT0rUohToIHBVmO3gRUauiRe6O8KQevHsHvF79a8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=etymKDsi; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1773338138; c=relaxed/simple;
+	bh=4bglTImz9Sp2rODHW2D9z8ZP0GDmfEyIdQnrUA26yhY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ciQUeHxDVFsuvtHn8WCHSlwSHiFoEC3/s3Z9xdMDVf14HvrRBlHqhJ+F1kaxaxkpGhkbI/ENXRGxvW0km/wPmEW1uBUqq5i3P2ORF/T+2dDeil/XeP1iOZrkJFrnbQemJOOjpm0noD0J89Gi7zgTbD/WhqOvdJgo5IhCW06bo68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ekR56DrJ; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etymKDsi"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ad9516a653so6247925ad.0
-        for <sched-ext@lists.linux.dev>; Thu, 12 Mar 2026 10:55:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ekR56DrJ"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3599126be32so776487a91.1
+        for <sched-ext@lists.linux.dev>; Thu, 12 Mar 2026 10:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773338135; x=1773942935; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fdFG60QcqovBGx6aKrom/AQDIgTY2I4d+E0t9Zp7suA=;
-        b=etymKDsiiW+zYEWAn/arslhFW5MOV7gQ1J3bkqzvVfh1kWARUtvqhAXYFNbr0MKid/
-         W7MQ/efeOYsCc6elv/r31QTCH8MqIDHYXpT6W/bjRfDnBo8lExHg1br5REg2qScAjgen
-         rb9xrJUXtNVVe8Hk5d96EvvWniftTVW43/tM6Mx65uDX9sU0iSTC1h1ePjdH9JP00BHw
-         Vso3J3K8XJDHTEdaK7Dgw9PN6hChLS4nSdKXLBK9Ic+zM+7IOo542YPxb6EO9ipzv/JA
-         ln240C2LZVBp03JQ8N+xd/me0DpNNjWIVJ4R6lsq7Q02CheA6vRLqUrqYCG24+tvvaVQ
-         WkAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773338135; x=1773942935;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773338136; x=1773942936; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fdFG60QcqovBGx6aKrom/AQDIgTY2I4d+E0t9Zp7suA=;
-        b=RnBVyvzkgGRLdq3cuZ8ps4t0VRulRP6Dgvel1orDalki9h8R72oqjJCILw8K3o4FNT
-         m3ETWzSkaWt6tpMXxdYjAVMzAz0QzJT6LltoorxdiuAl2ge5aluyJFL5bWs5qOeVHb7G
-         2f8oScxXJ6ZFDuLzIhir5/xmAn78SMld7fz0JqY7yDCAkniLnihtssPwcxRR9MEXfaA4
-         5oFP9p/tj5R6AJzinGDNQW4pOvhRgiywDg7X5uSxETnISZ/TS8jUH/ih6jOCno6QOIiS
-         foCBEzbxJItJH/gAOvu/eVRz7M5tQFOQL///WdSYkEZl7fSkHuBO6YnxcJCCD3Ik0y2u
-         KV+w==
-X-Gm-Message-State: AOJu0YwOKt13GnXlwkG0pkhL4oAhDhx35V2jCOlAxUQgfZfy6eTk2IZR
-	x9c6JbTmqjaQDTLrJwJHDV2LUcPh/P5w6AdOU/eQwdLkPvEjxYPvLhEN6Z2yz70S
-X-Gm-Gg: ATEYQzzod16GbGb0lqWcIuB33hZGSZFc9YKEkHeeCVCO18T6sWEEFSjpS15CWyz4yuC
-	ir5U0OUsENYdUaXqTiTEV8ZvYFku4Yjlg2+iIjZMLTt2L8hN7smJfL8N+o3nAhULzlSjiNHFq9V
-	ZJidb5GpyCgY1ZBhnIgZW9nV33bsfHSa3ONBIUdUWvj1hCMKZQ61Z3+da2fQW+X4j4HDd3OlQ15
-	f3a1uXrFNO2OvT+zvcNGDPndz5CdkeBxqqLjqJ0d4GIM6R64qTjG2n0AHOsC90DEvgbB3PLtl5C
-	GxBH3yI3vegwIoReLThrjN6DwDj9uFZRDgYe4PNSTecbVJQ43e5+mwJHKp8JUKeLGPCYJnUcK1q
-	1LWYo8TWRpE/5KXRzIx53jkyjpVar1y7LLrGwIy2ahlMbsSbAnmMHin5+soxYYRxxjfjvDPSxZ2
-	BdhGTaNzZFjOqipXJFdPZRDgc24oCrTxtAJX8/MeNqIA03jHuAFUrT
-X-Received: by 2002:a17:902:ffd0:b0:2ae:3f3f:67b8 with SMTP id d9443c01a7336-2aeca9a1751mr3408125ad.15.1773338134618;
-        Thu, 12 Mar 2026 10:55:34 -0700 (PDT)
+        bh=2f0Kw4MzuOVEMIhInO7UjHI/HT9q8K92lDL5/DcczPQ=;
+        b=ekR56DrJp8fkk4G0//U7pk/m3DdKwQBdaMobLqiZUf1DIAJZwEP/1pjv6IO3UCZ64S
+         SJPTOGwv5Wfnm4nitny2BA+Dku67RoRE8Qj7LDWPxIG049tA8nCVwYBGM6flqNS43TV8
+         pL4eMOrcCJj8kt+v4ORe1Bq3LfZSO5r3XB7KnQl/WV593Oq44XAPCnLvRpwjQYh3PrGS
+         94N0gFWv47fTFNdQ5go1dxkEk9tiaxxnXkzhTEobfUJM8XQy6Az0VpdI6ohxWO9NvkSs
+         V9OsXxrcaDTJL+91C+XwG7Y++B37AERBz7MJ5eMcvmpT1dO5Hsb7AHcOXltoVWlK6yq4
+         jsHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773338136; x=1773942936;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2f0Kw4MzuOVEMIhInO7UjHI/HT9q8K92lDL5/DcczPQ=;
+        b=YUZJcJEHfys81k+ONpsfmcZK3k/s7AxSZvhLD9TxokWDKUA+6XPZ+M1RknJ+kk3UJ8
+         Db1vAdcE7K2PfAm6YYSSF4N5h5D+8BViOJAhNtFKiHUEOpz0lqAG5cxBeMDT+6XjIO4x
+         A//SN9eXsLlZFrP6nRWUvWibMSBxdfx1gxois5x/WxtskcSXKKxvecJR2wjtZofLodHJ
+         jFnYI/mMNC/taskGbYQCQYiB/sgKvBM/enZ7ODy9E/qNN9AQTsCeZxvfYst3GoAbwFzh
+         CzR6SMWz8vUnvfL6q9pTPTzUzuxuu02ZJrTzl3l/U4XFZ2JFiWvfAZjcs5BQVkXCMqVW
+         l1lQ==
+X-Gm-Message-State: AOJu0Yw1VNgjG/Hwwdtue2yNb344v43tQTbrFvYLYgxH8oNyfOM3+L/2
+	ppzu76nmiZTaeemW2x7smygGkJj4evpVrtXI6YofOcmF8AwT1kNyRTW1blTekx84
+X-Gm-Gg: ATEYQzwJV8dbBxDhm+gliQ7aa01H0zZuyaI+el6HMBvuapgiW9dzcD8YEVdsp3lAKGU
+	B+alhF7UjDNjtVi6iQE9TOzRcwmSnah5fD2Uq57MHOkbT8p/oBXvWtiu3xlQp5boQN4EntZwgye
+	pNvHfpsfjY9VXch/DjaBcmZVZhLlrn3YVXXXioxtNgsvgEDA4my32bYatxv3yWH8zFiSBKX/ohQ
+	HyrcbY3wqBJ16EqAT/AfoFWVuG3xMdNMVCAaKvji7/t8FsOQFFfnRdmfBTSHujz+RRLBeYpp3B8
+	KzNkY65b7OCLjiXc1gYVYoN09vL4DNL3GU+MAxwh+wPYOIH8q6bqvPIiAdQjD8YI/VrrEeR6I7z
+	an0LhYfuRGDR7zT4Y5vdNy7YueD2mPX0JXEO/2n3c+eHfS8zIGMizS/I14W4DbOhSAd3+lj0+SA
+	zdfvAV4Aq49gYiEmsMFdj89na/FPFYyE3P+uKCU5svOxJPBAkLCugf8dA4J7YsL6w=
+X-Received: by 2002:a17:90b:57cd:b0:359:f3b1:6811 with SMTP id 98e67ed59e1d1-35a21e30c1emr467084a91.1.1773338136257;
+        Thu, 12 Mar 2026 10:55:36 -0700 (PDT)
 Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:d94d:d676:4576:a8c4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73cdf24c5csm6027353a12.12.2026.03.12.10.55.33
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73cdf24c5csm6027353a12.12.2026.03.12.10.55.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 10:55:34 -0700 (PDT)
+        Thu, 12 Mar 2026 10:55:36 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: sched-ext@lists.linux.dev
 Cc: tj@kernel.org,
@@ -63,10 +65,12 @@ Cc: tj@kernel.org,
 	changwoo@igalia.com,
 	jserv@ccns.ncku.edu.tw,
 	yphbchou0911@gmail.com
-Subject: [PATCH v2 0/2] sched_ext: Update demo schedulers and selftests for deprecated APIs
-Date: Fri, 13 Mar 2026 01:55:25 +0800
-Message-ID: <20260312175527.1220540-1-yphbchou0911@gmail.com>
+Subject: [PATCH v2 1/2] sched_ext: Update demo schedulers and selftests to use scx_bpf_task_set_dsq_vtime()
+Date: Fri, 13 Mar 2026 01:55:26 +0800
+Message-ID: <20260312175527.1220540-2-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260312175527.1220540-1-yphbchou0911@gmail.com>
+References: <20260312175527.1220540-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -75,63 +79,95 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Two sets of sched_ext APIs have been deprecated:
+Direct writes to p->scx.dsq_vtime are deprecated in favor of
+scx_bpf_task_set_dsq_vtime(). Update scx_simple, scx_flatcg, and
+select_cpu_vtime selftest to use the new kfunc with scale_by_task_weight.
 
-- Direct writes to p->scx.dsq_vtime in favor of
-  scx_bpf_task_set_dsq_vtime()
-- ops.cpu_acquire/release() in favor of handling CPU preemption via the
-  sched_switch tracepoint, as introduced by commit a3f5d4822253
-  ("sched_ext: Allow scx_bpf_reenqueue_local() to be called from
-  anywhere")
-
-This series updates the demo schedulers (scx_simple, scx_flatcg,
-scx_qmap) and selftests (select_cpu_vtime, maximal) to use the new
-APIs, keeping them in sync with current best practices.
-
-Patch 1 updates scx_simple, scx_flatcg, and select_cpu_vtime to use
-scx_bpf_task_set_dsq_vtime() with scale_by_task_weight.
-
-Patch 2 removes the cpu_acquire/release stubs and the
-__COMPAT_scx_bpf_reenqueue_local_from_anywhere() compat guard from
-scx_qmap, unconditionally relying on the sched_switch TP. The maximal
-selftest and reload_loop test are also fixed to properly attach the
-sched_switch tracepoint via bpf_map__set_autoattach() and
-maximal__attach(), as both tests use the maximal skeleton.
-
-Changes in v2:
-- Use scx_bpf_task_set_dsq_vtime() with scale_by_task_weight instead
-  of direct assignment and remove redundant bpf_ksym_exists() logic
-  (Andrea Righi)
-- Mention commit a3f5d4822253 ("sched_ext: Allow
-  scx_bpf_reenqueue_local() to be called from anywhere") in the commit
-  message to clarify why ops.cpu_acquire/release() are being deprecated
-  (Andrea Righi)
-- Fix maximal.c and reload_loop.c to actually attach the sched_switch
-  tracepoint by calling bpf_map__set_autoattach() and maximal__attach()
-  (Andrea Righi)
-- Link to v1:
-  https://lore.kernel.org/all/20260312042001.955675-1-yphbchou0911@gmail.com/
-
-Thanks,
-Cheng-Yang
-
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
+ tools/sched_ext/scx_flatcg.bpf.c                         | 9 +++++----
+ tools/sched_ext/scx_simple.bpf.c                         | 6 ++++--
+ tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c | 7 +++++--
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-Cheng-Yang Chou (2):
-  sched_ext: Update demo schedulers and selftests to use
-    scx_bpf_task_set_dsq_vtime()
-  sched_ext: Update demo schedulers and selftests to drop
-    ops.cpu_acquire/release()
-
- tools/sched_ext/scx_flatcg.bpf.c                  |  9 +++++----
- tools/sched_ext/scx_qmap.bpf.c                    | 15 ++-------------
- tools/sched_ext/scx_simple.bpf.c                  |  6 ++++--
- tools/testing/selftests/sched_ext/maximal.bpf.c   | 15 ++++++---------
- tools/testing/selftests/sched_ext/maximal.c       |  3 +++
- tools/testing/selftests/sched_ext/reload_loop.c   |  3 +++
- .../selftests/sched_ext/select_cpu_vtime.bpf.c    |  7 +++++--
- 7 files changed, 28 insertions(+), 30 deletions(-)
-
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index a8a9234bb41e..5cb92b4f1635 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -551,9 +551,10 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
+ 	 * too much, determine the execution time by taking explicit timestamps
+ 	 * instead of depending on @p->scx.slice.
+ 	 */
++	u64 delta = scale_by_task_weight(p, SCX_SLICE_DFL - p->scx.slice);
++
+ 	if (!fifo_sched)
+-		p->scx.dsq_vtime +=
+-			(SCX_SLICE_DFL - p->scx.slice) * 100 / p->scx.weight;
++		scx_bpf_task_set_dsq_vtime(p, p->scx.dsq_vtime + delta);
+ 
+ 	taskc = bpf_task_storage_get(&task_ctx, p, 0, 0);
+ 	if (!taskc) {
+@@ -822,7 +823,7 @@ s32 BPF_STRUCT_OPS(fcg_init_task, struct task_struct *p,
+ 	if (!(cgc = find_cgrp_ctx(args->cgroup)))
+ 		return -ENOENT;
+ 
+-	p->scx.dsq_vtime = cgc->tvtime_now;
++	scx_bpf_task_set_dsq_vtime(p, cgc->tvtime_now);
+ 
+ 	return 0;
+ }
+@@ -924,7 +925,7 @@ void BPF_STRUCT_OPS(fcg_cgroup_move, struct task_struct *p,
+ 		return;
+ 
+ 	delta = time_delta(p->scx.dsq_vtime, from_cgc->tvtime_now);
+-	p->scx.dsq_vtime = to_cgc->tvtime_now + delta;
++	scx_bpf_task_set_dsq_vtime(p, to_cgc->tvtime_now + delta);
+ }
+ 
+ s32 BPF_STRUCT_OPS_SLEEPABLE(fcg_init)
+diff --git a/tools/sched_ext/scx_simple.bpf.c b/tools/sched_ext/scx_simple.bpf.c
+index b456bd7cae77..a61a7df81e49 100644
+--- a/tools/sched_ext/scx_simple.bpf.c
++++ b/tools/sched_ext/scx_simple.bpf.c
+@@ -121,12 +121,14 @@ void BPF_STRUCT_OPS(simple_stopping, struct task_struct *p, bool runnable)
+ 	 * too much, determine the execution time by taking explicit timestamps
+ 	 * instead of depending on @p->scx.slice.
+ 	 */
+-	p->scx.dsq_vtime += (SCX_SLICE_DFL - p->scx.slice) * 100 / p->scx.weight;
++	u64 delta = scale_by_task_weight(p, SCX_SLICE_DFL - p->scx.slice);
++
++	scx_bpf_task_set_dsq_vtime(p, p->scx.dsq_vtime + delta);
+ }
+ 
+ void BPF_STRUCT_OPS(simple_enable, struct task_struct *p)
+ {
+-	p->scx.dsq_vtime = vtime_now;
++	scx_bpf_task_set_dsq_vtime(p, vtime_now);
+ }
+ 
+ s32 BPF_STRUCT_OPS_SLEEPABLE(simple_init)
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
+index bfcb96cd4954..63e03fe5d983 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
+@@ -66,12 +66,15 @@ void BPF_STRUCT_OPS(select_cpu_vtime_running, struct task_struct *p)
+ void BPF_STRUCT_OPS(select_cpu_vtime_stopping, struct task_struct *p,
+ 		    bool runnable)
+ {
+-	p->scx.dsq_vtime += (SCX_SLICE_DFL - p->scx.slice) * 100 / p->scx.weight;
++	u64 delta = scale_by_task_weight(p, SCX_SLICE_DFL - p->scx.slice);
++
++	scx_bpf_task_set_dsq_vtime(p, p->scx.dsq_vtime + delta);
++
+ }
+ 
+ void BPF_STRUCT_OPS(select_cpu_vtime_enable, struct task_struct *p)
+ {
+-	p->scx.dsq_vtime = vtime_now;
++	scx_bpf_task_set_dsq_vtime(p, vtime_now);
+ }
+ 
+ s32 BPF_STRUCT_OPS_SLEEPABLE(select_cpu_vtime_init)
 -- 
 2.48.1
 
