@@ -1,95 +1,143 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B377B1DF248
-	for <sched-ext@lists.linux.dev>; Fri, 13 Mar 2026 01:22:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B193264F4
+	for <sched-ext@lists.linux.dev>; Fri, 13 Mar 2026 01:49:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773364959; cv=none; b=DrUTqm+7bJDsYtDOIsg+2Woo8FASokEx7bwl9ZAsMRRJ+dlL4idL4So0fE9axfRT5luD990O9XvSjWVXm7yX8W5ftogujsndB5qyNJECpfkM8zz45O61IsyESvIybGNF08PEoad0glkoKVByqeyc1HhIUaKC2OC1kiNvcwgxAj0=
+	t=1773366594; cv=none; b=ibS+C1lyuipBcq6BQLQG6i1sWM8FGW04tDwILvjBCnmRn9zWy9Ica3bAbw4w0d39VtCXj22RSOTKlGSYc9kh2uePbWWeBt99/PVWvJeDRiCP8ZiAE46GWdOOJQMv03AMkEs2WOmuVkT5QqiiGVUcHq/+dG5kl1CEEW53EUSJkYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773364959; c=relaxed/simple;
-	bh=S7s+E2PzTdUk5MK6iYimu8+oXGdZpi3jtSFFszLBfEI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bO1jMQlo6zOcO0UOAlkS44zkrRXlKq0OeBjlYkybm0SGADeoFDnljJVmVUQwaPdZtVoNBlXgdeefy7wR0C7QcjgRWy8Ad0vJbAgL4H5PVt990bMVy/xuNaCzZkPuE0ATu5QHmyYJv6PplmoAFZ/xE9s/uppuOtMl4aJ49/+QQnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pl+y+OGi; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1773366594; c=relaxed/simple;
+	bh=HcCYrUbwdbQ9qm+SnnxDstNfQalstmwwMj021hOE+0w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D50qyY3BdOql7Yzir4JoAN/R3THVNL78emCmnhQ4LUnyCG8gS2gUlTyPhq8Y/EYcJfsVeouiP3C28AlWok0JQxtB+Jpac3Lg60if/mdro1NcjrOJTKRKJswlXNs92TV+FJasFbV3mk8399OCPs5ENd+D7HqGpRSQJBUz/2q+2xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TByNGTR1; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pl+y+OGi"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-829781b2b01so1129556b3a.2
-        for <sched-ext@lists.linux.dev>; Thu, 12 Mar 2026 18:22:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TByNGTR1"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-829ac4670c4so1246258b3a.0
+        for <sched-ext@lists.linux.dev>; Thu, 12 Mar 2026 18:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773364958; x=1773969758; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p1qz7uWZq31kUxpd+jaV9EVh0vAAxHB2gsIYXu3Io+8=;
-        b=Pl+y+OGi+uCmjdZet3GcJ3Fy0MGelOJTBIVqNeTGAZQAgzrPiOMNDVv6qzVuF20uJQ
-         GDbqXAqEbINeOzDRLcMlkc3+WpCRDiPdowAaVygPrr4cJ2lsKWSQlkTp7ijKhq1jfLjH
-         tv4XWWE0btvh64i5rks4S/NJxecKaOMo+XiUh6fyTZI2K1bMd8mN/mmkcq9tlPFRvtEq
-         pO3HjW3R56KrJwlq1GrlG+rX5cqUoaujdj9+tKfOg+CDe9q/ACA62ghhS/EfUcabrBjI
-         RhVlTE2SEqmLlAuTM9iccZg6elR0VqMx1ZnDezL83UCYmnLPFNM+uFlILbHr2rXqALCt
-         J9GA==
+        d=gmail.com; s=20230601; t=1773366592; x=1773971392; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xyLz6TfxBag2GcRlSGPMEMKECM2OC8P+AKQN/bDhyRs=;
+        b=TByNGTR112Y+Dwda8va5/Nl3gekPRXy5h79pffBRgYRcYOg39K8LimCq0R513Px4+z
+         BtNIJ3xGbDXTF0Fmhx7FUtU2p/RbdMhUfqgFv+uhM7M+zszWhCRVZNqem4K3B59juziN
+         rVe1MuFH2fN9aGf4iAaKy/MX7s7Sdknn5xt6S3//6dYs/BBfCLGLsQOLQ4mtktmIwxEZ
+         Hssf97PsAMi32RxmrQ+Zl+R+ImObfaQb7OXKcbrKQPTrJXwIPKC+GwGCwfMAV6gv8GKl
+         JejfXbOHXs6gDIWJOP3UxmtW2zp1zflQxn3B8wneucANS02MUwtijejKfUUwPJo1xMwc
+         Cj+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773364958; x=1773969758;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p1qz7uWZq31kUxpd+jaV9EVh0vAAxHB2gsIYXu3Io+8=;
-        b=Iix6ppHLYHIqCy7nMXLXUa8eWLxM7YjhF/VKRpBY/RVIZg80y/ozrRweGxGJMWQq5f
-         NnCGYCb4EK71KsNDkhg9mW60qlFUqP+k4U39WfmbZgPlCT+em5UmzDi4BffqHgG8FCFJ
-         TlpKpy27C11cwL0osbucY9mEkN0bmeQdhy4pwNlH65x/uLPrQ6583qYB/SX0uq+gG2Ts
-         Q2y62/TBioHi4ZZY8o1EyaG9Z3NE73SXbcGFX66BRo4Exxrdy00ksmNjq8RdBKuq9Xwa
-         OCJtz7xzSGIr1JqngzBdq6z9aTfrcvrqwnjIUK9fMsKTK4VnLUlPe3cbcygfX7WMQ8hs
-         ff5g==
-X-Gm-Message-State: AOJu0YwYyyU5Lbcf6CxTrnPUp52OUFz7fXh9F+2l6HE2nz9AMbFqDvVr
-	M8WQwOoYgaTBka8iIxsnMOm/ILi4pNJE8y7VSZo9QhYqVxIqutdqkfes
-X-Gm-Gg: ATEYQzwD8IiXHpb7WXTsrVWAoDxthxRQwJHHwZnds7FRgOrx5bVpsqfKFReDVH8+tG1
-	OPvgSCS2ZIbnIubzQDhq9Gwy4rLvG+daJrlCO2efAVo4mBM2cxERtMk6ayVkdXV6ClvV6NqAoBY
-	nECkvCaoOqA4ZhgsWq5+r1VjM3seYMu8sSYnVrW43HK9sFkMD822fgGQZIYZIpaNQti7Mt8I95Z
-	4D21GTFtEmOQpwjHDuknD/bmCwYyU28rpfhan4zQr8wfGAW0l9zWeUjBntAc7kzcb4Y399JdiiP
-	2B0UFQtonTJjYOfP1Ufci5dlcFqnbnxoBW7zeOlbS2fmGKsti8M94Oj8ecZ/619bJmxlb1OGrwe
-	cme2Tx0lS9J6te87x7rEgso/JJQF0ySjRdacniUU+Kl+ToMGXS7Ap0i4ZOtwg1ApaT13qFNzQKs
-	0pxHBHMfuBk4Ghz1Kf0njvCKsQgzY9WVjCHZEK2oyUMu17Vgzx5cs+LcE6eIWv
-X-Received: by 2002:a05:6a21:6088:b0:398:7922:f510 with SMTP id adf61e73a8af0-398ecd9db00mr1055542637.56.1773364957888;
-        Thu, 12 Mar 2026 18:22:37 -0700 (PDT)
-Received: from eric-acer (36-225-72-126.dynamic-ip.hinet.net. [36.225.72.126])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73ebb75624sm223877a12.24.2026.03.12.18.22.36
+        d=1e100.net; s=20251104; t=1773366592; x=1773971392;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xyLz6TfxBag2GcRlSGPMEMKECM2OC8P+AKQN/bDhyRs=;
+        b=k+QkKn51C6djX4oMjvmkMoW0iYgXBy4/qKQzsPlEGnJIu2ycmH6EbechsK2DrrzU+y
+         hrmCSRNRmwa1rjhBiN/MhONyZxtWBPKsGOqwrC+KAJ+ND8k332hNuLGS6B5fABbwXkJP
+         UOucS/mBDx4HmWfGbvhbUN/k+mHEonVFgGQywcCNWxH4o8mzBCDo46t+trJitvKkvCI1
+         tGGbGVsqvXA8CFeF/3lzdhQMGFJa2FuQOym4zG7nLGwGx5JWIc5hTFARdRf8ETEFtrnK
+         lRLM9hDly7KQg8a2KU9bjGsVkWkIsJpLtjZE0rU2wVaHGQOF+y5wbRy6/OHetqAUMZBl
+         m4FQ==
+X-Gm-Message-State: AOJu0Yw+KWpPXq4QAZ1JbgpXfOEbNzE7dm22toqKn6UpQpnJrP3tMhwS
+	AQbi3J6xEYgNQLwrWREx+yTiEpDtIN5wqBnNaS2qCv4t2JxhDv6Bwi2bOHi+PF8M
+X-Gm-Gg: ATEYQzzP7dseOZm1z52Xwxn1BEftc7peWbCqj3QTkdAUgj/jWg0zT2t5on9hMJkTDIZ
+	n0ckKzz2HBCQ9MbnPhkXfQ6pcVZWnHbm6WvcLlG35AZlFoppdbWexm9Zz53++j08kwMjXFsg/xZ
+	X5xz2qcf8CsOZQ0VFG0NWmvZZEX6c/lSlp0D+L4fGA38QHE+tjm/ei37LVuB314Fe2a2WqK6Gno
+	ixyTAp4VY9MCY4XO19PEf91Am8yEncx/dYAvFYxkELI7e/n7zv38rqfshFJ0S2xnAp8qpFN3Ank
+	edMg6Q97fSydRWGZPYNo3nSltzGruRnbLdoh5o0APvQFLkwokLlEy1HFCmhB7c8DW+g5k0mNOSy
+	1JA/iabIHY/FsP0qblPEx2+E975DmnZHizdHT95HdT2Ewy3oWSlA7gUUIRwDZZgwxmcTswuU7dy
+	FuH3oFFN/BYS9K/QAQizjgBBS1TnhbiyoHcXgdkyJmg/H07gjIJIEY
+X-Received: by 2002:a05:6a00:bb84:b0:82a:8aa:cbb0 with SMTP id d2e1a72fcca58-82a19733b85mr1222594b3a.29.1773366591868;
+        Thu, 12 Mar 2026 18:49:51 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:d94d:d676:4576:a8c4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a07365090sm4268676b3a.46.2026.03.12.18.49.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 18:22:37 -0700 (PDT)
-Date: Fri, 13 Mar 2026 09:22:34 +0800
+        Thu, 12 Mar 2026 18:49:51 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev, tj@kernel.org, void@manifault.com,
-	changwoo@igalia.com, jserv@ccns.ncku.edu.tw
-Subject: Re: [PATCH v2 1/2] sched_ext: Update demo schedulers and selftests
- to use scx_bpf_task_set_dsq_vtime()
-Message-ID: <abNm2tsm9_2HFOTk@eric-acer>
-References: <20260312175527.1220540-1-yphbchou0911@gmail.com>
- <20260312175527.1220540-2-yphbchou0911@gmail.com>
- <abMoyauzdQlqUxz3@gpd4>
+To: sched-ext@lists.linux.dev
+Cc: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	jserv@ccns.ncku.edu.tw,
+	yphbchou0911@gmail.com
+Subject: [PATCH v3 0/2] sched_ext: Update demo schedulers and selftests for deprecated APIs
+Date: Fri, 13 Mar 2026 09:49:42 +0800
+Message-ID: <20260313014944.1234667-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <abMoyauzdQlqUxz3@gpd4>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Mar 12, 2026 at 09:57:45PM +0100, Andrea Righi wrote:
-> Hi Cheng-Yang,
-> 
-> On Fri, Mar 13, 2026 at 01:55:26AM +0800, Cheng-Yang Chou wrote:
-> > Direct writes to p->scx.dsq_vtime are deprecated in favor of
-> > scx_bpf_task_set_dsq_vtime(). Update scx_simple, scx_flatcg, and
-> > select_cpu_vtime selftest to use the new kfunc with scale_by_task_weight.
-> 
-> Sorry, that's my mistake, we should use scale_by_task_weight_inverse(), not
-> scale_by_task_weight() as I suggested in my previous email.
+Two sets of sched_ext APIs have been deprecated:
 
-I didn't notice it either. I'll send a v3 patch!
+- Direct writes to p->scx.dsq_vtime in favor of
+  scx_bpf_task_set_dsq_vtime()
+- ops.cpu_acquire/release() in favor of handling CPU preemption via the
+  sched_switch tracepoint, as introduced by commit a3f5d4822253
+  ("sched_ext: Allow scx_bpf_reenqueue_local() to be called from
+  anywhere")
 
--- 
+This series updates the demo schedulers (scx_simple, scx_flatcg,
+scx_qmap) and selftests (select_cpu_vtime, maximal) to use the new
+APIs, keeping them in sync with current best practices.
+
+Patch 1 updates scx_simple, scx_flatcg, and select_cpu_vtime to use
+scx_bpf_task_set_dsq_vtime() with scale_by_task_weight_inverse().
+
+Patch 2 removes the cpu_acquire/release stubs and the
+__COMPAT_scx_bpf_reenqueue_local_from_anywhere() compat guard from
+scx_qmap, unconditionally relying on the sched_switch TP. The maximal
+selftest and reload_loop test are also fixed to properly attach the
+sched_switch tracepoint via bpf_map__set_autoattach() and
+maximal__attach(), as both tests use the maximal skeleton.
+
+Changes in v3:
+- Use scale_by_task_weight_inverse() instead of scale_by_task_weight()
+  (Andrea Righi)
+- Link to v2:
+  https://lore.kernel.org/all/20260312175527.1220540-1-yphbchou0911@gmail.com/
+
+Changes in v2:
+- Use scx_bpf_task_set_dsq_vtime() with scale_by_task_weight instead
+  of direct assignment and remove redundant bpf_ksym_exists() logic
+  (Andrea Righi)
+- Mention commit a3f5d4822253 ("sched_ext: Allow
+  scx_bpf_reenqueue_local() to be called from anywhere") in the commit
+  message to clarify why ops.cpu_acquire/release() are being deprecated
+  (Andrea Righi)
+- Fix maximal.c and reload_loop.c to actually attach the sched_switch
+  tracepoint by calling bpf_map__set_autoattach() and maximal__attach()
+  (Andrea Righi)
+- Link to v1:
+  https://lore.kernel.org/all/20260312042001.955675-1-yphbchou0911@gmail.com/
+
 Thanks,
 Cheng-Yang
+
+---
+
+Cheng-Yang Chou (2):
+  sched_ext: Update demo schedulers and selftests to use
+    scx_bpf_task_set_dsq_vtime()
+  sched_ext: Update demo schedulers and selftests to drop
+    ops.cpu_acquire/release()
+
+ tools/sched_ext/scx_flatcg.bpf.c                  |  9 +++++----
+ tools/sched_ext/scx_qmap.bpf.c                    | 15 ++-------------
+ tools/sched_ext/scx_simple.bpf.c                  |  6 ++++--
+ tools/testing/selftests/sched_ext/maximal.bpf.c   | 15 ++++++---------
+ tools/testing/selftests/sched_ext/maximal.c       |  3 +++
+ tools/testing/selftests/sched_ext/reload_loop.c   |  3 +++
+ .../selftests/sched_ext/select_cpu_vtime.bpf.c    |  7 +++++--
+ 7 files changed, 28 insertions(+), 30 deletions(-)
+
+-- 
+2.48.1
+
