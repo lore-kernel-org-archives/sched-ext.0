@@ -1,63 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A3A38644E;
-	Fri, 13 Mar 2026 22:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7851AF4E9
+	for <sched-ext@lists.linux.dev>; Sat, 14 Mar 2026 01:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773440119; cv=none; b=Fmf6iojOs7lSD9fG9DVVUchWUFsF3UBjJPftenn2nHNdMGhSqtOYHy9XnoBDOIulwScu68+Jcs6KKtnpxnfQi/LV4W6LdpUtw9H6s0VRiSnYOwoWD/aUXoWVk1xPW2QPiwRbwYHnR7DGEPIeYyi/2HdP9O67FeNkfjNjxrKnzL4=
+	t=1773452385; cv=none; b=AjZ35zNqOxYPlKCPiM4Vl9aYF3qDGpGu495bpZbi/ef31pXWx59RswMRDJ5hrBuMJSrycXORDOOXZfTeLXT+ljANeYeG2EgxcDu0XLdX2eXjkgH4iNwmKrbhr7PxOpY2LktIV6GMeXANApiDctChPC0Oor6fIv324yNogUQf3B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773440119; c=relaxed/simple;
-	bh=FUml2dYt3mHJuR4iLNEQ7n3ENfytM4UsIEObrP1qvMg=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=AQjJUMawawYGTPVRKgumrlphUxvBYhrzliNDglQF0sAV9ttGeA3BxJn1MTAauRUmtSteanndUw+oku+MjQ18vBYViWLEcY3zXnfi4k/gfFhgLcPizWClfQPcHRo+vccLeiiOdZPilF6uJo8WHfGe/LTn7v9H+5/AbpgN6GvvNXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dhHNVGIV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773452385; c=relaxed/simple;
+	bh=JWBU+revNLiU051sHSBgTbPxPH54uL0h8PkcTap/zM4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iwTrVep9fNVBB8cpa7liDgUDCwHhfvmrGBID+HwSeCh82ExGlENwtdyQL/8kT752XeSoIQl72t2BkA4+tXnWOCcw7Tr10HXSu05Ww7vvywoeLjxlnjLpE5ut/1m1AY3t0cMDM+JmsTO0nkMo+dRwFbdkqBJUrm9BTTM+XnNO7SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHCG0HZq; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dhHNVGIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174CBC19421;
-	Fri, 13 Mar 2026 22:15:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773440119;
-	bh=FUml2dYt3mHJuR4iLNEQ7n3ENfytM4UsIEObrP1qvMg=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=dhHNVGIVRXLk8x2xyLKV0a1HXlGsGiQs2mDK1B+kM7yjlIMshtf7Uv0A36RVNvhO6
-	 GjhbhP2rcBykvR0moUcpjnW6idqCZjZ3GSPOtocEEYAxg8tkojadozA+vg1obznSOv
-	 pt2uBUMDng0mDTBvRjZMtSuMfJqwJpjQwS8hTWOToaI20H57/pflTfO8cFmDm/hQI8
-	 Cw2ixhiwv6pprP8Et9daAAyziI7wpr8t69QPssU5RH58N1UMcEFrHSJbzq6OQo2r3k
-	 tM6Ua0ukEjywe9av85dnqhi4TcyV1xorHS3/3Hing5RoY9UBrlBC60ULzA4BX49Z3W
-	 WmUkCXPp2rlEw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 02FE83808200;
-	Fri, 13 Mar 2026 22:15:15 +0000 (UTC)
-Subject: Re: [GIT PULL] sched_ext: Fixes for v7.0-rc3
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <00374b06f5f22a6c7af1edd5652bcc60@kernel.org>
-References: <00374b06f5f22a6c7af1edd5652bcc60@kernel.org>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <00374b06f5f22a6c7af1edd5652bcc60@kernel.org>
-X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.0-rc3-fixes
-X-PR-Tracked-Commit-Id: 2fcfe5951eb2e8440fc5e1dd6ea977336ff83a1d
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 8369b2e97d806537dcdba1d6b3bb46fb1407dab0
-Message-Id: <177344011348.1522840.11413840088812152262.pr-tracker-bot@kernel.org>
-Date: Fri, 13 Mar 2026 22:15:13 +0000
-To: Tejun Heo <tj@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHCG0HZq"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ab232cc803so13513785ad.3
+        for <sched-ext@lists.linux.dev>; Fri, 13 Mar 2026 18:39:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773452383; x=1774057183; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dAJWNXjsO/O8xArroDNSHxaklI4x8bUA1ttPHuFbeDA=;
+        b=iHCG0HZqb7UaoKXL0Cl9hAdUK3DJ/wzQpHvSCtnHCLxZr1pqKDpLPwi0HyoTRR5fjv
+         7ZdgpwRM6e0OPBlAKJHXfaZ6BWzWDtHMEuWGC4L/J9qTgGVJ5sL/fcwnljPIN9lDNJY0
+         J0BR9YGTUvETEYIl4FbGwjTYxk0u+uL/1/IQrQVqf7ZpgfnApTQk42vEH2t9jweAqCwu
+         K6MpL44yz7IKcrd5GN6+QavwhXu8gy4pIVzbi+pcmNGFCvtow1/zgD2OfTJLRYUIe6NY
+         gtDN05n0dPqj6d5ZkCdHjZCzs4Ype8sMkc8FR79UIFkodJGRq2BkRpOcuVkut1v1Iz6x
+         m8ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773452383; x=1774057183;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dAJWNXjsO/O8xArroDNSHxaklI4x8bUA1ttPHuFbeDA=;
+        b=aMvOjMgMOd4nE+eFlIqmIWqvwAmsTR6yu+uahbXiFbqMW3ZnVRKt2iLO1cf5Dlgawa
+         vVh9Eh4aKrqOu8rHoe8+5jhK9KjynC7c0HyL9LPqAWxm2RmdAMy79q+huanDm9RLaSBG
+         rbSuXZeKvTAziHexfNCmrSsCkGmG+AlWPjzezE4RS/m3NWuJBJmdCWCFXwQ6uBfmOv08
+         uA7mjbr4VlaZ6+9U6aFk3zwWZNYFDs98mTnVsFPe9Np9gIP+ddKkUChctl5nFNYP4yza
+         HcN0EF5j7z19mCL/H35v4pOCsp25LloOQ9Az/ylQuC8jH+CSzX5cvUWzUuaeUux0UX3D
+         8Y8Q==
+X-Gm-Message-State: AOJu0YzeSA5NNuMypaP5OY5JfkZrKbY87lkShFNDksDCcPTjJbvZtCt8
+	FxAgGLPZqlbJx4H64ERsgBXNnNXyNkf+UWB1yDy19T2L/sS1ha960O4b8kjUKg==
+X-Gm-Gg: ATEYQzzdYbVHx7Qo6xRUq7ZPSnVsxWFhWXcXzeUCMitYNLn2JwpTH/Yz0ByhzhRvzOQ
+	iw33UaD1bt5MZyiToeeNCq5RZ5HAqj8p634OP9pCJMfJVhAdWSteP78QBpg+r6o2IWp2HxowA3x
+	yyppyA/bxa8h2oUMVS4PLOuTpABLzvJfRo8jb/ujC3WHnePMyolM5g+VmhQXE4QwFcWaGblYHek
+	KdTsArBfNkHiW2krxlbYV+bwDXIgYHo1xR+SXmqjXhXm7BdBUXDofIyg3wv2QwMZv0pzUPq62IV
+	6Dk4paohtR7g12x2EqzTz88AUd7fiQbo894s4uBzkx0uVzA+s1MsVrz7lJhGlyvcQaHqMT5rCgf
+	IzJbomYPDQzFDwexclTe3bGhrtGu/XX0yx6S4lo3p4GrQg11x4COJ0wlUHmU5v3qjwuh10sSWIB
+	EuyICpsNoPx1Y1ckz0yBT8dgLJLmsbC/Wg3qcalQWSNTLF3t9s5Gs=
+X-Received: by 2002:a17:903:174e:b0:2ae:7f28:124b with SMTP id d9443c01a7336-2aeca955e2bmr50515085ad.22.1773452383441;
+        Fri, 13 Mar 2026 18:39:43 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:812:f4b6:2aba:4bed])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece416212sm35512635ad.0.2026.03.13.18.39.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Mar 2026 18:39:43 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev
+Cc: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	jserv@ccns.ncku.edu.tw,
+	yphbchou0911@gmail.com
+Subject: [PATCH] sched_ext: Fix uninitialized ret in scx_alloc_and_add_sched()
+Date: Sat, 14 Mar 2026 09:39:34 +0800
+Message-ID: <20260314013934.12666-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Fri, 13 Mar 2026 10:28:37 -1000:
+Under CONFIG_EXT_SUB_SCHED, the kzalloc() and kstrdup() failure
+paths jump to err_stop_helper without first setting ret. The
+function then returns ERR_PTR(ret) with ret uninitialized, which
+can produce ERR_PTR(0) (NULL), causing the caller's IS_ERR() check
+to pass and leading to a NULL pointer dereference.
 
-> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.0-rc3-fixes
+Set ret = -ENOMEM before each goto to fix the error path.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/8369b2e97d806537dcdba1d6b3bb46fb1407dab0
+Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ kernel/sched/ext.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Thank you!
-
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index e7ab3647e35f..c45e4cfbae17 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6210,13 +6210,17 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ 
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	char *buf = kzalloc(PATH_MAX, GFP_KERNEL);
+-	if (!buf)
++	if (!buf) {
++		ret = -ENOMEM;
+ 		goto err_stop_helper;
++	}
+ 	cgroup_path(cgrp, buf, PATH_MAX);
+ 	sch->cgrp_path = kstrdup(buf, GFP_KERNEL);
+ 	kfree(buf);
+-	if (!sch->cgrp_path)
++	if (!sch->cgrp_path) {
++		ret = -ENOMEM;
+ 		goto err_stop_helper;
++	}
+ 
+ 	sch->cgrp = cgrp;
+ 	INIT_LIST_HEAD(&sch->children);
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+2.48.1
+
