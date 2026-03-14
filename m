@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1102D8773;
-	Sat, 14 Mar 2026 09:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644C92D3EE5;
+	Sat, 14 Mar 2026 09:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773479093; cv=none; b=ZAiTGOJNy2a2AniLfkAfXbFdWAjIkY1YYeZIbaUlTqB1BOlfdsp6mCTUCciuoViNRAGKbjY0AtuDnKUzQiXqYjJgPcJknR5X1in9xyimk6OAZyuZj4ur8Up89X8jDgKIgAMnFmN+cDgR4x0VDWjMh+rzDvnYZSqcSfGKmrjVSlY=
+	t=1773479095; cv=none; b=UNkRtw4C59Q62l1Lk7i/AAHMHbre4V62kjhXjFgEcHY/QjJJt9EIVPfW9xne+xojqGuJSEXcXkVu7WgRomm7C/Mg2DIhdysqvEi+PbhrKHcd95vzOrSJcJsh2M1Iwok6WcFIgeoti4TWvHo4CsZwUHoZEI/hQqzgHPvGtcZ64uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773479093; c=relaxed/simple;
-	bh=w4wWsKfgwuwyK6wLp9ak9sb2QQeWum1J2UbHniKD2xU=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=AvqNG/3cRcnjToPDgsUzNa7ZqUIhXInaWIFYLlsJ+zu9G52zP4Q67R/Sd0M+/2ZhapQZjDTw7oLVA0uV9qSn7nFhGR2VePJCEbFWhmrvvCOjbznuBygzOEA00IhDUYAcG06FoZxfEkt4N2B7WjiBsziEaj457yzYd4yydAMcXR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YGtwzb2u; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773479095; c=relaxed/simple;
+	bh=uZtu01RYIsVKns4vmPF/TDGYmHuBpiShOv9vDfXQBDM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=MITsUVFj7RO8i9uQKLNx8Im7sr4im00+jY4+9SNo4Dvs7/9PexDMMuVlF21CvCYGwUskf9L9LCH6WTSvTx9MiOuyJVT+8MmheG2qw9fllctlHVn544wdj4urgnp5BleQJ9ujuXUqQWxzUK/qfQBtDZPt8eO7J9nJdrKX8aY6xa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sNKHszGS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YGtwzb2u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAF5C116C6;
-	Sat, 14 Mar 2026 09:04:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sNKHszGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A53C116C6;
+	Sat, 14 Mar 2026 09:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773479092;
-	bh=w4wWsKfgwuwyK6wLp9ak9sb2QQeWum1J2UbHniKD2xU=;
+	s=k20201202; t=1773479095;
+	bh=uZtu01RYIsVKns4vmPF/TDGYmHuBpiShOv9vDfXQBDM=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=YGtwzb2uNijplMT98XDXjTBBg9/EF3V2xdsiWY2LD4pkPToF2hCl2JF11iRG8y3V+
-	 5FF9yWxGimPoch2EqbZXpgnKgMdPJgIt0ktwJAeNG5joIL5Bi6dEps4gbc41jhm1hf
-	 /zAsOQ+ME8cGLP4Fb7DJfYiaEcI5vjO3KEIReDHaN6jrCf+FA/VsmpC/1qYuqd9eBA
-	 cQX/+md+1VP2hnllX+5MX/voOgzQ3WqxKh1rTXsefN3qmJFWUWGp2crDpqPwLMnzkv
-	 C+gUds/nW5Kbx27/zfQw32xr8Y4s0kVv3DVtvTunBEBGE8OmHDFJPR3qjg0MTTrtHI
-	 tbJA2b96igKkA==
-Date: Fri, 13 Mar 2026 23:04:51 -1000
-Message-ID: <ebe2578e7e6bee15b366c3309512fb09@kernel.org>
+	b=sNKHszGS6lRRPPupBs9UDyf0kCGHgco9Rf3okMnhBwt8Py+kuvNRdIdpCv73yC+3W
+	 zBHU34EIP49ZLAEhZmztQDjsQjPU5oXwE+1PRO2QVfNVo1Z+OU5IBa3ict5AHeMb9T
+	 Cpt+DaKpWp5Pn0WYWDs0NJqBd610tQkLIttLawQPJQrmGFuYFGz9zbiDojbMUnjJWi
+	 ZrqG+CvPNvF/DO8aOnqcdN+N10YA9eo1RpuuKTI3EMhTZjCmbU3B+iTmwSJsb+YmSU
+	 jCm5sUe5rTER4clXCeFQapyMZ1DnIdB2Vbz4NQowU6EmhftMlOBcFgN//laJjHsZ/c
+	 qh8qPz8woOyNw==
+Date: Fri, 13 Mar 2026 23:04:54 -1000
+Message-ID: <719a1f3866dec56f2c233cfc433bb5f3@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Cheng-Yang Chou <yphbchou0911@gmail.com>,
  sched-ext@lists.linux.dev
@@ -37,10 +37,10 @@ Cc: void@manifault.com,
  chia7712@gmail.com,
  linux-kernel@vger.kernel.org,
  Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH] sched_ext/selftests: Fix incorrect include guard
- comments
-In-Reply-To: <20260314042057.29691-1-yphbchou0911@gmail.com>
-References: <20260314042057.29691-1-yphbchou0911@gmail.com>
+Subject: Re: [PATCH v4 0/2] sched_ext: Update demo schedulers and selftests
+ for deprecated APIs
+In-Reply-To: <20260314033708.26483-1-yphbchou0911@gmail.com>
+References: <20260314033708.26483-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,7 +49,18 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello,
 
-Applied to sched_ext/for-7.1.
+Patch 1 looks fine. For patch 2, ops.cpu_acquire/release() are already
+removed from the tree, so this patch doesn't apply as-is.
+
+Also, a couple minor things:
+
+- select_cpu_vtime.bpf.c: There's an extra trailing blank line before
+  the closing brace in select_cpu_vtime_stopping().
+
+- maximal.bpf.c: The sched_switch tracepoint's prev_state parameter is
+  typed as unsigned long but the TP_PROTO declares unsigned int.
+
+Can you rebase and fix these up?
 
 Thanks.
 --
