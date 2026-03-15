@@ -1,73 +1,42 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34155264A65
-	for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 08:34:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E762542AA9;
+	Sun, 15 Mar 2026 08:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773563655; cv=none; b=aofouH2XZoLTg6lLF4bgnb5KAJ9rGo1K46h3YpDAL76bJhgxcv8siqdnIiNHkrysjswKUuGepuhPgvNwMgDRMS8kJ1Wh4XFrcwX3IARzWzJSIRQe6mEfSwnvE9AlDSib1Vtl5Vcj/0vIG7rhRFYasv8a1uF7u14Rpjsb5tlOo7A=
+	t=1773565087; cv=none; b=LbUTEFgcknaUHBjuxPqQuD1piq0dSVPHADaKw16SAXPrEY9+TOukk5pMQXYWEozwVBSDfbk0VhAbztPDxUZgw+Me8jJCcOerhXg5e0dj6CQdzaZSjCvOEoGuaqOqtfim8aJTZyp4BarZTZQ4isrkBDZ+MqAodYRB5mh2WRHqlJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773563655; c=relaxed/simple;
-	bh=JswHTJYz9MRngGoFjhu0NOM5RxPm4lbHbUjfClnKEyI=;
+	s=arc-20240116; t=1773565087; c=relaxed/simple;
+	bh=DGLZxbgMt8PKTNjGHdKNr4RiWJNhoHbCDBjjV69f9fY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PO1lB6D7rAgrw5Gb7rhSuYWOfBlf90dbZ4Hs5GlctC49EH4uwFZfMeTAyxgYeS+jgEKnuDJ3R3dyfCrAoMJaYmDdGzAgs01iDoGxAIo2H2C1Cn+NAJWRAtk43NBMh6nGvOiFn1++nwdzY6fOzgh7PXuSWfuq4FNR1TRX4kmypKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cg/pY3Oy; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=QTtPiuRLSwTLqgLz0/JQIcbTGfjqpltWGswNGY+fq0FustPiDYl/xalAXY9ycsmf8n2fBaBcsi9IPPbWiD6ORzih72+WbMtQIYqiQZwhEgTEgeathcMyUJdwHu86ssKABS19jbH3mXpw9u7BquFV7kayPYZlsWrwMBfOYNKQfuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u46yTCdV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cg/pY3Oy"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82990763921so3387941b3a.1
-        for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 01:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773563653; x=1774168453; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jLFBr3LHRGS0NMGe0BQLsy5cwcrOQ0A4omv5121esfo=;
-        b=Cg/pY3Oy6JmNRsQJIbkrcf0/NirgXHhHrxNZmNiR/d+r+ogYe1nVxdOWrokba8aa+7
-         G6+16g6X+iZ1muPYWpKWc4a6Aci/tYn0BmrjuDe5rQn6+0czpZiweGuqt+twKZaFvbH9
-         IyVKPu4UKv8y1Em6kqP51bDXkA/Qsm0i9dCpcyeunsMBH47u716K1jBTk02E6KJrWApt
-         oryvyPZUx2eQEzA0tV5vWBESARjyGSREtDbEEhk9HYWJbbsoXwhT53fEwh45HuzI43u5
-         iK4egpBQh4LhRiuuZBxKBYvWegWOL3WZLLJ1VL0+e+/3SNjz8mTUsUDUHjAd8BF6BJuZ
-         EwQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773563653; x=1774168453;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jLFBr3LHRGS0NMGe0BQLsy5cwcrOQ0A4omv5121esfo=;
-        b=moYAbCk4quES94FzCuzMhYrv/ph74qfiIigUzgDZq6G5k6TzCawnrNY5yXz0SiX0Mt
-         LNgrYf+ph5i8lSoz7jEOvI2pnnOuHZD5RKru/caDPOIQkvuRBPwwW/ixKTmn6QJhnM5J
-         ufnoILDDt7VH6KPnpH/vJFI/oDj6B/VMMLitBhAaCXyTR4EVeCPPqaDcg0AxWDab6GLQ
-         d/AoAXrLcYU9kSwa4iMrozQDjLA80O3OK/JblRREmEC0bajLi5PWJDFfcoA5RI96U571
-         aUMLxFNw/5AEVCR8osnUcnaWxtH/EOUeM4s40DHiIegongu5joQ8KJLlf2KdeCTwTvu8
-         rC+w==
-X-Gm-Message-State: AOJu0YxPC7r5MnjGKG3i9Q98bPCNduhaTz8Pm6/wV/gwHRil/VhLsEgV
-	QY1kvfbC9icxgNIry3t1vG33tQegsqxoRp6xLBO4b+L/7XHOjjcfTABsaEP8ISHC
-X-Gm-Gg: ATEYQzznGaOJUJZ/0O2A/5KJS9V4MKrewnvUxG4sUdDnRRkFM5W6z0lfCjKRKIuVBqJ
-	/BlJ8K4ktKXj1rsjCWit9gZfTRoIOg51ylVN87sT8t95w1WdFdU4K8QPqRGIZVmTEUJmnfUkZ3B
-	qq+o6smJQ67nzrTUZQZlDGQHHtAE7+Vj8XRUIO9GuQLw1qhWL93CSVGeisIYJ//c4Gd/0ArnvUY
-	w+zrrYED4y6E297OR20K/bOlMx7jzhk9MzIT6JAd6tFD2gzih46SaHVTWTOQOxrRXl2DUEjD0Zc
-	JK0NOJfjdGsxCmq4muPcxVJaDwBGJ63bQo9RtIq1jlT4X/1Pt+celKUXQ1Uvd7RWt+qAcyb8rbt
-	wNKNThcXN78/SAW9Hbk3pwBfBWirz877EW4ACUImUtpj6AgAIc9btg3OkBR3SjhkqjeTHJs5Z6a
-	fa7IcfOY3V8uBBcC+ynL7cBRwxonrXMkKmv2pk1yskUJtg0P+jgsn2aql+p8uL
-X-Received: by 2002:a05:6a21:4d8e:b0:38d:eeb9:8f6d with SMTP id adf61e73a8af0-398eca3f446mr8557119637.24.1773563653227;
-        Sun, 15 Mar 2026 01:34:13 -0700 (PDT)
-Received: from eric-acer (36-225-72-126.dynamic-ip.hinet.net. [36.225.72.126])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73eb9966d9sm5963378a12.11.2026.03.15.01.34.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 01:34:12 -0700 (PDT)
-Date: Sun, 15 Mar 2026 16:34:09 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v4 0/2] sched_ext: Update demo schedulers and selftests
- for deprecated APIs
-Message-ID: <abZvAf14_s1TrwM9@eric-acer>
-References: <20260315082500.597204-1-yphbchou0911@gmail.com>
- <20260315082500.597204-4-yphbchou0911@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u46yTCdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC54C4CEF7;
+	Sun, 15 Mar 2026 08:58:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773565086;
+	bh=DGLZxbgMt8PKTNjGHdKNr4RiWJNhoHbCDBjjV69f9fY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u46yTCdV6RB2B5+T3/ISGLWHAay6bNvdHIHSKbsXS2hn412/oe4FqbbICk7UNyDbC
+	 SV/yecCIiZL9No31YjCPKWzB06Lt12LxziKBohsBMW0ZYk5cDPf5batQ4mhGlmtczb
+	 M0NMnnepDC4jwNEJCWbgstAU562LVddmlNws5dmzSq+QdK414SRGb9VJuC2e4mpV+d
+	 VJbI1nw00LDLTGmOJUkIo/Kab+a0FGzD2sRoWcnVLQB6wI21xSXj/lPLrB+4fPwERs
+	 +6pttAk0C6P/y18HOYleQeSrtr8QUysavw3sdvYmvHEUX37NLYocp0ag+piaE++Q+/
+	 UmAq/NaCoh/yA==
+Date: Sat, 14 Mar 2026 22:58:05 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.1] sched_ext: Reduce DSQ lock contention
+ in consume_dispatch_q()
+Message-ID: <abZ0nerzU1j19BEG@slm.duckdns.org>
+References: <20260314235231.684671-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -76,11 +45,48 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260315082500.597204-4-yphbchou0911@gmail.com>
+In-Reply-To: <20260314235231.684671-1-arighi@nvidia.com>
 
-Please disregard this outdated cover letter, as I accidentally sent it.
-My apologies for the mess!
+Hello, Andrea.
+
+On Sun, Mar 15, 2026 at 12:52:31AM +0100, Andrea Righi wrote:
+...
+> Benchmarks that generate many enqueue/dispatch events (e.g., schbench)
+> show around 2-3x higher throughput with most of the scx schedulers with
+> this change applied.
+
+Can you share more details about the benchmark setup and results?
+
+> +	/*
+> +	 * Use trylock to avoid spinning on a contended DSQ, if we fail to
+> +	 * acquire the lock kick the CPU to retry on the next balance.
+> +	 *
+> +	 * In bypass mode simply spin to acquire the lock, since
+> +	 * scx_kick_cpu() is suppressed.
+> +	 */
+> +	if (scx_bypassing(sch, cpu)) {
+> +		raw_spin_lock(&dsq->lock);
+> +	} else if (!raw_spin_trylock(&dsq->lock)) {
+> +		scx_kick_cpu(sch, cpu, 0);
+> +		return false;
+> +	}
+
+But I'm not sure this is what we wanna do. If we *really* want to do this,
+maybe we can add a try_move variant; however, I'm pretty deeply skeptical
+about the approach for a few reasons.
+
+- If a shared DSQ becomes a bottleneck, the right thing to do would be
+  introducing multiple DSQs and shard them.
+
+- This likely is trading off fairness to gain bandwidth and this approach
+  depending on machine / workload may lead to severe starvation. One can
+  argue that controlled trade off between fairness and bandwidth is useful
+  for some use cases. However, even if that is the case, I don't think
+  trylock is the way to get there. If we think that low overhead high
+  fan-out shared queue is desirable, it'd be better to introduce dedicated
+  data structure which can do so in a controlled manner.
+
+Thakns.
 
 -- 
-Thanks,
-Cheng-Yang
+tejun
