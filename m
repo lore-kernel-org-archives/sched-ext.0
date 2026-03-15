@@ -1,62 +1,62 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40EC35A933
-	for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 18:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE9F3368B7
+	for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 18:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773598228; cv=none; b=KRzQeyc8cWqHSZn6TRfA+VJs1fgvbfdxthl4UQeDopdJuYp8zhM1SDvEt7eEEbmwlyaajK7gu2uXHFkWgDd1VU76ZeiJ0fyZNVpJut9JZg2NuJipYRlWpTZBMxs5/euYpiULlecVseuS7eY9/nGZ7q38OJ43Wt9Mqwf9KEVrDAM=
+	t=1773598231; cv=none; b=qj3v8Yf4dQ8VYLRAnmXy6wdEXNudZLHpblOOhH7umH4APfGco9Uo9iBld6bjaLep1IodmNeB6G6jCyigKM0AiNiZ7BZvCcON2cYIsOsLSfoICpEsdEnnM+9zM/xJYM2arPnR3N8JU7SkIFdZMMb43NATVf+2W9NYeRUCibJ4HWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773598228; c=relaxed/simple;
-	bh=9+E8lSHW1nogNg2zTBvUQTIgxNWWo4UjlfVhBZqWIp8=;
+	s=arc-20240116; t=1773598231; c=relaxed/simple;
+	bh=emomF28bC2HD9UZ1S5YEBJa3IpbhEs1g/EtIqKyAahU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dudlV9wAo0lHe8jmp/qYaiufYYfkUng9tET17WbuFtQuiqtIqmskdKNIKqgniB9cfinxiKIsWvrmDcxAV3BcsXI2FAnNSduVaVSXV4RIH3h7JrbWVbUUbZWrsgvKAu1jIzChZAOLy0FniyfB380ipNsC/5RvvCwSYh+/LgzeXyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/Tp0Xd+; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version; b=F8RhktmzxAuOI/mXEWrwyqutOqxSUEZHMZFpNS+n7MqO/8dinXq2Kn9XUFGhBriPl2OHI3mMmZ+ZfY7xsERqphCNAyQGNIeLSYAWwc03niSikLOYyqeZAqc6oGFMJMNSzczc1XZaXpmADmJFXgyKTY5GpCtGf9Yg4ilFxGFl+GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aXiB6aTp; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/Tp0Xd+"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-35691a231a7so2102704a91.3
-        for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 11:10:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXiB6aTp"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35b88a4f123so544809a91.1
+        for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 11:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773598227; x=1774203027; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1773598229; x=1774203029; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H12fPMCOAO/O39I7rbKCm2i4W4utibRo+hpS57Khl80=;
-        b=V/Tp0Xd+rUtFE9g1iLYZ0xgnr/gFgH/YBTNpMC6uXHarT8W6ssio3FbQ/VtZEg/TjT
-         uOIO6o3Tlvihqq5A+BY6+t1WA08y7hGLvsq/Ijg3Oq7tm/xDaBoPAQUoe5TLbXTdoX9r
-         LUsZ4//L85TNkptHMDJrd2J94uBqdHjitxPsTHIUvNtfNtwokq9RZxJxLk4zeF8QW+yV
-         S3YipzS9AvB1QZoJFwKBbjcHg/rxuzZz6ZXdae052mMwT03QtWD6HUzr4wehO7yZpOyQ
-         V1mO2qud2ksBkRbSknw4gQhX4hxcde4fv4c20qlyp/kogvRmWo41ZkB9zNU7HIIspdzd
-         B2Fg==
+        bh=rXmvjcx0XP78vVpm+BHrXpbru2P8EyHjwjUISmqRNjM=;
+        b=aXiB6aTpOr3/4QGTWZdq+ATthn1u9RNQiyfmstpAeweZ5NRbuvCVX8ZqxtoFjKzYOB
+         PD9BgIogfihV+711XEl1AMt5YKQSzRxUDKk/3IlNeMjpfWPHSCWgWDHWfCohJ4nVCEsR
+         icDksZ5AKcb+iiTHexsIVHqDSz6ZeFYbv+maqMChK3Tb9M5I1WC0DAdiIrRUINih13ML
+         Fhi+PrvSGfIk78fzWXbDKMWv1YIxDdhZVMw46wtj2lk5+iny6l8dRIPCR0FEwLUhoWP3
+         rv7Y8WjqFblqqUQlF09e5DHiF8dg2WEEw7XRkeUPbSFXjny88hbBFWV8j7WFfsx1tw0E
+         adig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773598227; x=1774203027;
+        d=1e100.net; s=20251104; t=1773598229; x=1774203029;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=H12fPMCOAO/O39I7rbKCm2i4W4utibRo+hpS57Khl80=;
-        b=E12XT3BxGjj/ZbbJxigy5DLsjzFGpu8+XVvXN/cchxReILAe1Aj0JhMjDFJpKJpY0W
-         vALZ0eJMn3IjEqS1dVGK5JNMZIIEdKdJ/CWHgLMO/uL67ilkRqSLREr29FFcAUFKiaQt
-         9wRkqR3y2x8yu06dmrNkiwysz1pWRrXwLHIVIIdqCfuw7+mkVaAZx7QBA71w3hasjPjc
-         xJWPotTOQZH29OMEmzg24mxfXDvRRzSpUm5IIyQj/AYt1yOkQyeys6vQcN+18cfpWD22
-         tO6NhGikaEcskaQUBbYfOfYULa0eB9CMlhH2c1zDPzLT3rQHRNdGlRbCVC31GZRJ8IhB
-         z2Kw==
-X-Gm-Message-State: AOJu0YzvdDHy0dEUNod+89YuWNnTppbjuq/JBq1GAkzrR1KDXbwr2e9G
-	ZxAeHXTQBqKACJcPjgTGKLZkaeCTNHImAdz73KJ82qlA8IUFXkRj0qK0Emd9x4tu
-X-Gm-Gg: ATEYQzxYLtszBjyfo/GZtOAQdlTVuon5inB1DGXKZEGTpiPl5iwTj0G4uDfZSHFkUOp
-	nYJl9EYJCrnjljBfJXFt5iRF1br8929TbCaPML1YLcZVZW2f6bVe0KWCUIqLIExJhZIdNxprlaI
-	sCDmnZbF5DwpT6tSNMSrhbaNRs0pnYmDeR55Hr8nW4kQ1inr/TXSzgSOPe8WQd20PucufD5Lply
-	xlPr8CkGd/p/DLfdHNdvq46STrEDeAMW/jLeTQO0GHQRrvVBtcXLwToyhSDPM7wf6vtZjzNjy4s
-	+ttq7tWzoboDRszCygUWnpuwUr1iABhkDkQdrwbqFvzeOBGx1nns1tITUfHn/FvETpEtNxgWdlB
-	NxUyC/Kym0KjV8FFTZlJw/KvAOIqJM3MGN4atJVFiZNuRZJOi99FRmxRwMXxFCk9HOQpDjqAiv2
-	cFL52REDHFgh0PrhdzuOUmQi6MwyubfhahrL4oyB4THbOoJk4RvO8N
-X-Received: by 2002:a17:90b:2e45:b0:341:134:a962 with SMTP id 98e67ed59e1d1-35a2206fb36mr8984179a91.28.1773598227008;
-        Sun, 15 Mar 2026 11:10:27 -0700 (PDT)
+        bh=rXmvjcx0XP78vVpm+BHrXpbru2P8EyHjwjUISmqRNjM=;
+        b=eTTLQMI/AcprLo/IZPMsEYYyv9WwpFqrgm1mqDSU2SKsecyUv/SITdT8WIVCeJXNM6
+         HUXCbXhiwUOpH65v4WznB+8Wj0GSWxE+73KhEZpGM4bparBvgCLo17WdBX6JK6TeL22X
+         83jmnx/JnrqdbVeBGNr5XUBrsYz2ZTE9AMpX5hZFYui87NTAtubPKT3XuuKZbJFRu/nt
+         OrLGJ1gS1p+OlhRzKgZax+X3dkeimr6ghEOqMmJD+xEIAxmwS0BVxuML299MQ0+X/UA5
+         qeJAFbLrk6OfDMrsH3k+ttgr2b9gxnIWJRZbVnM+d8PmFmehYB4+AvzoGf0DYNlUu5hW
+         hosw==
+X-Gm-Message-State: AOJu0Yz3chq9L3jUVKqDGHXG3pcfshuPKi6IwJ97Y0VblDFAMRQRXHR9
+	UlHEvW8KdSKfW4jBE2r/qfs/GblJvxUoP2sx0DV+WGluOcz+El/S4mpwYSEFPj5o
+X-Gm-Gg: ATEYQzz4HQmRvXiuBz6LwS2Xs2LvYvnB7a+nZlpOFG2b0I80bCFqCY+Fyi+6RBUnVqE
+	NkJPA3wvDevkqU/lc57FZhQ2vbpBfGC/uuUgnqoQXejd2KXZEmHX7Fjo7F8aoImmVYtQpPK868P
+	mTCw9FivzPCHfSEeIMR3LgwXgtysHF5syfXPVb4NeWf/+mfDMc5BJf7vmqhI2g80y76VIvt9fvN
+	gAHMPdPMISwdjStfo9H34xII4YDwIpT6VzcVVfW52jYFHb0NR1VQNGFGmNhfcoXol/zJD25epCi
+	xcS2xhK0dbrGQAz6hL1PRZXeFqK6Br4uATuh77XOn0zcMtLgLFQaNrPwZVme72804EmHmHU1vc7
+	DjvazvL/IZEJOn9b6xqQ3N0n859qu3OwXZWX/7BfWDIAAoc5pzRl6cYyC61R21W42zBgqxPgJMC
+	avORz9BNorHoJJOoUyfhUGmpN8rApjBKL/xURnqG4RnQi0oso5kjaf
+X-Received: by 2002:a17:90b:1c11:b0:356:7025:56c7 with SMTP id 98e67ed59e1d1-35a21e9ef5amr8075389a91.5.1773598229036;
+        Sun, 15 Mar 2026 11:10:29 -0700 (PDT)
 Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:c21f:f7d6:f4bc:6198])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35b9b797ab2sm1537624a91.7.2026.03.15.11.10.25
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35b9b797ab2sm1537624a91.7.2026.03.15.11.10.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 11:10:26 -0700 (PDT)
+        Sun, 15 Mar 2026 11:10:28 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: sched-ext@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>,
@@ -66,9 +66,9 @@ To: sched-ext@lists.linux.dev,
 Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
 	Chia-Ping Tsai <chia7712@gmail.com>,
 	yphbchou0911@gmail.com
-Subject: [PATCH 1/2] sched_ext: Cache per-node NUMA distance order in scx_idle_init_masks()
-Date: Mon, 16 Mar 2026 02:10:14 +0800
-Message-ID: <20260315181017.1377138-2-yphbchou0911@gmail.com>
+Subject: [PATCH 2/2] sched_ext: Use cached NUMA order in pick_idle_cpu_from_online_nodes()
+Date: Mon, 16 Mar 2026 02:10:15 +0800
+Message-ID: <20260315181017.1377138-3-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20260315181017.1377138-1-yphbchou0911@gmail.com>
 References: <20260315181017.1377138-1-yphbchou0911@gmail.com>
@@ -80,76 +80,99 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add scx_numa_node_order[] and scx_numa_node_order_cnt[], per-node
-arrays that store NUMA nodes sorted by increasing distance from each
-node. They are allocated and populated once during boot in
-scx_idle_init_masks() using the existing for_each_node_numadist()
-O(N^2) traversal, so the cost is paid only at init time.
+Switch pick_idle_cpu_from_online_nodes() from the O(N^2)
+for_each_node_numadist() traversal to the pre-sorted
+scx_numa_node_order[] arrays introduced in the previous patch.
+The per-call cost drops from O(N^2) to O(N), where N is the number
+of NUMA nodes.
 
-pick_idle_cpu_from_online_nodes() will use these cached arrays to
-reduce its per-call complexity from O(N^2) to O(N).
+Nodes that went offline after boot are skipped with a node_online()
+check, so CPU hotplug remains correct without needing to rebuild
+the arrays.
+
+The per_cpu_unvisited nodemask, used only by the old implementation
+to track visited nodes across loop iterations, is no longer needed
+and is removed.
 
 Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- kernel/sched/ext_idle.c | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ kernel/sched/ext_idle.c | 49 ++++++++++++-----------------------------
+ 1 file changed, 14 insertions(+), 35 deletions(-)
 
 diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-index 03be4d664267..623a0356d6c3 100644
+index 623a0356d6c3..90225bf3992c 100644
 --- a/kernel/sched/ext_idle.c
 +++ b/kernel/sched/ext_idle.c
-@@ -144,6 +144,14 @@ static s32 pick_idle_cpu_in_node(const struct cpumask *cpus_allowed, int node, u
-  */
- static DEFINE_PER_CPU(nodemask_t, per_cpu_unvisited);
- 
-+/*
-+ * Per-node sorted arrays of NUMA nodes in increasing distance order,
-+ * pre-computed at init time to avoid the O(N^2) traversal on each call
-+ * to pick_idle_cpu_from_online_nodes().
-+ */
-+static int **scx_numa_node_order;
-+static int *scx_numa_node_order_cnt;
-+
- /*
-  * Search for an idle CPU across all nodes, excluding @node.
-  */
-@@ -685,6 +693,36 @@ void scx_idle_init_masks(void)
- 		BUG_ON(!alloc_cpumask_var_node(&per_cpu(local_numa_idle_cpumask, i),
- 					       GFP_KERNEL, cpu_to_node(i)));
- 	}
-+
-+#ifdef CONFIG_NUMA
-+	/*
-+	 * Pre-compute per-node NUMA distance order so that
-+	 * pick_idle_cpu_from_online_nodes() can iterate in O(N) instead of
-+	 * the O(N^2) traversal required by for_each_node_numadist().
-+	 */
-+	scx_numa_node_order = kcalloc(nr_node_ids, sizeof(*scx_numa_node_order), GFP_KERNEL);
-+	BUG_ON(!scx_numa_node_order);
-+	scx_numa_node_order_cnt = kcalloc(nr_node_ids, sizeof(*scx_numa_node_order_cnt), GFP_KERNEL);
-+	BUG_ON(!scx_numa_node_order_cnt);
-+
-+	for_each_node(i) {
-+		scx_numa_node_order[i] = kcalloc(nr_node_ids, sizeof(int), GFP_KERNEL);
-+		BUG_ON(!scx_numa_node_order[i]);
-+	}
-+
-+	rcu_read_lock();
-+	for_each_node(i) {
-+		nodemask_t unvisited;
-+		int node = i, j = 0;
-+
-+		nodes_copy(unvisited, node_states[N_POSSIBLE]);
-+		node_clear(i, unvisited);
-+		for_each_node_numadist(node, unvisited)
-+			scx_numa_node_order[i][j++] = node;
-+		scx_numa_node_order_cnt[i] = j;
-+	}
-+	rcu_read_unlock();
-+#endif
+@@ -138,12 +138,6 @@ static s32 pick_idle_cpu_in_node(const struct cpumask *cpus_allowed, int node, u
  }
  
- static void update_builtin_idle(int cpu, bool idle)
+ #ifdef CONFIG_NUMA
+-/*
+- * Tracks nodes that have not yet been visited when searching for an idle
+- * CPU across all available nodes.
+- */
+-static DEFINE_PER_CPU(nodemask_t, per_cpu_unvisited);
+-
+ /*
+  * Per-node sorted arrays of NUMA nodes in increasing distance order,
+  * pre-computed at init time to avoid the O(N^2) traversal on each call
+@@ -157,42 +151,27 @@ static int *scx_numa_node_order_cnt;
+  */
+ static s32 pick_idle_cpu_from_online_nodes(const struct cpumask *cpus_allowed, int node, u64 flags)
+ {
+-	nodemask_t *unvisited;
+-	s32 cpu = -EBUSY;
+-
+-	preempt_disable();
+-	unvisited = this_cpu_ptr(&per_cpu_unvisited);
++	int idx;
+ 
+ 	/*
+-	 * Restrict the search to the online nodes (excluding the current
+-	 * node that has been visited already).
++	 * The order is pre-computed at boot time in scx_numa_node_order[],
++	 * so each call is O(N) rather than O(N^2), where N is the number
++	 * of NUMA nodes.
+ 	 */
+-	nodes_copy(*unvisited, node_states[N_ONLINE]);
+-	node_clear(node, *unvisited);
++	for (idx = 0; idx < scx_numa_node_order_cnt[node]; idx++) {
++		int numa_node = scx_numa_node_order[node][idx];
++		s32 cpu;
+ 
+-	/*
+-	 * Traverse all nodes in order of increasing distance, starting
+-	 * from @node.
+-	 *
+-	 * This loop is O(N^2), with N being the amount of NUMA nodes,
+-	 * which might be quite expensive in large NUMA systems. However,
+-	 * this complexity comes into play only when a scheduler enables
+-	 * SCX_OPS_BUILTIN_IDLE_PER_NODE and it's requesting an idle CPU
+-	 * without specifying a target NUMA node, so it shouldn't be a
+-	 * bottleneck is most cases.
+-	 *
+-	 * As a future optimization we may want to cache the list of nodes
+-	 * in a per-node array, instead of actually traversing them every
+-	 * time.
+-	 */
+-	for_each_node_numadist(node, *unvisited) {
+-		cpu = pick_idle_cpu_in_node(cpus_allowed, node, flags);
++		/* Nodes that went offline after boot are skipped. */
++		if (!node_online(numa_node))
++			continue;
++
++		cpu = pick_idle_cpu_in_node(cpus_allowed, numa_node, flags);
+ 		if (cpu >= 0)
+-			break;
++			return cpu;
+ 	}
+-	preempt_enable();
+ 
+-	return cpu;
++	return -EBUSY;
+ }
+ #else
+ static inline s32
 -- 
 2.48.1
 
