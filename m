@@ -1,178 +1,133 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE9F3368B7
-	for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 18:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9FC374730;
+	Sun, 15 Mar 2026 20:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773598231; cv=none; b=qj3v8Yf4dQ8VYLRAnmXy6wdEXNudZLHpblOOhH7umH4APfGco9Uo9iBld6bjaLep1IodmNeB6G6jCyigKM0AiNiZ7BZvCcON2cYIsOsLSfoICpEsdEnnM+9zM/xJYM2arPnR3N8JU7SkIFdZMMb43NATVf+2W9NYeRUCibJ4HWY=
+	t=1773605451; cv=none; b=EXliR78F5HwnVW78NtlvVzHy/qoR5W2RiqgldxFj1L1hO+xu/q+YppL0iaivGn3fXDsx7IUErm+L2R5FRbftc+IqqcEAUKuwBpseTEsqF/33CKVMNFHGdv1EBWGsbBTncVdhWhmpraqnSVNY2/yWhCk9GKIwTg6z9vF9PLoIAko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773598231; c=relaxed/simple;
-	bh=emomF28bC2HD9UZ1S5YEBJa3IpbhEs1g/EtIqKyAahU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8RhktmzxAuOI/mXEWrwyqutOqxSUEZHMZFpNS+n7MqO/8dinXq2Kn9XUFGhBriPl2OHI3mMmZ+ZfY7xsERqphCNAyQGNIeLSYAWwc03niSikLOYyqeZAqc6oGFMJMNSzczc1XZaXpmADmJFXgyKTY5GpCtGf9Yg4ilFxGFl+GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aXiB6aTp; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773605451; c=relaxed/simple;
+	bh=8hwK4wdAS2dqjAT/wdZ1kip1o2FwiGC/pQ9aHjdQzhA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IZEG12L0PtoN1APTw9U19AH28P2g7mhDe2JuvGaKB7CrkWbam7pon2YDXPUvNFte+09RJ68qI6Ruh1T1UcfDYJ7Fr6SuhCipi8NFP9IWX01T8L8t8J0r1SMBWxGN8TeoDRX0pX89nws0OKB7okQ+3EYfh0XUnISIes3stzFN6Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i8DkslNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXiB6aTp"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-35b88a4f123so544809a91.1
-        for <sched-ext@lists.linux.dev>; Sun, 15 Mar 2026 11:10:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773598229; x=1774203029; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rXmvjcx0XP78vVpm+BHrXpbru2P8EyHjwjUISmqRNjM=;
-        b=aXiB6aTpOr3/4QGTWZdq+ATthn1u9RNQiyfmstpAeweZ5NRbuvCVX8ZqxtoFjKzYOB
-         PD9BgIogfihV+711XEl1AMt5YKQSzRxUDKk/3IlNeMjpfWPHSCWgWDHWfCohJ4nVCEsR
-         icDksZ5AKcb+iiTHexsIVHqDSz6ZeFYbv+maqMChK3Tb9M5I1WC0DAdiIrRUINih13ML
-         Fhi+PrvSGfIk78fzWXbDKMWv1YIxDdhZVMw46wtj2lk5+iny6l8dRIPCR0FEwLUhoWP3
-         rv7Y8WjqFblqqUQlF09e5DHiF8dg2WEEw7XRkeUPbSFXjny88hbBFWV8j7WFfsx1tw0E
-         adig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773598229; x=1774203029;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rXmvjcx0XP78vVpm+BHrXpbru2P8EyHjwjUISmqRNjM=;
-        b=eTTLQMI/AcprLo/IZPMsEYYyv9WwpFqrgm1mqDSU2SKsecyUv/SITdT8WIVCeJXNM6
-         HUXCbXhiwUOpH65v4WznB+8Wj0GSWxE+73KhEZpGM4bparBvgCLo17WdBX6JK6TeL22X
-         83jmnx/JnrqdbVeBGNr5XUBrsYz2ZTE9AMpX5hZFYui87NTAtubPKT3XuuKZbJFRu/nt
-         OrLGJ1gS1p+OlhRzKgZax+X3dkeimr6ghEOqMmJD+xEIAxmwS0BVxuML299MQ0+X/UA5
-         qeJAFbLrk6OfDMrsH3k+ttgr2b9gxnIWJRZbVnM+d8PmFmehYB4+AvzoGf0DYNlUu5hW
-         hosw==
-X-Gm-Message-State: AOJu0Yz3chq9L3jUVKqDGHXG3pcfshuPKi6IwJ97Y0VblDFAMRQRXHR9
-	UlHEvW8KdSKfW4jBE2r/qfs/GblJvxUoP2sx0DV+WGluOcz+El/S4mpwYSEFPj5o
-X-Gm-Gg: ATEYQzz4HQmRvXiuBz6LwS2Xs2LvYvnB7a+nZlpOFG2b0I80bCFqCY+Fyi+6RBUnVqE
-	NkJPA3wvDevkqU/lc57FZhQ2vbpBfGC/uuUgnqoQXejd2KXZEmHX7Fjo7F8aoImmVYtQpPK868P
-	mTCw9FivzPCHfSEeIMR3LgwXgtysHF5syfXPVb4NeWf/+mfDMc5BJf7vmqhI2g80y76VIvt9fvN
-	gAHMPdPMISwdjStfo9H34xII4YDwIpT6VzcVVfW52jYFHb0NR1VQNGFGmNhfcoXol/zJD25epCi
-	xcS2xhK0dbrGQAz6hL1PRZXeFqK6Br4uATuh77XOn0zcMtLgLFQaNrPwZVme72804EmHmHU1vc7
-	DjvazvL/IZEJOn9b6xqQ3N0n859qu3OwXZWX/7BfWDIAAoc5pzRl6cYyC61R21W42zBgqxPgJMC
-	avORz9BNorHoJJOoUyfhUGmpN8rApjBKL/xURnqG4RnQi0oso5kjaf
-X-Received: by 2002:a17:90b:1c11:b0:356:7025:56c7 with SMTP id 98e67ed59e1d1-35a21e9ef5amr8075389a91.5.1773598229036;
-        Sun, 15 Mar 2026 11:10:29 -0700 (PDT)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:c21f:f7d6:f4bc:6198])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35b9b797ab2sm1537624a91.7.2026.03.15.11.10.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 11:10:28 -0700 (PDT)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	yphbchou0911@gmail.com
-Subject: [PATCH 2/2] sched_ext: Use cached NUMA order in pick_idle_cpu_from_online_nodes()
-Date: Mon, 16 Mar 2026 02:10:15 +0800
-Message-ID: <20260315181017.1377138-3-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260315181017.1377138-1-yphbchou0911@gmail.com>
-References: <20260315181017.1377138-1-yphbchou0911@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i8DkslNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA1BC4CEF7;
+	Sun, 15 Mar 2026 20:10:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773605450;
+	bh=8hwK4wdAS2dqjAT/wdZ1kip1o2FwiGC/pQ9aHjdQzhA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=i8DkslNXgktkAGJ6MuEn6LlQ5y90BfzQbko1GOQXLE4XkG+l2vv/J5EncH8P7t11s
+	 KB0x/I6PK8jMyS0uTgQ53rKANcJjxc8gwEfVdwH9mkKmJ8nW8EwtY66Mo99tzsgJlg
+	 Vk6mag7H5yivMD86L3ESPxN1QYjeDWq65M4DVdOmNWWmeVWgA1NgBAaC22RcyvUTmK
+	 Huh92NbbwUB/BXtnW7sB5DGSNltYnP8gy2weaFo4EhRrcv8s5JyEJww/a4MXo3beyG
+	 b+hr+57dv9XKNg7YWylQkXLb+eAAUs1tOulY3QL75gSJVdi/TVUC9aHcVJeCBOwi76
+	 xk5tmRQnFT+jw==
+Date: Sun, 15 Mar 2026 10:10:49 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, newton@meta.com
+Subject: Re: [PATCH sched_ext/for-7.1] sched_ext: Reduce DSQ lock contention
+ in consume_dispatch_q()
+Message-ID: <abcSSTZglXeHmgT4@slm.duckdns.org>
+References: <20260314235231.684671-1-arighi@nvidia.com>
+ <abZ0nerzU1j19BEG@slm.duckdns.org>
+ <abZ-li3Dq9_PXu58@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abZ-li3Dq9_PXu58@gpd4>
 
-Switch pick_idle_cpu_from_online_nodes() from the O(N^2)
-for_each_node_numadist() traversal to the pre-sorted
-scx_numa_node_order[] arrays introduced in the previous patch.
-The per-call cost drops from O(N^2) to O(N), where N is the number
-of NUMA nodes.
+(cc'ing Ryan Newton and quoting whole body)
 
-Nodes that went offline after boot are skipped with a node_online()
-check, so CPU hotplug remains correct without needing to rebuild
-the arrays.
+On Sun, Mar 15, 2026 at 10:40:38AM +0100, Andrea Righi wrote:
+> On Sat, Mar 14, 2026 at 10:58:05PM -1000, Tejun Heo wrote:
+> > Hello, Andrea.
+> > 
+> > On Sun, Mar 15, 2026 at 12:52:31AM +0100, Andrea Righi wrote:
+> > ...
+> > > Benchmarks that generate many enqueue/dispatch events (e.g., schbench)
+> > > show around 2-3x higher throughput with most of the scx schedulers with
+> > > this change applied.
+> > 
+> > Can you share more details about the benchmark setup and results?
+> 
+> Just running schbench and perf bench for now, it definitely needs more
+> testing, but I wanted to send a patch to start a discussion about this (I
+> should have added the RFC in the subject, sorry).
+> 
+> > 
+> > > +	/*
+> > > +	 * Use trylock to avoid spinning on a contended DSQ, if we fail to
+> > > +	 * acquire the lock kick the CPU to retry on the next balance.
+> > > +	 *
+> > > +	 * In bypass mode simply spin to acquire the lock, since
+> > > +	 * scx_kick_cpu() is suppressed.
+> > > +	 */
+> > > +	if (scx_bypassing(sch, cpu)) {
+> > > +		raw_spin_lock(&dsq->lock);
+> > > +	} else if (!raw_spin_trylock(&dsq->lock)) {
+> > > +		scx_kick_cpu(sch, cpu, 0);
+> > > +		return false;
+> > > +	}
+> > 
+> > But I'm not sure this is what we wanna do. If we *really* want to do this,
+> > maybe we can add a try_move variant; however, I'm pretty deeply skeptical
+> > about the approach for a few reasons.
+> > 
+> > - If a shared DSQ becomes a bottleneck, the right thing to do would be
+> >   introducing multiple DSQs and shard them.
+> 
+> True, but then we also need a load balancer with multiple DSQs and moving
+> tasks across DSQs is also not very efficient. With a shared DSQ we do
+> really well with latency, but under intense scheduling activity (e.g.,
+> schbench) we get poor performance, so all those scheduling-related
+> benchmarks get a bad score with most of the scx schedulers.
+> 
+> With this applied pretty much all the scx schedulers (scx_cosmos,
+> scx_bpfland, scx_p2dq, scx_lavd) get pretty much the same score (or
+> even slightly better) as EEVDF with schbench, without any noticeable impact
+> on latency (tested avg fps and tail latency with a few games).
+> 
+> > 
+> > - This likely is trading off fairness to gain bandwidth and this approach
+> >   depending on machine / workload may lead to severe starvation. One can
+> >   argue that controlled trade off between fairness and bandwidth is useful
+> >   for some use cases. However, even if that is the case, I don't think
+> >   trylock is the way to get there. If we think that low overhead high
+> >   fan-out shared queue is desirable, it'd be better to introduce dedicated
+> >   data structure which can do so in a controlled manner.
+> 
+> True, and I think with moderate CPU activity this may increase latency due
+> to the additional kick/balance step when trylock fails (maybe control this
+> behavior with a flag?).
+> 
+> That said, the throughput benefits seem significant. While schbench is
+> probably an extreme case, the improvement there is substantial (2-3x),
+> which suggests this approach might also benefit some more realistic
+> workloads. I'm planning to run additional tests over the next few days to
+> better understand this.
+> 
+> Based on the schbench results, it seems like a missed opportunity to drop
+> this entirely. Can you elaborate more on the dedicated data structure you
+> mentioned? Do you have something specific in mind?
 
-The per_cpu_unvisited nodemask, used only by the old implementation
-to track visited nodes across loop iterations, is no longer needed
-and is removed.
+IIRC, Ryan was experimenting with some data structures which trade off
+fairness for scalability in BPF and saw promising results. Ryan, can you
+please share what you did?
 
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
- kernel/sched/ext_idle.c | 49 ++++++++++++-----------------------------
- 1 file changed, 14 insertions(+), 35 deletions(-)
+Thanks.
 
-diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-index 623a0356d6c3..90225bf3992c 100644
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -138,12 +138,6 @@ static s32 pick_idle_cpu_in_node(const struct cpumask *cpus_allowed, int node, u
- }
- 
- #ifdef CONFIG_NUMA
--/*
-- * Tracks nodes that have not yet been visited when searching for an idle
-- * CPU across all available nodes.
-- */
--static DEFINE_PER_CPU(nodemask_t, per_cpu_unvisited);
--
- /*
-  * Per-node sorted arrays of NUMA nodes in increasing distance order,
-  * pre-computed at init time to avoid the O(N^2) traversal on each call
-@@ -157,42 +151,27 @@ static int *scx_numa_node_order_cnt;
-  */
- static s32 pick_idle_cpu_from_online_nodes(const struct cpumask *cpus_allowed, int node, u64 flags)
- {
--	nodemask_t *unvisited;
--	s32 cpu = -EBUSY;
--
--	preempt_disable();
--	unvisited = this_cpu_ptr(&per_cpu_unvisited);
-+	int idx;
- 
- 	/*
--	 * Restrict the search to the online nodes (excluding the current
--	 * node that has been visited already).
-+	 * The order is pre-computed at boot time in scx_numa_node_order[],
-+	 * so each call is O(N) rather than O(N^2), where N is the number
-+	 * of NUMA nodes.
- 	 */
--	nodes_copy(*unvisited, node_states[N_ONLINE]);
--	node_clear(node, *unvisited);
-+	for (idx = 0; idx < scx_numa_node_order_cnt[node]; idx++) {
-+		int numa_node = scx_numa_node_order[node][idx];
-+		s32 cpu;
- 
--	/*
--	 * Traverse all nodes in order of increasing distance, starting
--	 * from @node.
--	 *
--	 * This loop is O(N^2), with N being the amount of NUMA nodes,
--	 * which might be quite expensive in large NUMA systems. However,
--	 * this complexity comes into play only when a scheduler enables
--	 * SCX_OPS_BUILTIN_IDLE_PER_NODE and it's requesting an idle CPU
--	 * without specifying a target NUMA node, so it shouldn't be a
--	 * bottleneck is most cases.
--	 *
--	 * As a future optimization we may want to cache the list of nodes
--	 * in a per-node array, instead of actually traversing them every
--	 * time.
--	 */
--	for_each_node_numadist(node, *unvisited) {
--		cpu = pick_idle_cpu_in_node(cpus_allowed, node, flags);
-+		/* Nodes that went offline after boot are skipped. */
-+		if (!node_online(numa_node))
-+			continue;
-+
-+		cpu = pick_idle_cpu_in_node(cpus_allowed, numa_node, flags);
- 		if (cpu >= 0)
--			break;
-+			return cpu;
- 	}
--	preempt_enable();
- 
--	return cpu;
-+	return -EBUSY;
- }
- #else
- static inline s32
 -- 
-2.48.1
-
+tejun
