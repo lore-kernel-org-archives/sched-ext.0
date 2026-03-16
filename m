@@ -1,383 +1,270 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CCFA38F243
-	for <sched-ext@lists.linux.dev>; Mon, 16 Mar 2026 10:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773655388; cv=none; b=BDf2W3hj7X4PiGZhXyeBN4GrPZzadBdeRWDZAW3qIGhrOnJ5p7+HV8D25pDhxeeYWwlbOo5xFTfftq3T/pL5ejhfD7h1Ni3AqPZ+SWV6/rXTX7YaLKw7Iww9ez0B5fxgUZiKkSYGh/hwjqvCJOosOzO149SxoxgcEywyGCCIujE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773655388; c=relaxed/simple;
-	bh=VIF9kYfcgVSL3ByLqv2ACH4zHelFk2PGr95HIuYjMVs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gAKoEtBn4SnfBxTKhkx7W0j3SyUKqcuG7p6G4q8ZHnUFaXs/EaRjN1WaEgGXozs9fuevdPa0AmtY1GFiMT4liu4zgizDYtLADNTUJcJf1P1TJuq3dz/qpc1dsQ/OdKfN93H+0Nhjwo0rIt3MzCFvOBPzB3inNFrXdaeMPSu2FNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4B8B71477;
-	Mon, 16 Mar 2026 03:02:58 -0700 (PDT)
-Received: from e127648.cambridge.arm.com (e127648.arm.com [10.1.28.15])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 13C753F73B;
-	Mon, 16 Mar 2026 03:03:01 -0700 (PDT)
-From: Christian Loehle <christian.loehle@arm.com>
-To: sched-ext@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	shuah@kernel.org,
-	dietmar.eggemann@arm.com,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH 2/2] sched_ext/selftests: Add SCX_KICK_WAIT cycle tests
-Date: Mon, 16 Mar 2026 10:02:49 +0000
-Message-Id: <20260316100249.1651641-3-christian.loehle@arm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260316100249.1651641-1-christian.loehle@arm.com>
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010037.outbound.protection.outlook.com [52.101.85.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F411038F647
+	for <sched-ext@lists.linux.dev>; Mon, 16 Mar 2026 10:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773658198; cv=fail; b=sNBOcG3YkRMB3dKdQjBjQnjFlVyKq+ZN50SylpfVFsloglaWuVYR8b5da4sWz5ta8sFC3hq19K5CKRzzf5DRjGXaLvUSQPMeSGap8lIdy1ymmELOQOfI31DOpXRXiqyfXTA2zWQ4Lo21iteU37WmJU7MbOhkqnFhM2IJh+WESV4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773658198; c=relaxed/simple;
+	bh=+irnAnANljiBt9tReHyvTcVwhBUggkUDakoAKY5ZZYc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=IY2AhGcrQosLtkUzJmqg8noxPWkdUgWbTmah2ypTXNwhPHQASyf0zVsh4mNdh5vtRkMwLQMYjxeVDeTzBOhJ8PMTHFRP0T3wQYcN1Ibhhq2834JIVHkrKU+Pj66fP/2UUaSVlzZysjE4wXwdabgi0ytPcTnwZR5c89fNpqzlr9U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NedfV1Jd; arc=fail smtp.client-ip=52.101.85.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NedfV1Jd"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kb9VyKVq0VVY4JruSLkqMOQua5Mxi3849E1F/fsowMUbD2Q217syIcvCOjBc8MvL2FpODwX2pkIqniEIXrmAaNpp6wsHIOEV/xannOR3/StpMYCXKtqKA3D3amuMUHdH+ZOzvg0y/cW0JRrVNtqao2Ru8Eb/QkWqz9YAfnzQpigrp1fzEdLSjFlugVoaFnIpMjzqPCmcIdOUfbJRWB8MchTu+0gGZhimaTKv4NBd1Hruf54FhWHQ2SG4BTybLRN/kDp6mdJPrH37u+8dXKDA/rERLzi1tITI7kgHQBtdO/XMkzirESagLRoExwHaXQXoZp07aiz3nz65xedyYAyUVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ofUFA0jcELXHnqxk+bkj7C4beq49MRVcvu3PC4VVfSc=;
+ b=SpiCekEeDkDdLamhGPS+Mg/rpfuZWne9l2/jWGlWVetIooPGkERzjA395dFdvMnSURhmLQRxZrsBCSMKA1O5T+Gw55t+52zE74ZVH3OZCxob8EgprFywsGKDO8SbCUgxt9jfkD+jY/K9lTI8nLz0FbpHoRcu0WEEcNy+DEAPzMoM9rQvo3mhIytXLaEdtBx+MpqfG5jIxXJ2CkFqQGnBNJb7ALeDoVdlyLqHI779JBXIO4MjcK+JAUaz2YPAJRIWm5+8tiSbbFwICzgiP5VSpUVLKekZGEkePQr2HcZPW5eX97ZNn0Kb7SK2vrqekmS1TjoxSwY0rgxHHtdDyiY1cQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ofUFA0jcELXHnqxk+bkj7C4beq49MRVcvu3PC4VVfSc=;
+ b=NedfV1JdrlMU9knTM+LxXox3wvq30f4mtPmgen83ZHu2UH+mGBkmB+acuDLqyy+7csMmtjY7PSFoGRqOBg/+TcZv5ykCwCS9cBbPp3r1tpiQqpAe2FUapyK8dZ8aSsSLl/tlVKG9ajuBtJqzWIQRUCCt1baf105boXN/j+js5L2t5dnT0SSyg/WTcdmtsd86KgWrsk8kZuFS5wo4DuuyWQaZtmm1Jo0W7GHmKEbzumo854o3adGP0Crvp3C6CRXiKfW0joYOvwBMp8IAFsxNMTWfUdPtEQAKtIFj23tOM3c2YoXXYtPYmFPpeO0zYBje+rzqJODgM+zxyy6PVr1Z0w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DM6PR12MB4385.namprd12.prod.outlook.com (2603:10b6:5:2a6::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.4; Mon, 16 Mar
+ 2026 10:49:52 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.022; Mon, 16 Mar 2026
+ 10:49:52 +0000
+Date: Mon, 16 Mar 2026 11:49:42 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Christian Loehle <christian.loehle@arm.com>
+Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, tj@kernel.org, void@manifault.com,
+	changwoo@igalia.com, mingo@redhat.com, peterz@infradead.org,
+	shuah@kernel.org, dietmar.eggemann@arm.com
+Subject: Re: [PATCH 1/2] sched_ext: Prevent SCX_KICK_WAIT deadlock by
+ serialization
+Message-ID: <abfgRv5DkOnCzz-q@gpd4>
 References: <20260316100249.1651641-1-christian.loehle@arm.com>
+ <20260316100249.1651641-2-christian.loehle@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260316100249.1651641-2-christian.loehle@arm.com>
+X-ClientProxiedBy: MI0P293CA0013.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:44::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM6PR12MB4385:EE_
+X-MS-Office365-Filtering-Correlation-Id: aea2759e-15a6-46b0-5b4f-08de8349c0bb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|7416014|376014|7053199007|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	+KDmg7eTuSkQ5fbt9GErPC2bSe8MQQF63+bpZOtXJkZohPQhksIu/2vKPdhFxDktsZG1ZrM65LfDuHn0TmQLVjflRsdO8Q/k3jndaYLOAZqaKplye7ugD6xFbiYwI+NYW4EVFsBREJNH+77DKtL3QQj3ATueVV/G9gOY3xNaLCzOu2epvJYjlfal0K7d4V/gleUCdY+/96MWz7BLNki6wkpa9OFrkbT7RzdEesRzm0vOImaYO+2kffQ0EbpFDuTd3HNvV3rFvLeiIR/SI0Hz6KsfEDz5SstAQsvYwfL/IkwtLjRWXtt7go+6U3YDKkkpjE2mAXU0DKqHD9nou67C+fatpf7nQecYaUKXJ46qaX9tPIEnFqWrxO0LTk1aklroXrmDOGkL1jMiBJH/loiKeiJ66+qlzrYYry0MW6Wl00e4lAPa2tWEJl4STzx5IJ5uTIxEC/t9aXCAsCd+iYad7+Znge8yZKuBpYHURPxXKixBP7IZ56MlI+heq1FMN5wiMvHkYgwxFGtOxnDcoYweWQx472+nqfhO1FUx68CvJKfFn7FOlRee9KrK1F0P+V3dUAL5jtK0FsmMNDU4hXbkJzdG5TH76mQt1AlCbMFpOcKqT+lK9AtlL0bSd55sK0zEul974IOQgdJtt40uRV+RhypL6aV2phQR2xbg1lKEpqAhz/SOr0Jh3M23p3hXr4vsZHW/3bdhBOOkgsz6ARKmABoZht2Z9MTr588AJm3qgWE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(7053199007)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Y04ycUNoYVBWTzRvNzA0K3dGTzRTamxVQ3R6Y2xlckJtMlp2eTBqQUovcVlY?=
+ =?utf-8?B?VGw2VlBHQ1ZkejFoZGpRc3VCdnV2OHRvbDNCNHNDTG9XbnVkQzl3aEp1REo5?=
+ =?utf-8?B?NGdVSXcxMFNkNlZoaUFHQ1dRY29pY1dQb0dqYW5Yb3pwR0JjcE9ualBsSjVn?=
+ =?utf-8?B?NFBjSkhTencwaE5GSzRQalh0a2hQWUgvVjBsNDlKSjdzUUJ3VGN1VWljWTVs?=
+ =?utf-8?B?NGs3Q2taWEZPVE42dWpmVFFSMkdydFNia2FyQTVaTnVJY0xaWGtTRm0vNFlE?=
+ =?utf-8?B?eEdzWU43T1M1Ly9sTnB0dHV5VG5ua0J6L0dhL3Z5Q2VQWGxtbVlUc09HQVFO?=
+ =?utf-8?B?K2Y2a2ExaGlqWWYxbW5iTHhLTEVMWlJ0OXZRU3h6Z2VYY1NKcklNTFgxK3Fv?=
+ =?utf-8?B?K2NtSmZVTTk1UTJwZEJhQkdPU25qS3V2cnZSeDEwTG1xN1JTbk0vbWxHdXBG?=
+ =?utf-8?B?Uktjdk5UTkFhK2RYUTdSRDE5cnlMcHRUc1A0VlM1MlNYTFZlRlBLZWV1dmZH?=
+ =?utf-8?B?aVBRekxIUVVsU3VYWkNzMVJlVFcySXZYdkpGSUYzOHNnaWt5K25VQkJ3RUNl?=
+ =?utf-8?B?ZHpIcTkyWThtMlFEMzV0cm1CcU0wSVhSWTUrNFk4MDZVN3B5ZnRLY3l2M2pP?=
+ =?utf-8?B?d1hGNHZKSmJIYUVueEtvWnJtdU9hVWcrcDgvczVCemE1T3Z6em9ONHFKQzNW?=
+ =?utf-8?B?Mm81MklHTWJ4QmVmazllVm0yZ25Ba2U5Wlozc2MyM2Q2aDF3YXkzWGovY0kw?=
+ =?utf-8?B?YjJ3Y1Bxa0VYdms3ak80eFZVNkJxaTVOTHNCSWFNUUl6eWtIdXZMNUhGVVJH?=
+ =?utf-8?B?OG0rb3YxNW9VS2NNZlFNWEptb1YzYzdnUkVWa081RSs2V3RDSkwrRCsyZGor?=
+ =?utf-8?B?K0pLQ2VadjlvQ0IvNTFZekZad1Yxd1BhYWtuQ3dzcHp2OTRQNUxaYTVVOGRN?=
+ =?utf-8?B?Q1laSE1uMnhyZ0lxbGQxR0ZGV3k4blR0VlZiNkZlZTVCZFpMZ25jYjcwUkVy?=
+ =?utf-8?B?WWRwdlFVYVd4ZnhJc1ZlZXVwN2NacXFaN3RVdS96NzhhZk9oMEU5Sk9KQUtl?=
+ =?utf-8?B?eit3RGlkK2E2SndqVnliSHl1dkVSWGsrSVhuMDR1dGsxcVZXdEt4eUR3Q01Z?=
+ =?utf-8?B?NDJ5bXNZZFVVT2hFeXAyYXd0RXBDZ0xBZ3F1SERqOUtRQUU4MVhQZ0tYdW9p?=
+ =?utf-8?B?di8yZnFKNlJScFR1eDdRTGU4b28wMmVnTVk3T0J5SVk3VjNjZlVkRmxIUGRl?=
+ =?utf-8?B?ZlhOZzc4TVZjSzRjeXVIeWo0a3ZoanlrTE0vYURiT2NtakgydUxMZ1N1UjRT?=
+ =?utf-8?B?YjBmTjR5RnYzZUttYUp0UmxScmttZEtGdDQwRzEwek1EWnUwVnJtYkJjdTkz?=
+ =?utf-8?B?c3psd0xxRWtSQjRUa2N4VW42bGEzMk5zOVJmUDJYRk4veWhkWnVLbzk0NHNs?=
+ =?utf-8?B?NWZOUCt1bHhIVnRaeGFSOFVuVGlPczRLNEIvdVJlOEFUWmcyT3IrUCtnZ280?=
+ =?utf-8?B?YXNKRnJDdGgxS0xOUlVnamZFeVVZVDUzaENnNkhJWVVreFJ2VFZoaUgwTFMv?=
+ =?utf-8?B?a0EvN2QrT3J2cjdnVy93L3dNUHpWOGRQYVV4dVpMOXRBK29pTUxYOVNuU1lx?=
+ =?utf-8?B?VHdjVVl3OXpRQ2ZWajhPUXdsZ3hXa3E5ZEVXY3J3WVY1L3hZRHdFUkVOWmkw?=
+ =?utf-8?B?N2cyeXpGSXlPZjNsVXZ6K3BuSHNhbG1VM3dHTmJRUEtkUmxMZXNzK2xYeVQr?=
+ =?utf-8?B?eXRUK05FcE50aGpzejU0RkdkWDA5NXNIUnhGbFJpQ3lDbWR4djRzMXRqblZT?=
+ =?utf-8?B?dmwwR2xXRys2anZnZ28xM2RZblV5SnNqMVd4REt5VHhkQmd4OVdpRG9rRjdp?=
+ =?utf-8?B?Z1JHdXVMNkhBazRNQ2VsNlNNdDgzL1F3WGNsNFpiWlhKcUxQR2lDRGdKZTRm?=
+ =?utf-8?B?SUttd0xSVDZmZW42WDR0V0JTRVZyVjdTa1V1WndEUVlQdmVDM0FLdkVlekEx?=
+ =?utf-8?B?enVrakl5NU5yVThLdUo3RzFveFM0YTJZT3V0SlFmM21OME0zUUZPVDRON0U4?=
+ =?utf-8?B?RW1jNmt6V2RpTEladW9aWnNFU2EzMmdUWCtnbGdDcHlSQTN2Vm93UHR1UStv?=
+ =?utf-8?B?aUFTNlRKVWtITnJ3NDZnZzBadEdVTFhxdEYvdkg3SWVhTlVOM0k5dkdhR2lp?=
+ =?utf-8?B?aGUyd0UxN3RDKzhhQWFqR1MyWVFMbDliMFIvakQybzYzVnBMQ08vNzk1M0lM?=
+ =?utf-8?B?TnJodnF4UmpGNmNUNzYraVdqVGRTNnJoc1ZwMXBSVThGZFpSYWVWeWUyaHFk?=
+ =?utf-8?B?RW9NMC9rekVWM1FNdFVmTk5QQWRJYjJCOHhLcWkyL0VCNm15RUl1dz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aea2759e-15a6-46b0-5b4f-08de8349c0bb
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2026 10:49:52.4784
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: USW7vEvdG6+Aux9syePCrLu+5TL4tszYRnQXqLe+m+b7L7L2Tdgcbr44+o4a3cJGO6saGwhbted9iBsXfQvbhw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4385
 
-Add wait_kick_cycle, a test stressing an SCX_KICK_WAIT cycle
-between three CPUs by calling SCX_KICK_WAIT between them to
-test if sched_ext prevents a deadlock.
+Hi Christian,
 
-Note: hangs on unfixed kernels
+On Mon, Mar 16, 2026 at 10:02:48AM +0000, Christian Loehle wrote:
+> SCX_KICK_WAIT causes kick_cpus_irq_workfn() to busy-wait using
+> smp_cond_load_acquire() until the target CPU's current SCX task has been
+> context-switched out (its kick_sync counter advanced).
+> 
+> If multiple CPUs each issue SCX_KICK_WAIT targeting one another
+> concurrently — e.g. CPU A waits for CPU B, B waits for CPU C, C waits for
+> CPU A — all CPUs can end up wedged inside smp_cond_load_acquire()
+> simultaneously.  Because each victim CPU is spinning in hardirq/irq_work
+> context, it cannot reschedule, so no kick_sync counter ever advances and
+> the system deadlocks.
+> 
+> Fix this by serializing access to the wait loop behind a global raw
+> spinlock (scx_kick_wait_lock).  Only one CPU at a time may execute the
+> wait loop; any other CPU that has SCX_KICK_WAIT work to do and fails to
+> acquire the lock records itself in scx_kick_wait_pending and returns.
+> When the active waiter finishes and releases the lock, it replays the
+> pending set by re-queuing each pending CPU's kick_cpus_irq_work, ensuring
+> no wait request is silently dropped.
+> 
+> This is deliberately a coarse serialization: multiple simultaneous wait
+> operations now run sequentially, increasing latency.  In exchange,
+> deadlocks are impossible regardless of the cycle length (A->B->C->...->A).
+> 
+> Also clear scx_kick_wait_pending in free_kick_syncs() so that any stale
+> bits left by a CPU that deferred just as the scheduler exited are reset
+> before the next scheduler instance loads.
+> 
+> Fixes: 90e55164dad4 ("sched_ext: Implement SCX_KICK_WAIT")
+> Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+> ---
+>  kernel/sched/ext.c | 45 +++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 43 insertions(+), 2 deletions(-)
+> 
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 26a6ac2f8826..b63ae13d0486 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -89,6 +89,19 @@ struct scx_kick_syncs {
+>  
+>  static DEFINE_PER_CPU(struct scx_kick_syncs __rcu *, scx_kick_syncs);
+>  
+> +/*
+> + * Serialize %SCX_KICK_WAIT processing across CPUs to avoid wait cycles.
+> + * Callers failing to acquire @scx_kick_wait_lock defer by recording
+> + * themselves in @scx_kick_wait_pending and are retriggered when the active
+> + * waiter completes.
+> + *
+> + * Lock ordering: @scx_kick_wait_lock is always acquired before
+> + * @scx_kick_wait_pending_lock; the two are never taken in the opposite order.
+> + */
+> +static DEFINE_RAW_SPINLOCK(scx_kick_wait_lock);
+> +static DEFINE_RAW_SPINLOCK(scx_kick_wait_pending_lock);
+> +static cpumask_t scx_kick_wait_pending;
+> +
+>  /*
+>   * Direct dispatch marker.
+>   *
+> @@ -4279,6 +4292,13 @@ static void free_kick_syncs(void)
+>  		if (to_free)
+>  			kvfree_rcu(to_free, rcu);
+>  	}
+> +
+> +	/*
+> +	 * Clear any CPUs that were waiting for the lock when the scheduler
+> +	 * exited.  Their irq_work has already returned so no in-flight
+> +	 * waiter can observe the stale bits on the next enable.
+> +	 */
+> +	cpumask_clear(&scx_kick_wait_pending);
 
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
----
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../selftests/sched_ext/wait_kick_cycle.bpf.c |  70 ++++++
- .../selftests/sched_ext/wait_kick_cycle.c     | 223 ++++++++++++++++++
- 3 files changed, 294 insertions(+)
- create mode 100644 tools/testing/selftests/sched_ext/wait_kick_cycle.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/wait_kick_cycle.c
+Do we need a raw_spin_lock/unlock(&scx_kick_wait_pending_lock) here to make
+sure we're not racing with with cpumask_set_cpu()/cpumask_clear_cpu()?
+Probably it's not that relevant at this point, but I'd keep the locking for
+correctness.
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 006300ac6dff..0b5b527265f7 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -188,6 +188,7 @@ auto-test-targets :=			\
- 	rt_stall			\
- 	test_example			\
- 	total_bw			\
-+	wait_kick_cycle			\
- 
- testcase-targets := $(addsuffix .o,$(addprefix $(SCXOBJ_DIR)/,$(auto-test-targets)))
- 
-diff --git a/tools/testing/selftests/sched_ext/wait_kick_cycle.bpf.c b/tools/testing/selftests/sched_ext/wait_kick_cycle.bpf.c
-new file mode 100644
-index 000000000000..c53cda86ec75
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/wait_kick_cycle.bpf.c
-@@ -0,0 +1,70 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2026 Christian Loehle <christian.loehle@arm.com>
-+ *
-+ * Stress concurrent SCX_KICK_WAIT calls to validate forward progress.
-+ *
-+ * Three CPUs are designated from userspace. Every enqueue from one of the
-+ * three CPUs kicks the next CPU in the ring with SCX_KICK_WAIT, creating a
-+ * persistent A -> B -> C -> A wait cycle pressure.
-+ */
-+
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+const volatile s32 test_cpu_a;
-+const volatile s32 test_cpu_b;
-+const volatile s32 test_cpu_c;
-+
-+u64 nr_enqueues;
-+u64 nr_wait_kicks;
-+
-+UEI_DEFINE(uei);
-+
-+static s32 target_cpu(s32 cpu)
-+{
-+	if (cpu == test_cpu_a)
-+		return test_cpu_b;
-+	if (cpu == test_cpu_b)
-+		return test_cpu_c;
-+	if (cpu == test_cpu_c)
-+		return test_cpu_a;
-+	return -1;
-+}
-+
-+void BPF_STRUCT_OPS(wait_kick_cycle_enqueue, struct task_struct *p, u64 enq_flags)
-+{
-+	s32 this_cpu = bpf_get_smp_processor_id();
-+	s32 tgt;
-+
-+	__sync_fetch_and_add(&nr_enqueues, 1);
-+
-+	if (p->flags & PF_KTHREAD) {
-+		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_INF,
-+				   enq_flags | SCX_ENQ_PREEMPT);
-+		return;
-+	}
-+
-+	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+
-+	tgt = target_cpu(this_cpu);
-+	if (tgt < 0 || tgt == this_cpu)
-+		return;
-+
-+	__sync_fetch_and_add(&nr_wait_kicks, 1);
-+	scx_bpf_kick_cpu(tgt, SCX_KICK_WAIT);
-+}
-+
-+void BPF_STRUCT_OPS(wait_kick_cycle_exit, struct scx_exit_info *ei)
-+{
-+	UEI_RECORD(uei, ei);
-+}
-+
-+SEC(".struct_ops.link")
-+struct sched_ext_ops wait_kick_cycle_ops = {
-+	.enqueue		= wait_kick_cycle_enqueue,
-+	.exit			= wait_kick_cycle_exit,
-+	.name			= "wait_kick_cycle",
-+	.timeout_ms		= 1000U,
-+};
-diff --git a/tools/testing/selftests/sched_ext/wait_kick_cycle.c b/tools/testing/selftests/sched_ext/wait_kick_cycle.c
-new file mode 100644
-index 000000000000..3889e7a9a0a7
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/wait_kick_cycle.c
-@@ -0,0 +1,223 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2026 Christian Loehle <christian.loehle@arm.com>
-+ */
-+#define _GNU_SOURCE
-+
-+#ifndef ARRAY_SIZE
-+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
-+#endif
-+
-+#include <bpf/bpf.h>
-+#include <errno.h>
-+#include <pthread.h>
-+#include <sched.h>
-+#include <scx/common.h>
-+#include <stdint.h>
-+#include <string.h>
-+#include <time.h>
-+#include <unistd.h>
-+
-+#include "scx_test.h"
-+#include "wait_kick_cycle.bpf.skel.h"
-+
-+/*
-+ * Multiple workers per test CPU. Packing several runnable threads onto each
-+ * CPU causes frequent context switching and back-to-back enqueue() calls, which
-+ * maximizes the chance that all three test CPUs fire enqueue() concurrently
-+ * and enter the SCX_KICK_WAIT cycle simultaneously.
-+ */
-+#define WORKERS_PER_CPU	4
-+#define NR_TEST_CPUS	3
-+#define NR_WORKERS	(NR_TEST_CPUS * WORKERS_PER_CPU)
-+
-+struct worker_ctx {
-+	pthread_t tid;
-+	int cpu;
-+	volatile bool stop;
-+	volatile __u64 iters;
-+	bool started;
-+};
-+
-+static int pick_test_cpus(int *cpu_a, int *cpu_b, int *cpu_c)
-+{
-+	cpu_set_t mask;
-+	int cpus[4];
-+	int nr = 0;
-+	int cpu;
-+
-+	if (sched_getaffinity(0, sizeof(mask), &mask))
-+		return -errno;
-+
-+	for (cpu = 0; cpu < CPU_SETSIZE && nr < ARRAY_SIZE(cpus); cpu++) {
-+		if (!CPU_ISSET(cpu, &mask))
-+			continue;
-+		cpus[nr++] = cpu;
-+	}
-+
-+	if (nr < 3)
-+		return -EOPNOTSUPP;
-+
-+	/* Leave one CPU unused when possible so one CPU remains uncongested. */
-+	if (nr >= 4) {
-+		*cpu_a = cpus[1];
-+		*cpu_b = cpus[2];
-+		*cpu_c = cpus[3];
-+	} else {
-+		*cpu_a = cpus[0];
-+		*cpu_b = cpus[1];
-+		*cpu_c = cpus[2];
-+	}
-+	return 0;
-+}
-+
-+static void *worker_fn(void *arg)
-+{
-+	struct worker_ctx *worker = arg;
-+	cpu_set_t mask;
-+
-+	CPU_ZERO(&mask);
-+	CPU_SET(worker->cpu, &mask);
-+
-+	if (sched_setaffinity(0, sizeof(mask), &mask))
-+		return (void *)(uintptr_t)errno;
-+
-+	/*
-+	 * Tight yield loop — no sleep.  Keeping the CPU continuously busy
-+	 * with rapid context switches ensures enqueue() fires at the highest
-+	 * possible rate on each test CPU.
-+	 */
-+	while (!worker->stop) {
-+		sched_yield();
-+		worker->iters++;
-+	}
-+
-+	return NULL;
-+}
-+
-+static int join_worker(struct worker_ctx *worker)
-+{
-+	void *ret;
-+	struct timespec ts;
-+	int err;
-+
-+	if (!worker->started)
-+		return 0;
-+
-+	if (clock_gettime(CLOCK_REALTIME, &ts))
-+		return -errno;
-+
-+	ts.tv_sec += 2;
-+	err = pthread_timedjoin_np(worker->tid, &ret, &ts);
-+	if (err == ETIMEDOUT)
-+		pthread_detach(worker->tid);
-+	if (err)
-+		return -err;
-+
-+	if ((uintptr_t)ret)
-+		return -(int)(uintptr_t)ret;
-+
-+	return 0;
-+}
-+
-+static enum scx_test_status setup(void **ctx)
-+{
-+	struct wait_kick_cycle *skel;
-+
-+	skel = wait_kick_cycle__open();
-+	SCX_FAIL_IF(!skel, "Failed to open skel");
-+	SCX_ENUM_INIT(skel);
-+
-+	*ctx = skel;
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status run(void *ctx)
-+{
-+	struct wait_kick_cycle *skel = ctx;
-+	struct worker_ctx workers[NR_WORKERS] = {};
-+	struct bpf_link *link = NULL;
-+	enum scx_test_status status = SCX_TEST_PASS;
-+	int test_cpus[NR_TEST_CPUS] = { -1, -1, -1 };
-+	int ret;
-+	int i;
-+
-+	ret = pick_test_cpus(&test_cpus[0], &test_cpus[1], &test_cpus[2]);
-+	if (ret == -EOPNOTSUPP)
-+		return SCX_TEST_SKIP;
-+	if (ret) {
-+		SCX_ERR("Failed to pick test cpus (%d)", ret);
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	skel->rodata->test_cpu_a = test_cpus[0];
-+	skel->rodata->test_cpu_b = test_cpus[1];
-+	skel->rodata->test_cpu_c = test_cpus[2];
-+
-+	if (wait_kick_cycle__load(skel)) {
-+		SCX_ERR("Failed to load skel");
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	link = bpf_map__attach_struct_ops(skel->maps.wait_kick_cycle_ops);
-+	if (!link) {
-+		SCX_ERR("Failed to attach scheduler");
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	/* WORKERS_PER_CPU threads per test CPU, all in tight yield loops. */
-+	for (i = 0; i < NR_WORKERS; i++)
-+		workers[i].cpu = test_cpus[i / WORKERS_PER_CPU];
-+
-+	for (i = 0; i < NR_WORKERS; i++) {
-+		ret = pthread_create(&workers[i].tid, NULL, worker_fn, &workers[i]);
-+		if (ret) {
-+			SCX_ERR("Failed to create worker thread %d (%d)", i, ret);
-+			status = SCX_TEST_FAIL;
-+			goto out;
-+		}
-+		workers[i].started = true;
-+	}
-+
-+	sleep(3);
-+
-+	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
-+		SCX_ERR("Scheduler exited unexpectedly (kind=%llu code=%lld)",
-+			(unsigned long long)skel->data->uei.kind,
-+			(long long)skel->data->uei.exit_code);
-+		status = SCX_TEST_FAIL;
-+	}
-+
-+out:
-+	for (i = 0; i < NR_WORKERS; i++)
-+		workers[i].stop = true;
-+
-+	for (i = 0; i < NR_WORKERS; i++) {
-+		ret = join_worker(&workers[i]);
-+		if (ret && status == SCX_TEST_PASS) {
-+			SCX_ERR("Failed to join worker thread %d (%d)", i, ret);
-+			status = SCX_TEST_FAIL;
-+		}
-+	}
-+
-+	if (link)
-+		bpf_link__destroy(link);
-+
-+	return status;
-+}
-+
-+static void cleanup(void *ctx)
-+{
-+	struct wait_kick_cycle *skel = ctx;
-+
-+	wait_kick_cycle__destroy(skel);
-+}
-+
-+struct scx_test wait_kick_cycle = {
-+	.name = "wait_kick_cycle",
-+	.description = "Verify SCX_KICK_WAIT forward progress under a 3-CPU wait cycle",
-+	.setup = setup,
-+	.run = run,
-+	.cleanup = cleanup,
-+};
-+REGISTER_SCX_TEST(&wait_kick_cycle)
--- 
-2.34.1
+Thanks,
+-Andrea
 
+>  }
+>  
+>  static void scx_disable_workfn(struct kthread_work *work)
+> @@ -5647,8 +5667,9 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+>  	struct rq *this_rq = this_rq();
+>  	struct scx_rq *this_scx = &this_rq->scx;
+>  	struct scx_kick_syncs __rcu *ksyncs_pcpu = __this_cpu_read(scx_kick_syncs);
+> -	bool should_wait = false;
+> +	bool should_wait = !cpumask_empty(this_scx->cpus_to_wait);
+>  	unsigned long *ksyncs;
+> +	s32 this_cpu = cpu_of(this_rq);
+>  	s32 cpu;
+>  
+>  	if (unlikely(!ksyncs_pcpu)) {
+> @@ -5672,6 +5693,17 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+>  	if (!should_wait)
+>  		return;
+>  
+> +	if (!raw_spin_trylock(&scx_kick_wait_lock)) {
+> +		raw_spin_lock(&scx_kick_wait_pending_lock);
+> +		cpumask_set_cpu(this_cpu, &scx_kick_wait_pending);
+> +		raw_spin_unlock(&scx_kick_wait_pending_lock);
+> +		return;
+> +	}
+> +
+> +	raw_spin_lock(&scx_kick_wait_pending_lock);
+> +	cpumask_clear_cpu(this_cpu, &scx_kick_wait_pending);
+> +	raw_spin_unlock(&scx_kick_wait_pending_lock);
+> +
+>  	for_each_cpu(cpu, this_scx->cpus_to_wait) {
+>  		unsigned long *wait_kick_sync = &cpu_rq(cpu)->scx.kick_sync;
+>  
+> @@ -5686,11 +5718,20 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+>  		 * task is picked subsequently. The latter is necessary to break
+>  		 * the wait when $cpu is taken by a higher sched class.
+>  		 */
+> -		if (cpu != cpu_of(this_rq))
+> +		if (cpu != this_cpu)
+>  			smp_cond_load_acquire(wait_kick_sync, VAL != ksyncs[cpu]);
+>  
+>  		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
+>  	}
+> +
+> +	raw_spin_unlock(&scx_kick_wait_lock);
+> +
+> +	raw_spin_lock(&scx_kick_wait_pending_lock);
+> +	for_each_cpu(cpu, &scx_kick_wait_pending) {
+> +		cpumask_clear_cpu(cpu, &scx_kick_wait_pending);
+> +		irq_work_queue(&cpu_rq(cpu)->scx.kick_cpus_irq_work);
+> +	}
+> +	raw_spin_unlock(&scx_kick_wait_pending_lock);
+>  }
+>  
+>  /**
+> -- 
+> 2.34.1
+> 
