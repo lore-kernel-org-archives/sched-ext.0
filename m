@@ -1,62 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6BF2066F7;
-	Mon, 16 Mar 2026 09:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58CBC37B03A
+	for <sched-ext@lists.linux.dev>; Mon, 16 Mar 2026 10:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773653467; cv=none; b=NOYmMi4drEhSy3+W3vN3M/Y3F/W8IC6S7F7u9+1+GCpJSa+WdY5nN+tsN9FuCM8UvTL5l6AgLCLlESzRLsgTJlCKa+JmhaNnGKXucywdS/tn2rJOAxbqxiDKdikC0xOgnswOyXlLfeGdRQ1iL4vB+XwIFrZPbAU8HNH0uD7QSp8=
+	t=1773655381; cv=none; b=fwXYZZlZjNna9PghbUFzEi5MYog2mhMJQqKUfJne4a0MbLGuV3d9Ih3VNlmIbo0Nn4Hbngm7Ul5Eq0OCrYs8f8avX/HrhzugOzP1guTy1MyWrCY7/vMm6pfF1Md6UY3/xCGs/rfIQSU5hsQ1fBmmYN2pnO1ZzpgSGYB6jepkxeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773653467; c=relaxed/simple;
-	bh=J+I5wfTMMcbrocNgMBcPriOLF3E14DfuoYV4/m9qjqQ=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=h+tonctv73mYD1ADaP2vt6fIlF6lVZYo80n6O0ZnkBCjNl7jJHkSufoAqetl32KxRnE9tOUyJbWkRDxFYndohsPadzZ2fGNp8F0id3pr/r4NuWE5s7PS6CzQmJAyNWYB5Hle+QYrvGQ/7gg4NLDFo+5RRfgJ0Ig4QI0x6+sTRW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K4l4evH3; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K4l4evH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3D4C19421;
-	Mon, 16 Mar 2026 09:31:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773653467;
-	bh=J+I5wfTMMcbrocNgMBcPriOLF3E14DfuoYV4/m9qjqQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=K4l4evH3Y8V8kSAE7H/1RBHPJwmbmz81pT0IF9FQhNHCq+U5/430HiSFsBnr/gBGB
-	 cbmdcRnQK8XOQeZA304iWMjNSbtk+1lTpQdyWVKnDigH4+vl5SBjKZOU/9uAg4dM0N
-	 SyQJ11YczPVYDUJXc7c0f1lubIPQfShZ+XSzGQbWuQN51nPxUHCbNZ99T2BKeqKRQ9
-	 xbfyWT0pgv+VVJrRzT6FgTuTjeznIQ7cYRfL5xDPkCzI9Nt3lqcjqUq+4sb3rh25GV
-	 +jQ1sICNmAQqhgaDGV2j73dCol5RbEAUA8FpkU6Ro9xqkFLtBiJhnaLqnkhij7k9rH
-	 I0gQ5mlRyq3Og==
-Date: Sun, 15 Mar 2026 23:31:06 -1000
-Message-ID: <9ee1855588c8722b2b045df7da8408df@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>,
- Changwoo Min <changwoo@igalia.com>,
- David Carlier <devnexen@gmail.com>,
- Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Fix cgroup double-put on sub-sched
- abort path
-In-Reply-To: <20260316054328.838304-2-tj@kernel.org>
-References: <20260316054328.838304-1-tj@kernel.org>
- <20260316054328.838304-2-tj@kernel.org>
+	s=arc-20240116; t=1773655381; c=relaxed/simple;
+	bh=wQpB/ndcDnmBwMVwVKKGlUpTa9SMQk/BOgkhwNUr5tc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=gHEjA7YmGGWBwxF/HbskiBKUTHN/aPQDh9cLDgVW3rHllfX15UrTjI9/Y0o3bu5O0sO5P7ORMCqr6d2NTniNVToXCUAbZ/Mw24MHBz9WE0IeiLal20iolzFsHbRmYpkhxT/lBiR/OsM7eHaW6RBWVlXa3EL8dZK9OjopcMrdCio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 71A141477;
+	Mon, 16 Mar 2026 03:02:52 -0700 (PDT)
+Received: from e127648.cambridge.arm.com (e127648.arm.com [10.1.28.15])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 0A1763F73B;
+	Mon, 16 Mar 2026 03:02:55 -0700 (PDT)
+From: Christian Loehle <christian.loehle@arm.com>
+To: sched-ext@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	shuah@kernel.org,
+	dietmar.eggemann@arm.com,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 0/2] sched_ext: Fix SCX_KICK_WAIT cycle deadlock
+Date: Mon, 16 Mar 2026 10:02:47 +0000
+Message-Id: <20260316100249.1651641-1-christian.loehle@arm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello,
+When using SCX_KICK_WAIT I noticed that it lacks any deadlock
+prevention and will deadlock with no chance of sched_ext even ejecting
+the BPF scheduler.
+The BPF scheduler cannot impose any reasonablesynchronisation itself,
+except for a strict partition of which CPUs are allowed to SCX_KICK_WAIT
+which other CPUs.
+Since SCX_KICK_WAIT seems to be used quite rarely, just synchronize
+all SCX_KICK_WAIT globally and don't try to be clever about cycle
+detection.
+Also add a testcase that reproduces the issue.
 
-> Tejun Heo (2):
->   sched_ext: Fix cgroup double-put on sub-sched abort path
->   sched_ext: Use kobject_put() for kobject_init_and_add() failure in
->     scx_alloc_and_add_sched()
+Christian Loehle (2):
+  sched_ext: Prevent SCX_KICK_WAIT deadlock by serialization
+  sched_ext/selftests: Add SCX_KICK_WAIT cycle tests
 
-Applied 1-2 to sched_ext/for-7.1 w/ the Fixes tag updated per your
-suggestion.
+ kernel/sched/ext.c                            |  45 +++-
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/wait_kick_cycle.bpf.c |  70 ++++++
+ .../selftests/sched_ext/wait_kick_cycle.c     | 223 ++++++++++++++++++
+ 4 files changed, 337 insertions(+), 2 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/wait_kick_cycle.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/wait_kick_cycle.c
 
-Thanks.
+-- 
+2.34.1
 
---
-tejun
