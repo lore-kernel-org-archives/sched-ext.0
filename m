@@ -1,212 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5202D3AE1A2;
-	Tue, 17 Mar 2026 11:33:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191433EAC8F
+	for <sched-ext@lists.linux.dev>; Tue, 17 Mar 2026 15:04:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747186; cv=none; b=oPV0ZwvUzjUHc76loHBx6YSFo/2W4eV1V+fMwZXjt6SN1yatPPoFZmXwVI9mzmofr5LjVwt+5oxz9klvaxUGGNVLcXHGhhDtVcB25W3OFr9tFO9q6UOIPsUCYRacJoehXAVaSrPFWslfBSBt2IL2NrAsv84DEav/veZjHNz9aJo=
+	t=1773759858; cv=none; b=c4j+HYni2+jQv8EXwk93q9CkXHRx3ODxbOW7AT77c0Hb9DI3ua+ASn2zwIGUx/kWEcz6LQgFmdNQxTAIbCJuQxIxSvF1sTpyKq0kFntMF0zTGEEgJscewwVQBTaSVOtAFbXpr7R/iTby4nXEhb0My3yU/GrqdB5GmM9saJ4CX2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747186; c=relaxed/simple;
-	bh=iUe5MH6DGp3rJV14U0Y5iVvgGFfkm2WLp8a6OaIr0N0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fgrZSr+7FL/7S5W4K3QgSxdVx1Y+cw2pl81vdIx8lwDvDo4hVqcR46GolYcNr8oShupF71/GJ9kblWA5TXQTd2Ed+DrwotaMcMJRgJiTPis6/eutwCG0ZSVIVp5rI97dHVPdl/PJ73U42LpXtLFvORG9cnAPL6dL/UPKRWVY3is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bv77rShU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773759858; c=relaxed/simple;
+	bh=j8Rj63u5A2GqzG5nneOtHDWEjGHKYN1jUH+3RWdOBZM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ckUoIuI4zNYyB0R0gcja0T3z/18oAUKuX5VLkW6gCHBVJcXG/KKmwVQzHrwvVHqHoK/o7Bx8y26/a58ywxirqUeKx4Cstntf2MCigM3j0Gh3vYCdpIE3O9vb+38uG3NQuSnlNrfEXL7PW1Ou6wn/BQ5nmLDrTU7jkQcJUs916PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J9wFej3S; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bv77rShU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC24C2BCAF;
-	Tue, 17 Mar 2026 11:33:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747186;
-	bh=iUe5MH6DGp3rJV14U0Y5iVvgGFfkm2WLp8a6OaIr0N0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bv77rShUsCZoaRkq2k9iI3PgqBOxkPvb++AYY1PdE/sbNvbh0m6MJKgVwc+0HsnwV
-	 8sZMkSAovepaGSCi27rFIa3KSyIhGNpEtuwy6DtVCUgrbHJLK9+AZQJsA6DaDQC+kH
-	 x+v1tBYz6HRkUdn4EaKlgIX9XCbLLVxNPhfSY5g+4ICb9bK13D6jGXq2eESXp3DOSR
-	 yNWvWL2XArhCwk91SaE2Pe+SeicLh7+WxA4tjar0d0aJoOx/AYULiZck7UDAutyBFf
-	 PJ68D9lmAGJdbC1P9YIHa3ZXlfBzg5Q9pI5sU+MpEeSoiAxK7BWQunw86TEP8hvX6w
-	 KMGqBf5FoXclw==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: zhidao su <soolaugust@gmail.com>,
-	zhidao su <suzhidao@xiaomi.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] sched_ext: Use WRITE_ONCE() for the write side of dsq->seq update
-Date: Tue, 17 Mar 2026 07:32:43 -0400
-Message-ID: <20260317113249.117771-12-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
-References: <20260317113249.117771-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J9wFej3S"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c70ea5e9e9dso2728677a12.1
+        for <sched-ext@lists.linux.dev>; Tue, 17 Mar 2026 08:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773759856; x=1774364656; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4tPLY5cxdr8t/f7wJOJzE3QvhWDIphguKfZiPmpZGz0=;
+        b=J9wFej3SozOKTs7s9iDTDH/WB3ifX3CWgC3TirUmm5+wZ87qIWf+3JGue9sgZIfMFA
+         ENfRvSpoibmgEA+D5Fd4yZ0g1FS6EwDJWb27nqx79zHyAlRXAORDbXc471+pLiFnQvfI
+         UJ6pz3Vl1mZ2PDeVN3/ccBpKgaBH5+OPp9oUcvbfuqnSXr+8WSCgC+HNS6y41/xNIJdR
+         prbbuWFGPwbD3jbAWNV5MnMwArrLkG2PelEomFScWezN0IxVrCVsMceTgfQGXT0hrLC1
+         KE41hbRWqKqJ3jUpmJU4icZouqqphouBo5VESNMXqfxR7Hmg2omy7fUsI4ZcixZ7jELd
+         5Fbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773759856; x=1774364656;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4tPLY5cxdr8t/f7wJOJzE3QvhWDIphguKfZiPmpZGz0=;
+        b=EgZVGlzdtUfj8ppDiHy/qoTF9xueQaiGUJW2oGAreEC9fXrmQItl6GYvPalspU79GY
+         FMhqe9n/azT7KspYtN9ydH8Cu+Yi+5f9NO9mt+VBPXaOnQ9N8GvY8/RhyE6QV/2mJscK
+         rYbmtxpboVeMGpXf82a9C92SZ2ETkNVhbtrcePJap1LkIPEtV0gJPlUaRPdRDY+cyCra
+         f1nAjV8ad4V7CL4kDxhQ+H+Y/3cPnpZ1GKZC+Ks6PNzSReIT8fpbgqClK8jv2SBZR3M2
+         gb8fhE5UNcLVjNXxl+n0MRE6sGQqvUWQoqYhq3XKyaIBaAwmTQLjygnOJYVAfLQd9FjS
+         jpoQ==
+X-Gm-Message-State: AOJu0YzF+fZgpqdLpUiKuttXG/aQxLf0tV6a9e5zfF1L3y5boJxT1xTo
+	pZZBZPlBmfWE8ldprcCKfonTKfYdxxGi44/l9fbMVwukErcGugIFElTCcHy9ST6j
+X-Gm-Gg: ATEYQzzDT8+PwuaYfD/Vx33xQx3y6X2iNRwTYHaX/+CvLedGQvK8FfFKiGZr7NyiJ3C
+	J5rSD/QeqXYRyhuFHeiErFGeR35OODpgEMJEtXBe/7mBBLKhlDu5rxduuhq4xNais0AQZNvh0O3
+	RzXmn3UVh9adq+FaqPVvVsDovpWwfd50nzb5XmXcDIQB3dAbV+WrJ4LmQR3+zRONOst3ryuhprc
+	kqvYnrEvgyNp15zixOY06bCWxhmy/X8+b2d9fP85nkPEM2ZOgz4Piz8MKZv9QAkvZR+qL5P034r
+	YEEsSB2EMZ1zoMx9RE8aYvz+TGf0+KunyxzSdl6D1dU6YzoAlW7ObjO4VZpEN5eQr93iI987vrb
+	OTa1vrnxMf7F+/OXXJIuPTnnyHC3PC9irySQtY4lfAMGmh6P2m3FegA4hFmkkx3MRCXV8oyz7lm
+	yI+XbW8DZ+lFZtnYwJvihTHvNLZpKPZlvakc1khsvny3StYU+W7Mm0kwYXXw==
+X-Received: by 2002:a05:6a20:c989:b0:398:837a:7af0 with SMTP id adf61e73a8af0-398ecb1981amr16469942637.30.1773759856182;
+        Tue, 17 Mar 2026 08:04:16 -0700 (PDT)
+Received: from eric-acer (36-225-83-37.dynamic-ip.hinet.net. [36.225.83.37])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c74029fa6eesm6785419a12.20.2026.03.17.08.04.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Mar 2026 08:04:15 -0700 (PDT)
+Date: Tue, 17 Mar 2026 23:04:11 +0800
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>, 
+	Christian Loehle <christian.loehle@arm.com>
+Subject: Re: [PATCH 1/2] sched_ext: Cache per-node NUMA distance order in
+ scx_idle_init_masks()
+Message-ID: <bwbqaaeptqcjfuotszesmckmkept2o5exdkbn67nx7uz6bwilh@mlrjlhh4ovzi>
+References: <20260315181017.1377138-1-yphbchou0911@gmail.com>
+ <20260315181017.1377138-2-yphbchou0911@gmail.com>
+ <abgnBgO83uXd7Xq-@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19.8
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abgnBgO83uXd7Xq-@gpd4>
 
-From: zhidao su <soolaugust@gmail.com>
+Hi Andrea,
 
-[ Upstream commit 7a8464555d2e5f038758bb19e72ab4710b79e9cd ]
+On Mon, Mar 16, 2026 at 04:51:34PM +0100, Andrea Righi wrote:
+> Hi Cheng-Yang,
+> 
+> this has been sitting in my TODO list for a while, so thanks for looking
+> at it. :)
+> 
+> Comments below.
+> 
+> On Mon, Mar 16, 2026 at 02:10:14AM +0800, Cheng-Yang Chou wrote:
+> > Add scx_numa_node_order[] and scx_numa_node_order_cnt[], per-node
+> > arrays that store NUMA nodes sorted by increasing distance from each
+> > node. They are allocated and populated once during boot in
+> > scx_idle_init_masks() using the existing for_each_node_numadist()
+> > O(N^2) traversal, so the cost is paid only at init time.
+> > 
+> > pick_idle_cpu_from_online_nodes() will use these cached arrays to
+> > reduce its per-call complexity from O(N^2) to O(N).
+> > 
+> > Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+> > ---
+> >  kernel/sched/ext_idle.c | 38 ++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 38 insertions(+)
+> > 
+> > diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
+> > index 03be4d664267..623a0356d6c3 100644
+> > --- a/kernel/sched/ext_idle.c
+> > +++ b/kernel/sched/ext_idle.c
+> > @@ -144,6 +144,14 @@ static s32 pick_idle_cpu_in_node(const struct cpumask *cpus_allowed, int node, u
+> >   */
+> >  static DEFINE_PER_CPU(nodemask_t, per_cpu_unvisited);
+> >  
+> > +/*
+> > + * Per-node sorted arrays of NUMA nodes in increasing distance order,
+> > + * pre-computed at init time to avoid the O(N^2) traversal on each call
+> > + * to pick_idle_cpu_from_online_nodes().
+> > + */
+> > +static int **scx_numa_node_order;
+> > +static int *scx_numa_node_order_cnt;
+> 
+> Do we need this array? Isn't this always nr_node_ids - 1 (all other
+> possible nodes)?
+> 
+> Also, if nodes are sparse we should probably initialize the array with
+> NUMA_NO_NODE items and skip them when we scan the array (in addition to the
+> node_online() check).
+> 
 
-bpf_iter_scx_dsq_new() reads dsq->seq via READ_ONCE() without holding
-any lock, making dsq->seq a lock-free concurrently accessed variable.
-However, dispatch_enqueue(), the sole writer of dsq->seq, uses a plain
-increment without the matching WRITE_ONCE() on the write side:
+Both are good points, will be addressed in the v2 patch.
+Also, thanks to Christian for the QEMU tip and to you for the virtme-ng
+example, will test before sending the patch.
 
-    dsq->seq++;
-    ^^^^^^^^^^^
-    plain write -- KCSAN data race
+> > +
+> >  /*
+> >   * Search for an idle CPU across all nodes, excluding @node.
+> >   */
+> > @@ -685,6 +693,36 @@ void scx_idle_init_masks(void)
+> >  		BUG_ON(!alloc_cpumask_var_node(&per_cpu(local_numa_idle_cpumask, i),
+> >  					       GFP_KERNEL, cpu_to_node(i)));
+> >  	}
+> > +
+> > +#ifdef CONFIG_NUMA
+> > +	/*
+> > +	 * Pre-compute per-node NUMA distance order so that
+> > +	 * pick_idle_cpu_from_online_nodes() can iterate in O(N) instead of
+> > +	 * the O(N^2) traversal required by for_each_node_numadist().
+> > +	 */
+> > +	scx_numa_node_order = kcalloc(nr_node_ids, sizeof(*scx_numa_node_order), GFP_KERNEL);
+> 
+> Considering the comment above, we probably need only nr_node_ids - 1 items.
 
-The KCSAN documentation requires that if one accessor uses READ_ONCE()
-or WRITE_ONCE() on a variable to annotate lock-free access, all other
-accesses must also use the appropriate accessor. A plain write leaves
-the pair incomplete and will trigger KCSAN warnings.
+ACK.
 
-Fix by using WRITE_ONCE() for the write side of the update:
-
-    WRITE_ONCE(dsq->seq, dsq->seq + 1);
-
-This is consistent with bpf_iter_scx_dsq_new() and makes the
-concurrent access annotation complete and KCSAN-clean.
-
-Signed-off-by: zhidao su <suzhidao@xiaomi.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-Now I have all the information I need for the analysis.
-
-## Analysis
-
-### 1. Commit Message Analysis
-
-The commit fixes a KCSAN data race annotation issue. `dsq->seq` is read
-lock-free via `READ_ONCE()` in `bpf_iter_scx_dsq_new()` (line 6589), but
-the write side in `dispatch_enqueue()` uses a plain `dsq->seq++` (line
-1100). KCSAN requires that if one side uses
-`READ_ONCE()`/`WRITE_ONCE()`, all accessors must also use the
-appropriate annotation. The fix is a one-line change from `dsq->seq++`
-to `WRITE_ONCE(dsq->seq, dsq->seq + 1)`.
-
-### 2. Code Change Analysis
-
-The change is trivially small and correct:
-- **Before**: `dsq->seq++` — plain write, incomplete KCSAN annotation
-- **After**: `WRITE_ONCE(dsq->seq, dsq->seq + 1)` — properly annotated
-  write
-
-The read side at line 6589 already uses `READ_ONCE(kit->dsq->seq)`,
-confirming this is a lock-free concurrent access pattern. The write side
-holds a lock (dispatch queue lock), but the reader does not, making the
-`WRITE_ONCE()`/`READ_ONCE()` pair necessary for correctness under the
-KCSAN/C11 memory model.
-
-### 3. Subsystem: sched_ext
-
-**Critical factor**: `sched_ext` was introduced in **v6.12**. The
-current stable kernel trees are:
-- 6.12.y (contains sched_ext)
-- 6.6.y (does NOT contain sched_ext)
-- 6.1.y (does NOT contain sched_ext)
-- 5.15.y, 5.10.y, etc. (do NOT contain sched_ext)
-
-This means the commit can only apply to **6.12.y** (and later, 6.19.y
-once it becomes a stable tree).
-
-### 4. Bug Severity
-
-This is a KCSAN annotation completeness fix. It:
-- Fixes a real data race (writer uses plain store while reader uses
-  `READ_ONCE()`)
-- Prevents KCSAN warnings
-- The practical impact on most architectures (especially x86) is minimal
-  since `dsq->seq` is a `u64` and the write is already atomic in
-  practice on 64-bit platforms
-- However, on some architectures (32-bit), a plain write to a 64-bit
-  value could be torn, potentially causing the reader to see a
-  partially-updated value
-
-### 5. Risk Assessment
-
-- **One-line change**: Minimal risk
-- **Obviously correct**: `WRITE_ONCE()` is the standard annotation for
-  this pattern
-- **No behavioral change**: Same value is written, just with proper
-  annotation
-- **Well-tested pattern**: `WRITE_ONCE(x, x + 1)` is used extensively
-  throughout the kernel
-
-### 6. Stable Criteria Assessment
-
-- **Fixes a real bug**: Yes — data race (KCSAN violation), and
-  potentially a real torn-write issue on 32-bit
-- **Obviously correct**: Yes — standard `WRITE_ONCE()` pattern
-- **Small and contained**: Yes — one line changed
-- **No new features**: Correct
-- **Tested**: Accepted by maintainer (Tejun Heo)
-
-While this is a legitimate fix, the severity is quite low. It primarily
-silences KCSAN warnings and ensures correctness of the annotation pair.
-On 64-bit architectures (where sched_ext is primarily used), the plain
-store was already effectively atomic. The practical user impact is
-minimal.
-
-### Verification
-
-- Verified `sched_ext` was introduced in v6.12 via `git log --diff-
-  filter=A -- kernel/sched/ext.c` (commit `f0e1a0643a59b`)
-- Verified no commits to `kernel/sched/ext.c` exist in `v6.10..v6.11`
-  range (file didn't exist before 6.12)
-- Confirmed `READ_ONCE(kit->dsq->seq)` exists at line 6589 of
-  `kernel/sched/ext.c` (the reader)
-- Confirmed `dsq->seq++` exists at line 1100 (the writer being fixed)
-- The write occurs under a lock (dispatch queue lock held in
-  `dispatch_enqueue`), but the read in `bpf_iter_scx_dsq_new()` is lock-
-  free
-- Verified this is a one-line change with no dependencies
-
-### Decision
-
-This is a valid but low-severity KCSAN data race annotation fix. It's a
-one-line change that is obviously correct and fixes a real (if minor)
-data race. It only applies to 6.12.y stable since sched_ext doesn't
-exist in older trees. The fix is small, surgical, and meets stable
-kernel criteria — it prevents KCSAN warnings and ensures proper memory
-access semantics for concurrent access to `dsq->seq`.
-
-**YES**
-
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0bb8fa927e9e9..413b9f9336fe9 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1097,7 +1097,7 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 	}
- 
- 	/* seq records the order tasks are queued, used by BPF DSQ iterator */
--	dsq->seq++;
-+	WRITE_ONCE(dsq->seq, dsq->seq + 1);
- 	p->scx.dsq_seq = dsq->seq;
- 
- 	dsq_mod_nr(dsq, 1);
 -- 
-2.51.0
-
+Thanks,
+Cheng-Yang
