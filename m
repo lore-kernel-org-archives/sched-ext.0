@@ -1,82 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BA037C0E7
-	for <sched-ext@lists.linux.dev>; Tue, 17 Mar 2026 17:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C68280A21;
+	Tue, 17 Mar 2026 17:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768776; cv=none; b=dB97DhV4kpAB+PRE0nw6V8dMGYu/TiFpAZSz7KjcHbDfSUizi75Fac5nTgkH1EON1ekl0T910Ob1hEnTI+YGeE4ol6u1zbidWJtx6IUsTHDzcFiPPae1TA+s4qb5LMVJ+RTFCWdX6E7WSJ2mqsc7y0uzqbtZrveEb79ZbzF/Sl0=
+	t=1773770051; cv=none; b=U2dKcJjLGoIxM2kPfRYYMai7wWoP2VraI0IyfjKI7twW73hsM2J3zWgVoqH6M8KnY4iK1yDvDLG2AmM6FyiCtlMP+X4rtoM68QWNo6jJc/xtWawDdV+TLk2vfJtyfOOHeu6SO/lGSu6x5KV4MRkGxs9ur5bu6RejuEwD5W6g28E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768776; c=relaxed/simple;
-	bh=lJ9qjvoIwEU8PqrKJykwXySsjdyWbOi4v/7dSh76wFY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l0t/GkSPUJzWWpc1nRexWDjwUCoJELlgvxsmF/LoMq9UXFIV+z3QSXuTf53BBDKkaVDFb3howcLDfPsdEd9Xwh1dackG6hQ+Yn4iPPRg1Tm2fV4ppuZObYY1XMzZ9skNVomSQ5td7mnbja1P3or9Lk6hYA58GjshL1AThLCg0BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VjmPYFJr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773770051; c=relaxed/simple;
+	bh=o9U4kP9BoiNmczBWmGX/rTwZTTh7SYM3gh/9l0lKK5A=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=o36SBtCHeB3+k1UwdT7LKrNAdG9DLlOn+RSGu3cCupss4pAtVRPv6siL71y5ZI6BfLv9ucXv5NTbHn1GShhK+wquCYz+Ew7r+LSe5nx32WcgsOipWmgXDVKFZbZzJIk/aIxPjmospMOhYKA2uF7y9ZZNVGx6rb0VaSYpf0iXtgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YN/ZWP53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VjmPYFJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69D6C4CEF7;
-	Tue, 17 Mar 2026 17:32:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YN/ZWP53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A20C4CEF7;
+	Tue, 17 Mar 2026 17:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773768775;
-	bh=lJ9qjvoIwEU8PqrKJykwXySsjdyWbOi4v/7dSh76wFY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VjmPYFJrLf7V33qmIOxW91C3gHJkla2ZfcZ2LXt4nv/5wgxQPilKpcKlVlg+oxFf/
-	 gw0Y1vaAmBAzOIOz1XLBCL98K/ILCqbVuWTBs1/AIOqBFMrwphRTz913uZRfqLCfj7
-	 mZRGMqpUhD0boItuEjglQvYkjBAJkiO5YL76PpdSKxmjFXdSXJE2uTAMJQ8anIeXJp
-	 QulsfyP3BN9N3IcuObWY2CQQeg8aApr1ynp3EBGIy2L30oo+AogjtnS3W7/6koTPPg
-	 iPmdHTOueDrMexr622KTJ11r6bkA3UisR4XOxrOBJ8059WSGhJVuNqMC6vno93/ilw
-	 DhzCDytzn9Y2w==
-Date: Tue, 17 Mar 2026 07:32:54 -1000
+	s=k20201202; t=1773770050;
+	bh=o9U4kP9BoiNmczBWmGX/rTwZTTh7SYM3gh/9l0lKK5A=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=YN/ZWP53WZKFsJBYj7miyTfZVQiB6a5duXQA2RfXaMvE9gM4IRaZ5HsVl6OjvoerZ
+	 j8z2tgkrPsxwxEMECQQdReF1b2iw8I4MXKzNF19ccBz/sl6sOppVK0Yi/JRJGRAkEE
+	 dhee2kUlcHo9wPfKlfUIEiec40IAeDHKYUG5DSTA0evvMFgE98j3kO0IZ5trHIWQBk
+	 juxAL6+lB7L8pNG/+uD4V2Mie1pRTUbh2znkfMAql3LUqHM8aMyYDo070BEfctbPZU
+	 9mAYYf8PtBSZzmyNxEgSHL/Gc3F39My8xxBfeaviAKcJoYo5rYsFNEx2+MWWQth0Ce
+	 3mnOTnrLw21kg==
+Date: Tue, 17 Mar 2026 07:54:09 -1000
+Message-ID: <f397a5691ea770788818e17bc5fc8421@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Andrea Righi <arighi@nvidia.com>, sched-ext@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: Re: [PATCH 1/2] sched_ext: Cache per-node NUMA distance order in
- scx_idle_init_masks()
-Message-ID: <abmQRgwQZhZk9-_S@slm.duckdns.org>
-References: <20260315181017.1377138-1-yphbchou0911@gmail.com>
- <20260315181017.1377138-2-yphbchou0911@gmail.com>
- <abgnBgO83uXd7Xq-@gpd4>
- <bwbqaaeptqcjfuotszesmckmkept2o5exdkbn67nx7uz6bwilh@mlrjlhh4ovzi>
+To: soolaugust@gmail.com
+Cc: sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>,
+ Peter Zijlstra <peterz@infradead.org>,
+ Ingo Molnar <mingo@redhat.com>,
+ zhidao su <suzhidao@xiaomi.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>
+Subject: Re: [PATCH] sched_ext: Fix typos in comments
+In-Reply-To: <20260317075209.1197766-1-soolaugust@gmail.com>
+References: <20260317075209.1197766-1-soolaugust@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bwbqaaeptqcjfuotszesmckmkept2o5exdkbn67nx7uz6bwilh@mlrjlhh4ovzi>
 
-On Tue, Mar 17, 2026 at 11:04:11PM +0800, Cheng-Yang Chou wrote:
-> Hi Andrea,
-> 
-> On Mon, Mar 16, 2026 at 04:51:34PM +0100, Andrea Righi wrote:
-> > Hi Cheng-Yang,
-> > 
-> > this has been sitting in my TODO list for a while, so thanks for looking
-> > at it. :)
-> > 
-> > Comments below.
-> > 
-> > On Mon, Mar 16, 2026 at 02:10:14AM +0800, Cheng-Yang Chou wrote:
-> > > Add scx_numa_node_order[] and scx_numa_node_order_cnt[], per-node
-> > > arrays that store NUMA nodes sorted by increasing distance from each
-> > > node. They are allocated and populated once during boot in
-> > > scx_idle_init_masks() using the existing for_each_node_numadist()
-> > > O(N^2) traversal, so the cost is paid only at init time.
+Hello,
 
-Wasn't the conclusion that given the low numa node count, O(N^2) doesn't
-matter for now here although I can see node count becoming high enough with
-AMD fake LLC NUMA enabled on an actual large NUMA machines. But if we decide
-that's an actual problem, shouldn't it be addressed in the topology code
-rather than from sched_ext side?
+Applied to sched_ext/for-7.1.
 
 Thanks.
 
--- 
+--
 tejun
