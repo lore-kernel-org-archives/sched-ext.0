@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C68280A21;
-	Tue, 17 Mar 2026 17:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A27F280A21;
+	Tue, 17 Mar 2026 17:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773770051; cv=none; b=U2dKcJjLGoIxM2kPfRYYMai7wWoP2VraI0IyfjKI7twW73hsM2J3zWgVoqH6M8KnY4iK1yDvDLG2AmM6FyiCtlMP+X4rtoM68QWNo6jJc/xtWawDdV+TLk2vfJtyfOOHeu6SO/lGSu6x5KV4MRkGxs9ur5bu6RejuEwD5W6g28E=
+	t=1773770054; cv=none; b=gTcCr229AfgJwMLSlVz9XZR9Zr6eRzAVAr76Cl3Y7rDhStvFAkSd7XDNfWxbo6QQRuwsB+11iHj1ByDqLUcpz4K+PpOi1SK+TYlqEB2mMZPqiAx+GpF5Rs44VylJTyXWy1hjgZVnDH8JWdCtgc38a5mlsMzJHtcrvTLJ3gb54+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773770051; c=relaxed/simple;
+	s=arc-20240116; t=1773770054; c=relaxed/simple;
 	bh=o9U4kP9BoiNmczBWmGX/rTwZTTh7SYM3gh/9l0lKK5A=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=o36SBtCHeB3+k1UwdT7LKrNAdG9DLlOn+RSGu3cCupss4pAtVRPv6siL71y5ZI6BfLv9ucXv5NTbHn1GShhK+wquCYz+Ew7r+LSe5nx32WcgsOipWmgXDVKFZbZzJIk/aIxPjmospMOhYKA2uF7y9ZZNVGx6rb0VaSYpf0iXtgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YN/ZWP53; arc=none smtp.client-ip=10.30.226.201
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=pfAr0vHH/EtN1wIVb76/ztOZMe8RWttMDyzn5kJqW0P5C/qYHpc2BLRzdwUU5ZTuQFqH4GON9fLWhRiAPKzuMQQtt8e2ArOV61WAwC3X65h0g0zXUtI+DItzJoz/yqxTwoBimj6j8qc8CReWs/d0XfN5PCBS2YcguaPs9Ow7r1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GFnTFJ9Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YN/ZWP53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A20C4CEF7;
-	Tue, 17 Mar 2026 17:54:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GFnTFJ9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B896C4CEF7;
+	Tue, 17 Mar 2026 17:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773770050;
+	s=k20201202; t=1773770053;
 	bh=o9U4kP9BoiNmczBWmGX/rTwZTTh7SYM3gh/9l0lKK5A=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=YN/ZWP53WZKFsJBYj7miyTfZVQiB6a5duXQA2RfXaMvE9gM4IRaZ5HsVl6OjvoerZ
-	 j8z2tgkrPsxwxEMECQQdReF1b2iw8I4MXKzNF19ccBz/sl6sOppVK0Yi/JRJGRAkEE
-	 dhee2kUlcHo9wPfKlfUIEiec40IAeDHKYUG5DSTA0evvMFgE98j3kO0IZ5trHIWQBk
-	 juxAL6+lB7L8pNG/+uD4V2Mie1pRTUbh2znkfMAql3LUqHM8aMyYDo070BEfctbPZU
-	 9mAYYf8PtBSZzmyNxEgSHL/Gc3F39My8xxBfeaviAKcJoYo5rYsFNEx2+MWWQth0Ce
-	 3mnOTnrLw21kg==
-Date: Tue, 17 Mar 2026 07:54:09 -1000
-Message-ID: <f397a5691ea770788818e17bc5fc8421@kernel.org>
+	b=GFnTFJ9QAepAzZ8oxRr76IFc/HjV/jfbhbtdDP5TT+6wj5E7FkBStDWKuX+cv/V9a
+	 VF/l0QwzJ6a0aW/bel5QCQiYXuufaake7kNw0c/ovV6czmNpSSuMqYU5f7IU6PsyBx
+	 xzqGmpm3HVnnYRmOJ3qVOBW+rQdmHRBM9i4atONRXxIKPRdqbeEZ1/3zZHpiN1ph2M
+	 otU8u6CWPbvZASC5b9tb+12vH9aq7+O0V8mR+KKfZD+1/cEdW6J4n18bQG5rRmkKYp
+	 F7FsR6akiRYdda5kx4UqmWodeoGyFZkQM+dDj8CGV/5WYFfVUdQCBkTVC6TMe52WRq
+	 nDuJu9dl/O3Tg==
+Date: Tue, 17 Mar 2026 07:54:12 -1000
+Message-ID: <d9a7272d7410a5f86adf22f3bd60cb5c@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: soolaugust@gmail.com
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
 Cc: sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org,
  David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>,
  Changwoo Min <changwoo@igalia.com>,
- Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar <mingo@redhat.com>,
- zhidao su <suzhidao@xiaomi.com>,
- Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH] sched_ext: Fix typos in comments
-In-Reply-To: <20260317075209.1197766-1-soolaugust@gmail.com>
-References: <20260317075209.1197766-1-soolaugust@gmail.com>
+ Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+ Chia-Ping Tsai <chia7712@gmail.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.1] selftests/sched_ext: Show failed
+ test names in summary
+In-Reply-To: <20260317151406.937519-1-yphbchou0911@gmail.com>
+References: <20260317151406.937519-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
