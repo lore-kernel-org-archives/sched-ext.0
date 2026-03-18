@@ -1,136 +1,103 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B797D228CB8
-	for <sched-ext@lists.linux.dev>; Wed, 18 Mar 2026 01:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB74363C77
+	for <sched-ext@lists.linux.dev>; Wed, 18 Mar 2026 06:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773796297; cv=none; b=KOM0J0XZW5dZCwsGrUcosU6Bpexw+J2ScgGYSxkqrLGadPW7ODlgqJyfbC06fBZZzcRhPuO5lexNXJB9+rRlf+7DhIsnyQJ9kTu5Evr9Tuup8ls7kOXO2yN7rRKD+SZPW4gqKsHfOvOZ0ohHhsBF3Eww96laagMTy+KKa7FOuMs=
+	t=1773813764; cv=none; b=EoEpgs49aU1+eYiBzVNz3nc9vrJhk/IirIn6BzIQ5l6tuPGEwB6d5r762sUh9Vo2ei4MIbxtNDBxncxOKJzqtykeuHecOL4zZAI8xLdKih3CmU07bfhmmJiOYFDhYmLCC6Uwm4XPEh5YEjWVt74pc0VL16xi5gm1JB9UHZAGoqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773796297; c=relaxed/simple;
-	bh=3av6Hueuy0V18Ux4IR4GlBwrw4O8fKoKMTedBg/5QHw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZhjedGK7iQusdaVurpJfW8mfaybX+VF8enbP6AMjm6O57HSF+RX4kmhZ0lC2ELxs0VRJqJbT7/4wa5nL8swLtu3hbd7aEBqP3gdh/hAHLlYKbzbFQSX7XhMoCDCHhQLBxrX61rORwSTGJm0uVJx08LVZD285omEyqUD1cCKDWCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pg4ih0Mv; arc=none smtp.client-ip=209.85.214.172
+	s=arc-20240116; t=1773813764; c=relaxed/simple;
+	bh=oUlk2n2Samf+iUJU+Vashp2Zl+eq2zZZX0pmSpCwDTk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=if80QmqD3LWYbTf9yV+IcpMnhrfjzBX+NyaaKeMHLEll586nxECwmNp5s9KE527IuUyOLZAcsTMeiBEzj7aNEdvg+xijmiNDBfFoP/kxksXKGwSnR48c3yN6R+vJvtW/dNWBvVsDudnajrec10Y0qrkjqDuv4NLSuBAPyWans8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apyB3KhA; arc=none smtp.client-ip=209.85.216.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pg4ih0Mv"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2aae146b604so40555805ad.3
-        for <sched-ext@lists.linux.dev>; Tue, 17 Mar 2026 18:11:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apyB3KhA"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-35a1cc6e478so3506675a91.0
+        for <sched-ext@lists.linux.dev>; Tue, 17 Mar 2026 23:02:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773796294; x=1774401094; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+Vx826MjNzhvcNnkbu+BLj+vkNNIn9NZKPb0U2RyrU=;
-        b=Pg4ih0Mv66jARh8P0n+yBOsvdZRCek9xhCy/g908ZPzBBxFiJahivUS047tSdP2Nem
-         tNNQLmXZO5arCtdSfcXt27x9z0nUOLanR4wuMr4ouSHzDAQTqLZmkDpw1AYuivUmoen2
-         wVZm4ySQq5AiHoXdjYPQOHGYWq0O8oezBeO1h/5y3PMyYjzslyfxgG4yOHLAlCZEbG+5
-         0RV1q1rBmyfQpXfTxOhAQF7PY1G6z7QFCR7l0Yz/mTFr4ssgBaS0mrZn5BRy2Sz9EUML
-         G0dL+UtWyoeh5w1Cr0kkhNFvBVori1cHsuuUa7azfTBWMSqBQ+xpebarPfJiLggoCDM8
-         7LFw==
+        d=gmail.com; s=20230601; t=1773813762; x=1774418562; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IJkIVtuxuti/XXH+Al9drVlkAla5vyfHEBgWFGTXaE4=;
+        b=apyB3KhANFxroZx2c+K1yuUbw7Xxqk6kfW5DUeUI3WBmiGv7WmmXKNdaTwcSyNW3P1
+         9rLxJPld6Fk1c5N72eqL/0tooo9Mybrz4RJO/El/ho3lgALtBOJMpFiYXInWnDZ11zf+
+         w7YBtcQJF4N0F/dyzFD/1Wn9xFxNSbvAUcRsblut40JU57PEgCnaHuUBtWLyK8dsG1y6
+         Rkapp0afbK4+xYrL+Kucxxg3Sv3897mGdatcjAK17z9bB/KgQn7k/sU28jBrh+k2/g2I
+         rlVodWanE9qA9XG93LArsY3h64N+yrwj56elYYYqfL65DuSJQp2DCTWGR+X+tZy6ZkUv
+         1ENQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773796294; x=1774401094;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z+Vx826MjNzhvcNnkbu+BLj+vkNNIn9NZKPb0U2RyrU=;
-        b=Z7Q9NAmiDon1uGyALmY2f2pXgdf0G4s3YWCF+T9aky+Dq3hqj/W/4bNPXJ0OOqTzVf
-         uO7X6ajau9uLBv/0nKR3drAS+5xx46t6FiskurFFwkDJjcC3/khWrPDVRJ/8yJkrUh5L
-         Nt4/vTfcHpnXgKXRV4j3aHfWv01+bk0qoOzbJ2qBRtgZ+tCR6hG3P+T7T908hA+hL8pb
-         uRF7OG/XOPFZNMFl/6YT+XN/m5vLjR4vo2CW7RmieFx7eEbYszWR4d33o9jdB2fdCWCX
-         e2r3YZoVzRbWNsbGuWTjUW9xkRWB9obpLm598HT8SekqJtyEokzmtMgLv7aryicmhEi8
-         wzJw==
-X-Forwarded-Encrypted: i=1; AJvYcCW1AvG1XBICFs0kKQ5kuBtBKX/xLX0m3xAQ9I8lv6VCaA2NUgH+Z+aWJ2/0JMyd2WvLg4TFMaP3DcQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxbRDBQqeAy/uuZXThMEzvQ0PhvMKCYiUDFtlkcOUUif8bXJWsS
-	x4QwY5mI0Ct56rOAU+aFZEaTSwh00ONzw5Qq+raDGHTOr2g6C+xLt3z/
-X-Gm-Gg: ATEYQzyT3vCVL35QsM7BOTy2tVjTYePZ7SU9QXlQXnI/URCE+eyosHpmr1WZPFWGTZK
-	ahdJqjnasNd5xWp4gkUFt09UPkrRPpIMCGyuRqZqWTddD8QMjyMSZ05s5urGZ830Mbty/xnL+z1
-	E6cnze7luszErDkViaOMNfKmlMo1lYTr5b/tJZ0f+NxJ7aF89zrzl2Jv5vPSvbsVNR2ViM7mbQ+
-	lA9XhAPX37xtIUxDkpiVf8b3RDDyACVDKVdeJkZWLYraKFRgPCsNtAC24fiiqzujwkBg2Y4HF+h
-	InIG6TEky+HDRhzj1eZaJd75ha3N7ufaFcuHdXCwrCXO10z6RpgoJFeLpZyFDWNjow3WjQYAgNJ
-	fq90h7dW8UogbEHXnYSDVJs5QsFzima+T9ksYben2Ldp2x5y9TAawFyYNnRvG9iWllmiFEOcQwL
-	fvV0W20Yl70yzzW1qZ55wJESE6InmTp/EpUwas0rZZItrHQGHZvJ/AGhZctw==
-X-Received: by 2002:a17:902:d2c2:b0:2b0:506b:e6f1 with SMTP id d9443c01a7336-2b06e3d3cd5mr16153215ad.29.1773796293907;
-        Tue, 17 Mar 2026 18:11:33 -0700 (PDT)
-Received: from eric-acer (36-225-83-37.dynamic-ip.hinet.net. [36.225.83.37])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b06e5f0f25sm7668215ad.42.2026.03.17.18.11.31
+        d=1e100.net; s=20251104; t=1773813762; x=1774418562;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IJkIVtuxuti/XXH+Al9drVlkAla5vyfHEBgWFGTXaE4=;
+        b=oYQUq2fX5zhweH4WwwunHWnb/xvIunBsfkDUNlIfgX0w1PtIt10CKBTIzPhp+HhHY9
+         NvLYYc2tIw+I9ym6e2N/YgwzjMhIPWr/8iJnL3QZvNewj9XRKSBdq+iRJIAc0834sCTr
+         vXn/RXgdZi7Iq6lXnzADfLN7hByS1a7ucG5BvxVtFBIFk0vPSdk/ionrXXmcuySS2pE8
+         sfZ8n8Kyiabv6EdU3GwOX9F6dRVDjWyJDPL3zSv67JE4Q5P3nzIf+//1EVwaggu7rFVY
+         15By7z0ws3rE5FCnThJvm+rdDciMo/Ft7uKbZfuoRx894UHYj0qgCC5IKHi9bQtsUeS0
+         I7MA==
+X-Gm-Message-State: AOJu0YydPXvDthiw5EFxBIpuL4+4eqI5MJGoPxRLsnQhFBw1evqqDSVr
+	kelfqtSyPwM52fsuCTFhJ8nZBFOAEl0EoNR0/c5fN7KcQliRLcqbXPwC
+X-Gm-Gg: ATEYQzzs3rmmaQDaWKXqFycD3dOnzQSgy6bCT04ux0uA7xqKwoX28zXMAIM7bqo2VMA
+	ezWopQDEZMwFdMMPxKxfUIcJJAWNTat0mswzdrRSfs3pVzkqWlKd7aRF0JeECswIaRbUKf2qr8L
+	hAH3fw8U3FgPf581aSXj/d+4Es2hr9N6StLH9HDSDaj9EDNiQ5YxfOJ0BCdlUwHyjYg/IUtYTfI
+	pUOoIJ3O6B+gdf9W4bkwy2Yf3HJTLBy9ZPCmjlbbd+b0GCEh6kQlUsVqtJycmKxRP+2DU7gjfE4
+	XxYHxGVaRLD1+AR4fXTN1CNO0Y0Mhk/JTrI+eCvLxg3mg328mda1CH/cai2R/X3ciptWDBeR6dA
+	Zul9zvQptPZOB0qElaEIilc61Xysj+ryRgiOkNlG/K6nDLcyPpuyrbY3fwFO5hgEuS5BOJ808Gc
+	zNh6ZGducI8UeTCyiZ+KY75oIjZVnadW1VwDj81g0Nnbc0xWGA7xg=
+X-Received: by 2002:a17:90b:5350:b0:33b:bed8:891c with SMTP id 98e67ed59e1d1-35bb9f56531mr1863267a91.23.1773813762214;
+        Tue, 17 Mar 2026 23:02:42 -0700 (PDT)
+Received: from SH-PF5NDYD6.Hygon.cn ([112.64.138.194])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bbbedd0desm924453a91.4.2026.03.17.23.02.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Mar 2026 18:11:33 -0700 (PDT)
-Date: Wed, 18 Mar 2026 09:11:29 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH sched_ext/for-7.1] sched_ext: idle: Prioritize idle SMT
- sibling
-Message-ID: <mqszomfbraegntun7x4vb5x4u65nwbo74plledtdz23ean3tcy@av7vios3d3ie>
-References: <20260318003842.762275-1-arighi@nvidia.com>
+        Tue, 17 Mar 2026 23:02:41 -0700 (PDT)
+From: Ke Zhao <ke.zhao.kernel@gmail.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	ke.zhao.kernel@gmail.com
+Subject: [PATCH] tools/sched_ext: Update stale scx_ops_error comment in fcg_cgroup_move
+Date: Wed, 18 Mar 2026 14:02:24 +0800
+Message-ID: <20260318060224.47393-1-ke.zhao.kernel@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260318003842.762275-1-arighi@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Andrea,
+The function scx_ops_error() was renamed to scx_error(), but the
+comment here is left pointing to the old name.
+Update to be consistent with current API.
 
-On Wed, Mar 18, 2026 at 01:38:42AM +0100, Andrea Righi wrote:
-> In the default built-in idle CPU selection policy, when @prev_cpu is
-> busy and no fully idle core is available, try to place the task on its
-> SMT sibling if that sibling is idle, before searching any other idle CPU
-> in the same LLC.
-> 
-> Migration to the sibling is cheap and keeps the task on the same core,
-> preserving L1 cache and reducing wakeup latency.
-> 
-> On large SMT systems this appears to consistently boost throughput by
-> roughly 2-3% on CPU-bound workloads (running a number of tasks equal to
-> the number of SMT cores).
-> 
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> ---
->  kernel/sched/ext_idle.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-> index c7e4052626979..e0c57355b33b8 100644
-> --- a/kernel/sched/ext_idle.c
-> +++ b/kernel/sched/ext_idle.c
-> @@ -616,6 +616,18 @@ s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
->  		goto out_unlock;
->  	}
->  
-> +	/*
-> +	 * Use @prev_cpu's sibling if it's idle.
-> +	 */
-> +	if (sched_smt_active()) {
-> +		for_each_cpu_and(cpu, cpu_smt_mask(prev_cpu), allowed) {
-> +			if (cpu == prev_cpu)
-> +				continue;
-> +			if (scx_idle_test_and_clear_cpu(cpu))
-> +				goto out_unlock;
-> +		}
-> +	}
-> +
->  	/*
->  	 * Search for any idle CPU in the same LLC domain.
->  	 */
-> -- 
-> 2.53.0
-> 
+Signed-off-by: Ke Zhao <ke.zhao.kernel@gmail.com>
+---
+ tools/sched_ext/scx_flatcg.bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Overall looks good, just a nit:
-
-The block comment at the top of scx_select_cpu_dfl() still lists 5
-steps. With this patch a new step should be added and the numbering
-updated accordingly.
-
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 0e785cff0f24..c4019ac6314b 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -919,7 +919,7 @@ void BPF_STRUCT_OPS(fcg_cgroup_move, struct task_struct *p,
+ 	struct fcg_cgrp_ctx *from_cgc, *to_cgc;
+ 	s64 delta;
+ 
+-	/* find_cgrp_ctx() triggers scx_ops_error() on lookup failures */
++	/* find_cgrp_ctx() triggers scx_error() on lookup failures */
+ 	if (!(from_cgc = find_cgrp_ctx(from)) || !(to_cgc = find_cgrp_ctx(to)))
+ 		return;
+ 
 -- 
-Thanks,
-Cheng-Yang
+2.43.0
+
