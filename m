@@ -1,71 +1,72 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D628E39DBC0
-	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 07:01:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CAE2D7DE4
+	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 07:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773903688; cv=none; b=rIKCsfR1aznBOg7RwAt6QxuFRNXnq1TbvfiavZTyNuFXA7h8NxMCT5mtiSMuh2v9Y3oYjBpTTnll2xIwDbHmD0OljVbUsGiiXZgzIvMt/IM5zZMv3AGPjquvVZQMFdoXWw6Ws1U2OC+1AMxsPUafSIR+3M2KvWkb18jVemK4ivA=
+	t=1773903690; cv=none; b=fgWuup1051LuCcn3mwwEpe9f0P6qDvQB7liGPYgbAWP777rZyOKHqwrn6qIZmDFhh9h/1yhhyaIz8Yj/nlbe4k0e3ldfFLSBT9Ukxo18LSkDjD/ZSLh21F1XWaZAIY+W0mA4c/IG9jqQvkVv1dh3Mync1BmvO0IR+ZncagDCxcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773903688; c=relaxed/simple;
-	bh=Ig8Qidl4g7GxBDjk5CCcFxksDYaez31SFGaFRo6Aoeg=;
+	s=arc-20240116; t=1773903690; c=relaxed/simple;
+	bh=a+qtgi1u0E/yy3Arqhj+x2XegoAvgyWn/ESgIzxc2zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rQsGHroD5TDmtcrOv43CtAIYB1gs0Jlv31mSU6U+xMTrLIFD0Ikcox3aDvUgs5BbRaEl9RxWTWr2TKVJTcW3Ex2qQxqpmv8+Q/QyE1nVSZWD79fWzLwsm+KWe1kqua1J05VlgJrx9yApe7VbhOFTR40FyZ0ZSVukFmsuUFJnT1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5ERsyr+; arc=none smtp.client-ip=209.85.210.171
+	 MIME-Version; b=dSiI7MDHdrCx4MsrJ5k/nUHPpqR+aBzesMktO+obwu51ma4ZnhfTRQlUZRVqrVMZx72QzKeaB8TY9PXj309wWQYa8gps+T82v1QQM6akPDw9sLoNCqCIZUajb+3/nzW3dn6mWZZ9jTIzOIzZVTkdTeCEClNZZFzbSHRFY2YGvdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dgnOQrJi; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5ERsyr+"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8297e0b27e5so410673b3a.1
-        for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 00:01:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dgnOQrJi"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-823c56765fdso387348b3a.1
+        for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 00:01:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773903686; x=1774508486; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1773903688; x=1774508488; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=G3L3nqRkUerT82JcbBzptz1tSxX46jhmu/lsfGDI2es=;
-        b=C5ERsyr+c8hjB/87CdyKLYLJHyd4hpeU96YvAAWZHYFm4NERT0p6qrbvRKcplktsmK
-         29/TAeW0B22Whg5EBfM2kJI3hpL/eSYNJNSkPHSOIJNN+ydyqiBQIS5FS9PioN2V5APn
-         N5i4ml1HhY+HiIbQr0tD1KYRvPHl6Q1IgoU+Ta+BSb2JFf6qQ8KaTjTzzRN72AuV7euG
-         E741NPTlxsSnKb7ZaqOkNnxJmrhY/D7a9lJxz5gC5Vb8kKwUDO/vptl1RE8XJiUxidvh
-         OCDxlXBjxz0OM5rQ6T7QoFCmWUu2+gu3N+6Nql78biGbSu3LsEV8vuNEeQKrZXfuTEfE
-         ea3Q==
+        bh=/QLtLSIXaJatdS6h1ESraQjK+5WjYv2k4bMTmGiD7wQ=;
+        b=dgnOQrJi2FHOlAIcri1zulwO6S4gvwsK7gT24heiAthvg7sAzbKUimHNooUAFcsjsi
+         PVWGYOYNnmlJjP/8g3wmDRSDcfdwzE6o3N93TIpq5SRqqgbSoyr8E66Op5B84MxH4wog
+         vEB1w4JiXNVs2C3X3ikWTMN4Ox2M0B6sdLdr7byUAvWbdpWbMFisuByUy8RlNBPwYOfS
+         +JVgkYbpgLtzcbuxuqeb/mh0P9zHKLoQqmnacldevZospJqPaO7d4AcO/CUcGB+ctpl2
+         tm7lPRQLM1bPV/5IQuXE0s80mD9lTzwlxvktDrl6KeO6sAcF8gu0uKyKGyMUuFIp/HyK
+         bymg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773903686; x=1774508486;
+        d=1e100.net; s=20251104; t=1773903688; x=1774508488;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=G3L3nqRkUerT82JcbBzptz1tSxX46jhmu/lsfGDI2es=;
-        b=jkmXSKJLZfMDisw2cSjF8JmJVoUDT/dVGlyIsCKwoJtEGw3f2/lTHf8Ew1GtjvLIUI
-         A8R5cT7VSzujzuoJTvzvyChXo9NDLX/zRV8xWKrrTYqrCN5knfNImepAPn4vPbL+MD/C
-         m9lO2vHQ1VDHtWoVcY0e7BeMEqDtXU1l/EjF39u6bUEfbdsMPsqgsUQ4OBlXzt7iEkYS
-         +0gpKI+xxgOa/mi7KqkKZntbAZIoY6NFd/8cPMhxypitK0E2bf8ojcaXSXq0bUuD/lyD
-         09H5pZ8f+lgnCwpTPf5ftIzRdDFnpaKSh/HkK36wE6y+8xs2EDLHMQTcFlA8yNV11Yq+
-         rw/w==
-X-Gm-Message-State: AOJu0YxFhiLWY2OgJiuCwSdxMDThbVrRWxOEfonQKD7QWf5SdQ4mjbeq
-	yJHqtFzY6XYljimSrgfxtYO7p8rErUa/pqorSXTHMn9XGgQjj/hnRavz+Krs7Q==
-X-Gm-Gg: ATEYQzyPmRLafe9qtoO5JhnTrB1MPRYpHo3E0XGfceamqsMHzJMukVRiw7G16EoPs3B
-	Lk+m5L1f6lhwkp0/4uabJQz7ivOqnLwmIR+YoMfoFczWfaUEMogeemPl7KxKC18K5+fSrrvdlbx
-	CuFqSbWERoIFoaxI09xEOSEkAmMvSXgNxytXKOtWMI+C7MGmFGc9itlQppuNUh0IFiBHkEkkV1M
-	f+nYJIMcTlDEDKIjhK/Vb4lArJEyGmqXhtruF2bZkzyY4A2N37+6prqXTn/JsalTUjQTzAjf+i4
-	3z2E4C9mlrMji39vqf68M1a5omF8wg/+bBGTSpt0cHr4CDWx66x00yG+M5DQbUpcTun6qTbHdkS
-	dz8LzAy9BDzRx4N2sSBwzrFtT3/AojKlhUH1t4bT5MK4Lvi8UsF9tKW0p/RFODikcavmwCUB0Du
-	HRKwgvIQhss1Ucn6e2zm9TzoxVU0m3YkzXvzW0NIYO5KfjzMT+8ViSBd0PLdMQXSwwFlYwbL22l
-	hc=
-X-Received: by 2002:a05:6a00:3319:b0:824:b181:f492 with SMTP id d2e1a72fcca58-82a6aea0e16mr5278227b3a.45.1773903685848;
-        Thu, 19 Mar 2026 00:01:25 -0700 (PDT)
+        bh=/QLtLSIXaJatdS6h1ESraQjK+5WjYv2k4bMTmGiD7wQ=;
+        b=RfrQN9DXQ1PfI1UiwwPzNv2pxRRj4bmMazqM2oGGy6QlNd1vsU3nl8wbbFv+oY2x30
+         XOPhzb4yZ350QLZgCa4uIvNxw/3/KDgUFsZTe9AApmNk9YiiEDKahInEgpdSm+L4P9qp
+         TlInTjWo6FFazPslnODVZiWyBDRefM0d8WgLUxkTca4AKiiibMyGiz5RE3JX1uE8XQ7z
+         lw5be1BiI01NP0924gP+1GLOFfiM7WkHcyGKnWn+T1M6fv/XicnZvDBNeDRRlgUnsLC9
+         enSpYiDGHqNgXoPOn8VP+j66BwxHUubT22aCGue/GzDmxXjS3XMZSwx+0vgfMnGJq6cQ
+         WfVw==
+X-Gm-Message-State: AOJu0Yy2nQo/y528WZH4kL3yIDUoERkzkRGhyq4MvlRIEP0NS67KZXEX
+	YRtqtN8GZ+t7PLBtUZZaXO5s8nmIBwn8nPkao77cDLzocYrSe31eABJl6ra4wQ==
+X-Gm-Gg: ATEYQzzWGu2clgA5i4g2NqKJJuAXs4m3tn4aaM9k2qWJNHWYDzjLqjtul7EjUTHAtEA
+	ivNLUEfwEJ9RhlqovWesci4u60R/5IC8ZMdogu7Vi1+g3WUJzoRDJz0B1ym8KYnud/NDfj1E/RO
+	v4339myx9Stt4r4JEpiIZO+TpXZVhzpaQ6pRJZxQycXy+0cvRuUBs+ygBg54O9OQOWDqcGBRhW9
+	JHF2+ZeTOMoMxVj7o6U2c2tFjB5Hvr/m137xyjmCU8NMBtiyVDQzU0cnsiEHqlkqH110612VCse
+	RHDfF/6BXBD1LAADiKIj2O44Kq5TKksaJ2YksskNbyhWp4pXgFbrWWzt7xXoWEsRo5GTCNen04I
+	4w8Ys0deB4XcvyfxkZ6+1eoLe0O3vkL+zB+NbfsbnjnvarO2l4YGGvUfeZ7Hs8GjiHgMFRAfMpX
+	As9NzUNbXD5pf3F8bvLypKUjp7vGbGzJ/6tpJeWOnj9ZG82Xnrb/8hyiTY12VrDhJbDHhshqFS3
+	Tc=
+X-Received: by 2002:a05:6a00:8c02:b0:82a:64c7:8c6d with SMTP id d2e1a72fcca58-82a6ae1f450mr5386765b3a.25.1773903687959;
+        Thu, 19 Mar 2026 00:01:27 -0700 (PDT)
 Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6bbe1ffbsm6599578b3a.43.2026.03.19.00.01.24
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6bbe1ffbsm6599578b3a.43.2026.03.19.00.01.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 00:01:25 -0700 (PDT)
+        Thu, 19 Mar 2026 00:01:27 -0700 (PDT)
 From: zhidao su <soolaugust@gmail.com>
 X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
 To: sched-ext@lists.linux.dev
 Cc: Su Zhidao <soolaugust@gmail.com>,
-	zhidao su <suzhidao@xiaomi.com>
-Subject: [PATCH v2 1/2] sched_ext: Documentation: Document events sysfs file and module parameters
-Date: Thu, 19 Mar 2026 15:01:18 +0800
-Message-ID: <20260319070119.575316-2-suzhidao@xiaomi.com>
+	zhidao su <suzhidao@xiaomi.com>,
+	Andrea Righi <arighi@nvidia.com>
+Subject: [PATCH v2 2/2] selftests/sched_ext: Return non-zero exit code on test failure
+Date: Thu, 19 Mar 2026 15:01:19 +0800
+Message-ID: <20260319070119.575316-3-suzhidao@xiaomi.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260319070119.575316-1-suzhidao@xiaomi.com>
 References: <20260319053026.447892-1-suzhidao@xiaomi.com>
@@ -76,148 +77,38 @@ List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Su Zhidao <soolaugust@gmail.com>
 
-Two categories of sched_ext diagnostics are currently undocumented:
+runner.c always returned 0 regardless of test results.  The kselftest
+framework (tools/testing/selftests/kselftest/runner.sh) invokes the runner
+binary and treats a non-zero exit code as a test failure; with the old
+code, failed sched_ext tests were silently hidden from the parent harness
+even though individual "not ok" TAP lines were emitted.
 
-1. Per-scheduler events sysfs file
-   Each active BPF scheduler exposes a set of diagnostic counters at
-   /sys/kernel/sched_ext/root/events.  Sub-schedulers expose their counters
-   at /sys/kernel/sched_ext/root/sub/sub-<cgroup_id>/events.  These counters
-   are defined (with detailed comments) in kernel/sched/ext_internal.h but
-   have no corresponding documentation in sched-ext.rst.  BPF scheduler
-   developers must read kernel source to understand what each counter means.
-
-   Add a description of the events file, an example of its output, and
-   a brief explanation of every counter.
-
-2. Module parameters
-   kernel/sched/ext.c registers two parameters under the sched_ext.
-   namespace (slice_bypass_us, bypass_lb_intv_us) via module_param_cb()
-   with MODULE_PARM_DESC() strings, but sched-ext.rst makes no mention
-   of them.  Users who need to tune bypass-mode behavior have no
-   in-tree documentation to consult.
-
-   Add a "Module Parameters" section documenting both knobs: their
-   default values, valid ranges (taken from the set_*() validators in
-   ext.c), and the note from the source that they are primarily for
-   debugging.
-
-No functional changes.
+Return 1 when at least one test failed, 0 when all tests passed or were
+skipped.
 
 Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
 ---
- Documentation/scheduler/sched-ext.rst      | 70 ++++++++++++++++++++++
- tools/testing/selftests/sched_ext/Makefile |  3 +
- 2 files changed, 73 insertions(+)
+ tools/testing/selftests/sched_ext/runner.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index f4f7d8f4f9e4..deeec22a9509 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -93,6 +93,57 @@ scheduler has been loaded):
-     # cat /sys/kernel/sched_ext/enable_seq
-     1
+diff --git a/tools/testing/selftests/sched_ext/runner.c b/tools/testing/selftests/sched_ext/runner.c
+index 37ad56c3eb29..4c68efa1512a 100644
+--- a/tools/testing/selftests/sched_ext/runner.c
++++ b/tools/testing/selftests/sched_ext/runner.c
+@@ -217,7 +217,7 @@ int main(int argc, char **argv)
+ 			printf("  - %s\n", failed_tests[i]);
+ 	}
  
-+Each running scheduler also exposes a per-scheduler ``events`` file under
-+``/sys/kernel/sched_ext/root/events`` that tracks diagnostic counters.
-+Sub-schedulers expose their counters at
-+``/sys/kernel/sched_ext/root/sub/sub-<cgroup_id>/events``.
-+Each counter occupies one ``name value`` line:
-+
-+.. code-block:: none
-+
-+    # cat /sys/kernel/sched_ext/root/events
-+    SCX_EV_SELECT_CPU_FALLBACK 0
-+    SCX_EV_DISPATCH_LOCAL_DSQ_OFFLINE 0
-+    SCX_EV_DISPATCH_KEEP_LAST 123
-+    SCX_EV_ENQ_SKIP_EXITING 0
-+    SCX_EV_ENQ_SKIP_MIGRATION_DISABLED 0
-+    SCX_EV_REENQ_IMMED 0
-+    SCX_EV_REENQ_LOCAL_REPEAT 0
-+    SCX_EV_REFILL_SLICE_DFL 456789
-+    SCX_EV_BYPASS_DURATION 0
-+    SCX_EV_BYPASS_DISPATCH 0
-+    SCX_EV_BYPASS_ACTIVATE 0
-+    SCX_EV_INSERT_NOT_OWNED 0
-+    SCX_EV_SUB_BYPASS_DISPATCH 0
-+
-+The counters are described in ``kernel/sched/ext_internal.h``; briefly:
-+
-+* ``SCX_EV_SELECT_CPU_FALLBACK``: ops.select_cpu() returned a CPU unusable by
-+  the task and the core scheduler silently picked a fallback CPU.
-+* ``SCX_EV_DISPATCH_LOCAL_DSQ_OFFLINE``: a local-DSQ dispatch was redirected
-+  to the global DSQ because the target CPU went offline.
-+* ``SCX_EV_DISPATCH_KEEP_LAST``: a task continued running because no other
-+  task was available (only when ``SCX_OPS_ENQ_LAST`` is not set).
-+* ``SCX_EV_ENQ_SKIP_EXITING``: an exiting task was dispatched to the local DSQ
-+  directly, bypassing ops.enqueue() (only when ``SCX_OPS_ENQ_EXITING`` is not set).
-+* ``SCX_EV_ENQ_SKIP_MIGRATION_DISABLED``: a migration-disabled task was
-+  dispatched to its local DSQ directly (only when
-+  ``SCX_OPS_ENQ_MIGRATION_DISABLED`` is not set).
-+* ``SCX_EV_REENQ_IMMED``: a task dispatched with ``SCX_ENQ_IMMED`` was
-+  re-enqueued because the target CPU was not available for immediate execution.
-+* ``SCX_EV_REENQ_LOCAL_REPEAT``: a reenqueue of the local DSQ triggered
-+  another reenqueue; recurring counts indicate incorrect ``SCX_ENQ_REENQ``
-+  handling in the BPF scheduler.
-+* ``SCX_EV_REFILL_SLICE_DFL``: a task's time slice was refilled with the
-+  default value (``SCX_SLICE_DFL``).
-+* ``SCX_EV_BYPASS_DURATION``: total nanoseconds spent in bypass mode.
-+* ``SCX_EV_BYPASS_DISPATCH``: number of tasks dispatched while in bypass mode.
-+* ``SCX_EV_BYPASS_ACTIVATE``: number of times bypass mode was activated.
-+* ``SCX_EV_INSERT_NOT_OWNED``: attempted to insert a task into a DSQ not owned
-+  by this scheduler; such attempts are silently ignored.
-+* ``SCX_EV_SUB_BYPASS_DISPATCH``: tasks dispatched from sub-scheduler bypass
-+  DSQs (only relevant with ``CONFIG_EXT_SUB_SCHED``).
-+
- ``tools/sched_ext/scx_show_state.py`` is a drgn script which shows more
- detailed information:
+-	return 0;
++	return failed > 0 ? 1 : 0;
+ }
  
-@@ -441,6 +492,25 @@ Where to Look
-     scheduling. Tasks with CPU affinity are direct-dispatched in FIFO order;
-     all others are scheduled in user space by a simple vruntime scheduler.
- 
-+Module Parameters
-+=================
-+
-+sched_ext exposes two module parameters under the ``sched_ext.`` namespace that
-+control bypass-mode behaviour. These knobs are primarily for debugging; there
-+is usually no reason to change them during normal operation. They can be read
-+and written at runtime (mode 0600) via
-+``/sys/module/sched_ext/parameters/``.
-+
-+``sched_ext.slice_bypass_us`` (default: 5000 µs)
-+    The time slice assigned to all tasks when the scheduler is in bypass mode,
-+    i.e. during BPF scheduler load, unload, and error recovery. Valid range is
-+    100 µs to 100 ms.
-+
-+``sched_ext.bypass_lb_intv_us`` (default: 500000 µs)
-+    The interval at which the bypass-mode load balancer redistributes tasks
-+    across CPUs. Set to 0 to disable load balancing during bypass mode. Valid
-+    range is 0 to 10 s.
-+
- ABI Instability
- ===============
- 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index a3bbe2c7911b..84e4f69b8833 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -162,8 +162,11 @@ endef
- all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubst %.c,%.skel.h,$(prog)))
- 
- auto-test-targets :=			\
-+	consume_immed			\
- 	create_dsq			\
- 	dequeue				\
-+	dsq_reenq			\
-+	enq_immed			\
- 	enq_last_no_enq_fails		\
- 	ddsp_bogus_dsq_fail		\
- 	ddsp_vtimelocal_fail		\
+ void scx_test_register(struct scx_test *test)
 -- 
 2.43.0
 
