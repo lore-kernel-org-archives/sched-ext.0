@@ -1,63 +1,63 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011047.outbound.protection.outlook.com [40.107.208.47])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011033.outbound.protection.outlook.com [52.101.52.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7427E27AC57
-	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 06:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B4834DCC7
+	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 06:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.33
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773902738; cv=fail; b=dHiydhOswz9RjE7UttyYnTISTlUH3gYZVDNNXN7ZyQ7ir54xWs1+3VYEHbv1UXlbso6JGOP5BfF2PLU9Rmxhwt7NVCu0EbDXqGW3ROjKbZiAbr1rK4WzEm3CNlRzG8OIlvENwlSdRzoTlKpwTS9CNRojLjRw280xEEmtIGakBAo=
+	t=1773903000; cv=fail; b=kn5cEXmRrrb45eHLPsCvp5Y3MCtBLDwL+9C4oM5gcg/g1wa6uClMKDQMHhMz9dFV1aGJsGSX4M6t1+65dfRTStuN6RNMMGsQ2eBf+cP73qUQ1rv6ZHacvd71WCxVtm92mZdkOg/FGMu3GtWeBudBt+wRIkITDaQx4ywZo1ePfn4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773902738; c=relaxed/simple;
-	bh=mZpGqwbuzarr1u8weep0Qkx4XgNcutaLA/33/BE7IeQ=;
+	s=arc-20240116; t=1773903000; c=relaxed/simple;
+	bh=769jwllXlR0HkEWe5CaK4hz3db7d84E5CWZTFpnP5vs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=FFLNMLjLDeafjO4xhK3JNC5cAWagM62/Tech/IvSVB/bpXt0CqD/ds1K2mLg0Lb3fAdkyCC4Xal0y+ARng1Z/VcgLQwGj2Y+Uddm1gVWOiGyF90nyLsrkJ+9x2YPAfBiE6B2PfJW/G/FyDpjXHKxkNuyNvZY0c2GyMRUtNJZZi4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MtDg4NSM reason="signature verification failed"; arc=fail smtp.client-ip=40.107.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+	 Content-Disposition:In-Reply-To:MIME-Version; b=HszRlGG3bbGIZy6bQmwc55LBoE8JKCvYT4WciQ8b8ny/xKpGBY6erhoiLkp12C5srE0+1ZiUxLto6hpWafPxQRUxyNPqXvVdSYDXe/ZnHiX4I8eVpIwmmEjCb8IcPsRcJO0CRL5wF2yl088ga9xkaozB95evUTNcfDIO3lrXu44=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cKsW63jq; arc=fail smtp.client-ip=52.101.52.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MtDg4NSM"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cKsW63jq"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dHcZxrlVNMdXe/OHJhZP/1clANnKbYhH91GDKeLjAPrL759aClr0VbdYqQWZUCG18C0dQ/0MtkRIJazUKmi7i+AFTp491v9yTRwlYgF0YN10gUjHw8mFBLEjoGhl+OhZhJNkJyMuhHrDNy4VjvvkaFIq8Frsk/MQjgrDOTfRF71uI7d2ScR/VIUrAIudoY5TWcuIwfZOymFrnwVGm8lW0Hp9gY+cAxcUqmr6AN9/QrtRrhNAKh44TDdpojbcizHEoleooW2VFnF8SzokPNi+tQSx2gCBER9SzPnkgvc0uLEN2ZYwRuzr5+gJZr6tcAdgZHyZguGvInQTWOeNU2GB2A==
+ b=XJ5nQjBojatv2cAWQ5N/qbOisLQfOzQsjTViygzapgPCDCq9eHfp9PNcFjkTRjtzL49g6w6ilatfTnBbFgRheEe5/mtHxHFsXtmpio64JyA0p0PJMjAcDyHryNU3IkqYhNsoJo31orSf4BSsMr4KYVPP9R9rVIhMDti1BBZcOuRG7UMcgEB8hniZPLx1u3pWZjWnR5QlNJT2WS+wmxfQ/0t8KycA+zRv3SnTqPM1VX9jUG2cvcgwg6XlhCHwJj+qBTBF0BEtZGbl8+KDH4Bi9l/2qIFagfeP8YW3xBhqyWn2NUVUSGG1t7XC8Dy4ngLVXaAc6uAqkVgVXu21KarjUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fqhhUxX3BmgZo5IRLzvBa2LPvhFY/azqTXkgDDcDL7k=;
- b=tTcY7zLkKrJSlbfbLInA+WEqbaLo2NeOpD9BS3PVDoS5GbvcyLyQkOTyD1P8kcW8R0/KOpuUQGq5qc1p0ijhHFZZj1mypY3sn+tlgkj10zu+RuYkLXu8jRZdPjJD6q6ff4Wjba/AcUxwprHBzr6XFwd2bhe+XEHnJGCvU+np8JB2MFGGDro4kOjz8st7rjqVLYodQvGZr4wArgm4v7oJlygfauQln5HgmeNFeQft+2+X8qOGTticTEdxxkXC6nwvpEJdc453WP+WYLJ2t4QuRL1zH54y7kDjHwqcAgu18uvooSvw1XMJh8PuYumd9XL691WUlUjlICPmi5z8DJRmIQ==
+ bh=7mCizkTYAnZo9gInINXGqm1c/xMRiQwU/BnF5Vntcwk=;
+ b=Z2bLLRBOoClQiA0VYqxHUf+XcM1SvxILl+uGDzLRqTIeMqC+fueItp4h2xuzUQGJ8ZSmCrRjYp2KFkCtxkvXUaBLKkVXYTYZVg8VxD+N3i9zG91P2jGkaDvHpiMdCeF99EB1kOAHkLuWgbFehaR2SJ/bWp8A9IbU+pmr06Xxa0k5GbFeDIttnUVpGZrPvBZsXDwNnsx0RQa6lTqLJZ/4lRTZijcxqmi4uOSwuKJrbis9NiYWxaY9F8Y2Z+7AvPSWfUK4zG4d3rTsvKpE+erCwm4uWeX2kFX8Y8IpHcGPO7bdYk/ysNX/h+OB7subih68VIVji6Q8McWn76RFhfz1Bw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fqhhUxX3BmgZo5IRLzvBa2LPvhFY/azqTXkgDDcDL7k=;
- b=MtDg4NSMUsy9WsjKZhdO78oaWW0QWD2S6MyMH0jipXdryN8EeCRnevMaFhH8/VAoRJkedzPBFs3OYRyGp4OnS961KcSyNokXX3CJHX3fwQVZyW2fA/PxlS0Z1MmO3HCCFyR1sK1IgCSNa7oQLYQCbK2v6v8u+93P9NhMtGfYRAKILwGwMwFJoz6oXLvfQ+5BYcSwJJJDxysqOnv/emYfjHfK9LuEt3bvQeZehkzV+Fdz15CC+jW8/gze6VKu1kAz/WT6vuJTMe2zSANGhybiIK0JENjxPxdvhRjHPOL/SrrSJJDG7DkyM/UnhIh4Go0/nBzNQNDi1Dvz66xh1Gt23A==
+ bh=7mCizkTYAnZo9gInINXGqm1c/xMRiQwU/BnF5Vntcwk=;
+ b=cKsW63jqE5B7F+b+ksSgMaKnefJI98N+AGe+vLW2osF7FO41Px0ZWYeDNDk++BnAoyDZOGn47QryczoFe1EGNsX5XrRGJpK1J4PzO7Nhv6ESXEvnMMBSzIsLwkH74Ih7lLnenc6CK9drmumeEN4nit6Yazl0bVAfR3a9nGx4vuswU/KOdEo2bKG0J4I1Ox/2rG0y+kvrGpgYWkVFKfx762gWdlDBEn8EVdxRgc85XnPw/pzN5ltooPCaio7VuMMcqfuwnuP50X1t4pbCWnjDZCxD10xGImZi+JzE30xnkFLSH28tzSCNqH9va1L2H2A+4q6yPjWzw26IMVMRuoFbww==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by CY5PR12MB6647.namprd12.prod.outlook.com (2603:10b6:930:40::11) with
+ by SA1PR12MB8643.namprd12.prod.outlook.com (2603:10b6:806:387::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.9; Thu, 19 Mar
- 2026 06:45:34 +0000
+ 2026 06:49:53 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9723.010; Thu, 19 Mar 2026
- 06:45:33 +0000
-Date: Thu, 19 Mar 2026 07:45:29 +0100
+ 06:49:53 +0000
+Date: Thu, 19 Mar 2026 07:49:49 +0100
 From: Andrea Righi <arighi@nvidia.com>
 To: zhidao su <soolaugust@gmail.com>
 Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, tj@kernel.org,
 	void@manifault.com, changwoo@igalia.com, peterz@infradead.org,
 	mingo@redhat.com, zhidao su <suzhidao@xiaomi.com>
-Subject: Re: [PATCH 1/2] sched_ext: Documentation: Document events sysfs file
- and module parameters
-Message-ID: <abubiaubvpc2GqNH@gpd4>
+Subject: Re: [PATCH 2/2] selftests/sched_ext: Return non-zero exit code on
+ test failure
+Message-ID: <abucjYB136uIIrmb@gpd4>
 References: <20260319053026.447892-1-suzhidao@xiaomi.com>
-Content-Type: text/plain; charset=iso-8859-1
+ <20260319053026.447892-2-suzhidao@xiaomi.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260319053026.447892-1-suzhidao@xiaomi.com>
-X-ClientProxiedBy: ZR2P278CA0023.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:46::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+In-Reply-To: <20260319053026.447892-2-suzhidao@xiaomi.com>
+X-ClientProxiedBy: MI1P293CA0017.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:3::13) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -66,195 +66,95 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CY5PR12MB6647:EE_
-X-MS-Office365-Filtering-Correlation-Id: 01bf3f85-22cc-42e6-55f9-08de85831e9c
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA1PR12MB8643:EE_
+X-MS-Office365-Filtering-Correlation-Id: de1fc704-e2bc-4aed-dce6-08de8583b959
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|22082099003|18002099003|56012099003;
+	BCL:0;ARA:13230040|366016|1800799024|376014|18002099003|22082099003|56012099003;
 X-Microsoft-Antispam-Message-Info:
-	Xysdv5hUFCnZ5YUNjQOeMqSioXDGymwegqgIY9lQ/cttN1KJ+Hkveu1cVIdeH+xfbAWSWemk4HGCIdyvGqd6/zxYuj8cQXmuPTqQqN+qIj2ojhGQhbgH8Ls8uFzsTKGgSyimjXSrHbgK1feOwDL+AxrwgjuIDVEnT88eUP3YfgHwd0YWLZV2zuHEsnYf5RC0X6Wfwunqg/+2uenA+hXtw6k/h+WazpaQYlWCSGeKeo8u/Fnpp+itRAeOuRXgiuJ3jCcyFLAmP0OL9nq/W05gUFfLPx2Guv+4OqH+JW42eY4cBhEVTe1JGuqgu7g/GhU/7AvhREFE3O7D9f5YCHWY0ZoTrxYdea+SOAzaCFMVKfeoVNtDsQekDYSPu4uLIbeMn2/3RC0fKVRybl8NmhXZmWlWiL27M2C6lUN9eZtDMx5iin0PXfbK1Ce4CQEDE86kS+9rYj5twKcC9V/cdHvAlAPPSfsvteU5nEISoYVOhTMw15Wn+4mATJc4wkevUEjfy6sJp7mvEYsyJ0vqmf2pnC0obM76IDjRW+Kc8wA2Y76HiCfP86B26+H3Ynp7mooSQkTHpM8pOKxRn1PNYTZwoTneau02Vz3WIm7+KmhuZDZ/DS4niMx/ozUuyezXLch2GpmAg2oYsKBJwJGpqytrb5kd0gvdI8axIMoJ8buAWBm1lb/FEGWcWWPjpSo1jFdynIk8z5pf+U4XENnWoGYPhWhQWaVko1mYJ0JD/hUSz28=
+	ITUaRD8yIGUaOkarXl0VCWENohU0dhjCt3sYSByHTeZA0xtYalMlM3+d7cOqrX0UcWmDO/hI1H4JeN6XlUhABB0MXxJExjqs+J85rT5ziuG+qMnlR9qukmNOZxIwcX7x7bBVwk/YmwRAVujyTvVRaBFgQFGMWnGHnPvQk1EUDob4RdmUGS2imd2RQISQQ/Ujm0Gsg2FrXIrBNCHUAo5Ipy1LjD/qbb/kQInN5OQW88orWnDXTzBpdPSjGOaZR55hKG/qyKcnRLnn2QCoQ/+ctewhOzro+Fc9liPj6X7rAwjFK9Rz53rOPjvNbOLRwF0EP2BtmIG5qNskn8p6IkJD9TeStQJEK4OQfumTTwrZvT3Gmd4TzeYY9hT5zMB1peOauNaNgJbWvfZFLdlUciUOnNAc3tmblPdAQXDWL8NDbIEInbceDufW8FC59+3j3QVLO3rpF2zlH1veMptx21TeJyqmXFHb4mup/aaNL9WVy6j+0lcBOPWoVd7EuiMtRY0ZvhtUL219vNmdKJwrb4CT/3s8jaUEMquewHxRPTMdQLz2fB2EXgrUnyyhTJpTwa2eX647LZcwqQvQyDnh/84cI2Nw1ngx8GfghZjtJaEBjhZwZFpKA33ROZkKw/iB2/SDtnLqP0kjXpOTF32rwzJAvu4Wu5RIVJ+9ly9qlitIIKhLyhm+8rqkGkaKDxhAYEUnzdUCWtVVDggbsjKAEf8319ICetMewUUYbVKGmWQRMkE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?WOockMaL/bpTiaAeQMZphnhtzBOqxgeThviNtEKdzNwVNeT3WCS8/B6qMD?=
- =?iso-8859-1?Q?S13U1vgOgNo40zOJmAluJ4tUW8b3wU7/eqMQ/f1/dJQi3EsXU5tAk6OYds?=
- =?iso-8859-1?Q?XNNlHg3d54YSLuqqKogy2HgUb/Uj/5gxKpsvkavW8tCaVFSiPccC5p6OUw?=
- =?iso-8859-1?Q?UvWd3mCCelD4wv3BlB9NADYjMzVXhSdtGtA7vtK+1cj4QQPqdYWjrErviY?=
- =?iso-8859-1?Q?gbJ085MEeqfwMPeB1GFWXLhnfdpPHx3eiwf3nbW1nin4WkTrLsoV0HMavN?=
- =?iso-8859-1?Q?rMHdE9YfrqHevXqRJbEq7lRSRvcz3aCW43dy48OIXxdZ53i9D4sTwQXsuk?=
- =?iso-8859-1?Q?ZzVptoSscKWcLmfye2y0fFrRNaMH2rpJ/6UZUfXv6dtCGeKTsaSLWxaLWv?=
- =?iso-8859-1?Q?q4AK237b1AIaxzOndsiUoU/zhgHBO1GQ8M/YJrY1y2F5tuIKB3mVVBUOqF?=
- =?iso-8859-1?Q?wCYmWGFTnYqEXwkV46V0LDAYuBaBEZTmxIO9bf7eEEQENEQk325xy5QTeu?=
- =?iso-8859-1?Q?3MMl4c13liN+VPkIMcla5tvULTIDPMU0PgAQEnIUV23W6w5LvgsmGco6dH?=
- =?iso-8859-1?Q?rhayr+OyfjLEuN/SbEjpn4sr8Op4bHjJ3Q2065JIDNXo6o8IYXolLkWJ9f?=
- =?iso-8859-1?Q?c7JENiFX9NHWuqNv4x+9pNuVnUWp6vK/g+sKiQSdIuZ8SBReIWNDKj1ypv?=
- =?iso-8859-1?Q?XN+XzmvdwB0TW+j0uZxQN3dHcxdk3KlL5oWMwz7LbCINDoOzrDRVqCUzlQ?=
- =?iso-8859-1?Q?1lIFnW1BlRBRtDDqgG3OihAhw+Gly7Yz6SBs4sEaNINR2jH7QmvQi6AZBu?=
- =?iso-8859-1?Q?1s/Bh5i7btCUZejjxeAlmJQzBw6T8nbaYQisVTMtmk+wQbiHwTJWO1gKgZ?=
- =?iso-8859-1?Q?WWhHHCiUHtPm+fhVvzMob4XkZVlnSytkI9XovT2sLKH0W1JStfCTuuleF8?=
- =?iso-8859-1?Q?V4XMV4w01YzlXydtFTovUxxs1Yty2a58JhZx+nDNKHMwBXzpeOGEL52Wx7?=
- =?iso-8859-1?Q?n9f2SQM7hQWdEz1TXPT6TErOaShFqbm+QqvBwZVUfg4tLqRLvynHFjCg3E?=
- =?iso-8859-1?Q?TSZSViPSAza6ZENcYZL5IpMYZ0Zixhk1ebgLyHY2IZdOK/BgCTDydbyi34?=
- =?iso-8859-1?Q?QR+9+QTmhrSKJwSE8QbGqF2I1/RorvznMiVHRwG3pb3lifu/o37tiSdfQA?=
- =?iso-8859-1?Q?A1vpJZqurxLz9rBnVHFAsl0FdrM8hunkeU1l1501zwIeHTydtU73sT0sHt?=
- =?iso-8859-1?Q?dsdBbFRCUgf5ad47ZMDBtyLbpszSEoomkjIke2KsJlb3OlzXajEtaohGvh?=
- =?iso-8859-1?Q?q46OzsdX1RVXgdbtpaFyEwVrJlbie5KihQYvLCM9QUjMUiqqbK8ydKokbN?=
- =?iso-8859-1?Q?G+OVmZND8zcVbrwtL8f7/ix0akRaydaN1S8d1zHA5fgA80/RR6sBQJ7Q1A?=
- =?iso-8859-1?Q?oDjFp+G57ZZCd7GZTGHIacs9Jbo5q2B/8DL7oyJCW/cazVfusuqIl0+cDw?=
- =?iso-8859-1?Q?ucJG2GcXFXG/Of8zqYw568dAf8NbX1wfv0kaDKCl+JFTeGm+wz7hkvHkq+?=
- =?iso-8859-1?Q?e76XADxCPxzs9jfR6d3enSMcn43Ad+MTBZlFObhx/gEom2SXikioI3o5ln?=
- =?iso-8859-1?Q?o50yuXjwm8IaKpIKZQhGWuOhOo3M448Kpx1F+Ecu2lnqBd5HFiYKGD+kPx?=
- =?iso-8859-1?Q?gy86H6ZkdkXqdMRJtRCt7b4ERQR8d3/knMer/hlnhBDnMMcXq9drneHc7v?=
- =?iso-8859-1?Q?mc9b5+R/XCZi0jcm/H1/IKLvGnptZxnqRTS2ZAkKRoY3Ci?=
+	=?us-ascii?Q?NaykQ9NlsDRsKwmyOmD0VGZpzpk9KUXKsaUdroQAYmVpxBWTQafxmV0JlxBV?=
+ =?us-ascii?Q?remmlyUulFTUpWc/kHahDjMvVEj5GCf3qfwqUWhSk+jTpyf/TC/TyTwYaxr+?=
+ =?us-ascii?Q?+wkSCdecvpy9cscli9uJfsNAGrW006qfuhiWbzgwJ1ZhRSXvRPeZsEaZlMhT?=
+ =?us-ascii?Q?VU0IlHrNMjRYz+pCWLchSmJgO1qmt0eFglMD99RcwN4/gct3O/WIDdKsLbWW?=
+ =?us-ascii?Q?uLglMa84/ILK6P3++5v4+1f+NSa/izV9diDaZmE7EMpFU7FsJAfXANIFKJae?=
+ =?us-ascii?Q?2UW0z3MGJ8rC86RNuUaBUmFUW5MBgu5oKNxEkJRQ0AWYL0p/HssFX8GU7q/m?=
+ =?us-ascii?Q?ebdDaJjDuT+YFFsBB54L/BXRJVIDXbPpBI3IJ78qcDNujmO+S5dLpMDz5PoA?=
+ =?us-ascii?Q?vVFw19KHBT5WFa4kYbd3a1//72MisSJYuQSWOitoQRsp9QTnFKYKm9FIIxUo?=
+ =?us-ascii?Q?xADskHJfR6Pxnbd5dxHlbCSvCznGLtSwuNH2P9XiJpAa7r9X2u7VlGz4qu0h?=
+ =?us-ascii?Q?81676YSNMvY/znNoc5Bnw2uYj5fc7zkp9qm4INtlOxqqalOidB2I928cLoP0?=
+ =?us-ascii?Q?I6UuVf0bllanNkmcvaGpjavqy4UkARMRsMzDsgU/4IH101iPU6UcI5MqO4dm?=
+ =?us-ascii?Q?858NG9AXxWOFzPLPX4BlQz0Ywfto4BBckcCwz+hYakdg6rxX+SnSJ7ASJ23g?=
+ =?us-ascii?Q?ruqrm9qtsvaN5AJuKjtgHvLhFusxKdazOco3PkvIgYlmv9uCm9xUjFlTb0Gg?=
+ =?us-ascii?Q?mpJCUHLV0aSVxGZsCSTFddEGA5kpFqJkyRk47uV5YTDTPTpDJ6hlrzjluuTP?=
+ =?us-ascii?Q?+8BAKtesD53Uxjidc8O/3qLNfV3oYpFQGf7a87GaaCVcYZfevP8Vu7WM/7yZ?=
+ =?us-ascii?Q?G1r0JSvsnw5PKlx0I0gotJJ66sR5y6nI7cn8dJjNzgz69U3vpPMyn8WcP36V?=
+ =?us-ascii?Q?Pft0dSfbscMUNCmap9VaWLcV4R+HiuwlPqvE9Mpl1Qpsi6u/Nrib2Pmv87ch?=
+ =?us-ascii?Q?yFyvb2DqpyahGEACTUKkPNA9A0x1xWq90rSOde2OQkf1NSItQ0ozsFEsM/zF?=
+ =?us-ascii?Q?PH4+2kXXzmyi0sujgN2ZYW7LvSBmaCHwM1Tl0CjI3M9QpiPQE/eIjMY+hI7S?=
+ =?us-ascii?Q?55EtnvF/agnx+koMAmBJrLvV7s6hHTF+uikx5DSeEWVeLvYfNMtiHKbJfadQ?=
+ =?us-ascii?Q?8duGkQ97eqI+o5DyL2bBuCg9MI7Orrngthu+nBD7aH++v1ZaaJYeq8CNvstK?=
+ =?us-ascii?Q?fodadqw0ATARY+mghMo/wC4nnAoC7FVWkEUYiCZb2ehbcflZeilNbr2LtM7x?=
+ =?us-ascii?Q?TVL+TAZYw0dQAkBGzfphIQRwdgThUqGXV3Lmo+qeez0vf6Ny+02lU6tJECmi?=
+ =?us-ascii?Q?+RydHcKxAYt+EOFtDB5MMlbp+V+0+SzM0XcfXLmPU2ZOVpQb6Do793OFUcNY?=
+ =?us-ascii?Q?YwWfZ2dplDtnbQkWNypckS9UjRkDJUt7jcRp9ZmLWLpDrTlKjuDwVy7Yk3Mg?=
+ =?us-ascii?Q?WK9T8+cxBESOPGer531i2Ra3YlD9TfsvCHsp/z8Pa3SjLFTjdQpqxWqcmwvK?=
+ =?us-ascii?Q?eGtdXjdZT0kDss2+LgNcnfULbtDcPtj53YkOuFUp/bdHlgKCbvlOSElHf4oF?=
+ =?us-ascii?Q?EAaKTA4xGSSkOpCdTTGCMxJOkfwSajRxQ9YgAGXLp2P2L/eNKO3DEKx+x/XG?=
+ =?us-ascii?Q?ugMOaq6m/pOp6SqCa3jc9XHETvcepjTnT4gsIvNwOS1M53ty?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 01bf3f85-22cc-42e6-55f9-08de85831e9c
+X-MS-Exchange-CrossTenant-Network-Message-Id: de1fc704-e2bc-4aed-dce6-08de8583b959
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2026 06:45:33.7584
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2026 06:49:53.1692
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZcWnC972hhC7d8HGo03krJjEthHM1qpbgzRDgnFuXdr3xkbVDl+nFRKuUJmaBGvj4i+Vq5iYv8IuST8M2b3VRQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6647
+X-MS-Exchange-CrossTenant-UserPrincipalName: r3c91oEidFQKDr0Kl70d0ygGpds9S0Psuq75cTlDmvUsRv3fn5+9FQhQ9Ln3du1a+2M1c6+F1O6bsaRA27+GiQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8643
 
-Hi,
-
-On Thu, Mar 19, 2026 at 01:30:25PM +0800, zhidao su wrote:
-> Two categories of sched_ext diagnostics are currently undocumented:
+On Thu, Mar 19, 2026 at 01:30:26PM +0800, zhidao su wrote:
+> runner.c always returned 0 regardless of test results.  The kselftest
+> framework (tools/testing/selftests/kselftest/runner.sh) invokes the runner
+> binary and treats a non-zero exit code as a test failure; with the old
+> code, failed sched_ext tests were silently hidden from the parent harness
+> even though individual "not ok" TAP lines were emitted.
 > 
-> 1. Per-scheduler events sysfs file
->    Each active BPF scheduler exposes a set of diagnostic counters at
->    /sys/kernel/sched_ext/<name>/events.  These counters are defined
->    (with detailed comments) in kernel/sched/ext_internal.h but have
->    no corresponding documentation in sched-ext.rst.  BPF scheduler
->    developers must read kernel source to understand what each counter
->    means.
-> 
->    Add a description of the events file, an example of its output, and
->    a brief explanation of every counter.
-> 
-> 2. Module parameters
->    kernel/sched/ext.c registers two parameters under the sched_ext.
->    prefix (slice_bypass_us, bypass_lb_intv_us) via module_param_cb()
->    with MODULE_PARM_DESC() strings, but sched-ext.rst makes no mention
->    of them.  Users who need to tune bypass-mode behavior have no
->    in-tree documentation to consult.
-> 
->    Add a "Module Parameters" section documenting both knobs: their
->    default values, valid ranges (taken from the set_*() validators in
->    ext.c), and the note from the source that they are primarily for
->    debugging.
-> 
-> No functional changes.
+> Return 1 when at least one test failed, 0 when all tests passed or were
+> skipped.
 > 
 > Signed-off-by: zhidao su <suzhidao@xiaomi.com>
 
-Thanks for documenting this. Comments below.
+Makes sense.
 
-> ---
->  Documentation/scheduler/sched-ext.rst | 68 +++++++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
-> 
-> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-> index f4f7d8f4f9e4..6fc7e720a956 100644
-> --- a/Documentation/scheduler/sched-ext.rst
-> +++ b/Documentation/scheduler/sched-ext.rst
-> @@ -93,6 +93,55 @@ scheduler has been loaded):
->      # cat /sys/kernel/sched_ext/enable_seq
->      1
->  
-> +Each running scheduler also exposes a per-scheduler ``events`` file under
-> +``/sys/kernel/sched_ext/<scheduler-name>/events`` that tracks diagnostic
-
-The right path is /sys/kernel/sched_ext/root/events. And now that we have
-sub-schedulers it's probably worth mentioning that sub-scheduler events
-file is located at /sys/kernel/sched_ext/root/sub/sub-<cgroup_id>/events.
-
-> +counters. Each counter occupies one ``name value`` line:
-> +
-> +.. code-block:: none
-> +
-> +    # cat /sys/kernel/sched_ext/simple/events
-> +    SCX_EV_SELECT_CPU_FALLBACK 0
-> +    SCX_EV_DISPATCH_LOCAL_DSQ_OFFLINE 0
-> +    SCX_EV_DISPATCH_KEEP_LAST 123
-> +    SCX_EV_ENQ_SKIP_EXITING 0
-> +    SCX_EV_ENQ_SKIP_MIGRATION_DISABLED 0
-> +    SCX_EV_REENQ_IMMED 0
-> +    SCX_EV_REENQ_LOCAL_REPEAT 0
-> +    SCX_EV_REFILL_SLICE_DFL 456789
-> +    SCX_EV_BYPASS_DURATION 0
-> +    SCX_EV_BYPASS_DISPATCH 0
-> +    SCX_EV_BYPASS_ACTIVATE 0
-> +    SCX_EV_INSERT_NOT_OWNED 0
-> +    SCX_EV_SUB_BYPASS_DISPATCH 0
-> +
-> +The counters are described in ``kernel/sched/ext_internal.h``; briefly:
-> +
-> +* ``SCX_EV_SELECT_CPU_FALLBACK``: ops.select_cpu() returned a CPU unusable by
-> +  the task and the core scheduler silently picked a fallback CPU.
-> +* ``SCX_EV_DISPATCH_LOCAL_DSQ_OFFLINE``: a local-DSQ dispatch was redirected
-> +  to the global DSQ because the target CPU went offline.
-> +* ``SCX_EV_DISPATCH_KEEP_LAST``: a task continued running because no other
-> +  task was available (only when ``SCX_OPS_ENQ_LAST`` is not set).
-> +* ``SCX_EV_ENQ_SKIP_EXITING``: an exiting task was dispatched to the local DSQ
-> +  directly, bypassing ops.enqueue() (only when ``SCX_OPS_ENQ_EXITING`` is not set).
-> +* ``SCX_EV_ENQ_SKIP_MIGRATION_DISABLED``: a migration-disabled task was
-> +  dispatched to its local DSQ directly (only when
-> +  ``SCX_OPS_ENQ_MIGRATION_DISABLED`` is not set).
-> +* ``SCX_EV_REENQ_IMMED``: a task dispatched with ``SCX_ENQ_IMMED`` was
-> +  re-enqueued because the target CPU was not available for immediate execution.
-> +* ``SCX_EV_REENQ_LOCAL_REPEAT``: a reenqueue of the local DSQ triggered
-> +  another reenqueue; recurring counts indicate incorrect ``SCX_ENQ_REENQ``
-> +  handling in the BPF scheduler.
-> +* ``SCX_EV_REFILL_SLICE_DFL``: a task's time slice was refilled with the
-> +  default value (``SCX_SLICE_DFL``).
-> +* ``SCX_EV_BYPASS_DURATION``: total nanoseconds spent in bypass mode.
-> +* ``SCX_EV_BYPASS_DISPATCH``: number of tasks dispatched while in bypass mode.
-> +* ``SCX_EV_BYPASS_ACTIVATE``: number of times bypass mode was activated.
-> +* ``SCX_EV_INSERT_NOT_OWNED``: attempted to insert a task into a DSQ not owned
-> +  by this scheduler; such attempts are silently ignored.
-> +* ``SCX_EV_SUB_BYPASS_DISPATCH``: tasks dispatched from sub-scheduler bypass
-> +  DSQs (only relevant with ``CONFIG_EXT_SUB_SCHED``).
-> +
->  ``tools/sched_ext/scx_show_state.py`` is a drgn script which shows more
->  detailed information:
->  
-> @@ -441,6 +490,25 @@ Where to Look
->      scheduling. Tasks with CPU affinity are direct-dispatched in FIFO order;
->      all others are scheduled in user space by a simple vruntime scheduler.
->  
-> +Module Parameters
-> +=================
-> +
-> +sched_ext exposes two module parameters under the ``sched_ext.`` prefix that
-
-Maybe ``sched_ext.`` namespace?
-
-> +control bypass-mode behaviour. These knobs are primarily for debugging; there
-> +is usually no reason to change them during normal operation. They can be read
-> +and written at runtime (mode 0600) via
-> +``/sys/module/sched_ext/parameters/``.
-> +
-> +``sched_ext.slice_bypass_us`` (default: 5000 µs)
-> +    The time slice assigned to all tasks when the scheduler is in bypass mode,
-> +    i.e. during BPF scheduler load, unload, and error recovery. Valid range is
-> +    100 µs to 100 ms.
-> +
-> +``sched_ext.bypass_lb_intv_us`` (default: 500000 µs)
-> +    The interval at which the bypass-mode load balancer redistributes tasks
-> +    across CPUs. Set to 0 to disable load balancing during bypass mode. Valid
-> +    range is 0 to 10 s.
-> +
->  ABI Instability
->  ===============
->  
-> -- 
-> 2.43.0
-> 
+Acked-by: Andrea Righi <arighi@nvidia.com>
 
 Thanks,
 -Andrea
+
+> ---
+>  tools/testing/selftests/sched_ext/runner.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tools/testing/selftests/sched_ext/runner.c b/tools/testing/selftests/sched_ext/runner.c
+> index 37ad56c3eb29..4c68efa1512a 100644
+> --- a/tools/testing/selftests/sched_ext/runner.c
+> +++ b/tools/testing/selftests/sched_ext/runner.c
+> @@ -217,7 +217,7 @@ int main(int argc, char **argv)
+>  			printf("  - %s\n", failed_tests[i]);
+>  	}
+>  
+> -	return 0;
+> +	return failed > 0 ? 1 : 0;
+>  }
+>  
+>  void scx_test_register(struct scx_test *test)
+> -- 
+> 2.43.0
+> 
