@@ -1,117 +1,173 @@
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C5C34D383
-	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 13:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B20830DD10
+	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 14:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773928478; cv=none; b=PBW+TAu+RAVVCGuwCcDDzyZIjrphIwMUTDnWStE1zauv6ypMj3jtMN34qLbdVfzB9s6L+hE6n9kyHQ1Oh4RZfkAL+M1eZllv79HUh51fa76rD36Iwxj6u/UhmX5GWzLct+ATHpVOguEvt/cIh/w0Fb4Ma1j+FnvdX+RMVIdcGBQ=
+	t=1773929640; cv=none; b=aEFysuF6O07bCTlrrBlh1GIiiDZs1hhDNQWFN8X85TsUl81AZbJ9Cpp3hN3/TDPCeKdnuIjde84hs7/LEKLAmKsGBPzeNnoGwHIg3ju+hNqkMpn1RM7z5vq1DeZOTnQTw1yzVH2BStyN8d1pvl+gzxpJKDxHfS7zHQKxmiFNNoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773928478; c=relaxed/simple;
-	bh=nEiSLs2H3Kvd1s/vRGu/XZ2J2WewS2gX5to8YkkCZ/o=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=sc+tP8EayMvf5BYTsg0AQiydkB/866qbHmRbZ6kMZmQjDfpzUihtunbJugUvMKUcPdlg3P4eEbm3d/42vj0gIfWnA/6N7xyk7NCD09PyMUUiKBH5Z1/UsJuKwfMTXW+oJX4Pzt50hwNDjm+JExfYV+v3d0P+L0DeSaSf3fvj8Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=II1bljVG; arc=none smtp.client-ip=209.85.128.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1773929640; c=relaxed/simple;
+	bh=4zAon2/wL1xkF183JwLxXVvEK05OvlwLI29zwOFhq2E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BWQE4HlzeDVMZyKxXRN81pxJCcWb2qYPRpUvyLruC8Z7gwpPBx7Ux9ZQyJ4tvUn99kJU37D9/dFm23cJO2huN1btAMzHVYuJ2t713ymTSnzP8KRJ9twtrtIl+K6TVBoh6gfV+0wwsYewfoL3SoLk0fD07E7z8y5vfwYwxzeowfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=qJFdgiFw; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=4jpB79yc; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=OrcSAEzL; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=HXVk5/yP; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="II1bljVG"
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-486fa35b005so8934695e9.2
-        for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 06:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1773928474; x=1774533274; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fV8dT3x1VQ3HsGvnNM5pFRRVLSQGVidD/Hn7+GzBMdw=;
-        b=II1bljVGx5rv27k+o/eYamz24xmF0OehgtDLEe1PjAaU6148v+gU4NuvqOVRWci0BZ
-         qjx+xAoiqPcZu3l3JX4lNnpY9XZ41fpSo+YKzMV0S1r3EklU5STm23v/rHNU1hsK6UW0
-         vT+WNattZnBk7eniyGEJszsNKD3GNEFGkZZHtvGqrYMLb4oP3lV1UITg/vwscwjzUM1C
-         TVscBq1j0+XhewfdeweWbZ8iMn8HbuvaAc7NFZMjfrX7yQpcbylkmXGe8mRJyLNLbTkd
-         Wwp3Pign+MuK6QSGe/N5Fvnp8/ye9WY5q8mPFAuv+Jk4SSFyIm3HS89aV18EqZYSix90
-         5Jww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773928474; x=1774533274;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fV8dT3x1VQ3HsGvnNM5pFRRVLSQGVidD/Hn7+GzBMdw=;
-        b=eToXyinYY1A9+q17DsLVuiDyLq7uzk+4d+YsJOmEQ9WFm0RT3GXwHNip2fXO753z5z
-         TLKH4YnBtu8ZG3O376IIfBrmY8rNC892qlKDB8ooVfhf2L9SioBKERe1K8YRnpXOolc+
-         HI0+lWAIMWdgLS8R9kKB0bAu8ul3iTS96Ly4p0gx53FiMFQ7MhidSLNWxIRIwHkzAOfO
-         RpnZDnY0uj5u1X2QlEbH8OxL34fDQG1pDmJykFzp+OgVq3SjIhOXcL1RKA18dXKdlqFP
-         RexuPKeqWnb8p+OLQGLxpeNdx5K0CKSZbbPQOl04LNMiqPjWwJ1NXs9CLokGAnepw8Z9
-         L8Ww==
-X-Forwarded-Encrypted: i=1; AJvYcCU3I2TImqpwcCBljbgFu9oui8Ths06c/qucfdWuojd44u5pf/T0L6PZnr9m4U7ughdf+ntUbhPmukc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyzU5fDSIm6KOK1FgaWXjmv0kQ3/W/D30oncX/d+vM7zyI+Tsyj
-	scON11lmyd8dPsAsKeGpNf89JqkhhKdZn37rLWxy9AKmnVXH5/2yRxR65fhbaOUC+0gI9uPotxn
-	+BWBZKWLK2/gAmw==
-X-Received: from wmdd14.prod.google.com ([2002:a05:600c:a20e:b0:480:6b05:6b9a])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:c491:b0:485:3f58:d9f with SMTP id 5b1f17b1804b1-486f4465d04mr124104415e9.30.1773928473659;
- Thu, 19 Mar 2026 06:54:33 -0700 (PDT)
-Date: Thu, 19 Mar 2026 13:54:32 +0000
-In-Reply-To: <DH6OUDJUQNA3.6L4YXJMME4KI@google.com>
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="qJFdgiFw";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="4jpB79yc";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="OrcSAEzL";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="HXVk5/yP"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 233AB5BD4B;
+	Thu, 19 Mar 2026 14:13:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1773929632; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4fUFXPph0d+U/6GDmGbgLZ/FXBjYuxpYsgD69WTKZEc=;
+	b=qJFdgiFwZof840urwELAyJUPmqr5R5KSb1T4rwYuc7bb8XNbCm/kv+M5FkrKSBEOM1bZiu
+	/MGyuwm/OFnFKmJm/t/Uz/+GbEcAEAQCMtEWioCbgwKOh4DWZ0qNVZOg9g66xDY+m4U+fD
+	w9Xqoe30eNI+goFz62hSwZMzWorThdA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1773929632;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4fUFXPph0d+U/6GDmGbgLZ/FXBjYuxpYsgD69WTKZEc=;
+	b=4jpB79ycXSQsxOkgtV3HKUa6Dm/vQ/wRir8pmFsiYnB6qgK3LbPe12RtulXb4tol7/E3ij
+	faYPra8B4GTfZjDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1773929631; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4fUFXPph0d+U/6GDmGbgLZ/FXBjYuxpYsgD69WTKZEc=;
+	b=OrcSAEzL/6c4UDB40dZmtUkHL2UKN/t418W/3/WLfRE3VUYtttdOTA1LBRs2LexriSZBXr
+	IUCLAcO9QxQoLCNXA0PSitgNb7BC5cuH9t+EXroQLbXGhfbC1mTChSWj64vc6V41FfYy8R
+	mio6pb/J12e+5TPnOnmBoDRex83ce1A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1773929631;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4fUFXPph0d+U/6GDmGbgLZ/FXBjYuxpYsgD69WTKZEc=;
+	b=HXVk5/yPJtxIjyky0dtujMNvVHE9KONXRU8D1O6wb4LBxoqwDaKPYOnkGEkCrYDJmYyVOA
+	klxEA++oJw6AsaAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 14B714273B;
+	Thu, 19 Mar 2026 14:13:51 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id TmUEBZ8EvGlPZwAAD6G6ig
+	(envelope-from <jack@suse.cz>); Thu, 19 Mar 2026 14:13:51 +0000
+Received: by quack3.suse.cz (Postfix, from userid 1000)
+	id C850FA0B32; Thu, 19 Mar 2026 15:13:46 +0100 (CET)
+Date: Thu, 19 Mar 2026 15:13:46 +0100
+From: Jan Kara <jack@suse.cz>
+To: Philipp Hahn <phahn-oss@avm.de>
+Cc: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com, 
+	bpf@vger.kernel.org, ceph-devel@vger.kernel.org, cocci@inria.fr, 
+	dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org, gfs2@lists.linux.dev, 
+	intel-gfx@lists.freedesktop.org, intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev, 
+	kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-btrfs@vger.kernel.org, 
+	linux-cifs@vger.kernel.org, linux-clk@vger.kernel.org, linux-erofs@lists.ozlabs.org, 
+	linux-ext4@vger.kernel.org, linux-fsdevel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-hyperv@vger.kernel.org, linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-leds@vger.kernel.org, linux-media@vger.kernel.org, linux-mips@vger.kernel.org, 
+	linux-mm@kvack.org, linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org, 
+	linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-pm@vger.kernel.org, linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org, 
+	linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, ntfs3@lists.linux.dev, 
+	samba-technical@lists.samba.org, sched-ext@lists.linux.dev, target-devel@vger.kernel.org, 
+	tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev, Jan Kara <jack@suse.com>
+Subject: Re: [PATCH 12/61] quota: Prefer IS_ERR_OR_NULL over manual NULL check
+Message-ID: <ol2d7c5z7yfyuwo5tyfxurgqedruhr6bzmuv37bx5phhrmmoyh@4zjspbtexid3>
+References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
+ <20260310-b4-is_err_or_null-v1-12-bd63b656022d@avm.de>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260319083518.94673-1-arighi@nvidia.com> <DH6OUDJUQNA3.6L4YXJMME4KI@google.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-Message-ID: <DH6T5U5G4AZ1.38Q2K35KN0ET5@google.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Invalidate dispatch
- decisions on CPU affinity changes
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Kuba Piecuch <jpiecuch@google.com>, Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>, Christian Loehle <christian.loehle@arm.com>, 
-	Daniel Hodges <hodgesd@meta.com>, <sched-ext@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260310-b4-is_err_or_null-v1-12-bd63b656022d@avm.de>
+X-Spam-Score: -2.30
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.30 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLck44p98ib5bmd95s13xxw3gp)];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	RCPT_COUNT_GT_50(0.00)[55];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email]
+X-Spam-Flag: NO
 
-On Thu Mar 19, 2026 at 10:31 AM UTC, Kuba Piecuch wrote:
->> @@ -2537,9 +2546,26 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
->>  	}
->>  
->>  	if (src_rq != dst_rq &&
->> -	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
->> -		dispatch_enqueue(sch, rq, find_global_dsq(sch, task_cpu(p)), p,
->> -				 enq_flags | SCX_ENQ_CLEAR_OPSS | SCX_ENQ_GDSQ_FALLBACK);
->> +	    unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, false))) {
->> +		/*
->> +		 * Affinity changed after dispatch decision and the task
->> +		 * can't run anymore on the destination rq.
->> +		 *
->> +		 * Drop the dispatch, the task will be re-enqueued. Set the
->> +		 * task back to QUEUED so dequeue (if waiting) can proceed
->> +		 * using current qseq from the task's rq.
->> +		 */
->> +		if (src_rq != rq) {
->> +			raw_spin_rq_unlock(rq);
->> +			raw_spin_rq_lock(src_rq);
->> +		}
->> +		atomic_long_set_release(&p->scx.ops_state,
->> +			       SCX_OPSS_QUEUED |
->> +			       (src_rq->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT));
->> +		if (src_rq != rq) {
->> +			raw_spin_rq_unlock(src_rq);
->> +			raw_spin_rq_lock(rq);
->> +		}
->>  		return;
->>  	}
->
-> My understanding is that task_can_run_on_remote_rq() can run without src_rq
-> locked, so it's possible that @p's cpumask changes after the check, isn't it?
-> In that case, I think it's still possible to move the task to the local DSQ
-> of a CPU that is outside of its cpumask, triggering a warning in
-> move_remote_task_to_local_dsq().
+On Tue 10-03-26 12:48:38, Philipp Hahn wrote:
+> Prefer using IS_ERR_OR_NULL() over using IS_ERR() and a manual NULL
+> check.
+> 
+> Change generated with coccinelle.
+> 
+> To: Jan Kara <jack@suse.com>
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Philipp Hahn <phahn-oss@avm.de>
 
-I've looked at the code more carefully and I don't think this is an issue.
-It's true that task_can_run_on_remote_rq() can run without src_rq locked, and
-it's possible that the cpumask changes after the check, but then the dequeue
-preceding the cpumask change must have waited for ops_state to change from
-SCX_OPSS_DISPATCHING to SCX_OPSS_NONE and it must have reset holding_cpu to -1,
-so thanks to the holding_cpu check later we won't insert the task into the DSQ.
+Thanks for the patch but frankly I find the original variant clearer wrt
+what is going on. So I prefer to keep the code as is.
 
-Apologies for the confusion.
+								Honza
 
+> ---
+>  fs/quota/quota.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/fs/quota/quota.c b/fs/quota/quota.c
+> index 33bacd70758007129e0375bab44d7431195ec441..2e09fc247d0cf45b9e83a4f8a0be7ea694c8c2a1 100644
+> --- a/fs/quota/quota.c
+> +++ b/fs/quota/quota.c
+> @@ -965,7 +965,7 @@ SYSCALL_DEFINE4(quotactl, unsigned int, cmd, const char __user *, special,
+>  	else
+>  		drop_super_exclusive(sb);
+>  out:
+> -	if (pathp && !IS_ERR(pathp))
+> +	if (!IS_ERR_OR_NULL(pathp))
+>  		path_put(pathp);
+>  	return ret;
+>  }
+> 
+> -- 
+> 2.43.0
+> 
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
