@@ -1,114 +1,89 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CAE2D7DE4
-	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 07:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96754238C03
+	for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 07:04:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773903690; cv=none; b=fgWuup1051LuCcn3mwwEpe9f0P6qDvQB7liGPYgbAWP777rZyOKHqwrn6qIZmDFhh9h/1yhhyaIz8Yj/nlbe4k0e3ldfFLSBT9Ukxo18LSkDjD/ZSLh21F1XWaZAIY+W0mA4c/IG9jqQvkVv1dh3Mync1BmvO0IR+ZncagDCxcw=
+	t=1773903896; cv=none; b=DbjYDTr/UXl/0s4ctJ41qadyD3OTK/DwbU5l6Cgm2guSocnuXZqjFCKVi+JqIPbYXpjeKFWX2K0WWItVZfKAstHe9DVLdlFH1hZ2WYl/mQCbiGUIlMRKhIZXoQgLOsL1C4xdF55AD3tLYE8IqPrzJeqPzQS5hRfSqHNqgcywqXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773903690; c=relaxed/simple;
-	bh=a+qtgi1u0E/yy3Arqhj+x2XegoAvgyWn/ESgIzxc2zw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSiI7MDHdrCx4MsrJ5k/nUHPpqR+aBzesMktO+obwu51ma4ZnhfTRQlUZRVqrVMZx72QzKeaB8TY9PXj309wWQYa8gps+T82v1QQM6akPDw9sLoNCqCIZUajb+3/nzW3dn6mWZZ9jTIzOIzZVTkdTeCEClNZZFzbSHRFY2YGvdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dgnOQrJi; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1773903896; c=relaxed/simple;
+	bh=fjDl6eUCxxDuKbCK9i1s5Op0J66a0Do/SQRMZl8mfRc=;
+	h=Message-ID:Date:From:Content-Type:MIME-Version:To:Cc:Subject:
+	 In-Reply-To:References; b=KA9CB9sQPyUFmidWMmoqKn3dG/7g7Joj69lk88ngv2zVq/OMIcIXVGQuwMCgll4i/KoAX8+QH8den6F0SGuksKlocl8g+IWXpVDg0ieWdkJSSsxb5E1Bz9cc3hNoHd2O2oJbORZD+Iqz7o68oPWbuunWRYt63MDb4qDulqQtXLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZT6UaM5+; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dgnOQrJi"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-823c56765fdso387348b3a.1
-        for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 00:01:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZT6UaM5+"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2adbfab4501so2561595ad.2
+        for <sched-ext@lists.linux.dev>; Thu, 19 Mar 2026 00:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773903688; x=1774508488; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1773903895; x=1774508695; darn=lists.linux.dev;
+        h=references:in-reply-to:subject:cc:to:content-transfer-encoding
+         :mime-version:from:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/QLtLSIXaJatdS6h1ESraQjK+5WjYv2k4bMTmGiD7wQ=;
-        b=dgnOQrJi2FHOlAIcri1zulwO6S4gvwsK7gT24heiAthvg7sAzbKUimHNooUAFcsjsi
-         PVWGYOYNnmlJjP/8g3wmDRSDcfdwzE6o3N93TIpq5SRqqgbSoyr8E66Op5B84MxH4wog
-         vEB1w4JiXNVs2C3X3ikWTMN4Ox2M0B6sdLdr7byUAvWbdpWbMFisuByUy8RlNBPwYOfS
-         +JVgkYbpgLtzcbuxuqeb/mh0P9zHKLoQqmnacldevZospJqPaO7d4AcO/CUcGB+ctpl2
-         tm7lPRQLM1bPV/5IQuXE0s80mD9lTzwlxvktDrl6KeO6sAcF8gu0uKyKGyMUuFIp/HyK
-         bymg==
+        bh=fjDl6eUCxxDuKbCK9i1s5Op0J66a0Do/SQRMZl8mfRc=;
+        b=ZT6UaM5+Wlh/nc1LFxCuaJHUy4u+A/ZIyhfE6CkeniHz4KTLvrZkNHxhzrWCQ4u/97
+         3CyQbmI30F+ZpyTb1dRkLySTRKfq8UtvRLYIP60fOEi92gZ+2xBydtnV35rOYUr+Flf/
+         Y9XiAs7B/LLTKcd6MQWRoxMl9hiup/kCeapicAths1Vr1DF6lSutEtsCdbNowDcJuRz4
+         kvobqlsi5neHkOqKkC3H9DgDJwcE3086UoU4xsaRC/xSABUPikO/jvCg5t99ajPC2Gig
+         OFxJKp7Uir2s1WZDojg8oJAseE97qLx2+gkoFIsXHY1faafMos6QkureUnD2IuW/GKU3
+         Zn9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773903688; x=1774508488;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1773903895; x=1774508695;
+        h=references:in-reply-to:subject:cc:to:content-transfer-encoding
+         :mime-version:from:date:message-id:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/QLtLSIXaJatdS6h1ESraQjK+5WjYv2k4bMTmGiD7wQ=;
-        b=RfrQN9DXQ1PfI1UiwwPzNv2pxRRj4bmMazqM2oGGy6QlNd1vsU3nl8wbbFv+oY2x30
-         XOPhzb4yZ350QLZgCa4uIvNxw/3/KDgUFsZTe9AApmNk9YiiEDKahInEgpdSm+L4P9qp
-         TlInTjWo6FFazPslnODVZiWyBDRefM0d8WgLUxkTca4AKiiibMyGiz5RE3JX1uE8XQ7z
-         lw5be1BiI01NP0924gP+1GLOFfiM7WkHcyGKnWn+T1M6fv/XicnZvDBNeDRRlgUnsLC9
-         enSpYiDGHqNgXoPOn8VP+j66BwxHUubT22aCGue/GzDmxXjS3XMZSwx+0vgfMnGJq6cQ
-         WfVw==
-X-Gm-Message-State: AOJu0Yy2nQo/y528WZH4kL3yIDUoERkzkRGhyq4MvlRIEP0NS67KZXEX
-	YRtqtN8GZ+t7PLBtUZZaXO5s8nmIBwn8nPkao77cDLzocYrSe31eABJl6ra4wQ==
-X-Gm-Gg: ATEYQzzWGu2clgA5i4g2NqKJJuAXs4m3tn4aaM9k2qWJNHWYDzjLqjtul7EjUTHAtEA
-	ivNLUEfwEJ9RhlqovWesci4u60R/5IC8ZMdogu7Vi1+g3WUJzoRDJz0B1ym8KYnud/NDfj1E/RO
-	v4339myx9Stt4r4JEpiIZO+TpXZVhzpaQ6pRJZxQycXy+0cvRuUBs+ygBg54O9OQOWDqcGBRhW9
-	JHF2+ZeTOMoMxVj7o6U2c2tFjB5Hvr/m137xyjmCU8NMBtiyVDQzU0cnsiEHqlkqH110612VCse
-	RHDfF/6BXBD1LAADiKIj2O44Kq5TKksaJ2YksskNbyhWp4pXgFbrWWzt7xXoWEsRo5GTCNen04I
-	4w8Ys0deB4XcvyfxkZ6+1eoLe0O3vkL+zB+NbfsbnjnvarO2l4YGGvUfeZ7Hs8GjiHgMFRAfMpX
-	As9NzUNbXD5pf3F8bvLypKUjp7vGbGzJ/6tpJeWOnj9ZG82Xnrb/8hyiTY12VrDhJbDHhshqFS3
-	Tc=
-X-Received: by 2002:a05:6a00:8c02:b0:82a:64c7:8c6d with SMTP id d2e1a72fcca58-82a6ae1f450mr5386765b3a.25.1773903687959;
-        Thu, 19 Mar 2026 00:01:27 -0700 (PDT)
-Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a6bbe1ffbsm6599578b3a.43.2026.03.19.00.01.26
+        bh=fjDl6eUCxxDuKbCK9i1s5Op0J66a0Do/SQRMZl8mfRc=;
+        b=YTnbniHnTp8S8ObGU9Z6zFgmbbjVULLS9zG90WYc5SxR787JPlJBjwzy8Wj9jZXRZA
+         SCJGYBv0UlbedMMQPFGMWGw0Pm0coWrdFH3qxaQN2z7BuhuCUFyxR/m8P4dN0DYU+Pal
+         6L0im/Y59A8Icok4c1Zi2nMp6yI651Is5lTnDTbbHO+MX547GZCEI84lbNu6dQv9sEMW
+         oF9nvQYlXUls1e9fmMR2X8VGvNiU+qy6Fkh6yjchPo5UqNzCc5ozITlhUnhYxYt0xstz
+         86izx6+pFIEZCFG4RqClhA2TcPh5FZVwEey8YWOOKFZq3IJouUmPf5txcMKGKfhwnDV7
+         JbYg==
+X-Gm-Message-State: AOJu0YzClsyzJr0lrPL9KOhAeLAZR5qQ6Xy3Wg7himLnzETXjfwyX9Lq
+	et/DHa+M1D7A9aWs3QnVxgcwsP90NZ3pg3imeWyPnQSfYW+3rZB3qMJF
+X-Gm-Gg: ATEYQzwCQCmu2F7BvFkZkoRsEuYmPlqsSVv6XbIm3DJRRIHMszb7ZPR1i7vOGSZWbLP
+	3/Wvw3J9GU0Q2KNK275vDMerqDq6cb1YFHq8uhONUdgRv+5n7QusZhxfVh/yJDJ6osPISU+v5Ol
+	5XEq1kL6wdnNg8Xjvd7U+anfK72CYkC4d8WE40zK1fQHDn5letozitqVcNYQkxn5pQd9azFsXd/
+	udwTpEWSQFgbi0CTrg6t8Z/15NMELccUowx+FmUCH38sWKKBFLTvFZ+3WspJqKdszwCoDfxTbea
+	6KHbnGGBquHMBYrrOt/bB9DoiDAoe0AwZwqIH55x2xUHVY6F6/v4036iUjFbvyDim2uVqoHVt4M
+	sEMc+sfVK2SrLOWkx5zVWqTBuHzfjx2HWhyfx1nX+0GsVLimVwbVghwUut7conP3srT5Z8102gX
+	IZ5m8SXhZEXcSUh93sGuGypbs=
+X-Received: by 2002:a17:903:230a:b0:2ae:aafa:ec95 with SMTP id d9443c01a7336-2b06e2fbf7cmr64796805ad.11.1773903894913;
+        Thu, 19 Mar 2026 00:04:54 -0700 (PDT)
+Received: from [127.0.1.1] ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b06e604e7bsm65005415ad.63.2026.03.19.00.04.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 00:01:27 -0700 (PDT)
+        Thu, 19 Mar 2026 00:04:54 -0700 (PDT)
+Message-ID: <69bba016.170a0220.92228.ab0c@mx.google.com>
+Date: Thu, 19 Mar 2026 00:04:54 -0700 (PDT)
 From: zhidao su <soolaugust@gmail.com>
 X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
-To: sched-ext@lists.linux.dev
-Cc: Su Zhidao <soolaugust@gmail.com>,
-	zhidao su <suzhidao@xiaomi.com>,
-	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH v2 2/2] selftests/sched_ext: Return non-zero exit code on test failure
-Date: Thu, 19 Mar 2026 15:01:19 +0800
-Message-ID: <20260319070119.575316-3-suzhidao@xiaomi.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260319070119.575316-1-suzhidao@xiaomi.com>
-References: <20260319053026.447892-1-suzhidao@xiaomi.com>
- <20260319070119.575316-1-suzhidao@xiaomi.com>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: base64
+To: Andrea Righi <arighi@nvidia.com>
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 1/2] sched_ext: Documentation: Document events sysfs file
+ and module parameters
+In-Reply-To: <abubiaubvpc2GqNH@gpd4>
+References: <20260319053026.447892-1-suzhidao@xiaomi.com>
+ <abubiaubvpc2GqNH@gpd4>
 
-From: Su Zhidao <soolaugust@gmail.com>
-
-runner.c always returned 0 regardless of test results.  The kselftest
-framework (tools/testing/selftests/kselftest/runner.sh) invokes the runner
-binary and treats a non-zero exit code as a test failure; with the old
-code, failed sched_ext tests were silently hidden from the parent harness
-even though individual "not ok" TAP lines were emitted.
-
-Return 1 when at least one test failed, 0 when all tests passed or were
-skipped.
-
-Signed-off-by: zhidao su <suzhidao@xiaomi.com>
-Acked-by: Andrea Righi <arighi@nvidia.com>
----
- tools/testing/selftests/sched_ext/runner.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tools/testing/selftests/sched_ext/runner.c b/tools/testing/selftests/sched_ext/runner.c
-index 37ad56c3eb29..4c68efa1512a 100644
---- a/tools/testing/selftests/sched_ext/runner.c
-+++ b/tools/testing/selftests/sched_ext/runner.c
-@@ -217,7 +217,7 @@ int main(int argc, char **argv)
- 			printf("  - %s\n", failed_tests[i]);
- 	}
- 
--	return 0;
-+	return failed > 0 ? 1 : 0;
- }
- 
- void scx_test_register(struct scx_test *test)
--- 
-2.43.0
-
+T24gVGh1LCBNYXIgMTksIDIwMjYgYXQgMDc6NDU6MjlBTSArMDEwMCwgQW5kcmVhIFJpZ2hpIHdy
+b3RlOgo+IFRoZSByaWdodCBwYXRoIGlzIC9zeXMva2VybmVsL3NjaGVkX2V4dC9yb290L2V2ZW50
+cy4gQW5kIG5vdyB0aGF0IHdlIGhhdmUKPiBzdWItc2NoZWR1bGVycyBpdCdzIHByb2JhYmx5IHdv
+cnRoIG1lbnRpb25pbmcgdGhhdCBzdWItc2NoZWR1bGVyIGV2ZW50cwo+IGZpbGUgaXMgbG9jYXRl
+ZCBhdCAvc3lzL2tlcm5lbC9zY2hlZF9leHQvcm9vdC9zdWIvc3ViLTxjZ3JvdXBfaWQ+L2V2ZW50
+cy4KCkZpeGVkIGluIHYyOiB0aGUgcGF0aCBpcyBub3cgL3N5cy9rZXJuZWwvc2NoZWRfZXh0L3Jv
+b3QvZXZlbnRzLCBhbmQgdGhlCnN1Yi1zY2hlZHVsZXIgcGF0aCAvc3lzL2tlcm5lbC9zY2hlZF9l
+eHQvcm9vdC9zdWIvc3ViLTxjZ3JvdXBfaWQ+L2V2ZW50cwppcyBtZW50aW9uZWQgYXMgd2VsbC4K
+Cj4gTWF5YmUgYGBzY2hlZF9leHQuYGAgbmFtZXNwYWNlPwoKRml4ZWQgaW4gdjIuCgpUaGFua3Mg
+Zm9yIHRoZSByZXZpZXcsCnpoaWRhbw==
