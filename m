@@ -1,256 +1,191 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462A53B8BB2
-	for <sched-ext@lists.linux.dev>; Fri, 20 Mar 2026 13:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774014970; cv=none; b=bwvZp+5T5Lzu4R5sU0zglSkFe7OBG9rklSgfDAbYEhnkAUGIpnG9veToLX5Wzl7RRX4dSENg32LjN3fjKm+mxfk2lIAvEN8+QsdKMv8Xd5/8hu6D57uONKOMEQA3CKGBxTsPsFv/3ZY9PVWTS4s9vESFOCAvQso6MtcF9eWoDgc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774014970; c=relaxed/simple;
-	bh=Ed4RA/LJ76SE6OfRzsvXdoFnqI9J/ydzMpwFGQcgi/A=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=RleLmzklZsBISsREHBP4rh6YF6WNs8KMyS16qCZo/eys5CAWwFj2SJQaCRSdO/nKfD+/A2wEAlPqjEJ6Lr9hlVC9K7eM8mEVicACvHism0xRFxw/W4x4vSNYnNvP3Gwj/fxVzXzwZZs3FXMTDRM89jdLrGAZzAXyo4lFHTTIdaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HjiXmEf4; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA033CD8AE
+	for <sched-ext@lists.linux.dev>; Fri, 20 Mar 2026 15:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774022244; cv=fail; b=ZDlt57u9epQdePRHlFI0dGbON7p81bahe8PsOSUasozriD8469RcjuXRqJPxD4RyJ50iJRenm3z6HWpwPoM7x0OnH7wL8mAMWrexgS3W2CJw+sB2jiC8UlNpeVfv701JxDm+rGYd4t3ymKYPDJtE338y35vf31TtzTb7DKIqK7E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774022244; c=relaxed/simple;
+	bh=2+dham4iTK1FHW0s+7f5P56JsS9YmqRFJi7PtxM26wc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=OhOKvrwiqd3AvsxiZUWF91b7MWqk38I1mJMuqEQgtf5WG88G9kILtpItHj8cuB1zJvtSxBy/RC8mvG1D/wsrhDp8c8eRzhnmduOIdOVXivPGUVY8hgBX+iVEYFc1z28xk+b4XmjdCiGOfNysYe1R5GCBn/KqPYNUCSwt93HPhBM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=RreSiBZE; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=MbaVBLN7; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HjiXmEf4"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-485397788b3so15393045e9.2
-        for <sched-ext@lists.linux.dev>; Fri, 20 Mar 2026 06:56:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="RreSiBZE";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="MbaVBLN7"
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62K8XoKP2498394;
+	Fri, 20 Mar 2026 15:57:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=corp-2025-04-25; bh=DRModKBa2wTx0NgF+X
+	mkXrmFMBi1WO/SL6F5X/UlpGw=; b=RreSiBZE+BwgyivyaycUG5LuNtTiVafscY
+	2cBwg3I5dUg0O/Hauibdx/L6cZjHAry9Y2ZNwGvg5vnsBsansTDFA3iThuO1zhyk
+	qvEidwi46ihAjQSkl8gDKtlmiJL5quGIQHeppN7hW05/SaCxXQd0dMR5XCy0uX38
+	4+TDoZr1T/x/OGX+H2jox3et/Oy8cXXPBxu7vpsktcDmnOdCPILSROUxyi/Ky8/B
+	Vg3Qyrv2u8dc8nXw9TGlq532CxFsbSapAV4xOyYrrO3UyWWJRxMXkGNUjeuMg5LF
+	ktrk7dKg3TZ/xGCEfnfFDLuwHGhD98vQtUcESQrCJ9Q2c9YffYTg==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cw07rhy4r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 20 Mar 2026 15:57:13 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 62KFfhpw003623;
+	Fri, 20 Mar 2026 15:57:12 GMT
+Received: from dm1pr04cu001.outbound.protection.outlook.com (mail-centralusazon11010065.outbound.protection.outlook.com [52.101.61.65])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4cvx4edmm3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 20 Mar 2026 15:57:12 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZNJymv/kR6hzjjwqyQr9BEBWzp1k6T9OM0lWcpoi/5A2yyvNzC2tBU+2Qvhg4aEkPEbJiLeEpGW2FpiQcTWusCAt28zrFdZAZxU4kXm8nI986mjYtIXxjo6JPZF5sGWq9viWtsuaWrdzXDGWSCJAAtPduPGvlg1iKreu5jURrlVMgw8/VAQ2elV5IdgqN8qa1V+f7LcmntcG5f3hbg3wcVJvvFowd9dPlHgJLzowyIz58LjU/SUReNbXs/B6+F3VQLG0QrA35WMKdUVUoaoYH9yAb1ptwKfviBvNgSzAUih6Wkg8BRj5BcmTLL11JdtAoNwE9FkoAAjWSJUN2L6vYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DRModKBa2wTx0NgF+XmkXrmFMBi1WO/SL6F5X/UlpGw=;
+ b=yVWglomhQbxuGHXYp24cJL65msWSf7C+FVSs9ejSNpi8Ox+wJFyNPNiXWT8Gry6EjDnCu5jNyOZEQqxo6DKSr/lry3rwSA/O//oy1E+9PaeIvi520bl2Cl0ySllP/zsri1yWttgEDSUg96aVoO/xEZR/p3au2l6lxZkdXThoyvb0wn9gihTpTD/4jFM41rn7m32n9Y8SH1ECnXZH9xS2Yx7zCyLCrSEZKZslNWM2V5SFH/mojOnI8t+3YW1m3SqGjiaAUG73y9YdoPQ6eCa9ADvoqwhTYSP51k8TiWVpfhKInbaJGpyi/BRPbc14fiEyMrNJ/W7h9u1FdtdPh/q2xg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1774014963; x=1774619763; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lvdvfQZFHOMRM0UdRldfEKNUYZsvxzi0kVQOrIIDXzY=;
-        b=HjiXmEf4j+fbNJmP2jtNAE0r2jm7pSWBv7OFLuGwMXxGgJKDPUI6aw0CkI1rWDsPit
-         EQQrauzoZFr0ngVtuIJV42V2HgqcctFF96o5CWgLVIsbfrC0Tc0rIF6QIDa8B+MniQR0
-         SUzPLzE/fPOKxSI3vTH5hQtgpaELNMkZE07XnP1/k68xmqVxBQM1AQtew9f2WAZ56XLz
-         rSGXrnmH7OZe4sV+8YVAFg6RrUqpPoxiq/9YeVWXKYBWsX+k76GIqyBN+jkpKvvTsX/y
-         NlfmJAZSrpRSibscdZHxFAayKHhVI78fm9VoQCpJJo3ppfzUgtp0CvaYdjiHjNTr1xVe
-         lwfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774014963; x=1774619763;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lvdvfQZFHOMRM0UdRldfEKNUYZsvxzi0kVQOrIIDXzY=;
-        b=VXQWNR6+kLK3fiUQfjZ9HGBtGOjPfhAPpjOMoUb5i4ZuzG/K/EKBawGp3qF9Tci1EK
-         GwaxY1+ZWas40h8z8gdcUzQpMacwNHxxJF5k0GpM8sVwD2Qy42g5MxbeUl1RYqY14/Tf
-         qcBpcoJ2TWC6alz1wPeTiBQPwY0bBK8Y3PE+nhEAczE7pS4BMvHRlCSHBpXumTrP0aJM
-         /KT454y/ycsMHPAbMC+Nn9RrQNak7qIYi86ChoDa3AFUI9t/9sWFcc1EenviOLp0FYcM
-         J74X8VN+25BmAHiRKm9GB8uK3JdRVHow7fTwcFX60eNvxIljWn5sISF+JtSX6kY3Glnv
-         QW2g==
-X-Forwarded-Encrypted: i=1; AJvYcCXNQwsTA92cxFfL3LtyxTBvzDQezB/q8cnlY1MgptYzCUJcePn7ueuso52zdFr1BmiBlIH/msexOTU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzUFPnyQiVBODwMuNs5N3wEkRq8Hb/FQWYp9VxxJaaHFsy3yMO7
-	8cR0itg+rQgaDKneg0bqOxV+b3TqeR1foNVACKT/wDRDM7bRfatHWHAVfjTAhLTaHYSWvk/2Yjv
-	IG4p+plFpFvWXcg==
-X-Received: from wmbhi23.prod.google.com ([2002:a05:600c:5357:b0:485:33e8:92af])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:8b31:b0:485:469f:5320 with SMTP id 5b1f17b1804b1-486fee2d9e0mr49152905e9.30.1774014963379;
- Fri, 20 Mar 2026 06:56:03 -0700 (PDT)
-Date: Fri, 20 Mar 2026 13:56:02 +0000
-In-Reply-To: <20260305062900.43450-1-arighi@nvidia.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DRModKBa2wTx0NgF+XmkXrmFMBi1WO/SL6F5X/UlpGw=;
+ b=MbaVBLN7t4ToWdifPSr+issrEOWSP3Sc2MPOPP8jHAdLnT+bbb6kq6pPIzY4/mQZfXTwC5w2HqkPRJ7nq5FeD1FgoxAUoBx6By/glC/8vSsz1a/echpsK/FUaCPlf7RvWZUXvCT5D2nXhwBM5GXflvFI7naIBbQ7+h43SO8foo4=
+Received: from DS0PR10MB7270.namprd10.prod.outlook.com (2603:10b6:8:f4::13) by
+ DM4PR10MB6765.namprd10.prod.outlook.com (2603:10b6:8:10f::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9723.23; Fri, 20 Mar 2026 15:57:09 +0000
+Received: from DS0PR10MB7270.namprd10.prod.outlook.com
+ ([fe80::a605:ff36:2427:6a34]) by DS0PR10MB7270.namprd10.prod.outlook.com
+ ([fe80::a605:ff36:2427:6a34%4]) with mapi id 15.20.9723.022; Fri, 20 Mar 2026
+ 15:57:09 +0000
+Date: Fri, 20 Mar 2026 11:57:02 -0400
+From: Daniel Jordan <daniel.m.jordan@oracle.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+        Changwoo Min <changwoo@igalia.com>,
+        Emil Tsalapatis <emil@etsalapatis.com>,
+        Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.1] sched_ext: idle: Prioritize idle SMT
+ sibling
+Message-ID: <ab1tumOcNCiwZqOc@dmjordan-vm.corpdevsubnet.oravirtteamphx.oraclevcn.com>
+References: <20260318003842.762275-1-arighi@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260318003842.762275-1-arighi@nvidia.com>
+X-ClientProxiedBy: CYZPR12CA0007.namprd12.prod.outlook.com
+ (2603:10b6:930:8b::25) To DS0PR10MB7270.namprd10.prod.outlook.com
+ (2603:10b6:8:f4::13)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260305062900.43450-1-arighi@nvidia.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-Message-ID: <DH7NTJ4IRIY1.GFW9V7S6Y1KU@google.com>
-Subject: Re: [PATCH v2] sched_ext: Document task ownership state machine
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>, Daniel Hodges <hodgesd@meta.com>, <sched-ext@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR10MB7270:EE_|DM4PR10MB6765:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9ce6eb18-2f80-4244-af42-08de869957ae
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	MSkKXBM61QImdD088S6nVINqnDbL5HJRVODFIjJ+dbbqIiO+SP6sq3IlD5GfWGAaH7/qn5X/Q7zQDFgzY7XqDrq7bQLl/SrDHJ3K4yp6wLx9YOYCFLvpR2588edzIdwJ9edSNsv4kNHfF7Al0zhUyZRssTr5O/sOhL3NaVju4V0pv+AwaXhnmMwyQYLRsmbx5QnXEw9Eyyrbw1quL0zSDypXPxlo55i5KCkmHnflEtgywRjFYrO9/8MEMLXhDr4r8LjoUNz4q/HHRRKa46CPgscFevcx7x7SKx2Dkwwsoty+W05SWCdYRHoosMsul990ZmyU6AT5jd2sEx7d+dEABVhSU73wiFSESXZYpeBsKSrZCkRK+FF+Bov81gfDoUoxbwCHMnBwXZWY47I3pQvIME9vmfdz+dHdrNomKw77NwfXi+E4co4frt0fle7Dy/1pj5n8+bwsAC9yygxaZZ1ouaU1WuE1oDpIxauMlaEGFxvXveQfbEwuFxufH0jcjlOqQLpXUDE47jE240oaOcDTECgLogVIKOhzYas36jXLz2MQQ7a/dYG4XCE183pHRnzY/KgGNFOy8JiHgL/EjZRxwjPn23Jb+3y22aA1sy+dfzw6bL5+PWscEIQmO94VF6cwPY+4gG4N0zJxLx37UtT6vo+bgUHw5VYUdgIKlhOd+axA+x6mKkKww5ixsUjB0EN7vvnHP/iKFVBJ5jriOY98ZmivrftNRBW0Izi2MkJ15II=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR10MB7270.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?M6x7XozfhOPPvMrhQLP6FjnWVrFgWMmjsetaF5Sqautc6ue3GCwbKk8+V6+R?=
+ =?us-ascii?Q?+yPQFrzG4azTqW+OAhszp6XZKPpUhrss5Yo8/smUqIh7XTdDTupMDvo7/F0J?=
+ =?us-ascii?Q?Q/kk0K2bHgp6I2BzrcgyVkK23RCtVoR5t0ak95ywcCEDMUKYmc4SEr+RTgAM?=
+ =?us-ascii?Q?bNcoWcLQI6D2r3nHLnCWW4CpojBrxWKCMNlNxwOh2sgeAKtib91Ju0E/Svxd?=
+ =?us-ascii?Q?Umwtgo0k6r5maaOONRqhlgUIfQ2GMk4ZKTzA8ntBSJS4JuIptdWoG3iFNsVL?=
+ =?us-ascii?Q?R6aGTGdvnBbR/GtCQDQGfhqggjWorKe+LQ/ktX+hGc2aFfsCsGb9ljgLysHc?=
+ =?us-ascii?Q?YRFnj01Ho+fUFe63mM6e/tt9dc3xfBJUMAtm7Pi9xZYXxBg8Ifa4MELPry1+?=
+ =?us-ascii?Q?OxpvZagxJOSLxPTK4AHhkQtxtXEb+vIMhDiHrLyynWfzveGgX+Fn2F5Psfci?=
+ =?us-ascii?Q?4h+9Lt6YSKENty4M0C1hLEdy7f+tg/8Nz+4g0CS69XE+Tlx6QZd6f0207jz6?=
+ =?us-ascii?Q?uFUFzoZfsg0vEwgqaiPUbHR6BNY//Zm8w2V1vVeRQV8v8hvEHj2LbPSVVugw?=
+ =?us-ascii?Q?K64NcbcKWQUeSJZVUB3Qwi83RdiAmUlty8uGQZyZo5UhKCS4qvOGDB5LQEhf?=
+ =?us-ascii?Q?kvEpnQ5VE7/uR1PAHJl/nrhD0WTXGAhqvTnAthC/bePVGHuozMGXrYOZ3EC1?=
+ =?us-ascii?Q?LZDY5YN+Ps2T3Vc/w9vZoRWq7tvtCfXfewAwdepIh/RJlurxHAGwSCfY7wBX?=
+ =?us-ascii?Q?c+ESGMPuLHJgxf30BPVIN2fkL76S9/ceTXUFJRtovd3BhPat0WRyPxLgAQ4B?=
+ =?us-ascii?Q?9rh2Aqu6MMa71jrXDRu+n58tO1KpfwiY53Qh+DLIJgsnmY7/Q4HDiazb0OQ4?=
+ =?us-ascii?Q?PSqhfG6zZAFkkpfzX5fGW0TovNPvItrqgGIVdGJR3Lt+33w8lzo8qi+ztuln?=
+ =?us-ascii?Q?ND9WPmoaeT78w00eXDsP4oUgTs68DEspwnLdaXULJQbvyfRwaa2VFK/JkR/z?=
+ =?us-ascii?Q?K0nV0SDU1dgUjTO92rx0tuMmbRWlColCj85Z2MZF8hl15VYZFvkyT6tAUlGZ?=
+ =?us-ascii?Q?R4LYDhN2+YAOAxAQmGhVYgr8LQd2lsx+oq8dxXBkog3t2r/8o0GBpqwAz6oC?=
+ =?us-ascii?Q?er5DPLB+sIDmw/RLF9Qq5BNd8JczMEqZm/OQ2T8QU19eI7+gcu4ttgPwaEPx?=
+ =?us-ascii?Q?pomBmv2CTMfiLEeUq1E/RpECFRsXBv/EUx/n1j/I9196DoKpJSbQyrwN5ZAZ?=
+ =?us-ascii?Q?C/59PTgAlJI/ui8OJS2kwODnsQMNuApVsSG9BQ+H9zdR2QoZbhcj94ulKnMH?=
+ =?us-ascii?Q?6pYYaS1QuKprO5yy7qWHF6owSP7p1L2JIUe2BsrPg49aljFGhqdw3JAeVsmu?=
+ =?us-ascii?Q?HDwio5yOnaDIFPAAYuqT7vynBbSXa0Np8OMi/hqTaXLDeZiasSW/Tr/ZOs9b?=
+ =?us-ascii?Q?OQtAtbWU6O+48gBAu2k8EQTFdIqcLYoo1n95zut1GfBui2Dkz5Kae6O5FV1V?=
+ =?us-ascii?Q?cOwivii7yHGD5Zv/VR5y6pVPs6spXhq5P4LrGyFt3cs/HJeiQBiEoRkAWmRD?=
+ =?us-ascii?Q?x48Qb4qVnx/0cG1bEOEJtIfgdzgGU1ClaQvS/SX5+liE0f+//i8RJ+MhSIQ7?=
+ =?us-ascii?Q?YRKL8yiICQ3CTXjMqtRhi+flwO+QYWGY31UFZibdcBWxEZfzX69Od+CEeDWp?=
+ =?us-ascii?Q?+swgS3Ix6Of0eONPStAr55CcJE5CUtkIvABlaMtcC9i45gq1fNfctIykd3Uc?=
+ =?us-ascii?Q?atQKvGUpDVVNk4SiftlvZK9DWqwlIO0=3D?=
+X-Exchange-RoutingPolicyChecked:
+	v4y4hmqO03EeO9AoR2FtTEABvu/bKM4zNGGF8GYTTYE2QZB5VanlAbdWAag+Ti5bkKY+59qlkIrOKGKV1cnZMOrJXCxeBUevuGYjX3kUAPGZ2GOzAYaoZ5n8+IyT09YiLGqYI9KsAbtbi2TxoGDguL4YRlj318Mk3osC32LV53eOJCDDLVDhcADqxx1SRbaKEWuTpHz/Ukxf5DMBbgYjg7KPsjR6xBPfwzLtIoE3Ly//Z5OzS31iZWla6V5y2W4s80EUXVZNBG+hPUL1FNr5rgR+yjOhceV+sX0afjpx9BZ04XWJ63MIWqUwKawjsG1GxFfdLuNjSeETea+khLPNfg==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	04QxJbWSdBkVBPwQR3mtZwvbaxxZEcNKmKkHiJ16roUe4Q2p11kuUVHIIXffsHIAmBt65aBNqOAoRBNOHI/MeHBTbBhkOKTDn7xrZ5KHw71Vcdf/kHrT2z9swYFj1jh4AwKUMKhJUItqf7X8QqvWfSwTzAxp8dTZ28SBuKZOUlCjCUcohxA1t/Itogbvtc3N6W68Zs8T8u+Jm86xTk5eKzkazeBbKEf3vXrvHCZyJcUkEDWz48+YTM+21sExeH6zzU1fqb+jWI6j9p7cmYNqEvKI/5WrShQ+FWhN9HBku6Syb6xzMT+o6f/vMrmFbGdEi0haQKaXGCVx52z/VRQLl1uqNPB+/ZNGU9XfwFy4C66AEbBExO0l1r1R6EsW2A3EnL8OBqh5y05eOgQjnaKGVfs8wrA6k4OTNLJzWABf6CRlfUKDKncRxm667U0QIE1DJWMyqFyYZhPN2UR9DKAoG3a36GVAurKpFc6e/aIo3+ip5KHgWkLd961aQPw7FsFIBTokLi8cEF31n9Jaj9MA67mUFS0eV0WFH3a4b+ChmdrzCF70QPy0NyCU3cmwDjKy6KD4GnSJDoN0Y4CY+DR/vKpCmqdt4nxfrMfN/jzyj9E=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ce6eb18-2f80-4244-af42-08de869957ae
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR10MB7270.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2026 15:57:09.6610
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JhOukj7IjZ1YyllaO+eOCFVRXFTc8c3dZ0MhT0etWPBAvN+wP8U2yXDP6J/pUMMWHDYA7wtJVA36hcJnAJDYGyZnV3msI0j7BN6tJMyif2Q=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6765
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-20_02,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 mlxlogscore=999
+ adultscore=0 phishscore=0 malwarescore=0 suspectscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2603050001 definitions=main-2603200127
+X-Authority-Analysis: v=2.4 cv=HcsZjyE8 c=1 sm=1 tr=0 ts=69bd6e59 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Yq5XynenixoA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=7Gl3-_t3PgB9XO-mQDs3:22 a=Eh1VrYCNLxuh08t6mL4A:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: im7BMF4pT5loWKzJV6pFaDpCvmW_BD70
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDEyOCBTYWx0ZWRfX9t7yCg2eG0La
+ fsQaPr8bptYELxrSUkpo68iYJztBbBs4mjNasgVXXHHV7UOyMTT02JScCQdJRJZD+fDQfvvbWzj
+ BWBYucRzVl8u+ShtEr4fOQDRtKrBU0ZzVaQidrzW6xHljimAkkEfpFPW66t1eoSj1wShb0sNofb
+ FGYfpMCntc/uzjiuzO4ADMIWJ6h0ujgXu+0WNbaeyz7qZwppCRiu0/IPtrriu0jMhQH7JiadUeC
+ 95Z3i29t26LzEsLxQTnZEvw2Qkfsr4AQC5o+WWV/Bb54S2FYXL8RXLeXQnkReublc6d9aR3Hf0r
+ IzWFaHBXTII427iioqUWRXEkJ8SSeByTPD+SvLEBM61z+cvV8Tea6KPyIRqbYjL6qF17/CXBD2Q
+ ZmwJY+I/fqzzAIUbwuH4w1QD/Q8qjNbIAeVa3T4abF2VzLmI5+pbM1haPz7hjCS0oHNfFiamsbd
+ z6OOVSYToNcXT2h711Q==
+X-Proofpoint-GUID: im7BMF4pT5loWKzJV6pFaDpCvmW_BD70
 
 Hi Andrea,
 
-Sorry for the late reply, I'm catching up with mail from the past ~month.
+On Wed, Mar 18, 2026 at 01:38:42AM +0100, Andrea Righi wrote:
+> In the default built-in idle CPU selection policy, when @prev_cpu is
+> busy and no fully idle core is available, try to place the task on its
+> SMT sibling if that sibling is idle, before searching any other idle CPU
+> in the same LLC.
+> 
+> Migration to the sibling is cheap and keeps the task on the same core,
+> preserving L1 cache and reducing wakeup latency.
 
-On Thu Mar 5, 2026 at 6:29 AM UTC, Andrea Righi wrote:
-> diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-> index bd26811fea99d..417d3c6f02fe3 100644
-> --- a/kernel/sched/ext_internal.h
-> +++ b/kernel/sched/ext_internal.h
-> @@ -1042,26 +1042,108 @@ static const char *scx_enable_state_str[] = {
->  };
->  
->  /*
-> - * sched_ext_entity->ops_state
-> + * Task Ownership State Machine (sched_ext_entity->ops_state)
->   *
-> - * Used to track the task ownership between the SCX core and the BPF scheduler.
-> - * State transitions look as follows:
-> + * The sched_ext core uses this state machine to track task ownership
-> + * between the SCX core and the BPF scheduler. This allows the BPF
-> + * scheduler to dispatch tasks without strict ordering requirements, while
-> + * the SCX core safely rejects invalid dispatches.
->   *
-> - * NONE -> QUEUEING -> QUEUED -> DISPATCHING
-> - *   ^              |                 |
-> - *   |              v                 v
-> - *   \-------------------------------/
-> + * State Transitions
->   *
-> - * QUEUEING and DISPATCHING states can be waited upon. See wait_ops_state() call
-> - * sites for explanations on the conditions being waited upon and why they are
-> - * safe. Transitions out of them into NONE or QUEUED must store_release and the
-> - * waiters should load_acquire.
-> + *       .------------> NONE (owned by SCX core)
-> + *       |               |           ^
-> + *       |       enqueue |           | direct dispatch
-> + *       |               v           |
-> + *       |           QUEUEING -------'
-> + *       |               |
-> + *       |       enqueue |
-> + *       |     completes |
-> + *       |               v
-> + *       |            QUEUED (owned by BPF scheduler)
-> + *       |               |
-> + *       |      dispatch |
-> + *       |               |
-> + *       |               v
-> + *       |          DISPATCHING
-> + *       |               |
-> + *       |      dispatch |
-> + *       |     completes |
-> + *       `---------------'
+Seems reasonable.
 
-We can also go directly from QUEUED to NONE when a task is dequeued for an
-attribute change or picked by core-sched.
+> On large SMT systems this appears to consistently boost throughput by
+> roughly 2-3% on CPU-bound workloads (running a number of tasks equal to
+> the number of SMT cores).
 
-> + * State Descriptions
-> + *
-> + * - %SCX_OPSS_NONE:
-> + *     Task is owned by the SCX core. It's either on a run queue, running,
-> + *     or being manipulated by the core scheduler. The BPF scheduler has no
-> + *     claim on this task.
-
-A blocked task's ops_state is also NONE. Or are we assuming here that the task
-is on_rq?
-Also, a task waiting to run on a built-in DSQ is in NONE state as well.
-
-> + *
-> + * - %SCX_OPSS_QUEUEING:
-> + *     Transitional state while transferring a task from the SCX core to
-> + *     the BPF scheduler. The task's rq lock is held during this state.
-> + *     Since QUEUEING is both entered and exited under the rq lock, dequeue
-> + *     can never observe this state (it would be a BUG). When finishing a
-> + *     dispatch, if the task is still in %SCX_OPSS_QUEUEING the completion
-> + *     path busy-waits for it to leave this state (via wait_ops_state())
-> + *     before retrying.
-> + *
-> + * - %SCX_OPSS_QUEUED:
-> + *     Task is owned by the BPF scheduler. It's on a DSQ (dispatch queue)
-> + *     and the BPF scheduler is responsible for dispatching it. A QSEQ
-
-The task doesn't have to be on a DSQ, it can be queued on some BPF data
-structure instead. Even if it is on a DSQ, its state depends on whether it's
-on a user DSQ (QUEUED) or a built-in DSQ, e.g. local (NONE).
-
-This prompted me to have a look at the logic around SCX_OPSS_QUEUED and I can't
-convince myself that it's correct in the case of direct dispatches to
-non-builtin DSQs.
-
-The only place where ops_state is set to QUEUED is at the end of
-do_enqueue_task(). Notably, this assignment is skipped in the case of direct
-dispatch.
-
-direct_dispatch() will then call dispatch_enqueue() with SCX_ENQ_CLEAR_OPSS,
-causing ops_state to be reset to NONE. We end up in a state where the task
-is enqueued on a user DSQ, its ops_state is NONE and p->scx.flags has
-SCX_TASK_IN_CUSTODY, which doesn't look like a consistent state to me.
-
-Am I missing something here?
-
-> + *     (queue sequence number) is embedded in this state to detect
-> + *     dispatch/dequeue races: if a task is dequeued and re-enqueued, the
-> + *     QSEQ changes and any in-flight dispatch operations targeting the old
-> + *     QSEQ are safely ignored.
-
-Technically speaking, the QSEQ is also embedded in QUEUEING, where it serves
-the same purpose.
-
-> + *
-> + * - %SCX_OPSS_DISPATCHING:
-> + *     Transitional state while transferring a task from the BPF scheduler
-> + *     back to the SCX core. This state indicates the BPF scheduler has
-> + *     selected the task for execution. When dequeue needs to take the task
-
-This description only applies to the case of a task being dispatched from
-ops.dispatch().
-
-There are cases where a task is transferred from the BPF scheduler to SCX core
-without going through DISPATCHING, e.g. dequeue for attribute change or
-core-sched pick.
-
-This state indicates the BPF scheduler has selected the task for execution,
-but it doesn't always go the other way: when the BPF scheduler selects a task
-for execution via direct dispatch, at no point does the task enter the
-DISPATCHING state.
-
-> + *     off a DSQ and it is still in %SCX_OPSS_DISPATCHING, the dequeue path
-> + *     busy-waits for it to leave this state (via wait_ops_state()) before
-> + *     proceeding. Exits to %SCX_OPSS_NONE when dispatch completes.
-> + *
-> + * Memory Ordering
-> + *
-> + * Transitions out of %SCX_OPSS_QUEUEING and %SCX_OPSS_DISPATCHING into
-> + * %SCX_OPSS_NONE or %SCX_OPSS_QUEUED must use atomic_long_set_release()
-> + * and waiters must use atomic_long_read_acquire(). This ensures proper
-> + * synchronization between concurrent operations.
-
-The transition from QUEUED to NONE in ops_dequeue() isn't covered here.
-It uses atomic_long_try_cmpxchg(), which implies full ordering.
-
-> + *
-> + * Cross-CPU Task Migration
-> + *
-> + * When moving a task in the %SCX_OPSS_DISPATCHING state, we can't simply
-> + * grab the target CPU's rq lock because a concurrent dequeue might be
-> + * waiting on %SCX_OPSS_DISPATCHING while holding the source rq lock
-> + * (deadlock).
-> + *
-> + * The sched_ext core uses a "lock dancing" protocol coordinated by
-> + * p->scx.holding_cpu. When moving a task to a different rq:
-> + *
-> + *   1. Verify task can be moved (CPU affinity, migration_disabled, etc.)
-> + *   2. Set p->scx.holding_cpu to the current CPU
-> + *   3. Set task state to %SCX_OPSS_NONE; dequeue waits while DISPATCHING
-> + *      is set, so clearing DISPATCHING first prevents the circular wait
-> + *      (safe to lock the rq we need)
-> + *   4. Unlock the current CPU's rq
-> + *   5. Lock src_rq (where the task currently lives)
-> + *   6. Verify p->scx.holding_cpu == current CPU, if not, dequeue won the
-> + *      race (dequeue clears holding_cpu to -1 when it takes the task), in
-> + *      this case migration is aborted
-> + *   7. If src_rq == dst_rq: clear holding_cpu and enqueue directly
-> + *      into dst_rq's local DSQ (no lock swap needed)
-> + *   8. Otherwise: call move_remote_task_to_local_dsq(), which releases
-> + *      src_rq, locks dst_rq, and performs the deactivate/activate
-> + *      migration cycle (dst_rq is held on return)
-> + *   9. Unlock dst_rq and re-lock the current CPU's rq to restore
-> + *      the lock state expected by the caller
-> + *
-> + * If any verification fails, abort the migration.
-
-Maybe also mention that the same dance happens during direct dispatch, where
-the task's state at the beginning of the dance is already NONE
-(set in direct_dispatch()), but src_rq is guaranteed to be equal to the current
-CPU's rq?
-
-> + *
-> + * This state tracking allows the BPF scheduler to try to dispatch any task
-> + * at any time regardless of its state. The SCX core can safely
-> + * reject/ignore invalid dispatches, simplifying the BPF scheduler
-> + * implementation.
->   */
->  enum scx_ops_state {
->  	SCX_OPSS_NONE,		/* owned by the SCX core */
-
-Thanks,
-Kuba
+What workloads out of curiosity?
