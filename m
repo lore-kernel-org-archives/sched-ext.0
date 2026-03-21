@@ -1,108 +1,134 @@
-Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833913D8113
-	for <sched-ext@lists.linux.dev>; Fri, 20 Mar 2026 18:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8342FF65B
+	for <sched-ext@lists.linux.dev>; Sat, 21 Mar 2026 07:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774030601; cv=none; b=Hysf9PMaUCFHzDVc0wTP/YHuEJZQzwJi3etyi7/Wd9waZdrbusqpApdMfllPi8LW5SGybesdWmBilQBXzytFd7MWWZ3Tu+iwwLVauB9PE1kjXspRG3/xa6Dmrw44jcnmR5AwJ6rpopizbOPYnLOTeuMTVOsL3XC9Qf+qGDygYSE=
+	t=1774076775; cv=none; b=cmPUUrTypQigdZMl05KvXhkJEb2SIFuXIlDAvEWFdnMURxHyesItuoq/+8aMKGtEM9UKBddNmnBRfDg52FSbuET67dXFPYWwNsHMGvDMntLdK1D56v6N/01K/69W92zZrmvuiOtTN4vQb4WJqhGMHeKblyPnTlJjnLoRr8/NK0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774030601; c=relaxed/simple;
-	bh=2eaBlWd5jGD3rJQwpesjYfrICE3jh1zZbHY+s3dEnpc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=b1rXMCYQGu6+pSO84pNAel35Pc2zmnKBXeauLXEJwScxLIZF8QP9dkisILS7Ofoie5p+IEvT7YX1gbkfPyn6ZSjzDP5PHzq1AqquDjmYVE2e2tyRAdCBC3FG0aXUD7nQvz9HmCArxEYGbrinAARFPLFsn+iUeHoIHfnZwneAAds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c8d21yj8; arc=none smtp.client-ip=209.85.208.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1774076775; c=relaxed/simple;
+	bh=8uuFV7QZa/G3UUlhzZubAEZJEKryz+WS3w+0HiOck+M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m4E2ziSbnNsApKGu2bCdvv3sl//WKiEutKi3RRPIWudLxcj9/JSs+VNvyHMvBGD6xRb9yW2SAxfDkjIMjqY5clLDb21XvJXsZ0h23hiIl71dncnbE1PXh4mI7hqeO889npzl+PJo3y/Vocs7kchNrMpgtixJG4W2/WN5dp2OD9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AT4U5SMi; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c8d21yj8"
-Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-662fd150354so4582231a12.2
-        for <sched-ext@lists.linux.dev>; Fri, 20 Mar 2026 11:16:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AT4U5SMi"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82ae379000fso589590b3a.1
+        for <sched-ext@lists.linux.dev>; Sat, 21 Mar 2026 00:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1774030599; x=1774635399; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=175LY80cvo4magxg2e73J6AXfntCy1Gia8IrNOJcCIU=;
-        b=c8d21yj8SqGS6rKca64XsZJqKBffq3WWKlf3lZxZvXYc8G2Fggo1bHEE9kaCgHucQ2
-         q1w+aZ1Twg1VDvWwzQ/QUK4dHqc18mOzr2ceueL6IxGQqxlQYtfdfVsl1qa9fvqSvgby
-         o78XCkf/2iNUujzwjKIk4P7eTXcDxLFivVsAxJyowsBxiDcZfFa0StNb5Z5gudEuCi79
-         DJ0Q5boacO3XMqjpkbnwWDxu9JrdbKb19YYx7XBXko7sUmTgwkmVuSmCJZeTqzi+ABdz
-         YLdoacyYCT2u+byO2THoBylDevuJGHKONaObjHvKPB3YwTf5J3Daqp5gFBFK6Ntw3Tt5
-         Laow==
+        d=gmail.com; s=20230601; t=1774076774; x=1774681574; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+E9RzLFtwhTym7kZaUZpBD53/envJOcDPzBdZKPAfkg=;
+        b=AT4U5SMiKD28xbEIEkGju+2XMfAC0oQlddEbaad6CW3f6gAsD7CMQL6ciKOy+qCKew
+         bVMdcLmG/PRtsJn4W6cN3x3ey34oKjUHKRswWov3FI1iZeXv0lKNQMAmxml3wJs0JxpH
+         xtzQDUZqo2CswRMHEuBXOvjZTJGpZHz7vTQNI4HlDtB3PQHJOl0/yJsldeN5NcL0geBg
+         4Nd5ZWqBcdRxeLDr/L5URx2ksfwDB+o52anm3jlKhrJkqq5sZd0MiPi07rBPZSyMvfkE
+         X4IFFsHQ/i2PIlK9mROgVKafA832ks1e1RJ0N75WtIgirC8ngZTWrIgkpJqH3y2iG7Vm
+         8HdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774030599; x=1774635399;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=175LY80cvo4magxg2e73J6AXfntCy1Gia8IrNOJcCIU=;
-        b=BN+GNkIMVcitKbiuK8YWsMf2W0EBuoi2Ajh37yQ9odfum6G5W7s1kuDFn7qR90o4Yx
-         P22owmqOaBUAigB1iHL25FCVZF2pdLW67nHrZmkwlUoWPPabws2lKph8oJUV+LdHDm+3
-         TCJ8ztu4R83G1t3WKiuxTK+GNw51dN4irbN4dCwM/0LuLjKog+R7mPNrabeFvVPfSwZp
-         7wmi2zelNT68EWUCb4HVOUITAH0vtOA/IzUCvX6L48xIhxrOX87Xwq0IE3Y4a0O86j3X
-         tdBaWXU+rEorhaiCuGGXZ+xPg66NNsRrx2/x/bc6ULVjtPbSl8DWLhEZuaxQRjbC+Sbr
-         nncA==
-X-Forwarded-Encrypted: i=1; AJvYcCVbP5Co/mkNHpg6WwA3BtllTlQzwr3FrrGr9A00g2I66DRZzS3lYylw0rt6o4Iv50nbE89LiCl6x0U=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyuizpbMq+p1uCMxResWUXqvqFtl59s2eojS9JuLY8jdXRIQyfM
-	gZVg28BuV783RFi/0zcYXWfpAqu03ypYsEEq7TElbb/39e+ZMiud9augidTNxWCZkndmswHqshl
-	yQjYMpnATAiQnBw==
-X-Received: from edsc4.prod.google.com ([2002:aa7:c744:0:b0:667:4c3d:fc68])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:1ed0:b0:663:f97e:5207 with SMTP id 4fb4d7f45d1cf-668c84f23bcmr3582223a12.0.1774030598677;
- Fri, 20 Mar 2026 11:16:38 -0700 (PDT)
-Date: Fri, 20 Mar 2026 18:16:38 +0000
-In-Reply-To: <DH7NTJ4IRIY1.GFW9V7S6Y1KU@google.com>
+        d=1e100.net; s=20251104; t=1774076774; x=1774681574;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+E9RzLFtwhTym7kZaUZpBD53/envJOcDPzBdZKPAfkg=;
+        b=mTfyrrTH3t0CsQMCViSdmAIcdOpgeF328quS6XYq1kwFV4z5i7Lt5z958w6EfqVAaS
+         y+brwPOiYZWaeXdka/ewvdG1J+rY0nlf2n3+zOQn9tCTslbSMzT3eA5+YE61lbez1FQo
+         7/ZWCayGaAvKbQmTsKJY/vW1R8VGZFXk/jh3Vpn7ghvIco5arh3gHtW/WIyac2DL5lsF
+         Q6JtvG4NJ7tUc1ku5dGy5WLJ91Ttvvs9uhUyorH70Y/A+YTvyHE6J6P3YWv84D4p3mSl
+         2HgxZ/xanv0QIRuFd92+LFNNujqnp2wW3KuYim3RePGCM1LPZmnUxzCWq9HkKSKAg6c8
+         0jnQ==
+X-Gm-Message-State: AOJu0Ywx5hOD0LaHx5gEStOntkGI9T7gYQ0ikzQ6bdc8xfSsNbe7aj2o
+	cC9QEWqS5JFAmvN+UKsQYPYZFftVonUH24Udb3kTFbhznGL9lJihHjNQZzqnA3mV
+X-Gm-Gg: ATEYQzyJ9+ryGnvqvk9Sanfx2HJl75zAG/7O04Nve5u8mCVX6eVg4ZM27a2a6t0wpai
+	jGpl9XEEh9mpvqypUNMOaDAn4NjBvw03lRueqQ5X/3e0s34DH4EPyStsUXAEwRz+HB1Sk6nzKqp
+	0Xphey93lNYnIxmZ1Qb4TBIG/N81T047UVr8KUhDIVhpOjInCtVdu5QT0DBXAh+G+mqowq3GLow
+	gpyYK+Fi0gSXefnmNGwuwekLsi7euzbJkO8TyaqrmkiO4ipri+O6by+trXftWxn6rv8iynQpBg2
+	RtMTKF2koDzDrcja5oKa2J7m/Dxwv9dWnJGt2KwcUPIPO6rrh+tHsCcErB3H2+hrWqK1Cze/JgU
+	3ya/YVggd/J3fWbKKUjR2Htxt7APnIbqJNID44/MM3YGXMEo5oActpxXmXokhJxE+e/0OIzItel
+	DXxRy0vXngWIZwT16mXOq6P9ggxrgEwcSkqm/HBOenqd7KKmHYBkIn
+X-Received: by 2002:a05:6a00:4197:b0:824:b03f:2f65 with SMTP id d2e1a72fcca58-82a7a7e5f12mr7106316b3a.7.1774076773757;
+        Sat, 21 Mar 2026 00:06:13 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:ccd0:c749:3565:422c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b03bbebbfsm4705431b3a.18.2026.03.21.00.06.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Mar 2026 00:06:13 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] sched_ext: Fix build errors and unused label warning in non-cgroup configs
+Date: Sat, 21 Mar 2026 15:05:15 +0800
+Message-ID: <20260321070605.691776-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260305062900.43450-1-arighi@nvidia.com> <DH7NTJ4IRIY1.GFW9V7S6Y1KU@google.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-Message-ID: <DH7TD1UMMNIW.3FYBGIXBZ7E3O@google.com>
-Subject: Re: [PATCH v2] sched_ext: Document task ownership state machine
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Kuba Piecuch <jpiecuch@google.com>, Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>, Daniel Hodges <hodgesd@meta.com>, <sched-ext@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri Mar 20, 2026 at 1:56 PM UTC, Kuba Piecuch wrote:
-> On Thu Mar 5, 2026 at 6:29 AM UTC, Andrea Righi wrote:
->> + * - %SCX_OPSS_QUEUED:
->> + *     Task is owned by the BPF scheduler. It's on a DSQ (dispatch queue)
->> + *     and the BPF scheduler is responsible for dispatching it. A QSEQ
->
-> The task doesn't have to be on a DSQ, it can be queued on some BPF data
-> structure instead. Even if it is on a DSQ, its state depends on whether it's
-> on a user DSQ (QUEUED) or a built-in DSQ, e.g. local (NONE).
+When building without CONFIG_EXT_GROUP_SCHED and CONFIG_EXT_SUB_SCHED,
+clang reports errors for undeclared cgroup_put() and cgroup_get() calls.
+It also flags an unused err_stop_helper label.
 
-My comment here is incorrect in that a task being on a user DSQ doesn't imply
-it's in QUEUED state.
-Now I actually think it's impossible for a task on _any_ DSQ to be in QUEUED
-state, here's why:
+This conditionally compiles the cgroup reference counting functions and
+the error handling label to match the configurations that require them,
+preventing implicit declaration errors and unused label warnings.
 
-In order to initially get on a DSQ a task must be inserted into one via
-scx_bpf_dsq_insert(). That can happen in ops.{select_cpu,enqueue}()
-(direct dispatch) or in ops.dispatch() ("normal" dispatch).
+Tested with both configs enabled/disabled.
 
-In the direct dispatch case, the task either:
-* stays in NONE the whole time (ops.select_cpu()), or
-* goes from QUEUEING to NONE and stays there (ops.enqueue()).
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603210903.IrKhPd6k-lkp@intel.com/
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ kernel/sched/ext.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-In the normal dispatch case, the task must be in QUEUED state for
-finish_dispatch() to proceed, meaning it can't have been direct dispatched
-earlier. Then, the task state goes through QUEUED -> DISPATCHING -> NONE
-and stays there.
-
-scx_bpf_dsq_insert() isn't the only way for a task to be inserted into a DSQ.
-There's also scx_bpf_dsq_move(), but the task being moved must already be on
-a DSQ, so it must be in state NONE, and scx_bpf_dsq_move() doesn't affect that
-state.
-There are also other mechanisms like SCX automatically inserting a task with
-slice left into the local DSQ on preemption, but these also preserve the NONE
-state.
-
-So, QUEUED means the task is enqueued purely on the BPF side and isn't present
-on any DSQ, either user-created or built-in.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 94548ee9ad85..2e7a1259bd7c 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6494,8 +6494,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 	return sch;
+ 
++#ifdef CONFIG_EXT_SUB_SCHED
+ err_stop_helper:
+ 	kthread_destroy_worker(sch->helper);
++#endif
+ err_free_pcpu:
+ 	for_each_possible_cpu(cpu) {
+ 		if (cpu == bypass_fail_cpu)
+@@ -6514,7 +6516,9 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ err_free_sch:
+ 	kfree(sch);
+ err_put_cgrp:
++#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+ 	cgroup_put(cgrp);
++#endif
+ 	return ERR_PTR(ret);
+ }
+ 
+@@ -6603,7 +6607,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 	if (ret)
+ 		goto err_unlock;
+ 
++#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+ 	cgroup_get(cgrp);
++#endif
+ 	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
+-- 
+2.48.1
 
