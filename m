@@ -1,141 +1,209 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010055.outbound.protection.outlook.com [52.101.201.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEFE13DDAE
-	for <sched-ext@lists.linux.dev>; Sun, 22 Mar 2026 06:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774162666; cv=none; b=K+gW6/ARBUXhi2E9+DJF5KSWkaDQZds4Iz4pvh/ynP9YBwygbFjm6yM7QoNAFaAfEsmgG5XLMAv+tAW5t1V4GAlGGGE6JhGzsmwAryciFBIYx5h+GyYvkZAqpjOg9h5jnGlwZ6KpZ3NiDBBOzXJ227J1sThlHEmatzQfAfX08qg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774162666; c=relaxed/simple;
-	bh=Q0udf2z169WVaIz119eFU9ekbZ3DDGE67tFQ3I72DPk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A9ZUTHyJTCMsJC9cbWA8wljy165nIrLrVGTUw2LgorCe0kpDhONmWRyaWkPIjSlsng/9fsBpy211ZlCifbYT7130EC8WGqOKYmbR6d7sVWKDgFnlv94ZBHcRKf+gkCIC3VTNFeRlT9IeWTUDLstlJ7ktTzIVaVTkN+ZR0N48/tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DKQvFqW7; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7839B1DA23
+	for <sched-ext@lists.linux.dev>; Sun, 22 Mar 2026 07:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774163636; cv=fail; b=SXT/nWm8a1+8BPl0YHuMvnNHVM+LKyIDOCX9Pq2aRM7CqLyKKf9+bXPcFTtIHKMpnkpKlujFhzDjYjHuIzWEoT2mPRDX+tkbPXK32D9ZUO45XpDci7CooTdhbM0dcwrcbUX9u3ATzuldHHnyahIIriXMn+B0u9kxJm5QOZ3aLSk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774163636; c=relaxed/simple;
+	bh=14sAWBHgzPm+JOaZY3uwbGdZTfkQSBEswP9vVAcfW/U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WTU5QaukOl4luuFBCTh3EmgjQGb6iKY0NBMDhHZCy/pXcNtuEniUlUn85rVbPuQWuA1YqFWi4BUz10noCpcJ1Vtz9m32fFlJL1veTOdtiCbxEFX3bdx5ah1g4WwCltHCwXJ5p+G5Gdd8TPxCoU0APlU9N8xGWkjGV42kMgu6K7k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qdYunMRg; arc=fail smtp.client-ip=52.101.201.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DKQvFqW7"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2aaf59c4f7cso15468405ad.1
-        for <sched-ext@lists.linux.dev>; Sat, 21 Mar 2026 23:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774162663; x=1774767463; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HgBuk/oO25FW+6DFTD4Uzxp6aOOmbequhHways0qcMA=;
-        b=DKQvFqW7AxQo53Qfp2CNV3p+bem9znMtibNk8S0jkt1zwjfKkBVJDXwIRuTR30kEtu
-         ewXb4HFxJAl5sfAoBXtzlkaEcjLOGDJIoQo1GlsjlXuEhuLxSWEExxNVMjzDyXyzlfqs
-         53jBnv0KKF+8QjHupXFfVw/7FjDN3fxbC6JlfAzblnBLw25Ko7b76CC3qLB8+45NArxl
-         pjl8/BkUT5OPY8JedsYWpzf9i4mGlz3D0PFJPlthrHl4QqsMnCztIZK/kI/2K6y2b+ED
-         4WgWjLVj+vZhVPg3KeLio3ymE+TIfAQ1YYwkXfcNGZzijHYRHiXKui+EzYna/Pao/ZGS
-         0nrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774162663; x=1774767463;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HgBuk/oO25FW+6DFTD4Uzxp6aOOmbequhHways0qcMA=;
-        b=JnVt4+0Tu/2WYYwEzr3Zkf7yTY1en9/FHpYXvy8F3L7oLJNkvyddRnEZJnAUib0IIv
-         qvvJSNSSCvRXu2Q6u1PCdHvF1ypouhWFOEb+8P9eMYlSLHzxI7ywkupfqdm2BUt5/W+P
-         egKDEKNCQt06ybK6rQgDJMUVQlrTttz7IoXdY7VjCZL/qDt7mp8FIGS3XV2A76p68JDn
-         uCSDk4VrSqF4uSEIQqniuLuToI1JzqXxQOoBWh+R5lQXCuadnGu32XSTjNjZIUc+SKZ8
-         H/wS8S6ysNVBr9RtKzgQ97wBqm/5/vAA8mOtSIGpI0QtfNgb3dDkIJF9aPhTvZVvLoHI
-         HE3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWpt1Hw+FodPjFjRhkA9SZQrqk0XGyCeYO23Hx3XotfuF/syKORchmBmjZKfZ4+2L709pZk/+w5bc8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVPLfyOhEFe6l8RhXsKg/iIE8CJVhl9szAbzA+TXhCUmuVmGKV
-	77iB9IBzWclb1AieY8H+C35hlZEIyxdV6BINfN7ge0pmpF0Ya5TZaOEQ
-X-Gm-Gg: ATEYQzw8vUnvNg/YbMdLTPowR1aoSzvTP4vyvMv+lnTUqtR82T1VngiK5JevGNRR0sy
-	V/YFZv4XdIebtta+pFLGUC4GB3EkvGX/dO4QKBqkBe28nxHFAzBzgbto2rtK/xaGDwaG0k5Hrx7
-	acz6DJKfGFzMixVnJZ3LA9XWlIdjczq9Ae1Z1416T/fCu8d8i8I/1DuurgYlTBTW9ZfTkYKncLC
-	/GIe/kgV3QFK+I4xVt1JEOZc2qweUuK1pWOv4K/X3VkegVRAUeANP1F5OhKaxuBu+tfPbXBlFkP
-	G9uJrtRYRVMzc5dqTPN5kGtHrZS6YHpbEpv7f+NR70tkuxh7YteNqKtPqq/KhnAkaVqSkT894Cx
-	CdUGdXsmkIvOtUtI92cru9qUZHgGqTS7b91aZA4It4/8kWm+J/yYGPE9y50+dnlDbeNfxKvq6h7
-	fejLufyV45MQ/Ypc7lwDzpOAt77af6
-X-Received: by 2002:a17:902:e5ce:b0:2b0:59c4:e9dc with SMTP id d9443c01a7336-2b08271d4ecmr77958055ad.22.1774162663183;
-        Sat, 21 Mar 2026 23:57:43 -0700 (PDT)
-Received: from eric-wcnlab ([2001:288:7001:1099:e49f:fa98:a4ba:8111])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0836955dbsm93526315ad.72.2026.03.21.23.57.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2026 23:57:42 -0700 (PDT)
-Date: Sun, 22 Mar 2026 14:57:38 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 sched_ext/for-7.1] tools/sched_ext: Add compat
- handling for sub-scheduler ops
-Message-ID: <zvvsqqz5bm26rahcne2zcxqdk7lhuttk5b26zh64znotuoipqp@uvs2gmswgby5>
-References: <20260322063546.304416-1-arighi@nvidia.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qdYunMRg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lffsl5ENWmQn7EV6+xJ7kkYDmOwv5h8Qcd2VF7Wdc/J+oYGKUb/x1bTCGTOgbCtjwOuYfhPUnSZxU8iaK2eEKHZfzxoqQ+vZ1hqCGHYfwYRBOkNKqzlDWZ3rjiQ2epbIUne7tk4gHl/kBbqaiL/TsCS9wqBECyUoKX1NUaW0UDPq3eT4sla5xnnMmAYLvTgAVC2Hp8uIGj6GBH2XWTxMlNOUVuhg79JYxBP/n6m4LbMS2aWTZDUT/Stq682VnEaAlVVJKfbcEV0Lel7ARizfQwXAXBEI4jMJHoTmZWRfwyY8fesrWty56chbqFWJT9lE+xDpSE3K0vw+e7acWUHLBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rdKfsZUOGDdjxWqA4wtprL7SeZpXQd7DQ4X2TKncxC4=;
+ b=GnpT5cLClth2j+KcJJyWi241qAyJW0Z43ZjN4uj+Zj/v5SxQZEz+iezI1lHD8gLU13NkqtAA+Mi6oUBiTkl/s45UUWRCpr1FxCP9CJI9HoCtncnU6h6v3o2K9fmQOaQ3mYqRJhJGtAfWdKbfeH0J9bhA6+vFt6zFrKoz3wUI7yeZUvqQVYfrwemOwUcwgKs73sx/yyeMj6HS0Tn/z5ttEzv23ZeaeMtz+GeKkJox9PpT2AlnxPAWqN69zgmT6O+Tncw1nAv3ht4bHkRBeFH3AloB3rHgGAOTm2MvSNRMOmrrNzUqwfYgUA94NtdhhWPHAI4foD+8ZKEfZS+HKahfZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rdKfsZUOGDdjxWqA4wtprL7SeZpXQd7DQ4X2TKncxC4=;
+ b=qdYunMRgr3theQ+Bt3fexnyAeM6UrSKCQTH2p22lFpCEObbCtfv3rWN98IFqGftXZM9ab60jDb4g6h/qw659wcGvbPs7hbQEjWAv9qJPBKWwAhJSrPW3RLBkm7dr+i6DNnyUyVKbuRxxp8Prket4gekompHuGaqiEODd0ZF8dElI/ooBnbviJ66LjPfRKNeLZ3/cBZNk6a3Nm8JsomNeYU0ozqtVuZPMPymVV8tbPNvjH8ohVPII165Q6vQyvmpziIotSkBl8bTYkFZcgQBekC7V97xG/nENfTu/U9MS80lf89W6VQU8EIV8UUPVZ4+o1Himu1ijBG/gxCyhaiH03A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH0PR12MB7959.namprd12.prod.outlook.com (2603:10b6:510:282::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.15; Sun, 22 Mar
+ 2026 07:13:52 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9745.012; Sun, 22 Mar 2026
+ 07:13:51 +0000
+Date: Sun, 22 Mar 2026 08:13:48 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Fix build errors and
+ unused label warning in non-cgroup configs
+Message-ID: <ab-WrGgPTU27W9vl@gpd4>
+References: <20260322063955.951848-1-yphbchou0911@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260322063955.951848-1-yphbchou0911@gmail.com>
+X-ClientProxiedBy: MI1P293CA0016.ITAP293.PROD.OUTLOOK.COM (2603:10a6:290:3::8)
+ To LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260322063546.304416-1-arighi@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB7959:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4d71a206-895a-4f19-7710-08de87e29208
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|18002099003|7053199007|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	khhNc/mMIWK/vgWAsQ2HkVr+bF9lAkA4o0b6T48gTltUL+XHonQcAInnYhrMVtcNHLhhg9A4XXoIQsYIAq+QpMmuEUkTyrZC+RGHSKgofgGlFPtMeY1mqOPhzQcwKbnee5vTDFaMIhEH3QiVSo+lltwmBPuS7cVs7jAt9UrUwnwJhsnUD5XaEJnJjGjMH972uxTjVJmSozAAB2k1uMqWpRx/2IZ0806c5YJT/jkFPPmLTd6lqgWgv0tbebc+JOdLumC5xCaOfLQ95JUWeXKMEESm0dpxSqgKcc0hfChcU3W9KLT0539m1zZW5aO/3MJiMmqlyPQghFCGKVcdVFOirhHU/sCX5S32bwJcx9jU5vz8xBGTnyDJ6LJ1JKaisWt7qLh10uQFR3we/OfmFtBmi6irYTR060TXbLoCWJKBRA0oSUSn92bzf9TPpSXrc9E6+Xx19OnyZkTxtu6BWDZcPv5s0BI5uWsio7KhBkdDnFTcnkwQCSEtx4FuKpyde8l2EUixMRyfpQnM3yncyTMuOUtUO22Ef9swR02cH0U/d2xv/mKaQzRyxX5vGRUpp0r62KlI4H/ht+aG8tKl8mpHJs0JOqgQ5UEe+OFW8qXjNFk07JzkyfAkhHc9umwpeS97lhTzjAzIpzEc8FuOteEPA+GDzAuVAlBpvfYk8y7TXxtCy4c3CCr4EdGD270PIQLZmFCkl3pxHNszBk+uJvY2IpwyPBXUsIpuVsWhRrkI5G+DsU0cw8JJSEuNdGuvRXLF
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(18002099003)(7053199007)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?vsdm9L2CzeI5c0obyUJQKqDgrkAN4k1mSKFKiN5f3ylN4TLu71QTirZU11B7?=
+ =?us-ascii?Q?AO9BEs4Nvh4jFzJ6edny06XzSHHR+dnD8Pvho67KPKcDpJ8zJXrYc6PAKuJW?=
+ =?us-ascii?Q?R/t2npxHcN8iV9wUkzkOzoddIADTI+xXPdUGMc88ZBHsmdT7O2JI3Lnq+JJ1?=
+ =?us-ascii?Q?yWDKJ6S2FYjNhFh01HHAILqw20//l3/ZL1mZ+GAo63lojWf8Vb7likr0Y1fM?=
+ =?us-ascii?Q?SKkyJ+45gAMYepwBvTUcw5uL2/GbIyho0UoP8lbVbERHUfTS6Rw+reBmIfth?=
+ =?us-ascii?Q?vPY08N/PfRVXyZWGfW1j0GN0PfPEPhPr4RO7gTT/MXCpqP5jf9cyy8nIA48D?=
+ =?us-ascii?Q?ET7B9zzec+f3YWDoD+lKVgMSaUkzSIhQS2QuX5FNC8lATHCQXmqjXUyqdbJ5?=
+ =?us-ascii?Q?bm5JHfp+gn1EFtd6uzfdT9Ypr6YptYIz43yaq+X1HQvLNCI1dP9wTqqpsYLW?=
+ =?us-ascii?Q?i9EN9L9mtUm7J/7E0NWO3EaPhGnNhvNmB7Lj7iJxwY5SdKToTKZml7zd9CtU?=
+ =?us-ascii?Q?P1djzAmMb8mykFoiLkbQ0nSWk21MR9emWPcKFXkNZlatipBISPxJpr3i9l9c?=
+ =?us-ascii?Q?unwFJnvF7h/y0X6FphWO/oT5gMIgjEz0B1DABMGKryDHxv23wQJ37U6WSIKh?=
+ =?us-ascii?Q?fclNYD3+wO1nYveexnQw/G0Q8d5T9UZUOyB6bSPxrQAzpY+pAbsAdC1wEVY4?=
+ =?us-ascii?Q?jHCRlUXD4NyhELbeLeTmMqZCTNa0JZ9IDPg7sNfYA4P9IR8m4A0WgbMiRy9+?=
+ =?us-ascii?Q?JhaaV5IwnHNAlJ75ZF55yRTQGlAtwayhgofuI6l3YyJ7tzoXkag0CbEvrp6P?=
+ =?us-ascii?Q?sMeNyzpx5qZMyBiqf5cu4GodezVMzN3CoceiGpwyPnowSV6qAsj+iXnUXeQc?=
+ =?us-ascii?Q?tu1txVZxKaOHHNSuC2mR0ukr1qPUUhoDaisj4mOrQQf+13VPmdLi5atMSHqT?=
+ =?us-ascii?Q?5MrIRw8DK7jdYdsCSorECqYurtMp/L7XGTtLzIhWIJxo6BJyNcY1mi7ZHoFX?=
+ =?us-ascii?Q?Bsr6g8s6oFk9xOe2YrtBlN/Cj7YQ8NHp3YSEKNVsh37zJDPhIaz715ljWWuE?=
+ =?us-ascii?Q?rbLMSLEO6k5iWC4GnaIOoVMS1ouT3vXZKga4AGUrBKOM6fk1fblOStGDOY2L?=
+ =?us-ascii?Q?1MNNnFHmBK5HU29PHL7o63GqRZTOQrX/R0ZrV0ugaO17KTMG5YYUgemYf/HJ?=
+ =?us-ascii?Q?lx/PMPlnGe/qKFwtHKnsOWOh0rLuTE8zmk7Wd/zmMMwVp4688ebjLG2Lezw7?=
+ =?us-ascii?Q?1S/ckzOrVcBsXFmHBW6BZjRk5UWUq4ecyJzanVOKUzFqWKzX+d49dEnQwNGK?=
+ =?us-ascii?Q?SY/+PpAj/RMVh3wKbgDFa0nKgBJMvxFsnd9u7aEgjAhEd/lA00HXnv7k8H6I?=
+ =?us-ascii?Q?qhxo4edyDUgUTnlBsYHpU4CB86MAX0EK/qVLsK2KuoJB3ZVO7M8u22WI34sI?=
+ =?us-ascii?Q?UvXiPRApLXpojWBeKenu6JaA2Zci2HdfL5zu+n573q1fWjE7xRxJ97hGTdJf?=
+ =?us-ascii?Q?rLfNooBy54DL0rFkW+X8mMwnKnODMpClGVv7VbWAZCjqkDvRmSaUeZTOnoIu?=
+ =?us-ascii?Q?2iIgQd4ihc7byxmFAbtjYgifOJXJ1LwzIgfwvsL8zXgbxs5dy5zBDnn/YAmB?=
+ =?us-ascii?Q?5+Ikg5Ee9YYQD5JNUtRtq9Cacc+TS239tZgp709PlolP6nQ2N3MIN4QXjvjw?=
+ =?us-ascii?Q?9qlOdh2BWlHG3mFcuhYiDgCp5Z61PyL6NjtmbGX1HDYBPoorS1QVmrPXD2N1?=
+ =?us-ascii?Q?v1+8Dm/oiQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d71a206-895a-4f19-7710-08de87e29208
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2026 07:13:51.8444
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZZ93pGigy9b+A8z0NBmX20kmIBQI0w22ogZcdqRlTepvv7bjKJpqW0VF+Q8ZZho665nHkuY8DIqR6FIlydzSjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7959
 
-Hi Andrea,
-
-On Sun, Mar 22, 2026 at 07:35:46AM +0100, Andrea Righi wrote:
-> Extend SCX_OPS_OPEN() with compatibility handling for ops.sub_attach()
-> and ops.sub_detach(), allowing scx C schedulers with sub-scheduler
-> support to run on kernels both with and without its support.
+On Sun, Mar 22, 2026 at 02:39:50PM +0800, Cheng-Yang Chou wrote:
+> When building with SCHED_CLASS_EXT=y but CGROUPS=n, clang reports errors
+> for undeclared cgroup_put() and cgroup_get() calls, and a warning for the
+> unused err_stop_helper label.
 > 
-> Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>
+> EXT_SUB_SCHED is def_bool y depending only on SCHED_CLASS_EXT, but it
+> fundamentally requires cgroups (cgroup_path, cgroup_get, cgroup_put,
+> cgroup_id, etc.). Add the missing CGROUPS dependency to EXT_SUB_SCHED in
+> init/Kconfig.
+> 
+> Guard cgroup_put() and cgroup_get() in the common paths with:
+>   #if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+> 
+> Guard the err_stop_helper label with #ifdef CONFIG_EXT_SUB_SCHED since
+> all gotos targeting it are inside that same ifdef block.
+> 
+> Tested with both CGROUPS enabled and disabled.
+> 
 > Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> ---
-> Changes in v2:
->  - Handle sub_cgroup_id in older kernels (Cheng-Yang Chou)
->  - Link to v1: https://lore.kernel.org/all/20260321102036.58734-1-arighi@nvidia.com
-> 
->  tools/sched_ext/include/scx/compat.h | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-> index 9e0c8f3161e87..039854c490d5e 100644
-> --- a/tools/sched_ext/include/scx/compat.h
-> +++ b/tools/sched_ext/include/scx/compat.h
-> @@ -160,6 +160,7 @@ static inline long scx_hotplug_seq(void)
->   * COMPAT:
->   * - v6.17: ops.cgroup_set_bandwidth()
->   * - v6.19: ops.cgroup_set_idle()
-> + * - v7.1:  ops.sub_attach(), ops.sub_detach(), ops.sub_cgroup_id
->   */
->  #define SCX_OPS_OPEN(__ops_name, __scx_name) ({					\
->  	struct __scx_name *__skel;						\
-> @@ -181,6 +182,21 @@ static inline long scx_hotplug_seq(void)
->  		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_idle()\n"); \
->  		__skel->struct_ops.__ops_name->cgroup_set_idle = NULL;	\
->  	}									\
-> +	if (__skel->struct_ops.__ops_name->sub_attach &&			\
-> +	    !__COMPAT_struct_has_field("sched_ext_ops", "sub_attach")) {	\
-> +		fprintf(stderr, "WARNING: kernel doesn't support ops.sub_attach()\n"); \
-> +		__skel->struct_ops.__ops_name->sub_attach = NULL;		\
-> +	}									\
-> +	if (__skel->struct_ops.__ops_name->sub_detach &&			\
-> +	    !__COMPAT_struct_has_field("sched_ext_ops", "sub_detach")) {	\
-> +		fprintf(stderr, "WARNING: kernel doesn't support ops.sub_detach()\n"); \
-> +		__skel->struct_ops.__ops_name->sub_detach = NULL;		\
-> +	}									\
-> +	if (__skel->struct_ops.__ops_name->sub_cgroup_id > 0 &&		\
-> +	    !__COMPAT_struct_has_field("sched_ext_ops", "sub_cgroup_id")) { \
-> +		fprintf(stderr, "WARNING: kernel doesn't support ops.sub_cgroup_id\n"); \
-> +		__skel->struct_ops.__ops_name->sub_cgroup_id = 0;		\
-> +	}									\
->  	__skel; 								\
->  })
->  
-> -- 
-> 2.53.0
-> 
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202603210903.IrKhPd6k-lkp@intel.com/
+> Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-Looks good!
+Looks good to me.
 
-Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
 
--- 
 Thanks,
-Cheng-Yang
+-Andrea
+
+> ---
+>  init/Kconfig       | 2 +-
+>  kernel/sched/ext.c | 6 ++++++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/init/Kconfig b/init/Kconfig
+> index 06abd8e272cb..487a93e34be9 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -1178,7 +1178,7 @@ endif #CGROUP_SCHED
+>  
+>  config EXT_SUB_SCHED
+>          def_bool y
+> -        depends on SCHED_CLASS_EXT
+> +        depends on SCHED_CLASS_EXT && CGROUPS
+>  
+>  config SCHED_MM_CID
+>  	def_bool y
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 94548ee9ad85..2e7a1259bd7c 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -6494,8 +6494,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+>  #endif	/* CONFIG_EXT_SUB_SCHED */
+>  	return sch;
+>  
+> +#ifdef CONFIG_EXT_SUB_SCHED
+>  err_stop_helper:
+>  	kthread_destroy_worker(sch->helper);
+> +#endif
+>  err_free_pcpu:
+>  	for_each_possible_cpu(cpu) {
+>  		if (cpu == bypass_fail_cpu)
+> @@ -6514,7 +6516,9 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+>  err_free_sch:
+>  	kfree(sch);
+>  err_put_cgrp:
+> +#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+>  	cgroup_put(cgrp);
+> +#endif
+>  	return ERR_PTR(ret);
+>  }
+>  
+> @@ -6603,7 +6607,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+>  	if (ret)
+>  		goto err_unlock;
+>  
+> +#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+>  	cgroup_get(cgrp);
+> +#endif
+>  	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
+>  	if (IS_ERR(sch)) {
+>  		ret = PTR_ERR(sch);
+> -- 
+> 2.48.1
+> 
