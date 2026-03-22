@@ -1,172 +1,156 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011041.outbound.protection.outlook.com [40.107.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E282B1D8E01
-	for <sched-ext@lists.linux.dev>; Sun, 22 Mar 2026 06:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774161356; cv=fail; b=G1a0li00BKzoaunoJd4lkEwQPEqbBp/XfqeONuva6ibroPneflTk48zhd0aR3YB3U7bFOxq+IgwbCgoUGoHmLZI0WHMabzZBkQlMBxPzQfIIhMaP1o5oBYP9uAjMP3Npt7HZtksTKkBvfn8Q5GkIVyHBc7UJWQAZUXP+MbSWw7U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774161356; c=relaxed/simple;
-	bh=FPoqfVhbeiLr4iBCt9x9I0sDY5uJ1MZwhjDlBNW5MU8=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=qrSRdOHW5aADCLkqu7Bxu6DjBte6a8MuOyS1GUeR+1dIVkv625EdCvfYCH8Rfa5b8vxxC0n9Au7a3y37QsIYEBO1VbonYlHyrzQeXrXNgIi7pJt/rG6LySztH5DPEqj3IaK5WXDYwWy9h0EBdwzJTM1EllPpv0JKW0PKyddTX7Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=eD88heP+; arc=fail smtp.client-ip=40.107.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D03D40DFD8
+	for <sched-ext@lists.linux.dev>; Sun, 22 Mar 2026 06:40:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774161606; cv=none; b=EH7YNsAr/+wom252y3MrQiYmONuLe+EOZpbq259SNQktbMLavoSxVECfqNJhSVp3hV3fXS6upGMKHIhxejJV8dE+OkMCEQVpAOdfGSde6y0N1WmrkEgZ+QT+2KoiTtVrDSvNtRymjJ4zHqI8TR37iU1Tw2D67n00DjLO+I3V6pI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774161606; c=relaxed/simple;
+	bh=1ZiFwAw1r14kWmasOYjmkvqDfaKI+OJKE2csX56kufI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CBcK0sa1rRBM0xfw7fVdkMV+s050nVezGNz8BXXd8ivIsnv+yKqZrw3DL58C+CJBhJixtKDop4Vq/aaUYlkk1jgMVKniqtrucqeXacjQqB6SrKz7HtWRuQ49RPuTyHzjivNK9yqlzZRRPR0B0ybdBQF8Z4F47bI1zRgqBwmGwuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=exdTShU5; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="eD88heP+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ImmYLAPdvkVY24hR51d3iJPO7Ur/a2Z+5wNKBClgbGmLZbT4yjMgKGIOYH1dkc1W5fP4WgQVwlAXF//cWfOPnJq44Zv0YFGBlyddTe7MpOzKaXygbsxceDbgKJh7rtHm4g1BdtcVuHMM9zLA8MSNHtGxVWhgTuSlrdQ8ruCxTJhsEutKiffeBmUztUfnUF49O3E+ub6rtIIGNp+CyCC0hOkJIftLWXJMoCJTjXUbTxWEDPa0ykHD6UsBBsSfk325cQGHXlXxHCDqUdUWfhVEBDrKOK6JyyBNOWxTpPRIlQzi7Y/1l3tl9c1kog4cgihy5YHkRwIdCHbtdcFk+Mh93Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eE1RqBu0Y7Vi8MHxaO2fhMsVF3ZqJpcXUvsXmN7PQVA=;
- b=g+2id6ezPSlXhdIqKT8vpvruPO9t2wu9SN8nQ2KSDPUOVv7CIEBJmhBh4XL4qr+rqJhUvXnsRSbBZNWV/Tdyzo/1OMHD8f6Ie7EKUA7gnUrPV1qmZ10ZsXq1VF0ymh4LrsKvl43AZdBhcwAPtcYtbvk5CiqVlDFJ9t/DjVEQDGDXiUyZDqQHAUaCBJJetkSWvXNRgcwEoAnafcg7IsF884Oe/vLiPbBoaLGQiS45TuA9jsd05CPkvXPwTXQTsxA3pWAOtslIr8E73ZK5VlSU1OHu+XcES4gUIO4hpOU7z5AcwPIHcTJ4PKsM8wjvCjgcJRzfaY8gvhc8yx2a6/l7FA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eE1RqBu0Y7Vi8MHxaO2fhMsVF3ZqJpcXUvsXmN7PQVA=;
- b=eD88heP+rLJUS82Rypj9r53EKXcxn+gi7sPlXtVUvQ+4nK99GDXVga2e//WWznYltDYGKejxxqsxFoJoqiQNZAhxh+wZNTX2KlkfUeI4QOZqrlmZoMM5AF/qEwM2n2klvRcoIF71NmnC4rinrbPyR9aZd32jfmApUgP0ZCb3sdm8Y8DdfZONwbM9I46L+trSUAKWUy1KSlROiPhcvzuGtE6F8qgODieAo+fPyYria0v3A3n2MWCQu8h58f7IcCD2O3zv/sZf+4PdhYh2opf7ulQtyc7tx8izolnxOeQLoLdnuNh/qco9gT4c1qcJouxFq0uoBxHVNajBd5f0QAxM5w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by LV3PR12MB9404.namprd12.prod.outlook.com (2603:10b6:408:219::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.10; Sun, 22 Mar
- 2026 06:35:50 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9745.012; Sun, 22 Mar 2026
- 06:35:50 +0000
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="exdTShU5"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2b061b6cf36so13955145ad.3
+        for <sched-ext@lists.linux.dev>; Sat, 21 Mar 2026 23:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774161604; x=1774766404; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yeh7ADHQlXMFfOgh7EjdyHzLelcmLXhYoi6swcDcaig=;
+        b=exdTShU5K6BhcYh2kxCSqFzQZXQ7hr1kMnKSaqtU3qUkn0OmnJ30hBs5uimL6fMNEI
+         8j9n/aqoH6mKQCAGI1F0AGr5kD11kmTKRNPfqkA9H3SP36Jgdp8HXzUEZ/IAmtTrtzhl
+         9Mu6o6M1mjVt4jcBs7EJhnHNqgzFk3Ir+hcz1y372JMo5HHpmlKZ+BSLMN7Be/LTbQBa
+         emxfzX7kEtup2yaDjRmcV8HQkrue89xWAagLNV884/QTEzV9zsMN2SYGc2APoDD43jPF
+         SDUGJxMyRRNlmZpjokT/bKGAd8xYz3BirHlexG6bocy81dpmL7YslBQsFQ+5Li5A7r6m
+         bAnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774161604; x=1774766404;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yeh7ADHQlXMFfOgh7EjdyHzLelcmLXhYoi6swcDcaig=;
+        b=RzNux+d6E5nUTgU50qqifCFJPjaA15TNax7HYqfPqCPB7s+2jaC8RDhzA3Vo7n1LmX
+         ajlHrrVddH72skBOG3arJXJWp7ayWJ+TcAdH14CiUMzJLxWWYM5fJsBF2YbMmshUVyHF
+         lq4IiThkPI6XKGRvNo82miFQpxMMhXEsgrZN2POeV6uCGiQUiEbyd6svfdhK0aWdT3b6
+         iLBWaxDrp2hElrdMJa5P3Z52S4uQONu+k7MpKynUwcEHIloxZ0iCLB4ehtSo6G5h1WcL
+         KeJYv00DKfyO5yGKcMvHpoC5vRzdTAAY8ynancM75kbiG2CLMCMQAT9nC5kAkV6Df0UF
+         GD4A==
+X-Gm-Message-State: AOJu0YwwZugaT0hNid39WyCXRiLMWBI8MP+9dbmJGGTM0IhaKPXNhHj9
+	xfLw7qIxlr11X8kxXdPAqea+hAjIJbgxBgfR2nAkW8fcda4mSor1hD3LOqN83RPE
+X-Gm-Gg: ATEYQzxQTzmlULBuOj9LiGKAxbATwlvmoTX1iSL13PXJLNH0A61iqAYmIq8Dw8UMKGX
+	JYYxDsYuer2UvUxhF2bCzFMFSjm10PoPQG87WmqYqdXduqL4i2buhal1HNHVMe3gITc6SISh5ll
+	fG52CQJ9jFUM0RUr9KJcUHcGYQDQhYK6cYalLoChvLncas+VYNxfbs9LVZs5qKW8yiT8f8ELBE9
+	hrVfsdjTqsEBG6Ghscy4fc1gVsu5jTJB8mVqIZ8QwmCkYCf1bdLSBwxhCdBSlOyPnuHU3x4wfad
+	q/mWBrOg1PjIA/xoQ+2Vu8dMUiGnXzw/v5DXfshFgavt6LqZgynpjtpg+rLJccC2tOxO8/8S+Hk
+	xsXZve7De6qsXsHdaEQynuwf5+F9TYaf3JKEya1du6QOASxbm+baAcPcExXoFy4NHxzQxX2w9dB
+	NO8ji5W2C9H7NVFGNhr9Cx0eZn2CFCpSgDApfDz6oCQis7vHUMKKc6
+X-Received: by 2002:a17:903:244f:b0:2b0:5e10:9dbd with SMTP id d9443c01a7336-2b0826c84cdmr82196855ad.3.1774161604158;
+        Sat, 21 Mar 2026 23:40:04 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:e49f:fa98:a4ba:8111])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0836b97fesm68737465ad.84.2026.03.21.23.40.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Mar 2026 23:40:03 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: [PATCH v2 sched_ext/for-7.1] tools/sched_ext: Add compat handling for sub-scheduler ops
-Date: Sun, 22 Mar 2026 07:35:46 +0100
-Message-ID: <20260322063546.304416-1-arighi@nvidia.com>
-X-Mailer: git-send-email 2.53.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MI0P293CA0006.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::17) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH v2 sched_ext/for-7.1] sched_ext: Fix build errors and unused label warning in non-cgroup configs
+Date: Sun, 22 Mar 2026 14:39:50 +0800
+Message-ID: <20260322063955.951848-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|LV3PR12MB9404:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6d9bacb3-cbaa-4f2d-9332-08de87dd426c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	53W5KJ2Q9gQ2DRj9XlY/rLyjWJvl+458ZrwCcIBMeP1YjRdBJ0wz3dbl41tLp4TzpB87u6a/ieu+3JGztToC6jSyCkil1FI9b//zR8lsVldanVG3XINDOL/OeW/B7cmXIzRZy5oVxQcXL/OmWRDp2LwlKdpc7VgxWV7tIw3thIbHQYVODod1FjTwfytZm5rx3FCW+t0TuMOVRxXq//xPfncpdCNZMq8uX7MCUIjIBPSigaibAXDSLBu0nhJ7MRxYZ1xK3ydO88GzeZFB5MYHDMhbiJL0veALPyQ8HVLGXZaj/YbhTmKVCnvs+mcaATDyUh+Qr78LcrUv2QpSEpGGExht4IUVdObJZR6ZE1GICjEgcL+j2dw0smeGg31I/Ojm/SZTG59IQIV660M4HWPrYgeoORmqsxaYP7k0R8reYui6lRJYNSaUij014a+SBk2CxPEIhoIlJgl90t25sFUSHtd3h9pRnqCDCarqhIbqpTl8ILflvBC7TBulHBv2NG1IAujJpsbjcjcpYLBWhg1ks+VpaVcgN1+4dSRAEBVjNdQMsQjwfJBuQ0mnH0WP4TpbF0d0fhIQHNjYGmwkXbrQh0iPr9F54V7ut6/5/oQAwJpwWWjwoqJp6/RuZ1UW5VRztv2u4aRNRyS5LL246Q3ipdJfmxbOXn8uG7rfNjmI0BsyqmcJjfGsIaiUKtqnW3/cJGwwDnyo0Sq1ESOyS1mCKbn/noI+vKk97q7FOWSLXosTy8Z2ftOQgvfkikVo0bFD
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(56012099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?gMsUY3wh97AhpklvyT3khpdYpXIC8kBHjr3HLRnMwo1tlD8GKfHQWG2UTLyv?=
- =?us-ascii?Q?noBk7nhFEBP+Ysj1O8r9L3vpi5TihYVn2vbKDsntJsgGPxirQUGVKllBo1t4?=
- =?us-ascii?Q?ERyfKl+pXl4YfK4NgegZCIgBXDZp2cp417VGqjE3DYTJ+kdLkHpdBevckVnf?=
- =?us-ascii?Q?jFkQyKW7wu1af4bjBTOH+5QSerq39LFsXp3ocdXTNUdNpZsX3zbj3LtOUJL2?=
- =?us-ascii?Q?uNB+7jsof5mWvT9/KNtPAc2h5rtESwptrcAaK9ilYWx8R7vZhGy3qm4zQor7?=
- =?us-ascii?Q?oDWfGu6p5oOuDGqt02Adr3KTpmk9pcgtB3xDL8Lclv618kdWsvvU8SJUE8xu?=
- =?us-ascii?Q?9/h5wR0GQiuazBoWkCnKJa+BLBztp+hRxBPt13/synKzPzYHEsIU0wIHRh1O?=
- =?us-ascii?Q?VFP3qYu4lhfk0gnz2yn/Sk6KtdPwQluF+c1SW4YRhM1OrwNiDv+oJoeCWXev?=
- =?us-ascii?Q?+z0/6ybpNhgOg1LAP9AJFAKQo4VEEU7leEO7bItvx40Uh1lqJwBSwDowawYX?=
- =?us-ascii?Q?CIh4DXAX1CL1PZulMudit1HKdx+yWpTiYGD+lQ2G3F/pM8axc0zXb7wtCy/G?=
- =?us-ascii?Q?aS9x9WZvuJSLEDi9k5JzKBynkcIOqojU0HAL/Q7Ap/fNxi/xXvwwDqZ3MTbj?=
- =?us-ascii?Q?oSSCZFsmyPbHbDipty/mxv0ocFjy2GoF8EFmQoLqni+bd4iQQ5O8FdG4uWRD?=
- =?us-ascii?Q?tsTgDM+GYjrXHVO8yeFIEffcZTB/RH2SGr5EDvitYW9NcTy37okjMPI/tjFh?=
- =?us-ascii?Q?nXEZbIPlvf2zzxBIsuHPtQGsycKKhnt/ErTCJUYop45zCpxk4Fm7L+wam/zC?=
- =?us-ascii?Q?Hqsrp2W44/y8czHH2wMLucUs4Muj17vbBD/YDJenHIYvFDNuAUAhuYz1RC0Y?=
- =?us-ascii?Q?B973SOq/VxKO1wYjW8oQvQheHpxlCDmgDjCS/KqeI281gFrtMA4kQod8IL+f?=
- =?us-ascii?Q?JrRcx36Vp6XSf5zrkAtmzuyzSB924Uqyy9zu9mGCtKgr85z72hlD2UG+yPW4?=
- =?us-ascii?Q?dnggB9f4mLol2POWH5WxHDExUoZHNFx5MBoY9ZHuHk7vhnWcV94nmyVAtibt?=
- =?us-ascii?Q?Jy6LRI1iNXC39hSeU+4q9Rn2uFqizoDfLblDLhu1wntc/iNSr89ZqpMgIvXz?=
- =?us-ascii?Q?zq/g3UML2SAsofxZj6lWrdQkikR2ksEP7ZGLhU7kNskZq5aAoCZJONwZEZR2?=
- =?us-ascii?Q?UB6BLG8r1YTu9SYnFU+6hPcd28psMDBBpP9++tDdyoV7FL2kVIY/YdXR72mI?=
- =?us-ascii?Q?whloaDHhU0IsHSrwViMqr9C4gs+nyAzrlswos8gDkCqkuMMpHJOKk5fbXMIs?=
- =?us-ascii?Q?5e/fMIpKk5fXVgYvwXfua5z4NVSwzITgGECsIG7io0hVVOako5ySbpscmn42?=
- =?us-ascii?Q?1AF5+4UBDwzj7heZUib6MmiNzrS0UAfbY13GfCtX+7qYXvgV8dt1OjK5+LXE?=
- =?us-ascii?Q?H9JaKmR9g4zKahpel0DpD9SIQJx7fR+4GI2ziUIgGfQ/q671phLACNTrftwo?=
- =?us-ascii?Q?AP/l8sMSUt0BPpXfM7E9hIljFGNT7yQkJZnorQPVjXXC80QJt5+7/K7Cw9iv?=
- =?us-ascii?Q?89wg5Dzkz+4z81rV7QZ4vOdafrZ6WvYsEeGawKtsxQ+ORh16gmOH59NzIzHR?=
- =?us-ascii?Q?MYvO+cZXr9HryTf9YNNHA3CRZbRRtCg+1+0TqYbWdJhx5kI85jkFoWIEqUcL?=
- =?us-ascii?Q?8xaOItKG7I/UViuJCw8wSrlMOH0jxyKqdyUiog1op4RdYzNq51wgCvMLUPgq?=
- =?us-ascii?Q?W5mEnLnRJg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6d9bacb3-cbaa-4f2d-9332-08de87dd426c
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2026 06:35:50.7018
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PKEu3pCpHe4oMerPxrFReY8D71+dkc3uNlp5On/ZAW5g4PQwKTH/A1fIyJTXIpEvkYK60oYeDB/Htit736QNcA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9404
+Content-Transfer-Encoding: 8bit
 
-Extend SCX_OPS_OPEN() with compatibility handling for ops.sub_attach()
-and ops.sub_detach(), allowing scx C schedulers with sub-scheduler
-support to run on kernels both with and without its support.
+When building with SCHED_CLASS_EXT=y but CGROUPS=n, clang reports errors
+for undeclared cgroup_put() and cgroup_get() calls, and a warning for the
+unused err_stop_helper label.
 
-Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>
+EXT_SUB_SCHED is def_bool y depending only on SCHED_CLASS_EXT, but it
+fundamentally requires cgroups (cgroup_path, cgroup_get, cgroup_put,
+cgroup_id, etc.). Add the missing CGROUPS dependency to EXT_SUB_SCHED in
+init/Kconfig.
+
+Guard cgroup_put() and cgroup_get() in the common paths with:
+  #if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+
+Guard the err_stop_helper label with #ifdef CONFIG_EXT_SUB_SCHED since
+all gotos targeting it are inside that same ifdef block.
+
+Tested with both CGROUPS enabled and disabled.
+
 Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603210903.IrKhPd6k-lkp@intel.com/
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
-Changes in v2:
- - Handle sub_cgroup_id in older kernels (Cheng-Yang Chou)
- - Link to v1: https://lore.kernel.org/all/20260321102036.58734-1-arighi@nvidia.com
+ init/Kconfig       | 2 +-
+ kernel/sched/ext.c | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
- tools/sched_ext/include/scx/compat.h | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-index 9e0c8f3161e87..039854c490d5e 100644
---- a/tools/sched_ext/include/scx/compat.h
-+++ b/tools/sched_ext/include/scx/compat.h
-@@ -160,6 +160,7 @@ static inline long scx_hotplug_seq(void)
-  * COMPAT:
-  * - v6.17: ops.cgroup_set_bandwidth()
-  * - v6.19: ops.cgroup_set_idle()
-+ * - v7.1:  ops.sub_attach(), ops.sub_detach(), ops.sub_cgroup_id
-  */
- #define SCX_OPS_OPEN(__ops_name, __scx_name) ({					\
- 	struct __scx_name *__skel;						\
-@@ -181,6 +182,21 @@ static inline long scx_hotplug_seq(void)
- 		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_idle()\n"); \
- 		__skel->struct_ops.__ops_name->cgroup_set_idle = NULL;	\
- 	}									\
-+	if (__skel->struct_ops.__ops_name->sub_attach &&			\
-+	    !__COMPAT_struct_has_field("sched_ext_ops", "sub_attach")) {	\
-+		fprintf(stderr, "WARNING: kernel doesn't support ops.sub_attach()\n"); \
-+		__skel->struct_ops.__ops_name->sub_attach = NULL;		\
-+	}									\
-+	if (__skel->struct_ops.__ops_name->sub_detach &&			\
-+	    !__COMPAT_struct_has_field("sched_ext_ops", "sub_detach")) {	\
-+		fprintf(stderr, "WARNING: kernel doesn't support ops.sub_detach()\n"); \
-+		__skel->struct_ops.__ops_name->sub_detach = NULL;		\
-+	}									\
-+	if (__skel->struct_ops.__ops_name->sub_cgroup_id > 0 &&		\
-+	    !__COMPAT_struct_has_field("sched_ext_ops", "sub_cgroup_id")) { \
-+		fprintf(stderr, "WARNING: kernel doesn't support ops.sub_cgroup_id\n"); \
-+		__skel->struct_ops.__ops_name->sub_cgroup_id = 0;		\
-+	}									\
- 	__skel; 								\
- })
+diff --git a/init/Kconfig b/init/Kconfig
+index 06abd8e272cb..487a93e34be9 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1178,7 +1178,7 @@ endif #CGROUP_SCHED
  
+ config EXT_SUB_SCHED
+         def_bool y
+-        depends on SCHED_CLASS_EXT
++        depends on SCHED_CLASS_EXT && CGROUPS
+ 
+ config SCHED_MM_CID
+ 	def_bool y
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 94548ee9ad85..2e7a1259bd7c 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6494,8 +6494,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 	return sch;
+ 
++#ifdef CONFIG_EXT_SUB_SCHED
+ err_stop_helper:
+ 	kthread_destroy_worker(sch->helper);
++#endif
+ err_free_pcpu:
+ 	for_each_possible_cpu(cpu) {
+ 		if (cpu == bypass_fail_cpu)
+@@ -6514,7 +6516,9 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ err_free_sch:
+ 	kfree(sch);
+ err_put_cgrp:
++#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+ 	cgroup_put(cgrp);
++#endif
+ 	return ERR_PTR(ret);
+ }
+ 
+@@ -6603,7 +6607,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 	if (ret)
+ 		goto err_unlock;
+ 
++#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+ 	cgroup_get(cgrp);
++#endif
+ 	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
 -- 
-2.53.0
+2.48.1
 
