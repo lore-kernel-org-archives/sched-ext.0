@@ -1,130 +1,80 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3EB2D2496
-	for <sched-ext@lists.linux.dev>; Sun, 22 Mar 2026 17:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9298333ADBF;
+	Sun, 22 Mar 2026 19:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774199600; cv=none; b=qBMpnlOV19jYvQQ/V8BnJFR8SxEpGLXDa2FOblz2DNU50GnTIeR0Sj5S1NdqtqOcCjBqHL/yWZAU+FYDfbj4NqcTc4aO9eATvtGpPxyO6J50pGmKBL4rIRpd4ammpUD56lnmz5AeaO60eEMssah6fG/ikqwipQx1nasF3wviJPw=
+	t=1774209312; cv=none; b=U8o0Dos735vKa1TyTvKAUo5hnPnSJ1n4qdbZCRGA2IE3uw3JzRq3g1g3Y6JTUjJ2b8ycbYRDqmFkHK7HL4xd+cuB13mc0U5qlc8gc3K/OqAkDJ+aNr7hD7AjqTZ0NZCC5CGIkHDDfVtKNukaBde/TUfQo0HarPSR4d/gEQKuYXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774199600; c=relaxed/simple;
-	bh=fW5Bp5xHP7X0OJ1YJr30k22RCkr0xCzA6mo16FSlKow=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hJ0bbOp+9Z/MTxeLwd7OX43/zRf3T8h7iwl8OWapcjiVcIxuBHyAqpIBhhdizjj7CK2qOBZnA0L2U+/Ehnng0fPvFd7h8ggKDbhEKO/tGfL8CejWU50a5E+uHen40snSoswrikzPE0TZ3Oo6aLt7kIPIYsRADYsFA0Xgks+ATa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M6xiUA7H; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774209312; c=relaxed/simple;
+	bh=oiuD5gPKofQwelfeyLjsbDwstiTz8Vz2m+tHMd/MpGI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=jNmydbmozC33W2f9Sx5Lt0QtR3SsfHdsZkxTDZdFH44cXmfYZzdJEvI9g4Knd4KKSZ0H46ykljZkAsnS9jy7VwP9/hls+eCxkSwewjfNsoOxCe6Ju+m2uufxmDuV/elihbgrkO5ytPD1yYyz1rweKeAteBgdCy45C5fFOjWfnXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lb49iP6E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M6xiUA7H"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-82c20b9fb15so744560b3a.3
-        for <sched-ext@lists.linux.dev>; Sun, 22 Mar 2026 10:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774199598; x=1774804398; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=K6qo01IQ3XaXSXgbBtjuhdJGIL5gLBo1GyCSLVuluhs=;
-        b=M6xiUA7Hokuasa1Jeg46NMG4sub/3yfE8Cd9s3k/LqwnM7KfOs0Cvw1Xkbc4y2mk5w
-         h2Y5VHPonSPWPErLvxevVhTHygGqZHkxT3mlGAjGOaFhGZsq2VU5uj8ABCBOB5wFhmxI
-         MYuB3T/RLqJC1ZYIvXQH5PJb/RazvKW9p1otypoi9HCz5v4rd6qUsRmfv0qhJaTXD+7E
-         OikskKd9o/X/1/PlxzbmtKSIV6XFdofNRF7WqU37yu1CjNJDUmS4Wts6+GRDfo0+o8Eu
-         IZN5GH7QZ7udFEoA1Wxr4pNVtq4on34XuXfgp8ovfo5rAEdl55ouaepEBO5FF8ESPUPc
-         25Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774199598; x=1774804398;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K6qo01IQ3XaXSXgbBtjuhdJGIL5gLBo1GyCSLVuluhs=;
-        b=P4q/uvFeKZfBWB40AhoYE9DG2DO9rw2YoRDN+sNGIRxGGK1EVeDK408eGAVm/iHdTT
-         gRYwRT6JZRWAtOAih8iHuzqgsevaUXhm34ymGoHgTlltvEzeaIJ9mggJILoGv+Zqn2Li
-         8OAu1DAPcq5tPhfNInHsFdH484cR9/L8z8wbUQzJlbe8CSrpmHL+OPcvmACMoMS7fFp/
-         v5YcXY7DCdPyp4QCEzF8nRVvBAMhnbmPvQJDEBMhfUaqiWuOlp9aCAJ9aoB9hY5wO39r
-         y20JsLrVm5o+e1EA6p6A1TKASVhE0D+//ncz0gYWK2J4fOTl4ua1e3Vac2WxtR74Hnim
-         RQXQ==
-X-Gm-Message-State: AOJu0YyfPr1ewsAuP0xLjfFHXBwWfOmz9i8ZD30eoE5M3w5unPg1xGTj
-	/OA+5CxE92+ZGyZEtZ/X/ucOsHinUw2eKFg7BBaEewNYlkdI1EQNBF0CbiVTxgmo
-X-Gm-Gg: ATEYQzwpNQtQSU8whxBjJqi1evTp+zWgQbEthZ6jXaMcqwJtGfi4Wb8xMOPN6Uer/mN
-	te/m8Jd53srsubscWiGyffZdzDH3Ce3OMUuLla8xTK+LAhF/on4IE7K92QpAtzEG1CvB62A2GIp
-	M1Iz0rplP1aZNLztcHiSkLVgEVoCGSoZV/h1o65fHZu1+pSMnyn1HeCUwWwRXBZSBZVhScflmIE
-	5EW25XDEVc/aU7jAqX9fCiCpAOLqqi1OC1+pWzkA5ok0d7ZkAfUk/FIrWvZHKB6kFwW8TpdOxV2
-	XiQL4M8v3j/OOaiQtxDFfKzjbbrkH5KagaTwti5MIjXqtTEn8JeKDlBVGrq6BCKwjitSV+jUg8A
-	vAYGYwS29guxWi7+WwgNlBT1TJzVrtkDK54dM9HMkViitywW0ABxz/KxE40LO4YDpZBjKu57J2f
-	DrShQg9oejc81BVCB1k4lYtB9RzfltEhOA5IsaD6mbQQXOBo5k4Fw=
-X-Received: by 2002:a05:6a20:e291:b0:39c:113:14b6 with SMTP id adf61e73a8af0-39c01133c1dmr2112288637.61.1774199597797;
-        Sun, 22 Mar 2026 10:13:17 -0700 (PDT)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:a92:d962:9ffe:7c38])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c743a938aebsm5863459a12.17.2026.03.22.10.13.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 10:13:17 -0700 (PDT)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lb49iP6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240C5C19424;
+	Sun, 22 Mar 2026 19:55:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774209312;
+	bh=oiuD5gPKofQwelfeyLjsbDwstiTz8Vz2m+tHMd/MpGI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=lb49iP6EacwSV9Fj6STJRdno/ZuQfZNdrbJwut/WfD/NAk2p+vwfdgfvziVP6WlXd
+	 8UeXuiUIaEJtWQBqZqLuA8Ur5i8msDftDt0IfW7Ct2wiNfhRLAelV0tuadge43m/Hf
+	 UW45Q/v4Uo5726zl7W/rc4ZCKOD4KBEuGVwk7N9eBYN12WzMpY8oupg8EWttHqCt2p
+	 Ie29Tx2trZEbvTrfHbTWEeKcEhrbBps08hSw5xPXayWNVRhIl/6WZ7OW81IuGNHc7+
+	 hmYqHNtRkw+WHqnZlnwydiLLrIfA1ITEf8ChzmXGt0fiqBb9xo8PspALFn2YlG5Hk+
+	 GRlL/HyFygmZA==
+Date: Sun, 22 Mar 2026 09:55:11 -1000
+Message-ID: <c012fdc44ce9c0ea7c2b3bf291338f10@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>,
+ sched-ext@lists.linux.dev,
+ David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
 Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	yphbchou0911@gmail.com
-Subject: [PATCH sched_ext/for-7.0-fixes] sched_ext: Fix invalid kobj cast in scx_uevent()
-Date: Mon, 23 Mar 2026 01:13:06 +0800
-Message-ID: <20260322171309.2640439-1-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
+ Chia-Ping Tsai <chia7712@gmail.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.0-fixes] sched_ext: Fix invalid kobj
+ cast in scx_uevent()
+In-Reply-To: <20260322171309.2640439-1-yphbchou0911@gmail.com>
+References: <20260322171309.2640439-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-When the sched_ext kset is first registered, kset_register() emits a
-KOBJ_ADD uevent for the kset's own kobject, which is routed to
-scx_uevent().
+Hello,
 
-scx_uevent() unconditionally uses container_of() to cast the incoming
-kobject to struct scx_sched, producing a wild pointer when the kobject
-belongs to the kset itself rather than a scheduler instance. Accessing
-sch->ops.name through this pointer causes a KASAN slab-out-of-bounds
-read:
+The fix itself looks correct but could you please update a few things for v2?
 
-  BUG: KASAN: slab-out-of-bounds in string+0x3b6/0x4c0
-  Read of size 1 at addr ffff888004d04348 by task scx_enable_help/748
+- The patch description says that kset_register() of the sched_ext kset
+  itself triggers this during init. That's not actually the case -
+  kset_create_and_add() sets kobj.kset = NULL on the kset's own kobject,
+  so kobject_uevent_env() can't find a kset and the uevent is silently
+  dropped.
 
-  Call Trace:
-   string+0x3b6/0x4c0
-   vsnprintf+0x3ec/0x1550
-   add_uevent_var+0x160/0x3a0
-   scx_uevent+0x22/0x30
-   kobject_uevent_env+0x5dc/0x1730
-   kset_register+0x192/0x280
-   scx_alloc_and_add_sched+0x130d/0x1c60
-   ...
+  The actual trigger is the sub-scheduler kset created at
+  scx_alloc_and_add_sched() -> kset_create_and_add("sub", NULL,
+  &sch->kobj). That sub-kset's kobject has sch->kobj as its parent, and
+  sch->kobj.kset = scx_kset, so the uevent walk finds scx_kset and calls
+  scx_uevent() with the sub-kset's kobject which isn't a struct scx_sched.
 
-Fix this by checking the kobject's ktype against scx_ktype before
-performing the cast, and returning 0 for non-matching kobjects.
+  Please update the description to reflect this.
 
-Fixes: 494eaf465197 ("sched_ext: Replace naked scx_root dereferences in kobject callbacks")
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
-Link to full log:
-- https://gist.github.com/EricccTaiwan/9d3a2bfa11326fe134cec9f46125094c
+- Move the variable declaration to the top of the function. There's no
+  functional difference but the current placement looks messy - just put
+  the ktype check between the declaration and the use.
 
- kernel/sched/ext.c | 3 +++
- 1 file changed, 3 insertions(+)
+- Add a comment explaining why the check is needed - that scx_uevent()
+  can be reached by both scx_sched kobjects (scx_ktype) and sub-scheduler
+  kset kobjects (kset_ktype) through the parent chain walk, and we need to
+  filter out the latter.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 94548ee9ad85..9164a2348e39 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4834,6 +4834,9 @@ static const struct kobj_type scx_ktype = {
- 
- static int scx_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
- {
-+	if (kobj->ktype != &scx_ktype)
-+		return 0;
-+
- 	const struct scx_sched *sch = container_of(kobj, struct scx_sched, kobj);
- 
- 	return add_uevent_var(env, "SCXOPS=%s", sch->ops.name);
--- 
-2.48.1
+Thanks.
 
+--
+tejun
