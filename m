@@ -1,125 +1,160 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB35B2D7DDB
-	for <sched-ext@lists.linux.dev>; Mon, 23 Mar 2026 11:12:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3BE390CA5
+	for <sched-ext@lists.linux.dev>; Mon, 23 Mar 2026 12:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774264330; cv=none; b=Ciu0foH19pfVh1DAwREYeMUA98YSMnbCy5IOmBUrVwML3txvmTFRh1eURi9edSZnk8Bzz1yhd/Zp4AMJJtQUa7w9fnzZuXVvzNvbIldCi1Sji+wA2uHBrAgexQ9BAQARV/VbttbXjCcyy/pLmCOUFTGyufYJMfNzVcOR2mwL+FE=
+	t=1774269971; cv=none; b=fC76auY6cHx2d+5AcNdcza8n4chVE5fpCQUs96i+mmGYl7Iq5HgOjHBjw0RcobEBHGqolftz/1MyeVDsP64WZ7GoTMVx/43t3m1l80PdXe3naTOjsE5WgluZ/j19zsD0VFZAHOdHscQFauocY3jEihiUbV4/LGXu84z7g+Q6OkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774264330; c=relaxed/simple;
-	bh=GgZbs/hJJ9+C0EI6g6bfoVfhcQXz8do37FgrICco6B0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M7Qs0XjpU+qcrlEb/5F49srNfwHUgqC5z5IiSwesDOpRCz+EJxC+qN+1W/irPnf5BJIubQ+G89LwHKsv+tHbCTIprE3WCBQo6NqICgUrGHEbwc1S6YZbg3RkaaEnuQnSyiH6/qDwznSXTOxyhOWVMcsk2gCTyLojQfAoSvBaUY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NctN2eog; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1774269971; c=relaxed/simple;
+	bh=N+ypMCjm7s8T4QZhxg7opdPFA27uFmz/IiG49aSKt1o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kpN/hNnG1KQTb7nzPMgNR5DtcDBNm0/Pwa6mAf5Vy0qnQb6M7k3oC4ggT8mewmBGjNo+D877Pohx0HAPuGpK17xtCcGiMDUrkMsGZAsoKHNUKrXFf5fdeuiHmGoVlwqQ2QGydhQE+OjqIkKEJOEfTSCH4+KCgjIaMNPPbZARou8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CrtZoVQq; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NctN2eog"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c742882d2a4so1119388a12.0
-        for <sched-ext@lists.linux.dev>; Mon, 23 Mar 2026 04:12:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CrtZoVQq"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-82c20b9fb15so1089151b3a.3
+        for <sched-ext@lists.linux.dev>; Mon, 23 Mar 2026 05:46:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774264328; x=1774869128; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ubmWKc0BiM6q6L0w/SF40L8FLc9qxmV9T43nLBakcJ4=;
-        b=NctN2eog2kxrT/wzzuwZ9xxgETb+lJu8355S3Olzel79VxIg9654+WH8CgvxlzaiWt
-         HpJDglWoMPIf2S6EdhNKCGfPD1/uI/pymmWcxGVxMfEZD3gRya6hEFNBow0jwSn5inJg
-         2dTw2fh0+wYzKiU9VDVMf6qCYOteKHz3cnuwA6AjA6tNlXOxDcIc15jEM3S/1BxB9FTu
-         /XC6nL5dWmZZwjEeMFrkNk6XJCDMZ0qSNHOYEStjjXwvvHWLT3w0s/tse5AkS9RKveSB
-         K3a6CwbLMV8t0lYb2hLBHZiYZr7QZU7fTPfG+yXMqpJ0OozZiJ4BRU/ey6wv+jjt2hGu
-         MzPQ==
+        d=gmail.com; s=20230601; t=1774269970; x=1774874770; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bOLUHUlwNVbwlPqt1T8nZLMEyPfyV5o5YQnecy4Tgrc=;
+        b=CrtZoVQql8I+2ZxM+T/bcirmuVOtLLvt9I+8Z8oYio+Q3Fn8JxYL0dgA9J92fepguo
+         xdZTItgtw0dOAUF+C3GSgI+A6D08faSorzTOkF/YNRAw9bli4dgQNR+cFhfHkRPuXyMK
+         TwaTOKWz0KIerMGbJTs/BrfQNEOPCTQ7y5rvtHH93uGEBgCNE4csLNMTKILC9m5yUm5E
+         h4aQmqwWuRNmS9xN59O1Rw8F/+/ll6cj7Uvv9FBn0yWgyu+BgBan9qdimXZcmzGim4uO
+         6NTSpjN8c0lx8ZlkOlKaIMVTgotbGxUj4oet/i0MNCnGdu7BHztkWU+OGETvgELGAYq4
+         tepA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774264328; x=1774869128;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ubmWKc0BiM6q6L0w/SF40L8FLc9qxmV9T43nLBakcJ4=;
-        b=kpD9reOPq6+kicFKXGWBcEWm69FnO3qCJH1Uy/ZZj7kl7oSDt1mo0b9y5nL1wxzXWG
-         HMpb5qDYJWKyDz0HfWoSvFLlaBOVbO/5ivn6qoxrXxr+wZIu1RSHmaV1eZ/o4MEbTKcP
-         BuKwhiuiME43FybG09vxaqr3NHSHOak8UMOhTQPWbv+k2WylyXMGJgX28iEEpXtRb506
-         pk2jBkHwViatZFMYR/YZSMi6SSuGirWXrC6aNCT3RNeLDJWIamfXmekLzEU/22qDzyad
-         z/MWaGLYRNh41D31S/VYDmhgtXEeD1o1et0dXv+O6tEg5oYldUt+aPZSTUz6L0dYSVm9
-         b7LA==
-X-Gm-Message-State: AOJu0Yw5IMaMrEQPA0lfrHgqO0D3m0HnOzThIF9G73CuCfB9xs09JgMR
-	1qy7Aoer4kyRsDOcvenG6IeALOj9YdpP9jdmYMCIsp3dGfxKPmGz521lhyCFsw==
-X-Gm-Gg: ATEYQzxjUP/gh0g1Rw351WP+RH/qGTaO0cgJLeNsjfgGtV1Ti11roZyFDamDbl00yX4
-	x7UJgLKHCfyLHET7qiwx2LpoU4+CCA/fR6++SoWoGJjjSuFY46RjDpN+NuJZWpjWFGRkxEdK+k9
-	XOtLN7l6roifd1NUAAMzoUS6blf+TbiIyWmR0UI14uKNWNc/hlvGPPqhQB8Xf9O2DmihmQm+qRf
-	NylGkzE5oD/XK+Mj81FgWJ1E4H9jn3ZaV/k7KlhRT8QzjZHt1gU0AsFl+gLyuIIAOna9cuic+7B
-	tzL52td9ZWqilrqyiBHo3o+kjW8maNq246bF8N4FZ8dkvO7OuS8KraaeI77L4foWeNS+rHKhCG1
-	sFcX59Csw8rHd7Yzp5SdsAQcWaPT0JymNxyDhfIw7GBt1spn9pPGfxfDkaELBzK1txUe2CWAor4
-	6A+PqDmoPB1PbkL0mpWfxBR5YSjF4+q+5UW5bI72jlR4krtS4iAGyeHobyFpc8OBKfGVNgPkqNW
-	ec=
-X-Received: by 2002:a05:6a20:6a0c:b0:398:7853:70ea with SMTP id adf61e73a8af0-39bce9f1048mr10805228637.15.1774264328089;
-        Mon, 23 Mar 2026 04:12:08 -0700 (PDT)
-Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c74665ca206sm8559228a12.18.2026.03.23.04.12.05
+        d=1e100.net; s=20251104; t=1774269970; x=1774874770;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bOLUHUlwNVbwlPqt1T8nZLMEyPfyV5o5YQnecy4Tgrc=;
+        b=QsHmn3JO+Q8K5TYYWmQNPJi5yRvM5jl2DsSp5KduCDhfing/MRMsv2HwgM1z8ryw95
+         RyzdM9Kjbne/28bPenDhunDiqFU8OqTWL2gNfe5+y/llpq6naCb68zTyuNvZ1Att7+M8
+         4TgNCIZvV2rBIbSS+lO65X/oAzpTh5+pqbgoAIvpQ47DGg3uLHc+95g01zb/LUqlC1YY
+         +wZY7Uo5373mmBAIEH1XDQcNbkPf4BVk2mf/iG8eIXPThrEJPMFBAZ+5JUaH0Ytj3pZu
+         ojs56BM/dIEZU1yb4JLyRMfMJYZ0thJ4WHccHEQbcqQlSgIFc0ZIiPpy01j4diLEumpd
+         L6HQ==
+X-Gm-Message-State: AOJu0YwAb959cIMm45HyrWEHRJvNUw/1hWiss3WvLjalR0eiBGgg0UnH
+	nB7cQQeeZ3zh+JoR8rFd5aCMl4vMmIgKtywxQt95kzb9maC1ZwnBdycd
+X-Gm-Gg: ATEYQzyaVAbJDj+E/NgMb/ubV959OT0Zzn3RqEFOZZo2rhs+RFKQWvGdXQuP6OVaTQU
+	RVxp8OCnQ5gBVFFzYGrrTXDFnf3vchJ04PAr8yrAu6tIB1IRuQo7tjKkiA6mJdkboRqoprI5LTh
+	3fjPrY8gb8NH1Fgn5bbnY7xK/Fd+qN8Bncy3BeabnThCgdvWfUK4lsP6P9AIONYHQZTqsL3NreJ
+	HDam0r6npOGhSNxlr40td2/bbADK8pJCe3cbP+8lopvd11+CLdvEqpMsDmzaFZbw1d8N/jLu4MJ
+	L3fXS2gjdzsNDe7U5G/BVIAlbZENAMDIvbGzrGpg5UhjDOl5vl1OLKA2+PCgxntOYbcPIWFagZY
+	wS+M0EXyOhlOpLXoczAwo3MIYN5NiC1K6GJ4jd2JcQZ+F1s+GyI2J/1sX9dwODtpdt4gxfV0OfG
+	+LAgLb4Aa1iVcxPD7/ohDfjYurjoKP2uw+28bSuMT/loDJCXAQ6UvDTE9YUEhMvzB/n0hwWtw=
+X-Received: by 2002:a05:6a00:2e97:b0:829:7a62:5f with SMTP id d2e1a72fcca58-82a8c219da5mr9527079b3a.9.1774269969800;
+        Mon, 23 Mar 2026 05:46:09 -0700 (PDT)
+Received: from eric-acer (36-225-109-46.dynamic-ip.hinet.net. [36.225.109.46])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b0409f409sm9306107b3a.31.2026.03.23.05.46.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 04:12:07 -0700 (PDT)
-From: zhidao su <soolaugust@gmail.com>
-X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
-To: sched-ext@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org,
-	tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	peterz@infradead.org,
-	mingo@redhat.com,
-	zhidao su <suzhidao@xiaomi.com>
-Subject: [PATCH] sched_ext: Use READ_ONCE() for bypass_depth in scx_bypass()
-Date: Mon, 23 Mar 2026 19:12:02 +0800
-Message-ID: <20260323111202.3960280-1-suzhidao@xiaomi.com>
-X-Mailer: git-send-email 2.43.0
+        Mon, 23 Mar 2026 05:46:09 -0700 (PDT)
+Date: Mon, 23 Mar 2026 20:46:05 +0800
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH sched_ext/for-7.1] tools/sched_ext: Add __COMPAT wrapper
+ for scx_bpf_sub_dispatch()
+Message-ID: <ibfxe4h3f2b377oviswom7cqjerij4d2rqjxl5utj4gsehkfrq@lwk2gwqsshap>
+References: <20260322144433.1649092-1-yphbchou0911@gmail.com>
+ <acDxAON9TXIZDems@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acDxAON9TXIZDems@gpd4>
 
-In scx_bypass(), pos->bypass_depth is read under scx_sched_lock to
-update per-cpu BYPASSING flags:
+On Mon, Mar 23, 2026 at 08:51:28AM +0100, Andrea Righi wrote:
+> Hi Cheng-Yang,
+> 
+> On Sun, Mar 22, 2026 at 10:44:23PM +0800, Cheng-Yang Chou wrote:
+> > Add __COMPAT_scx_bpf_sub_dispatch() to compat.bpf.h so that schedulers
+> > using sub-sched dispatch can build and run on older kernels that lack the
+> > kfunc. Guard the call with CONFIG_EXT_SUB_SCHED and bpf_ksym_exists(),
+> > falling back to false when unavailable.
+> > 
+> > Update scx_qmap to use the new wrapper instead of calling
+> > scx_bpf_sub_dispatch() directly.
+> > 
+> > Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+> > ---
+> >  tools/sched_ext/include/scx/compat.bpf.h | 13 +++++++++++++
+> >  tools/sched_ext/scx_qmap.bpf.c           |  2 +-
+> >  2 files changed, 14 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
+> > index 83b3425e63b2..f24b9a1c75ad 100644
+> > --- a/tools/sched_ext/include/scx/compat.bpf.h
+> > +++ b/tools/sched_ext/include/scx/compat.bpf.h
+> > @@ -108,6 +108,19 @@ static inline struct task_struct *__COMPAT_scx_bpf_dsq_peek(u64 dsq_id)
+> >  	return p;
+> >  }
+> >  
+> > +/*
+> > + * v7.1: scx_bpf_sub_dispatch() for sub-sched dispatch. Preserve until we drop
+> > + * the compat layer for older kernels that lack the kfunc.
+> > + */
+> > +static inline bool __COMPAT_scx_bpf_sub_dispatch(u64 cgroup_id)
+> > +{
+> > +#ifdef CONFIG_EXT_SUB_SCHED
+> > +	if (bpf_ksym_exists(scx_bpf_sub_dispatch))
+> > +		return scx_bpf_sub_dispatch(cgroup_id);
+> > +#endif
+> 
+> Isn't bpf_ksym_exists() enough? The CONFIG_EXT_SUB_SCHED guard takes effect
+> only when we build an scx scheduler using __COMPAT_scx_bpf_sub_dispatch(),
+> instead we want to build the scheduler anywhere and then the BPF verifier
+> should evaluate the availability of scx_bpf_sub_dispatch().
+> 
+> Then the symbol will be resolved by this (from include/scx/common.bpf.h):
+> 
+>  bool scx_bpf_sub_dispatch(u64 cgroup_id) __ksym __weak;
+> 
+> So, IIUC the #ifdef CONFIG_EXT_SUB_SCHED guard is not really needed here.
 
-  raw_spin_lock(&scx_sched_lock);
-  scx_for_each_descendant_pre(pos, sch) {
-      if (pos->bypass_depth)  /* bare read */
+Indeed, this CONFIG_EXT_SUB_SCHED is redundant. 
+Thanks for the explanation!
 
-However, bypass_depth is written by inc_bypass_depth() and
-dec_bypass_depth() under scx_bypass_lock (a different lock):
+> 
+> Thanks,
+> -Andrea
+> 
+> > +	return false;
+> > +}
+> > +
+> >  /**
+> >   * __COMPAT_is_enq_cpu_selected - Test if SCX_ENQ_CPU_SELECTED is on
+> >   * in a compatible way. We will preserve this __COMPAT helper until v6.16.
+> > diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+> > index f3587fb709c9..dd44d8db0341 100644
+> > --- a/tools/sched_ext/scx_qmap.bpf.c
+> > +++ b/tools/sched_ext/scx_qmap.bpf.c
+> > @@ -490,7 +490,7 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct task_struct *prev)
+> >  
+> >  	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
+> >  		if (sub_sched_cgroup_ids[i] &&
+> > -		    scx_bpf_sub_dispatch(sub_sched_cgroup_ids[i]))
+> > +		    __COMPAT_scx_bpf_sub_dispatch(sub_sched_cgroup_ids[i]))
+> >  			return;
+> >  	}
+> >  
+> > -- 
+> > 2.48.1
+> > 
 
-  lockdep_assert_held(&scx_bypass_lock);
-  WRITE_ONCE(sch->bypass_depth, sch->bypass_depth + 1);
-
-The read side here holds scx_sched_lock, not scx_bypass_lock, so the
-two sides are protected by different locks, constituting a lockless
-concurrent access. All other read sites consistently use READ_ONCE():
-
-  L1237: if (unlikely(READ_ONCE(sch->bypass_depth)))
-  L4083: while (likely(!READ_ONCE(sch->bypass_depth)))
-
-Add the missing READ_ONCE() for consistency with the rest of the code
-and to make the concurrency intent explicit to KCSAN.
-
-Signed-off-by: zhidao su <suzhidao@xiaomi.com>
----
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 72a07eb050a3..2654690e3661 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5343,7 +5343,7 @@ static void scx_bypass(struct scx_sched *sch, bool bypass)
- 		scx_for_each_descendant_pre(pos, sch) {
- 			struct scx_sched_pcpu *pcpu = per_cpu_ptr(pos->pcpu, cpu);
- 
--			if (pos->bypass_depth)
-+			if (READ_ONCE(pos->bypass_depth))
- 				pcpu->flags |= SCX_SCHED_PCPU_BYPASSING;
- 			else
- 				pcpu->flags &= ~SCX_SCHED_PCPU_BYPASSING;
 -- 
-2.43.0
-
+Thanks,
+Cheng-Yang
