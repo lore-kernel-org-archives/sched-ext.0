@@ -1,80 +1,73 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828423A450C
-	for <sched-ext@lists.linux.dev>; Tue, 24 Mar 2026 18:47:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E35199E89
+	for <sched-ext@lists.linux.dev>; Tue, 24 Mar 2026 19:14:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774378045; cv=none; b=nM5Iy/D5VzgidXCv6Bqdc2TVZ/OggJsPLUSYh0PUz7Hd5tJKf9eAVEsK6yK+yXNMUrls7zMoJ3Fk7metLnLcphWWPX4bRVOAwOaioZ8FbLlchhV/WGxQV10RkdAn4680YhxUJyv7Mm5H73xrvvvXnXqDCry2B2Du7mfBdr+cZ+0=
+	t=1774379690; cv=none; b=Do9OM6YyWtOW909wueGJw3BsgsLMd/8SZDSRI3Z7HToxhkPbrv1tWm+cD2USnSDfIDvlOHfKQN1Y5QHiUMSFnE6T5VgkZWvqxLsQNhlXr2olVn6tklPWYCNbryrZ7mjgek50eeAFI0183I5FRw5mEZXKyxVb+2m//bXrulZCwFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774378045; c=relaxed/simple;
-	bh=53FtnsCuM4e6/5F3bf619l1FA5IlHw/iDpC6DaQWCI4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWotogluV2JbNUyJrH0Adypafngj+FLWaNHxxx+ClJFM2G1yaskf+aJKjhyBxBthDaQbfB6ef9BSK/1oKFgFezKp2tUxmyxZSELzT3DhLcKHZF12EfyBUKmtOdmASZan/2efuFAL57jqZJuCRs4UTq5y/mNSMaOpbW8ZqdF1WXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R54miI7k; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1774379690; c=relaxed/simple;
+	bh=/WHMNXqnLU2Zm98MLAT4ZJC5oH6pjuac9UnYEsm/eTY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KFHARG0kTc8DdQEl6liLmZ42iql3OMLdKYbMyYq/z1C/DsnCFOIcNQ+HRE3FFcaIKYIOfT5aIpQZyg5fwDwUorkrR4iTjyM5+MoSbygkp8+gnPPULBxlQWtYSgpDMyeUF9y5b+ZvMJFtR5ma5GimsK4Lx8X4JOzFWTjYIBC+OPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ojc/k2IQ; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R54miI7k"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ab232cc803so18914415ad.3
-        for <sched-ext@lists.linux.dev>; Tue, 24 Mar 2026 11:47:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ojc/k2IQ"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2b0abdde280so7688515ad.1
+        for <sched-ext@lists.linux.dev>; Tue, 24 Mar 2026 12:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774378044; x=1774982844; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+EEDLAzRE9U1qCNYBdZlpQSbdmAzEh2YrqmR/0ul8nw=;
-        b=R54miI7kTfLNAYzYgm2lj5R3dftLlvuU5nI6qrBstl52XQijuIJFfCRGZxTrujH+0P
-         bJSSeODuBqQy4SoRtBA+ceCTsYkmuXclFEMWmICH4DrNknnUTND7jsYmzFG52elj1yD0
-         4bCpmAFaWLqL2YY2CBngxizZ6RsIHDU+9+pSscbVgKRMnJL2mhMlNCDn1XgTSE3zNU4H
-         ibmJpZWb3a4lDUPPTu+uXa3NEmg1HxgRfI4DnACPnixVPYYlNmFa8BrDwcYoV2a7dLXv
-         odLPBn6u9jfg/U++QurwkgVoBSeY8FOjvGVWOFNA4Cl9Oo1ZwXmA9fMfO69DrvsdkGVf
-         ae6g==
+        d=gmail.com; s=20251104; t=1774379688; x=1774984488; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GavoV+GO2/EQitG0ZyZK5J9A5XlP+IlO16T2VYVdAg0=;
+        b=Ojc/k2IQHigf/IgKdW6+F7OHNk6P+Ip3S41zbLFBQEoxO04ujU+nyYlC61Rmf1a1Mq
+         yQaHvufbgteao4J5KRuQ8DbSIuxG5Fh+DaD56cCz+I+ZlM2Na/JxGO+UFEQ4EOKl2YWX
+         gAbQFwH3q9N/3aZA9e4kfj0r3fEw8uoV2le4NTT3tV0qoI+zDfrRZjU9+stkLHF4ySrs
+         cLVipmWlJ/xVbvvKUt4afVQOIaWDqufY3AjDkC8nO79R7tIUlEaGruEGW4bCCHIKSHfn
+         B9DE2TIKotOpGD7QvVe7JPrtJYm2bn0e4f0AN7lwu8zutJ22FTRfjiYvWNEGiGT2oUQ+
+         EEdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774378044; x=1774982844;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+EEDLAzRE9U1qCNYBdZlpQSbdmAzEh2YrqmR/0ul8nw=;
-        b=RuIHpsa0RAIK0X19sdewMOlVdQUy/RYYwMBk9fpuP5sidhg6rv2J6x86NLG1MRmqlm
-         1nJFCyfsuLk5xyE9IPD3phUt7KleA+p3IUZPI8ryPxOSOoYHiWu8b5dNHGIlpIr70OL+
-         2L9G7EeM6uLOUiNaJV1uMkYr1XAUyfMIok+mOqUOhzV0kMCCSUusFK6YEG1i/FBOE8x3
-         UIJ/2eTkWSQNNNVLXCu0GVWAg0zar2tqNAlW5Ua6xVFg1oF1a/jN6Epy9QKP6I5ZKgOi
-         DLJx/oVcDFykJpA/IJSRjNycTCxVBZK68sKouL70h7RuFr7MMKoh1o4YhlsR8sKZoBwP
-         KuFw==
-X-Forwarded-Encrypted: i=1; AJvYcCUQLDFpjRvRD4cluFr/BM0TqsmVjy2z6Unq/1w+MtGDG+2GLd8Jki01hdx38nKFqR4debQi3NkvaDM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxqYO3yphwrbMZCZG4a+TvUF1z211kIKLyAXOHhaDI8qIOIr0I+
-	sWeEHpTKIn5m0oh1ewwYdmCNpD7k1zIPU+MhxANY9ZSZVNcWDNK+W5uOkOqC9w==
-X-Gm-Gg: ATEYQzyIDC3oV+RXbPVlDZUEi7ZKY4sh1O1GYlAAqPwNoQPZ+Im35ov12o9n57XRRfS
-	nH0EQ6ea6N7f1uHW9dUdwtiXnu9QMfTQE+2sYu83nz3FXl5/AA/U/6vlIGDgb99ghVS7oVVGjTP
-	Mz7hS5qpOQy7DU6LBFuLOny5hcqNcLzsK9AzISnRWVIDl2lO6leIJAf8KW6dzy46BjT3Bwh2rrR
-	/8j0FJ9hU35XXesD39YEqGYKeYgKhdY7brTHWERT76vgO1nj5b6sli/18HzVnhW2DZiuI3ftHLJ
-	xggHzcxRUFhxrPPnUUpP28EUDn/vQnls39mE+UxlUFhMTCFfadObf8rjxlavw4mzEKZxk2IOcfV
-	8uS/DwijS8P4jtR2xSJX8Y7f6b8or/gzODgf8vS82mGYe378uBr8tNkFN1SxzzZg+zMrcG4uy2Q
-	KJHX26nA6lSjb6eyjwr/58Zu0c5tGaTaGM7mfGAPNboBJsnriConOvTjb3DiS6DrNRKXg18vgWH
-	BA=
-X-Received: by 2002:a17:902:f651:b0:2b0:6ce3:8f7 with SMTP id d9443c01a7336-2b0b0aead53mr6237685ad.43.1774378043889;
-        Tue, 24 Mar 2026 11:47:23 -0700 (PDT)
-Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0a9801748sm36732975ad.17.2026.03.24.11.47.21
+        d=1e100.net; s=20251104; t=1774379688; x=1774984488;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GavoV+GO2/EQitG0ZyZK5J9A5XlP+IlO16T2VYVdAg0=;
+        b=hEG8Pr2GRKfelBkfsdULseJ04uHr2fLfcytYz1014hroAEWCE1mm8Cq/vUOxEsNu5Y
+         i9jQESjb3gkxBSnJwTo6lYD9O1ezqY7n+ssXi+viDtXzFZp3qMP9ZbGDjdminKEROC3v
+         UnqjG+PHWQYMxcyRTiWgZl19C3A8vaUu8CEb+uh/3XEOxds7odgFG3AO8RDGve/sdY10
+         vZr1WW2elyNz3hsQxsgoKy3rbGp+8oMg3VslI8Wlwt9vKA0KVi9wcusszV2FGrYdiXCf
+         dkwr8EnzGX3B7JP06xyxoDUp1HFiUgetxUmB14ipAwp/xrEp2ey/I3jKP4+u4UfY7fVG
+         7A1A==
+X-Gm-Message-State: AOJu0YwCHs4JAAi7rc9s80F4UU6KpkX7EAh1COM/1UzbRR/3fSSwt5D4
+	mkY8r4RXB/OH6oL8+5sExMGeYXJtyvgEuG/RjB6zKdsCstKnJtYeRopMUQcTzg==
+X-Gm-Gg: ATEYQzykBBFBdKNc06hKl3aErVy/x8DO/2sL7oQvnNGj1wKsTCNs3QcDFn6VAMZuJm6
+	A0l0VHUJwiqA23kt/nGN9pOXxwxkMj/o0m0BzDhlIPigRtPbxALkK0qShaMpH2KUP/kTkf+e5Rv
+	mobam8fdcTJppQ9cC5gvaGCQSrEhr3pyHOmi7tR8SrdZ7Ihg2IHPzfTh31/AF1YD92lezmTF7He
+	ODC9KRZV/IDHmx0cFWQC4V3WJlBCT5Wy40Ka2lKsUrwwhE8HeRznD8iYsaQ54hGPizr4CTi0MO8
+	5plpzJkeaThmL1V0O/t9J3QoSacqDkM0ONQUcsQgPazRIGWPe36fyFTx3LxJHXaLHs/VNhsByxm
+	6LBUZymVTofM/VIhja++M7GZovxAPMWAEChRJSZjjGitB/IoHl5uO6whABooERHidCURk8Vtd2g
+	2jIX0+E/KVSllLet5kO6zi4iMCPZyi6WgYcU7P68I2zbwu9sB36bVAAstAmCHu/ls=
+X-Received: by 2002:a17:903:910:b0:2ae:ced7:4650 with SMTP id d9443c01a7336-2b0b0a7f74bmr7767065ad.24.1774379688315;
+        Tue, 24 Mar 2026 12:14:48 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:76ad:4f09:3dce:2442])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b08353e94asm151020485ad.25.2026.03.24.12.14.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 11:47:23 -0700 (PDT)
-From: zhidao su <soolaugust@gmail.com>
-X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
-To: linux-doc@vger.kernel.org
-Cc: corbet@lwn.net,
-	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	bpf@vger.kernel.org,
-	alexei.starovoitov@gmail.com,
-	tj@kernel.org,
-	zhidao su <suzhidao@xiaomi.com>
-Subject: [PATCH] docs: Raise minimum pahole version to 1.26 for KF_IMPLICIT_ARGS kfuncs
-Date: Wed, 25 Mar 2026 02:47:18 +0800
-Message-ID: <20260324184718.3747428-1-suzhidao@xiaomi.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <CAADnVQLbtuD=7mtGZFR25ULhjZ-3ifBpkyRcqu9jPSd2Mt3fBw@mail.gmail.com>
-References: <CAADnVQLbtuD=7mtGZFR25ULhjZ-3ifBpkyRcqu9jPSd2Mt3fBw@mail.gmail.com>
+        Tue, 24 Mar 2026 12:14:47 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com
+Subject: [PATCH] selftests/sched_ext: Skip rt_stall on older kernels and list skipped tests
+Date: Wed, 25 Mar 2026 03:14:04 +0800
+Message-ID: <20260324191433.1955484-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -83,57 +76,73 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since Linux 7.0, kfuncs annotated with KF_IMPLICIT_ARGS require pahole
-v1.26 or later.  Without it, such kfuncs will have incorrect BTF
-prototypes in vmlinux, causing BPF programs to fail to load with a
-"func_proto incompatible with vmlinux" error.  Many sched_ext kfuncs
-are affected (e.g. scx_bpf_create_dsq, scx_bpf_kick_cpu).
+rt_stall tests the ext DL server which was introduced in commit
+cd959a356205 ("sched_ext: Add a DL server for sched_ext tasks").
+On older kernels that lack this feature, the test calls ksft_exit_fail()
+internally which terminates the entire runner process, preventing
+subsequent tests from running.
 
-The root cause: scripts/Makefile.btf passes --btf_features=decl_tag_kfuncs
-to pahole only when pahole >= 1.26.  Without that flag, pahole emits no
-DECL_TAG BTF entries for __bpf_kfunc-annotated functions.  As a result,
-resolve_btfids/main.c::collect_kfuncs() finds no bpf_kfunc DECL_TAGs,
-short-circuits at line 1002, and btf2btf() never creates the _impl
-variants or strips the implicit 'aux' argument from the visible proto.
-The vmlinux BTF retains the 3-param prototype while BPF programs declare
-the 2-param version, triggering the mismatch.
+Add a guard in setup() that checks for the ext_server field in struct rq
+via __COMPAT_struct_has_field() and returns SCX_TEST_SKIP if not present.
 
-Raise the minimum version in the requirements table from 1.22 to 1.26
-and add a note explaining the failure mode, so users understand why
-their BPF programs fail on distributions shipping pahole v1.25 (e.g.
-Ubuntu 24.04 LTS).
+Also print the names of skipped tests in the results summary, mirroring
+the existing behavior for failed tests.
 
-Suggested-by: Jonathan Corbet <corbet@lwn.net>
-Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- Documentation/process/changes.rst | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/testing/selftests/sched_ext/rt_stall.c | 5 +++++
+ tools/testing/selftests/sched_ext/runner.c   | 8 +++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/process/changes.rst b/Documentation/process/changes.rst
-index 6b373e193548..02068d72a101 100644
---- a/Documentation/process/changes.rst
-+++ b/Documentation/process/changes.rst
-@@ -38,7 +38,7 @@ bash                   4.2              bash --version
- binutils               2.30             ld -v
- flex                   2.5.35           flex --version
- bison                  2.0              bison --version
--pahole                 1.22             pahole --version
-+pahole                 1.26             pahole --version
- util-linux             2.10o            mount --version
- kmod                   13               depmod -V
- e2fsprogs              1.41.4           e2fsck -V
-@@ -145,6 +145,11 @@ Since Linux 5.2, if CONFIG_DEBUG_INFO_BTF is selected, the build system
- generates BTF (BPF Type Format) from DWARF in vmlinux, a bit later from kernel
- modules as well.  This requires pahole v1.22 or later.
+diff --git a/tools/testing/selftests/sched_ext/rt_stall.c b/tools/testing/selftests/sched_ext/rt_stall.c
+index 81ea9b4883e5..a5041fc2e44f 100644
+--- a/tools/testing/selftests/sched_ext/rt_stall.c
++++ b/tools/testing/selftests/sched_ext/rt_stall.c
+@@ -119,6 +119,11 @@ static enum scx_test_status setup(void **ctx)
+ {
+ 	struct rt_stall *skel;
  
-+Since Linux 7.0, kfuncs annotated with KF_IMPLICIT_ARGS require pahole v1.26
-+or later.  Without it, such kfuncs will have incorrect BTF prototypes in
-+vmlinux, causing BPF programs to fail to load with a "func_proto incompatible
-+with vmlinux" error.  Many sched_ext kfuncs are affected.
++	if (!__COMPAT_struct_has_field("rq", "ext_server")) {
++		fprintf(stderr, "SKIP: ext DL server not supported\n");
++		return SCX_TEST_SKIP;
++	}
 +
- It is found in the 'dwarves' or 'pahole' distro packages or from
- https://fedorapeople.org/~acme/dwarves/.
- 
+ 	skel = rt_stall__open();
+ 	SCX_FAIL_IF(!skel, "Failed to open");
+ 	SCX_ENUM_INIT(skel);
+diff --git a/tools/testing/selftests/sched_ext/runner.c b/tools/testing/selftests/sched_ext/runner.c
+index 4c68efa1512a..d84f71eee049 100644
+--- a/tools/testing/selftests/sched_ext/runner.c
++++ b/tools/testing/selftests/sched_ext/runner.c
+@@ -134,6 +134,7 @@ int main(int argc, char **argv)
+ {
+ 	const char *filter = NULL;
+ 	const char *failed_tests[MAX_SCX_TESTS];
++	const char *skipped_tests[MAX_SCX_TESTS];
+ 	unsigned testnum = 0, i;
+ 	unsigned passed = 0, skipped = 0, failed = 0;
+ 	int opt;
+@@ -199,7 +200,7 @@ int main(int argc, char **argv)
+ 			passed++;
+ 			break;
+ 		case SCX_TEST_SKIP:
+-			skipped++;
++			skipped_tests[skipped++] = test->name;
+ 			break;
+ 		case SCX_TEST_FAIL:
+ 			failed_tests[failed++] = test->name;
+@@ -211,6 +212,11 @@ int main(int argc, char **argv)
+ 	printf("PASSED:  %u\n", passed);
+ 	printf("SKIPPED: %u\n", skipped);
+ 	printf("FAILED:  %u\n", failed);
++	if (skipped > 0) {
++		printf("\nSkipped tests:\n");
++		for (i = 0; i < skipped; i++)
++			printf("  - %s\n", skipped_tests[i]);
++	}
+ 	if (failed > 0) {
+ 		printf("\nFailed tests:\n");
+ 		for (i = 0; i < failed; i++)
 -- 
-2.43.0
+2.48.1
 
