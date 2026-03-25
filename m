@@ -1,178 +1,142 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011064.outbound.protection.outlook.com [52.101.52.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D31D3612FB
-	for <sched-ext@lists.linux.dev>; Wed, 25 Mar 2026 23:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.64
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774481092; cv=fail; b=T/SJMXeDFifuRQv8V046wtRmlWObKh5dJ3Kb1mxJVTuu1f0ZKWHD+TJP6uArksD0rzzK32tb1G+3gcMbtu2nDiyk4zexgRWL1nmmcwedTtrVckJ5G6q22hMNAE9BHvXXJ4h3fb1LjaVxknAfUsPytKnVrbt53f9uvdwpJomKzSg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774481092; c=relaxed/simple;
-	bh=qSYfUDbcxj7chPb0jzK7p57zIYTTDLYpvaJR0/WeueI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=so/SDfPWdFdmSgxn+70yLbZYNQcoBuwbI4Ni95YTfL8/+bocd5LonH2PXy+LLMSfpKIfkZgYhu2ustx0fHq3yRNDCidLwWKfjSxb4Isr+gOH8dWYxkeY2I1C2LPw/lnvJ2OlsKRtJZP1e+igi3zrqYvbwkV7xRX/2cl1S/p+qTc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hXQbAOw9; arc=fail smtp.client-ip=52.101.52.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D8F344021
+	for <sched-ext@lists.linux.dev>; Wed, 25 Mar 2026 23:43:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774482199; cv=none; b=DI/y8IL/CGieuoBQkcers0BIg6XC4bI9FvtehbyHpvwdJlknrVBy+ULyVcewEfPc3Js7FxdiSJZn+9QWCNbqt0viRlNcxnH2efSBbpSBiRhBwGTfiZRNFIsnn53BhXmkp6We/HEWQt1I+S4exCGbya8N74Jid1CW1JfF2yC85Qg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774482199; c=relaxed/simple;
+	bh=JVSJA95XSNzWk7VNTlsiBX5wLy3Z/V8V18VoSC6FQnE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bwX1yVXIuX4pQ9AB+vzU+3fnHQjCuBle19Gq0XVdJaXLchoOjfaPdTafWpTBazI+qjagK+1vvenrdirjE7vx4jS+k3iJ2iaRpiqmGONEAiH45qIFZtazFSpxjB676GLk3xfGj2Vpgr15UNrwNvziyiQ6q35WLIJ3lLWn3byzMbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddKtepYa; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hXQbAOw9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oomIgDL2aaWKaemHiYeckhOESHyIjnWnR0Yq622lq1iZ5kA7VySoo3Pz0MUcMaau9jXx1EXQzyh/N+vb7GBzA4ZxUP2t88Q0uAAYMX8aSaoJ2G9pxmrECmhnzlrT2tynT7CxPYj+Y7nQFlmYBULzYe+NEOEEevDEKTete23oBOAAgsJOh3qUdVPQE4j55kFzDsz9IeiEu33erVl5D4+stoYmhhNXrrvK0+aE2MtmK2yZKjxCGsQ5ZXMfObOdoQQAmGCof3dTZ3pm6sSisrR7JLM3/7tPgAkSulou24hJQgb+ZrjKd90xXpaixv8RDSk+yQ3e8sbABwHzR9xEhjxqVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vLg04AUQkrLGqW6vpzeRQRSvqq4tYnGK20tJ4enrcsI=;
- b=rp5S2e/u2TwCu0/RR2UbSlHpLmvwQgFykybceEAUCVH1GzsgZIIujN7sG36KtIg5NcpG63YkCZocJjWYsXHfo1jyaRwcNj/i/Pd1MUwgOnxpqCNv7hf/UteqwGqv5YaA1ZjbY9xP3e/SoTZdhd+btv9qIAJJ9BX2vLi2Eu0Gjv3N5n0oK4kwqi3eDtGvwdwgfQXcoZxeLOGFzCt0GXWh4viUOvWRPjW7lXegR2LC972ZHCXiaHoAGRS7ip/pIpGqKdRUbL25aJr4woexMF6fgH2vKZWLW83HupeiE6lmZy7d0yGAiFbYRj4rKv1pZREk6WVHIhraVD07rIWsVdlkqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vLg04AUQkrLGqW6vpzeRQRSvqq4tYnGK20tJ4enrcsI=;
- b=hXQbAOw9tV7keDXO6G83oYeOG5dMcmeGZF+sS3K++ufTztuJBf4Sq/eIVg6Bbunm4+tMxfsdaGt6gTIXxStTRGu684VKm/3x+XP83BxPk3LZi46kvhV12s0IUrCM67U6xqC7HnkkTMcY+nuLmmfcv6M5Rq5x6sLRb4FPW65esL0V/bEI9UWm66BoMuFfTh6mw25w024VBtbie7fh946ijnkydpLV3lhvzlfNxlm0CBUTWhiqNx97hhzsQSHZtEpqi8xaunr6ELsPNAePiQtR/yVWXNtpj/DATMvtKQZKy8iVH/tKkDgmKsjfurJLROUlY0MHxGh01M4vkWyTCAQ3OQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SJ5PPF4C62B9E70.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::991) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.6; Wed, 25 Mar
- 2026 23:24:43 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9745.019; Wed, 25 Mar 2026
- 23:24:43 +0000
-Date: Thu, 26 Mar 2026 00:24:34 +0100
-From: Andrea Righi <arighi@nvidia.com>
-To: Joseph Salisbury <joseph.salisbury@oracle.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: idle: use active idle domain in WAKE_SYNC
- check
-Message-ID: <acRusibUxjWj3WCW@gpd4>
-References: <20260324195836.949831-1-joseph.salisbury@oracle.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260324195836.949831-1-joseph.salisbury@oracle.com>
-X-ClientProxiedBy: MI1P293CA0017.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:3::13) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddKtepYa"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c2af7d09533so357155a12.1
+        for <sched-ext@lists.linux.dev>; Wed, 25 Mar 2026 16:43:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774482197; x=1775086997; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0e5DC58r0Jexfc/OwoQOpmCJSQcCUiUEwsRF0lcEEb4=;
+        b=ddKtepYaK/YX0dSdYHSe2KEYO8/8+hBjCUeP3ZuG/GHrAo41K3GVyuZv2ln5ufbQ9Z
+         LzZpP2+823ByhbiF8IPaeaPcc2jdHG8t6syNaEs1cf/gljVlzWqa2+DbjxSfqbJbauuG
+         A4YJGZjMyU3rDiTyhZajxCnpF09HcsPWMuqvgHbTseZVVmHFIhFjIPOv12WPGmhZQq+Q
+         rF6R8ISlp0g67CXCsaRnAtexLzR3+p3liR6xlSnb0kOXgFtbOV6+1Sfb8R0r3MUyD0j4
+         D+ehvFy89fuuzRFPZvkeuQtR3QMm6JOxjfBfypkBeyKHrivyarUweRx5U8hIQz/+rcRC
+         Bx9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774482197; x=1775086997;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0e5DC58r0Jexfc/OwoQOpmCJSQcCUiUEwsRF0lcEEb4=;
+        b=N1i0tnlxZ3e68m1J7Iz1YxrrpCnYU5YQTjvxpkmTEpfeyVEAAjZ9F1v8BCS+D/0g1x
+         4ygOgXj09dpZfPjKHkrmKfdODSo4Oa6zGgf09guiWVfAcvAQm40vwTagzpQbVsMb96ge
+         J9b75fD9vkTJWTtC5T9YLmOuawO+kK6nxuhrm6kzXH3yGw6lSoBWqq7NtmzLjfsmUC3G
+         W3c61dzV8ntaU/bH8J2hNPsbMbVKn3j7EFbaPpJPNKTkoWnhy5Kmp35BMWLF7Mvg/VsK
+         ZCg0VFhZluSlwNaZMp4Avqa8xE9Cmtc6d4yCWYNx2bQ54u11+QzPIBaxRx+E99iMI0qh
+         8q2g==
+X-Gm-Message-State: AOJu0Yxoc1pZL6dkQtEtpkgOmCnHdx6PXcJKZtKKjNWBb8/PLIQh4FL9
+	6R4clDW8FPhfB58g9VZTc2qV9hZCIemGzoYOPPk86QzO3tdo/EvMet7Tm9mxEA==
+X-Gm-Gg: ATEYQzwWvq8nHKxN7RddVUO7ABgxQ1r63ytPpzSnNTsgPpNJIjCysUuUm/j6L8Fa09j
+	vfcVOHCFVP9vfCQiK5oXziWrnjneml72NKE+hApGJxvyqJ3xYoNWCqiCu3Z79bmD1+eIePIN4qF
+	zHn6Ico/QqdkeDd3hrnetLDef4il1vh4njxXKIxuMfSTrehMEWRzxHNowJ4C/iFN999zyv6XzqX
+	wVyEZq9DBESDVo62Bcla1eaFywTYjI8cRdLns55L7MVd4tKdH/NQ0GGODLYbLHUcoJKasni79sd
+	M4Ne06UxRQAYh0Gw9p2r2C0ndgCak+6QwMBr9dDoah8+cQkCUjXBHaem1KiY8b5Wl1FBgt4i1Fc
+	nh7onFZ3QWoGwkNrzYOwYcXEImQNHNDqRH0Oukn/HyR1wpD9foz1acDLCleGiagydPG1ODuqKHU
+	VSCBgPolbOGeZciWonxM3fJFu6bS0Q4rL+T6DP4w+w6rd7ERhio21UYP9+Ab7tg4+dKF+ptAGWD
+	vw=
+X-Received: by 2002:a05:6a20:244d:b0:398:b16f:7045 with SMTP id adf61e73a8af0-39c4aceecd7mr5671802637.29.1774482197404;
+        Wed, 25 Mar 2026 16:43:17 -0700 (PDT)
+Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c767382bcecsm511785a12.13.2026.03.25.16.43.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 16:43:17 -0700 (PDT)
+From: zhidao su <soolaugust@gmail.com>
+X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
+To: sched-ext@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org,
+	tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	peterz@infradead.org,
+	mingo@redhat.com,
+	zhidao su <suzhidao@xiaomi.com>
+Subject: [PATCH] sched_ext: fix NULL deref in bpf_scx_unreg() due to ops->priv race
+Date: Thu, 26 Mar 2026 07:43:11 +0800
+Message-ID: <20260325234311.3614764-1-suzhidao@xiaomi.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ5PPF4C62B9E70:EE_
-X-MS-Office365-Filtering-Correlation-Id: 60855844-7226-412e-3077-08de8ac5b205
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|7416014|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	9oSOq/OxmHB15IhJW1aH89W6RtNGQW51xDmhLNRU4VqguA0YB8f0AZ8vLCl2hrxzVfFZur1Em+y1To/UF+eQ/h+F31uQMAwjodxcpHkPI+/T5m2m3J2EmeEiBZD7arWhTdhbmSYPNiZEj1Tq4bN8mhXN1xiYhPXtchkwuBUQWNmCvRBrboVRDLxfhNXnmCH6JTLz0+6gowZ9jJT380u2lauGS/w/QoeQBJ8IZue3IOgK8p42RAybZmNb5NzNuPdSqPyvkuH1t9HkU8HBqmgnjHdg4a1CahpilPi0tk0V1p3ZZb15/GrRXt53jLR85cNiGYrqqxyGrqRO+rRNAczkbRVHFqpMQr8IvzDcDpwU3UEDa090W+kFoojLvKA4wJna0PZZmFPA/cEL2txkZBf9p6fIsm0iYzmyV9avwCclWJzq6XUPHiWPrIuNWETGT6CIxepq66ULMIecS8gksgpC4/diAT0JwfxoNQNWAdOD5Gzw/yld8+DvumZnmPw1xKNazcdtigGpbhZZIXoa1V5M+nFB4gnvSYEUvJn34Y1MEQvOJVZUhgFrBIRqMlOiBbRaElbVt56SCNINoB9kFkVtDiTwnDZeTRsw+swS+jgLAl9JgFXzdy7w2b2t8xoLZlt5WcC+n+EbT+GL13/4Gjb5rSUTVWJXHOy4XQGYF0m0EigXw9nrJaP21plZWSGijbDqKthbDda744Uo+ylzvLFzIyNaJ7e/qUWaYZGWYNuOQ/xHLBAQMXy3D4d0S0wEzvlT
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?dHTA6CZsS3xurpDtAu+EbXoyhJju6tcYAuH9rabpaLZJtUO6L7SuBQPu8Vta?=
- =?us-ascii?Q?iToKU9TBUkYdomtiKzyjx0WakbxeMpmyYq7g8VeZHxsXPXCfAVikL88VsOsr?=
- =?us-ascii?Q?ZbEUqB4Dh4ZNlG8in/lSBZ+7prlOTPV719w3CbL9UdHj7w1JbF+zBBSam9Up?=
- =?us-ascii?Q?rZe+Lb4pEqSubEsLpTOh9HNp+rGf0NGxBmUZ/m4Xp+3gSvavfhfNMpNH32Ku?=
- =?us-ascii?Q?FZ+iBve25lDkuRtevZw1ySY3qFmKzsce4EJ6H68sy3ZU7WAgQiXbhMNYt9tz?=
- =?us-ascii?Q?Fag+UwrlA3tsgGkrrCknc7GAJZWFnEn16YsosnO3U6vER/bLmrr1UrfB8C4m?=
- =?us-ascii?Q?0Dl0gzyjdufdQR3oYwbQyo6+a8tJt0bYDdGMPO1FHCECJM+HRG0zY38ER3/t?=
- =?us-ascii?Q?17w70aSigyARSUQvIVIbwYqqUeQYSuY/LkdMAsx4/9lCZFKx6kibvrEu0i/J?=
- =?us-ascii?Q?/8fxcQGpYG27ocxBIU3KkU/lPpFBX1gDzeaVhDvwsl80oq0HeTJjrnwHZcSn?=
- =?us-ascii?Q?aO0RFzOaj5RIaEpAdqkvcEsX2hw//nsaW1Qf8y8lMtFzSB5tc/Kf44CzMBUC?=
- =?us-ascii?Q?RXdxtYIpvl4BO9VH7zUCC26cd3xKYWz7X8OxMJy9aAjfQVzgmdW456F1BiFv?=
- =?us-ascii?Q?cOSY9nppD3RKvSUbTpXNK1H9YcwkxlDl5cOckxQORgx9dbFX1AMZVdBsIxZk?=
- =?us-ascii?Q?gJ3KV4H38F4O9+BvEcIYrif5KJJ/vTASpRVGpmG3K1XVakkRP5PNSFGhq+jK?=
- =?us-ascii?Q?pSKHul9xSKgU4xFZ/3ihJb5gRiretZ8PQ+leWfJswB56eeiqVORI1S5Fo/SZ?=
- =?us-ascii?Q?LIFag7vVTGFW5Gxsaz0MfL8lYot6vqV4PKSdrT0GoXJF3ZV9m1koCgdpkK3y?=
- =?us-ascii?Q?/RRuFUNC91RmMeAcXNGaSQoOMH5d+yIgctCD7CBOPBTdRcqHLIpqychIaXz7?=
- =?us-ascii?Q?jYbzR9ASjq1/t7Yfc8uG/1Ib4hur6psIS0PsbP24AvK7/UWb9RyvyoGsd5yk?=
- =?us-ascii?Q?vLwZZU55TpL7PYkU6O7jY3vGjz43qP4H9YK93eokyOAiGTQImYuNoKz2RUlW?=
- =?us-ascii?Q?roMG5Xq0CHmad2T9Nt0yQnWaUI4Tw8h4I8G4zQZCCsJkdSahrh9u8TWPe1D+?=
- =?us-ascii?Q?U0SeynD8+7KA3mGTnJ4djP9wOouK7KJzoN1LM9rEiE/DsjuxJzRm6UZjATK8?=
- =?us-ascii?Q?rn12RsXU9Xzl5+P4hLCch82IBeOGQsZVn+gtn+ztSu8kMk2OASGZ2JZJU+up?=
- =?us-ascii?Q?oyEBxb0F92PwlcOC009ANUBBnnizWwSlWbRLIyUsqY2sWrz/ekXPSVZ4UcjF?=
- =?us-ascii?Q?RzTdjC3a57nj0JerRFWRRVlMml85fXzslbqdJai0jsq4JjQyUbD39uOGlF6y?=
- =?us-ascii?Q?c3KfT0wwENUktlNjigx2Kne+k2Zw3+m6D9N5rpEDs1MMvZTQyEwMTYU50Zq9?=
- =?us-ascii?Q?oubvQNxdH80mAN2zxrU7TSUwe6IUx7eA3tOdvtL+cP96o5iQm/RgH9uchfF3?=
- =?us-ascii?Q?T5glldjQ8nOBO7P1TW2SvHAnD0oZPxPlVSgkb/cx9JrH0VlBwq9GB2glUXGD?=
- =?us-ascii?Q?4r0kz+pBSfQ/1HTWIyZteVLpAm6Bl5nMilPX8Mkfrza77cYUbAv9PxsZFc9s?=
- =?us-ascii?Q?wQ9+Qsg1ateCLiBPhd9fUt+8Z6CxeZlN+SHgqE6TZxaN9RTYPPudss8QOyw/?=
- =?us-ascii?Q?KPUwgq+3ZpQ6YBIOJ92LfmmvjDbolJ2glWA7myXYPEX7+SEBWWr3kZivE6RF?=
- =?us-ascii?Q?MP+AdRyMcQ=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60855844-7226-412e-3077-08de8ac5b205
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2026 23:24:43.5018
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: juASllWTJcclDq0Eg0qM5oXRWrT4mdGZlPEHXvFyRGa4Rn/lF4u9P2entsxRXvG6PPB8jVKB0eTAsv7EvY0b8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF4C62B9E70
+Content-Transfer-Encoding: 8bit
 
-Hi Joe,
+The reload_loop selftest triggers a KASAN null-ptr-deref at
+scx_claim_exit+0x83 when two threads concurrently attach and
+destroy BPF schedulers using the same ops map.
 
-On Tue, Mar 24, 2026 at 03:58:36PM -0400, Joseph Salisbury wrote:
-> The WAKE_SYNC fast path checks whether there are idle CPUs before
-> biasing wakeups to the waker CPU.  After per-node idle masks were
-> introduced, this path started indexing idle_cpumask() with
-> cpu_to_node().
-> 
-> When per-node idle tracking is disabled, per-node masks are not kept in
-> sync and may be stale.  Reading them here can mis-detect system
-> utilization and lead to incorrect WAKE_SYNC wakeup placement.
-> 
-> Use scx_cpu_node_if_enabled() for the waker node lookup so this check
-> uses the global idle mask when per-node tracking is disabled and the
-> per-node mask only when that mode is enabled.
-> 
-> Fixes: 48849271e661 ("sched_ext: idle: Per-node idle cpumasks")
-> Cc: stable@vger.kernel.org # v6.15+
-> Assisted-by: Codex:GPT-5
-> Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
+The race occurs between bpf_scx_unreg() and a concurrent reg():
 
-This is good, but it's already fixed:
-https://lore.kernel.org/all/20260321105503.869337-1-yphbchou0911@gmail.com
+1. Thread A's bpf_scx_unreg() calls scx_disable() then
+   kthread_flush_work(), which blocks until disable completes
+   and transitions state back to SCX_DISABLED.
 
-You can probably use Tejun's branch to search for new issues/bugs:
+2. With state SCX_DISABLED, a concurrent reg() allocates a
+   new sch_B and sets ops->priv = sch_B under scx_enable_mutex.
 
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git
+3. Thread A's bpf_scx_unreg() then executes
+   RCU_INIT_POINTER(ops->priv, NULL), overwriting sch_B.
 
-Thanks,
--Andrea
+4. When Thread B's link is destroyed, bpf_scx_unreg() reads
+   ops->priv == NULL and passes it to scx_disable(), which
+   calls scx_claim_exit(NULL), crashing at NULL+0x310.
 
-> ---
->  kernel/sched/ext_idle.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-> index 8cfe0e9a7319..6b4520ed563d 100644
-> --- a/kernel/sched/ext_idle.c
-> +++ b/kernel/sched/ext_idle.c
-> @@ -543,7 +543,7 @@ s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
->  		 * piled up on it even if there is an idle core elsewhere on
->  		 * the system.
->  		 */
-> -		waker_node = cpu_to_node(cpu);
-> +		waker_node = scx_cpu_node_if_enabled(cpu);
->  		if (!(current->flags & PF_EXITING) &&
->  		    cpu_rq(cpu)->scx.local_dsq.nr == 0 &&
->  		    (!(flags & SCX_PICK_IDLE_IN_NODE) || (waker_node == node)) &&
-> -- 
-> 2.47.3
+Fix by adding a NULL guard for the case where ops->priv was
+never set, and by acquiring scx_enable_mutex before clearing
+ops->priv so that the check-and-clear is atomic with respect
+to reg() which also sets ops->priv under scx_enable_mutex.
+
+Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+---
+ kernel/sched/ext.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 551bfb99157d..01077cc2eb62 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -7372,9 +7372,22 @@ static void bpf_scx_unreg(void *kdata, struct bpf_link *link)
+ 	struct sched_ext_ops *ops = kdata;
+ 	struct scx_sched *sch = rcu_dereference_protected(ops->priv, true);
+ 
++	if (!sch)
++		return;
++
+ 	scx_disable(sch, SCX_EXIT_UNREG);
+ 	kthread_flush_work(&sch->disable_work);
+-	RCU_INIT_POINTER(ops->priv, NULL);
++
++	/*
++	 * A concurrent reg() may have already installed a new scheduler into
++	 * ops->priv by the time disable completes. Clear ops->priv only if it
++	 * still holds our sch.
++	 */
++	mutex_lock(&scx_enable_mutex);
++	if (rcu_access_pointer(ops->priv) == sch)
++		RCU_INIT_POINTER(ops->priv, NULL);
++	mutex_unlock(&scx_enable_mutex);
++
+ 	kobject_put(&sch->kobj);
+ }
+ 
+-- 
+2.43.0
+
