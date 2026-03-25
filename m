@@ -1,50 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-189.mta1.migadu.com (out-189.mta1.migadu.com [95.215.58.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3576C34C808;
-	Tue, 24 Mar 2026 20:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C2C17BA2
+	for <sched-ext@lists.linux.dev>; Wed, 25 Mar 2026 03:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774384641; cv=none; b=ayUlxvgRrFjh0WgkREVjphrqJo/qodNq6aKlljx5BwGh9KCCfvC3/3ini2YCc0gLMawn8bz+FgJrfr1HgzHw0lO+g2L918CiYVlF9nLSHL/PZyVwlKXigr9JvG2eby/WfaJLL4sM8Xj4hce3TqYPPrvqsx8gcTm/sR1b4cYx2po=
+	t=1774408317; cv=none; b=LgzlXLLHL2Xfk0DSWFGB4kgh+9A2Lp++njbLSOcTuN5aBv8zrW+SA9dzfAvFqSveD0qiaVGJuQ6KE7wGqUn/7bj855XilIDuS0V9v+0+MukOJgZKETTMpXDO+g11y+WDanQjv/zupWZySqmhUM8kIc7a0skLSYixlpRN+rCPnO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774384641; c=relaxed/simple;
-	bh=/6Uj9XwUoAPU0BcQZVOTdOUSFBimlsKmIkp3D+XTOGA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=lIRVkGBqPBHKqvHnq8vdts+Dz6VNw17nDPrfj1M5Dig0tOBKYuNmCsElRbm4bGiiLGb8hNhy3iG751aBcl2h82N28FaRlBar34Ivel6Y3EGTUdA46uMJXS5gJnrQVE4+ESGKNUt3RDsSKTY1owHM5wPR3QcTiwjD/WnxTU8TLUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dywDqeC5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774408317; c=relaxed/simple;
+	bh=WZplLBb/zzJ8TopyIP/QMhDwLUpLW5NNVl6kzErBwKg=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=oolHwhe/NNI9GLgErXxcWcD4wMKfxpKPzPDmuRhQSXwmf2GgFOtbsweIV/BnHStSIkExxUHve+J1JZ9cBaLNEIRlrvxLYGBoKJvN/SoFHU7YtedfZtld0z8Oci+JwqMCvycNIBMuIEBaJbECxvcSAEOL7scu1IkgyP2Hu0kgPSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=O/J8gzJ9; arc=none smtp.client-ip=95.215.58.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dywDqeC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FF4C19424;
-	Tue, 24 Mar 2026 20:37:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774384640;
-	bh=/6Uj9XwUoAPU0BcQZVOTdOUSFBimlsKmIkp3D+XTOGA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=dywDqeC5mLRuQRhGpsVSa2Bf+1gnC6mwdmjD/RP7iCa7gB2sWudYYswCH1o/AOHH7
-	 HnC9qV8v6VRl7hwzTZJHmt44a7cCo233H/olLukfv7iEbHzD8qrA2NjR1uU8Msm5Xn
-	 B83nNa5mr41r+Lg9ELbOGSr2WH9sPMlTLYiERih7F0eoUKA8rRo7GoPoKTK8DnEQGG
-	 WUGvqBSHY/FKZ1/OOOVw1RbST3vmQdTf31hd5k8Taj6qushajQoyyDbNMMSJAhtQLA
-	 j3H+M883UCVxdJTGyBsjI5RtoFT2VCL7e4NScFwhlWGD+4fM0dw6sHPnScBXyErTCO
-	 AIDWuffpZjA0w==
-Date: Tue, 24 Mar 2026 10:37:19 -1000
-Message-ID: <0cda388856399d7d52513dce216d4bab@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>,
- sched-ext@lists.linux.dev
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] selftests/sched_ext: Skip rt_stall on older kernels
- and list skipped tests
-In-Reply-To: <20260324191433.1955484-1-yphbchou0911@gmail.com>
-References: <20260324191433.1955484-1-yphbchou0911@gmail.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="O/J8gzJ9"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1774408304;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc; bh=GlOjr1EZKY3bXhZ6vt9D9keuTZu2IvV3+IrU6oq6YrY=;
+	b=O/J8gzJ9jnEUUIa42YQw5qPNNZwgIN3zkQbyJiFoe7xh1rg6aLK40/RT4D8spV3fq6b1I2
+	TrfT3aBZBrhqUpqOMHwdgZ+n4er4piQk8tJ/h4/+0VlEOdelGNXRJv6P96ID1SGH7kKFfd
+	WrPURDoiwELRuwDuvSD9nnt1u1+ojo0=
+From: Zqiang <qiang.zhang@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	qiang.zhang@linux.dev
+Subject: [PATCH v2] sched_ext: Choose the right sch->ops.name to output in the print_scx_info()
+Date: Wed, 25 Mar 2026 11:11:00 +0800
+Message-Id: <20260325031100.22840-1-qiang.zhang@linux.dev>
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Applied to sched_ext/for-7.1.
+The print_scx_info() always output scx_root structure's->ops.name,
+but for built with CONFIG_EXT_SUB_SCHED=y kernels, the tasks may be
+attach an sub scx_sched structure. this commit therefore use the
+scx_task_sched_rcu() to correctly get scx_sched structure to output
+ops.name, and drop state check.
 
-Thanks.
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+---
+ kernel/sched/ext.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 2472231ec556..551bfb99157d 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -7680,14 +7680,18 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+  */
+ void print_scx_info(const char *log_lvl, struct task_struct *p)
+ {
+-	struct scx_sched *sch = scx_root;
++	struct scx_sched *sch;
+ 	enum scx_enable_state state = scx_enable_state();
+ 	const char *all = READ_ONCE(scx_switching_all) ? "+all" : "";
+ 	char runnable_at_buf[22] = "?";
+ 	struct sched_class *class;
+ 	unsigned long runnable_at;
+ 
+-	if (state == SCX_DISABLED)
++	guard(rcu)();
++
++	sch = scx_task_sched_rcu(p);
++
++	if (!sch)
+ 		return;
+ 
+ 	/*
 -- 
-tejun
+2.17.1
+
