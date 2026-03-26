@@ -1,73 +1,42 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269432DB787
-	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 09:18:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8900831A55B
+	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 09:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774516688; cv=none; b=OlqPXH/sjMyeUPkNQya/BKjk68wLkNN0T3JMohp6lA0TJgs2OvXSkWA14GJagx3F8pQYjFZEdR3+8zSR0y+q+alOkWRYMsOdoquoxmwG2rV6r6XKL6Tz87fYslyplrNoa1m7Kvsu+BBT8A/+gqkqPodWUce8y3QHbYT9tl+t5ho=
+	t=1774517007; cv=none; b=UsiX0Y0eKm/CXDHfn5TOsSO0DGjntnodC4QwJB+IRJRexVyr884/Apj03AJsQy/aoBIlTXel67TQxpq3Mj6j4L+15QC8j4WnDTkalOsWCb9VFm78Tv0aBUEipdvkYi2sTAlp6qLN6uHjFtqD2z5y2YE90B6kv6cWB37QRlm659U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774516688; c=relaxed/simple;
-	bh=ynb5E3d5WO4xJeTVNBzo57d70Qa1mRrcWqzpUoEaZ1o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YzfsVEoR5Go7Aa7uG5yepjokBvpxLhLl0lc/9jXwRAKD7+PsLCdPUUGu0EXos6wKPYddDYW9yzDQIKcSYKu0A6k+xUSbfkkzMMnUzxaqbftuWdTQLCOmhLcJsQPqxUm5RZHQp+/r3dXxohiGv+IsBitXevAHkgn6V2YHRsVOYGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NF/nfYh9; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774517007; c=relaxed/simple;
+	bh=UIeZM1Rih8redGTLOVhUM5EOPoekZOr07MP3LYxFguo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LYhb7apChwEyrTHSYfniwSL+KrQk/Y3slcMyrFScBToWr+MiUVkQ3A0yWj8oqH+wBPp3cW6/wIjo7deW2yejsfhJW8003Pz/mdhujZiJSYeklNH/YnzpbEE6XCaK2KIYUe83rdA1KS4p85QQIJcmFteLGM3h5YaUCtqhVP3ZauQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=o8YjOm+f; arc=none smtp.client-ip=220.197.31.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NF/nfYh9"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2b0586d5bb8so5404325ad.3
-        for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 02:18:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774516686; x=1775121486; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=u5L/p3jok5ub3ykqcDjJqQfW/Y7+Y6SXASAcxbMUHCI=;
-        b=NF/nfYh9qPk7+qZgHxqw/99qflpXnp7c7FtcOlwuyAr1HTCkavgkhQfcvDPvAAEotM
-         l90S5X+2foM6CjwW1FKbTh2dLh1CQyhXd2SFixuJJfAQzkurgZ6xvzChZwBd+K8fTKoJ
-         JU5SYDacK37yYUfgQs+I+XfFDLl12kD89i9qjEfg2+fzwEPhCibyBCKVWDpNweBzUjml
-         zNWrKApGGXeqsKh2nGZ/OFgtWQ8JWSsLdJJ5tPJbyfqnyaVRMGQS1TyvRWe85jxZQVmr
-         SrYMpTz+FFTNdj4N1+nwBNjRmBlkShn02DsIbsyIIFPnGFNJCycmOcUn/4cncOEDSQJm
-         wHlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774516686; x=1775121486;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u5L/p3jok5ub3ykqcDjJqQfW/Y7+Y6SXASAcxbMUHCI=;
-        b=tS4NYIKaGTsvOodGCrTo11JUDMMjJT22yElF3R8HUmYgGGvCx76WzC4GE1xzx89yOj
-         Ba6m3mSofbqlWrF76zqYgEaqAanLau2t8K47+otUpZa7tDzjQVOH+NTt08JHgq6suFUt
-         xsHwi7hbM++Lg+/pjtKjoOBfZu0stkUCJJsPBur8NRO5mfP8nc3d9TlUDNfSGse8/w8/
-         m9PbkXl5T+in+5czuwXvRg38Lp8MTR3iGASWe7SgQzXrrbhp93951CWV/sXQmtdJhkNk
-         v2yAYtFjmTWynRQMV6pSztripgAQB5JElMBN2rOif8EFyIsNhxiAk4eU1VQ/OckPezKj
-         /OEw==
-X-Gm-Message-State: AOJu0YyNiXyWFcxTSQEmJXbwsaDrs1ePB9f/o2G00Z+J5uIIi+iTXbjU
-	kug6/EBNikG7HE+pTZrvvS5zE6CB7sr+or03qfeEk+ep5QZknBwoGG4yCH7yLOr9
-X-Gm-Gg: ATEYQzzGtrrwZI71fojnJpjJ+tPb6KAtsyQ9tmTi4x3PD0AfOwUpx1cnqe62NwXPjtv
-	IuhXEweTt1/6YUtPJIdEIpAN7czLFAniXe7pQ8pLRaiQON601aYhiIIFY0MklEtdtGg6JvwBQ6x
-	rk4czYqMq7m177csma1xJ28HbuvZesrxiM9lGGI/553Qju7IBA0AhVPkTMWulYga0v9XfdwVXG+
-	meCvy2te0/YhOH08NNAwbdQSXQXYfOOYk4FDRbGUU0zit9KmkwFUP920NPaLL+cenuIahF6HoDl
-	Qopj5tOFQg6pUgyhoxleTIUMEkxEKlBEYtCjhJnpNukpC9ywIIzEOp4DUd7AsDpQ+caQBl48uWz
-	VkU6pJXtM56Adu/eHDsgho7FrLH06ZzMf1X2oj7EISyNIVjRzkRgFrM9v8MuxWSCAgdq4vQ96Cd
-	L1afUF6CySBV33PGd6DUZUzllCDar2Giz0PMD7k62S0lUJW3qSuFY=
-X-Received: by 2002:a17:902:d582:b0:2b0:65e8:4041 with SMTP id d9443c01a7336-2b0b0b19ae0mr77976695ad.36.1774516686069;
-        Thu, 26 Mar 2026 02:18:06 -0700 (PDT)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:ac9c:4df3:99d:84b8])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc76bbdcsm24229525ad.5.2026.03.26.02.18.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2026 02:18:05 -0700 (PDT)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	yphbchou0911@gmail.com
-Subject: [PATCH] sched_ext: Fix scx_bpf_dsq_move_to_local___v2() to handle SCX_DSQ_GLOBAL
-Date: Thu, 26 Mar 2026 17:17:30 +0800
-Message-ID: <20260326091756.816828-1-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="o8YjOm+f"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=mE
+	7QChujbAfwdIe8F3YyGwvh9G0sMmK+/ROCqdamUwc=; b=o8YjOm+f90NCXb6r5n
+	vwglI/oNltNS2iTGGjwq8g2QlF+pu6tD8735LPV0f7s7mwnObvzK7jpRyeTsfHo3
+	NuYrXKiBc/PmwePULWFqXySU9493cZVTrHpA+V32ndMM4Mjtr14moUgsWH3EgCkd
+	2fYNC180HG3XGZJtCZqdcADkc=
+Received: from localhost.localdomain (unknown [])
+	by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wD391Qw+cRpggwvAg--.46626S2;
+	Thu, 26 Mar 2026 17:15:29 +0800 (CST)
+From: Zhao Mengmeng <zhaomzhao@126.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	emil@etsalapatis.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	zhaomengmeng@kylinos.cn
+Subject: [PATCH] tools/sched_ext: scx_central: start timer from central dispatch
+Date: Thu, 26 Mar 2026 17:15:23 +0800
+Message-ID: <20260326091523.299333-1-zhaomzhao@126.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -75,38 +44,154 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wD391Qw+cRpggwvAg--.46626S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3JrWftF15Jw4rKw1xXFWfAFb_yoW7GFWkpF
+	ZrCFyfAF1jqrW2qw4ktr4kCry3ZasxXryxKrs3KwnIvF4xCr1UtF1UtF4S9F43GrWkAa42
+	yF409FZxGanYy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U_3ktUUUUU=
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqxEWjWnE+TGEyQAA3J
 
-scx_bpf_dsq_move_to_local___v2() called find_user_dsq() for all dsq_id
-values, but find_user_dsq() only searches the rhashtable of user-created
-DSQs. SCX_DSQ_GLOBAL is a builtin DSQ stored in the per-node pnode and
-not in the rhashtable, so passing SCX_DSQ_GLOBAL caused find_user_dsq()
-to return NULL, triggering scx_error() and aborting the scheduler.
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-Add an explicit check for SCX_DSQ_GLOBAL and use find_global_dsq() in
-that case, matching the pattern used in find_dsq_for_dispatch().
+scx_central currently assumes that ops.init() runs on the selected
+central CPU and aborts otherwise. This is no longer true, as ops.init()
+is invoked from the scx_enable_helper thread, which can run on any
+CPU. As a result, sched_setaffinity() from userspace doesn't work, loading
+scx_central can fail with:
 
-Fixes: 860683763ebf ("sched_ext: Add enq_flags to scx_bpf_dsq_move_to_local()")
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+[ 1985.319942] sched_ext: central: scx_central.bpf.c:314: init from non-central CPU
+[ 1985.320317]    scx_exit+0xa3/0xd0
+[ 1985.320535]    scx_bpf_error_bstr+0xbd/0x220
+[ 1985.320840]    bpf_prog_3a445a8163fa8149_central_init+0x103/0x1ba
+[ 1985.321073]    bpf__sched_ext_ops_init+0x40/0xa8
+[ 1985.321286]    scx_root_enable_workfn+0x507/0x1650
+[ 1985.321461]    kthread_worker_fn+0x260/0x940
+[ 1985.321745]    kthread+0x303/0x3e0
+[ 1985.321901]    ret_from_fork+0x589/0x7d0
+[ 1985.322065]    ret_from_fork_asm+0x1a/0x30
+
+DEBUG DUMP
+===================================================================
+
+central: root
+scx_enable_help[134] triggered exit kind 1025:
+  scx_bpf_error (scx_central.bpf.c:314: init from non-central CPU)
+
+To fix it, initialize the BPF timer from ops.init(), but defer
+bpf_timer_start() to the first dispatch on the central CPU. This preserves
+the requirement that the timer be started from the central CPU when
+BPF_F_TIMER_CPU_PIN is used, without depending on the CPU affinity of
+the enable path.
+
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 ---
- kernel/sched/ext.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/sched_ext/scx_central.bpf.c | 60 ++++++++++++++++++++-----------
+ tools/sched_ext/scx_central.c     |  1 -
+ 2 files changed, 40 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 551bfb99157d..0d0780c77ffd 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -8249,7 +8249,10 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local___v2(u64 dsq_id, u64 enq_flags,
+diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
+index 399e8d3f8bec..b2d9b1164603 100644
+--- a/tools/sched_ext/scx_central.bpf.c
++++ b/tools/sched_ext/scx_central.bpf.c
+@@ -60,6 +60,7 @@ const volatile u32 nr_cpu_ids = 1;	/* !0 for veristat, set during init */
+ const volatile u64 slice_ns;
  
- 	flush_dispatch_buf(sch, dspc->rq);
+ bool timer_pinned = true;
++bool timer_started;
+ u64 nr_total, nr_locals, nr_queued, nr_lost_pids;
+ u64 nr_timers, nr_dispatches, nr_mismatches, nr_retries;
+ u64 nr_overflows;
+@@ -179,9 +180,47 @@ static bool dispatch_to_cpu(s32 cpu)
+ 	return false;
+ }
  
--	dsq = find_user_dsq(sch, dsq_id);
-+	if (dsq_id == SCX_DSQ_GLOBAL)
-+		dsq = find_global_dsq(sch, cpu_of(dspc->rq));
-+	else
-+		dsq = find_user_dsq(sch, dsq_id);
- 	if (unlikely(!dsq)) {
- 		scx_error(sch, "invalid DSQ ID 0x%016llx", dsq_id);
- 		return false;
++static void start_central_timer(void)
++{
++	struct bpf_timer *timer;
++	u32 key = 0;
++	int ret;
++
++	if (likely(timer_started))
++		return;
++
++	timer = bpf_map_lookup_elem(&central_timer, &key);
++	if (!timer) {
++		scx_bpf_error("failed to lookup central timer");
++		return;
++	}
++
++	ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
++	/*
++	 * BPF_F_TIMER_CPU_PIN is pretty new (>=6.7). If we're running in a
++	 * kernel which doesn't have it, bpf_timer_start() will return -EINVAL.
++	 * Retry without the PIN. This would be the perfect use case for
++	 * bpf_core_enum_value_exists() but the enum type doesn't have a name
++	 * and can't be used with bpf_core_enum_value_exists(). Oh well...
++	 */
++	if (ret == -EINVAL) {
++		timer_pinned = false;
++		ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, 0);
++	}
++
++	if (ret) {
++		scx_bpf_error("bpf_timer_start failed (%d)", ret);
++		return;
++	}
++
++	timer_started = true;
++}
++
+ void BPF_STRUCT_OPS(central_dispatch, s32 cpu, struct task_struct *prev)
+ {
+ 	if (cpu == central_cpu) {
++		start_central_timer();
++
+ 		/* dispatch for all other CPUs first */
+ 		__sync_fetch_and_add(&nr_dispatches, 1);
+ 
+@@ -310,29 +349,10 @@ int BPF_STRUCT_OPS_SLEEPABLE(central_init)
+ 	if (!timer)
+ 		return -ESRCH;
+ 
+-	if (bpf_get_smp_processor_id() != central_cpu) {
+-		scx_bpf_error("init from non-central CPU");
+-		return -EINVAL;
+-	}
+-
+ 	bpf_timer_init(timer, &central_timer, CLOCK_MONOTONIC);
+ 	bpf_timer_set_callback(timer, central_timerfn);
+ 
+-	ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
+-	/*
+-	 * BPF_F_TIMER_CPU_PIN is pretty new (>=6.7). If we're running in a
+-	 * kernel which doesn't have it, bpf_timer_start() will return -EINVAL.
+-	 * Retry without the PIN. This would be the perfect use case for
+-	 * bpf_core_enum_value_exists() but the enum type doesn't have a name
+-	 * and can't be used with bpf_core_enum_value_exists(). Oh well...
+-	 */
+-	if (ret == -EINVAL) {
+-		timer_pinned = false;
+-		ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, 0);
+-	}
+-	if (ret)
+-		scx_bpf_error("bpf_timer_start failed (%d)", ret);
+-	return ret;
++	return 0;
+ }
+ 
+ void BPF_STRUCT_OPS(central_exit, struct scx_exit_info *ei)
+diff --git a/tools/sched_ext/scx_central.c b/tools/sched_ext/scx_central.c
+index fd4c0eaa4326..f4bed0e69357 100644
+--- a/tools/sched_ext/scx_central.c
++++ b/tools/sched_ext/scx_central.c
+@@ -98,7 +98,6 @@ int main(int argc, char **argv)
+ 
+ 	/*
+ 	 * Affinitize the loading thread to the central CPU, as:
+-	 * - That's where the BPF timer is first invoked in the BPF program.
+ 	 * - We probably don't want this user space component to take up a core
+ 	 *   from a task that would benefit from avoiding preemption on one of
+ 	 *   the tickless cores.
 -- 
-2.48.1
+2.43.0
 
