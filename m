@@ -1,166 +1,267 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010049.outbound.protection.outlook.com [52.101.61.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405FE311C11;
-	Thu, 26 Mar 2026 06:43:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774507405; cv=none; b=RJtqrOcCvVIl8lXASCyC26z0kWGXNlbI9SdXyNQGxkcNVbRYMwQTsFIudgbMwN95gzOiNjxJWEqNy0q02ekDuTm3/tSWgjcfY4/cxjqrJfx1mbKpQY2h/MUSEt36UBDxyc1hrRNLSlx3jKE1dKCf+KBHoDEyH1PV+8pgh1+uE3A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774507405; c=relaxed/simple;
-	bh=qSexQmpuDMmwpl+CIU7fbjXqVQSQ5xSuV7IQEg37s8Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OSuEtB4//0OnEJYbV8OWN74EKabuYfapsTcgdPDzdufeO0HDmtUL/MFGv7uVJwjwNYh7AY0lTtOo1YsNyJiDTmXY4nmlmtE0/dTSdRHFKxRbH0unjuhIdIkrSMy3cFt8nc6k9QPEqXGSGIF1QgIcYgj6OlTLiT47sYjsxQgPDms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kvLwEDV+; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6DA34DB59
+	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 07:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774508777; cv=fail; b=mFO5i9Rtg3yY8KVxcK1o09ZUU0LfmvvFeUp6smCVOiLCYmHHrFvZ2UVpL5pu6EVLxT1LQBvswmfmjOHMYfLOxF20j/bLGyklem/XtfF8T090XJKw6AvxISP754p5NT1Mcz2Dnk/XtQsVtYHE+9gsw95bz88wmoUfl5/JAImNsr8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774508777; c=relaxed/simple;
+	bh=E4LsHnLXWrvMHs1LB03Y4UYTT7L91uBVa+iPjElfPVc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=RPnhbu3pSmVwcfceQGeWudMdUSpNdTK7Oke/4xNztO74QfQJDtkTvHuQ6Kp6stT/qAFLAPDFF92Bp8kNK9UOlSimMi2/rz8tj2OsT1LyC78qvma9zpZzsgwedM1/8wAsZl6a/N+WKB0q7s6TlIrBjC/OutXpdZmxHF+DaRz4cug=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=g9+EnHls; arc=fail smtp.client-ip=52.101.61.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kvLwEDV+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774507403; x=1806043403;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=qSexQmpuDMmwpl+CIU7fbjXqVQSQ5xSuV7IQEg37s8Y=;
-  b=kvLwEDV+ojM2nLJ9WScdfsqidiriDJ0sDkyQWGK8Kgb2DPR9FPW3mi+Y
-   VM3pFKrQDiI9fMSc3GJ/uuMaCYJv8XIPQ8AS1RFbPYysserWxFm78K0C5
-   PZs0u9haImCVj4K88qLkKcmmQrj+WCg9AtHJeJXKk3/crGnpfUN6vLrMI
-   1R7VYE1dk5jE6AUCuBaTvqn0BtPgdB/jcI8CZvFacKjlXTaXxX205UxN3
-   9Uek+jE0qtU2PUukuLf3adW1oy2njok/llqQIbPrOoQ2G+Q1UJ//vnaW6
-   XoOA79T9bLJejGjPwfN9I/+Cx+GCkgHWXkzxRmF3ZgaAG6KL2Xv5EUTwb
-   g==;
-X-CSE-ConnectionGUID: ROaYYkM3SriOmqGbCYMegg==
-X-CSE-MsgGUID: H6JodjWTQZSqzmhWNqhPGg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="79462652"
-X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; 
-   d="scan'208";a="79462652"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2026 23:43:23 -0700
-X-CSE-ConnectionGUID: wBL8JgPuRSmtr5GEUguCvg==
-X-CSE-MsgGUID: 4MPjA0KCTKGw4me0t0fWPw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; 
-   d="scan'208";a="255404103"
-Received: from lkp-server01.sh.intel.com (HELO 3905d212be1b) ([10.239.97.150])
-  by orviesa002.jf.intel.com with ESMTP; 25 Mar 2026 23:43:20 -0700
-Received: from kbuild by 3905d212be1b with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1w5eR2-000000008ML-44oD;
-	Thu, 26 Mar 2026 06:43:16 +0000
-Date: Thu, 26 Mar 2026 14:42:55 +0800
-From: kernel test robot <lkp@intel.com>
-To: Zqiang <qiang.zhang@linux.dev>, tj@kernel.org, void@manifault.com,
-	arighi@nvidia.com, changwoo@igalia.com
-Cc: oe-kbuild-all@lists.linux.dev, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, qiang.zhang@linux.dev
-Subject: Re: [PATCH] sched_ext: Choose the right sch->ops.name to output in
- the print_scx_info()
-Message-ID: <202603261453.8kiJImYo-lkp@intel.com>
-References: <20260324120313.12632-1-qiang.zhang@linux.dev>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="g9+EnHls"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d11Phtjhegep6QakbhWEcHOUMTb6Mzvcom2upIbKMQ7OpGkxs3OeSncHBY49PFAlnLCJ22HqUjIMpyki417StXFhP0oZlp9oTIXUG7rxF645xPoyv1NkX0Q7wdHdkf5to/xWFm9pE80k/TuBVFiIBTW+N09g/Dr9tNUD95BeJaqYVyWm2x/cfyldt4iF1egOrYBeM7a84G5lxBHhRa3+ZADNzan3IOQslvt1CCTic60rKoI+YmiMJVzZrlpNnot91hjyiC+r68uNOpE8Tct92ssiDMtqhl6k/MGLkp5ZtvE7avNGzVnMIPqJBVlvau6QJvUBuvUWfxUdLSypc74TMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ej4HvGSxVybnU73jZNCDYDgYJyX1Qj0+8LGNJ+BPBCA=;
+ b=H/7szGOuDMEuYTqcXvAhN1KFLLwbXzckWLUT04VX7gQU/WzhzO8bKVWzhOT3vIoXycUZaRE73VWnMRQuVevYznwNj50I5kGAMnGaMoxuI59r4+y8Arx5fu2yolUkvUpeyqEbSN956r4qN9Rp6qqnENic8e3GqZSjpEkBkfdJoDvG7yYLI3G6T3Wj4iM6UQupyfl5r0P+6ExOfIua62dVZndD8U6d7CGQjzq3MYkr+X1ffF6iKiKQkuVlD6bdaXujheed8StWAz+sze89s9eQfGoeGLTT0ocijOPxUlx1yC16Ro/OrLWWTLPXBsY9ZvYTLTdOh5pyQ4vGuKy3chPBrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ej4HvGSxVybnU73jZNCDYDgYJyX1Qj0+8LGNJ+BPBCA=;
+ b=g9+EnHlsDEEPU9yEvNzbh1LI+axEr0ja5jwVr0CT9OgSO2b85DJAHQcPQ9gwKm0V5UkBe65VDfx+OgEfX1DYG7Y74Wjy1U4ojfkVEjV4ukZjJ0mGphzUbo7Fv5ioTQpNbKww4BM1/+zhCNktVuJ+y8aKw3++TAroHIp7k6v1J+U93MlNWk/pR2i5dWtoJdnWsv4v5fQC7RevQpPGOX/juKgCXjhxIvaygkdSm6mjBWmpQaSkdfiUxZPdOHdVJmx1YaQsRcFQrIiVmaD363DYgc75Oh/MKnidxcBmxpTfOUA1VUVSRCyVNMYLnVZhDRfwjP4AIekLo43L3uGdLLIqmA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SJ2PR12MB8928.namprd12.prod.outlook.com (2603:10b6:a03:53e::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Thu, 26 Mar
+ 2026 07:06:12 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9745.019; Thu, 26 Mar 2026
+ 07:06:12 +0000
+Date: Thu, 26 Mar 2026 08:06:02 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: zhidao su <soolaugust@gmail.com>
+Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, tj@kernel.org,
+	void@manifault.com, changwoo@igalia.com, peterz@infradead.org,
+	mingo@redhat.com, zhidao su <suzhidao@xiaomi.com>
+Subject: Re: [PATCH 3/3] selftests/sched_ext: Fix consume_immed test
+ reliability
+Message-ID: <acTa2k5Fkhni_e7L@gpd4>
+References: <20260326022827.3826287-1-suzhidao@xiaomi.com>
+ <20260326022827.3826287-3-suzhidao@xiaomi.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260326022827.3826287-3-suzhidao@xiaomi.com>
+X-ClientProxiedBy: MI1P293CA0015.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:2::14) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260324120313.12632-1-qiang.zhang@linux.dev>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ2PR12MB8928:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ce9928f-32d9-4c46-b445-08de8b062a01
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|1800799024|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	3k8w7uu1nKKENBV0U5MpPhmHjJKrBXhpm/RKJOyl/iusElnn8bqa8GLuf1t2RIkILQTVIahCCpuDs/oYBy9t0CR/7S9aPyKQlmt+xW9+RWkU8mR0o1oREqbm4d45vQlS8hzXWt6iTJm1RRi5gr0rZWf6LzJ1ZOkKajvGu6qXMZCO1Cbt5lLC3S0wOAnNwRXr7nuy0VOD70ixoU4eJTsfrjHjVZ48ipvOXUTh6VgEfYQn23UGlO1eXI3X7g2LAm2GESRQLyuOtYSMKYVQ/z87aj3Szt8MRA5AWy+UmQn5ziXndD0WdJLIFECgDKNzW3sKkLMZsYTmf/GHnS9IlJuFjT//z3uibulepM/UH+ugKbYVSq7IuzirbjBUtOOKWlKdC3+QBDY/xCOYbEDiAxRDRWWcubIc6d1GHIbepJieKxcvM3CqnBdUI+g2y1RajtjzGDgePCy+kWU/t74rRMWcPoP8hNANktudlaT98tJ0C/+Xsp8/GZd3VOUwyCQ0mAj/TUfUwApMO1OVrisR7w/TJv2BUnoU9seLQ7Kl0xTZY5RpWl5qovTLI4xp7pNOHHg1dcnyNHZDU8bVzdHokFFKAMRsRrMvbaROt/ZIIfFlotcMoKHdWowqsRbL2nG7wtL93dfj/Y8N1t/fQhE7mIhdEcBdtSPPSesAI8BfGkp60U9MddxeYCj6DBKxQps+NtO5jwGC1T/ZiVSVubokOn7b0VS4zHQFwrH3qtyseKwtlXM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?3acU7lLINMdXp+96HAr1zflrYbj7oO0XZriaL8zDENk46yQ27PC+jVnVunvq?=
+ =?us-ascii?Q?iObv5xXL0ThFJ/lHnndn42wzXwd792tugiW/CyZDf88TMhym8Mo7FRHvBpA1?=
+ =?us-ascii?Q?NwHbEQZSJRSRCI9V7ttNYKbTS4bXTSX84xbnM9ti+oPblIWMx6qr48XE1uXl?=
+ =?us-ascii?Q?01QmE0OezZe+1nh2uimwGUfhREz41RA3ee1mXh8sDUTAZgEhIsoPRrh+qxof?=
+ =?us-ascii?Q?ruCXyJLl33kRd3l2MQGxNzJbwRTrG9a0ceWhMTglHfk9nRjlaFWQJ4D873vH?=
+ =?us-ascii?Q?/asJ1uVZxbi5r3upzY3bvExC8Nkh4SBgKbAMqnPnoyjwItn+KAxgwYDhY/Ym?=
+ =?us-ascii?Q?Ou+fCWTq3FpsS1+dPw4Qq3l2Xslm8BD4gK81PpwwWuYXs3l/XjvbdWJ12xCw?=
+ =?us-ascii?Q?OgwaKQMqPCaqFI8RUQbCI/OyaTAqp89sn+YwfWk1a/FhGr+fViLr7hmSHAeR?=
+ =?us-ascii?Q?ZwLbkxzEm9qfC/tYw7Lj661JQ1b+uux3Q0MY5hrCj/5nmSHv9/T7Bb9PuAJ+?=
+ =?us-ascii?Q?wf+o1YVN1GKk1XVvgjQbESQuKa58C9jHyaejhagyTT40uvxPmJ6C9ZS2mvo3?=
+ =?us-ascii?Q?q/RiQxL9Amd98lL6OLHgUQcn4Cy4fhb+j8bmcaUk/HgQgDG5LrZH0wVooaLv?=
+ =?us-ascii?Q?BCpGKLP6QcKCCE5Wmj+E8rV90GKXzOgV5WHULeogP20wdcDNCCrPsms2X6ZA?=
+ =?us-ascii?Q?JyT+eLZCoCFhow7Kd80FHamR74lC9wiIKCV8KL4Tk3mkW+mE6oa19YD3bgLv?=
+ =?us-ascii?Q?MGS3S4H1W5pAgTBCfBNYwm6I1tLsL/naBjKXPX8EJ3LNvRixD7fKVnAv0Urn?=
+ =?us-ascii?Q?Jrf7TAojsGc6TGDGP4tZ7RbrBBr4ba14Hz2ujRWZPgE9kI/3zdC1rA6BjUdw?=
+ =?us-ascii?Q?7rfHmZryWtxe03fGExi6+OzZFQRJLGxMIHe0gawqZa+q4gXLULteWcuPal4e?=
+ =?us-ascii?Q?zBFQV6kTruVGc/ZyqXkLVh9N+HXhhqfCrQMw2auoyEDyJ1SkeRoI89vZk5dy?=
+ =?us-ascii?Q?KErZDyHr5WMDLOP3Aip74yFIt3emTqpd0rrn8EJOR94Vi9RhRAER1KXlskMo?=
+ =?us-ascii?Q?G2JIor3m+jCm7T9zoHfUDhWm/u0dQgjY7b6RW7psGaBVLyd/N6GHF+dsxwuP?=
+ =?us-ascii?Q?6YPBDYmzKmCX5eB6Y10AYyVPSPjaiMyKnPItK4ZJ8IxrD0aUXNKvV8h2kalB?=
+ =?us-ascii?Q?Erzk/C/UP3GE9V9+0VJ3twpixDjZhBrg+yGoV3jMrGbRCqTuB1yHhpmbXq8R?=
+ =?us-ascii?Q?LDR0p9hwA8oNkPy91hFexJzc9WyI9umMXmwuyD6gxMGuXRYnmgE6uIEMFyjY?=
+ =?us-ascii?Q?Euhq6YcfnLrPDUuwhQr2A3AuMaSYk29UaoC7c2Ydb53Suz/F8pmbA73bE3qy?=
+ =?us-ascii?Q?jIgfj1NlOZf3t51BqrItkiqDw8rvcNwH/ZDNzo207+R2quYNg1POIs48iCJ8?=
+ =?us-ascii?Q?WKIjQw4T84VoHuWK04P95Ef8A07lNYpjVfWWU10bS9FebJKiyvvOoPPk6F1p?=
+ =?us-ascii?Q?ciJ49flavZStCdLepDTQrZFDdyDmnYSmn23vvBvnyk9z8gyXoyoK15JcC26N?=
+ =?us-ascii?Q?ypP0sBc0S8XwTv071cYX+3QsdtlFJL7Pek1qnyy0Gug5PWv5AHEh9HadhcPk?=
+ =?us-ascii?Q?VS9qNe+GbBS67Cpe8m7dKnFS7cHCh38DQHXf/8e+UGNGA7B+lcd6hTzC1ccn?=
+ =?us-ascii?Q?HAfalFGl8L4D8FAR9jL2dZqrHsRxT/6g8L8caWnlolGFR9hNXHL/PDxTZdoZ?=
+ =?us-ascii?Q?F2tDnAbT+g=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ce9928f-32d9-4c46-b445-08de8b062a01
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Mar 2026 07:06:12.6869
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fFhJ4BWcy2Xbb4z3YpcgctUgryUqMalJb3qbp7nQXNvxlgOF8qcCEPXaTXXgkD4kbFAbDA8IzY9DmznCOXCLlA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8928
 
-Hi Zqiang,
+Hi zhidao,
 
-kernel test robot noticed the following build errors:
+On Thu, Mar 26, 2026 at 10:28:27AM +0800, zhidao su wrote:
+> The consume_immed test was failing because nr_consume_immed_reenq
+> stayed 0. Two issues:
+> 
+> 1. Workers were spread across CPUs, so CPU 0's local DSQ rarely
+>    accumulated multiple tasks. Fix: pin all workers to CPU 0 and
+>    increase NUM_WORKERS to 8 to ensure USER_DSQ is always backlogged.
+> 
+> 2. ops.dispatch() called scx_bpf_dsq_move_to_local() only once, so
+>    CPU 0's local DSQ would contain exactly 1 task after dispatch.
+>    The IMMED slow path requires dsq->nr > 1 at the time of insertion
+>    (in dsq_inc_nr()), so a single dispatch call never triggers it.
+> 
+>    Fix: call scx_bpf_dsq_move_to_local() in a loop (up to 4 times)
+>    within a single ops.dispatch() invocation. The second call finds
+>    dsq->nr already 1, so dsq->nr increments to 2, triggering
+>    schedule_reenq_local() and the IMMED slow path.
+> 
+> Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+> ---
+>  .../selftests/sched_ext/consume_immed.bpf.c   | 25 ++++++++++++++-----
+>  .../selftests/sched_ext/consume_immed.c       | 14 ++++++++++-
+>  2 files changed, 32 insertions(+), 7 deletions(-)
+> 
+> diff --git a/tools/testing/selftests/sched_ext/consume_immed.bpf.c b/tools/testing/selftests/sched_ext/consume_immed.bpf.c
+> index 9c7808f5abe1..e99bea0b2c24 100644
+> --- a/tools/testing/selftests/sched_ext/consume_immed.bpf.c
+> +++ b/tools/testing/selftests/sched_ext/consume_immed.bpf.c
+> @@ -11,9 +11,9 @@
+>   *                   explicit SCX_ENQ_IMMED in enq_flags (requires v2 kfunc)
+>   *
+>   * Worker threads belonging to test_tgid are inserted into USER_DSQ.
+> - * ops.dispatch() on CPU 0 consumes from USER_DSQ with SCX_ENQ_IMMED.
+> - * With multiple workers competing for CPU 0, dsq->nr > 1 triggers the
+> - * IMMED slow path (reenqueue with SCX_TASK_REENQ_IMMED).
+> + * ops.dispatch() on CPU 0 consumes multiple tasks from USER_DSQ with
+> + * SCX_ENQ_IMMED in a single dispatch call, causing dsq->nr to exceed 1
+> + * and triggering the IMMED slow path (reenqueue with SCX_TASK_REENQ_IMMED).
+>   *
+>   * Requires scx_bpf_dsq_move_to_local___v2() (v7.1+) for enq_flags support.
+>   */
+> @@ -55,10 +55,23 @@ void BPF_STRUCT_OPS(consume_immed_enqueue, struct task_struct *p,
 
-[auto build test ERROR on tip/sched/core]
-[also build test ERROR on linus/master v7.0-rc5]
-[cannot apply to next-20260325]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+We should define a custom ops.select_cpu() to make sure all tasks are
+bounced to ops.enqueue(), in order to have more inserts into USER_DSQ,
+something like:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Zqiang/sched_ext-Choose-the-right-sch-ops-name-to-output-in-the-print_scx_info/20260326-043528
-base:   tip/sched/core
-patch link:    https://lore.kernel.org/r/20260324120313.12632-1-qiang.zhang%40linux.dev
-patch subject: [PATCH] sched_ext: Choose the right sch->ops.name to output in the print_scx_info()
-config: x86_64-rhel-9.4-bpf (https://download.01.org/0day-ci/archive/20260326/202603261453.8kiJImYo-lkp@intel.com/config)
-compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260326/202603261453.8kiJImYo-lkp@intel.com/reproduce)
+s32 BPF_STRUCT_OPS(consume_immed_select_cpu, struct task_struct *p,
+                   s32 prev_cpu, u64 wake_flags)
+{
+	return prev_cpu;
+}
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603261453.8kiJImYo-lkp@intel.com/
+>  
+>  void BPF_STRUCT_OPS(consume_immed_dispatch, s32 cpu, struct task_struct *prev)
+>  {
+> -	if (cpu == 0)
+> -		scx_bpf_dsq_move_to_local(USER_DSQ, SCX_ENQ_IMMED);
+> -	else
+> +	int i;
+> +
+> +	if (cpu != 0) {
+>  		scx_bpf_dsq_move_to_local(SCX_DSQ_GLOBAL, 0);
 
-All errors (new ones prefixed by >>):
+Hm.. this should trigger an error, you can't use
+scx_bpf_dsq_move_to_local() with SCX_DSQ_GLOBAL.
 
-   In file included from kernel/sched/build_policy.c:62:
-   kernel/sched/ext.c: In function 'scx_vexit':
-   kernel/sched/ext.c:4800:9: warning: function 'scx_vexit' might be a candidate for 'gnu_printf' format attribute [-Wsuggest-attribute=format]
-    4800 |         vscnprintf(ei->msg, SCX_EXIT_MSG_LEN, fmt, args);
-         |         ^~~~~~~~~~
-   kernel/sched/ext.c: In function 'print_scx_info':
->> kernel/sched/ext.c:5719:15: error: implicit declaration of function 'scx_task_sched_rcu' [-Wimplicit-function-declaration]
-    5719 |         sch = scx_task_sched_rcu(p);
-         |               ^~~~~~~~~~~~~~~~~~
->> kernel/sched/ext.c:5719:13: error: assignment to 'struct scx_sched *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-    5719 |         sch = scx_task_sched_rcu(p);
-         |             ^
+> +		return;
+> +	}
+> +
+> +	/*
+> +	 * Move multiple tasks into CPU 0's local DSQ with SCX_ENQ_IMMED in a
+> +	 * single dispatch call. When the second task is inserted (dsq->nr > 1),
+> +	 * dsq_inc_nr() triggers the IMMED slow path via schedule_reenq_local(),
+> +	 * which calls ops.enqueue() with SCX_ENQ_REENQ | SCX_TASK_REENQ_IMMED.
+> +	 */
+> +	for (i = 0; i < 4; i++) {
+> +		if (!scx_bpf_dsq_move_to_local(USER_DSQ, SCX_ENQ_IMMED))
+> +			break;
+> +	}
 
+Why 4? Two consecutive scx_bpf_dsq_move_to_local() should be enough, right?
 
-vim +/scx_task_sched_rcu +5719 kernel/sched/ext.c
+>  }
+>  
+>  s32 BPF_STRUCT_OPS_SLEEPABLE(consume_immed_init)
 
-  5695	
-  5696	/**
-  5697	 * print_scx_info - print out sched_ext scheduler state
-  5698	 * @log_lvl: the log level to use when printing
-  5699	 * @p: target task
-  5700	 *
-  5701	 * If a sched_ext scheduler is enabled, print the name and state of the
-  5702	 * scheduler. If @p is on sched_ext, print further information about the task.
-  5703	 *
-  5704	 * This function can be safely called on any task as long as the task_struct
-  5705	 * itself is accessible. While safe, this function isn't synchronized and may
-  5706	 * print out mixups or garbages of limited length.
-  5707	 */
-  5708	void print_scx_info(const char *log_lvl, struct task_struct *p)
-  5709	{
-  5710		struct scx_sched *sch;
-  5711		enum scx_enable_state state = scx_enable_state();
-  5712		const char *all = READ_ONCE(scx_switching_all) ? "+all" : "";
-  5713		char runnable_at_buf[22] = "?";
-  5714		struct sched_class *class;
-  5715		unsigned long runnable_at;
-  5716	
-  5717		guard(rcu)();
-  5718	
-> 5719		sch = scx_task_sched_rcu(p);
-  5720	
-  5721		if (!sch || state == SCX_DISABLED)
-  5722			return;
-  5723	
-  5724		/*
-  5725		 * Carefully check if the task was running on sched_ext, and then
-  5726		 * carefully copy the time it's been runnable, and its state.
-  5727		 */
-  5728		if (copy_from_kernel_nofault(&class, &p->sched_class, sizeof(class)) ||
-  5729		    class != &ext_sched_class) {
-  5730			printk("%sSched_ext: %s (%s%s)", log_lvl, sch->ops.name,
-  5731			       scx_enable_state_str[state], all);
-  5732			return;
-  5733		}
-  5734	
-  5735		if (!copy_from_kernel_nofault(&runnable_at, &p->scx.runnable_at,
-  5736					      sizeof(runnable_at)))
-  5737			scnprintf(runnable_at_buf, sizeof(runnable_at_buf), "%+ldms",
-  5738				  jiffies_delta_msecs(runnable_at, jiffies));
-  5739	
-  5740		/* print everything onto one line to conserve console space */
-  5741		printk("%sSched_ext: %s (%s%s), task: runnable_at=%s",
-  5742		       log_lvl, sch->ops.name, scx_enable_state_str[state], all,
-  5743		       runnable_at_buf);
-  5744	}
-  5745	
+We don't see this from the context, but to check if SCX_ENQ_IMMED is
+available can we just check if it's != 0, instead of checking the
+_scx_bpf_dsq_move_to_local___v2 symbol?
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Something like:
+
+if (SCX_ENQ_IMMED == 0) {
+	scx_bpf_error("SCX_ENQ_IMMED not available");
+	return -EOPNOTSUPP;
+}
+
+And remove the same check in consume_immed.c, because we're already
+checking it in the BPF part.
+
+Thanks,
+-Andrea
+
+> diff --git a/tools/testing/selftests/sched_ext/consume_immed.c b/tools/testing/selftests/sched_ext/consume_immed.c
+> index 7f9594cfa9cb..61cbc0fe3663 100644
+> --- a/tools/testing/selftests/sched_ext/consume_immed.c
+> +++ b/tools/testing/selftests/sched_ext/consume_immed.c
+> @@ -12,18 +12,30 @@
+>  #include <stdio.h>
+>  #include <unistd.h>
+>  #include <pthread.h>
+> +#include <sched.h>
+>  #include <bpf/bpf.h>
+>  #include <scx/common.h>
+>  #include "consume_immed.bpf.skel.h"
+>  #include "scx_test.h"
+>  
+> -#define NUM_WORKERS		4
+> +/*
+> + * Use more workers than CPUs, all pinned to CPU 0, so CPU 0's local DSQ
+> + * accumulates multiple IMMED tasks at once, reliably triggering the slow path.
+> + */
+> +#define NUM_WORKERS		8
+>  #define TEST_DURATION_SEC	3
+>  
+>  static volatile bool stop_workers;
+>  
+>  static void *worker_fn(void *arg)
+>  {
+> +	cpu_set_t cpuset;
+> +
+> +	/* Pin to CPU 0 to saturate its local DSQ */
+> +	CPU_ZERO(&cpuset);
+> +	CPU_SET(0, &cpuset);
+> +	pthread_setaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+> +
+>  	while (!stop_workers) {
+>  		volatile unsigned long i;
+>  
+> -- 
+> 2.43.0
+> 
