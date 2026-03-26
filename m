@@ -1,53 +1,53 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1B934B1A2;
-	Thu, 26 Mar 2026 06:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405FE311C11;
+	Thu, 26 Mar 2026 06:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774506583; cv=none; b=GIiKs9UE7iHdso8MpZqjAi85ZDzVG72CLwiEQuvxg4H2noVkzMwr/ZD2fy8falqCvkvvLt5GeXF08lhwVF2F+lTAd8ICGyrZtsiJvDEU47gxxDFuAqnJ5Qv6FaYe2o2FKyalEMlpicu1oO6qWTykZ8gjkJVM2nUN14D32xuwESw=
+	t=1774507405; cv=none; b=RJtqrOcCvVIl8lXASCyC26z0kWGXNlbI9SdXyNQGxkcNVbRYMwQTsFIudgbMwN95gzOiNjxJWEqNy0q02ekDuTm3/tSWgjcfY4/cxjqrJfx1mbKpQY2h/MUSEt36UBDxyc1hrRNLSlx3jKE1dKCf+KBHoDEyH1PV+8pgh1+uE3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774506583; c=relaxed/simple;
-	bh=F2CIwix+3OkogRxcS8TB5UZgzRKbysS1r7oWNKxyQDw=;
+	s=arc-20240116; t=1774507405; c=relaxed/simple;
+	bh=qSexQmpuDMmwpl+CIU7fbjXqVQSQ5xSuV7IQEg37s8Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m/cH8zticbELNPqHKAltIl+yV9coUqZW3BwdwFhNpot9a+V9bs2Bx+5EfhfUtsokJQnEZsfyVmYk1RjEr+BXQ4hJJbUloeQViLgzMDwNw9KTdD7+5FSwPdZEgWqgGlbT9e8xb3YeIBUm4x/WTpu36KLEkInQWDI1jiGE0z0yMd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QcsZmQPx; arc=none smtp.client-ip=198.175.65.20
+	 Content-Type:Content-Disposition:In-Reply-To; b=OSuEtB4//0OnEJYbV8OWN74EKabuYfapsTcgdPDzdufeO0HDmtUL/MFGv7uVJwjwNYh7AY0lTtOo1YsNyJiDTmXY4nmlmtE0/dTSdRHFKxRbH0unjuhIdIkrSMy3cFt8nc6k9QPEqXGSGIF1QgIcYgj6OlTLiT47sYjsxQgPDms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kvLwEDV+; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QcsZmQPx"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kvLwEDV+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774506582; x=1806042582;
+  t=1774507403; x=1806043403;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=F2CIwix+3OkogRxcS8TB5UZgzRKbysS1r7oWNKxyQDw=;
-  b=QcsZmQPxv3cTaTJ6hviHvU0td/yQCzrZwXuuL8prXn4/PQNWOXx2OEBT
-   0w+/YUCl00rAQXj2fEaELyQc6AZ9sbcndi91qP6zQV1wXTHigr+TYxKeS
-   xISw9xN8xrOXFRZn1rxMJ0w7L+v1ImYVU+zk4ns2vTg1WCEecbLbwwat4
-   ZCz+qG3rTxIfK6j8X8DkRpo7ajA4aNWbJese58nGiUkgj0h3BBk1lEme3
-   emo0ZVsm9g/NzKvGdrfY4G1/Nnvp53yTq5FW7TLwwKRJtaGYwaLtUzai4
-   iov3NH8O/c/w/6UULUrl6p7M2+G2k/0/IXyVM4286uzgbntpm5HXTJhaO
-   A==;
-X-CSE-ConnectionGUID: 0UxJLSCXSxOMja39/Vm8XA==
-X-CSE-MsgGUID: Y1SrlgijQd+j91TtbNb35Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="75271311"
+  bh=qSexQmpuDMmwpl+CIU7fbjXqVQSQ5xSuV7IQEg37s8Y=;
+  b=kvLwEDV+ojM2nLJ9WScdfsqidiriDJ0sDkyQWGK8Kgb2DPR9FPW3mi+Y
+   VM3pFKrQDiI9fMSc3GJ/uuMaCYJv8XIPQ8AS1RFbPYysserWxFm78K0C5
+   PZs0u9haImCVj4K88qLkKcmmQrj+WCg9AtHJeJXKk3/crGnpfUN6vLrMI
+   1R7VYE1dk5jE6AUCuBaTvqn0BtPgdB/jcI8CZvFacKjlXTaXxX205UxN3
+   9Uek+jE0qtU2PUukuLf3adW1oy2njok/llqQIbPrOoQ2G+Q1UJ//vnaW6
+   XoOA79T9bLJejGjPwfN9I/+Cx+GCkgHWXkzxRmF3ZgaAG6KL2Xv5EUTwb
+   g==;
+X-CSE-ConnectionGUID: ROaYYkM3SriOmqGbCYMegg==
+X-CSE-MsgGUID: H6JodjWTQZSqzmhWNqhPGg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="79462652"
 X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; 
-   d="scan'208";a="75271311"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2026 23:29:42 -0700
-X-CSE-ConnectionGUID: DvLfg5NhTyiMvdVKTpAAQA==
-X-CSE-MsgGUID: 3vgPVyiCSbayuby6mbCb4g==
+   d="scan'208";a="79462652"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2026 23:43:23 -0700
+X-CSE-ConnectionGUID: wBL8JgPuRSmtr5GEUguCvg==
+X-CSE-MsgGUID: 4MPjA0KCTKGw4me0t0fWPw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; 
-   d="scan'208";a="228981780"
-Received: from igk-lkp-server01.igk.intel.com (HELO 9958d990ccf2) ([10.211.93.152])
-  by orviesa003.jf.intel.com with ESMTP; 25 Mar 2026 23:29:40 -0700
-Received: from kbuild by 9958d990ccf2 with local (Exim 4.98.2)
+   d="scan'208";a="255404103"
+Received: from lkp-server01.sh.intel.com (HELO 3905d212be1b) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 25 Mar 2026 23:43:20 -0700
+Received: from kbuild by 3905d212be1b with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1w5eDo-000000007EL-1bjV;
-	Thu, 26 Mar 2026 06:29:36 +0000
-Date: Thu, 26 Mar 2026 07:28:48 +0100
+	id 1w5eR2-000000008ML-44oD;
+	Thu, 26 Mar 2026 06:43:16 +0000
+Date: Thu, 26 Mar 2026 14:42:55 +0800
 From: kernel test robot <lkp@intel.com>
 To: Zqiang <qiang.zhang@linux.dev>, tj@kernel.org, void@manifault.com,
 	arighi@nvidia.com, changwoo@igalia.com
@@ -55,7 +55,7 @@ Cc: oe-kbuild-all@lists.linux.dev, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org, qiang.zhang@linux.dev
 Subject: Re: [PATCH] sched_ext: Choose the right sch->ops.name to output in
  the print_scx_info()
-Message-ID: <202603260700.UT38KZHC-lkp@intel.com>
+Message-ID: <202603261453.8kiJImYo-lkp@intel.com>
 References: <20260324120313.12632-1-qiang.zhang@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -82,14 +82,14 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Zqiang/sched_ext-Choose-t
 base:   tip/sched/core
 patch link:    https://lore.kernel.org/r/20260324120313.12632-1-qiang.zhang%40linux.dev
 patch subject: [PATCH] sched_ext: Choose the right sch->ops.name to output in the print_scx_info()
-config: x86_64-rhel-9.4-bpf (https://download.01.org/0day-ci/archive/20260326/202603260700.UT38KZHC-lkp@intel.com/config)
+config: x86_64-rhel-9.4-bpf (https://download.01.org/0day-ci/archive/20260326/202603261453.8kiJImYo-lkp@intel.com/config)
 compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260326/202603260700.UT38KZHC-lkp@intel.com/reproduce)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260326/202603261453.8kiJImYo-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603260700.UT38KZHC-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603261453.8kiJImYo-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
