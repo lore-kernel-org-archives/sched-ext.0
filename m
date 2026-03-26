@@ -1,122 +1,166 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB16634F24E
-	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 05:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1B934B1A2;
+	Thu, 26 Mar 2026 06:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774501993; cv=none; b=U+hkjdovzoGMuEwcjPZlpKuaYcJwhdN5zPYz2Yej1VqD/6VxLZnvXoKhnOOkzVEwrkBQeoyJIfL0+E18HGXKkcx1QWnhytxY/8CTMQR+/laxcMzBDguBedD1bjI98XiPTWaLCKdMiypiri/RdNEqU7Q52ZIrHDbA4ogPHuJhFPY=
+	t=1774506583; cv=none; b=GIiKs9UE7iHdso8MpZqjAi85ZDzVG72CLwiEQuvxg4H2noVkzMwr/ZD2fy8falqCvkvvLt5GeXF08lhwVF2F+lTAd8ICGyrZtsiJvDEU47gxxDFuAqnJ5Qv6FaYe2o2FKyalEMlpicu1oO6qWTykZ8gjkJVM2nUN14D32xuwESw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774501993; c=relaxed/simple;
-	bh=CrCHGvVBKIandtc4VKSowVEgY2CkrtBYx77eJ9fExTs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AavZPrKnXLBch3HfR0lvg/gZDh7sb/rJxqhu75W0vAu9ouIryD8d5CC29jwcVHX4/8HPE9tgKPahXyiSdXAyUc3Nx0MN5brSoG64ZUh+U/SRpnJ1H7spR3NluULREXN/76LOmqNhlfxC5mUiRf5Jru+qY06ejXtBYTftfv1R7dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bFijkw0B; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774506583; c=relaxed/simple;
+	bh=F2CIwix+3OkogRxcS8TB5UZgzRKbysS1r7oWNKxyQDw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m/cH8zticbELNPqHKAltIl+yV9coUqZW3BwdwFhNpot9a+V9bs2Bx+5EfhfUtsokJQnEZsfyVmYk1RjEr+BXQ4hJJbUloeQViLgzMDwNw9KTdD7+5FSwPdZEgWqgGlbT9e8xb3YeIBUm4x/WTpu36KLEkInQWDI1jiGE0z0yMd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QcsZmQPx; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFijkw0B"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2ad21f437eeso3113025ad.0
-        for <sched-ext@lists.linux.dev>; Wed, 25 Mar 2026 22:13:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774501991; x=1775106791; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CrCHGvVBKIandtc4VKSowVEgY2CkrtBYx77eJ9fExTs=;
-        b=bFijkw0BzVN1ibB3sDIfTzjYSWUB2q7xGgK1aknwr0vf7vDfJBqseBIW0+1N0jAADi
-         2c/Hn/qev3iIUHDa1QLzOommDfMOf60vdZ1clPelZG7JPJlqjRS2I3bCkd8msxETKes9
-         FYe3gBahskhWv0R0+L2d4Kjpo9fSDkCWtSnURqqkfRI1167/WW1LuexZ71mIKGirzOlU
-         Ha64M8Xm4cKqXxbPY0ftQ1F0miaIjfPuEY/Gn3eIkp2ITOUBtpmVYh/tbyytiuj+g62j
-         Opj/S+g6HDf/nl7ktqJKEliqNUVNwwqTfJ7/1T/y7u2jdNQ+diyPf4JKcKVzgpsuSWKd
-         I7mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774501991; x=1775106791;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CrCHGvVBKIandtc4VKSowVEgY2CkrtBYx77eJ9fExTs=;
-        b=TjdU/b+TrwOXN9zrvuB16TqiGEgGAsGTHZEpSAMcDwN4oPos2CjBVwnwtn1ZYts7xR
-         82M9yDevg/CAnB5rEPz1idpFtgN1ngAETzDhsPiszjPQIyqdeaMb5WwlqtPyyLtoB97W
-         vs4xUFhdKckDXu70oHnN3BCOwHxfX87ycf/M1VXrlLK0yRe8rpmSR7jFCy42G9uo++pA
-         9XiUWZ6MKZX+PZNGktYTdp21tWEI0JKCNUoaXpmEpZpPvGDzm0NAaXzkCIlQbwJGWM+7
-         BhOO3rnTzzLbxU3/dMDURcT9fhCwr2HAqz0uHMApe1xG1QW3bj7QucXsPw+YeniW40Rk
-         06pw==
-X-Gm-Message-State: AOJu0Yw8ZbIjSHDgJxjfAFtRqQr4Y/S0H1Jd2Y3/7DuSkK3axJFuw51q
-	xfBCDslrTSplkqL0xgpx2GvWl7Dfxt/Dbsg02OLp5Dm6JsVap61TWqOm
-X-Gm-Gg: ATEYQzwd/PRLBsDrXhLGN18JDDac1Q09zD9NFcNzA0pKzruRkw8FISB4I+JAIBwb/yI
-	Jikf52CgisddfcVut3ReefwQWOJrcVtdYCCxFpwgCOyNVs3mnmZeD9yZ0GqZ+tbXIxR07yTUWy/
-	wylt+sFvQpvdaSKS5SFLCqv5IV8bRDDpsRU0PTGmIDrARdsZpajmq7d04YrlrNi7tRhnb+sqvDw
-	9S1qnWpn2a6GNPK3Owzlt4igRhHDgvHiqJIdta3qZPOSZTBSxqY14znjy1gJ87BzFfQgMSjWNeW
-	pOToOmPp5hfMYejkfcjwHx6yGQeuSrQWKUs4yMp/Ul2J0xZpYU4NBhYoIS+4+02WTbbVJwip/+6
-	Po7D0UL9qApj01i2kfQutU0qtiw9f4ek3d1q716ZZ71jRXtr6Wfqcbni7I3FQ3n0es55sJRIXBl
-	lr7DR/C+ZbcfqW6rqtzC9cw5DtG+e0LoaBP8B3ZhUh3uL3n0CR1Bk/heAg/tOVHHx/t3W10t2SF
-	sU=
-X-Received: by 2002:a17:902:c950:b0:2ae:5ab4:f4c0 with SMTP id d9443c01a7336-2b0c488e16cmr2842315ad.13.1774501991093;
-        Wed, 25 Mar 2026 22:13:11 -0700 (PDT)
-Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc8de61esm20402815ad.65.2026.03.25.22.13.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 22:13:10 -0700 (PDT)
-From: zhidao su <soolaugust@gmail.com>
-X-Google-Original-From: zhidao su <suzhidao@xiaomi.com>
-To: tj@kernel.org
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	peterz@infradead.org,
-	mingo@redhat.com,
-	suzhidao@xiaomi.com
-Subject: Re: [PATCH 1/3] sched_ext: fix NULL deref in bpf_scx_unreg() due to ops->priv race
-Date: Thu, 26 Mar 2026 13:13:05 +0800
-Message-ID: <20260326051305.113430-1-suzhidao@xiaomi.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <acSdtkMeCWBVuIOg@slm.duckdns.org>
-References: <acSdtkMeCWBVuIOg@slm.duckdns.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QcsZmQPx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774506582; x=1806042582;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=F2CIwix+3OkogRxcS8TB5UZgzRKbysS1r7oWNKxyQDw=;
+  b=QcsZmQPxv3cTaTJ6hviHvU0td/yQCzrZwXuuL8prXn4/PQNWOXx2OEBT
+   0w+/YUCl00rAQXj2fEaELyQc6AZ9sbcndi91qP6zQV1wXTHigr+TYxKeS
+   xISw9xN8xrOXFRZn1rxMJ0w7L+v1ImYVU+zk4ns2vTg1WCEecbLbwwat4
+   ZCz+qG3rTxIfK6j8X8DkRpo7ajA4aNWbJese58nGiUkgj0h3BBk1lEme3
+   emo0ZVsm9g/NzKvGdrfY4G1/Nnvp53yTq5FW7TLwwKRJtaGYwaLtUzai4
+   iov3NH8O/c/w/6UULUrl6p7M2+G2k/0/IXyVM4286uzgbntpm5HXTJhaO
+   A==;
+X-CSE-ConnectionGUID: 0UxJLSCXSxOMja39/Vm8XA==
+X-CSE-MsgGUID: Y1SrlgijQd+j91TtbNb35Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="75271311"
+X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; 
+   d="scan'208";a="75271311"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Mar 2026 23:29:42 -0700
+X-CSE-ConnectionGUID: DvLfg5NhTyiMvdVKTpAAQA==
+X-CSE-MsgGUID: 3vgPVyiCSbayuby6mbCb4g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,141,1770624000"; 
+   d="scan'208";a="228981780"
+Received: from igk-lkp-server01.igk.intel.com (HELO 9958d990ccf2) ([10.211.93.152])
+  by orviesa003.jf.intel.com with ESMTP; 25 Mar 2026 23:29:40 -0700
+Received: from kbuild by 9958d990ccf2 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w5eDo-000000007EL-1bjV;
+	Thu, 26 Mar 2026 06:29:36 +0000
+Date: Thu, 26 Mar 2026 07:28:48 +0100
+From: kernel test robot <lkp@intel.com>
+To: Zqiang <qiang.zhang@linux.dev>, tj@kernel.org, void@manifault.com,
+	arighi@nvidia.com, changwoo@igalia.com
+Cc: oe-kbuild-all@lists.linux.dev, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, qiang.zhang@linux.dev
+Subject: Re: [PATCH] sched_ext: Choose the right sch->ops.name to output in
+ the print_scx_info()
+Message-ID: <202603260700.UT38KZHC-lkp@intel.com>
+References: <20260324120313.12632-1-qiang.zhang@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260324120313.12632-1-qiang.zhang@linux.dev>
 
-On Thu, Mar 26, 2026 at 10:55:08AM +0800, Tejun Heo wrote:
-> On Thu, Mar 26, 2026 at 10:28:25AM +0800, zhidao su wrote:
-> > The reload_loop selftest triggers a KASAN null-ptr-deref at
-> > scx_claim_exit+0x83 when two threads concurrently attach and
-> > destroy BPF schedulers using the same ops map.
-> ...
-> Can you reproduce this? How do you trigger enable on the same ops that has
-> already been enabled?
+Hi Zqiang,
 
-I investigated further and the analysis in patch 1/3 was wrong.
-Please do not merge patches 1/3 and 2/3 from this series. Patch
-3/3 is still valid and can be applied independently.
+kernel test robot noticed the following build errors:
 
-Patch 1/3 (NULL deref):
-The race described in the commit message cannot occur. Both
-bpf_struct_ops_link_create() and bpf_struct_ops_map_link_detach()
-hold update_mutex when calling reg()/unreg(), so concurrent reg
-and unreg on the same ops map are serialized. I ran 20 rounds of
-reload_loop under KASAN with no crashes. The bug was never real.
+[auto build test ERROR on tip/sched/core]
+[also build test ERROR on linus/master v7.0-rc5]
+[cannot apply to next-20260325]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-I wrote the patch based on code analysis alone without first
-obtaining KASAN output confirming the crash. That was wrong.
+url:    https://github.com/intel-lab-lkp/linux/commits/Zqiang/sched_ext-Choose-the-right-sch-ops-name-to-output-in-the-print_scx_info/20260326-043528
+base:   tip/sched/core
+patch link:    https://lore.kernel.org/r/20260324120313.12632-1-qiang.zhang%40linux.dev
+patch subject: [PATCH] sched_ext: Choose the right sch->ops.name to output in the print_scx_info()
+config: x86_64-rhel-9.4-bpf (https://download.01.org/0day-ci/archive/20260326/202603260700.UT38KZHC-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260326/202603260700.UT38KZHC-lkp@intel.com/reproduce)
 
-Patch 2/3 (dsq_reenq reliability):
-I cannot reproduce a failure with the original test (NUM_WORKERS=4).
-Running 10 iterations locally, all pass. The "reliability fix" had
-no verified failure to fix and should not be merged.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603260700.UT38KZHC-lkp@intel.com/
 
-Patch 3/3 (consume_immed reliability):
-The original test fails consistently because ops.dispatch() moves
-only one task per call, so dsq->nr never exceeds 1 and the IMMED
-slow path in dsq_inc_nr() is never triggered. This is a real bug
-in the test. Patch 3/3 is valid and can be considered independently.
+All errors (new ones prefixed by >>):
 
-Sorry for the noise.
+   In file included from kernel/sched/build_policy.c:62:
+   kernel/sched/ext.c: In function 'scx_vexit':
+   kernel/sched/ext.c:4800:9: warning: function 'scx_vexit' might be a candidate for 'gnu_printf' format attribute [-Wsuggest-attribute=format]
+    4800 |         vscnprintf(ei->msg, SCX_EXIT_MSG_LEN, fmt, args);
+         |         ^~~~~~~~~~
+   kernel/sched/ext.c: In function 'print_scx_info':
+>> kernel/sched/ext.c:5719:15: error: implicit declaration of function 'scx_task_sched_rcu' [-Wimplicit-function-declaration]
+    5719 |         sch = scx_task_sched_rcu(p);
+         |               ^~~~~~~~~~~~~~~~~~
+>> kernel/sched/ext.c:5719:13: error: assignment to 'struct scx_sched *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+    5719 |         sch = scx_task_sched_rcu(p);
+         |             ^
 
-zhidao
+
+vim +/scx_task_sched_rcu +5719 kernel/sched/ext.c
+
+  5695	
+  5696	/**
+  5697	 * print_scx_info - print out sched_ext scheduler state
+  5698	 * @log_lvl: the log level to use when printing
+  5699	 * @p: target task
+  5700	 *
+  5701	 * If a sched_ext scheduler is enabled, print the name and state of the
+  5702	 * scheduler. If @p is on sched_ext, print further information about the task.
+  5703	 *
+  5704	 * This function can be safely called on any task as long as the task_struct
+  5705	 * itself is accessible. While safe, this function isn't synchronized and may
+  5706	 * print out mixups or garbages of limited length.
+  5707	 */
+  5708	void print_scx_info(const char *log_lvl, struct task_struct *p)
+  5709	{
+  5710		struct scx_sched *sch;
+  5711		enum scx_enable_state state = scx_enable_state();
+  5712		const char *all = READ_ONCE(scx_switching_all) ? "+all" : "";
+  5713		char runnable_at_buf[22] = "?";
+  5714		struct sched_class *class;
+  5715		unsigned long runnable_at;
+  5716	
+  5717		guard(rcu)();
+  5718	
+> 5719		sch = scx_task_sched_rcu(p);
+  5720	
+  5721		if (!sch || state == SCX_DISABLED)
+  5722			return;
+  5723	
+  5724		/*
+  5725		 * Carefully check if the task was running on sched_ext, and then
+  5726		 * carefully copy the time it's been runnable, and its state.
+  5727		 */
+  5728		if (copy_from_kernel_nofault(&class, &p->sched_class, sizeof(class)) ||
+  5729		    class != &ext_sched_class) {
+  5730			printk("%sSched_ext: %s (%s%s)", log_lvl, sch->ops.name,
+  5731			       scx_enable_state_str[state], all);
+  5732			return;
+  5733		}
+  5734	
+  5735		if (!copy_from_kernel_nofault(&runnable_at, &p->scx.runnable_at,
+  5736					      sizeof(runnable_at)))
+  5737			scnprintf(runnable_at_buf, sizeof(runnable_at_buf), "%+ldms",
+  5738				  jiffies_delta_msecs(runnable_at, jiffies));
+  5739	
+  5740		/* print everything onto one line to conserve console space */
+  5741		printk("%sSched_ext: %s (%s%s), task: runnable_at=%s",
+  5742		       log_lvl, sch->ops.name, scx_enable_state_str[state], all,
+  5743		       runnable_at_buf);
+  5744	}
+  5745	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
