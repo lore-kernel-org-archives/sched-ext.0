@@ -1,205 +1,186 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2FE3A5437
-	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 21:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774560586; cv=pass; b=LExGE+TMQJXQCU3GIojVS88eHdaQckDVnZWqZcJ4Gk3AoQrrPoJV9SY2Ztd5MN9nXAZJMlI5AWYtXLki6QOXDN79ShRWWZHmru/ZAlqW6YzcmuHQDeni3N5E50fudT6l1bcLLNiMseZ97tmjdohq7ILesumVwJBhfPBSe3AlMC4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774560586; c=relaxed/simple;
-	bh=qI9exwAmkDBjRH01c19fBBH57sSxNQDiBbwoNFgsSto=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jr8Z6qNZH4bapGZ1b99Y79gE6/TJlFDpArHHfDWwzHYh+rRhQ7uzct3Oami3uFrGjWQgTjxlEKu3meUq29TqIrNS3LE+1PCm3ON8S9/qql+LEvlLhQarPnoG2OiHYu0gG8y2hvGXfx9sjJhzC1s38klTsiiBndYSyAt1JDUXBiE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lXv4b440; arc=pass smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA92331A49
+	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 22:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774562800; cv=none; b=f/DcMEY9OZ+vx5EqW5MuZPaAWkUculS9O4uwzU8MEsvcsmtjB+TKkJdkd506KG7yGozl/bqZEfcd8L+FnQWU7jM+dfJyGfEyTh4cBEgyLat6TLeTHHNdKI2VTzk+Bc7bw6sgade9Th/JKFEc7Hw6diLbwrDJjIFk7f7RLOewmOw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774562800; c=relaxed/simple;
+	bh=VHcxuzCD6goD5XgHUp8HZt3sVRcSxxWJZeFmpBM71Qo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b9VSf2ibYWuIQ1TrCYmi3mQhiTmkfU8zmbueQlsipe4y93sYfqDXmMpADuYPuDC1JDpgkuWUQxM9jWjprPPmHvMDG/H9MGCP2OML922S7dm/LFFkM7rA+CYlN/GN1gx9aq+iRQdbR11UhiTYILtDdJi/FDuwrPiqNcY8ftux/Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Dvzw7op5; arc=none smtp.client-ip=95.215.58.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lXv4b440"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c766a95a72dso1044529a12.1
-        for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 14:29:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774560583; cv=none;
-        d=google.com; s=arc-20240605;
-        b=f/5U4TrnGFUQmlAESlS1wco0l+g1zyq7qV7KFJhsN7yLMIFT9da6R80vrI17xkpiAM
-         d29NIh7DNrxoIGNOnuG8LrBWorKL5KuOqZQMveqfsPka828LNM0KiPUnXzZRBOWqhl6+
-         oSHyueQ+5PZIpRH53h6NJfBKzqS68RyB6UWNFiSdanNKzKLLnc8CIUp1nst3VsZ5e4OY
-         oI/Jsq/SjmjX2NU0JvmO3/w0/ZxLtGS1BH/dW3lul+6TL7XdylixrrXVDadJqmHKfv6u
-         76M4Q7AzvXDPWZc3PqITXOAFQsWOAU8ktY6tLl9KVYaDCfxhSZ09EQ0V+4MA2QpSU2WJ
-         cLpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=3QATeCF9NkbK+B+zyLGqij20iEocr3QZWaHD6xlU47E=;
-        fh=Vvg/KBAc2UdgtcgY2vMpt25mDM97W5PY3Jxm/jLQUGE=;
-        b=QRGRDoH5+dMHOhpuMhFZwRdnoZ3/ogyXeHZ0SMApDDljw7I6ZjdW1l1oklB6zVk5XJ
-         Ey0+juZ4gfjYgdOXtGA/5iVS+K1W/0zLpLFFMpOPvsljhKbe3GFwVJwZtixNfpMeZ8xk
-         uvQwDeoxuTWe7na+vGwLihOtTBis1zjiILDFUwzmtSqMjTWY6s4d9vkFa3uYZcXjRtH9
-         G/oImt9e/2rW188m9PS42ESQ2pDZVHTj7lYAM6qZjm3c/G667fz4p7p7X4aHuOmz34UP
-         C0dMqJK4+I1oNX8xF3N6l7Rguae1iYVZFpN/emahohxKQIfCIWvBBC8tbWDTSl3mrN1z
-         bqkA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774560583; x=1775165383; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3QATeCF9NkbK+B+zyLGqij20iEocr3QZWaHD6xlU47E=;
-        b=lXv4b440ZQTJ7JDwEw/mH24jrX7QgSl4LjTnFTk6qHsgyEQA/DNPogmQRx3K6d9QMa
-         28EnccUUOilvicV0i/XoZVPxHMre1OHyDt2Ye78MLhpbCU0r9pDLh7hM1/C9CtJVaOW5
-         x6ew7ECAawezILBPXIc5T6oA/3Q3WJy5QMv5R/H9iH1JV7DwnPOQO9orPWf81dL80HXf
-         rZ7Vcg3ScK8m5k/B+NwjXaFb5EWX9z5c4Ed6wOZFLie64eTA14cvZcoAp2qKvtEBw2UN
-         eaFwh/Iu6vHpdxf1qfgkSUF5SX7cBXckcHWLOfE4yvsqsinLt+WF+UXLnp/35GBK76AK
-         sCoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774560583; x=1775165383;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=3QATeCF9NkbK+B+zyLGqij20iEocr3QZWaHD6xlU47E=;
-        b=WTWe2C1bzlluHZVgrRGTvTxLNmJakA1COMGPZq5NnagjziLJfYmtcyC7/CNpyFhWAR
-         yun2X071Cy0y1/MSh+n9lQCpHxX7oEtXkX9O+u1ngmw9QaTLl+mBvied/Aoz5IQzvJQe
-         OgP+CwOIUJVpkMzquXiGQ+XP9Vyhis4zV9ayRzCWC3+aBc7Glc5D16X5LCBsFZSWch+O
-         D0W476Jslt3ajWDsSh2G7L6sX2YXqegOzQgenlckPbtMgNirVnS3cVngYnNEL3N5Gnfr
-         1Wl1RLMtvOTb4yWRVz97CemkCjbHbbh0/8Jb52HeH440HUOgw7G3PuwlpdHQps9gImwT
-         1haA==
-X-Forwarded-Encrypted: i=1; AJvYcCVVd1l7mLcSGym/wug/uBXF3LMlKnfV/o3F11EFysOtKEgFiIY1MB4GpUes3z1kBpxEuog3DZk2534=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyKIJ5vYjhaxXwFF6iBIeeqxfl7v1ey3vt0RPEcFT2dckdc0IYK
-	QQjeUTvMIlR8c2XY6+h2qy3J8aOi4DB3JZaTmP6HSwuTum3AGf2G2fv1JcoPcFuN/g2/IIiYXwM
-	CcPtqy28yGGsVhgf9RHKxluqEq764wvE=
-X-Gm-Gg: ATEYQzzb/GqWYI/nZeDW9xQjS+K5DxHBggl45iB2EnliEqkTrRGISAkK4z8PcFIbyeK
-	LUnLM6oN4P+6cK1pQL64o0NO2yeKxq7asys3oC+U2mk315NlhV7I0J3OpsmOOnVDiIPuEKAonUA
-	6hjh3IIMzn2ti+WKg0ngfsviMcCa4gkwUZ2FZVa20sV7M2kYM+uvpMwMIItZWSJfXoo3uABYFj0
-	x/CqWFzOlojHtWawELSgfkcKt8+fjBw/BAv1MiYJAZY1qETLMoOMCygSVSgwB4XqA/nRU0vdYvF
-	EohpDTGXCKRfSWNR07y/RJ9hq/D17Y3d7g==
-X-Received: by 2002:a05:6a20:918c:b0:398:7d6e:27f4 with SMTP id
- adf61e73a8af0-39c877ea44amr236776637.1.1774560583359; Thu, 26 Mar 2026
- 14:29:43 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Dvzw7op5"
+Message-ID: <e0ca748d-3204-4160-b37d-0f76cbac8c6c@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1774562795;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ap4HZuU3Kp/MebHLlBMt2MHPRPf8GdkWOr2FuBBdAdU=;
+	b=Dvzw7op5c5X6VP5abajNjvoHkIBJxJAk2lEJ2Li2ge9tGe5TSNF4qSaJEHnCf2tfm2yunU
+	B44Q4XghGrB5JB1dEYr4rEDjchocp6YetnTDiU9SclLTdxbAwpgfdOEPlJalxX4Y07vpys
+	wPX98H7qZLiOX8iAYf1WNC2Y0kW/9GE=
+Date: Thu, 26 Mar 2026 15:06:28 -0700
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260326204335.3756885-1-suzhidao@xiaomi.com>
-In-Reply-To: <20260326204335.3756885-1-suzhidao@xiaomi.com>
-From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Thu, 26 Mar 2026 14:29:31 -0700
-X-Gm-Features: AQROBzDHSCVfkJYst2_nm2hm-Lt62FEoPxrr-U4kjkt2KElJQNQYMKfuKmX7V6w
-Message-ID: <CAEf4Bzb4EQVSTguMjmd=sYXYFxmyqYnGxBdRfg6dMnRoSYwORQ@mail.gmail.com>
-Subject: Re: [PATCH] libbpf: resolve versioned kfuncs by exact name before
- essential-name lookup
-To: zhidao su <soolaugust@gmail.com>
-Cc: bpf@vger.kernel.org, linux-kernel@vger.kernel.org, ast@kernel.org, 
-	daniel@iogearbox.net, andrii@kernel.org, martin.lau@linux.dev, 
-	sched-ext@lists.linux.dev, zhidao su <suzhidao@xiaomi.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] docs: Document pahole v1.26 requirement for
+ KF_IMPLICIT_ARGS kfuncs
+To: zhidao su <soolaugust@gmail.com>,
+ Alexei Starovoitov <alexei.starovoitov@gmail.com>, Tejun Heo <tj@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, bpf@vger.kernel.org
+References: <20260324062028.2479059-1-suzhidao@xiaomi.com>
+ <CAADnVQLbtuD=7mtGZFR25ULhjZ-3ifBpkyRcqu9jPSd2Mt3fBw@mail.gmail.com>
+ <69c2dbe8.170a0220.226f48.721e@mx.google.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <69c2dbe8.170a0220.226f48.721e@mx.google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, Mar 26, 2026 at 1:43=E2=80=AFPM zhidao su <soolaugust@gmail.com> wr=
-ote:
->
-> Some kfuncs use KF_IMPLICIT_ARGS and export both a base name (where
-> the verifier strips the implicit aux parameter from the prototype) and
-> a versioned name with additional user-visible parameters (e.g.
-> scx_bpf_dsq_move_to_local vs scx_bpf_dsq_move_to_local___v2).
->
-> When a BPF program declares a weak __ksym with a flavor suffix such as
-> func___v2, libbpf strips the suffix to obtain the essential name and
-> looks up the base entry first.  For KF_IMPLICIT_ARGS kfuncs the base
-> entry has fewer parameters (aux was stripped); the prototype
-> compatibility check against the versioned declaration (which has the
-> extra user parameter) then fails, and libbpf leaves the weak symbol
-> unresolved even though a perfectly-matching versioned kernel entry exists=
-.
->
-> Fix by trying an exact-name lookup first when the symbol has an
-> essential name (i.e. it has a flavor suffix).  If the exact name is
-> found in kernel BTF and its prototype is compatible, use it directly.
-> Only fall through to the essential-name lookup when the exact name is
-> absent or incompatible.
->
+On 3/24/26 11:46 AM, zhidao su wrote:
+> On Tue, 24 Mar 2026 08:12:12 -0700, Alexei Starovoitov wrote:
+>> I don't think that's true.
+>> At least when implicit args were designed the goal was to avoid
+>> pahole dependencies.
+>> Please share exact steps to reproduce.
+> 
+> Here are the exact reproduction steps and code path analysis.
+
+Hi everyone, sorry I'm late to the party.
+
+First of all, a *Nack* to the doc change in isolation, I agree with
+Alexei here. Tejun, I suggest to revert it.
+
+Doc change is insufficient and will make things only more confusing.
+
+Kconfig checks for pahole version, as well as Makefile.btf. If we set
+a new minimum version then it makes sense to assume it in the kernel
+build code, and *disable CONFIG_DEBUG_INFO_BTF* if the version is not
+recent enough. Also remove any flags/conditions that depend on pahole
+being less than target minimum version. For reference see a patch
+where I bumped the minimum version to 1.22 (903922cfa0e6):
+https://lore.kernel.org/bpf/20251219181825.1289460-1-ihor.solodrai@linux.dev/
+
+More importantly, the reported problem is real, but the actual fix is
+a bump to v1.27, not v1.26. As usual AI got it about 80% right in the
+analysis below (I assume this is AI output, it certainly looks like
+one). Although to be fair AI was misled by a human error.
+
+> 
+> Reproduction (Ubuntu 24.04, pahole v1.25):
+> 
+>   $ git clone https://github.com/sched-ext/sched_ext.git
+>   $ cd sched_ext && make -j$(nproc) LOCALVERSION=-test
+>   $ make -C tools/testing/selftests/sched_ext
+>   $ vng --run arch/x86/boot/bzImage --cpus 4 --memory 4G -- \
+>       tools/testing/selftests/sched_ext/build/runner 2>&1 | grep "func_proto"
+> 
+> Result: 23/30 tests fail with:
+>   libbpf: extern (func ksym) 'scx_bpf_create_dsq': func_proto [382]
+>           incompatible with vmlinux [53813]
+
+This is indeed an error you may get if BTF for kfuncs with
+KF_IMPLICIT_ARGS is wrong.
+
+> 
+> Root cause:
+> 
+> The KF_IMPLICIT_ARGS mechanism requires pahole v1.26 for the DECL_TAG
+> generation step that enables resolve_btfids to do its btf2btf work:
+> 
+> 1. scripts/Makefile.btf gates decl_tag_kfuncs on pahole >= 1.26:
+> 
+>      pahole-flags-$(call test-ge, $(pahole-ver), 126) = ... decl_tag_kfuncs
+
+This is correct in that resolve_btfids expects that pahole ran with
+decl_tag_kfuncs, but the version check is and was wrong.
+
+decl_tag_kfuncs was implemented in pahole commit 72e88f29c [1], which
+was released in v1.27. But on the kernel build side, the new feature
+was simply appended (ebb79e96f1ea [2]) to the list of features under
+1.26 check.
+
+[1] https://git.kernel.org/pub/scm/devel/pahole/pahole.git/commit/?id=72e88f29c6f7e14201756e65bd66157427a61aaf
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v7.0-rc5&id=ebb79e96f1ea454fbcc8fe27dfe44e751bd74b4b
+
+> 
+> 2. Without decl_tag_kfuncs, pahole does not emit DECL_TAG BTF entries
+>    for __bpf_kfunc-annotated functions.
+> 
+> 3. resolve_btfids/main.c::collect_kfuncs() (line 1002) early-returns
+>    when nr_decl_tags == 0:
+> 
+>      if (!link->nr_decl_tags)
+>          return 0;
+> 
+> 4. With no bpf_kfunc DECL_TAGs, btf2btf() never calls
+>    process_kfunc_with_implicit_args() to create _impl variants and
+>    strip 'aux' from the original proto.
+> 
+> 5. Result: vmlinux retains the 3-param proto (with 'aux') for all
+>    KF_IMPLICIT_ARGS kfuncs.
+> 
+> BTF evidence from our pahole v1.25-compiled vmlinux:
+> 
+>   $ bpftool btf dump file vmlinux | grep -A5 '[53813]'
+>   [53813] FUNC_PROTO '(anon)' ret_type_id=... vlen=3
+>       'dsq_id' type_id=...
+>       'node'   type_id=...
+>       'aux'    type_id=...    <-- implicit arg still present, 3-param
+>   (no scx_bpf_create_dsq_impl exists)
+
+So far so good.
+
+> 
+> With pahole v1.26, resolve_btfids creates scx_bpf_create_dsq_impl
+> (3-param, for verifier's find_kfunc_impl_proto) and rewrites
+> scx_bpf_create_dsq to 2-param (for libbpf ksym matching).
+
+And this is bullshit. The kernel build with pahole v1.26 has the same
+problem:
+
+  # Notice that 'bpf_wq_set_callback_impl' is absent from BTF
+  $ bpftool btf dump file vmlinux | grep 'bpf_wq_set'
+  [63890] FUNC 'bpf_wq_set_callback' type_id=9991 linkage=static
+          'KF_bpf_wq_set_callback' val=29
+
+vs expected (v1.27, v1.31):
+
+  $ bpftool btf dump vmlinux | grep 'bpf_wq_set'
+  [64253] FUNC 'bpf_wq_set_callback' type_id=51033 linkage=static
+  [64254] FUNC 'bpf_wq_set_callback_impl' type_id=34861 linkage=static
+          'KF_bpf_wq_set_callback' val=29
+
+One could've figured this out if they tried to actually run the build.
+
+> 
+> You're right that the design goal was to avoid pahole dependencies -
+> the implementation could be fixed in resolve_btfids to handle the
+> no-DECL_TAG case. But until such a fix lands, the dependency exists
+> in practice. Jonathan Corbet suggested raising the minimum version in
+> the requirements table to 1.26, which seems the cleanest fix.
+> 
 > Signed-off-by: zhidao su <suzhidao@xiaomi.com>
-> ---
->  tools/lib/bpf/libbpf.c | 35 +++++++++++++++++++++++++++++++++++
->  1 file changed, 35 insertions(+)
->
-
-libbpf doesn't support (yet) matching triple-underscore-suffixed
-kfuncs on the kernel side. We plan to support that, but it should be
-done differently.
-
-For now, as a work around, if you need libbpf to match
-scx_bpf_dsq_move_to_local___v2, you can add yet another triple
-underscore: scx_bpf_dsq_move_to_local___v2___andimeanit
-
-pw-bot: cr
 
 
-> diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-> index 0be7017800fe..80e495aebe68 100644
-> --- a/tools/lib/bpf/libbpf.c
-> +++ b/tools/lib/bpf/libbpf.c
-> @@ -8630,6 +8630,40 @@ static int bpf_object__resolve_ksym_func_btf_id(st=
-ruct bpf_object *obj,
->
->         local_func_proto_id =3D ext->ksym.type_id;
->
-> +       /*
-> +        * For kfuncs with a flavor suffix (e.g. "func___v2"), first try =
-the
-> +        * exact name.  If the exact name exists in kernel BTF and its
-> +        * prototype is compatible, use it directly.  This is necessary f=
-or
-> +        * KF_IMPLICIT_ARGS kfuncs that export both a base name (with the
-> +        * implicit aux parameter stripped) and a versioned name with ext=
-ra
-> +        * parameters: the essential-name lookup would find the base entr=
-y
-> +        * (fewer params) and fail the compat check, leaving the weak sym=
-bol
-> +        * unresolved even though the versioned kernel entry is a perfect
-> +        * match.
-> +        */
-> +       if (ext->essent_name) {
-> +               struct module_btf *exact_mod_btf =3D NULL;
-> +               struct btf *exact_btf =3D NULL;
-> +               int exact_id;
-> +
-> +               exact_id =3D find_ksym_btf_id(obj, ext->name, BTF_KIND_FU=
-NC,
-> +                                           &exact_btf, &exact_mod_btf);
-> +               if (exact_id >=3D 0) {
-> +                       kern_func =3D btf__type_by_id(exact_btf, exact_id=
-);
-> +                       kfunc_proto_id =3D kern_func->type;
-> +                       ret =3D bpf_core_types_are_compat(obj->btf,
-> +                                                       local_func_proto_=
-id,
-> +                                                       exact_btf,
-> +                                                       kfunc_proto_id);
-> +                       if (ret > 0) {
-> +                               kern_btf =3D exact_btf;
-> +                               mod_btf =3D exact_mod_btf;
-> +                               kfunc_id =3D exact_id;
-> +                               goto found;
-> +                       }
-> +               }
-> +       }
-> +
->         kfunc_id =3D find_ksym_btf_id(obj, ext->essent_name ?: ext->name,=
- BTF_KIND_FUNC, &kern_btf,
->                                     &mod_btf);
->         if (kfunc_id < 0) {
-> @@ -8655,6 +8689,7 @@ static int bpf_object__resolve_ksym_func_btf_id(str=
-uct bpf_object *obj,
->                 return -EINVAL;
->         }
->
-> +found:
->         /* set index for module BTF fd in fd_array, if unset */
->         if (mod_btf && !mod_btf->fd_array_idx) {
->                 /* insn->off is s16 */
-> --
-> 2.43.0
->
+zhidao su, I suggest you prepare a proper "minimum pahole version
+bump" patch, modifying kconfig checks, Makefile.btf and the
+documentation. Please route it through the BPF tree and add me to cc.
+
+Thanks.
+
+
