@@ -1,121 +1,244 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85ED28506B
-	for <sched-ext@lists.linux.dev>; Fri, 27 Mar 2026 05:36:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600B833A9D3
+	for <sched-ext@lists.linux.dev>; Fri, 27 Mar 2026 06:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774589761; cv=none; b=nsTwr7wd864U56l+xWYt91uVN09f8BUeUbFIoud0GlHOodNiCJcSRe1YTGikWfHJYoI0hozPYevu/3krxRZz/L0L/WjTg9NU0SmtvzS2cC9vJIavAx6tMW1nsCq+Ydy3cYQtq0E3JIXDf+0CyxcTnWe//aYddY06ViE87K6FG4w=
+	t=1774592315; cv=none; b=r8bY/KfGYxbTXAo/tAlsv0l2vc901XBFRUB9po0DDU9V+b5xAW8iIUpYwLAV2NoX/gMD5BNgxvXkCFwuEF3TrtOwVS+2Skr1nJqyqAdD1BdAFFKeh5JpuDKHjXKiJSTEmC+9FXgVPh3QqJmuFau1SIzL04RuSNmgwWtFAp0EtwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774589761; c=relaxed/simple;
-	bh=5xeI+UBtHbQiHG4eazoKGqLCdJsJQ/PduQuogAxxWrk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=InH7d1/kZIdgmbX6XsjzrP1NrW/tqd4YCiyoEFyPDnFBk0wdua++YU8mBrIWc4gIdPXW1qKdEWNPxcOJjEv58OxnyGYJoJARl1jFeT1BCWm7XIH0ATb1K953VKhCQWtBmznInBlQ069eQnkt8J13mSGo4rVlXVYFaUh1+O9PP5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BOB6fuz9; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1774592315; c=relaxed/simple;
+	bh=b/lQ0xtRPomqOeqilusoWC6LJkzps+btxDFUZn8eYKo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EyzoR/pKC5o887sj7KPEMLR2DYaEPavvfLGWfLNGmjympjyUmAXzesdHBj7WGiDQq1bDWBKNu4pdqm2f3+1jRGTQf/a7BmZmx6kfB9yFMNch5WafgAqEklkic3gAflqNvD18WK+aa7rpo7bG3yDWeOTnutwRdSJ16V+oVZIfH5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=ZZaqplt9; arc=none smtp.client-ip=220.197.31.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BOB6fuz9"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2aaf43014d0so11840895ad.2
-        for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 22:36:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774589760; x=1775194560; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=57zbslpdW+qQC0v6K2x2MyCaG2fO5ph99ZSLbrSIvxE=;
-        b=BOB6fuz9BrY7JaeNJiEgqQCNFTi4g5ryC5cdLff75YeXhc63mE432e7lwbBwq4imhd
-         0ftjDc9QjyiP3owWvPazgq/4xJy8dnM2NjVrnZfUgQbLje4LT0SRWCIam3eOOc0Dh0td
-         LiV8vgeixGPBoUmOaAmkr19pyfEY6vHIVFE0rhNmRLLKA8a1OWQZWP/i5c0WQoZmOj7q
-         pGb/7z3XMoNlSwgKTz49T64atLFYUvHAZaOy+hLkBI6sYg3R6teOW9aYYqShmkH7s5v2
-         ijQFEwouFruEpYXnRCXQXzssbtBRKobCMoaf1BaJkGJvYf9uToiZxs4wAZqgD1ehtbdL
-         lCUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774589760; x=1775194560;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=57zbslpdW+qQC0v6K2x2MyCaG2fO5ph99ZSLbrSIvxE=;
-        b=akPzRatRal+Muea5/6WAexVIqYLpNCouKRZLXNmtGlmB7SUFxlXzdkL6jLmlqxQi1g
-         omKRgwOT1sZjuEa7JUWjWiQPKrRJMNQ8oyOYnIpjnslqPeSj8oiBL/i0VZCrthTIk0nU
-         0REzNjGRSSpNWzsWbW5VgSDBuudjIJziyIw/2Af8IVzzbtKKhgSmuizmV95UVAvuhuU+
-         LogbRewIL7EalGFidLlGCcgFSHL1YkjRLEwqB/rGHRk+fwBr+UdQ1z1e0SjK1MR8Bzq1
-         QZuYxXAAtaPIiBIFv94YxjI2pLOTd+XKZECkipHRnRXtN3bpR8tG87n8rN0nGhueGaPq
-         2AfA==
-X-Gm-Message-State: AOJu0YzXpGxqhEE8twIITjlLbiWu5Xss77EqdYbt3/QqdWzH0rUnmfx1
-	onGlsFf60avc6/O4LbnkfVuN39NtOQE526dsCSPk+Xvj+rAjSKgKVcLLIWDK3GC6
-X-Gm-Gg: ATEYQzyB5BWpy1VWBBuPTL2umXe4uesOuSgyGyVoqT+OHGnpj5RL+7pTbJEJZLcTMQO
-	/+lY5GIxqjGp7WGrRvJdaOuCzvuRmG8crgK+5c1bEZHFVwOEjW0tK6QZApUyVbW50HVk6kfvqpW
-	Bait1CFDODh3kzYyHRLAgYxcPce4+TWA59EZn40sUYFkYF1W9RiFbepfQnpogdiJQKjPI3d+di+
-	fEfenHwFyaFaucG0PrKtm6V7N5uFHjCGZILYHLMVzJXwJCQZ1FLHPwSabf1+pms9sxPXcIVn3F3
-	kopBN5SYYc/Eb7rMEFkTkD/4/JiqZ7Ir6dMCqtK4h9OoJdyXNW2YisLT4qTvKLLndGa6j/SX9s5
-	2iOWS9lcUFoEqat1RD4rbK/iHJDXuoBUQb2AUrphLr1ByfYa+VS6qjUZFdyz1qERDS6ZLZhfw5Y
-	Eg5SVIsmW7DHVtFfY3a4D+slWiRdFAyweB9ONYrPk=
-X-Received: by 2002:a17:902:fd44:b0:2b0:c106:a402 with SMTP id d9443c01a7336-2b0cdc041cfmr9740755ad.3.1774589759675;
-        Thu, 26 Mar 2026 22:35:59 -0700 (PDT)
-Received: from eric-wcnlab ([2001:288:7001:1099:af69:9e67:ef33:2eb2])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b0bc773472sm48281805ad.7.2026.03.26.22.35.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2026 22:35:59 -0700 (PDT)
-Date: Fri, 27 Mar 2026 13:35:53 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
-	Chia-Ping Tsai <chia7712@gmail.com>, Zqiang <qiang.zhang@linux.dev>, 
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] sched_ext: Fix print_scx_info() build error on
- !CONFIG_EXT_SUB_SCHED kernels
-Message-ID: <tmzdbaqgbe3vypfbm6gdih6svfs6pyrdpnklgmmwc47brnika6@vtcswuax5dxq>
-References: <20260326081021.687711-1-yphbchou0911@gmail.com>
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="ZZaqplt9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=vE
+	lCNqJQP706filSx6HKAEMrNOm0zS0AqOYeueLdRRU=; b=ZZaqplt9aoEsxZALY1
+	kkjZmICV8M+XD+zwIaMbu1HJGhTiGbc0xBc2rmjh4yWzyqm+Hao4qAnM//fmB23K
+	Lob6TwjUNzAdbNGpZinAi9SBxqLHbn+yTyhtaLXprZt/GESl3l9CrZeRhu5a3KUu
+	o0/fbn/HbENXqRoaZ7ZgDWrDE=
+Received: from localhost.localdomain (unknown [])
+	by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id _____wC3FRAcIcZprXLQAQ--.25271S2;
+	Fri, 27 Mar 2026 14:18:04 +0800 (CST)
+From: Zhao Mengmeng <zhaomzhao@126.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	emil@etsalapatis.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	zhaomengmeng@kylinos.cn
+Subject: [PATCH RESEND v2] scx_central: Defer timer start to central dispatch to fix init error
+Date: Fri, 27 Mar 2026 14:17:57 +0800
+Message-ID: <20260327061757.252255-1-zhaomzhao@126.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260326081021.687711-1-yphbchou0911@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wC3FRAcIcZprXLQAQ--.25271S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3JrWfZFy8JrW3KFy7CF43trb_yoWxAryUpF
+	srCFyfJr1YqrWjvwsrtr4kCry3Xa17XryUtrWfGwnavF4xur4jqF1UtF4SqFWDGrWkAa42
+	yFW09FZxGFsYyaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U_3ktUUUUU=
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqxxb0mnGIRw54AAA31
 
-Hi Tejun,
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-On Thu, Mar 26, 2026 at 04:09:15PM +0800, Cheng-Yang Chou wrote:
-> scx_task_sched_rcu() is only available when CONFIG_EXT_SUB_SCHED is
-> enabled. Wrap the call with #ifdef CONFIG_EXT_SUB_SCHED and fall back
-> to rcu_dereference(scx_root) for the non-sub-sched case, which is
-> semantically equivalent.
-> 
-> Fixes: 60d4b17e886a ("sched_ext: Choose the right sch->ops.name to output in the print_scx_info()")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202603261453.8kiJImYo-lkp@intel.com/
-> Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-> ---
->  kernel/sched/ext.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 551bfb99157d..a40edd4d7cd9 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -7689,7 +7689,11 @@ void print_scx_info(const char *log_lvl, struct task_struct *p)
->  
->  	guard(rcu)();
->  
-> +#ifdef CONFIG_EXT_SUB_SCHED
->  	sch = scx_task_sched_rcu(p);
-> +#else
-> +	sch = rcu_dereference(scx_root);
-> +#endif
->  
->  	if (!sch)
->  		return;
-> -- 
-> 2.48.1
-> 
+scx_central currently assumes that ops.init() runs on the selected
+central CPU and aborts otherwise. This is no longer true, as ops.init()
+is invoked from the scx_enable_helper thread, which can run on any
+CPU.
 
-Gentle ping!
+As a result, sched_setaffinity() from userspace doesn't work, causing
+scx_central to fail when loading with:
 
+[ 1985.319942] sched_ext: central: scx_central.bpf.c:314: init from non-central CPU
+[ 1985.320317]    scx_exit+0xa3/0xd0
+[ 1985.320535]    scx_bpf_error_bstr+0xbd/0x220
+[ 1985.320840]    bpf_prog_3a445a8163fa8149_central_init+0x103/0x1ba
+[ 1985.321073]    bpf__sched_ext_ops_init+0x40/0xa8
+[ 1985.321286]    scx_root_enable_workfn+0x507/0x1650
+[ 1985.321461]    kthread_worker_fn+0x260/0x940
+[ 1985.321745]    kthread+0x303/0x3e0
+[ 1985.321901]    ret_from_fork+0x589/0x7d0
+[ 1985.322065]    ret_from_fork_asm+0x1a/0x30
+
+DEBUG DUMP
+===================================================================
+
+central: root
+scx_enable_help[134] triggered exit kind 1025:
+  scx_bpf_error (scx_central.bpf.c:314: init from non-central CPU)
+
+Fix this by:
+- Defer bpf_timer_start() to the first dispatch on the central CPU.
+- Initialize the BPF timer in central_init() and kick the central CPU
+to guarantee entering the dispatch path on the central CPU immediately.
+- Remove the unnecessary sched_setaffinity() call in userspace.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+---
+V2:
+- Remove sched_setaffinity() call and kick central cpu at ops.init() as
+suggested by Tejun.
+- Refactor the commit message and header for better clarity.
+---
+ tools/sched_ext/scx_central.bpf.c | 62 +++++++++++++++++++++----------
+ tools/sched_ext/scx_central.c     | 24 ------------
+ 2 files changed, 42 insertions(+), 44 deletions(-)
+
+diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
+index 399e8d3f8bec..4efcce099bd5 100644
+--- a/tools/sched_ext/scx_central.bpf.c
++++ b/tools/sched_ext/scx_central.bpf.c
+@@ -60,6 +60,7 @@ const volatile u32 nr_cpu_ids = 1;	/* !0 for veristat, set during init */
+ const volatile u64 slice_ns;
+ 
+ bool timer_pinned = true;
++bool timer_started;
+ u64 nr_total, nr_locals, nr_queued, nr_lost_pids;
+ u64 nr_timers, nr_dispatches, nr_mismatches, nr_retries;
+ u64 nr_overflows;
+@@ -179,9 +180,47 @@ static bool dispatch_to_cpu(s32 cpu)
+ 	return false;
+ }
+ 
++static void start_central_timer(void)
++{
++	struct bpf_timer *timer;
++	u32 key = 0;
++	int ret;
++
++	if (likely(timer_started))
++		return;
++
++	timer = bpf_map_lookup_elem(&central_timer, &key);
++	if (!timer) {
++		scx_bpf_error("failed to lookup central timer");
++		return;
++	}
++
++	ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
++	/*
++	 * BPF_F_TIMER_CPU_PIN is pretty new (>=6.7). If we're running in a
++	 * kernel which doesn't have it, bpf_timer_start() will return -EINVAL.
++	 * Retry without the PIN. This would be the perfect use case for
++	 * bpf_core_enum_value_exists() but the enum type doesn't have a name
++	 * and can't be used with bpf_core_enum_value_exists(). Oh well...
++	 */
++	if (ret == -EINVAL) {
++		timer_pinned = false;
++		ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, 0);
++	}
++
++	if (ret) {
++		scx_bpf_error("bpf_timer_start failed (%d)", ret);
++		return;
++	}
++
++	timer_started = true;
++}
++
+ void BPF_STRUCT_OPS(central_dispatch, s32 cpu, struct task_struct *prev)
+ {
+ 	if (cpu == central_cpu) {
++		start_central_timer();
++
+ 		/* dispatch for all other CPUs first */
+ 		__sync_fetch_and_add(&nr_dispatches, 1);
+ 
+@@ -310,29 +349,12 @@ int BPF_STRUCT_OPS_SLEEPABLE(central_init)
+ 	if (!timer)
+ 		return -ESRCH;
+ 
+-	if (bpf_get_smp_processor_id() != central_cpu) {
+-		scx_bpf_error("init from non-central CPU");
+-		return -EINVAL;
+-	}
+-
+ 	bpf_timer_init(timer, &central_timer, CLOCK_MONOTONIC);
+ 	bpf_timer_set_callback(timer, central_timerfn);
+ 
+-	ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
+-	/*
+-	 * BPF_F_TIMER_CPU_PIN is pretty new (>=6.7). If we're running in a
+-	 * kernel which doesn't have it, bpf_timer_start() will return -EINVAL.
+-	 * Retry without the PIN. This would be the perfect use case for
+-	 * bpf_core_enum_value_exists() but the enum type doesn't have a name
+-	 * and can't be used with bpf_core_enum_value_exists(). Oh well...
+-	 */
+-	if (ret == -EINVAL) {
+-		timer_pinned = false;
+-		ret = bpf_timer_start(timer, TIMER_INTERVAL_NS, 0);
+-	}
+-	if (ret)
+-		scx_bpf_error("bpf_timer_start failed (%d)", ret);
+-	return ret;
++	scx_bpf_kick_cpu(central_cpu, 0);
++
++	return 0;
+ }
+ 
+ void BPF_STRUCT_OPS(central_exit, struct scx_exit_info *ei)
+diff --git a/tools/sched_ext/scx_central.c b/tools/sched_ext/scx_central.c
+index fd4c0eaa4326..4a72df39500d 100644
+--- a/tools/sched_ext/scx_central.c
++++ b/tools/sched_ext/scx_central.c
+@@ -5,7 +5,6 @@
+  * Copyright (c) 2022 David Vernet <dvernet@meta.com>
+  */
+ #define _GNU_SOURCE
+-#include <sched.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <inttypes.h>
+@@ -49,8 +48,6 @@ int main(int argc, char **argv)
+ 	struct bpf_link *link;
+ 	__u64 seq = 0, ecode;
+ 	__s32 opt;
+-	cpu_set_t *cpuset;
+-	size_t cpuset_size;
+ 
+ 	libbpf_set_print(libbpf_print_fn);
+ 	signal(SIGINT, sigint_handler);
+@@ -96,27 +93,6 @@ int main(int argc, char **argv)
+ 
+ 	SCX_OPS_LOAD(skel, central_ops, scx_central, uei);
+ 
+-	/*
+-	 * Affinitize the loading thread to the central CPU, as:
+-	 * - That's where the BPF timer is first invoked in the BPF program.
+-	 * - We probably don't want this user space component to take up a core
+-	 *   from a task that would benefit from avoiding preemption on one of
+-	 *   the tickless cores.
+-	 *
+-	 * Until BPF supports pinning the timer, it's not guaranteed that it
+-	 * will always be invoked on the central CPU. In practice, this
+-	 * suffices the majority of the time.
+-	 */
+-	cpuset = CPU_ALLOC(skel->rodata->nr_cpu_ids);
+-	SCX_BUG_ON(!cpuset, "Failed to allocate cpuset");
+-	cpuset_size = CPU_ALLOC_SIZE(skel->rodata->nr_cpu_ids);
+-	CPU_ZERO_S(cpuset_size, cpuset);
+-	CPU_SET_S(skel->rodata->central_cpu, cpuset_size, cpuset);
+-	SCX_BUG_ON(sched_setaffinity(0, cpuset_size, cpuset),
+-		   "Failed to affinitize to central CPU %d (max %d)",
+-		   skel->rodata->central_cpu, skel->rodata->nr_cpu_ids - 1);
+-	CPU_FREE(cpuset);
+-
+ 	link = SCX_OPS_ATTACH(skel, central_ops, scx_central);
+ 
+ 	if (!skel->data->timer_pinned)
 -- 
-Thanks,
-Cheng-Yang
+2.43.0
+
