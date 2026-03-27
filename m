@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8748720F067;
-	Fri, 27 Mar 2026 00:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8B91D9346;
+	Fri, 27 Mar 2026 00:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774571308; cv=none; b=WlneNpHzuIUx7TEEvbNfcqzuGbOeecvAHAabDVOqs/Lq00gJF59KpGdjsznnEDCWuU7Yjhefb6y1FT7SVsl8xxrP2RkdUr7OE7h3bE2+2+/rcalZ+A1P/jBdeCtJoGy2STE1AO5XNyiz7ZrcapBwvCMylgEjTlg7HJ0rdTuXo9M=
+	t=1774572172; cv=none; b=txIr553eCnk+TSLSh2BYM8ekFQSI46j98dgjnBmJnLxNyQSRW0TZgb0uas+qHm4IW3ZQrjniANT/RA7YWpRQbewQxtbh8fmY5BFBH3Yduub1Z0Lwo3hO5RA3Zmvnw5NZ2/Hxi/+VaptW90EPn/d0F1W24wuvP/qMe05fE+vMB0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774571308; c=relaxed/simple;
-	bh=t0f7qTZoFLVX4PbGZBGtZK1nSxhr/Qx9XL4zfR2vAsE=;
+	s=arc-20240116; t=1774572172; c=relaxed/simple;
+	bh=ICX7nolKyIissU91JvBzXaiH1tJotKc62H56iH/9tIQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HWH1RRx5xPLViF6rbj3fLRKlP72Js9DDHEv9Kt/DfzkD8Rmw2FEh3MCASuVm95FFwi1jbIFFxvdPEkI0Reqq7/wCLWNgeuZ5bXmvoaxUz9tx1HYcfQi1Sn9j6IHOPnRa9M+2pAhdVMJa6zfGx51mIh2CF0R6z+zoiesKL1lCb4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afdFlI01; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Efz5pr/LytZ27YzAJRIWN6Av7tthLTCPFCprlrP2oY7cYnw5y8R7tAWnz+gToW5O1jsYl+57rxlILk6x03vWixvVUWr95u83hAuZgsViaTb2VODMs+grb7MPaPwI0Ch4CXLbpt1X1h6wssEDcNrS1CNtxcKFw2clfDzGRZejjwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXPtVI7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afdFlI01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20196C116C6;
-	Fri, 27 Mar 2026 00:28:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXPtVI7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8B2C116C6;
+	Fri, 27 Mar 2026 00:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774571308;
-	bh=t0f7qTZoFLVX4PbGZBGtZK1nSxhr/Qx9XL4zfR2vAsE=;
+	s=k20201202; t=1774572172;
+	bh=ICX7nolKyIissU91JvBzXaiH1tJotKc62H56iH/9tIQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=afdFlI01rmuTFvP/Fx2DOpuEZUJAxLmkYR4hl6A6EtVkV88LbMUZ4Hfxh8JeAysh3
-	 xr3IhQON5KcAB1V+ojfNMV50jv6GZThx9aAaO1n++12EWAHZMJcLClEIQm1dceTSqi
-	 5hTpeKMN5B4tu8/JTF+06RTtmFcAmNs5wVdZSq4mqOX9Mt8qwARRSzFxFh4O32ayG0
-	 S7QDHlI2L33gfDEIgTAbgA1agvUQaPS00rcgC1YbjXpWz2laQe50snLa6AH6IWuMMm
-	 1tbaDnSJgmrYw4Aqjz6WV/R4o/5dExQc95nPXjdnA/mtltdlcQDBaVSRIYaBaxowMy
-	 4TqI4fZ3NddCA==
-Date: Thu, 26 Mar 2026 14:28:27 -1000
+	b=EXPtVI7YN9YgYc9Ih6uds2iraLmAJbyFteSaksjclRoNEZTyZLTkSTMSDB+d0gKtA
+	 GIMWRMtyfnb/S0TNwcsHGa3iqjsI2Idkwlomv5+evq8sLQ/mWdGJzTgh9molwzT7+L
+	 UsWEA6q4aBdaRnT/eRN+St4bp2q3GnamI/cZaEhADOWIwVbOQW3/7pefws5e/KCWUy
+	 LhTJRMcJVs2l0UR5gbkK9EYg8CWjU88L4aRgdnt/rC1uKazmDcGo/iBgbXSK/H7q/3
+	 jm9zvpW6YBjC8oABg6p8I3rzFOZmAgPgmCyg1ZNriRwt3mblEN7lh13uFDZWh6LDPO
+	 CZdvfaLeb9SvQ==
+Date: Thu, 26 Mar 2026 14:42:50 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Ihor Solodrai <ihor.solodrai@linux.dev>
-Cc: zhidao su <soolaugust@gmail.com>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
-	bpf@vger.kernel.org
-Subject: Re: [PATCH] docs: Document pahole v1.26 requirement for
- KF_IMPLICIT_ARGS kfuncs
-Message-ID: <acXPKyDPAw6nR9nc@slm.duckdns.org>
-References: <20260324062028.2479059-1-suzhidao@xiaomi.com>
- <CAADnVQLbtuD=7mtGZFR25ULhjZ-3ifBpkyRcqu9jPSd2Mt3fBw@mail.gmail.com>
- <69c2dbe8.170a0220.226f48.721e@mx.google.com>
- <e0ca748d-3204-4160-b37d-0f76cbac8c6c@linux.dev>
+To: zhidao su <soolaugust@gmail.com>
+Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+	void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	peterz@infradead.org, mingo@redhat.com,
+	zhidao su <suzhidao@xiaomi.com>
+Subject: Re: [PATCH 1/4] tools/sched_ext: compat.bpf.h: fix
+ scx_bpf_dsq_reenq___compat signature
+Message-ID: <acXSilgub4NvWHXj@slm.duckdns.org>
+References: <20260326204238.3755737-1-suzhidao@xiaomi.com>
+ <20260326204238.3755737-2-suzhidao@xiaomi.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,24 +46,30 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e0ca748d-3204-4160-b37d-0f76cbac8c6c@linux.dev>
+In-Reply-To: <20260326204238.3755737-2-suzhidao@xiaomi.com>
 
-On Thu, Mar 26, 2026 at 03:06:28PM -0700, Ihor Solodrai wrote:
-> On 3/24/26 11:46 AM, zhidao su wrote:
-> > On Tue, 24 Mar 2026 08:12:12 -0700, Alexei Starovoitov wrote:
-> >> I don't think that's true.
-> >> At least when implicit args were designed the goal was to avoid
-> >> pahole dependencies.
-> >> Please share exact steps to reproduce.
-> > 
-> > Here are the exact reproduction steps and code path analysis.
+On Fri, Mar 27, 2026 at 04:42:35AM +0800, zhidao su wrote:
+> scx_bpf_dsq_reenq() is declared with KF_IMPLICIT_ARGS in the kernel BTF,
+> which means the BPF verifier automatically injects the
+> struct bpf_prog_aux *aux parameter.  The BPF-side weak symbol declaration
+> must NOT include the implicit parameter.
 > 
-> Hi everyone, sorry I'm late to the party.
-> 
-> First of all, a *Nack* to the doc change in isolation, I agree with
-> Alexei here. Tejun, I suggest to revert it.
+> The previous declaration included an explicit aux__prog parameter, which
+> caused BPF programs calling scx_bpf_dsq_reenq() through the compat macro
+> to fail verification on kernels where the kfunc is available.
 
-Ah, right, this isn't sched_ext proper even. Sorry about that. Reverting.
+Did this actually cause verification failure tho? If BPF isn't ignoring the
+implicit arg, it should have just failed ksym_exists test and then fell back
+to the older interface or trigger scx_bpf_error().
+
+It's rather obvious that most of your patches are AI slob and I don't see
+much value in the selftests that you added either. I'll just revert your
+previous patches. Please carefully consider whether what you're sending
+actually contributes anything practical and carefully verify the code
+changes and description before sending them. These frivolous and plausible
+sounding but not actually correct patches are taking bandwidth without
+actually improving anything. I'll likely ignore your submissions from now on
+unless the trajectory changes substantially.
 
 Thanks.
 
