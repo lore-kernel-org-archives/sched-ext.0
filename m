@@ -1,186 +1,74 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA92331A49
-	for <sched-ext@lists.linux.dev>; Thu, 26 Mar 2026 22:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8748720F067;
+	Fri, 27 Mar 2026 00:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774562800; cv=none; b=f/DcMEY9OZ+vx5EqW5MuZPaAWkUculS9O4uwzU8MEsvcsmtjB+TKkJdkd506KG7yGozl/bqZEfcd8L+FnQWU7jM+dfJyGfEyTh4cBEgyLat6TLeTHHNdKI2VTzk+Bc7bw6sgade9Th/JKFEc7Hw6diLbwrDJjIFk7f7RLOewmOw=
+	t=1774571308; cv=none; b=WlneNpHzuIUx7TEEvbNfcqzuGbOeecvAHAabDVOqs/Lq00gJF59KpGdjsznnEDCWuU7Yjhefb6y1FT7SVsl8xxrP2RkdUr7OE7h3bE2+2+/rcalZ+A1P/jBdeCtJoGy2STE1AO5XNyiz7ZrcapBwvCMylgEjTlg7HJ0rdTuXo9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774562800; c=relaxed/simple;
-	bh=VHcxuzCD6goD5XgHUp8HZt3sVRcSxxWJZeFmpBM71Qo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b9VSf2ibYWuIQ1TrCYmi3mQhiTmkfU8zmbueQlsipe4y93sYfqDXmMpADuYPuDC1JDpgkuWUQxM9jWjprPPmHvMDG/H9MGCP2OML922S7dm/LFFkM7rA+CYlN/GN1gx9aq+iRQdbR11UhiTYILtDdJi/FDuwrPiqNcY8ftux/Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Dvzw7op5; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1774571308; c=relaxed/simple;
+	bh=t0f7qTZoFLVX4PbGZBGtZK1nSxhr/Qx9XL4zfR2vAsE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HWH1RRx5xPLViF6rbj3fLRKlP72Js9DDHEv9Kt/DfzkD8Rmw2FEh3MCASuVm95FFwi1jbIFFxvdPEkI0Reqq7/wCLWNgeuZ5bXmvoaxUz9tx1HYcfQi1Sn9j6IHOPnRa9M+2pAhdVMJa6zfGx51mIh2CF0R6z+zoiesKL1lCb4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afdFlI01; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Dvzw7op5"
-Message-ID: <e0ca748d-3204-4160-b37d-0f76cbac8c6c@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1774562795;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ap4HZuU3Kp/MebHLlBMt2MHPRPf8GdkWOr2FuBBdAdU=;
-	b=Dvzw7op5c5X6VP5abajNjvoHkIBJxJAk2lEJ2Li2ge9tGe5TSNF4qSaJEHnCf2tfm2yunU
-	B44Q4XghGrB5JB1dEYr4rEDjchocp6YetnTDiU9SclLTdxbAwpgfdOEPlJalxX4Y07vpys
-	wPX98H7qZLiOX8iAYf1WNC2Y0kW/9GE=
-Date: Thu, 26 Mar 2026 15:06:28 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afdFlI01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20196C116C6;
+	Fri, 27 Mar 2026 00:28:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774571308;
+	bh=t0f7qTZoFLVX4PbGZBGtZK1nSxhr/Qx9XL4zfR2vAsE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=afdFlI01rmuTFvP/Fx2DOpuEZUJAxLmkYR4hl6A6EtVkV88LbMUZ4Hfxh8JeAysh3
+	 xr3IhQON5KcAB1V+ojfNMV50jv6GZThx9aAaO1n++12EWAHZMJcLClEIQm1dceTSqi
+	 5hTpeKMN5B4tu8/JTF+06RTtmFcAmNs5wVdZSq4mqOX9Mt8qwARRSzFxFh4O32ayG0
+	 S7QDHlI2L33gfDEIgTAbgA1agvUQaPS00rcgC1YbjXpWz2laQe50snLa6AH6IWuMMm
+	 1tbaDnSJgmrYw4Aqjz6WV/R4o/5dExQc95nPXjdnA/mtltdlcQDBaVSRIYaBaxowMy
+	 4TqI4fZ3NddCA==
+Date: Thu, 26 Mar 2026 14:28:27 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Ihor Solodrai <ihor.solodrai@linux.dev>
+Cc: zhidao su <soolaugust@gmail.com>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	bpf@vger.kernel.org
+Subject: Re: [PATCH] docs: Document pahole v1.26 requirement for
+ KF_IMPLICIT_ARGS kfuncs
+Message-ID: <acXPKyDPAw6nR9nc@slm.duckdns.org>
+References: <20260324062028.2479059-1-suzhidao@xiaomi.com>
+ <CAADnVQLbtuD=7mtGZFR25ULhjZ-3ifBpkyRcqu9jPSd2Mt3fBw@mail.gmail.com>
+ <69c2dbe8.170a0220.226f48.721e@mx.google.com>
+ <e0ca748d-3204-4160-b37d-0f76cbac8c6c@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH] docs: Document pahole v1.26 requirement for
- KF_IMPLICIT_ARGS kfuncs
-To: zhidao su <soolaugust@gmail.com>,
- Alexei Starovoitov <alexei.starovoitov@gmail.com>, Tejun Heo <tj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, bpf@vger.kernel.org
-References: <20260324062028.2479059-1-suzhidao@xiaomi.com>
- <CAADnVQLbtuD=7mtGZFR25ULhjZ-3ifBpkyRcqu9jPSd2Mt3fBw@mail.gmail.com>
- <69c2dbe8.170a0220.226f48.721e@mx.google.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <69c2dbe8.170a0220.226f48.721e@mx.google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e0ca748d-3204-4160-b37d-0f76cbac8c6c@linux.dev>
 
-On 3/24/26 11:46 AM, zhidao su wrote:
-> On Tue, 24 Mar 2026 08:12:12 -0700, Alexei Starovoitov wrote:
->> I don't think that's true.
->> At least when implicit args were designed the goal was to avoid
->> pahole dependencies.
->> Please share exact steps to reproduce.
+On Thu, Mar 26, 2026 at 03:06:28PM -0700, Ihor Solodrai wrote:
+> On 3/24/26 11:46 AM, zhidao su wrote:
+> > On Tue, 24 Mar 2026 08:12:12 -0700, Alexei Starovoitov wrote:
+> >> I don't think that's true.
+> >> At least when implicit args were designed the goal was to avoid
+> >> pahole dependencies.
+> >> Please share exact steps to reproduce.
+> > 
+> > Here are the exact reproduction steps and code path analysis.
 > 
-> Here are the exact reproduction steps and code path analysis.
-
-Hi everyone, sorry I'm late to the party.
-
-First of all, a *Nack* to the doc change in isolation, I agree with
-Alexei here. Tejun, I suggest to revert it.
-
-Doc change is insufficient and will make things only more confusing.
-
-Kconfig checks for pahole version, as well as Makefile.btf. If we set
-a new minimum version then it makes sense to assume it in the kernel
-build code, and *disable CONFIG_DEBUG_INFO_BTF* if the version is not
-recent enough. Also remove any flags/conditions that depend on pahole
-being less than target minimum version. For reference see a patch
-where I bumped the minimum version to 1.22 (903922cfa0e6):
-https://lore.kernel.org/bpf/20251219181825.1289460-1-ihor.solodrai@linux.dev/
-
-More importantly, the reported problem is real, but the actual fix is
-a bump to v1.27, not v1.26. As usual AI got it about 80% right in the
-analysis below (I assume this is AI output, it certainly looks like
-one). Although to be fair AI was misled by a human error.
-
+> Hi everyone, sorry I'm late to the party.
 > 
-> Reproduction (Ubuntu 24.04, pahole v1.25):
-> 
->   $ git clone https://github.com/sched-ext/sched_ext.git
->   $ cd sched_ext && make -j$(nproc) LOCALVERSION=-test
->   $ make -C tools/testing/selftests/sched_ext
->   $ vng --run arch/x86/boot/bzImage --cpus 4 --memory 4G -- \
->       tools/testing/selftests/sched_ext/build/runner 2>&1 | grep "func_proto"
-> 
-> Result: 23/30 tests fail with:
->   libbpf: extern (func ksym) 'scx_bpf_create_dsq': func_proto [382]
->           incompatible with vmlinux [53813]
+> First of all, a *Nack* to the doc change in isolation, I agree with
+> Alexei here. Tejun, I suggest to revert it.
 
-This is indeed an error you may get if BTF for kfuncs with
-KF_IMPLICIT_ARGS is wrong.
-
-> 
-> Root cause:
-> 
-> The KF_IMPLICIT_ARGS mechanism requires pahole v1.26 for the DECL_TAG
-> generation step that enables resolve_btfids to do its btf2btf work:
-> 
-> 1. scripts/Makefile.btf gates decl_tag_kfuncs on pahole >= 1.26:
-> 
->      pahole-flags-$(call test-ge, $(pahole-ver), 126) = ... decl_tag_kfuncs
-
-This is correct in that resolve_btfids expects that pahole ran with
-decl_tag_kfuncs, but the version check is and was wrong.
-
-decl_tag_kfuncs was implemented in pahole commit 72e88f29c [1], which
-was released in v1.27. But on the kernel build side, the new feature
-was simply appended (ebb79e96f1ea [2]) to the list of features under
-1.26 check.
-
-[1] https://git.kernel.org/pub/scm/devel/pahole/pahole.git/commit/?id=72e88f29c6f7e14201756e65bd66157427a61aaf
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v7.0-rc5&id=ebb79e96f1ea454fbcc8fe27dfe44e751bd74b4b
-
-> 
-> 2. Without decl_tag_kfuncs, pahole does not emit DECL_TAG BTF entries
->    for __bpf_kfunc-annotated functions.
-> 
-> 3. resolve_btfids/main.c::collect_kfuncs() (line 1002) early-returns
->    when nr_decl_tags == 0:
-> 
->      if (!link->nr_decl_tags)
->          return 0;
-> 
-> 4. With no bpf_kfunc DECL_TAGs, btf2btf() never calls
->    process_kfunc_with_implicit_args() to create _impl variants and
->    strip 'aux' from the original proto.
-> 
-> 5. Result: vmlinux retains the 3-param proto (with 'aux') for all
->    KF_IMPLICIT_ARGS kfuncs.
-> 
-> BTF evidence from our pahole v1.25-compiled vmlinux:
-> 
->   $ bpftool btf dump file vmlinux | grep -A5 '[53813]'
->   [53813] FUNC_PROTO '(anon)' ret_type_id=... vlen=3
->       'dsq_id' type_id=...
->       'node'   type_id=...
->       'aux'    type_id=...    <-- implicit arg still present, 3-param
->   (no scx_bpf_create_dsq_impl exists)
-
-So far so good.
-
-> 
-> With pahole v1.26, resolve_btfids creates scx_bpf_create_dsq_impl
-> (3-param, for verifier's find_kfunc_impl_proto) and rewrites
-> scx_bpf_create_dsq to 2-param (for libbpf ksym matching).
-
-And this is bullshit. The kernel build with pahole v1.26 has the same
-problem:
-
-  # Notice that 'bpf_wq_set_callback_impl' is absent from BTF
-  $ bpftool btf dump file vmlinux | grep 'bpf_wq_set'
-  [63890] FUNC 'bpf_wq_set_callback' type_id=9991 linkage=static
-          'KF_bpf_wq_set_callback' val=29
-
-vs expected (v1.27, v1.31):
-
-  $ bpftool btf dump vmlinux | grep 'bpf_wq_set'
-  [64253] FUNC 'bpf_wq_set_callback' type_id=51033 linkage=static
-  [64254] FUNC 'bpf_wq_set_callback_impl' type_id=34861 linkage=static
-          'KF_bpf_wq_set_callback' val=29
-
-One could've figured this out if they tried to actually run the build.
-
-> 
-> You're right that the design goal was to avoid pahole dependencies -
-> the implementation could be fixed in resolve_btfids to handle the
-> no-DECL_TAG case. But until such a fix lands, the dependency exists
-> in practice. Jonathan Corbet suggested raising the minimum version in
-> the requirements table to 1.26, which seems the cleanest fix.
-> 
-> Signed-off-by: zhidao su <suzhidao@xiaomi.com>
-
-
-zhidao su, I suggest you prepare a proper "minimum pahole version
-bump" patch, modifying kconfig checks, Makefile.btf and the
-documentation. Please route it through the BPF tree and add me to cc.
+Ah, right, this isn't sched_ext proper even. Sorry about that. Reverting.
 
 Thanks.
 
-
+-- 
+tejun
