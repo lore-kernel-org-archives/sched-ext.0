@@ -1,107 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92F03932C0
-	for <sched-ext@lists.linux.dev>; Fri, 27 Mar 2026 19:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BA740DFA2;
+	Sun, 29 Mar 2026 00:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774640896; cv=none; b=ndq60yo5C80u8egaB4nojD/6J0UeBZ/u61W0slJvCFYVTCrrLTjEAeJJU5+27VanzfuuegKee/Wyzxc/vBYysUYJ4c+brAMbXHvpmGXfJNywWkPdh4nVsYKxavW5S9sJTIUzUBaU6NGKg2m2BI+uI7kSH/6GRQG8rWj+OQH7s6A=
+	t=1774743537; cv=none; b=t8RjsSIAAe3ys/1PUNmXUcU/2pBhUdxrfPyo6U6t4QR9tP4DP6EFyZbUbzVKyyj1kkQi6TiEqM+Cr0FFj7LKBgFqSwnBhvDqZloZssyOua7flLcQSxEJNQclczPtufeSBZTWFyVZ5hu4+fhpEaTDY4FVloRYha8Z+KpfZj/HkhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774640896; c=relaxed/simple;
-	bh=GtO1EnQFH9nsoz/XWsQSEmkF3Y0jL27TJPCkutKtYMc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M06uWj5ACj6F9Uhh5yRouD82Xm7jkv+hPQ/hm1Z5SirZu/3yG/Il8jl6uGha215LgdTXC07thZ+fvO6nsqOULjOUKmTpzWt62P7mjqDNW8aZWvZOm8M6B4vNCRVF1i6fnmHOXwzn/F4sRUNGbjHn2LGlx5nGSI+Po8ePVRWoP4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hCDpedvj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774743537; c=relaxed/simple;
+	bh=rp9/JUAaIvp5v252b6Sodgub/b7yW2eOXJutCOZAdPY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sOfRPh3zyLHbTC9Xxo3Jp+xztWYZKlbX5DGrUBQWHUM3L4BFmMor0l8tkZ6NxwvboiKsc1GL/PUngnA+f6tZbLpIizYHFMdvpTilxMJFuWgUoCa5k/4rSDMOS6k2247knuQd7WyxWLZ+hCMTn3RpsQ5BKlRnT4VLOaX1oLXLsf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WVwI8RIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hCDpedvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565ADC2BC9E;
-	Fri, 27 Mar 2026 19:48:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WVwI8RIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574C0C4CEF7;
+	Sun, 29 Mar 2026 00:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774640895;
-	bh=GtO1EnQFH9nsoz/XWsQSEmkF3Y0jL27TJPCkutKtYMc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hCDpedvjya7F6HS0hLvCItR/jYpMB+teDvgiLogvBE6cuy7E9y3MTH6J6x2YrtQ4c
-	 W+h519po0RLaP7+Sum5oqc7t//myCcNTec6QbE7AUoc05nrZdka9MGYQKfYPUGKEkD
-	 AAJ+tWDum/TTaXqXexjMp8UlUHesNc237gozVpI34uuDTU3UeK0l0qWTa/o/9tZMum
-	 m0yc2wlfzWrwd+d/Kqo4hFKYYT5WYKM4BUN7I1HTacO/2COL4y5cAai63BpAxW2nLI
-	 Z2kCqaJ3Gkk2aQz0RLXQsRVkF9T0C3XNdcDxLBkueuqEzNDU+9S2C5QctKeQdUDDgJ
-	 MHTV2wlMPR0aw==
-Date: Fri, 27 Mar 2026 09:48:14 -1000
+	s=k20201202; t=1774743537;
+	bh=rp9/JUAaIvp5v252b6Sodgub/b7yW2eOXJutCOZAdPY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WVwI8RIXJGaf1IcIIiCercHXckkf7SUrShY5qKuzEujuPxZ87zv8dFHVrkoLXByjq
+	 jkOG3mew44l98//A4eLlniJ42NrmrYvUP2qkHED5BB8zsfFbpGhsPTUh1Wrw6ZT2UV
+	 XZI0WRTLhRjU/5Y+vJpk7KuD0Ee0bIMGy0XkWKyY0LhC5cLLEmqzlWODFnoykgbrwK
+	 BzslQPgaEj9Kq06NX8I8tR8r0FWJljseAZ+mDbcb0MGtGN6BB2MAkSRJXdtUDbzzyl
+	 lPZOv0JGix6S0X1VNtmcGJ/g5P9NrY5PsMpxe6yM5wIHOFNEk6ZXJM1+bYiD5zFbAq
+	 aUSPlZaGraDxg==
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Andrea Righi <arighi@nvidia.com>, sched-ext@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>, Zqiang <qiang.zhang@linux.dev>,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] sched_ext: Fix print_scx_info() build error on
- !CONFIG_EXT_SUB_SCHED kernels
-Message-ID: <acbe_sjJmLVHzNup@slm.duckdns.org>
-References: <20260326081021.687711-1-yphbchou0911@gmail.com>
- <tmzdbaqgbe3vypfbm6gdih6svfs6pyrdpnklgmmwc47brnika6@vtcswuax5dxq>
- <aca8A9UdYV8nElsB@slm.duckdns.org>
- <gunjxqantrttj335ai73vkvddqj5swkkfwvm5abkwprhiwjwwz@wktl537f5qim>
- <acbPa75X2LMsUUnv@gpd4>
- <rifaebh3yg7awjrfhbnhbs4gshbynt44uqje6guvs76osgly2d@zvry7xpcdsok>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Christian Loehle <christian.loehle@arm.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.0-fixes] sched_ext: Fix SCX_KICK_WAIT deadlock
+Date: Sat, 28 Mar 2026 14:18:54 -1000
+Message-ID: <20260329001856.835643-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <rifaebh3yg7awjrfhbnhbs4gshbynt44uqje6guvs76osgly2d@zvry7xpcdsok>
+Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Sat, Mar 28, 2026 at 03:01:45AM +0800, Cheng-Yang Chou wrote:
-...
-> I see that the fix, and I have verified the build passes there.
-> I'll make sure to cross-check with the latest branch next time and not
-> fully trust the robot's base tree...
+SCX_KICK_WAIT busy-waits in kick_cpus_irq_workfn() until the target CPU
+reschedules. Because the irq_work runs in hardirq context, the waiting
+CPU's kick_sync never advances, and if multiple CPUs form a wait cycle, all
+deadlock. This was reported by Christian while testing on arm64.
 
-It was never broken. scx_task_sched[_rcu]() were added by 88234b075c3f:
+0001 fixes the deadlock by deferring the wait to a balance callback which
+drops the rq lock and enables IRQs, allowing IPIs to be processed and
+kick_sync to keep advancing during the wait.
 
-  +#ifdef CONFIG_EXT_SUB_SCHED
-  ...
-  +static inline struct scx_sched *scx_task_sched(const struct task_struct *p)
-  +{
-  ...
-  +}
-  ...
-  +static inline struct scx_sched *scx_task_sched_rcu(const struct task_struct *p)
-  +{
-  ...
-  +}
-  ...
-  +#else  /* CONFIG_EXT_SUB_SCHED */
-  +static inline struct scx_sched *scx_task_sched(const struct task_struct *p)
-  +{
-  +       return rcu_dereference_protected(scx_root,
-  +                                        lockdep_is_held(&p->pi_lock) ||
-  +                                        lockdep_is_held(__rq_lockp(task_rq(p))));
-  +}
-  +
-  +static inline struct scx_sched *scx_task_sched_rcu(const struct task_struct *p)
-  +{
-  +       return rcu_dereference_all(scx_root);
-  +}
-  ...
-  +#endif /* CONFIG_EXT_SUB_SCHED */
+0002 adds a selftest that creates a 3-CPU kick_wait cycle to reproduce the
+issue.
 
-Just a cursory look at the definition should have stopped this from
-happening. Actually read the kernel test robot report. It's saying it tried
-to apply the patch on non-sched_ext trees and that led to compilation
-failures because they expectedly don't have changes from sched_ext/for-7.1.
+Based on sched_ext/for-7.0-fixes (db08b1940f4b).
 
-> For future robot reports, should I strictly follow the provided reproducer
-> steps, or just apply the robot's .config to the latest maintainer tree?
+ 0001-sched_ext-Fix-SCX_KICK_WAIT-deadlock-by-deferring-wa.patch
+ 0002-selftests-sched_ext-Add-cyclic-SCX_KICK_WAIT-stress-.patch
 
-I don't think it's about having specific procedures for everything. You
-can't guard against everything with proceures. It's more about the main
-principle: read and understand the code before sending patches.
+ kernel/sched/ext.c                                 |  95 +++++++---
+ kernel/sched/sched.h                               |   3 +
+ tools/testing/selftests/sched_ext/Makefile         |   1 +
+ .../selftests/sched_ext/cyclic_kick_wait.bpf.c     |  68 ++++++++
+ .../testing/selftests/sched_ext/cyclic_kick_wait.c | 194 +++++++++++++++++++++
+ 5 files changed, 336 insertions(+), 25 deletions(-)
 
--- 
+--
 tejun
