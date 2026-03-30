@@ -1,365 +1,120 @@
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012041.outbound.protection.outlook.com [52.101.43.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB8736EAB5
-	for <sched-ext@lists.linux.dev>; Sun, 29 Mar 2026 16:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774801579; cv=fail; b=c2SIGQN1hMT0dC6iA6qqvOfNkctVGA7NGJXQ05ya6vCFQAVdc4jWELjnSuCOTsC+TRrYxaiXNgMEEpY/6OAXZxbPGjCKhe7Gf+Kkdyj5O0pVP+yFS04OakUOjFR11RzyqIWvvEjbcOg3Okegxx59WxcKblEJRTfYRXYtj0in55s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774801579; c=relaxed/simple;
-	bh=xpagld+NlOKqF4q3IqcICkYlfnXfW0E9Ma0dFOXcML8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=EIncQDHjTlC+gbIUgtsq3ogMIiuqeoOIAqITQ2KptgrLZWOwWkdi9k6OBQryZqk64r6kfJMMHksuupqdQ4gWzSDTtLPtsfQQLdQlkiGS93O+cRX0KFwrTBAB8GBKuS0+rWFP36N/qRC6WGSyNVZYHkrtDlZ5RSwG0iexGu57EiI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mEV1gMhJ; arc=fail smtp.client-ip=52.101.43.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCDD40DFB4
+	for <sched-ext@lists.linux.dev>; Mon, 30 Mar 2026 04:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774845621; cv=none; b=YcoT0z7z2YHLsUb+xbG1c+TwKRzT3A7WEbuJpqhwALLdwRoavyDf/c396XcwV9jKQMELqYcvsc2BcqXsp/ygn3XkarGmdavCTz9Di8z9q4Oo53O5HLhzmO7keZYx64xIaSpEPLJ+O3t4QVXc2ROY8Q0yePWTIRlT2HUSGmo0wqk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774845621; c=relaxed/simple;
+	bh=rWOF3V2xnaI3zH932M7v2v2L8KsWHxiYAXkOXzxyF8c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bIYsSWzKuxu02Y8EQY+2P8F7VzUGviv2uf3Ees6+Hr3ncU+h+C3BuH5YytYKOQo5Pd4L/aOIJuIttlBgITWWNFdqalkkEJzz+jb9xriJSsMZvevfO+lZLLHCD0wYqAy4YuRjtLztCSsm+rMJ1ps5KM6Kf8NxeFKXgZzzZxzOtyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VavMANlO; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mEV1gMhJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WMy8CSGNf5X7dAlnigGqjpRJWECp+SW5OL3wMkdJY2C1qVQxvF2L1kLirH+KtU/Yr6UJppOTrpssT5fmUi3RelQHe+ouVQ+rBE8I5smmGJ6zWVfkUHfd7iqs/KXEI/gqWuWMTG1E2pHOjiMcolIfZI/1ioLTEqQ+GWYYjstpeODytlQZlsr3aAvAhooNWPkHtaygWOlpcLrM8kWzvHucNx036+2J4irGPqguzb5o8HRKtraeD1JGVFtJglcFJaeooCl89EUl2ChU5xEWOPOVxuUHlUVjPgDwbED1e1/qnj+AJg0C1/AK+krVoEYlFzOFt87408W1F5eNc7IjbYRTNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J37tkLt3RWYl9B3lwFjGe9ndOjn9Jo/teoDd7GUS5F0=;
- b=fbRZ2WX4BPuuWgTODdZn7KuPa55tAxsBO3V5bt473pCkZ7OEDEEKNWlS59stkerq/wh8JA0GIdqfBwN+OYX9CPPMa2kc0mtsy+z5Q8tlVgzHJ0BIqn7yHKNwVl2Sys3Xn37GpJbbbYKWMkkkuIVT+0/fHtjGEcx07ppBYa8iD/e0XmLJNzi0GDB8hj4WhJKy4SLnMZzd/kXxIGQ1cYRiWMk8DLRIH2HDSx5HyidlJ+tOIZKLXnDjEQKASD22fLDtD2+Jpk/wxQihlh5mxMvysOhIWoFYrRfOKAz3N1TgBAttdDpeQX1sE5u4kJ5kC1dqk8pCWJNzEjwY+byaO63mbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J37tkLt3RWYl9B3lwFjGe9ndOjn9Jo/teoDd7GUS5F0=;
- b=mEV1gMhJ0bhgxx8WMhguH07jd0rGBHMruZEx6j3010qmasBu8mTXxODSm+uJarfd4PU+y7kuQ2ap+XtLMp7ZuJ3NKTe4cSV/WeB9NzF3MKgiV/tFEKgQTuYraoEUFI7tUjSIxqTvyIT7WWd1QOUfV7Lp7cAsaVagC0QIlywQl6a/tlMmFOjKYJaGi4GVZjN3/qlLgWgxp/eJL36+RhJ0Q1b0Kfxu6ZyRy2limlmP4PIBYNHyZWlVfTahKWLCzEDhsQKw+cE2BclPoGhCuVtfQrMpmOloDqMBWq/ZGo3K5sbZUmODM7Nipk+dbL/yoVnKLQXwhp6xOKWO0LKfj0zNDA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by MW4PR12MB7437.namprd12.prod.outlook.com (2603:10b6:303:21a::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Sun, 29 Mar
- 2026 16:26:14 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.014; Sun, 29 Mar 2026
- 16:26:14 +0000
-Date: Sun, 29 Mar 2026 18:26:10 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Fix SCX_KICK_WAIT deadlock by deferring
- wait to balance callback
-Message-ID: <aclSomF-cmT6_UsN@gpd4>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VavMANlO"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-82a3d3235c9so3450108b3a.2
+        for <sched-ext@lists.linux.dev>; Sun, 29 Mar 2026 21:40:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774845620; x=1775450420; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ruDoiQUAfR36vOonPGaMaqIHkaDbg9MLjJ0P1HEnzZU=;
+        b=VavMANlOSj6mYOyvTEGk4lhV1rSkflekGd359qN+YqmuOloWXn7h6hbyExdHv3BUF8
+         88zEksGvSk9wJzvyOPMSh34PQpB8nJOCx5wElAMHu7Ur83b8s0bKsqeLIovKoTJdfISa
+         vSdiAWtBCWtXlAEnbB9w0q9ZB2ds876fPnUwmoGmldnKUwCaJI8W3ZVCbykbJGSSmofa
+         2WjJ5BOggmGA1X3nmuTfpERseyPG22IZx7Rpct78xliH++DLAkbDcvy73jnvL9djIFJj
+         rDvHb7jNnUCLI5JKi0cOwU08hRtvTk+0rhCDCuE5JEq8tNGqiiSxeKqeC6k30h8uK8GC
+         7FKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774845620; x=1775450420;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ruDoiQUAfR36vOonPGaMaqIHkaDbg9MLjJ0P1HEnzZU=;
+        b=OfgtFI+wuFkcCiNNzo+9Q1+24VO5WscqDNU+vS8njn9GpzDIA+vthIGokDgp2r3GVi
+         HFmuaeWCTesUY1RQJGi/dxPcm9EjruvxPS0GVDsilIYq7OAV+80Ctzy/Gh0MGgxgcHh7
+         GcKBPrjwSYC/izgCvvTPquwHX8jZV3CrTcOrkfwYRbS5CQRmxjfVZTaZVtOGxw9QnZA8
+         WnARfLbWObzcxjbvZH6UF6ffPtTlvto5Vi1SKf5f29Xciqf9dTufOw2eunF5invDDMB/
+         SrqQKyf8UJWiO6EUH7OHDQniJcP69wvB+JPh9a5uCia1CLRVFTEWvjBwLCCLDCKTIZwQ
+         A4dw==
+X-Forwarded-Encrypted: i=1; AJvYcCVynj3Hz3yzdrHA4a0xfw1QGqjDtLaxpDeo42yELo9QsFSphHcarM0L894qIs0KMBZ1u6CONnjwEu0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxUPOfat02hJolT4zyBFVJgg+SvUQ/9f0DYj2GcUoZokHgrxxJi
+	uotafL+L/eAKl4mUkUb0e4CaLJQufVu6FdY5zIp+AKLqrat1LYKGytEx
+X-Gm-Gg: ATEYQzywTKBXdaP47q4vmqdGOGPzW9p3jLTgRdcoteGrVdPyM70EHmU6178g9Asml4Y
+	5OwyYwYlag7Gs4LtOo6lgxdGZJaftZvgbVBRTeLCUXV42JpeC1i+QJpmaC/pLJIp8+sQ0+/yIRZ
+	9toqKr8i+NKAvCybtUZEV5JVicJ/AoN6UBybPrX4a15sv/Jr/tRVQzqnwUFsv6ExapLfrZeclYp
+	QN4QEaXgd6Qis7Dz6XHFS5Uf+Kc8yfNmEkKq58W/JzHAt+jNk0w5LbHl+33oJQHXb8QOdeRFeSJ
+	fDEuUG/4GIIKtrH1BKLsdoOWjgLiA9dCzSZeFBv2ioG8ykf3q19HyxXFE4nq8mZOk1Frt43DqZV
+	oLbT7fvZP9gTXGbpmDliRyfTTZylXZHJDg0gstAnt1DA/vfaCIOLH12tvwe/MBGIGAsqw6pHF/i
+	+QBR1Et5qntI5pGKlNIo8VQEdDWfABl6KGfmQY1hILfFOZ+HPrKfRgUiKh/g==
+X-Received: by 2002:a05:6a00:27a0:b0:81e:12f1:d8a with SMTP id d2e1a72fcca58-82c95ebecabmr10833957b3a.34.1774845619774;
+        Sun, 29 Mar 2026 21:40:19 -0700 (PDT)
+Received: from eric-acer (36-225-73-11.dynamic-ip.hinet.net. [36.225.73.11])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82ca862dee1sm6124475b3a.61.2026.03.29.21.40.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Mar 2026 21:40:19 -0700 (PDT)
+Date: Mon, 30 Mar 2026 12:40:15 +0800
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Changwoo Min <changwoo@igalia.com>, Christian Loehle <christian.loehle@arm.com>, 
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH 2/2] selftests/sched_ext: Add cyclic SCX_KICK_WAIT stress
+ test
+Message-ID: <7orrkdssfovhjymosuumtd4bcaw5igsmfkn6s3y3qjlsp3tbzo@pingldf3qnta>
 References: <20260329001856.835643-1-tj@kernel.org>
- <20260329001856.835643-2-tj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260329001856.835643-2-tj@kernel.org>
-X-ClientProxiedBy: MI2P293CA0005.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:45::12) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+ <20260329001856.835643-3-tj@kernel.org>
+ <r36q4trzw267surx5xbod3ilm4wgmmyurqk6kres6gmtj7qbfl@lyasdc3a2zlk>
+ <aclKrNMA4CG7K5K9@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|MW4PR12MB7437:EE_
-X-MS-Office365-Filtering-Correlation-Id: d5f0fcf0-5ac3-4cf4-81c8-08de8dafe52d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	hZ25Xi6CxPdZElDApEY4e2SH1s2pJda0xUdrHqu1F6T3cSMM57jVGcGpb8Lq088luZ4t8VK7kQM3KzYq6rOJguUeI7q2ad7aICWtvJ/2JL6YAXmD7snVV3AK7cfKmPa6PA4+SEACoFq0D1UM4UjXIzLPyml+/Z4Yuk0dM2LvkiDNvXjbo0u4NLGaafnW60FJMjnodOHbCAyjbeSL9YGvoTHj8Oqh9A5M/1G4K2F5DrZmD1n7YwrGs6NGW4Iv557AYnYM34bTS7s/A0CZS4EWg/ivZKZS3IS+oJxRs94v2x1nABIuOEsfJ+MSPAauZktw4R5x6S/qlQWpL6nUHHScSg06HFgjbFuud6BZDuVN/pirneOwK9VQrcdMNHUjAk9GqqDL46kMCzYZoBrqkhJiX18FS6NNFqve1Fj/H0sj6ChpC7gt5mI6iNO4GVcHWndS3WlJVdEDQIkZKXX87ckVxm/wXy6AWk//HdVdmUVQIOhYP4xUhrW5geA0Pk1Ht33FT1D8PIcS2PmvZt7En5lbuIzQA2J6SVklOMeF+wts92vXOY/nKOoCJapoEifN82P18mGbREu/trPM/bvVqlLtdKzonYl7RqTwtuogkZx4OD15dgV9Obro8pKvMxxBG3gYUzugu2z4Sfc0BR5j5WmWtgoLOjgnE2UXSxZrdISuOdPXyb4G9/pHkv3r/OSl2r8NKUT+yK9RUChHejFDxu6VnZFXZ+k7jOUDWvjLzGxcFUHTc9Gc0iQWNloin3XI03KG
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(56012099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OENqR0t0MzdUd1h1NHYxNkc1bWgxSlBoSk54aGgwZzFOelk3aUtOeGNMZnB4?=
- =?utf-8?B?ejN5b2JFZGlFSTc5VHJWVzQ5TElMY1hGeTRnaW4vL0VlWFdFUVZ2VUpodkgy?=
- =?utf-8?B?OXkxS3pPL3RoT2g5aGtKbTlwWDZZTS9hY0pDbUQ4Mm1rNGZ4T1NSRGhMNHFT?=
- =?utf-8?B?TjZlZGZwUWFxeVZvaEU3UXdHaEtiN3VmZDdUVEQ0ZEZKTGwxWGVNZWhhdXp6?=
- =?utf-8?B?OEJNWXFodXlJd3NFOTRXb3J3TTdycm9yVXgzRkRhNnJORDJUcGg1RWtWNG93?=
- =?utf-8?B?b1NuSk9kNU9TOThmSFZKUlZ2bEQrUFJLcVhteVhyRTZXQXRyN01MTklvWlpj?=
- =?utf-8?B?Umk4NTlFYlowb3M3bWF2ZXU5Wi9LaGF4Q2VGQ3J6Y2d5VVp2aTVnN0VNRmtF?=
- =?utf-8?B?dVd0V0pNSTk3RGd0QVZUTjYxcWJTS3FjdGU0TG5jZG4zVk5BYlNrZ24yMUhN?=
- =?utf-8?B?Z1JFUFV0NmNtTG5ZaDB4bzk2SHpqYXhjYnp6eVg4QnA0c1VtdlFnNFNQbEMz?=
- =?utf-8?B?dEsrdkNmOGtnd1dqbmpKQXB6OFZ4SVdTdURvWGd1QkkySGwzYWhoVlJLZ2U1?=
- =?utf-8?B?STNmTVJMc3BvbUt6elFLc0pKU3FiN04vaXQwRmE3RTE1SFUxMEp0aUxFOFJV?=
- =?utf-8?B?WDNXRmFLQ2EwMll5QysrM2Nwb2FhM09GTExXWk1pMGRIVnJkbHpWM3RtVWF1?=
- =?utf-8?B?SWlkWGtuVHNtQ1YwTjY3dytYTDNCN1dsMUtpVjNXSU02RFdqMDVhQnRlSjRH?=
- =?utf-8?B?VW1TeDJFckRmODJlSE92U2pleUJZbU9BRTlyeW9Qc084ajFXdWpFUkZ2d2Mv?=
- =?utf-8?B?eFp3L25VZjlRNzFTbzhPQVpXM0E5d0VuUzV2a3hBMDFTbWFKMzZlSTZwK3FI?=
- =?utf-8?B?dC9kanJyQk5FRXVIZEN4WExOMDJrcllkRFphS1JVeUNkOVI4Rnp1RllkWlV0?=
- =?utf-8?B?Q3dwenIzUXNYMjZnaUJKNmE3VFBDM3hWaERoY0JqZWNMTGNFQU5vdmJxblcx?=
- =?utf-8?B?VzhhTHJNWmM3MHV2RUd2aC9FNFlTZXlxLzlyKzBSSnZSMkFiN1N0dDc4ek1R?=
- =?utf-8?B?V2lwdzZNdTRjTWR0SlZLS21rU0xDclFFaldCbjN3WFNQQmlPUVNhWXBLWERO?=
- =?utf-8?B?YTk5cGdSeWtueHpodGluL3RLOWZQSU81RHUxbWZDUWdVeTVEWWhad0gwNmdL?=
- =?utf-8?B?TEh0blRHc0p4QXpnTEZ4MUlQR2dGSGZvTS9uc2VzWW5UK0Q4WkJobjFSTUNY?=
- =?utf-8?B?c1pGTDVJQi9SQzUxaVJLUGo4ZE4vdWh6bHozWWZKNndaT0xnZ0kxN21TU1lD?=
- =?utf-8?B?ZmNOcmtCZ2IwQTV4a0xOc3ZsWnhIOE9nNVdHd0NGSEpRUFd2bW5adkVWWm9B?=
- =?utf-8?B?Q0hMcmxlOW9mekU5WFlSOTlLaFN1RHV6MmFvTXM1ZGVkS01Za201ZStWeURI?=
- =?utf-8?B?MTFUU1VRVktYWmlmYXFOVWh2QnVDcmZxL3NtRVQxYm0zNWo0YmFDRHJMem5l?=
- =?utf-8?B?RzcvOWFyMm96cGg1SDZYS0NLQzN2NU5yT0JPQUg5RTAzeFFOblJjWDhuK1pH?=
- =?utf-8?B?eVRpclF5RnVoVG9pQWNwMi9vU3ltSFNUS1RtZ0lwWm9ZYkFMclVWY1JnWU9w?=
- =?utf-8?B?R3VOTk5wMVRVOVJxV0w4YldTQVA3TC9CeHZEQysrZFRTU0VlK2dwWUp2bC9C?=
- =?utf-8?B?NTVpYk51bzVXUDRDL2R2SXpvdGNlbTNXYlFESU4xVXhBQVVMTUtxMVBOc0lw?=
- =?utf-8?B?QVNnQlc5eE9welRTQkxHNnc0UjU5SXV0emptcTVGend0ZERkWm9UbkVVYmVt?=
- =?utf-8?B?dlRPekYzR2swVCtLbnJQeXQxS2JINHYwOUF5anByT0xRMEpla3ZHWkxvZDJN?=
- =?utf-8?B?TGI3OGZlUWtMZldmcXlsblRIRnc0dGR2T29tM1V3ejA3N1hTOVNHZmovN01k?=
- =?utf-8?B?SndNV2FkeUN0RTB1U0dzdGk4Sm9lakZyZk5UMkZEMi9MY2w2SG90Z0lZRzVv?=
- =?utf-8?B?aGQ4dDUzY3NqbllBdk9haHpDejhrVnNPUnBrY3pnZHByRnh0c1ppQzRTWVQ3?=
- =?utf-8?B?WlVzQ1FjektiOE80Q1EyK21sWCtvbWphbDRXbjAvS0RhUmxpVERlN2V4N3pN?=
- =?utf-8?B?eU5LUmdCV2RDRERNTnNMZEhaUDBUelBlS01zb1FrQWdySHdibmwra213ay9L?=
- =?utf-8?B?cDB0UXNtbTB6WVZBMXF3ZEZzbGk3K0ozNlFKajUyVGNqRVA2bTAxZWRaMnYr?=
- =?utf-8?B?cDU1aUN2WDNqY21YaGI2R254bURwZDFveWNoZENaTW1MN0pNNXQxZ2xyL01m?=
- =?utf-8?B?WnZnSXZlcis4cHZHaXBYemJaWUVjb3Q0UzBuU2hSbS9WczF0UDZWQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5f0fcf0-5ac3-4cf4-81c8-08de8dafe52d
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Mar 2026 16:26:13.9940
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4/WwjecH1Y36maaZpQE6SP8XG2EVwFhVwwm1TfGVgw5dbLz2sB1Fwb9V/u/XZHgwH5Zj+Sl0dsJMQtVzMjEk7A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7437
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aclKrNMA4CG7K5K9@gpd4>
 
-Hi Tejun,
+Hi Andrea,
 
-On Sat, Mar 28, 2026 at 02:18:55PM -1000, Tejun Heo wrote:
-> SCX_KICK_WAIT busy-waits in kick_cpus_irq_workfn() using
-> smp_cond_load_acquire() until the target CPU's kick_sync advances. Because
-> the irq_work runs in hardirq context, the waiting CPU cannot reschedule and
-> its own kick_sync never advances. If multiple CPUs form a wait cycle, all
-> CPUs deadlock.
+On Sun, Mar 29, 2026 at 05:52:12PM +0200, Andrea Righi wrote:
+> Hi Cheng-Yang,
 > 
-> Replace the busy-wait in kick_cpus_irq_workfn() with resched_curr() to
-> force the CPU through do_pick_task_scx(), which queues a balance callback
-> to perform the wait. The balance callback drops the rq lock and enables
-> IRQs following the sched_core_balance() pattern, so the CPU can process
-> IPIs while waiting. The local CPU's kick_sync is advanced on entry to
-> do_pick_task_scx() and continuously during the wait, ensuring any CPU that
-> starts waiting for us sees the advancement and cannot form cyclic
-> dependencies.
+> On Sun, Mar 29, 2026 at 05:06:20PM +0800, Cheng-Yang Chou wrote:
+> > Hi Tejun,
+> > 
+> > On Sat, Mar 28, 2026 at 02:18:56PM -1000, Tejun Heo wrote:
+> > > Add a test that creates a 3-CPU kick_wait cycle (A->B->C->A). A BPF
+> > > scheduler kicks the next CPU in the ring with SCX_KICK_WAIT on every
+> > > enqueue while userspace workers generate continuous scheduling churn via
+> > > sched_yield(). Without the preceding fix, this hangs the machine within seconds.
+> > 
+> > I think it would be better to skip this test on older, unpatched kernels.
+> > Sometimes I use my local kernel for testing before the stable patches are
+> > fully integrated, so skipping the test would be a safer approach.
+> > 
+> > Otherwise, this test can stall the machine and make it impossible to
+> > exit the test runner.
 > 
-> Fixes: 90e55164dad4 ("sched_ext: Implement SCX_KICK_WAIT")
-> Cc: stable@vger.kernel.org # v6.12+
-> Reported-by: Christian Loehle <christian.loehle@arm.com>
-> Link: https://lore.kernel.org/r/20260316100249.1651641-1-christian.loehle@arm.com
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
->  kernel/sched/ext.c   | 95 ++++++++++++++++++++++++++++++++------------
->  kernel/sched/sched.h |  3 ++
->  2 files changed, 73 insertions(+), 25 deletions(-)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 26a6ac2f8826..d5bdcdb3f700 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -2404,7 +2404,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
->  {
->  	struct scx_sched *sch = scx_root;
->  
-> -	/* see kick_cpus_irq_workfn() */
-> +	/* see kick_sync_wait_bal_cb() */
->  	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
->  
->  	update_curr_scx(rq);
-> @@ -2447,6 +2447,48 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
->  		switch_class(rq, next);
->  }
->  
-> +static void kick_sync_wait_bal_cb(struct rq *rq)
-> +{
-> +	struct scx_kick_syncs __rcu *ks = __this_cpu_read(scx_kick_syncs);
-> +	unsigned long *ksyncs = rcu_dereference_sched(ks)->syncs;
-> +	bool waited;
-> +	s32 cpu;
-> +
-> +	/*
-> +	 * Drop rq lock and enable IRQs while waiting. IRQs must be enabled
-> +	 * — a target CPU may be waiting for us to process an IPI (e.g. TLB
+> Actually, I disagree. The whole point of the kselftests is to expose kernel
+> issues, including bugs in older kernels that may need fixes. So, I think we
+> shouldn't skip the test.
 
-nit: s/—/-/
+I see your point. While the system stall is a bit painful during local 
+machine testing on unpatched kernels, I agree that kselftests should 
+remain an effective gatekeeper for kernel issues.
 
-> +	 * flush) while we wait for its kick_sync to advance.
-> +	 *
-> +	 * Also, keep advancing our own kick_sync so that new kick_sync waits
-> +	 * targeting us, which can start after we drop the lock, cannot form
-> +	 * cyclic dependencies.
-> +	 */
-> +retry:
-> +	waited = false;
-> +	for_each_cpu(cpu, rq->scx.cpus_to_sync) {
-> +		/*
-> +		 * smp_load_acquire() pairs with smp_store_release() on
-> +		 * kick_sync updates on the target CPUs.
-> +		 */
-> +		if (cpu == cpu_of(rq) ||
-> +		    smp_load_acquire(&cpu_rq(cpu)->scx.kick_sync) != ksyncs[cpu]) {
-> +			cpumask_clear_cpu(cpu, rq->scx.cpus_to_sync);
-> +			continue;
-> +		}
+Or maybe return SCX_TEST_FAIL? 
 
-Should we add something like:
+Since without this patch, this test won't pass anyway. Perhaps failing
+more gracefully is a better middle ground than stalling the entire machine.
 
-		if (cpu != cpu_of(rq) && !cpu_online(cpu)) {
-			cpumask_clear_cpu(cpu, rq->scx.cpus_to_sync);
-			continue;
-		}
-
-> +
-> +		raw_spin_rq_unlock_irq(rq);
-> +		while (READ_ONCE(cpu_rq(cpu)->scx.kick_sync) == ksyncs[cpu]) {
-
-And here:
-			if (cpu != cpu_of(rq) && !cpu_online(cpu))
-				break;
-
-(see below)
-
-> +			smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
-> +			cpu_relax();
-> +		}
-> +		raw_spin_rq_lock_irq(rq);
-> +		waited = true;
-> +	}
-> +
-> +	if (waited)
-> +		goto retry;
-> +}
-> +
->  static struct task_struct *first_local_task(struct rq *rq)
->  {
->  	return list_first_entry_or_null(&rq->scx.local_dsq.list,
-> @@ -2460,7 +2502,7 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
->  	bool keep_prev;
->  	struct task_struct *p;
->  
-> -	/* see kick_cpus_irq_workfn() */
-> +	/* see kick_sync_wait_bal_cb() */
->  	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
->  
->  	rq_modified_begin(rq, &ext_sched_class);
-> @@ -2470,6 +2512,17 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
->  	rq_repin_lock(rq, rf);
->  	maybe_queue_balance_callback(rq);
->  
-> +	/*
-> +	 * Defer to a balance callback which can drop rq lock and enable
-> +	 * IRQs. Waiting directly in the pick path would deadlock against
-> +	 * CPUs sending us IPIs (e.g. TLB flushes) while we wait for them.
-> +	 */
-> +	if (unlikely(rq->scx.kick_sync_pending)) {
-> +		rq->scx.kick_sync_pending = false;
-> +		queue_balance_callback(rq, &rq->scx.kick_sync_bal_cb,
-> +				       kick_sync_wait_bal_cb);
-
-queue_balance_callback() is a no-op if the rq is in balance_push, but I
-guess it's ok to just clear the kick_sync_pending if we add the checks
-above.
-
-> +	}
-> +
->  	/*
->  	 * If any higher-priority sched class enqueued a runnable task on
->  	 * this rq during balance_one(), abort and return RETRY_TASK, so
-> @@ -4713,6 +4766,9 @@ static void scx_dump_state(struct scx_exit_info *ei, size_t dump_len)
->  		if (!cpumask_empty(rq->scx.cpus_to_wait))
->  			dump_line(&ns, "  cpus_to_wait   : %*pb",
->  				  cpumask_pr_args(rq->scx.cpus_to_wait));
-> +		if (!cpumask_empty(rq->scx.cpus_to_sync))
-> +			dump_line(&ns, "  cpus_to_sync   : %*pb",
-> +				  cpumask_pr_args(rq->scx.cpus_to_sync));
->  
->  		used = seq_buf_used(&ns);
->  		if (SCX_HAS_OP(sch, dump_cpu)) {
-> @@ -5610,11 +5666,11 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
->  
->  		if (cpumask_test_cpu(cpu, this_scx->cpus_to_wait)) {
->  			if (cur_class == &ext_sched_class) {
-> +				cpumask_set_cpu(cpu, this_scx->cpus_to_sync);
->  				ksyncs[cpu] = rq->scx.kick_sync;
->  				should_wait = true;
-> -			} else {
-> -				cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
->  			}
-> +			cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
->  		}
->  
->  		resched_curr(rq);
-> @@ -5669,27 +5725,15 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
->  		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
->  	}
->  
-> -	if (!should_wait)
-> -		return;
-> -
-> -	for_each_cpu(cpu, this_scx->cpus_to_wait) {
-> -		unsigned long *wait_kick_sync = &cpu_rq(cpu)->scx.kick_sync;
-> -
-> -		/*
-> -		 * Busy-wait until the task running at the time of kicking is no
-> -		 * longer running. This can be used to implement e.g. core
-> -		 * scheduling.
-> -		 *
-> -		 * smp_cond_load_acquire() pairs with store_releases in
-> -		 * pick_task_scx() and put_prev_task_scx(). The former breaks
-> -		 * the wait if SCX's scheduling path is entered even if the same
-> -		 * task is picked subsequently. The latter is necessary to break
-> -		 * the wait when $cpu is taken by a higher sched class.
-> -		 */
-> -		if (cpu != cpu_of(this_rq))
-> -			smp_cond_load_acquire(wait_kick_sync, VAL != ksyncs[cpu]);
-> -
-> -		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
-> +	/*
-> +	 * Can't wait in hardirq — kick_sync can't advance, deadlocking if
-> +	 * CPUs wait for each other. Defer to kick_sync_wait_bal_cb().
-> +	 */
-> +	if (should_wait) {
-> +		raw_spin_rq_lock(this_rq);
-> +		this_scx->kick_sync_pending = true;
-> +		resched_curr(this_rq);
-> +		raw_spin_rq_unlock(this_rq);
->  	}
->  }
->  
-> @@ -5794,6 +5838,7 @@ void __init init_sched_ext_class(void)
->  		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
->  		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
->  		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
-> +		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_sync, GFP_KERNEL, n));
->  		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
->  		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
->  
-> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-> index 43bbf0693cca..1ef9ba480f51 100644
-> --- a/kernel/sched/sched.h
-> +++ b/kernel/sched/sched.h
-> @@ -805,9 +805,12 @@ struct scx_rq {
->  	cpumask_var_t		cpus_to_kick_if_idle;
->  	cpumask_var_t		cpus_to_preempt;
->  	cpumask_var_t		cpus_to_wait;
-> +	cpumask_var_t		cpus_to_sync;
-> +	bool			kick_sync_pending;
->  	unsigned long		kick_sync;
->  	local_t			reenq_local_deferred;
->  	struct balance_callback	deferred_bal_cb;
-> +	struct balance_callback	kick_sync_bal_cb;
->  	struct irq_work		deferred_irq_work;
->  	struct irq_work		kick_cpus_irq_work;
->  	struct scx_dispatch_q	bypass_dsq;
-> -- 
-> 2.53.0
-> 
-
+-- 
 Thanks,
--Andrea
+Cheng-Yang
