@@ -1,64 +1,63 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011021.outbound.protection.outlook.com [52.101.57.21])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010047.outbound.protection.outlook.com [52.101.193.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C5637AA9E
-	for <sched-ext@lists.linux.dev>; Thu,  2 Apr 2026 07:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CF332142B
+	for <sched-ext@lists.linux.dev>; Thu,  2 Apr 2026 08:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775116498; cv=fail; b=fDWVnzHNybfpklzGS3OGD5fOVOFWoSEGzRs3jfvB9F1Yoic7DrOuwvccipBKz9+CEFJWneR1H41Bysl++O0Lhxrd4C5Y1jG0EzEldl8aI7pehY/ipXM1VOwByt/647RoID4jZRynSzrR/XGZO/LnqZw9llDTnHBRYZW2VXUGbOc=
+	t=1775120279; cv=fail; b=e18qlKIEXG0e+Fof5NHOzxicIMqyww4COCDQlHxhIfqAIwRF3G7H1mPIMyd3uqpVjY3TV2cZMOFg79geUaArhBE+dbi6PumWyq0o2x0RtdUjC2MJnZEfNGSxJ1KnWBOxLfL27EAsBSfyEWMGgQYGFpIIsy8atsEZnQVxgCWIsao=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775116498; c=relaxed/simple;
-	bh=yB3ECk2jobMeNoDDRqb4+Ir7Y9veHtemzqP96oXNFX0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=j5oK69CMEUW5c5GstqaJ7gjrr5OUIbOkr3/JTYl6424MivfIt3cQYG+nQt6vzES1WiGdPewFcJiParzwRiiMA4lZIABoqHBaNudY/8MfsEVRYNmmGBUzGTuJfce/NcZ1ki5S9l1LzmaM3wwXF/ytzkX/0vQ6d4Rfrg/q/YG+h0Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MNSi3rRZ; arc=fail smtp.client-ip=52.101.57.21
+	s=arc-20240116; t=1775120279; c=relaxed/simple;
+	bh=HDRMJN6G5iI08/a6toSuAx14PkbKOR8FybsuK666cqo=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=myinlOe81JBHAr241VUYVGh4IFuCqSzIeX+n3VvlAx/es301J96ImuZuWa7H6SAc8x1yTVYZi1jUwsv5UKT4O/9V3phyLkkKAtmKxbrvlNV9jYDgZpPHHaLWwTzlg9r9SFKvcN+0LmfnhYwV0SUvMBt4o0nugmoDBLCK2oMO5m0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Fl7rfGQr; arc=fail smtp.client-ip=52.101.193.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MNSi3rRZ"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Fl7rfGQr"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qZpOMCM6jRZhtNud+oqW12yvGz2oY2S0M64Y0eCdG4tqaAMLm+2FQuGngPoG/Nx6S897MnTah9lhk1SdmFDb+2toDHDJTt+wEGBwaXqrkELq2U9KS18ExT6TqvBcMShkDIrum9WDykLsX0Kg/qBSbIz0cN78nOISWrjbWsZ23s4EjbWgZoJoof+vKI+uPMBFCzu8z7NlIBFdyzhYLyJS/dPrea/Ne9JyKGKeIvLqf6gUkZn2ivR7zZ4ISHnRFuJpKVcPPm2AJU0VscFfHu6So/5hIBKC+K6yB0zl1p8ihitqmgflcVpVbD0meUkksvzT61lUbqgBOynxNJKACz+Mzg==
+ b=ll+vdrjm+ZsTnwlLIKXk7k7zfhiUc8jFKU7x92a0NUO971q8e6e9uQLsPhIIHGqOQz7z3HXks0MmELrWqj+IMO7WHCpsJBpLH6O0O5HXFkWAF9bocFF6xa5x4uZFHR32zhqaE6Sbxgi6JiFncOIqx5qOcpXTXqcTD4j75jWtHii/eFe8jj0RdDdm8FUaohxL32Nz+4AqTSGGC/ZakgJdPB61nEgoLbPDEkhYiN0UJ21HXtBBccBtUUlG0g9EAPtFfvLayGnb1hCZRHVy/U2bB4iee4GMob+bRPfzZlUKXJeFLhtJTt+edKu9qGYNpF4Dlv6MhoCYKunQ+XzadWSh4A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YB+Lzo0hWPGdYcAZomiHFa5mpXhQ8OUskluCFDC6jEI=;
- b=faHGnMLFrkbrjR74wexEc7ly7c5pTNFA/3NCHCBE583AqB9dAIG0aG+YgCROfWmQOxT2NL1GfRuusC/kVv3pnO0v7EppjPjOxL7AAZbjKUsa0qcM95lvsmAA4uvLd6sEk+sBUQBGH47T9Rtg3+j04xiLtDkVtCalhbIBSPvApOQsXYQ85+85lMuUGSRfbaxqUXEd8MiLpojEwmCToztbXHTK1NDSV5yRI4y6BjpxJfoPddfyxa5qDmKdZ49FLHm2+xaYm5+ADeGamaT9uqcnNWuWDF3XGCn8GtAnLlVRpPKYGbwxZUs5rV5NWpQaKqZYxMr52Gn7OtjHIWCE87U8gw==
+ bh=e+Sy6LnWhfuarUkh8XQwJtgV8/dXiHJ/ogzPS/1gEFQ=;
+ b=YPSN59M9sVV5SxNJM7LvGMXUoOYaD/+C1dJA7okI9rtT6lbbI1tEdGVvZpWDZAmmEej/krnd2axOtbarH0wm6da8MgUVOdTxtQbl2zOS/lbwMyNGq80w8eoC85s3dMexWIB4BVpdITJzV2ohrCq6vzBzaCvFiS4J3l74+f5z9PzfL9eoZJ+uTH2KocyBybTqiOc3cRCfuwZiGauVJsRQaCNdjquvKptqGsRQ9TVb+3AJ/pRttHo7ht1aDe1Fwx7amWI4XfThFxWAyl8ofO6BZT8jGEGrt8+4fma/GEOfqXBKgUCRe5M05ygV1PhYNPX1N33xT/3SBn8evrzFf7go7g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YB+Lzo0hWPGdYcAZomiHFa5mpXhQ8OUskluCFDC6jEI=;
- b=MNSi3rRZCS23zquTNmRjlieTDYb9HZ/RfjL5jCCE8aw7ssNgQA2tCAahFe/1SVNIOMmcqV3htrtfBJKm2L5YcTSUMyeZvdAv1Ef810yiSDXm9drHT0liBo7TyMER8L668RY4JB/dE9YnCEOjS/6JEY/0VA1nCzG+pFgj4/DqqMyjBoHNVnzcmoG0XM5Yz/ZbedccB4fVt51EolLJM2j4NqzO4pu7cq2+hYT0Vun0HGBBg3el+jzTcpjr7fMoAJvcnqmeGmxVMolL3uYFwRk4Rc37H6v+oCRt/2U+bHT/J67n9/3AGqgZOW3FbitbV6DZNp/GtrRN2BSP7wEnR4gvRw==
+ bh=e+Sy6LnWhfuarUkh8XQwJtgV8/dXiHJ/ogzPS/1gEFQ=;
+ b=Fl7rfGQrQcluVJwjilFpwsCh0zCu6VkB/NtI63bsOMJ4ST9CzrvDbelYdZu6plfeunhz+LvCJ8SNEGQ40hB6X3SlYwRgzQup1bjgjwyR8iYF+8/8dFQk7+ewiDkHPaLLjVBGGPMBmSUwK91wIyLx8PXu/a0qSfKiNt44luXy+nOUhnbgFsw3iA412n3OGTvQlNebUW4HUeL4T6yh2XQzA2MCi5fi4q3kteCoTFayu9KYpovLCIWeDRsfa5EYln5GBDpN7e4tbyuHu/LGIFnJH+pNSBM/ggH4RXpAwM/x3CVeGOXxb9ddUiKf+uAGvj/duIRoBqwb4bN/DwH5fvmR9w==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH0PR12MB999113.namprd12.prod.outlook.com (2603:10b6:510:38f::6) with
+Received: from CY1PR12MB9601.namprd12.prod.outlook.com (2603:10b6:930:107::16)
+ by DM4PR12MB8498.namprd12.prod.outlook.com (2603:10b6:8:183::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.18; Thu, 2 Apr
- 2026 07:54:53 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.016; Thu, 2 Apr 2026
- 07:54:52 +0000
-Date: Thu, 2 Apr 2026 09:54:44 +0200
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.21; Thu, 2 Apr
+ 2026 08:57:54 +0000
+Received: from CY1PR12MB9601.namprd12.prod.outlook.com
+ ([fe80::cd76:b497:475f:4de3]) by CY1PR12MB9601.namprd12.prod.outlook.com
+ ([fe80::cd76:b497:475f:4de3%5]) with mapi id 15.20.9769.017; Thu, 2 Apr 2026
+ 08:57:53 +0000
 From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, patsomaru@meta.com
-Subject: Re: [PATCH] sched_ext: Fix stale direct dispatch state in ddsp_dsq_id
-Message-ID: <ac4gxCImroMR6TYl@gpd4>
-References: <20260401215619.1188194-1-arighi@nvidia.com>
- <ac2gYobvvAXSPjxd@slm.duckdns.org>
- <ac4dbpuXGBUEVm6E@gpd4>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac4dbpuXGBUEVm6E@gpd4>
-X-ClientProxiedBy: ZRAP278CA0011.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:10::21) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Daniel Hodges <hodgesd@meta.com>,
+	Patrick Somaru <patsomaru@meta.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] sched_ext: Fix stale direct dispatch state in ddsp_dsq_id
+Date: Thu,  2 Apr 2026 10:57:43 +0200
+Message-ID: <20260402085743.1410070-1-arighi@nvidia.com>
+X-Mailer: git-send-email 2.53.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ZR2P278CA0005.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:50::10) To CY1PR12MB9601.namprd12.prod.outlook.com
+ (2603:10b6:930:107::16)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,168 +65,229 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB999113:EE_
-X-MS-Office365-Filtering-Correlation-Id: 35dfc68d-c72a-4b20-2c2b-08de908d1f80
+X-MS-TrafficTypeDiagnostic: CY1PR12MB9601:EE_|DM4PR12MB8498:EE_
+X-MS-Office365-Filtering-Correlation-Id: 63455d82-e486-4890-6162-08de9095ecf6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|22082099003|18002099003|56012099003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|56012099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	QONW16mfXG2VRZKfcxCK8VESXQGiaRtNE+PXuGg1JFKajkadz5rdyjpEKdTD0cqVZCCk/9lKaHNxUx8Dn/6lM6JgL7MYFRrH2JvA++V/2cciBoaS+jED5xsfiVd35IfcwttBq3R+P8S7LoShB9YUliM5XL3EnS/su4FCpQrTUVbro/Cou00EsMpdw2uvEX/I2qcAGhdOcsbAZr+wq+wqoSzv+sOAMlvZZjHcQLssc4l2NbbZ2I4Ji2nUrGY2+mczo2cfCMUj4+w425OSkG2cXUDL2VV5Y+6xx2Blhn8fVdg5QTB5y03AktLkUQcw20/TIrxVHy2nv9dhuhXpOXNctL5v8Ud8qqnCM/gEBmv/B/wRHagWk4WgVmt8IjsKibAgVJZtauY7nWyehfnsJXQxfKab9+19EqLZdWbJ0fmSyqQzZdJJSlk34+KOUmtF44tmqkecbDpb1pNYmEKkm9nPAR1sALIjkIqmgz17Ob3aXstj/ehK5pjGN+QtnLU9oLd6neOIG3j+eIkKB/oE+9I//1HEyOqHWiWTf9c88ALhTg0mJYmeGLMlV/N0ncWkak65x3vhXvZnlb4up1EsdSPC50Oh29y+m36Vwz+i+hjk1hcpDRVyaCqCmP4Kkn50pLgFeQucWbt8OqxsEebf3+sN8LL2sWOqbgdwhBdzQebTmvCxIsQFcvrG9AYV1gseI6XZIx8SzsLOEb3Bgm1sMA9iciJiyx6E0Fi1VU7LdDl0r+4=
+	fCbl6ph1MLRSr075AqxSiQqPG8Dm2ShrT7hiKBq4sLpi+4+kLRJCXg2vNybsLJ8qw010Gcyk528Oz1wSPHBQ+H1iHev5js/4wH3hYBRUQO0V+6E71iadsm/Cxi+RsLLIR0FGUaB7iWk+c72zgyTp7bFUfo6abkdc71u9n/D7wuDMc3QGSj6zv8ld6jvSPE7F1OsTk5vLZYUTr8AJqZ9dXRFgbw72AgUZZO0t6UdE7jQAgoYB2Xe2aOr2YoxjEUN/OEG0qovX/fEyk9h4F10lnMRkw/DRnZdD/RBrALDlVy8PAJUOB4HUGBxAT3MjjaY1F579W/QhCsIjVkhMY10QFV1AIunEcNBBYcBXQOkyvdbuUqhm0X7OdFcq0vxzXK20/xhVBMmF/Nl/mfJjwS1C5LPanQWC2rA4+IcNlFUUtbRJKGTLTtqW2Nquw+4mGu12ivYvMwmx9wHpEpy6t9xhaFNP44VUKktkJURHsAwhU+ty2gqaJp4mkzS2kDxxxDBXRbP4oJD8UIEiHLt6vTIgJ4DcLg7E0zhC06EichPuWQyXA084leods4rYilKVnFuaxwT10RrAnZ/azNDtMfCujK96iOhc8rrIwJ3kARZx7iDbKDdxFFDk2rzgoEBJdrRPtnJBnISoINMxmDNj6NLr4bP9FEPIno07VdY4OpLLif2+QhL77YyUz/dxKv0LWrCU2doSB2SFmOCFiEJUMGKPu5gogzfiWAQAxYnWvYwumoI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY1PR12MB9601.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(56012099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?7ZDZWCzqMDS2jDXLGoYzrn/E2iz7fefADnIAgy/Q9pZlQl4uJnCHrpPQV3FT?=
- =?us-ascii?Q?ia/Vjv/Ul19hg/0Z1y2cup0BFNPSngF5f6B/GZWYJJuiESDtRLhSp0fPiVGk?=
- =?us-ascii?Q?YISptjENYIIY2I0qeKbNAspWqPQMuHAb5p2+JjpyKTUql4REo69IgEWt/BQI?=
- =?us-ascii?Q?gKvKVD6DLHsRmC1daAkLJFUoc5ycNrPHr+EXqIYGCdid5L2F8fhPGoks/urB?=
- =?us-ascii?Q?l11utTkqoXgkBe88dS67CFnBLjbGYoI3LNIcZeGtBuBAT6thh8jOvlUR/1nw?=
- =?us-ascii?Q?2nlbXkE06/C/rED7WQUSWvl4e+9OBFL5MC6B844NrnjuJe19kbLF68PDCl7N?=
- =?us-ascii?Q?p21e0QUOPtTss4t8BGjYpoh4mjIPO5k1YYaB3xSbIWrhzvr2JUW5WMOYKaLH?=
- =?us-ascii?Q?HKy3lftZp3zOBYBjvWpRKIuQeLfzT7i0SViwTo0obTpDZk6URDgf0jJ/BaoX?=
- =?us-ascii?Q?gVh3CU9bAgdD1PhJQsRgiEuhfW3vN5jzUffdnINUizE9nWYNe9vb8itm2kKd?=
- =?us-ascii?Q?JFAVuuzj0WKTpujb+LTSoz9vNNEG2Zv0hlSExESya9mEMeqYDVF2qwCvNkqF?=
- =?us-ascii?Q?4hzFRCCYyl9CrHRdKjJaVGqnNEPWMNQuoFFXeuuFsHDA38eDTI6bP8A4W/7K?=
- =?us-ascii?Q?0gAbtu1zOSPF4iw2ckhD+GMr/PZD8G4gixLHDqgFzxfEzqWlEyuYQu4Kz5Gq?=
- =?us-ascii?Q?q8Dv0e4YiWTnQqgp5wLNUBTNonyLb5jo50zh6Y4ZltSTZ5GEbLh+FBMopomv?=
- =?us-ascii?Q?/JqCbjrSBM1kgpSfpIrwtnDIpFZkK2RSy5S4FfQMSq6h2dF6gX86zkOzIVT1?=
- =?us-ascii?Q?ooqNaVga+L4Vp5nl+Wq5DZPAdm7jgt9pQBTet4V3ZblnMojOShAMxfwUiggm?=
- =?us-ascii?Q?Mb01w2Uj9LpXUQneigS/Bcmju5cl1smp37Gr7gZj3wwg8NRSQA7Ksi24ntBb?=
- =?us-ascii?Q?B7eltTtK3dnP1oH9JXQWklAzOsnx9h9zTRiLqSM8LzbGSGNx/NmEwLQNv2/8?=
- =?us-ascii?Q?b8zDVKja1Tb7owag+uhiUvWvDLBqMFXlNu7qKcef/A0UMcF0shI8SMW8Ariw?=
- =?us-ascii?Q?nHU2WouJlZlRLIhLZPkFFBbQ05vwf+MhIB0gmppYaBd8NSuqO/GKfY3fjx3A?=
- =?us-ascii?Q?yzotOXwkYomr3bmFtR5KNISMCoSxiqv95iH35y3/5RDgTponRF8WcBhjJ/zx?=
- =?us-ascii?Q?wcWYUgwqQ86/BpnIhXr0MNuB13SnR/CTWIEc0rtt4nypbKbFkRvQ/txM0FBP?=
- =?us-ascii?Q?A2XgrPire/5m/s5FhZW96WTwbqHEiBsM+uHuufbBXzwRUllK25oRS4W/Nk1v?=
- =?us-ascii?Q?g1Z6Qtpey4VZuHSTEN9rlWaWCH4rOXHEvsifTWSkcAYSv5A9ZLgp+jFoUeTI?=
- =?us-ascii?Q?TsRwdhVLZqW1BU5oMw1YW53EBAYOn8gFdpkdAJes48TlWoBvlI2k/QbRaUAE?=
- =?us-ascii?Q?UOrrbLD7JCgsOhog4jtaF422Fvc5FhDMFqWhuywjo8iZpzZBEz8kD+s7M2p1?=
- =?us-ascii?Q?3Na0GOy8VYZMWCATZcyFpKqEg5RrNglqUoT2PkMFAUeEKec9698SM4qgS4d9?=
- =?us-ascii?Q?awm0FpdWfwjCLxSyfsv4KxTfLtTDXWgXJJW6WaRsrExycslGa+6zD1SNs89V?=
- =?us-ascii?Q?t3kE6oImt4sO4nNhrdYoq6q/okNSnkzs9QAJTbtifuH612h3EV0khc13WvkZ?=
- =?us-ascii?Q?QBqYmLSiXJa4hHkDE/PP8h0YoJS54vq2jsKn1st5FnmYVmXC5r3Dr6eyB7Jl?=
- =?us-ascii?Q?e+ROanMzng=3D=3D?=
+	=?us-ascii?Q?0LlWCHLgri24KFJVepX05C8XXgHuWCpCAntCiVtLw2Bw2wEzzlmvyzca1p9M?=
+ =?us-ascii?Q?kxUFHdE2+vqeDqIK7uzymrSCsztbh6KgKY44WVWpYb+5WZFRLLadoDd9IBy9?=
+ =?us-ascii?Q?XMV8jhJWereDMvtKT3Q7RNYq9mOuA3ISznVtbKN1aQqCGBrmKg3Y8/fDrMqA?=
+ =?us-ascii?Q?T694DgW8HWBXNwytfqVBA91Aywv3UIOgz+pzcT2Y9I57DazalfeH0qf7jdlj?=
+ =?us-ascii?Q?5iO2eJMKHEBA6mh5aX4dO3nyyg5gkIC4JIvEOAd/RMnga57j5qKzGHm1ixGf?=
+ =?us-ascii?Q?HzbF0MghiV9ydGuflNKrikD5FTAHmhVn8ktqjXYbVjfBrQEd1qXKwRXVPuTD?=
+ =?us-ascii?Q?Roy0wUVbWMkVP0JMtcjElXWjBcLAYiSa70j5Q/HzrTvFVgMykqrrrIjV/0D+?=
+ =?us-ascii?Q?RTLEwz43OAY31lbITg63ywJbbXfqCXaPTdL8bt1TEHndFtwcse8jvkt/CYDR?=
+ =?us-ascii?Q?MYkKUKfOZgjN0fL7XUknCcrkCRqASx25PQVcicErUoAGcXrVaU+3Sb3TD465?=
+ =?us-ascii?Q?/okJirCgK//kPs1n+5hiVI5NeSowGX7tRLsQc9Q4wbl7t6shR5h8eJ0v9oej?=
+ =?us-ascii?Q?Nn6cs47QyD9IWLc/GjV9mT11gD0dbkhlnezy6qHURqbb39Uf+lYU2xASb09J?=
+ =?us-ascii?Q?tlpmx20ViVYEurSM3Fes5S2mpho8j6ibYFNcc8nCdjtS9i6LZml/jt/iE6c4?=
+ =?us-ascii?Q?FsV0EYMk2jk/hbooBRV7IIJcJz4EPTqpZ84POHAdaVB3JFjJBg5TRgiUzWVj?=
+ =?us-ascii?Q?AXrrCBNXXLvxVetPZnAbwkpo6Fr3mAmTnKirGi4GbmVut5RsHzbfalsOkMKG?=
+ =?us-ascii?Q?LITd2nb+vxyx0mgwHc++aCK4MMBBLuHDYNgpl42jcSkoftfgZbjzR+ByGhtv?=
+ =?us-ascii?Q?YfRRI6M4lIyMhnl7ITqVjCo9QXSFkjK6/muSYSY+LP5j9560fywRUDblklaS?=
+ =?us-ascii?Q?D+Mnq96keAOWXkc/CfKQgCjcSOzGZmyb1g4247hRNpeVVwbY6t3fKIKNmFD0?=
+ =?us-ascii?Q?JFE/ybqgAZJMVfRrjxSAN+nIqvn3Maza81j05IId7ndra/jWuagUslW1cAKW?=
+ =?us-ascii?Q?jDy2RxX9Kzu64Gufh/O4QeXR3+M392QBo/j46ic+b3TnqXVfyWImPUQ/mycI?=
+ =?us-ascii?Q?YiFKxL7jWRM9j6vMJYqdvxkZ5HuEWhYS2sjMZ9FmmV95fep/kISZimaFYVRf?=
+ =?us-ascii?Q?dJJRdX37VENAl9Zx0YWxe/3iWDYljmfmQb1nLozuJjyzKNDNwRTUTL9UOoyC?=
+ =?us-ascii?Q?zKmoun3UNVU6LwPMdJ9iIp0hi5XCPTXq8Pw7BJ0DSmQpXEIbXRwWl4VsbS/Z?=
+ =?us-ascii?Q?UiWe2K1589LBc5VBbln6L+cePGxQHzIpVJL5C7ZVeb6L/M2aw989iQlhLbW3?=
+ =?us-ascii?Q?pUF+uOUilv5aZCribAvtKYU339GU5rJ09Cq0yhvD1Vzk5sdjVTNgG/HIxSQc?=
+ =?us-ascii?Q?22GKuzzsvMgwr+Eu+vVFZyfXxkgLaeJGky6geBM8XraJ0gjfN3rjuPT9vfZs?=
+ =?us-ascii?Q?M6tjpThhjO988yPixkmSHNRqeuMHUvQhATD2AohKT57LUqiS2Af+aDar7iX6?=
+ =?us-ascii?Q?HLfunZqJ+YF0N60ap0yK3/jrOivjCzgI8UU2wmHEa/duTTgoY6pvPAKZ1vPh?=
+ =?us-ascii?Q?mIiJc2HatJL71a616zuRzcjFfcbCopuXxn1KU+IiibgbE1Ywi6poCEw99Df1?=
+ =?us-ascii?Q?coEaHEk3WhgSbNx7CjdIAiWhu6wihFOmTgBn3hBIzUL+zzFdgegWkJ0CLzYN?=
+ =?us-ascii?Q?aihDUNSXzg=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 35dfc68d-c72a-4b20-2c2b-08de908d1f80
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 63455d82-e486-4890-6162-08de9095ecf6
+X-MS-Exchange-CrossTenant-AuthSource: CY1PR12MB9601.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2026 07:54:52.8270
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2026 08:57:53.8267
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uFtazQYetG5Mqu2H2lnlIzgFwntwQfF441yMoqK/RDRP7hZyIhElIEbl1S83ZOos7pBCH6CR44V5OZCKorKrlg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB999113
+X-MS-Exchange-CrossTenant-UserPrincipalName: tws7khRCdRsBrjHJ857A9Mt7dZxonKxbavhbZKEwZl8f8voVXaNXQF2CgS7XB94zxt76Q+nwfrEEbiBum7JiMg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8498
 
-On Thu, Apr 02, 2026 at 09:40:41AM +0200, Andrea Righi wrote:
-> Hi Tejun,
-> 
-> On Wed, Apr 01, 2026 at 12:46:58PM -1000, Tejun Heo wrote:
-> > Hello,
-> > 
-> > (cc'ing Patrick Somaru. This is the same issue reported on
-> > https://github.com/sched-ext/scx/pull/3482)
-> > 
-> > On Wed, Apr 01, 2026 at 11:56:19PM +0200, Andrea Righi wrote:
-> > > @p->scx.ddsp_dsq_id can be left set (non-SCX_DSQ_INVALID) in three
-> > > scenarios, causing a spurious WARN_ON_ONCE() in mark_direct_dispatch()
-> > > when the next wakeup's ops.select_cpu() calls scx_bpf_dsq_insert():
-> > > 
-> > > 1. Deferred dispatch cancellation: when a task is directly dispatched to
-> > >    a remote CPU's local DSQ via ops.select_cpu() or ops.enqueue(), the
-> > >    dispatch is deferred (since we can't lock the remote rq while holding
-> > >    the current one). If the task is dequeued before processing the
-> > >    dispatch in process_ddsp_deferred_locals(), dispatch_dequeue()
-> > >    removes the task from the list leaving a stale direct dispatch state.
-> > > 
-> > >    Fix: clear ddsp_dsq_id and ddsp_enq_flags in the !list_empty branch
-> > >    of dispatch_dequeue().
-> > > 
-> > > 2. Holding-cpu dispatch race: when dispatch_to_local_dsq() transfers a
-> > >    task to another CPU's local DSQ, it sets holding_cpu and releases
-> > >    DISPATCHING before locking the source rq. If dequeue wins the race
-> > >    and clears holding_cpu, dispatch_enqueue() is never called and
-> > >    ddsp_dsq_id is not cleared.
-> > > 
-> > >    Fix: clear ddsp_dsq_id and ddsp_enq_flags when clearing holding_cpu
-> > >    in dispatch_dequeue().
-> > 
-> > These two just mean that dequeue need to clear it, right?
-> 
-> Correct, we want to clear the state where dispatch_dequeue() cancels a
-> pending direct dispatch without calling dispatch_enqueue(), so I could have
-> just clear the state unconditionally in the !dsq case and simplify the
-> code.
-> 
-> > 
-> > > 3. Cross-scheduler-instance stale state: When an SCX scheduler exits,
-> > >    scx_bypass() iterates over all runnable tasks to dequeue/re-enqueue
-> > >    them, but sleeping tasks are not on any runqueue and are not touched.
-> > >    If a sleeping task had a deferred dispatch in flight (ddsp_dsq_id
-> > >    set) at the time the scheduler exited, the state persists. When a new
-> > >    scheduler instance loads and calls scx_enable_task() for all tasks,
-> > >    it does not reset this leftover state. The next wakeup's
-> > >    ops.select_cpu() then sees a non-INVALID ddsp_dsq_id and triggers:
-> > > 
-> > >      WARN_ON_ONCE(p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
-> > > 
-> > >    Fix: clear ddsp_dsq_id and ddsp_enq_flags in scx_enable_task() before
-> > >    calling ops.enable(), ensuring each new scheduler instance starts
-> > >    with a clean direct dispatch state per task.
-> > 
-> > I don't understand this one. If we fix the missing clearing from dequeue,
-> > where would the residual ddsp_dsq_id come from? How would a sleeping task
-> > have ddsp_dsq_id set? Note that select_cpu() + enqueue() call sequence is
-> > atomic w.r.t. dequeue as both are protected by pi_lock.
-> > 
-> > It's been always a bit bothersome that ddsp_dsq_id was being cleared in
-> > dispatch_enqueue(). It was there to catch the cases where ddsp_dsq_id was
-> > overridden but it just isn't the right place. Can we do the following?
-> > 
-> > - Add clear_direct_dispatch() which clears ddsp_dsq_id and ddsp_enq_flags.
-> > 
-> > - Add clear_direct_dispatch() call under the enqueue: in do_enqueue_task()
-> >   and remove ddsp clearing from dispatch_enqueue(). This should catch all
-> >   cases that ignore ddsp.
-> > 
-> > - Add clear_direct_dispatch() call after dispatch_enqueue() in
-> >   direct_dispatch(). This clears it for the synchronous consumption.
-> > 
-> > - Add clear_direct_dispatch() call before dispatch_to_local_dsq() call in
-> >   process_ddsp_deferred_locals(). Note that the funciton has to cache and
-> >   clear ddsp fields *before* calling dispatch_to_local_enq() as the function
-> >   will migrate the task to another rq and we can't control what happens to
-> >   it afterwrds. Even for the previous synchronous case, it may just be a
-> >   better pattern to always cache dsq_id and enq_flags in local vars and
-> >   clear p->scx.ddsp* before calling dispatch_enqueue().
-> > 
-> > - Add clear_direct_dispatch() call to dequeue_task_scx() after
-> >   dispatch_dequeue().
-> > 
-> > I think this should capture all cases and the fields are cleared where they
-> > should be cleared (either consumed or canceled).
-> 
-> I like this, it looks like a better design.
-> 
-> However, I tried it, but I'm still able to trigger the warning, unless I
-> clear the direct dispatch state in __scx_enable_task(), so we're still
-> missing a case that doesn't properly clear the state.
-> 
-> I think it has something to do with sleeping tasks / queued wakeups /
-> bypass, because now I can easily reproduce the warning running a
-> `stress-ng --sleep 1` while restarting a scheduler that uses
-> SCX_OPS_ALLOW_QUEUED_WAKEUP, like scx_cosmos. Will keep investigating...
+@p->scx.ddsp_dsq_id can be left set (non-SCX_DSQ_INVALID) triggering a
+spurious warning in mark_direct_dispatch() when the next wakeup's
+ops.select_cpu() calls scx_bpf_dsq_insert(), such as:
 
-I think I see it: waking tasks may have had ddsp_dsq_id set by the outgoing
-scheduler's ops.select_cpu() and then been queued on a wake_list via
-ttwu_queue_wakelist(), when SCX_OPS_ALLOW_QUEUED_WAKEUP is set. Such tasks are
-not on the runqueue (on_rq == 0) and are not iterated by scx_bypass(), so their
-direct dispatch state won't be cleared by dequeue_task_scx().
+ WARNING: kernel/sched/ext.c:1273 at scx_dsq_insert_commit+0xcd/0x140
 
-How about clearning the direct dispatch state in scx_disable_task()? That would
-catch those tasks as well and it won't leave the stale state from the previous
-scx scheduler instance.
+The root cause is that ddsp_dsq_id was only cleared in dispatch_enqueue(),
+which is not reached in all paths that consume or cancel a direct dispatch
+verdict. Instead, clear it at the right places:
 
-Thanks,
--Andrea
+ - direct_dispatch(): cache the direct dispatch state in local variables
+   and clear it before dispatch_enqueue() on the synchronous path. For
+   the deferred path, the direct dispatch state must remain set until
+   process_ddsp_deferred_locals() consumes them.
+
+ - process_ddsp_deferred_locals(): cache the dispatch state in local
+   variables and clear it before calling dispatch_to_local_dsq(), which
+   may migrate the task to another rq.
+
+ - do_enqueue_task(): clear the dispatch state on the enqueue path
+   (local/global/bypass fallbacks), where the direct dispatch verdict is
+   ignored.
+
+ - dequeue_task_scx(): clear the dispatch state after dispatch_dequeue()
+   to handle both the deferred dispatch cancellation and the holding_cpu
+   race, covering all cases where a pending direct dispatch is
+   cancelled.
+
+ - scx_disable_task(): clear the direct dispatch state when
+   transitioning a task out of the current scheduler. Waking tasks may
+   have had the direct dispatch state set by the outgoing scheduler's
+   ops.select_cpu() and then been queued on a wake_list via
+   ttwu_queue_wakelist(), when SCX_OPS_ALLOW_QUEUED_WAKEUP is set. Such
+   tasks are not on the runqueue and are not iterated by scx_bypass(),
+   so their direct dispatch state won't be cleared. Without this clear,
+   when the new scheduler calls scx_enable_task() for these tasks, any
+   subsequent ops.select_cpu() call that tries to direct dispatch the
+   task will trigger the WARN_ON_ONCE() in mark_direct_dispatch().
+
+Fixes: 5b26f7b920f76 ("sched_ext: Allow SCX_DSQ_LOCAL_ON for direct dispatches")
+Cc: stable@vger.kernel.org # v6.12+
+Cc: Daniel Hodges <hodgesd@meta.com>
+Cc: Patrick Somaru <patsomaru@meta.com>
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+---
+Changes in v2:
+ - Move clearing of the direct dispatch state out of dispatch_enqueue() to the
+   appropriate places (Tejun Heo)
+ - Do not unconditionally clear the direct dispatch state in scx_enable_task()
+ - Link to v1: https://lore.kernel.org/all/20260401215619.1188194-1-arighi@nvidia.com
+
+ kernel/sched/ext.c | 44 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 17 deletions(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index d5bdcdb3f7004..71bb83fccd60d 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1109,15 +1109,6 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+ 	dsq_mod_nr(dsq, 1);
+ 	p->scx.dsq = dsq;
+ 
+-	/*
+-	 * scx.ddsp_dsq_id and scx.ddsp_enq_flags are only relevant on the
+-	 * direct dispatch path, but we clear them here because the direct
+-	 * dispatch verdict may be overridden on the enqueue path during e.g.
+-	 * bypass.
+-	 */
+-	p->scx.ddsp_dsq_id = SCX_DSQ_INVALID;
+-	p->scx.ddsp_enq_flags = 0;
+-
+ 	/*
+ 	 * We're transitioning out of QUEUEING or DISPATCHING. store_release to
+ 	 * match waiters' load_acquire.
+@@ -1283,16 +1274,23 @@ static void mark_direct_dispatch(struct scx_sched *sch,
+ 	p->scx.ddsp_enq_flags = enq_flags;
+ }
+ 
++static inline void clear_direct_dispatch(struct task_struct *p)
++{
++	p->scx.ddsp_dsq_id = SCX_DSQ_INVALID;
++	p->scx.ddsp_enq_flags = 0;
++}
++
+ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
+ 			    u64 enq_flags)
+ {
+ 	struct rq *rq = task_rq(p);
+-	struct scx_dispatch_q *dsq =
+-		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
++	u64 dsq_id = p->scx.ddsp_dsq_id;
++	u64 ddsp_enq_flags = p->scx.ddsp_enq_flags | enq_flags;
++	struct scx_dispatch_q *dsq;
+ 
+ 	touch_core_sched_dispatch(rq, p);
+ 
+-	p->scx.ddsp_enq_flags |= enq_flags;
++	dsq = find_dsq_for_dispatch(sch, rq, dsq_id, p);
+ 
+ 	/*
+ 	 * We are in the enqueue path with @rq locked and pinned, and thus can't
+@@ -1303,6 +1301,12 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
+ 	if (dsq->id == SCX_DSQ_LOCAL && dsq != &rq->scx.local_dsq) {
+ 		unsigned long opss;
+ 
++		/*
++		 * Update the direct dispatch state and keep it until
++		 * process_ddsp_deferred_locals() consumes it.
++		 */
++		p->scx.ddsp_enq_flags = ddsp_enq_flags;
++
+ 		opss = atomic_long_read(&p->scx.ops_state) & SCX_OPSS_STATE_MASK;
+ 
+ 		switch (opss & SCX_OPSS_STATE_MASK) {
+@@ -1329,8 +1333,8 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
+ 		return;
+ 	}
+ 
+-	dispatch_enqueue(sch, dsq, p,
+-			 p->scx.ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
++	clear_direct_dispatch(p);
++	dispatch_enqueue(sch, dsq, p, ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
+ }
+ 
+ static bool scx_rq_online(struct rq *rq)
+@@ -1439,6 +1443,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	 */
+ 	touch_core_sched(rq, p);
+ 	refill_task_slice_dfl(sch, p);
++	clear_direct_dispatch(p);
+ 	dispatch_enqueue(sch, dsq, p, enq_flags);
+ }
+ 
+@@ -1610,6 +1615,7 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int deq_flags
+ 	sub_nr_running(rq, 1);
+ 
+ 	dispatch_dequeue(rq, p);
++	clear_direct_dispatch(p);
+ 	return true;
+ }
+ 
+@@ -2293,13 +2299,15 @@ static void process_ddsp_deferred_locals(struct rq *rq)
+ 				struct task_struct, scx.dsq_list.node))) {
+ 		struct scx_sched *sch = scx_root;
+ 		struct scx_dispatch_q *dsq;
++		u64 dsq_id = p->scx.ddsp_dsq_id;
++		u64 enq_flags = p->scx.ddsp_enq_flags;
+ 
+ 		list_del_init(&p->scx.dsq_list.node);
++		clear_direct_dispatch(p);
+ 
+-		dsq = find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, p);
++		dsq = find_dsq_for_dispatch(sch, rq, dsq_id, p);
+ 		if (!WARN_ON_ONCE(dsq->id != SCX_DSQ_LOCAL))
+-			dispatch_to_local_dsq(sch, rq, dsq, p,
+-					      p->scx.ddsp_enq_flags);
++			dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
+ 	}
+ }
+ 
+@@ -3147,6 +3155,8 @@ static bool task_dead_and_done(struct task_struct *p)
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
++	clear_direct_dispatch(p);
++
+ 	/*
+ 	 * In do_task_dead(), a dying task sets %TASK_DEAD with preemption
+ 	 * disabled and __schedule(). If @p has %TASK_DEAD set and off CPU, @p
+-- 
+2.53.0
+
