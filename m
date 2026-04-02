@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9856309F19;
-	Thu,  2 Apr 2026 19:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F8134A795;
+	Thu,  2 Apr 2026 19:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775157834; cv=none; b=fwyqAMPpK7Ckog6/PaGv5S6XzjNztPmgCv3rp7DX/IA/hUUr2CkgZfq+W0Lc+YBSIHpKTjzYODO+HPDEQDEYGQSvkWgXwj9IUHVgkKiH9HKInrnQfIFT+uN3Zsb9xANtuyZtjkq1ZOReVooPRvuPLwYV7ReW+6qzpPqTxgkvEFs=
+	t=1775158113; cv=none; b=uLdVUnTbvlonRmaioOXilT7+A2O11T2pSbWVsQtYxpblP3H7NcG9NA0hkSLfS6g+yMu3kuaIBGKfrzijS2NNj5bnclSNnIAr8KASfx2Ycwx+9RtiVzCWT6Oc4Pc1XoVggx5oCxGPBNDqxRoasijoo9ZAerMzS6KOz3L4da7Du2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775157834; c=relaxed/simple;
-	bh=vqx/MZHF8f9il0rGOTsDE3ph7fezWDjioB1ephUzl64=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=qWokwKWxIvaieXKnJ6MMUftHcC9LX8fZMuyHEoEemJwdlr/Ibnj2T80ACeyVw+DaJZXCllnuegnrvgOk4PV7EY+4NTVE1Gmzi2vrNzR4WeQ8nG7fxyrJvWv0lhHOJG4WwaLHwFiOyX8shGwcKS3fjk9aQC56Qw6YsVyPvxkrSxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChJAeUVi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775158113; c=relaxed/simple;
+	bh=/eGplUhPUZo29frQGkeiSP/VgYWnV6hHXiYPyp1OT68=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=am4tLsp1RMv5eymYklU2MgAyGtlFR6E8w/1uu6dFnzTH8FGJ1GDlXqthS0JEezK+u1M3Yus7rErRXVnhT5yIWZL/3o0aQjmfS2DcyabKD560jA7wo3jhuFsh+z9JaWItoi5y42tAG+j6LiyriByXfFUY3r9X8sleNIvLMfKSvjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QUNinGm2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChJAeUVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62021C2BCAF;
-	Thu,  2 Apr 2026 19:23:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUNinGm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC0AC116C6;
+	Thu,  2 Apr 2026 19:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775157834;
-	bh=vqx/MZHF8f9il0rGOTsDE3ph7fezWDjioB1ephUzl64=;
+	s=k20201202; t=1775158112;
+	bh=/eGplUhPUZo29frQGkeiSP/VgYWnV6hHXiYPyp1OT68=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ChJAeUViq36xGScFJlgVTOvJ+WgMNtmgcaTchz4iuojRcfbWU8sC81EXHtUzCyXVN
-	 1MtDiUz9AU2Vu6m9Z1vYcR2I2w31QgG5pIl3y2QkV6tAg48iI/YIguldx5OvPR1b6P
-	 ofyIwzXQ8ahpwNnNCTCzcYO1Sz4/jC4vwiVBR2oNv8r6XT/tEy4Z0S3v8hsmguW1aC
-	 g7hMAzWEHtiGI5abEGGncIeZVDErY5Q6tpcOfCM8e0KJ1+5USWxLiHxozfTF+vnJ3i
-	 SrTAweuOPEhFnHAB3aSqYVjZbC0Sf1rFEKL8lTuQoCeTa/mZFUvyRCPXm7mZJbV3fP
-	 XqpPINI49oP5w==
-Date: Thu, 02 Apr 2026 09:23:53 -1000
-Message-ID: <393da1e19829508f97fba3d10ad9503f@kernel.org>
+	b=QUNinGm2ok3/jWS5DU+jmMaf9CVGdCdgfCyyeAK0QtihP6bfvia1yosab9mYWmvxr
+	 47m58+YYJGjQedwFtGaslBfKuDKKS9NriFFRL4nlHlXWZmvsNdSUnLByjjf5eLOBE/
+	 92qgjgV8Gm6dF9A34OYvWsz3FAJc0mM8y5o0sV1hDVxnyhTMz+rO7anFGCB9uE2ri/
+	 oFccWrF7KHGgAhqsNAUoIwir589A6zMvpd/DlrTD2/fladnvmYnR8Mzxb88DKcoNEO
+	 vjOrkE2+kwGyqc8QGMnyBb1/duGvq53kGVupveHyvFe0s0BLM1PoTzzDPO/n9iOnlV
+	 ALQz90MPKyjtA==
+Date: Thu, 02 Apr 2026 09:28:31 -1000
+Message-ID: <c7818bd96cbdd6a6c2c98f8dc62e526a@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Samuele Mariotti <smariotti@disroot.org>,
- arighi@nvidia.com, void@manifault.com, changwoo@igalia.com
-Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- Paolo Valente <paolo.valente@unimore.it>
-Subject: Re: [PATCH BUGFIX] sched_ext: Fix missing warning in
- scx_set_task_state() default case
-In-Reply-To: <20260402170025.1387202-1-smariotti@disroot.org>
-References: <20260402170025.1387202-1-smariotti@disroot.org>
+To: Changwoo Min <changwoo@igalia.com>,
+ Andrea Righi <arighi@nvidia.com>, void@manifault.com,
+ Kuba Piecuch <jpiecuch@google.com>
+Cc: kernel-dev@igalia.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: Fix is_bpf_migration_disabled() false
+ negative on non-PREEMPT_RCU
+In-Reply-To: <20260402023150.660967-1-changwoo@igalia.com>
+References: <20260402023150.660967-1-changwoo@igalia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -44,10 +45,11 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello,
 
-Applied to sched_ext/for-7.1.
+Applied to sched_ext/for-7.0-fixes with Andrea's Reviewed-by and Fixes/Cc-stable
+tags added per Andrea's suggestion.
 
-One note for future submissions - there's no need to resend the same patch
-multiple times in quick succession.
+Kuba, I'm not sure the suggested alternative is necessarily better. We can
+revisit later if needed.
 
 Thanks.
 
