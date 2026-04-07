@@ -1,81 +1,142 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828C73A6F0F
-	for <sched-ext@lists.linux.dev>; Tue,  7 Apr 2026 09:49:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DC22EF653
+	for <sched-ext@lists.linux.dev>; Tue,  7 Apr 2026 09:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775555364; cv=none; b=IvP9pM7YJQm/EOpE8L99czmcybwBN303G+D9KPss6Mos/1Id8Q8jF+0sjheMVFMrYpfDn/T6JwDodj5VtbUk4QNIB6oQ4WRtXCUEuIHXD4wH3tQyg7gJzSPQ/BrGOexoAOYZo2tL9DLNJQ+REKlweMEkrNYQJVx5efz6u2oNpts=
+	t=1775555667; cv=none; b=aqfFnJmh2bfD1xaDpw1frRpTe/n1Q7kNi4zW3VcdHcu+gIzJDyADCEmBh9LIj3X4f24PwPsblUgM9kOHBth197/ri8Qf9WHFuiMo8nw0ORH1MqLOYPXYZAbpS6dDKY1C8Lyx9l73BMWTb7HfQeSXkniFZeD2jALimU9CTevlXXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775555364; c=relaxed/simple;
-	bh=fzcCyw/9umWpvSqx0r/H/r9HB+aOhgq05Y03kko+vaM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WmAYYfK9InS34w8efNZJEq3YC9jWu8bUwjozQmzNgTaVnjcr3g1GsyuHIjZS7bzwzuk268aOnb2/dYBSf+xDpe4RLje94FniLAxe6PTDH9gXNCAQ9uQSCGOkbD7KHObIhn+Va7Yje/yK3BSI1XMOmRrgnYPBrDbSdYyesdnXaoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 093738fa326711f1aa26b74ffac11d73-20260407
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:0f4b4505-fff3-4d6b-b770-3cf72a4f1ee3,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:20
-X-CID-META: VersionHash:e7bac3a,CLOUDID:3c92cfa91ca0a15833158eba1e3b9314,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|850|898,TC:nil,Content:0|15|50,E
-	DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
-	0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 093738fa326711f1aa26b74ffac11d73-20260407
-X-User: fangqiurong@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <fangqiurong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1862919251; Tue, 07 Apr 2026 17:49:14 +0800
-From: fangqiurong@kylinos.cn
-To: sched-ext@lists.linux.dev
-Cc: tj@kernel.org,
-	arighi@nvidia.com,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] sched/ext: Remove redundant else after return in scx_bpf_dsq_move_to_local
-Date: Tue,  7 Apr 2026 17:49:11 +0800
-Message-Id: <20260407094911.2581120-1-fangqiurong@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1775555667; c=relaxed/simple;
+	bh=JiDmOBb52ayWBZHsIMB0ZOY9VC0NkDLYiOe/EP4wUhs=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=KR7sFipQC/wdQMKsxTFATdDeWz9tNrsA8Ctih7h6eWTJ9deCkDNL1goEFU6A0dHGIw3VRwJpte9JYdeSOYFenqhdYJKafIhhLryE/wHR2QI6jhlI7M3Fs9ELr0pTvtERrP4IiusYvE44ajVD3xUosPYwd4/KGCSkIN+98YbZOUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rAiY2a2v; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rAiY2a2v"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-488c16958e9so1607755e9.1
+        for <sched-ext@lists.linux.dev>; Tue, 07 Apr 2026 02:54:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1775555664; x=1776160464; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=i4vsXtEL49zVqufg8lyj0hHK/lVL3UAvs+p/Ca2lHfA=;
+        b=rAiY2a2vb960LeR/gn6fpLN/2C7+L1fac4UVMAapuHq0hlin6MibZ9oqcyVcCaj836
+         V/Fnzm3O8ZZ+yJBJUQ5AxJw3FitA+BhGi2aQtmu0z9FC88jOQvz+87qFJyoIcnLrch01
+         XsCbrwucy5QsM1CkmXVDtCSDIMjetIJY41UCL+7p9+OpKzEnK8Xh1naxKmPQI/sHlFpt
+         3sbc5i8kcCH02kIWXp1xb/HInqeXB/MHYBNF+v6qVhj4NJQvogfvHAI5iw+i6iKs1k5u
+         3K8q3QYNWQKl7absUc2gjwrCg2RRV4Cl8InIKQI7dwEo90W0KCFHjHtDVI0K45KSUfLA
+         9dwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775555664; x=1776160464;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i4vsXtEL49zVqufg8lyj0hHK/lVL3UAvs+p/Ca2lHfA=;
+        b=O22GtPanxrYdI2IUiZAt7m4Sp3RLmnckkNnqCUr5THp7l++rtxSdbsWQF3UA3v1VAp
+         Lu6XShEdcHuZS6lINgZm+9oP9DXwmW/vbMRjcdoyVykhUM+pCDEprH7S2vZNPAzixRtd
+         dN/r8cRtftNUiVgjo3qg9gTbccZiqAetkG3Gg3MUc4c5R2M8Yfhw8d39HasIoNAVt/iT
+         XYKsxqlKCChc0hFyGWuwp1JsEDgU2k9wKDHAkF5r8acHaMqwS07qJBPVVlORQZHF0CHc
+         KsNJVIiAqhy+zBin+JfeJuREHGBdh/rEb3AJpVrkSmeazmVy95LuN4VJKeH+4oJKRCaw
+         wRSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWVb/De3kCqtpfOEb5KFfR+5WEu2L0wPi0uXjQbtWLVAVIrE+xNpYDCCAjiG5jAVQH5kdce2OheJYQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxGjNaRNoH5WMPlVqvH2cn4wDTku08BXLJNAj2TDt6gfJ5zs9wS
+	IZS5McAZNdAHPW63070SDOVg1aF8J0//kXqPA6jT3QoOc3wgtq4N59ng4Irutf7dx04DyxHtHgf
+	yiI+r50WB/asmIA==
+X-Received: from wmc13.prod.google.com ([2002:a05:600c:600d:b0:488:7c5a:b238])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:3492:b0:488:b14f:b8ed with SMTP id 5b1f17b1804b1-488b14fb9e4mr101613605e9.0.1775555663834;
+ Tue, 07 Apr 2026 02:54:23 -0700 (PDT)
+Date: Tue, 07 Apr 2026 09:54:22 +0000
+In-Reply-To: <20260406114755.840497-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260406114755.840497-1-arighi@nvidia.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DHMTYAUXLBZ4.RTEFCELFZ0J6@google.com>
+Subject: Re: [PATCH sched_ext/for-7.1] sched_ext: Documentation: Add
+ ops.dequeue() to task lifecycle
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>
+Cc: Christian Loehle <christian.loehle@arm.com>, Kuba Piecuch <jpiecuch@google.com>, 
+	Emil Tsalapatis <emil@etsalapatis.com>, <sched-ext@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+Hi Andrea,
 
-The else branch is unnecessary when the if-block already returns.
+On Mon Apr 6, 2026 at 11:47 AM UTC, Andrea Righi wrote:
+> Document ops.dequeue() in the sched_ext task lifecycle now that its
+> semantics are well-defined.
+>
+> Also update the pseudo-code to use task_is_runnable() consistently and
+> clarify the case where ops.dispatch() does not refill the time slice.
+>
+> Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> ---
+>  Documentation/scheduler/sched-ext.rst | 24 +++++++++++++++---------
+>  1 file changed, 15 insertions(+), 9 deletions(-)
+>
+> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+> index 404b4e4c33f7e..9f03650abfeba 100644
+> --- a/Documentation/scheduler/sched-ext.rst
+> +++ b/Documentation/scheduler/sched-ext.rst
+> @@ -422,23 +422,29 @@ by a sched_ext scheduler:
+>  
+>          ops.runnable();         /* Task becomes ready to run */
+>  
+> -        while (task is runnable) {
+> +        while (task_is_runnable(task)) {
+>              if (task is not in a DSQ && task->scx.slice == 0) {
+>                  ops.enqueue();  /* Task can be added to a DSQ */
+>  
+> -                /* Any usable CPU becomes available */
+> +                /* Task property change (i.e., affinity, nice, etc.)? */
+> +                if (sched_change(task)) {
+> +                    ops.dequeue(); /* Exiting BPF scheduler custody */
 
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
----
- kernel/sched/ext.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Doesn't the task also go through quiescent -> runnable here? The full path
+being dequeue -> quiescent -> (actual property change) -> runnable -> enqueue.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 064eaa76be4b..e8384b5f1b0f 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6280,9 +6280,9 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local(u64 dsq_id)
- 		 */
- 		dspc->nr_tasks++;
- 		return true;
--	} else {
--		return false;
- 	}
-+
-+	return false;
- }
- 
- /**
--- 
-2.25.1
+I guess we should be accurate here since quiescent and runnable are present
+elsewhere in the pseudocode.
 
+> +                    continue;
+> +                }
+> +            }
+>  
+> -                ops.dispatch(); /* Task is moved to a local DSQ */
+> +            /* Any usable CPU becomes available */
+> +
+> +            ops.dispatch();     /* Task is moved to a local DSQ */
+
+s/local/terminal/?
+
+> +            ops.dequeue();      /* Exiting BPF scheduler custody */
+>  
+> -                ops.dequeue(); /* Exiting BPF scheduler */
+> -            }
+>              ops.running();      /* Task starts running on its assigned CPU */
+>  
+> -            while task_is_runnable(p) {
+> -                while (task->scx.slice > 0 && task_is_runnable(p))
+> -                    ops.tick();     /* Called every 1/HZ seconds */
+> +            while (task_is_runnable(task) && task->scx.slice > 0) {
+> +                ops.tick();     /* Called every 1/HZ seconds */
+>  
+> -                ops.dispatch();     /* task->scx.slice can be refilled */
+> +                if (task->scx.slice == 0)
+> +                    ops.dispatch(); /* task->scx.slice can be refilled */
+>              }
+>  
+>              ops.stopping();     /* Task stops running (time slice expires or wait) */
+
+Thanks,
+Kuba
