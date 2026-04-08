@@ -1,118 +1,104 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4266F35972
-	for <sched-ext@lists.linux.dev>; Wed,  8 Apr 2026 04:47:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7C239B97E
+	for <sched-ext@lists.linux.dev>; Wed,  8 Apr 2026 09:19:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775623639; cv=none; b=EPNFKwYH7soO8oEKY9erQ1iRDm+Upt4huuAJo9Q9TwVFlCgqbfF/6U+z2GnKOyioSBhPPQ4E6ZS8Pd7xo+4B6Z6CfNh+TrgrpPaiZ3lD3FCSB1qKQsZpht/uADiiuK5YYUGSxf1YIiOjYa6UJXMHbFLNjMyFyHh6nQVeLaya1C8=
+	t=1775639987; cv=none; b=tBwSLqFZf9hSVk0sPa5ubAF5btMzRxnapBBoGXK+7dWCDPfg+3FWEBbuCybbG72gweALv8Ut/0cTys9ghQWiTzFLy7nfUGIRL/kwlr0ESMpdc9DqBWd1GmBjkH+m9T8U52uOvo4dv2YFLAUjNWm/cdQitisu1ioPsvrdP30g+6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775623639; c=relaxed/simple;
-	bh=ij/FQrCWmW8vdteY7JxNZK+TpeUEbt6s67bGzONHR50=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4+Bt/XDMnJnstpVHXPsFGInb5lyM/hDT2i4xT7jNmRgcjUzTRQbPZNB2nQwzwEPQxCjCm6Zm4GQm4ytfPReRbNDhWuK/dFvz/CgaRViDM22l7gOefbog0PosvRJf7TmxlOUoLPTNMk4B4aPcrCsAy6yK0oJadTMPKRQOI2fZbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HfXETUk5; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775639987; c=relaxed/simple;
+	bh=WzEsEsduf2sQc3dKAdRwaP5aVyz8wNAQWwECTdXiTaI=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Sa+nbDDqsPK+OysKx3GzcFaWw5xH6zoj4FVqgBUcb86g31kXD1Mj7qk2Sw2StcvDQX44NK7OIcQ94jqPNYaY2Bxi7ka7wPBX9+qjmVJ0j3523eN6+Ipt9/L+DTsNFxtx1T7Xn6ZkaIYAKboBhP7bWj6FQe5f7pKOrTofuhhpElI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Xwp6hZeY; arc=none smtp.client-ip=209.85.221.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HfXETUk5"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82c70e4654eso2644772b3a.2
-        for <sched-ext@lists.linux.dev>; Tue, 07 Apr 2026 21:47:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Xwp6hZeY"
+Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-43d121c4271so4566017f8f.3
+        for <sched-ext@lists.linux.dev>; Wed, 08 Apr 2026 02:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775623638; x=1776228438; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hGr+zXkBV1n2fo6k5RDlLaxck90xEF8/J3gjY6ypPAA=;
-        b=HfXETUk5K6u2kEmoZ1ie+BUupsAZO+HLLo8+ea2plUC/5N1JGYrtotwzWH9HmNBpca
-         QL7+SYIg+gR3+YHcOVwsRBITpH9OFarKlW9LfHyVt+WcYLCiEF/FLGUGNOGgich+z4gn
-         vu9GpmexwcmFyQbN5gPRb5BTn+byWClyf8yL4ou9iJZ/QiMRqBkyBmyUij43HODGgqFa
-         sLUjkot8vGwGiIXu6eKxH1ljE6xRPyrk6bma6qMjhjSA1Rhhf5bpHc6fXs+PXCiQEpK/
-         n03Yc81uh2m4A/VSqnEJMZ8Bv3Ida6jBvh/vwfPG+cpXiP6oHDoXOL1CmD2U75f+t2C4
-         /8Vg==
+        d=google.com; s=20251104; t=1775639982; x=1776244782; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=W6wudDjPf2Vj8w3dFyq1e1+5psQ2M5yoeUXXKSlAbWo=;
+        b=Xwp6hZeYgj5CwfojVDzTq8itrj9/qXf/RIn/LzCwamDFvbqG8Gm/delUiifuQjxCIQ
+         Eya6NBPF9KRrf5pcxcj/JKvp88TMTGXO8hVKPf8iZB1pvR6PCMNl0orUKXFISjGhYYB/
+         4Jn6sNV3kaGEwuBmhjIpaFrMjLY83RB8V6y9o6dh3E83klnMIiC0Kcg2II1YXl/YFp+7
+         W0egbM0W2wCpXeHKnXImnn8sVukPrUR0o1XJNRm1ACGNDm1O9fBZxRcBa0DKy2eKqvZD
+         5PrVvPc4IfxcVCfvJnbVH3WBU26c8DlLppN0unwy85NWRYFszH0S6G9aLeEqQRWc6mPN
+         6hWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775623638; x=1776228438;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hGr+zXkBV1n2fo6k5RDlLaxck90xEF8/J3gjY6ypPAA=;
-        b=EWQka7iRIsOJpFmZeSX6ahfGYE2SCkZ3CdR9REVln3su5ZNvF3QKwlF39L/Xb59mWY
-         M35yulbyW5Bmn/BcMnw6cVwD4uBq1pJd8hsF9LTg3vx3N9Gb14UNObcM8WiV9RVvrVJ7
-         YD+p0XQmFQZRfObdm5rc4qbB+BQZcGY+KpZVmpj8kA7EKIE7PKyeuOBEIFf02m75yE6m
-         hQyNrlX7NZiuinq7ertWDYmp+UAcUajcfUxz8cw66XXpSXxtFuzHJ65t+3S5vIEklDxJ
-         MdYc8Td+Zu9moDhzMyhg+JN7RlDbiyrg74IREFiRvUl6TJuAhZ3rDJhCCI7wg8PWKacZ
-         5PFg==
-X-Gm-Message-State: AOJu0YyY0NK0VKpk2laQHAi3orRZ3ntZaE1RznYXr6lrNYmEnfNalG/J
-	pPpMYeFEtw4eernXmyNUdBdqDsvwazkllFIK28SM9RySyRX9LZvBM9iy
-X-Gm-Gg: AeBDietN3n1REATdcyiMTH8ubzEu7RVum1uxO2kNbI+kmxZpqZHIMREjj0jFjtE7DDp
-	FNvx5ZmqtTmy/UonJsYZ5RU3n/zo/FP1zEqdIWvZym7CL90kcYiGXnh71pRlavy7h5KItmAHttx
-	z1yz9mOilXNqCfx7cgTBF2Sn/2OsRT6NNKEocTpicayLM2S5N+8QiJJ1zzBOUJwVdIfdFJ9StXo
-	MzWEWbiZ003Npw6haw0jnZVMoy69OZqTr6SAPHaqa7ktesHLRTlIPtAVh+sAS6mQwsQaaSoH2br
-	ymZGN46uI3rqYZ/9WuSpNv7LRaKvIbsmh3wabPc3jR7o93mHff2s8kBkTKj9gZ6MpbNWnFlbKbn
-	cMamQDqEIcH+a/uzV1xk3KOV0t7uaBJyc8ZRQdPQnsDo9sQWz6/90Vv4TFTYMG6/57DaUtLefyQ
-	i5K1XzTw1mepOM2tWCzSIsIhgwCNw3
-X-Received: by 2002:a05:6a00:1da1:b0:824:a22c:c6d7 with SMTP id d2e1a72fcca58-82d0da928c1mr18157746b3a.18.1775623637457;
-        Tue, 07 Apr 2026 21:47:17 -0700 (PDT)
-Received: from eric-wcnlab ([2001:288:7001:1099:4c23:8546:f68d:c612])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9c3ce13sm20106495b3a.38.2026.04.07.21.47.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 21:47:17 -0700 (PDT)
-Date: Wed, 8 Apr 2026 12:47:10 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: fangqiurong@kylinos.cn
-Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, tj@kernel.org, 
-	arighi@nvidia.com, mingo@redhat.com, peterz@infradead.org, jserv@ccns.ncku.edu.tw, 
-	chia7712@gmail.com
-Subject: Re: [PATCH] sched_ext: Remove dead code in scx_set_task_state
- default case
-Message-ID: <g34iyvtsaols5xj7jw4uxw43uhvionnlrv27njrvcezlibrmis@5sdswgdh5ktb>
-References: <20260408032025.3042093-1-fangqiurong@kylinos.cn>
+        d=1e100.net; s=20251104; t=1775639982; x=1776244782;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W6wudDjPf2Vj8w3dFyq1e1+5psQ2M5yoeUXXKSlAbWo=;
+        b=qe21IqZahyxBjnVAPLmgMhhilSay0du5XMwYG2lozyH5lBrrd9B157FNMjjOr0oS1j
+         wCbGzxYD+9eA2B0ChjcvyZfKDTwLXpxH1x9G6kWUcXZFln5UVzlVhg3muxW8u2nm+8ik
+         N1xJ4P1ATZT0ZyDp02gzOOJlH7isi4VX1I6Cv3f0FpcZw36wzQUf9ek9dxJ/mxg8dIey
+         CjElyyPgrt5t5MD9OeS1dNPVQQLUZWzQJwJPT8Ix0oKDBHqqW+lEi+jdkHZct1OpBw88
+         r/fp+XWSL7lruRojayox+JyOOBDfPtulKaxIhalaBFcOJAo18koz+fVok64xsVK8pqD+
+         r9UA==
+X-Forwarded-Encrypted: i=1; AJvYcCXl0XocGAqxQejkt9+uOqhKXeebgrJA0/8UQXCkvzwVDhPYHmCEYJzWx6Fn/ipzfKHTvIr8r2xz5sg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwNwOyYgMqFdHzSaP3dpxv5CBAS7tkwM6uQlX9sQxtC299kW0AI
+	AET6UmPBr2lU5TbVOLlKn5eZ3pDEYrXrPwONPUGRKVbn4JTqTuf3aewWyzZCWOW8236mHeOis4l
+	vGgMaV6+nz/Rl0Q==
+X-Received: from wmbem21.prod.google.com ([2002:a05:600c:8215:b0:486:ff40:e138])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:894:b0:488:aa3d:fab1 with SMTP id 5b1f17b1804b1-488aa3dfc7dmr106454015e9.17.1775639981413;
+ Wed, 08 Apr 2026 02:19:41 -0700 (PDT)
+Date: Wed,  8 Apr 2026 09:18:21 +0000
+In-Reply-To: <adUxZ5Qp_vH6cBZj@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260408032025.3042093-1-fangqiurong@kylinos.cn>
+Mime-Version: 1.0
+References: <adUxZ5Qp_vH6cBZj@gpd4>
+X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
+Message-ID: <20260408091821.91063-1-jpiecuch@google.com>
+Subject: [PATCH sched_ext/for-7.1] sched_ext: Documentation: Add missing calls
+ to quiescent(), runnable()
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
+	Christian Loehle <christian.loehle@arm.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Kuba Piecuch <jpiecuch@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi fangqiurong,
+When a queued task has one of its scheduling properties changed
+(e.g. nice, affinity), it goes through dequeue() -> quiescent() ->
+(property change callback, e.g. ops.set_weight()) -> runnable() ->
+enqueue().
 
-On Wed, Apr 08, 2026 at 11:20:25AM +0800, fangqiurong@kylinos.cn wrote:
-> From: fangqiurong <fangqiurong@kylinos.cn>
-> 
-> The 'warn = true' assignment before 'return' in the default case is
-> dead code - WARN_ONCE is never reached when returning early. Remove it.
-> 
-> Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
-> ---
->  kernel/sched/ext.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index e8384b5f1b0f..4aaa7bf1faa6 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -2934,7 +2934,6 @@ static void scx_set_task_state(struct task_struct *p, enum scx_task_state state)
->  		warn = prev_state != SCX_TASK_READY;
->  		break;
->  	default:
-> -		warn = true;
->  		return;
->  	}
->  
-> -- 
-> 2.25.1
-> 
+The existing documentation only mentions dequeue() and enqueue() on that
+path, so add the missing callbacks.
 
-Thanks for spotting this, but it's already fixed in b905ee77d5f5:
+Fixes: a4f61f0a1afd ("sched_ext: Documentation: Add ops.dequeue() to task lifecycle")
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ Documentation/scheduler/sched-ext.rst | 5 +++++
+ 1 file changed, 5 insertions(+)
 
- https://lore.kernel.org/all/20260402170025.1387202-1-smariotti@disroot.org/
-
-You can probably use Tejun's branch for future contribution:
-
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git
-
+diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+index ec594ae8086de..b5c70f4cfc352 100644
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -429,6 +429,11 @@ by a sched_ext scheduler:
+                 /* Task property change (i.e., affinity, nice, etc.)? */
+                 if (sched_change(task)) {
+                     ops.dequeue(); /* Exiting BPF scheduler custody */
++                    ops.quiescent();
++
++                    /* Property change callback, e.g. ops.set_weight() */
++
++                    ops.runnable();
+                     continue;
+                 }
+             }
 -- 
-Thanks,
-Cheng-Yang
+2.53.0.1213.gd9a14994de-goog
+
