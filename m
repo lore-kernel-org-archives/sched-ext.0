@@ -1,59 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3388F3290CB
-	for <sched-ext@lists.linux.dev>; Thu,  9 Apr 2026 01:35:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2291827707
+	for <sched-ext@lists.linux.dev>; Thu,  9 Apr 2026 03:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775698543; cv=none; b=n+y6XJF4FNJ0O0Bi8lUKNmWQHlaUs73/pwyr7zEYqfJNBbCr7oYv/DXd+frYghVkGPx2baBQRVDmlfd/4n6AnGMvvyNeoC6zrWNF5x8RnVVUqy0Q1ikvIEgxwf4CiLblDKMwo0MMDDWciPgNRfaYrPubfEiaV2od2UrFX6+fbdA=
+	t=1775704929; cv=none; b=jQTKIPC4aRJzYBS6oendarpn3xslgATMew3slZyFlk/i2P3cMWEVebQvlSepwjSmgSsq+9Z/OlGYakZZX4aGgH0j58kikLGRyF1PpaQE24gDHbL7a2fsvrmah4uMWxecYgKjqhtMBPNLU+QrEHM3HuPrXY4TnwZ8zw3PpPtDzGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775698543; c=relaxed/simple;
-	bh=A+AEZA+rfNzYXIuDDCRtRjtBfBAgBX0skS2BU+gg3T0=;
-	h=Date:Message-ID:From:To:Cc:In-Reply-To:References:Subject; b=ZiH0P+QyZmcNUJJV4K/fsldIeAwhdn1sy2om8A2vjDPAF+H08viFoJ6Df0iUCF+F2WbChoDuqV5CLJqfrtqINdrefH+rveUCkYL1JkEccFgRWac/DXSM9aaFGa9NprYTijG+T5oKCW1UCbpWwt5NXjQbPaz0Ejl32KhUaaGh+uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jnhfpGTk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775704929; c=relaxed/simple;
+	bh=QalazcFu8iOREwryftfpJMzcVqtrXDg81FW/qQokQ00=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NcK2zMa76g5piAmsTr9Ev68f8DvOcUw6+zhzMLLEuidJ8F2iX09fb5C/7zlMi38JCklVMMWL+/O84u/GXz3mGSGk4RhOME0G+9MjKvVp2jwLJljgD+m9VIRem/VXfG1PCl22eqhnKa4OTLuHPUc+dRHbJ/j9IytgFwQ2I/LDf/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=LJtwpSlG; arc=none smtp.client-ip=220.197.31.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jnhfpGTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1405C2BCB3;
-	Thu,  9 Apr 2026 01:35:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775698542;
-	bh=A+AEZA+rfNzYXIuDDCRtRjtBfBAgBX0skS2BU+gg3T0=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=jnhfpGTkzH6AZXnBQ6c5KBJHr5VepYXlARTjuZKjrZu4ywgJqC0Sg810C7tiZGRcr
-	 ZAlgvQ2lbKgenJjJQAVf9po337XRayWPxxV7US0EZ/Hj5JfSNzl5eC/D160aKAJaAj
-	 1X7Dgj3WMDuqqjmT8QQqo+5fVu8rBmhyJSNh4ZoXXDEjTMxwbnGjDvN0izAzNzLC4x
-	 bRtiBMmvVHofRQgKzJCE02nvc53IwviVUECuStr+1CpF3jYo6PXXlm1Rdn7SmLMVD/
-	 T/TCT/c+HxeiwQg/obbQnvJpaQ3N6YTHI9vB9WZTtTfncBsA5VHZsc0bLiyENzF2UV
-	 d7ZLESZoIVm4g==
-Date: Wed, 08 Apr 2026 15:35:41 -1000
-Message-ID: <2f275663260c2178d78fbaed529ae813@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: arighi@nvidia.com,
-	changwoo@igalia.com,
-	chia7712@gmail.com,
-	jserv@ccns.ncku.edu.tw,
-	sched-ext@lists.linux.dev,
-	void@manifault.com
-In-Reply-To: <20260407235715.3770516-1-yphbchou0911@gmail.com>
-References: <20260407235715.3770516-1-yphbchou0911@gmail.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.1] selftests/sched_ext: Improve runner error reporting for invalid arguments
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="LJtwpSlG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=Ee
+	TIvJCaqvOOkXamuiiRvwQSyuH2rNzgLdbkztr803A=; b=LJtwpSlG2HYsIgXOXL
+	VZf/u5vIAyReBpwG/ehu1X35yp8/ChgGxLSpBkg549pY4RaJVqYhE2nRFbMtkGfj
+	+HiGUnMje8zXz/JCUBNf5dOWDkpN0edVOa+9f+OaiHnebURp7OXxkeZg4dLCsiYe
+	Miv8b6wYs0nYMFmrL563yAG+8=
+Received: from localhost.localdomain (unknown [])
+	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wDndx5AG9dpKePoBA--.19355S4;
+	Thu, 09 Apr 2026 11:21:37 +0800 (CST)
+From: Zhao Mengmeng <zhaomzhao@126.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	zhaomengmeng@kylinos.cn
+Subject: [PATCH 2/3] scx_central: Cancel BPF timer during ops.exit
+Date: Thu,  9 Apr 2026 11:21:25 +0800
+Message-ID: <20260409032126.114812-3-zhaomzhao@126.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260409032126.114812-1-zhaomzhao@126.com>
+References: <20260409032126.114812-1-zhaomzhao@126.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDndx5AG9dpKePoBA--.19355S4
+X-Coremail-Antispam: 1Uf129KBjvdXoWrKr4Uur13GFyrXr45WFyfWFg_yoWfuwc_C3
+	W3Wr18AFs8GF1ak3WYkr4UXF1FkFZ5KFs8WrWIg393ZF4UJFn8AF1UCF4DuryDKw4UZFsr
+	CFs7XF48Zr929jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU81KZJUUUUU==
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlgEnnmnXG0FMlQAA3T
 
-Hello,
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-On Wed, Apr 08, 2026 at 07:57:15AM +0800, Cheng-Yang Chou wrote:
-> Report an error for './runner foo' (positional arg instead of -t) and
-> for './runner -t foo' when the filter matches no tests. Previously both
-> cases produced no error output.
+Cancel the BPF timer in ops.exit, which is called before
+free_kick_syncs(), so that new cpu kick will not come and hit the NULL
+check in kick_cpus_irq_workfn().
 
-Applied to sched_ext/for-7.1.
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+---
+ tools/sched_ext/scx_central.bpf.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Thanks.
+diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
+index 4efcce099bd5..6c2cd5511a25 100644
+--- a/tools/sched_ext/scx_central.bpf.c
++++ b/tools/sched_ext/scx_central.bpf.c
+@@ -359,7 +359,14 @@ int BPF_STRUCT_OPS_SLEEPABLE(central_init)
+ 
+ void BPF_STRUCT_OPS(central_exit, struct scx_exit_info *ei)
+ {
++	u32 key = 0;
++	struct bpf_timer *timer;
++
+ 	UEI_RECORD(uei, ei);
++
++	timer = bpf_map_lookup_elem(&central_timer, &key);
++	if (timer)
++		bpf_timer_cancel(timer);
+ }
+ 
+ SCX_OPS_DEFINE(central_ops,
+-- 
+2.43.0
 
---
-tejun
