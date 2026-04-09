@@ -1,242 +1,248 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013068.outbound.protection.outlook.com [40.107.201.68])
+Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [62.89.141.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F1E2D978A
-	for <sched-ext@lists.linux.dev>; Thu,  9 Apr 2026 17:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.68
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775756797; cv=fail; b=OX6rQ8TGa6mzu9JNyqfQQ86q8YgbMaEaZRZpBvgPUDO4CXmWIBLOHxTmT4gtAvDt/sPBsdvfe0aoB1kPuKIrL7J4La7/U4CkHBfR3Aq7+I2MB8wXvsQCMg/AP5LsBS1eKaSJGsyanq35OUjskcMCYztfMKlm+sag9F8iGsx7dMw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775756797; c=relaxed/simple;
-	bh=E49hapiotfX3OIWGl2LoOVQ6YqwnYGjKc4c0atzwfeg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hk2yb1ihAS8h6+fdUYREus5Mw788pG1tX60euiOto8HrlSsPqMGpe00/pRTJ5LG0G+E49nSRqAge28AQ6uKuBl53RUlfBoei6/H1oWnbMLzu9oqD1kES/o88hgPkfR2ib22MGKqL5+h0ovU6rhBGfivqeKldB+NHoyBxMyXi8dw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tXPnOzNr; arc=fail smtp.client-ip=40.107.201.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7156D3E314E;
+	Thu,  9 Apr 2026 18:12:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.89.141.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775758382; cv=none; b=jPBFkce5IdXM1oR73zp4d1LQl0Kwxcrj3NcvsS19vR4mmxL8wW/vH//PX2n7RpmzuRHzssvYEPhl5QPncuxqBy+krKZnaIm0reghk/4NWMmfYlJ8evh3v7iUEaEc0I+SF6w4e1Ha4sSEUxrh4xsoCtEMjb8aPXFlJblfS6a99es=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775758382; c=relaxed/simple;
+	bh=BoGW7oywgvm57yYmgFIJhKPYzBfyhEW/uN+KSu6heaU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z1pkP+nYR0+2vauJLLzvKfLodZ7EBKfx8ohRzW6suEJnaHscQ4K//wJ7y+uvbvFBWGNcUG/+A0YIABFmqUyBZ8NS1VCLOEy6CEBGLnc7RZqBdLn9hWKo5XW/dWgWg1Fas/wZxp/gVYCP0n4sY3yf/wK+9LX+VXoeij5b9l9mkaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk; spf=none smtp.mailfrom=ftp.linux.org.uk; dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b=JJcsCEca; arc=none smtp.client-ip=62.89.141.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ftp.linux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tXPnOzNr"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YU2dmZS1AAis+P7ls3l8QH8fkNWikCW0JnWm4YH8tGN6JWQDiKOAKjT7lcXwXLUA7GSbmnx4k6igamK8ce5sQVyHbje6iB1MMkDsYvle6VNtYiHYJOY5z4WYE8fDUorOabG18rjMV0E9lMj032du3/kASfzFmp4IevYd8gi3SKykcRZC7cggRLGDyM0+PcAgeLPvfI1jUH2TXBm5PUponQxcRssweVI8OPgovgaUW1OaH0wZwxydWIF5Kht1QSYfiHlnoAViRqxMNc3TvlQ28Gs86FmkizTNJe06n0OBRmiPXSUQdFJ3nALCOcc5+5Y+LpxVYjeDhAnr1sYKk0hgLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RNDSKWtDaRFBJ3Yc6s0IGWCQucnYu0EjoyFCzu/FhbU=;
- b=Eh3hOhijE8wKuFtba8e/AoDfIsGLfwy/6LDVrC5QnLDE86oRGXsEoR/6UJmOqsSKGQUCMYJnxCl5JgtBTpr1uEqhuO1N3eZLHgmKelkeromxOhMMbKm8nzPVhlY8T1BcMas1tywyWnCkM6n4s6O0tUizUW+Zbt2svu5EDv1gXM6lx5huh1M9N+TvU/G6dXV9hL8Va8snz88Xuo+k+8u9mwFGEgn6cKGefsBw0MQhoR5URrNHEIkR+a5z9j72ZJiySwASBHTRuJgeQeJWw7KXTGFIsHzSJpBN6V3y+MQCbZsKvRLpZI912a7nXn39QNy6X2MSFaYVfnOnSE7u88Cg2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RNDSKWtDaRFBJ3Yc6s0IGWCQucnYu0EjoyFCzu/FhbU=;
- b=tXPnOzNriOLGWVmX3ZmMoCXx5JM8FQzQnoHyEUGFH6QuLH4Ht68Hu63MiUJxIi+omkLQ9toQsnBezpNKQJccSXg+Tepf7GPgs+7o+A+amQLuQf984Cxr7I1r9mIzNwSxWgyIXbXioT12pc2ADJD58O0n0MtJ2nr5VuExnZDDr+jOZ5BMUyxahe3qUZ4Mwq87CAhjdYysHHhZfITfq/jcManbjjtSjjj7v6ePVSRP3X61NkFZzAvwtvvugy/Cbc8uLRucAYTndPbUiStranABliFtxf6Firuq16Aw4i3hEtBbDaQX+wCuARgM8iz3divCx7zfh9x18iI+80zS63jp+Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DS2PR12MB9615.namprd12.prod.outlook.com (2603:10b6:8:275::18)
- by DS7PR12MB6215.namprd12.prod.outlook.com (2603:10b6:8:95::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9769.17; Thu, 9 Apr 2026 17:46:31 +0000
-Received: from DS2PR12MB9615.namprd12.prod.outlook.com
- ([fe80::f4e9:9ad6:cb62:2c15]) by DS2PR12MB9615.namprd12.prod.outlook.com
- ([fe80::f4e9:9ad6:cb62:2c15%6]) with mapi id 15.20.9769.018; Thu, 9 Apr 2026
- 17:46:31 +0000
-Date: Thu, 9 Apr 2026 19:46:18 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Kuba Piecuch <jpiecuch@google.com>
-Cc: Tejun Heo <tj@kernel.org>, Changwoo Min <changwoo@igalia.com>,
-	David Vernet <void@manifault.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Documentation: improve
- accuracy of task lifecycle pseudo-code
-Message-ID: <adfl6iuDWHYp9fZN@gpd4>
-References: <20260409165744.1526489-1-jpiecuch@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260409165744.1526489-1-jpiecuch@google.com>
-X-ClientProxiedBy: MI1P293CA0003.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:2::19) To DS2PR12MB9615.namprd12.prod.outlook.com
- (2603:10b6:8:275::18)
+	dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b="JJcsCEca"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=BoGW7oywgvm57yYmgFIJhKPYzBfyhEW/uN+KSu6heaU=; b=JJcsCEcaKqyNrvJOUZ8XOnA1AS
+	yC//2gnLRa8FcBRiXofOYljopOoyt9r8CbkWaLEFmbUVfW5qK5utkUh3D77jxlkhKoZiYVbvdTEnm
+	X8jEr88bUddVEJ+24e8elVa7rPEDm9C+KeO3Yi+QSp+riwZi9Be8u3P2jnyNq7RhzU24dEi9YT5JB
+	9o5OjQL5vQk2h32ksN+l6XHB7LZbu7YtKRAMPXU1ZH+Yata0JOXemtl88QWI3UJ7mBXR7GCgddkg5
+	qrhpzNPrKwHYiMCapxKfC0E4ZwUatWZBULD1y88efyo7haqTewJrOOn317SRlKBwAg9TXV76h3bsC
+	A/eZOWQA==;
+Received: from viro by zeniv.linux.org.uk with local (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wAtvH-00000003xj6-26He;
+	Thu, 09 Apr 2026 18:16:11 +0000
+Date: Thu, 9 Apr 2026 19:16:11 +0100
+From: Al Viro <viro@zeniv.linux.org.uk>
+To: Philipp Hahn <phahn-oss@avm.de>
+Cc: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com,
+	bpf@vger.kernel.org, ceph-devel@vger.kernel.org, cocci@inria.fr,
+	dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org,
+	gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org,
+	intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev,
+	kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+	linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-erofs@lists.ozlabs.org,
+	linux-ext4@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linux-hyperv@vger.kernel.org,
+	linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-leds@vger.kernel.org, linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org, linux-mm@kvack.org,
+	linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org,
+	linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
+	linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+	ntfs3@lists.linux.dev, samba-technical@lists.samba.org,
+	sched-ext@lists.linux.dev, target-devel@vger.kernel.org,
+	tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev,
+	Julia Lawall <Julia.Lawall@inria.fr>,
+	Nicolas Palix <nicolas.palix@imag.fr>, Chris Mason <clm@fb.com>,
+	David Sterba <dsterba@suse.com>, Ilya Dryomov <idryomov@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Steve French <sfrench@samba.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>, Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Latchesar Ionkov <lucho@ionkov.net>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Gao Xiang <xiang@kernel.org>, Chao Yu <chao@kernel.org>,
+	Yue Hu <zbestahu@gmail.com>, Jeffle Xu <jefflexu@linux.alibaba.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Miklos Szeredi <miklos@szeredi.hu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Jan Kara <jack@suse.com>, Phillip Lougher <phillip@squashfs.org.uk>,
+	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>, Max Filippov <jcmvbkbc@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	John Johansen <john.johansen@canonical.com>,
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jamal Hadi Salim <jhs@mojatatu.com>, Jiri Pirko <jiri@resnulli.us>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Trond Myklebust <trondmy@kernel.org>,
+	Anna Schumaker <anna@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>, NeilBrown <neil@brown.name>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Dai Ngo <Dai.Ngo@oracle.com>, Jon Maloy <jmaloy@redhat.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Russell King <linux@armlinux.org.uk>,
+	John Crispin <john@phrozen.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Rich Felker <dalias@libc.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Zhenyu Wang <zhenyuw.linux@gmail.com>,
+	Zhi Wang <zhi.wang.linux@gmail.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	Sandy Huang <hjc@rock-chips.com>,
+	Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Igor Russkikh <irusskikh@marvell.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <mchan@broadcom.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Taras Chornyi <taras.chornyi@plvision.eu>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>, Linus Walleij <linusw@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eduardo Valentin <edubezval@gmail.com>, Keerthy <j-keerthy@ti.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Mark Greer <mgreer@animalcreek.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>, Dave Penkler <dpenkler@gmail.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>, Justin Sanders <justin@coraid.com>,
+	Jens Axboe <axboe@kernel.dk>, Georgi Djakov <djakov@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: Re: [PATCH 00/61] treewide: Use IS_ERR_OR_NULL over manual NULL
+ check - refactor
+Message-ID: <20260409181611.GP3836593@ZenIV>
+References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PR12MB9615:EE_|DS7PR12MB6215:EE_
-X-MS-Office365-Filtering-Correlation-Id: 79e767cb-9425-4170-bec6-08de965fef1d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	7dqi7hX53aMsGVBVz4TU4NoRBfqGmXnK71/4Gpwfi1b5DMlxl+xwi28sGfIhtetnkBzkxcCVBZk34SfLgF3r7+81KS+hOoTBzRTGHHcTLq0uc1EpNgh1sXP4ws0kyU0RQpldgYDMjQTPv57/n+D+tYfsCouy43CKzgwRUe7je0htARuuWffA8R+f3agbojuskveHbHlLrk+ZpGYqQVZGqgVnsySZYX4XPlEEBBKbfdl5yD+bHAivPiu4RdKS3J1Z54eEcmSSev0X6No7GvQRcPpjkYkpTX+lf5y5TgDpuy4dWr8rh7wiZQ5cq+7Rjw8Az7JYbB5hya5SGXlFcS7LLrFjbTjuth1/SYLP8OPfthGpwTfUiTCO8Bs+iURzQbpWZeN02/N3ymAEV2nV7ESd/VXvISfyknbpn8ghAYEB3TdTYkYVeYoGML42uuvyuTvlP8iz9bODwZ32hJNmJTpSci0ZyI4ikU+5kIzQT9a8dedm8Kiy8Up2VJghPoPGO13oOS3TZN530tvPSznjdbowVO6HVu+Ekzzke7LWFiEnA6JNAxdZEmdkug3rf/VrzDP01JNLhqBoCQxAnKVe4qeSXw1xzcX9Nlt6rHAiDh5/sjhLhSw3K7rCIyHzo6z/VAnELUZT2zaImCvfNBo/fsrqqZ8SHGFy+9EpwKd6JQYtbmxQfL74Z4Lrm+VFUcEezzC7XuBenZTFh43DK5bhLkRvTD2MarnK4FgDzYmKVozma2w=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS2PR12MB9615.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?RkJaMlEw+rNR97ucnVw3stMlmTChKtdIa+BGCUeiOB2UY/A4r+tyVOF1AIAh?=
- =?us-ascii?Q?hcytbmg03CLwHu2ehm9MWBpyrUcVmMKZ9m13Fe3F25cqlgbo4qiSIGEUutzt?=
- =?us-ascii?Q?Mg1GGHQrcctphS8fOSFiqPC4nFIJtaH0KBp75qnuh6yh9JplO2Zasa/QTQGt?=
- =?us-ascii?Q?ys+3kVA2YM85BHz8RXyyQO1unEousn3YYydxDaxs1Gvkp0XdqaGLqZwU+WHW?=
- =?us-ascii?Q?pltw0XOXFMQjcCb7WkNRFVwBqbrUlyPyUO2gJu4CSKjm6CWISrFiAfm+ckhT?=
- =?us-ascii?Q?7Rj/wvrTaYYuce1WOHy/Xr2T5R9BSjomEz7luPyf10TTea3Jf2kiK/CIdpkx?=
- =?us-ascii?Q?0svG+7WoGp+yxTjrKZ9+d2dX5dc62fIcUuYCIaltUAdvpq4DjQN9wNL5jTxj?=
- =?us-ascii?Q?PJr8MwZlQkW8XkBYklvIOcqirWl8KeuST+JC4gRwVtTlfJda69LPI7ix8Qfk?=
- =?us-ascii?Q?g2Jv71IOQfcloq40nZInqSvVsIDLNb8b2ApgZ0NZXZIeBhJgTjyKCx/3aVWZ?=
- =?us-ascii?Q?j/P61TU2d8Ffxpc/b4gii9Xv5jK+SyBEDw9rVUTdX1ApdkLO2UEtYwNbmDNZ?=
- =?us-ascii?Q?5xDLdhoWKxWB50Dux0eGvxkBbkdFf88jTF5YJcEl9rJGg+hFTjknxwYnR4tn?=
- =?us-ascii?Q?1/4VSTp55vzYoWTOaf/MBYGQs7x87Zi3NDkix0gARKuPl+Xnhi4Veec5C1cc?=
- =?us-ascii?Q?+G9iZEeGT69Pz2Npo/xdxQ5Tz/4wg+adwuQOIo/UsprsvRJj0cDpMSKKjckM?=
- =?us-ascii?Q?M6OiL064HzxeORQQtnt3EGVhjGoWYF/yyl5WpXvYSINUBnt6ni7rppwRt5hB?=
- =?us-ascii?Q?pHWxSCCj8CbSj4PAlL6rxiKjrL9nfMscVhGyd3m53S8izUVbPeoRxdSpYGCB?=
- =?us-ascii?Q?H+B+L//qLnJxk8GiBjxJP83rys5FmvRC1Xo3AIOOQzxQJbnJ3NqygShzXYoK?=
- =?us-ascii?Q?OmjyW7VF3mRj0F49/rdu6FxTF3zwPP3TO6cZaQlXlkLonXzg5qfUhVCXAvLl?=
- =?us-ascii?Q?xWvV7193CRyMc3Db4AO7q24U5NWpGUs5aZdZRCc8fXqlCA+A2HCBcwkC8YqN?=
- =?us-ascii?Q?F8q1Jp0+sv3Agt3ILxKSKmPGGdrgpt5xpK6w3Q5hIerT9bWTiVb13xw1x3ml?=
- =?us-ascii?Q?ZPCL9/mxaUtH6SVo+lmljkA4d+QORKRBFgvDVMq/4v6SI5GUJQ8WB3tohdsg?=
- =?us-ascii?Q?CJhU8r+G0adzHm39k2TnV5kuDnYMh2Eko1OJ/vXGeOgLRHicumZ0JkO4Tedo?=
- =?us-ascii?Q?8jA6V7zrU2yU31y6/UNfVbayzQAAfA32BOoZV8YKboNNKY46F/Av9+NP2O02?=
- =?us-ascii?Q?i1DitEMn7BQKbXunu1Oc4h0VTLLKqIz7VWkLfoZo8LauwepmfevYSL0Sekai?=
- =?us-ascii?Q?A5TqQl6qiG6nhBDiF1ZNOLFIdeE8ueyXdIRux5Dx1iDtIB1GaAvGWeNyyA7e?=
- =?us-ascii?Q?lvc1XlypaFZGwZvSB/ICsKGe6kKmQTp/TWH/h2EGskV3lRvPxwMAC8P4vl3O?=
- =?us-ascii?Q?9HdyDtMsoZegGSU3G10Zf4LbKLNoezypzzMkuEMCUXd+mi5M11Lz5lUeWjkk?=
- =?us-ascii?Q?9TYiqnhCrAkM7x8WPc+7qqL0FI2lVccQHpTRl2xgGilap9eYFDYY+vo6HEKP?=
- =?us-ascii?Q?nuLrB8zQ8A5D8Z3aqL/YCHgUyE+Ru8vpiAsQag9KEUXHHgP79av6PcV8xeDA?=
- =?us-ascii?Q?CxZUOc7ZpXRNvwl69/JDKDx47OLo3+vM4mzwVzZ+yMpZSk6X2BwjfAc43qkA?=
- =?us-ascii?Q?qJVHYBb2zA=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79e767cb-9425-4170-bec6-08de965fef1d
-X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9615.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2026 17:46:31.6259
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sJeKln175xZ49+s4AfQAtWQTpMkcjjI9StbKZDGtJb/YvE3pd0cU96tevEel9sSJ/199LlYGyYS392omVJE99w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6215
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
+Sender: Al Viro <viro@ftp.linux.org.uk>
 
-On Thu, Apr 09, 2026 at 04:57:44PM +0000, Kuba Piecuch wrote:
-> * Add ops.quiescent() and ops.runnable() to the sched_change path.
->   When a queued task has one of its scheduling properties changed
->   (e.g. nice, affinity), it goes through dequeue() -> quiescent() ->
->   (property change callback, e.g. ops.set_weight()) -> runnable() ->
->   enqueue().
-> 
-> * Change && to || in ops.enqueue() condition. We want to enqueue tasks
->   that have a non-zero slice and are not in any DSQ.
-> 
-> * Call ops.dispatch() and ops.dequeue() only for tasks that have had
->   ops.enqueue() called. This is to account for tasks direct-dispatched
->   from ops.select_cpu().
-> 
-> * Add a note explaining that the pseudo-code provides a simplified view
->   of the task lifecycle and list some examples of cases that the
->   pseudo-code does not account for.
-> 
-> Fixes: a4f61f0a1afd ("sched_ext: Documentation: Add ops.dequeue() to task lifecycle")
-> Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+On Tue, Mar 10, 2026 at 12:48:26PM +0100, Philipp Hahn wrote:
+> While doing some static code analysis I stumbled over a common pattern,
+> where IS_ERR() is combined with a NULL check. For that there is
+> IS_ERR_OR_NULL().
 
-Looks good to me.
+... and valid uses of IS_ERR_OR_NULL are rare as hen teeth.
+Most of those are "I'm not sure how this function returns an
+error, let's use that just in case".
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>$
-
-Thanks,
--Andrea
-
-> ---
-> 
-> Changes in v2:
->  - Changed && to || in ops.enqueue() condition (Andrea)
->  - Moved ops.dispatch() and ops.dequeue() inside the if statement
->    (Andrea)
->  - Added a note after the pseudo-code with examples of cases that the
->    pseudo-code does not account for
->  - Link to v1: https://lore.kernel.org/all/20260408091821.91063-1-jpiecuch@google.com
-> 
->  Documentation/scheduler/sched-ext.rst | 43 ++++++++++++++++++++++-----
->  1 file changed, 36 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-> index ec594ae8086de..2d77ab4816a63 100644
-> --- a/Documentation/scheduler/sched-ext.rst
-> +++ b/Documentation/scheduler/sched-ext.rst
-> @@ -408,8 +408,8 @@ for more information.
->  Task Lifecycle
->  --------------
->  
-> -The following pseudo-code summarizes the entire lifecycle of a task managed
-> -by a sched_ext scheduler:
-> +The following pseudo-code presents a rough overview the entire lifecycle
-> +of a task managed by a sched_ext scheduler:
->  
->  .. code-block:: c
->  
-> @@ -423,20 +423,25 @@ by a sched_ext scheduler:
->          ops.runnable();         /* Task becomes ready to run */
->  
->          while (task_is_runnable(task)) {
-> -            if (task is not in a DSQ && task->scx.slice == 0) {
-> +            if (task is not in a DSQ || task->scx.slice == 0) {
->                  ops.enqueue();  /* Task can be added to a DSQ */
->  
->                  /* Task property change (i.e., affinity, nice, etc.)? */
->                  if (sched_change(task)) {
->                      ops.dequeue(); /* Exiting BPF scheduler custody */
-> +                    ops.quiescent();
-> +
-> +                    /* Property change callback, e.g. ops.set_weight() */
-> +
-> +                    ops.runnable();
->                      continue;
->                  }
-> -            }
->  
-> -            /* Any usable CPU becomes available */
-> +                /* Any usable CPU becomes available */
->  
-> -            ops.dispatch();     /* Task is moved to a local DSQ */
-> -            ops.dequeue();      /* Exiting BPF scheduler custody */
-> +                ops.dispatch();     /* Task is moved to a local DSQ */
-> +                ops.dequeue();      /* Exiting BPF scheduler custody */
-> +            }
->  
->              ops.running();      /* Task starts running on its assigned CPU */
->  
-> @@ -456,6 +461,30 @@ by a sched_ext scheduler:
->      ops.disable();              /* Disable BPF scheduling for the task */
->      ops.exit_task();            /* Task is destroyed */
->  
-> +Note that the above pseudo-code does not cover all possible state transitions
-> +and edge cases, to name a few examples:
-> +
-> +* ``ops.dispatch()`` may fail to move the task to a local DSQ due to a racing
-> +  property change on that task, in which case ``ops.dispatch()`` will be
-> +  retried.
-> +
-> +* The task may be direct-dispatched to a local DSQ from ``ops.enqueue()``,
-> +  in which case ``ops.dispatch()`` and ``ops.dequeue()`` are skipped and we go
-> +  straight to ``ops.running()``.
-> +
-> +* Property changes may occur at virtually any point during the task's lifecycle,
-> +  not just when the task is queued and waiting to be dispatched. For example,
-> +  changing a property of a running task will lead to the callback sequence
-> +  ``ops.stopping()`` -> ``ops.quiescent()`` -> (property change callback) ->
-> +  ``ops.runnable()`` -> ``ops.running()``.
-> +
-> +* A sched_ext task can be preempted by a task from a higher-priority scheduling
-> +  class, in which it will exit the tick-dispatch loop even though it is runnable
-> +  and has a non-zero slice.
-> +
-> +See the "Scheduling Cycle" section for a more detailed description of how
-> +a freshly woken up task gets on a CPU.
-> +
->  Where to Look
->  =============
->  
-> -- 
-> 2.53.0.1213.gd9a14994de-goog
-> 
+Please, do not introduce more of that crap.
