@@ -1,248 +1,123 @@
-Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [62.89.141.173])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7156D3E314E;
-	Thu,  9 Apr 2026 18:12:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.89.141.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524BF38655E;
+	Fri, 10 Apr 2026 06:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775758382; cv=none; b=jPBFkce5IdXM1oR73zp4d1LQl0Kwxcrj3NcvsS19vR4mmxL8wW/vH//PX2n7RpmzuRHzssvYEPhl5QPncuxqBy+krKZnaIm0reghk/4NWMmfYlJ8evh3v7iUEaEc0I+SF6w4e1Ha4sSEUxrh4xsoCtEMjb8aPXFlJblfS6a99es=
+	t=1775802648; cv=none; b=WEJfYbFeCHOOVkNYF2d9BoY5c0RoikmdW/RvxRw9mG2yFYEjubHAkq6ZZ5nfhOT0KuZFF7y8X85WP/jO/wUH2hs6QD44Zu3l4Fcl/h+cKUvxH5FXTFO3Blsb7alPxHm5+ymTs31WGXTCxLim9nL4qPYd3q4YAiv6ZChOINbW2O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775758382; c=relaxed/simple;
-	bh=BoGW7oywgvm57yYmgFIJhKPYzBfyhEW/uN+KSu6heaU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z1pkP+nYR0+2vauJLLzvKfLodZ7EBKfx8ohRzW6suEJnaHscQ4K//wJ7y+uvbvFBWGNcUG/+A0YIABFmqUyBZ8NS1VCLOEy6CEBGLnc7RZqBdLn9hWKo5XW/dWgWg1Fas/wZxp/gVYCP0n4sY3yf/wK+9LX+VXoeij5b9l9mkaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk; spf=none smtp.mailfrom=ftp.linux.org.uk; dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b=JJcsCEca; arc=none smtp.client-ip=62.89.141.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ftp.linux.org.uk
+	s=arc-20240116; t=1775802648; c=relaxed/simple;
+	bh=suPMO7P78NQCrlpQySt2FvE3xVVlzIPiC3jRKgPxt1U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BIwsLqLlrb+4pCxcf183T1MFtdJ88riXgw4RLoo0vXzlsFtLxrIJBf6beW+p2iMWM4ScW+CaKeuqa4P1voMeNweXhasifQilaILe5HL4qTGBXhKfBed9joY1IOf8KWpYtEW1UUBalce1wCx/sB7G2onAcuG7PXdX0TRfYRImDe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kSfClPLu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b="JJcsCEca"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=BoGW7oywgvm57yYmgFIJhKPYzBfyhEW/uN+KSu6heaU=; b=JJcsCEcaKqyNrvJOUZ8XOnA1AS
-	yC//2gnLRa8FcBRiXofOYljopOoyt9r8CbkWaLEFmbUVfW5qK5utkUh3D77jxlkhKoZiYVbvdTEnm
-	X8jEr88bUddVEJ+24e8elVa7rPEDm9C+KeO3Yi+QSp+riwZi9Be8u3P2jnyNq7RhzU24dEi9YT5JB
-	9o5OjQL5vQk2h32ksN+l6XHB7LZbu7YtKRAMPXU1ZH+Yata0JOXemtl88QWI3UJ7mBXR7GCgddkg5
-	qrhpzNPrKwHYiMCapxKfC0E4ZwUatWZBULD1y88efyo7haqTewJrOOn317SRlKBwAg9TXV76h3bsC
-	A/eZOWQA==;
-Received: from viro by zeniv.linux.org.uk with local (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wAtvH-00000003xj6-26He;
-	Thu, 09 Apr 2026 18:16:11 +0000
-Date: Thu, 9 Apr 2026 19:16:11 +0100
-From: Al Viro <viro@zeniv.linux.org.uk>
-To: Philipp Hahn <phahn-oss@avm.de>
-Cc: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com,
-	bpf@vger.kernel.org, ceph-devel@vger.kernel.org, cocci@inria.fr,
-	dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org,
-	intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev,
-	kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-	linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-erofs@lists.ozlabs.org,
-	linux-ext4@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-hyperv@vger.kernel.org,
-	linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-leds@vger.kernel.org, linux-media@vger.kernel.org,
-	linux-mips@vger.kernel.org, linux-mm@kvack.org,
-	linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org,
-	linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
-	linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-	ntfs3@lists.linux.dev, samba-technical@lists.samba.org,
-	sched-ext@lists.linux.dev, target-devel@vger.kernel.org,
-	tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev,
-	Julia Lawall <Julia.Lawall@inria.fr>,
-	Nicolas Palix <nicolas.palix@imag.fr>, Chris Mason <clm@fb.com>,
-	David Sterba <dsterba@suse.com>, Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Steve French <sfrench@samba.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>, Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Latchesar Ionkov <lucho@ionkov.net>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Gao Xiang <xiang@kernel.org>, Chao Yu <chao@kernel.org>,
-	Yue Hu <zbestahu@gmail.com>, Jeffle Xu <jefflexu@linux.alibaba.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Chunhai Guo <guochunhai@vivo.com>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Jan Kara <jack@suse.com>, Phillip Lougher <phillip@squashfs.org.uk>,
-	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kSfClPLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDAAC19421;
+	Fri, 10 Apr 2026 06:30:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775802647;
+	bh=suPMO7P78NQCrlpQySt2FvE3xVVlzIPiC3jRKgPxt1U=;
+	h=From:To:Cc:Subject:Date:From;
+	b=kSfClPLuswyxjMEst7TCZAmgNdODLsFekFuOGHogReF9xBos4e6L5tqVtY5LC3yvs
+	 7PljlSAKs04udkCfA5N6NbcSZkma90tXrLiOkGYQ058KO+ca2CyM71yGtBEtECIaxx
+	 6rPPtM9/w7bDz3fbBgH7roqX+AbyEGG3Fy3v839Dlc7nbupmEzuSvCxilI0mPcjG1z
+	 BOIuSW0Xn/xIRGninkLsKZYd52cwF+8iLveBSveP1ljj31MTanNpC4EQp7+Se0gp6n
+	 Wo0YmBssUtD+oZteEArI2YVz1CJaiozC4rCHi6Jd0FWNOzf0Majf23yc5CItTrmt0J
+	 TKDicGWRXvyZA==
+From: Tejun Heo <tj@kernel.org>
+To: sched-ext@lists.linux.dev,
+	David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, Max Filippov <jcmvbkbc@gmail.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	John Johansen <john.johansen@canonical.com>,
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jamal Hadi Salim <jhs@mojatatu.com>, Jiri Pirko <jiri@resnulli.us>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Trond Myklebust <trondmy@kernel.org>,
-	Anna Schumaker <anna@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>, NeilBrown <neil@brown.name>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Dai Ngo <Dai.Ngo@oracle.com>, Jon Maloy <jmaloy@redhat.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Russell King <linux@armlinux.org.uk>,
-	John Crispin <john@phrozen.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Zhenyu Wang <zhenyuw.linux@gmail.com>,
-	Zhi Wang <zhi.wang.linux@gmail.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-	Sandy Huang <hjc@rock-chips.com>,
-	Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Igor Russkikh <irusskikh@marvell.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <mchan@broadcom.com>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Taras Chornyi <taras.chornyi@plvision.eu>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
-	Keyur Chudgar <keyur@os.amperecomputing.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>, Linus Walleij <linusw@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Eduardo Valentin <edubezval@gmail.com>, Keerthy <j-keerthy@ti.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Mark Greer <mgreer@animalcreek.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Lee Jones <lee@kernel.org>,
-	Pavel Machek <pavel@kernel.org>, Dave Penkler <dpenkler@gmail.com>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
-	Long Li <longli@microsoft.com>, Justin Sanders <justin@coraid.com>,
-	Jens Axboe <axboe@kernel.dk>, Georgi Djakov <djakov@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: Re: [PATCH 00/61] treewide: Use IS_ERR_OR_NULL over manual NULL
- check - refactor
-Message-ID: <20260409181611.GP3836593@ZenIV>
-References: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
+	Changwoo Min <changwoo@igalia.com>
+Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Juntong Deng <juntong.deng@outlook.com>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.1] sched_ext: Add verifier-time kfunc context filter
+Date: Thu,  9 Apr 2026 20:30:36 -1000
+Message-ID: <20260410063046.3556100-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260310-b4-is_err_or_null-v1-0-bd63b656022d@avm.de>
-Sender: Al Viro <viro@ftp.linux.org.uk>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Mar 10, 2026 at 12:48:26PM +0100, Philipp Hahn wrote:
-> While doing some static code analysis I stumbled over a common pattern,
-> where IS_ERR() is combined with a NULL check. For that there is
-> IS_ERR_OR_NULL().
+Hello,
 
-... and valid uses of IS_ERR_OR_NULL are rare as hen teeth.
-Most of those are "I'm not sure how this function returns an
-error, let's use that just in case".
+This moves enforcement of SCX context-sensitive kfunc restrictions from
+runtime kf_mask checks to BPF verifier-time filtering, using the BPF core's
+struct_ops context information.
 
-Please, do not introduce more of that crap.
+This is based on work by Juntong Deng and Cheng-Yang Chou:
+
+  https://lore.kernel.org/r/20260406154834.1920962-1-yphbchou0911@gmail.com
+
+I ended up redoing the series. The number of changes needed and the
+difficulty of validating each one made iterating through review emails
+impractical:
+
+ - Pre-existing call-site bugs needed fixing first. ops.cgroup_move() was
+   mislabeled as SCX_KF_UNLOCKED when sched_move_task() actually holds the
+   rq lock, and set_cpus_allowed_scx() passed rq=NULL to SCX_CALL_OP_TASK
+   despite holding the rq lock. These had to be sorted out before the
+   runtime-to-verifier conversion could be validated.
+
+ - The macro-based kfunc ID deduplication (SCX_KFUNCS_*) made it hard to
+   verify that the new code produced the same accept/reject verdicts as
+   the old.
+
+ - No systematic validation of the full (kfunc, caller) verdict matrix
+   existed, so it wasn't clear whether the conversion was correct.
+
+This series takes a different approach: first fix the call-site bugs that
+made the conversion harder than it needed to be, then do the conversion in
+small isolated steps, and verify the full verdict matrix at each stage.
+
+The series:
+
+ 01/10 Drop TRACING access to select_cpu kfuncs
+ 02/10 Add select_cpu kfuncs to scx_kfunc_ids_unlocked
+ 03/10 Track @p's rq lock across set_cpus_allowed_scx -> ops.set_cpumask
+ 04/10 Fix ops.cgroup_move() invocation kf_mask and rq tracking
+ 05/10 Decouple kfunc unlocked-context check from kf_mask
+ 06/10 Drop redundant rq-locked check from scx_bpf_task_cgroup()
+ 07/10 Add verifier-time kfunc context filter
+ 08/10 Remove runtime kfunc mask enforcement
+ 09/10 Rename scx_kf_allowed_on_arg_tasks() to scx_kf_arg_task_ok()
+ 10/10 Warn on task-based SCX op recursion
+
+Patches 1-2 are extracted from the original patchset. Patches 3-4 fix
+pre-existing call-site bugs where SCX_CALL_OP_TASK passed rq=NULL despite
+the kernel holding the rq lock. Patch 5 converts select_cpu_from_kfunc and
+scx_dsq_move to explicit locked-state tests. Patch 6 drops the now-
+redundant kf_mask check from scx_kf_allowed_on_arg_tasks. Patch 7 adds the
+verifier-time filter. Patch 8 removes the runtime kf_mask machinery. Patches
+9-10 are post-removal cleanup.
+
+The full verdict matrix was verified by writing BPF test programs covering
+every kfunc group from every relevant caller context, testing both baseline
+and patched kernels. All in-tree example schedulers and most scx-repo
+schedulers pass smoke testing on the patched kernel.
+
+Based on sched_ext/for-7.1 (ff1befcb1683).
+
+ include/linux/sched/ext.h   |  28 ---
+ kernel/sched/ext.c          | 415 ++++++++++++++++++++---------------------
+ kernel/sched/ext_idle.c     |  69 ++++---
+ kernel/sched/ext_idle.h     |   2 +
+ kernel/sched/ext_internal.h |   8 +-
+ kernel/sched/sched.h        |   1 +
+ 6 files changed, 253 insertions(+), 270 deletions(-)
+
+Git tree:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-kf-allowed-filter
+
+--
+tejun
