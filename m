@@ -1,49 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F03338A728;
-	Fri, 10 Apr 2026 06:30:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862A437A4BC
+	for <sched-ext@lists.linux.dev>; Fri, 10 Apr 2026 06:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775802658; cv=none; b=mRkQMhaeGyojcZ7B9Yf6A+dSf9OpWBBBDalHnbDYrmEgUhtDEoAHsI023MOc8oQmGcw4J8VwDIy6Y35YuD3GCxzdHZ2GZ7F6xVGyZeD6ZbCt9Bkwqq69pGu/dHYjF7j9Xim6SGrZcDhOiWVM70tRp2TVGfjhuve8yPgrETlvh6c=
+	t=1775803692; cv=none; b=fDMHHrbZj5SpbX3gR+ggJMj+PjZabnUb8YN/FItrrQfHdCFdQnsUVELcI4ZH44UuGQbja8z12SO8UTx5CyKW70/yCV1eWZKUgUcvR/VDUChl8bu7WHGrTXU0E/zOdI0b0teKRSRveIYdcxQDVMRgOD2j5RH4V8tthu7UfjZjmiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775802658; c=relaxed/simple;
-	bh=KNb/z2yRE2cuPGhPmYTvpEafu7+gyfB6fcKu3U/I+Qc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzJ9yh8PndXRASMPtz8+YyMw70NELhTJbgsMJN8aBFbJyPrgrmS2MbZm9Vw8rvBsNk6Qcm1ODIJN+oFmWfTCriOk7pg0lyTC+bgL9uowES6OkS8W4cImbDz+nebOY39WAXy3daCy3a3QeJPm4BM4hojBbryhD8b5xZBmAEe3tOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQLL7Lfi; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQLL7Lfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E86C2BC9E;
-	Fri, 10 Apr 2026 06:30:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775802658;
-	bh=KNb/z2yRE2cuPGhPmYTvpEafu7+gyfB6fcKu3U/I+Qc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQLL7Lfi2pL6rlgHFnj3CmB/9/nKr3EAsSBuuCAunHAl+eAgp3ZuZf6HsCxSowqo/
-	 5Fc6q6Uga7X55x8lleVaWxmklfgI6qFTuw2q2y5EhuUpfuHhschTWfjHilxaHr0q39
-	 SFsJVKjQlik5nWkgKN6GHlNJUZvdsW89BMsYXvaL6aaQBuYjX/5jW7/tntOfqUIcSL
-	 92JZMqusTcG4CeRAJBw286c0QcXWhp0011Mnek7IdC3qNxABBV/TQFfyLxwpB+RPez
-	 phk6waN4EWP04a4gAWfhA/1TEt+OzT1Gjz159zw8sY7nubs7mnzSIwseK05SK9PRlx
-	 Jl2OwYONoR/GA==
-From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Juntong Deng <juntong.deng@outlook.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	s=arc-20240116; t=1775803692; c=relaxed/simple;
+	bh=1h2YqNJo0GavyU4mracICOaQN+/Vkfdqcp7RITRrETs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=PxMEp/Cz3TVp3/yrVK8ZjvXCQuqnplcFKCKfsCLKRbZ0AWVS/gAlO9heGxYLgEEA2SAoc1MPBI73ha9TVkt+EIfLDmv5KpCWMwFRsfSja2IQ/OS6+2c8rPM6imp01186jn6fB/l6ty4HjUX7tQNj8cMloudDdyPge5GYUZy1M9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 34b93e1c34a911f1aa26b74ffac11d73-20260410
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:60f23653-d9c4-49f3-bfa5-c9260a8e803f,IP:0,U
+	RL:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:20
+X-CID-META: VersionHash:e7bac3a,CLOUDID:d4b50ce756fe4d1c8db6dcc7ba6ba837,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|850|898,TC:nil,Content:0|15|50,E
+	DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
+	0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 34b93e1c34a911f1aa26b74ffac11d73-20260410
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 126916995; Fri, 10 Apr 2026 14:47:56 +0800
+From: fangqiurong@kylinos.cn
+To: tj@kernel.org,
+	void@manifault.com
+Cc: arighi@nvidia.com,
+	changwoo@igalia.com,
+	shuah@kernel.org,
+	christian.loehle@arm.com,
+	newton@meta.com,
+	sched-ext@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 10/10] sched_ext: Warn on task-based SCX op recursion
-Date: Thu,  9 Apr 2026 20:30:46 -1000
-Message-ID: <20260410063046.3556100-11-tj@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260410063046.3556100-1-tj@kernel.org>
-References: <20260410063046.3556100-1-tj@kernel.org>
+	fangqiurong <fangqiurong@kylinos.cn>
+Subject: [PATCH] selftests/sched_ext: Fix wrong DSQ ID in peek_dsq error message
+Date: Fri, 10 Apr 2026 14:47:53 +0800
+Message-Id: <20260410064753.469802-1-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -52,56 +56,30 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The kf_tasks[] design assumes task-based SCX ops don't nest - if they
-did, kf_tasks[0] would get clobbered. The old scx_kf_allow() WARN_ONCE
-caught invalid nesting via kf_mask, but that machinery is gone now.
+From: fangqiurong <fangqiurong@kylinos.cn>
 
-Add a WARN_ON_ONCE(current->scx.kf_tasks[0]) at the top of each
-SCX_CALL_OP_TASK*() macro. Checking kf_tasks[0] alone is sufficient: all
-three variants (SCX_CALL_OP_TASK, SCX_CALL_OP_TASK_RET,
-SCX_CALL_OP_2TASKS_RET) write to kf_tasks[0], so a non-NULL value at
-entry to any of the three means re-entry from somewhere in the family.
+The error path after scx_bpf_create_dsq(real_dsq_id, ...) was reporting
+test_dsq_id instead of real_dsq_id in the error message, which would
+mislead debugging.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
 ---
- kernel/sched/ext.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/testing/selftests/sched_ext/peek_dsq.bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 27091ae075a3..99760d1fbbd4 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -502,10 +502,13 @@ do {										\
-  * held by try_to_wake_up() with rq tracking via scx_rq.in_select_cpu. So if
-  * kf_tasks[] is set, @p's scheduler-protected fields are stable.
-  *
-- * These macros only work for non-nesting ops since kf_tasks[] is not stacked.
-+ * kf_tasks[] can not stack, so task-based SCX ops must not nest. The
-+ * WARN_ON_ONCE() in each macro catches a re-entry of any of the three variants
-+ * while a previous one is still in progress.
-  */
- #define SCX_CALL_OP_TASK(sch, op, rq, task, args...)				\
- do {										\
-+	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
- 	current->scx.kf_tasks[0] = task;					\
- 	SCX_CALL_OP((sch), op, rq, task, ##args);				\
- 	current->scx.kf_tasks[0] = NULL;					\
-@@ -514,6 +517,7 @@ do {										\
- #define SCX_CALL_OP_TASK_RET(sch, op, rq, task, args...)			\
- ({										\
- 	__typeof__((sch)->ops.op(task, ##args)) __ret;				\
-+	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
- 	current->scx.kf_tasks[0] = task;					\
- 	__ret = SCX_CALL_OP_RET((sch), op, rq, task, ##args);			\
- 	current->scx.kf_tasks[0] = NULL;					\
-@@ -523,6 +527,7 @@ do {										\
- #define SCX_CALL_OP_2TASKS_RET(sch, op, rq, task0, task1, args...)		\
- ({										\
- 	__typeof__((sch)->ops.op(task0, task1, ##args)) __ret;			\
-+	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
- 	current->scx.kf_tasks[0] = task0;					\
- 	current->scx.kf_tasks[1] = task1;					\
- 	__ret = SCX_CALL_OP_RET((sch), op, rq, task0, task1, ##args);		\
+diff --git a/tools/testing/selftests/sched_ext/peek_dsq.bpf.c b/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
+index 96e3a336a8a6..7f23fb17b1e0 100644
+--- a/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
++++ b/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
+@@ -197,7 +197,7 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(peek_dsq_init)
+ 	}
+ 	err = scx_bpf_create_dsq(real_dsq_id, -1);
+ 	if (err) {
+-		scx_bpf_error("Failed to create DSQ %d: %d", test_dsq_id, err);
++		scx_bpf_error("Failed to create DSQ %d: %d", real_dsq_id, err);
+ 		return err;
+ 	}
+ 
 -- 
-2.53.0
+2.25.1
 
