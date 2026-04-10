@@ -1,41 +1,42 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.7])
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A0033A6F2
-	for <sched-ext@lists.linux.dev>; Fri, 10 Apr 2026 22:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3799478F4F
+	for <sched-ext@lists.linux.dev>; Fri, 10 Apr 2026 23:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775861936; cv=none; b=bJ5ypX86zqzKf+KHDW41t3HSQ3phKoLFJePmRfu3MFT8koGKFvxlfDg5PPVseg/Q/o6PgnULgVIM9j+xs2bzw6CciSr0sl5mRbzF2VReFHcgaOh7vhflh0Yzma8scM2k8pxGSakCqCY8cNH9D1xGO61ypCjegWnaCL7wdor22EA=
+	t=1775863086; cv=none; b=Yfg0Wp8gmIUs75NcKvAECDrBkpdFRBNYyckpdyWI6nb+oCkcIEIphBnDpX1mIF7pO8qNPawmaS76RfDsXOprk3m7t42dPeC9vksYQj5avDXhbS9uDcjWKmjekSzIBR7ALq/ChyoV19WjF+j2DYzzBpUPxgz9iP+o7PrH5xKN8Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775861936; c=relaxed/simple;
-	bh=qJbVzHmePHTXLglfgut/yQBPzC6BAP459GlMgUSeGbs=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=ngQm29hqBIBCmF0ye9A3IfuY1B+stCja+ESxGChjMc+tkqk12Yfyb+iuPvxjARQRL1t3Td5qrx8YYZt7vol4mS7GgjYhi8lb9zOXeOBpWbmycmEHTtEnQa/qzst+zx36m7JFBvNEgovbSy7A5LpJLN59jPKpl1qaYHZ5S7DBWHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=LX0+edg1; arc=none smtp.client-ip=117.135.210.7
+	s=arc-20240116; t=1775863086; c=relaxed/simple;
+	bh=JazobPq6BhvzP5Tie4CxqADLvT/x0USe2wG5oOAGZ80=;
+	h=Date:From:To:CC:Subject:In-Reply-To:Message-ID:MIME-Version:
+	 Content-Type; b=dX7zqHiOTzdiYQGXXKeJuNehiBuGjju9e60+8CgO3+RGKw91Hpz2ua0yjPIkB8mAuEapr91rrsfIraoUqEL6O2PIvxx8giYIVc/uslxPmnV4OcPeky+n16GZ2UzM0qzDtbGhR2KqAAlpo89ChKZf9+X7H12Sqz2SNvNL9VK+Df8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=Sr15+k25; arc=none smtp.client-ip=117.135.210.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="LX0+edg1"
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="Sr15+k25"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
 	s=s110527; h=Date:From:To:Subject:Message-ID:MIME-Version:
-	Content-Type; bh=E6Me02ZTj6dh7HVBpnXBiI4P2QkQolzaIJeCwPxdciA=;
-	b=LX0+edg11M0Z8aA/gN1vsNZbj9On8MgzIvipc+C+kIuP1wFMGqkzxJqj4vkpQ5
-	wF38AMVGOOEZiqgtihfZrmTZjJQH3irJwtdG+OYIsVytnW5Y2GilvyzVw9dVKQzU
-	QXY5Qnn20Z2cm02sKOkXHfNVsDds2oKrE8iFQ5/br4ssU=
+	Content-Type; bh=JazobPq6BhvzP5Tie4CxqADLvT/x0USe2wG5oOAGZ80=;
+	b=Sr15+k258dOOEIW79ORTTwyZbH7y6HAM5QV5kSd18BpE1mocUa7S0iUcFoD82Y
+	SR44iAoNl4kvndrG6jks6V3OpB5NnTakK1sRMyn7d0daSgtKBbtNssTGLn9UgIFY
+	YYd8zJ446GeqrogRrw8BeydLuw7n9newrxDf84VmUndwQ=
 Received: from ehlo.thunderbird.net (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wD3B6iOgNlpPLNHBQ--.14247S2;
-	Sat, 11 Apr 2026 06:58:22 +0800 (CST)
-Date: Sat, 11 Apr 2026 06:58:21 +0800
+	by gzsmtp5 (Coremail) with SMTP id QCkvCgD3_3EIhdlpCwIJCw--.28624S2;
+	Sat, 11 Apr 2026 07:17:29 +0800 (CST)
+Date: Sat, 11 Apr 2026 07:17:28 +0800
 From: Zhao mengmeng <zhaomzhao@126.com>
-To: Tejun Heo <tj@kernel.org>
-CC: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+To: tj@kernel.org
+CC: arighi@nvidia.com, changwoo@igalia.com, emil@etsalapatis.com,
+ linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, void@manifault.com,
  zhaomengmeng@kylinos.cn
-Subject: Re: [PATCH 1/3] sched_ext: Prevent CPU kicks from exiting schedulers
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_sched=5Fext/fo?=
+ =?US-ASCII?Q?r-7=2E1=5D_sched=5Fext=3A_Drop_s?=
+ =?US-ASCII?Q?purious_warning_on_kick_during_scheduler_disable?=
 User-Agent: Thunderbird for Android
-In-Reply-To: <adlZ9nHVKfcwly_H@slm.duckdns.org>
-References: <20260409032126.114812-1-zhaomzhao@126.com> <20260409032126.114812-2-zhaomzhao@126.com> <adlZ9nHVKfcwly_H@slm.duckdns.org>
-Message-ID: <EA6894CA-24CB-4A2E-B768-959D5CC129F7@126.com>
+In-Reply-To: <20260410202054.4189994-1-tj@kernel.org>
+Message-ID: <8A8D3A99-FDE5-4DEA-B619-756F51146FDD@126.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,35 +46,11 @@ MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-CM-TRANSID:_____wD3B6iOgNlpPLNHBQ--.14247S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Gr48Gw1DXryDCFW7XF4kXrb_yoWfJFb_ZF
-	yqkFs2kFZ8WF4vy3Z3Kr4SqFWYgF1UJFW8Gwn2vF92kr9xAFyUWF4YkFZav3Z3JF4IqF98
-	Ka1vva18tr9xtjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUUVyI5UUUUU==
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqw8Ui2nZgI9P1gAA3d
+X-CM-TRANSID:QCkvCgD3_3EIhdlpCwIJCw--.28624S2
+X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxU1CJmDUUUU
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqgk0q2nZhQlwvQAA3N
 
-On April 11, 2026 4:13:42 AM GMT+08:00, Tejun Heo <tj@kernel=2Eorg> wrote:
->On Thu, Apr 09, 2026 at 11:21:24AM +0800, Zhao Mengmeng wrote:
->> From: Zhao Mengmeng <zhaomengmeng@kylinos=2Ecn>
->>=20
->> On PC with 8 core, when running scx_central with stress-ng -c 2 --io 8,
->> if enable/disable scx_central frequently, dmesg will pop an message:
->>=20
->>     [   38=2E214510] sched_ext: BPF scheduler "central" enabled
->>     [   47=2E809167] hrtimer: interrupt took 11287895 ns
->>     [   48=2E233813] sched_ext: BPF scheduler "central" disabled (unreg=
-istered from user space)
->>     [   48=2E248460] kick_cpus_irq_workfn() called with NULL scx_kick_s=
-yncs <---- here
->
->So, this is not really a problem=2E I think all we need to do it switchin=
-g
->that to a debug message=2E
->
->Thanks=2E
->
-
-Tejun, thanks for review=2E I will switch pr_warn_once to pr_debug and sti=
-ll
-keep patch 2 in v2, WDYT?
+LGTM=2E
+Reviewed-by: Zhao Mengmeng <zhaomengmeng@kylinos=2Ecn>
 
