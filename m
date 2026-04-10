@@ -1,168 +1,122 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011019.outbound.protection.outlook.com [52.101.62.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F00230BE9
-	for <sched-ext@lists.linux.dev>; Fri, 10 Apr 2026 17:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775843145; cv=fail; b=GxwG4QVNePzbb/dZrIPbp5bURMNiE15Uw4zJOJFpzkEkYOmfrTqfmH5YMWUGT5c5WwbKv26Ft+fHX0Tx7+0F53+vx50SL4JScqIzgNqjNvwiMF4HNeBcegMJATVBSx9/x6UQUjoFpH2W6jLR8dNhwmF8KRXA8g4m6ekkr1qQW60=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775843145; c=relaxed/simple;
-	bh=ir8nRuY+6I6dbzjjGj8nSbDrYtVZoD5jNwPxijWL/o4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Gy/hfynM0WLTxkbp6uq85K0NyPvxHwwTfRA0FQgecb+kEACJvT3cp4uduLPnnxzPcLziiw04MD03Ki0Tkg9iPdfksYNIjRAydYbhiogQuBJFeT0QBGpl/n/jfkN5zlSNyeJqMuXgi90vmqYcZ/6PN4JLCBL1rLL68nsqPpiAmVs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=V/r7+EjU; arc=fail smtp.client-ip=52.101.62.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2676F230BE9;
+	Fri, 10 Apr 2026 17:51:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775843511; cv=none; b=kPuygMOzIKicLLaVtKpbuIpAEtqDs7DRqsP1L5ztA+mEgS5rSR1XfAqGecwppI17coND5GZVPPdYmCaP5Gp+QUv6DtOFXZdAw5LVD+bLBCAJggaGxG0u1AIeIQkAw91VCuHxdfMNsfTKn0BZ7RW5ZP9GgU29PatrXOBuCP1aIgY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775843511; c=relaxed/simple;
+	bh=lTeXv+sYC2gUYGe8+OtVM3fr/mOC0Oby+lMsJPrKn+Y=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=UpyXTYYA1N0VM0mfzLFE13aC5kK5cOKuURLG2c1jUa7L2JVEXeMdCi0ZxXJJwXhYpRLDyIPHUpfKKK/azxVxQHH49Xua1lPq1LRf+AREA9n+uWYLxPx99w0NeIPS9to72ORx1mKMpk4IwazkKqHby9qqupvVoYU0G2DqwO/g3Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uc7yHcYI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="V/r7+EjU"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KvRtvHUHcbJJEaHcXC/iCk+UUCvkmUXLgc9e9+r1F2yaZFuow1OWEhBEgsLTEscxeBHF6ky5PdgU2ip/TH3jXoWOkL33aJUSniisMbLkpCbe2b3E+bt/qV7N2cVVq93JNDTlssQtkie8oLmKSSOYXElRRErnqC4I4nkqvy/43l9qM+OpDPEMXBPbrcb1SZIkw6KMgEWl1EQTnFt+G2I+qLc1khCHEIYe9RO7pAM7LOCx4SLmXdNVXdECblyh50x09ogFS8LGKPLwARtPbq/MODUOp0bZo7Ho06XskKCoukVWDeZu/WaZltilM/fR5xt0jFqDoqjaLmASAFjMCSKcGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3DTJAPM+CD2s8cBkOGNrbmQ/aspoC3tif4ogQybgNcI=;
- b=WFvAw7hA7RK0WxRk2vP5dLO0qdIBrRmDArpxD7o3aBpfpbjIZoW+byXWgFLUO+1lgzh2//AqDAnPub8yh4gfKrKCIBfbnMFKXi29xFhfoybEOO1pAf0eK2/mjrwb8vt5sxh3ZVQqErmLLTWCgbb+kYhaFFZ1+7sGtu9i/X1/8yuHnccslEC0o1l4IRSFwpjsWL77JkKBWH2MquIi5pLfTUBiBn3ROtwaI0yZLjC1F+qJtwEUanOiS1RJsZcCLK64p7D0048mM8UEKH+R5/tBivqzvFantfvdbjEPfhc2ysjKep7NRr7GdlYVFlp1I5m+91x78qzVvOz0moopmOCwxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3DTJAPM+CD2s8cBkOGNrbmQ/aspoC3tif4ogQybgNcI=;
- b=V/r7+EjUv7sauWtUTYIpIvBp4PRHY311a7rApa2drZRK/tJKyazF2E1lt081z/DQ5f3kILkbdXWqO8Rf/yy5pgc79H8ZonDDDqJWGZcgDLSFkOD5KprJ41TZtzdKNlDJKniL+nA4esXLxjIjWLgABwC3I4DyHfEllQ65191XTgnUOe6bAXRB4kct93giHhM+IXm7EVKLuuRT8+YJdvjU0kOStPW41CS5bRWFPs4JuFQcl/Q2akhpGQqxbOgVKtS593lZRwhJ1rSeaJS+tAAZICHygItCF7dOunQD3ao1qZAF5cc7asnANqkZu7qnZfU7OZroYe8Ly2zbgplveSmEMw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SA1PR12MB7342.namprd12.prod.outlook.com (2603:10b6:806:2b3::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.10; Fri, 10 Apr
- 2026 17:45:40 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9791.032; Fri, 10 Apr 2026
- 17:45:40 +0000
-Date: Fri, 10 Apr 2026 19:45:32 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Juntong Deng <juntong.deng@outlook.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.1] sched_ext: Add verifier-time kfunc
- context filter
-Message-ID: <adk3PF5tJOwJbeop@gpd4>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uc7yHcYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EADEC19421;
+	Fri, 10 Apr 2026 17:51:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775843510;
+	bh=lTeXv+sYC2gUYGe8+OtVM3fr/mOC0Oby+lMsJPrKn+Y=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=uc7yHcYI9it3NctNjmI3M1iGZynrQTbFNOBOeZM2Knaz9WbXZrg7ltw9Or2gzeard
+	 InrqNeTvO0StEuHUPIiVIcN7nH7Rr+nLFAeI53DAEHyFVE8qzrJGz773BLoD5UDXTH
+	 ffkPnWCX4gcixC83adz+eHLFyFd3xS5/6yc8Vsdc0O29k1RdBjFHVII9fDxo5S/OAc
+	 sxPK3yI12hrE8jkbbyTULmQPqX3QqKGcISTincYiUC0YU+epMTfGgxgx1XRhSZEkS9
+	 k8ak80T9/NmItuaXVF0/QmCkyKz/Zj4Q6JDJP2MORxxSjLN0OkDYIhv2WW8IoDyxkm
+	 upEFcvmvZeVtQ==
+Date: Fri, 10 Apr 2026 07:51:49 -1000
+Message-ID: <71bdb4d99ef8c2e770f883fc0f2a2d67@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: sched-ext@lists.linux.dev,
+ David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
+Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>,
+ Juntong Deng <juntong.deng@outlook.com>,
+ Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+ Chia-Ping Tsai <chia7712@gmail.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v2 02/10] sched_ext: Add select_cpu kfuncs to
+ scx_kfunc_ids_unlocked
+In-Reply-To: <20260410063046.3556100-3-tj@kernel.org>
 References: <20260410063046.3556100-1-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260410063046.3556100-1-tj@kernel.org>
-X-ClientProxiedBy: MI2P293CA0013.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:45::8) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+ <20260410063046.3556100-3-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA1PR12MB7342:EE_
-X-MS-Office365-Filtering-Correlation-Id: c81b25dc-b56d-4bd7-d51e-08de9728fb22
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|7416014|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	gVfG/DURPuqwcONrvZw1sz/TzIY42b6j/Sc2MPdTdXMW0oNJU+FU1hCv6tiYxCkrv3FU/eMnE/H5zv/Nyz59ajWUEPAQT8eC/SnbdNAjVUzd0O8ezzJV+aOeWeGdBvUEDxC0kLZXESXA64JbgmQNMiexJYTdVU40P91gwOlCcq2JuY+r1mErERaC7ie6e06zICKFLgPYV5fSCeKP5/W9VGpcZ3hL2PyA6TZiduFSn++qE/5RFCaPyc/5HvPSXrt3pINUrB8eJvckX1Ljtxjp5UwRWjHNzueWTQiwhwKmYlpJi1J9PlR3c19ihwoqx3lxgUx1e0B1XMqs/3xbe0jg8l/wWINu/PVENYJX8VrdoXOQNtP/8TmlzGFl/L5WgyLefCLlMSu6oxoXh01flrBLOVPBOFAmSOA4uMkzA/QeZLXJ4C3yC3krfWNbiAnEvW5X4eUahoc6KCmShv6OJJnACF6XVdn77B6fwNX2iiSeGlFwOBN6V1197TKwUSkxZRa4tF7f51/CI4upyQBGwoJA5LnJl5xhjKM0F3N8/qR3M0OffwY5IFFiMn4SMCBJbiCtGgQUH2MjCiJLqxmumt4nIzY6kMo+x2H3ab1uvOkYk2oOpTNvzTDlVvKGzVr9y8pRi5MX2d43BAumQd6G1oQ86H+Mz+lpL5YrQQTbwVRDuo770asd/zr8YMEs4vx1tEhbXGkr9fMbfXaOsig9AiZbAR+xQ90pIqEcAKeL0JdnUFA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?qqF/cmyoAZUEVnZ+yhpDinAqmHQELRB1B5IkHAa+6WaqoMkY5+m5gMNhNODI?=
- =?us-ascii?Q?nih/79XA2TdEhfKRGVKyflY9za+85Ms18NgpsJbtC29bC7p8cVXWYUYN2jNz?=
- =?us-ascii?Q?K2GOFSeA/NMMKwTcUtS+RaiJEUERbgGbcEuffee3fimW56BcKRmVvoy83tlG?=
- =?us-ascii?Q?WfYLlXMmwgf9BxugvpORg+n1PJ21E1+Kf2N70PIZg8WzHWTRN3bE2bCs9C59?=
- =?us-ascii?Q?ekVdV8duMSrt9L9uZOKiJaCECSVUvkFtzM2AY+SDCU5m9Nz5V/bCRVgrMgUg?=
- =?us-ascii?Q?DOQjka7TZXNv+svldxiodCkl3UedscA74RqkmxaVzHP/0OHHhOvX/shlZ5mO?=
- =?us-ascii?Q?/pjYsGudDhxnHqB8+sW0dCuGg98a5ZYiXqnQXFghXOK5AMvLNQ+X2JWOSWZj?=
- =?us-ascii?Q?rxXT9EZfOjpfdadp059wPvLb14mN98gdZ5LMhNJCxDb2lLREqlaZd9RXzaiU?=
- =?us-ascii?Q?Ev5sObjfpOgrGnkBwpTTZn366hx/JUdVVvPIAkF6HMBIko5zZSYpGXSyWw6o?=
- =?us-ascii?Q?fnbuPo2blqUD29unu+fK6VBGrhf09JxtCdF2wq4rqcZFNAvmYmdNGobQEecp?=
- =?us-ascii?Q?HxIksuegyZUxnRNBSCzsvtQiiZhUWocrSlrTz2bb3Rw1rlaNXwshq60yVfO0?=
- =?us-ascii?Q?tfGP0jCsFiRCoezJCzw/w1jOK8Oz1HZ38NXRtbTXw/rL32cu81OctLKzpeot?=
- =?us-ascii?Q?JWb58bXCGBqxfsv0906DmhAhOzPwWNUMlc/1Do+wiT9+J5Y9I1PxG6+BXs7i?=
- =?us-ascii?Q?r4WOnlCdpu1I/o/HmRe79u/pO/DeFFaC6MZUthkRr3j4IOCLjfEXVj+W+db0?=
- =?us-ascii?Q?qmgWS+g1HhxBGny4gmDMlwH4jgOU63GAV/9ouV4bynz7eAATAzG7cwqCplvM?=
- =?us-ascii?Q?j0q2nzMxg+4EBGq9RzSFscWyBcEe61WKoxnOgCrPbj1kTgeeZbUm0FLhlCpP?=
- =?us-ascii?Q?B7TrrKTQ4lX4G0YgfdHlBah1iPyYFbcDSZ7GAOE4qE5gypzU3Gnsdh8TtLuB?=
- =?us-ascii?Q?NhMgPu4G7DfBX3IN5Kgd6nd+pO/Efu5t3Qg8vYu7s1a6p90Xbg864tw2iQ0G?=
- =?us-ascii?Q?q16GFHZVF5l6gMjjSns96ajhAEOzgQyzb7l4vHyRVchVl8pvPC7654sT7DyF?=
- =?us-ascii?Q?FaYmp2HppJe8D9T3C2k4Ao1JmRFSjS2wPAQ/qPkZzb0YhKM0j7A+yRm0Kjvm?=
- =?us-ascii?Q?EIzrN9cF1VC/AyG3N8/kvj4/DfPBTK40gBamnJLtTpGf9OYFurc1dZQWI9tz?=
- =?us-ascii?Q?/yrDu6vx83tLWZZMHb0vUFEye8dAh0r4+GJVh9lyBS4/7kLjIbnYAxHZSe0D?=
- =?us-ascii?Q?2gKtXC8nzoWh34vGIl9plC8wZSjYh63hFyCs0JuksrRnt2XE2Y/JOyJ8t8Ub?=
- =?us-ascii?Q?THgbpsR6jNKwzVhT2r39CNFUPK/85j06tbVcPg4+Hlg1nW6zsKP7HiyBgbD9?=
- =?us-ascii?Q?kYLXNA1VXIA21d8hit66c/kzi+3knPtnyeYvW20Aml5xdUJv9UiT05fmmwHi?=
- =?us-ascii?Q?6CDEk3kAteHE5cR5EVVlKjMTeglyy2SaTsGOac8EQUXL9JUssJxNWdzHbuPB?=
- =?us-ascii?Q?+dla0njAFNjUvv4CTYg8OCrisPl91OrFEHDDgu61YkDjGe/W+RTwoaUy2FBd?=
- =?us-ascii?Q?RsQd27P8tzeIqFCr4EbJao4Ti7x3aNdc94w3sO/QZU7GecFyWkMuhgocxObD?=
- =?us-ascii?Q?xuNh9U8Yc8NOsPl6RUhZ9d22mKyE0QJV62aCEMrpJpUKgeaKwYnFhP53KfV8?=
- =?us-ascii?Q?84i4s2IF0w=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c81b25dc-b56d-4bd7-d51e-08de9728fb22
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2026 17:45:40.2766
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OheLr6ZOBzW/WmCh58QeKEmBhFZgvxf+g/bfakxRGJV4MEM3b+bZFg0dhoeylIB/JFEDzNwGcJAFhqu6ItHLRA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7342
 
-On Thu, Apr 09, 2026 at 08:30:36PM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> This moves enforcement of SCX context-sensitive kfunc restrictions from
-> runtime kf_mask checks to BPF verifier-time filtering, using the BPF core's
-> struct_ops context information.
-> 
-> This is based on work by Juntong Deng and Cheng-Yang Chou:
-> 
->   https://lore.kernel.org/r/20260406154834.1920962-1-yphbchou0911@gmail.com
-> 
-> I ended up redoing the series. The number of changes needed and the
-> difficulty of validating each one made iterating through review emails
-> impractical:
-> 
->  - Pre-existing call-site bugs needed fixing first. ops.cgroup_move() was
->    mislabeled as SCX_KF_UNLOCKED when sched_move_task() actually holds the
->    rq lock, and set_cpus_allowed_scx() passed rq=NULL to SCX_CALL_OP_TASK
->    despite holding the rq lock. These had to be sorted out before the
->    runtime-to-verifier conversion could be validated.
-> 
->  - The macro-based kfunc ID deduplication (SCX_KFUNCS_*) made it hard to
->    verify that the new code produced the same accept/reject verdicts as
->    the old.
-> 
->  - No systematic validation of the full (kfunc, caller) verdict matrix
->    existed, so it wasn't clear whether the conversion was correct.
-> 
-> This series takes a different approach: first fix the call-site bugs that
-> made the conversion harder than it needed to be, then do the conversion in
-> small isolated steps, and verify the full verdict matrix at each stage.
+select_cpu_from_kfunc() has an extra scx_kf_allowed_if_unlocked() branch
+that accepts calls from unlocked contexts and takes task_rq_lock() itself
+- a "callable from unlocked" property encoded in the kfunc body rather
+than in set membership. That's fine while the runtime check is the
+authoritative gate, but the upcoming verifier-time filter uses set
+membership as the source of truth and needs it to reflect every context
+the kfunc may be called from.
 
-Thanks Tejun, Juntong and Cheng-Yang for working on this!
+Add the three select_cpu kfuncs to scx_kfunc_ids_unlocked so their full
+set of callable contexts is captured by set membership. This follows the
+existing dual-set convention used by scx_bpf_dsq_move{,_vtime} and
+scx_bpf_dsq_move_set_{slice,vtime}, which are members of both
+scx_kfunc_ids_dispatch and scx_kfunc_ids_unlocked.
 
-I've done some basic smoke tests with this and everything seems to work fine so
-far. I'm planning to run more extensive performance tests, last time that I
-tried to brutally comment out scx_kf_allowed() I was getting some small but
-consistent performance improvements, so I'm expecting to notice something
-similar with this one. Will keep you informed.
+While at it, add brief comments on each duplicate BTF_ID_FLAGS block
+(including the pre-existing dsq_move ones) explaining the dual
+membership.
 
-Thanks,
--Andrea
+No runtime behavior change: the runtime check in select_cpu_from_kfunc()
+remains the authoritative gate until it is removed along with the rest
+of the scx_kf_mask enforcement in a follow-up.
+
+v2: Clarify dispatch-set comment to name scx_bpf_dsq_move*() explicitly so it
+    doesn't appear to cover scx_bpf_sub_dispatch() (Andrea Righi).
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+---
+ kernel/sched/ext.c      |    6 ++++++
+ kernel/sched/ext_idle.c |    4 ++++
+ 2 files changed, 10 insertions(+)
+
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -8497,6 +8497,7 @@ BTF_ID_FLAGS(func, scx_bpf_dispatch_nr_s
+ BTF_ID_FLAGS(func, scx_bpf_dispatch_cancel, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_to_local, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_to_local___v2, KF_IMPLICIT_ARGS)
++/* scx_bpf_dsq_move*() also in scx_kfunc_ids_unlocked: callable from unlocked contexts */
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_slice, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_vtime, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move, KF_RCU)
+@@ -8612,10 +8613,15 @@ __bpf_kfunc_end_defs();
+
+ BTF_KFUNCS_START(scx_kfunc_ids_unlocked)
+ BTF_ID_FLAGS(func, scx_bpf_create_dsq, KF_IMPLICIT_ARGS | KF_SLEEPABLE)
++/* also in scx_kfunc_ids_dispatch: also callable from ops.dispatch() */
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_slice, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_vtime, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_move_vtime, KF_RCU)
++/* also in scx_kfunc_ids_select_cpu: also callable from ops.select_cpu()/ops.enqueue() */
++BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and, KF_IMPLICIT_ARGS | KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_select_cpu_and, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_select_cpu_dfl, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_KFUNCS_END(scx_kfunc_ids_unlocked)
+
+ static const struct btf_kfunc_id_set scx_kfunc_set_unlocked = {
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -1482,6 +1482,10 @@ static const struct btf_kfunc_id_set scx
+  * contexts where @p's pi_lock state is unknown. Keep them out of
+  * BPF_PROG_TYPE_TRACING by registering them in their own set which is exposed
+  * only to STRUCT_OPS and SYSCALL programs.
++ *
++ * These kfuncs are also members of scx_kfunc_ids_unlocked (see ext.c) because
++ * they're callable from unlocked contexts in addition to ops.select_cpu() and
++ * ops.enqueue().
+  */
+ BTF_KFUNCS_START(scx_kfunc_ids_select_cpu)
+ BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and, KF_IMPLICIT_ARGS | KF_RCU)
