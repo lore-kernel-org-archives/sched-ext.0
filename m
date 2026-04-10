@@ -1,56 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EEE3A7597;
-	Fri, 10 Apr 2026 08:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6173B38BD;
+	Fri, 10 Apr 2026 09:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775811255; cv=none; b=OftIXGR5J7pYeYM0wnIn7YAdFvxbf/GMjijOCF5mRuhbxVNGUK4fuw3FRGSlpUo0rYmWYlo5jjAVdadgK/5qqGAltwQ0MWyT4a5AAGYN1btIA9kaWDbc/HGUIDfR/GiFOTEiWwaAtpRBta1GWK7F0MeMF/rgglAJn3gzfGMB1xY=
+	t=1775812322; cv=none; b=SLJon+elrrM/j/8qOd8RLsamQyjdTJZD9ESQlRzQWp6F8q0V/CYqHERJqEAPiHNFVgs7h18ENMAi6Ro6fiV1stldU5578aD4cz7Gyflr+hboCfzlyqVoKvu+jigWosHOahbheuw5sU/TSqKHHZUZqPk5Bz9SuJZLnZ5UT5dr1PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775811255; c=relaxed/simple;
-	bh=I5LvUHuZq/0J0I+pjHNrLVfC0wpQAby6zQJ582lhRR4=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=ssu8qV+iQmzOB715W6UPlQEcMG9iVl6rEelsHZVrlHhI9d6JvapHCyN38l5/bSCWHZLMmxQmu7QmSCzdpiPdrILruVzR6pUea3+XB7b2FTqzSNTf4jvv4uK6MXfeDCBML/gV5ZR0uNOKBEMOCOnxc7QghsPNB/X33YIgcrNT/UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixBuw1f0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775812322; c=relaxed/simple;
+	bh=+0ix+E8GBUCgIN6jbrba74DKgOITHGZNkoqWjOpimuI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=T4DuU0E2eUg9kNr/EGoicD5Jd4oXoAdxj5bjf012VTmHfXvjSRADuXnRClZj0IPCUCodUWCR5oPfMmb2nCX2lo9wWDpD5CNWb17zO61NRPs0XtovXK7d0AsZuvu6M9aSyyW5kycaq3C15C2Yi5EeCfpllEPLIp0lvsXCPsUVcbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqQUV4Fe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixBuw1f0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B99C19424;
-	Fri, 10 Apr 2026 08:54:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqQUV4Fe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06C4C19421;
+	Fri, 10 Apr 2026 09:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775811254;
-	bh=I5LvUHuZq/0J0I+pjHNrLVfC0wpQAby6zQJ582lhRR4=;
+	s=k20201202; t=1775812321;
+	bh=+0ix+E8GBUCgIN6jbrba74DKgOITHGZNkoqWjOpimuI=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ixBuw1f0bSPz9y5T/nAKiz0Nu0ZYFcDokmUbnVniwUbePKALCpzi31E9vKfI4KDro
-	 CU+vA99SuikuHStrTCakcrF+nTfJqWDk0SdRsWkS17DMQySwKobhYZLTo4ytrYjzGZ
-	 QTuGAA4E1IhJNls62apFighQf/iOqbE/E7XbHO264Mu+xE7s6TulLmMT3CKG6LytCv
-	 K3S3sk023/SCMgXOVpQC68CGdVltXHFVRy+n+jy93HpbfY6jzv2w8gD9Xja0sLk/a0
-	 E0NU8q8nGh4gE5t0lzGtpIvbie/M+MXVymq1Tov9FiZlRkaTDS1G5xzTLDXtSfiCJQ
-	 iV+pZJd/iZhew==
-Date: Thu, 09 Apr 2026 22:54:14 -1000
-Message-ID: <e6d64e846bffe480d8a381ca00fac743@kernel.org>
+	b=gqQUV4Fe9rxPUqCuBJcWoWdJ+EfUZTeI9+cEvabY/og8nxPXVegC4iOUGoe/BXtQP
+	 p8n9fkxn38FO3NThQgNPopHI+pwnWMLXXp0AQGk+nQvHj6L8gBnEmnY8/weHP6pcm1
+	 jh+L2vu7WX+dZtlOyFQj5G8+Ps3t0gThm+hkqkPzrfvri8lwCUZcwwE647Q7eb8TgQ
+	 str74Aw+HScyh1MXwU24ZesUbExztWhEls95zGrasVRpPjcm6aoD7VWlYalIa1m1Rk
+	 T867sttiJ91iOCaoYJQ2piDik42hq+ypfioLlyPenvJK3qUwWNLCRDciqidsodl3Sf
+	 6eYlNdYjtjFfA==
+Date: Thu, 09 Apr 2026 23:12:00 -1000
+Message-ID: <f5e679526b18d284d23339c5b74aa35b@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Kuba Piecuch <jpiecuch@google.com>
-Cc: Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
- David Vernet <void@manifault.com>,
- Christian Loehle <christian.loehle@arm.com>,
- linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
- Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Documentation: improve
- accuracy of task lifecycle pseudo-code
-In-Reply-To: <20260409165744.1526489-1-jpiecuch@google.com>
-References: <20260409165744.1526489-1-jpiecuch@google.com>
+To: fangqiurong@kylinos.cn
+Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+ shuah@kernel.org, christian.loehle@arm.com, newton@meta.com,
+ sched-ext@lists.linux.dev, linux-kselftest@vger.kernel.org,
+ linux-kernel@vger.kernel.org, emil@etsalapatis.com
+Subject: Re: [PATCH] selftests/sched_ext: Fix wrong DSQ ID in peek_dsq
+ error message
+In-Reply-To: <20260410064753.469802-1-fangqiurong@kylinos.cn>
+References: <20260410064753.469802-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
-
-Applied to sched_ext/for-7.1 with the following minor typo fixes:
-
-- "a rough overview the entire" -> "a rough overview of the entire"
-- "in which it will exit" -> "in which case it will exit"
+Applied to sched_ext/for-7.1.
 
 Thanks.
 
