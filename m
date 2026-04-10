@@ -1,51 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6173B38BD;
-	Fri, 10 Apr 2026 09:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFBB3DA5CD
+	for <sched-ext@lists.linux.dev>; Fri, 10 Apr 2026 15:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775812322; cv=none; b=SLJon+elrrM/j/8qOd8RLsamQyjdTJZD9ESQlRzQWp6F8q0V/CYqHERJqEAPiHNFVgs7h18ENMAi6Ro6fiV1stldU5578aD4cz7Gyflr+hboCfzlyqVoKvu+jigWosHOahbheuw5sU/TSqKHHZUZqPk5Bz9SuJZLnZ5UT5dr1PI=
+	t=1775834367; cv=none; b=tHMgdCdH9fPb0Z5E8+kzoG2yMibzUNBJ+TeppZq2dRAFQa9X6uBc0Z1T0BJZ9xat/TIoxl6rqzUJj3u47lxJe4kzXWHNoJxYgNX6Qpw5xpHoLONCjnh+cnk2Nr1sCOALjt/MNtUeRlmZl4esAFEuLAJ8uK5FaJ1hiskssJaIHCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775812322; c=relaxed/simple;
-	bh=+0ix+E8GBUCgIN6jbrba74DKgOITHGZNkoqWjOpimuI=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=T4DuU0E2eUg9kNr/EGoicD5Jd4oXoAdxj5bjf012VTmHfXvjSRADuXnRClZj0IPCUCodUWCR5oPfMmb2nCX2lo9wWDpD5CNWb17zO61NRPs0XtovXK7d0AsZuvu6M9aSyyW5kycaq3C15C2Yi5EeCfpllEPLIp0lvsXCPsUVcbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqQUV4Fe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775834367; c=relaxed/simple;
+	bh=2PJcapuxUWWHQgHKuYh+AB0Bg9+uWPE8WWtuj/kl/pY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Z3dQI4rL4EBlYzij9k0Qft9qLe7q2StIa861uGOJazli8ZbUD5kW03aippAeIMLkoUqT09O5s/iD1DUC/Gmqx6d/8gfWQE4MBZl2gHMamOeiNi2v8H0U1bzLJJ7k766hkB6BA06c+u9mT+7GatN8FXZNwXm9E6xQDG1kAYIgJKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=VM9pR3FU; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqQUV4Fe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06C4C19421;
-	Fri, 10 Apr 2026 09:12:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775812321;
-	bh=+0ix+E8GBUCgIN6jbrba74DKgOITHGZNkoqWjOpimuI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=gqQUV4Fe9rxPUqCuBJcWoWdJ+EfUZTeI9+cEvabY/og8nxPXVegC4iOUGoe/BXtQP
-	 p8n9fkxn38FO3NThQgNPopHI+pwnWMLXXp0AQGk+nQvHj6L8gBnEmnY8/weHP6pcm1
-	 jh+L2vu7WX+dZtlOyFQj5G8+Ps3t0gThm+hkqkPzrfvri8lwCUZcwwE647Q7eb8TgQ
-	 str74Aw+HScyh1MXwU24ZesUbExztWhEls95zGrasVRpPjcm6aoD7VWlYalIa1m1Rk
-	 T867sttiJ91iOCaoYJQ2piDik42hq+ypfioLlyPenvJK3qUwWNLCRDciqidsodl3Sf
-	 6eYlNdYjtjFfA==
-Date: Thu, 09 Apr 2026 23:12:00 -1000
-Message-ID: <f5e679526b18d284d23339c5b74aa35b@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: fangqiurong@kylinos.cn
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
- shuah@kernel.org, christian.loehle@arm.com, newton@meta.com,
- sched-ext@lists.linux.dev, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org, emil@etsalapatis.com
-Subject: Re: [PATCH] selftests/sched_ext: Fix wrong DSQ ID in peek_dsq
- error message
-In-Reply-To: <20260410064753.469802-1-fangqiurong@kylinos.cn>
-References: <20260410064753.469802-1-fangqiurong@kylinos.cn>
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="VM9pR3FU"
+Received: from trampoline.thunk.org (pool-173-48-116-90.bstnma.fios.verizon.net [173.48.116.90])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 63AFIonm015842
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Apr 2026 11:18:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1775834338; bh=eTlXD+fEi5OyNbu4TxRTwpDmEzFd2ThBwniicSqJG9M=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	b=VM9pR3FUqiyu4dGQLYjxtn5fwtIzfU7ySZMp0abbH18xV6/gDABRi9uB743lXz8hh
+	 DLg+D58JGiw6cmfTe96qrNZsfI1LrX8CH4Z4SZsryjUI4LnJNSYnME68kmTAWN0bac
+	 +APmObxjmRctPfSGmHJbriSXfrkN55pWYIbiVRfu2y0ECqpOPHSJun6K+BHM+LkVI2
+	 DM7T+QYmlRWbU/sqPlO03FdXluf2F9iRmmuiDmCsbPLwL4U9izV2zs90P/AyWnNi7/
+	 WJE2W3FtW9KojAgen2wKI5w3YJJGh4CS8IuF5T47bMgUta6WPQzUW9F7QaunmIRgXz
+	 enYXQQPwNnobw==
+Received: by trampoline.thunk.org (Postfix, from userid 15806)
+	id 0D7462E00E1; Fri, 10 Apr 2026 11:18:48 -0400 (EDT)
+From: "Theodore Ts'o" <tytso@mit.edu>
+To: amd-gfx@lists.freedesktop.org, apparmor@lists.ubuntu.com,
+        bpf@vger.kernel.org, ceph-devel@vger.kernel.org, cocci@inria.fr,
+        dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org,
+        gfs2@lists.linux.dev, intel-gfx@lists.freedesktop.org,
+        intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev,
+        kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-erofs@lists.ozlabs.org,
+        linux-ext4@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-leds@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-mm@kvack.org,
+        linux-modules@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-nfs@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-pm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-sctp@vger.kernel.org,
+        linux-security-module@vger.kernel.org, linux-sh@vger.kernel.org,
+        linux-sound@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+        linux-trace-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        ntfs3@lists.linux.dev, samba-technical@lists.samba.org,
+        sched-ext@lists.linux.dev, target-devel@vger.kernel.org,
+        tipc-discussion@lists.sourceforge.net, v9fs@lists.linux.dev,
+        Philipp Hahn <phahn-oss@avm.de>
+Cc: "Theodore Ts'o" <tytso@mit.edu>, Andreas Dilger <adilger.kernel@dilger.ca>
+Subject: Re: [PATCH 04/61] ext4: Prefer IS_ERR_OR_NULL over manual NULL check
+Date: Fri, 10 Apr 2026 11:18:40 -0400
+Message-ID: <177583430870.2758959.6171961359325912353.b4-ty@b4>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260310-b4-is_err_or_null-v1-4-bd63b656022d@avm.de>
+References: <20260310-b4-is_err_or_null-v1-4-bd63b656022d@avm.de>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Applied to sched_ext/for-7.1.
 
-Thanks.
+On Tue, 10 Mar 2026 12:48:30 +0100, Philipp Hahn wrote:
+> Prefer using IS_ERR_OR_NULL() over using IS_ERR() and a manual NULL
+> check.
+> 
+> Change generated with coccinelle.
 
---
-tejun
+Applied, thanks!
+
+[04/61] ext4: Prefer IS_ERR_OR_NULL over manual NULL check
+        commit: 1d749e110277ce4103f27bd60d6181e52c0cc1e3
+
+Best regards,
+-- 
+Theodore Ts'o <tytso@mit.edu>
