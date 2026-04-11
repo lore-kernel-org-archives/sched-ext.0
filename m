@@ -1,72 +1,74 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E262619005E
-	for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 12:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF092F25F0
+	for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 14:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775912269; cv=none; b=eWBUtBktolRmtBZuxSlgd4+7CiCTfTctBqSZ+uKARNAlP90BGcVJ/tQlwcmnQaKKPsO2Qavi7uRKqzQ4IQG8p0EA+ts27wznwP4C5zIZrLx/QGlMZT+I6gYjkxg7+X59ZdFHIGhXchfVZYCEOEoU/Zz2MPxSn1P4g7yYyGjjcGM=
+	t=1775917664; cv=none; b=Ao0E97GcM+cOZlH7xB8gZLX2Pgcn1swq6lvVdeiXOnMOAeuxHbgBSTYz4sGDQKnV5SrPGCzfWk8PVQyhhPHHVwEYcHGbIfrzbGdbOh0QQTd23huD1FmkrcsFs1k+g/b29c+v4+ysh17y8ikYTT0lnrgJ/4ODMfnb96Lfsxqp1+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775912269; c=relaxed/simple;
-	bh=6TUk8d7GMwPd+BAVQiLrDrpb+kDYKil7AE6NM5oSRZA=;
+	s=arc-20240116; t=1775917664; c=relaxed/simple;
+	bh=V5DXXRb/2Ik2Yfwfvi5TOAsYn3rduQUt3OicGQ3m9q8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l3Tw4z6mIJyCzyj4JFqjZWrqkYiLYblJsR+alAYe3zKY7Po4yjJc61QHZX7BCI8fkAor99hg+N3kUXeNkT5v4p3q3dJqJu2V2bef4KoDfLBJUR+L2VNGGj2Q9S2ZWQYz9rrXMUA7oB6KJu7W0STVh5Nl/mT5iXxGJGgHLLcw0dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XM/BJqDz; arc=none smtp.client-ip=209.85.215.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=UIwXhrgJM9oxJBnlDLnXoPmgkPJIdnVyL+wzpq+y+h7HHdeQqkqFDyHVUoqHfhgHpkeg5qQ0ZYiGE6rr1Uo/X50Ho5mGul7Cl61Eahioqfy5UNRWxRcun3DqfVw8Bi9eYZiKFGwqHp78kqnSyPSpS4IPfIAIMcecBPzy4OwPESU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7qZUnU+; arc=none smtp.client-ip=209.85.216.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XM/BJqDz"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c766a95a72dso1927351a12.1
-        for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 05:57:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7qZUnU+"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-35da1af3e10so3067705a91.3
+        for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 07:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775912267; x=1776517067; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1775917662; x=1776522462; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y4g7ZWe8WPifH5y5coO8dt9KUB40+ANDdk64E/1BJRc=;
-        b=XM/BJqDz/YPtczgFr9KUtpv5aa2GIXR3Oot+qWKa6K3KJZGvQ7461uztqrCr3ytV5s
-         XDOt1uc47ca6g07SMoY+VSJLkNqxbzgV6b5YTOJzLP0ajDN/l9b/Hn8wFpnruePszJlT
-         98+0GnOZXsv7NnKKV700U8meq+zjwYNbRXzjEiIQPXLxwcHuwbCX1ub3GSchLfFq21fg
-         ZoJHFu0KX+c/uMZM3eEd2sNw55Ov4A7GceozFlmlqHSpCUE5eftQiOfmyM++LvwQ1BFJ
-         U7fWEUd9kB52Sl3/yxKdAL2yRO5N7ipY2RxXYgyz+LQCwkEomqPlKQiON5GlwweT7hl+
-         dPfw==
+        bh=itDS40O6MZZofgf9Ri84SdBbTtJCcysOrubRuZ04fvs=;
+        b=Q7qZUnU+uMFVQprFCR1+bwXgN6ZRsCF3uOIRppQ57eX8+9Jl2Y03cRwhu2KiOOp6Bs
+         bupmr1dxWaErDAb9+120Cki1Lrg0xl2BQ+yIoXkWPd9OiSthsUEqcif69BT5ErHUNECI
+         8AfUtzlARHMyo0ddlG2+kVhPQDPtT9QQ7Yvi5TuOrMKE9/xBUGrOjhDdKivr51cJQlFd
+         tI7an4ClY6v3yFA7khmb6OyW8vkzKCCyvD/ceQff7B2vv7Gf3sM7OHlwPS6jXU1LpDpm
+         zWK9PvVbJT4pF+92tXGqR4aa9DF1+ib2Unqs9kmC5pKPS+4geyjUXiqHI8bZamzIJGM+
+         zn4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775912267; x=1776517067;
+        d=1e100.net; s=20251104; t=1775917662; x=1776522462;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Y4g7ZWe8WPifH5y5coO8dt9KUB40+ANDdk64E/1BJRc=;
-        b=I4sneU61IYfYyIAOp7dtC0o6Pp22bl+L7gE43Xv0jD6CwQIir/Ko8CkJR3W5B3wROv
-         lpGXfVFCqmwIu9CSsgRqnGoWF5u6h5uKt1Zcg+d/fu9Qm0fDWDW8lVRUl/8gvdvTexeO
-         S2otodKYB+eOA1r6rh/JHNSDFtPs3uyJcYgWpc5c3q3kwjJi/gtCGrCQCsLKEjrEHD8A
-         cpAtXAq7O6M+lBawikeMXyqoCngMbPvjhSzbwtSPP1nNbDlPpOeGzJKo+lJVsLSEz+n8
-         dqzprpibGAsh0wlF9OjV8WI1SijS1l5OQlchem6rMqxh21jmX5s6jpjUy58drv0CNdkz
-         eOgQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV11Txla9xkzHkYy52io8qqN5WCwN3hiKF+18+fujmDQ8XsEuOC4hqZ3Gwz+kIp0DyQzq99SqT6s6U=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw3c/Bt0SvUm2I9rO3mpkaMdkzHmKUT7ciPyrCXJ9ZlOOo1t3Dd
-	6umP3yDVihrz4dnzITtANpwGzO4jpjH/rfSkMHEy5dWxWvB5Cj6+w30A
-X-Gm-Gg: AeBDiet8Kxp/PsqIiamCtEosEMCH0Yz5iiMfgO/L+Ro3+nfTE6ivTBdxUskRrVQuHYv
-	TgARZKCsNIhc3ydCqHiNERdZAoaNchvLXxZrylXVKjow7DCHU1lZEEFo6hxKpbHCTc8eW/KPv84
-	ZJM64D2F4D/eloIjZVGdxtnKvqdMfOhUTWOLTT8uiOXWPiwz5QtpvdmIIDQOi9uAMzsiL7Aq4wc
-	tVX1ZHKFsQCWytT8RPR+Qz2H2dAWT/rFXCwmzQLYjFVsLr4VNdpEUC85nrmamvs0fgiv6isOimc
-	hpw8KmD9LI4C268yzjYH8N2LnWHTwfJbHT8DVl7BrxbMcSlSXochKExdfAO/Vg7xvTJYkH3qd4s
-	LsK+PYRr+1xVqWo4H58fb3fNBXtSZxVRTOMAbtFuDugbIBSm4A+ypOce6J9bR+a7hnnd6xxhdNi
-	clzxL/c3ydnxyXdzsVHWm6KmL84SRL
-X-Received: by 2002:a05:6300:8e10:b0:39c:787:f185 with SMTP id adf61e73a8af0-39fe3f3fb2amr5468289637.29.1775912267096;
-        Sat, 11 Apr 2026 05:57:47 -0700 (PDT)
+        bh=itDS40O6MZZofgf9Ri84SdBbTtJCcysOrubRuZ04fvs=;
+        b=I6q3TnNZpFHlczHJZGC/AjVbr46ZSuR3FhwDIHUlBw4EhwkCaJs5W304pBFYjOwrNz
+         jzo1RwnFLXcyJsneNi4gzwjiPFHxlQELewagD81YGdAsdW5p8mysTHnqIvh2BQ+jGjjf
+         WyVV6mgtqa4xItTRe4PQchtXtrc67PlOBwATs0Jx82Y3Z77w3pghcLDzh9x19FZUHdJ2
+         Y9LE8IbO+H+nzzAYzYQSOX225/0QdMhZRXEj7gGaokH9xPS9hKNN4ihVrW/DHGvaLVYZ
+         2eRROUpqIZvUzZz4Ll4Kcpsbq4bEkrcwig14tIz5nxQFUJJ1nkygZp077HocXtuF7yQv
+         Upcg==
+X-Forwarded-Encrypted: i=1; AJvYcCVTaW88+2Sv3Yd/s1ycWxmXjlcGQhy5hjvV0GuUcDAF+9WExalzuvI8uFxHpGLRM+CGBv9yUvufckQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzjYNH8NqvrNI+beBBOUk3JMtpCXT7duSyVazhTcvDVQJqFCist
+	yMjX+zXLutzrxZbq5uM4WQlIDFM8NoDDv9xN7zmqJ+UZj29Bpdhjp6ty
+X-Gm-Gg: AeBDieuSkq+K22esY51zsf6n7lgK9v+HLnPq7JTpWl08lN6c5UrlPp8G+gulQe/PEcE
+	n6fMeF8jEbCxG56pBZII5i/rP7xo+7jJIYfj3Y5FnDLhC3lp/MK07EurSsbZ47MSbmTwPOLMC3r
+	qZd2zMFiV8OzQw68chC4eztrzihgIbOBpnoObhJoz7n/4cYkfOZLYHQwq3wJIfjXQQJMbD8gD7j
+	pc2A4tn4n5juMaULj6dxe491Gfa99/RpnnCYKsTMUOLdQrXXT24a5kQSJ5o5RR5GYit+t0gy8hy
+	fWhmKWMXEz59Z0bY4WopCzKfn+wcoYsQeteeuCtX3nmq79ogLbuy/niYB7gCqT3tjPogV+6aV1M
+	5J7t2vRUfjnURdRCv2k8BV5x3Tos8oliwGT776m08QCSj/KcXzS5dIgalv0XxXhuhSEK3dhnO2h
+	f9EDJJ/UvyFo1kBg6ccXgTzxCe6cb1
+X-Received: by 2002:a17:90b:38c8:b0:35d:a542:2dc4 with SMTP id 98e67ed59e1d1-35e42842cc9mr7841008a91.21.1775917662343;
+        Sat, 11 Apr 2026 07:27:42 -0700 (PDT)
 Received: from eric-wcnlab ([2001:288:7001:1099:4440:b527:db2e:c93f])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c4b6dd7sm5905837b3a.29.2026.04.11.05.57.45
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e35156445sm9772230a91.14.2026.04.11.07.27.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Apr 2026 05:57:46 -0700 (PDT)
-Date: Sat, 11 Apr 2026 20:57:42 +0800
+        Sat, 11 Apr 2026 07:27:42 -0700 (PDT)
+Date: Sat, 11 Apr 2026 22:27:37 +0800
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
 Subject: Re: [PATCH sched_ext/for-7.1] tools/sched_ext: Kick idle CPU for
  pinned tasks in scx_qmap
-Message-ID: <cpn5bqvb6qmew2opqffmtmgcuin3lvtiqzht6vmnef5px3pvr2@bhgdpcfcmg3c>
+Message-ID: <2ez5asyb7yuwldbqenmrpzvdyl2oq4oxism6lj62m6zx7fgy3d@4qk45ujilk6v>
 References: <de52a1c5537e2a130d19eb244b7606c1@kernel.org>
+ <cpn5bqvb6qmew2opqffmtmgcuin3lvtiqzht6vmnef5px3pvr2@bhgdpcfcmg3c>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -75,51 +77,76 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <de52a1c5537e2a130d19eb244b7606c1@kernel.org>
+In-Reply-To: <cpn5bqvb6qmew2opqffmtmgcuin3lvtiqzht6vmnef5px3pvr2@bhgdpcfcmg3c>
 
 Hi Tejun,
 
-On Sat, Apr 11, 2026 at 01:33:56AM -1000, Tejun Heo wrote:
-> scx_qmap uses global BPF queue maps for task dispatch. A task pinned to a
-> single CPU can only be dispatched by its home CPU's ops.dispatch(), but an
-> idle CPU won't call ops.dispatch() on its own. This leaves per-CPU kthreads
-> like ksoftirqd stranded, causing NOHZ tick-stop warnings from pending
-> softirqs.
+On Sat, Apr 11, 2026 at 08:57:42PM +0800, Cheng-Yang Chou wrote:
+> On Sat, Apr 11, 2026 at 01:33:56AM -1000, Tejun Heo wrote:
+> > scx_qmap uses global BPF queue maps for task dispatch. A task pinned to a
+> > single CPU can only be dispatched by its home CPU's ops.dispatch(), but an
+> > idle CPU won't call ops.dispatch() on its own. This leaves per-CPU kthreads
+> > like ksoftirqd stranded, causing NOHZ tick-stop warnings from pending
+> > softirqs.
+> > 
+> > Kick the target CPU with SCX_KICK_IDLE when enqueueing a pinned task.
+> > 
+> > Signed-off-by: Tejun Heo <tj@kernel.org>
+> > ---
+> >  tools/sched_ext/scx_qmap.bpf.c | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+> > index f3587fb709c9..09d1624fb869 100644
+> > --- a/tools/sched_ext/scx_qmap.bpf.c
+> > +++ b/tools/sched_ext/scx_qmap.bpf.c
+> > @@ -314,6 +314,14 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+> >  		__sync_fetch_and_add(&nr_highpri_queued, 1);
+> >  	}
+> >  	__sync_fetch_and_add(&nr_enqueued, 1);
+> > +
+> > +	/*
+> > +	 * Kick idle target CPU for pinned tasks. Without this, the CPU can
+> > +	 * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
+> > +	 * tick-stop warnings.
+> > +	 */
+> > +	if (p->nr_cpus_allowed == 1)
+> > +		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
+> >  }
+> > 
+> >  /*
+> > --
+> > 2.53.0
 > 
-> Kick the target CPU with SCX_KICK_IDLE when enqueueing a pinned task.
+> Looks good to me! The same issue exists in scx_userland where pinned
+> tasks can be dispatched to SCX_DSQ_GLOBAL without kicking the idle
+> target CPU. I'll follow a patch to add the same fix there!
 > 
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
->  tools/sched_ext/scx_qmap.bpf.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-> index f3587fb709c9..09d1624fb869 100644
-> --- a/tools/sched_ext/scx_qmap.bpf.c
-> +++ b/tools/sched_ext/scx_qmap.bpf.c
-> @@ -314,6 +314,14 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
->  		__sync_fetch_and_add(&nr_highpri_queued, 1);
->  	}
->  	__sync_fetch_and_add(&nr_enqueued, 1);
-> +
-> +	/*
-> +	 * Kick idle target CPU for pinned tasks. Without this, the CPU can
-> +	 * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
-> +	 * tick-stop warnings.
-> +	 */
-> +	if (p->nr_cpus_allowed == 1)
-> +		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
->  }
-> 
->  /*
-> --
-> 2.53.0
+> Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-Looks good to me! The same issue exists in scx_userland where pinned
-tasks can be dispatched to SCX_DSQ_GLOBAL without kicking the idle
-target CPU. I'll follow a patch to add the same fix there!
+Actually, would it make more sense to fold this directly into the same
+patch?
 
-Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+diff --git a/tools/sched_ext/scx_userland.bpf.c b/tools/sched_ext/scx_userland.bpf.c
+index f29862b89386..56c53d457f45 100644
+--- a/tools/sched_ext/scx_userland.bpf.c
++++ b/tools/sched_ext/scx_userland.bpf.c
+@@ -195,6 +195,14 @@ static void enqueue_task_in_user_space(struct task_struct *p, u64 enq_flags)
+                 */
+                __sync_fetch_and_add(&nr_failed_enqueues, 1);
+                scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++
++               /*
++               * Kick idle target CPU for pinned tasks. Without this, the CPU can
++               * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
++               * tick-stop warnings.
++               */
++               if (p->nr_cpus_allowed == 1)
++                       scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
+        } else {
+                __sync_fetch_and_add(&nr_user_enqueues, 1);
+                set_usersched_needed();
+
 
 -- 
 Thanks,
