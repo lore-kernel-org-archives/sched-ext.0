@@ -1,78 +1,86 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FA313AA2F;
-	Sat, 11 Apr 2026 11:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD2833F8D9;
+	Sat, 11 Apr 2026 12:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775907238; cv=none; b=g176WK24e+W3nMeKJK0KDVHVRbGe1kxbPOhBYmfZuGGJ6yI9Z6LLEpf2FqG4Z6KLT1xLHwcrL6JZ7JBRgnqlVSWr5kBolJvrQTFRUKMZBKiw7Ipw0275EHvigVlVwXEWcdcKWkswifMXIxkl2nDoriXzdBXeNCK8VCW4VsEoVEM=
+	t=1775910509; cv=none; b=VCqfEeqk11QBkKc09uj/2uCFyeBmpcNYDxoPR8A0qW7CBj50x4vS8FBDA7CzFLaVIF4JGBLQsFKHuMqGbrQNzJZfxI9HgWpeU3ACDAaFgADVbqTDZazZGIGN7rEKoxvIW/Hck3o1RuC9I7sSr7mqY9hykTNjfzL739iFI1VGW1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775907238; c=relaxed/simple;
-	bh=Zm8WEHCFfrppW0HJIYCmNmWAob/4nlad/NDUog5TX9U=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=HGhbc11igt8rvsPHo2vKQ07pV+XzmkZaPnvM2w8goWPB2Ld4/ZLM7RfiEbZudo2MjPRzGwZeCSlKq2NBx/e3sqr4E82dGFfP6J7NfUbRkLFU7M/nwDy/2ZcO7uMXHqCs8077nJ1+0IH1CnLg6GNTRhwa89tbgDK2YM/sQoshkRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3PyyWiU; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775910509; c=relaxed/simple;
+	bh=f7SfMQg+cA0NgaCiuvHEe9kS+dibktXxuwZMIedqxPw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Kj1Hqb4KHCzTJbgMp2xLZYb2b4EcgInezHnSjf1It5V88+Vpm0cuuIEg/KPxAkmTWzF6oa8OpTe6LjtG9RF8bE4srEHmLYReb+g3C7X+RqbDbRNsrRhRH+O0ff9An3Htg7FlNjHzCXMtrKkk3Km6U+2w66aBs2xHPZuq1GC2mbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Jeon7pdM; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3PyyWiU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E05C4CEF7;
-	Sat, 11 Apr 2026 11:33:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775907237;
-	bh=Zm8WEHCFfrppW0HJIYCmNmWAob/4nlad/NDUog5TX9U=;
-	h=Date:From:To:Cc:Subject:From;
-	b=G3PyyWiUbNzVZAcKVOAmK0inL49geX+ktcYKCF3uIJWXbWIp973l+tU6sDzBtgxiI
-	 0iVIMHx+TN2oXh4+hw5Nt/lieWLy7geOzxrvbwMC0KmDqf/oU13bAKCN7iw2q4SzNH
-	 4HIDWrVN+zlqPQuAOnTa0nPKY3B8zR6e/jIKClmWWZ5c5P3UC6bl+IlKio79/5Bj/t
-	 adXx3S97gzSElW+lDS9+q0g4X0k6Vn4TA4WH5A0GBELKXX3/DRkSRWraSnX/L3+edE
-	 Z3YJAn1xfwPXb544qElgKeV3jXg4zrdOF1tAgnjfKaSSgr8qJu7RR4SzfgAXYwz7Xj
-	 zUEpMNwJ0ucNQ==
-Date: Sat, 11 Apr 2026 01:33:56 -1000
-Message-ID: <de52a1c5537e2a130d19eb244b7606c1@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: [PATCH sched_ext/for-7.1] tools/sched_ext: Kick idle CPU for
- pinned tasks in scx_qmap
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Jeon7pdM"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Q17e8cS+umTd22Tj+Lld3UsJlQkIMpk7Q60AHKIdGZE=; b=Jeon7pdMmDtw+nmpP89855s4H0
+	P1Rlu0u75e7wutAvFG+aDj2zGRP9nJv4wPybQgREt75Vu7ETwjEX7ZDHNlKXbffEEFe/sUVUG558I
+	vNxHjnVIH0aAqKHtPHszEG4hYl5UPrgi1TMotiaFnvaUUcOpGPkWQGUKGbFHXVujZwmZMXeAenU/m
+	JPAZBfUWZKr8ycSkpCgP2whLAK+ZngW2UpCTY+trxNVAsZRC2KG/msgaij/Fqhq+7e6MhMtyU+tdZ
+	dFNC9uyX11BJni6i5uYNIjHxYp0orF/53g+Boy9asap8KkTZDciAWl4Uf+PocGcEPcmnCkW4ocGoP
+	Lhwe8mxw==;
+Received: from [58.29.145.179] (helo=[192.168.123.154])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wBXRa-00EklS-FT; Sat, 11 Apr 2026 14:28:10 +0200
+Message-ID: <f199597d-7665-4095-a69d-f4a3d1b2c638@igalia.com>
+Date: Sat, 11 Apr 2026 21:28:03 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] sched_ext: Dump the stall CPU first in watchdog exit
+To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>
+Cc: void@manifault.com, kernel-dev@igalia.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20260408031113.76005-1-changwoo@igalia.com>
+ <20260408031113.76005-3-changwoo@igalia.com>
+ <adb-pduIY6oZxLYh@slm.duckdns.org> <adc-l_7ZNWLkyPFL@gpd4>
+ <addHAYU_iKIC15nY@slm.duckdns.org>
+From: Changwoo Min <changwoo@igalia.com>
+Content-Language: en-US, ko-KR, en-US-large, ko
+In-Reply-To: <addHAYU_iKIC15nY@slm.duckdns.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-scx_qmap uses global BPF queue maps for task dispatch. A task pinned to a
-single CPU can only be dispatched by its home CPU's ops.dispatch(), but an
-idle CPU won't call ops.dispatch() on its own. This leaves per-CPU kthreads
-like ksoftirqd stranded, causing NOHZ tick-stop warnings from pending
-softirqs.
+Hi all,
 
-Kick the target CPU with SCX_KICK_IDLE when enqueueing a pinned task.
+Thanks for the feedback, Tejun and Andrea,
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- tools/sched_ext/scx_qmap.bpf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 4/9/26 3:28 PM, Tejun Heo wrote:
+> Hello,
+> 
+> On Thu, Apr 09, 2026 at 07:52:23AM +0200, Andrea Righi wrote:
+>>> Would it make sense to generalize this so that the exit record the CPU the
+>>> exit is triggered on and always dump that CPU first? That should include
+>>> stall case, is likely useful for different cases too and we don't have to
+>>> add @stall_cpu to the exit functions.
+>>
+>> But if we record the current CPU the exit is triggered on, in
+>> check_rq_for_timeouts() we would prioritize the watchdog worker's CPU instead of
+>> the stalled one, right?
+> 
+> Ah, right. Can we at least generalize it to culprit or offending CPU? For
+> regular scx_error() triggers, we'd want to see what that particular CPU was
+> doing too.
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index f3587fb709c9..09d1624fb869 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -314,6 +314,14 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 		__sync_fetch_and_add(&nr_highpri_queued, 1);
- 	}
- 	__sync_fetch_and_add(&nr_enqueued, 1);
-+
-+	/*
-+	 * Kick idle target CPU for pinned tasks. Without this, the CPU can
-+	 * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
-+	 * tick-stop warnings.
-+	 */
-+	if (p->nr_cpus_allowed == 1)
-+		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
- }
+We can generalize to prioritize the CPU that was caught by the watchdog
+or called scx_exit(). Regarding the field name, I think exit_cpu makes
+sense, meaning a CPU that makes the scheduler exit.
 
- /*
---
-2.53.0
+I will send out v2 soon.
+
+Regards,
+Changwoo Min
