@@ -1,153 +1,216 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF092F25F0
-	for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 14:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46802868AB;
+	Sat, 11 Apr 2026 14:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775917664; cv=none; b=Ao0E97GcM+cOZlH7xB8gZLX2Pgcn1swq6lvVdeiXOnMOAeuxHbgBSTYz4sGDQKnV5SrPGCzfWk8PVQyhhPHHVwEYcHGbIfrzbGdbOh0QQTd23huD1FmkrcsFs1k+g/b29c+v4+ysh17y8ikYTT0lnrgJ/4ODMfnb96Lfsxqp1+A=
+	t=1775918283; cv=none; b=Gnz9w4TjC6Ynt5GQeie2DuakOJpF6JU4dEmr0SFhR7JM0qZvxOWuKnamV3pV/hcBAJdZ2QlpInaubEe/+57SWuhxDx+S7bpwycQof1aR8QJysSvoWTLShFbUXYK/t2WFswqXgX2Tcjs2/KSZJ0NW628ASwyj8wHDGQ5sPuADYEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775917664; c=relaxed/simple;
-	bh=V5DXXRb/2Ik2Yfwfvi5TOAsYn3rduQUt3OicGQ3m9q8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UIwXhrgJM9oxJBnlDLnXoPmgkPJIdnVyL+wzpq+y+h7HHdeQqkqFDyHVUoqHfhgHpkeg5qQ0ZYiGE6rr1Uo/X50Ho5mGul7Cl61Eahioqfy5UNRWxRcun3DqfVw8Bi9eYZiKFGwqHp78kqnSyPSpS4IPfIAIMcecBPzy4OwPESU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7qZUnU+; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775918283; c=relaxed/simple;
+	bh=dsyyQzGsS3A6hFqbIbgHeanM8UgrZIL8VdOZWZQm288=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sDujtkq4vk3MpjE89zsMOv/Vb7kFvJh/deFWCv15RHIOoBnwHERUsmctDoPxgJs8t3O36Ri99yAssjs1OMzXTp8lqPH7NgTxfuXbNdAHa2IPyvndIYU4YF7WIMAjCmbt9bj7MrwZe2/Mpg7FmEbvjhNqm3+kWVisUtuzE4oMbWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=nBao8OaW; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7qZUnU+"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-35da1af3e10so3067705a91.3
-        for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 07:27:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775917662; x=1776522462; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=itDS40O6MZZofgf9Ri84SdBbTtJCcysOrubRuZ04fvs=;
-        b=Q7qZUnU+uMFVQprFCR1+bwXgN6ZRsCF3uOIRppQ57eX8+9Jl2Y03cRwhu2KiOOp6Bs
-         bupmr1dxWaErDAb9+120Cki1Lrg0xl2BQ+yIoXkWPd9OiSthsUEqcif69BT5ErHUNECI
-         8AfUtzlARHMyo0ddlG2+kVhPQDPtT9QQ7Yvi5TuOrMKE9/xBUGrOjhDdKivr51cJQlFd
-         tI7an4ClY6v3yFA7khmb6OyW8vkzKCCyvD/ceQff7B2vv7Gf3sM7OHlwPS6jXU1LpDpm
-         zWK9PvVbJT4pF+92tXGqR4aa9DF1+ib2Unqs9kmC5pKPS+4geyjUXiqHI8bZamzIJGM+
-         zn4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775917662; x=1776522462;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=itDS40O6MZZofgf9Ri84SdBbTtJCcysOrubRuZ04fvs=;
-        b=I6q3TnNZpFHlczHJZGC/AjVbr46ZSuR3FhwDIHUlBw4EhwkCaJs5W304pBFYjOwrNz
-         jzo1RwnFLXcyJsneNi4gzwjiPFHxlQELewagD81YGdAsdW5p8mysTHnqIvh2BQ+jGjjf
-         WyVV6mgtqa4xItTRe4PQchtXtrc67PlOBwATs0Jx82Y3Z77w3pghcLDzh9x19FZUHdJ2
-         Y9LE8IbO+H+nzzAYzYQSOX225/0QdMhZRXEj7gGaokH9xPS9hKNN4ihVrW/DHGvaLVYZ
-         2eRROUpqIZvUzZz4Ll4Kcpsbq4bEkrcwig14tIz5nxQFUJJ1nkygZp077HocXtuF7yQv
-         Upcg==
-X-Forwarded-Encrypted: i=1; AJvYcCVTaW88+2Sv3Yd/s1ycWxmXjlcGQhy5hjvV0GuUcDAF+9WExalzuvI8uFxHpGLRM+CGBv9yUvufckQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzjYNH8NqvrNI+beBBOUk3JMtpCXT7duSyVazhTcvDVQJqFCist
-	yMjX+zXLutzrxZbq5uM4WQlIDFM8NoDDv9xN7zmqJ+UZj29Bpdhjp6ty
-X-Gm-Gg: AeBDieuSkq+K22esY51zsf6n7lgK9v+HLnPq7JTpWl08lN6c5UrlPp8G+gulQe/PEcE
-	n6fMeF8jEbCxG56pBZII5i/rP7xo+7jJIYfj3Y5FnDLhC3lp/MK07EurSsbZ47MSbmTwPOLMC3r
-	qZd2zMFiV8OzQw68chC4eztrzihgIbOBpnoObhJoz7n/4cYkfOZLYHQwq3wJIfjXQQJMbD8gD7j
-	pc2A4tn4n5juMaULj6dxe491Gfa99/RpnnCYKsTMUOLdQrXXT24a5kQSJ5o5RR5GYit+t0gy8hy
-	fWhmKWMXEz59Z0bY4WopCzKfn+wcoYsQeteeuCtX3nmq79ogLbuy/niYB7gCqT3tjPogV+6aV1M
-	5J7t2vRUfjnURdRCv2k8BV5x3Tos8oliwGT776m08QCSj/KcXzS5dIgalv0XxXhuhSEK3dhnO2h
-	f9EDJJ/UvyFo1kBg6ccXgTzxCe6cb1
-X-Received: by 2002:a17:90b:38c8:b0:35d:a542:2dc4 with SMTP id 98e67ed59e1d1-35e42842cc9mr7841008a91.21.1775917662343;
-        Sat, 11 Apr 2026 07:27:42 -0700 (PDT)
-Received: from eric-wcnlab ([2001:288:7001:1099:4440:b527:db2e:c93f])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e35156445sm9772230a91.14.2026.04.11.07.27.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Apr 2026 07:27:42 -0700 (PDT)
-Date: Sat, 11 Apr 2026 22:27:37 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH sched_ext/for-7.1] tools/sched_ext: Kick idle CPU for
- pinned tasks in scx_qmap
-Message-ID: <2ez5asyb7yuwldbqenmrpzvdyl2oq4oxism6lj62m6zx7fgy3d@4qk45ujilk6v>
-References: <de52a1c5537e2a130d19eb244b7606c1@kernel.org>
- <cpn5bqvb6qmew2opqffmtmgcuin3lvtiqzht6vmnef5px3pvr2@bhgdpcfcmg3c>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="nBao8OaW"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=HBRt4QSEOwBBAhu5S/+S8lTob8S6BCke2ARXTFLjTJc=; b=nBao8OaWtcoBdR8t8Lp620XNOq
+	uHa+2BMtVv+S17a/T+hi4e6hyOM9hnv6RzMo6lORC2gqhNAxgUNnJKqD9wrkipJEwO3Ah72sqtnfG
+	alftTVK//4Xb+oyoEoKtTK9CHlXILxkignFVjmG4bekCjGVaZIlzkJhSztE524RI22wA0ug23HbZ0
+	qfc6sf9CKCvv2Xf3+BSsSVa14bBOOkoEovRrQg49eCqXGcN8xYRCvWn/bJ54JADgwpdDxDYyRL3ky
+	9Dg4yce6E7ZAf+S+XUxyXtb0qmK7dcFDYYyCxr+yx2LtTmPD8LglgQKGaQXvzb49abYIIqcWN1nrY
+	6fsMpLuw==;
+Received: from [58.29.145.179] (helo=[192.168.123.154])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wBZT3-00EmOP-Gq; Sat, 11 Apr 2026 16:37:50 +0200
+Message-ID: <f748b81f-ed84-48d9-8ca4-9ac7865181ee@igalia.com>
+Date: Sat, 11 Apr 2026 23:37:42 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cpn5bqvb6qmew2opqffmtmgcuin3lvtiqzht6vmnef5px3pvr2@bhgdpcfcmg3c>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] sched_ext: Dump the stall CPU first in watchdog exit
+To: Andrea Righi <arighi@nvidia.com>
+Cc: tj@kernel.org, void@manifault.com, kernel-dev@igalia.com,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260408031113.76005-1-changwoo@igalia.com>
+ <20260408031113.76005-3-changwoo@igalia.com> <adc81Une7-LrDLrR@gpd4>
+From: Changwoo Min <changwoo@igalia.com>
+Content-Language: en-US, ko-KR, en-US-large, ko
+In-Reply-To: <adc81Une7-LrDLrR@gpd4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Tejun,
+Hi Andrea,
 
-On Sat, Apr 11, 2026 at 08:57:42PM +0800, Cheng-Yang Chou wrote:
-> On Sat, Apr 11, 2026 at 01:33:56AM -1000, Tejun Heo wrote:
-> > scx_qmap uses global BPF queue maps for task dispatch. A task pinned to a
-> > single CPU can only be dispatched by its home CPU's ops.dispatch(), but an
-> > idle CPU won't call ops.dispatch() on its own. This leaves per-CPU kthreads
-> > like ksoftirqd stranded, causing NOHZ tick-stop warnings from pending
-> > softirqs.
-> > 
-> > Kick the target CPU with SCX_KICK_IDLE when enqueueing a pinned task.
-> > 
-> > Signed-off-by: Tejun Heo <tj@kernel.org>
-> > ---
-> >  tools/sched_ext/scx_qmap.bpf.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> > 
-> > diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-> > index f3587fb709c9..09d1624fb869 100644
-> > --- a/tools/sched_ext/scx_qmap.bpf.c
-> > +++ b/tools/sched_ext/scx_qmap.bpf.c
-> > @@ -314,6 +314,14 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
-> >  		__sync_fetch_and_add(&nr_highpri_queued, 1);
-> >  	}
-> >  	__sync_fetch_and_add(&nr_enqueued, 1);
-> > +
-> > +	/*
-> > +	 * Kick idle target CPU for pinned tasks. Without this, the CPU can
-> > +	 * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
-> > +	 * tick-stop warnings.
-> > +	 */
-> > +	if (p->nr_cpus_allowed == 1)
-> > +		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
-> >  }
-> > 
-> >  /*
-> > --
-> > 2.53.0
+
+On 4/9/26 2:44 PM, Andrea Righi wrote:
+> Hi Changwoo,
 > 
-> Looks good to me! The same issue exists in scx_userland where pinned
-> tasks can be dispatched to SCX_DSQ_GLOBAL without kicking the idle
-> target CPU. I'll follow a patch to add the same fix there!
+> On Wed, Apr 08, 2026 at 12:11:13PM +0900, Changwoo Min wrote:
+>> When a watchdog timeout fires, the CPU where the stalled task was
+>> running is the most relevant piece of information for diagnosing the
+>> hang. However, if there are many CPUs, the dump can get truncated and
+>> the stall CPU's information may not appear in the output.
+>>
+>> Add a stall_cpu field to scx_exit_info, thread it through scx_vexit()
+>> and __scx_exit(), and populate it from cpu_of(rq) in
+>> check_rq_for_timeouts(). In scx_dump_state(), dump the stall CPU
+>> before iterating the rest so it always appears at the top of the output.
+>>
+>> Introduce a scx_exit() macro that wraps __scx_exit() with stall_cpu=0
+>> for all non-stall exit paths, keeping call sites unchanged.
 > 
-> Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+> Should we use stall_cpu = -1 as a sentinel to represent "no stall"?
 
-Actually, would it make more sense to fold this directly into the same
-patch?
+I think initializing stall_cpu to 0 has advantages: since CPU 0 cannot
+be turned off and is always valid, even if a task stall didn’t happen,
+the first scx_dump_cpu() call is always valid.
 
-diff --git a/tools/sched_ext/scx_userland.bpf.c b/tools/sched_ext/scx_userland.bpf.c
-index f29862b89386..56c53d457f45 100644
---- a/tools/sched_ext/scx_userland.bpf.c
-+++ b/tools/sched_ext/scx_userland.bpf.c
-@@ -195,6 +195,14 @@ static void enqueue_task_in_user_space(struct task_struct *p, u64 enq_flags)
-                 */
-                __sync_fetch_and_add(&nr_failed_enqueues, 1);
-                scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+
-+               /*
-+               * Kick idle target CPU for pinned tasks. Without this, the CPU can
-+               * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
-+               * tick-stop warnings.
-+               */
-+               if (p->nr_cpus_allowed == 1)
-+                       scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
-        } else {
-                __sync_fetch_and_add(&nr_user_enqueues, 1);
-                set_usersched_needed();
+> 
+>>
+>> Signed-off-by: Changwoo Min <changwoo@igalia.com>
+>> ---
+>>   kernel/sched/ext.c          | 31 ++++++++++++++++++++-----------
+>>   kernel/sched/ext_internal.h |  3 +++
+>>   2 files changed, 23 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+>> index 8f7d5c1556be..671a1713aedb 100644
+>> --- a/kernel/sched/ext.c
+>> +++ b/kernel/sched/ext.c
+>> @@ -200,24 +200,28 @@ static bool task_dead_and_done(struct task_struct *p);
+>>   static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
+>>   static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind);
+>>   static bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
+>> -		      s64 exit_code, const char *fmt, va_list args);
+>> +		      s64 exit_code, int stall_cpu, const char *fmt,
+>> +		      va_list args);
+>>   
+>> -static __printf(4, 5) bool scx_exit(struct scx_sched *sch,
+>> -				    enum scx_exit_kind kind, s64 exit_code,
+>> -				    const char *fmt, ...)
+>> +static __printf(5, 6) bool __scx_exit(struct scx_sched *sch,
+>> +				      enum scx_exit_kind kind, s64 exit_code,
+>> +				      int stall_cpu, const char *fmt, ...)
+>>   {
+>>   	va_list args;
+>>   	bool ret;
+>>   
+>>   	va_start(args, fmt);
+>> -	ret = scx_vexit(sch, kind, exit_code, fmt, args);
+>> +	ret = scx_vexit(sch, kind, exit_code, stall_cpu, fmt, args);
+>>   	va_end(args);
+>>   
+>>   	return ret;
+>>   }
+>>   
+>> +#define scx_exit(sch, kind, exit_code, fmt, args...)				\
+>> +					__scx_exit(sch, kind, exit_code, 0, fmt, ##args)
+>> +
+>>   #define scx_error(sch, fmt, args...)	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
+>> -#define scx_verror(sch, fmt, args)	scx_vexit((sch), SCX_EXIT_ERROR, 0, fmt, args)
+>> +#define scx_verror(sch, fmt, args)	scx_vexit((sch), SCX_EXIT_ERROR, 0, 0, fmt, args)
+>>   
+>>   #define SCX_HAS_OP(sch, op)	test_bit(SCX_OP_IDX(op), (sch)->has_op)
+>>   
+>> @@ -3433,9 +3437,10 @@ static bool check_rq_for_timeouts(struct rq *rq)
+>>   					last_runnable + READ_ONCE(sch->watchdog_timeout)))) {
+>>   			u32 dur_ms = jiffies_to_msecs(jiffies - last_runnable);
+>>   
+>> -			scx_exit(sch, SCX_EXIT_ERROR_STALL, 0,
+>> -				 "%s[%d] failed to run for %u.%03us",
+>> -				 p->comm, p->pid, dur_ms / 1000, dur_ms % 1000);
+>> +			__scx_exit(sch, SCX_EXIT_ERROR_STALL, 0, cpu_of(rq),
+>> +				   "%s[%d] failed to run for %u.%03us",
+>> +				   p->comm, p->pid, dur_ms / 1000,
+>> +				   dur_ms % 1000);
+>>   			timed_out = true;
+>>   			break;
+>>   		}
+>> @@ -6337,8 +6342,11 @@ static void scx_dump_state(struct scx_sched *sch, struct scx_exit_info *ei,
+>>   	dump_line(&s, "CPU states");
+>>   	dump_line(&s, "----------");
+>>   
+>> +	/* Dump the stall CPU first, then dump the rest in order. */
+>> +	scx_dump_cpu(sch, &s, &dctx, ei->stall_cpu, dump_all_tasks);
+> 
+> And here we can skip this if ei->stall_cpu < 0.
 
+As mentioned earlier, even if stall_cpu is not set, scx_dump_cpu() for
+CPU 0 is always valid, so the additional if statement is not necessary.
+I can add comments here to avoid potential confusion in the future,
+instead of initializing stall_cpu to -1. What do you think?
 
--- 
-Thanks,
-Cheng-Yang
+> 
+>>   	for_each_possible_cpu(cpu) {
+>> -		scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
+>> +		if (cpu != ei->stall_cpu)
+>> +			scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
+>>   	}
+>>   
+>>   	dump_newline(&s);
+>> @@ -6377,7 +6385,7 @@ static void scx_disable_irq_workfn(struct irq_work *irq_work)
+>>   }
+>>   
+>>   static bool scx_vexit(struct scx_sched *sch,
+>> -		      enum scx_exit_kind kind, s64 exit_code,
+>> +		      enum scx_exit_kind kind, s64 exit_code, int stall_cpu,
+>>   		      const char *fmt, va_list args)
+>>   {
+>>   	struct scx_exit_info *ei = sch->exit_info;
+>> @@ -6400,6 +6408,7 @@ static bool scx_vexit(struct scx_sched *sch,
+>>   	 */
+>>   	ei->kind = kind;
+>>   	ei->reason = scx_exit_reason(ei->kind);
+>> +	ei->stall_cpu = stall_cpu;
+>>   
+>>   	irq_work_queue(&sch->disable_irq_work);
+>>   	return true;
+>> diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+>> index b4f36d8b9c1d..a0a09e8f2ac2 100644
+>> --- a/kernel/sched/ext_internal.h
+>> +++ b/kernel/sched/ext_internal.h
+>> @@ -93,6 +93,9 @@ struct scx_exit_info {
+>>   	/* %SCX_EXIT_* - broad category of the exit reason */
+>>   	enum scx_exit_kind	kind;
+>>   
+>> +	/* CPU where a task stall happened. */
+>> +	int			stall_cpu;
+>> +
+> 
+> With CO-RE we shouldn't have any compatibility issue, but would it make sense to
+> move this at the end of the struct anyway?
+
+I wanted to fill the 4-byte hole between kind and exit_code. If there is
+no compatibility issue, I would prefer to fill the hole and colocate the
+high-level information, like kind and exit_code, together rather than
+placing it after the messages. However, this is a matter of taste, so I
+don’t have a strong opinion here.
+
+Regards,
+Changwoo Min
+> 
+>>   	/* exit code if gracefully exiting */
+>>   	s64			exit_code;
+>>   
+>> -- 
+>> 2.53.0
+>>
+> 
+> Thanks,
+> -Andrea
+> 
+
