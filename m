@@ -1,86 +1,126 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD2833F8D9;
-	Sat, 11 Apr 2026 12:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E262619005E
+	for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 12:57:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775910509; cv=none; b=VCqfEeqk11QBkKc09uj/2uCFyeBmpcNYDxoPR8A0qW7CBj50x4vS8FBDA7CzFLaVIF4JGBLQsFKHuMqGbrQNzJZfxI9HgWpeU3ACDAaFgADVbqTDZazZGIGN7rEKoxvIW/Hck3o1RuC9I7sSr7mqY9hykTNjfzL739iFI1VGW1M=
+	t=1775912269; cv=none; b=eWBUtBktolRmtBZuxSlgd4+7CiCTfTctBqSZ+uKARNAlP90BGcVJ/tQlwcmnQaKKPsO2Qavi7uRKqzQ4IQG8p0EA+ts27wznwP4C5zIZrLx/QGlMZT+I6gYjkxg7+X59ZdFHIGhXchfVZYCEOEoU/Zz2MPxSn1P4g7yYyGjjcGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775910509; c=relaxed/simple;
-	bh=f7SfMQg+cA0NgaCiuvHEe9kS+dibktXxuwZMIedqxPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kj1Hqb4KHCzTJbgMp2xLZYb2b4EcgInezHnSjf1It5V88+Vpm0cuuIEg/KPxAkmTWzF6oa8OpTe6LjtG9RF8bE4srEHmLYReb+g3C7X+RqbDbRNsrRhRH+O0ff9An3Htg7FlNjHzCXMtrKkk3Km6U+2w66aBs2xHPZuq1GC2mbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Jeon7pdM; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1775912269; c=relaxed/simple;
+	bh=6TUk8d7GMwPd+BAVQiLrDrpb+kDYKil7AE6NM5oSRZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l3Tw4z6mIJyCzyj4JFqjZWrqkYiLYblJsR+alAYe3zKY7Po4yjJc61QHZX7BCI8fkAor99hg+N3kUXeNkT5v4p3q3dJqJu2V2bef4KoDfLBJUR+L2VNGGj2Q9S2ZWQYz9rrXMUA7oB6KJu7W0STVh5Nl/mT5iXxGJGgHLLcw0dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XM/BJqDz; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Jeon7pdM"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Q17e8cS+umTd22Tj+Lld3UsJlQkIMpk7Q60AHKIdGZE=; b=Jeon7pdMmDtw+nmpP89855s4H0
-	P1Rlu0u75e7wutAvFG+aDj2zGRP9nJv4wPybQgREt75Vu7ETwjEX7ZDHNlKXbffEEFe/sUVUG558I
-	vNxHjnVIH0aAqKHtPHszEG4hYl5UPrgi1TMotiaFnvaUUcOpGPkWQGUKGbFHXVujZwmZMXeAenU/m
-	JPAZBfUWZKr8ycSkpCgP2whLAK+ZngW2UpCTY+trxNVAsZRC2KG/msgaij/Fqhq+7e6MhMtyU+tdZ
-	dFNC9uyX11BJni6i5uYNIjHxYp0orF/53g+Boy9asap8KkTZDciAWl4Uf+PocGcEPcmnCkW4ocGoP
-	Lhwe8mxw==;
-Received: from [58.29.145.179] (helo=[192.168.123.154])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1wBXRa-00EklS-FT; Sat, 11 Apr 2026 14:28:10 +0200
-Message-ID: <f199597d-7665-4095-a69d-f4a3d1b2c638@igalia.com>
-Date: Sat, 11 Apr 2026 21:28:03 +0900
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XM/BJqDz"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c766a95a72dso1927351a12.1
+        for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 05:57:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775912267; x=1776517067; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y4g7ZWe8WPifH5y5coO8dt9KUB40+ANDdk64E/1BJRc=;
+        b=XM/BJqDz/YPtczgFr9KUtpv5aa2GIXR3Oot+qWKa6K3KJZGvQ7461uztqrCr3ytV5s
+         XDOt1uc47ca6g07SMoY+VSJLkNqxbzgV6b5YTOJzLP0ajDN/l9b/Hn8wFpnruePszJlT
+         98+0GnOZXsv7NnKKV700U8meq+zjwYNbRXzjEiIQPXLxwcHuwbCX1ub3GSchLfFq21fg
+         ZoJHFu0KX+c/uMZM3eEd2sNw55Ov4A7GceozFlmlqHSpCUE5eftQiOfmyM++LvwQ1BFJ
+         U7fWEUd9kB52Sl3/yxKdAL2yRO5N7ipY2RxXYgyz+LQCwkEomqPlKQiON5GlwweT7hl+
+         dPfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775912267; x=1776517067;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y4g7ZWe8WPifH5y5coO8dt9KUB40+ANDdk64E/1BJRc=;
+        b=I4sneU61IYfYyIAOp7dtC0o6Pp22bl+L7gE43Xv0jD6CwQIir/Ko8CkJR3W5B3wROv
+         lpGXfVFCqmwIu9CSsgRqnGoWF5u6h5uKt1Zcg+d/fu9Qm0fDWDW8lVRUl/8gvdvTexeO
+         S2otodKYB+eOA1r6rh/JHNSDFtPs3uyJcYgWpc5c3q3kwjJi/gtCGrCQCsLKEjrEHD8A
+         cpAtXAq7O6M+lBawikeMXyqoCngMbPvjhSzbwtSPP1nNbDlPpOeGzJKo+lJVsLSEz+n8
+         dqzprpibGAsh0wlF9OjV8WI1SijS1l5OQlchem6rMqxh21jmX5s6jpjUy58drv0CNdkz
+         eOgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV11Txla9xkzHkYy52io8qqN5WCwN3hiKF+18+fujmDQ8XsEuOC4hqZ3Gwz+kIp0DyQzq99SqT6s6U=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw3c/Bt0SvUm2I9rO3mpkaMdkzHmKUT7ciPyrCXJ9ZlOOo1t3Dd
+	6umP3yDVihrz4dnzITtANpwGzO4jpjH/rfSkMHEy5dWxWvB5Cj6+w30A
+X-Gm-Gg: AeBDiet8Kxp/PsqIiamCtEosEMCH0Yz5iiMfgO/L+Ro3+nfTE6ivTBdxUskRrVQuHYv
+	TgARZKCsNIhc3ydCqHiNERdZAoaNchvLXxZrylXVKjow7DCHU1lZEEFo6hxKpbHCTc8eW/KPv84
+	ZJM64D2F4D/eloIjZVGdxtnKvqdMfOhUTWOLTT8uiOXWPiwz5QtpvdmIIDQOi9uAMzsiL7Aq4wc
+	tVX1ZHKFsQCWytT8RPR+Qz2H2dAWT/rFXCwmzQLYjFVsLr4VNdpEUC85nrmamvs0fgiv6isOimc
+	hpw8KmD9LI4C268yzjYH8N2LnWHTwfJbHT8DVl7BrxbMcSlSXochKExdfAO/Vg7xvTJYkH3qd4s
+	LsK+PYRr+1xVqWo4H58fb3fNBXtSZxVRTOMAbtFuDugbIBSm4A+ypOce6J9bR+a7hnnd6xxhdNi
+	clzxL/c3ydnxyXdzsVHWm6KmL84SRL
+X-Received: by 2002:a05:6300:8e10:b0:39c:787:f185 with SMTP id adf61e73a8af0-39fe3f3fb2amr5468289637.29.1775912267096;
+        Sat, 11 Apr 2026 05:57:47 -0700 (PDT)
+Received: from eric-wcnlab ([2001:288:7001:1099:4440:b527:db2e:c93f])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c4b6dd7sm5905837b3a.29.2026.04.11.05.57.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Apr 2026 05:57:46 -0700 (PDT)
+Date: Sat, 11 Apr 2026 20:57:42 +0800
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.1] tools/sched_ext: Kick idle CPU for
+ pinned tasks in scx_qmap
+Message-ID: <cpn5bqvb6qmew2opqffmtmgcuin3lvtiqzht6vmnef5px3pvr2@bhgdpcfcmg3c>
+References: <de52a1c5537e2a130d19eb244b7606c1@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] sched_ext: Dump the stall CPU first in watchdog exit
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>
-Cc: void@manifault.com, kernel-dev@igalia.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20260408031113.76005-1-changwoo@igalia.com>
- <20260408031113.76005-3-changwoo@igalia.com>
- <adb-pduIY6oZxLYh@slm.duckdns.org> <adc-l_7ZNWLkyPFL@gpd4>
- <addHAYU_iKIC15nY@slm.duckdns.org>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <addHAYU_iKIC15nY@slm.duckdns.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <de52a1c5537e2a130d19eb244b7606c1@kernel.org>
 
-Hi all,
+Hi Tejun,
 
-Thanks for the feedback, Tejun and Andrea,
-
-On 4/9/26 3:28 PM, Tejun Heo wrote:
-> Hello,
+On Sat, Apr 11, 2026 at 01:33:56AM -1000, Tejun Heo wrote:
+> scx_qmap uses global BPF queue maps for task dispatch. A task pinned to a
+> single CPU can only be dispatched by its home CPU's ops.dispatch(), but an
+> idle CPU won't call ops.dispatch() on its own. This leaves per-CPU kthreads
+> like ksoftirqd stranded, causing NOHZ tick-stop warnings from pending
+> softirqs.
 > 
-> On Thu, Apr 09, 2026 at 07:52:23AM +0200, Andrea Righi wrote:
->>> Would it make sense to generalize this so that the exit record the CPU the
->>> exit is triggered on and always dump that CPU first? That should include
->>> stall case, is likely useful for different cases too and we don't have to
->>> add @stall_cpu to the exit functions.
->>
->> But if we record the current CPU the exit is triggered on, in
->> check_rq_for_timeouts() we would prioritize the watchdog worker's CPU instead of
->> the stalled one, right?
+> Kick the target CPU with SCX_KICK_IDLE when enqueueing a pinned task.
 > 
-> Ah, right. Can we at least generalize it to culprit or offending CPU? For
-> regular scx_error() triggers, we'd want to see what that particular CPU was
-> doing too.
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
+>  tools/sched_ext/scx_qmap.bpf.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+> index f3587fb709c9..09d1624fb869 100644
+> --- a/tools/sched_ext/scx_qmap.bpf.c
+> +++ b/tools/sched_ext/scx_qmap.bpf.c
+> @@ -314,6 +314,14 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+>  		__sync_fetch_and_add(&nr_highpri_queued, 1);
+>  	}
+>  	__sync_fetch_and_add(&nr_enqueued, 1);
+> +
+> +	/*
+> +	 * Kick idle target CPU for pinned tasks. Without this, the CPU can
+> +	 * idle while ksoftirqd is pending in the BPF queue, triggering NOHZ
+> +	 * tick-stop warnings.
+> +	 */
+> +	if (p->nr_cpus_allowed == 1)
+> +		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
+>  }
+> 
+>  /*
+> --
+> 2.53.0
 
-We can generalize to prioritize the CPU that was caught by the watchdog
-or called scx_exit(). Regarding the field name, I think exit_cpu makes
-sense, meaning a CPU that makes the scheduler exit.
+Looks good to me! The same issue exists in scx_userland where pinned
+tasks can be dispatched to SCX_DSQ_GLOBAL without kicking the idle
+target CPU. I'll follow a patch to add the same fix there!
 
-I will send out v2 soon.
+Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-Regards,
-Changwoo Min
+-- 
+Thanks,
+Cheng-Yang
