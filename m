@@ -1,108 +1,285 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96B7390237
-	for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 15:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3769832E72F
+	for <sched-ext@lists.linux.dev>; Sun, 12 Apr 2026 18:18:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775920192; cv=none; b=AwoBiUgxlzCmb2hyQ+GVCxDDOnzSjkb6fJ95AvN0pfKcVH8rlUM1yls7Bu+HXFdGIqPNSXo5xNJclZmVfN1XOfqzP0glu/+y8HjFoDQfz2enEqQg0u4YDlyFvVg1LhRn1QVCBWPnuqVj45i+8l7Gw5TKLEn5+Ip4/j0sPo4c+jw=
+	t=1776017903; cv=none; b=Drt1eMd5pDx4DB0CtN5IuBCxzW4gX4V1DLJ17WHpqCjj2QdLlb00jALmlVSKxCWf2A59C1mAoXkDsCOhWjgAPrYqEjPWlT8O45Jk4NfJ2TMcKP7mhIDZzuYyGO2NcQibB70AG2KcxFzzdwOSmO0Fd3uY5EyqrU5FgadWty7KpSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775920192; c=relaxed/simple;
-	bh=2mBgIUpk5PT+jzVy/e2ec4iWbsOT4oLJY3trvERvd48=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JEB31f7qN4kTkvQryNUK75Fw/vastWOCUwd5Z6B7xmmYOVKM4/RgT6dHI2YvSlyMLzG7smGsu4Dm/LJkKTvAvOB4PZXhfY6eJjfVN2VliLXDjSFLTvHVl2m+gmmqVsjsouCiwIzC+mbUqKfvz+z3dfZKJfX2nmRPKHhtoHYcfMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M+59o0hI; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1776017903; c=relaxed/simple;
+	bh=PFVCOffAPTXBDK7gsUNjcLIhH9SzTZK2CoweMyo/t14=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M1cNNG7L9/Toc6BMEANnzfNM9Ml7WyHUikHwAIWh0P/lpVkxeQE7k9LaHhrUh0g6lnJgJxSVnz6utJPdhN5u6hYRYhGqG5xRjc1TKbubzcRhMpGUGvDg1Ls/J6WxoQJ6cNvJk51GzCUHCiu/ZHCLcnVax2Y4Y4K96v1apxUEsjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OwnrVI3U; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M+59o0hI"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2adbfab4501so12457155ad.2
-        for <sched-ext@lists.linux.dev>; Sat, 11 Apr 2026 08:09:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OwnrVI3U"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-82f0884bcfaso1936378b3a.1
+        for <sched-ext@lists.linux.dev>; Sun, 12 Apr 2026 11:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775920190; x=1776524990; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=G+tnLgQ1yCFjaQCYF2CBUftQ5ucVloLEn+CgT/EJNVs=;
-        b=M+59o0hIrVWf4DbHiDXSyO/dLNABzfdi1cbVyOiaakHu8lmDw6x2k/QFZoxTN/LgBi
-         eJ5z9uHuJEQdzoPXbYiV0Igklft7+yrEIMhxKHz0zEUeSa40xJNN6a7x5kWrY120jbRc
-         Nj8TJPiSqZaVQEl7yMrrfPHTKDsQwnzrE3YGNZ+mcDmTsXDjqz4UnErRKrh+qoKR307I
-         DGldRQbAzw3EYsFnMgd6RgDJTE5TP9A34riaXakO6tApVmabVjSuA6lVABaamxp9ywjt
-         XzaRvxmhkkAaWv3Y7ZLUyflYVyymrOW88oM+yZuNTs0se/xDlZiVECDkK5s8ZU7rfv+m
-         /G7Q==
+        d=gmail.com; s=20251104; t=1776017901; x=1776622701; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d0lXBCiOMkoFu4Tr3Z4bw4jVhAqhzUpwDXkACUdSblo=;
+        b=OwnrVI3U765XVeoaQhOFPXiw1KBBXpUBX3FVxNS1CV0uyp5fH0NNNzie7gDBd68Lw1
+         qWfPqe3IJ4q0tU+Vei0E9JInPHlZmUOcOk/nvEMdPiG2qUwFOs1nz01PMK3LlYzVBP+E
+         MB67d/gCnyVg9Bp84yMcgy8oTAN4yft1WzGPpF14HRp2/h98RAo032fkSdvgiKU9VSLd
+         h+WckzEq599iIAOY0NMunp+p+yUcNVKHDFzDpnhKZKqRfQVnJOB3NVb9ETnbjSyVysIs
+         gUptfgjxSaBPHfdTRO7K09QYn+2e58EqCbyE71VOWX6w8ONCXMdm4ygzNUkDRszB2iDs
+         m0VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775920190; x=1776524990;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G+tnLgQ1yCFjaQCYF2CBUftQ5ucVloLEn+CgT/EJNVs=;
-        b=PWliZ+3Gu3WG2h5UQySJQpcdMUhux8bpLLB9BHnWiVs+efqQ3mMX05N14UVjDXkItb
-         O8mjiJ0X/mGKb3D/WbjDGA7K+bMcKq29P32KKZxuj7rbe5jox26yAB+u8EfNancsO82C
-         3um4tloFKrdeEdBTWtXuDHMgvGrDQqDOZII2EWskyXbjxrtEfqaa9CE9w2OsC3SeTlrv
-         FQfIQfBlpMgP3fm+AryFRWK435iCJ3pffmrlSRQwHDn4RQaVWl7hbLF3FdMH5IBIloM8
-         QPfuv7Y4vTCQHIgwpiCg+Ctzxo1kyw+tQ4DVQCsERu0mNuxjpN+cyZMt26lwaMs0cCf8
-         ORLA==
-X-Forwarded-Encrypted: i=1; AJvYcCX42W8GzLj6jpbeG9AxcPUb8POhD4t6YLBO9MePMi+s4HRpCoD4TsUiaOoayHDLXMoZqnCvRYLfgDc=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw6L/uCGemfCbfpgenlImgriTIpEjuCCrXKoEnJn6jBPn0x7cfY
-	EAknFvCfyDItSczRvBWrVbpL9nsKd24dXsf1gDMnYbPrRGxlYQTJFrt6
-X-Gm-Gg: AeBDievVPbxwHORe+lfXtcSW1yc6xnGQXQkpO+tDvPUKRSzl4hVNUkfOrIj89XejvcT
-	vB98KNhRRHw6m7HvZhjz/WPP1F5twI5kHXOu50T4MYRrTeXZx7bCStD0o4B5QOmo0qTh6iBP8Wz
-	pAaGOyS0CmCrYIx/uXtNpviitwz27H5vV9hoPuWNdS5NY1Wcz/XM9ByXyhS2WPvBw45ssUgAZ61
-	Qsq+53J/UiSLbBg9bFsSneg7lUWvRPcWNprLJ33cClWmWcizYqpQL8nOSbT4NOo4YJ7J3KUyruA
-	RigBfKo3OBURBZCkLz7DStzZAI5BVBtBkG3QNgXi2CbnAJu/DPwQIzMpHueMbU+5SZBjZ6XGnN6
-	l1e7dEdTgIfZh3B3pdlv+CxWVcbZvg+t4Ic7shzjJ3AhT6/fYKHO8469m+oMhPWG3EEcgSWYI+c
-	UeazxChKYy9j2eGd9XB4ypDlR7NHmb
-X-Received: by 2002:a17:903:1ae8:b0:2b2:497e:3f60 with SMTP id d9443c01a7336-2b2d5a6d679mr79615375ad.33.1775920189966;
-        Sat, 11 Apr 2026 08:09:49 -0700 (PDT)
-Received: from eric-wcnlab ([2001:288:7001:1099:4440:b527:db2e:c93f])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2d4dabca4sm61221555ad.15.2026.04.11.08.09.47
+        d=1e100.net; s=20251104; t=1776017901; x=1776622701;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d0lXBCiOMkoFu4Tr3Z4bw4jVhAqhzUpwDXkACUdSblo=;
+        b=syhxbfMwHpgGLzJ+TDbo/TzU70tyXvO1vk7WWIT3XK0Vss18VRUA01C4ibQfKlB1eR
+         6FU3ikykuP1jLPwEqmbB7HCDMcObxwbxF+ElUkG3VYuXSza207RLTVbMMJhA+f7rP8TJ
+         xJGDXS/FgYuWZgs+5kSAivVEjodLR6RmKISaHmfvwLQ4iTs6IsjUBwHX/MAOXKXw0yrA
+         ASPJdwAj5Dz/urasNPRLQLsAvJ0XOwylNKGqwnqPUfaSLxeg+JLV8G3k+k9GcWkwkvz8
+         S9orEYRqqefPpLGgx2AoxZroSVYEnwefijl4RzEnlDFMqjMs8rnSQ1jOsRWPrBG5hI7o
+         qZFg==
+X-Forwarded-Encrypted: i=1; AFNElJ8C37X945Ql5IA+vvdcIa1I5wBtYmsDY7qxHw/oSlwIDbfv1rJr1XpMA78oV7z01nnWUMXg/xo5mqw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxPku0P30ilcBTdnMicDUS21mz+xCgT28TIAnf6FngtZAjwsadg
+	cmePYbP+VuCNHXZzATaa3AkCoR7ddRljmqFzkmteM8BkLg9ABtPm5Mxo
+X-Gm-Gg: AeBDiesY2Jw9wgiyINVeH0V+qGmCLz0GsR4MLnp0jg346odnyQl9ST38x4X4GsA3gmB
+	myibYT9gpCqE94ts6UCx+9ob2nNo+ig5UkSxRqTbwEPBe4C8JpF1oMmlXA7rJPcy//aoi0P1R9d
+	0bTW0A6M5LiDR2mhYi5boMPhNO/Nmn8OT6cgpvQPO/jOg2c++aXHC94BHs0N8zi6v6Mn+KKJj7X
+	8+lqZlowrQdbdvmqxIbXLw0iwoqe+9ox6/Eno8A6F626N/TWNI7W6DZ+afp6f2ZYxpfIZ/Y8cbr
+	Rk8t289HuPeHhGUqmL+mAobDL+qISjpejyaXioAIWy+OfjqD9clOwXS9Uze6SCGfW4FF/kqamE6
+	X6Mvl3vGgD2RYb+klPH8wdIQy95O5+TL1uh52akF+0yAuO2w1kDKDVTJRcqZfkwDgVbCvyLknZc
+	0+bIF8eo2oppTj8Juoq2KDmhfuiZfIS1X9GKH7GC3sjrHA8XoygrQ=
+X-Received: by 2002:a05:6a00:4684:b0:82f:1d38:f692 with SMTP id d2e1a72fcca58-82f1d38fc86mr4656821b3a.6.1776017901412;
+        Sun, 12 Apr 2026 11:18:21 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:da32:10f:5734:2b9c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c4b3b29sm8921394b3a.36.2026.04.12.11.18.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Apr 2026 08:09:49 -0700 (PDT)
-Date: Sat, 11 Apr 2026 23:09:44 +0800
+        Sun, 12 Apr 2026 11:18:20 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>, sched-ext@lists.linux.dev, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
-	Juntong Deng <juntong.deng@outlook.com>, Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
-	Chia-Ping Tsai <chia7712@gmail.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.1] sched_ext: Add verifier-time kfunc
- context filter
-Message-ID: <z24pxjqtffpapups2bemfo7q7ys6dibb2nstnsdn5brmee7oty@t4n4z753ws4p>
-References: <20260410063046.3556100-1-tj@kernel.org>
- <adk3PF5tJOwJbeop@gpd4>
- <aa6dotiucffrhwylwuwezvmtkew5ekzcnpt2eb4vvf2yquame4@ewd3arfzvozy>
- <adn7PVYWR2FVnqFQ@slm.duckdns.org>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: linux-man@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com
+Subject: [PATCH] man7, man2: document SCHED_EXT policy
+Date: Mon, 13 Apr 2026 02:16:58 +0800
+Message-ID: <20260412181743.276652-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <adn7PVYWR2FVnqFQ@slm.duckdns.org>
+Content-Transfer-Encoding: 8bit
 
-Hi Tejun,
+Add the sched_ext(7) manual page and update existing scheduling
+documentation to include the SCHED_EXT policy.
 
-On Fri, Apr 10, 2026 at 09:41:49PM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> On Sat, Apr 11, 2026 at 02:17:37PM +0800, Cheng-Yang Chou wrote:
-> > Regarding selftests: do we need to add any for this series?
-> > It was brought up during the review of Juntong's v3 patch,
-> > but I haven't seen any further responses regarding this on my v4 patchset.
-> 
-> It would be nice to have a test covering all combinations of allow/deny
-> matrix and that's how I tested but I'm not sure there currently is a good
-> way to include such tests in the current testing framework.
-> 
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ man/man2/sched_setattr.2      |  11 +++-
+ man/man2/sched_setscheduler.2 |   4 ++
+ man/man7/sched.7              |  13 +++++
+ man/man7/sched_ext.7          | 100 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 126 insertions(+), 2 deletions(-)
+ create mode 100644 man/man7/sched_ext.7
 
-Covering all combinations would add quite a few BPF files (7 contexts *
-5 kfunc groups = 35 cells, each deny case needing its own program)
-
-Given that all demo and out-of-tree schedulers are working fine with the
-new filter, I'd lean toward leaving it as-is for now.
-
+diff --git a/man/man2/sched_setattr.2 b/man/man2/sched_setattr.2
+index 80a0ac726dcf..d60678f00e72 100644
+--- a/man/man2/sched_setattr.2
++++ b/man/man2/sched_setattr.2
+@@ -81,6 +81,10 @@ a deadline scheduling policy;
+ see
+ .BR sched (7)
+ for details.
++.TP 14
++.B SCHED_EXT
++for extensible scheduling policies implemented via BPF
++(see \fBsched_ext\fR(7)).
+ .P
+ The
+ .I attr
+@@ -95,7 +99,8 @@ struct sched_attr {
+     u32 sched_policy;      /* Policy (SCHED_*) */
+     u64 sched_flags;       /* Flags */
+     s32 sched_nice;        /* Nice value (SCHED_OTHER,
+-                              SCHED_BATCH) */
++                              SCHED_BATCH,
++                              SCHED_EXT) */
+     u32 sched_priority;    /* Static priority (SCHED_FIFO,
+                               SCHED_RR) */
+     /* For SCHED_DEADLINE */
+@@ -218,8 +223,10 @@ This field specifies the nice value to be set when specifying
+ .I sched_policy
+ as
+ .B SCHED_OTHER
++,
++.BR SCHED_BATCH ,
+ or
+-.BR SCHED_BATCH .
++.BR SCHED_EXT .
+ The nice value is a number in the range \-20 (high priority)
+ to +19 (low priority);
+ see
+diff --git a/man/man2/sched_setscheduler.2 b/man/man2/sched_setscheduler.2
+index b4c35543e5bf..825eb7290ee7 100644
+--- a/man/man2/sched_setscheduler.2
++++ b/man/man2/sched_setscheduler.2
+@@ -67,6 +67,10 @@ and
+ for running
+ .I very
+ low priority background jobs.
++.TP
++.B SCHED_EXT
++for extensible scheduling policies implemented via BPF
++(see \fBsched_ext\fR(7)).
+ .P
+ For each of the above policies,
+ .I param\->sched_priority
+diff --git a/man/man7/sched.7 b/man/man7/sched.7
+index 00926cd34ecf..2e73a4c716b9 100644
+--- a/man/man7/sched.7
++++ b/man/man7/sched.7
+@@ -116,6 +116,13 @@ and
+ .BR sched_get_priority_max (2)
+ to find the range of priorities supported for a particular policy.
+ .P
++Since Linux 6.12, there is an extensible BPF scheduling policy
++.RB ( SCHED_EXT ),
++which allows for custom scheduling algorithms to be implemented as BPF
++programs.
++See
++.BR sched_ext (7).
++.P
+ Conceptually,
+ the scheduler maintains a list of runnable threads for each possible
+ .I sched_priority
+@@ -529,6 +536,12 @@ priority (lower even than a +19 nice value with the
+ or
+ .B SCHED_BATCH
+ policies).
++.SS SCHED_EXT: Extensible BPF Scheduling
++Tasks with this policy are managed by an extensible scheduler class,
++which allows for custom scheduling algorithms to be implemented as
++BPF programs.
++See
++.BR sched_ext (7).
+ .\"
+ .SS Resetting scheduling policy for child processes
+ Each thread has a reset-on-fork scheduling flag.
+diff --git a/man/man7/sched_ext.7 b/man/man7/sched_ext.7
+new file mode 100644
+index 000000000000..7ea467e18b84
+--- /dev/null
++++ b/man/man7/sched_ext.7
+@@ -0,0 +1,100 @@
++.TH SCHED_EXT 7 2024-04-13 "Linux" "Linux Programmer's Manual"
++.SH NAME
++sched_ext \- Extensible BPF Scheduler Class
++.SH SYNOPSIS
++.B #include <linux/sched.h>
++.PP
++.B #define SCHED_EXT 7
++.SH DESCRIPTION
++.B sched_ext
++is a scheduling class whose behavior can be defined by a set of BPF
++programs, known as the BPF scheduler. It allows for the implementation
++of custom scheduling algorithms that can be loaded and unloaded
++dynamically.
++.PP
++When a BPF scheduler is loaded, it can take over the scheduling of
++tasks that use the
++.B SCHED_EXT
++policy, as well as tasks using standard policies like
++.BR SCHED_NORMAL ,
++.BR SCHED_BATCH ,
++and
++.B SCHED_IDLE ,
++depending on how the BPF scheduler is configured.
++.SS Switching to and from sched_ext
++The feature is enabled via the
++.B CONFIG_SCHED_CLASS_EXT
++kernel configuration option.
++.PP
++A task can explicitly request the
++.B SCHED_EXT
++policy using system calls such as
++.BR sched_setscheduler (2)
++or
++.BR sched_setattr (2).
++If no BPF scheduler is currently loaded, tasks with the
++.B SCHED_EXT
++policy are treated as
++.B SCHED_NORMAL
++and scheduled by the default fair-class scheduler (CFS/EEVDF).
++.PP
++When a BPF scheduler is loaded:
++.IP \(bu 3
++If
++.B SCX_OPS_SWITCH_PARTIAL
++is NOT set in the scheduler's flags, ALL tasks with policies
++.BR SCHED_NORMAL ,
++.BR SCHED_BATCH ,
++.BR SCHED_IDLE ,
++and
++.B SCHED_EXT
++are scheduled by
++.BR sched_ext .
++.IP \(bu 3
++If
++.B SCX_OPS_SWITCH_PARTIAL
++IS set, only tasks with the
++.B SCHED_EXT
++policy are scheduled by
++.BR sched_ext .
++Tasks with other policies remain under the control of the fair-class scheduler.
++.PP
++If the BPF scheduler terminates (either normally, due to an error, or
++via a SysRq command), all tasks are automatically reverted to the
++fair-class scheduler.
++.SS System Interfaces
++.B sched_ext
++exposes several interfaces in sysfs for monitoring and control:
++.TP
++.I /sys/kernel/sched_ext/state
++Shows the current state of the BPF scheduler (\fBenabled\fR, \fBdisabled\fR, etc.).
++.TP
++.I /sys/kernel/sched_ext/root/ops
++Shows the name of the currently loaded BPF scheduler.
++.TP
++.I /sys/kernel/sched_ext/enable_seq
++A monotonically incrementing counter that tracks how many times a BPF
++scheduler has been enabled since boot.
++.SS Safety and Debugging
++System integrity is maintained regardless of the BPF scheduler's
++behavior. If a runnable task stalls or an internal error is detected,
++the BPF scheduler is aborted.
++.PP
++The following SysRq sequences are available for emergency management:
++.TP
++.B SysRq-S
++Aborts the current BPF scheduler and reverts all tasks to the fair-class
++scheduler.
++.TP
++.B SysRq-D
++Triggers a debug dump of the current scheduler state to the
++.B sched_ext_dump
++tracepoint.
++.SH SEE ALSO
++.BR sched (7),
++.BR sched_setscheduler (2),
++.BR sched_setattr (2),
++.BR bpf (2)
++.PP
++.I Documentation/scheduler/sched-ext.rst
++in the Linux kernel source tree.
 -- 
-Thanks,
-Cheng-Yang
+2.48.1
+
