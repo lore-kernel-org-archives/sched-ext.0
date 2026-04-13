@@ -1,104 +1,98 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1057A3C7E0A
-	for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 12:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FFD34B69C
+	for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 15:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776084562; cv=none; b=KeyH1QAOFkDlG5EKcxQQVzKkpClW/y1c9pMTTpRNTkOPM7FkcV7M7pv4ZX2DLOAyO3k0YQSPojFOl52G+kUmu+gXKIINPOnibhNukVqw09Sty+ARLqQ0rmXgwUkI9WFrvB1kg3vNCsVh25Gst2nMDy+WsX9ahD98gqZGdQ0Kso0=
+	t=1776094181; cv=none; b=lr8eWhmY5yzTXu6N7+RP2w0I+ilKED6CzVyR8ApSKH6jvUGvpB56vJxvkqSsR4VG3UhjOpxsY7camr+HFe98/dn6Wmx7i6aEzPEaOBZaW+JQvAztDpDfcYCEOY+PPDNfLFB98RCDw6ltu3OQitQi2OOlJKJQQcOUqGb9g3uKufI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776084562; c=relaxed/simple;
-	bh=Z3cNA8j/78leauxyhJJRiybcGuO1UBXlb14jOZ4l88o=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=Hpbj5QvZC62HySUW31jQmz17262xg9PYk9CH1taq2GJbEcNGmR8D6TiPho9Up9z3hbFT9OuAaFXKPxKKhf9HJWv1z6LCWBU7RwJWQVLjP6HMlmBIeC35fy8vcpZ8qoT+A9uA+Vd045zmFLiC3ZlIQQc0eKnHq+xJkMlKsJ0ZPSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WeQCSYI4; arc=none smtp.client-ip=209.85.128.73
+	s=arc-20240116; t=1776094181; c=relaxed/simple;
+	bh=NR+5k8ukR4ii0+m4gxeR5jAg+Hv8x71QJsfgETKlIxk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=peP3/EdB8Mdn04LpY5bs306TIPnR/Opo3QPCmT+jjFlgdbipKUTBidpQ4vV5dsdkACAA5nMfFXFi/l9hIJnMJ4Hf7nHIy+zJHRZw2h7lfwn7F7D+PWo5SboUS8ToHBbyjBFB9ngy3CEDo2ECBvEgRYF/kYhtID0/DE3jACgc3PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PF8JpLTL; arc=none smtp.client-ip=209.85.221.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WeQCSYI4"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-488c74405ecso26798625e9.1
-        for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 05:49:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PF8JpLTL"
+Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-43d03065782so2741987f8f.0
+        for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 08:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1776084558; x=1776689358; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oYSjvFVqOb2Ff9E9WDbGz7uydXxIqYZzZiieWil8N6Y=;
-        b=WeQCSYI49kRgovfr5gVh7ThR9TracNX0VIKW6pUnFuJs1C8wzdmS0hs/i+jhjOZ+zB
-         W11z4tx+4sfHslu8VvKOvuDEdkmUBC4X9dk3JuhlvC5F1nGReODvh7ASB5/MxcfmUUJQ
-         kImxCPANSJ2DkN9VIieJMck4JAqiUykCZ4uBFTcYU3FULhzITlvbWWhw22JTSd+Doi02
-         IFC1DfxBApYm330nrih+h3NPBOUp+o5IvuiiJ3rzhcUpuQ9fwoV5/BXma2dmU4q6zABN
-         RNiHaxVjPsQzjkEFNiHfFLPiHKvpeR/7535kwwYGQEL32YJtx8TpkdxA3WAip1wtOY2u
-         vwDg==
+        d=google.com; s=20251104; t=1776094179; x=1776698979; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vlODL68AXkTrt/fDTHQFLWjjbdQAEDxlF+Jb+gRQnKU=;
+        b=PF8JpLTLoCcB6BITcQ/qBnKStodoB0tBpN12+SsKsb0pOpTXij/2dd7OToagQNidrg
+         +fUc3BGp2Kn68iLRgLTQFGafjrlkEWtArufeYFyArY6Hc0+BGD5W3OInjkK5bclDkeJV
+         MIf1ZmvpNDBPvDaGEEpUo1haPFOw8KwQqjzAfbL6yFKZWeDavjCUEgCDh2uZEd5xFgzU
+         rOyLaH0S1mvWPg15+9rjvIqt2pSW4UEQzZb0WaI5ou8Z/uN4Z95VG3gcJlgpKv14J3Di
+         qiIHwDrZFIOyk67UXi7cx8BHKRJYMlbdjL5XZRXPNrghlxpRoYkrbaXhZoxqQDlje/Dh
+         to2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776084558; x=1776689358;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oYSjvFVqOb2Ff9E9WDbGz7uydXxIqYZzZiieWil8N6Y=;
-        b=F9W1QyWrVS38x8AP6md3+8jj2hzIF2IBY9zBF6rBgq7y72xtEebdq03ZAb96halVCI
-         yfsqP49RPlSCY555sWpaoeXiPFxnrG5uAywW5MYOhgK61VsOIVg37nknEgDBw3WbCiZS
-         Qhetpep2l0wmVXg3DqwwfnL6H0zNkjeAUps5UorS1OrA3vLl0UiI+aogYViYfVXCUHYp
-         SjlxjGyDHsTcjtfY+KbxJjJZR5sTcO0uAmOMLKqH81EY7kto+APfcqd//g8EMQL/4OAH
-         vtZFvaCGFzq84ctv64UiLrpW/uXyawxMWKQ3JX9XORFccpuSFVcTicYxWciT2+LPO3qR
-         1gNw==
-X-Forwarded-Encrypted: i=1; AFNElJ8ykQGdQWKfstNd4I0d+Q5bDoUkydi2vprf/TWrgI8jlX/C7pRNVYjSDvchj69cPd9tmNJVx/g5ldY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxHvDPRwqyVIDCCnTrSXjXmlihIFjnqt+hm0QQY0ceUPKF4T0YY
-	JbJZP/OSp0XcWBOX7xrr/VUR1mRL69zr/ZjkmXh2vRJaAzOwWOIEgJwUTzumq99Z0zf+4kOScgx
-	mXBJwYo+7+jqGqQ==
-X-Received: from wmbdr14.prod.google.com ([2002:a05:600c:608e:b0:487:2186:fcf7])
+        d=1e100.net; s=20251104; t=1776094179; x=1776698979;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vlODL68AXkTrt/fDTHQFLWjjbdQAEDxlF+Jb+gRQnKU=;
+        b=HtBGHvPRSY0/WqXreAhLEj+aM3vTK2qUhMS6iy5NiIFnstTXFSRGbqIgCT5Sj9AvQD
+         ZtFZKOHvEqLSFGaz50mrSLOhOSAGbrB4aemaxgrqoJf/xxZPr+t4d8Dlk2Rhp+k0bd9N
+         PcXwO7/Bkfv8TMhjB4idxcOUSQcuv/fDZFeNNiNnoSabcTgqtPUic7emXdV8b4POJ6gd
+         ZNmnu3YQ1Yr8BBAy2QWWIyDO/Vrk0zP3XiEq/G32qua6TFp+K3J8KueZ2mHIlmfag0up
+         oIJuKj+GvxlUMTW+hjpakvnmdGi6XdAQIu0U5QnwuUrig8yjxESkYmAQQL0qu1XZmp2C
+         AXag==
+X-Forwarded-Encrypted: i=1; AFNElJ87yNLLymtubBQov/2VDf9hZxTk8QQXnC1+KLkrgZtUSwe7wxqOMMlpukD+ota6jAG5AwK6wfuRuVI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxifSBPmh2dRWBZLOLJ6L4rBJVuy7MyUE3dL8/hiOuTTPLKL1PV
+	V962YKyV00cg7TbqeUDnfHBlI3qQb1uGi51vcHlRpiaUOcwwcy0Y3iZJc8HabgLIynMOa71GzV8
+	k6Xo+6TWLo6Tfzw==
+X-Received: from wrph7.prod.google.com ([2002:adf:f4c7:0:b0:43c:f4ee:7a69])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:890e:b0:488:bd79:94d8 with SMTP id 5b1f17b1804b1-488d684331emr119278455e9.18.1776084558147;
- Mon, 13 Apr 2026 05:49:18 -0700 (PDT)
-Date: Mon, 13 Apr 2026 12:49:02 +0000
+ 2002:a05:6000:1884:b0:43d:778a:9698 with SMTP id ffacd0b85a97d-43d778a9a02mr7152422f8f.24.1776094178479;
+ Mon, 13 Apr 2026 08:29:38 -0700 (PDT)
+Date: Mon, 13 Apr 2026 15:29:37 +0000
+In-Reply-To: <20260413110453.357198-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
-Message-ID: <20260413124902.843578-1-jpiecuch@google.com>
-Subject: [PATCH sched_ext/for-7.1] sched_ext: Make string params of
- __ENUM_set() const
+References: <20260413110453.357198-1-yphbchou0911@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DHS4U9BLRCPG.1S9E4BT1UIHQT@google.com>
+Subject: Re: [PATCH] tools/sched_ext: Handle pinned tasks in scx_central
 From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	David Vernet <void@manifault.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
-	Kuba Piecuch <jpiecuch@google.com>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>, <sched-ext@lists.linux.dev>, 
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-A small change to improve type safety/const correctness.
-__COMPAT_read_enum() already has const string parameters.
+Hi Cheng-Yang,
 
-It fixes a warning when using the header in C++ code:
+On Mon Apr 13, 2026 at 11:04 AM UTC, Cheng-Yang Chou wrote:
+> @@ -107,12 +113,13 @@ void BPF_STRUCT_OPS(central_enqueue, struct task_struct *p, u64 enq_flags)
+>  	__sync_fetch_and_add(&nr_total, 1);
+>  
+>  	/*
+> -	 * Push per-cpu kthreads at the head of local dsq's and preempt the
+> -	 * corresponding CPU. This ensures that e.g. ksoftirqd isn't blocked
+> -	 * behind other threads which is necessary for forward progress
+> -	 * guarantee as we depend on the BPF timer which may run from ksoftirqd.
+> +	 * Push tasks pinned to a single CPU at the head of local dsq's and
+> +	 * preempt the corresponding CPU. This ensures that e.g. ksoftirqd
+> +	 * isn't blocked behind other threads which is necessary for forward
+> +	 * progress guarantee as we depend on the BPF timer which may run
+> +	 * from ksoftirqd.
+>  	 */
+> -	if ((p->flags & PF_KTHREAD) && p->nr_cpus_allowed == 1) {
+> +	if (p->nr_cpus_allowed == 1) {
 
-  error: ISO C++11 does not allow conversion from string literal
-         to 'char *' [-Werror,-Wwritable-strings]
+If you want to cover all cases, then I think you should also check
+is_migration_disabled(p). When a task disables migration, it is not reflected
+in p->cpus_ptr or p->nr_cpus_allowed until the task is switched out (see
+migrate_disable_switch()), which happens __after__ ops.enqueue().
+So here, you could see p->nr_cpus_allowed > 1 even though the task has
+migration disabled.
 
-That's because string literals have type char[N] in C and
-const char[N] in C++.
-
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
-
-Not sure whether upstream cares about C++, but figured I'd send it in
-anyway. Also not sure if it merits CC'ing stable (probably not?)
-Would appreciate your input!
-
- tools/sched_ext/include/scx/enums.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tools/sched_ext/include/scx/enums.h b/tools/sched_ext/include/scx/enums.h
-index 8e7c91575f0b3..c3b09acce824a 100644
---- a/tools/sched_ext/include/scx/enums.h
-+++ b/tools/sched_ext/include/scx/enums.h
-@@ -9,7 +9,7 @@
- #ifndef __SCX_ENUMS_H
- #define __SCX_ENUMS_H
- 
--static inline void __ENUM_set(u64 *val, char *type, char *name)
-+static inline void __ENUM_set(u64 *val, const char *type, const char *name)
- {
- 	bool res;
- 
--- 
-2.53.0.1213.gd9a14994de-goog
-
+Thanks,
+Kuba
