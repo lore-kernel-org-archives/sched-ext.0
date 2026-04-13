@@ -1,98 +1,93 @@
 Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FFD34B69C
-	for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F5D3B0AFD
+	for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 15:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776094181; cv=none; b=lr8eWhmY5yzTXu6N7+RP2w0I+ilKED6CzVyR8ApSKH6jvUGvpB56vJxvkqSsR4VG3UhjOpxsY7camr+HFe98/dn6Wmx7i6aEzPEaOBZaW+JQvAztDpDfcYCEOY+PPDNfLFB98RCDw6ltu3OQitQi2OOlJKJQQcOUqGb9g3uKufI=
+	t=1776095415; cv=none; b=cFMQQ7Wqef0lL9+q/GU+cIoazLHRdDrxMSVJCA/+twR6sxKzdJw3qbaaW8qjue2v1bqleYOY2X3mS8TdCG6vtTv0TdTlSs0kfbb7lUId+NURiBfdwvf9T88xZfe8bWfIcYeM1M5J63GeAQ2MuZh8QYlrYxWnI999C5a9+JvWvzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776094181; c=relaxed/simple;
-	bh=NR+5k8ukR4ii0+m4gxeR5jAg+Hv8x71QJsfgETKlIxk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=peP3/EdB8Mdn04LpY5bs306TIPnR/Opo3QPCmT+jjFlgdbipKUTBidpQ4vV5dsdkACAA5nMfFXFi/l9hIJnMJ4Hf7nHIy+zJHRZw2h7lfwn7F7D+PWo5SboUS8ToHBbyjBFB9ngy3CEDo2ECBvEgRYF/kYhtID0/DE3jACgc3PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PF8JpLTL; arc=none smtp.client-ip=209.85.221.73
+	s=arc-20240116; t=1776095415; c=relaxed/simple;
+	bh=YC685YyW6qw20jw9igIT2AdiNHEcGzlsq/ssz/jOiCQ=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=X4gG/PbBVHVzRf1m9+pbrgKNt7814AZkKcMbiDgfOJbOgV1w485oD/+wYVnhxewLxaz3/6eiQpt5N8B7n/0alTifBnOXjE1YootulfnHWjuncCjI1Bebjju1s5/A2Y6C6ree+f0bTeeGLRsbFqW/yOmk8+E4vfwH52filWPf7LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BThNVZkt; arc=none smtp.client-ip=209.85.221.73
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PF8JpLTL"
-Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-43d03065782so2741987f8f.0
-        for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 08:29:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BThNVZkt"
+Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-43d1bfbd219so3325582f8f.0
+        for <sched-ext@lists.linux.dev>; Mon, 13 Apr 2026 08:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1776094179; x=1776698979; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vlODL68AXkTrt/fDTHQFLWjjbdQAEDxlF+Jb+gRQnKU=;
-        b=PF8JpLTLoCcB6BITcQ/qBnKStodoB0tBpN12+SsKsb0pOpTXij/2dd7OToagQNidrg
-         +fUc3BGp2Kn68iLRgLTQFGafjrlkEWtArufeYFyArY6Hc0+BGD5W3OInjkK5bclDkeJV
-         MIf1ZmvpNDBPvDaGEEpUo1haPFOw8KwQqjzAfbL6yFKZWeDavjCUEgCDh2uZEd5xFgzU
-         rOyLaH0S1mvWPg15+9rjvIqt2pSW4UEQzZb0WaI5ou8Z/uN4Z95VG3gcJlgpKv14J3Di
-         qiIHwDrZFIOyk67UXi7cx8BHKRJYMlbdjL5XZRXPNrghlxpRoYkrbaXhZoxqQDlje/Dh
-         to2w==
+        d=google.com; s=20251104; t=1776095413; x=1776700213; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dBKs6RmD5lklIwd+PqH307L7R0ZSIWZPtkNE1hSBlrw=;
+        b=BThNVZktSTHHGejT+QwG2P8EiUdglV3V4bX5qbPCg2odSSkwCfMQxYnkOFv9GhHVRF
+         9HUybdLP0lnsA96Bu3Vpk92KAeU54HMWnLpAdvCiBL+Da8nTX5fj25FUfL8o8DJzuF1f
+         eGuB7Bed6RW3wpBRCUeIZu79DfaSwYhsJd5ZkjKoSqYenfoMN0MbISWrCQdaKVxaUF0F
+         cSlon4wdNzr/pvKqZ1FCtX2qCfg1+bIUnPei7/1Y9rgzrV35c2LBGc/scS9/vdcDhaK3
+         cJhAGVHIoVE7d+6c5Ss45PSsI8kLHTPOJZ/AW6CB2wuE//ayAmKSJP8SB488tAH9EB45
+         i+fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776094179; x=1776698979;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vlODL68AXkTrt/fDTHQFLWjjbdQAEDxlF+Jb+gRQnKU=;
-        b=HtBGHvPRSY0/WqXreAhLEj+aM3vTK2qUhMS6iy5NiIFnstTXFSRGbqIgCT5Sj9AvQD
-         ZtFZKOHvEqLSFGaz50mrSLOhOSAGbrB4aemaxgrqoJf/xxZPr+t4d8Dlk2Rhp+k0bd9N
-         PcXwO7/Bkfv8TMhjB4idxcOUSQcuv/fDZFeNNiNnoSabcTgqtPUic7emXdV8b4POJ6gd
-         ZNmnu3YQ1Yr8BBAy2QWWIyDO/Vrk0zP3XiEq/G32qua6TFp+K3J8KueZ2mHIlmfag0up
-         oIJuKj+GvxlUMTW+hjpakvnmdGi6XdAQIu0U5QnwuUrig8yjxESkYmAQQL0qu1XZmp2C
-         AXag==
-X-Forwarded-Encrypted: i=1; AFNElJ87yNLLymtubBQov/2VDf9hZxTk8QQXnC1+KLkrgZtUSwe7wxqOMMlpukD+ota6jAG5AwK6wfuRuVI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxifSBPmh2dRWBZLOLJ6L4rBJVuy7MyUE3dL8/hiOuTTPLKL1PV
-	V962YKyV00cg7TbqeUDnfHBlI3qQb1uGi51vcHlRpiaUOcwwcy0Y3iZJc8HabgLIynMOa71GzV8
-	k6Xo+6TWLo6Tfzw==
-X-Received: from wrph7.prod.google.com ([2002:adf:f4c7:0:b0:43c:f4ee:7a69])
+        d=1e100.net; s=20251104; t=1776095413; x=1776700213;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dBKs6RmD5lklIwd+PqH307L7R0ZSIWZPtkNE1hSBlrw=;
+        b=h8r5IaPh5xmv1ZVjhUyRRluBY42dtoBQAjmCGLczFXwvi3ECJRhtcp+kR8IDpGFsJj
+         eqQPqCpz88XgheSaAiWxafYGltMXG47lCVfF0qyUJKNwLPKRTX5M4SzYKEDVnwrHQgZF
+         DFNcICoXA/YC2FjPwnklqhD62U0s63+AcZKp4pt1rTB3ESv+t6p60QnBFLplcLquqawa
+         OSA5vOYYZxDD+PuegXlIrD3PAF/U2ZCtu5iXp9ncBWJ6Wnk/Q5FNOauwWM+IARevU8W1
+         3TpJNHB8c3XZONRMCia1FAhPXxdibN18kIXxhMOxJGqrGm8yrYV6N6ses21egFfv1NJT
+         XHRQ==
+X-Forwarded-Encrypted: i=1; AFNElJ812BYJVYKDQHX3UNgOLPz/KD/3UUe4hhbfj/hRwfhkBnkjKGDm6W6N7jwC1E81Ztvz8xa8frd0DoA=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx3bs0Qe/XU48f7DAhN8iwz9sPAdSzKlxaK6mC3gkBE2EH/Wof1
+	kZ9oyj0YwvN1+uuLEuNI7BHPqnqBATy3o4y6eViHQvyRY4mylCwZBVWrlwF9OQgIfjLP0YxodGy
+	fPA9GQiBRAQPS1Q==
+X-Received: from wrdf11.prod.google.com ([2002:a5d:58eb:0:b0:43d:7bb1:ac59])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:1884:b0:43d:778a:9698 with SMTP id ffacd0b85a97d-43d778a9a02mr7152422f8f.24.1776094178479;
- Mon, 13 Apr 2026 08:29:38 -0700 (PDT)
-Date: Mon, 13 Apr 2026 15:29:37 +0000
-In-Reply-To: <20260413110453.357198-1-yphbchou0911@gmail.com>
+ 2002:a05:6000:2512:b0:43d:75ec:26f7 with SMTP id ffacd0b85a97d-43d75ec2939mr8089831f8f.29.1776095410379;
+ Mon, 13 Apr 2026 08:50:10 -0700 (PDT)
+Date: Mon, 13 Apr 2026 15:50:05 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260413110453.357198-1-yphbchou0911@gmail.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-Message-ID: <DHS4U9BLRCPG.1S9E4BT1UIHQT@google.com>
-Subject: Re: [PATCH] tools/sched_ext: Handle pinned tasks in scx_central
+X-Mailer: git-send-email 2.53.0.1213.gd9a14994de-goog
+Message-ID: <20260413155005.1215682-1-jpiecuch@google.com>
+Subject: [PATCH sched_ext/for-7.1] tools/sched_ext: Add explicit cast from
+ void* in RESIZE_ARRAY()
 From: Kuba Piecuch <jpiecuch@google.com>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>, <sched-ext@lists.linux.dev>, 
-	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	David Vernet <void@manifault.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Kuba Piecuch <jpiecuch@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Cheng-Yang,
+This fixes the following compilation error when using the header from
+C++ code:
 
-On Mon Apr 13, 2026 at 11:04 AM UTC, Cheng-Yang Chou wrote:
-> @@ -107,12 +113,13 @@ void BPF_STRUCT_OPS(central_enqueue, struct task_struct *p, u64 enq_flags)
->  	__sync_fetch_and_add(&nr_total, 1);
->  
->  	/*
-> -	 * Push per-cpu kthreads at the head of local dsq's and preempt the
-> -	 * corresponding CPU. This ensures that e.g. ksoftirqd isn't blocked
-> -	 * behind other threads which is necessary for forward progress
-> -	 * guarantee as we depend on the BPF timer which may run from ksoftirqd.
-> +	 * Push tasks pinned to a single CPU at the head of local dsq's and
-> +	 * preempt the corresponding CPU. This ensures that e.g. ksoftirqd
-> +	 * isn't blocked behind other threads which is necessary for forward
-> +	 * progress guarantee as we depend on the BPF timer which may run
-> +	 * from ksoftirqd.
->  	 */
-> -	if ((p->flags & PF_KTHREAD) && p->nr_cpus_allowed == 1) {
-> +	if (p->nr_cpus_allowed == 1) {
+  error: assigning to 'struct scx_flux__data_uei_dump *' from
+  incompatible type 'void *'
 
-If you want to cover all cases, then I think you should also check
-is_migration_disabled(p). When a task disables migration, it is not reflected
-in p->cpus_ptr or p->nr_cpus_allowed until the task is switched out (see
-migrate_disable_switch()), which happens __after__ ops.enqueue().
-So here, you could see p->nr_cpus_allowed > 1 even though the task has
-migration disabled.
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ tools/sched_ext/include/scx/common.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-Kuba
+diff --git a/tools/sched_ext/include/scx/common.h b/tools/sched_ext/include/scx/common.h
+index 823251fc47151..60f5513787d66 100644
+--- a/tools/sched_ext/include/scx/common.h
++++ b/tools/sched_ext/include/scx/common.h
+@@ -67,6 +67,7 @@ typedef int64_t s64;
+ 		bpf_map__set_value_size((__skel)->maps.elfsec##_##arr,			\
+ 				sizeof((__skel)->elfsec##_##arr->arr[0]) * (n));	\
+ 		(__skel)->elfsec##_##arr =						\
++			(typeof((__skel)->elfsec##_##arr))				\
+ 			bpf_map__initial_value((__skel)->maps.elfsec##_##arr, &__sz);	\
+ 	} while (0)
+ 
+-- 
+2.53.0.1213.gd9a14994de-goog
+
