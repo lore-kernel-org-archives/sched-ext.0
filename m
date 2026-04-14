@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3C72F28FF
-	for <sched-ext@lists.linux.dev>; Tue, 14 Apr 2026 17:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7BE1D5CC6;
+	Tue, 14 Apr 2026 17:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776187146; cv=none; b=sIkyCYOehxkiRSZUgCdyWqLHgCDIl4rteqQEH2AepOT1HhZ+noWDT/LBCSM/WUg2o1m+n0zWkj+7173Klxv8t+PnqFu8nBPDyhKAKYYUDoFNLwx8YglJNm+731wi1Z1jejTG/Z+U0vv10Nv4JBiu4RY5JGEdSOzVZfzG2L3458U=
+	t=1776187384; cv=none; b=cXhQgMQImWfU2aK+OfYtcblbUGWeFrLzxmp9sJyRKQztSkx71DTGlFOetPTFdQ24XX6qM5mDWh/1yjzPy584i/puF5zFbL8COB7bW1bgHi7PhE8ixAOA9qxMe4gy8k+bY8eAxIG8EICWnYPq7LrS2NgsHafoU8LAspMXGbR0B/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776187146; c=relaxed/simple;
-	bh=0kKmCuAycD4RClSEXdDOKo82lsxJ2n0hhLnnNHmRuOw=;
+	s=arc-20240116; t=1776187384; c=relaxed/simple;
+	bh=EtIXgDtZije819G8S+TgKYxLQZojM3MCshppot01HrQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lHXYnGsUFUJpY+YcXjdkX8lt/kaR8pwdXlzW5G4MPZJZxPGW5ivgPrWympOTpp6PFW6EbQJ6svg9YKTX3k7ra0E+vMsZM+gsN8YBt2sleUxkR+ZNp+y5Lj4VwUkJ7AmO6Es+rg90bibMBGrCCOLv+0CPFQA4YQFUWP9TeLmvFqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l2dYe1uQ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=bCb774q9EPEpJX5HHjcy/MzkfVuDWu3ap+Gj0cPBrto2IOiqOLlY0YUJ36+7ZvTKpszuzp+eJT9xU7xCBek9Puw0ui4pYXeLplH56myTIbIg6KkvHqgw9NAgP/VhvJk6DldEvQxUQ5QhWyBvuw8+mYIhdYmJcSY2uH2Cj4v3Naw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nMNdnmbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l2dYe1uQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10933C19425;
-	Tue, 14 Apr 2026 17:19:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMNdnmbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F21C19425;
+	Tue, 14 Apr 2026 17:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776187146;
-	bh=0kKmCuAycD4RClSEXdDOKo82lsxJ2n0hhLnnNHmRuOw=;
+	s=k20201202; t=1776187383;
+	bh=EtIXgDtZije819G8S+TgKYxLQZojM3MCshppot01HrQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l2dYe1uQ5xA9aH5TgHkgMJsbz13bhRJwCbDZMxRYb+W3dKPuBPUQ3BOdLuT17IuEb
-	 0neSG/iUvZ5wO9JVdjnDTlGxSm/wS6V6B282Jqm3+ECoeB0XwJzDmgiQEe3DV8JLDf
-	 0NngCwYd17eZo9/Umoma1d91uaDH+ONKZpEIA2XzHw2bifnuC/g3ewAw1buHY6pk6J
-	 TGXm2X2OKtNAssXKK7T6jINkd4BZFlBcQForKzBy5Lhb4pOD9707JsxUFldcsLfgWh
-	 MQ+MKjFsRZTKmGVQYQLVGmm+rCj1vhb1kpxHFuunrrmvmWV+1qWTLRikzqmS7Z7qMS
-	 dcD5kjRDWE+7A==
-Date: Tue, 14 Apr 2026 07:19:04 -1000
+	b=nMNdnmbO6/hgGRunEyZcTnrDbh8WCz/W1Ut1UBpBOyVHU70OUaY5w/cqpm9cvsyfD
+	 hUXRzCUjfjjtyBCx5ty2NvVTgtH+DfE920TbsUQsd7sV07wnLyNnPt2Xbbh1Bzvd8T
+	 CJvjqkY1JBoLQFAmp+fcP5/Vy2X2JJqMhSE1A7a9tkRIQRdPxN2hevo/1q1/CWT4CL
+	 MqsZs7O+7QyWavbjOHMOv+m/ISbxxPE1YM97MYjwG4A5xbNI9n8JuAdtsMeXzypSU8
+	 5NZVsIqqW4Z+UwAFTsGNNTeDbE1KigXV8NlMt3mVgbG6mdC3WT0nFQ0lkCp2L3LI+f
+	 yiS7g5jMHCiuA==
+Date: Tue, 14 Apr 2026 07:23:02 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH] tools/sched_ext: Handle pinned tasks in scx_central
-Message-ID: <ad53CFXVxTha3EQu@slm.duckdns.org>
-References: <20260413110453.357198-1-yphbchou0911@gmail.com>
- <DHS4U9BLRCPG.1S9E4BT1UIHQT@google.com>
- <s3khi4ec55rog6tgbgxip5skqjdhimcemhwzf3h7pbbvxslnu7@5r4v7jbv4w7z>
+To: Fredrik Boettger Bratberg <fredrik.b.bratberg@gmail.com>
+Cc: Henrik Austad <henrik@austad.us>, Peter Ziljstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@kernel.org>, linux-rt-devel@lists.linux.dev,
+	sched-ext@lists.linux.dev
+Subject: Re: [RFC PATCH] sched: add CONFIG_SCHED_EXT_RT_EXPERIMENTAL to move
+ SCHED_EXT above SCHED_RR/SCHED_FIFO
+Message-ID: <ad539mUd8A0lDWAw@slm.duckdns.org>
+References: <20260414125933.3520885-1-fredrik.b.bratberg@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,58 +45,32 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <s3khi4ec55rog6tgbgxip5skqjdhimcemhwzf3h7pbbvxslnu7@5r4v7jbv4w7z>
+In-Reply-To: <20260414125933.3520885-1-fredrik.b.bratberg@gmail.com>
 
 Hello,
 
-On Tue, Apr 14, 2026 at 11:45:59AM +0800, Cheng-Yang Chou wrote:
-> diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
-> index 4efcce099bd5..67b160a7ce18 100644
-> --- a/tools/sched_ext/scx_central.bpf.c
-> +++ b/tools/sched_ext/scx_central.bpf.c
-> @@ -96,7 +96,13 @@ s32 BPF_STRUCT_OPS(central_select_cpu, struct task_struct *p,
->  	 * disturbing other CPUs. It's safe to blindly return the central cpu as
->  	 * select_cpu() is a hint and if @p can't be on it, the kernel will
->  	 * automatically pick a fallback CPU.
-> +	 *
-> +	 * For tasks pinned to a single CPU, return the current CPU to avoid
-> +	 * an unnecessary fallback.
->  	 */
-> +	if (p->nr_cpus_allowed == 1)
-> +		return scx_bpf_task_cpu(p);
-> +
+On Tue, Apr 14, 2026 at 02:59:33PM +0200, Fredrik Boettger Bratberg wrote:
+> A recent paper published in the 2025 Real-Time Systems Symposium (RTSS)
+> "Enabling Flexible Scheduling in ROS 2", would presumably also benefint
+> from this feature. The paper aims to address and improve the real-time
+> capabilities of Robot Operating System 2 (ROS2). As part of their paper
+> they implement an EDF using sched_ext. They do not explicitly address the
+> issue of their EDF SCHED_EXT tasks effectively having a lower priority than
+> SCHED_NORMAL, but it is a known limitation of the current sched_ext class
+> placement
 
-This isn't necessary. select_cpu() isn't called if nr_cpus_allowed == 1.
+Isn't that mostly solvable by just not putting tasks in DL/RT and enabling
+switching_all?
 
-> @@ -107,12 +113,17 @@ void BPF_STRUCT_OPS(central_enqueue, struct task_struct *p, u64 enq_flags)
->  	__sync_fetch_and_add(&nr_total, 1);
->  
->  	/*
-> -	 * Push per-cpu kthreads at the head of local dsq's and preempt the
-> -	 * corresponding CPU. This ensures that e.g. ksoftirqd isn't blocked
-> -	 * behind other threads which is necessary for forward progress
-> -	 * guarantee as we depend on the BPF timer which may run from ksoftirqd.
-> +	 * Push tasks pinned to a single CPU or with migration disabled at
-> +	 * the head of local dsq's and preempt the corresponding CPU. This
-> +	 * ensures that e.g. ksoftirqd isn't blocked behind other threads
-> +	 * which is necessary for forward progress guarantee as we depend on
-> +	 * the BPF timer which may run from ksoftirqd.
-> +	 *
-> +	 * p->nr_cpus_allowed is not updated until migrate_disable_switch()
-> +	 * runs during context switch, which happens after ops.enqueue(). Check
-> +	 * is_migration_disabled() directly to catch tasks in this window.
->  	 */
-> -	if ((p->flags & PF_KTHREAD) && p->nr_cpus_allowed == 1) {
-> +	if (p->nr_cpus_allowed == 1 || is_migration_disabled(p)) {
+> This change conditionally reorders sched_class selection such that, when
+> enabled:
+> 
+>   STOP > DL > EXT > RT > FAIR > IDLE
 
-Let's not expand the condition here. This is to guarantee forward progress
-of the scheduler itself.
-
-> @@ -155,6 +166,13 @@ static bool dispatch_to_cpu(s32 cpu)
->  		if (!bpf_cpumask_test_cpu(cpu, p->cpus_ptr)) {
-
-Instead, can you expand the condition above to "if this task can't run on
-the target CPU for whatever reason"?
+The problem is that RT being above EXT is required for safety as EXT depends
+on RT superceding it for enable/disable path forward progress guarantee. If
+you put EXT on top of RT, it's relatively easy to stall out the whole system
+without any way to recover it.
 
 Thanks.
 
