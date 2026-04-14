@@ -1,177 +1,269 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F83C3E275C
-	for <sched-ext@lists.linux.dev>; Tue, 14 Apr 2026 12:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9643E63BA
+	for <sched-ext@lists.linux.dev>; Tue, 14 Apr 2026 12:59:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776170325; cv=none; b=mOcUrM7WT5tbteI1MysirriwjHTcTwQOCbOF9r45y/6THc/SK8zc6loA/r78esh9UV/hS8TaDR4vmXNTNq8gZnF/tcd9lK//BldY28iFKDWKNQ9rTrXbe+32Z7m+Fwxl6l6wdvhEoT9ZjVjoOyvbnMKiXAaxOnQOc+C18HYuigk=
+	t=1776171581; cv=none; b=EMIi5j3jWnW/3UL5fUck1bbf/b8npMRN65WsbgiqemIGcWtxQiPxcNTE07Ck8oraTEERkqgK5Ru/KWU8gbSaWTgdy1MVYKrFR5uIrH1hNm03W3xENocNnkYGjAgfe339utQXRJmwhhWuXSyDNUrVM18cD+4Imio55JMA7N+C1VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776170325; c=relaxed/simple;
-	bh=IDUHEoc9IMQmEyJ7zaOyhXp5dECdabqPboEfWiFbLas=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gx/M4732lmH3TuIxifDHkBDmMbXhRroBjzOXd/wFRHUfi5aaQzqdmPEPU5dRWIBf/YD9j/0gm7nNXlwT74ZpRElCVMBTkz+b1heLMju3UkBxZk+5dt6+WlV8Tmrt1afGN8Ac3CA767GC9CUfmu07X2/8Dph1b80brBJZ72HC1zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MRmzoz04; arc=none smtp.client-ip=209.85.216.52
+	s=arc-20240116; t=1776171581; c=relaxed/simple;
+	bh=WQHdgxfWlX0aPB6RR7aILl83Gc2XgUcket5ljTMUvjA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=sSkWyhmDj0Z0CfUqjFdZ3tBPJFBSr156ctMiNNb7z7kt1KIkVbu/AvUN4luHEZ1CtQRTYgRWBo0cDTquEbmOgB5EilJ4y1Hs7J1agK6uZG5R7vWbrkYuFU85pLvYfhxuZ/nawIKDSqpmGraOfp4BLyLTLCBi8QF4D0WU+SbAIQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YKdtkZhT; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MRmzoz04"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-35d99bae2ebso4773322a91.3
-        for <sched-ext@lists.linux.dev>; Tue, 14 Apr 2026 05:38:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YKdtkZhT"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-66b2d49ffb0so7282906a12.3
+        for <sched-ext@lists.linux.dev>; Tue, 14 Apr 2026 05:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776170324; x=1776775124; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QNKFB9lrr4XL7PfssPaK+M9NZgQDIRZgrK0ojBUTM/g=;
-        b=MRmzoz042raBmJFfWSDLYiSClu47UU18iZi/gaoGzMLLAABv+UeQBgL8zw334L3pEV
-         rNILlModK7cTJzzIyBTpf7yVWszpYRzbNZHo43uW5JrLfCF/lMl8M9O4G/yhFDBWzPHs
-         kaeJ8GspBwSYPG2QnOr1n5seRcOsV/Ph1j3AzE1UfPMK5BtCBGLVQ2VkQICafft4AFYT
-         8hdNSLaBVuku5K84ri+F6s8rjLLrfeMHfu4yLuioZaye/lchouQVmyXbhgQiSTtN2W2J
-         pGL0FmonGKh+FqChNYaysPGKRjUIzYJsMdb4zoOmTJBC3LQHzeYw+wvuM43ZbxTqoKXs
-         ojvA==
+        d=gmail.com; s=20251104; t=1776171579; x=1776776379; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cdLGnEYh10cO+yUbeSf7mdF0hSaGC/uTtDvKw2e8EtU=;
+        b=YKdtkZhTZTWcjhoYyF0LNPq4gTVMHcnEpnL6Lj+TchoIZ9s9G090xfLQzfvvqTwMzb
+         8HyOzmt428aeMkt/QAt2SuMZLs01bxUAgC/Q0YdJfRIb28SSkyf6eVHFZxODwerkx2Ij
+         w0urtZlYb5fi7ncAWKWEx3oTPi+AqfOHidE3bMqiN7uf1V4j2irtl/QJ8Ieer493XPV8
+         dWPtqPKYjtimqb+Vz6T67zV+E56MkdLDtTn9UO9FdFCJ8z9N91ataLa4bjHYqVmRpE5U
+         qqQl9pgEXX+FZScdDalRTTRKm9aLSULa51OHQrg3dzzX6/G/Gy6EO0GLrEbTaZ6lSx4D
+         SYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776170324; x=1776775124;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QNKFB9lrr4XL7PfssPaK+M9NZgQDIRZgrK0ojBUTM/g=;
-        b=BbHXlpHFpA94XcMlVHLNdLc9BixUQRj4aaB0L7KU6+r24VXoxHFiNvXp3m03Gtyrcd
-         xOyyQfIeX0T1134+qLB/JwyY+BrUYmKxxVEzbwq95gHI2Xs5dMrupcfsu6gCgY1ZAAuI
-         jLcRf8MeyZYZ1VcPudpXq9kKhdl6MzmW8m6xt9n6fIoWBW5IaDFUw/yVSxYCBkRG2Jz2
-         83Ug64/4Thtu/wMS9KjuCvWFMrs3d6oAE5o3BcQiuFL6TYER7CG4xhj3XKs656TWscTV
-         HKLMBzDUcCclM5aHNi+N72SzKvuhPA/UroRE5/Jk5e81HnLFyJ/aqnPqsyS7YUBq/h4q
-         YY+A==
-X-Gm-Message-State: AOJu0Yw1v/FVIZT915AUHdZFafR75TSclHXbjPVIDZghSZ0iuTBgETWx
-	msrBDhNRjJcN1B58yznzX89qODknCgDi7PPBlM7hwfj0k3Jpf6jASt/a
-X-Gm-Gg: AeBDieuDuQx0kws/8xYkZWSvtrbMcDIgcaJES/P6UoNF5/USlK2M9uKiruJTUBgWs6e
-	8P5Kc94HSerWc0cDjIRf5UwTZvTxP4WjkmAbH1gdNKvMCWbQujxFlzNdqgpg19dQ9Tvb+PfIult
-	qucP6L1LhpJqoGN/9NlO5GNZdfhO7Hkm72NbEdg6Q/HZ/fj2Wo9wR+3ERi/cwigwE+0IOWux6Bf
-	mMIwuzGHHK9QyYMVGWNqzRn+7W2xdUkADGp8XmYLLewp7UZ70CcbaglXHkZJyvqKEEtE72LwC07
-	3iVbBKc1xXDwuhPMXDRrMnwpiXvSldtrv/GvHgiNEJ/X6VYADyRQr8V5FzdC7DUmx4FCHeUk9N2
-	vqPdAimrbgIWS/95Imw3tR7S0BVxiwwbvGWiQLeorAqxpec6cjVXH2nNytYnY7h3dr+LOEc1D2u
-	w0AjzSZFimUGsbZEBeBpl6yIF/4zXh
-X-Received: by 2002:a17:90b:4c0c:b0:35f:b7f5:9b3 with SMTP id 98e67ed59e1d1-35fb7f5117dmr7302972a91.3.1776170323483;
-        Tue, 14 Apr 2026 05:38:43 -0700 (PDT)
-Received: from eric-wcnlab ([2001:288:7001:1099:839f:5f0c:bfd1:44c4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35e4306b900sm5325702a91.11.2026.04.14.05.38.40
+        d=1e100.net; s=20251104; t=1776171579; x=1776776379;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cdLGnEYh10cO+yUbeSf7mdF0hSaGC/uTtDvKw2e8EtU=;
+        b=nQgnc/Ba/x2PKKzdGvr65crJvjPe1Rt9XW0a2aY98Y7MLAny8z0ldJ0bvHV6+vfBb7
+         NL03JInF73/5RrR7vQbffSwFwivirgScKwyFQHenB9DcQDrJk+pWprAfSzjw3THy+5cz
+         exJlE9ltCelIRYHODZKfvHRyjzi7kf8gwbk6GvoQwJje156s00ep0IfwcGbpvZMx/wVw
+         kDYE5FuD1aJAtfaqEUsXhzo+UgDN1Vu+gd2vr1Lcb+wkIQryYpTFFv75CbHq5yhPXxb5
+         XpbgpEhQx8Ix0RE2PJOJO5RmO/YoPAJM/0SEvms1vH7uhW1XUCGECyPfyIrMBuGnqpqu
+         e+6A==
+X-Forwarded-Encrypted: i=1; AFNElJ97CpMswxx0dLCvxixdObAZAtMtzsYqMyiVlJtPfBz887MYKyloiJqsjbAC0DESmXCzb5x34S6MOBQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxqrNvroY2RZdwtUqtKfa3WWKfp7PLjayO/1hMj5SoZwgOob9rW
+	5XP7Goq8uC93vg/O1Znvbfk2z3R79/tQ8tAlihk//1xO8UsJBKKHCEWc
+X-Gm-Gg: AeBDietAt6/FnsS1i09Fxkjqv9sBMZSdZMmtqq12s2DI+dTKlTp7KJEP6NCEXDKfN/C
+	13e47AvVOAXZBbvaY/JiWIsNvkAnyJgmvMzabC/q5iytsU17m7SlOkbDtnGJQ0kdoW7sqL5IanU
+	3VOkmCaN1u3kQMZ/9pckf7zkjOAHJv/ZRVbEyQvberyXvuBC5znMSHX9TucCgbDm3lQnrOUVSEg
+	9IgNHDW66uHOP2hKkgkIsZiuQopBpAvGnnlxr1C9eYMLjcOxJRvdkb/2AfAQoxy8fRqByqocU+D
+	PyL/K9H0rbOU+tzklHk+/Af3raz67V20p9tmL/lRwL+mRuNoTmI2H/lXodvKSdaIMzlWLa1qWBz
+	a7X3MWAuEIBCKK6n1VgKnhxxXSJHs0JGgqeUBWAms+XlDJl4DlyGqSIQltIAZ52Igbqt9Hfk2k5
+	/fNmeezNYQhrAxVsoKPPMlJ+Adt68EAtGF9L5B5QMY/JTQQwuw4xl8lVyNGdU4Fb1EJPyD8tI=
+X-Received: by 2002:a17:907:78c:b0:b96:ef71:49f9 with SMTP id a640c23a62f3a-b9d724f02f4mr994414966b.9.1776171578288;
+        Tue, 14 Apr 2026 05:59:38 -0700 (PDT)
+Received: from alala.sintef.no ([78.91.103.181])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9d6dfd89a9sm402687666b.25.2026.04.14.05.59.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 05:38:43 -0700 (PDT)
-Date: Tue, 14 Apr 2026 20:38:37 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>, 
-	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	Juntong Deng <juntong.deng@outlook.com>, Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
-	Chia-Ping Tsai <chia7712@gmail.com>, Emil Tsalapatis <emil@etsalapatis.com>, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 07/10] sched_ext: Add verifier-time kfunc context filter
-Message-ID: <f2ab3yg5niso6hxqe7sd4jmv5xzdizk3khcspm5bylfbn3mj44@tpyiezvs4cod>
-References: <20260410063046.3556100-1-tj@kernel.org>
- <20260410063046.3556100-8-tj@kernel.org>
+        Tue, 14 Apr 2026 05:59:37 -0700 (PDT)
+From: Fredrik Boettger Bratberg <fredrik.b.bratberg@gmail.com>
+To: fredrik.b.bratberg@gmail.com
+Cc: Henrik Austad <henrik@austad.us>,
+	Peter Ziljstra <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	linux-rt-devel@lists.linux.dev,
+	sched-ext@lists.linux.dev
+Subject: [RFC PATCH] sched: add CONFIG_SCHED_EXT_RT_EXPERIMENTAL to move SCHED_EXT above SCHED_RR/SCHED_FIFO
+Date: Tue, 14 Apr 2026 14:59:33 +0200
+Message-Id: <20260414125933.3520885-1-fredrik.b.bratberg@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260410063046.3556100-8-tj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Tejun, Andrea,
+From: fredrikBB <fredrik.b.bratberg@gmail.com>
 
-On Thu, Apr 09, 2026 at 08:30:43PM -1000, Tejun Heo wrote:
-> +/*
-> + * Verifier-time filter for context-sensitive SCX kfuncs. Registered via the
-> + * .filter field on each per-group btf_kfunc_id_set. The BPF core invokes this
-> + * for every kfunc call in the registered hook (BPF_PROG_TYPE_STRUCT_OPS or
-> + * BPF_PROG_TYPE_SYSCALL), regardless of which set originally introduced the
-> + * kfunc - so the filter must short-circuit on kfuncs it doesn't govern (e.g.
-> + * scx_kfunc_ids_any) by falling through to "allow" when none of the
-> + * context-sensitive sets contain the kfunc.
-> + */
-> +int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
-> +{
-> +	bool in_unlocked = btf_id_set8_contains(&scx_kfunc_ids_unlocked, kfunc_id);
-> +	bool in_select_cpu = btf_id_set8_contains(&scx_kfunc_ids_select_cpu, kfunc_id);
-> +	bool in_enqueue = btf_id_set8_contains(&scx_kfunc_ids_enqueue_dispatch, kfunc_id);
-> +	bool in_dispatch = btf_id_set8_contains(&scx_kfunc_ids_dispatch, kfunc_id);
-> +	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
-> +	u32 moff, flags;
-> +
-> +	/* Not a context-sensitive kfunc (e.g. from scx_kfunc_ids_any) - allow. */
-> +	if (!(in_unlocked || in_select_cpu || in_enqueue || in_dispatch || in_cpu_release))
-> +		return 0;
-> +
-> +	/* SYSCALL progs (e.g. BPF test_run()) may call unlocked and select_cpu kfuncs. */
-> +	if (prog->type == BPF_PROG_TYPE_SYSCALL)
-> +		return (in_unlocked || in_select_cpu) ? 0 : -EACCES;
-> +
-> +	if (prog->type != BPF_PROG_TYPE_STRUCT_OPS)
-> +		return -EACCES;
-> +
-> +	/*
-> +	 * add_subprog_and_kfunc() collects all kfunc calls, including dead code
-> +	 * guarded by bpf_ksym_exists(), before check_attach_btf_id() sets
-> +	 * prog->aux->st_ops. Allow all kfuncs when st_ops is not yet set;
-> +	 * do_check_main() re-runs the filter with st_ops set and enforces the
-> +	 * actual restrictions.
-> +	 */
-> +	if (!prog->aux->st_ops)
-> +		return 0;
-> +
-> +	/*
-> +	 * Non-SCX struct_ops: only unlocked kfuncs are safe. The other
-> +	 * context-sensitive kfuncs assume the rq lock is held by the SCX
-> +	 * dispatch path, which doesn't apply to other struct_ops users.
-> +	 */
-> +	if (prog->aux->st_ops != &bpf_sched_ext_ops)
-> +		return in_unlocked ? 0 : -EACCES;
+sched_ext is a great tool to quickly develop and test custom scheduling
+policies. However, a current limitation of sched_ext is that it is fixed
+between the idle and fair classes in the scheduling class hierarchy. This
+makes it problematic to implement new real-time policies with sched_ext.
+For research and experimental purposes, it is useful to have the option to
+increase sched_ext priority relative to the other classes.
 
-After reconsidering the concern raised by Sashiko [1], I think we should
-not allow non-SCX struct_ops programs to call SCX unlocked kfuncs.
+One particular use case is the implementation of mixed-criticality
+schedulers such as EDF-VD, where real-time capabilities are required. In
+such cases, a priority equal to or higher than that of SCHED_RR and
+SCHED_FIFO is desired in order to limit interference by other tasks.
+Framed differently, this option enables experimentation with custom
+real-time scheduling policies in sched_ext.
 
-I found two concrete problems with the current approach:
+A recent paper published in the 2025 Real-Time Systems Symposium (RTSS)
+"Enabling Flexible Scheduling in ROS 2", would presumably also benefint
+from this feature. The paper aims to address and improve the real-time
+capabilities of Robot Operating System 2 (ROS2). As part of their paper
+they implement an EDF using sched_ext. They do not explicitly address the
+issue of their EDF SCHED_EXT tasks effectively having a lower priority than
+SCHED_NORMAL, but it is a known limitation of the current sched_ext class
+placement
 
-1. KASAN slab-out-of-bounds in scx_prog_sched()
+This change conditionally reorders sched_class selection such that, when
+enabled:
 
-   With CONFIG_EXT_SUB_SCHED=y, scx_prog_sched() blindly casts the
-   pointer returned by bpf_prog_get_assoc_struct_ops(aux) to
-   struct sched_ext_ops * and reads ops->priv.
+  STOP > DL > EXT > RT > FAIR > IDLE
 
-   For a non-SCX struct_ops program we could hit a KASAN bug. 
-   Verified (See Full log [2]):
+Normally, it is possible to schedule all fair-class policies under
+sched_ext. CONFIG_SCHED_EXT_RT_EXPERIMENTAL removes this possibility in
+order to prevent fair-class policies from effectively increasing their
+precedence in the scheduling class hierarchy. This is done by forcing
+scx_switched_all() and scx_switching_all to false.
 
-    [   46.496052] BUG: KASAN: slab-out-of-bounds in scx_bpf_kick_cpu+0x29c/0x2b0
-    [   46.496175] Read of size 8 at addr ffff88811167bd10 by task scx_oob_kasan/633
-     ...
-    [   46.496478]  ? scx_bpf_kick_cpu+0x29c/0x2b0
-    [   46.496488]  scx_bpf_kick_cpu+0x29c/0x2b0
-    [   46.496494]  bpf_prog_746ba9ec0529bae2_test_ca_init+0x27/0x29
-    [   46.496499]  bpf__tcp_congestion_ops_init+0x47/0xa3
-    [   46.496506]  tcp_init_congestion_control+0xad/0x430
-    [   46.496512]  tcp_init_transfer+0x537/0x8f0
-    [   46.496519]  tcp_finish_connect+0x1ef/0x700
+This patch has been tested on a BeagleV-Fire development board with
+PREEMPT_RT enabled on the 6.18.6 kernel, and it made SCHED_EXT tasks be
+preempted by SCHED_RR / SCHED_FIFO tasks to a much lesser extent as
+desired. However, it still occasionally happen that SCHED_EXT tasks gets
+preempted by other tasks which do not run in an hard IRQ context. Comments
+regarding why this can be the case are also greatly appreciated.
 
-2. Non-SCX programs should not call SCX kfuncs
+Reviewed-by: Henrik Austad <henrik@austad.us>
+Signed-off-by: Fredrik Boettger Bratberg <fredrik.b.bratberg@gmail.com>
+Cc: Peter Ziljstra <peterz@infradead.org> 
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Thomas Gleixner <tglx@kernel.org>
+Cc: Henrik Austad <henrik@austad.us>
+Cc: linux-rt-devel@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+---
+ include/asm-generic/vmlinux.lds.h | 13 +++++++++++++
+ kernel/Kconfig.preempt            | 16 ++++++++++++++++
+ kernel/sched/core.c               |  6 ++++++
+ kernel/sched/ext.c                | 11 +++++++++++
+ kernel/sched/sched.h              |  8 ++++++++
+ 5 files changed, 54 insertions(+)
 
-   Allowing non-SCX struct_ops programs to call unlocked kfuncs such as
-   scx_bpf_kick_cpu() is semantically wrong.
-
-So I think we should do the following:
-
-1. Add a filter to deny all context-sensitive kfuncs for non-SCX
-   struct_ops programs, not just the rq-locked ones.
-   This makes the runtime OOB in scx_prog_sched() unreachable.
-
-2. Add a selftest: a TCP BPF program that calls scx_bpf_kick_cpu()
-   should be rejected at load time.
-
-Wdyt, thanks.
-
-[1] https://sashiko.dev/#/patchset/20260410063046.3556100-1-tj%40kernel.org?part=7
-[2] https://gist.github.com/EricccTaiwan/d1787f4f1fa5b5d42d436fbe7c0e2b3b
-
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index e04d56a53..3fe9504c4 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -133,6 +133,18 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
+  * used to determine the order of the priority of each sched class in
+  * relation to each other.
+  */
++#ifdef CONFIG_SCHED_EXT_RT_EXPERIMENTAL
++#define SCHED_DATA				\
++	STRUCT_ALIGN();				\
++	__sched_class_highest = .;		\
++	*(__stop_sched_class)			\
++	*(__dl_sched_class)			\
++	*(__ext_sched_class)			\
++	*(__rt_sched_class)			\
++	*(__fair_sched_class)			\
++	*(__idle_sched_class)			\
++	__sched_class_lowest = .;
++#else
+ #define SCHED_DATA				\
+ 	STRUCT_ALIGN();				\
+ 	__sched_class_highest = .;		\
+@@ -143,6 +155,7 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
+ 	*(__ext_sched_class)			\
+ 	*(__idle_sched_class)			\
+ 	__sched_class_lowest = .;
++#endif
+ 
+ /* The actual configuration determine if the init/exit sections
+  * are handled as text/data or they can be discarded (which
+diff --git a/kernel/Kconfig.preempt b/kernel/Kconfig.preempt
+index da326800c..553d22605 100644
+--- a/kernel/Kconfig.preempt
++++ b/kernel/Kconfig.preempt
+@@ -189,3 +189,19 @@ config SCHED_CLASS_EXT
+ 	  For more information:
+ 	    Documentation/scheduler/sched-ext.rst
+ 	    https://github.com/sched-ext/scx
++
++config SCHED_EXT_RT_EXPERIMENTAL
++	bool "[EXPERIMENTAL] Increase sched_ext priority above SCHED_CLASS_RT"
++	depends on SCHED_CLASS_EXT
++	help
++	  This option increases sched_ext's class precedence above SCHED_RR and
++	  SCHED_FIFO which improves the real-time capabilities of sched_ext.
++	  Normally the sched_ext scheduler is placed in between the fair
++	  and idle scheduling class, which can cause exessive preemption of
++	  SCHED_EXT tasks by both real-time and fair class tasks.
++
++	  Note that this option will force SCX_OPS_SWITCH_PARTIAL, meaning only tasks
++	  with the SCHED_EXT policy can be scheduled by sched_ext. This
++	  is in contrast to the default behaviour where all SCHED_NORMAL,
++	  SCHED_BATCH, SCHED_IDLE, and SCHED_EXT tasks are scheduled by
++	  sched_ext when the BPF scheduler is loaded and running.
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index eb47d294e..93d16f665 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -8654,8 +8654,14 @@ void __init sched_init(void)
+ 	BUG_ON(!sched_class_above(&rt_sched_class, &fair_sched_class));
+ 	BUG_ON(!sched_class_above(&fair_sched_class, &idle_sched_class));
+ #ifdef CONFIG_SCHED_CLASS_EXT
++	/* Reorder BUG_ON if sched_ext is moved in the hierarchy */
++	#ifdef CONFIG_SCHED_EXT_RT_EXPERIMENTAL
++	BUG_ON(!sched_class_above(&dl_sched_class, &ext_sched_class));
++	BUG_ON(!sched_class_above(&ext_sched_class, &rt_sched_class));
++	#else
+ 	BUG_ON(!sched_class_above(&fair_sched_class, &ext_sched_class));
+ 	BUG_ON(!sched_class_above(&ext_sched_class, &idle_sched_class));
++	#endif
+ #endif
+ 
+ 	wait_bit_init();
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 31eda2a56..dea807971 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4776,7 +4776,15 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 	 * All tasks are READY. It's safe to turn on scx_enabled() and switch
+ 	 * all eligible tasks.
+ 	 */
++/*
++ * If sched_ext is elevated in the scheduling hierarchy, we cannot allow
++ * sched_ext to schedule tasks part of the fair classes.
++ */
++#ifdef CONFIG_SCHED_EXT_RT_EXPERIMENTAL
++	WRITE_ONCE(scx_switching_all, false);
++#else
+ 	WRITE_ONCE(scx_switching_all, !(ops->flags & SCX_OPS_SWITCH_PARTIAL));
++#endif
+ 	static_branch_enable(&__scx_enabled);
+ 
+ 	/*
+@@ -4819,8 +4827,11 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 		goto err_disable;
+ 	}
+ 
++/* When running with SCHED_EXT_RT, only allow switch_partial */
++#ifndef CONFIG_SCHED_EXT_RT_EXPERIMENTAL
+ 	if (!(ops->flags & SCX_OPS_SWITCH_PARTIAL))
+ 		static_branch_enable(&__scx_switched_all);
++#endif
+ 
+ 	pr_info("sched_ext: BPF scheduler \"%s\" enabled%s\n",
+ 		sch->ops.name, scx_switched_all() ? "" : " (partial)");
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 2f8b06b12..6e9c1cae7 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1762,7 +1762,15 @@ DECLARE_STATIC_KEY_FALSE(__scx_enabled);	/* SCX BPF scheduler loaded */
+ DECLARE_STATIC_KEY_FALSE(__scx_switched_all);	/* all fair class tasks on SCX */
+ 
+ #define scx_enabled()		static_branch_unlikely(&__scx_enabled)
++/*
++ * If sched_ext is elevated in the scheduling hierarchy, we cannot allow
++ * sched_ext to schedule tasks part of the fair classes.
++ */
++#ifdef CONFIG_SCHED_EXT_RT_EXPERIMENTAL
++#define scx_switched_all()	false
++#else
+ #define scx_switched_all()	static_branch_unlikely(&__scx_switched_all)
++#endif
+ 
+ static inline void scx_rq_clock_update(struct rq *rq, u64 clock)
+ {
 -- 
-Thanks,
-Cheng-Yang
+2.34.1
+
