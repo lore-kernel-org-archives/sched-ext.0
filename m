@@ -1,101 +1,100 @@
 Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD9C39098D
-	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 15:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA0D3E1CFA
+	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 15:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.231.145.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776353344; cv=fail; b=fnA5bvdvYYOdg3R9fJ3Sp/Lk+OGaS9rV0e6yNTubZP+mfEbyo3ByTshojaAFM42U8EGYadM+5fM5VyKYwJSGH9SPkCn6C/NeFYIM3uhVgrqkgz91rUu4NL8WWo/d+veVXPYEdaircBouoqYdtYbaAStHtxFnhfemB/IRP5F4Td0=
+	t=1776353489; cv=fail; b=nhhg0wzf9nKefZPX86CQtgxBtnU5QWvyOberLXEBgvICQDyV7dKABP10k6gL0AyRnWhib3KA6axrbmyJAidGl7t0ZMOrPEKzhY93jwMC99d6wDEMGpmhPyY5e+3G3tKe52gsJUrddcmgXjTM85Kab5IDket4Jl5jfStfz3paJ8c=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776353344; c=relaxed/simple;
-	bh=qJe0NaWagkA9+JhQb0BGGk63UjkJv+em2UfFFWNqbjo=;
+	s=arc-20240116; t=1776353489; c=relaxed/simple;
+	bh=K1N9DR8IOkUkVbu+q/xgDTq2RrXHtcZVW6MYlP1pw1s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uj7MMZ11FPcFJc+TahFLC7S78/gcr2cfkW3OPG8ThwS7nc8xj4bxBk01lBry8OdWXhq+1OyK9nu5YvRB3pKBmFGDQwyKGyss0MUDCNxwRquU+ZXHROUX2uWLTEQCKnxa4zZZSbWRoCLvokyG7a2JIM3Cy6hoyQEYAPvDU8Y/+zY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=DsGB3Tzq; arc=fail smtp.client-ip=67.231.145.42
+	 To:Cc:Content-Type; b=Yg2C7g9fqnVCZkzPoz7lBJ2JIIW75mLHPffEfeu86+UHHjXvm5c3FFE7x7YAKpbL85wSa0VHuAlh32/Gyw5p7jm/Nb6iiaKWNTCdkk6U9dv0vwfhalbxxPDqfFEcNqifh4A08rmJ7k1TL1uPdXvSPDpaAKbtUKcSEcORqMxm35U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com; spf=pass smtp.mailfrom=meta.com; dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b=h/NA15B2; arc=fail smtp.client-ip=67.231.145.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=meta.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=meta.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="DsGB3Tzq"
-Received: from pps.filterd (m0528009.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63G2a4g62435765
-	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 08:29:02 -0700
+	dkim=pass (2048-bit key) header.d=meta.com header.i=@meta.com header.b="h/NA15B2"
+Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
+	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63GB1plH3548657
+	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 08:31:27 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=s2048-2025-q2;
-	 bh=yC1Q41m8mP0u0pnZU+jF9Gq4jFlxlZ79PSJI5I7o+qU=; b=DsGB3Tzq7Je5
-	vKN6l2c7cXFILFXlZsGtHrlYqZD/SGwUgJJEToe2IW7QjltsB3+cYlN/ipVodXco
-	v3JI+HATVGb6KJu4L7FhsoAR4rv82pC55tcanhIwTDpKYf5cpilVR8t+sMb3Wvtf
-	4iOpMpSKS2MK8Be3GgJduODJwlZAACFmaQYdcu6Dk8THNBwRMVEXHzG1PwKMVlZW
-	JrZiZOnQFtU8nibW/kW/pXqoMPB/xxI+jqOGzDuQmzpASCQlUln5Jme8DfxqY1yi
-	UQCdGNFtNI3/I1oP2dy04PhzmEEzR9yl9p55e2tMKN1i62FijUqXsKEIZFONDnws
-	ebx1xXSDKA==
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
-	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4dh864jrsy-1
+	 bh=VQHfLw3eW7W7ujIqv5saOoA1YUaI6oBIjgJLM8YTULo=; b=h/NA15B2IhFw
+	wB8PBlb3jZs1LAAav1gVl1mUXB7t6XpSNvmEsOPqUzRi7FIlP960n2w+pLfj1ttD
+	/6saoCef85WKDO1n1tSr8NKJtUQSfLbRe+E2WD9U/gnHrvYxb6bXLLTAAL70jrDs
+	jcbdC5XztSf5tOELagPAdvdUEWoozzKGRJpxNGjNuqhNMQOYRCSjkwR59fJSbuFA
+	wX87zGZz52hFnxLgf3IvZ9tSJ72GC8kjxyHZXMzn4VNM3FKfwFvsMAo5+g5elxb2
+	USquzC62KzpnP94syuzGIEljJ8qgbbeTtU4jaylPWuiZdUS6sVpOywrYhjHxhosj
+	ah4hHNAc4w==
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
+	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4dh84x2mcm-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 08:29:01 -0700 (PDT)
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-488c213b485so61941195e9.2
-        for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 08:29:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776353340; cv=none;
+	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 08:31:27 -0700 (PDT)
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-43d7b7bacddso3234215f8f.0
+        for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 08:31:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776353485; cv=none;
         d=google.com; s=arc-20240605;
-        b=g9x2kvyjLsSvd1QL+hWRZqACZkUQ4UDZuRKM2mRpXwcTHjhDVZySGKQ01IZBRxff/3
-         XejYh2oMjqyEjxQPIPqza/cjz0nlGxI7mXG4FoaADiFVB8pZqxJwQVvaKxjF7DYEx4pD
-         KjggysqUFEwP+3dwYhb2/S6LYM2J99Wqdkzrsv3ElJFh1D/vizmJN+BOE0DE6KIIqv13
-         JzPC6oUkI6dzA5ur1f3RHSqC1m9Qb7Kb80M2qKnJ/kvuw+GtNY5IAS8LTTGnexviHQUi
-         5l8QRDLd4e/XIKq/sCZBbuDwY+kYxEjGUKdnDvBoULOLdiviEc1Pw0OQBiLIgpInxAyN
-         sJtA==
+        b=ZZ/CW9TodmAvp/ZczZREEIvImotEaUlcDKfCTLepNIIhtsH75jlgvTkEimG0M61wCG
+         SHWjyE/yruf0YlZk8PD0Wlwqwg3jOpSPwfl3yQ3aDk4Dt0izipzEz9l9hOdazR3CbGKK
+         fTZufEleIaiD34QaiDo3ko2PoqKRKvkVDhmggVdel/llo1CH4TC2Ow5xCof/edoOhhe7
+         jUPn1kQCxbJa69WkowqGGQ/sP3MLy8V4qUeHneuriKiHtjmeULG8iYlpdZ+1RhcZkrMz
+         Wo2XW6IHN8yJ/eGpKJ1RvS6Bs2S6tYG81xO2liQnPHmgTIsUqxky6ar0Dce9vShKP8xX
+         BJBQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version;
-        bh=B6HIx1G8DCWQOBzzLaP2s73BJd2FUe6w7ma7Pwwtg1E=;
-        fh=xc+TNgpJiKr1q4NrApni1+BCBWH3X40WIWVHpFFo6ds=;
-        b=CEriaqX/JB9nDAupjcPXmqqjF4d0XeipITMzqIK1ICRAtE6rU8m4K3QRy22bxFycUm
-         OA1wTuz5XCHf8t2A1wG38JixfmcSBIZNjD/ho6dq/dm9Rv6ibEJMmMR+ffE3bcvwEJPE
-         /B4hEfbazxVwdPy16k+aq4SaoKYVyHuzyJwqMF4m1J5EfaV1Kr2hfk+ig85/dJGp+sj3
-         Ak9kNCxukdtfnKbEmL1h7shbF4l159A/IvpKCHQYUzaMsGaGGdID35qDZWlpyZwZAIG9
-         18ca2FsRETw/iErMNWXGQxtV4Yk2IWQ11EqHBPNbkztPPSK8Q6kKpb9apFWn8RmdG/fu
-         jGsA==;
+        bh=oPLZKI7D/Z3v0kz/cagkGvZsVVFLMB214zAbqT4YKmw=;
+        fh=JxCU1HBFx1UeyljEhfFrULT217ZGMRIdeFjHq0m/LhE=;
+        b=MGdq3QGyaX3oqX+oi3iW9ZmQzCo9d+WEqkE5DTfWjoMshDxJpZTzU7z1rpQV8UKELH
+         iSxgglSts2MaIfm6QL5tiO+xywjZ4b1qAkIJJ/xw0CLrJ9H4KUHGkwMlsPCljd6vloTy
+         CjPIx2i48XburcNBOm7RfpItEPLFXQkzTFPEGhtQcN7AfMJl3e5r1K2IlLl7szpKGy6v
+         b2mzsp/8+UaAQknJYUva8lxQvUw4zwOc5aUExtgRfdMdJvC8eXW5DoWwiG34NBl2t/Ff
+         AjwkFpUUTeN2oVKGEyOJwmYPZBNUYyp2viLFZqPltFJwZxyBRndlYrk6bYu6Jn60tzSi
+         RvTw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776353340; x=1776958140;
+        d=1e100.net; s=20251104; t=1776353485; x=1776958285;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=B6HIx1G8DCWQOBzzLaP2s73BJd2FUe6w7ma7Pwwtg1E=;
-        b=ly5CB0Sok+2kXYmwbTGF1CndAYJEMiGctR9fzODRUmVF3oAHfGUFhTk3pPv7Y8pV43
-         U27CpZ1579bQWWfk8EcZQiJV9QkhwRTzKpf3XQvxP5HoxV2p7oW69qLpG9DHKbArzgVW
-         1jU8W7AMA2oCAEtUpm75lhn3NSp3xncHObioP7ZOSlOYbYB59km6fAxK2at6mC8aD6na
-         6VpdeHXpn7w7tKKEP2l1vzqkPcr0n8YsI6XwDM/wsDZZl99dj+7UJ9FWAsdSyYsRZXyE
-         QFRHCq5YCQp21012g2yHKv+p6WpzklljDvcZ/sYHAkiOEfIvRRBSpzHEuszl6rRqDy0p
-         IXZg==
-X-Forwarded-Encrypted: i=1; AFNElJ9V1d5e7+Cr3Og6Y3z3O+mSFB93R3M9YqNBoaKQC3nB8EiX+QPcdVZrVPJgQ6wXBBd181e51+6KwoY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzbQFhjtwiJhvhdG/MGI8XyZ//VnnezhfeiFHMRFOiCiTVIiM16
-	WSfGlgAMJQA65E2kW5+6eYsMSr9rvbIdQ7sPXT5DZk6MIpQIeO+FypqEmqbjFo7tU1LhhiqJ5V5
-	Z7pk2O1VuCsNmnsiItUPLKAfNRjyNEFSuUruivJNpAJTHAY4ngPC4Ps2gO1tjg3L9+KYYlI7q4g
-	4oDhaendnItZCc/xE0u95B5KVsp9k/6mAeErA=
-X-Gm-Gg: AeBDiev7D2gInrHhIF/c8EpKR4gFX1yrCGiTcQ2HoFK6rowzYohHc8q5OQL/VM4SvfE
-	C6hK/aZaKYVy1Ptvde9GhA2V5kTAnX17ATKDevSLKY3zHtbAU9qnd2sRYps4WRoL8J/CB48Qj6H
-	PgPpPAzJHRCT2dfewfJJYADsZTSLul8D3o4WmKl7NxLzdGVZZ5j7dSXCFVfN2ph9jXBA2Igfpij
-	aIEius2WAYpdEJRC4OH8+r90xSiaL1yMkYD9cauncR4lv2pbQCntJUA30bSv1r0
-X-Received: by 2002:a05:600c:674f:b0:488:a82f:bb9b with SMTP id 5b1f17b1804b1-488d68cb47amr382982435e9.30.1776353340010;
-        Thu, 16 Apr 2026 08:29:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:674f:b0:488:a82f:bb9b with SMTP id
- 5b1f17b1804b1-488d68cb47amr382981705e9.30.1776353339358; Thu, 16 Apr 2026
- 08:28:59 -0700 (PDT)
+        bh=oPLZKI7D/Z3v0kz/cagkGvZsVVFLMB214zAbqT4YKmw=;
+        b=PmYruo7aKQEFxxLTsBjzGs139oZbabnvfHRS0AvsmH0ITBtOT8ypstuQM2VaMq2SXU
+         q2kBf5ek4Mpj4qhk8779x3Qw+DeFqE5uBn6SOG8dvMvaOKJZgqGEWgJSoNZnNB0jxsgJ
+         ZKC1A/U6H7dNjti8na8LeihJoi5F4/pOQRhvnUVkQZpWWefucsJuuZrL/fxbaYjedaqc
+         CMf/A66bZy9Yw161jruVEIYSy0dzc6LEBRLAAH+AfxC8syO7BjxvGlMUQGyF2FRh2jJj
+         MZiW/4zegy8vHXszvvRx2Fyvq6WEW/H7RGFsn6lEZu5LM73cRqWKPbBdJG8Yw6P/X0Tq
+         iOGg==
+X-Forwarded-Encrypted: i=1; AFNElJ9gwTn+RYwGimmuQze5L95QRukfNsI9pJOvrZnsvFU1Ry+i9arGZ3+r2htnCjTW/f0R1kNpLlKCWXY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzUHrry0HqIZGE8Atn3NAJgVIdxjjiUnI6hgbG8gIg+NVAaG/OX
+	RdZytshuawWK8Y3NdMMiS5EuUOj9CXMzDotqjsfMUew0mcPnZdL0v8KBl5XPDKSZpJlX67H6apP
+	IZhfkJrXN9+8+fCobk/8/RyoBpsM3dGva9sQIPSvDLx41gxAChI5V2M3948g54L4HioxVr+bYhK
+	UwFnmMweItCdbbZ4eJ3pU7G2NRvit+rNV1nqg=
+X-Gm-Gg: AeBDieuI5tBn3KtLm5OcVm9sUuUQFXPQMASqHf0lC7/2P92XsLqj452+NmLy+5BXyT1
+	/MLXS4CZ/e7ORmgET0nN7OCQN2aSJ2C/F1Di2910QhsfhdjWGe4wh8Y2pK6A3qg3JyU9X/GSPfM
+	johcRQKLFpCglLU1Whg+sS3EGBO+s3o/xQWEstNNBvA5nEf1sQ7vqWOH9x5iKOT5FVsScm5eGI5
+	9o3HAIgNJTA5AvVIE6XdLxgWc7EF+jj2+Nc17W+SXqBwWwElO24B0NwZlk3setg
+X-Received: by 2002:a05:600c:1507:b0:485:3a27:a961 with SMTP id 5b1f17b1804b1-488d7f23b18mr200689645e9.0.1776353485075;
+        Thu, 16 Apr 2026 08:31:25 -0700 (PDT)
+X-Received: by 2002:a05:600c:1507:b0:485:3a27:a961 with SMTP id
+ 5b1f17b1804b1-488d7f23b18mr200689025e9.0.1776353484449; Thu, 16 Apr 2026
+ 08:31:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260416081626.1285617-1-tj@kernel.org> <20260416081626.1285617-3-tj@kernel.org>
-In-Reply-To: <20260416081626.1285617-3-tj@kernel.org>
+References: <20260416081626.1285617-1-tj@kernel.org> <20260416081626.1285617-4-tj@kernel.org>
+In-Reply-To: <20260416081626.1285617-4-tj@kernel.org>
 From: Emil Tsalapatis <etsal@meta.com>
-Date: Thu, 16 Apr 2026 08:28:47 -0700
-X-Gm-Features: AQROBzA4H_GAnja1uleDKrxxCHn_63F-4zmxzDvTMzHouKqtQZ66K11KoEbL6Nw
-Message-ID: <CAMe2y=GpzfsEC61VJSfLBBNjR+gbFDm41pjFJGz02hg4+8C0wQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] sched_ext: scx_qmap: move globals and cpu_ctx into a
- BPF arena map
+Date: Thu, 16 Apr 2026 08:31:12 -0700
+X-Gm-Features: AQROBzD_mkSY-MFfxDMJ4PT8FCkK_MtGppxVxnl7U74w_A6RzIlXhPRadqSbOGQ
+Message-ID: <CAMe2y=EWejtP8fQ0hvje472ZO_vMr4rn9GsgYM-b8UKmU_UFig@mail.gmail.com>
+Subject: Re: [PATCH 3/4] sched_ext: scx_qmap: move task_ctx into a BPF arena slab
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
         Changwoo Min <changwoo@igalia.com>,
@@ -103,21 +102,21 @@ Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
         linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=GKY41ONK c=1 sm=1 tr=0 ts=69e1003e cx=c_pps
- a=IwH782EDBk/vqbJ9rM8UFw==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22 a=U_y8lYiYyhHBU5rMqhb2:22
- a=VwQbUJbxAAAA:8 a=CWErhr8FAAAA:8 a=DIKSa76ZwRCfwPHaqN0A:9 a=QEXdDO2ut3YA:10
- a=Ng9YvVcppn9CIdWre3nD:22 a=I-g_0vLIplkVOQ0FYkeP:22
-X-Proofpoint-GUID: Mp9vRG3cLgLTjUlWudsuvKvRf2YLkMaP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDE0NyBTYWx0ZWRfX+xe61LTRXTko
- PyuV+qQdy/ky8zfJ/AlB1xtWBG0FyYa3e7au683SDFjdhGj+yS46m37MZyP3zfe4EBoVsKoRsQh
- jDMxSDDYGqSfy+W+ypl5F+oCQtbTM6kbBcR+MS2ewykygPSwJ9/WE8ihJfbTe2ywXfizbpM1sRP
- EvMZr6KGNw5Ksm7uiDMj9E+htosGAJNqKrcC7uhTOFskMDjQsEXpDALZ+VP840MJ/eWqHV0WzFM
- AQsUuHkXTK2BLr8DJuQoLaS/TI7WBPi3DoOC3DdDTChJO+bfsIgT4ocTtEpMaxFnr48wq/W7ZfA
- 8H9xh1e8k6s5fZyIex4pL1SfF5PMFR9e2O8du3qwlrfV+NlFYiQ9/0Rd5Z7oRAJk9IhMjJ4g5id
- XwXxpTyaHPegMjqcomYNpBYRu2c2qaAEaU7mjlpn3hHD+Xhd2Ta8Dv6CvpSWX8FmG3S1k9V6lEP
- F3pph9ZBkeP/USJuUTw==
-X-Proofpoint-ORIG-GUID: Mp9vRG3cLgLTjUlWudsuvKvRf2YLkMaP
+X-Proofpoint-GUID: 3nKjvtDuoMtSQfk6vJVl6p1DagI-vGt4
+X-Proofpoint-ORIG-GUID: 3nKjvtDuoMtSQfk6vJVl6p1DagI-vGt4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDE0NyBTYWx0ZWRfXyFU6hh7a3WAq
+ 9otGIlmLn6j/Uz7xK7e0UkjH1z2gVuf+aM2ADeeQ8/Uak7S5JR6I1E9KcsPreuu2Wosva0WjChf
+ /zoXIrqGxIfdOs4Vbsp/Qq7l6aixaAXWtLB7DRci6s0sKLB4ZKRZFcphSnaABKl2feRKIHSQ2Cs
+ FquC6wGgVRq9Sb94KVrZkvG5O6qZbAcy7E9xUkjl+gUgRto4SbyIyhgS1kSmMSGMIC5dicXTI63
+ PQrTUUBAgVKEMVHN59Wt5792sQCUlaohI7tKqN2ecbQA07gJkH6aFduGw1ur1nRnqW9WAEmyXQD
+ G+6Y25XKy3BlGBwGad5nYsqTiTLOZkooxlDwRk/MH21rwb77RP3Mc6bHGVeTruI5APIt5141nbf
+ ra/elFdXU+Xedmi0N49Svl3r8Gw1GnoeXPwWho/RoVUq4l1xe/1HdO4KHQos4JSHRs2rq+gPojf
+ wFBRZG/y8Ipz6+BMH9A==
+X-Authority-Analysis: v=2.4 cv=aepRWxot c=1 sm=1 tr=0 ts=69e100cf cx=c_pps
+ a=CsXZvLRfiTx/ye2xXAwb9g==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=7x6HtfJdh03M6CCDgxCd:22 a=tpM8CJlwf7uhpglF1g9U:22
+ a=VwQbUJbxAAAA:8 a=CWErhr8FAAAA:8 a=FUGtJdsc86X_b6lmtAcA:9 a=QEXdDO2ut3YA:10
+ a=F7q00xkr9EfWfQvbdVXI:22 a=I-g_0vLIplkVOQ0FYkeP:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-16_03,2026-04-16_03,2025-10-01_01
@@ -128,616 +127,474 @@ On Thu, Apr 16, 2026 at 1:20=E2=80=AFAM Tejun Heo <tj@kernel.org> wrote:
 > Arena simplifies verification and allows more natural programming.
 > Convert scx_qmap to arena as preparation for further sub-sched work.
 >
-> Move mutable scheduler state from BSS globals and a percpu array map
-> into a single BPF arena map. A shared struct qmap_arena is declared as
-> an __arena global so BPF accesses it directly and userspace reaches it
-> through skel->arena->qa.
+> Allocate per-task context from an arena slab instead of storing it
+> directly in task_storage. task_ctx_stor now holds an arena pointer to
+> the task's slab entry. Free entries form a singly-linked list protected
+> by bpf_res_spin_lock; slab exhaustion triggers scx_bpf_error().
 >
-> Scheduling logic unchanged; only memory backing changes.
+> The slab size is configurable via the new -N option (default 16384).
+>
+> Also add bpf_res_spin_lock/unlock declarations to common.bpf.h.
+>
+> Scheduling logic unchanged.
 >
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 > ---
 
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
->  tools/sched_ext/scx_qmap.bpf.c | 152 ++++++++++++++-------------------
->  tools/sched_ext/scx_qmap.c     |  45 +++++-----
->  tools/sched_ext/scx_qmap.h     |  57 +++++++++++++
->  3 files changed, 147 insertions(+), 107 deletions(-)
->  create mode 100644 tools/sched_ext/scx_qmap.h
+One nit, since we never have non-arena task_ctxs we can do
+
+typedef struct task_ctx __arena task_ctx;
+
+to avoid annotating every instance.
+
+>  tools/sched_ext/include/scx/common.bpf.h |   4 +
+>  tools/sched_ext/scx_qmap.bpf.c           | 178 ++++++++++++++++++-----
+>  tools/sched_ext/scx_qmap.c               |   9 +-
+>  tools/sched_ext/scx_qmap.h               |   7 +
+>  4 files changed, 159 insertions(+), 39 deletions(-)
 >
+> diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/i=
+nclude/scx/common.bpf.h
+> index 19459dedde41..35fc62556241 100644
+> --- a/tools/sched_ext/include/scx/common.bpf.h
+> +++ b/tools/sched_ext/include/scx/common.bpf.h
+> @@ -526,6 +526,10 @@ static inline bool is_migration_disabled(const struc=
+t task_struct *p)
+>  void bpf_rcu_read_lock(void) __ksym;
+>  void bpf_rcu_read_unlock(void) __ksym;
+>
+> +/* resilient qspinlock */
+> +int bpf_res_spin_lock(struct bpf_res_spin_lock *lock) __ksym __weak;
+> +void bpf_res_spin_unlock(struct bpf_res_spin_lock *lock) __ksym __weak;
+> +
+>  /*
+>   * Time helpers, most of which are from jiffies.h.
+>   */
 > diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bp=
 f.c
-> index a18234f3c27a..0f8fbb6d0bc2 100644
+> index 0f8fbb6d0bc2..e071969c8f32 100644
 > --- a/tools/sched_ext/scx_qmap.bpf.c
 > +++ b/tools/sched_ext/scx_qmap.bpf.c
-> @@ -22,6 +22,8 @@
->   */
->  #include <scx/common.bpf.h>
->
-> +#include "scx_qmap.h"
-> +
->  enum consts {
->         ONE_SEC_IN_NS           =3D 1000000000,
->         ONE_MSEC_IN_NS          =3D 1000000,
-> @@ -48,14 +50,26 @@ const volatile bool suppress_dump;
+> @@ -49,6 +49,7 @@ const volatile s32 disallow_tgid;
+>  const volatile bool suppress_dump;
 >  const volatile bool always_enq_immed;
 >  const volatile u32 immed_stress_nth;
+> +const volatile u32 max_tasks;
 >
-> -u64 nr_highpri_queued;
-> -u32 test_error_cnt;
-> -
-> -#define MAX_SUB_SCHEDS         8
-> -u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
-> -
 >  UEI_DEFINE(uei);
 >
-> +/*
-> + * All mutable scheduler state - per-cpu context, stats counters, core-s=
-ched
-> + * sequence numbers, sub-sched cgroup ids - lives in this single BPF are=
-na map.
-> + * Userspace reaches it via skel->arena->qa.
-> + */
-> +struct {
-> +       __uint(type, BPF_MAP_TYPE_ARENA);
-> +       __uint(map_flags, BPF_F_MMAPABLE);
-> +       __uint(max_entries, 1 << 16);           /* upper bound in pages */
-
-I assume this is picked to handle 64K pages on ARM.
-
-> +#if defined(__TARGET_ARCH_arm64) || defined(__aarch64__)
-> +       __ulong(map_extra, 0x1ull << 32);       /* user/BPF mmap base */
-> +#else
-> +       __ulong(map_extra, 0x1ull << 44);
-> +#endif
-> +} arena SEC(".maps");
-> +
-> +struct qmap_arena __arena qa;
-> +
->  struct qmap {
->         __uint(type, BPF_MAP_TYPE_QUEUE);
->         __uint(max_entries, 4096);
-> @@ -102,8 +116,6 @@ static const u32 qidx_to_cpuperf_target[] =3D {
->   * task's seq and the associated queue's head seq is called the queue di=
-stance
+> @@ -117,20 +118,43 @@ static const u32 qidx_to_cpuperf_target[] =3D {
 >   * and used when comparing two tasks for ordering. See qmap_core_sched_b=
 efore().
 >   */
-> -static u64 core_sched_head_seqs[5];
-> -static u64 core_sched_tail_seqs[5];
 >
->  /* Per-task scheduling context */
+> -/* Per-task scheduling context */
+> +/*
+> + * Per-task scheduling context. Allocated from the qa.task_ctxs[] slab in
+> + * arena. While the task is alive the entry is referenced from task_ctx_=
+stor;
+> + * while it's free the entry sits on the free list singly-linked through
+> + * @next_free.
+> + */
 >  struct task_ctx {
-> @@ -119,27 +131,6 @@ struct {
->         __type(value, struct task_ctx);
+> -       bool    force_local;    /* Dispatch directly to local_dsq */
+> -       bool    highpri;
+> -       u64     core_sched_seq;
+> +       struct task_ctx __arena *next_free;     /* only valid on free lis=
+t */
+> +       bool                    force_local;    /* Dispatch directly to l=
+ocal_dsq */
+> +       bool                    highpri;
+> +       u64                     core_sched_seq;
+> +};
+> +
+> +/* Holds an arena pointer to the task's slab entry. */
+> +struct task_ctx_stor_val {
+> +       struct task_ctx __arena *taskc;
+>  };
+>
+>  struct {
+>         __uint(type, BPF_MAP_TYPE_TASK_STORAGE);
+>         __uint(map_flags, BPF_F_NO_PREALLOC);
+>         __type(key, int);
+> -       __type(value, struct task_ctx);
+> +       __type(value, struct task_ctx_stor_val);
 >  } task_ctx_stor SEC(".maps");
 >
-> -struct cpu_ctx {
-> -       u64     dsp_idx;        /* dispatch index */
-> -       u64     dsp_cnt;        /* remaining count */
-> -       u32     avg_weight;
-> -       u32     cpuperf_target;
-> -};
-> -
-> -struct {
-> -       __uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
-> -       __uint(max_entries, 1);
-> -       __type(key, u32);
-> -       __type(value, struct cpu_ctx);
-> -} cpu_ctx_stor SEC(".maps");
-> -
-> -/* Statistics */
-> -u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cpu0, nr_de=
-queued, nr_ddsp_from_enq;
-> -u64 nr_core_sched_execed;
-> -u64 nr_expedited_local, nr_expedited_remote, nr_expedited_lost, nr_exped=
-ited_from_timer;
-> -u32 cpuperf_min, cpuperf_avg, cpuperf_max;
-> -u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
-> -
+> +/* Protects the task_ctx slab free list. */
+> +__hidden struct bpf_res_spin_lock qa_task_lock SEC(".data.qa_task_lock");
+> +
+> +static int qmap_spin_lock(struct bpf_res_spin_lock *lock)
+> +{
+> +       if (bpf_res_spin_lock(lock)) {
+> +               scx_bpf_error("res_spin_lock failed");
+> +               return -EBUSY;
+> +       }
+> +       return 0;
+> +}
+> +
 >  static s32 pick_direct_dispatch_cpu(struct task_struct *p, s32 prev_cpu)
 >  {
 >         s32 cpu;
-> @@ -215,9 +206,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct =
-*p, u64 enq_flags)
+> @@ -148,21 +172,34 @@ static s32 pick_direct_dispatch_cpu(struct task_str=
+uct *p, s32 prev_cpu)
+>         return -1;
+>  }
+>
+> -static struct task_ctx *lookup_task_ctx(struct task_struct *p)
+> +/*
+> + * Force a reference to the arena map. The verifier associates an arena =
+with
+> + * a program by finding an LD_IMM64 instruction that loads the arena's B=
+PF
+> + * map; programs that only use arena pointers returned from task-local
+> + * storage (like qmap_select_cpu) never reference @arena directly. Witho=
+ut
+> + * this, the verifier rejects addr_space_cast with "addr_space_cast insn
+> + * can only be used in a program that has an associated arena".
+> + */
+> +#define QMAP_TOUCH_ARENA() do { asm volatile("" :: "r"(&arena)); } while=
+ (0)
+> +
+
+Really nice that this works when placed as a macro.
+
+> +static struct task_ctx __arena *lookup_task_ctx(struct task_struct *p)
+>  {
+> -       struct task_ctx *taskc;
+> +       struct task_ctx_stor_val *v;
+> +
+> +       QMAP_TOUCH_ARENA();
+>
+> -       if (!(taskc =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0))) {
+> +       v =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
+> +       if (!v || !v->taskc) {
+>                 scx_bpf_error("task_ctx lookup failed");
+>                 return NULL;
+>         }
+> -       return taskc;
+> +       return v->taskc;
+>  }
+>
+>  s32 BPF_STRUCT_OPS(qmap_select_cpu, struct task_struct *p,
+>                    s32 prev_cpu, u64 wake_flags)
+>  {
+> -       struct task_ctx *taskc;
+> +       struct task_ctx __arena *taskc;
 >         s32 cpu;
 >
->         if (enq_flags & SCX_ENQ_REENQ) {
-> -               __sync_fetch_and_add(&nr_reenqueued, 1);
-> +               __sync_fetch_and_add(&qa.nr_reenqueued, 1);
->                 if (scx_bpf_task_cpu(p) =3D=3D 0)
-> -                       __sync_fetch_and_add(&nr_reenqueued_cpu0, 1);
-> +                       __sync_fetch_and_add(&qa.nr_reenqueued_cpu0, 1);
->         }
->
->         if (p->flags & PF_KTHREAD) {
-> @@ -228,7 +219,7 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct =
-*p, u64 enq_flags)
->                         return;
->         }
->
-> -       if (test_error_cnt && !--test_error_cnt)
-> +       if (qa.test_error_cnt && !--qa.test_error_cnt)
->                 scx_bpf_error("test triggering error");
->
 >         if (!(taskc =3D lookup_task_ctx(p)))
-> @@ -238,7 +229,7 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct =
-*p, u64 enq_flags)
->          * All enqueued tasks must have their core_sched_seq updated for =
-correct
->          * core-sched ordering. Also, take a look at the end of qmap_disp=
-atch().
->          */
-> -       taskc->core_sched_seq =3D core_sched_tail_seqs[idx]++;
-> +       taskc->core_sched_seq =3D qa.core_sched_tail_seqs[idx]++;
->
->         /*
->          * IMMED stress testing: Every immed_stress_nth'th enqueue, dispa=
-tch
-> @@ -276,7 +267,7 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct =
-*p, u64 enq_flags)
->         /* if select_cpu() wasn't called, try direct dispatch */
->         if (!__COMPAT_is_enq_cpu_selected(enq_flags) &&
->             (cpu =3D pick_direct_dispatch_cpu(p, scx_bpf_task_cpu(p))) >=
-=3D 0) {
-> -               __sync_fetch_and_add(&nr_ddsp_from_enq, 1);
-> +               __sync_fetch_and_add(&qa.nr_ddsp_from_enq, 1);
->                 scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cpu, slice_ns, e=
-nq_flags);
->                 return;
->         }
-> @@ -311,9 +302,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct =
-*p, u64 enq_flags)
->
->         if (highpri_boosting && p->scx.weight >=3D HIGHPRI_WEIGHT) {
->                 taskc->highpri =3D true;
-> -               __sync_fetch_and_add(&nr_highpri_queued, 1);
-> +               __sync_fetch_and_add(&qa.nr_highpri_queued, 1);
->         }
-> -       __sync_fetch_and_add(&nr_enqueued, 1);
-> +       __sync_fetch_and_add(&qa.nr_enqueued, 1);
->  }
->
->  /*
-> @@ -322,9 +313,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct =
-*p, u64 enq_flags)
->   */
->  void BPF_STRUCT_OPS(qmap_dequeue, struct task_struct *p, u64 deq_flags)
+> @@ -199,7 +236,7 @@ static int weight_to_idx(u32 weight)
+>  void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
 >  {
-> -       __sync_fetch_and_add(&nr_dequeued, 1);
-> +       __sync_fetch_and_add(&qa.nr_dequeued, 1);
->         if (deq_flags & SCX_DEQ_CORE_SCHED_EXEC)
-> -               __sync_fetch_and_add(&nr_core_sched_execed, 1);
-> +               __sync_fetch_and_add(&qa.nr_core_sched_execed, 1);
->  }
->
+>         static u32 user_cnt, kernel_cnt;
+> -       struct task_ctx *taskc;
+> +       struct task_ctx __arena *taskc;
+>         u32 pid =3D p->pid;
+>         int idx =3D weight_to_idx(p->scx.weight);
+>         void *ring;
+> @@ -321,7 +358,7 @@ void BPF_STRUCT_OPS(qmap_dequeue, struct task_struct =
+*p, u64 deq_flags)
 >  static void update_core_sched_head_seq(struct task_struct *p)
-> @@ -333,7 +324,7 @@ static void update_core_sched_head_seq(struct task_st=
-ruct *p)
->         struct task_ctx *taskc;
+>  {
+>         int idx =3D weight_to_idx(p->scx.weight);
+> -       struct task_ctx *taskc;
+> +       struct task_ctx __arena *taskc;
 >
 >         if ((taskc =3D lookup_task_ctx(p)))
-> -               core_sched_head_seqs[idx] =3D taskc->core_sched_seq;
-> +               qa.core_sched_head_seqs[idx] =3D taskc->core_sched_seq;
->  }
+>                 qa.core_sched_head_seqs[idx] =3D taskc->core_sched_seq;
+> @@ -345,7 +382,7 @@ static bool dispatch_highpri(bool from_timer)
+>         /* scan SHARED_DSQ and move highpri tasks to HIGHPRI_DSQ */
+>         bpf_for_each(scx_dsq, p, SHARED_DSQ, 0) {
+>                 static u64 highpri_seq;
+> -               struct task_ctx *taskc;
+> +               struct task_ctx __arena *taskc;
 >
->  /*
-> @@ -384,14 +375,14 @@ static bool dispatch_highpri(bool from_timer)
->                                      SCX_ENQ_PREEMPT)) {
->                         if (cpu =3D=3D this_cpu) {
->                                 dispatched =3D true;
-> -                               __sync_fetch_and_add(&nr_expedited_local,=
- 1);
-> +                               __sync_fetch_and_add(&qa.nr_expedited_loc=
-al, 1);
->                         } else {
-> -                               __sync_fetch_and_add(&nr_expedited_remote=
-, 1);
-> +                               __sync_fetch_and_add(&qa.nr_expedited_rem=
-ote, 1);
->                         }
->                         if (from_timer)
-> -                               __sync_fetch_and_add(&nr_expedited_from_t=
-imer, 1);
-> +                               __sync_fetch_and_add(&qa.nr_expedited_fro=
-m_timer, 1);
->                 } else {
-> -                       __sync_fetch_and_add(&nr_expedited_lost, 1);
-> +                       __sync_fetch_and_add(&qa.nr_expedited_lost, 1);
->                 }
->
->                 if (dispatched)
-> @@ -404,19 +395,19 @@ static bool dispatch_highpri(bool from_timer)
->  void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct task_struct *prev)
+>                 if (!(taskc =3D lookup_task_ctx(p)))
+>                         return false;
+> @@ -396,7 +433,7 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct ta=
+sk_struct *prev)
 >  {
 >         struct task_struct *p;
-> -       struct cpu_ctx *cpuc;
-> +       struct cpu_ctx __arena *cpuc;
->         struct task_ctx *taskc;
-> -       u32 zero =3D 0, batch =3D dsp_batch ?: 1;
-> +       u32 batch =3D dsp_batch ?: 1;
+>         struct cpu_ctx __arena *cpuc;
+> -       struct task_ctx *taskc;
+> +       struct task_ctx __arena *taskc;
+>         u32 batch =3D dsp_batch ?: 1;
 >         void *fifo;
 >         s32 i, pid;
->
->         if (dispatch_highpri(false))
->                 return;
->
-> -       if (!nr_highpri_queued && scx_bpf_dsq_move_to_local(SHARED_DSQ, 0=
-))
-> +       if (!qa.nr_highpri_queued && scx_bpf_dsq_move_to_local(SHARED_DSQ=
-, 0))
->                 return;
->
-> -       if (dsp_inf_loop_after && nr_dispatched > dsp_inf_loop_after) {
-> +       if (dsp_inf_loop_after && qa.nr_dispatched > dsp_inf_loop_after) {
->                 /*
->                  * PID 2 should be kthreadd which should mostly be idle a=
-nd off
->                  * the scheduler. Let's keep dispatching it to force the =
-kernel
-> @@ -430,10 +421,7 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct t=
-ask_struct *prev)
->                 }
->         }
->
-> -       if (!(cpuc =3D bpf_map_lookup_elem(&cpu_ctx_stor, &zero))) {
-> -               scx_bpf_error("failed to look up cpu_ctx");
-> -               return;
-> -       }
-> +       cpuc =3D &qa.cpu_ctxs[bpf_get_smp_processor_id()];
->
->         for (i =3D 0; i < 5; i++) {
->                 /* Advance the dispatch cursor and pick the fifo. */
-> @@ -442,9 +430,11 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct t=
-ask_struct *prev)
->                         cpuc->dsp_cnt =3D 1 << cpuc->dsp_idx;
->                 }
->
-> -               fifo =3D bpf_map_lookup_elem(&queue_arr, &cpuc->dsp_idx);
-> +               u64 dsp_idx =3D cpuc->dsp_idx;
-> +
-> +               fifo =3D bpf_map_lookup_elem(&queue_arr, &dsp_idx);
->                 if (!fifo) {
-> -                       scx_bpf_error("failed to find ring %llu", cpuc->d=
-sp_idx);
-> +                       scx_bpf_error("failed to find ring %llu", dsp_idx=
-);
->                         return;
->                 }
->
-> @@ -465,10 +455,10 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct =
-task_struct *prev)
->                         }
->
->                         if (taskc->highpri)
-> -                               __sync_fetch_and_sub(&nr_highpri_queued, =
-1);
-> +                               __sync_fetch_and_sub(&qa.nr_highpri_queue=
-d, 1);
->
->                         update_core_sched_head_seq(p);
-> -                       __sync_fetch_and_add(&nr_dispatched, 1);
-> +                       __sync_fetch_and_add(&qa.nr_dispatched, 1);
->
->                         scx_bpf_dsq_insert(p, SHARED_DSQ, slice_ns, 0);
->
-> @@ -529,8 +519,8 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct ta=
+> @@ -440,7 +477,7 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct ta=
 sk_struct *prev)
->         }
 >
->         for (i =3D 0; i < MAX_SUB_SCHEDS; i++) {
-> -               if (sub_sched_cgroup_ids[i] &&
-> -                   scx_bpf_sub_dispatch(sub_sched_cgroup_ids[i]))
-> +               if (qa.sub_sched_cgroup_ids[i] &&
-> +                   scx_bpf_sub_dispatch(qa.sub_sched_cgroup_ids[i]))
+>                 /* Dispatch or advance. */
+>                 bpf_repeat(BPF_MAX_LOOPS) {
+> -                       struct task_ctx *taskc;
+> +                       struct task_ctx __arena *taskc;
+>
+>                         if (bpf_map_pop_elem(fifo, &pid))
+>                                 break;
+> @@ -529,11 +566,9 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct t=
+ask_struct *prev)
+>          * if the task were enqueued and dispatched immediately.
+>          */
+>         if (prev) {
+> -               taskc =3D bpf_task_storage_get(&task_ctx_stor, prev, 0, 0=
+);
+> -               if (!taskc) {
+> -                       scx_bpf_error("task_ctx lookup failed");
+> +               taskc =3D lookup_task_ctx(prev);
+> +               if (!taskc)
 >                         return;
->         }
->
-> @@ -546,21 +536,15 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cpu, struct =
-task_struct *prev)
->                 }
+> -               }
 >
 >                 taskc->core_sched_seq =3D
-> -                       core_sched_tail_seqs[weight_to_idx(prev->scx.weig=
-ht)]++;
-> +                       qa.core_sched_tail_seqs[weight_to_idx(prev->scx.w=
+>                         qa.core_sched_tail_seqs[weight_to_idx(prev->scx.w=
 eight)]++;
->         }
->  }
->
->  void BPF_STRUCT_OPS(qmap_tick, struct task_struct *p)
+> @@ -564,14 +599,12 @@ void BPF_STRUCT_OPS(qmap_tick, struct task_struct *=
+p)
+>  static s64 task_qdist(struct task_struct *p)
 >  {
-> -       struct cpu_ctx *cpuc;
-> -       u32 zero =3D 0;
-> +       struct cpu_ctx __arena *cpuc =3D &qa.cpu_ctxs[bpf_get_smp_process=
-or_id()];
->         int idx;
+>         int idx =3D weight_to_idx(p->scx.weight);
+> -       struct task_ctx *taskc;
+> +       struct task_ctx __arena *taskc;
+>         s64 qdist;
 >
-> -       if (!(cpuc =3D bpf_map_lookup_elem(&cpu_ctx_stor, &zero))) {
-> -               scx_bpf_error("failed to look up cpu_ctx");
-> -               return;
-> -       }
-> -
->         /*
->          * Use the running avg of weights to select the target cpuperf le=
-vel.
->          * This is a demonstration of the cpuperf feature rather than a
-> @@ -589,7 +573,7 @@ static s64 task_qdist(struct task_struct *p)
+> -       taskc =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
+> -       if (!taskc) {
+> -               scx_bpf_error("task_ctx lookup failed");
+> +       taskc =3D lookup_task_ctx(p);
+> +       if (!taskc)
 >                 return 0;
->         }
+> -       }
 >
-> -       qdist =3D taskc->core_sched_seq - core_sched_head_seqs[idx];
-> +       qdist =3D taskc->core_sched_seq - qa.core_sched_head_seqs[idx];
+>         qdist =3D taskc->core_sched_seq - qa.core_sched_head_seqs[idx];
 >
->         /*
->          * As queue index increments, the priority doubles. The queue w/ =
-index 3
-> @@ -679,13 +663,10 @@ void BPF_STRUCT_OPS(qmap_dump, struct scx_dump_ctx =
-*dctx)
->
->  void BPF_STRUCT_OPS(qmap_dump_cpu, struct scx_dump_ctx *dctx, s32 cpu, b=
-ool idle)
->  {
-> -       u32 zero =3D 0;
-> -       struct cpu_ctx *cpuc;
-> +       struct cpu_ctx __arena *cpuc =3D &qa.cpu_ctxs[cpu];
->
->         if (suppress_dump || idle)
->                 return;
-> -       if (!(cpuc =3D bpf_map_lookup_percpu_elem(&cpu_ctx_stor, &zero, c=
-pu)))
-> -               return;
->
->         scx_bpf_dump("QMAP: dsp_idx=3D%llu dsp_cnt=3D%llu avg_weight=3D%u=
- cpuperf_target=3D%u",
->                      cpuc->dsp_idx, cpuc->dsp_cnt, cpuc->avg_weight,
-> @@ -802,7 +783,7 @@ struct {
+> @@ -606,21 +639,64 @@ bool BPF_STRUCT_OPS(qmap_core_sched_before,
+>   * tasks when a higher-priority scheduling class takes the CPU.
 >   */
->  static void monitor_cpuperf(void)
+>
+> -s32 BPF_STRUCT_OPS(qmap_init_task, struct task_struct *p,
+> -                  struct scx_init_task_args *args)
+> +s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init_task, struct task_struct *p,
+> +                            struct scx_init_task_args *args)
 >  {
-> -       u32 zero =3D 0, nr_cpu_ids;
-> +       u32 nr_cpu_ids;
->         u64 cap_sum =3D 0, cur_sum =3D 0, cur_min =3D SCX_CPUPERF_ONE, cu=
-r_max =3D 0;
->         u64 target_sum =3D 0, target_min =3D SCX_CPUPERF_ONE, target_max =
-=3D 0;
->         const struct cpumask *online;
-> @@ -812,7 +793,7 @@ static void monitor_cpuperf(void)
->         online =3D scx_bpf_get_online_cpumask();
->
->         bpf_for(i, 0, nr_cpu_ids) {
-> -               struct cpu_ctx *cpuc;
-> +               struct cpu_ctx __arena *cpuc =3D &qa.cpu_ctxs[i];
->                 u32 cap, cur;
->
->                 if (!bpf_cpumask_test_cpu(i, online))
-> @@ -834,11 +815,6 @@ static void monitor_cpuperf(void)
->                 cur_sum +=3D cur * cap / SCX_CPUPERF_ONE;
->                 cap_sum +=3D cap;
->
-> -               if (!(cpuc =3D bpf_map_lookup_percpu_elem(&cpu_ctx_stor, =
-&zero, i))) {
-> -                       scx_bpf_error("failed to look up cpu_ctx");
-> -                       goto out;
-> -               }
-> -
->                 /* collect target */
->                 cur =3D cpuc->cpuperf_target;
->                 target_sum +=3D cur;
-> @@ -846,14 +822,14 @@ static void monitor_cpuperf(void)
->                 target_max =3D cur > target_max ? cur : target_max;
->         }
->
-> -       cpuperf_min =3D cur_min;
-> -       cpuperf_avg =3D cur_sum * SCX_CPUPERF_ONE / cap_sum;
-> -       cpuperf_max =3D cur_max;
-> +       qa.cpuperf_min =3D cur_min;
-> +       qa.cpuperf_avg =3D cur_sum * SCX_CPUPERF_ONE / cap_sum;
-> +       qa.cpuperf_max =3D cur_max;
+> +       struct task_ctx_stor_val *v;
+> +       struct task_ctx __arena *taskc;
 > +
-> +       qa.cpuperf_target_min =3D target_min;
-> +       qa.cpuperf_target_avg =3D target_sum / nr_online_cpus;
-> +       qa.cpuperf_target_max =3D target_max;
+>         if (p->tgid =3D=3D disallow_tgid)
+>                 p->scx.disallow =3D true;
 >
-> -       cpuperf_target_min =3D target_min;
-> -       cpuperf_target_avg =3D target_sum / nr_online_cpus;
-> -       cpuperf_target_max =3D target_max;
-> -out:
->         scx_bpf_put_cpumask(online);
+> -       /*
+> -        * @p is new. Let's ensure that its task_ctx is available. We can=
+ sleep
+> -        * in this function and the following will automatically use GFP_=
+KERNEL.
+> -        */
+> -       if (bpf_task_storage_get(&task_ctx_stor, p, 0,
+> -                                BPF_LOCAL_STORAGE_GET_F_CREATE))
+> -               return 0;
+> -       else
+> +       /* pop a slab entry off the free list */
+> +       if (qmap_spin_lock(&qa_task_lock))
+> +               return -EBUSY;
+> +       taskc =3D qa.task_free_head;
+> +       if (taskc)
+> +               qa.task_free_head =3D taskc->next_free;
+> +       bpf_res_spin_unlock(&qa_task_lock);
+> +       if (!taskc) {
+> +               scx_bpf_error("task_ctx slab exhausted (max_tasks=3D%u)",=
+ max_tasks);
+> +               return -ENOMEM;
+> +       }
+> +
+> +       taskc->next_free =3D NULL;
+> +       taskc->force_local =3D false;
+> +       taskc->highpri =3D false;
+> +       taskc->core_sched_seq =3D 0;
+> +
+> +       v =3D bpf_task_storage_get(&task_ctx_stor, p, NULL,
+> +                                BPF_LOCAL_STORAGE_GET_F_CREATE);
+> +       if (!v) {
+> +               /* push back to the free list */
+> +               if (!qmap_spin_lock(&qa_task_lock)) {
+> +                       taskc->next_free =3D qa.task_free_head;
+> +                       qa.task_free_head =3D taskc;
+> +                       bpf_res_spin_unlock(&qa_task_lock);
+> +               }
+>                 return -ENOMEM;
+> +       }
+> +       v->taskc =3D taskc;
+> +       return 0;
+> +}
+> +
+> +void BPF_STRUCT_OPS(qmap_exit_task, struct task_struct *p,
+> +                   struct scx_exit_task_args *args)
+> +{
+> +       struct task_ctx_stor_val *v;
+> +       struct task_ctx __arena *taskc;
+> +
+> +       v =3D bpf_task_storage_get(&task_ctx_stor, p, NULL, 0);
+> +       if (!v || !v->taskc)
+> +               return;
+> +       taskc =3D v->taskc;
+> +       v->taskc =3D NULL;
+> +
+> +       if (qmap_spin_lock(&qa_task_lock))
+> +               return;
+> +       taskc->next_free =3D qa.task_free_head;
+> +       qa.task_free_head =3D taskc;
+> +       bpf_res_spin_unlock(&qa_task_lock);
 >  }
 >
-> @@ -996,8 +972,8 @@ s32 BPF_STRUCT_OPS(qmap_sub_attach, struct scx_sub_at=
-tach_args *args)
->         s32 i;
+>  void BPF_STRUCT_OPS(qmap_dump, struct scx_dump_ctx *dctx)
+> @@ -675,12 +751,17 @@ void BPF_STRUCT_OPS(qmap_dump_cpu, struct scx_dump_=
+ctx *dctx, s32 cpu, bool idle
 >
->         for (i =3D 0; i < MAX_SUB_SCHEDS; i++) {
-> -               if (!sub_sched_cgroup_ids[i]) {
-> -                       sub_sched_cgroup_ids[i] =3D args->ops->sub_cgroup=
-_id;
-> +               if (!qa.sub_sched_cgroup_ids[i]) {
-> +                       qa.sub_sched_cgroup_ids[i] =3D args->ops->sub_cgr=
-oup_id;
->                         bpf_printk("attaching sub-sched[%d] on %s",
->                                    i, args->cgroup_path);
->                         return 0;
-> @@ -1012,8 +988,8 @@ void BPF_STRUCT_OPS(qmap_sub_detach, struct scx_sub_=
-detach_args *args)
->         s32 i;
+>  void BPF_STRUCT_OPS(qmap_dump_task, struct scx_dump_ctx *dctx, struct ta=
+sk_struct *p)
+>  {
+> -       struct task_ctx *taskc;
+> +       struct task_ctx_stor_val *v;
+> +       struct task_ctx __arena *taskc;
+> +
+> +       QMAP_TOUCH_ARENA();
 >
->         for (i =3D 0; i < MAX_SUB_SCHEDS; i++) {
-> -               if (sub_sched_cgroup_ids[i] =3D=3D args->ops->sub_cgroup_=
-id) {
-> -                       sub_sched_cgroup_ids[i] =3D 0;
-> +               if (qa.sub_sched_cgroup_ids[i] =3D=3D args->ops->sub_cgro=
-up_id) {
-> +                       qa.sub_sched_cgroup_ids[i] =3D 0;
->                         bpf_printk("detaching sub-sched[%d] on %s",
->                                    i, args->cgroup_path);
->                         break;
+>         if (suppress_dump)
+>                 return;
+> -       if (!(taskc =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0)))
+> +       v =3D bpf_task_storage_get(&task_ctx_stor, p, NULL, 0);
+> +       if (!v || !v->taskc)
+>                 return;
+> +       taskc =3D v->taskc;
+>
+>         scx_bpf_dump("QMAP: force_local=3D%d core_sched_seq=3D%llu",
+>                      taskc->force_local, taskc->core_sched_seq);
+> @@ -915,10 +996,32 @@ static int lowpri_timerfn(void *map, int *key, stru=
+ct bpf_timer *timer)
+>
+>  s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
+>  {
+> -       u32 key =3D 0;
+> +       struct task_ctx __arena *slab;
+> +       u32 nr_pages, key =3D 0, i;
+>         struct bpf_timer *timer;
+>         s32 ret;
+>
+> +       /*
+> +        * Allocate the task_ctx slab in arena and thread the entire slab=
+ onto
+> +        * the free list. max_tasks is set by userspace before load.
+> +        */
+> +       if (!max_tasks) {
+> +               scx_bpf_error("max_tasks must be > 0");
+> +               return -EINVAL;
+> +       }
+> +
+> +       nr_pages =3D (max_tasks * sizeof(struct task_ctx) + PAGE_SIZE - 1=
+) / PAGE_SIZE;
+> +       slab =3D bpf_arena_alloc_pages(&arena, NULL, nr_pages, NUMA_NO_NO=
+DE, 0);
+> +       if (!slab) {
+> +               scx_bpf_error("failed to allocate task_ctx slab");
+> +               return -ENOMEM;
+> +       }
+> +       qa.task_ctxs =3D slab;
+> +
+> +       bpf_for(i, 0, max_tasks)
+> +               slab[i].next_free =3D (i + 1 < max_tasks) ? &slab[i + 1] =
+: NULL;
+> +       qa.task_free_head =3D &slab[0];
+> +
+>         if (print_msgs && !sub_cgroup_id)
+>                 print_cpus();
+>
+> @@ -1005,6 +1108,7 @@ SCX_OPS_DEFINE(qmap_ops,
+>                .tick                    =3D (void *)qmap_tick,
+>                .core_sched_before       =3D (void *)qmap_core_sched_befor=
+e,
+>                .init_task               =3D (void *)qmap_init_task,
+> +              .exit_task               =3D (void *)qmap_exit_task,
+>                .dump                    =3D (void *)qmap_dump,
+>                .dump_cpu                =3D (void *)qmap_dump_cpu,
+>                .dump_task               =3D (void *)qmap_dump_task,
 > diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-> index e7c89a2bc3d8..8844499c14c4 100644
+> index 8844499c14c4..4bdcc4bc5fbd 100644
 > --- a/tools/sched_ext/scx_qmap.c
 > +++ b/tools/sched_ext/scx_qmap.c
-> @@ -10,9 +10,11 @@
->  #include <inttypes.h>
->  #include <signal.h>
->  #include <libgen.h>
-> +#include <sys/mman.h>
->  #include <sys/stat.h>
->  #include <bpf/bpf.h>
->  #include <scx/common.h>
-> +#include "scx_qmap.h"
->  #include "scx_qmap.bpf.skel.h"
+> @@ -23,12 +23,13 @@ const char help_fmt[] =3D
+>  "See the top-level comment in .bpf.c for more details.\n"
+>  "\n"
+>  "Usage: %s [-s SLICE_US] [-e COUNT] [-t COUNT] [-T COUNT] [-l COUNT] [-b=
+ COUNT]\n"
+> -"       [-P] [-M] [-H] [-d PID] [-D LEN] [-S] [-p] [-I] [-F COUNT] [-v]\=
+n"
+> +"       [-N COUNT] [-P] [-M] [-H] [-d PID] [-D LEN] [-S] [-p] [-I] [-F C=
+OUNT] [-v]\n"
+>  "\n"
+>  "  -s SLICE_US   Override slice duration\n"
+>  "  -e COUNT      Trigger scx_bpf_error() after COUNT enqueues\n"
+>  "  -t COUNT      Stall every COUNT'th user thread\n"
+>  "  -T COUNT      Stall every COUNT'th kernel thread\n"
+> +"  -N COUNT      Size of the task_ctx arena slab (default 16384)\n"
+>  "  -l COUNT      Trigger dispatch infinite looping after COUNT dispatche=
+s\n"
+>  "  -b COUNT      Dispatch upto COUNT tasks together\n"
+>  "  -P            Print out DSQ content and event counters to trace_pipe =
+every second\n"
+> @@ -73,8 +74,9 @@ int main(int argc, char **argv)
+>         skel =3D SCX_OPS_OPEN(qmap_ops, scx_qmap);
 >
->  const char help_fmt[] =3D
-> @@ -60,6 +62,8 @@ int main(int argc, char **argv)
->  {
->         struct scx_qmap *skel;
->         struct bpf_link *link;
-> +       struct qmap_arena *qa;
-> +       __u32 test_error_cnt =3D 0;
->         int opt;
+>         skel->rodata->slice_ns =3D __COMPAT_ENUM_OR_ZERO("scx_public_cons=
+ts", "SCX_SLICE_DFL");
+> +       skel->rodata->max_tasks =3D 16384;
 >
->         libbpf_set_print(libbpf_print_fn);
-> @@ -76,7 +80,7 @@ int main(int argc, char **argv)
+> -       while ((opt =3D getopt(argc, argv, "s:e:t:T:l:b:PMHc:d:D:SpIF:vh"=
+)) !=3D -1) {
+> +       while ((opt =3D getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:v=
+h")) !=3D -1) {
+>                 switch (opt) {
+>                 case 's':
 >                         skel->rodata->slice_ns =3D strtoull(optarg, NULL,=
  0) * 1000;
+> @@ -94,6 +96,9 @@ int main(int argc, char **argv)
+>                 case 'b':
+>                         skel->rodata->dsp_batch =3D strtoul(optarg, NULL,=
+ 0);
 >                         break;
->                 case 'e':
-> -                       skel->bss->test_error_cnt =3D strtoul(optarg, NUL=
-L, 0);
-> +                       test_error_cnt =3D strtoul(optarg, NULL, 0);
+> +               case 'N':
+> +                       skel->rodata->max_tasks =3D strtoul(optarg, NULL,=
+ 0);
+> +                       break;
+>                 case 'P':
+>                         skel->rodata->print_dsqs_and_events =3D true;
 >                         break;
->                 case 't':
->                         skel->rodata->stall_user_nth =3D strtoul(optarg, =
-NULL, 0);
-> @@ -142,29 +146,32 @@ int main(int argc, char **argv)
->         SCX_OPS_LOAD(skel, qmap_ops, scx_qmap, uei);
->         link =3D SCX_OPS_ATTACH(skel, qmap_ops, scx_qmap);
->
-> +       qa =3D &skel->arena->qa;
-> +       qa->test_error_cnt =3D test_error_cnt;
-> +
->         while (!exit_req && !UEI_EXITED(skel, uei)) {
-> -               long nr_enqueued =3D skel->bss->nr_enqueued;
-> -               long nr_dispatched =3D skel->bss->nr_dispatched;
-> +               long nr_enqueued =3D qa->nr_enqueued;
-> +               long nr_dispatched =3D qa->nr_dispatched;
->
-> -               printf("stats  : enq=3D%lu dsp=3D%lu delta=3D%ld reenq/cp=
-u0=3D%"PRIu64"/%"PRIu64" deq=3D%"PRIu64" core=3D%"PRIu64" enq_ddsp=3D%"PRIu=
-64"\n",
-> +               printf("stats  : enq=3D%lu dsp=3D%lu delta=3D%ld reenq/cp=
-u0=3D%llu/%llu deq=3D%llu core=3D%llu enq_ddsp=3D%llu\n",
->                        nr_enqueued, nr_dispatched, nr_enqueued - nr_dispa=
-tched,
-> -                      skel->bss->nr_reenqueued, skel->bss->nr_reenqueued=
-_cpu0,
-> -                      skel->bss->nr_dequeued,
-> -                      skel->bss->nr_core_sched_execed,
-> -                      skel->bss->nr_ddsp_from_enq);
-> -               printf("         exp_local=3D%"PRIu64" exp_remote=3D%"PRI=
-u64" exp_timer=3D%"PRIu64" exp_lost=3D%"PRIu64"\n",
-> -                      skel->bss->nr_expedited_local,
-> -                      skel->bss->nr_expedited_remote,
-> -                      skel->bss->nr_expedited_from_timer,
-> -                      skel->bss->nr_expedited_lost);
-> +                      qa->nr_reenqueued, qa->nr_reenqueued_cpu0,
-> +                      qa->nr_dequeued,
-> +                      qa->nr_core_sched_execed,
-> +                      qa->nr_ddsp_from_enq);
-> +               printf("         exp_local=3D%llu exp_remote=3D%llu exp_t=
-imer=3D%llu exp_lost=3D%llu\n",
-> +                      qa->nr_expedited_local,
-> +                      qa->nr_expedited_remote,
-> +                      qa->nr_expedited_from_timer,
-> +                      qa->nr_expedited_lost);
->                 if (__COMPAT_has_ksym("scx_bpf_cpuperf_cur"))
->                         printf("cpuperf: cur min/avg/max=3D%u/%u/%u targe=
-t min/avg/max=3D%u/%u/%u\n",
-> -                              skel->bss->cpuperf_min,
-> -                              skel->bss->cpuperf_avg,
-> -                              skel->bss->cpuperf_max,
-> -                              skel->bss->cpuperf_target_min,
-> -                              skel->bss->cpuperf_target_avg,
-> -                              skel->bss->cpuperf_target_max);
-> +                              qa->cpuperf_min,
-> +                              qa->cpuperf_avg,
-> +                              qa->cpuperf_max,
-> +                              qa->cpuperf_target_min,
-> +                              qa->cpuperf_target_avg,
-> +                              qa->cpuperf_target_max);
->                 fflush(stdout);
->                 sleep(1);
->         }
 > diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-> new file mode 100644
-> index 000000000000..52153230bfce
-> --- /dev/null
+> index 52153230bfce..c183d82632b3 100644
+> --- a/tools/sched_ext/scx_qmap.h
 > +++ b/tools/sched_ext/scx_qmap.h
-> @@ -0,0 +1,57 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Shared definitions between scx_qmap.bpf.c and scx_qmap.c.
-> + *
-> + * The scheduler keeps all mutable state in a single BPF arena map. stru=
-ct
-> + * qmap_arena is the one object that lives at the base of the arena and =
-is
-> + * mmap'd into userspace so the loader can read counters directly.
-> + *
-> + * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-> + * Copyright (c) 2026 Tejun Heo <tj@kernel.org>
-> + */
-> +#ifndef __SCX_QMAP_H
-> +#define __SCX_QMAP_H
+> @@ -34,6 +34,9 @@ struct cpu_ctx {
+>         __u32 cpuperf_target;
+>  };
+>
+> +/* Opaque to userspace; defined in scx_qmap.bpf.c. */
+> +struct task_ctx;
 > +
-> +#ifdef __BPF__
-> +#include <scx/bpf_arena_common.bpf.h>
-> +#else
-> +#include <linux/types.h>
-> +#include <scx/bpf_arena_common.h>
-> +#endif
-> +
-> +#define MAX_SUB_SCHEDS         8
-> +
-> +/*
-> + * cpu_ctxs[] is sized to a fixed cap so the layout is shared between BP=
-F and
-> + * userspace. Keep this in sync with NR_CPUS used by the BPF side.
-> + */
-> +#define SCX_QMAP_MAX_CPUS      1024
-> +
-> +struct cpu_ctx {
-> +       __u64 dsp_idx;          /* dispatch index */
-> +       __u64 dsp_cnt;          /* remaining count */
-> +       __u32 avg_weight;
-> +       __u32 cpuperf_target;
-> +};
-> +
-> +struct qmap_arena {
-> +       /* userspace-visible stats */
-> +       __u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cp=
+>  struct qmap_arena {
+>         /* userspace-visible stats */
+>         __u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cp=
 u0;
-> +       __u64 nr_dequeued, nr_ddsp_from_enq;
-> +       __u64 nr_core_sched_execed;
-> +       __u64 nr_expedited_local, nr_expedited_remote;
-> +       __u64 nr_expedited_lost, nr_expedited_from_timer;
-> +       __u64 nr_highpri_queued;
-> +       __u32 test_error_cnt;
-> +       __u32 cpuperf_min, cpuperf_avg, cpuperf_max;
-> +       __u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
+> @@ -52,6 +55,10 @@ struct qmap_arena {
+>         __u64 core_sched_tail_seqs[5];
+>
+>         struct cpu_ctx cpu_ctxs[SCX_QMAP_MAX_CPUS];
 > +
-> +       /* kernel-side runtime state */
-> +       __u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
-> +       __u64 core_sched_head_seqs[5];
-> +       __u64 core_sched_tail_seqs[5];
-> +
-> +       struct cpu_ctx cpu_ctxs[SCX_QMAP_MAX_CPUS];
-> +};
-> +
-> +#endif /* __SCX_QMAP_H */
+> +       /* task_ctx slab; allocated and threaded by qmap_init() */
+> +       struct task_ctx __arena *task_ctxs;
+> +       struct task_ctx __arena *task_free_head;
+>  };
+>
+>  #endif /* __SCX_QMAP_H */
 > --
 > 2.53.0
 >
