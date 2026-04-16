@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90DD1DC198;
-	Thu, 16 Apr 2026 17:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E0A2A1B2;
+	Thu, 16 Apr 2026 17:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776362194; cv=none; b=XMZGHe6TXEV2O03mpTcHp9PdbbNEVWksZWWoaSty6DDQKYMFJWlsppgVAXUyQ0u8tMGfz8BClAabSUQH6AkqVC/W7lJAvMzVw5IHa8OMPhSUpaHKPZDGgyONV7Zi9IHRjlh+UB35ChkHU/T6Az4S0wFbrpch6o48S3FEJWkujBM=
+	t=1776362375; cv=none; b=aSxZvSptVofEk5cDmDDxHpZCQNutZHSO7R/HE0UMGNw3SlN+097dfqw6B+xDoM9hHE0kHXD3jXoe0r6+qyUT/XlRNoo78JaR3HvcXXmmNH/Sn/v2LQwEcueFS9xiXkx78coGOsyfOXiUU3D1EEtScMOZIi2Wam+gH/iMJ6aJdHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776362194; c=relaxed/simple;
-	bh=KdcGpKLRC6bvMX3dEy0yvIMgE+RyJc8GyiO/VJk+TWE=;
+	s=arc-20240116; t=1776362375; c=relaxed/simple;
+	bh=DwFUOQieKU9C3mgInWP2wUqke/tOFn8NWajP3uqFULU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ATQ2o5ev2PIM2Tn9lNi4YNZhXwY9jBJF9ljTrPyPqOV9NnvJ9fG4GRUfi/Jw3N1E8km9TjB3G477jk7pLZyF+1D7v9RvBTWeIXiTc6RbfbB+bTSS9Ro4soqne2O69j6o0UpUyUwus1O47s0O9ipCdZavxxcdATQRigkYI0x8qBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RpwYdJD4; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=r54oxwlZASNyErSC8qbfp07eCwItMIWm9HpEdsTfpR/Yo6/q0RuLTja2te4XHhzksKkVAwSWvQewBmhfp8/NqfzH88W+7bwIdQNHEa+rv4L0pPe5Yz+zF+XlJ4Fyu6SQ18VrWpQ9a7RsTb2+xVJX71gQ6pNVr6Yodf87pc7/kF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NR52oEoV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RpwYdJD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDF8C2BCAF;
-	Thu, 16 Apr 2026 17:56:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NR52oEoV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C4CC2BCAF;
+	Thu, 16 Apr 2026 17:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776362194;
-	bh=KdcGpKLRC6bvMX3dEy0yvIMgE+RyJc8GyiO/VJk+TWE=;
+	s=k20201202; t=1776362374;
+	bh=DwFUOQieKU9C3mgInWP2wUqke/tOFn8NWajP3uqFULU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RpwYdJD4zJSsuKgCwaO4W38faG5WN3rCxb5YzNk/+cyzkQHrxPbNgql5bVKXQ/RkB
-	 sxmn4vWrEVANNBT//EIW/CBi4LvzQgrzDuC5DVU4Y2zW+DPkKEOCYDEPlxJdLXfmpQ
-	 EAhPL4uatR/7FepuRH7PCh3icZ5uMu6hazdzWV113gW45FR6fr9d/Z4X5iBOzRx0mj
-	 JymfFdg+V0XUqrTdbpM1B+D2ewN2oFOZlYKY6q9UYXsMk2KyG1BOsDjpFrvaxZ9RYg
-	 b6Unq7K+QmmhlDyNDCW69Rwqg2/pwO8XJCOhZhHyOjJ/Rw8Kz34Q5Rg4MtQ8kC8VrM
-	 cpnbRE8/AxUgw==
-Date: Thu, 16 Apr 2026 07:56:33 -1000
+	b=NR52oEoVcx7u5QyJSfYsiG389KrXus8UudAZRISYuBmK/By2/4la5OxAiCLZn75rx
+	 Nf6FQds7ZyjpjRQNaeEuSk1/8NlAK6mDfoSknCPyXQZfRbyDhijwhn4RyIGsC6+qYj
+	 CK+k+ertLsf4qqTXRgH6flfKCZTU75N4PDBzekBuhKmz2IAFRYcwxldk6KT7P5VOzd
+	 uCHiGWCOTtm21kmbqXDuecHPfK0NWMjTeDhFBrRNedcbnQA7wonWumkZGBtB8wxz9t
+	 0XMTrnjSm7/nfL9peNWbqI2Crg/mJj1RSeO+ep1Vkix/p9fh6kYSaB8dN4bJddqDPq
+	 D1/pOFC5UqPJA==
+Date: Thu, 16 Apr 2026 07:59:33 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>, stable@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Prevent RB-tree corruption in
- scx_bpf_task_set_dsq_vtime()
-Message-ID: <aeEi0X4Fn70bUgva@slm.duckdns.org>
-References: <20260415193459.933175-1-yphbchou0911@gmail.com>
+To: Fredrik Bratberg <fredrik.b.bratberg@gmail.com>
+Cc: Henrik Austad <henrik@austad.us>, Peter Ziljstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@kernel.org>, linux-rt-devel@lists.linux.dev,
+	sched-ext@lists.linux.dev
+Subject: Re: [RFC PATCH] sched: add CONFIG_SCHED_EXT_RT_EXPERIMENTAL to move
+ SCHED_EXT above SCHED_RR/SCHED_FIFO
+Message-ID: <aeEjhTftzK_sjYi-@slm.duckdns.org>
+References: <20260414125933.3520885-1-fredrik.b.bratberg@gmail.com>
+ <ad539mUd8A0lDWAw@slm.duckdns.org>
+ <CALP2E1xwgfNmW+u=oyQ6bVW0ZeuQRZK65gR5RXyQyzy1n6U_8Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,29 +47,28 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260415193459.933175-1-yphbchou0911@gmail.com>
+In-Reply-To: <CALP2E1xwgfNmW+u=oyQ6bVW0ZeuQRZK65gR5RXyQyzy1n6U_8Q@mail.gmail.com>
 
-On Thu, Apr 16, 2026 at 03:32:44AM +0800, Cheng-Yang Chou wrote:
-> scx_bpf_task_set_dsq_vtime() allows modifying a task's dsq_vtime without
-> checking if it is already enqueued on SCX_DSQ_PRIQ. Since dsq_vtime is
-> the rb-tree sorting key, mutating it in-place violates the BST invariant
-> and corrupts the tree structure.
-> 
-> In ops.dispatch():
-> 	p = scx_bpf_dsq_peek(PRIO_DSQ); // Get a task already in the DSQ
-> 	if (p) {
-> 		// This illegally returns %true
-> 		scx_bpf_task_set_dsq_vtime(p, 0xFFFFFFFFFFFFFFFF);
-> 	}
-> 
-> Fix this by adding a check for the SCX_TASK_DSQ_ON_PRIQ flag. Disallow
-> vtime modification and trigger scx_error() if the task is already queued
-> on a priority DSQ.
+Hello,
 
-If the user updates the vtime after inserting, the tree looks wrong but it
-won't cause crashes or anything. Later insertions might get confused in
-terms of ordering but it's a rather obvious user-shotting-their-own-foot, so
-I'm more inclined to leave it as-is.
+On Thu, Apr 16, 2026 at 10:11:16AM +0200, Fredrik Bratberg wrote:
+> I understand that this patch undermines the safety aspects taken into the
+> design of sched_ext: For example safely returning to the EEVDF scheduler
+> if tasks are starved. However, this is a tradeoff which is fine for what I
+> am trying to do, and the Kconfig is meant as an "expert" option.
+
+I'm not sure we can include a Kconfig option in the upstream kernel that can
+lead to system lockups in everyday scenarios no matter how the option is
+marked.
+
+> My goal here is to look into the possibility of creating custom real-time
+> policies using sched_ext, where SCHED_EXT tasks could gain priority over
+> all other tasks. I am aware that this pushes the boundaries of what
+> sched_ext is meant to do, but want to start a discussion on whether this
+> could in general be a future feature of sched_ext or not.
+
+In the current form at least, I'm afraid this would have to be carried
+outside the tree.
 
 Thanks.
 
