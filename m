@@ -1,29 +1,30 @@
-Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.7])
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F2C21B905
-	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 01:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE3221B905
+	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 01:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776302826; cv=none; b=WlJsr0lZF55qAOjYut7TDksSpT1gBwZuNgU0gbC+ABEb37ImoiImUrmYkSNe+TkMzDBXshcKJa+o0SffFmKmKJ0O1cNSGtJnc4PzwpLN19TeATb2GfnT0g02m0Bq5pJwl14SLpqDIPy369O7C/5k4ftRjg19sDF+zyZo8b/KLYQ=
+	t=1776302829; cv=none; b=UcbFkfzYQrYsisTf3oKUhIKQnhxYLZj4UVwly1RFiD5erUped9YS52KBM8LHVOrbj18Kc/PKSFnnVSc5Yak/a+3GeSKsPW5nmMR6BfoVFqLnZzNLgQ68uIL2CMX4fir/SVtN6IdbtaiHoWAN9mNwRWALDh1djoweYSPASYiGUTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776302826; c=relaxed/simple;
-	bh=7wkOda3k/2g1VtJH35ebCMMz+SpWzj7atqmELaOUgWE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Pd9Knit77LmtBAYk6WfjrDoAghG9LNA6wh5hUzwu2m04tF7Pt4+vwU7dNRJB1hgh1Xh6/t2teD+t3/GUHXaVozfDiuly0hmi1e7CE45fdp3RbwjJ0bJLHhQcQubE5vawCae6dO0B+g9KrlwvObpfu7YGcrTpPoWrBMp1Vbhohxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=dV6QP2H4; arc=none smtp.client-ip=220.197.31.7
+	s=arc-20240116; t=1776302829; c=relaxed/simple;
+	bh=0NPff8qv5ZpbhvzhMc052Lek2kjbyQ46v5mNbWpq0UA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=d5rk3YWBw6UA6ESJbeGgjLe7kAOUK6WjjHcdkzzQX4kZehwMy7RFegQt7SlM+4zBvAeyXtINv+dYlaRrxHG/OV4h39bJ4VrOTaw47Vnq7CYnuYo140m1DsMeQ3oJgV3z7MI+J4pGI2xPS6+Nlr2olLguaUtjhanKGq+D4oBMn7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=kkrYPfkI; arc=none smtp.client-ip=117.135.210.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="dV6QP2H4"
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="kkrYPfkI"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=6u
-	mo9uiMiI/490+WIKGFpuSF3l9fvNVPyaNvAZu7WJI=; b=dV6QP2H4j+Jg1ejjhX
-	OZQJYaqdHLu9aXvVqh+3NUC+imNdpRfrwBlJ7osWB5lT4oLnf/rtFtJutK9GWnPx
-	ImGDOAD4Nq4Va6QY1WTDujlR+Qj8XjBErtnZy3yjymY3xcFbvae+I7lY5KCYTfqr
-	LOmoDIpyNcRJ77/KzOvrjOCZU=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=MO
+	9zfOHQVMneVVRYJXXzsHNZuKRDVPKnBw+V44zOZfo=; b=kkrYPfkIqlaOtyAyz2
+	pNFmCb52mMygewInG8AQMkx0TMMThr2HhD7VD0ep5PXWxKbkYpa15whUhKH3g+C6
+	SF7nJF2n9ePFmXrPAJRvGB9Jch3wToXmFjMo7c+2KF5SlVbRGwhZ1EAUtYr0OrCZ
+	QnsVPjev3FfOToGhLrDeNJi2o=
 Received: from localhost.localdomain (unknown [])
-	by gzsmtp3 (Coremail) with SMTP id PikvCgD3P6_POuBpPsBlDw--.10078S2;
-	Thu, 16 Apr 2026 09:26:39 +0800 (CST)
+	by gzsmtp3 (Coremail) with SMTP id PikvCgD3P6_POuBpPsBlDw--.10078S4;
+	Thu, 16 Apr 2026 09:26:40 +0800 (CST)
 From: Zhao Mengmeng <zhaomzhao@126.com>
 To: tj@kernel.org,
 	void@manifault.com,
@@ -33,10 +34,12 @@ Cc: yphbchou0911@gmail.com,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	zhaomengmeng@kylinos.cn
-Subject: [PATCH v2 0/2] sched_ext: Cgroup sub-scheduler minor fixes
-Date: Thu, 16 Apr 2026 09:26:27 +0800
-Message-ID: <20260416012629.48414-1-zhaomzhao@126.com>
+Subject: [PATCH v2 2/2] sched_ext: Print sub-scheduler disabled log and reason
+Date: Thu, 16 Apr 2026 09:26:29 +0800
+Message-ID: <20260416012629.48414-3-zhaomzhao@126.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260416012629.48414-1-zhaomzhao@126.com>
+References: <20260416012629.48414-1-zhaomzhao@126.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -44,31 +47,98 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PikvCgD3P6_POuBpPsBlDw--.10078S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Jry7Kw1fWF4xAw17ZFy8uFg_yoWxurXEva
-	yrCFyDJa4YvF9xJa4agr4DXrW8Ka1UXF95G3W2gFWUur9xAr1DKF4UAay5ZF1jqFW7WF1f
-	J3ySvFWrJwn3KjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjDPEPUUUUU==
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqxBVzGngOtB5cAAA3I
+X-CM-TRANSID:PikvCgD3P6_POuBpPsBlDw--.10078S4
+X-Coremail-Antispam: 1Uf129KBjvJXoWxGF4fJw17CF4rKr1rZr1DWrg_yoW5Gw4xpF
+	s3XrW2yF9Iqa42gan2y395ury5JrZ7Aa42vr1aka92yr1jqrn5Xr48JrySvF98Jr95Jw42
+	kr4vg342gF47K3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jFApnUUUUU=
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlxBVzGngOtC0LQAA3k
 
 From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-This patchset contains two fixes that I met when testing cgroup
-sub-scheduler. Patch 1 add the -c option to scx_qmap help, which support
-sub-scheduler but has no clue how to use it. Patch 2 add logs when sub-
-scheduler is disabled, almost the same logic as root scheduler.
+Take scx_qmap for example, when sub scheduler is attached, there is
+'BPF sub-scheduler "qmap" enabled' message, but when dettached, the log
+is missing. Add a new function to do the log thing, it can be used by
+both root scheduler and sub scheduler.
 
-V2:
-- Add [-c CG_PATH] to the usage synopsis(Cheng-Yang Chou)
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+---
+ kernel/sched/ext.c | 39 ++++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
 
-Zhao Mengmeng (2):
-  tools/sched_ext: Add missing -c option in scx_qmap help
-  sched_ext: Print sub-scheduler disabled log and reason
-
- kernel/sched/ext.c         | 39 +++++++++++++++++++++++---------------
- tools/sched_ext/scx_qmap.c |  3 ++-
- 2 files changed, 26 insertions(+), 16 deletions(-)
-
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 012ca8bd70fb..229a82900e8f 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5526,6 +5526,26 @@ static void scx_disable_dump(struct scx_sched *sch)
+ 	sch->dump_disabled = true;
+ }
+ 
++static void scx_log_sched_disable(struct scx_sched *sch)
++{
++	struct scx_exit_info *ei = sch->exit_info;
++	const char *type = scx_parent(sch) ? "sub-scheduler" : "scheduler";
++
++	if (ei->kind >= SCX_EXIT_ERROR) {
++		pr_err("sched_ext: BPF %s \"%s\" disabled (%s)\n", type,
++		       sch->ops.name, ei->reason);
++
++		if (ei->msg[0] != '\0')
++			pr_err("sched_ext: %s: %s\n", sch->ops.name, ei->msg);
++#ifdef CONFIG_STACKTRACE
++		stack_trace_print(ei->bt, ei->bt_len, 2);
++#endif
++	} else {
++		pr_info("sched_ext: BPF %s \"%s\" disabled (%s)\n", type,
++			sch->ops.name, ei->reason);
++	}
++}
++
+ #ifdef CONFIG_EXT_SUB_SCHED
+ static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
+ 
+@@ -5696,6 +5716,8 @@ static void scx_sub_disable(struct scx_sched *sch)
+ 			    &sub_detach_args);
+ 	}
+ 
++	scx_log_sched_disable(sch);
++
+ 	if (sch->ops.exit)
+ 		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
+ 	kobject_del(&sch->kobj);
+@@ -5707,7 +5729,6 @@ static void scx_sub_disable(struct scx_sched *sch) { }
+ 
+ static void scx_root_disable(struct scx_sched *sch)
+ {
+-	struct scx_exit_info *ei = sch->exit_info;
+ 	struct scx_task_iter sti;
+ 	struct task_struct *p;
+ 	int cpu;
+@@ -5797,22 +5818,10 @@ static void scx_root_disable(struct scx_sched *sch)
+ 	scx_idle_disable();
+ 	synchronize_rcu();
+ 
+-	if (ei->kind >= SCX_EXIT_ERROR) {
+-		pr_err("sched_ext: BPF scheduler \"%s\" disabled (%s)\n",
+-		       sch->ops.name, ei->reason);
+-
+-		if (ei->msg[0] != '\0')
+-			pr_err("sched_ext: %s: %s\n", sch->ops.name, ei->msg);
+-#ifdef CONFIG_STACKTRACE
+-		stack_trace_print(ei->bt, ei->bt_len, 2);
+-#endif
+-	} else {
+-		pr_info("sched_ext: BPF scheduler \"%s\" disabled (%s)\n",
+-			sch->ops.name, ei->reason);
+-	}
++	scx_log_sched_disable(sch);
+ 
+ 	if (sch->ops.exit)
+-		SCX_CALL_OP(sch, exit, NULL, ei);
++		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
+ 
+ 	scx_unlink_sched(sch);
+ 
 -- 
 2.43.0
 
