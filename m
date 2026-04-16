@@ -1,144 +1,63 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.8])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE3221B905
-	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 01:27:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CA32BD11
+	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 01:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776302829; cv=none; b=UcbFkfzYQrYsisTf3oKUhIKQnhxYLZj4UVwly1RFiD5erUped9YS52KBM8LHVOrbj18Kc/PKSFnnVSc5Yak/a+3GeSKsPW5nmMR6BfoVFqLnZzNLgQ68uIL2CMX4fir/SVtN6IdbtaiHoWAN9mNwRWALDh1djoweYSPASYiGUTI=
+	t=1776304217; cv=none; b=JKW1IryYCkTpgRFJU145iuiy0cRfQzWx2i1n5lbNUsHYBDJBjOuIYCek3q+Vdyg1xoEBpUZd766ZJ/SzEqxdpSNaVWchJc2KIyHizsgD/BC+KFLMgimgXUBwanc/ym7K1Ji0wCK5Cus2XN2O2SITEL76a+ya0+6oI4FI/x6jRwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776302829; c=relaxed/simple;
-	bh=0NPff8qv5ZpbhvzhMc052Lek2kjbyQ46v5mNbWpq0UA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5rk3YWBw6UA6ESJbeGgjLe7kAOUK6WjjHcdkzzQX4kZehwMy7RFegQt7SlM+4zBvAeyXtINv+dYlaRrxHG/OV4h39bJ4VrOTaw47Vnq7CYnuYo140m1DsMeQ3oJgV3z7MI+J4pGI2xPS6+Nlr2olLguaUtjhanKGq+D4oBMn7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=kkrYPfkI; arc=none smtp.client-ip=117.135.210.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="kkrYPfkI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=MO
-	9zfOHQVMneVVRYJXXzsHNZuKRDVPKnBw+V44zOZfo=; b=kkrYPfkIqlaOtyAyz2
-	pNFmCb52mMygewInG8AQMkx0TMMThr2HhD7VD0ep5PXWxKbkYpa15whUhKH3g+C6
-	SF7nJF2n9ePFmXrPAJRvGB9Jch3wToXmFjMo7c+2KF5SlVbRGwhZ1EAUtYr0OrCZ
-	QnsVPjev3FfOToGhLrDeNJi2o=
-Received: from localhost.localdomain (unknown [])
-	by gzsmtp3 (Coremail) with SMTP id PikvCgD3P6_POuBpPsBlDw--.10078S4;
-	Thu, 16 Apr 2026 09:26:40 +0800 (CST)
-From: Zhao Mengmeng <zhaomzhao@126.com>
-To: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Cc: yphbchou0911@gmail.com,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	zhaomengmeng@kylinos.cn
-Subject: [PATCH v2 2/2] sched_ext: Print sub-scheduler disabled log and reason
-Date: Thu, 16 Apr 2026 09:26:29 +0800
-Message-ID: <20260416012629.48414-3-zhaomzhao@126.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260416012629.48414-1-zhaomzhao@126.com>
-References: <20260416012629.48414-1-zhaomzhao@126.com>
+	s=arc-20240116; t=1776304217; c=relaxed/simple;
+	bh=UocuhRPYBrOhfwEn8vYdZdNxEnzLgnAq82M7DEyRCMc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=CZRy3fayoEr5VNFYKjsPifOyxEdnFM/cMUooeXL5boUEI7zoK9JzXyIdQxsDYU2w3lBpzzvcMMs16Li34CrizRC05YpDiji7tl8XTGAfhRI11i38+4wSJnDcR7J3VIw+cw0EAWQB4dVKF9FM0Qrb1QUVxV60NyZpg8MEmcj1E9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 9411cf96393611f1aa26b74ffac11d73-20260416
+X-CID-UNFAMILIAR: 1
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:2a9493e1-43fc-475e-b158-383c86ddeae1,IP:10,
+	URL:0,TC:0,Content:5,EDM:25,RT:0,SF:9,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:49
+X-CID-INFO: VERSION:1.3.12,REQID:2a9493e1-43fc-475e-b158-383c86ddeae1,IP:10,UR
+	L:0,TC:0,Content:5,EDM:25,RT:0,SF:9,FILE:0,BULK:0,RULE:Release_HamU,ACTION
+	:release,TS:49
+X-CID-META: VersionHash:e7bac3a,CLOUDID:8b03f2bd8bc92530b92bf6043d12a01e,BulkI
+	D:260416095002CSVPFOEW,BulkQuantity:0,Recheck:0,SF:16|19|66|78|81|82|83|10
+	1|102|127|898,TC:nil,Content:4|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bul
+	k:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0
+	,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_USA,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 9411cf96393611f1aa26b74ffac11d73-20260416
+X-User: zhaomengmeng@kylinos.cn
+Received: from [198.18.0.1] [(1.193.37.198)] by mailgw.kylinos.cn
+	(envelope-from <zhaomengmeng@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 1740711839; Thu, 16 Apr 2026 09:50:00 +0800
+Message-ID: <7ad57375-c651-4fb0-8279-bc3423157255@kylinos.cn>
+Date: Thu, 16 Apr 2026 09:49:56 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PikvCgD3P6_POuBpPsBlDw--.10078S4
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGF4fJw17CF4rKr1rZr1DWrg_yoW5Gw4xpF
-	s3XrW2yF9Iqa42gan2y395ury5JrZ7Aa42vr1aka92yr1jqrn5Xr48JrySvF98Jr95Jw42
-	kr4vg342gF47K3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jFApnUUUUU=
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlxBVzGngOtC0LQAA3k
-
+User-Agent: Mozilla Thunderbird
+To: yphbchou0911@gmail.com
+Cc: arighi@nvidia.com, changwoo@igalia.com, chia7712@gmail.com,
+ jserv@ccns.ncku.edu.tw, sched-ext@lists.linux.dev, stable@vger.kernel.org,
+ tj@kernel.org, void@manifault.com
+References: <20260415193459.933175-1-yphbchou0911@gmail.com>
+Subject: Re: [PATCH] sched_ext: Prevent RB-tree corruption in
+ scx_bpf_task_set_dsq_vtime()
 From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+In-Reply-To: <20260415193459.933175-1-yphbchou0911@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Take scx_qmap for example, when sub scheduler is attached, there is
-'BPF sub-scheduler "qmap" enabled' message, but when dettached, the log
-is missing. Add a new function to do the log thing, it can be used by
-both root scheduler and sub scheduler.
-
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
----
- kernel/sched/ext.c | 39 ++++++++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 15 deletions(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 012ca8bd70fb..229a82900e8f 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5526,6 +5526,26 @@ static void scx_disable_dump(struct scx_sched *sch)
- 	sch->dump_disabled = true;
- }
- 
-+static void scx_log_sched_disable(struct scx_sched *sch)
-+{
-+	struct scx_exit_info *ei = sch->exit_info;
-+	const char *type = scx_parent(sch) ? "sub-scheduler" : "scheduler";
-+
-+	if (ei->kind >= SCX_EXIT_ERROR) {
-+		pr_err("sched_ext: BPF %s \"%s\" disabled (%s)\n", type,
-+		       sch->ops.name, ei->reason);
-+
-+		if (ei->msg[0] != '\0')
-+			pr_err("sched_ext: %s: %s\n", sch->ops.name, ei->msg);
-+#ifdef CONFIG_STACKTRACE
-+		stack_trace_print(ei->bt, ei->bt_len, 2);
-+#endif
-+	} else {
-+		pr_info("sched_ext: BPF %s \"%s\" disabled (%s)\n", type,
-+			sch->ops.name, ei->reason);
-+	}
-+}
-+
- #ifdef CONFIG_EXT_SUB_SCHED
- static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
- 
-@@ -5696,6 +5716,8 @@ static void scx_sub_disable(struct scx_sched *sch)
- 			    &sub_detach_args);
- 	}
- 
-+	scx_log_sched_disable(sch);
-+
- 	if (sch->ops.exit)
- 		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
- 	kobject_del(&sch->kobj);
-@@ -5707,7 +5729,6 @@ static void scx_sub_disable(struct scx_sched *sch) { }
- 
- static void scx_root_disable(struct scx_sched *sch)
- {
--	struct scx_exit_info *ei = sch->exit_info;
- 	struct scx_task_iter sti;
- 	struct task_struct *p;
- 	int cpu;
-@@ -5797,22 +5818,10 @@ static void scx_root_disable(struct scx_sched *sch)
- 	scx_idle_disable();
- 	synchronize_rcu();
- 
--	if (ei->kind >= SCX_EXIT_ERROR) {
--		pr_err("sched_ext: BPF scheduler \"%s\" disabled (%s)\n",
--		       sch->ops.name, ei->reason);
--
--		if (ei->msg[0] != '\0')
--			pr_err("sched_ext: %s: %s\n", sch->ops.name, ei->msg);
--#ifdef CONFIG_STACKTRACE
--		stack_trace_print(ei->bt, ei->bt_len, 2);
--#endif
--	} else {
--		pr_info("sched_ext: BPF scheduler \"%s\" disabled (%s)\n",
--			sch->ops.name, ei->reason);
--	}
-+	scx_log_sched_disable(sch);
- 
- 	if (sch->ops.exit)
--		SCX_CALL_OP(sch, exit, NULL, ei);
-+		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
- 
- 	scx_unlink_sched(sch);
- 
--- 
-2.43.0
-
+Just discuss, if is better to use WARN_ON_ONCE instead of failing the
+scheduler, just like the check in the beginning of dispatch_enqueue().
