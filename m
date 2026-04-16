@@ -1,62 +1,62 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81D32701CB
-	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 06:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3D137BE7A
+	for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 06:47:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776322048; cv=none; b=MgHYUdnKduDWWJuz1HVGadYFuMQVjSodmDXDYO5MmhyddinLjBRltuFx51D4072uqXAaU9JO0odYVO7FMIThYkgaJsOoE2fmc4O0nAecwA2JxnytNxPSwVZAXAgFgpsmxQSuFtBUpKBGiYuAbcp5OnFw4x2OpOj5rH+Kg3WZTZI=
+	t=1776322051; cv=none; b=QRFvRmmzOnive69fjDtO/T2ecpVIG/IEZuyGHNoBzy4/5xDPvyDmzkHOnJDV4QXOIYoTIl2HTrwHXgn8TDwRtPrYu2S+8Ar6YjnE0OJYIoPEUODfBOOwEOjO/ZdNOzhhuVjd91HEy255iQB8n9+YpdQwNkp/gy5FegdBDiLDQiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776322048; c=relaxed/simple;
-	bh=T2bk+cbksw5pTyrH/m7bhIA/Az3Qgqu2+PTVON56GZw=;
+	s=arc-20240116; t=1776322051; c=relaxed/simple;
+	bh=IoooIES1we9H4UrTS/V5m8VZsU5ybmywjWgdTLsb5Fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OayMDqo+Q2RmCQUNbk+IMpslnj4+akWiaAgOMjbmcxp9dvPxEC5GtdqtuUKCagKKHplX/REVidv8QF9L++kKCoJ5Htep02AL+00owIONbdozVKi75wkkeIUGy5G7Dy6quvtmBJJWMefbrctHIKi03AOhT3TWO+unsdTmpp/rAOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJnVGUW9; arc=none smtp.client-ip=209.85.210.172
+	 MIME-Version; b=mo30ArkqDUB4umSrdsjVSL0v8aQ8sMdDF/CM1LJIBJo7GHUpKsOsgu79y2SWDzeKwUFbx1Avy6fgrSeI4l+0g6/1sxZ/KMS+u59w2vVphf6E80qRtg/izuZovHh+YNDVB/DzKjJhK5ObK6KhJ02PWn99nuXZNc4rptVIvwYsJEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ckbppZIo; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJnVGUW9"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-827270d50d4so6725991b3a.3
-        for <sched-ext@lists.linux.dev>; Wed, 15 Apr 2026 23:47:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckbppZIo"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-82f69adeecbso640090b3a.2
+        for <sched-ext@lists.linux.dev>; Wed, 15 Apr 2026 23:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776322047; x=1776926847; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1776322049; x=1776926849; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PHJWcadZu0oLyHlYGenIryGOmPMMnmgXxdpbwZ8eji8=;
-        b=MJnVGUW9DTwOqCN5S+uLnFE9DFSnHiM49j45z//31nyjC8VuSM2LKrlashbu+JqPVZ
-         tmBRgj17cZVDDbUbFVQzQUTTzhpq2LYsuR9Cc6uUG7mIYBUgwF1D7azBR0vD1TPCBO20
-         eRgefbDvrxPniV3Vtq/NpwA/xuaNFkbxFja/3+/ptVlrOKIvvkWd1ARackowHqNg9TJ+
-         4BaDaDplsxXH4BBQ6CPpaUYdlbFc/jwcBN53ziIU0kXowcGfpQuOWcHBCV7oRhtmRX2Y
-         /vhHYLc0OnuuOCVb/R7zmw3LYVIsTsoDKElThQyq7hR4HL9MYofWxlDE/fPsYukIpEWO
-         G6Eg==
+        bh=YzHl15V6LaKZz5Nq0yjuiMpGczFONg84vITPocytaBw=;
+        b=ckbppZIoh/N5jv6Kp6PICbEevrWJvsvXWpS81qJqmKNrm4yzMljRWZIlzCtYQ4OI0P
+         f+AM1Cv82LzBfgDipsXGrVBDhiuynt/HRvf1z24ZvuXtZ2GRo4Ybc3o6AIXPrF80f1AZ
+         3oamlM4KABUMsGLZ+xH5sO9+4YzkTzQ6rJSK2auB6NmwjsObKCtyXH+Z3C8xiWGp/B6J
+         KEJ/x4z55sKrWLFZBoEni0BdpvrkRpJ1Zc9DMHJ6GsxHk040nH7LntPK9zDUvHsSkprJ
+         8fh3YX02X/MMgM3SHvwa4EQ2CxcL729Uwb300+rGibznHw3sRniS1M8eCa8ZwkA1JT71
+         YefQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776322047; x=1776926847;
+        d=1e100.net; s=20251104; t=1776322049; x=1776926849;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=PHJWcadZu0oLyHlYGenIryGOmPMMnmgXxdpbwZ8eji8=;
-        b=U/+gtMxUYlpCvH1vqz/LxTanrG+Vbxs0HQ9QJFC8q3M+CBhZKC9nZ8/piFHUhPc5iw
-         BJv4X/nU2nUEU4QSPmPIoBuVXc3s+5JypTaE5YTq7rYPoVHkI7abJ4hqHZwufB4cRGOx
-         r3GsN20z3umViiI0dD3nWb1RDsCyPGaoBNBByTumrUzusYIJLyFwpD6+rDzqGUVRIE47
-         84ctr1EGCL/c5mFuQowWp4GSpO0yJ50KT5I3oBx2WmEAt26JJELoFHJOuVJ2Eb1sBFLX
-         KRwwd0N/tXbh/m5/USeTRS5W/Araaksw9ZllpsaYN6XKB8+fA39RR9dYlHlLMXaGPIAi
-         LOZQ==
-X-Gm-Message-State: AOJu0YzQgo7pTyzz04cIiTnCse2DeaRA20spLH2+Snv9/cYJzzFDa02e
-	v8Q+9UDHV0lPVhT6AKVIRCqSYhSYFshApo0rfeNYHhWLufemNUXHIxDt4HJSPVYU
-X-Gm-Gg: AeBDiete+VdOa1Rb7IQGo4/mwMbEnAnbAg+wV7LhHg5gb4JVSInatGmgygRF8ZVUrEJ
-	JWq1/DLhh6MieDevcYs4MRffWOhuSzF5oIy7IMpW0jmkRzc1aqfaJdvRDXwXSzXB89Ji06l67yo
-	pOeNxCEYIcjIRvPvwO9Qcpg3CGugFswjLlcbN8q8vEvVgcrBfEJe/v41dVETPH7ylmJBWFFwSWe
-	8c8MCIzxLLM/3fTzgrNiTwD6ItRNT8ab2ol/kjTUkx3vb3SknSA8BhkW5mmBo3o5BNiGWC9zIT5
-	yvSR/ncc4YWhsHYfqD6HNNnWw/P3bpij/G2YudtVq6XuolQzyI4HOXEg9e3AX7Rgvne+naD5FJc
-	HTYZGE+rIwOhCThYMyzPqCtZjiEeA2on9isp2csWrYnmZHNOYu0bumIiYFgWyrJG6IdzVksDQNm
-	kxrRBeeZHx1GDPYX9gqM0lYu3YvoGZ3CY02CNlP/0n1ify7GbX89kD0QThljMp
-X-Received: by 2002:a05:6a00:6c89:b0:82a:805a:7cc with SMTP id d2e1a72fcca58-82f0c269212mr26026757b3a.4.1776322046690;
-        Wed, 15 Apr 2026 23:47:26 -0700 (PDT)
+        bh=YzHl15V6LaKZz5Nq0yjuiMpGczFONg84vITPocytaBw=;
+        b=WXlrTIhe1wLrypAMCNN9GGpahNjhbfTC0aN7A+C1vRnbOgshK5iVdfh55aqlD7B4PZ
+         2sN3tsm7gEnEaDMQ28z4bjkz696rHkjY4A5kBKQFYO5gzGBw4wPu5DEumvoUScT1Rf/i
+         ftmXs6PbNE3Kapei9QfFtrGw6CLqK8XH4DJCje3Kk3vBgGMDZjBZJpkJtEfpNwwkzxQh
+         1Or8s86kvE5/PQ55eb0weRX9wzfk0+Q2+gzzRgRn1o8NOxQcBYN67rEcg5/44/pmdwcV
+         hBntHNtjNDUpWQnLqn//3MI3jOQtfh/hZvrmoJEAdct0vbNoHPTrUGTMnja/9D1XcW18
+         Ku7g==
+X-Gm-Message-State: AOJu0YxpJJ5NoQ+Y87oZB5uNabtN74GlWXjep/JRiaq9XB82LZa56frX
+	GDtGBkzbZUn4rBGBQICg6BBaM4dtaFIscmumvwr/w8spaOS3mR9UtOZsItTEXoTa
+X-Gm-Gg: AeBDiet6WnsfRBQUTPR9BYU0lfAxMrzlSMC8clFGE402OkuKJ3VZH3PrMo22mHlBI/o
+	vjj+QsrIvLJGytmXIFAo8Tmzmx0euY1D5TZlJTLrsUke9CQ6XBzLnwIHvD1yCfu6Ytcr6my5L8p
+	dCQlMWTvTxtM+k5OMRbul+dWTNC4FEzvz+L+4iC0Nkh8V3FVAX9yXKlsDtGm6u5EywtQ3YAnu8Y
+	tVIurNtYLwKm1r2RBs+7IV6aaQlLFC9JFjXQ49++U1rSNoCed6/bCzSv9SMPHnzMIFF0YbnwWHD
+	wft5O8CfN6J0Fcl+oouRwXipCjMfPeSQQJUNOCLc++d9Ch7O8C5yeHmBrZcWUXLpoysfgiP6lr9
+	0RkOMRmXm0BKN8h67c7C5Lm+3SDW9y4qWmtofGz44Xv3sr4byDRElyeGhiiFFjzFXFf5sIjSAzd
+	gBqeYahJdOStVrk3AO2Nb21BmwlDra0BWu/6lLzZlsyTBfjWBkLotXSpZcDJX+
+X-Received: by 2002:a05:6a00:1c97:b0:823:9b7:9c0e with SMTP id d2e1a72fcca58-82f0c24cc51mr22176572b3a.34.1776322048665;
+        Wed, 15 Apr 2026 23:47:28 -0700 (PDT)
 Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:49:cbd5:ab58:206c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f6d922a38sm3212392b3a.7.2026.04.15.23.47.25
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f6d922a38sm3212392b3a.7.2026.04.15.23.47.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2026 23:47:26 -0700 (PDT)
+        Wed, 15 Apr 2026 23:47:28 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: sched-ext@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>,
@@ -66,9 +66,9 @@ To: sched-ext@lists.linux.dev,
 Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
 	Chia-Ping Tsai <chia7712@gmail.com>,
 	yphbchou0911@gmail.com
-Subject: [PATCH 1/2] sched_ext: Deny SCX kfuncs to non-SCX struct_ops programs
-Date: Thu, 16 Apr 2026 14:46:40 +0800
-Message-ID: <20260416064715.1008437-2-yphbchou0911@gmail.com>
+Subject: [PATCH 2/2] selftests/sched_ext: Add non_scx_kfunc_deny test
+Date: Thu, 16 Apr 2026 14:46:41 +0800
+Message-ID: <20260416064715.1008437-3-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20260416064715.1008437-1-yphbchou0911@gmail.com>
 References: <20260416064715.1008437-1-yphbchou0911@gmail.com>
@@ -80,101 +80,134 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_kfunc_context_filter() currently allows non-SCX struct_ops programs
-(e.g. tcp_congestion_ops) to call SCX unlocked kfuncs. This is wrong
-for two reasons:
+Verify that the BPF verifier rejects a non-SCX struct_ops program
+(tcp_congestion_ops) that attempts to call an SCX kfunc (scx_bpf_kick_cpu).
+The test expects the load to fail with -EACCES from scx_kfunc_context_filter.
 
-- It is semantically incorrect: a TCP congestion control program has no
-  business calling SCX kfuncs such as scx_bpf_kick_cpu().
-
-- With CONFIG_EXT_SUB_SCHED=y, kfuncs like scx_bpf_kick_cpu() call
-  scx_prog_sched(aux), which invokes bpf_prog_get_assoc_struct_ops(aux)
-  and casts the result to struct sched_ext_ops * before reading ops->priv.
-  For a non-SCX struct_ops program the returned pointer is the kdata of
-  that struct_ops type, which is far smaller than sched_ext_ops, making
-  the read an out-of-bounds access (confirmed with KASAN).
-
-Extend the filter to cover scx_kfunc_set_any as well, and deny all
-context-sensitive kfuncs for any struct_ops program that is not the SCX
-struct_ops. This addresses both issues: the semantic contract is enforced
-at the verifier level, and the runtime out-of-bounds access becomes
-unreachable.
-
-Fixes: d1d3c1c6ae36 ("sched_ext: Add verifier-time kfunc context filter")
 Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- kernel/sched/ext.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ tools/testing/selftests/sched_ext/Makefile    |  1 +
+ .../sched_ext/non_scx_kfunc_deny.bpf.c        | 44 +++++++++++++++++
+ .../selftests/sched_ext/non_scx_kfunc_deny.c  | 47 +++++++++++++++++++
+ 3 files changed, 92 insertions(+)
+ create mode 100644 tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/non_scx_kfunc_deny.c
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 012ca8bd70fb..768abc6cf7ad 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -9479,6 +9479,7 @@ BTF_KFUNCS_END(scx_kfunc_ids_any)
- static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- 	.owner			= THIS_MODULE,
- 	.set			= &scx_kfunc_ids_any,
-+	.filter			= scx_kfunc_context_filter,
- };
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 789037be44c7..2880a122a214 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -190,6 +190,7 @@ auto-test-targets :=			\
+ 	test_example			\
+ 	total_bw			\
+ 	cyclic_kick_wait		\
++	non_scx_kfunc_deny		\
  
- /*
-@@ -9530,9 +9531,9 @@ static const u32 scx_kf_allow_flags[] = {
-  * .filter field on each per-group btf_kfunc_id_set. The BPF core invokes this
-  * for every kfunc call in the registered hook (BPF_PROG_TYPE_STRUCT_OPS or
-  * BPF_PROG_TYPE_SYSCALL), regardless of which set originally introduced the
-- * kfunc - so the filter must short-circuit on kfuncs it doesn't govern (e.g.
-- * scx_kfunc_ids_any) by falling through to "allow" when none of the
-- * context-sensitive sets contain the kfunc.
-+ * kfunc - so the filter must short-circuit on kfuncs it doesn't govern by
-+ * falling through to "allow" when none of the context-sensitive sets contain
-+ * the kfunc.
-  */
- int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- {
-@@ -9541,18 +9542,19 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	bool in_enqueue = btf_id_set8_contains(&scx_kfunc_ids_enqueue_dispatch, kfunc_id);
- 	bool in_dispatch = btf_id_set8_contains(&scx_kfunc_ids_dispatch, kfunc_id);
- 	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
-+	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
- 	u32 moff, flags;
+ testcase-targets := $(addsuffix .o,$(addprefix $(SCXOBJ_DIR)/,$(auto-test-targets)))
  
--	/* Not a context-sensitive kfunc (e.g. from scx_kfunc_ids_any) - allow. */
--	if (!(in_unlocked || in_select_cpu || in_enqueue || in_dispatch || in_cpu_release))
-+	/* Not a context-sensitive kfunc - allow. */
-+	if (!(in_unlocked || in_select_cpu || in_enqueue || in_dispatch || in_cpu_release || in_any))
- 		return 0;
- 
- 	/* SYSCALL progs (e.g. BPF test_run()) may call unlocked and select_cpu kfuncs. */
- 	if (prog->type == BPF_PROG_TYPE_SYSCALL)
--		return (in_unlocked || in_select_cpu) ? 0 : -EACCES;
-+		return (in_unlocked || in_select_cpu || in_any) ? 0 : -EACCES;
- 
- 	if (prog->type != BPF_PROG_TYPE_STRUCT_OPS)
--		return -EACCES;
-+		return in_any ? 0 : -EACCES;
- 
- 	/*
- 	 * add_subprog_and_kfunc() collects all kfunc calls, including dead code
-@@ -9565,14 +9567,15 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 		return 0;
- 
- 	/*
--	 * Non-SCX struct_ops: only unlocked kfuncs are safe. The other
--	 * context-sensitive kfuncs assume the rq lock is held by the SCX
--	 * dispatch path, which doesn't apply to other struct_ops users.
-+	 * Non-SCX struct_ops: context-sensitive kfuncs are not permitted.
- 	 */
- 	if (prog->aux->st_ops != &bpf_sched_ext_ops)
--		return in_unlocked ? 0 : -EACCES;
-+		return -EACCES;
- 
- 	/* SCX struct_ops: check the per-op allow list. */
-+	if (in_any)
-+		return 0;
+diff --git a/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
+new file mode 100644
+index 000000000000..9f16d39255e7
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
+@@ -0,0 +1,44 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Verify that context-sensitive SCX kfuncs (even "unlocked" ones) are
++ * restricted to only SCX struct_ops programs. Non-SCX struct_ops programs,
++ * such as TCP congestion control programs, should be rejected by the BPF
++ * verifier when attempting to call these kfuncs.
++ *
++ * Copyright (C) 2026 Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
++ * Copyright (C) 2026 Cheng-Yang Chou <yphbchou0911@gmail.com>
++ */
 +
- 	moff = prog->aux->attach_st_ops_member_off;
- 	flags = scx_kf_allow_flags[SCX_MOFF_IDX(moff)];
- 
++#include <vmlinux.h>
++#include <bpf/bpf_helpers.h>
++#include <bpf/bpf_tracing.h>
++
++/* SCX kfunc from scx_kfunc_ids_any set */
++void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
++
++SEC("struct_ops/ssthresh")
++__u32 BPF_PROG(tcp_ca_ssthresh, struct sock *sk)
++{
++	/*
++	 * This call should be rejected by the verifier because this is a
++	 * TCP congestion control program (non-SCX struct_ops).
++	 */
++	scx_bpf_kick_cpu(0, 0);
++	return 2;
++}
++
++SEC("struct_ops/cong_avoid")
++void BPF_PROG(tcp_ca_cong_avoid, struct sock *sk, __u32 ack, __u32 acked) {}
++
++SEC("struct_ops/undo_cwnd")
++__u32 BPF_PROG(tcp_ca_undo_cwnd, struct sock *sk) { return 2; }
++
++SEC(".struct_ops")
++struct tcp_congestion_ops tcp_non_scx_ca = {
++	.ssthresh   = (void *)tcp_ca_ssthresh,
++	.cong_avoid = (void *)tcp_ca_cong_avoid,
++	.undo_cwnd  = (void *)tcp_ca_undo_cwnd,
++	.name       = "tcp_kfunc_deny",
++};
++
++char _license[] SEC("license") = "GPL";
+diff --git a/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.c b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.c
+new file mode 100644
+index 000000000000..1c031575fb87
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.c
+@@ -0,0 +1,47 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Verify that context-sensitive SCX kfuncs (even "unlocked" ones) are
++ * restricted to only SCX struct_ops programs. Non-SCX struct_ops programs,
++ * such as TCP congestion control programs, should be rejected by the BPF
++ * verifier when attempting to call these kfuncs.
++ *
++ * Copyright (C) 2026 Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
++ * Copyright (C) 2026 Cheng-Yang Chou <yphbchou0911@gmail.com>
++ */
++
++#include <bpf/bpf.h>
++#include <scx/common.h>
++#include <unistd.h>
++#include <errno.h>
++#include <stdio.h>
++#include "non_scx_kfunc_deny.bpf.skel.h"
++#include "scx_test.h"
++
++static enum scx_test_status run(void *ctx)
++{
++	struct non_scx_kfunc_deny *skel;
++	int err;
++
++	skel = non_scx_kfunc_deny__open();
++	if (!skel) {
++		SCX_ERR("Failed to open skel");
++		return SCX_TEST_FAIL;
++	}
++
++	err = non_scx_kfunc_deny__load(skel);
++	non_scx_kfunc_deny__destroy(skel);
++
++	if (err == 0) {
++		SCX_ERR("non-SCX BPF program loaded when it should have been rejected");
++		return SCX_TEST_FAIL;
++	}
++
++	return SCX_TEST_PASS;
++}
++
++struct scx_test non_scx_kfunc_deny = {
++	.name = "non_scx_kfunc_deny",
++	.description = "Verify that non-SCX struct_ops programs cannot call SCX kfuncs",
++	.run = run,
++};
++REGISTER_SCX_TEST(&non_scx_kfunc_deny)
 -- 
 2.48.1
 
