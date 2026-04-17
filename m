@@ -1,106 +1,157 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896BD28726E
-	for <sched-ext@lists.linux.dev>; Fri, 17 Apr 2026 06:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776407440; cv=pass; b=Wbki2JEhgVuCDprOeBv87UrcQ4l3E1WGIRgvr+DySmrAb/G/IonM2FOzfVkRik6W3qfkTeRMLd8ewF88xailufsmeTM6Y6AmnW1GmxKUuX9X9Z+bvrCnK36NcNqC6Koqmc0lxPK1rg8F8dqmqI7RL23FpqcQx0eo5avub6+FKi4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776407440; c=relaxed/simple;
-	bh=eQjf63Fv03/lLp1JyzRkc1/XN3bTfq1vV7Et2P8WcaY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bHb6M2MjeX0IrHwV3fTu+8BHld1wxZeOQdjxqs+0zR3gfkJdKaIoLfp/U7TZVxbSQ5y4dlapndip2cxNxFg8Bf7CLx/Z/6ZJqlSTaNXdvL+ikk5q0BtaVxFFUP5sLbFy19GsrlOwO/4WU9lV1+8rTw5IvojqcUVJBrjUwYpxopw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jPGh0TKK; arc=pass smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3F83783D3;
+	Fri, 17 Apr 2026 07:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776411533; cv=none; b=SsJvM/U7vyv0hO55naR1uHM3s9y3MblxI4zpk4pWPr9H/QvXOjRfwtkVrcECPHDf1PSIr+jxxboSgGeZ0TrRVCNN9/UFgHv6oRzPGLUVlcMPycvrh9bfC0AEriEmN+RSm3A+GGkJWPg9rrelxK+4LbiorY/uSIWDGZKLCXZq1TI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776411533; c=relaxed/simple;
+	bh=3+OoYA4kjHqVG8ZM6xSU1J5mm5fDqQDHcOlMugEH9eQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J3mm0QixPTxOTjloy6J0EWXpaJG2xvqTRjsa6l4UgP1dM30kwo++zBhz6U/VnryRDhAzsVESCoICRwtK7uXwKvQnpA08hFOxbbnuKjMDkYrxK7t2QqK+9omuYeny7OQuTrIa40u5N2ZdJeTTrXnwTjG0eCfE6VfDPK0PWqxVTTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WzB1+Cd8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jPGh0TKK"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-35fc2b18363so419059a91.0
-        for <sched-ext@lists.linux.dev>; Thu, 16 Apr 2026 23:30:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1776407439; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Pk0jPphRHpXqGnkZII4s3pFFmWozZSJgwWt/qdWdric6m+iSyBZxa3UGnodL4ql3HB
-         PD/bofQoglRyVRaJ/Zr4SI6CzJZ+y0ZiQrR8s5Qr1yJvwQ6kpKpaUZ9m8j6T7DmFz2Yg
-         jHiTsWfqkZIis0bNB0H+mQ0grGBAhsB9m7PmuP04h6p9jy4Ix9UE7QDyzxnpjTux9E0a
-         BrJRZEtyiGOfmn8OUcsOEfxscgmm/gNUtOl5+CoLtU8mQ356i5mh2NJrkBL1A01gkjDs
-         T1lgHQuyehRwtmjw+whA6gQVYwr5KS1ZGOtMnKnMPSl17egYAi3L/pn3AccK2Odljf+t
-         Bq/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=eQjf63Fv03/lLp1JyzRkc1/XN3bTfq1vV7Et2P8WcaY=;
-        fh=8Q10VOSeG6fl1GOpCB8fDmw9zRjxf/Nelf8LDpk22YI=;
-        b=dy/xFniCHvxwQORUkiCEuVoBQ8QIU/2fOitr6nzVvfTc69Dxk3z5urNbLywcm1TH8x
-         FG905Hm1+ikfJtbNc7jTQ2v++ixDs30HRNxg37dXbaRHGecREoI5Bkix/DcyL1NELMnw
-         iI4rsp14EcarFOyR2AUXUfYwBOPvVd5+d7zv2bklFeLPsoaI84y0ilT1OzoRMlsaB+j6
-         a56utkVfdNVeWP7ubSFTLT6l7gCuMSzjCqcKJLZSuWhrVQ5KEm75tyBqJA3+eO4x7aae
-         GHs1sG8ah7x5qbhE010qAv4FlEDpuYj+0dLQ/bsapD5A6TOCfy/7yWa4wiZVIATrBeDX
-         LqUQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776407439; x=1777012239; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eQjf63Fv03/lLp1JyzRkc1/XN3bTfq1vV7Et2P8WcaY=;
-        b=jPGh0TKKfwKfiwv8d6O4zwDYNswCJ8zvKbIwNVytT6vb2yP9bpH3qwkS30SVq+Un3g
-         Vwe3XG2QJDejSra00hbaf6CFNSKZ8HAPqCFwFe2LLGkkkblW1n1X7bo91VcGnp//Zgs2
-         j1wI0fES3b42sEkxNhzWbmXePNIhZItETTx7mLUc+0ay4NkTzHIuqSy1Xidx1wb8TTD1
-         Uxz4+62q8ncSxxvA38F56AzTgTtBnBwLyH95nSsEOxywlRFWIgCVJosY+pziRYSBf92F
-         keA+EMEppjZzG957VyClKgSKd1g7xiIq1Kp0yERrOWW1WidpzRHTvr0S4yAd+wJRH3Sk
-         o5pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776407439; x=1777012239;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eQjf63Fv03/lLp1JyzRkc1/XN3bTfq1vV7Et2P8WcaY=;
-        b=j/+cPkxLj9KrOwFglMxE9byuZMTvDxEjrAg2SU48CgN3pArl2N89+BmXYI6qAxSexK
-         NVHZyg4q4S4qU56TPziC7Lw0ah4TjH5F5RiLPGC+Etifs5Juo13TPzrBfZcqWsW7KCBX
-         vhKzlJZMWtm1qAxEVf3JQ34SHW8FK3bczbTQx4QpPcVSfQnQrz+N4shigZZP+UfmgJy4
-         ghYH2M8mZFygT3Xi1XWDFOwo+/jpBrCKlcMczruiXfNbjW0Ni6XNxyu1NehQ0muFzPOh
-         J29WfcUGqRdik1dz9i8zRka7zXwdVpSs5pybA3dgRa/R8te6VB4cJbVHAK50YO8qS3Nx
-         EPtw==
-X-Forwarded-Encrypted: i=1; AFNElJ+iXYbMdafQTnAqvgTcST768JL6EEnIlWGxvTT51NEbm7Uq0N00AaRs1mPdMFmKthpX7EAm/qwZizg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwXI8leBQk2vFFQNgWS24egpt7H6iR0OTZ7ahV4v/MO5vVIRGxN
-	KEC2xFa7Fs6GP6XQo37+wGopMF/f9AR5jFywQzkmt9sfS1wV73tDczEV/YmfQv9FU1RepjSGaoB
-	t+ig4jcQnVOy0TeApQiDswQMSb1sEMec=
-X-Gm-Gg: AeBDieu7JS8ubroRZ1Yj14SWQyvd3keIaat7q1q2k31QHVAL07hJtVSxrD0QV2eBceF
-	LNuDJn56ABf/O49bI3tRUgY71wiJ7ZKEXKBHWJeGadg0vNcXKHD+dBPId4eGMnlauAl9DLy/Vkk
-	mY2AcIMjqXWJX30D0uHMtekfTh20DYYqk0YxWSYQUzaNcEPCbLqJ4v/f83Ns/oMldL5gLXV5K/P
-	z0iD/83OHGz+lF6mo1bkdOD0j4rqqmYlwf8x5Eq7Mpyuf24fygJRj9Dt05uz2XJSosiXs0u0aBg
-	J9BPwpIHDv7eLna0G4ygYOvCklmQgYXsrzRWekhoBlDT+ggWtg==
-X-Received: by 2002:a17:90b:1dc2:b0:35f:b306:5d47 with SMTP id
- 98e67ed59e1d1-361403af9c4mr1787310a91.1.1776407438810; Thu, 16 Apr 2026
- 23:30:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WzB1+Cd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45854C19425;
+	Fri, 17 Apr 2026 07:38:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776411533;
+	bh=3+OoYA4kjHqVG8ZM6xSU1J5mm5fDqQDHcOlMugEH9eQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WzB1+Cd88hHIPfUFdl+7otALEfYIgMVBaObhaNm0pYivMjcr2qQvGVUQjKtU179FV
+	 nI1MfoQ9XVzg5VQyITgNjVx6eft7YnQsvjdn0AP2UaQt6aB2GXnE8zoOGWkhNmfj7Q
+	 S6IWXS7RznV5xYEubsOfbZcZAOXCEbk6EGX5PFmXVxrjguTkdlWNeS5D/TQY3yqgXY
+	 /2unCLIHs0J1tArJMB4TmbFrK6a0OD6Q18S3ttnu0m/jNFyqzcGisGm10kKxtml8Fd
+	 hDlLxduTLJKfvXi3jD2/DPuMuY6KYaYXreppTE1OM9Toab5nC1pbOXeyRuRRF9zQvP
+	 TPt2WBXV11Y4A==
+Date: Thu, 16 Apr 2026 21:38:52 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Thomas Graf <tgraf@suug.ch>, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-crypto@vger.kernel.org, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH for-7.1-fixes 1/2] rhashtable: add no_sync_grow option
+Message-ID: <aeHjjGEhlikSsxCX@slm.duckdns.org>
+References: <20260417002449.2290577-1-tj@kernel.org>
+ <aeGCMkdg5Fgv8UMS@gondor.apana.org.au>
+ <aeGElQ-TcCclEHwo@slm.duckdns.org>
+ <aeGIsGi9fBqu9EZT@gondor.apana.org.au>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260414125933.3520885-1-fredrik.b.bratberg@gmail.com>
- <ad539mUd8A0lDWAw@slm.duckdns.org> <CALP2E1xwgfNmW+u=oyQ6bVW0ZeuQRZK65gR5RXyQyzy1n6U_8Q@mail.gmail.com>
- <aeEjhTftzK_sjYi-@slm.duckdns.org>
-In-Reply-To: <aeEjhTftzK_sjYi-@slm.duckdns.org>
-From: Fredrik Bratberg <fredrik.b.bratberg@gmail.com>
-Date: Fri, 17 Apr 2026 08:30:28 +0200
-X-Gm-Features: AQROBzDycB-ddt_eDK_taw9Z2FZr9wIEEwxZPEGnQIUgQQDiog8oYYhEX0pTcXs
-Message-ID: <CALP2E1wVZS-mRo3-Cdp0c0D0GSqv5rK-w2D3T0_sFXgwAg+AbQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] sched: add CONFIG_SCHED_EXT_RT_EXPERIMENTAL to move
- SCHED_EXT above SCHED_RR/SCHED_FIFO
-To: Tejun Heo <tj@kernel.org>
-Cc: Henrik Austad <henrik@austad.us>, Peter Ziljstra <peterz@infradead.org>, 
-	Steven Rostedt <rostedt@goodmis.org>, Thomas Gleixner <tglx@kernel.org>, linux-rt-devel@lists.linux.dev, 
-	sched-ext@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aeGIsGi9fBqu9EZT@gondor.apana.org.au>
 
-On Thu, Apr 16, 2026 at 7:59=E2=80=AFPM Tejun Heo <tj@kernel.org> wrote:
-> In the current form at least, I'm afraid this would have to be carried
-> outside the tree.
+Hello,
 
-Totally understandable. Thanks for taking the time to explain and review th=
-is.
+On Fri, Apr 17, 2026 at 09:11:12AM +0800, Herbert Xu wrote:
+> On Thu, Apr 16, 2026 at 02:53:41PM -1000, Tejun Heo wrote:
+> > 
+> > Oops, that's a mistake. I meant GFP_ATOMIC kmalloc allocation. kmalloc uses
+> > regular spin_lock so can't be called under raw_spin_lock. There's the new
+> > kmalloc_nolock() but that means even smaller reserve size, so higher chance
+> > of failing. I'm not sure it can even accomodate larger allocations.
+> 
+> We should at least try to grow even if it fails.
+>
+> > Another aspect is that for some use cases, it's more problematic to fail
+> > insertion than delaying hash table resize (e.g. that can lead to fork
+> > failures on a thrashing system).
+> 
+> rhashtable is meant to grow way before you reach 100% occupancy.
+> So the fact that you even reached this point means that something
+> has gone terribly wrong.
+> 
+> Is this failure reproducible?
+> 
+> I had a look at kernel/sched/ext.c and all the calls to rhashtable
+> insertion come from thread context.  So why does it even use a
+> raw spinlock?
+
+Yeah, the DSQ conversion is incorrect. Sorry about that. In the current
+master branch, there's another rhashtable - scx_sched_hash - which is
+inserted under scx_sched_lock which is a raw spin lock. This is a bit
+difficult to trigger because each insertion involves loading a subscheduler
+which usually takes quite some time and the whole operatoin is serialized.
+In a devel branch, I'm adding a unique thread ID to task rhashtable -
+scx_tid_hash:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git
+
+which is initialized and populated when the root scheduler loads. As all
+existing tasks are inserted during init, it ends up expanding the hashtable
+rapidly and it's not difficult to make it hit the synchronous growth path.
+
+- Build kernel and boot. Build the example schedulers - `make -C tools/sched_ext`
+
+- Create a lot of dormant threads:
+
+        stress-ng --pthread 1 --pthread-max 10000 --timeout 60s
+
+- Run the qmap scheduler which enables tid hashing:
+
+        tools/sched_ext/build/bin/scx_qmap
+
+and the following lockdep triggers:
+
+  [   34.344355] sched_ext: BPF scheduler "qmap" enabled
+  [   35.999783] sched_ext: BPF scheduler "qmap" disabled (unregistered from user space)
+  [   92.996704]
+  [   92.996947] =============================
+  [   92.997462] [ BUG: Invalid wait context ]
+  [   92.997974] 7.0.0-work-08607-g4e2e9e22ddbe-dirty #423 Not tainted
+  [   92.998759] -----------------------------
+  [   92.999285] scx_enable_help/1907 is trying to lock:
+  [   92.999903] ffff888237aa9450 (batched_entropy_u32.lock){..-.}-{3:3}, at: get_random_u32+0x40/0x270
+  [   93.001047] other info that might help us debug this:
+  [   93.001716] context-{5:5}
+  [   93.002057] 6 locks held by scx_enable_help/1907:
+  [   93.002677]  #0: ffffffff83a90d48 (scx_enable_mutex){+.+.}-{4:4}, at: scx_root_enable_workfn+0x2b/0xad0
+  [   93.003872]  #1: ffffffff83a90e40 (scx_fork_rwsem){++++}-{0:0}, at: scx_root_enable_workfn+0x407/0xad0
+  [   93.005053]  #2: ffffffff83a90f80 (scx_cgroup_ops_rwsem){++++}-{0:0}, at: scx_cgroup_lock+0x11/0x20
+  [   93.006380]  #3: ffffffff83c3de28 (cgroup_mutex){+.+.}-{4:4}, at: scx_root_enable_workfn+0x436/0xad0
+  [   93.007535]  #4: ffffffff83a90e88 (scx_tasks_lock){....}-{2:2}, at: scx_root_enable_workfn+0x511/0xad0
+  [   93.008757]  #5: ffffffff83b77c98 (rcu_read_lock){....}-{1:3}, at: rhashtable_insert_slow+0x65/0x9e0
+  [   93.009909] stack backtrace:
+  [   93.010298] CPU: 2 UID: 0 PID: 1907 Comm: scx_enable_help Not tainted 7.0.0-work-08607-g4e2e9e22ddbe-dirty #423 PREEMPT(full)
+  [   93.010300] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 02/02/2022
+  [   93.010301] Sched_ext: qmap (enabling)
+  [   93.010301] Call Trace:
+  [   93.010304]  <TASK>
+  [   93.010305]  dump_stack_lvl+0x50/0x70
+  [   93.010307]  __lock_acquire+0x9e8/0x2760
+  [   93.010314]  lock_acquire+0xb2/0x240
+  [   93.010317]  get_random_u32+0x58/0x270
+  [   93.010321]  bucket_table_alloc+0xa6/0x190
+  [   93.010322]  rhashtable_insert_slow+0x8ac/0x9e0
+  [   93.010325]  scx_root_enable_workfn+0x893/0xad0
+  [   93.010328]  kthread_worker_fn+0x108/0x300
+  [   93.010330]  kthread+0xfa/0x120
+  [   93.010332]  ret_from_fork+0x175/0x320
+  [   93.010334]  ret_from_fork_asm+0x1a/0x30
+  [   93.010336]  </TASK>
+
+Now, I can move the insertion out of the raw scx_tasks_lock; however, that
+complicates init path as now it has to account for possible races against
+task exit path.
+
+Also, taking a step back, if rhashtable allows usage under raw spin locks,
+isn't this broken regardless of how easy or difficult it may be to reproduce
+the problem? Practically speaking, the scx_sched_hash one is unlikely to
+trigger in real world; however, it is still theoretically possible and I'm
+pretty positive that one would be able to create a repro case with the right
+interference workload. It'd be contrived for sure but should be possible.
+
+Thanks.
+
+-- 
+tejun
