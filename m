@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DFB1A5B84
-	for <sched-ext@lists.linux.dev>; Fri, 17 Apr 2026 18:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C69D24A047;
+	Fri, 17 Apr 2026 18:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776451109; cv=none; b=fs260Ub0tM8zA1CYRBJzgwynPYqGkivYG5nAGDSLQDVLO4WdtYX2ApsFwxE7EZ6XSATHkga2+rXISEpdQKls6bmcBjhlt1fATNt2bztwE3FovvwDOnzu6pgdo9DnMXfv4xMJ5xZpiFRMZw4QhiNVG9hheKsSWCeVtO566nOjEwo=
+	t=1776451114; cv=none; b=rZirA32Rp/89rIMbxA/V3kqZGKRt4VjcLSpc3xIN2Gs/Kv2PzAMn+YF5vM/5TNhHdCL/mLApvPeap/q51OWi+Khh1jazpTX5x4HTrQrPXDOviXNmTPvQ2x5M1xygDjL0eOLFwMbA8Cw5iuEfJDV4QUR02tytyXJm3yT7v6TvniA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776451109; c=relaxed/simple;
-	bh=+KpSgwYPCGqdt6avlWOsU81LS/KFZBqht1Uj7jseeNs=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=rKCz6D2TfrpJbuMGU48mS3kd5OG0bx90rx6rsJxjiLulkMI7JwXVwmBPyyWNS+bakoWjZvMRe2ysMPnbsvDRDPaneMHh+Yaq1LXOp4NzHt2HzCmliiK9kZ5x0k1/Sj8h9pAfkvdnEb1XGuMBfLBu3m2mWiQR2x2Onuy4T+D+HAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MJ7F7djs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776451114; c=relaxed/simple;
+	bh=QMYCbiu4UslwGII4hGwxgtxjwyvT++A+3NQrbFHRAHc=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=D37T25pU859GKTRiS0VdRmfml44v2w0sloTOmcc9NfK87yoVLuYupGmdiyRDAkypZXvhmcLEA422J/+f2b6e70In8d5eRno0xbAvIvhHgoffv6QvSP08ZiipQNUa9pWevgTB+WUBzgwQyrIAUVRy2RbdFJKm18tqCVuVc7BZCK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sQwIpAMK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MJ7F7djs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C69DC19425;
-	Fri, 17 Apr 2026 18:38:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sQwIpAMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DE6C19425;
+	Fri, 17 Apr 2026 18:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776451109;
-	bh=+KpSgwYPCGqdt6avlWOsU81LS/KFZBqht1Uj7jseeNs=;
+	s=k20201202; t=1776451113;
+	bh=QMYCbiu4UslwGII4hGwxgtxjwyvT++A+3NQrbFHRAHc=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=MJ7F7djsxMImISit6+2j/QjC/YpVQHDCyChLz90Bt6N0EoOgOhKdP+G10jf2IvjJI
-	 r6fsDQCiVsDezQCgjWyfl8P7AEilG8KmbfHCXOYc+CLAzgC9EX7ohWQZ+GgOnSVyUK
-	 k7ECh1CNrGfGJ7dyPkJANWi3VEn75gnv91MqxGBt4Fa1uYpG612Nt7ytbcKUPdpSTN
-	 c2xL7bKkFojSPnqjBM83uQ7g7zIAVWyqyt2KB9BTLa2aZiVqxAlEhX8lbQJzbATVDc
-	 6r2F/Sy8DEY8uAdt3ZkQEdcp50UPzxTkrNM44eTOg2V1rze0bU+Sx80Rhv/n6RpfXf
-	 VDoSYT16J000w==
-Date: Fri, 17 Apr 2026 08:38:28 -1000
-Message-ID: <46db71ab566022b4f834dddb2e343981@kernel.org>
+	b=sQwIpAMKjexAbUtvIpEbPfY35BjFXbdT0kA+a5T0xCNK2bOY3SN5tcmc4DAKWvJh4
+	 2cktZGdDV5TSnVMjPVV2d/08/WlP2L4Uoq81z5d/bgzFU+7e3Wq9ctbvfC8Kbm76x1
+	 tx1VcYM2eJeeYPQbx/bWvpA1vBEeUEV995k6kCHTUxSlS0JNF5QewQyPTg0+gwTap/
+	 tw+rhWPks+vVfjEahHi4bMIORhnhWE+oo+ojtJuPJdD7Y+blleHYwkztyY9mp8hAjS
+	 q2bVMaGmaOJMdDEqNhT1Xd6j8z1N+WgEydND51Wpd24u5nGBY3chp9BT1P0S1xUpdi
+	 Vq0oVqxw76WOg==
+Date: Fri, 17 Apr 2026 08:38:32 -1000
+Message-ID: <f142e9af1dcb51fb14f559f65d54d26b@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
- David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
- Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
- Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH] tools/sched_ext: Handle pinned tasks in scx_central
-In-Reply-To: <3cpy5o3wdfqrmk7kuvwlvibnkesvzprjru5urhyvf66qytnjeu@jibpzykbt65k>
-References: <3cpy5o3wdfqrmk7kuvwlvibnkesvzprjru5urhyvf66qytnjeu@jibpzykbt65k>
+To: Zhao Mengmeng <zhaomzhao@126.com>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+ Cheng-Yang Chou <yphbchou0911@gmail.com>
+Subject: Re: [PATCH v3 0/2] sched_ext: Cgroup sub-scheduler minor fixes
+In-Reply-To: <20260417-sched_ext-0417-v3-0-e11b3aed57d3@kylinos.cn>
+References: <20260417-sched_ext-0417-v3-0-e11b3aed57d3@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,8 +44,9 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello,
 
-> Cheng-Yang Chou (1):
->   tools/sched_ext: Handle migration-disabled tasks in scx_central
+> Zhao Mengmeng (2):
+>   tools/sched_ext: Add missing -c option in scx_qmap help
+>   sched_ext: Print sub-scheduler disabled log and reason
 
 Applied to sched_ext/for-7.2.
 
