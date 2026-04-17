@@ -1,77 +1,124 @@
-Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33AC15A864;
-	Fri, 17 Apr 2026 01:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.181.231.80
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DF92882D7
+	for <sched-ext@lists.linux.dev>; Fri, 17 Apr 2026 03:38:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776388947; cv=none; b=tbf8NrRt5rfBOOEIM2q/XGmkfup/Y16m8NWfCzUUgdE6Emwi2dGTDprJPI1fn9dWX4mvRx2vtiT4z1aXjrSw090qq5lfPZxAZVkh4TXFnkzAmqU0+hTVkVHbKcjcvU0B8NDx63yHcf5osA19G0LnfWccj9E9NmUcG1XwFaYf7Zc=
+	t=1776397121; cv=none; b=khR5o5YrGePUe6EHDeMlFmiUQhuWUyG/e/5LKgfJ4xdlNsNrAtf9bPu1RnLOreHeEYrX6z8DzzVDXo49aVNtBnoHgbVSkI8LxBYOa4nPhOhkUM4OI6CJeYejqYWFsFE/ReI9gYhjVFqsGGgpUogU4nQ15gDa1caowQFRqDted7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776388947; c=relaxed/simple;
-	bh=CG/NCwO+nPOC20Kz0LGE7rqG2F59/6JWtxYLDPHWBXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PTWJiRX7e8AsuV0G0WGzH7AIYRkXL1eFl2qg4joXeG47JPIhdH6OHfNUtXUz25MoAupxvYP0dhL0ZOd2qI9Wa+06WmTDN4Ng9O36EQLGkqPLGwCYl2/2xN0XriAQ5YnJ0iQf88RK1kKnTyJPumrZDpmPiytiRW19sTXUesAbANQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=YzXAvkC/; arc=none smtp.client-ip=180.181.231.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b="YzXAvkC/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
-	from:content-type:reply-to; bh=A8ox5tavZ4O1d/3nbNfsxMmrke14ukZABfXa6XYclBE=; 
-	b=YzXAvkC/aTuN6hcOqY0BSZbC0igguEt+AqnOjbpOeHIab9+hOWLFFunPIJnVkOgjqQE7IhAQ5hu
-	WjbI50xqezJBXyxwl/9LL7BLjbzY3S6bBp2HqcYGMlfPHaq3kZUXN7fSxZC+U68VfnNFI2c1ltA6o
-	T3Dvhqf55vk0vAS7jbT4jiQ9THh/zM/t9koLOmTM3CDqwRqDhAXqat+/OwMuUbfab06TZ4FR5t6jG
-	kjHwFjrZ5B3qhqpMaoHOdI/+Uoe2JkvhIkykWq1UTKec72oWTIkz7hIrNNtl9GQcPKevyV01B+XN9
-	ZPRyf1kxFzZz6Mfa9X/gMPyDie4vCJqKfG8Q==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1wDXuN-006gxx-21;
-	Fri, 17 Apr 2026 09:22:12 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 17 Apr 2026 09:22:11 +0800
-Date: Fri, 17 Apr 2026 09:22:11 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Tejun Heo <tj@kernel.org>
-Cc: Thomas Graf <tgraf@suug.ch>, David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-crypto@vger.kernel.org, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Florian Westphal <fw@strlen.de>,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH for-7.1-fixes 1/2] rhashtable: add no_sync_grow option
-Message-ID: <aeGLQ2X_svzH_00M@gondor.apana.org.au>
-References: <20260417002449.2290577-1-tj@kernel.org>
+	s=arc-20240116; t=1776397121; c=relaxed/simple;
+	bh=aShfdK9MvlNYlLeAMRP0BTKdPnnfUm9rjkK3DECKDjc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KXbntev59KokvDMMvzUEZRcogJeuXy0QOL5m6rqBQ41pBE0WAp6krWDm8a21jZX39p4yGZhAmUoalMPTjeEYTNTAOZGeWj+6+b4hQkWRTkM25VhOC9eDrKCsLx7WGC2iKs9rwrzOHoQ1c4vOZUIwYMyWsGkvosG1Xm86uHF9Ozk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: e792f4fa3a0e11f1aa26b74ffac11d73-20260417
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
+	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
+	HR_TO_NO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_TRUSTED
+	SA_EXISTED, SN_TRUSTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
+	DMARC_NOPASS, CIE_BAD, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS
+	GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:e501130b-3f71-4270-91d4-5e67a25c92ba,IP:10,
+	URL:0,TC:0,Content:-25,EDM:-25,RT:0,SF:-5,FILE:0,BULK:0,RULE:Release_Ham,A
+	CTION:release,TS:-45
+X-CID-INFO: VERSION:1.3.12,REQID:e501130b-3f71-4270-91d4-5e67a25c92ba,IP:10,UR
+	L:0,TC:0,Content:-25,EDM:-25,RT:0,SF:-5,FILE:0,BULK:0,RULE:NOTI_GNA5D1EA,A
+	CTION:release,TS:-45
+X-CID-META: VersionHash:e7bac3a,CLOUDID:20167e21a3d88a3a306d33e4c403286f,BulkI
+	D:2604171138334ZKLAGK4,BulkQuantity:0,Recheck:0,SF:17|19|38|66|78|102|127|
+	898,TC:nil,Content:0|15|50,EDM:2|44,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,Q
+	S:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,
+	ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_EDM_RNO,TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: e792f4fa3a0e11f1aa26b74ffac11d73-20260417
+X-User: zhangguopeng@kylinos.cn
+Received: from yan.. [(183.242.174.22)] by mailgw.kylinos.cn
+	(envelope-from <zhangguopeng@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1543285358; Fri, 17 Apr 2026 11:38:31 +0800
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+To: longman@redhat.com,
+	tj@kernel.org,
+	hannes@cmpxchg.org,
+	mkoutny@suse.com,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	shuah@kernel.org,
+	chenridong@huaweicloud.com
+Cc: cgroups@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>
+Subject: [PATCH 0/2] cgroup/cpuset: fix DL rollback accounting and add a selftest
+Date: Fri, 17 Apr 2026 11:37:40 +0800
+Message-ID: <20260417033742.40793-1-zhangguopeng@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260417002449.2290577-1-tj@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Apr 16, 2026 at 02:24:48PM -1000, Tejun Heo wrote:
-> 
-> The follow-up sched_ext patch is a fix targeting sched_ext/for-7.1-fixes
-> which I'd like to send Linus's way sooner than later. Would it be okay
-> to route both patches through sched_ext/for-7.1-fixes? If you'd prefer
-> to route the rhashtable change differently, that works too. Please let
-> me know, thanks.
+Hi,
 
-As I said earlier, we should work out if this is really needed or
-not.
+This series fixes a cpuset DL bandwidth rollback bug and adds a selftest to cover it.
 
-But if it is needed, we did have this feature before.  It's called
-insecure_elasticity which was removed because we moved all its users
-off to better solutions.
+cpuset_can_attach() only reserves deadline bandwidth when migrating DL
+tasks to a disjoint CPU mask, but cpuset_cancel_attach() rolls back based
+only on the presence of migrating DL tasks. This makes the rollback path
+asymmetric: it can call dl_bw_free() even when no dl_bw_alloc() was done.
+Because the alloc and free CPU selection also differed, rollback could
+return bandwidth to a different root domain than the one originally
+charged.
 
-We can always bring it back.
+Patch 1 fixes the rollback accounting by recording the CPU used for
+dl_bw_alloc() during attach and using that exact state in
+cpuset_cancel_attach(). If no allocation happened, rollback skips
+dl_bw_free(). Successful attach behavior is unchanged.
 
-Cheers,
+Patch 2 adds a sched_ext selftest which exercises the real attach
+rollback path from userspace. The test uses a sched_ext scheduler whose
+cgroup_prep_move() rejects SCHED_DEADLINE tasks so that the cpu
+controller fails after cpuset has already accepted the move. It then
+checks that dl_bw->total_bw on the target CPU remains unchanged across
+the failed move.
+
+Local testing:
+
+With patch 1:
+ok 1 cpuset_dl_rollback
+
+Without patch 1:
+ERR: cpuset_dl_rollback.c:760
+Expected total_bw for CPU0 to remain unchanged (1677696 != 2027221)
+not ok 1 cpuset_dl_rollback
+
+Guopeng Zhang (2):
+  cgroup/cpuset: record DL BW alloc CPU for attach rollback
+  selftests/sched_ext: add cpuset DL rollback test
+
+ kernel/cgroup/cpuset-internal.h               |   5 +
+ kernel/cgroup/cpuset.c                        |  13 +-
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../sched_ext/cpuset_dl_rollback.bpf.c        |  28 +
+ .../selftests/sched_ext/cpuset_dl_rollback.c  | 810 ++++++++++++++++++
+ 5 files changed, 853 insertions(+), 4 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/cpuset_dl_rollback.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/cpuset_dl_rollback.c
+
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+2.43.0
+
