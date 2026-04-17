@@ -1,86 +1,94 @@
-Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907802DA762;
-	Fri, 17 Apr 2026 07:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.181.231.80
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F0F244694
+	for <sched-ext@lists.linux.dev>; Fri, 17 Apr 2026 09:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776412308; cv=none; b=sXacqjv20zpD48fXY3KwuuVAB+Wsb+DMusJh44/530gwc7Wg3WvKQZIUVZ+j0kskPVtDouEFTdZIyzmv5lXhoyPgnt+8ezYl/tE3dSiOzVoCIqhYhfnXiMfJP7iSM7vmy9EvieqkwrW+S/VEADCgaVWrV4wKe8ccxgCuBny3atc=
+	t=1776417529; cv=none; b=V3lh51+o67VgwfmOoIxom6zMa8SErAQuWv2DKLbLEQxnpkGHON+e2/bS0W3G9xU47ejoWC+Jj0GFM0BWaN9ESJfy/4QZUXCQyTW9BMljBotO15Eo61n7N4bk8eN5N2K+AQ2VzZ407JV3/PqzUSyepVRkBUTSN45/gRNQ7sHddoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776412308; c=relaxed/simple;
-	bh=XDpFdE3oVxDXK2rAt/ZVLQzVPJuoIOfluQJ5LNBdXj8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HiVs0OXrCl2hToa8MLhNdw6iGBS3loYsrMfBG5CqKpEFOJydD8T8u4tzT3q16o+3Xrf1THlxuMzSY8hmA8f8YmVj1A/gg9hvUtSDnHAawrqD6LHWY0E+WLlLjz8N4GoBFGd6LyZS9V9gQLkAWU+IRvAa4dAr8M1uM8Rjc9Q5OSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=pYCLsWGg; arc=none smtp.client-ip=180.181.231.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+	s=arc-20240116; t=1776417529; c=relaxed/simple;
+	bh=O/mebuCUkEA3/Nd3oABndkbrsYCXoTYPE60hWZMD9Jg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=aZlicABqFr3jCrRAnqt4u1iJjFoHXaAP9T9QPylzc9++8hVzQ6uzKL4WjWJXk3mZMxDI9lFvhq+EIIly9CWJKGRHznR81T+dIqm1IPz8gxCQsEzMQKAkMeMDzib5+hoPZK0Ltg9srbfIFsiluVA5/jbMauEjAIr+mouVsSyKBeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=J0tQ30KI; arc=none smtp.client-ip=220.197.31.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b="pYCLsWGg"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
-	from:content-type:reply-to; bh=MFx+6P24sUjVA8e9kWaqWgUD8PuMXmCy9x6KoXX4A6Q=; 
-	b=pYCLsWGgm5T2zg9CezVsDBgn4DuYCw79KYigJuoexvezfAPpImC/Eg7eH2pTOSlGxBgDXcfPTXK
-	qwf3dsJxXc/hxqrCdnf+QBCzUaQVkxYfTJ87kmvMT8/kPa2Qec5oDCXxMF6+BKhYCUs4Kfah5XJhe
-	79C1WTxvTjOUlmVoZAEIBehDnMPEOkKSk5lX5GFg/SHddvaTcM1X4gnP1HmxivnmdkisItFgoQGCf
-	5iKibBovajPDLuscDuZC6mcv5MQ8VS4JteLa813axqSfczy1n1Q7q/JCww5J2eXRofPfjo5cKWAgT
-	m9Ipa/RyD3wNd3ijJGVn0et4WujfmPXMaGyQ==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1wDdyy-006kYV-2Y;
-	Fri, 17 Apr 2026 15:51:21 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 17 Apr 2026 15:51:20 +0800
-Date: Fri, 17 Apr 2026 15:51:20 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Tejun Heo <tj@kernel.org>
-Cc: Thomas Graf <tgraf@suug.ch>, David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-crypto@vger.kernel.org, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Florian Westphal <fw@strlen.de>,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH for-7.1-fixes 1/2] rhashtable: add no_sync_grow option
-Message-ID: <aeHmeAz-Z-Rx2MqX@gondor.apana.org.au>
-References: <20260417002449.2290577-1-tj@kernel.org>
- <aeGCMkdg5Fgv8UMS@gondor.apana.org.au>
- <aeGElQ-TcCclEHwo@slm.duckdns.org>
- <aeGIsGi9fBqu9EZT@gondor.apana.org.au>
- <aeHjjGEhlikSsxCX@slm.duckdns.org>
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="J0tQ30KI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:Date:Subject:MIME-Version:Content-Type:
+	Message-Id:To; bh=kNOCjAuKnRK9xQ88OZ2Vcbm4jyVbfNgNJCwQqDZGQO4=;
+	b=J0tQ30KI6hq86n5UOKrZxMjkwZ1o3QaSm4abwJ7xNm+ojLCywZKvkjsTW9ZfQI
+	Y/JirZ+dc2mM+uZTTk0tAFuiRNo0LYxkLGQ57RlFJXLk4grE9pxgpxrFigNiWL+c
+	qxp1ehB4s0Wy5GAWEeURTByo+OQPMctGMvwbpkoMw7nEM=
+Received: from [127.0.1.1] (unknown [])
+	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wD3l+jY+uFpMSmcBg--.7149S3;
+	Fri, 17 Apr 2026 17:18:17 +0800 (CST)
+From: Zhao Mengmeng <zhaomzhao@126.com>
+Date: Fri, 17 Apr 2026 17:18:02 +0800
+Subject: [PATCH v3 1/2] tools/sched_ext: Add missing -c option in scx_qmap
+ help
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aeHjjGEhlikSsxCX@slm.duckdns.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260417-sched_ext-0417-v3-1-e11b3aed57d3@kylinos.cn>
+References: <20260417-sched_ext-0417-v3-0-e11b3aed57d3@kylinos.cn>
+In-Reply-To: <20260417-sched_ext-0417-v3-0-e11b3aed57d3@kylinos.cn>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Zhao Mengmeng <zhaomengmeng@kylinos.cn>, 
+ Cheng-Yang Chou <yphbchou0911@gmail.com>
+X-Mailer: b4 0.15.2
+X-CM-TRANSID:_____wD3l+jY+uFpMSmcBg--.7149S3
+X-Coremail-Antispam: 1Uf129KBjvJXoW7ZF4DGryxAryDCry7Wr4Durg_yoW8WrW8pF
+	4kXr48CrnaqFy3Jr1kZa48X34rWws3WrWIqFZ7u34q93Z3tr1Iqw17GFsaqr4DJryIya48
+	AF9agw17KF15C3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jriSdUUUUU=
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqxnHP2nh+tky6AAA37
 
-On Thu, Apr 16, 2026 at 09:38:52PM -1000, Tejun Heo wrote:
->
-> Also, taking a step back, if rhashtable allows usage under raw spin locks,
-> isn't this broken regardless of how easy or difficult it may be to reproduce
-> the problem? Practically speaking, the scx_sched_hash one is unlikely to
-> trigger in real world; however, it is still theoretically possible and I'm
-> pretty positive that one would be able to create a repro case with the right
-> interference workload. It'd be contrived for sure but should be possible.
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-rhashtable originated in networking where it tries very hard to
-stop the hash table from ever degenerating into a linked list.
+The sub-scheduler api has been added to scx_qmap, but the new -c option is
+missing in help, which is hard to understand and use. Add it in help.
 
-If your use-case is not as adversarial as that, and you're happy
-for the hash table to degenerate into a linked-list in the worst
-case, then yes it's aboslutely fine to not grow the table (or
-try to grow it and fail with kmalloc_nolock).
+V2: add [-c CG_PATH] to the usage synopsis.
 
-It's just that we haven't had any users like this until now and
-the feature that you want got removed because of that.
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ tools/sched_ext/scx_qmap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-I'm more than happy to bring it back (commit 5f8ddeab10ce).
+diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+index 4bdcc4bc5fbd..725c4880058d 100644
+--- a/tools/sched_ext/scx_qmap.c
++++ b/tools/sched_ext/scx_qmap.c
+@@ -23,7 +23,8 @@ const char help_fmt[] =
+ "See the top-level comment in .bpf.c for more details.\n"
+ "\n"
+ "Usage: %s [-s SLICE_US] [-e COUNT] [-t COUNT] [-T COUNT] [-l COUNT] [-b COUNT]\n"
+-"       [-N COUNT] [-P] [-M] [-H] [-d PID] [-D LEN] [-S] [-p] [-I] [-F COUNT] [-v]\n"
++"       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I]\n"
++"       [-F COUNT] [-v]\n"
+ "\n"
+ "  -s SLICE_US   Override slice duration\n"
+ "  -e COUNT      Trigger scx_bpf_error() after COUNT enqueues\n"
+@@ -35,6 +36,7 @@ const char help_fmt[] =
+ "  -P            Print out DSQ content and event counters to trace_pipe every second\n"
+ "  -M            Print out debug messages to trace_pipe\n"
+ "  -H            Boost nice -20 tasks in SHARED_DSQ, use with -b\n"
++"  -c CG_PATH    Cgroup path to attach as sub-scheduler, must run parent scheduler first\n"
+ "  -d PID        Disallow a process from switching into SCHED_EXT (-1 for self)\n"
+ "  -D LEN        Set scx_exit_info.dump buffer length\n"
+ "  -S            Suppress qmap-specific debug dump\n"
 
-Cheers,
 -- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+2.43.0
+
