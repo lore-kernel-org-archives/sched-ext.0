@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274D92D1F40;
-	Sun, 19 Apr 2026 17:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B472472AE;
+	Sun, 19 Apr 2026 17:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776621188; cv=none; b=RDJeT8xSVvAL2qQ4DdXI908S37+T4iQazUlcRMCb4vm6F/oB0fhWKurxIqLTH0U+UO6p98gJ1fsb8j5ADMXf4t8Ds3tk6IGlJ/vmG9AzBjPu5aw2fZvg7u15qbI2ClXaOPiKBTuxa8QoDgI5uyKU+cQCgzpFIp2kJFqMhYf5po8=
+	t=1776621193; cv=none; b=jyG9FfUfaOQcBdmSieoYADsJVj+4mLHN8tW0lSIJfTKAVeEdXaIqCoPQyDe3FGSbnFXO5fnAuu14FywiwaMjVf7NvJKq+PlI9JMQ4OBhauUWMWiqqsKlEMoJ5ouLUiByEcI5H5k173yZvwHfMJs2EtUGL8nFfhkankqTTPgVZ5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776621188; c=relaxed/simple;
+	s=arc-20240116; t=1776621193; c=relaxed/simple;
 	bh=BpUlTZdU6iKLJyHy74DVgUbJssdVdz1upreAoZlF8RA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=iMs7aaw0EevRysEeo3fxU0s1d155zlfyZI4wFdH1QFSY82VLd/N/2Zd2+d98z1jxx8V2Kx9SEk7hxZ6fW/3FGlxN0454v9Ajuo9a6sJx8DkYgFg3M5LJ1kidXvgPH7A1oDmOcjKcMI0l6mq8tLT8eINcPEai168mdHMX259NG7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwOMb6vc; arc=none smtp.client-ip=10.30.226.201
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=FLA+qE6uepRof6jbVlbvgOIrRJdwn2yUDUDIauyGk9sUWkg7ErqHrOlwsuXsEeKIdf++HVlIJORicLywZ7ljcfwucDeUxUyvsm6BeuEVHl8FTEJbeEQlIZv5epiC2BECxZl9hSCju/YEZapE6qTZKv/ylravK4jcvK3ELdtFBE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E5gb9D9d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwOMb6vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975A3C2BCAF;
-	Sun, 19 Apr 2026 17:53:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E5gb9D9d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD5AC2BCAF;
+	Sun, 19 Apr 2026 17:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776621187;
+	s=k20201202; t=1776621193;
 	bh=BpUlTZdU6iKLJyHy74DVgUbJssdVdz1upreAoZlF8RA=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=bwOMb6vcsy2oXk8h1fu05NvimnYj93Wk3cQ+H/yXuzDdJYK7oBABV/ctP7ULH62cA
-	 mfCRVT0PiYRzXZUiyQjC80Nw3qDmP9qaybAy3XKXTL1eQ/MXzucllQEz1wRLM2Iq0u
-	 r75ZyYRNSB6q1f/TZwoSc7SQZhTj531fjRqfPaKblCP/Hji0M7GX9tq2h9lJPslFiS
-	 LulD/JLqJqcuUIvaD+FWmSa4O8TKjgchT4tO3o4zyxL5MtMhnza8C6/3ads2pVNbAW
-	 3P859lUHBnzQamGRxT29IeBkBK3Ts61290k6ZeeA53ZvoC2TcCIzbJikLqEVCZHOhJ
-	 zuU6G5wy5ITEA==
-Date: Sun, 19 Apr 2026 07:53:06 -1000
-Message-ID: <ac4a939fb312285d5afacabad33240a2@kernel.org>
+	b=E5gb9D9drTvgS9/9kibAscy9+TlyKBxI7KfCOc5PLXG0NGIALcG7JXGbwuwVXOa6s
+	 YOv6sNXj9VxeWXXudlO68hOSRrn257amKmmEiloZHK201ud5b04bqlxcHt2IH4wQez
+	 KC0r6gS0NiTJZRIhY+Zyiz6hsVj2ecvnwsQlmRE6SnMe9G4UUoimbmDm6RzA6WNnN1
+	 S/xi7MQMt7T0d68iCQJD+GeWqZmIIBCArXZwFi7HsA58iQAJCQBHh4yv2yRnowujuK
+	 Ql0UBCX1RvrI0BbK0AbOfyPxFOkOez1hK4SjgmbJBq4o5end+aXGuCKGiKRofBzjIh
+	 Zu0EusImrkTJA==
+Date: Sun, 19 Apr 2026 07:53:12 -1000
+Message-ID: <bfdf1d6066eb84b84f0a35dccf41f68f@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>,
  sched-ext@lists.linux.dev,
- Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
- linux-kernel@vger.kernel.org,
- Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
- Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH sched_ext/for-7.2] sched_ext: Document the ops compat
- strategy in compat.h/compat.bpf.h
-In-Reply-To: <75aaaf7a4dd540191bd8550dd181528b@kernel.org>
-References: <75aaaf7a4dd540191bd8550dd181528b@kernel.org>
+ David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+ Chia-Ping Tsai <chia7712@gmail.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 sched_ext/for-7.1-fixes] tools/sched_ext: Remove dead -d
+ option in scx_flatcg
+In-Reply-To: <20260419163619.254122-1-yphbchou0911@gmail.com>
+References: <20260419163619.254122-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
