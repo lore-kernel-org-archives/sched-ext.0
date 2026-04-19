@@ -1,152 +1,505 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013041.outbound.protection.outlook.com [40.107.201.41])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9DD2701C4
-	for <sched-ext@lists.linux.dev>; Sun, 19 Apr 2026 18:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776623503; cv=fail; b=GdqoHstLlyt2qbAgeh/NA6oYdQkpBBnM8/JBwthBAsRn0dgmhZzXtzjGhdJBBjYICdrRRm7pf7RPIQXY8KGAnit2G8nG/g12uR11wig5DsoWXau2FGTa6eIb8vfKtbNmG3mRkyOLNOSnWuJhwWHbt4ctwL26jRX8e7uty+/WJLg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776623503; c=relaxed/simple;
-	bh=EXITGCLKIolOUCzJPEMuIFdJlTYZ6KWNIa+t/SwspMQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ZfcAoYA0ZcbH/Zy6q4/3i6zcJJonuHMeMj4i2ELUtGs6fDVq1pjHGZrOmMQPZcMR8yOpqdQnEzq8NQcsbSTPyxypzrwdBFlg9psOlGSQsSgd1dwEDaq1pR400viS6vEhk2qI+3xyjMLq6r+GdhJn9S/G6hToclIr7rRhXYbxafk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=d9ajo26k; arc=fail smtp.client-ip=40.107.201.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37167142E83;
+	Sun, 19 Apr 2026 18:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776623807; cv=none; b=TkcA3DcX3FjHJMPbj2WtUtyx6h7BPoL0IvEIP0dMQ+IA5Ib89YjToegmcciy9vxq2ZYI1wn1Hn8TfyVOcAlj3FTkasdIm1klyV6DiOyoqOp6XsDvHEPW/qSYbTuUPkkUpmqZS6XhMhw+uBw4ELcuZT+HJ9dhXE8/KXR80WgKsF4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776623807; c=relaxed/simple;
+	bh=vdv15msqQ5d3fHSKHuyXpmd9tfJSjdDCvNcXRUMve2Y=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=D/l8srs01bnNPI94h1/q3PjVd4fKmn8toiDEPt1tArL2pbcLSn2yG4qDOqzwBFjMmhAFWcVHoaw4Eh1XccaewHPlpHboaQ41o5rNj6dL+F5O9E9HV7tqe8KwdJa1nTtVz6jDqAfUbWovOSLthdpEYE93q8HBzZH9wUcYVhiXpdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n+H6Bvs9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="d9ajo26k"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ksURVnnh0OGnT49VyR8UxI0qMHu6xKwsTEoW+r2pGo7VTDyaZqS5FgfYLtgW6aqytcRHMJQSqh0LkuHE9pcEd9j0+TqOBqcw7nJbFxcL8g6WWGWcDNH7GvUQrj5m8CE79gqTxISl0gQXsC8KOeWVkYYJyLNDOgaWBLCoVXG2DLJK4ncVFPP5fBDMxNn17lMrs6s2qrQhunP6VfEsVlStAsMua2wCnUZwDfJPM89SM4zKSaGq6YwJiVPsZ9pCR8D4dfrD2SgJazgHMXB6OhDquo0RwBG2p3hxhKWYASN5oBG9bwv8zDHP/LqMD32PTkIo902cSHCytGx6x+jRO/5AYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SY1y9mfBL/YLi6YLVe5DAYp0Iqbgf8TG6/dmhkMmYB8=;
- b=FLnl3/i+pBpMmy91cAWZWyryJFsqWHQLL1D5AHTunucxSHqryYuDwjZ3SKN6AJjWCZyz+LLzE4QznLNh+QlTwvd9SNrmDTZ0D5D5iwKWcavM9OUO9qTyKZcFpovpJCe46SjUgBZQIX40ZScrxgAge2b75DSg37hyb22i+zSj2dpUIXXdxotzRLb89isKB+gSdDw1ZDEHeKT9Q2vNwvvhVVsmLY2I3fC6dHruS5sJOboSBSLy/d4TzQBrTkDflucQyUHcnPWkto7waTeucqfHjA9b25XWGmZx0Le9EzCLpQIDMGBp/K78uM/8RCtwsVPoNvynEEDl81h5MgCKmTJ8IA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SY1y9mfBL/YLi6YLVe5DAYp0Iqbgf8TG6/dmhkMmYB8=;
- b=d9ajo26kRHf1YGwWs7VLpxjQLrz8DXBqK4qoySTDyvWZV1pvwvTSMOOqYE5ADXDDHCucGS6R7u80QkNbqXbVk4fLF1rLP4zVBsEaNejRC5sg5mcFydIUAqJ7YOdZaLowmjRNfyF2sv+IVAG9RUhnEvncYc/JNB2BPhGy33DyDxIJXs9SLddZ7qLMTQbpxDFVuJUGyWcS7Jey0usK7tUm8a7T5jvyGEGBbu9D39LcUROZaifI3crPT7BzhtTPBRswp2vAtBlT/7AmVQVaVctPmp23zYdbNtfQAokvG+9qnllBWOPu6F9GQhJ5Z8PyHiye8uocM+BZnP/lYAa79Kghlw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DM4PR12MB7694.namprd12.prod.outlook.com (2603:10b6:8:102::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.15; Sun, 19 Apr
- 2026 18:31:34 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9846.014; Sun, 19 Apr 2026
- 18:31:34 +0000
-Date: Sun, 19 Apr 2026 20:31:29 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: Re: [PATCH sched_ext/for-7.2] sched_ext: add p->scx.tid and
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n+H6Bvs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DB6C2BCAF;
+	Sun, 19 Apr 2026 18:36:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776623806;
+	bh=vdv15msqQ5d3fHSKHuyXpmd9tfJSjdDCvNcXRUMve2Y=;
+	h=Date:From:To:Cc:Subject:From;
+	b=n+H6Bvs9J7qc/YHxdeAUHC32pPnFMrNAxG8ygYony2m74MFcaDrPCt3cpRiVCgAu2
+	 1ANVr50FjMVjy5fQdgdbUgS89mvl+Quuu5x9xnwicF8DC3h4as+tuNMl/N2Yv9gMx+
+	 Vunai/MECbzittjV96+tTnB4x1J9ZbB3SyvdqDZ++qKlb5rzxjFTtylwoYTvle8Ftq
+	 hcAxhfuXonST0kVVduOmwCqVpo7EUpNa/2ycLFlWX71BNKbRoWpmi4605QK7eupDKl
+	 0YlVUTAWQ9RL8O5EprQaDznbipuFWsONdbePCCEeVkdi6cndgSCKgLG9SFN2vZDYyD
+	 iYuSM6XYsQmUQ==
+Date: Sun, 19 Apr 2026 08:36:45 -1000
+Message-ID: <c3069bb592d7d09790ca9ff6d9b7d3b2@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>,
+ sched-ext@lists.linux.dev,
+ Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+ linux-kernel@vger.kernel.org,
+ Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+ Chia-Ping Tsai <chia7712@gmail.com>
+Subject: [PATCH v3 sched_ext/for-7.2] sched_ext: add p->scx.tid and
  SCX_OPS_TID_TO_TASK lookup
-Message-ID: <aeUfgbeUevwfvcXI@gpd4>
-References: <a19c8c74d7c767bc9865b75d6de7c723@kernel.org>
- <aeUKt4Mv7NPZIrLW@gpd4>
- <070b4b9e6b56a0c9e2e61423f35837b4@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <070b4b9e6b56a0c9e2e61423f35837b4@kernel.org>
-X-ClientProxiedBy: MI3PEPF00004EA2.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::452) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB7694:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2e1122d4-86bd-4e78-866a-08de9e41e258
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	TgWcRpI46GIw8l3chIri5fP6nbq0xmbToWjaIYcdcg13qjfQzLU/0bWwYqGPcFQq252a+4RowLDpS0xZU7R90FOGMfJJoNIuJOpupbIa8e6DJa0ZuOYQ0lcxbKew9pR82FCfUK1PS0/LxClBQ8lHCRk6Ck0s07kwX9EPGuGVhPBJls2IAeGlfUj1yBQo04QZfLz07/NvNTYY1D5w4GB6nfcvG4O8GIsu5hbxPh+A4FBD/26UAPvhcXy4IVP2Jo/tK6mFerFYEY4BcOV7ixrGDDTUU2hG1U5281BHo575vg2uS70NTWp/gtGemNU/GiYafSZBruTdFujnuvo9w73hHZ4HUQFy15uipItdyzCme4wwDmrPMUlSsbRa5kbmMdbYL9cip4yvznmBbbTLfrUhxri17NM9aOJfgNf8leSDl1Lg3BjXWWGmfImD/hZRt/ZWVvIiJn4FLh03d38/3fCSLgf1gK3irGwqY2hCzxYcXS7XNivctu91bRdJoCxjjpTs05nfSXPDyhb5PFbG01e0u7hVGnv7coG/GTc4DzE7w9FthSPPAYXfe3nmt6ME3bff4fLgRLZ97qz7YpBVd8Q853QR3tZTqIwl9c2muY4KR7Qy9ddTfUJ5+T++9JZ1DE9unEEC2LO910UqvVNW94bqPV9QzmaLO7YNWFL+yawepJtWamaJNEcrWKMZkgGEc/qc6iKwcA4tD5oTigLkTlwe9dhaeGhr6IR6M7qELFCcWSo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?UgBt45aBIqTPwKpLYUA3mtpNST422esnfOkpplNYVsmgXklOqvG6i6oCy7KF?=
- =?us-ascii?Q?y6qWar3eDPtgVEF4rgxd1PD4aJm5AqPO8KUVgPV3OBhxIr+dRVVvBXRU1tbH?=
- =?us-ascii?Q?8E/fp8l+Qb60J5GwMRl9l4SiCG1+CfVsSzyqCucMvCDYnYiWjBsPcKm8x3FK?=
- =?us-ascii?Q?Y0CqyRZgw1JgOngEfInCqr71a+abxWlYNNubpQY9GGMisrg6YL7o7pCDhL3v?=
- =?us-ascii?Q?wGsEroSwdpErpyEo90dc1qjae/gc1XLgYmnVuBbEmwil7qlYTDoh7M9XUn29?=
- =?us-ascii?Q?4DiYq3sehWBL9bzlIofyc0GdPds3HM2NuKVEbdJgPCQbmR31nTQDYwN2tKE/?=
- =?us-ascii?Q?lZfM0TVF5DBbMW6W0pgzgpILIfVqXMi+xafxPpZtYUFRQLoBD+OmwsNJRXwF?=
- =?us-ascii?Q?PP6YJANyEg7Ph3KIs9+TcCmKWdhB63TLREPCPJs5OnXl1zzkiIAYYWhfiWjA?=
- =?us-ascii?Q?WeFjk95hRCaoPyhrmZIQQTUvcH3ArbW/hTGX3WyS5Hj0WgST74gj0QUrTlcI?=
- =?us-ascii?Q?nUzB2vghMyw8rCaj5BIrhmZFcEs7yo8coWeHCUAK5W7DKNYGFvogtzGivUe2?=
- =?us-ascii?Q?oTJKEF7VGtNy/cRp/nsTV/HqOUE4DoiSw4yPeJpnLcNoCM0/j668iaEgOUT2?=
- =?us-ascii?Q?Mjolcf4zalN3/L9CWXYGTgomgz+YYK7xSy3o2fg/fEROLCYJ088BKUFSRgm8?=
- =?us-ascii?Q?8FF/LeF+1fzANjE3Ax2Rxto4Jmp0qWGyeFr+CZINITk6wbf2qC7ytxgH2Bf0?=
- =?us-ascii?Q?8/tBlesqNSKzPEt4n14iUP26y+5fiZCMMkoKt2Yb1qJ60S/MDdFqDqTMd1Jf?=
- =?us-ascii?Q?0e0JHHH25EuZoEUvSXeJMRvrDrAsdbB7kzlJx5aJNWw5TKQewKo2cXuWdTyZ?=
- =?us-ascii?Q?rRiPvzWWdCxbcReA1ojD2nrVGx3pQ3s40I2ItjsizRfHYHItg9z1ugejc0zX?=
- =?us-ascii?Q?mal2H3UdNXXhehvtzJ/QwWTT1eBGppUHQVGq+dV61HbXPZF9cfwvVFKNvMt+?=
- =?us-ascii?Q?Q/fjE7gz5c1MVstVpsPfqOs+6pL/YLMjuD7o6E+MHYcBv4PG7a4NHZR3V3g1?=
- =?us-ascii?Q?h/sfv+UpsMUmty+q0goNSxL1cyL+++7FwpOUOBed4QifP4T9OoU9iQ2wDWhy?=
- =?us-ascii?Q?PGiU+ljyg4HEhdbYHBeBGN8oaIKwc0+0wWt+OhMNoRTyUO0CSB9ysw04e4SE?=
- =?us-ascii?Q?YbPrb2XP5y5uPLrLDejM7f75vH+0On0SCkAvbvb7VWcSWWBE992ODf6mROgU?=
- =?us-ascii?Q?jV+s1FBikVicMNhNoHVlvW/80mOeiCzxeC9ZdgHbcerV/POzY+wJx3x188Z4?=
- =?us-ascii?Q?5N2EIs48fom/xWNga3DJWR17hVF9JcvxyvJEaYqbFT89M2c+0Dz6xt+7y1DA?=
- =?us-ascii?Q?V4Xe+AXulNSJut7GCbEwfjSHZXo01LyG4ymi1lfOy6uZ1DHE0viN44p5LsxK?=
- =?us-ascii?Q?eJlRbCblHCBSpcTOREgzIBLm/vjZQKaQ5il2UPO3EIh9+hkORQaCWrhT2lEg?=
- =?us-ascii?Q?NNVV1De7ys2Jsqp+I3jJK2AKYyLHh07HT4ZxhNz1a+8b/7icXgR+2GWmGf8w?=
- =?us-ascii?Q?5bKqpaY3WbQl8AelHp0TnHK3uTFBNPAPnV0i4ZXYgjvdLrBwh5xEdY/eVUF4?=
- =?us-ascii?Q?RjD07EO/J3GdEuaRnEJEVxYXKfgVJRj32PqMyZKoQDjZn6/EXCg/pg7tjZys?=
- =?us-ascii?Q?9rBnJ5UL5vQ2d2XHzqke+Hd4CqgkMXH1BXlP7baSSBvYBQejCU51Pda3DYVt?=
- =?us-ascii?Q?j/aLe3NAbw=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2e1122d4-86bd-4e78-866a-08de9e41e258
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Apr 2026 18:31:34.5347
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: btFTVWlpRKte3ydjO7wJZuU7B3IZodsee5ZsefNgbOdj3wus70OxbGZmMQ7WkR6BbFTihwaI4SSPAE71UyMiiQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7694
 
-On Sun, Apr 19, 2026 at 08:12:02AM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> On Sun, Apr 19, 2026 at 07:02:47PM +0200, Andrea Righi wrote:
-> > I'm wondering if we should have a teardown function, called before disabling
-> > SCX_OPS_TID_TO_TASK and destroying scx_tid_hash, to explicitly remove all the
-> > scx_tid_hash entries via rhashtable_remove_fast().
-> 
-> rhashtable_remove_fast() doesn't clear tid_hash_node.next either - it
-> just unlinks from the bucket chain, leaving obj->next at whatever the
-> chain successor or nulls-marker put there. So explicit drain wouldn't
-> give us a cleaner post-state.
-> 
-> And the stale pointer is never read. After the static key is disabled,
-> scx_post_fork/sched_ext_dead/scx_bpf_tid_to_task all gate on the key and
-> skip the hash. On re-enable, rhashtable_init() creates fresh buckets and
-> task iteration re-inserts each live task via
-> rhashtable_lookup_insert_fast(), which unconditionally does
-> 
->     RCU_INIT_POINTER(obj->next, head);
-> 
-> at include/linux/rhashtable.h:838. Lookups always traverse from
-> ht->tbl[hash], never from an embedded node.
+BPF schedulers that can't hold task_struct pointers (arena-backed ones in
+particular) key tasks by pid. During exit, pid is released before the
+task finishes passing through scheduler callbacks, so a dying task
+becomes invisible to the BPF side mid-schedule. scx_qmap hits this: an
+exiting task's dispatch callback can't recover its queue entry, stalling
+dispatch until SCX_EXIT_ERROR_STALL.
 
-Ah, I missed the unconditional re-init, then we should be fine.
-Thanks for clarifying it.
+Add a unique non-zero u64 p->scx.tid assigned at fork that survives the
+full task lifetime including exit. scx_bpf_tid_to_task() looks up the
+task; unlike bpf_task_from_pid(), it handles exiting tasks.
 
--Andrea
+The lookup costs an rhashtable insert/remove under scx_tasks_lock, so
+root schedulers opt in via SCX_OPS_TID_TO_TASK. Sub-schedulers that set
+the flag to declare a dependency are rejected at attach if root didn't
+opt in.
+
+scx_qmap converted: keys tasks by tid and enables SCX_OPS_ENQ_EXITING.
+Pre-patch it stalls within seconds under a non-leader-exec workload;
+with the patch it runs cleanly.
+
+v3: Warn on rhashtable_lookup_insert_fast() failure via new
+    scx_tid_hash_insert() helper (Cheng-Yang Chou).
+
+v2: Guard scx_root deref in scx_bpf_tid_to_task() error path. The kfunc
+    is registered via scx_kfunc_set_any and reachable from tracing and
+    syscall programs when no scheduler is attached (Cheng-Yang Chou).
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ include/linux/sched/ext.h                |    9 +
+ kernel/sched/ext.c                       |  154 +++++++++++++++++++++++++++++--
+ kernel/sched/ext_internal.h              |   20 +++-
+ tools/sched_ext/include/scx/common.bpf.h |    1 
+ tools/sched_ext/scx_qmap.bpf.c           |   13 +-
+ 5 files changed, 180 insertions(+), 17 deletions(-)
+
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -203,6 +203,15 @@ struct sched_ext_entity {
+ 	u64			core_sched_at;	/* see scx_prio_less() */
+ #endif
+ 
++	/*
++	 * Unique non-zero task ID assigned at fork. Persists across exec and
++	 * is never reused. Lets BPF schedulers identify tasks without storing
++	 * kernel pointers - arena-backed schedulers being one example. See
++	 * scx_bpf_tid_to_task().
++	 */
++	u64			tid;
++	struct rhash_head	tid_hash_node;	/* see SCX_OPS_TID_TO_TASK */
++
+ 	/* BPF scheduler modifiable fields */
+ 
+ 	/*
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -38,6 +38,15 @@ static const struct rhashtable_params sc
+ static struct rhashtable scx_sched_hash;
+ #endif
+ 
++/* see SCX_OPS_TID_TO_TASK */
++static const struct rhashtable_params scx_tid_hash_params = {
++	.key_len		= sizeof_field(struct sched_ext_entity, tid),
++	.key_offset		= offsetof(struct sched_ext_entity, tid),
++	.head_offset		= offsetof(struct sched_ext_entity, tid_hash_node),
++	.insecure_elasticity	= true,	/* inserted/removed under scx_tasks_lock */
++};
++static struct rhashtable scx_tid_hash;
++
+ /*
+  * During exit, a task may schedule after losing its PIDs. When disabling the
+  * BPF scheduler, we need to be able to iterate tasks in every state to
+@@ -58,10 +67,25 @@ static cpumask_var_t scx_bypass_lb_resch
+ static bool scx_init_task_enabled;
+ static bool scx_switching_all;
+ DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
++static DEFINE_STATIC_KEY_FALSE(__scx_tid_to_task_enabled);
++
++/*
++ * True once SCX_OPS_TID_TO_TASK has been negotiated with the root scheduler
++ * and the tid->task table is live. Wraps the static key so callers don't
++ * take the address, and hints "likely enabled" for the common case where
++ * the feature is in use.
++ */
++static inline bool scx_tid_to_task_enabled(void)
++{
++	return static_branch_likely(&__scx_tid_to_task_enabled);
++}
+ 
+ static atomic_long_t scx_nr_rejected = ATOMIC_LONG_INIT(0);
+ static atomic_long_t scx_hotplug_seq = ATOMIC_LONG_INIT(0);
+ 
++/* Global cursor for the per-CPU tid allocator. Starts at 1; tid 0 is reserved. */
++static atomic64_t scx_tid_cursor = ATOMIC64_INIT(1);
++
+ #ifdef CONFIG_EXT_SUB_SCHED
+ /*
+  * The sub sched being enabled. Used by scx_disable_and_exit_task() to exit
+@@ -111,6 +135,17 @@ struct scx_kick_syncs {
+ static DEFINE_PER_CPU(struct scx_kick_syncs __rcu *, scx_kick_syncs);
+ 
+ /*
++ * Per-CPU buffered allocator state for p->scx.tid. Each CPU pulls a chunk of
++ * SCX_TID_CHUNK ids from scx_tid_cursor and hands them out locally without
++ * further synchronization. See scx_alloc_tid().
++ */
++struct scx_tid_alloc {
++	u64	next;
++	u64	end;
++};
++static DEFINE_PER_CPU(struct scx_tid_alloc, scx_tid_alloc);
++
++/*
+  * Direct dispatch marker.
+  *
+  * Non-NULL values are used for direct dispatch from enqueue path. A valid
+@@ -3665,6 +3700,33 @@ void init_scx_entity(struct sched_ext_en
+ 	scx->slice = SCX_SLICE_DFL;
+ }
+ 
++/* See scx_tid_alloc / scx_tid_cursor. */
++static u64 scx_alloc_tid(void)
++{
++	struct scx_tid_alloc *ta;
++
++	guard(preempt)();
++	ta = this_cpu_ptr(&scx_tid_alloc);
++
++	if (unlikely(ta->next >= ta->end)) {
++		ta->next = atomic64_fetch_add(SCX_TID_CHUNK, &scx_tid_cursor);
++		ta->end = ta->next + SCX_TID_CHUNK;
++	}
++	return ta->next++;
++}
++
++static void scx_tid_hash_insert(struct task_struct *p)
++{
++	int ret;
++
++	lockdep_assert_held(&scx_tasks_lock);
++
++	ret = rhashtable_lookup_insert_fast(&scx_tid_hash,
++					    &p->scx.tid_hash_node,
++					    scx_tid_hash_params);
++	WARN_ON_ONCE(ret);
++}
++
+ void scx_pre_fork(struct task_struct *p)
+ {
+ 	/*
+@@ -3682,6 +3744,8 @@ int scx_fork(struct task_struct *p, stru
+ 
+ 	percpu_rwsem_assert_held(&scx_fork_rwsem);
+ 
++	p->scx.tid = scx_alloc_tid();
++
+ 	if (scx_init_task_enabled) {
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 		struct scx_sched *sch = kargs->cset->dfl_cgrp->scx_sched;
+@@ -3717,9 +3781,11 @@ void scx_post_fork(struct task_struct *p
+ 		}
+ 	}
+ 
+-	raw_spin_lock_irq(&scx_tasks_lock);
+-	list_add_tail(&p->scx.tasks_node, &scx_tasks);
+-	raw_spin_unlock_irq(&scx_tasks_lock);
++	scoped_guard(raw_spinlock_irq, &scx_tasks_lock) {
++		list_add_tail(&p->scx.tasks_node, &scx_tasks);
++		if (scx_tid_to_task_enabled())
++			scx_tid_hash_insert(p);
++	}
+ 
+ 	percpu_up_read(&scx_fork_rwsem);
+ }
+@@ -3770,17 +3836,19 @@ static bool task_dead_and_done(struct ta
+ 
+ void sched_ext_dead(struct task_struct *p)
+ {
+-	unsigned long flags;
+-
+ 	/*
+ 	 * By the time control reaches here, @p has %TASK_DEAD set, switched out
+ 	 * for the last time and then dropped the rq lock - task_dead_and_done()
+ 	 * should be returning %true nullifying the straggling sched_class ops.
+ 	 * Remove from scx_tasks and exit @p.
+ 	 */
+-	raw_spin_lock_irqsave(&scx_tasks_lock, flags);
+-	list_del_init(&p->scx.tasks_node);
+-	raw_spin_unlock_irqrestore(&scx_tasks_lock, flags);
++	scoped_guard(raw_spinlock_irqsave, &scx_tasks_lock) {
++		list_del_init(&p->scx.tasks_node);
++		if (scx_tid_to_task_enabled())
++			rhashtable_remove_fast(&scx_tid_hash,
++					       &p->scx.tid_hash_node,
++					       scx_tid_hash_params);
++	}
+ 
+ 	/*
+ 	 * @p is off scx_tasks and wholly ours. scx_root_enable()'s READY ->
+@@ -5794,9 +5862,13 @@ static void scx_root_disable(struct scx_
+ 
+ 	/* no task is on scx, turn off all the switches and flush in-progress calls */
+ 	static_branch_disable(&__scx_enabled);
++	if (sch->ops.flags & SCX_OPS_TID_TO_TASK)
++		static_branch_disable(&__scx_tid_to_task_enabled);
+ 	bitmap_zero(sch->has_op, SCX_OPI_END);
+ 	scx_idle_disable();
+ 	synchronize_rcu();
++	if (sch->ops.flags & SCX_OPS_TID_TO_TASK)
++		rhashtable_free_and_destroy(&scx_tid_hash, NULL, NULL);
+ 
+ 	if (ei->kind >= SCX_EXIT_ERROR) {
+ 		pr_err("sched_ext: BPF scheduler \"%s\" disabled (%s)\n",
+@@ -6553,6 +6625,17 @@ static int validate_ops(struct scx_sched
+ 	}
+ 
+ 	/*
++	 * SCX_OPS_TID_TO_TASK is enabled by the root scheduler. A sub-sched
++	 * may set it to declare a dependency; reject if the root hasn't
++	 * enabled it.
++	 */
++	if ((ops->flags & SCX_OPS_TID_TO_TASK) && scx_parent(sch) &&
++	    !(scx_root->ops.flags & SCX_OPS_TID_TO_TASK)) {
++		scx_error(sch, "SCX_OPS_TID_TO_TASK requires root scheduler to enable it");
++		return -EINVAL;
++	}
++
++	/*
+ 	 * SCX_OPS_BUILTIN_IDLE_PER_NODE requires built-in CPU idle
+ 	 * selection policy to be enabled.
+ 	 */
+@@ -6602,13 +6685,19 @@ static void scx_root_enable_workfn(struc
+ 	if (ret)
+ 		goto err_unlock;
+ 
++	if (ops->flags & SCX_OPS_TID_TO_TASK) {
++		ret = rhashtable_init(&scx_tid_hash, &scx_tid_hash_params);
++		if (ret)
++			goto err_free_ksyncs;
++	}
++
+ #if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+ 	cgroup_get(cgrp);
+ #endif
+ 	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
+-		goto err_free_ksyncs;
++		goto err_free_tid_hash;
+ 	}
+ 
+ 	/*
+@@ -6697,6 +6786,10 @@ static void scx_root_enable_workfn(struc
+ 	WARN_ON_ONCE(scx_init_task_enabled);
+ 	scx_init_task_enabled = true;
+ 
++	/* flip under fork_rwsem; the iter below covers existing tasks */
++	if (ops->flags & SCX_OPS_TID_TO_TASK)
++		static_branch_enable(&__scx_tid_to_task_enabled);
++
+ 	/*
+ 	 * Enable ops for every task. Fork is excluded by scx_fork_rwsem
+ 	 * preventing new tasks from being added. No need to exclude tasks
+@@ -6740,6 +6833,17 @@ static void scx_root_enable_workfn(struc
+ 		scx_set_task_sched(p, sch);
+ 		scx_set_task_state(p, SCX_TASK_READY);
+ 
++		/*
++		 * Insert into the tid hash under scx_tasks_lock so we can't
++		 * race sched_ext_dead() and leave a stale entry for an already
++		 * exited task.
++		 */
++		if (scx_tid_to_task_enabled()) {
++			guard(raw_spinlock_irq)(&scx_tasks_lock);
++			if (!list_empty(&p->scx.tasks_node))
++				scx_tid_hash_insert(p);
++		}
++
+ 		put_task_struct(p);
+ 	}
+ 	scx_task_iter_stop(&sti);
+@@ -6799,6 +6903,9 @@ static void scx_root_enable_workfn(struc
+ 	cmd->ret = 0;
+ 	return;
+ 
++err_free_tid_hash:
++	if (ops->flags & SCX_OPS_TID_TO_TASK)
++		rhashtable_free_and_destroy(&scx_tid_hash, NULL, NULL);
+ err_free_ksyncs:
+ 	free_kick_syncs();
+ err_unlock:
+@@ -9288,6 +9395,34 @@ __bpf_kfunc struct task_struct *scx_bpf_
+ }
+ 
+ /**
++ * scx_bpf_tid_to_task - Look up a task by its scx tid
++ * @tid: task ID previously read from p->scx.tid
++ *
++ * Returns the task with the given tid, or NULL if no such task exists. The
++ * returned pointer is valid until the end of the current RCU read section
++ * (KF_RCU_PROTECTED). Requires SCX_OPS_TID_TO_TASK to be set on the root
++ * scheduler; otherwise an error is raised and NULL returned.
++ */
++__bpf_kfunc struct task_struct *scx_bpf_tid_to_task(u64 tid)
++{
++	struct sched_ext_entity *scx;
++
++	if (!scx_tid_to_task_enabled()) {
++		struct scx_sched *sch = rcu_dereference(scx_root);
++
++		if (sch)
++			scx_error(sch, "scx_bpf_tid_to_task() called without SCX_OPS_TID_TO_TASK");
++		return NULL;
++	}
++
++	scx = rhashtable_lookup(&scx_tid_hash, &tid, scx_tid_hash_params);
++	if (!scx)
++		return NULL;
++
++	return container_of(scx, struct task_struct, scx);
++}
++
++/**
+  * scx_bpf_now - Returns a high-performance monotonically non-decreasing
+  * clock for the current CPU. The clock returned is in nanoseconds.
+  *
+@@ -9470,6 +9605,7 @@ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_
+ BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
++BTF_ID_FLAGS(func, scx_bpf_tid_to_task, KF_RET_NULL | KF_RCU_PROTECTED)
+ BTF_ID_FLAGS(func, scx_bpf_now)
+ BTF_ID_FLAGS(func, scx_bpf_events)
+ #ifdef CONFIG_CGROUP_SCHED
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -13,6 +13,9 @@ enum scx_consts {
+ 	SCX_DSP_MAX_LOOPS		= 32,
+ 	SCX_WATCHDOG_MAX_TIMEOUT	= 30 * HZ,
+ 
++	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
++	SCX_TID_CHUNK			= 1024,
++
+ 	SCX_EXIT_BT_LEN			= 64,
+ 	SCX_EXIT_MSG_LEN		= 1024,
+ 	SCX_EXIT_DUMP_DFL_LEN		= 32768,
+@@ -138,7 +141,8 @@ enum scx_ops_flags {
+ 	 * To mask this problem, by default, unhashed tasks are automatically
+ 	 * dispatched to the local DSQ on enqueue. If the BPF scheduler doesn't
+ 	 * depend on pid lookups and wants to handle these tasks directly, the
+-	 * following flag can be used.
++	 * following flag can be used. With %SCX_OPS_TID_TO_TASK,
++	 * scx_bpf_tid_to_task() can find exiting tasks reliably.
+ 	 */
+ 	SCX_OPS_ENQ_EXITING		= 1LLU << 2,
+ 
+@@ -189,6 +193,17 @@ enum scx_ops_flags {
+ 	 */
+ 	SCX_OPS_ALWAYS_ENQ_IMMED	= 1LLU << 7,
+ 
++	/*
++	 * Maintain a mapping from p->scx.tid to task_struct so the BPF
++	 * scheduler can recover task pointers from stored tids via
++	 * scx_bpf_tid_to_task().
++	 *
++	 * Only the root scheduler turns this on. A sub-sched may set the flag
++	 * to declare a dependency on the lookup; if the root scheduler hasn't
++	 * enabled it, attaching the sub-sched is rejected.
++	 */
++	SCX_OPS_TID_TO_TASK		= 1LLU << 8,
++
+ 	SCX_OPS_ALL_FLAGS		= SCX_OPS_KEEP_BUILTIN_IDLE |
+ 					  SCX_OPS_ENQ_LAST |
+ 					  SCX_OPS_ENQ_EXITING |
+@@ -196,7 +211,8 @@ enum scx_ops_flags {
+ 					  SCX_OPS_ALLOW_QUEUED_WAKEUP |
+ 					  SCX_OPS_SWITCH_PARTIAL |
+ 					  SCX_OPS_BUILTIN_IDLE_PER_NODE |
+-					  SCX_OPS_ALWAYS_ENQ_IMMED,
++					  SCX_OPS_ALWAYS_ENQ_IMMED |
++					  SCX_OPS_TID_TO_TASK,
+ 
+ 	/* high 8 bits are internal, don't include in SCX_OPS_ALL_FLAGS */
+ 	__SCX_OPS_INTERNAL_MASK		= 0xffLLU << 56,
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -99,6 +99,7 @@ s32 scx_bpf_task_cpu(const struct task_s
+ struct rq *scx_bpf_cpu_rq(s32 cpu) __ksym;
+ struct rq *scx_bpf_locked_rq(void) __ksym;
+ struct task_struct *scx_bpf_cpu_curr(s32 cpu) __ksym __weak;
++struct task_struct *scx_bpf_tid_to_task(u64 tid) __ksym __weak;
+ u64 scx_bpf_now(void) __ksym __weak;
+ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __weak;
+ 
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -127,7 +127,8 @@ struct task_ctx {
+ 	struct task_ctx __arena	*q_next;	/* queue link, NULL if tail */
+ 	struct task_ctx __arena	*q_prev;	/* queue link, NULL if head */
+ 	struct qmap_fifo __arena *fifo;		/* queue we're on, NULL if not queued */
+-	s32			pid;
++	u64			tid;
++	s32			pid;	/* for dump only */
+ 	bool			force_local;	/* Dispatch directly to local_dsq */
+ 	bool			highpri;
+ 	u64			core_sched_seq;
+@@ -547,7 +548,7 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 c
+ 			if (!taskc)
+ 				break;
+ 
+-			p = bpf_task_from_pid(taskc->pid);
++			p = scx_bpf_tid_to_task(taskc->tid);
+ 			if (!p)
+ 				continue;
+ 
+@@ -598,8 +599,6 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 c
+ 			if (!bpf_cpumask_test_cpu(cpu, p->cpus_ptr))
+ 				scx_bpf_kick_cpu(scx_bpf_task_cpu(p), 0);
+ 
+-			bpf_task_release(p);
+-
+ 			batch--;
+ 			cpuc->dsp_cnt--;
+ 			if (!batch || !scx_bpf_dispatch_nr_slots()) {
+@@ -724,6 +723,7 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init_t
+ 	taskc->q_next = NULL;
+ 	taskc->q_prev = NULL;
+ 	taskc->fifo = NULL;
++	taskc->tid = p->scx.tid;
+ 	taskc->pid = p->pid;
+ 	taskc->force_local = false;
+ 	taskc->highpri = false;
+@@ -776,7 +776,7 @@ void BPF_STRUCT_OPS(qmap_dump, struct sc
+ 	/*
+ 	 * Walk the queue lists without locking - kfunc calls (scx_bpf_dump)
+ 	 * aren't in the verifier's kfunc_spin_allowed() list so we can't hold
+-	 * a lock and dump. Best-effort; racing may print stale pids but the
++	 * a lock and dump. Best-effort; racing may print stale tids but the
+ 	 * walk is bounded by bpf_repeat() so it always terminates.
+ 	 */
+ 	bpf_for(i, 0, 5) {
+@@ -785,7 +785,7 @@ void BPF_STRUCT_OPS(qmap_dump, struct sc
+ 		bpf_repeat(4096) {
+ 			if (!taskc)
+ 				break;
+-			scx_bpf_dump(" %d", taskc->pid);
++			scx_bpf_dump(" %d:%llu", taskc->pid, taskc->tid);
+ 			taskc = taskc->q_next;
+ 		}
+ 		scx_bpf_dump("\n");
+@@ -1159,6 +1159,7 @@ void BPF_STRUCT_OPS(qmap_sub_detach, str
+ }
+ 
+ SCX_OPS_DEFINE(qmap_ops,
++	       .flags			= SCX_OPS_ENQ_EXITING | SCX_OPS_TID_TO_TASK,
+ 	       .select_cpu		= (void *)qmap_select_cpu,
+ 	       .enqueue			= (void *)qmap_enqueue,
+ 	       .dequeue			= (void *)qmap_dequeue,
