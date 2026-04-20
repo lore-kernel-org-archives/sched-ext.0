@@ -1,102 +1,159 @@
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AB92BDC2A
-	for <sched-ext@lists.linux.dev>; Mon, 20 Apr 2026 15:28:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155A339EF1F;
+	Mon, 20 Apr 2026 17:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776698938; cv=none; b=srrDozcW5FrjwOKQ4tFljtGp3GQ/yGubXmTSBD/3c950Qhj4JRWWuyfJSLAe6Q8s/6JcY9XCnef7151dAAQrGfKSSQQJEEO+LCikBu6XwwZBLqIzbUyL82Ef6DlKYJtCRF9D3jgorjJY7Hf6L25zRnq3lt7Y42C7PgNucVklISg=
+	t=1776705813; cv=none; b=QS1rVWsU1BW8Z99HU61MY+H8rzkjlxv237CkG+jyYeR+Fa0p9huVNLcPem36dwY3AJ8ids32VeJOu1PtVJTJDiEtnOPNkL3Kp21pJPiIVqPfVVXN0lUfLYiJr/o09O2l+PJ6sNYj37CYywzKnFl3pv+IyMesIp+cFdgnCxlTx0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776698938; c=relaxed/simple;
-	bh=j2lNLX27uSv94INu8iyMX5QdGDl/jTKWzG0XfROtqG4=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=EOptKww2pyqSo9U7/bxY2C0tpWAPCKo9gCQPuhgPTorkh1QbjZNp/GvDHk6pA8cMINCKbXAwCqjOHwFmr2n9RAw5+PJjkBCWBE9xS26MwL4oPlk6hPjaU8D30cBZiCTqlbhRsiZxrUbcwgr9G63SmEd4czhHCWZ42e6qa4PLyF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wi7SkACN; arc=none smtp.client-ip=209.85.221.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1776705813; c=relaxed/simple;
+	bh=rBE/AEervawb8RdmDWSRWgLIOT5De76UJOpmVhQNgc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fBzzKoRYnw19Nyfhji9t/Hc/2sMemdeY5J+VzG7fSqeGtLf9lI77AXU4kLFD/FWKHLMeOOy2rWOz+1kfDvabY92qF0dIHu2vLhoj69vtCsnwHpuKmxCNjDMjqWeLrCF+Yu5BPRlis58rULSUozeHbh9+/130qUQv4Voil7Z+2RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ECDDwu7E; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wi7SkACN"
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-4411a572dc5so819405f8f.1
-        for <sched-ext@lists.linux.dev>; Mon, 20 Apr 2026 08:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1776698935; x=1777303735; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PDHIhd21CO55vv8wW1IQ7iOUTjYPhqTSEDEgVsLeO7M=;
-        b=wi7SkACNNrjN0i3WAJJsIfVKhblx0Cb2CQ6QOGXPn/QpJez0aJjek1maR0Cm9IhgXx
-         R3lSPeuIXbKEz3f43Q1GW5uENW/el+vU3MUkzDRhKb4JjnQGhVtuMwKL7mLM9qNTvil8
-         sA4G+VKMnYn4tCYlXKhqP/md0qh7o4xAlWWoPIsbQeSr7dEK2db+S/57SDA/1X3HypGf
-         VJjB7GapiSiJtI3dMheVKuYppTeM51lVpAq+pyU8mQK7CiFbUp5DFIVgIoMWAevbs8H6
-         pE7MltnuDVwnbBrb9rWb56eiPwwwBRrg7MGkABAhVjM+JIIcafa7DVSRqffYI+5gcxh9
-         GXSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776698935; x=1777303735;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PDHIhd21CO55vv8wW1IQ7iOUTjYPhqTSEDEgVsLeO7M=;
-        b=nwya0m2jpLyqZtTWKXhku7UzIpVrkGAYVZjYkO59FI8XOXeEBArjYEgA2jYJD8eft7
-         uPmgz/nzZyLxZHALcZ8FKmhSVlZRxwSuR/U/EcOQNH+q41Bstq1pXFO8TI4Ak2YO0vBa
-         tG5aDh6GxdsvRva0aNGrxnNt/vZo74v84bur51BFSnZ5u0KEfvmoMFPsK/uNpYue/YRn
-         0Pl0liqaIntAhqrD/u2PPW8JIdAHiAdcKduOjdKmHAbXGF6AwE15JHonhqNWR6Jlk4mh
-         T8c8/upBnLEZhOt2FsAC0kjMJqLdiYsNa0plLL9XLjCke3tv/uYT9tj0TVCcT1HMGJ8U
-         pluw==
-X-Forwarded-Encrypted: i=1; AFNElJ9v5kA3MeAviPApJm9jBHfw8HjDj14WqB5wU0L1DjYSw3LdQ1Ac45AhVIUHgHuc3zoCkr4Ce6DNyFA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHIY4zkjG6Ois3HSep9dPk9g21GGBqmo94KnH+jZXEFJ1nIPq+
-	JQEeYLmDnZaWkSKeKu9tDvrABUC90DUdHqSzJUTpb6fjmwk1u41979/StRCGa0s6pLXOBZQVUBw
-	2Y4TLyRo2J57m6w==
-X-Received: from wrot16.prod.google.com ([2002:adf:f050:0:b0:43d:710b:a5d3])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:1acd:b0:43b:4aba:8f38 with SMTP id ffacd0b85a97d-43fe3e14242mr22235488f8f.47.1776698934834;
- Mon, 20 Apr 2026 08:28:54 -0700 (PDT)
-Date: Mon, 20 Apr 2026 15:28:47 +0000
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ECDDwu7E"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1776705812; x=1808241812;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=rBE/AEervawb8RdmDWSRWgLIOT5De76UJOpmVhQNgc4=;
+  b=ECDDwu7EXhgEoWlKDHOG50Ut6tkuyAQg2WgaTzOOCnCTOTVLQsBMzmQF
+   B9Xiu0D14RQvqVlxn0ePMnM7YZdonhdm9nDUedLVnR0q2BjNGqPbMBIoT
+   /Q5P6MDakbsPAJD+RO/TFrGbpjPLbpdM4XruPtC2eWYP/H6xn7Mds/Yhp
+   1m6t5B6j8ux+7Vd6eQAViPzSQ40+xy7Y6bNHaA3Et5cbAMxmqrJKdOWtd
+   YWeff++3EoGZcK7Rg9NSB/RDcbuVaTQGwZ9zToS1/9pt+k7fFUlJB3IHm
+   4GcZZFdpMOy4ZmJAaBnRUHHbcA0pBUKnUfMy26JKuJ8rSNMLrbx+/q2Ww
+   g==;
+X-CSE-ConnectionGUID: HphUFiUoQpeA9Zoqy6zUlA==
+X-CSE-MsgGUID: GIiQACVvS5iqmTdhiE4LHg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11762"; a="89097993"
+X-IronPort-AV: E=Sophos;i="6.23,190,1770624000"; 
+   d="scan'208";a="89097993"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Apr 2026 10:23:32 -0700
+X-CSE-ConnectionGUID: ErK47NMFRKevGid/FVva5A==
+X-CSE-MsgGUID: YYr8FaJxT8OabMGTyJSi9w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,190,1770624000"; 
+   d="scan'208";a="255039477"
+Received: from lkp-server01.sh.intel.com (HELO 7e48d0ff8e22) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 20 Apr 2026 10:23:28 -0700
+Received: from kbuild by 7e48d0ff8e22 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wEsLE-000000002hQ-49Ob;
+	Mon, 20 Apr 2026 17:23:24 +0000
+Date: Tue, 21 Apr 2026 01:22:36 +0800
+From: kernel test robot <lkp@intel.com>
+To: Herbert Xu <herbert@gondor.apana.org.au>, Tejun Heo <tj@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Thomas Graf <tgraf@suug.ch>, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-crypto@vger.kernel.org, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Florian Westphal <fw@strlen.de>,
+	netdev@vger.kernel.org, NeilBrown <neil@brown.name>
+Subject: Re: [PATCH] rhashtable: Restore insecure_elasticity toggle
+Message-ID: <202604210112.4dByOk9v-lkp@intel.com>
+References: <aeLgjAeJuidWNy3N@gondor.apana.org.au>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.54.0.rc1.555.g9c883467ad-goog
-Message-ID: <20260420152847.3690794-1-jpiecuch@google.com>
-Subject: [PATCH v2] sched_ext: Documentation: add note about multiple
- ops.enqueue() calls in a row
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	David Vernet <void@manifault.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
-	Kuba Piecuch <jpiecuch@google.com>, Cheng-Yang Chou <yphbchou0911@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aeLgjAeJuidWNy3N@gondor.apana.org.au>
 
-Commit 84b1a0ea0b7c
-("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
-introduced the possibility of ops.enqueue() being called multiple times
-in a row for the same task without intervening calls to ops.dequeue().
-Document this behavior as it may be surprising to some.
+Hi Herbert,
 
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Acked-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
-Changes in v2:
- - Removed redundant line from commit description (Cheng-Yang)
+kernel test robot noticed the following build warnings:
 
- Documentation/scheduler/sched-ext.rst | 5 +++++
- 1 file changed, 5 insertions(+)
+[auto build test WARNING on akpm-mm/mm-nonmm-unstable]
+[also build test WARNING on net/main net-next/main linus/master v7.0]
+[cannot apply to next-20260420]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index 03d595d178ea..fba09aa1cd4e 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -339,6 +339,11 @@ The following briefly shows how a waking task is scheduled and executed.
-      leaves (e.g., when ``ops.dispatch()`` moves it to a terminal DSQ, or
-      on property change / sleep).
- 
-+   Note that ``ops.enqueue()`` can be called multiple times in a row without
-+   an intervening call to ``ops.dequeue()``. This can happen, for example,
-+   when a task on a user-created DSQ is re-enqueued using
-+   ``scx_bpf_dsq_reenq()``. The task stays in BPF custody the entire time.
-+
-    When a task leaves BPF scheduler custody, ``ops.dequeue()`` is invoked.
-    The dequeue can happen for different reasons, distinguished by flags:
- 
+url:    https://github.com/intel-lab-lkp/linux/commits/Herbert-Xu/rhashtable-Restore-insecure_elasticity-toggle/20260418-233732
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-nonmm-unstable
+patch link:    https://lore.kernel.org/r/aeLgjAeJuidWNy3N%40gondor.apana.org.au
+patch subject: [PATCH] rhashtable: Restore insecure_elasticity toggle
+config: sparc64-allmodconfig (https://download.01.org/0day-ci/archive/20260421/202604210112.4dByOk9v-lkp@intel.com/config)
+compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project 5bac06718f502014fade905512f1d26d578a18f3)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260421/202604210112.4dByOk9v-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202604210112.4dByOk9v-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In file included from net/mac80211/s1g.c:9:
+   In file included from net/mac80211/ieee80211_i.h:27:
+   include/linux/rhashtable.h:831:32: error: member reference type 'struct rhashtable_params' is not a pointer; did you mean to use '.'?
+     831 |         if (elasticity <= 0 && !params->insecure_elasticity)
+         |                                 ~~~~~~^~
+         |                                       .
+   include/linux/rhashtable.h:839:13: error: member reference type 'struct rhashtable_params' is not a pointer; did you mean to use '.'?
+     839 |             !params->insecure_elasticity)
+         |              ~~~~~~^~
+         |                    .
+>> net/mac80211/s1g.c:104:36: warning: implicit conversion from 'unsigned long' to '__u16' (aka 'unsigned short') changes value from 18446744073709551614 to 65534 [-Wconstant-conversion]
+     104 |         twt_agrt->req_type &= cpu_to_le16(~IEEE80211_TWT_REQTYPE_REQUEST);
+         |                               ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/byteorder/generic.h:90:21: note: expanded from macro 'cpu_to_le16'
+      90 | #define cpu_to_le16 __cpu_to_le16
+         |                     ^
+   include/uapi/linux/byteorder/big_endian.h:36:53: note: expanded from macro '__cpu_to_le16'
+      36 | #define __cpu_to_le16(x) ((__force __le16)__swab16((x)))
+         |                                           ~~~~~~~~~~^~~
+   include/uapi/linux/swab.h:107:12: note: expanded from macro '__swab16'
+     107 |         __fswab16(x))
+         |         ~~~~~~~~~ ^
+   1 warning and 2 errors generated.
+
+
+vim +104 net/mac80211/s1g.c
+
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23   95  
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23   96  static void
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23   97  ieee80211_s1g_rx_twt_setup(struct ieee80211_sub_if_data *sdata,
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23   98  			   struct sta_info *sta, struct sk_buff *skb)
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23   99  {
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  100  	struct ieee80211_mgmt *mgmt = (void *)skb->data;
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  101  	struct ieee80211_twt_setup *twt = (void *)mgmt->u.action.u.s1g.variable;
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  102  	struct ieee80211_twt_params *twt_agrt = (void *)twt->params;
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  103  
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23 @104  	twt_agrt->req_type &= cpu_to_le16(~IEEE80211_TWT_REQTYPE_REQUEST);
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  105  
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  106  	/* broadcast TWT not supported yet */
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  107  	if (twt->control & IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST) {
+7ff379ba2d4b7b2 Johannes Berg    2021-09-27  108  		twt_agrt->req_type &=
+7ff379ba2d4b7b2 Johannes Berg    2021-09-27  109  			~cpu_to_le16(IEEE80211_TWT_REQTYPE_SETUP_CMD);
+7ff379ba2d4b7b2 Johannes Berg    2021-09-27  110  		twt_agrt->req_type |=
+7ff379ba2d4b7b2 Johannes Berg    2021-09-27  111  			le16_encode_bits(TWT_SETUP_CMD_REJECT,
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  112  					 IEEE80211_TWT_REQTYPE_SETUP_CMD);
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  113  		goto out;
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  114  	}
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  115  
+30ac96f7cc973bb Howard Hsu       2022-10-27  116  	/* TWT Information not supported yet */
+30ac96f7cc973bb Howard Hsu       2022-10-27  117  	twt->control |= IEEE80211_TWT_CONTROL_RX_DISABLED;
+30ac96f7cc973bb Howard Hsu       2022-10-27  118  
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  119  	drv_add_twt_setup(sdata->local, sdata, &sta->sta, twt);
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  120  out:
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  121  	ieee80211_s1g_send_twt_setup(sdata, mgmt->sa, sdata->vif.addr, twt);
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  122  }
+f5a4c24e689f54e Lorenzo Bianconi 2021-08-23  123  
+
 -- 
-2.54.0.rc1.555.g9c883467ad-goog
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
