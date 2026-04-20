@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D673A875A;
-	Mon, 20 Apr 2026 18:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE393A9D90
+	for <sched-ext@lists.linux.dev>; Mon, 20 Apr 2026 18:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776708121; cv=none; b=uP7hAXE4p+IFRkqwaOqceyy5qQNmW8DkgyMl3r9tudsTvr1R4nHGIC4YM5XQ6gP20SeF/2hw1/rdwuiwe75hhgovzM8xj9NiRk/5YvYYfAFGRmJc3L8/dpxdHfwRo+iEwZer6mLZy1nBsEPAxYZmboyg0gP41wn+DzI01wlHik8=
+	t=1776708124; cv=none; b=N9stRushqqeonpqAEsHI+Om4qKDugVAzhBNx6VIlIowCpaGdcW+6xdoyEYQpkEHx7OGlnbBdKbHv5yqnB8eVlxQwf7/mNyVCAsWka9ng5MYUX+Oh6YR8D+KT6XRXEZIwMuEjhXZjE7b5IbFt8nqUm7Wpxxeq/4kT5xJ9lAy4OOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776708121; c=relaxed/simple;
+	s=arc-20240116; t=1776708124; c=relaxed/simple;
 	bh=AL3RD12e+wd3hpXo+XZ4a0Ofa1msrCKNJWe1W8ilL1Y=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=ODARLfKAOEFjY/sELo83JxStave8efXXMoBWyLtfJ7K3pNhFuzpEOgqR8NAAlRmP/fDAi3xYhL/zdMiYf6FWpXy3oBAptaag2hYO3dvAxJGoGC3TNxoxtbRISIqFKtidUyVXH8qE46khjRufO0PWeNu3keV2Ktv+0o6dNqfYIGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQCv7Rq7; arc=none smtp.client-ip=10.30.226.201
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=ifHAcDxcxX7CJNaI3dmdsNoirhtYk3F2W7za051elrxsp0Lj5wqeFAJIJnM6WDWr1ZcXzZbShx2U3XHvUyi0Q1LEUb5cIacBiZHRSgij5kcJqt805+hOlb/tVqyYuvd7eRhlsJsc5xGOJPH14izwCopJVlJ+MrNpbahFIr57rWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K4tlu2sr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQCv7Rq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8209FC19425;
-	Mon, 20 Apr 2026 18:02:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K4tlu2sr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E82C2BCB0;
+	Mon, 20 Apr 2026 18:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776708120;
+	s=k20201202; t=1776708124;
 	bh=AL3RD12e+wd3hpXo+XZ4a0Ofa1msrCKNJWe1W8ilL1Y=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=XQCv7Rq7mvXpz0NsbGddnePPdssrjT5WbCRJZafgjdERv0Bux4a9UxmgUUIRkhrsL
-	 Thtye/KNnm5XdxEmTTDij9rm4DXBxbVilooKA1uzyR1hNNFzPWTu6SIaLpTHYEwwvA
-	 DLW09ydtFNSLrch38ik5+/PXCyLCQMVZBQuCLfxaf58iDb6eWoTjung4cDw5Rp0p2i
-	 i8+JAZZNSDNvtZGAOJoZo8IV1tWdfhapYLg7NV9S1VsN4XOvQSVgGBde8WXALnX8nz
-	 0E3HqjLmjPQttccjo+lJy+h+f9uO059NgEFDqys0wP8LoT2MVSzhG99dIDJLopwLQ9
-	 Ca4ZpFtu1ih2w==
-Date: Mon, 20 Apr 2026 08:01:59 -1000
-Message-ID: <7e4aa7dbafae4599fbba05d1b7454c9a@kernel.org>
+	b=K4tlu2srp1jSww7TDHPSEQfjBSq5MfsgHa5VDBqcVovEHTs1st9oxdqIvWyvvpgzh
+	 labM5cAacSB4rYZYE00ehz514NT9w/q6QGfiWElIkvTAdb28e3QWE/lAoVNup9S8te
+	 kQ0859F8iLSgdHUfKQNrXU3E3pGkUr05mMezLnIlIJre3owaxQiVItnNS0DpRBCS45
+	 owgT0fniRR+3QSOAQJmsnn4Qr+Cz+PYxwpybZn1TF/vQZ14mCAt8AELkmB3HHqG8L1
+	 //5tguy/7uf4GNSmW+XfNWNpkSj7vUborBP8Gy8Reg2O9lAfBAOOCaZSndUvACRfgD
+	 8XlZJ7dKMI3tQ==
+Date: Mon, 20 Apr 2026 08:02:03 -1000
+Message-ID: <fd9056e44169d272515dc5b94e334e7a@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Kuba Piecuch <jpiecuch@google.com>
-Cc: Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: sched-ext@lists.linux.dev,
  David Vernet <void@manifault.com>,
- linux-kernel@vger.kernel.org,
- sched-ext@lists.linux.dev,
- Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: Re: [PATCH v2] sched_ext: Documentation: add note about multiple
- ops.enqueue() calls in a row
-In-Reply-To: <20260420152847.3690794-1-jpiecuch@google.com>
-References: <20260420152847.3690794-1-jpiecuch@google.com>
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>,
+ Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+ Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH v2 sched_ext/for-7.2] sched_ext: Documentation: clarify
+ arena-backed doubly-linked lists in scx_qmap
+In-Reply-To: <20260420065520.383127-1-yphbchou0911@gmail.com>
+References: <20260420065520.383127-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
