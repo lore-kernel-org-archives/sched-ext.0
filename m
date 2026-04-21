@@ -1,74 +1,74 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB9326FD97
-	for <sched-ext@lists.linux.dev>; Tue, 21 Apr 2026 13:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8173039D6F7
+	for <sched-ext@lists.linux.dev>; Tue, 21 Apr 2026 13:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776778273; cv=none; b=oyv2gECjqYe/YyNto/FpEyfwEJPj3epZVgA4c0W4g3NnRpIEhUGQcRYGa3kDkbVZ3eKQqXH044TYLC9y+xjP1zVO63bV004izdVGjcQT9w/CNdCYNd8N/WzLWgcRFoPquFz81lK7e4uio2nZhp3O1UuxLRRVzy0LjNyig1QAbYc=
+	t=1776778612; cv=none; b=nNtlRzz5Tmi464OJ032XJ/7ARQGlsww/oRYLF4im6dfEK5TFvCZAReciwu3zM+/3vXiT6TCyUtx4TLEE8r118IyPqKshhWqhAazuLkFPcmiCm2IUAioVySdlhJ+LDg5onxaTxS0WhyRjS0nFi/S7HBcPq3V1V1VqRdWFhfTdgxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776778273; c=relaxed/simple;
-	bh=5OXh9qwGgCUnsQZ5sWiznN1+yTPaVaMMMmX8wUq076E=;
+	s=arc-20240116; t=1776778612; c=relaxed/simple;
+	bh=HfC2rcAHx3L49DKzGd14vHAZZy0fNUJCCBnyc+rOkLE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HV66QeLwxlA7RWBzIaEWV77Bib+cHJCv9PXPp6c2smtUhQZdX1b2CcyLh7MiO0WOUA8qctjco02/WyaE67X247nszjLo4oYmagS6ggwbCpgcx9MpjnlwmDS2+6cV4oKhbJs89lu04auGhv6NE4dxpIJT2lD9sOGbyW3imy+C1SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=deGgKp9h; arc=none smtp.client-ip=209.85.215.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZKJ7j6nUdr2e0cArhzA2l5XNnr2hlBVPa2qkOOcz/uyNOSgV50Db4C0xX6S4UcfePFPSQtoGAUwlJdwz6xeTWHvrdGHbIk5Hv8/TXdMxrKV3YhiUVhvOF47nFN6GTIyRlRCeOn/whJ3G/nH6FXh0jKcGpxkCmDDmQjpKRWTTS+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y1BdfwTK; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="deGgKp9h"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c70f91776fcso1630638a12.0
-        for <sched-ext@lists.linux.dev>; Tue, 21 Apr 2026 06:31:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y1BdfwTK"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-35d965648a2so3623113a91.0
+        for <sched-ext@lists.linux.dev>; Tue, 21 Apr 2026 06:36:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776778272; x=1777383072; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1776778611; x=1777383411; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WCX5Uszzip8DRdXjVUDmJ4cf+a8xcm2wuC/F0AJWc0E=;
-        b=deGgKp9hG0vPiN9RYW8BHkYu3tcWiqJwG2bjBrKZq742e17BMHc4DWOngEootlz3nj
-         WpbZwIm15Yh/w9o+ZLCflg40ane87CJQucVqe55trUNPb/dhhms2vGcvm5tOLZ6YLzgb
-         vfKaAenF4UaFLiCpMs9qUmhJH+BhcEtpVfrZh37an3kG38QIEymrT1ZYgdl6V2zuK0oQ
-         953GxBUG3wbFp+DSXJvq3MopEb5lkLTHoehiy2BZ0hZv5dRMh+aQSfJFoqRpFN5+fx0q
-         eyrtdoHk2mOrWIAXOw2R3QzM8U+07EKF7xAs51E9bPzeqVOnryHRn46SdnkCvUiy2fEe
-         t4kA==
+        bh=cICu5OuDgaUihDORDEXfRm9USuXHUFKG9LJ148MNZfc=;
+        b=Y1BdfwTKfOPEk5OCInXL9dvDCrihAb3//3b5B/plSRcgc4UQwPqXQyZgppixapBOn8
+         inaA+dKUMjbHn/Zf+XbDaK8JTYOvzP7XoaHuTksLtlBrRPW09YzLIafZMB0alJ+eJngx
+         6ivzexqxi7LxLDt1kZL6k3cdxpNy4t7hAY1YbnjBFrUVoHZstip8Rp+1ghghTGaORe24
+         v303XJsJ0Xe90lVYBJfRxf5UkC3IoqXnbvqEmrMPWN7SMK+qPVeyRugI/chNd+z6MJth
+         Y5RuLtpzntBtbBPSLGly6Bkey4XksL4tveD00z1HFA8mVx5Sk0RblhYHcpdio8Fg8AuF
+         ljKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776778272; x=1777383072;
+        d=1e100.net; s=20251104; t=1776778611; x=1777383411;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WCX5Uszzip8DRdXjVUDmJ4cf+a8xcm2wuC/F0AJWc0E=;
-        b=MBzO2gvwIuSTfyHJMxoTZZRPl1tRt6UNSPCQbQgY239jM31DMyBLYDax7Z2lAf4EyF
-         yYPrLWxwMaNB49k4khDfZgnfz+ADN/o4Z2L8tMcz9qd6n0mo5BXqLb1psafXENGDX8Wa
-         qCVdfZmZ9yKUndH/Le/ONN/g4GgQCytB59zbHvRlHnwN4+Gdop/3ZcDT/hLDKpH9Q4ro
-         Du76e7y3Qh1vNlsKoHp+YW1eVf7IithoWH5CF3u8P12q6W5pvtzxEttBjYAir+386zLp
-         uEOIoPMJWEnhuiB/QIg1C2bg/iZcxZgaXddTXjdzzDHe5XKVPjSThOzXQqtdWvp2YWgF
-         L8Hw==
-X-Forwarded-Encrypted: i=1; AFNElJ8cAkk7bFJ2Iybs/mpf3YJKvenFKXspTXltNmR30x3YwYL4yw2ymAiTC1J6xOk4hEcW6fJjskD1oJI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxvVjJJZZniqbXBLhrtpN1CUFh5gq4vgE38bjRpyDth5VZEPWsL
-	dfqs4+KkWOnyIbhmky7PG9blkLUKMLZBXG1r/dZCtq7XZmur3+cnqTCv
-X-Gm-Gg: AeBDietPNN4MgHnjR4NfBGjmMOpWAIQ+rU76NuNtIoEzWMz27AI/WPDXG07XufHLtn7
-	LCJM6rE0v2DEnmqrZ+YpfgBncY0z7b4LPwSGmTVrblKnJzZ7JmWJdxDrhGO7Mf24nF2Qo0Gqr3S
-	oyIDyyayCCabQzPr+2Cv/jKZWVA1Mtx/awfW/DxR9HmxjrE6eqC5XrHhTkTXhClh9scvNIbH3+0
-	Kmu3woEoCAw7hY2xJLWddrBcL8TwqT7VC+OOAbkwQJ8H6R/fnfi3hn26cu1b/EdvFRa0GTJ51mo
-	2VXm2HIi7FxmmvRxF1D6/HMVEbDq/3FUU2vEd1cDYR3GJHwSvHR4jZn++EVysa2vFfbiPLxBo3r
-	EYo6r56r/4lOUxK3m6LoTeM6jNL2ojUlhuyge2glG4d+jtIXp9EGGFvqgjsxA4kQxul0GEsxwBH
-	j9lj5YktGxlQs1SQbnSdKV0W7jElGATgeyRuNElytLryRW380YLzzTxop9Xk8oW7XwDx+HSFjEo
-	xZeQ8CDBCbhvL4h
-X-Received: by 2002:a05:6a20:e211:b0:3a2:7ef4:81df with SMTP id adf61e73a8af0-3a27ef485b0mr10491480637.26.1776778271506;
-        Tue, 21 Apr 2026 06:31:11 -0700 (PDT)
+        bh=cICu5OuDgaUihDORDEXfRm9USuXHUFKG9LJ148MNZfc=;
+        b=O0rsybADGjKbyOLqBWBHG7kQGa48+ynMEAngO4NntKXeN8K6u3WhxJQ6yCslreXdyg
+         GyjP8hKNPxVhGo1Uv0IweJEijxQI4IL6K92gLm9anO5B7QeOWfktEbK90dGyqq/mUFRz
+         qiFxQzYOD451UYZC5HwU8xNOCCHPHNst9Fo/uWMGOOWObdGAfKff4YfnRTKGHR9jrVqQ
+         j/ezqg6/UdsJq9WqMiQ/zW7eG3FgwwaukovVqBlDZK1lJAI5PFTNCM56OQEW6qFktQjQ
+         PpS1xl49D/rh+4W3Ob/1jVTSn3F4bvrisKAJ7vUkOc4mSbS82VyRyx2Pt6toIQffPtVo
+         I72Q==
+X-Forwarded-Encrypted: i=1; AFNElJ8LBxng/yz3+45nyvk6Qjfh7Zpqd3Jbd+ecI19F2/b8JknAwqTVQF6TLKZxYh5pEMMT50jXUK0f1xg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyFllssWrmU3bVbMJZ0xo1dq4f/IrsG38UKqujJfED5sFTk1lZu
+	HATDDcI5huaDMtc4rRCheqpI4raR7S1X3BF/nSwU9lnBL8n9irX1a9Oq
+X-Gm-Gg: AeBDiesrg+79mcX/n97jl3pGHJ4TDrrsxZN7B/MPdq0s+SJPzxGoF50nmPAT2+XQjq3
+	bJEAVC21Zh9OgVFUsA3P5hMcSZ8ske578q5mX375QViCtQOg53xCqrDut5n4MjKABQe3q7sg85+
+	U88ahZDoSF1CT2QW+wqtrkv2PL1n/iZ9F5iCzLURaKFF8BYI/xLrIxzOCll55HzD2ldAj4B/WRG
+	lK0xv/7Ar6HZcochvbr+olDn9Xf7guEClBYEa7xYpup1GQ+WwMgrzDeAFqd0pfSVcxcD/IoVeJB
+	X7L5UxHGK+q/3/vpobykTGazcVwFTooWoh70IvzY5ic/fBbVCIjwmxdyuZ1qoW4GIazkvfTg4p2
+	wPL+i6vxBVU1jg9RuAX1igoywEx76rNti1L4Dyi2nZ8tO6eb3bl4vRQMS3dYYx6G0/fsJGVOg/Y
+	iMqn+dGYiGxZ4Q1D6YL8EbGMTZH5s4Yz0nIESR4s1/If2mCiQcwNou7i+anMtRBAQ7vl3TzGa6J
+	6Ui/DlPg6pCedk/
+X-Received: by 2002:a17:90b:1642:b0:35f:b107:f1ae with SMTP id 98e67ed59e1d1-361403adbcfmr18302652a91.4.1776778610624;
+        Tue, 21 Apr 2026 06:36:50 -0700 (PDT)
 Received: from cchengyang.duckdns.org (36-225-97-241.dynamic-ip.hinet.net. [36.225.97.241])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7976f9cabfsm11703580a12.9.2026.04.21.06.31.09
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c79770587c1sm10602734a12.32.2026.04.21.06.36.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Apr 2026 06:31:11 -0700 (PDT)
-Date: Tue, 21 Apr 2026 21:31:07 +0800
+        Tue, 21 Apr 2026 06:36:50 -0700 (PDT)
+Date: Tue, 21 Apr 2026 21:36:47 +0800
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
 	sched-ext@lists.linux.dev, emil@etsalapatis.com, linux-kernel@vger.kernel.org, 
 	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH 01/16] sched_ext: Rename ops_cpu_valid() to
- scx_cpu_valid() and expose it
-Message-ID: <20260421212801.Gee7d@cchengyang.duckdns.org>
+Subject: Re: [PATCH 02/16] sched_ext: Move scx_exit(), scx_error() and
+ friends to ext_internal.h
+Message-ID: <20260421213118.Gdc56@cchengyang.duckdns.org>
 References: <20260421071945.3110084-1-tj@kernel.org>
- <20260421071945.3110084-2-tj@kernel.org>
+ <20260421071945.3110084-3-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -77,16 +77,20 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260421071945.3110084-2-tj@kernel.org>
+In-Reply-To: <20260421071945.3110084-3-tj@kernel.org>
 
 Hi Tejun,
 
-On Mon, Apr 20, 2026 at 09:19:30PM -1000, Tejun Heo wrote:
-> Rename the static ext.c helper and declare it in ext_internal.h so
-> ext_idle.c and the upcoming cid code can call it directly instead of
-> relying on build_policy.c textual inclusion.
+On Mon, Apr 20, 2026 at 09:19:31PM -1000, Tejun Heo wrote:
+> Things shared across multiple .c files belong in a header. scx_exit() /
+> scx_error() (and their scx_vexit() / scx_verror() siblings) are already
+> called from ext_idle.c and the upcoming ext_cid.c, and it was only
+> build_policy.c's textual inclusion of ext.c that made the references
+> resolve. Move the whole family to ext_internal.h.
 > 
-> Pure rename and visibility change.
+> Pure visibility change.
+> 
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
 Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
