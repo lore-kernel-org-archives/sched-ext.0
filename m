@@ -1,129 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD6938238F;
-	Wed, 22 Apr 2026 17:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE92D2483;
+	Wed, 22 Apr 2026 17:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776877449; cv=none; b=H+sh/rEBge/heDqqthWz/OH1Al1xTmJ+hP45yOK84f8q3tPuYI0obDFP9RfrPYl82YIom4YYkePrQmyeIpJBMc0A3qokKq6xy7zS7PzOtdnqpwI44tQZl1daHdU2UZZ6q6gH/VJ07NgbqpzOym7N0ZYlWnUTg3DbHw1nC+j0cXw=
+	t=1776878338; cv=none; b=sNpciYAyMkztynACOaAKjKIXGIyscB5eupFOuCadLvv8Y/PYtgMP8k239Ku/hyIFda9qhz3EU6BvfaavZTnkjnK7CWAl7riy4wjb9yRQwlMjGSBqGErLJAu93qNzKJHd/YCX+txHbg90QJ3zaScF1541gnaoE2ZY/3bPQElP7kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776877449; c=relaxed/simple;
-	bh=WN4++GZzedWt8KWBFQNN7PvPJc5i06L9DJHYqC/gdGA=;
+	s=arc-20240116; t=1776878338; c=relaxed/simple;
+	bh=FiYQa7tnRLyTpJd8T5DYYtmAKyOHGq337bdQwXrjTX4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sIyX/a4MasILd1sg1ZEbWMfrfC/OfO5WeFJga7/w13XoaR4mJOLrR8Obbfg1i9G1xNhTvYPiKzMFl+AdMD6jRaDhXtsrlPiMA9aj+mN4ux94lSTI8oNKgbm8kFBZsI5zE4P9AViKl/Dd6IdQTcMIdo217t5E8+/J/FtNXihYd1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H1DpzBHm; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=sKBzWWxsxhU2zKfgkpNbGjBjep1auIWlePnLFFfvWsTr96nxkHjEH5JwOD/mgn2rtlBZ6TfVk1x+nL5HLRYb+aUmDcvRahvqKbBJRNHWLn7/7M8g4mgjuOWuvcxLeNLzYDLWan3Ga6AcFV01M5MVgWvtvv5A/WpoDSwRuhefNcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qZb0AAtt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H1DpzBHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BABCC19425;
-	Wed, 22 Apr 2026 17:04:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qZb0AAtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FB0C19425;
+	Wed, 22 Apr 2026 17:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776877449;
-	bh=WN4++GZzedWt8KWBFQNN7PvPJc5i06L9DJHYqC/gdGA=;
+	s=k20201202; t=1776878338;
+	bh=FiYQa7tnRLyTpJd8T5DYYtmAKyOHGq337bdQwXrjTX4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H1DpzBHm13lJJKQf3puh8DWgleHiak18U/2K2GMx7HeYd6B6XMNYcRS5eD5AI3fdU
-	 UmEKVX7iKdsTc12hqMoZMGu3w9AdJUwGcznGPj6HgRRL/MX0vh2r1pQULnvvxX8OmV
-	 id58n0+E4KmdFJm5a56onDE7x4iLo6uIe0btFe/MXJa7hxMO1LlZmSVIfWdLks8gjG
-	 o4dXK0CenSWnhskWcxIjQzD3xCvt4B8+MLotTo5Nrxli9LRDGVsBmsrNkeV/nElume
-	 xWszNeCJzs4hSrnzG2og68WT+9Br4iKmgkC/tmblhbHf/BA+urHEBHclSmx+ey9fH7
-	 DweUPQBpr3wvQ==
-Date: Wed, 22 Apr 2026 19:04:05 +0200
-From: Alejandro Colomar <alx@kernel.org>
+	b=qZb0AAttHkohmh/8tCxKykx78MJOuXRQhJupp76IsR/DVFCXON88tX+p9i2Iu003c
+	 dvFBxjL9bv3Z8hXlQGp/5XNLMT/teHDhUbkf1RpkI9XKv59CkRdgd6H/ZjpJ30fvQI
+	 llby9Ou9c6oy+5AP3GzlkJJLpJMfFs/YdlXKfGOzs7qv7wytkQ1ilPAQ4f73uu/jzH
+	 lCEUZdAOwD3ZYEJHLBIzCm1096r6OfO5C6k/EBzlDgVll4igvq2+M1m7cJo6Eb/Xay
+	 yITxVweSwofuUzkRgjeXFnuAnnwUE3BilTPEG5UComNAzrflmlnQDKkcFHdwxIOshv
+	 YmI2JeylGO1hw==
+Date: Wed, 22 Apr 2026 07:18:57 -1000
+From: Tejun Heo <tj@kernel.org>
 To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: linux-man@vger.kernel.org, sched-ext@lists.linux.dev, 
-	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH] man7, man2: document SCHED_EXT policy
-Message-ID: <aej-qt0anWLqaSFK@devuan>
-References: <20260412181743.276652-1-yphbchou0911@gmail.com>
- <aejvcpOKmAxCnJQV@devuan>
- <20260423003214.G1987@cchengyang.duckdns.org>
+Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.2] sched_ext: Refactor
+ scx_root_enable_workfn() enablement task migration
+Message-ID: <aekDAe7GV99mRM7l@slm.duckdns.org>
+References: <20260421074154.584737-1-yphbchou0911@gmail.com>
+ <6cccef586daa450e322d9659d4e64e13@kernel.org>
+ <20260422094555.Gaec7@cchengyang.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="emnodr3iolwnld5b"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260423003214.G1987@cchengyang.duckdns.org>
+In-Reply-To: <20260422094555.Gaec7@cchengyang.duckdns.org>
 
+On Wed, Apr 22, 2026 at 09:53:24AM +0800, Cheng-Yang Chou wrote:
+> Regarding the ordering of the task enablement sequence: do you think
+> it would be useful to be included in the kdoc?
 
---emnodr3iolwnld5b
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: linux-man@vger.kernel.org, sched-ext@lists.linux.dev, 
-	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH] man7, man2: document SCHED_EXT policy
-Message-ID: <aej-qt0anWLqaSFK@devuan>
-References: <20260412181743.276652-1-yphbchou0911@gmail.com>
- <aejvcpOKmAxCnJQV@devuan>
- <20260423003214.G1987@cchengyang.duckdns.org>
-MIME-Version: 1.0
-In-Reply-To: <20260423003214.G1987@cchengyang.duckdns.org>
+Who'd be the audience tho? This isn't a level of detail that'd be
+interesting to people who want to use SCX. For kernel devs, I don't think a
+doc which just restates the code sequence is all that useful when you can
+just throw an AI agent at it and get the same and more in no time.
 
-Hi Cheng-Yang,
-
-On 2026-04-23T00:46:44+0800, Cheng-Yang Chou wrote:
-> Hi Alejandro,
->=20
-> On Wed, Apr 22, 2026 at 06:02:49PM +0200, Alejandro Colomar wrote:
-> > What's the reason for this weird formatting of the source code?  At this
-> > point I wonder if this was generated by AI.
-> >=20
-> > Please take into account 'CONTRIBUTING.d/ai'.
->=20
-> Okay, after reading the AI policy doc carefully, I've decided to drop=20
-> this patch. I used AI to help with the formatting since I'm not familiar
-> with the rules here.
->=20
-> I didn't realize this was strictly forbidden here, my apologies :/
-> Sorry for the noise, and thanks for your time!
-
-No problem.  If you write it from scratch again, I'd welcome the patch.
-If you follow the surrounding style, it shouldn't be too difficult.
-It's intimidating at first, but the language is quite simple.  If you
-don't understand much the man(7) language even after trying, I can help
-format it myself with a decent draft.  Just let me know what you want to
-do.
-
-
-Cheers,
-Alex
-
->=20
-> --=20
-> Cheers,
-> Cheng-Yang
->=20
-
---=20
-<https://www.alejandro-colomar.es>
-
---emnodr3iolwnld5b
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmno/4QACgkQ64mZXMKQ
-wql7Tg/+OjGzYzsObDCdyskRpmCTjb+LHmaUQUJhblQg5352Y64pHQ/dpRxnUhZ9
-uNyP1X2rue2+fucR3JbpBQxQ2t2rsraCrii5NlXYctn3HQqfl2DGoj/Q5m0J4+uR
-QcTcw2X4pTuqmTsdlvMABYQoeAgHHv17BpZXlZ9MYyx08hpV1KOkoaqlxEzFJdkc
-R6cCve+8QqQ7y5NjE0oC7Vn14mo0UyC2pmg0/ZKclCN8ibxw9QZ0eBT2sSdQwaja
-NrPg5ZwN3JjZJDP2j293W2vEUxs/8K4iMVCIOfT/q/pEJh8MrX/mNa2mh0ogtyc9
-mw7I+N+5dJaTfRY6jZA8ScRlbeC7i2QGni6Cdp4LzC7NeVIk+jTwddyeeGiBorvJ
-68z8YlXnjjJu618AowwGSRyxCYQHuvseL1xagym6T+s6rrgRRmEGZKteIZg79uAZ
-EurenVDgUhRulHiszJePIhrbeyOwTd3d2j/8Vi7X03igL2Sd4FDZqi+pCrlhjShT
-TmihrK1jWfqXeDWHV4bb38+s0OEGB3HlJyKFagOa/QDNfOSGhJdb/N2H21d7ihbz
-42l2uzmhmZZRVoZhRD1D9IK/0CDxQFU3TObIVkM5pmf/ULULWeMdF0LZDhM6vIa+
-r0w38eDoCp4ErCheVSlWyvcnbB136Vc8nnCqG7DDf3R3kMCr3bk=
-=/J+W
------END PGP SIGNATURE-----
-
---emnodr3iolwnld5b--
+-- 
+tejun
