@@ -1,147 +1,324 @@
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32330330B14
-	for <sched-ext@lists.linux.dev>; Wed, 22 Apr 2026 13:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E76833A708;
+	Wed, 22 Apr 2026 16:02:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776864093; cv=none; b=r8/j9Q2s5liRWRrMYW326mb+dMyya7WJKr3tEullTu5cKNsvoc2EADyINJEz2HxilV6TGBssaU0qULZ3MgoQLa1wETcMzIflWNUGzozV+KkCy1EouPZJji7wGqLaw6TtgPslGCayQXGdUjFoXaJzrOWkLj/zuW1yplAU9pJuUnc=
+	t=1776873774; cv=none; b=j1B9W/YUPNdGH4NBoCmJ7rUxaxm1MbVsRudBw+omD6S2f9Ht2wc+o+VnxNtENgx9daAThNTJYzIXGIBQD4Cr6vtCEW7cM1dmAkXcNDkQVQf7mpivBmIptmPYJq7nUipY3Cf3qnH6lqZ+67sCw2vNegS2YS6r8PBDwmBs4OBjUhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776864093; c=relaxed/simple;
-	bh=Wl8/yonMi1Xj3FkTx7Nutbni9RoU96mZlTgPZJ9pTUo=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=qcXGnng+2eChTgJD5bRZNTOWKBWlmxrg57U8hLx9LOY4Y4hxIwTvIewX+GJnpjk3o287yDRwC9QWGAf/8DpZA3i6YuoVkmIwyb7B5mK0aLOj3w4SpjnAH+7u5m7dgCx3ntg+11m/yjSQ3OIyHj+H/UcYrAQjFF6HhJUiPpuOhhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lLmRN5pr; arc=none smtp.client-ip=209.85.221.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1776873774; c=relaxed/simple;
+	bh=nL9IsUTicRDtZsgkxDf6frSYlGTBgN51+NKX/76YYgs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WB6/BZXUYs1H0Xqnd50BGVOQJyyoB1Zi9eKGrL7chNqElHoeZEKu1m60GHebiMUwDiIyEW855kYdWpRKnUYgHr2VRfrruv/aqOu3jcvfDdSS2epH5YsAzSMBjHZ3ahhfG2jyE8B/LuaP/l6z15MYwFY3jHX/BRFYYjufllux3sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pY3MGCiS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lLmRN5pr"
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-43d7d03e1e7so4257699f8f.3
-        for <sched-ext@lists.linux.dev>; Wed, 22 Apr 2026 06:21:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1776864089; x=1777468889; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3CesbFZs4c9Pqg2tm5xcqWyWaJqZrUAi3Am22HOf06o=;
-        b=lLmRN5prTtPyeFac8d4ySPpmCimESD6glZttFlrcQWkoI9Bv0+UBtGmCk58fd4oO/3
-         udrj3poV2hCk1+O3mJd5uqFFaETvSiutWtDAGVrUfFAzGrgTg2IBK9ZNrZfkQmLIg8hG
-         K6j8Lubg2r9q/LiZOxQrjh/T/giFzFvO0SDvJK8fBzbmNYYC9EL0yHwsXzM/g6VJ36kJ
-         Mu8MoBhwvXQnG7NMimrnc6X+r0ymSCMYWFNpaE6vP+mEssFwLa20ho/7ZqC18bcv2sAo
-         yz1zglCKonJMPeEKk2cb2jAOOzj8drEnJHQg7qoOLnYbHTCXZMQdxT1muhkUwZA4uhJm
-         +p+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776864089; x=1777468889;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3CesbFZs4c9Pqg2tm5xcqWyWaJqZrUAi3Am22HOf06o=;
-        b=gyhJBMJoPvOugD++nbhb33ZxtaEesLZHeVd33o5ktz25i17yoyCJBdokzqbt58SldZ
-         zWri5RSI4Uv9RzBzsA8jUAuW+QZwdLptKby4kiUF1ztECKtNdk6dHwgdspC21IUxwfhg
-         u9C7nSPx24NmOCejoIVPtu7SP5W4/yunW9zJeZR5P02occrRZm0RgTgUIAdYiGE38ANI
-         o6grBtpRhbf3oG4UBEkSjd+97xp23MUntiUNfF6m94Jn35pLolug5NZTr8k++3gBYzOh
-         TLmVIAQk51+zKLcBiOVVroZnWG87urDDjdHcLZAjJbfJ3+vVD8cYxNEZMv2Yt1wiuXX5
-         1fIw==
-X-Forwarded-Encrypted: i=1; AFNElJ8WsxfWVOEqkQjlpCcA6dr+1jbpIJuZ+RREGSvec2WwDda56Vbsuv5TH6lVHuRHR8J/wREwN08cL3o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzIX6CZ4goC8e817Sd9Z0dVfD9Rc5zI7Al0qwGketrg1XIFaQB7
-	W7LYpX/tAi+Di3ik17VJkpZhaqw9Fz46lOa1EOq2fjdsWyJhtzJzUSeBD3fl5rTVGmZATreH0+l
-	Ss3NewPqOy0h92A==
-X-Received: from wruq11.prod.google.com ([2002:a5d:658b:0:b0:43c:f906:ae85])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6000:2283:b0:43f:e94a:e777 with SMTP id ffacd0b85a97d-43fe94ae7eamr31430236f8f.37.1776864088325;
- Wed, 22 Apr 2026 06:21:28 -0700 (PDT)
-Date: Wed, 22 Apr 2026 13:21:27 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pY3MGCiS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74818C19425;
+	Wed, 22 Apr 2026 16:02:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776873774;
+	bh=nL9IsUTicRDtZsgkxDf6frSYlGTBgN51+NKX/76YYgs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pY3MGCiSl2esxhSSigNMVoFdx7Tid5NTVNnpKEgGtEJXis7v8+es35AT8FlU2xIyM
+	 zUJ9xItfnNRuzkJ2SVOaZKtH0K+yKr1SyTJagMM39OWYMA600UegrjneuDGhf6kcri
+	 oE/lH1mb88lLAMX/EIMCSPhsJ2rTSk3rxT4WaFJJRHwBq0CQRoLZ/j5MsWHmL9UnXp
+	 FceknXj+4f2VtIbLq1CnyjYvPNTB5lA/r3N0JyYmICQ8EIOegL5FtiyqRO1tF5S5ru
+	 u0QZrsG/zP9j8AK/CVyp37N2hxCW4H1Ap8RwrIb01MOgcJbRdT8RQR0aAIJpBBubNH
+	 2NMTiCumE/TOA==
+Date: Wed, 22 Apr 2026 18:02:49 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: linux-man@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH] man7, man2: document SCHED_EXT policy
+Message-ID: <aejvcpOKmAxCnJQV@devuan>
+References: <20260412181743.276652-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-Message-ID: <DHZPHUFXB4N3.2RY28MUEWBNYK@google.com>
-Subject: SCX_ENQ_IMMED potentially leaving dispatched tasks lingering on local DSQs
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, David Vernet <void@manifault.com>
-Cc: <linux-kernel@vger.kernel.org>, <sched-ext@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="iv4pwsfupebvrkdl"
+Content-Disposition: inline
+In-Reply-To: <20260412181743.276652-1-yphbchou0911@gmail.com>
 
-Hi folks,
 
-I recently saw that scx_qmap got rid of the sched_switch tracepoint hook,
-claiming that SCX_OPS_ALWAYS_ENQ_IMMED is sufficient to keep tasks from
-lingering on local DSQs.
+--iv4pwsfupebvrkdl
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: linux-man@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH] man7, man2: document SCHED_EXT policy
+Message-ID: <aejvcpOKmAxCnJQV@devuan>
+References: <20260412181743.276652-1-yphbchou0911@gmail.com>
+MIME-Version: 1.0
+In-Reply-To: <20260412181743.276652-1-yphbchou0911@gmail.com>
 
-This prompted me to think about some possible edge cases, and I think we
-can end up with lingering tasks on the local DSQ in the following scenario:
+Hi Cheng-Yang,
 
-Initial conditions: rq->curr == rq->idle &&
-                    rq->next_class == &idle_sched_class
+On 2026-04-13T02:16:58+0800, Cheng-Yang Chou wrote:
+> Add the sched_ext(7) manual page and update existing scheduling
+> documentation to include the SCHED_EXT policy.
+>=20
+> Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+> ---
+>  man/man2/sched_setattr.2      |  11 +++-
+>  man/man2/sched_setscheduler.2 |   4 ++
+>  man/man7/sched.7              |  13 +++++
+>  man/man7/sched_ext.7          | 100 ++++++++++++++++++++++++++++++++++
+>  4 files changed, 126 insertions(+), 2 deletions(-)
+>  create mode 100644 man/man7/sched_ext.7
+>=20
+> diff --git a/man/man2/sched_setattr.2 b/man/man2/sched_setattr.2
+> index 80a0ac726dcf..d60678f00e72 100644
+> --- a/man/man2/sched_setattr.2
+> +++ b/man/man2/sched_setattr.2
+> @@ -81,6 +81,10 @@ a deadline scheduling policy;
+>  see
+>  .BR sched (7)
+>  for details.
+> +.TP 14
+> +.B SCHED_EXT
+> +for extensible scheduling policies implemented via BPF
+> +(see \fBsched_ext\fR(7)).
 
-1. We enter schedule() for whatever reason, e.g. BPF scheduler kick from
-   another CPU.
+Please follow the style within that manual page.  We avoid \f unless
+truly necessary.
 
-2. In __pick_next_task(), all sched classes above SCX fail to pick a task.
-   We still have rq->next_class == &idle_sched_class.
+>  .P
+>  The
+>  .I attr
+> @@ -95,7 +99,8 @@ struct sched_attr {
+>      u32 sched_policy;      /* Policy (SCHED_*) */
+>      u64 sched_flags;       /* Flags */
+>      s32 sched_nice;        /* Nice value (SCHED_OTHER,
+> -                              SCHED_BATCH) */
+> +                              SCHED_BATCH,
+> +                              SCHED_EXT) */
 
-3. We enter do_pick_task_scx(). rq_modified_begin() does nothing because
-   sched_class_above(rq->next_class, &ext_sched_class) is false.
+Why break the line?
 
-4. ops.dispatch() dispatches two tasks. The first one goes to the local DSQ,
-   and the second one goes to a remote CPU's local DSQ. The first task is
-   dispatched without interference.
+>      u32 sched_priority;    /* Static priority (SCHED_FIFO,
+>                                SCHED_RR) */
+>      /* For SCHED_DEADLINE */
+> @@ -218,8 +223,10 @@ This field specifies the nice value to be set when s=
+pecifying
+>  .I sched_policy
+>  as
+>  .B SCHED_OTHER
+> +,
 
-5. During dispatch of the second task, while the local CPU's rq lock is dropped
-   during insertion into the remote CPU's local DSQ, an RT task wakes up on the
-   local CPU. Since rq->next_class is still idle, wakeup_preempt() calls
-   wakeup_preempt_idle() which calls resched_curr(rq). This effectively does
-   nothing since need_resched is cleared in __schedule() after pick.
-   rq->next_class is set to &rt_sched_class.
+What's the reason for this weird formatting of the source code?  At this
+point I wonder if this was generated by AI.
 
-6. At the end of balance_one(), we don't trigger a reenqueue because the local
-   DSQ has only one task.
+Please take into account 'CONTRIBUTING.d/ai'.
 
-7. do_pick_task_scx() notices rq_modified_above(rq, &ext_sched_class) and
-   returns RETRY_TASK.
+> +.BR SCHED_BATCH ,
+>  or
+> -.BR SCHED_BATCH .
+> +.BR SCHED_EXT .
+>  The nice value is a number in the range \-20 (high priority)
+>  to +19 (low priority);
+>  see
+> diff --git a/man/man2/sched_setscheduler.2 b/man/man2/sched_setscheduler.2
+> index b4c35543e5bf..825eb7290ee7 100644
+> --- a/man/man2/sched_setscheduler.2
+> +++ b/man/man2/sched_setscheduler.2
+> @@ -67,6 +67,10 @@ and
+>  for running
+>  .I very
+>  low priority background jobs.
+> +.TP
+> +.B SCHED_EXT
+> +for extensible scheduling policies implemented via BPF
+> +(see \fBsched_ext\fR(7)).
 
-8. The RT task ends up being picked and runs. SCX is not notified of the switch
-   because we're switching from the idle task to an RT task.
+Please check formatting.
 
-If my understanding is correct and I didn't miss anything important, then
-at no point does SCX reenqueue the first task, even though it should.
+>  .P
+>  For each of the above policies,
+>  .I param\->sched_priority
+> diff --git a/man/man7/sched.7 b/man/man7/sched.7
+> index 00926cd34ecf..2e73a4c716b9 100644
+> --- a/man/man7/sched.7
+> +++ b/man/man7/sched.7
+> @@ -116,6 +116,13 @@ and
+>  .BR sched_get_priority_max (2)
+>  to find the range of priorities supported for a particular policy.
+>  .P
+> +Since Linux 6.12, there is an extensible BPF scheduling policy
+> +.RB ( SCHED_EXT ),
+> +which allows for custom scheduling algorithms to be implemented as BPF
+> +programs.
+> +See
+> +.BR sched_ext (7).
+> +.P
+>  Conceptually,
+>  the scheduler maintains a list of runnable threads for each possible
+>  .I sched_priority
+> @@ -529,6 +536,12 @@ priority (lower even than a +19 nice value with the
+>  or
+>  .B SCHED_BATCH
+>  policies).
+> +.SS SCHED_EXT: Extensible BPF Scheduling
+> +Tasks with this policy are managed by an extensible scheduler class,
+> +which allows for custom scheduling algorithms to be implemented as
+> +BPF programs.
+> +See
+> +.BR sched_ext (7).
+>  .\"
+>  .SS Resetting scheduling policy for child processes
+>  Each thread has a reset-on-fork scheduling flag.
+> diff --git a/man/man7/sched_ext.7 b/man/man7/sched_ext.7
+> new file mode 100644
+> index 000000000000..7ea467e18b84
+> --- /dev/null
+> +++ b/man/man7/sched_ext.7
+> @@ -0,0 +1,100 @@
+> +.TH SCHED_EXT 7 2024-04-13 "Linux" "Linux Programmer's Manual"
+> +.SH NAME
+> +sched_ext \- Extensible BPF Scheduler Class
+> +.SH SYNOPSIS
+> +.B #include <linux/sched.h>
+> +.PP
 
-This particular scenario may not apply to scx_qmap, but I think it proves that
-it's possible to have dispatched tasks lingering on the local DSQ even with
-SCX_OPS_ALWAYS_ENQ_IMMED.
+The use of P and PP seems very inconsistent.
 
-I was thinking we could fix this by adding a nr_immed check right before
-returning RETRY_TASK:
 
-diff --git i/kernel/sched/ext.c w/kernel/sched/ext.c
-index d66fea57ee69..480627fdc203 100644
---- i/kernel/sched/ext.c
-+++ w/kernel/sched/ext.c
-@@ -3079,8 +3079,11 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
-         * If @force_scx is true, always try to pick a SCHED_EXT task,
-         * regardless of any higher-priority sched classes activity.
-         */
--       if (!force_scx && rq_modified_above(rq, &ext_sched_class))
-+       if (!force_scx && rq_modified_above(rq, &ext_sched_class)) {
-+               if (rq->scx.nr_immed)
-+                       schedule_reenq_local(rq, 0);
-                return RETRY_TASK;
-+       }
+Have a lovely day!
+Alex
 
-        keep_prev = rq->scx.flags & SCX_RQ_BAL_KEEP;
-        if (unlikely(keep_prev &&
+> +.B #define SCHED_EXT 7
+> +.SH DESCRIPTION
+> +.B sched_ext
+> +is a scheduling class whose behavior can be defined by a set of BPF
+> +programs, known as the BPF scheduler. It allows for the implementation
+> +of custom scheduling algorithms that can be loaded and unloaded
+> +dynamically.
+> +.PP
+> +When a BPF scheduler is loaded, it can take over the scheduling of
+> +tasks that use the
+> +.B SCHED_EXT
+> +policy, as well as tasks using standard policies like
+> +.BR SCHED_NORMAL ,
+> +.BR SCHED_BATCH ,
+> +and
+> +.B SCHED_IDLE ,
+> +depending on how the BPF scheduler is configured.
+> +.SS Switching to and from sched_ext
+> +The feature is enabled via the
+> +.B CONFIG_SCHED_CLASS_EXT
+> +kernel configuration option.
+> +.PP
+> +A task can explicitly request the
+> +.B SCHED_EXT
+> +policy using system calls such as
+> +.BR sched_setscheduler (2)
+> +or
+> +.BR sched_setattr (2).
+> +If no BPF scheduler is currently loaded, tasks with the
+> +.B SCHED_EXT
+> +policy are treated as
+> +.B SCHED_NORMAL
+> +and scheduled by the default fair-class scheduler (CFS/EEVDF).
+> +.PP
+> +When a BPF scheduler is loaded:
+> +.IP \(bu 3
+> +If
+> +.B SCX_OPS_SWITCH_PARTIAL
+> +is NOT set in the scheduler's flags, ALL tasks with policies
+> +.BR SCHED_NORMAL ,
+> +.BR SCHED_BATCH ,
+> +.BR SCHED_IDLE ,
+> +and
+> +.B SCHED_EXT
+> +are scheduled by
+> +.BR sched_ext .
+> +.IP \(bu 3
+> +If
+> +.B SCX_OPS_SWITCH_PARTIAL
+> +IS set, only tasks with the
+> +.B SCHED_EXT
+> +policy are scheduled by
+> +.BR sched_ext .
+> +Tasks with other policies remain under the control of the fair-class sch=
+eduler.
+> +.PP
+> +If the BPF scheduler terminates (either normally, due to an error, or
+> +via a SysRq command), all tasks are automatically reverted to the
+> +fair-class scheduler.
+> +.SS System Interfaces
+> +.B sched_ext
+> +exposes several interfaces in sysfs for monitoring and control:
+> +.TP
+> +.I /sys/kernel/sched_ext/state
+> +Shows the current state of the BPF scheduler (\fBenabled\fR, \fBdisabled=
+\fR, etc.).
+> +.TP
+> +.I /sys/kernel/sched_ext/root/ops
+> +Shows the name of the currently loaded BPF scheduler.
+> +.TP
+> +.I /sys/kernel/sched_ext/enable_seq
+> +A monotonically incrementing counter that tracks how many times a BPF
+> +scheduler has been enabled since boot.
+> +.SS Safety and Debugging
+> +System integrity is maintained regardless of the BPF scheduler's
+> +behavior. If a runnable task stalls or an internal error is detected,
+> +the BPF scheduler is aborted.
+> +.PP
+> +The following SysRq sequences are available for emergency management:
+> +.TP
+> +.B SysRq-S
+> +Aborts the current BPF scheduler and reverts all tasks to the fair-class
+> +scheduler.
+> +.TP
+> +.B SysRq-D
+> +Triggers a debug dump of the current scheduler state to the
+> +.B sched_ext_dump
+> +tracepoint.
+> +.SH SEE ALSO
+> +.BR sched (7),
+> +.BR sched_setscheduler (2),
+> +.BR sched_setattr (2),
+> +.BR bpf (2)
+> +.PP
+> +.I Documentation/scheduler/sched-ext.rst
+> +in the Linux kernel source tree.
+> --=20
+> 2.48.1
+>=20
 
-...but I think this only fixes the case where the RT task wakes up on the CPU
-that is doing the dispatch. The other case is one where the RT task wakes up
-on the remote CPU (the one the second task was dispatched to) after insertion
-of the second task, assuming the remote CPU is initially idle.
+--=20
+<https://www.alejandro-colomar.es>
 
-To fix both cases, one potential solution that comes to mind is bumping
-rq->next_class to &ext_sched_class when inserting a task into rq->scx.local_dsq.
-Perhaps we should call wakeup_preempt() in dispatch_to_local_dsq()?
+--iv4pwsfupebvrkdl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Let me know what you think!
+-----BEGIN PGP SIGNATURE-----
 
-Thanks,
-Kuba
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmno8SkACgkQ64mZXMKQ
+wqnzoRAAr6k++84i5vxj2yr80JLRblz/py+xD7UkbAaxla6rOCtDvuQVFsFAsOC5
+2oH5zzUT/X4exvFV22yhHu3+5hBhUVftoQ46yLYH+odzNCvNda33E0cYJmpT0p5s
+JjiIxKVl25hXG553RAY7ZzF9Bwwi04ADhNyIEoFS4AK3OjdGHlD+ZMe3VO1H9dgX
+dYCbZN5ZH29sHFhQydK6o/W8Gj5s1OF4Ut7DI2AWGKVn3TzPIgRctdpUNw8viFWG
+f7cu8DZe/RNkt+0qT5Z4CKiQ33kiBudp5voaqYBYDk+TwccRNuJ9DwEAPMorEjWv
+RMF9j58bIQ36kMPlGqWu29ZLEIWboxNl9sKyzMHPZRyHmFHM4LvJd6uIx2HITQQr
+6I69FD7Kom0uJsKl9nJYhS+bMC7JY6syJkzhHmwhluj1tIAbEvvutdT6IUC5GhYy
+ta7AMNqalbeuQ7xoXqSBFPdHqdZgx1Xh2KCqC8pOAP13a5vSCr56Znhv/EHK9FVZ
+QGK7mmxpOwAKls9pmiUWT1dQp4p9TeCNgmcJ9PVRKHwYMM+ehrJQhm1T5tGJhAYB
+HmLzpB3BrnBmyJsTiuDagypsAz8VV9dVoROkVGnLWc5+8to+nk6L9eV9gH5obJ9v
+pXUU0750RxDhpPA9XW7jAVC5sQjQZUGq58vaCeFC3lTxiUsyhhM=
+=tV7x
+-----END PGP SIGNATURE-----
+
+--iv4pwsfupebvrkdl--
