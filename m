@@ -1,88 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DF137FF58;
-	Wed, 22 Apr 2026 16:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD6938238F;
+	Wed, 22 Apr 2026 17:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776876659; cv=none; b=RZBxWVzG/lxWm1M+IzUabF4rkG0WUdLhOLHC+HVJhTmPwyLy0oNsPeTcL2wCSdDTFSkXxEAoZ8IFlkcyNBHMVLcgOUjIVL8ZRVV5ps675ko/4Nj13mzSb20dKK23cHEYtaqa9sGQUiPFaTa/p4nUcqVnoTX+M0H2si4IA3oQT6o=
+	t=1776877449; cv=none; b=H+sh/rEBge/heDqqthWz/OH1Al1xTmJ+hP45yOK84f8q3tPuYI0obDFP9RfrPYl82YIom4YYkePrQmyeIpJBMc0A3qokKq6xy7zS7PzOtdnqpwI44tQZl1daHdU2UZZ6q6gH/VJ07NgbqpzOym7N0ZYlWnUTg3DbHw1nC+j0cXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776876659; c=relaxed/simple;
-	bh=JqHVndBopXtaMTm5N3jvxxsGm2MplEEB8Z4nCMDC1rA=;
+	s=arc-20240116; t=1776877449; c=relaxed/simple;
+	bh=WN4++GZzedWt8KWBFQNN7PvPJc5i06L9DJHYqC/gdGA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rG0Ta3Znr3Ar3eKuCfeZdNmCwXItTcj8T6QMxaqn/r9YxhbvrbZUSz/ZxM/6n9D7OrnZiJ0RNK/XhJpgfq4auEZpofnli8yxepr9+v5qAxsgUqhhzGc9ZBKGw556bFN8K/fLsyfzGqsCiMsjRZVCuHiljpcJ8NNgV/6gM2TcCys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FFJro3+L; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=sIyX/a4MasILd1sg1ZEbWMfrfC/OfO5WeFJga7/w13XoaR4mJOLrR8Obbfg1i9G1xNhTvYPiKzMFl+AdMD6jRaDhXtsrlPiMA9aj+mN4ux94lSTI8oNKgbm8kFBZsI5zE4P9AViKl/Dd6IdQTcMIdo217t5E8+/J/FtNXihYd1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H1DpzBHm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FFJro3+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B76C19425;
-	Wed, 22 Apr 2026 16:50:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H1DpzBHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BABCC19425;
+	Wed, 22 Apr 2026 17:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776876659;
-	bh=JqHVndBopXtaMTm5N3jvxxsGm2MplEEB8Z4nCMDC1rA=;
+	s=k20201202; t=1776877449;
+	bh=WN4++GZzedWt8KWBFQNN7PvPJc5i06L9DJHYqC/gdGA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FFJro3+L19O+JvYDC1QdfMnP4+pqKT9ZDUqoIY6wSswQqCXUVFJeuPlh4fXo11Rpy
-	 2E7K+2ltE+lQT6gmlG5aOoSfMczXICSGY6sq6ipk0g0e/gbMFXscRbF9n+klu6V5A6
-	 fJ/576wrogttCBUSsIUqqnfbJafBsxavyUFeVgnZxE61Gyc7oYqPRneZRGS0cwbP8A
-	 ZKJC/5bR1q5dN7bPJL/6fkz/xDeMAFBqz3tkOEpdic6fJr+t9RzJvhCxNLdcasoa2j
-	 PWiDgKVF5gjLXCQLrNtWzdjJWRITG2C0XCYKtumje4cofplSdBl/mz5sawFC9NOqau
-	 o5AawwgvoMrFA==
-Date: Wed, 22 Apr 2026 06:50:58 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Kuba Piecuch <jpiecuch@google.com>
-Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
-	David Vernet <void@manifault.com>, linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: Re: SCX_ENQ_IMMED potentially leaving dispatched tasks lingering on
- local DSQs
-Message-ID: <aej8cmhZVhsqogr4@slm.duckdns.org>
-References: <DHZPHUFXB4N3.2RY28MUEWBNYK@google.com>
+	b=H1DpzBHm13lJJKQf3puh8DWgleHiak18U/2K2GMx7HeYd6B6XMNYcRS5eD5AI3fdU
+	 UmEKVX7iKdsTc12hqMoZMGu3w9AdJUwGcznGPj6HgRRL/MX0vh2r1pQULnvvxX8OmV
+	 id58n0+E4KmdFJm5a56onDE7x4iLo6uIe0btFe/MXJa7hxMO1LlZmSVIfWdLks8gjG
+	 o4dXK0CenSWnhskWcxIjQzD3xCvt4B8+MLotTo5Nrxli9LRDGVsBmsrNkeV/nElume
+	 xWszNeCJzs4hSrnzG2og68WT+9Br4iKmgkC/tmblhbHf/BA+urHEBHclSmx+ey9fH7
+	 DweUPQBpr3wvQ==
+Date: Wed, 22 Apr 2026 19:04:05 +0200
+From: Alejandro Colomar <alx@kernel.org>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: linux-man@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH] man7, man2: document SCHED_EXT policy
+Message-ID: <aej-qt0anWLqaSFK@devuan>
+References: <20260412181743.276652-1-yphbchou0911@gmail.com>
+ <aejvcpOKmAxCnJQV@devuan>
+ <20260423003214.G1987@cchengyang.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="emnodr3iolwnld5b"
 Content-Disposition: inline
-In-Reply-To: <DHZPHUFXB4N3.2RY28MUEWBNYK@google.com>
+In-Reply-To: <20260423003214.G1987@cchengyang.duckdns.org>
 
-Hello, Kuba.
 
-On Wed, Apr 22, 2026 at 01:21:27PM +0000, Kuba Piecuch wrote:
-> diff --git i/kernel/sched/ext.c w/kernel/sched/ext.c
-> index d66fea57ee69..480627fdc203 100644
-> --- i/kernel/sched/ext.c
-> +++ w/kernel/sched/ext.c
-> @@ -3079,8 +3079,11 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
->          * If @force_scx is true, always try to pick a SCHED_EXT task,
->          * regardless of any higher-priority sched classes activity.
->          */
-> -       if (!force_scx && rq_modified_above(rq, &ext_sched_class))
-> +       if (!force_scx && rq_modified_above(rq, &ext_sched_class)) {
-> +               if (rq->scx.nr_immed)
-> +                       schedule_reenq_local(rq, 0);
->                 return RETRY_TASK;
-> +       }
-> 
->         keep_prev = rq->scx.flags & SCX_RQ_BAL_KEEP;
->         if (unlikely(keep_prev &&
+--emnodr3iolwnld5b
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+From: Alejandro Colomar <alx@kernel.org>
+To: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Cc: linux-man@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH] man7, man2: document SCHED_EXT policy
+Message-ID: <aej-qt0anWLqaSFK@devuan>
+References: <20260412181743.276652-1-yphbchou0911@gmail.com>
+ <aejvcpOKmAxCnJQV@devuan>
+ <20260423003214.G1987@cchengyang.duckdns.org>
+MIME-Version: 1.0
+In-Reply-To: <20260423003214.G1987@cchengyang.duckdns.org>
 
-Ah, good catch.
+Hi Cheng-Yang,
 
-> ...but I think this only fixes the case where the RT task wakes up on the CPU
-> that is doing the dispatch. The other case is one where the RT task wakes up
-> on the remote CPU (the one the second task was dispatched to) after insertion
-> of the second task, assuming the remote CPU is initially idle.
-> 
-> To fix both cases, one potential solution that comes to mind is bumping
-> rq->next_class to &ext_sched_class when inserting a task into rq->scx.local_dsq.
-> Perhaps we should call wakeup_preempt() in dispatch_to_local_dsq()?
+On 2026-04-23T00:46:44+0800, Cheng-Yang Chou wrote:
+> Hi Alejandro,
+>=20
+> On Wed, Apr 22, 2026 at 06:02:49PM +0200, Alejandro Colomar wrote:
+> > What's the reason for this weird formatting of the source code?  At this
+> > point I wonder if this was generated by AI.
+> >=20
+> > Please take into account 'CONTRIBUTING.d/ai'.
+>=20
+> Okay, after reading the AI policy doc carefully, I've decided to drop=20
+> this patch. I used AI to help with the formatting since I'm not familiar
+> with the rules here.
+>=20
+> I didn't realize this was strictly forbidden here, my apologies :/
+> Sorry for the noise, and thanks for your time!
 
-I think what's missing is wakeup_preempt() call in
-move_remote_task_to_local_dsq(). This is SCX's version of move_queued_task()
-and we're missing wakeup_preempt() call after activate_task().
+No problem.  If you write it from scratch again, I'd welcome the patch.
+If you follow the surrounding style, it shouldn't be too difficult.
+It's intimidating at first, but the language is quite simple.  If you
+don't understand much the man(7) language even after trying, I can help
+format it myself with a decent draft.  Just let me know what you want to
+do.
 
-Thanks.
 
--- 
-tejun
+Cheers,
+Alex
+
+>=20
+> --=20
+> Cheers,
+> Cheng-Yang
+>=20
+
+--=20
+<https://www.alejandro-colomar.es>
+
+--emnodr3iolwnld5b
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEES7Jt9u9GbmlWADAi64mZXMKQwqkFAmno/4QACgkQ64mZXMKQ
+wql7Tg/+OjGzYzsObDCdyskRpmCTjb+LHmaUQUJhblQg5352Y64pHQ/dpRxnUhZ9
+uNyP1X2rue2+fucR3JbpBQxQ2t2rsraCrii5NlXYctn3HQqfl2DGoj/Q5m0J4+uR
+QcTcw2X4pTuqmTsdlvMABYQoeAgHHv17BpZXlZ9MYyx08hpV1KOkoaqlxEzFJdkc
+R6cCve+8QqQ7y5NjE0oC7Vn14mo0UyC2pmg0/ZKclCN8ibxw9QZ0eBT2sSdQwaja
+NrPg5ZwN3JjZJDP2j293W2vEUxs/8K4iMVCIOfT/q/pEJh8MrX/mNa2mh0ogtyc9
+mw7I+N+5dJaTfRY6jZA8ScRlbeC7i2QGni6Cdp4LzC7NeVIk+jTwddyeeGiBorvJ
+68z8YlXnjjJu618AowwGSRyxCYQHuvseL1xagym6T+s6rrgRRmEGZKteIZg79uAZ
+EurenVDgUhRulHiszJePIhrbeyOwTd3d2j/8Vi7X03igL2Sd4FDZqi+pCrlhjShT
+TmihrK1jWfqXeDWHV4bb38+s0OEGB3HlJyKFagOa/QDNfOSGhJdb/N2H21d7ihbz
+42l2uzmhmZZRVoZhRD1D9IK/0CDxQFU3TObIVkM5pmf/ULULWeMdF0LZDhM6vIa+
+r0w38eDoCp4ErCheVSlWyvcnbB136Vc8nnCqG7DDf3R3kMCr3bk=
+=/J+W
+-----END PGP SIGNATURE-----
+
+--emnodr3iolwnld5b--
