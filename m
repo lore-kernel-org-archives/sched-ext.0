@@ -1,79 +1,71 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF7F3E3C7F
-	for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 09:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0875378D8C
+	for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 10:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776938285; cv=none; b=KJS5F1FeRLTP80c14B9wJTL6xA5mQhnJ/EMX+lIKnca324k6FI4KO3mvNMuDfOJFlpvhd/0Gk1HtWCrb1Yq0Nt3dMuD0Rr4jhKmitrwsi27kVTuqTlXw+vJ3WqF2pEjCesA2XN8FWgytyxJKmIjYbb72sdB1ZhVVaclk7xYGwvo=
+	t=1776939073; cv=none; b=UcWCmDA4S07neXIW4i3tW+p7b11lcx5/3M2JXgKPE2C9ZhYQy1tNroHU9oBNHCW7D0waWwMZB3Kw+Xgu4vJgesw6I6VzdOVSOLDaDCnhjQCl7h6mac8cXHPpQZ43YCCLokGcFn8lP3+Rrb65GF62h4AADySl7pQUzSy+upQTowc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776938285; c=relaxed/simple;
-	bh=T9xOPEIRVuEMXwzsoJF3rIE4dGPO2GTOdHElauuWTg4=;
+	s=arc-20240116; t=1776939073; c=relaxed/simple;
+	bh=Uev1A1IJqjGUBY+XI/CF9FiL8iqdzS5rd7OUOLXiuXc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H4W2XhKacu6+hVed9ysgH1D3OlW/63bFbnTD6QvyRSfrgGtEGg1ePOQHvQlEESWBFzEnR2wtEItBKV5si8xoF7M4D3JCp3NASu3PkrGHrWt2u8/XGmykEzEol7FlSL4p2JmyG9GrlmeW+lUZWifK8RpdWFLHxk3TwPtkz1Dqe2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=InMgqNnu; arc=none smtp.client-ip=209.85.215.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=GhLx9Wx6cTGqa7PGv2JFH10OD08Y9VaSEOyrH/H5uw/beOu1jfwxEukkeJTmlen1EJoQQTJFyolAoJF+qOjcgqgSZxPj9ykEsCl6FH0Jq89aZwqfOi7fXVLfElsDZawMp6o2v5B3Wt2OrLml2NWYZsBEhaotkkkiCkfXz4+CiMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4642FUD; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="InMgqNnu"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c796163fac5so3880360a12.1
-        for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 02:58:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4642FUD"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35da2d35eccso4528985a91.0
+        for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 03:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776938283; x=1777543083; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1776939071; x=1777543871; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZOBvdGdTDz7yqfdSpLpE+U5JGv9TC/gKhZxbG4r91Hs=;
-        b=InMgqNnul7E0j8lugvGHcCdcL8MgsqqVfZmDk3oFwmhfsndMdgkkEH79AagxISSO7s
-         dxeOvWah9IFjUxdYGanmYO9HgtFIudVCrvchKwiduwFXNAt7QXFHYRw/GgaMm9wLM9Y5
-         4jZ1ylP2Ewa5NtzLFD7vqZrkSRuEy7mWxiVM3pY26/cqKERk07fTDZSEqwRV1qfpdu6M
-         YX4Ss9VrJqJw2QrVFunGKi9SwVYSAvM0XwSUoR3Yd9X/EzJ/JGhvAbcPovYj55MnZSlc
-         aD21FRkgfnx9NRmb0vDZbbOOQ9kegpv071zKKZonLql5CUqHgeuXTSGfBAW6h2Zch6pZ
-         ISHQ==
+        bh=8oFzIyjZgewpt7kgyc/KhZdPraItJdPjiKhMNmR9bZs=;
+        b=L4642FUD5kBj0fv725csJBM2TKW9jfe4bk4rsbBBwtc9Rw31qbEmLBZUgBMhgdG4fe
+         2ZqZgsZC8EQqGSq6QujoJOsIGiiJkMwJIN57HEPAFMu9mwYO57hX4w+RyaItQctqWfB6
+         d7MCHI/FmDAXgSXKT6bFkYOmGnjhJdDDpP+qUXZy/Ds3k1W0u85XTdPxDWEO7MOQttqB
+         r7dRcmH+kHYsvoX4ql5mV8WaQwqrc1O7CZ5wCwI+KYbbC6aMl7SH8grehMnOJLaGTXOw
+         bq5MuxbnemeNRQMr4Q47yOGJIadwpLRoCduvgcJu7O5tnOMeRBcFjOkqH4tVyFBmEDIf
+         GzRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776938283; x=1777543083;
+        d=1e100.net; s=20251104; t=1776939071; x=1777543871;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZOBvdGdTDz7yqfdSpLpE+U5JGv9TC/gKhZxbG4r91Hs=;
-        b=R807/W7f4q0Il4fILRzWW5FRft9wBw4YiuPgp+3Z+nRuBwosO7e3/vqe9cPL3PGUoe
-         Xu6PNrGd8DcMR/oSmBGDWYG2S52dZZVP4wn/XdpeOqc40GHMxQ70LbOnZhQXrHKAqjpz
-         V0QpCB5oKfuoBUxQgHgtHA8uh1n37MG7Pa6HIFojt349ee0pNfuz0KKQ6+RmsALC2JbR
-         fTJQ1eJlmfaZrj7oSTfqs1kC7oFxJ4rH3Y1hWOKKaXhhEK4Cv2uHA1PeqCiic0DNtKQU
-         5M7IlKHxCLBe9v4dxRi79k+vOPXRM8aezCFL9Wt1pXy9C7NM1jXnPDdk6eASS/JAqKt2
-         cKbw==
-X-Forwarded-Encrypted: i=1; AFNElJ/7r6FvDjllyiGbpnBZf9S0BuFtVZnZas9bFZOY0MUZKaaOfI3eXqo07JFpoGi8azeFjru81+jza2k=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz8hJVyh3A/R5LCxdhkjwRKbW1z6Y/FE12KG00tOGFy+7WK2XJZ
-	v21qNuO3FQovoz27hc6JMs6nPY8h7DWsCZ19dcH45d/LmOdWLnvWckUt
-X-Gm-Gg: AeBDiet1TKVi+3nJDLgNsBQQkZoMTBm0e4JToXINidHT6xUmasa9ZdyDRF4Q9Zr0OKf
-	0PL41uvedvj9LWVD1vWdHxVMJrsHx1Nb1RhUXyKfIHf7VzoW7JWTYKwymRMQWiYb5JrwFKtv7r+
-	MZHoZd0xPwsz8RaVbvl/AP0L/v++nz8CV8xIJgq9/8c5Lrcagkp9ZCXQLl9eWEDoBowm4Td3tTN
-	xvgMF3rsKErrv+oKE6kkIpXGuSkyqtBeOruON8ms5rgO0AWRpJAyTRrQ4iSEQCVthnsKUAo2u7w
-	rsjA7ZyHqdHZui5pTrFLDia1w/ZlHYqAwO3QJb/AsBVEU6T7rkbdptcu787nfP4HaSjV68vFljV
-	kClV4kSucsx1A+z/d1OsFpujwz8jIwl75XhtpPpC8r4/0pbBZ8O7La30qXZlmaTK3BGl7cwb8zH
-	duitt6CIlVBZ633Xiovrq6y0is4V3/6YT4Dc7JOEo=
-X-Received: by 2002:a05:6a00:22cc:b0:82a:1044:3563 with SMTP id d2e1a72fcca58-82f8c902bcamr29389328b3a.23.1776938283106;
-        Thu, 23 Apr 2026 02:58:03 -0700 (PDT)
+        bh=8oFzIyjZgewpt7kgyc/KhZdPraItJdPjiKhMNmR9bZs=;
+        b=HDqSyjv2uqdkbyR/MhPJzYKJPOkyxeFV+JZdAB8WFXdPMxh5X4/BjtAIALFRGRlVGh
+         bRhDeIdDySu4Jkll0oTIgjPCWPVh7y49UiI12Oj61kr0THcN/yB3vJJ4x11XHgF7jQEx
+         C1mk9rXGNjs9qUtLGpxgKeg1wEHK/p4sHrsw7PVPW13pj6ENx/Enj/DJMTdaWQNUxwfF
+         BKzv6TSJZdkNTdN0AGtol1SjhioNWurJ+khMHIoJ99gDZl4T6gDX2eUCUgm692s052yK
+         RaJ3DQyUcHzd9Q1Q0P553L70y7jDGhcr3E0ASEhIu5AOzN63EyzdfVvYnsZN+GuE/ea5
+         b0QQ==
+X-Gm-Message-State: AOJu0YwjqH72QFYW6JksaBWnTNSxl1F+H9M0JmkS4zAl8CqUf+i200Mh
+	sh10cJ6I8QMhOCj0e/f5lRacQ0PoV9QbEo6F7llwo7V9Op7ke5ac4l5W0KhziC/C
+X-Gm-Gg: AeBDievlbvu9KzBiQdgqiEOht/psDrF6b0vfjLEd3F9lq3hZi0viP4r6OHyNZ3VPoBZ
+	fH6PaZ+fRPJd6HTr0AjIYn6cNAMc7IoRHYER3K1B3+LF5UoLpe/6I4h15HITAZ08UTasBU5xbSI
+	iTHDbI0lsYblPPyYX70999p2ExUmOFq6ld3cEbFKSf1M5EGoMk3pBy3TbC/20o/FmSXjEo2375l
+	sQTKBXkN3qlMRlArzdzMQDuKHz4SRPtBKpsBZcXjkevYXYV0tym0r3rwjeA/8ToUHg1DBFzA+6W
+	FWupL55qp2r6thb6CoWGslMmwb1VRR7aHzu8wz48QV1zP+ZcNmSa6JE7dEVetfSir9lInOn42hr
+	b6heGgCsSNXTcvw0ghGSMur1+VQddjWsIw/cKqmjMwmPijPHZCadUw+S80cSxktI9RFuxPq0nGU
+	zg3GaRIKQGdziGR0/lzCVMB/GwHNPGTFWxRNupHbc=
+X-Received: by 2002:a17:90b:3c0f:b0:359:87a8:e65c with SMTP id 98e67ed59e1d1-3614046c9f7mr26637893a91.17.1776939070891;
+        Thu, 23 Apr 2026 03:11:10 -0700 (PDT)
 Received: from eric-wcnlab ([2001:288:7001:1099:8fe7:77cf:52a3:6990])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ebb3fa2sm19950118b3a.29.2026.04.23.02.58.00
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5fab0caf1sm199909175ad.42.2026.04.23.03.11.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Apr 2026 02:58:02 -0700 (PDT)
-Date: Thu, 23 Apr 2026 17:57:58 +0800
+        Thu, 23 Apr 2026 03:11:10 -0700 (PDT)
+Date: Thu, 23 Apr 2026 18:11:06 +0800
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Zhao Mengmeng <zhaomzhao@126.com>
-Cc: Tejun Heo <tj@kernel.org>, void@manifault.com, arighi@nvidia.com, 
-	changwoo@igalia.com, sched-ext@lists.linux.dev, emil@etsalapatis.com, 
-	linux-kernel@vger.kernel.org, Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
+To: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
 	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH 12/16] sched_ext: Forbid cpu-form kfuncs from cid-form
- schedulers
-Message-ID: <c4hm7eabmsqxlbt5s52xpxdikwkmytsgjsv4boirbv6prtsn27@iqt6o5s5up2c>
-References: <20260421071945.3110084-1-tj@kernel.org>
- <20260421071945.3110084-13-tj@kernel.org>
- <177693500312.275653.17323765149266875001.b4-reply@b4>
- <20260423171156.G698a@cchengyang.duckdns.org>
- <177693691666.302051.8681445792423127931.b4-reply@b4>
- <fyeso4logqty357oe3vmbxy4nylb2c63ef3yp45zlrx5wl227t@mddzgld7y6nh>
- <c46b7b93-c80e-4c5f-ab72-aaf1fd6825a5@126.com>
+Subject: Re: [BUG] selftests/sched_ext: reload_loop failed
+Message-ID: <yww2ljjozzwsoetokd47w7inmpd4uvyh3hxdsievq5hnmgyvh5@3uzx7s5en2eb>
+References: <20260419174413.Gf28b@cchengyang.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -82,184 +74,96 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c46b7b93-c80e-4c5f-ab72-aaf1fd6825a5@126.com>
+In-Reply-To: <20260419174413.Gf28b@cchengyang.duckdns.org>
 
-Hi Zhao,
-
-On Thu, Apr 23, 2026 at 05:53:13PM +0800, Zhao Mengmeng wrote:
-> On 4/23/26 17:48, Cheng-Yang Chou wrote:
-> > Hi Zhao,
-> > 
-> > On Thu, Apr 23, 2026 at 05:35:16PM +0800, Zhao Mengmeng wrote:
-> >> On 2026-04-23 17:21 +0800, Cheng-Yang Chou wrote:
-> >>> Hi Zhao,
-> >>>
-> >>> On Thu, Apr 23, 2026 at 05:03:23PM +0800, Zhao Mengmeng wrote:
-> >>>> non_scx_kfunc_deny.bpf.c:17:6: error: conflicting types for 'scx_bpf_kick_cpu'
-> >>>> 17 | void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
-> >>>> |      ^
-> >>>> /root/work/source-code/linux-next/tools/testing/selftests/sched_ext/build/include/vmlinux.h:136300:13: note: previous declaration is here
-> >>>> 136300 | extern void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux *aux) __weak __ksym;
-> >>>> |             ^
-> >>>> non_scx_kfunc_deny.bpf.c:26:23: error: too few arguments to function call, expected 3, have 2
-> >>>> 26 |         scx_bpf_kick_cpu(0, 0);
-> >>>> |         ~~~~~~~~~~~~~~~~     ^
-> >>>> /root/work/source-code/linux-next/tools/testing/selftests/sched_ext/build/include/vmlinux.h:136300:13: note: 'scx_bpf_kick_cpu' declared here
-> >>>> 136300 | extern void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux *aux) __weak __ksym;
-> >>>>
-> >>>> On the one hand, non_scx_kfunc_deny.bpf.c has it own problem, it should
-> >>>> not declare scx_bpf_kick_cpu(), on the other hand, the root cause is after
-> >>>
-> >>> If your point is that a TCP program shouldn't declare scx_bpf_kick_cpu(),
-> >>> you are correct. The main goal of non_scx_kfunc_deny is to ensure that,
-> >>> witch commit 2d2b026c3ea7, no non-SCX programs can use SCX func.
-> >>
-> >> No, I mean this bpf program can just `#include <scx/common.bpf.h>` at the
-> >> start of the file, remove the scx_bpf_kick_cpu() declaration.
-> >>
-> >> diff --git a/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
-> >> index 9f16d39255e7..0d6fcc8e5eb6 100644
-> >> --- a/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
-> >> +++ b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
-> >> @@ -9,12 +9,7 @@
-> >> * Copyright (C) 2026 Cheng-Yang Chou <yphbchou0911@gmail.com>
-> >> */
-> >>
-> >> -#include <vmlinux.h>
-> >> -#include <bpf/bpf_helpers.h>
-> >> -#include <bpf/bpf_tracing.h>
-> >> -
-> >> -/* SCX kfunc from scx_kfunc_ids_any set */
-> >> -void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
-> >> +#include <scx/common.bpf.h>
-> >>
-> >> SEC("struct_ops/ssthresh")
-> >> __u32 BPF_PROG(tcp_ca_ssthresh, struct sock *sk)
-> >>
-> >> But before this commit, your code builds well, after this commit, it
-> >> failed. That's why I suggest Tejun to add the missing KF_IMPLICIT_ARGS, it
-> >> changed the signature in generated vmlinux.h, which I think we don't need
-> >> expose aux argument to bpf program.
-> > 
-> > Ahh, thanks for the explanation, now I get it. 
-> > Are you planning to send a patch to fix this, or would you like me to
-> > spin one?
-> > 
-> > I tested the fix above, and everything works fine.
-> > 
+On Sun, Apr 19, 2026 at 05:51:57PM +0800, Cheng-Yang Chou wrote:
+> I am testing based on commit 5425abc222bc (tj/for-7.2 branch) using virtme-ng.
+> The kernel config I'm using: 
+> - https://github.com/sched-ext/scx/blob/main/kernel.config
 > 
-> I am working on a patch and is about to send it, I will add your Tested-by,
-> WDYT? 
+> While running `./runner -t reload_loop`, I encountered the following error. 
+> I'll begin a bisect and provide more details once I have them, just wanted
+> to bring this up now in case it looks familiar.
 
-Thanks for catching this! Feel free to add,
+Since i'm testing scx-cid branch, same issue hit while testing NUMA
+with virtme-ng.
 
-Tested-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-
-> >>>
-> >>>> this commit, the signature of scx_bpf_kick_cpu() changes from
-> >>>>
-> >>>> `extern void scx_bpf_kick_cpu(s32 cpu, u64 flags) __weak __ksym;` to
-> >>>> `extern void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux *aux) __weak __ksym` 
-> >>>
-> >>> Regarding the non_scx_kfunc_deny.bpf.c build failure, I'll fix it. If
-> >>> needed, we can test with another SCX function that doesn't require the
-> >>> *aux parameter.
-> >>>
-> >>> Thanks.
-> >>
-> >> Like I said above, it builds well on for-next branch, just this commit
-> >> trigger the failure. I believe your test case is very reasonable.
-> >>
-> >> Best regards,
-> >> --  
-> >> Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-> >>>>
-> >>>> After code analysis and test, I believe scx_bpf_kick_cpu miss the 
-> >>>> KF_IMPILCIT_ARGS, just like the defination in scx_kfunc_ids_any.
-> >>>>
-> >>>> So here misses  KF_IMPLICIT_ARGS 
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_task_cpu)
-> >>>> Missing KF_RCU.
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_cpu_rq)
-> >>>> Missing KF_IMPLICIT_ARGS
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_cpu_curr)
-> >>>> Missing KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_cpu_node)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap)
-> >>>> Missing KF_IMPLICIT_ARGS
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur)
-> >>>> Missing KF_IMPLICIT_ARGS
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_cpuperf_set)
-> >>>> Missing KF_IMPLICIT_ARGS
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_get_possible_cpumask)
-> >>>> Missing KF_ACQUIRE
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_get_online_cpumask)
-> >>>> Missing KF_ACQUIRE
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_put_cpumask)
-> >>>> Missing KF_RELEASE
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_select_cpu_dfl)
-> >>>> Missing KF_IMPLICIT_ARGS | KF_RCU
-> >>>>> +BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and)
-> >>>> Missing KF_IMPLICIT_ARGS | KF_RCU
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_select_cpu_and)
-> >>>> Missing KF_RCU
-> >>>>
-> >>>> Please correct me if I miss something.
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask_node)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask_node)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_put_idle_cpumask)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_test_and_clear_cpu_idle)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu_node)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu)
-> >>>>> +BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu_node)
-> >>>>> +BTF_KFUNCS_END(scx_kfunc_ids_cpu_only)
-> >>>>> +
-> >>>>>  /*
-> >>>>>   * Per-op kfunc allow flags. Each bit corresponds to a context-sensitive kfunc
-> >>>>>   * group; an op may permit zero or more groups, with the union expressed in
-> >>>>> @@ -10031,6 +10067,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
-> >>>>>  	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
-> >>>>>  	bool in_idle = btf_id_set8_contains(&scx_kfunc_ids_idle, kfunc_id);
-> >>>>>  	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
-> >>>>> +	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
-> >>>>>  	u32 moff, flags;
-> >>>>>  
-> >>>>>  	/* Not an SCX kfunc - allow. */
-> >>>>> @@ -10068,6 +10105,15 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
-> >>>>>  	    prog->aux->st_ops != &bpf_sched_ext_ops_cid)
-> >>>>>  		return -EACCES;
-> >>>>>  
-> >>>>> +	/*
-> >>>>> +	 * cid-form schedulers must use cid/cmask kfuncs. cid and cpu are both
-> >>>>> +	 * small s32s and trivially confused, so cpu-only kfuncs are rejected at
-> >>>>> +	 * load time. The reverse (cpu-form calling cid-form kfuncs) is
-> >>>>> +	 * intentionally permissive to ease gradual cpumask -> cid migration.
-> >>>>> +	 */
-> >>>>> +	if (prog->aux->st_ops == &bpf_sched_ext_ops_cid && in_cpu_only)
-> >>>>> +		return -EACCES;
-> >>>>> +
-> >>>>>  	/* SCX struct_ops: check the per-op allow list. */
-> >>>>>  	if (in_any || in_idle)
-> >>>>>  		return 0;
-> >>>>> -- 
-> >>>>> 2.53.0
-> >>>>>
-> >>>>>
-> >>>>
-> >>>>
-> >>>>
-> >>>
-> >>> -- 
-> >>> Cheers,
-> >>> Cheng-Yang
-> >>>
-> >>
-> >>
-> > 
-> 
+===== START =====
+TEST: numa
+DESCRIPTION: Verify NUMA-aware functionalities
+OUTPUT:
+[   42.567360] Oops: int3: 0000 [#1] SMP NOPTI
+[   42.567780] CPU: 5 UID: 0 PID: 642 Comm: scx_enable_help Not tainted 7.0.0-g92f8cb8241dd-dirty #14 PREEMPT(lazy)
+[   42.567949] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   42.568109] Sched_ext: numa (enabling+all)
+[   42.568179] RIP: 0010:update_rq_clock+0x6c/0x280
+[   42.568263] Code: 00 00 8b 83 20 0e 00 00 a8 02 0f 85 89 00 00 00 0f 1f 44 00 00 83 c8 04 8b bb a8 0e 00 00 89 83 20 0e 00 00 e8 d5 43 05 00 eb <75> 48 89 c5 48 2b ab 10 0e 00 00 78 62 48 89 83 10 0e 00 00 48 8b
+[   42.568328] RSP: 0018:ffffa775c1547c80 EFLAGS: 00000007
+[   42.568356] RAX: 00000009e92dde7d RBX: ffffa2efb533d900 RCX: 0000000000000000
+[   42.568367] RDX: 00000009e92dde7d RSI: ffffffffd61bc543 RDI: 0000000000000002
+[   42.568379] RBP: ffffa2efb533d900 R08: 0000000000000002 R09: 0000000000000001
+[   42.568389] R10: 0000000000000001 R11: 0000000000000000 R12: 000000000000004e
+[   42.568400] R13: ffffa2efb5498260 R14: ffffa2edca374000 R15: ffffa2f00ccb2000
+[   42.568455] FS:  0000000000000000(0000) GS:ffffa2f00ccb2000(0000) knlGS:0000000000000000
+[   42.568467] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   42.568477] CR2: 00007f2cde9cf680 CR3: 00000002d984c000 CR4: 00000000000006f0
+[   42.568575] Call Trace:
+[   42.568695]  <TASK>
+[   42.568792]  sched_change_begin+0x1d1/0x2c0
+[   42.568899]  scx_root_enable_workfn+0x871/0x9c0
+[   42.569048]  ? kthread_worker_fn+0x50/0x3b0
+[   42.569060]  ? __pfx_scx_root_enable_workfn+0x10/0x10
+[   42.569069]  kthread_worker_fn+0xcb/0x3b0
+[   42.569087]  ? __pfx_kthread_worker_fn+0x10/0x10
+[   42.569098]  kthread+0xf4/0x120
+[   42.569107]  ? __pfx_kthread+0x10/0x10
+[   42.569126]  ret_from_fork+0x275/0x340
+[   42.569134]  ? __pfx_kthread+0x10/0x10
+[   42.569145]  ret_from_fork_asm+0x1a/0x30
+[   42.569219]  </TASK>
+[   42.569275] Modules linked in:
+[   42.569686] Oops: int3: 0000 [#2] SMP NOPTI
+[   42.569699] ---[ end trace 0000000000000000 ]---
+[   42.569779] CPU: 9 UID: 0 PID: 0 Comm: swapper/9 Tainted: G      D             7.0.0-g92f8cb8241dd-dirty #14 PREEMPT(lazy)
+[   42.569830] RIP: 0010:update_rq_clock+0x6c/0x280
+[   42.569840] Code: 00 00 8b 83 20 0e 00 00 a8 02 0f 85 89 00 00 00 0f 1f 44 00 00 83 c8 04 8b bb a8 0e 00 00 89 83 20 0e 00 00 e8 d5 43 05 00 eb <75> 48 89 c5 48 2b ab 10 0e 00 00 78 62 48 89 83 10 0e 00 00 48 8b
+[   42.569845] RSP: 0018:ffffa775c1547c80 EFLAGS: 00000007
+[   42.569845] Tainted: [D]=DIE
+[   42.569854] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   42.569860] RIP: 0010:update_rq_clock+0x6c/0x280
+[   42.569876] Code: 00 00 8b 83 20 0e 00 00 a8 02 0f 85 89 00 00 00 0f 1f 44 00 00 83 c8 04 8b bb a8 0e 00 00 89 83 20 0e 00 00 e8 d5 43 05 00 eb <75> 48 89 c5 48 2b ab 10 0e 00 00 78 62 48 89 83 10 0e 00 00 48 8b
+[   42.569881] RSP: 0018:ffffa775c02f0e90 EFLAGS: 00000003
+[   42.569888] RAX: 00000009e93aba75 RBX: ffffa2efb56bd900 RCX: 0000000000000000
+[   42.569891] RDX: 00000009e93aba75 RSI: ffffffffd61bc543 RDI: 0000000000000002
+[   42.569894] RBP: ffffa775c02f0ed8 R08: 0000000000000002 R09: 0000000000000000
+[   42.569897] R10: 0000000000003965 R11: 0000000000000000 R12: 0000000000000000
+[   42.569900] R13: 0000000000000000 R14: ffffa2edc0988000 R15: 0000000000000009
+[   42.569903] FS:  0000000000000000(0000) GS:ffffa2f00ceb2000(0000) knlGS:0000000000000000
+[   42.569874]
+[   42.569907] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   42.569909] RAX: 00000009e92dde7d RBX: ffffa2efb533d900 RCX: 0000000000000000
+[   42.569910] CR2: 000055803f00a000 CR3: 00000002d984c000 CR4: 00000000000006f0
+[   42.569913] RDX: 00000009e92dde7d RSI: ffffffffd61bc543 RDI: 0000000000000002
+[   42.569914] Call Trace:
+[   42.569916] RBP: ffffa2efb533d900 R08: 0000000000000002 R09: 0000000000000001
+[   42.569919] R10: 0000000000000001 R11: 0000000000000000 R12: 000000000000004e
+[   42.569921] R13: ffffa2efb5498260 R14: ffffa2edca374000 R15: ffffa2f00ccb2000
+[   42.569925] FS:  0000000000000000(0000) GS:ffffa2f00ccb2000(0000) knlGS:0000000000000000
+[   42.569927]  <IRQ>
+[   42.569929] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   42.569932] CR2: 00007f2cde9cf680 CR3: 00000002d984c000 CR4: 00000000000006f0
+[   42.569941]  sched_tick+0xa1/0x3a0
+[   42.569956]  update_process_times+0xa4/0xf0
+[   42.569967]  tick_nohz_handler+0x8d/0x160
+[   42.569976]  ? __pfx_tick_nohz_handler+0x10/0x10
+[   42.569983]  __hrtimer_run_queues+0x72/0x340
+[   42.569999]  hrtimer_interrupt+0x114/0x250
+[   42.570015]  __sysvec_apic_timer_interrupt+0x6a/0x1c0
+[   42.570074] Kernel panic - not syncing: Fatal exception in interrupt
+[   44.017037] Shutting down cpus with NMI
+[   44.017495] Kernel Offset: 0x24000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+[   44.022221] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+qemu-system-x86_64: terminating on signal 15 from pid 940918 (htop)
 
 -- 
 Cheers,
