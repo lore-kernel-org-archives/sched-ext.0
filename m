@@ -1,210 +1,118 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8262EB859
-	for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 09:36:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE23E5EE7
+	for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 09:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776937000; cv=none; b=UKBoAN55xXBQzcFoRO5/gPa7DVT9gPOPs/jGAYv1y5p37UO6lFzCj/jxyNv8q6Ue152jOBCIEiywuoB/8uF6UUlgaZiLg9aPvKhi7BXS4DoT7p2ErOuzkvjTZ6UVtIQEpsdQ/ER7/VGU3ZdwCx+Tgihrq7h7w+Gn/NtzwYLHh+E=
+	t=1776937695; cv=none; b=T3ltggzL0js21Jb7zwUm4cqijz9YCOnaKV1ecaanNqehtHuVl7UT9ohporFZfOc9oZBzsHD5cbkSGzzyXQLU0u7IVSOk1cXh6WchhjEqUXqqZh0CWegD/3m9cvqKIRiQcke69c3R/oRwkrHo/U3wQlkKeTzRwBcCFHDFxkvZU40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776937000; c=relaxed/simple;
-	bh=9e2z8lbm+scoSSbWqfQThbD+HCaV12hpnnLMH41u1p8=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=g9rBmo6WaxMVWadbqx3FH69gi6Pw9i+ywO3xGjbIM6c+/r8ji930DJLWK/2eVi5v+thKz62YP2HMbG898ZFL8I+ziuHI0nc7uG6tqaNyduciQE7VSDJeSvADiv9DyuyZOAiAnCVgUCU6f+8epny5d8KuWwu69zr180tAtGlqktI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=pN9pv/75; arc=none smtp.client-ip=117.135.210.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+	s=arc-20240116; t=1776937695; c=relaxed/simple;
+	bh=isUGdThoupT1njkgBQnVVrdFvbO/3BNw0h/VGihjLec=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=U54av/DGhIWyFVYQt5oGl3JOStmSSBLRRwwjxsxa518sHy2jESgUfpBH1dkFsSQm5KGUN2+/Yn47DsKaFZf1Svq+6wH3RUH6eRNxF2LyO9OdHNh6GYZG5SeuYtAezYnKcKBrJyjbFZH2uG4wAayPpmGsfl8l1Smgbb/MugjWVWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=c602HmJW; arc=none smtp.client-ip=209.85.128.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="pN9pv/75"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=MIME-Version:Content-Type:Subject:From:To:Date:
-	Message-Id; bh=PzNfz4ZNpZ6WeuX3TcZduhzxe7RdToCtJ0NkNO9MDSs=; b=p
-	N9pv/75B0KL/jkY5mtGx6oQjX5UDGJgPVlhvYw7B/2Kpv2hnJ76gFm3zs9PS1/5n
-	6gcH8fxPoBqq+6JTJTZssJrt1E0tdfSVe5PJQu7Zdy8zmIw4XLaL2M/PY0zrIDWe
-	hXg1IHdo9x80cXhISb3NBTqb5O/1Lv+8tFAMsHvhnM=
-Received: from [127.0.1.1] (unknown [])
-	by gzsmtp4 (Coremail) with SMTP id PykvCgDn79bU5+lpaAhqDw--.53831S2;
-	Thu, 23 Apr 2026 17:35:17 +0800 (CST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c602HmJW"
+Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-488d56f87e8so54558425e9.0
+        for <sched-ext@lists.linux.dev>; Thu, 23 Apr 2026 02:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1776937693; x=1777542493; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Hl1kWGbH9q/qjzDK/ZdU4A22sT2z4nhW5mix2FM6i4=;
+        b=c602HmJWyRytkGDZvAlRcvSxpBZMSM2QoumpDfxRYcqkixb+7XPrZAeAwHpFJyco6M
+         yeSBopXu3fIMDV5ThySuifr+F3VBHbRdpyjkrNIlsrdscuIzhC9PIGNe9j6T1nwfsMYP
+         0469uBnh3Z7shSe0UVyJuwdK7pLhXGUCCJyj9o4AssPpu7rYsUc1sysQ/V2cDaHtRnAz
+         OD71Ef768detwl6gSsuCPNs5wboCZWgEr69EDPpJLEPfnVHz1sIny9KPFt8JIO8oGLN5
+         SMkbXSQTwkFP8UVgQhp29XreR+Vwju8AVGUjjW9PMo8W3kMice3GPUiyEkHDs5WeWkqA
+         pJig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776937693; x=1777542493;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Hl1kWGbH9q/qjzDK/ZdU4A22sT2z4nhW5mix2FM6i4=;
+        b=HpD2nIBYp7/YdFuyaxj0k47FzZEf1LeMpINHbzl0e+uU1Wb296BH3kPYbmr8xeMDut
+         IHiznQhT6jDw+XnS4JXWPJ41o3WUIZSptJNCYMQRRE06ILYSzxSxkUrlCRrfzcrvPZI4
+         6oJnzN0YjgKTJTLj9bA6eT3CIKuPvk5R34A2fiusSHwl0MaqXjADo2iiGgC4/70oasge
+         mncxBilec7ysaI46EW4hg8FLkRoV4wbZju+aXOrgwWw1jIKh+dK1cgW40d3zJKHS4IOR
+         HV5nGwRqgu9LGnir3Puc5HH9dxBSNTiCHms+cDMkgdmfEN806nPQEHmEzRgh/v4Od8Ma
+         xm4w==
+X-Forwarded-Encrypted: i=1; AFNElJ/4g1UXYjl4spFXCXbgesqoSPL2e+1qRh25UUM6oSBoNDBlGBvBb8LxHxQocMyrB0zE6VT5IdawLFQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJaQMiuDJzTnORPX46Irr2R9Un9HhPaI/BBZGm+OcDX+Dg/vOw
+	ONmILwXziEDFBkEFMk+TcMOpJDXDRNXxU08+Z+QBeial7kkuObvv2o2nWugfhx7QBwlSUxEiTZj
+	pihwyF2uhvpnI8Q==
+X-Received: from wmro12.prod.google.com ([2002:a05:600c:378c:b0:488:c2a4:dd33])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:a305:b0:48a:53cb:85f4 with SMTP id 5b1f17b1804b1-48a53cb8734mr145926305e9.24.1776937692621;
+ Thu, 23 Apr 2026 02:48:12 -0700 (PDT)
+Date: Thu, 23 Apr 2026 09:48:11 +0000
+In-Reply-To: <aej8cmhZVhsqogr4@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 12/16] sched_ext: Forbid cpu-form kfuncs from cid-form
- schedulers
-From: Zhao Mengmeng <zhaomzhao@126.com>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Zhao Mengmeng <zhaomzhao@126.com>, Tejun Heo <tj@kernel.org>, 
- void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, 
- sched-ext@lists.linux.dev, emil@etsalapatis.com, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260423171156.G698a@cchengyang.duckdns.org>
-References: <20260421071945.3110084-1-tj@kernel.org>
- <20260421071945.3110084-13-tj@kernel.org>
- <177693500312.275653.17323765149266875001.b4-reply@b4>
- <20260423171156.G698a@cchengyang.duckdns.org>
-Date: Thu, 23 Apr 2026 17:35:16 +0800
-Message-Id: <177693691666.302051.8681445792423127931.b4-reply@b4>
-X-Mailer: b4 0.15.2
-X-CM-TRANSID:PykvCgDn79bU5+lpaAhqDw--.53831S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3AFykJFy8XFy8uF48XFW5KFg_yoWxWFyfpF
-	WvvF1qkr18Xa45Z3Z7tF4vqr1ftrs5tw4I9w4UGFySkwsFqayxJw1Svr45X3s5Crn2kw4D
-	Zry0gFWfWr1Fy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRcBMtUUUUU=
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlxUEe2np59V9TQAA3-
+Mime-Version: 1.0
+References: <DHZPHUFXB4N3.2RY28MUEWBNYK@google.com> <aej8cmhZVhsqogr4@slm.duckdns.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DI0FTX13UW17.1IZJ9TMG9EFRA@google.com>
+Subject: Re: SCX_ENQ_IMMED potentially leaving dispatched tasks lingering on
+ local DSQs
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, Kuba Piecuch <jpiecuch@google.com>
+Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	David Vernet <void@manifault.com>, <linux-kernel@vger.kernel.org>, 
+	<sched-ext@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
 
-On 2026-04-23 17:21 +0800, Cheng-Yang Chou wrote:
-> Hi Zhao,
-> 
-> On Thu, Apr 23, 2026 at 05:03:23PM +0800, Zhao Mengmeng wrote:
-> > non_scx_kfunc_deny.bpf.c:17:6: error: conflicting types for 'scx_bpf_kick_cpu'
-> > 17 | void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
-> > |      ^
-> > /root/work/source-code/linux-next/tools/testing/selftests/sched_ext/build/include/vmlinux.h:136300:13: note: previous declaration is here
-> > 136300 | extern void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux *aux) __weak __ksym;
-> > |             ^
-> > non_scx_kfunc_deny.bpf.c:26:23: error: too few arguments to function call, expected 3, have 2
-> > 26 |         scx_bpf_kick_cpu(0, 0);
-> > |         ~~~~~~~~~~~~~~~~     ^
-> > /root/work/source-code/linux-next/tools/testing/selftests/sched_ext/build/include/vmlinux.h:136300:13: note: 'scx_bpf_kick_cpu' declared here
-> > 136300 | extern void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux *aux) __weak __ksym;
-> > 
-> > On the one hand, non_scx_kfunc_deny.bpf.c has it own problem, it should
-> > not declare scx_bpf_kick_cpu(), on the other hand, the root cause is after
-> 
-> If your point is that a TCP program shouldn't declare scx_bpf_kick_cpu(),
-> you are correct. The main goal of non_scx_kfunc_deny is to ensure that,
-> witch commit 2d2b026c3ea7, no non-SCX programs can use SCX func.
+Hi Tejun,
 
-No, I mean this bpf program can just `#include <scx/common.bpf.h>` at the
-start of the file, remove the scx_bpf_kick_cpu() declaration.
+On Wed Apr 22, 2026 at 4:50 PM UTC, Tejun Heo wrote:
+> Hello, Kuba.
+>
+> On Wed, Apr 22, 2026 at 01:21:27PM +0000, Kuba Piecuch wrote:
+>> diff --git i/kernel/sched/ext.c w/kernel/sched/ext.c
+>> index d66fea57ee69..480627fdc203 100644
+>> --- i/kernel/sched/ext.c
+>> +++ w/kernel/sched/ext.c
+>> @@ -3079,8 +3079,11 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+>>          * If @force_scx is true, always try to pick a SCHED_EXT task,
+>>          * regardless of any higher-priority sched classes activity.
+>>          */
+>> -       if (!force_scx && rq_modified_above(rq, &ext_sched_class))
+>> +       if (!force_scx && rq_modified_above(rq, &ext_sched_class)) {
+>> +               if (rq->scx.nr_immed)
+>> +                       schedule_reenq_local(rq, 0);
+>>                 return RETRY_TASK;
+>> +       }
+>> 
+>>         keep_prev = rq->scx.flags & SCX_RQ_BAL_KEEP;
+>>         if (unlikely(keep_prev &&
+>
+> Ah, good catch.
+>
+>> ...but I think this only fixes the case where the RT task wakes up on the CPU
+>> that is doing the dispatch. The other case is one where the RT task wakes up
+>> on the remote CPU (the one the second task was dispatched to) after insertion
+>> of the second task, assuming the remote CPU is initially idle.
+>> 
+>> To fix both cases, one potential solution that comes to mind is bumping
+>> rq->next_class to &ext_sched_class when inserting a task into rq->scx.local_dsq.
+>> Perhaps we should call wakeup_preempt() in dispatch_to_local_dsq()?
+>
+> I think what's missing is wakeup_preempt() call in
+> move_remote_task_to_local_dsq(). This is SCX's version of move_queued_task()
+> and we're missing wakeup_preempt() call after activate_task().
 
-diff --git a/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
-index 9f16d39255e7..0d6fcc8e5eb6 100644
---- a/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
-+++ b/tools/testing/selftests/sched_ext/non_scx_kfunc_deny.bpf.c
-@@ -9,12 +9,7 @@
-* Copyright (C) 2026 Cheng-Yang Chou <yphbchou0911@gmail.com>
-*/
+I'm not sure if we should limit ourselves to just remote tasks.
+If we call wakeup_preempt(rq, p, flags) when adding @p to @rq's local DSQ
+regardless of whether @p/@rq is remote, then I think that should cover all
+cases and the patch above wouldn't be needed.
 
--#include <vmlinux.h>
--#include <bpf/bpf_helpers.h>
--#include <bpf/bpf_tracing.h>
--
--/* SCX kfunc from scx_kfunc_ids_any set */
--void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
-+#include <scx/common.bpf.h>
+Perhaps local_dsq_post_enq() would be a good place to invoke wakeup_preempt()?
 
-SEC("struct_ops/ssthresh")
-__u32 BPF_PROG(tcp_ca_ssthresh, struct sock *sk)
-
-But before this commit, your code builds well, after this commit, it
-failed. That's why I suggest Tejun to add the missing KF_IMPLICIT_ARGS, it
-changed the signature in generated vmlinux.h, which I think we don't need
-expose aux argument to bpf program.
-> 
-> > this commit, the signature of scx_bpf_kick_cpu() changes from
-> > 
-> > `extern void scx_bpf_kick_cpu(s32 cpu, u64 flags) __weak __ksym;` to
-> > `extern void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux *aux) __weak __ksym` 
-> 
-> Regarding the non_scx_kfunc_deny.bpf.c build failure, I'll fix it. If
-> needed, we can test with another SCX function that doesn't require the
-> *aux parameter.
-> 
-> Thanks.
-
-Like I said above, it builds well on for-next branch, just this commit
-trigger the failure. I believe your test case is very reasonable.
-
-Best regards,
---  
-Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-> > 
-> > After code analysis and test, I believe scx_bpf_kick_cpu miss the 
-> > KF_IMPILCIT_ARGS, just like the defination in scx_kfunc_ids_any.
-> > 
-> > So here misses  KF_IMPLICIT_ARGS 
-> > > +BTF_ID_FLAGS(func, scx_bpf_task_cpu)
-> > Missing KF_RCU.
-> > > +BTF_ID_FLAGS(func, scx_bpf_cpu_rq)
-> > Missing KF_IMPLICIT_ARGS
-> > > +BTF_ID_FLAGS(func, scx_bpf_cpu_curr)
-> > Missing KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED
-> > > +BTF_ID_FLAGS(func, scx_bpf_cpu_node)
-> > > +BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap)
-> > Missing KF_IMPLICIT_ARGS
-> > > +BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur)
-> > Missing KF_IMPLICIT_ARGS
-> > > +BTF_ID_FLAGS(func, scx_bpf_cpuperf_set)
-> > Missing KF_IMPLICIT_ARGS
-> > > +BTF_ID_FLAGS(func, scx_bpf_get_possible_cpumask)
-> > Missing KF_ACQUIRE
-> > > +BTF_ID_FLAGS(func, scx_bpf_get_online_cpumask)
-> > Missing KF_ACQUIRE
-> > > +BTF_ID_FLAGS(func, scx_bpf_put_cpumask)
-> > Missing KF_RELEASE
-> > > +BTF_ID_FLAGS(func, scx_bpf_select_cpu_dfl)
-> > Missing KF_IMPLICIT_ARGS | KF_RCU
-> > > +BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and)
-> > Missing KF_IMPLICIT_ARGS | KF_RCU
-> > > +BTF_ID_FLAGS(func, scx_bpf_select_cpu_and)
-> > Missing KF_RCU
-> > 
-> > Please correct me if I miss something.
-> > > +BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask)
-> > > +BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask_node)
-> > > +BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask)
-> > > +BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask_node)
-> > > +BTF_ID_FLAGS(func, scx_bpf_put_idle_cpumask)
-> > > +BTF_ID_FLAGS(func, scx_bpf_test_and_clear_cpu_idle)
-> > > +BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu)
-> > > +BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu_node)
-> > > +BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu)
-> > > +BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu_node)
-> > > +BTF_KFUNCS_END(scx_kfunc_ids_cpu_only)
-> > > +
-> > >  /*
-> > >   * Per-op kfunc allow flags. Each bit corresponds to a context-sensitive kfunc
-> > >   * group; an op may permit zero or more groups, with the union expressed in
-> > > @@ -10031,6 +10067,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
-> > >  	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
-> > >  	bool in_idle = btf_id_set8_contains(&scx_kfunc_ids_idle, kfunc_id);
-> > >  	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
-> > > +	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
-> > >  	u32 moff, flags;
-> > >  
-> > >  	/* Not an SCX kfunc - allow. */
-> > > @@ -10068,6 +10105,15 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
-> > >  	    prog->aux->st_ops != &bpf_sched_ext_ops_cid)
-> > >  		return -EACCES;
-> > >  
-> > > +	/*
-> > > +	 * cid-form schedulers must use cid/cmask kfuncs. cid and cpu are both
-> > > +	 * small s32s and trivially confused, so cpu-only kfuncs are rejected at
-> > > +	 * load time. The reverse (cpu-form calling cid-form kfuncs) is
-> > > +	 * intentionally permissive to ease gradual cpumask -> cid migration.
-> > > +	 */
-> > > +	if (prog->aux->st_ops == &bpf_sched_ext_ops_cid && in_cpu_only)
-> > > +		return -EACCES;
-> > > +
-> > >  	/* SCX struct_ops: check the per-op allow list. */
-> > >  	if (in_any || in_idle)
-> > >  		return 0;
-> > > -- 
-> > > 2.53.0
-> > > 
-> > > 
-> > 
-> > 
-> > 
-> 
-> -- 
-> Cheers,
-> Cheng-Yang
-> 
-
-
+Thanks,
+Kuba
