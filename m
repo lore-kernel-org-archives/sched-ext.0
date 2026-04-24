@@ -1,146 +1,148 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1537419C556;
-	Thu, 23 Apr 2026 23:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEE775801;
+	Fri, 24 Apr 2026 01:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776985466; cv=none; b=KLP4BGSF8G83TMSOkz1FKwFKHkLrP0lS9hIhNi1pJX5KnJPki9bDKy35gBskItJpiXS82hbJ0+CYn32Sc8lxnTTqFcKRlSkm0XJLxEnsLuyKuigGAGVn+OQkVwI9jQIzeS+Ek7O6yMrfwEuhVm75dDaSUu85ZyGyiH1e0saCqJQ=
+	t=1776994342; cv=none; b=bRfsFSvNPZ6k5kLpLEySZc/1ywxq1Q6rMJGisqiaNVPB+tv88H9xoyshayxGUtJiEp0JIR/pGv0kgATEVcbJdTLM5VTgqxqGeCcMX3QsIaO+uWrO3Sh1GQ8tJa/7s4ukHUZ8GZzyeY8mKHSnhIEIcz5egFj8bvjiD+ww/U0S2Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776985466; c=relaxed/simple;
-	bh=qzfzVjLbbS2qpRjqwvHDBULTq4u8olwDzHtrTDmzlJU=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=uT8sqARjFjGdZSuKoGDulOvr4QvjzcgMdTXh0+Vk7CZiJeNHeNO3YKnsJrtSH7SkKU3c+HPvaRDom5YEQW1HUPbx6VCrlTZ0vNoxTZIFzePvWpaaOOZegA+GADuuiuVcIxYX+BIap9Lqf3mvBSTs9B4cJSxH3qZS/pr5uZRRniw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCZ8Cqpp; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776994342; c=relaxed/simple;
+	bh=4qk8mgwdMlpiyWFIxlVE/CktR07iSQhTW0+dQ+sngyk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YWS6CFoLDdXQGBcb0WWkwWOX2PnTofIxDKJ5df8z6b4om/3NcZzAX2QaEhEjdwQNn/jzrR/fa94V+ajajsioWUSP/J0A+W9nhPv0jY8fkJeOz5xDOVvKvuh7sCBv+dbppU5/OMVsvfTAkehNoOR8nonbAnSyEUGsp4WNF1iR0+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tX6ogE5c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCZ8Cqpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A63C2BCAF;
-	Thu, 23 Apr 2026 23:04:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tX6ogE5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3DBC2BCAF;
+	Fri, 24 Apr 2026 01:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776985465;
-	bh=qzfzVjLbbS2qpRjqwvHDBULTq4u8olwDzHtrTDmzlJU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=HCZ8Cqpp4bUrdDg7NyWv/BiOpcd5YSJWY6TMIb8Go/u5bv2Y8CQQkA2W/UEUhZc3x
-	 fbBKz+cr6MqGVtvN9Hv19vmBfVK6a1ZNJ0TRIXNtKbB5vZf47KPR0JkcO8cWncBwvW
-	 R5sTVHMXyi/DUid8Sy1sp7MszzxaJJqS2lZh901kPp6UK2G7sRBcFdlc3Ejd3CIP2p
-	 B4uKM2e9YV526G8rsnGBKuJLkuq6GdvmdazEuvviAuf036X5qGcQhK6V6ah2kbuSWl
-	 e8nOgg6U+cAAOo9agWSDL/U+pezKas0hDBsVXrAhPIXQ+nK1lKLySiDrkia9MeRxKK
-	 qHK9W5lBwLQ5A==
-Date: Thu, 23 Apr 2026 13:04:24 -1000
-Message-ID: <38133c3fa792e3a5d5b425729f59b9ee@kernel.org>
+	s=k20201202; t=1776994341;
+	bh=4qk8mgwdMlpiyWFIxlVE/CktR07iSQhTW0+dQ+sngyk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tX6ogE5csdiNH+uVUbe29lnhVGx0o5xDwZezRoNlkc/2YZeFAG2ssnW0WGCUaI4eR
+	 eoF5Gdees+bcthbtTNNeTw2OA2ySV1hzq+6iig+GmLOcxwVroKOoHS5WEXpr0N9kCy
+	 oEzCmfCbBrgp/VZyTYL0UKA/HElbVWDojConi/SN3GMWr+kYnKpE+NEtkrVjNurV64
+	 kvRW7JhbLVSPjVmZssgLxzCzrtaXbAG3DHpd/W1Pmpy6zk2CM6QiOUzid1k771VTUD
+	 CocrnIyP6SHFiTBkEAMdZZ8c0OYUrR5MqssHjHmVBkpBx+6bHdaf+FDiNqEMvNm3+1
+	 HGCm1TOtbsfOw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
 Cc: sched-ext@lists.linux.dev,
- emil@etsalapatis.com,
- linux-kernel@vger.kernel.org,
- Cheng-Yang Chou <yphbchou0911@gmail.com>,
- Zhao Mengmeng <zhaomzhao@126.com>
-Subject: [PATCH v2 sched_ext/for-7.2] sched_ext: Forbid cpu-form kfuncs from cid-form schedulers
-In-Reply-To: <20260421071945.3110084-13-tj@kernel.org>
-References: <20260421071945.3110084-13-tj@kernel.org>
+	emil@etsalapatis.com,
+	linux-kernel@vger.kernel.org,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Zhao Mengmeng <zhaomzhao@126.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-7.2] sched_ext: Topological CPU IDs and cid-form struct_ops
+Date: Thu, 23 Apr 2026 15:32:03 -1000
+Message-ID: <20260424013220.2923402-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-cid and cpu are both small s32s, trivially confused when a cid-form
-scheduler calls a cpu-keyed kfunc. Reject cid-form programs that
-reference any kfunc in the new scx_kfunc_ids_cpu_only at verifier load
-time.
+Hello,
 
-The reverse direction is intentionally permissive: cpu-form schedulers
-can freely call cid-form kfuncs to ease a gradual cpumask -> cid
-migration.
+v2 of https://lore.kernel.org/r/20260421071945.3110084-1-tj@kernel.org
 
-The check sits in scx_kfunc_context_filter() right after the SCX
-struct_ops gate and before the any/idle allow and per-op allow-list
-checks, so it catches cpu-only kfuncs regardless of which set they
-belong to (any, idle, or select_cpu).
+v2:
+- Add ext-types.h first patch for early subsystem-wide type defs.
+- cid: publish the cid tables with WRITE_ONCE / read with READ_ONCE;
+  document the visibility contract.
+- cid-kfuncs: NULL-guard scx_bpf_this_cid / scx_bpf_task_cid for
+  TRACING/SYSCALL callers before any SCX sched has enabled.
+- cid-struct-ops: use struct_size() for the set_cmask_scratch percpu
+  alloc; cluster __scx_is_cid_type disable with __scx_enabled disable
+  in scx_root_disable().
+- cid-kfunc-filter: sync per-entry kfunc flags with each kfunc's
+  primary BTF_ID_FLAGS() declaration (Zhao). pahole intersects flags
+  across occurrences; omitting them drops the flags globally - the
+  visible symptom was KF_IMPLICIT_ARGS getting cleared on
+  scx_bpf_kick_cpu, leaking bpf_prog_aux into vmlinux.h.
+- cmask: narrow to the helpers this series actually uses;
+  cmask_copy_from_kernel contract and runtime guard.
 
-v2: Sync per-entry kfunc flags with their primary declarations (Zhao).
-    pahole intersects flags across BTF_ID_FLAGS() occurrences, so
-    omitting them drops the flags globally.
+This patchset introduces topological CPU IDs (cids) - dense,
+topology-ordered cpu identifiers - and an alternative cid-form struct_ops
+type that lets BPF schedulers operate in cid space directly.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: Zhao Mengmeng <zhaomzhao@126.com>
----
- kernel/sched/ext.c |   51 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+Key pieces:
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -9969,6 +9969,47 @@ static const struct btf_kfunc_id_set scx
- };
+- cid space: scx_cid_init() walks nodes * LLCs * cores * threads and packs
+  a dense cid mapping. The mapping can be overridden via
+  scx_bpf_cid_override(). See "Topological CPU IDs" in ext_cid.h for the
+  model.
 
- /*
-+ * cpu-form kfuncs that are forbidden from cid-form schedulers
-+ * (bpf_sched_ext_ops_cid). Programs targeting the cid struct_ops type must
-+ * use the cid-form alternative (cid/cmask kfuncs).
-+ *
-+ * Membership overlaps with scx_kfunc_ids_{any,idle,select_cpu}; the filter
-+ * tests this set independently and rejects matches before the per-op
-+ * allow-list check runs.
-+ *
-+ * pahole/resolve_btfids scans every BTF_ID_FLAGS() at build time and
-+ * intersects flags across duplicate entries, so each entry must carry the
-+ * same flags as the kfunc's primary declaration; otherwise the flags get
-+ * dropped globally.
-+ */
-+BTF_KFUNCS_START(scx_kfunc_ids_cpu_only)
-+BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_node, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_set, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_get_possible_cpumask, KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_online_cpumask, KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
-+BTF_ID_FLAGS(func, scx_bpf_select_cpu_dfl, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_select_cpu_and, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask_node, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask_node, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_put_idle_cpumask, KF_RELEASE)
-+BTF_ID_FLAGS(func, scx_bpf_test_and_clear_cpu_idle, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu_node, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu_node, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_KFUNCS_END(scx_kfunc_ids_cpu_only)
-+
-+/*
-  * Per-op kfunc allow flags. Each bit corresponds to a context-sensitive kfunc
-  * group; an op may permit zero or more groups, with the union expressed in
-  * scx_kf_allow_flags[]. The verifier-time filter (scx_kfunc_context_filter())
-@@ -10031,6 +10072,7 @@ int scx_kfunc_context_filter(const struc
- 	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
- 	bool in_idle = btf_id_set8_contains(&scx_kfunc_ids_idle, kfunc_id);
- 	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
-+	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
- 	u32 moff, flags;
+- cmask: a base-windowed bitmap over cid space. Kernel and BPF helpers with
+  identical semantics. Used by scx_qmap for per-task affinity and idle-cid
+  tracking; meant to be the substrate for sub-sched cid allocation.
 
- 	/* Not an SCX kfunc - allow. */
-@@ -10068,6 +10110,15 @@ int scx_kfunc_context_filter(const struc
- 	    prog->aux->st_ops != &bpf_sched_ext_ops_cid)
- 		return -EACCES;
+- bpf_sched_ext_ops_cid: a parallel struct_ops type whose callbacks take
+  cids/cmasks instead of cpus/cpumasks. Kernel translates at the boundary
+  via scx_cpu_arg() / scx_cpu_ret(); the two struct types share offsets up
+  through @priv (verified by BUILD_BUG_ON) so the union view in scx_sched
+  works without function-pointer casts. Sub-sched support is tied to
+  cid-form: validate_ops() rejects cpu-form sub-scheds and cpu-form roots
+  that expose sub_attach / sub_detach.
 
-+	/*
-+	 * cid-form schedulers must use cid/cmask kfuncs. cid and cpu are both
-+	 * small s32s and trivially confused, so cpu-only kfuncs are rejected at
-+	 * load time. The reverse (cpu-form calling cid-form kfuncs) is
-+	 * intentionally permissive to ease gradual cpumask -> cid migration.
-+	 */
-+	if (prog->aux->st_ops == &bpf_sched_ext_ops_cid && in_cpu_only)
-+		return -EACCES;
-+
- 	/* SCX struct_ops: check the per-op allow list. */
- 	if (in_any || in_idle)
- 		return 0;
+- cid-form kfuncs: scx_bpf_kick_cid, scx_bpf_cidperf_{cap,cur,set},
+  scx_bpf_cid_curr, scx_bpf_task_cid, scx_bpf_this_cid,
+  scx_bpf_nr_{cids,online_cids}, scx_bpf_cid_to_cpu, scx_bpf_cpu_to_cid.
+  A cid-form program may not call cpu-only kfuncs (enforced at verifier
+  load via scx_kfunc_context_filter); the reverse is intentionally
+  permissive to ease migration.
+
+- scx_qmap port: scx_qmap is converted to cid-form. It uses the cmask-based
+  idle picker, per-task cid-space cpus_allowed, and cid-form kfuncs
+  throughout. Sub-sched dispatching via scx_bpf_sub_dispatch() continues to
+  work.
+
+v2 re-tested on the 16-cpu QEMU: cid-form scx_qmap, cpu-form scx_simple,
+cid<->cpu cycling, scx_qmap under stress-ng, hotplug auto-restart, and
+sub-sched (root scx_qmap + cgroup-scoped scx_qmap child). Clean.
+
+Based on sched_ext/for-7.2 (c2929bc21dce).
+
+ 0001-sched_ext-Add-ext_types.h-for-early-subsystem-wide-d.patch
+ 0002-sched_ext-Rename-ops_cpu_valid-to-scx_cpu_valid-and-.patch
+ 0003-sched_ext-Move-scx_exit-scx_error-and-friends-to-ext.patch
+ 0004-sched_ext-Shift-scx_kick_cpu-validity-check-to-scx_b.patch
+ 0005-sched_ext-Relocate-cpu_acquire-cpu_release-to-end-of.patch
+ 0006-sched_ext-Make-scx_enable-take-scx_enable_cmd.patch
+ 0007-sched_ext-Add-topological-CPU-IDs-cids.patch
+ 0008-sched_ext-Add-scx_bpf_cid_override-kfunc.patch
+ 0009-tools-sched_ext-Add-struct_size-helpers-to-common.bp.patch
+ 0010-sched_ext-Add-cmask-a-base-windowed-bitmap-over-cid-.patch
+ 0011-sched_ext-Add-cid-form-kfunc-wrappers-alongside-cpu-.patch
+ 0012-sched_ext-Add-bpf_sched_ext_ops_cid-struct_ops-type.patch
+ 0013-sched_ext-Forbid-cpu-form-kfuncs-from-cid-form-sched.patch
+ 0014-tools-sched_ext-scx_qmap-Restart-on-hotplug-instead-.patch
+ 0015-tools-sched_ext-scx_qmap-Add-cmask-based-idle-tracki.patch
+ 0016-tools-sched_ext-scx_qmap-Port-to-cid-form-struct_ops.patch
+ 0017-sched_ext-Require-cid-form-struct_ops-for-sub-sched-.patch
+
+Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-cid-v2
+
+ kernel/sched/build_policy.c              |   2 +
+ kernel/sched/ext.c                       | 650 +++++++++++++++++++++++++----
+ kernel/sched/ext_cid.c                   | 417 ++++++++++++++++++++
+ kernel/sched/ext_cid.h                   | 164 ++++++++
+ kernel/sched/ext_idle.c                  |   8 +-
+ kernel/sched/ext_internal.h              | 203 +++++++---
+ kernel/sched/ext_types.h                 | 104 +++++
+ tools/sched_ext/include/scx/cid.bpf.h    | 597 ++++++++++++++++++++++++++++
+ tools/sched_ext/include/scx/common.bpf.h |  23 ++
+ tools/sched_ext/include/scx/compat.bpf.h |  24 ++
+ tools/sched_ext/scx_qmap.bpf.c           | 306 ++++++++-------
+ tools/sched_ext/scx_qmap.c               |  25 +-
+ tools/sched_ext/scx_qmap.h               |   2 +-
+ 13 files changed, 2240 insertions(+), 285 deletions(-)
+
+--
+tejun
