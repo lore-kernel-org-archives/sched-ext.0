@@ -1,32 +1,32 @@
-Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.8])
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7051A6812
-	for <sched-ext@lists.linux.dev>; Fri, 24 Apr 2026 01:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335775C613
+	for <sched-ext@lists.linux.dev>; Fri, 24 Apr 2026 02:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776995128; cv=none; b=toGSUgovxaXVo6WT4Msv2QJZbqNxrzK3Svqb4g0KhSEOmoiIdJWippwfRwPoFjaG8Oda+JUTBG2kxT7ObJ2ODLE13ivFAUxgpeLQlcZrhrZYL74hiTb3FhGRHSZjlbx/1Vf9j8UuPs0nCvGnVYKNKuAkYQ/99sxKasfP+d7K2qY=
+	t=1776996953; cv=none; b=oILe4rAn0YNCPFfynWJvFlY80HxPaHYC2hxqRPs1Fs4NupWkIcUbhhudLpGogcFHJHI9Sda27DwkUiXGMdQF0eKW+q4EqJCohDVUSXv7J4xEMV0LWQEnPdsFNXeI0CfQHDgadDOw1dn2hXsvelKw8FyS1VnuYfq9o/WLMEtTrys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776995128; c=relaxed/simple;
-	bh=hfgslwX9LLRaFCjNsyjLsf10qkCXHgosE2XLKPgOURA=;
+	s=arc-20240116; t=1776996953; c=relaxed/simple;
+	bh=EWEga4Hx/REbXRDAw5nXTvkDCVY9XcGJN3SBRJ0qYx0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DjJj7Wwng9qEkzFa/T7aMhyQJzlcRBNvTM8rj0II85j/h6y7oYWKoeKYu2oHFuMd5M26nUi+PijxNDFTkyU9fpBtznrVL013EWFml99qvrOhYKY5UYN4/BZm5JLOdNg/gtA77HT/0Q+TvjkPKR/IoHjIqfJC0Re626EFglLaP4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=UEY32+pf; arc=none smtp.client-ip=220.197.31.8
+	 In-Reply-To:Content-Type; b=MsBbyCLlCyCp5oyWHDpLB59vmmJnVf+gYVy6JFXETpYWhzTCyEfkPJuD1cgARAOseO4ytkA3gFpATTi2r5ceDMPs2Q/Zm2CuvnTTk6lRHK80ImqM8rl/odgeTA+b5kQuEGQlcQOR/OQZbnHxvpKHbMpTAlEObgqZF05V/fZv5hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=YUKxd1pU; arc=none smtp.client-ip=117.135.210.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="UEY32+pf"
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="YUKxd1pU"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
 	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=NlxfMqJofm07iylPADZhEb2EO4Dgn96db1mTA0Wxaow=;
-	b=UEY32+pfGVOX2S46bC8Dr1EDg3MnwWx/zViFifHL4gkp4KWNdnF+HKFrHqSiS3
-	SpNdaMeHkXhVvcMA2cvr+/tKPOavSeWT9wFGvFB+dTfEfYQduBYI1kcEHeohminO
-	fbzRxEUU6SZ7hh50sZ1WcKlt0dhEhPQki6JCr+WhOFI9U=
+	Content-Type; bh=7FPZhbLqYU5Iw+enx1mmaE0zlrEFpEgYksqzk7Gr7Ok=;
+	b=YUKxd1pUbm4w06e9huJc7+mwmvfzF3ASMNEHEcVxjYL1xeyhddWhJ5Xdx79R24
+	sIVMNc4JhiMWowB7L+TPM235KebzXgPncpS6RfCLCohOCtV1hk5bmfPhgLYgzp9Q
+	NQiVtL39OjS4cKaykRVsQd6leadU70561WFKs81B1XQY0=
 Received: from [198.18.0.1] (unknown [])
-	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wD37+cWy+ppTKDXAA--.60881S2;
-	Fri, 24 Apr 2026 09:44:55 +0800 (CST)
-Message-ID: <8632d618-4abe-4c88-b7a9-75ce9b1afe28@126.com>
-Date: Fri, 24 Apr 2026 09:44:54 +0800
+	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wD3h2400upp9tkVAQ--.48720S2;
+	Fri, 24 Apr 2026 10:15:16 +0800 (CST)
+Message-ID: <90bb684e-e8da-46e3-b7af-acc74a70fb81@126.com>
+Date: Fri, 24 Apr 2026 10:15:16 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -34,26 +34,25 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 sched_ext/for-7.2] sched_ext: Forbid cpu-form kfuncs
- from cid-form schedulers
+Subject: Re: [PATCH 13/17] sched_ext: Forbid cpu-form kfuncs from cid-form
+ schedulers
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
 Cc: sched-ext@lists.linux.dev, emil@etsalapatis.com,
  linux-kernel@vger.kernel.org, Cheng-Yang Chou <yphbchou0911@gmail.com>
-References: <20260421071945.3110084-13-tj@kernel.org>
- <38133c3fa792e3a5d5b425729f59b9ee@kernel.org>
+References: <20260424013220.2923402-14-tj@kernel.org>
 From: Zhao Mengmeng <zhaomzhao@126.com>
-In-Reply-To: <38133c3fa792e3a5d5b425729f59b9ee@kernel.org>
+In-Reply-To: <20260424013220.2923402-14-tj@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD37+cWy+ppTKDXAA--.60881S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3XrWxKFWUArWUur1kAr18Zrb_yoW7WF1kpF
-	WFgrs0kr1kJas7uan7tan5CrW5Cw1kJa1xuw1DCFySkwsrtFWrJ34Svr1jq3s8Wrn5G3yD
+X-CM-TRANSID:_____wD3h2400upp9tkVAQ--.48720S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3XrWxKFWUArWUur1kAr18Zrb_yoW7CrW8pF
+	WFgrZ0kr1kJa97u3Z7tan5CrW5Cw1kJa1xuw1DCFySkw4qqFWrJ34Svr1jq3s8Wrn5G3yD
 	XF10vFW7Wr1jkaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j1VbkUUUUU=
-X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBqhcNhGnqyxcl6wAA3l
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j1xRDUUUUU=
+X-CM-SenderInfo: 52kd0zp2kd0qqrswhudrp/xtbBlxTWTmnq0jSa8wAA3X
 
-On 4/24/26 07:04, Tejun Heo wrote:
+On 4/24/26 09:32, Tejun Heo wrote:
 > cid and cpu are both small s32s, trivially confused when a cid-form
 > scheduler calls a cpu-keyed kfunc. Reject cid-form programs that
 > reference any kfunc in the new scx_kfunc_ids_cpu_only at verifier load
@@ -76,15 +75,18 @@ On 4/24/26 07:04, Tejun Heo wrote:
 > Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 > Cc: Zhao Mengmeng <zhaomzhao@126.com>
 > ---
->  kernel/sched/ext.c |   51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  kernel/sched/ext.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++
 >  1 file changed, 51 insertions(+)
 > 
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index abc0c798150d..37f37f31b025 100644
 > --- a/kernel/sched/ext.c
 > +++ b/kernel/sched/ext.c
-> @@ -9969,6 +9969,47 @@ static const struct btf_kfunc_id_set scx
+> @@ -9979,6 +9979,47 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
+>  	.filter			= scx_kfunc_context_filter,
 >  };
-> 
->  /*
+>  
+> +/*
 > + * cpu-form kfuncs that are forbidden from cid-form schedulers
 > + * (bpf_sched_ext_ops_cid). Programs targeting the cid struct_ops type must
 > + * use the cid-form alternative (cid/cmask kfuncs).
@@ -128,26 +130,24 @@ On 4/24/26 07:04, Tejun Heo wrote:
 
 Hi Tejun,
 
-Looks good to me.
-
+Build it and check the vmlinux.h, no signature changes, selftests build well. So looks good to me.
+ 
 Reviewed-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-
-> +/*
+>  /*
 >   * Per-op kfunc allow flags. Each bit corresponds to a context-sensitive kfunc
 >   * group; an op may permit zero or more groups, with the union expressed in
->   * scx_kf_allow_flags[]. The verifier-time filter (scx_kfunc_context_filter())
-> @@ -10031,6 +10072,7 @@ int scx_kfunc_context_filter(const struc
+> @@ -10042,6 +10083,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
 >  	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
 >  	bool in_idle = btf_id_set8_contains(&scx_kfunc_ids_idle, kfunc_id);
 >  	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
 > +	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
 >  	u32 moff, flags;
-> 
+>  
 >  	/* Not an SCX kfunc - allow. */
-> @@ -10068,6 +10110,15 @@ int scx_kfunc_context_filter(const struc
+> @@ -10079,6 +10121,15 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
 >  	    prog->aux->st_ops != &bpf_sched_ext_ops_cid)
 >  		return -EACCES;
-> 
+>  
 > +	/*
 > +	 * cid-form schedulers must use cid/cmask kfuncs. cid and cpu are both
 > +	 * small s32s and trivially confused, so cpu-only kfuncs are rejected at
