@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C553FFAD7;
-	Fri, 24 Apr 2026 20:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15F040148F;
+	Fri, 24 Apr 2026 20:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777063471; cv=none; b=Zibpb1d1qtB5VJeugYepNpJxfjI0QnNC3Pm1KeUJOMbfaokBNoV0Gk+Ol2Y4/RYLqyaNjF+wvvolKezywmrTxHygjVnCtrlb4EVul1PeMxApcloWnRdq122thmTDHzsxfw2cfx4TucUgRmUo59Lk7EwIUL6p49DBVyB5bgffIp8=
+	t=1777063472; cv=none; b=twC52SzF0hYK1Jd5bKCdt2XQNJaxN9gmwgxqI7iHblxY1BK8I8LTwZCj8KS60SHkkfCRnhm6yxWPduwnrlphJxLi6vj3zjWyrmYlxz5BOtyW837nM5+Y30lg90qwt5+hM3rQhcZqC+UFIzN5ECeQVTO13gLw7wOnjbfIs+yeA+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777063471; c=relaxed/simple;
-	bh=qPJgdoqthPXRaxCT3RdewnobRnyX54NzogEAbZX+gxU=;
+	s=arc-20240116; t=1777063472; c=relaxed/simple;
+	bh=ANEytGs1+qLxgWyc7LeyCkCiw6I6fwuwtWhLccBP09w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABCJVOSQtLTi3+16Bs9xif2eyreNaz6UhT9jUR4xeMwNwjq53DqllbPY6O4g39iw/STQO3CSAV+lgX+5nppzD3bJnJjzzvkfcPkL9J9QbZ5XUQQZXBjpFjgM+2wb1Gi48lW/ROYLiDSn9+l1FG3B2MtPFByTA2PlSBdf/HyHtZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FfYPh1vY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rB1FSxd5+ks617dGtMlUbwv+oLWSd+CKH5X6ZxquNgFrUbPdLGHO4u7hFojvshZgwXwkvCyv1EVbnBs8JubSd81wqTkMqR5ZfBbXC9bZCm9ibqPSxX1glwK4hU/jPlz/kYkfwxjJ7o+/nYQYoEuCiwE1HoDC8w3m+V5olm+e3lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NHXoGH79; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FfYPh1vY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46025C2BCB0;
-	Fri, 24 Apr 2026 20:44:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NHXoGH79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A09C19425;
+	Fri, 24 Apr 2026 20:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777063471;
-	bh=qPJgdoqthPXRaxCT3RdewnobRnyX54NzogEAbZX+gxU=;
+	s=k20201202; t=1777063472;
+	bh=ANEytGs1+qLxgWyc7LeyCkCiw6I6fwuwtWhLccBP09w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FfYPh1vYC3tKQQndNIcAICbwTx3xGH181zfiBIrRxXbcs3dnyXg4+LJ3aWiqSiA1z
-	 dORYtsioE55uSMBVIqna7R5nyi2QwLx4J0ybpP0eL+RbX5bZFIOKSCZR/3K3NttM+M
-	 tYVTHkzEjWeuz0wAYn+sCCXr/uQuM/QT66Nq94X7kuaJrlYXac3mpoYSd85J9WJPI9
-	 ImW9DHqEZdSTCkz8o3GURrrBbAbUKmq00w79IW4j6PEUPnEmU+Ki4qzBR+9hhJIdSC
-	 91UJedsAgn/PrG03rQtAJywkRnntJf/NGHwyg3R3uvKXTrhXAHFIlKdt4UZCjR4J+H
-	 LTnj+Csoep6gw==
+	b=NHXoGH79sUBdVq7W/954FQQGr2iYZJsyDwjZzzoTgFZ0yewSGOT+vHCdZZaMmbMFN
+	 gYs1L7+F9EjWUmlNd678n82ae7s3nNcHThHjOP5X/h5ZbBSNeOMXbJA+LWSTfljhyt
+	 vP7ZDdfig1QcILzaXU3dVpz9Igabd8l16PlnQtvitb9cDpw4GjwHXGAbADKGbQTime
+	 3LRIAaMOifKmucUjqz2ryjJeDJZmqkqq/AsWjmz4VAaa0JDM9I/HOil1WyOlG5Es/I
+	 84Jx230lccBkGnuoxTScTmLnJSFr4DndMkzWAHU8ZvmjW82bDdeuq0M0t/G11Mnbnu
+	 VJRlTPLAOS68w==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -35,11 +35,10 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	Chris Mason <clm@meta.com>,
 	Ryan Newton <newton@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH 11/13] sched_ext: Make bypass LB cpumasks per-scheduler
-Date: Fri, 24 Apr 2026 10:44:16 -1000
-Message-ID: <20260424204418.3809733-12-tj@kernel.org>
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 12/13] sched_ext: Align cgroup #ifdef guards with SUB_SCHED vs GROUP_SCHED
+Date: Fri, 24 Apr 2026 10:44:17 -1000
+Message-ID: <20260424204418.3809733-13-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424204418.3809733-1-tj@kernel.org>
 References: <20260424204418.3809733-1-tj@kernel.org>
@@ -51,130 +50,113 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bypass_lb_{donee,resched}_cpumask were file-scope statics shared by all
-scheduler instances. With CONFIG_EXT_SUB_SCHED, multiple sched instances
-each arm their own bypass_lb_timer; concurrent bypass_lb_node() calls RMW
-the global cpumasks with no lock, corrupting donee/resched decisions.
+Two EXT_GROUP_SCHED/SUB_SCHED guards are misclassified:
 
-Move the cpumasks into struct scx_sched, allocate them alongside the timer
-in scx_alloc_and_add_sched(), free them in scx_sched_free_rcu_work().
+- scx_root_enable_workfn()'s cgroup_get(cgrp) and the err_put_cgrp unwind
+  in scx_alloc_and_add_sched() are under `#if GROUP || SUB`, but the
+  matching cgroup_put() in scx_sched_free_rcu_work() is inside `#ifdef SUB`
+  only (via sch->cgrp, stored only under SUB). GROUP-only would leak a
+  reference on every root-sched enable.
 
-Fixes: 95d1df610cdc ("sched_ext: Implement load balancer for bypass mode")
-Cc: stable@vger.kernel.org # v6.19+
+- sch_cgroup() / set_cgroup_sched() live under `#if GROUP || SUB` but touch
+  SUB-only fields (sch->cgrp, cgroup->scx_sched). GROUP-only wouldn't
+  compile.
+
+GROUP needs CGROUP_SCHED; SUB needs only CGROUPS. CGROUPS=y/CGROUP_SCHED=n
+gives the reachable GROUP=n, SUB=y combination; GROUP=y, SUB=n isn't
+reachable today (SUB is def_bool y under CGROUPS). Neither miscategorization
+triggers a real bug in any reachable config, but keep the guards honest:
+
+- Narrow cgroup_get and err_put_cgrp to `#ifdef SUB` (matches the free-side
+  put).
+- Move sch_cgroup() and set_cgroup_sched() to a separate `#ifdef SUB` block
+  with no-op stubs for the !SUB case; keep root_cgroup() and scx_cgroup_{
+  lock,unlock}() under `#if GROUP || SUB` since those only need cgroup core.
+
+Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
 Reported-by: Chris Mason <clm@meta.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext.c          | 33 +++++++++++++++++++--------------
- kernel/sched/ext_internal.h |  2 ++
- 2 files changed, 21 insertions(+), 14 deletions(-)
+ kernel/sched/ext.c | 41 ++++++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 19 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index da188af21b3d..0980531c0e6c 100644
+index 0980531c0e6c..9a31b8f064e9 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -53,8 +53,6 @@ DEFINE_STATIC_KEY_FALSE(__scx_enabled);
- DEFINE_STATIC_PERCPU_RWSEM(scx_fork_rwsem);
- static atomic_t scx_enable_state_var = ATOMIC_INIT(SCX_DISABLED);
- static DEFINE_RAW_SPINLOCK(scx_bypass_lock);
--static cpumask_var_t scx_bypass_lb_donee_cpumask;
--static cpumask_var_t scx_bypass_lb_resched_cpumask;
- static bool scx_init_task_enabled;
- static bool scx_switching_all;
- DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
-@@ -4747,6 +4745,8 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 	irq_work_sync(&sch->disable_irq_work);
- 	kthread_destroy_worker(sch->helper);
- 	timer_shutdown_sync(&sch->bypass_lb_timer);
-+	free_cpumask_var(sch->bypass_lb_donee_cpumask);
-+	free_cpumask_var(sch->bypass_lb_resched_cpumask);
- 
- #ifdef CONFIG_EXT_SUB_SCHED
- 	kfree(sch->cgrp_path);
-@@ -5102,8 +5102,8 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, s32 donor,
- static void bypass_lb_node(struct scx_sched *sch, int node)
- {
- 	const struct cpumask *node_mask = cpumask_of_node(node);
--	struct cpumask *donee_mask = scx_bypass_lb_donee_cpumask;
--	struct cpumask *resched_mask = scx_bypass_lb_resched_cpumask;
-+	struct cpumask *donee_mask = sch->bypass_lb_donee_cpumask;
-+	struct cpumask *resched_mask = sch->bypass_lb_resched_cpumask;
- 	u32 nr_tasks = 0, nr_cpus = 0, nr_balanced = 0;
- 	u32 nr_target, nr_donor_target;
- 	u32 before_min = U32_MAX, before_max = 0;
-@@ -6499,6 +6499,15 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 	init_irq_work(&sch->disable_irq_work, scx_disable_irq_workfn);
- 	kthread_init_work(&sch->disable_work, scx_disable_workfn);
- 	timer_setup(&sch->bypass_lb_timer, scx_bypass_lb_timerfn, 0);
-+
-+	if (!alloc_cpumask_var(&sch->bypass_lb_donee_cpumask, GFP_KERNEL)) {
-+		ret = -ENOMEM;
-+		goto err_stop_helper;
-+	}
-+	if (!alloc_cpumask_var(&sch->bypass_lb_resched_cpumask, GFP_KERNEL)) {
-+		ret = -ENOMEM;
-+		goto err_free_lb_cpumask;
-+	}
- 	sch->ops = *ops;
- 	rcu_assign_pointer(ops->priv, sch);
- 
-@@ -6508,14 +6517,14 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- 	char *buf = kzalloc(PATH_MAX, GFP_KERNEL);
- 	if (!buf) {
- 		ret = -ENOMEM;
--		goto err_stop_helper;
-+		goto err_free_lb_resched;
- 	}
- 	cgroup_path(cgrp, buf, PATH_MAX);
- 	sch->cgrp_path = kstrdup(buf, GFP_KERNEL);
- 	kfree(buf);
- 	if (!sch->cgrp_path) {
- 		ret = -ENOMEM;
--		goto err_stop_helper;
-+		goto err_free_lb_resched;
- 	}
- 
- 	sch->cgrp = cgrp;
-@@ -6550,10 +6559,12 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 	return sch;
- 
--#ifdef CONFIG_EXT_SUB_SCHED
-+err_free_lb_resched:
-+	free_cpumask_var(sch->bypass_lb_resched_cpumask);
-+err_free_lb_cpumask:
-+	free_cpumask_var(sch->bypass_lb_donee_cpumask);
- err_stop_helper:
- 	kthread_destroy_worker(sch->helper);
--#endif
- err_free_pcpu:
- 	for_each_possible_cpu(cpu) {
- 		if (cpu == bypass_fail_cpu)
-@@ -9740,12 +9751,6 @@ static int __init scx_init(void)
- 		return ret;
- 	}
- 
--	if (!alloc_cpumask_var(&scx_bypass_lb_donee_cpumask, GFP_KERNEL) ||
--	    !alloc_cpumask_var(&scx_bypass_lb_resched_cpumask, GFP_KERNEL)) {
--		pr_err("sched_ext: Failed to allocate cpumasks\n");
--		return -ENOMEM;
--	}
--
- 	return 0;
+@@ -4413,21 +4413,6 @@ static struct cgroup *root_cgroup(void)
+ 	return &cgrp_dfl_root.cgrp;
  }
- __initcall(scx_init);
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 62ce4eaf6a3f..a075732d4430 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -1075,6 +1075,8 @@ struct scx_sched {
- 	struct irq_work		disable_irq_work;
- 	struct kthread_work	disable_work;
- 	struct timer_list	bypass_lb_timer;
-+	cpumask_var_t		bypass_lb_donee_cpumask;
-+	cpumask_var_t		bypass_lb_resched_cpumask;
- 	struct rcu_work		rcu_work;
  
- 	/* all ancestors including self */
+-static struct cgroup *sch_cgroup(struct scx_sched *sch)
+-{
+-	return sch->cgrp;
+-}
+-
+-/* for each descendant of @cgrp including self, set ->scx_sched to @sch */
+-static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
+-{
+-	struct cgroup *pos;
+-	struct cgroup_subsys_state *css;
+-
+-	cgroup_for_each_live_descendant_pre(pos, css, cgrp)
+-		rcu_assign_pointer(pos->scx_sched, sch);
+-}
+-
+ static void scx_cgroup_lock(void)
+ {
+ #ifdef CONFIG_EXT_GROUP_SCHED
+@@ -4445,12 +4430,30 @@ static void scx_cgroup_unlock(void)
+ }
+ #else	/* CONFIG_EXT_GROUP_SCHED || CONFIG_EXT_SUB_SCHED */
+ static struct cgroup *root_cgroup(void) { return NULL; }
+-static struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
+-static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
+ static void scx_cgroup_lock(void) {}
+ static void scx_cgroup_unlock(void) {}
+ #endif	/* CONFIG_EXT_GROUP_SCHED || CONFIG_EXT_SUB_SCHED */
+ 
++#ifdef CONFIG_EXT_SUB_SCHED
++static struct cgroup *sch_cgroup(struct scx_sched *sch)
++{
++	return sch->cgrp;
++}
++
++/* for each descendant of @cgrp including self, set ->scx_sched to @sch */
++static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
++{
++	struct cgroup *pos;
++	struct cgroup_subsys_state *css;
++
++	cgroup_for_each_live_descendant_pre(pos, css, cgrp)
++		rcu_assign_pointer(pos->scx_sched, sch);
++}
++#else	/* CONFIG_EXT_SUB_SCHED */
++static struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
++static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
++#endif	/* CONFIG_EXT_SUB_SCHED */
++
+ /*
+  * Omitted operations:
+  *
+@@ -6583,7 +6586,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ err_free_sch:
+ 	kfree(sch);
+ err_put_cgrp:
+-#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
++#ifdef CONFIG_EXT_SUB_SCHED
+ 	cgroup_put(cgrp);
+ #endif
+ 	return ERR_PTR(ret);
+@@ -6674,7 +6677,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 	if (ret)
+ 		goto err_unlock;
+ 
+-#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
++#ifdef CONFIG_EXT_SUB_SCHED
+ 	cgroup_get(cgrp);
+ #endif
+ 	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
 -- 
 2.53.0
 
