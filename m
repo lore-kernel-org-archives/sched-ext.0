@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15F040148F;
-	Fri, 24 Apr 2026 20:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C167C4014A0;
+	Fri, 24 Apr 2026 20:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777063472; cv=none; b=twC52SzF0hYK1Jd5bKCdt2XQNJaxN9gmwgxqI7iHblxY1BK8I8LTwZCj8KS60SHkkfCRnhm6yxWPduwnrlphJxLi6vj3zjWyrmYlxz5BOtyW837nM5+Y30lg90qwt5+hM3rQhcZqC+UFIzN5ECeQVTO13gLw7wOnjbfIs+yeA+Y=
+	t=1777063473; cv=none; b=u6mTKAqpsT9RDLZkVrVuBuEDr974E6YAOcUg/7cdsBbRm9gN4SyCQTUcDOCp+CA6xONFBrQZMOTLtYhVzdXRgkX1iNDqAK1QBdV8IXrChXYmhbdM1lfRs6AkiK8glf3kQgeMS20NOkeWFkpY+yYkc8OwY1T7Fn6Hm5lzuChe6hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777063472; c=relaxed/simple;
-	bh=ANEytGs1+qLxgWyc7LeyCkCiw6I6fwuwtWhLccBP09w=;
+	s=arc-20240116; t=1777063473; c=relaxed/simple;
+	bh=HY8mhoSA8xFDxWdsYS/lGGl51bT5hsX31Wi7bVd76sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rB1FSxd5+ks617dGtMlUbwv+oLWSd+CKH5X6ZxquNgFrUbPdLGHO4u7hFojvshZgwXwkvCyv1EVbnBs8JubSd81wqTkMqR5ZfBbXC9bZCm9ibqPSxX1glwK4hU/jPlz/kYkfwxjJ7o+/nYQYoEuCiwE1HoDC8w3m+V5olm+e3lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NHXoGH79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aiw9AC8wH4v6WbJwewJg69/h7MlhADzeMVq468vmC9GF5kNauwZ2ki1QcjBArXDpk7BlEh/FQuzQ0MrvUO3LXerP4nsVbB5ogGWOwFoaGMhcwaonDJBOU6ii6YjLVDlvD68tohYsS4ZK0BAizV1diMLIHySSy9vFOR9TZ/6KKbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hBBx3lMc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NHXoGH79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A09C19425;
-	Fri, 24 Apr 2026 20:44:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hBBx3lMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58335C19425;
+	Fri, 24 Apr 2026 20:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777063472;
-	bh=ANEytGs1+qLxgWyc7LeyCkCiw6I6fwuwtWhLccBP09w=;
+	s=k20201202; t=1777063473;
+	bh=HY8mhoSA8xFDxWdsYS/lGGl51bT5hsX31Wi7bVd76sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHXoGH79sUBdVq7W/954FQQGr2iYZJsyDwjZzzoTgFZ0yewSGOT+vHCdZZaMmbMFN
-	 gYs1L7+F9EjWUmlNd678n82ae7s3nNcHThHjOP5X/h5ZbBSNeOMXbJA+LWSTfljhyt
-	 vP7ZDdfig1QcILzaXU3dVpz9Igabd8l16PlnQtvitb9cDpw4GjwHXGAbADKGbQTime
-	 3LRIAaMOifKmucUjqz2ryjJeDJZmqkqq/AsWjmz4VAaa0JDM9I/HOil1WyOlG5Es/I
-	 84Jx230lccBkGnuoxTScTmLnJSFr4DndMkzWAHU8ZvmjW82bDdeuq0M0t/G11Mnbnu
-	 VJRlTPLAOS68w==
+	b=hBBx3lMcUrXku7Fu592tEoq8wGUrfvE6cYqBD400odo1OJYJjzGgzq7mKqpGjy6bI
+	 oXfq8pa4ZjyJtZXwkgvnnpBbfrKIhGJqJEt2z6lNo75JkNf39eDWuQr2thhEeIcZCH
+	 Z1ZAtQOmCD+iWXNm2D3ZcdHOBnfGHizL7RhR0EkRlemCCPTRGQXPngMn1oI/cGhSn/
+	 vE9+CfrLn5Cmd0S3wH4wv5VLzu2m9p0JcUMu2JyZ6kkQ0tvBvJYRF+V7npckfja0U/
+	 0mVHjjjK2rq+z2JQGmz0EklW4UF7BPbmVEQQhwnDiKIyttN66ZWwfJHrqy7lZbZYuD
+	 jZeOnuWS4O8TQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -36,9 +36,9 @@ Cc: sched-ext@lists.linux.dev,
 	Chris Mason <clm@meta.com>,
 	Ryan Newton <newton@meta.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 12/13] sched_ext: Align cgroup #ifdef guards with SUB_SCHED vs GROUP_SCHED
-Date: Fri, 24 Apr 2026 10:44:17 -1000
-Message-ID: <20260424204418.3809733-13-tj@kernel.org>
+Subject: [PATCH 13/13] sched_ext: Refuse cross-task select_cpu_from_kfunc calls
+Date: Fri, 24 Apr 2026 10:44:18 -1000
+Message-ID: <20260424204418.3809733-14-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424204418.3809733-1-tj@kernel.org>
 References: <20260424204418.3809733-1-tj@kernel.org>
@@ -50,113 +50,70 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Two EXT_GROUP_SCHED/SUB_SCHED guards are misclassified:
+select_cpu_from_kfunc() skipped pi_lock for @p when called from
+ops.select_cpu() or another rq-locked SCX op, assuming the held lock
+protects @p. scx_bpf_select_cpu_dfl() / __scx_bpf_select_cpu_and() accept an
+arbitrary KF_RCU task_struct, so a caller in e.g. ops.select_cpu(p1) or
+ops.enqueue(p1) can pass some other p2 - the held pi_lock / rq lock is p1's,
+not p2's - and reading p2->cpus_ptr / nr_cpus_allowed races with
+set_cpus_allowed_ptr() and migrate_disable_switch() on another CPU.
 
-- scx_root_enable_workfn()'s cgroup_get(cgrp) and the err_put_cgrp unwind
-  in scx_alloc_and_add_sched() are under `#if GROUP || SUB`, but the
-  matching cgroup_put() in scx_sched_free_rcu_work() is inside `#ifdef SUB`
-  only (via sch->cgrp, stored only under SUB). GROUP-only would leak a
-  reference on every root-sched enable.
+Abort the scheduler on cross-task calls in both branches: check @p against
+direct_dispatch_task (the task currently being selected) for
+ops.select_cpu(), and task_rq(p) against scx_locked_rq() for other rq-locked
+SCX ops.
 
-- sch_cgroup() / set_cgroup_sched() live under `#if GROUP || SUB` but touch
-  SUB-only fields (sch->cgrp, cgroup->scx_sched). GROUP-only wouldn't
-  compile.
-
-GROUP needs CGROUP_SCHED; SUB needs only CGROUPS. CGROUPS=y/CGROUP_SCHED=n
-gives the reachable GROUP=n, SUB=y combination; GROUP=y, SUB=n isn't
-reachable today (SUB is def_bool y under CGROUPS). Neither miscategorization
-triggers a real bug in any reachable config, but keep the guards honest:
-
-- Narrow cgroup_get and err_put_cgrp to `#ifdef SUB` (matches the free-side
-  put).
-- Move sch_cgroup() and set_cgroup_sched() to a separate `#ifdef SUB` block
-  with no-op stubs for the !SUB case; keep root_cgroup() and scx_cgroup_{
-  lock,unlock}() under `#if GROUP || SUB` since those only need cgroup core.
-
-Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
+Fixes: 0022b328504d ("sched_ext: Decouple kfunc unlocked-context check from kf_mask")
 Reported-by: Chris Mason <clm@meta.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>
 ---
- kernel/sched/ext.c | 41 ++++++++++++++++++++++-------------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+ kernel/sched/ext_idle.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0980531c0e6c..9a31b8f064e9 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4413,21 +4413,6 @@ static struct cgroup *root_cgroup(void)
- 	return &cgrp_dfl_root.cgrp;
+diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
+index c43d62d90e40..ff4d1b97437d 100644
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -927,14 +927,24 @@ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+ 	 * Accessing p->cpus_ptr / p->nr_cpus_allowed needs either @p's rq
+ 	 * lock or @p's pi_lock. Three cases:
+ 	 *
+-	 *  - inside ops.select_cpu(): try_to_wake_up() holds @p's pi_lock.
++	 *  - inside ops.select_cpu(): try_to_wake_up() holds the wake-up
++	 *    task's pi_lock (stashed in direct_dispatch_task;
++	 *    mark_direct_dispatch() invalidates it post-dispatch).
+ 	 *  - other rq-locked SCX op: scx_locked_rq() points at the held rq.
+ 	 *  - truly unlocked (UNLOCKED ops, SYSCALL, non-SCX struct_ops):
+ 	 *    nothing held, take pi_lock ourselves.
++	 *
++	 * In the first two cases, BPF schedulers may pass an arbitrary task
++	 * that the held lock doesn't cover. Refuse those.
+ 	 */
+ 	if (this_rq()->scx.in_select_cpu) {
++		if (p != __this_cpu_read(direct_dispatch_task))
++			goto cross_task;
+ 		lockdep_assert_held(&p->pi_lock);
+-	} else if (!scx_locked_rq()) {
++	} else if (scx_locked_rq()) {
++		if (task_rq(p) != scx_locked_rq())
++			goto cross_task;
++	} else {
+ 		raw_spin_lock_irqsave(&p->pi_lock, irq_flags);
+ 		we_locked = true;
+ 	}
+@@ -960,6 +970,11 @@ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+ 		raw_spin_unlock_irqrestore(&p->pi_lock, irq_flags);
+ 
+ 	return cpu;
++
++cross_task:
++	scx_error(sch, "select_cpu kfunc called cross-task on %s[%d]",
++		  p->comm, p->pid);
++	return -EINVAL;
  }
  
--static struct cgroup *sch_cgroup(struct scx_sched *sch)
--{
--	return sch->cgrp;
--}
--
--/* for each descendant of @cgrp including self, set ->scx_sched to @sch */
--static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
--{
--	struct cgroup *pos;
--	struct cgroup_subsys_state *css;
--
--	cgroup_for_each_live_descendant_pre(pos, css, cgrp)
--		rcu_assign_pointer(pos->scx_sched, sch);
--}
--
- static void scx_cgroup_lock(void)
- {
- #ifdef CONFIG_EXT_GROUP_SCHED
-@@ -4445,12 +4430,30 @@ static void scx_cgroup_unlock(void)
- }
- #else	/* CONFIG_EXT_GROUP_SCHED || CONFIG_EXT_SUB_SCHED */
- static struct cgroup *root_cgroup(void) { return NULL; }
--static struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
--static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
- static void scx_cgroup_lock(void) {}
- static void scx_cgroup_unlock(void) {}
- #endif	/* CONFIG_EXT_GROUP_SCHED || CONFIG_EXT_SUB_SCHED */
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+static struct cgroup *sch_cgroup(struct scx_sched *sch)
-+{
-+	return sch->cgrp;
-+}
-+
-+/* for each descendant of @cgrp including self, set ->scx_sched to @sch */
-+static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
-+{
-+	struct cgroup *pos;
-+	struct cgroup_subsys_state *css;
-+
-+	cgroup_for_each_live_descendant_pre(pos, css, cgrp)
-+		rcu_assign_pointer(pos->scx_sched, sch);
-+}
-+#else	/* CONFIG_EXT_SUB_SCHED */
-+static struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
-+static void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
-+#endif	/* CONFIG_EXT_SUB_SCHED */
-+
- /*
-  * Omitted operations:
-  *
-@@ -6583,7 +6586,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
- err_free_sch:
- 	kfree(sch);
- err_put_cgrp:
--#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
-+#ifdef CONFIG_EXT_SUB_SCHED
- 	cgroup_put(cgrp);
- #endif
- 	return ERR_PTR(ret);
-@@ -6674,7 +6677,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_unlock;
- 
--#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
-+#ifdef CONFIG_EXT_SUB_SCHED
- 	cgroup_get(cgrp);
- #endif
- 	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
+ /**
 -- 
 2.53.0
 
