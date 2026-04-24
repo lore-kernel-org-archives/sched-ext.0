@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA07237186E;
-	Fri, 24 Apr 2026 17:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D2C3E6389;
+	Fri, 24 Apr 2026 17:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777051644; cv=none; b=szOVBtWdnSfUdZfPnr8mk09UQyZLp6k4tDsb3PiQMNaTjRIbLZJSR8JINKxcV2eLtadOgs42jhXGf8JIKw2ZVlFgDQ/sNS5HshzYAWXaHhFDBnt4dnRSqks8NqGPaJ+F/FTBQ3fS24aYbnmaDvzdJ1ZsLzOsCydqlYxyUXAnTbs=
+	t=1777051645; cv=none; b=dFzkzdeUe3wpw456TGfmqH9YgCbWhcVoIAW7ceYDqhHipDsdwyHBYXOYVY0Z7HGqdYjF/7jUvmmwotNJ5khLaVyIeStVdzcz2B5s04687eN41UBm0wJPwG16soYSf/fj9yPEuKQFs5aU+CjjSJ/Rm4sejQ/8l4pBFHGJV24e2BQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777051644; c=relaxed/simple;
-	bh=uP54tN+3Hp8vh8q+K1Yw91i9zeNJBnvABeKhnVGsEyY=;
+	s=arc-20240116; t=1777051645; c=relaxed/simple;
+	bh=hBcwV78SziahaSIcr683ZxhcgCxfjB9pwg/FWrtOYj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHWDHkRpM9zdT129tUj/9SHo/OtdSRdompk2qh+gKE6JDnMmeaxkqpZOVDRbBgBkCs4+xpWeXvxb81UAP/cU2yDAKQpylXz0Iej/ehIVtkizDd7UpFSoZO1kJOm4QGP3ajBT2MT9Mtw+ECR0UKaIMNNDPNXOprOQeNnUTP8Xn5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZhEsTLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHeIbfEN5O79ucjexdhWtBzUhfLzTUEdXX6+FhGTlwllssK79yav4QZ0CVuvR2uAv2VUqdJE2EAw/sLMhlinnjv2hUXCkT59arnKslh/yM3ggQHL2Hl5OVRUObL3XPa2AJkQEjVa/q2cecq2t2QwOq+PeN5YmzELn9E0Jpx1Abk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K3jkPJu5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZhEsTLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF33CC2BCB2;
-	Fri, 24 Apr 2026 17:27:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K3jkPJu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C94C19425;
+	Fri, 24 Apr 2026 17:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777051644;
-	bh=uP54tN+3Hp8vh8q+K1Yw91i9zeNJBnvABeKhnVGsEyY=;
+	s=k20201202; t=1777051645;
+	bh=hBcwV78SziahaSIcr683ZxhcgCxfjB9pwg/FWrtOYj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZhEsTLDO6NRxL+QlXfe4H8sbC1n672g84yMEN6RTJh03H4B8aS5fe1fxAZjk+buT
-	 ab7M/9gSHhFh42vn4sTxnDthaT0Wx6U1aRG6CikcekudxeWpBp5l5fH95qvGN7R1S1
-	 M9OHnCZUUnNkmjwRr/dmSGAlLJFYHQmcIOkdRk1ZnCEgOcFGbu642p8awWvS9yQDmS
-	 2BZZctKsAkjFN/8k7c6Mg/9byt7USML8VmgSKBesZfFX7Nvi7kUsl+rUvgzAT5+30C
-	 H/aGGuUgti0xm4yQCqkqlYWD5Jn3mN2q6rplzkdxNplvsLRfok0tjVOwgCY/5RQlvm
-	 SY//wrnoYNU/w==
+	b=K3jkPJu5vyjf/CjoupOO23RY+4VaJqZVmXmIlOjudWx1fF3xewaPxjt0qk4hsusob
+	 1GSRad4rlu49xlqlHJyjn9AywgD/ZqUzK2On28Ok5EWS0LW1pB9u8IWBhHgXGmjkfo
+	 vob/zZrJONZvTaLWL2fFH0mEbnKfZYimpQWG3qyVf/0k+8uX97KkS4t1iNLBt0m+16
+	 XFsvNHoNPQMdAtPNBAoC76dZbsl7UDhTWQrkIZ6Ih4YOIlDH34V9SjIV+OuxKHUaEL
+	 j3yv4piUIMq60mTnDFU3NAg8Py45KYhixWEUdAAK39CjjmiYLWAp4cuP02g4+DSssv
+	 4y6LgcwVXqLnA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -36,9 +36,9 @@ Cc: sched-ext@lists.linux.dev,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>,
 	Zhao Mengmeng <zhaomzhao@126.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 01/17] sched_ext: Add ext_types.h for early subsystem-wide defs
-Date: Fri, 24 Apr 2026 07:27:05 -1000
-Message-ID: <20260424172721.3458520-2-tj@kernel.org>
+Subject: [PATCH 02/17] sched_ext: Rename ops_cpu_valid() to scx_cpu_valid() and expose it
+Date: Fri, 24 Apr 2026 07:27:06 -1000
+Message-ID: <20260424172721.3458520-3-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424172721.3458520-1-tj@kernel.org>
 References: <20260424172721.3458520-1-tj@kernel.org>
@@ -50,129 +50,167 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce kernel/sched/ext_types.h as the early-def header for the
-sched_ext compilation unit. Included from kernel/sched/build_policy.c
-before ext_internal.h so every later header and source in the unit
-sees its content without re-inclusion. Later patches add their types
-here (struct scx_cid_topo, scx_cmask, scx_cid_shard, etc.) so the
-subsystem has one place to stash types shared across the TU.
+Rename the static ext.c helper and declare it in ext_internal.h so
+ext_idle.c and the upcoming cid code can call it directly instead of
+relying on build_policy.c textual inclusion.
 
-Move enum scx_consts (SCX_DSP_DFL_MAX_BATCH, SCX_WATCHDOG_MAX_TIMEOUT,
-SCX_SUB_MAX_DEPTH, etc.) here as the initial content. Ops-facing
-content stays in ext_internal.h.
+Pure rename and visibility change.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- kernel/sched/build_policy.c |  1 +
- kernel/sched/ext_internal.h | 32 ---------------------------
- kernel/sched/ext_types.h    | 43 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 44 insertions(+), 32 deletions(-)
- create mode 100644 kernel/sched/ext_types.h
+ kernel/sched/ext.c          | 22 +++++++++++-----------
+ kernel/sched/ext_idle.c     |  6 +++---
+ kernel/sched/ext_internal.h |  2 ++
+ 3 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/sched/build_policy.c b/kernel/sched/build_policy.c
-index 755883faf751..180ade38625e 100644
---- a/kernel/sched/build_policy.c
-+++ b/kernel/sched/build_policy.c
-@@ -58,6 +58,7 @@
- #include "deadline.c"
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 0ba12449f0c6..1d6613dc4d3b 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1055,7 +1055,7 @@ static inline bool __cpu_valid(s32 cpu)
+ }
  
- #ifdef CONFIG_SCHED_CLASS_EXT
-+# include "ext_types.h"
- # include "ext_internal.h"
- # include "ext.c"
- # include "ext_idle.c"
+ /**
+- * ops_cpu_valid - Verify a cpu number, to be used on ops input args
++ * scx_cpu_valid - Verify a cpu number, to be used on ops input args
+  * @sch: scx_sched to abort on error
+  * @cpu: cpu number which came from a BPF ops
+  * @where: extra information reported on error
+@@ -1064,7 +1064,7 @@ static inline bool __cpu_valid(s32 cpu)
+  * Verify that it is in range and one of the possible cpus. If invalid, trigger
+  * an ops error.
+  */
+-static bool ops_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where)
++bool scx_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where)
+ {
+ 	if (__cpu_valid(cpu)) {
+ 		return true;
+@@ -1677,7 +1677,7 @@ static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
+ 	if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
+ 		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
+ 
+-		if (!ops_cpu_valid(sch, cpu, "in SCX_DSQ_LOCAL_ON dispatch verdict"))
++		if (!scx_cpu_valid(sch, cpu, "in SCX_DSQ_LOCAL_ON dispatch verdict"))
+ 			return find_global_dsq(sch, tcpu);
+ 
+ 		return &cpu_rq(cpu)->scx.local_dsq;
+@@ -3260,7 +3260,7 @@ static int select_task_rq_scx(struct task_struct *p, int prev_cpu, int wake_flag
+ 		this_rq()->scx.in_select_cpu = false;
+ 		p->scx.selected_cpu = cpu;
+ 		*ddsp_taskp = NULL;
+-		if (ops_cpu_valid(sch, cpu, "from ops.select_cpu()"))
++		if (scx_cpu_valid(sch, cpu, "from ops.select_cpu()"))
+ 			return cpu;
+ 		else
+ 			return prev_cpu;
+@@ -8679,7 +8679,7 @@ static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 	struct rq *this_rq;
+ 	unsigned long irq_flags;
+ 
+-	if (!ops_cpu_valid(sch, cpu, NULL))
++	if (!scx_cpu_valid(sch, cpu, NULL))
+ 		return;
+ 
+ 	local_irq_save(irq_flags);
+@@ -8775,7 +8775,7 @@ __bpf_kfunc s32 scx_bpf_dsq_nr_queued(u64 dsq_id)
+ 	} else if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
+ 		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
+ 
+-		if (ops_cpu_valid(sch, cpu, NULL)) {
++		if (scx_cpu_valid(sch, cpu, NULL)) {
+ 			ret = READ_ONCE(cpu_rq(cpu)->scx.local_dsq.nr);
+ 			goto out;
+ 		}
+@@ -9164,7 +9164,7 @@ __bpf_kfunc u32 scx_bpf_cpuperf_cap(s32 cpu, const struct bpf_prog_aux *aux)
+ 	guard(rcu)();
+ 
+ 	sch = scx_prog_sched(aux);
+-	if (likely(sch) && ops_cpu_valid(sch, cpu, NULL))
++	if (likely(sch) && scx_cpu_valid(sch, cpu, NULL))
+ 		return arch_scale_cpu_capacity(cpu);
+ 	else
+ 		return SCX_CPUPERF_ONE;
+@@ -9192,7 +9192,7 @@ __bpf_kfunc u32 scx_bpf_cpuperf_cur(s32 cpu, const struct bpf_prog_aux *aux)
+ 	guard(rcu)();
+ 
+ 	sch = scx_prog_sched(aux);
+-	if (likely(sch) && ops_cpu_valid(sch, cpu, NULL))
++	if (likely(sch) && scx_cpu_valid(sch, cpu, NULL))
+ 		return arch_scale_freq_capacity(cpu);
+ 	else
+ 		return SCX_CPUPERF_ONE;
+@@ -9228,7 +9228,7 @@ __bpf_kfunc void scx_bpf_cpuperf_set(s32 cpu, u32 perf, const struct bpf_prog_au
+ 		return;
+ 	}
+ 
+-	if (ops_cpu_valid(sch, cpu, NULL)) {
++	if (scx_cpu_valid(sch, cpu, NULL)) {
+ 		struct rq *rq = cpu_rq(cpu), *locked_rq = scx_locked_rq();
+ 		struct rq_flags rf;
+ 
+@@ -9341,7 +9341,7 @@ __bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu, const struct bpf_prog_aux *aux)
+ 	if (unlikely(!sch))
+ 		return NULL;
+ 
+-	if (!ops_cpu_valid(sch, cpu, NULL))
++	if (!scx_cpu_valid(sch, cpu, NULL))
+ 		return NULL;
+ 
+ 	if (!sch->warned_deprecated_rq) {
+@@ -9398,7 +9398,7 @@ __bpf_kfunc struct task_struct *scx_bpf_cpu_curr(s32 cpu, const struct bpf_prog_
+ 	if (unlikely(!sch))
+ 		return NULL;
+ 
+-	if (!ops_cpu_valid(sch, cpu, NULL))
++	if (!scx_cpu_valid(sch, cpu, NULL))
+ 		return NULL;
+ 
+ 	return rcu_dereference(cpu_rq(cpu)->curr);
+diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
+index c43d62d90e40..11d11ea6ca6b 100644
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -917,7 +917,7 @@ static s32 select_cpu_from_kfunc(struct scx_sched *sch, struct task_struct *p,
+ 	bool we_locked = false;
+ 	s32 cpu;
+ 
+-	if (!ops_cpu_valid(sch, prev_cpu, NULL))
++	if (!scx_cpu_valid(sch, prev_cpu, NULL))
+ 		return -EINVAL;
+ 
+ 	if (!check_builtin_idle_enabled(sch))
+@@ -975,7 +975,7 @@ __bpf_kfunc s32 scx_bpf_cpu_node(s32 cpu, const struct bpf_prog_aux *aux)
+ 	guard(rcu)();
+ 
+ 	sch = scx_prog_sched(aux);
+-	if (unlikely(!sch) || !ops_cpu_valid(sch, cpu, NULL))
++	if (unlikely(!sch) || !scx_cpu_valid(sch, cpu, NULL))
+ 		return NUMA_NO_NODE;
+ 	return cpu_to_node(cpu);
+ }
+@@ -1257,7 +1257,7 @@ __bpf_kfunc bool scx_bpf_test_and_clear_cpu_idle(s32 cpu, const struct bpf_prog_
+ 	if (!check_builtin_idle_enabled(sch))
+ 		return false;
+ 
+-	if (!ops_cpu_valid(sch, cpu, NULL))
++	if (!scx_cpu_valid(sch, cpu, NULL))
+ 		return false;
+ 
+ 	return scx_idle_test_and_clear_cpu(cpu);
 diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 4a7ffc7f55d2..c35098668fb1 100644
+index c35098668fb1..5e3b79963d41 100644
 --- a/kernel/sched/ext_internal.h
 +++ b/kernel/sched/ext_internal.h
-@@ -8,38 +8,6 @@
- #define SCX_OP_IDX(op)		(offsetof(struct sched_ext_ops, op) / sizeof(void (*)(void)))
- #define SCX_MOFF_IDX(moff)	((moff) / sizeof(void (*)(void)))
+@@ -1350,6 +1350,8 @@ DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
  
--enum scx_consts {
--	SCX_DSP_DFL_MAX_BATCH		= 32,
--	SCX_DSP_MAX_LOOPS		= 32,
--	SCX_WATCHDOG_MAX_TIMEOUT	= 30 * HZ,
--
--	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
--	SCX_TID_CHUNK			= 1024,
--
--	SCX_EXIT_BT_LEN			= 64,
--	SCX_EXIT_MSG_LEN		= 1024,
--	SCX_EXIT_DUMP_DFL_LEN		= 32768,
--
--	SCX_CPUPERF_ONE			= SCHED_CAPACITY_SCALE,
--
--	/*
--	 * Iterating all tasks may take a while. Periodically drop
--	 * scx_tasks_lock to avoid causing e.g. CSD and RCU stalls.
--	 */
--	SCX_TASK_ITER_BATCH		= 32,
--
--	SCX_BYPASS_HOST_NTH		= 2,
--
--	SCX_BYPASS_LB_DFL_INTV_US	= 500 * USEC_PER_MSEC,
--	SCX_BYPASS_LB_DONOR_PCT		= 125,
--	SCX_BYPASS_LB_MIN_DELTA_DIV	= 4,
--	SCX_BYPASS_LB_BATCH		= 256,
--
--	SCX_REENQ_LOCAL_MAX_REPEAT	= 256,
--
--	SCX_SUB_MAX_DEPTH		= 4,
--};
--
- enum scx_exit_kind {
- 	SCX_EXIT_NONE,
- 	SCX_EXIT_DONE,
-diff --git a/kernel/sched/ext_types.h b/kernel/sched/ext_types.h
-new file mode 100644
-index 000000000000..19299ec3920e
---- /dev/null
-+++ b/kernel/sched/ext_types.h
-@@ -0,0 +1,43 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Early sched_ext type definitions.
-+ *
-+ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-+ * Copyright (c) 2026 Tejun Heo <tj@kernel.org>
-+ */
-+#ifndef _KERNEL_SCHED_EXT_TYPES_H
-+#define _KERNEL_SCHED_EXT_TYPES_H
+ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id);
+ 
++bool scx_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where);
 +
-+enum scx_consts {
-+	SCX_DSP_DFL_MAX_BATCH		= 32,
-+	SCX_DSP_MAX_LOOPS		= 32,
-+	SCX_WATCHDOG_MAX_TIMEOUT	= 30 * HZ,
-+
-+	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
-+	SCX_TID_CHUNK			= 1024,
-+
-+	SCX_EXIT_BT_LEN			= 64,
-+	SCX_EXIT_MSG_LEN		= 1024,
-+	SCX_EXIT_DUMP_DFL_LEN		= 32768,
-+
-+	SCX_CPUPERF_ONE			= SCHED_CAPACITY_SCALE,
-+
-+	/*
-+	 * Iterating all tasks may take a while. Periodically drop
-+	 * scx_tasks_lock to avoid causing e.g. CSD and RCU stalls.
-+	 */
-+	SCX_TASK_ITER_BATCH		= 32,
-+
-+	SCX_BYPASS_HOST_NTH		= 2,
-+
-+	SCX_BYPASS_LB_DFL_INTV_US	= 500 * USEC_PER_MSEC,
-+	SCX_BYPASS_LB_DONOR_PCT		= 125,
-+	SCX_BYPASS_LB_MIN_DELTA_DIV	= 4,
-+	SCX_BYPASS_LB_BATCH		= 256,
-+
-+	SCX_REENQ_LOCAL_MAX_REPEAT	= 256,
-+
-+	SCX_SUB_MAX_DEPTH		= 4,
-+};
-+
-+#endif /* _KERNEL_SCHED_EXT_TYPES_H */
+ /*
+  * Return the rq currently locked from an scx callback, or NULL if no rq is
+  * locked.
 -- 
 2.53.0
 
