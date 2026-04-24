@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD5F3E51CD;
-	Fri, 24 Apr 2026 17:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA07237186E;
+	Fri, 24 Apr 2026 17:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777051644; cv=none; b=mw/zaO+4thlIDpUTrs9HUwkVT1x+wEs5GBhEhvLB3/Ofi7ovIqPRW99cYhIdcxlRSuoviNKZJtcaiI62QAPAEivxHSK/QFX8dtGvdygutYf+yl11K7RrQy+OvmQQNZIwQO5YZvR8DNCMRrZzMD7DzX6UYaMhZz50hXnJV1H75Fs=
+	t=1777051644; cv=none; b=szOVBtWdnSfUdZfPnr8mk09UQyZLp6k4tDsb3PiQMNaTjRIbLZJSR8JINKxcV2eLtadOgs42jhXGf8JIKw2ZVlFgDQ/sNS5HshzYAWXaHhFDBnt4dnRSqks8NqGPaJ+F/FTBQ3fS24aYbnmaDvzdJ1ZsLzOsCydqlYxyUXAnTbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777051644; c=relaxed/simple;
-	bh=JkEhNa56zyGUJztgEGLrGfVLxhfW9ST3gPFAPHD4ipY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G4KNnbVVr6H87/DcbNvHNXMYH7xrvfgIYu5ILOYp/YTgnf28ZZuKulqqdpVrNyHthJUa87XYrlaalEe1jmkfGa3Ez/BewuzUxkO5LBQ2RjL+PKFmo3AXhvRc2Wna6wZNmtZzxHX5dFbBfODbeJ9pwDenXbLu+fCREFsdrVHP/uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V+dac8A/; arc=none smtp.client-ip=10.30.226.201
+	bh=uP54tN+3Hp8vh8q+K1Yw91i9zeNJBnvABeKhnVGsEyY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IHWDHkRpM9zdT129tUj/9SHo/OtdSRdompk2qh+gKE6JDnMmeaxkqpZOVDRbBgBkCs4+xpWeXvxb81UAP/cU2yDAKQpylXz0Iej/ehIVtkizDd7UpFSoZO1kJOm4QGP3ajBT2MT9Mtw+ECR0UKaIMNNDPNXOprOQeNnUTP8Xn5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZhEsTLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V+dac8A/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2EAC19425;
-	Fri, 24 Apr 2026 17:27:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZhEsTLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF33CC2BCB2;
+	Fri, 24 Apr 2026 17:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777051642;
-	bh=JkEhNa56zyGUJztgEGLrGfVLxhfW9ST3gPFAPHD4ipY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=V+dac8A/NR/TigcBjwubnTyCuOQyrez+OX0mISnv/OMFKeR99kx7Pr+zoYKcVScmL
-	 6/fmDyqNjwwTgsGJyZ5YXnUxdd12Yi8mUDGjPV7snsJCQMwRrWm4zWdOfOSUoh8lHU
-	 TJ1fspNbqJEaQzLnr30ZwIcLKaG0Jr2M+EZ4g9mtaCwcJNoTHeLCcOn8rOESexm9S9
-	 F+kKwqUicw//DUx0KaaMdrzibJ4J2eeLCBrA0EYKG9nyv9ctMhANxNpMxMgKPz6zl4
-	 XqMHXzP2amYYERj8e9ZR8XaRdM1+1lgwVZSvAcINgrsq1zx3cLSyexRNiQqBXJCP40
-	 NNpr7t7U1anRQ==
+	s=k20201202; t=1777051644;
+	bh=uP54tN+3Hp8vh8q+K1Yw91i9zeNJBnvABeKhnVGsEyY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=iZhEsTLDO6NRxL+QlXfe4H8sbC1n672g84yMEN6RTJh03H4B8aS5fe1fxAZjk+buT
+	 ab7M/9gSHhFh42vn4sTxnDthaT0Wx6U1aRG6CikcekudxeWpBp5l5fH95qvGN7R1S1
+	 M9OHnCZUUnNkmjwRr/dmSGAlLJFYHQmcIOkdRk1ZnCEgOcFGbu642p8awWvS9yQDmS
+	 2BZZctKsAkjFN/8k7c6Mg/9byt7USML8VmgSKBesZfFX7Nvi7kUsl+rUvgzAT5+30C
+	 H/aGGuUgti0xm4yQCqkqlYWD5Jn3mN2q6rplzkdxNplvsLRfok0tjVOwgCY/5RQlvm
+	 SY//wrnoYNU/w==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -35,10 +36,12 @@ Cc: sched-ext@lists.linux.dev,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>,
 	Zhao Mengmeng <zhaomzhao@126.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET v2 REPOST sched_ext/for-7.2] sched_ext: Topological CPU IDs and cid-form struct_ops
-Date: Fri, 24 Apr 2026 07:27:04 -1000
-Message-ID: <20260424172721.3458520-1-tj@kernel.org>
+Subject: [PATCH 01/17] sched_ext: Add ext_types.h for early subsystem-wide defs
+Date: Fri, 24 Apr 2026 07:27:05 -1000
+Message-ID: <20260424172721.3458520-2-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260424172721.3458520-1-tj@kernel.org>
+References: <20260424172721.3458520-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,108 +50,129 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Introduce kernel/sched/ext_types.h as the early-def header for the
+sched_ext compilation unit. Included from kernel/sched/build_policy.c
+before ext_internal.h so every later header and source in the unit
+sees its content without re-inclusion. Later patches add their types
+here (struct scx_cid_topo, scx_cmask, scx_cid_shard, etc.) so the
+subsystem has one place to stash types shared across the TU.
 
-Reposting v2 because the original send was not properly threaded -
-each patch went out as a standalone top-level message. Content is
-unchanged from the original v2.
+Move enum scx_consts (SCX_DSP_DFL_MAX_BATCH, SCX_WATCHDOG_MAX_TIMEOUT,
+SCX_SUB_MAX_DEPTH, etc.) here as the initial content. Ops-facing
+content stays in ext_internal.h.
 
-Original v2: https://lore.kernel.org/r/20260424013220.2923402-1-tj@kernel.org
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/build_policy.c |  1 +
+ kernel/sched/ext_internal.h | 32 ---------------------------
+ kernel/sched/ext_types.h    | 43 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 32 deletions(-)
+ create mode 100644 kernel/sched/ext_types.h
 
-v2 of https://lore.kernel.org/r/20260421071945.3110084-1-tj@kernel.org
+diff --git a/kernel/sched/build_policy.c b/kernel/sched/build_policy.c
+index 755883faf751..180ade38625e 100644
+--- a/kernel/sched/build_policy.c
++++ b/kernel/sched/build_policy.c
+@@ -58,6 +58,7 @@
+ #include "deadline.c"
+ 
+ #ifdef CONFIG_SCHED_CLASS_EXT
++# include "ext_types.h"
+ # include "ext_internal.h"
+ # include "ext.c"
+ # include "ext_idle.c"
+diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+index 4a7ffc7f55d2..c35098668fb1 100644
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -8,38 +8,6 @@
+ #define SCX_OP_IDX(op)		(offsetof(struct sched_ext_ops, op) / sizeof(void (*)(void)))
+ #define SCX_MOFF_IDX(moff)	((moff) / sizeof(void (*)(void)))
+ 
+-enum scx_consts {
+-	SCX_DSP_DFL_MAX_BATCH		= 32,
+-	SCX_DSP_MAX_LOOPS		= 32,
+-	SCX_WATCHDOG_MAX_TIMEOUT	= 30 * HZ,
+-
+-	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
+-	SCX_TID_CHUNK			= 1024,
+-
+-	SCX_EXIT_BT_LEN			= 64,
+-	SCX_EXIT_MSG_LEN		= 1024,
+-	SCX_EXIT_DUMP_DFL_LEN		= 32768,
+-
+-	SCX_CPUPERF_ONE			= SCHED_CAPACITY_SCALE,
+-
+-	/*
+-	 * Iterating all tasks may take a while. Periodically drop
+-	 * scx_tasks_lock to avoid causing e.g. CSD and RCU stalls.
+-	 */
+-	SCX_TASK_ITER_BATCH		= 32,
+-
+-	SCX_BYPASS_HOST_NTH		= 2,
+-
+-	SCX_BYPASS_LB_DFL_INTV_US	= 500 * USEC_PER_MSEC,
+-	SCX_BYPASS_LB_DONOR_PCT		= 125,
+-	SCX_BYPASS_LB_MIN_DELTA_DIV	= 4,
+-	SCX_BYPASS_LB_BATCH		= 256,
+-
+-	SCX_REENQ_LOCAL_MAX_REPEAT	= 256,
+-
+-	SCX_SUB_MAX_DEPTH		= 4,
+-};
+-
+ enum scx_exit_kind {
+ 	SCX_EXIT_NONE,
+ 	SCX_EXIT_DONE,
+diff --git a/kernel/sched/ext_types.h b/kernel/sched/ext_types.h
+new file mode 100644
+index 000000000000..19299ec3920e
+--- /dev/null
++++ b/kernel/sched/ext_types.h
+@@ -0,0 +1,43 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Early sched_ext type definitions.
++ *
++ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
++ * Copyright (c) 2026 Tejun Heo <tj@kernel.org>
++ */
++#ifndef _KERNEL_SCHED_EXT_TYPES_H
++#define _KERNEL_SCHED_EXT_TYPES_H
++
++enum scx_consts {
++	SCX_DSP_DFL_MAX_BATCH		= 32,
++	SCX_DSP_MAX_LOOPS		= 32,
++	SCX_WATCHDOG_MAX_TIMEOUT	= 30 * HZ,
++
++	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
++	SCX_TID_CHUNK			= 1024,
++
++	SCX_EXIT_BT_LEN			= 64,
++	SCX_EXIT_MSG_LEN		= 1024,
++	SCX_EXIT_DUMP_DFL_LEN		= 32768,
++
++	SCX_CPUPERF_ONE			= SCHED_CAPACITY_SCALE,
++
++	/*
++	 * Iterating all tasks may take a while. Periodically drop
++	 * scx_tasks_lock to avoid causing e.g. CSD and RCU stalls.
++	 */
++	SCX_TASK_ITER_BATCH		= 32,
++
++	SCX_BYPASS_HOST_NTH		= 2,
++
++	SCX_BYPASS_LB_DFL_INTV_US	= 500 * USEC_PER_MSEC,
++	SCX_BYPASS_LB_DONOR_PCT		= 125,
++	SCX_BYPASS_LB_MIN_DELTA_DIV	= 4,
++	SCX_BYPASS_LB_BATCH		= 256,
++
++	SCX_REENQ_LOCAL_MAX_REPEAT	= 256,
++
++	SCX_SUB_MAX_DEPTH		= 4,
++};
++
++#endif /* _KERNEL_SCHED_EXT_TYPES_H */
+-- 
+2.53.0
 
-v2:
-- Add ext-types.h first patch for early subsystem-wide type defs.
-- cid: publish the cid tables with WRITE_ONCE / read with READ_ONCE;
-  document the visibility contract.
-- cid-kfuncs: NULL-guard scx_bpf_this_cid / scx_bpf_task_cid for
-  TRACING/SYSCALL callers before any SCX sched has enabled.
-- cid-struct-ops: use struct_size() for the set_cmask_scratch percpu
-  alloc; cluster __scx_is_cid_type disable with __scx_enabled disable
-  in scx_root_disable().
-- cid-kfunc-filter: sync per-entry kfunc flags with each kfunc's
-  primary BTF_ID_FLAGS() declaration (Zhao). pahole intersects flags
-  across occurrences; omitting them drops the flags globally - the
-  visible symptom was KF_IMPLICIT_ARGS getting cleared on
-  scx_bpf_kick_cpu, leaking bpf_prog_aux into vmlinux.h.
-- cmask: narrow to the helpers this series actually uses;
-  cmask_copy_from_kernel contract and runtime guard.
-
-This patchset introduces topological CPU IDs (cids) - dense,
-topology-ordered cpu identifiers - and an alternative cid-form struct_ops
-type that lets BPF schedulers operate in cid space directly.
-
-Key pieces:
-
-- cid space: scx_cid_init() walks nodes * LLCs * cores * threads and packs
-  a dense cid mapping. The mapping can be overridden via
-  scx_bpf_cid_override(). See "Topological CPU IDs" in ext_cid.h for the
-  model.
-
-- cmask: a base-windowed bitmap over cid space. Kernel and BPF helpers with
-  identical semantics. Used by scx_qmap for per-task affinity and idle-cid
-  tracking; meant to be the substrate for sub-sched cid allocation.
-
-- bpf_sched_ext_ops_cid: a parallel struct_ops type whose callbacks take
-  cids/cmasks instead of cpus/cpumasks. Kernel translates at the boundary
-  via scx_cpu_arg() / scx_cpu_ret(); the two struct types share offsets up
-  through @priv (verified by BUILD_BUG_ON) so the union view in scx_sched
-  works without function-pointer casts. Sub-sched support is tied to
-  cid-form: validate_ops() rejects cpu-form sub-scheds and cpu-form roots
-  that expose sub_attach / sub_detach.
-
-- cid-form kfuncs: scx_bpf_kick_cid, scx_bpf_cidperf_{cap,cur,set},
-  scx_bpf_cid_curr, scx_bpf_task_cid, scx_bpf_this_cid,
-  scx_bpf_nr_{cids,online_cids}, scx_bpf_cid_to_cpu, scx_bpf_cpu_to_cid.
-  A cid-form program may not call cpu-only kfuncs (enforced at verifier
-  load via scx_kfunc_context_filter); the reverse is intentionally
-  permissive to ease migration.
-
-- scx_qmap port: scx_qmap is converted to cid-form. It uses the cmask-based
-  idle picker, per-task cid-space cpus_allowed, and cid-form kfuncs
-  throughout. Sub-sched dispatching via scx_bpf_sub_dispatch() continues to
-  work.
-
-v2 re-tested on the 16-cpu QEMU: cid-form scx_qmap, cpu-form scx_simple,
-cid<->cpu cycling, scx_qmap under stress-ng, hotplug auto-restart, and
-sub-sched (root scx_qmap + cgroup-scoped scx_qmap child). Clean.
-
-Based on sched_ext/for-7.2 (c2929bc21dce).
-
- 0001-sched_ext-Add-ext_types.h-for-early-subsystem-wide-d.patch
- 0002-sched_ext-Rename-ops_cpu_valid-to-scx_cpu_valid-and-.patch
- 0003-sched_ext-Move-scx_exit-scx_error-and-friends-to-ext.patch
- 0004-sched_ext-Shift-scx_kick_cpu-validity-check-to-scx_b.patch
- 0005-sched_ext-Relocate-cpu_acquire-cpu_release-to-end-of.patch
- 0006-sched_ext-Make-scx_enable-take-scx_enable_cmd.patch
- 0007-sched_ext-Add-topological-CPU-IDs-cids.patch
- 0008-sched_ext-Add-scx_bpf_cid_override-kfunc.patch
- 0009-tools-sched_ext-Add-struct_size-helpers-to-common.bp.patch
- 0010-sched_ext-Add-cmask-a-base-windowed-bitmap-over-cid-.patch
- 0011-sched_ext-Add-cid-form-kfunc-wrappers-alongside-cpu-.patch
- 0012-sched_ext-Add-bpf_sched_ext_ops_cid-struct_ops-type.patch
- 0013-sched_ext-Forbid-cpu-form-kfuncs-from-cid-form-sched.patch
- 0014-tools-sched_ext-scx_qmap-Restart-on-hotplug-instead-.patch
- 0015-tools-sched_ext-scx_qmap-Add-cmask-based-idle-tracki.patch
- 0016-tools-sched_ext-scx_qmap-Port-to-cid-form-struct_ops.patch
- 0017-sched_ext-Require-cid-form-struct_ops-for-sub-sched-.patch
-
-Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-cid-v2
-
- kernel/sched/build_policy.c              |   2 +
- kernel/sched/ext.c                       | 650 +++++++++++++++++++++++++----
- kernel/sched/ext_cid.c                   | 417 ++++++++++++++++++++
- kernel/sched/ext_cid.h                   | 164 ++++++++
- kernel/sched/ext_idle.c                  |   8 +-
- kernel/sched/ext_internal.h              | 203 +++++++---
- kernel/sched/ext_types.h                 | 104 +++++
- tools/sched_ext/include/scx/cid.bpf.h    | 597 ++++++++++++++++++++++++++++
- tools/sched_ext/include/scx/common.bpf.h |  23 ++
- tools/sched_ext/include/scx/compat.bpf.h |  24 ++
- tools/sched_ext/scx_qmap.bpf.c           | 306 ++++++++-------
- tools/sched_ext/scx_qmap.c               |  25 +-
- tools/sched_ext/scx_qmap.h               |   2 +-
- 13 files changed, 2240 insertions(+), 285 deletions(-)
-
---
-tejun
