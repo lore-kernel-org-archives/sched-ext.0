@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611BE299A87;
-	Fri, 24 Apr 2026 01:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5D32C21F4;
+	Fri, 24 Apr 2026 01:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776994347; cv=none; b=AWtWfFnLlnooLwNO0Z7sKlhIUxJKCpJjyE1eP9xQRUq0QfeRu1SeJlR8/2HnTUI4LcVtBdqacgN4s/a33QP0OqWJrb4/t1lC+bc9+JX7O8S4xbSRpNz4aKkgVh9ARn4JG0AnCxhvXMWiN4SbOb51sYtmah3mtKiWRk5qa7gUF1c=
+	t=1776994348; cv=none; b=o6AH507tB62+IeG7AzCluEUTIDXfbZthP+6XHqsw9sGMX3aUSBIOz6luOfRyN6yBm/b+uO77Ayemv4lEFsJaCQTqwOKX/L7CspDl2YkFc2QnmXuvA3hF+xSvZdb4ay6oRMD4M97Ut45EE5hb0RRl15cjPmYn71kTUl223JWeyo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776994347; c=relaxed/simple;
-	bh=r+Z8r8lWQGuoXh/Em8sBvlC+zdcTZBI4barR4wIwdUc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AxFDhYQCslaQVrL+6VEslcXwlmG77mfiipWWP4tRT4K8yDxSVwJqF2bLpVtaFlaNKT1ZpZldzBN4jNxyCAoH4UELUSPYsYme0+vXNHx/G+i0QUlYts28qXHq0c0r4V1kBeZJcroBQ6RpRJyb/NwVc/oX/Kw6MfoFjyH4wt/9DBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y50hvECc; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776994348; c=relaxed/simple;
+	bh=Df/QrhGUTH85Yr3EbL3zRRqadS7dp2wpP9ACZpOvrQk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AwnaCkPIDBgIRdeaSGSnxEAirblLDkPVJhSZJzy5Huc7VhTZSAQURw5sMUSZuhLk5XHLSi64kI6clepEjTF6TpUdTIgR9+YGEDy+JqaPICcbG1TFoaEdin+XxvZqGG+0/11VH55LR1CeOw34ch8OLXtM3o//0Tp6DqDm/r0UhFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ctRaYHJM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y50hvECc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DF7C2BCB3;
-	Fri, 24 Apr 2026 01:32:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ctRaYHJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22700C2BCB4;
+	Fri, 24 Apr 2026 01:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776994347;
-	bh=r+Z8r8lWQGuoXh/Em8sBvlC+zdcTZBI4barR4wIwdUc=;
+	s=k20201202; t=1776994348;
+	bh=Df/QrhGUTH85Yr3EbL3zRRqadS7dp2wpP9ACZpOvrQk=;
 	h=From:To:Cc:Subject:Date:From;
-	b=Y50hvECcIqn4Hd2hjkIWBHQKYSC/apkW0RkTMaONXfugjfMiwEo+eGu+V6usO1540
-	 IjhaWGr3GE0pqeIqieBRRU1k+jwgVBAGOaIgDnMjTaDtaYLL63v5yPvdgxmD4bq0uP
-	 pTvLsC/4wkKmWbuN2TawTdO2APUYWJrBkXxHLNlVkb9+udcNft1B44WwmMTrYt39nT
-	 evDwz60A3a6qIgQxc8qZ64QEAsntNmKB0DWIzmlyJJKppRcKgtFqwfZumN/SQGj+mt
-	 NWidYxEhzxuStG8nQSNPwGObiboFmaJpHF+It89Q0yBM2/K9OgTdTuEu/rhAnpGoXE
-	 jpYxeMjQjpMaw==
+	b=ctRaYHJMvOLS1BNHRQRCUnjrehOSe0GDtzQVj7HvS5SJjgqxATtP7aSZdjA2RoRI0
+	 xKX+dvgOo4gYsgKK+qg2AXov2Otytn+KFZn459DGVAKJb3doMxjOhERDsUE6OIarOs
+	 BAzL+zJAAfT+FTeNP5KR3Nop5EuBPuNiwryWi6u2FY68DuSi6jBUreZOWKmU+yfa21
+	 DG+94GbR7JMKV/uoovrYnvJcFIVv9OanjCKFcZ7QQz6n3QW8z/gdk227mBVAnb/GJA
+	 6RPg8hA4DtZq42OxjROcd8g0GajBe/nXS6kbr4UW///MYIRH/8A1topah9BBCaZJYn
+	 PtArP8e8WU5HA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -35,9 +35,9 @@ Cc: sched-ext@lists.linux.dev,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>,
 	Zhao Mengmeng <zhaomzhao@126.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 05/17] sched_ext: Relocate cpu_acquire/cpu_release to end of struct sched_ext_ops
-Date: Thu, 23 Apr 2026 15:32:08 -1000
-Message-ID: <20260424013220.2923402-6-tj@kernel.org>
+Subject: [PATCH 06/17] sched_ext: Make scx_enable() take scx_enable_cmd
+Date: Thu, 23 Apr 2026 15:32:09 -1000
+Message-ID: <20260424013220.2923402-7-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -47,120 +47,113 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-cpu_acquire and cpu_release are deprecated and slated for removal. Move
-their declarations to the end of struct sched_ext_ops so an upcoming
-cid-form struct (sched_ext_ops_cid) can omit them entirely without
-disturbing the offsets of the shared fields.
+Pass struct scx_enable_cmd to scx_enable() rather than unpacking @ops
+at every call site and re-packing into a fresh cmd inside. bpf_scx_reg()
+now builds the cmd on its stack and hands it in; scx_enable() just
+wires up the kthread work and waits.
 
-Switch the two SCX_HAS_OP() callers for these ops to direct field checks
-since the relocated ops sit outside the SCX_OPI_END range covered by the
-has_op bitmap.
+Relocate struct scx_enable_cmd above scx_alloc_and_add_sched() so
+upcoming patches that also want the cmd can see it.
 
-scx_kf_allow_flags[] auto-sizes to the highest used SCX_OP_IDX, so
-SCX_OP_IDX(cpu_release) moving to a higher index just enlarges the
-sparse array; the lookup logic is unchanged.
+No behavior change.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- kernel/sched/ext.c          |  4 +--
- kernel/sched/ext_internal.h | 54 ++++++++++++++++++++++---------------
- 2 files changed, 34 insertions(+), 24 deletions(-)
+ kernel/sched/ext.c | 46 +++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index a94e621d2c6c..ad255268f207 100644
+index ad255268f207..cd4c235e0c82 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -2814,7 +2814,7 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
- 		 * core. This callback complements ->cpu_release(), which is
- 		 * emitted in switch_class().
- 		 */
--		if (SCX_HAS_OP(sch, cpu_acquire))
-+		if (sch->ops.cpu_acquire)
- 			SCX_CALL_OP(sch, cpu_acquire, rq, cpu, NULL);
- 		rq->scx.cpu_released = false;
+@@ -6425,6 +6425,19 @@ static struct scx_sched_pnode *alloc_pnode(struct scx_sched *sch, int node)
+ 	return pnode;
+ }
+ 
++/*
++ * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
++ * starvation. During the READY -> ENABLED task switching loop, the calling
++ * thread's sched_class gets switched from fair to ext. As fair has higher
++ * priority than ext, the calling thread can be indefinitely starved under
++ * fair-class saturation, leading to a system hang.
++ */
++struct scx_enable_cmd {
++	struct kthread_work	work;
++	struct sched_ext_ops	*ops;
++	int			ret;
++};
++
+ /*
+  * Allocate and initialize a new scx_sched. @cgrp's reference is always
+  * consumed whether the function succeeds or fails.
+@@ -6656,19 +6669,6 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+ 	return 0;
+ }
+ 
+-/*
+- * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
+- * starvation. During the READY -> ENABLED task switching loop, the calling
+- * thread's sched_class gets switched from fair to ext. As fair has higher
+- * priority than ext, the calling thread can be indefinitely starved under
+- * fair-class saturation, leading to a system hang.
+- */
+-struct scx_enable_cmd {
+-	struct kthread_work	work;
+-	struct sched_ext_ops	*ops;
+-	int			ret;
+-};
+-
+ static void scx_root_enable_workfn(struct kthread_work *work)
+ {
+ 	struct scx_enable_cmd *cmd = container_of(work, struct scx_enable_cmd, work);
+@@ -7244,11 +7244,10 @@ static s32 __init scx_cgroup_lifetime_notifier_init(void)
+ core_initcall(scx_cgroup_lifetime_notifier_init);
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
+-static s32 scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
++static s32 scx_enable(struct scx_enable_cmd *cmd, struct bpf_link *link)
+ {
+ 	static struct kthread_worker *helper;
+ 	static DEFINE_MUTEX(helper_mutex);
+-	struct scx_enable_cmd cmd;
+ 
+ 	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
+ 			   cpu_possible_mask)) {
+@@ -7272,16 +7271,15 @@ static s32 scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
  	}
-@@ -2960,7 +2960,7 @@ static void switch_class(struct rq *rq, struct task_struct *next)
- 	 *  next time that balance_one() is invoked.
- 	 */
- 	if (!rq->scx.cpu_released) {
--		if (SCX_HAS_OP(sch, cpu_release)) {
-+		if (sch->ops.cpu_release) {
- 			struct scx_cpu_release_args args = {
- 				.reason = preempt_reason_from_class(next_class),
- 				.task = next,
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index fb1a555faaaa..dee7f7e2a2ca 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -523,28 +523,6 @@ struct sched_ext_ops {
- 	 */
- 	void (*update_idle)(s32 cpu, bool idle);
  
--	/**
--	 * @cpu_acquire: A CPU is becoming available to the BPF scheduler
--	 * @cpu: The CPU being acquired by the BPF scheduler.
--	 * @args: Acquire arguments, see the struct definition.
--	 *
--	 * A CPU that was previously released from the BPF scheduler is now once
--	 * again under its control.
--	 */
--	void (*cpu_acquire)(s32 cpu, struct scx_cpu_acquire_args *args);
--
--	/**
--	 * @cpu_release: A CPU is taken away from the BPF scheduler
--	 * @cpu: The CPU being released by the BPF scheduler.
--	 * @args: Release arguments, see the struct definition.
--	 *
--	 * The specified CPU is no longer under the control of the BPF
--	 * scheduler. This could be because it was preempted by a higher
--	 * priority sched_class, though there may be other reasons as well. The
--	 * caller should consult @args->reason to determine the cause.
--	 */
--	void (*cpu_release)(s32 cpu, struct scx_cpu_release_args *args);
--
- 	/**
- 	 * @init_task: Initialize a task to run in a BPF scheduler
- 	 * @p: task to initialize for BPF scheduling
-@@ -835,6 +813,38 @@ struct sched_ext_ops {
+ #ifdef CONFIG_EXT_SUB_SCHED
+-	if (ops->sub_cgroup_id > 1)
+-		kthread_init_work(&cmd.work, scx_sub_enable_workfn);
++	if (cmd->ops->sub_cgroup_id > 1)
++		kthread_init_work(&cmd->work, scx_sub_enable_workfn);
+ 	else
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+-		kthread_init_work(&cmd.work, scx_root_enable_workfn);
+-	cmd.ops = ops;
++		kthread_init_work(&cmd->work, scx_root_enable_workfn);
  
- 	/* internal use only, must be NULL */
- 	void __rcu *priv;
-+
-+	/*
-+	 * Deprecated callbacks. Kept at the end of the struct so the cid-form
-+	 * struct (sched_ext_ops_cid) can omit them without affecting the
-+	 * shared field offsets. Use SCX_ENQ_IMMED instead. Sitting past
-+	 * SCX_OPI_END means has_op doesn't cover them, so SCX_HAS_OP() cannot
-+	 * be used; callers must test sch->ops.cpu_acquire / cpu_release
-+	 * directly.
-+	 */
-+
-+	/**
-+	 * @cpu_acquire: A CPU is becoming available to the BPF scheduler
-+	 * @cpu: The CPU being acquired by the BPF scheduler.
-+	 * @args: Acquire arguments, see the struct definition.
-+	 *
-+	 * A CPU that was previously released from the BPF scheduler is now once
-+	 * again under its control. Deprecated; use SCX_ENQ_IMMED instead.
-+	 */
-+	void (*cpu_acquire)(s32 cpu, struct scx_cpu_acquire_args *args);
-+
-+	/**
-+	 * @cpu_release: A CPU is taken away from the BPF scheduler
-+	 * @cpu: The CPU being released by the BPF scheduler.
-+	 * @args: Release arguments, see the struct definition.
-+	 *
-+	 * The specified CPU is no longer under the control of the BPF
-+	 * scheduler. This could be because it was preempted by a higher
-+	 * priority sched_class, though there may be other reasons as well. The
-+	 * caller should consult @args->reason to determine the cause.
-+	 * Deprecated; use SCX_ENQ_IMMED instead.
-+	 */
-+	void (*cpu_release)(s32 cpu, struct scx_cpu_release_args *args);
- };
+-	kthread_queue_work(READ_ONCE(helper), &cmd.work);
+-	kthread_flush_work(&cmd.work);
+-	return cmd.ret;
++	kthread_queue_work(READ_ONCE(helper), &cmd->work);
++	kthread_flush_work(&cmd->work);
++	return cmd->ret;
+ }
  
- enum scx_opi {
+ 
+@@ -7453,7 +7451,9 @@ static int bpf_scx_check_member(const struct btf_type *t,
+ 
+ static int bpf_scx_reg(void *kdata, struct bpf_link *link)
+ {
+-	return scx_enable(kdata, link);
++	struct scx_enable_cmd cmd = { .ops = kdata };
++
++	return scx_enable(&cmd, link);
+ }
+ 
+ static void bpf_scx_unreg(void *kdata, struct bpf_link *link)
 -- 
 2.53.0
 
