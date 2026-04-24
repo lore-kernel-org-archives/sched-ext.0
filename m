@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54C52777FC;
-	Fri, 24 Apr 2026 01:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBFC30E85B;
+	Fri, 24 Apr 2026 01:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776994357; cv=none; b=tDlFpmSELww2q6jeWBTACF23QlsZWvlHTwEfwXAE8cxonPTTZY9xnCHvFSy3rMqV2IAQzAK0SYe7aKnBOzd4avh0a/RQDqRK7WgrRt7s4k2BHL02SNz3NOkJ+WCVSEyDx02WgtfpIttL7VollIUyUaUOxL4aoZQd91GO0DZB9Ek=
+	t=1776994358; cv=none; b=QGfXY82MmvWlbypXBOEndsX3zt7d6JUsDszM4d+Yjpoo0glSEEVuAZ4tEmXrfQcaaP/Oks++EZYo9QdqT408zlP7jlLrBpwKHSQ4CtRhb68LcsvEgOUNcUQhwD6hofjmfo2vdcHDBzwRq+UWOzJ8OmIEhzP++ZeEdszL1ADUKUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776994357; c=relaxed/simple;
-	bh=xhxvxur1R7nTKgjiuPnwJLrAHZqLwz0lvrWf9U7Mzus=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gl985hyp2gsxtPUGjTXpQvq27JEw/V5jqEIznXsh/qlbCUWEvqNFl5IGcRkQaFW8cn/KP/fYNV7wBIFdwq29xnfxrOv9GQB4p6W3zN6VGIJGCxuECI4TQbX3DBBvachLMjm//q/3YLs7BTcD0VlhnSPt+1gga6tLl9H29+ALk84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YHbfBgrG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1776994358; c=relaxed/simple;
+	bh=b9SFeYk6FBY9ruvgfcvV+TtJ0vHTzPE5iCgys96mfA4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CgiziFu265xZla6pERB2J/v/PO175wYACli1L0YrpKYQNjI7frW0GRJVNSDAWmpq6kzwaDAF7wg+kGT95J35/ZGqmTnySmeTUf/ECbxHlwxEWYX3Sf3e6IjK+ty7SEG37fIgl3/KdpM04ck0TIBLmkOewrQxmruoucI1or8tVzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/Pvfun5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YHbfBgrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A327EC2BCAF;
-	Fri, 24 Apr 2026 01:32:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/Pvfun5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B672BC2BCAF;
+	Fri, 24 Apr 2026 01:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776994356;
-	bh=xhxvxur1R7nTKgjiuPnwJLrAHZqLwz0lvrWf9U7Mzus=;
+	s=k20201202; t=1776994357;
+	bh=b9SFeYk6FBY9ruvgfcvV+TtJ0vHTzPE5iCgys96mfA4=;
 	h=From:To:Cc:Subject:Date:From;
-	b=YHbfBgrGrpUiiG1yRTkupB1u4fuKpL9/HHw3dxgPbGBKvuhx4kcB/GpnO8w4lkwKH
-	 WTJOUp/ZWjq1p9jTSJjKY77CSq5uekvFT9TK8aE1+YoQ9wui/DQ+Vl23/kDM4Cs3Pc
-	 al1Ib0uSlp7sFdheCJiqg8BXO+eZnK9p4VoF3Wn7zh0F3+JQnvdG5g03zaM1z0Zjt7
-	 x7SxFg1va+or5VhU/4WScLzZGhQWq7cLB7/44mon2ni506y1BoF2JfAiemKLEHQFN+
-	 8fQm+sXdAjc531sRSxTF2QZfH9jfjU1WmuRVCJKSy9vRAhssz+GSLlarYoKCX4Qegm
-	 c24XHe85HdiEg==
+	b=P/Pvfun5BFKHfJRkKT3VffY5/6SdkaT+1uQl50WpAMU6ZPSZc+bIj7cdwOpJ7Vj18
+	 kpb3sLsps6qIGytqKr48D6DnOl7iBLc69dsa7e/e8o/wfXJTvOUMFDY0cpIRjgdn5W
+	 ztdRFVBzB//yZHRFjOiSK3DtAzWCR4GnxNKDVK05J89SnufytHSWsrQkH2FcaIamYX
+	 tGctx0PHx8+1hC2BaCsotitC7cwpKUUCPnsBe2Pxh0Mwxor8w+1C7yej/4F3WP/692
+	 lseqN4N8k6cshU1POUdaFph4FcjX9O1w08bJeovxSOh2apg6+bhzR2Soqw1CuzKnTe
+	 CSyfZNICy/eFg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -35,9 +35,9 @@ Cc: sched-ext@lists.linux.dev,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>,
 	Zhao Mengmeng <zhaomzhao@126.com>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 14/17] tools/sched_ext: scx_qmap: Restart on hotplug instead of cpu_online/offline
-Date: Thu, 23 Apr 2026 15:32:17 -1000
-Message-ID: <20260424013220.2923402-15-tj@kernel.org>
+Subject: [PATCH 15/17] tools/sched_ext: scx_qmap: Add cmask-based idle tracking and cid-based idle pick
+Date: Thu, 23 Apr 2026 15:32:18 -1000
+Message-ID: <20260424013220.2923402-16-tj@kernel.org>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -47,149 +47,252 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The cid mapping is built from the online cpu set at scheduler enable
-and stays valid for that set; routine hotplug invalidates it. The
-default cid behavior is to restart the scheduler so the mapping gets
-rebuilt against the new online set, and that requires not implementing
-cpu_online / cpu_offline (which suppress the kernel's ACT_RESTART).
+Switch qmap's idle-cpu picker from scx_bpf_pick_idle_cpu() to a
+BPF-side bitmap scan, still under cpu-form struct_ops. qa_idle_cids
+tracks idle cids (updated in update_idle / cpu_offline) and each
+task's taskc->cpus_allowed tracks its allowed cids (built in
+set_cpumask / init_task); select_cpu / enqueue scan the intersection
+for an idle cid. Callbacks translate cpu <-> cid on entry;
+cid-qmap-port drops those translations.
 
-Drop the two ops along with their print_cpus() helper - the cluster
-view was only useful as a hotplug demo and is meaningless over the
-dense cid space the scheduler will move to. Wire main() to handle the
-ACT_RESTART exit by reopening the skel and reattaching, matching the
-pattern in scx_simple / scx_central / scx_flatcg etc. Reset optind so
-getopt re-parses argv into the fresh skel rodata each iteration.
+The scan is barebone - no core preference or other topology-aware
+picks like the in-kernel picker - but qmap is a demo and this is
+enough to exercise the plumbing.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 62 ----------------------------------
- tools/sched_ext/scx_qmap.c     | 13 +++----
- 2 files changed, 7 insertions(+), 68 deletions(-)
+ tools/sched_ext/scx_qmap.bpf.c | 131 +++++++++++++++++++++++++++++----
+ 1 file changed, 115 insertions(+), 16 deletions(-)
 
 diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index ba4879031dac..78a1dd118c7e 100644
+index 78a1dd118c7e..bbb3922bafd7 100644
 --- a/tools/sched_ext/scx_qmap.bpf.c
 +++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -843,63 +843,6 @@ void BPF_STRUCT_OPS(qmap_cgroup_set_bandwidth, struct cgroup *cgrp,
+@@ -72,6 +72,13 @@ struct {
+ 
+ struct qmap_arena __arena qa;
+ 
++/*
++ * Global idle-cid tracking, maintained via update_idle / cpu_offline and
++ * scanned by the direct-dispatch path. Allocated in qmap_init() from one
++ * arena page, sized to the full cid space.
++ */
++struct scx_cmask __arena *qa_idle_cids;
++
+ /* Per-queue locks. Each in its own .data section as bpf_res_spin_lock requires. */
+ __hidden struct bpf_res_spin_lock qa_q_lock0 SEC(".data.qa_q_lock0");
+ __hidden struct bpf_res_spin_lock qa_q_lock1 SEC(".data.qa_q_lock1");
+@@ -132,8 +139,18 @@ struct task_ctx {
+ 	bool			force_local;	/* Dispatch directly to local_dsq */
+ 	bool			highpri;
+ 	u64			core_sched_seq;
++	struct scx_cmask	cpus_allowed;	/* per-task affinity in cid space */
+ };
+ 
++/*
++ * Slab stride for task_ctx. cpus_allowed's flex array bits[] overlaps the
++ * tail bytes appended per entry; struct_size() gives the actual per-entry
++ * footprint.
++ */
++#define TASK_CTX_STRIDE							\
++	struct_size_t(struct task_ctx, cpus_allowed.bits,		\
++		      CMASK_NR_WORDS(SCX_QMAP_MAX_CPUS))
++
+ /* All task_ctx pointers are arena pointers. */
+ typedef struct task_ctx __arena task_ctx_t;
+ 
+@@ -161,20 +178,37 @@ static int qmap_spin_lock(struct bpf_res_spin_lock *lock)
+ 	return 0;
+ }
+ 
+-static s32 pick_direct_dispatch_cpu(struct task_struct *p, s32 prev_cpu)
++/*
++ * Try prev_cpu's cid, then scan taskc->cpus_allowed AND qa_idle_cids
++ * round-robin from prev_cid + 1. Atomic claim retries on race; bounded
++ * by IDLE_PICK_RETRIES to keep the verifier's insn budget in check.
++ */
++#define IDLE_PICK_RETRIES	16
++
++static s32 pick_direct_dispatch_cpu(struct task_struct *p, s32 prev_cpu,
++				    task_ctx_t *taskc)
+ {
+-	s32 cpu;
++	u32 nr_cids = scx_bpf_nr_cids();
++	s32 prev_cid, cid;
++	u32 i;
+ 
+ 	if (!always_enq_immed && p->nr_cpus_allowed == 1)
+ 		return prev_cpu;
+ 
+-	if (scx_bpf_test_and_clear_cpu_idle(prev_cpu))
++	prev_cid = scx_bpf_cpu_to_cid(prev_cpu);
++	if (cmask_test_and_clear(qa_idle_cids, prev_cid))
+ 		return prev_cpu;
+ 
+-	cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
+-	if (cpu >= 0)
+-		return cpu;
+-
++	cid = prev_cid;
++	bpf_for(i, 0, IDLE_PICK_RETRIES) {
++		cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
++					      qa_idle_cids, cid + 1);
++		barrier_var(cid);
++		if (cid >= nr_cids)
++			return -1;
++		if (cmask_test_and_clear(qa_idle_cids, cid))
++			return scx_bpf_cid_to_cpu(cid);
++	}
+ 	return -1;
+ }
+ 
+@@ -286,7 +320,7 @@ s32 BPF_STRUCT_OPS(qmap_select_cpu, struct task_struct *p,
+ 	if (p->scx.weight < 2 && !(p->flags & PF_KTHREAD))
+ 		return prev_cpu;
+ 
+-	cpu = pick_direct_dispatch_cpu(p, prev_cpu);
++	cpu = pick_direct_dispatch_cpu(p, prev_cpu, taskc);
+ 
+ 	if (cpu >= 0) {
+ 		taskc->force_local = true;
+@@ -379,7 +413,7 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+ 
+ 	/* if select_cpu() wasn't called, try direct dispatch */
+ 	if (!__COMPAT_is_enq_cpu_selected(enq_flags) &&
+-	    (cpu = pick_direct_dispatch_cpu(p, scx_bpf_task_cpu(p))) >= 0) {
++	    (cpu = pick_direct_dispatch_cpu(p, scx_bpf_task_cpu(p), taskc)) >= 0) {
+ 		__sync_fetch_and_add(&qa.nr_ddsp_from_enq, 1);
+ 		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cpu, slice_ns, enq_flags);
+ 		return;
+@@ -726,6 +760,10 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init_task, struct task_struct *p,
+ 	taskc->force_local = false;
+ 	taskc->highpri = false;
+ 	taskc->core_sched_seq = 0;
++	cmask_init(&taskc->cpus_allowed, 0, scx_bpf_nr_cids());
++	bpf_rcu_read_lock();
++	cmask_from_cpumask(&taskc->cpus_allowed, p->cpus_ptr);
++	bpf_rcu_read_unlock();
+ 
+ 	v = bpf_task_storage_get(&task_ctx_stor, p, NULL,
+ 				 BPF_LOCAL_STORAGE_GET_F_CREATE);
+@@ -843,6 +881,48 @@ void BPF_STRUCT_OPS(qmap_cgroup_set_bandwidth, struct cgroup *cgrp,
  			   cgrp->kn->id, period_us, quota_us, burst_us);
  }
  
--/*
-- * Print out the online and possible CPU map using bpf_printk() as a
-- * demonstration of using the cpumask kfuncs and ops.cpu_on/offline().
-- */
--static void print_cpus(void)
--{
--	const struct cpumask *possible, *online;
--	s32 cpu;
--	char buf[128] = "", *p;
--	int idx;
--
--	possible = scx_bpf_get_possible_cpumask();
--	online = scx_bpf_get_online_cpumask();
--
--	idx = 0;
--	bpf_for(cpu, 0, scx_bpf_nr_cpu_ids()) {
--		if (!(p = MEMBER_VPTR(buf, [idx++])))
--			break;
--		if (bpf_cpumask_test_cpu(cpu, online))
--			*p++ = 'O';
--		else if (bpf_cpumask_test_cpu(cpu, possible))
--			*p++ = 'X';
--		else
--			*p++ = ' ';
--
--		if ((cpu & 7) == 7) {
--			if (!(p = MEMBER_VPTR(buf, [idx++])))
--				break;
--			*p++ = '|';
--		}
--	}
--	buf[sizeof(buf) - 1] = '\0';
--
--	scx_bpf_put_cpumask(online);
--	scx_bpf_put_cpumask(possible);
--
--	bpf_printk("CPUS: |%s", buf);
--}
--
--void BPF_STRUCT_OPS(qmap_cpu_online, s32 cpu)
--{
--	if (print_msgs) {
--		bpf_printk("CPU %d coming online", cpu);
--		/* @cpu is already online at this point */
--		print_cpus();
--	}
--}
--
--void BPF_STRUCT_OPS(qmap_cpu_offline, s32 cpu)
--{
--	if (print_msgs) {
--		bpf_printk("CPU %d going offline", cpu);
--		/* @cpu is still online at this point */
--		print_cpus();
--	}
--}
--
++void BPF_STRUCT_OPS(qmap_update_idle, s32 cpu, bool idle)
++{
++	s32 cid = scx_bpf_cpu_to_cid(cpu);
++
++	QMAP_TOUCH_ARENA();
++	if (cid < 0)
++		return;
++	if (idle)
++		cmask_set(qa_idle_cids, cid);
++	else
++		cmask_clear(qa_idle_cids, cid);
++}
++
++/*
++ * The cpumask received here is kernel-address memory; walk it bit by bit
++ * (bpf_cpumask_test_cpu handles the access), convert each set cpu to its
++ * cid, and populate the arena-resident taskc cmask.
++ */
++void BPF_STRUCT_OPS(qmap_set_cpumask, struct task_struct *p,
++		    const struct cpumask *cpumask)
++{
++	task_ctx_t *taskc;
++	u32 nr_cpu_ids = scx_bpf_nr_cpu_ids();
++	s32 cpu;
++
++	taskc = lookup_task_ctx(p);
++	if (!taskc)
++		return;
++
++	cmask_zero(&taskc->cpus_allowed);
++
++	bpf_for(cpu, 0, nr_cpu_ids) {
++		s32 cid;
++
++		if (!bpf_cpumask_test_cpu(cpu, cpumask))
++			continue;
++		cid = scx_bpf_cpu_to_cid(cpu);
++		if (cid >= 0)
++			__cmask_set(&taskc->cpus_allowed, cid);
++	}
++}
++
  struct monitor_timer {
  	struct bpf_timer timer;
  };
-@@ -1078,9 +1021,6 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 		slab[i].next_free = (i + 1 < max_tasks) ? &slab[i + 1] : NULL;
- 	qa.task_free_head = &slab[0];
+@@ -992,34 +1072,51 @@ static int lowpri_timerfn(void *map, int *key, struct bpf_timer *timer)
  
--	if (print_msgs && !sub_cgroup_id)
--		print_cpus();
--
- 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
- 	if (ret) {
- 		scx_bpf_error("failed to create DSQ %d (%d)", SHARED_DSQ, ret);
-@@ -1174,8 +1114,6 @@ SCX_OPS_DEFINE(qmap_ops,
- 	       .cgroup_set_bandwidth	= (void *)qmap_cgroup_set_bandwidth,
- 	       .sub_attach		= (void *)qmap_sub_attach,
- 	       .sub_detach		= (void *)qmap_sub_detach,
--	       .cpu_online		= (void *)qmap_cpu_online,
--	       .cpu_offline		= (void *)qmap_cpu_offline,
- 	       .init			= (void *)qmap_init,
- 	       .exit			= (void *)qmap_exit,
- 	       .timeout_ms		= 5000U,
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 725c4880058d..99408b1bb1ec 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -67,12 +67,14 @@ int main(int argc, char **argv)
- 	struct bpf_link *link;
- 	struct qmap_arena *qa;
- 	__u32 test_error_cnt = 0;
-+	__u64 ecode;
- 	int opt;
+ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
+ {
+-	task_ctx_t *slab;
++	u8 __arena *slab;
+ 	u32 nr_pages, key = 0, i;
+ 	struct bpf_timer *timer;
+ 	s32 ret;
  
- 	libbpf_set_print(libbpf_print_fn);
- 	signal(SIGINT, sigint_handler);
- 	signal(SIGTERM, sigint_handler);
--
-+restart:
-+	optind = 1;
- 	skel = SCX_OPS_OPEN(qmap_ops, scx_qmap);
- 
- 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
-@@ -184,11 +186,10 @@ int main(int argc, char **argv)
+ 	/*
+ 	 * Allocate the task_ctx slab in arena and thread the entire slab onto
+-	 * the free list. max_tasks is set by userspace before load.
++	 * the free list. max_tasks is set by userspace before load. Each entry
++	 * is TASK_CTX_STRIDE bytes - task_ctx's trailing cpus_allowed flex
++	 * array extends into the stride tail.
+ 	 */
+ 	if (!max_tasks) {
+ 		scx_bpf_error("max_tasks must be > 0");
+ 		return -EINVAL;
  	}
  
- 	bpf_link__destroy(link);
--	UEI_REPORT(skel, uei);
-+	ecode = UEI_REPORT(skel, uei);
- 	scx_qmap__destroy(skel);
--	/*
--	 * scx_qmap implements ops.cpu_on/offline() and doesn't need to restart
--	 * on CPU hotplug events.
--	 */
+-	nr_pages = (max_tasks * sizeof(struct task_ctx) + PAGE_SIZE - 1) / PAGE_SIZE;
++	nr_pages = (max_tasks * TASK_CTX_STRIDE + PAGE_SIZE - 1) / PAGE_SIZE;
+ 	slab = bpf_arena_alloc_pages(&arena, NULL, nr_pages, NUMA_NO_NODE, 0);
+ 	if (!slab) {
+ 		scx_bpf_error("failed to allocate task_ctx slab");
+ 		return -ENOMEM;
+ 	}
+-	qa.task_ctxs = slab;
++	qa.task_ctxs = (task_ctx_t *)slab;
+ 
+ 	bpf_for(i, 0, 5)
+ 		qa.fifos[i].idx = i;
+ 
+-	bpf_for(i, 0, max_tasks)
+-		slab[i].next_free = (i + 1 < max_tasks) ? &slab[i + 1] : NULL;
+-	qa.task_free_head = &slab[0];
++	bpf_for(i, 0, max_tasks) {
++		task_ctx_t *cur = (task_ctx_t *)(slab + i * TASK_CTX_STRIDE);
++		task_ctx_t *next = (i + 1 < max_tasks) ?
++			(task_ctx_t *)(slab + (i + 1) * TASK_CTX_STRIDE) : NULL;
++		cur->next_free = next;
++	}
++	qa.task_free_head = (task_ctx_t *)slab;
 +
-+	if (UEI_ECODE_RESTART(ecode))
-+		goto restart;
- 	return 0;
- }
++	/*
++	 * Allocate and initialize the idle cmask. Starts empty - update_idle
++	 * fills it as cpus enter idle.
++	 */
++	qa_idle_cids = bpf_arena_alloc_pages(&arena, NULL, 1, NUMA_NO_NODE, 0);
++	if (!qa_idle_cids) {
++		scx_bpf_error("failed to allocate idle cmask");
++		return -ENOMEM;
++	}
++	cmask_init(qa_idle_cids, 0, scx_bpf_nr_cids());
+ 
+ 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
+ 	if (ret) {
+@@ -1104,6 +1201,8 @@ SCX_OPS_DEFINE(qmap_ops,
+ 	       .dispatch		= (void *)qmap_dispatch,
+ 	       .tick			= (void *)qmap_tick,
+ 	       .core_sched_before	= (void *)qmap_core_sched_before,
++	       .set_cpumask		= (void *)qmap_set_cpumask,
++	       .update_idle		= (void *)qmap_update_idle,
+ 	       .init_task		= (void *)qmap_init_task,
+ 	       .exit_task		= (void *)qmap_exit_task,
+ 	       .dump			= (void *)qmap_dump,
 -- 
 2.53.0
 
