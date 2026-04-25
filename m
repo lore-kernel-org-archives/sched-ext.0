@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299DB40DFB2;
-	Sat, 25 Apr 2026 00:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2D81A76BB;
+	Sat, 25 Apr 2026 00:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777076598; cv=none; b=bKWrgWxY1m5hQfj0BmNyVQ8YAAVlxGEujf8tIs/SOlWu2EwwFIG5RUQ3WJxVPpd9+sideLTkNkARHwOLcKstdXO97MSKbIwleuWmUsLsQKmOGViGL6f50NpzBa4DHpMqZEEBtwzbFJptpzlTlIeWB29DNXaP8zmnxHhsfgHZFrs=
+	t=1777077600; cv=none; b=Bk2kAsH3LCvLqfaRv4+hnH9Un99ue80ex7ARMUNt+N/Ca7r7x+cvAfOZ1HNWWyKgok6F1Tha6f09yjgmEtEVJ6nsxTdiXAXudTkF51X224+951GL/z/Z/s6nCXldExT5vOuGHakGEGXizTyNoco+QeY4d9I6CUulWyyGAN89v/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777076598; c=relaxed/simple;
-	bh=IPPwj3wGXdJNgfx7ZyCXQjYbRHxs0hDZtPrw+qX1wfc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=RYMv98LF5yX+Ln20kCrSwegVl/ne/6/VNZp/UVsk2LhGsH5DwNHNuRUZ9DC6rvvh5Bw1VFGMyO0c9iUxTxvuBTdCREq32oQ+c29eKAH9PBfJKbDa2srOQbNrH6zuFgYzRh2Xr6hZgjmRJc98YmyXIpo6UJw71l9TRsAH4AyQhj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1LrprL3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777077600; c=relaxed/simple;
+	bh=EqpnY65BhGZ0zfN9viNV4FZEEM2WR6bLhXJ7nwuBaTI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=r+0Wg+GgyJJW3i5JyXLv1/fh1BvKNzbFzUixZf2RqNJJrT4YuT8n6P5hMPflwspIJQaIQIlgjI+t31C2SYM1FtJXJszfrQqm6XdEeB3P4Uaws3N+Bq0NdOBrbDvQBSnTfTEkSF6J3IWSJc10IwsZ/+Wii7EcRIdSO6I323kCuPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=esRp+Iup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1LrprL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90325C19425;
-	Sat, 25 Apr 2026 00:23:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="esRp+Iup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A168C19425;
+	Sat, 25 Apr 2026 00:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777076597;
-	bh=IPPwj3wGXdJNgfx7ZyCXQjYbRHxs0hDZtPrw+qX1wfc=;
+	s=k20201202; t=1777077600;
+	bh=EqpnY65BhGZ0zfN9viNV4FZEEM2WR6bLhXJ7nwuBaTI=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=n1LrprL3sNRFcJmEdLGAwXrXXDEwkKrvqON8JN2uYYksmzwK9m4KL5uCyAsmFn9dM
-	 1TZy3G/KWYr+6Z/6wQmqIk2bjq5B9ExnDzr2SNoTpGVz/SzF2aNGvC9srviXw6R6uk
-	 9fXSoGqD2gEWcWEavcjJ8gc3YBXKHrFv+epWmg5uq9L0k/O0tyURAU7Z2NCxZGRIb6
-	 8miKDfm1iKa4GroSwD2SumLQGcaBOWuzPF1PXuNMDUTXLXMjN9m7c8GLimpccbr8w2
-	 4vnPj7Yh8RZ+rd2ZpYyRn4w4FH1h+U0qRopFvYpnseEyKej+sOQjx36yEwyzlQ8bYA
-	 9GfbQrhbZaWFQ==
-Date: Fri, 24 Apr 2026 14:23:16 -1000
-Message-ID: <32173da2e3d3bb3107d92ade0c4c87a0@kernel.org>
+	b=esRp+IupZXiTXbpQRmOg2aiaOJ8d2qHt57jPP//fJxCrNIGAVGVn99bxlGt/HZVwb
+	 iAnybxW7YnAAeBkebrhI8fpet2A8bKHtOOXI6Zh/vx6KedQEsZk03/RHkhFyHt5k2l
+	 6bBdwfz6oOud4SZY9fadY1Tt/nxNQbd5brbDdoExvDKnqZ1V0xLOC97yqxhXRGDSll
+	 EF0M939YVcF7GNpzw1YthV9U1l8rbWDhrQQ14CK0IU3wI6TxgaCoZVOLiyVdKzhokR
+	 hxPsvfW4zZ7mKtY0VXGeW7s+lckKKVqjzUPqL5Tbra5S5w8F6HMPUyhKYAxND8QSzU
+	 WC3zmyN8VC/Mg==
+Date: Fri, 24 Apr 2026 14:39:59 -1000
+Message-ID: <71740a62384f21a1613326a3e450fb69@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
 Cc: sched-ext@lists.linux.dev,
-	emil@etsalapatis.com,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-7.1-fixes] sched_ext: Defer scx_hardlockup() out of NMI
-In-Reply-To: <e78c625bf7ef51fef0e564d9c25482aa@kernel.org>
-References: <e78c625bf7ef51fef0e564d9c25482aa@kernel.org>
+ linux-kernel@vger.kernel.org,
+ Emil Tsalapatis <emil@etsalapatis.com>,
+ Chris Mason <clm@meta.com>,
+ Ryan Newton <newton@meta.com>
+Subject: Re: [PATCHSET sched_ext/for-7.1-fixes] sched_ext: Assorted fixes
+In-Reply-To: <20260424204418.3809733-1-tj@kernel.org>
+References: <20260424204418.3809733-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,11 +47,11 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello,
 
-> [PATCH sched_ext/for-7.1-fixes] sched_ext: Defer scx_hardlockup() out of NMI
-
-Applied to sched_ext/for-7.1-fixes with the Cc: stable line dropped.
+Applied 1-13 plus extras 14/13 and 15/13 to sched_ext/for-7.1-fixes.
+Patches 13 and 15/13 applied as v2; Andrea's Reviewed-by added on the
+other twelve plus 14/13.
 
 Thanks.
 
--- 
+--
 tejun
