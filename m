@@ -1,157 +1,813 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B6E169AD2
-	for <sched-ext@lists.linux.dev>; Sun, 26 Apr 2026 01:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF7226158C;
+	Mon, 27 Apr 2026 05:08:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777168079; cv=none; b=SRYdm6hN0e83748hno5P3PHqvSJGcoDpg3e+lKg5TTGwpDdCU7HMe9S3MvQ2ld9iWE9+1gHUH+i9imexeqSrJxx4ebOIYGniuRw34HEFq5sAdeYACOCfdK1S2X/i3pl3TNvXtyORK0ipQRxcpaWE3/bEgPBr0fXG9pb7dyVy9nE=
+	t=1777266512; cv=none; b=ui7rnsW+9yn4e0muD2sBCEwwuPrhWYvFY+c/f+ickk/szNww31zxcG66djNTfF3MFmfwq+yCP4ZhpmvlryRw/eLEtEopEwhctZP2xdc76YiTzz41/JCECobA66gwdbTpeygTHZwnRAJ6ml+O8B2mrCqiRxmDcFds8GrQPB3dG+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777168079; c=relaxed/simple;
-	bh=QrvqSDc041TNuXNt3BBlwMz8vZoL2QGWRmws13hXG+Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RSNx++daRDgcvPADuUnN/hbQ8WtT/Io3Y+xsc9o8bmOpHBXhj7pPNOmZ63/ioGYsIFOxKGYfRmzcUY7CHdxyuIaVIi2OFaAuThDc3u+m/g0bkwzdPuGw1qY4toAfyCCUMZl2Ry0DKa69Hrvv/Wij8WUlwECKAtevULeGIvKDQPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FgKchmHK; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1777266512; c=relaxed/simple;
+	bh=mretQ2GvaolGMamHFMqTDeJXPJ0R8ycPPb7trAGz/lE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EyBJtxh3omaU4Uc0eHWVRIn+8jNq2DCKdvaPounh7ZzulgKIPsX6JZ+KupFl2YxSl6SCzfJjeKBnggzpGJx9+7SzZd/STbVTd4uMEZD5kFGDGjRtiU2i8mrhui56vyezT9s1ZAjY0LRJyVGFCAxCCoDYWyYEoPx1m7XmvId9i+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G2xJCRht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FgKchmHK"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-35d9f68d011so5989859a91.2
-        for <sched-ext@lists.linux.dev>; Sat, 25 Apr 2026 18:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777168077; x=1777772877; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RL7xdU0D39uNUreJOg8ut3Rg0sXkiiyngpi4Y/rXepg=;
-        b=FgKchmHKj+jl4stIoafa/xweUtdRiByQVPzxbQmbD88KmskAE8d5W4hHWtJJVK7dLB
-         amA4hGfHs2d+uMj/c0Jdf20uvfGkQcybRoGQzBkv6E51S/b73s+Fxu+/Di8RHPxWYMPR
-         r/cRBYSn3g/K+uoQhbewsw3Vg7X6HNTQiyxbnkbteVIGy5uvYdIB+6tO96+Tp+caoncs
-         /umnDLLh1qsgP9TDyA47YhAvsPmbgp3p/hkBe25+CR5jv17Am59GbmnF11v1pNOBwuCs
-         QImwJIxFFT6H3td71khJPT3EDgbHHzzxEHLzv9S5o/v/+PTcxSL0brJ4vYCSg7zr/Qjw
-         JbTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777168077; x=1777772877;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RL7xdU0D39uNUreJOg8ut3Rg0sXkiiyngpi4Y/rXepg=;
-        b=r8XmWev9MRlSq+u/2OoAV6ziwoRKSylAjuQY6P28j1aW8/l1V+9YCcj/3BhJavOXJ2
-         FDu3GDIuwxxuiwrC9PABAs9f4NN8cMYeJlCL5nv6ZQvhQTIAapdMX0JWsugeg3MZXRfm
-         TwkVvRI7vPPae5DcLEmoTFxPgePCSB9WgvTwzWfQowsbf+UH7egzRJiaBD7I11ywYif4
-         7YmsKn8XYfMtegTUI4lxoAsYdDDyFF7iENugi3PbjjwyN5oUKwvv9RSIhQ8yFjc5Mbrm
-         ZtD85LzMjW83o+Sjeo7VTIx4ubnhZ0N0qkPCKnIU8vuTlf517qMdQbLx9ch/55GOjzxM
-         jFrw==
-X-Forwarded-Encrypted: i=1; AFNElJ9e4MnKY1xMiFMslzFKronKr8TR3OYwBV5am2Rd8y9iLuR/4OPj83Idk4gXnuH/YSkfxesTM5TYcp0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxKsytlCyuErD9dEMlxupMeFsuXOMEARWmydVgH6jkPZ7bktG2L
-	MzTEr9/UKeOF/jinOJZ7ANQIzizEo8laeAwrCBjQA0ngeBEKG33K3fOS
-X-Gm-Gg: AeBDieuSgRHboWL2+vSCFVsf3X1OZnfmwXVw6tHr4EaPvX9Ek4j7eBvwTgijcwAmtjq
-	NbZTDoUS6e58Uzm0tt6rh2RYbaIwKiocYQDLEAt+Uuic06x7a6dg0abcOxHcW31bt+jf4sOOZww
-	FYXX0LLmchH/o1hQB2fLvEbNgRHMEGSHVkxW3Em6S6bwe2CC3A+8kD+n56NHpU/R312T1ETTMXm
-	QZ6TNDza+kspbq9Lv0U6qB7N3N00ygojzbylLdPPDnySYzVKXjHSWsSjFxc5nUMyZfrIVmvCzuB
-	7zcAN6e2pPGqQNbiOmkT8U1u4CWc5pXZt7p8h8IHv1of9TS0GKsX176OSdOWtQ0sO03K6BMwuNu
-	EHzrL5pw1uxdoRFpK0J1osmncdL4g+5x48x3hLkdR59mptbTO8MXqkIagiTbFDKan9mcoQ+HzGM
-	ooCC9DDNaqRTb46gVEMDN8Zj3BchX7q9id97TE9Oqx5749LDr/e0GCuJZ8+peo8cdaWSi8iwqxl
-	1Vr11NKAyof7NPR
-X-Received: by 2002:a17:90b:3504:b0:35f:bb33:d727 with SMTP id 98e67ed59e1d1-36140478be0mr37352571a91.20.1777168077417;
-        Sat, 25 Apr 2026 18:47:57 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-83-234.dynamic-ip.hinet.net. [36.225.83.234])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36141973c57sm27058415a91.14.2026.04.25.18.47.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2026 18:47:56 -0700 (PDT)
-Date: Sun, 26 Apr 2026 09:47:53 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Kuba Piecuch <jpiecuch@google.com>
-Cc: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
-	Emil Tsalapatis <emil@etsalapatis.com>, Christian Loehle <christian.loehle@arm.com>, 
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Invalidate dispatch
- decisions on CPU affinity changes
-Message-ID: <20260426093756.Gd781@cchengyang.duckdns.org>
-References: <20260319083518.94673-1-arighi@nvidia.com>
- <DH6OUDJUQNA3.6L4YXJMME4KI@google.com>
- <abxl-xw7nt1jp5qT@gpd4>
- <DH7HWWN0HZQM.1ZSKEH89LMOKQ@google.com>
- <acHJED4iAeytdC2l@slm.duckdns.org>
- <20260422142633.G7180@cchengyang.duckdns.org>
- <DI0KLDKWJBOI.2LVQ249QGVJI8@google.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G2xJCRht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B01C19425;
+	Mon, 27 Apr 2026 05:08:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777266512;
+	bh=mretQ2GvaolGMamHFMqTDeJXPJ0R8ycPPb7trAGz/lE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=G2xJCRhtD1Q+yiUvPSqy2BX14XR6RD3FCdZ1zeKFnzq4aeu8G+JzRPkPy+5ygv4ZK
+	 WUKNAGXtJ42gFDjDV67ZAGNGsX5G68ZhhHwZwrkiksxtOGv50pjY7dbX+Ejk7DOdXe
+	 Oq3fC4+oYgDEFNEtUhFfZ1ZqdbC5y9v1h3ozjFqMbj3w1F4AQwwOBX7xNGeN+dsdlc
+	 n3Z+w1jYKAr5kSD+W0ib+KIwhw/BuesVE4cEJlql3Pvhu1wNflEpz2PTpUwXkqXX05
+	 6pGdl28I8dZDxhIJJ3uKbHa6IsL72HRYPJY1FHIrK8/H+jBxpqyTmLUXvNSYBSAA2H
+	 HvAPYignIlB3Q==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	emil@etsalapatis.com,
+	linux-kernel@vger.kernel.org,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Zhao Mengmeng <zhaomzhao@126.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH v3] sched_ext: Add bpf_sched_ext_ops_cid struct_ops type
+Date: Sun, 26 Apr 2026 19:08:30 -1000
+Message-ID: <20260427050830.2095323-1-tj@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260424172721.3458520-13-tj@kernel.org>
+References: <20260424172721.3458520-13-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <DI0KLDKWJBOI.2LVQ249QGVJI8@google.com>
 
-Hi Kuba,
+cpumask is awkward from BPF and unusable from arena; cid/cmask work in
+both. Sub-sched enqueue will need cmask. Without a full cid interface,
+schedulers end up mixing forms - a subtle-bug factory.
 
-On Thu, Apr 23, 2026 at 01:32:20PM +0000, Kuba Piecuch wrote:
-> > On Mon, Mar 23, 2026 at 01:13:20PM -1000, Tejun Heo wrote:
-> >> > The simple way to do this is to do scx_bpf_dsq_insert() at the very beginning,
-> >> > once we know which task we would like to dispatch, and cancel the pending
-> >> > dispatch via scx_bpf_dispatch_cancel() if any of the pre-dispatch checks fail
-> >> > on the BPF side. This way, the "critical section" includes BPF-side checks, and
-> >> > SCX will ignore the dispatch if there was a dequeue/enqueue racing with the
-> >> > critical section.
-> >> > 
-> >> > With this solution, we can throw an error if task_can_run_on_remote_rq() is
-> >> > false, because we know that there was no racing cpumask change (if there was,
-> >> > it would have been caught earlier, in finish_dispatch()).
-> >> 
-> >> Yeah, I think this makes more sense. qseq is already there to provide
-> >> protection against these events. It's just that the capturing of qseq is too
-> >> late. If insert/cancel is too ugly, we can introduce another kfunc to
-> >> capture the qseq - scx_bpf_dsq_insert_begin() or something like that - and
-> >> stash it in a per-cpu variable. That way, qseq would be cover the "current"
-> >> queued instance and the existing qseq mechanism would be able to reliably
-> >> ignore the ones that lost race to dequeue.
-> >
-> > Since this has been stale for a while, I prepared a patch to implement
-> > scx_bpf_dsq_insert_begin() as suggested.
-> 
-> Thanks for creating the patch. A couple of thoughts:
-> 
-> 1. Do we have a use case that requires dsq_insert_begin() that isn't
->    satisfied using the "insert and then cancel if needed" approach?
+Add sched_ext_ops_cid, which mirrors sched_ext_ops with cid/cmask
+replacing cpu/cpumask in the topology-carrying callbacks.
+cpu_acquire/cpu_release are deprecated and absent; a prior patch
+moved them past @priv so the cid-form can omit them without
+disturbing shared-field offsets.
 
-IIUC, yes. scx_bpf_dispatch_cancel() is only registered in 
-scx_kfunc_ids_dispatch, so it is only callable from ops.dispatch().
-dsq_insert_begin(), on the other hand, is available from both
-ops.enqueue() and ops.dispatch() (SCX_KF_ENQUEUE | SCX_KF_DISPATCH).
-Since there is nothing to cancel in ops.enqueue(), the insert-and-cancel
-approach simply doesn't work there.
+The two structs share byte-identical layout up to @priv, so the
+existing bpf_scx init/check hooks, has_op bitmap, and
+scx_kf_allow_flags[] are offset-indexed and apply to both.
+BUILD_BUG_ON in scx_init() pins the shared-field and renamed-callback
+offsets so any future drift trips at boot.
 
-> 
-> 2. Do we want to restrict ourselves through the one qseq slot provided by
->    dsq_insert_begin()? The most flexible approach IMO would be to simply
->    allow BPF to read the qseq directly via a kfunc and then supply it to
->    dsq_insert() later. With this, we can have multiple qseqs saved at the
->    same time, and we can even pass them between CPUs, e.g. if one CPU
->    dequeues a task for a sibling CPU, but we want the checks to be made inside
->    the sibling's ops.dispatch() (I just made this use case it up, it may not
->    be practical.)
->    That said, exposing an internal thing like qseq to BPF may be a step too far.
+The kernel<->BPF boundary translates between cpu and cid:
 
-In Tejun's reply back in [1], he suggested dsq_insert_begin() precisely
-to avoid promoting qseq into the BPF ABI — which matches your own concern.
-The single per-CPU slot is sufficient for the one-task-per-iteration
-dispatch loops used by existing schedulers (e.g., scx_central).
-If a concrete cross-CPU use case materializes later, we can always extend
-dsq_insert() to accept an explicit qseq without breaking the current,
-simpler path.
+- A static key, enabled on cid-form sched load, gates the translation
+  so cpu-form schedulers pay nothing.
+- dispatch, update_idle, cpu_online/offline and dump_cpu translate
+  the cpu arg at the callsite.
+- select_cpu also translates the returned cid back to a cpu.
+- set_cpumask is wrapped to synthesize a cmask in a per-cpu scratch
+  before calling the cid-form callback.
 
-[1]: https://lore.kernel.org/all/acHJED4iAeytdC2l@slm.duckdns.org/
+All scheds in a hierarchy share one form. The static key drives the
+hot-path branch.
 
->    Let me know what you think.
-> 
+v2: Use struct_size() for the set_cmask_scratch percpu alloc. Move
+    cid-shard fields and assertions into the later cid-shard patch.
 
-Please correct me if I'm missing something, thanks! ^0^
+v3: Drop `static` on scx_set_cmask_scratch; add extern in ext_internal.h.
 
--- 
-Cheers,
-Cheng-Yang
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ kernel/sched/ext.c                       |  271 +++++++++++++++++++++++++++++--
+ kernel/sched/ext_cid.c                   |   44 +++++
+ kernel/sched/ext_cid.h                   |   10 +
+ kernel/sched/ext_idle.c                  |    2
+ kernel/sched/ext.c                       |  279 +++++++++++++++++++++++++++++--
+ kernel/sched/ext_cid.c                   |   37 ++++
+ kernel/sched/ext_cid.h                   |    9 +
+ kernel/sched/ext_idle.c                  |    2 
+ kernel/sched/ext_internal.h              |  109 ++++++++++++
+ tools/sched_ext/include/scx/compat.bpf.h |   12 +
+ 6 files changed, 428 insertions(+), 20 deletions(-)
+
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -516,6 +516,33 @@ do {										\
+ 		update_locked_rq(__prev_locked_rq);				\
+ } while (0)
+ 
++/*
++ * Flipped on enable per sch->is_cid_type. Declared in ext_internal.h so
++ * subsystem inlines can read it.
++ */
++DEFINE_STATIC_KEY_FALSE(__scx_is_cid_type);
++
++/*
++ * scx_cpu_arg() wraps a cpu arg being handed to an SCX op. For cid-form
++ * schedulers it resolves to the matching cid; for cpu-form it passes @cpu
++ * through. scx_cpu_ret() is the inverse for a cpu/cid returned from an op
++ * (currently only ops.select_cpu); it validates the BPF-supplied cid and
++ * triggers scx_error() on @sch if invalid.
++ */
++static s32 scx_cpu_arg(s32 cpu)
++{
++	if (scx_is_cid_type())
++		return __scx_cpu_to_cid(cpu);
++	return cpu;
++}
++
++static s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
++{
++	if (cpu_or_cid < 0 || !scx_is_cid_type())
++		return cpu_or_cid;
++	return scx_cid_to_cpu(sch, cpu_or_cid);
++}
++
+ #define SCX_CALL_OP_RET(sch, op, locked_rq, args...)				\
+ ({										\
+ 	struct rq *__prev_locked_rq;						\
+@@ -577,6 +604,41 @@ do {										\
+ 	__ret;									\
+ })
+ 
++/**
++ * scx_call_op_set_cpumask - invoke ops.set_cpumask / ops_cid.set_cmask for @task
++ * @sch: scx_sched being invoked
++ * @rq: rq to update as the currently-locked rq, or NULL
++ * @task: task whose affinity is changing
++ * @cpumask: new cpumask
++ *
++ * For cid-form schedulers, translate @cpumask to a cmask via the per-cpu
++ * scratch in ext_cid.c and dispatch through the ops_cid union view. Caller
++ * must hold @rq's rq lock so this_cpu_ptr is stable across the call.
++ */
++static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
++					   struct task_struct *task,
++					   const struct cpumask *cpumask)
++{
++	WARN_ON_ONCE(current->scx.kf_tasks[0]);
++	current->scx.kf_tasks[0] = task;
++	if (rq)
++		update_locked_rq(rq);
++
++	if (scx_is_cid_type()) {
++		struct scx_cmask *cmask = this_cpu_ptr(scx_set_cmask_scratch);
++
++		lockdep_assert_irqs_disabled();
++		scx_cpumask_to_cmask(cpumask, cmask);
++		sch->ops_cid.set_cmask(task, cmask);
++	} else {
++		sch->ops.set_cpumask(task, cpumask);
++	}
++
++	if (rq)
++		update_locked_rq(NULL);
++	current->scx.kf_tasks[0] = NULL;
++}
++
+ /* see SCX_CALL_OP_TASK() */
+ static __always_inline bool scx_kf_arg_task_ok(struct scx_sched *sch,
+ 							struct task_struct *p)
+@@ -1682,7 +1744,7 @@ static struct scx_dispatch_q *find_dsq_f
+ 		return &rq->scx.local_dsq;
+ 
+ 	if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
+-		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
++		s32 cpu = scx_cpu_ret(sch, dsq_id & SCX_DSQ_LOCAL_CPU_MASK);
+ 
+ 		if (!scx_cpu_valid(sch, cpu, "in SCX_DSQ_LOCAL_ON dispatch verdict"))
+ 			return find_global_dsq(sch, tcpu);
+@@ -2764,11 +2826,13 @@ scx_dispatch_sched(struct scx_sched *sch
+ 		dspc->nr_tasks = 0;
+ 
+ 		if (nested) {
+-			SCX_CALL_OP(sch, dispatch, rq, cpu, prev_on_sch ? prev : NULL);
++			SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
++				    prev_on_sch ? prev : NULL);
+ 		} else {
+ 			/* stash @prev so that nested invocations can access it */
+ 			rq->scx.sub_dispatch_prev = prev;
+-			SCX_CALL_OP(sch, dispatch, rq, cpu, prev_on_sch ? prev : NULL);
++			SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
++				    prev_on_sch ? prev : NULL);
+ 			rq->scx.sub_dispatch_prev = NULL;
+ 		}
+ 
+@@ -3263,7 +3327,9 @@ static int select_task_rq_scx(struct tas
+ 		*ddsp_taskp = p;
+ 
+ 		this_rq()->scx.in_select_cpu = true;
+-		cpu = SCX_CALL_OP_TASK_RET(sch, select_cpu, NULL, p, prev_cpu, wake_flags);
++		cpu = SCX_CALL_OP_TASK_RET(sch, select_cpu, NULL, p,
++					   scx_cpu_arg(prev_cpu), wake_flags);
++		cpu = scx_cpu_ret(sch, cpu);
+ 		this_rq()->scx.in_select_cpu = false;
+ 		p->scx.selected_cpu = cpu;
+ 		*ddsp_taskp = NULL;
+@@ -3313,7 +3379,7 @@ static void set_cpus_allowed_scx(struct
+ 	 * designation pointless. Cast it away when calling the operation.
+ 	 */
+ 	if (SCX_HAS_OP(sch, set_cpumask))
+-		SCX_CALL_OP_TASK(sch, set_cpumask, task_rq(p), p, (struct cpumask *)p->cpus_ptr);
++		scx_call_op_set_cpumask(sch, task_rq(p), p, (struct cpumask *)p->cpus_ptr);
+ }
+ 
+ static void handle_hotplug(struct rq *rq, bool online)
+@@ -3335,9 +3401,9 @@ static void handle_hotplug(struct rq *rq
+ 		scx_idle_update_selcpu_topology(&sch->ops);
+ 
+ 	if (online && SCX_HAS_OP(sch, cpu_online))
+-		SCX_CALL_OP(sch, cpu_online, NULL, cpu);
++		SCX_CALL_OP(sch, cpu_online, NULL, scx_cpu_arg(cpu));
+ 	else if (!online && SCX_HAS_OP(sch, cpu_offline))
+-		SCX_CALL_OP(sch, cpu_offline, NULL, cpu);
++		SCX_CALL_OP(sch, cpu_offline, NULL, scx_cpu_arg(cpu));
+ 	else
+ 		scx_exit(sch, SCX_EXIT_UNREG_KERN,
+ 			 SCX_ECODE_ACT_RESTART | SCX_ECODE_RSN_HOTPLUG,
+@@ -3922,7 +3988,7 @@ static void switching_to_scx(struct rq *
+ 	 * different scheduler class. Keep the BPF scheduler up-to-date.
+ 	 */
+ 	if (SCX_HAS_OP(sch, set_cpumask))
+-		SCX_CALL_OP_TASK(sch, set_cpumask, rq, p, (struct cpumask *)p->cpus_ptr);
++		scx_call_op_set_cpumask(sch, rq, p, (struct cpumask *)p->cpus_ptr);
+ }
+ 
+ static void switched_from_scx(struct rq *rq, struct task_struct *p)
+@@ -5948,6 +6014,7 @@ static void scx_root_disable(struct scx_
+ 
+ 	/* no task is on scx, turn off all the switches and flush in-progress calls */
+ 	static_branch_disable(&__scx_enabled);
++	static_branch_disable(&__scx_is_cid_type);
+ 	if (sch->ops.flags & SCX_OPS_TID_TO_TASK)
+ 		static_branch_disable(&__scx_tid_to_task_enabled);
+ 	bitmap_zero(sch->has_op, SCX_OPI_END);
+@@ -6363,7 +6430,7 @@ static void scx_dump_state(struct scx_sc
+ 		used = seq_buf_used(&ns);
+ 		if (SCX_HAS_OP(sch, dump_cpu)) {
+ 			ops_dump_init(&ns, "  ");
+-			SCX_CALL_OP(sch, dump_cpu, rq, &dctx, cpu, idle);
++			SCX_CALL_OP(sch, dump_cpu, rq, &dctx, scx_cpu_arg(cpu), idle);
+ 			ops_dump_exit();
+ 		}
+ 
+@@ -6519,7 +6586,11 @@ static struct scx_sched_pnode *alloc_pno
+  */
+ struct scx_enable_cmd {
+ 	struct kthread_work	work;
+-	struct sched_ext_ops	*ops;
++	union {
++		struct sched_ext_ops		*ops;
++		struct sched_ext_ops_cid	*ops_cid;
++	};
++	bool			is_cid_type;
+ 	int			ret;
+ };
+ 
+@@ -6527,10 +6598,11 @@ struct scx_enable_cmd {
+  * Allocate and initialize a new scx_sched. @cgrp's reference is always
+  * consumed whether the function succeeds or fails.
+  */
+-static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
++static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 						 struct cgroup *cgrp,
+ 						 struct scx_sched *parent)
+ {
++	struct sched_ext_ops *ops = cmd->ops;
+ 	struct scx_sched *sch;
+ 	s32 level = parent ? parent->level + 1 : 0;
+ 	s32 node, cpu, ret, bypass_fail_cpu = nr_cpu_ids;
+@@ -6622,7 +6694,18 @@ static struct scx_sched *scx_alloc_and_a
+ 		ret = -ENOMEM;
+ 		goto err_free_lb_cpumask;
+ 	}
+-	sch->ops = *ops;
++	/*
++	 * Copy ops through the right union view. For cid-form the source is
++	 * struct sched_ext_ops_cid which lacks the trailing cpu_acquire/
++	 * cpu_release; those stay zero from kzalloc.
++	 */
++	if (cmd->is_cid_type) {
++		sch->ops_cid = *cmd->ops_cid;
++		sch->is_cid_type = true;
++	} else {
++		sch->ops = *cmd->ops;
++	}
++
+ 	rcu_assign_pointer(ops->priv, sch);
+ 
+ 	sch->kobj.kset = scx_kset;
+@@ -6759,7 +6842,12 @@ static int validate_ops(struct scx_sched
+ 		return -EINVAL;
+ 	}
+ 
+-	if (ops->cpu_acquire || ops->cpu_release)
++	/*
++	 * cid-form's struct is shorter and doesn't include the cpu_acquire /
++	 * cpu_release tail; reading those fields off a cid-form @ops would
++	 * run past the BPF allocation. Skip for cid-form.
++	 */
++	if (!sch->is_cid_type && (ops->cpu_acquire || ops->cpu_release))
+ 		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
+ 
+ 	return 0;
+@@ -6795,12 +6883,15 @@ static void scx_root_enable_workfn(struc
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	cgroup_get(cgrp);
+ #endif
+-	sch = scx_alloc_and_add_sched(ops, cgrp, NULL);
++	sch = scx_alloc_and_add_sched(cmd, cgrp, NULL);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
+ 		goto err_free_tid_hash;
+ 	}
+ 
++	if (sch->is_cid_type)
++		static_branch_enable(&__scx_is_cid_type);
++
+ 	/*
+ 	 * Transition to ENABLING and clear exit info to arm the disable path.
+ 	 * Failure triggers full disabling from here on.
+@@ -7120,7 +7211,7 @@ static void scx_sub_enable_workfn(struct
+ 	raw_spin_unlock_irq(&scx_sched_lock);
+ 
+ 	/* scx_alloc_and_add_sched() consumes @cgrp whether it succeeds or not */
+-	sch = scx_alloc_and_add_sched(ops, cgrp, parent);
++	sch = scx_alloc_and_add_sched(cmd, cgrp, parent);
+ 	kobject_put(&parent->kobj);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
+@@ -7571,6 +7662,13 @@ static int bpf_scx_reg(void *kdata, stru
+ 	return scx_enable(&cmd, link);
+ }
+ 
++static int bpf_scx_reg_cid(void *kdata, struct bpf_link *link)
++{
++	struct scx_enable_cmd cmd = { .ops_cid = kdata, .is_cid_type = true };
++
++	return scx_enable(&cmd, link);
++}
++
+ static void bpf_scx_unreg(void *kdata, struct bpf_link *link)
+ {
+ 	struct sched_ext_ops *ops = kdata;
+@@ -7702,6 +7800,73 @@ static struct bpf_struct_ops bpf_sched_e
+ 	.cfi_stubs = &__bpf_ops_sched_ext_ops
+ };
+ 
++/*
++ * cid-form cfi stubs. Stubs whose signatures match the cpu-form (param types
++ * identical, only param names differ across structs) are reused; only
++ * set_cmask needs a fresh stub since the second argument type differs.
++ */
++static void sched_ext_ops_cid__set_cmask(struct task_struct *p,
++					 const struct scx_cmask *cmask) {}
++
++static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
++	.select_cid		= sched_ext_ops__select_cpu,
++	.enqueue		= sched_ext_ops__enqueue,
++	.dequeue		= sched_ext_ops__dequeue,
++	.dispatch		= sched_ext_ops__dispatch,
++	.tick			= sched_ext_ops__tick,
++	.runnable		= sched_ext_ops__runnable,
++	.running		= sched_ext_ops__running,
++	.stopping		= sched_ext_ops__stopping,
++	.quiescent		= sched_ext_ops__quiescent,
++	.yield			= sched_ext_ops__yield,
++	.core_sched_before	= sched_ext_ops__core_sched_before,
++	.set_weight		= sched_ext_ops__set_weight,
++	.set_cmask		= sched_ext_ops_cid__set_cmask,
++	.update_idle		= sched_ext_ops__update_idle,
++	.init_task		= sched_ext_ops__init_task,
++	.exit_task		= sched_ext_ops__exit_task,
++	.enable			= sched_ext_ops__enable,
++	.disable		= sched_ext_ops__disable,
++#ifdef CONFIG_EXT_GROUP_SCHED
++	.cgroup_init		= sched_ext_ops__cgroup_init,
++	.cgroup_exit		= sched_ext_ops__cgroup_exit,
++	.cgroup_prep_move	= sched_ext_ops__cgroup_prep_move,
++	.cgroup_move		= sched_ext_ops__cgroup_move,
++	.cgroup_cancel_move	= sched_ext_ops__cgroup_cancel_move,
++	.cgroup_set_weight	= sched_ext_ops__cgroup_set_weight,
++	.cgroup_set_bandwidth	= sched_ext_ops__cgroup_set_bandwidth,
++	.cgroup_set_idle	= sched_ext_ops__cgroup_set_idle,
++#endif
++	.sub_attach		= sched_ext_ops__sub_attach,
++	.sub_detach		= sched_ext_ops__sub_detach,
++	.cid_online		= sched_ext_ops__cpu_online,
++	.cid_offline		= sched_ext_ops__cpu_offline,
++	.init			= sched_ext_ops__init,
++	.exit			= sched_ext_ops__exit,
++	.dump			= sched_ext_ops__dump,
++	.dump_cid		= sched_ext_ops__dump_cpu,
++	.dump_task		= sched_ext_ops__dump_task,
++};
++
++/*
++ * The cid-form struct_ops shares all bpf_struct_ops hooks with the cpu form.
++ * init_member, check_member, reg, unreg, etc. process kdata as the byte block
++ * verified to match by the BUILD_BUG_ON checks in scx_init().
++ */
++static struct bpf_struct_ops bpf_sched_ext_ops_cid = {
++	.verifier_ops = &bpf_scx_verifier_ops,
++	.reg = bpf_scx_reg_cid,
++	.unreg = bpf_scx_unreg,
++	.check_member = bpf_scx_check_member,
++	.init_member = bpf_scx_init_member,
++	.init = bpf_scx_init,
++	.update = bpf_scx_update,
++	.validate = bpf_scx_validate,
++	.name = "sched_ext_ops_cid",
++	.owner = THIS_MODULE,
++	.cfi_stubs = &__bpf_ops_sched_ext_ops_cid
++};
++
+ 
+ /********************************************************************************
+  * System integration and init.
+@@ -8913,7 +9078,7 @@ __bpf_kfunc s32 scx_bpf_dsq_nr_queued(u6
+ 		ret = READ_ONCE(this_rq()->scx.local_dsq.nr);
+ 		goto out;
+ 	} else if ((dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON) {
+-		s32 cpu = dsq_id & SCX_DSQ_LOCAL_CPU_MASK;
++		s32 cpu = scx_cpu_ret(sch, dsq_id & SCX_DSQ_LOCAL_CPU_MASK);
+ 
+ 		if (scx_cpu_valid(sch, cpu, NULL)) {
+ 			ret = READ_ONCE(cpu_rq(cpu)->scx.local_dsq.nr);
+@@ -10020,8 +10185,15 @@ int scx_kfunc_context_filter(const struc
+ 
+ 	/*
+ 	 * Non-SCX struct_ops: SCX kfuncs are not permitted.
++	 *
++	 * Both bpf_sched_ext_ops (cpu-form) and bpf_sched_ext_ops_cid
++	 * (cid-form) are valid SCX struct_ops. Member offsets match between
++	 * the two (verified by BUILD_BUG_ON in scx_init()), so the shared
++	 * scx_kf_allow_flags[] table indexed by SCX_MOFF_IDX(moff) applies to
++	 * both.
+ 	 */
+-	if (prog->aux->st_ops != &bpf_sched_ext_ops)
++	if (prog->aux->st_ops != &bpf_sched_ext_ops &&
++	    prog->aux->st_ops != &bpf_sched_ext_ops_cid)
+ 		return -EACCES;
+ 
+ 	/* SCX struct_ops: check the per-op allow list. */
+@@ -10052,6 +10224,73 @@ static int __init scx_init(void)
+ 	int ret;
+ 
+ 	/*
++	 * sched_ext_ops_cid mirrors sched_ext_ops up to and including @priv.
++	 * Both bpf_scx_init_member() and bpf_scx_check_member() use offsets
++	 * from struct sched_ext_ops; sched_ext_ops_cid relies on those offsets
++	 * matching for the shared fields. Catch any drift at boot.
++	 */
++#define CID_OFFSET_MATCH(cpu_field, cid_field)					\
++	BUILD_BUG_ON(offsetof(struct sched_ext_ops, cpu_field) !=		\
++		     offsetof(struct sched_ext_ops_cid, cid_field))
++	/* data fields used by bpf_scx_init_member() */
++	CID_OFFSET_MATCH(dispatch_max_batch, dispatch_max_batch);
++	CID_OFFSET_MATCH(flags, flags);
++	CID_OFFSET_MATCH(name, name);
++	CID_OFFSET_MATCH(timeout_ms, timeout_ms);
++	CID_OFFSET_MATCH(exit_dump_len, exit_dump_len);
++	CID_OFFSET_MATCH(hotplug_seq, hotplug_seq);
++	CID_OFFSET_MATCH(sub_cgroup_id, sub_cgroup_id);
++	/* shared callbacks: the union view requires byte-for-byte offset match */
++	CID_OFFSET_MATCH(enqueue, enqueue);
++	CID_OFFSET_MATCH(dequeue, dequeue);
++	CID_OFFSET_MATCH(dispatch, dispatch);
++	CID_OFFSET_MATCH(tick, tick);
++	CID_OFFSET_MATCH(runnable, runnable);
++	CID_OFFSET_MATCH(running, running);
++	CID_OFFSET_MATCH(stopping, stopping);
++	CID_OFFSET_MATCH(quiescent, quiescent);
++	CID_OFFSET_MATCH(yield, yield);
++	CID_OFFSET_MATCH(core_sched_before, core_sched_before);
++	CID_OFFSET_MATCH(set_weight, set_weight);
++	CID_OFFSET_MATCH(update_idle, update_idle);
++	CID_OFFSET_MATCH(init_task, init_task);
++	CID_OFFSET_MATCH(exit_task, exit_task);
++	CID_OFFSET_MATCH(enable, enable);
++	CID_OFFSET_MATCH(disable, disable);
++	CID_OFFSET_MATCH(dump, dump);
++	CID_OFFSET_MATCH(dump_task, dump_task);
++	CID_OFFSET_MATCH(sub_attach, sub_attach);
++	CID_OFFSET_MATCH(sub_detach, sub_detach);
++	CID_OFFSET_MATCH(init, init);
++	CID_OFFSET_MATCH(exit, exit);
++#ifdef CONFIG_EXT_GROUP_SCHED
++	CID_OFFSET_MATCH(cgroup_init, cgroup_init);
++	CID_OFFSET_MATCH(cgroup_exit, cgroup_exit);
++	CID_OFFSET_MATCH(cgroup_prep_move, cgroup_prep_move);
++	CID_OFFSET_MATCH(cgroup_move, cgroup_move);
++	CID_OFFSET_MATCH(cgroup_cancel_move, cgroup_cancel_move);
++	CID_OFFSET_MATCH(cgroup_set_weight, cgroup_set_weight);
++	CID_OFFSET_MATCH(cgroup_set_bandwidth, cgroup_set_bandwidth);
++	CID_OFFSET_MATCH(cgroup_set_idle, cgroup_set_idle);
++#endif
++	/* renamed callbacks must occupy the same slot as their cpu-form sibling */
++	CID_OFFSET_MATCH(select_cpu, select_cid);
++	CID_OFFSET_MATCH(set_cpumask, set_cmask);
++	CID_OFFSET_MATCH(cpu_online, cid_online);
++	CID_OFFSET_MATCH(cpu_offline, cid_offline);
++	CID_OFFSET_MATCH(dump_cpu, dump_cid);
++	/* @priv tail must align since both share the same data block */
++	CID_OFFSET_MATCH(priv, priv);
++	/*
++	 * cid-form must end exactly at @priv - validate_ops() skips
++	 * cpu_acquire/cpu_release for cid-form because reading those fields
++	 * past the BPF allocation would be UB.
++	 */
++	BUILD_BUG_ON(sizeof(struct sched_ext_ops_cid) !=
++		     offsetofend(struct sched_ext_ops, priv));
++#undef CID_OFFSET_MATCH
++
++	/*
+ 	 * kfunc registration can't be done from init_sched_ext_class() as
+ 	 * register_btf_kfunc_id_set() needs most of the system to be up.
+ 	 *
+@@ -10101,6 +10340,12 @@ static int __init scx_init(void)
+ 		return ret;
+ 	}
+ 
++	ret = register_bpf_struct_ops(&bpf_sched_ext_ops_cid, sched_ext_ops_cid);
++	if (ret) {
++		pr_err("sched_ext: Failed to register cid struct_ops (%d)\n", ret);
++		return ret;
++	}
++
+ 	ret = register_pm_notifier(&scx_pm_notifier);
+ 	if (ret) {
+ 		pr_err("sched_ext: Failed to register PM notifier (%d)\n", ret);
+--- a/kernel/sched/ext_cid.c
++++ b/kernel/sched/ext_cid.c
+@@ -10,6 +10,14 @@
+ #include "ext_cid.h"
+ 
+ /*
++ * Per-cpu scratch cmask used by scx_call_op_set_cpumask() to synthesize a
++ * cmask from a cpumask. Allocated alongside the cid arrays on first enable
++ * and never freed. Sized to the full cid space. Caller holds rq lock so
++ * this_cpu_ptr is safe.
++ */
++struct scx_cmask __percpu *scx_set_cmask_scratch;
++
++/*
+  * cid tables.
+  *
+  * Pointers are published once on first enable and never revoked. The default
+@@ -48,6 +56,7 @@ static s32 scx_cid_arrays_alloc(void)
+ 	u32 npossible = num_possible_cpus();
+ 	s16 *cid_to_cpu, *cpu_to_cid;
+ 	struct scx_cid_topo *cid_topo;
++	struct scx_cmask __percpu *set_cmask_scratch;
+ 
+ 	if (scx_cid_to_cpu_tbl)
+ 		return 0;
+@@ -55,17 +64,22 @@ static s32 scx_cid_arrays_alloc(void)
+ 	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
+ 	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
+ 	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
++	set_cmask_scratch = __alloc_percpu(struct_size(set_cmask_scratch, bits,
++						       SCX_CMASK_NR_WORDS(npossible)),
++					   sizeof(u64));
+ 
+-	if (!cid_to_cpu || !cpu_to_cid || !cid_topo) {
++	if (!cid_to_cpu || !cpu_to_cid || !cid_topo || !set_cmask_scratch) {
+ 		kfree(cid_to_cpu);
+ 		kfree(cpu_to_cid);
+ 		kfree(cid_topo);
++		free_percpu(set_cmask_scratch);
+ 		return -ENOMEM;
+ 	}
+ 
+ 	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
+ 	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
+ 	WRITE_ONCE(scx_cid_topo, cid_topo);
++	WRITE_ONCE(scx_set_cmask_scratch, set_cmask_scratch);
+ 	return 0;
+ }
+ 
+@@ -210,6 +224,27 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 	return 0;
+ }
+ 
++/**
++ * scx_cpumask_to_cmask - Translate a kernel cpumask into a cmask
++ * @src: source cpumask
++ * @dst: cmask to write
++ *
++ * Initialize @dst to cover the full cid space [0, num_possible_cpus()) and
++ * set the bit for each cid whose cpu is in @src.
++ */
++void scx_cpumask_to_cmask(const struct cpumask *src, struct scx_cmask *dst)
++{
++	s32 cpu;
++
++	scx_cmask_init(dst, 0, num_possible_cpus());
++	for_each_cpu(cpu, src) {
++		s32 cid = __scx_cpu_to_cid(cpu);
++
++		if (cid >= 0)
++			__scx_cmask_set(dst, cid);
++	}
++}
++
+ __bpf_kfunc_start_defs();
+ 
+ /**
+--- a/kernel/sched/ext_cid.h
++++ b/kernel/sched/ext_cid.h
+@@ -53,6 +53,7 @@ extern struct btf_id_set8 scx_kfunc_ids_
+ 
+ s32 scx_cid_init(struct scx_sched *sch);
+ int scx_cid_kfunc_init(void);
++void scx_cpumask_to_cmask(const struct cpumask *src, struct scx_cmask *dst);
+ 
+ /**
+  * cid_valid - Verify a cid value, to be used on ops input args
+@@ -127,6 +128,14 @@ static inline s32 scx_cpu_to_cid(struct
+ 	return __scx_cpu_to_cid(cpu);
+ }
+ 
++/**
++ * scx_is_cid_type - Test whether the active scheduler hierarchy is cid-form
++ */
++static inline bool scx_is_cid_type(void)
++{
++	return static_branch_unlikely(&__scx_is_cid_type);
++}
++
+ static inline bool __scx_cmask_contains(const struct scx_cmask *m, u32 cid)
+ {
+ 	return likely(cid >= m->base && cid < m->base + m->nr_bits);
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -789,7 +789,7 @@ void __scx_update_idle(struct rq *rq, bo
+ 	 */
+ 	if (SCX_HAS_OP(sch, update_idle) && do_notify &&
+ 	    !scx_bypassing(sch, cpu_of(rq)))
+-		SCX_CALL_OP(sch, update_idle, rq, cpu_of(rq), idle);
++		SCX_CALL_OP(sch, update_idle, rq, scx_cpu_arg(cpu_of(rq)), idle);
+ }
+ 
+ static void reset_idle_masks(struct sched_ext_ops *ops)
+--- a/kernel/sched/ext_internal.h
++++ b/kernel/sched/ext_internal.h
+@@ -847,6 +847,93 @@ struct sched_ext_ops {
+ 	void (*cpu_release)(s32 cpu, struct scx_cpu_release_args *args);
+ };
+ 
++/**
++ * struct sched_ext_ops_cid - cid-form alternative to struct sched_ext_ops
++ *
++ * Mirrors struct sched_ext_ops with cpu/cpumask substituted with cid/cmask
++ * where applicable. Layout up to and including @priv matches sched_ext_ops
++ * byte-for-byte (verified by BUILD_BUG_ON checks at scx_init() time) so
++ * shared field offsets work for both struct types in bpf_scx_init_member()
++ * and bpf_scx_check_member(). The deprecated cpu_acquire/cpu_release
++ * callbacks at the tail of sched_ext_ops are omitted here entirely.
++ *
++ * Differences from sched_ext_ops:
++ *   - select_cpu       -> select_cid (returns cid)
++ *   - dispatch         -> dispatch (cpu arg is now cid)
++ *   - update_idle      -> update_idle (cpu arg is now cid)
++ *   - set_cpumask      -> set_cmask (cmask instead of cpumask)
++ *   - cpu_online       -> cid_online
++ *   - cpu_offline      -> cid_offline
++ *   - dump_cpu         -> dump_cid
++ *   - cpu_acquire/cpu_release  -> not present (deprecated in sched_ext_ops)
++ *
++ * BPF schedulers using this type cannot call cpu-form scx_bpf_* kfuncs;
++ * use the cid-form variants instead. Enforced at BPF verifier time via
++ * scx_kfunc_context_filter() branching on prog->aux->st_ops.
++ *
++ * See sched_ext_ops for callback documentation.
++ */
++struct sched_ext_ops_cid {
++	s32 (*select_cid)(struct task_struct *p, s32 prev_cid, u64 wake_flags);
++	void (*enqueue)(struct task_struct *p, u64 enq_flags);
++	void (*dequeue)(struct task_struct *p, u64 deq_flags);
++	void (*dispatch)(s32 cid, struct task_struct *prev);
++	void (*tick)(struct task_struct *p);
++	void (*runnable)(struct task_struct *p, u64 enq_flags);
++	void (*running)(struct task_struct *p);
++	void (*stopping)(struct task_struct *p, bool runnable);
++	void (*quiescent)(struct task_struct *p, u64 deq_flags);
++	bool (*yield)(struct task_struct *from, struct task_struct *to);
++	bool (*core_sched_before)(struct task_struct *a,
++				   struct task_struct *b);
++	void (*set_weight)(struct task_struct *p, u32 weight);
++	void (*set_cmask)(struct task_struct *p,
++			   const struct scx_cmask *cmask);
++	void (*update_idle)(s32 cid, bool idle);
++	s32 (*init_task)(struct task_struct *p,
++			  struct scx_init_task_args *args);
++	void (*exit_task)(struct task_struct *p,
++			   struct scx_exit_task_args *args);
++	void (*enable)(struct task_struct *p);
++	void (*disable)(struct task_struct *p);
++	void (*dump)(struct scx_dump_ctx *ctx);
++	void (*dump_cid)(struct scx_dump_ctx *ctx, s32 cid, bool idle);
++	void (*dump_task)(struct scx_dump_ctx *ctx, struct task_struct *p);
++#ifdef CONFIG_EXT_GROUP_SCHED
++	s32 (*cgroup_init)(struct cgroup *cgrp,
++			    struct scx_cgroup_init_args *args);
++	void (*cgroup_exit)(struct cgroup *cgrp);
++	s32 (*cgroup_prep_move)(struct task_struct *p,
++				 struct cgroup *from, struct cgroup *to);
++	void (*cgroup_move)(struct task_struct *p,
++			     struct cgroup *from, struct cgroup *to);
++	void (*cgroup_cancel_move)(struct task_struct *p,
++				    struct cgroup *from, struct cgroup *to);
++	void (*cgroup_set_weight)(struct cgroup *cgrp, u32 weight);
++	void (*cgroup_set_bandwidth)(struct cgroup *cgrp,
++				      u64 period_us, u64 quota_us, u64 burst_us);
++	void (*cgroup_set_idle)(struct cgroup *cgrp, bool idle);
++#endif	/* CONFIG_EXT_GROUP_SCHED */
++	s32 (*sub_attach)(struct scx_sub_attach_args *args);
++	void (*sub_detach)(struct scx_sub_detach_args *args);
++	void (*cid_online)(s32 cid);
++	void (*cid_offline)(s32 cid);
++	s32 (*init)(void);
++	void (*exit)(struct scx_exit_info *info);
++
++	/* Data fields - must match sched_ext_ops layout exactly */
++	u32 dispatch_max_batch;
++	u64 flags;
++	u32 timeout_ms;
++	u32 exit_dump_len;
++	u64 hotplug_seq;
++	u64 sub_cgroup_id;
++	char name[SCX_OPS_NAME_LEN];
++
++	/* internal use only, must be NULL */
++	void __rcu *priv;
++};
++
+ enum scx_opi {
+ 	SCX_OPI_BEGIN			= 0,
+ 	SCX_OPI_NORMAL_BEGIN		= 0,
+@@ -1003,7 +1090,18 @@ struct scx_sched_pnode {
+ };
+ 
+ struct scx_sched {
+-	struct sched_ext_ops	ops;
++	/*
++	 * cpu-form and cid-form ops share field offsets up to .priv (verified
++	 * by BUILD_BUG_ON in scx_init()). The anonymous union lets the kernel
++	 * access either view of the same storage without function-pointer
++	 * casts: use .ops for cpu-form and shared fields, .ops_cid for the
++	 * cid-renamed callbacks (set_cmask, select_cid, cid_online, ...).
++	 */
++	union {
++		struct sched_ext_ops		ops;
++		struct sched_ext_ops_cid	ops_cid;
++	};
++	bool			is_cid_type;	/* true if registered via bpf_sched_ext_ops_cid */
+ 	DECLARE_BITMAP(has_op, SCX_OPI_END);
+ 
+ 	/*
+@@ -1360,6 +1458,15 @@ enum scx_ops_state {
+ extern struct scx_sched __rcu *scx_root;
+ DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
+ 
++extern struct scx_cmask __percpu *scx_set_cmask_scratch;
++
++/*
++ * True when the currently loaded scheduler hierarchy is cid-form. All scheds
++ * in a hierarchy share one form, so this single key tells callsites which
++ * view to use without per-sch dereferences. Use scx_is_cid_type() to test.
++ */
++DECLARE_STATIC_KEY_FALSE(__scx_is_cid_type);
++
+ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id);
+ 
+ bool scx_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where);
+--- a/tools/sched_ext/include/scx/compat.bpf.h
++++ b/tools/sched_ext/include/scx/compat.bpf.h
+@@ -446,4 +446,16 @@ static inline void scx_bpf_dsq_reenq(u64
+ 		__VA_ARGS__,							\
+ 	};
+ 
++/*
++ * Define a cid-form sched_ext_ops. Programs targeting this struct_ops type
++ * use cid-form callback signatures (select_cid, set_cmask, cid_online/offline,
++ * dispatch with cid arg, etc.) and may only call the cid-form scx_bpf_*
++ * kfuncs (kick_cid, task_cid, this_cid, ...).
++ */
++#define SCX_OPS_CID_DEFINE(__name, ...)						\
++	SEC(".struct_ops.link")							\
++	struct sched_ext_ops_cid __name = {					\
++		__VA_ARGS__,							\
++	};
++
+ #endif	/* __SCX_COMPAT_BPF_H */
