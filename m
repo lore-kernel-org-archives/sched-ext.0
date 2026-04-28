@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD67C344DAB;
-	Tue, 28 Apr 2026 20:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9D938C42A;
+	Tue, 28 Apr 2026 20:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777408560; cv=none; b=KwA1enq9dzIAaY6912tbIQDR0LUmWB8AibG+TqlX0prrymj29nIqYZy1mYqFoiSn6TXIXKHOGGqOrPdIrhzEPhY64k7xZsMDbKjvVcHUo+qarywIQddYQbrWjcpWHrEEhlXw7pMXt4Dq4cigODTb63+cZjWFkAG9GvVTCyChJG8=
+	t=1777408562; cv=none; b=S9VMhXElo0o89XxCl4i50y12GqXt29f3aTQciqC47XkFCogije/CsuoeUtt6RPdnje3LyzuzUldQ0yeiJC0cqdgvCk/x3Zyg9GE8xbvW5SPNjQsEeX+Zu7lTfFuha7znHofxpwON54MeFur68Q9FHWdhIQ72YVhM4NEcWjVXAPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777408560; c=relaxed/simple;
-	bh=40l0zyl7ASELtJldRkCGqa852uvn4bMe6z9571sp3MM=;
+	s=arc-20240116; t=1777408562; c=relaxed/simple;
+	bh=mF99S9OQFhqlH3tuVBEctk6+uQhMKG4PA8+HCyqrWZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJ4Ti8kzXRZMGzGljKHelDgkWfqj2jBo6pXEY+GEDOVIDGyjuitt+Oihcz+yF9XpDd3W81jNe7QYpQ8AMZaK55zACcpTtQcz/xB4+LaVNBqE9SmMb7bOlFa6w6I5qwX552hashtfqnwcJ7VFG/yLSvi04pWM/M60oeOIgSiNjj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qbaBZaS5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOlBHTDt/fINapF/xEQOIKUhl+yhTUBfHeB4a7DhoFtz4Ru+OU5j7WUGd9KnB7hW32qbdzyc7kQ5KzeLdbz8FsqQ6wEl7p2smnB7TNXV+SYZfYh2ivD4AsTC6w6X3c2g5VcG7wk1RyOclkIpz46W28BRXRLX4HwUwpAT1XEPD9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oF3Sftfu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qbaBZaS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A050CC2BCB3;
-	Tue, 28 Apr 2026 20:36:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oF3Sftfu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2FDC2BCB3;
+	Tue, 28 Apr 2026 20:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777408560;
-	bh=40l0zyl7ASELtJldRkCGqa852uvn4bMe6z9571sp3MM=;
+	s=k20201202; t=1777408561;
+	bh=mF99S9OQFhqlH3tuVBEctk6+uQhMKG4PA8+HCyqrWZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qbaBZaS5veRs7kaL9vPUYVDlO9OSwVLPbQ+p1ThYCGKwchqaJBajxqOzWHnoHOsPO
-	 XICVYNR4Smg8gtLqaPbqBVE9sISWSYD/foKAataI4BjanKiulK8KXfvdaIfFnEFcYd
-	 WjoiWbPFQyucGxghcBTuS4BRU0WTzjRSEDb+17ImJPdl0cWbHwtlQw5EnncGjCLKLz
-	 qiy6ApAtEhbKsIJo561h+bE49ixdL2U/QD+iHiCypV+qSXzLqR9u/rlSGtCqugux7a
-	 Pl6IPXSmaUbXswZgRt0MhQK1IiIYYfCXQArwAxu1ANQ/lqvpBGFPHLZK4ohyExd6GC
-	 6Li0ZCoL2a1AQ==
+	b=oF3SftfubpX5azNoPmLXJCZnLTlvgAeeTUJoxdR9GvWE2/P+83B1GZZcTtBCBBzVM
+	 1YNQ3VwQn3ll812hbVZNh9JIRhnJGClIhmQtNx5EkSrS1b6b1DM1u19aq6nZkB4YrK
+	 R6JQW3XuJ2GYItnz/BsF3Z9rh647eJFAmMJ14h1nuiBmOqRNf2lKj1xLdXAt+aUU2P
+	 19148yiGi20qmiqH0vaPtPRhRHuLuAE9YeYpl74f+OeHrMW8s4h9iI0dBVPc+VOu+P
+	 wVHP2rkhAxaiO1nfRPb4YxdpYZ6UJyCCjGwCfSmvHZgCl7eHbyn4YdXg560QTRp9qW
+	 vtgvm2d9hXvtw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,11 +34,10 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Subject: [PATCH 13/17] sched_ext: Forbid cpu-form kfuncs from cid-form schedulers
-Date: Tue, 28 Apr 2026 10:35:41 -1000
-Message-ID: <20260428203545.181052-14-tj@kernel.org>
+	Cheng-Yang Chou <yphbchou0911@gmail.com>
+Subject: [PATCH 14/17] tools/sched_ext: scx_qmap: Restart on hotplug instead of cpu_online/offline
+Date: Tue, 28 Apr 2026 10:35:42 -1000
+Message-ID: <20260428203545.181052-15-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260428203545.181052-1-tj@kernel.org>
 References: <20260428203545.181052-1-tj@kernel.org>
@@ -50,107 +49,149 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-cid and cpu are both small s32s, trivially confused when a cid-form
-scheduler calls a cpu-keyed kfunc. Reject cid-form programs that
-reference any kfunc in the new scx_kfunc_ids_cpu_only at verifier load
-time.
+The cid mapping is built from the online cpu set at scheduler enable
+and stays valid for that set; routine hotplug invalidates it. The
+default cid behavior is to restart the scheduler so the mapping gets
+rebuilt against the new online set, and that requires not implementing
+cpu_online / cpu_offline (which suppress the kernel's ACT_RESTART).
 
-The reverse direction is intentionally permissive: cpu-form schedulers
-can freely call cid-form kfuncs to ease a gradual cpumask -> cid
-migration.
-
-The check sits in scx_kfunc_context_filter() right after the SCX
-struct_ops gate and before the any/idle allow and per-op allow-list
-checks, so it catches cpu-only kfuncs regardless of which set they
-belong to (any, idle, or select_cpu).
-
-v2: Sync per-entry kfunc flags with their primary declarations (Zhao).
-    pahole intersects flags across BTF_ID_FLAGS() occurrences, so
-    omitting them drops the flags globally.
+Drop the two ops along with their print_cpus() helper - the cluster
+view was only useful as a hotplug demo and is meaningless over the
+dense cid space the scheduler will move to. Wire main() to handle the
+ACT_RESTART exit by reopening the skel and reattaching, matching the
+pattern in scx_simple / scx_central / scx_flatcg etc. Reset optind so
+getopt re-parses argv into the fresh skel rodata each iteration.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Reviewed-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 ---
- kernel/sched/ext.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ tools/sched_ext/scx_qmap.bpf.c | 62 ----------------------------------
+ tools/sched_ext/scx_qmap.c     | 13 +++----
+ 2 files changed, 7 insertions(+), 68 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 8e3c60affc0b..d8f8fca5ded9 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -10095,6 +10095,47 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- 	.filter			= scx_kfunc_context_filter,
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index ba4879031dac..78a1dd118c7e 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -843,63 +843,6 @@ void BPF_STRUCT_OPS(qmap_cgroup_set_bandwidth, struct cgroup *cgrp,
+ 			   cgrp->kn->id, period_us, quota_us, burst_us);
+ }
+ 
+-/*
+- * Print out the online and possible CPU map using bpf_printk() as a
+- * demonstration of using the cpumask kfuncs and ops.cpu_on/offline().
+- */
+-static void print_cpus(void)
+-{
+-	const struct cpumask *possible, *online;
+-	s32 cpu;
+-	char buf[128] = "", *p;
+-	int idx;
+-
+-	possible = scx_bpf_get_possible_cpumask();
+-	online = scx_bpf_get_online_cpumask();
+-
+-	idx = 0;
+-	bpf_for(cpu, 0, scx_bpf_nr_cpu_ids()) {
+-		if (!(p = MEMBER_VPTR(buf, [idx++])))
+-			break;
+-		if (bpf_cpumask_test_cpu(cpu, online))
+-			*p++ = 'O';
+-		else if (bpf_cpumask_test_cpu(cpu, possible))
+-			*p++ = 'X';
+-		else
+-			*p++ = ' ';
+-
+-		if ((cpu & 7) == 7) {
+-			if (!(p = MEMBER_VPTR(buf, [idx++])))
+-				break;
+-			*p++ = '|';
+-		}
+-	}
+-	buf[sizeof(buf) - 1] = '\0';
+-
+-	scx_bpf_put_cpumask(online);
+-	scx_bpf_put_cpumask(possible);
+-
+-	bpf_printk("CPUS: |%s", buf);
+-}
+-
+-void BPF_STRUCT_OPS(qmap_cpu_online, s32 cpu)
+-{
+-	if (print_msgs) {
+-		bpf_printk("CPU %d coming online", cpu);
+-		/* @cpu is already online at this point */
+-		print_cpus();
+-	}
+-}
+-
+-void BPF_STRUCT_OPS(qmap_cpu_offline, s32 cpu)
+-{
+-	if (print_msgs) {
+-		bpf_printk("CPU %d going offline", cpu);
+-		/* @cpu is still online at this point */
+-		print_cpus();
+-	}
+-}
+-
+ struct monitor_timer {
+ 	struct bpf_timer timer;
  };
+@@ -1078,9 +1021,6 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
+ 		slab[i].next_free = (i + 1 < max_tasks) ? &slab[i + 1] : NULL;
+ 	qa.task_free_head = &slab[0];
  
-+/*
-+ * cpu-form kfuncs that are forbidden from cid-form schedulers
-+ * (bpf_sched_ext_ops_cid). Programs targeting the cid struct_ops type must
-+ * use the cid-form alternative (cid/cmask kfuncs).
-+ *
-+ * Membership overlaps with scx_kfunc_ids_{any,idle,select_cpu}; the filter
-+ * tests this set independently and rejects matches before the per-op
-+ * allow-list check runs.
-+ *
-+ * pahole/resolve_btfids scans every BTF_ID_FLAGS() at build time and
-+ * intersects flags across duplicate entries, so each entry must carry the
-+ * same flags as the kfunc's primary declaration; otherwise the flags get
-+ * dropped globally.
-+ */
-+BTF_KFUNCS_START(scx_kfunc_ids_cpu_only)
-+BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_node, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_cur, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_set, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_get_possible_cpumask, KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_online_cpumask, KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
-+BTF_ID_FLAGS(func, scx_bpf_select_cpu_dfl, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_select_cpu_and, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_cpumask_node, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_get_idle_smtmask_node, KF_IMPLICIT_ARGS | KF_ACQUIRE)
-+BTF_ID_FLAGS(func, scx_bpf_put_idle_cpumask, KF_RELEASE)
-+BTF_ID_FLAGS(func, scx_bpf_test_and_clear_cpu_idle, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_pick_idle_cpu_node, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_pick_any_cpu_node, KF_IMPLICIT_ARGS | KF_RCU)
-+BTF_KFUNCS_END(scx_kfunc_ids_cpu_only)
+-	if (print_msgs && !sub_cgroup_id)
+-		print_cpus();
+-
+ 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
+ 	if (ret) {
+ 		scx_bpf_error("failed to create DSQ %d (%d)", SHARED_DSQ, ret);
+@@ -1174,8 +1114,6 @@ SCX_OPS_DEFINE(qmap_ops,
+ 	       .cgroup_set_bandwidth	= (void *)qmap_cgroup_set_bandwidth,
+ 	       .sub_attach		= (void *)qmap_sub_attach,
+ 	       .sub_detach		= (void *)qmap_sub_detach,
+-	       .cpu_online		= (void *)qmap_cpu_online,
+-	       .cpu_offline		= (void *)qmap_cpu_offline,
+ 	       .init			= (void *)qmap_init,
+ 	       .exit			= (void *)qmap_exit,
+ 	       .timeout_ms		= 5000U,
+diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+index 725c4880058d..99408b1bb1ec 100644
+--- a/tools/sched_ext/scx_qmap.c
++++ b/tools/sched_ext/scx_qmap.c
+@@ -67,12 +67,14 @@ int main(int argc, char **argv)
+ 	struct bpf_link *link;
+ 	struct qmap_arena *qa;
+ 	__u32 test_error_cnt = 0;
++	__u64 ecode;
+ 	int opt;
+ 
+ 	libbpf_set_print(libbpf_print_fn);
+ 	signal(SIGINT, sigint_handler);
+ 	signal(SIGTERM, sigint_handler);
+-
++restart:
++	optind = 1;
+ 	skel = SCX_OPS_OPEN(qmap_ops, scx_qmap);
+ 
+ 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
+@@ -184,11 +186,10 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	bpf_link__destroy(link);
+-	UEI_REPORT(skel, uei);
++	ecode = UEI_REPORT(skel, uei);
+ 	scx_qmap__destroy(skel);
+-	/*
+-	 * scx_qmap implements ops.cpu_on/offline() and doesn't need to restart
+-	 * on CPU hotplug events.
+-	 */
 +
- /*
-  * Per-op kfunc allow flags. Each bit corresponds to a context-sensitive kfunc
-  * group; an op may permit zero or more groups, with the union expressed in
-@@ -10158,6 +10199,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
- 	bool in_idle = btf_id_set8_contains(&scx_kfunc_ids_idle, kfunc_id);
- 	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
-+	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
- 	u32 moff, flags;
- 
- 	/* Not an SCX kfunc - allow. */
-@@ -10195,6 +10237,15 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	    prog->aux->st_ops != &bpf_sched_ext_ops_cid)
- 		return -EACCES;
- 
-+	/*
-+	 * cid-form schedulers must use cid/cmask kfuncs. cid and cpu are both
-+	 * small s32s and trivially confused, so cpu-only kfuncs are rejected at
-+	 * load time. The reverse (cpu-form calling cid-form kfuncs) is
-+	 * intentionally permissive to ease gradual cpumask -> cid migration.
-+	 */
-+	if (prog->aux->st_ops == &bpf_sched_ext_ops_cid && in_cpu_only)
-+		return -EACCES;
-+
- 	/* SCX struct_ops: check the per-op allow list. */
- 	if (in_any || in_idle)
- 		return 0;
++	if (UEI_ECODE_RESTART(ecode))
++		goto restart;
+ 	return 0;
+ }
 -- 
 2.54.0
 
