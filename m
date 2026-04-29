@@ -1,60 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AADE390993;
-	Wed, 29 Apr 2026 07:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5C724BBF0;
+	Wed, 29 Apr 2026 07:17:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777446842; cv=none; b=WZ1i9Hat5jiPsTwpYj+/QiKNhrvYJi/UrI/lSGXC5yfza5ZpKazCjqeOu4pFGSJ/xFldP7tqJfECZc0q5CphIJAEBxvcl8t1uoqOFtyrmVWNwQWOlSQxAx58M4Gs9YOR6oESgF02FCzEFKhM1RAhcQCgIn+HgmSTMnSy3m2IgFY=
+	t=1777447069; cv=none; b=ZMIvX12LNfbfriWDgLZTy/V5t2ojACfMDk0sFWbNG42bO9esIz3rLypd4QjkmRepwfptQ5YcZKhRxuIcXMW+eEiu0gDuuj3jy0zqgjgK9CtufhOKq4iCp+Qdor84MuEQ0bDviIsAN4ZAxF5TF8qZutKpLI3P34/I2c6oIT57OaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777446842; c=relaxed/simple;
-	bh=omobsoSyDmyIkjr0MyQmsMSnyef0lkI3kL/jhz+ZQ54=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VzWO+x3VnSamiFfFFLgcEzfc70bnZsFbc8QVhNC9AzLhk9gWIuo7IepRhzQ8eMJO1idQaxsc8pLP2vZWX+/X8tta0LvTlFRkpwI4OLngX72wO2WiOyewzIn0gx+tXl2prFWYZvK2yNZ08u+eu8n/CpgA6wOEXQEdUEqTrDEDXbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nVDyZODr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777447069; c=relaxed/simple;
+	bh=LJrYFtyL/gxpwCr9Yl9aCRvZ9aAMs1/nB1vMIAMDoPM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ojUFm5CbGmd4uaIkmXLmN+CQUsCkZo/yAlf4QuYy52Mhyf0kB95vTMbC+f3YruG+TbIfQhP3GKfOdZcpIlOJIyyf5hNtxmwewM97NQniAuJHR9dHqotGQBFXBMOuKL4awN0bw3TwD7/IrAs+psnt6j/l8tpwg8v4LttiDCsQuFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=pU1xUJTE; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nVDyZODr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A293C2BCB3;
-	Wed, 29 Apr 2026 07:14:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777446842;
-	bh=omobsoSyDmyIkjr0MyQmsMSnyef0lkI3kL/jhz+ZQ54=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nVDyZODrBgg/Pe7YJN6wN5CYj/ESIglycn831Vo1ptlO0egOflhDmpDEVx+v/Yzrt
-	 syKMl4JziSwtjECby2kMh9312q89sE7S63HnteSp6KaCJqCDyeSx26UxP0ruFZQmSm
-	 y0ReZ4xT1WIWfb18Yrt0FK/Z3WkLpFFhyXCtqKgTLBJ+/Uzx5fbUzuJ7TW7ZdSXYQZ
-	 pbFFA4qb02ZNshbXOIr0Zlzx/vNsIlV8sMbxlFZImBVJOBpCx+tFJ2bZzGcnenfanF
-	 e+fUfv1bLaCmpz9Fvi1QfShiVulFPUnW4o/4sz4jtHJk5lz46C+USoY7nkiacbvdCd
-	 MBf6bAEjAaaeQ==
-Date: Tue, 28 Apr 2026 21:14:01 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Changwoo Min <changwoo@igalia.com>
-Cc: void@manifault.com, arighi@nvidia.com, kernel-dev@igalia.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] sched_ext: Dump the exit CPU first
-Message-ID: <afGvufr6kLYiAbhm@slm.duckdns.org>
-References: <20260429060726.359024-1-changwoo@igalia.com>
- <20260429060726.359024-3-changwoo@igalia.com>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="pU1xUJTE"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=LJrYFtyL/gxpwCr9Yl9aCRvZ9aAMs1/nB1vMIAMDoPM=; b=pU1xUJTEwLOIEnBZpK2gmp+HOJ
+	kADfFpjS6XjlPrWtCYbWQ6Uv2punkv4alcASUI5obz3VaWr2mS3RlRJIxEzNCCi/3FY3HF2Y2rL/j
+	moGwXq/LuPIf4kf44v2g5BmVq0BofNs9vJSr4CXqcppkEWWW8BxUk3zEbLhvvvXVgUbhKimnjewtg
+	RghKUMVpO4WteY/F918Nd6ZTATJTTcA3g4HguSxr/94SqJszKqKEbIHgo1YfuClo3/8oP24M8j196
+	Y+bSx/6fCgGZ3ZL23lpJ/Padd89U4nK8Rf3pAM6v/Nenn02vEEmX33+JA+Lj6LAg/8hxK5SWNjO5P
+	DP6qWQBA==;
+Received: from [58.29.145.179] (helo=[192.168.8.203])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wHzAw-003mIo-2c; Wed, 29 Apr 2026 09:17:37 +0200
+Message-ID: <8633fcd7-fd31-4af1-b578-2439a69318df@igalia.com>
+Date: Wed, 29 Apr 2026 16:17:31 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260429060726.359024-3-changwoo@igalia.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] sched_ext: Dump the exit CPU first
+To: Tejun Heo <tj@kernel.org>
+Cc: void@manifault.com, arighi@nvidia.com, kernel-dev@igalia.com,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20260429060726.359024-1-changwoo@igalia.com>
+ <20260429060726.359024-3-changwoo@igalia.com>
+ <afGvufr6kLYiAbhm@slm.duckdns.org>
+From: Changwoo Min <changwoo@igalia.com>
+Content-Language: en-US, ko-KR, en-US-large, ko
+In-Reply-To: <afGvufr6kLYiAbhm@slm.duckdns.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Apr 29, 2026 at 03:07:25PM +0900, Changwoo Min wrote:
->  static bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
-> -		      s64 exit_code, const char *fmt, va_list args);
-> +		      s64 exit_code, int exit_cpu, const char *fmt,
-> +		      va_list args);
+Thanks, Tejun, for the review.
 
-It's a bit mixed throughout the code but let's use s32 for cpu. Otherwise,
-the series looks good to me.
+On 4/29/26 4:14 PM, Tejun Heo wrote:
+> It's a bit mixed throughout the code but let's use s32 for cpu. Otherwise,
+> the series looks good to me.
 
-Thanks.
+Sure, I will post the updated version soon.
 
--- 
-tejun
+Regards,
+Changwoo Min
