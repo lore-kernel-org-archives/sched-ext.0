@@ -1,37 +1,37 @@
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A523A382D;
-	Wed, 29 Apr 2026 08:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01F83A8742;
+	Wed, 29 Apr 2026 08:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777451030; cv=none; b=UxMSvxiev7tF323wiuV+j65/Uj7BW69y7iJZNVyi68xsrPdTYccOVg4TEUXmimGuFSILRy856x7g323y2UbxkEebZSYIgUEdshKaAHG5eqzucjMHpj46GHwqUT61SNu6l6FnhnRcwPCLtnDTES2t+nBIHdvcM5+HrXtrANe6anQ=
+	t=1777451034; cv=none; b=rEx9A8qviue6IIQCHdui42YidLw/LiL8hZ02d6ECyArhI9IoBfoxBwSTLGNUo9rJWAhV7+CbgdcfcUb2vvLcVzZD+6FhIqTcZuYByTGbW3jgMS9MagdpTTwXkgFO/vNCXXlNIzXLW5H4GfxnwG+7SJmiOGPMxHSrM2+QpPa1EXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777451030; c=relaxed/simple;
-	bh=4tZIy/8CY/gl5nc0OzwEh+iC1BtCAhkoHfyCj+ETup8=;
+	s=arc-20240116; t=1777451034; c=relaxed/simple;
+	bh=BUWb8P5Z5iyh7MtWWO+vkPjmuYYg2DGB3or3mMpZZ9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ip1QkJhdY5vaTrhf4ssKqYNCgExQjA+iVKxQEd01ynVrx4QwnXryEu1HK3oYWetXqQFpMgNDikJ3N4uupBqNSL6TZCK/EujS5/lfqou1yLKTLnz+QTgUzpG8kfvzcL9jsyC5p9gik4tGcO+DTozq0QZqXwvWcl1Ntum/dC0v9mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=kUBCrfLv; arc=none smtp.client-ip=213.97.179.56
+	 MIME-Version; b=CVux0fPPWNXcX4WAh3hNJRU6ZxsfhaI0US92DUW3zE0u4nUWygycalhMHdlmLzhY+LmBdFM9YRnrvpo1UgvTjveq9pJiOmWlfgO9/Gd5vBqbE1NLXz4gIxgWayFCtEho1CTtsttsTOe46b64fuGxQTMF8dRhyhS4X++zRyINL00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=gli4DiHh; arc=none smtp.client-ip=213.97.179.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="kUBCrfLv"
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="gli4DiHh"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
 	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
 	List-Post:List-Owner:List-Archive;
-	bh=g/vNjXwa6UGIV0c+j7cCceoRR6zLSDvTcLLeBgumRl0=; b=kUBCrfLvaCgouPE42ryEYoqY67
-	8aY7MEwSQZhUJ70pTONUBFvHRRHBYPiDR7hMw5XKCE+JVDyc1+WAsts4b+Waz1vbMC3tP2dEtoYzR
-	KXn1cJB9OMZEAqXMyMeH4hSKQswLAVZNAwK80NEpqATBRqBuu/pTNg5V18hdTgjgsq90gGbVZusS8
-	44+0b0i5wx7FUygY6ltkCE4GdetU6uMPDuKWRFTgGi+8cC+dl5YOkY8UcvC0KP7iVwkDmPMEbZN9U
-	7FJD89YJLPd7AlaIYuChVSiJJ9tLwlqZx5FMqKEbhjadldStTdxGaueJrRnFmgtI7Mlf54T26SIXl
-	4Onzl1vg==;
+	bh=XE9lihpf45ac+Vxml6PEmw0N0ER3hi/2ljTrLLByryA=; b=gli4DiHh8e9icQ/35JE4OM3k0u
+	oQKs0OERkznMWWBgbXjFWn8nT7TdkRLbrBY+PnLdf933+32EUMmQgBA3ZD248yHG/k3V2e1teNbQ5
+	jyUMMiJfq/r+pRROp8gYRIsCREAEiKGy8vvym0umR/hGZVRv738NezFSNz+DzIuX4J1jLO09HGuf+
+	ZrJBoHobqVyZlKzV6FsMc0l5Dm15VOJIPj8nU/7ZKpICHowKkNdXYFJxJ1rzUH1e36uW+ro8o+/lt
+	Ya/lhuoMroUWRkZ+ZqkebL6GsQUSRo2+tz96HBueKv2VYP8V7s0AxOO1PoIJ0Of1vIEZSxZaZAFtK
+	b+1F1GGg==;
 Received: from [58.29.145.179] (helo=localhost)
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wI0Cr-003ojQ-Iu; Wed, 29 Apr 2026 10:23:41 +0200
+	id 1wI0Cx-003ojt-Dx; Wed, 29 Apr 2026 10:23:47 +0200
 From: Changwoo Min <changwoo@igalia.com>
 To: tj@kernel.org,
 	void@manifault.com,
@@ -40,9 +40,9 @@ To: tj@kernel.org,
 Cc: kernel-dev@igalia.com,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/3] sched_ext: Dump the exit CPU first
-Date: Wed, 29 Apr 2026 17:23:17 +0900
-Message-ID: <20260429082318.420146-3-changwoo@igalia.com>
+Subject: [PATCH v3 3/3] sched_ext: Expose exit_cpu to BPF and userspace
+Date: Wed, 29 Apr 2026 17:23:18 +0900
+Message-ID: <20260429082318.420146-4-changwoo@igalia.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260429082318.420146-1-changwoo@igalia.com>
 References: <20260429082318.420146-1-changwoo@igalia.com>
@@ -54,172 +54,69 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When sched_ext is disabled by an error, the CPU that triggered the exit
-is the most relevant piece of information for diagnosing the problem.
-However, if there are many CPUs, the dump can get truncated and that
-CPU's information may not appear in the output.
+Extend struct user_exit_info with an exit_cpu field so BPF schedulers
+and the userspace report path can see the CPU that triggered the exit,
+matching the kernel-side dump.
 
-Add an exit_cpu field to scx_exit_info and thread it through scx_vexit()
-/ __scx_exit(). For the watchdog stall path, populate it from cpu_of(rq)
-in check_rq_for_timeouts(). For all other exit paths, define a scx_exit()
-macro that wraps __scx_exit() with raw_smp_processor_id(), so the CPU
-that initiated the exit is captured automatically, with no call-site
-changes needed.
+UEI_RECORD() defaults the field to -1 before the CO-RE-gated copy so
+that running against an older kernel without exit_cpu stays
+distinguishable from "exit happened on CPU 0".
 
-In scx_dump_state(), report the exit CPU in the dump header ("on cpu N")
-and dump that CPU first, skipping it in the per-CPU loop, so the most
-relevant CPU is never truncated out of the dump. The SysRq-D path
-initializes exit_cpu to -1 so debug dumps not tied to an exit don't
-arbitrarily promote CPU 0.
+UEI_REPORT() appends "on CPU N" to the EXIT line when the value is
+valid, surfacing the most diagnostically useful piece of exit info to
+any sched_ext userspace tool without needing to crack open the debug
+dump.
 
 Signed-off-by: Changwoo Min <changwoo@igalia.com>
 ---
- kernel/sched/ext.c          | 52 +++++++++++++++++++++++++++----------
- kernel/sched/ext_internal.h |  6 +++++
- 2 files changed, 44 insertions(+), 14 deletions(-)
+ tools/sched_ext/include/scx/user_exit_info.bpf.h    | 3 +++
+ tools/sched_ext/include/scx/user_exit_info.h        | 2 ++
+ tools/sched_ext/include/scx/user_exit_info_common.h | 5 +++++
+ 3 files changed, 10 insertions(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 025bd8c6f429..46c2e395de03 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -234,24 +234,29 @@ static bool task_dead_and_done(struct task_struct *p);
- static void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
- static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind);
- static bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
--		      s64 exit_code, const char *fmt, va_list args);
-+		      s64 exit_code, s32 exit_cpu, const char *fmt,
-+		      va_list args);
+diff --git a/tools/sched_ext/include/scx/user_exit_info.bpf.h b/tools/sched_ext/include/scx/user_exit_info.bpf.h
+index e7ac6611a990..98cab643c8d9 100644
+--- a/tools/sched_ext/include/scx/user_exit_info.bpf.h
++++ b/tools/sched_ext/include/scx/user_exit_info.bpf.h
+@@ -32,6 +32,9 @@
+ 				  __uei_name##_dump_len, (__ei)->dump);		\
+ 	if (bpf_core_field_exists((__ei)->exit_code))				\
+ 		__uei_name.exit_code = (__ei)->exit_code;			\
++	__uei_name.exit_cpu = -1;						\
++	if (bpf_core_field_exists((__ei)->exit_cpu))				\
++		__uei_name.exit_cpu = (__ei)->exit_cpu;				\
+ 	/* use __sync to force memory barrier */				\
+ 	__sync_val_compare_and_swap(&__uei_name.kind, __uei_name.kind,		\
+ 				    (__ei)->kind);				\
+diff --git a/tools/sched_ext/include/scx/user_exit_info.h b/tools/sched_ext/include/scx/user_exit_info.h
+index 399697fa372f..56a02b549aef 100644
+--- a/tools/sched_ext/include/scx/user_exit_info.h
++++ b/tools/sched_ext/include/scx/user_exit_info.h
+@@ -39,6 +39,8 @@
+ 	fprintf(stderr, "EXIT: %s", __uei->reason);				\
+ 	if (__uei->msg[0] != '\0')						\
+ 		fprintf(stderr, " (%s)", __uei->msg);				\
++	if (__uei->exit_cpu >= 0)						\
++		fprintf(stderr, " on CPU %d", __uei->exit_cpu);			\
+ 	fputs("\n", stderr);							\
+ 	__uei->exit_code;							\
+ })
+diff --git a/tools/sched_ext/include/scx/user_exit_info_common.h b/tools/sched_ext/include/scx/user_exit_info_common.h
+index 2d0981aedd89..76e2a055eb4b 100644
+--- a/tools/sched_ext/include/scx/user_exit_info_common.h
++++ b/tools/sched_ext/include/scx/user_exit_info_common.h
+@@ -22,6 +22,11 @@ enum uei_sizes {
  
--static __printf(4, 5) bool scx_exit(struct scx_sched *sch,
--				    enum scx_exit_kind kind, s64 exit_code,
--				    const char *fmt, ...)
-+static __printf(5, 6) bool __scx_exit(struct scx_sched *sch,
-+				      enum scx_exit_kind kind, s64 exit_code,
-+				      s32 exit_cpu, const char *fmt, ...)
- {
- 	va_list args;
- 	bool ret;
- 
- 	va_start(args, fmt);
--	ret = scx_vexit(sch, kind, exit_code, fmt, args);
-+	ret = scx_vexit(sch, kind, exit_code, exit_cpu, fmt, args);
- 	va_end(args);
- 
- 	return ret;
- }
- 
-+#define scx_exit(sch, kind, exit_code, fmt, args...)				\
-+	__scx_exit(sch, kind, exit_code, raw_smp_processor_id(), fmt, ##args)
-+
- #define scx_error(sch, fmt, args...)	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
--#define scx_verror(sch, fmt, args)	scx_vexit((sch), SCX_EXIT_ERROR, 0, fmt, args)
-+#define scx_verror(sch, fmt, args)						\
-+	scx_vexit((sch), SCX_EXIT_ERROR, 0, raw_smp_processor_id(), fmt, args)
- 
- #define SCX_HAS_OP(sch, op)	test_bit(SCX_OP_IDX(op), (sch)->has_op)
- 
-@@ -3389,9 +3394,10 @@ static bool check_rq_for_timeouts(struct rq *rq)
- 					last_runnable + READ_ONCE(sch->watchdog_timeout)))) {
- 			u32 dur_ms = jiffies_to_msecs(jiffies - last_runnable);
- 
--			scx_exit(sch, SCX_EXIT_ERROR_STALL, 0,
--				 "%s[%d] failed to run for %u.%03us",
--				 p->comm, p->pid, dur_ms / 1000, dur_ms % 1000);
-+			__scx_exit(sch, SCX_EXIT_ERROR_STALL, 0, cpu_of(rq),
-+				   "%s[%d] failed to run for %u.%03us",
-+				   p->comm, p->pid, dur_ms / 1000,
-+				   dur_ms % 1000);
- 			timed_out = true;
- 			break;
- 		}
-@@ -5528,6 +5534,7 @@ static struct scx_exit_info *alloc_exit_info(size_t exit_dump_len)
- 	if (!ei)
- 		return NULL;
- 
-+	ei->exit_cpu = -1;
- 	ei->bt = kzalloc_objs(ei->bt[0], SCX_EXIT_BT_LEN);
- 	ei->msg = kzalloc(SCX_EXIT_MSG_LEN, GFP_KERNEL);
- 	ei->dump = kvzalloc(exit_dump_len, GFP_KERNEL);
-@@ -6384,8 +6391,13 @@ static void scx_dump_state(struct scx_sched *sch, struct scx_exit_info *ei,
- 	if (ei->kind == SCX_EXIT_NONE) {
- 		dump_line(&s, "Debug dump triggered by %s", ei->reason);
- 	} else {
--		dump_line(&s, "%s[%d] triggered exit kind %d:",
--			  current->comm, current->pid, ei->kind);
-+		if (ei->exit_cpu >= 0)
-+			dump_line(&s, "%s[%d] triggered exit kind %d on cpu %d:",
-+				  current->comm, current->pid, ei->kind,
-+				  ei->exit_cpu);
-+		else
-+			dump_line(&s, "%s[%d] triggered exit kind %d:",
-+				  current->comm, current->pid, ei->kind);
- 		dump_line(&s, "  %s (%s)", ei->reason, ei->msg);
- 		dump_newline(&s);
- 		dump_line(&s, "Backtrace:");
-@@ -6402,8 +6414,15 @@ static void scx_dump_state(struct scx_sched *sch, struct scx_exit_info *ei,
- 	dump_line(&s, "CPU states");
- 	dump_line(&s, "----------");
- 
+ struct user_exit_info {
+ 	int		kind;
 +	/*
-+	 * Dump the exit CPU first so it isn't lost to dump truncation, then
-+	 * walk the rest in order, skipping the one already dumped.
++	 * CPU that triggered the exit, or -1 if unset (e.g. running on an
++	 * older kernel that does not expose this field).
 +	 */
-+	if (ei->exit_cpu >= 0)
-+		scx_dump_cpu(sch, &s, &dctx, ei->exit_cpu, dump_all_tasks);
- 	for_each_possible_cpu(cpu) {
--		scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
-+		if (cpu != ei->exit_cpu)
-+			scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
- 	}
- 
- 	dump_newline(&s);
-@@ -6442,7 +6461,7 @@ static void scx_disable_irq_workfn(struct irq_work *irq_work)
- }
- 
- static bool scx_vexit(struct scx_sched *sch,
--		      enum scx_exit_kind kind, s64 exit_code,
-+		      enum scx_exit_kind kind, s64 exit_code, s32 exit_cpu,
- 		      const char *fmt, va_list args)
- {
- 	struct scx_exit_info *ei = sch->exit_info;
-@@ -6465,6 +6484,7 @@ static bool scx_vexit(struct scx_sched *sch,
- 	 */
- 	ei->kind = kind;
- 	ei->reason = scx_exit_reason(ei->kind);
-+	ei->exit_cpu = exit_cpu;
- 
- 	irq_work_queue(&sch->disable_irq_work);
- 	return true;
-@@ -7730,7 +7750,11 @@ static const struct sysrq_key_op sysrq_sched_ext_reset_op = {
- 
- static void sysrq_handle_sched_ext_dump(u8 key)
- {
--	struct scx_exit_info ei = { .kind = SCX_EXIT_NONE, .reason = "SysRq-D" };
-+	struct scx_exit_info ei = {
-+		.kind		= SCX_EXIT_NONE,
-+		.exit_cpu	= -1,
-+		.reason		= "SysRq-D",
-+	};
- 	struct scx_sched *sch;
- 
- 	list_for_each_entry_rcu(sch, &scx_sched_all, all)
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index a54903bb74b3..54c6ed43b6c7 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -97,6 +97,12 @@ struct scx_exit_info {
- 	/* %SCX_EXIT_* - broad category of the exit reason */
- 	enum scx_exit_kind	kind;
- 
-+	/*
-+	 * CPU that initiated the exit, valid once @kind has been set.
-+	 * Negative if the exit path didn't identify a CPU.
-+	 */
-+	s32			exit_cpu;
-+
- 	/* exit code if gracefully exiting */
- 	s64			exit_code;
- 
++	s32		exit_cpu;
+ 	s64		exit_code;
+ 	char		reason[UEI_REASON_LEN];
+ 	char		msg[UEI_MSG_LEN];
 -- 
 2.54.0
 
