@@ -1,39 +1,39 @@
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1373FB041;
-	Wed, 29 Apr 2026 12:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836CB3F23C5;
+	Wed, 29 Apr 2026 12:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777466853; cv=none; b=kMSAlZtpcVRtuaeMhCYq2LMqBeMc2gxUyuH18exjRa9vGo64J6q314hegN+l8gH91zgB2ia7tfI4HtRhmud6ujUXsRwCdnUYzvaiPSj+TmcmYTx1PaKfGGJf+rY5nHnmekFpYcYppiyKZUKUu3n+wBHpzOr7pWwr/TiT6QMLNYY=
+	t=1777466958; cv=none; b=s4DXNuBo3beBc1gCW2FjG4O5eDEFHIvW0z0wZZ+dFbkRykWPskBKAyIoFOVw5EWyDcKQqjR2+cgaIk0FPO/hv+MaTzCSi83hqS6RyoJatiwG/5zHykidOb0BUNgumk82zPt9b1FJ07KRXIYmerYOpWSd1JBGIHV98DBczLiyZKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777466853; c=relaxed/simple;
-	bh=OYCoyV9bPw+ESZ1VQhkFFIuXssRkmVHLfDSUvozeWys=;
+	s=arc-20240116; t=1777466958; c=relaxed/simple;
+	bh=Wrf/2kC6tWx3K7/KkvAf7ANA76q19HdE7qCdN66tFU4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AG16nzCVWOsR/NQAdyEpTxVpbCeXSDynrC/EQdCoqbmSsTTjMVDJfooHCEw0AaPofQ/OMii8O1MJfSGM5eNzNjG1d0XsiJydbtXzj0HG7HSCNHWkuxtR6j512s0C0vTb773BLv5Cz1PIiUukEBPsmJ2SBq6b4uVunlG8Md1xSVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=rGxYFjEj; arc=none smtp.client-ip=213.97.179.56
+	 In-Reply-To:Content-Type; b=AJGHPgIxkyuPClRuGZsAetZB3WIpJCBHmZ8i6RvtR2d578zcOqz1pfSBeYvHSqqhV3OiRMaEOAx7Ra6Q0djW3d1kWWAHCJ3SSHFGb7smsWtbddgJ7JG5FhzLB/z0gmQnCgPGKVL+kSeOWxOe44yNaZUCpKd4g2iRNYlXVDQl3NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Z9br0Uk2; arc=none smtp.client-ip=213.97.179.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="rGxYFjEj"
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Z9br0Uk2"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
 	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=TkGQq/yqw0EUeTirhX4EILLNiYMPtEn3u8rm5dJTykg=; b=rGxYFjEjRY492lrjb/STtqVdhm
-	Pv8jNSManPPywGl1YmBRlW4MI9bP7dSFXiII9h6sOgnhDOElw/RS2/f6ukfAGHspd6AQtaEeB24NU
-	K5+7q/jPBSDJ31O3+z0Wzqqdku+SH2M3CN273MOQ8BHIsEVsmiWagU1otOjV2dC1hOpCnFXxT/7m0
-	UMtTSxTmsJ7CPd7/6kYB5M91QycZMTWUU810yZxG7XbH9tCdz69mC61TX0FcslDEJOA/1RLi3gtOn
-	NhP8p47mWLLUNBm68y4a1g7Sz7/qeD4aSE7fMTeSRJmxBFGhdQ+/IKId2K7n3nIbkf+nUr5zOjY/D
-	UuOCMbng==;
+	bh=kgfPcN2ICmid9UbD4tLqJBrCWBSEv+QXk+ww21bOifY=; b=Z9br0Uk2qLBswSWsgULX8mqpgi
+	zyLe5a9/pGSMgz8fMcsP6tgif8LLHR5m2iFPKh+RgCgxmtPHpkISKcK9MDwoM6afG3chIJJX63zda
+	/X8Oh/OvayVdUhOW1+ISn1WKOlkpUZG3Vk5aM/W8Z70BO2lw0cq0FsPXkXcihitOyHhhV1Y8Yu9y6
+	3rxXszGu0T8+D4G1e9pwe4QtGDKEY43ZE6Sk4bpFT34RaO2AiQLIyuCzzJTT6yAjJqChD70z9D72h
+	oJx1aib5GvqeRSgBQnKYjNE6Y4t01tq6p8vekkjNK8H3DAEY/Jsz7wMHdU0Gi3z3KsEhRPX18tfGN
+	ySDtCbmg==;
 Received: from [58.29.145.179] (helo=[192.168.8.203])
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1wI4K5-003w5i-NP; Wed, 29 Apr 2026 14:47:25 +0200
-Message-ID: <b8bc70c1-8914-4a39-825d-e94cfb983d60@igalia.com>
-Date: Wed, 29 Apr 2026 21:47:15 +0900
+	id 1wI4Lm-003w8R-Iv; Wed, 29 Apr 2026 14:49:10 +0200
+Message-ID: <6262aacd-cae7-455a-96ef-ea9a4b1949b7@igalia.com>
+Date: Wed, 29 Apr 2026 21:49:05 +0900
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -41,173 +41,125 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/17] sched_ext: Add cmask, a base-windowed bitmap over
- cid space
+Subject: Re: [PATCHSET v3 sched_ext/for-7.2] sched_ext: Topological CPU IDs
+ and cid-form struct_ops
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
- linux-kernel@vger.kernel.org, Cheng-Yang Chou <yphbchou0911@gmail.com>
+ linux-kernel@vger.kernel.org
 References: <20260428203545.181052-1-tj@kernel.org>
- <20260428203545.181052-11-tj@kernel.org>
 From: Changwoo Min <changwoo@igalia.com>
 Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <20260428203545.181052-11-tj@kernel.org>
+In-Reply-To: <20260428203545.181052-1-tj@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-
-On 4/29/26 5:35 AM, Tejun Heo wrote:
-
-> +/*
-> + * x86 BPF JIT rejects BPF_OR | BPF_FETCH and BPF_AND | BPF_FETCH on arena
-> + * pointers (see bpf_jit_supports_insn() in arch/x86/net/bpf_jit_comp.c). Only
-> + * BPF_CMPXCHG / BPF_XCHG / BPF_ADD with FETCH are allowed. Implement
-> + * test_and_{set,clear} and the atomic set/clear via a cmpxchg loop.
-> + *
-> + * CMASK_CAS_TRIES is far above what any non-pathological contention needs.
-> + * Exhausting it means the bit update was lost, which corrupts the caller's view
-> + * of the bitmap, so raise scx_bpf_error() to abort the scheduler.
-> + */
-> +#define CMASK_CAS_TRIES		1024
-> +
-> +static __always_inline void cmask_set(struct scx_cmask __arena *m, u32 cid)
-> +{
-> +	u64 __arena *w;
-> +	u64 bit, old, new;
-> +	u32 i;
-> +
-> +	if (!__cmask_contains(m, cid))
-> +		return;
-> +	w = __cmask_word(m, cid);
-> +	bit = BIT_U64(cid & 63);
-> +	bpf_for(i, 0, CMASK_CAS_TRIES) {
-> +		old = *w;
-> +		if (old & bit)
-> +			return;
-> +		new = old | bit;
-> +		if (__sync_val_compare_and_swap(w, old, new) == old)
-> +			return;
-> +	}
-> +	scx_bpf_error("cmask_set CAS exhausted at cid %u", cid);
-> +}
-> +
-> +static __always_inline void cmask_clear(struct scx_cmask __arena *m, u32 cid)
-> +{
-> +	u64 __arena *w;
-> +	u64 bit, old, new;
-> +	u32 i;
-> +
-> +	if (!__cmask_contains(m, cid))
-> +		return;
-> +	w = __cmask_word(m, cid);
-> +	bit = BIT_U64(cid & 63);
-> +	bpf_for(i, 0, CMASK_CAS_TRIES) {
-> +		old = *w;
-> +		if (!(old & bit))
-> +			return;
-> +		new = old & ~bit;
-> +		if (__sync_val_compare_and_swap(w, old, new) == old)
-> +			return;
-> +	}
-> +	scx_bpf_error("cmask_clear CAS exhausted at cid %u", cid);
-> +}
-> +
-> +static __always_inline bool cmask_test_and_set(struct scx_cmask __arena *m, u32 cid)
-> +{
-> +	u64 __arena *w;
-> +	u64 bit, old, new;
-> +	u32 i;
-> +
-> +	if (!__cmask_contains(m, cid))
-> +		return false;
-> +	w = __cmask_word(m, cid);
-> +	bit = BIT_U64(cid & 63);
-> +	bpf_for(i, 0, CMASK_CAS_TRIES) {
-> +		old = *w;
-> +		if (old & bit)
-> +			return true;
-> +		new = old | bit;
-> +		if (__sync_val_compare_and_swap(w, old, new) == old)
-> +			return false;
-> +	}
-> +	scx_bpf_error("cmask_test_and_set CAS exhausted at cid %u", cid);
-> +	return false;
-> +}
-> +
-> +static __always_inline bool cmask_test_and_clear(struct scx_cmask __arena *m, u32 cid)
-> +{
-> +	u64 __arena *w;
-> +	u64 bit, old, new;
-> +	u32 i;
-> +
-> +	if (!__cmask_contains(m, cid))
-> +		return false;
-> +	w = __cmask_word(m, cid);
-> +	bit = BIT_U64(cid & 63);
-> +	bpf_for(i, 0, CMASK_CAS_TRIES) {
-> +		old = *w;
-> +		if (!(old & bit))
-> +			return false;
-> +		new = old & ~bit;
-> +		if (__sync_val_compare_and_swap(w, old, new) == old)
-> +			return true;
-> +	}
-> +	scx_bpf_error("cmask_test_and_clear CAS exhausted at cid %u", cid);
-> +	return false;
-> +}
-
-Exiting a BPF scheduler when CAS retries fail seems too brutal, while it
-is extremely rare to happen. What about adding a kfunc for the slow path
-that runs only when the CAS retry fails? For example,
-scx_bpf_cmask_test_and_clear( ) does the same thing as
-cmask_test_and_clear(), but it never fails. cmask_test_and_clear() calls
-scx_bpf_cmask_test_and_clear( ) only when the CAS retry fails. In this
-way, we can use the fast path in the BPF implementation while ensuring
-the operation succeeds.
-
-> +/**
-> + * cmask_next_set - find the first set bit at or after @cid
-> + * @m: cmask to search
-> + * @cid: starting cid (clamped to @m->base if below)
-> + *
-> + * Returns the smallest set cid in [@cid, @m->base + @m->nr_bits), or
-> + * @m->base + @m->nr_bits if none (the out-of-range sentinel matches the
-> + * termination condition used by cmask_for_each()).
-> + */
-> +static __always_inline u32 cmask_next_set(const struct scx_cmask __arena *m, u32 cid)
-> +{
-> +	u32 end = m->base + m->nr_bits;
-> +	u32 base = m->base / 64;
-> +	u32 last_wi = (end - 1) / 64 - base;
-> +	u32 start_wi, start_bit, i;
-> +
-> +	if (cid < m->base)
-> +		cid = m->base;
-> +	if (cid >= end)
-> +		return end;
-> +
-> +	start_wi = cid / 64 - base;
-> +	start_bit = cid & 63;
-> +
-> +	bpf_for(i, 0, CMASK_MAX_WORDS) {
-> +		u32 wi = start_wi + i;
-> +		u64 word;
-> +		u32 found;
-> +
-> +		if (wi > last_wi)
-> +			break;
-> +
-> +		word = m->bits[wi];
-> +		if (i == 0)
-> +			word &= GENMASK_U64(63, start_bit);
-> +		if (!word)
-> +			continue;
-> +
-> +		found = (base + wi) * 64 + __builtin_ctzll(word);
-
-Some compiler versions (e.g., clang-18 or older) don’t support
-__builtin_ctzll(). To handle this gracefully, there is already a
-wrapper, ctzll(), in common.bpf.h. So, I suggest using ctzll()
-for compatibility.
+Thank you, Tejun, for the patchset.
+I like it! I made some comments on patches 10 and 16.
 
 Reviewed-by: Changwoo Min <changwoo@igalia.com>
+
+On 4/29/26 5:35 AM, Tejun Heo wrote:
+> Hello,
+> 
+> v3 (all from the Sashiko AI review at
+> https://sashiko.dev/#/patchset/20260424172721.3458520-1-tj%40kernel.org):
+> 
+> - cid: drop leaked cpus_read_lock() on scx_cid_init() failure;
+>    BUILD_BUG_ON tightened to NR_CPUS<=8192 to match the BPF cmask
+>    helpers' CMASK_MAX_WORDS coverage.
+> - bpf-struct-size: use offsetof() in struct_size() to match the
+>    kernel <linux/overflow.h> macro semantics (no inflation from
+>    trailing struct padding).
+> - cmask: cmask_copy_from_kernel() validates src->base==0 via
+>    probe-read; nr_bits check is bit-level rather than rounded-up
+>    word-count.
+> - cid-qmap-idle: qmap_init() refuses to load when scx_bpf_nr_cids()
+>    exceeds SCX_QMAP_MAX_CPUS; the task_ctx flex array would otherwise
+>    overflow into the next slab entry.
+> 
+> v2: https://lore.kernel.org/r/20260424172721.3458520-1-tj@kernel.org
+> v1: https://lore.kernel.org/r/20260421071945.3110084-1-tj@kernel.org
+> 
+> This patchset introduces topological CPU IDs (cids) - dense,
+> topology-ordered cpu identifiers - and an alternative cid-form struct_ops
+> type that lets BPF schedulers operate in cid space directly.
+> 
+> Key pieces:
+> 
+> - cid space: scx_cid_init() walks nodes * LLCs * cores * threads and packs
+>    a dense cid mapping. The mapping can be overridden via
+>    scx_bpf_cid_override(). See "Topological CPU IDs" in ext_cid.h for the
+>    model.
+> 
+> - cmask: a base-windowed bitmap over cid space. Kernel and BPF helpers with
+>    identical semantics. Used by scx_qmap for per-task affinity and idle-cid
+>    tracking; meant to be the substrate for sub-sched cid allocation.
+> 
+> - bpf_sched_ext_ops_cid: a parallel struct_ops type whose callbacks take
+>    cids/cmasks instead of cpus/cpumasks. Kernel translates at the boundary
+>    via scx_cpu_arg() / scx_cpu_ret(); the two struct types share offsets up
+>    through @priv (verified by BUILD_BUG_ON) so the union view in scx_sched
+>    works without function-pointer casts. Sub-sched support is tied to
+>    cid-form: validate_ops() rejects cpu-form sub-scheds and cpu-form roots
+>    that expose sub_attach / sub_detach.
+> 
+> - cid-form kfuncs: scx_bpf_kick_cid, scx_bpf_cidperf_{cap,cur,set},
+>    scx_bpf_cid_curr, scx_bpf_task_cid, scx_bpf_this_cid,
+>    scx_bpf_nr_{cids,online_cids}, scx_bpf_cid_to_cpu, scx_bpf_cpu_to_cid.
+>    A cid-form program may not call cpu-only kfuncs (enforced at verifier
+>    load via scx_kfunc_context_filter); the reverse is intentionally
+>    permissive to ease migration.
+> 
+> - scx_qmap port: scx_qmap is converted to cid-form. It uses the cmask-based
+>    idle picker, per-task cid-space cpus_allowed, and cid-form kfuncs
+>    throughout. Sub-sched dispatching via scx_bpf_sub_dispatch() continues to
+>    work.
+> 
+> v3 re-tested on the 16-cpu QEMU: cid-form scx_qmap under stress-ng plus
+> reload cycles, hotplug auto-restart, and sub-sched (root scx_qmap +
+> cgroup-scoped scx_qmap child). Clean.
+> 
+> Based on sched_ext/for-7.2 (4939721aad2e).
+> 
+>   0001-sched_ext-Add-ext_types.h-for-early-subsystem-wide-d.patch
+>   0002-sched_ext-Rename-ops_cpu_valid-to-scx_cpu_valid-and-.patch
+>   0003-sched_ext-Move-scx_exit-scx_error-and-friends-to-ext.patch
+>   0004-sched_ext-Shift-scx_kick_cpu-validity-check-to-scx_b.patch
+>   0005-sched_ext-Relocate-cpu_acquire-cpu_release-to-end-of.patch
+>   0006-sched_ext-Make-scx_enable-take-scx_enable_cmd.patch
+>   0007-sched_ext-Add-topological-CPU-IDs-cids.patch
+>   0008-sched_ext-Add-scx_bpf_cid_override-kfunc.patch
+>   0009-tools-sched_ext-Add-struct_size-helpers-to-common.bp.patch
+>   0010-sched_ext-Add-cmask-a-base-windowed-bitmap-over-cid-.patch
+>   0011-sched_ext-Add-cid-form-kfunc-wrappers-alongside-cpu-.patch
+>   0012-sched_ext-Add-bpf_sched_ext_ops_cid-struct_ops-type.patch
+>   0013-sched_ext-Forbid-cpu-form-kfuncs-from-cid-form-sched.patch
+>   0014-tools-sched_ext-scx_qmap-Restart-on-hotplug-instead-.patch
+>   0015-tools-sched_ext-scx_qmap-Add-cmask-based-idle-tracki.patch
+>   0016-tools-sched_ext-scx_qmap-Port-to-cid-form-struct_ops.patch
+>   0017-sched_ext-Require-cid-form-struct_ops-for-sub-sched-.patch
+> 
+> Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-cid-v3
+> 
+>   kernel/sched/build_policy.c              |   3 +
+>   kernel/sched/ext.c                       | 651 ++++++++++++++++++++++++++----
+>   kernel/sched/ext_cid.c                   | 409 +++++++++++++++++++
+>   kernel/sched/ext_cid.h                   | 164 ++++++++
+>   kernel/sched/ext_idle.c                  |   8 +-
+>   kernel/sched/ext_internal.h              | 205 +++++++---
+>   kernel/sched/ext_types.h                 | 104 +++++
+>   tools/sched_ext/include/scx/cid.bpf.h    | 667 +++++++++++++++++++++++++++++++
+>   tools/sched_ext/include/scx/common.bpf.h |  23 ++
+>   tools/sched_ext/include/scx/compat.bpf.h |  24 ++
+>   tools/sched_ext/scx_qmap.bpf.c           | 346 +++++++++-------
+>   tools/sched_ext/scx_qmap.c               |  70 +++-
+>   tools/sched_ext/scx_qmap.h               |   2 +-
+>   13 files changed, 2391 insertions(+), 285 deletions(-)
+> 
+> Thanks.
+> 
+> --
+> tejun
+> 
+
