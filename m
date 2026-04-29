@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960C2425CF4;
-	Wed, 29 Apr 2026 18:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E6641B356;
+	Wed, 29 Apr 2026 18:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777486911; cv=none; b=KLd+fgn1RYQy+H9wuovlypS/JYs+QBPdzNtHtc4L7ptTEmsa2x61BEwRMzZKrp5mGW4X0llE4UFLVWrl+PAhuCy3Gd+twR+tiBRRu2Q2ykB/vH7mzewHEU+Z3RQ4BMkDOTWymOwc7NorfWRRez7hH+Q9YU+iX0SdYDNLjFhahzU=
+	t=1777487370; cv=none; b=hSHoC+xTPz/yOE3euRUtinQrV5Iu1z+pBirTc6zX1guD/YLEGVRERr+BbkKQ6solN9c7YWe6bKVwGF/DgqazUeMURl82pJq/mq/orGN7LE2Nm4LgXSpgCivHNJd6fViOqyrtyErCP8yF4eb7RvMrWmTNqObwEsqOs73a7A+az+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777486911; c=relaxed/simple;
-	bh=plsafDwkAkd/K9h64CJzG0BINlyrQf7Vk/mfQVI/aMA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBDf3lPUEB87uu/W+Ql6Gx/pKcn4VdYyA0zzWei2yJFP7OL153sLJ7XSc+9xVtXGmBtgJtPTerU2+qQSCJFQXj2ujFGtgPb0oNIzj9grIaOrz8hCx5jSSgBgIUhCvhC/dp2x/5s8FedMirEHODprtkOlCs+ZPiqDFvrE9W4v/98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hHERJy/7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777487370; c=relaxed/simple;
+	bh=zRPwqtMCUQqP2YFKgvX1xfSGFqslc0okhCxRXrd5B9M=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=pYJyG2fy5N9F1vJDlcIFPD8lxCQSsbHAxSgjTg2YNHSq9KGYuuxrLvskuJrewTCimH4AkB0m2ceW5EsBG0MMB2KL68BKbqITPU/lPy+/tqwsyxauVvuIlnlS7/ApXd84yx6wmwcmHX5LcAEc8+BNZ0wdFV5/XIgcceNKqZ+Zzec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJN4DR7k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hHERJy/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24105C19425;
-	Wed, 29 Apr 2026 18:21:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJN4DR7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE48C19425;
+	Wed, 29 Apr 2026 18:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777486911;
-	bh=plsafDwkAkd/K9h64CJzG0BINlyrQf7Vk/mfQVI/aMA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHERJy/7ad1z94INv4/oRMCVulCpxwFl35qolkfcIylxaW5i1009au3S6jLTk4goI
-	 0OO2G/wrSPudixLtLNnGtMGrfhdVjcOIZ8lNZyw4RFQICR/aPkvswXOecDOvp5a2cP
-	 XDJ6kfi707NzIZBZlh9PE6q9XxgL33AkTGUKLq1XWzHzItZ1/+EHuCAEic7nfYZnVe
-	 1Kt1n6PABKCjfAndX3Jj0wQAY1D00pWWG8x6sRuOIVu3vBbYK6cXMsk1i5DQv9U/pf
-	 Mw2+G0Ey55ETSnl7lGimEH/QvdFh8tc+aW23cI7T7UsjNCohAdRk+H9/YCmRH3ffNS
-	 6zcaj4XFt5axA==
+	s=k20201202; t=1777487369;
+	bh=zRPwqtMCUQqP2YFKgvX1xfSGFqslc0okhCxRXrd5B9M=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=SJN4DR7kQSJjiFYjsqgDr/IDImiHbebqIti/UzJ3fU3dHQVxtBPt2n/sEyj69MQxm
+	 ij5omtx6qnZ2EXj5qet8jEO2e31U9OMgy9YJ3ppCJ0aRFO6HIhuvLRNf8oWY70SYiv
+	 txbPfv25+uk4icZyVpIzgHlKa2v2Eht4JiNa7iJ37frW6xdTNJPE8ANxiCIjFEymRE
+	 xD7a5WJfNIFSP7bIWMCyndy5IxqYmgmewG/ehonek+zX2cjz4kEBr5PjjRHJGzU6tM
+	 /Iqmtx9O96r0dB2+VK9F2gVIha+p26SzNtZm5ax0awqgIlXIRlL0mvhjwhwoLak2ek
+	 mJH/2O7BsrsQg==
+Date: Wed, 29 Apr 2026 08:29:28 -1000
+Message-ID: <e784a3f81fc227c4db2bdc1ef585a705@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
+ Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
 Cc: Emil Tsalapatis <emil@etsalapatis.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: [PATCH 17/17] sched_ext: Require cid-form struct_ops for sub-sched support
-Date: Wed, 29 Apr 2026 08:21:31 -1000
-Message-ID: <20260429182131.1780125-18-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
+ sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCHSET v4 sched_ext/for-7.2] sched_ext: Topological CPU IDs and cid-form struct_ops
 In-Reply-To: <20260429182131.1780125-1-tj@kernel.org>
 References: <20260429182131.1780125-1-tj@kernel.org>
 Precedence: bulk
@@ -46,59 +42,31 @@ X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Sub-scheduler support is tied to the cid-form struct_ops: sub_attach /
-sub_detach will communicate allocation via cmask, and the hierarchy assumes
-all participants share a single topological cid space. A cpu-form root that
-accepts sub-scheds would need cpu <-> cid translation on every cross-sched
-interaction, defeating the purpose.
+Hello,
 
-Enforce this at validate_ops():
-- A sub-scheduler (scx_parent(sch) non-NULL) must be cid-form.
-- A root that exposes sub_attach / sub_detach must be cid-form.
+> Tejun Heo (17):
+>   sched_ext: Add ext_types.h for early subsystem-wide defs
+>   sched_ext: Rename ops_cpu_valid() to scx_cpu_valid() and expose it
+>   sched_ext: Move scx_exit(), scx_error() and friends to ext_internal.h
+>   sched_ext: Shift scx_kick_cpu() validity check to scx_bpf_kick_cpu()
+>   sched_ext: Relocate cpu_acquire/cpu_release to end of struct sched_ext_ops
+>   sched_ext: Make scx_enable() take scx_enable_cmd
+>   sched_ext: Add topological CPU IDs (cids)
+>   sched_ext: Add scx_bpf_cid_override() kfunc
+>   tools/sched_ext: Add struct_size() helpers to common.bpf.h
+>   sched_ext: Add cmask, a base-windowed bitmap over cid space
+>   sched_ext: Add cid-form kfunc wrappers alongside cpu-form
+>   sched_ext: Add bpf_sched_ext_ops_cid struct_ops type
+>   sched_ext: Forbid cpu-form kfuncs from cid-form schedulers
+>   tools/sched_ext: scx_qmap: Restart on hotplug instead of cpu_online/offline
+>   tools/sched_ext: scx_qmap: Add cmask-based idle tracking and cid-based idle pick
+>   tools/sched_ext: scx_qmap: Port to cid-form struct_ops
+>   sched_ext: Require cid-form struct_ops for sub-sched support
 
-scx_qmap, which is currently the only scheduler demoing sub-sched support,
-was converted to cid-form in the preceding patch, so this doesn't cause
-breakage.
+Applied 1-17 to sched_ext/for-7.2.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Reviewed-by: Changwoo Min <changwoo@igalia.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
----
- kernel/sched/ext.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Thanks.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 65a00c979691..f3a585e32db3 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6869,6 +6869,23 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
- 	if (!sch->is_cid_type && (ops->cpu_acquire || ops->cpu_release))
- 		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
- 
-+	/*
-+	 * Sub-scheduler support is tied to the cid-form struct_ops. A sub-sched
-+	 * attaches through a cid-form-only interface (sub_attach/sub_detach),
-+	 * and a root that accepts sub-scheds must expose cid-form state to
-+	 * them. Reject cpu-form schedulers on either side.
-+	 */
-+	if (!sch->is_cid_type) {
-+		if (scx_parent(sch)) {
-+			scx_error(sch, "sub-sched requires cid-form struct_ops");
-+			return -EINVAL;
-+		}
-+		if (ops->sub_attach || ops->sub_detach) {
-+			scx_error(sch, "sub_attach/sub_detach requires cid-form struct_ops");
-+			return -EINVAL;
-+		}
-+	}
-+
- 	return 0;
- }
- 
--- 
-2.54.0
-
+--
+tejun
