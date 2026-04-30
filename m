@@ -1,72 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E6641B356;
-	Wed, 29 Apr 2026 18:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7312C9443
+	for <sched-ext@lists.linux.dev>; Thu, 30 Apr 2026 08:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777487370; cv=none; b=hSHoC+xTPz/yOE3euRUtinQrV5Iu1z+pBirTc6zX1guD/YLEGVRERr+BbkKQ6solN9c7YWe6bKVwGF/DgqazUeMURl82pJq/mq/orGN7LE2Nm4LgXSpgCivHNJd6fViOqyrtyErCP8yF4eb7RvMrWmTNqObwEsqOs73a7A+az+U=
+	t=1777538758; cv=none; b=ENBKHWR4pqUh81loeCsS8ncqJniLcr2Al85dIArHqNsrODFWd1NoK8ct+iSX++cfjQ5MFmm482oFdOwAEbgwzH/4yivAZW8YwGq5t+e52YkgcYUd6VKO1iYJpwRxzu5rjaJoWWw6g2yUL76AVE93dR4rEneL71c9zPHc3Y1YCHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777487370; c=relaxed/simple;
-	bh=zRPwqtMCUQqP2YFKgvX1xfSGFqslc0okhCxRXrd5B9M=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=pYJyG2fy5N9F1vJDlcIFPD8lxCQSsbHAxSgjTg2YNHSq9KGYuuxrLvskuJrewTCimH4AkB0m2ceW5EsBG0MMB2KL68BKbqITPU/lPy+/tqwsyxauVvuIlnlS7/ApXd84yx6wmwcmHX5LcAEc8+BNZ0wdFV5/XIgcceNKqZ+Zzec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJN4DR7k; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777538758; c=relaxed/simple;
+	bh=XG1JpCj1PVjtKlFUM+aogmb5LHzlS6tTL7popB9zMdk=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=n5Owi2yqDeBeqjLZEGh03fRnVkgV8w6s9AygBZ9uWpwXD273xGGpy+XnXw2H3dMATqelprnXs9yjGwmMNpSit0Tkx7+cSawiDK+kDElIY49Pe02GI7DogrUoPJWlWG8qoIScDXV6yiU/UAyoZjhL7l/SlyR4GjqHW2k3MJSGihM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=OHzHfqPV; arc=none smtp.client-ip=95.215.58.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJN4DR7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE48C19425;
-	Wed, 29 Apr 2026 18:29:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777487369;
-	bh=zRPwqtMCUQqP2YFKgvX1xfSGFqslc0okhCxRXrd5B9M=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=SJN4DR7kQSJjiFYjsqgDr/IDImiHbebqIti/UzJ3fU3dHQVxtBPt2n/sEyj69MQxm
-	 ij5omtx6qnZ2EXj5qet8jEO2e31U9OMgy9YJ3ppCJ0aRFO6HIhuvLRNf8oWY70SYiv
-	 txbPfv25+uk4icZyVpIzgHlKa2v2Eht4JiNa7iJ37frW6xdTNJPE8ANxiCIjFEymRE
-	 xD7a5WJfNIFSP7bIWMCyndy5IxqYmgmewG/ehonek+zX2cjz4kEBr5PjjRHJGzU6tM
-	 /Iqmtx9O96r0dB2+VK9F2gVIha+p26SzNtZm5ax0awqgIlXIRlL0mvhjwhwoLak2ek
-	 mJH/2O7BsrsQg==
-Date: Wed, 29 Apr 2026 08:29:28 -1000
-Message-ID: <e784a3f81fc227c4db2bdc1ef585a705@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET v4 sched_ext/for-7.2] sched_ext: Topological CPU IDs and cid-form struct_ops
-In-Reply-To: <20260429182131.1780125-1-tj@kernel.org>
-References: <20260429182131.1780125-1-tj@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="OHzHfqPV"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1777538754;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc; bh=LZPC9sO3rCTy4EKRx4TxyKwcU3j58hdJZ1FAznjk8mY=;
+	b=OHzHfqPVp7JqOOjX0qnsFEIzfaEx8yICDnmTObfni4ZRwmAnkh4HFs3aFMFK17jQHPnWMp
+	ngapj84poBBu6q5IasBHjTrWKK5MltZwheOqWywSr3+pB5DqWkvansgSUu82EsHppgI5tE
+	jepv+hvfxhIKbYlT2GiWmyQLHL5ISIk=
+From: Zqiang <qiang.zhang@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	qiang.zhang@linux.dev
+Subject: [PATCH] sched_ext: Remove redundant rcu_read_lock/unlock() in sysrq_handle_sched_ext_reset()
+Date: Thu, 30 Apr 2026 16:45:43 +0800
+Message-Id: <20260430084543.25137-1-qiang.zhang@linux.dev>
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
+The sysrq_handle_sched_ext_reset() callback has already been
+executed in the rcu read critical section within __handle_sysrq(),
+this commit therefore remove redundant rcu_read_lock/unlock() in
+the sysrq_handle_sched_ext_reset().
 
-> Tejun Heo (17):
->   sched_ext: Add ext_types.h for early subsystem-wide defs
->   sched_ext: Rename ops_cpu_valid() to scx_cpu_valid() and expose it
->   sched_ext: Move scx_exit(), scx_error() and friends to ext_internal.h
->   sched_ext: Shift scx_kick_cpu() validity check to scx_bpf_kick_cpu()
->   sched_ext: Relocate cpu_acquire/cpu_release to end of struct sched_ext_ops
->   sched_ext: Make scx_enable() take scx_enable_cmd
->   sched_ext: Add topological CPU IDs (cids)
->   sched_ext: Add scx_bpf_cid_override() kfunc
->   tools/sched_ext: Add struct_size() helpers to common.bpf.h
->   sched_ext: Add cmask, a base-windowed bitmap over cid space
->   sched_ext: Add cid-form kfunc wrappers alongside cpu-form
->   sched_ext: Add bpf_sched_ext_ops_cid struct_ops type
->   sched_ext: Forbid cpu-form kfuncs from cid-form schedulers
->   tools/sched_ext: scx_qmap: Restart on hotplug instead of cpu_online/offline
->   tools/sched_ext: scx_qmap: Add cmask-based idle tracking and cid-based idle pick
->   tools/sched_ext: scx_qmap: Port to cid-form struct_ops
->   sched_ext: Require cid-form struct_ops for sub-sched support
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+---
+ kernel/sched/ext.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Applied 1-17 to sched_ext/for-7.2.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 45a2668284bc..0f3e9d088151 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -7953,13 +7953,11 @@ static void sysrq_handle_sched_ext_reset(u8 key)
+ {
+ 	struct scx_sched *sch;
+ 
+-	rcu_read_lock();
+ 	sch = rcu_dereference(scx_root);
+ 	if (likely(sch))
+ 		scx_disable(sch, SCX_EXIT_SYSRQ);
+ 	else
+ 		pr_info("sched_ext: BPF schedulers not loaded\n");
+-	rcu_read_unlock();
+ }
+ 
+ static const struct sysrq_key_op sysrq_sched_ext_reset_op = {
+-- 
+2.17.1
 
-Thanks.
-
---
-tejun
