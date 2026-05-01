@@ -1,85 +1,75 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE0A3A1687
-	for <sched-ext@lists.linux.dev>; Thu, 30 Apr 2026 09:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE231D6DA9
+	for <sched-ext@lists.linux.dev>; Fri,  1 May 2026 13:16:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777541273; cv=none; b=lIs7nb2LhMIOIoRSvM8IvSTWeR3nCTl86K0UCFl0oWsTXW9JUhfm2DQJajVHaP/pySDU5NK3KFld0T0wiy2jPRZFAAhKBBRlOKFcXe/fx5u9yCe8t9y7FiBQMNUVFsXRoYIF6ONe3udEcTem1xiNLeQEO4p9Lf/L+io+zDoNi2k=
+	t=1777641391; cv=none; b=gS9xbo6mJe8DT8Bo9aZaresuDJuOnWgl+IsEG0SAsXMsJseG/yjoht1fCTSaSu6VejsRcezbYuEri/ixWTyz3ZXjjyPhJl+yXkIIuLbvu0TE1V4HB0P5IB/wsmkHRsGxUfzN/fY60y4yaWUqECQlc7BKxAbqIz9iDPjol8btxlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777541273; c=relaxed/simple;
-	bh=CXDxq6gShe6+wBOoBAqetqOH0qIWfFPLMI4Hbm9iCDg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a2AzL0t/c+ZDQ3UhnU0bOv46hE8kD297b633LGCr3kts3Gn7kB9tPSE7a7/gikIV+/GT6K5rIM0LKCd1Wnr6+2kvLQchC9OYVC0RM3tHqRHKVCZweB0hGvyMKCFrjFHfuGspIvgS5+Bqwvmd/ddLPFZp8+DhaJgyPK8IyWLKoa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SE5QFHho; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1777641391; c=relaxed/simple;
+	bh=+41dixGNeuD2dVMUdxAXfx15jbMsmmmXJdlPS6imaks=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=joH074Fe1TE6H9UNwBtjQ9SpBaOxgupbD7sY2EUQDxQ0Fr0/kUWG/CPXoKVHnOE2upayKhQC4242QrNq1z10DJ87UkMMP+vdGOs6tHJxBvBJzSSkGNLKEU5aCYfJziidRApSugGadeVBvkBfx0/yQ/jemYcJ3kkYBuA6yT/rhOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pBSE3u7L; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SE5QFHho"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-488b0046078so5935295e9.1
-        for <sched-ext@lists.linux.dev>; Thu, 30 Apr 2026 02:27:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pBSE3u7L"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2b458ca2296so11696235ad.0
+        for <sched-ext@lists.linux.dev>; Fri, 01 May 2026 06:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777541271; x=1778146071; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1777641389; x=1778246189; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=23Gv79bX11KtZ0VP1e3ka7ca7k5Ir/in0ODtFUOjGc4=;
-        b=SE5QFHhobUy7n/m9CZxncXRO0P3kA1xX4AKP/zB0kyNgFDluzUcrg02ZImb9GegFzZ
-         14/Y5MiNxuKyhqLSnPcqGxMW80e6+daG9+U65kCqepIHGYhv3c8I6xkLIpSROaHXofE0
-         BEhaiBWXa2IN7cqfzT8ACNw66L+WCEgERaFYl7bN4uLdkw22KYgYhHEGPqN2zTazIFyO
-         AFKNiUJGL1KEDVErmKrwQN4WhHDbS8XALVx0EXKd7NzvSPIhkzFtuq2Vm8HBNc43pL2T
-         es0zerVayUgUFavQJa23LgvbU5gX5QsrKgpcbciqTXHb3kwLTB+QH0KgpDwtevWlaD/9
-         nRuQ==
+        bh=IVOgkFgOSAS8LAKhbBot9eAfbt7830iNQpu7KWGXDJs=;
+        b=pBSE3u7LvQN8v0f3xUZIRpmiUiutMfQO3K/HE7mG0tKCB2WVHeJCYh80mAWGLErmkP
+         F2hljaEnBnbGkGNeOap2aA2HU85FYTsJfXF8/N/e/8rv7P60LxO+LNQQJnMap9DKNHoW
+         nnvLqI+1e6r2jFr2Z/c+vk5+/j/l0TB1K7mTBH2ulQ5BsvlVfmLCD0NrJK2YbrzS6wBv
+         /WzD9YvcBxqBfelroDP/g3vweLvUezkzxde5sHCqmdAmuQJENtRkMpDsV7NIZC2hpHAS
+         ywlQ+A/1NpVf8Oq4RE+vntmFDDlv4TGy1L/tKsk4qrHeDCLhmVOk9oS7rWh+fYbVh4q4
+         I6fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777541271; x=1778146071;
+        d=1e100.net; s=20251104; t=1777641389; x=1778246189;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=23Gv79bX11KtZ0VP1e3ka7ca7k5Ir/in0ODtFUOjGc4=;
-        b=pdyXpbuzWnoCUXxCmoPtZQ2nWM+ZK2ohz/ua8ddPhHOOu/+B6d4xtEXiGowc3c7u0U
-         jd8NoJVFjbgc5T/HJDRB0Hog4n9SgbZ4HD8L6hWkKJZk5AO8KhRVdymCKtICu1UcCOP7
-         Y56CtSSz8uBazaTRPnYRgcRGziO1ICMhRx1DSkPDkIcY0bIxDfbn3YbeUpiWfp30DEC9
-         BqRNYevlK88MYRPGuHfO59ygg8ZzDFSZptT00kWkW9r93UnNzdKSeXX03b8hwThsqq5+
-         ma/CdJGeTSQiva4ccUdwr5VtpC5ZohvhkNHfxk6Krn6irL9d/skus5YY0IjOcUANLsJe
-         0v7w==
-X-Forwarded-Encrypted: i=1; AFNElJ/mKedmPOwn8Y4xse9KJHhAdW/v2xdJS8B3OjlFgRJnbKYR4T1Vq6QD0GAjrO5a2YaLV2xybsLFp2U=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLCnJ5eLbVM+pMaMX7vdSb28bA/gFmnUkYB2YQaJH3uX32z8sZ
-	lFK5HQ63OGAS7V51H9/0XNQ4SSVF9pwmW4+OLgH+UFHX5XSC01cZe3vv
-X-Gm-Gg: AeBDiet1HjMpHiyOdstZbrstlMzH1ENFwyX8LcygQRiT7Ou7jXsplo4q6tTLVlmCYgG
-	H+JGE9YKHBuY52fGghohjfi03rcfuC3iU7YOHeMT8j9zoW7ECgQcgVXHVeN21UiQ2Ga0b6Nq+4k
-	KjCK9sScSgdCJgk2jvPzway2eLgmDDp7QCuhf8ik7V1EYGDiqHzhZ7ke4m7K6KRVud/jI7/26at
-	Wq4fb17ZisWzjQWVnpUu7pzcPr8CnHIZM1eBgp4RokCb9MjfM47ir0CAvgCKFgk2mP/xnSIcWrW
-	1Iyi9E+8Z0URJNngssPWxtM9a2rKwAztNPotqAhmSBaX/vrVE+O0YImbdGE0CkwJB42KSruMdUG
-	00IaR6OLNe1lIS7qcJnnh8aC/snqG9Lgop6Qoe13tIX9wLmT+9n/sTpymX1O7q4UuFuelNwtU1O
-	0sOq9BNT3nrU3TW7eQpY1NY6MLsM/Bkml8j7EBF9g6IdtDx0Jvb+pItbYWp4DBM8zj/MPmrlNHn
-	F3I/L4frzAX4XGAy8H9qQLuW0qitdWk
-X-Received: by 2002:a05:600c:4688:b0:488:a824:fdff with SMTP id 5b1f17b1804b1-48a8444da8emr38043855e9.22.1777541270697;
-        Thu, 30 Apr 2026 02:27:50 -0700 (PDT)
-Received: from dohko.chello.ie (188-141-5-72.dynamic.upc.ie. [188.141.5.72])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a820c865esm48160615e9.5.2026.04.30.02.27.49
+        bh=IVOgkFgOSAS8LAKhbBot9eAfbt7830iNQpu7KWGXDJs=;
+        b=s9MgIoP3nsljsD6H65sFcjFVGBrNHIIW8GRo9PipUgmibt5VI1WoKihEgHP61zXu+C
+         iHCAzc/Ix2RFV0i2gOg8mY+TgAbZNv7P1YLOM5M/+sgTRXXxjxKxR/OEArlMTn0D33kh
+         TijDID/2rUpbYAFsd1TujnIGW0EnpyeSlxtkR34b1fTe2us9L/bLzBIR4HCaw5pnDGuI
+         UkqCtw997Cxx1SxQTkQEaYH/TJ6HZ87NR6pkjvREwgcGppzfVV2STbMfQ8hs7RvLZ2i5
+         BFQMAeKYC1oXFxsme78//Afu+Qn91s/W28/fva6BJCQQ9Ie8AN63gnNGUd5z4ndjiGOy
+         nSwQ==
+X-Gm-Message-State: AOJu0Yx9J3+mTwD3cHMqS3mJdBe2wCHdAUpzyMhKryZpmdPf/+mXQhcD
+	LRvucpBcu1o9r0dubisYX/DMXSQouok7+v63ejoTJ8A8Ilhnif3uMix/hwcFqw==
+X-Gm-Gg: AeBDieuxyLayxMBxnoTxVIlN9E1PeEjFf4+c/COGvEJPrfRhWfY3n/uzPrEvsukvuYK
+	AVWf1KbSAR6MWIB4LUoxYeMVPP4RT0WokmbvCprQZ04Fp5wrAcBc09hNXGaqH9NecrF8vYOfv9T
+	bpNU2gzIb7p4Rhl5HnVyoa+eLxBiFUKdQ1JXa7l4x86s3+z7vp0zVxRp3jkX3ONtCU/yS8XiN1m
+	5DL0WPdmZWjuRZ4MT4o6U+lvw9ZbjhfWSMgETddr+PfNV3avrTrJC9UHZVHnzZjq0xu5sYMQ7EW
+	MmOaq89tZboOEODpoR6Zl5WjJeg+fLUWj0xqWPYB64Os0aUjmlATaXFHi1oeRu310Wq6pFll/qB
+	Q6j2gT42O2RiZv/FCE1gEsB7qnI1XLrhieHjJ+cfuruWCTocfx0fkC05vtU6DEy2Hrol5gilKlP
+	+sdCUNlByCMZyTHV6ovhk1TEkxgF/MlfpmBkahl8P3xu7uXqNjvBvIz2O18/v3AeU=
+X-Received: by 2002:a17:902:c209:b0:2b0:c45a:bc2 with SMTP id d9443c01a7336-2b9a2354024mr50552755ad.16.1777641389309;
+        Fri, 01 May 2026 06:16:29 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:57df:16f5:b7ab:5d05])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9cae59f62sm22438005ad.70.2026.05.01.06.16.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2026 02:27:50 -0700 (PDT)
-From: David Carlier <devnexen@gmail.com>
-To: Tejun Heo <tj@kernel.org>,
+        Fri, 01 May 2026 06:16:28 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	sched-ext@lists.linux.dev (open list:SCHEDULER - SCHED_EXT),
-	linux-kernel@vger.kernel.org (open list:SCHEDULER)
-Cc: David Carlier <devnexen@gmail.com>,
-	Claude <noreply@anthropic.com>
-Subject: [PATCH] sched_ext: idle: Recheck prev_cpu after narrowing allowed mask
-Date: Thu, 30 Apr 2026 10:27:47 +0100
-Message-ID: <20260430092747.73114-1-devnexen@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	rcu@vger.kernel.org
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com
+Subject: [PATCH sched_ext/for-7.2 0/2] sched_ext: Follow-up fixes for exit_cpu accuracy
+Date: Fri,  1 May 2026 21:14:55 +0800
+Message-ID: <20260501131521.161852-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -88,56 +78,37 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_select_cpu_dfl() narrows @allowed to @cpus_allowed & @p->cpus_ptr
-when the BPF caller supplies a @cpus_allowed that differs from
-@p->cpus_ptr and @p doesn't have full affinity. However,
-@is_prev_allowed was computed against the original (wider)
-@cpus_allowed, so the prev_cpu fast paths could pick a @prev_cpu that
-is in @cpus_allowed but not in @p->cpus_ptr, violating the intended
-invariant that the returned CPU is always usable by @p. The kernel
-masks this via the SCX_EV_SELECT_CPU_FALLBACK fallback, but the
-behavior contradicts the documented contract.
+Follow-up of Tejun's suggestion [1]:
 
-Move the @is_prev_allowed evaluation past the narrowing block so it
-tests against the final @allowed mask.
+Patch 1: Normalize "on cpu N" -> "on CPU N" in the exit dump header to
+match UEI output style.
 
-Fixes: ee9a4e92799d ("sched_ext: idle: Properly handle invalid prev_cpu during idle selection")
-Assisted-by: Claude <noreply@anthropic.com>
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Patch 2: Fix exit_cpu accuracy for the hard lockup and RCU stall paths
+which were recording the detector CPU instead of the actual hung/stalled
+CPU. Touches kernel/rcu/tree_stall.h and kernel/rcu/tree_exp.h to thread
+the stalled CPU through panic_on_rcu_stall().
+
+Based on sched_ext/for-7.2 (88588854c283).
+
+[1]: https://lore.kernel.org/r/e7cbfc99b52b4b7059267bb81498179f@kernel.org/
+
+Thanks,
+Cheng-Yang
+
 ---
- kernel/sched/ext_idle.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-index 41785f65bbb2..bbb845f36a0a 100644
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -464,12 +464,6 @@ s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
- 
- 	preempt_disable();
- 
--	/*
--	 * Check whether @prev_cpu is still within the allowed set. If not,
--	 * we can still try selecting a nearby CPU.
--	 */
--	is_prev_allowed = cpumask_test_cpu(prev_cpu, allowed);
--
- 	/*
- 	 * Determine the subset of CPUs usable by @p within @cpus_allowed.
- 	 */
-@@ -486,6 +480,12 @@ s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
- 		}
- 	}
- 
-+	/*
-+	 * Check whether @prev_cpu is still within the allowed set. If not,
-+	 * we can still try selecting a nearby CPU.
-+	 */
-+	is_prev_allowed = cpumask_test_cpu(prev_cpu, allowed);
-+
- 	/*
- 	 * This is necessary to protect llc_cpus.
- 	 */
--- 
-2.53.0
+Cheng-Yang Chou (2):
+  sched_ext: Normalize exit dump header to "on CPU N"
+  sched_ext: Fix exit_cpu accuracy for lockup paths
+
+ include/linux/sched/ext.h   |  4 ++--
+ kernel/rcu/tree_exp.h       |  2 +-
+ kernel/rcu/tree_stall.h     | 11 +++++++----
+ kernel/sched/ext.c          | 15 ++++++++-------
+ kernel/sched/ext_internal.h |  2 --
+ 5 files changed, 18 insertions(+), 16 deletions(-)
+
+--
+2.48.1
+
 
