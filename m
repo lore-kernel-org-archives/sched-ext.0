@@ -1,73 +1,46 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA77B3C3452
-	for <sched-ext@lists.linux.dev>; Sun,  3 May 2026 13:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+Received: from mail.piware.de (mail.piware.de [37.120.164.117])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4748C2236F0;
+	Sun,  3 May 2026 13:53:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.120.164.117
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777813865; cv=none; b=pkbJMeIBrn///+VRq5+STayzJZbBTnEQ0NUAXmYrwpIX6qmHSOHay+8hZiOBNBcoY14gQFFQM1ZawD54A8gxFkDNjnB2a1Zu21quuQYESMBEz/HL+nk7P4rWZOuRqLyBRRwiZZWuNML2h6Y+GAvuTYf6lKUriIVGXs1wbYIKLmE=
+	t=1777816435; cv=none; b=G+NTCB5a1zXwIKWfbgRjIu5M0eUBnQX2gyF72BmOO2kv4jgjkuKove4bWodA3JnbFMo+mpVwKQHUE17l8GlxKdQdMIMUYdXP+/miixt8rI6LEqQ2Ea4/xMYMWgBVrUXyg78BHZR6YnDdM/w9gCli3RU1nP0WO502mMYyHIZnE/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777813865; c=relaxed/simple;
-	bh=ai5V+UUkPLDazc6YAKJCX9JXd8sc9Quh73GltaoiBCE=;
+	s=arc-20240116; t=1777816435; c=relaxed/simple;
+	bh=+/QBPDKuejX5RK9MIlRm6Y6hQS92z0N8GOAF3fBZaoM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ddBfCgVZ3xXmKqe6mAjmwv/rDRPjMtl9cYqP3V3wcZleWneKHe7YKP98zuZOjHi+BMJYAr7npOoRJQS20WEQh8rOqzxsoCSBzsCKhiiLpj9FhLRdX2bIorwnJT6wgwV+8jJMEGi6PrLCNjxgGDxJNIvjwy/LqdVnMldafCxrs2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CNweBjr2; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=EfS8r/5bfrFHD3k5i76isOxH78BiAbUqf8jOasuRluoV7vPvm9t82fDnaSZ3uXfbJUGlv+3swZGZGvmo9GJF2sAxPeweJvdXqXURx1tzsw2uTnEXuzbj1r0tOr6SPX2b2OHLxNcLvVoAe2I0Nvs9dOrtwpvl9fSwZ6rkYHFqlVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=piware.de; spf=pass smtp.mailfrom=piware.de; dkim=pass (2048-bit key) header.d=piware.de header.i=@piware.de header.b=WbGWTHzr; arc=none smtp.client-ip=37.120.164.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=piware.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=piware.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CNweBjr2"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-835c98b659eso172768b3a.0
-        for <sched-ext@lists.linux.dev>; Sun, 03 May 2026 06:11:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777813864; x=1778418664; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q8HIXa9UkVZApYilYIFuxVyZm+x6ADD5Wp80rFVE9pI=;
-        b=CNweBjr2Ht2ZiT5YetvuUM2fsLyP9I0LWP4pS8Twuu08diyIepfKn/KajMJ1cOVB2D
-         AVkz+X6phS+VA7SKQkxdXZaJXM4hd9bEgRYje3TrT0gEJ6Ik/4QY9JhvQVvPLfzm2Mwh
-         Cww5wu5NYZ/88ouBeBsMGg+tyPH19mav2Q9UtorbFH4mCJr94Dl+lF2rBcMDXiPu0Szt
-         ynzgDW2ALsfJGkAisy3VHoKCzsWCtWWZK+iRzYm60SxZm20cb1ofSEi+3IRcH9iKGHfX
-         iwoAekSrmvT//ixzkuRvVM9XSfakuLH+RbR1Xb2LJ/uKI3uHpg/0Eg0DTYiegyrzxP3+
-         FvQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777813864; x=1778418664;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q8HIXa9UkVZApYilYIFuxVyZm+x6ADD5Wp80rFVE9pI=;
-        b=nqifvuLdzWds8dLgiE+esqION+XTwvJWWjgQmOFCX9mGuBvydc7MAWi22pwYWuCPvp
-         r1gN2Iru9ku74ruvsfrZQ8nwL76FN5XZJi4RVKWyXjx/Edkjs+ZQQTCSqTEdIUzzChhG
-         eY7M1P3VRGbW7BtRHG/0HgedT8H+CgMEkMWx1+9sFHMnolbF2JKT3UPu8brWxKzXUw94
-         EBGK/bO+rGNftGV/VgUKtQzL4vMZ/BypMR2GXLRHQrUQFAHGQ+iP2iXj0em4iC6Z5YjD
-         X2jD7ZLu2OodsyY3QehvIITj/qv8N03ObE7lUvc/ewa5q+TmrudUNgXDWut+pnf/6Ma8
-         fPKQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+h61rZkV6/VHoQSp0MrRCNt6ajES6eMuFCxutHx53hY7ZALKg7JJx/mkrrTX/nzxrwgC4T6QGJlzs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwnjQKd7bUKgbyzVNxds81MoMK4OIhjG9nv3Xjw/ej/ft7u19hV
-	hYVbaAt4XCrno7my8ohWTOhkLYwHqMi6PRoXOb6GCjwx2J8oQpvDQ6x5
-X-Gm-Gg: AeBDieufUsQO70luJ6nja/zyykK2Yxl2S+uSyRnMwRTgrTbexgaxvMI9PSHoa9JMKzR
-	5KX6mJDXsaqVBDcMIhYrpCkjhU2rhMtwL4adbqHHChIPpWtTksJdGa5QUARYPgpuTgdKldRwfrG
-	qITXkMvzGRB9ZKfsM0p6G9BKJoscHC5UbHs+9GxQUL6fKUE5mO+j2P1vqgqbw1jpadXm4sDDWWI
-	2yIVK85fawLTH1K7vzIlbHXyYbaRZP/HFRYHgC0azEefmZj+cd6/MALTIp6YckqUzqWbc+9O0PY
-	mmBXXsMzk8f+lO0tpaFaqC3uBT7BQ74xcBhDFZjlQyYWJ6xOF0FK4ypO8N6WO/G6oH43kn3LV+6
-	AMJMh9NBBfRfXAa96BhWP1434BMO7bnI8mtE7fO7H4tUXW2DuPFC85BKOlTZ5DhQSpx5zf49l1h
-	61rqLtzzuzttxD7/D6oeAZuGYNYBmQazQR74v/DqnTVUFZAAKvjTSygnXKNlWJH5efU3ZOSXdKE
-	bwtv7fXfIA47gI6
-X-Received: by 2002:aa7:9f07:0:b0:835:388c:9764 with SMTP id d2e1a72fcca58-835388ca073mr2974452b3a.37.1777813864051;
-        Sun, 03 May 2026 06:11:04 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-77-225.dynamic-ip.hinet.net. [36.225.77.225])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-835433e5bf7sm2503890b3a.10.2026.05.03.06.11.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 May 2026 06:11:03 -0700 (PDT)
-Date: Sun, 3 May 2026 21:10:59 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Zqiang <qiang.zhang@linux.dev>
-Cc: tj@kernel.org, void@manifault.com, arighi@nvidia.com, 
-	changwoo@igalia.com, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH] sched_ext: Remove redundant rcu_read_lock/unlock() in
- sysrq_handle_sched_ext_reset()
-Message-ID: <20260503210256.G4259@cchengyang.duckdns.org>
-References: <20260430084543.25137-1-qiang.zhang@linux.dev>
+	dkim=pass (2048-bit key) header.d=piware.de header.i=@piware.de header.b="WbGWTHzr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=piware.de; s=2025;
+	t=1777816426; bh=+/QBPDKuejX5RK9MIlRm6Y6hQS92z0N8GOAF3fBZaoM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WbGWTHzrPdPzmLCNmgDDQXwNuLINgouT2LkJze9DC8qU0QOKyeBE44UR2c7SqYv4p
+	 H/NU/d2OS82GIGmrsGtk1xRdtOReK/NOYJCS4MSG+ipvgZ/DRGgAK1rTzv4RFiwZ5p
+	 d94gfp0L3xKkFVknttVjE8DYEMDWmg1JwN8rhErxeDJyTHz4ggC8RwQ0BXL4WiBe49
+	 2bqsIsnSYbN68MBnDflcrANzwgvR6RCGCVGsY5FwwRamUz2g5fdD0HTLr6Gy/B+SoU
+	 MznmknzjoPL2v7JpoDYqEfVZ0Sv+JHw4Ro5sEZ469sTOu5Levmgej43vojEJse3Wxl
+	 lZeFkxnA4kKNA==
+Received: from piware.de (localhost [127.0.0.1])
+	by mail.piware.de (Postfix) with SMTP id B0F4CFF854;
+	Sun, 03 May 2026 15:53:45 +0200 (CEST)
+Date: Sun, 3 May 2026 15:53:44 +0200
+From: Martin Pitt <martin@piware.de>
+To: Tejun Heo <tj@kernel.org>
+Cc: regressions@lists.linux.dev, cgroups@vger.kernel.org,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal =?iso-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 cgroup/for-7.1-fixes sched_ext/for-7.1-fixes] cgroup:
+ Defer css percpu_ref kill on rmdir until cgroup is depopulated
+Message-ID: <afdTaEBPqzYGnO4n@piware.de>
+References: <ad3b4597f3df81914b871618535370db@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -76,50 +49,53 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260430084543.25137-1-qiang.zhang@linux.dev>
+In-Reply-To: <ad3b4597f3df81914b871618535370db@kernel.org>
 
-Hi Zqiang,
+Hello Tejun and all,
 
-On Thu, Apr 30, 2026 at 04:45:43PM +0800, Zqiang wrote:
-> The sysrq_handle_sched_ext_reset() callback has already been
-> executed in the rcu read critical section within __handle_sysrq(),
-> this commit therefore remove redundant rcu_read_lock/unlock() in
-
-Nit: s/remove/removes
-
-Looks good!
-Reviewed-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-
-> the sysrq_handle_sched_ext_reset().
+Tejun Heo [2026-05-01  8:31 -1000]:
+> A chain of commits going back to v7.0 reworked rmdir to satisfy the
+> controller invariant that a subsystem's ->css_offline() must not run while
+> tasks are still doing kernel-side work in the cgroup.
+> [..]
+> v2: Pin cgrp across the deferred destroy work with explicit
+>     cgroup_get()/cgroup_put() around queue_work() and the work_fn. v1
+>     wasn't actually broken (ordered cgroup_offline_wq + queue_work order
+>     in cgroup_task_dead() saved it) but the explicit ref removes the
+>     dependency on those non-obvious invariants. Also note the
+>     pre-existing cgroup_apply_control_disable() race in the description;
+>     a follow-up will defer kill_css_finish() there.
 > 
-> Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-> ---
->  kernel/sched/ext.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 45a2668284bc..0f3e9d088151 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -7953,13 +7953,11 @@ static void sysrq_handle_sched_ext_reset(u8 key)
->  {
->  	struct scx_sched *sch;
->  
-> -	rcu_read_lock();
->  	sch = rcu_dereference(scx_root);
->  	if (likely(sch))
->  		scx_disable(sch, SCX_EXIT_SYSRQ);
->  	else
->  		pr_info("sched_ext: BPF schedulers not loaded\n");
-> -	rcu_read_unlock();
->  }
->  
->  static const struct sysrq_key_op sysrq_sched_ext_reset_op = {
-> -- 
-> 2.17.1
-> 
-> 
+> Fixes: 1b164b876c36 ("cgroup: Wait for dying tasks to leave on rmdir")
 
--- 
-Cheers,
-Cheng-Yang
+Tested-by: Martin Pitt <martin@piware.de>
+
+> Could you give v2 a try? Same defer-the-percpu_ref-kill mechanism as
+> v1, with an explicit cgroup_get/put around the deferred work to make
+> the lifetime invariant obvious (Sashiko bot review on v1; v1 wasn't
+> broken but the explicit ref removes a dependency on non-obvious
+> ordering). Fix should behave identically to v1 for your reproducer.
+
+Sorry for the delay, I haven't built a kernel in a decade and not ever for
+Fedora.
+
+I applied the patch to the Rawhide 7.1.0-0.rc1 kernel, it applies cleanly
+there. (I first tried on top of 6.9.14, but there are conflicts.)
+
+  https://copr.fedorainfracloud.org/coprs/martinpitt/test-fixes/build/10419932/
+
+Usage on Fedora 44:
+
+  dnf copr enable martinpitt/test-fixes
+  dnf update kernel-core kernel-modules-internal
+
+(This assumes a cloud VM. If you use the full kernel, update the "kernel"
+package as well).
+
+I ran the cockpit-podman test that originally triggered the bug, as well as my
+reduced variant, against that patched kernel for 50 rounds each, and it has
+consistently succeeded.
+
+So this works great, thanks a lot!
+
+Martin
