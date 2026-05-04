@@ -1,43 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CC3322DB7;
-	Mon,  4 May 2026 21:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC8233E355;
+	Mon,  4 May 2026 21:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777928743; cv=none; b=Pgbv/EZurP/NU5R+BEbVXHV+ZSoZ+g3qDpn10UQyGH7RwFSpDFatE3+ifTuTfm1fdFjn8e0z66h3Tsd8Rmw8zzrDGmdEE1HQn6DoIwbKqty1CYTcPwAu2/UNf6ZClNQuiNxfycjwX1TBD0M83tLDRV1ij6ytshGHmHx8p8gUghE=
+	t=1777928744; cv=none; b=A8mUCHOdKrM92ZAv3vmBufE+ql9UfvWzhzic1l0lqrq66u6l4NLleB+ELnLcmiukAtlrC+Vk6wjVGxyvi1CsW8CB6nKpU+NC0zxr34xAXWfriJ2OvB9JBLz+qpn9IszRWDu5F/Iebvt8tVdaQJpF/xOrx1FVtHmvACXmdSZzaaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777928743; c=relaxed/simple;
-	bh=ZQ0Nh5rqtqiB+taGfMPj8Pjt7bRswEsPI9sgnfVXAKI=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=k+4pEYoMV/z7OLAit6z9r+GJ/pSer76mkLgyPjv2wk1Z6HCPvnSPEnr2G6Xa5vtMlIwkiB76SuW7G7zuWRThT+Q4VTk1d/tC1lTEmn5+jvCVr8aGuxX0dmpDNfX3J598z7IpipTy4qkME4BZXu3Zk6c8zaHJZhr+oen+KV6IFgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VVOn5tC/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777928744; c=relaxed/simple;
+	bh=D68CSF7zNw2sDid9jA+oD2PXi+2x+O2oOmU+W44U8Oo=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=sCFYbIvdA9rI89lowyGu9JgkqtQry72P5XhkmAI8QykM1jc0e7dvqOKh+4efQUVzL/d7VOQw8pduTNKAdNZ0xseiZzBI/Wjrf3uE22eGBM+HpE9bJ9ZQ/mkhHf0oFLwMzEN7Y+BdIpN4fWSRYvSyYQKOcwlhFrcytvJPTw3/d8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZdzTh3jK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VVOn5tC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB3BC2BCB8;
-	Mon,  4 May 2026 21:05:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZdzTh3jK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B514BC2BCC4;
+	Mon,  4 May 2026 21:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777928742;
-	bh=ZQ0Nh5rqtqiB+taGfMPj8Pjt7bRswEsPI9sgnfVXAKI=;
+	s=k20201202; t=1777928743;
+	bh=D68CSF7zNw2sDid9jA+oD2PXi+2x+O2oOmU+W44U8Oo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=VVOn5tC/jU1FIzjhKdGyMgoJnsTNAEm9BTDti+K2oSBXdRdrTmZmhmO+twqXUvALP
-	 cgWKT7QMPaky46fpS/Plh3dIke652PfY49wkx0tubbz/LdXMXLYW1XpC6jb+0P9XCq
-	 1h2/h6SBJWtaVlgI5zBsGFFcQRsX5RFAHX/r/r4Df1YW6eQNCoUTfv1H2kh/8xBgLr
-	 mGGSOazsgvOdNFEsqtcE5Rfx+5l3eLDsWypvdSBKXmi4TgD9DVbT3WM9BYWDRRU+rD
-	 9p6tmPOIslhMBKmyqyT9maxz5slT0q15w5QIkyItn8LJyIhwLs7SdoDXwvFd/TAIsL
-	 RH40AbluDw/9A==
-Date: Mon, 04 May 2026 11:05:41 -1000
-Message-ID: <20d4ea38932499d7fe3379d1410cbbf2@kernel.org>
+	b=ZdzTh3jK6vt2d/NUTnT7Nhg5GEoVJp+5GV9BFfv/pe84bWmyDNMOdfO6cMmlTk2b2
+	 NvelE2ew+ndr358c3UVwewTa7ZJH4Gdmp2K/3EKk4ZruYnt+OztDeVK8Tz3ZPsdrH5
+	 +mdcYsuQ9DwPKStYLOQUjBviZVxgnZeXussrpZtwupYni9KmYvRMX9MSseT7euWIAo
+	 sEYHExng3LyMh63VntZsoszTWi9GQ7su75iK4MeQJWXse9u1u5KZjfzU5EKi4eN2Av
+	 b3a/ll6Eftki+uT2GKyftX2WOmwckNjnanoIAVFJa/tPbx1aA4P7Ovy7KfSqkbBGDn
+	 uhd46+9/DgnMw==
+Date: Mon, 04 May 2026 11:05:43 -1000
+Message-ID: <0e038f18af2a809b9ed3c179b1b285cf@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Zqiang <qiang.zhang@linux.dev>
+To: David Carlier <devnexen@gmail.com>
 Cc: David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>,
  Changwoo Min <changwoo@igalia.com>,
- Cheng-Yang Chou <yphbchou0911@gmail.com>,
+ Ingo Molnar <mingo@redhat.com>,
+ Peter Zijlstra <peterz@infradead.org>,
+ Juri Lelli <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>,
+ Dietmar Eggemann <dietmar.eggemann@arm.com>,
+ Steven Rostedt <rostedt@goodmis.org>,
+ Ben Segall <bsegall@google.com>,
+ Mel Gorman <mgorman@suse.de>,
+ Valentin Schneider <vschneid@redhat.com>,
+ K Prateek Nayak <kprateek.nayak@amd.com>,
  sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Remove redundant rcu_read_lock/unlock() in sysrq_handle_sched_ext_reset()
-In-Reply-To: <20260430084543.25137-1-qiang.zhang@linux.dev>
-References: <20260430084543.25137-1-qiang.zhang@linux.dev>
+Subject: Re: [PATCH] sched_ext: idle: Recheck prev_cpu after narrowing allowed mask
+In-Reply-To: <20260430092747.73114-1-devnexen@gmail.com>
+References: <20260430092747.73114-1-devnexen@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,8 +55,8 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello,
 
-Applied to sched_ext/for-7.2 with Andrea's suggested commit message
-rewording and both Reviewed-by tags.
+Applied to sched_ext/for-7.1-fixes with Andrea's Reviewed-by and a
+Cc: stable@vger.kernel.org # v6.16+ added.
 
 Thanks.
 
