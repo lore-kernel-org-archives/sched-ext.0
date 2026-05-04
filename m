@@ -1,54 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D842431716F;
-	Mon,  4 May 2026 21:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E1C347BAF;
+	Mon,  4 May 2026 21:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777929814; cv=none; b=s9u0C76TCHeAyM0FQGqIy1MDB/53M1fq5Dm7Ngwe3USAa3nIIGwrdIWH08aTP232zLaIFF75+ezN6mN3Qg5ty78QsdtLMBT3xnZkpOK0ORVZTKp1kKVczBdKoo/P/cejJTewnKDSsK58Y9NNTOaU0C5bwt1KxRSSzlHI8cnx7vA=
+	t=1777929899; cv=none; b=Z7PN9wPzK2x2k6mbPXxDau0DxV9qT9XTcuoY0a2UvbfdC/kRGt3DMiMFCTmCvLHw8aBtA9YocICWUINfAd2JvWDEz+fYZApSsdMfjyGkZjHF4OdEzHZHkXmsC97hX5eJGK2k3+iMGkyg2Waw3DMfA57vhM9RRjdziqa+YAe4XlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777929814; c=relaxed/simple;
-	bh=qwdHNsm339DgGlPwlYlDBmESvB43wCN5K9Fa8rDpWmI=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=GhOD6IZXi24TOb6rwbxWcwvzsIpxaz4ToMDLO12IyhZ7rFjBFd+JiIImjZwmj7YNIKD5EUol7H8uZGDNBRXxftwEP3R20nyJDQycBKGp4eHYczlJNJFiKFJnLLSkL5UPnRRgtebVVVOfQlkR+t6Y2/28FYvbzl5XzhHKaULm+KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IO7vmlo7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777929899; c=relaxed/simple;
+	bh=0/HIrDb0QvlX7E2J7c5JMdLMHxZuXmV+lQjeyNW41Zo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TKsVNJHuMPubkXvFGEkbiuux6jnVKzDhxwWcWnmbk+LlpsElTWsc2bUAbaYQU/4OtIF+eS4T1BTEPm2blzxLkU16Z9pjPeGEas7V69OsywSNF1OXZoFuSGdkPeVFqVyuXtMhM46CYKkWRhQu0FHZAnqmTRBBENvGuyrMf+27fjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJQWpnqZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IO7vmlo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1917EC2BCB8;
-	Mon,  4 May 2026 21:23:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJQWpnqZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E72C2BCB8;
+	Mon,  4 May 2026 21:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777929814;
-	bh=qwdHNsm339DgGlPwlYlDBmESvB43wCN5K9Fa8rDpWmI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=IO7vmlo7X1YIGHIRiNVgsErE7bOImofPu3pPKqi+IWkuWnJsKZ6qMAL80+QaJ4S6f
-	 ZCvyhjBQsbnGe5SETuNijo0+z7mSMkhFxmsr4/j9hZbn4WPWfJOP4TrYESRaczK5lg
-	 Xvug/n4+pqxJ0Ui5Fe2wB7cC13otbdKCNSYGApuW66OYw5MDkFfD7x1ps6yz9hX61J
-	 3ZSrdCBBA2yN0VQVml+Fm6KF9/5BBsZN9MQlSNtTwci++9I7Rn7HPSezfFiVR49ipj
-	 +t+k+Ps5DjjeT7NR1gxO2+JhZr29LCQOZeb4Mr+GsPDMDvlIjhB0kFyaW6zwu8Vido
-	 P8iDnJyv+vqdQ==
-Date: Mon, 04 May 2026 11:23:33 -1000
-Message-ID: <f54b9a18bb2e5b429ca9bffea6bc119a@kernel.org>
+	s=k20201202; t=1777929898;
+	bh=0/HIrDb0QvlX7E2J7c5JMdLMHxZuXmV+lQjeyNW41Zo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BJQWpnqZIJ8Miix/SaQQit0nW6kiyy3d2prc7PkfQQm/+EmtYGgD8x8GGfZAonq1q
+	 2nXWSMccNSYWM+wYbcA6gKl9bAoPdjpQEGGisUsf3V8R6ny2f1jl+8GOInkqX/26xp
+	 Q4oMKLnpfF70esJLfoU+UojvLkQZfyT9umdiHo5evhMvTVllzJB3UE4N965ET8KmxH
+	 E/ZFedVCUkfxJOEkN2XcqIbE+z1/uGChm8y/0OWlwK7JSFhan/rvZUiAkFDsmHWakW
+	 3+9ezBt8fuBlyu19LPjho6NCkifDpVPGWdbfYEE+SrFACHGTk8UzI5jCvwrbDjUSKs
+	 6m8ENmFogVTZg==
+Date: Mon, 4 May 2026 11:24:57 -1000
 From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
- kernel test robot <lkp@intel.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-7.2] sched_ext: Add __printf format attributes to scx_vexit() and bstr formatters
-In-Reply-To: <d49b20910d6d09389af138f45acbfaf0@kernel.org>
-References: <d49b20910d6d09389af138f45acbfaf0@kernel.org>
+To: Kuba Piecuch <jpiecuch@google.com>
+Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>
+Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Invalidate dispatch
+ decisions on CPU affinity changes
+Message-ID: <afkOqQRB1YqSlL4x@slm.duckdns.org>
+References: <DH6OUDJUQNA3.6L4YXJMME4KI@google.com>
+ <abxl-xw7nt1jp5qT@gpd4>
+ <DH7HWWN0HZQM.1ZSKEH89LMOKQ@google.com>
+ <acHJED4iAeytdC2l@slm.duckdns.org>
+ <20260422142633.G7180@cchengyang.duckdns.org>
+ <DI0KLDKWJBOI.2LVQ249QGVJI8@google.com>
+ <20260426093756.Gd781@cchengyang.duckdns.org>
+ <DI3TFV6PNXZ7.3OR8GY5SBIEZ7@google.com>
+ <20260502000039.Ga94c@cchengyang.duckdns.org>
+ <DI9QFXIX3Z0R.23PU1FB6DEMPS@google.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DI9QFXIX3Z0R.23PU1FB6DEMPS@google.com>
 
-Hello,
+On Mon, May 04, 2026 at 08:00:50AM +0000, Kuba Piecuch wrote:
+> Random thought: If exposing qseq values to BPF directly is undesirable, then
+> perhaps a less objectionable approach would be to expose them as opaque
+> cookie/token values? Same semantics, but fewer SCX internals leaking to BPF.
 
-Applied to sched_ext/for-7.2.
+Yeah, cookie sounds fine to me and let's clearly note that this is for
+schedulers that don't implement properly synchronized dequeue.
 
 Thanks.
 
---
+-- 
 tejun
