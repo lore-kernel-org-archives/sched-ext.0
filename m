@@ -1,59 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23AC3E6383;
-	Mon,  4 May 2026 18:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE933E5568
+	for <sched-ext@lists.linux.dev>; Mon,  4 May 2026 19:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777920850; cv=none; b=hp/cgmRRohuvMhpwICeyxfGnPIyC/Vb8H+FrMyE+8P1BH4T+c0peiSU/4IINkIF+qCM7f4u98JgDwpZ4K07wTO06mTJ6HjwE9jIGcfBYBAhTzC0FHacKJFbdG/xk0JifRxk+BazU+1oEivBeSuC8MnCAZ/+SMjKIknIESkYE6nQ=
+	t=1777921636; cv=none; b=SRo6BbN58xdHn3+l6WPIUk3wJN5gz1cToRIAqXLiC9pXHxyzGqvvZUTBTnkH3tdmQ+QT4OYQzwg1zaFX3BjXKTbzO1LmZXfPNc7wajC7Y1b5xE58NOrmTx4HE/2wcdzbqqg5EgDqLN5i5GruCWysyVgKnr1pZSbtwjxyYwGg6Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777920850; c=relaxed/simple;
-	bh=h+uhi/NqA0FdGMn82gWEgw/8zcywPLWzEWQvhat6/88=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=JfHE0Xh9QCTclWdcCWTxi28b/8ovh4bV27v6XRFkSpW1LsCuX7qg62ZIEOdOOZKzZ5zT4Oz3yt4n4ZivKoe1MaGS9HbQutfwK/l8cAjs6OvUPSFLMOoCF+t/JGIA0549PcU/hDQgEJznRNeHc+t16ZpY5hZ2m1pcqyyMxt7hkVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FGyOvreE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777921636; c=relaxed/simple;
+	bh=wrcvcDQM9qzv6zoJI10nTJQbS729ZfeVfAiP8RdSGe8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=smgsyS4U955Zu3wGelMj2Q1qinNmlAWL1NLw/F+z1evYJDcE7tVCmtfVwzBnwzxpo+qVOcmD4UU7+hecpvA5uqj7mt2gfeod/ogvBmy7uiU5m6rqkaqr3Z/HXy67vsIj9A4nEqBtxlgql14VQJF9oic8sZCDpDkySNKrS1MZhTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CWGvEuSr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FGyOvreE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E928C2BCB8;
-	Mon,  4 May 2026 18:54:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CWGvEuSr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E694FC2BCF4;
+	Mon,  4 May 2026 19:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777920849;
-	bh=h+uhi/NqA0FdGMn82gWEgw/8zcywPLWzEWQvhat6/88=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=FGyOvreEiMEaXdRBOOmb+UQ2J0P8dT1vMZM2ECeQ8cWbZ2pPj+ydl4qOo+xkF3VmR
-	 pYPQly6gcwTXC3PQBpNHwZIZB4i4JmllJ5++KeYIr0sE9yObcv5snbFy1kHlFkiQ3L
-	 T7Ecr9Vnhu8QgiQ83n6U0S58A9C9Mt4j+VH19cFiPyfPLN4md2drA4aD7o53xczR1n
-	 iHo7QOGQ0PSz9Jvm2pbdRWN5buHlgKMpXTfDdZGkDZweqVCc9XjukvVGTHWfS6AprY
-	 vsh6SJrmb56SjJCaPdYYeiCRme7c51Ys4cqsEpiWEHsMrIBTzSSmzTvdUPYIlXba0K
-	 /43mPcLCWW91g==
-Date: Mon, 04 May 2026 08:54:08 -1000
-Message-ID: <fb9ce3e0dbd50b89a1c9b687fc445be8@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Martin Pitt <martin@piware.de>
-Cc: regressions@lists.linux.dev,
- cgroups@vger.kernel.org,
- Johannes Weiner <hannes@cmpxchg.org>,
- Michal Koutný <mkoutny@suse.com>,
- Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
- Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 cgroup/for-7.1-fixes sched_ext/for-7.1-fixes] cgroup: Defer css percpu_ref kill on rmdir until cgroup is depopulated
-In-Reply-To: <ad3b4597f3df81914b871618535370db@kernel.org>
-References: <ad3b4597f3df81914b871618535370db@kernel.org>
+	s=k20201202; t=1777921636;
+	bh=wrcvcDQM9qzv6zoJI10nTJQbS729ZfeVfAiP8RdSGe8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=CWGvEuSratycJ+DQ6uUIBz+enfhuQXpXG91/KLQ3ht4eIphd/4KLDExk6FC3QE7ZR
+	 3xu5kQ3LEsPleAEwVvAbTv6s1usXN/0lCY4YQmbk3LXh4egSkzwXo56q+YZiexiDDj
+	 2PmXUg0o32Tc5LjpnINZYEXuo99CgX4vWuYxfKQE+xmrGLRr0TlPZqaHZKAGClYe91
+	 VBk8X+D+8C749TMbGV7K2UT2UkCC/GnIssW2OYHk6FX1hliPmRpiPhkkawsd/Zi8q6
+	 yVXBFF/UY1ttPyMBJkcwMJI+BB7XXVK4Qp5WA62+ltf9gkJJ4AQJPiWKkfTjYxUE3o
+	 RAr29fIP78ugw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 2/2] sched_ext: Fix exit_cpu accuracy for lockup
+ paths
+Reply-To: sashiko@lists.linux.dev
+To: "Cheng-Yang Chou" <yphbchou0911@gmail.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260504161543.674488-3-yphbchou0911@gmail.com>
+References: <20260504161543.674488-3-yphbchou0911@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 04 May 2026 19:07:14 +0000
+Message-Id: <20260504190715.E694FC2BCF4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
-
-Applied to cgroup/for-7.1-fixes.
-
-Thanks.
-
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] synchronize_rcu_expedited_wait() incorrectly passes the detector=
+ CPU instead of the stalled CPU or -1 to panic_on_rcu_stall().
 --
-tejun
+
+commit be51680372265a1376da290cd206c8c990bc5343
+Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
+
+sched_ext: Fix exit_cpu accuracy for lockup paths
+
+This commit updates lockup detection paths to pass the actually stalled CPU,
+rather than the CPU executing the detection code, to handle_lockup(). It
+modifies scx_hardlockup_irq_workfn(), scx_rcu_cpu_stall(), and
+panic_on_rcu_stall() to accept the stalled CPU as an argument.
+
+[ ... ]
+
+> diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
+> index 82cada459e5d0..fa83e273a6487 100644
+> --- a/kernel/rcu/tree_exp.h
+> +++ b/kernel/rcu/tree_exp.h
+> @@ -675,7 +675,7 @@ static void synchronize_rcu_expedited_wait(void)
+> =20
+>  		nbcon_cpu_emergency_exit();
+> =20
+> -		panic_on_rcu_stall();
+> +		panic_on_rcu_stall(raw_smp_processor_id());
+
+The commit message states that recording the detector CPU rather than the
+stalled CPU is wrong.
+
+However, in synchronize_rcu_expedited_wait(), it appears raw_smp_processor_=
+id()
+represents the CPU waiting for the expedited grace period (the detector CPU=
+),
+not necessarily the CPU that is stalled.
+
+Does passing raw_smp_processor_id() here contradict the patch's stated goal
+by incorrectly blaming the detecting CPU? If identifying a specific stalled
+CPU is difficult in this path, would it be more appropriate to pass -1 to
+indicate no specific CPU is targeted?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260504161543.6744=
+88-1-yphbchou0911@gmail.com?part=3D2
