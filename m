@@ -1,142 +1,95 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB80148AE32
-	for <sched-ext@lists.linux.dev>; Tue,  5 May 2026 15:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB0815FA81;
+	Tue,  5 May 2026 22:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777996701; cv=none; b=h10HIdnBryOkMNZk6fSbxNHDYyKv/ji2C5DmGXoDZ3vheqIp40UWHE74nRzX1gfWlANvj1ALfwxOD7XDPOxwx6PaGN6lDqFDCjM1n64U+cI5GxcnNJdCogcIVU9ezX2PyiILN4VfdLzCK24E5MIPEPoiFd8xxBXBQFuItpqK5b8=
+	t=1778018737; cv=none; b=SSC+sfcCn/6xnZDhxDzUr8UIZtReng16FytvNZuwdIhH7YBZSY/PJj1sQ1Lzl4T2thy9ij1D2tTdibpVJTouQg9/iAnU6SUy9A8Jl/HRpEXgsVM27RlH/v1M50JcJRV6mxHSJe0r+nOpXJE97gRUkYUgzPabUCD0IJZzN7mM9/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777996701; c=relaxed/simple;
-	bh=q5u/UdHFSJSvCX3OoYzCme3wenzpAuPuauy9KaBJs0o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AERzgz1TIEFhNMCI0stBOczf50qVTi/DBkMbNeUZ4xCzI6bzJCzi8no/h0f8mJTizM6M/wYI3jFYZQnV2WSlnyoLrrYLVBonrJyeYCbJVNiBL8fSNLIWWAYd0IgQZRClg/6+halJhmF+8WQll+CA6zwjdhja9I7Grnpzz+Z5G7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/iFiASM; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778018737; c=relaxed/simple;
+	bh=fK6gxBNCui+BmvzweS85uhFYLVGOfdAJCyOt+PGbWKk=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=io/rG3ytQMm8Y03RLaCV7L4CzeHjzgD/TWglo0LJn9N6WFyUE15suoDwRTIrRP/U5x3Ji/J+hgKUnaW9bKvXJPJZze4nCLw80K6eowh458ELSr/MgW/u1rL0IdkvRRQPZWmD14EoVCsHmFiWRprkukOrXZQgBzwM6ZWxSrhoUKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bblcNoif; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/iFiASM"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c80170db7d6so1078171a12.0
-        for <sched-ext@lists.linux.dev>; Tue, 05 May 2026 08:58:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777996699; x=1778601499; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GFNz8igJVfgZfXbWHEAoaJ0onW3oZl+AuVGbjieeRbM=;
-        b=I/iFiASMOLMD7jWnB3IaShw7LZ3u6r/qp2taKD8uM77wxGHne0KbT+2+RC9P6cGMhG
-         ZJR6Z4qv9MRMogN+NN9sM+hv/ev4j7hwOcCWndrxHGjmjsYe8sSILZ9f9Ny8Y0NWiyke
-         rpBTRtNI5a3y+XxFlLceOSPKKICePSv4IrlLQESKVqRt9pN8Tfg4d74yP0n1vxUedCHV
-         GywNtaSiFnfEYMrr+zHgI+RXBEVAbfZu1SaDtutqrVvbS3uIakBSS+anqBHKHNHxsBZM
-         fMoiTuueVozHy1ofcXSUKo3Hy3BWyGRCYIeQas9e/c20oMtFhsv8xxZbhqhefiDDYSHI
-         M9eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777996699; x=1778601499;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GFNz8igJVfgZfXbWHEAoaJ0onW3oZl+AuVGbjieeRbM=;
-        b=Un+PAU0Tc2VxujzPSqg+v5vKDyYEdXsv/8ZlRhWvaOsgtHPgONTV61b1Trn25/l8df
-         1vK8mYFwt8D8UGbeB+fkiaIqAxZsfLlqGiPfd1Uh9lAbtGmfYsO2azkjL5+pRkJvrEM+
-         h7y3aMqKyluYizcdb2RmEZ6rR9Grn2oxzl6fCsw0S1clhXWEzapWXfmp907aSAdkRKW8
-         bDgqmmI5KBRfsQedlXlDO5yyfh66mmfjsRVpPtpEkKePXrz9ZwEEXgOiSwO8r1vnrXlo
-         xPgrGG50f1XKnX/CZVem0+uHTIFIMeN0w8urew1WMeESKcPniIJuCP5rsHzPH8v0u3nD
-         gRZw==
-X-Forwarded-Encrypted: i=1; AFNElJ/4L7jdteTnD/oCFURCzCerwmNch8KCVkQ3Tw9hj8wLMhS/ojelA31t/O0DN9fcLzhOrAokyo93a6M=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz8FTDibZda5EBbgEhdb6tdDlgHqwrBoJtzQGtvxbgo46UCpQTf
-	DuuvdDKT8j/QyMmpIqEChjtjWvn1fKfllbx8bWdTAjSm5Ol/hWkYcbao
-X-Gm-Gg: AeBDiev+POFhEuwqeWCbHeOrJgobTetuFODeL5lC7mwx+h+dfTLo9IswPnAtRTaCpi8
-	DhnbUBSjghmqQTF6zyNAiE0XXHWYAwsS28qWoghMKFbujEIx2UImORs9A522vUmPP5qfSWoFw5N
-	idGo7/CU68Nwbu1ooJZLE16PAoyCSvzel+8tsJph+HJy2OucE+hzMgdzEKhQublFdpb3OImWybs
-	oHwLc3uEObg3fRcvhejMUmKJrh5d5SwIt+5zW4lOPnGWsHUUmWtv6cAxySS1ct+fkjqmsxHnjia
-	SFSOUXP6qP7KoKHxLbQZcMQbYF2U5yHd4gQnDIOja3w+UztR/WZ+qLfHH4w2nsK2Hl26vh/g0g+
-	W6zu/FQ4h0A/3077iEv/LV2OSLnhSMRtdGzsplp8zXxwDKVW7f3FiEYvdjilfCgW5qF6X5zfvv9
-	ho1yzig9C1RXkbwGBuHmtQ8fZLFfHuBAb1dxxplbPwV0+vgGYMaRLPWidaBfj603Ndkl39UqqO+
-	fun0spclyWR/h99ObqvZorpEVA=
-X-Received: by 2002:a05:6300:210e:b0:3a2:7ef4:81e1 with SMTP id adf61e73a8af0-3aa3b87f72amr4177149637.47.1777996698921;
-        Tue, 05 May 2026 08:58:18 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-109-31.dynamic-ip.hinet.net. [36.225.109.31])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7ffbc6f84asm12360504a12.19.2026.05.05.08.58.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 08:58:18 -0700 (PDT)
-Date: Tue, 5 May 2026 23:58:14 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: Kuba Piecuch <jpiecuch@google.com>, Andrea Righi <arighi@nvidia.com>, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
-	Emil Tsalapatis <emil@etsalapatis.com>, Christian Loehle <christian.loehle@arm.com>, 
-	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Invalidate dispatch
- decisions on CPU affinity changes
-Message-ID: <20260505234158.G1d71@cchengyang.duckdns.org>
-References: <acHJED4iAeytdC2l@slm.duckdns.org>
- <20260422142633.G7180@cchengyang.duckdns.org>
- <DI0KLDKWJBOI.2LVQ249QGVJI8@google.com>
- <20260426093756.Gd781@cchengyang.duckdns.org>
- <DI3TFV6PNXZ7.3OR8GY5SBIEZ7@google.com>
- <20260502000039.Ga94c@cchengyang.duckdns.org>
- <DI9QFXIX3Z0R.23PU1FB6DEMPS@google.com>
- <afkOqQRB1YqSlL4x@slm.duckdns.org>
- <DIAL292DWST9.1UIAWWSHW1UMB@google.com>
- <afmq4DtGZcf4Zh5D@slm.duckdns.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bblcNoif"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC88C2BCC9;
+	Tue,  5 May 2026 22:05:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778018737;
+	bh=fK6gxBNCui+BmvzweS85uhFYLVGOfdAJCyOt+PGbWKk=;
+	h=Date:From:To:Cc:Subject:From;
+	b=bblcNoifmwoM2FfJtNg/xQJcC8mWO0gWWl5k41x2m9aK6mirNOcJuSa/EFpAMxA0X
+	 LPn3jxHUpbJurTTIr65uA5Y/9V1l1CGVJ81vOJrDX18lbqQGT7tas+JP+xkOh1u/RM
+	 LTddZw85ou01IVeQiJX9LWvXAuUiBcwcM3jHFI0NBNm6293p/7Hrpw/w5Lu7awqex2
+	 DYdUWHPCrM/971DRUJSHs3z6ExL/dky2+oML7QbL/aP5D4RlX5mg3IoDxlS6VPl7da
+	 0/leeWlgQ8dHg/uPqDx2tVIdIp6Y3qG2opdNpdD1VdIbaQky+3fGlETJkJjReHvayl
+	 UtGQdRExu0wPQ==
+Date: Tue, 05 May 2026 12:05:36 -1000
+Message-ID: <0b691f25de6be993a3496962f91fa212@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>
+Subject: [GIT PULL] sched_ext: Fixes for v7.1-rc2
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afmq4DtGZcf4Zh5D@slm.duckdns.org>
 
-Hi Tejun, Kuba, Andrea,
+Hello,
 
-On Mon, May 04, 2026 at 10:31:28PM -1000, Tejun Heo wrote:
-> > Could you elaborate a bit on what you mean by "properly synchronized" here?
-> 
-> If ops.dequeue() synchronizes with the dispatch path so that the task being
-> dequeued is either dequeued or dispatched, there's nothing else to protect.
-> If ops.dequeue() wins, the task won't be dispatched. If ops.dequeue() loses,
-> the task should already be in either the dispatch buffer or local DSQ and
-> the kernel dequeue code will shoot them down. In the former case, at the
-> dispatch buffer flush time, the task would either be already dequeued or
-> re-enqueued with a different qseq and ignored. In the latter,
-> dispatch_dequeue() would remove it from the local DSQ.
-> 
-> > To me, introducing cookies is primarily about adding flexibility around
-> > managing the "dispatch window" between the qseq being probed and the actual
-> > dispatch attempt in finish_dispatch(). For example, a CPU can get a cookie and
-> > pass it to another CPU to perform the dispatch, which is not possible with
-> > the current interface.
-> 
-> So, this is mostly for schedulers that don't want to or for some reason
-> can't implement proper synchronization between dequeue and dispatch paths. A
-> convenient thing to make life a bit easier.
+The following changes since commit d99f7a32f09dccbe396187370ec1a74a31b73d7e:
 
-I think we are on the same page! I'd like to take ownership of the
-cookie implementation.
+  sched_ext: Fix scx_flush_disable_work() UAF race (2026-04-28 07:40:03 -1000)
 
-Andrea, as we discussed offline, please feel free to send the deferred
-SCX bandwidth implementation, since you're already working on that. I
-want to focus on the cookie implementation first, since the design has
-been discussed for a while and I want to move it forward.
+are available in the Git repository at:
 
-Here's the API I'm planning to propose:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.1-rc2-fixes
 
-- u64 scx_bpf_task_get_cookie(struct task_struct *p)
+for you to fetch changes up to b34c82777a2c0648ee053595f4b290fd5249b093:
 
-   Returns an opaque cookie representing @p's current qseq. The caller
-   can store this in a BPF map and pass it to another CPU.
+  sched_ext: idle: Recheck prev_cpu after narrowing allowed mask (2026-05-04 11:01:04 -1000)
 
-- bool scx_bpf_dsq_insert_with_cookie(struct task_struct *p, u64 dsq_id,
-  									  u64 enq_flags, u64 cookie)
+----------------------------------------------------------------
+sched_ext: Fixes for v7.1-rc2
 
-   Like scx_bpf_dsq_insert() with slice=0, but uses @cookie's qseq
-   instead of re-reading ops_state at insert time. A stale cookie causes
-   finish_dispatch() to silently discard the dispatch, which is safe.
+- Fix idle CPU selection returning prev_cpu outside the task's cpus_ptr
+  when the BPF caller's allowed mask was wider. Stable backport.
 
-Will send a follow-up patch soon, thanks!
+- Two opposite-direction gaps in scx_task_iter's cgroup-scoped mode
+  versus the global mode:
 
--- 
-Cheers,
-Cheng-Yang
+  - Tasks past exit_signals() are filtered by the cgroup walk but kept by
+    global. Sub-scheduler enable abort leaked __scx_init_task() state.
+    Add a CSS_TASK_ITER_WITH_DEAD flag to cgroup's task iterator
+    (scx_task_iter is its only user) and use it.
+
+  - Tasks past sched_ext_dead() are still returned, tripping
+    WARN_ON_ONCE() in callers or making them touch torn-down state. Mark
+    and skip under the per-task rq lock.
+
+----------------------------------------------------------------
+David Carlier (1):
+      sched_ext: idle: Recheck prev_cpu after narrowing allowed mask
+
+Tejun Heo (2):
+      cgroup, sched_ext: Include exiting tasks in cgroup iter
+      sched_ext: Skip past-sched_ext_dead() tasks in scx_task_iter_next_locked()
+
+ include/linux/cgroup.h    |  1 +
+ include/linux/sched/ext.h |  1 +
+ kernel/cgroup/cgroup.c    |  8 +++++---
+ kernel/sched/ext.c        | 39 +++++++++++++++++++++++++++++----------
+ kernel/sched/ext_idle.c   | 12 ++++++------
+ 5 files changed, 42 insertions(+), 19 deletions(-)
+
+Thanks.
+
+--
+tejun
