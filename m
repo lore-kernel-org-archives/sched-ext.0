@@ -1,74 +1,56 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C993EAC76
-	for <sched-ext@lists.linux.dev>; Tue,  5 May 2026 08:20:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18272EDD6B;
+	Tue,  5 May 2026 08:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777969232; cv=none; b=DJrvMNGAlVHyHJmoziw5UkXnwpsOz0sxhqQnT/5zY+NasD8im7hyc2MHKxtndo1cP7I/SIg2c38b2Q7osYRPcKx+ovI74162g4EzqyKBPKVK3X5tHBnz34ssVZsf91rQyP+KyJP/GnRpvjr9rAYQAkRbde06GjC4aYEt1Ud0M+o=
+	t=1777969889; cv=none; b=j+xrEnydZb2irL/nKSv4kszkCqXSXhAGqfVh0gWRAr0M+O4p+nlrcsDiTQc4krUu6BuzROiW8aLIvU5hg270t3l37jwJJ7AagpIRncmiAdgshDs7vSWsG7geFNed1ao3SLYbpAdxU516MjFYBhpOSVQBMDZ1cEZyZ2U9HZj/M2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777969232; c=relaxed/simple;
-	bh=R6zK5AUA3ReAaVE7yLnp1VTQo+rBlgPut73aqTg18tc=;
+	s=arc-20240116; t=1777969889; c=relaxed/simple;
+	bh=UgQkuBXO60MJ0km0jrl0xWSmaJ98fxXc4i7XCGG3ino=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uo1OBzIQdv0DHvE0Ai4pwYw01ejYMqQf1L/OgQIvKphhszdZAXAaXl65TDWtxHnupiPEongZ1yB0XjUfXuywM1vZoMymIQLnhCffVHbZ0W5wKc+UAPXWrzT8o6SwDtHJUOo7FCLq8WaX9LgTCHCleXgKVpjwPQX2vdfmsDwQjB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B9d3i1dK; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=SAlH8oD73VwhHAPZ8aBRApL7Uh3SNV8F9xcUWhL82EAeozk5V95PVC6g+f4fHU3Y2BbuSHN4Bh1HmNYqmin2lnLBMZNNHXF1glQ8D2gvsm87OSErlQnuN5f3zucoMzYtJdDy4EpJGdY3aQP4dcnukA3yONJWDBadv174YRli1ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=urgYuI0N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B9d3i1dK"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2b4583f0a1aso29840765ad.3
-        for <sched-ext@lists.linux.dev>; Tue, 05 May 2026 01:20:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777969230; x=1778574030; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SSLbkw7xRXP5QSYBn/JzKFk3JWJUAlfv40FrPMgnGwE=;
-        b=B9d3i1dK5+LTBPjL5Wo1cAvus+h4sZM5bEEwQN7vum1VTR4SGHO7IjywkY2EvkgIG/
-         SOUDyXRECKRptgfOE6RWBbuYK0zepbiPNFa0GMqH3uAVjJu0kUGuYxqdqS6gZcVghFv8
-         35ArTmrdMnF01HJe/7971JG3f10FsJaTCKpJavnjl5SwgzjLljkrv02PsOhGVekUW9dI
-         ggApRXXZKqNmNGw49BHdXZ5qVNy0LOccFfpRc8AWyNfPF1ZXbDyFQYV7ARw6PAh8WAZk
-         y62FQIUP8QdUME1xkzM5fwyX2LVa+MBy3NF6zbL6KBJ1B/6+x8tDvbPFgb+DW5Eu9+my
-         /R1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777969230; x=1778574030;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SSLbkw7xRXP5QSYBn/JzKFk3JWJUAlfv40FrPMgnGwE=;
-        b=kpEvh1OJWEuTexpX4zTdWhGTF16Jkna8fEVLYzbJn/rdoFoz32mIkG/v4+elClfk3C
-         V9hdxZcIdtaqCf2e5NVBFei5fbEkRrgWgW68GEhG53AR5ksnYRtsDgk6k4RDhzderFyp
-         hwUcLRbBQPEEM7hCt/VDW+euk6IW10CJtIwypCL06e/XLW8GqV4l7bzByAzJy6Qrx4Sw
-         IEp+QLEY54z+q1klNjrsPbg0jGMc7sDTqDjECRC7h+0ervJ2xE/rcL0VqbfMQ2vzYXwR
-         v4JaOXJHuFw8ks6qbFuz+fHBxLeReCxOuWBlG3CPuVCUi0InpMCmGyrQ3nF1e+RH4KbV
-         Y5eA==
-X-Gm-Message-State: AOJu0YxTfLkLRvqpO7LW4Nd1SqgKc5Gf6rOEC8rjQlWjbaer7VauuBNx
-	bdfRlMKVk1aYGmfOL1+WL6aNMWMq9kgi7h9hrZGq0ugeuweSdfdtJH1v
-X-Gm-Gg: AeBDieudEZ5kVkNzGgZ6xt8p3E0rOUkKyIQUMZQjFjWLaVzLkYEEuAv58ymF1LT8wzo
-	D7Kke/YBmh0hmDWEOGx7KmCBH6aDfni9SN5/12idpcDghxNR9sG9hFF4SySBSO2KWed8ErDQ6DB
-	9i/ZQoQFrBJUxsGMzqvX3eXcrGoTQiE525mVR9gbfRh0xfvbAdJayIY1BjEfSHLOgMN+oG4e7//
-	dPjG2livsIG9F7lfFt6pz/uEz9nFILhb3aYaPQ2lCkk+DdH6LYz+Fp7/UHsQXqSo2GpaAuHoXq6
-	bRgFAWh38XCB1XNyu+VreD7IbYCSvNEZEXkDt1gb9SE5f8YYGxxr6RxL4WRi7hlQRdUl6lkmVcU
-	9q6X0HLtxGN+O9KTOqxXn6i9BMZTWxMcM8tXdUNfXRcdCJYJ/eixkLp5BukPT4wUzoivUTbWvdP
-	cwI/aBkf+tsf45hh6gaDngtlZzqe6xpRVKlvm6XsLHnyQ2KB1thIQUB3X0MsvBvrcl0iZOunNkM
-	bRanhtHUZePtSpN
-X-Received: by 2002:a17:903:22cc:b0:2ae:4a4e:1e25 with SMTP id d9443c01a7336-2b9f2808597mr123975305ad.25.1777969230021;
-        Tue, 05 May 2026 01:20:30 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-109-31.dynamic-ip.hinet.net. [36.225.109.31])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9caaae662sm129435035ad.22.2026.05.05.01.20.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 May 2026 01:20:29 -0700 (PDT)
-Date: Tue, 5 May 2026 16:20:25 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, rcu@vger.kernel.org, Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="urgYuI0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3006FC2BCB4;
+	Tue,  5 May 2026 08:31:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777969889;
+	bh=UgQkuBXO60MJ0km0jrl0xWSmaJ98fxXc4i7XCGG3ino=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=urgYuI0N166O1KYBugCgNu8k4a7m1l33bKp0E4y6t5GPQLLPisSyaTzSrwyL7eqU4
+	 pNLaNwoKF7CZBlj99VAt+PKfWQo6CbGFyfA1w/b8z9T5H5E7DG71EBaZMEXEtExSmu
+	 +uneEqY+agAh5NFbNMDzLXePTY5m7XR4HWvknPYFj/KwpWO8zJ8Oit2LpgB9NXpn4A
+	 6p+hFQmlRP//W1O4p+oVj3sFuVvHPHzQAtUxBhrvp9L+8zXUubrxG3UfBOtHjOoBpt
+	 nnHiSDc1m2W/q96Z7RAH3KItml9AwBjcQrOPLYsswM1iiSB+GZV7JR+Shr6e10Ovwb
+	 /rKAmGzDH5gtw==
+Date: Mon, 4 May 2026 22:31:28 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Kuba Piecuch <jpiecuch@google.com>
+Cc: Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Daniel Hodges <hodgesd@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
 	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v2 2/2] sched_ext: Fix exit_cpu accuracy for lockup paths
-Message-ID: <20260505154006.G743b@cchengyang.duckdns.org>
-References: <20260504161543.674488-1-yphbchou0911@gmail.com>
- <20260504161543.674488-3-yphbchou0911@gmail.com>
- <c402160a-dbc6-4292-a684-395a80d677d4@paulmck-laptop>
+Subject: Re: [PATCH v2 sched_ext/for-7.1] sched_ext: Invalidate dispatch
+ decisions on CPU affinity changes
+Message-ID: <afmq4DtGZcf4Zh5D@slm.duckdns.org>
+References: <DH7HWWN0HZQM.1ZSKEH89LMOKQ@google.com>
+ <acHJED4iAeytdC2l@slm.duckdns.org>
+ <20260422142633.G7180@cchengyang.duckdns.org>
+ <DI0KLDKWJBOI.2LVQ249QGVJI8@google.com>
+ <20260426093756.Gd781@cchengyang.duckdns.org>
+ <DI3TFV6PNXZ7.3OR8GY5SBIEZ7@google.com>
+ <20260502000039.Ga94c@cchengyang.duckdns.org>
+ <DI9QFXIX3Z0R.23PU1FB6DEMPS@google.com>
+ <afkOqQRB1YqSlL4x@slm.duckdns.org>
+ <DIAL292DWST9.1UIAWWSHW1UMB@google.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -77,298 +59,54 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c402160a-dbc6-4292-a684-395a80d677d4@paulmck-laptop>
+In-Reply-To: <DIAL292DWST9.1UIAWWSHW1UMB@google.com>
 
-Hi Paul, Tejun,
+Hello, Kuba.
 
-On Mon, May 04, 2026 at 08:44:48PM -0700, Paul E. McKenney wrote:
-> On Tue, May 05, 2026 at 12:08:20AM +0800, Cheng-Yang Chou wrote:
-> > handle_lockup() uses raw_smp_processor_id() for exit_cpu, which is wrong
-> > for two paths:
-> > 
-> > - scx_hardlockup_irq_workfn() has the hung CPU in a local variable but
-> >   irq_work may run elsewhere; pass the local cpu explicitly.
-> > - scx_rcu_cpu_stall() takes no CPU, recording the detector rather than
-> >   the stalled one; add stalled_cpu to its signature and
-> >   panic_on_rcu_stall(), threading it from print_cpu_stall() (current
-> >   CPU) and print_other_cpu_stall() (first detected stalled CPU).
-> > 
-> > Add an exit_cpu parameter to handle_lockup() so callers pass the correct
-> > CPU directly. Remove the now-unused scx_verror() macro.
-> > 
-> > Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-> > ---
-> >  include/linux/sched/ext.h   |  4 ++--
-> >  kernel/rcu/tree_exp.h       |  2 +-
-> >  kernel/rcu/tree_stall.h     | 11 +++++++----
-> >  kernel/sched/ext.c          | 14 ++++++++------
-> >  kernel/sched/ext_internal.h |  2 --
-> >  5 files changed, 18 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-> > index d05efcac794d..16bbf24089ca 100644
-> > --- a/include/linux/sched/ext.h
-> > +++ b/include/linux/sched/ext.h
-> > @@ -259,7 +259,7 @@ void sched_ext_dead(struct task_struct *p);
-> >  void print_scx_info(const char *log_lvl, struct task_struct *p);
-> >  void scx_softlockup(u32 dur_s);
-> >  bool scx_hardlockup(int cpu);
-> > -bool scx_rcu_cpu_stall(void);
-> > +bool scx_rcu_cpu_stall(int stalled_cpu);
-> >  
-> >  #else	/* !CONFIG_SCHED_CLASS_EXT */
-> >  
-> > @@ -267,7 +267,7 @@ static inline void sched_ext_dead(struct task_struct *p) {}
-> >  static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
-> >  static inline void scx_softlockup(u32 dur_s) {}
-> >  static inline bool scx_hardlockup(int cpu) { return false; }
-> > -static inline bool scx_rcu_cpu_stall(void) { return false; }
-> > +static inline bool scx_rcu_cpu_stall(int stalled_cpu) { return false; }
-> 
-> There might be more than one stalled CPU.  You could pass in a cpumask_t
-> or similar to print all of them, or take the first or the last or
-> some such.
+On Tue, May 05, 2026 at 08:01:58AM +0000, Kuba Piecuch wrote:
+> Could you elaborate a bit on what you mean by "properly synchronized" here?
 
-sched_ext's exit_info carries a single s32 exit_cpu, so we can only
-record one CPU. Would taking the first stalled CPU be acceptable as a 
-best-effort hint, or would you prefer we pass -1 and skip the CPU field
-entirely for the RCU stall paths?
+If ops.dequeue() synchronizes with the dispatch path so that the task being
+dequeued is either dequeued or dispatched, there's nothing else to protect.
+If ops.dequeue() wins, the task won't be dispatched. If ops.dequeue() loses,
+the task should already be in either the dispatch buffer or local DSQ and
+the kernel dequeue code will shoot them down. In the former case, at the
+dispatch buffer flush time, the task would either be already dequeued or
+re-enqueued with a different qseq and ignored. In the latter,
+dispatch_dequeue() would remove it from the local DSQ.
 
-> >  
-> >  #endif	/* CONFIG_SCHED_CLASS_EXT */
-> >  
-> > diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-> > index 82cada459e5d..fa83e273a648 100644
-> > --- a/kernel/rcu/tree_exp.h
-> > +++ b/kernel/rcu/tree_exp.h
-> > @@ -675,7 +675,7 @@ static void synchronize_rcu_expedited_wait(void)
-> >  
-> >  		nbcon_cpu_emergency_exit();
-> >  
-> > -		panic_on_rcu_stall();
-> > +		panic_on_rcu_stall(raw_smp_processor_id());
-> 
-> As Tejun pointed out, this gets you whatever random CPU was running
-> RCU's expedited grace-period processing, which is almost certainly not
-> the stalled CPU.
-> 
-> In addition, in preemptible kernels, it is possible to stall not on a CPU,
-> but on a task that was preempted within an RCU read-side critical section.
-> (It is also possible to stall on some CPUs and on some tasks.)
-> 
-> So suppose that the expedited grace period is stalled not on a CPU, but
-> instead on a task.  What do you want to do in that case?
-> 
-> If you only care about CPUs, then synchronize_rcu_expedited_stall()
-> could return the number of the first stalled CPU that it encountered,
-> or -1 if there were no CPUs doing any stalling.  If you wanted the first
-> CPU, you could capture it within the first rcu_for_each_leaf_node()
-> loop in that function.  Or you could pass in a cpumask_t and have
-> synchronize_rcu_expedited_stall() fill it in, getting all the CPUs.
-> And you could pass in an array (along with its size) to capture the PIDs
-> of any stalled tasks, which synchronize_rcu_expedited_stall() would in
-> turn pass down to rcu_print_task_exp_stall(), which could fill in the
-> PIDs of the first stalled tasks in the ->blkd_tasks lists.
-> 
-> Whatever you collect would then be passed down to panic_on_rcu_stall()
-> and from there to scx_rcu_cpu_stall().
-> 
-> Much depends on exactly what you are trying to accomplish with the
-> additional information.
+> To me, introducing cookies is primarily about adding flexibility around
+> managing the "dispatch window" between the qseq being probed and the actual
+> dispatch attempt in finish_dispatch(). For example, a CPU can get a cookie and
+> pass it to another CPU to perform the dispatch, which is not possible with
+> the current interface.
 
-So, the goal here is best-effort: when sched_ext is aborted due to an
-RCU stall, record which CPU was involved for the dump header. There is
-no task-based filed in exit_info, so task stalls would naturally fall
-through to -1.
+So, this is mostly for schedulers that don't want to or for some reason
+can't implement proper synchronization between dequeue and dispatch paths. A
+convenient thing to make life a bit easier.
 
-Would you prefer:
- (a) pass -1 unconditionally
- (b) have synchronize_rcu_expedited_stall() return the first stalled CPU
-     (or -1 if only tasks are stalled)?
+> On another, slightly related note: I'm considering making scx_bpf_dsq_insert()
+> and other dispatch-related kfuncs that manipulate only CPU-local state
+> callable while holding BPF spinlocks. This is something that the comment above
+> scx_bpf_dsq_insert() explicitly mentions:
+> 
+>   This function doesn't have any locking restrictions and may be called under
+>   BPF locks (in the future when BPF introduces more flexible locking).
+> 
+> I'm not sure what "more flexible locking" means here, but this can be
+> accomplished by simply adding the kfuncs to the list of kfuncs callable under
+> spinlocks in the BPF verifier.
+> 
+> Are you aware of any previous work on this? Any pushback from BPF folks?
 
-> 
-> More inline below.
-> 
-> 						Thanx, Paul
-> 
-> >  	}
-> >  }
-> >  
-> > diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-> > index b67532cb8770..172ac08e673d 100644
-> > --- a/kernel/rcu/tree_stall.h
-> > +++ b/kernel/rcu/tree_stall.h
-> > @@ -159,7 +159,7 @@ static int __init check_cpu_stall_init(void)
-> >  early_initcall(check_cpu_stall_init);
-> >  
-> >  /* If so specified via sysctl, panic, yielding cleaner stall-warning output. */
-> > -static void panic_on_rcu_stall(void)
-> > +static void panic_on_rcu_stall(int stalled_cpu)
-> >  {
-> >  	static int cpu_stall;
-> >  
-> > @@ -167,7 +167,7 @@ static void panic_on_rcu_stall(void)
-> >  	 * Attempt to kick out the BPF scheduler if it's installed and defer
-> >  	 * the panic to give the system a chance to recover.
-> >  	 */
-> > -	if (scx_rcu_cpu_stall())
-> > +	if (scx_rcu_cpu_stall(stalled_cpu))
-> >  		return;
-> >  
-> >  	if (++cpu_stall < sysctl_max_rcu_stall_to_panic)
-> > @@ -631,6 +631,7 @@ static void rcu_check_gp_kthread_expired_fqs_timer(void)
-> >  static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
-> >  {
-> >  	int cpu;
-> > +	int first_stalled_cpu = -1;
-> >  	unsigned long flags;
-> >  	unsigned long gpa;
-> >  	unsigned long j;
-> > @@ -660,6 +661,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
-> >  			for_each_leaf_node_possible_cpu(rnp, cpu)
-> >  				if (rnp->qsmask & leaf_node_cpu_bit(rnp, cpu)) {
-> >  					print_cpu_stall_info(cpu);
-> > +					if (first_stalled_cpu < 0)
-> > +						first_stalled_cpu = cpu;
-> 
-> This gets the first stalled CPU.  Maybe that is also what you want for
-> the expedited stalls?
-> 
-> Again, there might not be any stalled CPUs, but only stalled tasks...
-> 
+That comment was written before bpf_spinlock was introduced. Please feel
+free to allow thoes functions under bpf spinlocks. BTW, there's also arena
+spinlock that is implemented in BPF proper, which is already used by
+multiple schedulers and likely to be the default option in the future:
 
-Understood. For print_other_cpu_stall() itself, first_stalled_cpu = -1
-when only tasks are stalled seems acceptable since exit_cpu < 0 is
-already handled gracefully.
-
-Is there a convention I should follow here, or is -1 fine?
-
-> >  					ndetected++;
-> >  				}
-> >  		}
-> > @@ -701,7 +704,7 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
-> >  
-> >  	nbcon_cpu_emergency_exit();
-> >  
-> > -	panic_on_rcu_stall();
-> > +	panic_on_rcu_stall(first_stalled_cpu);
-> 
-> ...in which case panic_on_rcu_stall() gets a -1.  Which might not be what
-> the user wants to see.
-> 
-> >  	rcu_force_quiescent_state();  /* Kick them all. */
-> >  }
-> > @@ -754,7 +757,7 @@ static void print_cpu_stall(unsigned long gp_seq, unsigned long gps)
-> >  
-> >  	nbcon_cpu_emergency_exit();
-> >  
-> > -	panic_on_rcu_stall();
-> > +	panic_on_rcu_stall(smp_processor_id());
-> 
-> In this case, we do just have the current CPU doing the stall, so this
-> does work fine.  (If there are more CPUs and tasks involved, there
-> could be additional RCU CPU stall warning messages.)
-
-Good to know, thanks for confirming.
-
-> 
-> >  	/*
-> >  	 * Attempt to revive the RCU machinery by forcing a context switch.
-> > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> > index 48c65ac8e230..8a0b1662a75a 100644
-> > --- a/kernel/sched/ext.c
-> > +++ b/kernel/sched/ext.c
-> > @@ -5069,6 +5069,7 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
-> >  
-> >  /**
-> >   * handle_lockup - sched_ext common lockup handler
-> > + * @exit_cpu: CPU to record in exit_info; pass the stalled/hung CPU, not current
-> >   * @fmt: format string
-> >   *
-> >   * Called on system stall or lockup condition and initiates abort of sched_ext
-> > @@ -5078,7 +5079,7 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
-> >   * resolve the lockup. %false if sched_ext is not enabled or abort was already
-> >   * initiated by someone else.
-> >   */
-> > -static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
-> > +static __printf(2, 3) bool handle_lockup(int exit_cpu, const char *fmt, ...)
-> >  {
-> >  	struct scx_sched *sch;
-> >  	va_list args;
-> > @@ -5094,7 +5095,7 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
-> >  	case SCX_ENABLING:
-> >  	case SCX_ENABLED:
-> >  		va_start(args, fmt);
-> > -		ret = scx_verror(sch, fmt, args);
-> > +		ret = scx_vexit(sch, SCX_EXIT_ERROR, 0, exit_cpu, fmt, args);
-> >  		va_end(args);
-> >  		return ret;
-> >  	default:
-> > @@ -5114,9 +5115,9 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
-> >   * resolve the reported RCU stall. %false if sched_ext is not enabled or someone
-> >   * else already initiated abort.
-> >   */
-> > -bool scx_rcu_cpu_stall(void)
-> > +bool scx_rcu_cpu_stall(int stalled_cpu)
-> >  {
-> > -	return handle_lockup("RCU CPU stall detected!");
-> > +	return handle_lockup(stalled_cpu, "RCU CPU stall detected!");
-> >  }
-> >  
-> >  /**
-> > @@ -5131,7 +5132,8 @@ bool scx_rcu_cpu_stall(void)
-> >   */
-> >  void scx_softlockup(u32 dur_s)
-> >  {
-> > -	if (!handle_lockup("soft lockup - CPU %d stuck for %us", smp_processor_id(), dur_s))
-> > +	if (!handle_lockup(smp_processor_id(), "soft lockup - CPU %d stuck for %us",
-> > +			   smp_processor_id(), dur_s))
-> 
-> Repeating "smp_processor_id()" in the argument list seems a bit redundant?
-
-Will save to a local variable in v3.
-
-> 
-> >  		return;
-> >  
-> >  	printk_deferred(KERN_ERR "sched_ext: Soft lockup - CPU %d stuck for %us, disabling BPF scheduler\n",
-> > @@ -5150,7 +5152,7 @@ static void scx_hardlockup_irq_workfn(struct irq_work *work)
-> >  {
-> >  	int cpu = atomic_xchg(&scx_hardlockup_cpu, -1);
-> >  
-> > -	if (cpu >= 0 && handle_lockup("hard lockup - CPU %d", cpu))
-> > +	if (cpu >= 0 && handle_lockup(cpu, "hard lockup - CPU %d", cpu))
-> 
-> Repeating "cpu" in the argument list seems a bit redundant?
-> 
-
-The first occurrence is exit_cpu (struct field), the second is the %d
-format argument for the readable message. BOth serve different purposes
-so both are needed.
+  https://github.com/sched-ext/scx/blob/main/scheds/include/bpf_arena_spin_lock.h
 
 Thanks.
 
-> >  		printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
-> >  				cpu);
-> >  }
-> > diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-> > index b4f5dd28855e..2d04f27cf7c5 100644
-> > --- a/kernel/sched/ext_internal.h
-> > +++ b/kernel/sched/ext_internal.h
-> > @@ -1486,8 +1486,6 @@ __printf(5, 6) bool __scx_exit(struct scx_sched *sch, enum scx_exit_kind kind,
-> >  	__scx_exit(sch, kind, exit_code, raw_smp_processor_id(), fmt, ##args)
-> >  #define scx_error(sch, fmt, args...)						\
-> >  	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
-> > -#define scx_verror(sch, fmt, args)						\
-> > -	scx_vexit((sch), SCX_EXIT_ERROR, 0, raw_smp_processor_id(), fmt, args)
-> >  
-> >  /*
-> >   * Return the rq currently locked from an scx callback, or NULL if no rq is
-> > -- 
-> > 2.48.1
-> > 
-> > 
-
 -- 
-Cheers,
-Cheng-Yang
+tejun
