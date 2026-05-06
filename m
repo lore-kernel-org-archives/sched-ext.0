@@ -1,196 +1,243 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CB635893
-	for <sched-ext@lists.linux.dev>; Wed,  6 May 2026 06:16:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C56715A864
+	for <sched-ext@lists.linux.dev>; Wed,  6 May 2026 07:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778048194; cv=none; b=SR8W2jkY7hrID8NlnjBSmIigYRr8zMd9YbOHC8WaJ64flc+7dJK+jxqn1NWPTMw5FPyxvISdMr6QsKxg5O2AcBAL4/ykWXMzwL4NnRcDtUq9Gyg8UP7eOh+mlq5DfHhvjVxvulo5r/WyJxRivUpXVFWqw2gNCSIu/lpSGPS+bGM=
+	t=1778054386; cv=none; b=ewI1FjL0JKjCsNcp+HFa1FqV7WSUA6MEkz/51oSZP2ZKcR4I14Tfu0JyFCezKcYDCE1/RRYunhPOk6MovuLVV+4e2s91ZvE4JXglEQT/cTEuofkR8wFB4xUm1VwMF+mAI8c4jKfKo65ho0UBXt2C+bdTO9UeuDX99KVTTbtWq0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778048194; c=relaxed/simple;
-	bh=YafaXHe9xW8qAvONGlbzR//saBWHJoBvegAJEAdEgSc=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=b2LwfBtkBdOq7RhrDDPmAL33OVcCCTO+bKcTgA+MfDN9BZY5QON0WrkbGqzeQVu8ueEATeFijnSgyDTWE8+4IZ0Fc0DuK5ud91RXwwTjRXtkCgAZIvZvmlNGW/lziPsaKcQWIXy9G23HvbyyGlF+TQ6vjWvRhlTB69HvLFNfIYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oiBshIFL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778054386; c=relaxed/simple;
+	bh=mZX9gNDURpiuAyN6IOmaMHejLTzuxT72fq5/OA9KN6k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qzvsJ0doE/7KNwY1baGtgBrBJ8V2lqH82ldzzceFHKEJMbhjDwdc/OxGwk3n1AvmWcdb8O7avNDAPQQDkM2x+CJiZV9ToNrE+Vr5YpGokwtPAW4UPaaLqO2GYn0t3M6om542JTzNUuICxiVJWt0RO73S5T2AzvtHqljI0U0S22E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AOoiIHKF; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oiBshIFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73070C2BCB8;
-	Wed,  6 May 2026 06:16:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778048193;
-	bh=YafaXHe9xW8qAvONGlbzR//saBWHJoBvegAJEAdEgSc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=oiBshIFLJHGMef1MAYAYCOL8kHTxIeMibY+R1cKMTAeUhEAudVlgyEGtGRjE3yrrC
-	 ycyj9h0BFdHfCLGXS10zFrwXeNkWom1sDQTmkZLPly43ap+J2LKDMAOcMxKcVvv5SH
-	 bdHd1N/Hl93NlMMgpFhVTvWbBmT2vzRfQQwv0j2yKfRoNsOp6hn87v/QFq0fdIWYcn
-	 crggIXpxRTQ9fi4YvqI53pTuUlmQ83OeuMgyjYWB9KbSjoz6oIscH8S8Ux9b9j07Y+
-	 6xYWNSM8nl8rINbl045TRolCeT/5rJu0f6AIaWg52y0W8DHW6S/Mq12qTNacmFZVHw
-	 bvK7Uje4sLOAQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] sched_ext: Fix sched_ext_dead() race with
- scx_root_enable_workfn()
-Reply-To: sashiko@lists.linux.dev
-To: "zhidao su" <soolaugust@gmail.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260506054001.1105522-1-suzhidao@xiaomi.com>
-References: <20260506054001.1105522-1-suzhidao@xiaomi.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 06 May 2026 06:16:32 +0000
-Message-Id: <20260506061633.73070C2BCB8@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AOoiIHKF"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8353c9f24d2so2309995b3a.3
+        for <sched-ext@lists.linux.dev>; Wed, 06 May 2026 00:59:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778054384; x=1778659184; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=M4dy71nocwmDk2GInI4U9N3zYYgSRjxdg3aEBPK/5Dk=;
+        b=AOoiIHKFS4urU9AVkltCbcjYBVHtH5GTyrpkzKSX+zPBESvec1NpZuzUkGopXYnGu2
+         iDasvCmI3Du8QBbR6JWyftX3r/kEP7nJiIxURelBX/3ul7xPm3aKA42KMAqKAxOyclHq
+         oWY3xpyNwn0QezmH9lpQETFxrql4HLlyCIjqHVvOtO2sZb1eAk9Bl5xBzfRZNhS/i26k
+         Huny+5nG55XCXI9HHcySfFTsMlkcHNrYLU2X/7vIVmMnLmwriKH9KD0C72EP4liWK3X0
+         St7f3gjyKlO8Q3pbEn0mvuKmJa3ZzyTViCn782rF3Y8XvqVSygfY6WSvT0ngSm8pwkrF
+         sWvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778054384; x=1778659184;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M4dy71nocwmDk2GInI4U9N3zYYgSRjxdg3aEBPK/5Dk=;
+        b=WCfqPuHEnXOufXlUto4XenGRRy+YqM0VyTDVm+8qQxQ1EslJdNFLGtBMMDRROnn/bL
+         0ZI+cpl/K29DwvCX7s/EI8jJYRygFJ0vPMYfieQTDQ/8rlY7imuT0fzGEECH6n/zPySL
+         r6Aa47Ikcq6MKsuRH9nociYBB13jQb4IgDvC/wLbEM6zRpOtL33BPaOSRuga6sjYrYjD
+         xC6ldmoIYvPiY23jNXb1V+HZ123DBHB0NE6TW1z2c4jHgSqCoaKdgX2jM8SxfPD9ewmv
+         ZcSKltCmBjIt/7xRbUfmsFPAeSQljO1kxWnS91okJeapuypdKNhqkcCjAnoTQFtiLLUx
+         9GXQ==
+X-Gm-Message-State: AOJu0YxGqovCUooJJuM67Kdffaj/3X4RR5RB59NZwEBRn4Nlmo6xy3d3
+	KdhG2ngAeN36TLOKHU4wcmf63uK9CCOM0pOprSE/DfHWljI8rJhtLGpBm2puew==
+X-Gm-Gg: AeBDiesSYVmr2uIU9EvyJR1Pn7zRaRvCarDwnxP9OcCybuBC8tCqu7WmTSDuxW+6EdK
+	tV1h9SRuRY/Xw3+wN3cuy+MXM3LL1rb/7+ma8x718+S9nPcJ85pEsKh5Ka6T5Dgoxg1pERo8iCM
+	2sxBQXoZKcCW+asw52NrRpxbdhpvUdA9kl4EVpZ7ZNOXMteu3AztxiTQhOf7hkKnKebyPcmTnkZ
+	yHdyyTQ88u0lpVWhrd2nag8AFRKSDK6o1N8SH/ueLbOgA1BRO1y3Tg+U1Scx/ItPxAR4TtRHprm
+	UkgQxhHLRcW/Am+RXeR+ur2b7dc80Um409r+gpCgWIuzncacWLpKKN7RdDi0uKDw7wniog51tkl
+	vVoOybonGGT88Omdv6llZuR3B8Uu303l3WwTN5FS8zx+N4/JBbV8jRqiuh9Xu5iD2PezVInnwkW
+	zRbPE3joZTYUYCVupM2fexju0MomrYwnlK/A1mulPRr6ckMJpX1fNIN8JdPpJJ9Q==
+X-Received: by 2002:a05:6a20:9392:b0:3a3:a5cd:5621 with SMTP id adf61e73a8af0-3aa5ac148c8mr2387420637.51.1778054384175;
+        Wed, 06 May 2026 00:59:44 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:5aa6:d56d:38a9:469])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8242ab2971sm1689268a12.6.2026.05.06.00.59.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 May 2026 00:59:43 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com,
+	Kuba Piecuch <jpiecuch@google.com>
+Subject: [PATCH] sched_ext: Add cookie API for early qseq capture
+Date: Wed,  6 May 2026 15:59:21 +0800
+Message-ID: <20260506075925.371138-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [High] Calling `scx_set_task_state(p, SCX_TASK_READY)` without holding `t=
-ask_rq_lock(p)` introduces a Time-Of-Check to Time-Of-Use (TOCTOU) data rac=
-e against `sched_ext_dead()`.
-- [High] A memory ordering vulnerability defeats the bug 1 fix on weakly or=
-dered architectures, allowing the NULL pointer dereference to still occur.
-- [Medium] Missing `SCX_TASK_OFF_TASKS` flag on the `scx_root_enable_workfn=
-()` cleanup path exposes dead tasks to cgroup iterators, causing sub-schedu=
-ler enables to abort.
---
+scx_bpf_dsq_insert() captures qseq at insert time. Any BPF-side
+pre-dispatch checks (e.g. CPU affinity validation) performed before
+the insert are outside the qseq protection window: a dequeue/re-enqueue
+race occurring between the check and the insert goes undetected by
+finish_dispatch(), which sees a matching qseq and proceeds with stale
+assumptions.
 
-commit 1d291365affa3415c03f2031e9198ebe7208a245
-Author: zhidao su <soolaugust@gmail.com>
+Introduce two new kfuncs to extend the qseq protection window:
 
-sched_ext: Fix sched_ext_dead() race with scx_root_enable_workfn()
+- scx_bpf_task_get_cookie(p)
+    Reads @p's current qseq from ops_state and returns it as an opaque
+    u64 cookie. The BPF scheduler should call this before performing
+    pre-dispatch validity checks. The cookie may be stored in BPF maps
+    to support cross-CPU dispatch patterns.
 
-In CONFIG_EXT_SUB_SCHED, scx_task_sched(p) returns p->scx.sched instead
-of scx_root. scx_root_enable_workfn() iterates all tasks and for each
-releases scx_tasks_lock via scx_task_iter_unlock() before calling
-scx_init_task().
+- scx_bpf_dsq_insert_with_cookie(p, dsq_id, enq_flags, cookie)
+    Like scx_bpf_dsq_insert() with slice=0, but uses the cookie's qseq
+    instead of re-reading ops_state at insert time. If @p was dequeued
+    and re-enqueued between get_cookie() and here, qseq will have
+    changed and finish_dispatch() will silently discard the stale
+    dispatch. Use scx_bpf_task_set_slice() to set a non-default slice.
 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 5600618dcef8e..98505577d56ca 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -3690,7 +3690,15 @@ static int scx_init_task(struct scx_sched *sch, st=
-ruct task_struct *p, bool fork
->  		/*
->  		 * While @p's rq is not locked. @p is not visible to the rest of
->  		 * SCX yet and it's safe to update the flags and state.
-> +		 *
-> +		 * Install p->scx.sched before transitioning state off NONE so
-> +		 * that the invariant state!=3DNONE =3D> p->scx.sched!=3DNULL holds as
-> +		 * soon as state becomes observable.  A concurrent sched_ext_dead()
-> +		 * that races the INIT window will then always find a valid
-> +		 * scheduler pointer and can call scx_disable_and_exit_task()
-> +		 * to release resources allocated by ops.init_task().
->  		 */
-> +		scx_set_task_sched(p, sch);
->  		p->scx.flags |=3D SCX_TASK_RESET_RUNNABLE_AT;
->  		scx_set_task_state(p, SCX_TASK_INIT);
->  	}
+To support explicit qseq passing, refactor scx_dsq_insert_commit() to
+take qseq as a parameter; all existing callers capture ops_state at
+their call site, preserving the original behavior.
 
-Can this result in a memory ordering vulnerability on weakly ordered
-architectures?
+This mechanism is intended for schedulers that do not implement
+properly synchronized dequeue. A scheduler whose ops.dequeue()
+synchronizes atomically with the dispatch path does not need cookies.
 
-In scx_init_task(), scx_set_task_sched() uses rcu_assign_pointer(), which
-relies on smp_store_release(). While smp_store_release() guarantees prior
-operations are visible, it does not prevent subsequent memory operations
-from being reordered before the release.
+Suggested-by: Tejun Heo <tj@kernel.org>
+Suggested-by: Kuba Piecuch <jpiecuch@google.com>
+Suggested-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Andrea Righi <arighi@nvidia.com>
+Link: https://lore.kernel.org/r/20260203230639.1259869-1-arighi@nvidia.com/
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+As discussed in [1].
+[1]: https://lore.kernel.org/r/20260319083518.94673-1-arighi@nvidia.com/
 
-Could the CPU commit the store updating p->scx.flags to SCX_TASK_INIT
-before the store to p->scx.sched is completed? If a concurrent
-sched_ext_dead() observes state =3D=3D SCX_TASK_INIT, branches into the cle=
-anup
-path, and reads a NULL scheduler pointer, it would pass it to
-scx_disable_and_exit_task() which crashes in SCX_HAS_OP().
+ kernel/sched/ext.c | 65 +++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 61 insertions(+), 4 deletions(-)
 
-Does this require a full write memory barrier (e.g., smp_wmb()) between
-setting the scheduler pointer and transitioning the state?
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index c80f0efd42c0..49577cca3104 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -8303,7 +8303,7 @@ static bool scx_dsq_insert_preamble(struct scx_sched *sch, struct task_struct *p
+ }
+ 
+ static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
+-				  u64 dsq_id, u64 enq_flags)
++				  u64 dsq_id, u64 enq_flags, unsigned long qseq)
+ {
+ 	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
+ 	struct task_struct *ddsp_task;
+@@ -8321,7 +8321,7 @@ static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
+ 
+ 	dspc->buf[dspc->cursor++] = (struct scx_dsp_buf_ent){
+ 		.task = p,
+-		.qseq = atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK,
++		.qseq = qseq,
+ 		.dsq_id = dsq_id,
+ 		.enq_flags = enq_flags,
+ 	};
+@@ -8388,7 +8388,8 @@ __bpf_kfunc bool scx_bpf_dsq_insert___v2(struct task_struct *p, u64 dsq_id,
+ 	else
+ 		p->scx.slice = p->scx.slice ?: 1;
+ 
+-	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags);
++	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags,
++			      atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK);
+ 
+ 	return true;
+ }
+@@ -8416,7 +8417,8 @@ static bool scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
+ 
+ 	p->scx.dsq_vtime = vtime;
+ 
+-	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
++	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ,
++			      atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK);
+ 
+ 	return true;
+ }
+@@ -8505,13 +8507,67 @@ __bpf_kfunc void scx_bpf_dsq_insert_vtime(struct task_struct *p, u64 dsq_id,
+ 	scx_dsq_insert_vtime(sch, p, dsq_id, slice, vtime, enq_flags);
+ }
+ 
++/**
++ * scx_bpf_task_get_cookie - Get an opaque dispatch cookie for a task
++ * @p: task_struct to read cookie from
++ *
++ * Returns an opaque u64 cookie encoding @p's current qseq. Call this
++ * before pre-dispatch validity checks and pass the result to
++ * scx_bpf_dsq_insert_with_cookie() to extend the qseq protection window.
++ *
++ * For schedulers that do not implement properly synchronized dequeue only.
++ */
++__bpf_kfunc u64 scx_bpf_task_get_cookie(struct task_struct *p)
++{
++	return atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK;
++}
++
++/**
++ * scx_bpf_dsq_insert_with_cookie - Insert a task using an early-captured cookie
++ * @p: task_struct to insert
++ * @dsq_id: DSQ to insert into
++ * @enq_flags: SCX_ENQ_*
++ * @cookie: cookie from scx_bpf_task_get_cookie()
++ * @aux: implicit BPF argument
++ *
++ * Like scx_bpf_dsq_insert() with slice=0, but uses @cookie's qseq instead
++ * of re-reading ops_state at insert time. A stale cookie causes
++ * finish_dispatch() to silently discard the dispatch. Use
++ * scx_bpf_task_set_slice() to set a non-default slice.
++ *
++ * Returns %true on success, %false on failure.
++ */
++__bpf_kfunc bool scx_bpf_dsq_insert_with_cookie(struct task_struct *p,
++						 u64 dsq_id, u64 enq_flags,
++						 u64 cookie,
++						 const struct bpf_prog_aux *aux)
++{
++	struct scx_sched *sch;
++
++	guard(rcu)();
++	sch = scx_prog_sched(aux);
++	if (unlikely(!sch))
++		return false;
++
++	if (!scx_dsq_insert_preamble(sch, p, dsq_id, &enq_flags))
++		return false;
++
++	p->scx.slice = p->scx.slice ?: 1;
++
++	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags, (unsigned long)cookie);
++
++	return true;
++}
++
+ __bpf_kfunc_end_defs();
+ 
+ BTF_KFUNCS_START(scx_kfunc_ids_enqueue_dispatch)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_insert, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_insert___v2, KF_IMPLICIT_ARGS | KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_dsq_insert_with_cookie, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_ID_FLAGS(func, __scx_bpf_dsq_insert_vtime, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_insert_vtime, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_task_get_cookie, KF_RCU)
+ BTF_KFUNCS_END(scx_kfunc_ids_enqueue_dispatch)
+ 
+ static const struct btf_kfunc_id_set scx_kfunc_set_enqueue_dispatch = {
+@@ -10181,6 +10237,7 @@ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
+ BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_task_cid, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_task_get_cookie, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
+-- 
+2.48.1
 
-[ ... ]
-
-> @@ -7130,7 +7133,49 @@ static void scx_root_enable_workfn(struct kthread_=
-work *work)
->  			goto err_disable_unlock_all;
->  		}
-> =20
-> -		scx_set_task_sched(p, sch);
-> +		/*
-> +		 * sched_ext_dead() may have raced while locks were dropped in
-> +		 * scx_task_iter_unlock().  Two cases:
-> +		 *
-> +		 * (a) sched_ext_dead() ran after scx_init_task() set state=3DINIT:
-> +		 *     it called scx_disable_and_exit_task() (cancelled=3Dtrue) and
-> +		 *     reset state to NONE.  ops.exit_task() already ran; skip.
-> +		 *
-> +		 * (b) sched_ext_dead() ran before scx_init_task() (state=3DNONE at
-> +		 *     the time): it skipped scx_disable_and_exit_task() because
-> +		 *     state was NONE.  scx_init_task() subsequently called
-> +		 *     ops.init_task() and set state=3DINIT, leaving allocated
-> +		 *     resources with no owner.  We must call
-> +		 *     scx_disable_and_exit_task() here to release them.
-> +		 *
-> +		 * Distinguish case (a) from (b) by reading state: (a) leaves
-> +		 * state=3DNONE (reset by scx_disable_and_exit_task); (b) leaves
-> +		 * state=3DINIT (set by scx_init_task, never reset).
-> +		 */
-> +		{
-> +			bool p_dead =3D false, need_exit =3D false;
-> +
-> +			scoped_guard(raw_spinlock_irq, &scx_tasks_lock) {
-> +				if (list_empty(&p->scx.tasks_node)) {
-> +					p_dead =3D true;
-> +					need_exit =3D scx_get_task_state(p) !=3D SCX_TASK_NONE;
-> +				}
-> +			}
-> +
-> +			if (p_dead) {
-> +				if (need_exit) {
-> +					struct rq_flags rf;
-> +					struct rq *rq;
-> +
-> +					rq =3D task_rq_lock(p, &rf);
-> +					scx_disable_and_exit_task(sch, p);
-> +					task_rq_unlock(rq, p, &rf);
-
-Is this cleanup path missing the SCX_TASK_OFF_TASKS flag?
-
-If sched_ext_dead() runs before scx_init_task() completes, it sees state
-NONE and skips setting SCX_TASK_OFF_TASKS. When this cleanup path calls
-scx_disable_and_exit_task() under task_rq_lock(), the SCX_TASK_OFF_TASKS
-flag is not set before the runqueue is unlocked.
-
-Because the flag is missing, if a cgroup iterator traverses the cgroup
-before cgroup_task_dead() removes the task, could the iterator erroneously
-yield the dead task with state NONE, hit assert_task_ready_or_enabled(p),
-and abort the sub-scheduler enable?
-
-> +				}
-> +				put_task_struct(p);
-> +				continue;
-> +			}
-> +		}
-> +
->  		scx_set_task_state(p, SCX_TASK_READY);
-
-Can this cause a Time-Of-Check to Time-Of-Use (TOCTOU) data race against
-sched_ext_dead()?
-
-The code checks list_empty(&p->scx.tasks_node) under scx_tasks_lock to
-determine if a concurrent sched_ext_dead() has started processing.
-
-However, once scx_tasks_lock is dropped, sched_ext_dead() can acquire it,
-remove the task, and proceed to exit the task, eventually doing
-p->scx.flags |=3D SCX_TASK_OFF_TASKS under task_rq_lock(p).
-
-Meanwhile, scx_root_enable_workfn() continues past the lock and
-unconditionally calls scx_set_task_state(p, SCX_TASK_READY) without holding
-task_rq_lock(p). Because scx_set_task_state() performs a non-atomic
-read-modify-write on p->scx.flags, could this overwrite and permanently
-lose the SCX_TASK_OFF_TASKS flag?
-
-Also, could this incorrectly transition a dead task to SCX_TASK_READY after
-its scheduler resources were torn down, triggering a warning?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260506054001.1105=
-522-1-suzhidao@xiaomi.com?part=3D1
