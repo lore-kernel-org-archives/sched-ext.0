@@ -1,71 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB722F8EBD;
-	Thu,  7 May 2026 21:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094C634D90D;
+	Thu,  7 May 2026 22:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778189984; cv=none; b=VP6I3p5XnvCQd2Lp/1I3wWV0KXA0kHsRyrFHGo7E6lSaFEHNM4AoXR3KlzlpUVYAvhv/kWnS9+UlnSn+piKc7MoAiB/sY+lyro7d225lV7GTaUlCZ4DblRUoz6CEfNtpbaPa03OZxMQup3+Q4Zm5WbNF8G0ZM+g+cfq2vnuNdhs=
+	t=1778191357; cv=none; b=OU4HNoGew4Ua7n0CL49tMN98KfyXmwPUftiVh5aVOU2wDSMPGs/4i5JiqAtWL7HMu/oRsZtGDic16fykC0WpXSdJeZSaQGSLkFrzJ/14okdMleFziF5ACCcmjbHDXc98DpyBZE6KK8G7cX+iRd8YXJMkwY89pAmJhIjTec1xL+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778189984; c=relaxed/simple;
-	bh=/lteh37gFrcehzIfySkddYhObpzN3Kh7rgRZtnS3fSE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aCr1XlP3nFzzRSb5yX5bnvJZLOY4gqcY+Yp336rYtPBdnY1yQcoxPo5oL6YMCYtOZB4N+bUnUTolJhsqN4Qj8SRb9IUrM884uYaGFzgEgYGV3teIrlYXAhZ6oppQDpgnyZul96io2JnAjeQ/YSOLK/ID7DNsLaYMakGwo0nbI+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d5NiLGTX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778191357; c=relaxed/simple;
+	bh=1uAy3urIuHx8PVwOULS3x/fKKuptIWToQJJv7w1dCoo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=SC/qpMqqAiKolHrA7MphZqBds8TmHTTkBD+edsK06eX+PqIisy97OJx+7XDyb3BWilpgps/GX7eOSkZbf3vCf+3Do9NCT7nvMaQP5C/lYn17Co4fKIVZa3Ejk0TC2lACKIZLBa0OC5a1sl2itd/tpsZbeafZcsAC7y/4rn44dz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sxjVPe4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d5NiLGTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AB8C2BCB2;
-	Thu,  7 May 2026 21:39:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sxjVPe4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B41FC2BCB2;
+	Thu,  7 May 2026 22:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778189984;
-	bh=/lteh37gFrcehzIfySkddYhObpzN3Kh7rgRZtnS3fSE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d5NiLGTX00uOl4BSim7PGAWnDNBOPMloqxlb8qjqPfZlKRlshwR+qjE2M4CKcDQNT
-	 B0nMVXcm/E2cmsZWWXj3VEFuIcW5UDcI20MaIPrssdvpcKspe04l1YDqreFhREjXXg
-	 VV7HqZSU412PI2aOlvXX94wOQdmSb/LLue+ewk9pbXRvvXe47LBQ2WvEWfeos515HQ
-	 bh6zIp3MoXkYMILGopvdEQ6ioQp3qT+G5NKZ+Z/gLeaw02vJ7gvdCiaijbGpyrcOaX
-	 Vt8vwGsGG0PJTl68zcDJ7uEtDrqrEXeQbUL5RW58SmTFhA/dy4PRHFc5nOoOTMNJXt
-	 IgC6ChnlVR5IA==
-Date: Thu, 7 May 2026 11:39:43 -1000
+	s=k20201202; t=1778191356;
+	bh=1uAy3urIuHx8PVwOULS3x/fKKuptIWToQJJv7w1dCoo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=sxjVPe4kIXEs4uU+Yxjcr8Zrm8GIqAWZPtDgMnFp1QZ6JiO3k0cfccVcl5E/AQnlv
+	 +c1iKSI/k2org2n/81Z/aq4BNV93RWX+BY+HBSDNYFAAGFXtTh8DWJPIjLCb1/4A2Z
+	 ACgsIoEUUKApNl4EGkMaG3QHtUM8teApxUhN0Aiob+Yx7HhN+0SnZsw6SHETm7bzcr
+	 //DVn7l3v8x+JdHFokij6LPeSGV4AUOwEU7VTsWJOeZ9vW4h6QlY3IJ/5LSKLzp/2E
+	 JKE9G9TPH1oHUOViT67A4Ojm5HTwazW5W1/KqIr/KNg5vx4UVdp64TdPtGM1nM6BMF
+	 7kJGlz+u6nFbQ==
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>, sched-ext@lists.linux.dev,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, rcu@vger.kernel.org,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v2 2/2] sched_ext: Fix exit_cpu accuracy for lockup paths
-Message-ID: <af0Gn47y1Lj2BAqd@slm.duckdns.org>
-References: <20260504161543.674488-1-yphbchou0911@gmail.com>
- <20260504161543.674488-3-yphbchou0911@gmail.com>
- <c402160a-dbc6-4292-a684-395a80d677d4@paulmck-laptop>
- <20260505154006.G743b@cchengyang.duckdns.org>
- <afmrgVdEHKF0FbNs@slm.duckdns.org>
- <20260506181409.Gc6e5@cchengyang.duckdns.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	kernel test robot <lkp@intel.com>,
+	oe-kbuild-all@lists.linux.dev
+Subject: [PATCH sched_ext/for-7.1-fixes] sched_ext: Drop unused scx_find_sub_sched() stub
+Date: Thu,  7 May 2026 12:02:35 -1000
+Message-ID: <20260507220235.3312282-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260506181409.Gc6e5@cchengyang.duckdns.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 06, 2026 at 06:18:11PM +0800, Cheng-Yang Chou wrote:
-> Hi Tejun,
-> 
-> On Mon, May 04, 2026 at 10:34:09PM -1000, Tejun Heo wrote:
-> > On Tue, May 05, 2026 at 04:20:25PM +0800, Cheng-Yang Chou wrote:
-> > We carry only one cpu in exit_info but we can easily dump the cpumask and
-> > prioritize dumping all the cpus in the mask.
-> 
-> To confirm: are you suggesting scx_rcu_cpu_stall() take a cpumask, use
-> cpumask_first() for exit_cpu, and dump the full mask in the exit message?
+scx_find_sub_sched()'s only caller, scx_bpf_sub_dispatch(), is gated on
+CONFIG_EXT_SUB_SCHED. When CONFIG_EXT_SUB_SCHED=n the caller compiles out
+and the stub becomes dead code, tripping -Wunused-function on randconfigs.
+Drop the stub.
 
-Yes.
+Fixes: 25037af712eb ("sched_ext: Add rhashtable lookup for sub-schedulers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202605080556.42PXw8U9-lkp@intel.com/
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Thanks.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 7d367c140a36..48b4834c7027 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -297,7 +297,6 @@ static void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch)
+ #else	/* CONFIG_EXT_SUB_SCHED */
+ static struct scx_sched *scx_parent(struct scx_sched *sch) { return NULL; }
+ static struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root) { return pos ? NULL : root; }
+-static struct scx_sched *scx_find_sub_sched(u64 cgroup_id) { return NULL; }
+ static void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch) {}
+ #endif	/* CONFIG_EXT_SUB_SCHED */
 
--- 
-tejun
