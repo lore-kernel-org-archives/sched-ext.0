@@ -1,296 +1,196 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2CB238159
-	for <sched-ext@lists.linux.dev>; Thu,  7 May 2026 02:32:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE2F36AF6
+	for <sched-ext@lists.linux.dev>; Thu,  7 May 2026 02:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778121158; cv=none; b=ae3RIkG3HR8X4Gc5vVxpi7k8BeN3jznVb/Wpxq8wJH6dnMb3Mu7ija8vzQ15uzzAEvwDHXCZ2FFUBptCJnsuCo9csGjgifimru5P2hr/h4kse0R38LWKUa+BUBX3uLnNOgnG+OC1h1LJdUwlUDB8tURIXtdPBrixv4RYcBOJ0XY=
+	t=1778122217; cv=none; b=LGPtM8Z0MtYuSrsZGiuM8WGVxrtYppAg66jldaCGyQzew0wTGoCHpYEr19lD+7O5c1z7LxkQipRLp3HPNIJIH6n2xD1jgzcGjQtF9S+iSUVDtrlMmDW87Vg+u3xFWI36pSX/1gz9GhY1iyqf6+7yh+sfCsaxIfNI3QNMiogH3WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778121158; c=relaxed/simple;
-	bh=XIVMCDjzPlTxfHhRJyKt7NkoOHhmpdRK+H1evR8Gqbk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=c9x/Pr73N1hHOESVNOTxElDpCq6QaDETjATgvINron3tuvxwpaV8LU0iWuq6ff2vSQkHQZTRG4ZxRGa1WpfUH6fxHvvwEdramFvdl1geHThENajEdqAt/7Xcj8TrmxTLYfeS6miQDgTHAP7ZDHjA2juQ8tORY53y6AWlBL/y6Rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L42krAtK; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1778122217; c=relaxed/simple;
+	bh=YsvHE0bgtEf7sOTMYOc4PB4RHZ3dEsNhhvn8pGkZnQ4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YwsERkN2tCeLGArS44RWf/ULLa/gGml/ZF87LIonKmSwiXdTYOyvQR9WaHb1UPEzGz8SgPwrPeedaSgrhAwjbiHTsNp1XaS2xE+ds3HFNQcCQOfOzKEU8f4d7vBQU8CAJHF1m/79CBWIaFsB7Rcu6eEo12uy1UnZKaP9Karhi6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/yHCfeh; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L42krAtK"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2b9ea536877so2141295ad.1
-        for <sched-ext@lists.linux.dev>; Wed, 06 May 2026 19:32:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/yHCfeh"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c8028fa6039so185638a12.2
+        for <sched-ext@lists.linux.dev>; Wed, 06 May 2026 19:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778121156; x=1778725956; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b4vgs0xscu3MsVhFPXf5qWcASYOxg1W9AcmmIG28clo=;
-        b=L42krAtK/qUF4ztltX6UnutUukNcle4gFTXUGF9rmPapNZ9xr1Q8GZlT12nY2sG1gY
-         65kzzKmTY+5Ruicf//M6VtXBQVsNQ5diWUS3gOzi41wSGwCJo/p7Ind07AiF3aXkqPdP
-         yv8x3GmFgB0BTbVNAoXZb/2FvncHTSdGF9yg6wHkUHJgOxWuZ1VV611IucB5iEN26VbU
-         rAU9CQU6fBK+6Tp1jh+qKEAo93VCC576t2ptmz9I4f1zIJ92lCa2BIQg6tVM8KR9kIMN
-         4O8XBBFytiAhggBBYTwJPWSvpVeYa9zRJeDvbl1ZlI1e59wY6y44t3dQ0t6ebMSXVBBY
-         bZsg==
+        d=gmail.com; s=20251104; t=1778122216; x=1778727016; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xx9CTrNduwwT9IqwPYPsPJELavITGXCS33lFUkmDQcE=;
+        b=C/yHCfeh4NijVqr9mTl31Z6jjg1bzXouDCKFjJCc1ls9ZjXsdu7q6i/5tV/6k4IjCn
+         lpAefx9R1jWDm4IDEaETm0X72A598IVMuuMQkGZkOeudj27r5CKvYSRjIEUdMuXZElFu
+         l7uZP1gBPFmsaz2EZa4RrZ+2XlPD7vBaaxwpbZn07gAbVj9wq5HkK5+C2RquP/8pDqMS
+         i9zyP6X+UoJeXHZ683WcSkqkLuYxl8+XHDxfSuWaHjgKCcZkBI2WO9JdmHvXDuTZb6e8
+         nE+cp2P6CwGrP8y0MSahQ9EVuT2t8kKj8JyHIE1VddOcrj8FZD4HQK5XIitTy+Ze4uAr
+         KLHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778121156; x=1778725956;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=b4vgs0xscu3MsVhFPXf5qWcASYOxg1W9AcmmIG28clo=;
-        b=TjVKXs6Cz8166o3zdmuvjIMr36YzbW5LKs/j7KPZqoBOs0wCSIVoTzvu0QbCXyaI4F
-         OWGrBPEII+7kC2rsVY6GPJwBA86eTyKjYDP4euP4Tz3k7I4HE4WPsh8RWtdvm2v9pxbC
-         Kr3P7xJFyadOQ4ciLc5bl1IDbfFzXfl+LDbT6MZ5X49ctHPcDMcqBLsRVfEJKY6dRNmn
-         VPMsUp/MeID/r4yZ9qRS95xa2MCL6qs2yfPHh6lOxA7royjf+mSwM0wClqOe7w7VyJU7
-         1+NQ9q6zNtmUoY0verPPyfyrqhp9xbVhCpk9XHBtqGiWa6j9//0MBcNamDAIi/cLyzj3
-         ET+w==
-X-Gm-Message-State: AOJu0YxjvNM6QL63sr5Nhax2C1Yelkf7KFhEwCVm6k3kwYq48teTOZqr
-	pvxU4XRdMare+K/qXPTcRFyGjDl0GrFs/8Od4/7kJ6rnQFtNHAt8X5RU
-X-Gm-Gg: AeBDiet7hRS3Q9hIKCXsPW+Z2cCMIyZqFHHHoqUdMDARbzkIfb4x1tVVZG0yZ9fqQ6x
-	27XXeyIIBeIw58CJ+qXccYQ6R57Z7GPgfT+i96JzF5YGJCcFk75GRgzkK4wRiT7o8Gicopo9NNH
-	nbn62teHlw4HfcJBQoc/FOBgMnRgadRBMtA9lII+pSLfaassnHSBu0Y8Cg1Vutks0aOM3LA3r+2
-	CXEqbF8qZEXFjGweqaJSPeodkkn9z06d62JqR422XhPnNgC2yXjEqZswxShD9kPxZ50+bKmOw7f
-	bsoYdo7J67c7azgOb8d6TQ2LOrsooJMCt4pcxz0JjcCT2/5240D+LKATi9w/Gv9eDKPF7Uj9Qto
-	Vj92qTNYN0m4it7MOdWvX48IrZobagHtlB0qy6hIMjHBn1XTpisJHvEW+TRa8jTjGxW2GjEE2Xv
-	EKoexYBtNEoHYxpvw/Fsg3JXe+YcNj5qnsgwZutqUtFG3Qu2rFJsmz842R
-X-Received: by 2002:a17:903:2f46:b0:2b2:3eec:c75b with SMTP id d9443c01a7336-2babc64a10dmr9337385ad.2.1778121155927;
-        Wed, 06 May 2026 19:32:35 -0700 (PDT)
-Received: from smtpclient.apple ([43.224.245.235])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2babadd2304sm6031105ad.42.2026.05.06.19.32.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 May 2026 19:32:35 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20251104; t=1778122216; x=1778727016;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Xx9CTrNduwwT9IqwPYPsPJELavITGXCS33lFUkmDQcE=;
+        b=CBUOPNuWkfM5qN4aJnlPoG2d92rKCBt+xE/DoFTb/7TMvAKOYGs/7EcNJxdcgUHZ0J
+         kK/VBT0E11/8hJjlpoY0ivi/cspP/lB/P4zbjejh/aGVq+/VbEK51v1Bc2j5S41bm3so
+         OLDxlOZE8U7ITdW6GVdID9/I+xUubyQw9bcN1lAoGaocyNUwYxCLz1QUPjRk/Askl/82
+         P5zajYGHvz+uMMuIT4pwuSecbUZq/2H7oaQd9PiHhRvA5D9GAj3Cayb0FFgcE9R3rBVs
+         b33J7QqY56CjH9EKyDR+p2LdnbAGmDMNMvzxkyjQrrGLyZ7FpsnB+AhcWWsSdEXe8lsf
+         3XYQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+X+++9dCTbKQtWex6VcsSXMakEkJ1h51aaPXUqNy+ny5c07l0EvUBKAA2oCg0zDJEkQka9cKWxBCE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzMA8VWBlohrlrKw3ATBRrI4ljO0Y1FxRNt10sh/inFaSKQYIuU
+	KTaO4hCtUQNdxQMiVyfboeRDN3hC9jfJeYLLEu7RSbVZuMew/k+9Tkct
+X-Gm-Gg: AeBDieuL6WHt7pBy4I9k6MfdjGh6UJm33FVx9s7Cr88fTckbLijSyZq2mixyw0g5jPh
+	DOKysS8OM+XNRUd8mnKw7vWjDnvmQI8MF+bAStfVtN9IQbTsXm8b+G4FhH8r/jP3XDxzOAFNE5z
+	4smqJtWwqcb0J9oM/jCJITUgsqXPTP7oYaF4i7ibGiqeYvIoS5PhSFDeortFY6IkhgjScDdaK9P
+	rLUI0iYwUpZABpiv/X37E3oySjm7EGBT6PGCWOFcUIAxLr5Ze+khSGt85yF9JTOmRIjfA1xlssa
+	0aHLKlK3L8fYFJW0ndGuVz4vibdEJlBT1TtmXI/JK5pO8I6JzeEFp3QE9xN5cMuodHh8Z5MTair
+	EozgK1cHE9cVzm33q/mwqnEIuH72P7TxG/dFcD3ITIcBYLjT4PqL3Qw3Gnsb2WD56pgQti6lXUu
+	hUExNv/CNM/X3QoWyrzWiQ04jvVG0MalL/se3UE9lgeCizhV45/wf3okdNpoOo
+X-Received: by 2002:a05:6a21:999b:b0:39b:9644:6e93 with SMTP id adf61e73a8af0-3aa5a8310aamr6411416637.6.1778122215696;
+        Wed, 06 May 2026 19:50:15 -0700 (PDT)
+Received: from SK-20220728IVMR.localdomain ([43.224.245.231])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83965a3e3ecsm7071017b3a.19.2026.05.06.19.50.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 May 2026 19:50:15 -0700 (PDT)
+From: Wen Jobs <wenxiaolong123@gmail.com>
+To: Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	Wen Jobs <wenxiaolong123@gmail.com>
+Subject: [PATCH] sched: Fix typos in comments
+Date: Thu,  7 May 2026 10:49:40 +0800
+Message-Id: <20260507024940.2739-1-wenxiaolong123@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v2] sched_ext: Fix sched_ext_dead() race with
- scx_root_enable_workfn()
-From: zhidao su <soolaugust@gmail.com>
-In-Reply-To: <20260506061633.73070C2BCB8@smtp.kernel.org>
-Date: Thu, 7 May 2026 10:32:21 +0800
-Cc: sched-ext@lists.linux.dev,
- Tejun Heo <tj@kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5636DBB8-B5F3-4F88-AA54-B388DB3A80F1@gmail.com>
-References: <20260506054001.1105522-1-suzhidao@xiaomi.com>
- <20260506061633.73070C2BCB8@smtp.kernel.org>
-To: sashiko@lists.linux.dev
-X-Mailer: Apple Mail (2.3864.500.181)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 06 2026, sashiko-bot@kernel.org wrote:
+Fix several typos in comments across the scheduler subsystem:
 
-> - [High] Calling `scx_set_task_state(p, SCX_TASK_READY)` without =
-holding
->  `task_rq_lock(p)` introduces a Time-Of-Check to Time-Of-Use (TOCTOU)
->  data race against `sched_ext_dead()`.
-> [...]
-> Can this cause a Time-Of-Check to Time-Of-Use (TOCTOU) data race =
-against
-> sched_ext_dead()?
+- kernel/sched/core.c:     'compability' -> 'compatibility'
+- kernel/sched/ext.c:      'upto' -> 'up to' (2 occurrences)
+- kernel/sched/fair.c:     'faireness' -> 'fairness'
+- kernel/sched/sched.h:    'actualy' -> 'actually';
+                           'exhaused' -> 'exhausted';
+                           'thottled' -> 'throttled'
+- kernel/sched/wait_bit.c: 'condtion' -> 'condition'
 
-When p_dead is true the code does `continue`, so scx_set_task_state(p,
-SCX_TASK_READY) is never reached for dead tasks. The TOCTOU window
-doesn't exist.
+Signed-off-by: Wen Jobs <wenxiaolong123@gmail.com>
+---
+ kernel/sched/core.c     | 2 +-
+ kernel/sched/ext.c      | 4 ++--
+ kernel/sched/fair.c     | 2 +-
+ kernel/sched/sched.h    | 6 +++---
+ kernel/sched/wait_bit.c | 2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
 
-> - [High] A memory ordering vulnerability defeats the bug 1 fix on =
-weakly
->  ordered architectures, allowing the NULL pointer dereference to still =
-occur.
-> [...]
-> Does this require a full write memory barrier (e.g., smp_wmb()) =
-between
-> setting the scheduler pointer and transitioning the state?
-
-I'm not confident whether the store ordering between =
-scx_set_task_sched()
-and the state transition needs an explicit barrier here.
-
-Tejun, what's the intended model for scx flags access in this path?
-
-> - [Medium] Missing `SCX_TASK_OFF_TASKS` flag on the =
-scx_root_enable_workfn()
->  cleanup path exposes dead tasks to cgroup iterators.
-> [...]
-> Is this cleanup path missing the SCX_TASK_OFF_TASKS flag?
-
-Not needed here. scx_task_iter_next_locked() checks SCX_TASK_OFF_TASKS
-only for cgroup-scoped iteration, which is only reachable from
-scx_sub_enable_workfn(). That function requires scx_enabled() at entry;
-scx_root_enable_workfn() has not called scx_ops_enable() yet at this
-point, so no sub-sched enable can be running concurrently.
-
-
-> 2026=E5=B9=B45=E6=9C=886=E6=97=A5 14:16=EF=BC=8Csashiko-bot@kernel.org =
-=E5=86=99=E9=81=93=EF=BC=9A
->=20
-> Thank you for your contribution! Sashiko AI review found 3 potential =
-issue(s) to consider:
-> - [High] Calling `scx_set_task_state(p, SCX_TASK_READY)` without =
-holding `task_rq_lock(p)` introduces a Time-Of-Check to Time-Of-Use =
-(TOCTOU) data race against `sched_ext_dead()`.
-> - [High] A memory ordering vulnerability defeats the bug 1 fix on =
-weakly ordered architectures, allowing the NULL pointer dereference to =
-still occur.
-> - [Medium] Missing `SCX_TASK_OFF_TASKS` flag on the =
-`scx_root_enable_workfn()` cleanup path exposes dead tasks to cgroup =
-iterators, causing sub-scheduler enables to abort.
-> --
->=20
-> commit 1d291365affa3415c03f2031e9198ebe7208a245
-> Author: zhidao su <soolaugust@gmail.com>
->=20
-> sched_ext: Fix sched_ext_dead() race with scx_root_enable_workfn()
->=20
-> In CONFIG_EXT_SUB_SCHED, scx_task_sched(p) returns p->scx.sched =
-instead
-> of scx_root. scx_root_enable_workfn() iterates all tasks and for each
-> releases scx_tasks_lock via scx_task_iter_unlock() before calling
-> scx_init_task().
->=20
->> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
->> index 5600618dcef8e..98505577d56ca 100644
->> --- a/kernel/sched/ext.c
->> +++ b/kernel/sched/ext.c
->> @@ -3690,7 +3690,15 @@ static int scx_init_task(struct scx_sched =
-*sch, struct task_struct *p, bool fork
->> /*
->> * While @p's rq is not locked. @p is not visible to the rest of
->> * SCX yet and it's safe to update the flags and state.
->> + *
->> + * Install p->scx.sched before transitioning state off NONE so
->> + * that the invariant state!=3DNONE =3D> p->scx.sched!=3DNULL holds =
-as
->> + * soon as state becomes observable.  A concurrent sched_ext_dead()
->> + * that races the INIT window will then always find a valid
->> + * scheduler pointer and can call scx_disable_and_exit_task()
->> + * to release resources allocated by ops.init_task().
->> */
->> + scx_set_task_sched(p, sch);
->> p->scx.flags |=3D SCX_TASK_RESET_RUNNABLE_AT;
->> scx_set_task_state(p, SCX_TASK_INIT);
->> }
->=20
-> Can this result in a memory ordering vulnerability on weakly ordered
-> architectures?
->=20
-> In scx_init_task(), scx_set_task_sched() uses rcu_assign_pointer(), =
-which
-> relies on smp_store_release(). While smp_store_release() guarantees =
-prior
-> operations are visible, it does not prevent subsequent memory =
-operations
-> from being reordered before the release.
->=20
-> Could the CPU commit the store updating p->scx.flags to SCX_TASK_INIT
-> before the store to p->scx.sched is completed? If a concurrent
-> sched_ext_dead() observes state =3D=3D SCX_TASK_INIT, branches into =
-the cleanup
-> path, and reads a NULL scheduler pointer, it would pass it to
-> scx_disable_and_exit_task() which crashes in SCX_HAS_OP().
->=20
-> Does this require a full write memory barrier (e.g., smp_wmb()) =
-between
-> setting the scheduler pointer and transitioning the state?
->=20
-> [ ... ]
->=20
->> @@ -7130,7 +7133,49 @@ static void scx_root_enable_workfn(struct =
-kthread_work *work)
->> goto err_disable_unlock_all;
->> }
->>=20
->> - scx_set_task_sched(p, sch);
->> + /*
->> + * sched_ext_dead() may have raced while locks were dropped in
->> + * scx_task_iter_unlock().  Two cases:
->> + *
->> + * (a) sched_ext_dead() ran after scx_init_task() set state=3DINIT:
->> + *     it called scx_disable_and_exit_task() (cancelled=3Dtrue) and
->> + *     reset state to NONE.  ops.exit_task() already ran; skip.
->> + *
->> + * (b) sched_ext_dead() ran before scx_init_task() (state=3DNONE at
->> + *     the time): it skipped scx_disable_and_exit_task() because
->> + *     state was NONE.  scx_init_task() subsequently called
->> + *     ops.init_task() and set state=3DINIT, leaving allocated
->> + *     resources with no owner.  We must call
->> + *     scx_disable_and_exit_task() here to release them.
->> + *
->> + * Distinguish case (a) from (b) by reading state: (a) leaves
->> + * state=3DNONE (reset by scx_disable_and_exit_task); (b) leaves
->> + * state=3DINIT (set by scx_init_task, never reset).
->> + */
->> + {
->> + bool p_dead =3D false, need_exit =3D false;
->> +
->> + scoped_guard(raw_spinlock_irq, &scx_tasks_lock) {
->> + if (list_empty(&p->scx.tasks_node)) {
->> + p_dead =3D true;
->> + need_exit =3D scx_get_task_state(p) !=3D SCX_TASK_NONE;
->> + }
->> + }
->> +
->> + if (p_dead) {
->> + if (need_exit) {
->> + struct rq_flags rf;
->> + struct rq *rq;
->> +
->> + rq =3D task_rq_lock(p, &rf);
->> + scx_disable_and_exit_task(sch, p);
->> + task_rq_unlock(rq, p, &rf);
->=20
-> Is this cleanup path missing the SCX_TASK_OFF_TASKS flag?
->=20
-> If sched_ext_dead() runs before scx_init_task() completes, it sees =
-state
-> NONE and skips setting SCX_TASK_OFF_TASKS. When this cleanup path =
-calls
-> scx_disable_and_exit_task() under task_rq_lock(), the =
-SCX_TASK_OFF_TASKS
-> flag is not set before the runqueue is unlocked.
->=20
-> Because the flag is missing, if a cgroup iterator traverses the cgroup
-> before cgroup_task_dead() removes the task, could the iterator =
-erroneously
-> yield the dead task with state NONE, hit =
-assert_task_ready_or_enabled(p),
-> and abort the sub-scheduler enable?
->=20
->> + }
->> + put_task_struct(p);
->> + continue;
->> + }
->> + }
->> +
->> scx_set_task_state(p, SCX_TASK_READY);
->=20
-> Can this cause a Time-Of-Check to Time-Of-Use (TOCTOU) data race =
-against
-> sched_ext_dead()?
->=20
-> The code checks list_empty(&p->scx.tasks_node) under scx_tasks_lock to
-> determine if a concurrent sched_ext_dead() has started processing.
->=20
-> However, once scx_tasks_lock is dropped, sched_ext_dead() can acquire =
-it,
-> remove the task, and proceed to exit the task, eventually doing
-> p->scx.flags |=3D SCX_TASK_OFF_TASKS under task_rq_lock(p).
->=20
-> Meanwhile, scx_root_enable_workfn() continues past the lock and
-> unconditionally calls scx_set_task_state(p, SCX_TASK_READY) without =
-holding
-> task_rq_lock(p). Because scx_set_task_state() performs a non-atomic
-> read-modify-write on p->scx.flags, could this overwrite and =
-permanently
-> lose the SCX_TASK_OFF_TASKS flag?
->=20
-> Also, could this incorrectly transition a dead task to SCX_TASK_READY =
-after
-> its scheduler resources were torn down, triggering a warning?
->=20
-> --=20
-> Sashiko AI review =C2=B7 =
-https://sashiko.dev/#/patchset/20260506054001.1105522-1-suzhidao@xiaomi.co=
-m?part=3D1
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index b8871449d3c6..a1993f97bec2 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -10677,7 +10677,7 @@ void call_trace_sched_update_nr_running(struct rq *rq, int count)
+  * acceptable tradeoff as it completely avoids complex serialization,
+  * memory barriers and atomic operations for the common case.
+  *
+- * Aside of that this mechanism also ensures RT compability:
++ * Aside of that this mechanism also ensures RT compatibility:
+  *
+  *   - The task which runs the fixup is fully preemptible except for the
+  *     short runqueue lock held sections.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 38d90baf78cf..fa99ba358c09 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5203,7 +5203,7 @@ static void bypass_lb_node(struct scx_sched *sch, int node)
+ 
+ 	/*
+ 	 * We don't want CPUs to have more than $nr_donor_target tasks and
+-	 * balancing to fill donee CPUs upto $nr_target. Once targets are
++	 * balancing to fill donee CPUs up to $nr_target. Once targets are
+ 	 * calculated, find the donee CPUs.
+ 	 */
+ 	nr_target = DIV_ROUND_UP(nr_tasks, nr_cpus);
+@@ -8025,7 +8025,7 @@ __bpf_kfunc_start_defs();
+  * task is inserted.
+  *
+  * When called from ops.dispatch(), there are no restrictions on @p or @dsq_id
+- * and this function can be called upto ops.dispatch_max_batch times to insert
++ * and this function can be called up to ops.dispatch_max_batch times to insert
+  * multiple tasks. scx_bpf_dispatch_nr_slots() returns the number of the
+  * remaining slots. scx_bpf_dsq_move_to_local() flushes the batch and resets the
+  * counter.
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 728965851842..2a3025bce927 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -13728,7 +13728,7 @@ static void propagate_entity_cfs_rq(struct sched_entity *se)
+ 	 * If a task gets attached to this cfs_rq and before being queued,
+ 	 * it gets migrated to another CPU due to reasons like affinity
+ 	 * change, make sure this cfs_rq stays on leaf cfs_rq list to have
+-	 * that removed load decayed or it can cause faireness problem.
++	 * that removed load decayed or it can cause fairness problem.
+ 	 */
+ 	if (!cfs_rq_pelt_clock_throttled(cfs_rq))
+ 		list_add_leaf_cfs_rq(cfs_rq);
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 9f63b15d309d..22d8924854a8 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -394,9 +394,9 @@ extern s64 dl_scaled_delta_exec(struct rq *rq, struct sched_dl_entity *dl_se, s6
+  * between defer and replenish but never actually enqueue the server.
+  *
+  * Only when the target class does not manage to exhaust the server's runtime
+- * (there's actualy starvation in the given period), will the dl_server get on
++ * (there's actually starvation in the given period), will the dl_server get on
+  * the runqueue. Once queued it will pick tasks from the target class and run
+- * them until either its runtime is exhaused, at which point its back to
++ * them until either its runtime is exhausted, at which point its back to
+  * dl_server_timer, or until there are no more tasks to run, at which point
+  * the dl_server stops itself.
+  *
+@@ -405,7 +405,7 @@ extern s64 dl_scaled_delta_exec(struct rq *rq, struct sched_dl_entity *dl_se, s6
+  * subject to CBS wakeup rules -- without having to wait for the next period.
+  *
+  * Additionally, because of the dl_defer behaviour the start/stop behaviour is
+- * naturally thottled to once per period, avoiding high context switch
++ * naturally throttled to once per period, avoiding high context switch
+  * workloads from spamming the hrtimer program/cancel paths.
+  */
+ extern void dl_server_update_idle(struct sched_dl_entity *dl_se, s64 delta_exec);
+diff --git a/kernel/sched/wait_bit.c b/kernel/sched/wait_bit.c
+index 1088d3b7012c..47ab3bcd2ebc 100644
+--- a/kernel/sched/wait_bit.c
++++ b/kernel/sched/wait_bit.c
+@@ -207,7 +207,7 @@ EXPORT_SYMBOL(init_wait_var_entry);
+  * given variable to change.  wait_var_event() can be waiting for an
+  * arbitrary condition to be true and associates that condition with an
+  * address.  Calling wake_up_var() suggests that the condition has been
+- * made true, but does not strictly require the condtion to use the
++ * made true, but does not strictly require the condition to use the
+  * address given.
+  *
+  * The wake-up is sent to tasks in a waitqueue selected by hash from a
+-- 
+2.34.1
 
