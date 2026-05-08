@@ -1,204 +1,209 @@
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com [209.85.128.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012026.outbound.protection.outlook.com [52.101.43.26])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E0E37AA72
-	for <sched-ext@lists.linux.dev>; Fri,  8 May 2026 14:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.74
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778248977; cv=none; b=gDuJTqt61Cm2h8kc9uqCb+kg5qqQ/QFfZM9eLz6I3xjE+vpShAccaXQRAETRPjZ9GB/zJCp6CYGDOOk7MvPCNWc3CTNEjZU3jVbz/87YtB6m5vDGEwlphaM8AeyCYwkQ2w7+HYBi208R68emoI7GxTqexCfy1WFsOmlWRC8DNjs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778248977; c=relaxed/simple;
-	bh=wFDH1o3olfLg5Ia+rpt7qq+s9E6GpSnwIOlVVU8i2Tw=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=e5xSZ1+o0e7lwP+BQDNrsxbXHNm6Kawq/4lR0NOLetenjgKWkpKYKDaXFHJlwLwculY2kT1/cIg5XmP+KbWDa3zSjXjiv8AQkEjP+4E85iRcvYBvsomeNNdcReZZHp/9lOUrqhV313ENjIMLOVsl4M/qntaWpPtX92TZx+FFjFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YSA5c/ML; arc=none smtp.client-ip=209.85.128.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BA43E5EC0
+	for <sched-ext@lists.linux.dev>; Fri,  8 May 2026 14:14:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.26
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778249691; cv=fail; b=s+CWNqBlHIbK5379C1uNH0JYkaWAs6Wgp+GiFkaT4r5nkn+CfV9THPjQ8KJzEnn2L2vyuFIB7+WARpe/L0smHzEW30TYsryg3kFD8gxXjEY+xatIwzfg6cjq8DMxgAPBiqaGVCsyWGWtTYJ0V0OIK/9G6Ol8d/DuNsN1HpgqsGA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778249691; c=relaxed/simple;
+	bh=FOjbj78tqru7pf9uB2vXkLwL2xvEaV18QyZ64oiKCJs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=jeRKnTXsVugnxM5qO6xjuht+IzErL4P0tjfvvjbGKOAv0f2tvo62n/LO9FQa7guxXkCCxZaxdMY18iJefJ3lXRAL65H56CT4ibPXZsccnTsI1RQ4D8AJgfuxvoAA742yQzHBVuQJDwBNEGwbxgZck/DdrtWB54mIuMjzzLuzZCE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DKwWGu8v; arc=fail smtp.client-ip=52.101.43.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YSA5c/ML"
-Received: by mail-wm1-f74.google.com with SMTP id 5b1f17b1804b1-488c0120047so12710605e9.0
-        for <sched-ext@lists.linux.dev>; Fri, 08 May 2026 07:02:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778248974; x=1778853774; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VXcmRThuEWO63YTSaN19aEGemVtVdbv7aDPqYYnwWkg=;
-        b=YSA5c/ML3i9MKPMT8AWU7cDTmCr26rSy6z3oqrFAP3Gt41r8Ys9C0Jf+TGu/mr9xHZ
-         Pm5zeWsZ5M2yFg8WCcupaCyLuRpPVwlLhkg7ZpmMPYVAhcfPT8lOyr/1rSL96KgfekrI
-         lLyAa6gEIpqlOmrwBstO2yclfAmLV5cEIR6qf0Mu5ojn1DdHLT7VfSBg/9oL9J+xFNlc
-         JEfmx6slc2yJrRQtDvD5Dc84IngxJFBcd+DPnh2DqrH+pKlx2T70zC5INLgWsfYM20WU
-         VbdKYAE17YjNz5WC8YUNGmA5CgMqPT3mYrTTAg84wJWdApYPmRF6EpLIBofaKLeKGupW
-         SLAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778248974; x=1778853774;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VXcmRThuEWO63YTSaN19aEGemVtVdbv7aDPqYYnwWkg=;
-        b=IAhOZ7dQ+uzzSpAHB5LwBl+pfbk0QMgfhY0eYoCsX9rcNTo9EU+Rk9quuxElSGJ1vb
-         gmACpkiO/cdBwe6yRv7nDKx1huTnr8oZXWHWFJ2eZri3ukskXbHs8JZAPSMsZ1nKjm3A
-         fFWi2InTiqkqAmBUrEucvdbfEzyWu9zrLSU3Kg0OzFNf7qwV5NsyifT2acamh60mboNe
-         0zmlDqU38tiPLEYBIsGMuK+RFL0sBOuINwgrFMaf+yBuYKVg25pndzUQsbljcDnQ1QEu
-         urUf7WMmS9h/XCAASHB1kfd7zk9i/9sR8PlEYRzvH6lS08MPUD1wnwMoGoRnmI4iqpu0
-         psRQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8PiXM1b9fAtP5fxg/CymAg5Y7w8ta3T3FUAvAcoieOfuOKlKw7r2s2XZIBbRLb9jWcARKjLPTvybs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw1jm4Er81tHmeUvIu9SUWwCi6PEHq/mCVSUyVM+rKcyAX0Xdwu
-	YrHaXRFhVqrX6dw6fxWaPpnGrr+hxluXa+1peJOMdPuGiSwhhZn2Nv5Qyqaarzp+nb/4fcUw7Kq
-	7YM6KDnbad60MwZrnUg==
-X-Received: from wmlf10.prod.google.com ([2002:a7b:c8ca:0:b0:48d:146d:6669])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:1797:b0:48d:366:b962 with SMTP id 5b1f17b1804b1-48e51e0a8a8mr106370715e9.6.1778248974199;
- Fri, 08 May 2026 07:02:54 -0700 (PDT)
-Date: Fri, 08 May 2026 14:02:45 +0000
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DKwWGu8v"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=s2HnaptV6ojCT1cpQlSEKsbOh5LJPpXIL3j+9gUMOHHDPX6mMPThPZk7w99fAq0ODQKXRRVnLsfPoERifU01bK+9FFwYuiv0ZOmpJ/Nz7BxLIoM8nAvZcPgicA6/M1zI3897qWdLEscH7nDUaOYcg6OqJkiyMFl1julZfG3OZ1WS5XpP+XwQCpLPebJhWF4OHSia0OIpsEMNeNOHpANQB1HhfUJQZglLO+fzEwT++rs82WYHawLhE334BTliQEjG4Z7sMiI/2dnuzkKtRLYqY5Ygd6sVQ5wC1xHO2v2FPbBK2GMPqUj1TFU7XXNWNKLyUJBpHLE0dh+B7CqS/Jrtog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8Hg2XgI5ApE6URHXmX6vJYqdg8RfF3b9X/fRn69KCeE=;
+ b=MpEZmxZzum9fhsY7b2Iy6WPTeldRbs3kOfg0uq6Omro9dduWU4JDqoYJ8dEaIm7dp+l2eLPPDY29eRIZ1CQkDj33eAsW0GmdGmAWFlQxgluutJS+MIbAKV0gfhXfc+7TcBydOBRAY3m/3UFvrO2wC13IZ680fzLg3+nsPsPwCTn3+O/FphWGEy61N/7fN+T3ukAFrzePIJHnNH31uO8ec4oSHf/LHVuLPvzmNSxodggT7DFH3j5Vj0oQZIrxLkz/hybL+XCuX8ghUKS3PN0ZUByfrMAioKizmfDK8CyBG/nHAU6cc0FfCO/r95SJ9Ia/tHgiGzUBcgE8EwQ5KmurLw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8Hg2XgI5ApE6URHXmX6vJYqdg8RfF3b9X/fRn69KCeE=;
+ b=DKwWGu8vcRi8xyTA2O3hOOGQW9Q/hJQw0wGm180syxSUhHZPMc2fXd+rmtWlqg/Bo874u4XOrXDLVS4wDECHS2lkycdjoSo4u5OOEZMfP8+jy9efVCEZ+5YIu+PXw4H6E0/rJC8C1bhnTOL4wCOdmBbDFb4u+9OWFcoLx6+3lkbhs8QN7exao95QCFd0NDNN7xmqTisiKZTPn0KEp+g/EzwQLIEPMDkOo0m9nfCv2sDDXubwdVEo5MpkGf3141kUn/3rzg7hiqy6KZ3hAKyLzT+URvau4uZX0HMDZu/VsML7dZypYPQO+9kl7X0uThWzHMJdPxMhwOloSV4kBOoq1Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH7PR12MB7017.namprd12.prod.outlook.com (2603:10b6:510:1b7::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Fri, 8 May
+ 2026 14:14:43 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9891.017; Fri, 8 May 2026
+ 14:14:43 +0000
+Date: Fri, 8 May 2026 16:14:27 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Christian Loehle <christian.loehle@arm.com>
+Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, tj@kernel.org,
+	void@manifault.com, changwoo@igalia.com
+Subject: Re: [RFC][PATCH] sched_ext: Allow consuming local tasks when aborting
+Message-ID: <af3vw6Sjh1dW8oEA@gpd4>
+References: <20260507135642.692290-1-christian.loehle@arm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260507135642.692290-1-christian.loehle@arm.com>
+X-ClientProxiedBy: ZR2P278CA0028.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:46::8) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIAAXt/WkC/x3MQQ5AMBBA0avIrE1SjSKuIhbFYCJKOiVE3F1j+
- Rb/PyDkmQTq5AFPJwtvLiJLE+hn6yZCHqJBK10ooyrcj4DByoIS/NEHXK270XSm02NuKStziOn uaeTr3zbt+34VHkJuZgAAAA==
-X-Change-Id: 20260508-put-task-struct-many-5b5b2f4ae174
-X-Developer-Key: i=aliceryhl@google.com; a=openpgp; fpr=49F6C1FAA74960F43A5B86A1EE7A392FDE96209F
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5092; i=aliceryhl@google.com;
- h=from:subject:message-id; bh=wFDH1o3olfLg5Ia+rpt7qq+s9E6GpSnwIOlVVU8i2Tw=;
- b=owEBbQKS/ZANAwAKAQRYvu5YxjlGAcsmYgBp/e0La+wERa4SgFHFwZzu6XdSGRui6vLxCtQ1s
- 2d/uBZx5ViJAjMEAAEKAB0WIQSDkqKUTWQHCvFIvbIEWL7uWMY5RgUCaf3tCwAKCRAEWL7uWMY5
- RuFiEAC5xbqkM6wsZulENtzyW35yQTipHX4FGSiCnlBNG0C/ALdZUnlYbHusE/PbThUZAzDPICP
- 6NZoIe83p3LB102k3/H0nmM7h//WpfKQ+beNIitFlu5nJRvEn9yoWUnmxQRdfhhEdVFC+fwGS4G
- WXqGDf/g+jN0avXueIXVT6U+sU9vuHkM2HeDzEL54K19PBK7YTUiltoW8M+5TsNyivxsFUtGwD0
- DtoGh6Fc8fQztcEMzvtmND0SEHYnPYTUwl2Gd51Zse/f48HnAyqxC224v7NUBC18JGmXVHocAlK
- AYDGUQBbjBK6wvlR/pkxWRIWQGgrPlWjkcvat7XvfuYpBq44CYtoOhrU1quGlTSGN0U3z7ed+41
- 25V6gvY1uF7yL9n4NgfoPXlUNsZJKU9Fe3y983KzVvCqOiz5HbWhHgmZlxgQSt+P4aNLMqX56wB
- SWbLJ6GZwVvpZz6udveJg+SuwxQ8/yAnYuy1griDWwfQE3/pN2o7qtg1jCfLh3qTKPRUNN3cYrb
- IvrR4dBTpFOBXSCOpzFf6Vf2GNiTpsBfCTmTQBCpEHfukjHLCJ7SnOUA5s0G57YQ0y3mzF0oXuW
- xZZJUR19vdEiUc6Od57NHsULjnuePCAUcJal5yb56ov32Z8sfFhdZq5cWZAX4nnqOdKS0zG9ez4 5VKjj2h5MtF98Aw==
-X-Mailer: b4 0.14.3
-Message-ID: <20260508-put-task-struct-many-v1-1-8341c18141a6@google.com>
-Subject: [PATCH] sched/task: always defer 'struct task_struct' destruction via RCU
-From: Alice Ryhl <aliceryhl@google.com>
-To: "Paul E. McKenney" <paulmck@kernel.org>, Andrea Righi <arighi@nvidia.com>, Boqun Feng <boqun@kernel.org>, 
-	Changwoo Min <changwoo@igalia.com>, Clark Williams <clrkwllms@kernel.org>, 
-	David Vernet <void@manifault.com>, Frederic Weisbecker <frederic@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
-	Jens Axboe <axboe@kernel.dk>, Joel Fernandes <joelagnelf@nvidia.com>, 
-	Josh Triplett <josh@joshtriplett.org>, Lai Jiangshan <jiangshanlai@gmail.com>, 
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>, 
-	Uladzislau Rezki <urezki@gmail.com>, Zqiang <qiang.zhang@linux.dev>
-Cc: io-uring@vger.kernel.org, rcu@vger.kernel.org, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev, 
-	Alice Ryhl <aliceryhl@google.com>
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH7PR12MB7017:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1e80bdb1-e730-4ab5-9575-08dead0c26c9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	z+W3FG6GgjsbD0dfzlyj+RCSmeJ3AAovZ+PlFGigzW/8/rYp+okJR5Y5RCp4KNpWYawB4xZWTh1ItcI+jZxaNncAhI9+m42ga9V5KeRFLjEOD6SEDvnktX/Q9WKrQ2V6HYUWxGT2q8VCTKC9zMZtOIlDxd8r5KySQ5H2QUvM6qjuGaRUHkkN2yw0OeGU21MkH2K3UscqNp9NM6aAN513Drhp+KaxjamXnEDV+py+2+w4BCQPBF53rimqBVcngayf2q0fAj7DLFxcUWt8E0k8TsPN4VJO6zfzxulpugLWlzmg1LBzlClFjj4SvzdMY2EKwaf1oXt7pWHjVDjqKmp+O07sKZd4peIVGO8r6oh7h/WjLnjq0rXthTIeeMV3ERqonFduckYOHPTrLcZWSWQ8xd1di/JTRbtUljY01dAcRbEdysrb/yx5GfxC8ZA715p1QBl8bCGYMVb9Q2PDLRmQ8vVHyA4euxkA9FFKEStixcb/qwy13ZwS03zusnzZHO8O5yDyk9zRcF73lFBlLUfnUMYZje5n0SBj59UwqswIOuD02MavUY/gjxbZ88s8riQC+zOzewo6ixQEmp+DlPDSim5+V7w/R0ChF4zWHoPRBKHw178UNSYZ1nMnVlweuwTzSjrm7u0Y3ueYirNNoU6VUUzod8ldxsB8ljSpZDTMxwC8S7rG4lLNeJsNn9vIaHm9
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?rRikoMHo0XNdSFknEbd3WPBihdm9KZtqPM3w5MHJEZog9Iu+XI/yJH6BFALR?=
+ =?us-ascii?Q?yWZ9ELJ+4gXMGAaJaebkT6907mCC/pAT7X3ZxU5BMPrCDFiHfPLe0GBRUoG1?=
+ =?us-ascii?Q?1uD8e6wdnD4Z0caj5q5wenJrEyKSZC6M8tXmJ+wtPArOdtJqHnSPaOcCoA2x?=
+ =?us-ascii?Q?kpviL4vv+lQhbNQPX8uNjw3urmZAIxipkRWqnOVdLKsAlpWEIG1afsVObbcE?=
+ =?us-ascii?Q?P/1tGYoHgIJb3vzRU+4l+6Ysra1e1HSFDnKOGsDMx8ym9R9noOlJeinY9py0?=
+ =?us-ascii?Q?sGihLrW846bxoBNkP3iqQ+S+MLWo2MEtPxkgkfqW3EoIRZqVvmT6D3BRaWQw?=
+ =?us-ascii?Q?jsEo1E7tDcc/0k3xnVx3IuD/uncZLyVUSLRfVTB3fGHyNGAlew82hN2tc8C5?=
+ =?us-ascii?Q?ueyX0k4H+2IKNFMqPE7CZAUCCwdBXxanj2oZa0JKTl1CPscJ8fyslTNHoATF?=
+ =?us-ascii?Q?bhJuGzrZMoy2H21iIYWGfP5CZq2h8MNyEHeoEE4J5fjlWHcnZXLnD702eQ3I?=
+ =?us-ascii?Q?6rslxGn1qZqwGhMWSpoJFTwg/IJVFZwmqzbuaFE+odtiOE0DFPHev05UDWTJ?=
+ =?us-ascii?Q?egSeTWNh+walyo+QSUmfxa4/oxPVlbFzzMQBkb+XhxzCrYjM09KRMqAsIvtl?=
+ =?us-ascii?Q?fA9hiPegiDRdPehwpfewW9HOtZuvH7UkTo8/lNlkL4L+mrIOaP/xNNcM9JpZ?=
+ =?us-ascii?Q?DR4HMndZhtqj03/qmEuj59M/Z4dJYanUBP5IGJl5o9Ejq2QK8yJHdkUns2qI?=
+ =?us-ascii?Q?GMscoGOWjEXOZGxquY4vyaKz/KKxFBMeTXguGu4vTcQI5n3l7sMZpj0xtIxo?=
+ =?us-ascii?Q?EDAROFeu5vXn4zxLeiPQmMjo7TXV798HxG5B/zy5Wtr7mHPoOG+Z6WZ6ndgm?=
+ =?us-ascii?Q?H7HWbgQImpH+wkiU9qwhXnxa/1r8+7aaM+/EtK10t0aNTcbHyqRZ1jxPioYN?=
+ =?us-ascii?Q?jQzUBWVM43GgpVSonx1pqkN/lDr2UOLR0FhSBgiC30kGaGrxT17h1nU9B2xd?=
+ =?us-ascii?Q?y0jibYLbSjXzkSPoYPBU7ivWt0f7mYG/vsTruyB1zG95ZMW3icIzHRngQtJi?=
+ =?us-ascii?Q?JYMYZpuWt4MMZBhaJaIRYRpddc1c93UuxpJIxEv9osAcFkQecULlFD3t1Qw8?=
+ =?us-ascii?Q?ZnhC961V0mcVZrPNOpmvkAHqeOzVw+xKBgUsJ8REfVR+/2wnFqxHGU+COvMY?=
+ =?us-ascii?Q?MW9fGsvCcs4TQjMWP5288lks7G5e0htMwlVWllt5AZ/AhpXSqi5ojH6NwBIH?=
+ =?us-ascii?Q?ZGo4ww9oihC5JMlA/E3h1pPJQBByhH/h6x2NGVKRW4iVJRXW+HmlNiSTUIhJ?=
+ =?us-ascii?Q?mIhqiOIVHqGtuEmGy+I4GRMLja6Qf/Kbp17T0YhAtNwpRkuiQtogi4+5IYNq?=
+ =?us-ascii?Q?QCJ9Xx0Xr67VARdYI4coD9K5AZKre3mNP0EwAd/e4a8So8LXfL43LjnF1i1w?=
+ =?us-ascii?Q?2TxJRb4Yy/dwZr4NlZgbL89OvYThprZK2wak216ZvW0SU4e03LcOMPrnMbL2?=
+ =?us-ascii?Q?epO8aDm5EvEbX+qqtUKqiQSohInmiFXDW82OoLmXyXHP+I84yHc49193QmHz?=
+ =?us-ascii?Q?SwDO1f+yjv59Ypd5nyrD27DJTtiNVPm7jpuQiKMTfKM6Kpfu10CHn+R8T3nh?=
+ =?us-ascii?Q?J+E+f/X8v2plNcty4hKy3mCWkLcal7dhFRmJ3tmJxkntKoAVj0soIsHyXuop?=
+ =?us-ascii?Q?0Or9mi3GNMjYZSJCuOS+u9DmzEPx2wJg4jGyou3AmSagDIpffciE/dQJPTbi?=
+ =?us-ascii?Q?qRW2NKVM/A=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e80bdb1-e730-4ab5-9575-08dead0c26c9
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 14:14:43.7601
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TOHTYCgaFLICSOf+xX2JY1nTuWEKHKsXtq78IEbf8kJ1tTIHQx5y2kh+7Q+QCJHZwTrz8xmwYduhEkLnzllx/w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7017
 
-The sched/task.h header file currently exposes a tryget_task_struct()
-function, but it is very risky to use it: If the last refcount of the
-task is dropped using put_task_struct_many(), then the task is freed
-right away without an RCU grace period.
+Hi Christian,
 
-This means that if the kernel contains a code path anywhere such that
-the last refcount of a task may be dropped with put_task_struct_many(),
-and it also contains a code path anywhere that tries to stash a task
-pointer under rcu and use tryget_task_struct() on it, then if they ever
-execute on the same 'struct task_struct', it results in a
-use-after-free.
+On Thu, May 07, 2026 at 02:56:42PM +0100, Christian Loehle wrote:
+> When aborting, consume_dispatch_q() breaks out of the task iteration
+> loop entirely for non-bypass DSQs. This prevents CPUs from consuming
+> even their own tasks (where rq == task_rq) from any DSQ.
+> 
+> This causes a deadlock during CPU hotplug:
+> 
+> 1. The BPF scheduler's cpu_offline callback calls scx_bpf_exit(),
+>    setting sch->aborting and queuing the disable_work on the helper
+>    kthread.
+> 
+> 2. The helper kthread (and other tasks) are stuck on the global or
+>    user DSQs because bypass mode hasn't been entered yet.
+> 
+> 3. No CPU can consume these tasks due to the aborting break, so the
+>    helper never runs scx_root_disable() -> scx_bypass().
+> 
+> 4. The cpuhp thread is stuck in balance_hotplug_wait() because the
+>    dying CPU's rq never drains.
+> 
+> Tasks on user DSQs are equally affected: BPF schedulers can dispatch
+> RCU and other critical kthreads to user DSQs, causing RCU stalls when
+> those tasks become unconsumable.
+> 
+> The aborting check was added to prevent live-locks from the remote task
+> migration path (consume_remote_task() -> goto retry), but also avoid
+> holding the dsq->lock for too long.
+> 
+> Change the break to skip only remote tasks via continue, allowing each
+> CPU to still consume tasks already on its own rq. This unblocks the
+> helper kthread, lets bypass mode activate, and allows both hotplug and
+> RCU grace periods to complete.
 
-The above applies even if the RCU user drops its own task reference with
-put_task_struct(), because if that is not the last reference, then it's
-possible for another thread to invoke put_task_struct_many() and free
-the task less than a grace period after the RCU user called
-put_task_struct().
+Have you been able to reproduce this stall condition?
 
-There does not appear to be an actual problem in the kernel tree right
-now because there are no in-tree users of put_task_struct_many() where
-refcount_sub_and_test() might return 'true'. Io-uring invokes the
-function from task work while the task is still running, so it will not
-decrement it all the way to zero. (Note that if I'm wrong about this,
-then it's probably possible to trigger UAF by combining this codepath in
-io-uring with the tryget_task_struct() call in sched-ext.)
+When the kernel forces bypass, scx_bypass() explicitly walks every CPU's
+runnable_list and cycles tasks through DEQUEUE_SAVE | DEQUEUE_MOVE so
+dispatching stops depending on BPF.
 
-However, the current situation is fragile and error-prone.
-- If you look at put_task_struct_many() in isolation, it looks like it
-  would be okay to call it in a situation where refcount_sub_and_test()
-  might return 'true'.
-- Similarly, if you look at tryget_task_struct(), you would assume that
-  you are allowed to call this method for a grace period after 'users'
-  hitting zero. (If not, why does it exist?)
-But if two different kernel developers anywhere in the kernel make these
-conflicting assumptions at any point in the future, then the combination
-of their code may lead to a use-after-free if there is any way for them
-to interact via the same 'struct task_struct'.
+On CPU hotplug the helper kthread (and all the other critical kthreads) should
+be also in the runnable_list, so they should be moved to SCX_DSQ_BYPASS and
+consume_dispatch_q() should be able to consume them.
 
-Thus, as a defensive measure, we should either make
-put_task_struct_many() use call_rcu(), or we should delete
-tryget_task_struct(). This patch suggests the former because it does not
-change anything for any callers that exist today. (As argued previously,
-the body of the 'if' statement is dead code in the kernel today.)
+Maybe the problem is that in do_enqueue_task() we keep tasks on the local DSQ
+when !scx_rq_online(rq), instead we should prioritize the bypass condition.
 
-The comment in put_task_struct() is also updated so that nobody changes
-its implementation to only use call_rcu() under PREEMPT_RT in the
-future. The current comment suggests that would be a legal change, but
-it is similarly incompatible with anyone using tryget_task_struct().
+Does something like the following make sense to you?
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
----
-Including sched-ext and io-uring in the cc list as they are the only
-users of tryget_task_struct() and put_task_struct_many() respectively.
----
- include/linux/sched/task.h | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+Thanks,
+-Andrea
 
-diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-index 41ed884cffc9..da2fbd17b676 100644
---- a/include/linux/sched/task.h
-+++ b/include/linux/sched/task.h
-@@ -131,19 +131,25 @@ static inline void put_task_struct(struct task_struct *t)
- 		return;
+ kernel/sched/ext.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 7ac7d10a41bef..277110d950c30 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1901,6 +1901,17 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	 */
+ 	p->scx.flags &= ~SCX_TASK_IMMED;
  
++	/*
++	 * Check bypass before testing the rq online state: bypass mode stops
++	 * processing local DSQs, so tasks should be routed through
++	 * SCX_DSQ_BYPASS rather than dispatched to the local DSQ during CPU
++	 * hotplug events.
++	 */
++	if (scx_bypassing(sch, cpu_of(rq))) {
++		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
++		goto bypass;
++	}
++
  	/*
--	 * Under PREEMPT_RT, we can't call __put_task_struct
--	 * in atomic context because it will indirectly
--	 * acquire sleeping locks. The same is true if the
--	 * current process has a mutex enqueued (blocked on
--	 * a PI chain).
-+	 * Delay __put_task_struct() for one grace period so
-+	 * that tryget_task_struct() may be used for one
-+	 * grace period after any call to put_task_struct().
- 	 *
--	 * In !RT, it is always safe to call __put_task_struct().
--	 * Though, in order to simplify the code, resort to the
--	 * deferred call too.
-+	 * This also has the benefit of making it legal to
-+	 * call put_task_struct() in atomic context. We
-+	 * can't do that under PREEMPT_RT because it will
-+	 * indirectly acquire sleeping locks. The same is
-+	 * true if the current process has a mutex enqueued
-+	 * (blocked on a PI chain).
- 	 *
- 	 * call_rcu() will schedule __put_task_struct_rcu_cb()
- 	 * to be called in process context.
- 	 *
-+	 * In !RT, it is safe to call __put_task_struct()
-+	 * from atomic context, but we still need to delay
-+	 * cleanup for a grace period to accommodate
-+	 * tryget_task_struct() callers.
-+	 *
- 	 * __put_task_struct() is called when
- 	 * refcount_dec_and_test(&t->usage) succeeds.
- 	 *
-@@ -164,7 +170,7 @@ DEFINE_FREE(put_task, struct task_struct *, if (_T) put_task_struct(_T))
- static inline void put_task_struct_many(struct task_struct *t, int nr)
- {
- 	if (refcount_sub_and_test(nr, &t->usage))
--		__put_task_struct(t);
-+		call_rcu(&t->rcu, __put_task_struct_rcu_cb);
- }
+ 	 * If !scx_rq_online(), we already told the BPF scheduler that the CPU
+ 	 * is offline and are just running the hotplug path. Don't bother the
+@@ -1909,11 +1920,6 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	if (!scx_rq_online(rq))
+ 		goto local;
  
- void put_task_struct_rcu_user(struct task_struct *task);
-
----
-base-commit: 7fd2df204f342fc17d1a0bfcd474b24232fb0f32
-change-id: 20260508-put-task-struct-many-5b5b2f4ae174
-
-Best regards,
--- 
-Alice Ryhl <aliceryhl@google.com>
-
+-	if (scx_bypassing(sch, cpu_of(rq))) {
+-		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
+-		goto bypass;
+-	}
+-
+ 	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
+ 		goto direct;
+ 
