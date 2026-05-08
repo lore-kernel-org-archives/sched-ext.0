@@ -1,349 +1,467 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012028.outbound.protection.outlook.com [52.101.53.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDC532E6BD
-	for <sched-ext@lists.linux.dev>; Fri,  8 May 2026 07:40:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.28
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778226033; cv=fail; b=Dq1KfG/ozkKP7OluZeEYH4jDLjkt7LHu0tHUEI2Wa4X1q+MrcCsjuUMtFXFaQbETtv7X1mB9whZ24SF8wb/0uMTW3ahQCA/TCff/FffmIpv0+C3jm6yT2gSDTbjJkJic7wWqrhvgQjUBB8bam9U2Y1FIjisFmkfs7cU65KdfygA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778226033; c=relaxed/simple;
-	bh=8EGrBZHbI+CaYIVT2ax7FZzoESH6MEHL7NwEn6Id91Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=JoEH4eZxYkCuzoWOy4eopEtyLL2Gomz0bBRHT0d/4qQnvW1OuiFJcFR8ErX5lyBuFoGfO3Vdq04gE41vOczCuL3RHi7eXjOKKI5ASp6c9CixViWhveh1wV3TYq1NO1WMuamkyrGKw1E5tKHL7DO1/jTkiByfiuj2fY1qEOO1yIg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jEjUhcMy; arc=fail smtp.client-ip=52.101.53.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CCC37E303
+	for <sched-ext@lists.linux.dev>; Fri,  8 May 2026 07:52:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778226730; cv=none; b=qsb/0u4EisltCHUuHpHqVq2ZJU4EGEGAWq61hUQ4I3uh/iP4dtVHDFA2OlLBohLfZSV6HwpVCEno4+ZofWM1fKmtELC+BxSnm9Zkgv71gm64HIefS5KyJdDxyq3djs2MADSzZjh24zAXRDNcBbzKKNsEB8rslTP7rpiBa979Z5o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778226730; c=relaxed/simple;
+	bh=QbNWoa1qIsCZ6h37ALp5edJjeNQqRpD+pRIJqIDDPLs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DcvTMG5K6RmYyzaaUzRcafYAnN9yN0G3nKP2KYQWWt9kAS892SBFcnD9g88uYzESsGqdVbbrCHDLI00nAJNmVcj7KFRxjMd7Yn2HtM/vPFmkc5VoxNYbotFE3VAQy0bft7bGw2jWeWqHV+dKAy3RE+1YAHgBrklpVfmqfj2v2V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NEmoP9xZ; arc=none smtp.client-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jEjUhcMy"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rMW2E8tlxO6Q6qY4zMA1QoW/x3wJtzn+uuqQiIVslyB0lNWYZ+ekY6SxdqwNEZw5izA61QRUmzKNWaGxqUkB85l36qo5MxhgiN+RzPdZpZF39nKtoFzh5P6paL5ef+0aFs7ozoZt6oeU95GAjpS4FKTxIvj/37w7EWP8d/QThfIlJDG9AQKYkC/nfCr8/dnQz/8YDlvLWdpe57xNRLoOctmhVnXuUq354m6neLcJV1jMipftYv2tBd7YePgFRZJy1AJJucgTD5oxah0EbYmxf89TFoaf3POBfroo3qouQCNaFVuHd1Lgz5ydd45iddTJA7X0fRgP9FQy20a9KQVaMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xWzPh/em1swiWo2xcit193nFVd1BmWgQbv3cS9jtyO8=;
- b=xBbaEobjaFY1fRik5uXMf7YO10V9Mk2HjP0zG4SeLyoZi9eL31xq6tHxdxnUA78/IOyDr5WtL4qaqpg1fCPi4/PG+1zCwicOD35XPgVZvsjB39tHeGLbnPuClzZToMDHslmeeXs4Yj8RhOSvucQ10GyvKY9jZ+4KVCDpf5T9e+fDsZIC4Tdb7yEesSVIbiPli5z4NeHjKrED8pPx3/8gABpDzGFkcGBX/ArVkBHJv1LlYkFrGx9WPrPPFlylrij7pGruTuMBJk7X9WXiBn5X8vwpsywxosGVwY5umjT09VWg9i46Zkn0wiEPBUf6RzNNH3ShOmBl7JBonRd3i0k7gg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xWzPh/em1swiWo2xcit193nFVd1BmWgQbv3cS9jtyO8=;
- b=jEjUhcMyAUL4no8IaCdYptPYWYY3cY5lDqtT4kNvIQkiR0bc/Oojx8jyj4XfZS7m2cQYjb7HdTv4yYGolXtF9vQOUJIgcX7bZXt9Vrfqclj1/FheFDIx58r6cPeokzGYXMWZ2vM59FHXbaSviXEIF/yeffEsFlaPiY5j5ulNJjyOpw6nKvxSSpfrqWoHHYHjyTj/wPHg94hSNb7qz2KhDLkaWc5Lq0oeqXyxlI/UhedRKxA73cMw8vXL5n/UYY8RuH6LLaFvlcvyeEl2OluvHVl7Bp278PM8j+mHzJdt0kBk+KO/Mp1J55PeQlKfwnbY72RypbrjkGcu1XxLIScfDw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by CH3PR12MB8545.namprd12.prod.outlook.com (2603:10b6:610:163::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
- 2026 07:40:22 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9891.017; Fri, 8 May 2026
- 07:40:20 +0000
-Date: Fri, 8 May 2026 09:40:04 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: John Stultz <jstultz@google.com>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Koba Ko <kobak@nvidia.com>, Joel Fernandes <joelagnelf@nvidia.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/10] sched/core: Skip migration disabled tasks in proxy
- execution
-Message-ID: <af2TVI7ZAw41ZO3C@gpd4>
-References: <20260506174639.535232-1-arighi@nvidia.com>
- <20260506174639.535232-2-arighi@nvidia.com>
- <CANDhNCoKyJGZApptPo=7S-Cdu1FqPPr_Wr9djV1-NzjfVnbkgw@mail.gmail.com>
- <427e64df-2d3c-47a5-925f-ef9a751f1ca3@amd.com>
- <afwxsJiNJcNQrcHN@gpd4>
- <bfb4c8ca-e155-41b8-ab00-1607d9823051@amd.com>
- <afxlvypRoa0qCHhs@gpd4>
- <24ffc508-a806-4be0-9b33-fbe8c02d1742@amd.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24ffc508-a806-4be0-9b33-fbe8c02d1742@amd.com>
-X-ClientProxiedBy: ZR2P278CA0063.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:52::7) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEmoP9xZ"
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2b4520f6b32so3239743eec.0
+        for <sched-ext@lists.linux.dev>; Fri, 08 May 2026 00:52:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778226725; x=1778831525; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lVc9Il3YRzVNGidLNxWPc9mcguOR/ueoaeWWxhFeju8=;
+        b=NEmoP9xZtzrZHzXLeZy6ueAdOUnxPB7lejBoL71dWhpndJ6hBStOKuoj4ee9XoblNx
+         7B13xy5biVNszILjw7LSDR7AJ7I2UXEbqdQHY97Ye0AHL4aputBDaYG4wZ7m4T4QPwTP
+         07rL5oQVatz1pMvCpVA9+406p1q0lK8hTyxatOjZOCV4496IDCGy8pRuh+0cn1xC/Kw0
+         fW46LRBsP3rHuQ/ZRNQ1nP5J0944ZxFHu76FfnLr3+W+sIJyQ6UTMn8rEJn8TdDL/rDR
+         kT1WoXjjQh1vShwWxGkonzHvmclJC7YKCER5A6kza8GrAStQDvn6Y0jT0V6F7V5uJjM3
+         PfoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778226725; x=1778831525;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lVc9Il3YRzVNGidLNxWPc9mcguOR/ueoaeWWxhFeju8=;
+        b=AlNBiwsCPjCTHB2OM59g+qFKj3GH9qww4ZCrlhRWN4Wwns9iQa/YDfnCWhFBTFTWSw
+         bWVPjmS+PgMDyPp1Hr/JW3ywXh9bl2sSIzqVDw0XH3TGJlokBgeRmC8rcXSt9MpkX5lT
+         YD3TDFc6xMK3H9xxBMNPeOEeQZ0tTlx6GobsZqeq5a2LbViXlnEIbycYJSTR3szj85yM
+         x/o4FCWKOI66LJZ7KafI7fuHsHc2YwJn6d9MVDRCbpfuP7oSAHqRbxbrpsU/LAPBKQHe
+         dWQSaL+OrIxsidoVIOMTF/6MykRTHbEcytv6RmlA6m1xvR9KomFYmpMsmlQglG8FXREP
+         xafQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9pIIsjR4klKplU9YQXx0KCdC4uHdJRr5KH08HwxVUVIozXb9FPMqODoEvfYQllgtk8Drw1U6dlFgs=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yys42wJIpgnMmXbwH5R7dSkHlMJYHDK1WZ47kh1eH4YRJqf3EyO
+	LkHl9kd66uRyhSmpnFrLdWsUTVa1ecyX/kb1INDa123v++dWLtVvuivk
+X-Gm-Gg: AeBDiet/Vt8zO+wGDfiSglGQaWVk92RqnrSaJVrFhduTxJlK87HfMpoRlvL6Y6LV4W7
+	/TQd49bD6vUzw0x+2eBCP1j+GtzuMmj5urk4qVkIQ6FZKsq7Ld0cmXN3n/IIloi7MDD4h5gmcxV
+	aA1HlLD9VT/uxKKQq5u+KFci3COVhpWjt3Q0c+VNn6Yt1O6tOgQ6FlCzwFYKI2CU9+S5uhKSTD5
+	IBlUhfSD1kSp9SfUwlqbAqzjRnlpSE8Vr++K0ZHCRW2e6DHcVmThUv/lDDptpJk17919EcwN1fK
+	pMnzLBB4UYFPWbrTz4dzYszFwrgY0jYxcFqYGJ0kMFa0YQ/sDSKesUwckDGeP3OQhEtFE+N3QDk
+	3z2GKZNDpWAxQXArXgUx/AZmdGJzbUeJxQ2vB81g3C6MW7WJSo5+2cH9om1iTSQJ2mxjFrv/+Qb
+	55EOESmmrtQKtEdplq/14AmwN98Lli5G0=
+X-Received: by 2002:a05:7022:ea23:b0:12b:ec15:69d2 with SMTP id a92af1059eb24-1319d14dcbfmr5342798c88.33.1778226725038;
+        Fri, 08 May 2026 00:52:05 -0700 (PDT)
+Received: from wujing.localdomain ([74.48.213.230])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-132781103e7sm1650917c88.1.2026.05.08.00.52.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 May 2026 00:52:04 -0700 (PDT)
+From: Qiliang Yuan <realwujing@gmail.com>
+Date: Fri, 08 May 2026 15:51:35 +0800
+Subject: [PATCH] sched_ext: Add scx_ai_numa scheduler example for AI
+ workloads
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH3PR12MB8545:EE_
-X-MS-Office365-Filtering-Correlation-Id: 30eb0b4b-e03a-4b35-01cb-08deacd50dbe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	Zvq/gW3zghhbw5dW0XaO3DXRcB7Y3upUr8gg5JpjCNm9x9RZvHgdgsW9VjrBox2MyuDBlsvyWVaG1F2F0+BOVr3Wuh4JKHT6OGHa5LPCkuL/pz7Tst0dolIPWYCi5FEmqyiTOUQs24gN23o0AHKUsIz8iBwnPM4FFC9bpVs2ZE8VUBnATaB0IAj0OdX8TCysU0BD+MSdLFJsornqpvAWibKk2kUvEz3k2p90/nSLzXmV6OW3UgYkbCM7kaAwux3hKBy2TK8ZcJlwubOHGvf5313SShNhtWYZgs2IOoV+aLtjBzpPhDpISa5vuiKza1LdWcCtTNyYZiDgjx1SOxJpKStad61UVrPvb7HYx4vheEPqn1OKkiI0q3VLcWH4SgC3sNlwzLLOgXX0/4oeiuCwjibDNo+XgUQyWyHkPxDWAZUi0pml7eLPP1looMtnhZCppyNZWPIu2cN1IWqCVpBrVI3DI/pVM4in1I32oSyHl4bHjq/Q8D1Os6CFu8xw+/okl/u4Mz5CxfUgK3YJjsT7/dpTczktMMP6byzKUiHpdlDxeW06bnThKh9T3PUYY4Px6CWei5O37VxqJyt6QZKZGMuWneJM/OcqyS6ZEhR+7Zbk8YkkYga/MEQlKG7RO7WsJRpTY8V5vYq3xUNubJwH96uhaKP+KCz+5+2hxJt4CqAsKBmiPVz+n7V7gaMC6j2c
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Q0HeUQshfwrS6SdGEZcIRH1RTs+ZRbrA+/8zN2AHAvlC/66rZe5nVL4bLTFh?=
- =?us-ascii?Q?jA++OiP+s1t9Y50LxCqwokAx23q5l7ZiSLAV09RPBOkFO3xz1tkIKSeb5NmX?=
- =?us-ascii?Q?ctrR1LiEmK/0bY0WVv3b6j8QkkjEb+Rj7cZAuvn1IZBy6ofssFz70phuv/kH?=
- =?us-ascii?Q?AFPZ1ut4DGqeKIfhVVMszn/Wzk49lCC2flmP8FQBQt492oQPbk/+Ow+KFtOG?=
- =?us-ascii?Q?X7OSHRLZHxys4s/YiVFZSX3ZffQCBMhwOlhXJl5uEPapypFPtq9/XZum2QcF?=
- =?us-ascii?Q?ZBP5kpp+qwVnccZgvr6fe7mfUDO3/dohaqe2N5tAmRcXswsFKwTSA2l0ika5?=
- =?us-ascii?Q?TWR52kI39Rr8EbUk+/Pqm6/VkXj4GNGmgEB1bxbTBewDMR9JUBr6F6OVErmB?=
- =?us-ascii?Q?7144y/clVzG63NOSlYAraZ6peTpilKw/xQyTuheeRsGdgxxOcO4FjOmS1WER?=
- =?us-ascii?Q?+iCteIQcYO+yG7j+d0Ok7V7Ytbl157S81wvVFVwHhxyFFEkM/psfRwRQ7j4E?=
- =?us-ascii?Q?2fdHqU99jnx3MrG8u4sP7Pw7OYa1FbykhLo+WikT2sdit/7U77QW2S9BlcFp?=
- =?us-ascii?Q?1WBJJ17SNeHtLowG4IfgyQmh9r0lG16lIGwjw/fiMIByuUiV9yfbQP/s3lmi?=
- =?us-ascii?Q?0Zc07lMl6XJaqFLiO97NJuFKSr2x2URhaKrphUZZCh2FfeNPMaq8kJTUZHKr?=
- =?us-ascii?Q?j3BP7jB4MiBLIko56MX6wO988Gfz40O4zjKMYOGKAb9iO8ihKPSq2tdFbYx5?=
- =?us-ascii?Q?DRt51xD4Idr/AWy6Kpn6oRji/jeuOTPt9pfEmExNHs8GUpZm7sKJ1iFq5mAG?=
- =?us-ascii?Q?kuZi3oGAZt75IVtQ5UwmIDpdMCOB/W9m6G7npDfvd/XSFwVZpDxG8Tu95nTy?=
- =?us-ascii?Q?e0FdB1d02Gaoyj40XeNutz/ynw5F75Ko3BGCjJM5cJZCsTL6nkhYHbcfpsEF?=
- =?us-ascii?Q?sRLnSM4l3Mha5YDfECREAUal5zP9hSHaZOeb8/WERDdupoJO7VmtQUF5IHZX?=
- =?us-ascii?Q?DBUM51hTJN1r8JoAWoVgRGudN/HHvMLetOqADAyJXnjs+ibn0z3jKOZ/HA2V?=
- =?us-ascii?Q?DrMvD1ObotO4xqe0J6B+mbmlSeBK+Qj7OitnaaO2Qzzblb7TJwdG+0ZSML+h?=
- =?us-ascii?Q?9W6t+6MTjBxQLsV1K5tbLolG9g8pwVGzUwyty2CWmutkiYOVljLWxm4YnQPM?=
- =?us-ascii?Q?GTkwAx0z1g64L2AjwBnlf9zaLtMinQVVEHdGY0BDinORChMpMXWA9QP6IzxL?=
- =?us-ascii?Q?wejioq6TkAJO0KlbdVi57hX47FdGGncg+J54tE4UiVo6UAve/TNdG/dCHmZe?=
- =?us-ascii?Q?5nEE3sGxRThcHfZ2/DRvL2VN/kKh7sI6JjSJDgTVY62djim+p34d2T4gVShK?=
- =?us-ascii?Q?YH2CKGOwi/Hl8bw41rzZc50VdsGJxJwVfCBiuHzpFNCG2gdBh78U6RfjU2x1?=
- =?us-ascii?Q?pBGasu3lOUsd+LZWJRC2Nq2YSZxJIBtuS4XNtWC3ikv0AecZDEte8g1QHLef?=
- =?us-ascii?Q?mQ/VlzjGLwhs7CzwhKxl9ez6IuQL89DEmYnZ5dZTimWoyvOhrae0e2+hETU7?=
- =?us-ascii?Q?a5Q6PkNTTNuJeIfh3cL1U3ozFN2KM8H9wwDkHC1sGig2TuqT4U4BvOMKfpp+?=
- =?us-ascii?Q?5k/HQWJGT0OH8t7viCxT3SYoVAlSTYFNV2XtHGj54xxg6wonWe47Mg+9m+SR?=
- =?us-ascii?Q?0EeI7mpSSWBgklJWb9AI1QiYlxvFibdrzxbH5bcnNbR+rIvs7KDTAO6PlbTN?=
- =?us-ascii?Q?cq5gJDdWLw=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 30eb0b4b-e03a-4b35-01cb-08deacd50dbe
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 07:40:19.8901
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LC+n+FW/5hgJ+CbTTdnVn99pyAnVxOjNKMx2J15C3yfvSY5471tfNBLCxll+YZ+puKH7vYbl98tNcrvZAGd4gg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8545
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260508-feat-scx_ai_example-v1-1-2b498af3514d@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MSwqAIBRG4a3EHSeYmVhbiQipv7rQC40Qor0nD
+ b/BOQ8FeEagJnvI4+bAx55Q5BkNi9tnCB6TSUllZCWtmOAuEYbYO+4R3XauEBZFaXWtldGGUnl
+ 6TBz/a9u97wfu/7W5ZQAAAA==
+X-Change-ID: 20260508-feat-scx_ai_example-8e1384942646
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
+ bpf@vger.kernel.org, Qiliang Yuan <realwujing@gmail.com>
+X-Mailer: b4 0.14.3
 
-Hi Prateek,
+Implement an AI-focused NUMA-aware scheduler that optimizes task dispatch for
+GPU-accelerated AI training. The scheduler maintains per-NUMA-node dispatch
+queues to preserve L3 cache warmth and minimize remote DRAM accesses that
+would stall GPU kernel launches waiting on CPU preprocessing.
 
-On Thu, May 07, 2026 at 09:17:34PM +0530, K Prateek Nayak wrote:
-> Hello Andrea,
-> 
-> On 5/7/2026 3:43 PM, Andrea Righi wrote:
-> >>>> scx flow should look something like (please correct me if I'm
-> >>>> wrong):
-> >>>>
-> >>>>      CPU0: donor                    CPU1: owner
-> >>>>      ===========                    ===========
-> >>>>
-> >>>>   /* Donor is retained on rq*/
-> >>>>   put_prev_task_scx()
-> >>>>     ops.stopping()
-> >>>>   ops.dispatch() /* May be skipped if SCX_OPS_ENQ_LAST is not set */
-> >>>>   do_pick_task_scx()
-> >>>>     next = donor;
-> >>>>   find_proxy_task()
-> >>>>     proxy_migrate_task()
-> >>>>       ops.dequeue()
-> >>>>         ======================> /*
-> >>
-> >> At this point I mean ^
-> >>
-> >>>>                                  * Moves to owner CPU (May be outside of affinity list)
-> >>>>                                  * ops.enqueue() still happens on CPU0 but I've shown it
-> >>>>                                  * here to depict the context has moved to owner's CPU.
-> >>>>                                  */
-> >>>>                                 ops.enqueue()
-> >>>>                                   scx_bpf_dsq_insert()
-> >>>>                                     /*
-> >>>>                                      * !!! Cannot dispatch to local CPU; Outside affinity !!!
-> >>>>                                      *
-> >>>>                                      * We need to allow local dispatch outside affinity iff:
-> >>>>                                      *
-> >>>>                                      *   p->is_blocked && cpu == task_cpu(p)
-> >>>>                                      *
-> >>>>                                      * Since enqueue_task_scx() hold's the task's rq_lock, the
-> >>>>                                      * is_blocked indicator should be stable during a dispatch.
-> >>>>                                      */
-> >>>>                                 ops.dispatch()
-> >>>>                                 do_pick_task_scx()
-> >>>>                                   set_next_task_scx()
-> >>>>                                     ops.running(donor)
-> >>>>                                 find_proxy_task()
-> >>>>                                   next = owner
-> >>>>                                 /*
-> >>>>                                  * !!! Owner stats running without any notification. !!!
-> >>>>                                  * 
-> >>>>                                  * If owner blocks, dequeue_task_scx() is executed first and
-> >>>>                                  * the sched-ext scheduler sees:
-> >>>>                                  *
-> >>>>                                  *   ops.stopping(owner)
-> >>>>                                  *
-> >>>>                                  * which leads to some asymmetry.
-> >>>>                                  *
-> >>>>                                  * XXX: Below is how I imagine the flow should continue.
-> >>>>                                  */
-> >>>>                                 ops.quiescent(owner) /* Core is taking back control of owner's running */
-> >>>>                                 /* Runs owner */
-> >>>>                                 ops.runnable(owner) /* Core is giving back control to ext layer */
-> >>>>                                 ops.stopping(donor); /* Accounting symmetry for donor */
-> >>>
-> >>> I think the order of operations should be the following:
-> >>>
-> >>> ops.runnable(donor)
-> >>>    -> ops.enqueue(donor)
-> >>>    -> donor becomes curr
-> >>>    -> ops.running(donor) /* set_next_task_scx(donor); !task_is_blocked(donor) */
-> >>>    -> donor executes
-> >>>    -> donor blocks on mutex (proxy: stays on_rq; task_is_blocked(donor) true)
-> >>>    -> __schedule()
-> >>>    -> pick_next -> proxy-exec selects owner as next
-> >>>    -> put_prev_task_scx(donor)
-> >>>         -> ops.stopping(donor)
-> >>>         -> dispatch_enqueue(local_dsq) /* blocked donor: ext core parks on local DSQ */
-> >>>    -> set_next_task_scx(owner)
-> >>>         -> ops.running(owner)
-> >>
-> >> So ext will just switch the context back to owner? But how does this
-> >> happen with the changes in your series?
-> >>
-> >> Based on my understanding, this happens:
-> >>
-> >>     -> pick_next -> sced-ext returns donor as next
-> >>     /* prev's context is put back */
-> >>     -> set_next_task_scx(donor)
-> >>       -> ops.running(donor)
-> >>
-> >>     /* In core.c */
-> >>
-> >>     /* next = donor */
-> >>     if (next->blocked_on) /* true since we have blocked donor */
-> >>        next = find_proxy_task(); /* Returns owner */
-> >>
-> >>     /* next = owner; */
-> >>     /* Starts running owner */
-> >>
-> >> How does ext core swap back the owner context here? Am I missing
-> >> something? find_proxy_task() doesn't call put_prev_set_next_task() so
-> >> I'm at a loss how we get to set_next_task_scx(owner).
-> > 
-> > The sequence should be the following:
-> 
-> Still a bit confused! Hope you can bear with me for just a little
-> bit longer :-)
+Key features:
+- Per-NUMA-node DSQs (dispatch queues) to maintain cache locality
+- Idle fast path that bypasses DSQ for minimum latency
+- Per-task NUMA affinity tracking to remember task placement
+- Work stealing across nodes to prevent starvation during load imbalance
 
-No, thank you! This is super useful for me! I want to make sure I'm not
-missing/misinterpreting anything obvious. :)
+The BPF component (scx_ai_numa.bpf.c) implements the core scheduler
+callbacks, while the userspace loader (scx_ai_numa.c) detects NUMA
+topology, installs the BPF program, and reports per-node dispatch
+statistics every second.
 
-> 
-> > 
-> >  - pick_next_task(rq, rq->donor, &rf) returns donor (because we parked it on the local DSQ)
-> 
-> So put_prev_set_next_task() happens as a part of pick_next_task().
-> 
-> When we pick the donor, we have already called set_next_task(donor)
-> on it before returning it from pick_next_task().
-> 
-> "owner" is still not known at this point ...
+This scheduler is suitable for AI training workloads where GPU command
+launches depend on rapid CPU preprocessing with minimal scheduling latency.
 
-That seems correct.
+Signed-off-by: Qiliang Yuan <realwujing@gmail.com>
+---
+ tools/sched_ext/Makefile          |   2 +-
+ tools/sched_ext/scx_ai_numa.bpf.c | 200 ++++++++++++++++++++++++++++++++++++++
+ tools/sched_ext/scx_ai_numa.c     | 126 ++++++++++++++++++++++++
+ 3 files changed, 327 insertions(+), 1 deletion(-)
 
-> 
-> >  - in __schedule() (still holding rq->lock), proxy sees next->blocked_on and does:
-> >     - next = find_proxy_task(rq, next, &rf);  -> returns owner (or triggers migration / retries)
-> >  - Only after that, __schedule() reaches the point where it performs the switch
-> >    (put_prev_set_next_task(rq, prev, next) via the pick path). Ao  that point,
-> 
-> ... and we don't do put_prev_set_next_task(donor, owner) after
-> (or within) find_proxy_task() as far as I'm aware. The "donor"
-> remains as the task on which we last called put_prev_task().
-
-Also correct.
-
-> 
-> If you are referring to the bits in your Patch2, the calls to
-> put_prev_task() and set_next_task() is done on the same "donor"
-> task. It is purely for the sake of adding a balance callback if
-> we had skipped migrating away the prev task due to proxy.
-> 
-> AFAIC, nothing does a set_next_task(owner) after
-> pick_next_task() in __schedule() unless I'm grossly mistaken.
-
-I think you're right.
-
-Let me try to recap what happens in two different scenarios:
-
-# donor and owner running on the same CPU
-
-Owner runs on CPU0, it expires its p->scx.slice, so it's de-scheduled and added
-to a DSQ; donor is next, it runs and blocks on a mutex on CPU0, we park the
-donor on CPU0's local DSQ, pick_next_task(rq, rq->donor, &rf) on CPU0 returns
-next == donor, we see next->blocked_on == true, so we trigger find_proxy_task(),
-inside find_proxy_task() we see owner_cpu == task_cpu, find_proxy_task() returns
-owner, replacing next, set_next_task_scx(owner) triggers ops_dequeue() +
-dispatch_dequeue(), removing the owner from the DSQ, then
-set_next_task_scx(owner) will trigger ops.running(onwer), then
-ops.stopping(owner). And in this case we don't trigger ops.stopping(donor) +
-ops.running(donor) during the proxy switch.
-
-# donor and owner running on different CPUs
-
-Owner runs on CPU0, it expires its p->scx.slice, so it's de-scheduled and added
-to a DSQ; donor runs on CPU1, it blocks on a mutex on CPU1, we park donor on
-CPU1's local DSQ, pick_next_task(rq, rq->donor, &rf) on CPU1 returns donor as
-next, we see next->blocked_on == true, we trigger
-find_proxy_task() on CPU1, find_proxy_task() sees owner_cpu != this_cpu, so it
-triggers proxy_migrate_task() to migrate donor to CPU0, which triggers
-deactivate_task(donor), unlinking it from CPU1's local DSQ, then
-proxy_set_task_cpu(donor, CPU0). But at this point we're not adding donor to
-CPU0's local DSQ. I think this is the part that is missing, if we add donor to
-CPU0's local DSQ at this point we would effectively fall back to the "same CPU"
-scenario and (in theory) everything should work.
-
-Something like the following (not tested yet - about to).
-
-Thanks,
--Andrea
-
- kernel/sched/ext.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index af9b10cd82c4a..6125c4cbd6d64 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1915,6 +1915,22 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+diff --git a/tools/sched_ext/Makefile b/tools/sched_ext/Makefile
+index 21554f0896923..a639b5bf4f542 100644
+--- a/tools/sched_ext/Makefile
++++ b/tools/sched_ext/Makefile
+@@ -191,7 +191,7 @@ $(INCLUDE_DIR)/%.bpf.skel.h: $(SCXOBJ_DIR)/%.bpf.o $(INCLUDE_DIR)/vmlinux.h $(BP
  
- 	WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_QUEUED));
+ SCX_COMMON_DEPS := include/scx/common.h include/scx/user_exit_info.h | $(BINDIR)
  
-+	/*
-+	 * Under proxy execution, mutex-blocked donors can be migrated to a
-+	 * different rq (e.g., towards the mutex owner's CPU). For sched_ext, rq
-+	 * association alone isn't sufficient for the donor to be picked again
-+	 * and drive find_proxy_task(); make it immediately visible on the
-+	 * destination rq by parking it on the built-in local DSQ.
-+	 *
-+	 * This task is a scheduling context token and isn't supposed to run as
-+	 * itself while blocked.
-+	 */
-+	if (unlikely(task_is_blocked(p))) {
-+		clear_direct_dispatch(p);
-+		dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, 0);
-+		return;
+-c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_userland scx_pair scx_sdt
++c-sched-targets = scx_simple scx_cpu0 scx_qmap scx_central scx_flatcg scx_userland scx_pair scx_sdt scx_ai_numa
+ 
+ $(addprefix $(BINDIR)/,$(c-sched-targets)): \
+ 	$(BINDIR)/%: \
+diff --git a/tools/sched_ext/scx_ai_numa.bpf.c b/tools/sched_ext/scx_ai_numa.bpf.c
+new file mode 100644
+index 0000000000000..89d3b7dd3d474
+--- /dev/null
++++ b/tools/sched_ext/scx_ai_numa.bpf.c
+@@ -0,0 +1,200 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * scx_ai_numa - AI NUMA-aware scheduler (BPF side)
++ *
++ * Scheduling policy optimized for AI training workloads:
++ *
++ * 1. Per-NUMA-node DSQs: each NUMA node owns a dedicated dispatch queue.
++ *    Tasks are steered to the DSQ of the NUMA node they last ran on,
++ *    preserving L3 cache warmth and reducing remote DRAM accesses that
++ *    stall GPU kernel launches waiting on CPU preprocessing.
++ *
++ * 2. Idle fast path: when an idle CPU is found, bypass the per-node DSQ
++ *    and insert directly into SCX_DSQ_LOCAL for minimum latency.
++ *
++ * 3. Task NUMA affinity: per-task storage tracks the preferred NUMA node
++ *    (updated every time select_cpu() sees the task's prev_cpu).
++ *
++ * 4. Work stealing: if a node's DSQ is empty, try remote nodes in order
++ *    to prevent CPU starvation during load imbalance (e.g., bursty GPU
++ *    command submissions landing on a single NUMA node).
++ */
++#include <scx/common.bpf.h>
++
++char _license[] SEC("license") = "GPL";
++
++UEI_DEFINE(uei);
++
++#define MAX_NUMA_NODES 16
++
++/* One DSQ per NUMA node, IDs 0 .. MAX_NUMA_NODES-1 */
++#define NUMA_DSQ(node) ((u64)(node))
++
++/* Per-task context: remember which NUMA node this task prefers */
++struct task_ctx {
++	u32 preferred_node;
++};
++
++struct {
++	__uint(type, BPF_MAP_TYPE_TASK_STORAGE);
++	__uint(map_flags, BPF_F_NO_PREALLOC);
++	__type(key, int);
++	__type(value, struct task_ctx);
++} task_ctx_stor SEC(".maps");
++
++/* Per-node counters (per-CPU to avoid false sharing) */
++struct node_stat {
++	__u64 local_dsq;	/* fast-path: direct SCX_DSQ_LOCAL insert */
++	__u64 numa_dsq;		/* enqueued to per-node DSQ */
++	__u64 steal;		/* dispatched from a remote node's DSQ */
++};
++
++struct {
++	__uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
++	__uint(key_size, sizeof(u32));
++	__uint(value_size, sizeof(struct node_stat));
++	__uint(max_entries, MAX_NUMA_NODES);
++} node_stats SEC(".maps");
++
++/* Set by userspace after detecting the number of NUMA nodes */
++const volatile u32 nr_nodes = 1;
++
++static __always_inline u32 cpu_to_node(s32 cpu)
++{
++	return __COMPAT_scx_bpf_cpu_node(cpu);
++}
++
++static __always_inline void stat_inc_local(u32 node)
++{
++	struct node_stat *s = bpf_map_lookup_elem(&node_stats, &node);
++
++	if (s)
++		s->local_dsq++;
++}
++
++static __always_inline void stat_inc_numa(u32 node)
++{
++	struct node_stat *s = bpf_map_lookup_elem(&node_stats, &node);
++
++	if (s)
++		s->numa_dsq++;
++}
++
++static __always_inline void stat_inc_steal(u32 node)
++{
++	struct node_stat *s = bpf_map_lookup_elem(&node_stats, &node);
++
++	if (s)
++		s->steal++;
++}
++
++s32 BPF_STRUCT_OPS(ai_numa_select_cpu, struct task_struct *p, s32 prev_cpu, u64 wake_flags)
++{
++	struct task_ctx *tctx;
++	bool is_idle = false;
++	u32 node;
++	s32 cpu;
++
++	/* Update task's preferred NUMA node from prev_cpu */
++	tctx = bpf_task_storage_get(&task_ctx_stor, p, 0,
++				     BPF_LOCAL_STORAGE_GET_F_CREATE);
++	if (tctx) {
++		node = cpu_to_node(prev_cpu);
++		tctx->preferred_node = node < nr_nodes ? node : 0;
 +	}
 +
- 	/* internal movements - rq migration / RESTORE */
- 	if (sticky_cpu == cpu_of(rq))
- 		goto local_norefill;
++	/*
++	 * Default selection tries prev_cpu first (same LLC), which preserves
++	 * L1/L2/L3 cache across AI loop iterations without extra policy code.
++	 */
++	cpu = scx_bpf_select_cpu_dfl(p, prev_cpu, wake_flags, &is_idle);
++	if (is_idle) {
++		/* Idle CPU found: bypass DSQ for minimum latency */
++		node = cpu_to_node(cpu);
++		stat_inc_local(node);
++		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
++	}
++
++	return cpu;
++}
++
++void BPF_STRUCT_OPS(ai_numa_enqueue, struct task_struct *p, u64 enq_flags)
++{
++	struct task_ctx *tctx;
++	u32 node = 0;
++
++	/*
++	 * Route to the task's preferred NUMA node DSQ.
++	 * Keeping AI tasks on the same NUMA node as their GPU's host memory
++	 * reduces cross-node DRAM traffic and PCIe DMA stalls.
++	 */
++	tctx = bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
++	if (tctx) {
++		node = tctx->preferred_node;
++		if (node >= nr_nodes)
++			node = 0;
++	}
++
++	stat_inc_numa(node);
++	scx_bpf_dsq_insert(p, NUMA_DSQ(node), SCX_SLICE_DFL, enq_flags);
++}
++
++void BPF_STRUCT_OPS(ai_numa_dispatch, s32 cpu, struct task_struct *prev)
++{
++	u32 my_node = cpu_to_node(cpu);
++	u32 i;
++
++	/* First: consume from our own NUMA node — zero cross-node traffic */
++	if (scx_bpf_dsq_move_to_local(NUMA_DSQ(my_node), 0))
++		return;
++
++	/*
++	 * Work steal from other nodes in order.
++	 * Prevents CPU starvation when one GPU's launch bursts all tasks
++	 * onto a single NUMA node while other nodes sit idle.
++	 */
++	for (i = 0; i < MAX_NUMA_NODES; i++) {
++		u32 node = i;
++
++		if (node >= nr_nodes)
++			break;
++		if (node == my_node)
++			continue;
++		if (scx_bpf_dsq_move_to_local(NUMA_DSQ(node), 0)) {
++			stat_inc_steal(my_node);
++			return;
++		}
++	}
++}
++
++s32 BPF_STRUCT_OPS_SLEEPABLE(ai_numa_init)
++{
++	u32 i;
++	int ret;
++
++	for (i = 0; i < MAX_NUMA_NODES; i++) {
++		if (i >= nr_nodes)
++			break;
++		ret = scx_bpf_create_dsq(NUMA_DSQ(i), -1);
++		if (ret) {
++			scx_bpf_error("failed to create DSQ for node %u: %d",
++				      i, ret);
++			return ret;
++		}
++	}
++
++	return 0;
++}
++
++void BPF_STRUCT_OPS(ai_numa_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
++SCX_OPS_DEFINE(ai_numa_ops,
++	       .select_cpu	= (void *)ai_numa_select_cpu,
++	       .enqueue		= (void *)ai_numa_enqueue,
++	       .dispatch	= (void *)ai_numa_dispatch,
++	       .init		= (void *)ai_numa_init,
++	       .exit		= (void *)ai_numa_exit,
++	       .name		= "ai_numa");
+diff --git a/tools/sched_ext/scx_ai_numa.c b/tools/sched_ext/scx_ai_numa.c
+new file mode 100644
+index 0000000000000..58c7bb1bd6bb6
+--- /dev/null
++++ b/tools/sched_ext/scx_ai_numa.c
+@@ -0,0 +1,126 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * scx_ai_numa - AI NUMA-aware scheduler (userspace loader)
++ *
++ * Detects NUMA topology, configures the BPF scheduler, and prints
++ * per-node dispatch statistics every second.
++ */
++#include <stdio.h>
++#include <unistd.h>
++#include <signal.h>
++#include <assert.h>
++#include <libgen.h>
++#include <sys/stat.h>
++#include <bpf/bpf.h>
++#include <scx/common.h>
++#include "scx_ai_numa.bpf.skel.h"
++
++/* Must match BPF side */
++struct node_stat {
++	__u64 local_dsq;
++	__u64 numa_dsq;
++	__u64 steal;
++};
++
++#define MAX_NUMA_NODES 16
++
++static volatile int exit_req;
++
++static void sigint_handler(int sig)
++{
++	exit_req = 1;
++}
++
++/* Detect NUMA node count by scanning sysfs */
++static __u32 detect_nr_nodes(void)
++{
++	struct stat st;
++	char path[64];
++	__u32 i, count = 0;
++
++	for (i = 0; i < MAX_NUMA_NODES; i++) {
++		snprintf(path, sizeof(path),
++			 "/sys/devices/system/node/node%u", i);
++		if (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
++			count = i + 1;
++		else
++			break;
++	}
++	return count ? count : 1;
++}
++
++static void print_stats(struct scx_ai_numa *skel, __u32 nr_nodes)
++{
++	int nr_cpus = libbpf_num_possible_cpus();
++	int map_fd  = bpf_map__fd(skel->maps.node_stats);
++
++	printf("\n%-6s %14s %14s %14s\n",
++	       "Node", "Local-DSQ", "NUMA-DSQ", "Steals");
++	printf("------+--------------+--------------+--------------\n");
++
++	for (__u32 node = 0; node < nr_nodes; node++) {
++		struct node_stat per_cpu[nr_cpus];
++		struct node_stat total = {};
++		__u32 key = node;
++		int i;
++
++		if (bpf_map_lookup_elem(map_fd, &key, per_cpu) < 0)
++			continue;
++
++		for (i = 0; i < nr_cpus; i++) {
++			total.local_dsq += per_cpu[i].local_dsq;
++			total.numa_dsq  += per_cpu[i].numa_dsq;
++			total.steal     += per_cpu[i].steal;
++		}
++
++		printf("%-6u %14llu %14llu %14llu\n", node,
++		       total.local_dsq, total.numa_dsq, total.steal);
++	}
++}
++
++int main(int argc, char **argv)
++{
++	struct scx_ai_numa *skel;
++	struct bpf_link *link;
++	__u64 ecode;
++	__u32 nr_nodes;
++
++	signal(SIGINT, sigint_handler);
++	signal(SIGTERM, sigint_handler);
++
++	nr_nodes = detect_nr_nodes();
++	printf("scx_ai_numa: detected %u NUMA node(s)\n", nr_nodes);
++
++restart:
++	/*
++	 * Avoid SCX_OPS_OPEN() which accesses sub_attach/sub_detach/
++	 * sub_cgroup_id at compile time. These fields may not be available
++	 * in all supported kernel versions.
++	 */
++	skel = scx_ai_numa__open();
++	SCX_BUG_ON(!skel, "Could not open scx_ai_numa");
++	skel->struct_ops.ai_numa_ops->hotplug_seq = scx_hotplug_seq();
++	SCX_ENUM_INIT(skel);
++
++	/* Pass NUMA topology to the BPF program via rodata */
++	skel->rodata->nr_nodes = nr_nodes;
++
++	SCX_OPS_LOAD(skel, ai_numa_ops, scx_ai_numa, uei);
++	link = SCX_OPS_ATTACH(skel, ai_numa_ops, scx_ai_numa);
++
++	printf("scx_ai_numa: running (Ctrl-C to stop)\n");
++
++	while (!exit_req && !UEI_EXITED(skel, uei)) {
++		print_stats(skel, nr_nodes);
++		fflush(stdout);
++		sleep(1);
++	}
++
++	bpf_link__destroy(link);
++	ecode = UEI_REPORT(skel, uei);
++	scx_ai_numa__destroy(skel);
++
++	if (UEI_ECODE_RESTART(ecode))
++		goto restart;
++	return 0;
++}
+
+---
+base-commit: 8ab992f815d6736b5c7a6f5fd7bfe7bc106bb3dc
+change-id: 20260508-feat-scx_ai_example-8e1384942646
+
+Best regards,
+-- 
+Qiliang Yuan <realwujing@gmail.com>
+
