@@ -1,177 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCFE2857EE;
-	Fri,  8 May 2026 19:08:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11E131196F;
+	Fri,  8 May 2026 20:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778267309; cv=none; b=T4k1RtiyiSRo+9nNqYU4IQp0zqjgWR8qEieI3eaq2B/8cZvuWKgiQ0biPoaU/xiyzKB+EfYNXLiCwLZ4lvb6sCMhvZwllso/TpSP+4gVitqCYk52lFlQ6ka9t+zNWw/Fm1cQPO5kPoXSpK2gzt+sxqNxQX6CLrdabSrPJmza90w=
+	t=1778270521; cv=none; b=tanWnb1DeT3a694C9HPtGbd/iTuJKEf1QMC5lnp9qpOKh1sOK9ZUUViMV+/pmDPqKtqtPAbt56IaHEMR6tlDipdomAra/dGAVl2YyAdD1rAawRgeLm11rveZ4Nwby+izM7Fb0De7ajlyYjbX0lW1JEFUP/Wchqyp1jDC1OXtZhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778267309; c=relaxed/simple;
-	bh=lzLVGB0mcn0nS2U9oCM5vmPBKKOzJLY4dhbjmse1ptk=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=tmDt+I2yQgoGQTY8OtF+1gdrh1EVSvhjWelcslcCAa9VgHh4P8zuH/hkVd4tZ32FQo2000Qww3ogzOsRYr6xIWLTowvEuCHwxLs3nuZbp1aOT4q+IMKseDgRFQc85bezyAg+23fnM5xc5up8RbNWWt+YUAHy7zRg/THMsEeV7nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoyiiZE7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778270521; c=relaxed/simple;
+	bh=BykR7qv2rJEBW+1ipmJDVOTBlBjhiNJn/jDK5p509o8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GA47GA9wKyDf3MQYJMu0Y0sT8f3+yU/fUjRyOPM21018rWiN5OULzKSjKUpptKrpAT5uU8HEzj94CybsrneqGiHm0T+dm7gnjhB9zPn778Tn5KojwSsB+zSwzRD8ExGEgkYxdrdZlB112rDKFMgAxxueUgnOHm0qoLkdDEC9EDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0z7DLcol; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=KK9pL1WA; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoyiiZE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6B2C2BCB0;
-	Fri,  8 May 2026 19:08:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778267308;
-	bh=lzLVGB0mcn0nS2U9oCM5vmPBKKOzJLY4dhbjmse1ptk=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=eoyiiZE7/81nCVWdi8+v7/FsFn9vw5OU0vuhcOLpV+0GYhoQIG6tRqj+cDh5FdEtp
-	 MeUDzmlrV8U0KKdbL4v+7WrlOQIV17dkal5Y7q852HzGMNf3/QKC01i/8OzpjfCr2Q
-	 ogIhp1UJ7OHMZk0YxLsfkORudDPFJYFw9n9i/oTK0tki4yUko5oxKc32uMEzAZllO2
-	 3low2i7inBp/FV6Rveuain6kx4FFeeErwdAGqO8n0hksMAQdKs++U0aV6cC7tVSpkY
-	 UntDrZO3OAeCVcI+176TL7tsPk0Zhc1dITuWSdqoNDzhyvnjhyGg7b2mRQvISXFYl4
-	 ip26n5bA/piWQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: Add scx_ai_numa scheduler example for AI
- workloads
-Reply-To: sashiko@lists.linux.dev
-To: "Qiliang Yuan" <realwujing@gmail.com>
-Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20260508-feat-scx_ai_example-v1-1-2b498af3514d@gmail.com>
-References: <20260508-feat-scx_ai_example-v1-1-2b498af3514d@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 08 May 2026 19:08:27 +0000
-Message-Id: <20260508190828.8A6B2C2BCB0@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0z7DLcol";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="KK9pL1WA"
+Date: Fri, 8 May 2026 22:01:57 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1778270518;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rNkBez2kj8pSOTKjwGur83xGxf1QOwrtzGM5jsyyCyY=;
+	b=0z7DLcolD0ydZmCUUSzu3QMQAfzt0afZMtq9sx8vQ5VIN6MBlSM7iGVZ1bXlO/zMHrjxPg
+	10UNKhg0yMrmGTpOHel29StuJ2+8QdTf3QWFO1qIB6Qg+R+3cCKWoqeWbTULqKkaF0LeYC
+	icT/oKlTEEZyJrpvxnQW8gUeO//pM60ACwmBVPmUsXCRWmhOMPDrffkIhxgkyLfsQqeuSr
+	twpAsvZRf7GYBcqOSUimhbrBcrY7g2xORwFU7SWCy41Sr4GtDfplhNnMokymTCH/7THGRP
+	rKxT3M+2P7eHzSAPkhT9ytKXHE7Hti66YKewFwcnurwYmwTdETLHCLOjoYo3Fg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1778270518;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rNkBez2kj8pSOTKjwGur83xGxf1QOwrtzGM5jsyyCyY=;
+	b=KK9pL1WAMVbPb+jWFa4Ki+oBttXdOUAELLnCO1Jim7hOGb6cCxxPcLS5IhQa2lx8edT4Oe
+	abhcvmLNtSBpKPDA==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>, Boqun Feng <boqun@kernel.org>,
+	Changwoo Min <changwoo@igalia.com>,
+	Clark Williams <clrkwllms@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>, Jens Axboe <axboe@kernel.dk>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
+	Uladzislau Rezki <urezki@gmail.com>, Zqiang <qiang.zhang@linux.dev>,
+	io-uring@vger.kernel.org, rcu@vger.kernel.org,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: Re: [PATCH] sched/task: always defer 'struct task_struct'
+ destruction via RCU
+Message-ID: <20260508200157.kWPZI3p3@linutronix.de>
+References: <20260508-put-task-struct-many-v1-1-8341c18141a6@google.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260508-put-task-struct-many-v1-1-8341c18141a6@google.com>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
-- [High] Missing bounds check on `my_node` in `ai_numa_dispatch` triggers `=
-scx_error()` and scheduler abort on sparse or large NUMA topologies.
-- [High] Tasks pinned to a single CPU bypass `select_cpu` and are improperl=
-y routed to `NUMA_DSQ(0)`, causing CPU cycle waste and breaking NUMA isolat=
-ion.
-- [High] Userspace NUMA node detection logic fails on sparse topologies, de=
-grading the scheduler and triggering a kernel abort.
-- [Medium] Missing error check on `libbpf_num_possible_cpus()` leads to pot=
-ential negative Variable Length Array (VLA) size and userspace crash.
---
+On 2026-05-08 14:02:45 [+0000], Alice Ryhl wrote:
+> The sched/task.h header file currently exposes a tryget_task_struct()
+> function, but it is very risky to use it: If the last refcount of the
+> task is dropped using put_task_struct_many(), then the task is freed
+> right away without an RCU grace period.
+> 
+> This means that if the kernel contains a code path anywhere such that
+> the last refcount of a task may be dropped with put_task_struct_many(),
+> and it also contains a code path anywhere that tries to stash a task
+> pointer under rcu and use tryget_task_struct() on it, then if they ever
+> execute on the same 'struct task_struct', it results in a
+> use-after-free.
 
-commit 5065582a0672767bbb7d29e1575961ffc48ac6d0
-Author: Qiliang Yuan <realwujing@gmail.com>
+If the counter dropped to 0 then tryget_task_struct() won't increment
+it. There is also task_struct::rcu_users which holds one `usage' on it
+and this RCU grace period we care about.
 
-sched_ext: Add scx_ai_numa scheduler example for AI workloads
+The only reason why there is a RCU free here is because of RT and it was
+limited to RT only. Then a PI case came up (on RT again) I asked
+repeatedly to have it unconditional on RT and !RT. Which then did
+happen.
 
-This commit introduces a NUMA-aware BPF scheduler tailored for AI workloads=
- to
-preserve L3 cache warmth. The scheduler implements per-NUMA-node dispatch
-queues, an idle fast path, task NUMA affinity tracking, and work stealing. A
-userspace loader configures the scheduler and reports dispatch statistics.
+I don't think I would mind to align the two code paths but not as a
+"this might be UAF if" but to do the same "thing". The important RCU
+grace period happens via put_task_struct_rcu_user().
 
-> diff --git a/tools/sched_ext/scx_ai_numa.bpf.c b/tools/sched_ext/scx_ai_n=
-uma.bpf.c
-> new file mode 100644
-> index 0000000000000..89d3b7dd3d474
-> --- /dev/null
-> +++ b/tools/sched_ext/scx_ai_numa.bpf.c
-
-[ ... ]
-
-> +void BPF_STRUCT_OPS(ai_numa_enqueue, struct task_struct *p, u64 enq_flag=
-s)
-> +{
-> +	struct task_ctx *tctx;
-> +	u32 node =3D 0;
-> +
-> +	/*
-> +	 * Route to the task's preferred NUMA node DSQ.
-> +	 * Keeping AI tasks on the same NUMA node as their GPU's host memory
-> +	 * reduces cross-node DRAM traffic and PCIe DMA stalls.
-> +	 */
-> +	tctx =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0);
-
-If a task is pinned to a single CPU, the sched_ext core intentionally skips
-ops.select_cpu() and the task's NUMA affinity (tctx) is never initialized.
-Will this cause the task to always default to NUMA_DSQ(0)?=20
-
-If so, CPUs on node 0 might constantly iterate over these tasks but fail to
-dispatch them because task_can_run_on_remote_rq() returns false, potentially
-breaking NUMA isolation until the pinned CPU work-steals from NUMA_DSQ(0).
-
-[ ... ]
-
-> +void BPF_STRUCT_OPS(ai_numa_dispatch, s32 cpu, struct task_struct *prev)
-> +{
-> +	u32 my_node =3D cpu_to_node(cpu);
-> +	u32 i;
-> +
-> +	/* First: consume from our own NUMA node =E2=80=94 zero cross-node traf=
-fic */
-> +	if (scx_bpf_dsq_move_to_local(NUMA_DSQ(my_node), 0))
-
-Can cpu_to_node() return a node ID greater than or equal to nr_nodes (e.g. =
-on
-systems with sparse NUMA topologies or more than 16 nodes)?
-
-If my_node is >=3D nr_nodes, the DSQ would not have been created by
-ai_numa_init(). Could this cause the core scheduler to fail in find_user_ds=
-q()
-and trigger an scx_error() that aborts the BPF scheduler?
-
-[ ... ]
-
-> diff --git a/tools/sched_ext/scx_ai_numa.c b/tools/sched_ext/scx_ai_numa.c
-> new file mode 100644
-> index 0000000000000..58c7bb1bd6bb6
-> --- /dev/null
-> +++ b/tools/sched_ext/scx_ai_numa.c
-
-[ ... ]
-
-> +/* Detect NUMA node count by scanning sysfs */
-> +static __u32 detect_nr_nodes(void)
-> +{
-> +	struct stat st;
-> +	char path[64];
-> +	__u32 i, count =3D 0;
-> +
-> +	for (i =3D 0; i < MAX_NUMA_NODES; i++) {
-> +		snprintf(path, sizeof(path),
-> +			 "/sys/devices/system/node/node%u", i);
-> +		if (stat(path, &st) =3D=3D 0 && S_ISDIR(st.st_mode))
-> +			count =3D i + 1;
-> +		else
-> +			break;
-
-If the system has sparse NUMA nodes (for example, only node 0 and node 2 are
-present), will this loop prematurely break at i =3D 1?
-
-This would set nr_nodes to 1, causing the initialization to only create
-NUMA_DSQ(0). When tasks run on node 2, they might attempt to enqueue or
-dispatch from a non-existent NUMA_DSQ(2), which could trigger a kernel abor=
-t.
-
-[ ... ]
-
-> +static void print_stats(struct scx_ai_numa *skel, __u32 nr_nodes)
-> +{
-> +	int nr_cpus =3D libbpf_num_possible_cpus();
-> +	int map_fd  =3D bpf_map__fd(skel->maps.node_stats);
-> +
-> +	printf("\n%-6s %14s %14s %14s\n",
-> +	       "Node", "Local-DSQ", "NUMA-DSQ", "Steals");
-> +	printf("------+--------------+--------------+--------------\n");
-> +
-> +	for (__u32 node =3D 0; node < nr_nodes; node++) {
-> +		struct node_stat per_cpu[nr_cpus];
-
-Does libbpf_num_possible_cpus() need an error check here?
-
-If it fails and returns a negative error code, passing a negative size to t=
-he
-variable-length array per_cpu could cause undefined behavior and crash the
-userspace loader.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260508-feat-scx_a=
-i_example-v1-1-2b498af3514d@gmail.com?part=3D1
+Sebastian
