@@ -1,55 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9A5348463;
-	Thu,  7 May 2026 22:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E991DFDE;
+	Fri,  8 May 2026 00:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778191889; cv=none; b=I9FdKrJV5D2JESfYYX/XVz9fPkhLLoBscJxPbnOAaE7LDQdeRtGMkcpvjtuj2VIUq5HGjhmpLib53kGiUne1/eW3zajCI/T5cxZVkA50Ei4ospwLKJxsMIYOuA4Mu7zo5RRWoX9oC/bDlBD4wwi/D33/c/CYEKbLN81LO2dDSNQ=
+	t=1778199414; cv=none; b=NdYmDDRajz4iJjCXgIf15vdjG6wc9a/I0rG/YHNk5F1mG1YLcaX3RLMWXEB4H88o9EPHc8TWncNM+5rIFyzX21kcW5euTI/wKFPH2muJlAv2x7kftrUeT6wYVUq6/GX49h9656O6uWoqYJBLqUbDZCDAOa7MNHvQAoSxl2FU6so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778191889; c=relaxed/simple;
-	bh=xkv4rowQSbrlz+DtnyHzM6Q4ND/p6P6zl8wnb2i6vJM=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=blMoy6tY212RXHmPT8Fjkazbpr0HweJOyO4pPN7UvMJWCCPj2y9wCwcQ81sDLNiePmbtdE1fSJY3cIVzCXLva50x/1C4Ay5feeoDvUKX8SxA4ARCyi7pRKDVY7po18uMldBKj24q185dgKNcxVRz/8wonNj3QQiwjr4OefVvTMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FzLmi3k+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778199414; c=relaxed/simple;
+	bh=S5MClpKvomTXIophHpwHSVzzs95e4JS2EaLDLrkMKQA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BiFAOimxSw64ItG0vOSm22De4QF3yxxwcdZd7QU1ZKvXLPnb+WgFQuljKnNOcLaqQbAJRl3lkMq4/LD10HehaKfQ7qabDKM3afa/hLNvI63+jt687Qv0P1Y5ezdit5CH8S2pjgkSwOE5tHCqlSiZEheC4LEBi2XyKs6n+w5eqUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MN+kVwLQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FzLmi3k+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE6BC2BCB2;
-	Thu,  7 May 2026 22:11:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MN+kVwLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB743C2BCB2;
+	Fri,  8 May 2026 00:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778191889;
-	bh=xkv4rowQSbrlz+DtnyHzM6Q4ND/p6P6zl8wnb2i6vJM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=FzLmi3k+vpM8ma5gpHAt2iCRjmThcQo7FWwQ6NR30PYPlZDjM2CdrfTQ15Hx4g4WH
-	 esymcZVfGxgMnWwm62/SHD+wfzxvrnboMkY7A6/xwvLy7NTBJ7Kf7MckGtNXrAQQ+C
-	 EdczivCbnP78WublvhW+z+VaKhOQyT9kkpJ8CCQ9XGnfvnliDhK9VLyqWGQ1YaTZIp
-	 EdUaoM0AAjt5v+a3TevJOtmibHvzv8NIUWsNj8tzlmiucucNDvttJdZL/lh1MYx6KL
-	 qg40AZH2A73n6jizoiaJhkkXfJ+k8GIFfN6Jrg0cII4n5EjMRRi/0NtRGM8o7wx0JK
-	 o2kzoaORMt8uQ==
-Date: Thu, 07 May 2026 12:11:28 -1000
-Message-ID: <ad9f6467175c1a6f8c1122e011b89074@kernel.org>
+	s=k20201202; t=1778199413;
+	bh=S5MClpKvomTXIophHpwHSVzzs95e4JS2EaLDLrkMKQA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=MN+kVwLQyW0ivR8yt3zEhF7aZl1EjusN6xEQzs6VV8gojdBHNy0fPiX7BN7y7L9br
+	 b3+g2vpzc0KuzUw6iKdYculXrgaV7wrsFBxsk0D5HP2Gs9s204Sdcdw8+2C5QFUlX0
+	 We7iZrldG6vvNRFlLj8d4wUWPjgmMSonlg/e9x1mKhbjaCPCdhtwN9/qo8hIT2mvJ+
+	 UErrVgNY+gaM19SR7JeOgF/OkkXrAxq/8RVbMsxco1fJ2At0kCTMATOkkvfOesNcTT
+	 nl//gDqGwev1a5T/g9t3vTQpW8r4CpMufYQUAkC4h+GXamdmP5sTM5ZcDMSlk2a5Ik
+	 twNWMVF7AXkGA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
 Cc: Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- kernel test robot <lkp@intel.com>,
- oe-kbuild-all@lists.linux.dev
-Subject: Re: [PATCH sched_ext/for-7.1-fixes] sched_ext: Drop unused scx_find_sub_sched() stub
-In-Reply-To: <20260507220235.3312282-1-tj@kernel.org>
-References: <20260507220235.3312282-1-tj@kernel.org>
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH sched_ext/for-7.1-fixes] sched_ext: Fix !CONFIG_EXT_SUB_SCHED build warnings
+Date: Thu,  7 May 2026 14:16:52 -1000
+Message-ID: <20260508001652.3477646-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hello,
+W=1 with CONFIG_EXT_SUB_SCHED=n flags 'err_msg' uninitialized and
+'err_free_lb_resched' unused. Initialize err_msg and gate the label.
 
-Applied to sched_ext/for-7.1-fixes.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Thanks.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 48b4834c7027..f4e2db8e56be 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5584,7 +5584,7 @@ static void refresh_watchdog(void)
 
---
-tejun
+ static s32 scx_link_sched(struct scx_sched *sch)
+ {
+-	const char *err_msg;
++	const char *err_msg = "";
+ 	s32 ret = 0;
+
+ 	scoped_guard(raw_spinlock_irq, &scx_sched_lock) {
+@@ -6652,8 +6652,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops,
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 	return sch;
+
++#ifdef CONFIG_EXT_SUB_SCHED
+ err_free_lb_resched:
+ 	free_cpumask_var(sch->bypass_lb_resched_cpumask);
++#endif
+ err_free_lb_cpumask:
+ 	free_cpumask_var(sch->bypass_lb_donee_cpumask);
+ err_stop_helper:
