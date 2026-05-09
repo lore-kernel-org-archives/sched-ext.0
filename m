@@ -1,104 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f74.google.com (mail-ej1-f74.google.com [209.85.218.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74EF184;
-	Sat,  9 May 2026 01:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ADB383C6F
+	for <sched-ext@lists.linux.dev>; Sat,  9 May 2026 07:18:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778288461; cv=none; b=pJ3n84ccWweMF4ytOpR8MpRfWLb1adujmyR2TSMpLzGM5yajAeRv68MEgsxEIvN+DpNyTSdmmiV754OwwqYiw1dy1xUn9DW8uFqFnrYsmGYavHGZAD4ZQEc48YKBryO1ueELbKiLvU1EEEZc4vW7rjJoK9sp0IqnNFfq+4ZZXIo=
+	t=1778311120; cv=none; b=ZQHHptoZDr4S8Nq5zzcDsGyte0/Wn5GDMWxb6vIwOonAauHI0Lrc/SwlAq8hVIo0Fy2eORoW1azxfIcYL6ohpI/ZvV6xLmm9zTANr3HivOrt+OTU3sMA+WXpax3FKkkVPG3g/z37gzBultl/AhVGTjTvJ4Xb7Tvey54Y2isGHWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778288461; c=relaxed/simple;
-	bh=rpdTKe8+sH7M5vSrO/7KezKcg9DKmbgvxRaH6ajx6yY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjl/PQTLBI231VRi5CB80Ejy7+oZd1H0Tat0wcQ04OQQRKjJMn9e1tToi5ZPlaDUIk0q8Lv4UNsHeB9SWV78s2j7p5RAeUpJceo5lJilSw6DMOHWDJHJAYAXT1kDHBH5838quMlyZSLLayrZGYo8PYqCepHtiJjKYNX93bQ1FH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WJXETm9t; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778311120; c=relaxed/simple;
+	bh=o7CPCGXOj2haokXsQESfPJhyteLvwzZMKjC6vcdU+L8=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=gK31qQqhgkdbDSFGvpJTEovKFmDWnPKgrcT+SCqBQYDsU8Ijhk4gETBk0A8YGOsH/OGbWNuu7mGzqoVNR5k3I4K5aklBOrX1Z7BgP/crAqXLR+SeHENmBS1Y7ydJ7zWYicqlBp1aFb6JQg6QxAuYfo8VNcyIRLZOS+Up/BgAMl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DXURPV2O; arc=none smtp.client-ip=209.85.218.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WJXETm9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BD1C2BCB0;
-	Sat,  9 May 2026 01:01:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778288460;
-	bh=rpdTKe8+sH7M5vSrO/7KezKcg9DKmbgvxRaH6ajx6yY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJXETm9tlzixz/GLr2haZzZTUVIHq67VME3HXh0iRFXHnWBhBp5rapsfo0/MUvUYx
-	 Fp5/qMT6fcQWKaWg8WrB0bTiHYk8AgwtBy60qkC4mqIlKxmynYqasaWQZohnCyNXdK
-	 KaAb1XJhuNRk+fcWgftOn2YP3DPkTBgp72uhZozUEydMOZvhIaOQvajMLdPC/ZTe6/
-	 bQe4/1jjD2IR/5eHufKovjtyC4B10695R38xhOxxzqAqXJ6LwCHXvJRgJyuEOVP7K6
-	 1/iGrj/4fnbRVuPLhL4SJQYudzC2WKISULBlpbMzear7GpiOLl+XxsG88tgHp0R72d
-	 usqumglhsBwww==
-From: Tejun Heo <tj@kernel.org>
-To: arighi@nvidia.com,
-	void@manifault.com,
-	changwoo@igalia.com,
-	jstultz@google.com
-Cc: mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	kprateek.nayak@amd.com,
-	christian.loehle@arm.com,
-	kobak@nvidia.com,
-	joelagnelf@nvidia.com,
-	emil@etsalapatis.com,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH sched_ext/for-7.2 0/10] sched: Make proxy execution compatible with sched_ext
-Date: Fri,  8 May 2026 15:00:59 -1000
-Message-ID: <20260509010059.345908-1-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260506174639.535232-1-arighi@nvidia.com>
-References: <20260506174639.535232-1-arighi@nvidia.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DXURPV2O"
+Received: by mail-ej1-f74.google.com with SMTP id a640c23a62f3a-b8704795d25so235924466b.2
+        for <sched-ext@lists.linux.dev>; Sat, 09 May 2026 00:18:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1778311116; x=1778915916; darn=lists.linux.dev;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nWPmLPcUZniG40mmE6xEF7MYszlEp9VqvWN3AMo3/Bg=;
+        b=DXURPV2OtbqVFBE4VHc8aeCBBsNYTuXqxPRvZmT4pP9hwjTtcDq/ZVcp95hdKvncx3
+         52faBFFT7G/7BJ+8cycyL+Us2qAFiZSWmw/QmvxpBF/4MXBzagOuMLiAQJDCzvk6YpJ0
+         cqVc8Xd4op0bqZVJjs+pLaF6bN4jMdO0gBWS3AKROSQXwyF4jsJGeA3m/4TpvNTKq3bn
+         jqXnP7wZMbOq+D4/A3vFvQnSA4qJ0WUWcDVG51RXdXSr8vDQmugWbyS6d0e3FeJA+U4J
+         9ImdC7ojnYHdtDcCO/chwsTEo5/ewVTYyxEVzW7/gwjFZGsfbxNb/WqOvy0AVlSHHSap
+         yrAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778311116; x=1778915916;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nWPmLPcUZniG40mmE6xEF7MYszlEp9VqvWN3AMo3/Bg=;
+        b=eZnHkshaQcUDOUsvf17mwhCU57wVl1KT5SA5nc6BqeKUvrsdoDuVLw+sz36tKyYPP/
+         2FhQlrE7TmUSs6LasAMK1jvUSKRgxbC6G2lAHUaLtineHWciKtqiu9j5qNhrx3oDdYYL
+         lPc1pfzRWjR5FVtg4ZKY4LoYaaf+i/G95kZ+RYoqfmSrHBsGTi/aqT5BDSW7L5au0rTW
+         IeZcLbWseCgQHmS0w7W6flNwg+pye66QjrXllVblEbUpCXSdbrTOthQHuov2ipWPeuyF
+         AMTEmGL481+tKCC+HOjhABLG/6hdr/NJLr+AdilnuGm+DSPBhPoqprD7G3r2mZFoDPzM
+         fHZQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9kMYQYL0YWkV7axci5lAgAC3Pe4eNtRK8sUSMWe1yoxoKY7UNDNzt29FovE7RbtS8kFNkL0/By6qc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzwKGN3JebbCIok0NodaGFzBT1vQJhSAhR9h1DOq80wd/lAnNPM
+	qp8nRaGIEms0oTWsKqd0J9HGEOrlNzIsMo5kmdCYmKyMNw+q2Xi2GNUInPLm8Mw2lqFeg+32lGl
+	kcnnl0oRayOWopX6omw==
+X-Received: from ejcbu12.prod.google.com ([2002:a17:907:930c:b0:bca:912a:8b1])
+ (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:907:3e93:b0:ba3:a8ef:3597 with SMTP id a640c23a62f3a-bc56c72d655mr930748266b.25.1778311115972;
+ Sat, 09 May 2026 00:18:35 -0700 (PDT)
+Date: Sat, 9 May 2026 07:18:34 +0000
+In-Reply-To: <20260508200157.kWPZI3p3@linutronix.de>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260508-put-task-struct-many-v1-1-8341c18141a6@google.com> <20260508200157.kWPZI3p3@linutronix.de>
+Message-ID: <af7fym1VhjYMw_h4@google.com>
+Subject: Re: [PATCH] sched/task: always defer 'struct task_struct' destruction
+ via RCU
+From: Alice Ryhl <aliceryhl@google.com>
+To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>, Andrea Righi <arighi@nvidia.com>, Boqun Feng <boqun@kernel.org>, 
+	Changwoo Min <changwoo@igalia.com>, Clark Williams <clrkwllms@kernel.org>, 
+	David Vernet <void@manifault.com>, Frederic Weisbecker <frederic@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
+	Jens Axboe <axboe@kernel.dk>, Joel Fernandes <joelagnelf@nvidia.com>, 
+	Josh Triplett <josh@joshtriplett.org>, Lai Jiangshan <jiangshanlai@gmail.com>, 
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>, Uladzislau Rezki <urezki@gmail.com>, 
+	Zqiang <qiang.zhang@linux.dev>, io-uring@vger.kernel.org, rcu@vger.kernel.org, 
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-rt-devel@lists.linux.dev
+Content-Type: text/plain; charset="utf-8"
 
-Hello,
+On Fri, May 08, 2026 at 10:01:57PM +0200, Sebastian Andrzej Siewior wrote:
+> On 2026-05-08 14:02:45 [+0000], Alice Ryhl wrote:
+> > The sched/task.h header file currently exposes a tryget_task_struct()
+> > function, but it is very risky to use it: If the last refcount of the
+> > task is dropped using put_task_struct_many(), then the task is freed
+> > right away without an RCU grace period.
+> > 
+> > This means that if the kernel contains a code path anywhere such that
+> > the last refcount of a task may be dropped with put_task_struct_many(),
+> > and it also contains a code path anywhere that tries to stash a task
+> > pointer under rcu and use tryget_task_struct() on it, then if they ever
+> > execute on the same 'struct task_struct', it results in a
+> > use-after-free.
+> 
+> If the counter dropped to 0 then tryget_task_struct() won't increment
+> it.
 
-I'm a bit worried this is more invasive than what it buys. Even with
-the full series, the cross-CPU gap Prateek raised stays open -
-find_proxy_task() doesn't go through put_prev_set_next_task(), so owner
-runs without ops.running(owner). Closing that seems to need yet another
-protocol on top, either synthetic running/stopping events or scx core
-taking over dispatch_dequeue for substitutions. The BPF scheduler ends
-up dispatching tasks it didn't pick and observing callbacks for tasks
-it didn't enqueue, which feels too magical and error-prone.
+Yes. If the 'struct task_struct' hasn't been freed yet. What is the
+scenario where it might be zero, but you are certain it is not yet
+freed? If not rcu, then I guess this applies only to those cases where
+__put_task_struct() itself removes the task from the relevant collection
+when 'users' hits zero.
 
-Maybe worth considering an alternative where, when scx is loaded, we
-just turn proxy-exec off entirely and expose blocked_on to the BPF
-scheduler. Schedulers that want PI can implement it themselves on top
-of the relationship; ones that don't pay nothing.
+If tryget_task_struct() can only safely be used in that scenario, then I
+think that's worth at least a comment in the header file, because at
+first glance it's a surprising limitation.
 
-scx_enable could flip the proxy_exec static branch off, after which the
-existing gates in __schedule keep blocked tasks off the runqueue and
-skip find_proxy_task on their own. The remaining concern is in-flight
-donors at the moment of the flip - the existing scx_bypass walk already
-visits every rq's runnable list during enable, and could force-block
-any task it sees with blocked_on set. Mutex unlock would re-wake them
-through wake_q normally after that. blocked_on itself is set and
-cleared in mutex.c regardless of proxy_exec, so the signal we'd want
-to surface is already there.
+> There is also task_struct::rcu_users which holds one `usage' on it
+> and this RCU grace period we care about.
 
-For the BPF side, the natural shape seems to be tagging the existing
-ops.quiescent and ops.runnable callbacks with a bit indicating "this
-sleep/wake was a mutex transition," plus a small kfunc that returns
-the owner of the mutex p is blocked on. A scheduler that wants PI then
-records the owner in its own task storage on the quiescent side, boosts
-it via the existing vtime / slice / dsq_move / kick primitives, and
-drops the boost when the runnable side fires. No new dispatch protocol,
-the BPF scheduler stays in charge of who runs.
+Sure, but I guess my question is: why does tryget_task_struct() exist?
+The 'rcu_users' field is not the reason because 'usage' can't be zero
+when using that field.
 
-Does that direction seem reasonable, or am I missing something that
-makes it not work?
+Alice
 
-Thanks.
---
-tejun
+> The only reason why there is a RCU free here is because of RT and it was
+> limited to RT only. Then a PI case came up (on RT again) I asked
+> repeatedly to have it unconditional on RT and !RT. Which then did
+> happen.
+> 
+> I don't think I would mind to align the two code paths but not as a
+> "this might be UAF if" but to do the same "thing". The important RCU
+> grace period happens via put_task_struct_rcu_user().
+> 
+> Sebastian
