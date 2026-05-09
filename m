@@ -1,41 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A27368968;
-	Fri,  8 May 2026 23:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74EF184;
+	Sat,  9 May 2026 01:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778284788; cv=none; b=QvbgibERmUkH1ZjBZVyPLEOfoH/3jYPY1dS7zqu3qx5xu9Jf6frJtaAs21LNbqG7krJXLaU2f4cvmMWuE3oHW5mZG/tPrMRlLIVJOKKptQvX58nBwnY8zdxF1a/r+dKcncoOn84ONuWNeIDcu0Jm41ykZIs/+Nl6j/O6vFTuQpw=
+	t=1778288461; cv=none; b=pJ3n84ccWweMF4ytOpR8MpRfWLb1adujmyR2TSMpLzGM5yajAeRv68MEgsxEIvN+DpNyTSdmmiV754OwwqYiw1dy1xUn9DW8uFqFnrYsmGYavHGZAD4ZQEc48YKBryO1ueELbKiLvU1EEEZc4vW7rjJoK9sp0IqnNFfq+4ZZXIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778284788; c=relaxed/simple;
-	bh=6E40lC76wZ3jjTxH8no/Ylp+eq3ZDV0K1yIevvQs7qg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CTC55q64DK5ZZGX4rXQ+ymIlCnaMizj4ux/coSoRxJp5xrXXyO3oJGGXaew+I7EclzjwiLdlc9maGSrPRm9Jx6v3mr7ftTIB2KnItSjwugbS+8wcSia+nb8yqDN2XLUVt1awi9z2BKakOg0MMOCiscvthVBWTaRrvIRM3WyI4Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L+1mKZab; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778288461; c=relaxed/simple;
+	bh=rpdTKe8+sH7M5vSrO/7KezKcg9DKmbgvxRaH6ajx6yY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jjl/PQTLBI231VRi5CB80Ejy7+oZd1H0Tat0wcQ04OQQRKjJMn9e1tToi5ZPlaDUIk0q8Lv4UNsHeB9SWV78s2j7p5RAeUpJceo5lJilSw6DMOHWDJHJAYAXT1kDHBH5838quMlyZSLLayrZGYo8PYqCepHtiJjKYNX93bQ1FH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WJXETm9t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L+1mKZab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889CEC2BCB0;
-	Fri,  8 May 2026 23:59:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WJXETm9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BD1C2BCB0;
+	Sat,  9 May 2026 01:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778284787;
-	bh=6E40lC76wZ3jjTxH8no/Ylp+eq3ZDV0K1yIevvQs7qg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=L+1mKZabQLISTkw7nWODy98da8WDOXZyQR22XTd+0vBi7FUtwYK/CjYbP5xHNIt1t
-	 NJ+f7NBDajlHuFFsBHn5OAF/Jnw/5kEpdSuMMjR5NxhGAAg1YD4oqDd9EIZzanWKoD
-	 9VT4yiMtb2mXo7n4BLMsH4iqTWGTKVDfjnjrmiMS9b0wbpVCSzMQwvCJuvFJlFky3x
-	 lhZwYQpIJKmA3s7gZ9Y057NvxTc5OnyWFhyvg4wV/lhv01BL7k+q5JzxSeksBpMkr/
-	 SczQYRHb8N/ePmGloZ68qiZjfT2b4e9TO9c60iqw0OXSF9eKZr9rvO1ro23UO3yQZf
-	 GH9pWSj9ceG/Q==
+	s=k20201202; t=1778288460;
+	bh=rpdTKe8+sH7M5vSrO/7KezKcg9DKmbgvxRaH6ajx6yY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WJXETm9tlzixz/GLr2haZzZTUVIHq67VME3HXh0iRFXHnWBhBp5rapsfo0/MUvUYx
+	 Fp5/qMT6fcQWKaWg8WrB0bTiHYk8AgwtBy60qkC4mqIlKxmynYqasaWQZohnCyNXdK
+	 KaAb1XJhuNRk+fcWgftOn2YP3DPkTBgp72uhZozUEydMOZvhIaOQvajMLdPC/ZTe6/
+	 bQe4/1jjD2IR/5eHufKovjtyC4B10695R38xhOxxzqAqXJ6LwCHXvJRgJyuEOVP7K6
+	 1/iGrj/4fnbRVuPLhL4SJQYudzC2WKISULBlpbMzear7GpiOLl+XxsG88tgHp0R72d
+	 usqumglhsBwww==
 From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+To: arighi@nvidia.com,
+	void@manifault.com,
+	changwoo@igalia.com,
+	jstultz@google.com
+Cc: mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	vschneid@redhat.com,
+	kprateek.nayak@amd.com,
+	christian.loehle@arm.com,
+	kobak@nvidia.com,
+	joelagnelf@nvidia.com,
+	emil@etsalapatis.com,
+	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH sched_ext/for-7.2] sched_ext: Fix ops_cid layout assert
-Date: Fri,  8 May 2026 13:59:46 -1000
-Message-ID: <20260508235946.215232-1-tj@kernel.org>
+Subject: Re: [RFC PATCH sched_ext/for-7.2 0/10] sched: Make proxy execution compatible with sched_ext
+Date: Fri,  8 May 2026 15:00:59 -1000
+Message-ID: <20260509010059.345908-1-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260506174639.535232-1-arighi@nvidia.com>
+References: <20260506174639.535232-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -44,57 +61,44 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-ca1d48a86fab ("sched_ext: Use offsetofend on both sides of the ops_cid
-layout assert") replaced sizeof() with offsetofend() to dodge 32-bit
-PPC trailing padding, but the resulting check is tautological: with
-CID_OFFSET_MATCH(priv, priv) already enforcing offsetof(priv) equality
-and @priv being the same type in both structs, the two offsetofends
-are equal by construction. The original protection - catching a stray
-field added past @priv in sched_ext_ops_cid - is gone.
+Hello,
 
-Anchor on a zero-size __end[] marker appended after @priv. Its offset
-sits flush after @priv regardless of trailing struct padding; if a
-field is inserted past @priv, __end shifts and the assert fires.
+I'm a bit worried this is more invasive than what it buys. Even with
+the full series, the cross-CPU gap Prateek raised stays open -
+find_proxy_task() doesn't go through put_prev_set_next_task(), so owner
+runs without ops.running(owner). Closing that seems to need yet another
+protocol on top, either synthetic running/stopping events or scx core
+taking over dispatch_dequeue for substitutions. The BPF scheduler ends
+up dispatching tasks it didn't pick and observing callbacks for tasks
+it didn't enqueue, which feels too magical and error-prone.
 
-Closes: https://lore.kernel.org/all/20260508215211.0C03AC2BCB0@smtp.kernel.org/
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext.c          | 6 ++----
- kernel/sched/ext_internal.h | 3 +++
- 2 files changed, 5 insertions(+), 4 deletions(-)
+Maybe worth considering an alternative where, when scx is loaded, we
+just turn proxy-exec off entirely and expose blocked_on to the BPF
+scheduler. Schedulers that want PI can implement it themselves on top
+of the relationship; ones that don't pay nothing.
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index f86ee15be7cb..b685f45b4fd0 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -10380,11 +10380,9 @@ static int __init scx_init(void)
- 	/*
- 	 * cid-form must end exactly at @priv - validate_ops() skips
- 	 * cpu_acquire/cpu_release for cid-form because reading those fields
--	 * past the BPF allocation would be UB. offsetofend() on both sides
--	 * instead of sizeof() on sched_ext_ops_cid to sidestep trailing
--	 * struct padding (e.g. 32-bit PPC tail-pads ops_cid past @priv).
-+	 * past the BPF allocation would be UB.
- 	 */
--	BUILD_BUG_ON(offsetofend(struct sched_ext_ops_cid, priv) !=
-+	BUILD_BUG_ON(offsetof(struct sched_ext_ops_cid, __end) !=
- 		     offsetofend(struct sched_ext_ops, priv));
- #undef CID_OFFSET_MATCH
- 
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 0ed79bd891c7..cd33984cffcf 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -938,6 +938,9 @@ struct sched_ext_ops_cid {
- 
- 	/* internal use only, must be NULL */
- 	void __rcu *priv;
-+
-+	/* layout end anchor for the BUILD_BUG_ON in scx_init(); keep last */
-+	char __end[0];
- };
- 
- enum scx_opi {
--- 
-2.54.0
+scx_enable could flip the proxy_exec static branch off, after which the
+existing gates in __schedule keep blocked tasks off the runqueue and
+skip find_proxy_task on their own. The remaining concern is in-flight
+donors at the moment of the flip - the existing scx_bypass walk already
+visits every rq's runnable list during enable, and could force-block
+any task it sees with blocked_on set. Mutex unlock would re-wake them
+through wake_q normally after that. blocked_on itself is set and
+cleared in mutex.c regardless of proxy_exec, so the signal we'd want
+to surface is already there.
 
+For the BPF side, the natural shape seems to be tagging the existing
+ops.quiescent and ops.runnable callbacks with a bit indicating "this
+sleep/wake was a mutex transition," plus a small kfunc that returns
+the owner of the mutex p is blocked on. A scheduler that wants PI then
+records the owner in its own task storage on the quiescent side, boosts
+it via the existing vtime / slice / dsq_move / kick primitives, and
+drops the boost when the runnable side fires. No new dispatch protocol,
+the BPF scheduler stays in charge of who runs.
+
+Does that direction seem reasonable, or am I missing something that
+makes it not work?
+
+Thanks.
+--
+tejun
