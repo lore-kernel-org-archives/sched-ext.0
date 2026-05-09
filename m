@@ -1,60 +1,62 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FD733A9D6
-	for <sched-ext@lists.linux.dev>; Sat,  9 May 2026 19:12:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A2433A9D6
+	for <sched-ext@lists.linux.dev>; Sat,  9 May 2026 19:12:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778353953; cv=none; b=e6ilHl5ZBMniUqjTM8q8b+Xl303BP/4/TJNdfYYu/VYLJ8Es3WkZmZUSUDC3WW3tlHl6fIyhhlpFccMVY242xYt5b5PFn95g5rnrrJUTG9yPEx3osU3/Xk1RB6Q98Z2bUFs8x1v+WKhVUjTSyvsywEml/I+v6+8a44O/TSX2rBE=
+	t=1778353955; cv=none; b=s+xQoABDPpmy5EHshSLPQrHwd2THfwsV92nWPvD45cD1snsgDUQl67IL9FIlbSdcf3upg6LgrCbtNWOC8dHLaYAtaC5iAhAJaEJMPXCJko8DzX5AaGxxTuY+KT1ATKaQLurqKgPy7wveRI0bc4JGVKbWPXDwt+9WG9yOeMsvtfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778353953; c=relaxed/simple;
-	bh=XAeSVdfuvjERxkZ3ivnHkiKnAK1996w38I4ORrUJbAE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U0yqGemrLLjtmC95RC19zXncJ4ngNQG9fh+aAsNASXgntKWKipd2m24dF0M7bKPwqOcDGx16IOYCP7IMuMS5DRbfNckUtu4/0adeMbQJY8xAQIAelzTxxEqBPWGzsFYZxbJSBXUfyDcfkGKiHABraD5BXsrk3NDSXiIm71dwzIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WoaKWfTu; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1778353955; c=relaxed/simple;
+	bh=buoFwZcfMoHAEb2wVT3r8ho+o7RKNQnVGrjIjHTkKLk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JJy+QdduWXJeh8pm58HBhVSjXkmNW7O4ba81UGEtu1D6iaU0tGX3H/6HjbIvs3nbNOFw/A2kPdUXAQS/uZShPVNhSVne9oZDIMdd+owLnfbg/RFSHZ9XenFa0h09J5ESpMQMgrYfTJvnHl5EG2OVSUfMVllrwadbvxYUdaJQ4Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OT1FYS/L; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WoaKWfTu"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-835b78c3797so1294050b3a.2
-        for <sched-ext@lists.linux.dev>; Sat, 09 May 2026 12:12:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OT1FYS/L"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-82faf871346so2171276b3a.0
+        for <sched-ext@lists.linux.dev>; Sat, 09 May 2026 12:12:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778353951; x=1778958751; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZiyCBih9Y3h/IyulpuTJbjYK6Wcs4hbA5aLTRTJlwe4=;
-        b=WoaKWfTuxmqRxVp6KrqTck6y3RLoYg/RT9EVMFfclqqiT6PMFdtW/rQuHqtoob8aVd
-         3oYSQwMzOyxCd7cj6fR9OUfRPAA79ePWOSm7qamCFoSh6mZzkGRPWNWTxkjMtkFsGh+5
-         J1KzgxGpWgLmmjFZEdGWjIe7BAeP5EVxjf4Bs7aC5OaeIMbIcDvPNl7qUDmA6RaXVPqX
-         m+ixXrWABjknpyj+M+yATee88ummO+iqEvd2kpiyGgZq24qvteQqfws/TPfKbwZkmm5E
-         zJeDxvsghxZHTQGml09h3f7aqMldvuNboNw0ta0qJCZYjVws52vRq9VmnfGrq7Bjf3D7
-         KVJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778353951; x=1778958751;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778353953; x=1778958753; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZiyCBih9Y3h/IyulpuTJbjYK6Wcs4hbA5aLTRTJlwe4=;
-        b=YkgNbhI6/FMG/CjF/pjnwAszGFQS3AN5ANfpUpJUB+c8Q4XbiR4uIipWheuQ2/B1Gk
-         JYaGjgKUu8cg23CoAQF57MlJrohNkKUjukuuvmZSC/NLynINe0mG7L9GRTU4XyqgFGXd
-         MqafN3qQpUxnVuVAPESabCSq4VuXQlw7/z66h5XkTZZaBX7bXOfyN48M3n80uZ2rseQp
-         YoueDYGh5VfOzjN2YsNL/JH5B343euuwCjNinC0RIrPWAafoAuXKLVV0ApwAHMY+ry4G
-         X/oS8AhXwTb5an8teMNenkhg0gN20AAIbKsDMFy9ODQk+M0ZFB6KIVtDqNTVyvxpdzNL
-         V08g==
-X-Gm-Message-State: AOJu0YxnwJZ7GkN9vx/sOB1qR9kfWOCxu8jzbR6uxHfcXY9DsoSu5G2R
-	oHEGSDEf1waKkug0U7GpaLiIPzeK7ov04H6IeFXAdkqr6bnZTppW770ciDVVEg==
-X-Gm-Gg: Acq92OFAfNSuppk32sDZcH8emQrq3vSecF5utxUDJGMEgbc+PvXHfZ7fNITmuuo1/35
-	SwXq9gTeyMVBn1t2tTdQNZBVcpdbi/T4yE4nwEgTSZT5c5tyZNcuWjMsK0aPWEFlFE5+rLfuQrY
-	TOnzzCSxRTfQnEvQMEsbJaNbw/xtCxbTxCss2SAb/liqlPU+NUNVYWQoXkX3hueGfb2A3pIMY56
-	+UWHbWioMm3zwhvaNijNCiqiVT1ioXa8blcoTGuanmMqrjm3Joz/mCbnhy2L3Od7F0ScS2ynaI7
-	riq9WyuMAs13I3YrAbQVh2M+1lFrcXAjPU7CJW9VAa+9SBnayqS/My5osJnW89+4ldYivv/P5KM
-	2oHDPDAMdNPmu2mkWe4kLKNhpXXS2ymrHTZWSlt6p4o36jtfN12LfutE8JMZ9YsKE2j4Psn9cAn
-	VBwNoe3E7AiQ64UTPF/vUZ2V9NFYGdICqSm0tQLfQ6UfnO0d0h72jP
-X-Received: by 2002:a05:6a00:44c7:b0:836:900e:8743 with SMTP id d2e1a72fcca58-83cf6d744d8mr8022409b3a.36.1778353951122;
-        Sat, 09 May 2026 12:12:31 -0700 (PDT)
+        bh=YVIqZnMaFRdEkd9ciNSxiylOHQsYJ82ix3eDnEtePeY=;
+        b=OT1FYS/LH+Wwmg3271hJx/C2VW0gX9IKKZaUuIf2GPZqAyz9+tAJXd4AIgn9isoSqf
+         yKjRCaQhqel2O0tW/Dlg4AABRBXr6a1bWf7fhelqYspGdm8l1l6f+u2vkJVbvN2+TWlV
+         880WofcroA8k8zFhhguHw9pCLS6scbLrQZ87kChfZ/2WFP6rT2wG48DsHFu3As6SZmVr
+         pnRFcImjfBiC8aal5ckK9qkqkx1CWb2iNZkxVlkcul2CFypWj1+FrkVMzKUjtMGvtD9U
+         CYbHw3AJh7/vy68vBSLL5f82eGq405xlX+fVpDJOGZi+6IMggoqWulICRG0cYxF6ocpY
+         1LhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778353953; x=1778958753;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YVIqZnMaFRdEkd9ciNSxiylOHQsYJ82ix3eDnEtePeY=;
+        b=I3buld1ojL1iDD1LshXZ882fDOLJx1x5SSDr2MJaT65Lt+o9Pk6oIkiv+srh07jp2A
+         2Ul4zUvN26gJYLPdJmVHgEeohhdoWpXWfDrsXJdhV9d0i7xtKbLWlIrEB8j2Kqk+JABe
+         nUDzeSUYEwAXIOsSu+Lj+7CruSW9Kxkl/6vIi2oSrKYEBsE7WmFbHRIDqKHGxNukiinu
+         Ii5Qi6TNnToLIybbzZdPYVybJDStgquIEpgmQ15BbEviXZpVZT2StaaI+aEyfmbyaBP1
+         ZKOLs2VYqxFxuybzTxWjCXgNekJFrqyrlA8TYOdhoBHegnNR62mRmA3jwDIpyzmQCLFr
+         rXEw==
+X-Gm-Message-State: AOJu0YxG2WlR+dCP0inE0Z4dqxxWr09UIJClcnaE5stV62ZERLOpFaf0
+	2ueA4mIWGKVQiD9IXtbVHtvPoUa9T7Rpk1ukjXPWhzc+1hICuOz2Q5plcGYkwg==
+X-Gm-Gg: Acq92OFnibScr2NjCYpl6NfsoN3JpyKxCSHjggYICxhVI6cVXH6blizfyXOPiGWjE5n
+	0OKlED7yGCY/uKFuFrn7aquYSWWi+FcRgqTDSnVLD0/vojvCwrNI6aA4l1Ojam6HGD6MvBYdvGm
+	vZ5HkpoXW33R8FlsOx25Ep0QMLi3oFP7AlVDz4o/m/eL3QbPn3qDOlcBAkAUCnT82H+PMWZFiHs
+	sveSfOGMqDMCErntONTXswuQH2MK9s2cFjDHXdhIOFUXGpiI9AFsYwBhjmQ6MdX3Rcmd5hbjHz8
+	b38SVr5hWItkZLSmHVSnr1ENhZBTWQfEJzaf2NbBWKyXo3j69NnT1xl1mSIMCZjuf8lmb2UGIph
+	QKp999ZP0dWnyaN/Q4JU3eeSMY+FbdQSnMX2kr/IGPdaXV2YVPh5fDr3ROGBCIownuGCrklvZSJ
+	R9jIKktdgfN+UWAlkqFTyN1iwVJshPu7KewZMogurT6vM7AgRnzVH+AY5LKE6DYrM=
+X-Received: by 2002:a05:6a00:9297:b0:82c:e83d:a9b0 with SMTP id d2e1a72fcca58-83a5c6babd7mr18020935b3a.21.1778353953119;
+        Sat, 09 May 2026 12:12:33 -0700 (PDT)
 Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:7487:6815:7f54:c796])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83967dbd995sm14470222b3a.43.2026.05.09.12.12.29
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83967dbd995sm14470222b3a.43.2026.05.09.12.12.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 May 2026 12:12:30 -0700 (PDT)
+        Sat, 09 May 2026 12:12:32 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: sched-ext@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>,
@@ -65,10 +67,12 @@ Cc: Kuba Piecuch <jpiecuch@google.com>,
 	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
 	Chia-Ping Tsai <chia7712@gmail.com>,
 	yphbchou0911@gmail.com
-Subject: [PATCH v3 sched_ext/for-7.2 0/2] sched_ext: Add dispatch transaction API
-Date: Sun, 10 May 2026 03:11:55 +0800
-Message-ID: <20260509191223.168648-1-yphbchou0911@gmail.com>
+Subject: [PATCH v3 1/2] sched_ext: Add dispatch transaction API
+Date: Sun, 10 May 2026 03:11:56 +0800
+Message-ID: <20260509191223.168648-2-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260509191223.168648-1-yphbchou0911@gmail.com>
+References: <20260509191223.168648-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -77,72 +81,184 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_dsq_insert() captures the task's sequence number at insert time,
-so any pre-dispatch validity checks a BPF scheduler performs before the
-insert fall outside the race detection window.
+scx_bpf_dsq_insert() captures the task's dispatch token at insert time.
+Any BPF-side validity checks performed before the insert fall outside
+the race detection window: a dequeue/re-enqueue occurring between the
+check and the insert goes undetected, and finish_dispatch() proceeds
+with stale assumptions.
 
-Patch 1: Introduce a dispatch transaction API with two new kfuncs.
-- scx_bpf_dsq_insert_begin() captures the sequence number before any
-  pre-dispatch checks, opening the transaction.
-- scx_bpf_dsq_insert_commit() inserts the task using the early-captured
-  token, extending the race detection window. If the token has gone stale
-  (task was dequeued or claimed by another CPU), finish_dispatch()
-  silently discards the entry. This is intended for schedulers that do
-  not implement properly synchronized dequeue.
+Introduce two new kfuncs to extend the detection window via a dispatch
+transaction:
 
-Patch 2: Add a selftest exercising the dispatch transaction API. The BPF
-scheduler captures the token in ops.dispatch() and flips CPU affinity on
-child tasks to trigger dequeue and re-enqueue, verifying that both
-successful and stale-token dispatch paths are exercised.
+- scx_bpf_dsq_insert_begin(p)
+    Starts a dispatch transaction for @p and returns an opaque u64
+    token. The BPF scheduler should call this before performing
+    pre-dispatch validity checks. The token may be stored in BPF maps
+    to support cross-CPU dispatch patterns.
 
-Test plan:
-- Applied this series and ran selftests with vng, all tests pass.
-- Confirmed selftest skips on older kernel.
+- scx_bpf_dsq_insert_commit(p, dsq_id, enq_flags, token)
+    Like scx_bpf_dsq_insert() with slice=0, but commits using the
+    token captured by scx_bpf_dsq_insert_begin(). If @p was dequeued
+    or claimed between begin and commit, the transaction is silently
+    discarded. Use scx_bpf_task_set_slice() to set a non-default slice.
 
-This series is discussed in [1].
-[1]: https://lore.kernel.org/r/20260319083518.94673-1-arighi@nvidia.com/
+To support explicit token passing, rename scx_dsq_insert_commit() to
+scx_dsq_insert_buf() and add a qseq parameter. All existing callers
+preserve the original behavior.
 
-Changes in v3:
-- Rename cookie API to dispatch transaction API: rename kfuncs from
-  scx_bpf_task_get_cookie/scx_bpf_dsq_insert_with_cookie to
-  scx_bpf_dsq_insert_begin/scx_bpf_dsq_insert_commit (Tejun Heo)
-- Rename internal scx_dsq_insert_commit() to scx_dsq_insert_buf() to
-  avoid collision with the new public kfunc (Tejun Heo)
-- Move __ksym __weak declarations in common.bpf.h into the API commit
-- Redesign selftest to call insert from ops.dispatch() with CPU affinity
-  flips to actually exercise the race detection window. v2 called from
-  ops.enqueue() where the cookie was silently ignored (Tejun Heo)
-- Skip selftest on older kernels lacking the dispatch transaction API
-- Apply the same fix logic as commit e18002d2c791 to the selftest
-- Link to v2:
-  https://lore.kernel.org/r/20260506160412.522199-1-yphbchou0911@gmail.com/
+This mechanism is intended for schedulers that do not implement
+properly synchronized dequeue. A scheduler whose ops.dequeue()
+synchronizes atomically with the dispatch path does not need this API.
 
-Changes in v2:
-- Reword kdoc for both kfuncs to avoid exposing qseq and ops_state as
-  implementation details (Kuba Piecuch)
-- Add __ksym __weak declarations for new kfuncs in common.bpf.h
-- Add dispatch_cookie selftest (Kuba Piecuch)
-- Link to v1:
-  https://lore.kernel.org/r/20260506075925.371138-1-yphbchou0911@gmail.com/
-
-Thanks,
-Cheng-Yang
-
+Suggested-by: Tejun Heo <tj@kernel.org>
+Suggested-by: Kuba Piecuch <jpiecuch@google.com>
+Suggested-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Andrea Righi <arighi@nvidia.com>
+Link: https://lore.kernel.org/r/20260203230639.1259869-1-arighi@nvidia.com/
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
+ kernel/sched/ext.c                       | 72 ++++++++++++++++++++++--
+ tools/sched_ext/include/scx/common.bpf.h |  2 +
+ 2 files changed, 69 insertions(+), 5 deletions(-)
 
-Cheng-Yang Chou (2):
-  sched_ext: Add dispatch transaction API
-  selftests/sched_ext: Add dispatch_cookie test
-
- kernel/sched/ext.c                            |  72 ++++++++++++-
- tools/sched_ext/include/scx/common.bpf.h      |   2 +
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../selftests/sched_ext/dispatch_cookie.bpf.c | 102 ++++++++++++++++++
- .../selftests/sched_ext/dispatch_cookie.c     | 100 +++++++++++++++++
- 5 files changed, 272 insertions(+), 5 deletions(-)
- create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.c
-
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index b2741b6fb046..81483520f5cc 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -8315,8 +8315,8 @@ static bool scx_dsq_insert_preamble(struct scx_sched *sch, struct task_struct *p
+ 	return true;
+ }
+ 
+-static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
+-				  u64 dsq_id, u64 enq_flags)
++static void scx_dsq_insert_buf(struct scx_sched *sch, struct task_struct *p,
++			       u64 dsq_id, u64 enq_flags, unsigned long qseq)
+ {
+ 	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
+ 	struct task_struct *ddsp_task;
+@@ -8334,7 +8334,7 @@ static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
+ 
+ 	dspc->buf[dspc->cursor++] = (struct scx_dsp_buf_ent){
+ 		.task = p,
+-		.qseq = atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK,
++		.qseq = qseq,
+ 		.dsq_id = dsq_id,
+ 		.enq_flags = enq_flags,
+ 	};
+@@ -8401,7 +8401,8 @@ __bpf_kfunc bool scx_bpf_dsq_insert___v2(struct task_struct *p, u64 dsq_id,
+ 	else
+ 		p->scx.slice = p->scx.slice ?: 1;
+ 
+-	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags);
++	scx_dsq_insert_buf(sch, p, dsq_id, enq_flags,
++			      atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK);
+ 
+ 	return true;
+ }
+@@ -8429,7 +8430,8 @@ static bool scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
+ 
+ 	p->scx.dsq_vtime = vtime;
+ 
+-	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
++	scx_dsq_insert_buf(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ,
++			      atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK);
+ 
+ 	return true;
+ }
+@@ -8518,13 +8520,72 @@ __bpf_kfunc void scx_bpf_dsq_insert_vtime(struct task_struct *p, u64 dsq_id,
+ 	scx_dsq_insert_vtime(sch, p, dsq_id, slice, vtime, enq_flags);
+ }
+ 
++/**
++ * scx_bpf_dsq_insert_begin - Begin a dispatch transaction for a task
++ * @p: task_struct to dispatch
++ *
++ * Returns an opaque u64 dispatch token. Pass the token to
++ * scx_bpf_dsq_insert_commit() to insert @p into a DSQ. If @p is dequeued
++ * or claimed by another path between scx_bpf_dsq_insert_begin() and
++ * scx_bpf_dsq_insert_commit(), the commit will silently fail.
++ *
++ * This API is intended for schedulers that do not implement properly
++ * synchronized dequeue.
++ */
++__bpf_kfunc u64 scx_bpf_dsq_insert_begin(struct task_struct *p)
++{
++	return atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK;
++}
++
++/**
++ * scx_bpf_dsq_insert_commit - Commit a dispatch transaction
++ * @p: task_struct to insert
++ * @dsq_id: DSQ to insert into
++ * @enq_flags: SCX_ENQ_*
++ * @token: token from scx_bpf_dsq_insert_begin()
++ * @aux: implicit BPF argument
++ *
++ * Like scx_bpf_dsq_insert() with slice=0, but commits a dispatch transaction
++ * begun with scx_bpf_dsq_insert_begin(). If @p was dequeued or claimed
++ * between begin and commit, the dispatch is silently discarded. Use
++ * scx_bpf_task_set_slice() to set a non-default slice.
++ *
++ * Returns %true if the entry was buffered for dispatch, %false on preamble
++ * failure (e.g. @p is not owned by this scheduler). Note: stale token
++ * detection fires asynchronously in finish_dispatch() after ops.dispatch()
++ * returns. A %true return does not guarantee the task was actually dispatched.
++ */
++__bpf_kfunc bool scx_bpf_dsq_insert_commit(struct task_struct *p,
++					    u64 dsq_id, u64 enq_flags,
++					    u64 token,
++					    const struct bpf_prog_aux *aux)
++{
++	struct scx_sched *sch;
++
++	guard(rcu)();
++	sch = scx_prog_sched(aux);
++	if (unlikely(!sch))
++		return false;
++
++	if (!scx_dsq_insert_preamble(sch, p, dsq_id, &enq_flags))
++		return false;
++
++	p->scx.slice = p->scx.slice ?: 1;
++
++	scx_dsq_insert_buf(sch, p, dsq_id, enq_flags, (unsigned long)token);
++
++	return true;
++}
++
+ __bpf_kfunc_end_defs();
+ 
+ BTF_KFUNCS_START(scx_kfunc_ids_enqueue_dispatch)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_insert, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_insert___v2, KF_IMPLICIT_ARGS | KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_dsq_insert_commit, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_ID_FLAGS(func, __scx_bpf_dsq_insert_vtime, KF_IMPLICIT_ARGS | KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_insert_vtime, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_dsq_insert_begin, KF_RCU)
+ BTF_KFUNCS_END(scx_kfunc_ids_enqueue_dispatch)
+ 
+ static const struct btf_kfunc_id_set scx_kfunc_set_enqueue_dispatch = {
+@@ -10194,6 +10255,7 @@ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
+ BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_task_cid, KF_RCU)
++BTF_ID_FLAGS(func, scx_bpf_dsq_insert_begin, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index 5f715d69cde6..fb793008e2e3 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -63,6 +63,8 @@ s32 scx_bpf_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
+ s32 __scx_bpf_select_cpu_and(struct task_struct *p, const struct cpumask *cpus_allowed,
+ 			     struct scx_bpf_select_cpu_and_args *args) __ksym __weak;
+ bool __scx_bpf_dsq_insert_vtime(struct task_struct *p, struct scx_bpf_dsq_insert_vtime_args *args) __ksym __weak;
++u64 scx_bpf_dsq_insert_begin(struct task_struct *p) __ksym __weak;
++bool scx_bpf_dsq_insert_commit(struct task_struct *p, u64 dsq_id, u64 enq_flags, u64 token) __ksym __weak;
+ u32 scx_bpf_dispatch_nr_slots(void) __ksym;
+ void scx_bpf_dispatch_cancel(void) __ksym;
+ void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
 -- 
 2.48.1
 
