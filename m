@@ -1,117 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23DF254B18;
-	Sun, 10 May 2026 19:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD0C309EFF;
+	Sun, 10 May 2026 20:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778442098; cv=none; b=oKoF2gmQWpjz1jl9+zgpxCc9ofQHXQ3lHHT7l2NNsY3M+v6V6BXtTa6v7LU6hrQvipayO+SufoHPZDONQTQ1uaQ5prPzYHEskgkUPVZ9NtS5SSTSpbEUJDwQAbyzm/nabCt/+YsawZ4lZJcStHhzshlZfltkwCtFARDiKRJdKGs=
+	t=1778443490; cv=none; b=JqM5y6U3aAShJ1U3c/1uaYX6lWeu93PMkadFVfQK5Jd6oWC/E5tZPJ8XScQBz1u0LNLkIJAQeJKCc5ZfjaLMj+fHSevWO4g7WT1kFKYvUb+DZ718oie6yqSPpNYkJr0LwIFofLCPRHpnh2u0V5IcpDkeMltE5dXjf60zvZBz4aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778442098; c=relaxed/simple;
-	bh=tZbKd1Rhw4wF0lBNpJRa8Fko9Hp+UVutJQSGa1Z7vPk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VfSUjfOJ3BNacOJwtLsrdaCZUvcofGLWjQtgPkIhnFORxhO++IBYUzEKmJSM9+P8yjIdvl/qF8bKBanL8ZeeSi38pGYKwNIQBMVspfi85DOFh7eI4Osh7tys7LGwvoLEbRuit+REagHxyr6VIdmMa6CBEQ9ad56wSgfri7YWRhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yyb45iIv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778443490; c=relaxed/simple;
+	bh=GYRDMX2SF76afM3g6C9vn7LUXD54k2rlanlHA6wIIqY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ab2q8tuDqojVqFOV+vkF5EHMnNR9a8EMjJB705Ldl+kDFOcUDw7s3LtTJW0Hl/AqgKHKfhCmgtPMuTwRvrFq5UPv9Qt7dL4hxfJ+MiSgX8ZxnnLfhn142N7ziJBoO8mGDHnSptjbvxKaD/Y1slrTNRov441fEdT7TZKK9thrl18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i4DvD7Ga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yyb45iIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB7BC2BCB8;
-	Sun, 10 May 2026 19:41:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i4DvD7Ga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AF1C2BCB8;
+	Sun, 10 May 2026 20:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778442098;
-	bh=tZbKd1Rhw4wF0lBNpJRa8Fko9Hp+UVutJQSGa1Z7vPk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Yyb45iIvG8aXRhdD8nyBMZ6Y4VusliF7Hp3vK3Tp2XuMowp77gzrFg+yVOBaro0z7
-	 pa+NV6khI/a7QwBw7MSXMwedjIkx3R2RV6ntf6N4bX3Yc2vRMlQ0geFtoZVXS86Jtv
-	 Lp+MkIna+uC8FA8zrBIrEaQQU//hTkF4TQTnCDyGPySgnq3ixHjyfDbd1x+081LmaS
-	 cLQyPgTFKrHUXImU82IznZNEaFYo37wLl1nzEKpJIAJzAlxPyQNSP9reFhcCmxSgQ6
-	 XVASnW6R3j9GXpbPopXoY3ZtNNMiiSKA6bIVtkCqGHLCtno7JDn5bvpTG5TO9dVYgV
-	 dnnE07fNEn/FA==
-Date: Sun, 10 May 2026 09:41:37 -1000
+	s=k20201202; t=1778443489;
+	bh=GYRDMX2SF76afM3g6C9vn7LUXD54k2rlanlHA6wIIqY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=i4DvD7Ga1HxCyU3d4gokKPRCI30OorIHRbaBXMtcTiF7dfnAFkKPDRn8hAMZ7v+TD
+	 IxSB/dUZL+ZGeO0Nc852KC3lYEDdN4r/EQKZA1b2BL9biON69oBGLmp5u1lBb3rdKD
+	 WVdZdBp/d2wksTkACvpztwg6p++ceR4hjUa5wpnQxdxww8WUB5V6z5zYMzYRfynRbA
+	 4NFWjAtiECzOOOMg/v1/aGh84KycK/oRSoe7cfkrOK4y8V2QMO1iI240r27a9Sqnj9
+	 +YwU7lVWpxBjCdhYqfb22M2e7rvTwYSOf1lVVZRohf28j5RF7ygy0Y28y0r0TuftjO
+	 3WONjqgnUgCtQ==
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: void@manifault.com, changwoo@igalia.com, jstultz@google.com,
-	mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
-	vincent.guittot@linaro.org, dietmar.eggemann@arm.com,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	vschneid@redhat.com, kprateek.nayak@amd.com,
-	christian.loehle@arm.com, kobak@nvidia.com, joelagnelf@nvidia.com,
-	emil@etsalapatis.com, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH sched_ext/for-7.2 0/10] sched: Make proxy execution
- compatible with sched_ext
-Message-ID: <agDfcbbe3-Za15CB@slm.duckdns.org>
-References: <20260506174639.535232-1-arighi@nvidia.com>
- <20260509010059.345908-1-tj@kernel.org>
- <agCfAY9zqrQiKAJ4@gpd4>
+To: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: emil@etsalapatis.com,
+	suzhidao@xiaomi.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH v2 2/6] sched_ext: Inline scx_init_task() and move RESET_RUNNABLE_AT into scx_set_task_state()
+Date: Sun, 10 May 2026 10:04:48 -1000
+Message-ID: <20260510200448.2471037-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260510074113.2049514-3-tj@kernel.org>
+References: <20260510074113.2049514-1-tj@kernel.org> <20260510074113.2049514-3-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agCfAY9zqrQiKAJ4@gpd4>
+Content-Transfer-Encoding: 8bit
 
-Hello,
+Prepare for the SCX_TASK_INIT_BEGIN/DEAD work that follows by collapsing the
+scx_init_task() helper. Move the SCX_TASK_RESET_RUNNABLE_AT setting into
+scx_set_task_state() on the INIT transition (it was set unconditionally at
+every INIT site through the scx_init_task() helper), inline scx_init_task()
+into scx_fork() and scx_root_enable_workfn(), and drop the helper.
 
-I'll think more on enabling proxy execution as-is for sched_ext. Reponse on
-scx_bpf_dsq_move():
+As a side effect, scx_sub_disable() migration sequence now also sets
+RESET_RUNNABLE_AT (it previously wrote INIT directly without going through
+scx_init_task()). The flag triggers a runnable_at reset on the next
+set_task_runnable(), which is harmless on a task that has just been moved
+between scheds.
 
-On Sun, May 10, 2026 at 05:06:41PM +0200, Andrea Righi wrote:
-...
-> Let's say we expose blocked_on (and a kfunc returning the mutex owner) via
-> tagged ops.quiescent/runnable(). The BPF scheduler now wants to boost the owner.
-> What's the actual way to do so? Some mechanisms that we have right now:
->  - slice extension: scx_bpf_task_set_slice() works in place, but it affects
->    only a running owner,
->  - dsq_vtime: scx_bpf_task_set_dsq_vtime() updates the value, but for a task
->    already enqueued in a PRIQ DSQ the position in the rbtree doesn't move, so
->    this doesn't actually boost an already-queued owner.
->  - DSQ move: scx_bpf_dsq_move() requires an iterator and the task to have been
->    queued before iteration started. We don't have a kfunc today that takes a
->    task pointer and atomically yanks it from wherever it is to a higher-priority
->    DSQ. We also have no API exposing which DSQ a task is currently sitting in.
+On root-enable, p->scx.flags is written without the task's rq lock. The task
+isn't visible to scx yet, and a follow-up patch restores the lock-held
+write.
 
-Assuming ->blocked_on() is triggered without rq lock held (if not, we just
-need to tell scx_bpf_dsq_move() that it can do lock dancing in this context
-too), we should already be able to move the task directly:
+v2: Note p->scx.flags rq-lock relaxation on root-enable path. (Andrea)
 
-p->scx.dsq->id should already be accessible through BPF_CORE_READ(). Maybe
-we can make it a bit nicer.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext.c | 31 +++++++++----------------------
+ 1 file changed, 9 insertions(+), 22 deletions(-)
 
-scx_bpf_dsq_move() doesn't actually need the task to come from iteration.
-It's a bit odd but we're overloading the iterator for two purposes -
-iteration and transaction scope definition. If a task is dequeued and
-reenqueued after iteration is opened, scx_bpf_dsq_move() ignores the move as
-the visit is considered stale. scx_bpf_dsq_move() only depends on this part.
-The following is an excerpt from the function comment:
-
- * For the transfer to be successful, @p must still be on the DSQ and have been
- * queued before the DSQ iteration started. This function doesn't care whether
- * @p was obtained from the DSQ iteration. @p just has to be on the DSQ and have
- * been queued before the iteration started.
-
-So, for an example, ->blocked_on() can do:
-
-  void my_sched_blocked_on(struct task_struct *p, struct task_struct *blocker)
-  {
-          u64 dsq_id = BPF_CORE_READ(p, scx.dsq, id);
-          struct bpf_iter_scx_dsq it;
-
-          if (!bpf_iter_scx_dsq_new(&it, dsq_id, 0)) {
-                  scx_bpf_dsq_move(&it, p, SCX_DSQ_LOCAL_ON | WHATEVER_CPU_WE_PICK,
-                                   SCX_ENQ_PREEMPT);
-                  bpf_iter_scx_dsq_destroy(&it);
-          }
-  }
-
-This is not the prettiest but the above should do all that's needed and
-nothing else. It just looks up the dsq and remembers the insert sequence. No
-actual iteration happens. Again, it'd be trivial to add BPF helpers or extra
-kfuncs to make this nicer.
-
-Thanks.
-
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 10c6e0261f11..81841277a54f 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -726,6 +726,7 @@ static void scx_set_task_state(struct task_struct *p, u32 state)
+ 		break;
+ 	case SCX_TASK_INIT:
+ 		warn = prev_state != SCX_TASK_NONE;
++		p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
+ 		break;
+ 	case SCX_TASK_READY:
+ 		warn = prev_state == SCX_TASK_NONE;
+@@ -3585,22 +3586,6 @@ static int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fo
+ 	return 0;
+ }
+ 
+-static int scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
+-{
+-	int ret;
+-
+-	ret = __scx_init_task(sch, p, fork);
+-	if (!ret) {
+-		/*
+-		 * While @p's rq is not locked. @p is not visible to the rest of
+-		 * SCX yet and it's safe to update the flags and state.
+-		 */
+-		p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
+-		scx_set_task_state(p, SCX_TASK_INIT);
+-	}
+-	return ret;
+-}
+-
+ static void __scx_enable_task(struct scx_sched *sch, struct task_struct *p)
+ {
+ 	struct rq *rq = task_rq(p);
+@@ -3763,10 +3748,11 @@ int scx_fork(struct task_struct *p, struct kernel_clone_args *kargs)
+ #else
+ 		struct scx_sched *sch = scx_root;
+ #endif
+-		ret = scx_init_task(sch, p, true);
+-		if (!ret)
+-			scx_set_task_sched(p, sch);
+-		return ret;
++		ret = __scx_init_task(sch, p, true);
++		if (unlikely(ret))
++			return ret;
++		scx_set_task_state(p, SCX_TASK_INIT);
++		scx_set_task_sched(p, sch);
+ 	}
+ 
+ 	return 0;
+@@ -6897,8 +6883,8 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 
+ 		scx_task_iter_unlock(&sti);
+ 
+-		ret = scx_init_task(sch, p, false);
+-		if (ret) {
++		ret = __scx_init_task(sch, p, false);
++		if (unlikely(ret)) {
+ 			put_task_struct(p);
+ 			scx_task_iter_stop(&sti);
+ 			scx_error(sch, "ops.init_task() failed (%d) for %s[%d]",
+@@ -6906,6 +6892,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 			goto err_disable_unlock_all;
+ 		}
+ 
++		scx_set_task_state(p, SCX_TASK_INIT);
+ 		scx_set_task_sched(p, sch);
+ 		scx_set_task_state(p, SCX_TASK_READY);
+ 
 -- 
-tejun
+2.54.0
+
