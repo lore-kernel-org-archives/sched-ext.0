@@ -1,241 +1,68 @@
-Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com [209.85.221.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84E5388E71
-	for <sched-ext@lists.linux.dev>; Sun, 10 May 2026 13:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06BE3932DC;
+	Sun, 10 May 2026 13:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778420492; cv=none; b=ettLbMNpLRAUOg1g/marwdVtoeCeVEtOqcPjb0qg4dvVSTW2zbU4nkklMnwSKQi52mXptORq8oaqeAk9fHpgYVIE8cmQfJ7L0l2qoQVzg4aDsJJaAVT0DhDVQ4+y4FqnMz1pVEepSd2mjLEmA8HsJuK7u1BDO+B0jPKvj7Ysp5c=
+	t=1778421332; cv=none; b=blrcUaEOx/BoNwmOlJThTrPCvJEAEe5rom454O2b1Z6ePfSN12QHaU4CAYbAWXZNFSTnTUonj4nrPT1wigyoSTAsuPevtFnF6PNQCKqVe4MuBNGdYwlmC/g9z2CCZtAXBOngWFYIwa1KgqFijXg4DI+Rzu9mv4+8sX6RMdyYtVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778420492; c=relaxed/simple;
-	bh=AZr8rIQ1ubNmwJuBVike4Leb5tE6j84Hc44G5ztyCvs=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=oNYLryr2Xuw/ht5iLEJgJteMO1z7qsYuo/i8MAi/0fYHmWWKKWrFWZCg/v/3tI3PypjAMXMCKOIe0SO1bKD6b0B93v/RNFFWCTFDHoI9Rl48x8ndfQVp9W3eh69L1UraaU1pHoXMzj2WsHq2c5r5DmZU5GPtHVV7lG4uPHu5RxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ArxYqy1l; arc=none smtp.client-ip=209.85.221.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--aliceryhl.bounces.google.com
+	s=arc-20240116; t=1778421332; c=relaxed/simple;
+	bh=FxRKigehiLGN3UQfHHA5rga4kgJBTzlRe/0ULSv66bw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iSqbZNkCR36raXFu27RP+mFeZ9m0iGgk0z1M52+kgGhoTF1ZjpWhEgmqh87aNOMdQ69Fg7H7ObITK9dvOx/OvA1uXVYrg0HFICdYgMZSd4rwQY7Svo6X9I1QBJvWF0DvTFHISO+ziqVvw31oxNZnRkfJOobiApsoDvvqbKybrVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pCvx/nXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ArxYqy1l"
-Received: by mail-wr1-f73.google.com with SMTP id ffacd0b85a97d-43d7a5b9678so2323621f8f.2
-        for <sched-ext@lists.linux.dev>; Sun, 10 May 2026 06:41:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778420488; x=1779025288; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cmhcPqIDcr/VmaJfBaD4MTK3AqhVyijG/EOTeXKKd6g=;
-        b=ArxYqy1lOAUKAArlvWY/qOFkhUCT80YJAn/jbL/9gzniLmnPO4n9GNYgaljzB7YXvo
-         rzEZOBCqrzfGdFk0xxwNMybBd0xjQYcWHyoYcTQOe49i2IixedFTZ/YwPkYn7ZIqlVdh
-         aBsGJ4GotcwAIaV5qG8MYUq8GSALbx411Bg/fdM4WDl37w4tBYKKctECIrhBAzEfk2tr
-         HHGtzMtLU+hWlwByqDqTt+SLCU+1wOeL82+VxDuqykg/XewVnxbUSmNVqULAUJcoL2mm
-         I94G5iGLPe/Ckm6EROcwYCPFaCNrurObyXrT/o8e2saErr+uwy56FsbKILB8xwbtk0hG
-         NWmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778420488; x=1779025288;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cmhcPqIDcr/VmaJfBaD4MTK3AqhVyijG/EOTeXKKd6g=;
-        b=qmZ2tIWTWwqu37b30mqVzZxLsCl0dPFbOFfqAA9mTeklb8Vn5Hz90bo8BMw7CGR6Jd
-         9C+kkcK84q79OZ8Xx8iPL0VvAbmmlrgneVikeCTRGch7L6LA7X5tAv9I0vy2MnNhM4kb
-         9dqQBKQlzSLHYilpp7EfAny31BR5imsWYeyH4+po4qnFz9FSS6OGde3WZpDmV4hiJvrg
-         lnqh9WgQfohBnggm54Udjo716lj9HqK+VuelKNueTYmhacbuWBWeAlRY1DnnNrAetyIw
-         UU5uIt8dpjGCQWZ16Wu9KS2ZgnLtZNfdLT6qwS13Ap4tApcV8hTwNAKNcjibCEFTL/eA
-         s1CQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/JwPTqQUYITdzQ/ieprZDW7rwxmFfh03PW3lKGsAjAE4HGf60o1/Q6u4yXxB997jxTEGniMLLqec8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzTLNWdxfr2ibCbggfe/LMiundYs/5hGRnHAC5yW+oGL0SpzTAs
-	KbndImkYVdXKHugGXByqbJn16koB7aPIq1zJeUeS0kPn2ytLPSk8DNt4fNffikoeNoHxklYLXna
-	eGEEDPYyxZZcGm5hccA==
-X-Received: from wmxb15-n2.prod.google.com ([2002:a05:600d:844f:20b0:486:fe68:2045])
- (user=aliceryhl job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:c091:b0:488:a977:8de with SMTP id 5b1f17b1804b1-48e706b264cmr73095925e9.16.1778420488316;
- Sun, 10 May 2026 06:41:28 -0700 (PDT)
-Date: Sun, 10 May 2026 13:41:27 +0000
-In-Reply-To: <af5XymUlyE0Jsi2t@gpd4>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pCvx/nXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DBAC2BCB8;
+	Sun, 10 May 2026 13:55:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778421332;
+	bh=FxRKigehiLGN3UQfHHA5rga4kgJBTzlRe/0ULSv66bw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=pCvx/nXr3aBfdCtbSjVXkvK6db2RXP1rJBwcuZUOg/m4AfqSC+MXX5L99Gy/zxvK7
+	 OL2/C7LFEVsi1KnACuq317jmOBGlLQkvjuOfP+i/DKVnQiMSsPotuA+U/VHdvFy/Wr
+	 HHnCkWUkYbpKlx2eeSHaPLIHtOiiCD1ZOYcd+uB2lFUOOP0OtVkTV9s2XNkA5Vz1Fv
+	 BcMnSp1CMc5zV5N/zXhwJipFkZw97amsZ/b937CphnkkGpEhFO/6IuUcWoVOs3YwPc
+	 SlLu268tKdCxKaQVb5Xeg3QHB0cyOzMD4wceprF0CXoCkgoD/1AJAdfBUBt5IWnj3w
+	 808ZNjmzyhzIw==
+From: Tejun Heo <tj@kernel.org>
+To: suzhidao@xiaomi.com
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	emil@etsalapatis.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: Re: [PATCH v2] sched_ext: Fix sched_ext_dead() race with scx_root_enable_workfn()
+Date: Sun, 10 May 2026 03:55:31 -1000
+Message-ID: <20260510135531.2291252-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260506054001.1105522-1-suzhidao@xiaomi.com>
+References: <20260429133155.3825247-1-suzhidao@xiaomi.com> <20260506054001.1105522-1-suzhidao@xiaomi.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260508-put-task-struct-many-v1-1-8341c18141a6@google.com> <af5XymUlyE0Jsi2t@gpd4>
-Message-ID: <agCLBxHEUqWIepx8@google.com>
-Subject: Re: [PATCH] sched/task: always defer 'struct task_struct' destruction
- via RCU
-From: Alice Ryhl <aliceryhl@google.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>, Boqun Feng <boqun@kernel.org>, 
-	Changwoo Min <changwoo@igalia.com>, Clark Williams <clrkwllms@kernel.org>, 
-	David Vernet <void@manifault.com>, Frederic Weisbecker <frederic@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
-	Jens Axboe <axboe@kernel.dk>, Joel Fernandes <joelagnelf@nvidia.com>, 
-	Josh Triplett <josh@joshtriplett.org>, Lai Jiangshan <jiangshanlai@gmail.com>, 
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>, 
-	Uladzislau Rezki <urezki@gmail.com>, Zqiang <qiang.zhang@linux.dev>, io-uring@vger.kernel.org, 
-	rcu@vger.kernel.org, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-rt-devel@lists.linux.dev
-Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 08, 2026 at 11:38:18PM +0200, Andrea Righi wrote:
-> Hi Alice,
-> 
-> On Fri, May 08, 2026 at 02:02:45PM +0000, Alice Ryhl wrote:
-> > The sched/task.h header file currently exposes a tryget_task_struct()
-> > function, but it is very risky to use it: If the last refcount of the
-> > task is dropped using put_task_struct_many(), then the task is freed
-> > right away without an RCU grace period.
-> > 
-> > This means that if the kernel contains a code path anywhere such that
-> > the last refcount of a task may be dropped with put_task_struct_many(),
-> > and it also contains a code path anywhere that tries to stash a task
-> > pointer under rcu and use tryget_task_struct() on it, then if they ever
-> > execute on the same 'struct task_struct', it results in a
-> > use-after-free.
-> > 
-> > The above applies even if the RCU user drops its own task reference with
-> > put_task_struct(), because if that is not the last reference, then it's
-> > possible for another thread to invoke put_task_struct_many() and free
-> > the task less than a grace period after the RCU user called
-> > put_task_struct().
-> > 
-> > There does not appear to be an actual problem in the kernel tree right
-> > now because there are no in-tree users of put_task_struct_many() where
-> > refcount_sub_and_test() might return 'true'. Io-uring invokes the
-> > function from task work while the task is still running, so it will not
-> > decrement it all the way to zero. (Note that if I'm wrong about this,
-> > then it's probably possible to trigger UAF by combining this codepath in
-> > io-uring with the tryget_task_struct() call in sched-ext.)
-> > 
-> > However, the current situation is fragile and error-prone.
-> > - If you look at put_task_struct_many() in isolation, it looks like it
-> >   would be okay to call it in a situation where refcount_sub_and_test()
-> >   might return 'true'.
-> > - Similarly, if you look at tryget_task_struct(), you would assume that
-> >   you are allowed to call this method for a grace period after 'users'
-> >   hitting zero. (If not, why does it exist?)
-> > But if two different kernel developers anywhere in the kernel make these
-> > conflicting assumptions at any point in the future, then the combination
-> > of their code may lead to a use-after-free if there is any way for them
-> > to interact via the same 'struct task_struct'.
-> > 
-> > Thus, as a defensive measure, we should either make
-> > put_task_struct_many() use call_rcu(), or we should delete
-> > tryget_task_struct(). This patch suggests the former because it does not
-> > change anything for any callers that exist today. (As argued previously,
-> > the body of the 'if' statement is dead code in the kernel today.)
-> > 
-> > The comment in put_task_struct() is also updated so that nobody changes
-> > its implementation to only use call_rcu() under PREEMPT_RT in the
-> > future. The current comment suggests that would be a legal change, but
-> > it is similarly incompatible with anyone using tryget_task_struct().
-> > 
-> > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> > ---
-> > Including sched-ext and io-uring in the cc list as they are the only
-> > users of tryget_task_struct() and put_task_struct_many() respectively.
-> 
-> For sched_ext I think we should be already protected by scx_tasks_lock.
-> 
-> From kernel/sched/core.c:
-> 
->   finish_task_switch():
->       if (prev_state == TASK_DEAD) {
->           prev->sched_class->task_dead(prev);
->           sched_ext_dead(prev);
->           cgroup_task_dead(prev);
->           put_task_stack(prev);
->           ...
->           put_task_struct_rcu_user(prev);
->       }
-> 
->  And sched_ext_dead() in kernel/sched/ext.c:
-> 
->   scoped_guard(raw_spinlock_irqsave, &scx_tasks_lock) {
->       list_del_init(&p->scx.tasks_node);
->       ...
->   }
-> 
-> Now on the sched_ext iter side:
-> 
->   scx_task_iter_start();                     /* takes scx_tasks_lock */
->   while ((p = scx_task_iter_next_locked()))
->       if (!tryget_task_struct(p))            /* still under scx_tasks_lock */
->          ...
-> 
-> So, the locking gives us the invariant: while the iter holds scx_tasks_lock and
-> observes p on the list, sched_ext_dead(p) cannot have completed.
+Hello,
 
-Correct my if I'm wrong, but this sounds like you don't need the tryget
-variant. The 'users' counter is guaranteed be non-zero for one grace
-period after put_task_struct_rcu_user(prev).
+Thanks for the report and the patches. The same race window also
+affects the analogous sub-sched paths and the wrapper-disable paths
+trip on the NONE state that scx_fail_parent() leaves behind, so I
+ended up taking a more invasive route - extending the task state
+machine with SCX_TASK_INIT_BEGIN and SCX_TASK_DEAD - rather than
+continuing with your localized fix.
 
-Alice
+Posted as a 6-patch series:
 
-> And the css_task_iter paths have the analogous ordering.
-> 
-> That said, I think this patch still makes sense to provide a consistent
-> semantics between put_task_struct() and put_task_struct_many(), as mentioned by
-> Sebastian. So, maybe reword the message around consistency rather than UAF?
-> 
-> Thanks,
-> -Andrea
-> 
-> > ---
-> >  include/linux/sched/task.h | 24 +++++++++++++++---------
-> >  1 file changed, 15 insertions(+), 9 deletions(-)
-> > 
-> > diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-> > index 41ed884cffc9..da2fbd17b676 100644
-> > --- a/include/linux/sched/task.h
-> > +++ b/include/linux/sched/task.h
-> > @@ -131,19 +131,25 @@ static inline void put_task_struct(struct task_struct *t)
-> >  		return;
-> >  
-> >  	/*
-> > -	 * Under PREEMPT_RT, we can't call __put_task_struct
-> > -	 * in atomic context because it will indirectly
-> > -	 * acquire sleeping locks. The same is true if the
-> > -	 * current process has a mutex enqueued (blocked on
-> > -	 * a PI chain).
-> > +	 * Delay __put_task_struct() for one grace period so
-> > +	 * that tryget_task_struct() may be used for one
-> > +	 * grace period after any call to put_task_struct().
-> >  	 *
-> > -	 * In !RT, it is always safe to call __put_task_struct().
-> > -	 * Though, in order to simplify the code, resort to the
-> > -	 * deferred call too.
-> > +	 * This also has the benefit of making it legal to
-> > +	 * call put_task_struct() in atomic context. We
-> > +	 * can't do that under PREEMPT_RT because it will
-> > +	 * indirectly acquire sleeping locks. The same is
-> > +	 * true if the current process has a mutex enqueued
-> > +	 * (blocked on a PI chain).
-> >  	 *
-> >  	 * call_rcu() will schedule __put_task_struct_rcu_cb()
-> >  	 * to be called in process context.
-> >  	 *
-> > +	 * In !RT, it is safe to call __put_task_struct()
-> > +	 * from atomic context, but we still need to delay
-> > +	 * cleanup for a grace period to accommodate
-> > +	 * tryget_task_struct() callers.
-> > +	 *
-> >  	 * __put_task_struct() is called when
-> >  	 * refcount_dec_and_test(&t->usage) succeeds.
-> >  	 *
-> > @@ -164,7 +170,7 @@ DEFINE_FREE(put_task, struct task_struct *, if (_T) put_task_struct(_T))
-> >  static inline void put_task_struct_many(struct task_struct *t, int nr)
-> >  {
-> >  	if (refcount_sub_and_test(nr, &t->usage))
-> > -		__put_task_struct(t);
-> > +		call_rcu(&t->rcu, __put_task_struct_rcu_cb);
-> >  }
-> >  
-> >  void put_task_struct_rcu_user(struct task_struct *task);
-> > 
-> > ---
-> > base-commit: 7fd2df204f342fc17d1a0bfcd474b24232fb0f32
-> > change-id: 20260508-put-task-struct-many-5b5b2f4ae174
-> > 
-> > Best regards,
-> > -- 
-> > Alice Ryhl <aliceryhl@google.com>
-> > 
+  https://lore.kernel.org/all/20260510074113.2049514-1-tj@kernel.org/
+
+Thanks.
+
+--
+tejun
