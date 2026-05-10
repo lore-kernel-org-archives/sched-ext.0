@@ -1,61 +1,80 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013044.outbound.protection.outlook.com [40.107.201.44])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011049.outbound.protection.outlook.com [40.93.194.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348E620468E
-	for <sched-ext@lists.linux.dev>; Sun, 10 May 2026 17:52:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398BE3002A0;
+	Sun, 10 May 2026 18:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778435545; cv=fail; b=qOiJeMMDW1bu2lEGwS56jJm9zB+wwWA+eRCNy6wYsDPjIPNnnL8Dx+8mK0CzSpXWUB/u6g1IxOjpoUMNKweT6oLr2b3EKpHDY5x09UnrJm1+e8XzQ3+i4wWwdb5heH3gN3pa76RGU9Xkoj0J2y2NbF9E9cQKg4J5V6UAD4AIak8=
+	t=1778438219; cv=fail; b=P1BfmkZmnXcZHgWMoisIkDdtmxLTQ14665YghF3dRUypjlN7IcI4KItPZuhBD/lctHc/+5hmCTPsx8J/1BQl/fk+NcKaMzhgf4Xy+vWV60+WPXZUAMIC5h/JLnhjHrz55WVGw7tULo4HuIubWOIAjeYaBe7/fbMmxnNbUDRzEyw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778435545; c=relaxed/simple;
-	bh=dwunw1ykbKU/D2l6Et6nbWyLOYlwu/i5/bw3GrPNrj8=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=EJEPgmVIOwVZNCNOVtklQldekq+B8elNGkXlqQQrJaBeJoxldXPhu3662uXyIk99XQGzc6/oLV2DkstsOzrPX6JbJbFNkzKf4XPZa/zHsCL1Uxbg+o/PbPtzdlSOjWx5noOyasTCqqinIjJJLxUqgsJWZ+uFNjP8n9a7Id4wpOM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cXBO9t8O; arc=fail smtp.client-ip=40.107.201.44
+	s=arc-20240116; t=1778438219; c=relaxed/simple;
+	bh=3rRsAO1Hi3k0aWPXMeC9jKl/wNCljCvOzVgcYXs/yeM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=duEY9SdO9QD9ORpTUi2hP8mCHvY37IjKsOIwsKOZq2KZjx6JnoDqVo3mRNUt+Ug6uhMPybp5FfbX0y/djnif2dL7UR7TsehdKbES1JKnRb7iDzacNoaQXZMFzQbSxpukI2qAxCiBltcurCa1wvIlHDNr/10yB5XbQYf7/5mOX4w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=pBv4R7pA; arc=fail smtp.client-ip=40.93.194.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cXBO9t8O"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pBv4R7pA"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dBHKn9K3X6mLKNs8tRI7qy/fkWc1ozBh8wybTSfnWVkzWLhiomGPXiJhbEQs1x1FZwdLQbd30meJeCsPvoflVUq7FGefMuO3mrC9GzyZt9VnwcBr/V/0e2DSFquPSlMN//BzzbxhF9KcXRybaty0XjDsH/PCA4TfZfz4NRilLQULAXjpvU2CFDUiouvFKZ+ANq2680P7Hj7rbYctc5pxc4HRup96iWZK+0IzEqdQqpVQ0tFJxOVAJZ71VrFNRpauG87VYmz6OmLo0f/h0yXwFW/WA/JnrC1ENEHIukEvys8a0g03D4UNUAg/FFTIobT9Q61M2v9g6Mf2AiHNrEOMbw==
+ b=sILG9deQJPCZt0TX/NYL0infPrpkNhoE3C7Y2w970cdB/PMUTC/6KrK12/IZkM4Xt03p/l4XpxQ1q8vVJVOrnZ2Q4z4+pNH3KE3ABtYSaNd2auAueTy6bTpnOdaBjTozEQ9FNLYP8l1gT8OrDc+ME4VPaMqBl57kEfiPRwDekFpRi1PCUO6fE1V/D9qvuLUReOvCTQPh6MQwjSVA//RMRVLR4giQUtbe+bDyJ6BKQCtJiOMUB6khzoCmLJ4OPbzDtv2DzLWLTbR4V+JrCSh+X7RUJZiKZfBMKFyER2FxqCRmqi3ME8SBUq/FQHNodlSMJCwfantG3yIIcMOD+IeSHA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=o4WBo72Tk8CjVdacKVvKL5vKtNp08oIpNl5Jz0ObwF8=;
- b=lpWUuuZyAIzA+tJTri5/53Du6TEWoxRA5PQcRGH6WIjnOdVscEXNZ4glfoLXKT2CxCaEihcxivNjMuzoOfaItTO6NTV7jpQfSq5cDXD75Cpxl7aS/gi7uGyJlbWMXsQ20HCA51uSBJVaCZpz/kXuPx+bnDwQte+pTvBjrtz9hzKL76YfQQbzsVcUtcO1iwqBKGZR0prQzy1OodQPsOuaNp/HN/f6Ge+4QS7c1+xT4XY9/K7ZL3T3ThtG5Yq2dVS41eQb6WnrphwWedaQzDfFHVKOgfJ2XjmxV8RCSvBX8yPWo6ShrA7wNFmx021KZwZcAh8fMgSITyWL5QRuHcRh4w==
+ bh=6M2hQUUo2JcMOjaFO0fTo4/X5QugDjhqsXB2iF6xmR0=;
+ b=QrnYiyDy8SDcLdw1yIYK6VC7YE2tCpmVono7dNOuHuuT7xNZXIcTb1ZJfONi3uDEuN9blxlXt0n1sAbRbACFYm7amTx/xIuoFrKolAB2HfjZpuHMp2aFX1ZMO3TLUd46gOiBSOZERzMM1gLSrGnXSw6KLvaL8JvwAUXFzClbBDx87Q8d5vih+6IEFBjKarjqQVRTJyEIfnQzfjRxkTXmyOgdGDKZFQ+1D9hKO1j2sOhZYn71wFn/uubFtfvUg/Je+cs3GkVyuM/aB2QMw/mUw3pFEF1DCNL//YuNhK6fKRRWyjC7bkqzkJti9yzWPI4I58vziSXk/Idp8t1ZR7bVSw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=o4WBo72Tk8CjVdacKVvKL5vKtNp08oIpNl5Jz0ObwF8=;
- b=cXBO9t8OaXeFcqwxxoEHEVOpZ326y3gZ0Q/ZUpAwCDP1uIEZUOclUa3mEgLJeX7F3OONc9OIFRlbe+ECkSnksFQQqYqFQRMNag8tAnNgwAXMo4eDfrvcx1mRWzukx1nDeLXMaABnyV/1fgkZ/X0m99OJmTdfu0cfOjT6GrxNpg03s1pVqymn1nmr9p/3fbnqtcK2Qfpy05rX9d0F0kLJ9/qixQ/17eHTTWFBkEFu/FM3+qLzlFtRsw/GUVh5NOcd8x/Si3xn/tYlB4npEkmhZB6SNPHos0btcX/ERH2IphsEmpY0A2Z1NFlugKMak1UhMvfjkY4uamSDEsM85FEJeg==
+ bh=6M2hQUUo2JcMOjaFO0fTo4/X5QugDjhqsXB2iF6xmR0=;
+ b=pBv4R7pAijNU2503456XZOEi7vYx8K4JoXqYH0F+/uKqCdRwlvSTDEz2TkLp5okt+sUkVV9aCgiUMjJ1Z26pOvupDysFNOdh6hp+KeTHA8Iiwx+0Vf5KUYEZdKaZmw4AB1EELCO2oWKC8sCECoT8BkU+hkSHG22S6d/T7trXhYAOOVByPDcMF7dLL9QdYPnp3whe6PJNwMQ2F1xepVXwJFVXCC8agtxLGxPm0VR/TgMag8VMXh8iiaKvt6HKxlHfqHdqIovY5nq8RzFO6UvKCfO4MR+XSQna6GZk12SpC9k0JUEkL5dAR1wDmhIGm0f5c3OxtsogJ6fSzGqOLk6NPA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DM4PR12MB7550.namprd12.prod.outlook.com (2603:10b6:8:10e::12) with
+ by PH7PR12MB5806.namprd12.prod.outlook.com (2603:10b6:510:1d2::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.22; Sun, 10 May
- 2026 17:52:19 +0000
+ 2026 18:36:54 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9891.021; Sun, 10 May 2026
- 17:52:19 +0000
+ 18:36:54 +0000
+Date: Sun, 10 May 2026 20:36:41 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>,
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>, Boqun Feng <boqun@kernel.org>,
+	Changwoo Min <changwoo@igalia.com>,
+	Clark Williams <clrkwllms@kernel.org>,
 	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH sched_ext/for-7.1-fixes] selftests/sched_ext: Fix build error in dequeue selftest
-Date: Sun, 10 May 2026 19:52:11 +0200
-Message-ID: <20260510175211.978332-1-arighi@nvidia.com>
-X-Mailer: git-send-email 2.54.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MI1P293CA0010.ITAP293.PROD.OUTLOOK.COM (2603:10a6:290:2::7)
- To LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+	Frederic Weisbecker <frederic@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>, Jens Axboe <axboe@kernel.dk>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
+	Uladzislau Rezki <urezki@gmail.com>, Zqiang <qiang.zhang@linux.dev>,
+	io-uring@vger.kernel.org, rcu@vger.kernel.org,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: Re: [PATCH] sched/task: always defer 'struct task_struct'
+ destruction via RCU
+Message-ID: <agDQOf8Qe11ozpuf@gpd4>
+References: <20260508-put-task-struct-many-v1-1-8341c18141a6@google.com>
+ <af5XymUlyE0Jsi2t@gpd4>
+ <agCLBxHEUqWIepx8@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agCLBxHEUqWIepx8@google.com>
+X-ClientProxiedBy: MI3PEPF00004E9B.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::457) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -63,91 +82,154 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM4PR12MB7550:EE_
-X-MS-Office365-Filtering-Correlation-Id: a9ec218c-85c6-4f9a-b94a-08deaebce131
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH7PR12MB5806:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1b9c736b-d0d8-49ca-462c-08deaec31bb8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|56012099003|18002099003;
+	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|18002099003|22082099003|56012099003;
 X-Microsoft-Antispam-Message-Info:
-	WSCKnoHFyFBuhM8COH3Vk1pL04YmILgx79wdmWTjttZVyJzao/ozGloV+J0rCAhDwgXy7qQhFz2iy1pj/nXlC3LEWADPpiXqDJvGL/ETtCbcxPuiM9ywnjwtkgHS7rA1+1ts46GBCo1XkaIb0+miixfNS3pbRgnGAVwlrJSduo4CvUEIWp7mxKPQzVzCxfYKvH8otkf9hlpW+yJ6d+a5+rNc+3fXTtWuaoQLxgpB1tDGX9h4SSCH8TygiEHeEcMgCWGuCSgU6MeHGHt1vuMi/R5/O3MXi3ehYeauF8YslvELTFJqPA6ul+55I0L71GbJTNUeZOZTwit/7cDKxRbmgoJbn79ogSVNqPcHd64Jh221pqpJRqlh/vjpmUT/Z+eKtArDwijHzYOB3+PcS/TJnNkX+dxVG/2uM42GPbEiqZ3pSBmr+FWhzYE1098DyZqb7S119bgtUdsjeJVWyLlRxck6lndYbqyWjbkb1LYuPFbSAlw7/K2OLHb4RQGIHoH33j+SNP0Y1qFPAsqXdyzOkTkV6Y7yPR80jJ9wfmVusGbD+AXjQ9axDpqhOfCN/SQxYZqm/fsZpilm4cSYNvG46fSNM+hjxv3dp5n6oxTGuIeLRvdGgOrqkmf/gX8Kc1WjaciJZNEv9JK/eipr2oBIyZdi7VfUhHKLBKRMk6RnBfuHSDHCvXgeXCzL9NdCmMZJ
+	9nDG7FLFiUTP5PV869rNqEAe3wtttkdY2Ub6H1koxdUJeDnhzkZWUwK9z3PZXSQg+upHPcQI7MckIoP4hHeHXAnkGQvGsgGq9DWZKz48KNXLxQdZlS3elqay5PmBZ3JMNo2u6wHdfU7kCqDkTo1FsbJmh3hchhwWhsUiOUKxwnjxcKp1CZ6MEx8WmPj6V6NedvoPSOkU8WJPIKa8ymjmJR6r99LlpooJWb/dObZuvieQkuiJm8V57H+vAav8M5oD5NAcvcVzPtJYN0ROAEfVWZZIy5/D0gKVSQrIJSXnhDAjvG02DYvAsL9htocInQsLIAsR4Xtg2u7oXb8LTuetad3hsep0DVMd1p55RfKvuu0CCxBeVZOHAmRZDTccoL0uA9xcr5gSpnBSohBZNmWx+cEQLcl7IWbWHfSWVtuotAe52jeBCzXJirFe2fNdf7s89zFMOgDmqUznHPV5wMzu/D/EYMmfR/0GJ2V1eOEpo1KOC8rIVI2Gcu74SwiO2/6fAzdQc/esrHERUTNN4AI49YMVQ5grTBgXz1RdMsuXYctBxOBdyv4zt6wqDyJWJBn4p3P5u2baLgfRfirYRSHEP/jvesQH++C0mBhAu8igl/iCW7noHKqN+30BQnYenM2+fIxmxD1NXlHJm+nMm5RnmKhF4N8ovJhETixtdGqCfGAoYkxXAi8lPaEqnqCdhV3w
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(56012099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?JtvO9kqkA48VJ8dNgWRMXM9bWkJuBlg6q1TSZ3HgDEdYTcN03DBGOrMdk7aX?=
- =?us-ascii?Q?T7yuu9hhL05Qn8kK7QG1qryT3umVdUHkrCy41WMmV4/j+LT1CZbICKsB9qGN?=
- =?us-ascii?Q?QneLJYFgKPlOBeaPKLDSp5/eeXNXsLBwwlG+YsHHMrZLgIxNR3V90++81Qmq?=
- =?us-ascii?Q?DkYXOqLeZhKuQXciOt1eej+rGksxT6+WRY0KKImPzAXCLypBEFD7KINetErv?=
- =?us-ascii?Q?UdiZH0xDWAbgJUhLJe/RAGlJ89WOoTuOLUhhvod2KC2YOF7TtHvXQXIUli8p?=
- =?us-ascii?Q?OOztystQ1Dx+hvvZ6T8GhVmrmg/kRkHy2C9G47AuNkS8za9mTiIcqylInwQi?=
- =?us-ascii?Q?ART85mndXsM9ArWCg4ICJyiLDU09yQF5Nym9IFnl0fiMfy2RAJDbPLDuDfLk?=
- =?us-ascii?Q?EJUFSdKqxAJOvdxWQbGWZQkiubHX+h8VBtMgrdbkNzhy8V0mXBRnu9JoQ6TY?=
- =?us-ascii?Q?BGb50uKh6BNe7sBrcRR3E7kyop8q6PNdcSED8t2/ovuxGiRfLninKdolH6WH?=
- =?us-ascii?Q?68PX6lx4O7v849bvXuyWQPU+Lt5StPUXjYcvds3JKB0GGxxIS72gM9Z2h8G8?=
- =?us-ascii?Q?Wqurz3M96KADWYCkCllD11pfSpDmcWEbOq0D5NdlvgA6eUJsRdgsU35v6HwB?=
- =?us-ascii?Q?FxYSBfpjdRGRZIhVK9HVbZgmBS86wfBbkfEupkgiaXyp9wVi6r6WVFg+u23m?=
- =?us-ascii?Q?9woZn8Dr/BBq0eyFRFkbHBUcqO02YAHZ1lSuHER/zIMed1pqCLUSL+xGcZyB?=
- =?us-ascii?Q?XVXRuYqJV54df60xcdHnZFE/qms0sIMU76XMiDqFSgZieldrPxFXhawf+2hv?=
- =?us-ascii?Q?1Wls89FsXXCrk5rkjLtnSFlyrNl4OIzOlyP2rwLFAnh6b/YEBoamHpKeWt5z?=
- =?us-ascii?Q?Zz59hNxoHve5sE0qWYSXhKbL7lWXPFHl1O+1B8lsIdoP5ZircKnxggCZ4Evb?=
- =?us-ascii?Q?EShpX1xab5zBqntYAPp94JZ+bfkRB37u4/HNDzp4WrM+4RTLJbfmHDLJp9K2?=
- =?us-ascii?Q?UKT8DBOm+QoERbpV5WHU90pifKjR/WTlSjXCR3t+UzYP3BEHFjAAQ5G1Lsp7?=
- =?us-ascii?Q?4BLymNYL1sq2PzN8A14dT149q0/ZIn51Wph+GJheile8jXcRbN5005CNsLlu?=
- =?us-ascii?Q?C5zP2F9YMtgCB7WObnaKN0TspF5pIhrBCJC2uTFcMQOjfbCy5LwjFpgNtBxm?=
- =?us-ascii?Q?AM9W92EAjtkyjp0pLWw49M6VC2A/lsaac18Dox9f0FIM6yYSTFpo+kXqLUSF?=
- =?us-ascii?Q?C8jNy8jfRhaWstPH0sbBAD1qeB19uiQPV6+gKwXs0PosavOLxKTxIZYmbvkg?=
- =?us-ascii?Q?3YZbeJbgXXRW2u2Kz/j8vzkGOLbAzl4AdqlRUyHQbNd3bTQb865Q+3SDJoBo?=
- =?us-ascii?Q?kQuCJzIIgc6c3js/aCQyPamOlaT+ZCgztFTFIMtNi/uZSv6VVAkNoEG8ydHs?=
- =?us-ascii?Q?p65n10ofXhUt8Sw8M5BUheCwsZJZnCoO/cHii/LdTqhvqYqjN8pP01HL4+hz?=
- =?us-ascii?Q?c1LFZYPZPDnFqYH1p+M5/nxoMG1NC7XeVdxpJntBF8wh35kG3827ZmLMR5Kb?=
- =?us-ascii?Q?oY1PAPtwJm6iNVvmUUWGuLw2h4IK0t84MjBXLsm1xomNd1MSIFJdSFptHkbR?=
- =?us-ascii?Q?JPp9IFHKOroYZsCWFsQXbyaM+62SMFBMAn7fVxxYi1uglHaoI9+W8CtvC1ww?=
- =?us-ascii?Q?h/ndo5956JTsWbCM8NRQco4PXufeF5K6tY3VB5xvwnUPa/TwtEFRubWTRZGw?=
- =?us-ascii?Q?og9NwwlVFA=3D=3D?=
+	=?us-ascii?Q?zIsJdII9FCNAYGQ9AnrF+errycYiKawbyFiq2ErZwY18CzPQwQsWx1P2V7K9?=
+ =?us-ascii?Q?xxLPTVdzqUjkXk9FFUTJXgY1+RP638jp7wkgwhfo9gDZDbNbBFAhx75cRpUI?=
+ =?us-ascii?Q?K2I6uHzlWSqV8wY7HnPjBHLsSQ+aIRJ4grt+GrPVOxmMI8rQFf5DFbD3JvDF?=
+ =?us-ascii?Q?WeNMJQRYrYaQpNNii1x154FEWltEZx7mnv5HWq+CgizTycGqt2yYFmSdCgSF?=
+ =?us-ascii?Q?ffFsTqHRhQo5/hUKJbEvA1jLN3vt/6vsk+F6ck2qhBh2f/SdBWbT6GGXGN09?=
+ =?us-ascii?Q?Lal6aotZUxpdmhoH6Dg7nYqtWWXAlwZlwjqRr+WivYSMtmi+NYYrZGoxfbQf?=
+ =?us-ascii?Q?V7zrpVXdVjCC6pdBll2vLNzaXxekIyJIvU+/XF7HdR2JbMOacW3yITfmRuqd?=
+ =?us-ascii?Q?KOWRyBw2dxmLgDaUXHPN9PV+eC1Voj/wVbRtL+w93PbisB3shp2aH61WQBJ/?=
+ =?us-ascii?Q?hdffCdrYUjoh++oPIIkGGIItUkH7lFHbE2BBa5IEAktzJ2LSuETI4ZdBnFiE?=
+ =?us-ascii?Q?DveNGdzC2hez/y+7SWA0CEqtPG1Vpe70QI8KhCEKfPOeehIUedlLtCXB6aXr?=
+ =?us-ascii?Q?1kYGN943gW4wwhgSMQWrnWedI85D9VlibznZ8XkjIZ8aAmgzZu0OdX64DgQV?=
+ =?us-ascii?Q?0wy+m7bPH8Bpf3X5A2diXqTNopIkKeIGRc9dcHf0O/HxeOdR02KLi5/JcKwy?=
+ =?us-ascii?Q?wqzz6sdj005h/0Scno2NIqMtHckJc6z9nFRbdNGqojAxbm/ilC1qWyWPlMB/?=
+ =?us-ascii?Q?WBoN5GIRqgeN4RWvuSyW0iXxadSdfdqqjHpcLKtw3OXM+oDF1/JpltrrhT+/?=
+ =?us-ascii?Q?LhLCxKnHz/Icpawmuf/YuSxV4f4KAcJS6o0R/oQRSePMgwtDXOJsKUBTxD1P?=
+ =?us-ascii?Q?hF3QFNapyilG7e947KbgpQ7kgkh03WhJC3EDYAnqEXyorPmq6a9XFdO74+YQ?=
+ =?us-ascii?Q?iEOdkq/P7pTDtNA75/5zeosjwF71NLiKqPTe+CXI35If9h3NnKdbW68UjtO/?=
+ =?us-ascii?Q?3RrB+Flz+P2A+HvC7IP683ikLc8uB6omlKeEkYVCA8dsV2lsvV2EeLo0xpth?=
+ =?us-ascii?Q?LJPKFSLuNkd2n4xcRtfl8kBJMfFzIZXXhecpWmEkDV7H5l3ZVIDqSDfLfvjT?=
+ =?us-ascii?Q?jfkunFymFo1tt2GTH0XsAE+fyxG7IagiDdCLgQT4kCjjX4/HuMUiNHRe8o6w?=
+ =?us-ascii?Q?w38LZEUUcDpKzq6hrYcaN4vVZ+ZT/nqjkxGrUKtcYZrAhzIUgZJUasJ5PHWN?=
+ =?us-ascii?Q?VmhSMw1XYq+yWRX1E7U2BtArJ9QExmV3nAFyWlzdOTX9j53cpHXJxKbrdlmd?=
+ =?us-ascii?Q?hgZhhkJdpjdRvy7pd3dYMD3dqko2uxM89cDArs+Lyin9+fSLQ55/l79Ecnkq?=
+ =?us-ascii?Q?O3nPmyGYnNBUKfIrUdWqfOY2A66mrknsCNw1kudj8iMAGSDANWMwzRuva38V?=
+ =?us-ascii?Q?q6JwdLd40p00cTG7QicBrY/PaglPqpSCd7fMK/LDh/UsjwO2tDx6l72kZNkH?=
+ =?us-ascii?Q?fF+Zlc0vWjKHQtXEGZaiD+k3WR8+rLakAJTa7NG44fLzTKRwQbjTUitKrexi?=
+ =?us-ascii?Q?uYBjh1BD4dpTFJFpqOK7ok46Lt80uSB3bXaenzaJYLfbUTvkKKenCSS2OkPN?=
+ =?us-ascii?Q?7fVxvjzJJqrL3hqI4TiTdQY/SR/tEVSkdkVAyOyLIOnodOajoYjbLZx6WmI9?=
+ =?us-ascii?Q?AW2qt9Qrx2HinGXWABYBTS7UcFdH2L1QNRIWo+yUpVYmEp4Z?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a9ec218c-85c6-4f9a-b94a-08deaebce131
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b9c736b-d0d8-49ca-462c-08deaec31bb8
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2026 17:52:19.0605
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2026 18:36:54.3372
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Dgrg0ZUdYXZVhXLjrOWvmmNf5ZZ5jYJilY1Zv5Xt2GnrqD20lSeTWlaY58nBSDRB7RM6/JZy94pUuNUd6mR2pg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7550
+X-MS-Exchange-CrossTenant-UserPrincipalName: f43VXm5JAGpeaJ2zbQimWFejHyK5S9p/fr/UFNBdDu17/74XPR0PY2NhMt1huGnDdEBJQs9MTz/gtc/icxDKFA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5806
 
-Building the dequeue selftest with newer compilers (e.g., gcc 16)
-triggers the following error:
+On Sun, May 10, 2026 at 01:41:27PM +0000, Alice Ryhl wrote:
+> On Fri, May 08, 2026 at 11:38:18PM +0200, Andrea Righi wrote:
+> > Hi Alice,
+> > 
+> > On Fri, May 08, 2026 at 02:02:45PM +0000, Alice Ryhl wrote:
+> > > The sched/task.h header file currently exposes a tryget_task_struct()
+> > > function, but it is very risky to use it: If the last refcount of the
+> > > task is dropped using put_task_struct_many(), then the task is freed
+> > > right away without an RCU grace period.
+> > > 
+> > > This means that if the kernel contains a code path anywhere such that
+> > > the last refcount of a task may be dropped with put_task_struct_many(),
+> > > and it also contains a code path anywhere that tries to stash a task
+> > > pointer under rcu and use tryget_task_struct() on it, then if they ever
+> > > execute on the same 'struct task_struct', it results in a
+> > > use-after-free.
+> > > 
+> > > The above applies even if the RCU user drops its own task reference with
+> > > put_task_struct(), because if that is not the last reference, then it's
+> > > possible for another thread to invoke put_task_struct_many() and free
+> > > the task less than a grace period after the RCU user called
+> > > put_task_struct().
+> > > 
+> > > There does not appear to be an actual problem in the kernel tree right
+> > > now because there are no in-tree users of put_task_struct_many() where
+> > > refcount_sub_and_test() might return 'true'. Io-uring invokes the
+> > > function from task work while the task is still running, so it will not
+> > > decrement it all the way to zero. (Note that if I'm wrong about this,
+> > > then it's probably possible to trigger UAF by combining this codepath in
+> > > io-uring with the tryget_task_struct() call in sched-ext.)
+> > > 
+> > > However, the current situation is fragile and error-prone.
+> > > - If you look at put_task_struct_many() in isolation, it looks like it
+> > >   would be okay to call it in a situation where refcount_sub_and_test()
+> > >   might return 'true'.
+> > > - Similarly, if you look at tryget_task_struct(), you would assume that
+> > >   you are allowed to call this method for a grace period after 'users'
+> > >   hitting zero. (If not, why does it exist?)
+> > > But if two different kernel developers anywhere in the kernel make these
+> > > conflicting assumptions at any point in the future, then the combination
+> > > of their code may lead to a use-after-free if there is any way for them
+> > > to interact via the same 'struct task_struct'.
+> > > 
+> > > Thus, as a defensive measure, we should either make
+> > > put_task_struct_many() use call_rcu(), or we should delete
+> > > tryget_task_struct(). This patch suggests the former because it does not
+> > > change anything for any callers that exist today. (As argued previously,
+> > > the body of the 'if' statement is dead code in the kernel today.)
+> > > 
+> > > The comment in put_task_struct() is also updated so that nobody changes
+> > > its implementation to only use call_rcu() under PREEMPT_RT in the
+> > > future. The current comment suggests that would be a legal change, but
+> > > it is similarly incompatible with anyone using tryget_task_struct().
+> > > 
+> > > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> > > ---
+> > > Including sched-ext and io-uring in the cc list as they are the only
+> > > users of tryget_task_struct() and put_task_struct_many() respectively.
+> > 
+> > For sched_ext I think we should be already protected by scx_tasks_lock.
+> > 
+> > From kernel/sched/core.c:
+> > 
+> >   finish_task_switch():
+> >       if (prev_state == TASK_DEAD) {
+> >           prev->sched_class->task_dead(prev);
+> >           sched_ext_dead(prev);
+> >           cgroup_task_dead(prev);
+> >           put_task_stack(prev);
+> >           ...
+> >           put_task_struct_rcu_user(prev);
+> >       }
+> > 
+> >  And sched_ext_dead() in kernel/sched/ext.c:
+> > 
+> >   scoped_guard(raw_spinlock_irqsave, &scx_tasks_lock) {
+> >       list_del_init(&p->scx.tasks_node);
+> >       ...
+> >   }
+> > 
+> > Now on the sched_ext iter side:
+> > 
+> >   scx_task_iter_start();                     /* takes scx_tasks_lock */
+> >   while ((p = scx_task_iter_next_locked()))
+> >       if (!tryget_task_struct(p))            /* still under scx_tasks_lock */
+> >          ...
+> > 
+> > So, the locking gives us the invariant: while the iter holds scx_tasks_lock and
+> > observes p on the list, sched_ext_dead(p) cannot have completed.
+> 
+> Correct my if I'm wrong, but this sounds like you don't need the tryget
+> variant. The 'users' counter is guaranteed be non-zero for one grace
+> period after put_task_struct_rcu_user(prev).
 
- dequeue.c:28:22: error: variable 'sum' set but not used
+Correct, I think we can just get rid of tryget and use get_task_struct().
+I'll run some stress tests with this change.
 
-The 'volatile' qualifier prevents the writes from being optimized away,
-but does not silence the unused variable 'sum' is indeed only written
-and never read.
-
-Consume 'sum' via an empty asm() with a register input constraint. This
-forces the compiler to keep the accumulated value (preserving the CPU
-stress loop) and avoiding the build error.
-
-Fixes: 658ad2259b3e ("selftests/sched_ext: Add test to validate ops.dequeue() semantics")
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
----
- tools/testing/selftests/sched_ext/dequeue.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/tools/testing/selftests/sched_ext/dequeue.c b/tools/testing/selftests/sched_ext/dequeue.c
-index 4e93262703ca8..383d06e972a46 100644
---- a/tools/testing/selftests/sched_ext/dequeue.c
-+++ b/tools/testing/selftests/sched_ext/dequeue.c
-@@ -33,6 +33,7 @@ static void worker_fn(int id)
- 		/* Do some work to trigger scheduling events */
- 		for (j = 0; j < 10000; j++)
- 			sum += j;
-+		asm volatile("" : : "r"(sum));
- 
- 		/* Sleep to trigger dequeue */
- 		usleep(1000 + (id * 100));
--- 
-2.54.0
-
+-Andrea
