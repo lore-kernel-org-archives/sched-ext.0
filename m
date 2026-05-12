@@ -1,146 +1,144 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0AB284690
-	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 04:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778559866; cv=pass; b=mZiS9Yv4byrYrTtBWp6yHPFC9Tn67l9WqqitC6WoWMQHbMA6D/igslmgXY/lqaMQlL2Eo8Ij1ev0fTZKZcnPvH+/SvJyKtPb11GGtku4j/nuG7IyBmkLlQtBkOaol9PpKWzg5rtKB6K0WyVA/NfDhr/dQ8QYnt/FlUovBYUdPhc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778559866; c=relaxed/simple;
-	bh=rEcITMB4+0LkfIr7lkfRl3YhQcJNmnW0NYCfnXkoG9s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rl/bGFKLWhYlG1FYizEWcH10nfr30ARDNQCOHRyMMa5pWGv+WYz7KsI47GBxw8M7r1R+W8FipV1bcP4J60TPskOYc2Qj8WnLSSyBVueVPmxdACqXN0PDbEb0zDyJab3FLEpsBxndU5f1hM9QaGC9iT6ZZds88Li++T+YokAtD8U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jqw7GExc; arc=pass smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51CB4014A3
+	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 05:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778565420; cv=none; b=lpICA8Z0pXtAmg9wd3WeHXnDN5by5OrwYK5WSoBi97FnWUoS51qn+cIhDi4Vz2MIFhUQHi1NbgOnXShDQHD05Sjfw8jVnz79kuBR4h8N1Ee++QFnqzhGggzZotD+GdkGGxtVRYmd5UfPb7OwRq2LNs+IOThn/IczEGB4dNGloeU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778565420; c=relaxed/simple;
+	bh=PEVkDx+h6dAL4n1ODSOCOw2//wltqWTU9G012mXgXmQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fZ5psfxSBwp9gSCMKKRIL7XQ3NuJb4lswmiAt17d9saTLuunv5+AKg62DKMhw0EFf5gQHPpqqDKBp36lSjGUjQKCXTPsA5wsBOG8g94ZG92M8ejf301dFccK5Jk+kQXJGUkmGT/a9+MslMHcMpiPa/fc73g/lF+pSe0I5lE8ICY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=likewhatevs.io; spf=pass smtp.mailfrom=likewhatevs.io; dkim=pass (2048-bit key) header.d=likewhatevs.io header.i=@likewhatevs.io header.b=0sh1lprz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TEx8f8h3; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=likewhatevs.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=likewhatevs.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jqw7GExc"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-44a74032ff8so3718057f8f.1
-        for <sched-ext@lists.linux.dev>; Mon, 11 May 2026 21:24:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778559864; cv=none;
-        d=google.com; s=arc-20240605;
-        b=DPVf9ltXAIHL5WrsZJPOZJNr1E/kG23cRYisfHNykePuNv7qWR0fp1ePjaCidCLGcX
-         P5dF2k5oClT9wOFzLBy4LEnFp+i77Qc8S4WFgixU7e709bQvfHNmvCUwj9/HfAZGkv9C
-         hOqEioD6fwZoUo3FLV0d4uYPVJOX3FsSCLR1ZXSycLr+lqj7YuqcgawFQAsL6LEW3ZqZ
-         5WSGKXl591NsMnnTDOk6A81HyRxq5moXsg+jZy7gPLMbHydEWix7rRHGC6aNAUXTRWgq
-         qRqD5g7iXseQItkozc9gLvowJcfUN0sALMRViKRaFMSGKfgqGqG2YadAYNAipAgE/xR/
-         /MGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=rEcITMB4+0LkfIr7lkfRl3YhQcJNmnW0NYCfnXkoG9s=;
-        fh=KtztwQR4rb5jqLLlKrN75gsrfdFpkhiGB1C9IBOaly4=;
-        b=EjsCyfTjBwSBjH/nK4gsj2t60oMj4rT/Jv3g+DdpDng8QcI1NTTDrmxzKRsUfKWSNk
-         SGRfowH1yofJhrYg+qomx6nhom3BoHuADVqLp1nkegENOKva2kNgWPawyD768sZS+bOy
-         HBwhKWrb3fl9TdyWRR6BEsDyuju1EjOHvu0JqH7Zx+wR9Rdonc81NMpiNA54BMa+FkJT
-         ff4h92AA3EIo75wjTdci3AESRAHj4Zz+EOSFp7RmH4uLMMGnkMOX64voFakenzvyEWfq
-         fg30t7n7RJQJtJC3nUqFNUSOSoE3ejJIizsWdafmNWc+k2kwCuww9vwTKZ27hs/tykrJ
-         hMhA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778559864; x=1779164664; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rEcITMB4+0LkfIr7lkfRl3YhQcJNmnW0NYCfnXkoG9s=;
-        b=Jqw7GExctx+7e2FOM52PnFFCH6ed6YArYoW+1jL8y54wi19Q94qJ/HOFUyHjJhcaZs
-         +g0f9of0RDycHfC+o08eUFliy8RlWt2+jd2i2Qvc48d0/G584N7CzzBvBkn4D9B1QN4D
-         Xk4id5q+FE7RHJLNZf6/7ME7cQ0HKTwPqS3KhQPM3ldKmBUML9ZKchNPbqmk+orrA8zz
-         MhRGGAMsumBBPJiwH05bAEk38ZN/PbzxC8iUKufyalO3Xoq5ordyJhEUQ5GslXfhP74i
-         DQyhO41odrLmlE3LFoL1WsmbzqFZL8WK1sc9OJDA23IO+ZBaVf501jLeX1AXqWEHY5+E
-         3K9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778559864; x=1779164664;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rEcITMB4+0LkfIr7lkfRl3YhQcJNmnW0NYCfnXkoG9s=;
-        b=eXWSoU4cU/aLK1PR6AM7y6NYJp2R2dqo6eIE5ShE3zOKxbHu8LkhX9yqfNDKMuiRfv
-         gh0EbAG2l3iajVueXloYNIeG+/6MI+zf3191T6q9Ow6LE6Mhl7dqspPzVrlQl0gEG2SY
-         cOVZ201OP+s67//FPFxTvYQokMRcyrNFv607rP6DMGNud+EPpSieUuuC/IotYz933t/o
-         yD+To58KDhF37xUxe3ND6zlc0l0rUZvOcgqEtXobjafpv36XSbTzkzTfrkDSVEjt1keL
-         ENsNMi8iiKcbPUAEawnlVpqUPQwsf9e8chobE2AJ4ER1GHNbLuZcMpvtcxMLl8rrNIQZ
-         tc9Q==
-X-Forwarded-Encrypted: i=1; AFNElJ83lLnZphN0MKtyQmSXgnpWb83WaGoUay6LlMVvACCBqjXHj6ttJAOrLI8rNwcMw6CrmTSax8r4xkA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyrUuxe3dohSJmdLwbFXDyhKq+WSG6WpRyGJIojnylYaHeztxEi
-	R3UlaVgODdt/wnUFEiVXYOOcrn4Ui1MtPhknAHPP8tFKkYuuDmrUbgq/qhe5GtZIWTLNTlEIN50
-	Q33scC0r/bK43tMqs6tBrzLBlYMbru84=
-X-Gm-Gg: Acq92OEDMT1a0kiKEbPHP8FN7W1WjaiGr26kI05Nl311QLoNunMOYSrAVFFAapH38bD
-	zZn7sD8cq1x6BCvwpyGW1DJ87IGSK4zVZoBq9jNVR6tsQvpE6ezhsedsBRrZe6hW02qr0ymS8/o
-	vg5B1UEgGvfvVnix00dxt0R1YnyUqSjN6/mI7hZWfYlQEPrM+yIFZEMSAjy77NsRhsJLq2+0jtC
-	1/jVXRzwvL6FvkUi7+0T/+8Yp0rsJ18tzReVjCviYt9ynYD7atetrdCpNMhU2RQ51D7pvVkK0wd
-	yJKGxawFtjtW6S1VTQAgrCk7VjRdf8YeHcfsCCeQxgLLXmuh5JNSgKvqIAwToNWYQg3b1OPcYy3
-	hIEaDAiyYC7j+42rGl34fIpaTF3LWouVqFxMA
-X-Received: by 2002:a5d:588b:0:b0:44b:7ec9:2d76 with SMTP id
- ffacd0b85a97d-4515b056d5fmr43891510f8f.7.1778559863458; Mon, 11 May 2026
- 21:24:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=likewhatevs.io header.i=@likewhatevs.io header.b="0sh1lprz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TEx8f8h3"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8F4BE14000D7;
+	Tue, 12 May 2026 01:56:41 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Tue, 12 May 2026 01:56:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=likewhatevs.io;
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1778565401; x=1778651801; bh=MfRm5BoSWZ
+	Zb0f/8pACjmHoh2eNoR97DUSZE8LG7Abc=; b=0sh1lprzMNscveLCtJUC4WLHRu
+	mRIQQRqeJ4/wlNxKOkMtzA8E/HRPy6PsUtWjDko0zdOfWqbZAM6/w/JyWtEfQLTE
+	LthXrqJMpt7WP71WbPt76E3WXBUy08nuWus0iUWDxCy2epZB7g6enjlt9N5GfDk/
+	e+AnNyAbJmvtE8qBFBa5rSY6cOBz2o34kAkyEZPCROSqd7RaEcAWaf9Wv8seV0m6
+	GYBvRPSyEvkAtWKJ39lofOogAU3Cb2CGA0ECwFdC6rKmoMGh+jueFZ6J/jpMXNWW
+	d+q2972AvaO+w/mDh6X/njuEkubpFKCvileB+fO7jsMtH3w9I4QuAXxm5Hsw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1778565401; x=1778651801; bh=MfRm5BoSWZZb0f/8pACjmHoh2eNoR97DUSZ
+	E8LG7Abc=; b=TEx8f8h3kThmBTsHAUa1wnWNiFsp1lF3hexppRcS0Z27DpF+Qd5
+	C2jKekCFk9/XmTd3hFzK1Cfjp6l7oc12dm4AG5Mfu2+H2PFkCNeiyjwRjeTrTcna
+	1o6GZWOX8LGXI88FcmdKRhFgAnf6+mypszX0odc886jCB9Dxq4sgkfK11ncLECne
+	XRTUJy9RXt4dPx80Lavhvp1V/g54aQODKCB6ebfUTbWzjrn4LxNNnVHWaPyPxoCn
+	EqMiGkgHi8kz68Ng7BXPMWH6swh/sqaGuy5cQLpP8Hjft+8DIj2xtP/dcHv+Ksi/
+	5YbeMoUP6VOGVSAxOY9REnfJ3evvj3yCUWw==
+X-ME-Sender: <xms:GcECanb6vddCnu3o1kBstcPqw8FL6V4eSvCrJlYNV8VNklKnKpO3Lw>
+    <xme:GcECakO20ZwP9RPQ9EarucnSfEANJ9D48YyZqqjtCIU4FbiS4ii_zUoM3doQQk6we
+    rvpJPVwJ6dJRkjXPelkK5u3wVrUZNS7V6TojQYWNorc5En1SWmG3Rpf>
+X-ME-Received: <xmr:GcECakYCEPzPC6y_q2BKBjt9SZemYRjPO0uFvVC1QzgOuuP8n11-882wCEUTyQDZPbaQKFolzpFmcg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddutddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffoggfgsedtkeertdertd
+    dtnecuhfhrohhmpefrrghtucfuohhmrghruhcuoehprghtshhosehlihhkvgifhhgrthgv
+    vhhsrdhioheqnecuggftrfgrthhtvghrnhepfeevieevieejgfeutedtjeelleeifedvtd
+    ekkeduudevteevuedtheffieeuhedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphgrthhsoheslhhikhgvfihhrghtvghvshdrihhopdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtjheskhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepshgthhgvugdqvgigtheslhhishhtshdrlhhinh
+    hugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehprghtshhosehlihhkvgifhhgrthgvvhhsrdhioh
+X-ME-Proxy: <xmx:GcECaq0p-s_4Wu3ATr_bn2CwsdrylDY34gjCUudkuPWKAE-ueyo_3g>
+    <xmx:GcECaidAXEhpsEUc8HnJRmAj7lAp1kUI8SOfgMkddbDAKbdYPpa_9Q>
+    <xmx:GcECajFBC8IZSBrbLJKU59-inhYiZNxT3NMvJuEvbtFdI2QeiLwtsQ>
+    <xmx:GcECar1am_Vv7X5f60mLbdZvqqdJg9ZzBTjHkcIcSzPleyKf-hbb4Q>
+    <xmx:GcECasvHR6Uz4W85Y05WihNusEgROvYA05UBWBxAsCTVmDiIFxemhfKD>
+Feedback-ID: i7f194913:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 May 2026 01:56:41 -0400 (EDT)
+From: Pat Somaru <patso@likewhatevs.io>
+To: Tejun Heo <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Pat Somaru <patso@likewhatevs.io>
+Subject: [PATCH] sched_ext: Add tracepoint for scheduler exit
+Date: Tue, 12 May 2026 01:56:32 -0400
+Message-ID: <20260512055632.1096713-1-patso@likewhatevs.io>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260427105109.2554518-1-tj@kernel.org> <20260427105109.2554518-3-tj@kernel.org>
- <CAP01T76jRW0sjkzebSvDKy+AK-fh7hq+0zhDcP7oLGcg_qxOfA@mail.gmail.com>
- <DIGBW43UUKDX.1H7FT7A9JDOOT@etsalapatis.com> <CAP01T77_Lgfj8yX6JtErGES9icebqygDUZT-wzXq9UV6JGugYA@mail.gmail.com>
- <DIGDLA5275AR.128FTQMU7Z8S3@gmail.com> <CAP01T74MP6+igNsqhDinYXbk2mFB2zW6Kk6Lb7srrWM8ANojvA@mail.gmail.com>
-In-Reply-To: <CAP01T74MP6+igNsqhDinYXbk2mFB2zW6Kk6Lb7srrWM8ANojvA@mail.gmail.com>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Mon, 11 May 2026 21:24:12 -0700
-X-Gm-Features: AVHnY4JbmRmoLiyIrtTCPPrLDOfNzNQqeFWDcIXyHeMkB4ngpaEfYyyARPA0-E8
-Message-ID: <CAADnVQKfMHUZ8YzLkWW--f1G_+mx6bKdvVHUMArYsb+6-esWCA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/9] bpf/arena: Add BPF_F_ARENA_MAP_ALWAYS for direct
- kernel access
-To: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>, Tejun Heo <tj@kernel.org>, 
-	Alexei Starovoitov <ast@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>, Andrii Nakryiko <andrii@kernel.org>, 
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, bpf <bpf@vger.kernel.org>, sched-ext@lists.linux.dev, 
-	LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, May 11, 2026 at 8:49=E2=80=AFPM Kumar Kartikeya Dwivedi
-<memxor@gmail.com> wrote:
->
-> On Tue, 12 May 2026 at 05:25, Alexei Starovoitov
-> <alexei.starovoitov@gmail.com> wrote:
-> >
-> > On Mon May 11, 2026 at 7:43 PM PDT, Kumar Kartikeya Dwivedi wrote:
-> > >
-> > > If not, the best course to me seems to be to make the flag behavior
-> > > default, and just rely on ASan (and Rust in the future) to prevent an=
-y
-> > > memory safety issues, and drop the stream based feedback on fault,
-> > > etc.
-> >
-> > Agree that this needs to be new default without new uapi flags.
-> > How about we tweak the idea further.
-> > Let all arena pages be unmapped initially. bpf progs will fault
-> > on them and will be reported via bpf_streams.
-> > But we also prepare one "scratch page". Let's use this name,
-> > since "garbage page" reads too dirty.
-> > When kernel faults we populate pte with that scratch page
-> > and let the kernel code retry.
-> > To implement it the page_fault_oops() can have a callback
-> > into bpf/arena helper similar to kfence_handle_page_fault.
-> > If fault address is in arena, do kfence_unprotect()-like.
->
-> Interesting idea. So I guess this page remains mapped once kernel
-> faults on it. I guess we can still reset it to NULL if we alloc and
-> free a page at the same address, so it's just a drop-in to prevent
-> further faults inside the kernel, since emulating instructions is ugly
-> and we're not using asm wrappers that have fixup labels etc. If we end
-> up allocating and freeing something at the same address it will likely
-> get reset to NULL (that would be ideal). But even if this happens in
-> parallel we may fault again and then will just fix up the NULL pte
-> with scratch page again. We can likely also preserve fault reporting
-> into streams when such scratch pages are brought in.
+sched_ext schedulers have state in BPF programs and kernel. scx_dump
+provides kernel state and BPF program state on error, but this is static
+in what it can provide.
 
-Yep. All makes sense.
-The hope is that faults from kfuncs should be rare
-compared to faults from regular arena bugs.
-So the stuck scratch page shouldn't happen often and
-faults on unmapped will still be seen most of the time.
+Add a sched_ext_exit tracepoint in scx_claim_exit() so that BPF programs
+can dynamically inspect scheduler specific state at the moment of exit.
+
+Signed-off-by: Pat Somaru <patso@likewhatevs.io>
+---
+ include/trace/events/sched_ext.h | 19 +++++++++++++++++++
+ kernel/sched/ext.c               |  2 ++
+ 2 files changed, 21 insertions(+)
+
+diff --git a/include/trace/events/sched_ext.h b/include/trace/events/sched_ext.h
+index d1bf5acd59c5..9ccf884919c1 100644
+--- a/include/trace/events/sched_ext.h
++++ b/include/trace/events/sched_ext.h
+@@ -84,6 +84,25 @@ TRACE_EVENT(sched_ext_bypass_lb,
+ 	)
+ );
+ 
++TRACE_EVENT(sched_ext_exit,
++
++	TP_PROTO(__u32 kind),
++
++	TP_ARGS(kind),
++
++	TP_STRUCT__entry(
++		__field(__u32, kind)
++	),
++
++	TP_fast_assign(
++		__entry->kind		= kind;
++	),
++
++	TP_printk("kind %u",
++		  __entry->kind
++	)
++);
++
+ #endif /* _TRACE_SCHED_EXT_H */
+ 
+ /* This part must be outside protection */
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 64f8a096f133..0219b11bb9d1 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -6200,6 +6200,8 @@ static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
+ 	 */
+ 	WRITE_ONCE(sch->aborting, true);
+ 
++	trace_sched_ext_exit(kind);
++
+ 	/*
+ 	 * Propagate exits to descendants immediately. Each has a dedicated
+ 	 * helper kthread and can run in parallel. While most of disabling is
+-- 
+2.54.0
+
