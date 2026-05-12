@@ -1,175 +1,207 @@
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9774321CC5C
-	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 00:32:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.65
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778545951; cv=pass; b=fLbAsfGpKncyqYkwGlLtQFM2skuWAVKYV63Q8AJj71AhJltV/BMJJP56b58irUs9PL9UxQDFO4h/mIhMeTCiOnG/G4RJ0pvOFF2rCTK3elB+dQf0O0ThGtkDU3Qy9HyTn69uj/x2UHSe4z6iYPUVQQ2T7DPxHR1IWRd5ozIGlqM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778545951; c=relaxed/simple;
-	bh=DLipxZvxsoUVWde4JunXu3jCwr9EfsRTFS5dQlBwn7s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WNlfe9Jb75NltQ70rkfVp3XalrKz/a6zVTyJUwWcUbsXxDGIQfngHqrH34t7GFgGhVlXGDliyvhKdV2bzka8BztpI1QYEF4S4U5QFLJvuLCcDU5/rtAWsoHjESwiU0j2EkdoEsA9RWPbTwD+kBzOVuKkKH6LfFBrLAaCX35UzgA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MpxgUrrj; arc=pass smtp.client-ip=209.85.221.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D48F1448D5
+	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 00:44:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778546678; cv=none; b=lA7LbIkrx8HbPzlQbNw6xwrN/jJTEbBhTofQgZThFmkOelA2rJNRn7to2hNN72l07nsKrI4c5BlAoyn6hrXzbcgw5JMhC3S9A2FXV7weis6DOpZm4cLpcUCCgbEyYYitpTqxcukADC57XufmY6yZVxyyJeJL1dvOfCXPh6XrGoU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778546678; c=relaxed/simple;
+	bh=09qdc32R+gpSDRLd/Ncng0aGMksh2Qkdn6a6xtDHcQ4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=g9dK/VjvzcqmHgfJQqoelMZAc/EfsqBtg8ahUh+LbyMDx7fjrt9e6XSVesXAGE7zzpFFxNPwq9mWh76kuhnru0vQdbYcwFugnEKhoOSLmyXYPyBN9H5njuO3PIxEFhLneZ5OXiJuVVEL8+eCiUhneC39m/t3dqDyQguqoCC75uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lwmih1TQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MpxgUrrj"
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-453903ee4adso4237305f8f.3
-        for <sched-ext@lists.linux.dev>; Mon, 11 May 2026 17:32:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778545948; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GaUYERhJXdDLoyzEO5Rcaacuu0cYVk3ZW+w1P/W+BRUacA88ozv4g/bNtFM3p/bMPQ
-         r8hCaCLrVMpIY7A/TWjqSBqJM3kl6R9BiN/AZ97BeYfVI2V0MWTF+9MCenDgxqVATpLn
-         Cg5mWU+ElwzE/Y22/m3/sRyvXHVpMA8+mrk7jf40TJ4mHejbMPTAkwEWRRN3blNqbVhk
-         HNhNAeCB86PRqG7+egbv/2zHdhkFz9vrRRTPYKpTe3VVXlcWtYjfAuquAm44XdFe7Oew
-         LrxcEBO9nylIJyX1duaMnb805A8eY+JWm7y/9e/+XvZ8MVtlAzFCB5ATRcmK4+/zJy6n
-         jr8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=DLipxZvxsoUVWde4JunXu3jCwr9EfsRTFS5dQlBwn7s=;
-        fh=WDlgcjw83TJOwr7wDwlIELfC2IKS/rUvd7Q+QlGFsHU=;
-        b=EekCISOIa9uQDHnNuzkSy4OB+V4C4XfkYfr6S3mDINpfPKE22QdmIxDF+NHjp9L/xX
-         paOhQSYfy3DZvJ5NsX0KRrQjJS8lTLFueUUtN66HJc9YsTJ4mSj76AbH830aDEMhIFqX
-         WwsMf3laE0y63RtZWFbSU2GI/y8uiCwQT58+WPTxTkwML+nYHZh8rGWlkPDKEovG3knZ
-         kkqBFYCGDjtH2/Xwyt7tXBLpeHTcZgWp5kPENxIb9AIFo+U7577KkIg85QToSprEWWFS
-         P9seTSpI1jkB2gYry/c1R4TlOGDQJc7XsaEQRqAxM2bWL7ejcXplxfkdLvOAua3eYtyT
-         A0Fg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778545948; x=1779150748; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DLipxZvxsoUVWde4JunXu3jCwr9EfsRTFS5dQlBwn7s=;
-        b=MpxgUrrj5/l7logIXEl3ZfEVEYqMCdICTGGViPfwXynV+VmGUI4MCTY7e3tvvjEMLc
-         Ocz9XSKBDb4Y3oT/OBEh/cVLswI+DsXYDeo7u+CaOfitzdtA4n803+dECoHLZv9u0NEl
-         MrP8CBRn3h0woKSzSnYE3nhjofGL8RdiKGK7XxZdX6d3xtd8xJTJifLscHEDMwYa8gDJ
-         JTb6gT1yrBPZ3uhvZIUR6C7iSBAzz9s7RKpC5wREoz3/dV3UvOITfIbioawtSwZKSbl/
-         KfbUcP2VdhcWoSwG12I+Z67CnTvHfXavGpdlAbRFKCCiQCBBU6+M7kBXxVj2NnmJVYgt
-         tNmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778545948; x=1779150748;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DLipxZvxsoUVWde4JunXu3jCwr9EfsRTFS5dQlBwn7s=;
-        b=rlBm4yXCFek2tFJyhE9GVQtFmFgDTcklD4b46FWefU6a2rWgiX82yfcHxxrEaBRKXN
-         VaLU8xiOgMpyZfqKwu9L2AsfvHIzP8Ynl8tWI+Ygj9RPoO4soXMrCRn9oaPynkQPe73r
-         U2Z+O/f27eoTt7BOPXdIfoRR20We6BZxsaVWBzecyk+RY4K7cQezrLoxwgkHHSLc4Zbp
-         qWuetJKKwmzVKv4gU3/WerTgEKILKn9eMIt/Lk6ox5zpOih2ZyIbblhbHwXnvy25TfQq
-         qnUErZFhOK9IAQIUrXsuO0uV1FUEcUYf4oytIqH4kjsmuiWX2lX0Vcvcdc3RkOJ1OmKA
-         Q9NQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9TtdTWVZ/mU5jFSYFNMlP5dIKaWvAsHunJ0VPUl7utiGXsUEhpXqituZPBC6obRB8G6L50LEmmUQI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxKStSGHMikHHhDbIHK46hlzIHj6s6vjWMeRqpNie7rGhK11bVP
-	Enm99CKjYzglxELS8y32h9Oj3Qs+ifsRlTEs4jiZeCB6iKfZ1ESVpkKge6TtaCf1pQaiVBBdb/s
-	7q2VyBNUqxQaac6bX1iraL2wnmaOwPoQ=
-X-Gm-Gg: Acq92OGHBcI+s8aurx+uYbmNZ4/x4DdDWq5PlKlfzJTm1YEW1UUCz1zmVZFZoS8nUqu
-	umoApEUutwE28q5/ZNCCIY61MMJMKWYRorNqlCFJLuOi2ZmGFla7FWeodCEN8EhmVoc7bA7XQoH
-	DaAqnY5OooTMNOifMq2mnI0zvIY94tm6Gem4/dRWO+SV3sRjHrZPF2HieUMOtON2G3IULeqP0mQ
-	7RdZVMbOxDvM25p3cuIvgBvFy4ACS0W1HAcHsrPbjZSj/1U3ImOQdPA28liGoospX1gRQbw7rKp
-	UNBh0pwPX9ucP+4NmnCQvpm2nC8TWLyq6YbJt0s7DgVnsFO4Ruz+XQ2nMmAYASsybelT9kPdVX2
-	tbhCCN0JMYhliqwC8mvOf+C75w0KggsfKBu+rsiiMb4clTJR9Iph+ExRDPA==
-X-Received: by 2002:a05:6000:2386:b0:43c:ef4f:79dc with SMTP id
- ffacd0b85a97d-456969c3922mr16875069f8f.8.1778545947757; Mon, 11 May 2026
- 17:32:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lwmih1TQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23D7C2BCB0;
+	Tue, 12 May 2026 00:44:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778546677;
+	bh=09qdc32R+gpSDRLd/Ncng0aGMksh2Qkdn6a6xtDHcQ4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=Lwmih1TQgwiauuT2RJHKdfuyKx3yYStP1qNy9moihenMCohaxoZdaVIBCBBELbOXU
+	 /aa7tKO3wpr6AKY9vR7dfMW1UBW4i2bDRvtPQBZzAigeELfy1rqDqzQyE15BqNVWZE
+	 EbLG6q4kk+9ATMFkf6ukSrTA42n1FX/iZ3iaL6hvIBVF4mGdvlbOHOwBJdoEkYJcjj
+	 ibHqdb6EGHGiw0Vn5BDIOuR2pzz7pdTnsnl9DjqSQ7o9/Iy/nPFmzQAqsrte/EzIMp
+	 J52Pt8PgW+8nc5QMSY2NgVejTvC7Q6hCGWaUhqwbanlbGY4jY443BedNbYLMlsZo0g
+	 RAnR8++wCbSsw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH sched_ext/for-7.1-fixes] sched_ext: Fix ops->priv NULL
+ pointer deref in bpf_scx_unreg()
+Reply-To: sashiko@lists.linux.dev
+To: "Andrea Righi" <arighi@nvidia.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260510224332.2011982-1-arighi@nvidia.com>
+References: <20260510224332.2011982-1-arighi@nvidia.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 12 May 2026 00:44:36 +0000
+Message-Id: <20260512004437.A23D7C2BCB0@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260427105109.2554518-1-tj@kernel.org> <20260427105109.2554518-3-tj@kernel.org>
-In-Reply-To: <20260427105109.2554518-3-tj@kernel.org>
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Date: Tue, 12 May 2026 02:31:51 +0200
-X-Gm-Features: AVHnY4IN6SRbhkgvisYjF50cU7eRw3WpE3dVeN6f3nAoVL9QPK8GJxHjvocBCDQ
-Message-ID: <CAP01T76jRW0sjkzebSvDKy+AK-fh7hq+0zhDcP7oLGcg_qxOfA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/9] bpf/arena: Add BPF_F_ARENA_MAP_ALWAYS for direct
- kernel access
-To: Tejun Heo <tj@kernel.org>
-Cc: Alexei Starovoitov <ast@kernel.org>, Emil Tsalapatis <emil@etsalapatis.com>, 
-	Eduard Zingerman <eddyz87@gmail.com>, Andrii Nakryiko <andrii@kernel.org>, David Vernet <void@manifault.com>, 
-	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, bpf@vger.kernel.org, 
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 27 Apr 2026 at 12:51, Tejun Heo <tj@kernel.org> wrote:
->
-> bpf_arena's kern_vm range is selectively populated: only allocated pages
-> have PTEs. This catches a narrow class of buggy BPF programs that
-> dereference unmapped arena addresses, but the protection is shallow - within
-> the allocated set there are countless ways for a buggy program to corrupt
-> arena memory.
->
-> It does, however, impose cost on the kernel side accesses. A kfunc or
-> struct_ops callback that wants to consume an arena pointer cannot simply
-> load through it; the page may have been freed underneath, so the access has
-> to go through copy_from_kernel_nofault(). Out-parameter writes currently
-> have no equivalent.
->
-> Arena is becoming the primary memory model for BPF programs, and more kfunc
-> / struct_ops surfaces will want to read and write arena memory directly. The
-> actual answer for catching arena memory bugs is arena ASAN, which addresses
-> all memory access bugs meaningfully. Given that, it's worth offering an
-> opt-in mode that drops the partial fault protection in exchange for cheap
-> direct kernel-side access.
->
-> Add BPF_F_ARENA_MAP_ALWAYS. Arenas created with this flag allocate a
-> per-arena "garbage" page and pre-populate every PTE in the kern_vm range to
-> point at it. arena_alloc_pages() replaces the garbage PTE with a real page;
-> arena_free_pages() restores the garbage PTE instead of clearing.
-> arena_vm_fault() ignores the garbage page so user-side fault semantics are
-> unchanged.
->
-> Stores into garbage-backed addresses are silently absorbed; loads return
-> indeterminate bytes. Userspace mappings are unaffected. The flag is opt-in -
-> arenas without it behave exactly as before.
->
-> Suggested-by: Alexei Starovoitov <ast@kernel.org>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+s) to consider:
+- [Critical] Dangling pointer in scx_alloc_and_add_sched() leads to Use-Aft=
+er-Free.
+- [High] Spurious scx_error() triggers Denial of Service in multi-sched env=
+ironments.
+- [High] Early return in bpf_scx_unreg() introduces a permanent resource le=
+ak and wedges the scheduler state.
+- [High] Fallback to scx_root in scx_prog_sched() breaks isolation and allo=
+ws cross-scheduler state corruption.
+- [High] Using ops->priv to track the scheduler instance inherently breaks =
+sub-schedulers.
+--
 
-If we go down this route, we should probably make this flag the
-default behavior. Otherwise, we cannot universally enable passing
-arena memory into kfuncs. Every subsystem will have to check the flag,
-we'll have to gate being able to pass memory based on the flag's
-presence, etc., which just adds complexity everywhere. It will
-eliminate a few patches in this set too. From the programmer's
-perspective, program behavior isn't changing much, so we can use
-zeroed page (to guarantee faulting loads return 0) instead of setting
-the PTE to NULL. While at it we should drop
-bpf_prog_report_arena_violation, and its various users.
+commit 13d28bde689d42f58394dbdb0585d40676beacf4
+Author: Andrea Righi <arighi@nvidia.com>
 
-Summarizing past discussions on all this, with more details on various
-pros/cons:
+sched_ext: Fix ops->priv NULL pointer deref in bpf_scx_unreg()
 
-Currently, the semantics for a fault dictate that the program simply
-continues, and the destination register becomes 0. One could argue the
-ideal form should have been to abort the program on fault, but that
-wasn't possible at the time of implementation. We added fault
-reporting to the program's streams to improve debuggability. Now since
-we have an ASAN implementation, you can likely run that to catch
-memory safety problems. An argument against this is that it doesn't
-help surface a class of issues for production programs. We don't have
-data on whether stray faults or memory corruption within present pages
-is the more common occurrence of bugs in the small set of programs
-using arenas, so it hard to pass any clear judgement. One thing we do
-lose is faults on NULL-derefs, which are likely common, but Emil had
-some ideas on that.
+Under heavy concurrent attach/detach operations, scx_claim_exit() can
+trigger a NULL pointer dereference. This commit fixes it by falling back
+to the scx_root path in scx_prog_sched() when ops->priv is NULL, and
+returning early in bpf_scx_unreg() if the scheduler pointer is NULL.
 
-Another thing we lose is the ability to build something like GWP-Asan
-[0] that we can run in production programs without paying much of the
-performance cost by sampling allocations we want to detect bugs for.
-But between ASAN and Rust-BPF plans, I am not sure how compelling it
-will be going forward. So while it's sort of sad to lose the ability
-to fault feedback, it is also non-trivial to enable direct access to
-arena memory for the kernel while preserving faults (I won't go into
-the details here) without using fault-safe memcpy to move data from/to
-arena on the kernel side.
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 345aa11b84b28..11998530416fb 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -7493,6 +7493,14 @@ static void bpf_scx_unreg(void *kdata, struct bpf_=
+link *link)
+>  	struct sched_ext_ops *ops =3D kdata;
+>  	struct scx_sched *sch =3D rcu_dereference_protected(ops->priv, true);
+> =20
+> +	/*
+> +	 * ops->priv can be NULL if scx_alloc_and_add_sched() failed before
+> +	 * assigning it, or if bpf_scx_unreg() somehow re-entered. There's
+> +	 * nothing to tear down in either case.
+> +	 */
+> +	if (!sch)
+> +		return;
+> +
 
-[0]: https://llvm.org/docs/GwpAsan.html
+Does this lockless check introduce a permanent resource leak when multiple
+links are created for the same map?
 
-> [...]
+Looking at bpf_struct_ops_map_link_dealloc(), it does not hold locks
+preventing concurrent reg operations. If Thread 1 initiates unreg for a
+detached link and executes scx_disable(), but is preempted before executing
+RCU_INIT_POINTER(ops->priv, NULL):
+
+Thread 1:
+scx_disable()
+... preempted ...
+
+Thread 2 could successfully attach a new link for the same map, assigning i=
+ts
+new scheduler sch2 to ops->priv.
+
+When Thread 1 resumes and executes RCU_INIT_POINTER(ops->priv, NULL), it
+clears the pointer to Thread 2's active scheduler.
+
+When Thread 2 subsequently detaches, would bpf_scx_unreg() read ops->priv,
+see NULL, and return early here?
+
+This would completely skip scx_disable() and kobject_put(), permanently
+leaking sch2 and leaving scx_enable_state stuck at SCX_ENABLED. Would this
+prevent new schedulers from being loaded until the system is rebooted?
+
+Can a dangling pointer in scx_alloc_and_add_sched() lead to a use-after-free
+with this ops->priv logic?
+
+While not introduced by this patch, in scx_alloc_and_add_sched(),
+rcu_assign_pointer(ops->priv, sch) is called before several fallible
+allocations.
+
+If a subsequent step like kobject_init_and_add() fails, the function jumps =
+to
+the error path and frees sch via kfree(), but fails to reset ops->priv to
+NULL.
+
+If a map was previously attached, ran, and armed a stray bpf_timer, could a
+subsequent failed re-attach attempt leave ops->priv pointing to the freed s=
+ch?
+
+When the stray timer fires, would scx_prog_sched() dereference ops->priv and
+return the freed pointer to BPF kfuncs?
+
+> diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+> index a075732d4430d..e468a7401ed83 100644
+> --- a/kernel/sched/ext_internal.h
+> +++ b/kernel/sched/ext_internal.h
+> @@ -1433,11 +1433,21 @@ static inline bool scx_task_on_sched(struct scx_s=
+ched *sch,
+>  static inline struct scx_sched *scx_prog_sched(const struct bpf_prog_aux=
+ *aux)
+>  {
+>  	struct sched_ext_ops *ops;
+> -	struct scx_sched *root;
+> +	struct scx_sched *root, *sch;
+> =20
+>  	ops =3D bpf_prog_get_assoc_struct_ops(aux);
+> -	if (likely(ops))
+> -		return rcu_dereference_all(ops->priv);
+> +	if (likely(ops)) {
+> +		sch =3D rcu_dereference_all(ops->priv);
+> +		if (likely(sch))
+> +			return sch;
+> +		/*
+> +		 * @aux is associated with @ops but @ops->priv is NULL. This can
+> +		 * be observed transiently under concurrent attach/detach (e.g.
+> +		 * bpf_scx_unreg() clears @ops->priv before kdata is freed).
+> +		 * Continue with the scx_root path so single-sched users keep
+> +		 * working, sub-sched users see no scheduler.
+> +		 */
+> +	}
+
+Does this fallback to scx_root trigger a denial of service in multi-sched
+environments?
+
+If root->ops.sub_attach is true, the fallback bypasses the return root; path
+and instead hits scx_error(root, "Unassociated program executing with
+sub-schedulers").
+
+Because scx_error() is a macro that disables the BPF scheduler and forces
+a system-wide fallback to CFS, could encountering this transient
+ops->priv =3D=3D NULL state instantly crash the root scheduler?
+
+Can this fallback to scx_root break isolation and allow cross-scheduler sta=
+te
+corruption?
+
+When a scheduler is detached, bpf_scx_unreg() clears ops->priv to NULL.
+However, asynchronous execution contexts like bpf_timer or workqueues armed
+by the detached scheduler can still fire.
+
+If this stray program calls a kfunc, it observes ops->priv =3D=3D NULL and =
+now
+falls back to returning the globally active scx_root.
+
+If an entirely different scheduler has since been attached, would the stray
+program bypass isolation boundaries and directly manipulate the new
+scheduler's state? Prior to this patch, it safely returned NULL.
+
+This isn't a bug introduced by this patch, but does using ops->priv to track
+the scheduler instance inherently break sub-schedulers?
+
+Because ops->priv is a single pointer on the shared struct_ops map (kdata),
+attaching the same map to multiple cgroups will sequentially overwrite
+ops->priv. It will only track the most recently attached scheduler.
+
+If a BPF program executes for an older cgroup's scheduler, will it read
+ops->priv, receive the newer cgroup's scheduler, and operate on the wrong
+state?
+
+> =20
+>  	root =3D rcu_dereference_all(scx_root);
+>  	if (root) {
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260510224332.2011=
+982-1-arighi@nvidia.com?part=3D1
