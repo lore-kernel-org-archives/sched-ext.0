@@ -1,144 +1,153 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51CB4014A3
-	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 05:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D6C384CEA
+	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 12:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778565420; cv=none; b=lpICA8Z0pXtAmg9wd3WeHXnDN5by5OrwYK5WSoBi97FnWUoS51qn+cIhDi4Vz2MIFhUQHi1NbgOnXShDQHD05Sjfw8jVnz79kuBR4h8N1Ee++QFnqzhGggzZotD+GdkGGxtVRYmd5UfPb7OwRq2LNs+IOThn/IczEGB4dNGloeU=
+	t=1778588959; cv=none; b=axN2zGhcQgpCJeTzu/klZ+K0vbHkfJGZKDeuAUtqpHKetb86bpGY4cNSEhea2vRI07fyaU15XFD/NsTaIEIM9syx5ERE7eu5dxAzFvZYFCc0Uihx7QE9kX/hLdiSFG0CmkYQAT4s4WQt+oWZIE5+mA75uAuf8iqTJxLX5TiL28E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778565420; c=relaxed/simple;
-	bh=PEVkDx+h6dAL4n1ODSOCOw2//wltqWTU9G012mXgXmQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fZ5psfxSBwp9gSCMKKRIL7XQ3NuJb4lswmiAt17d9saTLuunv5+AKg62DKMhw0EFf5gQHPpqqDKBp36lSjGUjQKCXTPsA5wsBOG8g94ZG92M8ejf301dFccK5Jk+kQXJGUkmGT/a9+MslMHcMpiPa/fc73g/lF+pSe0I5lE8ICY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=likewhatevs.io; spf=pass smtp.mailfrom=likewhatevs.io; dkim=pass (2048-bit key) header.d=likewhatevs.io header.i=@likewhatevs.io header.b=0sh1lprz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TEx8f8h3; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=likewhatevs.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=likewhatevs.io
+	s=arc-20240116; t=1778588959; c=relaxed/simple;
+	bh=umVNWktZmfkRdQrYKl483CR+VTehRJFRdPI74iAAm9M=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=OVBWKhVKtHhuIveus4NjmdfRSMV4sY+dI51GcdaZo4cL46bLu91JVsTYJSspv4V2Jfa8Y92dlbvtIm7QanvcNgczFflHHXtFW2gewdzeCffdnnl7HAllQ9f4tzBIGOVP6Oonnz5H+VSjnaW1PkpldsizDbWdJYN+59+ANE9KR5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=cF9LNjYa; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=likewhatevs.io header.i=@likewhatevs.io header.b="0sh1lprz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TEx8f8h3"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8F4BE14000D7;
-	Tue, 12 May 2026 01:56:41 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 12 May 2026 01:56:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=likewhatevs.io;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1778565401; x=1778651801; bh=MfRm5BoSWZ
-	Zb0f/8pACjmHoh2eNoR97DUSZE8LG7Abc=; b=0sh1lprzMNscveLCtJUC4WLHRu
-	mRIQQRqeJ4/wlNxKOkMtzA8E/HRPy6PsUtWjDko0zdOfWqbZAM6/w/JyWtEfQLTE
-	LthXrqJMpt7WP71WbPt76E3WXBUy08nuWus0iUWDxCy2epZB7g6enjlt9N5GfDk/
-	e+AnNyAbJmvtE8qBFBa5rSY6cOBz2o34kAkyEZPCROSqd7RaEcAWaf9Wv8seV0m6
-	GYBvRPSyEvkAtWKJ39lofOogAU3Cb2CGA0ECwFdC6rKmoMGh+jueFZ6J/jpMXNWW
-	d+q2972AvaO+w/mDh6X/njuEkubpFKCvileB+fO7jsMtH3w9I4QuAXxm5Hsw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1778565401; x=1778651801; bh=MfRm5BoSWZZb0f/8pACjmHoh2eNoR97DUSZ
-	E8LG7Abc=; b=TEx8f8h3kThmBTsHAUa1wnWNiFsp1lF3hexppRcS0Z27DpF+Qd5
-	C2jKekCFk9/XmTd3hFzK1Cfjp6l7oc12dm4AG5Mfu2+H2PFkCNeiyjwRjeTrTcna
-	1o6GZWOX8LGXI88FcmdKRhFgAnf6+mypszX0odc886jCB9Dxq4sgkfK11ncLECne
-	XRTUJy9RXt4dPx80Lavhvp1V/g54aQODKCB6ebfUTbWzjrn4LxNNnVHWaPyPxoCn
-	EqMiGkgHi8kz68Ng7BXPMWH6swh/sqaGuy5cQLpP8Hjft+8DIj2xtP/dcHv+Ksi/
-	5YbeMoUP6VOGVSAxOY9REnfJ3evvj3yCUWw==
-X-ME-Sender: <xms:GcECanb6vddCnu3o1kBstcPqw8FL6V4eSvCrJlYNV8VNklKnKpO3Lw>
-    <xme:GcECakO20ZwP9RPQ9EarucnSfEANJ9D48YyZqqjtCIU4FbiS4ii_zUoM3doQQk6we
-    rvpJPVwJ6dJRkjXPelkK5u3wVrUZNS7V6TojQYWNorc5En1SWmG3Rpf>
-X-ME-Received: <xmr:GcECakYCEPzPC6y_q2BKBjt9SZemYRjPO0uFvVC1QzgOuuP8n11-882wCEUTyQDZPbaQKFolzpFmcg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvddutddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffoggfgsedtkeertdertd
-    dtnecuhfhrohhmpefrrghtucfuohhmrghruhcuoehprghtshhosehlihhkvgifhhgrthgv
-    vhhsrdhioheqnecuggftrfgrthhtvghrnhepfeevieevieejgfeutedtjeelleeifedvtd
-    ekkeduudevteevuedtheffieeuhedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphgrthhsoheslhhikhgvfihhrghtvghvshdrihhopdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtjheskhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepshgthhgvugdqvgigtheslhhishhtshdrlhhinh
-    hugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehprghtshhosehlihhkvgifhhgrthgvvhhsrdhioh
-X-ME-Proxy: <xmx:GcECaq0p-s_4Wu3ATr_bn2CwsdrylDY34gjCUudkuPWKAE-ueyo_3g>
-    <xmx:GcECaidAXEhpsEUc8HnJRmAj7lAp1kUI8SOfgMkddbDAKbdYPpa_9Q>
-    <xmx:GcECajFBC8IZSBrbLJKU59-inhYiZNxT3NMvJuEvbtFdI2QeiLwtsQ>
-    <xmx:GcECar1am_Vv7X5f60mLbdZvqqdJg9ZzBTjHkcIcSzPleyKf-hbb4Q>
-    <xmx:GcECasvHR6Uz4W85Y05WihNusEgROvYA05UBWBxAsCTVmDiIFxemhfKD>
-Feedback-ID: i7f194913:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 May 2026 01:56:41 -0400 (EDT)
-From: Pat Somaru <patso@likewhatevs.io>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Pat Somaru <patso@likewhatevs.io>
-Subject: [PATCH] sched_ext: Add tracepoint for scheduler exit
-Date: Tue, 12 May 2026 01:56:32 -0400
-Message-ID: <20260512055632.1096713-1-patso@likewhatevs.io>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="cF9LNjYa"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2b9e9a6802aso21867855ad.3
+        for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 05:29:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1778588950; x=1779193750; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=umVNWktZmfkRdQrYKl483CR+VTehRJFRdPI74iAAm9M=;
+        b=cF9LNjYaNSz0cFbFrk1QUp089SGno9eYJ8vvhrodnTrrRyYYooBPZosQnZDd40Uk9k
+         eRlylyt+uqtDyuz0XN/djXwp4k04ws7sSCuAM6Z7Oc9pDXuLEiiawcNa23Ro2DBOAonT
+         2xYqCKR7Kfre2YeHeRVr1JRgdDqERAk3qfpLzgkqsvp0RBZyeKWcMb+/kWt691KSwdlq
+         gLRzsnCVUyWwxrmhpVgcqpTiqVGcY44Fzu05pecakL58ojA4hmX7rnQ6SUA3bwlP9Ywq
+         w1dt/g5c6hlu4GNN6i1HuXUpvpk51I3bNBGQ4Q8SdkcCWJL7n1Nw0BJOLZLnKqfKsKjt
+         WPEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778588950; x=1779193750;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=umVNWktZmfkRdQrYKl483CR+VTehRJFRdPI74iAAm9M=;
+        b=pvqUGy3Kc4yHbjMObxgdXa4h9toUaSP0Xk48sC9TyQvvdnrMS1n9wKeFDNYnm3bQ9O
+         vHBdB/iGPriObqlyqVne3cddO+7YHJKF2VQMfU6dEzG/+pu5Jhumu+4na6c6fjjqEsOM
+         pu1gaZskG8kaR316hYJZe2YAiiomHLBnua9yWGd0zhosEo9qpIg3CM4O4tM2SH+dY/aE
+         N1JkN2OQK+mCJi0RuH2jZrbtui7DQ4prIj6XXdegohSMmWGCp0e9fjUDZo6UPW4CfQ5G
+         wNs53AnCkhEe4zXOX7x/xt44KnotCVoZ7ce77ueLJvdGOQUgCZfT8ywV8xwJCtc5hi+5
+         TZ0Q==
+X-Forwarded-Encrypted: i=1; AFNElJ8GAfdnBXlJUwaNgt6HK7mj8V+8Ts+xAxD2ySC6GTjT4i+LJym1wHNXeCdW9Dlqb2g1qenh2KdtbV8=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywd31Lj+RL7yP3h1OlnjvPb+seFdYvLuNSSJwQpVnDCFDZGlo6A
+	y8RApZQ+M+MyiGHmnpIBtPEd/hHMpH5coKwCBFQgPjgjaajJ6H17owcNyWjsJCbBV/0=
+X-Gm-Gg: Acq92OGwxc/XI70s2SIIhlPaxQRHGdA5FV+EO9wMXhrCmH9pp9qQsw1VGP2WsiuJ9JF
+	yrLbdR4t1WvGjpCLpZ4mhEZIitYhhoyyJSir7YEwy6ZmcqvxkxcNK27QVAuxu8/se2tfwBxfHLK
+	tlzyRWbW8yOYo+NGw50qic/XSwp9PjxJpdDNrAvsfBRwjvJCLxGzGROGfgv0CyFeR/ChvrY9cRS
+	LCLlc9UafZGkFHy1I1u6AKyBYQec0t3A6zpNQUO+T7+3f30JAuyOkNupKq6n+WoXd67iyi25j5w
+	m77k8kG6wWNt91ISlQA1r5lwkLGOIpC+YE0NszLxGpVUkKOxLcb7SLUzqV//3TcUYmoQ5mKfUNC
+	MfX71elEJi1dJOT1dxh7wGpYX6hLOgklLdLVL/HeYmJBoiOCGP2e4GgF9+MTWnuQc27wYg/PfOs
+	bxXUTtT4k4CadRSfLG1EEpPwmb
+X-Received: by 2002:a17:903:2d2:b0:2b9:4941:7f6e with SMTP id d9443c01a7336-2baf0cf399emr200710255ad.2.1778588950278;
+        Tue, 12 May 2026 05:29:10 -0700 (PDT)
+Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2baf1d405adsm137845385ad.28.2026.05.12.05.29.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 May 2026 05:29:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 May 2026 08:29:09 -0400
+Message-Id: <DIGP5VDNWMJ9.2HXDCVLOPWAMT@etsalapatis.com>
+Cc: "Emil Tsalapatis" <emil@etsalapatis.com>, "Tejun Heo" <tj@kernel.org>,
+ "Alexei Starovoitov" <ast@kernel.org>, "Eduard Zingerman"
+ <eddyz87@gmail.com>, "Andrii Nakryiko" <andrii@kernel.org>, "David Vernet"
+ <void@manifault.com>, "Andrea Righi" <arighi@nvidia.com>, "Changwoo Min"
+ <changwoo@igalia.com>, "bpf" <bpf@vger.kernel.org>,
+ <sched-ext@lists.linux.dev>, "LKML" <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH 2/9] bpf/arena: Add BPF_F_ARENA_MAP_ALWAYS for
+ direct kernel access
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>, "Kumar Kartikeya
+ Dwivedi" <memxor@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260427105109.2554518-1-tj@kernel.org>
+ <20260427105109.2554518-3-tj@kernel.org>
+ <CAP01T76jRW0sjkzebSvDKy+AK-fh7hq+0zhDcP7oLGcg_qxOfA@mail.gmail.com>
+ <DIGBW43UUKDX.1H7FT7A9JDOOT@etsalapatis.com>
+ <CAP01T77_Lgfj8yX6JtErGES9icebqygDUZT-wzXq9UV6JGugYA@mail.gmail.com>
+ <DIGDLA5275AR.128FTQMU7Z8S3@gmail.com>
+ <CAP01T74MP6+igNsqhDinYXbk2mFB2zW6Kk6Lb7srrWM8ANojvA@mail.gmail.com>
+ <CAADnVQKfMHUZ8YzLkWW--f1G_+mx6bKdvVHUMArYsb+6-esWCA@mail.gmail.com>
+In-Reply-To: <CAADnVQKfMHUZ8YzLkWW--f1G_+mx6bKdvVHUMArYsb+6-esWCA@mail.gmail.com>
 
-sched_ext schedulers have state in BPF programs and kernel. scx_dump
-provides kernel state and BPF program state on error, but this is static
-in what it can provide.
+On Tue May 12, 2026 at 12:24 AM EDT, Alexei Starovoitov wrote:
+> On Mon, May 11, 2026 at 8:49=E2=80=AFPM Kumar Kartikeya Dwivedi
+> <memxor@gmail.com> wrote:
+>>
+>> On Tue, 12 May 2026 at 05:25, Alexei Starovoitov
+>> <alexei.starovoitov@gmail.com> wrote:
+>> >
+>> > On Mon May 11, 2026 at 7:43 PM PDT, Kumar Kartikeya Dwivedi wrote:
+>> > >
+>> > > If not, the best course to me seems to be to make the flag behavior
+>> > > default, and just rely on ASan (and Rust in the future) to prevent a=
+ny
+>> > > memory safety issues, and drop the stream based feedback on fault,
+>> > > etc.
+>> >
+>> > Agree that this needs to be new default without new uapi flags.
+>> > How about we tweak the idea further.
+>> > Let all arena pages be unmapped initially. bpf progs will fault
+>> > on them and will be reported via bpf_streams.
+>> > But we also prepare one "scratch page". Let's use this name,
+>> > since "garbage page" reads too dirty.
+>> > When kernel faults we populate pte with that scratch page
+>> > and let the kernel code retry.
+>> > To implement it the page_fault_oops() can have a callback
+>> > into bpf/arena helper similar to kfence_handle_page_fault.
+>> > If fault address is in arena, do kfence_unprotect()-like.
+>>
+>> Interesting idea. So I guess this page remains mapped once kernel
+>> faults on it. I guess we can still reset it to NULL if we alloc and
+>> free a page at the same address, so it's just a drop-in to prevent
+>> further faults inside the kernel, since emulating instructions is ugly
+>> and we're not using asm wrappers that have fixup labels etc. If we end
+>> up allocating and freeing something at the same address it will likely
+>> get reset to NULL (that would be ideal). But even if this happens in
+>> parallel we may fault again and then will just fix up the NULL pte
+>> with scratch page again. We can likely also preserve fault reporting
+>> into streams when such scratch pages are brought in.
+>
+> Yep. All makes sense.
+> The hope is that faults from kfuncs should be rare
+> compared to faults from regular arena bugs.
+> So the stuck scratch page shouldn't happen often and
+> faults on unmapped will still be seen most of the time.
 
-Add a sched_ext_exit tracepoint in scx_claim_exit() so that BPF programs
-can dynamically inspect scheduler specific state at the moment of exit.
+This sounds great, it pretty much retains all arena behavior that we
+care about. The most important part is that it reliably reports the
+first memory access error, which even now is the only one that is
+meaningful. The delta with current behavior is that subsequent accesses
+are not caught, but we don't care about those because they are very
+likely caused by reading zeros during the initial buggy access.
 
-Signed-off-by: Pat Somaru <patso@likewhatevs.io>
----
- include/trace/events/sched_ext.h | 19 +++++++++++++++++++
- kernel/sched/ext.c               |  2 ++
- 2 files changed, 21 insertions(+)
+Would the scratch page be actually mapped into the arena radix tree, or=20
+just the pte? Because if it doesn't then I think we don't even need to
+worry about resetting it from the arena side. Just allocating it at
+a later time will overwrite the scratch page PTE with new valid page,
+Until then the page is accessing the scratch page, but again we only
+care about the first buggy access.
 
-diff --git a/include/trace/events/sched_ext.h b/include/trace/events/sched_ext.h
-index d1bf5acd59c5..9ccf884919c1 100644
---- a/include/trace/events/sched_ext.h
-+++ b/include/trace/events/sched_ext.h
-@@ -84,6 +84,25 @@ TRACE_EVENT(sched_ext_bypass_lb,
- 	)
- );
- 
-+TRACE_EVENT(sched_ext_exit,
-+
-+	TP_PROTO(__u32 kind),
-+
-+	TP_ARGS(kind),
-+
-+	TP_STRUCT__entry(
-+		__field(__u32, kind)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->kind		= kind;
-+	),
-+
-+	TP_printk("kind %u",
-+		  __entry->kind
-+	)
-+);
-+
- #endif /* _TRACE_SCHED_EXT_H */
- 
- /* This part must be outside protection */
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 64f8a096f133..0219b11bb9d1 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6200,6 +6200,8 @@ static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
- 	 */
- 	WRITE_ONCE(sch->aborting, true);
- 
-+	trace_sched_ext_exit(kind);
-+
- 	/*
- 	 * Propagate exits to descendants immediately. Each has a dedicated
- 	 * helper kthread and can run in parallel. While most of disabling is
--- 
-2.54.0
-
+Small nit: Maybe default page instead of scratch page? Scratch page
+sounds a bit like scratch space but we don't actually use the page to
+store any data.
