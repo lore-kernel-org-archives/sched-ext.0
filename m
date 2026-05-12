@@ -1,246 +1,108 @@
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700A7370D69
-	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 02:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778553860; cv=pass; b=Tun1ZHcE1TC0u8Dpaq/mA0glb9T+cOwCQH591/vIuVeEkucaf/aKmj4DuagnwvTJ7RPX3dBN8+S2gjc0KszxkTQJCGpLZcOLENUxuk4p/Yl+idMzy+HIryJd4SdPL1A3hnXTSh2rcesIAK2PY/BdIFbIqU0TmP2Q/8D4PsubZd8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778553860; c=relaxed/simple;
-	bh=b9zLwgQOpkKcamLtiDDaoswAhjVuywCuDT+EeOJH+A8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HxYE9tBkWlTx7GE/THBwr6TIO5T52JwfwWdpqW625Grc8YTjOHkvAtrEgfAyacwvX+TiAyKRpRbhm7HAm9QSE4D68Jq7EpXrdZQX4IGkCPuQq0UVtzxcvziUn4aQ7/oO2ONG0JfnXiFzkxGt0rRg1hfOtyQ3iGOY56YZTUYb/Hc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUgCfMeQ; arc=pass smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEFD19CD03
+	for <sched-ext@lists.linux.dev>; Tue, 12 May 2026 03:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778556308; cv=none; b=tD0eLkV0CilhXWI6mgaIc9fgDdkrrN5ocCrSD1fnoxeWHoN2o4dtRWXuuzXGbHSWofZo6kBEtwNE0PW/f3cN3KjsgA37A16misBN/aPvcUr4sYwvFn5SmMbXqyek6urnW4lOu2gNRJSj6P2UphbrMpBlZXOzFmC1bMifWVRtZUs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778556308; c=relaxed/simple;
+	bh=lUvCSX7+f/zvgszpi8kv9Vx76od+XjPpIa3nZHTbWlk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=HKSRx+VdQlQ6e1UWwNOOTtFLnm1rFiUDJGD4/aMR7MRwjGBrqOzBdyGPfMato5KL36TggRVirxe2uSUxARGxXFz9cNDj+MhELzYw+haQn+mvdB9JAr7aqN3lQZ83CfuOsV8EVgNBhypORgmNivJ/+lchaSQ2Ukq5F8V5hWtS+y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GOe9vXZK; arc=none smtp.client-ip=209.85.167.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUgCfMeQ"
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4891f625344so46807115e9.0
-        for <sched-ext@lists.linux.dev>; Mon, 11 May 2026 19:44:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778553857; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UNfNsr9QZv+LgM1r8h2mu9o6OHPlXnvKTicMC0eBomcFsFSESLMr0OKF0MW3naeZbj
-         oS6sfRUb6N+lAZncVbxRRl62ouelAb6Rs4fkn/Q2kHwqDmC16iAXQzZn/QxuCJyb3JJm
-         Smip5VWtsZJSXtQpJl6IsOWXew7ATPfeEWwg9Fma5jjfaa8qlgTuzg/1rJw0sP58rcss
-         SKuq2wvbjsjpdHmI2NzYDx04pTZdik5cbnVSESDvGWR32LS0IjLXYt1xXOfO6q6pk2/c
-         bfpgDi/Z35NUJLPl/LWHsbWkRrL6Q8OtR7C5HH1GcJ+xMdBhk49lhE12BSWDBRBdrkvS
-         SF1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=b9zLwgQOpkKcamLtiDDaoswAhjVuywCuDT+EeOJH+A8=;
-        fh=iDOBSJjy1Gv8dkm6zqPZvDv29S1YOEZUYMzShUXfq8M=;
-        b=WmlZh2Uhds1x80TgIArziNDPIuciiOHbGmgXRiiFW6Gal00Wqibtf4GYPY3WmxImH1
-         JjAiutdkeyY5aWdw0a5w+0Gq3VN1VTq9JoiWQEZbyNsssWGR48WzT1bzv3khKBNe3Ukj
-         +Q6K4uWzPaNMw5AyeIVrijALHJc+4CR/x9ZPMv8OtcTx89j2ozoLNZxAgaS5W3pMrGVP
-         aL6MOn0wQWWXv4CN4yVfMgp/VTBXtdNc3hrlC4xdPC1jkDj40h8jVsyg6V9tSipivi5l
-         UVPPJGyRmepNy3QjY05YN2lph9nQK0D+PqOawJzWaWfpY8a7PwPQQn/jBe7SgfxYZRcM
-         FP6g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GOe9vXZK"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-47cbd444fd0so3258080b6e.2
+        for <sched-ext@lists.linux.dev>; Mon, 11 May 2026 20:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778553857; x=1779158657; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=b9zLwgQOpkKcamLtiDDaoswAhjVuywCuDT+EeOJH+A8=;
-        b=cUgCfMeQPRbrTHAjR8HyXOu1FOf7qeAynDW/83eRPNs+DmL+AU3CiEdSReFXMVqoSJ
-         A/3up1yv1NZkan99i7XGRZ5foDzhKsG7lcBkgvldP75UaHlkk6gUzawXi8NxTL3jEjK7
-         JvB/w9lgWz+NitEJU/72eA8INOsdJUFnik6tgQgk3laYQdzPQI03R1VXUu5PE8wrpq6E
-         7ieGDKk5gf8x5OQXyS2UBKD+dIyHaMftyDBtkkooWsCmSOfdLvoGeljCvHnmharFLDz9
-         QvRy3xSwymS6H6nA4iymHAOfG7ybA+E9HSesNC9ItPsjEewjKdUW5e4RSiKsouQxZAs5
-         tSog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778553857; x=1779158657;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778556306; x=1779161106; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b9zLwgQOpkKcamLtiDDaoswAhjVuywCuDT+EeOJH+A8=;
-        b=UciLlm42BduWG2Ei05v0xU2SNR9YJ7XHxPjmWWyjr6WfqYR7cuvb+SJu7Y0mlhxSyX
-         WY584ebWa2686OZgXCZKPEqfXOMgnAhGWvsmUins2Ro7M6MZg0iwjZrPa3CiZfodDcoJ
-         AEB0pFKKi++CrAcLn6INRsTy9oAfciQLyz8JbcvD85GsAAET0KGWD5msToR8gobyloCn
-         lIA6vuu3nx+osuOosxroGL2aR4kwXHX2TEDneqhbHOGXZ2+FZ/dO0N+IfQfW1fJgdfEH
-         WWMiOGxtIFAA1TsApV1Gb7UH/FKOjteLYY30OFu+mUAsV90AnXs0baJyGlWUDV+h+fK5
-         2kZw==
-X-Forwarded-Encrypted: i=1; AFNElJ/nik3NnRVAOiq7twQdODx9EGXM5pHRsQTFuKUfHeONeLzUTMLUXWJfyZjdB6xofQTM/zt/EQSH8D4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyIr/JPtA9OKTftQ1PF92SSM2i96gvMnPVpHYCPfeFdx+JOmY1w
-	gboc+xbBZXgieXZdhN0euQ9C0pLtPKBVHeEBKJSdNzUIVhqOuEmHckj3tBJcVrCWHCOUyI1fZJO
-	KzHM/kui1k7uMK6E2PTQod+IRVOGNvRI=
-X-Gm-Gg: Acq92OEFA2opxQH8kWLhoL/UVCNUvOyrr2n7gbi5WqZK9CvO51Tlt/bYTLHRwjSLAqb
-	G1MMIINE9hHmzXkkKD+TqM98/BKFBW+jL7yaB++HaUq7YJdROWzo14Gr3pZLepYx/8U9qdQvMUv
-	dOTSwDXPyR6Ug+ft5VTnRAgu0LMmnoWGVof3Q24fxgcIzrPIZ+2bf5sQ1TZMkX1EAl2Xm0eC8e6
-	khjlVIT3nj8BlSd8MY8Om/BtXCfdTUO4wqAtPIlAbcda0qGO3JhalCRB4NDkMfLREvGmLJnV0wr
-	4Cfhkqtd6GUbMmRPJioLnSDLyfy4r4oCydYmZaa+VCyBIMxZdbQbsMEUtEy55wZdIh30HAxHIBw
-	nagp7RllCU2heiYTvs49fv/h4PUHolNSWDyLVKAC4DKc2E+1ZSKQK8umZ
-X-Received: by 2002:a05:600c:5813:b0:48e:6be6:168d with SMTP id
- 5b1f17b1804b1-48e8e1f63a7mr19322365e9.8.1778553856750; Mon, 11 May 2026
- 19:44:16 -0700 (PDT)
+        bh=lUvCSX7+f/zvgszpi8kv9Vx76od+XjPpIa3nZHTbWlk=;
+        b=GOe9vXZKC6RSb3eX3Bn+cYXNOENFl6Sn7b/uSCuFXpU8Ge+/972OYGw1+qs4/6CM54
+         Mo4jA0A/mxJ+WiGyVlH1Dy7lqJJOIKtMAJoHhgp2ZzQYw2RBtFesB2Flc/oiTyTig79c
+         T4QkyOXeUYa5tpi6iT7NDb1FeO7Jw8G+BdkTDyIV8pDq/s7+BdxOQehzVUE57IqgM+f3
+         zB3wOqzrg2XgOrUu5+rFaxKAMkzI7DtDzvQX7l3isgVEiqvr2RuH1nQrnTMZg8PR8tDX
+         TjlzHFbrV5SCHtg48UMqDcdeeLDreKqG7MZvOJpqj6sLiNXID0FoeJ6ohyxsr1hE0CdE
+         Ehbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778556306; x=1779161106;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lUvCSX7+f/zvgszpi8kv9Vx76od+XjPpIa3nZHTbWlk=;
+        b=dJPzri+Vww1MEZ5K+qv3FzhmMgua01lYfgdMmSacRPTt09e2ad27L2AOjI6HspKnC/
+         dU5REGhbQJZy09djvy/uKP3vvFDHcir/rcw/s1yPXVtHYzWRLHUldsvx+gRIb65PpuGq
+         rmhAW5mmIkcZlskSp0SXh5sD1lXqeObO2XnEeOXb4pIlUF2EFrtK+eW5gPRsYZyIcakN
+         +JGMRbsuBkxgddXnRWSRQXKajcAyHNAW5MrpHyBKbUtW+p+AKUN0KM248/LI2HVJ/6LJ
+         XANEj8L5fmFIa2+sqOB/ZMBsvmZQhrXOWx4jPftSpisbqC+b8aUR+aj4q61HEgVMEswo
+         MyEw==
+X-Forwarded-Encrypted: i=1; AFNElJ/KO9LZDwiyBQaIcT7FuLaZ6XVe57rmu9eFHgO8VIV98fBosMRS/NCT8PgRv4lcuq/ZUNQxKF1BDrI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxLgQ1ri4JUeB/hSAcV9wlEZ4oxK2lSakdFiqLIoY/VLwsK6eY4
+	30deO+Yz472pXf/KuLA6LcsIBBtWOPSQxCOxxkz5ZvxsNZJvdSLQ8vIs
+X-Gm-Gg: Acq92OGCdyQqUAL3RZwpnoLabq6Nb6hGI25EITWT0NKT/SB+1KBj/nS6WA9ZsMnx4Ne
+	Y8V5Ie0708sL39NVnUmXbT8Er2yi6NxuuX+frpyqcijwxcsgHBL5BNvPO7cvGZMKLpHAHTFPfZQ
+	6nkLuEpx5ZN6LwBri/4x0tfKcyhtxZrinwhPGXuL9PRLsYSFiTjlKSy+g68D0bD05p3ckqU/qb3
+	EfIIbvzlS2kQ0a0bfLYbO59OL6LXadY4iJknCkBdsInP3kmnWFsrg+R0BUQ+8t9hsLxKn9s6frr
+	OpQsyieetX4doTH5Mc9FP1BsSndQNrP6Ya5afsCF+sYB4aCpp4/+UeqdPVGz5W+DfTQc2w8yNqN
+	s5MO7NwXD2tihGsUIQcNkFdIfSm/zTJxrLq6tnLudV/xO7zMdRvrC2I9B013+TBpfGJd4Fp3MrY
+	GQtCHB54t77uu06rj/K9EJ+bdzfTL5bXqhMxWvCvPwfv87Ex5POCoq9hltuqYGF8pyeC7F+esfY
+	M3AqdxsAvdsmPOv4g==
+X-Received: by 2002:a05:6820:2212:b0:694:8bfa:7819 with SMTP id 006d021491bc7-69998cafb9emr14905097eaf.13.1778556306125;
+        Mon, 11 May 2026 20:25:06 -0700 (PDT)
+Received: from localhost ([2a03:2880:10ff:43::])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-435570ad92dsm11696175fac.2.2026.05.11.20.25.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 May 2026 20:25:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260427105109.2554518-1-tj@kernel.org> <20260427105109.2554518-3-tj@kernel.org>
- <CAP01T76jRW0sjkzebSvDKy+AK-fh7hq+0zhDcP7oLGcg_qxOfA@mail.gmail.com> <DIGBW43UUKDX.1H7FT7A9JDOOT@etsalapatis.com>
-In-Reply-To: <DIGBW43UUKDX.1H7FT7A9JDOOT@etsalapatis.com>
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Date: Tue, 12 May 2026 04:43:40 +0200
-X-Gm-Features: AVHnY4LJUDHYlnNKv9mHKnF1ipPaCXJ6GrMIFsXa4Ijx1zB9GdxmVXUsdbTDwgQ
-Message-ID: <CAP01T77_Lgfj8yX6JtErGES9icebqygDUZT-wzXq9UV6JGugYA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/9] bpf/arena: Add BPF_F_ARENA_MAP_ALWAYS for direct
- kernel access
-To: Emil Tsalapatis <emil@etsalapatis.com>
-Cc: Tejun Heo <tj@kernel.org>, Alexei Starovoitov <ast@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>, 
-	Andrii Nakryiko <andrii@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, bpf@vger.kernel.org, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 11 May 2026 20:25:03 -0700
+Message-Id: <DIGDLA5275AR.128FTQMU7Z8S3@gmail.com>
+Cc: "Tejun Heo" <tj@kernel.org>, "Alexei Starovoitov" <ast@kernel.org>,
+ "Eduard Zingerman" <eddyz87@gmail.com>, "Andrii Nakryiko"
+ <andrii@kernel.org>, "David Vernet" <void@manifault.com>, "Andrea Righi"
+ <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>,
+ <bpf@vger.kernel.org>, <sched-ext@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [RFC PATCH 2/9] bpf/arena: Add BPF_F_ARENA_MAP_ALWAYS for
+ direct kernel access
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>, "Emil Tsalapatis"
+ <emil@etsalapatis.com>
+X-Mailer: aerc
+References: <20260427105109.2554518-1-tj@kernel.org>
+ <20260427105109.2554518-3-tj@kernel.org>
+ <CAP01T76jRW0sjkzebSvDKy+AK-fh7hq+0zhDcP7oLGcg_qxOfA@mail.gmail.com>
+ <DIGBW43UUKDX.1H7FT7A9JDOOT@etsalapatis.com>
+ <CAP01T77_Lgfj8yX6JtErGES9icebqygDUZT-wzXq9UV6JGugYA@mail.gmail.com>
+In-Reply-To: <CAP01T77_Lgfj8yX6JtErGES9icebqygDUZT-wzXq9UV6JGugYA@mail.gmail.com>
 
-On Tue, 12 May 2026 at 04:05, Emil Tsalapatis <emil@etsalapatis.com> wrote:
+On Mon May 11, 2026 at 7:43 PM PDT, Kumar Kartikeya Dwivedi wrote:
 >
-> On Mon May 11, 2026 at 8:31 PM EDT, Kumar Kartikeya Dwivedi wrote:
-> > On Mon, 27 Apr 2026 at 12:51, Tejun Heo <tj@kernel.org> wrote:
-> >>
-> >> bpf_arena's kern_vm range is selectively populated: only allocated pages
-> >> have PTEs. This catches a narrow class of buggy BPF programs that
-> >> dereference unmapped arena addresses, but the protection is shallow - within
-> >> the allocated set there are countless ways for a buggy program to corrupt
-> >> arena memory.
-> >>
-> >> It does, however, impose cost on the kernel side accesses. A kfunc or
-> >> struct_ops callback that wants to consume an arena pointer cannot simply
-> >> load through it; the page may have been freed underneath, so the access has
-> >> to go through copy_from_kernel_nofault(). Out-parameter writes currently
-> >> have no equivalent.
-> >>
-> >> Arena is becoming the primary memory model for BPF programs, and more kfunc
-> >> / struct_ops surfaces will want to read and write arena memory directly. The
-> >> actual answer for catching arena memory bugs is arena ASAN, which addresses
-> >> all memory access bugs meaningfully. Given that, it's worth offering an
-> >> opt-in mode that drops the partial fault protection in exchange for cheap
-> >> direct kernel-side access.
-> >>
-> >> Add BPF_F_ARENA_MAP_ALWAYS. Arenas created with this flag allocate a
-> >> per-arena "garbage" page and pre-populate every PTE in the kern_vm range to
-> >> point at it. arena_alloc_pages() replaces the garbage PTE with a real page;
-> >> arena_free_pages() restores the garbage PTE instead of clearing.
-> >> arena_vm_fault() ignores the garbage page so user-side fault semantics are
-> >> unchanged.
-> >>
-> >> Stores into garbage-backed addresses are silently absorbed; loads return
-> >> indeterminate bytes. Userspace mappings are unaffected. The flag is opt-in -
-> >> arenas without it behave exactly as before.
-> >>
-> >> Suggested-by: Alexei Starovoitov <ast@kernel.org>
-> >> Signed-off-by: Tejun Heo <tj@kernel.org>
-> >> ---
-> >
-> > If we go down this route, we should probably make this flag the
-> > default behavior. Otherwise, we cannot universally enable passing
-> > arena memory into kfuncs. Every subsystem will have to check the flag,
-> > we'll have to gate being able to pass memory based on the flag's
-> > presence, etc., which just adds complexity everywhere. It will
-> > eliminate a few patches in this set too. From the programmer's
-> > perspective, program behavior isn't changing much, so we can use
-> > zeroed page (to guarantee faulting loads return 0) instead of setting
-> > the PTE to NULL. While at it we should drop
-> > bpf_prog_report_arena_violation, and its various users.
-> >
-> > Summarizing past discussions on all this, with more details on various
-> > pros/cons:
-> >
-> > Currently, the semantics for a fault dictate that the program simply
-> > continues, and the destination register becomes 0. One could argue the
-> > ideal form should have been to abort the program on fault, but that
-> > wasn't possible at the time of implementation. We added fault
-> > reporting to the program's streams to improve debuggability. Now since
-> > we have an ASAN implementation, you can likely run that to catch
-> > memory safety problems. An argument against this is that it doesn't
-> > help surface a class of issues for production programs. We don't have
-> > data on whether stray faults or memory corruption within present pages
-> > is the more common occurrence of bugs in the small set of programs
-> > using arenas, so it hard to pass any clear judgement. One thing we do
-> > lose is faults on NULL-derefs, which are likely common, but Emil had
-> > some ideas on that.
-> >
-> > Another thing we lose is the ability to build something like GWP-Asan
-> > [0] that we can run in production programs without paying much of the
-> > performance cost by sampling allocations we want to detect bugs for.
-> > But between ASAN and Rust-BPF plans, I am not sure how compelling it
-> > will be going forward. So while it's sort of sad to lose the ability
-> > to fault feedback, it is also non-trivial to enable direct access to
-> > arena memory for the kernel while preserving faults (I won't go into
-> > the details here) without using fault-safe memcpy to move data from/to
-> > arena on the kernel side.
->
-> I completely agree with the discussion points, though imo we do not
-> need to make this flag the default if we support it. The complexity is
-> mostly checking whether a kfunc that takes arena arguments accepts the
-> burden of validating them, or if it depends on the new flag to prevent
-> faults. Any new kfuncs should have clear semantics on that, and we can
-> validate proper behavior with selftests.
+> If not, the best course to me seems to be to make the flag behavior
+> default, and just rely on ASan (and Rust in the future) to prevent any
+> memory safety issues, and drop the stream based feedback on fault,
+> etc.
 
-The main problem is accessing the arena or arena flags etc. to decide
-whether we can read / write the address. It needs to be passed around
-or retrieved at runtime from within the kfunc. It also makes it
-conditional on the flag, so depending on whether a flag is set my
-program will load or not load, since verifier prevents me from passing
-arena memory as argument to kfunc. In practice, once sched-ext
-requires it for its programs it will defacto be the default since
-that's where arenas are used (for now at least). At that point, why
-bother with the flag.
-
->
-> Whatever we choose, I am strongly in favor of keeping some kind of error
-> reporting when touching the first page in the arena. This has been by
-> far the biggest indicator of bugs, and if we only keep ASAN then we lose
-> our strongest signal for most use cases. This is made even worse by the
-> fact the new flag is incompatible with GWP-Asan, making it too costly to
-> run sanitization at scale.
->
-> For the flag, the solution would be to move reserving the low addresses
-> of arenas from libarena to the arena itself. The arena would have a low
-> watermark below which it would retain the existing faulting behavior.
-> The kfunc would bounds check check the arguments to ensure they're not
-> below the low watermark, and fail if they are.
->
-> It's not ideal - it adds the burden of bounds checking into the
-> kfunc - but it's reasonable that arena-related kfuncs should take into
-> account the arena's semantics.
-
-Another data point to consider is that if we omit this initial
-faultable region for catching NULL-derefs, we gain the ability to
-allow passing arena memory into any kfunc where memory arguments are
-taken, which might be pretty useful. We won't be able to do it if we
-have the initial region as faultable since we can't rely on kernel
-writes hitting a page without any checks on the memory region. You
-must treat arena arguments specially and cannot mix them with other
-memory arguments.
-
-The other way to keep the faultable region in the beginning would be
-to emit some assertion/runtime check in the verifier and abort the
-program if the arena memory being passed into the helper is accessible
-for the size parameter used for the helper call, or fix it up to some
-page that is likely to be present.
-
-In practice, if most users set the flag then I think you likely lose
-the benefit of the default behavior, or cannot rely on it anyway. When
-it becomes a dependency for passing arena memory in the kernel to
-helpers, most users will blindly set it.
-
-So in the end, it boils down to whether we think retaining faults
-(e.g., conditionally for the NULL case) is critical, and whether we
-have some convincing evidence for it.
-
-If not, the best course to me seems to be to make the flag behavior
-default, and just rely on ASan (and Rust in the future) to prevent any
-memory safety issues, and drop the stream based feedback on fault,
-etc.
-
->
-> >
-> > [0]: https://llvm.org/docs/GwpAsan.html
-> >
-> >> [...]
->
+Agree that this needs to be new default without new uapi flags.
+How about we tweak the idea further.
+Let all arena pages be unmapped initially. bpf progs will fault
+on them and will be reported via bpf_streams.
+But we also prepare one "scratch page". Let's use this name,
+since "garbage page" reads too dirty.
+When kernel faults we populate pte with that scratch page
+and let the kernel code retry.
+To implement it the page_fault_oops() can have a callback
+into bpf/arena helper similar to kfence_handle_page_fault.
+If fault address is in arena, do kfence_unprotect()-like.
