@@ -1,109 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011068.outbound.protection.outlook.com [40.107.208.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27739345CD8;
-	Wed, 13 May 2026 12:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778675257; cv=none; b=oWwSGMV2e4nOmou0e+zdf6ac+9Pz7vLFYiMwpvJICMzei/fUrhbtxG4+ZN4EgnOSYIuhiQWBJKwo42GNhpevEURbSXb45UW7l140YacatxLlljg1k6o3bZZLnYXmHRqMHjjKC3/GGp7CBclWaF66Hn0/kIcvKbS95UTn/Ln6EiY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778675257; c=relaxed/simple;
-	bh=nyZXI2mfFkWRpmXLtt4xx8ao5I3Mzjh0g9Rg8fP4WpA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jbQcds/A52LimmaLgUBKGnPwtcX7rLdPABlAwqnHQZPT5Z8iWSPSMtzUhiJZ63OccFkex0MiMXBQtbt/QxH9N6H1jqA7ml3sWssaHploFfReAQe9KB2f0GTQHmO7XCJW6QlKL9wJszQ0p43zXdc+tI5rHm5b/Uz0fRkSEr4ZREw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A5zUUKzB; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C49246788
+	for <sched-ext@lists.linux.dev>; Wed, 13 May 2026 13:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.68
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778677287; cv=fail; b=QDsttoXZpX3FNdORJQX06YlhiJ095lGHi5D/TGBT0jbbaK9AP1PvQ52JTO/bV1c+/gMhIfF/jtrqUkCzcn2c+zlskS3J+IJfJLPuKvVRibGM6koYRPcDc/X9lLC0J2qsmXgJffPZfD4aBwnVHEsRjbD0NoJfxBYP8ZjfIwUgFmY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778677287; c=relaxed/simple;
+	bh=7dBogNQF4UnbQyOTfDmPgkVNoUP5HX6nDzIg7s79vjc=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=UTYUb7x5jxrqcBWMcTVyvI90CZfayaxuGnIE/J09X5lac/4ul4OdgobnS72eHRUg2wuBenP4XKAymieYSxRGQaNonhyt1BzO+6HWPIv4Wc+HhGHqzjuxFYk76XdxTLF8kRqdfTZ7yYbJFEQz4DNYiLcdIjsrM2ZY4JVwlQumtSE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QtIfT/v1; arc=fail smtp.client-ip=40.107.208.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A5zUUKzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F474C2BCB7;
-	Wed, 13 May 2026 12:27:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778675256;
-	bh=nyZXI2mfFkWRpmXLtt4xx8ao5I3Mzjh0g9Rg8fP4WpA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=A5zUUKzBrBX6/0yQN2rebAVh/Y98b2En4ZwbG8m4kcz5atGu3YjRCkbjRJXyqMLMy
-	 fAHsQDu1qM7ndrzjermHL1dKAsFyS29dBcxDnVxk4kp51ZiopawwqFxXG8YKIwUUfD
-	 S0+ye/NrBcW53w2Sar0h6chir9EJ7HTkwpfb/p+UhXu7ONx+Q4MMVRVHzgYM8rClIA
-	 WOog+lQdKt7h88RqQdLxTFIYE60bFcuP/G79nk+VFdNUp29yefXqWmsgvcoFq9LP5P
-	 T37gX5DM/fLAdY5sD4GluqvV9pCrVWS2GMU9c/K9StsXmKqj6bz2cAnaOv79B+wit1
-	 kawNN6/p7ufSQ==
-Date: Wed, 13 May 2026 14:27:34 +0200
-From: Frederic Weisbecker <frederic@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Juri Lelli <juri.lelli@redhat.com>, sched-ext@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QtIfT/v1"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gF1jQ/saEcDIQ/T9e5No9b6NeHFIzaH1mIiBhvwRqnh/GyXFcib+biYpa5odlZpWJCAHzxG+b42cVooCwuce/mhmz+L7sC0V8HSe//JE3pbWr7TzdASrGNTAwL/LK3kv5TMk3phCBR3/02uQMOYvRKfF+y932pRDSYNKfC7t/of7YHuZZKrvORWoVE9BrmFTTt0qqT7N/GkaincFz13/Q5KUOZMAhwdN1V0OyroFAAwmW0OMEXBB+sK75qNTmEojCPfqk4r7hmFAqekk0cJTYSrGAYA8lPT5i3w+/Sewg0OXkloWnWIJXTCIp188+ZcH0cLkUv1KyM2KZjR91o8QWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oeHwha9Q6tDqloz5xe5BowjGpmeV3KSq7FxyvXWYYs8=;
+ b=Hg0WpGTxzHVU6PIeqQJ/uJQkAIK0NVfExXXlDUjPYdvh6oGFieawUmzPxjh8ewyJYCq94CyR0FPlvLlFzGoUGd1MbrnYXibI7esG0gtiYPt7s7qPkuqN6roQC8DqaQdZqF2TZS5XaTUZPyDLlq/8HzG/C/tR1ex2GbmYXyxFFZupjFF2ZHCYKsN9OiiRsMaDBUrC/M0kDnJrIdo3j3+tA+YAQesPaLH+181MV5P8e1IqwrtZ/f35rbnJNzcbOp8nVtk/fn0+1vOCqf5DRpv3ZPbpxeFLybjw5/ZNYByQiQxn6gxmse+VEV8OjRqoma3iemFoEj2BqEJwXxBSZXkdvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oeHwha9Q6tDqloz5xe5BowjGpmeV3KSq7FxyvXWYYs8=;
+ b=QtIfT/v1VDJ5u+hN0wX183860WigaWBqPlpV9vG1AqQcLr0PCevcFMOVCI1WfGjTzVe60paX6DvvjcrdGFktxjDImQKZ2hxN/bRCbgjDS9r3a1uUTfmjCr8boVJYhcxnFmSFxUS+2zaWbmrtwlD0S01SAjqhnwM+jBZWFLmm71M1umVWMgoyl9RqNYGu4WnidgAE2JYbOzb2miuRleL2WKIceUnhnIolGkZZTZsHL+lnuzBVVVqaFPEi7pQQ9X2DHgMy9ZPx/BikFpY6KjljAiqqSZB94DuIbe/57DUfNsWH8E4U/5jXtoaX4ST0DEXaamtN+wVA89ITM4XpaJheKQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by CY8PR12MB8313.namprd12.prod.outlook.com (2603:10b6:930:7d::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
+ 2026 13:01:20 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
+ 13:01:20 +0000
+From: Andrea Righi <arighi@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Chris Mason <clm@meta.com>,
+	Peter Schneider <pschneider1968@googlemail.com>,
+	sched-ext@lists.linux.dev,
+	stable@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-7.1-fixes] sched_ext: Use
- HK_TYPE_DOMAIN_BOOT to detect isolcpus= domain isolation
-Message-ID: <agRuNoin972BZ9Ok@localhost.localdomain>
-References: <20260513112438.642055-1-arighi@nvidia.com>
+Subject: [PATCH 7.0.y] sched_ext: Skip tasks with stale task_rq in bypass_lb_cpu()
+Date: Wed, 13 May 2026 15:01:11 +0200
+Message-ID: <20260513130111.689740-1-arighi@nvidia.com>
+X-Mailer: git-send-email 2.54.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ZR0P278CA0177.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:45::11) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260513112438.642055-1-arighi@nvidia.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CY8PR12MB8313:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3a9fd328-5197-4d76-5ba5-08deb0efba2b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|7416014|56012099003|18002099003|11063799003;
+X-Microsoft-Antispam-Message-Info:
+	oE4EJG2ZO74gIwGHRbpSi27FWCPvOqHH9ZDhqBWuIM08X4Cfa7u4+MpxAv8Mez5qBqQ/vw1V/zySqf8mrJAjVxH+yIMy6iGauoFr9mP0aWxL6mmTXL321zOc+fdQzezI27Uwfo+J5u5adBGqDTccUiCTgqjN+lxbktFsEC/4w4/N5bxAJ/ZCcQHfKzKDqSz8ky/WneL0N6HnGo9Vjfz7RGmsQTsgU2jYgREtF2jzYQ1FOpX8xWi0PAT9d7ue5iWvcqE4ZgiRjtv6Vr3xVJtEFoJpQvpwCo3PCMd7HOl2jBat/mllDSsiVXcFoIFFQX/4qHAZWCCgKsZ+wdKXgUFGhtyfWzhPbrDEcs+VjODYjVdgnOsOhSd6qBKYyc13U3fjVgbWmbiwYqRbSHAZv1EpKu6P5oQJPs+jNo1yPaSugb9zLn+mgBy/dgK6lVk+4xO2t8w6D0U+07yAenYPd5GYCCKmjWUsdY+hl/BabPQX4eB2LnCdjwhE62aTUUGLraFFHRE0eAg5YgSbWNpBzd4tJhmO9NHl/QhSRhbgLET64+c3XLHPH461Gyj6nvlVnnGcP23+6fqOc136X1Ff3Vxi7GrvkLk6xnMZPTtILGKP0NK3XqPC7RVq6wf3XXCKpaCafvKW0TZRLBWQmIyMSi/LxPUynn9x+oCbG4+vjTVUchPfj8xwx58kiyL7yX7Fn9+1
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7416014)(56012099003)(18002099003)(11063799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?kHFB1Go8zp2mbPAPos4tHtXzPOGEtoHxaDfmth2s6sxko+sK2q4Zg7PXM90q?=
+ =?us-ascii?Q?mvA8iAjnvyZaEZnAZIi3GAn4DNyh/40STGSfzb/Djg9GjkXeczqDjd9VnzbK?=
+ =?us-ascii?Q?0UQQ3PJzvFWKQKb+t5WI6ZtKshTgVGPY06UifnYyIdbvl0X8oKNe8oE/sY4w?=
+ =?us-ascii?Q?+EaNdBGfkp2wEzLeSXTk5uVVJagLIR0hqRiX9jlvRbg8JlR9keXzCAQAgo4e?=
+ =?us-ascii?Q?nNeLTk/9bTdWJkrlG+0/xuXGVVf7zavSqVdNcWB0768ChZRjkqe8RN9O0VBc?=
+ =?us-ascii?Q?IyxfLWoy/DR7s179JNbTFhJdGog1SxmK1ORB11ESNUm+9ks2DyOvquM+0+1i?=
+ =?us-ascii?Q?5CbWODC4Yj+atxNLCMZheaCCqgyS3AFsdA3QG6Xj/48LLT3I2UO7cQaOJ/OT?=
+ =?us-ascii?Q?pahSYbR5mVJPRBVRf3UumBDgYOu8mh99ytnhVtZButduud6QkwBi9EKBD84U?=
+ =?us-ascii?Q?GLLTBXtvwfnYBhhyiHfaNLWxMQgvnaByPpcEX8Ol826NgO/BTKXZ2CHhedsZ?=
+ =?us-ascii?Q?33Gl3If4HtWRB/cB5QFfUBw41uZF/OexTkwt4tgwrvG3kZdqv5Yl/E2yGMjp?=
+ =?us-ascii?Q?kGITU7R55VbQvO++Uv1kIX1PYJIoDjA7gt+dpSi69ceNEOvhylPD9ocWjh0n?=
+ =?us-ascii?Q?aSofWSs4KzD2D/hTs1RF/RsPT85s8U98pP2Sbv0TmUV4+TylMWvVu02twz6Y?=
+ =?us-ascii?Q?cFurNjXwHkGmCZZo85T1Ojm3BEn0cI95yUcUgKWcoRvdRyIRsD1zvOnznO7t?=
+ =?us-ascii?Q?lccztIhXQNFtYaU9xTyytSNmcD/rN9aCeSge0bj/70mJmMIM7vbVh3BnNDCz?=
+ =?us-ascii?Q?E+Nj0jaY/SrIQIC7o3L+x+ReH3eCEn7rjk+9Rl+IXrNCxoUVytYlmPE8Snd3?=
+ =?us-ascii?Q?fBwwBH6CcvCvpgP0yJPTnIgmcZoeXxk5mb+UVvpGHchD5dFlZNJk6BddVEmj?=
+ =?us-ascii?Q?BJF+h+MwyQyfAhaC8LwQ/jllcm74VBISMhzbSRy/KPvzyeroRgRiWBV1bnho?=
+ =?us-ascii?Q?gkhwjldmXrtVj5JXouF+zio9k6kUCtFzBbx0BO4ZAtfa0zyyRiwNN/8Nehvu?=
+ =?us-ascii?Q?m9Vg9SXdblwUJebQVrVF/bVhbfouBMpkFDGvZe08HoP5emEuHCBWCQtGp+jX?=
+ =?us-ascii?Q?aGZ2ifiNusAirKFWaKyOxs+5FnTZ2SUEdZyamjUz52XbzJhTJUpqHYD5DPfs?=
+ =?us-ascii?Q?6+QMdnBu90tZPdSGSJFW5zh0qVCf4J/bEVmy1jwNkf4f/MIk+27Xp2atjXbL?=
+ =?us-ascii?Q?k4RkO91GBREu1ElL2xzw+eGIMYM5wTvf2WCDAFcbieEwAy4i5rhLocOz44SN?=
+ =?us-ascii?Q?cZRXgA0JxmIaO+wea+rBpCx6LHSzDMpZWy2rMHl6y00Zbo+qjFdJSLNhIK4k?=
+ =?us-ascii?Q?VotlIQfMaRw8uvGb4VSHaG8q4PrIQ3Dn/mXRcAlFQAkL2GVMB6bE3kt2U/V3?=
+ =?us-ascii?Q?g/FY041hqMB3oDqKVjm61CXgnpyMjcpQ+VPxEYxI3utrLX/s2eWilb51AJKg?=
+ =?us-ascii?Q?FnWLHl6nCoJ38WuXKtBg7RoZrOUIWqNTMfgvXMtNteQOtY2xJOfRpu3pHRuR?=
+ =?us-ascii?Q?HBdl9Ark2ElqFQYOZ9OWkMEHW1k+U/PdH5mf/DD++RejE1uhd0DtUDZuuSQj?=
+ =?us-ascii?Q?xQ/VkJz4Ue1pm1D8Q6rFGbELFvDhhCxDbEF8HJrUjkDaNuIqm8sLapAXp0Dr?=
+ =?us-ascii?Q?uO7STRVJyoZwwvUlgIkv9/g/GOqMcOKapPU0oeEROOj1iy0v?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a9fd328-5197-4d76-5ba5-08deb0efba2b
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 13:01:20.2656
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IN1Mm3zW9sy/hrCkVxYlFZuBTvsCZQTLF1YjKOp9wkbA52tmzULZf9E+gTysxCfKIAGy5m4W+/I/LrfLsWd1XQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8313
 
-Le Wed, May 13, 2026 at 01:24:38PM +0200, Andrea Righi a écrit :
-> scx_enable() refuses to attach a BPF scheduler when isolcpus=domain is
-> in effect by comparing housekeeping_cpumask(HK_TYPE_DOMAIN) against
-> cpu_possible_mask.
-> 
-> Since commit 27c3a5967f05 ("sched/isolation: Convert housekeeping
-> cpumasks to rcu pointers"), HK_TYPE_DOMAIN's cpumask is RCU protected
-> and dereferencing it requires either RCU read lock, the cpu_hotplug
-> write lock, or the cpuset lock; scx_enable() holds none of these, so
-> booting with isolcpus=domain and attaching any BPF scheduler triggers
-> the following lockdep splat:
-> 
->   =============================
->   WARNING: suspicious RCU usage
->   -----------------------------
->   kernel/sched/isolation.c:60 suspicious rcu_dereference_check() usage!
-> 
->   1 lock held by scx_flash/281:
->    #0: ffffffff8379fce0 (update_mutex){+.+.}-{4:4}, at:
->        bpf_struct_ops_link_create+0x134/0x1c0
-> 
->   Call Trace:
->    dump_stack_lvl+0x6f/0xb0
->    lockdep_rcu_suspicious.cold+0x37/0x70
->    housekeeping_cpumask+0xcd/0xe0
->    scx_enable.isra.0+0x17/0x120
->    bpf_scx_reg+0x5e/0x80
->    bpf_struct_ops_link_create+0x151/0x1c0
->    __sys_bpf+0x1e4b/0x33c0
->    __x64_sys_bpf+0x21/0x30
->    do_syscall_64+0x117/0xf80
->    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-> 
-> In addition, commit 03ff73510169 ("cpuset: Update HK_TYPE_DOMAIN cpumask
-> from cpuset") made HK_TYPE_DOMAIN include cpuset isolated partitions as
-> well, which means the current check also rejects BPF schedulers when a
-> cpuset partition is active. That contradicts the original intent of
-> commit 9f391f94a173 ("sched_ext: Disallow loading BPF scheduler if
-> isolcpus= domain isolation is in effect"), which explicitly noted that
-> cpuset partitions are honored through per-task cpumasks and should not
-> be rejected.
-> 
-> Switch to housekeeping_enabled(HK_TYPE_DOMAIN_BOOT), which reads only
-> the housekeeping flag bit (no RCU dereference) and reflects exactly the
-> boot-time isolcpus= configuration that the error message refers to.
-> 
-> Fixes: 27c3a5967f05 ("sched/isolation: Convert housekeeping cpumasks to rcu pointers")
+From: Tejun Heo <tj@kernel.org>
 
-Ok reading the changelog of the above Fixes: head, I now understand why isolcpus
-is excluded and not cpuset.
+commit da2d81b4118a74e65d2335e221a38d665902a98c upstream.
 
-> Cc: stable@vger.kernel.org # v7.0+
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+bypass_lb_cpu() transfers tasks between per-CPU bypass DSQs without
+migrating them - task_cpu() only updates when the donee later consumes the
+task via move_remote_task_to_local_dsq(). If the LB timer fires again before
+consumption and the new DSQ becomes a donor, @p is still on the previous CPU
+and task_rq(@p) != donor_rq. @p can't be moved without its own rq locked.
 
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Skip such tasks.
 
+Fixes: 95d1df610cdc ("sched_ext: Implement load balancer for bypass mode")
+Cc: stable@vger.kernel.org # v6.19+
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+[ arighi: replace donor_rq with rq, not present in v7.0.y ]
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+---
+ kernel/sched/ext.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 89814646a9868..ddd7c19daa17c 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4008,6 +4008,15 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, struct rq *rq,
+ 		if (cpumask_empty(donee_mask))
+ 			break;
+ 
++		/*
++		 * If an earlier pass placed @p on @donor_dsq from a different
++		 * CPU and the donee hasn't consumed it yet, @p is still on the
++		 * previous CPU and task_rq(@p) != @rq. @p can't be moved
++		 * without its rq locked. Skip.
++		 */
++		if (task_rq(p) != rq)
++			continue;
++
+ 		donee = cpumask_any_and_distribute(donee_mask, p->cpus_ptr);
+ 		if (donee >= nr_cpu_ids)
+ 			continue;
 -- 
-Frederic Weisbecker
-SUSE Labs
+2.54.0
+
