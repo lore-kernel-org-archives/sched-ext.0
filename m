@@ -1,88 +1,63 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC2330662
-	for <sched-ext@lists.linux.dev>; Thu, 14 May 2026 09:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED2B336EE9;
+	Thu, 14 May 2026 16:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778750036; cv=none; b=edrm09cXYIe5bCtwPSf5B7A9m5uE1ZO6a47wHnzLDOU/v9juHi2KxGfJSTZVFj9fHlfB/fy3qvR1YkgX1KiM1Oc9iW0hchwexd6Lx9mKLQhBQO7xLiIY4F9mKRYFOoEvKTGv5aWVI9JDFdd1N0YCG2q96RtC1TaOqNOn6++17y4=
+	t=1778776870; cv=none; b=E58NnwWYkWOzIggjbAzGV0etKzsJz0aiDVdKeSQlAEGDyQL9QKmZXRfCqlb8SceINS3D8FB9CkRU/1ekevwOS690kzWANFMjvmcgVpBGQtaDx6HvNrZUS5eXCbQvE2x3pxeDKr4yHAtoJR1NnW2x8aRQJr8+XpPC7/0RAM8QOLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778750036; c=relaxed/simple;
-	bh=ZXkmqI4qu2HKDSgM9Z5W9p1fVi8LeQOqmxHRdo4RKFs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hu/n+LY4KoQnObLsOyXp+Nee/yN7IbTBuDKLQZRXzZYkJbv4bOEICycNHcKVt82QTof0AuZMAiY+sLoY6U0lWC2hv+2JNAKFUnUqm1R9MoirCc6wBZ+i+L2zele+liXwEkz97s6U5hD+mr0UIfNHtDnFqDEa5fFkRoxMpgnYKGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=STf94R1q; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	s=arc-20240116; t=1778776870; c=relaxed/simple;
+	bh=841mQrEuxYwhTkLZaigH7cWWurothqrNK/sCnVkMIsM=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=Mz02zhOtwmG4OofdWA/Fix1INH/W5KqmH+0Ihk+chBojHL6IrB9iUZ0AlZFsyf5LfkqsPpfFwVNRgwKVYr2iXrui6hV95Hz/6nul920v+6RUocfh0tzKkM6rlPIcMRK2ZGTzflrYBJnNFL79WnlpXmj+mKtfMU8+gZYrk35V1qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nAKnZub8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="STf94R1q"
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 8E06B26771;
-	Thu, 14 May 2026 11:13:52 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id RlyBlo3wzAE4; Thu, 14 May 2026 11:13:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1778750032; bh=ZXkmqI4qu2HKDSgM9Z5W9p1fVi8LeQOqmxHRdo4RKFs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=STf94R1qt4tAXMJSt/UuJFyw/urIzWAnYJVIruwySuaOaHhFz5Ru9qTQCf67edaCk
-	 RhGWanV6sW5POyaqHnXsumklZTHV/g60hBegCF7rBxwzg4/LiHaVnspDIDHqU6Ieeh
-	 gyb9malNbsVLB1n4/xQPvyQ50Yc5nseGpXbIf2c42CjKlyLFWUK45/+iCFocdYwd9I
-	 /Jn5kdIP6JenzQWywtdOpmqqeN9cwxx/9yK9yw/25ue0rO/VTJ2iSiuU+1bHDkFiUj
-	 c3cOeKOM7D1ZnfRRvJoBOovQgdItiMqhjXxXgS3XKcr0SaCNqt97swWi+TrWnmhF6p
-	 7/hYe6xr1ujmg==
-Date: Thu, 14 May 2026 11:13:49 +0200
-From: Samuele Mariotti <smariotti@disroot.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nAKnZub8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34585C2BCB3;
+	Thu, 14 May 2026 16:41:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778776870;
+	bh=841mQrEuxYwhTkLZaigH7cWWurothqrNK/sCnVkMIsM=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=nAKnZub8JtFLzNDslc3A9yhbQBmLMY+9Fr2JEigIqN0FndpTTeTYYN6fnoce3TUPz
+	 pdxP3WjhqNHq1ydcgyZZ+J57lDuXzYvvinXYO9kc3OVneLfvdXuz63ogvdOiG1w4m8
+	 unTyi+zOvU78gahZgA/NscEqF6Zqfpyrn3e9qWoSJAllPDX2Jo03N8J7076ZuCoAXs
+	 5zjEnISy4jYUw3LQnkWYQeDRsiXbbjxAvmvjrutOZZkCUXyULv1imWFF+NphR8owUe
+	 jmcO7m++G/YHTpfwE+RkmGkyV06sbtPZc5SU6AzD9oH1ukHOWEAH1J/G/fe71D9RnE
+	 bV+oe2g++uqhg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 2F16639D6578;
+	Thu, 14 May 2026 16:40:16 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Fixes for v7.1-rc3
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <4acd9d173508e386568e333a474d606e@kernel.org>
+References: <4acd9d173508e386568e333a474d606e@kernel.org>
+X-PR-Tracked-List-Id: <sched-ext.lists.linux.dev>
+X-PR-Tracked-Message-Id: <4acd9d173508e386568e333a474d606e@kernel.org>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.1-rc3-fixes
+X-PR-Tracked-Commit-Id: 6ae315d37924435516d697ea7dde0b799a5928e0
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 59a62ea4583e0f740bb3576ec210b23f39754327
+Message-Id: <177877681490.7753.1051566017562267672.pr-tracker-bot@kernel.org>
+Date: Thu, 14 May 2026 16:40:14 +0000
 To: Tejun Heo <tj@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>, void@manifault.com, 
-	changwoo@igalia.com, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Paolo Valente <paolo.valente@unimore.it>
-Subject: Re: [PATCH] sched_ext: Fix spurious WARN on stale ops_state in
- ops_dequeue()
-Message-ID: <agV8-RlKEkiAbd-h@cachyos>
-References: <20260513095329.4029345-1-smariotti@disroot.org>
- <agSKJbtmpRPLgYJW@gpd4>
- <agSpf9QRx4zqhZxx@cachyos>
- <agTYojgRwDH67QMC@slm.duckdns.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <agTYojgRwDH67QMC@slm.duckdns.org>
 
-Hi Tejun,
+The pull request you sent on Wed, 13 May 2026 10:59:54 -1000:
 
->Let's not do the WARN and exit. We shouldn't get this wrong and if we get
->this wrong, it's going to be obvious from lockup detectors. Can you please
->add a comment explaining the retry condition tho?
->
->Thanks.
->
->-- 
->tejun
+> git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.1-rc3-fixes
 
-Thanks for the feedback. If I understood correctly, you prefer no retry
-limit, letting the lockup detectors catch any real bug. I also added
-unlikely() since the stale case is by definition rare.
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/59a62ea4583e0f740bb3576ec210b23f39754327
 
-Here is the updated version:
+Thank you!
 
-/*
-  * If SCX_TASK_IN_CUSTODY is not set, opss is stale: finish_dispatch()
-  * has already claimed the task and cleared SCX_TASK_IN_CUSTODY. Retry
-  * to get a fresh view of p->scx.ops_state.
-  */
-if (unlikely(!(READ_ONCE(p->scx.flags) & SCX_TASK_IN_CUSTODY))) {
-     cpu_relax();
-     goto retry;
-}
-
-Let me know if this looks good to you.
-
-Thanks,
-Samuele
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
