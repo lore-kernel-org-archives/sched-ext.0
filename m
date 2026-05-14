@@ -1,117 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023133876C6;
-	Wed, 13 May 2026 20:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC1E3A785A
+	for <sched-ext@lists.linux.dev>; Thu, 14 May 2026 04:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778705996; cv=none; b=I6+tFiWItcQbSKsLXlkv6YN5SF2Gmte8ptKvAMnxB1CcxM2XyTG8Fqcz+rntm6tdyRwruzInZudMaRbWJnj7OV9Gdu65k4S/81DxlVPehnlk7DITWY2E9j1WAokkeKSzqKXAwpneZiAkD94yVDjUx0q9YMqrjjYBQhDSov3RjZg=
+	t=1778731238; cv=none; b=uNpeuOguQRht7cKNGG9r/fg1vyd2Fj7laaVzP0PuHnKOtABeBN6pGPNzlysahufhb0IJVfITX9eTR2EUlVFe2t8vUzAdgZDW8h/gXhdEeCtrrXz8zIk0m7WP+L8Mc8tQ++Vxm+oZNmQK9jc62t6/b74eQJUgWdANi6jhUX/DXtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778705996; c=relaxed/simple;
-	bh=1g2+qAIHFU6GzY+1bNAsFwcYkLyoqVTGv1r5SeHQvF0=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=RulZT0ocEW9RDAiN8dylCo9CwNGZg3ur7lOAMZSecwPcyF2cTAyqhJN+DZbEuyDL6G3Ojr3oHhP7CNM81ZRgTPt65Qr2XdUsVC2ONyV95B8eHo+NeUaxXHlEmQGTfA6M9PpUqxj3QEFQDRxecmZSEBAAsX/kOqiSXloVIv2igSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qQ6+Ucep; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778731238; c=relaxed/simple;
+	bh=p86kCMhh9dV7MSnwGW+Mf3fPNrvq2LR1NsNorDvzD48=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=LY/Yugf1Q0aQI1K12WZ8I/v0YivZByIv2yYYb2QwOkcEmsBSMIb5vbishFzX4HeEs2jDzN4IHc28OVsfymZilT1vrXIxYSQLpeO2RDESefiI/odLQW9xyRtOC4F5pe1iAD1cNALDsauxXrMjok7lhhGSC8teN4EUcKi/++NncBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b6Pa+Kfl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qQ6+Ucep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC84C19425;
-	Wed, 13 May 2026 20:59:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b6Pa+Kfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6D5C2BCB7;
+	Thu, 14 May 2026 04:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778705995;
-	bh=1g2+qAIHFU6GzY+1bNAsFwcYkLyoqVTGv1r5SeHQvF0=;
-	h=Date:From:To:Cc:Subject:From;
-	b=qQ6+Ucepk/j01piDQ4JRvD1lilTJ8fpGIYFL6v5mmWPVqNRnHYpLN3URQV9CmZxWj
-	 JM3A2LZ/pj4GLDk/DCBGU+oiXFqvt089Ad+W39zVkKPVPGFmYpVNJC+HvK9/NN7Vfr
-	 uhfEBSIOrsb5THrMxg3XL7kYDBbYRPLu4hYCH/ngMEP8dhLzHBQhj8E+2GOOEo4lzB
-	 /pxjxEx9k7ckAooTD2TaGB7tyj2OODZm4ggCRSF6YRoccKCTcC/ZlgyxiiMc48VfhW
-	 k63JVHMWrX2PX0my6BPKbjSLJrISwSxw0/5Lr8FQZKPZrfflP5elDuEgf86TjEnNS5
-	 WJkTw7hL/xCpw==
-Date: Wed, 13 May 2026 10:59:54 -1000
-Message-ID: <4acd9d173508e386568e333a474d606e@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>,
- Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: [GIT PULL] sched_ext: Fixes for v7.1-rc3
+	s=k20201202; t=1778731238;
+	bh=p86kCMhh9dV7MSnwGW+Mf3fPNrvq2LR1NsNorDvzD48=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=b6Pa+KflSaTSsHPacORcPxUOxKMzyGIlzca3dU/mc6EOiSrKpayvEkau+4k9vXW76
+	 W1B1e1pHScBfeuE2PJJeZpi+bhrCFM3QNR5JFPN0XTT1uWk/gDg4GwKYM0m2I50EM1
+	 Pafe+zp22US4NZdvpmvkB7TIZsVqyGhm6eukMPkNeDnXPtVqdXsWZIDw2BjMdk3iae
+	 gbpSBbuuXtIdzaMJoS1ZpUWCTMyuI4IdHw1/vUxbFVFLPVMMUuwcqZ2DomVZVwppgm
+	 rYNz499AjrnV6x6DnIwnjjp0gbeArlJ7vGHI7FOFHFCZNWkpOVCCe8TiYJX3PvfGER
+	 RO3+zN6ilLlBw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] sched_ext: Fix spurious WARN on stale ops_state in
+ ops_dequeue()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Samuele Mariotti" <smariotti@disroot.org>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260513095329.4029345-1-smariotti@disroot.org>
+References: <20260513095329.4029345-1-smariotti@disroot.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 14 May 2026 04:00:37 +0000
+Message-Id: <20260514040038.4C6D5C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello, Linus.
-
-The following changes since commit b34c82777a2c0648ee053595f4b290fd5249b093:
-
-  sched_ext: idle: Recheck prev_cpu after narrowing allowed mask (2026-05-04 11:01:04 -1000)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.1-rc3-fixes
-
-for you to fetch changes up to 6ae315d37924435516d697ea7dde0b799a5928e0:
-
-  sched_ext: Use HK_TYPE_DOMAIN_BOOT to detect isolcpus= domain isolation (2026-05-13 10:02:57 -1000)
-
-----------------------------------------------------------------
-sched_ext: Fixes for v7.1-rc3
-
-Bulk is hardening of the new sub-scheduler infrastructure.
-
-- UAFs and lifecycle bugs on the sub-sched attach/detach paths: parent
-  sub_kset freed under a racing child, list_del_rcu on an uninitialized
-  list head, ops->priv stomped by concurrent attach/detach, and a UAF in
-  the init-failure error path.
-
-- Task state-machine reorg closing concurrent enable-vs-dead races: a
-  task exiting during the unlocked init window could trip NULL ops
-  derefs or skip exit_task() cleanup.
-
-- A scx_link_sched() self-deadlock on scx_sched_lock.
-
-- isolcpus: stop dereferencing the now-RCU-protected HK_TYPE_DOMAIN
-  cpumask without RCU, and stop rejecting BPF schedulers when only
-  cpuset isolated partitions are active.
-
-- PREEMPT_RT: disable irq_work runs in hardirq context so dumps show the
-  failing task rather than the irq_work kthread.
-
-- Assorted !CONFIG_EXT_SUB_SCHED, randconfig, and selftest build fixes.
-
-----------------------------------------------------------------
-Andrea Righi (4):
-      selftests/sched_ext: Fix build error in dequeue selftest
-      sched_ext: Fix ops->priv clobber on concurrent attach/detach
-      sched_ext: Clear ops->priv on scx_alloc_and_add_sched() error paths
-      sched_ext: Use HK_TYPE_DOMAIN_BOOT to detect isolcpus= domain isolation
-
-Tejun Heo (13):
-      sched_ext: Move scx_error() out of scx_link_sched()'s lock region
-      sched_ext: Drop unused scx_find_sub_sched() stub
-      sched_ext: Fix !CONFIG_EXT_SUB_SCHED build warnings
-      sched_ext: Cleanups in preparation for the SCX_TASK_INIT_BEGIN/DEAD work
-      sched_ext: Inline scx_init_task() and move RESET_RUNNABLE_AT into scx_set_task_state()
-      sched_ext: Replace SCX_TASK_OFF_TASKS flag with SCX_TASK_DEAD state
-      sched_ext: Close root-enable vs sched_ext_dead() race with SCX_TASK_INIT_BEGIN
-      sched_ext: Close sub-sched init race with post-init DEAD recheck
-      sched_ext: Handle SCX_TASK_NONE in disable/switched_from paths
-      sched_ext: Avoid UAF in scx_root_enable_workfn() init failure path
-      sched_ext: Drop NONE early return in scx_disable_and_exit_task()
-      sched_ext: INIT_LIST_HEAD() &sch->all in scx_alloc_and_add_sched()
-      sched_ext: Defer sub_kset base put to scx_sched_free_rcu_work
-
-Zqiang (1):
-      sched_ext: Use IRQ_WORK_INIT_HARD() to initialize sch->disable_irq_work
-
- include/linux/sched/ext.h                   |  17 +-
- kernel/sched/ext.c                          | 277 ++++++++++++++++++++--------
- tools/testing/selftests/sched_ext/dequeue.c |   1 +
- 3 files changed, 206 insertions(+), 89 deletions(-)
-
-Thanks.
-
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [Medium] Concurrent plain read and write of `p->scx.flags` without proper=
+ annotations constitutes a C data race.
+- [Low] The newly added `goto retry;` loop lacks a `cpu_relax()` call.
 --
-tejun
+
+commit e9d6f8408ebc8ea1acdd33de496b607223fd733b
+Author: Samuele Mariotti <smariotti@disroot.org>
+
+sched_ext: Fix spurious WARN on stale ops_state in ops_dequeue()
+
+This commit resolves a spurious warning in ops_dequeue() caused by a race
+with finish_dispatch(). It introduces a retry loop that re-evaluates
+ops_state if SCX_TASK_IN_CUSTODY is cleared while the task is still seen
+as SCX_OPSS_QUEUED.
+
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+[ ... ]
+> @@ -2035,7 +2036,9 @@ static void ops_dequeue(struct rq *rq, struct task_=
+struct *p, u64 deq_flags)
+>  		BUG();
+>  	case SCX_OPSS_QUEUED:
+>  		/* A queued task must always be in BPF scheduler's custody */
+> -		WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_IN_CUSTODY));
+> +		if (!(p->scx.flags & SCX_TASK_IN_CUSTODY))
+
+The commit message mentions that this read can execute concurrently with
+finish_dispatch() on another CPU performing a non-atomic read-modify-write
+that clears SCX_TASK_IN_CUSTODY.
+
+Since a plain read racing with a plain write constitutes a C data race,
+can this trigger KCSAN splats or allow compiler optimizations like load
+tearing?
+
+Should this read use READ_ONCE() or data_race(), and the lockless writer
+be appropriately annotated as well?
+
+> +			goto retry;
+
+Since the goto retry creates a spin-wait loop waiting for the other CPU's
+memory writes to propagate, is it necessary to include a cpu_relax() call
+here?
+
+Standard kernel practice usually requires a cpu_relax() in polling loops to
+yield execution resources to HyperThreading siblings and prevent the CPU
+from hogging power during a tight spin.
+
+> +
+>  		if (atomic_long_try_cmpxchg(&p->scx.ops_state, &opss,
+>  					    SCX_OPSS_NONE))
+>  			break;
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513095329.4029=
+345-1-smariotti@disroot.org?part=3D1
