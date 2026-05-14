@@ -1,118 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69D927A107
-	for <sched-ext@lists.linux.dev>; Thu, 14 May 2026 05:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC2330662
+	for <sched-ext@lists.linux.dev>; Thu, 14 May 2026 09:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778734941; cv=none; b=EU6neMAd5x36b/p9k0mrYXClHhE2bFM4oXiGUlhgXpX1EqJADd+2JvsDYNfo9bx4x8yC8z8jllW+rfaEcUgyP5XMJeiH+KSTu3BdPOyJAWMbdN2EcRdH/RrM510DynPh+H71zOe1kHbK1XMo/mWb/yi3QJAmSgZ4a+oFLAJFzQ8=
+	t=1778750036; cv=none; b=edrm09cXYIe5bCtwPSf5B7A9m5uE1ZO6a47wHnzLDOU/v9juHi2KxGfJSTZVFj9fHlfB/fy3qvR1YkgX1KiM1Oc9iW0hchwexd6Lx9mKLQhBQO7xLiIY4F9mKRYFOoEvKTGv5aWVI9JDFdd1N0YCG2q96RtC1TaOqNOn6++17y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778734941; c=relaxed/simple;
-	bh=czfP+0UGSm6E7tfJ2wD8iBsRJztQ5K/p2vb0DwC8zRo=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=lIjpk2Mh1lkR8ap2OJ1Zer4Adq/uvpHjtneD4E3UgZNBa3KwwVf03C3bLFEH8jpujgDeyCY0JyDkaBUBnPFQAHBi3Do+P/xJnRqdp5g+cn5L49EBsHQuwKQHDrQC9bNCnKdrqjk/V04kIinJqK3/Yh1OmFPpIPzGWKRsA0QmmbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZOrbAjad; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778750036; c=relaxed/simple;
+	bh=ZXkmqI4qu2HKDSgM9Z5W9p1fVi8LeQOqmxHRdo4RKFs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hu/n+LY4KoQnObLsOyXp+Nee/yN7IbTBuDKLQZRXzZYkJbv4bOEICycNHcKVt82QTof0AuZMAiY+sLoY6U0lWC2hv+2JNAKFUnUqm1R9MoirCc6wBZ+i+L2zele+liXwEkz97s6U5hD+mr0UIfNHtDnFqDEa5fFkRoxMpgnYKGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=STf94R1q; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZOrbAjad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56321C2BCB7;
-	Thu, 14 May 2026 05:02:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778734941;
-	bh=czfP+0UGSm6E7tfJ2wD8iBsRJztQ5K/p2vb0DwC8zRo=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=ZOrbAjadkklq4zsK1GUPPf6VaVdj/SY1p3FWilq5XIQFYMdFC8juDogKf917MDCns
-	 T7o0lTXqE5S1paUn1oYWY9kSCpZc1LxaaCW2WBeN/V1/zoCe+J3LPKtR8snT0JA2xU
-	 uQ30tG0KfiBFeM6sHruwz+5rRNrZDdsq9uI98lVBI3cUd7oc/vVvGsAP6xwOubRQUA
-	 +VIxtVipA93/vIbt0ChaVqThlFNH+yPz5Tn+WmRi4KJyULLm+MVPLW8cfEzNUf1DS9
-	 px4yxNo7/9n5KqojYej92DRAYM5rPBdlXjRp/gytd6HPo4LuOBXpGENZf2RnSbYUi9
-	 Mzsibk2WF0H7g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 7.0.y] sched_ext: Skip tasks with stale task_rq in
- bypass_lb_cpu()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andrea Righi" <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260513130111.689740-1-arighi@nvidia.com>
-References: <20260513130111.689740-1-arighi@nvidia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 May 2026 05:02:20 +0000
-Message-Id: <20260514050221.56321C2BCB7@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="STf94R1q"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 8E06B26771;
+	Thu, 14 May 2026 11:13:52 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id RlyBlo3wzAE4; Thu, 14 May 2026 11:13:52 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1778750032; bh=ZXkmqI4qu2HKDSgM9Z5W9p1fVi8LeQOqmxHRdo4RKFs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=STf94R1qt4tAXMJSt/UuJFyw/urIzWAnYJVIruwySuaOaHhFz5Ru9qTQCf67edaCk
+	 RhGWanV6sW5POyaqHnXsumklZTHV/g60hBegCF7rBxwzg4/LiHaVnspDIDHqU6Ieeh
+	 gyb9malNbsVLB1n4/xQPvyQ50Yc5nseGpXbIf2c42CjKlyLFWUK45/+iCFocdYwd9I
+	 /Jn5kdIP6JenzQWywtdOpmqqeN9cwxx/9yK9yw/25ue0rO/VTJ2iSiuU+1bHDkFiUj
+	 c3cOeKOM7D1ZnfRRvJoBOovQgdItiMqhjXxXgS3XKcr0SaCNqt97swWi+TrWnmhF6p
+	 7/hYe6xr1ujmg==
+Date: Thu, 14 May 2026 11:13:49 +0200
+From: Samuele Mariotti <smariotti@disroot.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>, void@manifault.com, 
+	changwoo@igalia.com, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Paolo Valente <paolo.valente@unimore.it>
+Subject: Re: [PATCH] sched_ext: Fix spurious WARN on stale ops_state in
+ ops_dequeue()
+Message-ID: <agV8-RlKEkiAbd-h@cachyos>
+References: <20260513095329.4029345-1-smariotti@disroot.org>
+ <agSKJbtmpRPLgYJW@gpd4>
+ <agSpf9QRx4zqhZxx@cachyos>
+ <agTYojgRwDH67QMC@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <agTYojgRwDH67QMC@slm.duckdns.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] Unbounded lock hold time with IRQs disabled when skipping tasks in=
- `bypass_lb_cpu()`.
-- [Low] Obsolete comment contradicts the new task_rq lock constraints.
---
+Hi Tejun,
 
-commit 68327c3a383140f9157a96a24a7b23be2c135ac5
-Author: Tejun Heo <tj@kernel.org>
+>Let's not do the WARN and exit. We shouldn't get this wrong and if we get
+>this wrong, it's going to be obvious from lockup detectors. Can you please
+>add a comment explaining the retry condition tho?
+>
+>Thanks.
+>
+>-- 
+>tejun
 
-sched_ext: Skip tasks with stale task_rq in bypass_lb_cpu()
+Thanks for the feedback. If I understood correctly, you prefer no retry
+limit, letting the lockup detectors catch any real bug. I also added
+unlikely() since the stale case is by definition rare.
 
-This commit updates bypass_lb_cpu() to skip tasks whose task_rq() does not
-match the donor rq. These tasks were placed on the donor DSQ from a differe=
-nt
-CPU but haven't been consumed yet, preventing their migration without the
-proper rq lock.
+Here is the updated version:
 
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
+/*
+  * If SCX_TASK_IN_CUSTODY is not set, opss is stale: finish_dispatch()
+  * has already claimed the task and cleared SCX_TASK_IN_CUSTODY. Retry
+  * to get a fresh view of p->scx.ops_state.
+  */
+if (unlikely(!(READ_ONCE(p->scx.flags) & SCX_TASK_IN_CUSTODY))) {
+     cpu_relax();
+     goto retry;
+}
 
-[ ... ]
+Let me know if this looks good to you.
 
->  	while ((p =3D n)) {
->  		struct rq *donee_rq;
-
-[ ... ]
-
-> +		/*
-> +		 * If an earlier pass placed @p on @donor_dsq from a different
-> +		 * CPU and the donee hasn't consumed it yet, @p is still on the
-> +		 * previous CPU and task_rq(@p) !=3D @rq. @p can't be moved
-> +		 * without its rq locked. Skip.
-> +		 */
-> +		if (task_rq(p) !=3D rq)
-> +			continue;
-
-Because this uses continue, does it bypass the lock-yielding check at the
-bottom of the loop (if (!(nr_balanced % SCX_BYPASS_LB_BATCH)))?
-
-If there is a large batch of unconsumed tasks left over from previous passe=
-s,
-could skipping them without incrementing nr_balanced result in an unbounded
-loop?
-
-Traversing a long list here while holding the rq lock and donor_dsq lock
-with IRQs disabled could potentially cause latency spikes or trigger the
-soft lockup watchdog.
-
->  		donee =3D cpumask_any_and_distribute(donee_mask, p->cpus_ptr);
->  		if (donee >=3D nr_cpu_ids)
->  			continue;
-> =20
->  		donee_rq =3D cpu_rq(donee);
->  		donee_dsq =3D &donee_rq->scx.bypass_dsq;
-> =20
->  		/*
->  		 * $p's rq is not locked but $p's DSQ lock protects its
->  		 * scheduling properties making this test safe.
->  		 */
-
-This isn't a bug, but is this comment still accurate?
-
-Since the function initially acquires raw_spin_rq_lock_irq(rq) and the
-newly added check guarantees task_rq(p) =3D=3D rq, it appears the task's rq=
- is
-actually locked when it reaches this point.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513130111.6897=
-40-1-arighi@nvidia.com?part=3D1
+Thanks,
+Samuele
