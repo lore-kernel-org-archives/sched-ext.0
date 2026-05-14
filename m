@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC1E3A785A
-	for <sched-ext@lists.linux.dev>; Thu, 14 May 2026 04:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69D927A107
+	for <sched-ext@lists.linux.dev>; Thu, 14 May 2026 05:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778731238; cv=none; b=uNpeuOguQRht7cKNGG9r/fg1vyd2Fj7laaVzP0PuHnKOtABeBN6pGPNzlysahufhb0IJVfITX9eTR2EUlVFe2t8vUzAdgZDW8h/gXhdEeCtrrXz8zIk0m7WP+L8Mc8tQ++Vxm+oZNmQK9jc62t6/b74eQJUgWdANi6jhUX/DXtU=
+	t=1778734941; cv=none; b=EU6neMAd5x36b/p9k0mrYXClHhE2bFM4oXiGUlhgXpX1EqJADd+2JvsDYNfo9bx4x8yC8z8jllW+rfaEcUgyP5XMJeiH+KSTu3BdPOyJAWMbdN2EcRdH/RrM510DynPh+H71zOe1kHbK1XMo/mWb/yi3QJAmSgZ4a+oFLAJFzQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778731238; c=relaxed/simple;
-	bh=p86kCMhh9dV7MSnwGW+Mf3fPNrvq2LR1NsNorDvzD48=;
+	s=arc-20240116; t=1778734941; c=relaxed/simple;
+	bh=czfP+0UGSm6E7tfJ2wD8iBsRJztQ5K/p2vb0DwC8zRo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=LY/Yugf1Q0aQI1K12WZ8I/v0YivZByIv2yYYb2QwOkcEmsBSMIb5vbishFzX4HeEs2jDzN4IHc28OVsfymZilT1vrXIxYSQLpeO2RDESefiI/odLQW9xyRtOC4F5pe1iAD1cNALDsauxXrMjok7lhhGSC8teN4EUcKi/++NncBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b6Pa+Kfl; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=lIjpk2Mh1lkR8ap2OJ1Zer4Adq/uvpHjtneD4E3UgZNBa3KwwVf03C3bLFEH8jpujgDeyCY0JyDkaBUBnPFQAHBi3Do+P/xJnRqdp5g+cn5L49EBsHQuwKQHDrQC9bNCnKdrqjk/V04kIinJqK3/Yh1OmFPpIPzGWKRsA0QmmbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZOrbAjad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b6Pa+Kfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6D5C2BCB7;
-	Thu, 14 May 2026 04:00:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZOrbAjad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56321C2BCB7;
+	Thu, 14 May 2026 05:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778731238;
-	bh=p86kCMhh9dV7MSnwGW+Mf3fPNrvq2LR1NsNorDvzD48=;
+	s=k20201202; t=1778734941;
+	bh=czfP+0UGSm6E7tfJ2wD8iBsRJztQ5K/p2vb0DwC8zRo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=b6Pa+KflSaTSsHPacORcPxUOxKMzyGIlzca3dU/mc6EOiSrKpayvEkau+4k9vXW76
-	 W1B1e1pHScBfeuE2PJJeZpi+bhrCFM3QNR5JFPN0XTT1uWk/gDg4GwKYM0m2I50EM1
-	 Pafe+zp22US4NZdvpmvkB7TIZsVqyGhm6eukMPkNeDnXPtVqdXsWZIDw2BjMdk3iae
-	 gbpSBbuuXtIdzaMJoS1ZpUWCTMyuI4IdHw1/vUxbFVFLPVMMUuwcqZ2DomVZVwppgm
-	 rYNz499AjrnV6x6DnIwnjjp0gbeArlJ7vGHI7FOFHFCZNWkpOVCCe8TiYJX3PvfGER
-	 RO3+zN6ilLlBw==
+	b=ZOrbAjadkklq4zsK1GUPPf6VaVdj/SY1p3FWilq5XIQFYMdFC8juDogKf917MDCns
+	 T7o0lTXqE5S1paUn1oYWY9kSCpZc1LxaaCW2WBeN/V1/zoCe+J3LPKtR8snT0JA2xU
+	 uQ30tG0KfiBFeM6sHruwz+5rRNrZDdsq9uI98lVBI3cUd7oc/vVvGsAP6xwOubRQUA
+	 +VIxtVipA93/vIbt0ChaVqThlFNH+yPz5Tn+WmRi4KJyULLm+MVPLW8cfEzNUf1DS9
+	 px4yxNo7/9n5KqojYej92DRAYM5rPBdlXjRp/gytd6HPo4LuOBXpGENZf2RnSbYUi9
+	 Mzsibk2WF0H7g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: Fix spurious WARN on stale ops_state in
- ops_dequeue()
+Subject: Re: [PATCH 7.0.y] sched_ext: Skip tasks with stale task_rq in
+ bypass_lb_cpu()
 Reply-To: sashiko-reviews@lists.linux.dev
-To: "Samuele Mariotti" <smariotti@disroot.org>
+To: "Andrea Righi" <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260513095329.4029345-1-smariotti@disroot.org>
-References: <20260513095329.4029345-1-smariotti@disroot.org>
+In-Reply-To: <20260513130111.689740-1-arighi@nvidia.com>
+References: <20260513130111.689740-1-arighi@nvidia.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 May 2026 04:00:37 +0000
-Message-Id: <20260514040038.4C6D5C2BCB7@smtp.kernel.org>
+Date: Thu, 14 May 2026 05:02:20 +0000
+Message-Id: <20260514050221.56321C2BCB7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,59 +46,73 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [Medium] Concurrent plain read and write of `p->scx.flags` without proper=
- annotations constitutes a C data race.
-- [Low] The newly added `goto retry;` loop lacks a `cpu_relax()` call.
+- [High] Unbounded lock hold time with IRQs disabled when skipping tasks in=
+ `bypass_lb_cpu()`.
+- [Low] Obsolete comment contradicts the new task_rq lock constraints.
 --
 
-commit e9d6f8408ebc8ea1acdd33de496b607223fd733b
-Author: Samuele Mariotti <smariotti@disroot.org>
+commit 68327c3a383140f9157a96a24a7b23be2c135ac5
+Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Fix spurious WARN on stale ops_state in ops_dequeue()
+sched_ext: Skip tasks with stale task_rq in bypass_lb_cpu()
 
-This commit resolves a spurious warning in ops_dequeue() caused by a race
-with finish_dispatch(). It introduces a retry loop that re-evaluates
-ops_state if SCX_TASK_IN_CUSTODY is cleared while the task is still seen
-as SCX_OPSS_QUEUED.
+This commit updates bypass_lb_cpu() to skip tasks whose task_rq() does not
+match the donor rq. These tasks were placed on the donor DSQ from a differe=
+nt
+CPU but haven't been consumed yet, preventing their migration without the
+proper rq lock.
 
 > diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
 > --- a/kernel/sched/ext.c
 > +++ b/kernel/sched/ext.c
+
 [ ... ]
-> @@ -2035,7 +2036,9 @@ static void ops_dequeue(struct rq *rq, struct task_=
-struct *p, u64 deq_flags)
->  		BUG();
->  	case SCX_OPSS_QUEUED:
->  		/* A queued task must always be in BPF scheduler's custody */
-> -		WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_IN_CUSTODY));
-> +		if (!(p->scx.flags & SCX_TASK_IN_CUSTODY))
 
-The commit message mentions that this read can execute concurrently with
-finish_dispatch() on another CPU performing a non-atomic read-modify-write
-that clears SCX_TASK_IN_CUSTODY.
+>  	while ((p =3D n)) {
+>  		struct rq *donee_rq;
 
-Since a plain read racing with a plain write constitutes a C data race,
-can this trigger KCSAN splats or allow compiler optimizations like load
-tearing?
+[ ... ]
 
-Should this read use READ_ONCE() or data_race(), and the lockless writer
-be appropriately annotated as well?
+> +		/*
+> +		 * If an earlier pass placed @p on @donor_dsq from a different
+> +		 * CPU and the donee hasn't consumed it yet, @p is still on the
+> +		 * previous CPU and task_rq(@p) !=3D @rq. @p can't be moved
+> +		 * without its rq locked. Skip.
+> +		 */
+> +		if (task_rq(p) !=3D rq)
+> +			continue;
 
-> +			goto retry;
+Because this uses continue, does it bypass the lock-yielding check at the
+bottom of the loop (if (!(nr_balanced % SCX_BYPASS_LB_BATCH)))?
 
-Since the goto retry creates a spin-wait loop waiting for the other CPU's
-memory writes to propagate, is it necessary to include a cpu_relax() call
-here?
+If there is a large batch of unconsumed tasks left over from previous passe=
+s,
+could skipping them without incrementing nr_balanced result in an unbounded
+loop?
 
-Standard kernel practice usually requires a cpu_relax() in polling loops to
-yield execution resources to HyperThreading siblings and prevent the CPU
-from hogging power during a tight spin.
+Traversing a long list here while holding the rq lock and donor_dsq lock
+with IRQs disabled could potentially cause latency spikes or trigger the
+soft lockup watchdog.
 
-> +
->  		if (atomic_long_try_cmpxchg(&p->scx.ops_state, &opss,
->  					    SCX_OPSS_NONE))
->  			break;
+>  		donee =3D cpumask_any_and_distribute(donee_mask, p->cpus_ptr);
+>  		if (donee >=3D nr_cpu_ids)
+>  			continue;
+> =20
+>  		donee_rq =3D cpu_rq(donee);
+>  		donee_dsq =3D &donee_rq->scx.bypass_dsq;
+> =20
+>  		/*
+>  		 * $p's rq is not locked but $p's DSQ lock protects its
+>  		 * scheduling properties making this test safe.
+>  		 */
+
+This isn't a bug, but is this comment still accurate?
+
+Since the function initially acquires raw_spin_rq_lock_irq(rq) and the
+newly added check guarantees task_rq(p) =3D=3D rq, it appears the task's rq=
+ is
+actually locked when it reaches this point.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513095329.4029=
-345-1-smariotti@disroot.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260513130111.6897=
+40-1-arighi@nvidia.com?part=3D1
