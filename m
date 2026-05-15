@@ -1,144 +1,185 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6378F371045
-	for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 14:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA45A1B4224
+	for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 17:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778856664; cv=none; b=r1w6+r8l3Vqe77hTxoPKQNYA5NOPf2xm913h6mcQasHZQMhEBVxVfKFhCOVNIBbhMizi7EvhXVSJmC7OJ0CUw1huW7/b1EvGCIP+1sgT39khAdFsLcKvBI8UdclJLjrR8/WXGVpVzpcA/khfiXNa8RWM9/liTGgGt651ncVfEsA=
+	t=1778866098; cv=none; b=g2WyTYqO1sVoaAJrFMLeHcXFqrorFCLYnDXfcFxoqy42jB83+v3B2qmC7KJxhqcHRp4eVjBWzemnfBkwkSV/Z4uxzTIJC63eyamOmNdttNVBA5yi0AVFM6nXI7SbbSDq6dD5lRmmjZUaanIwSL6whfi2bsfHUbxWpVkr1nmL6qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778856664; c=relaxed/simple;
-	bh=AjW8+aq8sHhIgv9LapcR1yUtsjO286mkSVVo4tF2b3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZOyNgrL9c8lgVsjYR9TJQVjqT1/Ki5HR80vp9VtSCyHXAVJJOgUm0wR477q8LvLqyOD37GtnPL9SXBESNjmYLKqjSoUnuEdQtmAEYm8t3tWTM//Fi7RT4xSHF8B4TrxzT8dU7iQ9Tfs/x3xaj+Asng7nXEG4KW5QzIsf7X5HtxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n61S8OfX; arc=none smtp.client-ip=209.85.216.54
+	s=arc-20240116; t=1778866098; c=relaxed/simple;
+	bh=wopLSiYWZUYJQGU7S3xN8kB06OjSk1qmClHaDPILScU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ayubBQQxJiBd/s22qhwV+1Tj3qZZlaKNv9oNPim+MuCz7kgL/Q1SHzEPDlSAyXhW1LQ3LuSghwMPAljqXw9ldJI+BTp0frtBp6SOvgygzDaEbwbTx2NpFZkO0n6l+vJiSYnxJbXJld3smnOuDyS6F9rYOrUB18xdHFMRKwKbBe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KEa/+zcR; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n61S8OfX"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-365e20fe3b8so5601971a91.3
-        for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 07:51:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KEa/+zcR"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-82f8b60e54dso64200b3a.2
+        for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 10:28:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778856663; x=1779461463; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kEDifam5yI6Em64zxXsitxd087MvN5wmox4QB6Aj4jA=;
-        b=n61S8OfXHsFghatuESqVIRML/CJYfy5xZqzis75hdn99cFUQ2n2ondp66/nQpDMF71
-         NrqAfcZVqJcGw7cvJvF9/GNaVtkdHmxuEvbGZeWH/Llnj/Z8uIUgl2u65H5Y/ZJ3N+y/
-         DRJF4KMDfOw31dEfZlqow37FxqWPLq9StcFG7+6/gi3SfeWy7r6FW6eAXg6ItkZo+ksO
-         nFvZHjFW8/90sCmysY9yEzC7MnMx7Q8nZBAkNTKgjS5aitfbTx8pB65/k0plc/5PRCA1
-         A5WkGEv3cX6AtjZXFJd0xSi+1Cdv/iuvCNyYTNoIyUF1vmGelc8Bclooy4ecR4jw1/pI
-         iSzg==
+        d=gmail.com; s=20251104; t=1778866096; x=1779470896; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iEaZOPq5HHimmzdxWliVnbIt5bH7OFDlR29q4MX45bY=;
+        b=KEa/+zcRtLUFS6dq7UKDXYT3FqPupkeIAhd5GMOq5znYU7e3Qs/OeDB70OL5cuj17F
+         fM2hJXOtAMwVJalAi8CPsibwJePKUPJr6dvhIVuZWm9FNKldEZxh8NpLSAbNySTOJhjF
+         ZlbiuXw+ScPGWvWUFP2k6ZnyysWwyig3bJaW7Nh0nM9DGCocJ64y/S7Z1Cp4BoOrOgqs
+         afbIYb79GqtlWwD/NSu9wU2Z0eYBLP/JTfEpQLBOJuTZULIjjvWjd6EIqJA3Edc1IDgC
+         6VgOnc2O/EMjor3DuKeNfm+t4byNddvqcDquC0rDjFtwbfUa1H6t7zgLGw9tNt8FCr9t
+         p3WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778856663; x=1779461463;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kEDifam5yI6Em64zxXsitxd087MvN5wmox4QB6Aj4jA=;
-        b=A7b7W6hIt70eOW0FZ33aZaxMB7J5WyodaTiq9OMGFISNDhKfZqgeanbmMII37V+YXX
-         qfz9g/inmhl2qOUgBOHUvnXkjqw/H8aE5OrzzN0EwwtAB0BLnLWl6lwlJcWeYhm7al48
-         92hwc7rxM6rABX0WFflMsCgz05GQaGDH4sNQopv6KM0NVNqw8tr/M7IAK8Gixvdo4+uk
-         Hu0AQVNHsF3Tnn5ONkqeNFeIpgGSlr5wyKVzvb5T+eJjGVDWi1J6gCbZ1casiaqaQNaM
-         nz+03ys2QEWph7sbt72WSF9/9T0U/e2egqk4PYtqP413GI9fY8oaDnoIsIyNb6qBViw2
-         S9Rw==
-X-Forwarded-Encrypted: i=1; AFNElJ9SSin06B/GzkXmdYgNgl5bUbTySB25DDk2iWzNqe6XZ9sY2tki13KT342nzfKU7erjGCKxxEuJjbs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwhRqyvDw+pbjSaZrOHGTYxBGwugTOmyS/WckSYG4WmYGxOWou9
-	glvsRL26dqyiNVxlww74IGzRw0HEiDdK3KwK6iS3kqqlR5aVWvYfKFQD
-X-Gm-Gg: Acq92OEapE8JYKW9mD4hAMGYwaWYXz3PrA6ndlJ/gC348+rjqjlZ3qeE3E2ChboSGw7
-	xOiZWzGz7S7k93kcISS2JWe2nD6JysfFe+uBKOQzZ66vsQMzuix8qjKnG8vgR3Y5SrAjZJTQK0U
-	3kh/Bn65cAuopi8it0r7RXfswtTls6V39aY3QMR5LBesBRKWY3Xbn+8N1ob0YCng3VRNvoMVSYL
-	w5rBjb5VSswhEjFCSYMdhQKTKN1BXeemwqocnpRR7dd+hy3nmgjaan1y0Y0cpbLnNC0HIn/pIE+
-	ajsRTJpA4erRB7IqKpDlVIZx8c6XSlNv7SyYmlC8pyaRwtgkg5TKxxICrNZYALrzU4jrQ8nE0ZJ
-	hKzr0Az2FHpPBQxfhAgl4cfBaP2HlLCz0hCp61tD5p6dF4l2v7FXtSxfLoiKSmMKlFGMpphUmFc
-	cg7SCScNM7kFt5DZaya4xEn4J18T/E99GP3Wgt3uv2e8qqk2taO6g7fzE6ZPJ18jzgQYwrxGr77
-	XM=
-X-Received: by 2002:a17:90b:48cf:b0:368:b01c:85a0 with SMTP id 98e67ed59e1d1-36951b7213cmr4421153a91.14.1778856662517;
-        Fri, 15 May 2026 07:51:02 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-72-95.dynamic-ip.hinet.net. [36.225.72.95])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36968dae27bsm699360a91.1.2026.05.15.07.51.00
+        d=1e100.net; s=20251104; t=1778866096; x=1779470896;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iEaZOPq5HHimmzdxWliVnbIt5bH7OFDlR29q4MX45bY=;
+        b=IVAE6OZ89J1NlUUBGZ8CYKzYCgWKsNgKG3RtlIub2fD1j4k2LeWsi00B6i9MiyZUR8
+         pUzIMoNu+nBFQ8klt+GZaCOHnCAeFW2gxGbF7yYJ0SyzuyQ22IRSzv2iqTFDitUFAkD2
+         m9lcBW/irUoOqiJZ+esLdAgCxLwCbdfFcUdfB89iTKjBC9nBhy1CnpnESzIywRgonzP6
+         eYhYsSLO9f1fR415xnUhF+BKHqyPiIB8dsj4rFlLfUMy14sU/dH5KQDHo9xyCV7zPeau
+         01dD7pj04mxwkD9wqgV5Tj8819+PFToLwppYxA74+7OP1I9ixNLxSPT6c31OpEcFZNhF
+         pU6g==
+X-Gm-Message-State: AOJu0YyfIESDK2cWrQh42OLjHGimP9Z5PEC0Rrq+E5335K2c0TdGuObt
+	tueAWzzVs7YeU6CCBlTt+vPJj/7ErfgZtR0wiZFIl2Fd1xW9/yKKIM03Yc+Atw==
+X-Gm-Gg: Acq92OHIDkWL2YkkKdu+QFL+LQSXE7eb+i1rLFo2Jm1VZxlVkGs3oul5nOy2K0jV54O
+	eNjkRCxI0PHazwPEjv1MsPe5G18ZWrMp6MfTur/xheL1aXyMh5WbCtUFovEUKjE2FwBI2FslTvu
+	2FFEOQu46c5SbGuWz/37GtTSHqLygvsHlNsBd3PSPWyuMTjaE2dYCJ0V+8q8VjfQTUNokH6RkHM
+	F5ELx69wlAi/2xc3tEq1AZu0Xfa6SllUgRp2GWv0Zr85PaRSJicd4SajCbf2eDZKVCyfx90HuDx
+	bMm2e2b2eFUlnmL5Sxv6P2Uy7xhpJjW3YdC/bCABLmv9F57ygT5cbUAFnRKHwB+2ghXdMLXsF9F
+	cbsYQodHWpm784j+RoRsMZ0XiTaiaU6b7f53eijLj0c8hSTdZg9iYA3msWpS5l8gO1sklzxfwsI
+	4c8XgVWtHV8qz7CDsLCayQYTQdRm+eC6cAJbz9XycPVSCUgBjH2+r6
+X-Received: by 2002:a05:6a00:8d1:b0:81f:3f03:6846 with SMTP id d2e1a72fcca58-83f33f2b93amr5502240b3a.47.1778866095575;
+        Fri, 15 May 2026 10:28:15 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:9584:f97f:cff9:ff7a])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c5b71fsm5973035b3a.29.2026.05.15.10.28.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2026 07:51:02 -0700 (PDT)
-Date: Fri, 15 May 2026 22:50:59 +0800
+        Fri, 15 May 2026 10:28:15 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, sched-ext@lists.linux.dev, 
-	David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, 
-	Kuba Piecuch <jpiecuch@google.com>, Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v3 1/2] sched_ext: Add dispatch transaction API
-Message-ID: <20260515224002.G1a39@cchengyang.duckdns.org>
-References: <20260509191223.168648-1-yphbchou0911@gmail.com>
- <20260509191223.168648-2-yphbchou0911@gmail.com>
- <af-l_M9p9npc9FUA@gpd4>
- <agCP-e9ZL8smNoNQ@slm.duckdns.org>
- <agCdBQXkDNO4CWoT@gpd4>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com
+Subject: [PATCH v4 sched_ext/for-7.2 0/3] sched_ext: Add dispatch transaction API
+Date: Sat, 16 May 2026 01:27:38 +0800
+Message-ID: <20260515172807.254804-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agCdBQXkDNO4CWoT@gpd4>
+Content-Transfer-Encoding: 8bit
 
-Hi Andrea, Tejun,
+scx_bpf_dsq_insert() captures the task's sequence number at insert time,
+so any pre-dispatch validity checks a BPF scheduler performs before the
+insert fall outside the race detection window.
 
-On Sun, May 10, 2026 at 04:58:13PM +0200, Andrea Righi wrote:
-> On Sun, May 10, 2026 at 04:02:33AM -1000, Tejun Heo wrote:
-> > Hello,
-> > 
-> > On Sat, May 09, 2026 at 11:24:12PM +0200, Andrea Righi wrote:
-> > > Why not passing slice to scx_bpf_dsq_insert_commit()? Is it because of the BPF
-> > > args limitation? In that case we could introduce a struct similar to
-> > > scx_bpf_dsq_insert_vtime_args.
+Patch 1: Rename the internal scx_dsq_insert_commit() to
+scx_dsq_insert_stage() to better reflect its role as a staging step
+before the actual DSQ insertion. No functional change.
 
-Introduced scx_bpf_dsq_insert_commit_args wrapping dsq_id, slice and
-enq_flags to stay within the BPF verifier's five-arg limit.
+Patch 2: Introduce a dispatch transaction API with two new kfuncs.
+- scx_bpf_dsq_insert_begin() captures the sequence number before any
+  pre-dispatch checks, opening the transaction.
+- scx_bpf_dsq_insert_commit() inserts the task using the early-captured
+  token, extending the race detection window. If the token has gone stale
+  (task was dequeued or claimed by another CPU), finish_dispatch()
+  silently discards the entry. Both kfuncs are restricted to local DSQs,
+  and commit() is callable only from ops.dispatch(). This is intended for
+  schedulers that do not implement properly synchronized dequeue.
 
-> > > 
-> > > Speaking of vtime, we may also need a scx_bpf_dsq_insert_vtime_commit() that
-> > > accepts dsq_vtime as well, otherwise how do we use priority DSQs with this new
-> > > transaction variant?
-> > 
-> > Given that these are only meaningful when targeting local DSQs, I don't
-> > think vtime interface is necessary. It'd probably be a good idea to
-> > explicitly restrict usage to local DSQs.
-> 
-> Ack, it definitely makes sense to restrict this to local DSQs.
+Patch 3: Add a selftest exercising the dispatch transaction API. The BPF
+scheduler captures the token in ops.dispatch() and flips CPU affinity on
+child tasks to trigger dequeue and re-enqueue, verifying that both
+successful and stale-token dispatch paths are exercised.
 
-Restricted scx_bpf_dsq_insert_commit() to local DSQs at runtime,
-targeting a non-local DSQ aborts the sched via scx_error()
+Test plan:
+- Applied this series and ran selftests with vng, all tests pass.
+- Confirmed selftest skips on older kernel.
 
-> 
-> > 
-> > > > To support explicit token passing, rename scx_dsq_insert_commit() to
-> > > > scx_dsq_insert_buf() and add a qseq parameter. All existing callers
-> > > > preserve the original behavior.
-> > > > 
-> > > > This mechanism is intended for schedulers that do not implement
-> > > > properly synchronized dequeue. A scheduler whose ops.dequeue()
-> > > > synchronizes atomically with the dispatch path does not need this API.
-> > > 
-> > > I'm wondering if we should validate qseq also in mark_direct_dispatch(), it
-> > > seems that we're not validating qseq in the direct dispatch path, or am I
-> > > missing something?
-> > 
-> > In DD path, the task can't be lost and it'd be a bit silly to use this
-> > interface. Again, probably good idea to at least start with just allowing in
-> > dispatch path.
+This series is discussed in [1].
+[1]: https://lore.kernel.org/r/20260319083518.94673-1-arighi@nvidia.com/
 
-Restricted scx_bpf_dsq_insert_commit() to ops.dispatch() only by moviing
-it from scx_kfunc_ids_enqueue_dispatch to scx_kfunc_ids_dispatch.
+Changes in v4:
+- Separate the internal rename into its own commit with no functional
+  change; use scx_dsq_insert_stage() instead of scx_dsq_insert_buf()
+  (Tejun Heo)
+- Restrict scx_bpf_dsq_insert_commit() to ops.dispatch() only by moving
+  it from scx_kfunc_ids_enqueue_dispatch to scx_kfunc_ids_dispatch
+  (Tejun Heo)
+- Restrict scx_bpf_dsq_insert_commit() to local DSQs at runtime:
+  targeting a non-local DSQ aborts the scheduler (Tejun Heo)
+- Expand kdoc for both kfuncs with the full problem statement and
+  use-case context (Tejun Heo)
+- Add scx_bpf_dsq_insert_commit_args struct to stay within the BPF
+  verifier's five-argument limit imposed by KF_IMPLICIT_ARGS (Andrea Righi)
+- Selftest: pass slice=0 in commit_args to preserve the task's existing
+  slice rather than zeroing it (Andrea Righi)
+- Selftest: use the first online CPU from sched_getaffinity() instead of
+  hardcoded CPU 0 (Andrea Righi)
+- Selftest: clarify that nr_tx_stale counts attempted stale commits, not
+  rejections detected by finish_dispatch() (Andrea Righi)
+- Selftest: skip dispatch transaction path for CPU-pinned tasks (e.g.
+  per-CPU kworkers) that cannot be inserted into the current CPU's local
+  DSQ; fall back to the global DSQ instead
+- Add comment to mark_direct_dispatch() explaining why qseq validation
+  is not needed on the direct dispatch path (Andrea Righi)
+- Remove duplicate scx_bpf_dsq_insert_begin BTF entry from
+  scx_kfunc_ids_enqueue_dispatch (sashiko-bot)
+- Use u64 consistently for qseq in the dispatch buffer path
+  (scx_dsp_buf_ent, scx_dsq_insert_stage, finish_dispatch)
+- Link to v3:
+  https://lore.kernel.org/r/20260509191223.168648-1-yphbchou0911@gmail.com/
 
-> 
-> Also true. Thanks for clarifying.
+Changes in v3:
+- Rename the API from cookie to dispatch transaction: kfuncs renamed from
+  scx_bpf_task_get_cookie/scx_bpf_dsq_insert_with_cookie to
+  scx_bpf_dsq_insert_begin/scx_bpf_dsq_insert_commit (Tejun Heo)
+- Rename internal scx_dsq_insert_commit() to avoid collision with the
+  new public kfunc (Tejun Heo)
+- Move __ksym __weak declarations in common.bpf.h into the API commit
+- Redesign selftest to call insert from ops.dispatch() with CPU affinity
+  flips to actually exercise the race detection window (Tejun Heo)
+- Skip selftest on older kernels lacking the dispatch transaction API
+- Apply the same fix logic as commit e18002d2c791 to the selftest
+- Link to v2:
+  https://lore.kernel.org/r/20260506160412.522199-1-yphbchou0911@gmail.com/
 
-And, added a comment to mark_direct_dispatch() explaining why qseq
-validation is not needed.
+Changes in v2:
+- Reword kdoc for both kfuncs to avoid exposing qseq and ops_state as
+  implementation details (Kuba Piecuch)
+- Add __ksym __weak declarations for new kfuncs in common.bpf.h
+- Add dispatch_cookie selftest (Kuba Piecuch)
+- Link to v1:
+  https://lore.kernel.org/r/20260506075925.371138-1-yphbchou0911@gmail.com/
 
-Thanks!
+Thanks,
+Cheng-Yang
+
+---
+
+Cheng-Yang Chou (3):
+  sched_ext: Rename scx_dsq_insert_commit() to scx_dsq_insert_stage()
+  sched_ext: Add dispatch transaction API
+  selftests/sched_ext: Add dispatch_cookie test
+
+ kernel/sched/ext.c                            | 112 +++++++++++++-
+ kernel/sched/ext_internal.h                   |   2 +-
+ tools/sched_ext/include/scx/common.bpf.h      |   2 +
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/dispatch_cookie.bpf.c | 120 +++++++++++++++
+ .../selftests/sched_ext/dispatch_cookie.c     | 139 ++++++++++++++++++
+ 6 files changed, 369 insertions(+), 7 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.c
 
 -- 
-Cheers,
-Cheng-Yang
+2.48.1
+
