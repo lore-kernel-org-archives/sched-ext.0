@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9BD3F9A0A
-	for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 17:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE13E340260
+	for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 18:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778867947; cv=none; b=LKydGeAJTUj5QQvnbfLoHSH4Ow0t0xWNNgZbnuCBB+sqTwgTGrq9r/IM51bwRDD9HmzOE+9Z7lCxKqdDLdDTkE4cdDACcPht8xXcWCkFn8ljWB2bWTQLfQLJcaO4MuNZ4h1ADI9uObnDje5PAdWCjX4Q9LQHUdO4WId7zbBlR84=
+	t=1778869162; cv=none; b=enfJykNSNVgn636+Slf5HKNy5aIFHuGQoRAcZJjsgtIQr3vS6F06h8gVCKQux9MPVHkwk34CLnLhVAbS6NuMyReutYmd7pArg0uVROMx4OcuHUNxrVvw984lDOwKxSQetGeg0iUU1AhJ8rLHHtaLaKtLun3motkGhRMILrlE1Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778867947; c=relaxed/simple;
-	bh=Z4WJrfP4hQqnboA0ygzTG/azOdUHfSnia0k4Ii3iO6U=;
+	s=arc-20240116; t=1778869162; c=relaxed/simple;
+	bh=r2nMjiqDT8YWUVHzax2E5uphUG9fS75M2OMmRMdvLWQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bD8nhLdse8B2bBNlKts/X092AAhY38efh7XRCJd3QUqUjRdZOcOeFYNRo7j3er7tBaXOHiA2w9YbXHoFGyItp/w2XzNqJgk0f1qgiwywj7Epc6jSERJsew+rhShHtQ3AIdXLznKRX698sEQ6yd5Z/skX+TcjnR2gTvgbpkqR9Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y/uirDvf; arc=none smtp.client-ip=10.30.226.201
+	 Message-Id; b=EhIMel1Q7DbnGVNQbZwZiredeh2bjOPG65RXEcTMlJt4DLctydW86n3i790QocFVjHNbiyZD3TVP/nmdcMqmcK3fvdgpjIbO4zFpkmxoYiyTx4JhzrSgKmjoXhdZBTVgJI+Tqb4FC6pNMRcRU1X5fEPTvfRjeDrCq8qbt9MudxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AFsuLHqY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y/uirDvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCBEC2BCB0;
-	Fri, 15 May 2026 17:59:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AFsuLHqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6739CC2BCB3;
+	Fri, 15 May 2026 18:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778867946;
-	bh=Z4WJrfP4hQqnboA0ygzTG/azOdUHfSnia0k4Ii3iO6U=;
+	s=k20201202; t=1778869162;
+	bh=r2nMjiqDT8YWUVHzax2E5uphUG9fS75M2OMmRMdvLWQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=Y/uirDvfOlfhMSLkqrGrMrUkI7TlyA2MnV4iq4AJW7RyWdEkfhDw9h+q+mbRqYO9+
-	 p+0hcb/qH/hsOuuQnvowT0nC1EaLme3tFVTP1Qd7wEBdiJo28yomavRPwuzMLgdqNf
-	 WfJPgy8anaeaqqprpgMBeE6upjQ1wO0Du+Hh+tL9qg+EWb1gp5l6BCBxlEnt4zWTEv
-	 4n9LY9msaABebp87C3pHLfqzyxKHsVA5CS6S/E577E6fTFZ7RBAsMcN4dHLxCkDuZ9
-	 Qo8g9Qow5H53IS5wIrXayYKWqYHO9mq/dVuSrC3aHiY5frSmI1ldUtznK2WxpU3nsi
-	 b7efHg6GSRpSg==
+	b=AFsuLHqYxidUsyoR2VW9/Q1dK+KrF9Pvjaha9Y+L2cAGIQAC4BR46YsjlAl6ZrDYT
+	 sC6Ig78apGXF2eAK6TxtHcOxWO0tDnZy8+CozlTa5DP1EjvUmM8f562bX47RLIYq9V
+	 pvcwztnG6vX6qkQRduLsVnOk6ljpVJKfFSeHmvihUwOLbbSsuGEk8mPHYUp/5BrLGi
+	 QXDaAGJFRzL5BNJYq5O9lVlq30NJ8u4grBTMYUoT67pomLdvQtEbZABjV1tXAUHZ1C
+	 u2m9Qa+QOTHasSxy0bHcMAIuvSP3Dk9IBIP4xOzub16E2Kt06cCzQPH5N7CHhQHrBn
+	 mwA+GY/p/VL9Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/3] sched_ext: Add dispatch transaction API
+Subject: Re: [PATCH 3/3] selftests/sched_ext: Add dispatch_cookie test
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Cheng-Yang Chou" <yphbchou0911@gmail.com>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260515172807.254804-3-yphbchou0911@gmail.com>
-References: <20260515172807.254804-3-yphbchou0911@gmail.com>
+In-Reply-To: <20260515172807.254804-4-yphbchou0911@gmail.com>
+References: <20260515172807.254804-4-yphbchou0911@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 15 May 2026 17:59:05 +0000
-Message-Id: <20260515175906.5FCBEC2BCB0@smtp.kernel.org>
+Date: Fri, 15 May 2026 18:19:21 +0000
+Message-Id: <20260515181922.6739CC2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,102 +45,82 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] Double Fetch / TOCTOU vulnerability in `scx_bpf_dsq_insert_commit(=
-)` when accessing `args` fields.
-- [High] Unprotected state modification (`p->scx.slice`) causing a data rac=
-e on actively running or migrated tasks.
+- [Medium] Child processes spin indefinitely and will leak if the parent te=
+rminates unexpectedly.
+- [Medium] The dispatch operation returns immediately without attempting to=
+ dispatch another task if `bpf_task_from_pid()` fails, potentially leaving =
+runnable tasks stranded.
 --
 
-commit c413431466d2cd2f8ef609dabb82ff0b92ea46d2
+commit 91ea259621d3c40168f6eb29f9526e50de76f0b2
 Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-sched_ext: Add dispatch transaction API
+selftests/sched_ext: Add dispatch_cookie test
 
-This commit introduces scx_bpf_dsq_insert_begin() and
-scx_bpf_dsq_insert_commit() kfuncs to allow a dispatch transaction. This
-mechanism extends the race detection window for schedulers that queue tasks
-in ops.enqueue() but do not implement properly synchronized ops.dequeue().
+This commit adds a new sched_ext selftest to exercise the dispatch
+transaction API (scx_bpf_dsq_insert_begin and scx_bpf_dsq_insert_commit).
+It uses a BPF scheduler with a queue map and a userspace program that forks
+multiple spinning children, flipping their CPU affinities to trigger dequeue
+and re-enqueue cycles.
 
-Link: https://lore.kernel.org/r/20260203230639.1259869-1-arighi@nvidia.com/
-
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> index 0dadda97ef57c..2dfcfc3c885bb 100644
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-
-[ ... ]
-
-> @@ -8518,6 +8530,92 @@ __bpf_kfunc void scx_bpf_dsq_insert_vtime(struct t=
-ask_struct *p, u64 dsq_id,
+> diff --git a/tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c b/to=
+ols/testing/selftests/sched_ext/dispatch_cookie.bpf.c
+> new file mode 100644
+> index 0000000000000..160a77ed9000f
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
 
 [ ... ]
 
-> +__bpf_kfunc bool scx_bpf_dsq_insert_commit(struct task_struct *p,
-> +					    struct scx_bpf_dsq_insert_commit_args *args,
-> +					    u64 token,
-> +					    const struct bpf_prog_aux *aux)
+> +void BPF_STRUCT_OPS(dispatch_cookie_dispatch, s32 cpu,
+> +		    struct task_struct *prev)
 > +{
-> +	struct scx_sched *sch;
-> +	u64 enq_flags =3D args->enq_flags;
+> +	s32 pid;
+> +	struct task_struct *p;
+> +	u64 *stored, token;
 > +
-> +	guard(rcu)();
-> +	sch =3D scx_prog_sched(aux);
-> +	if (unlikely(!sch))
-> +		return false;
+> +	if (bpf_map_pop_elem(&queue, &pid))
+> +		return;
 > +
-> +	if (args->dsq_id !=3D SCX_DSQ_LOCAL &&
-> +	    (args->dsq_id & SCX_DSQ_LOCAL_ON) !=3D SCX_DSQ_LOCAL_ON) {
+> +	p =3D bpf_task_from_pid(pid);
+> +	if (!p)
+> +		return;
 
-Since pointer arguments to BPF kfuncs like args can point to shared memory
-such as BPF map values, which can be concurrently modified by userspace or
-other BPF programs, is it possible for args->dsq_id to change between reads?
+If a task exits and bpf_task_from_pid(pid) returns NULL, does returning
+early here prevent other valid tasks in the queue from being dispatched?
 
-If args->dsq_id changes to a global DSQ ID after this local-only check pass=
-es,
-could it bypass the constraint during the subsequent scx_dsq_insert_preambl=
-e()
-and scx_dsq_insert_stage() calls?
+Since ops.dispatch() expects a task to be inserted into a DSQ, would it be
+better to loop and try popping another PID instead of returning immediately
+and leaving the CPU idle?
 
-> +		scx_error(sch, "scx_bpf_dsq_insert_commit() may only target local DSQs=
-");
-> +		return false;
+[ ... ]
+
+> diff --git a/tools/testing/selftests/sched_ext/dispatch_cookie.c b/tools/=
+testing/selftests/sched_ext/dispatch_cookie.c
+> new file mode 100644
+> index 0000000000000..047d9ea1822b9
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/dispatch_cookie.c
+
+[ ... ]
+
+> +	for (i =3D 0; i < NUM_CHILDREN; i++) {
+> +		pids[i] =3D fork();
+> +		if (pids[i] =3D=3D 0) {
+> +			while (1)
+> +				sched_yield();
+> +		}
+> +		if (pids[i] > 0)
+> +			nforked++;
 > +	}
-> +
-> +	if (!scx_dsq_insert_preamble(sch, p, args->dsq_id, &enq_flags))
-> +		return false;
-> +
-> +	if (args->slice)
-> +		p->scx.slice =3D args->slice;
-> +	else
-> +		p->scx.slice =3D p->scx.slice ?: 1;
 
-Could a concurrent modification to args->slice between the condition check
-and the assignment result in setting the task's slice to 0, bypassing the
-fallback logic?
+If the test is interrupted (e.g., via SIGINT, SIGTERM, or a test framework
+timeout) before reaching the cleanup code, will these spinning children be
+leaked and consume 100% of the CPUs indefinitely?
 
-Would it be safer to fetch args->dsq_id and args->slice exactly once into
-local variables at the beginning of the function, similar to how
-args->enq_flags is handled?
-
-Additionally, since scx_bpf_dsq_insert_commit() is intended for schedulers
-where p may have been dequeued or migrated to another CPU after the dispatch
-token was captured, the current CPU might not hold p's runqueue lock here.
-
-Could modifying p->scx.slice without synchronization cause a data race if
-the task is actively running or queued on another CPU?
-
-Even if the stale token is later detected and discarded by finish_dispatch(=
-),
-it appears the corruption to p->scx.slice would already have occurred. Is
-there a way to defer this write or synchronize it so the active state is not
-modified?
-
-> +
-> +	scx_dsq_insert_stage(sch, p, args->dsq_id, enq_flags, token);
-> +
-> +	return true;
-> +}
+Could this be prevented by calling prctl(PR_SET_PDEATHSIG, SIGKILL) in the
+child processes immediately after fork()?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515172807.2548=
-04-1-yphbchou0911@gmail.com?part=3D2
+04-1-yphbchou0911@gmail.com?part=3D3
