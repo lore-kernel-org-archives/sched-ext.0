@@ -1,110 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E8143CEEB
-	for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 09:39:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B827538758B
+	for <sched-ext@lists.linux.dev>; Fri, 15 May 2026 10:12:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778837943; cv=none; b=PG2fKsQFqW8ztJ8Ac86X64vE7O0JEg9uBvJSGZ2WbhsFaS1RcJjZqnYn2yqnEuxAig0rIR5HevxGXuKQjNVSuEb6xHwXx16qdmb+tzScc7RcDdHIObKar1OFxEcQz+jPEnrUvRfFS5D67ZLk22zD5cbP+JZLsX4LmtK+m7Dn+Wc=
+	t=1778839956; cv=none; b=rpQSxhVrJJ+JowP0HOH1b5jwbBlkrV8o8K77WXam9Waogg1Rz4lVv+PMuZRtgGYmaTVJ7hPYmxS8B5wmk8sknQ2JMAVkBb0NZGbXhM/7o4e6LlfnEBaeS/p3gbVp1uxEUiNVDNYGDv0Stv1nnufJwFbIGEvWz1nDoMGA3zXRt2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778837943; c=relaxed/simple;
-	bh=Ii5E4NDIbbFSIgFkGyUpNTq1MD2LkMKH3/ib99MhU9o=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iutlpVySb4QVo2hsDBAEmFcgU6QlwXpQuJVK4XRxHjJa2D3OaQG2QPFBDCxRz52ecZhANuyLBPKd27py/bAM5aaEgaLeWUVDpycr6VYm4cxZQHPBKXo5BQjz8OdjBv92WpyNHimfkSJHBia+G//+6H4XZ4W7aj7oXv2CIN0TuXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nBtlBHBz; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778839956; c=relaxed/simple;
+	bh=OMHLxeqGbTlWeS7IvcYmDvMDR0Gv41of8yDbKwjgvMQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BWLqvNhXMB03GpEHMiWvnUiPCE2HQi5QSdbCI6FfNQYNTbir08hbWxhTBMOVpdM0fntGDalPmvrhbj+SbP7fJwvxsprUIh7dnFkAR+vtQUTdKSadNFqY4fUfBP9BhbuTaAIE8/zD1Nmu2ml86b/oDZdAjgb/xL2iZd8gxmRuCQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=Csqt5TLJ; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nBtlBHBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29D9C2BCB8;
-	Fri, 15 May 2026 09:39:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778837942;
-	bh=Ii5E4NDIbbFSIgFkGyUpNTq1MD2LkMKH3/ib99MhU9o=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=nBtlBHBzB0ZYTgP1K5XHJVFV35ytREDeXXlA23eCgJ0IQpoPua4+ImftoM/8wTDzs
-	 tyb1p8ELExEIgirviq6MBUWxe7QuvZjFwiBkh9HHYohMMcZ2fI+tYAX3YaYQz0reA2
-	 9UdCdAweQEIQnfpylF6G8nBNLN413TWH7rxTxsoYb3yFQhcGJRdWaTmiLVrM9ATqEp
-	 nj5UaZPzBpKwNtFXqD4Vn7X3UainrGSOQtAmY5mRjCe031rT/G97xmvAh6UUYz7i3d
-	 sOkR9ABjgHIgn7NCRD8cWFKmO6428oOkmmlFYTWmA+GIQ3UWas5vG0xf8Pq9AkZcu3
-	 dhPj2UlWnqWSw==
-From: sashiko-bot@kernel.org
-Subject: Re: Patch "sched_ext: Skip tasks with stale task_rq in
- bypass_lb_cpu()" has been added to the 7.0-stable tree
-Reply-To: sashiko-reviews@lists.linux.dev
-To: gregkh@linuxfoundation.org
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <2026051520-oak-marlin-d109@gregkh>
-References: <2026051520-oak-marlin-d109@gregkh>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 15 May 2026 09:39:01 +0000
-Message-Id: <20260515093902.D29D9C2BCB8@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="Csqt5TLJ"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id E8E1C26F47;
+	Fri, 15 May 2026 12:12:26 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id zwOz6aRYCWv0; Fri, 15 May 2026 12:12:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1778839946; bh=OMHLxeqGbTlWeS7IvcYmDvMDR0Gv41of8yDbKwjgvMQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Csqt5TLJ7hO8xeFIeowzZmwEMRJN0JAsIsolf/TZNCVYBhEZlED94mbnUn7OT/knC
+	 ONfaWh9eYK6d3ILodDPu0FrA9S87CJdUE4xxbq+0w21gZOZE3LyffTcxPrYNLfQyAu
+	 994p/zXEeCI8ecxnQMEsXdyKme98J22wePDRRjshU0YpGDJYVr9UkyBu25tGVCigni
+	 QeqXiJyhsOk8UEyRik5PTeBXKNf+Fv3CznvyDW9b7WIMPDdxUpAqMhpCayAPLZEUKT
+	 HVui5PszpF4a5Sq40OMEhJ3DiGH9iWtXsPrl8Cp/ud4P2spafImth+8vNJLH1hVKm8
+	 mqmL1gaAQd7Nw==
+Date: Fri, 15 May 2026 12:12:24 +0200
+From: Samuele Mariotti <smariotti@disroot.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, void@manifault.com, changwoo@igalia.com, 
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Paolo Valente <paolo.valente@unimore.it>
+Subject: Re: [PATCH] sched_ext: Fix spurious WARN on stale ops_state in
+ ops_dequeue()
+Message-ID: <agbxDkqPcq0P0Xjl@cachyos>
+References: <20260513095329.4029345-1-smariotti@disroot.org>
+ <agSKJbtmpRPLgYJW@gpd4>
+ <agSpf9QRx4zqhZxx@cachyos>
+ <agTYojgRwDH67QMC@slm.duckdns.org>
+ <agV8-RlKEkiAbd-h@cachyos>
+ <agYr1RbafGUevfOH@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <agYr1RbafGUevfOH@gpd4>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Unbounded iteration with interrupts disabled in `bypass_lb_cpu()` =
-due to skipping tasks without yielding.
---
+Hello Andrea,
 
-commit a8567d453e072dcdd0102db7ef988700bdb7dc40
-Author: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On 14/05/2026 22:08, Andrea Righi wrote:
+...
+>The code looks good to me, I'd elaborate more on the comment to make it clear
+>that the retry loop is guaranteed to terminate (not a deadlock).
+>
+>How about this (or something along these lines)?
+>
+> /*
+>  * A queued task must be in BPF scheduler's custody. If
+>  * SCX_TASK_IN_CUSTODY is clear, finish_dispatch() on another
+>  * CPU has already passed call_task_dequeue() (which clears the
+>  * flag), but has not yet written SCX_OPSS_NONE. That final
+>  * store does not require this rq's lock, so retrying with
+>  * cpu_relax() is bounded: we'll observe NONE (or DISPATCHING,
+>  * handled by the fallthrough) on a subsequent iteration.
+>  */
+>
+>Thanks,
+>-Andrea
 
-sched_ext: Skip tasks with stale task_rq in bypass_lb_cpu()
+Agreed, the comment covers all the relevant aspects and explains the if
+condition clearly. I would go with it.
 
-This commit updates the bypass_lb_cpu() load balancer to skip tasks that
-have a stale task_rq. This prevents moving tasks between per-CPU bypass
-dispatch queues without having the correct runqueue lock held.
 
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-[ ... ]
-> @@ -4005,6 +4005,15 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, st=
-ruct rq *rq,
->  		if (cpumask_empty(donee_mask))
->  			break;
-> =20
-> +		/*
-> +		 * If an earlier pass placed @p on @donor_dsq from a different
-> +		 * CPU and the donee hasn't consumed it yet, @p is still on the
-> +		 * previous CPU and task_rq(@p) !=3D @rq. @p can't be moved
-> +		 * without its rq locked. Skip.
-> +		 */
-> +		if (task_rq(p) !=3D rq)
-> +			continue;
-
-Does this regression lead to unbounded iteration with local interrupts
-disabled?
-
-Looking at bypass_lb_cpu(), it iterates over tasks in donor_dsq while holdi=
-ng
-rq->lock and donor_dsq->lock. The function includes a batching mechanism to
-drop these locks and prevent CPU stalls:
-
-    nr_balanced++;
-    if (!(nr_balanced % SCX_BYPASS_LB_BATCH) && n) {
-        list_move_tail(&cursor.node, &n->scx.dsq_list.node);
-        raw_spin_unlock(&donor_dsq->lock);
-        raw_spin_rq_unlock_irq(rq);
-        cpu_relax();
-        ...
-
-When tasks are skipped via the new continue statement, nr_balanced is not
-incremented.
-
-If the bypass dispatch queue contains a massive number of tasks that were
-recently load-balanced but not yet consumed, they will all have a stale
-task_rq.
-
-Since they are all skipped, the loop might process an immense queue without
-ever incrementing nr_balanced or triggering the lock yield.
-
-Would it be safer to use a separate loop iteration counter rather than the
-number of successfully balanced tasks to trigger the yield?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/2026051520-oak-marl=
-in-d109@gregkh?part=3D1
+Thanks,
+Samuele
