@@ -1,102 +1,78 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0443D3C3BF3
-	for <sched-ext@lists.linux.dev>; Sun, 17 May 2026 18:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4814E3CC7EC;
+	Sun, 17 May 2026 18:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779042012; cv=none; b=WMCuFqGY8fWdvzxoJixwnlD0VI+jPwWg7JXZJLkk4itTT58M1R8jpByig9IYQnHLWQXzlKbc1pKHfIH7RcrEytZXC5WKAFeQ1d/2k8LofXuHBSDy6AESjaVw1gUJjRoAACEO1qT/CH1v2px96IMy4GlQrvMPfT6scbopbMl+kFs=
+	t=1779042976; cv=none; b=J40T02e/DLd81ZyYs6r+HIpKq/vQSIuzYzads+URlB/J5eS74HSJXx10GjqSTan6EdLt+l90aJxPiNL7KMAigDRiAw8wwmPW2rOaC9OmEl8tTDNbdH89VhGGP+to45KyRGqpRmoAhsNf/AZpG/LP5d8Kyf9FjppMTpqNvvImDgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779042012; c=relaxed/simple;
-	bh=9JLQmfZ1o1V7KlsMNdCc3eHYgQ3/3UiTmvm0nnRPG1E=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=oru34JvWDzWz8TXNt6Zt26HsI/f4tY/8D+hQ2MfH9YTWPKU2QeS6RoZDih4CEMPvabTa/Whiupo++f9fcNebDGllh7p1WA0y4y6FcJ0PwyiyZSLKzWYTr+UE4Wlt3ugWzdR/MjiiAjF4SGVsBlANvCxto10PK0bs8LLSxPs88+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=al/UYULY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779042976; c=relaxed/simple;
+	bh=tgVmokPTzZmWe87zVMvyByUvdQz/DK2l370kpo10d1I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SnLhAg4IMSsqsnX7+tt1E2HguvaVZDcSCKRy/NBCe2OTsd3X7NdAIN5R2bipSt3G7/wYvC///9G+3obW4IuW4yFG5UNRjIQyGXkMIeg2VLpBMVxDrUhqLWKboLzCx6QTjSdci1OejMSm4R0nXlkcWUQsgo9sQf8Ub5qJACttL/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rds4Uxaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="al/UYULY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676B7C2BCB0;
-	Sun, 17 May 2026 18:20:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rds4Uxaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE761C2BCB0;
+	Sun, 17 May 2026 18:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779042011;
-	bh=9JLQmfZ1o1V7KlsMNdCc3eHYgQ3/3UiTmvm0nnRPG1E=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=al/UYULYW0lOaGKHNxE2Q8EzM+1K3z97SgvyOIzHfvutH1kLluEGRb4kmENlq59jt
-	 mBYD0V6P7wLiRVP66dr3t3ApPzO/7P3KVzOWpZBcu5XMDYcnbvM23F809dvoyviYfd
-	 cxq1z5W/zC7HWS1uo9ILyvFndHS3S9mDPa3Qb5T14BHpCB+bGctLieZ7XX4kYRnd1X
-	 uKEnU0+5EaPJg3msCZW7AorXVMXQiyuPhJm6UhYr8lVncLS4z4QR0FKz3+y7Hp3nb6
-	 s9GZV0Ti9Z/qB4QKJdzaTvuIaAwqWYgU/CIsu1ZOq9rLqB4h6SXYJSZrdL3G7H6Y+5
-	 hAVUqw9iYJlQg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/3] sched_ext: Rename scx_cmask.nr_bits to nr_cids
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tejun Heo" <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260517181022.1184056-2-tj@kernel.org>
-References: <20260517181022.1184056-2-tj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 17 May 2026 18:20:10 +0000
-Message-Id: <20260517182011.676B7C2BCB0@smtp.kernel.org>
+	s=k20201202; t=1779042975;
+	bh=tgVmokPTzZmWe87zVMvyByUvdQz/DK2l370kpo10d1I=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Rds4UxaqKmx2zhDhg8VIv7j+gvZk+3BZD9Oi1CSoGTx3zqRUC0vKAPd4eB7w5p/2W
+	 2VZrgvJiDYQAxJWdF95pl0liSgz963+WYGlykFT3FlC4/1cjiDxVC4PgMCthfgomAW
+	 YXmPNmcT3T5zlbvIkYV95uacVjNBPI9k1A8HQvwklM84Tg43ze08l3AvRx/sew3Azt
+	 r/W4a4x2+Ny7zrj0cAaHAna/pT9rzja1poM9ICebsV5WmF9ZQSn2Tkp0C6zogI9AhK
+	 E0l08gw7OCKaaQTbjXYZIUccBcohY1Q1Ih1kasCRQgbI0uAJdeenhA8Om5oJamTOhM
+	 uGzu2iQh9FHaw==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET RESEND sched_ext/for-7.2] sched_ext: cmask improvements
+Date: Sun, 17 May 2026 08:36:11 -1000
+Message-ID: <20260517183614.1191534-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Incomplete refactoring of `nr_bits` to `nr_cids` causes a compilati=
-on error in `cmask_copy_from_kernel()`.
+Hello,
+
+Resend with the correct cover letter. The earlier posting
+(20260517181022.1184056-1-tj@kernel.org) went out under a stale cover
+from an unrelated draft; the three patches themselves were the right
+ones and are unchanged in this resend. Apologies for the noise.
+
+Three patches for cmask: tidy active-range bookkeeping and add the
+mask-on-mask op helpers the sub-sched series will use.
+
+Not backward-compat with the current scx_cmask layout/API, but cmask
+landed in for-7.2 and hasn't been released; scx_qmap is the only user.
+
+ 0001 - sched_ext: Rename scx_cmask.nr_bits to nr_cids
+ 0002 - sched_ext: Track bits[] storage size in struct scx_cmask
+ 0003 - sched_ext: Add cmask mask ops
+
+Based on sched_ext/for-7.2 (c9017d335aab).
+
+Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git cmask-prep
+
+ kernel/sched/ext_cid.c                | 307 +++++++++++++++++++++++++++++++++-
+ kernel/sched/ext_cid.h                |  71 +++++++-
+ kernel/sched/ext_types.h              |  64 +++++--
+ tools/sched_ext/include/scx/cid.bpf.h | 117 +++++++++----
+ 4 files changed, 506 insertions(+), 53 deletions(-)
+
+Thanks.
+
 --
-
-commit 7049bf95e9f693c1107678499b063bd2c1a25e08
-Author: Tejun Heo <tj@kernel.org>
-
-sched_ext: Rename scx_cmask.nr_bits to nr_cids
-   =20
-struct scx_cmask is a base-windowed bitmap over cid space. Each bit
-represents one cid, so the count of active bits is the count of cids. The
-sibling struct scx_cid_shard already uses nr_cids. Rename as a prep so the
-following patches that grow the cmask API can use the consistent name.
-
-> diff --git a/kernel/sched/ext_types.h b/kernel/sched/ext_types.h
-> index ebb8cdf906123..c6c4e3db73111 100644
-> --- a/kernel/sched/ext_types.h
-> +++ b/kernel/sched/ext_types.h
-[ ... ]
-> @@ -82,21 +82,21 @@ struct scx_cid_topo {
->   */
->  struct scx_cmask {
->  	u32 base;
-> -	u32 nr_bits;
-> +	u32 nr_cids;
->  	DECLARE_FLEX_ARRAY(u64, bits);
->  };
-
-Will this rename cause a build failure for BPF programs using
-cmask_copy_from_kernel() from tools/sched_ext/include/scx/cid.bpf.h?
-
-It appears cmask_copy_from_kernel() still references the old nr_bits
-member:
-
-static __always_inline void cmask_copy_from_kernel(struct scx_cmask __arena=
- *dst,
-						   const struct scx_cmask *src)
-{
-	u32 base =3D 0, nr_bits =3D 0, nr_words, wi;
-...
-	if (bpf_probe_read_kernel(&nr_bits, sizeof(nr_bits), &src->nr_bits)) {
-		scx_bpf_error("probe-read cmask->nr_bits failed");
-		return;
-	}
-
-	if (nr_bits > dst->nr_bits) {
-		scx_bpf_error("src cmask nr_bits=3D%u exceeds dst nr_bits=3D%u",
-			      nr_bits, dst->nr_bits);
-		return;
-	}
-...
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260517181022.1184=
-056-1-tj@kernel.org?part=3D1
+tejun
