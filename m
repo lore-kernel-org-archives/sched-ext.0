@@ -1,199 +1,397 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013066.outbound.protection.outlook.com [40.93.201.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6F2346FAD
-	for <sched-ext@lists.linux.dev>; Sun, 17 May 2026 10:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779015407; cv=fail; b=bD+AfkaSTA4wMBxD7A7pgsNvY34BDtN7wqh2NE6oPAmkixEfgr+sYywo8BU4xpYvSkqbA1pWoDIQzWixp2KPKGGkp6ig5qHdjLM/RmPwIQUBCH5qoLtbiXbyR1nwA++SQJJbDQUo3p1Gg5NePbdT4mVf9XoDWeNcqDb3T6WgkLI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779015407; c=relaxed/simple;
-	bh=/WgSVtWojU8Vfyl5rznIDVPgubk06i2C108uFGJd6mg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ikRtGfyj1vARTOPpHAfoBG+gHnzii7IC/MZSqM1d55XWCup5PH305MlnTkc8vi0fH+I//CGbo8Wjwjna9JG51mavjn5dwN62g/Qp7Ab+tX3HHBXEgtNGRNlvlI2kKDShLwrN/rf0K4VkePv5GAWNDP8/WJnw006IaSqTWlnprcw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=fFhBwlxw; arc=fail smtp.client-ip=40.93.201.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C032F361DDE
+	for <sched-ext@lists.linux.dev>; Sun, 17 May 2026 16:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779034092; cv=none; b=NlDFfFiCLV0AlF6DvwbdN8bqk1w2RzgbKsW56vgg6kBz60G0Mk27W3NOvfINgQcJ8j/sXexw6zE/48ysXVfpL0XtB1w/POzuT2+7zFxAzQ08Iye8RTA366GfYAAC54ZcLzSxEHFcbpxqEd8E7qQIya+T43kEMW1z/ypo0FOiNX4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779034092; c=relaxed/simple;
+	bh=F6i2AT0JaGRG4i13mHV8/t0QYkoNRcB+biePBczZ3QU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EIlBbz+RAbZoXY+t48iXBd4SdrwqGHrxNdS82LlvFKJLM0+9XSPHm82ghYvb6pKvDNjHkR1mkE6z//mb0cE1REUiO9dp2Ejty4NuezXDCq3TBGV2X1COCX2yA1DbAAhm9rzjI25PGuYjrktFc/Ihctyg7f8tImgZ2Xa2FNiqDe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OjgkADBR; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="fFhBwlxw"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iIKoE1qaFwxQpLwcANquopD0aJNLcxEUx2b6zoqTQVVJW/WjVVKoq3PF8ksHI1wlZ8HLMpHmD/dM7Jp0cqaBSRy7BjZKr6xsP9s6uPHMGZravzKlTI2W1N+y6glhmYO9onx0Tj1Rjm1Ne8YyRCuBdpMEqBIStCmDgKe5bnJ90f8ntND0XyxNM/Wj1fPQXpZEtBMmXEMr3a5iV8fNBwRCnPE/mdHOoXEe/EG6WmT7IIHtPSxA2v0cQSIUDREfBM/gjOnMfzNXDyU4o3Yiyk70+SRqKBCcnmWewmtk29ztb8yd6QMJVjdC7ZXlLnuH+t9QvN8phtFGJ/PqxkBbF5pqUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qut8bPoZDoVn7ASiLh+0nPIRcQkz5DPozD2yt17fzUQ=;
- b=X2MOOIFpEj3DT0Y0bFq88g/3caNHR7jBycYEQ2AlHdvGccHHUjkZ1i+J6+D+BrWt7zxvYLF1E5STzUw9dp65G7nMabuJ133sFicQNLDGpcoR8TDpFsQCrE8TmTyAJX+LfnkD70vdXQ0RHb4TfNP4ZqzugJSBFal23upURzLK3iN7eIml00MciSnOrnbdIvkkt9QJsXaTrtMmMZOdiL+uHnh69UtDo0hNT0NsEWQI9fXUIm4u76mxALlMLHsH46HXInV2cI9lwxi3HibD1uplRhincwRf5l4+o05LCU+/bUolnG0vew5D1gXYHv05TLBfCzRsIOC0fBQ9bB6YY6PU1Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qut8bPoZDoVn7ASiLh+0nPIRcQkz5DPozD2yt17fzUQ=;
- b=fFhBwlxwXhZ7XdbYwYbouBWpPUkJGEDt3Nxto1vy+4+0zzJ5Z3ylpNrhIOaMEX/Q1509aJ4wYVtFAwRypndpzfrTOwOgQ9fveN5wIyDnBRt3SZPCCL8C4On4W3XVb99jrV3b0NfonOyWkXz9H3rszVRYO80d4A8HQeZTEYNBtNgCN1Js6CsSMDU22cXTi6dHd1zwk6pUfJsWNen5z5rdsKBvDTakSTu8kYgdhlUMDINKltGU8p22tXHbBDtG2BLWp3N9QctYnO3RGd8GvG8X+LPHMyqf91ALx6CWgycZbBW1RIufMIm2o2jD0BxF6/SC5ltbHdVBiYm6HWiOjecoqQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by PH7PR12MB6665.namprd12.prod.outlook.com (2603:10b6:510:1a7::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.22; Sun, 17 May
- 2026 10:56:42 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%4]) with mapi id 15.20.9913.009; Sun, 17 May 2026
- 10:56:41 +0000
-Date: Sun, 17 May 2026 12:56:34 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-7.1-fixes] sched_ext: Fix deadlock between
- scx_root_disable() and concurrent forks
-Message-ID: <agme4i4w5K6Ab9cM@gpd4>
-References: <39ab37b4e79c6e5361a907c06ab27e72@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <39ab37b4e79c6e5361a907c06ab27e72@kernel.org>
-X-ClientProxiedBy: MI2P293CA0011.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:45::11) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OjgkADBR"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c6dd5b01e14so584280a12.0
+        for <sched-ext@lists.linux.dev>; Sun, 17 May 2026 09:08:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779034090; x=1779638890; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ewb/vcCAW4T3qYCqoZidr6uNqEhYqfHVueO6BxP2CYE=;
+        b=OjgkADBRGfY1eMYvJ2DoGSPX+igHXXoYE2E01+uCECxSg1Mu/5cd9zVwDULOfS+LHK
+         heFUx3MwgcQlICZ5EQJ5GXPlHSKMOybCjj3mBaMMDg0wNAt1jsq6vSRYyJQBOEjius9z
+         Se82I4BjZLpigjGbbK4Mq8T2m2uTuk/hXVqFQXgIQkMLVHdQXDmodz0Np0wlWNmhUj9r
+         5wUCQl+V2p4Go9oaKqqa7dvImGcJrUkbYwqzoiXhB/nT1G518VONF0iIMHeYRZ5Kr+ZN
+         FVUnahbYQc4+oQ+ZfVYune1Q88INbgMcHBXDMTteKOe4HleWRzLZ3fzyIbrp2uY5CnI3
+         LUcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779034090; x=1779638890;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ewb/vcCAW4T3qYCqoZidr6uNqEhYqfHVueO6BxP2CYE=;
+        b=MP0LSw9c7Fml/fgUt39BKPJRVrgGIHfgwr0XjnJONaPcE3j7kshL8qZ1turi/4Qxf7
+         NYyyo0UID0PcWVxnD+H5lLcC2ZPb8kulYdK7Wr9awhnYzFHFvgxnI2rRQ/qE/0aQH2ZI
+         BGHt432im+ak0XwgoUwcb0yIru0aUWBo3o6/stXhdUxNq/UzTdKNUm1/a10W/UnRB9g+
+         6JRck/543zPm8FhwFoJYaaCU5133tf6yVsJWFFsym+Fd7coviGn18xuWbIW36QVpICYl
+         C3xMDxBeToSE8Dm+v3/+sbNfr6ARtXbLt8GoU9utjWq4IZZRLzBXfAd1VHwnGog44C3l
+         Ei+g==
+X-Gm-Message-State: AOJu0Yw2nmh4T9OAaTEpJvIHDY+nwIqSead7EQRINz8kwZbjZMmdAo4d
+	lUDhX5VYCcvLKq+oazpObMT8+JsiZVRChW2JJ5Ilv59NT4Q9urzuLZea
+X-Gm-Gg: Acq92OEM13Cd8/ZRWFVKfu2D56Th3iX5z2liCzJ2cVPHK2iJ5UHnxWyO1JQhaPHXqiW
+	AT6NyIVkvOOombIsI194MXWMMkLUeeqt4fk9Ba3wwfJoWdjkxFAZ0cfZ3OH97nOx1zxypj4d4mm
+	MOHKbLl1Eie6YBtqjaPUnLHQ9kWX/tO4E6DcG9+Xqz/oDbwQkyhxiWYGcoi+qtU6w6WDFis3xLH
+	NTqapwVOJKrjU1TIAlkDxVfb5/B4UHXotewP/HYEY/prAXTcODuJiWx7USHv8CEcPqMY9ym+xBx
+	Th4fRJggWuu1iE3Z/KtdL0SEhfX5WlcqrYhZi1wPTlHYR9jtTJDUCM9GZ75juuawnuPxvzr47GC
+	eOfbeK9W3o2wVF3qN6KaQg+MIkj/HpxH7/RGNn1ildHAnXQ9eyOdJePr9WxOVo+K42CUxQ14EIe
+	FdHvApp0lGD67lJtB/P52slkEq3Y0EYM7m5ncD3AYO2CF+ApuVqvE=
+X-Received: by 2002:a05:6a21:600d:b0:3b2:6988:a6f5 with SMTP id adf61e73a8af0-3b26988d373mr4729331637.4.1779034089762;
+        Sun, 17 May 2026 09:08:09 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:43af:54c2:876:4f0f])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c82da93df0dsm4586076a12.19.2026.05.17.09.08.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 May 2026 09:08:08 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: yphbchou0911@gmail.com
+Cc: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Kuba Piecuch <jpiecuch@google.com>,
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>
+Subject: [PATCH v2 3/3] selftests/sched_ext: Add dispatch_cookie test
+Date: Mon, 18 May 2026 00:07:42 +0800
+Message-ID: <20260517160742.935859-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260515172807.254804-4-yphbchou0911@gmail.com>
+References: <20260515172807.254804-4-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|PH7PR12MB6665:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e33a743-e642-458f-51db-08deb402fa07
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|11063799003|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	Kh13dRldM7vP8XLMPUFo9GpnF84K7pn4NuHsaHATFEB2IuS0OE4L6bi0uUAO2wIfhRFgWdPEvcnx/ccEZc2ulCHXDohvzMpEEERpWxmtCioF6GVSYdzpoKXvGQ5NeLuNsdABli+4CaL3Y9CvEU39gkKkoGl1rMS7H5C2kSCd5m3ENje09leM33hAM0FTURfdWVV9ZurPuJ5iw84V8a5ACLCohchSbRqbNMtGY5ylWccdIBkREcTkiMc56gfPg0zd+0YOEwhcjwSxCL7YntXqhy/GAQGrrojbsbDN3VR8p9cM9uW+AoU/0p/pnIrOJCAnEH2HtV0rIOtsJYWTn0R/SCJJ+n9CFSHEkK4DUsBUjOrYKpQN1p/OtyDqWsFEBeTfAZVXYOkSJvZrEV3TmcnvaTn5VHxJJiyzNHS9wwuuZrPy1hYikxPGsRsLAiqDZTV1Rjam44+hHIrop4nmkbAm76WIBV/YACN824NNzkJluWqnkBKSyWh0Zd3lZR0YLYn60myjYdrKNS69X2M/1y0FcGG2qVXGiHKiuG6h49c44fJ3QSClPFImWJAhobJUoK39/1Q6UKMThX3Kmb303L7Fi+DXU2eS5fnmaxKokGv6BxWMhRNtCjUNzxm68IlTlba1bPFUCb1pYa+B1s5yQ3P8BlpHit8KookKx9B/Jo3nrKciANc6km5ZJG8Wm4lxyYzd
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(11063799003)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ifjfNmJXt9EiPazRywIifGJk4/7vZq0VcUO+wr6ohbxw/vnYt014407s5RGr?=
- =?us-ascii?Q?C+txDaPTv4rU8U6rrCV4VB4g0hznAaz079XqhAr+DliIt6VigCvdA5sfcXBd?=
- =?us-ascii?Q?NUjb+9fxrHC4OczUewlZdgyl4sraDmycggrm8pDoJXlztJxELfj0alL4JnxX?=
- =?us-ascii?Q?HDSOm8MQ34lu3IGEgBrYMJ4h4rHNZotp3AKFyVqsH+yjv2mTHC4qiMHItJOd?=
- =?us-ascii?Q?tnXyyWXy9zZ7Is+qlK4IOuni+4qasOlQjlBPoYd4/B1gx+lbE3yuKRCnw7VT?=
- =?us-ascii?Q?lcOrvV6cwf/7q5DrSgM3adm1y/ZaAJQX60P4VuO2khTTP7kQesI4OLi4pjg/?=
- =?us-ascii?Q?quUy8Po0v3QX7RKkFJtvfFpxG8Ge1S2eosZuQ+OjztQOVL2g7VZOScRjZ7eM?=
- =?us-ascii?Q?DOSmnu1Tq1hEQ0831pbPd06ShVjD9nEUeLYoJPRladRQn6B4zeM1xyADjvHw?=
- =?us-ascii?Q?B4tUkgFQBxUY6H0owTJx6tvAEEZ2zfAbAGFyOFu0cpwt5MUs4SQvFBv+ps+V?=
- =?us-ascii?Q?vtJhWyCJ4J3tdyTrgoUR3+GiwZJP9cuvrsPexDXO0OL4MPzUf/voJQIRu94G?=
- =?us-ascii?Q?LTgNxCo9riBm0iIwM0xLa3qFr8J+vZxQ9HQbO6flnFk7d+G8MmFIGkOPEh5L?=
- =?us-ascii?Q?hj69za6pVS8/jop8YBiv0OaVDVm/KdTLdV773zUsjceapJ8ZI4JkBvJ1KkE5?=
- =?us-ascii?Q?nqh1Wva0Fz5s9hFri1sQLvo3QC5E/QOCg/X7uN+4kk6y8VWnj51U71fSZbvg?=
- =?us-ascii?Q?hLjW7ax4zER7cCHR+q2oG5iWbMsKR2Gs8fSrOrl1ZU9OZgBYGU0X1qlgsp6/?=
- =?us-ascii?Q?a6SlGMOhNWUeN2enaIqt0qIBzs5z9KsyG2fiEsb0aHjKsrv2U+Kmfw+U0gMP?=
- =?us-ascii?Q?Gq+J3mqQclczQ+QVVNcZfbNarCnEwGpLr/kvYb+S0hEtfBtIPuKY60DU3bxG?=
- =?us-ascii?Q?inIcTDzaBEMjYp3vjV9hw0EExFAXQqFWXYl9tgrABsLaDMdny+FIymjZ9juX?=
- =?us-ascii?Q?CT9zh5EEYMJtxZj99n5pb4Yo/VgxipH+2QODop8YPqayVJXGCcD14vUAcRLz?=
- =?us-ascii?Q?jzvOmX+5iYNwmVYbDHVZz9H3hWYA92+6QJQj9h70MWiJ7weU7Q9FlC9+XP+a?=
- =?us-ascii?Q?W0D+YszAerBrA+HNrtuPmjg9gcsDyfVDXbOVvSdVoiVwihbk+B4CSkyZEJbO?=
- =?us-ascii?Q?lGjN79fNp9peXK+a93DuQkpYkWf0q7Rt/ZBmWHoGBM8ffNRALQDk1uS0K3yG?=
- =?us-ascii?Q?+rlhOrorAScHXMemr4hn9ohSaRK4G7TNRX3t4mz2eKM/HtzGaJyWiie5MEkf?=
- =?us-ascii?Q?ZmpQYNxdX7yIAkK0PJuAUoDrp4qs5U5VWapK7Dj0fguw2RGQWbhLOU0YlBUY?=
- =?us-ascii?Q?7QVe4cw4bkT2k+N26mAPUPokgfcOnyx0a/Yj2XIGg0HirHL/FqCFEge7bxrx?=
- =?us-ascii?Q?R7HDkc8LXhtgei7vzOGY6GfY4R3sDzFxRXr6C7PADZT41hg2qkPEGePdQHby?=
- =?us-ascii?Q?iIeQtBzIKlO4+Q9N1BO/lzwK8lgVUa3AjAZg4WiDNm2tn1n7Ykj0A1+ARm4S?=
- =?us-ascii?Q?PuA2U4RpS8sgkouMB3L2QsjImrqwL/YVUnSQkMelNNbJdNbscewFJwwPRUnT?=
- =?us-ascii?Q?kpf5RtXLnmG6FoJ467FkS79WPw3eBpyeJLXcp7c7CtbBbMLQG4wgSe74G1zF?=
- =?us-ascii?Q?6MGrPUUH20D/c0LApAaUBFgLYWAoTRIRg2HDVIgHoKUk6cd0?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e33a743-e642-458f-51db-08deb402fa07
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2026 10:56:41.4208
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eRDc0DU5TXPe5lts8gfMeqR1cgY5V1Pn+HB3vz21pWFRzvbfMH3SqkRGrw9gaPEp3+J+7OWy1hZuVDDb1x14Gw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6665
+Content-Transfer-Encoding: 8bit
 
-Hi Tejun,
+Test scx_bpf_dsq_insert_begin() and scx_bpf_dsq_insert_commit().
 
-On Sat, May 16, 2026 at 02:41:20PM -1000, Tejun Heo wrote:
-> scx_root_disable() enters SCX_DISABLING before it grabs scx_enable_mutex to
-> clear [__]scx_switching_all. task_should_scx() short-circuits on DISABLING,
-> so forks in that window land on fair while next_active_class() still skips
-> fair - the new tasks stall.
-> 
-> This can deadlock the disable path itself: scx_alloc_and_add_sched() runs
-> under scx_enable_mutex and creates a helper kthread; if that new kthread is
-> one of the stalled fair tasks, the mutex holder waits forever and
-> scx_root_disable() can never make progress. Only sub-sched support exposes
-> this, since sub-sched enables are the only path where
-> scx_alloc_and_add_sched() can race the root's disable.
-> 
-> Move the DISABLING check after @scx_switching_all so that whenever
-> @scx_switching_all is set, forks keep going to scx and stay in lockstep with
-> __scx_switched_all. Once both are cleared (together under the mutex),
-> DISABLING applies normally.
-> 
-> Fixes: 337ec00b1d9c ("sched_ext: Implement cgroup sub-sched enabling and disabling")
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
->  kernel/sched/ext.c |   23 ++++++++++++++++++++++-
->  1 file changed, 22 insertions(+), 1 deletion(-)
-> 
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -5092,10 +5092,31 @@ static const struct kset_uevent_ops scx_
->   */
->  bool task_should_scx(int policy)
->  {
-> -	if (!scx_enabled() || unlikely(scx_enable_state() == SCX_DISABLING))
-> +	/* if disabled, nothing should be on it */
-> +	if (!scx_enabled())
->  		return false;
-> +
-> +	/* scx is taking over all SCHED_OTHER and SCHED_EXT tasks */
->  	if (READ_ONCE(scx_switching_all))
->  		return true;
-> +
-> +	/*
-> +	 * scx is tearing down - keep new SCHED_EXT tasks out.
-> +	 *
-> +	 * Must come after scx_switching_all test. While both are set, we must
-> +	 * return true via the branch above: [__]scx_switching_all are cleared
-> +	 * together under scx_enable_mutex, and a fork routed to fair while
-> +	 * __scx_switched_all is still on would stall because
-> +	 * next_active_class() skips fair.
+The BPF scheduler enqueues tasks into a BPF queue map in ops.enqueue()
+and dispatches them via the begin/commit transaction API in ops.dispatch().
+After a successful dispatch, the token is stored in a BPF hash map. On
+the task's next dispatch (after dequeue/re-enqueue increments qseq), the
+stored token is stale and finish_dispatch() silently drops the buffered
+entry; a fallback scx_bpf_dsq_insert() then dispatches the task.
 
-Just being extra picky: [__]scx_switching_all are cleared together sequentially,
-but not atomically (in fact the order is what matters). To make it more clear,
-how about rephrasing the comment block above like this:
+Userspace forks spinning children and repeatedly flips their CPU affinity
+to the first online CPU and back, triggering dequeue/re-enqueue cycles.
+The test asserts that both nr_tx_dispatched (fresh commits) and
+nr_tx_stale (attempted stale commits) are positive, exercising both the
+happy path and the stale-token path. The test skips on kernels that
+predate the dispatch transaction API.
 
-  * Must come after the scx_switching_all test. scx_root_disable()
-  * clears __scx_switched_all before scx_switching_all (both under
-  * scx_enable_mutex), so while scx_switching_all is observed as true,
-  * __scx_switched_all may still be on. A fork routed to fair in that
-  * window would stall because next_active_class() skips fair.
+Suggested-by: Tejun Heo <tj@kernel.org>
+Suggested-by: Kuba Piecuch <jpiecuch@google.com>
+Suggested-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+Changes in v2:
+- Assign *ctx = tctx early and initialize skel = NULL before failure paths
+- Add NULL guard in cleanup() to prevent NULL-deref on failed setup()
 
-> +	 *
-> +	 * This can develop into a deadlock - scx holds scx_enable_mutex across
-> +	 * kthread_create() in scx_alloc_and_add_sched(); if the new kthread is
-> +	 * the stalled task, the disable path can never grab the mutex to clear
-> +	 * scx_switching_all.
-> +	 */
-> +	if (unlikely(scx_enable_state() == SCX_DISABLING))
-> +		return false;
-> +
->  	return policy == SCHED_EXT;
->  }
-> 
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/dispatch_cookie.bpf.c | 120 ++++++++++++++++
+ .../selftests/sched_ext/dispatch_cookie.c     | 135 ++++++++++++++++++
+ 3 files changed, 256 insertions(+)
+ create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.c
 
-Other than that, looks good to me.
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 5d2dffca0e91..ae3dc0913378 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -164,6 +164,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
+ auto-test-targets :=			\
+ 	create_dsq			\
+ 	dequeue				\
++	dispatch_cookie			\
+ 	enq_last_no_enq_fails		\
+ 	ddsp_bogus_dsq_fail		\
+ 	ddsp_vtimelocal_fail		\
+diff --git a/tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c b/tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
+new file mode 100644
+index 000000000000..160a77ed9000
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
+@@ -0,0 +1,120 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Test scx_bpf_dsq_insert_begin() and scx_bpf_dsq_insert_commit().
++ *
++ * Exercises both the happy path (fresh token committed successfully) and
++ * the stale-token path (stored token reused after the task was dequeued and
++ * re-enqueued, incrementing qseq and making the token stale).
++ *
++ * Copyright (C) 2026 Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
++ * Copyright (C) 2026 Cheng-Yang Chou <yphbchou0911@gmail.com>
++ */
++#include <scx/common.bpf.h>
++
++char _license[] SEC("license") = "GPL";
++
++UEI_DEFINE(uei);
++
++struct {
++	__uint(type, BPF_MAP_TYPE_QUEUE);
++	__uint(max_entries, 8192);
++	__type(value, s32);
++} queue SEC(".maps");
++
++struct {
++	__uint(type, BPF_MAP_TYPE_HASH);
++	__uint(max_entries, 4096);
++	__type(key, s32);
++	__type(value, u64);
++} last_token SEC(".maps");
++
++long nr_tx_dispatched;
++long nr_tx_stale;
++
++void BPF_STRUCT_OPS(dispatch_cookie_enqueue, struct task_struct *p,
++		    u64 enq_flags)
++{
++	s32 pid = p->pid;
++
++	if (bpf_map_push_elem(&queue, &pid, 0))
++		scx_bpf_error("Failed to enqueue %s[%d]", p->comm, p->pid);
++}
++
++void BPF_STRUCT_OPS(dispatch_cookie_dispatch, s32 cpu,
++		    struct task_struct *prev)
++{
++	s32 pid;
++	struct task_struct *p;
++	u64 *stored, token;
++
++	if (bpf_map_pop_elem(&queue, &pid))
++		return;
++
++	p = bpf_task_from_pid(pid);
++	if (!p)
++		return;
++
++	/*
++	 * Tasks pinned to a different CPU (e.g. per-CPU kworkers) cannot be
++	 * inserted into this CPU's local DSQ. Skip the transaction path and
++	 * fall back to the global DSQ so the scheduler does not abort.
++	 */
++	if (!bpf_cpumask_test_cpu(cpu, p->cpus_ptr)) {
++		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
++		bpf_task_release(p);
++		return;
++	}
++
++	/*
++	 * After a successful fresh dispatch, store the token. On the task's
++	 * next dispatch (after re-enqueue increments qseq), the stored token
++	 * exercises the stale path in finish_dispatch().
++	 *
++	 * scx_bpf_dsq_insert_commit() always returns %true when the preamble
++	 * passes; stale detection fires asynchronously in finish_dispatch()
++	 * with no BPF-observable signal. Always pair the commit() call with a
++	 * fallback scx_bpf_dsq_insert(): if the token is stale,
++	 * finish_dispatch() drops the buffered entry and the fallback
++	 * dispatches the task. If the token is still fresh, finish_dispatch()
++	 * dispatches it and the fallback's CAS is a no-op.
++	 */
++	struct scx_bpf_dsq_insert_commit_args commit_args = {
++		.dsq_id		= SCX_DSQ_LOCAL,
++		.slice		= 0,
++		.enq_flags	= 0,
++	};
++
++	stored = bpf_map_lookup_elem(&last_token, &pid);
++	if (stored) {
++		token = *stored;
++		bpf_map_delete_elem(&last_token, &pid);
++		scx_bpf_dsq_insert_commit(p, &commit_args, token);
++		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
++		/* counts attempted stale commits, not finish_dispatch() rejections */
++		__sync_fetch_and_add(&nr_tx_stale, 1);
++	} else {
++		token = scx_bpf_dsq_insert_begin(p);
++		if (scx_bpf_dsq_insert_commit(p, &commit_args, token)) {
++			__sync_fetch_and_add(&nr_tx_dispatched, 1);
++			bpf_map_update_elem(&last_token, &pid, &token, BPF_ANY);
++		} else {
++			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
++		}
++	}
++
++	bpf_task_release(p);
++}
++
++void BPF_STRUCT_OPS(dispatch_cookie_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
++SEC(".struct_ops.link")
++struct sched_ext_ops dispatch_cookie_ops = {
++	.enqueue		= (void *) dispatch_cookie_enqueue,
++	.dispatch		= (void *) dispatch_cookie_dispatch,
++	.exit			= (void *) dispatch_cookie_exit,
++	.name			= "dispatch_cookie",
++	.timeout_ms		= 5000U,
++};
+diff --git a/tools/testing/selftests/sched_ext/dispatch_cookie.c b/tools/testing/selftests/sched_ext/dispatch_cookie.c
+new file mode 100644
+index 000000000000..89e6ad6d6a79
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/dispatch_cookie.c
+@@ -0,0 +1,135 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Test scx_bpf_dsq_insert_begin() and scx_bpf_dsq_insert_commit().
++ *
++ * Copyright (C) 2026 Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
++ * Copyright (C) 2026 Cheng-Yang Chou <yphbchou0911@gmail.com>
++ */
++#define _GNU_SOURCE
++#include <bpf/bpf.h>
++#include <errno.h>
++#include <sched.h>
++#include <scx/common.h>
++#include <signal.h>
++#include <stdlib.h>
++#include <sys/wait.h>
++#include <unistd.h>
++#include "dispatch_cookie.bpf.skel.h"
++#include "scx_test.h"
++
++#define NUM_CHILDREN	32
++#define NUM_FLIP_ITERS	100
++
++struct dispatch_cookie_ctx {
++	struct dispatch_cookie	*skel;
++	struct bpf_link		*link;
++};
++
++static enum scx_test_status setup(void **ctx)
++{
++	struct dispatch_cookie_ctx *tctx;
++
++	if (!__COMPAT_has_ksym("scx_bpf_dsq_insert_begin")) {
++		fprintf(stderr, "SKIP: dispatch transaction API not supported\n");
++		return SCX_TEST_SKIP;
++	}
++
++	tctx = malloc(sizeof(*tctx));
++	SCX_FAIL_IF(!tctx, "Failed to allocate test context");
++	tctx->skel = NULL;
++	tctx->link = NULL;
++	*ctx = tctx;
++
++	tctx->skel = dispatch_cookie__open();
++	SCX_FAIL_IF(!tctx->skel, "Failed to open skel");
++
++	SCX_ENUM_INIT(tctx->skel);
++	SCX_FAIL_IF(dispatch_cookie__load(tctx->skel), "Failed to load skel");
++
++	return SCX_TEST_PASS;
++}
++
++static enum scx_test_status run(void *ctx)
++{
++	struct dispatch_cookie_ctx *tctx = ctx;
++	cpu_set_t cpuset_one, cpuset_all;
++	pid_t pids[NUM_CHILDREN];
++	int i, j, nforked = 0, status, first_cpu;
++
++	tctx->link = bpf_map__attach_struct_ops(tctx->skel->maps.dispatch_cookie_ops);
++	SCX_FAIL_IF(!tctx->link, "Failed to attach scheduler");
++
++	SCX_FAIL_IF(sched_getaffinity(0, sizeof(cpuset_all), &cpuset_all),
++		    "Failed to get CPU affinity (%d)", errno);
++
++	first_cpu = -1;
++	for (i = 0; i < CPU_SETSIZE; i++) {
++		if (CPU_ISSET(i, &cpuset_all)) {
++			first_cpu = i;
++			break;
++		}
++	}
++	SCX_FAIL_IF(first_cpu < 0, "No online CPUs found");
++
++	CPU_ZERO(&cpuset_one);
++	CPU_SET(first_cpu, &cpuset_one);
++
++	for (i = 0; i < NUM_CHILDREN; i++) {
++		pids[i] = fork();
++		if (pids[i] == 0) {
++			while (1)
++				sched_yield();
++		}
++		if (pids[i] > 0)
++			nforked++;
++	}
++
++	/*
++	 * Flip affinity to trigger dequeue/re-enqueue, which increments qseq
++	 * and makes previously captured tokens stale.
++	 */
++	for (i = 0; i < NUM_FLIP_ITERS; i++) {
++		for (j = 0; j < NUM_CHILDREN; j++) {
++			if (pids[j] <= 0)
++				continue;
++			sched_setaffinity(pids[j], sizeof(cpuset_one), &cpuset_one);
++			sched_setaffinity(pids[j], sizeof(cpuset_all), &cpuset_all);
++		}
++		usleep(1000);
++	}
++
++	for (i = 0; i < NUM_CHILDREN; i++) {
++		if (pids[i] <= 0)
++			continue;
++		kill(pids[i], SIGKILL);
++		waitpid(pids[i], &status, 0);
++	}
++
++	SCX_GT(nforked, 0);
++	SCX_GT(tctx->skel->bss->nr_tx_dispatched, 0);
++	SCX_GT(tctx->skel->bss->nr_tx_stale, 0);
++
++	return SCX_TEST_PASS;
++}
++
++static void cleanup(void *ctx)
++{
++	struct dispatch_cookie_ctx *tctx = ctx;
++
++	if (!tctx)
++		return;
++	if (tctx->link)
++		bpf_link__destroy(tctx->link);
++	dispatch_cookie__destroy(tctx->skel);
++	free(tctx);
++}
++
++struct scx_test dispatch_cookie = {
++	.name		= "dispatch_cookie",
++	.description	= "Verify scx_bpf_dsq_insert_begin() and "
++			  "scx_bpf_dsq_insert_commit() dispatch tasks correctly",
++	.setup		= setup,
++	.run		= run,
++	.cleanup	= cleanup,
++};
++REGISTER_SCX_TEST(&dispatch_cookie)
+-- 
+2.48.1
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-
-Thanks,
--Andrea
