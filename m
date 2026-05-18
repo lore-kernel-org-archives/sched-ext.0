@@ -1,267 +1,129 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B71043E4A6
-	for <sched-ext@lists.linux.dev>; Mon, 18 May 2026 13:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E7C28E0F
+	for <sched-ext@lists.linux.dev>; Mon, 18 May 2026 13:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779110014; cv=none; b=XOrdH53CEN8JYyrOWNLFAA9SEHUf+R/KQ6o86iA6nFgSmfWbsJNWxlESiY5mBrWJlfUl0bEUV/m5O62dQIDFHSJ9Nt+1RCAuYqzLfkbFLwFTe+OUrltXqTioNa1SI54ukU0149cgeDHoALiJ7Wwi/8AdB+mqus+T1ZOjog1ib7I=
+	t=1779111945; cv=none; b=l2hkaugJmEID9BrEemZQ0TWqzTHiRIxu9iIO2RntbcDmjpLEVv+UZvyvG5+eQgdoEP1vQYTlVzDcf3kecnpV1cPPxz+gZPH2pWg0mENAILzOjutRbyBubfhlTOUcNt/zghPJuHeFrCES5CyJifbhCvzbzcEhDnq18Tboh4kZWkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779110014; c=relaxed/simple;
-	bh=C7nHQnxYggXqqXgHA8yK2XGmo8iSvTXSqhwUU1ZUQx8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6Rr6BC7COrITq9Z9I1q2ASottpW67FhIerEj83e+2+FO+imrjjWeHq2deu/cl5OlROPnus5j6lrbJlYh6TAzMKFaXbN0aX/S6DF796hdY9HE8+QRLVfeYKjPrfylcPneslPVV2V2kuZyYiqY8YbBclTLjfbon1hpPqtL9N2Ex4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a2MM+mvW; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779111945; c=relaxed/simple;
+	bh=K9Td6XC3NkbWMFETK3EHBOTnNWbw2/n1OVoMTf5K5d0=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=t/z47wIs6ahac3Rik+dH4KzeyS09Ent2hnPBH4YYyo0EXVcNUw2A2nqcswPKSkFxIUKX/5dLhTxMc0kqQcOjl5veyNkKOYnACLyNS7MpsbmrOgIpxGA05cKbTrwemkEFB5X6b3xkQuC9BztmuQJU645hsAnTzS+SArceuD+fMKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFmSFide; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a2MM+mvW"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-367d88b9940so1317166a91.1
-        for <sched-ext@lists.linux.dev>; Mon, 18 May 2026 06:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779110012; x=1779714812; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q+jVh1ZMjYbXV7kTF8Y6pq+jOCVWPBaSeZyRt6WW1QY=;
-        b=a2MM+mvWSlXaDRXkWArMUM2Fx2G5ffHFMn9bTLoAShZIG+ATNCheLCnVGSdL/sQ2Hu
-         dkKsT1J/5BJya6uNqgx17tPHEVJk/4fRmhRLTcYGyZd9LgvSL3+jXEhscm7cZSqPrLin
-         iAu4gnwYaW5OI1qPAV7f6b169LtUetwwfrP5QN4kKLRO9r12fQZI3Mg5h9XLN0t8/Pib
-         aLHvmpHj2ImaQNCcRqlhOLfw4XjIRDDPR54dHVauer9pAsbaNjjfcVbkzvtqhmMiiEQG
-         EsHnXlCsgYEXGEdyrNyNY3T/NKA8jYLH6qyQ8loG1NXl0sdoKnxS2pTjKqDlFhbq6ULA
-         42Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779110012; x=1779714812;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Q+jVh1ZMjYbXV7kTF8Y6pq+jOCVWPBaSeZyRt6WW1QY=;
-        b=P82Ef+9on3zgILv/fZqr4MrYD53cySJrPYuFRhsgusuAdft13jCIpBdHsAKZr4VqO4
-         dfJSboR+lpaqnrc54v5d+VTqP8IuWf2NsvWXBhOB+uvnowwORPoYLF4yzuFvB0uwrjuP
-         QyeJjFMsFKGMl2qE6rluZ9pnlJ8EBI9Oeo8W1bnHeczDoQWbKlLyvOT+uTEKQ2se3ZXZ
-         UpqFNAjWv+ABxRaVnPmMqYucrm5FRRnCKuYXwRCfgD5CohSTQdzEwYhQJVFA5ZWVRUQJ
-         qoI0LYPTokZNpP7fF9TeUlTTLz7+AG9yXXN/+hPvjWkUp4GLcQzq8rxgKvw9Bjq79D6+
-         q1xg==
-X-Gm-Message-State: AOJu0YyxtROIMggNg+58eCYn0PsGjabSV4qSp8C/ng650ZdoNZneDZch
-	HYjCEEmC8nNQ0fSPOE9YP9ahX5bEyRFJ5iWESfVWrTzYNQFD2vA67TegK7pqNA==
-X-Gm-Gg: Acq92OEVi8hCkH11CkqRVAuv832R7wH2+CMxnqZPmeVrPgmrj59ef62mDLhL2EpcLwZ
-	0wmVzwBhIRp42egGRWbY1DRCeibeMs3qxwFBhO+lxkH0fRaORdHb6LA4SLt1UaFBRjBiRUsqV0W
-	9ETCkmGWB/q1BrtEjPq6pX6MhVSMAHwUbdQUNJo+dz1gjQNUADpP+HV8siw53pqp3PHSfFl/ahz
-	2+HVuxNEyExaCrb1rZad4s3nouFk/kxapZQyLHMNdpdKhyYz38JDu9rjRrfgFphHAxyzvz4erfl
-	+GhZND7Rs5KSzEFItS2HIT0hgMERMCJOMytjrbwSyYlE8soSq9aAt7B7dAGQxyCjKZWDxkErPxU
-	oLJDuQlmkDycMmDV5tboec5QGBp29/v9rOHT2LMLICe0HfeD/76ADW4sO1AKtCau1Uuc096Acv6
-	0Wf5Z/cq7egKe5FJCX8/zq1NJO4TKQxWgtfnm+wNkNwN8NjhQK9UMy
-X-Received: by 2002:a17:90b:314a:b0:366:3517:1a95 with SMTP id 98e67ed59e1d1-3695173c0cfmr14018103a91.0.1779110012364;
-        Mon, 18 May 2026 06:13:32 -0700 (PDT)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:c31b:5187:c514:ac40])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-369512424c2sm11241781a91.4.2026.05.18.06.13.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 06:13:32 -0700 (PDT)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	rcu@vger.kernel.org
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: [PATCH v3 2/2] sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stalled CPUs
-Date: Mon, 18 May 2026 21:11:49 +0800
-Message-ID: <20260518131311.1170786-3-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260518131311.1170786-1-yphbchou0911@gmail.com>
-References: <20260518131311.1170786-1-yphbchou0911@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFmSFide"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9ADC2BCB8;
+	Mon, 18 May 2026 13:45:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779111945;
+	bh=K9Td6XC3NkbWMFETK3EHBOTnNWbw2/n1OVoMTf5K5d0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=jFmSFidei8cbpOVf/vid87XWrwKyCKNR3fG4ywLSY5qn3qYQSQMDAkpiF4xs5Mg/a
+	 XZEDomxFjIls3ijummjAa9XbmdXrvTA+2M1jz2N5lcBk5U1Vt+K0uf0rXu7Lmadszw
+	 igBsUQSjLPIoWmpiNVXhGebDQHIQjGBxuxG5qDy0+YyWSnn2ZKciSEUCtptOQywAzX
+	 EfA5w9Z5a4Bdq3CKM5vYJFeP9E9oIQTswEHod31RqmbOjUbZnR1CP5eGXf+2hImyS5
+	 F0bQXzhonGZsak6jlQwbeR00YCBdjEASgHkrF8BYS2Kycq/BiGo4q2dvvYM9U3G9BX
+	 YXXJ0BXN//23A==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 2/2] sched_ext, rcu: Upgrade RCU stall paths to
+ report cpumask of stalled CPUs
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Cheng-Yang Chou" <yphbchou0911@gmail.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260518131311.1170786-3-yphbchou0911@gmail.com>
+References: <20260518131311.1170786-3-yphbchou0911@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 18 May 2026 13:45:44 +0000
+Message-Id: <20260518134544.ED9ADC2BCB8@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-scx_rcu_cpu_stall() previously recorded the detector CPU rather than the
-stalled one, and the expedited grace period path had no stalled CPU to
-report at all.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] Dynamic memory allocation in RCU stall reporting paths introduces =
+deadlocks and degrades diagnostic reliability.
+--
 
-Thread a cpumask through panic_on_rcu_stall() and scx_rcu_cpu_stall()
-to capture all stalled CPUs. Report cpumask_first() as exit_cpu and the
-full CPU list in the exit message. Task-only stalls yield exit_cpu = -1.
-Falls back to cpu_none_mask on allocation failure.
+commit 97fc58777bb71d599b2d82e880aa479bdea14d1d
+Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Subject: sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stall=
+ed CPUs
 
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
- include/linux/sched/ext.h |  4 ++--
- kernel/rcu/tree_exp.h     | 14 +++++++++++---
- kernel/rcu/tree_stall.h   | 15 +++++++++++----
- kernel/sched/ext.c        |  7 +++++--
- 4 files changed, 29 insertions(+), 11 deletions(-)
+This commit updates the RCU stall reporting paths to thread a cpumask throu=
+gh
+panic_on_rcu_stall() and scx_rcu_cpu_stall() to capture and report all stal=
+led
+CPUs. It dynamically allocates the mask using zalloc_cpumask_var() with
+GFP_KERNEL in the expedited path and GFP_ATOMIC in the normal stall path.
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 20b2343aa344..75cb8b119fb7 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -263,7 +263,7 @@ void sched_ext_dead(struct task_struct *p);
- void print_scx_info(const char *log_lvl, struct task_struct *p);
- void scx_softlockup(u32 dur_s);
- bool scx_hardlockup(int cpu);
--bool scx_rcu_cpu_stall(void);
-+bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask);
- 
- #else	/* !CONFIG_SCHED_CLASS_EXT */
- 
-@@ -271,7 +271,7 @@ static inline void sched_ext_dead(struct task_struct *p) {}
- static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
- static inline void scx_softlockup(u32 dur_s) {}
- static inline bool scx_hardlockup(int cpu) { return false; }
--static inline bool scx_rcu_cpu_stall(void) { return false; }
-+static inline bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask) { return false; }
- 
- #endif	/* CONFIG_SCHED_CLASS_EXT */
- 
-diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-index 82cada459e5d..6199ca3cfb7d 100644
---- a/kernel/rcu/tree_exp.h
-+++ b/kernel/rcu/tree_exp.h
-@@ -555,7 +555,8 @@ static bool synchronize_rcu_expedited_wait_once(long tlimit)
- /*
-  * Print out an expedited RCU CPU stall warning message.
-  */
--static void synchronize_rcu_expedited_stall(unsigned long jiffies_start, unsigned long j)
-+static void synchronize_rcu_expedited_stall(unsigned long jiffies_start, unsigned long j,
-+					    struct cpumask *stalled_mask)
- {
- 	int cpu;
- 	unsigned long mask;
-@@ -578,6 +579,8 @@ static void synchronize_rcu_expedited_stall(unsigned long jiffies_start, unsigne
- 			if (!(READ_ONCE(rnp->expmask) & mask))
- 				continue;
- 			ndetected++;
-+			if (stalled_mask)
-+				cpumask_set_cpu(cpu, stalled_mask);
- 			rdp = per_cpu_ptr(&rcu_data, cpu);
- 			pr_cont(" %d-%c%c%c%c", cpu,
- 				"O."[!!cpu_online(cpu)],
-@@ -659,23 +662,28 @@ static void synchronize_rcu_expedited_wait(void)
- 
- 	for (;;) {
- 		unsigned long j;
-+		cpumask_var_t stalled_mask;
-+		bool have_mask;
- 
- 		if (synchronize_rcu_expedited_wait_once(jiffies_stall))
- 			return;
- 		if (rcu_stall_is_suppressed())
- 			continue;
- 
-+		have_mask = zalloc_cpumask_var(&stalled_mask, GFP_KERNEL);
-+
- 		nbcon_cpu_emergency_enter();
- 
- 		j = jiffies;
- 		rcu_stall_notifier_call_chain(RCU_STALL_NOTIFY_EXP, (void *)(j - jiffies_start));
- 		trace_rcu_stall_warning(rcu_state.name, TPS("ExpeditedStall"));
--		synchronize_rcu_expedited_stall(jiffies_start, j);
-+		synchronize_rcu_expedited_stall(jiffies_start, j, have_mask ? stalled_mask : NULL);
- 		jiffies_stall = 3 * rcu_exp_jiffies_till_stall_check() + 3;
- 
- 		nbcon_cpu_emergency_exit();
- 
--		panic_on_rcu_stall();
-+		panic_on_rcu_stall(have_mask ? stalled_mask : cpu_none_mask);
-+		free_cpumask_var(stalled_mask);
- 	}
- }
- 
-diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-index b67532cb8770..b25609520418 100644
---- a/kernel/rcu/tree_stall.h
-+++ b/kernel/rcu/tree_stall.h
-@@ -159,7 +159,7 @@ static int __init check_cpu_stall_init(void)
- early_initcall(check_cpu_stall_init);
- 
- /* If so specified via sysctl, panic, yielding cleaner stall-warning output. */
--static void panic_on_rcu_stall(void)
-+static void panic_on_rcu_stall(const struct cpumask *stalled_mask)
- {
- 	static int cpu_stall;
- 
-@@ -167,7 +167,7 @@ static void panic_on_rcu_stall(void)
- 	 * Attempt to kick out the BPF scheduler if it's installed and defer
- 	 * the panic to give the system a chance to recover.
- 	 */
--	if (scx_rcu_cpu_stall())
-+	if (scx_rcu_cpu_stall(stalled_mask))
- 		return;
- 
- 	if (++cpu_stall < sysctl_max_rcu_stall_to_panic)
-@@ -631,6 +631,8 @@ static void rcu_check_gp_kthread_expired_fqs_timer(void)
- static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
- {
- 	int cpu;
-+	cpumask_var_t stalled_mask;
-+	bool have_mask;
- 	unsigned long flags;
- 	unsigned long gpa;
- 	unsigned long j;
-@@ -645,6 +647,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
- 	if (rcu_stall_is_suppressed())
- 		return;
- 
-+	have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC);
-+
- 	nbcon_cpu_emergency_enter();
- 
- 	/*
-@@ -660,6 +664,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
- 			for_each_leaf_node_possible_cpu(rnp, cpu)
- 				if (rnp->qsmask & leaf_node_cpu_bit(rnp, cpu)) {
- 					print_cpu_stall_info(cpu);
-+					if (have_mask)
-+						cpumask_set_cpu(cpu, stalled_mask);
- 					ndetected++;
- 				}
- 		}
-@@ -701,7 +707,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
- 
- 	nbcon_cpu_emergency_exit();
- 
--	panic_on_rcu_stall();
-+	panic_on_rcu_stall(have_mask ? stalled_mask : cpu_none_mask);
-+	free_cpumask_var(stalled_mask);
- 
- 	rcu_force_quiescent_state();  /* Kick them all. */
- }
-@@ -754,7 +761,7 @@ static void print_cpu_stall(unsigned long gp_seq, unsigned long gps)
- 
- 	nbcon_cpu_emergency_exit();
- 
--	panic_on_rcu_stall();
-+	panic_on_rcu_stall(cpumask_of(smp_processor_id()));
- 
- 	/*
- 	 * Attempt to revive the RCU machinery by forcing a context switch.
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 22b1356aa4eb..a2ef2eae7e91 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5187,9 +5187,12 @@ static __printf(2, 3) bool handle_lockup(int exit_cpu, const char *fmt, ...)
-  * resolve the reported RCU stall. %false if sched_ext is not enabled or someone
-  * else already initiated abort.
-  */
--bool scx_rcu_cpu_stall(void)
-+bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask)
- {
--	return handle_lockup(-1, "RCU CPU stall detected!");
-+	int exit_cpu = cpumask_empty(stalled_mask) ? -1 : (int)cpumask_first(stalled_mask);
-+
-+	return handle_lockup(exit_cpu, "RCU CPU stall on CPUs (%*pbl)",
-+			     cpumask_pr_args(stalled_mask));
- }
- 
- /**
--- 
-2.48.1
+> diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
+> index 82cada459e5d0..6199ca3cfb7d7 100644
+> --- a/kernel/rcu/tree_exp.h
+> +++ b/kernel/rcu/tree_exp.h
 
+[ ... ]
+
+> @@ -659,23 +662,28 @@ static void synchronize_rcu_expedited_wait(void)
+> =20
+>  	for (;;) {
+>  		unsigned long j;
+> +		cpumask_var_t stalled_mask;
+> +		bool have_mask;
+> =20
+>  		if (synchronize_rcu_expedited_wait_once(jiffies_stall))
+>  			return;
+>  		if (rcu_stall_is_suppressed())
+>  			continue;
+> =20
+> +		have_mask =3D zalloc_cpumask_var(&stalled_mask, GFP_KERNEL);
+
+Since callers of synchronize_rcu_expedited() might hold arbitrary sleepable
+locks, can this GFP_KERNEL allocation cause an AB-BA deadlock if the system
+enters direct memory reclaim and attempts to acquire those same locks?
+
+Additionally, if the allocation fails due to memory exhaustion (which is a
+common cause of RCU stalls), this falls back to cpu_none_mask. This drops
+the stalled CPU list exactly when diagnostic information is most needed.
+
+Would a pre-allocated static mask be safer for these critical diagnostic
+paths?
+
+[ ... ]
+
+> diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
+> index b67532cb87705..b256095204184 100644
+> --- a/kernel/rcu/tree_stall.h
+> +++ b/kernel/rcu/tree_stall.h
+
+[ ... ]
+
+> @@ -645,6 +647,8 @@ static void print_other_cpu_stall(unsigned long gp_se=
+q, unsigned long gps)
+>  	if (rcu_stall_is_suppressed())
+>  		return;
+> =20
+> +	have_mask =3D zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC);
+
+When CONFIG_CPUMASK_OFFSTACK=3Dy is enabled, this dynamically allocates mem=
+ory.
+
+If the stalled CPU is stuck holding a memory allocator lock like a slab node
+lock, will the detector CPU spin indefinitely trying to acquire that same
+lock, entirely suppressing the stall warning and deadlocking the system?
+
+Also, if this GFP_ATOMIC allocation fails, it emits a page allocation failu=
+re
+warning before nbcon_cpu_emergency_enter() is called.
+
+If the stalled CPU happens to hold the console lock, could this standard
+printk path deadlock the reporting CPU?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260518131311.1170=
+786-1-yphbchou0911@gmail.com?part=3D2
