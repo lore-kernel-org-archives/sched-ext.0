@@ -1,45 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017EA390234;
-	Mon, 18 May 2026 19:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8B42571DD;
+	Mon, 18 May 2026 19:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779132621; cv=none; b=grtRLgv4bkHVwU7rDvEA+W1LsgY6n2q/imQSX0iS8VdVMGGigvKfyEhjNn9smrUUR/EOJ7sDTsvpQ88UF23bVj6Vo3mF0qiQFNZn96g1gMrgUzqGjE/eoF8PunoQSLXgzjFOn0avEcOUsCfIMHJ6XpDw+X3fyXLIdup14qpVTVI=
+	t=1779133915; cv=none; b=fVY6sRubuU/4PnzwhBu8608loGEKNZgBZGGTS/lMMtGlT61Ew4ay266L0pExrbz0hIMCoI8Gca4mTWJSrmqtOfjt5QZ9VFp/2sh1XscaY1GJaJKFGhFoMDh2IcxhTV2sUmrU4m+6F4CFPSJASwfZDmAG37w2yteL21i5gMg6d+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779132621; c=relaxed/simple;
-	bh=rVbWO/Hq0lQC5ldOAFBGDcMSk5719URhA8XsJZ/v0xU=;
+	s=arc-20240116; t=1779133915; c=relaxed/simple;
+	bh=0EDZC3hd1XIo9RQYnoioqSdk6FylXyXD32g6lc8WK80=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=toXScaVNVOdOduzUnyMP4OxhdyUyIKoSPRjOOerS50Ik4SXeHeZtQ/1xDex3OubhSTl4QhlqgB51Z79hF8a+tlXNIvBCWdOTwUfNo3j8A59RmCsEMRTOKhHsnbFf4gCra7iCLx1wnMs6aM4aWLCHMte79BUDk9UF3RT5IA3t5X4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NE6coFqO; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=C5CXlHRsGs3ZOgNANOheOfwDifoYjpVu6UCsmKTL1f6mp6Toxan5VJvDTRnjdBCT3iyLskpD0CoNz9Ayp3mRvPxGJx3mH5iwrjuntZ8yXmxcjLb5iDaKfOj7/M5YBmJvFeof+LzB9RAErvbpbkiUwyxBcnD8ErSlgm4QfV1kh7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A3KTXS+Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NE6coFqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEB0C2BCF6;
-	Mon, 18 May 2026 19:30:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A3KTXS+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71871C2BCB7;
+	Mon, 18 May 2026 19:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779132620;
-	bh=rVbWO/Hq0lQC5ldOAFBGDcMSk5719URhA8XsJZ/v0xU=;
+	s=k20201202; t=1779133914;
+	bh=0EDZC3hd1XIo9RQYnoioqSdk6FylXyXD32g6lc8WK80=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NE6coFqOIIw6kh92Klply41Z7rPAmmJi3sty5BvQeOTCKoBHKo7K0I26BFlA/WOzu
-	 hy/x0r7KKdg2i2yRmtGcMc6oWY43B9zN/TkX3vAh5+CyS+XMl1jbb0RDlI9JdjCXZ3
-	 e1iLesMy0DxjTq9VqP6E/3f85kMtra7ph9KYABKEwT6aRbZmw2JRfQZFA+rK2hqNVo
-	 k+5WPm0uthFNX7Latmu1BiIyx2jzlUh5tbbNaU2hbMOZHhoCk/+h155HQSFlOAcZ7W
-	 NEFHxUybuL+Qs9ddhkDRw9Yi53VMN2W+NYL/+q7RBiXcm19UH2sX9039UAizflQr0q
-	 yy0g13O453YzA==
-Date: Mon, 18 May 2026 09:30:19 -1000
+	b=A3KTXS+Q/AEBoZ4uNfNUsQ0k+ej9XaXq69rCQFPw1ygtZW43gGcEuMye/wWE45zdM
+	 YMDY+mI9YFi+aDyqPtX65ur9P0c1QLANOG7IYdZsxcU5O4TksyH0HhEMICOGFtEsDu
+	 NbqOY4ZUq2HB4h+bfnVdA26kN4pBS4xYv5DFT9gazLd16W7FbrqAVkcww8+KXOp2eb
+	 jkLATaJa7wZKYa7Y3RhuUVAq34sssOBxg9XNnYenpE4Kl2gYVnA293XdgSXNGs1/Y7
+	 aOE88cBDoObjjaZ5K6sWE4I1ly4Ftfz3HR+tVZRTJvCijUZ6tVmR9iJuQl7V3aRIho
+	 Az/hnaRVwWgCA==
+Date: Mon, 18 May 2026 09:51:53 -1000
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>, rcu@vger.kernel.org,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v3 2/2] sched_ext, rcu: Upgrade RCU stall paths to report
- cpumask of stalled CPUs
-Message-ID: <agtoyycMdwatAiFc@slm.duckdns.org>
-References: <20260518131311.1170786-1-yphbchou0911@gmail.com>
- <20260518131311.1170786-3-yphbchou0911@gmail.com>
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+	bpf@vger.kernel.org, x86@kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 7/8] sched_ext: Sub-allocator over kernel-claimed BPF
+ arena pages
+Message-ID: <agtt2dEjS4Qg7a_P@slm.duckdns.org>
+References: <20260517211232.1670594-1-tj@kernel.org>
+ <20260517211232.1670594-8-tj@kernel.org>
+ <20260518072042.GP3102624@noisy.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -48,19 +61,17 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260518131311.1170786-3-yphbchou0911@gmail.com>
+In-Reply-To: <20260518072042.GP3102624@noisy.programming.kicks-ass.net>
 
-On Mon, May 18, 2026 at 09:11:49PM +0800, Cheng-Yang Chou wrote:
-> +bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask)
->  {
-> -	return handle_lockup(-1, "RCU CPU stall detected!");
-> +	int exit_cpu = cpumask_empty(stalled_mask) ? -1 : (int)cpumask_first(stalled_mask);
-> +
-> +	return handle_lockup(exit_cpu, "RCU CPU stall on CPUs (%*pbl)",
-> +			     cpumask_pr_args(stalled_mask));
+Hello,
 
-Wouldn't you want to pipe this down so that you can prioritize all stalled
-CPUs when dumping?
+On Mon, May 18, 2026 at 09:20:42AM +0200, Peter Zijlstra wrote:
+...
+> Should this really be part of scx rather than be part of the bpf-arena
+> thing proper?
+
+It's just a layer on top of arena. If bpf folks are okay with it, I don't
+see why it can't be a common utility thing on the bpf side.
 
 Thanks.
 
