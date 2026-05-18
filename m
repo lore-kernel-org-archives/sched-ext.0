@@ -1,155 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4974D3E024F;
-	Mon, 18 May 2026 08:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7773ED11F
+	for <sched-ext@lists.linux.dev>; Mon, 18 May 2026 13:13:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779091599; cv=none; b=X4EyR+jsoTsvtTW6D2C20I6AJQI4PrM/CG0K6yExu0nsE/vgS/VkhqBBJiA6XCBSc82OOdmCeB0MFnUTXsrLntAF3W2IQCCA/FnUiX2/0yHtlu+G7B9xLzlPuUYMtFVXF2mYzutvDIQ4NtKfPNkXqbkLyh24E2jDwaaQ+Fi8y/E=
+	t=1779110010; cv=none; b=irxoGZijiIHes6oduxPtqKZ6GQ+oE8SOZSJ/uvcRpjHA81u1j0r31Jsxqp05OgS7iypkFYAChZa1LV1jD5bmq5gsLrqZbD2yBQYsila8vdcEn5OVnJ3WK838XMGkRBUaqRdID74JaGMMJnQlepFCMqTwHEr2q8Om2n7hRy7jKMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779091599; c=relaxed/simple;
-	bh=kEuniSHQNIJ6L0hPMKHr8wZkzqKyNNWkUVWkXhasdXA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GUjmlDfMdA1gnR2HbYOEWzARxykoPfc4n5vhP/tqea+3eiEcAwYJkxGwR3RAFgcVgza9toXNswdmFr1k3ctbTU6RiYzkzOc5+HUqvazZEjsZSU5LPtqr9/vyBd9Bld4GvHzavqxwwB79WIefe3LASFjN2vOdGyj2NAb7LUDpHgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=INZ5j3KR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779110010; c=relaxed/simple;
+	bh=GiEkZMkm2x4I0jKruTe/O1TNuhy40/QVV6JTo4QA6sI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uJJV+CWym/mWNgejI0FV009OY5lkKyAdRzlFIJ7UO/upN7DRtIHMAO3GExFetEwEoDSXajB7xDh8T7EJTN5/J6eM7qdno0kb6KcPAUgBhaqNu5FScePg8lFifjozDTowMfB3407n5WrVb+wUDpYn0qoYfFWa1ZFBSn5B/BrPkdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TlLPuDfq; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="INZ5j3KR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0ADAC2BCB7;
-	Mon, 18 May 2026 08:06:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779091598;
-	bh=kEuniSHQNIJ6L0hPMKHr8wZkzqKyNNWkUVWkXhasdXA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=INZ5j3KRIvy4Z5CGgrdXBCP3zQoo46tl5JhAXKL8QiMoOPlkLJrMDpj+ZxyxCAiHu
-	 5QKLn81mMUogW66RPtBBpQDF3XTQVJTQjVhE6Z4lblQ2r192u2SEDMfPxJFblcRJo3
-	 g+WzHT7dJ0We8jH0fK9DguWfVQmfppbRhGdrIBZ70HIjztIRzlA7skVOXSps6jK7kt
-	 KJcba635Qk44MTDo49U9Tq2XtuCd12/YMTP9VztzEq4SaAhSctg88I9pce7Gh3BMUQ
-	 L/1UhjJR92pWAdhnsFqnEozTBxHJg+u3VkpunwomR7JL1DtWvsbMEBRPGVf89x7NPV
-	 jXAkwB6IsxfyQ==
-Message-ID: <9ba50fd2-077e-4291-9276-9adb18186873@kernel.org>
-Date: Mon, 18 May 2026 10:06:29 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TlLPuDfq"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3665b67ed66so1302520a91.1
+        for <sched-ext@lists.linux.dev>; Mon, 18 May 2026 06:13:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779110008; x=1779714808; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=16E2PQZmiE6IrGqbWtSpGp/RWymtbpDf21NqZrAM3es=;
+        b=TlLPuDfqJDmRxArhODIOxobLLg+LO+dK9/KOTaW5KgQ1d8WjVSrj8ET8AhQjpN3Ytv
+         B3rHPO3xCha6qvUZzONUQcI+a+oRDed2hdVmevLph0WgXFb9AgaMKAJgLJJnVHGbI5xp
+         BpvGMj+Lz7Z7FB7HhxJv8PeN7hmVYAQFg9Kv7d07/alCLQtRToI+KNguYKtjapIGWDHr
+         2TiXpKchwjATolJthzIphwkw3t3zGAqEyJqZzfGKTEzAPcNvXstSYvmvO+2o6/dJlrto
+         MlaFI/oPXLVo4eeYYieI5TpAyS4AL/sCkdmeHwu4+bitgrWw2D7KZpOkYrx9iHVjLd9M
+         6ngg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779110008; x=1779714808;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=16E2PQZmiE6IrGqbWtSpGp/RWymtbpDf21NqZrAM3es=;
+        b=qSRKUMkL+m/33yBp/vA6O+IYDjw3LwVxIncB8gzwPmL7p19Z66EteLeEVBADX6m+Ns
+         DUNfg1d+ou3diyJOXOtrVYlz0baqMonZjOBRRinN9ZDrv0nROcuOzqCuWV0k9N/p/xNf
+         PoRhRvDMUigyL+x0NQlw9Y23CMK5herAFB5HkNi/l3uC6mSRajbXEuhhLMtyksxY7N75
+         IwmoAdbOLLIGsKvtrQFO39CqpwafG7VO90VQdcl8zp4snPZp7qNLsS87o7dfuC/wK+dC
+         gl0WCC5Pa6zEmA5JQSDeumuKkDbIAmWbwMQjz61DGv+zJxBFMd1HfPE2VDG3Xa2xEnb6
+         Wdww==
+X-Gm-Message-State: AOJu0YwWM6yZw0ZTwbEDCkrwUQEmQOl+AwwKHa9FLQdtiByphf/tr4XP
+	2mC1gGzoWdX66IicqdpBneMOPtWcWYjhnXb0m2AGRm9gqYZOnHAJvroAq45XIQ==
+X-Gm-Gg: Acq92OGCP1o3mnFZYVhUd0j9QdGo2bJQd793qMGLvBQ1sjff1UeRLCd550sBsWhijbn
+	P3JFohYBLdXSQ/AUwuBtvyJcjBVWzyhXZav45RwG9WtC6OHrNOIcC9g82EWfjG3gj7VeZew7d4J
+	j43zK+YZYhDAP+xmjcZmhukthunE7iGZg8J/fEEbpz/srQ6JjudA0oq3idkxg7alTBR+lfUlWuH
+	ziJop+iq0pxTW/kOYM3jFkPtto1Iy/WuNF0kKfjoO0zHOmNA9yidpvnTEkE63OS4EnRw+9M9BU4
+	jzl3f2hwZdgsoVSMyaRGZDFcITGP6WNCb2U/EKkVkfbukA4ncNA48/iBJiHdKXn7qZstfqQZ3b5
+	NVOFepGmCSD+G8wBdU+DLcYXuzhP/wXj6XDTSNAvEZQH65D8geMsZJDyrCVZtVnOb4KaD1FI96H
+	rFSOpGH+gJq98NyMResEAqHo7Mry4VaAzUUg+LsOi9ffoa/KMEk4qa
+X-Received: by 2002:a17:90b:2743:b0:366:4a47:f267 with SMTP id 98e67ed59e1d1-36951b83b77mr15475516a91.16.1779110008155;
+        Mon, 18 May 2026 06:13:28 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:c31b:5187:c514:ac40])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-369512424c2sm11241781a91.4.2026.05.18.06.13.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 06:13:27 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	rcu@vger.kernel.org
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>
+Subject: [PATCH v3 sched_ext/for-7.2 0/2] sched_ext: Follow-up fixes for exit_cpu accuracy
+Date: Mon, 18 May 2026 21:11:47 +0800
+Message-ID: <20260518131311.1170786-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] mm: Add ptep_try_install() for lockless empty-slot
- installs
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
- Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Martin KaFai Lau <martin.lau@linux.dev>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
- Andrew Morton <akpm@linux-foundation.org>, Mike Rapoport <rppt@kernel.org>,
- Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
- bpf@vger.kernel.org, x86@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org
-References: <20260517211232.1670594-1-tj@kernel.org>
- <20260517211232.1670594-2-tj@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20260517211232.1670594-2-tj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/17/26 23:12, Tejun Heo wrote:
-> Add ptep_try_install(ptep, new_pte): atomically set *ptep to new_pte
-> iff it is currently pte_none(). Returns true on success, false if the
-> slot was already populated or the arch has no implementation.
-> 
-> The intended caller is the upcoming bpf_arena kernel-side fault
-> recovery path. The install runs from a page fault and may have to
-> contend with locks already held by the faulting kernel caller, so
-> keeping it lock-free via cmpxchg is the safe choice.
-> 
-> The generic version in <linux/pgtable.h> returns false. x86 and arm64
-> override with try_cmpxchg-based implementations on the underlying
-> pteval. Other architectures get the false stub - the callers there
-> already fall through to oops.
-> 
-> Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-> Suggested-by: Alexei Starovoitov <ast@kernel.org>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
+Follow-up of Tejun's suggestion [1], discussed in v2 and the subsequent
+review thread [2].
 
-[...]
+Patch 1: Fix exit_cpu accuracy for the hard lockup and softlockup paths,
+which were recording the detector CPU instead of the stalled one. For the
+RCU stall path, use -1 as a placeholder until patch 2 threads the cpumask.
 
->  
-> +#ifndef __HAVE_ARCH_PTEP_TRY_INSTALL
-> +/**
-> + * ptep_try_install - atomically install an empty PTE
-> + * @ptep: page table entry
-> + * @new_pte: value to install
-> + *
-> + * Atomically set *@ptep to @new_pte iff *@ptep is pte_none(). Return
-> + * true on success. Architectures opt in by providing a cmpxchg-based
-> + * override. The generic stub returns false.
-> + */
-> +static inline bool ptep_try_install(pte_t *ptep, pte_t new_pte)
-> +{
-> +	return false;
-> +}
-> +#endif
+Patch 2: Upgrade panic_on_rcu_stall() and scx_rcu_cpu_stall() to accept
+a cpumask of stalled CPUs. Both the non-expedited and expedited RCU stall
+paths collect all stalled CPUs and pass the full set to scx_rcu_cpu_stall(),
+which uses cpumask_first() for exit_cpu and includes the full CPU list
+in the exit message.
 
-Ehm, what?
+Based on sched_ext/for-next (d83f90561532).
 
-This is a very, very, very bad generic idea/interface.
+Changes in v3:
+- Drop patch 1 of v2 ("Normalize exit dump header to 'on CPU N'"),
+  already applied to sched_ext/for-7.2.
+- Replace single stalled_cpu int with const struct cpumask * in
+  panic_on_rcu_stall() and scx_rcu_cpu_stall() (Paul McKenney, Tejun Heo).
+- Use cpumask_of(smp_processor_id()) in print_cpu_stall().
+- Build cpumask of all stalled CPUs in print_other_cpu_stall().
+- Thread cpumask through synchronize_rcu_expedited_stall() and
+  synchronize_rcu_expedited_wait() (Tejun Heo).
+- Use cpumask_first() for exit_cpu and include the full CPU list in the
+  exit message (Tejun Heo).
+- Pass %*pbl directly to handle_lockup() to avoid intermediate buffer
+  truncation.
+- Falls back to cpu_none_mask on allocation failure.
+- Link to v2:
+  https://lore.kernel.org/r/20260504161543.674488-1-yphbchou0911@gmail.com/
 
-On which ptes is this supposed to be used? User ptes or kernel ptes?
+Changes in v2:
+- Use raw_smp_processor_id() in synchronize_rcu_expedited_wait() to
+  avoid CONFIG_DEBUG_PREEMPT splat (preemption is enabled there after
+  nbcon_cpu_emergency_exit()).
+- Link to v1:
+  https://lore.kernel.org/r/20260501131521.161852-1-yphbchou0911@gmail.com/
 
-Surely we don't want this on user ptes.
+[1]: https://lore.kernel.org/r/e7cbfc99b52b4b7059267bb81498179f@kernel.org/
+[2]: https://lore.kernel.org/r/af0Gn47y1Lj2BAqd@slm.duckdns.org/
+
+Thanks,
+Cheng-Yang
+
+---
+
+Cheng-Yang Chou (2):
+  sched_ext: Fix exit_cpu accuracy for lockup paths
+  sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stalled
+    CPUs
+
+ include/linux/sched/ext.h   |  4 ++--
+ kernel/rcu/tree_exp.h       | 14 +++++++++++---
+ kernel/rcu/tree_stall.h     | 15 +++++++++++----
+ kernel/sched/ext.c          | 17 +++++++++++------
+ kernel/sched/ext_internal.h |  2 --
+ 5 files changed, 35 insertions(+), 17 deletions(-)
 
 -- 
-Cheers,
+2.48.1
 
-David
