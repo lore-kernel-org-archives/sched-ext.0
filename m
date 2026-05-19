@@ -1,116 +1,183 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8113DD857
-	for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 08:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16FB3EFD0D
+	for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 08:48:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779177796; cv=none; b=VlSnXxAliTIpK8ZdJQSX/7yUnEcUnBji3B2uDDC5khJXiNpL7rbr9IdiQth3hy7s0FoeDUbtuGq0SO0WAPt87Jaxslb09O9Xh4LbBVmDGm76K5FwgX1pygyaiw2tb4GIcAzc/M/5i60Wlx+HVQjffX7m8WgT8i5lbRvZ6wSqnN4=
+	t=1779180512; cv=none; b=LhHyUWjraqzP4IBzxaXbCCz0nIon+tXiaCNh8L6nvQGaS1z/CpQW5JPKiqaefsZJ1v0ylOgNwdICjuMFfYmO07jULDlrK53GVaHuK8bIrzlV1ucDC0yR3Vi5GtntggfJk3ORmX9AKhubglLqxmkfncft7bvJeKTRfoTzbQOL3L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779177796; c=relaxed/simple;
-	bh=LUHLBLA+t+dlz3Pkv1Lh9An71O0/RK94P+VoQ+FOVkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b6IG879I3DVSqJkb5VdBZkYP0bMkcM6G20y6mCzlcbtIa3OWcBwqjjlKQ0dGus9cnlQXvW/BtAkJOBjdvfmFJ3faRvi34zKittpgIlaaB5R7gxlnMQArYRN+G7+dQDbYD8DnpvSLkV4eOOSFA0jsZK0jVzMluHvyR2HULtCJL6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1MB7crQ; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779180512; c=relaxed/simple;
+	bh=A8NurAjVai1rXpe8+GFUNJmbcElMs4DSQAQrUeWGOWQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=QQqIlZd+MYEFO9IyzBeBI2OmZSUYYUpaA6VA53TZE601aZCvROuCxBjLYpZH0rBllkuwoEeEFqfQ+xbbohgAOSQMisQSRwRwY0K5byFS6q/ZPJbHE4/z/wiLNWKKDnTzpwa5RF2vv2fJ7etDJ6x4DwIb0j8F23YC508EabhhngI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkB9m73H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1MB7crQ"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c7ffe8eeaf2so1339573a12.0
-        for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 01:03:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779177795; x=1779782595; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FzTmNwB8gsREOlS6zByQH9A1MxUASfb5z5mhpssClQs=;
-        b=Q1MB7crQguYJ2g1tEnPUZTGS9aV85RjUW3MKmjlEd2oJA62ZTT4dzvOhP4T/UORBOL
-         2J8RGCWhomCfwDVqhAYAYWkDrJvAh98nbEW+MgNBc23qteDdhMR+8Mh85IDwdX4uUg0l
-         LNtGH5YS9rcAcbJM8PgBKvsEZnEELpdGqlr5nefAob2Wt+/L6X+weaazzOU5iPeUKzVC
-         EkN9C6RrOmeNCq2o1QC5tpOb5s4SGf2Owca/881OHW7fA4T1SDfAXVfQkLoYLhHgWglw
-         eL/lg7o/AsgcPkvIQHbFy0hQIpipP0sMlQxF75m2300kyJ3Iv1qXsFo8dV9lkTT7ePmq
-         2YSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779177795; x=1779782595;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FzTmNwB8gsREOlS6zByQH9A1MxUASfb5z5mhpssClQs=;
-        b=SzjaQ9PUKcUQADzRXgtfKJmWWbO5efxbUPD3b7LYb3FHhwfcZPcX5sP76vyTAZVbcN
-         +/aNUN692h+OI/1EA3QokQvREWtydgiUr0StI9YYpjB2rDmQoWdyjkjUEn0jm0vxdTue
-         Sc0E3Ngray48MHKZ1/QLteN8rZZhGYvk2VwMCBQ6vHxR2PNZ9/OG0A1fzf1D/s84ZqX8
-         XxSPJdxF8Z+jtrbNwWim/xP//eVrrnI+QFFlfzPdv9JzZkJEEB2FZc9RXvto1+l0iNZc
-         Cjh6g0hkaWvsMHtprLs+yHvLv4ckt+JPuYe6qemove3FHdXWTN78fFZ/ybhI8dhfwlRX
-         oRqQ==
-X-Gm-Message-State: AOJu0Yw6LSQTK6xd9YDHA5hfqWf2GZccKUs6QGpMxQzUP069BFFJnsy0
-	zvgX713iEYj153KbslUBJJ/RdbrFYc5vYtmE+MIjQ63hRgS0DXjC0iwAj9z/qA==
-X-Gm-Gg: Acq92OEj9Zs3h9uvms4NQfUBSX+TmAguvxxYIS6quUcKUWasNbRUPFq1kLSH19XAwYh
-	1lOe+2fl6rxpx9KThlKyqlaHuVT75ksiup16FmfBa8iRBh9gV+cApql/xjeBXAq2dbtTECzxkTQ
-	/tTCIQChoVRl/Br8c6b/WXomtUQZ21vpuSRZccZ1hKJHR3cOSmxF6q6i/9fIHAzgBEz2UpMP+vE
-	Tjc5/Kk5ZkZXrvXYUpkf6E7InvgzFnjenr5N+AwySjBUyDYfa5JAa1BYexTVsWzIR2sD11Y22Q5
-	G12yYdU622qA55P3I/kTTx1dgDfOjimT21dZI/uLqiYzIz0s0eFFA5YSVH7U1GDZs3QeoQO/QjX
-	62Cu0TPTKiwggI5v3JEmh6x2Qeyxzfdx7fCPO7j738bKBlQOSIgCi236SYzzC5Esniu2tWDP9ni
-	TyTOyH4lalN8GPX8FaGYqPDEsKJTjV6gD6Tl8zPQj17V9i0kiwctmLbvxKmIdUpci5AN6bgvJuy
-	O7f0njF6KIZDmDj
-X-Received: by 2002:a17:902:7892:b0:2bd:63dc:b7ad with SMTP id d9443c01a7336-2bd7e86c6b1mr144453945ad.2.1779177794505;
-        Tue, 19 May 2026 01:03:14 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-116-93.dynamic-ip.hinet.net. [36.225.116.93])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5d11d6easm191361105ad.72.2026.05.19.01.03.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 01:03:14 -0700 (PDT)
-Date: Tue, 19 May 2026 16:03:10 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>, 
-	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	"Paul E . McKenney" <paulmck@kernel.org>, rcu@vger.kernel.org, Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, 
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v3 2/2] sched_ext, rcu: Upgrade RCU stall paths to report
- cpumask of stalled CPUs
-Message-ID: <20260519160158.Gad1f@cchengyang.duckdns.org>
-References: <20260518131311.1170786-1-yphbchou0911@gmail.com>
- <20260518131311.1170786-3-yphbchou0911@gmail.com>
- <agtoyycMdwatAiFc@slm.duckdns.org>
- <20260519152904.G1f99@cchengyang.duckdns.org>
- <agwW2PET7rOcL_87@slm.duckdns.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkB9m73H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59B9C2BCB3;
+	Tue, 19 May 2026 08:48:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779180512;
+	bh=A8NurAjVai1rXpe8+GFUNJmbcElMs4DSQAQrUeWGOWQ=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+	b=dkB9m73HiS+OWqck7EPQX5rX9kkW/rjmhVT/z4LwV6WXdwA6YLef/VZpsZBP2tnEL
+	 hRfzmk+lyDrghYt1+9mv413Bbq7t6Rd4H90vSpLueckF6xPTj6Ec13tzpjz/aK6Z/A
+	 5OCz0nAb5pKLT2+/kWwlzNg9Epz392cfuiZUH6WX1i9oKs7j1izhFQjYzL3WvR8u1k
+	 4iGmzHqCUW9tEZVgM6y9d3FawesdTWfFjY6p3P00zkheTXfxe678lV/yWcON+0wyCX
+	 nPqGZHaW3pjr+w2B8U8pQPGC3b7du1WkdlHuN+eEbjR8IV45uQspejwe8dz7uUTlU3
+	 VlLRd9KyIwrdA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 2/3] sched_ext: Track bits[] storage size in struct
+ scx_cmask
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tejun Heo" <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260519075838.2706712-3-tj@kernel.org>
+References: <20260519075838.2706712-3-tj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 19 May 2026 08:48:30 +0000
+Message-Id: <20260519084831.D59B9C2BCB3@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agwW2PET7rOcL_87@slm.duckdns.org>
 
-Hi Tejun,
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+s) to consider:
+- [High] The `__SCX_CMASK_DEFINE` macro leaves the `bits[]` flexible array =
+uninitialized, causing subsequent operations to operate on stack garbage.
+- [Medium] The BPF helper `__cmask_init()` returns early on failure without=
+ initializing the structure, exposing uninitialized memory to the executing=
+ BPF program.
+- [Medium] BPF `__cmask_init()` does not validate `alloc_cids` against `CMA=
+SK_MAX_WORDS`, leading to inconsistent state and truncated operations.
+- [Medium] Integer wrap-around in `cmask_reframe()` and `scx_cmask_reframe(=
+)` leaves tail padding uncleared when `nr_cids` is near `U32_MAX`.
+--
 
-On Mon, May 18, 2026 at 09:52:56PM -1000, Tejun Heo wrote:
-> On Tue, May 19, 2026 at 03:43:45PM +0800, Cheng-Yang Chou wrote:
-> > Hi Tejun,
-> > 
-> > On Mon, May 18, 2026 at 09:30:19AM -1000, Tejun Heo wrote:
-> > > On Mon, May 18, 2026 at 09:11:49PM +0800, Cheng-Yang Chou wrote:
-> > > > +bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask)
-> > > >  {
-> > > > -	return handle_lockup(-1, "RCU CPU stall detected!");
-> > > > +	int exit_cpu = cpumask_empty(stalled_mask) ? -1 : (int)cpumask_first(stalled_mask);
-> > > > +
-> > > > +	return handle_lockup(exit_cpu, "RCU CPU stall on CPUs (%*pbl)",
-> > > > +			     cpumask_pr_args(stalled_mask));
-> > > 
-> > > Wouldn't you want to pipe this down so that you can prioritize all stalled
-> > > CPUs when dumping?
-> > 
-> > Ahh yes, will add stall_cpus to scx_exit_info, store the full mask
-> > there, and update scx_dump_state() to dump all stalled CPUs first.
-> 
-> I'm not sure I'd add it to scx_exit_info as that's public interface. Just
-> pipe it to dump?
-> 
+commit af0adccc546dd475652f096375ea97f8c951b0f6
+Author: Tejun Heo <tj@kernel.org>
 
-Ok, just pipe it to dump, will send a v4 patch soon.
-Thanks.
+sched_ext: Track bits[] storage size in struct scx_cmask
 
--- 
-Cheers,
-Cheng-Yang
+This commit adds tracking of the allocated word count to scx_cmask, splits
+the bit-range API into explicit-capacity and tight-capacity helpers, and
+provides equivalent BPF mirror functions. It also adds clear and fill
+helpers to manage the active-range bits safely.
+
+diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
+--- a/kernel/sched/ext_cid.h
++++ b/kernel/sched/ext_cid.h
+[ ... ]
+> +static inline void scx_cmask_reframe(struct scx_cmask *m, u32 base, u32 =
+nr_cids)
+> +{
+> +	if (WARN_ON_ONCE(SCX_CMASK_NR_WORDS(nr_cids) > m->alloc_words))
+> +		return;
+> +
+> +	if (nr_cids) {
+> +		u32 last_word =3D ((base & 63) + nr_cids - 1) / 64;
+
+The commit message states:
+"Widen SCX_CMASK_NR_WORDS()/CMASK_NR_WORDS() to compute in u64 so that
+@nr_cids near U32_MAX no longer wraps to a small value and bypasses
+the bounds check in cmask_reframe()."
+
+Despite this, could the last_word calculation here still wrap around?
+
+If nr_cids is near U32_MAX, ((base & 63) + nr_cids - 1) might overflow the
+32-bit u32, resulting in a small last_word value (potentially 0). This would
+cause the head word to be cleared again instead of the intended tail word,
+leaving tail padding uncleared.
+
+diff --git a/kernel/sched/ext_types.h b/kernel/sched/ext_types.h
+--- a/kernel/sched/ext_types.h
++++ b/kernel/sched/ext_types.h
+[ ... ]
+> +#define __SCX_CMASK_DEFINE(NAME, BASE, NR_CIDS, ALLOC_CIDS)			\
+> +	_DEFINE_FLEX(struct scx_cmask, NAME, bits, SCX_CMASK_NR_WORDS(ALLOC_CID=
+S), \
+> +		     =3D { .base =3D (BASE),					\
+> +			 .nr_cids =3D (NR_CIDS),					\
+> +			 .alloc_words =3D SCX_CMASK_NR_WORDS(ALLOC_CIDS) })
+
+Does _DEFINE_FLEX with a designated initializer fully zero-initialize the
+flexible array members?
+
+In C, initializing specific struct members does not necessarily zero out
+the remaining padding or flexible array bytes. The documentation mentions
+this macro aliases zero-initialized storage, but without the explicit
+memset() that was previously handled by scx_cmask_init(), could the bits
+array end up containing stack garbage?
+
+diff --git a/tools/sched_ext/include/scx/cid.bpf.h b/tools/sched_ext/includ=
+e/scx/cid.bpf.h
+--- a/tools/sched_ext/include/scx/cid.bpf.h
++++ b/tools/sched_ext/include/scx/cid.bpf.h
+[ ... ]
+> +static __always_inline void __cmask_init(struct scx_cmask __arena *m, u3=
+2 base,
+> +					 u32 nr_cids, u32 alloc_cids)
+>  {
+> -	u32 nr_words =3D CMASK_NR_WORDS(nr_cids), i;
+> +	u32 alloc_words, i;
+> +
+> +	if (unlikely(nr_cids > alloc_cids)) {
+> +		scx_bpf_error("__cmask_init: nr_cids=3D%u exceeds alloc_cids=3D%u",
+> +			      nr_cids, alloc_cids);
+> +		return;
+> +	}
+
+Because scx_bpf_error() schedules an asynchronous abort rather than halting
+the BPF program synchronously, will the program continue executing with an
+uninitialized mask?
+
+The kernel counterpart __scx_cmask_init() safely clamps the value to
+alloc_cids instead of returning early. Would clamping the value or zeroing
+the memory here prevent subsequent BPF logic from operating on uninitialized
+memory?
+
+> +	alloc_words =3D CMASK_NR_WORDS(alloc_cids);
+> =20
+>  	m->base =3D base;
+>  	m->nr_cids =3D nr_cids;
+> +	m->alloc_words =3D alloc_words;
+> =20
+>  	bpf_for(i, 0, CMASK_MAX_WORDS) {
+> -		if (i >=3D nr_words)
+> +		if (i >=3D alloc_words)
+>  			break;
+>  		m->bits[i] =3D 0;
+>  	}
+>  }
+
+If alloc_cids is very large, could alloc_words exceed CMASK_MAX_WORDS?
+
+If so, this initialization loop will stop at CMASK_MAX_WORDS (129), leaving
+the remaining words uninitialized. However, m->alloc_words will still record
+the larger size. Should there be a validation check against CMASK_MAX_WORDS
+to prevent silent truncation in this and other bitmask operations?
+
+[ ... ]
+> +static __always_inline void cmask_reframe(struct scx_cmask __arena *m, u=
+32 base, u32 nr_cids)
+> +{
+> +	if (CMASK_NR_WORDS(nr_cids) > m->alloc_words) {
+> +		scx_bpf_error("cmask_reframe: nr_cids=3D%u exceeds alloc_words=3D%u",
+> +			      nr_cids, m->alloc_words);
+> +		return;
+> +	}
+> +	if (nr_cids) {
+> +		u32 last_word =3D ((base & 63) + nr_cids - 1) / 64;
+
+Similar to the kernel helper scx_cmask_reframe(), could this calculation wr=
+ap
+around 32-bit limits if nr_cids is near U32_MAX, resulting in last_word bei=
+ng
+calculated incorrectly?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260519075838.2706=
+712-1-tj@kernel.org?part=3D2
