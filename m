@@ -1,180 +1,151 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD342D5925
-	for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 18:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779214955; cv=none; b=BEB9T+R1qXFlwRzPuFG//sKecIfNcufXQSELTWbJ1RKlIOtxz/BBW7SEX1TDT/hyuAiatFzitMeJuU3/hKnhNK69cn3RGSuYIiiG3e1QJ8w0WqLmL0P01oTiAa4+bwuLryiT4A3Se6BnewIIizmxi3xQSp7fXFC16XtYqMuPGFE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779214955; c=relaxed/simple;
-	bh=/iZEIInf+h07QsZt9LdbOhTRLtwkJCA5Nww+jvwEjz8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AFEQ9NIuAYJQcAB4Nn2iHF83uPuUtNoi+X9EYv8kFfRBcwPyGGiZiGFF8DseuxfJnHkFAqdfQ3QYFgSRD+zda9p8pe6SQfzz4ciKDOn/wStAGcWQDNFiWDDTmDg6RyzLvb/r1dvfZepZJPRxsipPeYrigbiC8Vh7U0iULnKYq0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hn256KXH; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA893AFCF6
+	for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 19:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779217500; cv=pass; b=J/BdyWOTyL8F2QHLwG24CoJd0Vz/Hw52ccGM8Hz7RlhXLDrsYPSja8onPJ4IHKQ/HuCuCRSBP3SStTNtDDBtbNIWndeGzmW8d7gPeDj/klD3ltcf32eoTxzkOphRkay2zK3EC/NXuJj84iaOmJMn8eWvHaK9NlSfTO1eM+d9Bes=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779217500; c=relaxed/simple;
+	bh=cojGRWW/Ex1hiO5wrDav3feItUxRSAUPq9EN/ARWbRI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PrSem9tDsISlmIow/6FZvFYrAZ8AMeD5eKJ/uop41NTVG0MPFNnFWeZIenOFA6sx8KPzYm+oZ7OABMn0egXoquTroAonKnTsFnBwnZo9EJMQT4nABcMDVL/XywLRDA3dwhWeO6VdybRhNZ0VgZXR+ewKmIfeNUPV7DlquTFMC7A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YKdXqJ0Y; arc=pass smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hn256KXH"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8383fb7143aso1756967b3a.3
-        for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 11:22:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YKdXqJ0Y"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so23488645e9.3
+        for <sched-ext@lists.linux.dev>; Tue, 19 May 2026 12:04:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779217495; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bbiGyirHwKOpjt1RSYNhY4CqXiMWH7UfnaHVvAQRnhuTJKRbLxWJHpWPgRaRDgVa5h
+         awk90qFuKw7bCpBGaGk18vyx3JAMTa4hDaFsKTwSuUTu1co2xvBrpfD1Q/cwIT47wBKc
+         aPl2zt1JIkSW9WlEl+LHVjQ9f1uqOB9oapEJrKxsXiBZoiHzS93gPxDZXg/kD7tacEQ6
+         MZ5tp+5H7A5wYJ6yotQJxgsfCZB1uxKIIVBCW/L8NIyGvm97r6E+3PdaSbiGx149I2p1
+         ozh4k2nC6rnM/g9P5FA7OfL1yMdVj9Ls6UmgV1dfrTmv+fgSxTOfZrV+I4N2DJeDL33H
+         JqmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=cojGRWW/Ex1hiO5wrDav3feItUxRSAUPq9EN/ARWbRI=;
+        fh=6g50fVg9s3n6YWnBNdeDHwzk7nd9ryvlmwpxTBg5xzM=;
+        b=QbDhDIZqIV8JI+rdDHQB1zexMuEJdkaUsnRLlF+cjMv+79iJMy0rrWFPOapffeAYIM
+         lV0weTHeMCLa4KncqOJfMZh5hWbzdrM6klQUGaeAQpdimrMoIwShqsujFZsQLTK2XGlX
+         Kmns6cI7ebt28ez/4cpxJ1ACX8tbQktx2TZGqqZTQm9DxM3VpmcL7Psr+9sCxM7B+Akb
+         bGEg3EuGnWqH7EPpKPfBP/qvZQYsPd96Ubs16FZMqiI+SjsD8plhCCZT8sKUAwYkBpZd
+         8hMUj4/3cFfpvlZ8iykfJ/FdFVyGdwhxnvV51KQhcW233fwOsSpQlfhNrYNXKzMcpdHf
+         a/4Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779214953; x=1779819753; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=djwlqTMl8+NOKghG5Z1Hqhs/9/X6wY6hcEaIBs4ftFI=;
-        b=Hn256KXHfDAVIoMoQAe0tQCmJxIgP4tfRXqMobpz9ZNgIJ/Ika3Ng4R4FeiMetii2h
-         iAuHFhLJMd6EEMQBT4N9y9JdlrEncO8uoD15C76gx3Tb5DmNKprUBGpM4R4Dqm/FPpD2
-         rOHcVsKVenYQRBp2qGXXIdSjxfWSgKJt535lfZjowhsrrIyNylWKCIPamH9oTgwJpbL7
-         lhlj3xwR7yPZT109aKJVu22ynFQDXcJ3ns19RRcHNn/KOPUg4a+1R442/SJY/MFip647
-         HUDHDjZRccHcOfBohcpF4K7zlE3LuFarZrD/Melo041pWZGehX4O0YnwXLShgSRM743W
-         vY4Q==
+        d=gmail.com; s=20251104; t=1779217495; x=1779822295; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cojGRWW/Ex1hiO5wrDav3feItUxRSAUPq9EN/ARWbRI=;
+        b=YKdXqJ0YfppTbm+F3uLnQLyaTwJFNZFHjFSKHFr5zopLBc6NsYjHoyv7fUG5fAq27j
+         sKwItJ7+iq1K/NqJl9fSqDg8TlI5osCBllw396ZoQ/xpiV4sEwPRJ4Yrt0QOVZj3bKHU
+         OJ032BfKUuplQ4+FxlAZx/e6q2G4iy6UyPhH2npOFUa/1unQbakVgcEt7cT8cD/mPyDK
+         dhm1ZMQDpPlsKUKZIrO8uoHEG5vSaZjV0e2snSgd4fWHGEqZuuXJWzbfLhcRFAKFmb3G
+         JTHAGGn4J0BIbmCq59KTYVRlVAXTuLZYQyuPgLTqFPsj7OLAAXOEZ+l91FZMCQZxKvmm
+         oFQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779214953; x=1779819753;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=djwlqTMl8+NOKghG5Z1Hqhs/9/X6wY6hcEaIBs4ftFI=;
-        b=aPX/4m4WMDSXcgPulXvCW4s60fHzHI/5VJJpuaGYXgxDVII4hGe8iTVRuN9E1cH8yv
-         Nh1pyPcsI5uRAZiRS8COIEYw6Zd+Qf0K+Zr7RNZpndhyb4Y8p26Zi7UcqQAQop37fmBS
-         hBK9ifkZmNmxr+VHYIEqaB09aTfZVw+xAXDFZrgIAhMY01pPtuJulw5ypG+DXY4MnR9G
-         ZrGXUq2Bib2g1Vq9cAG8ELh6p42nCuAOk4XGXFiENm4JkFjqz9LyXcTyN3spBIdb/lhr
-         kxUglmUOj1msmNDoe0m42xjFDhyFWlgGabb3dY+UWt+3wnCdT/qCEnA/v9HwJT78jDFz
-         Lr/g==
-X-Gm-Message-State: AOJu0YzRLTRXoWcsnrM8FibGacEkE+lkh8zXE2c1EVOAUGzFMCA95+IV
-	aI6mzjasvz6YyeyBx9ZDnt47tzdNTCcFSS5TRnbVLb7JJui8yHNF6CNo
-X-Gm-Gg: Acq92OF8owobHbkby7/R0nrOf+SaCANd5NQJ3iHFJQkaI12ExukH4Qo8z1MELBd+R6z
-	iWWakhzeE0aip9sdxuVXAG1Gd8dL80i+voOabK1iTOQsfP2nBIsVN3Gwrk1NF1/NSQiC+FZUQL5
-	dr8W37Wxp93lh5jPanIMbNjSvwa47ab5lxZegxwjlF++i4dbtAX1hGIcn+VF1ET3PA/nBTJTzjz
-	fKe7sY/53qyyezdpQ5CVtY35G3R9WXf4y6+Oa6r0MOWy7pU/HgSvWVTrV3osBZ698dQ2BFjzlKS
-	dcbg3NigGCFEBOJ1606gLxfc8SOs6/0MftGfmP0qwzQuAo2Zcun/fGj9sbKiPYscI52TAX57M59
-	weNiD5iudc9fHIN69toKSl6K6yqSTRC7I37dnfj5HIxLUkmF4ud+BXNW877DzACjgxS001AfmqP
-	dgCmCt1pFO5L1OyycIpywCSbkFERN3sbgUiUeu0njFNbzbe9YInP242zrEb2W96lQughU3x8rzt
-	EMLHkwrkDjOmfG7
-X-Received: by 2002:a05:6a00:1f09:b0:835:41f3:f43e with SMTP id d2e1a72fcca58-83f33c45c8cmr21236031b3a.16.1779214952946;
-        Tue, 19 May 2026 11:22:32 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-225-116-93.dynamic-ip.hinet.net. [36.225.116.93])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c5ce1fsm18712359b3a.35.2026.05.19.11.22.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 11:22:32 -0700 (PDT)
-Date: Wed, 20 May 2026 02:22:29 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH 2/2] sched_ext, rcu: Upgrade RCU stall paths to report
- cpumask of stalled CPUs
-Message-ID: <20260520020904.G8ffa@cchengyang.duckdns.org>
-References: <20260519171745.1551340-3-yphbchou0911@gmail.com>
- <20260519175231.520A0C2BCB3@smtp.kernel.org>
+        d=1e100.net; s=20251104; t=1779217495; x=1779822295;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=cojGRWW/Ex1hiO5wrDav3feItUxRSAUPq9EN/ARWbRI=;
+        b=ait06Jh+ZBVRkgJQFKQOprRESAO3+NH/tJNq2BKEalpodez24IALRnXMpae0iPUUIe
+         WbH6eTE0Sj4SmMYvqHPajAVkUKqXYR0uTJChifYhONthJoVTAxKPAb9NWfvtvFkPgggX
+         D601k5v0UsHgwuFAtR9M5uOTQ9Doc9xvE8G4612oR0mPyeylYq7liH60pUCJF88POQbD
+         PO58RWRX47j0+PFMJ24px8aJ5A4PAwhKYMmnTOsIKrzUXhgazkkAqEuF0zItVOLb8aRW
+         evKOHX2vEWGxnHvP98EDeLWYU+0j9pOh1+CeTA6QnH8DxGCyvaveCJaXndjDcBoTZ5VE
+         cEgg==
+X-Forwarded-Encrypted: i=1; AFNElJ/AYyMKAv/RMssXQMVp2JMyBGamgPzJ3y8U6zp1avWMBzUEQv3KNBlnuY8EPEJnBLhG4tFQ1S5hIsI=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw5ceSL1oWQxDHIBTIv3sUQ/ZIGaaVQm6XUJcYbcXJoTy25DmYk
+	fsvKmh6f/+6QkCffrj59BhJHHcHEWXmM957NrInzKM9VB6ooulGJvQOgMCGGQGGW6ga0wrvmg3v
+	6uzLolHfMDX092hMGF6bnuBJsfOXg6OY=
+X-Gm-Gg: Acq92OHE+lwqBqtoRXx3GKkqS6ZSSyUa7HOA0OL6gZP8lbtiJQxYuQ5BREuU5r1K+I/
+	xrsaFownI7ghHPrKqHfg2+cshz15v9v3eO4nKFKgt8UJT3qRjxqiTe+ZySeuTHHRQAWMMa9Yh4s
+	PPPmOVxN0En6sYwelNe/GDWbvzF/o6SWWvUDA15Yexm58xK/FORm6IFYegLaGDlBxxEojNT2/Iw
+	MwHpy2bXAdzvthXnjG+Khj718Oeozi3rTMYfUX00lntj/KKs2A/pwdD7KXahvOlwtaq/zrp2lKX
+	c+RItm2dC84RN7H1tSdtNAGGonoDKmLcYbX5Xpa4Zu84AJbnBvCh0nnp170MjwYmXWEo8WU=
+X-Received: by 2002:a05:600c:a00f:b0:48a:5301:bb5c with SMTP id
+ 5b1f17b1804b1-48fe63263dfmr337569515e9.16.1779217495209; Tue, 19 May 2026
+ 12:04:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260519175231.520A0C2BCB3@smtp.kernel.org>
+References: <20260517211232.1670594-1-tj@kernel.org> <20260517211232.1670594-2-tj@kernel.org>
+ <9ba50fd2-077e-4291-9276-9adb18186873@kernel.org> <agtuPrgIDNKSu2Oo@slm.duckdns.org>
+ <2f02d90d-cdc9-48ef-abe3-99e00f22595f@kernel.org> <297658c4ae2d6e7103f5968efc936224@kernel.org>
+ <04b03066-86d3-4c0b-b077-307fd0f3bc9c@kernel.org> <5590fd3d-dae1-4070-b52f-bc40982ac678@kernel.org>
+ <agyZxmHoueGwBAQg@slm.duckdns.org>
+In-Reply-To: <agyZxmHoueGwBAQg@slm.duckdns.org>
+From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Date: Tue, 19 May 2026 12:04:36 -0700
+X-Gm-Features: AVHnY4KnCVsDx1rhJ5Rhju09kIJne6tHjry-aCcLnmL6aRppUmxM6vRJAa3dciI
+Message-ID: <CAADnVQJt0p7hSn2G074QZRh2LEdthy3RKYJ9j3w5yeJ-e8UQLw@mail.gmail.com>
+Subject: Re: [PATCH 1/8] mm: Add ptep_try_install() for lockless empty-slot installs
+To: Tejun Heo <tj@kernel.org>
+Cc: "David Hildenbrand (Arm)" <david@kernel.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>, 
+	Daniel Borkmann <daniel@iogearbox.net>, Martin KaFai Lau <martin.lau@linux.dev>, 
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
+	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, Mike Rapoport <rppt@kernel.org>, 
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, bpf <bpf@vger.kernel.org>, 
+	X86 ML <x86@kernel.org>, linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, 
+	linux-mm <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 19, 2026 at 05:52:29PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Dynamic memory allocation (`GFP_ATOMIC`) in the RCU stall detector path can cause a hard deadlock, masking the system hang instead of reporting it.
-> --
-> 
-> commit ffd18e78b03bfaba9705c61803e8bd0bb6325d38
-> Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
-> 
-> sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stalled CPUs
-> 
-> This commit updates the RCU stall paths to capture all stalled CPUs in a
-> cpumask rather than just the detecting CPU. The cpumask is passed through
-> the stall handlers and dumped first during a sched_ext state dump to avoid
-> losing the stalled CPUs to truncation.
-> 
-> > diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-> > index 82cada459e5d0..b8f4ca984c1c9 100644
-> > --- a/kernel/rcu/tree_exp.h
-> > +++ b/kernel/rcu/tree_exp.h
-> 
-> [ ... ]
-> 
-> > @@ -659,23 +662,28 @@ static void synchronize_rcu_expedited_wait(void)
-> >  
-> >  	for (;;) {
-> >  		unsigned long j;
-> > +		cpumask_var_t stalled_mask;
-> > +		bool have_mask;
-> >  
-> >  		if (synchronize_rcu_expedited_wait_once(jiffies_stall))
-> >  			return;
-> >  		if (rcu_stall_is_suppressed())
-> >  			continue;
-> >  
-> > +		have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC | __GFP_NOWARN);
-> > +
-> 
-> [Severity: High]
-> Could this allocation cause a hard deadlock during an RCU stall?
-> 
-> If CONFIG_CPUMASK_OFFSTACK=y is set, zalloc_cpumask_var() performs a dynamic
-> memory allocation via kmalloc(). If the stalled CPU is stuck holding a memory
-> allocator lock (such as zone->lock or the SLUB list_lock), the detecting CPU
-> will deadlock trying to acquire it.
-> 
-> Additionally, GFP_ATOMIC includes __GFP_KSWAPD_RECLAIM, which can wake up
-> kswapd and acquire scheduler locks (pi_lock, rq->lock). If the stalled
-> CPU holds one of these scheduler locks, it could also deadlock here.
-> 
-> This would completely prevent the RCU stall warning from being printed
-> and mask the root cause of the hang. Would it be safer to use a
-> statically preallocated cpumask for stall reporting?
+On Tue, May 19, 2026 at 10:11=E2=80=AFAM Tejun Heo <tj@kernel.org> wrote:
+>
+> On Tue, May 19, 2026 at 11:40:48AM +0200, David Hildenbrand (Arm) wrote:
+> > On 5/19/26 11:05, David Hildenbrand (Arm) wrote:
+> ...
+> > >> The only requirements are that the kernel doesn't oops and the
+> > >> violation gets caught. Beyond that, behavior at the address is
+> > >> unspecified, and which installer wins the race doesn't matter as
+> > >> long as kernel integrity holds.
+> > >
+> > > You'll have inconsistent TLB state.
+>
+> Wouldn't it still be either or with both cases being okay?
+>
+> > > I really don't like that approach.
+> > >
+> > > We should really try to just take the lock, and remove any code under=
+ the lock
+> > > that could trigger such unpleasant deadlocks.
+> > >
+> > > Is that feasible?
+> >
+> > ... or can we run into similar problems with kprobes? (I am obviously n=
+o bpf
+> > expert ...)
+>
+> Yeah, I mean, that was just the first TP I found scanning the code. Any
+> kprobes or other TPs in the path would behave the same.
+>
+> When this fault triggers, the BPF program has already malfunctioned, so i=
+t's
+> not going to be a high frequency path and performance isn't a primary
+> consideration. So, anything that can ensure that the kernel doesn't crash=
+ or
+> lock up would be fine. Any better ideas?
 
-I think the concern is valid, will fix this by pre-allocating static
-cpumask in rcu_init() and clearing at the start of each stall report.
-
-> 
-> >  		nbcon_cpu_emergency_enter();
-> >  
-> >  		j = jiffies;
-> 
-> [ ... ]
-> 
-> > diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-> > index b67532cb87705..90d6eaf1b8415 100644
-> > --- a/kernel/rcu/tree_stall.h
-> > +++ b/kernel/rcu/tree_stall.h
-> 
-> [ ... ]
-> 
-> > @@ -645,6 +647,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
-> >  	if (rcu_stall_is_suppressed())
-> >  		return;
-> >  
-> > +	have_mask = zalloc_cpumask_var(&stalled_mask, GFP_ATOMIC | __GFP_NOWARN);
-> > +
-> 
-> [Severity: High]
-> Can this dynamic allocation also trigger a hard deadlock?
-> 
-> print_other_cpu_stall() executes in a critical diagnostic context with
-> IRQs disabled (enforced by lockdep_assert_irqs_disabled()). Similar to
-> the issue in synchronize_rcu_expedited_wait(), allocating memory here
-> might deadlock if the stalled CPU holds a lock required by the memory
-> allocator or scheduler.
-> 
-
-Ditto.
-
-
-> >  	nbcon_cpu_emergency_enter();
-> >  
-> >  	/*
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260519171745.1551340-1-yphbchou0911@gmail.com?part=2
-
--- 
-Cheers,
-Cheng-Yang
+As you guys already figured out the trylock is not an option.
+The fault handler has to install _some_ page and let kernel continue.
+Scratch page or arena page doesn't matter. Potentially different CPUs
+will see different page. It's not a concern at all.
+bpf prog is buggy, but the kernel will continue to work without a glitch.
+bpf runtime will disable and unload misbehaving prog.
