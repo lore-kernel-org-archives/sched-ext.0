@@ -1,80 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DBC3DD526;
-	Tue, 19 May 2026 07:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A7D3DEFE3;
+	Tue, 19 May 2026 07:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779177177; cv=none; b=chL1sPdQ0p7qGYdDzrkuahDrzDqt2ngwZznad/b8p0qSQt6FZgNXS45pCAnpdFAI9OdykaW18WmKnSg2KuZef4ALnUMhrui3SO8Ilxzrs/hh2Mxp4G1Df6oo1i7+tpKBGfeWSiCJ14a+58W5Pwb9T4fuC3o9PcX9Aif6DPyJQ1A=
+	t=1779177520; cv=none; b=MzP32t9H6XyavaerEL0n2U62JvoiuJSYPAys7gqoZyVqyo7bIArzaAC7PYerjvE3/lbJf1ttoMdXR0sI6B1nLpsCpif24M1GTaJSiZX3rHFNa+u5zOLouJk9j7fUz9vM4Z6xzuI30KYd5wzxn6zlAqKhEEv7OrRv7iO5PxtNt0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779177177; c=relaxed/simple;
-	bh=Y4Pfi131QEGx2U1d21Xv/Ynq6wBAvSNPx6ruKbBI9ks=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rV3N7sbEU8qAX1B6KRyN1qJB/pVf00PXsrlGpMya8IQ27V1yHBzx42bZ9aupjhCSKfJaQP4GlcCj4kER5xgEjeARoSTAyO0RFVx/HmarKWeDA5X22Dbv9IsZNhMnQfjL6mOkSw9MtQbpFJmK8RqB2/kyhoiqyMVO5YkJE8yXpcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qBcSUizj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779177520; c=relaxed/simple;
+	bh=qpUVfrNNPzmLtFUO0UlpaKbsPAr3GEhyHksLuOuuZvI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=drmihCD3tM7GTxZ0mlgLD8H2a85yI6RiAm/KHGxtZcw5ejmpR5PS4FE8sKTiJxM0+otAsmAAa3rjq9kY20W7HoiBXTGXT/PagIyx+LFwQV1pT6ZnGFxxrQ1JWn3p8FN5FNEbv4Not7SQIRD1ISn+0YzvIXslvWWlDsmfJOcUDIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CKBdyr+7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qBcSUizj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C745C2BCB3;
-	Tue, 19 May 2026 07:52:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CKBdyr+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BE9C2BCC9;
+	Tue, 19 May 2026 07:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779177177;
-	bh=Y4Pfi131QEGx2U1d21Xv/Ynq6wBAvSNPx6ruKbBI9ks=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qBcSUizjIbBWkl56BaY8YjNJKCqgY7Iem7s46etiALvjzAUukC2xyvJv8nC1p9uHf
-	 Ntm0i0Dby4XROP1I3F5dEQVZ/5XNsOuEoAbUJ/NhGvI4+L0/keNBPC2/beyaRlZIL+
-	 55u0/gCLWkXecNCRb7Amx2w8gm107jNNdvqGmheP8NxhdTprWVm54ul9beTO1J7QeZ
-	 R+FXoqz5QYj8PfNcLnRWedrIUrRqa2OoQuoXKkG/zjzU6t4gpl0uBJE3b+7ovpK47e
-	 HggSyk4jgBCpQyewEr3Xmzolzk8sxfXhmzkJKSfddw1jBO7j659MSNEdRIxHC37T22
-	 tf15kdCFrv3jA==
-Date: Mon, 18 May 2026 21:52:56 -1000
+	s=k20201202; t=1779177519;
+	bh=qpUVfrNNPzmLtFUO0UlpaKbsPAr3GEhyHksLuOuuZvI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CKBdyr+7kZjoS8EdFpZlG6gEFkg/gPZpAt/JKPtaiS0tfCPFkMrtsyTjY0uoX3/OM
+	 OSetAmXeC9wC1pNunSrPRWYcxmsmGVkar9uYI+P20X6PVKbPEseRnH2mO72MwdAl6Q
+	 ns7EOUr+7/2ViJx6j9BFtmb6bYiWnB/W929zPU+tnap2GXAV/rS43uW7e0ujVm1Wa+
+	 6dM4ybnwGbMnVOuCvN7Au6vlVh/pFMu2LHOBVOThypNH7GHvwKBIAPPgzlSbCZQnyy
+	 HQaSiBRDoglD9Y/eKJifYpGSL+/leqvKfWcJBQU6pfv17ra829nVBo0oiTdhtjPdsN
+	 2vY8CxVRvfoww==
 From: Tejun Heo <tj@kernel.org>
-To: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
+To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>, rcu@vger.kernel.org,
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>
-Subject: Re: [PATCH v3 2/2] sched_ext, rcu: Upgrade RCU stall paths to report
- cpumask of stalled CPUs
-Message-ID: <agwW2PET7rOcL_87@slm.duckdns.org>
-References: <20260518131311.1170786-1-yphbchou0911@gmail.com>
- <20260518131311.1170786-3-yphbchou0911@gmail.com>
- <agtoyycMdwatAiFc@slm.duckdns.org>
- <20260519152904.G1f99@cchengyang.duckdns.org>
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-7.2] sched_ext: cmask improvements
+Date: Mon, 18 May 2026 21:58:35 -1000
+Message-ID: <20260519075838.2706712-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260519152904.G1f99@cchengyang.duckdns.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 19, 2026 at 03:43:45PM +0800, Cheng-Yang Chou wrote:
-> Hi Tejun,
-> 
-> On Mon, May 18, 2026 at 09:30:19AM -1000, Tejun Heo wrote:
-> > On Mon, May 18, 2026 at 09:11:49PM +0800, Cheng-Yang Chou wrote:
-> > > +bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask)
-> > >  {
-> > > -	return handle_lockup(-1, "RCU CPU stall detected!");
-> > > +	int exit_cpu = cpumask_empty(stalled_mask) ? -1 : (int)cpumask_first(stalled_mask);
-> > > +
-> > > +	return handle_lockup(exit_cpu, "RCU CPU stall on CPUs (%*pbl)",
-> > > +			     cpumask_pr_args(stalled_mask));
-> > 
-> > Wouldn't you want to pipe this down so that you can prioritize all stalled
-> > CPUs when dumping?
-> 
-> Ahh yes, will add stall_cpus to scx_exit_info, store the full mask
-> there, and update scx_dump_state() to dump all stalled CPUs first.
+Hello,
 
-I'm not sure I'd add it to scx_exit_info as that's public interface. Just
-pipe it to dump?
+v2 rolls up the per-patch updates that went out in reply to v1 and
+includes an update from Andrea's review on 2/3.
+
+v1: https://lore.kernel.org/r/20260517183614.1191534-1-tj@kernel.org
+
+v2:
+- 1/3: Also rename nr_bits in cmask_copy_from_kernel().
+- 2/3: Init scx_set_cmask_scratch. Bounds-check __cmask_init().
+  Widen *_CMASK_NR_WORDS() to u64. (Andrea)
+- 3/3: Add scx_cmask_empty().
+
+Three patches for cmask: tidy active-range bookkeeping and add the
+mask-on-mask op helpers the sub-sched series will use.
+
+Not backward-compat with the current scx_cmask layout/API, but cmask
+landed in for-7.2 and hasn't been released; scx_qmap is the only user.
+
+ 0001 - sched_ext: Rename scx_cmask.nr_bits to nr_cids
+ 0002 - sched_ext: Track bits[] storage size in struct scx_cmask
+ 0003 - sched_ext: Add cmask mask ops
+
+Based on sched_ext/for-7.2 (1136fb1213d1).
+
+Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git cmask-prep-v2.3
+
+ kernel/sched/ext_cid.c                | 322 +++++++++++++++++++++++++++++++++-
+ kernel/sched/ext_cid.h                |  72 +++++++-
+ kernel/sched/ext_types.h              |  68 +++++--
+ tools/sched_ext/include/scx/cid.bpf.h | 144 ++++++++++-----
+ 4 files changed, 545 insertions(+), 61 deletions(-)
 
 Thanks.
 
--- 
+--
 tejun
