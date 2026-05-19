@@ -1,375 +1,160 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB6C3E0226;
-	Tue, 19 May 2026 07:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757533DFC67;
+	Tue, 19 May 2026 08:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779177523; cv=none; b=XdcIYf6FVXbuKDccMl42YtA36i9NKQjLyFqAJUYt0B6tlFTdzFVPp2ATy3Mv0bLwup+nbWpf7J8L2x6lfbYIJPbJHWk3FNnMKxZFtx/lRXy57wGfb3y0KAuUoylh8qfx3SOC9SYkLVZrjrdU2mFdsFNKk1zFly+PurIvvXk2eZ8=
+	t=1779177649; cv=none; b=XQO8MF5ImyX/J4YGKHlD20P6hkhBh6PkJ47bdqvSeD9QYB5mTsbTfiKpTll0FYjcTpJlUnuMxwtsJK/KpJ+V49UAT+PYQRgKmCt/LPm72n0pOhFSoIPFV3LhF+rThIOZzlUn5UkJtqDR8srGoGS3BSuNBGa+tdcRgKk/ek0qzBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779177523; c=relaxed/simple;
-	bh=jgU1Ux0RSKsoEQTyZSVlLlzMwDuv4HMvnNIQKAz6Hfc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRWRGhxsHbY0gSwLdZcdWj2iKgshwwxgyQp9MJmqBium6yF2/ljG+0mnhScEYkXPl864m6KFEwS8E2SCWjUihajsMPYmzkvUnEPOdgGSg7dU9G/0iimY896+gkBEdnHho+y1RwOwmG1aGPkJOVG5LRISPAYqKZZdGPE6cu5TdCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ryU947U9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779177649; c=relaxed/simple;
+	bh=jq+Ic2o6+/T6R+6rKPEYUVCfMRGyHOvp7RzEZ9FUseg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ejfcrCkJqx/Q8sHakmiYyOoL7tNpayPxMm8IqenwyUEnJ7p/Uq6XbjbI4nTsh0CVEP2P+s0flHj7SOb0V9kyTwcnrwKOzcl7QKM8cyJPxaXfVHlURQtyDlwxrPbnd4fbh1ggX+Kejgrne1wxV6M3DiLwhpCdDyW8j98xWiOEI/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I7vznwgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ryU947U9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26A2C2BCC6;
-	Tue, 19 May 2026 07:58:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I7vznwgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FD0C2BCB3;
+	Tue, 19 May 2026 08:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779177522;
-	bh=jgU1Ux0RSKsoEQTyZSVlLlzMwDuv4HMvnNIQKAz6Hfc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryU947U9tlM+gW2y/66ib39zg/gCyIHQroWF9ZuM4ngqJBryY43VwmfpAX6upiapc
-	 gSa+ZA0mAMjzb8kMoQx74/m2F6Z4sm4PQ+2Dfr+xLnt8sKejtJ7l9HhXnKO/vaiJve
-	 Qrd03LdN5PnHDte4m872BXCB9TPPjcDUtzRGqxZJhM/Pglho/Q3MiJWRIrK8sT2L+t
-	 B3jAx78Fbh8W/GeXPTkQBXEVVwDM3uze208DxJ4xsLaLKyqlIGLEmDkJ6jslCezFO6
-	 hUd8vM3lE25aHlaxfhSwZ0k6tpg2/ErJqQpIvecIv2D5DLriecoi3MBKwj69ADyR9A
-	 zSFxMSFKJOmMw==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v2 3/3] sched_ext: Add cmask mask ops
-Date: Mon, 18 May 2026 21:58:38 -1000
-Message-ID: <20260519075838.2706712-4-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260519075838.2706712-1-tj@kernel.org>
-References: <20260519075838.2706712-1-tj@kernel.org>
+	s=k20201202; t=1779177649;
+	bh=jq+Ic2o6+/T6R+6rKPEYUVCfMRGyHOvp7RzEZ9FUseg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=I7vznwgLR82bFg5okwmiS44hagsTw2fpDtHv0dip23rZYyVv4Z5pV0JENKZenbEPY
+	 caLAFtNgxAyhxPdG12x510QK9CG3TrZLhkbICxRov/OQDkC0s4u377E1oMvrrXwpD0
+	 3EKxDFcB9Ep5YgHVziesBC27Eb10HYleQgaos3KsBrEEXh4kLkX4il/gSUs5ieJWF2
+	 xTbsEghuYQZwcY1VgRfOFjtAQnl34fSLoNXrbJE8TSkf8FQx2ojuS/rT2+Y61bn+G/
+	 X5e2Fd3WrZEKYAfmyYW26ySv7pM3wQ/gnB8Wl460a8i+L59que2/pHmk3jQl+hA1Vi
+	 v08NGy3tgOARA==
+Message-ID: <2f02d90d-cdc9-48ef-abe3-99e00f22595f@kernel.org>
+Date: Tue, 19 May 2026 10:00:39 +0200
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] mm: Add ptep_try_install() for lockless empty-slot
+ installs
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, Alexei Starovoitov <ast@kernel.org>,
+ Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>,
+ Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Mike Rapoport <rppt@kernel.org>,
+ Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+ bpf@vger.kernel.org, x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org
+References: <20260517211232.1670594-1-tj@kernel.org>
+ <20260517211232.1670594-2-tj@kernel.org>
+ <9ba50fd2-077e-4291-9276-9adb18186873@kernel.org>
+ <agtuPrgIDNKSu2Oo@slm.duckdns.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <agtuPrgIDNKSu2Oo@slm.duckdns.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Sub-sched cap code and other upcoming consumers need bulk cmask ops, both
-mutating (and/or/copy/andnot) and predicate (subset/intersects/empty).
+On 5/18/26 21:53, Tejun Heo wrote:
+> Hello,
+> 
+> On Mon, May 18, 2026 at 10:06:29AM +0200, David Hildenbrand (Arm) wrote:
+>> On 5/17/26 23:12, Tejun Heo wrote:
+>>> +static inline bool ptep_try_install(pte_t *ptep, pte_t new_pte)
+>>> +{
+>>> +	return false;
+>>> +}
+>>> +#endif
+>>
+>> Ehm, what?
+>>
+>> This is a very, very, very bad generic idea/interface.
+>>
+>> On which ptes is this supposed to be used? User ptes or kernel ptes?
+>>
+>> Surely we don't want this on user ptes.
+> 
+> Yeah, this is only for the BPF arena PTEs which are already managed in their
+> own way. I'd be happy to place / gate it however appropriate.
 
-cmask_walk_op2() walks the intersection of two ranges word by word;
-cmask_walk_op1() walks one range. Both are __always_inline and dispatched on
-a compile-time-constant op enum, so each public entry collapses to a
-specialized loop with the inner switch reduced to one arm.
 
-Two-cmask ops only touch bits in the intersection of the two ranges; bits
-outside are left unchanged. scx_cmask_or_racy() and scx_cmask_copy_racy()
-mirror the locking forms but read @src word-by-word through data_race();
-callers handle ordering with concurrent writers themselves.
+So, we only use it within apply_to_page_range() with init_mm, where we don't use
+page table locks.
 
-v2: Add scx_cmask_empty().
+Usually we seem to grab the &arena->spinlock to protect the kernel page tables.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext_cid.c | 270 +++++++++++++++++++++++++++++++++++++++++
- kernel/sched/ext_cid.h |   9 ++
- 2 files changed, 279 insertions(+)
+And you're saying that we might get called from a page fault handler where that
+lock can already be held.
 
-diff --git a/kernel/sched/ext_cid.c b/kernel/sched/ext_cid.c
-index 44dd47a87709..0c91b951fd33 100644
---- a/kernel/sched/ext_cid.c
-+++ b/kernel/sched/ext_cid.c
-@@ -397,6 +397,276 @@ __bpf_kfunc s32 scx_bpf_cpu_to_cid(s32 cpu, const struct bpf_prog_aux *aux)
- 	return scx_cpu_to_cid(sch, cpu);
- }
- 
-+/*
-+ * Set ops on cmasks. cmask_walk_op2() shares one walk across mutating
-+ * (and/or/copy/andnot) and predicate (subset/intersects) two-cmask forms;
-+ * cmask_walk_op1() does the same shape over a single cmask range. Every public
-+ * entry passes a compile-time-constant @op; cmask_walk_op{1,2}() and
-+ * cmask_word_op{1,2}() are __always_inline so the inner switch collapses to the
-+ * selected op and cmask_op2_is_pred() folds the predicate early-exit out of
-+ * mutating ops.
-+ *
-+ * Two-cmask ops only touch @dst bits inside the intersection of the two ranges;
-+ * bits outside stay untouched. In particular, scx_cmask_copy() does NOT zero
-+ * @dst bits that lie outside @src's range.
-+ *
-+ * The _RACY variants are otherwise identical to their non-racy counterpart but
-+ * read @src word-by-word via data_race(). Memory ordering with concurrent
-+ * writers is the caller's responsibility.
-+ */
-+enum cmask_op2 {
-+	/* mutating */
-+	CMASK_OP2_AND,
-+	CMASK_OP2_OR,
-+	CMASK_OP2_OR_RACY,
-+	CMASK_OP2_COPY,
-+	CMASK_OP2_COPY_RACY,
-+	CMASK_OP2_ANDNOT,
-+	/* predicates - short-circuit when the per-word result is true */
-+	CMASK_OP2_SUBSET,
-+	CMASK_OP2_INTERSECTS,
-+};
-+
-+static __always_inline bool cmask_op2_is_pred(const enum cmask_op2 op)
-+{
-+	return op == CMASK_OP2_SUBSET || op == CMASK_OP2_INTERSECTS;
-+}
-+
-+static __always_inline bool cmask_word_op2(u64 *av, const u64 *bp, u64 mask,
-+					   const enum cmask_op2 op)
-+{
-+	switch (op) {
-+	case CMASK_OP2_AND:
-+		*av &= ~mask | *bp;
-+		return false;
-+	case CMASK_OP2_OR:
-+		*av |= *bp & mask;
-+		return false;
-+	case CMASK_OP2_OR_RACY:
-+		*av |= data_race(*bp) & mask;
-+		return false;
-+	case CMASK_OP2_COPY:
-+		*av = (*av & ~mask) | (*bp & mask);
-+		return false;
-+	case CMASK_OP2_COPY_RACY:
-+		*av = (*av & ~mask) | (data_race(*bp) & mask);
-+		return false;
-+	case CMASK_OP2_ANDNOT:
-+		*av &= ~(*bp & mask);
-+		return false;
-+	case CMASK_OP2_SUBSET:
-+		/* stop on the first bit in @sub not set in @super */
-+		return (*bp & ~*av) & mask;
-+	case CMASK_OP2_INTERSECTS:
-+		return (*av & *bp) & mask;
-+	}
-+	unreachable();
-+}
-+
-+/*
-+ * Walk the intersection of [@a_base, @a_base + @a_nr_cids) with [@b_base,
-+ * @b_base + @b_nr_cids) word by word, applying @op. Mutating ops walk all words
-+ * and return false; predicates return true on the first word whose per-word
-+ * test is true. Empty intersection returns false (matches "no bits to consider"
-+ * for both mutate and predicate).
-+ *
-+ * Base/nr_cids are taken as parameters so callers with snapshotted bounds can
-+ * drive the walk with values independent of the cmask's header.
-+ */
-+static __always_inline bool cmask_walk_op2(u64 *a_bits, u32 a_base, u32 a_nr_cids,
-+					   const u64 *b_bits, u32 b_base, u32 b_nr_cids,
-+					   const enum cmask_op2 op)
-+{
-+	u32 lo = max(a_base, b_base);
-+	u32 hi = min(a_base + a_nr_cids, b_base + b_nr_cids);
-+	u32 a_word_off = a_base / 64;
-+	u32 b_word_off = b_base / 64;
-+	u32 lo_word = lo / 64;
-+	u32 hi_word = (hi - 1) / 64;
-+	u64 head_mask = GENMASK_U64(63, lo & 63);
-+	u64 tail_mask = GENMASK_U64((hi - 1) & 63, 0);
-+	u32 w;
-+
-+	if (lo >= hi)
-+		return false;
-+
-+	if (lo_word == hi_word)
-+		return cmask_word_op2(&a_bits[lo_word - a_word_off],
-+				      &b_bits[lo_word - b_word_off],
-+				      head_mask & tail_mask, op);
-+
-+	if (cmask_word_op2(&a_bits[lo_word - a_word_off],
-+			   &b_bits[lo_word - b_word_off], head_mask, op) &&
-+	    cmask_op2_is_pred(op))
-+		return true;
-+
-+	for (w = lo_word + 1; w < hi_word; w++)
-+		if (cmask_word_op2(&a_bits[w - a_word_off],
-+				   &b_bits[w - b_word_off], ~0ULL, op) &&
-+		    cmask_op2_is_pred(op))
-+			return true;
-+
-+	return cmask_word_op2(&a_bits[hi_word - a_word_off],
-+			      &b_bits[hi_word - b_word_off], tail_mask, op);
-+}
-+
-+enum cmask_op1 {
-+	CMASK_OP1_ANY_SET,
-+};
-+
-+static __always_inline bool cmask_word_op1(const u64 *ap, u64 mask,
-+					   const enum cmask_op1 op)
-+{
-+	switch (op) {
-+	case CMASK_OP1_ANY_SET:
-+		return *ap & mask;
-+	}
-+	unreachable();
-+}
-+
-+/*
-+ * Walk [@a_base, @a_base + @a_nr_cids) of @a_bits word by word, applying @op.
-+ * Returns true on the first word whose per-word test is true; returns false if
-+ * no word matches or the range is empty. All current op1s short-circuit on
-+ * per-word true; if a non-predicate op1 lands here, add a cmask_op1_is_pred()
-+ * guard analogous to cmask_op2_is_pred().
-+ */
-+static __always_inline bool cmask_walk_op1(const u64 *a_bits, u32 a_base,
-+					   u32 a_nr_cids,
-+					   const enum cmask_op1 op)
-+{
-+	u32 lo = a_base;
-+	u32 hi = a_base + a_nr_cids;
-+	u32 a_word_off = a_base / 64;
-+	u32 lo_word = lo / 64;
-+	u32 hi_word = (hi - 1) / 64;
-+	u64 head_mask = GENMASK_U64(63, lo & 63);
-+	u64 tail_mask = GENMASK_U64((hi - 1) & 63, 0);
-+	u32 w;
-+
-+	if (lo >= hi)
-+		return false;
-+
-+	if (lo_word == hi_word)
-+		return cmask_word_op1(&a_bits[lo_word - a_word_off],
-+				      head_mask & tail_mask, op);
-+
-+	if (cmask_word_op1(&a_bits[lo_word - a_word_off], head_mask, op))
-+		return true;
-+	for (w = lo_word + 1; w < hi_word; w++)
-+		if (cmask_word_op1(&a_bits[w - a_word_off], ~0ULL, op))
-+			return true;
-+	return cmask_word_op1(&a_bits[hi_word - a_word_off], tail_mask, op);
-+}
-+
-+void scx_cmask_and(struct scx_cmask *dst, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_AND);
-+}
-+
-+void scx_cmask_or(struct scx_cmask *dst, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_OR);
-+}
-+
-+/**
-+ * scx_cmask_or_racy - OR @src into @dst, reading @src without locking
-+ *
-+ * @src is read word-by-word through data_race(). Same per-bit independence
-+ * rationale as scx_cmask_copy_racy(). Memory ordering with writers is the
-+ * caller's responsibility.
-+ */
-+void scx_cmask_or_racy(struct scx_cmask *dst, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_OR_RACY);
-+}
-+
-+void scx_cmask_copy(struct scx_cmask *dst, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_COPY);
-+}
-+
-+/**
-+ * scx_cmask_copy_racy - Snapshot @src into @dst without locking
-+ *
-+ * @src is read word-by-word through data_race(). Head/tail masking matches
-+ * scx_cmask_copy(). Each bit in a cmask is independent, so partial updates
-+ * just leave some bits fresher than others. Memory ordering with writers is
-+ * the caller's responsibility.
-+ */
-+void scx_cmask_copy_racy(struct scx_cmask *dst, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_COPY_RACY);
-+}
-+
-+void scx_cmask_andnot(struct scx_cmask *dst, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_ANDNOT);
-+}
-+
-+/*
-+ * Return true if @cm has any bit set in [@lo, @hi). Caller must ensure
-+ * [@lo, @hi) is contained in @cm's range.
-+ */
-+static bool cmask_any_set_in_range(const struct scx_cmask *cm, u32 lo, u32 hi)
-+{
-+	if (lo >= hi)
-+		return false;
-+	return cmask_walk_op1(&cm->bits[lo / 64 - cm->base / 64], lo, hi - lo,
-+			      CMASK_OP1_ANY_SET);
-+}
-+
-+/**
-+ * scx_cmask_subset - test whether @sub is a subset of @super
-+ * @sub: cmask to test
-+ * @super: cmask to test against
-+ *
-+ * Return true iff every set bit of @sub is also set in @super.
-+ */
-+bool scx_cmask_subset(const struct scx_cmask *sub, const struct scx_cmask *super)
-+{
-+	u32 super_end = super->base + super->nr_cids;
-+	u32 sub_end = sub->base + sub->nr_cids;
-+
-+	/*
-+	 * Set bits in @sub outside @super's range can't be in @super, so any
-+	 * such bit means not a subset. The walk below only visits words
-+	 * common to both ranges, so these need a separate scan.
-+	 */
-+	if (sub->base < super->base &&
-+	    cmask_any_set_in_range(sub, sub->base, min(super->base, sub_end)))
-+		return false;
-+	if (sub_end > super_end &&
-+	    cmask_any_set_in_range(sub, max(sub->base, super_end), sub_end))
-+		return false;
-+
-+	return !cmask_walk_op2((u64 *)super->bits, super->base, super->nr_cids,
-+			       sub->bits, sub->base, sub->nr_cids, CMASK_OP2_SUBSET);
-+}
-+
-+bool scx_cmask_intersects(const struct scx_cmask *a, const struct scx_cmask *b)
-+{
-+	return cmask_walk_op2((u64 *)a->bits, a->base, a->nr_cids,
-+			      b->bits, b->base, b->nr_cids, CMASK_OP2_INTERSECTS);
-+}
-+
-+/**
-+ * scx_cmask_empty - Test whether @m has no bits set
-+ * @m: cmask to test
-+ *
-+ * Return true iff @m's active range has no bits set.
-+ */
-+bool scx_cmask_empty(const struct scx_cmask *m)
-+{
-+	return !cmask_any_set_in_range(m, m->base, m->base + m->nr_cids);
-+}
-+
- /**
-  * scx_bpf_cid_topo - Copy out per-cid topology info
-  * @cid: cid to look up
-diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
-index 223ed0e857ec..abea22ba2cc2 100644
---- a/kernel/sched/ext_cid.h
-+++ b/kernel/sched/ext_cid.h
-@@ -53,6 +53,15 @@ extern struct btf_id_set8 scx_kfunc_ids_init;
- 
- void scx_cmask_clear(struct scx_cmask *m);
- void scx_cmask_fill(struct scx_cmask *m);
-+void scx_cmask_and(struct scx_cmask *dst, const struct scx_cmask *src);
-+void scx_cmask_or(struct scx_cmask *dst, const struct scx_cmask *src);
-+void scx_cmask_or_racy(struct scx_cmask *dst, const struct scx_cmask *src);
-+void scx_cmask_copy(struct scx_cmask *dst, const struct scx_cmask *src);
-+void scx_cmask_copy_racy(struct scx_cmask *dst, const struct scx_cmask *src);
-+void scx_cmask_andnot(struct scx_cmask *dst, const struct scx_cmask *src);
-+bool scx_cmask_subset(const struct scx_cmask *sub, const struct scx_cmask *super);
-+bool scx_cmask_intersects(const struct scx_cmask *a, const struct scx_cmask *b);
-+bool scx_cmask_empty(const struct scx_cmask *m);
- s32 scx_cid_init(struct scx_sched *sch);
- int scx_cid_kfunc_init(void);
- void scx_cpumask_to_cmask(const struct cpumask *src, struct scx_cmask *dst);
+Is that really possible? I'd much rather prefer to trylock and retry, unless
+that can really result in deadlocks. But I have the feeling that such deadlocks
+should be impossible here.
+
+Can you elaborate on the deadlock situation and how that can happen in valid
+scenarios?
+
+
+The thing is that ptep_try_install() relies on other page table walking and
+insertion code to do the right thing. Shaky.
+
+For example, staring at apply_range_set_cb(), what prevents:
+
+(1) apply_range_set_cb() finding pte_none(ptep_get(pte)
+(2) apply_range_set_scratch_cb() succeeding ptep_try_install()
+(3) apply_range_set_cb() overwriting the pte with set_pte_at()
+
+Between (2) and (3) CPUs could access the scratch PTE.
+
 -- 
-2.54.0
+Cheers,
 
+David
