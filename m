@@ -1,63 +1,63 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06499360EDA
-	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 03:17:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681D21D5AD4
+	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 04:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779333443; cv=none; b=qNGj3KqJILL7WuYeWG/4lFxJ6b4SyUp92WGloyKzWDPcDy9tKAK2G+WYhWjcSYZMY3RMnG62iozmnWUfXOSYA7LVDosMlDvnoCbwN/fpg2kWkQ6wpV+wsNcCDYeyESw1qs0xW9FNUjoVE4XyykkGkG4WgbUmJ+J5sexOpIkkwD8=
+	t=1779336469; cv=none; b=hkWGdtZQgRpZDSygKTkIL7kgoxL+ePPo9HKrodtuIoRJMy3/ku5bUkZwYP0z6G6NxqFHhYvs+d7x+gLZUppRE/XKdS3LUp70fUn1e/BiTibD/UxYGI/oRrjVhcEBhZ6lNtdnOKEcmcIqNTofDKq6+ahnX1+MrX9Z76IBtNtvfE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779333443; c=relaxed/simple;
-	bh=ny4F686XU3gQ2H+vMFM/I+B0c5kC47mbwkkPWhSTfgM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=M+gkut6g4+dR7wt4FrLfivO2j0tRL+jww8YqHtFSvm1We4ReoptghE4ivBn/tb5ryK25Bz/X3WKbnXN/PbO0zE/077luVOArKuej7DuaTnea71MX5Er6eiBMAL+gkEe6/CP9xfKiqotNH6RHYpumprXD2kYxSohv2fJ6roPv7VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=ylN6K7jd; arc=none smtp.client-ip=209.85.216.51
+	s=arc-20240116; t=1779336469; c=relaxed/simple;
+	bh=fBEBu93b5jczK6qq9CsUWP0pGZF6IcTC/U317pLv/p0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=DagcV8wFkUDj2TjHcL8xtmUbM0v9TSVElKf3Ww/HNKKL45xXN+OdN1qpZGNw9NonVFT5HzXdj4FXPl8DK8Um9s/OfEKyG5tHfxZN9WZWpqBh59H9AYfB6HrwrvtG8J+/AxCljkYcu6JVKa8mbd52RpogenUYNZ3u11WgoWXmMbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=KgMt24HA; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="ylN6K7jd"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3697f25d26eso2849809a91.1
-        for <sched-ext@lists.linux.dev>; Wed, 20 May 2026 20:17:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="KgMt24HA"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82faf871346so4392088b3a.0
+        for <sched-ext@lists.linux.dev>; Wed, 20 May 2026 21:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1779333441; x=1779938241; darn=lists.linux.dev;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1779336466; x=1779941266; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WnZgEvyl5JzulXJ71OevVX7wYBcNSF1YrTlDeDtAzPQ=;
-        b=ylN6K7jd4xJcXzobwmxsu3MB2hiXHIIK1a2/fhD8v/p0lfndM6nHVQyxKeNpRSF+Wj
-         9RmTUsc0HCgcYHRdRaRMk0Yop9miRIgfTTDI+qWtn5mfyzCd2NbXOWKk45eW3yYl/hes
-         pDTXAi+LPBjWR7Hc+3pgWV/S7Dkk4rf6D0GDdx6wW7ilL5fuYBCDW4Ya3VtEIy3QFuom
-         scoROhBWirzz3m+zCSfUvTtIDVNjwVYAyRUTGYGP7lmtCv6egrxnPXRJADH19033vVZQ
-         H5SHLynvIfNvQp8PBqzFpaqZSiXEWRxHcEXIiOAwJfg1FNvOthtoNxVkzDxNhLas75Qh
-         zPxw==
+        bh=C2hkMG41D7UumAODedFGWVazHZhYrfBwUFGTzkSTLig=;
+        b=KgMt24HAS1IOxVqC4Anrblyz/fMYqboZ4qntalSASlqkKhf+7KGkgcBdT8aiBuFknc
+         XSaBa4Lq2zlGcsIax6rf7U6HlUCQ03nZtvFrevFhNtsDrB/G1rTcRyBpZ7JSuAFl4YM2
+         GeUfsEyzlOR2Lj96K2po89r20QWfDxONN/kmFKCnjPL/X7ChAsu7iTxLGJQxMfm4SHcQ
+         V1vCHup0SQZYKJV3p8g0bbNQBkpM6fppVCc//SC7xVcGcN/POJ3MdRnA821PW+nhP4+D
+         ukXPXm9sMpqwa93xT/PksJtDWbTvM1KaOkaagzQ8kvrCOvemjRVvPHOl3/HfmY3oVBNm
+         v+jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779333441; x=1779938241;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
+        d=1e100.net; s=20251104; t=1779336466; x=1779941266;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WnZgEvyl5JzulXJ71OevVX7wYBcNSF1YrTlDeDtAzPQ=;
-        b=Y0ZTaXFjTKMZRmtPsWYI9Qx/PuYRcJ7gMSUSHRroPn54O6juVnIvBUi9cE5mucHHxi
-         Xm0TvOqbjUBYH7zzrnRg9UOfKTKF7OiCzDG/L+4DJB9DwKQYzKLu3CNz6VUr6g1esAR2
-         bmKp/s8A8RLDs2niIhseHs3ajtlE7FbwB4HJv8ZjEbkzgbVgrm6gn+6ovR5aE/kx2E2j
-         80EabJTdU0bn8xGmT2nVxIrvCo2Thi/h4uAzITa/z5Cs8GXA33r+0CmTIlnDrBL5TCbb
-         idS8wcyS+O7rrm230ysOTJx1YeFPQ/4hr4+v4gpTSlpK/DyPaSLh6TzGccCtWnvAfcwk
-         JwHQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/Mg3xEWwjJ7Tvo3cTklwqjSGcvTLSJ36eMgWFw9kFCCRFAwCii95pl+cz7L6YFXwxrD787m77/N64=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx8/J41m3t0vwaacr1IlbzTnYyeCRpCJme4vHmDs5AbIJALz+k/
-	rVxnae5ILWywieLidCZGJt80jWAFXc5EzcP3iO5e5lSH0Gk+GdlCAau3nBsSST0XKh8=
-X-Gm-Gg: Acq92OGuKax82j5z8RQAqozqWxRbQMF8Urf+fDp2yHvJgy6DmUNfhyJWb+tDotAz7hX
-	pnI6QiBP3S5p90AYYU4z57MvW/TA4LjrqD+IAkrHMlYlr7ylW32nM86xI1cLwXg5MkfLPI0ow5d
-	wYzNV9+bw3JM2Pt3vVDdR0ZA+0rhB8b3L9zmW9KDMOxc+pI6qS5OM/unqLbFYH9vWXeVe8lx1eU
-	rLQWfuqKfysm1AJZxzoB7IvPd6j3mktCFuu6DcsAjjeuLEfTnGFW3oz07YmRFYxGOdEBs8H3poQ
-	BoTuKP1RFYBHxkirdoH5jkIRHOxvUnVotNNPuZZ9EhjJaXZJFf+1Ptwv+Fq4sPlmuUr8+n9JCIe
-	IPEAoL2YLKFIcmdm7dW63Geb4nCCFw5IaZ3T10vnVLvGGcpA5rWBTQ7yrDqAOp5WCCQZ1B2dVo6
-	6sa6A0GTKVWUj8AAEKh6vCYiAH
-X-Received: by 2002:a17:90b:1fc3:b0:366:16d1:6a26 with SMTP id 98e67ed59e1d1-36a45139004mr1096386a91.5.1779333441193;
-        Wed, 20 May 2026 20:17:21 -0700 (PDT)
+        bh=C2hkMG41D7UumAODedFGWVazHZhYrfBwUFGTzkSTLig=;
+        b=INUcdWuUDgei7zYa8HRCw4O4o4T7iWigp3jwp/NHVE7T52xr8lNILpnhU8bnzP+S7p
+         RUXJBSJbJILfMb0vnyNnt1OXdTWKVjZarTb6Cko2C06lfDjIBf/gmEk7UuxTmtu0RpAX
+         EKlKM0mebtem56AKnYFWr9oQmsBpiBKYv0oyJ27GITJOxcv28wy08qJx0dAuF0UqeqF6
+         +ifKUDChi7Sd+cWFFayfdgYP10iIks7+px6Q9+asp331V2bvUf47DX54oIg51gcB6t3v
+         gn/EYrL7gUnwSaX9d1BqGJpPfI4ey6mvKRKFmo2MmZvl0zA/5TJLeS5UMU1EoKz1W9Zl
+         Txqg==
+X-Forwarded-Encrypted: i=1; AFNElJ+gvl+E29rMSfG6rxHN+0pI8q8IDkj0enWadhL5AaKnOU+RhH+tCqCrn2UQTXsJa+pb7/a7+HSNx7Y=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw3XhX/8vL/NWIRdGcgbCBkispq1tAVIUAt8vBkqAksHglS1zc3
+	s71+X3cEo6C/DaOBp/CWRIsHcrkozuL3WRZpwL8dLrnZ9s5ByydyskhGs4BKVV0Sm64=
+X-Gm-Gg: Acq92OEvv4xoQ4aK/WopuZ0n1VQ8juoNbs7i9mtLu9tcsVktSFFjNusFiC/CVj8ZOn3
+	LUZrnSXO06wfaFptwNuRtFHyDI+E5iQPDySeAU7OGZtqW394hc0dcJBdmZW6yY2F0IoxuIIpujB
+	4EnMM4vLNte7gp1zwh9ytfelOU/t1nZ/PG8x8XxcTB3obXmol0T1EWWLnESPQ8ZxD+nfUvZP6I5
+	P5soP73yui4k7d9waxS3/8e4c/vjIyxt7YfIoDkztkqyRdhH9A2v5T2ndxqZ77ZC4OALGmGBX8q
+	03DkNvJvAmlaGc+t/33/i1KWqBFefEJswXbK4M0p1b4kj/d9qU/ArJtvk0dsHHeDD72m9hMlKbt
+	MZ6bIYsdxcDhJtTNfzVrWfbkCM7upO0J942zBzxINkQ9s6aVA70r3wiwhIoMD6qheGZnSWTRgNJ
+	nWhv8EqW6gCK5ww8D+gy3+c7nv8xopAFab1kg=
+X-Received: by 2002:a05:6a00:4c8c:b0:83f:250d:59c with SMTP id d2e1a72fcca58-8414ae6e912mr1347583b3a.39.1779336465527;
+        Wed, 20 May 2026 21:07:45 -0700 (PDT)
 Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a4560779csm222458a91.1.2026.05.20.20.17.20
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19f7cd19sm22757564b3a.54.2026.05.20.21.07.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 20:17:20 -0700 (PDT)
+        Wed, 20 May 2026 21:07:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,14 +66,8 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 20 May 2026 23:17:20 -0400
-Message-Id: <DIO129TJQ1F9.20NON5EPGLHRO@etsalapatis.com>
-To: "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>,
- "Andrea Righi" <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>,
- "Alexei Starovoitov" <ast@kernel.org>, "Andrii Nakryiko"
- <andrii@kernel.org>, "Daniel Borkmann" <daniel@iogearbox.net>, "Martin
- KaFai Lau" <martin.lau@linux.dev>, "Kumar Kartikeya Dwivedi"
- <memxor@gmail.com>
+Date: Thu, 21 May 2026 00:07:44 -0400
+Message-Id: <DIO24V5XSTSW.2PW1QDEHN0T3M@etsalapatis.com>
 Cc: "Peter Zijlstra" <peterz@infradead.org>, "Catalin Marinas"
  <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>, "Thomas
  Gleixner" <tglx@kernel.org>, "Ingo Molnar" <mingo@redhat.com>, "Borislav
@@ -83,96 +77,110 @@ Cc: "Peter Zijlstra" <peterz@infradead.org>, "Catalin Marinas"
  <emil@etsalapatis.com>, <sched-ext@lists.linux.dev>, <bpf@vger.kernel.org>,
  <x86@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 3/8] bpf: Add sleepable variant of bpf_arena_alloc_pages
- for kernel callers
+Subject: Re: [PATCH 4/8] bpf: Add bpf_struct_ops_for_each_prog()
 From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>,
+ "Andrea Righi" <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>,
+ "Alexei Starovoitov" <ast@kernel.org>, "Andrii Nakryiko"
+ <andrii@kernel.org>, "Daniel Borkmann" <daniel@iogearbox.net>, "Martin
+ KaFai Lau" <martin.lau@linux.dev>, "Kumar Kartikeya Dwivedi"
+ <memxor@gmail.com>
 X-Mailer: aerc 0.21.0-0-g5549850facc2
 References: <20260520235052.4180316-1-tj@kernel.org>
- <20260520235052.4180316-4-tj@kernel.org>
-In-Reply-To: <20260520235052.4180316-4-tj@kernel.org>
+ <20260520235052.4180316-5-tj@kernel.org>
+In-Reply-To: <20260520235052.4180316-5-tj@kernel.org>
 
 On Wed May 20, 2026 at 7:50 PM EDT, Tejun Heo wrote:
-> The existing kernel-side export of bpf_arena_alloc_pages is _non_sleepabl=
-e
-> only - it's used by the verifier to inline the kfunc when the call site i=
-s
-> non-sleepable. There is no sleepable equivalent for kernel callers; the
-> kfunc bpf_arena_alloc_pages itself is BPF-only.
+> Add a helper that walks the member progs of the struct_ops map
+> containing a given @kdata vmtable. struct_ops ->reg() callbacks (and
+> similar) sometimes need to inspect the loaded BPF programs, e.g. to
+> discover maps they reference via prog->aux->used_maps.
 >
-> sched_ext needs sleepable kernel-side allocs for its arena pool init/grow
-> paths. Add bpf_arena_alloc_pages_sleepable() mirroring the _non_sleepable
-> wrapper but passing sleepable=3Dtrue to arena_alloc_pages().
+> The implementation mirrors bpf_struct_ops_id(): container_of @kdata
+> to recover the bpf_struct_ops_map, then iterate st_map->links[i]->prog
+> for i in [0, funcs_cnt). Same access pattern, no new locking - by the
+> time ->reg() fires st_map is fully populated and stable.
+>
+> A sched_ext follow-up walks the member progs of a cid-form scheduler's
+> struct_ops map, reads prog->aux->arena directly, and requires all member
+> progs to reference exactly one arena, without requiring the BPF program
+> to call a registration kfunc.
 >
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
 > ---
->  include/linux/bpf.h |  8 ++++++++
->  kernel/bpf/arena.c  | 13 +++++++++++++
->  2 files changed, 21 insertions(+)
+>  include/linux/bpf.h         |  3 +++
+>  kernel/bpf/bpf_struct_ops.c | 36 ++++++++++++++++++++++++++++++++++++
+>  2 files changed, 39 insertions(+)
 >
 > diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-> index 831996c411cf..64968ca6db51 100644
+> index 64968ca6db51..5b99d786e98c 100644
 > --- a/include/linux/bpf.h
 > +++ b/include/linux/bpf.h
-> @@ -679,6 +679,8 @@ int bpf_dynptr_from_file_sleepable(struct file *file,=
- u32 flags,
->  void *bpf_arena_alloc_pages_non_sleepable(void *p__map, void *addr__ign,=
- u32 page_cnt, int node_id,
->  					  u64 flags);
->  void bpf_arena_free_pages_non_sleepable(void *p__map, void *ptr__ign, u3=
-2 page_cnt);
-> +void *bpf_arena_alloc_pages_sleepable(void *p__map, void *addr__ign, u32=
- page_cnt, int node_id,
-> +				      u64 flags);
->  #else
->  static inline void *bpf_arena_alloc_pages_non_sleepable(void *p__map, vo=
-id *addr__ign, u32 page_cnt,
->  							int node_id, u64 flags)
-> @@ -689,6 +691,12 @@ static inline void *bpf_arena_alloc_pages_non_sleepa=
-ble(void *p__map, void *addr
->  static inline void bpf_arena_free_pages_non_sleepable(void *p__map, void=
- *ptr__ign, u32 page_cnt)
->  {
->  }
-> +
-> +static inline void *bpf_arena_alloc_pages_sleepable(void *p__map, void *=
-addr__ign, u32 page_cnt,
-> +						    int node_id, u64 flags)
-> +{
-> +	return NULL;
-> +}
->  #endif
+> @@ -2129,6 +2129,9 @@ int bpf_prog_assoc_struct_ops(struct bpf_prog *prog=
+, struct bpf_map *map);
+>  void bpf_prog_disassoc_struct_ops(struct bpf_prog *prog);
+>  void *bpf_prog_get_assoc_struct_ops(const struct bpf_prog_aux *aux);
+>  u32 bpf_struct_ops_id(const void *kdata);
+> +int bpf_struct_ops_for_each_prog(const void *kdata,
+> +				 int (*cb)(struct bpf_prog *prog, void *data),
+> +				 void *data);
 > =20
->  extern const struct bpf_map_ops bpf_map_offload_ops;
-> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-> index 1c0b87ecc817..a811cf6170fa 100644
-> --- a/kernel/bpf/arena.c
-> +++ b/kernel/bpf/arena.c
-> @@ -934,6 +934,19 @@ void *bpf_arena_alloc_pages_non_sleepable(void *p__m=
-ap, void *addr__ign, u32 pag
-> =20
->  	return (void *)arena_alloc_pages(arena, (long)addr__ign, page_cnt, node=
-_id, false);
+>  #ifdef CONFIG_NET
+>  /* Define it here to avoid the use of forward declaration */
+> diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
+> index 05b366b821c3..16aec18ed31b 100644
+> --- a/kernel/bpf/bpf_struct_ops.c
+> +++ b/kernel/bpf/bpf_struct_ops.c
+> @@ -1203,6 +1203,42 @@ u32 bpf_struct_ops_id(const void *kdata)
 >  }
-> +
-> +void *bpf_arena_alloc_pages_sleepable(void *p__map, void *addr__ign, u32=
- page_cnt,
-> +				      int node_id, u64 flags)
+>  EXPORT_SYMBOL_GPL(bpf_struct_ops_id);
+> =20
+> +/**
+> + * bpf_struct_ops_for_each_prog - Invoke @cb for each member prog
+> + * @kdata: kernel-side struct_ops vmtable (the @kdata arg to ->reg/->upd=
+ate/->unreg)
+> + * @cb: callback invoked once per member prog; non-zero return stops ite=
+ration
+> + * @data: opaque argument passed to @cb
+> + *
+> + * Walks the struct_ops member progs registered on the map containing @k=
+data.
+> + * Intended for use from struct_ops ->reg() callbacks (and similar) that=
+ need to
+> + * inspect the loaded BPF programs (for example to discover maps they re=
+ference
+> + * via @prog->aux->used_maps).
+> + *
+> + * Return 0 if iteration completed, otherwise the first non-zero @cb ret=
+urn.
+> + */
+> +int bpf_struct_ops_for_each_prog(const void *kdata,
+> +				 int (*cb)(struct bpf_prog *prog, void *data),
+> +				 void *data)
 > +{
-> +	struct bpf_map *map =3D p__map;
-> +	struct bpf_arena *arena =3D container_of(map, struct bpf_arena, map);
+> +	struct bpf_struct_ops_value *kvalue;
+> +	struct bpf_struct_ops_map *st_map;
+> +	u32 i;
+> +	int ret;
 > +
-> +	if (map->map_type !=3D BPF_MAP_TYPE_ARENA || flags || !page_cnt)
-> +		return NULL;
+> +	kvalue =3D container_of(kdata, struct bpf_struct_ops_value, data);
+> +	st_map =3D container_of(kvalue, struct bpf_struct_ops_map, kvalue);
 > +
-> +	return (void *)arena_alloc_pages(arena, (long)addr__ign, page_cnt, node=
-_id, true);
+> +	for (i =3D 0; i < st_map->funcs_cnt; i++) {
+> +		if (!st_map->links[i])
+> +			continue;
+> +		ret =3D cb(st_map->links[i]->prog, data);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +	return 0;
 > +}
+> +EXPORT_SYMBOL_GPL(bpf_struct_ops_for_each_prog);
 > +
->  __bpf_kfunc void bpf_arena_free_pages(void *p__map, void *ptr__ign, u32 =
-page_cnt)
+>  static bool bpf_struct_ops_valid_to_reg(struct bpf_map *map)
 >  {
->  	struct bpf_map *map =3D p__map;
+>  	struct bpf_struct_ops_map *st_map =3D (struct bpf_struct_ops_map *)map;
 
