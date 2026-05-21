@@ -1,63 +1,63 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681D21D5AD4
-	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 04:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395C116DEB1
+	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 04:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779336469; cv=none; b=hkWGdtZQgRpZDSygKTkIL7kgoxL+ePPo9HKrodtuIoRJMy3/ku5bUkZwYP0z6G6NxqFHhYvs+d7x+gLZUppRE/XKdS3LUp70fUn1e/BiTibD/UxYGI/oRrjVhcEBhZ6lNtdnOKEcmcIqNTofDKq6+ahnX1+MrX9Z76IBtNtvfE4=
+	t=1779336514; cv=none; b=SzkmBYxdygO+fqjssPA5XaJttB7SEwr4JBDcLqgAzeU8dE6bQUDGheKAc9/UbAWrfBRsl4YdhZXvr1tAUZNTGQlIpGEQtq+CFB5C++dSMHYOOyWi00SoK0rq73LNDxYaRbJn/tduvKbNcRsy1ZxOGt5WSXTMA1a52i1e4y8IkcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779336469; c=relaxed/simple;
-	bh=fBEBu93b5jczK6qq9CsUWP0pGZF6IcTC/U317pLv/p0=;
+	s=arc-20240116; t=1779336514; c=relaxed/simple;
+	bh=cXsEv7M8s8B+fW56IioKkoVTP6yPw0hwmUPpqeXjWu0=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=DagcV8wFkUDj2TjHcL8xtmUbM0v9TSVElKf3Ww/HNKKL45xXN+OdN1qpZGNw9NonVFT5HzXdj4FXPl8DK8Um9s/OfEKyG5tHfxZN9WZWpqBh59H9AYfB6HrwrvtG8J+/AxCljkYcu6JVKa8mbd52RpogenUYNZ3u11WgoWXmMbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=KgMt24HA; arc=none smtp.client-ip=209.85.210.180
+	 References:In-Reply-To; b=taeKNmFvOR1LumPAsSp2sD8JuL9WEJspMq16Zgg9szyLGEmOfti7K348YD0zUgKH8GixAdrDQyRz/9nHyfHShJNceLuvXUyMUIklA04cM1D2Y5WWNoMabnfLawM7XJSHYjovqbP6MICOaoSLVvLAUVNtshhcp697eZkGmrrGRC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=CnRHI9K5; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="KgMt24HA"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-82faf871346so4392088b3a.0
-        for <sched-ext@lists.linux.dev>; Wed, 20 May 2026 21:07:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="CnRHI9K5"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-83ef1d17904so5612946b3a.1
+        for <sched-ext@lists.linux.dev>; Wed, 20 May 2026 21:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1779336466; x=1779941266; darn=lists.linux.dev;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1779336512; x=1779941312; darn=lists.linux.dev;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=C2hkMG41D7UumAODedFGWVazHZhYrfBwUFGTzkSTLig=;
-        b=KgMt24HAS1IOxVqC4Anrblyz/fMYqboZ4qntalSASlqkKhf+7KGkgcBdT8aiBuFknc
-         XSaBa4Lq2zlGcsIax6rf7U6HlUCQ03nZtvFrevFhNtsDrB/G1rTcRyBpZ7JSuAFl4YM2
-         GeUfsEyzlOR2Lj96K2po89r20QWfDxONN/kmFKCnjPL/X7ChAsu7iTxLGJQxMfm4SHcQ
-         V1vCHup0SQZYKJV3p8g0bbNQBkpM6fppVCc//SC7xVcGcN/POJ3MdRnA821PW+nhP4+D
-         ukXPXm9sMpqwa93xT/PksJtDWbTvM1KaOkaagzQ8kvrCOvemjRVvPHOl3/HfmY3oVBNm
-         v+jA==
+        bh=ynBnbM/NLUcVxU1YYBO1La/PNj07zsMaWyq2DVRegqU=;
+        b=CnRHI9K5GG7gE40hoOjmMfuhbkUo4HiQh4AE4QMxzU/VZ005kvXUqTRdmjMJo184zu
+         Qd213FN9oQyTHLVrcgXfSq1WHfPDcyhuQZeTufgR12g1q6B5vYpRVRREfGTYoOk6JaMc
+         pRAv216/oOOWNe05OJjhPqtZMqGq7Cp6joMIEPIK3VAGKnkK9c/Auyienq9noZkVyD+z
+         5vxaiJd+gz+fV5Ao8L5CKKuSXlPDWbW6kyciBGmg/KBwaLHsAkXfI6h8wNh284GtN6J6
+         6R2nUQyJLeinqFPzwBq4+MBy6/atD3r1K7+CIqiaecUSIgHFWuNv32SDmDn39spgc9kw
+         gA7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779336466; x=1779941266;
+        d=1e100.net; s=20251104; t=1779336512; x=1779941312;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=C2hkMG41D7UumAODedFGWVazHZhYrfBwUFGTzkSTLig=;
-        b=INUcdWuUDgei7zYa8HRCw4O4o4T7iWigp3jwp/NHVE7T52xr8lNILpnhU8bnzP+S7p
-         RUXJBSJbJILfMb0vnyNnt1OXdTWKVjZarTb6Cko2C06lfDjIBf/gmEk7UuxTmtu0RpAX
-         EKlKM0mebtem56AKnYFWr9oQmsBpiBKYv0oyJ27GITJOxcv28wy08qJx0dAuF0UqeqF6
-         +ifKUDChi7Sd+cWFFayfdgYP10iIks7+px6Q9+asp331V2bvUf47DX54oIg51gcB6t3v
-         gn/EYrL7gUnwSaX9d1BqGJpPfI4ey6mvKRKFmo2MmZvl0zA/5TJLeS5UMU1EoKz1W9Zl
-         Txqg==
-X-Forwarded-Encrypted: i=1; AFNElJ+gvl+E29rMSfG6rxHN+0pI8q8IDkj0enWadhL5AaKnOU+RhH+tCqCrn2UQTXsJa+pb7/a7+HSNx7Y=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw3XhX/8vL/NWIRdGcgbCBkispq1tAVIUAt8vBkqAksHglS1zc3
-	s71+X3cEo6C/DaOBp/CWRIsHcrkozuL3WRZpwL8dLrnZ9s5ByydyskhGs4BKVV0Sm64=
-X-Gm-Gg: Acq92OEvv4xoQ4aK/WopuZ0n1VQ8juoNbs7i9mtLu9tcsVktSFFjNusFiC/CVj8ZOn3
-	LUZrnSXO06wfaFptwNuRtFHyDI+E5iQPDySeAU7OGZtqW394hc0dcJBdmZW6yY2F0IoxuIIpujB
-	4EnMM4vLNte7gp1zwh9ytfelOU/t1nZ/PG8x8XxcTB3obXmol0T1EWWLnESPQ8ZxD+nfUvZP6I5
-	P5soP73yui4k7d9waxS3/8e4c/vjIyxt7YfIoDkztkqyRdhH9A2v5T2ndxqZ77ZC4OALGmGBX8q
-	03DkNvJvAmlaGc+t/33/i1KWqBFefEJswXbK4M0p1b4kj/d9qU/ArJtvk0dsHHeDD72m9hMlKbt
-	MZ6bIYsdxcDhJtTNfzVrWfbkCM7upO0J942zBzxINkQ9s6aVA70r3wiwhIoMD6qheGZnSWTRgNJ
-	nWhv8EqW6gCK5ww8D+gy3+c7nv8xopAFab1kg=
-X-Received: by 2002:a05:6a00:4c8c:b0:83f:250d:59c with SMTP id d2e1a72fcca58-8414ae6e912mr1347583b3a.39.1779336465527;
-        Wed, 20 May 2026 21:07:45 -0700 (PDT)
+        bh=ynBnbM/NLUcVxU1YYBO1La/PNj07zsMaWyq2DVRegqU=;
+        b=E2JxOTDlUj2z3koa5vwCKV40OHYEi0OrQzacf7mU90Mo03N1Vza3TouaV+wpWqX08A
+         TND7JTgr4kJFZJhy7mLx98LkLALotHOwqV0saCwDw5HTeC4vOlltVknlhnZwm5f0j0fl
+         +5Ml3LH+yBhwFecTKsJMhpLUh3BVAjcI8rmbgaf6F1/IjN9oYmSZuhtOqomoQCIvnHw1
+         xyd3CTqPg+nTTYCJkOz/2Qlsi+StPV+SqHeklWH8rrZPGa3/xVmf+n0xYisCZ2aQHR48
+         Mc3V7ba3RbiS08tnenvLsF8DPA2JywFvLhBevifua9CMYeXhd8+sWyGfyM+hz3hpjCfd
+         71KA==
+X-Forwarded-Encrypted: i=1; AFNElJ+egSw6OvxJY1Ra22MEYkpjmv9WTm/omLFcOW8uv2ZY2+eOK9VEInyIGSF5gjbc+8HZcKppiEOvxIs=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxjvYecI0dsm8ZhGwv21twndPakuUgRaqsHnmphTkNAxZa6iVKz
+	nCKIu6TkBCXxznRhNO72FOL1ClH03v7RkYERUqpO02vD3PMg9ONkGbsVFZhJ/uGhQy4=
+X-Gm-Gg: Acq92OHSwT5FKiRI1g8R4jOD4f3VPWHWccmphsfq1SvLL0hufx6Ba7pziojn8NKpgkQ
+	87+xxydQbhx0heWqiiN+Hm3jgrA+cjM+rYqDd+n7Ll6ne0oNn44ARh3/WVUZtKYtI/6AgLEUFRA
+	409l4Ce7ITBNDPHmSsP0LC+jsSrJK4FkSLH5mf/0VcWzDXQzUZ9z+m6baLZuQLSl04XpEk2/q9w
+	36WdsLTNTSmKefM2KR/E+o3fzwDlN1JjQ0iC/nmGkE9UaMwcolm/tL3O1lwGUVmlnk0Q6Atkcsi
+	9WS60iLwpaK2ewnsfc8+C6l0hA9+ipIkFieEd5/qomHuFCgzv5FdUjVCsLAnRcPu3QI5502TGs1
+	0Dyz/nrM3qGhq6FKaR40wJiPo6F3UcoJpfgRo+KpuRHSuA9Z7HMt9oi7FBgFE2G9Fc1gRjjjeCx
+	ZJo2foId1NhT/HZgu0VhhjmfUJ
+X-Received: by 2002:aa7:88c1:0:b0:82f:7b98:e499 with SMTP id d2e1a72fcca58-8414adf532amr1336929b3a.31.1779336511925;
+        Wed, 20 May 2026 21:08:31 -0700 (PDT)
 Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19f7cd19sm22757564b3a.54.2026.05.20.21.07.44
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8413ac7b2b2sm3505781b3a.14.2026.05.20.21.08.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 21:07:45 -0700 (PDT)
+        Wed, 20 May 2026 21:08:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,8 +66,8 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 21 May 2026 00:07:44 -0400
-Message-Id: <DIO24V5XSTSW.2PW1QDEHN0T3M@etsalapatis.com>
+Date: Thu, 21 May 2026 00:08:30 -0400
+Message-Id: <DIO25GJPKAS6.1MJRN7AI18G4P@etsalapatis.com>
 Cc: "Peter Zijlstra" <peterz@infradead.org>, "Catalin Marinas"
  <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>, "Thomas
  Gleixner" <tglx@kernel.org>, "Ingo Molnar" <mingo@redhat.com>, "Borislav
@@ -77,7 +77,8 @@ Cc: "Peter Zijlstra" <peterz@infradead.org>, "Catalin Marinas"
  <emil@etsalapatis.com>, <sched-ext@lists.linux.dev>, <bpf@vger.kernel.org>,
  <x86@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 4/8] bpf: Add bpf_struct_ops_for_each_prog()
+Subject: Re: [PATCH 5/8] bpf/arena: Add bpf_arena_map_kern_vm_start() and
+ bpf_prog_arena()
 From: "Emil Tsalapatis" <emil@etsalapatis.com>
 To: "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>,
  "Andrea Righi" <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>,
@@ -87,100 +88,85 @@ To: "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>,
  <memxor@gmail.com>
 X-Mailer: aerc 0.21.0-0-g5549850facc2
 References: <20260520235052.4180316-1-tj@kernel.org>
- <20260520235052.4180316-5-tj@kernel.org>
-In-Reply-To: <20260520235052.4180316-5-tj@kernel.org>
+ <20260520235052.4180316-6-tj@kernel.org>
+In-Reply-To: <20260520235052.4180316-6-tj@kernel.org>
 
 On Wed May 20, 2026 at 7:50 PM EDT, Tejun Heo wrote:
-> Add a helper that walks the member progs of the struct_ops map
-> containing a given @kdata vmtable. struct_ops ->reg() callbacks (and
-> similar) sometimes need to inspect the loaded BPF programs, e.g. to
-> discover maps they reference via prog->aux->used_maps.
+> struct bpf_arena is opaque to callers outside arena.c. Add two helpers
+> for struct_ops subsystems that need to reach into an arena:
 >
-> The implementation mirrors bpf_struct_ops_id(): container_of @kdata
-> to recover the bpf_struct_ops_map, then iterate st_map->links[i]->prog
-> for i in [0, funcs_cnt). Same access pattern, no new locking - by the
-> time ->reg() fires st_map is fully populated and stable.
+>   bpf_arena_map_kern_vm_start(struct bpf_map *map)
+>     returns @map's kern_vm_start. A sched_ext follow-up needs this
+>     to translate kern_va <-> uaddr.
 >
-> A sched_ext follow-up walks the member progs of a cid-form scheduler's
-> struct_ops map, reads prog->aux->arena directly, and requires all member
-> progs to reference exactly one arena, without requiring the BPF program
-> to call a registration kfunc.
+>   bpf_prog_arena(struct bpf_prog *prog)
+>     returns the bpf_map of the arena referenced by @prog (NULL if
+>     @prog references no arena). The verifier enforces at most one
+>     arena per program. Used by struct_ops callers that auto-discover
+>     an arena from a member prog and need to take a map reference.
 >
+> Suggested-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
 > ---
->  include/linux/bpf.h         |  3 +++
->  kernel/bpf/bpf_struct_ops.c | 36 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 39 insertions(+)
+>  include/linux/bpf.h |  2 ++
+>  kernel/bpf/arena.c  | 26 ++++++++++++++++++++++++++
+>  2 files changed, 28 insertions(+)
 >
 > diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-> index 64968ca6db51..5b99d786e98c 100644
+> index 5b99d786e98c..e1ba57c10aaa 100644
 > --- a/include/linux/bpf.h
 > +++ b/include/linux/bpf.h
-> @@ -2129,6 +2129,9 @@ int bpf_prog_assoc_struct_ops(struct bpf_prog *prog=
-, struct bpf_map *map);
->  void bpf_prog_disassoc_struct_ops(struct bpf_prog *prog);
->  void *bpf_prog_get_assoc_struct_ops(const struct bpf_prog_aux *aux);
->  u32 bpf_struct_ops_id(const void *kdata);
-> +int bpf_struct_ops_for_each_prog(const void *kdata,
-> +				 int (*cb)(struct bpf_prog *prog, void *data),
-> +				 void *data);
+> @@ -618,6 +618,8 @@ void bpf_rb_root_free(const struct btf_field *field, =
+void *rb_root,
+>  		      struct bpf_spin_lock *spin_lock);
+>  u64 bpf_arena_get_kern_vm_start(struct bpf_arena *arena);
+>  u64 bpf_arena_get_user_vm_start(struct bpf_arena *arena);
+> +u64 bpf_arena_map_kern_vm_start(struct bpf_map *map);
+> +struct bpf_map *bpf_prog_arena(struct bpf_prog *prog);
+>  int bpf_obj_name_cpy(char *dst, const char *src, unsigned int size);
 > =20
->  #ifdef CONFIG_NET
->  /* Define it here to avoid the use of forward declaration */
-> diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
-> index 05b366b821c3..16aec18ed31b 100644
-> --- a/kernel/bpf/bpf_struct_ops.c
-> +++ b/kernel/bpf/bpf_struct_ops.c
-> @@ -1203,6 +1203,42 @@ u32 bpf_struct_ops_id(const void *kdata)
+>  struct bpf_offload_dev;
+> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+> index a811cf6170fa..51b9ae36feb6 100644
+> --- a/kernel/bpf/arena.c
+> +++ b/kernel/bpf/arena.c
+> @@ -84,6 +84,32 @@ u64 bpf_arena_get_user_vm_start(struct bpf_arena *aren=
+a)
+>  	return arena ? arena->user_vm_start : 0;
 >  }
->  EXPORT_SYMBOL_GPL(bpf_struct_ops_id);
 > =20
 > +/**
-> + * bpf_struct_ops_for_each_prog - Invoke @cb for each member prog
-> + * @kdata: kernel-side struct_ops vmtable (the @kdata arg to ->reg/->upd=
-ate/->unreg)
-> + * @cb: callback invoked once per member prog; non-zero return stops ite=
-ration
-> + * @data: opaque argument passed to @cb
+> + * bpf_arena_map_kern_vm_start - kern_vm_start lookup by struct bpf_map =
+*
+> + * @map: a BPF_MAP_TYPE_ARENA map
 > + *
-> + * Walks the struct_ops member progs registered on the map containing @k=
-data.
-> + * Intended for use from struct_ops ->reg() callbacks (and similar) that=
- need to
-> + * inspect the loaded BPF programs (for example to discover maps they re=
-ference
-> + * via @prog->aux->used_maps).
-> + *
-> + * Return 0 if iteration completed, otherwise the first non-zero @cb ret=
-urn.
+> + * Return @map's kern_vm_start.
 > + */
-> +int bpf_struct_ops_for_each_prog(const void *kdata,
-> +				 int (*cb)(struct bpf_prog *prog, void *data),
-> +				 void *data)
+> +u64 bpf_arena_map_kern_vm_start(struct bpf_map *map)
 > +{
-> +	struct bpf_struct_ops_value *kvalue;
-> +	struct bpf_struct_ops_map *st_map;
-> +	u32 i;
-> +	int ret;
-> +
-> +	kvalue =3D container_of(kdata, struct bpf_struct_ops_value, data);
-> +	st_map =3D container_of(kvalue, struct bpf_struct_ops_map, kvalue);
-> +
-> +	for (i =3D 0; i < st_map->funcs_cnt; i++) {
-> +		if (!st_map->links[i])
-> +			continue;
-> +		ret =3D cb(st_map->links[i]->prog, data);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +	return 0;
+> +	return bpf_arena_get_kern_vm_start(container_of(map, struct bpf_arena, =
+map));
 > +}
-> +EXPORT_SYMBOL_GPL(bpf_struct_ops_for_each_prog);
 > +
->  static bool bpf_struct_ops_valid_to_reg(struct bpf_map *map)
+> +/**
+> + * bpf_prog_arena - return the bpf_map of the arena referenced by @prog
+> + * @prog: a loaded BPF program
+> + *
+> + * The verifier enforces at most one arena per program and stores it in
+> + * prog->aux->arena. Return that arena's underlying bpf_map, or NULL if
+> + * @prog does not reference an arena.
+> + */
+> +struct bpf_map *bpf_prog_arena(struct bpf_prog *prog)
+> +{
+> +	struct bpf_arena *arena =3D prog->aux->arena;
+> +
+> +	return arena ? &arena->map : NULL;
+> +}
+> +
+>  static long arena_map_peek_elem(struct bpf_map *map, void *value)
 >  {
->  	struct bpf_struct_ops_map *st_map =3D (struct bpf_struct_ops_map *)map;
+>  	return -EOPNOTSUPP;
 
