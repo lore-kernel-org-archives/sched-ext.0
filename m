@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E261E39098C
-	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 18:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9AF38E8C8
+	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 18:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779387826; cv=none; b=qbbDLKrs0b+9KFBi3Zhq7uYgl5LFAU7wic4DFosI/TKweWLmqjUs+ok/xCD7AqPDxNXfzGyw9JRKZuH2lf+VonpRfCEMiHNEObHt6OLwvRE8ZXbD3xfVUFwZZuIlkOSjPSkOaGMWkNPoK2a5rMy+GkKoyvQTjgZUHOruhJmmcsY=
+	t=1779388314; cv=none; b=kpmgGvwmpZchLrQz2R6NDiayT4fkHvkpO9/015OW3GUhiE5sRhMxS7V1bs7rSnCSCwKpocvhbk4B5erz4hR1Z9QDL9/6qYaqfHTB5CvdQNYqUqWR+nExKc5dNEvth0/tvZ8QL9qN0Ux6af0C2HLpfdfUgpqQOAP0tjc3SkOjjBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779387826; c=relaxed/simple;
-	bh=w9TOMHiexRDDQC6Q18iKHmJb2etT+4JVfgVL8UBj2Fc=;
+	s=arc-20240116; t=1779388314; c=relaxed/simple;
+	bh=pb/ckQWyF3lGfJ7uTDR889Dghh7kmJ9U+4DR+Toi1pE=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QAqDTKqfQZDcjNfl9q5YqeNVTLy2g5L8sBuGOJM3eHfYj4pJGvkByvTWpOKF38GpeFczfW12G34Xk6Pj4dFP+ENIsSUT0ezCxxCBgyu1pH9Y/1tOId5zTRA06EtJ9hJ3QJgqrZ2T7vLWl5XgfGYqWszKibP3SK4m5q2xob4WueE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AjqI7HEz; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Do6HC6OYu1Gd0Q3dgbmLhrKQpEpM5GXd7nE472xQafAgQXIUYgz4SPV/jPvro/3ZaPI7Pui73brX2mdUmNQQ2q1UKwZ6ylR+zPfnpaGU/UGRv5iQuK6ORNx7ZYTYn5N4VUQKCKjeaEYBhvEjgFiUruTs2BSj9MMQb0SJ79V1EVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IanBGrK9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AjqI7HEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E671F000E9;
-	Thu, 21 May 2026 18:23:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IanBGrK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED89C1F000E9;
+	Thu, 21 May 2026 18:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779387824;
-	bh=/NjEGbU73J97MX8nQGdFcfANYH35TP9WlDXGe6OXqKw=;
+	s=k20260515; t=1779388313;
+	bh=4yEL1imEPtNrd9wbkQ5wkk46tQEV4LKHNsNqOKSbPTw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=AjqI7HEz5AZV+8wpZLsx2yG1wFJB9hKUJXJ8MlYXtzl0m1N7MFyMO+afHyd3CjG0r
-	 hps3rsRhtwHpkmr2cxzGYp//195pqfhRrF6+FOoVZDn2gz07YLSb+cA1HpUXTI8j2F
-	 aSUMvPZEH6oK9keboQzpnVKAXUwH6TwK+ju2QTEuEj6RGQNSxFOdTfAIaqs+XMuHIy
-	 QkofIVJBgogNXGP6XYvz7Nb3/gwFGiLJ+ve0AKRKMJqJVtuxxMOdCIC0ldHh/KKYUF
-	 TXBG7SaDppIPBBk7y+B+L6//sJAX/w32SwviMwFUc1VmA0LqxyE1O2lenD9crAyzoi
-	 duBJKUC4IisuQ==
+	b=IanBGrK9dvpHuAUIDOtEjsD62aIVkpYWhsTUH0ZRriNK76DDP2rrF8K1ZON7Z/LT9
+	 G+yO91tc79dNBCk70jZD+BSlmIEqlpHrhv0XdhIwRsY++q556gBAbqR+cyNPwBZ5NU
+	 2rUHP3Ma86l6IS062c0DiJEjbi2lvHBq2v9bt9Qnhj+pap2eWLkEd1+RTnnfrxXbny
+	 D+JunKfmEpELxkrMzltuXUP8RkyfppfrCMyp3Pq4MCxo6nmaQw+NpUVw8BwuZbBeJu
+	 NPU2RMNwk7+hbGxotb5GtwwwQORvcL96t8xiete4qoCdaXCri9BwhdpcqNtT1Ga8eA
+	 Zcsqi0SQqUDUg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Auto-register/unregister dl_server
- reservations
+Subject: Re: [PATCH 2/2] selftests/sched_ext: Validate dl_server
+ attach/detach in total_bw test
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Andrea Righi" <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260521174509.1534623-2-arighi@nvidia.com>
-References: <20260521174509.1534623-2-arighi@nvidia.com>
+In-Reply-To: <20260521174509.1534623-3-arighi@nvidia.com>
+References: <20260521174509.1534623-3-arighi@nvidia.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 18:23:43 +0000
-Message-Id: <20260521182344.77E671F000E9@smtp.kernel.org>
+Date: Thu, 21 May 2026 18:31:52 +0000
+Message-Id: <20260521183152.ED89C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,206 +46,114 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] Deferring the ext_server bandwidth reservation to sched_ext load t=
-ime allows deadline bandwidth overcommit, breaking real-time guarantees.
-- [High] Dropping `dl_b->lock` between detaching and attaching deadline ser=
-vers allows concurrent tasks to steal bandwidth, permanently breaking starv=
-ation protection.
-- [High] `dl_server_detach_bw()` and `dl_server_attach_bw()` fail to update=
- local runqueue bandwidth (`rq->dl.this_bw`), breaking GRUB reclamation and=
- causing CPU overcommit.
+- [Medium] Unchecked return value of fclose() in write_server_param() masks=
+ kernel-level debugfs write failures.
+- [Medium] The test incorrectly assumes all CPUs share the same fair_server=
+ runtime and globally restores CPU 0's value to all CPUs.
+- [Medium] Early exit in write_fair_runtime_all() prevents full system stat=
+e restoration if a single CPU write fails during cleanup.
 --
 
-commit c14e78e1decaa133b4b018a638661ae8c0968dc2
+commit 694643dec460b3df43c360074223ec82f5be4cc8
 Author: Andrea Righi <arighi@nvidia.com>
 
-sched_ext: Auto-register/unregister dl_server reservations
+selftests/sched_ext: Validate dl_server attach/detach in total_bw test
 
-This commit changes the deadline server bandwidth reservations for sched_ext
-and fair servers to be dynamic. Rather than statically reserving bandwidth
-for both at boot, it attaches and detaches the bandwidth reservations
-based on whether the BPF scheduler is loaded and operating in full or
-partial mode.
+Extend the total_bw selftest to validate the fair/ext dl_server
+auto-attach/detach operations.
 
-> diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-> --- a/kernel/sched/deadline.c
-> +++ b/kernel/sched/deadline.c
-
+> diff --git a/tools/testing/selftests/sched_ext/total_bw.c b/tools/testing=
+/selftests/sched_ext/total_bw.c
+> index 5b0a619bab86e..8eea12e8868ac 100644
+> --- a/tools/testing/selftests/sched_ext/total_bw.c
+> +++ b/tools/testing/selftests/sched_ext/total_bw.c
 [ ... ]
-
-> +int dl_server_attach_bw(struct sched_dl_entity *dl_se)
+> @@ -100,6 +100,66 @@ static int read_total_bw_values(long *bw_values, int=
+ max_cpus)
+[ ... ]
+> +static int write_server_param(const char *server, const char *param,
+> +			      int cpu, long value)
 > +{
-> +	struct rq *rq =3D dl_se->rq;
-> +	int cpu =3D cpu_of(rq);
-> +	struct dl_bw *dl_b;
-> +	unsigned long cap;
-> +	int cpus;
+> +	char path[128];
+> +	FILE *fp;
+> +	int ret =3D 0;
 > +
-> +	if (dl_se->dl_bw_attached)
-> +		return 0;
+> +	snprintf(path, sizeof(path),
+> +		 "/sys/kernel/debug/sched/%s_server/cpu%d/%s",
+> +		 server, cpu, param);
+> +	fp =3D fopen(path, "w");
+> +	if (!fp)
+> +		return -1;
+> +	if (fprintf(fp, "%ld", value) < 0)
+> +		ret =3D -1;
+> +	fclose(fp);
+
+[Severity: Medium]
+Since FILE streams are fully buffered or line-buffered by default and
+fprintf() writes a string without a newline, couldn't the actual write()
+syscall to debugfs be triggered during fclose()?
+
+If the kernel rejects the write (e.g., due to admission control), fclose()
+would return EOF but fprintf() would have succeeded. By ignoring the fclose=
+()
+return value, could this incorrectly return 0 (success) even when the
+parameter was not updated?
+
 > +
-> +	dl_b =3D dl_bw_of(cpu);
-> +	guard(raw_spinlock)(&dl_b->lock);
+> +	return ret;
+> +}
 > +
-> +	cpus =3D dl_bw_cpus(cpu);
+> +static int write_fair_runtime_all(int nr_cpus, long value)
+> +{
+> +	int i;
 > +
-> +	/*
-> +	 * If there's no active CPU in this root domain (e.g., @cpu is offline),
-> +	 * just record the intent, so dl_server_add_bw() honors it when CPUs
-> +	 * come back.
-> +	 */
-> +	if (!cpus) {
-> +		dl_se->dl_bw_attached =3D 1;
-> +		return 0;
+> +	for (i =3D 0; i < nr_cpus; i++) {
+> +		if (write_server_param("fair", "runtime", i, value) < 0) {
+> +			SCX_ERR("Failed to write fair_server runtime on CPU %d", i);
+> +			return -1;
+
+[Severity: Medium]
+If a single CPU write fails when this function is called from the cleanup
+path, this early return will abort the loop. Could this prevent the remaini=
+ng
+CPUs from being restored to their original fair_server runtimes, leaving the
+system in a permanently customized state?
+
+> +		}
 > +	}
-> +
-> +	cap =3D dl_bw_capacity(cpu);
-> +
-> +	if (__dl_overflow(dl_b, cap, 0, dl_se->dl_bw))
-> +		return -EBUSY;
-> +
-> +	__dl_add(dl_b, dl_se->dl_bw, cpus);
-> +	dl_se->dl_bw_attached =3D 1;
 > +
 > +	return 0;
 > +}
-> +
-> +/*
-> + * Detach @dl_se's bandwidth from the root domain's total_bw accounting.
-> + *
-> + * Use to dynamically unregister a dl_server's bandwidth reservation whi=
-le
-> + * preserving its configured @dl_runtime / @dl_period. No-op if @dl_se is
-> + * not currently attached.
-> + */
-> +void dl_server_detach_bw(struct sched_dl_entity *dl_se)
-> +{
-> +	struct rq *rq =3D dl_se->rq;
-> +	int cpu =3D cpu_of(rq);
-> +	struct dl_bw *dl_b;
-> +	int cpus;
-> +
-> +	if (!dl_se->dl_bw_attached)
-> +		return;
-> +
-> +	dl_b =3D dl_bw_of(cpu);
-> +	guard(raw_spinlock)(&dl_b->lock);
-> +
-> +	cpus =3D dl_bw_cpus(cpu);
-> +
-> +	/*
-> +	 * If no active CPUs in this root domain, the bandwidth isn't in
-> +	 * @dl_b right now; only clear the flag so dl_server_add_bw() skips
-> +	 * the server on the next root-domain rebuild.
-> +	 */
-> +	if (cpus)
-> +		__dl_sub(dl_b, dl_se->dl_bw, cpus);
-> +	dl_se->dl_bw_attached =3D 0;
-> +}
-
-[Severity: High]
-Does this miss updating the local runqueue bandwidth?
-
-While the global root domain bandwidth (dl_b->total_bw) is updated here
-and in dl_server_attach_bw(), rq->dl.this_bw doesn't appear to be updated
-via __sub_rq_bw() and __add_rq_bw().=20
-
-During boot, ext_server is initialized and its bandwidth is added to
-this_bw, but the subsequent dl_server_detach_bw() does not subtract it.
-
-Could this permanently inflate this_bw, which then causes the GRUB
-reclamation algorithm to incorrectly calculate inactive utilization and
-allow active DL tasks to consume more CPU time than admitted?
-
-> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-
 [ ... ]
-
-> @@ -6136,10 +6144,24 @@ static void scx_root_disable(struct scx_sched *sc=
-h)
->  	/*
->  	 * Invalidate all the rq clocks to prevent getting outdated
->  	 * rq clocks from a previous scx scheduler.
-> +	 *
-> +	 * Also re-balance the dl_server bandwidth reservations: detach
-> +	 * ext_server (no more sched_ext tasks) and reinstate fair_server
-> +	 * if it was previously detached because we were running in full
-> +	 * mode. Detach before attach to avoid a transient overflow of the
-> +	 * root domain's bandwidth capacity.
->  	 */
->  	for_each_possible_cpu(cpu) {
->  		struct rq *rq =3D cpu_rq(cpu);
-> +
->  		scx_rq_clock_invalidate(rq);
-> +
-> +		scoped_guard(rq_lock_irqsave, rq) {
-> +			dl_server_detach_bw(&rq->ext_server);
-> +			if (was_switched_all &&
-> +			    WARN_ON_ONCE(dl_server_attach_bw(&rq->fair_server)))
-
-[Severity: High]
-Can a concurrent task steal the bandwidth during this transition?
-
-Because dl_server_detach_bw() and dl_server_attach_bw() each acquire and
-release the root domain's dl_b->lock independently, the lock is dropped
-between the two calls.
-
-If another CPU executes sched_setattr(SCHED_DEADLINE) during this window,
-can it consume the newly freed bandwidth, causing the attach operation to
-fail and permanently leaving the CPU without its starvation protection
-server?
-
-> +				pr_warn("failed to re-attach fair_server on CPU %d\n", cpu);
-> +		}
->  	}
-
+> @@ -217,6 +277,9 @@ static enum scx_test_status run(void *ctx)
 [ ... ]
-
-> @@ -7314,6 +7336,27 @@ static void scx_root_enable_workfn(struct kthread_=
-work *work)
->  	if (!(ops->flags & SCX_OPS_SWITCH_PARTIAL))
->  		static_branch_enable(&__scx_switched_all);
-> =20
-> +	/*
-> +	 * Re-balance the dl_server bandwidth reservations.
-> +	 *
-> +	 * In full mode (!SCX_OPS_SWITCH_PARTIAL) no task will ever run in
-> +	 * the fair class, so detach the fair_server reservation and give
-> +	 * that bandwidth back to the RT class. Always attach the
-> +	 * ext_server reservation since sched_ext tasks are now possible.
-> +	 *
-> +	 * Detach before attach to avoid a transient overflow of the root
-> +	 * domain's bandwidth capacity.
-> +	 */
-> +	for_each_possible_cpu(cpu) {
-> +		struct rq *rq =3D cpu_rq(cpu);
-> +
-> +		guard(rq_lock_irqsave)(rq);
-> +		if (scx_switched_all())
-> +			dl_server_detach_bw(&rq->fair_server);
-> +		if (WARN_ON_ONCE(dl_server_attach_bw(&rq->ext_server)))
-
-[Severity: High]
-Does this allow deadline bandwidth overcommit?
-
-In partial mode (!scx_switched_all()), the system attempts to attach
-ext_server while fair_server is still attached. If user deadline tasks
-have already consumed the remaining root domain bandwidth prior to loading
-the BPF scheduler, dl_server_attach_bw() will fail with -EBUSY.
-
-Since this error only triggers a warning and proceeds to load the scheduler,
-ext_server remains active and will throttle other DL tasks. Does this
-silently bypass DL admission control and break real-time guarantees?
-
-> +			pr_warn("failed to attach ext_server on CPU %d\n", cpu);
+> +	original_runtime =3D read_server_param("fair", "runtime", 0);
+> +	if (original_runtime <=3D 0) {
+> +		fprintf(stderr, "Skipping attach/detach validation: debugfs not access=
+ible\n");
+> +		return SCX_TEST_PASS;
 > +	}
+> +	doubled_runtime =3D original_runtime * 2;
 > +
->  	pr_info("sched_ext: BPF scheduler \"%s\" enabled%s\n",
->  		sch->ops.name, scx_switched_all() ? "" : " (partial)");
->  	kobject_uevent(&sch->kobj, KOBJ_ADD);
+> +	fprintf(stderr,
+> +		"Setting fair_server runtime to %ld ns on all CPUs (orig %ld)\n",
+> +		doubled_runtime, original_runtime);
+> +
+> +	if (write_fair_runtime_all(test_ctx->nr_cpus, doubled_runtime) < 0) {
+> +		ret =3D SCX_TEST_FAIL;
+> +		goto restore;
+> +	}
+
+[Severity: Medium]
+This reads the original fair_server runtime from CPU 0 only, and then
+eventually restores this same value to all CPUs during cleanup.
+
+On heterogeneous systems (like big.LITTLE) or manually tuned systems, CPUs =
+may
+have different initial runtimes. Does this destructively overwrite all uniq=
+ue
+per-CPU runtimes with CPU 0's value after the test completes?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521174509.1534=
-623-1-arighi@nvidia.com?part=3D1
+623-1-arighi@nvidia.com?part=3D2
