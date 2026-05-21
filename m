@@ -1,336 +1,686 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4F43A3E9C;
-	Wed, 20 May 2026 23:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFCE35676E
+	for <sched-ext@lists.linux.dev>; Thu, 21 May 2026 03:16:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779321066; cv=none; b=oYs4yn1AOxac9B4mStZ7R6Ir+1zvobt9x1f07eScoJ2bUcW9K4jWtEw70cpWysWOuwh5Lakuiwb98wtYmtavNcJpycHgqWqWVN02R1kN3R2FlVQkWIS7lITX8V1ulVnlc+q08UPhJngddI7xJYkSNFt6goBd9RIY2Lx0a2JHg9g=
+	t=1779333422; cv=none; b=XOabC6WhkOiKOsjYllf/ViOVoPV29z9UL1+5j44eh597cOg1EFLdnXCjKAyJHEm9FZDVtzA6hKTxs/93q95gX3fiueVdCemCyDkEo1kGXZridnsmLL6C4I+sWg/lichy+zvXk7gEh1Xf95HURlNzc0L0rn+v+VBNMgY5oDItfJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779321066; c=relaxed/simple;
-	bh=CmaSxokkvlRLFrROBdPgYBc3HhKD4GVPgw+XoEV11jU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2qFXJnNzwPjdaDjoGqNSGJKYwSz/IFdcUnEKxSHmV73LkqWP1T76C89AeAAfEDVYFVck2OsRgd79O75wHRQj6P/7OiKktyHAKjPCZLUqcZiN3juYvemmzmRTz98bR1AjxZyf7Jg6vxSr+P7Jw3q4kEIX/DIKy3eFBdIHSTagbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XB7ViVbI; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779333422; c=relaxed/simple;
+	bh=yi+5Xb7QjzwtUFXAXyBneNbSgrYbqFtlYmb8lHm3t+4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=QmHT8oRCpScywBcdSyX8LXlFxXBW3s9vomANNejHlTq1CpXKZ47td5G2LSYInSm0vkp5JB6lEPjy9UOUXJEUOXxyyC25pA1WMFxw3tN+dhT3Y+xSh2UN67KQgdyvixmSCIdBqUj9rEE51WQ7fNVUBrVJJrqWke1iUr7sBrQB7Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=mSkLMOlQ; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XB7ViVbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4162F1F00A39;
-	Wed, 20 May 2026 23:51:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779321060;
-	bh=pxPJ5Kb1pUca7gBA63ZwC2/H1JHE6paqYcxxGSFa3qQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XB7ViVbI6QwMQAtAil6w+oL8bl0oAUYhmJxQH/p3CVU4rkIrtPxkP4wZHqFThxJaT
-	 Quip1QtcqkbzJwbhSLN2qv+Pdjk/CoYJIeYGN5ZR0ycpdWVXnz4d/pduzbZivrz1LZ
-	 4KQ2rTsPHaiUf2AQEF5jpsTgRVvJzZT3rGU9Y/0139arL3KUA2HtyxlJXnTN/JcyW2
-	 zP4cHBDOsfy/v3064tbJ//EMDQgf4qI7wL6986AU/Kes8ibuahwkM6z832ag2zcnIA
-	 JPyOoN1f623cxD12L7EzFewa2TcKySgmGyluNRSTYn84Y6FIQpfoBTPWZON07m542j
-	 fmEfYTtQcjX+g==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	sched-ext@lists.linux.dev,
-	bpf@vger.kernel.org,
-	x86@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7/8] sched_ext: Sub-allocator over kernel-claimed BPF arena pages
-Date: Wed, 20 May 2026 13:50:51 -1000
-Message-ID: <20260520235052.4180316-8-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520235052.4180316-1-tj@kernel.org>
-References: <20260520235052.4180316-1-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="mSkLMOlQ"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-367d88b9940so3632211a91.1
+        for <sched-ext@lists.linux.dev>; Wed, 20 May 2026 20:16:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1779333419; x=1779938219; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jELMhKLGUtWyEbvchAP5Mgs2MLb2HNlCeWKkazBlD+8=;
+        b=mSkLMOlQXU4sOYJFQXozSxOn1V2VqOv2j+b7L9geb1aZyQnMffeXkkDrM9GMe98ERg
+         CHA2+QQ8Bamju/XXA0XAICd5GJ6/9xDGK/s9M7Gr6WvHTmAP8XirhdyE0n0lvBwUN0FB
+         buttJqQv1RB3tBbk+awydskk6TSzDCP7ZpEutVTZlJmKAdVCUWZ/7Ndyy43nn0QYYqx6
+         RVidiTC1U1WG9A+6r3l4w6MYCVPLCq17olDZLaMub8QtElE8E0o5Kf2IzDT+UT8zKQSS
+         kk/TmmTaGzSObEAXlmsicoy/ApQjTEFSJKSZ458PpY51eDZwsFmvb1L3YuAHonarUj3F
+         FbEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779333419; x=1779938219;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jELMhKLGUtWyEbvchAP5Mgs2MLb2HNlCeWKkazBlD+8=;
+        b=P3WXFfJv6AwuliDzTlyIdrf6la3Inc1FzPBKd2Qa5vI1P17NR38IBowBbnnge3Yv+Y
+         nIfIjNLpPSK6nzwVz5wmawm51yiB9wyZOE/X/m3mnsnNH95tem5QVSrlQrPZwk1JgpY3
+         pxeyqEOXOgDpkEVPp26q7LtMqqLhvjMS+vseVDoGsmEnGwGoYJN6uyGEFF8hXPeLlesU
+         59v64WmhF1x+njvlVG4pl3o6OYJVqZo+ci+cXpTn6jFt/HitkcVXARemr9LrO5bH4A7s
+         X6/Z/OnfdYQRD7hQQWDYeGTgvIEb7+58NlB1bjRT+Dlfupy+PKVxa4eBJrvMxzbUC/FD
+         Lpgw==
+X-Forwarded-Encrypted: i=1; AFNElJ8f7efXywK24pPvJzkHXciIpa9TzWFQSBi7J9Y8y93PE04zwXMBrsdH09XFV9GIUp/Jo9ZW9stlWnA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxSiUYXN1OAjR7+fkGVnXFXbxl/GoEgp2H820g2FjJ9popiI0tW
+	6eXTiq7bbgdQM5vg2Uf0Vh31xsdw3AqM1l0u94cboiY04iqnizWenZ/n+zOhRPN1g4k=
+X-Gm-Gg: Acq92OG09qe2MMRJRwv/lZL6xq0taF7OGNpkfesR0M5LFs+ckXtLvNbTQHm2tbk4hdc
+	dK+X4HTx+qwohf9yvHOCoeOwLhMunJUFOSvdaTH0f5FAKKf8aWsCjnYDzkwfiV3Yv0oP8r8fegt
+	XQBlV+GhDKABQHfSpQOCvVJB8pGfoWm8oclMyOWrCl9Hw2bosfEAjqGYAAo2reOfocDaGaU2xYr
+	GPV6gTFAKPfppgVMLw2+Ao6reX+4QGOsAO9rdaNWrTIT075PPqWLSgcQ+YxL9VksAmAHcCiXHU4
+	ZOy8yWgb8ijulqiIhsQI4Z3l+npJKa6AtWXFJbReFkMMRoBB8A09LmTN+vh12tCSPZK1V3lx1Zt
+	fo5qEKj3eez9vVflSH6Kl/ZGHYAli2K1qA2QnHI1JrI8+vl7oLOW07EoQPRHPWEvItPLU201QGW
+	IbF9W3GnsXBZ7qyJptw3GS9Pkw
+X-Received: by 2002:a17:90b:1fc6:b0:369:c5f4:9681 with SMTP id 98e67ed59e1d1-36a45626bb0mr1185388a91.22.1779333418913;
+        Wed, 20 May 2026 20:16:58 -0700 (PDT)
+Received: from localhost ([2001:569:58a0:da00:a5c8:c4ce:f7c1:40c1])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a3d0d847dsm999527a91.10.2026.05.20.20.16.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 20:16:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 20 May 2026 23:16:57 -0400
+Message-Id: <DIO11ZK1AJTB.1U25TXKLC0W90@etsalapatis.com>
+Cc: "Peter Zijlstra" <peterz@infradead.org>, "Catalin Marinas"
+ <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>, "Thomas
+ Gleixner" <tglx@kernel.org>, "Ingo Molnar" <mingo@redhat.com>, "Borislav
+ Petkov" <bp@alien8.de>, "Dave Hansen" <dave.hansen@linux.intel.com>,
+ "Andrew Morton" <akpm@linux-foundation.org>, "David Hildenbrand"
+ <david@kernel.org>, "Mike Rapoport" <rppt@kernel.org>, "Emil Tsalapatis"
+ <emil@etsalapatis.com>, <sched-ext@lists.linux.dev>, <bpf@vger.kernel.org>,
+ <x86@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/8] bpf: Recover arena kernel faults with scratch page
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>,
+ "Andrea Righi" <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>,
+ "Alexei Starovoitov" <ast@kernel.org>, "Andrii Nakryiko"
+ <andrii@kernel.org>, "Daniel Borkmann" <daniel@iogearbox.net>, "Martin
+ KaFai Lau" <martin.lau@linux.dev>, "Kumar Kartikeya Dwivedi"
+ <memxor@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260520235052.4180316-1-tj@kernel.org>
+ <20260520235052.4180316-3-tj@kernel.org>
+In-Reply-To: <20260520235052.4180316-3-tj@kernel.org>
 
-Build a per-scheduler sub-allocator on top of pages claimed from the BPF
-arena registered in the previous patch. Subsequent kernel-managed
-arena-resident structures (e.g. per-CPU set_cmask cmask) carve their storage
-from this pool.
+On Wed May 20, 2026 at 7:50 PM EDT, Tejun Heo wrote:
+> From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+>
+> BPF arena usage is becoming more prevalent, but kernel <-> BPF communicat=
+ion
+> over arena memory is awkward today. Data has to be staged through a trust=
+ed
+> kernel pointer with extra code and copying on the BPF side. While reads
+> through arena pointers can use a fault-safe helper, writes don't have a g=
+ood
+> solution. The in-line alternative would need instruction emulation or asm
+> fixup labels.
+>
+> Enable direct kernel-side reads and writes within GUARD_SZ / 2 of any
+> handed-in arena pointer, without bounds checking. A per-arena scratch pag=
+e
+> is installed by the arch fault path into empty arena kernel PTEs - x86 fr=
+om
+> page_fault_oops() for not-present faults, arm64 from __do_kernel_fault() =
+for
+> translation faults, both after the existing exception-table and KFENCE
+> handling. The faulting instruction retries and the access is also reporte=
+d
+> through the program's BPF stream, preserving error reporting.
+>
+> bpf_prog_find_from_stack() resolves the current BPF program (and its aren=
+a)
+> from the kernel stack - no new bpf_run_ctx state is added. Recovery cover=
+s
+> the 4 GiB arena plus the upper half-guard (GUARD_SZ / 2). The lower
+> half-guard is excluded because well-behaved kfuncs only access forward fr=
+om
+> arena pointers. The kfunc-author contract - access at most GUARD_SZ / 2 p=
+ast
+> a handed-in pointer - is documented in Documentation/bpf/kfuncs.rst.
+>
+> The install is lock-free via ptep_try_set(). On race-loss the winning
+> installer's PTE is already valid, so the access retry succeeds. The arena
+> clear path uses ptep_get_and_clear() so installer and clearer race throug=
+h
+> atomic accessors. No flush_tlb_kernel_range() afterwards. Stale "not mapp=
+ed"
+> entries just cause one extra re-fault, cheaper than a global IPI on every
+> install.
+>
+> Scratch exists only to keep the kernel from oopsing on an in-line arena
+> access. Its presence at a PTE means the BPF program has already
+> malfunctioned, and the violation is reported through the program's BPF
+> stream. The only requirement for behavior on a scratched PTE is that the
+> kernel doesn't crash. In particular, any user-side access through such a =
+PTE
+> may segfault. The shared scratch page is freed once during map destructio=
+n.
+>
+> BPF instruction faults continue to use the existing JIT exception-table
+> path. This patch changes only the kernel-text fault path. No UAPI flag is
+> added. The new behavior is the default.
+>
+> v2: Use ptep_get_and_clear() in apply_range_clear_cb(). (David)
+>
+> Suggested-by: Alexei Starovoitov <ast@kernel.org>
+> Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> Cc: David Hildenbrand <david@kernel.org>
+> ---
 
-scx_arena_pool_init() creates a gen_pool. scx_arena_alloc() returns the
-kernel VA. On exhaustion, the pool grows by claiming more pages via
-bpf_arena_alloc_pages_sleepable(). Chunks are added at the kernel-side
-mapping address; callers translate to the BPF-arena form themselves if
-needed.
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 
-Allocations sleep (GFP_KERNEL) - they may grow the pool through vzalloc and
-arena page allocation. All current consumers run from the enable path (after
-ops.init() and the kernel-side arena auto-discovery, before validate_ops()),
-where sleeping is fine.
-
-scx_arena_pool_destroy() walks each chunk, returns outstanding ranges to the
-gen_pool with gen_pool_free() and then calls gen_pool_destroy(). The
-underlying arena pages are released when the arena map itself is torn down,
-so the pool destroy doesn't free them explicitly.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/build_policy.c |   4 ++
- kernel/sched/ext.c          |  11 ++++
- kernel/sched/ext_arena.c    | 127 ++++++++++++++++++++++++++++++++++++
- kernel/sched/ext_arena.h    |  18 +++++
- kernel/sched/ext_internal.h |   5 ++
- 5 files changed, 165 insertions(+)
- create mode 100644 kernel/sched/ext_arena.c
- create mode 100644 kernel/sched/ext_arena.h
-
-diff --git a/kernel/sched/build_policy.c b/kernel/sched/build_policy.c
-index 5e76c9177d54..067979a7b69e 100644
---- a/kernel/sched/build_policy.c
-+++ b/kernel/sched/build_policy.c
-@@ -59,12 +59,16 @@
- 
- #ifdef CONFIG_SCHED_CLASS_EXT
- # include <linux/btf_ids.h>
-+# include <linux/find.h>
-+# include <linux/genalloc.h>
- # include "ext_types.h"
- # include "ext_internal.h"
- # include "ext_cid.h"
-+# include "ext_arena.h"
- # include "ext_idle.h"
- # include "ext.c"
- # include "ext_cid.c"
-+# include "ext_arena.c"
- # include "ext_idle.c"
- #endif
- 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 56f94ac32ba0..fb91079c1244 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5003,6 +5003,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 
- 	rhashtable_free_and_destroy(&sch->dsq_hash, NULL, NULL);
- 	free_exit_info(sch->exit_info);
-+	scx_arena_pool_destroy(sch);
- 	if (sch->arena_map)
- 		bpf_map_put(sch->arena_map);
- 	kfree(sch);
-@@ -7155,6 +7156,12 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
- 	}
- 
-+	ret = scx_arena_pool_init(sch);
-+	if (ret) {
-+		cpus_read_unlock();
-+		goto err_disable;
-+	}
-+
- 	for (i = SCX_OPI_CPU_HOTPLUG_BEGIN; i < SCX_OPI_CPU_HOTPLUG_END; i++)
- 		if (((void (**)(void))ops)[i])
- 			set_bit(i, sch->has_op);
-@@ -7473,6 +7480,10 @@ static void scx_sub_enable_workfn(struct kthread_work *work)
- 		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
- 	}
- 
-+	ret = scx_arena_pool_init(sch);
-+	if (ret)
-+		goto err_disable;
-+
- 	if (validate_ops(sch, ops))
- 		goto err_disable;
- 
-diff --git a/kernel/sched/ext_arena.c b/kernel/sched/ext_arena.c
-new file mode 100644
-index 000000000000..53174033765d
---- /dev/null
-+++ b/kernel/sched/ext_arena.c
-@@ -0,0 +1,127 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * BPF extensible scheduler class: Documentation/scheduler/sched-ext.rst
-+ *
-+ * scx_arena_pool: kernel-side sub-allocator over BPF-arena pages.
-+ *
-+ * Each chunk added to @sch->arena_pool comes from one
-+ * bpf_arena_alloc_pages_sleepable() call and is registered at the
-+ * kernel-side mapping address. Callers translate to the BPF-arena form
-+ * themselves if needed.
-+ *
-+ * Allocations grow the pool on demand. Underlying arena pages are released
-+ * when the arena map itself is torn down.
-+ *
-+ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-+ * Copyright (c) 2026 Tejun Heo <tj@kernel.org>
-+ */
-+
-+enum scx_arena_consts {
-+	SCX_ARENA_MIN_ORDER		= 3,	/* 8-byte minimum sub-allocation */
-+	SCX_ARENA_GROW_PAGES		= 4,	/* per growth */
-+};
-+
-+s32 scx_arena_pool_init(struct scx_sched *sch)
-+{
-+	if (!sch->arena_map)
-+		return 0;
-+
-+	sch->arena_pool = gen_pool_create(SCX_ARENA_MIN_ORDER, NUMA_NO_NODE);
-+	if (!sch->arena_pool)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+static void scx_arena_clear_chunk(struct gen_pool *pool, struct gen_pool_chunk *chunk,
-+				  void *data)
-+{
-+	int order = pool->min_alloc_order;
-+	size_t chunk_sz = chunk->end_addr - chunk->start_addr + 1;
-+	unsigned long end_bit = chunk_sz >> order;
-+	unsigned long b, e;
-+
-+	for_each_set_bitrange(b, e, chunk->bits, end_bit)
-+		gen_pool_free(pool, chunk->start_addr + (b << order),
-+			      (e - b) << order);
-+}
-+
-+/*
-+ * Tear down the pool. Outstanding gen_pool allocations are freed via
-+ * scx_arena_clear_chunk() so gen_pool_destroy() doesn't BUG. The underlying
-+ * arena pages are released when the arena map itself is torn down.
-+ */
-+void scx_arena_pool_destroy(struct scx_sched *sch)
-+{
-+	if (!sch->arena_pool)
-+		return;
-+	gen_pool_for_each_chunk(sch->arena_pool, scx_arena_clear_chunk, NULL);
-+	gen_pool_destroy(sch->arena_pool);
-+	sch->arena_pool = NULL;
-+}
-+
-+/*
-+ * Grow the pool by @page_cnt pages. bpf_arena_alloc_pages_sleepable() and
-+ * gen_pool_add() (which calls vzalloc(GFP_KERNEL)) require a sleepable
-+ * context.
-+ */
-+static int scx_arena_grow(struct scx_sched *sch, u32 page_cnt)
-+{
-+	u64 kern_vm_start;
-+	u32 uaddr32;
-+	void *p;
-+	int ret;
-+
-+	if (!sch->arena_map || !sch->arena_pool)
-+		return -EINVAL;
-+
-+	p = bpf_arena_alloc_pages_sleepable(sch->arena_map, NULL,
-+					    page_cnt, NUMA_NO_NODE, 0);
-+	if (!p)
-+		return -ENOMEM;
-+
-+	uaddr32 = (u32)(unsigned long)p;
-+	kern_vm_start = bpf_arena_map_kern_vm_start(sch->arena_map);
-+
-+	ret = gen_pool_add(sch->arena_pool, kern_vm_start + uaddr32,
-+			   page_cnt * PAGE_SIZE, NUMA_NO_NODE);
-+	if (ret) {
-+		bpf_arena_free_pages_non_sleepable(sch->arena_map, p, page_cnt);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Allocate @size bytes from the arena pool. Returns kernel VA on success, NULL
-+ * on failure. May grow the pool via scx_arena_grow() which sleeps. Caller must
-+ * be in a GFP_KERNEL context.
-+ */
-+void *scx_arena_alloc(struct scx_sched *sch, size_t size)
-+{
-+	unsigned long kern_va;
-+	u32 page_cnt;
-+
-+	might_sleep();
-+
-+	if (!sch->arena_pool)
-+		return NULL;
-+
-+	kern_va = gen_pool_alloc(sch->arena_pool, size);
-+	if (!kern_va) {
-+		page_cnt = max_t(u32, SCX_ARENA_GROW_PAGES,
-+				 (size + PAGE_SIZE - 1) >> PAGE_SHIFT);
-+		if (scx_arena_grow(sch, page_cnt))
-+			return NULL;
-+		kern_va = gen_pool_alloc(sch->arena_pool, size);
-+		if (!kern_va)
-+			return NULL;
-+	}
-+
-+	return (void *)kern_va;
-+}
-+
-+void scx_arena_free(struct scx_sched *sch, void *kern_va, size_t size)
-+{
-+	if (sch->arena_pool && kern_va)
-+		gen_pool_free(sch->arena_pool, (unsigned long)kern_va, size);
-+}
-diff --git a/kernel/sched/ext_arena.h b/kernel/sched/ext_arena.h
-new file mode 100644
-index 000000000000..4f3610160102
---- /dev/null
-+++ b/kernel/sched/ext_arena.h
-@@ -0,0 +1,18 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * BPF extensible scheduler class: Documentation/scheduler/sched-ext.rst
-+ *
-+ * Copyright (c) 2025 Meta Platforms, Inc. and affiliates.
-+ * Copyright (c) 2025 Tejun Heo <tj@kernel.org>
-+ */
-+#ifndef _KERNEL_SCHED_EXT_ARENA_H
-+#define _KERNEL_SCHED_EXT_ARENA_H
-+
-+struct scx_sched;
-+
-+s32 scx_arena_pool_init(struct scx_sched *sch);
-+void scx_arena_pool_destroy(struct scx_sched *sch);
-+void *scx_arena_alloc(struct scx_sched *sch, size_t size);
-+void scx_arena_free(struct scx_sched *sch, void *kern_va, size_t size);
-+
-+#endif /* _KERNEL_SCHED_EXT_ARENA_H */
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index d40cfd29ddaa..ff7e882bd67a 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -1116,8 +1116,13 @@ struct scx_sched {
- 	 * Arena map auto-discovered from member progs at struct_ops attach.
- 	 * cid-form schedulers must use exactly one arena across all member
- 	 * progs. NULL on cpu-form.
-+	 *
-+	 * @arena_pool sub-allocates @arena_map. Each gen_pool chunk is added
-+	 * at the kernel-side mapping address. Grows on demand and pages are
-+	 * not released until sched destroy.
- 	 */
- 	struct bpf_map		*arena_map;
-+	struct gen_pool		*arena_pool;
- 
- 	DECLARE_BITMAP(has_op, SCX_OPI_END);
- 
--- 
-2.54.0
+>  Documentation/bpf/kfuncs.rst |  14 +++
+>  arch/arm64/mm/fault.c        |  10 +-
+>  arch/x86/mm/fault.c          |  12 ++-
+>  include/linux/bpf.h          |   1 +
+>  include/linux/bpf_defs.h     |  11 +++
+>  kernel/bpf/arena.c           | 177 +++++++++++++++++++++++++++--------
+>  kernel/bpf/core.c            |   5 +
+>  7 files changed, 183 insertions(+), 47 deletions(-)
+>  create mode 100644 include/linux/bpf_defs.h
+>
+> diff --git a/Documentation/bpf/kfuncs.rst b/Documentation/bpf/kfuncs.rst
+> index 75e6c078e0e7..6d497e720998 100644
+> --- a/Documentation/bpf/kfuncs.rst
+> +++ b/Documentation/bpf/kfuncs.rst
+> @@ -462,6 +462,20 @@ In order to accommodate such requirements, the verif=
+ier will enforce strict
+>  PTR_TO_BTF_ID type matching if two types have the exact same name, with =
+one
+>  being suffixed with ``___init``.
+> =20
+> +2.8 Accessing arena memory through kfunc arguments
+> +--------------------------------------------------
+> +
+> +A read or write at any address inside an arena does not oops the kernel.
+> +Unallocated arena pages are lazily backed by a scratch page and the
+> +access is reported through the program's BPF stream as an error. Only
+> +the BPF program's correctness is affected; the kernel itself remains
+> +intact.
+> +
+> +The arena is followed by a ``GUARD_SZ / 2`` (32 KiB) guard region that
+> +is also covered by this recovery. A kfunc handed an arena pointer may
+> +therefore access up to ``GUARD_SZ / 2`` past it without bounds-checking
+> +against the arena. Larger accesses must verify the range explicitly.
+> +
+>  .. _BPF_kfunc_lifecycle_expectations:
+> =20
+>  3. kfunc lifecycle expectations
+> diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+> index 920a8b244d59..0d58d667fcd8 100644
+> --- a/arch/arm64/mm/fault.c
+> +++ b/arch/arm64/mm/fault.c
+> @@ -9,6 +9,7 @@
+> =20
+>  #include <linux/acpi.h>
+>  #include <linux/bitfield.h>
+> +#include <linux/bpf_defs.h>
+>  #include <linux/extable.h>
+>  #include <linux/kfence.h>
+>  #include <linux/signal.h>
+> @@ -416,9 +417,12 @@ static void __do_kernel_fault(unsigned long addr, un=
+signed long esr,
+>  	} else if (addr < PAGE_SIZE) {
+>  		msg =3D "NULL pointer dereference";
+>  	} else {
+> -		if (esr_fsc_is_translation_fault(esr) &&
+> -		    kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
+> -			return;
+> +		if (esr_fsc_is_translation_fault(esr)) {
+> +			if (kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
+> +				return;
+> +			if (bpf_arena_handle_page_fault(addr, esr & ESR_ELx_WNR, regs->pc))
+> +				return;
+> +		}
+> =20
+>  		msg =3D "paging request";
+>  	}
+> diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+> index f0e77e084482..b0f103ddbd23 100644
+> --- a/arch/x86/mm/fault.c
+> +++ b/arch/x86/mm/fault.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/sched/task_stack.h>	/* task_stack_*(), ...		*/
+>  #include <linux/kdebug.h>		/* oops_begin/end, ...		*/
+>  #include <linux/memblock.h>		/* max_low_pfn			*/
+> +#include <linux/bpf_defs.h>		/* bpf_arena_handle_page_fault	*/
+>  #include <linux/kfence.h>		/* kfence_handle_page_fault	*/
+>  #include <linux/kprobes.h>		/* NOKPROBE_SYMBOL, ...		*/
+>  #include <linux/mmiotrace.h>		/* kmmio_handler, ...		*/
+> @@ -688,10 +689,13 @@ page_fault_oops(struct pt_regs *regs, unsigned long=
+ error_code,
+>  	if (IS_ENABLED(CONFIG_EFI))
+>  		efi_crash_gracefully_on_page_fault(address);
+> =20
+> -	/* Only not-present faults should be handled by KFENCE. */
+> -	if (!(error_code & X86_PF_PROT) &&
+> -	    kfence_handle_page_fault(address, error_code & X86_PF_WRITE, regs))
+> -		return;
+> +	/* Only not-present faults should be handled by KFENCE or BPF arena. */
+> +	if (!(error_code & X86_PF_PROT)) {
+> +		if (kfence_handle_page_fault(address, error_code & X86_PF_WRITE, regs)=
+)
+> +			return;
+> +		if (bpf_arena_handle_page_fault(address, error_code & X86_PF_WRITE, re=
+gs->ip))
+> +			return;
+> +	}
+> =20
+>  oops:
+>  	/*
+> diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+> index 0136a108d083..831996c411cf 100644
+> --- a/include/linux/bpf.h
+> +++ b/include/linux/bpf.h
+> @@ -6,6 +6,7 @@
+> =20
+>  #include <uapi/linux/bpf.h>
+>  #include <uapi/linux/filter.h>
+> +#include <linux/bpf_defs.h>
+> =20
+>  #include <crypto/sha2.h>
+>  #include <linux/workqueue.h>
+> diff --git a/include/linux/bpf_defs.h b/include/linux/bpf_defs.h
+> new file mode 100644
+> index 000000000000..d98e033b8c0b
+> --- /dev/null
+> +++ b/include/linux/bpf_defs.h
+> @@ -0,0 +1,11 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * Subset of bpf.h declarations, split out so files that need only these
+> + * declarations can avoid bpf.h's full include cost.
+> + */
+> +#ifndef _LINUX_BPF_DEFS_H
+> +#define _LINUX_BPF_DEFS_H
+> +
+> +bool bpf_arena_handle_page_fault(unsigned long addr, bool is_write, unsi=
+gned long fault_ip);
+> +
+> +#endif /* _LINUX_BPF_DEFS_H */
+> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+> index 08d008cc471e..1c0b87ecc817 100644
+> --- a/kernel/bpf/arena.c
+> +++ b/kernel/bpf/arena.c
+> @@ -53,6 +53,7 @@ struct bpf_arena {
+>  	u64 user_vm_start;
+>  	u64 user_vm_end;
+>  	struct vm_struct *kern_vm;
+> +	struct page *scratch_page;
+>  	struct range_tree rt;
+>  	/* protects rt */
+>  	rqspinlock_t spinlock;
+> @@ -118,6 +119,11 @@ struct apply_range_data {
+>  	int i;
+>  };
+> =20
+> +struct clear_range_data {
+> +	struct llist_head *free_pages;
+> +	struct page *scratch_page;
+> +};
+> +
+>  static int apply_range_set_cb(pte_t *pte, unsigned long addr, void *data=
+)
+>  {
+>  	struct apply_range_data *d =3D data;
+> @@ -144,33 +150,59 @@ static void flush_vmap_cache(unsigned long start, u=
+nsigned long size)
+>  	flush_cache_vmap(start, start + size);
+>  }
+> =20
+> -static int apply_range_clear_cb(pte_t *pte, unsigned long addr, void *fr=
+ee_pages)
+> +static int apply_range_clear_cb(pte_t *pte, unsigned long addr, void *da=
+ta)
+>  {
+> +	struct clear_range_data *d =3D data;
+>  	pte_t old_pte;
+>  	struct page *page;
+> =20
+> -	/* sanity check */
+> -	old_pte =3D ptep_get(pte);
+> +	/*
+> +	 * Pairs with ptep_try_set() in the kernel-fault scratch installer.
+> +	 * Both sides must be atomic.
+> +	 */
+> +	old_pte =3D ptep_get_and_clear(&init_mm, addr, pte);
+>  	if (pte_none(old_pte) || !pte_present(old_pte))
+> -		return 0; /* nothing to do */
+> +		return 0;
+> =20
+>  	page =3D pte_page(old_pte);
+>  	if (WARN_ON_ONCE(!page))
+>  		return -EINVAL;
+> =20
+> -	pte_clear(&init_mm, addr, pte);
+> +	/*
+> +	 * Skip the per-arena scratch page. A kernel fault on an unallocated ua=
+ddr
+> +	 * scratches its PTE. A later bpf_arena_free_pages() over that range wa=
+lks
+> +	 * here. Without the skip, scratch_page would be freed.
+> +	 */
+> +	if (page =3D=3D d->scratch_page)
+> +		return 0;
+> +
+> +	__llist_add(&page->pcp_llist, d->free_pages);
+> +	return 0;
+> +}
+> =20
+> -	/* Add page to the list so it is freed later */
+> -	if (free_pages)
+> -		__llist_add(&page->pcp_llist, free_pages);
+> +static int apply_range_set_scratch_cb(pte_t *pte, unsigned long addr, vo=
+id *data)
+> +{
+> +	struct page *scratch_page =3D data;
+> =20
+> +	if (!pte_none(ptep_get(pte)))
+> +		return 0;
+> +	/*
+> +	 * Best-effort install. ptep_try_set() returns false only if another
+> +	 * installer (real allocation or concurrent fault) won the cmpxchg.
+> +	 * Their PTE is already valid, so the access retry succeeds.
+> +	 *
+> +	 * No flush_tlb_kernel_range() needed. Stale "not mapped" entries just
+> +	 * cause one extra re-fault through this same path.
+> +	 */
+> +	ptep_try_set(pte, mk_pte(scratch_page, PAGE_KERNEL));
+>  	return 0;
+>  }
+> =20
+>  static int populate_pgtable_except_pte(struct bpf_arena *arena)
+>  {
+> +	/* Populate intermediates for the recovery range (4 GiB + upper half-gu=
+ard). */
+>  	return apply_to_page_range(&init_mm, bpf_arena_get_kern_vm_start(arena)=
+,
+> -				   KERN_VM_SZ - GUARD_SZ, apply_range_set_cb, NULL);
+> +				   SZ_4G + GUARD_SZ / 2, apply_range_set_cb, NULL);
+>  }
+> =20
+>  static struct bpf_map *arena_map_alloc(union bpf_attr *attr)
+> @@ -221,22 +253,29 @@ static struct bpf_map *arena_map_alloc(union bpf_at=
+tr *attr)
+>  	init_irq_work(&arena->free_irq, arena_free_irq);
+>  	INIT_WORK(&arena->free_work, arena_free_worker);
+>  	bpf_map_init_from_attr(&arena->map, attr);
+> +
+> +	err =3D bpf_map_alloc_pages(&arena->map, NUMA_NO_NODE, 1, &arena->scrat=
+ch_page);
+> +	if (err)
+> +		goto err_free_arena;
+> +
+>  	range_tree_init(&arena->rt);
+>  	err =3D range_tree_set(&arena->rt, 0, attr->max_entries);
+> -	if (err) {
+> -		bpf_map_area_free(arena);
+> -		goto err;
+> -	}
+> +	if (err)
+> +		goto err_free_scratch;
+>  	mutex_init(&arena->lock);
+>  	raw_res_spin_lock_init(&arena->spinlock);
+>  	err =3D populate_pgtable_except_pte(arena);
+> -	if (err) {
+> -		range_tree_destroy(&arena->rt);
+> -		bpf_map_area_free(arena);
+> -		goto err;
+> -	}
+> +	if (err)
+> +		goto err_destroy_rt;
+> =20
+>  	return &arena->map;
+> +
+> +err_destroy_rt:
+> +	range_tree_destroy(&arena->rt);
+> +err_free_scratch:
+> +	__free_page(arena->scratch_page);
+> +err_free_arena:
+> +	bpf_map_area_free(arena);
+>  err:
+>  	free_vm_area(kern_vm);
+>  	return ERR_PTR(err);
+> @@ -244,6 +283,7 @@ static struct bpf_map *arena_map_alloc(union bpf_attr=
+ *attr)
+> =20
+>  static int existing_page_cb(pte_t *ptep, unsigned long addr, void *data)
+>  {
+> +	struct bpf_arena *arena =3D data;
+>  	struct page *page;
+>  	pte_t pte;
+> =20
+> @@ -251,6 +291,12 @@ static int existing_page_cb(pte_t *ptep, unsigned lo=
+ng addr, void *data)
+>  	if (!pte_present(pte)) /* sanity check */
+>  		return 0;
+>  	page =3D pte_page(pte);
+> +	/*
+> +	 * Skip the scratch page. The walk is page-table-driven, not range-tree=
+-driven,
+> +	 * so it can visit scratch PTEs at uaddrs the BPF program never allocat=
+ed.
+> +	 */
+> +	if (page =3D=3D arena->scratch_page)
+> +		return 0;
+>  	/*
+>  	 * We do not update pte here:
+>  	 * 1. Nobody should be accessing bpf_arena's range outside of a kernel =
+bug
+> @@ -286,9 +332,10 @@ static void arena_map_free(struct bpf_map *map)
+>  	 * free those pages.
+>  	 */
+>  	apply_to_existing_page_range(&init_mm, bpf_arena_get_kern_vm_start(aren=
+a),
+> -				     KERN_VM_SZ - GUARD_SZ, existing_page_cb, NULL);
+> +				     SZ_4G + GUARD_SZ / 2, existing_page_cb, arena);
+>  	free_vm_area(arena->kern_vm);
+>  	range_tree_destroy(&arena->rt);
+> +	__free_page(arena->scratch_page);
+>  	bpf_map_area_free(arena);
+>  }
+> =20
+> @@ -374,33 +421,37 @@ static vm_fault_t arena_vm_fault(struct vm_fault *v=
+mf)
+>  		return VM_FAULT_RETRY;
+> =20
+>  	page =3D vmalloc_to_page((void *)kaddr);
+> -	if (page)
+> +	if (page) {
+> +		if (page =3D=3D arena->scratch_page)
+> +			/* BPF triggered scratch here; don't lazy-alloc over it */
+> +			goto out_sigsegv;
+>  		/* already have a page vmap-ed */
+>  		goto out;
+> +	}
+> =20
+>  	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
+> =20
+>  	if (arena->map.map_flags & BPF_F_SEGV_ON_FAULT)
+>  		/* User space requested to segfault when page is not allocated by bpf =
+prog */
+> -		goto out_unlock_sigsegv;
+> +		goto out_sigsegv_memcg;
+> =20
+>  	ret =3D range_tree_clear(&arena->rt, vmf->pgoff, 1);
+>  	if (ret)
+> -		goto out_unlock_sigsegv;
+> +		goto out_sigsegv_memcg;
+> =20
+>  	struct apply_range_data data =3D { .pages =3D &page, .i =3D 0 };
+>  	/* Account into memcg of the process that created bpf_arena */
+>  	ret =3D bpf_map_alloc_pages(map, NUMA_NO_NODE, 1, &page);
+>  	if (ret) {
+>  		range_tree_set(&arena->rt, vmf->pgoff, 1);
+> -		goto out_unlock_sigsegv;
+> +		goto out_sigsegv_memcg;
+>  	}
+> =20
+>  	ret =3D apply_to_page_range(&init_mm, kaddr, PAGE_SIZE, apply_range_set=
+_cb, &data);
+>  	if (ret) {
+>  		range_tree_set(&arena->rt, vmf->pgoff, 1);
+>  		free_pages_nolock(page, 0);
+> -		goto out_unlock_sigsegv;
+> +		goto out_sigsegv_memcg;
+>  	}
+>  	flush_vmap_cache(kaddr, PAGE_SIZE);
+>  	bpf_map_memcg_exit(old_memcg, new_memcg);
+> @@ -409,8 +460,9 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf=
+)
+>  	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+>  	vmf->page =3D page;
+>  	return 0;
+> -out_unlock_sigsegv:
+> +out_sigsegv_memcg:
+>  	bpf_map_memcg_exit(old_memcg, new_memcg);
+> +out_sigsegv:
+>  	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+>  	return VM_FAULT_SIGSEGV;
+>  }
+> @@ -668,6 +720,7 @@ static void arena_free_pages(struct bpf_arena *arena,=
+ long uaddr, long page_cnt,
+>  	struct llist_head free_pages;
+>  	struct llist_node *pos, *t;
+>  	struct arena_free_span *s;
+> +	struct clear_range_data cdata;
+>  	unsigned long flags;
+>  	int ret =3D 0;
+> =20
+> @@ -696,9 +749,11 @@ static void arena_free_pages(struct bpf_arena *arena=
+, long uaddr, long page_cnt,
+>  	range_tree_set(&arena->rt, pgoff, page_cnt);
+> =20
+>  	init_llist_head(&free_pages);
+> +	cdata.free_pages =3D &free_pages;
+> +	cdata.scratch_page =3D arena->scratch_page;
+>  	/* clear ptes and collect struct pages */
+>  	apply_to_existing_page_range(&init_mm, kaddr, page_cnt << PAGE_SHIFT,
+> -				     apply_range_clear_cb, &free_pages);
+> +				     apply_range_clear_cb, &cdata);
+> =20
+>  	/* drop the lock to do the tlb flush and zap pages */
+>  	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+> @@ -788,6 +843,7 @@ static void arena_free_worker(struct work_struct *wor=
+k)
+>  	struct arena_free_span *s;
+>  	u64 arena_vm_start, user_vm_start;
+>  	struct llist_head free_pages;
+> +	struct clear_range_data cdata;
+>  	struct page *page;
+>  	unsigned long full_uaddr;
+>  	long kaddr, page_cnt, pgoff;
+> @@ -801,6 +857,8 @@ static void arena_free_worker(struct work_struct *wor=
+k)
+>  	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
+> =20
+>  	init_llist_head(&free_pages);
+> +	cdata.free_pages =3D &free_pages;
+> +	cdata.scratch_page =3D arena->scratch_page;
+>  	arena_vm_start =3D bpf_arena_get_kern_vm_start(arena);
+>  	user_vm_start =3D bpf_arena_get_user_vm_start(arena);
+> =20
+> @@ -813,7 +871,7 @@ static void arena_free_worker(struct work_struct *wor=
+k)
+> =20
+>  		/* clear ptes and collect pages in free_pages llist */
+>  		apply_to_existing_page_range(&init_mm, kaddr, page_cnt << PAGE_SHIFT,
+> -					     apply_range_clear_cb, &free_pages);
+> +					     apply_range_clear_cb, &cdata);
+> =20
+>  		range_tree_set(&arena->rt, pgoff, page_cnt);
+>  	}
+> @@ -928,23 +986,12 @@ static int __init kfunc_init(void)
+>  }
+>  late_initcall(kfunc_init);
+> =20
+> -void bpf_prog_report_arena_violation(bool write, unsigned long addr, uns=
+igned long fault_ip)
+> +static void __bpf_prog_report_arena_violation(struct bpf_prog *prog, boo=
+l write,
+> +					      unsigned long addr, unsigned long fault_ip)
+>  {
+>  	struct bpf_stream_stage ss;
+> -	struct bpf_prog *prog;
+>  	u64 user_vm_start;
+> =20
+> -	/*
+> -	 * The RCU read lock is held to safely traverse the latch tree, but we
+> -	 * don't need its protection when accessing the prog, since it will not
+> -	 * disappear while we are handling the fault.
+> -	 */
+> -	rcu_read_lock();
+> -	prog =3D bpf_prog_ksym_find(fault_ip);
+> -	rcu_read_unlock();
+> -	if (!prog)
+> -		return;
+> -
+>  	/* Use main prog for stream access */
+>  	prog =3D prog->aux->main_prog_aux->prog;
+> =20
+> @@ -957,3 +1004,53 @@ void bpf_prog_report_arena_violation(bool write, un=
+signed long addr, unsigned lo
+>  		bpf_stream_dump_stack(ss);
+>  	}));
+>  }
+> +
+> +bool bpf_arena_handle_page_fault(unsigned long addr, bool is_write, unsi=
+gned long fault_ip)
+> +{
+> +	struct bpf_arena *arena;
+> +	struct bpf_prog *prog;
+> +	unsigned long kbase;
+> +	unsigned long page_addr =3D addr & PAGE_MASK;
+> +
+> +	prog =3D bpf_prog_find_from_stack();
+> +	if (!prog)
+> +		return false;
+> +
+> +	arena =3D prog->aux->arena;
+> +	/* a prog not using arena may be on stack, so arena can be NULL */
+> +	if (!arena)
+> +		return false;
+> +
+> +	kbase =3D bpf_arena_get_kern_vm_start(arena);
+> +
+> +	/*
+> +	 * Recovery covers the 4 GiB mappable band plus the upper half-guard.
+> +	 * Lower guard is unreachable from kfuncs; an address there indicates
+> +	 * a different bug class - leave it to the regular kernel oops path.
+> +	 */
+> +	if (page_addr < kbase || page_addr >=3D kbase + SZ_4G + GUARD_SZ / 2)
+> +		return false;
+> +
+> +	apply_to_page_range(&init_mm, page_addr, PAGE_SIZE,
+> +			    apply_range_set_scratch_cb, arena->scratch_page);
+> +	flush_vmap_cache(page_addr, PAGE_SIZE);
+> +	__bpf_prog_report_arena_violation(prog, is_write, page_addr - kbase, fa=
+ult_ip);
+> +	return true;
+> +}
+> +
+> +void bpf_prog_report_arena_violation(bool write, unsigned long addr, uns=
+igned long fault_ip)
+> +{
+> +	struct bpf_prog *prog;
+> +
+> +	/*
+> +	 * The RCU read lock is held to safely traverse the latch tree, but we
+> +	 * don't need its protection when accessing the prog, since it will not
+> +	 * disappear while we are handling the fault.
+> +	 */
+> +	rcu_read_lock();
+> +	prog =3D bpf_prog_ksym_find(fault_ip);
+> +	rcu_read_unlock();
+> +	if (!prog)
+> +		return;
+> +	__bpf_prog_report_arena_violation(prog, write, addr, fault_ip);
+> +}
+> diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+> index 066b86e7233c..fa368d8920d9 100644
+> --- a/kernel/bpf/core.c
+> +++ b/kernel/bpf/core.c
+> @@ -3290,6 +3290,11 @@ __weak u64 bpf_arena_get_kern_vm_start(struct bpf_=
+arena *arena)
+>  {
+>  	return 0;
+>  }
+> +__weak bool bpf_arena_handle_page_fault(unsigned long addr, bool is_writ=
+e,
+> +					unsigned long fault_ip)
+> +{
+> +	return false;
+> +}
+> =20
+>  #ifdef CONFIG_BPF_SYSCALL
+>  static int __init bpf_global_ma_init(void)
 
