@@ -1,367 +1,256 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f195.google.com (mail-dy1-f195.google.com [74.125.82.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F01A37C11D;
-	Fri, 22 May 2026 17:22:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CE435975
+	for <sched-ext@lists.linux.dev>; Fri, 22 May 2026 17:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779470551; cv=none; b=SUCtVvhGizvMFcKBgZPfm7aUNWR4QcEK1dUHWb+ur2vNZ6+bVJKlhduOtUbrorO+czOMgiagRHh0xr7oHZj3wbgTDLh2LB/u1h33G/1zJc4MdkfEJIHrp1FY7kc9IcKQrKv7BgKRZwQE3xOh101VPVfk7N6xahAM12dcf7VqxR0=
+	t=1779471039; cv=none; b=snp6v+5TKUX0diqYavdbV9jWi0xlDrHwv1tFaqkda+/x7k+ndtAztsDYsK2meIOWpwWnvw4qhoX0agUN9UXaQHtBt8EJ1u6l92zgSwjqc2l03TNrHl9Fykki6HPExU0+Za4Z6hvjYdjqpUsDpHPQ+ZofC+tMRA5UZ0C6RruXgec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779470551; c=relaxed/simple;
-	bh=oRzrnvy2BsPVeG5NZvqzAzgKqVyKYyV2DA+1SsP2Vpg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDCioh0KBw7ubx9xc0u/0GMlSmN0G0vJjd5AiaMbg5zRnthX1y+Kxu97FOuqVJk04b5h4d43LHQj4XKFbc8RGQGi5W7vyYPNVmTxWIhYt5gclA+B4r2I1LilJT/1iEjQsH69q7wKZQTlr24VgXVwkX9V07zFOBptxPSwTf+lUXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3sn00kP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779471039; c=relaxed/simple;
+	bh=VhBkmGmLLsybMGIXvrXKgN8VANg2tLi+JZGA4VFkBCw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=MkdIPOIvEjD1vsKD/dl4Z7pnErOBFjxsMi9DiAf929fXPAU9EjyCE+iqvHZZEtig/C2U6ntHy4yP4cZTP8B+bbkzNF7TiQbnSOTPR+TEHWedOwBXmu6GGj68mfN8dpFS0t7TFZ4J2Aj7Tktsv4jWLC2PqfGa4daqzwsmzHVPnFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com; spf=pass smtp.mailfrom=etsalapatis.com; dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b=bnNj8ZgC; arc=none smtp.client-ip=74.125.82.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3sn00kP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27791F00A3F;
-	Fri, 22 May 2026 17:22:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779470547;
-	bh=eX0Mxlx1n6AwVGSB1X8Y1otXtKX0cegACAfNOUMD+j4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M3sn00kPfnYp6fE1gGLPv/h1VIy9g2pURe2Jpw3twBNUcNRpIyFQj7Y6Hkpjdengy
-	 D6OhOuIU8sTcjA3WC5lEVdWFcLRZokaEnCKxrfZeKx3NkZ3lcd/yFhs3K4wabzpZKI
-	 y7kD+UiLJGsou+kSioRuvxcpMc22Z18oF3d1cuZg3CV0mkcWebD7iCjpWTHVjTPj9/
-	 M68qrDqANsf+jVp3h0QB10D14m3Mr8mza144wa03yEyXzHPFFsJc1TfM4YFHUFnV4+
-	 zbpbTS4KZligU+2AkAIc3AcLkIf1u1TSpOf4kgMfdtdnaWvjsEa6EEIFL/2tEbKeZF
-	 zpEkCyQ9q1kXw==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	sched-ext@lists.linux.dev,
-	bpf@vger.kernel.org,
-	x86@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 8/8] sched_ext: Convert ops.set_cmask() to arena-resident cmask
-Date: Fri, 22 May 2026 07:22:19 -1000
-Message-ID: <20260522172219.1423324-9-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260522172219.1423324-1-tj@kernel.org>
-References: <20260522172219.1423324-1-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=etsalapatis-com.20251104.gappssmtp.com header.i=@etsalapatis-com.20251104.gappssmtp.com header.b="bnNj8ZgC"
+Received: by mail-dy1-f195.google.com with SMTP id 5a478bee46e88-3045c195251so398002eec.1
+        for <sched-ext@lists.linux.dev>; Fri, 22 May 2026 10:30:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=etsalapatis-com.20251104.gappssmtp.com; s=20251104; t=1779471037; x=1780075837; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EelqnoHr5FCkbvG3Twc29L7eua8CyCTu+4+bwT3AbqE=;
+        b=bnNj8ZgCREqGYcdux3SmEOep8wF0jYIxduKlsh6a7tyWGyRcelyk0BDgUn7g/feso1
+         P9aMxu80h1oIxKsvENltIqUZdq+LIrdYKobc75PCaDkcjnnQyh1zgeAOL7MWTvJbJFVy
+         IQ+zoSoJQkMOioUBi9JRxiyNNfFevQe7/HkJFR8yRY2fT4XPi/s7inmpWVuaSk9PQ2Pl
+         KBHvombuO/WjZ5LFqI6/MiZGwlLO4eNSrWYVpPZy34+2m1m6vNR2/lrlMG8vRYxC1h4h
+         1cJvcbupFdYgnSGqJX18/tpfXQMUJyjas0h3/mP4X6g0lJZsWVE8lvoj9QarsgYBSvDb
+         I/9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779471037; x=1780075837;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EelqnoHr5FCkbvG3Twc29L7eua8CyCTu+4+bwT3AbqE=;
+        b=F/NdvkibArw8uh4fThxJtMaTrTZRsvLiOq1bq/IiWA22tXJmULnZEa8UhclKgw6yg/
+         8Ke2rHPSTQtBcfKtRk4bq18+XPAdgc29jntKbLIGVwdes4FvR+mfVhJT87ddCdqSgqES
+         1DmxsNE0bb0VbMVJgqMN+m4+PxpSMT/VNIptkdTj2UCkODZfXSCW5XVvtFtQbAYeag4R
+         9tW8ZL5eUnX6WXWPsvcyZ08qFeBS8kTFP65UYDfyLHjT1H6+CsRRcNfGH0dnS59due3b
+         e61YCSg8K//dUeQR9GfEkBzLGt6sF7pn9ZuPXS2c+yPq1vu6kdC9ndqu4uMjdzKsL6Tq
+         YeuA==
+X-Forwarded-Encrypted: i=1; AFNElJ++7N2nLbubHyihrcsTK9xveu/cWEsqqWRhla43VSylri498mjRoy1y1QdgQ1CsKT9CfiCSymDJRFA=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy6Gs1SsD7F3nKeFCv+irYgSwIix78eQ1ELv6oHbXKz1UMY0neH
+	FWMTEZ5GXq9CgFq/VhteqjphTaSjS/QcSpoKG+u3ptK2e5EGV37V0CsOw0SP+vc4teg=
+X-Gm-Gg: Acq92OGEu0/Q0FpX6VwN7Guy7QGPUCMyMlSc5KuHFrJXY2wpsjS3SRqMwiZptQ7uc5W
+	rF8rW9aB03wUqVG1UTm5UOds6LF7lrXfA2Yo3FbTgU5DPAC6WWqWD024Ls51spio/UxYTKdt+nX
+	0jC49/oNclM3PDw/ct2N6Upehkjp4P+XAxIeZxxR6WQiiv5owEqRalEoVOXPtq0FOffYvzO7OEX
+	Qz4TzBLgAhzPrajrTNQw30KAyD6t13fB+YL+0NRWXhtM0igo5G1lvjvutNJ1OQozylTXVwEFt5Q
+	kBwaT9IOW62u9MgFX+H/LIsSOgFiqYw4c5Krk01XQrHcMu7CsI/nPpWzJv4/TpJJ4lJ8nT9oH5H
+	b+ZLm91t1a/zW7hTF7X/62fzwUcWpIgVF0/DhRFi1rekDxR4f8afXdYTegd3iMyUzNe7mSrDr+f
+	gvlc2q
+X-Received: by 2002:a05:7300:a10c:b0:2f2:6dde:df54 with SMTP id 5a478bee46e88-30449146a8bmr2366652eec.33.1779471036629;
+        Fri, 22 May 2026 10:30:36 -0700 (PDT)
+Received: from localhost ([2620:10d:c090:600::69da])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30451ef4719sm1445018eec.1.2026.05.22.10.30.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 10:30:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 22 May 2026 13:30:34 -0400
+Message-Id: <DIPDU3YSFCBS.1UWA8LVD5LDE9@etsalapatis.com>
+Cc: "Ching-Chun Huang" <jserv@ccns.ncku.edu.tw>, "Chia-Ping Tsai"
+ <chia7712@gmail.com>
+Subject: Re: [PATCH sched_ext/for-7.2 0/2] tools/sched_ext: fix scx_qmap BPF
+ verifier rejection
+From: "Emil Tsalapatis" <emil@etsalapatis.com>
+To: "Cheng-Yang Chou" <yphbchou0911@gmail.com>, <sched-ext@lists.linux.dev>,
+ "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>, "Andrea
+ Righi" <arighi@nvidia.com>, "Changwoo Min" <changwoo@igalia.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260522171406.2171819-1-yphbchou0911@gmail.com>
+In-Reply-To: <20260522171406.2171819-1-yphbchou0911@gmail.com>
 
-ops_cid.set_cmask() expects a cmask. The kernel couldn't write into the
-arena, so it translated cpumask -> cmask in kernel memory and passed the
-result as a trusted pointer. The BPF cmask helpers all operate on arena
-cmasks though, so the BPF side had to word-by-word probe-read the kernel
-cmask into an arena cmask via cmask_copy_from_kernel() before any helper
-could touch it. It works, but is clumsy.
+On Fri May 22, 2026 at 1:13 PM EDT, Cheng-Yang Chou wrote:
+> scx_qmap fails to load with modern LLVM due to LLVM liveness killing the
+> PTR_TO_ARENA register alias before arena stores. The BPF verifier rejects
+> these stores with "RN invalid mem access 'scalar'".
+>
+> Patch 1: moves bpf_addr_space_cast() before the #if block so it is always
+> available regardless of LLVM version.
+>
+> Patch 2: calls bpf_addr_space_cast() at every arena store site in scx_qma=
+p
+> where the PTR_TO_ARENA alias dies before the write.
+>
+> Failure observed on sched_ext/for-next with vng (without this series):
 
-With direct kernel-side arena access now in place, build the cmask in the
-arena. The kernel writes to it through the kern_va side of the dual mapping.
-BPF directly dereferences it via an __arena pointer like any other arena
-struct.
+I do not think this is the way to go about this problem. Annotations,
+especially heavily BPF-specific like this, are too obscure for us to
+expect people to use. If anything this seems like something we should
+handle in the verifier.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
----
- kernel/sched/ext.c                    | 68 +++++++++++++++++++++++++--
- kernel/sched/ext_cid.c                | 20 +-------
- kernel/sched/ext_internal.h           | 10 +++-
- tools/sched_ext/include/scx/cid.bpf.h | 52 --------------------
- tools/sched_ext/scx_qmap.bpf.c        |  5 +-
- 5 files changed, 75 insertions(+), 80 deletions(-)
+Can you elaborate on "LLVM liveness killing the register alias"? This
+seems like missing addr_space_cast() instructions added by the compiler,
+for some reason it tries to use r7 directly instead of either reusing or
+rebuilding r8. Also, which Clang version are you using?
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index fb91079c1244..94562e3350c6 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -621,11 +621,16 @@ static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
- 		update_locked_rq(rq);
- 
- 	if (scx_is_cid_type()) {
--		struct scx_cmask *cmask = this_cpu_ptr(scx_set_cmask_scratch);
--
--		lockdep_assert_irqs_disabled();
--		scx_cpumask_to_cmask(cpumask, cmask);
--		sch->ops_cid.set_cmask(task, cmask);
-+		struct scx_cmask *kern_va = *this_cpu_ptr(sch->set_cmask_scratch);
-+		unsigned long uaddr = (unsigned long)kern_va -
-+			bpf_arena_map_kern_vm_start(sch->arena_map);
-+		/*
-+		 * Build the per-CPU arena cmask and hand BPF the uaddr. Caller
-+		 * holds the rq lock with IRQs disabled, which makes us the sole
-+		 * user of the scratch area.
-+		 */
-+		scx_cpumask_to_cmask(cpumask, kern_va);
-+		sch->ops_cid.set_cmask(task, (struct scx_cmask *)uaddr);
- 	} else {
- 		sch->ops.set_cpumask(task, cpumask);
- 	}
-@@ -4949,6 +4954,48 @@ static const struct attribute_group scx_global_attr_group = {
- static void free_pnode(struct scx_sched_pnode *pnode);
- static void free_exit_info(struct scx_exit_info *ei);
- 
-+static s32 scx_set_cmask_scratch_alloc(struct scx_sched *sch)
-+{
-+	size_t size = struct_size_t(struct scx_cmask, bits,
-+				    SCX_CMASK_NR_WORDS(num_possible_cpus()));
-+	int cpu;
-+
-+	if (!sch->is_cid_type || !sch->arena_pool)
-+		return 0;
-+
-+	sch->set_cmask_scratch = alloc_percpu(struct scx_cmask *);
-+	if (!sch->set_cmask_scratch)
-+		return -ENOMEM;
-+
-+	for_each_possible_cpu(cpu) {
-+		struct scx_cmask **slot = per_cpu_ptr(sch->set_cmask_scratch, cpu);
-+
-+		*slot = scx_arena_alloc(sch, size);
-+		if (!*slot)
-+			return -ENOMEM;
-+		scx_cmask_init(*slot, 0, num_possible_cpus());
-+	}
-+	return 0;
-+}
-+
-+static void scx_set_cmask_scratch_free(struct scx_sched *sch)
-+{
-+	size_t size = struct_size_t(struct scx_cmask, bits,
-+				    SCX_CMASK_NR_WORDS(num_possible_cpus()));
-+	int cpu;
-+
-+	if (!sch->set_cmask_scratch)
-+		return;
-+
-+	for_each_possible_cpu(cpu) {
-+		struct scx_cmask **slot = per_cpu_ptr(sch->set_cmask_scratch, cpu);
-+
-+		scx_arena_free(sch, *slot, size);
-+	}
-+	free_percpu(sch->set_cmask_scratch);
-+	sch->set_cmask_scratch = NULL;
-+}
-+
- static void scx_sched_free_rcu_work(struct work_struct *work)
- {
- 	struct rcu_work *rcu_work = to_rcu_work(work);
-@@ -5003,6 +5050,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 
- 	rhashtable_free_and_destroy(&sch->dsq_hash, NULL, NULL);
- 	free_exit_info(sch->exit_info);
-+	scx_set_cmask_scratch_free(sch);
- 	scx_arena_pool_destroy(sch);
- 	if (sch->arena_map)
- 		bpf_map_put(sch->arena_map);
-@@ -7162,6 +7210,12 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		goto err_disable;
- 	}
- 
-+	ret = scx_set_cmask_scratch_alloc(sch);
-+	if (ret) {
-+		cpus_read_unlock();
-+		goto err_disable;
-+	}
-+
- 	for (i = SCX_OPI_CPU_HOTPLUG_BEGIN; i < SCX_OPI_CPU_HOTPLUG_END; i++)
- 		if (((void (**)(void))ops)[i])
- 			set_bit(i, sch->has_op);
-@@ -7484,6 +7538,10 @@ static void scx_sub_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_disable;
- 
-+	ret = scx_set_cmask_scratch_alloc(sch);
-+	if (ret)
-+		goto err_disable;
-+
- 	if (validate_ops(sch, ops))
- 		goto err_disable;
- 
-diff --git a/kernel/sched/ext_cid.c b/kernel/sched/ext_cid.c
-index 0c91b951fd33..808c6390da5a 100644
---- a/kernel/sched/ext_cid.c
-+++ b/kernel/sched/ext_cid.c
-@@ -7,14 +7,6 @@
-  */
- #include <linux/cacheinfo.h>
- 
--/*
-- * Per-cpu scratch cmask used by scx_call_op_set_cpumask() to synthesize a
-- * cmask from a cpumask. Allocated alongside the cid arrays on first enable
-- * and never freed. Sized to the full cid space. Caller holds rq lock so
-- * this_cpu_ptr is safe.
-- */
--struct scx_cmask __percpu *scx_set_cmask_scratch;
--
- /*
-  * cid tables.
-  *
-@@ -54,8 +46,6 @@ static s32 scx_cid_arrays_alloc(void)
- 	u32 npossible = num_possible_cpus();
- 	s16 *cid_to_cpu, *cpu_to_cid;
- 	struct scx_cid_topo *cid_topo;
--	struct scx_cmask __percpu *set_cmask_scratch;
--	s32 cpu;
- 
- 	if (scx_cid_to_cpu_tbl)
- 		return 0;
-@@ -63,25 +53,17 @@ static s32 scx_cid_arrays_alloc(void)
- 	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
- 	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
- 	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
--	set_cmask_scratch = __alloc_percpu(struct_size(set_cmask_scratch, bits,
--						       SCX_CMASK_NR_WORDS(npossible)),
--					   sizeof(u64));
- 
--	if (!cid_to_cpu || !cpu_to_cid || !cid_topo || !set_cmask_scratch) {
-+	if (!cid_to_cpu || !cpu_to_cid || !cid_topo) {
- 		kfree(cid_to_cpu);
- 		kfree(cpu_to_cid);
- 		kfree(cid_topo);
--		free_percpu(set_cmask_scratch);
- 		return -ENOMEM;
- 	}
- 
- 	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
- 	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
- 	WRITE_ONCE(scx_cid_topo, cid_topo);
--	for_each_possible_cpu(cpu)
--		scx_cmask_init(per_cpu_ptr(set_cmask_scratch, cpu),
--			       0, npossible);
--	WRITE_ONCE(scx_set_cmask_scratch, set_cmask_scratch);
- 	return 0;
- }
- 
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index ff7e882bd67a..9bb65367f510 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -1124,6 +1124,14 @@ struct scx_sched {
- 	struct bpf_map		*arena_map;
- 	struct gen_pool		*arena_pool;
- 
-+	/*
-+	 * Per-CPU arena cmask used by scx_call_op_set_cpumask() to hand a cmask
-+	 * to ops_cid.set_cmask(). The kernel writes through the stored kern_va;
-+	 * the BPF-arena uaddr handed to BPF is recovered by subtracting the
-+	 * arena's kern_vm_start.
-+	 */
-+	struct scx_cmask * __percpu *set_cmask_scratch;
-+
- 	DECLARE_BITMAP(has_op, SCX_OPI_END);
- 
- 	/*
-@@ -1480,8 +1488,6 @@ enum scx_ops_state {
- extern struct scx_sched __rcu *scx_root;
- DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
- 
--extern struct scx_cmask __percpu *scx_set_cmask_scratch;
--
- /*
-  * True when the currently loaded scheduler hierarchy is cid-form. All scheds
-  * in a hierarchy share one form, so this single key tells callsites which
-diff --git a/tools/sched_ext/include/scx/cid.bpf.h b/tools/sched_ext/include/scx/cid.bpf.h
-index e281c88fa824..70f2a3829af4 100644
---- a/tools/sched_ext/include/scx/cid.bpf.h
-+++ b/tools/sched_ext/include/scx/cid.bpf.h
-@@ -675,56 +675,4 @@ static __always_inline void cmask_from_cpumask(struct scx_cmask __arena *m,
- 	}
- }
- 
--/**
-- * cmask_copy_from_kernel - probe-read a kernel cmask into an arena cmask
-- * @dst: arena cmask to fill; must have @dst->base == 0 and be sized for @src.
-- * @src: kernel-memory cmask (e.g. ops.set_cmask() arg); @src->base must be 0.
-- *
-- * Word-for-word copy; @src and @dst must share base 0 alignment. Triggers
-- * scx_bpf_error() on probe failure or precondition violation.
-- */
--static __always_inline void cmask_copy_from_kernel(struct scx_cmask __arena *dst,
--						   const struct scx_cmask *src)
--{
--	u32 base = 0, nr_cids = 0, nr_words, wi;
--
--	if (dst->base != 0) {
--		scx_bpf_error("cmask_copy_from_kernel requires dst->base == 0");
--		return;
--	}
--
--	if (bpf_probe_read_kernel(&base, sizeof(base), &src->base)) {
--		scx_bpf_error("probe-read cmask->base failed");
--		return;
--	}
--	if (base != 0) {
--		scx_bpf_error("cmask_copy_from_kernel requires src->base == 0");
--		return;
--	}
--
--	if (bpf_probe_read_kernel(&nr_cids, sizeof(nr_cids), &src->nr_cids)) {
--		scx_bpf_error("probe-read cmask->nr_cids failed");
--		return;
--	}
--
--	if (nr_cids > dst->nr_cids) {
--		scx_bpf_error("src cmask nr_cids=%u exceeds dst nr_cids=%u",
--			      nr_cids, dst->nr_cids);
--		return;
--	}
--
--	nr_words = CMASK_NR_WORDS(nr_cids);
--	cmask_zero(dst);
--	bpf_for(wi, 0, CMASK_MAX_WORDS) {
--		u64 word = 0;
--		if (wi >= nr_words)
--			break;
--		if (bpf_probe_read_kernel(&word, sizeof(u64), &src->bits[wi])) {
--			scx_bpf_error("probe-read cmask->bits[%u] failed", wi);
--			return;
--		}
--		dst->bits[wi] = word;
--	}
--}
--
- #endif /* __SCX_CID_BPF_H */
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 7e77f22674ea..8a2d6a8ebd8e 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -919,14 +919,15 @@ void BPF_STRUCT_OPS(qmap_update_idle, s32 cid, bool idle)
- }
- 
- void BPF_STRUCT_OPS(qmap_set_cmask, struct task_struct *p,
--		    const struct scx_cmask *cmask)
-+		    const struct scx_cmask *cmask_in)
- {
-+	struct scx_cmask __arena *cmask = (struct scx_cmask __arena *)(long)cmask_in;
- 	task_ctx_t *taskc;
- 
- 	taskc = lookup_task_ctx(p);
- 	if (!taskc)
- 		return;
--	cmask_copy_from_kernel(&taskc->cpus_allowed, cmask);
-+	cmask_copy(&taskc->cpus_allowed, cmask);
- }
- 
- struct monitor_timer {
--- 
-2.54.0
+>
+> root@virtme-ng:/home/ubuntu/sched_ext/tools/sched_ext# ./build/bin/scx_qm=
+ap
+> libbpf: prog 'qmap_dequeue': BPF program load failed: -EACCES
+> libbpf: prog 'qmap_dequeue': -- BEGIN PROG LOAD LOG --
+> 0: R1=3Dctx() R10=3Dfp0
+> ; void BPF_STRUCT_OPS(qmap_dequeue, struct task_struct *p, u64 deq_flags)=
+ @ scx_qmap.bpf.c:467
+> 0: (79) r2 =3D *(u64 *)(r1 +0)
+> func 'dequeue' arg0 has btf_id 115922 type STRUCT 'task_struct'
+> 1: R1=3Dctx() R2=3Dtrusted_ptr_task_struct()
+> 1: (79) r4 =3D *(u64 *)(r1 +8)          ; R1=3Dctx() R4=3Dscalar()
+> ; __sync_fetch_and_add(&qa.nr_dequeued, 1); @ scx_qmap.bpf.c:471
+> 2: (18) r1 =3D 0x10000fff9000           ; R1=3Dscalar()
+> 4: (18) r3 =3D 0x10000fff9000           ; R3=3Dscalar()
+> 6: (07) r3 +=3D 32                      ; R3=3Dscalar()
+> 7: (bf) r5 =3D addr_space_cast(r3, 0, 1)        ; R3=3Dscalar() R5=3Daren=
+a
+> 8: (b7) r3 =3D 1                        ; R3=3D1
+> 9: (b7) r0 =3D 1                        ; R0=3D1
+> 10: (db) r0 =3D atomic64_fetch_add((u64 *)(r5 +0), r0)          ; R0=3Dsc=
+alar() R5=3Darena
+> 11: (18) r5 =3D 0x100000000             ; R5=3D0x100000000
+> ; if (deq_flags & SCX_DEQ_CORE_SCHED_EXEC) @ scx_qmap.bpf.c:472
+> 13: (5f) r4 &=3D r5                     ; R4=3Dscalar(smin=3Dsmin32=3D0,s=
+max=3Dumax=3D0x100000000,smax32=3Dumax32=3D0,var_off=3D(0x0; 0x100000000))
+> 14: (15) if r4 =3D=3D 0x0 goto pc+3       ; R4=3D0x100000000
+> ; __sync_fetch_and_add(&qa.nr_core_sched_execed, 1); @ scx_qmap.bpf.c:473
+> 15: (07) r1 +=3D 48                     ; R1=3Dscalar()
+> 16: (bf) r1 =3D addr_space_cast(r1, 0, 1)       ; R1=3Darena
+> 17: (db) r3 =3D atomic64_fetch_add((u64 *)(r1 +0), r3)          ;
+> ; QMAP_TOUCH_ARENA(); @ scx_qmap.bpf.c:247
+> 18: (18) r1 =3D 0xff110001062b6800      ; R1=3Dmap_ptr(map=3Darena,ks=3D0=
+,vs=3D0)
+> ; v =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0); @ scx_qmap.bpf.c:2=
+49
+> 20: (18) r1 =3D 0xff11000105cafc00      ; R1=3Dmap_ptr(map=3Dtask_ctx_sto=
+r,ks=3D4,vs=3D8)
+> 22: (b7) r3 =3D 0                       ; R3=3D0
+> 23: (b7) r4 =3D 0                       ; R4=3D0
+> 24: (85) call bpf_task_storage_get#156        ; R0=3Dmap_value_or_null(id=
+=3D1,map=3Dtask_ctx_stor,ks=3D4,vs=3D8)
+> ; if (!v || !v->taskc) @ scx_qmap.bpf.c:250
+> 25: (15) if r0 =3D=3D 0x0 goto pc+77      ; R0=3Dmap_value(map=3Dtask_ctx=
+_stor,ks=3D4,vs=3D8)
+> 26: (79) r7 =3D *(u64 *)(r0 +0)         ; R0=3Dmap_value(map=3Dtask_ctx_s=
+tor,ks=3D4,vs=3D8) R7=3Dscalar()
+> 27: (15) if r7 =3D=3D 0x0 goto pc+75      ; R7=3Dscalar(umin=3D1)
+> 28: (bf) r8 =3D addr_space_cast(r7, 0, 1)       ; R7=3Dscalar(umin=3D1) R=
+8=3Darena
+> ; if (taskc && taskc->fifo) { @ scx_qmap.bpf.c:476
+> 29: (79) r9 =3D *(u64 *)(r8 +24)        ; R8=3Darena R9=3Dscalar()
+> 30: (15) if r9 =3D=3D 0x0 goto pc+72      ; R9=3Dscalar(umin=3D1)
+> ; if (taskc->highpri) @ scx_qmap.bpf.c:477
+> 31: (71) r1 =3D *(u8 *)(r8 +45)         ; R1=3Dscalar(smin=3Dsmin32=3D0,s=
+max=3Dumax=3Dsmax32=3Dumax32=3D255,var_off=3D(0x0; 0xff)) R8=3Darena
+> 32: (56) if w1 !=3D 0x1 goto pc+9       ; R1=3D1
+> 33: (b7) r1 =3D 1                       ; R1=3D1
+> ; __sync_fetch_and_sub(&qa.nr_highpri_queued, 1); @ scx_qmap.bpf.c:478
+> 34: (87) r1 =3D -r1                     ; R1=3D-1
+> 35: (18) r2 =3D 0x10000fff9000          ; R2=3Dscalar()
+> 37: (07) r2 +=3D 88                     ; R2=3Dscalar()
+> 38: (bf) r2 =3D addr_space_cast(r2, 0, 1)       ; R2=3Darena
+> 39: (db) r1 =3D atomic64_fetch_add((u64 *)(r2 +0), r1)          ; R1=3Dsc=
+alar() R2=3Darena
+> ; struct qmap_fifo __arena *fifo =3D taskc->fifo; @ scx_qmap.bpf.c:299
+> 40: (79) r9 =3D *(u64 *)(r8 +24)        ; R8=3Darena R9=3Dscalar()
+> ; if (!fifo) @ scx_qmap.bpf.c:302
+> 41: (15) if r9 =3D=3D 0x0 goto pc+61      ; R9=3Dscalar(umin=3D1)
+> ; lock =3D qa_q_lock(fifo->idx); @ scx_qmap.bpf.c:305
+> 42: (bf) r2 =3D addr_space_cast(r9, 0, 1)       ; R2=3Darena R9=3Dscalar(=
+umin=3D1)
+> 43: (61) r1 =3D *(u32 *)(r2 +16)        ; R1=3Dscalar(smin=3D0,smax=3Duma=
+x=3D0xffffffff,var_off=3D(0x0; 0xffffffff)) R2=3Darena
+> ; switch (qid) { @ scx_qmap.bpf.c:110
+> 44: (66) if w1 s> 0x1 goto pc+8       ; R1=3Dscalar(smin=3D0,smax=3Dumax=
+=3D0xffffffff,smax32=3D1,var_off=3D(0x0; 0xffffffff))
+> 45: (18) r6 =3D 0xff11000105caf1e8      ; R6=3Dmap_value(map=3D.data.qa_q=
+_lock,ks=3D4,vs=3D4)
+> 47: (16) if w1 =3D=3D 0x0 goto pc+17      ; R1=3Dscalar(smin=3Dumin=3Dumi=
+n32=3D1,smax=3Dumax=3D0xffffffff,smax32=3D1,var_off=3D(0x0; 0xffffffff))
+> 48: (16) if w1 =3D=3D 0x1 goto pc+1 50: R2=3Darena R7=3Dscalar(umin=3D1) =
+R8=3Darena R9=3Dscalar(umin=3D1) R10=3Dfp0
+> ; switch (qid) { @ scx_qmap.bpf.c:110
+> 50: (18) r6 =3D 0xff11000105caede8      ; R6=3Dmap_value(map=3D.data.qa_q=
+_lock,ks=3D4,vs=3D4)
+> 52: (05) goto pc+12
+> 65: (7b) *(u64 *)(r10 -16) =3D r2       ; R2=3Darena R10=3Dfp0 fp-16=3Dar=
+ena
+> ; if (bpf_res_spin_lock(lock)) { @ scx_qmap.bpf.c:193
+> 66: (bf) r1 =3D r6                      ; R1=3Dmap_value(map=3D.data.qa_q=
+_lock,ks=3D4,vs=3D4) R6=3Dmap_value(map=3D.data.qa_q_lock,ks=3D4,vs=3D4)
+> 67: (85) call bpf_res_spin_lock#69027         ; R0=3D0
+> 68: (16) if w0 =3D=3D 0x0 goto pc+9       ; R0=3D0
+> ; if (taskc->fifo !=3D fifo) { @ scx_qmap.bpf.c:310
+> 78: (79) r1 =3D *(u64 *)(r8 +24)        ; R1=3Dscalar() R8=3Darena
+> 79: (1d) if r1 =3D=3D r9 goto pc+1 81: R6=3Dmap_value(map=3D.data.qa_q_lo=
+ck,ks=3D4,vs=3D4) R7=3Dscalar(umin=3D1) R8=3Darena R10=3Dfp0 fp-16=3Darena
+> ; bpf_res_spin_unlock(lock); @ scx_qmap.bpf.c:311
+> 81: (79) r2 =3D *(u64 *)(r8 +16)        ; R2=3Dscalar() R8=3Darena
+> ; if (taskc->q_next) @ scx_qmap.bpf.c:315
+> 82: (79) r1 =3D *(u64 *)(r8 +8)         ; R1=3Dscalar() R8=3Darena
+> 83: (15) if r1 =3D=3D 0x0 goto pc+4       ; R1=3Dscalar(umin=3D1)
+> 84: (bf) r3 =3D addr_space_cast(r1, 0, 1)       ; R1=3Dscalar(umin=3D1) R=
+3=3Darena
+> ; taskc->q_next->q_prev =3D taskc->q_prev; @ scx_qmap.bpf.c:316
+> 85: (7b) *(u64 *)(r3 +16) =3D r2        ; R2=3Dscalar() R3=3Darena
+> ; if (taskc->q_prev) @ scx_qmap.bpf.c:319
+> 86: (79) r2 =3D *(u64 *)(r8 +16)        ; R2=3Dscalar() R8=3Darena
+> ; taskc->q_next->q_prev =3D taskc->q_prev; @ scx_qmap.bpf.c:316
+> 87: (05) goto pc+2
+> ; fifo->tail =3D taskc->q_prev; @ scx_qmap.bpf.c:318
+> 90: (07) r7 +=3D 8                      ; R7=3Dscalar()
+> ; if (taskc->q_prev) @ scx_qmap.bpf.c:319
+> 91: (15) if r2 =3D=3D 0x0 goto pc+3       ; R2=3Dscalar(umin=3D1)
+> 92: (bf) r2 =3D addr_space_cast(r2, 0, 1)       ; R2=3Darena
+> ; taskc->q_prev->q_next =3D taskc->q_next; @ scx_qmap.bpf.c:320
+> 93: (7b) *(u64 *)(r2 +8) =3D r1         ; R1=3Dscalar(umin=3D1) R2=3Daren=
+a
+> 94: (05) goto pc+2
+> ; fifo->head =3D taskc->q_next; @ scx_qmap.bpf.c:322
+> 97: (b7) r1 =3D 0                       ; R1=3D0
+> ; taskc->q_prev =3D NULL; @ scx_qmap.bpf.c:324
+> 98: (7b) *(u64 *)(r7 +16) =3D r1
+> R7 invalid mem access 'scalar'
+> processed 70 insns (limit 1000000) max_states_per_insn 1 total_states 5 p=
+eak_states 5 mark_read 0
+> -- END PROG LOAD LOG --
+> libbpf: prog 'qmap_dequeue': failed to load: -EACCES
+> libbpf: failed to load object 'scx_qmap'
+> libbpf: failed to load BPF skeleton 'scx_qmap': -EACCES
+> [SCX_BUG] scx_qmap.c:193 (Permission denied)
+> Failed to load skel
+>
+> Thanks,
+> Cheng-Yang
+>
+> ---
+>
+> Cheng-Yang Chou (2):
+>   tools/sched_ext: always define bpf_addr_space_cast
+>   tools/sched_ext: scx_qmap: fix arena stores
+>
+>  .../include/scx/bpf_arena_common.bpf.h        | 21 +++--
+>  tools/sched_ext/scx_qmap.bpf.c                | 85 +++++++++++++------
+>  2 files changed, 71 insertions(+), 35 deletions(-)
+>
+> --
+> 2.48.1
 
