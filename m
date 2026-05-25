@@ -1,115 +1,63 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D80202C48
-	for <sched-ext@lists.linux.dev>; Mon, 25 May 2026 17:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16DB290DBB;
+	Mon, 25 May 2026 19:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779729825; cv=none; b=hkfl3VHDako/1a2XP8PGEmCGpqH2wMf20ARY+pnX2kfT4RmgEvBRRbJx1idhA1yTbwk46oi49iUOMlWwQBwOpmuGLe9pKWz3RbPn1wxprFKP94tsgoGh44hgY1dOG7nMcoF+6iH4Wiip3wbI5+nZdAZaay2/oWkmiKgL6KZkN3o=
+	t=1779738866; cv=none; b=Pmj1SIKm0eSQ21cPS0W8fyoI1ygJW4HhmUSd9DD/J83Q7gXSlCYcdue25AflM2vK3MOE85AeDfbwbwkRJDEeeO58qT79Kz2w3/JxZwie+hVrewNNx7q5vXe18g+Qu1Iqu+L5c1a6Z3kF+Ojrs8ADZTITaUs/quI/PBsvhevhZBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779729825; c=relaxed/simple;
-	bh=JdvYWGrSco54EEqETbKJVg6q93Z4ZxJu0AmOTiAuFJI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ABUzB/w2KDBYFi8OdfTnovDjqmZxBTKx9DD7jujN//aQniRUi4Ou0FjfO28lUpPg/XIQhkRmF56CSw4/rzO5ZnPMPLcKBkfwwRVwDxdGL3Oph9vBkExak3NZl/xVhhkR8uB0vtT0mi1QTwEqXyizYprcnPlBklYLywvjL08u9JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DCWceZFV; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1779738866; c=relaxed/simple;
+	bh=u/qGy74QsXohW/BY+X5DqQ4oseT1pVTdC0g2DKtRwAo=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=uIpgKINPgoUcAbFdNfdJM71j74SnbClU7amijUdus35ezyZTFaGDXSsCZsjq95QuGlffVkhiMoTkZKaRRwZa0s8+hEcak5xHdk82rmYFbOZxjGuvmCDMG+iieNoJJA74oQk8aDk6KE/Lsny7LGQH2CbMctelXrSjQGlnPx5fJRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SqGm8cye; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DCWceZFV"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2bc85eda6b6so49224025ad.1
-        for <sched-ext@lists.linux.dev>; Mon, 25 May 2026 10:23:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779729823; x=1780334623; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=T2GwsuihI9h91LLFb14RdfQIAiapZCcyVFrlmi8na0M=;
-        b=DCWceZFVkPrJco5a5IzoR1g7+0iMOn9kjC4UZdEMrDYjpyL6M8cmiff+kYwjvkrO1c
-         Rih0dSAfYycnDBC1XNEeiixiOk56q+rRskVY6TOuBKhZWedB/MRoajPsnxau3FJw5G0U
-         /q1mGeHYFW12C64k2ua4nn0d/FJ7g6jOByICNazLaSy2beZ+9Wy4HFwZlWwbDDCRXkbf
-         k0cZHTvCq5IMlp0vylqyEzzvs3V/VL/WMZyu6S9AOp4BY2N3cr61TYz+ORCLvJFSIMwR
-         C4kR0Z3IS5c1/hVtGQpT4piG+1JK7pzA+hbChMtaNqFmY1coXy3jz0/LuVy17sjjvrzp
-         l1kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779729823; x=1780334623;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T2GwsuihI9h91LLFb14RdfQIAiapZCcyVFrlmi8na0M=;
-        b=el15D2JjaN4ncQvFObTQIGQuiCCLhpfSmoAv0G9gaIbDmZrhhiCzQEPHcbhg8MWKkK
-         WKaMsxxuDiXn43nZbeYRRmJZl3COrfFc3jeAdLx6157svzlzbonkGg353zpVnwAJdTf4
-         Vu5tAKcrsIkedEvqf4BFIEW+ePZ+2gD9vLk7aq5MmzoylSTNZaCjAt7dD36W0UKAFHaG
-         aaYJMJYFqPAFd1zz0DoD/XzpUPdNEb30bRCuruZBaJ4yZrdl2ENp/GTeRKiFAzXFl1ZK
-         7kKztGg+etgJimxejdjU41tfMewGbHHTE9nTm+I1dO/Lj5DfbTvKA6j94P2yUhgx7/1m
-         mzXg==
-X-Gm-Message-State: AOJu0YxXN5Vz7VU2dA+1stS4AHHmBS5HFUVnAQeGnBNESVdbAbeOe2Iz
-	KKlru6EEmMeCIYM8c8SaD9ZnY++c/py61krXtPlQCW4fD6zSJi9As92i+R6zKA==
-X-Gm-Gg: Acq92OGOx/1WggpyDMLZFom9ck0cH9HxXzJyMC1ZA0/CN0VDN55JWwSGek0NjgbY2LP
-	8nUJQu5nUtDxze6stvXMlyejX7Kvr54484B/XBFnf9/Nz9FSQjS1TfX42NvuFukeE63hi+xe3jV
-	57ZpAfwnlzSykICZjFL1svBqOv5GqPB4fM9tr/u5OMFy3yHR/mFuhxXK9HmzXDlS4Rik1MA55my
-	RC49MfRA9YZm33vYQjCzA9Z8+jgeKbLnm0z3w0AeBIbJO+GkwkeWoLX6Spm9q5/+JT7WTbdkZ/N
-	twUELksSutBI/7dXuNjYRe0JR94+F8siCxt/iLGVLiInYt2m9BEIjB5Ia569Ac+I1aj5yWGhLLn
-	gBxkLC1qxkBAMZrEVrUbCCf0KPRMmn5BWDH0jPa5xTRhF6GkAWlfJ+Zi/fISb2CzWbri1ewPWhx
-	ZVptP+UrxEkrXKtoq7XzDVsdMT6ZGKvmE2oZF7qu45ojiGL6otwigL
-X-Received: by 2002:a17:902:db07:b0:2b4:5b82:a8e3 with SMTP id d9443c01a7336-2beb0631a36mr172186075ad.24.1779729823247;
-        Mon, 25 May 2026 10:23:43 -0700 (PDT)
-Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:1b1d:c3c0:6d07:6b5f])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb56ce43bsm95569185ad.28.2026.05.25.10.23.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2026 10:23:42 -0700 (PDT)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	yphbchou0911@gmail.com
-Subject: [PATCH sched_ext/for-7.1-fixes] sched_ext: idle: Fix errno loss in scx_idle_init()
-Date: Tue, 26 May 2026 01:22:31 +0800
-Message-ID: <20260525172315.156381-1-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SqGm8cye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1241F000E9;
+	Mon, 25 May 2026 19:54:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779738865;
+	bh=dii3jeukr9ExIOwor2LDBx6O9OEuTAMnAAZyBHgb1+k=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=SqGm8cyerm1SAKBPfWzdO911EPlHOkLgLQxNL2YxIKlaa2m0/wIkdLGaWuQk+uw3A
+	 G0G816Zc+XLJqqK1siV/8whKehjGCchy2oHMQybI8D6VxAGgQVAUZ+vcgQRLeAYQye
+	 dWwIkfUAttGN+Wsn0GfAh/zvhzjAP/ItOgIemH25wTluWa6DsZan0Y76olOHNS5Sr4
+	 1O6OhHpe8Tujbolu0VpDx2Iq0Hz5cjSu60j0wNILiZ92QyrouncjKvYvJS4zM4WeC8
+	 xq9487/+ZwKDyziuUXNXpYKOVQwNYYTPa2ufLfi6pMzaq7gRCTDprZ0o9epjoJI8jG
+	 zQZEOSY357XFw==
+Date: Mon, 25 May 2026 09:54:24 -1000
+Message-ID: <240ca6a938e38d2af591f09a721d6e9f@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, Alexei Starovoitov <ast@kernel.org>,
+ Andrii Nakryiko <andrii@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>,
+ Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>,
+ Mike Rapoport <rppt@kernel.org>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, bpf@vger.kernel.org, x86@kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, Tejun Heo <tj@kernel.org>
+Subject: Re: [PATCHSET v4 sched_ext/for-7.2] bpf/arena: Direct kernel-side
+ access
+In-Reply-To: <20260522172219.1423324-1-tj@kernel.org>
+References: <20260522172219.1423324-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-|| is a boolean operator, any nonzero (error) return short-circuits
-to 1 rather than the actual errno. The caller in scx_init() logs and
-propagates this value, so the wrong code reaches upper layers.
+Hello,
 
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
-scx_cid_kfunc_init() in ext_cid.c already uses the correct pattern. 
+Patches 1-5 went through bpf-next and are pulled into sched_ext/for-7.2.
+Applied 6-8 to for-7.2.
 
- kernel/sched/ext_idle.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+Thanks.
 
-diff --git a/kernel/sched/ext_idle.c b/kernel/sched/ext_idle.c
-index bbb845f36a0a..6ff80722f645 100644
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -1509,13 +1509,9 @@ static const struct btf_kfunc_id_set scx_kfunc_set_select_cpu = {
- 
- int scx_idle_init(void)
- {
--	int ret;
--
--	ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_idle) ||
--	      register_btf_kfunc_id_set(BPF_PROG_TYPE_TRACING, &scx_kfunc_set_idle) ||
--	      register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL, &scx_kfunc_set_idle) ||
--	      register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_select_cpu) ||
--	      register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL, &scx_kfunc_set_select_cpu);
--
--	return ret;
-+	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_idle) ?:
-+	       register_btf_kfunc_id_set(BPF_PROG_TYPE_TRACING, &scx_kfunc_set_idle) ?:
-+	       register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL, &scx_kfunc_set_idle) ?:
-+	       register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_select_cpu) ?:
-+	       register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL, &scx_kfunc_set_select_cpu);
- }
 -- 
-2.48.1
-
+tejun
