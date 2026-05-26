@@ -1,137 +1,365 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23E23CFF72
-	for <sched-ext@lists.linux.dev>; Tue, 26 May 2026 09:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C092A155C82;
+	Tue, 26 May 2026 12:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779787349; cv=none; b=f8TDry8mCB7EGc5zbsMxU68OBg0NEfJg6glXYGyJQcLhFhjREjLA86B+XHOqpqFqLBobrZ860OhaqMpi83SvjLhpsGUahQ/4zouHsWP2mHHSBQEB8Zva3QbhoAVsh7sF87oYazSqIDWzY7GVZkVvXuJN3z8RkJVTKacce5wN7I8=
+	t=1779799535; cv=none; b=T6RB2E50Mh/er0XoSn1kPK7Rg4z2m/CrnEeplxG2yWZDT90h93uzqjcgvo5BOrKC/CRJ971a7JJg9fqj1KknYbhr0AmFr/HhG0PE6KUDPRlnx3eoE5fffOCpng6VndMg3XWCmPCfQNV1Nly09aDdxqke7+D7fVoFM9Utghujh20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779787349; c=relaxed/simple;
-	bh=NEvkckh490Yo02xMjylUw4jsTJqU10w0awqPyTb05Jo=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iBCDvjPrblHDAtre7PjXERB/I/U/Uhnm9cBE5YtzH99j8Mc9GgqQkGrYo6juWZ4z/JxDMgZAr22cc4HJrP2CZ2bT20KwnGcYRpVe5QafRYOVCZTfOwTE+6uAHzZlNo2EQKS4plKNomIBakcQKBfNRAlDmS2P8sm9NUEpvyz58Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AJLtVm8p; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779799535; c=relaxed/simple;
+	bh=3hvHVVE6/Pg1LacAPceqgczetzfzG5ZAqzzGtPibWRs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Xh3MC3YtQeh0dWdu+WBsxQgI8vPlD9a9LWEOaO1nVG+yTcOV/fgZqLUlIIhFTe6B2d5PrkImrpM8LnOL91wtgcOqjqqsSZ/XpSgiN6fc+/WGO9vAYAYlK/3z/tBnrDDskg4r6lwPQHjZIZxVKd/wKWf5vQT64VQaIdf82iQ4eDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLFTsAWM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AJLtVm8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6891F00A3A;
-	Tue, 26 May 2026 09:22:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLFTsAWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16F81F000E9;
+	Tue, 26 May 2026 12:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779787348;
-	bh=DwrFCW3rfZvAKdTRALvJM7AX59EUMJ5cDqYSW9cDRBU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=AJLtVm8pp7Hmmba8N6WOXgV3SSrjBx6+4BFaPDSQZ777JP0OdPHzpcFGzKsTtCYfC
-	 9xYlPgK2up9CmgbnY6NAIQVfegdwTEkPvHNLMDNiiZiugLmiWIYq9hMUui2G4Z7aIr
-	 8yKpVNzwM+ekTenorX1JsPtXekpmrQA94Mfwfk4aAPeZcC4izjqagIKC4n8nH0rjly
-	 qhwkuZhfMa+6764fNBRkgeGqtmC46W/fztIx9ELXHfoXjHzQqHhCULhEvaadZs3IPs
-	 2q3h9ASmfa2G8NVkuYgiy3x7BHQ78O94UjrMSYr6Z00xM+umphIr8jAPIBEdAjNTxA
-	 fPMHGK9oAZang==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Auto-register/unregister dl_server
- reservations
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andrea Righi" <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260526082954.550958-2-arighi@nvidia.com>
-References: <20260526082954.550958-2-arighi@nvidia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 26 May 2026 09:22:27 +0000
-Message-Id: <20260526092228.3B6891F00A3A@smtp.kernel.org>
+	s=k20260515; t=1779799533;
+	bh=QzlfLKei3OF/tSTWl5q71VoQJ0uXecHs8Dxb+dYN9G4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=NLFTsAWMim8BkpWfM13Ly59xEKPU0Gh340MP2ykVv6v7CucDM8RMVDkl0RU8kOWv5
+	 ZgUwwfWA6Y0O3Bv52yc6C4UCN8Gdpv+sY73hXVMF5IgxzOyV7DHN0ywB0iBh1B5ZUr
+	 sNc2S2C9x5k2lf+3OkuU1WufuYGwUvX/rfOOnQk5UGAtzhozONeCKBkr1rYaWbRIpH
+	 w+1VCdz9YrDSKNgjzqz5Ja8ZI06r5AvQU0oAZl8JvkGm065SjZ/ZzTxUfO+DJUk781
+	 CzaEjH5dLhj6ywN0EpBCKC7xAZ5vAHQ9Kxox4/Co/pSSg3/XNbJtrRRP14CY790KzX
+	 MD8kcSakTORtA==
+Message-ID: <7fd673df-22f3-4d70-a779-ea0b878188b3@kernel.org>
+Date: Tue, 26 May 2026 14:45:25 +0200
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] bpf: Recover arena kernel faults with scratch page
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
+ Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>,
+ Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Mike Rapoport <rppt@kernel.org>,
+ Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+ bpf@vger.kernel.org, x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org
+References: <20260522172219.1423324-1-tj@kernel.org>
+ <20260522172219.1423324-3-tj@kernel.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260522172219.1423324-3-tj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-
-New issues:
-- [High] Bypassing the overflow check for detached deadline servers allows =
-configuring an arbitrarily large bandwidth for offline CPUs, breaking root =
-domain admission control upon hotplug.
-
-Pre-existing issues:
-- [High] Modifying a deadline server's bandwidth via debugfs for an offline=
- CPU causes division-by-zero crashes.
---
-
-commit e4e3b446a7561269980e46cfd4aec61572b0cae1
-Author: Andrea Righi <arighi@nvidia.com>
-
-sched_ext: Auto-register/unregister dl_server reservations
-
-This commit makes deadline server bandwidth reservations dynamic by
-introducing an attached/detached state. It ensures that only the currently
-active scheduling policy registers its bandwidth reservation, allowing unus=
-ed
-bandwidth to be reclaimed without losing the configured runtime and period.
-
-> diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-> index ddfd6bc63ab1d..8de5f182fd659 100644
-> --- a/kernel/sched/deadline.c
-> +++ b/kernel/sched/deadline.c
-
-[ ... ]
-
-> @@ -1907,13 +1918,16 @@ int dl_server_apply_params(struct sched_dl_entity=
- *dl_se, u64 runtime, u64 perio
->  	cpus =3D dl_bw_cpus(cpu);
->  	cap =3D dl_bw_capacity(cpu);
-> =20
-> -	if (__dl_overflow(dl_b, cap, old_bw, new_bw))
-> -		return -EBUSY;
-> +	if (init || dl_se->dl_bw_attached) {
-> +		if (__dl_overflow(dl_b, cap, old_bw, new_bw))
-> +			return -EBUSY;
+On 5/22/26 19:22, Tejun Heo wrote:
+> From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> 
+> BPF arena usage is becoming more prevalent, but kernel <-> BPF communication
+> over arena memory is awkward today. Data has to be staged through a trusted
+> kernel pointer with extra code and copying on the BPF side. While reads
+> through arena pointers can use a fault-safe helper, writes don't have a good
+> solution. The in-line alternative would need instruction emulation or asm
+> fixup labels.
+> 
+> Enable direct kernel-side reads and writes within GUARD_SZ / 2 of any
+> handed-in arena pointer, without bounds checking. A per-arena scratch page
+> is installed by the arch fault path into empty arena kernel PTEs - x86 from
+> page_fault_oops() for not-present faults, arm64 from __do_kernel_fault() for
+> translation faults, both after the existing exception-table and KFENCE
+> handling. The faulting instruction retries and the access is also reported
+> through the program's BPF stream, preserving error reporting.
+> 
+> bpf_prog_find_from_stack() resolves the current BPF program (and its arena)
+> from the kernel stack - no new bpf_run_ctx state is added. Recovery covers
+> the 4 GiB arena plus the upper half-guard (GUARD_SZ / 2). The lower
+> half-guard is excluded because well-behaved kfuncs only access forward from
+> arena pointers. The kfunc-author contract - access at most GUARD_SZ / 2 past
+> a handed-in pointer - is documented in Documentation/bpf/kfuncs.rst.
+> 
+> The install is lock-free via ptep_try_set(). On race-loss the winning
+> installer's PTE is already valid, so the access retry succeeds. The arena
+> clear path uses ptep_get_and_clear() so installer and clearer race through
+> atomic accessors. No flush_tlb_kernel_range() afterwards. Stale "not mapped"
+> entries just cause one extra re-fault, cheaper than a global IPI on every
+> install.
+> 
+> Scratch exists only to keep the kernel from oopsing on an in-line arena
+> access. Its presence at a PTE means the BPF program has already
+> malfunctioned, and the violation is reported through the program's BPF
+> stream. The only requirement for behavior on a scratched PTE is that the
+> kernel doesn't crash. In particular, any user-side access through such a PTE
+> may segfault. The shared scratch page is freed once during map destruction.
+> 
+> BPF instruction faults continue to use the existing JIT exception-table
+> path. This patch changes only the kernel-text fault path. No UAPI flag is
+> added. The new behavior is the default.
+> 
+> v2: Use ptep_get_and_clear() in apply_range_clear_cb(). (David)
+> v3: Stub bpf_arena_handle_page_fault() for !CONFIG_BPF_SYSCALL. (lkp)
+> 
+> Suggested-by: Alexei Starovoitov <ast@kernel.org>
+> Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+> Cc: David Hildenbrand <david@kernel.org>
+> ---
+>  Documentation/bpf/kfuncs.rst |  14 +++
+>  arch/arm64/mm/fault.c        |  10 +-
+>  arch/x86/mm/fault.c          |  12 ++-
+>  include/linux/bpf.h          |   1 +
+>  include/linux/bpf_defs.h     |  19 ++++
+>  kernel/bpf/arena.c           | 177 +++++++++++++++++++++++++++--------
+>  kernel/bpf/core.c            |   5 +
+>  7 files changed, 191 insertions(+), 47 deletions(-)
+>  create mode 100644 include/linux/bpf_defs.h
+> 
+> diff --git a/Documentation/bpf/kfuncs.rst b/Documentation/bpf/kfuncs.rst
+> index 75e6c078e0e7..6d497e720998 100644
+> --- a/Documentation/bpf/kfuncs.rst
+> +++ b/Documentation/bpf/kfuncs.rst
+> @@ -462,6 +462,20 @@ In order to accommodate such requirements, the verifier will enforce strict
+>  PTR_TO_BTF_ID type matching if two types have the exact same name, with one
+>  being suffixed with ``___init``.
+>  
+> +2.8 Accessing arena memory through kfunc arguments
+> +--------------------------------------------------
+> +
+> +A read or write at any address inside an arena does not oops the kernel.
+> +Unallocated arena pages are lazily backed by a scratch page and the
+> +access is reported through the program's BPF stream as an error. Only
+> +the BPF program's correctness is affected; the kernel itself remains
+> +intact.
+> +
+> +The arena is followed by a ``GUARD_SZ / 2`` (32 KiB) guard region that
+> +is also covered by this recovery. A kfunc handed an arena pointer may
+> +therefore access up to ``GUARD_SZ / 2`` past it without bounds-checking
+> +against the arena. Larger accesses must verify the range explicitly.
+> +
+>  .. _BPF_kfunc_lifecycle_expectations:
+>  
+>  3. kfunc lifecycle expectations
+> diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+> index 920a8b244d59..0d58d667fcd8 100644
+> --- a/arch/arm64/mm/fault.c
+> +++ b/arch/arm64/mm/fault.c
+> @@ -9,6 +9,7 @@
+>  
+>  #include <linux/acpi.h>
+>  #include <linux/bitfield.h>
+> +#include <linux/bpf_defs.h>
+>  #include <linux/extable.h>
+>  #include <linux/kfence.h>
+>  #include <linux/signal.h>
+> @@ -416,9 +417,12 @@ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
+>  	} else if (addr < PAGE_SIZE) {
+>  		msg = "NULL pointer dereference";
+>  	} else {
+> -		if (esr_fsc_is_translation_fault(esr) &&
+> -		    kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
+> -			return;
+> +		if (esr_fsc_is_translation_fault(esr)) {
+> +			if (kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
+> +				return;
+> +			if (bpf_arena_handle_page_fault(addr, esr & ESR_ELx_WNR, regs->pc))
+> +				return;
+> +		}
+>  
+>  		msg = "paging request";
+>  	}
+> diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+> index f0e77e084482..b0f103ddbd23 100644
+> --- a/arch/x86/mm/fault.c
+> +++ b/arch/x86/mm/fault.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/sched/task_stack.h>	/* task_stack_*(), ...		*/
+>  #include <linux/kdebug.h>		/* oops_begin/end, ...		*/
+>  #include <linux/memblock.h>		/* max_low_pfn			*/
+> +#include <linux/bpf_defs.h>		/* bpf_arena_handle_page_fault	*/
+>  #include <linux/kfence.h>		/* kfence_handle_page_fault	*/
+>  #include <linux/kprobes.h>		/* NOKPROBE_SYMBOL, ...		*/
+>  #include <linux/mmiotrace.h>		/* kmmio_handler, ...		*/
+> @@ -688,10 +689,13 @@ page_fault_oops(struct pt_regs *regs, unsigned long error_code,
+>  	if (IS_ENABLED(CONFIG_EFI))
+>  		efi_crash_gracefully_on_page_fault(address);
+>  
+> -	/* Only not-present faults should be handled by KFENCE. */
+> -	if (!(error_code & X86_PF_PROT) &&
+> -	    kfence_handle_page_fault(address, error_code & X86_PF_WRITE, regs))
+> -		return;
+> +	/* Only not-present faults should be handled by KFENCE or BPF arena. */
+> +	if (!(error_code & X86_PF_PROT)) {
+> +		if (kfence_handle_page_fault(address, error_code & X86_PF_WRITE, regs))
+> +			return;
+> +		if (bpf_arena_handle_page_fault(address, error_code & X86_PF_WRITE, regs->ip))
+> +			return;
 > +	}
+>  
+>  oops:
+>  	/*
+> diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+> index 0136a108d083..831996c411cf 100644
+> --- a/include/linux/bpf.h
+> +++ b/include/linux/bpf.h
+> @@ -6,6 +6,7 @@
+>  
+>  #include <uapi/linux/bpf.h>
+>  #include <uapi/linux/filter.h>
+> +#include <linux/bpf_defs.h>
+>  
+>  #include <crypto/sha2.h>
+>  #include <linux/workqueue.h>
+> diff --git a/include/linux/bpf_defs.h b/include/linux/bpf_defs.h
+> new file mode 100644
+> index 000000000000..2185cd3966d4
+> --- /dev/null
+> +++ b/include/linux/bpf_defs.h
+> @@ -0,0 +1,19 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * Subset of bpf.h declarations, split out so files that need only these
+> + * declarations can avoid bpf.h's full include cost.
+> + */
+> +#ifndef _LINUX_BPF_DEFS_H
+> +#define _LINUX_BPF_DEFS_H
+> +
+> +#ifdef CONFIG_BPF_SYSCALL
+> +bool bpf_arena_handle_page_fault(unsigned long addr, bool is_write, unsigned long fault_ip);
+> +#else
+> +static inline bool bpf_arena_handle_page_fault(unsigned long addr, bool is_write,
+> +					       unsigned long fault_ip)
+> +{
+> +	return false;
+> +}
+> +#endif
+> +
+> +#endif /* _LINUX_BPF_DEFS_H */
+> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+> index 08d008cc471e..1c0b87ecc817 100644
+> --- a/kernel/bpf/arena.c
+> +++ b/kernel/bpf/arena.c
+> @@ -53,6 +53,7 @@ struct bpf_arena {
+>  	u64 user_vm_start;
+>  	u64 user_vm_end;
+>  	struct vm_struct *kern_vm;
+> +	struct page *scratch_page;
+>  	struct range_tree rt;
+>  	/* protects rt */
+>  	rqspinlock_t spinlock;
+> @@ -118,6 +119,11 @@ struct apply_range_data {
+>  	int i;
+>  };
+>  
+> +struct clear_range_data {
+> +	struct llist_head *free_pages;
+> +	struct page *scratch_page;
+> +};
+> +
+>  static int apply_range_set_cb(pte_t *pte, unsigned long addr, void *data)
+>  {
+>  	struct apply_range_data *d = data;
+> @@ -144,33 +150,59 @@ static void flush_vmap_cache(unsigned long start, unsigned long size)
+>  	flush_cache_vmap(start, start + size);
+>  }
 
-[Severity: High]
-Does bypassing the overflow check for detached servers allow configuring an
-invalid bandwidth?
+There is still the chance that apply_range_set_cb() could race with scratch
+insertion, right?
 
-If userspace configures a massive bandwidth for an offline CPU while the
-server is detached, the overflow check is skipped. Later, when the BPF
-scheduler is loaded, scx_root_enable_workfn() calls dl_server_attach_bw()
-for all possible CPUs. For the offline CPU, __dl_server_attach_bw_locked()
-skips its own overflow check since the CPU is not active, but it still sets
-dl_bw_attached =3D 1.
+Shouldn't we also be using ptep_try_set() there?
 
-When that CPU is later brought online, the hotplug rebuild path calls
-dl_server_add_bw(), which unconditionally adds the unvalidated bandwidth to
-the root domain's total_bw since dl_bw_attached is now true. Could this
-force the root domain into a permanently overcommitted state and break
-SCHED_DEADLINE admission control?
+The nasty thing is handling whether ptep_try_set() actually works.
 
-> =20
->  	if (init) {
->  		__add_rq_bw(new_bw, &rq->dl);
->  		__dl_add(dl_b, new_bw, cpus);
-> -	} else {
-> +		dl_se->dl_bw_attached =3D 1;
-> +	} else if (dl_se->dl_bw_attached) {
->  		__dl_sub(dl_b, dl_se->dl_bw, cpus);
->  		__dl_add(dl_b, new_bw, cpus);
+Something like the following on top, maybe?
 
-[Severity: High]
-This isn't a bug introduced by this patch, but can modifying an attached
-server's bandwidth on an offline CPU cause a division by zero?
 
-When a CPU is offline, it belongs to a root domain with zero active CPUs, so
-dl_bw_cpus() returns 0. If a user modifies the runtime/period via debugfs
-for an offline CPU with an attached server, we reach this update path.
+diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+index 49a8f7b1beef5..086bea3f3698e 100644
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -122,19 +122,27 @@ static int apply_range_set_cb(pte_t *pte, unsigned long
+addr, void *data)
+ {
+        struct apply_range_data *d = data;
+        struct page *page;
++       pte_t pteval;
 
-Both __dl_sub() and __dl_add() divide by cpus internally:
+        if (!data)
+                return 0;
+-       /* sanity check */
+-       if (unlikely(!pte_none(ptep_get(pte))))
+-               return -EBUSY;
 
-kernel/sched/deadline.c:__dl_sub() {
-    ...
-    __dl_update(dl_b, (s32)tsk_bw / cpus);
-}
+        page = d->pages[d->i];
+        /* paranoia, similar to vmap_pages_pte_range() */
+        if (WARN_ON_ONCE(!pfn_valid(page_to_pfn(page))))
+                return -EINVAL;
 
-Since cpus is 0, will this trigger a kernel panic and allow a local denial
-of service?
+-       set_pte_at(&init_mm, addr, pte, mk_pte(page, PAGE_KERNEL));
++       pteval = mk_pte(page, PAGE_KERNEL);
++#ifdef ptep_try_set
++       if (unlikely(!ptep_try_set(pte, pteval)))
++               return -EBUSY;
++#else
++       if (unlikely(!pte_none(ptep_get(pte))))
++               return -EBUSY;
++
++       set_pte_at(&init_mm, addr, pte, pteval);
++#endif
+        d->i++;
+        return 0;
+ }
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260526082954.5509=
-58-1-arighi@nvidia.com?part=3D1
+-- 
+Cheers,
+
+David
