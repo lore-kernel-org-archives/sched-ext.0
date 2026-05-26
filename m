@@ -1,365 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C092A155C82;
-	Tue, 26 May 2026 12:45:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BABE3FDBEA
+	for <sched-ext@lists.linux.dev>; Tue, 26 May 2026 13:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779799535; cv=none; b=T6RB2E50Mh/er0XoSn1kPK7Rg4z2m/CrnEeplxG2yWZDT90h93uzqjcgvo5BOrKC/CRJ971a7JJg9fqj1KknYbhr0AmFr/HhG0PE6KUDPRlnx3eoE5fffOCpng6VndMg3XWCmPCfQNV1Nly09aDdxqke7+D7fVoFM9Utghujh20=
+	t=1779803495; cv=none; b=KUkjhATB9lblgmPkFNdgVwf0GwcJUgIfZEjr2AuhyR7A7tpHKpFYE7s89G3H9q0W7Bfb+Miqr9fk40w479MdRA2jg0VXVUJLHEIF+C49qe4sAb93Ock6iiEoDIwjMtQkKLsv8G0rZdpcF7RN3+npI6yyJeqdmgB2OSrt5YyKYg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779799535; c=relaxed/simple;
-	bh=3hvHVVE6/Pg1LacAPceqgczetzfzG5ZAqzzGtPibWRs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xh3MC3YtQeh0dWdu+WBsxQgI8vPlD9a9LWEOaO1nVG+yTcOV/fgZqLUlIIhFTe6B2d5PrkImrpM8LnOL91wtgcOqjqqsSZ/XpSgiN6fc+/WGO9vAYAYlK/3z/tBnrDDskg4r6lwPQHjZIZxVKd/wKWf5vQT64VQaIdf82iQ4eDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLFTsAWM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779803495; c=relaxed/simple;
+	bh=g3XL6UHQ5X/eraQCFiYaUWLICWC+349yDBHJ+dUy8ik=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=byTbnec2LvaML1qYmYJB7l6UC7TIqWWL65kSXYjMom5aJhddcFhXkXrb0I91xlOzYBg9FHd50ez6WrWpccqFtAeGm07GlIxUIrBX1DWVRWaNHNEswAPAH5/WWbRLlF2nuHj34iFM01ri6CgzblbOLMaX5ayujMlJemos5YqY0P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LMZv/7iz; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLFTsAWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16F81F000E9;
-	Tue, 26 May 2026 12:45:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779799533;
-	bh=QzlfLKei3OF/tSTWl5q71VoQJ0uXecHs8Dxb+dYN9G4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=NLFTsAWMim8BkpWfM13Ly59xEKPU0Gh340MP2ykVv6v7CucDM8RMVDkl0RU8kOWv5
-	 ZgUwwfWA6Y0O3Bv52yc6C4UCN8Gdpv+sY73hXVMF5IgxzOyV7DHN0ywB0iBh1B5ZUr
-	 sNc2S2C9x5k2lf+3OkuU1WufuYGwUvX/rfOOnQk5UGAtzhozONeCKBkr1rYaWbRIpH
-	 w+1VCdz9YrDSKNgjzqz5Ja8ZI06r5AvQU0oAZl8JvkGm065SjZ/ZzTxUfO+DJUk781
-	 CzaEjH5dLhj6ywN0EpBCKC7xAZ5vAHQ9Kxox4/Co/pSSg3/XNbJtrRRP14CY790KzX
-	 MD8kcSakTORtA==
-Message-ID: <7fd673df-22f3-4d70-a779-ea0b878188b3@kernel.org>
-Date: Tue, 26 May 2026 14:45:25 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LMZv/7iz"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-836ed29d1e5so4676116b3a.2
+        for <sched-ext@lists.linux.dev>; Tue, 26 May 2026 06:51:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779803493; x=1780408293; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vwSbnjkxGnXGaLUaGKOC4vnl3KT7tW87Ya/uzx+HPaI=;
+        b=LMZv/7iz7iabdYPSBpwYaiy5pge6e9yOMfe67/Cm6BP1QiCNct1+BbFO+FtqisglIP
+         yk1TUHn7usKkICz74hNRSmZWEytslcqVbpD7e7lQfNlsraGCm7ficAGURVY1WvSu6+Le
+         fu7KlxwTygtLfYyBfWSWHoSjFnZD+UrTuuDpziqdRGg6+rKhOBiBOm/NnogtnW+4MM/h
+         NAHWm0med6vBsJgSGsf4e+WK/g8RotQuel/QPFBsSGXFMmSVaWkMU5WLYIp6Pt9qfSmd
+         s27FT6Io2bcYVktuRT8e00ii1mxdbY27/jC+hT3BYHg9hk5R9G6yX5SQi1Nnx+2heexV
+         A3sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779803493; x=1780408293;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vwSbnjkxGnXGaLUaGKOC4vnl3KT7tW87Ya/uzx+HPaI=;
+        b=TQNd/M+0pZD1Hqgz2r9jIXCP/00tWdu0gtFIs5OurOq7Lhvnulk+YjgakSigQS6+zO
+         CXUGF0/OChgieBOv1R9fwOi46fQEB025mNBTtXBEck0YtSRaqQteQ0+pikFpsACcz9GL
+         RglFrIeMpX6jEdflheBTYve5CIYbLWtoZDlb1t7SEWOB3CwBN0C6vQiPt+8K4PLRZxGU
+         xt9+5FmWBmV5MtK0zyzOHn4Ej+OaXDuvvdozAR1KfRBP052KIkrS44+OaJILM16tFReC
+         0SBJTGPVYH6QVKnGf2xs+Ocsl4yD6chIAkgC4EN2ozyc2mLjztkdXqQvMBXKHhKRYYHR
+         /+5w==
+X-Forwarded-Encrypted: i=1; AFNElJ8KMmRaJBfR8RtijrSY9yTkNBsePQIxDd5OK6P73sxp+AFNwgV0g6beRbnjpRV1gkOqihTVUdnAB8w=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzIL3P/b6p1346L6Q/Zm/I0Hn5/78hTjhJPH/I+JlyPQo65KKtF
+	9M646Co1Iep3co5zOhiwMfM8oG7/p2+qdnf4792GjrtMofnZHNEGfSai
+X-Gm-Gg: Acq92OE0Fjr3kxp05YWvK8lFRjubmn8hE1fdyF06UG/qiX2PIdTItCi/DmRQiqm9i9N
+	Hy26NXZYwtdkpbGOXY+PgJMbiptLAiTPf4InZE2WhCS4q83PyMHhU4xkfxqSwvtMKtpKLrI+Rms
+	pBHBRole/cu4MBmR9rH6KC2q8bDmcVxuc0JkPlBpAiStBsp9ROa1ph2rvy3TLUKbNqWJFn3lE/L
+	Zc9eNspc9mLclHXcvtChtUM7kLy4yTwzAX1tRVj2ngJTc/hIoG4rsjdX1KBhhDHL39R5je4gsKE
+	vCL98sqwiMIhvs+w+pz7dnWR25qQomZ90oDBqqU+o2jddZ30P4RDovEZ6Ja0feWt5VJC05fu920
+	JJUpQSX2JSRm0hbAU0QValNOEK1LjLqFEnYCl3aOT2UDi1s4tqT9VuqgED0cLaCDAWDFPLPRygn
+	sk9hMk9Issw28xghJePbcex3qGFXNDvcOxm+rw/3sW+8NtlJY=
+X-Received: by 2002:a05:6a00:908b:b0:83d:446c:2a8c with SMTP id d2e1a72fcca58-8415f406c9amr18309716b3a.25.1779803493442;
+        Tue, 26 May 2026 06:51:33 -0700 (PDT)
+Received: from DESKTOP-QGNVECK.localdomain ([139.159.170.72])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84164fb3083sm12523110b3a.43.2026.05.26.06.51.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 May 2026 06:51:32 -0700 (PDT)
+From: Zicheng Qu <quzicheng315@gmail.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	enjuk@amazon.com,
+	emil@etsalapatis.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Cc: tanghui20@huawei.com,
+	zhangqiao22@huawei.com,
+	quzicheng@huawei.com,
+	quzicheng315@gmail.com
+Subject: [PATCH] tools/sched_ext: Fix scx_show_state per-scheduler state reads
+Date: Tue, 26 May 2026 21:51:23 +0800
+Message-ID: <20260526135123.1892092-1-quzicheng315@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] bpf: Recover arena kernel faults with scratch page
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
- Alexei Starovoitov <ast@kernel.org>, Andrii Nakryiko <andrii@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Martin KaFai Lau <martin.lau@linux.dev>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
- Andrew Morton <akpm@linux-foundation.org>, Mike Rapoport <rppt@kernel.org>,
- Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
- bpf@vger.kernel.org, x86@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org
-References: <20260522172219.1423324-1-tj@kernel.org>
- <20260522172219.1423324-3-tj@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20260522172219.1423324-3-tj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 5/22/26 19:22, Tejun Heo wrote:
-> From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-> 
-> BPF arena usage is becoming more prevalent, but kernel <-> BPF communication
-> over arena memory is awkward today. Data has to be staged through a trusted
-> kernel pointer with extra code and copying on the BPF side. While reads
-> through arena pointers can use a fault-safe helper, writes don't have a good
-> solution. The in-line alternative would need instruction emulation or asm
-> fixup labels.
-> 
-> Enable direct kernel-side reads and writes within GUARD_SZ / 2 of any
-> handed-in arena pointer, without bounds checking. A per-arena scratch page
-> is installed by the arch fault path into empty arena kernel PTEs - x86 from
-> page_fault_oops() for not-present faults, arm64 from __do_kernel_fault() for
-> translation faults, both after the existing exception-table and KFENCE
-> handling. The faulting instruction retries and the access is also reported
-> through the program's BPF stream, preserving error reporting.
-> 
-> bpf_prog_find_from_stack() resolves the current BPF program (and its arena)
-> from the kernel stack - no new bpf_run_ctx state is added. Recovery covers
-> the 4 GiB arena plus the upper half-guard (GUARD_SZ / 2). The lower
-> half-guard is excluded because well-behaved kfuncs only access forward from
-> arena pointers. The kfunc-author contract - access at most GUARD_SZ / 2 past
-> a handed-in pointer - is documented in Documentation/bpf/kfuncs.rst.
-> 
-> The install is lock-free via ptep_try_set(). On race-loss the winning
-> installer's PTE is already valid, so the access retry succeeds. The arena
-> clear path uses ptep_get_and_clear() so installer and clearer race through
-> atomic accessors. No flush_tlb_kernel_range() afterwards. Stale "not mapped"
-> entries just cause one extra re-fault, cheaper than a global IPI on every
-> install.
-> 
-> Scratch exists only to keep the kernel from oopsing on an in-line arena
-> access. Its presence at a PTE means the BPF program has already
-> malfunctioned, and the violation is reported through the program's BPF
-> stream. The only requirement for behavior on a scratched PTE is that the
-> kernel doesn't crash. In particular, any user-side access through such a PTE
-> may segfault. The shared scratch page is freed once during map destruction.
-> 
-> BPF instruction faults continue to use the existing JIT exception-table
-> path. This patch changes only the kernel-text fault path. No UAPI flag is
-> added. The new behavior is the default.
-> 
-> v2: Use ptep_get_and_clear() in apply_range_clear_cb(). (David)
-> v3: Stub bpf_arena_handle_page_fault() for !CONFIG_BPF_SYSCALL. (lkp)
-> 
-> Suggested-by: Alexei Starovoitov <ast@kernel.org>
-> Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-> Cc: David Hildenbrand <david@kernel.org>
-> ---
->  Documentation/bpf/kfuncs.rst |  14 +++
->  arch/arm64/mm/fault.c        |  10 +-
->  arch/x86/mm/fault.c          |  12 ++-
->  include/linux/bpf.h          |   1 +
->  include/linux/bpf_defs.h     |  19 ++++
->  kernel/bpf/arena.c           | 177 +++++++++++++++++++++++++++--------
->  kernel/bpf/core.c            |   5 +
->  7 files changed, 191 insertions(+), 47 deletions(-)
->  create mode 100644 include/linux/bpf_defs.h
-> 
-> diff --git a/Documentation/bpf/kfuncs.rst b/Documentation/bpf/kfuncs.rst
-> index 75e6c078e0e7..6d497e720998 100644
-> --- a/Documentation/bpf/kfuncs.rst
-> +++ b/Documentation/bpf/kfuncs.rst
-> @@ -462,6 +462,20 @@ In order to accommodate such requirements, the verifier will enforce strict
->  PTR_TO_BTF_ID type matching if two types have the exact same name, with one
->  being suffixed with ``___init``.
->  
-> +2.8 Accessing arena memory through kfunc arguments
-> +--------------------------------------------------
-> +
-> +A read or write at any address inside an arena does not oops the kernel.
-> +Unallocated arena pages are lazily backed by a scratch page and the
-> +access is reported through the program's BPF stream as an error. Only
-> +the BPF program's correctness is affected; the kernel itself remains
-> +intact.
-> +
-> +The arena is followed by a ``GUARD_SZ / 2`` (32 KiB) guard region that
-> +is also covered by this recovery. A kfunc handed an arena pointer may
-> +therefore access up to ``GUARD_SZ / 2`` past it without bounds-checking
-> +against the arena. Larger accesses must verify the range explicitly.
-> +
->  .. _BPF_kfunc_lifecycle_expectations:
->  
->  3. kfunc lifecycle expectations
-> diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-> index 920a8b244d59..0d58d667fcd8 100644
-> --- a/arch/arm64/mm/fault.c
-> +++ b/arch/arm64/mm/fault.c
-> @@ -9,6 +9,7 @@
->  
->  #include <linux/acpi.h>
->  #include <linux/bitfield.h>
-> +#include <linux/bpf_defs.h>
->  #include <linux/extable.h>
->  #include <linux/kfence.h>
->  #include <linux/signal.h>
-> @@ -416,9 +417,12 @@ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
->  	} else if (addr < PAGE_SIZE) {
->  		msg = "NULL pointer dereference";
->  	} else {
-> -		if (esr_fsc_is_translation_fault(esr) &&
-> -		    kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
-> -			return;
-> +		if (esr_fsc_is_translation_fault(esr)) {
-> +			if (kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
-> +				return;
-> +			if (bpf_arena_handle_page_fault(addr, esr & ESR_ELx_WNR, regs->pc))
-> +				return;
-> +		}
->  
->  		msg = "paging request";
->  	}
-> diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
-> index f0e77e084482..b0f103ddbd23 100644
-> --- a/arch/x86/mm/fault.c
-> +++ b/arch/x86/mm/fault.c
-> @@ -8,6 +8,7 @@
->  #include <linux/sched/task_stack.h>	/* task_stack_*(), ...		*/
->  #include <linux/kdebug.h>		/* oops_begin/end, ...		*/
->  #include <linux/memblock.h>		/* max_low_pfn			*/
-> +#include <linux/bpf_defs.h>		/* bpf_arena_handle_page_fault	*/
->  #include <linux/kfence.h>		/* kfence_handle_page_fault	*/
->  #include <linux/kprobes.h>		/* NOKPROBE_SYMBOL, ...		*/
->  #include <linux/mmiotrace.h>		/* kmmio_handler, ...		*/
-> @@ -688,10 +689,13 @@ page_fault_oops(struct pt_regs *regs, unsigned long error_code,
->  	if (IS_ENABLED(CONFIG_EFI))
->  		efi_crash_gracefully_on_page_fault(address);
->  
-> -	/* Only not-present faults should be handled by KFENCE. */
-> -	if (!(error_code & X86_PF_PROT) &&
-> -	    kfence_handle_page_fault(address, error_code & X86_PF_WRITE, regs))
-> -		return;
-> +	/* Only not-present faults should be handled by KFENCE or BPF arena. */
-> +	if (!(error_code & X86_PF_PROT)) {
-> +		if (kfence_handle_page_fault(address, error_code & X86_PF_WRITE, regs))
-> +			return;
-> +		if (bpf_arena_handle_page_fault(address, error_code & X86_PF_WRITE, regs->ip))
-> +			return;
-> +	}
->  
->  oops:
->  	/*
-> diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-> index 0136a108d083..831996c411cf 100644
-> --- a/include/linux/bpf.h
-> +++ b/include/linux/bpf.h
-> @@ -6,6 +6,7 @@
->  
->  #include <uapi/linux/bpf.h>
->  #include <uapi/linux/filter.h>
-> +#include <linux/bpf_defs.h>
->  
->  #include <crypto/sha2.h>
->  #include <linux/workqueue.h>
-> diff --git a/include/linux/bpf_defs.h b/include/linux/bpf_defs.h
-> new file mode 100644
-> index 000000000000..2185cd3966d4
-> --- /dev/null
-> +++ b/include/linux/bpf_defs.h
-> @@ -0,0 +1,19 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Subset of bpf.h declarations, split out so files that need only these
-> + * declarations can avoid bpf.h's full include cost.
-> + */
-> +#ifndef _LINUX_BPF_DEFS_H
-> +#define _LINUX_BPF_DEFS_H
-> +
-> +#ifdef CONFIG_BPF_SYSCALL
-> +bool bpf_arena_handle_page_fault(unsigned long addr, bool is_write, unsigned long fault_ip);
-> +#else
-> +static inline bool bpf_arena_handle_page_fault(unsigned long addr, bool is_write,
-> +					       unsigned long fault_ip)
-> +{
-> +	return false;
-> +}
-> +#endif
-> +
-> +#endif /* _LINUX_BPF_DEFS_H */
-> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-> index 08d008cc471e..1c0b87ecc817 100644
-> --- a/kernel/bpf/arena.c
-> +++ b/kernel/bpf/arena.c
-> @@ -53,6 +53,7 @@ struct bpf_arena {
->  	u64 user_vm_start;
->  	u64 user_vm_end;
->  	struct vm_struct *kern_vm;
-> +	struct page *scratch_page;
->  	struct range_tree rt;
->  	/* protects rt */
->  	rqspinlock_t spinlock;
-> @@ -118,6 +119,11 @@ struct apply_range_data {
->  	int i;
->  };
->  
-> +struct clear_range_data {
-> +	struct llist_head *free_pages;
-> +	struct page *scratch_page;
-> +};
-> +
->  static int apply_range_set_cb(pte_t *pte, unsigned long addr, void *data)
->  {
->  	struct apply_range_data *d = data;
-> @@ -144,33 +150,59 @@ static void flush_vmap_cache(unsigned long start, unsigned long size)
->  	flush_cache_vmap(start, start + size);
->  }
+From: Zicheng Qu <quzicheng@huawei.com>
 
-There is still the chance that apply_range_set_cb() could race with scratch
-insertion, right?
+scx_show_state.py still reads scx_aborting and scx_bypass_depth as
+global symbols. Those symbols no longer exist after the state was moved
+into struct scx_sched, so the drgn script fails when it reaches either
+field.
 
-Shouldn't we also be using ptep_try_set() there?
+Fixes: 5c8d98a1b4de ("sched_ext: Move bypass state into scx_sched")
+Fixes: c1743da43cf5 ("sched_ext: Move aborting flag to per-scheduler field")
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+---
+ tools/sched_ext/scx_show_state.py | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-The nasty thing is handling whether ptep_try_set() actually works.
-
-Something like the following on top, maybe?
-
-
-diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 49a8f7b1beef5..086bea3f3698e 100644
---- a/kernel/bpf/arena.c
-+++ b/kernel/bpf/arena.c
-@@ -122,19 +122,27 @@ static int apply_range_set_cb(pte_t *pte, unsigned long
-addr, void *data)
- {
-        struct apply_range_data *d = data;
-        struct page *page;
-+       pte_t pteval;
-
-        if (!data)
-                return 0;
--       /* sanity check */
--       if (unlikely(!pte_none(ptep_get(pte))))
--               return -EBUSY;
-
-        page = d->pages[d->i];
-        /* paranoia, similar to vmap_pages_pte_range() */
-        if (WARN_ON_ONCE(!pfn_valid(page_to_pfn(page))))
-                return -EINVAL;
-
--       set_pte_at(&init_mm, addr, pte, mk_pte(page, PAGE_KERNEL));
-+       pteval = mk_pte(page, PAGE_KERNEL);
-+#ifdef ptep_try_set
-+       if (unlikely(!ptep_try_set(pte, pteval)))
-+               return -EBUSY;
-+#else
-+       if (unlikely(!pte_none(ptep_get(pte))))
-+               return -EBUSY;
+diff --git a/tools/sched_ext/scx_show_state.py b/tools/sched_ext/scx_show_state.py
+index 02e43c184d43..446d82807f90 100644
+--- a/tools/sched_ext/scx_show_state.py
++++ b/tools/sched_ext/scx_show_state.py
+@@ -27,18 +27,25 @@ def read_static_key(name):
+ def state_str(state):
+     return prog['scx_enable_state_str'][state].string_().decode()
+ 
++def read_root_ops_name():
++    if root:
++        return root.ops.name.string_().decode()
++    return ''
 +
-+       set_pte_at(&init_mm, addr, pte, pteval);
-+#endif
-        d->i++;
-        return 0;
- }
-
++def read_root_field(name, default):
++    if root:
++        return getattr(root, name).value_()
++    return default
++
+ root = prog['scx_root']
+ enable_state = read_atomic("scx_enable_state_var")
+ 
+-if root:
+-    print(f'ops           : {root.ops.name.string_().decode()}')
+-else:
+-    print('ops           : ')
++print(f'ops           : {read_root_ops_name()}')
+ print(f'enabled       : {read_static_key("__scx_enabled")}')
+ print(f'switching_all : {read_int("scx_switching_all")}')
+ print(f'switched_all  : {read_static_key("__scx_switched_all")}')
+ print(f'enable_state  : {state_str(enable_state)} ({enable_state})')
+-print(f'aborting      : {prog["scx_aborting"].value_()}')
+-print(f'bypass_depth  : {prog["scx_bypass_depth"].value_()}')
++print(f'aborting      : {read_root_field("aborting", False)}')
++print(f'bypass_depth  : {read_root_field("bypass_depth", 0)}')
+ print(f'nr_rejected   : {read_atomic("scx_nr_rejected")}')
+ print(f'enable_seq    : {read_atomic("scx_enable_seq")}')
 -- 
-Cheers,
+2.43.0
 
-David
