@@ -1,47 +1,47 @@
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010042.outbound.protection.outlook.com [52.101.201.42])
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010031.outbound.protection.outlook.com [52.101.46.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCCD18B0F
-	for <sched-ext@lists.linux.dev>; Tue, 26 May 2026 08:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D38C34EF04
+	for <sched-ext@lists.linux.dev>; Tue, 26 May 2026 08:30:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.31
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779784221; cv=fail; b=sYywuRUjLrOrvKRbh146htqa60nbkOv7cj08yNAFjXEkDi5sGfkJaSqqK9y1S86Qfz3RiTrYBruT2Z/bhiobaE7Cx313onYPhbn36g3yGWADMqzvMatbC8sKIFQW02fEVdviDT2aI7IwSQ4OkYyIsqcL3RnEmJY+HT67NgbmEYI=
+	t=1779784227; cv=fail; b=hUI1k6UEUAgGYzquL3QCqqcUU/89pJWh6FpFnPpwrOFttxkarP+ULKUHks4CSs/ze5FIjZ+FXRPnmi+OzuIXmO+mAXIK6CWLqA/0UPl+72w8XllBW0YUnMtkAI3gUL+yOIghzqaLRAJvyvK6u4iu2/Lu0A0qRZivAVZ33iM0hlo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779784221; c=relaxed/simple;
-	bh=WmcvZCxNGTFireeB0PUlbcIf22eZt7oIXgR4CoJwVZs=;
+	s=arc-20240116; t=1779784227; c=relaxed/simple;
+	bh=M0XOWJO3n6fZIPlEmHtBTdztia/H2eG4KiLJbDnQnt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=uYwJO52wDsV7bjP+11FoK6/F0N6fYD8c9PHiF5gACeGjPvr1vbTAE9FB0JG+cVRJ6fxcFfDkyTV1mbx0MNImwYqz5a1p8V072SPunSXZfLsjLIxUu9Aaydoifph4T8RYSnaGAN3iI0g6d5e+rgcPr767IpQu0A3uw77Iho+NA30=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nSIM0ouL; arc=fail smtp.client-ip=52.101.201.42
+	 Content-Type:MIME-Version; b=cm6np09ei/aRUei8qhOjxz3BMeLDnRZXCHc7aSox/HD1mimCeHhLpnP70X/l2q2NmPtTMJNmz/gFoge97yRp6Os7sSzJSiSGdv4iKmqCh1xXytLS324rJHWsG1Z1jDQrLzB5w4xyRl/wE3sqfv9SiENOTZe8NFdMWhi6F+E6Wyg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ToaXmVfy; arc=fail smtp.client-ip=52.101.46.31
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nSIM0ouL"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ToaXmVfy"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=d6ePGf2xJKG7CQyLiaqDZcalu5GNir51v9CmTy24/4jRG5LI5BDIInnGqzxBToF3PoceBqiVN4oPKmq7bIcOsNYBpRvpZlvz2sp6xs3c10rAiioKxSf2lwDll0Io+zUNCGJZA6vdYyYpk63CEvO3WSqKnhi17onofO0vrl5KFCSw5HBoekfviuUzA8LN340eoI6XvZCxI3zJCXAHNdmSLPaF5dLvkj0zb5L+fTG4TH3b9RyXVjSV5ElgiIa2U0Cdy+9jSItjmatkhZcJ0bHwRdLxO3t+j+RlNHVB0oMFi2mWb61lsgzJFb5Bqvm0kBjWMbsMSyxfwOrhSBECZQWREg==
+ b=fzzFQSNdVm53/J6Wx750rQY1xQlKyoTPFI1X4861lAyUyICp8r73hP4czgoqbzyIq0jo/CFm3sPCrq4j5OrEtI4YSfUcWfFxGMTTu3CyQ4Ev0N5vmMZVpvLMPU/SnCpB9+mo91SH03bjvOQFXXfetF11mwKKpKcc+xvE6A7Qqx2r8F4IO0PjgLo6e5YaS1DlG/+wFnrKpelYul/20hh7blwmxXkBCvN00v9U7hfUBOtKOUOgsEe304wrhfwH7W7+sDa9Ga5oZ5XSQ+czHdDD2Syw2i3SkhDIOxFsP2wLM9yDVPRZeGm8BOv62jcNC+qTWbZV6LpfnQ0BrVZ7eIZmbg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yTx4RdjOpJc90AOGAozQeTWrf9+UryB2BNo94pCrw2M=;
- b=aMy42Pg0/7cWnQcatwBulNNa/v5lZnKv+en4SI6hrlJKReKCTVTCFVINWx++U+R92uNCGccgewbxLXgn10YdzsPclCPwd3QZE/+WO99/li42QidUTkrExGgkZGcdMpu5nIYwiABavYTr4mi9nO8rl2C1sDGBQub7t0DKXbuy6GhkLG1DeiXIlPuFFEYadiiu4T8rSYzR7sMymamIRLSyx+3JWV+b1hPIGrhzpfXp/stYLExkOUd0raLqI5BBZd0xWE7FXui07IpbaH9i1iqO6/qmNueJcsgU0+/7ozEZZiFhxFIl7uSlziTfDiagn4rmzq1G8UIL790eDA+F9jVsdw==
+ bh=EP1y5MDSxD9u0mZDFbV3SH1BF8HdzYHs45cqhlOeess=;
+ b=PppDn8dKUjeO45XO1cG8OSBnuv83pl9RS0/L1QbS4lGsWwAa9VcQ8Ma6pfXzDC3abgi4dCJYAhLoYgcDdpj2p1CqEhtDy12vyRd5qhKLSBIy+mevtbfvZv7jAtzhewaFGfDx65OoUhzz92t1BZqZiHclwl0aAhBTBHMiwQ2PR5pAomZHqN6vdfxZe2lQ24nS9qyS8gYBQUrQFvTsP2gNpPgulUtA+htlWrfQFSUBaX/eNyyl7Q470iWibNp3N5nqD0r8e/Jcn5YcqbWHS7/NvEH7QNMfnw/DGIYVJOOwqrzGlojQkvRqRBPoE8k12g0IzvIlmFYJHTC07JYJtZ3qjA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yTx4RdjOpJc90AOGAozQeTWrf9+UryB2BNo94pCrw2M=;
- b=nSIM0ouLaLdK8selnvntcikC2RiiIiyhGMGA7HtXNhNDifM1gd7iCEQz5g4RmF0GRAn/rwgZdxBg6uSz1unzXFTeJ4/yjswUW3RjnLhKCWRdbAaAD8TtCIWC/3Kv6GN0Ynhp1Zr++8cl8TddpD0tm7rHLSJI4AphoY3ZCTTiRSU7xjZLzLXGhT3/QdkIrbtekydw3arhnDNWu0lSYK/Xjaiwch8j0UHaXXUvx+4o+Vv88gvFj4f/OVSlcjWUHjyU+aClYv1qv7ZlKS5oXX4l6R+CTxq9mWjPXb7K4+9tXmmX8NmwmWcA4EnO2iAmaYKEcXMbYnmYZyV7qLCCel823A==
+ bh=EP1y5MDSxD9u0mZDFbV3SH1BF8HdzYHs45cqhlOeess=;
+ b=ToaXmVfy10vog7z9wZX02kReSkrZ3T3c9uUah+KORSnjxgncVPm41VM4mbgAbsPXvtDdeAttN2wZBPXVj2MGIGDEgbIPIcrlDHNFEuVtcKVnEDksxu0LMeJBc7awhLC0UK/0Xfp5hbEwoJdBdSKfXSjW92DdaYkIakug4HWdxtQqnBiPfnbRJe3+TT54aqqoIB6RrZM6VifG6SDYfnK1XxepzyQmKawA2igyBWsda8AOb3sn3mhcR4LGqPvC/9ke/Wo6Lx/V0+562qJJA153Fyk8rm05HvcbQCSxuetw3uUrMWeqA+EKtN4kxfqe5q6H4s2oDNWRwyOb9d5Pz8qT5w==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH2PR12MB4824.namprd12.prod.outlook.com (2603:10b6:610:b::22)
  by CY8PR12MB7586.namprd12.prod.outlook.com (2603:10b6:930:99::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Tue, 26 May
- 2026 08:30:13 +0000
+ 2026 08:30:21 +0000
 Received: from CH2PR12MB4824.namprd12.prod.outlook.com
  ([fe80::34d6:fda7:9290:35a9]) by CH2PR12MB4824.namprd12.prod.outlook.com
  ([fe80::34d6:fda7:9290:35a9%5]) with mapi id 15.21.0048.019; Tue, 26 May 2026
- 08:30:13 +0000
+ 08:30:21 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -64,16 +64,16 @@ Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] sched_ext: Auto-register/unregister dl_server reservations
-Date: Tue, 26 May 2026 10:27:55 +0200
-Message-ID: <20260526082954.550958-2-arighi@nvidia.com>
+Subject: [PATCH 2/2] selftests/sched_ext: Validate dl_server attach/detach in total_bw test
+Date: Tue, 26 May 2026 10:27:56 +0200
+Message-ID: <20260526082954.550958-3-arighi@nvidia.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260526082954.550958-1-arighi@nvidia.com>
 References: <20260526082954.550958-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: DS2PEPF00004554.namprd21.prod.outlook.com
- (2603:10b6:f:fc00::516) To CH2PR12MB4824.namprd12.prod.outlook.com
+X-ClientProxiedBy: ZR1PEPF000077BB.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:918::475) To CH2PR12MB4824.namprd12.prod.outlook.com
  (2603:10b6:610:b::22)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -83,532 +83,303 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR12MB4824:EE_|CY8PR12MB7586:EE_
-X-MS-Office365-Filtering-Correlation-Id: 720ca8c4-b062-4266-1264-08debb0101e3
+X-MS-Office365-Filtering-Correlation-Id: 4580656b-0e1c-46dd-2d63-08debb01068b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|7416014|1800799024|366016|11063799006|6133799003|5023799004|56012099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	E6YucI/4+YIq5hkC0WI+2az5pokyMt5JH7ZnhfyV9HGvZQuU44ngciJj1o1jmLCurQMWTATbsNo9jGscr1K9Q0yPfuQvP6uKuOrQI957hwcLfa2AkOAsXYHwY68nt1hEso2n9NV77GCN9axG3OVTlQp+cF+xn7coLwCSKrXXAhy25LSYmNTz7N3+/knDtVeKYrc+n7jcBG/3nO3oTf08ISjwRsqS0V+usfNn5AJgq/G+V3jB4jDwe9N4WYBNeXDL+hBUtrTJhBSgd7gdNdCusJac4Uaj7IHJSfUMo6R0NHZvDkwW+eLNVuMrjzTDEp103R8BPCzCrovx+JMOL9yryb0Drzar/ZKBLCcUsX7Py3wAaDhxtjaG2GSrAb+PETxNil5osHjFvL39Rkx1+DEvHs1XMXUvPg8gaCzGNVOV8VBOi7X+euxch+p97tRna2M/v8snIDjoqqIGd+xlaoSVUoft6qwuhyvTFI9F3pjs3DevoWSaxFoi3nvfZiOXJonwWK5v88gAUZxta3MoVVmRm+lEII6c3tRj6nEfijkFuYdQhoTXYOn3mfGtFVbwcLEFK6x3PNwxXanv2U9blQzC624F9Zr75kOq56GrAcZUz/g74L75wFLP7HsdCqKANkE4QLHibjThE2kvHe7yUNWD+S7b/HKtYhgpskIcknnKisTWz2ZWYqCsXMNbTaqnwZn1
+	PoSgwlYj+zJQ9arGSLfjeAmN34HIfyDnf8FrVWvU1Ez8t9QIvRTpnzlXbF3pMis1TmRwpuqLLAXMfgkS53GGuKRfUv8CfroCTQPVf98lZ4fHgIkHZCbIPr00Wzgi1upmUiEphUTLpb4026XnFWEjT5HTeN8lD+nrlLsfmfEcsjIOod7qdHieNThVFaa7XJatX30MecM/qEFpHkL8XGEAhg+QN6rIA3iAp4c0O4jSSEHLFg/4EqWVJWMLygmhlSn7CfV1u36E2dmpwTR7GK1BUzAlG0lckklVp2VOyeVh8LXOfFJxrMgrEyVdcAboJB1Ng/zQ6bFvTCuXqOmFYAjlwB955+WC1IXQzUTBrx6eJC4jN/LlnmhUQnP6tN5B+94s0X5LeIjUeKoY7a8SPPjKewjaWs/lMU4+KyedOIo7qL2qA30BbLG8I3B+icDhoyaTK+PgDcqACrYTboi4E5xzX5q61Izv/bjMuJjZhWiuJAZgj94iO2BOZMRUvPsA4g4MXagFP0pTp6CrzD8MiA/WwtULpbgOYM3kuGisjyGdh5Hg9eHIyn+MtowtFcEU3ohsqVLfgVzktbNEUZDTwvJ/Bl8z6qx+ymv5fFLDc2+Zx9043HPaEewBg9qwAvfxkFr19uuSrqjf5jHdGbEjQPPLA/9xpoMJO1UJbmyyAxJPC3a3FeHU+pb5oElFHFb9gtVe
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4824.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(11063799006)(6133799003)(5023799004)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0Tv9SCI54f+cFQqKjAO+9VsAVlOWaPBPs0NtDo3XWVlDsAodgBlxMRkJMsct?=
- =?us-ascii?Q?udwN6jgMTqZPv4aJIpCdk0azjgy8uG8E7lSDdxPafBHYLfjwovKfMmKwtAqW?=
- =?us-ascii?Q?5/lK0eUIRKS1apXIdLhtkyfACPc5pzj9i9Tk1AplEhd2pcQjPvb1mnj3ewj6?=
- =?us-ascii?Q?4HlxgBKjN9R/bHpc54cPWq/7Yz3WagsE9fKadT6twuDHTz5NmGYwJCGploHp?=
- =?us-ascii?Q?k50UJH+aM4143BWnyyvWX95QNDUgEy017sbBzEpFJTzfZD10vfSKtz1agGQp?=
- =?us-ascii?Q?E9N57fBN3+3iwEw1JXWEiPljS2xvHoEA6XVTj9S6mcBh4Kkf5u/mGugCNa5+?=
- =?us-ascii?Q?nUShhSq28Q6s9AnSfwuMx8ArFxaSODjkK2cgQ/cge3P21miZX1srnFC4zHnq?=
- =?us-ascii?Q?6ckJ80J4mugUOt+xI4i5DVk65Mf6wuo/KD/YCim3jFFeWpAILdm6sQkCss0V?=
- =?us-ascii?Q?xpQG5LUyT6OdlLtBCb29tE6c+Qs9i2eu2razB95jEEI+iCj3a/0DQc49zdze?=
- =?us-ascii?Q?bgZnxhbVCwkUNwiqmDawpwWv7ypqqBbEtUY5GSR84sN0tbaCrbDDXw7YztBH?=
- =?us-ascii?Q?9tWucC05baSvW+MUXobRejIfDQYeju/9Fno8ZpmjPrQeh8jZe4AJumRgBrk4?=
- =?us-ascii?Q?+yo6A0duJcK8PNbFCzUvZPIYtM4HBvuvbe1LZVsEuetLvMr1YvNR1GCTRdnH?=
- =?us-ascii?Q?LNvhpQus+8wp5F9nWVint8Ic6bxxYh1Djk6GHokPrmFJ6+Faup8m8Wf1QCrX?=
- =?us-ascii?Q?mz/7bq4Wi6wezGlNR8DaeETv+NpcULc2MTg1qyNP9rVuCH7zLP6VE5F/HIQ7?=
- =?us-ascii?Q?SDbyMMl82n4A9BxhSIH/AwlyO51ES1YmpPbOI2FoJvBCb4YQz+7orqeJ+8C6?=
- =?us-ascii?Q?VKY2fcJCXxLRJOcEvgkgqzyIJpBMke+pZd0e7Vgq2c11i/O8iMxrITi3orwT?=
- =?us-ascii?Q?3hexLkjOeuI1mYrsIp/M/mW/HoJDyk632u2EVmXMLrPEShFy2IxAUFqP4URw?=
- =?us-ascii?Q?zet+yIvkyJrRcgg2sSZptaNwf//PFj8pRZY9rC/d3Oc55bGqV1KbXALeP8Qq?=
- =?us-ascii?Q?PjfjOrvep93Zu9akEcOiHaLSUCXeOaMNXrJZtOs+cUW5eh9st4qTRTKH1Mhh?=
- =?us-ascii?Q?UdvIMKbVFEpTyd4vTQqKB8PF5oIHsHC7gvzR+swRQ7teClRaqYoiWcZREC85?=
- =?us-ascii?Q?W6DpUoXU0rFz5qRszUFBi4gAnQqiYUXtYLMb5T71MsOctBT6gBqHU5lqLS8I?=
- =?us-ascii?Q?hQ4m96KhTat5i6CVEdI80v7d4MH6+2cR/lgXAZ6vwP2x2JTmWCOVqFFttRxc?=
- =?us-ascii?Q?pJ8C0LHfRtVGWVCnWEtkWSHL2LU3CTNHI1MijNuU+sKLshbqrb3kanbdhucp?=
- =?us-ascii?Q?uCNRNwW0w8RbygRvu91bOQQQviUP6pmn4+6J8C5xrP92LWD6N6XNGh3xz17u?=
- =?us-ascii?Q?mqrK1PNN968f/E3ZaHh1UJQFQlEdpwJKS+ktep/kC0jRI7Orq7JxLfYFmTMA?=
- =?us-ascii?Q?ThcReNoYE9NfEtXRNTP2Ri+c9J14qm4a2Ny0UKCF/G96o4p51+BmRIFQ/Apw?=
- =?us-ascii?Q?3v6gZctAo+B1dSe5EYxzklmkpKZmH8q488A8MYdWv0c/8cK2ZVVwFZOfhxS2?=
- =?us-ascii?Q?pQzBLwVuhYrBUJmSBggJ4PpGzgEd3xpLq9VB7vkg/r1OWcMweJ49bmsaEjZJ?=
- =?us-ascii?Q?n8mL6aE85w0/tXJuyAy+2GIiqSiHhJFqUJettefwAwtTKbft?=
+	=?us-ascii?Q?Zsq340qdsSfUP99IiLpOcxFP3aFaaAs7MlQkYO5jpLTyk6BZRIr58l7/mdsg?=
+ =?us-ascii?Q?De/pxBYmhhlhtc5hgSiX/3F5oopjXamfgpln/VylVOMdPeH3B6hHmuemQqMZ?=
+ =?us-ascii?Q?XEdun3rPCuWl3bGyncdvON7MruIT0D580fKUqIZgy/SRCksVyux8KRCSK/vN?=
+ =?us-ascii?Q?65wxd9Xj1HXpNqyEW8ay4/riqQE97ggrCqyD4md578mmbOL7Sz82XQpU2pVG?=
+ =?us-ascii?Q?ifJA2XNuam+PzQJjCOcURTYiNzaD+DPYXylZ+LCzA/jFXzU6PI5r+oGfJBdM?=
+ =?us-ascii?Q?u4M+kDJyuaPzVQutn82bJCqvKtqhluDcVskGNQXWGsGzoDThbcncEX8Khto0?=
+ =?us-ascii?Q?5UcyfAdd81kO4bIeKDUWo3NBKQlR+vAn7U+oa5X9LITupHYFEE9bbMgv6SZG?=
+ =?us-ascii?Q?TxYHENfZMyoH9cnJOBDWjVofv7EoOMrBsWZABqSBAOexDK3eqdsSlzU4zu0l?=
+ =?us-ascii?Q?sfQc56glp93chTxkEbt6d4wuU+s9ySdfj3OgKYlzz+JKMkEkeRGqoOqreHjN?=
+ =?us-ascii?Q?IWwnYUKenLCKIzrqShG7keMoF6LABcsI7CwkLN2aXHgEOhj65NYEo1biOI+T?=
+ =?us-ascii?Q?4Zdg4/KBapSIIaCh+F/Ansi02jVEx0T2OtkpJD6p+E+iXPvSOopReZo4Xs9U?=
+ =?us-ascii?Q?GJqPZgxQTUNmsVxcGj2vdOBWDak2EkkcBs445FcgXhxd7yn2D2e97s+WvNdp?=
+ =?us-ascii?Q?pGKcXnt9EYs0m4raOjBkRLq5z3Aj3ekRFoi3bY7mNmWx64MBLHrgoSur8xh9?=
+ =?us-ascii?Q?BOauLE8LYTTC5nl324w/PmbKh9ti9Jf8sApPxYWVos3DhCieAE7wPXoyTRPd?=
+ =?us-ascii?Q?DLupICDQkWPiSy1aqvX+Qu9fts4XfTBZraowqR+0yqo1KHitwxdCndMG6xJh?=
+ =?us-ascii?Q?xJICwuAWQhC6X2Nt6FP81/SobKTPlZbCxsX5F1T8V1ub+GI9j6BsX0RzXTMH?=
+ =?us-ascii?Q?WB3oC5Eb2r8xywODwuneA1fe8nQlRCAJk3OhBa0Sedtark2xzvnGW3BMpL4N?=
+ =?us-ascii?Q?j32FvP0tnPqHH0AXzsxNBf1pS7rjQAQUU2ZyIczZG5l1Mh9Eb5kqhWggWmJ/?=
+ =?us-ascii?Q?V07G9/modw0PHADIoWuqUmreKbLDglNz6j6JJTPuBW0gTrSyg9BGWpEjEQOF?=
+ =?us-ascii?Q?LDeB3t1hiKOXAntUelhThs41ZDOXxltsxq9ClOlu+z1V4/ldF0Yyda+dBJaP?=
+ =?us-ascii?Q?L9aaYYlpgNTyRs2924DSIsjWtPuySVN9geIVajhdlNY3eF+P/P5vySTr5bYF?=
+ =?us-ascii?Q?rtCd5dTpnoG1sM8Jjrjc1Ikag2SMdpMLvc7dgYyj0Fb3vBdywuo9Mf1qrqfb?=
+ =?us-ascii?Q?As4Az9Z5BJUezThOap8l4a4CdNMjvg12FFzFu5X0exLyDub06uDMTEP3jp0Q?=
+ =?us-ascii?Q?aV3H/6RKB9wJRztyVCixs9MYEyuG+E6rbsuamonnZBAi8NCGVmjBcupTh1IC?=
+ =?us-ascii?Q?fK2b7SVSUk16jFSewosjiMfzDOCMnNSie1Pa4VPfXP9bsJ4MwFzvkroTkZf2?=
+ =?us-ascii?Q?9Xh48AuVnihC7I1F5RKBXAotrRoStNNN/0U/TG+b6oSvVwp9MiOt4q4UQ5bA?=
+ =?us-ascii?Q?l8RFMVeFQUfCfC/1ZoESp1syiSTH7i4p2orDSuRmo875/eq0YqViLJA4mVw+?=
+ =?us-ascii?Q?ks9X2HTooO3TzqUrcmY26C+LRZ7i3/nExivLaOu9RJgAsuvrWgQUgpqGohIN?=
+ =?us-ascii?Q?hnV1JdzAuB+zFlGntvFPzmrPj9hAFMAg9OmBAttl/IT3zvm6?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 720ca8c4-b062-4266-1264-08debb0101e3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4580656b-0e1c-46dd-2d63-08debb01068b
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4824.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 08:30:13.6940
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 May 2026 08:30:21.3636
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OenKKsIE+KKfsO6wc2EJ/USkeUa9C/0zMfjGT8d5GhyNd8+El30B7t+eCp5LHhbB6h/MZGlEV7HjkLe/WeV5xA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: bJVuBCOT2IIf7qZX6tGHW4YDQCyKjN16bTw39G6STKGlsekQzsWAFB7NLmzGKHoKbKPaIbqqymtBWgRhoh9wZg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7586
 
-Commit cd959a3562050d ("sched_ext: Add a DL server for sched_ext tasks")
-introduced an ext_server deadline server to protect sched_ext tasks from
-fair/RT starvation, mirroring the existing fair_server.
+Extend the total_bw selftest to validate the fair/ext dl_server
+auto-attach/detach operations.
 
-Currently, both servers reserve their 50ms/1000ms bandwidth at boot,
-regardless of whether a BPF scheduler is loaded. Unused bandwidth is
-still reclaimed at runtime by other classes, but the static reservation
-prevents the RT class from implicitly using that headroom when one of
-the two classes is guaranteed to be empty.
-
-A sysadmin can work around this by writing
-/sys/kernel/debug/sched/{fair,ext}_server/cpu*/runtime, but that
-requires manual action and not all systems expose debugfs.
-
-A better approach is to make server bandwidth reservations dynamic: only
-the scheduling policy that is currently active should register its
-reservation, while the inactive one should not artificially hold
-capacity (keeping both reservations only when the BPF scheduler is
-running in partial mode):
-
- +---------------------------------------------+-------------+------------+
- | BPF scheduler state                         | fair server | ext server |
- +---------------------------------------------+-------------+------------+
- | not loaded (default boot)                   | reserved    | none       |
- | loaded full mode (!SCX_OPS_SWITCH_PARTIAL)  | none        | reserved   |
- | loaded partial mode (SCX_OPS_SWITCH_PARTIAL)| reserved    | reserved   |
- +---------------------------------------------+-------------+------------+
-
-To achieve this, introduce an "attached/detached" state for each
-deadline server, so the kernel can decide whether a server's bandwidth
-should be accounted in global bandwidth tracking.
-
-At boot, the system starts with only the fair server contributing to
-bandwidth accounting. When a BPF scheduler is enabled, the ext server is
-attached and may replace or complement the fair server depending on
-whether full or partial mode is used. When sched_ext is disabled, the
-system restores the previous deadline bandwidth values and behavior.
-
-The transition logic ensures that switching between scheduling modes is
-consistent and reversible, without losing runtime configuration or
-requiring manual intervention.
+After the existing consistency checks, the test now doubles the
+fair_server's runtime on every CPU via debugfs and verifies that:
+ 1. total_bw grew after the customization (proves fair_server was
+    attached and apply_params() honored the dl_bw_attached flag),
+ 2. with the minimal BPF scheduler loaded, total_bw drops back to the
+    baseline value (proves fair_server was detached and ext_server was
+    attached at its own default runtime),
+ 3. after unload total_bw matches the doubled value from step 1 (proves
+    fair_server was re-attached with the runtime customization preserved
+    across the load/unload cycle).
 
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- include/linux/sched.h   |   6 ++
- kernel/sched/deadline.c | 207 ++++++++++++++++++++++++++++++++++++++--
- kernel/sched/ext.c      |  71 ++++++++++++++
- kernel/sched/sched.h    |   4 +
- 4 files changed, 280 insertions(+), 8 deletions(-)
+ tools/testing/selftests/sched_ext/total_bw.c | 201 ++++++++++++++++++-
+ 1 file changed, 200 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index ee06cba5c6f53..7acceb80628b0 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -702,6 +702,11 @@ struct sched_dl_entity {
- 	 * running, skipping the defer phase.
- 	 *
- 	 * @dl_defer_idle tracks idle state
-+	 *
-+	 * @dl_bw_attached tells if this server's bandwidth currently
-+	 * contributes to the root domain's total_bw. Only meaningful for server
-+	 * entities (@dl_server == 1). Allows toggling the reservation on/off
-+	 * without losing the configured @dl_runtime/@dl_period.
- 	 */
- 	unsigned int			dl_throttled      : 1;
- 	unsigned int			dl_yielded        : 1;
-@@ -713,6 +718,7 @@ struct sched_dl_entity {
- 	unsigned int			dl_defer_armed	  : 1;
- 	unsigned int			dl_defer_running  : 1;
- 	unsigned int			dl_defer_idle     : 1;
-+	unsigned int			dl_bw_attached    : 1;
- 
- 	/*
- 	 * Bandwidth enforcement timer. Each -deadline task has its
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 7db4c87df83b0..dc46e807a8fa1 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1793,7 +1793,8 @@ void dl_server_start(struct sched_dl_entity *dl_se)
- 	struct rq *rq = dl_se->rq;
- 
- 	dl_se->dl_defer_idle = 0;
--	if (!dl_server(dl_se) || dl_se->dl_server_active || !dl_se->dl_runtime)
-+	if (!dl_server(dl_se) || dl_se->dl_server_active || !dl_se->dl_runtime ||
-+	    !dl_se->dl_bw_attached)
- 		return;
- 
- 	/*
-@@ -1868,6 +1869,13 @@ void sched_init_dl_servers(void)
- 		dl_se->dl_server = 1;
- 		dl_se->dl_defer = 1;
- 		setup_new_dl_entity(dl_se);
-+
-+		/*
-+		 * No BPF scheduler is loaded at boot, so the ext_server has no
-+		 * tasks to protect. Detach its bandwidth reservation, it will
-+		 * be attached when a BPF scheduler is loaded.
-+		 */
-+		dl_server_detach_bw(dl_se);
- #endif
- 	}
- }
-@@ -1878,6 +1886,9 @@ void __dl_server_attach_root(struct sched_dl_entity *dl_se, struct rq *rq)
- 	int cpu = cpu_of(rq);
- 	struct dl_bw *dl_b;
- 
-+	if (!dl_se->dl_bw_attached)
-+		return;
-+
- 	dl_b = dl_bw_of(cpu_of(rq));
- 	guard(raw_spinlock)(&dl_b->lock);
- 
-@@ -1903,13 +1914,16 @@ int dl_server_apply_params(struct sched_dl_entity *dl_se, u64 runtime, u64 perio
- 	cpus = dl_bw_cpus(cpu);
- 	cap = dl_bw_capacity(cpu);
- 
--	if (__dl_overflow(dl_b, cap, old_bw, new_bw))
--		return -EBUSY;
-+	if (init || dl_se->dl_bw_attached) {
-+		if (__dl_overflow(dl_b, cap, old_bw, new_bw))
-+			return -EBUSY;
-+	}
- 
- 	if (init) {
- 		__add_rq_bw(new_bw, &rq->dl);
- 		__dl_add(dl_b, new_bw, cpus);
--	} else {
-+		dl_se->dl_bw_attached = 1;
-+	} else if (dl_se->dl_bw_attached) {
- 		__dl_sub(dl_b, dl_se->dl_bw, cpus);
- 		__dl_add(dl_b, new_bw, cpus);
- 
-@@ -1929,6 +1943,181 @@ int dl_server_apply_params(struct sched_dl_entity *dl_se, u64 runtime, u64 perio
- 	return 0;
+diff --git a/tools/testing/selftests/sched_ext/total_bw.c b/tools/testing/selftests/sched_ext/total_bw.c
+index 5b0a619bab86e..2af01cee90cc0 100644
+--- a/tools/testing/selftests/sched_ext/total_bw.c
++++ b/tools/testing/selftests/sched_ext/total_bw.c
+@@ -100,6 +100,98 @@ static int read_total_bw_values(long *bw_values, int max_cpus)
+ 	return cpu_count;
  }
  
 +/*
-+ * Add @dl_se's bw to the root-domain accounting.
-+ *
-+ * Return -EBUSY if attaching would overflow root domain capacity.
++ * Read a per-CPU dl_server param (runtime or period) from debugfs.
++ * Returns the value in nanoseconds, or -1 on failure.
 + */
-+static int __dl_server_attach_bw_locked(struct sched_dl_entity *dl_se,
-+					struct dl_bw *dl_b, int cpus)
++static long read_server_param(const char *server, const char *param, int cpu)
 +{
-+	struct rq *rq = dl_se->rq;
-+	unsigned long cap;
++	char path[128];
++	long value = -1;
++	FILE *fp;
 +
-+	/*
-+	 * Always update @rq->dl.this_bw, but only update @dl_b->total_bw
-+	 * (and run the overflow check it gates) while this CPU is active.
-+	 *
-+	 * This mirrors dl_server_add_bw() during root-domain rebuilds, which
-+	 * only publishes bandwidth from active CPUs into @dl_b.
-+	 */
-+	if (cpu_active(cpu_of(rq))) {
-+		cap = dl_bw_capacity(cpu_of(rq));
-+		if (__dl_overflow(dl_b, cap, 0, dl_se->dl_bw))
-+			return -EBUSY;
-+		__dl_add(dl_b, dl_se->dl_bw, cpus);
++	snprintf(path, sizeof(path),
++		 "/sys/kernel/debug/sched/%s_server/cpu%d/%s",
++		 server, cpu, param);
++	fp = fopen(path, "r");
++	if (!fp)
++		return -1;
++	if (fscanf(fp, "%ld", &value) != 1)
++		value = -1;
++	fclose(fp);
++
++	return value;
++}
++
++/*
++ * Write a per-CPU dl_server param to debugfs. Returns 0 on success.
++ */
++static int write_server_param(const char *server, const char *param,
++			      int cpu, long value)
++{
++	char path[128];
++	FILE *fp;
++	int ret = 0;
++
++	snprintf(path, sizeof(path),
++		 "/sys/kernel/debug/sched/%s_server/cpu%d/%s",
++		 server, cpu, param);
++	fp = fopen(path, "w");
++	if (!fp)
++		return -1;
++	if (fprintf(fp, "%ld", value) < 0)
++		ret = -1;
++	if (fclose(fp) != 0)
++		ret = -1;
++
++	return ret;
++}
++
++static int read_fair_runtime_all(int nr_cpus, long *runtimes)
++{
++	int i;
++
++	for (i = 0; i < nr_cpus; i++) {
++		runtimes[i] = read_server_param("fair", "runtime", i);
++		if (runtimes[i] <= 0)
++			return -1;
 +	}
-+	__add_rq_bw(dl_se->dl_bw, &rq->dl);
-+	dl_se->dl_bw_attached = 1;
 +
 +	return 0;
 +}
 +
-+/*
-+ * Drain @dl_se and remove its bw from the root-domain accounting.
-+ */
-+static void __dl_server_detach_bw_locked(struct sched_dl_entity *dl_se,
-+					 struct dl_bw *dl_b, int cpus)
++static int write_fair_runtime_all(int nr_cpus, long value)
 +{
-+	struct rq *rq = dl_se->rq;
++	int i;
 +
-+	/*
-+	 * If the server is still active (on_rq), dequeue it via
-+	 * dl_server_stop(); task_non_contending() will either subtract
-+	 * @dl_bw from running_bw immediately (0-lag passed) or set
-+	 * dl_non_contending and arm the inactive_timer.
-+	 */
-+	if (dl_se->dl_server_active)
-+		dl_server_stop(dl_se);
-+
-+	/*
-+	 * Drop @dl_se's contribution from this rq's bandwidth accounting,
-+	 * mirroring the __add_rq_bw() done at attach time.
-+	 */
-+	dl_rq_change_utilization(rq, dl_se, 0);
-+
-+	/*
-+	 * Update @dl_b only while this CPU is active, matching
-+	 * dl_server_add_bw() during root-domain rebuilds.
-+	 *
-+	 * If this CPU is inactive, its bandwidth is not currently accounted in
-+	 * @dl_b->total_bw: either attach skipped adding it, or a rebuild
-+	 * already dropped it while re-publishing active CPUs only.
-+	 *
-+	 * In that case there is nothing to subtract from @dl_b. Just clear
-+	 * @dl_se->dl_bw_attached; if the CPU becomes active again, the next
-+	 * rebuild will re-publish its bandwidth.
-+	 */
-+	if (cpu_active(cpu_of(rq)))
-+		__dl_sub(dl_b, dl_se->dl_bw, cpus);
-+	dl_se->dl_bw_attached = 0;
-+}
-+
-+/*
-+ * Attach @dl_se's bandwidth to the root domain's total_bw accounting.
-+ *
-+ * Use to dynamically register a dl_server's bandwidth reservation while
-+ * preserving its configured @dl_runtime / @dl_period. No-op if @dl_se is
-+ * already attached.
-+ *
-+ * Returns -EBUSY if attaching would overflow the root domain capacity.
-+ */
-+int dl_server_attach_bw(struct sched_dl_entity *dl_se)
-+{
-+	struct rq *rq = dl_se->rq;
-+	int cpu = cpu_of(rq);
-+	struct dl_bw *dl_b;
-+	int cpus, ret;
-+
-+	if (dl_se->dl_bw_attached)
-+		return 0;
-+
-+	scoped_guard (raw_spinlock, &dl_bw_of(cpu)->lock) {
-+		dl_b = dl_bw_of(cpu);
-+		cpus = dl_bw_cpus(cpu);
-+		ret = __dl_server_attach_bw_locked(dl_se, dl_b, cpus);
-+	}
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * The natural 0->nr_running transition that triggers dl_server_start()
-+	 * may have happened while @dl_se was still detached (e.g., between
-+	 * scx_bypass(false) and the scx_enable() re-balance loop), so kick a
-+	 * start here.
-+	 *
-+	 * dl_server_start() bails out cleanly if there's nothing to schedule or
-+	 * it's already active. Skip if @cpu is offline; the server will be
-+	 * started naturally on the first enqueue once @cpu comes back.
-+	 */
-+	if (cpu_online(cpu))
-+		dl_server_start(dl_se);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Detach @dl_se's bandwidth from the root domain's total_bw accounting.
-+ *
-+ * Use to dynamically unregister a dl_server's bandwidth reservation while
-+ * preserving its configured @dl_runtime / @dl_period. No-op if @dl_se is
-+ * not currently attached.
-+ */
-+void dl_server_detach_bw(struct sched_dl_entity *dl_se)
-+{
-+	int cpu = cpu_of(dl_se->rq);
-+	struct dl_bw *dl_b;
-+	int cpus;
-+
-+	if (!dl_se->dl_bw_attached)
-+		return;
-+
-+	dl_b = dl_bw_of(cpu);
-+	guard(raw_spinlock)(&dl_b->lock);
-+	cpus = dl_bw_cpus(cpu);
-+	__dl_server_detach_bw_locked(dl_se, dl_b, cpus);
-+}
-+
-+/*
-+ * Atomically detach @detach_se and attach @attach_se on the same rq, holding
-+ * @dl_b->lock across both operations so a concurrent sched_setattr() cannot
-+ * steal the bandwidth freed by the detach before the attach can claim it.
-+ *
-+ * Both entities must live on the same rq (same root domain). Returns the
-+ * result of the attach: -EBUSY if attaching @attach_se would overflow root
-+ * domain capacity (in which case both servers end up detached).
-+ */
-+int dl_server_swap_bw(struct sched_dl_entity *detach_se,
-+		      struct sched_dl_entity *attach_se)
-+{
-+	struct rq *rq = detach_se->rq;
-+	int cpu = cpu_of(rq);
-+	struct dl_bw *dl_b;
-+	int cpus, ret;
-+
-+	WARN_ON_ONCE(attach_se->rq != rq);
-+
-+	scoped_guard (raw_spinlock, &dl_bw_of(cpu)->lock) {
-+		dl_b = dl_bw_of(cpu);
-+		cpus = dl_bw_cpus(cpu);
-+
-+		if (detach_se->dl_bw_attached)
-+			__dl_server_detach_bw_locked(detach_se, dl_b, cpus);
-+
-+		if (attach_se->dl_bw_attached)
-+			ret = 0;
-+		else
-+			ret = __dl_server_attach_bw_locked(attach_se, dl_b, cpus);
-+	}
-+	if (ret)
-+		return ret;
-+
-+	if (cpu_online(cpu))
-+		dl_server_start(attach_se);
-+
-+	return 0;
-+}
-+
- /*
-  * Update the current task's runtime statistics (provided it is still
-  * a -deadline task and has not been removed from the dl_rq).
-@@ -3236,12 +3425,12 @@ static void dl_server_add_bw(struct root_domain *rd, int cpu)
- 	struct sched_dl_entity *dl_se;
- 
- 	dl_se = &cpu_rq(cpu)->fair_server;
--	if (dl_server(dl_se) && cpu_active(cpu))
-+	if (dl_server(dl_se) && dl_se->dl_bw_attached && cpu_active(cpu))
- 		__dl_add(&rd->dl_bw, dl_se->dl_bw, dl_bw_cpus(cpu));
- 
- #ifdef CONFIG_SCHED_CLASS_EXT
- 	dl_se = &cpu_rq(cpu)->ext_server;
--	if (dl_server(dl_se) && cpu_active(cpu))
-+	if (dl_server(dl_se) && dl_se->dl_bw_attached && cpu_active(cpu))
- 		__dl_add(&rd->dl_bw, dl_se->dl_bw, dl_bw_cpus(cpu));
- #endif
- }
-@@ -3250,11 +3439,13 @@ static u64 dl_server_read_bw(int cpu)
- {
- 	u64 dl_bw = 0;
- 
--	if (cpu_rq(cpu)->fair_server.dl_server)
-+	if (cpu_rq(cpu)->fair_server.dl_server &&
-+	    cpu_rq(cpu)->fair_server.dl_bw_attached)
- 		dl_bw += cpu_rq(cpu)->fair_server.dl_bw;
- 
- #ifdef CONFIG_SCHED_CLASS_EXT
--	if (cpu_rq(cpu)->ext_server.dl_server)
-+	if (cpu_rq(cpu)->ext_server.dl_server &&
-+	    cpu_rq(cpu)->ext_server.dl_bw_attached)
- 		dl_bw += cpu_rq(cpu)->ext_server.dl_bw;
- #endif
- 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 83272acf17637..2330657bd66f3 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6112,6 +6112,7 @@ static void scx_root_disable(struct scx_sched *sch)
- {
- 	struct scx_task_iter sti;
- 	struct task_struct *p;
-+	bool was_switched_all;
- 	int cpu;
- 
- 	/* guarantee forward progress and wait for descendants to be disabled */
-@@ -6138,6 +6139,8 @@ static void scx_root_disable(struct scx_sched *sch)
- 	 */
- 	mutex_lock(&scx_enable_mutex);
- 
-+	was_switched_all = scx_switched_all();
-+
- 	static_branch_disable(&__scx_switched_all);
- 	WRITE_ONCE(scx_switching_all, false);
- 
-@@ -6187,10 +6190,34 @@ static void scx_root_disable(struct scx_sched *sch)
- 	/*
- 	 * Invalidate all the rq clocks to prevent getting outdated
- 	 * rq clocks from a previous scx scheduler.
-+	 *
-+	 * Also re-balance the dl_server bandwidth reservations: detach
-+	 * ext_server (no more sched_ext tasks) and reinstate fair_server if it
-+	 * was previously detached because we were running in full mode.
-+	 *
-+	 * Unlike the enable path, this runs on a recovery path that cannot
-+	 * fail, so we use dl_server_swap_bw() to atomically free ext_server's
-+	 * bandwidth and reclaim it for fair_server under the same dl_b lock.
-+	 *
-+	 * The swap can still fail with -EBUSY if someone bumped ext_server's
-+	 * runtime via debugfs between enable and disable; in that narrow case
-+	 * both servers end up detached and we just WARN.
- 	 */
- 	for_each_possible_cpu(cpu) {
- 		struct rq *rq = cpu_rq(cpu);
-+
- 		scx_rq_clock_invalidate(rq);
-+
-+		scoped_guard(rq_lock_irqsave, rq) {
-+			update_rq_clock(rq);
-+			if (was_switched_all) {
-+				if (WARN_ON_ONCE(dl_server_swap_bw(&rq->ext_server,
-+								   &rq->fair_server)))
-+					pr_warn("failed to re-attach fair_server on CPU %d\n", cpu);
-+			} else {
-+				dl_server_detach_bw(&rq->ext_server);
-+			}
++	for (i = 0; i < nr_cpus; i++) {
++		if (write_server_param("fair", "runtime", i, value) < 0) {
++			SCX_ERR("Failed to write fair_server runtime on CPU %d", i);
++			return -1;
 +		}
++	}
++
++	return 0;
++}
++
++/*
++ * Restore per-CPU fair_server runtimes.
++ */
++static int restore_fair_runtime_all(int nr_cpus, const long *runtimes)
++{
++	int ret = 0;
++	int i;
++
++	for (i = 0; i < nr_cpus; i++) {
++		if (write_server_param("fair", "runtime", i, runtimes[i]) < 0) {
++			SCX_ERR("Failed to restore fair_server runtime on CPU %d", i);
++			ret = -1;
++		}
++	}
++
++	return ret;
++}
++
+ static bool verify_total_bw_consistency(long *bw_values, int count)
+ {
+ 	int i;
+@@ -217,6 +309,9 @@ static enum scx_test_status run(void *ctx)
+ 	struct bpf_link *link;
+ 	long loaded_bw[MAX_CPUS];
+ 	long unloaded_bw[MAX_CPUS];
++	long doubled_bw[MAX_CPUS];
++	long original_runtime[MAX_CPUS], doubled_runtime;
++	enum scx_test_status ret;
+ 	int i;
+ 
+ 	/* Test scenario 2: BPF program loaded */
+@@ -257,7 +352,111 @@ static enum scx_test_status run(void *ctx)
  	}
  
- 	/* no task is on scx, turn off all the switches and flush in-progress calls */
-@@ -7233,6 +7260,31 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_disable;
- 
-+	/*
-+	 * Attach the ext_server bandwidth reservation before anything is
-+	 * committed so that we can fail the enable if the root domain cannot
-+	 * accommodate it. The matching fair_server detach is deferred to the
-+	 * tail of this function, after the switch is fully committed and can no
-+	 * longer fail.
-+	 *
-+	 * On failure, err_disable funnels into scx_root_disable() which
-+	 * detaches ext_server, so partially-attached state is cleaned up
-+	 * automatically.
-+	 */
-+	for_each_possible_cpu(cpu) {
-+		struct rq *rq = cpu_rq(cpu);
+ 	fprintf(stderr, "All total_bw values are consistent across all scenarios\n");
+-	return SCX_TEST_PASS;
 +
-+		scoped_guard(rq_lock_irqsave, rq) {
-+			update_rq_clock(rq);
-+			ret = dl_server_attach_bw(&rq->ext_server);
-+		}
-+		if (ret) {
-+			pr_warn("sched_ext: failed to attach ext_server on CPU %d (%d)\n",
-+				cpu, ret);
-+			goto err_disable;
++	/*
++	 * Validate auto-register/unregister of dl_server bandwidth reservations.
++	 *
++	 * Doubling fair_server's runtime doubles its bw contribution. With a
++	 * full-mode BPF scheduler (minimal_ops), the kernel should detach
++	 * fair_server and attach ext_server, dropping total_bw back to its
++	 * pre-customization (default ext_server-only) value. On unload, the
++	 * fair_server reservation should come back with its customized runtime
++	 * preserved, so total_bw doubles again.
++	 */
++	if (read_fair_runtime_all(test_ctx->nr_cpus, original_runtime) < 0) {
++		fprintf(stderr, "Skipping attach/detach validation: debugfs not accessible\n");
++		return SCX_TEST_PASS;
++	}
++	doubled_runtime = original_runtime[0] * 2;
++
++	fprintf(stderr,
++		"Setting fair_server runtime to %ld ns on all CPUs (orig %ld)\n",
++		doubled_runtime, original_runtime[0]);
++
++	if (write_fair_runtime_all(test_ctx->nr_cpus, doubled_runtime) < 0) {
++		ret = SCX_TEST_FAIL;
++		goto restore;
++	}
++
++	if (fetch_verify_total_bw(doubled_bw, test_ctx->nr_cpus) < 0) {
++		SCX_ERR("Failed to get stable values after doubling fair runtime");
++		ret = SCX_TEST_FAIL;
++		goto restore;
++	}
++
++	/*
++	 * After doubling the runtime, fair_server's bw contribution must grow.
++	 * We don't assert exactly 2x, because the kernel's to_ratio() truncates
++	 * the value, so 2 * to_ratio(period, runtime) and
++	 * to_ratio(period, 2 * runtime) can differ.
++	 */
++	for (i = 0; i < test_ctx->nr_cpus; i++) {
++		if (doubled_bw[i] <= test_ctx->baseline_bw[i]) {
++			SCX_ERR("CPU%d: fair did not increase total_bw (baseline=%ld, doubled=%ld)",
++				i, test_ctx->baseline_bw[i], doubled_bw[i]);
++			ret = SCX_TEST_FAIL;
++			goto restore;
 +		}
 +	}
 +
- 	/*
- 	 * Once __scx_enabled is set, %current can be switched to SCX anytime.
- 	 * This can lead to stalls as some BPF schedulers (e.g. userspace
-@@ -7387,6 +7439,25 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	if (!(ops->flags & SCX_OPS_SWITCH_PARTIAL))
- 		static_branch_enable(&__scx_switched_all);
- 
-+	/*
-+	 * Detach the fair_server bandwidth reservation now that the switch
-+	 * is fully committed. In full mode (!SCX_OPS_SWITCH_PARTIAL) no
-+	 * task will ever run in the fair class, so give that bandwidth
-+	 * back to the RT class. The matching ext_server attach already
-+	 * happened earlier; this only releases bandwidth and cannot fail.
-+	 *
-+	 * In partial mode keep fair_server attached.
-+	 */
-+	if (scx_switched_all()) {
-+		for_each_possible_cpu(cpu) {
-+			struct rq *rq = cpu_rq(cpu);
++	link = bpf_map__attach_struct_ops(test_ctx->skel->maps.minimal_ops);
++	if (!link) {
++		SCX_ERR("Failed to attach scheduler for detach test");
++		ret = SCX_TEST_FAIL;
++		goto restore;
++	}
 +
-+			guard(rq_lock_irqsave)(rq);
-+			update_rq_clock(rq);
-+			dl_server_detach_bw(&rq->fair_server);
++	if (fetch_verify_total_bw(loaded_bw, test_ctx->nr_cpus) < 0) {
++		SCX_ERR("Failed to get stable values with BPF loaded (detach test)");
++		bpf_link__destroy(link);
++		ret = SCX_TEST_FAIL;
++		goto restore;
++	}
++
++	/*
++	 * In full mode the customized fair_server is detached and ext_server is
++	 * attached at its default runtime, total_bw must match baseline.
++	 */
++	for (i = 0; i < test_ctx->nr_cpus; i++) {
++		if (loaded_bw[i] != test_ctx->baseline_bw[i]) {
++			SCX_ERR("CPU%d: expected bw %ld (fair detached, ext default), got %ld",
++				i, test_ctx->baseline_bw[i], loaded_bw[i]);
++			bpf_link__destroy(link);
++			ret = SCX_TEST_FAIL;
++			goto restore;
 +		}
 +	}
 +
- 	pr_info("sched_ext: BPF scheduler \"%s\" enabled%s\n",
- 		sch->ops.name, scx_switched_all() ? "" : " (partial)");
- 	kobject_uevent(&sch->kobj, KOBJ_ADD);
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 9f63b15d309d1..6d7eae73a6c00 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -421,6 +421,10 @@ extern void ext_server_init(struct rq *rq);
- extern void __dl_server_attach_root(struct sched_dl_entity *dl_se, struct rq *rq);
- extern int dl_server_apply_params(struct sched_dl_entity *dl_se,
- 		    u64 runtime, u64 period, bool init);
-+extern int dl_server_attach_bw(struct sched_dl_entity *dl_se);
-+extern void dl_server_detach_bw(struct sched_dl_entity *dl_se);
-+extern int dl_server_swap_bw(struct sched_dl_entity *detach_se,
-+			     struct sched_dl_entity *attach_se);
++	bpf_link__destroy(link);
++
++	if (fetch_verify_total_bw(unloaded_bw, test_ctx->nr_cpus) < 0) {
++		SCX_ERR("Failed to get stable values after BPF unload (detach test)");
++		ret = SCX_TEST_FAIL;
++		goto restore;
++	}
++
++	/*
++	 * After unload, fair_server is re-attached with its preserved 2x
++	 * runtime, so total_bw should return to the doubled value.
++	 */
++	for (i = 0; i < test_ctx->nr_cpus; i++) {
++		if (unloaded_bw[i] != doubled_bw[i]) {
++			SCX_ERR("CPU%d: BPF unloaded: expected %ld (fair restored at 2x), got %ld",
++				i, doubled_bw[i], unloaded_bw[i]);
++			ret = SCX_TEST_FAIL;
++			goto restore;
++		}
++	}
++
++	fprintf(stderr,
++		"dl_server attach/detach with customized fair runtime verified\n");
++	ret = SCX_TEST_PASS;
++
++restore:
++	if (restore_fair_runtime_all(test_ctx->nr_cpus, original_runtime) < 0)
++		SCX_ERR("Failed to fully restore per-CPU fair_server runtimes");
++
++	return ret;
+ }
  
- static inline bool dl_server_active(struct sched_dl_entity *dl_se)
- {
+ static void cleanup(void *ctx)
 -- 
 2.54.0
 
