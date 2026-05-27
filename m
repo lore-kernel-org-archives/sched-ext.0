@@ -1,164 +1,144 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131733DD867;
-	Wed, 27 May 2026 11:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ABA40488E
+	for <sched-ext@lists.linux.dev>; Wed, 27 May 2026 12:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779881201; cv=none; b=sAgG+GfUeFZ42zBPTDslVfmPyNTGoUTo/Mfo+hNkpLS/qEWYQEVu1W2fsc0v+CWuJ5bV8Yp9FhzYDCIVi13xo1GrztHTO/HCxT5e2ZQe+cOMbIVzh6a/0rCahocL9jWt+cthN07+30YIH0mEjrJoELGLjfipJi7EmklZ3tPWwHE=
+	t=1779885391; cv=none; b=l4wrpSTqZ0xMWtIxrAsRi6fLbdgl0ZO0383P4eIl2wejgyfSA41uLWu2o6RovDd1n4p3e4NmDaWRI4CS2QXVGxw5Zi/d2B3YtPPDTK9fGeR/AKJDpi/xigadCwErj8pZHeQ/fobFq6VsneTYG4hYoEe+gpYjOnbs/jIlr+lHw4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779881201; c=relaxed/simple;
-	bh=4hClCAa9e7Q31r3uLLheYM0SKS/nzLeDiouC+gjcNEo=;
+	s=arc-20240116; t=1779885391; c=relaxed/simple;
+	bh=z8SnESy3gnQbn+QFOulHBCRjZrTL9spqdHBcQCXi3o8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DVMjzoYU4pTKpuAIs2yDagJZleLjuAi3pSVudwrwTYjmnJQBgwG103ktVjbFNsz39a8NfpHQiTCyXG+z95ABZCKVGTneQCKGYvLUIuisIavgTEzP3X97UJuBwnT4WCAdoYrxxui10uI1cyiqxi3GvX82F6xt7yIUg9dKxGKULQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=MqPqWvVz; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	 In-Reply-To:Content-Type:Content-Disposition; b=lK0/0mwLlrdjyHxd272fnJWrIpqpRcfl5kNJKtf+fyPnoF5j/siW9wLcCl9ihHQdGw2PidWNQuZZ2uICtqjpzWatCVN9FhaDVPvgtq1jjWQE87yYdlcNBGQaQ4XK5wyc8v1Qml3zv7dO2NwEg+U0ijYHORK4FiOvHingtTBE4Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DwDyrKAH; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="MqPqWvVz"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Zmz7gvXLNFVU4mNYIz/OPYF+Wmm1sQQVAFvVlSg3PHo=; b=MqPqWvVzeciw+9k9ZHFlL1NsYH
-	XwfwCHs432mQts+AoUa/ZLJy3aEtYxuIuF774C+/KgZKBhKndWv51ijInjwM1xeIq789f++JXXEmK
-	//fmn+IgV0eMhiUtEW0/8VdRpUzT1uesPP0O9wZIK5Enm6ULyqtQYDrKNJzKz2vDIhJQCyWpDiN2I
-	JCxQ5TZb3EkX9Z1ihZ4Vqi4h1H2U5gaAQypqyQnX5XiAkpOKaTbWd2/11LudEwZ8xAkADQFUOcuZe
-	oMdahRJSu0yvSiGvZWsEglPUZB8reyYzBM5h7DTVwyvF4J8utQMOaOPXWcRFrXIbg+hjPeGIP2bHS
-	7JYdjYZQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wSCP3-0000000DgjA-34PG;
-	Wed, 27 May 2026 11:26:26 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 48130300673; Wed, 27 May 2026 13:26:24 +0200 (CEST)
-Date: Wed, 27 May 2026 13:26:24 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: quzicheng315@gmail.com
-Cc: arighi@nvidia.com, brho@google.com, bsegall@google.com,
-	changwoo@igalia.com, dietmar.eggemann@arm.com, haoluo@google.com,
-	joshdon@google.com, juri.lelli@redhat.co, kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org, mgorman@suse.de, mingo@redhat.com,
-	quzicheng@huawei.com, rostedt@goodmis.org,
-	sched-ext@lists.linux.dev, tanghui20@huawei.com, tj@kernel.org,
-	vincent.guittot@linaro.org, void@manifault.com, vschneid@redhat.com,
-	zhangqiao22@huawei.com
-Subject: Re: [PATCH v2] sched_ext: Rebuild fair weight on ext to fair switches
-Message-ID: <20260527112624.GT3126523@noisy.programming.kicks-ass.net>
-References: <ahXWaL2BYLU6ukkO@gpd4>
- <20260527094037.3494671-1-quzicheng315@gmail.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DwDyrKAH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1779885386;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=00VwKjTB9kl8nKM1Psf7Af/EO1i5jirjpXmjK/eUEG0=;
+	b=DwDyrKAH5BQYHgB1q638zCAmLDPhAIoVUqK3STDfIW/IwEDYFNPLOr1lZriE0I0MqosZ16
+	eBETYAhhsYOhadQVcnsmIyR04yomfJKXSQuww0W1tAYSRvSL0Fo9meuQGnpn0dv2xUaGDc
+	NHrQIdElxby59q7YjJqpf9Y0fDKoCBE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-253-I9TNDJOoPra7Fj6JKJDDDQ-1; Wed, 27 May 2026 08:36:24 -0400
+X-MC-Unique: I9TNDJOoPra7Fj6JKJDDDQ-1
+X-Mimecast-MFC-AGG-ID: I9TNDJOoPra7Fj6JKJDDDQ_1779885383
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-48e79219704so80659635e9.1
+        for <sched-ext@lists.linux.dev>; Wed, 27 May 2026 05:36:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779885383; x=1780490183;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=00VwKjTB9kl8nKM1Psf7Af/EO1i5jirjpXmjK/eUEG0=;
+        b=Cdf3y2Y+JJN5EwEZMq7e6534+p4yM5R4LSAa0QVljKQsHtsYX6BXbl2k9nuhmuKvIT
+         qcYk1OjjoQvxQFLXLzNMLpJcFj7/RXqhPX8jSubNR8iBDx8LUJxWa+NySMNDUFrfrpgW
+         phD5YiWkyj2hOEftQCKoUn1Lv496gMnhLXBIvr7+nONisjA9nHomELY7zSxv+dOJXZpn
+         RgJtWljVphYcymLD+hFCVOe78z7Z/afaaPkaxcA5gUzjoEHxoHyrgbBpOI2g94R5xxeB
+         +vpw+yzXP3Nd0WDz2tANB7e/x3IysVdj3G2bD4VuKf8bJKMqQQZXYNBusCKR/9BX4dxa
+         9RMA==
+X-Forwarded-Encrypted: i=1; AFNElJ+WB6E4pl8+IN1EVSV43bFGigU4dHw1PMPnQ4woD2d7oqRqKt4OeesWviVdP/7sdqmC4Tp3kqZONKc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzSmdhFuV4+DZS7XTIp/7HqicV5/3neAnn/Y9tTZ44m/szn1E/f
+	o8ONNlgqThc308uvH1txYH/e2c8o4p+WZippDqkKzCrAmkWZMeZvLdOjvmHjTdpmFuW74Wd49Jh
+	yNfqMP1NIYuOcLuk45R4G5Tq57+A89++VYqrWZEpCKVyfAOZvY74eiDc0YQRctQ==
+X-Gm-Gg: Acq92OGdAqZ/BqFE1l1zq4ZWu3lqYu5iIatzdYGDOapLZXGpJC2u4cVqCbAF+YDRoLN
+	R6Mak6NBrNAxfmdl/ZMcBSSRh75sa6ZFWhTdw8ZZ75EsZz6kxk08rs7QO0TNbSEj6LJwxrzAS6s
+	Crm4xQj8uTGGRWxbN4z7xzOaoSwLNPdOWctP24ihEz6+5ycWuUynvA83s8UTrHzOr4qp57F9Ago
+	5xEGz1ThUrorRoutdF5lHhAbAwizh+G1+meZGovj4Q/di3MVWiNSJ5PkAfM7oCLlmrih18R8g14
+	wE2JtuJkgN8vokjYS6tbJrPwtYYXsADcvvh6P6eDOOIauN/QbNyagqQRghIt1WNM0T983cH0ql0
+	xgHT9tVyRB7RgXos61YyEZXM07y5xwXviKmnYPOimhukG1LrllC0I9gTC1X8ArJA=
+X-Received: by 2002:a05:600c:83c8:b0:490:601f:d783 with SMTP id 5b1f17b1804b1-490601fd8f3mr246216725e9.4.1779885382959;
+        Wed, 27 May 2026 05:36:22 -0700 (PDT)
+X-Received: by 2002:a05:600c:83c8:b0:490:601f:d783 with SMTP id 5b1f17b1804b1-490601fd8f3mr246216325e9.4.1779885382555;
+        Wed, 27 May 2026 05:36:22 -0700 (PDT)
+Received: from jlelli-thinkpadt14gen4.remote.csb ([151.29.44.165])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4904527f7f7sm588107325e9.7.2026.05.27.05.36.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 05:36:21 -0700 (PDT)
+Date: Wed, 27 May 2026 14:36:18 +0200
+From: Juri Lelli <juri.lelli@redhat.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Phil Auld <pauld@redhat.com>, Koba Ko <kobak@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCHSET v3 sched_ext/for-7.2] sched_ext: Auto-manage ext/fair
+ dl_server bandwidth
+Message-ID: <ahblQnYT6Y9CTJMJ@jlelli-thinkpadt14gen4.remote.csb>
+References: <20260526164420.638711-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <20260526164420.638711-1-arighi@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: LY15mJG5OmejiLvutcXzLkQWxqEP3yrApId1UmhNWTw_1779885383
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260527094037.3494671-1-quzicheng315@gmail.com>
 
-On Wed, May 27, 2026 at 05:40:37PM +0800, quzicheng315@gmail.com wrote:
-> From: Zicheng Qu <quzicheng315@gmail.com>
-> 
-> Tasks running on sched_ext do not use p->se.load as their active
-> scheduling weight. Their nice-derived weight is maintained as
-> p->scx.weight instead.
-> 
-> When such a task switches back to fair, CFS expects p->se.load to match
-> the task's current policy/static_prio before the task is enqueued.
-> However, not all ext to fair transitions rebuild p->se.load. For
-> example, scx_root_disable() switches tasks back to fair directly, and
-> partial mode can move a task from SCHED_EXT to SCHED_NORMAL through
-> sched_setscheduler(). In the latter case, set_load_weight(p, true) runs
-> while p->sched_class is still ext_sched_class, so reweight_task_scx()
-> updates p->scx.weight but leaves p->se.load stale.
-> 
-> Rebuild the fair load weight in sched_change_end() when the class switch
-> is from ext_sched_class to fair_sched_class. This is after the class has
-> been changed and before the task is enqueued on fair, so CFS sees a
-> native load_weight derived from the task's current policy/static_prio.
-> 
-> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-> Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-> ---
-> Changes in v2:
-> - Move the fix from scx_root_disable() to sched_change_end() so the same
->   ext-to-fair rebuild also covers partial mode SCHED_EXT to SCHED_NORMAL
->   transitions through sched_setscheduler(), as Andrea pointed out.
-> 
->  kernel/sched/core.c |  2 ++
->  kernel/sched/ext.h  | 11 +++++++++++
->  2 files changed, 13 insertions(+)
-> 
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index b8871449d3c6..c694aabc451a 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -11200,6 +11200,8 @@ void sched_change_end(struct sched_change_ctx *ctx)
->  	 */
->  	WARN_ON_ONCE(p->sched_class != ctx->class && !(ctx->flags & ENQUEUE_CLASS));
->  
-> +	scx_rebuild_fair_weight_on_class_switch(p, ctx->class, p->sched_class);
-> +
->  	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switching_to)
->  		p->sched_class->switching_to(rq, p);
->  
-> diff --git a/kernel/sched/ext.h b/kernel/sched/ext.h
-> index 0b7fc46aee08..1f8248c897af 100644
-> --- a/kernel/sched/ext.h
-> +++ b/kernel/sched/ext.h
-> @@ -35,6 +35,14 @@ static inline bool task_on_scx(const struct task_struct *p)
->  	return scx_enabled() && p->sched_class == &ext_sched_class;
->  }
->  
-> +static inline void scx_rebuild_fair_weight_on_class_switch(struct task_struct *p,
-> +							   const struct sched_class *old_class,
-> +							   const struct sched_class *new_class)
-> +{
-> +	if (old_class == &ext_sched_class && new_class == &fair_sched_class)
-> +		set_load_weight(p, false);
-> +}
-> +
->  #ifdef CONFIG_SCHED_CORE
->  bool scx_prio_less(const struct task_struct *a, const struct task_struct *b,
->  		   bool in_fi);
-> @@ -55,6 +63,9 @@ static inline int scx_check_setscheduler(struct task_struct *p, int policy) { re
->  static inline bool task_on_scx(const struct task_struct *p) { return false; }
->  static inline bool scx_allow_ttwu_queue(const struct task_struct *p) { return true; }
->  static inline void init_sched_ext_class(void) {}
-> +static inline void scx_rebuild_fair_weight_on_class_switch(struct task_struct *p,
-> +							   const struct sched_class *old_class,
-> +							   const struct sched_class *new_class) {}
->  
->  #endif	/* CONFIG_SCHED_CLASS_EXT */
+Hi Andrea,
 
-This is truly horrible. We have 4 class methods involved with switching
-classes and you stick in a random call in a place that is called when no
-class is changed.
+On 26/05/26 18:42, Andrea Righi wrote:
+> Currently, a fixed bandwidth is reserved at boot for both the fair and ext
+> deadline servers, and this reservation remains unchanged unless explicitly
+> modified via debugfs. As a result, both servers permanently contribute to global
+> bandwidth accounting, regardless of whether a BPF scheduler is active.
+> 
+> While unused bandwidth can still be reclaimed at runtime by other classes, this
+> static reservation prevents RT from fully utilizing available headroom in
+> situations where one of the sched_ext or fair class is guaranteed to be inactive
+> (for example, when no BPF scheduler is loaded, or when sched_ext runs in full
+> mode and replaces fair).
+> 
+> As discussed at the VIII OSPM summit in Cambridge [1], a better solution would
+> be to dynamically register and unregister deadline server bandwidth based on the
+> active sched_ext state. This allows the kernel to automatically enable bandwidth
+> accounting only for the scheduling class that is currently active, while
+> disabling it for inactive ones.
+> 
+> This patch series implements this automatic register/unregister logic. Moreover,
+> the sched_ext total_bw kselftest is also modified to validate the correct
+> behavior across the different scheduling configurations and ensure that
+> bandwidth accounting follows the expected state transitions.
+> 
+> [1] https://retis.santannapisa.it/ospm-summit/
+> 
+> Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git dl-server-bw-v3
+> 
+> Changes in v3:
+>  - Don't bypass __dl_overflow() for detached servers in dl_server_apply_params()
+>    to reject oversized configs up front (reported by Sashiko)
+>  - A potential divide-by-zero in dl_server_apply_params() reported by Sashiko
+>    has been fixed in a separate patch (not introduced by this patch set):
+>    https://lore.kernel.org/all/20260526100502.575774-1-arighi@nvidia.com/
+>  - Link to v2: https://lore.kernel.org/all/20260526082954.550958-1-arighi@nvidia.com/
 
-Would not something like this work?
+This looks now good to me.
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 62a2dcb0d03e..a2eb43bd73b9 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -14957,6 +14957,11 @@ static void switched_from_fair(struct rq *rq, struct task_struct *p)
- 	detach_task_cfs_rq(p);
- }
- 
-+static void switching_to_fair(struct rq *rq, struct task_struct *p)
-+{
-+	set_load_weight(p, false);
-+}
-+
- static void switched_to_fair(struct rq *rq, struct task_struct *p)
- {
- 	WARN_ON_ONCE(p->se.sched_delayed);
-@@ -15351,6 +15356,7 @@ DEFINE_SCHED_CLASS(fair) = {
- 	.prio_changed		= prio_changed_fair,
- 	.switching_from		= switching_from_fair,
- 	.switched_from		= switched_from_fair,
-+	.switching_to		= switching_to_fair,
- 	.switched_to		= switched_to_fair,
- 
- 	.get_rr_interval	= get_rr_interval_fair,
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+
+Thanks!
+Juri
+
