@@ -1,101 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E20421A09;
-	Fri, 29 May 2026 18:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A70327874F
+	for <sched-ext@lists.linux.dev>; Sat, 30 May 2026 05:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780080249; cv=none; b=nvClOGO2ooKsba+ORq+QONTzMX/XYLBlvtf16YCks4psbNqsHexPod4DIjVm7ZlT5XIVcQzandGDXAg74YnjYWP3vT076T9TF0dH1CE08fHPSbd+Ei87n3GbGzgXWp978jQ28QR/pD+1MnFT4C78vJTSCaNwChySs9sfJGyi8Qw=
+	t=1780117570; cv=none; b=lDMvpuKUnmJ0LSelrn7bmvtxxmD9HimKkrU2MQgDUqTGrDqB2b68RxgjU7Tm22WW3glrtLURmr2alZiHYSco4KK568VSiK9eOq1/SSycVMMBDfD776Xhp455CstqTRlgQgE/LAr/U3XiRibRKUW79Ga1cX1H5oUyw6lmBXCaXZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780080249; c=relaxed/simple;
-	bh=lB4UHwwKsjEktKbsiosmb+A5JY/1UUjZeTWNw5g5k8w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PxE8ckovPzFbWbsMKo9ufDa+SSJbK52OyJAu9lN2uiQvb3ITNYUcjTlmr6WCCcqByjymqIsmeqRfopyTDtVChXdhzIGQIWrtTBOHCqWeB/qH3wfBWKlxAq8L3Ph/GwU/HJab62k0SF/kppKuDs80KsYVUcZkR76dC5AJGK8BfsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BO85kgeP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780117570; c=relaxed/simple;
+	bh=jZW/h0L71tOXj5QQdmWlP76DvpBaf55k9VUqHUX7v9A=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=eIYzYIkdbvvZrzD1savqtAgNrOQA+PwD2UotW2BsEBhWzmdvah0gEI0X5KWTLD2Pi/3DTZJXPlQHZ4ZmgjdIEg8ZE9FtnaLDNSccY4RAIkcN894zqPYVaYtCqIjq6YAFApLSaLqdhlAQ9hH76402apQ8AeFFVND2C/z5xD8tuP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCSYUOr5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BO85kgeP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842341F00893;
-	Fri, 29 May 2026 18:44:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCSYUOr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0FB1F00893;
+	Sat, 30 May 2026 05:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780080246;
-	bh=ZwpO+pOOZTWBchQdW/Dv7jGhsKusDPQYZ/nVee/aPKo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BO85kgePRyguLqXdsSmYSPPbc2M9M1R9D7u7yNKftG8vO83z5DOcpC1hVIDZvumcT
-	 QWxKTrqcHbY4mwtZyZS6Ri4wQ8M2wE5vozWmFRthBrdQTSjixI1eNMVZe401kMXp9x
-	 VKQXxqMh1mY8BQveioCajwIz3qEgPD3Wz7WFV799FuuXrDcApB+DKzZxCKjOMBtPc8
-	 xHIQ50diUzeyAWDTfME/K/4V9hozcFX8TbJXdud7+hlk9p/n3YoI3H2L1udoyJNVo2
-	 5aUAa1AzYtzcKeTBeKIaIbwzo5WR4sOI3s9svJydmcCnk5t2Y6uhwHfkazwN33Ed9k
-	 vzcg2+4l1sZBA==
-Date: Fri, 29 May 2026 08:44:05 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: David Hildenbrand <david@kernel.org>, David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
-	bpf <bpf@vger.kernel.org>, X86 ML <x86@kernel.org>,
-	linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-	linux-mm <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/8] bpf: Recover arena kernel faults with scratch page
-Message-ID: <ahnedQ33ZH8ogjbC@slm.duckdns.org>
-References: <20260522172219.1423324-1-tj@kernel.org>
- <20260522172219.1423324-3-tj@kernel.org>
- <7fd673df-22f3-4d70-a779-ea0b878188b3@kernel.org>
- <DIUMP21RASZI.2VNQV45RIL209@gmail.com>
- <3901fe0537edee9d7acdfd91695ead28@kernel.org>
- <CAADnVQJ+CqAszS2sSVu7gSfA_g4oaTR+SWmLNMX3_8c=OdR7NQ@mail.gmail.com>
+	s=k20260515; t=1780117569;
+	bh=WHNOx6lkls29/0E279+9tGTBN39OFcMaYbUMkeoITEk=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=PCSYUOr5Hs/enPG97Ws1c/qwKE8HeW8ukY+jEzvjjM2rTSAvPaUKtpraS9qv3R6R9
+	 QqNiaUV7iExWUQkemEs8ne5KK7x2r+YAQTXCa7RSyhOGPc3psgJkeo56+80DAQRG0f
+	 57WB7+Diy83gi6SENs0i+DxkX7AkZ/UtpNFVkxwwDOImCWwoRRVlHF6MVmhNvQmTXJ
+	 fCQjDhQpPhqXfBT2RkE637ddRGtJOmCnArfhEDMejujK5nGAVuJfDJqC1G5qLwqhmB
+	 FPI0RruFOPjpuPGNPToFjeQJYhUg5zgRqeS70a+3+bW8L09sUYoplb1eN4pSiWWAY/
+	 MZDsR2NxRuy2Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3] sched/fair: Rebuild load weight when switching to
+ fair
+Reply-To: sashiko-reviews@lists.linux.dev
+To: quzicheng315@gmail.com
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260528131238.3879110-1-quzicheng315@gmail.com>
+References: <20260528131238.3879110-1-quzicheng315@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 30 May 2026 05:06:08 +0000
+Message-Id: <20260530050609.0D0FB1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAADnVQJ+CqAszS2sSVu7gSfA_g4oaTR+SWmLNMX3_8c=OdR7NQ@mail.gmail.com>
 
-Hello,
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] Updating task load weight without scaling its PELT averages corrup=
+ts load_sum when attaching to fair.
+--
 
-On Fri, May 29, 2026 at 11:38:21AM -0700, Alexei Starovoitov wrote:
-...
-> > 1. The racing write. set_pte_at() and the scratch installer's
-> > ptep_try_set() hit the same PTE with no common lock. On x86-64 and arm64
-> > set_pte_at() is a single atomic store, so it can't tear against the
-> > cmpxchg, but a plain store racing a cmpxchg isn't atomic in general.
-> > David, is that the worry - an arch where set_pte_at() is split and could
-> > tear - or something else?
-> >
-> > 2. The SEGV. It's a BPF program failure propagating out as a SEGV. Maybe
-> > not ideal, but as long as we surface the BPF error properly, it doesn't
-> > necessarily seem broken to me.
-> 
-> returning EBUSY because apply_range_set_cb() hit scratch page
-> is SEGV out of arena_vm_fault() and arguably ok-ish,
-> but bpf_arena_alloc_pages() returning NULL because scratch page
-> was in the range just sucks.
-> Earlier bpf prog passed the wrong arena addr to kfunc and triggered
-> that scratch page. It broke the contract and kept the pieces,
-> so ok-ish too, but overwriting scratch page with proper page
-> during bpf_arena_alloc_pages() is imo much better behavior.
-> That scratch page will cause all future bpf_arena_alloc_pages() fail as well.
-> Hence I prefer that check removed.
+commit 5e323dec0121afc6858dcf6c332ec85a8dc01718
+Author: Zicheng Qu <quzicheng@huawei.com>
 
-Yeah, let's do that. David, would that be enough? Or are you still concerned
-about set_pte_at() competing with ptep_try_set()?
+sched/fair: Rebuild load weight when switching to fair
 
-Thanks.
+Tasks running outside the fair scheduling class may not keep their
+load weight in sync. This commit rebuilds the load weight from the
+switching_to hook before enqueueing back into fair.
 
--- 
-tejun
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 62a2dcb0d03e6..3671b512dcf7f 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+
+[ ... ]
+
+> @@ -14957,6 +14957,15 @@ static void switched_from_fair(struct rq *rq, st=
+ruct task_struct *p)
+>  	detach_task_cfs_rq(p);
+>  }
+> =20
+> +static void switching_to_fair(struct rq *rq, struct task_struct *p)
+> +{
+> +	/*
+> +	 * Tasks may come from classes that don't keep se.load up to date.
+> +	 * Rebuild it before the task is enqueued.
+> +	 */
+> +	set_load_weight(p, false);
+
+[Severity: High]
+Does updating the task load weight without scaling its PELT averages corrupt
+load_sum when attaching to fair?
+
+When a task transitions to fair, switched_to_fair() enqueues it by calling
+attach_task_cfs_rq() -> attach_entity_load_avg(). The attach_entity_load_av=
+g()
+function relies on se.load.weight matching se.avg.load_avg to reconstruct t=
+he
+unweighted load_sum:
+
+kernel/sched/fair.c:attach_entity_load_avg() {
+    ...
+    se->avg.load_sum =3D div_u64(se->avg.load_sum, se_weight(se));
+    ...
+}
+
+Since load_avg is based on the old weight but se_weight() returns the newly
+updated weight, load_sum ends up mathematically scaled by old_weight /
+new_weight. If a task's nice value was changed to a lower priority (smaller
+weight) while outside fair, load_sum could be artificially inflated by a
+massive factor, polluting cfs_rq->avg and disrupting CPU load balancing.
+
+> +}
+> +
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260528131238.3879=
+110-1-quzicheng315@gmail.com?part=3D1
