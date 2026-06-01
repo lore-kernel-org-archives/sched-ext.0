@@ -1,74 +1,73 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA8A35CB89
-	for <sched-ext@lists.linux.dev>; Mon,  1 Jun 2026 12:42:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F654372B50
+	for <sched-ext@lists.linux.dev>; Mon,  1 Jun 2026 15:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780317721; cv=none; b=N7gD4ujUtwnSXlNCSn5EmVOCebKkJZtwCg/SHrkNCAORQ1uicY0khfx+qG7gq/oF75cpI1BjZyinrSkt75rGTAXatLrn7SlMqjpUxMTHh4vvVXXOFND4MDUuhMtBme3pxByI2zFUEgMouCa34fiqe1y54OFtatsOuKbxkclgpRM=
+	t=1780329281; cv=none; b=ovNVeHR+mdAxuJGCsWevEUstULRYFuBvLytkzc+O2c2M6cpOukTyV8x7ngu3uCB+BgYXYmRxeyfdi4ukx1w/ol1yQ1nIn3OW78RCqFFO6PDUKssFimhOnBdfwoc3IYwuo6FALjkJZ6eRiM4lW41zqjz7bZlOu8+Yamn4fRhvzTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780317721; c=relaxed/simple;
-	bh=fSvt1vasSY/G30ddgDrjyy8+zV9Vlao9wYsxECgQ4mk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=usI6+2ZreMOpvBYlHHOyLbX2A/1XzLXdv00ksrRNYYOLDYO0pTX4pC0YRYvZr2xG1QW6p2KM2gCwVPtyreq2fyOJDb8Z/PKDvCfUmJEAilNPBm0DTgy+AMn1XKVotNhuL4XueMji9Hqz25GwjYt0E5uCTbOZ1A1q1tAKNhmAb/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com; spf=none smtp.mailfrom=readmodwrite.com; dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b=KL7klPke; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=readmodwrite.com
+	s=arc-20240116; t=1780329281; c=relaxed/simple;
+	bh=hlZBZqz5tyEq9CrBEiiBmpw3/OemZtzihyvwNijEMzM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Abzuvs4WInU0+MhKZgNxe46CgB0W+4BRE5khhg0iYGTyUEg3r9iKnEdSsyKhmxqWOYOPcPn6vmhaASErOEcAlFD+rXVH8vAMIyV/nLgSTkm0EnCMDUN89P10xu/qsBYDTRbGA5PTtphn/4CW0SJIuiYjAS9MDeQhv/xt+cvma/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZOmD3/I8; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b="KL7klPke"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4903997fcb5so103760575e9.2
-        for <sched-ext@lists.linux.dev>; Mon, 01 Jun 2026 05:42:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOmD3/I8"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-36bcbd7821fso1419646a91.2
+        for <sched-ext@lists.linux.dev>; Mon, 01 Jun 2026 08:54:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=readmodwrite-com.20251104.gappssmtp.com; s=20251104; t=1780317719; x=1780922519; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780329279; x=1780934079; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gfyPv7a96A4SDDYDoTWoVCAL2rD5vN2GwJzxHozmv94=;
-        b=KL7klPkehybHeNoCv1KwXSgQgnad8m3fmq38zmmfm9GxrNLjwav/atxZx1mDxIWg53
-         ElG3yZvs0FRLjEJYK2tS5mW8a0xVQFnUUvNaSIywhxGOEdP5nC7MJexsCh1oYW2fASG1
-         hi0FLd39ifC3l85RylWIhwzoJ3iTZfsbhzOLbOvx49v9hxhX3yuuMlUjJKFQuZ46t+Bk
-         7jHeECq1GJ9Zz0SuoCCxFfr2Jjdf8/iCgtz5K1RqmlJ2Ig6oK17Rzyqqc6OegV6yqXwp
-         U0vecW/70ZeXRMq4MYx+3ylywqH/N0jywNHusw7hviWWTORbMXdVUknYKCWTaXKGqOSa
-         g7Dw==
+        bh=D3UQqP1dEr1GoIfNwRf46B+2umMBSWEa9MFAzB8tetA=;
+        b=ZOmD3/I8FDftg7N5RZvzAkeiHbUVJWgUrXXuyt+bfTrsve3BJ7jED7mO7Jldn9WyYp
+         RdZHWqtQQNCTUcwZq/ZAPHe0Ab070G61Us9hNJ1VCovb/EtBaNESvtIaKhKtnr+lcIt3
+         FWxSQd2Ud5lfOJL3xFlaOX7SkHv7yzyCQiVAU1oXHEH49T17q/wg/Cy/2wHg2qwHUcNZ
+         GJJx1QRRmQkD2bk0z1dOV0YRaWgM33XujRL3dCiN+CB2xTXsirH/Epqe68zadWg/VZao
+         Daxr1tDfKUniq38HG8jqCCx/qZrgg983g0K2KH4rpnGqS3zsf5zxl93/GH7G99bkm/ck
+         O4cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780317719; x=1780922519;
+        d=1e100.net; s=20251104; t=1780329279; x=1780934079;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gfyPv7a96A4SDDYDoTWoVCAL2rD5vN2GwJzxHozmv94=;
-        b=VjrJCFdj+LtNpJv6HLOSmnawBll+Hz3ddahX2fHxVNb5YuwHfKzVWetTX4FtmPXItA
-         x/TKeE4urRL6dOcudE4Slgf5vVCAI3xyY76VD1V0cy6vE73XrD5yLzhiNn6nPAQNMYG5
-         AG9Sowge6XGSeOYGtyEMBvcMzgaoA8e8nzWEoYfDtm6EGREck8MzWEw5w9JthXg/+8vo
-         BF2xhjhl2G/mipjdHLn2zxeCSXra/DfCPGHGglJkVLm3B5UKZHHEFtvHpjxo9AWVm+jj
-         fZH1TS/U/67lppM+f3bPKW9X897gdo3rxpAtgVyJPy0Uk+0zaP65C63odiMxmyBtfBhr
-         XVQA==
-X-Forwarded-Encrypted: i=1; AFNElJ/+/LjcFK3QeKniVEUiTJ2wFiAzWYQ93FQll0semUF9N4IVEabAadeyM+YF+kKdoNu5IVEVEzLcCqY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzzvDhJ3lqApdVepHguDIAnNPcHt9cw45c+6i+lXOlMRQ8sUgVG
-	qk1lA3Np/Gcmh8+OjdxZNh8htSWJ3ei6fYFi16VzPP7lrflSn8TJRwkpII5e14flEt4=
-X-Gm-Gg: Acq92OFOlWgeJixTHjlNZtXEFX3zck/hR09Ik+x/p+jNLzv5moEonCdnef2QyQMgau9
-	jVChidQGqDgV11QYzCd/gUQ7B49v/MjDSwMnnin+yRhGPDEkwBb61efVULU3hhfjv5A1g9JTxLT
-	Riv73C7rOwlF6oCsV6YyAx3DAw/ildue5XlOvWsdgT0pfwJQ2IsWjIsGKgtejWE08NvlpMze+Fp
-	HObrU6udbnkLkGjItgvkqmeWk0s2XU1xohvQfyPvIPpRt0IMa3JaPf6PsdlyAMX8MWjWCZAxPrC
-	TefTMMz16ejqVW19cPKvxH1E1aCCZeh4A94YM9v/MnwggKI/hiYqdcwYzWR6JoUxk6Q1u8zg0uy
-	BU8kyd+I9R4PvnuNFWMvMJpnuytKI5/VxV1gD9GdIWvlDPHI58SYIE9SmYp+Niov2iK58NDn/8J
-	DzUGwLIyf5tusxdy/EnOXQ/CTdlzTd3RuLyWpUhvxAGS5JBvcXLQ==
-X-Received: by 2002:a05:600c:818c:b0:490:48df:2793 with SMTP id 5b1f17b1804b1-490a296df9amr205353575e9.26.1780317718760;
-        Mon, 01 Jun 2026 05:41:58 -0700 (PDT)
-Received: from matt-Precision-5490.. ([2a09:bac6:37a8:26a0::3d9:2a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef34c50f6sm28006952f8f.16.2026.06.01.05.41.57
+        bh=D3UQqP1dEr1GoIfNwRf46B+2umMBSWEa9MFAzB8tetA=;
+        b=PmjWsZNEdhTtttpsq5rjm5SZ8wy4YSTPIqjb5eHonTh2AuwJI5oC4wDJ8Jmazg72cd
+         KyuEwkZ8BEANKUHPDffG3jKrWELqfO8i0+vngIktK0DaChcX8SlWqSTrTRBl8pCoHdDk
+         YmRStidDf/N+J3vzvU1CRsJjoK/Bx+NiIz8dSFZyvzBPmmwHQHATUfB81Os3umWdARSx
+         Ry8EXtB5u8/jZ5gh8VtovHn6Pw4FgFM7t5VN6Zpwhq2fhvTg9YYg5T77jXzlhr4QPbIe
+         aaadsNBsEAlxU73sClZv2TBgh0uGO1o5wOIny/fDluey9zRgbUvZjMb84deUeC3BYV5p
+         g38w==
+X-Gm-Message-State: AOJu0YxWxQkw9TiQioRVUFckIWN8/cLoK4YDKrwcFOcMrrFTLXzcyUB1
+	KZ3gsTdRrCAwsGV8ONgBz0b+bYxwH+BsPBRi9KHX1cEC8X9UD12+OtuQEBu62g==
+X-Gm-Gg: Acq92OF+HpgnPxMvMg5MSYWg0wIGW5u4jp9slTrkp1gtkZfJQ0lI/84HylTMewSSByP
+	kriltDMNZlNw2NdqYs2YHFjbn4xzQsJUeAS36Rg1/y+DWG6I+z3rL+zHxeZksCET2XYMILOwZkP
+	2XhPnktQNyix1ci5w8mZ0juUvlQRDz/YFxE/SSs3teIultbOaNv6L78RuXt2DKp7KjdKGfkHue3
+	SWfT2o35l3ZTwTF/gVXgY4gP+hVQ/oaG8/RhhEPU/yMtBBkX62jA8/R3UPOE1RiHcTVKtC8wTN9
+	3o4u1puk6X9O+U369wlnQNOcywDtgaoCTcpvymnkKAI0G/Qc2hlAgw0rS1o2AuRjaarfmsm1AaI
+	voOARD9pbCIteXCe2ruWji95Ii3Sgq6bSRK2SfQ0HN9Z9JaJoiqh6H85Ug3s8lENH3loaf5CCJO
+	24lID8TspL1q0nFFchoVFjciYEYcxkbxjOlF20JqLHQ8jr9Bjt0o+W9Jy1y3I1xA==
+X-Received: by 2002:a17:90b:3141:b0:366:1bab:c3d6 with SMTP id 98e67ed59e1d1-36c4ff6456emr12266929a91.10.1780329279209;
+        Mon, 01 Jun 2026 08:54:39 -0700 (PDT)
+Received: from eric-wcnlab.tail151456.ts.net ([2001:288:7001:1099:197b:3172:a431:c73])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36dd90415besm99131a91.0.2026.06.01.08.54.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 05:41:58 -0700 (PDT)
-From: Matt Fleming <matt@readmodwrite.com>
-X-Google-Original-From: Matt Fleming <mfleming@cloudflare.com>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>
-Cc: Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	kernel-team@cloudflare.com,
-	Matt Fleming <mfleming@cloudflare.com>
-Subject: WARNING at kernel/sched/ext.c:3227 scx_cgroup_move_task+0xa8/0xb0
-Date: Mon,  1 Jun 2026 13:41:56 +0100
-Message-ID: <20260601124156.2205704-1-mfleming@cloudflare.com>
-X-Mailer: git-send-email 2.43.0
+        Mon, 01 Jun 2026 08:54:38 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	yphbchou0911@gmail.com
+Subject: [PATCH sched_ext/for-7.2] selftests/sched_ext: Fix dsq_move_to_local check
+Date: Mon,  1 Jun 2026 23:53:48 +0800
+Message-ID: <20260601155426.1460441-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -77,35 +76,29 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi,
+scan_dsq_pool() checked == 0 against scx_bpf_dsq_move_to_local(),
+which returns true on success. This inverted success and failure,
+causing peek_dsq_dispatch() to double-dispatch on success and skip
+the real_dsq fallback on failure.
 
-We're hitting a WARN_ON_ONCE in scx_cgroup_move_task() while running
-scx_lavd. The stack is:
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+---
+ tools/testing/selftests/sched_ext/peek_dsq.bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    scx_cgroup_move_task+0xa8/0xb0
-    sched_move_task+0x134/0x290
-    cpu_cgroup_attach+0x39/0x70
-    cgroup_migrate_execute+0x37d/0x450
-    cgroup_update_dfl_csses+0x1e3/0x270
-    cgroup_subtree_control_write+0x3e7/0x440
+diff --git a/tools/testing/selftests/sched_ext/peek_dsq.bpf.c b/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
+index 7f23fb17b1e0..9e802b52b29e 100644
+--- a/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
++++ b/tools/testing/selftests/sched_ext/peek_dsq.bpf.c
+@@ -95,7 +95,7 @@ static int scan_dsq_pool(void)
+ 			record_peek_result(task->pid);
+ 
+ 			/* Try to move this task to local */
+-			if (!moved && scx_bpf_dsq_move_to_local(dsq_id, 0) == 0) {
++			if (!moved && scx_bpf_dsq_move_to_local(dsq_id, 0)) {
+ 				moved = 1;
+ 				break;
+ 			}
+-- 
+2.48.1
 
-The trigger is systemd's user@UID.service startup. The user manager
-writes +cpu +memory +pids to its own subtree_control. Because +cpu is
-already inherited, the cpu task_group doesn't change -- but
-find_css_set() returns a css_set whose subsys[cpu] pointer differs
-from the source (different css object, same tg_cgrp()). That sets
-the cpu bit in mgctx->ss_mask, so both cpu_cgroup_can_attach() and
-cpu_cgroup_attach() run.
-
-scx_cgroup_can_attach() checks "from == to" in tg_cgrp() and skips the
-task, leaving cgrp_moving_from NULL. But cpu_cgroup_attach() calls
-sched_move_task() unconditionally, so scx_cgroup_move_task() fires and
-WARNs on the NULL.
-
-I managed to reproduce by cycling systemctl stop/start
-user@UID.service. The hit rate varies with css_set cache state.
-
-Any thoughts on the best way to resolve this?
-
-Thanks,
-Matt
