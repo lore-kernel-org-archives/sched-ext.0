@@ -1,225 +1,219 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EA93803C7;
-	Mon,  1 Jun 2026 18:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF3423393C;
+	Mon,  1 Jun 2026 18:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780339051; cv=none; b=CxZFpdEO8ZGo/3Sbggq0cjyyMobqFhYhfez6Pc22UGZN9E0Vwx2ghCMwjTs/F1hjxzaT7gJyKNb32CvsofcPWAOkHHaNt5yfHdYpkIv4DB3Gr3Bqs0AMpb5TR5IlTFRjFg47UB3Vv/fDT4XMRDA5IazAM7fae50CespjTwnk0r8=
+	t=1780340284; cv=none; b=qCbIkNSHlHJU9w41YRMDKIzwBJVKw9EMoj762zlFOU0/jND2RtvGLjbjV5CrzpWcEbQEna+I/jtBEydoADyvTsBQZTDF1HWGyY+urWu+8PEzPzmPhNWY4NwM5zhmDhNjgIJ0eZaeArNjefSEYMK3hopcqAWg1IRnuGG0y/BWjew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780339051; c=relaxed/simple;
-	bh=S/Vz7lEgeEnxGOMeVSybbZx7V+2Kb4zIFm/57RE48EU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=X853d5Qe8wQXEFeWLi417Ue2zmn79hg/YAPia0KO6OV+2T1tP2+IvlHb7H5meUu78S0a7u61vhKqj7YVWzctTUIJ0xSyLIJDVE8ob3X3FkvmWHPOkX7iiIEt5wt6Dptygw6H8TsYaobFPwv0QHkFJn3fSkPwAMYO6nGSmzJoaE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AeGFnrrs; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780340284; c=relaxed/simple;
+	bh=yRMay8ztBq1oRZs/VDDM24K1p4t3B+LtKCuSuuTycEM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=iL4t+v5tE7ahjfomsT5ohkTLBcF2F0FQ0RrIdQ+amyGpglGE1U6wOi/yO8oILn5lK5SBFBmKXCQmtk1rgvo9Gu5vUUUlHZL4qbWM8kxTfYmSA0bqyxHU8e4/Ef1slIs/NiMhQAQZgcZC12R5/fZ/nkkrPBxcFesZ/rORo+GOMiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MlEBJZjp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AeGFnrrs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F091C1F00893;
-	Mon,  1 Jun 2026 18:37:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MlEBJZjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22171F00893;
+	Mon,  1 Jun 2026 18:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780339050;
-	bh=453LPwlZ8/0XDh2NTel4qFyIHs7frDqHpyzC5sHiGyg=;
-	h=From:To:Cc:Subject:Date;
-	b=AeGFnrrsK0E5ty6ct0u3gW1VReUmbexgBW8yoXoczN3DxBHadkBk6Lt6cLL27yoji
-	 TD1au2oJ5rgsPB625hifuG8gVWIBPcbCDrzp1n8n35hCsjzKOaTyqRT0ItaNZwMlAY
-	 f/73X4KLIu4ok1+/RZGsXdm2QoT0qZ1jwuYRLF3o+3Wpdb+EV34DBTnALMJwS+qNyI
-	 cTCahpNQQz9nE6Yvd6nY5uBKHMvFkDjtmLAdrYfLYnJUSiI+40RGegaBz8hCYfPYl7
-	 u8DuXmy6UZwlxyhDHuYg+BXR8YRybd3v9alFTqrTU68jWbLzX9R+PwvzjFdY7RZCD2
-	 CzjYu29f8VVLA==
-From: Tejun Heo <tj@kernel.org>
-To: void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	ast@kernel.org,
-	andrii@kernel.org,
-	daniel@iogearbox.net,
-	martin.lau@linux.dev,
-	memxor@gmail.com
-Cc: peterz@infradead.org,
-	catalin.marinas@arm.com,
-	will@kernel.org,
-	tglx@kernel.org,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	akpm@linux-foundation.org,
-	david@kernel.org,
-	rppt@kernel.org,
-	emil@etsalapatis.com,
-	sched-ext@lists.linux.dev,
-	bpf@vger.kernel.org,
-	x86@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH bpf-next] bpf: Replace scratch PTE atomically when allocating arena pages
-Date: Mon,  1 Jun 2026 08:37:28 -1000
-Message-ID: <20260601183728.1800490-1-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
+	s=k20260515; t=1780340282;
+	bh=3N5P2gpKxerXP3VehMb0w4n+9h/Z0zVwrIMwJTm545U=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=MlEBJZjp777Ugtrbn2mMkQEOjHErM9H5DRvRIIBjDvDrIESyeIG3+nBsIudpDoSor
+	 9fbwtManuH9Hcj5VIF4CodOHT7Cpb5k9vennYsdjO1dJ81D8R7zagA0va1JAX+IdAo
+	 8EnVpDVjYWDPBmacfZ60kSQlA1uq6GGWFWL4REldfd0D33ggR5PUl++XafkT11YfCX
+	 Xt4yATn6mXLnmaq4UPNonej8ZotGQWACRXDeAo/3vHJIbmJWl0l86F8V8daBgCiEP/
+	 1TAOnzE6Fk+e7X59s50htOcX0SyvOxVIdf1v9iO2IZqwKREFS9j5D0bb/6xXtQVqnp
+	 E9fFi8m/UafJQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH bpf-next] bpf: Replace scratch PTE atomically when
+ allocating arena pages
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tejun Heo" <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
+In-Reply-To: <20260601183728.1800490-1-tj@kernel.org>
+References: <20260601183728.1800490-1-tj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 01 Jun 2026 18:58:02 +0000
+Message-Id: <20260601185802.B22171F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-apply_range_set_cb() maps the pages for a new arena allocation and returned
--EBUSY when the target PTE was already populated. Kernel-fault recovery
-leaves the per-arena scratch page in unallocated arena PTEs, so a later
-bpf_arena_alloc_pages() over such a page hits that -EBUSY, and every
-subsequent allocation of it fails the same way. Allocation must install the
-real page over scratch instead.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Overwriting the scratch PTE in place is a valid->valid change, which arm64
-forbids without break-before-make. Route through an invalid entry instead:
-ptep_try_set() fills only a none slot, so the PTE goes scratch->none->page.
-On finding scratch, clear it and flush_tlb_before_set() before retrying. The
-new flush_tlb_before_set() is a no-op except on arches like arm64 that need
-the break-before-make TLB invalidate. The loop also copes with a concurrent
-fault re-scratching the slot.
+New issues:
+- [Critical] Replacing the populated scratch page PTE with a newly allocate=
+d page lacks a TLB flush on architectures where `flush_tlb_before_set()` is=
+ a no-op, causing silent data corruption.
+- [High] Calling `pte_page(old)` without checking `pte_present(old)` can ca=
+use an invalid pointer dereference or kernel panic.
 
-Arches without ptep_try_set() never install the scratch page, so keep the
-must-be-empty check and set_pte_at() for them.
+Pre-existing issues:
+- [High] Calling memory allocation and page table walking functions with in=
+terrupts disabled causes lock nesting violations and scheduling while atomi=
+c bugs.
+--
 
-Fixes: dc11a4dba246 ("bpf: Recover arena kernel faults with scratch page")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
----
+commit b6f9fe34365955853d165d4a39abcf4bf12f7b70
+Author: Tejun Heo <tj@kernel.org>
 
- arch/arm64/include/asm/pgtable.h |   11 +++++++++++
- include/linux/pgtable.h          |   18 ++++++++++++++++++
- kernel/bpf/arena.c               |   38 +++++++++++++++++++++++++++++++++-----
- 3 files changed, 62 insertions(+), 5 deletions(-)
+bpf: Replace scratch PTE atomically when allocating arena pages
 
-diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index 984f050..3ce0f2a 100644
---- a/arch/arm64/include/asm/pgtable.h
-+++ b/arch/arm64/include/asm/pgtable.h
-@@ -1842,6 +1842,17 @@ static inline bool ptep_try_set(pte_t *ptep, pte_t new_pte)
- }
- #define ptep_try_set ptep_try_set
- 
-+/*
-+ * arm64 mandates break-before-make: a cleared kernel PTE must have its TLB
-+ * invalidated before a different page is installed in its place. The broadcast
-+ * TLBI is an instruction, not an IPI, so this is safe with interrupts disabled.
-+ */
-+static inline void flush_tlb_before_set(unsigned long addr)
-+{
-+	flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
-+}
-+#define flush_tlb_before_set flush_tlb_before_set
-+
- #define test_and_clear_young_ptes test_and_clear_young_ptes
- static inline bool test_and_clear_young_ptes(struct vm_area_struct *vma,
- 		unsigned long addr, pte_t *ptep, unsigned int nr)
-diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
-index b5739bb..4c6c408 100644
---- a/include/linux/pgtable.h
-+++ b/include/linux/pgtable.h
-@@ -1061,6 +1061,24 @@ static inline bool ptep_try_set(pte_t *ptep, pte_t new_pte)
- }
- #endif
- 
-+#ifndef flush_tlb_before_set
-+/**
-+ * flush_tlb_before_set - invalidate a kernel PTE's TLB before re-setting it
-+ * @addr: kernel virtual address whose PTE was just cleared
-+ *
-+ * Some architectures (e.g. arm64) do not allow a live page-table entry to be
-+ * repointed at a different page in one step. The old entry must first be made
-+ * invalid and its translation flushed from every TLB, and only then may the new
-+ * entry be written.
-+ *
-+ * This is only for the lockless atomic kernel-PTE installers (ptep_try_set()).
-+ * It must be callable with interrupts disabled.
-+ */
-+static inline void flush_tlb_before_set(unsigned long addr)
-+{
-+}
-+#endif
-+
- #ifndef wrprotect_ptes
- /**
-  * wrprotect_ptes - Write-protect PTEs that map consecutive pages of the same
-diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 1727503..b6ac5a9 100644
---- a/kernel/bpf/arena.c
-+++ b/kernel/bpf/arena.c
-@@ -142,6 +142,7 @@ static long compute_pgoff(struct bpf_arena *arena, long uaddr)
- 
- struct apply_range_data {
- 	struct page **pages;
-+	struct page *scratch_page;
- 	int i;
- };
- 
-@@ -154,19 +155,44 @@ static int apply_range_set_cb(pte_t *pte, unsigned long addr, void *data)
- {
- 	struct apply_range_data *d = data;
- 	struct page *page;
-+	pte_t pteval;
- 
- 	if (!data)
- 		return 0;
--	/* sanity check */
--	if (unlikely(!pte_none(ptep_get(pte))))
--		return -EBUSY;
- 
- 	page = d->pages[d->i];
- 	/* paranoia, similar to vmap_pages_pte_range() */
- 	if (WARN_ON_ONCE(!pfn_valid(page_to_pfn(page))))
- 		return -EINVAL;
- 
--	set_pte_at(&init_mm, addr, pte, mk_pte(page, PAGE_KERNEL));
-+	pteval = mk_pte(page, PAGE_KERNEL);
-+#ifdef ptep_try_set
-+	/*
-+	 * Kernel-fault recovery may have installed the scratch page here, and
-+	 * some architectures (arm64) prohibit valid->valid PTE transitions.
-+	 * Install atomically into a none slot. If scratch is present, clear it
-+	 * and flush_tlb_before_set() (break-before-make) before retrying.
-+	 */
-+	while (!ptep_try_set(pte, pteval)) {
-+		pte_t old = ptep_get(pte);
-+
-+		if (pte_none(old))
-+			continue;
-+		if (WARN_ON_ONCE(pte_page(old) != d->scratch_page))
-+			return -EBUSY;
-+		ptep_get_and_clear(&init_mm, addr, pte);
-+		flush_tlb_before_set(addr);
-+	}
-+#else
-+	/*
-+	 * Without ptep_try_set() there is no atomic installer, but such arches
-+	 * also do not wire up bpf_arena_handle_page_fault(), so no scratch page
-+	 * is ever installed and the slot is always none here.
-+	 */
-+	if (unlikely(!pte_none(ptep_get(pte))))
-+		return -EBUSY;
-+	set_pte_at(&init_mm, addr, pte, pteval);
-+#endif
- 	d->i++;
- 	return 0;
- }
-@@ -475,7 +501,8 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
- 	if (ret)
- 		goto out_sigsegv_memcg;
- 
--	struct apply_range_data data = { .pages = &page, .i = 0 };
-+	struct apply_range_data data = { .pages = &page, .i = 0,
-+					 .scratch_page = arena->scratch_page };
- 	/* Account into memcg of the process that created bpf_arena */
- 	ret = bpf_map_alloc_pages(map, NUMA_NO_NODE, 1, &page);
- 	if (ret) {
-@@ -665,6 +692,7 @@ static long arena_alloc_pages(struct bpf_arena *arena, long uaddr, long page_cnt
- 		return 0;
- 	}
- 	data.pages = pages;
-+	data.scratch_page = arena->scratch_page;
- 
- 	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
- 		goto out_free_pages;
+This commit modifies the BPF arena allocation to replace the shared scratch
+page with a newly allocated page. To support architectures like arm64, it
+uses ptep_try_set() to do a valid->invalid->valid transition, providing a
+new flush_tlb_before_set() hook for the break-before-make sequence. For
+architectures without ptep_try_set(), it falls back to checking pte_none()
+and setting the PTE directly.
+
+> diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
+> index b5739bb99fc15..4c6c4081ef715 100644
+> --- a/include/linux/pgtable.h
+> +++ b/include/linux/pgtable.h
+
+[ ... ]
+
+> @@ -1061,6 +1061,24 @@ static inline bool ptep_try_set(pte_t *ptep, pte_t=
+ new_pte)
+>  }
+>  #endif
+> =20
+> +#ifndef flush_tlb_before_set
+> +/**
+> + * flush_tlb_before_set - invalidate a kernel PTE's TLB before re-settin=
+g it
+> + * @addr: kernel virtual address whose PTE was just cleared
+> + *
+> + * Some architectures (e.g. arm64) do not allow a live page-table entry =
+to be
+> + * repointed at a different page in one step. The old entry must first b=
+e made
+> + * invalid and its translation flushed from every TLB, and only then may=
+ the new
+> + * entry be written.
+> + *
+> + * This is only for the lockless atomic kernel-PTE installers (ptep_try_=
+set()).
+> + * It must be callable with interrupts disabled.
+> + */
+> +static inline void flush_tlb_before_set(unsigned long addr)
+> +{
+> +}
+
+[Severity: Critical]
+Since the generic implementation of flush_tlb_before_set() is an empty
+function, does this leave a stale TLB entry on architectures like x86?
+
+When the scratch page is replaced, ptep_get_and_clear() clears the PTE, and
+then ptep_try_set() installs the newly allocated page. If the architecture
+uses the generic fallback for flush_tlb_before_set(), there is no TLB flush
+before the new entry is written, and the allocation loop doesn't seem to
+perform a deferred flush either.
+
+Could this result in BPF programs continuing to read and write the shared
+scratch page instead of the new memory?
+
+> +#endif
+> +
+>  #ifndef wrprotect_ptes
+>  /**
+>   * wrprotect_ptes - Write-protect PTEs that map consecutive pages of the=
+ same
+> diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+> index a641b19255aad..799fb49768e69 100644
+> --- a/kernel/bpf/arena.c
+> +++ b/kernel/bpf/arena.c
+
+[ ... ]
+
+> @@ -154,19 +155,44 @@ static int apply_range_set_cb(pte_t *pte, unsigned =
+long addr, void *data)
+>  {
+>  	struct apply_range_data *d =3D data;
+>  	struct page *page;
+> +	pte_t pteval;
+> =20
+>  	if (!data)
+>  		return 0;
+> =20
+>  	page =3D d->pages[d->i];
+>  	/* paranoia, similar to vmap_pages_pte_range() */
+>  	if (WARN_ON_ONCE(!pfn_valid(page_to_pfn(page))))
+>  		return -EINVAL;
+> =20
+> -	set_pte_at(&init_mm, addr, pte, mk_pte(page, PAGE_KERNEL));
+> +	pteval =3D mk_pte(page, PAGE_KERNEL);
+> +#ifdef ptep_try_set
+> +	/*
+> +	 * Kernel-fault recovery may have installed the scratch page here, and
+> +	 * some architectures (arm64) prohibit valid->valid PTE transitions.
+> +	 * Install atomically into a none slot. If scratch is present, clear it
+> +	 * and flush_tlb_before_set() (break-before-make) before retrying.
+> +	 */
+> +	while (!ptep_try_set(pte, pteval)) {
+> +		pte_t old =3D ptep_get(pte);
+> +
+> +		if (pte_none(old))
+> +			continue;
+> +		if (WARN_ON_ONCE(pte_page(old) !=3D d->scratch_page))
+
+[Severity: High]
+Can calling pte_page(old) here without first checking pte_present(old)
+cause an invalid pointer dereference?
+
+The function pte_none() only guarantees the PTE is not completely empty, but
+it doesn't ensure it is present. If the PTE contains a non-present entry
+like a swap entry or a poison marker, pte_page() will interpret the swap
+metadata as a physical page frame number.
+
+Additionally, on architectures like x86 with CONFIG_DEBUG_VM enabled,
+pte_pfn() asserts pte_present(), which would trigger a kernel panic. Should
+this check pte_present(old) before extracting the page?
+
+> +			return -EBUSY;
+> +		ptep_get_and_clear(&init_mm, addr, pte);
+> +		flush_tlb_before_set(addr);
+> +	}
+
+[ ... ]
+
+> @@ -475,7 +501,8 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
+>  	if (ret)
+>  		goto out_sigsegv_memcg;
+> =20
+> -	struct apply_range_data data =3D { .pages =3D &page, .i =3D 0 };
+> +	struct apply_range_data data =3D { .pages =3D &page, .i =3D 0,
+> +					 .scratch_page =3D arena->scratch_page };
+>  	/* Account into memcg of the process that created bpf_arena */
+>  	ret =3D bpf_map_alloc_pages(map, NUMA_NO_NODE, 1, &page);
+
+[Severity: High]
+This is a pre-existing issue, but does calling bpf_map_alloc_pages() here
+with interrupts disabled cause lock nesting violations or scheduling while
+atomic bugs?
+
+Looking at arena_vm_fault(), raw_res_spin_lock_irqsave() is called earlier,
+disabling interrupts. Then bpf_map_alloc_pages() is called, followed by
+apply_to_page_range(). The apply_to_page_range() function can dynamically
+allocate page tables using GFP_KERNEL (which can sleep) and acquires the
+page table lock, which is a sleepable rt_mutex on PREEMPT_RT kernels.
+
+A similar pattern exists in arena_alloc_pages(), where
+raw_res_spin_lock_irqsave() is taken before the while loop that calls
+apply_to_page_range(). Is it safe to call these sleepable functions inside
+an IRQ-disabled critical section?
+
+>  	if (ret) {
+>  		range_tree_set(&arena->rt, vmf->pgoff, 1);
+>  		goto out_sigsegv_memcg;
+>  	}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260601183728.1800=
+490-1-tj@kernel.org?part=3D1
