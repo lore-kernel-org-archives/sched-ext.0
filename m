@@ -1,125 +1,81 @@
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com [209.85.128.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635903B9D84
-	for <sched-ext@lists.linux.dev>; Tue,  2 Jun 2026 22:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FDF3314C4;
+	Tue,  2 Jun 2026 22:47:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780439366; cv=none; b=I9GOmSWaWVMXnEqoI1INk/Txkm5f+AFw1dtdXe6V6xUjOiepNeM9pHoEf9b7UU5ieocbM4a6mK6OdZjEVbttVaPNaO8ytVXjCIB55fnX2jPZ6efiDn/Er0soIaopVF8ZGaUtksvxiuC5WK1tcbeH9/yIJkJ3iqKWJGwQ5RdiSzI=
+	t=1780440461; cv=none; b=WSUdB3zz/EeiCLLMHCHBZ7lGDlAK8sA43LAR5DASMt/F1PAChsu5XrH7Kvv+qZheqhUgLqls3nc+sdlhWQfqTubW2JPbW6pCACAsz+Hpjv5JWsbwkADkM89X+fL00eLfC65sho4GAL/598q7S/bCLSzcibzQIuah/kdyQ9Ay4qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780439366; c=relaxed/simple;
-	bh=uCD4hCc4XJ9cLp0cEeWugpV7A+Kjg6CRiPP8rloQDrU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=dEyAn9L8Sej/OsL2K9Rbu3srJXXk5CjQHfSXxQQznjRll/Iil81VQPAJVhQB1aGWpVWfF65fWTNFzh1eIO+wOdHPQ42q+1nt7rFPYfAdI4DZCWOhWdlIL36Mox4PLmGT1b0OY5Ea7zcWRcQ6kLlfqSmrHXxBDqCJLXDhFJvtQtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bjkg3kRO; arc=none smtp.client-ip=209.85.128.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780440461; c=relaxed/simple;
+	bh=dPP6hvIJtR54p3YqjKbR7+5+9El5PQanJsjJyKiWE/U=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=MNJn85mnHd/jno6Et0mSBAT13vpCeSIpPaMq+IOhz58f3KBnsf2JCe1lHwhDnWM46yFJ+tHij421TzV2ef4R2fXehbioQRC4NiFutUq8eQ5H15t9f4KRhF5llDMSMpYC4K1/dZ4qVR2KVvcvXreo494louijqwmREA+7RcYVLRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q+GBpP+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bjkg3kRO"
-Received: by mail-wm1-f67.google.com with SMTP id 5b1f17b1804b1-49068493267so69690545e9.1
-        for <sched-ext@lists.linux.dev>; Tue, 02 Jun 2026 15:29:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780439362; x=1781044162; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uCD4hCc4XJ9cLp0cEeWugpV7A+Kjg6CRiPP8rloQDrU=;
-        b=Bjkg3kROZfIrwtAwum7KRqbvOgSEFxQ3XKDhV8cFPVTlTwI23mlnz5DTS1eSTERo2f
-         s8NAi1Rpgbo0WjBCI8vkzQDefafw7f7MA4l4BEdASPzhvzRww9UwaGynI+xBVUDZakVp
-         2n7/S7AkFUN46t6IHEfaMgvyLHo1Cg1zPDIXXpAehE8jx7SaGMWQOxi1EhhTTWy7OwxN
-         IQW9ewcJzBLdMBx9UEOaXT5L4S/cvlnrgTibh3vAT/Du/uDgAg5mejp9GD5DXhpEckPB
-         X/jz+0srcgVhDtdnBk1Kky79imInnP6VhRfKgKSYay6V/rQTCtTjWYlXeu/nFSYokJw8
-         OI2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780439362; x=1781044162;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uCD4hCc4XJ9cLp0cEeWugpV7A+Kjg6CRiPP8rloQDrU=;
-        b=k5sM47L6fhPiwVR/bQbp8Pqbwy7ji5qhSLDFQd7PzVU6HM7gimOSVlD2qNBXp6d4tm
-         KP8yOPbr2NQuz2ZhEddJjR96UXftLrHj0TAamJ1/SAGyLLFeyrLMUPekYIlJDpON6W/x
-         ClyxO8IRBV3XRXb6yzGWuT5jSB2HDcMV8D76STHXCissGGMoovPQhQ/rMHBGkctYjB1n
-         eyf7DnE2j8h9qDSoC1vK5U0Oed9W37c/nppkjvX8iEJchGFX3wE7mfbYqezJppdSiR07
-         0Qi+DdQ9PE49Dbd1GkE7XgcYHP/D6DtQYU8gkQvd+MW6REn5ThBjkmTdliQs2Gk8r3iN
-         bvKg==
-X-Forwarded-Encrypted: i=1; AFNElJ9PI4miLBNC3eo7xWsBgsz1UdV8BpNaeX2RI9/m5O6crrdPk23zOLtAiypgR7ZlH5l1AXQTv1aW/rI=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywu12cqwMk2GduRPcu4WQttcwDG5ZkFy9ug/GcTj1tUJgDVmI0k
-	QwlphXFxuv2wjDpTSmj7qF/1r3afqklJY1+yImHcJk2kr8CyqbDYYWhD
-X-Gm-Gg: Acq92OHXJ6aRr9mWbOKAUHhgneD7RffGSfRhAur3fNsrdDVOreyOJCKbl6Uzk5HPJMc
-	lDxvcYhGFenjBqldH5J3EaqWA1uYhnNLdgLbxFWpfI9wCtbU8gTCogOj2LJLKWM5areSsnD1i4E
-	blJCPRt+J60DEcL61jm1Y4s/xbL06rxIDqbOeXPGEF2PeW08+p1O6a6H7Id1R+5+KZ4Oc0O4TAC
-	XVGafq5SqDCxgotT57977tMeg/9qByzDRbqHH09A5AJ+DRhB3tax57VVDqZ0efaMLVNrElIgDQQ
-	VuFEz93+7pDlOw2757mrFyQcxSUh/Vdix0LW5C3l4zxym0YaNXoNPL3K0Nm/WRJcypoguSxNPor
-	fkDiepzn4OHeeeUgv6XXnnOzuQub2OCcsgrocJCPZZqaZ0m6A5wa7Zyg7k8j0xjKkQXmn0ZUB7n
-	2ARNs9dLgnBeKSCxfDhrFuG70Dhd2KNtVMkM/IKPa1TTpct9wynWkUqvqVYPfyKAB9KrmVURlCS
-	+W5h8bIygFmO2JtDk8eqAkgC6UotO1TpmXtM3fR4wyqdKNioHsX4f3OPFwl9TyVaUusBL1UCjMJ
-	PqNmUm3kf88=
-X-Received: by 2002:a05:600c:3495:b0:490:3c90:2cda with SMTP id 5b1f17b1804b1-490b5ed636amr10835505e9.20.1780439361703;
-        Tue, 02 Jun 2026 15:29:21 -0700 (PDT)
-Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b612f92fsm3362605e9.15.2026.06.02.15.29.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 15:29:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+GBpP+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B340E1F00893;
+	Tue,  2 Jun 2026 22:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780440459;
+	bh=zGQgmwtTMaw1tQ0egksnLeJoKbiodOct1cTG7ESAgmw=;
+	h=Date:From:To:Cc:Subject;
+	b=Q+GBpP+IzhYX/65IgkbLc4aPyqBRNPmnf+Ula6EQwZKcWmOcfT5VjrKPrWxk8W4/c
+	 f20O6MvVNioNApVXX6qaOwH60hAlarZSE3z2KW4Y1SzScBRgS7yMkoyo4E/cUznJTH
+	 tYEpXhYBT9wJ8DSVUoHM25pu4b2ppe5gFmNVUpTxFZz3+RatR4A9DO1mk/iBxtrokH
+	 fo7koBzs0JpwDwm98cHTsk0HkpH/Dj9B3YSos8P/968g6e0umnDggyv7ivt+2W7uff
+	 M0LQXtk+/CKz9m9CunsFeUYXLW2ymUBjamr59ddVmcgtblMdSvytQIs/XnEG0L9IVe
+	 Y3/30ngPkjpTw==
+Date: Tue, 02 Jun 2026 12:47:38 -1000
+Message-ID: <eaed7efc3d9465b3986fd1ce89d7257a@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: [GIT PULL] sched_ext: Fixes for v7.1-rc6
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 03 Jun 2026 00:29:20 +0200
-Message-Id: <DIYX2UV4C7W8.212LVKLCI8WG0@gmail.com>
-Cc: <peterz@infradead.org>, <catalin.marinas@arm.com>, <will@kernel.org>,
- <tglx@kernel.org>, <mingo@redhat.com>, <bp@alien8.de>,
- <dave.hansen@linux.intel.com>, <akpm@linux-foundation.org>,
- <david@kernel.org>, <rppt@kernel.org>, <emil@etsalapatis.com>,
- <sched-ext@lists.linux.dev>, <bpf@vger.kernel.org>, <x86@kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH bpf-next] bpf: Replace scratch PTE atomically when
- allocating arena pages
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: "Tejun Heo" <tj@kernel.org>, <void@manifault.com>, <arighi@nvidia.com>,
- <changwoo@igalia.com>, <ast@kernel.org>, <andrii@kernel.org>,
- <daniel@iogearbox.net>, <martin.lau@linux.dev>, <memxor@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20260601183728.1800490-1-tj@kernel.org>
-In-Reply-To: <20260601183728.1800490-1-tj@kernel.org>
 
-On Mon Jun 1, 2026 at 8:37 PM CEST, Tejun Heo wrote:
-> apply_range_set_cb() maps the pages for a new arena allocation and return=
-ed
-> -EBUSY when the target PTE was already populated. Kernel-fault recovery
-> leaves the per-arena scratch page in unallocated arena PTEs, so a later
-> bpf_arena_alloc_pages() over such a page hits that -EBUSY, and every
-> subsequent allocation of it fails the same way. Allocation must install t=
-he
-> real page over scratch instead.
->
-> Overwriting the scratch PTE in place is a valid->valid change, which arm6=
-4
-> forbids without break-before-make. Route through an invalid entry instead=
-:
-> ptep_try_set() fills only a none slot, so the PTE goes scratch->none->pag=
-e.
-> On finding scratch, clear it and flush_tlb_before_set() before retrying. =
-The
-> new flush_tlb_before_set() is a no-op except on arches like arm64 that ne=
-ed
-> the break-before-make TLB invalidate. The loop also copes with a concurre=
-nt
-> fault re-scratching the slot.
->
-> Arches without ptep_try_set() never install the scratch page, so keep the
-> must-be-empty check and set_pte_at() for them.
->
-> Fixes: dc11a4dba246 ("bpf: Recover arena kernel faults with scratch page"=
-)
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> Cc: Alexei Starovoitov <ast@kernel.org>
-> Cc: David Hildenbrand <david@kernel.org>
-> ---
->
+Hello,
 
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Two low-risk fixes, both contained within sched_ext.
+
+The following changes since commit 0c1a9dce208b4dc265925898e5da98934f7f9266:
+
+  sched_ext: Fix spurious WARN on stale ops_state in ops_dequeue() (2026-05-21 06:27:44 -1000)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.1-rc6-fixes
+
+for you to fetch changes up to 02e545c4297a26dbbc41df81b831e7f605bcd306:
+
+  sched_ext: Don't warn on NULL cgrp_moving_from in scx_cgroup_move_task() (2026-06-02 11:27:50 -1000)
+
+----------------------------------------------------------------
+sched_ext: Fixes for v7.1-rc6
+
+Two low-risk fixes:
+
+- Drop a spurious warning that can fire during cgroup migration while a
+  sched_ext scheduler is loaded.
+
+- Fix a drgn-based debug script that broke after scheduler state moved into
+  a per-scheduler struct.
+
+----------------------------------------------------------------
+Tejun Heo (1):
+      sched_ext: Don't warn on NULL cgrp_moving_from in scx_cgroup_move_task()
+
+Zicheng Qu (1):
+      tools/sched_ext: Fix scx_show_state per-scheduler state reads
+
+ kernel/sched/ext.c                | 10 ++++++----
+ tools/sched_ext/scx_show_state.py | 19 +++++++++++++------
+ 2 files changed, 19 insertions(+), 10 deletions(-)
+
+--
+tejun
