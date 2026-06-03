@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC734779A5;
-	Wed,  3 Jun 2026 17:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857EB453495;
+	Wed,  3 Jun 2026 17:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780507316; cv=none; b=h7xoZ/APhEXUYGURxRmBbSVxXI/b98JX2koW5rZ+gLDdsILeubOkfNv/JTYZieGzfY9YhHW4BmS1m58ocXwVMV8IqhxG5sDaS+mIC+FlhLDHlk4O3O3xYe5j4U2opybMfMG7GXb3EF7nLMkalNK+vjgvHUDlYF/ZgcXan4oOnpU=
+	t=1780507316; cv=none; b=dp9QYZho64tZ/2W9bfUp2BbD7K9dqQSOFUlurLhJcOH4czyziCIBy0ip1Vsfi2bgjbnWCOvps5OTHSNiJPe0wn5KNNs+zQllntHDS4cMqnGCeFOjpOUqreZ1dllTCrnnGf9tCt0wjUtQoEbWks3xrrbwB48/iun9VC1pCaz4cLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780507316; c=relaxed/simple;
-	bh=meKe4txTnicVHK5Gq/T3SWR3bNtlGIJf2k4FV4LwXXA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YUPXEr5frZwaSRlhgAt+GlO+RWixBjJZYWekhzftYZUriiEsdfoOb6qGMUXwsdp0pDKU5ZEenRhmJFY1U7vTGMOVD4WMtdusC04AgGNBk6CnOnR/3FW8TzHf2ourpZIuf1cABpn95W1iLUPkewwyl17sof1FLGx/n4iITA+q2Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XRBkadYg; arc=none smtp.client-ip=100.103.45.18
+	bh=TLeklP9tZV4IRMAnM+TAFVdxDegWu02V9abWBNLDgGk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=StCY709t2c+tDeQtpNRAZGptyf8aB4shvkEK1M3s6aG5koFS338ZKbTDeFzX9oEkJDYz9YV+c0KMzpQq6i2YDn8Z8Yne0ktI/kLAXW5YBXdCFItG7TrX3AP741U+wUtMmanr2RPOrxV2bmAz131ICshicFK49JQOOkH0aLNKIFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KaaHHqhZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XRBkadYg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7061F00893;
-	Wed,  3 Jun 2026 17:21:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KaaHHqhZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAC61F00898;
+	Wed,  3 Jun 2026 17:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780507314;
-	bh=lLy/pEWW+awW2g4H+D4SzauN9QV9fPeiDw2EEQ3I9o0=;
-	h=From:To:Cc:Subject:Date;
-	b=XRBkadYgwsmzz6fcPvPwbDM8eEJWQcBnaea112LRJ35uNna0qBw0a91CeoVXhF5Bu
-	 LI+LEc6jjwvO58yQJEoiopi/yB9RQZ3RzuEBy7XYegMGQi5UyIZsNg8agnqNgeEpHz
-	 qq8Tlo6FCoHZn++tvtramMSXSu/amLlpsUVi4Rl9sn4DVtJ4PeRbv7QsMQbZGV5LBV
-	 7T74jABfnDsQbMD6yiHaE1Cd6P0DHCGPQ88Ne+b+dzH3Ag5HlKal8UB4aTsdRHxIJ6
-	 5d0dUPI8qRkm/WDiQrYxudie0+4W6vAshzNWRlJDe32RXH3QIe8f2l8Sf8IPmjFJCW
-	 iUa8EqeJ4whLA==
+	s=k20260515; t=1780507315;
+	bh=u5ZXyxRmN925shYlI/YuTWC0iodGKkq4C19zisanqYE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=KaaHHqhZX1YM5YGVlfI7mmh7Jt0iJ1d53gZXk3FjeA+eRLUE2+eGcYa3DTzfZJIvT
+	 DDG/2obVgRjkHvCRXpy3aLflUFJcAXFsdVwx5/Bu7Kn7LciN3NTBiMl36bcJ+nr7uQ
+	 /cvwrzH5ye2LuS22U87lZU9XfxH8WNCrTQy9bJEMaNLKM9428jdw+jJuFFAAzAKfEG
+	 HXMoEqjtAjWPts2githKcnVHvyauLvgba9sKl16J+HFbD+8G/m1JDgZFq9WhQM22pM
+	 0iNrLNvKZdXMdl2jqAqdkO++x8ncN8xC+Z2DNSgA7XEPLVmYkngzK6ku1cJwJjEwn4
+	 Ab8y5/5wMFR1g==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -33,10 +34,12 @@ Cc: Emil Tsalapatis <emil@etsalapatis.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET sched_ext/for-7.2] sched_ext: cid/cmask interface prep
-Date: Wed,  3 Jun 2026 07:21:50 -1000
-Message-ID: <20260603172153.3081861-1-tj@kernel.org>
+Subject: [PATCH 1/3] sched_ext: Order single-cid cmask helpers as (cid, mask)
+Date: Wed,  3 Jun 2026 07:21:51 -1000
+Message-ID: <20260603172153.3081861-2-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260603172153.3081861-1-tj@kernel.org>
+References: <20260603172153.3081861-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,36 +48,67 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+__scx_cmask_set(), __scx_cmask_contains() and __scx_cmask_word() take the
+cmask first and the cid second. The kernel's bit and cpumask predicates put
+the index first: test_bit(nr, addr), cpumask_test_cpu(cpu, mask). Reorder
+the cmask helpers to (cid, mask) for consistency, ahead of new single-cid
+ops added next. Mask-level ops (and/or/andnot/copy/subset/intersects) keep
+(dst, src).
 
-Three preparatory changes to the cid/cmask interface that landed in for-7.2
-this cycle - a helper-argument reorder, two new helpers, and a kfunc
-return-type change. Posting ahead of the merge window, in particular the
-scx_bpf_kick_cid() return-type change in patch 3 - it changes a kfunc's
-signature and is cleaner to settle before 7.2 ships.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext_cid.c |  2 +-
+ kernel/sched/ext_cid.h | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-- Patch 1 reorders the single-cid cmask helpers to (cid, mask), matching the
-  kernel's index-first bit and cpumask predicates.
-- Patch 2 adds scx_cmask_test() and scx_cmask_for_each_cid().
-- Patch 3 switches scx_bpf_kick_cid() from void to s32 so future cap
-  enforcement can surface failures. The cid interface has no external users
-  yet, so the ABI change is safe now.
+diff --git a/kernel/sched/ext_cid.c b/kernel/sched/ext_cid.c
+index 808c6390da5a..66944a7ef79d 100644
+--- a/kernel/sched/ext_cid.c
++++ b/kernel/sched/ext_cid.c
+@@ -267,7 +267,7 @@ void scx_cpumask_to_cmask(const struct cpumask *src, struct scx_cmask *dst)
+ 		s32 cid = __scx_cpu_to_cid(cpu);
+ 
+ 		if (cid >= 0)
+-			__scx_cmask_set(dst, cid);
++			__scx_cmask_set(cid, dst);
+ 	}
+ }
+ 
+diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
+index abea22ba2cc2..46fd8eda0443 100644
+--- a/kernel/sched/ext_cid.h
++++ b/kernel/sched/ext_cid.h
+@@ -147,13 +147,13 @@ static inline bool scx_is_cid_type(void)
+ 	return static_branch_unlikely(&__scx_is_cid_type);
+ }
+ 
+-static inline bool __scx_cmask_contains(const struct scx_cmask *m, u32 cid)
++static inline bool __scx_cmask_contains(u32 cid, const struct scx_cmask *m)
+ {
+ 	return likely(cid >= m->base && cid < m->base + m->nr_cids);
+ }
+ 
+ /* Word in bits[] covering @cid. @cid must satisfy __scx_cmask_contains(). */
+-static inline u64 *__scx_cmask_word(const struct scx_cmask *m, u32 cid)
++static inline u64 *__scx_cmask_word(u32 cid, const struct scx_cmask *m)
+ {
+ 	return (u64 *)&m->bits[cid / 64 - m->base / 64];
+ }
+@@ -218,11 +218,11 @@ static inline void scx_cmask_reframe(struct scx_cmask *m, u32 base, u32 nr_cids)
+ 	m->nr_cids = nr_cids;
+ }
+ 
+-static inline void __scx_cmask_set(struct scx_cmask *m, u32 cid)
++static inline void __scx_cmask_set(u32 cid, struct scx_cmask *m)
+ {
+-	if (!__scx_cmask_contains(m, cid))
++	if (!__scx_cmask_contains(cid, m))
+ 		return;
+-	*__scx_cmask_word(m, cid) |= BIT_U64(cid & 63);
++	*__scx_cmask_word(cid, m) |= BIT_U64(cid & 63);
+ }
+ 
+ #endif /* _KERNEL_SCHED_EXT_CID_H */
+-- 
+2.54.0
 
-These are extracted from the in-development sub-scheduler series. Nothing
-here depends on the rest of that work.
-
-Base
-----
-
-sched_ext/for-7.2 (dad836524259)
-
- kernel/sched/ext.c                       | 13 ++++++++-----
- kernel/sched/ext_cid.c                   |  2 +-
- kernel/sched/ext_cid.h                   | 41 ++++++++++++++++++++++++++++----
- tools/sched_ext/include/scx/common.bpf.h |  2 +-
- 4 files changed, 46 insertions(+), 12 deletions(-)
-
-Thanks.
-
---
-tejun
