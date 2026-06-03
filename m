@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8D219D8A8
-	for <sched-ext@lists.linux.dev>; Wed,  3 Jun 2026 17:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D544375AB8
+	for <sched-ext@lists.linux.dev>; Wed,  3 Jun 2026 17:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780507885; cv=none; b=WHEG46GB4uv2/uqXb1FeXQ0Nia8w6e2/TXOYZ3pcsKGOhZOQeOjmRfDB+8Cyw+CyC5VWysti8WfxqWpiHmvSQxjjRWV3CaDjGNMHHPHk9XBKGcCNxLQa3pn15of8TpYuny7dDMB5UNOpc+06Ke0NOQvLLtRtHSjWq1bmcOGjrC0=
+	t=1780508488; cv=none; b=f19q22Aem8oQoq6VLEvdsQgib9jCtTUOVhb3eL8oV5GKuweTf5eaMMgoU/NW1KBLvSlENZ2cWrABwEqFDfiE2CFu2txyR74sfwIDM7QsYC2gq0woI7oRw0OO69rZMNei2lcIQbCVicD+HvmKEIJM9ZXZbXRtpbedzIhGNCP0PhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780507885; c=relaxed/simple;
-	bh=iJtusFDn8G6/kqM7NwdaLFu9G+GGunuYLp6loFuENA8=;
+	s=arc-20240116; t=1780508488; c=relaxed/simple;
+	bh=lM2lubi0Bz/HIZnUh39a9SrtDEjbUTuXdry7cAzwscA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=B16llvv2TqAYOtDgVBit6AfXvTXGaZHM2Q5KBS32Ku6VFcdA0pMSO0gSF85njjRm9MNYMZWT1IGkVkIqeaCQ08vDrur8Gp6vs5fFs/qZlvBBoBJJb9OQLKPslr6bnuyBGgJEKnwXRwBIVnE8CRylWJt4ZBSWK7bIL2bTobGeOEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fuDtIP4L; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=HjwsOWOy2vZWh48ldRtCf+muSf3OdbsbYp05Cp0pMgoSikLn9I2DmR5lvY3H28INQuwfPELTPYLZKRnJNHlI9PahUBCEhcpQhJJvjXlnf/kdRxt4DU/O+qYvHRdITnP1F5IhW3nuZA0RD2yk130U3xUHPUXmhzcbOf81/fAK0cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F7BKn/OO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fuDtIP4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312DC1F00893;
-	Wed,  3 Jun 2026 17:31:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F7BKn/OO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0679E1F00893;
+	Wed,  3 Jun 2026 17:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780507884;
-	bh=nqz52gEr2QGu+Fk2Oa+PZamiAx0QodAkoOPGp13D5H8=;
+	s=k20260515; t=1780508487;
+	bh=VkxzLApeGau2d/TfvUmKObmBCjIVICXYDNtb1uluVZ8=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fuDtIP4L0KRxg5eoR0iVTQ10ajE2Iz7dqNTWcXZg6p/FReAHnlj2dogewd24oJz2T
-	 3tRnCphXavsNC3Q+N5Ixc+YFzxF8zWURriTnmhDrHIvylCE5DcseLoSfEk7UhAvzFQ
-	 sP/lElJoiwPWO8OgmmQF4eWWF7AXN9YXkzPhoyyfEHaypGuzBcERwVk7QXlG6rDkZa
-	 ErHkNWTRBUdtjjiRYlXDxZcyaVGnXSRHOTT14xhR5pW2mUIWn4PVrEcxoodpJRPZDJ
-	 K2kTP0+ByFUSwb7gxrWAmfhdaLaWswnSu6m5ltOCheu683USaDLR8x7RTv09m1hGOd
-	 fAT9oUNDeafVA==
+	b=F7BKn/OO1dNPtBDmI919tTlXD/U2NfHSHU/vDshIBAOS9lDRVYLKEZwkCXu1l6LKT
+	 bV8gdaJ3KwVoNpwxWZ8Es0N0UlcnseebtAZG6bNkw2D4DLMFxPqcBlFRiO9YFzNAo2
+	 h7UsfdG1TH/onE5/bP9FFX0XM5oIodSG/DHq7QzOqR3wG+/piCELSbM3ahAt9e0E1h
+	 ZmU9w/0+PTIH55AvZTn51UGwYzk6XrMll7aZg+eOxVj/9A2fqfU5AYiHxoDp1PivnF
+	 7kk6c00ZTcKd7XiOtdR2/x9RhfHzENOdmGYkWIuyzOYXSeq/KQ6XsmVGJxfgi7uhM3
+	 fX1BPfmfMdLcg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/3] sched_ext: Order single-cid cmask helpers as (cid,
- mask)
+Subject: Re: [PATCH 2/3] sched_ext: Add scx_cmask_test() and
+ scx_cmask_for_each_cid()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260603172153.3081861-2-tj@kernel.org>
-References: <20260603172153.3081861-2-tj@kernel.org>
+In-Reply-To: <20260603172153.3081861-3-tj@kernel.org>
+References: <20260603172153.3081861-3-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 03 Jun 2026 17:31:23 +0000
-Message-Id: <20260603173124.312DC1F00893@smtp.kernel.org>
+Date: Wed, 03 Jun 2026 17:41:26 +0000
+Message-Id: <20260603174127.0679E1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,28 +46,24 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] Incomplete refactoring of cmask helpers argument order, causing =
-an API divergence between kernel and BPF implementations.
+- [High] scx_cmask_for_each_cid yields out-of-bounds phantom CIDs due to an=
+ overestimated loop bound and stale padding words.
 --
 
-commit cae9caa6c3655ef0cb4c126820c635529b2d5e19
+commit edd3ffa1eb6aa37c70fee16c5770f542f1484a83
 Author: Tejun Heo <tj@kernel.org>
+Subject: sched_ext: Add scx_cmask_test() and scx_cmask_for_each_cid()
 
-sched_ext: Order single-cid cmask helpers as (cid, mask)
-
-This commit reorders the parameters of single-cid cmask helpers to take the
-cid before the mask. This change is intended to make the parameters consist=
-ent
-with standard kernel predicates like cpumask_test_cpu(cpu, mask).
+Add single-bit test and iterator over set cids in an scx_cmask.
 
 > diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
-> index abea22ba2cc25..46fd8eda04435 100644
+> index abea22ba2cc25..d4c3ebba74162 100644
 > --- a/kernel/sched/ext_cid.h
 > +++ b/kernel/sched/ext_cid.h
 
 [ ... ]
 
-> @@ -218,11 +218,11 @@ static inline void scx_cmask_reframe(struct scx_cma=
+> @@ -218,11 +218,42 @@ static inline void scx_cmask_reframe(struct scx_cma=
 sk *m, u32 base, u32 nr_cids)
 >  	m->nr_cids =3D nr_cids;
 >  }
@@ -82,27 +78,75 @@ sk *m, u32 base, u32 nr_cids)
 > +	*__scx_cmask_word(cid, m) |=3D BIT_U64(cid & 63);
 >  }
 > =20
+> +/**
+> + * scx_cmask_test - test whether @cid is set in @m
+> + * @cid: cid to test
+> + * @m: cmask to test
+> + *
+> + * Return %false if @cid is outside @m's active range. Otherwise return =
+the
+> + * bit's value. Read via READ_ONCE so callers can race set/clear writers.
+> + */
+> +static inline bool scx_cmask_test(u32 cid, const struct scx_cmask *m)
+> +{
+> +	if (!__scx_cmask_contains(cid, m))
+> +		return false;
+> +	return READ_ONCE(*__scx_cmask_word(cid, m)) & BIT_U64(cid & 63);
+> +}
+> +
+> +/**
+> + * scx_cmask_for_each_cid - iterate set cids in @m
+> + * @cid: s32 loop var that receives each set cid in turn
+> + * @m: cmask to iterate
+> + *
+> + * Visits set bits within @m's active range in ascending order. Relies o=
+n the
+> + * head/tail-zero invariant of bits[], so no per-cid range check is need=
+ed.
+> + */
+> +#define scx_cmask_for_each_cid(cid, m)						\
+> +	for (u64 __bs =3D (m)->base & ~63u, __wi =3D 0,				\
+> +		     __nw =3D SCX_CMASK_NR_WORDS((m)->nr_cids);			\
+> +	     __wi < __nw; __wi++)						\
+> +		for (u64 __w =3D READ_ONCE((m)->bits[__wi]);			\
+> +		     __w && ((cid) =3D __bs + __wi * 64 + __ffs64(__w), true);	\
+> +		     __w &=3D __w - 1)
+> +
+>  #endif /* _KERNEL_SCHED_EXT_CID_H */
 
-[Severity: Medium]
-The commit message states the intent to reorder the cmask helpers for
-consistency, but does this refactoring inadvertently omit the BPF-facing
-helpers?
+[Severity: High]
+Does this iterator yield phantom CIDs outside of the mask's active range?
 
-The kernel-side helpers in ext_cid.h are updated here to use the new
-(cid, mask) order, but the equivalent functions in
-tools/sched_ext/include/scx/cid.bpf.h appear to still use the old
-(mask, cid) ordering:
+Since SCX_CMASK_NR_WORDS() overestimates worst-case capacity (e.g. for
+nr_cids=3D1, it evaluates to 2), __nw will be larger than necessary. The
+iterator lacks a strict cid < base + nr_cids bound check to compensate.
 
-tools/sched_ext/include/scx/cid.bpf.h:
-static __always_inline void cmask_set(struct scx_cmask __arena *m, u32 cid)
-static __always_inline bool cmask_test(const struct scx_cmask __arena *m, u=
-32 cid)
-static __always_inline bool __cmask_contains(const struct scx_cmask __arena=
- *m, u32 cid)
+When scx_cmask_reframe() shrinks a mask, it clears only m->bits[0] and
+m->bits[last_word]:
 
-Could this introduce an API divergence between the kernel and BPF
-implementations for developers writing BPF schedulers?
+kernel/sched/ext_cid.h:scx_cmask_reframe() {
+        if (nr_cids) {
+                u32 last_word =3D ((base & 63) + nr_cids - 1) / 64;
+
+                m->bits[0] =3D 0;
+                m->bits[last_word] =3D 0;
+        }
+        ...
+}
+
+Any words beyond last_word remain uncleared. If a mask is reframed to a
+smaller size (like nr_cids=3D1), SCX_CMASK_NR_WORDS(1) is 2, so the loop bo=
+und
+__nw is 2. The iterator will process the stale, uncleared bits in m->bits[1=
+],
+yielding CIDs outside the active range.
+
+Similarly, if nr_cids is 0, scx_cmask_reframe() skips clearing entirely, but
+SCX_CMASK_NR_WORDS(0) is 1. The iterator will traverse m->bits[0] and yield
+CIDs for an empty mask.
+
+Is a strict boundary check inside the loop needed?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603172153.3081=
-861-1-tj@kernel.org?part=3D1
+861-1-tj@kernel.org?part=3D2
