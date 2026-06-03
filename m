@@ -1,81 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FDF3314C4;
-	Tue,  2 Jun 2026 22:47:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B5332ED6
+	for <sched-ext@lists.linux.dev>; Wed,  3 Jun 2026 09:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780440461; cv=none; b=WSUdB3zz/EeiCLLMHCHBZ7lGDlAK8sA43LAR5DASMt/F1PAChsu5XrH7Kvv+qZheqhUgLqls3nc+sdlhWQfqTubW2JPbW6pCACAsz+Hpjv5JWsbwkADkM89X+fL00eLfC65sho4GAL/598q7S/bCLSzcibzQIuah/kdyQ9Ay4qU=
+	t=1780477285; cv=none; b=jWA9jW1qO1M0N3jZTBVziV6O784zjBYXVUnuOLFk5KpFNG3ZBEXMfpHy2P6Jh21Z5k/DTXK3W15YKwBdZGS5xQLVhvD1XNC/pGxRONsAsuk1tzbPgKbnjs9ORIXYS2vs60CVLFFPFvja0aUJftCWDudVZroxJJjt1+82uE4WdYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780440461; c=relaxed/simple;
-	bh=dPP6hvIJtR54p3YqjKbR7+5+9El5PQanJsjJyKiWE/U=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=MNJn85mnHd/jno6Et0mSBAT13vpCeSIpPaMq+IOhz58f3KBnsf2JCe1lHwhDnWM46yFJ+tHij421TzV2ef4R2fXehbioQRC4NiFutUq8eQ5H15t9f4KRhF5llDMSMpYC4K1/dZ4qVR2KVvcvXreo494louijqwmREA+7RcYVLRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q+GBpP+I; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+GBpP+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B340E1F00893;
-	Tue,  2 Jun 2026 22:47:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780440459;
-	bh=zGQgmwtTMaw1tQ0egksnLeJoKbiodOct1cTG7ESAgmw=;
-	h=Date:From:To:Cc:Subject;
-	b=Q+GBpP+IzhYX/65IgkbLc4aPyqBRNPmnf+Ula6EQwZKcWmOcfT5VjrKPrWxk8W4/c
-	 f20O6MvVNioNApVXX6qaOwH60hAlarZSE3z2KW4Y1SzScBRgS7yMkoyo4E/cUznJTH
-	 tYEpXhYBT9wJ8DSVUoHM25pu4b2ppe5gFmNVUpTxFZz3+RatR4A9DO1mk/iBxtrokH
-	 fo7koBzs0JpwDwm98cHTsk0HkpH/Dj9B3YSos8P/968g6e0umnDggyv7ivt+2W7uff
-	 M0LQXtk+/CKz9m9CunsFeUYXLW2ymUBjamr59ddVmcgtblMdSvytQIs/XnEG0L9IVe
-	 Y3/30ngPkjpTw==
-Date: Tue, 02 Jun 2026 12:47:38 -1000
-Message-ID: <eaed7efc3d9465b3986fd1ce89d7257a@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: [GIT PULL] sched_ext: Fixes for v7.1-rc6
+	s=arc-20240116; t=1780477285; c=relaxed/simple;
+	bh=G1fIEdNONzxdA3zDHKtNurIIfdPJq84k5sXJlYm0xzQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ljbKF2IIsDn64xMvtDSkFkmdK8Lj/UN/9W2Ov/8VdI0ZIFEKAFzPxz3lOHeq6YN9KKrJPazntO3Xkhn65WgGMYyO+gVBvhWxi1Clg1voKlN1bGxTZYQCRMZTIJcH3dwg6VYt8E6PvjngqeSkpBAC56MoourngJALSeXgj2nhWfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: c5ba111a5f2a11f1aa26b74ffac11d73-20260603
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:44410617-16e2-447a-9294-756fd9383c88,IP:0,U
+	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:25
+X-CID-META: VersionHash:e7bac3a,CLOUDID:5abcc23c39efe4e447567de6ae2951c0,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|136|850|865|898,TC:nil,Content:0
+	|15|50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OS
+	I:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: c5ba111a5f2a11f1aa26b74ffac11d73-20260603
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 858301019; Wed, 03 Jun 2026 17:01:13 +0800
+From: luoliang@kylinos.cn
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	David Carlier <devnexen@gmail.com>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Liang Luo <luoliang@kylinos.cn>
+Subject: [PATCH] tools/sched_ext: scx_flatcg: Document cgroup v2 requirement
+Date: Wed,  3 Jun 2026 17:01:06 +0800
+Message-Id: <20260603090106.2494243-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Hello,
+From: Liang Luo <luoliang@kylinos.cn>
 
-Two low-risk fixes, both contained within sched_ext.
+The BPF program relies on cgroup v2-specific features - specifically
+BPF_MAP_TYPE_CGRP_STORAGE and cgroup v2 kfuncs (bpf_cgroup_ancestor,
+bpf_cgroup_from_id, scx_bpf_task_cgroup, ...), none of which are
+available on cgroup v1. The current file header describes the
+algorithm but does not make this runtime requirement explicit, so
+users running on a cgroup v1-only system get a confusing BPF load
+error with no clear pointer to the cause.
 
-The following changes since commit 0c1a9dce208b4dc265925898e5da98934f7f9266:
+Document the requirement in a Note paragraph at the end of the file
+header so that it is visible to anyone reading the source.
 
-  sched_ext: Fix spurious WARN on stale ops_state in ops_dequeue() (2026-05-21 06:27:44 -1000)
+No functional change.
 
-are available in the Git repository at:
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
+---
+ tools/sched_ext/scx_flatcg.bpf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.1-rc6-fixes
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index fec359581826..067e1a7991d4 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -42,6 +42,9 @@
+  * The scheduler first picks the cgroup to run and then schedule the tasks
+  * within by using nested weighted vtime scheduling by default. The
+  * cgroup-internal scheduling can be switched to FIFO with the -f option.
++ *
++ * Note: Requires cgroup v2 (uses BPF_MAP_TYPE_CGRP_STORAGE and cgroup v2
++ * BPF kfuncs, neither of which are available on cgroup v1).
+  */
+ #include <scx/common.bpf.h>
+ #include "scx_flatcg.h"
+-- 
+2.25.1
 
-for you to fetch changes up to 02e545c4297a26dbbc41df81b831e7f605bcd306:
-
-  sched_ext: Don't warn on NULL cgrp_moving_from in scx_cgroup_move_task() (2026-06-02 11:27:50 -1000)
-
-----------------------------------------------------------------
-sched_ext: Fixes for v7.1-rc6
-
-Two low-risk fixes:
-
-- Drop a spurious warning that can fire during cgroup migration while a
-  sched_ext scheduler is loaded.
-
-- Fix a drgn-based debug script that broke after scheduler state moved into
-  a per-scheduler struct.
-
-----------------------------------------------------------------
-Tejun Heo (1):
-      sched_ext: Don't warn on NULL cgrp_moving_from in scx_cgroup_move_task()
-
-Zicheng Qu (1):
-      tools/sched_ext: Fix scx_show_state per-scheduler state reads
-
- kernel/sched/ext.c                | 10 ++++++----
- tools/sched_ext/scx_show_state.py | 19 +++++++++++++------
- 2 files changed, 19 insertions(+), 10 deletions(-)
-
---
-tejun
