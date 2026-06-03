@@ -1,111 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE53E47D94F;
-	Wed,  3 Jun 2026 17:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8D219D8A8
+	for <sched-ext@lists.linux.dev>; Wed,  3 Jun 2026 17:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780507318; cv=none; b=dSTsjeKBt4NZAWbzewMxqdA/fmXIbxp2r3zd/b1+MmcAQugIiIXuNXUOg9Pnz9r0YGBU9gvnFnG1KYemUEEseseT+skRMvp7lVqqt5/MGOGojp6txOn7Z4bZ7TvIQRVAek5nBUOS3e6ueoxPklkpU9BstEey2dm4ymZ2AsKVpx8=
+	t=1780507885; cv=none; b=WHEG46GB4uv2/uqXb1FeXQ0Nia8w6e2/TXOYZ3pcsKGOhZOQeOjmRfDB+8Cyw+CyC5VWysti8WfxqWpiHmvSQxjjRWV3CaDjGNMHHPHk9XBKGcCNxLQa3pn15of8TpYuny7dDMB5UNOpc+06Ke0NOQvLLtRtHSjWq1bmcOGjrC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780507318; c=relaxed/simple;
-	bh=DvQokXNT62FHYySHr71cdg2RmMOJnHf9W2YEq4F1ZgM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rnvqov2o8PYonMj1h8b9o4MuCedPynJdT003iQiXG2b885iDxRFQIb8hLw8Yr5SVbolyteClQrkDStZ54oTW67MRkPX966kdJkbdu87suRXzuXYEykMe8EeZ64uqrGi4dzl0DyvsRxW3wu463cZO+XmfNMKf1F23Riy06k9cbV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i4OyhS77; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780507885; c=relaxed/simple;
+	bh=iJtusFDn8G6/kqM7NwdaLFu9G+GGunuYLp6loFuENA8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=B16llvv2TqAYOtDgVBit6AfXvTXGaZHM2Q5KBS32Ku6VFcdA0pMSO0gSF85njjRm9MNYMZWT1IGkVkIqeaCQ08vDrur8Gp6vs5fFs/qZlvBBoBJJb9OQLKPslr6bnuyBGgJEKnwXRwBIVnE8CRylWJt4ZBSWK7bIL2bTobGeOEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fuDtIP4L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i4OyhS77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FEA1F00893;
-	Wed,  3 Jun 2026 17:21:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fuDtIP4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312DC1F00893;
+	Wed,  3 Jun 2026 17:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780507317;
-	bh=vkgEtTSHu7h+I7GdIaqJ32wT0J5pJIkANEDuCCv4QX0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4OyhS77ygHm+KKV9rtbm0yUzaEJ2eMbVAGHCto1k/NA02mY65UXtiX7ynViK7IXh
-	 ZAdyKI9ZXoaMw8xh9UHms+X7ak3PkbKRmq6vT3yES6pLIrpXdQz4NvFnkSoX4IJw8t
-	 PKa0y4uiYN4imwF1UW1kdGGXFn/NMMhgeAHWTK+C21oimIA8wgQp/nObMKgIfkdyzg
-	 FqW4J7F/N5K/kE8MZsN2cB+YZ3z0n8oeE3JEbixuVtCq7hcTmmFnYxduWf5RVPZMcP
-	 epXam8mtHzIX7kOMLv+b6gAkCmMz96Rs+EwUaW9VtAnNnOSGMYOqKM5OwTw3LhhZfx
-	 L9VR2Rv+GT0kA==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/3] sched_ext: Make scx_bpf_kick_cid() return s32
-Date: Wed,  3 Jun 2026 07:21:53 -1000
-Message-ID: <20260603172153.3081861-4-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260603172153.3081861-1-tj@kernel.org>
-References: <20260603172153.3081861-1-tj@kernel.org>
+	s=k20260515; t=1780507884;
+	bh=nqz52gEr2QGu+Fk2Oa+PZamiAx0QodAkoOPGp13D5H8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=fuDtIP4L0KRxg5eoR0iVTQ10ajE2Iz7dqNTWcXZg6p/FReAHnlj2dogewd24oJz2T
+	 3tRnCphXavsNC3Q+N5Ixc+YFzxF8zWURriTnmhDrHIvylCE5DcseLoSfEk7UhAvzFQ
+	 sP/lElJoiwPWO8OgmmQF4eWWF7AXN9YXkzPhoyyfEHaypGuzBcERwVk7QXlG6rDkZa
+	 ErHkNWTRBUdtjjiRYlXDxZcyaVGnXSRHOTT14xhR5pW2mUIWn4PVrEcxoodpJRPZDJ
+	 K2kTP0+ByFUSwb7gxrWAmfhdaLaWswnSu6m5ltOCheu683USaDLR8x7RTv09m1hGOd
+	 fAT9oUNDeafVA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/3] sched_ext: Order single-cid cmask helpers as (cid,
+ mask)
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tejun Heo" <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260603172153.3081861-2-tj@kernel.org>
+References: <20260603172153.3081861-2-tj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 03 Jun 2026 17:31:23 +0000
+Message-Id: <20260603173124.312DC1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Switch scx_bpf_kick_cid() from void to s32 so future cap enforcement can
-surface failures. cid interface is introduced in this cycle and has no
-external users, so the ABI change is safe. Subsequent patches will add
--EPERM returns when the calling sub-sched lacks the required cap on the
-target cid.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] Incomplete refactoring of cmask helpers argument order, causing =
+an API divergence between kernel and BPF implementations.
+--
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext.c                       | 13 ++++++++-----
- tools/sched_ext/include/scx/common.bpf.h |  2 +-
- 2 files changed, 9 insertions(+), 6 deletions(-)
+commit cae9caa6c3655ef0cb4c126820c635529b2d5e19
+Author: Tejun Heo <tj@kernel.org>
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 32ebbc351564..fedd501de67e 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -9405,9 +9405,10 @@ __bpf_kfunc void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux
-  * @flags: %SCX_KICK_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-- * cid-addressed equivalent of scx_bpf_kick_cpu().
-+ * cid-addressed equivalent of scx_bpf_kick_cpu(). Return 0 on success,
-+ * -errno otherwise.
-  */
--__bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
-+__bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
- {
- 	struct scx_sched *sch;
- 	s32 cpu;
-@@ -9415,10 +9416,12 @@ __bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux
- 	guard(rcu)();
- 	sch = scx_prog_sched(aux);
- 	if (unlikely(!sch))
--		return;
-+		return -ENODEV;
- 	cpu = scx_cid_to_cpu(sch, cid);
--	if (cpu >= 0)
--		scx_kick_cpu(sch, cpu, flags);
-+	if (cpu < 0)
-+		return -EINVAL;
-+	scx_kick_cpu(sch, cpu, flags);
-+	return 0;
- }
- 
- /**
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 5f715d69cde6..9591a6e778ce 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -105,7 +105,7 @@ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __
- s32 scx_bpf_cpu_to_cid(s32 cpu) __ksym __weak;
- s32 scx_bpf_cid_to_cpu(s32 cid) __ksym __weak;
- void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out) __ksym __weak;
--void scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
-+s32 scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
- s32 scx_bpf_task_cid(const struct task_struct *p) __ksym __weak;
- s32 scx_bpf_this_cid(void) __ksym __weak;
- struct task_struct *scx_bpf_cid_curr(s32 cid) __ksym __weak;
--- 
-2.54.0
+sched_ext: Order single-cid cmask helpers as (cid, mask)
 
+This commit reorders the parameters of single-cid cmask helpers to take the
+cid before the mask. This change is intended to make the parameters consist=
+ent
+with standard kernel predicates like cpumask_test_cpu(cpu, mask).
+
+> diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
+> index abea22ba2cc25..46fd8eda04435 100644
+> --- a/kernel/sched/ext_cid.h
+> +++ b/kernel/sched/ext_cid.h
+
+[ ... ]
+
+> @@ -218,11 +218,11 @@ static inline void scx_cmask_reframe(struct scx_cma=
+sk *m, u32 base, u32 nr_cids)
+>  	m->nr_cids =3D nr_cids;
+>  }
+> =20
+> -static inline void __scx_cmask_set(struct scx_cmask *m, u32 cid)
+> +static inline void __scx_cmask_set(u32 cid, struct scx_cmask *m)
+>  {
+> -	if (!__scx_cmask_contains(m, cid))
+> +	if (!__scx_cmask_contains(cid, m))
+>  		return;
+> -	*__scx_cmask_word(m, cid) |=3D BIT_U64(cid & 63);
+> +	*__scx_cmask_word(cid, m) |=3D BIT_U64(cid & 63);
+>  }
+> =20
+
+[Severity: Medium]
+The commit message states the intent to reorder the cmask helpers for
+consistency, but does this refactoring inadvertently omit the BPF-facing
+helpers?
+
+The kernel-side helpers in ext_cid.h are updated here to use the new
+(cid, mask) order, but the equivalent functions in
+tools/sched_ext/include/scx/cid.bpf.h appear to still use the old
+(mask, cid) ordering:
+
+tools/sched_ext/include/scx/cid.bpf.h:
+static __always_inline void cmask_set(struct scx_cmask __arena *m, u32 cid)
+static __always_inline bool cmask_test(const struct scx_cmask __arena *m, u=
+32 cid)
+static __always_inline bool __cmask_contains(const struct scx_cmask __arena=
+ *m, u32 cid)
+
+Could this introduce an API divergence between the kernel and BPF
+implementations for developers writing BPF schedulers?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603172153.3081=
+861-1-tj@kernel.org?part=3D1
