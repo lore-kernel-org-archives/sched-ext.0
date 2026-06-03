@@ -1,95 +1,195 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107B5332ED6
-	for <sched-ext@lists.linux.dev>; Wed,  3 Jun 2026 09:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7A9330652
+	for <sched-ext@lists.linux.dev>; Wed,  3 Jun 2026 13:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780477285; cv=none; b=jWA9jW1qO1M0N3jZTBVziV6O784zjBYXVUnuOLFk5KpFNG3ZBEXMfpHy2P6Jh21Z5k/DTXK3W15YKwBdZGS5xQLVhvD1XNC/pGxRONsAsuk1tzbPgKbnjs9ORIXYS2vs60CVLFFPFvja0aUJftCWDudVZroxJJjt1+82uE4WdYw=
+	t=1780494478; cv=none; b=ThVnBq8AtQVA+/xj/VsdG8z8FRH/t6HMIrIqB2hNVE3psIM6V6jsqilxS0Et6rfwMqbefu+r2pwpVEYpXd96FCIESxPHkBErSWrBNcTSxtGOV6zz479rsjEXx2DEgnFV5lsHSWhJ8PRIaYvU3BQU31g0nliagQiXjv5DkE99qsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780477285; c=relaxed/simple;
-	bh=G1fIEdNONzxdA3zDHKtNurIIfdPJq84k5sXJlYm0xzQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ljbKF2IIsDn64xMvtDSkFkmdK8Lj/UN/9W2Ov/8VdI0ZIFEKAFzPxz3lOHeq6YN9KKrJPazntO3Xkhn65WgGMYyO+gVBvhWxi1Clg1voKlN1bGxTZYQCRMZTIJcH3dwg6VYt8E6PvjngqeSkpBAC56MoourngJALSeXgj2nhWfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: c5ba111a5f2a11f1aa26b74ffac11d73-20260603
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:44410617-16e2-447a-9294-756fd9383c88,IP:0,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:25
-X-CID-META: VersionHash:e7bac3a,CLOUDID:5abcc23c39efe4e447567de6ae2951c0,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|136|850|865|898,TC:nil,Content:0
-	|15|50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OS
-	I:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: c5ba111a5f2a11f1aa26b74ffac11d73-20260603
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 858301019; Wed, 03 Jun 2026 17:01:13 +0800
-From: luoliang@kylinos.cn
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Carlier <devnexen@gmail.com>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH] tools/sched_ext: scx_flatcg: Document cgroup v2 requirement
-Date: Wed,  3 Jun 2026 17:01:06 +0800
-Message-Id: <20260603090106.2494243-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1780494478; c=relaxed/simple;
+	bh=0GWT/xRUsZau9mIQphOhWFX0ah2neK2mYMBqtklBqwc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KFflAJPEm2w04n64zFQlpoLpL43yR1rpVGBpd5qqBknzX2yORo9uzEcUNTWjXuW8e0zgj/ULPRKv7XnJ7IMMRC7WAGjajOe0xgs25MaN9GERCAEoi74SOALdHDskIiEc7e+jH34Rm7rDGHUUKxcxqWGxFMjWMifjKVOsCl/e1qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aXdFB5jE; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXdFB5jE"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-8423f1d8902so1515381b3a.1
+        for <sched-ext@lists.linux.dev>; Wed, 03 Jun 2026 06:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780494474; x=1781099274; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5z4kf7p8Gt6uCX79FL5V46n9tu3upTdO4mEiwxD3wDc=;
+        b=aXdFB5jEXlVb+KHdIOLJYMPma1dMftjyuOS6GaUpBIgUt2h3NmfUqbxxI5T/PNtlH5
+         Ar2LzNnHUMaH0xWHOa8Y6vM9LLro1j6HOJ0c4/MBTiTk6fUlChJPxVV+FApFRjENvlbj
+         Z9Bb4B7LFcZfDAMXpCzaxaoVpLuyjMldQIdFOcPevCIHE0UPGW1z+G+M33wpKsH7Vfs+
+         6cH5Vmlr6TUGRB8kwZFEuggcFQ/fsdBr5LSSTPO5eR1ppgvz0yEUC6RpBYGQWxHYFyJX
+         kMPEZNaGw4bQ0i+ABAyx9ezPB6sAxYqkhHMiGwFtW3CPiCydaXv1W3zyY5puZl1sO/sk
+         e73g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780494474; x=1781099274;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5z4kf7p8Gt6uCX79FL5V46n9tu3upTdO4mEiwxD3wDc=;
+        b=gVwadsbh9xE55ph8xIhzVWFH4aXzdgkiT3QrhdC5MDs/StSmhFC7vMXHu1VuSdEtPD
+         ds92/UyrSsDuILoGoWpAZ0EG/AORLGnXJlizAiZF9ebKMGapMLlq9UoyeAa/LGdnsRCH
+         XpFTOJ8V1Ff1e2Ts5G+8Yo/Lcv5CPyg8GSBXFoyHa+RndpqtL5wELxHvOa7Xlfnf9OBr
+         BPC9xaGyPZ1pIomUgIKb0h06ByANuBCpBz67pIPF/eKBWO5kL5SX6TqdgJ6irvPAwBh/
+         /e6qFjcKXfAOj/NZ5fR0X9+ejAmN5LkLOduJCgY4Vk2zafVA1Tiy9uE3Dn00RR0Onmk5
+         +f2w==
+X-Gm-Message-State: AOJu0YxliOdmrcVhbLDqXg3aXE5YWkVNKqp4cuZ5nvVI+mNd2gooZv/M
+	BrkxZHHGB3VDczCN5Dp1paRLdZxqs7be6vMG634zMewAhc6ZbVI0TrWS9p2JBw==
+X-Gm-Gg: Acq92OHVCU9HTzcKs4PN6BT42DwSRh+HoLAzyuHSzKlUTY/uVAm7c5hyCpRrcvipKiN
+	YZJ3rpa0/P9+k5qNxzeDrW78zOlfEeHKLUnovip0lP5gI/n4ZYPvOTqzqNyLFzvsAtO9B1iF86z
+	ndWjtflEmehp2DsqfpkKrILuiWpk5rqjD5HW6eBR7hAVZcwVGI+EogLXuDDAX2jC6M1WKyh4l9B
+	rKfHDrEeb2wrbfyL5z7f68JjSQpFkFAfmAehqubf3tG/elL/FOpSlQttgrGyK7UGk0ACw6YE2cx
+	CLPtM7H3Hzz4LvmkZD0DK3tJ6Nhl+EikDIxRFAVwolKB2QtjM5ouWCGiOII+kL4J6zi3I9C+o+c
+	YcuMcdMVh1YCT7gqoq32k8gx9qEKRwoeLZ7rquR6SPPleVUbx7hc09iiQBEYtHiNuvH/xp8hVOY
+	37z6zba/6so59VXe6fPYQ9ql7WsmsZrfa289TXnKjcuMOKK38HX7mfrRABlZVo0+NMGon+JsqBr
+	0h7E58SMKBqoxEAe9+bnehFCUltGg==
+X-Received: by 2002:a05:6a00:c90:b0:83f:2568:d45f with SMTP id d2e1a72fcca58-84284f5f588mr3501480b3a.23.1780494474238;
+        Wed, 03 Jun 2026 06:47:54 -0700 (PDT)
+Received: from cchengyang.duckdns.org (36-226-195-133.dynamic-ip.hinet.net. [36.226.195.133])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282372a16sm3866048b3a.18.2026.06.03.06.47.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jun 2026 06:47:53 -0700 (PDT)
+Date: Wed, 3 Jun 2026 21:47:49 +0800
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, 
+	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>, chengyang.chou@mediatek.com
+Subject: Re: [PATCH v4 sched_ext/for-7.2 0/3] sched_ext: Add dispatch
+ transaction API
+Message-ID: <20260603214527.G0c85@cchengyang.duckdns.org>
+References: <20260515172807.254804-1-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260515172807.254804-1-yphbchou0911@gmail.com>
 
-From: Liang Luo <luoliang@kylinos.cn>
+Hi Tejun, Andrea,
 
-The BPF program relies on cgroup v2-specific features - specifically
-BPF_MAP_TYPE_CGRP_STORAGE and cgroup v2 kfuncs (bpf_cgroup_ancestor,
-bpf_cgroup_from_id, scx_bpf_task_cgroup, ...), none of which are
-available on cgroup v1. The current file header describes the
-algorithm but does not make this runtime requirement explicit, so
-users running on a cgroup v1-only system get a confusing BPF load
-error with no clear pointer to the cause.
+On Sat, May 16, 2026 at 01:27:38AM +0800, Cheng-Yang Chou wrote:
+> scx_bpf_dsq_insert() captures the task's sequence number at insert time,
+> so any pre-dispatch validity checks a BPF scheduler performs before the
+> insert fall outside the race detection window.
+> 
+> Patch 1: Rename the internal scx_dsq_insert_commit() to
+> scx_dsq_insert_stage() to better reflect its role as a staging step
+> before the actual DSQ insertion. No functional change.
+> 
+> Patch 2: Introduce a dispatch transaction API with two new kfuncs.
+> - scx_bpf_dsq_insert_begin() captures the sequence number before any
+>   pre-dispatch checks, opening the transaction.
+> - scx_bpf_dsq_insert_commit() inserts the task using the early-captured
+>   token, extending the race detection window. If the token has gone stale
+>   (task was dequeued or claimed by another CPU), finish_dispatch()
+>   silently discards the entry. Both kfuncs are restricted to local DSQs,
+>   and commit() is callable only from ops.dispatch(). This is intended for
+>   schedulers that do not implement properly synchronized dequeue.
+> 
+> Patch 3: Add a selftest exercising the dispatch transaction API. The BPF
+> scheduler captures the token in ops.dispatch() and flips CPU affinity on
+> child tasks to trigger dequeue and re-enqueue, verifying that both
+> successful and stale-token dispatch paths are exercised.
+> 
+> Test plan:
+> - Applied this series and ran selftests with vng, all tests pass.
+> - Confirmed selftest skips on older kernel.
+> 
+> This series is discussed in [1].
+> [1]: https://lore.kernel.org/r/20260319083518.94673-1-arighi@nvidia.com/
 
-Document the requirement in a Note paragraph at the end of the file
-header so that it is visible to anyone reading the source.
+Any thoughts? Thanks.
 
-No functional change.
+> Changes in v4:
+> - Separate the internal rename into its own commit with no functional
+>   change; use scx_dsq_insert_stage() instead of scx_dsq_insert_buf()
+>   (Tejun Heo)
+> - Restrict scx_bpf_dsq_insert_commit() to ops.dispatch() only by moving
+>   it from scx_kfunc_ids_enqueue_dispatch to scx_kfunc_ids_dispatch
+>   (Tejun Heo)
+> - Restrict scx_bpf_dsq_insert_commit() to local DSQs at runtime:
+>   targeting a non-local DSQ aborts the scheduler (Tejun Heo)
+> - Expand kdoc for both kfuncs with the full problem statement and
+>   use-case context (Tejun Heo)
+> - Add scx_bpf_dsq_insert_commit_args struct to stay within the BPF
+>   verifier's five-argument limit imposed by KF_IMPLICIT_ARGS (Andrea Righi)
+> - Selftest: pass slice=0 in commit_args to preserve the task's existing
+>   slice rather than zeroing it (Andrea Righi)
+> - Selftest: use the first online CPU from sched_getaffinity() instead of
+>   hardcoded CPU 0 (Andrea Righi)
+> - Selftest: clarify that nr_tx_stale counts attempted stale commits, not
+>   rejections detected by finish_dispatch() (Andrea Righi)
+> - Selftest: skip dispatch transaction path for CPU-pinned tasks (e.g.
+>   per-CPU kworkers) that cannot be inserted into the current CPU's local
+>   DSQ; fall back to the global DSQ instead
+> - Add comment to mark_direct_dispatch() explaining why qseq validation
+>   is not needed on the direct dispatch path (Andrea Righi)
+> - Remove duplicate scx_bpf_dsq_insert_begin BTF entry from
+>   scx_kfunc_ids_enqueue_dispatch (sashiko-bot)
+> - Use u64 consistently for qseq in the dispatch buffer path
+>   (scx_dsp_buf_ent, scx_dsq_insert_stage, finish_dispatch)
+> - Link to v3:
+>   https://lore.kernel.org/r/20260509191223.168648-1-yphbchou0911@gmail.com/
+> 
+> Changes in v3:
+> - Rename the API from cookie to dispatch transaction: kfuncs renamed from
+>   scx_bpf_task_get_cookie/scx_bpf_dsq_insert_with_cookie to
+>   scx_bpf_dsq_insert_begin/scx_bpf_dsq_insert_commit (Tejun Heo)
+> - Rename internal scx_dsq_insert_commit() to avoid collision with the
+>   new public kfunc (Tejun Heo)
+> - Move __ksym __weak declarations in common.bpf.h into the API commit
+> - Redesign selftest to call insert from ops.dispatch() with CPU affinity
+>   flips to actually exercise the race detection window (Tejun Heo)
+> - Skip selftest on older kernels lacking the dispatch transaction API
+> - Apply the same fix logic as commit e18002d2c791 to the selftest
+> - Link to v2:
+>   https://lore.kernel.org/r/20260506160412.522199-1-yphbchou0911@gmail.com/
+> 
+> Changes in v2:
+> - Reword kdoc for both kfuncs to avoid exposing qseq and ops_state as
+>   implementation details (Kuba Piecuch)
+> - Add __ksym __weak declarations for new kfuncs in common.bpf.h
+> - Add dispatch_cookie selftest (Kuba Piecuch)
+> - Link to v1:
+>   https://lore.kernel.org/r/20260506075925.371138-1-yphbchou0911@gmail.com/
+> 
+> Thanks,
+> Cheng-Yang
+> 
+> ---
+> 
+> Cheng-Yang Chou (3):
+>   sched_ext: Rename scx_dsq_insert_commit() to scx_dsq_insert_stage()
+>   sched_ext: Add dispatch transaction API
+>   selftests/sched_ext: Add dispatch_cookie test
+> 
+>  kernel/sched/ext.c                            | 112 +++++++++++++-
+>  kernel/sched/ext_internal.h                   |   2 +-
+>  tools/sched_ext/include/scx/common.bpf.h      |   2 +
+>  tools/testing/selftests/sched_ext/Makefile    |   1 +
+>  .../selftests/sched_ext/dispatch_cookie.bpf.c | 120 +++++++++++++++
+>  .../selftests/sched_ext/dispatch_cookie.c     | 139 ++++++++++++++++++
+>  6 files changed, 369 insertions(+), 7 deletions(-)
+>  create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.bpf.c
+>  create mode 100644 tools/testing/selftests/sched_ext/dispatch_cookie.c
+> 
+> -- 
+> 2.48.1
+> 
 
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
----
- tools/sched_ext/scx_flatcg.bpf.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index fec359581826..067e1a7991d4 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -42,6 +42,9 @@
-  * The scheduler first picks the cgroup to run and then schedule the tasks
-  * within by using nested weighted vtime scheduling by default. The
-  * cgroup-internal scheduling can be switched to FIFO with the -f option.
-+ *
-+ * Note: Requires cgroup v2 (uses BPF_MAP_TYPE_CGRP_STORAGE and cgroup v2
-+ * BPF kfuncs, neither of which are available on cgroup v1).
-  */
- #include <scx/common.bpf.h>
- #include "scx_flatcg.h"
 -- 
-2.25.1
-
+Cheers,
+Cheng-Yang
