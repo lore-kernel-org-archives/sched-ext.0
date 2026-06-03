@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEADD46AF25;
-	Wed,  3 Jun 2026 17:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE53E47D94F;
+	Wed,  3 Jun 2026 17:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780507318; cv=none; b=X/cHBkeKA7kXgqWrhdUtfODH+dMzogYsD3Pjoe6xtlTaCFNzzRrxx9e08bUDLYyQvMMaZ66PawQw1tZTkdsllorqJ21TzwHxgHChbwvM+v9XQyFreDf0FSPaHrkclsbMw3Xi9YPYB7z0aDPcvllsySxsgmJ96u+aJ9mo8zltCBE=
+	t=1780507318; cv=none; b=dSTsjeKBt4NZAWbzewMxqdA/fmXIbxp2r3zd/b1+MmcAQugIiIXuNXUOg9Pnz9r0YGBU9gvnFnG1KYemUEEseseT+skRMvp7lVqqt5/MGOGojp6txOn7Z4bZ7TvIQRVAek5nBUOS3e6ueoxPklkpU9BstEey2dm4ymZ2AsKVpx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780507318; c=relaxed/simple;
-	bh=ubeJ4rNQG0Ef6kO6sgM1fpCp8AHwVjx0eI7FQ81ZpGc=;
+	bh=DvQokXNT62FHYySHr71cdg2RmMOJnHf9W2YEq4F1ZgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqgUUA7HhEIsBvd4l7Qi4WefqpiROMf6qUMJAal+jY/aCrG2g0s4B7jcVLIuZIkgvTR6/w3mIxqxiSxixDgYMRRjsCUirmxEEwgCYE1MDBu8xxp8QgMgH6wr8xiA2Oi1fLFJ8WZewHTs8j0OqQWHjL9WVg08AAhdtWycfW4+MzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJ3yNKM0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnvqov2o8PYonMj1h8b9o4MuCedPynJdT003iQiXG2b885iDxRFQIb8hLw8Yr5SVbolyteClQrkDStZ54oTW67MRkPX966kdJkbdu87suRXzuXYEykMe8EeZ64uqrGi4dzl0DyvsRxW3wu463cZO+XmfNMKf1F23Riy06k9cbV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i4OyhS77; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJ3yNKM0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74ADA1F00899;
-	Wed,  3 Jun 2026 17:21:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i4OyhS77"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FEA1F00893;
+	Wed,  3 Jun 2026 17:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780507316;
-	bh=RRw0+fHhoSh1DjgvQrikdK70eQbmSg8XU3PleKXE8Bg=;
+	s=k20260515; t=1780507317;
+	bh=vkgEtTSHu7h+I7GdIaqJ32wT0J5pJIkANEDuCCv4QX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJ3yNKM0SGYzbusZdMzuAf2bUIPR/vliT2xmYcsWCyDy4mnKN4NV534rPHK6z1uoQ
-	 sFe3UEgatXgqT+EjfD6gv/oDRvUomiVhbdW0oQlGPLStdpofvasmipL1YalUee2LHV
-	 dVtsPs6X4r01V1PrBZV/BsWjVOCI5L6QXm1pj0aVA3eKiHtoAQeOaMbKaB3vxb/LSn
-	 9/J7jOyJOeRVCqCeXhrGv59oHsGYOU+QhQhrUKLZ63ldav9KK6waVI9lfSQXmT8Xvc
-	 LPvQaUXhd558hfBRCmgpWepEwg8emxLFZVmuvK0ovgrwAYEa2SjbrtJlMT3/GfVAUn
-	 AXbdeB8/mgIsA==
+	b=i4OyhS77ygHm+KKV9rtbm0yUzaEJ2eMbVAGHCto1k/NA02mY65UXtiX7ynViK7IXh
+	 ZAdyKI9ZXoaMw8xh9UHms+X7ak3PkbKRmq6vT3yES6pLIrpXdQz4NvFnkSoX4IJw8t
+	 PKa0y4uiYN4imwF1UW1kdGGXFn/NMMhgeAHWTK+C21oimIA8wgQp/nObMKgIfkdyzg
+	 FqW4J7F/N5K/kE8MZsN2cB+YZ3z0n8oeE3JEbixuVtCq7hcTmmFnYxduWf5RVPZMcP
+	 epXam8mtHzIX7kOMLv+b6gAkCmMz96Rs+EwUaW9VtAnNnOSGMYOqKM5OwTw3LhhZfx
+	 L9VR2Rv+GT0kA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: Emil Tsalapatis <emil@etsalapatis.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/3] sched_ext: Add scx_cmask_test() and scx_cmask_for_each_cid()
-Date: Wed,  3 Jun 2026 07:21:52 -1000
-Message-ID: <20260603172153.3081861-3-tj@kernel.org>
+Subject: [PATCH 3/3] sched_ext: Make scx_bpf_kick_cid() return s32
+Date: Wed,  3 Jun 2026 07:21:53 -1000
+Message-ID: <20260603172153.3081861-4-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260603172153.3081861-1-tj@kernel.org>
 References: <20260603172153.3081861-1-tj@kernel.org>
@@ -48,53 +48,64 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add single-bit test and iterator over set cids in an scx_cmask.
+Switch scx_bpf_kick_cid() from void to s32 so future cap enforcement can
+surface failures. cid interface is introduced in this cycle and has no
+external users, so the ABI change is safe. Subsequent patches will add
+-EPERM returns when the calling sub-sched lacks the required cap on the
+target cid.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext_cid.h | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ kernel/sched/ext.c                       | 13 ++++++++-----
+ tools/sched_ext/include/scx/common.bpf.h |  2 +-
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
-index 46fd8eda0443..d4c3ebba7416 100644
---- a/kernel/sched/ext_cid.h
-+++ b/kernel/sched/ext_cid.h
-@@ -225,4 +225,35 @@ static inline void __scx_cmask_set(u32 cid, struct scx_cmask *m)
- 	*__scx_cmask_word(cid, m) |= BIT_U64(cid & 63);
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 32ebbc351564..fedd501de67e 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -9405,9 +9405,10 @@ __bpf_kfunc void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux
+  * @flags: %SCX_KICK_* flags
+  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+  *
+- * cid-addressed equivalent of scx_bpf_kick_cpu().
++ * cid-addressed equivalent of scx_bpf_kick_cpu(). Return 0 on success,
++ * -errno otherwise.
+  */
+-__bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
++__bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
+ {
+ 	struct scx_sched *sch;
+ 	s32 cpu;
+@@ -9415,10 +9416,12 @@ __bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux
+ 	guard(rcu)();
+ 	sch = scx_prog_sched(aux);
+ 	if (unlikely(!sch))
+-		return;
++		return -ENODEV;
+ 	cpu = scx_cid_to_cpu(sch, cid);
+-	if (cpu >= 0)
+-		scx_kick_cpu(sch, cpu, flags);
++	if (cpu < 0)
++		return -EINVAL;
++	scx_kick_cpu(sch, cpu, flags);
++	return 0;
  }
  
-+/**
-+ * scx_cmask_test - test whether @cid is set in @m
-+ * @cid: cid to test
-+ * @m: cmask to test
-+ *
-+ * Return %false if @cid is outside @m's active range. Otherwise return the
-+ * bit's value. Read via READ_ONCE so callers can race set/clear writers.
-+ */
-+static inline bool scx_cmask_test(u32 cid, const struct scx_cmask *m)
-+{
-+	if (!__scx_cmask_contains(cid, m))
-+		return false;
-+	return READ_ONCE(*__scx_cmask_word(cid, m)) & BIT_U64(cid & 63);
-+}
-+
-+/**
-+ * scx_cmask_for_each_cid - iterate set cids in @m
-+ * @cid: s32 loop var that receives each set cid in turn
-+ * @m: cmask to iterate
-+ *
-+ * Visits set bits within @m's active range in ascending order. Relies on the
-+ * head/tail-zero invariant of bits[], so no per-cid range check is needed.
-+ */
-+#define scx_cmask_for_each_cid(cid, m)						\
-+	for (u64 __bs = (m)->base & ~63u, __wi = 0,				\
-+		     __nw = SCX_CMASK_NR_WORDS((m)->nr_cids);			\
-+	     __wi < __nw; __wi++)						\
-+		for (u64 __w = READ_ONCE((m)->bits[__wi]);			\
-+		     __w && ((cid) = __bs + __wi * 64 + __ffs64(__w), true);	\
-+		     __w &= __w - 1)
-+
- #endif /* _KERNEL_SCHED_EXT_CID_H */
+ /**
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index 5f715d69cde6..9591a6e778ce 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -105,7 +105,7 @@ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __
+ s32 scx_bpf_cpu_to_cid(s32 cpu) __ksym __weak;
+ s32 scx_bpf_cid_to_cpu(s32 cid) __ksym __weak;
+ void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out) __ksym __weak;
+-void scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
++s32 scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
+ s32 scx_bpf_task_cid(const struct task_struct *p) __ksym __weak;
+ s32 scx_bpf_this_cid(void) __ksym __weak;
+ struct task_struct *scx_bpf_cid_curr(s32 cid) __ksym __weak;
 -- 
 2.54.0
 
