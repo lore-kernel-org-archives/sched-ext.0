@@ -1,113 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A782E8897;
-	Thu,  4 Jun 2026 02:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FC7175A87
+	for <sched-ext@lists.linux.dev>; Thu,  4 Jun 2026 02:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780538439; cv=none; b=i+7ggs3tPPpsjwLlD62HyMFsSE+vkeTdMHoVpQ6Ht+y9efOu6FuhgNN0dQwdLSZ6EOqPkllqKVJmm796/xnaqMjXNeg08BSiIu9rL1tDGytHkE//MBGuNB03W848O8Szl/Oxq44jLLm7OPXa2Ubsj0Y1Kn8lGFT4JjU/A4pBBM0=
+	t=1780539012; cv=none; b=iwYgbsw2y98HhC9tyn10IzJFqKPvGFC/OIOpUGWUSK0h/sfWVN2JHzImcAu42F+kNTuOHKBxQmK0jWOA4egFyO1pgd44mhNySbPDF6T6hvNHselkFuYiwJen3j2AA5FyIoTKcX7mc79fWhoFnTOic+5tHHSrOhhJ3kl+9H1r51s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780538439; c=relaxed/simple;
-	bh=rx1UqVZragIe/pEwO6f+GnTQkx9QEzJcLpsX4Pml5ME=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFeSVPWoXTmfusR4n39mNYNalpQ1canw/1LGWzY7v5j4t7z+XYcy6EUnbTZuKhFTW0cmF0YrFHpmqK8qiqoQeFu1vhP467doU3aRAcQRyOUxYJXks6Gj5v2GvgKU3YmGwhIhPCuuqB+DFxe8DjB2isAhvZrjYAPXlxuX5VdaQSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JvBQNT1u; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780539012; c=relaxed/simple;
+	bh=W2LOOtFtfBzp4gEBkicWHsyJGX8we0gfhQoQN6Rws3Y=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=CBMXCTblK7uglbD7Mdqspl6ap5IXK0XSueEgSdESAOkk/uQqUFAvRGY6Qi+SFdYeUof5oMEfBRLd3n7zi/aidTlbrqaRK9TLpKxOGj8FDeH4zgP8KtqhqWnXqU9LhDPQgTbHNN6zawZDuezMc5oV3cEnZCWjVXhl39FtBWmhba4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=InIVX3uh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JvBQNT1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68591F00893;
-	Thu,  4 Jun 2026 02:00:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="InIVX3uh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A771F00898;
+	Thu,  4 Jun 2026 02:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780538438;
-	bh=XyN3p9AE8ifBXoGgejvwMDhhEAYoSLl5s6ihd7xkC0o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JvBQNT1uQPoAqpeu58M1QyYkN7zJi3D3WdYYTmfJLj679lfZCweTupVYjOCn1ux9/
-	 KjTFwFv1IIzGnHEICuLOtjQIBDVHXfjfVpRFMdGd529qIKexEI4+c6WSLHYIpvufT/
-	 572ssauWdK8z2buytT6EZ6xD6yNKcdG9zXTLSkzywgKrrEwOck8zLG+yhQ99knjHQD
-	 L6HUF+6pLIsh7mh2Y5kFgq1Nz1DtN85sIZ/obgmtgHta4C+XvxGSHcbpPykAilywhv
-	 7Z6R9be+uZP8LYp1lc56OhiuOIRxQChrCwvGebpuI6BbpzyzM/AqelzXIc+mVv0VbW
-	 zdmBjjHGnmOEQ==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 4/4] sched_ext: Make scx_bpf_kick_cid() return s32
-Date: Wed,  3 Jun 2026 16:00:32 -1000
-Message-ID: <20260604020032.3536466-5-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260604020032.3536466-1-tj@kernel.org>
-References: <20260604020032.3536466-1-tj@kernel.org>
+	s=k20260515; t=1780539011;
+	bh=T0rPkejHtSIxzTk/uZ5byqh3I9pZNQ65DkXcgcBqobg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=InIVX3uhaHP47mUQhXnxS48OEiYoblDSlsOtEOQDi2J3HTYn8z24wt+B4F/7WNVcn
+	 EcpLHYUso5Hxj5bHFyl5treM+CnmXV/jjCAayrTLyt1hgygM88F8pG6LQCjVG2UwON
+	 AoI+YjXOSFh2kAL4SlzyANQpqlijBYEPAFJn1xNOy9zhdArd6vFyI9kIjQESW/DQZF
+	 SV6tJ9M54q8LYDoMJwu3F/yEuAWJMffaq+deg8DwjPJlocbkWm9QDs6+bJINZf14SA
+	 7g9l0EPSuv39SsvrlWs6TxRiomni5gV9T6fEydsMzJajFNl0PWJZaSMhzmxdD8cZ6D
+	 Hqk2D7BRhbQig==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 3/4] sched_ext: Add scx_cmask_test() and
+ scx_cmask_for_each_cid()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tejun Heo" <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260604020032.3536466-4-tj@kernel.org>
+References: <20260604020032.3536466-4-tj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 04 Jun 2026 02:10:10 +0000
+Message-Id: <20260604021011.42A771F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Switch scx_bpf_kick_cid() from void to s32 so future cap enforcement can
-surface failures. cid interface is introduced in this cycle and has no
-external users, so the ABI change is safe. Subsequent patches will add
--EPERM returns when the calling sub-sched lacks the required cap on the
-target cid.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] The `scx_cmask_for_each_cid` macro expands into two nested `for` l=
+oops, breaking standard C iteration semantics for `break` statements. If a =
+caller uses a `break` statement to terminate the iteration early, it will o=
+nly exit the inner loop (terminating the scan for the current 64-bit word).=
+ The outer loop will then increment, fetch the next word, and continue iter=
+ating. This creates a trap where developers intending to completely abort t=
+he loop will inadvertently only skip the rest of the current word and silen=
+tly resume on the next one.
+--
 
-v2: Return scx_cid_to_cpu()'s errno instead of -EINVAL. (Andrea)
+commit e9a4307d205f9de4f9da9f425dd9329d36d47094
+Author: Tejun Heo <tj@kernel.org>
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext.c                       | 13 ++++++++-----
- tools/sched_ext/include/scx/common.bpf.h |  2 +-
- 2 files changed, 9 insertions(+), 6 deletions(-)
+sched_ext: Add scx_cmask_test() and scx_cmask_for_each_cid()
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 32ebbc351564..62769abb553a 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -9405,9 +9405,10 @@ __bpf_kfunc void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux
-  * @flags: %SCX_KICK_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-- * cid-addressed equivalent of scx_bpf_kick_cpu().
-+ * cid-addressed equivalent of scx_bpf_kick_cpu(). Return 0 on success,
-+ * -errno otherwise.
-  */
--__bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
-+__bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
- {
- 	struct scx_sched *sch;
- 	s32 cpu;
-@@ -9415,10 +9416,12 @@ __bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux
- 	guard(rcu)();
- 	sch = scx_prog_sched(aux);
- 	if (unlikely(!sch))
--		return;
-+		return -ENODEV;
- 	cpu = scx_cid_to_cpu(sch, cid);
--	if (cpu >= 0)
--		scx_kick_cpu(sch, cpu, flags);
-+	if (cpu < 0)
-+		return cpu;
-+	scx_kick_cpu(sch, cpu, flags);
-+	return 0;
- }
- 
- /**
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 5f715d69cde6..9591a6e778ce 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -105,7 +105,7 @@ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __
- s32 scx_bpf_cpu_to_cid(s32 cpu) __ksym __weak;
- s32 scx_bpf_cid_to_cpu(s32 cid) __ksym __weak;
- void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out) __ksym __weak;
--void scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
-+s32 scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
- s32 scx_bpf_task_cid(const struct task_struct *p) __ksym __weak;
- s32 scx_bpf_this_cid(void) __ksym __weak;
- struct task_struct *scx_bpf_cid_curr(s32 cid) __ksym __weak;
--- 
-2.54.0
+Adds a single-bit test and an iterator over set cids in an scx_cmask.
+The iterator is bounded to the active span.
 
+> diff --git a/kernel/sched/ext_cid.h b/kernel/sched/ext_cid.h
+> index 46fd8eda04435..5745e5785e897 100644
+> --- a/kernel/sched/ext_cid.h
+> +++ b/kernel/sched/ext_cid.h
+
+[ ... ]
+
+> +/**
+> + * scx_cmask_for_each_cid - iterate set cids in @m
+> + * @cid: s32 loop var that receives each set cid in turn
+> + * @m: cmask to iterate
+> + *
+> + * Visits set bits within @m's active range in ascending order. Scans on=
+ly the
+> + * words the active range spans, where head and tail padding is kept zer=
+o, so
+> + * no per-cid range check is needed.
+> + */
+> +#define scx_cmask_for_each_cid(cid, m)						\
+> +	for (u64 __bs =3D (m)->base & ~63u, __wi =3D 0,				\
+> +		     __nw =3D scx_cmask_nr_used_words(m);				\
+> +	     __wi < __nw; __wi++)						\
+> +		for (u64 __w =3D READ_ONCE((m)->bits[__wi]);			\
+> +		     __w && ((cid) =3D __bs + __wi * 64 + __ffs64(__w), true);	\
+> +		     __w &=3D __w - 1)
+
+[Severity: High]
+Since this macro expands into two nested for loops, what happens if a caller
+uses a break statement to terminate the iteration early?
+
+It appears a break will only exit the inner loop, terminating the scan for
+the current 64-bit word. The outer loop will then increment, fetch the next
+word, and continue iterating.
+
+Could this create a trap where a standard break statement inadvertently ski=
+ps
+the rest of the current word but silently resumes yielding items on the next
+word, violating standard C iteration semantics?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604020032.3536=
+466-1-tj@kernel.org?part=3D3
