@@ -1,84 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30C1262FF8;
-	Fri,  5 Jun 2026 15:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C32C43DA24;
+	Fri,  5 Jun 2026 19:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780673408; cv=none; b=jGnDch5B/kJrIDJIdsVic0jZfZddUT5k4/7z+VbWdnbkAchWMQwTGZh+hYW0NH4o3DJ6KBIuCpDL0L+7fMfL4km+Fy9djVB+U/UwVNEfFFi4g2iT5Vo8ywgYiZ7aiwQVZQAC7oezb7iwCU9VKdk2WI5/YH4RBuJA/V4Cu56l5Q0=
+	t=1780687110; cv=none; b=VaP4C8Axj3trVgOkjdwdPt2Zx4Mp/7G28zGO3hFULoF+cJxpzNpS1zWDBLpg/LvZTenLmIOlgzAv6prC+4qfU7njwSOleYNGOVWyToZWYc4+6TuffhFAkRcWFdAfh1ZyMVS3Od3Le1ZdFo+7xPMFzH8XTMLHT/eQIL68QDRMjRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780673408; c=relaxed/simple;
-	bh=zMgRSnvJOko7Z8pAG1TnHG0nOb6lLyPQqMzGvtSoFzA=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=PON3Wuo8wShsdTHcIMjMJ0PRdLgm5UJRTslLu5FPgR0SB9y2I2iiBS+bkT3saAVzCBVrbCKQp+ZFdHuOLTcDXTVmSbkit+Wy6RFReUUa38x/4JmgBaCGjjtbQHAFgmNFj+6TYG0J3J5fAFR6qtrepyQh1A+LolyZ3Tsu0SytJn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RayKJ7nc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780687110; c=relaxed/simple;
+	bh=qwdHNsm339DgGlPwlYlDBmESvB43wCN5K9Fa8rDpWmI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=tpS2tHqmrJgXeY+drE59VMuSJGarlL2NH9kCMK6la9CZw0N6SUH2eY1tucZgOi28iqvXqKvaw4xe+d4wPNbQc5LUE9bFfP/8sq1obLjjX1e6B6HXA+3i/IPEj5LsPT5FSL+2rRqy4IQITJgfiMjPwyJEDH4mvU2MhyWKnGq1coQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQexEArk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RayKJ7nc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C001F00893;
-	Fri,  5 Jun 2026 15:30:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQexEArk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680891F00893;
+	Fri,  5 Jun 2026 19:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780673407;
-	bh=1BFFFgB57ZAob11PrIhvgonvaYPbDjOxXtuYXVUomG0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=RayKJ7ncq0sZEb9vdqzRVX7YDpHvVxSzRbkdFFpFXx+JmNyRvyody6M/TZBC+J1mC
-	 aijEDSFOVz044vXnDL+FBwplQJdbIFbUpu/BmIKdN10yjwCnxeqA3tttPoUnDrCfXj
-	 jJ77iJAoRNuPuAW5vKVhA6bptbyqojfT4V6HHh7zbnAH5oeRGBECqR9A8H+BWuiNEy
-	 xndf4zIX/VXugdxNVUP/9oD1IQfp6KuVrUa/LGQ+/TVcncmYM63Jcd3akd8jng6r8x
-	 16RFTi1oRG6rL/FWWoe+DWiKMkGU1UMQ8HFvlAKpM2e4qVOhrcaGRY+GkrU8dwNl9q
-	 jRADb53t0lpNg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D0AF53930BA5;
-	Fri,  5 Jun 2026 15:30:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20260515; t=1780687104;
+	bh=qwdHNsm339DgGlPwlYlDBmESvB43wCN5K9Fa8rDpWmI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=gQexEArkeIG7IEayE51ex/ovqurwwBvxUOleLYXHnVziccPQ1fRY4pKS64jE90AcI
+	 nNk/lvlCbkwaXPwginhvlbg/dBagipWpdKxDYbnI+iQNAXPqFvI1fuAURwe59uDid/
+	 spWV2IKb2NCbz2MCw1EpHmpawPdWbPoNhnhAJUV6cl8eEOCeulX2kgD55QMKpXox/2
+	 ipTByODSbPxSb20Z1hyhawSTmpyZ/YjzqzOPY6AT8BX+G+CkFO88ZNw/8VSe+wDzB1
+	 bAbT9DcLjdsSgHMehwe4mh4bGLKf4dlZvYyEHi8dqnJROXvZgJBiAzpAaF3n9BsNcN
+	 yUH+kaloRZCNA==
+Date: Fri, 05 Jun 2026 09:18:23 -1000
+Message-ID: <3ff09db09b52b01fcd5564cff01e18f3@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.2] sched_ext: Add scx_arena_to_kaddr() / scx_kaddr_to_arena()
+In-Reply-To: <20260604100223.3831303-1-tj@kernel.org>
+References: <20260604100223.3831303-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH bpf-next] bpf: Replace scratch PTE atomically when
- allocating
- arena pages
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <178067340741.3804693.1794735582974531631.git-patchwork-notify@kernel.org>
-Date: Fri, 05 Jun 2026 15:30:07 +0000
-References: <20260601183728.1800490-1-tj@kernel.org>
-In-Reply-To: <20260601183728.1800490-1-tj@kernel.org>
-To: Tejun Heo <tj@kernel.org>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
- ast@kernel.org, andrii@kernel.org, daniel@iogearbox.net,
- martin.lau@linux.dev, memxor@gmail.com, peterz@infradead.org,
- catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org, mingo@redhat.com,
- bp@alien8.de, dave.hansen@linux.intel.com, akpm@linux-foundation.org,
- david@kernel.org, rppt@kernel.org, emil@etsalapatis.com,
- sched-ext@lists.linux.dev, bpf@vger.kernel.org, x86@kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org
 
-Hello:
+Hello,
 
-This patch was applied to bpf/bpf-next.git (master)
-by Alexei Starovoitov <ast@kernel.org>:
+Applied to sched_ext/for-7.2.
 
-On Mon,  1 Jun 2026 08:37:28 -1000 you wrote:
-> apply_range_set_cb() maps the pages for a new arena allocation and returned
-> -EBUSY when the target PTE was already populated. Kernel-fault recovery
-> leaves the per-arena scratch page in unallocated arena PTEs, so a later
-> bpf_arena_alloc_pages() over such a page hits that -EBUSY, and every
-> subsequent allocation of it fails the same way. Allocation must install the
-> real page over scratch instead.
-> 
-> [...]
+Thanks.
 
-Here is the summary with links:
-  - [bpf-next] bpf: Replace scratch PTE atomically when allocating arena pages
-    https://git.kernel.org/bpf/bpf-next/c/f64c723741c9
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+--
+tejun
