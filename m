@@ -1,63 +1,63 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5827B2F8E93
-	for <sched-ext@lists.linux.dev>; Wed, 10 Jun 2026 15:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A32B33A9D6
+	for <sched-ext@lists.linux.dev>; Wed, 10 Jun 2026 15:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781105261; cv=none; b=tJ4dXPR2y/L2E9Xf7KSlKlEHeJq8ukdeNGAlodPJsjnGo8klxhYr6qpEysCzxZxxX6QdIubV+qxS3klxBYIK7ZObaesKpViHijcU/mz6F8HNcod5TkD1yTSlZaLQaX1rlv7wUO9hA+wjduU0LnsGltaKb0JC7z/CVKyoSFO6k6I=
+	t=1781105264; cv=none; b=NnSQpRe+OrXsVNwjkVpS8YY7qspnRPKwScEU3HeKu/Bl3yRsIx8S9aE83CG5h6WSQjqth96mD2KesHv+Gu8kRI4/xqd9d+8prLtF2H0Kxo18HG9qM1nm8zLrIlPuQovn+zmRQq46JYU6ki6sg4Gcz0vNT+M9uivzqry/sl1QSAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781105261; c=relaxed/simple;
-	bh=Y7Sgz/nq2ViACapjh7GV0aYqHtnpgNTDFxg/Xs8lRDQ=;
+	s=arc-20240116; t=1781105264; c=relaxed/simple;
+	bh=g9zRWLcmBnQlGBVCLThbLBnPQy6092kl3esMhff/JJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNv/FQG6zZ2FkGIGKzaHoJWyqz+k2vGk2fljzYhpGiPRSXd/sJsputi6+n7qglRCGvYt5VB+1RHwjkvtqTvXAiJ8Dtb1n7O6TOp/avJpB2nf2zYYdDrVgMZp4MAbLktsbOMwxCfuo9Ykg4VeOJXXBC+RUeY6WHovaiHNTNNrEEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PMiEfSIg; arc=none smtp.client-ip=209.85.215.169
+	 MIME-Version; b=DNX1R8i87i3I0Gxlt1wX8HzghRmFsneVS/0JysxDia5pquglW/6AZlgq4OhPvMmIhh4q383ZwDLJDKgSfgcSWQ2oLa3JhtBU5dvsqOhbjzQvOhNM8tBstKQ5th1DBstqlWi9w6kDXHeoFdgw2Qkn3i/74FFHrNqyAeDeUzvZRO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LwKToTOx; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PMiEfSIg"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-c8585c51f1fso3230440a12.1
-        for <sched-ext@lists.linux.dev>; Wed, 10 Jun 2026 08:27:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LwKToTOx"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c0c2d792c8so46415015ad.1
+        for <sched-ext@lists.linux.dev>; Wed, 10 Jun 2026 08:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781105260; x=1781710060; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781105263; x=1781710063; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5KwLbbL/2J/oqKV1VGplian3GK8W402eH0sQ7ZlH2PE=;
-        b=PMiEfSIgDAG/ZUmoyb0ZyN8dSQgTQJZR61wlLh5BgT8p1PpWlieFk6TXVxVSHLC0Og
-         4bru24Inej2g+AXRVPHAEI0STBXLaVP9zrj8Sm3LI61OfOFa5SzazKefaUNWdzroMrpM
-         KJUpKbvJuc7aQqMEqcF/im7gNmH2o1Y3xI/Z+RIjvcF3ggjMOjRq94FWI7Nt21IrVlE8
-         y6jFoFIZD/uPRCjZyPnR04sOAJUynCyzBJ7StoVmV2J8C9CKJeB+IEf6TS9L8Lx2VS4l
-         u890Y4poi50cU40BcfuMiBPC/LY5HLQXrPVkeSSsWQLcENT4AoR1T2zy2MloCZdZbITG
-         VsfQ==
+        bh=STqVDY7lMzQQDOSwrNUBF6fOSRNCCttOlD2Vwh31pUs=;
+        b=LwKToTOxjjifGk6o+uuHBJq7ejsY5jqezmY/A36vUM5jdN0yXkMK9ziTCDQWV89Wcw
+         Ea6ziESHwTccZBfw+pUfXRN9favff4EK2nyuA/RCY6MQ6LT35gYEOfZ0PFedplZBTnQp
+         5hf81Vgqv9hxC9WuNyuI7qj81OS/G7cSYz+xxF2N6yE/yB+IlmdGoOvNqBZqLV/kcATq
+         mseIYKbrSRYgyNsZSJnCLWOe2GagC82UP5VgaCWtNOZ022gyCmopzxel82syg0AWcqru
+         IDHgAT3Zm7f2+coIn65yV0zjimr8kQTwtE+JywIihLLAh3KfUgLHmkv+v2vSnlzgzaYH
+         p2EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781105260; x=1781710060;
+        d=1e100.net; s=20251104; t=1781105263; x=1781710063;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=5KwLbbL/2J/oqKV1VGplian3GK8W402eH0sQ7ZlH2PE=;
-        b=qFGtG2p5aGXL3CQxkJoxFf4z3+B7LClPWvevoZRh0LG704gbCX+mL1g2hWcvfUipRP
-         P7Wm4sotQzdaYF0gTQqBPb3BCg1/aTwygOgii2rOQqomc+g0dsZBgOcyjn8biDr8ghNM
-         zC8NGIwh6l8jXkc3AKSnzRHgcvk3PA/DiJTQdqiBqUbIR2lNquiCLAIEt/8J9Ajyh98y
-         +xH2wWhejs/9PaU0mPwK9wvFR/tjLEWdIO4/LNyM/oLwBOShNvTeS2SQD0jgE9ha5Sq9
-         VzpeFhiJQRXPJHp1hI5vj4sQhquzBmv314cdJOYIqbuzZgPzQqn5eOsQvlUNgrFPu484
-         dakQ==
-X-Gm-Message-State: AOJu0Yz4TKpynw5cDg4EIz40vXWrKNRgo9HRvQOa2ztgRQkY5YXxLAgZ
-	Ax7GhkLJQHE3/28Zy4jbqyyrdCXKl4o3okHrlGFHH8/wa3kmY1hPyBfz5hD4Fw==
-X-Gm-Gg: Acq92OFoWfa9AwxYSjeHWkmaFtxy1a35dgFHnbJHUZru02dj92QGkA0ReVkfaFB5JV6
-	5dzyNQ0DJWY9rlSWf6agUIcDOLQnrGpVj58qmt7qbuaGStt8aiprlF0i8vmJv9TVqViO9lsUpML
-	9lONeJeLwm+s8dVPHMHMdyiSAYp8YXTH90uKHQdBp08qgCts03+RaRBY2i4sc4OvztFChrhIj0I
-	1EeI9sBPZ8zdCb5VsKTNedFLucC9V+lUi5tXtPlnoGqZKYQ/5xtOMJHugPcBYfGm1TtP/rtQGn+
-	C5qed2z39NWEJbo1RqWRx4F99/YmIuAIQAqKBzwxMKl5GDohv+PN18+a01blXYQs9l/rBK8msV2
-	kyjK7SW2SrpmYcsuKzIJfcuo8Acd78GYX26tTtpZJxvR1bcWMFVP3nhyy1I5PFxc+q5yJcHvdc2
-	4vOAPnn+/6WFi78OBMbUCrouAybDVUrTTqCdbA7quenzbUjtlzrs6QQNb4vsCdL60iQw1JlABJ3
-	0uVt7tijttRhHSWGpi9Mb4dZPk=
-X-Received: by 2002:a17:903:1209:b0:2bc:e299:4b3f with SMTP id d9443c01a7336-2c1ec80a4eamr201655695ad.10.1781105259460;
-        Wed, 10 Jun 2026 08:27:39 -0700 (PDT)
+        bh=STqVDY7lMzQQDOSwrNUBF6fOSRNCCttOlD2Vwh31pUs=;
+        b=UsKCEm9ezpnV/l6JepxJLvVs2UCO8jWiIpdt32jn/dleMdeQJ1SjVOEukCYOg3f6Vt
+         pW76KQjD39dImklmrMHlB1AbUZxc4rTd02jQzeGKrqODibXoK1asronwsacMOOwzrQVq
+         8fQzvmMwdXE1cqj/i53gDREIhN44Gnc/uA73xIQReOjYkILSWjVnHAACfvsJMPL4NKgM
+         A2w506mw5smj6B8SUErDr+tDX9hOZUqP1s5bPJnoebt6Sg981TRMxD7ATAgyvwQBRjnJ
+         XazjlhIUIWucJdd1Cra22oYQmg3KwKSZd7RVKXki8LciD7Ixay0A0v0j3FfxExc51wW7
+         zl7g==
+X-Gm-Message-State: AOJu0Yxk6cqxR2uMKqdp3X+EHStMgkw323804riRa1Zd7pR9hgoJ40Oa
+	aiRCHubQDyIoloQRxqjx48s2XZKze3TzhbAz6YVm0Be8fFbnY+fL55H5MObaIg==
+X-Gm-Gg: Acq92OH+kZNCeaDQFiFcopG8VMW8qSjd9dtmVI90/+BhNrQdPcHd0hVnWz6290xw5Nm
+	IvY4hhYiKSeEangqCkNxYFQ/8gzP9+DSnTCgc6+qH2sQa205466p+6V0nn60Cvt3DPDLh9GQaGC
+	QD9KE1Oz/dfydVKIHljr6iphv16pMb//AQCyH3a9s5RUzM145THeZ4E7aeBFlDZNCUOE1nYruXe
+	IC6Dnw2kP1RuEevW3pqTPPtwnpbBajDtKDXOmSgpZIDOppR1dOIlcgZVDYfy93xi21S0MRzVNOk
+	P5J7+2HMOMkggmQIK7ATWXY7iLhRpuYoDuAiIOhGsIPWxpaOhtvEfE7NHFKR2zKEC/8rULgacG/
+	nR/brkhUhUGSGDqcP9WbmStweV2dmpTCOSS/QYHIuZj/uF3TV/IpKLz2dJIC5F1hbxsNCT4gTxK
+	fkK8FMrc4LfY0fkoHbOunJ56NUWiafPpSAUD4hk+TJUpl18nWgrKnmaLx/LrHmVA1LPQgzG2p2Z
+	iI6YjaKefyuzFNPNGjcsdAvqJc=
+X-Received: by 2002:a17:903:f8b:b0:2c1:566b:f907 with SMTP id d9443c01a7336-2c1e7f9199bmr307939515ad.20.1781105262669;
+        Wed, 10 Jun 2026 08:27:42 -0700 (PDT)
 Received: from cchengyang.tail151456.ts.net (36-226-225-196.dynamic-ip.hinet.net. [36.226.225.196])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609e573sm253335795ad.47.2026.06.10.08.27.36
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609e573sm253335795ad.47.2026.06.10.08.27.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 08:27:39 -0700 (PDT)
+        Wed, 10 Jun 2026 08:27:42 -0700 (PDT)
 From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 To: sched-ext@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>,
@@ -70,12 +70,13 @@ Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
 	Chia-Ping Tsai <chia7712@gmail.com>,
 	chengyang.chou@mediatek.com,
 	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: [PATCH 1/2] sched_ext: Fix exit_cpu accuracy for lockup paths
-Date: Wed, 10 Jun 2026 23:26:55 +0800
-Message-ID: <20260610152717.15905-2-yphbchou0911@gmail.com>
+Subject: [PATCH 2/2] sched_ext, rcu: Upgrade RCU stall paths to report cpumask of stalled CPUs
+Date: Wed, 10 Jun 2026 23:26:56 +0800
+Message-ID: <20260610152717.15905-3-yphbchou0911@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260610152717.15905-1-yphbchou0911@gmail.com>
+In-Reply-To: <20260610152717.15905-2-yphbchou0911@gmail.com>
 References: <20260610152717.15905-1-yphbchou0911@gmail.com>
+ <20260610152717.15905-2-yphbchou0911@gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -84,98 +85,291 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-handle_lockup() uses raw_smp_processor_id() for exit_cpu, which is wrong
-for two paths:
+scx_rcu_cpu_stall() previously recorded the detector CPU rather than the
+stalled one, and the expedited grace period path had no stalled CPU to
+report at all.
 
-- scx_hardlockup_irq_workfn() has the hung CPU in a local variable but
-  irq_work may run elsewhere. Pass the local cpu explicitly.
-- scx_rcu_cpu_stall() records the detector CPU rather than the stalled
-  one. Pass -1 for now. The next patch fixes this properly.
+Thread a cpumask through panic_on_rcu_stall() and scx_rcu_cpu_stall()
+to capture all stalled CPUs. Report cpumask_first() as exit_cpu and the
+full CPU list in the exit message. Task-only stalls yield exit_cpu = -1.
+
+Store the stall mask in scx_sched rather than scx_exit_info, keeping the
+BPF-visible struct unchanged. scx_dump_state() reads sch->stall_cpus
+directly and dumps all stalled CPUs first to avoid losing them to
+truncation.
 
 Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
 Reviewed-by: Andrea Righi <arighi@nvidia.com>
 ---
- kernel/sched/ext.c          | 15 +++++++++------
- kernel/sched/ext_internal.h |  2 --
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ include/linux/sched/ext.h   |  4 +-
+ kernel/rcu/tree.c           |  3 ++
+ kernel/rcu/tree_exp.h       |  5 ++-
+ kernel/rcu/tree_stall.h     | 13 +++++--
+ kernel/sched/ext.c          | 73 ++++++++++++++++++++++++++++++++-----
+ kernel/sched/ext_internal.h |  1 +
+ 6 files changed, 83 insertions(+), 16 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 8f82407330ae..161a7a2ca80f 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5205,6 +5205,7 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 20b2343aa344..75cb8b119fb7 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -263,7 +263,7 @@ void sched_ext_dead(struct task_struct *p);
+ void print_scx_info(const char *log_lvl, struct task_struct *p);
+ void scx_softlockup(u32 dur_s);
+ bool scx_hardlockup(int cpu);
+-bool scx_rcu_cpu_stall(void);
++bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask);
  
- /**
-  * handle_lockup - sched_ext common lockup handler
-+ * @exit_cpu: CPU to record in exit_info. Pass the stalled/hung CPU, not current.
-  * @fmt: format string
-  *
-  * Called on system stall or lockup condition and initiates abort of sched_ext
-@@ -5214,7 +5215,7 @@ bool scx_allow_ttwu_queue(const struct task_struct *p)
-  * resolve the lockup. %false if sched_ext is not enabled or abort was already
-  * initiated by someone else.
-  */
--static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
-+static __printf(2, 3) bool handle_lockup(int exit_cpu, const char *fmt, ...)
+ #else	/* !CONFIG_SCHED_CLASS_EXT */
+ 
+@@ -271,7 +271,7 @@ static inline void sched_ext_dead(struct task_struct *p) {}
+ static inline void print_scx_info(const char *log_lvl, struct task_struct *p) {}
+ static inline void scx_softlockup(u32 dur_s) {}
+ static inline bool scx_hardlockup(int cpu) { return false; }
+-static inline bool scx_rcu_cpu_stall(void) { return false; }
++static inline bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask) { return false; }
+ 
+ #endif	/* CONFIG_SCHED_CLASS_EXT */
+ 
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index 55df6d37145e..03c9651be5c0 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -4871,6 +4871,9 @@ static void __init rcu_dump_rcu_node_tree(void)
+ 
+ struct workqueue_struct *rcu_gp_wq;
+ 
++static struct cpumask rcu_stall_cpumask;
++static struct cpumask rcu_exp_stall_cpumask;
++
+ void __init rcu_init(void)
  {
- 	struct scx_sched *sch;
- 	va_list args;
-@@ -5230,7 +5231,7 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
- 	case SCX_ENABLING:
- 	case SCX_ENABLED:
- 		va_start(args, fmt);
--		ret = scx_verror(sch, fmt, args);
-+		ret = scx_vexit(sch, SCX_EXIT_ERROR, 0, exit_cpu, fmt, args);
- 		va_end(args);
- 		return ret;
- 	default:
-@@ -5252,7 +5253,7 @@ static __printf(1, 2) bool handle_lockup(const char *fmt, ...)
-  */
- bool scx_rcu_cpu_stall(void)
- {
--	return handle_lockup("RCU CPU stall detected!");
-+	return handle_lockup(-1, "RCU CPU stall detected!");
+ 	int cpu = smp_processor_id();
+diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
+index 82cada459e5d..46b6907f1b09 100644
+--- a/kernel/rcu/tree_exp.h
++++ b/kernel/rcu/tree_exp.h
+@@ -578,6 +578,7 @@ static void synchronize_rcu_expedited_stall(unsigned long jiffies_start, unsigne
+ 			if (!(READ_ONCE(rnp->expmask) & mask))
+ 				continue;
+ 			ndetected++;
++			cpumask_set_cpu(cpu, &rcu_exp_stall_cpumask);
+ 			rdp = per_cpu_ptr(&rcu_data, cpu);
+ 			pr_cont(" %d-%c%c%c%c", cpu,
+ 				"O."[!!cpu_online(cpu)],
+@@ -665,6 +666,8 @@ static void synchronize_rcu_expedited_wait(void)
+ 		if (rcu_stall_is_suppressed())
+ 			continue;
+ 
++		cpumask_clear(&rcu_exp_stall_cpumask);
++
+ 		nbcon_cpu_emergency_enter();
+ 
+ 		j = jiffies;
+@@ -675,7 +678,7 @@ static void synchronize_rcu_expedited_wait(void)
+ 
+ 		nbcon_cpu_emergency_exit();
+ 
+-		panic_on_rcu_stall();
++		panic_on_rcu_stall(&rcu_exp_stall_cpumask);
+ 	}
  }
  
- /**
-@@ -5267,11 +5268,13 @@ bool scx_rcu_cpu_stall(void)
-  */
- void scx_softlockup(u32 dur_s)
+diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
+index b67532cb8770..d0c4f193f17e 100644
+--- a/kernel/rcu/tree_stall.h
++++ b/kernel/rcu/tree_stall.h
+@@ -159,7 +159,7 @@ static int __init check_cpu_stall_init(void)
+ early_initcall(check_cpu_stall_init);
+ 
+ /* If so specified via sysctl, panic, yielding cleaner stall-warning output. */
+-static void panic_on_rcu_stall(void)
++static void panic_on_rcu_stall(const struct cpumask *stalled_mask)
  {
--	if (!handle_lockup("soft lockup - CPU %d stuck for %us", smp_processor_id(), dur_s))
-+	int cpu = smp_processor_id();
-+
-+	if (!handle_lockup(cpu, "soft lockup - CPU %d stuck for %us", cpu, dur_s))
+ 	static int cpu_stall;
+ 
+@@ -167,7 +167,7 @@ static void panic_on_rcu_stall(void)
+ 	 * Attempt to kick out the BPF scheduler if it's installed and defer
+ 	 * the panic to give the system a chance to recover.
+ 	 */
+-	if (scx_rcu_cpu_stall())
++	if (scx_rcu_cpu_stall(stalled_mask))
  		return;
  
- 	printk_deferred(KERN_ERR "sched_ext: Soft lockup - CPU %d stuck for %us, disabling BPF scheduler\n",
--			smp_processor_id(), dur_s);
-+			cpu, dur_s);
- }
+ 	if (++cpu_stall < sysctl_max_rcu_stall_to_panic)
+@@ -645,6 +645,8 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
+ 	if (rcu_stall_is_suppressed())
+ 		return;
  
- /*
-@@ -5286,7 +5289,7 @@ static void scx_hardlockup_irq_workfn(struct irq_work *work)
++	cpumask_clear(&rcu_stall_cpumask);
++
+ 	nbcon_cpu_emergency_enter();
+ 
+ 	/*
+@@ -660,6 +662,7 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
+ 			for_each_leaf_node_possible_cpu(rnp, cpu)
+ 				if (rnp->qsmask & leaf_node_cpu_bit(rnp, cpu)) {
+ 					print_cpu_stall_info(cpu);
++					cpumask_set_cpu(cpu, &rcu_stall_cpumask);
+ 					ndetected++;
+ 				}
+ 		}
+@@ -701,7 +704,7 @@ static void print_other_cpu_stall(unsigned long gp_seq, unsigned long gps)
+ 
+ 	nbcon_cpu_emergency_exit();
+ 
+-	panic_on_rcu_stall();
++	panic_on_rcu_stall(&rcu_stall_cpumask);
+ 
+ 	rcu_force_quiescent_state();  /* Kick them all. */
+ }
+@@ -754,7 +757,9 @@ static void print_cpu_stall(unsigned long gp_seq, unsigned long gps)
+ 
+ 	nbcon_cpu_emergency_exit();
+ 
+-	panic_on_rcu_stall();
++	cpumask_clear(&rcu_stall_cpumask);
++	cpumask_set_cpu(smp_processor_id(), &rcu_stall_cpumask);
++	panic_on_rcu_stall(&rcu_stall_cpumask);
+ 
+ 	/*
+ 	 * Attempt to revive the RCU machinery by forcing a context switch.
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 161a7a2ca80f..731a8c27de2b 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4966,6 +4966,8 @@ static const struct attribute_group scx_global_attr_group = {
+ 
+ static void free_pnode(struct scx_sched_pnode *pnode);
+ static void free_exit_info(struct scx_exit_info *ei);
++static const char *scx_exit_reason(enum scx_exit_kind kind);
++static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind);
+ 
+ static s32 scx_set_cmask_scratch_alloc(struct scx_sched *sch)
  {
- 	int cpu = atomic_xchg(&scx_hardlockup_cpu, -1);
+@@ -5022,6 +5024,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 	timer_shutdown_sync(&sch->bypass_lb_timer);
+ 	free_cpumask_var(sch->bypass_lb_donee_cpumask);
+ 	free_cpumask_var(sch->bypass_lb_resched_cpumask);
++	free_cpumask_var(sch->stall_cpus);
  
--	if (cpu >= 0 && handle_lockup("hard lockup - CPU %d", cpu))
-+	if (cpu >= 0 && handle_lockup(cpu, "hard lockup - CPU %d", cpu))
- 		printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
- 				cpu);
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	kfree(sch->cgrp_path);
+@@ -5251,9 +5254,46 @@ static __printf(2, 3) bool handle_lockup(int exit_cpu, const char *fmt, ...)
+  * resolve the reported RCU stall. %false if sched_ext is not enabled or someone
+  * else already initiated abort.
+  */
+-bool scx_rcu_cpu_stall(void)
++bool scx_rcu_cpu_stall(const struct cpumask *stalled_mask)
+ {
+-	return handle_lockup(-1, "RCU CPU stall detected!");
++	struct scx_sched *sch;
++	struct scx_exit_info *ei;
++	int exit_cpu;
++
++	guard(rcu)();
++
++	sch = rcu_dereference(scx_root);
++	if (unlikely(!sch))
++		return false;
++
++	switch (scx_enable_state()) {
++	case SCX_ENABLING:
++	case SCX_ENABLED:
++		break;
++	default:
++		return false;
++	}
++
++	exit_cpu = cpumask_empty(stalled_mask) ? -1 : (int)cpumask_first(stalled_mask);
++	ei = sch->exit_info;
++
++	guard(preempt)();
++
++	if (!scx_claim_exit(sch, SCX_EXIT_ERROR))
++		return false;
++
++#ifdef CONFIG_STACKTRACE
++	ei->bt_len = stack_trace_save(ei->bt, SCX_EXIT_BT_LEN, 1);
++#endif
++	scnprintf(ei->msg, SCX_EXIT_MSG_LEN, "RCU CPU stall on CPUs (%*pbl)",
++		  cpumask_pr_args(stalled_mask));
++	ei->kind = SCX_EXIT_ERROR;
++	ei->reason = scx_exit_reason(SCX_EXIT_ERROR);
++	ei->exit_cpu = exit_cpu;
++	cpumask_copy(sch->stall_cpus, stalled_mask);
++
++	irq_work_queue(&sch->disable_irq_work);
++	return true;
  }
+ 
+ /**
+@@ -6673,14 +6713,23 @@ static void scx_dump_state(struct scx_sched *sch, struct scx_exit_info *ei,
+ 	dump_line(&s, "----------");
+ 
+ 	/*
+-	 * Dump the exit CPU first so it isn't lost to dump truncation, then
+-	 * walk the rest in order, skipping the one already dumped.
++	 * Dump stalled CPUs first so they aren't lost to dump truncation, then
++	 * walk the rest in order. Fall back to exit_cpu if no stall mask set.
+ 	 */
+-	if (ei->exit_cpu >= 0)
+-		scx_dump_cpu(sch, &s, &dctx, ei->exit_cpu, dump_all_tasks);
+-	for_each_possible_cpu(cpu) {
+-		if (cpu != ei->exit_cpu)
++	if (!cpumask_empty(sch->stall_cpus)) {
++		for_each_cpu(cpu, sch->stall_cpus)
+ 			scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
++		for_each_possible_cpu(cpu) {
++			if (!cpumask_test_cpu(cpu, sch->stall_cpus))
++				scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
++		}
++	} else {
++		if (ei->exit_cpu >= 0)
++			scx_dump_cpu(sch, &s, &dctx, ei->exit_cpu, dump_all_tasks);
++		for_each_possible_cpu(cpu) {
++			if (cpu != ei->exit_cpu)
++				scx_dump_cpu(sch, &s, &dctx, cpu, dump_all_tasks);
++		}
+ 	}
+ 
+ 	dump_newline(&s);
+@@ -6917,6 +6966,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		ret = -ENOMEM;
+ 		goto err_free_lb_cpumask;
+ 	}
++	if (!zalloc_cpumask_var(&sch->stall_cpus, GFP_KERNEL)) {
++		ret = -ENOMEM;
++		goto err_free_lb_resched_cpumask;
++	}
+ 	/*
+ 	 * Copy ops through the right union view. For cid-form the source is
+ 	 * struct sched_ext_ops_cid which lacks the trailing cpu_acquire/
+@@ -7000,8 +7053,10 @@ static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ #ifdef CONFIG_EXT_SUB_SCHED
+ err_free_lb_resched:
+ 	RCU_INIT_POINTER(ops->priv, NULL);
+-	free_cpumask_var(sch->bypass_lb_resched_cpumask);
++	free_cpumask_var(sch->stall_cpus);
+ #endif
++err_free_lb_resched_cpumask:
++	free_cpumask_var(sch->bypass_lb_resched_cpumask);
+ err_free_lb_cpumask:
+ 	free_cpumask_var(sch->bypass_lb_donee_cpumask);
+ err_stop_helper:
 diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index b04701190b23..bddfa59f1b75 100644
+index bddfa59f1b75..190f9815293a 100644
 --- a/kernel/sched/ext_internal.h
 +++ b/kernel/sched/ext_internal.h
-@@ -1535,8 +1535,6 @@ __printf(5, 6) bool __scx_exit(struct scx_sched *sch, enum scx_exit_kind kind,
- 	__scx_exit(sch, kind, exit_code, raw_smp_processor_id(), fmt, ##args)
- #define scx_error(sch, fmt, args...)						\
- 	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
--#define scx_verror(sch, fmt, args)						\
--	scx_vexit((sch), SCX_EXIT_ERROR, 0, raw_smp_processor_id(), fmt, args)
+@@ -1200,6 +1200,7 @@ struct scx_sched {
+ 	struct timer_list	bypass_lb_timer;
+ 	cpumask_var_t		bypass_lb_donee_cpumask;
+ 	cpumask_var_t		bypass_lb_resched_cpumask;
++	cpumask_var_t		stall_cpus;
+ 	struct rcu_work		rcu_work;
  
- /*
-  * Return the rq currently locked from an scx callback, or NULL if no rq is
+ 	/* all ancestors including self */
 -- 
 2.43.0
 
