@@ -1,112 +1,92 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284103A7F40
-	for <sched-ext@lists.linux.dev>; Fri, 12 Jun 2026 16:15:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F103ED3AF
+	for <sched-ext@lists.linux.dev>; Fri, 12 Jun 2026 16:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781280941; cv=none; b=HB0ZWOzoFPDMyLyxpNXkrLoNVXbQm5CwdYZBQLlD/3pvDKd7ibck9lFFljUzeSyxq70XIZ4OLSpn7az2V1f4vCqhjKLlCilQseW524DqflaVozNyYINeohAi2eB9xwBqT2cahuygKxBBILHZhLS08uK+6mphrSe9AoSQPi32Xws=
+	t=1781281701; cv=none; b=sylZGZMK/P7bCTJ8pn7oZTAqrACDYvt3yNzHYFJHk0Yws/y5HKylbze54Ov8e3f+ByESNpy0PBbVaKQl5yNYVCoQAZyOfZ1/Z2vEm2Da11uqn84Me8xyPYg5B/BQTHXqDEtbglzU6HHT/9j1VdQvQIHILEvlg/FhcHBMuOFuHTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781280941; c=relaxed/simple;
-	bh=ZCGr2ZD7aOZdWJzN41ARCqQ+xGFtFShsMkpdFrnFqv4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NW/RrJoTibzFYWWz7qM7ssC3mQxv5wc7SWOhWVAX+IfUm7xsVtliLe2V1KZaKhv4OIQiSdb9j5Fv8yE1mfrkgL9l0bIBBjS6lCxq1TTe9AQinfFPWbBuyLnL6p7/itPe7jcPYa0Zzo2gIqtEKRdjzbQwc23sE8iT+r/VzOVlXKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=ha4HxVt1; arc=none smtp.client-ip=220.197.31.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1781281701; c=relaxed/simple;
+	bh=v7p7bImKs9nJDhjXRRTWHx8BdhMVzDw4UXajnokd/U8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=SyrJvl+Nqom9a42WzPnoBNzlPnhOJZWyFRSBvrtnacXiIj3GAIOK74t7G7LhiuXlNr1Pgz04aycEaWy9VyPoE0I1CBcKeGHcCVAggX4GISeInWM/a1vgRxL7Q3lj/uNqCHNBA77mK5XA8/bqtiKRyzOIlHMwKc0DlOC5CGHZcLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gwwU+Fbm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="ha4HxVt1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=6K
-	TNg5pZvks6roP+8nCZzPSVcej9PEkniYMrHCYILmE=; b=ha4HxVt1TGgFLL/Tvl
-	Oni1/GGPPMsW870VDlZLR/uBVcKt4IwXhmQMqMm5FP2nLTTz8wCeRC2cyoWQo10X
-	WVr64oytdVqg/IoMBZj5/QgKH+5jIkcVGIB+EXO6j+KBlkcBhQC1xyvo9Po/W6Ru
-	TQYypoW0NAuD2PH5DuvpbdGfk=
-Received: from cuijian-virtual-machine.localdomain (unknown [])
-	by gzsmtp2 (Coremail) with SMTP id PSgvCgCXcvlQMCxquPnSBg--.40798S2;
-	Sat, 13 Jun 2026 00:14:10 +0800 (CST)
-From: Cui Jian <cjian720@163.com>
-To: tj@kernel.org,
-	void@manifault.com
-Cc: arighi@nvidia.com,
-	changwoo@igalia.com,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	kprateek.nayak@amd.com,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Cui Jian <cjian720@163.com>
-Subject: [PATCH] sched_ext:SCX is preemptible by the Fair scheduler
-Date: Sat, 13 Jun 2026 00:14:03 +0800
-Message-Id: <20260612161403.105775-1-cjian720@163.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gwwU+Fbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C761F00A3D;
+	Fri, 12 Jun 2026 16:28:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781281698;
+	bh=kjz0NJL/GHsZ0AZoyRoNHZ+JFjF2l9kSnPdJkjpSLCY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=gwwU+Fbm4WC0hfFwhV5I4T29DWoKQ3bDT8FBVumDI6cqbXHxALcKs3t79lgXRgS+7
+	 H/xQKlKFuyckgu5tLuxq9T7hbOFkgc8VGIOBzN3H8x911HsOs9IFQUG6G6xJ6twV34
+	 e+kDCAeZpdDpVOvt6IhQe52x3/BnW5gHIqIxxcPZU8yxm7QYZlZdGboHZbpvziROTQ
+	 nBvmJjYeV/YfkoDd3+HFbUpvNYW65L0qXgk2rk8N7UOzV5877mKNnlhYv2IYJPW7ps
+	 LILlJ5KQMGLDKj4CechkHhgCyz4bHQdYPFo+rzff6zkiiLP6UFPV3rK8eeI4Gspvtl
+	 Mmh5j5wHK1dJg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] sched_ext:SCX is preemptible by the Fair scheduler
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Cui Jian" <cjian720@163.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260612161403.105775-1-cjian720@163.com>
+References: <20260612161403.105775-1-cjian720@163.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 12 Jun 2026 16:28:18 +0000
+Message-Id: <20260612162818.C9C761F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PSgvCgCXcvlQMCxquPnSBg--.40798S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Zw1DZw48Gw4DurW5Zw4xJFb_yoW8AF1kpa
-	9rZrWUG3y7tay5Kw1Ikrn5WFy8Xwn7Ga1S9FyDJwsYvrn0gFWSqw1jgrW2gryj9rW7Z34x
-	trn093ySvw1Yg3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07USPfLUUUUU=
-X-CM-SenderInfo: pfmlt0qxsqqiywtou0bp/xtbC9xLFUmosMFJ1swAA3Q
 
-sched_ext currently distinguishes preemption caused by STOP,
-DL and RT scheduling classes, but preemption from the Fair
-scheduler is reported as SCX_CPU_PREEMPT_UNKNOWN.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The patch adds `SCX_CPU_PREEMPT_FAIR` to `enum scx_cpu_preempt_r=
+eason` in `kernel/sched/ext_internal.h`, but fails to update the checked-in=
+ autogenerated BPF tool headers in `tools/sched_ext/include/scx/enum_defs.a=
+utogen.h`.
+--
 
-When analyzing SCX scheduling behavior, it is useful to know
-whether a task was preempted by RT/DL classes or switched out
-in favor of a Fair-class task. The lack of a dedicated reason
-makes debugging and observability more difficult.
+commit 0e9cc05c20430d666c8c1a1d7ea0741d9c28b2d3
+Author: Cui Jian <cjian720@163.com>
 
-Add SCX_CPU_PREEMPT_FAIR and report it when the next scheduled
-task belongs to fair_sched_class.
+sched_ext:SCX is preemptible by the Fair scheduler
 
-This change improves scheduling diagnostics and observability
-without affecting scheduling behavior.
+This commit adds a new preemption reason, SCX_CPU_PREEMPT_FAIR, to distingu=
+ish
+when a sched_ext task is preempted by the Fair scheduler. It updates the
+internal enum and mapping function to improve observability and diagnostics.
 
-Signed-off-by: Cui Jian <cjian720@163.com>
----
- kernel/sched/ext.c          | 2 ++
- kernel/sched/ext_internal.h | 2 ++
- 2 files changed, 4 insertions(+)
+> diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
+> index a075732d4430d..3ce07bec58a55 100644
+> --- a/kernel/sched/ext_internal.h
+> +++ b/kernel/sched/ext_internal.h
+> @@ -241,6 +241,8 @@ enum scx_cpu_preempt_reason {
+>  	SCX_CPU_PREEMPT_DL,
+>  	/* next task is being scheduled by &sched_class_stop */
+>  	SCX_CPU_PREEMPT_STOP,
+> +	/* next task is being scheduled by &sched_class_fair*/
+> +	SCX_CPU_PREEMPT_FAIR,
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 5d2d19473a82..6e0281218197 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3015,6 +3015,8 @@ preempt_reason_from_class(const struct sched_class *class)
- 		return SCX_CPU_PREEMPT_DL;
- 	if (class == &rt_sched_class)
- 		return SCX_CPU_PREEMPT_RT;
-+	if (class == &fair_sched_class)
-+		return SCX_CPU_PREEMPT_FAIR;
- 	return SCX_CPU_PREEMPT_UNKNOWN;
- }
- 
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index a075732d4430..3ce07bec58a5 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -241,6 +241,8 @@ enum scx_cpu_preempt_reason {
- 	SCX_CPU_PREEMPT_DL,
- 	/* next task is being scheduled by &sched_class_stop */
- 	SCX_CPU_PREEMPT_STOP,
-+	/* next task is being scheduled by &sched_class_fair*/
-+	SCX_CPU_PREEMPT_FAIR,
- 	/* unknown reason for SCX being preempted */
- 	SCX_CPU_PREEMPT_UNKNOWN,
- };
--- 
-2.34.1
+[Severity: Medium]
+Should tools/sched_ext/include/scx/enum_defs.autogen.h be regenerated
+and included in this patch?
 
+When adding a new value to enum scx_cpu_preempt_reason, the autogenerated
+BPF tool headers typically need updating so downstream BPF schedulers can
+use feature detection macros like HAVE_SCX_CPU_PREEMPT_FAIR.=20
+
+Without this update, BPF applications cannot conditionally check for this
+new preemption feature across different kernel versions.
+
+>  	/* unknown reason for SCX being preempted */
+>  	SCX_CPU_PREEMPT_UNKNOWN,
+>  };
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260612161403.1057=
+75-1-cjian720@163.com?part=3D1
