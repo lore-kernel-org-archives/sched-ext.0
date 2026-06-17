@@ -1,63 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30AF2E6CB8;
-	Wed, 17 Jun 2026 11:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A098A4A139B;
+	Wed, 17 Jun 2026 16:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781695508; cv=none; b=qJ4eU42lR770wMzRegy8ARwaVwYULuWk9TwKTgkCs3cpP/WHC125HvX7PR6Lg8yAkqTrlaKSDGkhHhH/nIo/VCtJgy+RjrZ6/QIr48TcWWVIIE2+9vQ1pN1P7A0Yvrlhptf9FGN3uxoPkUSShP/PFuBA8QO2lgYYjc63djcorkM=
+	t=1781715335; cv=none; b=TEq3YQ6thVwTlqbeADjsjvRGfvBnfah5H4+vIrCxVxtiP2uM7AgdH3rPJjgKceXsbhfOsJPDUYKfB5mDXnIif/8+RspSZWg48hJyz99Nk2c7XDyMXne6XO4/6eGVP/wYKzYogn3PUvwmYh3/GbTjC5RANV8DZVrYPd9Emql2iBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781695508; c=relaxed/simple;
-	bh=zCCuUEZZ1+Z2NKXXs3kk7fsl8CEgw13nkIxaEFXjRT4=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=TQnsSUX7w0SKZ2i64X4QdvZBPPxwpvCoC3wcLehJf6h5mJdDPa+C+UqqIKqA4t6XRf5ecym4G/8h/O+auxoREZVt6F/xlFTuw5LvFZISLOf9QNS3p3P56KGF4NZyL8EbB9QgHeXmlxBfXewEQr25mJOH8iy4LThXk7dl1KxaRw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bH8Uduty; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781715335; c=relaxed/simple;
+	bh=URy8vc9Kk9wVRU5o0ZF7wNk7ozlBPJPKeZbQyeorlPQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gb15NzAIU+5phR1khN0HLUcQJ7tF6nGgt0c0uztdx0EkQSAIQg524To+oe5/Y/zQ5xISpjr3WeQMX7OaKZLQ+EwbRFyNI72fza9JzDDygoMjCLxklen0wIjmYCaaEzhwPFfsOln33Qx2gqlWoGwb/0pZ10g9bAn4FhIFZcU1BeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KCA1zs+y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bH8Uduty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A0F1F000E9;
-	Wed, 17 Jun 2026 11:25:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KCA1zs+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA111F000E9;
+	Wed, 17 Jun 2026 16:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781695507;
-	bh=q0ZM3KIkroUOK8b2HMp4bsEXnSVsqz1KuqRNwAL5cwg=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc;
-	b=bH8UdutyWLEp5VQtDRkf90fFLJS/rt1xbVb7j/K3BA25+TiRsWPY9fp3WsOGWhLtH
-	 j50+qY0pRIv86olig+AMl3b9qP8Lf/nEX/HrcFtbk0NIiD+02mgPPAg7CftDmTlEwN
-	 OrgYCENuxd/5kYoNKwUxg76q/SEF17xBjmnteBgLoV/KeiBs3vUXEj9xVcHgFKM1FK
-	 yc7E5Ti5erXeyW49hA1RBbDH24FpH1Q5X7GxelSszrAPdTaF8+3Y+hPDGvkSnIWcjZ
-	 Pb8skiGY4hEwsT7QblpHFODOMRCrCa+AX6IjMgmOOIAnx9qTv4v6jzwia2wLU7ZdAn
-	 MHObeJv/1UgkQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 19A323930E03;
-	Wed, 17 Jun 2026 11:25:03 +0000 (UTC)
+	s=k20260515; t=1781715333;
+	bh=8q+yL0XniohwFXuPSAfY9RyYaCSOt6yHALjcxfWZn08=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=KCA1zs+y2yg5mxzYiB/wk6l9eB36obb0R6oJaOerHO7bb4e90WgUQCTNOM76rypp3
+	 pwmnqZLBfs1K5ZkSAPF/ZQvhHIt+/9y5nHn9NAd6doNW+EM/keuyTxLIGV/X/vGS6/
+	 oxt8lsPcqcEf2RyttDLflTYupyaGY/793/wdxvgqSBGU3Wz+7oPQs2oIttb6EeaMgX
+	 gKEtOUW0Hm7xO5wsdFyDOCcWlD8t2vl0hz4c6s4IabxuznsrgsC3WNpuZPsa7ty4MJ
+	 vbhWeEe1EGxwOFw66VhAgBKfUR70indCtzoRixXJaNq9jHqHdWnJIRC5mCU+Nkbez9
+	 +FgXrwrtpNdgw==
+Date: Wed, 17 Jun 2026 06:55:32 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
 Subject: Re: [GIT PULL] sched_ext changes for v7.2
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <6a0da8f90fd3890f734555f1632a3a0f@kernel.org>
+Message-ID: <ajLRhLp9XiOwVgnf@slm.duckdns.org>
 References: <6a0da8f90fd3890f734555f1632a3a0f@kernel.org>
-X-PR-Tracked-List-Id: <sched-ext.lists.linux.dev>
-X-PR-Tracked-Message-Id: <6a0da8f90fd3890f734555f1632a3a0f@kernel.org>
-X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.2
-X-PR-Tracked-Commit-Id: 2e05f2fd0dd72aa8aa56cf355e1e39a3f565b4ca
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 5b33fc6492a7b7a62359157db0f92f5b6e9af690
-Message-Id: <178169550170.1566750.11525125251340256401.pr-tracker-bot@kernel.org>
-Date: Wed, 17 Jun 2026 11:25:01 +0000
-To: Tejun Heo <tj@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, sched-ext@lists.linux.dev, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, linux-kernel@vger.kernel.org
+ <CAHk-=wghMm2c+AYEcwYY7drSVXB27DYqc-ZXpFiq=XFs-w59wA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wghMm2c+AYEcwYY7drSVXB27DYqc-ZXpFiq=XFs-w59wA@mail.gmail.com>
 
-The pull request you sent on Mon, 15 Jun 2026 12:56:30 -1000:
+On Wed, Jun 17, 2026 at 12:19:09PM +0100, Linus Torvalds wrote:
+> On Mon, 15 Jun 2026 at 23:56, Tejun Heo <tj@kernel.org> wrote:
+> >
+> >  create mode 100644 kernel/sched/ext_arena.c
+> >  create mode 100644 kernel/sched/ext_arena.h
+> >  create mode 100644 kernel/sched/ext_cid.c
+> >  create mode 100644 kernel/sched/ext_cid.h
+> >  create mode 100644 kernel/sched/ext_types.h
+> 
+> Please don't do this disgusting thing.
+> 
+> There's a reason we have subdirectories: it's to group files together
+> and separate them out
 
-> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.2
+Sure thing. Will reorganize in the coming cycle.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/5b33fc6492a7b7a62359157db0f92f5b6e9af690
-
-Thank you!
+Thanks.
 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+tejun
