@@ -1,181 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7A530DEB5;
-	Wed, 17 Jun 2026 03:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC3B3064AE
+	for <sched-ext@lists.linux.dev>; Wed, 17 Jun 2026 06:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781666697; cv=none; b=Y7M2fthw3qqO7A7vcQViFqwHuHvQsDiRjXgI686VA8/6oh22OgWOWZxsBOtkITDe8GdTsF9yM9/omXx0RsMxery6DoiFGuoi1mur2BA4w9eTMl+7N+xdHvGiuex5RdKDPr7gwiLqjdksvgesKfRaX3+Kxuqs0fEJpDhlcnzGEqE=
+	t=1781678899; cv=none; b=sO0K5o+1c8bkFgdfCpVZBfTGgMWLIw57ilYpzgc89mi3NzHKz3/gz/zaDrOkss74oxZjzc7HjWBru+hJGzG7gYdnnkRsI/OE3+9yDzHXT8gr8qBR+ZRtt8kWmadtf7J85HNdJZ+Lc+eEJrZ7JfxPT5V1lbuhOhR+ju/NH5qRbvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781666697; c=relaxed/simple;
-	bh=PhQtVTugvJgOpOvwkkJRV019Jkl0cc8hcbaUwDN99Cc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XWUsb3v4CbME5gdbAXpRxarN97fie7PMBNp6eNJYvihCgT62KM+kTOiW0A1lZpkYUB9jw2T49Jmso3+TX51l3LmNT7ZryhWKBebq/kxoU+vCwYu3BuudfG2Yx4z4C0SLOzk5rvjEmt4ITV0yxuQGiNj1x4BAicQlW1aWqgzxtLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ap21GvqQ; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ap21GvqQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14991F000E9;
-	Wed, 17 Jun 2026 03:24:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781666695;
-	bh=S7XLPItq41+fyRMiy+YilbTowXoFASrVVGWE7I23hwU=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
-	b=ap21GvqQi2/DBRnOPvqg7tdMKoTG8rj5Vh95b1iA9wgfspuH3OAUg8yBIpzH9M1Gg
-	 Q/ZFMiDFAwnzjK7DD37KOHXAlAYRcbZ4ioVrdq1zdx+XWLtui33GbCHJel9odneHHi
-	 0F0QBRzIHgf/CgA0zAQ+uEHEcQlqKyJdi8rREKBo2SKLlPifI+0lL6IyNWSdGnrGur
-	 Kjska5C+/wbVvNHuczpJQ7nJXS6oZ16IVk+kU6pTBGGYy/9v8VqEAcaUCppTpcYgDc
-	 FQCVAMKfXBb0qe4y7fWZHxrXlcG2ZoqVFd/MeG/Gsfy4nnoOajVZ2+KV5Z+/Gw/9fT
-	 FImNBJx+ysCcA==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 96082CE03CE; Tue, 16 Jun 2026 20:24:55 -0700 (PDT)
-Date: Tue, 16 Jun 2026 20:24:55 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Matt Fleming <matt@readmodwrite.com>
-Cc: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
-	kernel-team@cloudflare.com
-Subject: Re: sched_ext/lavd hard lockup in old call_rcu_tasks_generic
- needadjust path
-Message-ID: <35337ded-add4-4689-8f61-73f583a69b36@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20260609104733.1184001-1-mfleming@cloudflare.com>
- <2179fc11-3bd5-4d2e-9ad8-609e3356ec09@paulmck-laptop>
- <aiqxpzgl2YVVSARw@matt-Precision-5490>
- <1ad83f53-7897-40bc-a503-5a71031aa27f@paulmck-laptop>
- <aivaGbCzC4oaD05n@matt-Precision-5490>
- <3bbd4298-eb01-4784-bee5-caab3d3647b9@paulmck-laptop>
- <ajErr_GEejCD7n47@matt-Precision-5490>
+	s=arc-20240116; t=1781678899; c=relaxed/simple;
+	bh=mxfJdKr4nXVKG7iuqYRdd2k/7ISp2J7jHFF8/ss5K+g=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=tW21/NgJc+n8A9wzu+m07T1TZrvC8ML7y+EoLGy4mSztBV+HFCAJdk2nGDnjFY0gvPQ4qHjqMXaM18TdIpV0CA0Ciw6OmkYUGWGkdVe1EDCLZmcdD2cEAfbMQT9gFADw2OcAcj+3Y8F2Rn/XfTTNPtSZCWBkZTwau30DMCiTRjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 820c01c86a1811f1aa26b74ffac11d73-20260617
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:0fb00710-322f-4beb-af24-cba2d821374e,IP:0,U
+	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:-5
+X-CID-META: VersionHash:e7bac3a,CLOUDID:a1f20e6cda53d291a7503115ae9a1876,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|136|850|865|898,TC:nil,Content:0
+	|15|50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,O
+	SI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 820c01c86a1811f1aa26b74ffac11d73-20260617
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 993940327; Wed, 17 Jun 2026 14:48:11 +0800
+From: luoliang@kylinos.cn
+To: tj@kernel.org,
+	void@manifault.com
+Cc: arighi@nvidia.com,
+	changwoo@igalia.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	Liang Luo <luoliang@kylinos.cn>
+Subject: [PATCH] tools/sched_ext: scx_flatcg: Fix inverted vtime delta accounting
+Date: Wed, 17 Jun 2026 14:48:05 +0800
+Message-Id: <20260617064805.3901965-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajErr_GEejCD7n47@matt-Precision-5490>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 16, 2026 at 11:56:19AM +0100, Matt Fleming wrote:
-> On Fri, Jun 12, 2026 at 07:00:31AM -0700, Paul E. McKenney wrote:
-> > 
-> > Huh.  Looks like I did not implement RCU Tasks Trace in terms of SRCU
-> > any time too soon.  But there is also RCU Tasks and RCU Tasks Rude.
-> > 
-> > If we don't backport the SRCU patches, then the obvious alternative is
-> > for call_rcu_tasks*() to defer to IRQ work when invoked with interrupts
-> > disabled.  Or is there a better way?
-> 
-> What about something like this?
+From: Liang Luo <luoliang@kylinos.cn>
 
-Not bad, actually.
+In try_pick_next_cgroup(), a cgroup is charged its full slice upfront.
+fcg_dispatch() is then supposed to refund the unused time by adding
+(expected_end - now) * FCG_HWEIGHT_ONE / hweight to cvtime_delta:
 
-But we are going to have to similarly bypass call_rcu_tasks_generic()
-soon enough, though only when interrupts are disabled at the time
-of the call.  One complication is that it would need to interact
-with rcu_barrier_tasks_generic(), which would need to remove any
-pending callbacks from bypassed call_rcu_tasks_generic() invocations,
-as in llist_del_all() and enqueue the callbacks.  A well-placed
-raw_spin_trylock_rcu_node(rtpcp) should suffice for the serialization.
-The trick is that rcu_barrier_tasks_generic() is not obligated to
-wait on later calls to call_rcu_tasks_generic().
+    __sync_fetch_and_add(&cgc->cvtime_delta,
+                         (cpuc->cur_at + cgrp_slice_ns - now) *
+                         FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
 
-Is this something that you would be interested in digging into?
+However, if a cgroup yields early (expected_end > now), this adds a
+positive value to cvtime_delta, which ultimately increases cvtime,
+heavily penalizing the cgroup instead of refunding it.
 
-						Thanx, Paul
+Conversely, if a cgroup overuses its slice (now > expected_end), the
+unsigned subtraction underflows to a massive u64. When multiplied by
+FCG_HWEIGHT_ONE and divided by hweight via unsigned division, it
+yields an enormous positive number. Adding this huge value to
+cvtime_delta pushes the cgroup's virtual time roughly 3.25 days into
+the future, permanently starving it.
 
-> ----8<----
-> 
-> >From 6b2dc5002f3413f4f89eb1735259d065b7003a52 Mon Sep 17 00:00:00 2001
-> From: Matt Fleming <mfleming@cloudflare.com>
-> Date: Mon, 15 Jun 2026 11:19:43 +0100
-> Subject: [PATCH] rcu-tasks: Defer callback queue adjustment to irq_work
-> 
-> call_rcu_tasks_generic() can run from BPF task-storage teardown while
-> sched_ext still holds rq->lock. The RCU Tasks kthread can concurrently
-> hold cbs_gbl_lock while printing under it, then wake a task on the same
-> rq while the caller waits for cbs_gbl_lock.
-> 
-> Queue the adjustment through irq_work instead. This keeps callback
-> enqueueing synchronous while moving cbs_gbl_lock acquisition out of the
-> caller context.
-> 
-> Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-> ---
->  kernel/rcu/tasks.h | 33 +++++++++++++++++++++++----------
->  1 file changed, 23 insertions(+), 10 deletions(-)
-> 
-> diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-> index 2dc044fd126e..92aead9fc200 100644
-> --- a/kernel/rcu/tasks.h
-> +++ b/kernel/rcu/tasks.h
-> @@ -104,6 +104,7 @@ struct rcu_tasks {
->  	unsigned long n_ipis;
->  	unsigned long n_ipis_fails;
->  	struct task_struct *kthread_ptr;
-> +	struct irq_work cbs_adjust_irq_work;
->  	unsigned long lazy_jiffies;
->  	rcu_tasks_gp_func_t gp_func;
->  	pregp_func_t pregp_func;
-> @@ -129,6 +130,7 @@ struct rcu_tasks {
->  };
->  
->  static void call_rcu_tasks_iw_wakeup(struct irq_work *iwp);
-> +static void call_rcu_tasks_iw_adjust(struct irq_work *iwp);
->  
->  #define DEFINE_RCU_TASKS(rt_name, gp, call, n)						\
->  static DEFINE_PER_CPU(struct rcu_tasks_percpu, rt_name ## __percpu) = {			\
-> @@ -144,6 +146,7 @@ static struct rcu_tasks rt_name =							\
->  	.call_func = call,								\
->  	.wait_state = TASK_UNINTERRUPTIBLE,						\
->  	.rtpcpu = &rt_name ## __percpu,							\
-> +	.cbs_adjust_irq_work = IRQ_WORK_INIT_HARD(call_rcu_tasks_iw_adjust),	\
->  	.lazy_jiffies = DIV_ROUND_UP(HZ, 4),						\
->  	.name = n,									\
->  	.percpu_enqueue_shift = order_base_2(CONFIG_NR_CPUS),				\
-> @@ -342,6 +345,24 @@ static void call_rcu_tasks_iw_wakeup(struct irq_work *iwp)
->  	rcuwait_wake_up(&rtp->cbs_wait);
->  }
->  
-> +static void call_rcu_tasks_iw_adjust(struct irq_work *iwp)
-> +{
-> +	unsigned long flags;
-> +	bool expanded = false;
-> +	struct rcu_tasks *rtp = container_of(iwp, struct rcu_tasks, cbs_adjust_irq_work);
-> +
-> +	raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
-> +	if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
-> +		WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
-> +		WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
-> +		smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
-> +		expanded = true;
-> +	}
-> +	raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
-> +	if (expanded)
-> +		pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
-> +}
-> +
->  // Enqueue a callback for the specified flavor of Tasks RCU.
->  static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
->  				   struct rcu_tasks *rtp)
-> @@ -389,16 +410,8 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
->  		rtpcp->urgent_gp = 3;
->  	rcu_segcblist_enqueue(&rtpcp->cblist, rhp);
->  	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
-> -	if (unlikely(needadjust)) {
-> -		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
-> -		if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
-> -			WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
-> -			WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
-> -			smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
-> -			pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
-> -		}
-> -		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
-> -	}
-> +	if (unlikely(needadjust))
-> +		irq_work_queue(&rtp->cbs_adjust_irq_work);
->  	rcu_read_unlock();
->  	/* We can't create the thread unless interrupts are enabled. */
->  	if (needwake && READ_ONCE(rtp->kthread_ptr))
-> -- 
-> 2.43.0
-> 
+cgrp_cap_budget() later applies cvtime_delta to cvtime reading it as
+u64. Once dispatch can produce negative (refund) deltas, reading them
+as u64 turns every refund into a huge positive value with the same
+starving effect, so read and apply the delta as s64 and clamp the
+result at zero.
+
+Order the time delta as (now - expected_end) so overruns are positive
+and early yields negative, and split the magnitude scaling by sign
+since BPF has no signed division.
+
+Observed on a nested cgroup hierarchy under mixed CPU load: cvtime
+grew roughly 300x faster than wall-clock time, cvtime_delta reached
+2^47..2^49, and tasks in cgroups stalled. After the change cvtime
+advances at the expected weight-scaled rate and no anomalous deltas
+appear.
+
+Fixes: a4103eacc2ab ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
+---
+ tools/sched_ext/scx_flatcg.bpf.c | 37 ++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
+
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index fec359581826..a37f5b876da8 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -249,15 +249,26 @@ static void cgrp_refresh_hweight(struct cgroup *cgrp, struct fcg_cgrp_ctx *cgc)
+ 
+ static void cgrp_cap_budget(struct cgv_node *cgv_node, struct fcg_cgrp_ctx *cgc)
+ {
+-	u64 delta, cvtime, max_budget;
++	s64 delta;
++	u64 cvtime, max_budget;
+ 
+ 	/*
+ 	 * A node which is on the rbtree can't be pointed to from elsewhere yet
+ 	 * and thus can't be updated and repositioned. Instead, we collect the
+ 	 * vtime deltas separately and apply it asynchronously here.
+ 	 */
+-	delta = __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
+-	cvtime = cgv_node->cvtime + delta;
++	delta = (s64)__sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
++	/*
++	 * cvtime_delta may be negative (early-yield refund from fcg_dispatch()).
++	 * Apply it in the signed domain and clamp the resulting cvtime at zero
++	 * so that a refund larger than the accumulated cvtime doesn't roll the
++	 * field negative.
++	 */
++	s64 vtime = (s64)cgv_node->cvtime + delta;
++
++	if (vtime < 0)
++		vtime = 0;
++	cvtime = (u64)vtime;
+ 
+ 	/*
+ 	 * Allow a cgroup to carry the maximum budget proportional to its
+@@ -767,11 +778,25 @@ void BPF_STRUCT_OPS(fcg_dispatch, s32 cpu, struct task_struct *prev)
+ 		 * We want to update the vtime delta and then look for the next
+ 		 * cgroup to execute but the latter needs to be done in a loop
+ 		 * and we can't keep the lock held. Oh well...
++		 *
++		 * Charge the overrun or refund the unused time. The original
++		 * (cur_at + slice - now) was inverted: early yields were
++		 * penalized and overruns underflowed. Use (now - (cur_at +
++		 * slice)) so overruns are positive and early yields negative;
++		 * split the magnitude scaling by sign since BPF has no signed
++		 * division.
+ 		 */
+ 		bpf_spin_lock(&cgv_tree_lock);
+-		__sync_fetch_and_add(&cgc->cvtime_delta,
+-				     (cpuc->cur_at + cgrp_slice_ns - now) *
+-				     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
++		s64 excess = (s64)now - (s64)(cpuc->cur_at + cgrp_slice_ns);
++		s64 delta;
++
++		if (excess > 0)
++			delta = (s64)((u64)excess * FCG_HWEIGHT_ONE /
++				      (cgc->hweight ?: 1));
++		else
++			delta = -(s64)((u64)-excess * FCG_HWEIGHT_ONE /
++				       (cgc->hweight ?: 1));
++		__sync_fetch_and_add(&cgc->cvtime_delta, delta);
+ 		bpf_spin_unlock(&cgv_tree_lock);
+ 	} else {
+ 		stat_inc(FCG_STAT_CNS_GONE);
+-- 
+2.43.0
+
