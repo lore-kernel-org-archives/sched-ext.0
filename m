@@ -1,70 +1,43 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A7130DD30
-	for <sched-ext@lists.linux.dev>; Thu, 18 Jun 2026 06:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628B42EFD95;
+	Thu, 18 Jun 2026 15:55:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781765770; cv=none; b=sHSMD9BF38sYz9utrW4bsJmwtAKZ9gFrXLBAxTS8jNV1hewP/XADEocPFYiuVtUjM2/VT1KHMwdT8hjhH9kzbjmxXYADFlS9vB4Ds3DBxuR72a7q7AjD2GGvQ0dcCU7f0YYA3ntG+28tN4N+KEKkRx960vggKLqANGPt5XZSJI0=
+	t=1781798152; cv=none; b=DiLhaCX/C2Fqm7Rp3OhqmYiZc2+NoWsED3DkGgXwAWXooOa9xHb8GoWtXShI8z9RakCujIBGGh7aTl6LKrX4BOJsj8KapYPColjbtTxVBjDlecbLGhlFLWZS6NRGP4Wa81iNo5RObj/LHxfp1mYGxps7k8xOFbEx4MmZldqJA4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781765770; c=relaxed/simple;
-	bh=Ge51/Fa247w4qatZwAwqghySFPUWr0IpTDx18YkSsDY=;
+	s=arc-20240116; t=1781798152; c=relaxed/simple;
+	bh=r7gvIgG2Wdh0b/AP9uLqvFIL7+ZYHaGv8j2GMvtG7MY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OKfQY2znY+XUocc7RzHWDt07YADTT6sMLe/wthYONMsGymeJukkFID5DcgaqyOKrky4diB5PfZq1xDWk7vwXPDgwXX5y8UU7tenEktMKLMIN1dGMWhdTHUvjtTb0NhB4WIemdaXYIHkPf92FXplAsLW4vTdgj+VCAbqIjPPJSMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com; spf=none smtp.mailfrom=readmodwrite.com; dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b=caxZvHUI; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=readmodwrite.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=iE3QnodoK+/5wwDx3fI7xr3m99/J2uEKO2fMFYgKyteAAV6OOxnVxV25hNJotNLN5FCXRB5zN0jtVNUr0x1txXZmPjgExhhvQjnz9vW1pVlndUKydDG/Xq8cnPdjZG1JuL0j0ON1uZMUyi7hPksKbP2YSKglw8Nhs7Y/d2F5tBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H0SRswW3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b="caxZvHUI"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-490cf3000f0so5340095e9.1
-        for <sched-ext@lists.linux.dev>; Wed, 17 Jun 2026 23:56:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=readmodwrite-com.20251104.gappssmtp.com; s=20251104; t=1781765767; x=1782370567; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mqo0Z4bbyEL/S2Ts4wZccNyu0EnvuTridAOzOQ1Lq70=;
-        b=caxZvHUIKCgTCeXsXaHJK6g/CXi2Dg6R+T0ZqhMNJhk3+69AqsgerjMspSCp0U6djw
-         JjJvRe/9nl/NWqGgrkX8BzeDJ4BgS9ba7qjEIEzuWnsAN/9+T/5ErWwyuLrBEdPeT65M
-         +QeV/Uy2nmMA+m9wi6xmXxbG7W7mhZR74Twe0irytkUJEuU989EPJhBKiRMV8Y4VamkX
-         FGZXwI+7bxVrpUaeixAb4JH3ybaZOb4D9IOFL3D2m1PleAUQfbDgxmorKYcaC6vd1hpY
-         UNY8YUisU2gChxhg1+MQHFHpI73/1GX96cTXBuokIyMK27rVtDLi//FZVjRw2a+FTeFo
-         YTsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781765767; x=1782370567;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Mqo0Z4bbyEL/S2Ts4wZccNyu0EnvuTridAOzOQ1Lq70=;
-        b=EGNLA3swXV5sMALLe7G3aVTklrYXns8r3NtWQSqfsZCUwP3iFI0B8RgwLcGnIw+VyF
-         edurCQpi0qPGNv6FeUHn5WVWR1qA5YzkT+sr+laJ+2PijpvL1P5u7nvKzXLYgbhUfdI6
-         +4vq7hFX5foK+3mTMBkYCAo4hMlbwzppDAVWUMnS9BUKAFdBjAg8a1O/8Ko33kHrbYvr
-         Nxn0S9SBHV58nffeD164nPI0Iw/vlGjtkkkWYndB/NLNXTVmKeaQuNa+2x5atJp9GHXa
-         GhqWN0plOn8wAG5oeEFy3sJzpub3RGqP8lNdOSIv34cdXkqx0Z/i4M+2FetCa9x9dQGS
-         wtMg==
-X-Forwarded-Encrypted: i=1; AFNElJ/caEAlkkOc/EXskzCuQ1Ez0RqcbsrOFOQ3nugUKVlPBbxzcdYAKg4hPEal1eC5dbOQ2eqWN5l4/wU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxiFdQB0FpB5G+nPVz8wsceYGkHv24cx9ps6IeSh9yHD+ruvvh4
-	cP+86l5RMzxApgnCDHZRkqHk1RxYV1b6suW8WpI4shBEHrTmrGkMh7mtKCjc/vca0Ss=
-X-Gm-Gg: Acq92OFrhJ88OboIPOqJDYhwQXtuZiueaNF2LB+wQWlXG8qFNx4JJV4y3cCKKyADl4N
-	XRdA6II6FS3tmQMmt1/scpWDDEAK/me9hsNuo9RTzbD4hs7X+6u8fNOS9g8cECJg+IkZqq8LqC5
-	WRsfsNrOYMvwLDHnj3evY3kdu810Q1v80BcaNa3hQ/4A29jlry3CXQp3stbd+mue4n3l837+LsD
-	I4HOckRy8G36ogjp7pfDWml5BbC2GEnPCTxITirb0zbk+FbAW9IOE68VsHg8Ti7HPImgasck33D
-	IaJOIGZbDIwbrM3ySYudYn7iH4z/m4KWy9VcdkWXoQcBYCjYlk6wjNezx9Y3lZxDvMmy8MF1pbc
-	bwOYF5reU2r4KEs/EcFWrrGVNq2t0YjcLnQqYEMo+156b9B8z5ZHg0vhYypOWfeN6B5giRE2/gS
-	6uNqV4pBIYJgZJMo4/Hpk=
-X-Received: by 2002:a05:600c:c494:b0:490:e190:38f3 with SMTP id 5b1f17b1804b1-492341275ccmr101004155e9.21.1781765767044;
-        Wed, 17 Jun 2026 23:56:07 -0700 (PDT)
-Received: from localhost ([104.28.20.64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-462e7fc53fasm9610061f8f.33.2026.06.17.23.56.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 23:56:06 -0700 (PDT)
-Date: Thu, 18 Jun 2026 07:56:05 +0100
-From: Matt Fleming <matt@readmodwrite.com>
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, 
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, kernel-team@cloudflare.com
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H0SRswW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41461F000E9;
+	Thu, 18 Jun 2026 15:55:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781798151;
+	bh=Kj7+KL+PSumQZfnfcRRsBskhS6ytmgonRpTvAHPL8Qc=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
+	b=H0SRswW3hXDY/wvKnVHjJOpKTCcBqODOHPu9zJVNweNB7ngkZIi7gN83o27onYfRZ
+	 wb/pZ0wNJcn6chha1413Bob1w9UNOgTB0z4xzAGTBxL9o6eOTgEQv7rbr7rlfqTxZZ
+	 MkYjanilmzHZ9KCes+iJsYkrpxc8TSfetzOyUa3zvME+hsL+wJxK3t6jIOIdM4MQ/4
+	 qDXgvCfSCRiVHeHTIYlpF/DYu78Waoz2aImGuYGoOKpwFMDMSbRXO0IYTas6ubcQWs
+	 d7WNGn3Sek0pt1J8sKJk9Znb0HNaLjtY9P7T8tzhF1EuFd+kGOg4q1375zzZqzQ8U1
+	 t2cpvTgNhNIQw==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id B84AACE0C39; Thu, 18 Jun 2026 08:55:50 -0700 (PDT)
+Date: Thu, 18 Jun 2026 08:55:50 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Matt Fleming <matt@readmodwrite.com>
+Cc: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+	kernel-team@cloudflare.com
 Subject: Re: sched_ext/lavd hard lockup in old call_rcu_tasks_generic
  needadjust path
-Message-ID: <ajOWZ3JvlmihMNAH@matt-Precision-5490>
+Message-ID: <120adbd6-08f6-4eec-83cd-523e25489707@paulmck-laptop>
+Reply-To: paulmck@kernel.org
 References: <20260609104733.1184001-1-mfleming@cloudflare.com>
  <2179fc11-3bd5-4d2e-9ad8-609e3356ec09@paulmck-laptop>
  <aiqxpzgl2YVVSARw@matt-Precision-5490>
@@ -73,6 +46,7 @@ References: <20260609104733.1184001-1-mfleming@cloudflare.com>
  <3bbd4298-eb01-4784-bee5-caab3d3647b9@paulmck-laptop>
  <ajErr_GEejCD7n47@matt-Precision-5490>
  <35337ded-add4-4689-8f61-73f583a69b36@paulmck-laptop>
+ <ajOWZ3JvlmihMNAH@matt-Precision-5490>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -81,28 +55,31 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <35337ded-add4-4689-8f61-73f583a69b36@paulmck-laptop>
+In-Reply-To: <ajOWZ3JvlmihMNAH@matt-Precision-5490>
 
-On Tue, Jun 16, 2026 at 08:24:55PM -0700, Paul E. McKenney wrote:
-> On Tue, Jun 16, 2026 at 11:56:19AM +0100, Matt Fleming wrote:
+On Thu, Jun 18, 2026 at 07:56:05AM +0100, Matt Fleming wrote:
+> On Tue, Jun 16, 2026 at 08:24:55PM -0700, Paul E. McKenney wrote:
+> > On Tue, Jun 16, 2026 at 11:56:19AM +0100, Matt Fleming wrote:
+> > > 
+> > > What about something like this?
 > > 
-> > What about something like this?
+> > Not bad, actually.
+> > 
+> > But we are going to have to similarly bypass call_rcu_tasks_generic()
+> > soon enough, though only when interrupts are disabled at the time
+> > of the call.  One complication is that it would need to interact
+> > with rcu_barrier_tasks_generic(), which would need to remove any
+> > pending callbacks from bypassed call_rcu_tasks_generic() invocations,
+> > as in llist_del_all() and enqueue the callbacks.  A well-placed
+> > raw_spin_trylock_rcu_node(rtpcp) should suffice for the serialization.
+> > The trick is that rcu_barrier_tasks_generic() is not obligated to
+> > wait on later calls to call_rcu_tasks_generic().
+> > 
+> > Is this something that you would be interested in digging into?
 > 
-> Not bad, actually.
-> 
-> But we are going to have to similarly bypass call_rcu_tasks_generic()
-> soon enough, though only when interrupts are disabled at the time
-> of the call.  One complication is that it would need to interact
-> with rcu_barrier_tasks_generic(), which would need to remove any
-> pending callbacks from bypassed call_rcu_tasks_generic() invocations,
-> as in llist_del_all() and enqueue the callbacks.  A well-placed
-> raw_spin_trylock_rcu_node(rtpcp) should suffice for the serialization.
-> The trick is that rcu_barrier_tasks_generic() is not obligated to
-> wait on later calls to call_rcu_tasks_generic().
-> 
-> Is this something that you would be interested in digging into?
+> Sure, I'll take a look.
 
-Sure, I'll take a look.
+If you have questions or suggestions for the surrounding code, you know
+where to find me!  ;-)
 
-Thanks,
-Matt
+							Thanx, Paul
