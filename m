@@ -1,187 +1,107 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2AB1368294
-	for <sched-ext@lists.linux.dev>; Fri, 19 Jun 2026 15:59:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.76.78.106])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 853293B42F9
+	for <sched-ext@lists.linux.dev>; Fri, 19 Jun 2026 16:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.76.78.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781884780; cv=none; b=rC8QzVolB92m7L7I0tQI7mmYChd70o3t8HmFjGRCyqgvpQEmLRkS/ILgP2msP+zyIhbZVFyZ7fqfURl45dzGHFnkfHJ02IkjsTx77fcLQ/Txm+CAP17WhtLvYjVdwy90RoEBhjpWbhTQSXs4weOOs9FbqmJrqsoZW5g5DrSk6aI=
+	t=1781884961; cv=none; b=OEpOEgbfGtR0sPE7J8NpJHXaf5pVdWavooUARQa3X+zjnUALkfUFDq+oU9dyslN6neASNOZgT4ZSXFckPs2K2YcQXNMDBoD/xgTvAEEZsl9vdBN1v1+ehk35UsRszkOkOgPfRJCkyzMU6vwszDHCRP1/6Y4doF/Grr9Q0qjmGoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781884780; c=relaxed/simple;
-	bh=sd1T8E+V6BrZa/5tBOY4+7obeBjnUs0gVWH7h5SeEiI=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=h28sk+K1E8xbK/jCvAQ8ew8bzhuhZXMc/PwZQXh2hYcyOdsdDp2iX+x8OhEYp0uq9fURStjXVEFBi6MJIbXQ6XygQt9i0WeOxUWwppZM8gDeNo41U6Pq0NwBodGDVVTEZ00KOt6lx7ck11WIvDSJVdHqZb+WZTT2xfbA4cW4gIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=EEjHjKdY; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1781884961; c=relaxed/simple;
+	bh=eBmalbFwvezsu6JqPrRtaeiAUEkMDlAo27YCsl8U1rE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=K6lSD/1jyaa8tdt8zhdwcauAvcgJZ15Qtk2RhHax6ewUcQiXffD/GNb+hra/8pgYWPsxf6znSZGXOkTY4/a9v9yZ5VqOoc2ULSs4W3oN4zwph/uXBR8liUKpDQ09qYcNOyr8hOn7oP0ozC/D7qywcCgt2kfTQKZjrMIED0HkfW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn; dkim=fail (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b=LBLMKbBB reason="signature verification failed"; arc=none smtp.client-ip=13.76.78.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="EEjHjKdY"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 49B1827DC;
-	Fri, 19 Jun 2026 08:59:31 -0700 (PDT)
-Received: from e127648.cambridge.arm.com (e127648.arm.com [10.1.27.69])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 65E4F3F763;
-	Fri, 19 Jun 2026 08:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1781884775; bh=sd1T8E+V6BrZa/5tBOY4+7obeBjnUs0gVWH7h5SeEiI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EEjHjKdYuhENkOgFAq3+0lWM8UzmPFzOde6vO54KQoNi3pp6AFa61V4yb8l2O6qTG
-	 fACXpV7jnvvt/bLTX3+idsdL5V5R1WDuA21Ik2y3YNNriLO/FYk9/G1DGjn5U0TDqA
-	 lXfqUpERsmkCdy2xZsG495dHoatJeIfSIsgQmNio=
-From: Christian Loehle <christian.loehle@arm.com>
-To: sched-ext@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org,
-	tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	gnq25@mails.tsinghua.edu.cn,
-	Christian Loehle <christian.loehle@arm.com>
-Subject: [PATCH] sched_ext: Remove deprecated scx_bpf_cpu_rq()
-Date: Fri, 19 Jun 2026 16:59:20 +0100
-Message-Id: <20260619155920.156257-1-christian.loehle@arm.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b="LBLMKbBB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=mails.tsinghua.edu.cn; s=dkim; h=Received:Date:From:To:Cc:
+	Subject:In-Reply-To:References:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:Message-ID; bh=3ZSZ1GJmN9Ykp3wkoNvUZXy
+	ZqxRc7nzDIIQpdknRQQU=; b=LBLMKbBBbjkmvmut3ar1p8RP5gqml8Ua9qO/PMg
+	jQ8jIKbltGIQD8mOXxTEgudwjVhzso10qrgv0OKP0fgv4rCe6kgSRUcnf6lfwVWt
+	eO4LQfOWxcw6BOtAh2JE7/Ly6xG6WgMy4z0jx4scjBlZsdw/o0F9xYUQBe8fKQQX
+	+LyY=
+Received: from gnq25$mails.tsinghua.edu.cn ( [183.172.62.193] ) by
+ ajax-webmail-web2 (Coremail) ; Sat, 20 Jun 2026 00:02:14 +0800 (GMT+08:00)
+Date: Sat, 20 Jun 2026 00:02:14 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: "Nuoqi Gui" <gnq25@mails.tsinghua.edu.cn>
+To: "Christian Loehle" <christian.loehle@arm.com>
+Cc: "Tejun Heo" <tj@kernel.org>, "David Vernet" <void@manifault.com>,
+	"Alexei Starovoitov" <ast@kernel.org>,
+	"Daniel Borkmann" <daniel@iogearbox.net>,
+	"Andrii Nakryiko" <andrii@kernel.org>,
+	"Andrea Righi" <arighi@nvidia.com>,
+	"Changwoo Min" <changwoo@igalia.com>,
+	"Shuah Khan" <shuah@kernel.org>, sched-ext@lists.linux.dev,
+	bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: Re: [PATCH bpf-next 0/2] sched_ext: Mark scx_bpf_cpu_rq()
+ nullable
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT5 build
+ 20250909(015d6f0a) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-4df55a87-4b50-4a66-85a0-70f79cb6c8b5-tsinghua.edu.cn
+In-Reply-To: <1b75c8ce-19c1-4a35-8747-d63e28dbbc16@arm.com>
+References: <20260619-f01-14-scx-cpu-rq-ret-null-v1-0-3b4281cdf0da@mails.tsinghua.edu.cn>
+ <1b75c8ce-19c1-4a35-8747-d63e28dbbc16@arm.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <41898842.82354.19ee09e5a42.Coremail.gnq25@mails.tsinghua.edu.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID:yQQGZQC3k5sGaDVqDXtpAg--.741W
+X-CM-SenderInfo: xjqtjko6pdxz3vow2x5qjk3toohg3hdfq/1tbiAQMDA2o0b7D0-AA
+	BsK
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-scx_bpf_cpu_rq() exposes rq pointers without requiring the rq lock and
-has emitted a deprecation warning since commit
-5c48d88fe004 ("sched_ext: deprecation warn for scx_bpf_cpu_rq()").
-The supported replacements cover the intended uses:
-scx_bpf_locked_rq() for locked rq access and
-scx_bpf_cpu_curr() for remote curr lookup.
-
-Remove the kfunc, its BTF registrations, the deprecation warning
-state, and the BPF-side prototype and compat fallback.
-
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
----
- kernel/sched/ext.c                       | 30 ------------------------
- kernel/sched/ext_internal.h              |  1 -
- tools/sched_ext/include/scx/common.bpf.h |  5 ++--
- tools/sched_ext/include/scx/compat.bpf.h | 17 --------------
- 4 files changed, 2 insertions(+), 51 deletions(-)
-
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0db6fa2daea3..72d99dd3fe89 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -10222,34 +10222,6 @@ __bpf_kfunc s32 scx_bpf_task_cid(const struct task_struct *p)
- 	return tbl[task_cpu(p)];
- }
- 
--/**
-- * scx_bpf_cpu_rq - Fetch the rq of a CPU
-- * @cpu: CPU of the rq
-- * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-- */
--__bpf_kfunc struct rq *scx_bpf_cpu_rq(s32 cpu, const struct bpf_prog_aux *aux)
--{
--	struct scx_sched *sch;
--
--	guard(rcu)();
--
--	sch = scx_prog_sched(aux);
--	if (unlikely(!sch))
--		return NULL;
--
--	if (!scx_cpu_valid(sch, cpu, NULL))
--		return NULL;
--
--	if (!sch->warned_deprecated_rq) {
--		printk_deferred(KERN_WARNING "sched_ext: %s() is deprecated; "
--				"use scx_bpf_locked_rq() when holding rq lock "
--				"or scx_bpf_cpu_curr() to read remote curr safely.\n", __func__);
--		sch->warned_deprecated_rq = true;
--	}
--
--	return cpu_rq(cpu);
--}
--
- /**
-  * scx_bpf_locked_rq - Return the rq currently locked by SCX
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-@@ -10540,7 +10512,6 @@ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
- BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_task_cid, KF_RCU)
--BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
- BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
- BTF_ID_FLAGS(func, scx_bpf_cid_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
-@@ -10575,7 +10546,6 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- BTF_KFUNCS_START(scx_kfunc_ids_cpu_only)
- BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
--BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
- BTF_ID_FLAGS(func, scx_bpf_cpu_node, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_cpuperf_cap, KF_IMPLICIT_ARGS)
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index b04701190b23..38f099ccd24f 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -1165,7 +1165,6 @@ struct scx_sched {
- 	 * but it doesn't really matter.
- 	 */
- 	bool			warned_zero_slice:1;
--	bool			warned_deprecated_rq:1;
- 	bool			warned_unassoc_progs:1;
- 
- 	struct list_head	all;
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 9591a6e778ce..bd51986c4c42 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -96,7 +96,6 @@ s32 scx_bpf_pick_any_cpu_node(const cpumask_t *cpus_allowed, int node, u64 flags
- s32 scx_bpf_pick_any_cpu(const cpumask_t *cpus_allowed, u64 flags) __ksym;
- bool scx_bpf_task_running(const struct task_struct *p) __ksym;
- s32 scx_bpf_task_cpu(const struct task_struct *p) __ksym;
--struct rq *scx_bpf_cpu_rq(s32 cpu) __ksym;
- struct rq *scx_bpf_locked_rq(void) __ksym;
- struct task_struct *scx_bpf_cpu_curr(s32 cpu) __ksym __weak;
- struct task_struct *scx_bpf_tid_to_task(u64 tid) __ksym __weak;
-@@ -983,8 +982,8 @@ extern struct irqtime___local cpu_irqtime __ksym __weak;
- static inline struct rq___local *get_current_rq(u32 cpu)
- {
- 	/*
--	 * This is a workaround to get an rq pointer since we decided to
--	 * deprecate scx_bpf_cpu_rq().
-+	 * This is a workaround to get an rq pointer now that
-+	 * scx_bpf_cpu_rq() has been removed.
- 	 *
- 	 * WARNING: The caller must hold the rq lock for @cpu. This is
- 	 * guaranteed when called from scheduling callbacks (ops.running,
-diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-index 87f15f296234..133058578668 100644
---- a/tools/sched_ext/include/scx/compat.bpf.h
-+++ b/tools/sched_ext/include/scx/compat.bpf.h
-@@ -233,23 +233,6 @@ static inline bool __COMPAT_is_enq_cpu_selected(u64 enq_flags)
- 	 scx_bpf_pick_any_cpu_node(cpus_allowed, node, flags) :			\
- 	 scx_bpf_pick_any_cpu(cpus_allowed, flags))
- 
--/*
-- * v6.18: Add a helper to retrieve the current task running on a CPU.
-- *
-- * Keep this helper available until v6.20 for compatibility.
-- */
--static inline struct task_struct *__COMPAT_scx_bpf_cpu_curr(int cpu)
--{
--	struct rq *rq;
--
--	if (bpf_ksym_exists(scx_bpf_cpu_curr))
--		return scx_bpf_cpu_curr(cpu);
--
--	rq = scx_bpf_cpu_rq(cpu);
--
--	return rq ? rq->curr : NULL;
--}
--
- /*
-  * v6.19: To work around BPF maximum parameter limit, the following kfuncs are
-  * replaced with variants that pack scalar arguments in a struct. Wrappers are
--- 
-2.34.1
-
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiQ2hyaXN0aWFuIExvZWhs
+ZSIgPGNocmlzdGlhbi5sb2VobGVAYXJtLmNvbT4KPiBTZW5kIHRpbWU6RnJpZGF5LCAxOS8wNi8y
+MDI2IDIzOjMxOjU5Cj4gVG86ICJOdW9xaSBHdWkiIDxnbnEyNUBtYWlscy50c2luZ2h1YS5lZHUu
+Y24+LCAiVGVqdW4gSGVvIiA8dGpAa2VybmVsLm9yZz4sICJEYXZpZCBWZXJuZXQiIDx2b2lkQG1h
+bmlmYXVsdC5jb20+LCAiQWxleGVpIFN0YXJvdm9pdG92IiA8YXN0QGtlcm5lbC5vcmc+LCAiRGFu
+aWVsIEJvcmttYW5uIiA8ZGFuaWVsQGlvZ2VhcmJveC5uZXQ+LCAiQW5kcmlpIE5ha3J5aWtvIiA8
+YW5kcmlpQGtlcm5lbC5vcmc+Cj4gQ2M6ICJBbmRyZWEgUmlnaGkiIDxhcmlnaGlAbnZpZGlhLmNv
+bT4sICJDaGFuZ3dvbyBNaW4iIDxjaGFuZ3dvb0BpZ2FsaWEuY29tPiwgIlNodWFoIEtoYW4iIDxz
+aHVhaEBrZXJuZWwub3JnPiwgc2NoZWQtZXh0QGxpc3RzLmxpbnV4LmRldiwgYnBmQHZnZXIua2Vy
+bmVsLm9yZywgbGludXgta3NlbGZ0ZXN0QHZnZXIua2VybmVsLm9yZywgbGludXgta2VybmVsQHZn
+ZXIua2VybmVsLm9yZwo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggYnBmLW5leHQgMC8yXSBzY2hlZF9l
+eHQ6IE1hcmsgc2N4X2JwZl9jcHVfcnEoKSBudWxsYWJsZQo+IAo+IE9uIDYvMTkvMjYgMTU6NDUs
+IE51b3FpIEd1aSB3cm90ZToKPiA+IHNjeF9icGZfY3B1X3JxKCkgY2FuIHJldHVybiBOVUxMIGZv
+ciBpbnZhbGlkIENQVSBpbnB1dCBvciB3aGVuIG5vIFNDWAo+ID4gc2NoZWR1bGVyIGlzIGFjdGl2
+ZSwgYnV0IGl0cyBrZnVuYyByZWdpc3RyYXRpb24gZG9lcyBub3QgYWR2ZXJ0aXNlIHRoZQo+ID4g
+bnVsbGFibGUgcmV0dXJuIHRvIHRoZSB2ZXJpZmllci4KPiA+IAo+ID4gQWRkIEtGX1JFVF9OVUxM
+IHRvIHNjeF9icGZfY3B1X3JxKCksIG1hdGNoaW5nIHRoZSBudWxsYWJsZSBtZXRhZGF0YSBhbHJl
+YWR5Cj4gPiBwcmVzZW50IG9uIG5laWdoYm9yaW5nIFNDWCBhY2Nlc3NvcnMsIGFuZCBhZGQgYSBz
+Y2hlZF9leHQgc2VsZnRlc3QgdGhhdCByZWplY3RzCj4gPiBhbiB1bmNoZWNrZWQgZGlyZWN0IHJ1
+bnF1ZXVlIGZpZWxkIHJlYWQuCj4gPiAKPiAKPiBTZWUgNWM0OGQ4OGZlMDA0ICgic2NoZWRfZXh0
+OiBkZXByZWNhdGlvbiB3YXJuIGZvciBzY3hfYnBmX2NwdV9ycSgpIikKPiBJIGd1ZXNzIEkgY2Fu
+IHNlbmQgYSBwYXRjaCB0byByZW1vdmUgdGhlIGZ1bmN0aW9uLCBpdCdzIGJlZW4gYSB3aGlsZS4K
+PiAKPiA+IFRoaXMgZml4ZXMgYSByZWdyZXNzaW9uIGludHJvZHVjZWQgYnkgNjIwM2VmNzNmYTVj
+ICgic2NoZWQvZXh0OiBBZGQgQlBGCj4gPiBmdW5jdGlvbiB0byBmZXRjaCBycSIpLgo+IAo+IEhv
+dyBzbz8KPiAKPiA+IAo+ID4gU2lnbmVkLW9mZi1ieTogTnVvcWkgR3VpIDxnbnEyNUBtYWlscy50
+c2luZ2h1YS5lZHUuY24+Cj4gPiAtLS0KPiA+IE51b3FpIEd1aSAoMik6Cj4gPiAgICAgICBzY2hl
+ZF9leHQ6IE1hcmsgc2N4X2JwZl9jcHVfcnEoKSBhcyBudWxsYWJsZQo+ID4gICAgICAgc2VsZnRl
+c3RzL3NjaGVkX2V4dDogQ292ZXIgc2N4X2JwZl9jcHVfcnEoKSBudWxsIHJldHVybgo+ID4gCj4g
+PiAga2VybmVsL3NjaGVkL2V4dC5jICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAg
+MiArLQo+ID4gIHRvb2xzL3Rlc3Rpbmcvc2VsZnRlc3RzL3NjaGVkX2V4dC9NYWtlZmlsZSAgICAg
+ICAgIHwgIDEgKwo+ID4gIC4uLi9zZWxmdGVzdHMvc2NoZWRfZXh0L2NwdV9ycV9yZXRfbnVsbC5i
+cGYuYyAgICAgIHwgMjcgKysrKysrKysrKysrKysrCj4gPiAgLi4uL3Rlc3Rpbmcvc2VsZnRlc3Rz
+L3NjaGVkX2V4dC9jcHVfcnFfcmV0X251bGwuYyAgfCAzOCArKysrKysrKysrKysrKysrKysrKysr
+Cj4gPiAgNCBmaWxlcyBjaGFuZ2VkLCA2NyBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pCj4g
+PiAtLS0KPiA+IGJhc2UtY29tbWl0OiBlNDI4N2JmMzRmOTdhODhjN2Q5MzIyZjViZGU4Mjg3MjRj
+MDczYTZiCj4gPiBjaGFuZ2UtaWQ6IDIwMjYwNjE3LWYwMS0xNC1zY3gtY3B1LXJxLXJldC1udWxs
+LTJlNzk1MzVhY2Q1Nwo+ID4gCj4gPiBCZXN0IHJlZ2FyZHMsCj4gPiAtLSAgCj4gPiBOdW9xaSBH
+dWkgPGducTI1QG1haWxzLnRzaW5naHVhLmVkdS5jbj4KPiA+IAo+ID4gCgpUaGFua3MsIHlvdSdy
+ZSByaWdodC4gIlJlZ3Jlc3Npb24iIHdhcyBpbmFjY3VyYXRlOyB0aGUgbWlzc2luZyBLRl9SRVRf
+TlVMTAptZXRhZGF0YSBoYXMgYmVlbiB0aGVyZSBzaW5jZSB0aGUga2Z1bmMgd2FzIGludHJvZHVj
+ZWQgYnkgNjIwM2VmNzNmYTVjLgoKSWYgdGhlIHByZWZlcnJlZCBkaXJlY3Rpb24gaXMgdG8gcmVt
+b3ZlIHNjeF9icGZfY3B1X3JxKCksIEknbGwgZHJvcCB0aGlzIApzZXJpZXMuCg==
