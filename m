@@ -1,32 +1,32 @@
-Received: from zg8tmja5ljk3lje4mi4ymjia.icoremail.net (zg8tmja5ljk3lje4mi4ymjia.icoremail.net [209.97.182.222])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E21327727
-	for <sched-ext@lists.linux.dev>; Fri, 19 Jun 2026 14:45:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.97.182.222
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.175.55.52])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E10472FD7B1
+	for <sched-ext@lists.linux.dev>; Fri, 19 Jun 2026 14:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.175.55.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781880353; cv=none; b=M1y0eToPBK3sd9AhX2SD4r3dNBnldR8VfxlO6/DJux2p5yBvza2tsPXHAQwtmeqfLxNXe4bowz7eocQ7A8jdtrUzhbTw3XCifjGpIrhRiu5WPAM6e4qE2i8RmmptK9/1yV9hLS3UEdOV6N9Xbwj+fRqhhZImzq9LLqy7Doq5A6w=
+	t=1781880353; cv=none; b=pLrwffn38QWpvlXu6Nt59s47/dFJnL8y2i9yrg+ro31hPOTLdRDU9vdRo3bgvce0m5jDCCh2n2LdVLPZ1Di7MVH5KxGBVvv/FvKbxuws24jtqjwDI81nSTlowtjxzZCDenagktje8q57EppBE5ti/Rrehdub/SHnQ3Vxqpnk6mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781880353; c=relaxed/simple;
-	bh=HZYtIN99QUMpwWbR0YMLaPxpVqFz501Kae/OHpH5Qoo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JNAom4InsLYN6BKUPT8xOmr+anGlHilf/eFM7g2uBnoenhQyHUVmSS1EWAUvGZEVKfM+7eUBQcZP6KjTUtTBqjZHNHEj+8yGuNMSZZmqN3IERVnnpNxn+nJ3R5fDt5Ph3c2kv4N4OlcSg9CW1paCPrTxFBivns2DuSckFpePy6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn; dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b=eNJ43H8R; arc=none smtp.client-ip=209.97.182.222
+	bh=TFk0MfznjCmyIteitfG9pMgEuBCZtq/YkYT56XbC+CA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=L7Klqw6jRuF2ru1FU3H2KwGpRRsHHVjV0ZGXQBClerE0UT/Bz/bXD/whR1GAmnBkXc0IugZKLGJHAn18AdtQcrnl4HbkI0fHhTpqwrrZ89ZipP+aqxcjXgdsuxjiRMixXUZcXb9u0gJWavdNUpDxA3uj6GueqfsBj8o7cXdmVjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn; dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b=Wd6XSbTE; arc=none smtp.client-ip=52.175.55.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b="eNJ43H8R"
+	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b="Wd6XSbTE"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:Subject:Date:
-	Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	To:Cc; bh=p/RpG1xo+BzvHjS6CfSoS6N987u53c6qZ7G1BRtJzKY=; b=eNJ43H
-	8RPSX96MxFJc0WmcmbEZeZxhPa+paGnB9EEAIY1HTvA0uhX6tZBOZDTrZOqe0oaG
-	IWTubQubWV4xXKP/kKlrKNfCogriKrPk9/SU29czLJtR/f1vY/Y7eyFbmjEhcRxh
-	EV80IP6iVjY8N+GHriLGahdNKJiCICGEsQ8Z4=
+	d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:Date:Subject:
+	MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	References:In-Reply-To:To:Cc; bh=k1XdGtRaEIWXqE6Xs298BuLMDQ3U+fa
+	YOCgVLLTfqDI=; b=Wd6XSbTEMjmDGIj1T36GuYZmqqlrwHRgG2XRtbZQiMY11cu
+	XImukSf/jVd9XmLMSEGywuS2KUlALBr6uOIMN+H8GApFoQKKxm0uH9mmwBwupXhp
+	X6sF6XQogzI/hpO/UC1BwqvzDoOks43ynQ7dvWROxsXhCRIX6opAKbk4MbLI=
 Received: from [127.0.0.1] (unknown [101.6.30.195])
-	by web5 (Coremail) with SMTP id zAQGZQAnsbsMVjVqxDGLAg--.41554S2;
+	by web5 (Coremail) with SMTP id zAQGZQAnsbsMVjVqxDGLAg--.41554S3;
 	Fri, 19 Jun 2026 22:45:32 +0800 (CST)
 From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Subject: [PATCH bpf-next 0/2] sched_ext: Mark scx_bpf_cpu_rq() nullable
-Date: Fri, 19 Jun 2026 22:45:31 +0800
-Message-Id: <20260619-f01-14-scx-cpu-rq-ret-null-v1-0-3b4281cdf0da@mails.tsinghua.edu.cn>
+Date: Fri, 19 Jun 2026 22:45:32 +0800
+Subject: [PATCH bpf-next 1/2] sched_ext: Mark scx_bpf_cpu_rq() as nullable
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -35,10 +35,9 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAxWNWoC/yXM0QrCIBSA4VcZ57oDajmpV4ldbO5YxjDzaAhj7
- 55blz8/fCswJU8Mt26FRF/P/h1ayFMH9jmGB6GfW4MSqhe9NOiERHlBthVtLJg+mChjKMuCisx
- Vn/VoZ22gATGR8/XA7zBFh4FqhuF/uEwvsnm3Ydt+Hrydk4gAAAA=
-X-Change-ID: 20260617-f01-14-scx-cpu-rq-ret-null-2e79535acd57
+Message-Id: <20260619-f01-14-scx-cpu-rq-ret-null-v1-1-3b4281cdf0da@mails.tsinghua.edu.cn>
+References: <20260619-f01-14-scx-cpu-rq-ret-null-v1-0-3b4281cdf0da@mails.tsinghua.edu.cn>
+In-Reply-To: <20260619-f01-14-scx-cpu-rq-ret-null-v1-0-3b4281cdf0da@mails.tsinghua.edu.cn>
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
  Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
  Andrii Nakryiko <andrii@kernel.org>
@@ -47,59 +46,61 @@ Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
  bpf@vger.kernel.org, linux-kselftest@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781880334; l=1187;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781880334; l=1369;
  i=gnq25@mails.tsinghua.edu.cn; s=20260605; h=from:subject:message-id;
- bh=HZYtIN99QUMpwWbR0YMLaPxpVqFz501Kae/OHpH5Qoo=;
- b=840HAMU3V+Qh7+51VQZEXF2RKAHCY47oR7hY2QbtdNDtil5WpxojBujk0ZHfwhzhfeZCf7RXY
- xN+gBjv4lNaB4CVY33cKdqrqMApxy5UDPZ7hGiZGmA/zxAalpJql4xd
+ bh=TFk0MfznjCmyIteitfG9pMgEuBCZtq/YkYT56XbC+CA=;
+ b=EetAIW627OzjrXjBDGjy2GYzJBE26Wpl7U9/dqd47jiSHOJ5/GRW1G8z6+XHwAo1SE+1hMbzA
+ Y3cyS0dTzc3CnzEFCdc5v7mWp4C7DiOAnuHBjblkDDzmj6Oc7aoc6MV
 X-Developer-Key: i=gnq25@mails.tsinghua.edu.cn; a=ed25519;
  pk=nqQ48fAxVTDp3z/IUmqv6BB+agXPpd8tQjDOBxwlgZo=
-X-CM-TRANSID:zAQGZQAnsbsMVjVqxDGLAg--.41554S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4UXr4UKF4DWw45Wry5CFg_yoWkZFc_Zr
-	4SyF9rXrnrua1Uua9rGFs5AryfCa10gr45CF18X3ZxG3y8Aw4DXF1kJF15uryFqw43GrZx
-	ur4rZ3W8Cr1xWjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb-xFc2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wA2ocxC64kI
-	II0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7
-	xvwVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28E
-	F7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzx
-	vE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VCjz48v1sIEY20_GrWk
-	Jr1UJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5c
-	I20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxE
-	wVAFwVW5XwCF04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26r4rKr1UJr1l4I8I3I
-	0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWU
-	GVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI
-	0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0
-	rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r
-	4UJbIYCTnIWIevJa73UjIFyTuYvjfUIKZXDUUUU
-X-CM-SenderInfo: xjqtjko6pdxz3vow2x5qjk3toohg3hdfq/1tbiAQYDA2o0b7DnAwAAsi
+X-CM-TRANSID:zAQGZQAnsbsMVjVqxDGLAg--.41554S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7WF48CFWUAw1fCF4kKF48WFg_yoW8Gw1DpF
+	srWr9Fkr18G3ykGa9rGr4rKrW5Aw1kJw4xuw1DArWIkw43X3Z5X34Syr12qr93uFn3tr1q
+	qF10vrWfCr1j93DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9v1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l8cAvFVAK
+	0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4
+	x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2
+	z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4
+	CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E74AGY7Cv6cx26r4r
+	Kr1UJr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc
+	8vx2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Av
+	z4vE14v_Xryl42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VW8Ww4UJr1UMxC20s
+	026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_
+	JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14
+	v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xva
+	j40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JV
+	W8JrUvcSsGvfC2KfnxnUUI43ZEXa7VU0hSdPUUUUU==
+X-CM-SenderInfo: xjqtjko6pdxz3vow2x5qjk3toohg3hdfq/1tbiAQMDA2o0b7DnBAAAsg
 
-scx_bpf_cpu_rq() can return NULL for invalid CPU input or when no SCX
-scheduler is active, but its kfunc registration does not advertise the
-nullable return to the verifier.
+scx_bpf_cpu_rq() can return NULL when the calling program is not attached to
+an active SCX scheduler or when the requested CPU is invalid. Its kfunc
+registration currently advertises only KF_IMPLICIT_ARGS, so the verifier does
+not mark the return as PTR_MAYBE_NULL.
 
-Add KF_RET_NULL to scx_bpf_cpu_rq(), matching the nullable metadata already
-present on neighboring SCX accessors, and add a sched_ext selftest that rejects
-an unchecked direct runqueue field read.
+Add KF_RET_NULL to the registration, matching scx_bpf_locked_rq() and
+scx_bpf_cpu_curr(), so BPF programs must check the returned runqueue pointer
+before dereferencing it.
 
-This fixes a regression introduced by 6203ef73fa5c ("sched/ext: Add BPF
-function to fetch rq").
-
+Fixes: 6203ef73fa5c ("sched/ext: Add BPF function to fetch rq")
 Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
 ---
-Nuoqi Gui (2):
-      sched_ext: Mark scx_bpf_cpu_rq() as nullable
-      selftests/sched_ext: Cover scx_bpf_cpu_rq() null return
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- kernel/sched/ext.c                                 |  2 +-
- tools/testing/selftests/sched_ext/Makefile         |  1 +
- .../selftests/sched_ext/cpu_rq_ret_null.bpf.c      | 27 +++++++++++++++
- .../testing/selftests/sched_ext/cpu_rq_ret_null.c  | 38 ++++++++++++++++++++++
- 4 files changed, 67 insertions(+), 1 deletion(-)
----
-base-commit: e4287bf34f97a88c7d9322f5bde828724c073a6b
-change-id: 20260617-f01-14-scx-cpu-rq-ret-null-2e79535acd57
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 65631e577ee9..dbe1fe1ac465 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -9787,7 +9787,7 @@ BTF_ID_FLAGS(func, scx_bpf_get_online_cpumask, KF_ACQUIRE)
+ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
+ BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
+ BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
+-BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
++BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
+ BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
+ BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
+ BTF_ID_FLAGS(func, scx_bpf_now)
 
-Best regards,
---  
-Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+-- 
+2.34.1
 
