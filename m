@@ -1,106 +1,92 @@
-Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [52.175.55.52])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E10472FD7B1
-	for <sched-ext@lists.linux.dev>; Fri, 19 Jun 2026 14:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.175.55.52
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7423326F288
+	for <sched-ext@lists.linux.dev>; Fri, 19 Jun 2026 15:32:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781880353; cv=none; b=pLrwffn38QWpvlXu6Nt59s47/dFJnL8y2i9yrg+ro31hPOTLdRDU9vdRo3bgvce0m5jDCCh2n2LdVLPZ1Di7MVH5KxGBVvv/FvKbxuws24jtqjwDI81nSTlowtjxzZCDenagktje8q57EppBE5ti/Rrehdub/SHnQ3Vxqpnk6mg=
+	t=1781883126; cv=none; b=RttsYtygnw3z20rvAkU5CjRz+GyKCGUVMAlY8FQmYJMlJy2r5wgm1t5U2G43aM4xjveGVy7r3Qmrf+C5E3UztE5BS4NdA2Toq/2+VG8Gm4n4mkftmwl3k5E6wm3kJlRuvv/+Aj6RuXSU2OSWi3IcOdRJf5mF0KInvpPC+oJ7ris=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781880353; c=relaxed/simple;
-	bh=TFk0MfznjCmyIteitfG9pMgEuBCZtq/YkYT56XbC+CA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L7Klqw6jRuF2ru1FU3H2KwGpRRsHHVjV0ZGXQBClerE0UT/Bz/bXD/whR1GAmnBkXc0IugZKLGJHAn18AdtQcrnl4HbkI0fHhTpqwrrZ89ZipP+aqxcjXgdsuxjiRMixXUZcXb9u0gJWavdNUpDxA3uj6GueqfsBj8o7cXdmVjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn; dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b=Wd6XSbTE; arc=none smtp.client-ip=52.175.55.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mails.tsinghua.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mails.tsinghua.edu.cn
+	s=arc-20240116; t=1781883126; c=relaxed/simple;
+	bh=FLaGLy9wrbFD2CWC3yAzWNpWSP81kGzPR3khH+QRHy4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oxDYHtqNersZXi+AOWD6L+ULUD0HVIrFGMSYQXCEM+ol+c7WflvIDNPpZ1+yR+HrG/9q3t63O52E0+XGmMqPYCxeFN2P+eJF8qos2hhuYdwPB3zDSVfrxyR1AGvdRF7yfbzwy9Bei/4PxBGEKfPF0QZ0zeVPwgeT5vN0/5nXBfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=OCaFtIzS; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mails.tsinghua.edu.cn header.i=@mails.tsinghua.edu.cn header.b="Wd6XSbTE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=mails.tsinghua.edu.cn; s=dkim; h=Received:From:Date:Subject:
-	MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	References:In-Reply-To:To:Cc; bh=k1XdGtRaEIWXqE6Xs298BuLMDQ3U+fa
-	YOCgVLLTfqDI=; b=Wd6XSbTEMjmDGIj1T36GuYZmqqlrwHRgG2XRtbZQiMY11cu
-	XImukSf/jVd9XmLMSEGywuS2KUlALBr6uOIMN+H8GApFoQKKxm0uH9mmwBwupXhp
-	X6sF6XQogzI/hpO/UC1BwqvzDoOks43ynQ7dvWROxsXhCRIX6opAKbk4MbLI=
-Received: from [127.0.0.1] (unknown [101.6.30.195])
-	by web5 (Coremail) with SMTP id zAQGZQAnsbsMVjVqxDGLAg--.41554S3;
-	Fri, 19 Jun 2026 22:45:32 +0800 (CST)
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Date: Fri, 19 Jun 2026 22:45:32 +0800
-Subject: [PATCH bpf-next 1/2] sched_ext: Mark scx_bpf_cpu_rq() as nullable
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="OCaFtIzS"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 421682880;
+	Fri, 19 Jun 2026 08:31:59 -0700 (PDT)
+Received: from [10.1.27.69] (e127648.arm.com [10.1.27.69])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 291513F763;
+	Fri, 19 Jun 2026 08:32:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1781883123; bh=FLaGLy9wrbFD2CWC3yAzWNpWSP81kGzPR3khH+QRHy4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OCaFtIzS2kFxVfuRpzmVsw4nOK0pN1QWF/aI85xpGdt7YOHIXWqtFzpb8gkys7TNS
+	 xUOXrI9Yg343LmL/2ZDRC29SP4qah+DgnPrY/jEiL9zNxwVm0c26ydYaMtqm0JaBsF
+	 fTa0/VTq1j6F6ko8ll2IJb3fghx7UnFYZLQ0mrlA=
+Message-ID: <1b75c8ce-19c1-4a35-8747-d63e28dbbc16@arm.com>
+Date: Fri, 19 Jun 2026 16:31:59 +0100
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260619-f01-14-scx-cpu-rq-ret-null-v1-1-3b4281cdf0da@mails.tsinghua.edu.cn>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 0/2] sched_ext: Mark scx_bpf_cpu_rq() nullable
+To: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>, Tejun Heo <tj@kernel.org>,
+ David Vernet <void@manifault.com>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
+ Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev,
+ bpf@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20260619-f01-14-scx-cpu-rq-ret-null-v1-0-3b4281cdf0da@mails.tsinghua.edu.cn>
+Content-Language: en-US
+From: Christian Loehle <christian.loehle@arm.com>
 In-Reply-To: <20260619-f01-14-scx-cpu-rq-ret-null-v1-0-3b4281cdf0da@mails.tsinghua.edu.cn>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
- Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
- Andrii Nakryiko <andrii@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
- Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev, 
- bpf@vger.kernel.org, linux-kselftest@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781880334; l=1369;
- i=gnq25@mails.tsinghua.edu.cn; s=20260605; h=from:subject:message-id;
- bh=TFk0MfznjCmyIteitfG9pMgEuBCZtq/YkYT56XbC+CA=;
- b=EetAIW627OzjrXjBDGjy2GYzJBE26Wpl7U9/dqd47jiSHOJ5/GRW1G8z6+XHwAo1SE+1hMbzA
- Y3cyS0dTzc3CnzEFCdc5v7mWp4C7DiOAnuHBjblkDDzmj6Oc7aoc6MV
-X-Developer-Key: i=gnq25@mails.tsinghua.edu.cn; a=ed25519;
- pk=nqQ48fAxVTDp3z/IUmqv6BB+agXPpd8tQjDOBxwlgZo=
-X-CM-TRANSID:zAQGZQAnsbsMVjVqxDGLAg--.41554S3
-X-Coremail-Antispam: 1UD129KBjvJXoW7WF48CFWUAw1fCF4kKF48WFg_yoW8Gw1DpF
-	srWr9Fkr18G3ykGa9rGr4rKrW5Aw1kJw4xuw1DArWIkw43X3Z5X34Syr12qr93uFn3tr1q
-	qF10vrWfCr1j93DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9v1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l8cAvFVAK
-	0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4
-	x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2
-	z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4
-	CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E74AGY7Cv6cx26r4r
-	Kr1UJr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc
-	8vx2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Av
-	z4vE14v_Xryl42xK82IYc2Ij64vIr41l42xK82IY6x8ErcxFaVAv8VW8Ww4UJr1UMxC20s
-	026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_
-	JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14
-	v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xva
-	j40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JV
-	W8JrUvcSsGvfC2KfnxnUUI43ZEXa7VU0hSdPUUUUU==
-X-CM-SenderInfo: xjqtjko6pdxz3vow2x5qjk3toohg3hdfq/1tbiAQMDA2o0b7DnBAAAsg
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-scx_bpf_cpu_rq() can return NULL when the calling program is not attached to
-an active SCX scheduler or when the requested CPU is invalid. Its kfunc
-registration currently advertises only KF_IMPLICIT_ARGS, so the verifier does
-not mark the return as PTR_MAYBE_NULL.
+On 6/19/26 15:45, Nuoqi Gui wrote:
+> scx_bpf_cpu_rq() can return NULL for invalid CPU input or when no SCX
+> scheduler is active, but its kfunc registration does not advertise the
+> nullable return to the verifier.
+> 
+> Add KF_RET_NULL to scx_bpf_cpu_rq(), matching the nullable metadata already
+> present on neighboring SCX accessors, and add a sched_ext selftest that rejects
+> an unchecked direct runqueue field read.
+> 
 
-Add KF_RET_NULL to the registration, matching scx_bpf_locked_rq() and
-scx_bpf_cpu_curr(), so BPF programs must check the returned runqueue pointer
-before dereferencing it.
+See 5c48d88fe004 ("sched_ext: deprecation warn for scx_bpf_cpu_rq()")
+I guess I can send a patch to remove the function, it's been a while.
 
-Fixes: 6203ef73fa5c ("sched/ext: Add BPF function to fetch rq")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
----
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> This fixes a regression introduced by 6203ef73fa5c ("sched/ext: Add BPF
+> function to fetch rq").
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 65631e577ee9..dbe1fe1ac465 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -9787,7 +9787,7 @@ BTF_ID_FLAGS(func, scx_bpf_get_online_cpumask, KF_ACQUIRE)
- BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
- BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
--BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cpu_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
- BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
- BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
- BTF_ID_FLAGS(func, scx_bpf_now)
+How so?
 
--- 
-2.34.1
+> 
+> Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+> ---
+> Nuoqi Gui (2):
+>       sched_ext: Mark scx_bpf_cpu_rq() as nullable
+>       selftests/sched_ext: Cover scx_bpf_cpu_rq() null return
+> 
+>  kernel/sched/ext.c                                 |  2 +-
+>  tools/testing/selftests/sched_ext/Makefile         |  1 +
+>  .../selftests/sched_ext/cpu_rq_ret_null.bpf.c      | 27 +++++++++++++++
+>  .../testing/selftests/sched_ext/cpu_rq_ret_null.c  | 38 ++++++++++++++++++++++
+>  4 files changed, 67 insertions(+), 1 deletion(-)
+> ---
+> base-commit: e4287bf34f97a88c7d9322f5bde828724c073a6b
+> change-id: 20260617-f01-14-scx-cpu-rq-ret-null-2e79535acd57
+> 
+> Best regards,
+> --  
+> Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+> 
+> 
 
