@@ -1,519 +1,150 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012048.outbound.protection.outlook.com [40.107.209.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3482737E0
-	for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 18:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782153954; cv=fail; b=lU8A0z9sxeKYztRIg1BvWxhnyGa6DnVf+WRsC90QNVwNwQYHAB/Er24oQR0niPKKg+npu6RI8ZHJVsVwJFx2D/tUiPfL8+76Niy3b21QovOcUGHYa5gaBVRYABHiGpjLoOjgMv4pMpK93acVPWhgFbmE/vuhbmJNxRzlTrkGLyo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782153954; c=relaxed/simple;
-	bh=+up8ySj5b5JHKR0oNOOwQnDcLXLJzkObExgXuH18m6o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=tGLUw66U1gk8noCqln2JIiQo3EgGfeB2Wtmf32bzPfnNvzSAP0DOfJsp+z1FqO0FS7EIYyB6xIALe7uS1+WboLELmXXJHF8q7S41k7WdOKbVH4pq9D4K266GYCMdRCVWMdBV8U0uIlG95CaQ8Mqco0+3ZEONSagnyBfY7+DnJTc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OH0vRhiK; arc=fail smtp.client-ip=40.107.209.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA82347FC4
+	for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 19:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782155036; cv=none; b=oUyl4aUqsqJbmfwWlHwfhwmt3Q+g8m4oO4AAqlcCxN01PgaTZLBLofhbJETm1YmuG5fdes263RZxHLZjtaqBCoNst9xH5jFMxGPrUjtqHMbBbj2iHG9uu/KD5EPJ9wIpTECC9DcbhnqsbiPNfhE+ru409HPhQKl9I2/vod8gCoc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782155036; c=relaxed/simple;
+	bh=uM6rjwv+rWrcNEl8KjTKnVcDSG3oUNpsPUMqnFOcLeE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PdhP0mbb7Bt6kl/eOrcP/054iSE/N1T3otV7WefP3qpblwzbs6r0eoInL4pWnQ4N0l2/RsU2Rl9Xde+HiW5/cscOLm7KkDVyOu/dw7mJuQSiG7JHKg5mBdaGyis4utNUTe3jo+JEPCEPkekS1edQpO0XxTrhaTCRSx1QWV37lsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVFsVndf; arc=none smtp.client-ip=74.125.82.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OH0vRhiK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZZ15QlfDpi5TUniOVQemu98s3bNEYB85Ako3oX6t5HmCHJpyqIv9cMg3RT3tapPi92/O+R2CDlPlWNtCweT2R2Ryk4Tcosw49wHepH/RWL1VelKgRIJL8ezyeM7ibLoByRJ/l/fKhj1pc1qt5EKxNOWPmrSETA9eWuq3gOZp+6laNpQ2PAdD5KrxmtG5mRW3MJM+pd3W/yInf910Gh2EVt5TmENevHEnABxhvIRusMZQmBmik2W6SD705/jTK/OkMDbqVMsDClleLb9Sus4G/y7zWrsm8I5YtppbOourmj7XwCnAVl7+wlJDYBOqvt69r2Q9VeXrdpWZ+GCC7eZjmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z0V56ONv+gmX3dbE6+1RxjQAvCKq5e4KageNzfJtrvg=;
- b=eFH5GpS0G9Zun3NI2ZmvJ3g3REf8sd7jd237+cBCbL6yj98zYhBxRURs2sbLMUXzusNgyPro2ZMu1xI84pUzVmXaeRKkDY8pe/b7XaVDGN2NrCyghJby/0VEA62tO9ARxwCaFx2/4UEEy4Zrv/0f7aILE4dNsVnc6m4CcwUnFjmWLFvkKtD2m+ykVMKUzxH+1QtGlFTrSchYCkGsO9LMB4uvT1PEF5kxr3ZpZtzzQCX48pjMnSBpNfT0LxbgN6WeH2arN1LVfU3tAy0eVlz7xh3sau8Ps/s86uqtm4rzpI9aRW+LJpt+IF6/lYkzQSONo+Vvz2xWvuzm4a9cpeRzng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z0V56ONv+gmX3dbE6+1RxjQAvCKq5e4KageNzfJtrvg=;
- b=OH0vRhiKnqxNzwWmvnb4WRNFJpGp4CjTw5DuDn2qXKu8XzuFCx4/8klQc9seMgPtF5WMVK5fSNs9A2wQV/h/inQcLWLi8gV4DlrWwhg6pTqNrQaqFtff935lol/OVc/mJSTcby1pJINnBVx0EtnEZv9GDpYtCXF81WWZt+/BimYNyuW4yBnKVJyg29d7+M8m6JEvW2Bb3DqibE7Xpoy/z+i6iBDRU3KNbv/9pxFRiOAR+FLLy+h6+jme3kTfkPFxSHftXb1CrgoWyY+GlyTP0j1cVIv9QfBWbnErQE4N27r6tNzGAp9542XfSPB4wvuWeMnAMBlobJ9N+xNNs9Zk7w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by CY8PR12MB7681.namprd12.prod.outlook.com (2603:10b6:930:84::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Mon, 22 Jun
- 2026 18:45:41 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
- 18:45:41 +0000
-Date: Mon, 22 Jun 2026 20:45:32 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: linux-kernel@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	sched-ext@lists.linux.dev
-Subject: Re: [PATCH sched_ext/for-7.2 2/2] sched_ext: Move shared helpers
- from ext.c into internal.h and cid.h
-Message-ID: <ajmCzLPU6Jo_2iB9@gpd4>
-References: <20260622173904.1169407-1-tj@kernel.org>
- <20260622173904.1169407-2-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260622173904.1169407-2-tj@kernel.org>
-X-ClientProxiedBy: MI3PEPF00004EA1.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::450) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVFsVndf"
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-3042a388168so186224eec.1
+        for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 12:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782155033; x=1782759833; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uM6rjwv+rWrcNEl8KjTKnVcDSG3oUNpsPUMqnFOcLeE=;
+        b=fVFsVndfg6mWKVB5EXTVDBkJ3nNQyNSuuy0dvNOIt0yrFYWUAs5viJCJZ1+sJcyX8K
+         44ipD6N+nptdUxD/Ihp50qXFW3QSSQdv+fsleMVC1msyBlvN69Jmughef5wEPgm40bAJ
+         MX2334ApBK7egBKDzD4QulH9lIqvtoHdLJc60iFcByl7w3KpdGhTxie66aqY9Gbh8jC5
+         ZvZL3QUIhb9tA1/Ge6wloUyhokLN7+TwfbMQSSZmiSQaowX7cp+oHXhk7Vcway66c1nU
+         2JKRUM1UF6dTin9s33bsTKC5EAwnJXaUl1HNBhR+Mxw4NE2ZBTWOWK5PB4UkawodUDI8
+         GJ+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782155033; x=1782759833;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uM6rjwv+rWrcNEl8KjTKnVcDSG3oUNpsPUMqnFOcLeE=;
+        b=MlYB3HxCcjcCPCQd6dHYNbP3CyXVrf3/TyxcZ2dLx3FphydYynpsrwxiwKtSpSHRDQ
+         63H1Ut2iy5Qh8a4Kgrr2VyfPF9jw/WlgnRuuC0vWep55r5RTkpc+0BUPrRvZdBcY5PoN
+         Gis5+ccjv3cyk5YyCihXaxdE9s64klSJRHlPtRKmTreiXXJVeVdrxk8QbXvnELmwG8S+
+         /iYdVDzh+ey1c3uHDVSp5SxQLpEokGPZKoyM94OZcwVXSHzobL2WPbPx0mo/6rfFaVF/
+         CkJMss8zI4ooo92/GS5Kwm2XJb66YgHrS2yOwQnyaSFgiMWfJhfh+isQ1ME2VKLyV4fk
+         kvAA==
+X-Forwarded-Encrypted: i=1; AHgh+Rq8UPJycc3E7WOoDYIz00zJ3C48SMnShUcjh2e3cbwzm2uwrD9hIUUeJXtYB1F8UraLYZTO6nvvQZg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzevTqbd6EdlfHqK6aCAqvy2CCa14Tka5+k5bX4+acEzw6XTR/1
+	JPHxGYG/6O08vHTvxxpSv+lBS0tsGbMaUarxsXmuPHQgeMeyuwLN8OwR
+X-Gm-Gg: AfdE7ckXk2Qns8fhzdCERXdSijqMO6Qx2SMb7Smgf7IKy5WGSf/VobGzNVx48SA5fmR
+	Nzvhlj1Oo/gE01xN/5ipaizmhQopjZ8i9GkvpgZO8qhj/qtRT3s21W9LofQKuVrKgoXdxu9FnGS
+	vM6UkW08cyLXMa8iM4FYZla85yF7jFz8L7Yi43+Pm3VwqdEGxn5XVZn9FHahj4EBHBWyS8/wJo3
+	qBhkKC3E13zyOyRzZ+nNLpsGSBJVQ3+dWVXFwCVlzt3/ETnfskOf082aCYilI7NC7tE+FSj1BVn
+	chLdEsA2cq+k9O4uKvuUli/RFWfZD/RdU+RNCg2zGCdLZ2acvTRFBzSnivwPi3UBo1JPtEK6PT7
+	wBd+Li48gUH4hy48zxu3WKZzslyTbIdkk6ngJbuDIhX/dfIlSl/pt+I2o/0bKPYO92ko1vxTSyg
+	EkR0Kn0xgHRVf5OsSnbaJioLOBf0+Z+EG7F7xVJjjK6wCfh6kR4Ldfm8brPvWJsxJ7qWI=
+X-Received: by 2002:a05:693c:2887:b0:30b:cc4e:6396 with SMTP id 5a478bee46e88-30c5553b105mr382073eec.7.1782155033135;
+        Mon, 22 Jun 2026 12:03:53 -0700 (PDT)
+Received: from ?IPv6:2a03:83e0:115c:1:6e2:c699:67c:63fe? ([2620:10d:c090:500::1:5387])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c1be4967fsm10549199eec.26.2026.06.22.12.03.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jun 2026 12:03:52 -0700 (PDT)
+Message-ID: <1979fc81ae7bdaabda8616cd9698a40ef8bbfaee.camel@gmail.com>
+Subject: Re: [PATCH v3 5/7] kernel: Use mutable list iterators
+From: Eduard Zingerman <eddyz87@gmail.com>
+To: Kaitao Cheng <kaitao.cheng@linux.dev>, Paul Moore <paul@paul-moore.com>,
+  Eric Paris <eparis@redhat.com>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann	 <daniel@iogearbox.net>, Andrii Nakryiko
+ <andrii@kernel.org>, Kumar Kartikeya Dwivedi <memxor@gmail.com>, "David S.
+ Miller" <davem@davemloft.net>, Jakub Kicinski	 <kuba@kernel.org>, Jesper
+ Dangaard Brouer <hawk@kernel.org>, John Fastabend	
+ <john.fastabend@gmail.com>, Tejun Heo <tj@kernel.org>, Johannes Weiner	
+ <hannes@cmpxchg.org>, Michal =?ISO-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>, 
+ Maarten Lankhorst	 <dev@lankhorst.se>, Maxime Ripard <mripard@kernel.org>,
+ Natalie Vock	 <natalie.vock@gmx.de>, Peter Zijlstra <peterz@infradead.org>,
+ Ingo Molnar	 <mingo@redhat.com>, Arnaldo Carvalho de Melo
+ <acme@kernel.org>, Namhyung Kim	 <namhyung@kernel.org>, Masami Hiramatsu
+ <mhiramat@kernel.org>, Oleg Nesterov	 <oleg@redhat.com>, Peter
+ Oberparleiter <oberpar@linux.ibm.com>, Andrew Morton	
+ <akpm@linux-foundation.org>, Baoquan He <baoquan.he@linux.dev>, Mike
+ Rapoport	 <rppt@kernel.org>, Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Pratyush Yadav	 <pratyush@kernel.org>, Naveen N Rao <naveen@kernel.org>,
+ Josh Poimboeuf	 <jpoimboe@kernel.org>, Jiri Kosina <jikos@kernel.org>,
+ Miroslav Benes	 <mbenes@suse.cz>, Petr Mladek <pmladek@suse.com>, Will
+ Deacon <will@kernel.org>,  Boqun Feng <boqun@kernel.org>, Luis Chamberlain
+ <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>,  Daniel Gomez
+ <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, Steffen
+ Klassert	 <steffen.klassert@secunet.com>, Daniel Jordan
+ <daniel.m.jordan@oracle.com>,  "Rafael J. Wysocki"	 <rafael@kernel.org>,
+ Davidlohr Bueso <dave@stgolabs.net>, "Paul E. McKenney"	
+ <paulmck@kernel.org>, Josh Triplett <josh@joshtriplett.org>, Frederic
+ Weisbecker <frederic@kernel.org>, Neeraj Upadhyay
+ <neeraj.upadhyay@kernel.org>, Joel Fernandes	 <joelagnelf@nvidia.com>,
+ Uladzislau Rezki <urezki@gmail.com>, Juri Lelli	 <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>, Kees Cook <kees@kernel.org>,
+ Balbir Singh <bsingharora@gmail.com>, Anna-Maria Behnsen	
+ <anna-maria@linutronix.de>, Thomas Gleixner <tglx@kernel.org>, John Stultz	
+ <jstultz@google.com>, KP Singh <kpsingh@kernel.org>, Matt Bobrowski	
+ <mattbobrowski@google.com>, Nathan Chancellor <nathan@kernel.org>, Martin
+ KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>, Mark Rutland
+ <mark.rutland@arm.com>,  Mathieu Desnoyers
+ <mathieu.desnoyers@efficios.com>, Dietmar Eggemann
+ <dietmar.eggemann@arm.com>, David Vernet	 <void@manifault.com>, Steven
+ Rostedt <rostedt@goodmis.org>
+Cc: audit@vger.kernel.org, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, 	netdev@vger.kernel.org, cgroups@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, 	linux-perf-users@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, 	kexec@lists.infradead.org,
+ live-patching@vger.kernel.org, 	linux-modules@vger.kernel.org,
+ linux-crypto@vger.kernel.org, 	linux-pm@vger.kernel.org,
+ rcu@vger.kernel.org, sched-ext@lists.linux.dev, 	llvm@lists.linux.dev,
+ Kaitao Cheng <chengkaitao@kylinos.cn>
+Date: Mon, 22 Jun 2026 12:03:46 -0700
+In-Reply-To: <20260622042811.31684-1-kaitao.cheng@linux.dev>
+References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
+	 <20260622042811.31684-1-kaitao.cheng@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CY8PR12MB7681:EE_
-X-MS-Office365-Filtering-Correlation-Id: eeb8a2b8-46af-4f6e-1736-08ded08e753c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|7416014|376014|366016|1800799024|6133799003|22082099003|18002099003|4143699003|56012099006|5023799004|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	EfECR38PYBfNs3TGcI9E/rzWFdAgx2SbAdwFqreBHUyWvynYUYDk9SQ8er7gi4lKL5utzpmlJcr+SrxQD9Dll7qR7bjRd2XSqADC2oSJo2lUlaGOUjieDnDf+Oeeuu0Dwbu2QATmmRInIc+kXK17hh4/P3nmke2OqfvGWt4QR0D1jKaAEnRVQHHqNjywu2gh4+irdKPiC5rS80czPyvlM0oP8YR2t79868XSdoGRvZBl8qtAPsS/ZUAaHlLOdw/6ZsDxVBG3jKtcXuNKkQcF/YfxdfIS8aezxn6w+MFvV40Lg9VxybHjX//vNekP8vwsybXSUC7yGAJ5TxLIeb9qc8LCSkYq9eWSjY2xWiMIkdJA/RzpB3/PU3YWtJetGo9ilVC26hY9d79Qb5LyDDLIz3wdC8cpYpJYl9Zzo4s2DZXoT7EbzTBM6ReZF1AFDwtj+e+98isU8Lmv2/FjfZEOgSTgPD2b4sJL4LKeOAg06IzaK2LOP9JrjkFqO/tVT8lRnT79y0fRwF+oWQWiEwMCgWrMMvsSERPW0Jz0UBCE0h0QV318vdE5ssk+XH8DQap81pWyV6HHkJHU/ipdIfGlHQxlgEF4KMwrHdl57LRN2gFvKqWySQ66n+5jx7HjxqfJd+iDfilRwq0FISv8CDckNxTzKsf2mrnXayFQk788ALU=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(6133799003)(22082099003)(18002099003)(4143699003)(56012099006)(5023799004)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?wuMI4AqZ5xM85nWD0repLvCPIzf1oRiC+RyTjz+3A6lMB07abTmr4JrXDJ+b?=
- =?us-ascii?Q?zoEb6P6/7rqQkiAZ/lZjVWQPPaaf9lWFYL19M9yL+3wBvMWrJtEj66VDbXNs?=
- =?us-ascii?Q?FeUDVO2OZnJFdBW/RyXjJ34Lajnhh1dl9zEHkdIZpU9PgQrHw+rVuE1ATUrc?=
- =?us-ascii?Q?U7SdD/zbAgwbSE/6GkbcP3z5jaBjI8vqrVv480FzVuzhef3UmQEnCIrm1Enx?=
- =?us-ascii?Q?TC7crfWxaIrvnl6w6NNDJtdy5/wZSEWultD2LxqOKoXQdPdQrMRkdeH24q6h?=
- =?us-ascii?Q?iW22dgirBDReswyFAFwH4vGX6e3CDvHGsYSYqxK/wmUxu4RgDA+7ognMoMLH?=
- =?us-ascii?Q?xuZH5bvPmO5sGCgqpe629VfKaTROJnYDx9GTNyhWtxj/YuZ3fkrzN4lK2EST?=
- =?us-ascii?Q?ZlaKFb1LwSt6+PsmNpIb80PueMR6kHKgl99I/BdBqTdKQRraqLiQuXYgMtEf?=
- =?us-ascii?Q?u5cOU9W2dhpNf8Le+Jz2LI7vTqARsvWUAiVwnKCYycUpTdh7b1fiD4+J/FjC?=
- =?us-ascii?Q?4KmE52xXz3Td+aTvYyhmav9kiwR2Sqx5+/qrttA258qbP6vnJpfC9WkcqbL/?=
- =?us-ascii?Q?CTCPcv9Yo7nAo8fuM9ufmYqjf3OVYozD9fv4LGrbU1ULxD7V/M6SGGtL6BIV?=
- =?us-ascii?Q?Qn3mxTszP8KrGlJGAea5weL7LQT1obwFbK6AjSvkiguedSYCsA4OX7I+sQgs?=
- =?us-ascii?Q?1OwU2Eap/oKjibM8cwjidJjwk+OtedyOsH0LYSfAKyXj5yxEBPDX7YQlXble?=
- =?us-ascii?Q?UCdEcXU7eYSagSYf6N6doZLrkTfvlne8N8Lw9+Xwqam7pq6TfhLeE1JTVnZo?=
- =?us-ascii?Q?oaIqMuxmScEvGj33JkQls8o7Qvu3s2Fjha9tx34Y7iG6its8zDBJqbsW4Qdk?=
- =?us-ascii?Q?w4ydV+c+UGRu08RqdIHhkK6zjITlobEhbb35X8nDxXgYoyycH84e+bxQqaSk?=
- =?us-ascii?Q?UuzWi/7KGYnCg29/iKC7WYZJZnP4cPzTHvwZn0RO8MoRda/O5QkH5F2zFTBx?=
- =?us-ascii?Q?cK4iMVai8UKdodj2E26LvS6cLigLjruS3ab560dqCZMAk8C+V0UhQf9oULLk?=
- =?us-ascii?Q?6joZPsXKC8zVk6JMogHH870OQ6WbeT+Lg69w1s1vhMbAvKUtL0TMCGHCXsYI?=
- =?us-ascii?Q?hTxXa/W6LgGsY2yLGxED+aeS7A515F2ox3S8kkzjZXp4XnTzATz3LPyDYHbM?=
- =?us-ascii?Q?jqocoOI5k5qCkhK06lEHadmtNq5C3c6adt24eqiKJWDq2giJyzJkAh3bFSoo?=
- =?us-ascii?Q?dHBl/HodIILvBE7Iybf4iVgqqpdoikpOO6EvoV33onSu3Ai8ikgOLzTRzLGa?=
- =?us-ascii?Q?O2i25XDGvla17qr9z3r2L7b+kc/vF/xa21cR5M7a/ynvZqaTBHAnwRVDT0fQ?=
- =?us-ascii?Q?FpiKOsDStMhid09zklXIsZRja+nymU6Y/uFLcBiUoz0nN9w1fd62ZyKwVNYF?=
- =?us-ascii?Q?z0DUGC9XI3gzxcEzuAdKqsAejP9h5ro+AZq7l7OYuvk/McoJ6sXDdzMxqhB0?=
- =?us-ascii?Q?QfbvNeayE30zBCnngLA/HOjZzXFs1mzPNcxTdgTP/LHaSNnYt3rRlWsXBAkt?=
- =?us-ascii?Q?KTXCIgcJFW2zv6NHmjLk7T2/5QRcawiLAUuGUDuZw9R7TplS/DvUesN0xw1A?=
- =?us-ascii?Q?n+t4SbrsiCRM6sgBK5MQAnJQuTrtj7eVKYShXiq3Y6HnxUbz/QJ/LhheNfZI?=
- =?us-ascii?Q?GzUs9YcSPtawni6dxbpaCmSLdJs/L6ry60p4XR4R45awtp7tn9Nn9plf+phO?=
- =?us-ascii?Q?hzmNNIXmUg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eeb8a2b8-46af-4f6e-1736-08ded08e753c
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 18:45:41.0462
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /lJ5FXeuYLK6xhcQmCw7D4W5o0Uhkj5UJq59upxyPrDoL+oRchF/BU5r5g5zfJpGqL/z+RJNmvt2gUJFE4TNaQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7681
 
-Hi Tejun,
-
-On Mon, Jun 22, 2026 at 07:39:04AM -1000, Tejun Heo wrote:
-> idle.c and cid.c are included into build_policy.c together with ext.c and
-> use helpers that ext.c defines. Because the helpers live in ext.c, the two
-> files can not parse as standalone units and clangd reports errors in them.
-> 
-> Move the helpers to the headers they belong to. The op-dispatch macros and
-> helpers plus scx_parent() to internal.h, and scx_cpu_arg()/scx_cpu_ret() to
-> cid.h. No functional change. idle.c and cid.c now parse clean standalone.
-> 
-> Suggested-by: Peter Zijlstra <peterz@infradead.org>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
+On Mon, 2026-06-22 at 12:28 +0800, Kaitao Cheng wrote:
+> From: Kaitao Cheng <chengkaitao@kylinos.cn>
+>=20
+> The safe list iteration helpers require callers to provide a temporary
+> cursor even when the cursor is only used internally by the loop. This
+> leaves many functions with otherwise unused variables whose only purpose
+> is to satisfy the old iterator interface.
+>=20
+> Use the mutable list iteration helpers for those cases. The mutable
+> helpers keep the same removal-safe traversal semantics, while allowing
+> the temporary cursor to be internal to the macro when the caller does
+> not need to observe it.
+>=20
+> Convert list, hlist and llist users under kernel/ where the temporary
+> cursor is not used outside the iteration. Keep the explicit cursor form
+> where the next entry is still needed by the surrounding code.
+>=20
+> No functional change intended.
+>=20
+> Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
 > ---
 
-Looks good to me.
+Beside the fact that this does not apply,
+I don't see a reason why is this needed for BPF sub-tree.
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-
-Thanks,
--Andrea
-
->  kernel/sched/ext/cid.h      |  21 ++++++
->  kernel/sched/ext/ext.c      | 141 ------------------------------------
->  kernel/sched/ext/internal.h | 121 +++++++++++++++++++++++++++++++
->  3 files changed, 142 insertions(+), 141 deletions(-)
-> 
-> diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-> index 41d0802c6af3..9c4f4b907f12 100644
-> --- a/kernel/sched/ext/cid.h
-> +++ b/kernel/sched/ext/cid.h
-> @@ -270,4 +270,25 @@ static inline u32 scx_cmask_nr_used_words(const struct scx_cmask *m)
->  		     __w && ((cid) = __bs + __wi * 64 + __ffs64(__w), true);	\
->  		     __w &= __w - 1)
->  
-> +/*
-> + * scx_cpu_arg() wraps a cpu arg being handed to an SCX op. For cid-form
-> + * schedulers it resolves to the matching cid; for cpu-form it passes @cpu
-> + * through. scx_cpu_ret() is the inverse for a cpu/cid returned from an op
-> + * (currently only ops.select_cpu); it validates the BPF-supplied cid and
-> + * triggers scx_error() on @sch if invalid.
-> + */
-> +static inline s32 scx_cpu_arg(s32 cpu)
-> +{
-> +	if (scx_is_cid_type())
-> +		return __scx_cpu_to_cid(cpu);
-> +	return cpu;
-> +}
-> +
-> +static inline s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
-> +{
-> +	if (cpu_or_cid < 0 || !scx_is_cid_type())
-> +		return cpu_or_cid;
-> +	return scx_cid_to_cpu(sch, cpu_or_cid);
-> +}
-> +
->  #endif /* _KERNEL_SCHED_EXT_CID_H */
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index ebf6dc84cb4d..dd41b84ae680 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -258,8 +258,6 @@ __printf(5, 6) bool __scx_exit(struct scx_sched *sch,
->  	return ret;
->  }
->  
-> -#define SCX_HAS_OP(sch, op)	test_bit(SCX_OP_IDX(op), (sch)->has_op)
-> -
->  static long jiffies_delta_msecs(unsigned long at, unsigned long now)
->  {
->  	if (time_after(at, now))
-> @@ -274,20 +272,6 @@ static bool u32_before(u32 a, u32 b)
->  }
->  
->  #ifdef CONFIG_EXT_SUB_SCHED
-> -/**
-> - * scx_parent - Find the parent sched
-> - * @sch: sched to find the parent of
-> - *
-> - * Returns the parent scheduler or %NULL if @sch is root.
-> - */
-> -static struct scx_sched *scx_parent(struct scx_sched *sch)
-> -{
-> -	if (sch->level)
-> -		return sch->ancestors[sch->level - 1];
-> -	else
-> -		return NULL;
-> -}
-> -
->  /**
->   * scx_next_descendant_pre - find the next descendant for pre-order walk
->   * @pos: the current position (%NULL to initiate traversal)
-> @@ -335,7 +319,6 @@ static void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch)
->  	rcu_assign_pointer(p->scx.sched, sch);
->  }
->  #else	/* CONFIG_EXT_SUB_SCHED */
-> -static inline struct scx_sched *scx_parent(struct scx_sched *sch) { return NULL; }
->  static inline struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root) { return pos ? NULL : root; }
->  static inline void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch) {}
->  #endif	/* CONFIG_EXT_SUB_SCHED */
-> @@ -495,123 +478,12 @@ static bool rq_is_open(struct rq *rq, u64 enq_flags)
->   */
->  DEFINE_PER_CPU(struct rq *, scx_locked_rq_state);
->  
-> -static inline void update_locked_rq(struct rq *rq)
-> -{
-> -	/*
-> -	 * Check whether @rq is actually locked. This can help expose bugs
-> -	 * or incorrect assumptions about the context in which a kfunc or
-> -	 * callback is executed.
-> -	 */
-> -	if (rq)
-> -		lockdep_assert_rq_held(rq);
-> -	__this_cpu_write(scx_locked_rq_state, rq);
-> -}
-> -
-> -/*
-> - * SCX ops can recurse via scx_bpf_sub_dispatch() - the inner call must not
-> - * clobber the outer's scx_locked_rq_state. Save it on entry, restore on exit.
-> - */
-> -#define SCX_CALL_OP(sch, op, locked_rq, args...)				\
-> -do {										\
-> -	struct rq *__prev_locked_rq;						\
-> -										\
-> -	if (locked_rq) {							\
-> -		__prev_locked_rq = scx_locked_rq();				\
-> -		update_locked_rq(locked_rq);					\
-> -	}									\
-> -	(sch)->ops.op(args);							\
-> -	if (locked_rq)								\
-> -		update_locked_rq(__prev_locked_rq);				\
-> -} while (0)
-> -
->  /*
->   * Flipped on enable per sch->is_cid_type. Declared in internal.h so
->   * subsystem inlines can read it.
->   */
->  DEFINE_STATIC_KEY_FALSE(__scx_is_cid_type);
->  
-> -/*
-> - * scx_cpu_arg() wraps a cpu arg being handed to an SCX op. For cid-form
-> - * schedulers it resolves to the matching cid; for cpu-form it passes @cpu
-> - * through. scx_cpu_ret() is the inverse for a cpu/cid returned from an op
-> - * (currently only ops.select_cpu); it validates the BPF-supplied cid and
-> - * triggers scx_error() on @sch if invalid.
-> - */
-> -static s32 scx_cpu_arg(s32 cpu)
-> -{
-> -	if (scx_is_cid_type())
-> -		return __scx_cpu_to_cid(cpu);
-> -	return cpu;
-> -}
-> -
-> -static s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
-> -{
-> -	if (cpu_or_cid < 0 || !scx_is_cid_type())
-> -		return cpu_or_cid;
-> -	return scx_cid_to_cpu(sch, cpu_or_cid);
-> -}
-> -
-> -#define SCX_CALL_OP_RET(sch, op, locked_rq, args...)				\
-> -({										\
-> -	struct rq *__prev_locked_rq;						\
-> -	__typeof__((sch)->ops.op(args)) __ret;					\
-> -										\
-> -	if (locked_rq) {							\
-> -		__prev_locked_rq = scx_locked_rq();				\
-> -		update_locked_rq(locked_rq);					\
-> -	}									\
-> -	__ret = (sch)->ops.op(args);						\
-> -	if (locked_rq)								\
-> -		update_locked_rq(__prev_locked_rq);				\
-> -	__ret;									\
-> -})
-> -
-> -/*
-> - * SCX_CALL_OP_TASK*() invokes an SCX op that takes one or two task arguments
-> - * and records them in current->scx.kf_tasks[] for the duration of the call. A
-> - * kfunc invoked from inside such an op can then use
-> - * scx_kf_arg_task_ok() to verify that its task argument is one of
-> - * those subject tasks.
-> - *
-> - * Every SCX_CALL_OP_TASK*() call site invokes its op with @p's rq lock held -
-> - * either via the @locked_rq argument here, or (for ops.select_cpu()) via @p's
-> - * pi_lock held by try_to_wake_up() with rq tracking via scx_rq.in_select_cpu.
-> - * So if kf_tasks[] is set, @p's scheduler-protected fields are stable.
-> - *
-> - * kf_tasks[] can not stack, so task-based SCX ops must not nest. The
-> - * WARN_ON_ONCE() in each macro catches a re-entry of any of the three variants
-> - * while a previous one is still in progress.
-> - */
-> -#define SCX_CALL_OP_TASK(sch, op, locked_rq, task, args...)			\
-> -do {										\
-> -	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
-> -	current->scx.kf_tasks[0] = task;					\
-> -	SCX_CALL_OP((sch), op, locked_rq, task, ##args);			\
-> -	current->scx.kf_tasks[0] = NULL;					\
-> -} while (0)
-> -
-> -#define SCX_CALL_OP_TASK_RET(sch, op, locked_rq, task, args...)			\
-> -({										\
-> -	__typeof__((sch)->ops.op(task, ##args)) __ret;				\
-> -	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
-> -	current->scx.kf_tasks[0] = task;					\
-> -	__ret = SCX_CALL_OP_RET((sch), op, locked_rq, task, ##args);		\
-> -	current->scx.kf_tasks[0] = NULL;					\
-> -	__ret;									\
-> -})
-> -
-> -#define SCX_CALL_OP_2TASKS_RET(sch, op, locked_rq, task0, task1, args...)	\
-> -({										\
-> -	__typeof__((sch)->ops.op(task0, task1, ##args)) __ret;			\
-> -	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
-> -	current->scx.kf_tasks[0] = task0;					\
-> -	current->scx.kf_tasks[1] = task1;					\
-> -	__ret = SCX_CALL_OP_RET((sch), op, locked_rq, task0, task1, ##args);	\
-> -	current->scx.kf_tasks[0] = NULL;					\
-> -	current->scx.kf_tasks[1] = NULL;					\
-> -	__ret;									\
-> -})
-> -
->  /**
->   * scx_call_op_set_cpumask - invoke ops.set_cpumask / ops_cid.set_cmask for @task
->   * @sch: scx_sched being invoked
-> @@ -650,19 +522,6 @@ static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
->  	current->scx.kf_tasks[0] = NULL;
->  }
->  
-> -/* see SCX_CALL_OP_TASK() */
-> -static __always_inline bool scx_kf_arg_task_ok(struct scx_sched *sch,
-> -							struct task_struct *p)
-> -{
-> -	if (unlikely((p != current->scx.kf_tasks[0] &&
-> -		      p != current->scx.kf_tasks[1]))) {
-> -		scx_error(sch, "called on a task not being operated on");
-> -		return false;
-> -	}
-> -
-> -	return true;
-> -}
-> -
->  enum scx_dsq_iter_flags {
->  	/* iterate in the reverse dispatch order */
->  	SCX_DSQ_ITER_REV		= 1U << 16,
-> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-> index 1f5312b3b387..145272cb4d8a 100644
-> --- a/kernel/sched/ext/internal.h
-> +++ b/kernel/sched/ext/internal.h
-> @@ -1553,6 +1553,111 @@ static inline struct rq *scx_locked_rq(void)
->  	return __this_cpu_read(scx_locked_rq_state);
->  }
->  
-> +static inline void update_locked_rq(struct rq *rq)
-> +{
-> +	/*
-> +	 * Check whether @rq is actually locked. This can help expose bugs
-> +	 * or incorrect assumptions about the context in which a kfunc or
-> +	 * callback is executed.
-> +	 */
-> +	if (rq)
-> +		lockdep_assert_rq_held(rq);
-> +	__this_cpu_write(scx_locked_rq_state, rq);
-> +}
-> +
-> +#define SCX_HAS_OP(sch, op)	test_bit(SCX_OP_IDX(op), (sch)->has_op)
-> +
-> +/*
-> + * SCX ops can recurse via scx_bpf_sub_dispatch() - the inner call must not
-> + * clobber the outer's scx_locked_rq_state. Save it on entry, restore on exit.
-> + */
-> +#define SCX_CALL_OP(sch, op, locked_rq, args...)				\
-> +do {										\
-> +	struct rq *__prev_locked_rq;						\
-> +										\
-> +	if (locked_rq) {							\
-> +		__prev_locked_rq = scx_locked_rq();				\
-> +		update_locked_rq(locked_rq);					\
-> +	}									\
-> +	(sch)->ops.op(args);							\
-> +	if (locked_rq)								\
-> +		update_locked_rq(__prev_locked_rq);				\
-> +} while (0)
-> +
-> +#define SCX_CALL_OP_RET(sch, op, locked_rq, args...)				\
-> +({										\
-> +	struct rq *__prev_locked_rq;						\
-> +	__typeof__((sch)->ops.op(args)) __ret;					\
-> +										\
-> +	if (locked_rq) {							\
-> +		__prev_locked_rq = scx_locked_rq();				\
-> +		update_locked_rq(locked_rq);					\
-> +	}									\
-> +	__ret = (sch)->ops.op(args);						\
-> +	if (locked_rq)								\
-> +		update_locked_rq(__prev_locked_rq);				\
-> +	__ret;									\
-> +})
-> +
-> +/*
-> + * SCX_CALL_OP_TASK*() invokes an SCX op that takes one or two task arguments
-> + * and records them in current->scx.kf_tasks[] for the duration of the call. A
-> + * kfunc invoked from inside such an op can then use
-> + * scx_kf_arg_task_ok() to verify that its task argument is one of
-> + * those subject tasks.
-> + *
-> + * Every SCX_CALL_OP_TASK*() call site invokes its op with @p's rq lock held -
-> + * either via the @locked_rq argument here, or (for ops.select_cpu()) via @p's
-> + * pi_lock held by try_to_wake_up() with rq tracking via scx_rq.in_select_cpu.
-> + * So if kf_tasks[] is set, @p's scheduler-protected fields are stable.
-> + *
-> + * kf_tasks[] can not stack, so task-based SCX ops must not nest. The
-> + * WARN_ON_ONCE() in each macro catches a re-entry of any of the three variants
-> + * while a previous one is still in progress.
-> + */
-> +#define SCX_CALL_OP_TASK(sch, op, locked_rq, task, args...)			\
-> +do {										\
-> +	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
-> +	current->scx.kf_tasks[0] = task;					\
-> +	SCX_CALL_OP((sch), op, locked_rq, task, ##args);			\
-> +	current->scx.kf_tasks[0] = NULL;					\
-> +} while (0)
-> +
-> +#define SCX_CALL_OP_TASK_RET(sch, op, locked_rq, task, args...)			\
-> +({										\
-> +	__typeof__((sch)->ops.op(task, ##args)) __ret;				\
-> +	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
-> +	current->scx.kf_tasks[0] = task;					\
-> +	__ret = SCX_CALL_OP_RET((sch), op, locked_rq, task, ##args);		\
-> +	current->scx.kf_tasks[0] = NULL;					\
-> +	__ret;									\
-> +})
-> +
-> +#define SCX_CALL_OP_2TASKS_RET(sch, op, locked_rq, task0, task1, args...)	\
-> +({										\
-> +	__typeof__((sch)->ops.op(task0, task1, ##args)) __ret;			\
-> +	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
-> +	current->scx.kf_tasks[0] = task0;					\
-> +	current->scx.kf_tasks[1] = task1;					\
-> +	__ret = SCX_CALL_OP_RET((sch), op, locked_rq, task0, task1, ##args);	\
-> +	current->scx.kf_tasks[0] = NULL;					\
-> +	current->scx.kf_tasks[1] = NULL;					\
-> +	__ret;									\
-> +})
-> +
-> +/* see SCX_CALL_OP_TASK() */
-> +static __always_inline bool scx_kf_arg_task_ok(struct scx_sched *sch,
-> +					       struct task_struct *p)
-> +{
-> +	if (unlikely((p != current->scx.kf_tasks[0] &&
-> +		      p != current->scx.kf_tasks[1]))) {
-> +		scx_error(sch, "called on a task not being operated on");
-> +		return false;
-> +	}
-> +
-> +	return true;
-> +}
-> +
->  static inline bool scx_bypassing(struct scx_sched *sch, s32 cpu)
->  {
->  	return unlikely(per_cpu_ptr(sch->pcpu, cpu)->flags &
-> @@ -1633,6 +1738,20 @@ static inline struct scx_sched *scx_prog_sched(const struct bpf_prog_aux *aux)
->  
->  	return NULL;
->  }
-> +
-> +/**
-> + * scx_parent - Find the parent sched
-> + * @sch: sched to find the parent of
-> + *
-> + * Returns the parent scheduler or %NULL if @sch is root.
-> + */
-> +static inline struct scx_sched *scx_parent(struct scx_sched *sch)
-> +{
-> +	if (sch->level)
-> +		return sch->ancestors[sch->level - 1];
-> +	else
-> +		return NULL;
-> +}
->  #else	/* CONFIG_EXT_SUB_SCHED */
->  static inline struct scx_sched *scx_task_sched(const struct task_struct *p)
->  {
-> @@ -1656,6 +1775,8 @@ static inline struct scx_sched *scx_prog_sched(const struct bpf_prog_aux *aux)
->  {
->  	return rcu_dereference_all(scx_root);
->  }
-> +
-> +static inline struct scx_sched *scx_parent(struct scx_sched *sch) { return NULL; }
->  #endif	/* CONFIG_EXT_SUB_SCHED */
->  
->  #endif /* _KERNEL_SCHED_EXT_INTERNAL_H */
-> -- 
-> 2.54.0
-> 
+[...]
