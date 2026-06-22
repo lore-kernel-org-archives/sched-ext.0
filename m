@@ -1,150 +1,241 @@
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA82347FC4
-	for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 19:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E7035200C;
+	Mon, 22 Jun 2026 20:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782155036; cv=none; b=oUyl4aUqsqJbmfwWlHwfhwmt3Q+g8m4oO4AAqlcCxN01PgaTZLBLofhbJETm1YmuG5fdes263RZxHLZjtaqBCoNst9xH5jFMxGPrUjtqHMbBbj2iHG9uu/KD5EPJ9wIpTECC9DcbhnqsbiPNfhE+ru409HPhQKl9I2/vod8gCoc=
+	t=1782160642; cv=none; b=p5iCH79/5287Y512huXC9cogkXz4cJpyhoF8k+Rd/eETQyRqU7r58QpVX0MSThACUBliMEoU1jRjuj7RXerJl9XluCM4eKnGmkqRy5mbuirVcI77lRkDULrF5TsoPLgL9jNVklrWfZNZw+f7HDm+iFwjWbyc9cxoF5iTTTrtjHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782155036; c=relaxed/simple;
-	bh=uM6rjwv+rWrcNEl8KjTKnVcDSG3oUNpsPUMqnFOcLeE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=PdhP0mbb7Bt6kl/eOrcP/054iSE/N1T3otV7WefP3qpblwzbs6r0eoInL4pWnQ4N0l2/RsU2Rl9Xde+HiW5/cscOLm7KkDVyOu/dw7mJuQSiG7JHKg5mBdaGyis4utNUTe3jo+JEPCEPkekS1edQpO0XxTrhaTCRSx1QWV37lsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fVFsVndf; arc=none smtp.client-ip=74.125.82.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782160642; c=relaxed/simple;
+	bh=7HULovNxjUp15J9s5xzdQ89gceTc2YFGK8lpH/4mVRI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Tc+udvgZ4zPPL8CoEV5Hl/CJvS8xWKDHZMbutaEVomfImAyWmE7p52VgWnLBXKMiXr5DQ520h6/1a5pjUgdd8s6J4yCFdoTLMrVIQ87+iw0HA5xpudVMv4lFM/KeqRj2536c3afCXZOP0AIWanYJRiSRz/u3i2YvVb0YrDTHtZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dOQvj6q3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fVFsVndf"
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-3042a388168so186224eec.1
-        for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 12:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782155033; x=1782759833; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uM6rjwv+rWrcNEl8KjTKnVcDSG3oUNpsPUMqnFOcLeE=;
-        b=fVFsVndfg6mWKVB5EXTVDBkJ3nNQyNSuuy0dvNOIt0yrFYWUAs5viJCJZ1+sJcyX8K
-         44ipD6N+nptdUxD/Ihp50qXFW3QSSQdv+fsleMVC1msyBlvN69Jmughef5wEPgm40bAJ
-         MX2334ApBK7egBKDzD4QulH9lIqvtoHdLJc60iFcByl7w3KpdGhTxie66aqY9Gbh8jC5
-         ZvZL3QUIhb9tA1/Ge6wloUyhokLN7+TwfbMQSSZmiSQaowX7cp+oHXhk7Vcway66c1nU
-         2JKRUM1UF6dTin9s33bsTKC5EAwnJXaUl1HNBhR+Mxw4NE2ZBTWOWK5PB4UkawodUDI8
-         GJ+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782155033; x=1782759833;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uM6rjwv+rWrcNEl8KjTKnVcDSG3oUNpsPUMqnFOcLeE=;
-        b=MlYB3HxCcjcCPCQd6dHYNbP3CyXVrf3/TyxcZ2dLx3FphydYynpsrwxiwKtSpSHRDQ
-         63H1Ut2iy5Qh8a4Kgrr2VyfPF9jw/WlgnRuuC0vWep55r5RTkpc+0BUPrRvZdBcY5PoN
-         Gis5+ccjv3cyk5YyCihXaxdE9s64klSJRHlPtRKmTreiXXJVeVdrxk8QbXvnELmwG8S+
-         /iYdVDzh+ey1c3uHDVSp5SxQLpEokGPZKoyM94OZcwVXSHzobL2WPbPx0mo/6rfFaVF/
-         CkJMss8zI4ooo92/GS5Kwm2XJb66YgHrS2yOwQnyaSFgiMWfJhfh+isQ1ME2VKLyV4fk
-         kvAA==
-X-Forwarded-Encrypted: i=1; AHgh+Rq8UPJycc3E7WOoDYIz00zJ3C48SMnShUcjh2e3cbwzm2uwrD9hIUUeJXtYB1F8UraLYZTO6nvvQZg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzevTqbd6EdlfHqK6aCAqvy2CCa14Tka5+k5bX4+acEzw6XTR/1
-	JPHxGYG/6O08vHTvxxpSv+lBS0tsGbMaUarxsXmuPHQgeMeyuwLN8OwR
-X-Gm-Gg: AfdE7ckXk2Qns8fhzdCERXdSijqMO6Qx2SMb7Smgf7IKy5WGSf/VobGzNVx48SA5fmR
-	Nzvhlj1Oo/gE01xN/5ipaizmhQopjZ8i9GkvpgZO8qhj/qtRT3s21W9LofQKuVrKgoXdxu9FnGS
-	vM6UkW08cyLXMa8iM4FYZla85yF7jFz8L7Yi43+Pm3VwqdEGxn5XVZn9FHahj4EBHBWyS8/wJo3
-	qBhkKC3E13zyOyRzZ+nNLpsGSBJVQ3+dWVXFwCVlzt3/ETnfskOf082aCYilI7NC7tE+FSj1BVn
-	chLdEsA2cq+k9O4uKvuUli/RFWfZD/RdU+RNCg2zGCdLZ2acvTRFBzSnivwPi3UBo1JPtEK6PT7
-	wBd+Li48gUH4hy48zxu3WKZzslyTbIdkk6ngJbuDIhX/dfIlSl/pt+I2o/0bKPYO92ko1vxTSyg
-	EkR0Kn0xgHRVf5OsSnbaJioLOBf0+Z+EG7F7xVJjjK6wCfh6kR4Ldfm8brPvWJsxJ7qWI=
-X-Received: by 2002:a05:693c:2887:b0:30b:cc4e:6396 with SMTP id 5a478bee46e88-30c5553b105mr382073eec.7.1782155033135;
-        Mon, 22 Jun 2026 12:03:53 -0700 (PDT)
-Received: from ?IPv6:2a03:83e0:115c:1:6e2:c699:67c:63fe? ([2620:10d:c090:500::1:5387])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30c1be4967fsm10549199eec.26.2026.06.22.12.03.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jun 2026 12:03:52 -0700 (PDT)
-Message-ID: <1979fc81ae7bdaabda8616cd9698a40ef8bbfaee.camel@gmail.com>
-Subject: Re: [PATCH v3 5/7] kernel: Use mutable list iterators
-From: Eduard Zingerman <eddyz87@gmail.com>
-To: Kaitao Cheng <kaitao.cheng@linux.dev>, Paul Moore <paul@paul-moore.com>,
-  Eric Paris <eparis@redhat.com>, Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann	 <daniel@iogearbox.net>, Andrii Nakryiko
- <andrii@kernel.org>, Kumar Kartikeya Dwivedi <memxor@gmail.com>, "David S.
- Miller" <davem@davemloft.net>, Jakub Kicinski	 <kuba@kernel.org>, Jesper
- Dangaard Brouer <hawk@kernel.org>, John Fastabend	
- <john.fastabend@gmail.com>, Tejun Heo <tj@kernel.org>, Johannes Weiner	
- <hannes@cmpxchg.org>, Michal =?ISO-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>, 
- Maarten Lankhorst	 <dev@lankhorst.se>, Maxime Ripard <mripard@kernel.org>,
- Natalie Vock	 <natalie.vock@gmx.de>, Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar	 <mingo@redhat.com>, Arnaldo Carvalho de Melo
- <acme@kernel.org>, Namhyung Kim	 <namhyung@kernel.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Oleg Nesterov	 <oleg@redhat.com>, Peter
- Oberparleiter <oberpar@linux.ibm.com>, Andrew Morton	
- <akpm@linux-foundation.org>, Baoquan He <baoquan.he@linux.dev>, Mike
- Rapoport	 <rppt@kernel.org>, Pasha Tatashin <pasha.tatashin@soleen.com>,
- Pratyush Yadav	 <pratyush@kernel.org>, Naveen N Rao <naveen@kernel.org>,
- Josh Poimboeuf	 <jpoimboe@kernel.org>, Jiri Kosina <jikos@kernel.org>,
- Miroslav Benes	 <mbenes@suse.cz>, Petr Mladek <pmladek@suse.com>, Will
- Deacon <will@kernel.org>,  Boqun Feng <boqun@kernel.org>, Luis Chamberlain
- <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>,  Daniel Gomez
- <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, Steffen
- Klassert	 <steffen.klassert@secunet.com>, Daniel Jordan
- <daniel.m.jordan@oracle.com>,  "Rafael J. Wysocki"	 <rafael@kernel.org>,
- Davidlohr Bueso <dave@stgolabs.net>, "Paul E. McKenney"	
- <paulmck@kernel.org>, Josh Triplett <josh@joshtriplett.org>, Frederic
- Weisbecker <frederic@kernel.org>, Neeraj Upadhyay
- <neeraj.upadhyay@kernel.org>, Joel Fernandes	 <joelagnelf@nvidia.com>,
- Uladzislau Rezki <urezki@gmail.com>, Juri Lelli	 <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>, Kees Cook <kees@kernel.org>,
- Balbir Singh <bsingharora@gmail.com>, Anna-Maria Behnsen	
- <anna-maria@linutronix.de>, Thomas Gleixner <tglx@kernel.org>, John Stultz	
- <jstultz@google.com>, KP Singh <kpsingh@kernel.org>, Matt Bobrowski	
- <mattbobrowski@google.com>, Nathan Chancellor <nathan@kernel.org>, Martin
- KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>, Mark Rutland
- <mark.rutland@arm.com>,  Mathieu Desnoyers
- <mathieu.desnoyers@efficios.com>, Dietmar Eggemann
- <dietmar.eggemann@arm.com>, David Vernet	 <void@manifault.com>, Steven
- Rostedt <rostedt@goodmis.org>
-Cc: audit@vger.kernel.org, linux-kernel@vger.kernel.org,
- bpf@vger.kernel.org, 	netdev@vger.kernel.org, cgroups@vger.kernel.org,
- dri-devel@lists.freedesktop.org, 	linux-perf-users@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org, 	kexec@lists.infradead.org,
- live-patching@vger.kernel.org, 	linux-modules@vger.kernel.org,
- linux-crypto@vger.kernel.org, 	linux-pm@vger.kernel.org,
- rcu@vger.kernel.org, sched-ext@lists.linux.dev, 	llvm@lists.linux.dev,
- Kaitao Cheng <chengkaitao@kylinos.cn>
-Date: Mon, 22 Jun 2026 12:03:46 -0700
-In-Reply-To: <20260622042811.31684-1-kaitao.cheng@linux.dev>
-References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
-	 <20260622042811.31684-1-kaitao.cheng@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.1 (3.60.1-1.fc44) 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dOQvj6q3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0219B1F000E9;
+	Mon, 22 Jun 2026 20:37:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782160633;
+	bh=E3uU3ThG/A2D12qAK0ptnKC8O+aAJd+dVYsVAW78QSE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=dOQvj6q3i++35tP25z+bIWXPU9eqz4b+LemzvziPXIJf4D0wApnxyALUIS+/wA70s
+	 PO6kZbjEiKiY95JG/K7lFzaGMTzCfQzNi1eBpZObfMfdsplWoKoDKpgzj2k/vULwAT
+	 5Jc9vGjiCqa5IyFXHO/9fRCRsb78wfX65daZZYsxP/wAPcVtOUoYvsnq3ROwEB4p0E
+	 Wkneq73ITGCq/zfKLgVfZkbUlklDTN8xVdWLNZXqIG0EZRqmjOh8yQN7dbtmSkkdtZ
+	 15vApYxaTfw9xE7lXjdbC6AtEuMdxVOOIUQIGZvNM4QlHfdXFTmLuQ6f9+W5zRHFs0
+	 hhKnuXzYsTrpw==
+From: Tejun Heo <tj@kernel.org>
+To: linux-kernel@vger.kernel.org
+Cc: Tejun Heo <tj@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	sched-ext@lists.linux.dev,
+	Andrea Righi <arighi@nvidia.com>
+Subject: [PATCH v2 sched_ext/for-7.2 1/2] sched_ext: Make kernel/sched/ext/ sources self-contained for clangd
+Date: Mon, 22 Jun 2026 10:37:12 -1000
+Message-ID: <20260622203712.1286063-1-tj@kernel.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260622173904.1169407-1-tj@kernel.org>
+References: <20260622173904.1169407-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon, 2026-06-22 at 12:28 +0800, Kaitao Cheng wrote:
-> From: Kaitao Cheng <chengkaitao@kylinos.cn>
->=20
-> The safe list iteration helpers require callers to provide a temporary
-> cursor even when the cursor is only used internally by the loop. This
-> leaves many functions with otherwise unused variables whose only purpose
-> is to satisfy the old iterator interface.
->=20
-> Use the mutable list iteration helpers for those cases. The mutable
-> helpers keep the same removal-safe traversal semantics, while allowing
-> the temporary cursor to be internal to the macro when the caller does
-> not need to observe it.
->=20
-> Convert list, hlist and llist users under kernel/ where the temporary
-> cursor is not used outside the iteration. Keep the explicit cursor form
-> where the next entry is still needed by the surrounding code.
->=20
-> No functional change intended.
->=20
-> Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
-> ---
+The sources under kernel/sched/ext/ build as a single translation unit:
+build_policy.c includes the source files and headers. An LSP/clangd editor
+parses each as a standalone unit, sees no types, and reports a flood of
+errors.
 
-Beside the fact that this does not apply,
-I don't see a reason why is this needed for BPF sub-tree.
+Give each header its dependencies and include guard, and have each source
+include the headers it uses.
 
-[...]
+ext.c, arena.c and the ext headers now parse clean standalone. idle.c and
+cid.c still reference a few macros and helpers defined in ext.c. The next
+patch moves those to shared headers.
+
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+---
+v2:
+- ext.c includes <linux/sched/clock.h> for sched_clock_cpu() (Andrea).
+- idle.h forward-declares struct cpumask/task_struct instead of
+  including ../sched.h (Andrea).
+
+v1: https://lore.kernel.org/r/20260622173904.1169407-1-tj@kernel.org
+
+ kernel/sched/ext/arena.c    |  4 ++++
+ kernel/sched/ext/arena.h    |  2 ++
+ kernel/sched/ext/cid.c      |  3 +++
+ kernel/sched/ext/cid.h      |  2 ++
+ kernel/sched/ext/ext.c      | 13 +++++++++++++
+ kernel/sched/ext/idle.c     |  3 +++
+ kernel/sched/ext/idle.h     |  4 ++++
+ kernel/sched/ext/internal.h |  8 ++++++++
+ kernel/sched/ext/types.h    |  6 ++++++
+ 9 files changed, 45 insertions(+)
+
+diff --git a/kernel/sched/ext/arena.c b/kernel/sched/ext/arena.c
+index 493c2424f842..5783694ec21d 100644
+--- a/kernel/sched/ext/arena.c
++++ b/kernel/sched/ext/arena.c
+@@ -15,6 +15,10 @@
+  * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
+  * Copyright (c) 2026 Tejun Heo <tj@kernel.org>
+  */
++#include <linux/genalloc.h>
++
++#include "internal.h"
++#include "arena.h"
+ 
+ enum scx_arena_consts {
+ 	SCX_ARENA_MIN_ORDER		= 3,	/* 8-byte minimum sub-allocation */
+diff --git a/kernel/sched/ext/arena.h b/kernel/sched/ext/arena.h
+index 4f3610160102..c378ae5fbc02 100644
+--- a/kernel/sched/ext/arena.h
++++ b/kernel/sched/ext/arena.h
+@@ -8,6 +8,8 @@
+ #ifndef _KERNEL_SCHED_EXT_ARENA_H
+ #define _KERNEL_SCHED_EXT_ARENA_H
+ 
++#include <linux/types.h>
++
+ struct scx_sched;
+ 
+ s32 scx_arena_pool_init(struct scx_sched *sch);
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index aeaea88f34c5..af83084ec740 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -7,6 +7,9 @@
+  */
+ #include <linux/cacheinfo.h>
+ 
++#include "internal.h"
++#include "cid.h"
++
+ /*
+  * cid tables.
+  *
+diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
+index 6e657fd147b0..41d0802c6af3 100644
+--- a/kernel/sched/ext/cid.h
++++ b/kernel/sched/ext/cid.h
+@@ -33,6 +33,8 @@
+ #ifndef _KERNEL_SCHED_EXT_CID_H
+ #define _KERNEL_SCHED_EXT_CID_H
+ 
++#include "internal.h"
++
+ struct scx_sched;
+ 
+ /*
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 00fe6cc6d7e2..f3253c946764 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -6,6 +6,19 @@
+  * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
+  * Copyright (c) 2022 David Vernet <dvernet@meta.com>
+  */
++#include <linux/bitmap.h>
++#include <linux/btf_ids.h>
++#include <linux/rhashtable.h>
++#include <linux/sched/clock.h>
++#include <linux/sched/isolation.h>
++#include <linux/suspend.h>
++#include <linux/sysrq.h>
++
++#include "../pelt.h"
++#include "internal.h"
++#include "cid.h"
++#include "arena.h"
++#include "idle.h"
+ 
+ static DEFINE_RAW_SPINLOCK(scx_sched_lock);
+ 
+diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
+index 2077373d8da3..8e8c6201b7df 100644
+--- a/kernel/sched/ext/idle.c
++++ b/kernel/sched/ext/idle.c
+@@ -9,6 +9,9 @@
+  * Copyright (c) 2022 David Vernet <dvernet@meta.com>
+  * Copyright (c) 2024 Andrea Righi <arighi@nvidia.com>
+  */
++#include "internal.h"
++#include "cid.h"
++#include "idle.h"
+ 
+ /* Enable/disable built-in idle CPU selection policy */
+ static DEFINE_STATIC_KEY_FALSE(scx_builtin_idle_enabled);
+diff --git a/kernel/sched/ext/idle.h b/kernel/sched/ext/idle.h
+index 8d169d3bbdf9..87a0e58f1eb7 100644
+--- a/kernel/sched/ext/idle.h
++++ b/kernel/sched/ext/idle.h
+@@ -10,7 +10,11 @@
+ #ifndef _KERNEL_SCHED_EXT_IDLE_H
+ #define _KERNEL_SCHED_EXT_IDLE_H
+ 
++#include <linux/btf_ids.h>
++
++struct cpumask;
+ struct sched_ext_ops;
++struct task_struct;
+ 
+ extern struct btf_id_set8 scx_kfunc_ids_idle;
+ extern struct btf_id_set8 scx_kfunc_ids_select_cpu;
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index b04701190b23..1f5312b3b387 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -5,6 +5,12 @@
+  * Copyright (c) 2025 Meta Platforms, Inc. and affiliates.
+  * Copyright (c) 2025 Tejun Heo <tj@kernel.org>
+  */
++#ifndef _KERNEL_SCHED_EXT_INTERNAL_H
++#define _KERNEL_SCHED_EXT_INTERNAL_H
++
++#include "../sched.h"
++#include "types.h"
++
+ #define SCX_OP_IDX(op)		(offsetof(struct sched_ext_ops, op) / sizeof(void (*)(void)))
+ #define SCX_MOFF_IDX(moff)	((moff) / sizeof(void (*)(void)))
+ 
+@@ -1651,3 +1657,5 @@ static inline struct scx_sched *scx_prog_sched(const struct bpf_prog_aux *aux)
+ 	return rcu_dereference_all(scx_root);
+ }
+ #endif	/* CONFIG_EXT_SUB_SCHED */
++
++#endif /* _KERNEL_SCHED_EXT_INTERNAL_H */
+diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
+index 8b3527e21fca..bc74eafd43f1 100644
+--- a/kernel/sched/ext/types.h
++++ b/kernel/sched/ext/types.h
+@@ -8,6 +8,12 @@
+ #ifndef _KERNEL_SCHED_EXT_TYPES_H
+ #define _KERNEL_SCHED_EXT_TYPES_H
+ 
++#include <linux/types.h>
++#include <linux/jiffies.h>
++#include <linux/overflow.h>
++#include <linux/time64.h>
++#include <linux/sched/topology.h>
++
+ enum scx_consts {
+ 	SCX_DSP_DFL_MAX_BATCH		= 32,
+ 	SCX_DSP_MAX_LOOPS		= 32,
+-- 
+2.54.0
+
