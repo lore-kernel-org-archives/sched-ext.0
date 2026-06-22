@@ -1,297 +1,247 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11023096.outbound.protection.outlook.com [52.101.127.96])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6891C35C1A1
-	for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 06:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782108981; cv=none; b=D566mJXy3WLoUigbskTc31I3HjnoknYHIEaXhiPWkxrGRDFLvMSs/Ndajh+mP+siH0qiNHM5OkTYq8SbNZgS1MxEgpYGUlhQ6V+LT3g5KHn6AOSrYYlI7ib4TuqkbJ0181pWm+6ox/HnHIC+OPk+ELJ/S/2b9Sr8yP6zMKQOBFE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782108981; c=relaxed/simple;
-	bh=hk8s1HyY3dzHKU/LGLjDjlXFo8lRWPfUJ+Vkj0iR3dk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F1ggR9CTuEuGVyTuf9KE1/GpZM0RPl0Knr+KdqWSBado0xvY9SUiJXosvYsSgYIB/dxltiKldZ5Tj/cKoSI3YhXdEnlzaz/N71tPKr5n6w+HtKRtarvoe15z4zBg8ZhG3DUxT0pa9V1wtV3G4adepCRLb17CIDGyiJIsVYuOmyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=t15fr1vS; arc=none smtp.client-ip=91.218.175.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D99435FF6C
+	for <sched-ext@lists.linux.dev>; Mon, 22 Jun 2026 06:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.96
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782111035; cv=fail; b=lwPiRceXovItBmak8EOotJM8hZ1YbM1DvNrU+v8F9GrTUxgy8TH1M0QyWPRsAj2h7iuqjjTE6RPmfCkRUF1Ve67WOOKvrk3CG9fmHbSi3JS9zZgbfVmz5MeOg3RurmNE4z/GMjvQ1EmYqNYDLtNnxcDver8PE3f3beivnkZ/8+8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782111035; c=relaxed/simple;
+	bh=O5IVquMZRwOAWVYvzLcL7Wm0msFdWas/OKl7kcrHKYI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=IjqJk1aYmMqrzmwwnONyWCS0vlqKXkm5A+Kd54gCjX/9z8MEZvSsUvlIkQFxvdiokSQDmGdwlB1SW40Yhs77ryKAO8vHwnaYWFpAyW1Gn4VSFwEjrMT3Ez7ADQ0AF4PmEhTLNvFdwW04dNgjZORmZA2l0HrviGgegcBbesHt88M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=transsion.com; spf=pass smtp.mailfrom=transsion.com; dkim=pass (1024-bit key) header.d=transsion.com header.i=@transsion.com header.b=TqHnAdI/; arc=fail smtp.client-ip=52.101.127.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=transsion.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=transsion.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="t15fr1vS"
-Message-ID: <8c8f1849-86d3-4c69-be27-30bbdffdf616@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782108966;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uc01vIZYGfTIV3fdEG67Z2UKVAOKK7e6urfcQoWTPXs=;
-	b=t15fr1vSWPqYuOVx1/bxMEqBYsgHtm0lD1qKuOgL6xYl94f+kJLWMkDtNXA1O6oXS4NWrk
-	UXfi4I4xGSapixdXs6K5v7yl7QxZTsj0xBO+b54oW8Z9JaKuiK5OobLxhWf+TcWH/AL++5
-	EurPaDWOivYCOI4YE0QW4UrJN1dv49Y=
-Date: Mon, 22 Jun 2026 14:15:01 +0800
+	dkim=pass (1024-bit key) header.d=transsion.com header.i=@transsion.com header.b="TqHnAdI/"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=S6PCN4TUhWbbQt0/ilL4vWtvUo8IhqLLrPHiTt+9SvLXRIXzvthbDe3E3hXsKKhtJ3kEvcqlvLgvq1yBQLfWybc+CnZR4b32v/H1pR28GAxD/QoxIgE7x99rQ88um/m5UHBstp6l1rFKqAKcFyyr+FCUJcfHjUXHfMCcE8rd5sj32D9fbi2wSaDvm5oYhKSkNfqltmas3vtk+p7wJD/dzE8YJwEKa9hGZCtN2qeia+GqiAJ6wqhcOs/CqcTKXhHqNRGaojqOK5I5JRytaldDHvDPBW5Kk7XKmMuGaTkExDF4kurgBEjD4o3cI21DWek/Vr47fCuXjt4DUWcJxLhLHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O5IVquMZRwOAWVYvzLcL7Wm0msFdWas/OKl7kcrHKYI=;
+ b=eBw5RMjLrAVzQkTtWuA4KHsoRsHb6aCQf21ocZLfK9LNHuR2hbrLKlnjfM5HNZuVPqn8e+wY48gqeRIsp8hVevszYgLpOiiZEOf8HlWh8gVcnzS+bmcl6hKWWUTnWPlnXUzyYkXWTMlUZSI3/WjvluePhN3gdEv/2CX0Zbl6RbbSUm/ev5kjpCQZbh3rDLeaEfBmblL1XfyYHaDDVFfpj3WG0h56KP8b6oaVmjPDVk6tIyy8grAFlu7IbmdT0UjaZ9YmCKrlJAwRxM1GNacynAD1NfLqR3e3T9copLvnVaf5s2mObESevc84DAQL1lpj+3SfaTv4bn60JN2iDdFZmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=transsion.com; dmarc=pass action=none
+ header.from=transsion.com; dkim=pass header.d=transsion.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=transsion.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O5IVquMZRwOAWVYvzLcL7Wm0msFdWas/OKl7kcrHKYI=;
+ b=TqHnAdI/V7Lk0ma2koFjLyDPSPuGbMxxMTHvP2WxES2MnfzOT9IVFrEhGDT1IdoevorOu1h9NWWeTBQe2y8cZdO6hRnAgvNDYU8K7i1reknB2PTGctr8nIbKDTwhcWL4KFJL1mtFNA/6GUJ/5/kZJ5mncn2qMvrjt+I+GVSbnjg=
+Received: from KL1PR0401MB6196.apcprd04.prod.outlook.com
+ (2603:1096:820:c7::13) by TYSPR04MB8166.apcprd04.prod.outlook.com
+ (2603:1096:405:9a::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Mon, 22 Jun
+ 2026 06:50:30 +0000
+Received: from KL1PR0401MB6196.apcprd04.prod.outlook.com
+ ([fe80::f2ee:1e28:9022:99f3]) by KL1PR0401MB6196.apcprd04.prod.outlook.com
+ ([fe80::f2ee:1e28:9022:99f3%3]) with mapi id 15.21.0139.011; Mon, 22 Jun 2026
+ 06:50:29 +0000
+From: Hongyan Xia <hongyan.xia@transsion.com>
+To: Christian Loehle <christian.loehle@arm.com>, "sched-ext@lists.linux.dev"
+	<sched-ext@lists.linux.dev>
+CC: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"tj@kernel.org" <tj@kernel.org>, "void@manifault.com" <void@manifault.com>,
+	"arighi@nvidia.com" <arighi@nvidia.com>, "changwoo@igalia.com"
+	<changwoo@igalia.com>, "gnq25@mails.tsinghua.edu.cn"
+	<gnq25@mails.tsinghua.edu.cn>
+Subject: Re: [PATCH] sched_ext: Remove deprecated scx_bpf_cpu_rq()
+Thread-Topic: [PATCH] sched_ext: Remove deprecated scx_bpf_cpu_rq()
+Thread-Index: AQHdAhIO8Zkx9/4tuEWach/GcRfJA7ZKIpKA
+Date: Mon, 22 Jun 2026 06:50:29 +0000
+Message-ID: <20a34e7a-baa0-4cfd-a1fe-fb1273fad994@transsion.com>
+References: <20260619155920.156257-1-christian.loehle@arm.com>
+In-Reply-To: <20260619155920.156257-1-christian.loehle@arm.com>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=transsion.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: KL1PR0401MB6196:EE_|TYSPR04MB8166:EE_
+x-ms-office365-filtering-correlation-id: 77bdfadc-4712-42bc-9901-08ded02a8c78
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|6133799003|22082099003|18002099003|56012099006|11063799006|5023799004|38070700021;
+x-microsoft-antispam-message-info:
+ FMMHKrSC97b5AQEp3NpnlGSlTEhtCItW6rp/lurbolDh8Qb9ig5YgbUP6K4Bfx3fFdwm1G0ocUK7iQ/2SzhTCtSjAVo9INzdGKr0QLXw6aNpbin0jVvxOMEUgEKvFKEk7uaLW59zjA681+BdlfzJpkC6mKH/ZBcs4pn8UDLmvH8Vy7FaZjbi8F/SLwd728TWYcEFJY+syw6g96CmWzIOLZ8Aw90g3WX2NEO26SxBLbStnojlh335vfQNxdZYfEPrNs6Lf7tPjSrJnTm6bcIO0fgewZ+WFlbW2/b/aKTF7ND3A9ZET7oSPYJkBLCKpyc3sYTWYcdDaVt+dt2geIKrhFJByN9d5R5q3eLooP1ocCgzZIUR/wtwXquEyBWaJNT7jeRNcMv8d1YyqTN11gC2qaIo4psqbj+XBAa+LYKRFOFy0WF7sVkSBdNDCn64uBxhR7zFAvYGLkU57de5imKy7jtw0ETTn/36R3EU/Gtemggjwshm2u82SXVCGkBC09EflSKvkLyZA/bhxF7YlUbRUtCBriA4HfdN9j9aVQx09QS7Ppjfb5GahcHsEQee4B+W2pASTC/RYZDD9DLxpvH+O+2FFyoflOOcI2XcBGWcFf51FBGX7/Cy5t5NzIGaea+q+hBEItaF3kAoAljrf+G3uvBAgv2qlCD9HvyX89O/QXAHWiIeKbmQzzarmW+63RJMyYSUSgPha3ri4RupFVk0asdXHfjSxyRMDWeX+ZV7O+Y=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR0401MB6196.apcprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006)(5023799004)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?bS9Qb3Y3M0xvc2JjUVB3N29lWEJZVndNa3R1dzN4c0JWazEvTzNxeFFLaG5u?=
+ =?utf-8?B?UGRva2hwWFpqOHp3L1pYenA1aUlhK1AyQUVHR2FTL2VkZXhjV1B5SEQ1WGpH?=
+ =?utf-8?B?SHhIVEhibFQ1QlRkKzQyZ2hHTStvVGw5UVl4QTdPTk9VS2FvUFF6V1BQOHFo?=
+ =?utf-8?B?MTk3WndCZ1kwRFoxc1pzZmZ6UkR0eWFCaE41TVk3UHBraDB1Z3hyM3VZSUpR?=
+ =?utf-8?B?ZDhOSjdtRndWR3dtN3dndjViU3JNYnE5dXcvVHFhcm9BNU5ZUWFabUltRGhG?=
+ =?utf-8?B?ZkJZSzRkeGZkSzFrazZEVGUrMEM3ZTBpdkdGVm9IRUVaVkhBSVlvN2tNSDhR?=
+ =?utf-8?B?M0ZJVVk5QVpTQjFZNytjcGZJckJqRW8wS3V4VXFndVB1bnhCQnFVUzk0Wlll?=
+ =?utf-8?B?N3NkYW1neTZ2Snk3Z0R5Y3BjeGtoTHVvRHVGY2tXblRNdEFtV0E4Z3pHcDJr?=
+ =?utf-8?B?cklsMncrcmcrNDlJcHE3UW91VktWUXAycDVrdDN4OWtqMmJ2WlZiRFg4UXJp?=
+ =?utf-8?B?cWh6YmpmSEN0Q1BFL2ZWUGNOeHJnUmFVWXcwaGJhOEw2NGF5Vk5sMFBvWmVB?=
+ =?utf-8?B?eGFYa0xEY2s2Ync0YUZ4dUR6TVBCN090Rno2V09HYTBFUzlYbVBYREg4WkhE?=
+ =?utf-8?B?c2k0MkZsYzNYWlJVM2l3L0h3Uk1lQlY4ZEw4c0h2ODM3a2M0VE42YW1vZ2VF?=
+ =?utf-8?B?ajhDcm93QVZMZVlZWFNZQnRpQXJuTlYrUTRoVC9IalhjVVJuRDBlTzFQM1B1?=
+ =?utf-8?B?djhaUWxWaTU5Yi8wcTMrSjhtNVVCa0tsbUlTVEJLcFA2OGMyNFc4QnNlRlBl?=
+ =?utf-8?B?ZVpNeG5pOEovcXZFdFRXdEY1TWJxby93VUp2MWhnc1RSTEdWc04wMjVvRVIz?=
+ =?utf-8?B?R0tXVGZDVGZOV2ZkME1LaUdVeHRicHR5emkwazBRRmtrbUhNY3ZYcmJkTFV3?=
+ =?utf-8?B?eTdnZW5LMTRLc3RaNk4rSWs4VGtPa0hvUUU5ZFR2QU9SOE5jNzM3dnpuVVVL?=
+ =?utf-8?B?TFFsMmN4cDIzbTlydElPMGltTGhsVm5kNDFDbm1hNjRmRy9lbGlIZjdsQW9K?=
+ =?utf-8?B?WFMxS0xXUmVJNzNFakVlNkx2NTlGdDIwWTZZVGpLWmExVHhCTVpMSVRyUHhZ?=
+ =?utf-8?B?VXl4RVNoYjJWQTBYUkxIT3VUSEZKb2txOUp3dzlWcGtldThWM0hpdUoya29j?=
+ =?utf-8?B?UEQ5VE5wUHZwbVR2L00vYytGRHAzR0IzclBXL3FnSWs1OTEvTmk5YjFUa1lC?=
+ =?utf-8?B?Z01BaGhrc0dBbm9jenZvb1Z0SENNV0pSZVBRckk1MytWSjBBZzBvOGVsUEYz?=
+ =?utf-8?B?MkNvcndndnZ2S0QyeTFSNndWRmVJdEtxMTNnVzBFdlF4SXdKSTgvb01XdEFz?=
+ =?utf-8?B?ZS8ycXpOMjIraWRPaHdjMlBNblNPSy9lTGxuS1dZYXd1dy9qeHkrQ3JOc2ZS?=
+ =?utf-8?B?VHJxQ1lhTEw0bVBnWHNxRmdKTEVkV0NkZ1RBRFpHNm55VE1wRE5ZRnF5ZXRl?=
+ =?utf-8?B?emdxMWR5U3NYUUVMQXloUFYwZkhISlJyWUNUOGtTbGxUNEZIWVRld0xVTjdR?=
+ =?utf-8?B?Mm9peTAvNkJtanZEbmUzdFdNM0xnb3o2dDE2SS9teVdVRzU5bWlMNTdONWhm?=
+ =?utf-8?B?YWQzcXpQREl5WUJUM3NwUTFXRS9yengwN0dGdWlmT254bE9aN0R1SlptVXBX?=
+ =?utf-8?B?QUI5QkorVGRCU3hEZGtoVUltZ0pvcTFJOGFKNFd1cHJaVEgrd25ISVFlRjdX?=
+ =?utf-8?B?QzhWby92M3RkUFB4c1ZCUFhtN2p4dWFQYlNaN1Q2WjBneE84RXU1bTE2VG9M?=
+ =?utf-8?B?ckpiQ1NzVWxMbkd5YWtFd0VrWnYrNnhld0lrRVZYazhVWU9xR1pLd2FTQSsv?=
+ =?utf-8?B?WUQ0b1h6VGtoQ2M2UUMzMWsyZzZVWGQvdU1SdXFYUGhiNHNIMXFCUmdYYlNq?=
+ =?utf-8?B?NE9jV0hYZHVvamdWN09FdlliUHZudG9HNDhvSUVvV0ZDYWNzaW9PdUhuNlVC?=
+ =?utf-8?B?bGx0MDhobHAvays3b3RaVERhZHpSOHVZYmhvRy9naTlYc1Y2UFdLbkxMTC9K?=
+ =?utf-8?B?WDhkblpSMXVySncrMmhLc05jajhHVjFWaFJ4WVJoYWI5cmU0TkpNZGZQRzlC?=
+ =?utf-8?B?MU93d1FmK3NPMXdGL0ZpT1hLbDlBcUJ1Ti9oVjY5YUs5T252bTR1cXVYMzdv?=
+ =?utf-8?B?OTNpdTJvQ3FWaFBPZU14UTVzMXA5ZXRrNUhEbnBQdDRtdmszSUl2cis4Q0Zm?=
+ =?utf-8?B?SG5hTWNkVlpNcGJYUWxmeGplNG51dTRrV2E4eG1NQ0xycExlTFI0UVg5TjJC?=
+ =?utf-8?B?eWt5WjNVbDZRbFJ1NExIdHhtbzdEZ3UwUENEQTRzVlFLc2RQbjhsSS9PeHZP?=
+ =?utf-8?Q?Xo1ZurumMRlrTY+I=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <915AB5ABCD3C8944A94423B5A496841C@apcprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/7] Prepare mutable list iterators to cache cursor
- state
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@kernel.org>, Jens Axboe <axboe@kernel.dk>,
- Tejun Heo <tj@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
- Namhyung Kim <namhyung@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
- Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Paul Moore <paul@paul-moore.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Shakeel Butt <shakeel.butt@linux.dev>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- David Howells <dhowells@redhat.com>, Simona Vetter <simona.vetter@ffwll.ch>,
- Randy Dunlap <rdunlap@infradead.org>,
- Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Philipp Stanner <phasta@kernel.org>, linux-block@vger.kernel.org,
- LKML <linux-kernel@vger.kernel.org>,
- "open list:CONTROL GROUP (CGROUP)" <cgroups@vger.kernel.org>,
- linux-ntfs-dev@lists.sourceforge.net,
- Linux-Fsdevel <linux-fsdevel@vger.kernel.org>,
- io-uring <io-uring@vger.kernel.org>, audit@vger.kernel.org,
- bpf <bpf@vger.kernel.org>, Network Development <netdev@vger.kernel.org>,
- dri-devel@lists.freedesktop.org,
- "linux-perf-use." <linux-perf-users@vger.kernel.org>,
- linux-trace-kernel <linux-trace-kernel@vger.kernel.org>,
- kexec@lists.infradead.org, live-patching@vger.kernel.org,
- linux-modules@vger.kernel.org,
- Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
- Linux Power Management <linux-pm@vger.kernel.org>, rcu@vger.kernel.org,
- sched-ext@lists.linux.dev, linux-mm <linux-mm@kvack.org>,
- virtualization@lists.linux.dev, damon@lists.linux.dev,
- clang-built-linux <llvm@lists.linux.dev>,
- chengkaitao <chengkaitao@kylinos.cn>, Muchun Song <muchun.song@linux.dev>
-References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
- <CAADnVQJmPWFT01b7DuLdtafv=8FyB84GYHNZ8zSTck+9Aw0JpA@mail.gmail.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Kaitao Cheng <kaitao.cheng@linux.dev>
-In-Reply-To: <CAADnVQJmPWFT01b7DuLdtafv=8FyB84GYHNZ8zSTck+9Aw0JpA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+X-OriginatorOrg: transsion.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR0401MB6196.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77bdfadc-4712-42bc-9901-08ded02a8c78
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jun 2026 06:50:29.6662
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 2e8503a6-2d01-4333-8e36-6ab7c8cd7ae2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zFYDOQTUyr1eu64oZD9ADIr8tFhqq2d7KbmU74k1yiONjL6ltd69Pg5TW75HJMoUNkhi+2R44K/kzGbW03ELAUy1SdrWMVbRcPctUG3VJqg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR04MB8166
 
-
-
-在 2026/6/22 13:28, Alexei Starovoitov 写道:
-> On Sun, Jun 21, 2026 at 9:06 PM Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
->>
->> From: chengkaitao <chengkaitao@kylinos.cn>
->>
->> The list_for_each*_safe() helpers are used when the loop body may remove
->> the current entry.  Their current interface, however, forces every caller
->> to define a temporary cursor outside the macro and pass it in, even when
->> the caller never uses that cursor directly.  For most call sites this
->> extra cursor is just boilerplate required by the macro implementation.
->>
->> This is awkward because the saved next pointer is an internal detail of
->> the iteration.  Callers that only remove or move the current entry do not
->> need to spell it out.
->>
->> The _safe() suffix has also caused confusion.  Christian Koenig pointed
->> out that the name is easy to read as a thread-safe variant, especially
->> for beginners, even though it only means that the iterator keeps enough
->> state to tolerate removal of the current entry.  He suggested _mutable()
->> as a clearer description of what the loop permits.
->>
->> Add *_mutable() iterator variants for list, hlist and llist.  The new
->> helpers are variadic and support both forms.  In the common case, the
->> caller omits the temporary cursor and the macro creates a unique internal
->> cursor with typeof(pos) and __UNIQUE_ID().  If a loop really needs an
->> explicit temporary cursor, the caller can still pass it and the helper
->> keeps the existing *_safe() behaviour.
->>
->> For example, a call site may use the shorter form:
->>
->>   list_for_each_entry_mutable(pos, head, member)
->>
->> or keep the explicit temporary cursor form:
->>
->>   list_for_each_entry_mutable(pos, tmp, head, member)
->>
->> The existing *_safe() helpers remain available for compatibility.  This
->> series only converts users in mm, block, kernel, init and io_uring.  If
->> this approach looks acceptable, the remaining users can be converted in
->> follow-up series.
->>
->> Changes in v3 (Christian König, Andy Shevchenko):
->> - Convert safe list walks to mutable iterators
->>
->> Changes in v2 (Muchun Song, Andy Shevchenko):
->> - Drop the list_for_each_entry_mutable*() helpers from v1 and make the
->>   cursor change directly in the existing list_for_each_entry*() helpers.
->> - Open-code special list walks that rely on updating the loop cursor in
->>   the body, preserving their existing traversal semantics.
->>
->> Link to v2:
->> https://lore.kernel.org/all/20260609061347.93688-1-kaitao.cheng@linux.dev/
->>
->> Link to v1:
->> https://lore.kernel.org/all/20260529082149.76764-1-kaitao.cheng@linux.dev/
->>
->> Kaitao Cheng (7):
->>   list: Add mutable iterator variants
->>   llist: Add mutable iterator variants
->>   mm: Use mutable list iterators
->>   block: Use mutable list iterators
->>   kernel: Use mutable list iterators
->>   initramfs: Use mutable list iterator
->>   io_uring: Use mutable list iterators
->>
->>  block/bfq-iosched.c                 |  17 +-
->>  block/blk-cgroup.c                  |  12 +-
->>  block/blk-flush.c                   |   4 +-
->>  block/blk-iocost.c                  |  18 +-
->>  block/blk-mq.c                      |   8 +-
->>  block/blk-throttle.c                |   4 +-
->>  block/kyber-iosched.c               |   4 +-
->>  block/partitions/ldm.c              |   8 +-
->>  block/sed-opal.c                    |   4 +-
->>  include/linux/list.h                | 269 ++++++++++++++++++++++++----
->>  include/linux/llist.h               |  81 +++++++--
->>  init/initramfs.c                    |   5 +-
->>  io_uring/cancel.c                   |   6 +-
->>  io_uring/poll.c                     |   3 +-
->>  io_uring/rw.c                       |   4 +-
->>  io_uring/timeout.c                  |   8 +-
->>  io_uring/uring_cmd.c                |   3 +-
->>  kernel/audit_tree.c                 |   4 +-
->>  kernel/audit_watch.c                |  16 +-
->>  kernel/auditfilter.c                |   4 +-
->>  kernel/auditsc.c                    |   4 +-
->>  kernel/bpf/arena.c                  |  10 +-
->>  kernel/bpf/arraymap.c               |   8 +-
->>  kernel/bpf/bpf_local_storage.c      |   3 +-
->>  kernel/bpf/bpf_lru_list.c           |  25 ++-
->>  kernel/bpf/btf.c                    |  18 +-
->>  kernel/bpf/cgroup.c                 |   7 +-
->>  kernel/bpf/cpumap.c                 |   4 +-
->>  kernel/bpf/devmap.c                 |  10 +-
->>  kernel/bpf/helpers.c                |   8 +-
->>  kernel/bpf/local_storage.c          |   4 +-
->>  kernel/bpf/memalloc.c               |  16 +-
->>  kernel/bpf/offload.c                |   8 +-
->>  kernel/bpf/states.c                 |   4 +-
->>  kernel/bpf/stream.c                 |   4 +-
->>  kernel/bpf/verifier.c               |   6 +-
->>  kernel/cgroup/cgroup-v1.c           |   4 +-
->>  kernel/cgroup/cgroup.c              |  54 +++---
->>  kernel/cgroup/dmem.c                |  12 +-
->>  kernel/cgroup/rdma.c                |   8 +-
->>  kernel/events/core.c                |  44 +++--
->>  kernel/events/uprobes.c             |  12 +-
->>  kernel/exit.c                       |   8 +-
->>  kernel/fail_function.c              |   4 +-
->>  kernel/gcov/clang.c                 |   4 +-
->>  kernel/irq_work.c                   |   4 +-
->>  kernel/kexec_core.c                 |   4 +-
->>  kernel/kprobes.c                    |  16 +-
->>  kernel/livepatch/core.c             |   4 +-
->>  kernel/livepatch/core.h             |   4 +-
->>  kernel/liveupdate/kho_block.c       |   4 +-
->>  kernel/liveupdate/luo_flb.c         |   4 +-
->>  kernel/locking/rwsem.c              |   2 +-
->>  kernel/locking/test-ww_mutex.c      |   2 +-
->>  kernel/module/main.c                |  11 +-
->>  kernel/padata.c                     |   4 +-
->>  kernel/power/snapshot.c             |   8 +-
->>  kernel/power/wakelock.c             |   4 +-
->>  kernel/printk/printk.c              |  11 +-
->>  kernel/ptrace.c                     |   4 +-
->>  kernel/rcu/rcutorture.c             |   3 +-
->>  kernel/rcu/tasks.h                  |   9 +-
->>  kernel/rcu/tree.c                   |   6 +-
->>  kernel/resource.c                   |   4 +-
->>  kernel/sched/core.c                 |   4 +-
->>  kernel/sched/ext.c                  |  22 +--
->>  kernel/sched/fair.c                 |  28 +--
->>  kernel/sched/topology.c             |   4 +-
->>  kernel/sched/wait.c                 |   4 +-
->>  kernel/seccomp.c                    |   4 +-
->>  kernel/signal.c                     |  11 +-
->>  kernel/smp.c                        |   4 +-
->>  kernel/taskstats.c                  |   8 +-
->>  kernel/time/clockevents.c           |   6 +-
->>  kernel/time/clocksource.c           |   4 +-
->>  kernel/time/posix-cpu-timers.c      |   4 +-
->>  kernel/time/posix-timers.c          |   3 +-
->>  kernel/torture.c                    |   3 +-
->>  kernel/trace/bpf_trace.c            |   4 +-
->>  kernel/trace/ftrace.c               |  49 +++--
->>  kernel/trace/ring_buffer.c          |  25 ++-
->>  kernel/trace/trace.c                |  12 +-
->>  kernel/trace/trace_dynevent.c       |   6 +-
->>  kernel/trace/trace_dynevent.h       |   5 +-
->>  kernel/trace/trace_events.c         |  35 ++--
->>  kernel/trace/trace_events_filter.c  |   4 +-
->>  kernel/trace/trace_events_hist.c    |   8 +-
->>  kernel/trace/trace_events_trigger.c |  17 +-
->>  kernel/trace/trace_events_user.c    |  16 +-
->>  kernel/trace/trace_stat.c           |   4 +-
->>  kernel/user-return-notifier.c       |   3 +-
->>  kernel/workqueue.c                  |  16 +-
->>  mm/backing-dev.c                    |   8 +-
->>  mm/balloon.c                        |   8 +-
->>  mm/cma.c                            |   4 +-
->>  mm/compaction.c                     |   4 +-
->>  mm/damon/core.c                     |   4 +-
->>  mm/damon/sysfs-schemes.c            |   4 +-
->>  mm/dmapool.c                        |   4 +-
->>  mm/huge_memory.c                    |   8 +-
->>  mm/hugetlb.c                        |  56 +++---
->>  mm/hugetlb_vmemmap.c                |  16 +-
->>  mm/khugepaged.c                     |  14 +-
->>  mm/kmemleak.c                       |   7 +-
->>  mm/ksm.c                            |  25 +--
->>  mm/list_lru.c                       |   4 +-
->>  mm/memcontrol-v1.c                  |   8 +-
->>  mm/memory-failure.c                 |  12 +-
->>  mm/memory-tiers.c                   |   4 +-
->>  mm/migrate.c                        |  23 ++-
->>  mm/mmu_notifier.c                   |   9 +-
->>  mm/page_alloc.c                     |   8 +-
->>  mm/page_reporting.c                 |   2 +-
->>  mm/percpu.c                         |  11 +-
->>  mm/pgtable-generic.c                |   4 +-
->>  mm/rmap.c                           |  10 +-
->>  mm/shmem.c                          |   9 +-
->>  mm/slab_common.c                    |  14 +-
->>  mm/slub.c                           |  33 ++--
->>  mm/swapfile.c                       |   4 +-
->>  mm/userfaultfd.c                    |  12 +-
->>  mm/vmalloc.c                        |  24 +--
->>  mm/vmscan.c                         |   7 +-
->>  mm/zsmalloc.c                       |   4 +-
->>  124 files changed, 875 insertions(+), 681 deletions(-)
-> 
-> Not sure what you were thinking, but this diff stat
-> is not landable.
-
-[PATCH v3 1/7] and [PATCH v3 2/7] contain the main logic and can
-be merged directly. They are also compatible with the old API.
-[PATCH v3 3/7] through [PATCH v3 7/7] are just simple interface
-replacements and do not change any functional logic. They can be
-left unmerged for now; individual modules can pick them up later
-if needed.
-
-In v2, Andy Shevchenko mentioned: "If it's done by Linus himself
-during the day when he prepares -rc1, it's fine." Even so, the
-changes in this patch series are indeed quite large and touch
-almost every subsystem. I have only converted part of them for
-now, so I wanted to send this out first and see what people think.
-
--- 
-Thanks
-Kaitao Cheng
-
+T24gNi8xOS8yMDI2IDExOjU5IFBNLCBDaHJpc3RpYW4gTG9laGxlIHdyb3RlOg0KPiBzY3hfYnBm
+X2NwdV9ycSgpIGV4cG9zZXMgcnEgcG9pbnRlcnMgd2l0aG91dCByZXF1aXJpbmcgdGhlIHJxIGxv
+Y2sgYW5kDQo+IGhhcyBlbWl0dGVkIGEgZGVwcmVjYXRpb24gd2FybmluZyBzaW5jZSBjb21taXQN
+Cj4gNWM0OGQ4OGZlMDA0ICgic2NoZWRfZXh0OiBkZXByZWNhdGlvbiB3YXJuIGZvciBzY3hfYnBm
+X2NwdV9ycSgpIikuDQo+IFRoZSBzdXBwb3J0ZWQgcmVwbGFjZW1lbnRzIGNvdmVyIHRoZSBpbnRl
+bmRlZCB1c2VzOg0KPiBzY3hfYnBmX2xvY2tlZF9ycSgpIGZvciBsb2NrZWQgcnEgYWNjZXNzIGFu
+ZA0KPiBzY3hfYnBmX2NwdV9jdXJyKCkgZm9yIHJlbW90ZSBjdXJyIGxvb2t1cC4NCj4gDQo+IFJl
+bW92ZSB0aGUga2Z1bmMsIGl0cyBCVEYgcmVnaXN0cmF0aW9ucywgdGhlIGRlcHJlY2F0aW9uIHdh
+cm5pbmcNCj4gc3RhdGUsIGFuZCB0aGUgQlBGLXNpZGUgcHJvdG90eXBlIGFuZCBjb21wYXQgZmFs
+bGJhY2suDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBDaHJpc3RpYW4gTG9laGxlIDxjaHJpc3RpYW4u
+bG9laGxlQGFybS5jb20+DQo+IC0tLQ0KPiAgIGtlcm5lbC9zY2hlZC9leHQuYyAgICAgICAgICAg
+ICAgICAgICAgICAgfCAzMCAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gICBrZXJuZWwvc2No
+ZWQvZXh0X2ludGVybmFsLmggICAgICAgICAgICAgIHwgIDEgLQ0KPiAgIHRvb2xzL3NjaGVkX2V4
+dC9pbmNsdWRlL3NjeC9jb21tb24uYnBmLmggfCAgNSArKy0tDQo+ICAgdG9vbHMvc2NoZWRfZXh0
+L2luY2x1ZGUvc2N4L2NvbXBhdC5icGYuaCB8IDE3IC0tLS0tLS0tLS0tLS0tDQo+ICAgNCBmaWxl
+cyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDUxIGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAt
+LWdpdCBhL2tlcm5lbC9zY2hlZC9leHQuYyBiL2tlcm5lbC9zY2hlZC9leHQuYw0KPiBpbmRleCAw
+ZGI2ZmEyZGFlYTMuLjcyZDk5ZGQzZmU4OSAxMDA2NDQNCj4gLS0tIGEva2VybmVsL3NjaGVkL2V4
+dC5jDQo+ICsrKyBiL2tlcm5lbC9zY2hlZC9leHQuYw0KPiBAQCAtMTAyMjIsMzQgKzEwMjIyLDYg
+QEAgX19icGZfa2Z1bmMgczMyIHNjeF9icGZfdGFza19jaWQoY29uc3Qgc3RydWN0IHRhc2tfc3Ry
+dWN0ICpwKQ0KPiAgIAlyZXR1cm4gdGJsW3Rhc2tfY3B1KHApXTsNCj4gICB9DQo+ICAgDQo+IC0v
+KioNCj4gLSAqIHNjeF9icGZfY3B1X3JxIC0gRmV0Y2ggdGhlIHJxIG9mIGEgQ1BVDQo+IC0gKiBA
+Y3B1OiBDUFUgb2YgdGhlIHJxDQo+IC0gKiBAYXV4OiBpbXBsaWNpdCBCUEYgYXJndW1lbnQgdG8g
+YWNjZXNzIGJwZl9wcm9nX2F1eCBoaWRkZW4gZnJvbSBCUEYgcHJvZ3MNCj4gLSAqLw0KPiAtX19i
+cGZfa2Z1bmMgc3RydWN0IHJxICpzY3hfYnBmX2NwdV9ycShzMzIgY3B1LCBjb25zdCBzdHJ1Y3Qg
+YnBmX3Byb2dfYXV4ICphdXgpDQo+IC17DQo+IC0Jc3RydWN0IHNjeF9zY2hlZCAqc2NoOw0KPiAt
+DQo+IC0JZ3VhcmQocmN1KSgpOw0KPiAtDQo+IC0Jc2NoID0gc2N4X3Byb2dfc2NoZWQoYXV4KTsN
+Cj4gLQlpZiAodW5saWtlbHkoIXNjaCkpDQo+IC0JCXJldHVybiBOVUxMOw0KPiAtDQo+IC0JaWYg
+KCFzY3hfY3B1X3ZhbGlkKHNjaCwgY3B1LCBOVUxMKSkNCj4gLQkJcmV0dXJuIE5VTEw7DQo+IC0N
+Cj4gLQlpZiAoIXNjaC0+d2FybmVkX2RlcHJlY2F0ZWRfcnEpIHsNCj4gLQkJcHJpbnRrX2RlZmVy
+cmVkKEtFUk5fV0FSTklORyAic2NoZWRfZXh0OiAlcygpIGlzIGRlcHJlY2F0ZWQ7ICINCj4gLQkJ
+CQkidXNlIHNjeF9icGZfbG9ja2VkX3JxKCkgd2hlbiBob2xkaW5nIHJxIGxvY2sgIg0KPiAtCQkJ
+CSJvciBzY3hfYnBmX2NwdV9jdXJyKCkgdG8gcmVhZCByZW1vdGUgY3VyciBzYWZlbHkuXG4iLCBf
+X2Z1bmNfXyk7DQo+IC0JCXNjaC0+d2FybmVkX2RlcHJlY2F0ZWRfcnEgPSB0cnVlOw0KPiAtCX0N
+Cj4gLQ0KPiAtCXJldHVybiBjcHVfcnEoY3B1KTsNCj4gLX0NCj4gLQ0KPiAgIC8qKg0KPiAgICAq
+IHNjeF9icGZfbG9ja2VkX3JxIC0gUmV0dXJuIHRoZSBycSBjdXJyZW50bHkgbG9ja2VkIGJ5IFND
+WA0KPiAgICAqIEBhdXg6IGltcGxpY2l0IEJQRiBhcmd1bWVudCB0byBhY2Nlc3MgYnBmX3Byb2df
+YXV4IGhpZGRlbiBmcm9tIEJQRiBwcm9ncw0KPiBAQCAtMTA1NDAsNyArMTA1MTIsNiBAQCBCVEZf
+SURfRkxBR1MoZnVuYywgc2N4X2JwZl9wdXRfY3B1bWFzaywgS0ZfUkVMRUFTRSkNCj4gICBCVEZf
+SURfRkxBR1MoZnVuYywgc2N4X2JwZl90YXNrX3J1bm5pbmcsIEtGX1JDVSkNCj4gICBCVEZfSURf
+RkxBR1MoZnVuYywgc2N4X2JwZl90YXNrX2NwdSwgS0ZfUkNVKQ0KPiAgIEJURl9JRF9GTEFHUyhm
+dW5jLCBzY3hfYnBmX3Rhc2tfY2lkLCBLRl9SQ1UpDQo+IC1CVEZfSURfRkxBR1MoZnVuYywgc2N4
+X2JwZl9jcHVfcnEsIEtGX0lNUExJQ0lUX0FSR1MpDQo+ICAgQlRGX0lEX0ZMQUdTKGZ1bmMsIHNj
+eF9icGZfbG9ja2VkX3JxLCBLRl9JTVBMSUNJVF9BUkdTIHwgS0ZfUkVUX05VTEwpDQo+ICAgQlRG
+X0lEX0ZMQUdTKGZ1bmMsIHNjeF9icGZfY3B1X2N1cnIsIEtGX0lNUExJQ0lUX0FSR1MgfCBLRl9S
+RVRfTlVMTCB8IEtGX1JDVV9QUk9URUNURUQpDQo+ICAgQlRGX0lEX0ZMQUdTKGZ1bmMsIHNjeF9i
+cGZfY2lkX2N1cnIsIEtGX0lNUExJQ0lUX0FSR1MgfCBLRl9SRVRfTlVMTCB8IEtGX1JDVV9QUk9U
+RUNURUQpDQo+IEBAIC0xMDU3NSw3ICsxMDU0Niw2IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgYnRm
+X2tmdW5jX2lkX3NldCBzY3hfa2Z1bmNfc2V0X2FueSA9IHsNCj4gICBCVEZfS0ZVTkNTX1NUQVJU
+KHNjeF9rZnVuY19pZHNfY3B1X29ubHkpDQo+ICAgQlRGX0lEX0ZMQUdTKGZ1bmMsIHNjeF9icGZf
+a2lja19jcHUsIEtGX0lNUExJQ0lUX0FSR1MpDQo+ICAgQlRGX0lEX0ZMQUdTKGZ1bmMsIHNjeF9i
+cGZfdGFza19jcHUsIEtGX1JDVSkNCj4gLUJURl9JRF9GTEFHUyhmdW5jLCBzY3hfYnBmX2NwdV9y
+cSwgS0ZfSU1QTElDSVRfQVJHUykNCj4gICBCVEZfSURfRkxBR1MoZnVuYywgc2N4X2JwZl9jcHVf
+Y3VyciwgS0ZfSU1QTElDSVRfQVJHUyB8IEtGX1JFVF9OVUxMIHwgS0ZfUkNVX1BST1RFQ1RFRCkN
+Cj4gICBCVEZfSURfRkxBR1MoZnVuYywgc2N4X2JwZl9jcHVfbm9kZSwgS0ZfSU1QTElDSVRfQVJH
+UykNCj4gICBCVEZfSURfRkxBR1MoZnVuYywgc2N4X2JwZl9jcHVwZXJmX2NhcCwgS0ZfSU1QTElD
+SVRfQVJHUykNCj4gZGlmZiAtLWdpdCBhL2tlcm5lbC9zY2hlZC9leHRfaW50ZXJuYWwuaCBiL2tl
+cm5lbC9zY2hlZC9leHRfaW50ZXJuYWwuaA0KPiBpbmRleCBiMDQ3MDExOTBiMjMuLjM4ZjA5OWNj
+ZDI0ZiAxMDA2NDQNCj4gLS0tIGEva2VybmVsL3NjaGVkL2V4dF9pbnRlcm5hbC5oDQo+ICsrKyBi
+L2tlcm5lbC9zY2hlZC9leHRfaW50ZXJuYWwuaA0KPiBAQCAtMTE2NSw3ICsxMTY1LDYgQEAgc3Ry
+dWN0IHNjeF9zY2hlZCB7DQo+ICAgCSAqIGJ1dCBpdCBkb2Vzbid0IHJlYWxseSBtYXR0ZXIuDQo+
+ICAgCSAqLw0KPiAgIAlib29sCQkJd2FybmVkX3plcm9fc2xpY2U6MTsNCj4gLQlib29sCQkJd2Fy
+bmVkX2RlcHJlY2F0ZWRfcnE6MTsNCj4gICAJYm9vbAkJCXdhcm5lZF91bmFzc29jX3Byb2dzOjE7
+DQo+ICAgDQo+ICAgCXN0cnVjdCBsaXN0X2hlYWQJYWxsOw0KPiBkaWZmIC0tZ2l0IGEvdG9vbHMv
+c2NoZWRfZXh0L2luY2x1ZGUvc2N4L2NvbW1vbi5icGYuaCBiL3Rvb2xzL3NjaGVkX2V4dC9pbmNs
+dWRlL3NjeC9jb21tb24uYnBmLmgNCj4gaW5kZXggOTU5MWE2ZTc3OGNlLi5iZDUxOTg2YzRjNDIg
+MTAwNjQ0DQo+IC0tLSBhL3Rvb2xzL3NjaGVkX2V4dC9pbmNsdWRlL3NjeC9jb21tb24uYnBmLmgN
+Cj4gKysrIGIvdG9vbHMvc2NoZWRfZXh0L2luY2x1ZGUvc2N4L2NvbW1vbi5icGYuaA0KPiBAQCAt
+OTYsNyArOTYsNiBAQCBzMzIgc2N4X2JwZl9waWNrX2FueV9jcHVfbm9kZShjb25zdCBjcHVtYXNr
+X3QgKmNwdXNfYWxsb3dlZCwgaW50IG5vZGUsIHU2NCBmbGFncw0KPiAgIHMzMiBzY3hfYnBmX3Bp
+Y2tfYW55X2NwdShjb25zdCBjcHVtYXNrX3QgKmNwdXNfYWxsb3dlZCwgdTY0IGZsYWdzKSBfX2tz
+eW07DQo+ICAgYm9vbCBzY3hfYnBmX3Rhc2tfcnVubmluZyhjb25zdCBzdHJ1Y3QgdGFza19zdHJ1
+Y3QgKnApIF9fa3N5bTsNCj4gICBzMzIgc2N4X2JwZl90YXNrX2NwdShjb25zdCBzdHJ1Y3QgdGFz
+a19zdHJ1Y3QgKnApIF9fa3N5bTsNCj4gLXN0cnVjdCBycSAqc2N4X2JwZl9jcHVfcnEoczMyIGNw
+dSkgX19rc3ltOw0KPiAgIHN0cnVjdCBycSAqc2N4X2JwZl9sb2NrZWRfcnEodm9pZCkgX19rc3lt
+Ow0KPiAgIHN0cnVjdCB0YXNrX3N0cnVjdCAqc2N4X2JwZl9jcHVfY3VycihzMzIgY3B1KSBfX2tz
+eW0gX193ZWFrOw0KPiAgIHN0cnVjdCB0YXNrX3N0cnVjdCAqc2N4X2JwZl90aWRfdG9fdGFzayh1
+NjQgdGlkKSBfX2tzeW0gX193ZWFrOw0KPiBAQCAtOTgzLDggKzk4Miw4IEBAIGV4dGVybiBzdHJ1
+Y3QgaXJxdGltZV9fX2xvY2FsIGNwdV9pcnF0aW1lIF9fa3N5bSBfX3dlYWs7DQo+ICAgc3RhdGlj
+IGlubGluZSBzdHJ1Y3QgcnFfX19sb2NhbCAqZ2V0X2N1cnJlbnRfcnEodTMyIGNwdSkNCj4gICB7
+DQo+ICAgCS8qDQo+IC0JICogVGhpcyBpcyBhIHdvcmthcm91bmQgdG8gZ2V0IGFuIHJxIHBvaW50
+ZXIgc2luY2Ugd2UgZGVjaWRlZCB0bw0KPiAtCSAqIGRlcHJlY2F0ZSBzY3hfYnBmX2NwdV9ycSgp
+Lg0KPiArCSAqIFRoaXMgaXMgYSB3b3JrYXJvdW5kIHRvIGdldCBhbiBycSBwb2ludGVyIG5vdyB0
+aGF0DQo+ICsJICogc2N4X2JwZl9jcHVfcnEoKSBoYXMgYmVlbiByZW1vdmVkLg0KPiAgIAkgKg0K
+PiAgIAkgKiBXQVJOSU5HOiBUaGUgY2FsbGVyIG11c3QgaG9sZCB0aGUgcnEgbG9jayBmb3IgQGNw
+dS4gVGhpcyBpcw0KPiAgIAkgKiBndWFyYW50ZWVkIHdoZW4gY2FsbGVkIGZyb20gc2NoZWR1bGlu
+ZyBjYWxsYmFja3MgKG9wcy5ydW5uaW5nLA0KPiBkaWZmIC0tZ2l0IGEvdG9vbHMvc2NoZWRfZXh0
+L2luY2x1ZGUvc2N4L2NvbXBhdC5icGYuaCBiL3Rvb2xzL3NjaGVkX2V4dC9pbmNsdWRlL3NjeC9j
+b21wYXQuYnBmLmgNCj4gaW5kZXggODdmMTVmMjk2MjM0Li4xMzMwNTg1Nzg2NjggMTAwNjQ0DQo+
+IC0tLSBhL3Rvb2xzL3NjaGVkX2V4dC9pbmNsdWRlL3NjeC9jb21wYXQuYnBmLmgNCj4gKysrIGIv
+dG9vbHMvc2NoZWRfZXh0L2luY2x1ZGUvc2N4L2NvbXBhdC5icGYuaA0KPiBAQCAtMjMzLDIzICsy
+MzMsNiBAQCBzdGF0aWMgaW5saW5lIGJvb2wgX19DT01QQVRfaXNfZW5xX2NwdV9zZWxlY3RlZCh1
+NjQgZW5xX2ZsYWdzKQ0KPiAgIAkgc2N4X2JwZl9waWNrX2FueV9jcHVfbm9kZShjcHVzX2FsbG93
+ZWQsIG5vZGUsIGZsYWdzKSA6CQkJXA0KPiAgIAkgc2N4X2JwZl9waWNrX2FueV9jcHUoY3B1c19h
+bGxvd2VkLCBmbGFncykpDQo+ICAgDQo+IC0vKg0KPiAtICogdjYuMTg6IEFkZCBhIGhlbHBlciB0
+byByZXRyaWV2ZSB0aGUgY3VycmVudCB0YXNrIHJ1bm5pbmcgb24gYSBDUFUuDQo+IC0gKg0KPiAt
+ICogS2VlcCB0aGlzIGhlbHBlciBhdmFpbGFibGUgdW50aWwgdjYuMjAgZm9yIGNvbXBhdGliaWxp
+dHkuDQo+IC0gKi8NCj4gLXN0YXRpYyBpbmxpbmUgc3RydWN0IHRhc2tfc3RydWN0ICpfX0NPTVBB
+VF9zY3hfYnBmX2NwdV9jdXJyKGludCBjcHUpDQo+IC17DQo+IC0Jc3RydWN0IHJxICpycTsNCj4g
+LQ0KPiAtCWlmIChicGZfa3N5bV9leGlzdHMoc2N4X2JwZl9jcHVfY3VycikpDQo+IC0JCXJldHVy
+biBzY3hfYnBmX2NwdV9jdXJyKGNwdSk7DQo+IC0NCj4gLQlycSA9IHNjeF9icGZfY3B1X3JxKGNw
+dSk7DQo+IC0NCj4gLQlyZXR1cm4gcnEgPyBycS0+Y3VyciA6IE5VTEw7DQo+IC19DQo+IC0NCj4g
+ICAvKg0KPiAgICAqIHY2LjE5OiBUbyB3b3JrIGFyb3VuZCBCUEYgbWF4aW11bSBwYXJhbWV0ZXIg
+bGltaXQsIHRoZSBmb2xsb3dpbmcga2Z1bmNzIGFyZQ0KPiAgICAqIHJlcGxhY2VkIHdpdGggdmFy
+aWFudHMgdGhhdCBwYWNrIHNjYWxhciBhcmd1bWVudHMgaW4gYSBzdHJ1Y3QuIFdyYXBwZXJzIGFy
+ZQ0KDQpJIGFkZGVkIHRoaXMgaGVscGVyIGJhY2sgaW4gdGhlIGRheXMgd2hlbiBleHQgYW5kIG15
+IHVuZGVyc3RhbmRpbmcgb2YgDQpleHQgd2VyZSBib3RoIG1hdHVyaW5nLiBJIGFncmVlIGl0IHNo
+b3VsZCBiZSByZW1vdmVkLiBJIGRvIGhhdmUgc29tZSANCmNvZGUgbG9jYWxseSB1c2luZyB0aGlz
+IGhlbHBlciwgYnV0IHRoYXQgc2hvdWxkIG5vdCBibG9jayB0aGlzIHJlbW92YWwuDQoNClJldmll
+d2VkLWJ5OiBIb25neWFuIFhpYSA8aG9uZ3lhbi54aWFAdHJhbnNzaW9uLmNvbT4NCg==
