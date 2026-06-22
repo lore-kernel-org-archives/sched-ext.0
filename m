@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF91F3FBA7;
-	Mon, 22 Jun 2026 17:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6807433F5AF;
+	Mon, 22 Jun 2026 17:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782149056; cv=none; b=eBV3PdaiceTPWvC4yaawIqKtjuUwdvbOn0Y/DpBcY4N/zjx8EQKULpryLVUm4IJgiUj9EL7Iv2/a70+tChkbhlhGGsryI8PMuH1yBcx6iroSqNZCd+Ay/VTOyhB/aoD8H4FSvX/Y1DJGEEHyi99xLwNSC0f97IZ/Bfm7kSTSKYk=
+	t=1782149075; cv=none; b=HN76JnxS3bUhd4L8rXiFXfTZHl97qQxfqI/TGrb/DEmgmHM9Xwgd6tAc4xdRumo+ZUiaJZManrzWbFwCm/IH9rUP8/ima6fiuvOThdz/AqhlfRGm9IZYaWIdm6r2gg8o3K6WwPXIJwqjtA6mXuJUjGaeyiunj8y2P7N54o2CoOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782149056; c=relaxed/simple;
-	bh=BNGoY9SA7aF+4lYBSoDpvjrtXUUnblmnmUbMlxskjF4=;
+	s=arc-20240116; t=1782149075; c=relaxed/simple;
+	bh=xxrQiZit283gFOCRPVj0BAAxA7nl2cHHH1szJ8rlyrE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uDwl5pGKYMsmr8CL0XLOPQ4KTNIcMwc06rpnXX23H/r53i6Br4AwjmvKA5WP2FoUu64rjyU0upmeGhHb6J5NZ3wP0jcdjPLeef6Ktthzr9vHI65d1f0cEuhqrGO4uaxPo6bg4C7EhpjaNxtDdPSoprdA4X/DtoQDocwxMwUnrLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JWRFqGGl; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=h6YjMTvJttTKu9USLR6zk7us2AIeBpegJ9BNpO/qvE6c6hAInHgJfFpGg0eDzaK9jZZmVo2fKnFipod1jyXRZztGyoND/bAhQriy+MVI9tWgkkjhngpB/yGBkx30kJltAoaDrsMcMZHeuPXVlPzP/14MHxi5EAzlPCFD5PkD140=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lQZ2oizT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JWRFqGGl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640691F000E9;
-	Mon, 22 Jun 2026 17:24:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lQZ2oizT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC9C1F000E9;
+	Mon, 22 Jun 2026 17:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782149055;
-	bh=dggcCq1q4f9IvnFD/8ykx5mtBGjHv63lBj4U8Tcq7ms=;
+	s=k20260515; t=1782149074;
+	bh=bpGQXG5JbudUzcK7rhb2SYPGMn61YSS8qsUp6Sjgaeo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=JWRFqGGl8I2IDHSnXV0vBvJrejavU4IR0v6oRNM7bQ02Zqa6ggr1/t6lFwUYgueN9
-	 D4lrd2G+aMIhGOBkal+yoah5uzIQDNUFQfyKwoBk6heKrr1stY2M3GFXNoMw4GGhSe
-	 itSViq2C4uH584TP1jN9kRWR2fePQ50QR08nx3KceXM8Hx0gKUi92OvjulLUSSPHt3
-	 PkWlQl6gW3qd88KbKHD4F2orCHtwIsra2k2rU/b+aSylb0Kc+YpYrPZdqQgnZHARw6
-	 WsZkAx8C27TdqqJdVDcSedBbFW7sK287HvvICliOh38kXYW7/XbVdJTlpSj0xANsCe
-	 x/h1Y9ervK15g==
-Date: Mon, 22 Jun 2026 07:24:14 -1000
+	b=lQZ2oizTtp0ulguYeKhjy3qt2SvIX+ZqYvV/dqW9m93xm0exqxAFrEJU3g/baFhZ6
+	 Y5aBG+GMh/8ss0wkv24O1NJ8ER9LXS7W/tN6LGULlHbYv3QiLwitZCKfMRL6ddjgzm
+	 soq6DqEcYivAsScOvnarhXrA720R6ZkuX9JUs9jwKwfOSnMjn63ndxtq6mhOMp5hyf
+	 4bRTal2XuW72InKzNJmmSa8r/MD0Esn82LuJcR7pjNhrRpi4vXfmjA2eJXKN+qHEDp
+	 Ljyk+bt7ubwMtt7vv/ExjkqW+dYmpweWX5NvArwZymbSxn29HhBxN7qDVeAhUJMHhq
+	 uhi6YC7LHzXfg==
+Date: Mon, 22 Jun 2026 07:24:33 -1000
 From: Tejun Heo <tj@kernel.org>
-To: linux-kernel@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: linux-kernel@vger.kernel.org, Ingo Molnar <mingo@redhat.com>,
 	Juri Lelli <juri.lelli@redhat.com>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
@@ -37,11 +37,11 @@ Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	sched-ext@lists.linux.dev
-Subject: Re: [PATCH v2 sched_ext/for-7.2] sched_ext: Move sources under
+Subject: Re: [PATCH sched_ext/for-7.2] sched_ext: Move sources under
  kernel/sched/ext/
-Message-ID: <ajlvvs0Uq5ZJC2EA@slm.duckdns.org>
+Message-ID: <ajlv0Wq2yu4D-F_T@slm.duckdns.org>
 References: <20260621163026.434856-1-tj@kernel.org>
- <20260621183444.485350-1-tj@kernel.org>
+ <20260622084657.GZ49951@noisy.programming.kicks-ass.net>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -50,28 +50,15 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260621183444.485350-1-tj@kernel.org>
+In-Reply-To: <20260622084657.GZ49951@noisy.programming.kicks-ass.net>
 
-On Sun, Jun 21, 2026 at 08:34:44AM -1000, Tejun Heo wrote:
-> The sched_ext sources had grown to ten ext* files directly under
-> kernel/sched/. Move them into a new kernel/sched/ext/ subdirectory and drop
-> the now-redundant ext_ prefix. ext.c/h keep their names.
-> 
->   kernel/sched/ext.{c,h}       -> kernel/sched/ext/ext.{c,h}
->   kernel/sched/ext_internal.h  -> kernel/sched/ext/internal.h
->   kernel/sched/ext_types.h     -> kernel/sched/ext/types.h
->   kernel/sched/ext_idle.{c,h}  -> kernel/sched/ext/idle.{c,h}
->   kernel/sched/ext_cid.{c,h}   -> kernel/sched/ext/cid.{c,h}
->   kernel/sched/ext_arena.{c,h} -> kernel/sched/ext/arena.{c,h}
-> 
-> The include paths in build_policy.c and sched.h, the MAINTAINERS glob, and a
-> few documentation and comment references are updated to match. No code or
-> symbol changes.
-> 
-> Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
+On Mon, Jun 22, 2026 at 10:46:57AM +0200, Peter Zijlstra wrote:
+> Can I take this opportunity to remind you that most of the ext files are
+> not clangd 'clean' yet. That is, they don't cleanly compile as stand
+> alone entities, which causes LSP/clangd enabled editors to throw a ton
+> of errors.
 
-Applied to sched_ext/for-7.2.
+Ah yeah, let me clean that up too.
 
 Thanks.
 
