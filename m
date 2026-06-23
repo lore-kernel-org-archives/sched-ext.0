@@ -1,66 +1,130 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EBF347FC8;
-	Tue, 23 Jun 2026 07:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36269131E49
+	for <sched-ext@lists.linux.dev>; Tue, 23 Jun 2026 14:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782201196; cv=none; b=KEBrMklplhcBcZ+5EPpgnIv9PjnL/sWDeIKYRWW6+91W5yPVLpyQ6mc7b2p6hNMOFyx2DpH2ar7BVZB85xo1i2qnD6ZZrxCBJ7++T/kGhSeMgmqX3/ih4tsfjrLX3578RU8THYQAuW21PW4oWpouv1gtaRgAk4C7R/oEchf2ZoA=
+	t=1782224827; cv=none; b=qT7b3FWjm4vqUtt2MugK9+BwMmLJCnT6oeoMBW6+8TKcevla+ktYP6FRIaMEraRu1wZ4QE0KRRasHjHcRa0fAPcJsHMpfjh/n8G7l6s8y0ZdSZHYVIFIf3ul9BhE9KiCVN6TPHnOVRww71oQJUL1mCkPcTSdNw2DeMp7GfwJdpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782201196; c=relaxed/simple;
-	bh=nh8P3PWPqMfa7kVs/VTDphL9R49dtEAnLvL7b9GvZ6w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PyPNkgedOduxsxVCr7GBpt+IJcZj7RIwE3QdcNce2wBlYW3D8rd5W9DlpoasKosxNqTadMkR77Mn8e2qARcDrUGktEklqcWt3pqqk0Ks3nWz7NataQhKtWWSdGjobUCLOKI3F+3JUhFiBK2eDD/cCTo09sRTnBAvgsxSlBkXcgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SoXCLjRb; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1782224827; c=relaxed/simple;
+	bh=aC9j6+/PUOfq+WMbyfBUdmM51dUpMhp6Zat62Hg0mec=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=L8SzCO9ycMnMyvTswmc8F9S3ZHzsF9+yazezcH9jm9/q333KUb1S26eaH4j/jte0sazKzVw0FapYVQ3JWFDJyQ4Csk27TZ3fH94Zx9njIYU1jBsAKZ4Ug+3gCsSIBnZs5tuXvcWokQaULICtbbCJfA/3/HtXtm8HPumyR+qi0MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=2sogVQLN; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=0lmDUG5H; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SoXCLjRb"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Nr7CGw0V1buKl4iT4u52NpbKI4yhiFz61ZrkSZGcxuE=; b=SoXCLjRb1DdmBMtYzvvDg8eulq
-	kKMVGc8Y/0rWti5A1JkmyHRHs6iGo+d8g/aA6CdOWTy459Ca1jbuLr8qCzOIDnBBmyhKj52ix6zSP
-	trNVvjysfEpEhYLMR0tzh/ycTx7kVQgHrj3WEY0ZP9jG0BLXuTgXHEu0Ohu45hnG6a3QHOLhhP1gD
-	YzYSQBx5U4MQqXtKvMbWw5cImMXejLfhhbflvmmw+mQNdHHXw55+J6V38RqXM9cVlq+ll3WBXJdaT
-	JHu98IKbkSaOlx4DfU4g6cAuF/m9taTz7p2ouxF6+NgervgbNSvTiQ+A/dvNTwALaWTM0rcr4rVOW
-	HY2fLWZQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
-	id 1wbvw8-00000000nwQ-47gx;
-	Tue, 23 Jun 2026 07:52:49 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 9615C3032AC; Tue, 23 Jun 2026 09:52:45 +0200 (CEST)
-Date: Tue, 23 Jun 2026 09:52:45 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Tejun Heo <tj@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>, linux-kernel@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	David Vernet <void@manifault.com>,
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="2sogVQLN";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="0lmDUG5H"
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1782224824;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=+VxJ/hTLLC3ZO1J8xkJJx8VcM1svBl0A5SvgrNP8pzI=;
+	b=2sogVQLNN9CTsNkjahoNiflubLnZ/1cTJQPBxue2C/SUtts4ataMYlzS2wqPhOFL3KZp+w
+	FSkdu8uu4NPBrn6/q24vmf5+IKmjSNBe2anxVYPbF+RNS/QmzreXIzCi7nwdChdpg/V7Ce
+	JLSxrdTnv9KjAMsCxR1eKThfFo5HN4elcILVjnO8F4mcvzFZUoO3bDNAczzDaun1245OnX
+	a4TB8SWKBKwc3UJT7g6YleQMIdUwQM4/3RVCdezUwSjJNWOj0zc8S9exoFII0/7xFZ0s8o
+	Uur6XzfVI9G7jczsG/wCRaxy8woWecAr3S6QgNgyQ0GQwzirpu6HjhqNyoIZGQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1782224824;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=+VxJ/hTLLC3ZO1J8xkJJx8VcM1svBl0A5SvgrNP8pzI=;
+	b=0lmDUG5Ha/0kmALYCixA5mZ8+0hCiCtCCjPG47cW8MfhG2qe6G1R2nw1HxOxynYaBW7PWq
+	7UMqZoTjZ4lEDXCw==
+To: linux-arch@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	netdev@vger.kernel.org
+Cc: "David S . Miller" <davem@davemloft.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Ben Segall <bsegall@google.com>,
+	Breno Leitao <leitao@debian.org>,
 	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	sched-ext@lists.linux.dev
-Subject: Re: [PATCH sched_ext/for-7.2 1/2] sched_ext: Make kernel/sched/ext/
- sources self-contained for clangd
-Message-ID: <20260623075245.GT48970@noisy.programming.kicks-ass.net>
-References: <20260622173904.1169407-1-tj@kernel.org>
- <903233e7c06ee5f3ea843e5b923bb7c6@kernel.org>
+	David Vernet <void@manifault.com>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Tejun Heo <tj@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Vlad Poenaru <vlad.wing@gmail.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: [PATCH 0/2] sched: Introduce and use deferred WARNs in sched
+Date: Tue, 23 Jun 2026 16:26:48 +0200
+Message-ID: <20260623142650.265721-1-bigeasy@linutronix.de>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <903233e7c06ee5f3ea843e5b923bb7c6@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 22, 2026 at 11:05:43AM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> Applied 1-2 to sched_ext/for-7.2 with Andrea's Reviewed-by added.
+This is a follow-up to the netconsole lockup reported
+	https://lore.kernel.org/all/20260610183621.3915271-1-vlad.wing@gmail.com/
 
-Thanks!
+The idea is to use deferred printing for WARNs and use them in sched. I
+tried to use only where it looks that the rq lock acquired instead a
+plain s/WARN_ON/WARN_ON_DEFFERED which would be simpler.
+
+This unholy deferred mess can be removed once we don't have legacy
+consoles anymore _or_ force force_legacy_kthread=3Dtrue.
+
+The initial report is against v6.16 and netconsole. The reported problem
+does not occur upstream since commit 7eab73b18630e ("netconsole: convert
+to NBCON console infrastructure") which is v7.0-rc1.
+
+Should this be rejected outright because the preferred sollution is to
+| - stick msg in buffer (lockless)
+| - print to atomic consoles (lockless)
+| - use irq_work to wake console kthreads (lockless)
+| - each kthread then tries to flush buffer to its own non-atomic console
+|   in non-atomic context."
+
+then this means to force force_legacy_kthread=3Dtrue.
+The threaded legacy printer is available since v6.12-rc1. It terms of stable
+fix, this could go back as of v6.12 stable and not earlier (in case we care=
+).
+
+I tested this on a x86 box with 8250 and warning in put_prev_entity().
+After it printed the initial warning, it dead-locked shortly after
+because systemd was writing to the kernel buffer it acquired the
+uart_port_lock then attempted to write lockdep report which required the
+same lock=E2=80=A6
+
+Sebastian Andrzej Siewior (2):
+  bug: Provide WARN_ON.*DEFERRED() macros for console deferred output
+  sched: Use WARN_ON.*_DEFERRED()
+
+ include/asm-generic/bug.h  |  41 ++++++++++++++
+ kernel/sched/core.c        |  78 +++++++++++++-------------
+ kernel/sched/core_sched.c  |   6 +-
+ kernel/sched/cpudeadline.c |   6 +-
+ kernel/sched/deadline.c    |  62 ++++++++++-----------
+ kernel/sched/ext.c         | 110 ++++++++++++++++++-------------------
+ kernel/sched/fair.c        |  88 ++++++++++++++---------------
+ kernel/sched/rt.c          |  36 ++++++------
+ kernel/sched/sched.h       |  18 +++---
+ lib/bug.c                  |  16 +++++-
+ 10 files changed, 257 insertions(+), 204 deletions(-)
+
+--=20
+2.53.0
+
