@@ -1,69 +1,71 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010008.outbound.protection.outlook.com [40.93.198.8])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012023.outbound.protection.outlook.com [40.107.209.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16E830100D;
-	Wed, 24 Jun 2026 11:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207313AFAE6
+	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 11:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.23
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782302265; cv=fail; b=JRLwvInPvc9CqZumaKTeHrZdqrpaqftFLZlzIE4B5aqjlQrcaVRTXzoOVN/F26Q/XidH9oTIcV56XXMB92xRKsxAsjGQLuD9L4EU5z3L32rHfBOJDt+1lQjVPULSQESTMKKXzD9D3ROF9Zk1fh8p/Ii7SQZKsS0SR6A0Uhy1n/I=
+	t=1782302341; cv=fail; b=jYe+PQnLwyd0OyQ2YyEZHEJpSvqWjiAz39R4UDQPD8DyEBpXB4W7StTMEoYWZ093iffJf0QfvHEzVSSaThNfPnzno3QA+fX+dWuqf8LHTJvWen3HJueFdFdPYEVmP03eVnnGVbXrnekmYe/lSYUfZn7lybIcd7ZzPZ5C8CZkC2U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782302265; c=relaxed/simple;
-	bh=2sawJVuUDRiznvovuWP3jy5uu8jYPyPuhMHcDhESozs=;
+	s=arc-20240116; t=1782302341; c=relaxed/simple;
+	bh=pI7Dbqnue/jQAE/hiV5l8KPyM1PrQsHm2ZhJxeXB+c4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ccZrDh2U7EUfC0MFtFm96CI5zCfq5SOogOGiKBKujuj6XPjqhDhmmUMFhbprTCP8zku9YMCOp5/NUQLuU8sDk1KSf3qL1yrD/W59KFKCAhazhuiapCzeCDTKjFEDFnOnw4JLBn1Wf6V5L7x6Bnq0P5uiwMgvnpId9NctIU0Vh4o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LGKF2xmb; arc=fail smtp.client-ip=40.93.198.8
+	 Content-Disposition:In-Reply-To:MIME-Version; b=hVpIEpFrUlVQU7ncJeJfWXeImQ3AcYhF6Jzkn5J5DsW+aFsle7QDw21OwcB6J2XJtk4VuaIwvR9gRBKbOYnmnqtElSr4H6U7c28RK6XjipNmJcRKab7KzhSolKsNISU4lQky8XDIyzkUbzwc4A9CE/OiUSfTad5HqxxsctbYERE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TObv9R8d; arc=fail smtp.client-ip=40.107.209.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LGKF2xmb"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TObv9R8d"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DkQdoEQp3MIa2RIgsR9CbLEF0aaIrDOc1G7bKQrxLdeZF1UIf2/I2coMsGQGOPwvKa9R0fQctAe1TybfiIuO40cd2LKKFvCzVEo3CArvCWhkYqdSYfDvKLwbzz2THVTvYU7E5oJLGVMQJmQCS7LhUY6nQVGEBt4DC/nk/rXXXia4tIR9K5968uLqKnOvXtLy0Tjg1l8ORbG8gWI5Sx1Jyy0RWrdLuYCwgLUSTu3hMF30hxN9OlU8P2Mb+7zPqNZckC3BmHoQ9DwBjgymYnmgQDxyL7A91jWc0TR6cQ0uC447N8s2ruz/QURHwkBP6Tr+XMnW7CDyeincNWhvkTWEfw==
+ b=WamhJg1IXXLBQVn0NiDbSl0f35z8tdH9X/jFXmRdetxlMQKj5Tu8RYtd9gjBiK2v7r0Bm4+RyQaCEi6Mr3Z6Wjdg8b0DdOjj8b1Cx0IL0DU6n5fp1h/ZLX0XWJ6jy4VF5BAJwAbNkOyLlEk/O6keNYTBHCfIAbiFfRXVXbzYa6fY/NWYvmqf9kd+BtShC5n9wbsPclnhlan3/2G8XbjvLGnzOnGnBPWq48JulCHDdkTzm3USLhBDGCGxfU8PnAwHoIkSw6R08lLjMIiNp4if1l99qLqtNb01JkzIZzopc2PN92hRyM6g4HZQExEPvyBFsg8gLHguiBAl6tcmaykX0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jRDB+0DfUVH43nwme3v1w73BAAmYhKt+Cfq6V7dgZAk=;
- b=e+nhDfI/r0yPBxz5l7bF+1iplCs1+ANqPOddFmtLtYjgTPboTMbdwbdeAHnzdIXbPVHFW8Ll9Um03mvuIFmPrcM6qjJBpgvalhoIEdARUzUSt3W7PejjYoiv80CnQeNqgWlLVte8/pZEcu4iW0dQs3JnSnJ94WjNHra8lK8XpQmmH8NlqQ1kil/6nrRyc+QhZLjaY6HHD5jEcdJ5Kn5+5YFRIUM+hZYdIg62aMzs/sPhGQa5x16cJbetScVW5KF0wR6sLrE0onPML9a/Y98eLbeD7/82AWffB6hGFmAXv+ysigUH5Cs63+vIZWk12DkEqzb2Auj62iUQPyjU4VuzSw==
+ bh=z0L8oMlALeG359sacxK7BI4G4Ij0DT11cyfDjNnASI8=;
+ b=u8L+5eXXnF2BotnKT1ZBlurv9rtqdoVc1pJsuWEpFcc01ndEvpClBQTJJK0qEt5acOL8yimCWbbP7UxY1NczGwx+cGHf24R4SB36f3BsX5gGHxlKDLrEXTXuj43ba3v97/Cf+JJqDXkDoj9shmDWjqjNwoJVePaZ4cgurDN6vc6pqi8uN44xbghmn/HtlNnlztNYhnEvel7LW4B/uXE0baEbRsjA1KFgrHImiL+gkXyEDihsZmQb9I743FYROnZODECZQiWji9kKYGBReSlbkAJ+5aCtKq/uLp9XJ/d7Gb6NIl8LVpIKyvvm/R360w9+Td5Gl96l1Cd33hwsBuw45g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jRDB+0DfUVH43nwme3v1w73BAAmYhKt+Cfq6V7dgZAk=;
- b=LGKF2xmbP3mFDLoI6Qa42W60808lN9Bkqdg7LCRd6oBs5MAh9fM5WrW/CU3+Zz4sEGWX4/sBLB+xQdNmz0xffdGOmp+3ROH4xc2G+mYVIMr+hDm/jqDX3lawVf2S5ngXwCwaksjK4IOGyMGUP0lNIMycSenluK94YaExw/bFG+794UZQaumsT5h7QoSsbd0x++ehIOSd88IPsHsrVF1h5fdp2wn5K/2ODddbA+AUlaea5iINKl7nJpydJyJTfNrEBr2zsiJqMEXagqRv+geOEF6CuJaCAkIua9yxndRMBfDBgEqesCKhuO7EiTEZ6yPH9ird/iVgLQvJ5PyBAVLnfw==
+ bh=z0L8oMlALeG359sacxK7BI4G4Ij0DT11cyfDjNnASI8=;
+ b=TObv9R8dxTPueJGdqC/EoLCAV+P6m2XD+N5Q7r9V45KKw/W0LvqW+XuFxikiKmUJy7mpLqHvXk+64xwlbPFhtbok8B4XDCIemT9Lo7C0Ct0uCAEHKGSKKT0q5uHYvgtfMTPYX2+TPRI/KBmIekjXp9OM0f3yFBiKAn3TgkNqPLo7NaipJxBQi5CHwlEjP/VIuMvDiaSENKrEZe/3GaTbat7l6ezvHFVFn1kVYl3TnQfJPm/FO4IJe7+Djfv/IFIap/O05eG77Kb516WUqEIHVvhzGhqEAgfBZ/KkQPDFxzBTXxZJv4iNatyw43ETMcMVGxK/7vG4uW9HKC5xuyoCPg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by CY1PR12MB9698.namprd12.prod.outlook.com (2603:10b6:930:107::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.14; Wed, 24 Jun
- 2026 11:57:39 +0000
+ 2026 11:58:56 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0139.018; Wed, 24 Jun 2026
- 11:57:39 +0000
-Date: Wed, 24 Jun 2026 13:57:27 +0200
+ 11:58:56 +0000
+Date: Wed, 24 Jun 2026 13:58:49 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Zicheng Qu <quzicheng@huawei.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
-	peterz@infradead.org, brho@google.com, bsegall@google.com,
-	changwoo@igalia.com, dietmar.eggemann@arm.com, haoluo@google.com,
-	joshdon@google.com, juri.lelli@redhat.co, kprateek.nayak@amd.com,
-	mgorman@suse.de, mingo@redhat.com, rostedt@goodmis.org,
-	tj@kernel.org, vincent.guittot@linaro.org, void@manifault.com,
-	vschneid@redhat.com, tanghui20@huawei.com, zhangqiao22@huawei.com,
-	quzicheng315@gmail.com
-Subject: Re: [PATCH v4 0/2] sched/fair: Fix fair load state when switching to
- fair
-Message-ID: <ajvGJ4Uui745fbBA@gpd4>
-References: <20260530050609.0D0FB1F00893@smtp.kernel.org>
- <20260624091648.271891-1-quzicheng@huawei.com>
+To: Breno Leitao <leitao@debian.org>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
+	kernel-team@meta.com
+Subject: Re: [PATCH v2] sched_ext: Avoid flooding the log with deprecation
+ warnings
+Message-ID: <ajvGeVwE-kNhrRHu@gpd4>
+References: <20260624-scx_warning-v2-1-07d0d48b0d01@debian.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260624091648.271891-1-quzicheng@huawei.com>
-X-ClientProxiedBy: MI0P293CA0007.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::10) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260624-scx_warning-v2-1-07d0d48b0d01@debian.org>
+X-ClientProxiedBy: MI1PEPF000008D2.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::432) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -73,95 +75,121 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CY1PR12MB9698:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4cbc3d9c-5166-45e2-13c9-08ded1e7ca0e
+X-MS-Office365-Filtering-Correlation-Id: fcdfb4fd-6672-4620-ef3f-08ded1e7f832
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|7416014|376014|366016|56012099006|11063799006|4143699003|18002099003|22082099003;
+	BCL:0;ARA:13230040|23010399003|1800799024|7416014|376014|366016|56012099006|11063799006|18002099003|22082099003|6133799003|13003099007;
 X-Microsoft-Antispam-Message-Info:
-	lyJI6T779zCCyDCb6/HMNgC9PGoqPHf3aHZGxyEXeqv3jAITAutsRtpuMMErmPkOsQhaPU7tC7tvm/3UJ36DOha4FUw2x0ao6WWzyCKUFEhKzh2CXE3z+D/sDtzvRZUaO8Ti0F5VvhNPuVoG0aggmpaQI+1AicgCxOXit1RlaZLVOZHRq/2YET+H8kc8/JDP2PD1maIOSbaZ2ct5wrX0Hh3HMyZ3zhWxrNZKTS3mYZk/eEJlqUfMqeigOA5ej3ei5l+0JxZHxLmba72K6w4aDwMREdjemVC6THWgfNFIt5xoVRtPGnJxNh7Z3BK1TpAdlpX8oD8TzVILk8fesDGBeVfmMGcwP5/QlBnbDYVbKrk0/2r2P5o+o7wprGQIKwwNxbgDdO49sGUi/b7FkEfgbkUO8IkhHdP0fXaE4hEj0x3ovLEB0/K5ypZa8WeuPHdAC/OtQOsBiPpibHo2pLKUE58FDaRJvmXQv3YtpgI1UDRuZ3UN/3DrZmdYvWeh/xN8cd8mszMwH3npY+0hu+ZIYgDoWJFyKCHXX6f8Bgf1f2DEuXeYVfo4BmwImsaaVTB1OpOn8yau6nPbz2s8wBI/2WXbps7LNvh3Moc9u/jQEzlaNQ41p/2LKd49SNOUOzDOntWFWPgKa7c8Nu24aVbJkVqLuqL+VUSOdhAN1gysc4o=
+	Z+9WTKYi65vaWViJjYyCQf8iKh017MgOAXSBvQ/jVEwBK0IvAo6hRW0PL3w4OomJDRWMijdY1Lboucv9hjW8MWOP+i4UzTcGqwdFbKMs4CMnNAEQq0vY+wKvp61k95CSil83IcMlPOeSZDLPFHGl1iI1JqACg/UWibgZcfjpkPjAM9C1f1OuKar/vcZXDz5JBhY/rZt8FFW5BGFyR9fmIorvhCwMTzdoW7ckS5yYWZ0dux0R+ooTzNVcwwFSn2XC9jzQQnprBMtZCwPd4Q3hwOpjn8w0JB9z3GVgG1yfZU+coiKAjW3mLJcxcqRyki4j/+AL0VSGMqBhmfel2nkUbwUMzH6XMkvfseNMK6ReauBS79HAjx8eIhVDs8zF7loo2LVh7I8t7NoEWOqfx7FXMh7TgQftPkfThr/d0usZZL9LQ0chAC2xXcCVfpuP8m4O0C+BlsvvhpOYdNRpic6rR+0zzqFKimG7Fgbf9Y2rsObrqiy/okXZwZl5C0lG0zY7JQs85/N7dCqFjoW6YeX7h8cjBrxIFEUOtW2ds8W8noARWPses/NRv4JovhUvHEnyL/f5adAWu83RBKDvfgROB9E4cRWSyj0M118eNQTpG0yxWJxNKIOLMStVcNXlEkmG06EbdezC4lvsGURMM+1E9t9ia6KMIN3R7xm38a2jE3w=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(7416014)(376014)(366016)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(7416014)(376014)(366016)(56012099006)(11063799006)(18002099003)(22082099003)(6133799003)(13003099007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0LOsXcceuibDUdxaPCDmvXfCf8f1w0qZ7QlmhOLM9G3jNOO1DHJg1lz4n93U?=
- =?us-ascii?Q?Q3IMUdt9qg0qF9u6I8WlmNw3D6dIMvbpGx6as9dEmN0huD/To12Apf+xQ4mh?=
- =?us-ascii?Q?DkVVtk0hNVfuGikjyFvoiW7+8osJzVg/eTDJHHJ/JBLqX61QCzLxYfcrteJ2?=
- =?us-ascii?Q?iRX7v35g0LjX64oSQE1HM2WhyMD5Oya4y7LlTzKGSVt8fhwc3H3+C0d+g4+s?=
- =?us-ascii?Q?mtmQSqrPSai90lCEtZNpeYjP3i7JwLR+5sHPM9aS3Dpmzt3g1mmmgOGLAfzg?=
- =?us-ascii?Q?N6xT0HNxPOlWMWKP5GNSvX0LrWduXHnJqmX73i/yxNevX6ckLC0HFlFDzc3I?=
- =?us-ascii?Q?6yDDSi5rEmrT6dXkBKdfuxdgp6krrrjCCKooDs+Bl3xBECsiiwi9rcLAnN+P?=
- =?us-ascii?Q?8b12az1kYRp/dWHARDt72LEyXXTJUjzG/6qEHkv/NFuBwATFr/GAbg9flVmt?=
- =?us-ascii?Q?jtFJt/hhnZeYhAysloZaA7lmBGFvAo3fuQQ3tWmVWFvVL/YjFYkfpGdNM+jy?=
- =?us-ascii?Q?vZFW0a/8AXwPRqVxXN9sFwjaiCA+WCUs0txBnxtPeet0kW7/K+3mYd5vAVc1?=
- =?us-ascii?Q?b1xmIcWg8Y2/u5wnv4N4DnS9eBlNz1qGIhw4QTRXhVMkd/m/Nnbl6HcC+lD0?=
- =?us-ascii?Q?mwRov4d5MPXeANYU1VWaJeVpkallzLhRR7cPuQnbkfpa4Lglz4qqM2Hu56WZ?=
- =?us-ascii?Q?LAx8Nrye0pNDVlgO7N8V6EPTFoeT5cmqlrZ4SFUFmh2ilVvxUp/noPhZ2SO7?=
- =?us-ascii?Q?xwHJBAcDaxAIQWFC2/rFaMWf5qL10hOz5z54YrXKkgVj896imLgA6MNWolYT?=
- =?us-ascii?Q?z61HZmzmOrV6/qfuUTQnr99hAtfHTgb0V7FifWZ+tJPDz8/dkeCGbLY7P/VW?=
- =?us-ascii?Q?0unceXxjIo92kuwhcm3Tp0QXMA9HGY0GEt7ACOl3fS3HFCHH6Zmlqlqbw+U9?=
- =?us-ascii?Q?Em6/ffjKZcN3RRP4VNQVvo22Yu3yexZOWdiNlj/3JpDgRNobhD67wnXtFD7X?=
- =?us-ascii?Q?81HuqArrhjDFwKcOd6LaLmYMnKu0YLtcxANE/sS6S2XRHGCId7NNagusYWpP?=
- =?us-ascii?Q?w1XsbgeF1/qJQVTqsAfjP8fX/gkxwQWrcqKeKr8phLisiIOYow58rMLdNS9M?=
- =?us-ascii?Q?AqW4z7oocuPEF2wgWxrGDGQGoH9Tt7f+9+aeIlwz+n8g+rnM64EIbFgI5OXY?=
- =?us-ascii?Q?02pKNycX4plxZWWJAYSnHTz+Lrqq0odXy7nD3Tyrdtmi/Jferv5va5iwi0F6?=
- =?us-ascii?Q?Ro0fD6wb3t2RkdwSJnsMmxh6SuH7rQOHkqwsI8Z+/9guwO3BRfSD5JwE2rMd?=
- =?us-ascii?Q?V6MO/tLruzpBTG6KF2Kffxam5ENoRIHlMLmIwhy8H6u4X39FlXeN3mBX3bYT?=
- =?us-ascii?Q?Kt33gifa2ojTHu8Q0SQY+0Pqxe5bUZMW1QLlCtrkmaO5cJslth4ATdwpVeFb?=
- =?us-ascii?Q?/jdzuJ6yrnng+by79rnEStg8BVAtpMCj3W0SDreujq38Aga9shWwF9KWnheN?=
- =?us-ascii?Q?1QC2kVaA9+f9Wv8lyweUz6pthPRG8Psn8NuQi4/jwCCRAdyqaMSLp3gAjBYK?=
- =?us-ascii?Q?7/OGuUlSVeVnLQMDm93rqvseClcnxSaNGtJhYICKZ26A8KkjhvFDiiaDJ9sD?=
- =?us-ascii?Q?Oi2wv4HJkh4aufJIVblbAPhbXxiCnCwhqsPTojXnY/8c+z5NFKPeOLdkt690?=
- =?us-ascii?Q?Gbvz+RcznjUnQ+pgVPH8ztRVq+Xe+G0aS44n+Lmef3PRNMxB?=
+	=?us-ascii?Q?Aa0wQrzIb1m8sET+JLbZVtdlmCagGokdKle0hKdYCpwN5HAxtKfdiKJ+5n/V?=
+ =?us-ascii?Q?+ELrc0ERc8Srl7NVMcWte0iD4+f5pmBCLAhFFJmms0K7eg9fM3iGB25kNmbz?=
+ =?us-ascii?Q?2jnhBMC77NcH+NrP/V/E+10MjFfAUueyjW4/NWax+CG4f3AQ0lL0BkD8f5si?=
+ =?us-ascii?Q?D2KG5X4iOQ+98G2P7kmX7l3c12J2Kk8T0iTTrWkItBNRe1pQMwPsceCORtBR?=
+ =?us-ascii?Q?QbyxIpMVbPsbogAS8m4f/szti60bKv3uZr728zDS23o1FFf6gZFbpG86nvAc?=
+ =?us-ascii?Q?xAZzNmNE2mAPXfL9x4QJ3XLBuiyGqXMtJAkrFh6lCv5PJRVHzeBdDWNtlTR4?=
+ =?us-ascii?Q?MeDWrga0lzNV8lu/jgArCq8n2LUDiGHxlC3o+QIPS528ENAxKPvOjf/Ia/Es?=
+ =?us-ascii?Q?GgHF7XJMYSzQLDN6n0FVpUaBQGqYqCsVvtZ8Eg2MaU9T/HWGX/fUYKmHCfeX?=
+ =?us-ascii?Q?vP+kfRIsorX/CFPYLONnOrZ7d1sLfdlU9InOgE6H50u84xM+7SQkjGLcSOXS?=
+ =?us-ascii?Q?8DyJlbTJeyDykP1gfYyqIkwZxEO0KVXiWhNpwhnUqxFjDsMLAT1rK5Xq4ILZ?=
+ =?us-ascii?Q?ZqV1PCmdLp5H8zC5TPZlkhypU2lZW+XwFWcE4+Q5hjscPr/RzzYOStqusto5?=
+ =?us-ascii?Q?3xbLGz3FfygF9cqE+HjG7Mn4zOaJj0c4pasbbnqWz/U8qSFlr8vEpdMZGq6/?=
+ =?us-ascii?Q?XLLUgNeHaF+3NXR+bsS01GMNQO/QEBG7hCk7h5yyJMgYqPQkq0xbVMxtvL1G?=
+ =?us-ascii?Q?MB6P0+lvB9kMT9MB/FxcFS/inV4KiTxni6gYL0+c+U5dpU3fhOu/tligIo/o?=
+ =?us-ascii?Q?NXVTJ40CBW/KQQ4WHZMmllcAJCQWLi2C+uLN7v9NFf8UefrT8oJL6A5TnQBA?=
+ =?us-ascii?Q?64XLmcGHru1GaPFcmsr6MJtJ9A0wmdyMaanueAFtwO7N23YVjGTqAL/hrDoj?=
+ =?us-ascii?Q?LVr91hN936S5fUYC3iNWT2VJYogMG3tE1m5uCT2T09Gyi5rli2/1urcDuV/z?=
+ =?us-ascii?Q?OcUfqm9IM2/keuOAXyIcrZye6iCQn1BgPmtUYjr5PpqLQO80T6q9i+lEzptq?=
+ =?us-ascii?Q?ZBAW0Uv5wgekcFtraPTGvFIW5WazVKSJNMYyUeKgfPZE5B8atPgs3aimlp5F?=
+ =?us-ascii?Q?xz/QDTTp0MWGzPQF9LNUPuB1BD4YoJs6F/iVl3gTNvfjfAWa4xhCNYmrOjcN?=
+ =?us-ascii?Q?oxsHMYfc1HgBx7k1OQslNQZMsq7Ng4LR7xjIWXrOdMCQm24SkB88wOblfwFe?=
+ =?us-ascii?Q?EVP0D8qcZG2ju9q/V8OAzicuBYcu9BbwAi/iTYH0HKpgjGiOvOET/ovDnj2M?=
+ =?us-ascii?Q?R2AJlmFpqUBsLgONFGFSKBHHSnG+VKBEYd8zvhon8E1IfprOM3sImxBTFjHD?=
+ =?us-ascii?Q?AaPTVcVHoZc9qrVeeNsy0kfBIiEuRAghNYnAjOKwN7Nb/E8hCTVE6HtiWpav?=
+ =?us-ascii?Q?/KbMHnSbBPfeFNXRGVrcYvmbNj5Sb2r/cI7PJiifqq/geujF77b3vDcM/54K?=
+ =?us-ascii?Q?aa0Ep/oHEZiR/rwczh8HH7fXgYjNvSn7+9Ucoth/1/cPxOMqi86A0pKaERKz?=
+ =?us-ascii?Q?4AsDeXHhhiur5bcGjDAWX/tPK5/2lfK3w6YXsgdTTcv7m9aUUmw4mIbS4Isl?=
+ =?us-ascii?Q?cnTeksNm4FnBtu9C9bVT8dnuKADRE6pWzHoWyNpWmLDX2Pp5TnepnwSaoOWq?=
+ =?us-ascii?Q?TBjnOekTHy0btDyDR/97hp2CTDFjvSFdEk1BDjbXdGfk7QVl?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4cbc3d9c-5166-45e2-13c9-08ded1e7ca0e
+X-MS-Exchange-CrossTenant-Network-Message-Id: fcdfb4fd-6672-4620-ef3f-08ded1e7f832
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2026 11:57:39.2945
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2026 11:58:56.6233
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wjgiXgoVHw67p4ZN8a8LUpYPgpEL+czDkCMs8aBa1GpuKDF0XFshzssyU63MO+vOVOI+cuW0Avasuwbur/86dA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: f5oaoHF93Xn0noY+6w+bg3oMf8CC1syoKg2vNWksmsSebW1pszUl8b9HpuhYMHeH/CD7d4jZIHg2BapP56QLRA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR12MB9698
 
-Hi Zicheng,
+Hi Breno,
 
-On Wed, Jun 24, 2026 at 09:16:46AM +0000, Zicheng Qu wrote:
-> Tasks outside fair may leave fair's sched_entity load state stale when
-> they switch back to fair. Patch 1 rebuilds p->se.load from fair's
-> switching_to hook, as in v3. Patch 2 keeps se->avg.load_avg in sync
-> with the rebuilt load weight before the entity is attached back to fair.
+On Wed, Jun 24, 2026 at 02:27:43AM -0700, Breno Leitao wrote:
+> The deprecation notices for direct p->scx.slice/dsq_vtime writes and for
+> ops->cpu_acquire/release() use plain pr_warn(), so they repeat on every
+> scheduler (re)load and can flood the kernel log.
+> 
+> The slice/dsq_vtime notice is the worst offender: it is emitted from the
+> BPF verifier's btf_struct_access callback, which is re-evaluated as the
+> verifier explores program paths, so a single scheduler load can print it
+> many times -- hundreds of lines on some hosts, dozens within the same
+> second.
+> 
+> Switch both notices to pr_warn_ratelimited() so each deprecation is still
+> reported but bursts no longer spam the log, and add the missing newline
+> to the slice/dsq_vtime message.
+> 
+> Signed-off-by: Breno Leitao <leitao@debian.org>
 
 Looks good to me.
 
-Acked-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
 Thanks,
 -Andrea
 
-> 
-> Changes in v4:
-> - Add Tejun's Acked-by to patch 1.
-> - Split the PELT load_avg synchronization into patch 2.
-> 
-> Changes in v3:
-> - Move the rebuild into fair's switching_to hook, as suggested by Peter.
->   This lets fair prepare its own state before enqueue and avoids adding a
->   sched_ext/fair-specific fixup to the generic sched_change_end() path.
-> 
+> ---
 > Changes in v2:
-> - Move the fix from scx_root_disable() to the class switch path so it also
->   covers partial-mode SCHED_EXT to SCHED_NORMAL transitions through
->   sched_setscheduler(). Andrea identified this missing case in the v1
->   discussion.
+> - Switch both deprecation notices from pr_warn_once() to
+>   pr_warn_ratelimited() (Christian, Andrea)
+> - Link to v1: https://lore.kernel.org/r/20260623-scx_warning-v1-1-14bf218f4bd9@debian.org
+> ---
+>  kernel/sched/ext/ext.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Zicheng Qu (2):
->   sched/fair: Rebuild load weight when switching to fair
->   sched/fair: Keep load_avg in sync after reweighting
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 691d53fe0f648..d62b93f48a854 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -6988,7 +6988,7 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+>  	 * run past the BPF allocation. Skip for cid-form.
+>  	 */
+>  	if (!sch->is_cid_type && (ops->cpu_acquire || ops->cpu_release))
+> -		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
+> +		pr_warn_ratelimited("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
+>  
+>  	/*
+>  	 * Sub-scheduler support is tied to the cid-form struct_ops. A sub-sched
+> @@ -7806,7 +7806,7 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
+>  		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
+>  		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
+>  		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
+> -			pr_warn("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()");
+> +			pr_warn_ratelimited("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()\n");
+>  			return SCALAR_VALUE;
+>  		}
+>  
 > 
->  kernel/sched/fair.c | 24 +++++++++++++++++++-----
->  1 file changed, 19 insertions(+), 5 deletions(-)
+> ---
+> base-commit: 4e5dfb7c84012007c3c7061126491bbc92d71bf1
+> change-id: 20260623-scx_warning-0df49c442afb
 > 
+> Best regards,
 > -- 
-> 2.53.0
+> Breno Leitao <leitao@debian.org>
+> 
