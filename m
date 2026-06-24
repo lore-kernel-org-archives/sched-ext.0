@@ -1,195 +1,261 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012023.outbound.protection.outlook.com [40.107.209.23])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207313AFAE6
-	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 11:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.23
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782302341; cv=fail; b=jYe+PQnLwyd0OyQ2YyEZHEJpSvqWjiAz39R4UDQPD8DyEBpXB4W7StTMEoYWZ093iffJf0QfvHEzVSSaThNfPnzno3QA+fX+dWuqf8LHTJvWen3HJueFdFdPYEVmP03eVnnGVbXrnekmYe/lSYUfZn7lybIcd7ZzPZ5C8CZkC2U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782302341; c=relaxed/simple;
-	bh=pI7Dbqnue/jQAE/hiV5l8KPyM1PrQsHm2ZhJxeXB+c4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hVpIEpFrUlVQU7ncJeJfWXeImQ3AcYhF6Jzkn5J5DsW+aFsle7QDw21OwcB6J2XJtk4VuaIwvR9gRBKbOYnmnqtElSr4H6U7c28RK6XjipNmJcRKab7KzhSolKsNISU4lQky8XDIyzkUbzwc4A9CE/OiUSfTad5HqxxsctbYERE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TObv9R8d; arc=fail smtp.client-ip=40.107.209.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0603A380C;
+	Wed, 24 Jun 2026 12:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782304211; cv=none; b=E3bQ6AZFG/Dc2EDtpcGMe2y4e6tAxdZhqoKe5MJfZLLgVxPsMuTF8Xey5rjfQnwIzYAFW5M+F5AlL9eV3amSLUTxHd0RSKCqPrHwBptihqr4qoZZA+25zK+z90T+DZL6bmkYGb/LSbspu5sdT15Tfo6JaWc4WQkF3N9vf9x70sA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782304211; c=relaxed/simple;
+	bh=x+wrByIgOH4VvEI96gvWujAPl3WM8xGYqVOhtQGJNvw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uD29StXT8KBuXsAVFLCZPlkAZexRlAMcVcNZ2gTb0dsqLkPU3wtnAPiAfpOL0xNKL5cbaJ/iLfxA/nuZxDiruel64fMc7E7MHrOh98SxNNiq5ckdfHOFCUe8jBH1D3CEjUHtaXEGAC+SCB/2Iz1dXC1SEUr0fC/QyH7qlEqm+Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=R0l5uaRB; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TObv9R8d"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WamhJg1IXXLBQVn0NiDbSl0f35z8tdH9X/jFXmRdetxlMQKj5Tu8RYtd9gjBiK2v7r0Bm4+RyQaCEi6Mr3Z6Wjdg8b0DdOjj8b1Cx0IL0DU6n5fp1h/ZLX0XWJ6jy4VF5BAJwAbNkOyLlEk/O6keNYTBHCfIAbiFfRXVXbzYa6fY/NWYvmqf9kd+BtShC5n9wbsPclnhlan3/2G8XbjvLGnzOnGnBPWq48JulCHDdkTzm3USLhBDGCGxfU8PnAwHoIkSw6R08lLjMIiNp4if1l99qLqtNb01JkzIZzopc2PN92hRyM6g4HZQExEPvyBFsg8gLHguiBAl6tcmaykX0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z0L8oMlALeG359sacxK7BI4G4Ij0DT11cyfDjNnASI8=;
- b=u8L+5eXXnF2BotnKT1ZBlurv9rtqdoVc1pJsuWEpFcc01ndEvpClBQTJJK0qEt5acOL8yimCWbbP7UxY1NczGwx+cGHf24R4SB36f3BsX5gGHxlKDLrEXTXuj43ba3v97/Cf+JJqDXkDoj9shmDWjqjNwoJVePaZ4cgurDN6vc6pqi8uN44xbghmn/HtlNnlztNYhnEvel7LW4B/uXE0baEbRsjA1KFgrHImiL+gkXyEDihsZmQb9I743FYROnZODECZQiWji9kKYGBReSlbkAJ+5aCtKq/uLp9XJ/d7Gb6NIl8LVpIKyvvm/R360w9+Td5Gl96l1Cd33hwsBuw45g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z0L8oMlALeG359sacxK7BI4G4Ij0DT11cyfDjNnASI8=;
- b=TObv9R8dxTPueJGdqC/EoLCAV+P6m2XD+N5Q7r9V45KKw/W0LvqW+XuFxikiKmUJy7mpLqHvXk+64xwlbPFhtbok8B4XDCIemT9Lo7C0Ct0uCAEHKGSKKT0q5uHYvgtfMTPYX2+TPRI/KBmIekjXp9OM0f3yFBiKAn3TgkNqPLo7NaipJxBQi5CHwlEjP/VIuMvDiaSENKrEZe/3GaTbat7l6ezvHFVFn1kVYl3TnQfJPm/FO4IJe7+Djfv/IFIap/O05eG77Kb516WUqEIHVvhzGhqEAgfBZ/KkQPDFxzBTXxZJv4iNatyw43ETMcMVGxK/7vG4uW9HKC5xuyoCPg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by CY1PR12MB9698.namprd12.prod.outlook.com (2603:10b6:930:107::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.14; Wed, 24 Jun
- 2026 11:58:56 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0139.018; Wed, 24 Jun 2026
- 11:58:56 +0000
-Date: Wed, 24 Jun 2026 13:58:49 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Breno Leitao <leitao@debian.org>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
-	kernel-team@meta.com
-Subject: Re: [PATCH v2] sched_ext: Avoid flooding the log with deprecation
- warnings
-Message-ID: <ajvGeVwE-kNhrRHu@gpd4>
-References: <20260624-scx_warning-v2-1-07d0d48b0d01@debian.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260624-scx_warning-v2-1-07d0d48b0d01@debian.org>
-X-ClientProxiedBy: MI1PEPF000008D2.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::432) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="R0l5uaRB"
+Message-ID: <f99b70cc-e11c-42a9-a986-d20b3f232a31@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782304195;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eNfuHxO86n8b93ev9jYNFJxXkathlRXlXpz1k/8S9nI=;
+	b=R0l5uaRBMcxiN2aXXeE7sJmbbWZ+nIwvYOIBg2hW4xeZNywWJj11l3PcvXG3Ip7YlbinqT
+	P/PQ6kfAvOv13VlW7fdMv2tpC85uXP91R5VJRz9HOOc6aZfnOL/SuWOVvCXI8elJq6bVmX
+	Hq88NW9qj4aWnLm21y4nDBq7fAgYa9M=
+Date: Wed, 24 Jun 2026 20:29:26 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CY1PR12MB9698:EE_
-X-MS-Office365-Filtering-Correlation-Id: fcdfb4fd-6672-4620-ef3f-08ded1e7f832
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|7416014|376014|366016|56012099006|11063799006|18002099003|22082099003|6133799003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	Z+9WTKYi65vaWViJjYyCQf8iKh017MgOAXSBvQ/jVEwBK0IvAo6hRW0PL3w4OomJDRWMijdY1Lboucv9hjW8MWOP+i4UzTcGqwdFbKMs4CMnNAEQq0vY+wKvp61k95CSil83IcMlPOeSZDLPFHGl1iI1JqACg/UWibgZcfjpkPjAM9C1f1OuKar/vcZXDz5JBhY/rZt8FFW5BGFyR9fmIorvhCwMTzdoW7ckS5yYWZ0dux0R+ooTzNVcwwFSn2XC9jzQQnprBMtZCwPd4Q3hwOpjn8w0JB9z3GVgG1yfZU+coiKAjW3mLJcxcqRyki4j/+AL0VSGMqBhmfel2nkUbwUMzH6XMkvfseNMK6ReauBS79HAjx8eIhVDs8zF7loo2LVh7I8t7NoEWOqfx7FXMh7TgQftPkfThr/d0usZZL9LQ0chAC2xXcCVfpuP8m4O0C+BlsvvhpOYdNRpic6rR+0zzqFKimG7Fgbf9Y2rsObrqiy/okXZwZl5C0lG0zY7JQs85/N7dCqFjoW6YeX7h8cjBrxIFEUOtW2ds8W8noARWPses/NRv4JovhUvHEnyL/f5adAWu83RBKDvfgROB9E4cRWSyj0M118eNQTpG0yxWJxNKIOLMStVcNXlEkmG06EbdezC4lvsGURMM+1E9t9ia6KMIN3R7xm38a2jE3w=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(7416014)(376014)(366016)(56012099006)(11063799006)(18002099003)(22082099003)(6133799003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Aa0wQrzIb1m8sET+JLbZVtdlmCagGokdKle0hKdYCpwN5HAxtKfdiKJ+5n/V?=
- =?us-ascii?Q?+ELrc0ERc8Srl7NVMcWte0iD4+f5pmBCLAhFFJmms0K7eg9fM3iGB25kNmbz?=
- =?us-ascii?Q?2jnhBMC77NcH+NrP/V/E+10MjFfAUueyjW4/NWax+CG4f3AQ0lL0BkD8f5si?=
- =?us-ascii?Q?D2KG5X4iOQ+98G2P7kmX7l3c12J2Kk8T0iTTrWkItBNRe1pQMwPsceCORtBR?=
- =?us-ascii?Q?QbyxIpMVbPsbogAS8m4f/szti60bKv3uZr728zDS23o1FFf6gZFbpG86nvAc?=
- =?us-ascii?Q?xAZzNmNE2mAPXfL9x4QJ3XLBuiyGqXMtJAkrFh6lCv5PJRVHzeBdDWNtlTR4?=
- =?us-ascii?Q?MeDWrga0lzNV8lu/jgArCq8n2LUDiGHxlC3o+QIPS528ENAxKPvOjf/Ia/Es?=
- =?us-ascii?Q?GgHF7XJMYSzQLDN6n0FVpUaBQGqYqCsVvtZ8Eg2MaU9T/HWGX/fUYKmHCfeX?=
- =?us-ascii?Q?vP+kfRIsorX/CFPYLONnOrZ7d1sLfdlU9InOgE6H50u84xM+7SQkjGLcSOXS?=
- =?us-ascii?Q?8DyJlbTJeyDykP1gfYyqIkwZxEO0KVXiWhNpwhnUqxFjDsMLAT1rK5Xq4ILZ?=
- =?us-ascii?Q?ZqV1PCmdLp5H8zC5TPZlkhypU2lZW+XwFWcE4+Q5hjscPr/RzzYOStqusto5?=
- =?us-ascii?Q?3xbLGz3FfygF9cqE+HjG7Mn4zOaJj0c4pasbbnqWz/U8qSFlr8vEpdMZGq6/?=
- =?us-ascii?Q?XLLUgNeHaF+3NXR+bsS01GMNQO/QEBG7hCk7h5yyJMgYqPQkq0xbVMxtvL1G?=
- =?us-ascii?Q?MB6P0+lvB9kMT9MB/FxcFS/inV4KiTxni6gYL0+c+U5dpU3fhOu/tligIo/o?=
- =?us-ascii?Q?NXVTJ40CBW/KQQ4WHZMmllcAJCQWLi2C+uLN7v9NFf8UefrT8oJL6A5TnQBA?=
- =?us-ascii?Q?64XLmcGHru1GaPFcmsr6MJtJ9A0wmdyMaanueAFtwO7N23YVjGTqAL/hrDoj?=
- =?us-ascii?Q?LVr91hN936S5fUYC3iNWT2VJYogMG3tE1m5uCT2T09Gyi5rli2/1urcDuV/z?=
- =?us-ascii?Q?OcUfqm9IM2/keuOAXyIcrZye6iCQn1BgPmtUYjr5PpqLQO80T6q9i+lEzptq?=
- =?us-ascii?Q?ZBAW0Uv5wgekcFtraPTGvFIW5WazVKSJNMYyUeKgfPZE5B8atPgs3aimlp5F?=
- =?us-ascii?Q?xz/QDTTp0MWGzPQF9LNUPuB1BD4YoJs6F/iVl3gTNvfjfAWa4xhCNYmrOjcN?=
- =?us-ascii?Q?oxsHMYfc1HgBx7k1OQslNQZMsq7Ng4LR7xjIWXrOdMCQm24SkB88wOblfwFe?=
- =?us-ascii?Q?EVP0D8qcZG2ju9q/V8OAzicuBYcu9BbwAi/iTYH0HKpgjGiOvOET/ovDnj2M?=
- =?us-ascii?Q?R2AJlmFpqUBsLgONFGFSKBHHSnG+VKBEYd8zvhon8E1IfprOM3sImxBTFjHD?=
- =?us-ascii?Q?AaPTVcVHoZc9qrVeeNsy0kfBIiEuRAghNYnAjOKwN7Nb/E8hCTVE6HtiWpav?=
- =?us-ascii?Q?/KbMHnSbBPfeFNXRGVrcYvmbNj5Sb2r/cI7PJiifqq/geujF77b3vDcM/54K?=
- =?us-ascii?Q?aa0Ep/oHEZiR/rwczh8HH7fXgYjNvSn7+9Ucoth/1/cPxOMqi86A0pKaERKz?=
- =?us-ascii?Q?4AsDeXHhhiur5bcGjDAWX/tPK5/2lfK3w6YXsgdTTcv7m9aUUmw4mIbS4Isl?=
- =?us-ascii?Q?cnTeksNm4FnBtu9C9bVT8dnuKADRE6pWzHoWyNpWmLDX2Pp5TnepnwSaoOWq?=
- =?us-ascii?Q?TBjnOekTHy0btDyDR/97hp2CTDFjvSFdEk1BDjbXdGfk7QVl?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fcdfb4fd-6672-4620-ef3f-08ded1e7f832
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2026 11:58:56.6233
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: f5oaoHF93Xn0noY+6w+bg3oMf8CC1syoKg2vNWksmsSebW1pszUl8b9HpuhYMHeH/CD7d4jZIHg2BapP56QLRA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR12MB9698
+Subject: Re: [PATCH v3 0/7] Prepare mutable list iterators to cache cursor
+ state
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+ Tejun Heo <tj@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Peter Zijlstra <peterz@infradead.org>,
+ Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+ Juri Lelli <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>,
+ Paul Moore <paul@paul-moore.com>, "Paul E. McKenney" <paulmck@kernel.org>,
+ Shakeel Butt <shakeel.butt@linux.dev>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ David Howells <dhowells@redhat.com>, Simona Vetter <simona.vetter@ffwll.ch>,
+ Randy Dunlap <rdunlap@infradead.org>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Philipp Stanner <phasta@kernel.org>, linux-block@vger.kernel.org,
+ LKML <linux-kernel@vger.kernel.org>,
+ "open list:CONTROL GROUP (CGROUP)" <cgroups@vger.kernel.org>,
+ linux-ntfs-dev@lists.sourceforge.net,
+ Linux-Fsdevel <linux-fsdevel@vger.kernel.org>,
+ io-uring <io-uring@vger.kernel.org>, audit@vger.kernel.org,
+ bpf <bpf@vger.kernel.org>, Network Development <netdev@vger.kernel.org>,
+ dri-devel@lists.freedesktop.org,
+ "linux-perf-use." <linux-perf-users@vger.kernel.org>,
+ linux-trace-kernel <linux-trace-kernel@vger.kernel.org>,
+ kexec@lists.infradead.org, live-patching@vger.kernel.org,
+ linux-modules@vger.kernel.org,
+ Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+ Linux Power Management <linux-pm@vger.kernel.org>, rcu@vger.kernel.org,
+ sched-ext@lists.linux.dev, linux-mm <linux-mm@kvack.org>,
+ virtualization@lists.linux.dev, damon@lists.linux.dev,
+ clang-built-linux <llvm@lists.linux.dev>,
+ chengkaitao <chengkaitao@kylinos.cn>, Muchun Song <muchun.song@linux.dev>
+References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
+ <CAADnVQJmPWFT01b7DuLdtafv=8FyB84GYHNZ8zSTck+9Aw0JpA@mail.gmail.com>
+ <8c8f1849-86d3-4c69-be27-30bbdffdf616@linux.dev>
+ <ajkSftEbdGoiJXYs@ashevche-desk.local>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Kaitao Cheng <kaitao.cheng@linux.dev>
+In-Reply-To: <ajkSftEbdGoiJXYs@ashevche-desk.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-Hi Breno,
 
-On Wed, Jun 24, 2026 at 02:27:43AM -0700, Breno Leitao wrote:
-> The deprecation notices for direct p->scx.slice/dsq_vtime writes and for
-> ops->cpu_acquire/release() use plain pr_warn(), so they repeat on every
-> scheduler (re)load and can flood the kernel log.
-> 
-> The slice/dsq_vtime notice is the worst offender: it is emitted from the
-> BPF verifier's btf_struct_access callback, which is re-evaluated as the
-> verifier explores program paths, so a single scheduler load can print it
-> many times -- hundreds of lines on some hosts, dozens within the same
-> second.
-> 
-> Switch both notices to pr_warn_ratelimited() so each deprecation is still
-> reported but bursts no longer spam the log, and add the missing newline
-> to the slice/dsq_vtime message.
-> 
-> Signed-off-by: Breno Leitao <leitao@debian.org>
 
-Looks good to me.
+在 2026/6/22 18:46, Andy Shevchenko 写道:
+> On Mon, Jun 22, 2026 at 02:15:01PM +0800, Kaitao Cheng wrote:
+>> 在 2026/6/22 13:28, Alexei Starovoitov 写道:
+>>> On Sun, Jun 21, 2026 at 9:06 PM Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
+> 
+> ...
+> 
+>>>>  block/bfq-iosched.c                 |  17 +-
+>>>>  block/blk-cgroup.c                  |  12 +-
+>>>>  block/blk-flush.c                   |   4 +-
+>>>>  block/blk-iocost.c                  |  18 +-
+>>>>  block/blk-mq.c                      |   8 +-
+>>>>  block/blk-throttle.c                |   4 +-
+>>>>  block/kyber-iosched.c               |   4 +-
+>>>>  block/partitions/ldm.c              |   8 +-
+>>>>  block/sed-opal.c                    |   4 +-
+>>>>  include/linux/list.h                | 269 ++++++++++++++++++++++++----
+>>>>  include/linux/llist.h               |  81 +++++++--
+>>>>  init/initramfs.c                    |   5 +-
+>>>>  io_uring/cancel.c                   |   6 +-
+>>>>  io_uring/poll.c                     |   3 +-
+>>>>  io_uring/rw.c                       |   4 +-
+>>>>  io_uring/timeout.c                  |   8 +-
+>>>>  io_uring/uring_cmd.c                |   3 +-
+>>>>  kernel/audit_tree.c                 |   4 +-
+>>>>  kernel/audit_watch.c                |  16 +-
+>>>>  kernel/auditfilter.c                |   4 +-
+>>>>  kernel/auditsc.c                    |   4 +-
+>>>>  kernel/bpf/arena.c                  |  10 +-
+>>>>  kernel/bpf/arraymap.c               |   8 +-
+>>>>  kernel/bpf/bpf_local_storage.c      |   3 +-
+>>>>  kernel/bpf/bpf_lru_list.c           |  25 ++-
+>>>>  kernel/bpf/btf.c                    |  18 +-
+>>>>  kernel/bpf/cgroup.c                 |   7 +-
+>>>>  kernel/bpf/cpumap.c                 |   4 +-
+>>>>  kernel/bpf/devmap.c                 |  10 +-
+>>>>  kernel/bpf/helpers.c                |   8 +-
+>>>>  kernel/bpf/local_storage.c          |   4 +-
+>>>>  kernel/bpf/memalloc.c               |  16 +-
+>>>>  kernel/bpf/offload.c                |   8 +-
+>>>>  kernel/bpf/states.c                 |   4 +-
+>>>>  kernel/bpf/stream.c                 |   4 +-
+>>>>  kernel/bpf/verifier.c               |   6 +-
+>>>>  kernel/cgroup/cgroup-v1.c           |   4 +-
+>>>>  kernel/cgroup/cgroup.c              |  54 +++---
+>>>>  kernel/cgroup/dmem.c                |  12 +-
+>>>>  kernel/cgroup/rdma.c                |   8 +-
+>>>>  kernel/events/core.c                |  44 +++--
+>>>>  kernel/events/uprobes.c             |  12 +-
+>>>>  kernel/exit.c                       |   8 +-
+>>>>  kernel/fail_function.c              |   4 +-
+>>>>  kernel/gcov/clang.c                 |   4 +-
+>>>>  kernel/irq_work.c                   |   4 +-
+>>>>  kernel/kexec_core.c                 |   4 +-
+>>>>  kernel/kprobes.c                    |  16 +-
+>>>>  kernel/livepatch/core.c             |   4 +-
+>>>>  kernel/livepatch/core.h             |   4 +-
+>>>>  kernel/liveupdate/kho_block.c       |   4 +-
+>>>>  kernel/liveupdate/luo_flb.c         |   4 +-
+>>>>  kernel/locking/rwsem.c              |   2 +-
+>>>>  kernel/locking/test-ww_mutex.c      |   2 +-
+>>>>  kernel/module/main.c                |  11 +-
+>>>>  kernel/padata.c                     |   4 +-
+>>>>  kernel/power/snapshot.c             |   8 +-
+>>>>  kernel/power/wakelock.c             |   4 +-
+>>>>  kernel/printk/printk.c              |  11 +-
+>>>>  kernel/ptrace.c                     |   4 +-
+>>>>  kernel/rcu/rcutorture.c             |   3 +-
+>>>>  kernel/rcu/tasks.h                  |   9 +-
+>>>>  kernel/rcu/tree.c                   |   6 +-
+>>>>  kernel/resource.c                   |   4 +-
+>>>>  kernel/sched/core.c                 |   4 +-
+>>>>  kernel/sched/ext.c                  |  22 +--
+>>>>  kernel/sched/fair.c                 |  28 +--
+>>>>  kernel/sched/topology.c             |   4 +-
+>>>>  kernel/sched/wait.c                 |   4 +-
+>>>>  kernel/seccomp.c                    |   4 +-
+>>>>  kernel/signal.c                     |  11 +-
+>>>>  kernel/smp.c                        |   4 +-
+>>>>  kernel/taskstats.c                  |   8 +-
+>>>>  kernel/time/clockevents.c           |   6 +-
+>>>>  kernel/time/clocksource.c           |   4 +-
+>>>>  kernel/time/posix-cpu-timers.c      |   4 +-
+>>>>  kernel/time/posix-timers.c          |   3 +-
+>>>>  kernel/torture.c                    |   3 +-
+>>>>  kernel/trace/bpf_trace.c            |   4 +-
+>>>>  kernel/trace/ftrace.c               |  49 +++--
+>>>>  kernel/trace/ring_buffer.c          |  25 ++-
+>>>>  kernel/trace/trace.c                |  12 +-
+>>>>  kernel/trace/trace_dynevent.c       |   6 +-
+>>>>  kernel/trace/trace_dynevent.h       |   5 +-
+>>>>  kernel/trace/trace_events.c         |  35 ++--
+>>>>  kernel/trace/trace_events_filter.c  |   4 +-
+>>>>  kernel/trace/trace_events_hist.c    |   8 +-
+>>>>  kernel/trace/trace_events_trigger.c |  17 +-
+>>>>  kernel/trace/trace_events_user.c    |  16 +-
+>>>>  kernel/trace/trace_stat.c           |   4 +-
+>>>>  kernel/user-return-notifier.c       |   3 +-
+>>>>  kernel/workqueue.c                  |  16 +-
+>>>>  mm/backing-dev.c                    |   8 +-
+>>>>  mm/balloon.c                        |   8 +-
+>>>>  mm/cma.c                            |   4 +-
+>>>>  mm/compaction.c                     |   4 +-
+>>>>  mm/damon/core.c                     |   4 +-
+>>>>  mm/damon/sysfs-schemes.c            |   4 +-
+>>>>  mm/dmapool.c                        |   4 +-
+>>>>  mm/huge_memory.c                    |   8 +-
+>>>>  mm/hugetlb.c                        |  56 +++---
+>>>>  mm/hugetlb_vmemmap.c                |  16 +-
+>>>>  mm/khugepaged.c                     |  14 +-
+>>>>  mm/kmemleak.c                       |   7 +-
+>>>>  mm/ksm.c                            |  25 +--
+>>>>  mm/list_lru.c                       |   4 +-
+>>>>  mm/memcontrol-v1.c                  |   8 +-
+>>>>  mm/memory-failure.c                 |  12 +-
+>>>>  mm/memory-tiers.c                   |   4 +-
+>>>>  mm/migrate.c                        |  23 ++-
+>>>>  mm/mmu_notifier.c                   |   9 +-
+>>>>  mm/page_alloc.c                     |   8 +-
+>>>>  mm/page_reporting.c                 |   2 +-
+>>>>  mm/percpu.c                         |  11 +-
+>>>>  mm/pgtable-generic.c                |   4 +-
+>>>>  mm/rmap.c                           |  10 +-
+>>>>  mm/shmem.c                          |   9 +-
+>>>>  mm/slab_common.c                    |  14 +-
+>>>>  mm/slub.c                           |  33 ++--
+>>>>  mm/swapfile.c                       |   4 +-
+>>>>  mm/userfaultfd.c                    |  12 +-
+>>>>  mm/vmalloc.c                        |  24 +--
+>>>>  mm/vmscan.c                         |   7 +-
+>>>>  mm/zsmalloc.c                       |   4 +-
+>>>>  124 files changed, 875 insertions(+), 681 deletions(-)
+>>>
+>>> Not sure what you were thinking, but this diff stat
+>>> is not landable.
+>>
+>> [PATCH v3 1/7] and [PATCH v3 2/7] contain the main logic and can
+>> be merged directly. They are also compatible with the old API.
+>> [PATCH v3 3/7] through [PATCH v3 7/7] are just simple interface
+>> replacements and do not change any functional logic. They can be
+>> left unmerged for now; individual modules can pick them up later
+>> if needed.
+>>
+>> In v2, Andy Shevchenko mentioned: "If it's done by Linus himself
+>> during the day when he prepares -rc1, it's fine."
+> 
+> Yes, but you need to get his blessing first to go with this.
+> Have you communicated with him on this?
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Not yet, because the overall approach is still not mature. People
+have different opinions on the implementation details and on how
+to move this forward, so I think we should iterate through a few
+versions first before making a final decision.
 
-Thanks,
--Andrea
+>> Even so, the
+>> changes in this patch series are indeed quite large and touch
+>> almost every subsystem. I have only converted part of them for
+>> now, so I wanted to send this out first and see what people think.
+> 
+> That's why it's better to provide a script to convert (e.g., coccinelle)
+> instead of tons of patches.
 
-> ---
-> Changes in v2:
-> - Switch both deprecation notices from pr_warn_once() to
->   pr_warn_ratelimited() (Christian, Andrea)
-> - Link to v1: https://lore.kernel.org/r/20260623-scx_warning-v1-1-14bf218f4bd9@debian.org
-> ---
->  kernel/sched/ext/ext.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 691d53fe0f648..d62b93f48a854 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -6988,7 +6988,7 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
->  	 * run past the BPF allocation. Skip for cid-form.
->  	 */
->  	if (!sch->is_cid_type && (ops->cpu_acquire || ops->cpu_release))
-> -		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
-> +		pr_warn_ratelimited("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
->  
->  	/*
->  	 * Sub-scheduler support is tied to the cid-form struct_ops. A sub-sched
-> @@ -7806,7 +7806,7 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
->  		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
->  		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
->  		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
-> -			pr_warn("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()");
-> +			pr_warn_ratelimited("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()\n");
->  			return SCALAR_VALUE;
->  		}
->  
-> 
-> ---
-> base-commit: 4e5dfb7c84012007c3c7061126491bbc92d71bf1
-> change-id: 20260623-scx_warning-0df49c442afb
-> 
-> Best regards,
-> -- 
-> Breno Leitao <leitao@debian.org>
-> 
+I tried writing conversion scripts with Coccinelle, but there were
+always cases that got missed. In contrast, I found that using AI
+for focused replacements was actually more efficient.
+
+As David Hildenbrand mentioned, "If we decide we want this, I guess
+we should target per-subsystem conversions." I would like to provide
+the new interface first; adapting each subsystem on demand later may
+be easier to achieve.
+-- 
+Thanks
+Kaitao Cheng
+
