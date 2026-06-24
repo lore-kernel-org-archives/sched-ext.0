@@ -1,63 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F0933F361;
-	Tue, 23 Jun 2026 23:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D33385D70
+	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 06:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782255638; cv=none; b=jpJY750UaozIO+AQRpWz451AawcagnSeGK2nMHIxSJptTdtldxUTNDRZyYmdf1cZmAlNm43XEodVB7lo7MuuKtDQ4k9SFFLVt6YaXDjjAgA/jkWygc4/adbLLkmJ5RX4OkB3ItSQ23l7djK0126pAn8c/8/+wcWGuSLpYjCdtbE=
+	t=1782282407; cv=none; b=Fd91PGEpf4mmT9yt7kdCtT765NO7YzzDRLKZhG46CqBiBZ8H2KO97rz0TnGCzdh7kfR7tLGpQnhp0t3oqkRXuy+r3Mpmm9wO53/wUVNkVa7fRAdbYXca2cY3F6ybIhdjcrnnFqWWhT3ZCSwFd6t5prCeRtAvqDN0KQNWTxuAZaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782255638; c=relaxed/simple;
-	bh=LstOdwD+RV/1OigRzKXHAcrnGfyiHV3P3RROdlt4RBk=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=HMfcos4xX5LWo5EYTKHCEhVVXv8HuQeUhXPYHc6u5XIz1lm+/v+yj/CgRk+V7YHI61SMaaxG1N77pAPEhN9RYlTEqxi7ixVPnvlQ72+M0T0bl+n/ACyL6b8y/rinR0nk0e7aKeBa2Zl2DGY+dprPGsnqszbX1XCFk7bM3K9Be98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDyns7bK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782282407; c=relaxed/simple;
+	bh=0vjDpm2bKnUhT+EfFPRfJ1u5DQc74zrXkPdzkXOX5Co=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wgzchd06k2f5cQEqZdVLybbOv5rCBY6d59voXKyYXDAP7OxlgRql6+eM3aRw0e2104qkM6CYhU468MFFREccsRq57ys8cONkDOi6ZW6QAOADjpOu6p43l1nrjlnEJvrcPR3GSVycX+gS4q7ln5A4ws2butiiEuj1RUuHBlr8NH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Juja3//w; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=defu1nJc; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDyns7bK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4612B1F000E9;
-	Tue, 23 Jun 2026 23:00:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782255637;
-	bh=hl+jJ15giJ5dDhBQANGmA+71L5gTMQVOmUmt+O8Gg0g=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc;
-	b=RDyns7bKeBOzIjwQl6P22XUC2Ux6s0GXVBnC6TFkCnWGOhEAwpwwI3j796Z1szIhN
-	 DDGJNMNNCycQ1y3vD393SNwYm+FTrkHzih3BV+P9JQt8g1pdj7hp4jFvVlu6P72sV1
-	 MHU9cauyjqyl508hGBh5gK/ZLqxvD7fPCQJd+3JtDYZ66FkLQAuEvERaSZFfHU73nV
-	 esAXSfw/Af8Mwgyar3GHPIgx4OZJ1F2SyW5s53sqoxk+j6VL1tSCWPivVaJELqHvlR
-	 j6tLvCVa1cs5RCssI6owSCQUX+uPZzrY1oCVpPqThFWvrqv5HCwoX9hYj6ufR0zVeL
-	 VZ6jx95hQzolQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D0A8C393101D;
-	Tue, 23 Jun 2026 23:00:27 +0000 (UTC)
-Subject: Re: [GIT PULL] sched_ext: Source tree reorganization for v7.2
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <e10b2679e4d0882e6d690c55c3efaa74@kernel.org>
-References: <e10b2679e4d0882e6d690c55c3efaa74@kernel.org>
-X-PR-Tracked-List-Id: <sched-ext.lists.linux.dev>
-X-PR-Tracked-Message-Id: <e10b2679e4d0882e6d690c55c3efaa74@kernel.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.2-1
-X-PR-Tracked-Commit-Id: 4437ad129cf5b37c00a5bc9fa5989d1da4d64d07
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 7603d8e78023e5883e075b4625fbdf059c6384f7
-Message-Id: <178225562639.2458641.11162450186242210908.pr-tracker-bot@kernel.org>
-Date: Tue, 23 Jun 2026 23:00:26 +0000
-To: Tejun Heo <tj@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Juja3//w";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="defu1nJc"
+Date: Wed, 24 Jun 2026 08:26:42 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1782282404;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UEwSwydbqyddg0x4WGqgKE9dtk0yX5ie6tfL0VulhhQ=;
+	b=Juja3//wAMtoqQ9BPBv8GnGjLzUs4cHvNu+MiAp1raa+aOuYzcgHGnpnK0PR9UoxnIaWSm
+	KnHqjI/GItmuSvC8UqLaCmju8Aj3LAvJCC1uLHQLNpaqA6HHgBYrjD+g7LcNMmj1xTQDj9
+	exkKkwFTfd4lWXYfSWABZsWnvLIuY9pf7p7pFcgowI0vulYbvuC4+FGWJEJAOr7udUXfci
+	yS+boDlanrogfe4D4dKtZckjjZ5/Bv89Aeb5nYBVaQyGPJYbCSqsQb+Az5fVkECc1s8wCH
+	bf/LZNLZtMjxU8xFx5yJ/rXVqcRlk3n1r108pLgeq3ZECooAQorWHiuKUxeTgw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1782282404;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UEwSwydbqyddg0x4WGqgKE9dtk0yX5ie6tfL0VulhhQ=;
+	b=defu1nJc+8utxGZI3K+aqFY0T0pIpJuycUiiStzL1lpqAw4pWEq86wVndS4WRZgCg/nDlw
+	lqWbWAicArExUlAQ==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: linux-arch@vger.kernel.org, linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev, netdev@vger.kernel.org,
+	"David S . Miller" <davem@davemloft.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>, Ben Segall <bsegall@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Changwoo Min <changwoo@igalia.com>,
+	David Vernet <void@manifault.com>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Eric Dumazet <edumazet@google.com>, Ingo Molnar <mingo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Juri Lelli <juri.lelli@redhat.com>, Paolo Abeni <pabeni@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Vlad Poenaru <vlad.wing@gmail.com>
+Subject: Re: [PATCH 1/2] bug: Provide WARN_ON.*DEFERRED() macros for console
+ deferred output
+Message-ID: <20260624062642.5DER6vrP@linutronix.de>
+References: <20260623142650.265721-1-bigeasy@linutronix.de>
+ <20260623142650.265721-2-bigeasy@linutronix.de>
+ <038a11a7-4ced-49ae-b605-2058733e841a@amd.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <038a11a7-4ced-49ae-b605-2058733e841a@amd.com>
 
-The pull request you sent on Mon, 22 Jun 2026 11:32:20 -1000:
+On 2026-06-23 20:24:02 [+0530], K Prateek Nayak wrote:
+> Hello Sebastian,
+Hi Prateek,
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.2-1
+> nit.
+>=20
+> Instead of replicating these bits, can we replace that return with a
+> "goto out" ...
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/7603d8e78023e5883e075b4625fbdf059c6384f7
+sure
 
-Thank you!
+=E2=80=A6
+> ... and replace this return with a:
+>=20
+>     return (warning) ? BUG_TRAP_TYPE_WARN : BUG_TRAP_TYPE_BUG;
+>=20
+> Looks a tab bit cleaner to my eyes. Thoughts?
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+It sure does.
+I wait for PeterZ' executive order to either do this and sprinkle sched/
+_or_ make legacy consoles deferred as it is done on RT.
+
+Petr, was there a big push back doing it unconditionally?
+
+> >  }
+> > =20
+
+Sebastian
