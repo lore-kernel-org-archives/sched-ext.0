@@ -1,86 +1,133 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from canpmsgout12.his.huawei.com (canpmsgout12.his.huawei.com [113.46.200.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3149F3B8BBF;
-	Wed, 24 Jun 2026 09:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D46236453;
+	Wed, 24 Jun 2026 09:40:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782293624; cv=none; b=hIO4JB1oWVaJMgK2IbnMpxI6sYJ38DSdS/tVzBJn4SRQOkyru8ltulkSAmA+u/JF6430fy8abzYcgt+W3ZuyCDFHqqPgYjHVJ1abpoGH9x7gwyhJQ/slGz6MfmlHavVlWjRuxGzcTWnF6jVQx/HQd36MRF+Mt/WnmNpS7DJlfRc=
+	t=1782294055; cv=none; b=uyPPGehVkZmNL7ja+/u3l/A+kYRIIPyKlHLqVz4UywgonUK9yEoZUOmanbp3P8mWEo0I3CzbFDPrzIM05SeMGGSxSYeIa1Dpdsae4EAD5FWb/CQ+JG4BbD6OzMVO00aoT+OOLiQ5Pal8oEsT/enIG+CD6kMAf59xdLOCVrhtqrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782293624; c=relaxed/simple;
-	bh=V4vMrLF5C917jIRL0H6Sc3xfE5TkB1yz3QjooYWMHWY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lsVAPv0HCc4JquiCCDMI28h1oL1ft+vqrs7UMdiYIifjmUQgriEoE4nsgXZ/R1UulP1CBcfcPZgdUi1Uqr3QMqd7kD8n2ocAm30m4P/ttYmdLp/LsTDqshC8zCnDsh4TRbEfqseTyuJL04B3Vz08tBxCFEoZVzjftMwWKBPyhhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ggrrtMIn; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1782294055; c=relaxed/simple;
+	bh=tT27IDAuXIjVYckOZ1Q1mSGk8t0bXJmn2Y5yivwiA/s=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=b1z6m9qq4mPMk8+ZQEmG1rgpxv0ZAfgSnsREaev4OvwgE7wqNMZtjUYcXmx+BklLtVFBNronqJK3CnqAnU1ThRlpfiIIdjH5Qs0d2OnM+fHI2ArlpowXiimJIEk3uUv78tTXTYdTrSzwZwQV2sclkCy4YKwfU8870H/qOM+MKHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=bRz9KT1e; arc=none smtp.client-ip=113.46.200.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ggrrtMIn"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=sVRuQnNxdi3tJrHHgcSarysIVdxQK98sXhem72xXjy0=; b=ggrrtMInP9TTthnUgcWBoro+wQ
-	BBkKjlj8LcZuG34xXkPE23doalYvTsTPsKw4AVm0qht4vsjrttsvcvf94I9KQS0fmdJ+ohWmalzm1
-	TzVuztK9AOknuMOt8vDAHlAcJ+CYcutqLRaZUm3x3BA4mWTlv07e36+NEUDhRnmoiw8BFOsPVFfz7
-	mFdimNYjlh7kOndRAvTH8lASWCFgcw9AbiyqPmqMrRS1TZ2qw2NyqnfeqyzStBl3w+iZC9SevFQAN
-	CcT2I2qruCmkg99UzMJ+wEwqSi5F0Hx5nSyo/LAmrZ0nB48J3MTVjhnLVmaiLimVHNz0kEogPZaM8
-	4qN15aqg==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wcJz7-00000007mrK-1mY0;
-	Wed, 24 Jun 2026 09:33:29 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 430E0300400; Wed, 24 Jun 2026 11:33:29 +0200 (CEST)
-Date: Wed, 24 Jun 2026 11:33:29 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: linux-arch@vger.kernel.org, linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev, netdev@vger.kernel.org,
-	"David S . Miller" <davem@davemloft.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>, Ben Segall <bsegall@google.com>,
-	Breno Leitao <leitao@debian.org>,
-	Changwoo Min <changwoo@igalia.com>,
-	David Vernet <void@manifault.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Eric Dumazet <edumazet@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>, Petr Mladek <pmladek@suse.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Simon Horman <horms@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Vlad Poenaru <vlad.wing@gmail.com>
-Subject: Re: [PATCH 0/2] sched: Introduce and use deferred WARNs in sched
-Message-ID: <20260624093329.GZ48970@noisy.programming.kicks-ass.net>
-References: <20260623142650.265721-1-bigeasy@linutronix.de>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="bRz9KT1e"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=rNHX1BfC0QKNibPspyDmD9iG11VJWd6nZncAxWH+f/w=;
+	b=bRz9KT1eAlznzLJgDND17LoitwvHvOd8MLENIGEKywJQi+P88Uud05b7e4LX+mVY1/pvkVpXH
+	FyeCThQmId96vhjN4oaJjA1yVW3AC574iuSCFDsB2LJOPTxmlwtFu/k3rsC9WyvMS5Z9h4t69+s
+	rWbo7yGXDY7E3+TuEc1SwPg=
+Received: from mail.maildlp.com (unknown [172.19.163.163])
+	by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4glcCQ2rH6znTVR;
+	Wed, 24 Jun 2026 17:32:02 +0800 (CST)
+Received: from dggemv712-chm.china.huawei.com (unknown [10.1.198.32])
+	by mail.maildlp.com (Postfix) with ESMTPS id 51BA440575;
+	Wed, 24 Jun 2026 17:40:46 +0800 (CST)
+Received: from kwepemq100012.china.huawei.com (7.202.195.195) by
+ dggemv712-chm.china.huawei.com (10.1.198.32) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 24 Jun 2026 17:40:46 +0800
+Received: from huawei.com (10.67.175.84) by kwepemq100012.china.huawei.com
+ (7.202.195.195) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 24 Jun
+ 2026 17:40:45 +0800
+From: Zicheng Qu <quzicheng@huawei.com>
+To: <sashiko-bot@kernel.org>
+CC: <sashiko-reviews@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<sched-ext@lists.linux.dev>, <peterz@infradead.org>, <arighi@nvidia.com>,
+	<brho@google.com>, <bsegall@google.com>, <changwoo@igalia.com>,
+	<dietmar.eggemann@arm.com>, <haoluo@google.com>, <joshdon@google.com>,
+	<juri.lelli@redhat.co>, <kprateek.nayak@amd.com>, <mgorman@suse.de>,
+	<mingo@redhat.com>, <rostedt@goodmis.org>, <tj@kernel.org>,
+	<vincent.guittot@linaro.org>, <void@manifault.com>, <vschneid@redhat.com>,
+	<tanghui20@huawei.com>, <zhangqiao22@huawei.com>, <quzicheng@huawei.com>,
+	<quzicheng315@gmail.com>
+Subject: [PATCH v4 1/2] sched/fair: Rebuild load weight when switching to fair
+Date: Wed, 24 Jun 2026 09:16:47 +0000
+Message-ID: <20260624091648.271891-2-quzicheng@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260624091648.271891-1-quzicheng@huawei.com>
+References: <20260530050609.0D0FB1F00893@smtp.kernel.org>
+ <20260624091648.271891-1-quzicheng@huawei.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260623142650.265721-1-bigeasy@linutronix.de>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemq100012.china.huawei.com (7.202.195.195)
 
-On Tue, Jun 23, 2026 at 04:26:48PM +0200, Sebastian Andrzej Siewior wrote:
-> This is a follow-up to the netconsole lockup reported
-> 	https://lore.kernel.org/all/20260610183621.3915271-1-vlad.wing@gmail.com/
-> 
-> The idea is to use deferred printing for WARNs and use them in sched. I
-> tried to use only where it looks that the rq lock acquired instead a
-> plain s/WARN_ON/WARN_ON_DEFFERED which would be simpler.
-> 
-> This unholy deferred mess can be removed once we don't have legacy
-> consoles anymore _or_ force force_legacy_kthread=true.
+Tasks that run outside fair may not keep p->se.load in sync with their
+current scheduling policy and static priority. sched_ext, for example,
+uses p->scx.weight as the active scheduling weight, so p->se.load can be
+stale when a task moves back to fair.
 
-So I really don't see why we should do this. This has been a 'problem'
-forever, and printk() is actually being fixed.
+The fair_sched_class expects the sched_entity load weight to be valid
+before the task is enqueued. Rebuild it from fair's switching_to hook,
+which runs after the class has been changed to fair and before enqueue,
+so both sched_ext disable and SCHED_EXT to SCHED_NORMAL transitions get
+a native fair load weight.
 
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+---
+Changes in v4:
+- No code changes.
+- Add Tejun's Acked-by.
+- Split the PELT load_avg synchronization into patch 2.
 
+Changes in v3:
+- Move the rebuild into fair's switching_to hook, as suggested by Peter.
+  This lets fair prepare its own state before enqueue and avoids adding a
+  sched_ext/fair-specific fixup to the generic sched_change_end() path.
+
+Changes in v2:
+- Move the fix from scx_root_disable() to the class switch path so it also
+  covers partial-mode SCHED_EXT to SCHED_NORMAL transitions through
+  sched_setscheduler(). Andrea identified this missing case in the v1
+  discussion.
+
+ kernel/sched/fair.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index d78467ec6ee1..edb11065a9fc 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -14998,6 +14998,15 @@ static void switching_from_fair(struct rq *rq, struct task_struct *p)
+ 		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
+ }
+ 
++static void switching_to_fair(struct rq *rq, struct task_struct *p)
++{
++	/*
++	 * Tasks may come from classes that don't keep se.load up to date.
++	 * Rebuild it before the task is enqueued.
++	 */
++	set_load_weight(p, false);
++}
++
+ static void switched_from_fair(struct rq *rq, struct task_struct *p)
+ {
+ 	detach_task_cfs_rq(p);
+@@ -15379,6 +15388,7 @@ DEFINE_SCHED_CLASS(fair) = {
+ 	.reweight_task		= reweight_task_fair,
+ 	.prio_changed		= prio_changed_fair,
+ 	.switching_from		= switching_from_fair,
++	.switching_to		= switching_to_fair,
+ 	.switched_from		= switched_from_fair,
+ 	.switched_to		= switched_to_fair,
+ 
+-- 
+2.53.0
