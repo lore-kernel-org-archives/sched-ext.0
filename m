@@ -1,126 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EEE3C10B0
-	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 14:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7603DA5B0
+	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 15:24:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782311239; cv=none; b=mkXI96RlOLUaNl1VQpQSlt7wO7Bga33Dz9TYutNmz/vG1HVGsKNxCbq5a6h0rRz3z/kSXv+uWRwJ0cSnXRake7lWDHFOztxDb1bV64OQSzhifqmeSsLPpXs0gLuOUatZo8Z1LmpPDaBgHWrFoAP9fzb4HdPJTxxkPFnEZFhKX6E=
+	t=1782314676; cv=none; b=bAkvl/FlaVbX+ZfViYwtV3Ovou/kVXx7MkTqUi1By1ZGMXfXIT97s8Wyuamk/gl2aR/8YuwGwsYwgHHaSWMnqdbavfH4uz1v39kTQf0wRlr2C70qaVq1f5duZga/N7tnSucT464NSfE/pOBebnunRg5crEwcdE53ekd8e32Ob2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782311239; c=relaxed/simple;
-	bh=bWBKhTvENMGyZeJKlPNYJGpyYAYnSBL7qBytJhw0xKk=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=C+85TaEen+f4Upwgz0FNdTWuokNXNZ6wEJUF10o2m1hNV08vBh9WD/bCTKdoJwrZkrR0xEj/gWZOfzuQJ8INcrpLOUYRyBhatHLZp6mWC+SKO2ykmuBchC74Etcz7vBN1Z6xuJqchp+cHLnJpNNZQctCQQsaVB4XZifsFzLxMq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kIkLlHXX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782314676; c=relaxed/simple;
+	bh=fsiytajv6eNJbyCkiukybDge6rLIme/uqRKFEf3Y1c4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OblWcm9Ur9PYw6soIzKE7VdRSJGd3XxpUlnAZKoceBjiLIBQnQEJpLaB2sLhen4JmohOcx50A/jR7qZxCheJ9hxu6FdW7XufKApxGkbmVYTcD1DV7DZF3VbQEQeraCSAQLRGu4N5/SjK5A93y3PwCxZ+lSkYDbjsDCZLt5SYOrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=ahUQRXee; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=9tMnLg60; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kIkLlHXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32061F00A3A;
-	Wed, 24 Jun 2026 14:27:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782311237;
-	bh=d8wB0ihyA0YdY6yKehBkymeG744RqgWrjkKM8qy5GFI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kIkLlHXXkiiyOlfjI9fJt8V0rvHOzSpplQx+AlHwleXkUsYRCxTvbQz3rcanGHLa9
-	 GQsRZ4nq66W0TOF2jRe6JNVUgaMl3HBwwWhLB8xdAHoXlRPFGK7VtFFjWx6wUNYDP/
-	 k/KeWn3kuoeUUmTsOwFQhw2jdESoSIes0Xn/OtXjupkutmB8gWdeR60c8rOxfk76xU
-	 9lj/HpczSyCRONaz6aAOhw4sgIUnkVByhTEQewPG/8IiPJeZ8Oga1CvtEEhaP2DTuo
-	 51wXutiJVuRsYNebcFc4cCsOgtWmivNy2hVSKo4ifjHRMiReL+8wF5aXc/yOTU+aMc
-	 A8+s6yXfGV1RA==
-From: sashiko-bot@kernel.org
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="ahUQRXee";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="9tMnLg60"
+Date: Wed, 24 Jun 2026 17:24:31 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1782314673;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fsiytajv6eNJbyCkiukybDge6rLIme/uqRKFEf3Y1c4=;
+	b=ahUQRXeeeV84Rz5Yg77XzGuHhYAaoBCRdm1McRqx7y+mWDGflHSNa7lt6Q9OXNzXexrExU
+	VdqrrgO/NyD4r6i2cals3J9t5QjZ3pLntOHSyn7S2mctc0HPlvZfKhVLt/VHjcMinP616T
+	OHuE/0vVzLrKPVPjMTcPcNCOiZFeZ5KtRboW3TfX5LYotq6vNmzVOrLqNwy9m1tRX7OCB2
+	du9oyIgY5AZjLZb5jvgtUzXlN/YEZ037dyAIssm/TsQXToDDfEbwZMdbua32cpkBL1Ilfk
+	A4aByCqaqBPYgV7yDUzAgiNt1cStfQRsjFJFN8E3nYuK6i7/qoi+0ATslguL1A==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1782314673;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fsiytajv6eNJbyCkiukybDge6rLIme/uqRKFEf3Y1c4=;
+	b=9tMnLg60JUqdRsMpQfN6XFvVhk1aA3iUFCE1d6X8zsBbvcQQgvkRHjg1RrF5Nkd+0UyHSB
+	TDhCtq5F0ld7g9AA==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: Petr Mladek <pmladek@suse.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>, linux-arch@vger.kernel.org,
+	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	netdev@vger.kernel.org, "David S . Miller" <davem@davemloft.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>, Ben Segall <bsegall@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Changwoo Min <changwoo@igalia.com>,
+	David Vernet <void@manifault.com>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Eric Dumazet <edumazet@google.com>, Ingo Molnar <mingo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Juri Lelli <juri.lelli@redhat.com>, Paolo Abeni <pabeni@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Simon Horman <horms@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Vlad Poenaru <vlad.wing@gmail.com>
 Subject: Re: [PATCH 1/2] bug: Provide WARN_ON.*DEFERRED() macros for console
  deferred output
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sebastian Andrzej Siewior" <bigeasy@linutronix.de>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260623142650.265721-2-bigeasy@linutronix.de>
+Message-ID: <20260624152431.Ufq0jT8r@linutronix.de>
 References: <20260623142650.265721-1-bigeasy@linutronix.de>
  <20260623142650.265721-2-bigeasy@linutronix.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 24 Jun 2026 14:27:17 +0000
-Message-Id: <20260624142717.B32061F00A3A@smtp.kernel.org>
+ <038a11a7-4ced-49ae-b605-2058733e841a@amd.com>
+ <20260624062642.5DER6vrP@linutronix.de>
+ <ajugq8VAciqtMx9F@pathway.suse.cz>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ajugq8VAciqtMx9F@pathway.suse.cz>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [High] Using guard(preempt) instead of guard(preempt_notrace) risks infin=
-ite tracing recursion.
-- [Low] Missing semicolons after function/macro calls in the fallback imple=
-mentation of WARN_ON_DEFERRED.
-- [Low] Undeclared dependency on <linux/cleanup.h> and <linux/preempt.h> fo=
-r guard(preempt).
---
+On 2026-06-24 11:17:31 [+0200], Petr Mladek wrote:
+> For Linus, it was a no-go, definitely.
+=E2=80=A6
+> I would vote for adding the WARN_*DEFERRED() into the scheduler code
+> at least until majority of console drivers are converted to nbcon API.
 
-commit 2038be49d63c72765117592b09ef0f46f0eef9d8
-Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+I see four nbcon serial console drivers (+netconsole, + drm_log). We
+have at least four times that many console drivers. What is the
+majority from your point of view? The 8250 should cover all of x86.
 
-bug: Provide WARN_ON.*DEFERRED() macros for console deferred output
+> Best Regards,
+> Petr
 
-This commit introduces a deferred version of the WARN_ON() macro to delay
-flushing the console until a later context. It implements WARN_ON_DEFERRED
-and WARN_ON_ONCE_DEFERRED using printk_deferred_enter/exit() and extends
-__report_bug() to handle the deferred case.
-
-> diff --git a/include/asm-generic/bug.h b/include/asm-generic/bug.h
-> index 09e8eccee8ed9..1e3ff00f709b8 100644
-> --- a/include/asm-generic/bug.h
-> +++ b/include/asm-generic/bug.h
-
-[ ... ]
-
-> @@ -159,6 +180,19 @@ extern __printf(1, 2) void __warn_printk(const char =
-*fmt, ...);
->  })
->  #endif
-> =20
-> +#ifndef WARN_ON_DEFERRED
-> +#define WARN_ON_DEFERRED(condition) ({					\
-> +	int __ret_warn_on =3D !!(condition);				\
-> +	if (unlikely(__ret_warn_on)) {					\
-> +		guard(preempt)();					\
-
-[Severity: High]
-Does this risk infinite recursion if WARN_ON_DEFERRED() is called from a
-tracing context?
-
-guard(preempt) expands to preempt_disable(), which is a traceable function.=
- If
-a deferred warning occurs in traced code, disabling preemption will re-trig=
-ger
-the tracer, which may again trigger the warning.
-
-Should this use guard(preempt_notrace)() to match the preempt_disable_notra=
-ce()
-used in __report_bug()?
-
-[Severity: Low]
-Does this introduce an undeclared dependency on <linux/cleanup.h> and
-<linux/preempt.h> for guard()?
-
-Using WARN_ON_DEFERRED() in a file that does not indirectly include these
-headers might lead to build failures on architectures using this fallback m=
-acro.
-
-> +		printk_deferred_enter()					\
-> +		__WARN();						\
-> +		printk_deferred_exit()					\
-
-[Severity: Low]
-Are there missing semicolons after the printk_deferred_enter() and
-printk_deferred_exit() calls?
-
-This looks like it will cause a syntax error on architectures that do not
-define __WARN_FLAGS and rely on this fallback macro.
-
-> +	}								\
-> +	unlikely(__ret_warn_on);					\
-> +})
-> +#endif
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623142650.2657=
-21-1-bigeasy@linutronix.de?part=3D1
+Sebastian
