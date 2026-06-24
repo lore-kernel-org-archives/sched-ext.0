@@ -1,264 +1,148 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C263C10BD
-	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 14:23:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C23B3AD525
+	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 14:27:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782311011; cv=none; b=b9uo4joIT7iqs2GBV+TIkOEpvRiOf59mw025+NOUs+gQVBF/Xr0zLAfb/Hd5AKMSJDZFLpjUw2cZPOJ8npSWuGCUUNz4i5YFcqHBLB6QUkP1aY/MkQOGmahIH5FZvlEyKwzy3RfAqk+s2O+LKUhU7GIe0ygEvwCiwmdq0hiGWi4=
+	t=1782311238; cv=none; b=qEFK3akbihnnJr56oJsL7gtKW4cg87hMg1bZxRagUZJEo2DC7G3GJShCXMpm5rB9Q2DLZfapmN62w4bm0+W755TDuhrhUAQxuYgpNUJMLLtO9dzh5zPdUS+lPAWVYQy0NHn5121qZAEQLME9yBwqbtbRb+RRxIHuE2a5gpAzzKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782311011; c=relaxed/simple;
-	bh=ANcnDbJl1GrE6afhpUmaNktn53Zw0TE+IUnQR7Lyflk=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UZe0F+CEM0Y+FcHXOnXA1y8Bbjw1BQRnTBQ77X5SUt5miWe/2UFu2z+MZboMk9NsMLfCO8JYbth9xgUrgBIB0+X1MdKy5UxIITLZ8XQBU61SIV+Opda4BLb4fxPsL1CrVGS24uiXZGJmabfAgXc4KMNnRswyqq5TgSsSO9nX0iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPPsldMu; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782311238; c=relaxed/simple;
+	bh=585FsCYBPGHW+VeYrF6duev3wS5vMkN7D3rDd+Xylb4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=FEVRqXPulB4O1kTCVVomqEvkb7Lhzv1rWuqReE0gVBx2iUhHg3mtci+nCKzbZTnvuBg8W4LoBfncK0IRgBsbY2Bxi9/IcI8a0JnHTDuI3Ak+gTEOgfOe9+3LML/puShSNq9KBwt2ZGBNu0GC+qYN2rKEstgDe+lfGOyRRXg6b1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BxL6zJtI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPPsldMu"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-46cdcec58c2so213778f8f.1
-        for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 07:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782311007; x=1782915807; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Per6MI6n5CBZ4jce2Yah0coKW3mXxHCaIKwWKmwmsgQ=;
-        b=SPPsldMuVWaGiF050fuVxnnw33dWV70IYrgCZj18IVzqBIrp8NOeZvf04oY5AH9Tot
-         /z0JKFPHgCBN5LaLKr5NKLy3RnTpqQlf0Pk/sQ9zadUDLE2qJ2WNSZAQqMhjVBCBrHf2
-         /5GZHDEwehEsFg71weD67uRigMLpV++JUQf8Gw8J2ENwz20CA2n22cKefKMp2gydgpMK
-         j0rT8J34zRRj75fz2WbQfpOqUo3xfCy+/H0mbLVFfHawVcOL++u3i7hQ/0odTxUbXgjm
-         5JcgTGPoUw+I7Pj1Vc/atynXzepOiuWUX3viQuXZSGEw765ta2oGHqexNSTTgBid+rHl
-         610A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782311007; x=1782915807;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Per6MI6n5CBZ4jce2Yah0coKW3mXxHCaIKwWKmwmsgQ=;
-        b=O9Ag/O0BdREYcvFytzCupVlQ8yRwBNqEsZrqf7NQjPFvKdChHLlnOE2JFYRrb4qkwP
-         ZxjAYZj+esPzcq4ijPHXj1svLUoPBkZg2QTkRuLF3mymxAAKhKCVWWlfGl7PM+eyBd7z
-         nQy69dzuYWgFmzNOezmpFJG/dlC4sqJW1Nx7pEEtYpBoQxhPs76wY9eyAnwIRkZvtolU
-         hilUVD+BRQRtnFqlev/Pbg/x9iuad4QSqBrYxPsD+zgPYWuB8JEDulXUudrZqS7igL+7
-         l7TktTUsxWonRucEIH7+GOoi9nu8j3HQVIhZEtZDcuYJY7hB9PRBTnXXkEqc9FP+a/kC
-         6ZTw==
-X-Forwarded-Encrypted: i=1; AHgh+RoTCFDcvIxzuRN5oA+/9KX18rdUD4liReqLbMhxHgsmRFCfLA1BF2Wc9l+865e6udhXLqVAdb+fuLE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzsYb+tDXEk+7QEkqQ2C1/3N4Xfmk9Nc1Y3LRaFMlnFRwrmxt83
-	vfKL+0cVLU7VNRtJB/r4WD9cWhRIVxboU4/fyVZ4QN0EJdEof+IsA8vD
-X-Gm-Gg: AfdE7ckSUgiFE9wf8NGNEOjQQSlG7eYI/StlCksf2Gn+RemWY1bnO67xr22bgdfa3XL
-	m1fan6R2IbqyWIn4VpouGpo9FFnmWukCdcgMPlmW5ZkHSrQG8I61uaGrUxna5mUPhIr6O4sDA8A
-	IPG5TWcl6siXRC+wWohGMqVvqOQ47BbmZTvc6ckMXdni9F8Uo3HX6oYf6vwJPAuFaFFQvJ4Snto
-	ndBoeP+fKw9gqptq1n74TKkg+cS418b2iZXXn0VUzQKV1kjg6NMh+vm/m8dQBppPfyMjYCBmjsP
-	2IJlTaN5P4nQKSyHYBFP+kI3iVmLpytD4fZo1MOuXPQan0x8NCrRN4+Jk3dEqIe+fzO8jhGffnl
-	hifZY399+57bPTGIIyFHBHU8EP2DU7Q4gpARj23upab9hC5CYpun+8MGfhUfuAAEsakQqouKz+f
-	xTlsPKw4SxZUjFCom9ApOf8gSaOVooy36wzqG5f47Si8dVdtsNhw==
-X-Received: by 2002:a05:6000:471a:b0:460:2e53:a6f6 with SMTP id ffacd0b85a97d-46d04583b35mr1261972f8f.12.1782311006854;
-        Wed, 24 Jun 2026 07:23:26 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-46c221d9405sm8183744f8f.22.2026.06.24.07.23.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 07:23:26 -0700 (PDT)
-Date: Wed, 24 Jun 2026 15:23:24 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: Christian =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>
-Cc: Kaitao Cheng <kaitao.cheng@linux.dev>, Andrew Morton
- <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, Jens
- Axboe <axboe@kernel.dk>, Tejun Heo <tj@kernel.org>, Alexander Viro
- <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Alexei
- Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
- Andrii Nakryiko <andrii@kernel.org>, Johannes Weiner <hannes@cmpxchg.org>,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim
- <namhyung@kernel.org>, Thomas Gleixner <tglx@kernel.org>, Juri Lelli
- <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, Paul
- Moore <paul@paul-moore.com>, Andy Shevchenko
- <andriy.shevchenko@linux.intel.com>, "Paul E. McKenney"
- <paulmck@kernel.org>, Shakeel Butt <shakeel.butt@linux.dev>, David Howells
- <dhowells@redhat.com>, Simona Vetter <simona.vetter@ffwll.ch>, Randy Dunlap
- <rdunlap@infradead.org>, Luca Ceresoli <luca.ceresoli@bootlin.com>, Philipp
- Stanner <phasta@kernel.org>, linux-block@vger.kernel.org,
- linux-kernel@vger.kernel.org, cgroups@vger.kernel.org,
- linux-ntfs-dev@lists.sourceforge.net, linux-fsdevel@vger.kernel.org,
- io-uring@vger.kernel.org, audit@vger.kernel.org, bpf@vger.kernel.org,
- netdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-perf-users@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
- kexec@lists.infradead.org, live-patching@vger.kernel.org,
- linux-modules@vger.kernel.org, linux-crypto@vger.kernel.org,
- linux-pm@vger.kernel.org, rcu@vger.kernel.org, sched-ext@lists.linux.dev,
- linux-mm@kvack.org, virtualization@lists.linux.dev, damon@lists.linux.dev,
- llvm@lists.linux.dev, Kaitao Cheng <chengkaitao@kylinos.cn>
-Subject: Re: [PATCH v3 1/7] list: Add mutable iterator variants
-Message-ID: <20260624152324.3def88ce@pumpkin>
-In-Reply-To: <cf8467c7-b98f-44a5-9cf9-60b43b5da711@amd.com>
-References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
-	<20260622040533.29824-2-kaitao.cheng@linux.dev>
-	<20260622094242.64531b9a@pumpkin>
-	<351a6b67-b394-4c58-aee2-88b6c8089ad5@linux.dev>
-	<cf8467c7-b98f-44a5-9cf9-60b43b5da711@amd.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BxL6zJtI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B161F000E9;
+	Wed, 24 Jun 2026 14:27:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782311237;
+	bh=XzewmIYBXd7F69/jqg2yoN2hPg/yrfFMV3brH17Cnd0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=BxL6zJtIgCPb6KoF9lMuv3kzGxOtjvxctHPPosd3OMdNKknpXAnBaCtB0rlQB3/3W
+	 9GvDgAHSQSKXRN3QcW5KbMU/BOeEw18sp74GgzrmA5L8oYWp4tg38bIjABxD5CFTH0
+	 qNm4id9GhWRO2qPVKw1kMLUlL7ag6i86/Bz+AGrRnHeZbgm3i4PYwnP+YqnkbiqGXy
+	 M3PzpJbkUKUEJUVO3LanGvV3RGaMk2iyJexsMqoISmksqhVDRPLpqGRfFdhsCMKODd
+	 fFvS2mN2oaJGi41Hghiu3Q5ZPWhuW4ocWk2eOjwGF7M5ExbUjnOs6HHq07GYutVyLU
+	 cGIxeEWqy880w==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/2] sched: Use WARN_ON.*_DEFERRED()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sebastian Andrzej Siewior" <bigeasy@linutronix.de>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260623142650.265721-3-bigeasy@linutronix.de>
+References: <20260623142650.265721-1-bigeasy@linutronix.de>
+ <20260623142650.265721-3-bigeasy@linutronix.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 24 Jun 2026 14:27:16 +0000
+Message-Id: <20260624142717.25B161F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, 24 Jun 2026 15:23:47 +0200
-Christian K=C3=B6nig <christian.koenig@amd.com> wrote:
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-> On 6/24/26 15:14, Kaitao Cheng wrote:
-> >=20
-> >=20
-> > =E5=9C=A8 2026/6/22 16:42, David Laight =E5=86=99=E9=81=93: =20
-> >> On Mon, 22 Jun 2026 12:05:31 +0800
-> >> Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
-> >> =20
-> >>> From: Kaitao Cheng <chengkaitao@kylinos.cn>
-> >>>
-> >>> The list_for_each*_safe() helpers are used when the loop body may
-> >>> remove the current entry.  Their API exposes the temporary cursor at
-> >>> every call site, even though most users only need it for the iterator
-> >>> implementation and never reference it in the loop body.
-> >>>
-> >>> Add *_mutable() variants for list and hlist iteration.  The new helpe=
-rs
-> >>> support both forms: callers may keep passing an explicit temporary cu=
-rsor
-> >>> when they need to inspect or reset it, or omit it and let the helper =
-use
-> >>> a unique internal cursor. =20
-> >>
-> >> I'm not really sure 'mutable' means anything either.
-> >> It is possible to make it valid for the loop body (or even other threa=
-ds)
-> >> to delete arbitrary list items - but that needs significant extra over=
-heads.
-> >>
-> >> It might be worth doing something that doesn't need the extra variable,
-> >> but there is little point doing all the churn just to rename things.
-> >> =20
-> >>>
-> >>> This makes call sites that only mutate the list through the current e=
-ntry
-> >>> less noisy, while keeping the existing *_safe() helpers available for
-> >>> compatibility.
-> >>>
-> >>> Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
-> >>> ---
-> >>>  include/linux/list.h | 269 +++++++++++++++++++++++++++++++++++++----=
+New issues:
+- [Low] The fallback definition of `WARN_ON_DEFERRED` in `include/asm-gener=
+ic/bug.h` contains a syntax error due to missing semicolons. By broadly int=
+roducing this macro in the scheduler, this commit breaks the build on archi=
+tectures that lack `__WARN_FLAGS`.
+
+Pre-existing issues:
+- [High] The patch fails to replace `WARN()`, `WARN_ONCE()`, and several `W=
+ARN_ON_ONCE()` macros within the scheduler, leaving critical paths vulnerab=
+le to the exact AB-BA deadlock the patch claims to fix.
 --
-> >>>  1 file changed, 231 insertions(+), 38 deletions(-)
-> >>>
-> >>> diff --git a/include/linux/list.h b/include/linux/list.h
-> >>> index 09d979976b3b..1081def7cea9 100644
-> >>> --- a/include/linux/list.h
-> >>> +++ b/include/linux/list.h
-> >>> @@ -7,6 +7,7 @@
-> >>>  #include <linux/stddef.h>
-> >>>  #include <linux/poison.h>
-> >>>  #include <linux/const.h>
-> >>> +#include <linux/args.h>
-> >>> =20
-> >>>  #include <asm/barrier.h>
-> >>> =20
-> >>> @@ -763,28 +764,72 @@ static inline void list_splice_tail_init(struct=
- list_head *list,
-> >>>  #define list_for_each_prev(pos, head) \
-> >>>  	for (pos =3D (head)->prev; !list_is_head(pos, (head)); pos =3D pos-=
->prev)
-> >>> =20
-> >>> -/**
-> >>> - * list_for_each_safe - iterate over a list safe against removal of =
-list entry
-> >>> - * @pos:	the &struct list_head to use as a loop cursor.
-> >>> - * @n:		another &struct list_head to use as temporary storage
-> >>> - * @head:	the head for your list.
-> >>> +/*
-> >>> + * list_for_each_safe is an old interface, use list_for_each_mutable=
- instead.
-> >>>   */
-> >>>  #define list_for_each_safe(pos, n, head) \
-> >>>  	for (pos =3D (head)->next, n =3D pos->next; \
-> >>>  	     !list_is_head(pos, (head)); \
-> >>>  	     pos =3D n, n =3D pos->next)
-> >>> =20
-> >>> +#define __list_for_each_mutable_internal(pos, tmp, head)		\
-> >>> +	for (typeof(pos) tmp =3D (pos =3D (head)->next)->next;		\ =20
-> >>
-> >> Use auto
-> >> =20
-> >>> +	     !list_is_head(pos, (head));				\
-> >>> +	     pos =3D tmp, tmp =3D pos->next)
-> >>> +
-> >>> +#define __list_for_each_mutable1(pos, head)				\
-> >>> +	__list_for_each_mutable_internal(pos, __UNIQUE_ID(next), head)
-> >>> +
-> >>> +#define __list_for_each_mutable2(pos, next, head)			\
-> >>> +	list_for_each_safe(pos, next, head)
-> >>> +
-> >>>  /**
-> >>> - * list_for_each_prev_safe - iterate over a list backwards safe agai=
-nst removal of list entry
-> >>> + * list_for_each_mutable - iterate over a list safe against entry re=
-moval
-> >>>   * @pos:	the &struct list_head to use as a loop cursor.
-> >>> - * @n:		another &struct list_head to use as temporary storage
-> >>> - * @head:	the head for your list.
-> >>> + * @...:	either (head) or (next, head)
-> >>> + *
-> >>> + * next:	another &struct list_head to use as optional temporary stor=
-age.
-> >>> + *		The temporary cursor is internal unless explicitly supplied by
-> >>> + *		the caller.
-> >>> + * head:	the head for your list.
-> >>> + */
-> >>> +#define list_for_each_mutable(pos, ...)					\
-> >>> +	CONCATENATE(__list_for_each_mutable, COUNT_ARGS(__VA_ARGS__))	\
-> >>> +		(pos, __VA_ARGS__) =20
-> >>
-> >> The variable argument count logic really just slows down compilation.
-> >> Maybe there aren't enough copies of this code to make that significant.
-> >> But just because you can do it doesn't mean it is a gooD idea.
-> >> I'm also not sure it really adds anything to the readability.
-> >>
-> >> And, it you are going to make the middle argument optional there is
-> >> no need to change the macro name. =20
-> >=20
-> > Christian K=C3=B6nig and Jani Nikula also disagree with the variadic-ar=
-gument
-> > implementation approach. If we abandon that method, it means we will
-> > inevitably need to add some new macros. If mutable is not a good name,
-> > suggestions for better alternatives would be welcome; coming up with a
-> > suitable name is indeed rather tricky. =20
->=20
-> I don't think you need to add a new macro for the specific use case that =
-people want to modify the next element of the iteration.
->=20
-> If I remember your numbers correctly that is a really corner case and kee=
-ping using the existing *_safe() macros for that sounds perfectly fine to m=
-e.
 
-IIRC currently you have a choice of either:
-	define               Item that can't be deleted
-	list_for_each()	     The current item.
-	list_for_each_safe() The next item.
-There is also likely to be code that updates the variables to allow
-for other scenarios.
+commit a6aa09c317e0b91e99c786c88d0107e256973560
+Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Subject: sched: Use WARN_ON.*_DEFERRED()
 
-Note that if increase a reference count and release a lock then list_for_ea=
-ch()
-is likely safer than list_for_each_safe() :-)
+This patch replaces WARN and WARN_ON_ONCE macros within the scheduler with
+their DEFERRED variants. This aims to prevent AB-BA deadlocks with legacy
+consoles that might wake ksoftirqd while the runqueue lock is held.
 
-list.h has 9 variants of the 'safe' loop.
-The bloat of another 9 is getting excessive.
+Link: https://lore.kernel.org/all/20260610183621.3915271-1-vlad.wing@gmail.=
+com
 
-It has to be said that this is one of my least favourite type of list...
+> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> index b8871449d3c69..0e282457abb91 100644
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -853,7 +853,7 @@ void update_rq_clock(struct rq *rq)
+>  		return;
+> =20
+>  	if (sched_feat(WARN_DOUBLE_CLOCK))
+> -		WARN_ON_ONCE(rq->clock_update_flags & RQCF_UPDATED);
+> +		WARN_ON_ONCE_DEFERRED(rq->clock_update_flags & RQCF_UPDATED);
 
-	David
+[Severity: Low]
+Does this broad replacement break the build on architectures without
+__WARN_FLAGS (like standard ARM32, MIPS, or SPARC)?
 
->=20
-> Regards,
-> Christian.
+The fallback definition of WARN_ON_DEFERRED in include/asm-generic/bug.h
+contains a syntax error due to missing semicolons:
 
+	printk_deferred_enter()					\
+	__WARN();						\
+	printk_deferred_exit()					\
+
+Using this macro here could cause syntax errors on those architectures.
+
+[ ... ]
+
+> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+> index 5d2d19473a82e..47d3a4c16455a 100644
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -1855,7 +1855,7 @@ static void direct_dispatch(struct scx_sched *sch, =
+struct task_struct *p,
+>  			break;
+>  		}
+> =20
+> -		WARN_ON_ONCE(p->scx.dsq || !list_empty(&p->scx.dsq_list.node));
+> +		WARN_ON_ONCE_DEFERRED(p->scx.dsq || !list_empty(&p->scx.dsq_list.node)=
+);
+>  		list_add_tail(&p->scx.dsq_list.node,
+
+[Severity: High]
+This is a pre-existing issue, but since the goal is to prevent deadlocks
+by replacing warnings while runqueue locks are held, did we miss the
+WARN_ONCE right above this in the same function?
+
+kernel/sched/ext.c:direct_dispatch() {
+    ...
+    default:
+        WARN_ONCE(true, "sched_ext: %s[%d] has invalid ops state...",
+                  p->comm, p->pid, opss);
+        atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_NONE);
+        break;
+    }
+
+    WARN_ON_ONCE_DEFERRED(p->scx.dsq || !list_empty(&p->scx.dsq_list.node));
+    ...
+}
+
+There are several other missed WARN and WARN_ONCE calls in the scheduler
+that are also called with locks held. Could these trigger the same AB-BA
+deadlock if they fire?
+
+For example:
+- finish_task_switch() in kernel/sched/core.c (with rq lock held)
+- proxy_force_return() in kernel/sched/core.c (with pi_lock and rq_lock hel=
+d)
+- sched_cpu_dying() in kernel/sched/core.c (with rq lock held)
+- sched_core_cpu_starting() in kernel/sched/core.c (with core_lock held)
+- scx_set_task_state() in kernel/sched/ext.c (with rq lock held)
+- assert_task_ready_or_enabled() in kernel/sched/ext.c (with rq lock held)
+
+Would it be better to audit and replace these remaining macros as well?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623142650.2657=
+21-1-bigeasy@linutronix.de?part=3D2
