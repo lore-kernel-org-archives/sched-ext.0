@@ -1,148 +1,135 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D83338D415
-	for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 09:17:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A63B3B47E2;
+	Wed, 24 Jun 2026 09:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782292659; cv=none; b=PCzQyHTZjWQovvYoPQVzfdPzkawxgdo0kPl0qDBUJr0yLTVP8f6Fmmf4KYJjbz9F/EYTwbXFoA+N+2bgSIAn44TUBWmANcaN2goMLQFYThG/Y9UI+EcgJtdBHJ8r2psFONT0+ksfyps6klGVPYUxebdFYytznYrOwIy2rt2QvOU=
+	t=1782293315; cv=none; b=KSSeL5jdylSsXc432m6fWJtih5L7hkvvgAfS4jF/a2Z/APeJGCrQR4wyGSph+dXa5x3fZKTdFFPXWAHNwdHdKQ1B0X/ps+OOV47Q843lUkmfEbMOJLxQ2yVi0XAiDZ8y9/fV/DigokDolRB17kiVZtG3ZMXUzM5sFnUOmSFaNjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782292659; c=relaxed/simple;
-	bh=Bejh2jagMXk07J4vN4q2aCTB4moMnQx6GKX/VG2wuG4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j4vAN5FW91PNCdfmizfgsliZWwiiHGB9uOnmhKKffv3HOAhAAHxNZVlymriTphlFRPbLpKjHuU71p5fyB+4x9lw7cdfZtRsc9zbo3K4ONHzR+PytVhWCVDM+JSD11q4I1QXXjG+e9uXZiuyLf3br65AtyDfB34uVz6fMUp0yVXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=G8wG7CPF; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1782293315; c=relaxed/simple;
+	bh=66af4jtR1ivMYaCroXmndu4LXkF04xDbWL+8wFZS4aE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hwG3c5m8b5UEf0CdK41XJXyrLudofq29c92oXgXx6GX8pUADAWb0KKaSSr6iIMxM39qITxmFKx0p2MkWxiDMsd/9NVDRLBGKGm9f88XQd6TVaFo+XR/AOhQUO+15lPdGI4B2dwHf1uD+7PIVeKwiVtawyxJoPPiy64CmpR4TehA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=Hfaw+mKI; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="G8wG7CPF"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-460166910e6so484501f8f.2
-        for <sched-ext@lists.linux.dev>; Wed, 24 Jun 2026 02:17:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1782292657; x=1782897457; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pMXKleFLZJBIvs4jrEU9E5muXUV27zhjMd5mE+UdPj8=;
-        b=G8wG7CPFImSYxhFkBJ4JKgQmfyPLCdcEPwNJtp5krOu3n+/UhZF0xgv8GiwTzOTmtK
-         tJfO4NyEp5ARIZbJdss3kcdJv/+DdHPmzrzOw5vcYYtalzIEb/n/ONqkahnhdwpscQUc
-         xrP1lEe9bvncT8TaJ0z+Z1FFfweXoHKqtS9rGC+hgEukMfeMcTSyf1Cw/a7fPQ1csHt/
-         dZio3CclmM/O+s5EhJkDJc69euG1yvTQMzGX0qm35fEoNaqKJkodPa8d0nVpoZlX+LrS
-         ygIktpkXiaHkAZht3qItHgPZIXypZhztCuj6ySJ9VN/yctrkg8yd0I+p79v+q3/yopFM
-         DtqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782292657; x=1782897457;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pMXKleFLZJBIvs4jrEU9E5muXUV27zhjMd5mE+UdPj8=;
-        b=gUgb0UwijTNcqFT6kI3ka/yARuKH8yERUMO07DBdMcNPGyVNMgLiwfI4sXu5rnOkYd
-         zHKk6mNaOS/7GB/tFx+a6un5DsoOvKrVamU+IITedXU/N0W19ISpmn0E7tAHoOZWmz/J
-         tH5N4Avuee5SQ+1ZV6QFm0lZxLqy3CV0sbXi+mE6A17e3wqXf//B+Rnw4s8vVeI3SR5J
-         yMl7rZaZkYgHQfH4xouezVHQ97rGMisG5cRX5VTGprAjMN4Fk0mX7xlk3muA2C80TY9/
-         D9J0NcpLadnyLQUMpSCFk8G/+Qpczj+75J7/rCpy/fOHBLlvqCRKDDose675HJ4bg8iC
-         64lQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+Gh3NiKawrM0aALyRe1n/L8aEANuXBr+rv4joBHWHG6w3lM0fPRM/7mv1t9zNKOwKb5oiX377T4ag=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLdyOLwO8BErVvqiSgS64iA4TuIRpO5zpmr5ggBKr/XbdGLIQp
-	dbauLSSsDYU7Q7Krn7vo9iK+mchyz17GogQD6/GmlpRmJ1TVfvNpECbTGAQCqGqOxUg=
-X-Gm-Gg: AfdE7ckxqdbJyK2wbRQnPN00Cxoc0hVdDpdt4Y/nPzLuFr3Auz3FW/9nGThEi75uYIW
-	tat7z1MhUFveOK2NiXlW8p6FRZbgehT3qTLDqxyXGQDcHxJ66Q9rOz8UTCqCb5/3P4NPHms7br0
-	4ESakIjxaZ8sMj7+FrOA9rsTG30btcNh3GGp2rPW3H0pgYZamAx/yArJnSjrlUpB9wSfHtOCFxu
-	Uy09lxGUyB4bk/E3nEHuMkpMlsoIv+b0W54Pamfz5Fe8wEQanEx30p4lnjtvvqg2Ur5/+2MBXYj
-	2lb278P8RiZpy52iD5G6lv5LTUrzh8HJ2B+MykqeHyfc56AWzfL5TSfQZkbRLa6sPovgUa5mulP
-	1LF9TXE+GpwBC3U6vtOughj2tBoIyvWfu+7C2B5cpFA2LW4KjjZY+uouZZcF4TvBJk1bPG9Gb9M
-	7yECtjpwz/rCjPQOY=
-X-Received: by 2002:a05:600c:1d16:b0:492:5855:1548 with SMTP id 5b1f17b1804b1-4926087830amr31471525e9.27.1782292655197;
-        Wed, 24 Jun 2026 02:17:35 -0700 (PDT)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4923fd1f886sm412331495e9.4.2026.06.24.02.17.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jun 2026 02:17:34 -0700 (PDT)
-Date: Wed, 24 Jun 2026 11:17:31 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>, linux-arch@vger.kernel.org,
-	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
-	netdev@vger.kernel.org, "David S . Miller" <davem@davemloft.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>, Ben Segall <bsegall@google.com>,
-	Breno Leitao <leitao@debian.org>,
-	Changwoo Min <changwoo@igalia.com>,
-	David Vernet <void@manifault.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Eric Dumazet <edumazet@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	John Ogness <john.ogness@linutronix.de>,
-	Juri Lelli <juri.lelli@redhat.com>, Paolo Abeni <pabeni@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Simon Horman <horms@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>, Tejun Heo <tj@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Vlad Poenaru <vlad.wing@gmail.com>
-Subject: Re: [PATCH 1/2] bug: Provide WARN_ON.*DEFERRED() macros for console
- deferred output
-Message-ID: <ajugq8VAciqtMx9F@pathway.suse.cz>
-References: <20260623142650.265721-1-bigeasy@linutronix.de>
- <20260623142650.265721-2-bigeasy@linutronix.de>
- <038a11a7-4ced-49ae-b605-2058733e841a@amd.com>
- <20260624062642.5DER6vrP@linutronix.de>
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="Hfaw+mKI"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Cc:To:Message-Id:
+	Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:
+	Reply-To:Content-ID:Content-Description:In-Reply-To:References;
+	bh=PHUJ0DhKQJLvQy2H4SuK9sKs0CUhgKdbb/J50pvlPqc=; b=Hfaw+mKInMq3c+vTj/vUZSlJQM
+	K9W5RsWDsADXEsB2y9BpLeV/yP/SI4vKzy2lhREFdow+0S8AnQ6xHWwAypc1CHLHI8yyVsv0Xt1Su
+	AHOXgXT4GpcS4Rke2ywSKvF/LboTO71NkPxlEM+v27zvQwubvKpUP66JDFGFhdxspRC6uFWKiTu4Y
+	CWBqHL0yJm8nagTA46Oqh92ULZ/q0KM7r7EtCw6/aEySJiLlTZ3R41OLhjCCgUbnrhxtlqHd5Dkrl
+	rRSUuA7FOSoW6tUHBXm2RfiP/g/zqBFqAjh4He5c463zWOtMn8enXe46bplABZTr3ZputMEpHN/V9
+	lxEXcAbg==;
+Received: from authenticated-user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1wcJto-002KCs-2N;
+	Wed, 24 Jun 2026 09:28:01 +0000
+From: Breno Leitao <leitao@debian.org>
+Date: Wed, 24 Jun 2026 02:27:43 -0700
+Subject: [PATCH v2] sched_ext: Avoid flooding the log with deprecation
+ warnings
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260624062642.5DER6vrP@linutronix.de>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260624-scx_warning-v2-1-07d0d48b0d01@debian.org>
+X-B4-Tracking: v=1; b=H4sIAA+jO2oC/23Muw7CIBQA0F8hdwYDSBrL5H+YxvDuXcBAgzUN/
+ 27s7HqGc0ALFUMDTQ6ooWPDkkETSQm41eQUGHrQBCSXE5/klTW3P9+mZsyJcR/V7JSSJlqgBF4
+ 1RNzP7bFQAiu2rdTPmXfx0/9PF0wwoWyU4haV9fPdB4smX0pNsIwxvn4wfTWnAAAA
+X-Change-ID: 20260623-scx_warning-0df49c442afb
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+ Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+ Juri Lelli <juri.lelli@redhat.com>, 
+ Vincent Guittot <vincent.guittot@linaro.org>, 
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+ Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, 
+ Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, 
+ K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ bpf@vger.kernel.org, kernel-team@meta.com, Breno Leitao <leitao@debian.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2472; i=leitao@debian.org;
+ h=from:subject:message-id; bh=66af4jtR1ivMYaCroXmndu4LXkF04xDbWL+8wFZS4aE=;
+ b=owEBbQKS/ZANAwAIATWjk5/8eHdtAcsmYgBqO6Mb2qSCp8SaqaXn4fp4GTYl5OGK8x/GOwJyq
+ w747KZ0u96JAjMEAAEIAB0WIQSshTmm6PRnAspKQ5s1o5Of/Hh3bQUCajujGwAKCRA1o5Of/Hh3
+ bc4dD/9tiDpM3ZcRzU5a2N3j4DsVC8V2G9AeUICWxEfRLXZUX7vG9ky6aTi6OwAKIv0q0JWfkYg
+ rIr5xrHfLqirW92h1+2/lchwl7IFFnwyYlRXd3/zuaZTpQCO75IytUhQym4JBwueh9pK4Gb0v8x
+ Sgx38jQC6WlmVmLt/tF2OuYt9+osRtiONtsJCTGAfSMtsEYSA6ZwRbbeBNgppALLcEL4xln4TAS
+ u4+Iumr1qA31PvfaPnNbwJOLoFhz3SK3s9JQrIXnXeWFe5aqkOhRvJZcsOxp2W36IA7d3TPWJil
+ AVEZWnWHsSy8m2XWNjrbVUBaNvBPMODVtEL2oGziSMtfGyBX2IKyl9qC/DjwFWIP+pjYUq5iMdA
+ u+vy/y9+OOplqryVwyh9zo7f/jsAAZPDqnNpkytMm/pmDfSmTb1sZ6WegBs9q55pZwW6fGS+9tE
+ J4Y00SAUpor0Z/zin8Nh6B74YkbLVQ0vUwk+S1dczB9XXiE8rZRN6T2K2gk2++IF4HKRTPk2Ioi
+ 0JxP5aZoFfsICRuXHvvU6je6ZQS2/SrBmx9joZY67MG+vrFuqfvaEDyz/hmqjs7XcLLnFAtNnSs
+ ZLfecptyUMIRUHsGdXBBgGEmM8ubhyBNQAdlRGsAgjYW9311O2Bgb5bxP0IPRNyuRVH2eByUwYV
+ RdX49yk1EpdJoxQ==
+X-Developer-Key: i=leitao@debian.org; a=openpgp;
+ fpr=AC8539A6E8F46702CA4A439B35A3939FFC78776D
+X-Debian-User: leitao
 
-On Wed 2026-06-24 08:26:42, Sebastian Andrzej Siewior wrote:
-> On 2026-06-23 20:24:02 [+0530], K Prateek Nayak wrote:
-> > Hello Sebastian,
-> Hi Prateek,
-> 
-> > nit.
-> > 
-> > Instead of replicating these bits, can we replace that return with a
-> > "goto out" ...
-> 
-> sure
-> 
-> …
-> > ... and replace this return with a:
-> > 
-> >     return (warning) ? BUG_TRAP_TYPE_WARN : BUG_TRAP_TYPE_BUG;
-> > 
-> > Looks a tab bit cleaner to my eyes. Thoughts?
-> 
-> It sure does.
-> I wait for PeterZ' executive order to either do this and sprinkle sched/
-> _or_ make legacy consoles deferred as it is done on RT.
-> 
-> Petr, was there a big push back doing it unconditionally?
+The deprecation notices for direct p->scx.slice/dsq_vtime writes and for
+ops->cpu_acquire/release() use plain pr_warn(), so they repeat on every
+scheduler (re)load and can flood the kernel log.
 
-For Linus, it was a no-go, definitely.
+The slice/dsq_vtime notice is the worst offender: it is emitted from the
+BPF verifier's btf_struct_access callback, which is re-evaluated as the
+verifier explores program paths, so a single scheduler load can print it
+many times -- hundreds of lines on some hosts, dozens within the same
+second.
 
-The problem are situations where the system gets stuck and panic()
-is not called. This is why nbcon consoles switch to the atomic
-mode in some emergency situations, see nbcon_cpu_emergency_enter(),
-for example, into __warn(), oops_enter(), rcu stall, and lockdep
-calls.
+Switch both notices to pr_warn_ratelimited() so each deprecation is still
+reported but bursts no longer spam the log, and add the missing newline
+to the slice/dsq_vtime message.
 
-Moving legacy consoles to a kthread would prevent stall in situations
-where printk() is called from the scheduler code. But it would cause
-that some other stalls become silent.
+Signed-off-by: Breno Leitao <leitao@debian.org>
+---
+Changes in v2:
+- Switch both deprecation notices from pr_warn_once() to
+  pr_warn_ratelimited() (Christian, Andrea)
+- Link to v1: https://lore.kernel.org/r/20260623-scx_warning-v1-1-14bf218f4bd9@debian.org
+---
+ kernel/sched/ext/ext.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-In my opinion, we should not move the legacy consoles to a kthread
-by default. I believe that the rest of the kernel is a bigger
-source of possible stalls than the scheduler. So, the overall
-experience will be better if we keep the status quo.
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 691d53fe0f648..d62b93f48a854 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -6988,7 +6988,7 @@ static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+ 	 * run past the BPF allocation. Skip for cid-form.
+ 	 */
+ 	if (!sch->is_cid_type && (ops->cpu_acquire || ops->cpu_release))
+-		pr_warn("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
++		pr_warn_ratelimited("ops->cpu_acquire/release() are deprecated, use sched_switch TP instead\n");
+ 
+ 	/*
+ 	 * Sub-scheduler support is tied to the cid-form struct_ops. A sub-sched
+@@ -7806,7 +7806,7 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
+ 		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
+ 		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
+ 		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
+-			pr_warn("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()");
++			pr_warn_ratelimited("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()\n");
+ 			return SCALAR_VALUE;
+ 		}
+ 
 
-I would vote for adding the WARN_*DEFERRED() into the scheduler code
-at least until majority of console drivers are converted to nbcon API.
+---
+base-commit: 4e5dfb7c84012007c3c7061126491bbc92d71bf1
+change-id: 20260623-scx_warning-0df49c442afb
 
-Best Regards,
-Petr
+Best regards,
+-- 
+Breno Leitao <leitao@debian.org>
+
