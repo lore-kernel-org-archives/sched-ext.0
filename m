@@ -1,41 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F92F25E4;
-	Thu, 25 Jun 2026 23:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D993EA94C
+	for <sched-ext@lists.linux.dev>; Fri, 26 Jun 2026 09:59:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782429839; cv=none; b=PM4SfrdU6LumENHR0wz/SzAS6MZ9KP/aVO9nLYMTtEy+/HJyoWnOIfA35HVWDYsv+fS2aG/yTpb5T+OKRZG26giNvK1rt4lk7gsgL9HTCyjePia78lFI76y5oAUKFbe7J6dE8bl4Stg7xM6n7nTNmyNJMkEhT5kIyVLEszLeVPo=
+	t=1782467979; cv=none; b=QMAcwq5FgOBb2YPX1QE+f4zldnSKSXhtLVfhtpIykjKhubjB6njxyDG5KMj30YP9CpZg4Uw9Q6dHXHtGVJfMR7KovkhZlmEh5bzlMaC4xMZFhJEQc3wDEKwToZ8g8950RhKzY5VlGOAYzZ+XRqroLNhwcwdMQDe7xFkrBN1LVVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782429839; c=relaxed/simple;
-	bh=qEPHRmxHAN74XEDLyEyK+6YP/yqB0JveOsbDAT+bryU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P6JGYSu2sMkAaJm3CkC/X0RcSnrTC4aKey84a9qaSNriN3Ld0KUzuhMBHrtXfKu0iMUx7nq24KKJG9Z/cJKTGaHtI61Bw+Zhe8H6cgwTI3/k2rzZI3f4xZvOtey53sTpcFzRg44ulIzqDGLiITsLeFoZSgc+e59U7NWRsgkJBro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DUp181D+; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DUp181D+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F93A1F000E9;
-	Thu, 25 Jun 2026 23:23:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782429837;
-	bh=nE+viarz/pTHbQcDnhYHvhgTQ044nlTFtRXJMtPtn50=;
-	h=From:To:Cc:Subject:Date;
-	b=DUp181D+GMOYiTYGJy9aQMXAuWZkzOdY/YhLunrHH7J2uRb8k9L81BQCdyjoh2iit
-	 7UM2fIjsFy3u7wj6DY7OYaQcpe1ACHjeCJPKATk2JUJpj0TgaEotwtLFL0O+n+bs8h
-	 pKVMaNECofYmd+2J9xT3/Jp3rzAfl68p2RpWFEWP8AfHSS7ofGXv1txFiwx4GYF8hN
-	 8vXkJFj/0PhCEneKuVjkZh/118uvodaIkVvXZGKQ3/IIB0c9lJLkiiZ7gSe3jaKTPN
-	 LRwltD196FUxEsbt0TycCfr06Ib7DNIGqlIeXQ0U1tWR2n7zuag7LWFlyefrecWxt0
-	 G3xSlgML6dfkQ==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
+	s=arc-20240116; t=1782467979; c=relaxed/simple;
+	bh=pxsg5xhN4Qq651qUozKudIxH4Gez0OXghOF3SpYOx8c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uH/UtXI8jEjWPHzj73DekwAIazEhW2WrnFlMIs3ylHcPi4YF5B0fuOwheQ8slbCcZtcUP8jrJK+Qc1IlTzgneGfjepRP+kSYQZvIoCJ88k0K/s5cOXS8Rg/dGPr6d9qgiWAcwl+utceRW6Lq6A2Hhv0c/TvnR7jMHYU4tm44rpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: ba9b0190714511f1aa26b74ffac11d73-20260626
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:d08f7d23-631b-4719-abdd-3c9d9d83baf7,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:0
+X-CID-META: VersionHash:e7bac3a,CLOUDID:14525d59427cd33e137d8cfb09cc3738,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|136|850|865|898,TC:nil,Content:0
+	|15|50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OS
+	I:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: ba9b0190714511f1aa26b74ffac11d73-20260626
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 505056140; Fri, 26 Jun 2026 17:59:32 +0800
+From: luoliang@kylinos.cn
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] sched_ext: Pin parent scx_sched across a child sub-scheduler's lifetime
-Date: Thu, 25 Jun 2026 13:23:56 -1000
-Message-ID: <20260625232356.3801838-1-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
+	Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Liang Luo <luoliang@kylinos.cn>
+Subject: [PATCH] tools/sched_ext: fix getopt() option variable signedness
+Date: Fri, 26 Jun 2026 17:59:28 +0800
+Message-Id: <20260626095928.2912889-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -44,56 +52,80 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A child sub-scheduler dereferences its parent scx_sched throughout its life,
-e.g., in scx_sub_disable() which reparents the child's tasks and calls
-parent->ops.sub_detach() after unlinking from the parent. However, the
-parent is pinned only through parent->sub_kset, which is dropped during
-disable. The parent scx_sched can be RCU-freed while a child is still
-disabling.
+From: Liang Luo <luoliang@kylinos.cn>
 
-Take a direct reference on the parent in scx_alloc_and_add_sched(), dropped
-in scx_sched_free_rcu_work(), so a parent always outlives its descendants.
+Four example schedulers (scx_simple, scx_cpu0, scx_sdt, scx_userland)
+declare the variable that holds getopt()'s return value as __u32.
+getopt() returns int and uses -1 to mark end-of-options; storing that
+sentinel in an unsigned variable turns it into 0xffffffff, and the
+subsequent 'opt != -1' test only happens to keep working because both
+operands of != are promoted to the same 0xffffffff.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Declare the variable as __s32 instead, matching getopt()'s actual
+contract and the style already used in scx_qmap.c (int opt) and
+scx_pair/central/flatcg.c (__s32 opt). This also silences the
+-Wsign-compare warnings emitted for the affected files.
+
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
 ---
- kernel/sched/ext/ext.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tools/sched_ext/scx_cpu0.c     | 2 +-
+ tools/sched_ext/scx_sdt.c      | 2 +-
+ tools/sched_ext/scx_simple.c   | 2 +-
+ tools/sched_ext/scx_userland.c | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index aecbb021d6d7..3b2e13bc924b 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -4916,6 +4916,8 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 		cgroup_put(sch_cgroup(sch));
- 	if (sch->sub_kset)
- 		kobject_put(&sch->sub_kset->kobj);
-+	if (scx_parent(sch))
-+		kobject_put(&scx_parent(sch)->kobj);
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 
- 	for_each_possible_cpu(cpu) {
-@@ -6863,12 +6865,19 @@ static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 	INIT_LIST_HEAD(&sch->children);
- 	INIT_LIST_HEAD(&sch->sibling);
- 
--	if (parent)
-+	if (parent) {
-+		/*
-+		 * Pin @parent for @sch's lifetime. The kobject hierarchy pins
-+		 * it only via @parent->sub_kset, which is dropped during
-+		 * disable. Released in scx_sched_free_rcu_work().
-+		 */
-+		kobject_get(&parent->kobj);
- 		ret = kobject_init_and_add(&sch->kobj, &scx_ktype,
- 					   &parent->sub_kset->kobj,
- 					   "sub-%llu", cgroup_id(cgrp));
--	else
-+	} else {
- 		ret = kobject_init_and_add(&sch->kobj, &scx_ktype, NULL, "root");
-+	}
- 
- 	if (ret < 0) {
- 		RCU_INIT_POINTER(ops->priv, NULL);
--- 
-2.54.0
+diff --git a/tools/sched_ext/scx_cpu0.c b/tools/sched_ext/scx_cpu0.c
+index a6fba9978b9c..af863b7d434a 100644
+--- a/tools/sched_ext/scx_cpu0.c
++++ b/tools/sched_ext/scx_cpu0.c
+@@ -62,7 +62,7 @@ int main(int argc, char **argv)
+ {
+ 	struct scx_cpu0 *skel;
+ 	struct bpf_link *link;
+-	__u32 opt;
++	__s32 opt;
+ 	__u64 ecode;
+
+ 	libbpf_set_print(libbpf_print_fn);
+diff --git a/tools/sched_ext/scx_sdt.c b/tools/sched_ext/scx_sdt.c
+index bf664b2d3785..ef197b266a36 100644
+--- a/tools/sched_ext/scx_sdt.c
++++ b/tools/sched_ext/scx_sdt.c
+@@ -44,7 +44,7 @@ int main(int argc, char **argv)
+ {
+ 	struct scx_sdt *skel;
+ 	struct bpf_link *link;
+-	__u32 opt;
++	__s32 opt;
+ 	__u64 ecode;
+
+ 	libbpf_set_print(libbpf_print_fn);
+diff --git a/tools/sched_ext/scx_simple.c b/tools/sched_ext/scx_simple.c
+index c3b48611712b..34f9785335b7 100644
+--- a/tools/sched_ext/scx_simple.c
++++ b/tools/sched_ext/scx_simple.c
+@@ -64,7 +64,7 @@ int main(int argc, char **argv)
+ {
+ 	struct scx_simple *skel;
+ 	struct bpf_link *link;
+-	__u32 opt;
++	__s32 opt;
+ 	__u64 ecode;
+
+ 	libbpf_set_print(libbpf_print_fn);
+diff --git a/tools/sched_ext/scx_userland.c b/tools/sched_ext/scx_userland.c
+index 616043c165e6..192b79c7e4aa 100644
+--- a/tools/sched_ext/scx_userland.c
++++ b/tools/sched_ext/scx_userland.c
+@@ -326,7 +326,7 @@ static int spawn_stats_thread(void)
+ static void pre_bootstrap(int argc, char **argv)
+ {
+ 	int err;
+-	__u32 opt;
++	__s32 opt;
+ 	struct sched_param sched_param = {
+ 		.sched_priority = sched_get_priority_max(SCHED_EXT),
+ 	};
+--
+2.39.5
 
