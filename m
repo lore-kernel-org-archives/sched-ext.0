@@ -1,110 +1,107 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792E2306744
-	for <sched-ext@lists.linux.dev>; Tue, 30 Jun 2026 03:13:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEED264617;
+	Tue, 30 Jun 2026 03:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782789183; cv=none; b=cQztp5//kcw/ZClhWStSm+d6103fjORCO/BYwu5hTqQ/ylwAJwN6afee9Q5Slly4xfdZTZ8sXNOuhPKhX6QQgyw8OTYCekQiWw1U7NoEzdtKvNp1MGpgX/GCjINQsxUCdYB1mJcL5qxQOqftygFTgrgG4ifjsEa6WVbAjR8+Vjo=
+	t=1782789629; cv=none; b=dVMqlWjeFG3MgYiC2JfjoPt8Hc/0wLW8Wtb072sKaewvO7gczDFiMJUUiBuyQw2FRKqWQn4tv4rQGqTCT7wxSGsyU9I9L2kpic73KFuAjFMdN4zwxqtp3Iq0hKlEJ4RnbAW7H1Z36p+3+SfznHrRFUowZAkWwIW566X8M8wDmMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782789183; c=relaxed/simple;
-	bh=/gjzEm9ltNohmq6N/JYDwBx5hXvsLgmkU42gn6o4lhA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cWg8+op6Vq/ygtCXXP31sKGcIa4I6Z0LbXY0Ho50JgKsDV5FidOl8zHDofLUp9CXKeYqR53S5srOtYB6XWtHbShrRvF22rkiQNSfBeQav7QxxnOAr6jmOC9Tf2Ctxstd6RPGySSTKa9vIyqmdXNGEySqAjqLAo4RthILN3ZMCWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 94166692743111f1aa26b74ffac11d73-20260630
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:65eb45f9-2d48-46f7-9c6b-e8dad5cd176a,IP:0,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:25
-X-CID-META: VersionHash:e7bac3a,CLOUDID:24d84fac57e3adc4c16301e1f1b049b9,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|850|865|898,TC:nil,Content:0|15|
-	50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,
-	OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 94166692743111f1aa26b74ffac11d73-20260630
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1777881677; Tue, 30 Jun 2026 11:12:51 +0800
-From: luoliang@kylinos.cn
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH] tools/sched_ext: use btf_vlen() helper in compat.h
-Date: Tue, 30 Jun 2026 11:12:46 +0800
-Message-Id: <20260630031246.2618216-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1782789629; c=relaxed/simple;
+	bh=swaQKFcypHEmfbvLvBQR/YUrccAsRYRbulEv2sYbc4g=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=QNWfnrcLXnm4tThPZAsnz1DRZf0Vb5ThRcqTuNdvlDRap1YTQ7izbg4iTuSsPr2aR+VdgrJXDep+QZar4+tlOcExr/tssUUQOucFSclJpl8ZFVa8BYHZFm7y52yQURvu6PY01drB+rF4dYb1W42YzMLelRxhkebotiuECQnhv3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lP6g7IZx; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lP6g7IZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BB51F000E9;
+	Tue, 30 Jun 2026 03:20:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782789627;
+	bh=4hWZaKzlBi1FrYoSVvny91d73NS37LVCJkUUjmHaVPQ=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=lP6g7IZxcbu2mjV+QOK4TD+PHg1+sQLyf37/kkvnQGXKVpwGyrOmmoe/J7W/ZHwEA
+	 jXQAo1dnlfXBBYiiizfkYitaHJwh0JD+KbeTKAmhrWSl2cVDvqMnYo2e7CmbM8TgGD
+	 OzlHqdkJa20o226dXmTa3mrIcbdLs+SHTNeTdoRGNE9jWWiaH+x0MyipOhgEV1jfJp
+	 JA169bqtg2BpZaD57rF5NUzX5WskMWAtDqIdzMbLiITAaBbtLL1CgqLRH9vjWI2AHI
+	 9ahLwWtg0E+ldz2jsFrYvvIMrtk6j6uCWM8Iqh//9LH84eRyTdqjkA9VaKsV9QAw0d
+	 mVwgU0w42dI+g==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] tools/sched_ext: use btf_vlen() helper in compat.h
+Reply-To: sashiko-reviews@lists.linux.dev
+To: luoliang@kylinos.cn
+Cc: bpf@vger.kernel.org, sched-ext@lists.linux.dev
+In-Reply-To: <20260630031246.2618216-1-luoliang@kylinos.cn>
+References: <20260630031246.2618216-1-luoliang@kylinos.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 30 Jun 2026 03:20:27 +0000
+Message-Id: <20260630032027.92BB51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: luoliang <luoliang@kylinos.cn>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The patch fails to resolve the `-Wsign-compare` warning it claim=
+s to fix because `btf_vlen()` returns `__u32`, not `__u16`.
+--
 
-__COMPAT_read_enum() and __COMPAT_struct_has_field() open-code the
-vlen lookup via the raw BTF_INFO_VLEN(t->info) UAPI macro, whose
-result type is __u32 (t->info is __u32 and 0xffff is promoted to
-unsigned). Comparing it against the int loop counter triggers
--Wsign-compare in every example scheduler that includes compat.h.
+commit 4880227aa1b0e483fd0500c9f49fa0639cd32d8b
+Author: luoliang <luoliang@kylinos.cn>
 
-libbpf already exposes btf_vlen() for exactly this purpose; it
-returns __u16, the natural width of the vlen field, and the usual
-integer promotions turn the 'int < __u16' comparison into a plain
-'int < int' so the warning goes away without any cast. This matches
-the pattern already used in-kernel (e.g. kernel/bpf/inode.c) and in
-tools/bpf/bpftool. Replace the three open-coded lookups with
-btf_vlen(t). No functional change.
+tools/sched_ext: use btf_vlen() helper in compat.h
 
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
----
- tools/sched_ext/include/scx/compat.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This commit replaces open-coded BTF_INFO_VLEN() lookups with btf_vlen() in=
+=20
+compat.h, intending to fix a -Wsign-compare compiler warning.
 
-diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-index 039854c490d5..df5ca1ce20f6 100644
---- a/tools/sched_ext/include/scx/compat.h
-+++ b/tools/sched_ext/include/scx/compat.h
-@@ -42,7 +42,7 @@ static inline bool __COMPAT_read_enum(const char *type, const char *name, u64 *v
- 	if (btf_is_enum(t)) {
- 		struct btf_enum *e = btf_enum(t);
- 
--		for (i = 0; i < BTF_INFO_VLEN(t->info); i++) {
-+		for (i = 0; i < btf_vlen(t); i++) {
- 			n = btf__name_by_offset(__COMPAT_vmlinux_btf, e[i].name_off);
- 			SCX_BUG_ON(!n, "btf__name_by_offset()");
- 			if (!strcmp(n, name)) {
-@@ -53,7 +53,7 @@ static inline bool __COMPAT_read_enum(const char *type, const char *name, u64 *v
- 	} else if (btf_is_enum64(t)) {
- 		struct btf_enum64 *e = btf_enum64(t);
- 
--		for (i = 0; i < BTF_INFO_VLEN(t->info); i++) {
-+		for (i = 0; i < btf_vlen(t); i++) {
- 			n = btf__name_by_offset(__COMPAT_vmlinux_btf, e[i].name_off);
- 			SCX_BUG_ON(!n, "btf__name_by_offset()");
- 			if (!strcmp(n, name)) {
-@@ -97,7 +97,7 @@ static inline bool __COMPAT_struct_has_field(const char *type, const char *field
- 
- 	m = btf_members(t);
- 
--	for (i = 0; i < BTF_INFO_VLEN(t->info); i++) {
-+	for (i = 0; i < btf_vlen(t); i++) {
- 		n = btf__name_by_offset(__COMPAT_vmlinux_btf, m[i].name_off);
- 		SCX_BUG_ON(!n, "btf__name_by_offset()");
- 			if (!strcmp(n, field))
--- 
-2.43.0
+>     libbpf already exposes btf_vlen() for exactly this purpose; it
+>     returns __u16, the natural width of the vlen field, and the usual
+>     integer promotions turn the 'int < __u16' comparison into a plain
+>     'int < int' so the warning goes away without any cast. This matches
 
+[Severity: Medium]
+Is this description accurate?
+
+Looking at the definitions in include/linux/btf.h and tools/lib/bpf/btf.h,
+btf_vlen() is defined to return an unsigned 32-bit integer (u32 or __u32),
+not a __u16:
+
+static inline u32 btf_vlen(const struct btf_type *t)
+{
+	return btf_type_vlen(t);
+}
+
+Because it returns an unsigned 32-bit integer, won't comparing it against
+a signed int still trigger the -Wsign-compare warning?
+
+> diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/inclu=
+de/scx/compat.h
+> index 602f07061ee39..5b92e9c85d03d 100644
+> --- a/tools/sched_ext/include/scx/compat.h
+> +++ b/tools/sched_ext/include/scx/compat.h
+> @@ -42,7 +42,7 @@ static inline bool __COMPAT_read_enum(const char *type,=
+ const char *name, u64 *v
+>  	if (btf_is_enum(t)) {
+>  		struct btf_enum *e =3D btf_enum(t);
+> =20
+> -		for (i =3D 0; i < BTF_INFO_VLEN(t->info); i++) {
+> +		for (i =3D 0; i < btf_vlen(t); i++) {
+
+[Severity: Medium]
+Does this code still compare a signed int 'i' against the unsigned 32-bit
+return value of btf_vlen(t)?
+
+Other places in the kernel (like kernel/bpf/inode.c) and bpftool typically
+avoid this warning by either declaring their loop counter as a __u32, or by
+explicitly assigning the result of btf_vlen() to an int variable before the
+loop. Should one of those approaches be used here instead?
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630031246.2618=
+216-1-luoliang@kylinos.cn?part=3D1
