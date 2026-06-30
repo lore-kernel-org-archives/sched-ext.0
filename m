@@ -1,43 +1,50 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E8D2D592D;
-	Mon, 29 Jun 2026 22:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792E2306744
+	for <sched-ext@lists.linux.dev>; Tue, 30 Jun 2026 03:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782773750; cv=none; b=e9aAf6yGoLiSLZ2i0XqX1IS60v/SPYvDw3749sc/rMzZ1v+SFm/KebI2Q5KXaoyw8LVD8W9gRGULql0yex0IMkJSClwEomfS+sjvOANm1NBqnKrVHqn4o3rm5QdiUkAGoQ+MdiOEq/K6mgrVjSEcjSg/zBZRD1B3tpftoE7VkSg=
+	t=1782789183; cv=none; b=cQztp5//kcw/ZClhWStSm+d6103fjORCO/BYwu5hTqQ/ylwAJwN6afee9Q5Slly4xfdZTZ8sXNOuhPKhX6QQgyw8OTYCekQiWw1U7NoEzdtKvNp1MGpgX/GCjINQsxUCdYB1mJcL5qxQOqftygFTgrgG4ifjsEa6WVbAjR8+Vjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782773750; c=relaxed/simple;
-	bh=X4K+BK3JmZwOUcM6+n8pOkrhiU/4kdZMQfTuanek7dw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UBQxdEOI3GR06YMn4q92kvqcG0nRa8sDD1S/KEtoeCFzaEAuVCPfBrMZvMzNDvw0yp5MaDn9dA2pUAdCQcTcq7wKzYZTxcvfDoZDrtfpI48DbP1ly2ni9BWQDajagMZRRFVyK1JDpmwFwmkcSuMIw2+P+mSOpsHmj+A3215pLew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lk3VK9eq; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lk3VK9eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201F31F000E9;
-	Mon, 29 Jun 2026 22:55:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782773749;
-	bh=MHXs29NnLQHGBzL05rgrxnxo6/44YOaw2/NJMWbg4UE=;
-	h=From:To:Cc:Subject:Date;
-	b=Lk3VK9eqVAlasB8ssMaMShE9KEdB6J3um48UaisZG8X3+xAy1nA4qNWa/EKJK6T8i
-	 N1HAbsTzSZ251wELa7oW9D1c7fZ4oFVKS6Zg7TtpuSAmL42WQzRUbTW5uEugMGAjN/
-	 h9cM81Wo1diyB+SWR8cez5dnmAFrSJ+uZpmoRv3iCwmbyzsRQz5AyyPS2iqBj48WKe
-	 Nqa9k+8VhEdWTfOb09cUY9RSQseeZk8OEbnD+ZzDzcoiImFm0fDxg2whxNM1Qj2KwD
-	 +f81nqF5YuNMB1eBSwNU+PHxHWTbz8aHk+o7j/qa75rcFf+BvuulZTGP3tpeoQrVSc
-	 QzZq4FRd2GyfA==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
+	s=arc-20240116; t=1782789183; c=relaxed/simple;
+	bh=/gjzEm9ltNohmq6N/JYDwBx5hXvsLgmkU42gn6o4lhA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=cWg8+op6Vq/ygtCXXP31sKGcIa4I6Z0LbXY0Ho50JgKsDV5FidOl8zHDofLUp9CXKeYqR53S5srOtYB6XWtHbShrRvF22rkiQNSfBeQav7QxxnOAr6jmOC9Tf2Ctxstd6RPGySSTKa9vIyqmdXNGEySqAjqLAo4RthILN3ZMCWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 94166692743111f1aa26b74ffac11d73-20260630
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:65eb45f9-2d48-46f7-9c6b-e8dad5cd176a,IP:0,U
+	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:25
+X-CID-META: VersionHash:e7bac3a,CLOUDID:24d84fac57e3adc4c16301e1f1b049b9,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|850|865|898,TC:nil,Content:0|15|
+	50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,
+	OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 94166692743111f1aa26b74ffac11d73-20260630
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1777881677; Tue, 30 Jun 2026 11:12:51 +0800
+From: luoliang@kylinos.cn
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev
-Cc: Tejun Heo <tj@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Kuba Piecuch <jpiecuch@google.com>
-Subject: [PATCH v3] sched_ext: Don't warn on core-sched forced idle in put_prev_task_scx()
-Date: Mon, 29 Jun 2026 12:55:48 -1000
-Message-ID: <20260629225548.3562257-1-tj@kernel.org>
-X-Mailer: git-send-email 2.54.0
+	bpf@vger.kernel.org,
+	Liang Luo <luoliang@kylinos.cn>
+Subject: [PATCH] tools/sched_ext: use btf_vlen() helper in compat.h
+Date: Tue, 30 Jun 2026 11:12:46 +0800
+Message-Id: <20260630031246.2618216-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,45 +53,58 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-put_prev_task_scx() warns when a runnable task drops to a lower sched_class
-without SCX_OPS_ENQ_LAST, on the assumption that balance_one() would have
-kept it running. Core scheduling breaks that: a forced-idle SMT sibling
-reschedules through the core_pick fast path in pick_next_task(), which skips
-pick_task_scx() and thus balance_one(), so a runnable task can drop to idle
-with ENQ_LAST unset.
+From: luoliang <luoliang@kylinos.cn>
 
-Gate the warning on sched_cpu_cookie_match(): a cookie mismatch means core
-scheduling forced the idle, while a match (or core scheduling off) still
-catches a genuine missing-ENQ_LAST drop.
+__COMPAT_read_enum() and __COMPAT_struct_has_field() open-code the
+vlen lookup via the raw BTF_INFO_VLEN(t->info) UAPI macro, whose
+result type is __u32 (t->info is __u32 and 0xffff is promoted to
+unsigned). Comparing it against the int loop counter triggers
+-Wsign-compare in every example scheduler that includes compat.h.
 
-v3: Gate the warning on sched_cpu_cookie_match() so it is suppressed only on
-    the forced-idle CPU instead of whenever core scheduling is enabled, so a
-    genuine missing-ENQ_LAST drop is still caught (Andrea Righi).
-v2: Reworded the description (Kuba Piecuch).
+libbpf already exposes btf_vlen() for exactly this purpose; it
+returns __u16, the natural width of the vlen field, and the usual
+integer promotions turn the 'int < __u16' comparison into a plain
+'int < int' so the warning goes away without any cast. This matches
+the pattern already used in-kernel (e.g. kernel/bpf/inode.c) and in
+tools/bpf/bpftool. Replace the three open-coded lookups with
+btf_vlen(t). No functional change.
 
-Fixes: 7c65ae81ea86 ("sched_ext: Don't call put_prev_task_scx() before picking the next task")
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
 ---
- kernel/sched/ext/ext.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/sched_ext/include/scx/compat.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 3b2e13bc924b..e75e2fd5ab7e 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3090,9 +3090,14 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		 * sched_class, %SCX_OPS_ENQ_LAST must be set. Tell
- 		 * ops.enqueue() that @p is the only one available for this cpu,
- 		 * which should trigger an explicit follow-up scheduling event.
-+		 *
-+		 * Core scheduling can force this CPU idle while @p stays
-+		 * runnable. @p's cookie then won't match the core's, so skip
-+		 * the warning in that case.
- 		 */
- 		if (next && sched_class_above(&ext_sched_class, next->sched_class)) {
--			WARN_ON_ONCE(!(sch->ops.flags & SCX_OPS_ENQ_LAST));
-+			WARN_ON_ONCE(sched_cpu_cookie_match(rq, p) &&
-+				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
- 		} else {
- 			do_enqueue_task(rq, p, 0, -1);
+diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
+index 039854c490d5..df5ca1ce20f6 100644
+--- a/tools/sched_ext/include/scx/compat.h
++++ b/tools/sched_ext/include/scx/compat.h
+@@ -42,7 +42,7 @@ static inline bool __COMPAT_read_enum(const char *type, const char *name, u64 *v
+ 	if (btf_is_enum(t)) {
+ 		struct btf_enum *e = btf_enum(t);
+ 
+-		for (i = 0; i < BTF_INFO_VLEN(t->info); i++) {
++		for (i = 0; i < btf_vlen(t); i++) {
+ 			n = btf__name_by_offset(__COMPAT_vmlinux_btf, e[i].name_off);
+ 			SCX_BUG_ON(!n, "btf__name_by_offset()");
+ 			if (!strcmp(n, name)) {
+@@ -53,7 +53,7 @@ static inline bool __COMPAT_read_enum(const char *type, const char *name, u64 *v
+ 	} else if (btf_is_enum64(t)) {
+ 		struct btf_enum64 *e = btf_enum64(t);
+ 
+-		for (i = 0; i < BTF_INFO_VLEN(t->info); i++) {
++		for (i = 0; i < btf_vlen(t); i++) {
+ 			n = btf__name_by_offset(__COMPAT_vmlinux_btf, e[i].name_off);
+ 			SCX_BUG_ON(!n, "btf__name_by_offset()");
+ 			if (!strcmp(n, name)) {
+@@ -97,7 +97,7 @@ static inline bool __COMPAT_struct_has_field(const char *type, const char *field
+ 
+ 	m = btf_members(t);
+ 
+-	for (i = 0; i < BTF_INFO_VLEN(t->info); i++) {
++	for (i = 0; i < btf_vlen(t); i++) {
+ 		n = btf__name_by_offset(__COMPAT_vmlinux_btf, m[i].name_off);
+ 		SCX_BUG_ON(!n, "btf__name_by_offset()");
+ 			if (!strcmp(n, field))
+-- 
+2.43.0
+
