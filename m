@@ -1,192 +1,167 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011062.outbound.protection.outlook.com [52.101.57.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4656D284690
-	for <sched-ext@lists.linux.dev>; Wed,  1 Jul 2026 18:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782930866; cv=none; b=vDLqwwd3ZGj2FHbGgjYYNmXYG9uBGO2t4be3VVihn0Wf3Gl2GUkIs5QPfHw/41gBH00dbi7xjZNa1JSR5HH4XZvGsMU458e9D/C87ThJu7MhVxmjYIS9khvx/KLrvYmwgV2fQDtFjIhFGdpssjJcW/UYNWJbCaUE0RhVmC3Thtc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782930866; c=relaxed/simple;
-	bh=FU8VyZGzXc5sjyITIVitKK02oZTlvdxDVlsjXyls4go=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gsVLl15vB0FKyYiu6NOebGhjUruRGjJPCXTy1Nw+cXtSdJu/ixE7SeWWSaYm3mOoNgkGBtc1VP6G4gtyZHaKuFi9Tk7bfU2sd64NkEjF+G8bJGcMcBKOQlTicvT+jLnwURA5kJ0ZhC0B6JvMMKp9ymMeDZ1VqC0UogQGKaCjRgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g4k4q4NN; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFE93B5854
+	for <sched-ext@lists.linux.dev>; Wed,  1 Jul 2026 19:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782935024; cv=fail; b=MX4yo/Pd4za13FkH//x4kgvDo40V6yRtrrjYf+KeWuOUX7AUYnzQIHJ1itwiBYWqYpVmnLehIqZM5V4ydIPVlGeP6NY7u6yNwXHRBygxXlzlh9V6eUIuXAc1I1mHHdeaFN60sC5xkLfQWiZT/BMiQZkAPZjs//QmTjBhhRgSyKQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782935024; c=relaxed/simple;
+	bh=Sdd507PBz8tLcAkTt3XoOywTt44YVdxAOGjL5QMdgnQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Y/boOAuXDaFNjZovuAxo4Jp/FZrfqlj+H/7cBqGK7JnTb8lc6cQ6CaaL7wpkb0zWs2AhRgfmkm1yCHzaTsiZUpbhsMVioM92KbYuMUu+NMbogw1NEx2Le18+mwRz+IBBhpHDhsfLtpRoSzT9YkCSFRElKRnXXIyRfsDPokkUzNU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rYs9pT4J; arc=fail smtp.client-ip=52.101.57.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g4k4q4NN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF9A1F00A3A;
-	Wed,  1 Jul 2026 18:34:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782930864;
-	bh=wHAao5xOal3kTMW105IW0HNCl34V84wFPiGF+yYpvHs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=g4k4q4NNJIhyDXjiKcHEi+I+b3AP8iNVI6jbx8JXnNcV/tUufrCl0zKMj+f+NKO4G
-	 GDXPzf/C6GvBUEwKgj4VIWA+AKCwXBVjv8p1tbbbEmDjLGWw2IIr6AKSAFaeoCeRG0
-	 W3vXDadKEpU++GkDTybg2huj72XlXXy5ZQVYx7JMH5pb8cZx38R0Bc6NGgxq0jNb1K
-	 KgWsYjZGV49e5jgpSqAZKh2chIGdTGJKjEpcxB8a4jFUxJBtAmRpIfHzWAEQPcZRcR
-	 r8JJ5J+WA7fk5blPaXHUJHbPwF8kJXKkgCtvA1wy+XV644mAufmfXbWseh5hMG97if
-	 dh3wA/q3NtZmg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 sched_ext/for-7.3 4/4] sched_ext: Split sub-scheduler
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rYs9pT4J"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SFRGLPrGFJdqv5nKYcN8RZe9+Z3M62uk7cvUMjLHsIPkcOzA4LHz14UYPHCiSVkpFWTQNwXeMUDPolaojl6HuVNizC13gH3aPlfXPNO4r/GwcJo27ZQbVlgYHGQMkMmTx7ZFcvQTUn+KmsBQdOVJ6ZkfSJiLp4JCa5RTyy/mnfVuYh0u8Ej6QdvKFktnydsQQRSzGq7/+KBKzQXdwSkRv1ohyQusfyXoVxin8tjwMLpOKTVr5N2N4RXmfUsUCdN9p9NrtI9Dex0lqm7R6fBQJqnxTxX9t0RLKwKerjDw1auwoBQNhDFxc8CQjvIgEnJrSxzKYavk/qS6A3iu7jA2fg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Za9OCxPE6qKBRY922w8KYBaqbjwwpbrn5UYmpEC/9pk=;
+ b=ScLvq3cZqjE5UEv83pvqBnHNytLOHZSqHwCiAKK3ZW5nh7KH4vKdS/J7Oz3P9vSgRieWoWpCfThzPuLKd3MQjxdgZZILs8GcOD6Y8DRClCMgKTyRbRhVT0C9KBvTivSQSrl4Z0vPh6D3ZaWEQMnw764nY0rPYdMtScwpE831102Cq365u85uOAtee5MozCnIBUqoOtz5OqQ0OwHhVLAB6h2VhbtJ2+5Fw6JtqkPm6BApGJHXGQba55pkKmkeFrIRcMF65/U6Z7PG7BvqGhWbwkd7VPFvNmIeoOfJWwrxi3Ma9YeTcUbjcWsMuiqgLAb6Kz1brCxr5qUsLBlBstGlow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Za9OCxPE6qKBRY922w8KYBaqbjwwpbrn5UYmpEC/9pk=;
+ b=rYs9pT4J9tU242OX5lGYcmrzf7cmJt3xSfJbuQxu5HT4+GGuuJ2I/Wl4upaVKkwbAovSMEgSXl1/5CLZ91RWXotEArBSAX3zoCQJmKUrL549V53FgHO6B6TQAsoUN5asFBhmxFqr1QqI679oJyqL2OOl/QGAuBii15VsAonDGfxJQ3x6dqTGG31PJinjR6bDeW8FimhscU7AHgUAujiUhPvfrNppir8vzUXa79kzXtcaClRC4KghEfiPSk6F1n3PNoWXjmpYqpTMo42UUMBGUpE1r+Fsi1rjM4N+kGkdkwrag7yMgmQtmt4aN+3X5UHydYyADO2GA8l4KOAu8C/RXw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by MN6PR12MB8591.namprd12.prod.outlook.com (2603:10b6:208:471::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Wed, 1 Jul 2026
+ 19:43:38 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0159.018; Wed, 1 Jul 2026
+ 19:43:37 +0000
+Date: Wed, 1 Jul 2026 21:43:25 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCHSET v2 sched_ext/for-7.3] sched_ext: Split sub-scheduler
  implementation into sub.c
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tejun Heo" <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260701181046.2490390-5-tj@kernel.org>
+Message-ID: <akVt3dx6dPj-Rt2p@gpd4>
 References: <20260701181046.2490390-1-tj@kernel.org>
- <20260701181046.2490390-5-tj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 01 Jul 2026 18:34:24 +0000
-Message-Id: <20260701183424.BAF9A1F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260701181046.2490390-1-tj@kernel.org>
+X-ClientProxiedBy: MI1P293CA0028.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:3::20) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|MN6PR12MB8591:EE_
+X-MS-Office365-Filtering-Correlation-Id: b8415617-0abc-48b8-a1af-08ded7a90b7e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|22082099003|18002099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	oeqDfUKzQAgJVzkAhb1IffS3Ynlfnh6jCni8fFoTS/f8elTwTv001ljUZuhsSvb4dMo09K5TzApbis/MFDakFUu3IqyVE5bZveC8QOC8gj7I3FL+5ep73EMR3IBPFHgGy52IB0eHlQa3FhM4Eof1Ylt0aTqrs7wzFa10zItswnR4xNU7oCYTGiAzg8dq+mJzcJhP2UMPZbqck/OcO0OzF0Sg0OPJulnHt5CNChk314BxuK6b6+IfabZJmKmsyBnsHsdFAGpJMepDu/u346+SeS0Z+rbxGdMf8r75o9C1m4mrMRzq5HaHuPhUWiW9e++U9cfmYUW56XgqKRsauz3l+f8dI7/nQRYRO4WFuKYa+PNwwOB9KLElQdGPaAjph4YxE1jq3NdWQIJddqmdpTTMy2GF3KpyXUzjArL5+YGcd5iWTAQ167HVaf2VLRWqHy/5dLhzGFTGyp9KAvoiAaXAiX21qWvfATvb768WCKfniP8Qzo5z4vumZlpRsShINUSP6+59mkEik36TR81QXkba/bWgvthTJ9AC9+O59i7hfRvPqhdrEvQz69ra7FjZKGVMJSbsZfQZpYayVTVpf0epZ9+c7gMHJQD2NKjQa7uaJgMHRuTPCqdX2v7vGAjMR4L+SzMcO1qjaqOHcE8uPsz9/9Sz/+xdo/U+wCzX+2QjuHE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?/WlB1pkbhNHLyVDkQONCGXQ0r4ROVEA/v0LOLwzDhwJLbAx+pIH6IxJzyPO6?=
+ =?us-ascii?Q?rasLnro2c7J3+a4ul8A/M2DAV6f9ZBC39b6Pp1fP4/YHtwNFJNTZkeBxxQkz?=
+ =?us-ascii?Q?80o9EJuQ6SCJm4dmlQnID2PlqFS3EYHWQ2HCmYVU2DkeCKLTiYYhHLPQ1v9W?=
+ =?us-ascii?Q?R6vTU3JP+/gTCcmcEUnkXYGWmF5jY4uG835hE4iSyihlP0WxhytMoOyR/sFK?=
+ =?us-ascii?Q?ZUiKL+a4IO7OiEaHogPuDOZlY6Ig/I2paqcF0YhO2RWlwYb9Km4sLKX06K17?=
+ =?us-ascii?Q?Xk5aVFkk/rlYABJSXxxWD04vstmg2xCIZxGXst6N8MKQ1dGciAIHdfgSJvlc?=
+ =?us-ascii?Q?v0eqzlaUSEMLXcTEqP5MU+qbBWeHjTqASafCRYXrHmsfQ8eC+ZSerLgfN/4J?=
+ =?us-ascii?Q?RUep0MIDC9jdnBN+I7BrpUkf4JiQ4G3eICcX9//8smtFJgLdmSY9fFl4XmTc?=
+ =?us-ascii?Q?iwQk0Jwqvs9LPXnrdJbIsge8mzoVTwPYz73H4JgP4gEdrx8ttIRMjMFx8nk6?=
+ =?us-ascii?Q?ee8w5tg2RGFKBuFC1X60Xe6Q8rXwQHlsDZXJpyNaUH7lAYiJdkxIA/X7gMv7?=
+ =?us-ascii?Q?2gAJmgxec1/Mg5x3oWYoBGB403lGNK/IvajGoZ0TLiRd0CXwxp+diSjVtJXa?=
+ =?us-ascii?Q?9n1l3AUU76SYAzt0FYXYNNQEZ5xu5+6vo+UOZkmx3OuBYfavJXaK9xWYP63z?=
+ =?us-ascii?Q?vjEOu7tMBUh2EQS2AgZlqRNf1OHi/jWkPvwhaLZnaWERSM3Wc2ezGXV9WinX?=
+ =?us-ascii?Q?9YOAsgyStHDQui82ldxjllkzASwy2BY3yVvop/jDN16gfWTSel1S88Y9gqAP?=
+ =?us-ascii?Q?uqxwcOXgmNjO/mBhcfdxZ60coaqVxg41figjgYSY/JqoOonvf+VgT5pgzENI?=
+ =?us-ascii?Q?Rrj+usKHoK4mxO6sxrbX+bBcUAczBI3UL+Cs5R3BPEhWPjROKF7xuHQzTa40?=
+ =?us-ascii?Q?v0tqDzWzIkMeUPZo+iWRqRzzb4TL73x31c+4Wfuc8OItswzg4jIy1eOcr6Yk?=
+ =?us-ascii?Q?1MrbM2H9BPBnI7NmSlQibQS4NmSwj9d0a8QQO6Svw3LBi1rHiORYRQ8SnJ1O?=
+ =?us-ascii?Q?3hUUVDuVpUSBIBQKdfhMAEZe2eXlOMdu5ALSGo+k6nJVg8cP7SM6XxaNHLzE?=
+ =?us-ascii?Q?K/y1+ZiUhi4UPHH22n8R2hzJLKI7GHvStvq5SMvLYTixJjmd3kc3KDdYvv0Q?=
+ =?us-ascii?Q?q+xcvFhpsI5yMqa57crxpJYOledO1e6CHDacxawbfldkpT75St06nD8Z6KjJ?=
+ =?us-ascii?Q?MzvzrtwlXv8kveoi4JCfS+Lc8Yw8Y5PElG++vs3cDlC3ZkpwI0jjkiqBtIQB?=
+ =?us-ascii?Q?eprWdF/ID+z7Z1tbkUTFPszEi7ET7Mm9+zOJtmA029N2IPwjEK54bEz0mEHN?=
+ =?us-ascii?Q?fc9/1X28eD2dIXSC8o8a3KdR3uyZKzu99GPfayGCv7UIIUcqLnajx44971+v?=
+ =?us-ascii?Q?QyuAID8cwrwqHHM/XfaNU9xfvq605EjotkKgSuTtXgiMF/5AEGG+3V1+Eg4Q?=
+ =?us-ascii?Q?i3ehe3j757Tri9kVuUMtPrlsd7bHB0QIohgATKnAC3oW+I21/WttQehIKzgS?=
+ =?us-ascii?Q?nnPwB2y77zK9O8oaBBMw8+OldrLq4tA3AAEBU0JevSEtDkN7SRRIB8uFelYA?=
+ =?us-ascii?Q?Wn8FnVR44RoVDcpftAUcpKx/eckfwuxnG4GMjEnr/9Vm5V+0r0ikbhmViRiL?=
+ =?us-ascii?Q?f24tVX53Rw/0JiQeicxKcZzi7mXuPGbhDX63TOp5/ieNa3W0WJ2cjTd58hNi?=
+ =?us-ascii?Q?RNZ09DqJ1g=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8415617-0abc-48b8-a1af-08ded7a90b7e
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 19:43:37.6786
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: k5JMnJUVQzEVs35ux8i8mXNA/KeCx5m0XGd+ORJKHuU0yzfw9SLqL6KLtDyoeknlqt0+RvluZctGnzRIH9Vk9w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8591
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+Hi Tejun,
 
-New issues:
-- [Low] Compilation failure due to implicit function declarations in `sub.h=
-`.
+On Wed, Jul 01, 2026 at 08:10:42AM -1000, Tejun Heo wrote:
+> Hello,
+> 
+> v2: Fold the scx_dispatch_sched() sub.h promotion into the split (patch 4) so
+>     it is self-contained. v1 left it to a later patch, so the posted split had
+>     sub.c call an ext.c file-local static (Andrea). __always_inline kept.
+>     Patches 1-3 unchanged.
+> 
+> v1: https://lore.kernel.org/all/20260701031429.1892218-1-tj@kernel.org
+> 
+> The sub-scheduler implementation has grown and will keep growing. Move it
+> out of ext.c into a new kernel/sched/ext/sub.c. The first three patches are
+> mechanical prep (prefix file-local helpers, expose shared internals, inline
+> a few trivial helpers) so the move itself stays pure code motion. No
+> functional change.
 
-Pre-existing issues:
-- [High] The `scx_bpf_sub_dispatch` kfunc breaks runqueue lock atomicity fo=
-r the parent BPF program.
-- [High] Missing `scx_error()` calls in `scx_sub_enable_workfn()` lead to s=
-ilent sub-scheduler initialization failures and zombie states.
---
+Looks good to me.
 
-commit c73a80aa8b4b758cfebb3ce05e858b8b1302f361
-Author: Tejun Heo <tj@kernel.org>
-Subject: sched_ext: Split sub-scheduler implementation into sub.c
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
-This commit moves the sub-scheduler implementation from ext.c into a new
-sub.c file. It also moves shared prototypes to sub.h and makes
-scx_dispatch_sched() an inline function in sub.h.
+Thanks,
+-Andrea
 
-> diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-> new file mode 100644
-> index 0000000000000..460a9fd196dc6
-> --- /dev/null
-> +++ b/kernel/sched/ext/sub.h
-
-[ ... ]
-
-> +static __always_inline bool
-> +scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
-> +		   struct task_struct *prev, bool nested)
-> +{
-> +	struct scx_dsp_ctx *dspc =3D &this_cpu_ptr(sch->pcpu)->dsp_ctx;
-> +	int nr_loops =3D SCX_DSP_MAX_LOOPS;
-> +	s32 cpu =3D cpu_of(rq);
-> +	bool prev_on_sch =3D (prev->sched_class =3D=3D &ext_sched_class) &&
-> +		scx_task_on_sched(sch, prev);
-> +
-> +	if (scx_consume_global_dsq(sch, rq))
-> +		return true;
-
-[ ... ]
-
-> +	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
-> +		return false;
-
-[Severity: Low]
-Does this cause a compilation failure due to implicit function declarations?
-
-In kernel/sched/build_policy.c, ext/sub.h is included before ext/ext.c. When
-the compiler parses this scx_dispatch_sched() inline function in sub.h,
-functions like scx_rq_online(), scx_flush_dispatch_buf(), and scx_kick_cpu()
-have not been declared yet because they are defined later as static functio=
-ns
-in ext.c. This will result in an implicit function declaration error.
-
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> new file mode 100644
-> index 0000000000000..0504204272732
-> --- /dev/null
-> +++ b/kernel/sched/ext/sub.c
-
-[ ... ]
-
-> +void scx_sub_enable_workfn(struct kthread_work *work)
-> +{
-> +	struct scx_enable_cmd *cmd =3D container_of(work, struct scx_enable_cmd=
-, work);
-> +	struct sched_ext_ops *ops =3D cmd->ops;
-> +	struct cgroup *cgrp;
-
-[ ... ]
-
-> +err_disable:
-> +	mutex_unlock(&scx_enable_mutex);
-> +	scx_flush_disable_work(sch);
-> +	cmd->ret =3D 0;
-> +}
-
-[Severity: High]
-This is a pre-existing issue, but do missing scx_error() calls lead to sile=
-nt
-sub-scheduler initialization failures?
-
-If initialization fails (for example, inside scx_arena_pool_init()), the co=
-de
-jumps to the err_disable label. Unlike scx_root_enable_workfn() which
-explicitly calls scx_error() to transition the scheduler to a disabled state
-and queue cleanup work, scx_sub_enable_workfn() omits this call.
-
-Consequently, scx_flush_disable_work() does nothing because the exit state
-remains SCX_EXIT_NONE, and the function returns success to userspace by
-setting cmd->ret =3D 0, leaving the sub-scheduler permanently half-initiali=
-zed.
-
-[ ... ]
-
-> +__bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_pr=
-og_aux *aux)
-> +{
-> +	struct rq *this_rq =3D this_rq();
-> +	struct scx_sched *parent, *child;
-> +
-> +	guard(rcu)();
-> +	parent =3D scx_prog_sched(aux);
-> +	if (unlikely(!parent))
-> +		return false;
-> +
-> +	child =3D scx_find_sub_sched(cgroup_id);
-> +
-> +	if (unlikely(!child))
-> +		return false;
-> +
-> +	if (unlikely(scx_parent(child) !=3D parent)) {
-> +		scx_error(parent, "trying to dispatch a distant sub-sched on cgroup %l=
-lu",
-> +			  cgroup_id);
-> +		return false;
-> +	}
-> +
-> +	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_pre=
-v,
-> +				  true);
-> +}
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does the scx_bpf_sub_dispatc=
-h()
-kfunc break runqueue lock atomicity for the parent BPF program?
-
-The BPF verifier and scheduler core assume that a non-sleepable ops.dispatch
-BPF program executes atomically while continuously holding the rq lock.
-However, when the parent BPF scheduler calls this kfunc, it evaluates the
-child scheduler's dispatch logic which calls scx_flush_dispatch_buf().
-
-Flushing the buffer can invoke dispatch_to_local_dsq(), which drops and
-re-acquires the rq lock. Dropping the lock underneath the still-executing
-parent BPF program violates the atomicity assumption, which can allow
-concurrent CPUs to modify the runqueue.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260701181046.2490=
-390-1-tj@kernel.org?part=3D4
+> 
+> Based on sched_ext/for-7.3 (5df6a4506d06) with sched_ext/for-7.2-fixes
+> (b7d9c359e5cf) assumed merged.
+> 
+> Tejun Heo (4):
+>   sched_ext: Prefix file-local ext.c helpers exposed by the sub.c split
+>   sched_ext: Expose the ext.c internals used by the sub.c split
+>   sched_ext: Inline small ext.c helpers shared across the sub.c split
+>   sched_ext: Split sub-scheduler implementation into sub.c
+> 
+>  kernel/sched/build_policy.c |    2 +
+>  kernel/sched/ext/ext.c      | 1117 +++++--------------------------------------
+>  kernel/sched/ext/internal.h |  164 ++++++-
+>  kernel/sched/ext/sub.c      |  668 ++++++++++++++++++++++++++
+>  kernel/sched/ext/sub.h      |  161 +++++++
+>  5 files changed, 1101 insertions(+), 1011 deletions(-)
+> 
+> Thanks.
+> 
+> --
+> tejun
