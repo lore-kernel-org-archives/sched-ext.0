@@ -1,320 +1,190 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013005.outbound.protection.outlook.com [40.107.201.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7223F0AA8
-	for <sched-ext@lists.linux.dev>; Wed,  1 Jul 2026 09:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782897607; cv=none; b=JBJO1jbPsVtcxggSeuTM0re7++BQHUd9+HKmYJxTxnWQ8VFxxAc/qhIa/9dXXi0n+SQ3Q6u2ymV10949zmEr+rWc4wJgpmeGn+Mtam7QO4DDez/XGDZd30uHLYqXFIPSHT6K6pEFg4QSKeM6dwne4KW6AxhKKW3ny66ZFzJZn6w=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782897607; c=relaxed/simple;
-	bh=7P+u0ve+4pTAQ3JWDmumCDHsnrmWBaIf1JwfEVKSINo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bN0NRx24TABfJEomow+bZRNyTHJ8ftUnUbL/05qQErsV/Sro4QKy21T0pK+cNfrQreIE4cBtWeXVk/qI0g5WHL8IVM+U/setYkqG23y2qPnUrilTcRujKiz+624sVhv2MtsSOgW3+qmLFaOhEqINP+VQylWFLGArANH/ayE13Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZIakNla; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABAA40DFCF
+	for <sched-ext@lists.linux.dev>; Wed,  1 Jul 2026 10:04:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.5
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782900266; cv=fail; b=qi4/Jotdh1mheejE5Jy00Jb/3wziD0xoESN2GvyLY7ROOJ/7Q2dEVcWGFSmMvwAp0aRkQ4UisrQGJbybFDMmqG0wiey5JRg7dxHodVY820d+hp8eMgJ4ZemHyKspIe4kIm330U6iNSAtvo8gL8WgwdV0Iuf833tO6VggO7WUk8k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782900266; c=relaxed/simple;
+	bh=I/WrQ3cQHrVODbr0/kGf8mF4wja70s3XWRH+EZM2QZk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=kqBMis5VV4k46CaurofMZ74HW6obfFmqrZ61+H37MJPX7T6YQNRlpmQghuvg8gV+YvE9GQ2is+1zfrKqFeyOCRDd3LRDHUhJqvTPUi15RKP99k8XZoixdQGDRieFgtbVvN9xVSNz1/uw+e9UioUUT+cJGxYJ12Y0X+MShdVIS4U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=S0NRWnDR; arc=fail smtp.client-ip=40.107.201.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZIakNla"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-37fb434c547so275492a91.0
-        for <sched-ext@lists.linux.dev>; Wed, 01 Jul 2026 02:20:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782897603; x=1783502403; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=737f7Ebbsrst7YTIEUi1Ot0TEsMTGrl0n4PwgIjxMgU=;
-        b=gZIakNlaU5mmPgYun8JukA+osGdf5k7oiyOO6P1rlrc6lpVZOKR2+b73311BAEA1ru
-         O1QH6hAeLjbOvQSckTGXDubzVIq9YhiCwrBQcKAsZHojAxUgyO2k4aldJIYRBG+NmHJz
-         g+Q79MNyX+nFRyW8/bm4NRn5VywNd7zm04dCNUr/Hj3zR1HGSwIt6vaMmj5JyCnG/HW4
-         n0RNKajyG4EmBX6EIB4GbdeFjie8xXtD/W25Fzwg3P65HPmhIkl+lAgxGkuK3oqx16RH
-         nZoDNl68ufNfoOBAOSw4HhRdHZE3UwLAnsgrcCTeU9/XEznbEC5zeeiCS5dWQdoZ2K/d
-         gdQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782897603; x=1783502403;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=737f7Ebbsrst7YTIEUi1Ot0TEsMTGrl0n4PwgIjxMgU=;
-        b=pLO7w3551c9lHmkNUC4R67tfBh08seI+4CasSgLSjG6IHBKHxSIe5QEJWdyB8fFS73
-         pC/2owyXLV3rhSTlRgpBBBI7Tj5ME4qK2XQNNj8cMWFcVCnb1upOgJuJdhJKCKmjB3Nb
-         XDVrRszURRXEwLlR+NaKIYbwxlFBgY2rC1QmGccsEDqhagK7W6CI96OdvuXOaLolvqB4
-         4xWDaUGPudYEqIrkkiE7Kp6aqecwDSS1uSQpkVgBnhoi2Le04lvAGAwvm9buRl1QRzz2
-         QTgOyCQervLJDGkUphAlIoqGgo5pRY9LIBpHMLbAophpE7ILArUGrdtXRCgtADVVLck5
-         Msvg==
-X-Forwarded-Encrypted: i=1; AHgh+Ro04TSfvYjSCQBGzlk7NgzR3Kq5W4vOT3mRZqPxTHCw2/vnXdfV4PpcDwBcuthCCUu+uXKXCoYjt1Q=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw2qepvjCSw6lCKQyvgV/Qupz6RueBG0/YmAda8ddDNWsGPFuu2
-	MihOLoLAbZWZMBcXNqLQJb49MbMOeNF4Hm3i7x6jSP9OE0OHv7CIZs96
-X-Gm-Gg: AfdE7ckepg1bU8wzog4EqTbkLHIpjPrFUqnv26FBlboXPitEKDhjqcnuw7PpVL5FrOc
-	HbFCWzSXndKBXAR3Gyaal8Mx/bzdXRE7a4YgNCxUn46rKHgAYWQALFyYdIHa3SSy312dprS35Qn
-	NCY8qSV7nDsUZKfEqvKCAsPCPTUMGtTwn7RnSsblt38Y35VO9JvOK7FdKNF79utWwCIZgA2LkV9
-	uU/EIv3Z5Knd3ekKI4ce+Yxt993d+byRMOcEZeSo60fXm12cuJg7YyQl6WPgwQlHfWReb8mTdau
-	Rc4ADAZjs06xOpTWRc6mC6RLW2BauIvpt8JcPT6x+/bPLZoAmQy8WfYhYFrTvyYKKESj/8cR8+0
-	cUomB93JVeNuY5w6AD7hOFWT+cx+xG0DgbKELJKveg8Up0Cl7Pbqh9m2JwO4JhoCT2B7SP4nnVp
-	N08sd0tzpXV1kKsEJaytNdRGA7kg0bkZTZ7wkSEd7v9ECPjaTwdrkNvARj8PolZFboYQ==
-X-Received: by 2002:a17:90b:28c4:b0:37f:9ce2:348c with SMTP id 98e67ed59e1d1-380aa2078admr873524a91.29.1782897603321;
-        Wed, 01 Jul 2026 02:20:03 -0700 (PDT)
-Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3809645185dsm1457000a91.15.2026.07.01.02.19.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jul 2026 02:20:02 -0700 (PDT)
-From: "zhidao su (Xiaomi)" <soolaugust@gmail.com>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>
-Cc: zhidao su <soolaugust@gmail.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	zhidao su <suzhidao@xiaomi.com>,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH] sched_ext: Reject task setter kfuncs outside SCX contexts
-Date: Wed,  1 Jul 2026 17:19:54 +0800
-Message-ID: <20260701091954.384565-1-soolaugust@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="S0NRWnDR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gjSRX9/orgS2bpbzgbfZHh6mSUhDi6YjcK0RWMd8OIokKxA1NlCKDdxJs/zXi0eE9l/NC3uVw3tBIR41TmRsyb6adjmp+axAQQCzWA3YIb1TlqtHuTU/CPSg1s/FptwZn6PydZ4X7CRk5NJ9xrzOUMoy7pesfhODxZR0uDcHsIcUmc1ZEver6SATOD6hkr6yLdLMduC+oWCxSQxfxaym7qCpdoA0F6EPo7kCPCjkfV4kd/TeNoHDF+tyavlT+SGZmOA19KFpggVmv7S/NfRgxyms4TAKpNW/hjoeA/0/dVTwaW+icTBAY5tl/g2JHe793TYP7cI5rxGFp+uGj7xqmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NLGUiPH2WdmwoTCbbfzfxUJOXd0leNSom9BgLavyDng=;
+ b=O+jUJOr70guUnFlcnsBvt+jIB0gKd+6xbJmjmVjgJXIwCtteRIaat4Be/bsNxMDexu0WvAYwTVijFQc0r8T04N43Gcb0tc6DbFMKPPK1MfPFpidzlhJR+Uo6f1nWW8moSNgM5MCRX7/XGZjmAN5pKg9OijqULbRrVJkobzNGBRVfqYgxEbwlNXX/6XNiSg6xQDqc4dIpdFif4bLhzKcKrWO5SsDoI+TN2qz9FKRU8eFneSWylHxmJCs2GyVpRBCkf72/58B2xdVMIWKJz1lx+Sr9bURLmTlhG6uiFV6PWzRYrQ6FNRUzfHag0G9DG8ExGieXXq/NM6x2fe3kf2YfYg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NLGUiPH2WdmwoTCbbfzfxUJOXd0leNSom9BgLavyDng=;
+ b=S0NRWnDR9Ru85CCi/FVjxNaXuB4irloCWUcnNYVHvaUfivvf2rf+JP/o5dZDvpy0P0v/2Aara9yvaCNzI1LNRqY46MFdHUqZttQSMXxujxPfOAC97+RcIyLSzzE42lDiMStSwSDm+EV+5PUBZlxg2lO7m3ICYu+42Zx2jB8kkR4kqjrSF4Y9FYfhdGujq3u2f1WTKRSfNc699Pur/Utdf3pClaSLGNl5XvwnFvIRPBX1arzEgxJ3FsdmAjRCmYksccQK+27JeMWrV+x8VGWotXWgJEFpoTiBbfSnaS6z+vPEkep+mn6EtQKRvVI4CJkecR8aw2N37ASBHJYoxLB8Nw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by SA5PPF634736581.namprd12.prod.outlook.com (2603:10b6:80f:fc04::8cd) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.19; Wed, 1 Jul
+ 2026 10:04:17 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0159.018; Wed, 1 Jul 2026
+ 10:04:17 +0000
+Date: Wed, 1 Jul 2026 12:04:05 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.3 4/4] sched_ext: Split sub-scheduler
+ implementation into sub.c
+Message-ID: <akTmFanypN_dRJiG@gpd4>
+References: <20260701031429.1892218-1-tj@kernel.org>
+ <20260701031429.1892218-5-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260701031429.1892218-5-tj@kernel.org>
+X-ClientProxiedBy: ZR0P278CA0033.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:1c::20) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SA5PPF634736581:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a118ae8-4aef-45b1-2062-08ded7581c8e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|11063799006|6133799003|4143699003|56012099006|22082099003|18002099003|5023799004;
+X-Microsoft-Antispam-Message-Info:
+	jpCDgmOdqyG6OkDMlLLfLPuieWZEbeWwrOX4/FIdS+LZF8F5fxGWzDreLiaFnPuS7F0bDf5srJwXnSkFPi45w/SYFpx6ZmS3vbJ/o5oJ+UIs0tf2TA6glzcYmJhkw3Gy/DbqztN6iP7GKQQwlS4iw1XUdPP0gQ6PPqA/zrePlwbSSYfybzWQKHWUS7hXZG29jrrsdm4cLZbLtCoU31+d7yiqcILdCN/Fk4p3oGg6Uj+7GaJzM8OP3l1NonxEfSp1c0e31ysTtBRIeANjzTDe3Yp6FypbPN8ASo4Ybe4//Nwp+UD+k9OOSZFXSb0tHfdGNWELX2qWUu99mr0UGRnzNoj1ly+DHXmDrZVYpMKvvC3OmOrowLv32z6/afoaeMQYemKAkdK/d6AxS9ywXVE9WZpPD+DAi90mvE0V+7YpnUox5WyPwj8bXW8Kn72sYfKg56Vm/MgiABk3IDQ4dLIGrmKA5UblfAt99NIDp9AVplUgDAoZPfsZsMYSYUN8uxKWzucqmRzYWBvuw0o3jLz8316uIO93edwZ2XzMmfc0oLCdWkBLfAJFQhhGC3wM2a5IDoFIhYewzWOjf7U37Tcj9KVhQeVW2feXTvByIeegLBelTsvJwYlT1nv27r4d1F5JzZlWS8kwC42Jv/kVOTFKIu939bmOAX1xkysG8I0j1WM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(11063799006)(6133799003)(4143699003)(56012099006)(22082099003)(18002099003)(5023799004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?dKPcAheik4AxZDUwTC1Af9rEh9pKbhT0VGRhfH7qF2u6Rzo9LysLA4yxeFBx?=
+ =?us-ascii?Q?pweqH7ntL81Plyo6JUji7MscBZ5/HtkcAwtI6PJJWkq2XS4DJN6d33ZpSrzY?=
+ =?us-ascii?Q?XQgC8t4mVGnnUERSzLAfQ4mWyfXTKxLNjt2LQRqzb/XBLMOO1D16TFONnZb9?=
+ =?us-ascii?Q?NsDsF8rb+wg1fiITHfAk52o70oZ0wkinOvaoqvjd9ZR0hBJkP++i/vUY/MCQ?=
+ =?us-ascii?Q?xLSYkbypLRX8q4rmpDsLzG6MFWBsUaEUlN37aPLvJHP0uJxCcKciA2lZnGKO?=
+ =?us-ascii?Q?rHZBEOnGMcKry+aTnkhKobosfAjLihvX8EpaFpx+8MS4yGePA+nZ/6tcZ+gp?=
+ =?us-ascii?Q?MAxpWuoNjezvG+ppnzIgxVufmr7q6GIcLg936Wx3OC1m/wXE9q7CuvbJfW3C?=
+ =?us-ascii?Q?/+enekU/KyzKNHgqcUO9Oa/YgbjBZejO9KdwOJmNAGlPr5wvEfY0x4R2wDAz?=
+ =?us-ascii?Q?hI5AdM+mqDNOFQdEwrP11bxGKET7pv+TcgdAWmgtG+z3YHVwP7+t6y/1lPhd?=
+ =?us-ascii?Q?up3gkOHmQ9CXG91uAju5q/sOg89ud5WMyJuTudgQZHhuFgyGm1p0QFIDMbSD?=
+ =?us-ascii?Q?h+Qjcnar8cx5IEdAx/7X97A0iaCyyGEmndE8S3NVsUwV2sjLh9gJbkRtKYBp?=
+ =?us-ascii?Q?O2vdZh9cPGHzb4Ftf6ihfCsH3j1mCnz4nPlA8OIbRcT5j9lVCd8CfsZu2F3x?=
+ =?us-ascii?Q?Yu+mK6m9gFm5KkJeJks6CQGFHzmZf2y8llZk6W4+LK0mjRsvsXkPovI25HCg?=
+ =?us-ascii?Q?X3XjCPiIldhGXHc/D3OfAENxh48WlcZcFVFbzsBDQidSzPiMf3VPcO4eT63Q?=
+ =?us-ascii?Q?1uxCAt9WW1ip7p1dL+WdRHr5fkc+hQ/3t8Mxl9t18QmqzOYKBbdGuncgKs/N?=
+ =?us-ascii?Q?6v9Kz0ihU2XAxAlw7+uCBFwrXUo5KxlxRnbbajUu5Zjwd119hwW2fzQ/Pz5H?=
+ =?us-ascii?Q?3ftWdvTkUOv0yNZBE5Ep4mXkNrtoHyYYMeXb/khR9A8ps9ky6eFc3+bXzK96?=
+ =?us-ascii?Q?uhupYHcZmd+KJb/Kar8TeZj0rCQRdUe+DP9oYBZSPJPq+1dMYCDFfhY20VbZ?=
+ =?us-ascii?Q?QZEK1g0uBdCGseSJpG5MkbtGMAO8jYhZYlPbXrqFY08tXLmRlmXF7VBrUdd/?=
+ =?us-ascii?Q?vkq1JDaA3Xdg8qXsTrKUsfz9bWUvSeiM2PQgC+Ss9DYaEQDP+7gt3ExhM4Gm?=
+ =?us-ascii?Q?vvhCGY3fBiSqnNJtvw3WPKf0n+LuUu0O/FNZ1E9Yw0x2QxwgDtzIimOjP6dT?=
+ =?us-ascii?Q?Kt0q10QlDV8tDyZJTEvgJIs6lTc4GHcQd+0zmIH+VJjH6Qi9PobZSfh1UvHp?=
+ =?us-ascii?Q?Un5rkb0yo2oXz1bO4Dw7QE8oW+yoAIdOSkyTS2Sqc3tDOUPwO/KDhKxc4BGZ?=
+ =?us-ascii?Q?ERYW/Uw47ZRlZJwrH2pv+crDXdj8h47uz1talJ90YCOoS6PvGfW+rhK7IvOP?=
+ =?us-ascii?Q?KYWCX6wgWYwpw84wtyR8T8yRwRMz40VbGqpftrLAVDUyqtYJjMTWHuQcyi1l?=
+ =?us-ascii?Q?s6k2rplpZHTjE0iY8R+1HlKdHcNpIT/uvbmTkWAgRv0yTYPhBGC7Rz5wzL9V?=
+ =?us-ascii?Q?WWZ3uT1PGBRdRYVcs1Y7VOkV1uDkfNXFYI8usERu7QuTU7mwj0gjG5O4EPWI?=
+ =?us-ascii?Q?oT3hx70g8nn7vC4iSsdBUvKF8A4Fv69tAzHRHRJ/zVxc9EQOZkK0ODzmP+VY?=
+ =?us-ascii?Q?2iVE/T/aNQ2i+K4Y3V+JtMEeBrcbBb/8sCKPG7AXfTxBQQgZwVnF3djIDPI8?=
+ =?us-ascii?Q?zgIpHkT3DA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a118ae8-4aef-45b1-2062-08ded7581c8e
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2026 10:04:17.1260
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: +P+fwEvQrsctEejzrRCeVBd3DiBw55FSRw5OPkOIJ6IvCXAslkrzgIy+DDIWT90LBxVSk5fEtKRtDEFNEtXNWQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF634736581
 
-scx_bpf_task_set_slice() and scx_bpf_task_set_dsq_vtime() mutate
-sched_ext task state and rely on scx_prog_sched() and
-scx_task_on_sched() to validate the calling scheduler's authority over
-the target task.
+Hi Tejun,
 
-However, the kfuncs were part of scx_kfunc_ids_any. That set is also
-registered for tracing and syscall programs and the verifier-time
-context filter allows any-set kfuncs from non-STRUCT_OPS program types.
-As a result, a non-SCX tracing program can load after calling the task
-setter wrappers, reaching the mutator kfuncs outside an SCX scheduler
-context.
+On Tue, Jun 30, 2026 at 05:14:29PM -1000, Tejun Heo wrote:
+> The sub-scheduler implementation has grown and will continue to expand. Move
+> the sub-scheduler functions from ext.c into a new kernel/sched/ext/sub.c.
+> sub.h holds the prototypes and the !CONFIG_EXT_SUB_SCHED no-op stubs.
+> 
+> No functional change.
+> 
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
 
-Split the task setter kfuncs into their own filtered kfunc set. Register
-that set for STRUCT_OPS, TRACING, and SYSCALL so the verifier can find
-the kfuncs, but let scx_kfunc_context_filter() reject them outside SCX
-struct_ops contexts. SCX schedulers can still call the setters, and the
-existing runtime task authority checks remain in place.
+...
 
-Add a negative sched_ext selftest which tries to call both task setter
-kfuncs from a tracing program. The test fails before this change because
-the program loads successfully, and passes after this change because the
-verifier rejects the task setter call.
+> +/**
+> + * scx_bpf_sub_dispatch - Trigger dispatching on a child scheduler
+> + * @cgroup_id: cgroup ID of the child scheduler to dispatch
+> + * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+> + *
+> + * Allows a parent scheduler to trigger dispatching on one of its direct
+> + * child schedulers. The child scheduler runs its dispatch operation to
+> + * move tasks from dispatch queues to the local runqueue.
+> + *
+> + * Returns: true on success, false if cgroup_id is invalid, not a direct
+> + * child, or caller lacks dispatch permission.
+> + */
+> +__bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux)
+> +{
+> +	struct rq *this_rq = this_rq();
+> +	struct scx_sched *parent, *child;
+> +
+> +	guard(rcu)();
+> +	parent = scx_prog_sched(aux);
+> +	if (unlikely(!parent))
+> +		return false;
+> +
+> +	child = scx_find_sub_sched(cgroup_id);
+> +
+> +	if (unlikely(!child))
+> +		return false;
+> +
+> +	if (unlikely(scx_parent(child) != parent)) {
+> +		scx_error(parent, "trying to dispatch a distant sub-sched on cgroup %llu",
+> +			  cgroup_id);
+> +		return false;
+> +	}
+> +
+> +	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_prev,
+> +				  true);
 
-Signed-off-by: zhidao su (Xiaomi) <soolaugust@gmail.com>
+clangd isn't happy here, because we're missing the declaration of
+scx_dispatch_sched(). It needs to be always inline. We can move the whole
+function to internal.h, but that would require extra restructuring. Otherwise,
+can relax the always inline condition?
 
----
-Validation:
-- Before fix: task_setter_kfunc_deny failed because non-SCX BPF loaded after calling task setter kfuncs
-- After fix: runner -t task_setter_kfunc_deny passed (PASSED=1 FAILED=0)
-- checkpatch --strict: 0 errors, 1 warning (MAINTAINERS new-file prompt), 0 checks
+From a local build the stack allocation in bytes looks like this:
 
- kernel/sched/ext.c                                      | 24 ++++++++++++++++++------
- tools/testing/selftests/sched_ext/Makefile              |  1 +
- tools/testing/selftests/sched_ext/task_setter_kfunc_deny.bpf.c | 17 +++++++++++++++++
- tools/testing/selftests/sched_ext/task_setter_kfunc_deny.c     | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 113 insertions(+), 6 deletions(-)
+                         scx_bpf_sub_dispatch()  scx_dispatch_sched()  Per level  4 levels
+                         -----------------------------------------------------------------
+__always_inline                    104                    -               104        416
+non-inline                          72                   72               144        576
+                         -----------------------------------------------------------------
+delta                                                                     +40       +160
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b8dd3358959d..257ffaca45f6 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -10254,9 +10254,12 @@ __bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
- 
- __bpf_kfunc_end_defs();
- 
--BTF_KFUNCS_START(scx_kfunc_ids_any)
-+BTF_KFUNCS_START(scx_kfunc_ids_task_setter)
- BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_IMPLICIT_ARGS | KF_RCU);
- BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_IMPLICIT_ARGS | KF_RCU);
-+BTF_KFUNCS_END(scx_kfunc_ids_task_setter)
-+
-+BTF_KFUNCS_START(scx_kfunc_ids_any)
- BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_kick_cid, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_dsq_nr_queued, KF_IMPLICIT_ARGS)
-@@ -10299,6 +10302,12 @@ BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_IMPLICIT_ARGS | KF_RCU | KF_ACQUIRE)
- #endif
- BTF_KFUNCS_END(scx_kfunc_ids_any)
- 
-+static const struct btf_kfunc_id_set scx_kfunc_set_task_setter = {
-+	.owner			= THIS_MODULE,
-+	.set			= &scx_kfunc_ids_task_setter,
-+	.filter			= scx_kfunc_context_filter,
-+};
-+
- static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- 	.owner			= THIS_MODULE,
- 	.set			= &scx_kfunc_ids_any,
-@@ -10408,13 +10417,14 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	bool in_dispatch = btf_id_set8_contains(&scx_kfunc_ids_dispatch, kfunc_id);
- 	bool in_cpu_release = btf_id_set8_contains(&scx_kfunc_ids_cpu_release, kfunc_id);
- 	bool in_idle = btf_id_set8_contains(&scx_kfunc_ids_idle, kfunc_id);
-+	bool in_task_setter = btf_id_set8_contains(&scx_kfunc_ids_task_setter, kfunc_id);
- 	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
- 	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
- 	u32 moff, flags;
- 
- 	/* Not an SCX kfunc - allow. */
- 	if (!(in_unlocked || in_init || in_select_cpu || in_enqueue || in_dispatch ||
--	      in_cpu_release || in_idle || in_any))
-+	      in_cpu_release || in_idle || in_task_setter || in_any))
- 		return 0;
- 
- 	/* SYSCALL progs (e.g. BPF test_run()) may call unlocked and select_cpu kfuncs. */
-@@ -10457,7 +10467,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 		return -EACCES;
- 
- 	/* SCX struct_ops: check the per-op allow list. */
--	if (in_any || in_idle)
-+	if (in_any || in_idle || in_task_setter)
- 		return 0;
- 
- 	moff = prog->aux->attach_st_ops_member_off;
-@@ -10572,6 +10582,12 @@ static int __init scx_init(void)
- 					     &scx_kfunc_set_unlocked)) ||
- 	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL,
- 					     &scx_kfunc_set_unlocked)) ||
-+	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS,
-+					     &scx_kfunc_set_task_setter)) ||
-+	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_TRACING,
-+					     &scx_kfunc_set_task_setter)) ||
-+	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL,
-+					     &scx_kfunc_set_task_setter)) ||
- 	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS,
- 					     &scx_kfunc_set_any)) ||
- 	    (ret = register_btf_kfunc_id_set(BPF_PROG_TYPE_TRACING,
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 5d2dffca0e91..000000000000 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -176,6 +176,7 @@ auto-test-targets :=			\
- 	maybe_null			\
- 	minimal				\
- 	non_scx_kfunc_deny		\
-+	task_setter_kfunc_deny		\
- 	numa				\
- 	allowed_cpus			\
- 	peek_dsq			\
-diff --git a/tools/testing/selftests/sched_ext/task_setter_kfunc_deny.bpf.c b/tools/testing/selftests/sched_ext/task_setter_kfunc_deny.bpf.c
-new file mode 100644
-index 000000000000..79b619a3445f
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/task_setter_kfunc_deny.bpf.c
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Verify that non-SCX programs cannot call task-mutating SCX kfuncs.
-+ */
-+
-+#include <scx/common.bpf.h>
-+
-+SEC("tp_btf/sched_switch")
-+int BPF_PROG(non_scx_task_setter, bool preempt, struct task_struct *prev,
-+	     struct task_struct *next, unsigned int prev_state)
-+{
-+	scx_bpf_task_set_slice(next, 1000000);
-+	scx_bpf_task_set_dsq_vtime(next, 1);
-+	return 0;
-+}
-+
-+char _license[] SEC("license") = "GPL";
-diff --git a/tools/testing/selftests/sched_ext/task_setter_kfunc_deny.c b/tools/testing/selftests/sched_ext/task_setter_kfunc_deny.c
-new file mode 100644
-index 000000000000..1450a7133a5c
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/task_setter_kfunc_deny.c
-@@ -0,0 +1,77 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Verify that task-mutating SCX kfuncs are rejected outside SCX contexts.
-+ */
-+
-+#include <bpf/libbpf.h>
-+#include <stdarg.h>
-+#include <scx/common.h>
-+#include <stdio.h>
-+#include <string.h>
-+#include "scx_test.h"
-+#include "task_setter_kfunc_deny.bpf.skel.h"
-+
-+static char verifier_log[8192];
-+static size_t verifier_log_pos;
-+
-+static int libbpf_print_fn(enum libbpf_print_level level, const char *format, va_list args)
-+{
-+	if (level == LIBBPF_DEBUG && verifier_log_pos < sizeof(verifier_log)) {
-+		int ret = vsnprintf(verifier_log + verifier_log_pos,
-+				  sizeof(verifier_log) - verifier_log_pos, format, args);
-+
-+		if (ret > 0)
-+			verifier_log_pos += ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static bool expected_rejection_seen(void)
-+{
-+	return strstr(verifier_log, "scx_bpf_task_set_slice") ||
-+	       strstr(verifier_log, "scx_bpf_task_set_dsq_vtime");
-+}
-+
-+static enum scx_test_status run(void *ctx)
-+{
-+	struct task_setter_kfunc_deny *skel;
-+	libbpf_print_fn_t old_libbpf_print_fn;
-+	int err;
-+
-+	old_libbpf_print_fn = libbpf_set_print(libbpf_print_fn);
-+	verifier_log[0] = '\0';
-+	verifier_log_pos = 0;
-+
-+	skel = task_setter_kfunc_deny__open();
-+	if (!skel) {
-+		SCX_ERR("Failed to open skel");
-+		libbpf_set_print(old_libbpf_print_fn);
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	err = task_setter_kfunc_deny__load(skel);
-+	task_setter_kfunc_deny__destroy(skel);
-+	libbpf_set_print(old_libbpf_print_fn);
-+
-+	if (!err) {
-+		SCX_ERR("non-SCX BPF program loaded after calling task setter kfuncs");
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	if (!expected_rejection_seen()) {
-+		SCX_ERR("load failed without expected sched_ext task setter rejection: %s",
-+			verifier_log);
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+struct scx_test task_setter_kfunc_deny = {
-+	.name = "task_setter_kfunc_deny",
-+	.description = "Verify non-SCX programs cannot call SCX task setter kfuncs",
-+	.run = run,
-+};
-+
-+REGISTER_SCX_TEST(&task_setter_kfunc_deny)
+I think the saving is quite still small compared with nested BPF frames. WDYT?
+
+Thanks,
+-Andrea
