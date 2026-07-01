@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B062B4C6EF3;
-	Wed,  1 Jul 2026 18:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E592B4C6EEB;
+	Wed,  1 Jul 2026 18:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782929451; cv=none; b=CCiSlU+Ac8XyXG6+PP7hzJcmouX50B0GryHcapqN7czevMfYGjVZBULuzPyvHC9crExP0SCtake5OsTzUgondKfgm/E1N1ov4vENLDwNjrozdIMhwAUa1b4UnS5mrIPRVfR33+Zs2AcQTOGQqA5jtO0a8oimtjBWkX0JUkCJg8I=
+	t=1782929452; cv=none; b=ET7l+DsEhSkhozIJQEjRpPjc55CC70vqvXp/9sRVKifxwAYA1rsQs7C0EZjpKv+wFm1CAeiflwiAYU26I9iiJODPTAK0s5t+37l2qVD11WU26JDPrORZpuRl/8aHzgmZJfd6id7fmSi9f0WjRHAxtgbde/9dkWmC8uVcZbgpK28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782929451; c=relaxed/simple;
-	bh=S125GV7dfbWuQ5FleS5RtzGWbajUzvTnmigLx5TTRGU=;
+	s=arc-20240116; t=1782929452; c=relaxed/simple;
+	bh=Pt/ZWR/2tqKk/QpDWUIUvgCUUyLaTM9ZFdIyLGYDRqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gt6UDm1iH57cNIk2xgEjXzZ9qsogcLTdYaLbD1sMJcUexQ39IJoWJTo/4GKuJpC4AUKtgC9FGbet24rn+De8XjaRcZxO06WdjGeGD0Ypbkk/LAyWmXSAjHzVC/+MQrHkKFvNOcJNtpUoWaWhbT3NIxKemJ9lwSIuyucSZpQQwZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDn0yXU8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dErFveJy82eYYERAmom2sknrW2rPTnqR80w9J5nEsGL0rpU2lXvsI5oS2swv3ZKGBK5y0R5KCLDRBN9S3UgsUS2ztR3EmDC/lMnEfq1QzxoWrEnmX7KjAqcPHLQ3nh8P57nEIcWiuixVpD7TFeahjBgqCNBYQ/SwQxCA6tdvRR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9jrOlu5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDn0yXU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8471F000E9;
-	Wed,  1 Jul 2026 18:10:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9jrOlu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2101F00A3A;
+	Wed,  1 Jul 2026 18:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782929449;
-	bh=4X0Yx48dxXhhtv4otXX7n/KEzEu4xVCy3wW9qi5DyjU=;
+	s=k20260515; t=1782929450;
+	bh=c5bXW4jCNOKx+P0sqjp4z0bpmVNkmcAbFrk43kHq1Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RDn0yXU8r9+8wwT/FIdV5isduqHviFhnRDCxxwOQjycsiFhIXfWeSHkd9P0qlyiYk
-	 IvaES73zFlj0W3kiLAXqbI7X4t/VDKoc02pLGlyfU1ghyQeUIhHEsFjZvFTuJtcqdy
-	 WCpR/qNij7BwjH7/z3TMcTDdrYXqTGp9L4jVWz74pA2hSVrHluGewWnnDeBEdJcdOK
-	 vlU1G5YM27KCAlwtvEFOjzfIH51pXvP7vONqTEO1LEBgwupssDDjtZEt947ala/QFT
-	 hJ5R+yVr4U4MN8Iimi6vXAV4PFLroMU6zOw7Hdq2bapsd/DO8OJypt+kfWtCQ9kk2m
-	 4Ji/Wo/dbll8A==
+	b=E9jrOlu57f3421obF1hctxkQGfcdQVFkRzjSjl+ATrwgNQGXmjCGiJ4LiZn2ShHaz
+	 evR/wUBJoGyqqKLGPsDhUX+QGSjlFB9PB+4FghSIMnqEGAlUx0raYkZOseYqYkdcQ3
+	 qDi5aG3Y3a0auWnRE6vIBjDXQKFoYQu+AGeaUmuEkc8gtXtDgXJdNulZZoq9+WCd7r
+	 PvE6ndpZYB11RQnjPmM4gKCZCr+t1q0ottXzoppFQUE6H+jt7HECcdtmmuScY4ZxF0
+	 kLO46oSszo2hr+hug25kCOGwJMO4SgbuUGxsp+/pEDRHa5tmDMJIQUDGvr9tQYNJgJ
+	 HHabY5o/pG7Qg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v2 sched_ext/for-7.3 1/4] sched_ext: Prefix file-local ext.c helpers exposed by the sub.c split
-Date: Wed,  1 Jul 2026 08:10:43 -1000
-Message-ID: <20260701181046.2490390-2-tj@kernel.org>
+Subject: [PATCH v2 sched_ext/for-7.3 2/4] sched_ext: Expose the ext.c internals used by the sub.c split
+Date: Wed,  1 Jul 2026 08:10:44 -1000
+Message-ID: <20260701181046.2490390-3-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260701181046.2490390-1-tj@kernel.org>
 References: <20260701181046.2490390-1-tj@kernel.org>
@@ -48,728 +48,449 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A later change moves the sub-scheduler implementation out of ext.c into its
-own file, from where it calls a number of file-local ext.c helpers. Give
-those helpers the scx_ prefix that cross-file sched_ext symbols carry, ahead
-of the move so the mechanical rename stays out of the code-motion patch. No
-functional change.
+The sub-scheduler implementation is about to move into its own sub.c, from
+where it calls a set of ext.c helpers and shares a few ext.c globals. Make
+those reachable across the new file boundary ahead of the move.
+
+No functional change.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 192 ++++++++++++++++++------------------
- kernel/sched/ext/internal.h |   2 +-
- 2 files changed, 97 insertions(+), 97 deletions(-)
+ kernel/sched/ext/ext.c      | 109 ++++++++++++------------------------
+ kernel/sched/ext/internal.h |  77 +++++++++++++++++++++++++
+ 2 files changed, 113 insertions(+), 73 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 4e0cd08a6a2e..56e6a13fd0f8 100644
+index 56e6a13fd0f8..58856a429821 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -369,7 +369,7 @@ static const struct sched_class *scx_setscheduler_class(struct task_struct *p)
- 	return __setscheduler_class(p->policy, p->prio);
- }
+@@ -20,7 +20,7 @@
+ #include "arena.h"
+ #include "idle.h"
  
--static struct scx_dispatch_q *bypass_dsq(struct scx_sched *sch, s32 cpu)
-+static struct scx_dispatch_q *scx_bypass_dsq(struct scx_sched *sch, s32 cpu)
- {
- 	return &per_cpu_ptr(sch->pcpu, cpu)->bypass_dsq;
- }
-@@ -392,11 +392,11 @@ static struct scx_dispatch_q *bypass_enq_target_dsq(struct scx_sched *sch, s32 c
- 		sch = scx_parent(sch);
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 
--	return bypass_dsq(sch, cpu);
-+	return scx_bypass_dsq(sch, cpu);
- }
- 
- /**
-- * bypass_dsp_enabled - Check if bypass dispatch path is enabled
-+ * scx_bypass_dsp_enabled - Check if bypass dispatch path is enabled
-  * @sch: scheduler to check
-  *
-  * When a descendant scheduler enters bypass mode, bypassed tasks are scheduled
-@@ -408,9 +408,9 @@ static struct scx_dispatch_q *bypass_enq_target_dsq(struct scx_sched *sch, s32 c
-  *
-  * This function checks bypass_dsp_enable_depth which is managed separately from
-  * bypass_depth to enable this decoupling. See enable_bypass_dsp() and
-- * disable_bypass_dsp().
-+ * scx_disable_bypass_dsp().
-  */
--static bool bypass_dsp_enabled(struct scx_sched *sch)
-+static bool scx_bypass_dsp_enabled(struct scx_sched *sch)
- {
- 	return unlikely(atomic_read(&sch->bypass_dsp_enable_depth));
- }
-@@ -1079,7 +1079,7 @@ bool scx_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where)
- }
- 
- /**
-- * ops_sanitize_err - Sanitize a -errno value
-+ * scx_ops_sanitize_err - Sanitize a -errno value
-  * @sch: scx_sched to error out on error
-  * @ops_name: operation to blame on failure
-  * @err: -errno value to sanitize
-@@ -1091,7 +1091,7 @@ bool scx_cpu_valid(struct scx_sched *sch, s32 cpu, const char *where)
-  * value fails IS_ERR() test after being encoded with ERR_PTR() and then is
-  * handled as a pointer.
-  */
--static int ops_sanitize_err(struct scx_sched *sch, const char *ops_name, s32 err)
-+static int scx_ops_sanitize_err(struct scx_sched *sch, const char *ops_name, s32 err)
- {
- 	if (err < 0 && err >= -MAX_ERRNO)
- 		return err;
-@@ -1251,7 +1251,7 @@ static void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq
- 		schedule_deferred(rq);
- }
- 
--static void schedule_reenq_local(struct rq *rq, u64 reenq_flags)
-+static void scx_schedule_reenq_local(struct rq *rq, u64 reenq_flags)
- {
- 	struct scx_sched *root = rcu_dereference_sched(scx_root);
- 
-@@ -1347,8 +1347,8 @@ static void dsq_inc_nr(struct scx_dispatch_q *dsq, struct task_struct *p, u64 en
- 	 * to the CPU or dequeued. In both cases, the only way @p can go back to
- 	 * the BPF sched is through enqueueing. If being inserted into a local
- 	 * DSQ with IMMED, persist the state until the next enqueueing event in
--	 * do_enqueue_task() so that we can maintain IMMED protection through
--	 * e.g. SAVE/RESTORE cycles and slice extensions.
-+	 * scx_do_enqueue_task() so that we can maintain IMMED protection
-+	 * through e.g. SAVE/RESTORE cycles and slice extensions.
- 	 */
- 	if (enq_flags & SCX_ENQ_IMMED) {
- 		if (unlikely(dsq->id != SCX_DSQ_LOCAL)) {
-@@ -1371,7 +1371,7 @@ static void dsq_inc_nr(struct scx_dispatch_q *dsq, struct task_struct *p, u64 en
- 		 * done yet, @p can't go on the CPU immediately. Re-enqueue.
- 		 */
- 		if (unlikely(dsq->nr > 1 || !rq_is_open(rq, enq_flags)))
--			schedule_reenq_local(rq, 0);
-+			scx_schedule_reenq_local(rq, 0);
- 	}
- }
- 
-@@ -1488,9 +1488,9 @@ static void local_dsq_post_enq(struct scx_sched *sch, struct scx_dispatch_q *dsq
- 	}
- }
- 
--static void dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
--			     struct scx_dispatch_q *dsq, struct task_struct *p,
--			     u64 enq_flags)
-+static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
-+				 struct scx_dispatch_q *dsq, struct task_struct *p,
-+				 u64 enq_flags)
- {
- 	bool is_local = dsq->id == SCX_DSQ_LOCAL;
- 
-@@ -1638,7 +1638,7 @@ static void task_unlink_from_dsq(struct task_struct *p,
- 	}
- }
- 
--static void dispatch_dequeue(struct rq *rq, struct task_struct *p)
-+static void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p)
- {
- 	struct scx_dispatch_q *dsq = p->scx.dsq;
- 	bool is_local = dsq == &rq->scx.local_dsq;
-@@ -1692,8 +1692,8 @@ static void dispatch_dequeue(struct rq *rq, struct task_struct *p)
- }
+-static DEFINE_RAW_SPINLOCK(scx_sched_lock);
++DEFINE_RAW_SPINLOCK(scx_sched_lock);
  
  /*
-- * Abbreviated version of dispatch_dequeue() that can be used when both @p's rq
-- * and dsq are locked.
-+ * Abbreviated version of scx_dispatch_dequeue() that can be used when both
-+ * @p's rq and dsq are locked.
+  * NOTE: sched_ext is in the process of growing multiple scheduler support and
+@@ -39,14 +39,14 @@ struct scx_sched __rcu *scx_root;
+ static LIST_HEAD(scx_sched_all);
+ 
+ #ifdef CONFIG_EXT_SUB_SCHED
+-static const struct rhashtable_params scx_sched_hash_params = {
++const struct rhashtable_params scx_sched_hash_params = {
+ 	.key_len		= sizeof_field(struct scx_sched, ops.sub_cgroup_id),
+ 	.key_offset		= offsetof(struct scx_sched, ops.sub_cgroup_id),
+ 	.head_offset		= offsetof(struct scx_sched, hash_node),
+ 	.insecure_elasticity	= true,	/* inserted under scx_sched_lock */
+ };
+ 
+-static struct rhashtable scx_sched_hash;
++struct rhashtable scx_sched_hash;
+ #endif
+ 
+ /* see SCX_OPS_TID_TO_TASK */
+@@ -68,9 +68,9 @@ static DEFINE_RAW_SPINLOCK(scx_tasks_lock);
+ static LIST_HEAD(scx_tasks);
+ 
+ /* ops enable/disable */
+-static DEFINE_MUTEX(scx_enable_mutex);
++DEFINE_MUTEX(scx_enable_mutex);
+ DEFINE_STATIC_KEY_FALSE(__scx_enabled);
+-DEFINE_STATIC_PERCPU_RWSEM(scx_fork_rwsem);
++DEFINE_PERCPU_RWSEM(scx_fork_rwsem);
+ static atomic_t scx_enable_state_var = ATOMIC_INIT(SCX_DISABLED);
+ static DEFINE_RAW_SPINLOCK(scx_bypass_lock);
+ static bool scx_init_task_enabled;
+@@ -101,7 +101,7 @@ static atomic64_t scx_tid_cursor = ATOMIC64_INIT(1);
+  * tasks for the sub-sched being enabled. Use a global variable instead of a
+  * per-task field as all enables are serialized.
   */
- static void dispatch_dequeue_locked(struct task_struct *p,
- 				    struct scx_dispatch_q *dsq)
-@@ -1774,10 +1774,10 @@ static void mark_direct_dispatch(struct scx_sched *sch,
-  *  - direct_dispatch(): cleared on the synchronous enqueue path, deferred
-  *    dispatch keeps the state until consumed
-  *  - process_ddsp_deferred_locals(): cleared after consuming deferred state,
-- *  - do_enqueue_task(): cleared on enqueue fallbacks where the dispatch
-+ *  - scx_do_enqueue_task(): cleared on enqueue fallbacks where the dispatch
-  *    verdict is ignored (local/global/bypass)
-- *  - dequeue_task_scx(): cleared after dispatch_dequeue(), covering deferred
-- *    cancellation and holding_cpu races
-+ *  - dequeue_task_scx(): cleared after scx_dispatch_dequeue(), covering
-+ *    deferred cancellation and holding_cpu races
-  *  - scx_disable_task(): cleared for queued wakeup tasks, which are excluded by
-  *    the scx_bypass() loop, so that stale state is not reused by a subsequent
-  *    scheduler instance
-@@ -1838,7 +1838,7 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
- 	ddsp_enq_flags = p->scx.ddsp_enq_flags;
- 	clear_direct_dispatch(p);
+-static struct scx_sched *scx_enabling_sub_sched;
++struct scx_sched *scx_enabling_sub_sched;
+ #else
+ #define scx_enabling_sub_sched	(struct scx_sched *)NULL
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+@@ -676,12 +676,12 @@ struct bpf_iter_scx_dsq {
+ } __attribute__((aligned(8)));
  
--	dispatch_enqueue(sch, rq, dsq, p, ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
-+	scx_dispatch_enqueue(sch, rq, dsq, p, ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
- }
  
- static bool scx_rq_online(struct rq *rq)
-@@ -1853,8 +1853,8 @@ static bool scx_rq_online(struct rq *rq)
- 	return likely((rq->scx.flags & SCX_RQ_ONLINE) && cpu_active(cpu_of(rq)));
- }
- 
--static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
--			    int sticky_cpu)
-+static void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
-+				int sticky_cpu)
+-static u32 scx_get_task_state(const struct task_struct *p)
++u32 scx_get_task_state(const struct task_struct *p)
  {
- 	struct scx_sched *sch = scx_task_sched(p);
- 	struct task_struct **ddsp_taskp;
-@@ -1941,7 +1941,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	direct_dispatch(sch, p, enq_flags);
- 	return;
- local_norefill:
--	dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, enq_flags);
-+	scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, enq_flags);
- 	return;
- local:
- 	dsq = &rq->scx.local_dsq;
-@@ -1962,7 +1962,7 @@ static void do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	touch_core_sched(rq, p);
- 	refill_task_slice_dfl(sch, p);
- 	clear_direct_dispatch(p);
--	dispatch_enqueue(sch, rq, dsq, p, enq_flags);
-+	scx_dispatch_enqueue(sch, rq, dsq, p, enq_flags);
+ 	return p->scx.flags & SCX_TASK_STATE_MASK;
  }
  
- static bool task_runnable(const struct task_struct *p)
-@@ -2031,7 +2031,7 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
- 	if (rq->scx.nr_running == 1)
- 		dl_server_start(&rq->ext_server);
- 
--	do_enqueue_task(rq, p, enq_flags, sticky_cpu);
-+	scx_do_enqueue_task(rq, p, enq_flags, sticky_cpu);
- 
- 	if (sticky_cpu >= 0)
- 		p->scx.sticky_cpu = -1;
-@@ -2167,7 +2167,7 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
- 	rq->scx.nr_running--;
- 	sub_nr_running(rq, 1);
- 
--	dispatch_dequeue(rq, p);
-+	scx_dispatch_dequeue(rq, p);
- 	clear_direct_dispatch(p);
- 	return true;
- }
-@@ -2215,7 +2215,7 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
- 	 * - A higher-priority wakes up while SCX dispatch is in progress.
- 	 */
- 	if (rq->scx.nr_immed)
--		schedule_reenq_local(rq, 0);
-+		scx_schedule_reenq_local(rq, 0);
+-static void scx_set_task_state(struct task_struct *p, u32 state)
++void scx_set_task_state(struct task_struct *p, u32 state)
+ {
+ 	u32 prev_state = scx_get_task_state(p);
+ 	bool warn = false;
+@@ -721,23 +721,6 @@ static void scx_set_task_state(struct task_struct *p, u32 state)
+ 	p->scx.flags |= state;
  }
  
- static void move_local_task_to_local_dsq(struct scx_sched *sch,
-@@ -2380,7 +2380,7 @@ static bool task_can_run_on_remote_rq(struct scx_sched *sch,
-  * values afterwards, as this operation can't be preempted or recurse, the
-  * holding_cpu can never become this CPU again before we're done. Thus, we can
-  * tell whether we lost to dequeue by testing whether the holding_cpu still
-- * points to this CPU. See dispatch_dequeue() for the counterpart.
-+ * points to this CPU. See scx_dispatch_dequeue() for the counterpart.
-  *
-  * On return, @dsq is unlocked and @src_rq is locked. Returns %true if @p is
-  * still valid. %false if lost to dequeue.
-@@ -2485,14 +2485,14 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 		dispatch_dequeue_locked(p, src_dsq);
- 		raw_spin_unlock(&src_dsq->lock);
+-/*
+- * SCX task iterator.
+- */
+-struct scx_task_iter {
+-	struct sched_ext_entity		cursor;
+-	struct task_struct		*locked_task;
+-	struct rq			*rq;
+-	struct rq_flags			rf;
+-	u32				cnt;
+-	bool				list_locked;
+-#ifdef CONFIG_EXT_SUB_SCHED
+-	struct cgroup			*cgrp;
+-	struct cgroup_subsys_state	*css_pos;
+-	struct css_task_iter		css_iter;
+-#endif
+-};
+-
+ /**
+  * scx_task_iter_start - Lock scx_tasks_lock and start a task iteration
+  * @iter: iterator to init
+@@ -766,7 +749,7 @@ struct scx_task_iter {
+  * All tasks which existed when the iteration started are guaranteed to be
+  * visited as long as they are not dead.
+  */
+-static void scx_task_iter_start(struct scx_task_iter *iter, struct cgroup *cgrp)
++void scx_task_iter_start(struct scx_task_iter *iter, struct cgroup *cgrp)
+ {
+ 	memset(iter, 0, sizeof(*iter));
  
--		dispatch_enqueue(sch, dst_rq, dst_dsq, p, enq_flags);
-+		scx_dispatch_enqueue(sch, dst_rq, dst_dsq, p, enq_flags);
- 	}
+@@ -805,7 +788,7 @@ static void __scx_task_iter_rq_unlock(struct scx_task_iter *iter)
+  * This function can be safely called anytime during an iteration. The next
+  * iterator operation will automatically restore the necessary locking.
+  */
+-static void scx_task_iter_unlock(struct scx_task_iter *iter)
++void scx_task_iter_unlock(struct scx_task_iter *iter)
+ {
+ 	__scx_task_iter_rq_unlock(iter);
+ 	if (iter->list_locked) {
+@@ -848,7 +831,7 @@ static void scx_task_iter_relock(struct scx_task_iter *iter,
+  * which is released on return. If the iterator holds a task's rq lock, that rq
+  * lock is also released. See scx_task_iter_start() for details.
+  */
+-static void scx_task_iter_stop(struct scx_task_iter *iter)
++void scx_task_iter_stop(struct scx_task_iter *iter)
+ {
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	if (iter->cgrp) {
+@@ -923,7 +906,7 @@ static struct task_struct *scx_task_iter_next(struct scx_task_iter *iter)
+  * whether they would like to filter out dead tasks. See scx_task_iter_start()
+  * for details.
+  */
+-static struct task_struct *scx_task_iter_next_locked(struct scx_task_iter *iter)
++struct task_struct *scx_task_iter_next_locked(struct scx_task_iter *iter)
+ {
+ 	struct task_struct *p;
  
+@@ -1186,8 +1169,8 @@ static void schedule_deferred_locked(struct rq *rq)
+ 	schedule_deferred(rq);
+ }
+ 
+-static void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+-			       u64 reenq_flags, struct rq *locked_rq)
++void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
++			u64 reenq_flags, struct rq *locked_rq)
+ {
+ 	struct rq *rq;
+ 
+@@ -2491,8 +2474,8 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
  	return dst_rq;
  }
  
--static bool consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
--			       struct scx_dispatch_q *dsq, u64 enq_flags)
-+static bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
-+				   struct scx_dispatch_q *dsq, u64 enq_flags)
+-static bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
+-				   struct scx_dispatch_q *dsq, u64 enq_flags)
++bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
++			    struct scx_dispatch_q *dsq, u64 enq_flags)
  {
  	struct task_struct *p;
  retry:
-@@ -2538,11 +2538,11 @@ static bool consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
+@@ -2538,7 +2521,7 @@ static bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
  	return false;
  }
  
--static bool consume_global_dsq(struct scx_sched *sch, struct rq *rq)
-+static bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq)
+-static bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq)
++bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq)
  {
  	int node = cpu_to_node(cpu_of(rq));
  
--	return consume_dispatch_q(sch, rq, &sch->pnode[node]->global_dsq, 0);
-+	return scx_consume_dispatch_q(sch, rq, &sch->pnode[node]->global_dsq, 0);
- }
+@@ -3548,7 +3531,7 @@ static struct cgroup *tg_cgrp(struct task_group *tg)
  
- /**
-@@ -2575,8 +2575,8 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 	 * If dispatching to @rq that @p is already on, no lock dancing needed.
- 	 */
- 	if (rq == src_rq && rq == dst_rq) {
--		dispatch_enqueue(sch, rq, dst_dsq, p,
--				 enq_flags | SCX_ENQ_CLEAR_OPSS);
-+		scx_dispatch_enqueue(sch, rq, dst_dsq, p,
-+				     enq_flags | SCX_ENQ_CLEAR_OPSS);
- 		return;
- 	}
+ #endif	/* CONFIG_EXT_GROUP_SCHED */
  
-@@ -2614,13 +2614,13 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 		 */
- 		if (src_rq == dst_rq) {
- 			p->scx.holding_cpu = -1;
--			dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
--					 enq_flags);
-+			scx_dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
-+					     enq_flags);
- 		} else if (unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
- 			p->scx.holding_cpu = -1;
- 			fallback = true;
--			dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
--					 p, enq_flags | SCX_ENQ_GDSQ_FALLBACK);
-+			scx_dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
-+					     p, enq_flags | SCX_ENQ_GDSQ_FALLBACK);
- 		} else {
- 			move_remote_task_to_local_dsq(p, enq_flags,
- 						      src_rq, dst_rq);
-@@ -2708,10 +2708,10 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
- 		goto retry;
- 	case SCX_OPSS_QUEUEING:
- 		/*
--		 * do_enqueue_task() is in the process of transferring the task
--		 * to the BPF scheduler while holding @p's rq lock. As we aren't
--		 * holding any kernel or BPF resource that the enqueue path may
--		 * depend upon, it's safe to wait.
-+		 * scx_do_enqueue_task() is in the process of transferring the
-+		 * task to the BPF scheduler while holding @p's rq lock. As we
-+		 * aren't holding any kernel or BPF resource that the enqueue
-+		 * path may depend upon, it's safe to wait.
- 		 */
- 		wait_ops_state(p, opss);
- 		goto retry;
-@@ -2724,10 +2724,10 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
- 	if (dsq->id == SCX_DSQ_LOCAL)
- 		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
- 	else
--		dispatch_enqueue(sch, rq, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
-+		scx_dispatch_enqueue(sch, rq, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
- }
- 
--static void flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
-+static void scx_flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
+-static int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
++int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
  {
- 	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 	u32 u;
-@@ -2771,13 +2771,13 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 	bool prev_on_sch = (prev->sched_class == &ext_sched_class) &&
- 		scx_task_on_sched(sch, prev);
+ 	int ret;
  
--	if (consume_global_dsq(sch, rq))
-+	if (scx_consume_global_dsq(sch, rq))
- 		return true;
- 
--	if (bypass_dsp_enabled(sch)) {
-+	if (scx_bypass_dsp_enabled(sch)) {
- 		/* if @sch is bypassing, only the bypass DSQs are active */
- 		if (scx_bypassing(sch, cpu))
--			return consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0);
-+			return scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0);
- 
- #ifdef CONFIG_EXT_SUB_SCHED
- 		/*
-@@ -2795,7 +2795,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
- 
- 		if (!(pcpu->bypass_host_seq++ % SCX_BYPASS_HOST_NTH) &&
--		    consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0)) {
-+		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
- 			__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
- 			return true;
- 		}
-@@ -2808,8 +2808,8 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 	dspc->rq = rq;
- 
- 	/*
--	 * The dispatch loop. Because flush_dispatch_buf() may drop the rq lock,
--	 * the local DSQ might still end up empty after a successful
-+	 * The dispatch loop. Because scx_flush_dispatch_buf() may drop the rq
-+	 * lock, the local DSQ might still end up empty after a successful
- 	 * ops.dispatch(). If the local DSQ is empty even after ops.dispatch()
- 	 * produced some tasks, retry. The BPF scheduler may depend on this
- 	 * looping behavior to simplify its implementation.
-@@ -2828,7 +2828,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 			rq->scx.sub_dispatch_prev = NULL;
- 		}
- 
--		flush_dispatch_buf(sch, rq);
-+		scx_flush_dispatch_buf(sch, rq);
- 
- 		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice) {
- 			rq->scx.flags |= SCX_RQ_BAL_KEEP;
-@@ -2836,7 +2836,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 		}
- 		if (rq->scx.local_dsq.nr)
- 			return true;
--		if (consume_global_dsq(sch, rq))
-+		if (scx_consume_global_dsq(sch, rq))
- 			return true;
- 
- 		/*
-@@ -2859,8 +2859,8 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 	 * queued. Without this fallback, bypassed tasks could stall if the host
- 	 * scheduler's ops.dispatch() doesn't yield any tasks.
- 	 */
--	if (bypass_dsp_enabled(sch))
--		return consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0);
-+	if (scx_bypass_dsp_enabled(sch))
-+		return scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0);
- 
- 	return false;
- }
-@@ -2939,7 +2939,7 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
- 	 *   between the IMMED queueing and the subsequent scheduling event.
- 	 */
- 	if (unlikely(rq->scx.local_dsq.nr > 1 && rq->scx.nr_immed))
--		schedule_reenq_local(rq, 0);
-+		scx_schedule_reenq_local(rq, 0);
- 
- 	rq->scx.flags &= ~SCX_RQ_IN_BALANCE;
- 	return true;
-@@ -2955,7 +2955,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
- 		 * dispatched. Call ops_dequeue() to notify the BPF scheduler.
- 		 */
- 		ops_dequeue(rq, p, SCX_DEQ_CORE_SCHED_EXEC);
--		dispatch_dequeue(rq, p);
-+		scx_dispatch_dequeue(rq, p);
- 	}
- 
- 	p->se.exec_start = rq_clock_task(rq);
-@@ -3067,10 +3067,10 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		if (p->scx.slice && !scx_bypassing(sch, cpu_of(rq))) {
- 			if (p->scx.flags & SCX_TASK_IMMED) {
- 				p->scx.flags |= SCX_TASK_REENQ_PREEMPTED;
--				do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
-+				scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
- 				p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
- 			} else {
--				dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, SCX_ENQ_HEAD);
-+				scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, SCX_ENQ_HEAD);
- 			}
- 			goto switch_class;
- 		}
-@@ -3088,9 +3088,9 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		if (next && sched_class_above(&ext_sched_class, next->sched_class)) {
- 			WARN_ON_ONCE(sched_cpu_cookie_match(rq, p) &&
- 				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
--			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
-+			scx_do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
- 		} else {
--			do_enqueue_task(rq, p, 0, -1);
-+			scx_do_enqueue_task(rq, p, 0, -1);
- 		}
- 	}
- 
-@@ -3562,7 +3562,7 @@ static int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fo
- 
- 		ret = SCX_CALL_OP_RET(sch, init_task, NULL, p, &args);
- 		if (unlikely(ret)) {
--			ret = ops_sanitize_err(sch, "init_task", ret);
-+			ret = scx_ops_sanitize_err(sch, "init_task", ret);
- 			return ret;
- 		}
- 	}
-@@ -4107,7 +4107,7 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
- 		if (!local_task_should_reenq(p, &reenq_flags, &reason))
- 			continue;
- 
--		dispatch_dequeue(rq, p);
-+		scx_dispatch_dequeue(rq, p);
- 
- 		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
- 			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
-@@ -4119,7 +4119,7 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
- 	list_for_each_entry_safe(p, n, &tasks, scx.dsq_list.node) {
- 		list_del_init(&p->scx.dsq_list.node);
- 
--		do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
-+		scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
- 
- 		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
- 		nr_enqueued++;
-@@ -4234,7 +4234,7 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
- 			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
- 		p->scx.flags |= reason;
- 
--		do_enqueue_task(task_rq, p, SCX_ENQ_REENQ, -1);
-+		scx_do_enqueue_task(task_rq, p, SCX_ENQ_REENQ, -1);
- 
- 		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
- 
-@@ -4354,7 +4354,7 @@ int scx_tg_online(struct task_group *tg)
- 			ret = SCX_CALL_OP_RET(sch, cgroup_init,
- 					      NULL, tg->css.cgroup, &args);
- 			if (ret)
--				ret = ops_sanitize_err(sch, "cgroup_init", ret);
-+				ret = scx_ops_sanitize_err(sch, "cgroup_init", ret);
- 		}
- 		if (ret == 0)
- 			tg->scx.flags |= SCX_TG_ONLINE | SCX_TG_INITED;
-@@ -4422,7 +4422,7 @@ int scx_cgroup_can_attach(struct cgroup_taskset *tset)
- 		p->scx.cgrp_moving_from = NULL;
- 	}
- 
--	return ops_sanitize_err(sch, "cgroup_prep_move", ret);
-+	return scx_ops_sanitize_err(sch, "cgroup_prep_move", ret);
+@@ -3631,7 +3614,7 @@ static void __scx_enable_task(struct scx_sched *sch, struct task_struct *p)
+ 		SCX_CALL_OP_TASK(sch, set_weight, rq, p, p->scx.weight);
  }
  
- void scx_cgroup_move_task(struct task_struct *p)
-@@ -4700,7 +4700,7 @@ static void destroy_dsq(struct scx_sched *sch, u64 dsq_id)
- 		goto out_unlock_dsq;
- 
- 	/*
--	 * Mark dead by invalidating ->id to prevent dispatch_enqueue() from
-+	 * Mark dead by invalidating ->id to prevent scx_dispatch_enqueue() from
- 	 * queueing more tasks. As this function can be called from anywhere,
- 	 * freeing is bounced through an irq work to avoid nesting RCU
- 	 * operations inside scheduler locks.
-@@ -4928,7 +4928,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 		 */
- 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
- 
--		exit_dsq(bypass_dsq(sch, cpu));
-+		exit_dsq(scx_bypass_dsq(sch, cpu));
- 	}
- 
- 	free_percpu(sch->pcpu);
-@@ -5239,7 +5239,7 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, s32 donor,
- 			 u32 nr_donor_target, u32 nr_donee_target)
+-static void scx_enable_task(struct scx_sched *sch, struct task_struct *p)
++void scx_enable_task(struct scx_sched *sch, struct task_struct *p)
  {
- 	struct rq *donor_rq = cpu_rq(donor);
--	struct scx_dispatch_q *donor_dsq = bypass_dsq(sch, donor);
-+	struct scx_dispatch_q *donor_dsq = scx_bypass_dsq(sch, donor);
- 	struct task_struct *p, *n;
- 	struct scx_dsq_list_node cursor = INIT_DSQ_LIST_CURSOR(cursor, donor_dsq, 0);
- 	s32 delta = READ_ONCE(donor_dsq->nr) - nr_donor_target;
-@@ -5287,7 +5287,7 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, s32 donor,
- 		if (donee >= nr_cpu_ids)
- 			continue;
+ 	__scx_enable_task(sch, p);
+ 	scx_set_task_state(p, SCX_TASK_ENABLED);
+@@ -3665,8 +3648,7 @@ static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
+ 	WARN_ON_ONCE(p->scx.flags & SCX_TASK_IN_CUSTODY);
+ }
  
--		donee_dsq = bypass_dsq(sch, donee);
-+		donee_dsq = scx_bypass_dsq(sch, donee);
+-static void __scx_disable_and_exit_task(struct scx_sched *sch,
+-					struct task_struct *p)
++void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
+ {
+ 	struct scx_exit_task_args args = {
+ 		.cancelled = false,
+@@ -3700,7 +3682,7 @@ static void __scx_disable_and_exit_task(struct scx_sched *sch,
+  * ran. The task state has not been transitioned, so this mirrors the
+  * SCX_TASK_INIT branch in __scx_disable_and_exit_task().
+  */
+-static void scx_sub_init_cancel_task(struct scx_sched *sch, struct task_struct *p)
++void scx_sub_init_cancel_task(struct scx_sched *sch, struct task_struct *p)
+ {
+ 	struct scx_exit_task_args args = { .cancelled = true };
  
- 		/*
- 		 * $p's rq is not locked but $p's DSQ lock protects its
-@@ -5308,7 +5308,7 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, s32 donor,
- 		 * between bypass DSQs.
- 		 */
- 		dispatch_dequeue_locked(p, donor_dsq);
--		dispatch_enqueue(sch, cpu_rq(donee), donee_dsq, p, SCX_ENQ_NESTED);
-+		scx_dispatch_enqueue(sch, cpu_rq(donee), donee_dsq, p, SCX_ENQ_NESTED);
+@@ -3711,8 +3693,7 @@ static void scx_sub_init_cancel_task(struct scx_sched *sch, struct task_struct *
+ 		SCX_CALL_OP_TASK(sch, exit_task, task_rq(p), p, &args);
+ }
  
- 		/*
- 		 * $donee might have been idle and need to be woken up. No need
-@@ -5351,7 +5351,7 @@ static void bypass_lb_node(struct scx_sched *sch, int node)
+-static void scx_disable_and_exit_task(struct scx_sched *sch,
+-				      struct task_struct *p)
++void scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
+ {
+ 	__scx_disable_and_exit_task(sch, p);
  
- 	/* count the target tasks and CPUs */
- 	for_each_cpu_and(cpu, cpu_online_mask, node_mask) {
--		u32 nr = READ_ONCE(bypass_dsq(sch, cpu)->nr);
-+		u32 nr = READ_ONCE(scx_bypass_dsq(sch, cpu)->nr);
+@@ -4525,7 +4506,7 @@ static struct cgroup *root_cgroup(void)
+ 	return &cgrp_dfl_root.cgrp;
+ }
  
- 		nr_tasks += nr;
- 		nr_cpus++;
-@@ -5373,7 +5373,7 @@ static void bypass_lb_node(struct scx_sched *sch, int node)
+-static void scx_cgroup_lock(void)
++void scx_cgroup_lock(void)
+ {
+ #ifdef CONFIG_EXT_GROUP_SCHED
+ 	percpu_down_write(&scx_cgroup_ops_rwsem);
+@@ -4533,7 +4514,7 @@ static void scx_cgroup_lock(void)
+ 	cgroup_lock();
+ }
  
- 	cpumask_clear(donee_mask);
- 	for_each_cpu_and(cpu, cpu_online_mask, node_mask) {
--		if (READ_ONCE(bypass_dsq(sch, cpu)->nr) < nr_target)
-+		if (READ_ONCE(scx_bypass_dsq(sch, cpu)->nr) < nr_target)
- 			cpumask_set_cpu(cpu, donee_mask);
- 	}
+-static void scx_cgroup_unlock(void)
++void scx_cgroup_unlock(void)
+ {
+ 	cgroup_unlock();
+ #ifdef CONFIG_EXT_GROUP_SCHED
+@@ -4851,7 +4832,7 @@ static void free_exit_info(struct scx_exit_info *ei);
+ static const char *scx_exit_reason(enum scx_exit_kind kind);
+ static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind);
  
-@@ -5384,7 +5384,7 @@ static void bypass_lb_node(struct scx_sched *sch, int node)
- 			break;
- 		if (cpumask_test_cpu(cpu, donee_mask))
- 			continue;
--		if (READ_ONCE(bypass_dsq(sch, cpu)->nr) <= nr_donor_target)
-+		if (READ_ONCE(scx_bypass_dsq(sch, cpu)->nr) <= nr_donor_target)
- 			continue;
- 
- 		nr_balanced += bypass_lb_cpu(sch, cpu, donee_mask, resched_mask,
-@@ -5395,7 +5395,7 @@ static void bypass_lb_node(struct scx_sched *sch, int node)
- 		resched_cpu(cpu);
- 
- 	for_each_cpu_and(cpu, cpu_online_mask, node_mask) {
--		u32 nr = READ_ONCE(bypass_dsq(sch, cpu)->nr);
-+		u32 nr = READ_ONCE(scx_bypass_dsq(sch, cpu)->nr);
- 
- 		after_min = min(nr, after_min);
- 		after_max = max(nr, after_max);
-@@ -5421,7 +5421,7 @@ static void scx_bypass_lb_timerfn(struct timer_list *timer)
- 	int node;
- 	u32 intv_us;
- 
--	if (!bypass_dsp_enabled(sch))
-+	if (!scx_bypass_dsp_enabled(sch))
- 		return;
- 
- 	for_each_node_with_cpus(node)
-@@ -5487,9 +5487,9 @@ static void enable_bypass_dsp(struct scx_sched *sch)
- 	 * dispatch enabled while a descendant is bypassing, which is all that's
- 	 * required.
- 	 *
--	 * bypass_dsp_enabled() test is used to determine whether to enter the
--	 * bypass dispatch handling path from both bypassing and hosting scheds.
--	 * Bump enable depth on both @sch and bypass dispatch host.
-+	 * scx_bypass_dsp_enabled() test is used to determine whether to enter
-+	 * the bypass dispatch handling path from both bypassing and hosting
-+	 * scheds. Bump enable depth on both @sch and bypass dispatch host.
- 	 */
- 	ret = atomic_inc_return(&sch->bypass_dsp_enable_depth);
- 	WARN_ON_ONCE(ret <= 0);
-@@ -5509,7 +5509,7 @@ static void enable_bypass_dsp(struct scx_sched *sch)
+-static s32 scx_set_cmask_scratch_alloc(struct scx_sched *sch)
++s32 scx_set_cmask_scratch_alloc(struct scx_sched *sch)
+ {
+ 	size_t size = struct_size_t(struct scx_cmask, bits,
+ 				    SCX_CMASK_NR_WORDS(num_possible_cpus()));
+@@ -5509,7 +5490,7 @@ static void enable_bypass_dsp(struct scx_sched *sch)
  }
  
  /* may be called without holding scx_bypass_lock */
--static void disable_bypass_dsp(struct scx_sched *sch)
-+static void scx_disable_bypass_dsp(struct scx_sched *sch)
+-static void scx_disable_bypass_dsp(struct scx_sched *sch)
++void scx_disable_bypass_dsp(struct scx_sched *sch)
  {
  	s32 ret;
  
-@@ -5654,7 +5654,7 @@ static void scx_bypass(struct scx_sched *sch, bool bypass)
- 
- 	/* disarming must come after moving all tasks out of the bypass DSQs */
- 	if (!bypass)
--		disable_bypass_dsp(sch);
-+		scx_disable_bypass_dsp(sch);
- unlock:
- 	raw_spin_unlock_irqrestore(&scx_bypass_lock, flags);
+@@ -5557,7 +5538,7 @@ static void scx_disable_bypass_dsp(struct scx_sched *sch)
+  *
+  * - scx_prio_less() reverts to the default core_sched_at order.
+  */
+-static void scx_bypass(struct scx_sched *sch, bool bypass)
++void scx_bypass(struct scx_sched *sch, bool bypass)
+ {
+ 	struct scx_sched *pos;
+ 	unsigned long flags;
+@@ -5746,7 +5727,7 @@ static void refresh_watchdog(void)
+ 		cancel_delayed_work_sync(&scx_watchdog_work);
  }
-@@ -6003,7 +6003,7 @@ static void scx_sub_disable(struct scx_sched *sch)
- 	 * DSQs for us.
- 	 */
- 	synchronize_rcu_expedited();
--	disable_bypass_dsp(sch);
-+	scx_disable_bypass_dsp(sch);
  
- 	scx_unlink_sched(sch);
- 
-@@ -6810,7 +6810,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 	}
- 
- 	for_each_possible_cpu(cpu) {
--		ret = init_dsq(bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
-+		ret = init_dsq(scx_bypass_dsq(sch, cpu), SCX_DSQ_BYPASS, sch);
- 		if (ret) {
- 			bypass_fail_cpu = cpu;
- 			goto err_free_pcpu;
-@@ -6963,7 +6963,7 @@ static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 	for_each_possible_cpu(cpu) {
- 		if (cpu == bypass_fail_cpu)
- 			break;
--		exit_dsq(bypass_dsq(sch, cpu));
-+		exit_dsq(scx_bypass_dsq(sch, cpu));
- 	}
- 	free_percpu(sch->pcpu);
- err_free_pnode:
-@@ -7007,7 +7007,7 @@ static int check_hotplug_seq(struct scx_sched *sch,
+-static s32 scx_link_sched(struct scx_sched *sch)
++s32 scx_link_sched(struct scx_sched *sch)
+ {
+ 	const char *err_msg = "";
+ 	s32 ret = 0;
+@@ -5795,7 +5776,7 @@ static s32 scx_link_sched(struct scx_sched *sch)
  	return 0;
  }
  
--static int validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
-+static int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+-static void scx_unlink_sched(struct scx_sched *sch)
++void scx_unlink_sched(struct scx_sched *sch)
+ {
+ 	scoped_guard(raw_spinlock_irq, &scx_sched_lock) {
+ #ifdef CONFIG_EXT_SUB_SCHED
+@@ -5816,13 +5797,13 @@ static void scx_unlink_sched(struct scx_sched *sch)
+  * @sch. Once @sch becomes empty during disable, there's no point in dumping it.
+  * This prevents calling dump ops on a dead sch.
+  */
+-static void scx_disable_dump(struct scx_sched *sch)
++void scx_disable_dump(struct scx_sched *sch)
+ {
+ 	guard(raw_spinlock_irqsave)(&scx_dump_lock);
+ 	sch->dump_disabled = true;
+ }
+ 
+-static void scx_log_sched_disable(struct scx_sched *sch)
++void scx_log_sched_disable(struct scx_sched *sch)
+ {
+ 	struct scx_exit_info *ei = sch->exit_info;
+ 	const char *type = scx_parent(sch) ? "sub-scheduler" : "scheduler";
+@@ -6285,7 +6266,7 @@ static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind)
+  * as a noop. Syncing the irq_work first is required to guarantee the
+  * kthread work has been queued before waiting for it.
+  */
+-static void scx_flush_disable_work(struct scx_sched *sch)
++void scx_flush_disable_work(struct scx_sched *sch)
+ {
+ 	int kind;
+ 
+@@ -6739,31 +6720,13 @@ static struct scx_sched_pnode *alloc_pnode(struct scx_sched *sch, int node)
+ 	return pnode;
+ }
+ 
+-/*
+- * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
+- * starvation. During the READY -> ENABLED task switching loop, the calling
+- * thread's sched_class gets switched from fair to ext. As fair has higher
+- * priority than ext, the calling thread can be indefinitely starved under
+- * fair-class saturation, leading to a system hang.
+- */
+-struct scx_enable_cmd {
+-	struct kthread_work	work;
+-	union {
+-		struct sched_ext_ops		*ops;
+-		struct sched_ext_ops_cid	*ops_cid;
+-	};
+-	bool			is_cid_type;
+-	struct bpf_map		*arena_map;	/* arena ref to transfer to sch */
+-	int			ret;
+-};
+-
+ /*
+  * Allocate and initialize a new scx_sched. @cgrp's reference is always
+  * consumed whether the function succeeds or fails.
+  */
+-static struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+-						 struct cgroup *cgrp,
+-						 struct scx_sched *parent)
++struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
++					  struct cgroup *cgrp,
++					  struct scx_sched *parent)
+ {
+ 	struct sched_ext_ops *ops = cmd->ops;
+ 	struct scx_sched *sch;
+@@ -7007,7 +6970,7 @@ static int check_hotplug_seq(struct scx_sched *sch,
+ 	return 0;
+ }
+ 
+-static int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
++int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
  {
  	/*
  	 * It doesn't make sense to specify the SCX_OPS_ENQ_LAST flag if the
-@@ -7170,7 +7170,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	if (sch->ops.init) {
- 		ret = SCX_CALL_OP_RET(sch, init, NULL);
- 		if (ret) {
--			ret = ops_sanitize_err(sch, "init", ret);
-+			ret = scx_ops_sanitize_err(sch, "init", ret);
- 			cpus_read_unlock();
- 			scx_error(sch, "ops.init() failed (%d)", ret);
- 			goto err_disable;
-@@ -7203,7 +7203,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 
- 	cpus_read_unlock();
- 
--	ret = validate_ops(sch, ops);
-+	ret = scx_validate_ops(sch, ops);
- 	if (ret)
- 		goto err_disable;
- 
-@@ -7545,7 +7545,7 @@ static void scx_sub_enable_workfn(struct kthread_work *work)
- 	if (sch->ops.init) {
- 		ret = SCX_CALL_OP_RET(sch, init, NULL);
- 		if (ret) {
--			ret = ops_sanitize_err(sch, "init", ret);
-+			ret = scx_ops_sanitize_err(sch, "init", ret);
- 			scx_error(sch, "ops.init() failed (%d)", ret);
- 			goto err_disable;
- 		}
-@@ -7560,7 +7560,7 @@ static void scx_sub_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_disable;
- 
--	if (validate_ops(sch, ops))
-+	if (scx_validate_ops(sch, ops))
- 		goto err_disable;
- 
- 	struct scx_sub_attach_args sub_attach_args = {
-@@ -7571,7 +7571,7 @@ static void scx_sub_enable_workfn(struct kthread_work *work)
- 	ret = SCX_CALL_OP_RET(parent, sub_attach, NULL,
- 			      &sub_attach_args);
- 	if (ret) {
--		ret = ops_sanitize_err(sch, "sub_attach", ret);
-+		ret = scx_ops_sanitize_err(sch, "sub_attach", ret);
- 		scx_error(sch, "parent rejected (%d)", ret);
- 		goto err_disable;
- 	}
-@@ -8830,7 +8830,7 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 
- 	/*
- 	 * If the BPF scheduler keeps calling this function repeatedly, it can
--	 * cause similar live-lock conditions as consume_dispatch_q().
-+	 * cause similar live-lock conditions as scx_consume_dispatch_q().
- 	 */
- 	if (unlikely(READ_ONCE(sch->aborting)))
- 		return false;
-@@ -8991,7 +8991,7 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local___v2(u64 dsq_id, u64 enq_flags,
- 
- 	dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 
--	flush_dispatch_buf(sch, dspc->rq);
-+	scx_flush_dispatch_buf(sch, dspc->rq);
- 
- 	dsq = find_user_dsq(sch, dsq_id);
- 	if (unlikely(!dsq)) {
-@@ -8999,7 +8999,7 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local___v2(u64 dsq_id, u64 enq_flags,
- 		return false;
- 	}
- 
--	if (consume_dispatch_q(sch, dspc->rq, dsq, enq_flags)) {
-+	if (scx_consume_dispatch_q(sch, dspc->rq, dsq, enq_flags)) {
- 		/*
- 		 * A successfully consumed task can be dequeued before it starts
- 		 * running while the CPU is trying to migrate other dispatched
-@@ -10683,7 +10683,7 @@ static int __init scx_init(void)
- 	/* @priv tail must align since both share the same data block */
- 	CID_OFFSET_MATCH(priv, priv);
- 	/*
--	 * cid-form must end exactly at @priv - validate_ops() skips
-+	 * cid-form must end exactly at @priv - scx_validate_ops() skips
- 	 * cpu_acquire/cpu_release for cid-form because reading those fields
- 	 * past the BPF allocation would be UB.
- 	 */
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 0256931a379a..743980dc60b0 100644
+index 743980dc60b0..53a8aec8652e 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1172,7 +1172,7 @@ struct scx_sched {
- 	u64			bypass_timestamp;
- 	s32			bypass_depth;
+@@ -1535,6 +1535,41 @@ enum scx_ops_state {
+ #define SCX_OPSS_STATE_MASK	((1LU << SCX_OPSS_QSEQ_SHIFT) - 1)
+ #define SCX_OPSS_QSEQ_MASK	(~SCX_OPSS_STATE_MASK)
  
--	/* bypass dispatch path enable state, see bypass_dsp_enabled() */
-+	/* bypass dispatch path enable state, see scx_bypass_dsp_enabled() */
- 	unsigned long		bypass_dsp_claim;
- 	atomic_t		bypass_dsp_enable_depth;
++/*
++ * SCX task iterator.
++ */
++struct scx_task_iter {
++	struct sched_ext_entity		cursor;
++	struct task_struct		*locked_task;
++	struct rq			*rq;
++	struct rq_flags			rf;
++	u32				cnt;
++	bool				list_locked;
++#ifdef CONFIG_EXT_SUB_SCHED
++	struct cgroup			*cgrp;
++	struct cgroup_subsys_state	*css_pos;
++	struct css_task_iter		css_iter;
++#endif
++};
++
++/*
++ * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
++ * starvation. During the READY -> ENABLED task switching loop, the calling
++ * thread's sched_class gets switched from fair to ext. As fair has higher
++ * priority than ext, the calling thread can be indefinitely starved under
++ * fair-class saturation, leading to a system hang.
++ */
++struct scx_enable_cmd {
++	struct kthread_work	work;
++	union {
++		struct sched_ext_ops		*ops;
++		struct sched_ext_ops_cid	*ops_cid;
++	};
++	bool			is_cid_type;
++	struct bpf_map		*arena_map;	/* arena ref to transfer to sch */
++	int			ret;
++};
++
+ extern struct scx_sched __rcu *scx_root;
+ DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
  
+@@ -1555,6 +1590,48 @@ __printf(5, 0) bool scx_vexit(struct scx_sched *sch, enum scx_exit_kind kind,
+ __printf(5, 6) bool __scx_exit(struct scx_sched *sch, enum scx_exit_kind kind,
+ 			       s64 exit_code, s32 exit_cpu, const char *fmt, ...);
+ 
++u32 scx_get_task_state(const struct task_struct *p);
++void scx_set_task_state(struct task_struct *p, u32 state);
++void scx_task_iter_start(struct scx_task_iter *iter, struct cgroup *cgrp);
++void scx_task_iter_unlock(struct scx_task_iter *iter);
++void scx_task_iter_stop(struct scx_task_iter *iter);
++struct task_struct *scx_task_iter_next_locked(struct scx_task_iter *iter);
++bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
++			    struct scx_dispatch_q *dsq, u64 enq_flags);
++bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq);
++void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
++			u64 reenq_flags, struct rq *locked_rq);
++int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork);
++void scx_enable_task(struct scx_sched *sch, struct task_struct *p);
++void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p);
++void scx_sub_init_cancel_task(struct scx_sched *sch, struct task_struct *p);
++void scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p);
++#if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
++void scx_cgroup_lock(void);
++void scx_cgroup_unlock(void);
++#endif
++s32 scx_set_cmask_scratch_alloc(struct scx_sched *sch);
++void scx_disable_bypass_dsp(struct scx_sched *sch);
++void scx_bypass(struct scx_sched *sch, bool bypass);
++s32 scx_link_sched(struct scx_sched *sch);
++void scx_unlink_sched(struct scx_sched *sch);
++void scx_disable_dump(struct scx_sched *sch);
++void scx_log_sched_disable(struct scx_sched *sch);
++void scx_flush_disable_work(struct scx_sched *sch);
++struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
++					  struct cgroup *cgrp,
++					  struct scx_sched *parent);
++int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops);
++
++extern raw_spinlock_t scx_sched_lock;
++extern struct mutex scx_enable_mutex;
++extern struct percpu_rw_semaphore scx_fork_rwsem;
++#ifdef CONFIG_EXT_SUB_SCHED
++extern const struct rhashtable_params scx_sched_hash_params;
++extern struct rhashtable scx_sched_hash;
++extern struct scx_sched *scx_enabling_sub_sched;
++#endif
++
+ #define scx_exit(sch, kind, exit_code, fmt, args...)				\
+ 	__scx_exit(sch, kind, exit_code, raw_smp_processor_id(), fmt, ##args)
+ #define scx_error(sch, fmt, args...)						\
 -- 
 2.54.0
 
