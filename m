@@ -1,38 +1,38 @@
 Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7623A6B82;
-	Thu,  2 Jul 2026 18:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3384A433E83;
+	Thu,  2 Jul 2026 18:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783016494; cv=none; b=tzUnZwKwc3qxaRue6yt7HdhmHoviyEDecL3eNCs6p2XVSK0DKraJXO3benmW+Mogd2kHTx3gw5eaz9ZiwA/tKYFjIZFZNDJmsTJB3s3LZ+CWzLvBc8c6k6lJcWarwiFkXC5f/Uo4V6t+QDlJTKr/GIqJbW6c/qHk6e3JabPW0XA=
+	t=1783016657; cv=none; b=Rjb5fkZCIlEVamhI8uCsC/ksxHuGPVdSEi9BJyTGdjJuVQ/2OgFGq2du6FGtJeQNTNKDvs2/dv9w1X6oxLw8ZvxdHuS/bTNRRoQ5H0OtKmWhjP5J0MIowAHZwklwIHDiymrdRjrxE/G74HfNsVI61tL1XxAUx2YM/exhySJnZkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783016494; c=relaxed/simple;
-	bh=R50w4ONzLnXl1VM24e0p8F33RGkMwGvCywnD9mgSBVY=;
+	s=arc-20240116; t=1783016657; c=relaxed/simple;
+	bh=KmUg/UQHDTILpcdvEVdTnOuV9qWOPUEoAryBAbqSAWQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SQGiYyf6jvUvkQYMlIPbbz+riykYe0RXMiG4SwVl24m+BBPDYWk4FhxjQhS6MMW3Z98cveT2OXvR0nEUCtv9wvrPbo6mUjYy9ykz71ArX3cXR6ivFeMrq6M993p8u8JzmQkVx+Pr1yViLuKM673NU5W7lOKFcmEQi7ZgaN7oPTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=cdvl3ofA; arc=none smtp.client-ip=90.155.92.199
+	 Content-Type:Content-Disposition:In-Reply-To; b=OKo4/V1TjIlcTf7H8ZGr4HZv9xqJg/oKovLu43AozTaZyauRsB/uJq4iEfBjsapP4qNnDN5oBvssP4eljrwd6lD5Q2UciILnuLCDhGAClxL9tQmnBtPXC/sMP8ovcGR3ka+4ErxSpwB7v9XWn/5a/3kk3ZW/AowfbPiRX5HVdk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=SfQ3WIjX; arc=none smtp.client-ip=90.155.92.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="cdvl3ofA"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="SfQ3WIjX"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=NSx9fj5OgJi8DoIMB8ArnocORh675jvqV7/5UpsqU30=; b=cdvl3ofA5lUf1bgEhyWK4logX1
-	HCbhxWxId80aiVxpHZ5Ir4GqH80dNGy0Rb1npJ8zGYeD+ZMn+EX2g9hk62H8KZNcVQ8RMxhyqwaFD
-	M/chr8gv+vjJGUW7BVgDHNKgkLMRbZPbd5m9kYDRQ0Y7piSPlnrq5XZWzy01XgMug7UadHPdO0V4X
-	nqolOP7LZy3h/Xa9G9Y20QQ8oNjuq5XsXdTSF4vUyCaMc9Xh6kJMW9Zn86m+yRHOFAQ7N0rfRlrz5
-	CBmsqkAK29toKB4Y1rlT7ABXrfgGkkIRsnUbBOnyEGsVVl/aumFesovXKq4zeIkM1Jt6Loow/4deD
-	/HYXd5MQ==;
+	bh=6IWzhe2f/pgjH98gCdbcDyYduz8BSklqfpXdqS+HK0Y=; b=SfQ3WIjX1HDRZO+toApSc04Jyo
+	PNWr+4f08+6gXoVXfq8RRlijJc+vMGKa+P2TPQocF5rftPNB5bA2xbPoe23vUzqaTn/nmbuHM9rxe
+	Zh9QNWUaE4tW1xOgRahcNS0BMe377/wFEhf4yX9m6W9E8O3PzIjIH1mAsSLc/0DnUynyMCNLsQ+Ga
+	de9zUEOybq5BGJaxtUySBBf90cfjuxP/iqtP2vH1qV6qSaoUW0++4BQ5nDXVMr7xnFdgpGqD+YgFr
+	WnWrAh0Qm5gJzsRe+IBHu6nvMvM78puy7Hyd2ExIgavAmP8r/YvZoiz2fb21Am5RRT1KVdQmkPfFo
+	RkZyfoMA==;
 Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
 	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
-	id 1wfM2K-000000048UE-0xmZ;
-	Thu, 02 Jul 2026 18:21:20 +0000
+	id 1wfM51-000000048j7-2IdE;
+	Thu, 02 Jul 2026 18:24:07 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 67C5C300220; Thu, 02 Jul 2026 20:21:18 +0200 (CEST)
-Date: Thu, 2 Jul 2026 20:21:18 +0200
+	id 65637300220; Thu, 02 Jul 2026 20:24:06 +0200 (CEST)
+Date: Thu, 2 Jul 2026 20:24:06 +0200
 From: Peter Zijlstra <peterz@infradead.org>
 To: Andrea Righi <arighi@nvidia.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
@@ -49,11 +49,11 @@ Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
 	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/12] sched/core: Skip migration disabled tasks in proxy
- execution
-Message-ID: <20260702182118.GL751831@noisy.programming.kicks-ass.net>
+Subject: Re: [PATCH 02/12] sched/core: Skip put_prev_task/set_next_task
+ re-entry for sched_ext donors
+Message-ID: <20260702182406.GM751831@noisy.programming.kicks-ass.net>
 References: <20260702171909.1994478-1-arighi@nvidia.com>
- <20260702171909.1994478-2-arighi@nvidia.com>
+ <20260702171909.1994478-3-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -62,36 +62,22 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260702171909.1994478-2-arighi@nvidia.com>
+In-Reply-To: <20260702171909.1994478-3-arighi@nvidia.com>
 
-On Thu, Jul 02, 2026 at 07:09:17PM +0200, Andrea Righi wrote:
-> Never attempt to migrate migration-disabled tasks or tasks that can only
-> run on a single CPU when switching donor's execution context, preventing
-> task pinning violations.
+On Thu, Jul 02, 2026 at 07:09:18PM +0200, Andrea Righi wrote:
+> In __schedule(), the proxy-exec donor-stabilization block calls
+> put_prev_task() and set_next_task() when rq->donor == prev_donor and
+> prev != next.
 > 
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> ---
->  kernel/sched/core.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+> For sched_ext tasks, re-entering set_next_task_scx() for a donor that
+> has already been seen by BPF ops.running via the normal pick path causes
+> issues. It fires SCX_CALL_OP_TASK(sch, running, rq, donor) a second
+> time, and sch->ops dispatch can land on a vtable slot in a state that
+> yields a NULL function pointer or corrupts the stack.
 > 
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index 3cc6fb1d20547..8a3eecc7caf5d 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -6936,6 +6936,20 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
->  			 */
->  			if (curr_in_chain)
->  				return proxy_resched_idle(rq);
-> +			/*
-> +			 * Tasks pinned to a single CPU (per-CPU kthreads via
-> +			 * kthread_bind(), tasks under migrate_disable()) cannot
-> +			 * be moved to @owner_cpu. proxy_migrate_task() uses
-> +			 * __set_task_cpu() which would silently violate the
-> +			 * pinning and leave the task to run on a CPU outside
-> +			 * its cpus_ptr once it is unblocked. Deactivate it on
-> +			 * this CPU; the owner running elsewhere will wake @p
-> +			 * back up when the mutex becomes available.
-> +			 */
+> Fix this by skipping the put_prev_task/set_next_task re-entry when the
+> donor is in the ext_sched_class, since sched_ext tracks curr/donor
+> itself.
 
-No, this is actually OK. Remember, we only migrate the scheduling
-context, but the task as such won't ever execute on the remote CPU.
+This really sounds like a bug in ext; how is this different from the
+sched_change pattern doing a put/set cycle?
