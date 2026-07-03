@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8843D9DBC
-	for <sched-ext@lists.linux.dev>; Fri,  3 Jul 2026 13:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341C13D3304
+	for <sched-ext@lists.linux.dev>; Fri,  3 Jul 2026 14:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783085662; cv=none; b=EqXb90ynSrkydpeM3hQ+OoVyUzL6KhDYey1cllUNAPEw+ksSX9Xorcr8UjVlnfy1+SH1zBufzlUq49zwMpIZ4RfHVDw1pn9XgAgxwXfDYgCmrl7hxhk0t0keeF6D+Oh3zyvFwJlKcwq5qiGUjr7c9EY1SW4lWKLmafz/yUBeECs=
+	t=1783087292; cv=none; b=K37Ri7Hp6ONjCgJEGun7qkejQL6bOOi99ZLHrQqaI8Lb2s2wrbqgydGxLf2Y/KntVAPKd5txC47Buegnt0Tf4qrmTy+68L3JlzssvhCc0YtJOwFg7vxhzdMokJe5x7sqcYBhxQIhZKmpvBCDh42Kv7ZeiLNziTLuzmfLjafehPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783085662; c=relaxed/simple;
-	bh=erTeWqtSTzyZ8VpJwSbc4EUD3Mw17xj0+v8UdbpCEbw=;
+	s=arc-20240116; t=1783087292; c=relaxed/simple;
+	bh=TapXkzB6Otm3eH8qisbV0tOdh0sZdtJZD6EjuxNFOWM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=sL9orzOdz3/t+ORtK3maSM0wtrc0X03pzrvliN408VlzaSH4XxB5aodk3CLMMbB355RVGftp5r/VxrHXV6qrIiGWM1t+vkSBZjrjQk/u8RT4D9XRAsJLukLAxqvRXCPfFLkfCtj51Me5/w9rytAFhMI3Pt/EJ+f0e11QlNwTBDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PTTYL9d4; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=D5hp7e4rK+k67bCWSqvZERI6P+L6572UwjpPnbJ2IPRxh7pG5lLSwlaOrzKqz0JCu4A1ks/QZbJc6wPKE8RAJaL52IpD8EZEVlVzqd94KGuCTKB2Dgia/9Bbg5NXnVDmTIBVIps+Jz/GeTaQ3ew8o0WEatkrRl7iDbwBJk2To6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dRop9oIl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PTTYL9d4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16B11F000E9;
-	Fri,  3 Jul 2026 13:34:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dRop9oIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75C11F00A3A;
+	Fri,  3 Jul 2026 14:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783085661;
-	bh=UpdKKchC3b7sPLPV+iy3LB7VrhMq/VnA6b95kp2HDXk=;
+	s=k20260515; t=1783087290;
+	bh=H9ptV1B63bBiZuErEEGzmf4oYGB2liEJTHsHFSmI7KQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=PTTYL9d4bkhWOVoZLBv2TDBRn0rf2VFqXXmR2Cb7FGD9/6k4Dhh1Z2thALezFIhLT
-	 wFuvjr5kp9OUVyf4pk0KiKbtQIljMt2VJymunUnJVZsJ1M0AB6/mRGFVUrDma1qL0V
-	 qHhb99tFb4LehHOpU370JGrGubb8O6kWw3jTkPSd9FLSL08SWmf3KWh2vLD+OWRjkV
-	 VCpFaHsYexNK5HFmV29zxvqw4d/CuwIVil3HhGwnO+H8pUWMMzSGE4nVmAUbA0Bqvr
-	 i0bzzahSepWb0uLESkgu3wIEWOvm4gOsAoVUuJHHHtvzReSoCf+LVYC8bb0ZYcSJwv
-	 cgRxeYFHBBgNw==
+	b=dRop9oIl85cCzdLUy35a17cwYLJ3/Zbvzrdmj652wSk3ah3kPcFy2SIhuA5anHi03
+	 ZHmsv/+lhNF27JvokVgX226OxzM29t36eLtdCfHH6nAks2JkVj1tIUwoTauZ9OBK/Z
+	 Yq/zP+3ut69UVKGuzdCq2etaZElao/zK8io6n3rKN63srfJjXQjZkOBSbLleRdmP+R
+	 2v+dBQdmWSpSUc2dNL4c+uuUqLTf78UOfx5gIQJOKqAhBj7e/ClsnNvMnBVel6oRCM
+	 Z0OlyNzE2ljCsXySmmdEcTYXVMf/v4eqaApDVBdo8h6BG4cWo9HKXNHYVVLIDYUWKU
+	 IK08uTC6btlDw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH sched_ext/for-7.3 25/32] sched_ext: Tie cpu occupancy to
- SCX_CAP_BASE through the task slice
+Subject: Re: [PATCH sched_ext/for-7.3 27/32] sched_ext: Gate kicks on
+ SCX_CAP_BASE and preemption on SCX_CAP_PREEMPT
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260703080159.2314350-26-tj@kernel.org>
+In-Reply-To: <20260703080159.2314350-28-tj@kernel.org>
 References: <20260703080159.2314350-1-tj@kernel.org>
- <20260703080159.2314350-26-tj@kernel.org>
+ <20260703080159.2314350-28-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 03 Jul 2026 13:34:19 +0000
-Message-Id: <20260703133420.C16B11F000E9@smtp.kernel.org>
+Date: Fri, 03 Jul 2026 14:01:30 +0000
+Message-Id: <20260703140130.B75C11F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,79 +47,77 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] scx_bpf_task_set_slice() assumes holding task_rq(p) implies exclus=
-ive access, but blocked tasks can migrate locklessly, allowing capability b=
-ypass and data races.
+
+Pre-existing issues:
+- [High] Inconsistent capability enforcement when a sub-scheduler dispatche=
+s a descendant's task to a local DSQ using SCX_ENQ_PREEMPT.
 --
 
-commit d3cb4ee9fc08ad3b3488c4dd100374ef3a61801c
+commit 35cbaaff89094ffe7ebdd01799138d2095bbc3dd
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Tie cpu occupancy to SCX_CAP_BASE through the task slice
+sched_ext: Gate kicks on SCX_CAP_BASE and preemption on SCX_CAP_PREEMPT
 
-This commit ties CPU occupancy to the SCX_CAP_BASE capability, ensuring
-that a task's slice can only be extended if its scheduler holds baseline
-CPU access. It updates scx_bpf_task_set_slice() to apply the slice
-synchronously when the rq lock is held, or out-of-band otherwise.
+A kick forces a scheduling event on the target cpu, and a preemption also
+evicts the running task. Gate both on caps. Any kick requires baseline
+access on the cid, and preempting a task the sub-sched does not own -
+whether by a SCX_ENQ_PREEMPT insert or a SCX_KICK_PREEMPT kick - requires
+the new SCX_CAP_PREEMPT.
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-
+> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+> index 2f1e19db8e72c..67ba352828e05 100644
+> --- a/kernel/sched/ext/sub.c
+> +++ b/kernel/sched/ext/sub.c
 [ ... ]
-
-> @@ -8626,20 +8761,45 @@ __bpf_kfunc_start_defs();
->  __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
->  					const struct bpf_prog_aux *aux)
+> @@ -222,7 +225,12 @@ struct scx_dispatch_q *scx_local_or_reject_dsq(struc=
+t scx_sched *sch, struct rq
+>  					       struct task_struct *p, u64 *enq_flags)
 >  {
->  	struct scx_sched *sch;
-> +	struct rq *rq =3D task_rq(p);
-> =20
->  	guard(rcu)();
->  	sch =3D scx_prog_sched(aux);
->  	if (unlikely(!sch || !scx_task_on_sched(sch, p)))
->  		return false;
-> =20
-> -	set_task_slice(p, slice);
-> +	/*
-> +	 * Out of band: stash and apply under the rq lock at the next drain,
-> +	 * where it is re-validated against @p's current owner.
-> +	 */
-> +	if (scx_locked_rq() !=3D rq) {
-> +		set_task_slice_oob(sch, p, slice);
-> +		return true;
-> +	}
+>  	s32 cid =3D __scx_cpu_to_cid(cpu_of(rq));
+> -	u64 missing =3D scx_missing_caps(sch, cpu_of(rq), scx_caps_for_enq(*enq=
+_flags));
+> +	u64 needed =3D scx_caps_for_enq(*enq_flags);
+> +	u64 missing;
 > +
-> +	/* under the rq lock: apply now, extensions gated on baseline access */
-> +	if (slice > p->scx.slice &&
-> +	    unlikely(scx_missing_caps(sch, cpu_of(rq), SCX_CAP_BASE)))
+> +	if (*enq_flags & SCX_ENQ_PREEMPT)
+> +		needed |=3D scx_caps_for_preempt(sch, rq);
+> +	missing =3D scx_missing_caps(sch, cpu_of(rq), needed);
 
 [Severity: High]
-Does this direct write path allow a capability bypass and a data race for
-blocked tasks?
+This isn't a bug introduced by this patch, but the newly added SCX_CAP_PREE=
+MPT
+check seems to expose a pre-existing context loss issue.
 
-If a BPF program on CPU A holds the rq_A lock and calls
-scx_bpf_task_set_slice() on a blocked task 'p' that last ran on CPU A,
-task_rq(p) will return rq_A. This matches scx_locked_rq(), allowing the code
-to skip the out-of-band path.
+Can this lead to spurious preemption failures when a sub-scheduler dispatch=
+es a
+descendant's task remotely?
 
-Could try_to_wake_up() concurrently migrate 'p' to CPU B in this scenario?
-Since try_to_wake_up() only needs to hold pi_lock (not the rq_A lock) while
-changing p->cpu, the BPF program might directly write to p->scx.slice at the
-same time update_curr_scx() is running on CPU B.
+When a sub-scheduler (e.g., A) dispatches a descendant's task (e.g., owned =
+by
+B) to a remote CPU using SCX_ENQ_PREEMPT, dispatch_to_local_dsq() delegates=
+ to
+move_remote_task_to_local_dsq(), which doesn't pass the active scheduler
+context (A).
 
-Additionally, since the capability check above uses the old CPU (rq_A) rath=
-er
-than the new CPU the task is migrating to, would this allow a sub-scheduler
-to bypass the SCX_CAP_BASE revocation check for the new CPU?
+Later, when the task is activated on the remote CPU:
 
-> +		__scx_add_event(sch, SCX_EV_SLICE_DENIED, 1);
-> +	else
-> +		set_task_slice(p, slice);
-> +
->  	return true;
->  }
+enqueue_task_scx() {
+    ...
+    struct scx_sched *sch =3D scx_task_sched(p);
+    ...
+}
+
+This reconstructs the scheduler context from the task itself, yielding B
+instead of A.
+
+When execution reaches scx_local_or_reject_dsq(), the needed capabilities a=
+re
+checked against B instead of A. Could this incorrectly reject the task, mov=
+ing
+it to the reject_dsq and creating an infinite scheduling loop that triggers=
+ the
+sched_ext watchdog?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260703080159.2314=
-350-1-tj@kernel.org?part=3D25
+350-1-tj@kernel.org?part=3D27
