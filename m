@@ -1,187 +1,270 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012011.outbound.protection.outlook.com [52.101.53.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2BC208D0
-	for <sched-ext@lists.linux.dev>; Thu,  2 Jul 2026 19:10:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783019443; cv=fail; b=aCqz/8XaDKxJInLaGQRWlOkvFYd+7JdppMJtAxJqXhfXUkhEnkBZNOrSo9rLu7TZHTaMgaig524U5cICDrp2CnOtKssOTuw+QW3xpWYpj4Ee4CB1ZZxALKaYfpJa/yLwr4Jpu7xAQz6P1L4kyX2N7bkbneOVSlhp/9G73R9vdHY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783019443; c=relaxed/simple;
-	bh=YyjVKMD2t41oSCNKcYGNyorHoINmBcc1dvTRHJahlms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ocG8nbArOySIhyfmJh/sBur7MIez11HGY0CJxABnbNRLdjo0yJ2olma+jA27UUdMD5fggrth18Ej5W8sFOcu8MZ4RktO6ldH0EU/E2ihCaDfRZqFVRPjHm2ZBkfa9JgPLgEBYBg6kvQgZEa0rrY4Dc1mQtDzv8684vhMupfGyDI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Q70aEERb; arc=fail smtp.client-ip=52.101.53.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B54135677C
+	for <sched-ext@lists.linux.dev>; Fri,  3 Jul 2026 06:10:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783059015; cv=none; b=UcIUPvl/1h6iDZDBQmxmoRBE4yxIsLbeQ3X7XaI205m/E0csiuxt8+xP0M2YiAUNUr1VuZcuu1Kcnddvs+PHOWKz7vh0VaV8jiGyt/CdJRtmiPij21dR0FQpcxDu+5MxIXu9AXcapr3ycU+cyCvAIXBJriSvlpg3abujKyMyMmY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783059015; c=relaxed/simple;
+	bh=ILyYp7u+Xx5IQb71iXxLXGG7E5bV1KwyT8OFv+gb7kc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WWhH4IUQbQbXFvRdIqZZgQVFPEwQaC6Jxu0uzn4WpZl4Q/xGdyyPJArWx9jGH6l0nQ0iBJI2B5psXvVcNXRA+dr4QOYmLwspXKt94h0uOwx8yiUhM2/iLqkxRl/wtFHufk40W1fH70aQNFJZP1x1teoDfbi4vItYH2dEdWxOGbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZXKUMr51; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eo60CRZO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Q70aEERb"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aALG806uJte1e/OfWsvW0c01ePUEb5/ZcfPIJMN9g2bE7mWyfTG1RtgqL3MzY2ZIDye+nfr+dCakUAejmibOZHAD7sIdSMENZ6tgSEx5Q2E7ILE6axWTcb3uu0KzByR6q8SXCjIZbb3/NkinQnpIzpWb3mVnH6iVbXOmbBI0b2xuPIXFW1azSs90CxHKKmAAPVM7Pq74C2XDZURzcgZZsmv3S9K9t/q8i7fgBe5GeK5j8pk39OWiCa3l3WQkXPKc9sBYHmmX3CTkB0+eirhncqvzs9oTogxvjuYw2zDHRyAKmFs6hbzmBrT0rIKz3+kOnLtdy1UxERE33Ul9CKTnhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3ieftqi5gQeX+6Ekl6qbIx7qVX2kHNR4yHpsh3N3i6g=;
- b=f8SXBh8CP+OrLAYre4BdPiNXSypgA6elpEsfCjSKp8UYPMlzFxniUa3zEIVII5nHZu5XibvHEmVDbdFJxFssDH/nqTbmFBDCTgEZSfwpxUClU3CX3skmQhXLzIX7fX/XZFGWXBcdL5jmJtxcXrIHoaguW9VjHQ7YKVcHbhx1Gi+fHME7nS9s8rhaVKQLlI2EXBP6xfHc9FsLWeOsOgulIxKyhiR8LnP4ABXM/v3IJ/oMYc6SNXGa8kCR3123FhKITqZf70ZXoySSBgi542PFyuMEFhQp8JuUivwBMrY7n3XsbajlANzLPXkZ9cqrxFMvZzEbLwFO8NBVH8o1V6k7Tg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3ieftqi5gQeX+6Ekl6qbIx7qVX2kHNR4yHpsh3N3i6g=;
- b=Q70aEERbqTpp3SlSq7mkAsmgefifD6WOnCns+8Fh3MiEq9LQ14hUxPlqDOAHE+dbLBWJfOebNRxyf4LY30Wnvvqe+Ht4V0xKad3kOea2l+hZrepLPo4xl/yrXbFNTYnirLgax+NRhsnRYRmHykElAzudmS60Dur5egDwdt2A7kruFd09biunhzP0fZYaTG1l3b5WMZxbwbVmwkGSGpdu6AemqaK4jlNCnpTBr+TAwOsQXSlhm3xSftE3/1DBdG8XzfMnFL1ocXWEARudn8Vg9LmA2UQr0/+Cu4lfAbfE34AMNMZT9GT5zrTDOKPh8OMFmoTIRWEOC617hDoxs91RJQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by SN7PR12MB7274.namprd12.prod.outlook.com (2603:10b6:806:2ad::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Thu, 2 Jul 2026
- 19:10:27 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0159.018; Thu, 2 Jul 2026
- 19:10:26 +0000
-Date: Thu, 2 Jul 2026 21:10:18 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
-	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, Shuah Khan <shuah@kernel.org>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/12] sched_ext: Delegate proxy donor admission to BPF
- schedulers
-Message-ID: <aka3msgKMEt8UDHS@gpd4>
-References: <20260702171909.1994478-1-arighi@nvidia.com>
- <20260702171909.1994478-10-arighi@nvidia.com>
- <191a3d02-1dd0-4f74-a977-874678632b7d@amd.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <191a3d02-1dd0-4f74-a977-874678632b7d@amd.com>
-X-ClientProxiedBy: MI3PEPF0000753B.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::4cd) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZXKUMr51";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eo60CRZO"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6635rsC13129448
+	for <sched-ext@lists.linux.dev>; Fri, 3 Jul 2026 06:10:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QgvYG/htqLFEmwIf1znvyLSb4uZLi0GqE7sjW+im1c8=; b=ZXKUMr51NaonOCBJ
+	ia/h91fZOqegcHLCiYrmIvMk53Pmi/kD3KM08hcDy7kqTO1ppdlxvHcAjL03iMjC
+	KYBCw8ivs+VlqwWFJUJ99yi8R9LqNLbsZJgFqvvK6weIjjZOOVNeVAkjfpGoTLDw
+	Hst33Pz4i0o5AjJLO4icTyqcPLh1zSPNeyWywI/XzjpCBtF3OcIkgPMPtdxbBvcr
+	mn4XKIemI+IPR9y/SATH3IzeliJf4G9NtgRPvc/mZZDjVK55Il0HVq0bS75gMrGK
+	tYyQPK8HSNyUM11u2dRkNMfaR6lJ322lw61A5ZcECiPWnfpEZthzNnVG94uXARlc
+	3EkSNQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f5qfc44gu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sched-ext@lists.linux.dev>; Fri, 03 Jul 2026 06:10:12 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-846bc8a0d12so56851b3a.3
+        for <sched-ext@lists.linux.dev>; Thu, 02 Jul 2026 23:10:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783059012; x=1783663812; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=QgvYG/htqLFEmwIf1znvyLSb4uZLi0GqE7sjW+im1c8=;
+        b=eo60CRZORgKUYRSRP+dQMHOi+cz5nGmc21htsRsbrqN7Bh8q8nHwGmhdBbgaWyRziV
+         Fom0frpEY1pyA7iJ1PimalTD6fVIdI+FjSxXDbjHDIXD9Druh9YhQZ/oblD1N67i53zS
+         45B88eI4YYAClFdcb4nqzfeURi8kdJRFHUrUadhza5Q1vUgvEd9iPRjtQhFzMUkY82yl
+         AdbKiQVaiWRUkMD213LMpztTPfZ9lct2eObEKcOdONnKt8U9fbBjrMvhkfwVpq06Gpv5
+         nYROLJLuytC/DL1xnrFkVkLcBrrsWQfWKBxMTwT2pzr5rl5arP+ahaW7OwVZKTUveBD0
+         S5Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783059012; x=1783663812;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=QgvYG/htqLFEmwIf1znvyLSb4uZLi0GqE7sjW+im1c8=;
+        b=L4YhjETf+JeiD0Nfqnq4fMwYTXDR9YOPHpTr5Am8oMUZHVJXHfY2Jwl1YjG0l63eBs
+         EdLeZ+8VbHWGYw5Xgtfy8WdQudJRSNiiZOAze3xKRJdO8velW+HXiTtHm1r6CVj4Mkja
+         zkh0g32vfWAB5NMQYlJS2L+xeFm1KdoCIY+vYSQHlutHEBIAjdEpfpnuufcfcT+JSSyH
+         BUgAa4VylR8P4KjKHLzTpBFGLJx2PRU0FY2Vv/FC1LoRfKLgwSoUA7UPaxALidHwWtJz
+         JBgmMmi40lVKBB6E8JGMBh4/v+zl8qJQPHsc5G0lCm7DgbRpQFCCT/XhSYJ/u+oWz8QI
+         LpPg==
+X-Forwarded-Encrypted: i=1; AHgh+RqAihUt2/+sA1f5Fra7dItT9HWwG8rWDth00AgdRexedCfdPHn+hGf4j1ae0Wip6+l9hapA+LNZVRQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YweChOiA8HrddU7WWcXHywqvH9zbbKmz120cwLzXryD1xioI3xG
+	MvyC1hE1sFjQxh40ywKyHHouB8wYutbAj/29BB9G/qc6H4e5Fp02HbG8Gf0aX3HEF+KP3C+6wM4
+	shuINt1kZF6mk7QV7EIMAUjvvvDyUWzuimezPlGIk+uefAYxJTcP72bV3sn/Ma1o=
+X-Gm-Gg: AfdE7cmIa3jQSXM/I9ej/fvhzTSkF2qfySQoDpFrgq+2PaWEFchC3sOozp5+pLQcTEW
+	2AhyFah4zI9OsSccZ7Fc6qtbkZExVSm+XA/QeB+BKMKT4yP8Hn6kP5o1HWDuK2xNY4zBwcGAzAz
+	hFVBf2+5mwp5IeFzXdukXDsyrR943Viblw2Kggf27W+8S3yGR/fYPOfWuC/bRdjKIluMYoPt3Xt
+	jWKTcHWLWF20QTSE8WnuyAvD0gRv3YlvT2ClF0Lx3gA5s+AUZiWuQHEtU8gXLTW1qSPSaUOsdp5
+	QNKyuti929+eidr28c0QLiKjjmZF+yai86A3XYCJh/EfRuBpP1qVo+QTQjHcMQyI4uGhK3Ckvb2
+	a6nLHKTsPUr69/1Oythbrh1voYgNFKoAikd6/dEjanv7RzNQy1LJbvdRY6Iz2XofJUHg7MfR6Ka
+	yNYQ==
+X-Received: by 2002:a05:6a00:2315:b0:847:88f4:30e1 with SMTP id d2e1a72fcca58-847c099a6camr5266126b3a.3.1783059011901;
+        Thu, 02 Jul 2026 23:10:11 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2315:b0:847:88f4:30e1 with SMTP id d2e1a72fcca58-847c099a6camr5266098b3a.3.1783059011169;
+        Thu, 02 Jul 2026 23:10:11 -0700 (PDT)
+Received: from [10.133.33.108] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847cb9b409fsm2365444b3a.52.2026.07.02.23.10.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Jul 2026 23:10:10 -0700 (PDT)
+Message-ID: <4c58a564-f53b-4031-8821-206f359994ed@oss.qualcomm.com>
+Date: Fri, 3 Jul 2026 14:10:05 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SN7PR12MB7274:EE_
-X-MS-Office365-Filtering-Correlation-Id: 563b2401-6fbf-472e-2957-08ded86d9318
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|7416014|23010399003|1800799024|11063799006|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	wfEcqsjB7K7IZfP7+dzjzVXDffMxp/n0kFLYx/0FmMGyHNHtq+YhErHlPqMjGEdz7YMHzJBsM5DMCShxlX04mESlpRljpgagd1NR+9VP7ebojijNn5Qwed9LXPS/dT7BgO5c6dlENcmAe1aake2n6dPPVfSnjU1+9xFyvyy9cXxdC3UERztosa+Xp6pvEtsRS8rh1iNMF2gCgma+CcnWreKnK+t2kp5upNfkpdjy19qooE0xMEbs9agVzhIpDg2o9ZKFGwEXeG+6hk8IP61mzCyr2QPedK/yxbEw/OsN+mqcrdGfbZtglPPuCEa3L7WkjG/6qYzsHBXjuB2C8JQEBOLeYSNgAgP4TImyxREpwpODcagXthO8tdP01sp1tX9Qh7tkIDO25BMh6rfovJjLRoQLvA4wQRhN05TOAXODokJ4392CoMYXznwChIY39IyeP1nPra6dFSCZPy4XwmxdeDVxHJZr+ypah/isH4nf4aLJ7kM2lFQ8Kc+dH0wdXubq7DzLIal7epan52b98a1fORogddfuzGaqyuGLwgVqqhuknsc/OtSmmU4WJoP7mKoQiK3qIr7QRAaC3DparD0ENbNVsYpswLhhi4XhS36d1MnB5xriuMWQH1SgBD6SSJP6tNIvmtGi/rDUy62HsZ2gyP8Y73J8AOW1X7Du0SnEILA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(23010399003)(1800799024)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Jv8fNbatsCrlbr84wPrlLmpjjxlwGdb+s8xVjsdPlefdWlXCITOBXFJzAPvs?=
- =?us-ascii?Q?iupiWRvmCmoxYmITXaXWp/ZAv1H+87zBcgfrDMurilxIt9MyIw25rH2oPzYf?=
- =?us-ascii?Q?ALLRSbFO1ff/nTSmoE2PrdB6JroT4sJCsJkLEoDdhMDaucsvZHAQxLskoGf+?=
- =?us-ascii?Q?1BKftSTDutihPtKJKz+sFOZUVj2/2WeH00CtZTd6KXX+vP8xs3tMHYCyfiFo?=
- =?us-ascii?Q?MXZlBxKJ57LYBHy0r4PsVl+2X3Cuzf7gESTSnofyGmqayNjaH+02zJe4TsQE?=
- =?us-ascii?Q?PUS5EaP8AgtgvrF+AI6pJ3SrwAGozsfkKrZom3EqbPCi0X97HNnCUP8aJyet?=
- =?us-ascii?Q?i7pEqp7tY+7d9/1cKN8/7hITs8rL+9UqhGHSGVPd3MOhMP+g38nTqH42qw2o?=
- =?us-ascii?Q?AZq79YteBsy4aSc75HhNcsrUqxgcLt0Y4jDe4OxV+6wWc3F5H6XZ8kC6PbQA?=
- =?us-ascii?Q?n5i9VGeHakiq6YhTwC+eNpPLITno+PKU7pk6MSxv8vOVM0c8l6hVrDA44xx6?=
- =?us-ascii?Q?4jzW6EIsPY7lLxSajiEVs/WfUqjvmH6B7mE0Bz0YjnULEmNG+g3c3OCA71E/?=
- =?us-ascii?Q?gN6poKcJ+OyHSfuIWnucNUBawoRsEQp7OBi9rbDj2Ea7gsJo+LSfShFfxJAi?=
- =?us-ascii?Q?G8im1iGINvTnWaiRnq3gNuUbrXpwrF5FnkO8QjIfSz/SKu+qOfOkcgEffA95?=
- =?us-ascii?Q?X2XpXM9AxdpdhtvT82OrgnRTKkaeB1eqb3+gxD59ZKXMm+GXPX0y1mT0FTro?=
- =?us-ascii?Q?nC07eun7gNtBxsM/c6ejFbdnjktXg5bvr2TdtwkgI7roHT9+UwpTGueFNqPI?=
- =?us-ascii?Q?FECpKsE65ES3tHL0hv5efnfIv5QwWnTY5EjGw9B7l5ZPTBSa7fS82Lhez1Nf?=
- =?us-ascii?Q?VYsIEE+34HoHRkfFrYpEI149r81PGBp7hJ64UyCkPCljUHcaOtyD3ciThifv?=
- =?us-ascii?Q?xyUZsYHmZ1eBrhpUbri04OY4eL7pRCpd/ltVUc0iN9o41kUwstMF5QD6YJQm?=
- =?us-ascii?Q?+bsm6W7KmX7Nh9cjlaQA8WGxRx9XnWaKVftsLfSj+0b0AuQMLmmBzKR8bF6H?=
- =?us-ascii?Q?X+0qucG6eK0bCoUo6TjpZJocvHcXSeHg2NxwvQeW2GGU1cUEn8C2QR8d6MOi?=
- =?us-ascii?Q?TrEDtJUkxz8O9o95p5oQYMc51I+FbqAt6keN/Dqh1JcAtZz1cXmDD8pi7I58?=
- =?us-ascii?Q?/YYDANAyeqj8f8oYwfu8iB6rnMTdlqT0NWCUjTlFfRbdRw+fRPeEhJmQniHK?=
- =?us-ascii?Q?JLKtw+phg5sqY4l4oGrCygZZ2Sn3z9qXdWYSt9MKyUFkIU1i4tzilrcCaJpz?=
- =?us-ascii?Q?VWGjFsOfE4Z3qY9JwnnYZ8d/+ayOcsqZcCE35Q3yqbjxOn3WVKx0TdyVydu6?=
- =?us-ascii?Q?WUhcXHdqbWs8vguawM3lGylrnm34cp2QvxxZQHsVmXsPrgQTYd/0Ff/ISoWD?=
- =?us-ascii?Q?QRi7dNIhW2Z3PlziijjjH/xONv3+QbwELRhKPcJbMj9CQpaQxz7iozTR2zzh?=
- =?us-ascii?Q?6SYF+ok2ruEruNxV/eplA+1z1EmtRKX/gOcEHyMCc359Xd5tL61NZRGxC4Kf?=
- =?us-ascii?Q?YPaLzlQ7hFEsOLX06sZ1jv9dBkQNZpDtoqggQYhaEeBQPIbclSbpxm8zE0SD?=
- =?us-ascii?Q?3zHgwcHbW/Ye0FvWYsB7asD0Zn9tX9cNmq05cMdXpKBT+4B8tyaFdRv/woMl?=
- =?us-ascii?Q?r3Bz7Ow0seQBTx54pQoO+gxnI7T8wX+2uPhNQeN3EnbbGqmsLDYM62R/NU6R?=
- =?us-ascii?Q?lLrmFDt0Uw=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 563b2401-6fbf-472e-2957-08ded86d9318
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2026 19:10:26.5803
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7gkkbJ6xhHAlsyeayIwAgofBOvL3eaz8wgF4cpqBCaF19ufnYCA3W/vP9u2QnBhRuVJTGf7MMwinYy6g4Fx4EA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7274
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/12] sched_ext: Split curr|donor references properly
+To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>,
+        David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+        John Stultz <jstultz@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+        Juri Lelli <juri.lelli@redhat.com>,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Dietmar Eggemann <dietmar.eggemann@arm.com>,
+        Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>,
+        Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
+        K Prateek Nayak <kprateek.nayak@amd.com>,
+        Christian Loehle <christian.loehle@arm.com>,
+        David Dai
+ <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
+        Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev,
+        linux-kernel@vger.kernel.org
+References: <20260702171909.1994478-1-arighi@nvidia.com>
+ <20260702171909.1994478-4-arighi@nvidia.com>
+From: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260702171909.1994478-4-arighi@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: aeAKmN0Lh90GhKqVtLh6o78wOY3i-8mF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzAzMDA1NiBTYWx0ZWRfX//lFgmDU6jop
+ FgGB5mVjLyqm6/zrAcekve9we831tu0dbFpCmbzdAKldSc47JMLjQyTI9klzb1A+cdPDZL+FIVU
+ prybaNfnI//2yl2f6aoIZmxh5Zo/EB+wqMNtg5o3SudMQMRVjgB5G97IhVZlB7X+fyT2JrwYFOo
+ c++R7TLLVuMcS+DS8PtGRmITZpS0obIYpOU4FE5rKBmaeFZDUBLsxW4ECyhkHFdGWL1/Pg3Uew/
+ dhzBv5lg+ba4XDO6IC3SD5bm4ab9wy8opjvQ00G9RDutZB5nNMK7se78mYwenHdL3cN8xaF3MDB
+ SMftwgqZkKxWfcjBr11fMVtzq4gsN62gVBX7aKovf3sMqEx9nhhKNUPaMxwdVPC/dJA81vm9Y/o
+ rwK8OE5oT50UkBrVQW42LsNcFOMaTy5taAsDYvFm3CT9ejN1btERSaSWz/q4N0tmqWZ+I+yR3hV
+ +/4mqusOcInzSckoF0Q==
+X-Authority-Analysis: v=2.4 cv=dvXrzVg4 c=1 sm=1 tr=0 ts=6a475244 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=1XWaLZrsAAAA:8 a=21McqEnWWSrJDHrl5ZIA:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-GUID: aeAKmN0Lh90GhKqVtLh6o78wOY3i-8mF
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzAzMDA1NiBTYWx0ZWRfX6ZdtaFaUA5kK
+ TKT5b3HejqYaWdKFXj6zdXgyLIregLaUrwW5ibm4Jx67+i3be6YKaycIVwBM9+tZnlaqcE1FqnZ
+ Oh6W2qxY9J1/AzLU3twpz3V2qmjPsWc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-07-03_02,2026-06-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607030056
 
-Hi Prateek,
-
-On Fri, Jul 03, 2026 at 12:11:40AM +0530, K Prateek Nayak wrote:
-> Hello Andrea,
+On 7/3/2026 1:09 AM, Andrea Righi wrote:
+> From: John Stultz <jstultz@google.com>
 > 
-> On 7/2/2026 10:39 PM, Andrea Righi wrote:
-> > @@ -7148,7 +7181,8 @@ static void __sched notrace __schedule(int sched_mode)
-> >  		 * task_is_blocked() will always be false).
-> >  		 */
-> >  		try_to_block_task(rq, prev, &prev_state,
-> > -				  !task_is_blocked(prev));
-> > +				  !task_is_blocked(prev) ||
-> > +				  !scx_allow_proxy_exec(prev));
-> >  		switch_count = &prev->nvcsw;
-> >  	}
-> >  
-> > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> > index c48d043dbe58f..8ffbf857acd51 100644
-> > --- a/kernel/sched/ext/ext.c
-> > +++ b/kernel/sched/ext/ext.c
-> > @@ -23,6 +23,14 @@
-> >  
-> >  DEFINE_RAW_SPINLOCK(scx_sched_lock);
-> >  
-> > +bool scx_allow_proxy_exec(const struct task_struct *p)
-> > +{
-> > +	if (!task_on_scx(p))
-> > +		return true;
-> > +
-> > +	return scx_task_sched(p)->ops.flags & SCX_OPS_ENQ_BLOCKED;
-> > +}
-> > +
+> With proxy-exec, we want to do the accounting against the donor most of
+> the time. Without proxy-exec, there should be no difference as the
+> rq->donor and rq->curr are the same.
+
+Trying to understand more of the situation when donor and curr in
+different sched_class? one is in scx and the other is not.
+ could you pls help to explain more with this information in commit message?
+
 > 
-> What happens when we switch in a a sched-ext scheduler that
-> doesn't support proxy?
+> So rework the logic to reference the rq->donor where appropriate.
 > 
-> There would be a bunch proxy donors already preset at the time of the
-> scheduler loading but I don't see anything in the enable path that
-> would take care of those tasks by blocking them completely.
+> Also add donor info to scx_dump_state().
 > 
-> Is it handled elsewhere?
+> Since CONFIG_SCHED_PROXY_EXEC currently depends on
+> !CONFIG_SCHED_CLASS_EXT, this should have no effect (other than the
+> extra donor output in scx_dump_state), but this is one step needed to
+> eventually remove that constraint for proxy-exec.
+> 
+> Signed-off-by: John Stultz <jstultz@google.com>
+> ---
+>  kernel/sched/ext/ext.c | 28 ++++++++++++++++------------
+>  1 file changed, 16 insertions(+), 12 deletions(-)
+> 
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 1a0ec985da77d..1588565050679 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -1145,17 +1145,17 @@ static void touch_core_sched_dispatch(struct rq *rq, struct task_struct *p)
+>  
+>  static void update_curr_scx(struct rq *rq)
+>  {
+> -	struct task_struct *curr = rq->curr;
+> +	struct task_struct *donor = rq->donor;
+>  	s64 delta_exec;
+>  
+>  	delta_exec = update_curr_common(rq);
+>  	if (unlikely(delta_exec <= 0))
+>  		return;
+>  
+> -	if (curr->scx.slice != SCX_SLICE_INF) {
+> -		curr->scx.slice -= min_t(u64, curr->scx.slice, delta_exec);
+> -		if (!curr->scx.slice)
+> -			touch_core_sched(rq, curr);
+> +	if (donor->scx.slice != SCX_SLICE_INF) {
+> +		donor->scx.slice -= min_t(u64, donor->scx.slice, delta_exec);
+> +		if (!donor->scx.slice)
+> +			touch_core_sched(rq, donor);
+>  	}
+>  
+>  	dl_server_update(&rq->ext_server, delta_exec);
+> @@ -1316,8 +1316,8 @@ static void local_dsq_post_enq(struct scx_sched *sch, struct scx_dispatch_q *dsq
+>  	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
+>  		return;
+>  
+> -	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
+> -	    rq->curr->sched_class == &ext_sched_class) {
+> +	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->donor &&
+> +	    rq->donor->sched_class == &ext_sched_class) {
+>  		rq->curr->scx.slice = 0;
 
-Good catch! It's not currently handled, a proxy donor that blocked before
-sched_ext was enabled can remain queued after being transferred to a scheduler
-that doesn't have SCX_OPS_ENQ_BLOCKED.
+Do you forget to update rq->curr with rq->donor here?
 
-We should probably deactivate existing blocked donors while switching them to a
-scheduler without proxy support.
+>  		resched_curr(rq);
+>  	}
+> @@ -2464,7 +2464,8 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
+>  		}
+>  
+>  		/* if the destination CPU is idle, wake it up */
+> -		if (!fallback && sched_class_above(p->sched_class, dst_rq->curr->sched_class))
+> +		if (!fallback && sched_class_above(p->sched_class,
+> +						      dst_rq->donor->sched_class))
+>  			resched_curr(dst_rq);
+>  	}
+>  
+> @@ -2876,7 +2877,7 @@ static struct task_struct *first_local_task(struct rq *rq)
+>  static struct task_struct *
+>  do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+>  {
+> -	struct task_struct *prev = rq->curr;
+> +	struct task_struct *prev = rq->donor;
+>  	bool keep_prev;
+>  	struct task_struct *p;
+>  
+> @@ -4029,7 +4030,7 @@ static void run_deferred(struct rq *rq)
+>  #ifdef CONFIG_NO_HZ_FULL
+>  bool scx_can_stop_tick(struct rq *rq)
+>  {
+> -	struct task_struct *p = rq->curr;
+> +	struct task_struct *p = rq->donor;
+>  	struct scx_sched *sch = scx_task_sched(p);
+>  
+>  	if (p->sched_class != &ext_sched_class)
+> @@ -6007,6 +6008,9 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+>  	dump_line(&ns, "          curr=%s[%d] class=%ps",
+>  		  rq->curr->comm, rq->curr->pid,
+>  		  rq->curr->sched_class);
+> +	dump_line(&ns, "          donor=%s[%d] class=%ps",
+> +		  rq->donor->comm, rq->donor->pid,
+> +		  rq->donor->sched_class);
+>  	if (!cpumask_empty(rq->scx.cpus_to_kick))
+>  		dump_line(&ns, "  cpus_to_kick   : %*pb",
+>  			  cpumask_pr_args(rq->scx.cpus_to_kick));
+> @@ -7452,7 +7456,7 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
+>  	unsigned long flags;
+>  
+>  	raw_spin_rq_lock_irqsave(rq, flags);
+> -	cur_class = rq->curr->sched_class;
+> +	cur_class = rq->donor->sched_class;
+>  
+>  	/*
+>  	 * During CPU hotplug, a CPU may depend on kicking itself to make
+> @@ -7464,7 +7468,7 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
+>  	    !sched_class_above(cur_class, &ext_sched_class)) {
+>  		if (cpumask_test_cpu(cpu, this_scx->cpus_to_preempt)) {
+>  			if (cur_class == &ext_sched_class)
+> -				rq->curr->scx.slice = 0;
+> +				rq->donor->scx.slice = 0;
+>  			cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
+>  		}
+>  
 
-I'll fix this in the next version and add this case to the kselftest.
 
-Thanks,
--Andrea
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
