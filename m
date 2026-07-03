@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084213E2773
-	for <sched-ext@lists.linux.dev>; Fri,  3 Jul 2026 14:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24943F23B3
+	for <sched-ext@lists.linux.dev>; Fri,  3 Jul 2026 14:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783088902; cv=none; b=drOauEKqVIVlqUagGxPfEFKCrXMSrKss6MkKHUoUD8QjBucOifg/eqyb862KQaVXXG7FLih9VCHJjOAw44ZjBIgtFhXNgEqk5zYgR6Tlbwi8DMf1DsOTAGXBarTbm62e8XhvI49QfG6Z8G7l4IkhscbFaBs/Pefj4awu0BP1/dY=
+	t=1783089903; cv=none; b=sWSyjXJcRva9o3SRUhuiUO/95a2/fGHD1JeMudeZuyyDYonarJ5KKxGDqfb6mrYKZY2DZlhAcceYBgzL4t/kN/5nhx1Ym5p9FH7mh+1jv10aMSxw/tIw47waT8bHGROvzHlPsx5xw8KzQq8EMRsGrVbloKrUAHTFDbZr+LO3Aa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783088902; c=relaxed/simple;
-	bh=9k4bSA/To1c+noLGOo+uJ0E9zwrJo5NJ6rso7HaOiIY=;
+	s=arc-20240116; t=1783089903; c=relaxed/simple;
+	bh=gk1yWJXfvutkG7m5FAC2deStw8S2XqF/wbuktC6pLyo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Yr6a28c61U7mRZWGXEhJbpislJHM7wV0ioU0WnzQZiaTGIUtM3pIclK5Z+R1p+Lo5Nq/q1q0kGGxKCoK8g4QAbqV1uwm82+c4gmY9sCAh0auD+nb1+UtXkRcz3MlgNiGAzREYJYDIr7BKchnnDGbXx2wFlmdNgqAbAJtSYX0EHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6BQbW0H; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=NSsjptpMRbBytagITQVpBGTZ/RdzNyBENd6/1fTY5HvabRN8AfIB+3JozX58qZUIW8QTM/vzq4jVoTb4e6ettUv3P6eNllkYP5U/q0AoQsdPtXspszHTSUsPGhH2F6TfSjxlV45Sv+NiDctFKJtdtnckI2UeGl1dCfPXYda6jLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FC66knIo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F6BQbW0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30C601F00A3D;
-	Fri,  3 Jul 2026 14:28:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FC66knIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0281F000E9;
+	Fri,  3 Jul 2026 14:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783088896;
-	bh=laKGrYmK3Tv2vyvinKa2Xj63qxAarnhaglpyPe8+bNI=;
+	s=k20260515; t=1783089902;
+	bh=vOwRj+ejfXxZJ+lKlZljbqL4OlnaHCe2uPG7hNj2D6c=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=F6BQbW0HGIB8aIlnFG5rXeDVomiS8xlRiJyPnCAHH2F8uGq179TfYfQj418wpObB2
-	 HBsvTpiX6jAU0CSrnrSOynAgHkj+3LB2mRs8+T63BzAR1AxliKkZqH0nYDi4VHEyi2
-	 KvlpF8qbJV5EX8Lm8WTyY5Mua5QEG7siWPFMF1CxD95RkUKXwAeJM0L/cZk1ee4YxE
-	 IOguH2Us39GygGfvXE5ponOpisSjt0nahupuyeZUWfWlUIrfPPOosEkj0K5jauc8Wa
-	 Pnrm3wVVJc4A+pP7W1DddmYwxj3Md1tC3mDMpAAeV464uXBGlq1KnrzPIiwbOykzUf
-	 Ki1EmiWm+114A==
+	b=FC66knIoR/o0Q6vsvTtD161BALUe8ht5VtbVnezqWXLtk+xMqKY918HE1IcO0NaN8
+	 gkWC/5B+4+Ztj0c9KJ4MMyrxXAzwHlx7ngLkHJ7BTtX5PIRo0P0kCTBs7m/rPD+zK8
+	 doyaKrgSyRDBsuaU9eeoU9KMNbaQhAQB1LURGEZtHgfNeyk/fZvqsdvTnqBhxkD270
+	 +1wKzP85yZJwNMjKmaFW5GaX9ziSNJ2seKrkmLj8LPIhcRZ5gJjdH9ZVi2AavDVe3H
+	 cxooGxlIY3OJON8Dlkx7qKd4+RPbxKE4hzJK8EKukwAQOCPC52Z6xlLvmfFjWi3sek
+	 vk/D9OddQh3DA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH sched_ext/for-7.3 29/32] sched_ext: Replay ecaps
- notifications suppressed by bypass
+Subject: Re: [PATCH sched_ext/for-7.3 30/32] sched_ext: Add
+ scx_bpf_sub_kill() to evict a child sub-scheduler
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260703080159.2314350-30-tj@kernel.org>
+In-Reply-To: <20260703080159.2314350-31-tj@kernel.org>
 References: <20260703080159.2314350-1-tj@kernel.org>
- <20260703080159.2314350-30-tj@kernel.org>
+ <20260703080159.2314350-31-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 03 Jul 2026 14:28:15 +0000
-Message-Id: <20260703142816.30C601F00A3D@smtp.kernel.org>
+Date: Fri, 03 Jul 2026 14:45:01 +0000
+Message-Id: <20260703144502.3B0281F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,87 +47,80 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Concurrent CPU hotplug, bypass toggle, or scx_bpf_sub_grant() cras=
-hes due to a NULL pshard dereference when a cpu-form sub-scheduler is linke=
-d but not yet rejected.
+- [High] Out-of-bounds read due to missing `__str` suffix on the `fmt` argu=
+ment in `scx_bpf_sub_kill_bstr`.
 --
 
-commit 8e75c7343c899785bda5b0be0886c20991519a76
+commit dae92dbfa20b120640a7210997136f2e4d4af380
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Replay ecaps notifications suppressed by bypass
+sched_ext: Add scx_bpf_sub_kill() to evict a child sub-scheduler
 
-scx_process_sync_ecaps() consumes ecaps syncs while the sched is bypassing
-without delivering ops.sub_ecaps_updated(), leaving reported_ecaps stale.
-This patch re-queues a sync for every (sched, cpu) with an undelivered delta
-at the per-cpu bypass exit in scx_bypass(), next to the idle renotify
-catch-up.
+This commit adds scx_bpf_sub_kill() to allow a cid-form scheduler to evict
+a direct child sub-scheduler. It exposes BPF string formatting infrastructu=
+re
+and introduces a new exit kind, SCX_EXIT_PARENT_KILL, to handle the teardow=
+n.
 
 > diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 90caf76db8bf6..15edcf4f81ee2 100644
+> index 15edcf4f81ee2..4baa6f7be71bd 100644
 > --- a/kernel/sched/ext/sub.c
 > +++ b/kernel/sched/ext/sub.c
 [ ... ]
-> @@ -550,6 +550,41 @@ void scx_process_sync_ecaps(struct rq *rq, struct ta=
-sk_struct *prev)
->  		scx_schedule_reenq_local(rq, SCX_REENQ_CAP_REVOKE);
+> @@ -1636,6 +1636,63 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u6=
+4 caps, struct scx_cmask *out_
+>  	return 0;
 >  }
 > =20
 > +/**
-> + * scx_unbypass_replay_ecaps - Replay a bypass-suppressed ecaps notifica=
-tion
-> + * @rq: rq of the cpu leaving bypass
-> + * @sch: scheduler that just left bypass on @rq's cpu
-> + *
+> + * scx_bpf_sub_kill_bstr - Kill a direct child sub-scheduler
+> + * @cgroup_id: cgroup id of the direct child to kill
+> + * @fmt: reason message format string
+> + * @data: format string parameters packaged using ___bpf_fill() macro
+> + * @data__sz: @data len, must end in '__sz' for the verifier
+> + * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF pr=
+ogs
 [ ... ]
 > + */
-> +void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
-> +{
-> +	s32 cpu =3D cpu_of(rq);
-> +	struct scx_sched_pcpu *pcpu =3D per_cpu_ptr(sch->pcpu, cpu);
-> +	struct scx_pshard *ps;
-> +	s32 cid;
-> +
-> +	lockdep_assert_rq_held(rq);
-> +
-> +	/* root holds every cap and never uses ecaps */
-> +	if (!sch->level)
-> +		return;
-> +
-> +	if (READ_ONCE(pcpu->ecaps) =3D=3D pcpu->reported_ecaps)
-> +		return;
-> +
-> +	cid =3D __scx_cpu_to_cid(cpu);
-> +	ps =3D sch->pshard[scx_cid_to_shard[cid]];
-> +
-> +	guard(raw_spinlock)(&ps->lock);
+> +__printf(2, 0)
+> +__bpf_kfunc s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
+> +				      unsigned long long *data, u32 data__sz,
+> +				      const struct bpf_prog_aux *aux)
 
 [Severity: High]
-This is a pre-existing issue and was not introduced by the patch under revi=
-ew,
-but this new function also appears to be affected by it. Can this cause a N=
-ULL
-pointer dereference if sch->pshard is NULL?
+Does this kfunc definition miss the __str suffix on the fmt parameter?
 
-If a user attaches a cpu-form scheduler (where !sch->is_cid_type) as a
-sub-scheduler, scx_alloc_pshards() returns 0 without allocating sch->pshard.
-The scheduler is then added to the descendant tree via scx_link_sched().
+Because the argument is named fmt instead of fmt__str, the BPF verifier
+treats it as a standard memory pointer (KF_ARG_PTR_TO_MEM) with a size of
+1 byte (the size of char), rather than as a null-terminated string.
 
-Before it is rejected by scx_validate_ops() and unlinked, a concurrent
-parent lifting bypass can trigger this new scx_unbypass_replay_ecaps()
-path, unconditionally accessing sch->pshard.
+If a BPF program passes a pointer to a 1-byte map value without a null
+terminator, the verifier will allow it. Later, this pointer is passed
+through scx_bstr_format() to bpf_bprintf_prepare(), which scans for a null
+terminator up to UINT_MAX:
 
-This pre-existing issue also seems to affect scx_online_ecaps(),
-scx_bpf_sub_grant(), and scx_bpf_sub_revoke() where pshard is accessed
-unconditionally. Could this be triggered by a concurrent CPU hotplug or BPF=
- call
-during this window?
+kernel/sched/ext/ext.c:__bstr_format() {
+    ...
+    ret =3D bpf_bprintf_prepare(fmt, UINT_MAX, data_buf, data__sz / 8,
+                              &bprintf_data);
+    ...
+}
 
-> +	queue_sync_ecaps(sch, cid);
-> +}
+Could this lead to an out-of-bounds read in the kernel if
+bpf_bprintf_prepare() scans beyond the 1-byte verified bounds?
+
+> +{
+> +	struct scx_sched *parent, *child;
+> +	s32 ret;
+> +
+> +	guard(rcu)();
+> +
+> +	parent =3D scx_prog_sched(aux);
+> +	if (unlikely(!parent))
+> +		return -ENODEV;
+> +
+[ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260703080159.2314=
-350-1-tj@kernel.org?part=3D29
+350-1-tj@kernel.org?part=3D30
