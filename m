@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B243538D3E0;
-	Fri,  3 Jul 2026 08:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F0438E8B0;
+	Fri,  3 Jul 2026 08:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783065750; cv=none; b=DfT0V+6cU0RqDB79aPO7RqdyxFuLWR5xpSea9tG/FO1bRJo66+koQwqV2mcdGsnLbkJM8KFtB2jdweUNxe+Q6CinI6uLjt80O4eC24Z2RePieT2sVrF/KQ/aJySpRag02v1DECEU06lWpT6sx0DP9O+xleXq5k/hmj5OcUTQArk=
+	t=1783065751; cv=none; b=TxsGOWzNAZnfgQ7/5Z7IsQfZUoPpgeAnaAJ1dZlEPMkC6I7n24Hiw5/tg9e5WIOsOpFrZqKmCPifni4Q0L6OqOla7ZBAdEelLqt8hY2lG0wP9jC2up7dEOjNq3ETao6HeWRa2FAYk1zW5Va24YCNYe7iFxczCvNEFVo1868i/JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783065750; c=relaxed/simple;
-	bh=AEIDtO8CUL7zzAkPkDN5NLlcb/5BuWwFqph0nvkQHEM=;
+	s=arc-20240116; t=1783065751; c=relaxed/simple;
+	bh=3sYUZlqV95gBaQngTksCVE20oKxt85dh4tU4uP/E9y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCGXOF07VpkX7N2v3snVCLjf5i3iAzqBVr94dpmKnmvseNRqosgybGbWm9WIjibaUWi2uz/DwTe5ph0VMqMOHUNJzoos1eN4Mn1GfC7VtWYUwslbSzY3WJAYGtGsoiMSV2s5QnazTZohOPMtwtE2cXA2S4V5sLQRBNN/z43sNro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWOojAlr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pBIy9KOQenBlhVayrtTv7m0vKrse6esCti6RatcmeFrWBk+AKkLgUxBGXulsHBAJpsu7o30BOErk1adAkVMR0xzWOdzvWzaVrZvjUzJPNjm/kSnZQ7c2ksSm1paI9UykmseAigfoF16T+J7LbcAXVgwhm7+hfqcW5F7So0MqN94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgbPC73K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWOojAlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD531F000E9;
-	Fri,  3 Jul 2026 08:02:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgbPC73K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF301F00A3A;
+	Fri,  3 Jul 2026 08:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783065748;
-	bh=mMzKSCtxZYq10stNoMIhpz/w4tVYnTtb1v7chVVVIFs=;
+	s=k20260515; t=1783065749;
+	bh=5YRtSpwmyHcc6aEFaS1fwlg42aHAsKVYT+v991TB15Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZWOojAlrFcCwuETaNUdjeuphv2seq02OW4+H20jeEfFJFkvM8t09uiRahyvl/bH7n
-	 ljULPTbONZJlFcU6EC/GJpenPm80QZMyA6fzB7Lhj/IH0p1g6hWKAEBh9ICm4EaVFC
-	 sUDT7LNjI/5hkWUfDa2WQMc2WTrV/GUDGGf0wuNJV1F2qbaZJnGV50jN0r3A92SJ/M
-	 ISPYYib9n/fqmY97SEXD14SBReG9/WrrIC3r2b5GQEn+E7jr2W6zJyax2Mu7DR7vjD
-	 NrmB93CGcP+E+zDoreUQhi6ZMTMT8Y0Fa+2NMtiUL+HZJoIlxLRb2llsfM4ug1WG/6
-	 hw5n7RkQlWjxQ==
+	b=LgbPC73KXPHpKyrq/5PMUgAaq8MIPAb+UBX0lego6ZXcjgkzU3KpftUuJT1npLz/m
+	 BME7MIezGnToYyCnye4+wjVhKWQ1RTMu1nSBtiOI4RTow/J3RRR0Js0BwYq47GAMcG
+	 GaFXWhqxfz+dP+CkEjTYhjbWB84JqFq8gS3Ckhk7bdH40C86T5dnCrSnpUeDHXxHW5
+	 yh/TpWt4gQe3HsQotvfxULykZrBjrFFs3ec0FGEpPGGgWtIf/9oPh2ocH5FdkcQs5l
+	 3PAut8oUoP2guzZFR1tNdxP0SywhOeeHtoEBWpzdJbNJGZ4m+q/nmXDSn57vNBMN4J
+	 rHlcrA9Erpbsw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH sched_ext/for-7.3 28/32] sched_ext: Route ops.update_idle() to sub-schedulers and re-notify owed scheds
-Date: Thu,  2 Jul 2026 22:01:55 -1000
-Message-ID: <20260703080159.2314350-29-tj@kernel.org>
+Subject: [PATCH sched_ext/for-7.3 29/32] sched_ext: Replay ecaps notifications suppressed by bypass
+Date: Thu,  2 Jul 2026 22:01:56 -1000
+Message-ID: <20260703080159.2314350-30-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703080159.2314350-1-tj@kernel.org>
 References: <20260703080159.2314350-1-tj@kernel.org>
@@ -48,292 +48,107 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-__scx_update_idle() notified only the root scheduler. A sub-scheduler that
-holds a cid needs that cid's idle state to place and kick on it.
+scx_process_sync_ecaps() consumes ecaps syncs while the sched is bypassing
+without delivering ops.sub_ecaps_updated(), leaving reported_ecaps stale.
+Nothing re-queued a sync when bypass lifted, so a cid whose caps never
+change again would never be notified. Attach-time initial grants hit this
+every time: they are consumed during the enable bypass window, so a sched
+never learned its initial effective caps through the callback.
 
-Deliver ops.update_idle() to every scheduler that holds SCX_CAP_BASE on the
-transitioning cid. The root holds every cap, so a real transition always
-reaches it.
-
-Real transitions are not enough on their own. A cid that is already idle
-when a sub-sched gains baseline access produces no transition, so the new
-holder would never learn it is idle. The ecaps sync arms a re-notify on the
-gain, and the next idle pick delivers ops.update_idle() to just that sched,
-leaving holders that already track the cpu untouched. A matching loss of
-baseline access drops any pending re-notify.
-
-Bypass suppresses ops.update_idle() too, so a cpu that goes idle during a
-bypass window and stays idle yields no transition to re-deliver on
-un-bypass. Arm the same re-notify for every sched leaving bypass. The acute
-case is a child granted cids during its own ops.sub_attach(). The grant
-lands while the child is bypassed and the notify walk skips it, so on
-un-bypass it holds cids it never saw go idle. The root is owed the same and
-is armed through a separate per-rq flag, which keeps this working when
-sub-schedulers are compiled out.
+Re-queue a sync for every (sched, cpu) with an undelivered delta at the
+per-cpu bypass exit in scx_bypass(), next to the idle renotify catch-up. The
+next balance on the cpu then delivers the pending delta with proper dispatch
+context.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 40 ++++++++++++++++++++--
- kernel/sched/ext/idle.c     | 68 +++++++++++++++++++++++++++++++------
- kernel/sched/ext/internal.h |  2 ++
- kernel/sched/ext/sub.c      | 24 ++++++++++++-
- kernel/sched/sched.h        |  2 ++
- 5 files changed, 122 insertions(+), 14 deletions(-)
+ kernel/sched/ext/ext.c |  4 +++-
+ kernel/sched/ext/sub.c | 35 +++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/sub.h |  2 ++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 5a2c96bf8aa9..bd934928d31d 100644
+index bd934928d31d..4c5c80393c2d 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -5476,6 +5476,38 @@ void scx_disable_bypass_dsp(struct scx_sched *sch)
- 	}
+@@ -5597,8 +5597,10 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+ 				pcpu->flags |= SCX_SCHED_PCPU_BYPASSING;
+ 			} else {
+ 				pcpu->flags &= ~SCX_SCHED_PCPU_BYPASSING;
+-				if (was_bypassing)
++				if (was_bypassing) {
+ 					unbypass_renotify_idle(rq, pos, pcpu);
++					scx_unbypass_replay_ecaps(rq, pos);
++				}
+ 			}
+ 		}
+ 
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 90caf76db8bf..15edcf4f81ee 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -550,6 +550,41 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
+ 		scx_schedule_reenq_local(rq, SCX_REENQ_CAP_REVOKE);
  }
  
 +/**
-+ * unbypass_renotify_idle - Arm an idle re-notify for a sched leaving bypass
++ * scx_unbypass_replay_ecaps - Replay a bypass-suppressed ecaps notification
 + * @rq: rq of the cpu leaving bypass
-+ * @pos: scheduler that just left bypass on @rq's cpu
-+ * @pcpu: @pos's per-cpu state for @rq's cpu
++ * @sch: scheduler that just left bypass on @rq's cpu
 + *
-+ * A sched leaving bypass is owed the ops.update_idle() calls suppressed while
-+ * bypassing. A cpu that goes idle during the bypass window and stays idle won't
-+ * produce a notification. Arm a re-notify that scx_bypass()'s resched flushes
-+ * on the next idle pick.
-+ *
-+ * An acute case is ops.sub_attach(). If the parent grants the child cids while
-+ * attaching, when attach is complete and bypass is lifted, the child may hold
-+ * idle cids it never saw go idle.
-+ *
-+ * The root is no exception as bypass suppresses its notifications the same way.
-+ * However, the root uses a separate per-rq flag so its re-notify keeps working
-+ * even when !CONFIG_EXT_SUB_SCHED.
++ * scx_process_sync_ecaps() consumes syncs while bypassing without delivering
++ * ops.sub_ecaps_updated(), leaving reported_ecaps stale. Nothing re-queues a
++ * sync when bypass lifts, so without a replay a cid that never changes again
++ * would never be notified. The attach-time initial grants are the acute case
++ * as they are consumed during the enable bypass window. Re-queue a sync for
++ * any undelivered delta so the next balance delivers it.
 + */
-+static void unbypass_renotify_idle(struct rq *rq, struct scx_sched *pos,
-+				   struct scx_sched_pcpu *pcpu)
-+{
-+	if (pos == scx_root) {
-+		rq->scx.flags |= SCX_RQ_ROOT_IDLE_RENOTIFY;
-+		return;
-+	}
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	pcpu->idle_renotify = true;
-+	rq->scx.flags |= SCX_RQ_SUB_IDLE_RENOTIFY;
-+#endif
-+}
-+
- /**
-  * scx_bypass - [Un]bypass scx_ops and guarantee forward progress
-  * @sch: sched to bypass
-@@ -5559,11 +5591,15 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
- 
- 		scx_for_each_descendant_pre(pos, sch) {
- 			struct scx_sched_pcpu *pcpu = per_cpu_ptr(pos->pcpu, cpu);
-+			bool was_bypassing = pcpu->flags & SCX_SCHED_PCPU_BYPASSING;
- 
--			if (pos->bypass_depth)
-+			if (pos->bypass_depth) {
- 				pcpu->flags |= SCX_SCHED_PCPU_BYPASSING;
--			else
-+			} else {
- 				pcpu->flags &= ~SCX_SCHED_PCPU_BYPASSING;
-+				if (was_bypassing)
-+					unbypass_renotify_idle(rq, pos, pcpu);
-+			}
- 		}
- 
- 		raw_spin_unlock(&scx_sched_lock);
-diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
-index 8e8c6201b7df..04b320f89b6f 100644
---- a/kernel/sched/ext/idle.c
-+++ b/kernel/sched/ext/idle.c
-@@ -12,6 +12,7 @@
- #include "internal.h"
- #include "cid.h"
- #include "idle.h"
-+#include "sub.h"
- 
- /* Enable/disable built-in idle CPU selection policy */
- static DEFINE_STATIC_KEY_FALSE(scx_builtin_idle_enabled);
-@@ -730,6 +731,46 @@ static void update_builtin_idle(int cpu, bool idle)
- 	}
- }
- 
-+/*
-+ * Notify schedulers of an idle transition on @cpu's cid, delivering to every
-+ * sched that holds %SCX_CAP_BASE on the cid (the root holds every cap). A real
-+ * transition (@do_notify) reaches all holders. A forced one (@root_renotify for
-+ * the root, a sub-sched's idle_renotify marker for a sub) reaches only the owed
-+ * scheds.
-+ */
-+static void scx_idle_notify(struct rq *rq, bool idle, bool do_notify, bool root_renotify)
++void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
 +{
 +	s32 cpu = cpu_of(rq);
-+	s32 cid = scx_cpu_arg(cpu);
-+	struct scx_sched *pos;
++	struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
++	struct scx_pshard *ps;
++	s32 cid;
 +
 +	lockdep_assert_rq_held(rq);
 +
-+	pos = scx_next_descendant_pre(NULL, scx_root);
-+	while (pos) {
-+		bool forced = false;
++	/* root holds every cap and never uses ecaps */
++	if (!sch->level)
++		return;
 +
-+		if (unlikely(scx_missing_caps(pos, cpu, SCX_CAP_BASE))) {
-+			pos = scx_skip_subtree_pre(pos, scx_root);
-+			continue;
-+		}
++	if (READ_ONCE(pcpu->ecaps) == pcpu->reported_ecaps)
++		return;
 +
-+		if (pos == scx_root) {
-+			forced = root_renotify;
-+		}
-+#ifdef CONFIG_EXT_SUB_SCHED
-+		else if (per_cpu_ptr(pos->pcpu, cpu)->idle_renotify) {
-+			per_cpu_ptr(pos->pcpu, cpu)->idle_renotify = false;
-+			forced = true;
-+		}
-+#endif
-+		if ((do_notify || forced) && SCX_HAS_OP(pos, update_idle) &&
-+		    !scx_bypassing(pos, cpu))
-+			SCX_CALL_OP(pos, update_idle, rq, cid, idle);
-+		pos = scx_next_descendant_pre(pos, scx_root);
-+	}
++	cid = __scx_cpu_to_cid(cpu);
++	ps = sch->pshard[scx_cid_to_shard[cid]];
++
++	guard(raw_spinlock)(&ps->lock);
++	queue_sync_ecaps(sch, cid);
 +}
 +
  /*
-  * Update the idle state of a CPU to @idle.
-  *
-@@ -748,7 +789,6 @@ static void update_builtin_idle(int cpu, bool idle)
-  */
- void __scx_update_idle(struct rq *rq, bool idle, bool do_notify)
- {
--	struct scx_sched *sch = scx_root;
- 	int cpu = cpu_of(rq);
- 
- 	lockdep_assert_rq_held(rq);
-@@ -772,20 +812,26 @@ void __scx_update_idle(struct rq *rq, bool idle, bool do_notify)
- 			update_builtin_idle(cpu, idle);
- 
- 	/*
--	 * Trigger ops.update_idle() only when transitioning from a task to
--	 * the idle thread and vice versa.
--	 *
--	 * Idle transitions are indicated by do_notify being set to true,
--	 * managed by put_prev_task_idle()/set_next_task_idle().
-+	 * ops.update_idle() fires on real idle transitions, indicated by
-+	 * @do_notify and managed by put_prev_task_idle()/set_next_task_idle().
-+	 * An idle pick also fires it to flush a forced notify owed to a sched
-+	 * that missed transitions while bypassed or on a cid it just gained.
-+	 * unbypass_renotify_idle() and scx_process_sync_ecaps() arm the per-rq
-+	 * gates, and scx_idle_notify() targets the owed scheds.
- 	 *
--	 * This must come after builtin idle update so that BPF schedulers can
--	 * create interlocking between ops.update_idle() and ops.enqueue() -
-+	 * This must come after the builtin idle update so that BPF schedulers
-+	 * can create interlocking between ops.update_idle() and ops.enqueue() -
- 	 * either enqueue() sees the idle bit or update_idle() sees the task
- 	 * that enqueue() queued.
- 	 */
--	if (SCX_HAS_OP(sch, update_idle) && do_notify &&
--	    !scx_bypassing(sch, cpu_of(rq)))
--		SCX_CALL_OP(sch, update_idle, rq, scx_cpu_arg(cpu_of(rq)), idle);
-+	if (do_notify ||
-+	    (idle && (rq->scx.flags &
-+		      (SCX_RQ_SUB_IDLE_RENOTIFY | SCX_RQ_ROOT_IDLE_RENOTIFY)))) {
-+		bool root_renotify = rq->scx.flags & SCX_RQ_ROOT_IDLE_RENOTIFY;
-+
-+		rq->scx.flags &= ~(SCX_RQ_SUB_IDLE_RENOTIFY | SCX_RQ_ROOT_IDLE_RENOTIFY);
-+		scx_idle_notify(rq, idle, do_notify, root_renotify);
-+	}
- }
- 
- static void reset_idle_masks(struct sched_ext_ops *ops)
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 6e2daf90a4ac..272639255e0d 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1244,6 +1244,8 @@ struct scx_sched_pcpu {
- 	 */
- 	u64			ecaps;
- 	struct llist_node	ecaps_to_sync_node;
-+	/* owed a forced update_idle() re-notify on this cpu */
-+	bool			idle_renotify;
- 	/* effective caps as of the last sub_ecaps_updated() delivery */
- 	u64			reported_ecaps;
- #endif
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 67ba352828e0..90caf76db8bf 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -461,6 +461,10 @@ static void discard_queued_syncs(struct rq *rq)
-  * pshard->caps[] is the target configuration. pcpu->ecaps is the effective
-  * transposed copy owned by the cid's cpu and written only here under @rq's
-  * lock.
-+ *
-+ * A sched that newly gains baseline access here is owed an update_idle() so it
-+ * learns the cid's idle state. Such a gain arms the per-rq
-+ * %SCX_RQ_SUB_IDLE_RENOTIFY gate so the next idle pick delivers it.
-  */
- void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- {
-@@ -493,7 +497,7 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 		struct scx_sched_pcpu *pcpu =
- 			container_of(pos, struct scx_sched_pcpu, ecaps_to_sync_node);
- 		struct scx_pshard *ps = pcpu->sch->pshard[shard];
--		u64 old, ecaps, lost;
-+		u64 old, ecaps, lost, gained;
- 
- 		init_llist_node(pos);
- 
-@@ -505,6 +509,7 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 		WRITE_ONCE(pcpu->ecaps, ecaps);
- 
- 		lost = old & ~ecaps;
-+		gained = ecaps & ~old;
- 		lost_all |= lost;
- 
- 		/* tell the sched its effective caps on this cid changed */
-@@ -522,6 +527,18 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 			scx_flush_dispatch_buf(pcpu->sch, rq);
- 			pcpu->reported_ecaps = ecaps;
- 		}
-+
-+		/*
-+		 * Gaining baseline access owes an update_idle() so the sched
-+		 * learns the cpu's idle state. Arm the per-rq gate so the next
-+		 * idle pick flushes it. Losing access drops any pending notify.
-+		 */
-+		if (gained & SCX_CAP_BASE) {
-+			pcpu->idle_renotify = true;
-+			rq->scx.flags |= SCX_RQ_SUB_IDLE_RENOTIFY;
-+		} else if (lost & SCX_CAP_BASE) {
-+			pcpu->idle_renotify = false;
-+		}
- 	}
- 
- 	/*
-@@ -1386,6 +1403,11 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 
- 				caps_updated_record(cps, changed_cids, granted_caps,
- 						    &to_deliver);
-+				/*
-+				 * The sync arms an update_idle() re-notify if
-+				 * the cid gains baseline access, so the holder
-+				 * learns of an already-idle cid.
-+				 */
- 				scx_cmask_for_each_cid(cid, changed_cids)
- 					queue_sync_ecaps(child, cid);
- 			}
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 8db6b09d91bf..2f9a6a98a3c9 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -787,6 +787,8 @@ enum scx_rq_flags {
- 	SCX_RQ_BAL_KEEP		= 1 << 3, /* balance decided to keep current */
- 	SCX_RQ_CLK_VALID	= 1 << 5, /* RQ clock is fresh and valid */
- 	SCX_RQ_BAL_CB_PENDING	= 1 << 6, /* must queue a cb after dispatching */
-+	SCX_RQ_SUB_IDLE_RENOTIFY	= 1 << 7, /* sub-scheds are owed update_idle() */
-+	SCX_RQ_ROOT_IDLE_RENOTIFY	= 1 << 8, /* the root is owed update_idle() */
- 
- 	SCX_RQ_IN_WAKEUP	= 1 << 16,
- 	SCX_RQ_IN_BALANCE	= 1 << 17,
+  * A cpu came back. Re-seed each sub-sched's ecaps on the cpu's cid. The sync
+  * recomputes effective caps from the pshard and fires ops.sub_ecaps_updated()
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index 9f74c142b73f..dd33472fadd4 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -29,6 +29,7 @@ void scx_free_pshards(struct scx_sched *sch);
+ s32 scx_alloc_pshards(struct scx_sched *sch);
+ void scx_init_root_caps(struct scx_sched *sch);
+ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev);
++void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch);
+ void scx_online_ecaps(struct rq *rq);
+ void scx_offline_ecaps(struct rq *rq);
+ void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu);
+@@ -51,6 +52,7 @@ static inline void scx_free_pshards(struct scx_sched *sch) {}
+ static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
+ static inline void scx_init_root_caps(struct scx_sched *sch) {}
+ static inline void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev) {}
++static inline void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch) {}
+ static inline void scx_online_ecaps(struct rq *rq) {}
+ static inline void scx_offline_ecaps(struct rq *rq) {}
+ static inline void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu) {}
 -- 
 2.54.0
 
