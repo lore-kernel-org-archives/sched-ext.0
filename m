@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D083603D5;
-	Fri,  3 Jul 2026 08:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A933793BD;
+	Fri,  3 Jul 2026 08:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783065724; cv=none; b=KKhzh5jZijca8m7R+dq4h/CNqqK52d0oIflDrVS8pKuBU/oauZ+7arW6cg9MzqT+lqtlIyxokkY3RduYAxrp4ZTewSDy7qYNToCQTyfrDvQCExTJIZ2jzl9PIQByLokV25Qm3VlfIWCvdwvKcw/vaP0baP1aLwxajYTZrEj4kZs=
+	t=1783065724; cv=none; b=JgnFdeoZ48t67T9dLE6sa8BZlTWDwoKDYB8YqYCWKf/ALaWEKvanBTHKJsp0OqZMiJfR/yeR2c+8EcvQ3IgsJZsrpTX2ptvau2KcOxBH7R5l6FZsNA4Hd/OCztLKJTf3nSaXNN075MxCz5oYpgeZQulhxVdrxS6kFzXAv+uwRZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783065724; c=relaxed/simple;
-	bh=ls857EryogaKLgK/p5F9r1KvmAzQouGiJAbqeryMVWs=;
+	bh=Zz8OkkGiC0VRjyLrmdmj/SLeg1/5Q11T5kJBAbTaYKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBJi2pDIPH/f//ZBJHAur4YLFu/3g0mPQ7fIQikrj3q3+4AqJvT5wi1Kog6vWgdukMoRhrKD3Bm/dOgkztpZe3UU2pgamRKMPQlfCKTDqrKj8kLMnNJ+7Q98M3piPzz8MIbPR922m7TOKAuEsyDex53CQISRj+9S2nEDmKUGupY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XcpRvmwJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nRxvRFmzLzsbYVYDUPIgb0wh/28Dmx6NMCdoXjiEdmXmiBUwBjS9wPPc3TQcIrVaSRlNxXdqxbeJ9916fs3OkiyA57dvIa5MH+ohWNKxtOtr9seRRiqiMbc/T8n/pV2EaO4gIlkC8ck7E19q304z9rfCk5MEJelddqp0I8Rfric=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJR/Bs5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XcpRvmwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B8B1F000E9;
-	Fri,  3 Jul 2026 08:02:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJR/Bs5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EB61F00A3E;
+	Fri,  3 Jul 2026 08:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783065722;
-	bh=iQMsxSme3BLLykqisXlRcayWbs+A567wzEFBAHXYSLU=;
+	s=k20260515; t=1783065723;
+	bh=yGvOTcKqcyF1Yp4vTb3EMV51EhY8CnScecYmJYJmNeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcpRvmwJ5fVMdR7JiCYr8wI7KLoxG9WHtrFu8DOGMzQ7843SqPgqwVMAnaNA8A753
-	 kmBbe4dY6jLPKn9kQtIgcEy6rICOFG48DfplL6aIO1i6fTtfYuxTgkI1OSLM3SpuuU
-	 xbV5jpCewghqAbGXCzkaGVMJiahe3ABoyAfkFb8zrCn1dWm9Z7Nm9mfCl5BzswEAfZ
-	 977CaLI5GGNtLmrj/wHZrVYyzOca8xGVgiw3pEF8HBwwPX17ulgD2MekuR6t0QmLAD
-	 2e73kxP4D594AJywQfRvQOjZQrmqw2dEXFOWyNe4SkbO3z1/8J6JOEvVVfy4ZTrtMd
-	 OKOmNiFyiN21Q==
+	b=OJR/Bs5Zw9H8EKGeSvYA3lehF1ohLk4g/l6IWbvrsfN0iviwBy+6Sk4cWm7E/SVp5
+	 UAHQV7dyVJeGP3J264z3dgVVCJdxSw4zKik1LvstZuwlTioUTNqInHMMxefIqTEIJF
+	 CXfjPUqY/EcXA8A831TlrCWivDJPr9jdHX1794VEb17ZVQ3Di85qeM4HKhV0AlsEfB
+	 J1gIdPVUsYJ+/FcQ7N6/INRT5tsDNdb6r3/V0u+jAhCXL3yjAESJG5oRxkdNw9npBG
+	 2yCCJOow0Isa3PwNF4LLdgU+aDxW7hxwXcN1BDlaguxBq/VmdjTgXbXQaX1+nucOfH
+	 8etGC+js+sCfA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH sched_ext/for-7.3 02/32] tools/sched_ext: scx - Fix cmask_subset(), cmask_equal() and cmask_weight()
-Date: Thu,  2 Jul 2026 22:01:29 -1000
-Message-ID: <20260703080159.2314350-3-tj@kernel.org>
+Subject: [PATCH sched_ext/for-7.3 03/32] sched_ext: Use READ_ONCE/WRITE_ONCE in cmask word ops and drop _RACY variants
+Date: Thu,  2 Jul 2026 22:01:30 -1000
+Message-ID: <20260703080159.2314350-4-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703080159.2314350-1-tj@kernel.org>
 References: <20260703080159.2314350-1-tj@kernel.org>
@@ -48,150 +48,132 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-cmask_equal(), cmask_weight() and cmask_subset() bounded their word walks
-with CMASK_NR_WORDS(nr_cids), which pads by one word and can't tell the last
-word in use without @base. The walks could thus cover a slack word past the
-active range, which cmask_reframe() leaves non-zero: a stale bit there gave
-cmask_equal() a spurious mismatch, cmask_weight() an inflated count, and
-cmask_subset() a spurious violation. cmask_subset() could also read
-@b->bits[] one word past its allocation (within the arena's fault-recovered
-range, so harmless), and deviated from the kernel scx_cmask_subset() by
-failing any @a range that doesn't nest inside @b's even when the overhanging
-bits are all clear.
-
-Bound the cmask_equal() and cmask_weight() walks by the words the range
-actually spans, with early returns for empty ranges. Rewrite cmask_subset()
-to match the kernel semantics: scan @a's overhangs for set bits with
-cmask_next_set() and walk the words of the range intersection.
-cmask_subset() moves below cmask_next_set(), which it now uses. Padding bits
-don't need masking as every cmask helper keeps them clear.
+The cmask ops can operate on BPF-arena cmasks which BPF programs may read
+and write concurrently. The _RACY op variants existed to make such lockless
+reads explicit but this turned out to be too restrictive. Mark the word
+accesses in all the two-cmask ops with READ_ONCE/WRITE_ONCE instead and drop
+the _RACY variants.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- tools/sched_ext/include/scx/cid.bpf.h | 88 +++++++++++++++++----------
- 1 file changed, 55 insertions(+), 33 deletions(-)
+ kernel/sched/ext/cid.c | 53 +++++++-----------------------------------
+ kernel/sched/ext/cid.h |  2 --
+ 2 files changed, 9 insertions(+), 46 deletions(-)
 
-diff --git a/tools/sched_ext/include/scx/cid.bpf.h b/tools/sched_ext/include/scx/cid.bpf.h
-index db247e42fb45..6b0b4e41b288 100644
---- a/tools/sched_ext/include/scx/cid.bpf.h
-+++ b/tools/sched_ext/include/scx/cid.bpf.h
-@@ -391,7 +391,9 @@ static __always_inline bool cmask_equal(const struct scx_cmask __arena *a,
- 
- 	if (a->base != b->base || a->nr_cids != b->nr_cids)
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index af83084ec740..4b7279ca740f 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -395,17 +395,15 @@ __bpf_kfunc s32 scx_bpf_cpu_to_cid(s32 cpu, const struct bpf_prog_aux *aux)
+  * bits outside stay untouched. In particular, scx_cmask_copy() does NOT zero
+  * @dst bits that lie outside @src's range.
+  *
+- * The _RACY variants are otherwise identical to their non-racy counterpart but
+- * read @src word-by-word via data_race(). Memory ordering with concurrent
+- * writers is the caller's responsibility.
++ * Word accesses use READ_ONCE/WRITE_ONCE so a caller may read @src
++ * locklessly. Memory ordering against concurrent writers is the caller's
++ * responsibility.
+  */
+ enum cmask_op2 {
+ 	/* mutating */
+ 	CMASK_OP2_AND,
+ 	CMASK_OP2_OR,
+-	CMASK_OP2_OR_RACY,
+ 	CMASK_OP2_COPY,
+-	CMASK_OP2_COPY_RACY,
+ 	CMASK_OP2_ANDNOT,
+ 	/* predicates - short-circuit when the per-word result is true */
+ 	CMASK_OP2_SUBSET,
+@@ -422,28 +420,22 @@ static __always_inline bool cmask_word_op2(u64 *av, const u64 *bp, u64 mask,
+ {
+ 	switch (op) {
+ 	case CMASK_OP2_AND:
+-		*av &= ~mask | *bp;
++		WRITE_ONCE(*av, *av & (~mask | READ_ONCE(*bp)));
  		return false;
--	nr_words = CMASK_NR_WORDS(a->nr_cids);
-+	if (a->nr_cids == 0)
-+		return true;
-+	nr_words = (a->base + a->nr_cids - 1) / 64 - a->base / 64 + 1;
- 
- 	bpf_for(i, 0, CMASK_MAX_WORDS) {
- 		if (i >= nr_words)
-@@ -402,36 +404,6 @@ static __always_inline bool cmask_equal(const struct scx_cmask __arena *a,
- 	return true;
+ 	case CMASK_OP2_OR:
+-		*av |= *bp & mask;
+-		return false;
+-	case CMASK_OP2_OR_RACY:
+-		*av |= data_race(*bp) & mask;
++		WRITE_ONCE(*av, *av | (READ_ONCE(*bp) & mask));
+ 		return false;
+ 	case CMASK_OP2_COPY:
+-		*av = (*av & ~mask) | (*bp & mask);
+-		return false;
+-	case CMASK_OP2_COPY_RACY:
+-		*av = (*av & ~mask) | (data_race(*bp) & mask);
++		WRITE_ONCE(*av, (*av & ~mask) | (READ_ONCE(*bp) & mask));
+ 		return false;
+ 	case CMASK_OP2_ANDNOT:
+-		*av &= ~(*bp & mask);
++		WRITE_ONCE(*av, *av & ~(READ_ONCE(*bp) & mask));
+ 		return false;
+ 	case CMASK_OP2_SUBSET:
+ 		/* stop on the first bit in @sub not set in @super */
+-		return (*bp & ~*av) & mask;
++		return (READ_ONCE(*bp) & ~READ_ONCE(*av)) & mask;
+ 	case CMASK_OP2_INTERSECTS:
+-		return (*av & *bp) & mask;
++		return (READ_ONCE(*av) & READ_ONCE(*bp)) & mask;
+ 	}
+ 	unreachable();
+ }
+@@ -556,39 +548,12 @@ void scx_cmask_or(struct scx_cmask *dst, const struct scx_cmask *src)
+ 		       src->bits, src->base, src->nr_cids, CMASK_OP2_OR);
  }
  
--/*
-- * True iff every bit set in @a is also set in @b over the intersection of
-- * their ranges. Bits of @a outside @b's range fail the test.
+-/**
+- * scx_cmask_or_racy - OR @src into @dst, reading @src without locking
+- *
+- * @src is read word-by-word through data_race(). Same per-bit independence
+- * rationale as scx_cmask_copy_racy(). Memory ordering with writers is the
+- * caller's responsibility.
 - */
--static __always_inline bool cmask_subset(const struct scx_cmask __arena *a,
--					 const struct scx_cmask __arena *b)
+-void scx_cmask_or_racy(struct scx_cmask *dst, const struct scx_cmask *src)
 -{
--	u32 a_end = a->base + a->nr_cids;
--	u32 b_end = b->base + b->nr_cids;
--	u32 a_wbase = a->base / 64;
--	u32 b_wbase = b->base / 64;
--	u32 nr_words, i;
--
--	/* any bit of @a outside @b's range is a subset violation */
--	if (a->base < b->base || a_end > b_end)
--		return false;
--
--	nr_words = CMASK_NR_WORDS(a->nr_cids);
--	bpf_for(i, 0, CMASK_MAX_WORDS) {
--		u32 wi_b;
--
--		if (i >= nr_words)
--			break;
--		wi_b = a_wbase + i - b_wbase;
--		if (a->bits[i] & ~b->bits[wi_b])
--			return false;
--	}
--	return true;
+-	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
+-		       src->bits, src->base, src->nr_cids, CMASK_OP2_OR_RACY);
 -}
 -
- /**
-  * cmask_next_set - find the first set bit at or after @cid
-  * @m: cmask to search
-@@ -488,16 +460,66 @@ static __always_inline u32 cmask_first_set(const struct scx_cmask __arena *m)
- 	     (cid) < (m)->base + (m)->nr_cids;					\
- 	     (cid) = cmask_next_set((m), (cid) + 1))
- 
-+/*
-+ * True iff every bit set in @a is also set in @b. Matches the kernel-side
-+ * scx_cmask_subset(): ranges don't need to nest, and set bits of @a outside
-+ * @b's range fail the test.
-+ */
-+static __always_inline bool cmask_subset(const struct scx_cmask __arena *a,
-+					 const struct scx_cmask __arena *b)
-+{
-+	u32 a_end = a->base + a->nr_cids;
-+	u32 b_end = b->base + b->nr_cids;
-+	u32 a_wbase = a->base / 64;
-+	u32 b_wbase = b->base / 64;
-+	u32 lo = a->base > b->base ? a->base : b->base;
-+	u32 hi = a_end < b_end ? a_end : b_end;
-+	u32 lo_word, hi_word, i;
-+
-+	/* set bits of @a outside @b's range can't be in @b */
-+	if (a->base < b->base &&
-+	    cmask_next_set(a, a->base) < (b->base < a_end ? b->base : a_end))
-+		return false;
-+	if (a_end > b_end &&
-+	    cmask_next_set(a, a->base > b_end ? a->base : b_end) < a_end)
-+		return false;
-+
-+	if (lo >= hi)
-+		return true;
-+
-+	/*
-+	 * Walk the words the range intersection spans. Plain word tests
-+	 * suffice: the scans above guarantee @a has no set bit outside @b's
-+	 * range and padding bits are kept clear by all cmask helpers.
-+	 */
-+	lo_word = lo / 64;
-+	hi_word = (hi - 1) / 64;
-+
-+	bpf_for(i, 0, CMASK_MAX_WORDS) {
-+		u32 w = lo_word + i;
-+
-+		if (w > hi_word)
-+			break;
-+		if (a->bits[w - a_wbase] & ~b->bits[w - b_wbase])
-+			return false;
-+	}
-+	return true;
-+}
-+
- /*
-  * Population count over [base, base + nr_cids). Padding bits in the head/tail
-  * words are guaranteed zero by the mutating helpers, so a flat popcount over
-- * all words is correct.
-+ * the words the range spans is correct.
-  */
- static __always_inline u32 cmask_weight(const struct scx_cmask __arena *m)
+ void scx_cmask_copy(struct scx_cmask *dst, const struct scx_cmask *src)
  {
--	u32 nr_words = CMASK_NR_WORDS(m->nr_cids), i;
-+	u32 nr_words, i;
- 	u32 count = 0;
+ 	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
+ 		       src->bits, src->base, src->nr_cids, CMASK_OP2_COPY);
+ }
  
-+	if (!m->nr_cids)
-+		return 0;
-+	nr_words = (m->base + m->nr_cids - 1) / 64 - m->base / 64 + 1;
-+
- 	bpf_for(i, 0, CMASK_MAX_WORDS) {
- 		if (i >= nr_words)
- 			break;
+-/**
+- * scx_cmask_copy_racy - Snapshot @src into @dst without locking
+- *
+- * @src is read word-by-word through data_race(). Head/tail masking matches
+- * scx_cmask_copy(). Each bit in a cmask is independent, so partial updates
+- * just leave some bits fresher than others. Memory ordering with writers is
+- * the caller's responsibility.
+- */
+-void scx_cmask_copy_racy(struct scx_cmask *dst, const struct scx_cmask *src)
+-{
+-	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
+-		       src->bits, src->base, src->nr_cids, CMASK_OP2_COPY_RACY);
+-}
+-
+ void scx_cmask_andnot(struct scx_cmask *dst, const struct scx_cmask *src)
+ {
+ 	cmask_walk_op2(dst->bits, dst->base, dst->nr_cids,
+diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
+index 9c4f4b907f12..54b10df32fd5 100644
+--- a/kernel/sched/ext/cid.h
++++ b/kernel/sched/ext/cid.h
+@@ -57,9 +57,7 @@ void scx_cmask_clear(struct scx_cmask *m);
+ void scx_cmask_fill(struct scx_cmask *m);
+ void scx_cmask_and(struct scx_cmask *dst, const struct scx_cmask *src);
+ void scx_cmask_or(struct scx_cmask *dst, const struct scx_cmask *src);
+-void scx_cmask_or_racy(struct scx_cmask *dst, const struct scx_cmask *src);
+ void scx_cmask_copy(struct scx_cmask *dst, const struct scx_cmask *src);
+-void scx_cmask_copy_racy(struct scx_cmask *dst, const struct scx_cmask *src);
+ void scx_cmask_andnot(struct scx_cmask *dst, const struct scx_cmask *src);
+ bool scx_cmask_subset(const struct scx_cmask *sub, const struct scx_cmask *super);
+ bool scx_cmask_intersects(const struct scx_cmask *a, const struct scx_cmask *b);
 -- 
 2.54.0
 
