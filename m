@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3C6379C46;
-	Fri,  3 Jul 2026 08:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7092637A493;
+	Fri,  3 Jul 2026 08:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783065725; cv=none; b=YlSfgHrD4b5qWip3RAbkn22/wbrU14/TcEmejfQpjEKA1cmO0DaXSD0WOQFaMJTO8/CRM85THTrLcYOKzd+AIHA5UCFxXLGVUu/dbNKh38vA4Kv1Rwo6u3Gjd0V6l4jUoIEPbNBIUa63yLs2fcE47q2ij2Dd8vcG3PCrQBXODdk=
+	t=1783065726; cv=none; b=s70k5+bwzITo8OAJyGcdQOwwMG1rXnsXR15G8vBLh04ClsJ3HY1NKB3X/PkPH99kOoygWm1VOOCRbFAI7G9zfrF69+0IiudHwI+XzhaqyydQyLdbTI+TRJMaMNHyk3X8PqjMFmyRTD2LeOez8jp0cBlHYAV9yqkNt4ZwZl9cPP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783065725; c=relaxed/simple;
-	bh=RZfXjQlqnBS15DaBCeoCptJQFie2pSYPSWpwhZvHfLY=;
+	s=arc-20240116; t=1783065726; c=relaxed/simple;
+	bh=CTbbRcyCwfbYhp8kCF6nzcXd1yzTyLyvkFOyrxhZyTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snuIodnq44JPAIZPh+F8pERpireuhu5b++zEl94RlchfPK3zyA+Mqar9Aco0oNgbCndZTbVq5g7TnxMCRutwzfEQd1nLMKnvdrKSOhBtRVGgESJYKd6T0+EW4YYP5eAtuXuTtuHXUMw1nAxzHCGwppMARYueaLFEsWv9XsG0B5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IIc5fSTM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sWMVeUTEXd5HkDbPnCfePG9gn8Ut9tig6XkdfLyGSeU6BNv0156hw/jkEyJKdKL5QdbVGjSHOjBeFx0Lply5HCzA8B5MKIPtNnUxFpuRIZUMJziYHpZ3e4Q9ErRc2bOebWlKrnycoaMp166vfeZ6aJrLuOV31xssXQIJmQ1zVXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/tAQ6EP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IIc5fSTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA321F000E9;
-	Fri,  3 Jul 2026 08:02:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/tAQ6EP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3E21F00A3A;
+	Fri,  3 Jul 2026 08:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783065724;
-	bh=20J9KeGu5/0//2NZR0+VzN9AF5WzXb9KGpXi7wNanu4=;
+	s=k20260515; t=1783065725;
+	bh=/ysQXVmdNtRwpAk8w40cPhflbZq4cAwWZ9sqkSL7tfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIc5fSTMczsxnVnnHLVQA+DMfxOBHhnaHcuww1J0OTavUipgKhZ25Asz5YegAAA3l
-	 vVztAT43nU1ihfIiF7kTzZVm3+Jr05y8vMYCxCeLAMiKxPXcm9DebPucXF3F9IUGNq
-	 2OMoS4N05jyMjD5xZzmrKRUzcuEVAOuMGWFTH/5LVnmXfcpP/VJazCGqWxlHkOZZGf
-	 SlharTDlhyOic96GIoHGFHNauC3ro7hffGyho0TFaIJquEq0MzLLNckgpdky9+qrEr
-	 e6zBPZimylNdGkHoIFdOkv56Ybmbb+041zPfMXXLAoVvbTsth1a1Kb3cQXUrxT2gE+
-	 1FVCIUI5hrQyQ==
+	b=I/tAQ6EP3KhvrLtV4kHdYv5m10mjJAY/dn997b0pzFROUZx5STpvIGi5MkE7ahLcE
+	 tqjRl/n6vfaVKQ9zkKcHsq5EXsIzMbuwwqLwpfmuuK4lFT4kdWLGSciE166yTYwbsk
+	 LJ2g9ilZg150sef7FrxCeHicSUBMqeeTbUdPpqsNMmrgu3oiGvJ62o+SthjpXk0dMF
+	 zyZe6Ii2tvOuFnTF0DdGKbNH9tbDQr9gUW5OR26X0Dub617Ydm7DgN+YPQBJtGaHDA
+	 37tautocSDG7u+LlcvSFTEhqKVFLt7X7vFvRIimA0vZD3xLKJl8Md2TPcnRi5A9FsB
+	 ZXfusWVdOMcGg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH sched_ext/for-7.3 04/32] tools/sched_ext: scx_qmap - Use bare u64/u32/s32 integer types
-Date: Thu,  2 Jul 2026 22:01:31 -1000
-Message-ID: <20260703080159.2314350-5-tj@kernel.org>
+Subject: [PATCH sched_ext/for-7.3 05/32] sched_ext: Reject direct slice and dsq_vtime writes for cid-form schedulers
+Date: Thu,  2 Jul 2026 22:01:32 -1000
+Message-ID: <20260703080159.2314350-6-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260703080159.2314350-1-tj@kernel.org>
 References: <20260703080159.2314350-1-tj@kernel.org>
@@ -48,116 +48,103 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_qmap.c and the shared scx_qmap.h mixed __u64/__u32/__s32 with the bare
-typedefs that scx/common.h provides. Convert the remaining __-prefixed
-integer types to the bare forms for consistency. The struct fields become
-bare u64 (uint64_t), so the stats printfs that fed them to %llu now cast to
-unsigned long long. No functional change.
+Direct writes to p->scx.slice and p->scx.dsq_vtime bypass
+scx_bpf_task_set_slice/dsq_vtime() and the authority checks they carry.
+Those checks exist for sub-schedulers, which attach only through the
+cid-form struct_ops, so the direct writes only need to be closed there.
+
+Give sched_ext_ops_cid its own verifier ops that reject the two fields.
+cid-form is a new interface with no legacy users, so there is no
+compatibility to keep. The cpu-form keeps direct writes, and the deprecation
+warning they carried is dropped.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- tools/sched_ext/scx_qmap.c | 21 +++++++++++----------
- tools/sched_ext/scx_qmap.h | 34 +++++++++++++++++-----------------
- 2 files changed, 28 insertions(+), 27 deletions(-)
+ kernel/sched/ext/ext.c | 44 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 32 insertions(+), 12 deletions(-)
 
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 67ddd483a4c7..f1eaebcab5dc 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -67,8 +67,8 @@ int main(int argc, char **argv)
- 	struct scx_qmap *skel;
- 	struct bpf_link *link;
- 	struct qmap_arena *qa;
--	__u32 test_error_cnt = 0;
--	__u64 ecode;
-+	u32 test_error_cnt = 0;
-+	u64 ecode;
- 	int opt;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index f4725698f5ef..4a93ed72e5aa 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -7003,6 +7003,21 @@ static bool bpf_scx_is_valid_access(int off, int size,
+ 	return btf_ctx_access(off, size, type, prog, info);
+ }
  
- 	libbpf_set_print(libbpf_print_fn);
-@@ -202,15 +202,16 @@ int main(int argc, char **argv)
++/* common to both forms: only scx.disallow is writable */
++static int bpf_scx_btf_struct_access_common(const struct bpf_reg_state *reg,
++					    int off, int size)
++{
++	const struct btf_type *t;
++
++	t = btf_type_by_id(reg->btf, reg->btf_id);
++	if (t == task_struct_type &&
++	    off >= offsetof(struct task_struct, scx.disallow) &&
++	    off + size <= offsetofend(struct task_struct, scx.disallow))
++		return SCALAR_VALUE;
++
++	return -EACCES;
++}
++
+ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
+ 				     const struct bpf_reg_state *reg, int off,
+ 				     int size)
+@@ -7011,23 +7026,22 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
  
- 		printf("stats  : enq=%lu dsp=%lu delta=%ld reenq/cid0=%llu/%llu deq=%llu core=%llu enq_ddsp=%llu\n",
- 		       nr_enqueued, nr_dispatched, nr_enqueued - nr_dispatched,
--		       qa->nr_reenqueued, qa->nr_reenqueued_cid0,
--		       qa->nr_dequeued,
--		       qa->nr_core_sched_execed,
--		       qa->nr_ddsp_from_enq);
-+		       (unsigned long long)qa->nr_reenqueued,
-+		       (unsigned long long)qa->nr_reenqueued_cid0,
-+		       (unsigned long long)qa->nr_dequeued,
-+		       (unsigned long long)qa->nr_core_sched_execed,
-+		       (unsigned long long)qa->nr_ddsp_from_enq);
- 		printf("         exp_local=%llu exp_remote=%llu exp_timer=%llu exp_lost=%llu\n",
--		       qa->nr_expedited_local,
--		       qa->nr_expedited_remote,
--		       qa->nr_expedited_from_timer,
--		       qa->nr_expedited_lost);
-+		       (unsigned long long)qa->nr_expedited_local,
-+		       (unsigned long long)qa->nr_expedited_remote,
-+		       (unsigned long long)qa->nr_expedited_from_timer,
-+		       (unsigned long long)qa->nr_expedited_lost);
- 		if (__COMPAT_has_ksym("scx_bpf_cidperf_cur"))
- 			printf("cpuperf: cur min/avg/max=%u/%u/%u target min/avg/max=%u/%u/%u\n",
- 			       qa->cpuperf_min,
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index d15a705d5ac5..808237540f5c 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -28,10 +28,10 @@
- #define SCX_QMAP_MAX_CPUS	1024
+ 	t = btf_type_by_id(reg->btf, reg->btf_id);
+ 	if (t == task_struct_type) {
+-		/*
+-		 * COMPAT: Will be removed in v6.23.
+-		 */
+ 		if ((off >= offsetof(struct task_struct, scx.slice) &&
+ 		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
+ 		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
+-		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
+-			pr_warn_ratelimited("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()\n");
+-			return SCALAR_VALUE;
+-		}
+-
+-		if (off >= offsetof(struct task_struct, scx.disallow) &&
+-		    off + size <= offsetofend(struct task_struct, scx.disallow))
++		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime)))
+ 			return SCALAR_VALUE;
+ 	}
  
- struct cpu_ctx {
--	__u64 dsp_idx;		/* dispatch index */
--	__u64 dsp_cnt;		/* remaining count */
--	__u32 avg_weight;
--	__u32 cpuperf_target;
-+	u64 dsp_idx;		/* dispatch index */
-+	u64 dsp_cnt;		/* remaining count */
-+	u32 avg_weight;
-+	u32 cpuperf_target;
+-	return -EACCES;
++	return bpf_scx_btf_struct_access_common(reg, off, size);
++}
++
++/* cid-form rejects direct slice and dsq_vtime writes in favor of the kfuncs */
++static int bpf_scx_cid_btf_struct_access(struct bpf_verifier_log *log,
++					 const struct bpf_reg_state *reg, int off,
++					 int size)
++{
++	return bpf_scx_btf_struct_access_common(reg, off, size);
+ }
+ 
+ static const struct bpf_verifier_ops bpf_scx_verifier_ops = {
+@@ -7036,6 +7050,12 @@ static const struct bpf_verifier_ops bpf_scx_verifier_ops = {
+ 	.btf_struct_access = bpf_scx_btf_struct_access,
  };
  
- /* Opaque to userspace; defined in scx_qmap.bpf.c. */
-@@ -40,25 +40,25 @@ struct task_ctx;
- struct qmap_fifo {
- 	struct task_ctx __arena *head;
- 	struct task_ctx __arena *tail;
--	__s32 idx;
-+	s32 idx;
- };
- 
- struct qmap_arena {
- 	/* userspace-visible stats */
--	__u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cid0;
--	__u64 nr_dequeued, nr_ddsp_from_enq;
--	__u64 nr_core_sched_execed;
--	__u64 nr_expedited_local, nr_expedited_remote;
--	__u64 nr_expedited_lost, nr_expedited_from_timer;
--	__u64 nr_highpri_queued;
--	__u32 test_error_cnt;
--	__u32 cpuperf_min, cpuperf_avg, cpuperf_max;
--	__u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
-+	u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cid0;
-+	u64 nr_dequeued, nr_ddsp_from_enq;
-+	u64 nr_core_sched_execed;
-+	u64 nr_expedited_local, nr_expedited_remote;
-+	u64 nr_expedited_lost, nr_expedited_from_timer;
-+	u64 nr_highpri_queued;
-+	u32 test_error_cnt;
-+	u32 cpuperf_min, cpuperf_avg, cpuperf_max;
-+	u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
- 
- 	/* kernel-side runtime state */
--	__u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
--	__u64 core_sched_head_seqs[5];
--	__u64 core_sched_tail_seqs[5];
-+	u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
-+	u64 core_sched_head_seqs[5];
-+	u64 core_sched_tail_seqs[5];
- 
- 	struct cpu_ctx cpu_ctxs[SCX_QMAP_MAX_CPUS];
- 
++static const struct bpf_verifier_ops bpf_scx_cid_verifier_ops = {
++	.get_func_proto = bpf_base_func_proto,
++	.is_valid_access = bpf_scx_is_valid_access,
++	.btf_struct_access = bpf_scx_cid_btf_struct_access,
++};
++
+ static int bpf_scx_init_member(const struct btf_type *t,
+ 			       const struct btf_member *member,
+ 			       void *kdata, const void *udata)
+@@ -7376,7 +7396,7 @@ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
+  * verified to match by the BUILD_BUG_ON checks in scx_init().
+  */
+ static struct bpf_struct_ops bpf_sched_ext_ops_cid = {
+-	.verifier_ops = &bpf_scx_verifier_ops,
++	.verifier_ops = &bpf_scx_cid_verifier_ops,
+ 	.reg = bpf_scx_reg_cid,
+ 	.unreg = bpf_scx_unreg,
+ 	.check_member = bpf_scx_check_member,
 -- 
 2.54.0
 
