@@ -1,135 +1,143 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BEB371049
-	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 02:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6A937BE7D
+	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 02:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783303692; cv=none; b=S8apm1MJGRPrt/aeTx7VgaHNFU8qWZ2ZJWFhZLB1ikEoYjzmaBnSzMqCgMXrzaD+KH2lizFmBy8ooIDJLcAFZHRtJ8gN/C3l+GT6yYmEducP/UTrdN+Bt63itYrZwu1/1f9/xL0hbNQUUXRYLSNLfpuuGtgU1NnZWnB4VfwdUYc=
+	t=1783303698; cv=none; b=dPbYHqpbC9MSIDK+BdZ0nPV9njqQ3sU29SPU41que4t216gziIGf0QPiGf2tmx+iwIU2W4bsTxFc8Yuwr5OMtpkIky8n2s5n/nwSTqChipT8zMpXrhvInvhaa5Dl0TUm9AK+tuMGvqJ6OAL5hiuH4FYkM4h4zDYQAB6D67rK5pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783303692; c=relaxed/simple;
-	bh=QYx6vUh1ApOxinU1V39blb36kRq2IJS5Fe4g3vBxuz8=;
+	s=arc-20240116; t=1783303698; c=relaxed/simple;
+	bh=gdQADdA8ym8YIhCtg5ZOjSoMlHoZy1kXs2dtRJHGRDg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=aElPcT7VowkxsBurynfzIbHYlRQdPiLXeBQRfXE6gJAhDgoQ97KUz1YkJ0izZ/EieJ8etDwe/gf3sypuiiuKfCwpd2igMDRBJ3v3AaCWZo6eoZIqxlCYV+qtM3X/DaiwMvzE7ruVKZ+7f9DE2YeM4hexyT4fPzf1s/+ata6Pl6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PM50MsFY; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=ZfQ7xAkvK/fMZdjcToVYHB4Qk7hwZC9jMwAkbhxPuOndqfiJhFMsTQIV9gg9nNCg96I3xU+GslgSeZXImANycW1x755k2XIsQDVWjGim3M/VMV17KiPtRpZg39g+ZOojvv4/DRbEGwdDUePUGIgqzXSbWN11VKQ3Z2TLVpOtMXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c7pWIK4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PM50MsFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8621F000E9;
-	Mon,  6 Jul 2026 02:08:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c7pWIK4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1771F000E9;
+	Mon,  6 Jul 2026 02:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783303691;
-	bh=E6g3Zt9vU1wtruF0XshMdffRyEaM+BuoEv+f3OI/AjU=;
+	s=k20260515; t=1783303697;
+	bh=mBHTq0N9c/jvwppIKwo+mzC7JUEqh57AihBJ8EIf4bk=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=PM50MsFYTm8gSdrhcjVG/ivdOstyLBwO6aAf5SkTckIQiM1uryH4suy6cgYfj2AhD
-	 wW6eBu8rnJE8HcpRhgnBODHf4La5gga1ZZxkKT/elAWHWgGTE6ULHW8a67D8KQFqrw
-	 RFbowRAmfWpivWzu2C7RWQzbjVK3SWedpDTC4DrHS/Fm4do8BgBq4BeXRb/9QUirFf
-	 EGYd3cGWqi22vgSQjD+SakeHS3Dg7qgAhm8xM3AnC3OZV0x3uGSd64EORdzuxqPAvu
-	 DajLyfASTt1v7zzARO55PxLwKkiCTfZKGlKR2p8s35IIHXZMcph/PM5pgi0W9ICbpM
-	 jfeXvHtO0kr+Q==
+	b=c7pWIK4QVxOpwUnZygWHCt9qJdF3qmj6jwWQbL2iNpfpc5ezMfw2eCzhbpRLhzUYR
+	 tmyw6a/XXx61rO6HGG3fiSljh/rOR/UapjlIchf2pv8g3t5yO/uU1YbG1KB/7Rsdvg
+	 r86n+2Y6it5ApC38aPs444UFOttLN3cdszkWIy+BstLTp+4AXRbFuijpjAj5RwUBFZ
+	 yANHmOX+cOvKDn59mTDuHikHPQM5NyUmvQyJoJnVDexlO6v+o6NJRS83kSKGmmRcq8
+	 paZ/ornx9/wboGac7erj2vSPFD/CXteBvGUiH/uMGLtA+1vydZivwSGtkEx9oAcxkb
+	 dAlfqHWPbqwqg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 sched_ext/for-7.3 17/36] sched_ext: RCU-protect the
- sub-sched tree's children/sibling lists
+Subject: Re: [PATCH v2 sched_ext/for-7.3 10/36] sched_ext: Add
+ ops.init_cids() to finalize the cid layout before init
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260706014058.439853-18-tj@kernel.org>
+In-Reply-To: <20260706014058.439853-11-tj@kernel.org>
 References: <20260706014058.439853-1-tj@kernel.org>
- <20260706014058.439853-18-tj@kernel.org>
+ <20260706014058.439853-11-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 02:08:10 +0000
-Message-Id: <20260706020810.BA8621F000E9@smtp.kernel.org>
+Date: Mon, 06 Jul 2026 02:08:16 +0000
+Message-Id: <20260706020817.2F1771F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Incomplete inheritance of bypass state in scx_link_sched() leaves =
-the new sub-scheduler in a broken bypass mode.
-- [High] RCU-001: Remove Before Reclaim Ordering Violation in scheduler dis=
-able paths.
+
+Pre-existing issues:
+- [High] `scx_bpf_cid_override()` failures are masked, leading to full enab=
+lement of a broken scheduler with corrupted CID layouts.
 --
 
-commit 9e5c6a7b8888aaf2f3dcc167530999a7492f82cf
+commit f3e3b0bef46dafbab2f0d836c3f5b9732c01f8e1
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: RCU-protect the sub-sched tree's children/sibling lists
-
-This commit switches the children and sibling list operations to RCU and
-expands the descendant walker to accept rcu_read_lock. It also adds logic
-to inherit the bypass state when linking a new sub-scheduler under a
-bypassing ancestor.
+    sched_ext: Add ops.init_cids() to finalize the cid layout before init
+   =20
+    A cid-form scheduler that calls scx_bpf_cid_override() to install a cus=
+tom
+    cid layout can only do so from ops.init(). Enable-path setup that depen=
+ds on
+    the cid layout thus has to run after ops.init(), and ops.init() itself =
+can't
+    use anything derived from the final layout, which turned out to be too
+    restrictive.
 
 > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 8ee980f822aac..9231ccc775e01 100644
+> index 150e74129266b..ee390d95cd2e3 100644
 > --- a/kernel/sched/ext/ext.c
 > +++ b/kernel/sched/ext/ext.c
 
 [ ... ]
 
-> @@ -5487,7 +5488,10 @@ s32 scx_link_sched(struct scx_sched *sch)
->  				break;
->  			}
+> @@ -6684,15 +6684,19 @@ static void scx_root_enable_workfn(struct kthread=
+_work *work)
 > =20
-> -			list_add_tail(&sch->sibling, &parent->children);
-> +			/* inherit the ancestor bypass state */
-> +			WRITE_ONCE(sch->bypass_depth, READ_ONCE(parent->bypass_depth));
-> +
-> +			list_add_tail_rcu(&sch->sibling, &parent->children);
+>  	scx_idle_enable(ops);
+> =20
+> -	if (sch->ops.init) {
+> -		ret =3D SCX_CALL_OP_RET(sch, init, NULL);
+> +	/*
+> +	 * A cid-form scheduler finalizes its cid layout in ops.init_cids(),
+> +	 * which may call scx_bpf_cid_override(). Run it before ops.init() so
+> +	 * the final layout is in effect.
+> +	 */
+> +	if (sch->is_cid_type && sch->ops_cid.init_cids) {
+> +		ret =3D SCX_CALL_OP_RET(sch, init_cids, NULL);
+>  		if (ret) {
+> -			ret =3D scx_ops_sanitize_err(sch, "init", ret);
+> +			ret =3D scx_ops_sanitize_err(sch, "init_cids", ret);
+>  			cpus_read_unlock();
+> -			scx_error(sch, "ops.init() failed (%d)", ret);
+> +			scx_error(sch, "ops.init_cids() failed (%d)", ret);
+>  			goto err_disable;
 >  		}
->  #endif	/* CONFIG_EXT_SUB_SCHED */
-> =20
+> -		sch->exit_info->flags |=3D SCX_EFLAG_INITIALIZED;
+>  	}
 
 [Severity: High]
-Does inheriting the bypass_depth here without setting the per-CPU fast-path
-flags leave the new sub-scheduler in a broken bypass mode?
+This is a pre-existing issue, but does this adequately handle failures duri=
+ng
+kfunc calls like scx_bpf_cid_override()?
 
-If sch->bypass_depth is inherited as 1, and scx_bypass(sch, true) is
-later called in scx_sub_enable_workfn(), inc_bypass_depth() checks
-if (sch->bypass_depth !=3D 1). It will return false and jump to the unlock
-label, skipping the SCX_SCHED_PCPU_BYPASSING flag initialization across
-all CPUs.
+If scx_bpf_cid_override() is called with invalid input (e.g., duplicate CID=
+s),
+it calls scx_error() and returns early without fully populating the CID tab=
+les:
 
-Could this lead to BPF operations being invoked when they should be bypassed
-and cause potential hangs or deadlocks?
-
-[ ... ]
-
-> @@ -5514,7 +5518,7 @@ void scx_unlink_sched(struct scx_sched *sch)
->  		if (scx_parent(sch)) {
->  			rhashtable_remove_fast(&scx_sched_hash, &sch->hash_node,
->  					       scx_sched_hash_params);
-> -			list_del_init(&sch->sibling);
-> +			list_del_rcu(&sch->sibling);
->  		}
->  #endif	/* CONFIG_EXT_SUB_SCHED */
->  		list_del_rcu(&sch->all);
-
-[Severity: High]
-Does the teardown path violate the remove-before-reclaim RCU invariant now
-that this list is RCU-protected?
-
-In both scx_sub_disable() and scx_disable(), the grace period functions
-(synchronize_rcu_expedited() or synchronize_rcu()) are called before
-scx_unlink_sched(sch):
-
-scx_sub_disable() {
-    synchronize_rcu_expedited();
-    scx_disable_bypass_dsp(sch);
-
-    scx_unlink_sched(sch);
+kernel/sched/ext/cid.c:scx_bpf_cid_override() {
+    ...
+    if (cpumask_test_and_set_cpu(c, seen)) {
+        scx_error(sch, "cid %d assigned to multiple cpus", c);
+        return;
+    }
+    scx_cpu_to_cid_tbl[cpu] =3D c;
+    scx_cid_to_cpu_tbl[c] =3D cpu;
+    ...
 }
 
-Because the scheduler remains linked in parent->children and scx_sched_all
-during and after the grace period, lockless RCU readers using
-scx_for_each_descendant_pre() can discover the dying scheduler after the
-grace period has finished but before it is unlinked.
+Because scx_bpf_cid_override() returns void, the BPF program might still
+return 0 to ops.init_cids(). If ops.init_cids() returns 0, the enable path
+assumes success and continues.
 
-Could this result in readers accessing an exited BPF scheduler context?
+While scx_error() queues disable_work, that work cannot execute because it
+requires scx_enable_mutex, which is held by scx_root_enable_workfn() until
+the very end of the enable path.
+
+Consequently, the kernel will take the scheduler out of bypass mode
+(scx_bypass(sch, false)) and transition to SCX_ENABLED state, actively
+dispatching tasks using the partially modified and corrupted CID layout unt=
+il
+the mutex is dropped and the disable work finally runs.
+
+Could we check if an asynchronous error (sch->exit_kind) was registered by a
+kfunc before proceeding to enable the scheduler and taking it out of bypass
+mode?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706014058.4398=
-53-1-tj@kernel.org?part=3D17
+53-1-tj@kernel.org?part=3D10
