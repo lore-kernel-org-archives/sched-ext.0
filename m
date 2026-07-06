@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E62D37BE95
-	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 02:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BEB371049
+	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 02:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783303681; cv=none; b=D9v4XerbjpLB7xPsqm/fSBG7N4xvGcE9YLoCM6BhhpRZgTQZMOoPrriDrOFguJlB8HgmZI19pVCxPR7AuPAHWcgnXPXEe+AimAHa+OU1mr9CRTHdwoS5fezGP80YPPbRBNrGQE2nE5YedIzCXK2jOvahSLkmbpyfFRLMo7TLg4Q=
+	t=1783303692; cv=none; b=S8apm1MJGRPrt/aeTx7VgaHNFU8qWZ2ZJWFhZLB1ikEoYjzmaBnSzMqCgMXrzaD+KH2lizFmBy8ooIDJLcAFZHRtJ8gN/C3l+GT6yYmEducP/UTrdN+Bt63itYrZwu1/1f9/xL0hbNQUUXRYLSNLfpuuGtgU1NnZWnB4VfwdUYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783303681; c=relaxed/simple;
-	bh=EKMS83MUh0v4a8WujgIhzPHVTJJhZvlO3hk9d2QFKzY=;
+	s=arc-20240116; t=1783303692; c=relaxed/simple;
+	bh=QYx6vUh1ApOxinU1V39blb36kRq2IJS5Fe4g3vBxuz8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=im9CYEKIHrQlhMcxKuL0oB3s2qFiV/eU4mL3D15v5dH3X2WNPIunZvbGMhgNPIMi+zJs5XuzaiowC0GiTBgS0HhIcjVlMntXf7VYNq0ToEPLT3BsUPgL+KgkZ+LN9jBEm/K1wyMRGJbdL8gV8SWgChInQQJ5Iwq99LkfhDx0c1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrHpwpTZ; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=aElPcT7VowkxsBurynfzIbHYlRQdPiLXeBQRfXE6gJAhDgoQ97KUz1YkJ0izZ/EieJ8etDwe/gf3sypuiiuKfCwpd2igMDRBJ3v3AaCWZo6eoZIqxlCYV+qtM3X/DaiwMvzE7ruVKZ+7f9DE2YeM4hexyT4fPzf1s/+ata6Pl6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PM50MsFY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrHpwpTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2101F000E9;
-	Mon,  6 Jul 2026 02:07:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PM50MsFY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8621F000E9;
+	Mon,  6 Jul 2026 02:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783303680;
-	bh=Dn1ETiHpNZmcakhkMnrdE5kw2hKKNxzoy+PvE/1NI+8=;
+	s=k20260515; t=1783303691;
+	bh=E6g3Zt9vU1wtruF0XshMdffRyEaM+BuoEv+f3OI/AjU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZrHpwpTZs+XxGR5eLL/4+cYgMNyrIwY/OYkXEm3gJpB44QvYtGoBndTkjU6d/bqZf
-	 yNk+F6Lurr/B6CgTTrIPTVDMBHx8LsKpHomwN6EYXdLfqU3r1Ppnls7daheIpJO6GC
-	 01nRZtPsnoXjpGwCrt/x7RAMssKk5Q2G0GCJZturWQ1+fgDTBArc7alJu7gdRILsKn
-	 1iDdkv7MQPz7n7F4AOTaZ0BRoOPn+Q7adGAbLBQQeyrS3h1B15XHi35q0vu8aNLfRj
-	 TkJDAfyrvknswDEkoHNqwc/qi9NVSWEt5i0tU3jlohEP4jHAnYbQbn+N9OZECWXvRu
-	 tZjeh1JyhhN/Q==
+	b=PM50MsFYTm8gSdrhcjVG/ivdOstyLBwO6aAf5SkTckIQiM1uryH4suy6cgYfj2AhD
+	 wW6eBu8rnJE8HcpRhgnBODHf4La5gga1ZZxkKT/elAWHWgGTE6ULHW8a67D8KQFqrw
+	 RFbowRAmfWpivWzu2C7RWQzbjVK3SWedpDTC4DrHS/Fm4do8BgBq4BeXRb/9QUirFf
+	 EGYd3cGWqi22vgSQjD+SakeHS3Dg7qgAhm8xM3AnC3OZV0x3uGSd64EORdzuxqPAvu
+	 DajLyfASTt1v7zzARO55PxLwKkiCTfZKGlKR2p8s35IIHXZMcph/PM5pgi0W9ICbpM
+	 jfeXvHtO0kr+Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 sched_ext/for-7.3 21/36] sched_ext: Maintain per-cpu
- effective cap copies for single-read checks
+Subject: Re: [PATCH v2 sched_ext/for-7.3 17/36] sched_ext: RCU-protect the
+ sub-sched tree's children/sibling lists
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260706014058.439853-22-tj@kernel.org>
+In-Reply-To: <20260706014058.439853-18-tj@kernel.org>
 References: <20260706014058.439853-1-tj@kernel.org>
- <20260706014058.439853-22-tj@kernel.org>
+ <20260706014058.439853-18-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 02:07:58 +0000
-Message-Id: <20260706020759.4A2101F000E9@smtp.kernel.org>
+Date: Mon, 06 Jul 2026 02:08:10 +0000
+Message-Id: <20260706020810.BA8621F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,108 +47,89 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] Asynchronous processing of `ecaps_to_sync` races with a new schedu=
-ler's `scx_cid_init()`, causing slab out-of-bounds reads in `scx_process_sy=
-nc_ecaps()`.
-- [High] `queue_sync_ecaps()` causes a NULL pointer dereference by passing =
-the global `scx_root` pointer to `scx_kick_cpu()` during scheduler teardown.
+- [High] Incomplete inheritance of bypass state in scx_link_sched() leaves =
+the new sub-scheduler in a broken bypass mode.
+- [High] RCU-001: Remove Before Reclaim Ordering Violation in scheduler dis=
+able paths.
 --
 
-commit d27a6ceed9961e91cdb8abb928e2d28ddbbb826a
+commit 9e5c6a7b8888aaf2f3dcc167530999a7492f82cf
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Maintain per-cpu effective cap copies for single-read checks
+sched_ext: RCU-protect the sub-sched tree's children/sibling lists
 
-This patch adds per-CPU effective capability copies (ecaps) to avoid testing
-multiple bits or encountering race conditions with caps[]. Grant and revoke
-operations queue a sync request for the target CPU, which is processed under
-the runqueue lock.
+This commit switches the children and sibling list operations to RCU and
+expands the descendant walker to accept rcu_read_lock. It also adds logic
+to inherit the bypass state when linking a new sub-scheduler under a
+bypassing ancestor.
 
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 8ee980f822aac..9231ccc775e01 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
 
 [ ... ]
 
-> @@ -287,6 +287,125 @@ static void scx_sub_seed_caps(struct scx_sched *sch)
->  	caps_updated_deliver(&to_deliver);
->  }
+> @@ -5487,7 +5488,10 @@ s32 scx_link_sched(struct scx_sched *sch)
+>  				break;
+>  			}
+> =20
+> -			list_add_tail(&sch->sibling, &parent->children);
+> +			/* inherit the ancestor bypass state */
+> +			WRITE_ONCE(sch->bypass_depth, READ_ONCE(parent->bypass_depth));
+> +
+> +			list_add_tail_rcu(&sch->sibling, &parent->children);
+>  		}
+>  #endif	/* CONFIG_EXT_SUB_SCHED */
 > =20
 
-[ ... ]
-
-> +static void queue_sync_ecaps(struct scx_sched *sch, s32 cid)
-> +{
-> +	s32 cpu =3D __scx_cid_to_cpu(cid);
-> +	struct scx_sched_pcpu *pcpu =3D per_cpu_ptr(sch->pcpu, cpu);
-> +
-> +	/*
-> +	 * Pairs with smp_mb() in scx_process_sync_ecaps(). Either the check
-> +	 * below sees the node off the list and queues it, or the in-flight sync
-> +	 * sees the caps[] update made before this call.
-> +	 */
-> +	smp_mb();
-> +
-> +	/* @cid's pshard->lock excludes concurrent queueing attempts */
-> +	if (llist_on_list(&pcpu->ecaps_to_sync_node))
-> +		return;
-> +	if (llist_add(&pcpu->ecaps_to_sync_node, &cpu_rq(cpu)->scx.ecaps_to_syn=
-c))
-> +		scx_kick_cpu(scx_root, cpu, 0);
-
 [Severity: High]
-During scheduler teardown, scx_ops_disable() clears the global scx_root
-pointer via RCU_INIT_POINTER(scx_root, NULL). If an active BPF program
-triggers queue_sync_ecaps() while scx_root is NULL, could passing scx_root
-here cause a NULL pointer dereference in scx_kick_cpu()?
+Does inheriting the bypass_depth here without setting the per-CPU fast-path
+flags leave the new sub-scheduler in a broken bypass mode?
 
-Since queue_sync_ecaps() already receives a valid struct scx_sched *sch
-parameter, would it be safer to pass sch to scx_kick_cpu() instead of
-scx_root?
+If sch->bypass_depth is inherited as 1, and scx_bypass(sch, true) is
+later called in scx_sub_enable_workfn(), inc_bypass_depth() checks
+if (sch->bypass_depth !=3D 1). It will return false and jump to the unlock
+label, skipping the SCX_SCHED_PCPU_BYPASSING flag initialization across
+all CPUs.
 
-> +}
-> +
-> +/* discard @rq's queued ecaps syncs */
+Could this lead to BPF operations being invoked when they should be bypassed
+and cause potential hangs or deadlocks?
 
 [ ... ]
 
-> +/**
-> + * scx_process_sync_ecaps - Sync this cpu's ecaps to pshard->caps[]
-> + * @rq: the cid's cpu rq
-> + *
-> + * pshard->caps[] is the target configuration. pcpu->ecaps is the effect=
-ive
-> + * transposed copy owned by the cid's cpu and written only here under @r=
-q's
-> + * lock.
-> + */
-> +void scx_process_sync_ecaps(struct rq *rq)
-> +{
-> +	s32 cid =3D __scx_cpu_to_cid(cpu_of(rq));
-> +	s32 shard =3D scx_cid_to_shard[cid];
+> @@ -5514,7 +5518,7 @@ void scx_unlink_sched(struct scx_sched *sch)
+>  		if (scx_parent(sch)) {
+>  			rhashtable_remove_fast(&scx_sched_hash, &sch->hash_node,
+>  					       scx_sched_hash_params);
+> -			list_del_init(&sch->sibling);
+> +			list_del_rcu(&sch->sibling);
+>  		}
+>  #endif	/* CONFIG_EXT_SUB_SCHED */
+>  		list_del_rcu(&sch->all);
 
 [Severity: High]
-When a new root scheduler is enabled, scx_cid_init() temporarily resets
-scx_cpu_to_cid_tbl[cpu] =3D -1 for all CPUs. If scx_process_sync_ecaps() is
-called concurrently (e.g., from an active scheduler's balance_one() or a
-dying scheduler's scx_sched_free_rcu_work()), could cid be evaluated as -1?
+Does the teardown path violate the remove-before-reclaim RCU invariant now
+that this list is RCU-protected?
 
-If cid is -1, evaluating scx_cid_to_shard[cid] would result in an
-out-of-bounds read. Even if we move the llist_empty() check above these
-lookups, a concurrent BPF execution calling scx_bpf_sub_grant() could queue
-a new sync, allowing execution to reach the lookups with cid still being -1
-and resulting in garbage values being used to index ps->caps.
+In both scx_sub_disable() and scx_disable(), the grace period functions
+(synchronize_rcu_expedited() or synchronize_rcu()) are called before
+scx_unlink_sched(sch):
 
-Can we defer the cid and shard evaluations until after we are sure we have
-work to process, or add bounds checking for cid?
+scx_sub_disable() {
+    synchronize_rcu_expedited();
+    scx_disable_bypass_dsp(sch);
 
-> +	struct llist_node *batch, *pos, *tmp;
-> +
-> +	lockdep_assert_rq_held(rq);
-> +
-> +	if (likely(llist_empty(&rq->scx.ecaps_to_sync)))
-> +		return;
+    scx_unlink_sched(sch);
+}
+
+Because the scheduler remains linked in parent->children and scx_sched_all
+during and after the grace period, lockless RCU readers using
+scx_for_each_descendant_pre() can discover the dying scheduler after the
+grace period has finished but before it is unlinked.
+
+Could this result in readers accessing an exited BPF scheduler context?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706014058.4398=
-53-1-tj@kernel.org?part=3D21
+53-1-tj@kernel.org?part=3D17
