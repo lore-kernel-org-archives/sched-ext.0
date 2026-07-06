@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F5339936B
-	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 07:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40C03E2759
+	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 07:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783322522; cv=none; b=sc1RBa7GOP7bQSXb7JiDrtenPjR+OBfRuTQEiCROAD6Lo1/1puK9RlAG9dBKWI0LW3ui29gqGUcNlqU0jbktwR6FJnAaQuFF/U79LUdIJNV5Ag07GSypmtkz46lJgqaEdUGxQolAyTFx3etrQKl+chI4A+fmym3zlN9hYRtiQCg=
+	t=1783322684; cv=none; b=BnFJsPriheXeTuapvH6LvBk4q5PNGbHMClA4O9yKGYlYNrNEK3XND48hQg8QQq7VPqvct8e7GLIVxflDjnrSpkD+UVsX1CwYkMfmSzhmdPyFbopN6UI70dwmZ302EVX/N2gKKjqyZHC/XoNrilHDD07UUlsznTfSbXjH9HhTrxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783322522; c=relaxed/simple;
-	bh=Ogzkg0q2k2qZtJnvlwBIQnJQRUbgX7S7msEltJeecGE=;
+	s=arc-20240116; t=1783322684; c=relaxed/simple;
+	bh=EoG5hQ24lovjcUjl2rk8O7C99SvhTJx6rUOmolplRn4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=F1415LMfycZozyGXplSp0l+IwynBQMk5quk8mWRz4FcATiUQBqRCkJzao525G5h1hvNT0UtJEAB3fyk7JRVbrPDAbXFqoJFIAuC5AdlbSAOC++/LBMg+fhMlGGiS5QZsItGniR59W+tKnMXqw75hRii5NvxIC1lmqBBQCvR4Fwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V9O1Bua9; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=pElhN4qvNaXirOl+hICQ/6gsz1fVKgV9fp7wENtga1XBjhLjsGRZ9hI2Jlf4KDlClWg8Y6BqMGz/ZqOUmcRygQyrFxCUjP1vq1BxRRs7Q7MZP2QRYSGVikN3/LF/mKQcNiDlxXIN7akwfkII/RSB9p8rGHrmaSZ8Br6Pr43fMZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hI20ZNg2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V9O1Bua9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7107F1F000E9;
-	Mon,  6 Jul 2026 07:21:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hI20ZNg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F1D1F000E9;
+	Mon,  6 Jul 2026 07:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783322515;
-	bh=65P+zEmCsa0VzKAV8+zoxP0G5+7AAB1EmP7g62T//uc=;
+	s=k20260515; t=1783322674;
+	bh=MRG7Spc5FZ1Uftiy5lfeO7r6VBCHIVgWTxO11GLuFu8=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=V9O1Bua96Zuq3I4y/Ro+h1oDzLnXGXwY8dNN5syKgIZLlJIvhXmQmIFuklj5Mz//N
-	 tyF21aYPRCHWQQygE7W9/8rdHwn2/K6c9A8imEU2pPm4dnCtwt5AhL3lhjQDM5y7FR
-	 E7vu2jl5cMZ2a57T9H1dQHBn1/oGkFHSmsDeFS33N95tOWkfLXxXtR4vgeX2kCi02j
-	 YoKewuMRdli0rZBZDwoho5gJR++/e/rWb1nI2lSDOorHflB4bRGjltFnzMTvboDi66
-	 r8R1YpBuCYZ0pASNuA5rKnGToipagTsaabzM04uzEb5zaTsEHhlQ+PIRI5TQjFQU6x
-	 2Ap7tXu0HtGcQ==
+	b=hI20ZNg2wegEz7egePCFdFDcQrOj3brvo+3vKXN3GSaJVplbPFLDZ48WfmQysEvvN
+	 l8r9wM0QPYtUsruQ4PRJpapV4TnNMvORDM5DaY/kMoU+BGagfl6EDEq4ggwukSNcjU
+	 HDXeOsl+t/Dbf2FZv+KcU6ayw7yC1GxFBXe4fA5ZuelCR3n1ngpDweqvJdTy70vAoj
+	 /fd4tQJBCvMGrF81pDMBrovs+uamxnuRHEQj4zwwyF371c/PxVoQA2F3nk6RB80h2i
+	 rJY47WV4bXoyyNI9cZvhqVgE4PAPV5tneub63ug8jAxk5q2EY4vVaJsfrC6bs8hpNe
+	 e/4M8K4V3POCA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 4/9] sched_ext: Handle blocked donor migration with
- proxy execution
+Subject: Re: [PATCH 3/9] sched_ext: Fix TOCTOU race in consume_remote_task()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Andrea Righi" <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260706070410.282826-5-arighi@nvidia.com>
+In-Reply-To: <20260706070410.282826-4-arighi@nvidia.com>
 References: <20260706070410.282826-1-arighi@nvidia.com>
- <20260706070410.282826-5-arighi@nvidia.com>
+ <20260706070410.282826-4-arighi@nvidia.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 07:21:55 +0000
-Message-Id: <20260706072155.7107F1F000E9@smtp.kernel.org>
+Date: Mon, 06 Jul 2026 07:24:33 +0000
+Message-Id: <20260706072434.65F1D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,66 +46,93 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] Plain data race on `rq->donor` in `task_current_donor()` during =
-lockless evaluation triggers KCSAN warnings.
+
+Pre-existing issues:
+- [High] Pre-existing tracking bug in dispatch_to_local_dsq(): it drops the=
+ locked_rq lock without clearing the scx_locked_rq_state tracking, which tr=
+iggers a lockdep crash if a nested ops.dequeue() callback executes in the f=
+allback path.
 --
 
-commit 6a880849b19162c80e0a10e017da8716e5ef3566
-Author: John Stultz <jstultz@google.com>
+commit aff47a8e37704807f1fefe8e15adcb99c8836308
+Author: Andrea Righi <arighi@nvidia.com>
 
-sched_ext: Handle blocked donor migration with proxy execution
+sched_ext: Fix TOCTOU race in consume_remote_task()
 
-With proxy execution enabled, mutex-blocked donors stay runnable so
-their scheduling context can execute the lock owner. This commit allows
-normal sched_ext migration of blocked donors unless the donor is active
-on its rq.
+This commit addresses a TOCTOU race condition in sched_ext during task
+migration between runqueues. It ensures task eligibility is re-evaluated
+after locking the source runqueue and properly tracks runqueue lock state
+while dropping the lock to avoid lockdep warnings.
 
 > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 4c6cd694c86db..e7cf88b2be7f6 100644
+> index 242f6ffbba350..4c6cd694c86db 100644
 > --- a/kernel/sched/ext/ext.c
 > +++ b/kernel/sched/ext/ext.c
 [ ... ]
-> @@ -2156,6 +2156,18 @@ static bool task_can_run_on_remote_rq(struct scx_s=
-ched *sch,
->  	if (task_on_cpu(task_rq(p), p))
->  		return false;
+> @@ -2240,20 +2246,58 @@ static bool unlink_dsq_and_lock_src_rq(struct tas=
+k_struct *p,
+>  		!WARN_ON_ONCE(src_rq !=3D task_rq(p));
+>  }
 > =20
+> -static bool consume_remote_task(struct rq *this_rq,
+> +static bool consume_remote_task(struct scx_sched *sch, struct rq *this_r=
+q,
+>  				struct task_struct *p, u64 enq_flags,
+>  				struct scx_dispatch_q *dsq, struct rq *src_rq)
+>  {
+> +	struct rq *tracked_rq =3D scx_locked_rq();
+> +	bool consumed =3D false;
+> +
 > +	/*
-> +	 * A blocked donor may be moved normally to select a new callback rq.
-> +	 * set_task_cpu() updates wake_cpu and makes the destination rq its new
-> +	 * callback home, even if the donor was previously proxy-migrated.
-> +	 *
-> +	 * Don't move an active donor while the source rq still references it f=
-or
-> +	 * scheduling and accounting. The migration can be retried after the do=
-nor
-> +	 * is switched out.
+> +	 * consume_remote_task() may be called from an SCX op with @this_rq
+> +	 * recorded as the currently locked rq. Clear the tracking while the rq
+> +	 * lock is dropped so nested callbacks don't save and later try to rest=
+ore
+> +	 * an rq which isn't locked anymore.
 > +	 */
-> +	if (task_is_blocked(p) && task_current_donor(task_rq(p), p))
+> +	if (tracked_rq) {
+> +		WARN_ON_ONCE(tracked_rq !=3D this_rq);
+> +		update_locked_rq(NULL);
+> +	}
+>  	raw_spin_rq_unlock(this_rq);
 
-[Severity: Medium]
-Will this trigger KCSAN warnings due to a data race on rq->donor?
+[Severity: High]
+This is a pre-existing issue, but does dispatch_to_local_dsq() have a simil=
+ar
+problem with stale rq lock tracking?
 
-When consume_dispatch_q() calls task_can_run_on_remote_rq() with enforce=3D=
-false
-as an opportunistic lockless check, it only holds dsq->lock, not the runque=
-ue
-lock for task_rq(p).
+Similar to consume_remote_task(), dispatch_to_local_dsq() drops the locked_=
+rq
+without temporarily clearing scx_locked_rq_state:
 
-This causes task_current_donor() to perform a plain read of rq->donor:
-
-kernel/sched/sched.h:task_current_donor() {
-    return rq->donor =3D=3D p;
+kernel/sched/ext/ext.c:dispatch_to_local_dsq() {
+    ...
+	/* switch to @src_rq lock */
+	if (locked_rq !=3D src_rq) {
+		raw_spin_rq_unlock(locked_rq);
+		locked_rq =3D src_rq;
+		raw_spin_rq_lock(src_rq);
+	}
+    ...
 }
 
-Since rq->donor can be concurrently modified by the runqueue's owner CPU,
-the plain read violates the memory model. Even if it is logically safe
-because the condition is re-evaluated later with the lock held, should
-this be annotated with READ_ONCE() or data_race() to avoid KCSAN warnings?
+If task_can_run_on_remote_rq() fails, it falls back to enqueueing to the gl=
+obal
+DSQ:
 
-> +		return false;
-> +
+		} else if (unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+			p->scx.holding_cpu =3D -1;
+			fallback =3D true;
+			scx_dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
+					     p, enq_flags | SCX_ENQ_GDSQ_FALLBACK);
+
+When scx_dispatch_enqueue() triggers the nested ops.dequeue() callback via
+SCX_CALL_OP_TASK, the stale, unlocked rq state is saved and later restored
+in SCX_CALL_OP, which triggers a lockdep assertion failure.
+
+Could this lead to a lockdep crash if a nested ops.dequeue() executes in the
+fallback path?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706070410.2828=
-26-1-arighi@nvidia.com?part=3D4
+26-1-arighi@nvidia.com?part=3D3
