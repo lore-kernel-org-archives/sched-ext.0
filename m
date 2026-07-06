@@ -1,132 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011016.outbound.protection.outlook.com [52.101.62.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D2D433E9E
-	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 07:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783323375; cv=none; b=LJhW+YKSc+nqlPEb8Lrpp+fNQvBA13tCNTGi+slKUFFn+F+tawxLUJFICqADKkohxpSGOi71qb14LCQsLWZj8Wfq6SiNolKh/S07kMNaYx6WPFzlbKlvR9HsjpXsnKkRpEwKNKxjgO0Hvb67HBad1lIqRhzs6x8VdS8IetTPq04=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783323375; c=relaxed/simple;
-	bh=souQwihaoM5mdQ9AH0h5COguRQet04UrBsw/Ah8cQXE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=dXBIM6mbuHObw9t2C/Ber8lDR/Ol5H5wUD1OeUWW+j1tqXn99TkK1sNsEmEAWMj2OCTIjbA+fxfW271fFtxtEMxdRmyunPGJ0+KUw+w7W3HupXfZrtjjKymoA8ujiim26sywD5lGedRU1+JElxbpBpQvsVIQ0C65xm0lZ9wga2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OyPFSI/t; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1F63328FD
+	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 07:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783324188; cv=fail; b=ghWOQZhiot05Poo+2lTWzs+aJeQoGREghjgGUeu4focf6UA4CmaqQ1nsHFsb2LCRrgAWak38uQPixC5vM7CkP0C1yd79bsAC9vLstX83/CgpAeARWCVH2qHHJH9IO0Se+gkqDjc6ZyWqYvMDLONP9EeWkrhfeEkj1zAuqleX/yo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783324188; c=relaxed/simple;
+	bh=mGiB6hv9Y6sR39MpuiC4IRXHaANfk79eg1loqfpB6XU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BzmCLKNwEFUo+WSuI94gOvPMGzn0pNbzcxA8IG5jOoYb+9DhYVerK9Hh95SrI/LZ0zeyd0EN7RxusWar2chgPNkseBSLt49LAKnnjvmlsLALHJ0Lf2S7J0KClSZTFUgH3Y7hfRBILmpwkI2ae5tGdUF+tYJHOHi/FaMPmSLCwt8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=4LhszFO7; arc=fail smtp.client-ip=52.101.62.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OyPFSI/t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3D41F000E9;
-	Mon,  6 Jul 2026 07:36:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783323364;
-	bh=yGkh3X8OsfYj6Ay6rUGvSG/PowdG/jiHKo0mdGvPAlc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OyPFSI/tLuKEih2AMZOyK634YsK5axK61B7GwmFctpYewyqdzcbitMB4R6EWM5p8Q
-	 qaCFaAbFwxf90hzrSBzjWVARRiltnqG2Q6Qb5hXMk/II3z8egvLyT2ZmxhBjds3ezm
-	 Tk0G8snWTbyDDB1LcYxmjcMtL7ari0U0lB7K29Hn/xS2jTLBNtP54JMpK/scJHK9C2
-	 KfCXuKDleN7LwAJmJNda/isLgLfCRTmXHlqycMqPdatNigfzZHMnDosnRWzASM+1ho
-	 o5LrGWsu13ztYZUu2dXKrl9M8RC02DMfAQaZTnR8JzTo9ah0zKjtIC5ZxYCT4cgn0C
-	 LqcaOcZsBKpBw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6/9] sched_ext: Delegate proxy donor admission to BPF
- schedulers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andrea Righi" <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260706070410.282826-7-arighi@nvidia.com>
-References: <20260706070410.282826-1-arighi@nvidia.com>
- <20260706070410.282826-7-arighi@nvidia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 07:36:04 +0000
-Message-Id: <20260706073604.BD3D41F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="4LhszFO7"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iCCyS7WVmeQV2qG/rTQspbGcvwFqma+iRihK5t486A/9FHD00dL6ehK5AcVG/uyqxwoFWlkCIZKIKEvAIqVVYTgdNogNcC+XDsbpRp2CueBrIG6fVU1IUkoClo2hrJjP13ZdqNwYI6kEUCG8AclPvimy0+PQF8eRU6KlrYrgKdh9Zlx4cs6M5B+6S5mGxqHFjBxDo3Gdxj9HVMoWyEeCB7UWTYSNL6AtmDdB+m8tKsSuMQ/mQGFfzr16hCsLyEkksM4AniZwjCc+3vcHpg34pib47X0ZZT934g1/PC7Cg+0FlXxSaGATVZ2AV6FxOa24FLlkp9HAnWX22bFk0SeuXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yAdFrOwWIcWrX2SPXH/fFvACur89QONM2G3KwpjE7yg=;
+ b=rt2k3yZi4P0nbBH07PQgMwGZK1D0Qk9+GmLf2x/UNkBw566QjSd0c0q9UnLZv7tmTKtF5Z7w3ZJNCk+OzhJiXBCcIuODHZznZCpI5Qv2K68h4i9Ql7mXV3lBSSpKqkdDTIS9emnETdFn41J8gKnCzyqmDJyxwnMS3stGla4MN3Ahp7ZpHEVpfF9CFsKmnwghxT0v6fJC8qjwgNceeKRRvhnzNLXAgoLgA2Mv4GPAxMC50j6K5potMnbLg9cn5Y1QkI862qYeNRPooDgUbLHT1mFNjvsBmnZ3n7vSlol2NASxnX1ot7puAhbNy6kYSkupoEmTkQDStw8I6YOC1INQ+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nvidia.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yAdFrOwWIcWrX2SPXH/fFvACur89QONM2G3KwpjE7yg=;
+ b=4LhszFO7UQqlPEHj1gviFgzT7gbrXxQWTjjmTiagK8q42PfpzYnncRn9TeCYBA3Gmx91M5K3eJddikG3KtC0GqT16D6uArfdGqPaBrgmdfhvIiVqjSOABvhm0utJP54sxeSD+7tGZ1TPGRw0mei39xiX/aQGihNtoL9ivcSGNxI=
+Received: from DS7PR03CA0011.namprd03.prod.outlook.com (2603:10b6:5:3b8::16)
+ by BL3PR12MB6523.namprd12.prod.outlook.com (2603:10b6:208:3bf::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Mon, 6 Jul 2026
+ 07:49:34 +0000
+Received: from DM2PEPF00003FC2.namprd04.prod.outlook.com
+ (2603:10b6:5:3b8:cafe::1e) by DS7PR03CA0011.outlook.office365.com
+ (2603:10b6:5:3b8::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.8 via Frontend Transport; Mon, 6
+ Jul 2026 07:49:34 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DM2PEPF00003FC2.mail.protection.outlook.com (10.167.23.20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Mon, 6 Jul 2026 07:49:34 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 6 Jul
+ 2026 02:49:33 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 6 Jul
+ 2026 02:49:33 -0500
+Received: from [10.136.39.91] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Mon, 6 Jul 2026 02:49:27 -0500
+Message-ID: <83348be4-ceb9-42fb-b818-c6499cc3bb1e@amd.com>
+Date: Mon, 6 Jul 2026 13:19:21 +0530
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/9] sched_ext: Delegate proxy donor admission to BPF
+ schedulers
+To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, David Vernet
+	<void@manifault.com>, Changwoo Min <changwoo@igalia.com>, John Stultz
+	<jstultz@google.com>
+CC: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot
+	<vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, "Mel
+ Gorman" <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
+	"Christian Loehle" <christian.loehle@arm.com>, David Dai
+	<david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>, Aiqun Yu
+	<aiqun.yu@oss.qualcomm.com>, Shuah Khan <shuah@kernel.org>,
+	<sched-ext@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+References: <20260706070410.282826-1-arighi@nvidia.com>
+ <20260706070410.282826-7-arighi@nvidia.com>
+Content-Language: en-US
+From: K Prateek Nayak <kprateek.nayak@amd.com>
+In-Reply-To: <20260706070410.282826-7-arighi@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM2PEPF00003FC2:EE_|BL3PR12MB6523:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e817358-b96a-46c7-03af-08dedb331f30
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700016|23010399003|376014|1800799024|7416014|11063799006|4143699003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	ZhyyuvMNwGiSld3IlREwb8PNsc6pdsaJ93+NgpztoGEoBPWHH0uCeQIXY2cxST6BcPsrp/0KBmaCD+vK9IOF/TnVai+1nbtZaLy3zzxj+R/WcrVA7gF5aWWxKHrjsH1C3IP0H711dvv1Y7y9htLP1kw32ly31R5sKwDcMvrwetbaV6UwDLdKL77zKb+3keNaKfhkgDSCl0vaQTEAo8HrL6xk9EqWO9GPc+7vDkxbouCSsuH3JgmCwNRW2qFyT+tfs0FzAlM5RvUMn7t+wFkfJxoOKLeFMnO88mOkd9+JJztU/AaVWYyBqQSYJYlAGHhUbmxTDZxKtrN+oyJhMzQuieqtmupVweLQqZH44kAa4RRewoSdVqamMei2a35N2v3J43m6sm1gZJEPUevtja64ctYobKt2I2lYnwrFfxufwn3pG2g9QU20tlmWNK/vLKSNhHQ8S7uIb2hRa5fV3wv5Dv2WfTvjqzNn/sob02xakYjYHDwUJTvfqDkWfJNT32E+QZ8TP0dE8SPUQ+8kEEahQX22KEMgfmUzg939Zx50P0UnIMImm6HB9XjT9cVs3LwvYDa/+A+i3rtiDar83xmKrxF7qndCzcI9MK2IWey35eZ7IiT1T1giKARaeFHeTa07IgpHWOBbMubjv6PbzBPhRENDD5jMbyM7Kz04uXlzzoSUgn5hEy+/kwVwZtxpOgMn//6gByNedJv0J79lxAzPCw==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(36860700016)(23010399003)(376014)(1800799024)(7416014)(11063799006)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	S2BitbjrLhR+6RHEhZ6HtmOCmAihc/9k7WxaqlI0dT61dcK1+fSCMbJCdatRc1UR7d2vbIsBs62YvD5nyhfoEFFV1WqRRv/UFGFBX+tN04j2BxJi39XvwyF0hGeVU9vYRaKMIALTFNNTsmd67rLMnAxKRXQ94jp+xSRX4PgzUoJcUdiyt532yZiPTxnxahtHpaYMrr3jqUWyOyWa7R2BWoeFKv64iMGtKItip1FMFWzFPKn1Otf9i5Ual9pXKa2qJd+RGJRenXWuRw8TO2qjUql86jpNIBb2i3HC671AYktwNBKpjftHeSzfJKIllpmhaCsNgTQsPNZWwYMMtvs2Jzc3ytl4sBtTyADXXG7F4PCywAj6qo5qJ+5CUQD0Zwi2r+/NHxKU7Yb/cgSUDK/Fid1EcL8Sd3spxkOUkIykmjUtgAjujLPbeqYdl2Aef/yx
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2026 07:49:34.5427
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e817358-b96a-46c7-03af-08dedb331f30
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DM2PEPF00003FC2.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6523
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
-- [Critical] task_proxy_cpu() locklessly accesses p->blocked_on and derefer=
-ences the mutex to acquire its wait_lock, leading to a Use-After-Free if th=
-e target task is awakened and the mutex is concurrently destroyed.
-- [High] task_proxy_cpu() acquires p->blocked_lock using raw_spinlock witho=
-ut disabling interrupts, risking a hard deadlock against hardware IRQ handl=
-ers.
-- [High] sched_proxy_block_task() asynchronously swaps the proxy donor to i=
-dle without forcing a reschedule on the target CPU, leaving the target CPU =
-to run the mutex owner indefinitely under idle accounting.
-- [High] sched_setscheduler() fails to block proxy donors when transitionin=
-g them to a BPF scheduler without SCX_OPS_ENQ_BLOCKED, violating scheduler =
-admission policies.
-- [High] scx_prepare_task_sched_change() is called locklessly, modifying ru=
-nqueue state and updating the runqueue clock without holding rq->lock or pi=
-_lock.
---
+Hello Andrea,
 
-commit fbf923089be5e0555003149fc8823b7f5e5723f7
-Author: Andrea Righi <arighi@nvidia.com>
-Subject: sched_ext: Delegate proxy donor admission to BPF schedulers
-
-Proxy execution keeps a blocked donor runnable so its scheduling context
-can execute the mutex owner. This commit adds SCX_OPS_ENQ_BLOCKED to delega=
-te
-proxy execution admission to BPF schedulers, allowing them to handle blocked
-donors according to their own policies. Schedulers without this capability
-have their donors blocked normally via sched_proxy_block_task().
-
+On 7/6/2026 12:21 PM, Andrea Righi wrote:
 > diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index 3673b17f6098c..19a6a78ef8472 100644
+> index 0139cd4a8be7e..f3b6c3c952e69 100644
 > --- a/kernel/sched/core.c
 > +++ b/kernel/sched/core.c
-
-[ ... ]
-
-> @@ -6767,6 +6767,28 @@ static void proxy_deactivate(struct rq *rq, struct=
- task_struct *donor)
+> @@ -6764,6 +6764,28 @@ static void proxy_deactivate(struct rq *rq, struct task_struct *donor)
 >  	block_task(rq, donor, state);
 >  }
-> =20
+>  
 > +/*
 > + * Remove a retained proxy donor before changing its scheduler ownership.
-> + * The caller holds p->pi_lock, so p cannot wake and migrate after block=
-_task()
+> + * The caller holds p->pi_lock, so p cannot wake and migrate after block_task()
 > + * drops it from the runqueue.
 > + */
 > +void sched_proxy_block_task(struct rq *rq, struct task_struct *p)
 > +{
-> +	unsigned long state =3D READ_ONCE(p->__state);
+> +	unsigned long state = READ_ONCE(p->__state);
 > +
 > +	lockdep_assert_held(&p->pi_lock);
 > +	lockdep_assert_rq_held(rq);
 > +
 > +	if (!task_is_blocked(p) || !task_on_rq_queued(p))
+
+nit.
+
+You may want to use p->is_blocked indicator for this which marks if the
+task has gone beyond the blocking point in __schedule(). I'll ensure
+we doesn't prematurely block task before here before it hits the
+correct blocking point in __schedule().
+
 > +		return;
-> +	if (WARN_ON_ONCE(state =3D=3D TASK_RUNNING))
+> +	if (WARN_ON_ONCE(state == TASK_RUNNING))
 > +		return;
 > +
 > +	if (task_current_donor(rq, p))
 > +		proxy_resched_idle(rq);
 > +	block_task(rq, p, state);
 > +}
-
-[Severity: High]
-Is this missing a resched_curr(rq) call?
-
-When scx_prepare_task_sched_change() calls sched_proxy_block_task() remotel=
-y, it
-replaces rq->donor with rq->idle via proxy_resched_idle(rq). If no IPI is s=
-ent
-to notify the remote CPU (since resched_curr() is omitted), won't the remot=
-e CPU
-continue running the mutex owner indefinitely under idle accounting, comple=
-tely
-bypassing scheduler preemption?
-
-[ ... ]
-
-> @@ -7009,6 +7031,39 @@ find_proxy_task(struct rq *rq, struct task_struct =
-*donor, struct rq_flags *rf)
+> +
+>  static inline void proxy_release_rq_lock(struct rq *rq, struct rq_flags *rf)
+>  	__releases(__rq_lockp(rq))
+>  {
+> @@ -7006,6 +7028,39 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
 >  	proxy_migrate_task(rq, rf, p, owner_cpu);
 >  	return NULL;
 >  }
@@ -140,161 +177,46 @@ bypassing scheduler preemption?
 > +	if (!task_is_blocked(p))
 > +		return -ENOENT;
 > +
-> +	mutex =3D READ_ONCE(p->blocked_on);
+
+This entry check should also use p->is_blocked now. Before that, proxy
+doesn't start for core.
+
+> +	mutex = READ_ONCE(p->blocked_on);
 > +	if (!mutex)
 > +		return -ENOENT;
 > +
 > +	guard(raw_spinlock)(&mutex->wait_lock);
-
-[Severity: Critical]
-Can this result in a use-after-free?
-
-The scx_bpf_task_proxy_cpu() kfunc can invoke this on any RCU-protected tas=
-k.
-The lockless read of p->blocked_on above occurs without holding p->pi_lock =
-or
-rq->lock. If the target task concurrently wakes up, finishes its execution,=
- and
-frees the mutex, the wait_lock acquisition here would be dereferencing freed
-memory.
-
 > +	guard(raw_spinlock)(&p->blocked_lock);
-
-[Severity: High]
-Can this cause a spinlock deadlock against hardware IRQs?
-
-The scx_bpf_task_proxy_cpu() kfunc can be called from IRQ-enabled contexts =
-like
-BPF_PROG_TYPE_SYSCALL programs. Because guard(raw_spinlock) does not disable
-interrupts (unlike raw_spinlock_irqsave), if an interrupt fires while the l=
-ock
-is held and tries to wake the same task (calling clear_task_blocked_on() fr=
-om
-hardirq context), it will deadlock trying to acquire p->blocked_lock.
-
-[ ... ]
-
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 85e07cbe626f6..a47ddbf741ea3 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-
-[ ... ]
-
-> @@ -23,6 +23,27 @@
-> =20
->  DEFINE_RAW_SPINLOCK(scx_sched_lock);
-> =20
-> +bool scx_allow_proxy_exec(const struct task_struct *p)
-> +{
-> +	if (!task_on_scx(p))
-> +		return true;
 > +
-> +	return scx_task_sched(p)->ops.flags & SCX_OPS_ENQ_BLOCKED;
+> +	if (mutex != __get_task_blocked_on(p))
+> +		return -EAGAIN;
+> +
+> +	owner = __mutex_owner(mutex);
+> +	if (!owner)
+> +		return -ENOENT;
+> +	if (!READ_ONCE(owner->on_rq) || owner->se.sched_delayed)
+> +		return -EAGAIN;
+
+This probabaly warrants a different return code since you don't want to
+keep retrying until the owner wakes up.
+
+> +
+> +	owner_cpu = task_cpu(owner);
+> +	if (owner_cpu != task_cpu(p) &&
+> +	    (p->nr_cpus_allowed == 1 || is_migration_disabled(p)))
+> +		return -EOPNOTSUPP;
+
+Do we need this? Proxy can work even if the owner is on a CPU where
+the donor cannot run.
+
+> +
+> +	return owner_cpu;
 > +}
-> +
-> +/*
-> + * Called immediately before sched_change_begin(). The caller must pass
-> + * DEQUEUE_NOCLOCK so the rq clock is updated only once.
-> + */
-> +void scx_prepare_task_sched_change(struct task_struct *p, struct scx_sch=
-ed *sch)
-> +{
-> +	update_rq_clock(task_rq(p));
-> +
-> +	/* Block retained donors that the incoming scheduler cannot manage. */
-> +	if (!(sch->ops.flags & SCX_OPS_ENQ_BLOCKED))
-> +		sched_proxy_block_task(task_rq(p), p);
-> +}
+>  #else /* SCHED_PROXY_EXEC */
+>  static struct task_struct *
+>  find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
 
-[Severity: High]
-How are blocked donors handled when a task policy is changed via the
-sched_setscheduler() syscall?
+-- 
+Thanks and Regards,
+Prateek
 
-It appears __sched_setscheduler() changes the task's class but does not inv=
-oke
-scx_prepare_task_sched_change(), nor does scx_check_setscheduler() validate
-this transition. If a blocked proxy donor transitions to a BPF scheduler th=
-at
-lacks SCX_OPS_ENQ_BLOCKED, won't it bypass the admission check and get enqu=
-eued
-as a normal runnable task instead of a blocked donor?
-
-[ ... ]
-
-> @@ -6950,6 +6985,10 @@ static void scx_root_enable_workfn(struct kthread_=
-work *work)
-> =20
->  		if (old_class !=3D new_class)
->  			queue_flags |=3D DEQUEUE_CLASS;
-> +		if (new_class =3D=3D &ext_sched_class) {
-> +			scx_prepare_task_sched_change(p, sch);
-> +			queue_flags |=3D DEQUEUE_NOCLOCK;
-> +		}
-> =20
->  		scoped_guard (sched_change, p, queue_flags) {
-
-[Severity: High]
-Is it safe to call scx_prepare_task_sched_change() outside the sched_change=
- guard?
-
-scx_prepare_task_sched_change() calls update_rq_clock() and
-sched_proxy_block_task(), both of which strictly require rq->lock. However,=
- here
-they are called locklessly before scoped_guard() acquires p->pi_lock and rq=
-->lock.
-Could this cause runqueue RB-tree corruption and lockdep panics?
-
-[ ... ]
-
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 0504204272732..0a5b84575ba5a 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
-
-[ ... ]
-
-> @@ -117,7 +117,9 @@ static void scx_fail_parent(struct scx_sched *sch,
->  		if (scx_task_on_sched(parent, p))
->  			continue;
-> =20
-> -		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
-> +		scx_prepare_task_sched_change(p, parent);
-> +		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE |
-> +			      DEQUEUE_NOCLOCK) {
-
-[Severity: High]
-Same issue here. scx_prepare_task_sched_change() is called locklessly before
-the rq->lock is acquired by the sched_change guard.
-
-[ ... ]
-
-> @@ -209,7 +211,9 @@ void scx_sub_disable(struct scx_sched *sch)
->  			continue;
->  		}
-> =20
-> -		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
-> +		scx_prepare_task_sched_change(p, parent);
-> +		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE |
-> +			      DEQUEUE_NOCLOCK) {
-
-[Severity: High]
-Same issue here. scx_prepare_task_sched_change() is called locklessly.
-
-[ ... ]
-
-> @@ -503,7 +507,9 @@ void scx_sub_enable_workfn(struct kthread_work *work)
->  		if (!(p->scx.flags & SCX_TASK_SUB_INIT))
->  			continue;
-> =20
-> -		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
-> +		scx_prepare_task_sched_change(p, sch);
-> +		scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE |
-> +			      DEQUEUE_NOCLOCK) {
-
-[Severity: High]
-Same issue here. scx_prepare_task_sched_change() is called locklessly.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706070410.2828=
-26-1-arighi@nvidia.com?part=3D6
