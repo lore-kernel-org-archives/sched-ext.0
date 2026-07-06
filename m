@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD78D32E121;
-	Mon,  6 Jul 2026 01:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB7637BE6F;
+	Mon,  6 Jul 2026 01:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783302062; cv=none; b=VJIvKthiofRaDVXy/Pm9fzdrvTCbtEPulFtM7ZVFH24NQFoCNc8sI7i2aWnLd8FXBmyQIt/22tWlc/sH9elVmQKdmqrg9NDVSdqNIJiOybM/uAS4W26b2QNUDbb2/lVFbtjPh2RO0QzenxPx+vIXzkY69QiVdfs4Q0TylWxDQHU=
+	t=1783302063; cv=none; b=SX4vjSHZI788F07AvbjoSe5QN4BPLDP/aXCbwFogZuzpPI6qZqIeIl7FZojrcwb9RmJd4RN3oOjORQ/MvJ7PeoQV5IQH1GlKmSO4A3pPBkR7AyKTmRJPjor61QDztKgbTdlvi94eLSbTx+3I+qU5HYw0/eiwHtzSFMgAcHe1qAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783302062; c=relaxed/simple;
-	bh=Gs0DY4skzUxDJcoAUdLKS+CVrIjwqmDpuXBlhkdHboY=;
+	s=arc-20240116; t=1783302063; c=relaxed/simple;
+	bh=0mI9WfCKXZ88xAlqsJMMNuFVm4h/9SvqfEqn8QqrLVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkzB4iqRislaaLt9hB25ITgj41FwuvpDG9cnhgYsgCtoJy8MB6agsroa9bl4nWMGgIvQpWec3L5YVIr9BN6Mhu0HHeYitZiugqNr0gygUkBE/7w23n1xPrZVogeoQrIAC8vO1nYwh9GJnXzAD5bVMK6tNIt9vE9PH12ont/svAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B0kr5LQ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cJpqIUAhOJgotJFTU+kDAwi7GbHuFDCTBoYJa00b+W/7j7ayXGGUPXStgj26UDluSleiSTXxl3yRjpyA5XRPSZ5qTwoCgZ4efDWZ0Hr2D6xaiHi0oIrOeMKM7QEe4KTE1sspmHxelUlZCovnbyOA7Gnz+t9SBH5xgNYFmunpOjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=byLNr34X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B0kr5LQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53FD91F00A3D;
-	Mon,  6 Jul 2026 01:41:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="byLNr34X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5394F1F000E9;
+	Mon,  6 Jul 2026 01:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783302061;
-	bh=G53dXQhkJaxH3bQ+S+EqX2WmpEbXWk3f96dnSqTuycQ=;
+	s=k20260515; t=1783302062;
+	bh=IbYqhU62Y8V6P/etDCSBiUQ7EDXxksqUU4iZDQ19TuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0kr5LQ6tQm7ZhQS/9gSEnaKZ+MB4eOTElHsnKFO01eJ48GABTUYShMC8gTCaDGqS
-	 QT5nNiwHftGytxkqo7lMQ/4ugZqIbZrNrKGAxGqjjJMtdGdc5obWUrYQjuImJ+xugC
-	 QC9ypDhqo1NtPNyEcyNc6dKSjpwLb0wQKJC5Q7rCJcuf1w6MqW5JsNUhdAKyNF1zn2
-	 YnJSpFxbkwvAPfO1leYzyBwys9Q6EffCYOlFtk9xWGMztK0VF1LxHqQtrDd5hNnZjr
-	 SDrmALOL03MX/KjVSgbQNxO11mbki+RaubTQ3P827ErDGx/Ttz//YbOJ4B1aQQbhxk
-	 hgSibx7HkynuA==
+	b=byLNr34XDAmTfZ/mJZkQUZDLan4JCVOZmEJ+Cwr9oWlW4/kqk0w5NScdeHWUtEfAR
+	 6pmG2bdOVaUCIlZv91EH2IXblWD33Z3cM4kXdL38aGiHOhKcLs7DWjTC1A6Joa4GPn
+	 /m5jeuIpbK+6G0iwJioNnIw4tKcE7ncNUWx0gqoGHiraBrh7HTBeFXvOXx8Opkz59m
+	 8Qvk/O0R5oj/hIodTW+GDJCAD6KikprIuxDRj0Qbp9UrUEL3H6917qvGkJVr8CtUNO
+	 mwpJGEzkumYxl9TRnOkULU8bquRGutrja//C///K9DDmNZpDF9Aed+yZ7JucXIE9Zc
+	 ec7EMxnkYnz+A==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v2 sched_ext/for-7.3 02/36] sched_ext: Rename extra_enq_flags to remote_activate_enq_flags
-Date: Sun,  5 Jul 2026 15:40:24 -1000
-Message-ID: <20260706014058.439853-3-tj@kernel.org>
+Subject: [PATCH v2 sched_ext/for-7.3 03/36] sched_ext: Fix premature ops->priv publication in scx_alloc_and_add_sched()
+Date: Sun,  5 Jul 2026 15:40:25 -1000
+Message-ID: <20260706014058.439853-4-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260706014058.439853-1-tj@kernel.org>
 References: <20260706014058.439853-1-tj@kernel.org>
@@ -48,65 +48,66 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_rq.extra_enq_flags carries scx-specific enqueue flags across the
-activate_task() boundary during a cross-rq task move in
-move_remote_task_to_local_dsq(). Rename it to remote_activate_enq_flags to
-name that role, and fix the stale comment that referenced the old
-move_task_to_local_dsq() name.
+scx_alloc_and_add_sched() publishes @sch through ops->priv before allocating
+the cgroup path. If that allocation fails, the unwind path clears ops->priv
+and frees @sch immediately. scx_prog_sched() callers can dereference
+ops->priv from RCU context the moment it is set, so freeing without a grace
+period can use-after-free a concurrent kfunc caller.
 
-No functional change.
+Move the publication below the cgroup path allocation so that every failure
+path after publication frees @sch through kobject_put(), whose release path
+defers the freeing by a grace period.
 
+Fixes: 105dcd005be2 ("sched_ext: Introduce scx_prog_sched()")
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c | 10 +++++-----
- kernel/sched/sched.h   |  3 ++-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ kernel/sched/ext/ext.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index b1bd506fd6ec..d15cf3c7f87c 100644
+index d15cf3c7f87c..be75bdc9ada2 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1824,7 +1824,7 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
- {
- 	struct scx_sched *sch = scx_task_sched(p);
- 	int sticky_cpu = p->scx.sticky_cpu;
--	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
-+	u64 enq_flags = core_enq_flags | rq->scx.remote_activate_enq_flags;
+@@ -6355,11 +6355,6 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		sch->ops = *cmd->ops;
+ 	}
  
- 	if (enq_flags & ENQUEUE_WAKEUP)
- 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
-@@ -2097,13 +2097,13 @@ static void move_remote_task_to_local_dsq(struct task_struct *p, u64 enq_flags,
- 	/*
- 	 * We want to pass scx-specific enq_flags but activate_task() will
- 	 * truncate the upper 32 bit. As we own @rq, we can pass them through
--	 * @rq->scx.extra_enq_flags instead.
-+	 * @rq->scx.remote_activate_enq_flags instead.
- 	 */
- 	WARN_ON_ONCE(!cpumask_test_cpu(cpu_of(dst_rq), p->cpus_ptr));
--	WARN_ON_ONCE(dst_rq->scx.extra_enq_flags);
--	dst_rq->scx.extra_enq_flags = enq_flags;
-+	WARN_ON_ONCE(dst_rq->scx.remote_activate_enq_flags);
-+	dst_rq->scx.remote_activate_enq_flags = enq_flags;
- 	activate_task(dst_rq, p, 0);
--	dst_rq->scx.extra_enq_flags = 0;
-+	dst_rq->scx.remote_activate_enq_flags = 0;
- }
+-	rcu_assign_pointer(ops->priv, sch);
+-
+-	sch->kobj.kset = scx_kset;
+-	INIT_LIST_HEAD(&sch->all);
+-
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	char *buf = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!buf) {
+@@ -6377,7 +6372,19 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 	sch->cgrp = cgrp;
+ 	INIT_LIST_HEAD(&sch->children);
+ 	INIT_LIST_HEAD(&sch->sibling);
++#endif	/* CONFIG_EXT_SUB_SCHED */
  
- /*
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 56acf502ba26..80b72d934ff3 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -797,7 +797,8 @@ struct scx_rq {
- 	struct list_head	runnable_list;		/* runnable tasks on this rq */
- 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
- 	unsigned long		ops_qseq;
--	u64			extra_enq_flags;	/* see move_task_to_local_dsq() */
-+	/* see move_remote_task_to_local_dsq() */
-+	u64			remote_activate_enq_flags;
- 	u32			nr_running;
- 	u32			cpuperf_target;		/* [0, SCHED_CAPACITY_SCALE] */
- 	bool			in_select_cpu;
++	/*
++	 * Publishing makes @sch visible to scx_prog_sched() readers. Failure
++	 * paths after this point must free @sch through kobject_put() whose
++	 * release path defers the actual freeing by an RCU grace period.
++	 */
++	rcu_assign_pointer(ops->priv, sch);
++
++	sch->kobj.kset = scx_kset;
++	INIT_LIST_HEAD(&sch->all);
++
++#ifdef CONFIG_EXT_SUB_SCHED
+ 	if (parent) {
+ 		/*
+ 		 * Pin @parent for @sch's lifetime. The kobject hierarchy pins
+@@ -6432,7 +6439,6 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 
+ #ifdef CONFIG_EXT_SUB_SCHED
+ err_free_lb_resched:
+-	RCU_INIT_POINTER(ops->priv, NULL);
+ 	free_cpumask_var(sch->stall_cpus);
+ #endif
+ err_free_lb_resched_cpumask:
 -- 
 2.54.0
 
