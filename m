@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC18337BE64;
-	Mon,  6 Jul 2026 01:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B553937C936;
+	Mon,  6 Jul 2026 01:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783302072; cv=none; b=CFRs2L/Q81N2a9Bd0G/8JKekzPmRlW89fuGI5Xo+0K+WzsQ6u1uD7XpGLbly5RW5TyEohXvJJyV1hQk90dwPwnmv5Houyd3Kz84zSV27RkLp9azZ5cXkFimYismUb/Z5nB+JgzKqGmot1VG/R5vCQwrTiIK+tl0VxPfDasrbFk8=
+	t=1783302073; cv=none; b=qEjPl+hf6ovuWk+GMNo0arLx1Vbfwo7XhT/hsN1KL34tZaf7ChoDHv/a2VI1bnHk9odwbCCbKYRpjSZkdZYs3rmK/jMsSH+U3NryOsrdkverrtZPsJqeHvhKj9tK4r1HReNv1FRl90I78JL9Q7UNQTxUGkW2mSKJsLBRjWTRcKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783302072; c=relaxed/simple;
-	bh=WP8QF/9c9K66y4knIFCv708cMt9HLOPxDwI6hftiiZs=;
+	s=arc-20240116; t=1783302073; c=relaxed/simple;
+	bh=wIQOzrrFOxez2bmTX+olDwkHYR+iWKhdRFaAGUMS0JM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdiJVdFok/pFWVjKDVdyhKkpOxaP3ZYHctsmpHsQMDNUT8DW9B53nni88JdNDfW5H07kwYSHdxvPXlLc33bd5WMvBquBLjCLUCY3VPfIo6thF/xRJMt0a2KbMw1Yst9uaPkJyZW3nyt6r5eP00f7M7M6yy0TW3WqsPkB8jhpNxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQJ58zXM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LEmj9tFVMqRVh1zh3yov99ILq5TkBv7XU3u7xlemR57lYg+F8ohwzeroRD2YmrpJdLLG2zFbsEErJHk5vN2eKQD3m6iMe1ojlQqjVJ9Xo8GOEE+zKPOi0W/+P6b32E8GDvrdkyAOEhgbYMSbxlwzlQmokCeoOG3sDa6+JGf28D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6AOVC3I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQJ58zXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0661F00A3A;
-	Mon,  6 Jul 2026 01:41:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6AOVC3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7271A1F000E9;
+	Mon,  6 Jul 2026 01:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783302070;
-	bh=QlHsxholBPJN7fYke0+HueNOsiqcsLT+sTwbkYpRq5E=;
+	s=k20260515; t=1783302068;
+	bh=jVhXxLQS9qxy8Nz/vACRAfL6oIOqjrZDoawVUZ20BgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQJ58zXMVW/x1MvjveZL5xy504XWPYF6su2OEjGqYt2w8PIAQAc6HSzoHz4OAaBYd
-	 CSnqNDxWH2Ie8xCB+JQjbOsLASkcYSUH/njaQJD/QS13hrqdydkGWm0mmK9TxxyJeW
-	 TjXH2U3H0L/Xe88dKg2GOQjO7KE8vRn/fioY0VjYfdJ7Qx9wdqge0chTCiR+n7+sWl
-	 a0wFzaYHSkplTW/lgVOzsTCBkwt8+STUIWWa//8LfrKNcjs7SULuIDcLC/GD+Lp6Jt
-	 ev+wzps5waJADK5GQnmFkDSY9hvykqNZfGWXLifDgn5qxFQ5krS2eEKXW55yUMP24P
-	 rVjhXdBDYBn6w==
+	b=j6AOVC3I9AGRifyXUqN7fkqQghgrCBMIK/fFc5fCMbWd9eTZyZZkg8dUfZfyX8Mkd
+	 +7BjhtNmGerstt4MJ7MhJyzdI3CBD4M7SmENUyQuzx8yzRZQhTeu6mnwDRGJhm/JaS
+	 Vri9Ow21Lo3gB/t4sznw5c1zFLfE4N1mvxGGJt6aI1K6dTAvwSI2Hve58sA30nT8ZY
+	 2nvZ+nx7lu8nreclLtYGWYFssKxL+JI4tN+Up+K3B6GOCggqZjOm0TcZog+cZ7XstL
+	 fCezugV852rvEZoocBDdFpuxyYEWKUvXHViN7P+c0z5L2KScE69H1m6xNehZThQIav
+	 mbaLH3HtTRXFQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v2 sched_ext/for-7.3 11/36] sched_ext: Add CID sharding
-Date: Sun,  5 Jul 2026 15:40:33 -1000
-Message-ID: <20260706014058.439853-12-tj@kernel.org>
+Subject: [PATCH v2 sched_ext/for-7.3 09/36] sched_ext: Make the kick machinery per-sched
+Date: Sun,  5 Jul 2026 15:40:31 -1000
+Message-ID: <20260706014058.439853-10-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260706014058.439853-1-tj@kernel.org>
 References: <20260706014058.439853-1-tj@kernel.org>
@@ -48,416 +48,330 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sub-sched operations need a scalable locking / work domain smaller than the
-whole cid space. Carve the cid space into topology-respecting shards: each
-shard is a contiguous cid range that stays within one LLC, and LLCs larger
-than the per-shard cap (default 24 cids, configurable via
-ops.cid_shard_size) split into enough shards to fit. A hard cap of
-SCX_CID_SHARD_MAX_CPUS prevents pathological sizes under custom
-configurations.
+The kick machinery kept its targets in rq->scx shared by every sched on the
+cpu. A preempt kick carried no record of which scheduler requested it.
 
-No-topo cids pack into their own shards so every cid has a shard assignment.
+A later patch needs preempt kicks scoped to the requesting scheduler so a
+sub-scheduler can preempt only tasks in its own subtree. Move the kick masks
+into the per-sched per-cpu scx_sched_pcpu and have scx_kick_cpu() link the
+sched onto a per-cpu list (rq->scx.sched_pcpus_to_kick). The cpu's single
+kick irq_work walks that list and kicks each sched's targets on its behalf,
+so a kick stays attributed to its scheduler.
 
-Also build scx_cid_shard_ranges[] for O(1) shard-to-cid-range lookup and
-scx_shard_node[] so callers can size or place work by NUMA without walking
-cids. Auto-built shards inherit their LLC's node. No-topo shards carry
-NUMA_NO_NODE.
+The SCX_KICK_WAIT sync set (cpus_to_sync, the kick_sync snapshot and the
+balance-callback trigger) stays in rq->scx: the waiter is the cpu, not the
+scheduler, and its only writers, the kick irq_work and the wait balance
+callback, are cpu-local.
+
+v2: Warn once per sched on scx_bpf_kick_cpu() from NMI.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/cid.c      | 132 ++++++++++++++++++++++++++++++++++--
- kernel/sched/ext/cid.h      |   4 ++
- kernel/sched/ext/ext.c      |   4 ++
- kernel/sched/ext/internal.h |  13 ++++
- kernel/sched/ext/types.h    |  35 ++++++++--
- 5 files changed, 176 insertions(+), 12 deletions(-)
+ kernel/sched/ext/ext.c      | 119 ++++++++++++++++++++++++++----------
+ kernel/sched/ext/internal.h |  14 +++++
+ kernel/sched/sched.h        |   6 +-
+ 3 files changed, 104 insertions(+), 35 deletions(-)
 
-diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index b0ec4d76f855..f3c54f4223b4 100644
---- a/kernel/sched/ext/cid.c
-+++ b/kernel/sched/ext/cid.c
-@@ -18,13 +18,17 @@
-  * use scx_bpf_cid_override() to change the mapping. The mapping stays stable
-  * until the root is disabled.
-  */
-+u32 scx_nr_cid_shards;
- s16 *scx_cid_to_cpu_tbl;
- s16 *scx_cpu_to_cid_tbl;
-+s32 *scx_cid_to_shard;
-+s32 *scx_shard_node;
-+struct scx_cid_shard *scx_cid_shard_ranges;
- struct scx_cid_topo *scx_cid_topo;
- 
- #define SCX_CID_TOPO_NEG	(struct scx_cid_topo) {				\
- 	.core_cid = -1, .core_idx = -1, .llc_cid = -1, .llc_idx = -1,		\
--	.node_cid = -1, .node_idx = -1,						\
-+	.node_cid = -1, .node_idx = -1, .shard_cid = -1, .shard_idx = -1,	\
- }
- 
- /*
-@@ -43,11 +47,40 @@ static const struct cpumask *cpu_llc_mask(int cpu, struct cpumask *fallbacks)
- 	return &ci->info_list[ci->num_leaves - 1].shared_cpu_map;
- }
- 
-+/*
-+ * Compute per-LLC shard layout. Each shard holds at most @shard_size cids, and
-+ * in any case no more than SCX_CID_SHARD_MAX_CPUS. Cores are spread as evenly
-+ * as possible across shards so cpu count is balanced: the first *@nr_large_p
-+ * shards get (*@cores_per_shard_p + 1) cores, the rest get *@cores_per_shard_p.
-+ */
-+static void calc_shard_layout(const struct cpumask *llc_cpus, u32 shard_size,
-+			      u32 *cores_per_shard_p, u32 *nr_large_p)
-+{
-+	u32 nr_cores = 0, nr_cpus = 0, nr_shards;
-+	int cpu;
-+
-+	for_each_cpu(cpu, llc_cpus) {
-+		nr_cpus++;
-+		if (cpumask_first(topology_sibling_cpumask(cpu)) == cpu)
-+			nr_cores++;
-+	}
-+
-+	nr_shards = max_t(u32, 1, DIV_ROUND_UP(nr_cpus, shard_size));
-+	nr_shards = max_t(u32, nr_shards,
-+			  DIV_ROUND_UP(nr_cpus, SCX_CID_SHARD_MAX_CPUS));
-+
-+	*cores_per_shard_p = nr_cores / nr_shards;
-+	*nr_large_p = nr_cores % nr_shards;
-+}
-+
- /* Allocate the cid tables once on first enable; never freed. */
- static s32 scx_cid_arrays_alloc(void)
- {
- 	u32 npossible = num_possible_cpus();
- 	s16 *cid_to_cpu, *cpu_to_cid;
-+	s32 *cid_to_shard;
-+	s32 *shard_node;
-+	struct scx_cid_shard *cid_shard_ranges;
- 	struct scx_cid_topo *cid_topo;
- 
- 	if (scx_cid_to_cpu_tbl)
-@@ -55,17 +88,27 @@ static s32 scx_cid_arrays_alloc(void)
- 
- 	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
- 	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
-+	cid_to_shard = kzalloc_objs(*scx_cid_to_shard, npossible, GFP_KERNEL);
-+	shard_node = kmalloc_objs(*scx_shard_node, npossible, GFP_KERNEL);
-+	cid_shard_ranges = kzalloc_objs(*scx_cid_shard_ranges, npossible, GFP_KERNEL);
- 	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
- 
--	if (!cid_to_cpu || !cpu_to_cid || !cid_topo) {
-+	if (!cid_to_cpu || !cpu_to_cid || !cid_to_shard || !shard_node ||
-+	    !cid_shard_ranges || !cid_topo) {
- 		kfree(cid_to_cpu);
- 		kfree(cpu_to_cid);
-+		kfree(cid_to_shard);
-+		kfree(shard_node);
-+		kfree(cid_shard_ranges);
- 		kfree(cid_topo);
- 		return -ENOMEM;
- 	}
- 
- 	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
- 	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
-+	WRITE_ONCE(scx_cid_to_shard, cid_to_shard);
-+	WRITE_ONCE(scx_shard_node, shard_node);
-+	WRITE_ONCE(scx_cid_shard_ranges, cid_shard_ranges);
- 	WRITE_ONCE(scx_cid_topo, cid_topo);
- 	return 0;
- }
-@@ -90,17 +133,29 @@ s32 scx_cid_init(struct scx_sched *sch)
- 	cpumask_var_t online_no_topo __free(free_cpumask_var) = CPUMASK_VAR_NULL;
- 	u32 next_cid = 0;
- 	s32 next_node_idx = 0, next_llc_idx = 0, next_core_idx = 0;
--	s32 cpu, ret;
-+	s32 next_shard_idx = 0;
-+	u32 shard_size, max_cids;
-+	u32 notopo_in_shard;
-+	s32 notopo_shard_cid, notopo_shard_idx;
-+	s32 cpu, cid, si, ret;
- 
- 	/* CMASK_MAX_WORDS in cid.bpf.h covers NR_CPUS up to 8192 */
- 	BUILD_BUG_ON(NR_CPUS > 8192);
- 
- 	lockdep_assert_cpus_held();
- 
-+	shard_size = sch->ops.cid_shard_size ?: SCX_CID_SHARD_SIZE_DFL;
-+	max_cids = min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS);
-+
- 	ret = scx_cid_arrays_alloc();
- 	if (ret)
- 		return ret;
- 
-+	/* clear shard ranges and reset shard_node for repopulate */
-+	memset(scx_cid_shard_ranges, 0, num_possible_cpus() * sizeof(*scx_cid_shard_ranges));
-+	for (si = 0; si < num_possible_cpus(); si++)
-+		scx_shard_node[si] = NUMA_NO_NODE;
-+
- 	if (!zalloc_cpumask_var(&to_walk, GFP_KERNEL) ||
- 	    !zalloc_cpumask_var(&node_scratch, GFP_KERNEL) ||
- 	    !zalloc_cpumask_var(&llc_scratch, GFP_KERNEL) ||
-@@ -142,29 +197,60 @@ s32 scx_cid_init(struct scx_sched *sch)
- 			const struct cpumask *llc_mask = cpu_llc_mask(ncpu, llc_fallback);
- 			s32 llc_cid = next_cid;
- 			s32 llc_idx = next_llc_idx++;
-+			u32 cores_per_shard, nr_large;
-+			u32 shard_local = 0, cores_in_shard = 0, cids_in_shard = 0;
-+			s32 shard_cid, shard_idx;
- 
- 			/* llc_scratch = node_scratch & this llc */
- 			cpumask_and(llc_scratch, node_scratch, llc_mask);
- 			if (WARN_ON_ONCE(!cpumask_test_cpu(ncpu, llc_scratch)))
- 				return -EINVAL;
- 
-+			calc_shard_layout(llc_scratch, shard_size, &cores_per_shard, &nr_large);
-+			shard_cid = next_cid;
-+			shard_idx = next_shard_idx++;
-+			scx_shard_node[shard_idx] = nid;
-+
- 			while (!cpumask_empty(llc_scratch)) {
- 				s32 lcpu = cpumask_first(llc_scratch);
- 				const struct cpumask *sib = topology_sibling_cpumask(lcpu);
- 				s32 core_cid = next_cid;
- 				s32 core_idx = next_core_idx++;
- 				s32 ccpu;
-+				u32 max_cores, cids_in_core;
- 
- 				/* core_scratch = llc_scratch & this core */
- 				cpumask_and(core_scratch, llc_scratch, sib);
- 				if (WARN_ON_ONCE(!cpumask_test_cpu(lcpu, core_scratch)))
- 					return -EINVAL;
- 
-+				/*
-+				 * Advance to a new shard when either core or
-+				 * cid count reaches max. The latter bounds
-+				 * shard sizes under uneven SMT. Never start an
-+				 * empty shard.
-+				 */
-+				cids_in_core = cpumask_weight(core_scratch);
-+				max_cores = cores_per_shard + (shard_local < nr_large ? 1 : 0);
-+				if (cores_in_shard &&
-+				    (cores_in_shard >= max_cores ||
-+				     cids_in_shard + cids_in_core > max_cids)) {
-+					shard_local++;
-+					cores_in_shard = 0;
-+					cids_in_shard = 0;
-+					shard_cid = next_cid;
-+					shard_idx = next_shard_idx++;
-+					scx_shard_node[shard_idx] = nid;
-+				}
-+				cores_in_shard++;
-+				cids_in_shard += cids_in_core;
-+
- 				for_each_cpu(ccpu, core_scratch) {
- 					s32 cid = next_cid++;
- 
- 					scx_cid_to_cpu_tbl[cid] = ccpu;
- 					scx_cpu_to_cid_tbl[ccpu] = cid;
-+					scx_cid_to_shard[cid] = shard_idx;
- 					scx_cid_topo[cid] = (struct scx_cid_topo){
- 						.core_cid = core_cid,
- 						.core_idx = core_idx,
-@@ -172,6 +258,8 @@ s32 scx_cid_init(struct scx_sched *sch)
- 						.llc_idx = llc_idx,
- 						.node_cid = node_cid,
- 						.node_idx = node_idx,
-+						.shard_cid = shard_cid,
-+						.shard_idx = shard_idx,
- 					};
- 
- 					cpumask_clear_cpu(ccpu, llc_scratch);
-@@ -184,12 +272,17 @@ s32 scx_cid_init(struct scx_sched *sch)
- 
- 	/*
- 	 * No-topo section: any possible cpu without a cid - normally just the
--	 * not-online ones. Collect any currently-online cpus that land here in
--	 * @online_no_topo so we can warn about them at the end.
-+	 * not-online ones. Pack into shards of up to min(@shard_size,
-+	 * SCX_CID_SHARD_MAX_CPUS) cids so that every cid has a valid shard
-+	 * assignment and the hard cap holds even with a large @shard_size.
-+	 * Collect any currently-online cpus that land here in @online_no_topo
-+	 * so we can warn about them at the end.
- 	 */
--	for_each_cpu(cpu, cpu_possible_mask) {
--		s32 cid;
-+	notopo_in_shard = min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS);
-+	notopo_shard_cid = -1;
-+	notopo_shard_idx = -1;
- 
-+	for_each_cpu(cpu, cpu_possible_mask) {
- 		if (__scx_cpu_to_cid(cpu) != -1)
- 			continue;
- 		if (cpu_online(cpu))
-@@ -198,7 +291,18 @@ s32 scx_cid_init(struct scx_sched *sch)
- 		cid = next_cid++;
- 		scx_cid_to_cpu_tbl[cid] = cpu;
- 		scx_cpu_to_cid_tbl[cpu] = cid;
-+
-+		if (notopo_in_shard >= min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS)) {
-+			notopo_shard_cid = cid;
-+			notopo_shard_idx = next_shard_idx++;
-+			notopo_in_shard = 0;
-+		}
-+		notopo_in_shard++;
-+
-+		scx_cid_to_shard[cid] = notopo_shard_idx;
- 		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
-+		scx_cid_topo[cid].shard_cid = notopo_shard_cid;
-+		scx_cid_topo[cid].shard_idx = notopo_shard_idx;
- 	}
- 
- 	if (!cpumask_empty(llc_fallback))
-@@ -208,6 +312,20 @@ s32 scx_cid_init(struct scx_sched *sch)
- 		pr_warn("scx_cid: online cpus with no usable topology: %*pbl\n",
- 			cpumask_pr_args(online_no_topo));
- 
-+	/*
-+	 * Fill cid_shard_ranges[] from cid_to_shard[]. Shards are contiguous
-+	 * cid ranges by construction: base_cid is the first cid landing in a
-+	 * shard, nr_cids is the count.
-+	 */
-+	for (cid = 0; cid < next_cid; cid++) {
-+		s32 sidx = scx_cid_to_shard[cid];
-+
-+		if (scx_cid_shard_ranges[sidx].nr_cids == 0)
-+			scx_cid_shard_ranges[sidx].base_cid = cid;
-+		scx_cid_shard_ranges[sidx].nr_cids++;
-+	}
-+
-+	scx_nr_cid_shards = next_shard_idx;
- 	return 0;
- }
- 
-diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-index cd0d4b9f1088..cdc18a7a48f5 100644
---- a/kernel/sched/ext/cid.h
-+++ b/kernel/sched/ext/cid.h
-@@ -48,8 +48,12 @@ struct scx_sched;
-  * See the comment above the table definitions in cid.c for the
-  * memory-ordering and visibility contract.
-  */
-+extern u32 scx_nr_cid_shards;
- extern s16 *scx_cid_to_cpu_tbl;
- extern s16 *scx_cpu_to_cid_tbl;
-+extern s32 *scx_cid_to_shard;
-+extern s32 *scx_shard_node;
-+extern struct scx_cid_shard *scx_cid_shard_ranges;
- extern struct scx_cid_topo *scx_cid_topo;
- extern struct btf_id_set8 scx_kfunc_ids_init_cids;
- 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index ee390d95cd2e..4e48ef16bdab 100644
+index 187754d0c3c8..150e74129266 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -7133,6 +7133,9 @@ static int bpf_scx_init_member(const struct btf_type *t,
- 	case offsetof(struct sched_ext_ops, hotplug_seq):
- 		ops->hotplug_seq = *(u64 *)(udata + moff);
- 		return 1;
-+	case offsetof(struct sched_ext_ops, cid_shard_size):
-+		ops->cid_shard_size = *(u32 *)(udata + moff);
-+		return 1;
- #ifdef CONFIG_EXT_SUB_SCHED
- 	case offsetof(struct sched_ext_ops, sub_cgroup_id):
- 		ops->sub_cgroup_id = *(u64 *)(udata + moff);
-@@ -9830,6 +9833,7 @@ static int __init scx_init(void)
- 	CID_OFFSET_MATCH(timeout_ms, timeout_ms);
- 	CID_OFFSET_MATCH(exit_dump_len, exit_dump_len);
- 	CID_OFFSET_MATCH(hotplug_seq, hotplug_seq);
-+	CID_OFFSET_MATCH(cid_shard_size, cid_shard_size);
- 	CID_OFFSET_MATCH(sub_cgroup_id, sub_cgroup_id);
- 	/* shared callbacks: the union view requires byte-for-byte offset match */
- 	CID_OFFSET_MATCH(enqueue, enqueue);
+@@ -4624,6 +4624,17 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 		 */
+ 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
+ 
++		/*
++		 * Bypass blocks new kicks. Flush the kick irq_work so this
++		 * pcpu's to_kick_node is off the list before it is freed.
++		 */
++		irq_work_sync(&cpu_rq(cpu)->scx.kick_cpus_irq_work);
++		WARN_ON_ONCE(!list_empty(&pcpu->to_kick_node));
++		free_cpumask_var(pcpu->cpus_to_kick);
++		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
++		free_cpumask_var(pcpu->cpus_to_preempt);
++		free_cpumask_var(pcpu->cpus_to_wait);
++
+ 		exit_dsq(scx_bypass_dsq(sch, cpu));
+ 	}
+ 
+@@ -5967,6 +5978,7 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+ 			 bool dump_all_tasks)
+ {
+ 	struct rq *rq = cpu_rq(cpu);
++	struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+ 	struct rq_flags rf;
+ 	struct task_struct *p;
+ 	struct seq_buf ns;
+@@ -5999,18 +6011,18 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+ 	dump_line(&ns, "          curr=%s[%d] class=%ps",
+ 		  rq->curr->comm, rq->curr->pid,
+ 		  rq->curr->sched_class);
+-	if (!cpumask_empty(rq->scx.cpus_to_kick))
++	if (!cpumask_empty(pcpu->cpus_to_kick))
+ 		dump_line(&ns, "  cpus_to_kick   : %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_kick));
+-	if (!cpumask_empty(rq->scx.cpus_to_kick_if_idle))
++			  cpumask_pr_args(pcpu->cpus_to_kick));
++	if (!cpumask_empty(pcpu->cpus_to_kick_if_idle))
+ 		dump_line(&ns, "  idle_to_kick   : %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_kick_if_idle));
+-	if (!cpumask_empty(rq->scx.cpus_to_preempt))
++			  cpumask_pr_args(pcpu->cpus_to_kick_if_idle));
++	if (!cpumask_empty(pcpu->cpus_to_preempt))
+ 		dump_line(&ns, "  cpus_to_preempt: %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_preempt));
+-	if (!cpumask_empty(rq->scx.cpus_to_wait))
++			  cpumask_pr_args(pcpu->cpus_to_preempt));
++	if (!cpumask_empty(pcpu->cpus_to_wait))
+ 		dump_line(&ns, "  cpus_to_wait   : %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_wait));
++			  cpumask_pr_args(pcpu->cpus_to_wait));
+ 	if (!cpumask_empty(rq->scx.cpus_to_sync))
+ 		dump_line(&ns, "  cpus_to_sync   : %*pb",
+ 			  cpumask_pr_args(rq->scx.cpus_to_sync));
+@@ -6302,8 +6314,17 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 	for_each_possible_cpu(cpu) {
+ 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+ 
++		node = cpu_to_node(cpu);
+ 		pcpu->sch = sch;
+ 		INIT_LIST_HEAD(&pcpu->deferred_reenq_local.node);
++		INIT_LIST_HEAD(&pcpu->to_kick_node);
++		if (!zalloc_cpumask_var_node(&pcpu->cpus_to_kick, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_kick_if_idle, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_preempt, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_wait, GFP_KERNEL, node)) {
++			ret = -ENOMEM;
++			goto err_free_pcpu;
++		}
+ 	}
+ 
+ 	sch->helper = kthread_run_worker(0, "sched_ext_helper");
+@@ -6448,6 +6469,14 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ err_stop_helper:
+ 	kthread_destroy_worker(sch->helper);
+ err_free_pcpu:
++	for_each_possible_cpu(cpu) {
++		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
++
++		free_cpumask_var(pcpu->cpus_to_kick);
++		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
++		free_cpumask_var(pcpu->cpus_to_preempt);
++		free_cpumask_var(pcpu->cpus_to_wait);
++	}
+ 	for_each_possible_cpu(cpu) {
+ 		if (cpu == bypass_fail_cpu)
+ 			break;
+@@ -7461,7 +7490,8 @@ static bool can_skip_idle_kick(struct rq *rq)
+ 	return !is_idle_task(rq->curr) && !(rq->scx.flags & SCX_RQ_IN_BALANCE);
+ }
+ 
+-static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
++static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_rq,
++			 unsigned long *ksyncs)
+ {
+ 	struct rq *rq = cpu_rq(cpu);
+ 	struct scx_rq *this_scx = &this_rq->scx;
+@@ -7480,25 +7510,25 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
+ 	 */
+ 	if ((cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
+ 	    !sched_class_above(cur_class, &ext_sched_class)) {
+-		if (cpumask_test_cpu(cpu, this_scx->cpus_to_preempt)) {
++		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
+ 			if (cur_class == &ext_sched_class)
+ 				rq->curr->scx.slice = 0;
+-			cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
+ 		}
+ 
+-		if (cpumask_test_cpu(cpu, this_scx->cpus_to_wait)) {
++		if (cpumask_test_cpu(cpu, pcpu->cpus_to_wait)) {
+ 			if (cur_class == &ext_sched_class) {
+ 				cpumask_set_cpu(cpu, this_scx->cpus_to_sync);
+ 				ksyncs[cpu] = rq->scx.kick_sync;
+ 				should_wait = true;
+ 			}
+-			cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 		}
+ 
+ 		resched_curr(rq);
+ 	} else {
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
++		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
++		cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 	}
+ 
+ 	raw_spin_rq_unlock_irqrestore(rq, flags);
+@@ -7525,6 +7555,7 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ 	struct rq *this_rq = this_rq();
+ 	struct scx_rq *this_scx = &this_rq->scx;
+ 	struct scx_kick_syncs __rcu *ksyncs_pcpu = __this_cpu_read(scx_kick_syncs);
++	struct scx_sched_pcpu *pcpu, *tmp;
+ 	bool should_wait = false;
+ 	unsigned long *ksyncs;
+ 	s32 cpu;
+@@ -7535,15 +7566,24 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ 
+ 	ksyncs = rcu_dereference_bh(ksyncs_pcpu)->syncs;
+ 
+-	for_each_cpu(cpu, this_scx->cpus_to_kick) {
+-		should_wait |= kick_one_cpu(cpu, this_rq, ksyncs);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
+-	}
++	/*
++	 * Walk scheds with pending kicks on this cpu. scx_kick_cpu() adds to
++	 * the list under local_irq_save() and only this irq_work consumes it.
++	 * A plain list without locking is sufficient.
++	 */
++	list_for_each_entry_safe(pcpu, tmp, &this_scx->sched_pcpus_to_kick, to_kick_node) {
++		list_del_init(&pcpu->to_kick_node);
++
++		for_each_cpu(cpu, pcpu->cpus_to_kick) {
++			should_wait |= kick_one_cpu(cpu, pcpu, this_rq, ksyncs);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
++		}
+ 
+-	for_each_cpu(cpu, this_scx->cpus_to_kick_if_idle) {
+-		kick_one_cpu_if_idle(cpu, this_rq);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
++		for_each_cpu(cpu, pcpu->cpus_to_kick_if_idle) {
++			kick_one_cpu_if_idle(cpu, this_rq);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
++		}
+ 	}
+ 
+ 	/*
+@@ -7668,11 +7708,8 @@ void __init init_sched_ext_class(void)
+ 		INIT_LIST_HEAD(&rq->scx.runnable_list);
+ 		INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
+ 
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick, GFP_KERNEL, n));
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_sync, GFP_KERNEL, n));
++		INIT_LIST_HEAD(&rq->scx.sched_pcpus_to_kick);
+ 		raw_spin_lock_init(&rq->scx.deferred_reenq_lock);
+ 		INIT_LIST_HEAD(&rq->scx.deferred_reenq_locals);
+ 		INIT_LIST_HEAD(&rq->scx.deferred_reenq_users);
+@@ -8458,12 +8495,27 @@ __bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime,
+ 
+ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ {
++	struct scx_sched_pcpu *pcpu;
+ 	struct rq *this_rq;
+ 	unsigned long irq_flags;
+ 
++	/*
++	 * The per-cpu kick list is guarded only by local_irq_save(), which does
++	 * not mask NMIs, so kicking from NMI could corrupt it and is unsupported.
++	 */
++	if (unlikely(in_nmi())) {
++		if (!sch->warned_nmi_kick) {
++			sch->warned_nmi_kick = true;
++			pr_warn("sched_ext: %s: scx_bpf_kick_cpu() from NMI ignored\n",
++				sch->ops.name);
++		}
++		return;
++	}
++
+ 	local_irq_save(irq_flags);
+ 
+ 	this_rq = this_rq();
++	pcpu = this_cpu_ptr(sch->pcpu);
+ 
+ 	/*
+ 	 * While bypassing for PM ops, IRQ handling may not be online which can
+@@ -8477,6 +8529,9 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 	 * Actual kicking is bounced to kick_cpus_irq_workfn() to avoid nesting
+ 	 * rq locks. We can probably be smarter and avoid bouncing if called
+ 	 * from ops which don't hold a rq lock.
++	 *
++	 * The kick masks are owned by @sch->pcpu, so that a preempt kick can be
++	 * attributed to @sch.
+ 	 */
+ 	if (flags & SCX_KICK_IDLE) {
+ 		struct rq *target_rq = cpu_rq(cpu);
+@@ -8491,16 +8546,18 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 			}
+ 			raw_spin_rq_unlock(target_rq);
+ 		}
+-		cpumask_set_cpu(cpu, this_rq->scx.cpus_to_kick_if_idle);
++		cpumask_set_cpu(cpu, pcpu->cpus_to_kick_if_idle);
+ 	} else {
+-		cpumask_set_cpu(cpu, this_rq->scx.cpus_to_kick);
++		cpumask_set_cpu(cpu, pcpu->cpus_to_kick);
+ 
+ 		if (flags & SCX_KICK_PREEMPT)
+-			cpumask_set_cpu(cpu, this_rq->scx.cpus_to_preempt);
++			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt);
+ 		if (flags & SCX_KICK_WAIT)
+-			cpumask_set_cpu(cpu, this_rq->scx.cpus_to_wait);
++			cpumask_set_cpu(cpu, pcpu->cpus_to_wait);
+ 	}
+ 
++	if (list_empty(&pcpu->to_kick_node))
++		list_add_tail(&pcpu->to_kick_node, &this_rq->scx.sched_pcpus_to_kick);
+ 	irq_work_queue(&this_rq->scx.kick_cpus_irq_work);
+ out:
+ 	local_irq_restore(irq_flags);
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index c9c64e91b6c6..a02aad5c0338 100644
+index 5ca44ad88786..1da4c3fa1347 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -845,6 +845,18 @@ struct sched_ext_ops {
- 	 */
- 	u64 hotplug_seq;
+@@ -1126,6 +1126,19 @@ struct scx_sched_pcpu {
+ 	struct scx_sched	*sch;
+ 	u64			flags;	/* protected by rq lock */
  
-+	/**
-+	 * @cid_shard_size: Target number of CIDs per shard
-+	 *
-+	 * Shards are contiguous CID ranges used as operation and locking
-+	 * domains for sub-scheduling. Each LLC is divided into ceil(nr_cpus /
-+	 * @cid_shard_size) shards, then cores are distributed across them
-+	 * evenly. If one core has more logical CPUs than @cid_shard_size, its
-+	 * shard will become larger than @cid_shard_size. Values above
-+	 * SCX_CID_SHARD_MAX_CPUS are capped. 0 means use the default (24).
++	/*
++	 * Kick state owned by this cpu for this sched. scx_kick_cpu() records
++	 * targets here and links @to_kick_node onto the cpu's
++	 * rq->scx.sched_pcpus_to_kick. The cpu's single kick irq_work walks
++	 * that list and kicks each sched's targets on its behalf. Per-sched so
++	 * a kick stays attributed to its scheduler.
 +	 */
-+	u32 cid_shard_size;
++	cpumask_var_t		cpus_to_kick;
++	cpumask_var_t		cpus_to_kick_if_idle;
++	cpumask_var_t		cpus_to_preempt;
++	cpumask_var_t		cpus_to_wait;
++	struct list_head	to_kick_node;
 +
- 	/**
- 	 * @cgroup_id: When >1, attach the scheduler as a sub-scheduler on the
- 	 * specified cgroup.
-@@ -977,6 +989,7 @@ struct sched_ext_ops_cid {
- 	u32 timeout_ms;
- 	u32 exit_dump_len;
- 	u64 hotplug_seq;
-+	u32 cid_shard_size;
- 	u64 sub_cgroup_id;
- 	char name[SCX_OPS_NAME_LEN];
+ 	/*
+ 	 * The event counters are in a per-CPU variable to minimize the
+ 	 * accounting overhead. A system-wide view on the event counter is
+@@ -1215,6 +1228,7 @@ struct scx_sched {
+ 	 */
+ 	bool			warned_zero_slice:1;
+ 	bool			warned_unassoc_progs:1;
++	bool			warned_nmi_kick:1;
  
-diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
-index bc74eafd43f1..b31d12931999 100644
---- a/kernel/sched/ext/types.h
-+++ b/kernel/sched/ext/types.h
-@@ -47,11 +47,16 @@ enum scx_consts {
- };
+ 	struct list_head	all;
  
- /*
-- * Per-cid topology info. For each topology level (core, LLC, node), records
-- * the first cid in the unit and its global index. Global indices are
-- * consecutive integers assigned in cid-walk order, so e.g. core_idx ranges
-- * over [0, nr_cores_at_init) with no gaps. No-topo cids have all fields set
-- * to -1.
-+ * Per-cid topology info. For each topology level (core, LLC, node) and shard,
-+ * records the first cid in the unit and its global index. Global indices are
-+ * consecutive integers assigned in cid-walk order, so e.g. core_idx ranges over
-+ * [0, nr_cores_at_init) with no gaps. No-topo cids have core/LLC/node fields
-+ * set to -1 but always have valid shard assignments.
-+ *
-+ * Shards are contiguous CID ranges used as scalable locking/work domains for
-+ * sub-scheduler operations. By default each LLC becomes one shard, split into
-+ * smaller shards if the LLC exceeds the target size. No-topo cids are packed
-+ * into their own max-sized shards.
-  *
-  * @core_cid: first cid of this cid's core (smt-sibling group)
-  * @core_idx: global index of that core, in [0, nr_cores_at_init)
-@@ -59,6 +64,8 @@ enum scx_consts {
-  * @llc_idx: global index of that LLC, in [0, nr_llcs_at_init)
-  * @node_cid: first cid of this cid's NUMA node
-  * @node_idx: global index of that node, in [0, nr_nodes_at_init)
-+ * @shard_cid: first cid of this cid's shard
-+ * @shard_idx: global index of that shard, in [0, scx_nr_cid_shards)
-  */
- struct scx_cid_topo {
- 	s32 core_cid;
-@@ -67,6 +74,24 @@ struct scx_cid_topo {
- 	s32 llc_idx;
- 	s32 node_cid;
- 	s32 node_idx;
-+	s32 shard_cid;
-+	s32 shard_idx;
-+};
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 80b72d934ff3..9e41a23ef49e 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -806,14 +806,12 @@ struct scx_rq {
+ 	u32			flags;
+ 	u32			nr_immed;		/* ENQ_IMMED tasks on local_dsq */
+ 	u64			clock;			/* current per-rq clock -- see scx_bpf_now() */
+-	cpumask_var_t		cpus_to_kick;
+-	cpumask_var_t		cpus_to_kick_if_idle;
+-	cpumask_var_t		cpus_to_preempt;
+-	cpumask_var_t		cpus_to_wait;
+ 	cpumask_var_t		cpus_to_sync;
+ 	bool			kick_sync_pending;
+ 	unsigned long		kick_sync;
+ 
++	struct list_head	sched_pcpus_to_kick;	/* see kick_cpus_irq_workfn() */
 +
-+enum scx_cid_consts {
-+	SCX_CID_SHARD_SIZE_DFL		= 24,
-+	SCX_CID_SHARD_MAX_CPUS		= 512,
-+};
-+
-+/*
-+ * Per-shard metadata for O(1) shard->cid-range lookup.
-+ *
-+ * @base_cid: first cid of the shard
-+ * @nr_cids: number of cids in the shard
-+ */
-+struct scx_cid_shard {
-+	s32			base_cid;
-+	s32			nr_cids;
- };
+ 	struct task_struct	*sub_dispatch_prev;
  
- /*
+ 	raw_spinlock_t		deferred_reenq_lock;
 -- 
 2.54.0
 
