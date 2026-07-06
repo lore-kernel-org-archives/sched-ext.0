@@ -1,142 +1,198 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659842C9D
-	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 02:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6F427B32C
+	for <sched-ext@lists.linux.dev>; Mon,  6 Jul 2026 02:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783303767; cv=none; b=iMzGSgBNjnrgX2P+zGOe+66qWDkQbbcM/dfSM8y78Nspvz7tQ1iz+RQ2tgZx/kvtD1oas9fe1bLzgMXgrVxgGTog6eeby/MRT6G+4kWr6aRwxeMxqROuJ5esGnXPyJA/bW6KQ44VHAMTizQQt1QQ9AkG61qZTABMfERjf4dxgXg=
+	t=1783303817; cv=none; b=K4aNHMSt8fkZgdER/79EafzGp0JvFySOC8mlj/O0tnR1waV+gXfyWi+lVimCtwSpuF14i5AOxO3hfQTmopfpFSAnDZQvs7uS3bkGdohxDPflrVFKpsmUKL8NTS7WijQTdBCUDbpxQl/wGE8wPXU8eQTKVSq6sDZzCEAJvuiigGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783303767; c=relaxed/simple;
-	bh=HpZUplxwEQh1Jm4dH+I8Kjx1CHGhoLf5J1lnHZuDvBk=;
+	s=arc-20240116; t=1783303817; c=relaxed/simple;
+	bh=bty7GzsjTjd5GTGJJ0+t6z+C3oDGHg6fEBc7X+l2qRE=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=OEkANryszU6dneWF4pBypgxMa+KXwyPnLIolCVRTP3NKpKRZO+E5Gk5y/Ri2sQ7VQAufvYVz9J5ti9N6GScjMXZW6nvcD9CKOdHNFUxxVk+y35d6S6p3HBGU9NQxMx7DDH8TXIRzJxsaU6o1/ni1fOae8KS0O7PJpoxz1rsqoqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBuJMhfD; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=RLWt0sI14f5h0U76Zd+jVxrpyATx+98mi1Va/G72gI+qvMivq8qgKiOo3wp60I6lnAN9UUX8N0I90XnkWWu6yBYHO9djxhFZ8XSC4eHEpQ9O+2FPHmVcKZQ2cZO6yGfB/8qYFRiFFJ4iik/gm8Hq22b/PaVwzt1P478OJhL2fWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cZV+vaMx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBuJMhfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422B21F00A3A;
-	Mon,  6 Jul 2026 02:09:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cZV+vaMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB9F1F000E9;
+	Mon,  6 Jul 2026 02:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783303766;
-	bh=Xbl+OkX6fAHx4oihvwwZaPePqg0C7xfEAmro1xDERQ0=;
+	s=k20260515; t=1783303816;
+	bh=qAaE3luVj7un5F/8UIbJNbOmGpUSGbeOnpeJTZM7rRI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=aBuJMhfDI01CqNWuFFV26+3lBQAPph0AMzhw2RuRPFLLMWRnqXpdC4b2o5ZRfXMPs
-	 qH86phOBofPx/qomTzAYxyMge+aH9Bepn1NfJy8VibJHiIhzBmCiDNWYGhYMVG08Qn
-	 MubBfN5Gy6htBPIsgiS9SXV3qHhTukcJ22EipJwzAS5WIcbUK24tMrm6CRDx8GRcqK
-	 H2QKc1af/f1m58ayy3nxl1x1tDpCeTOJB8zQOXDxNOjqQMxzwkbrOjeH+4cBG3kUzC
-	 Zhx8qfXDsN4G46Wc0e2guh1Ptp/VtQneTWWJViWbAlxkkPbHTwOgifibFYe4SpYNas
-	 Pt+6QqQxX9pBw==
+	b=cZV+vaMx8hBySak8JZUJ/Uq0ouSOg0BbnbOmBt15Zz0cy7IHXNF7/H7iVUHAKa0r9
+	 6mBalmkfu9cJ2u1IMhztEDGsuiQBleesmlwkeVPUYuhASQi1ZFXbFQ3uaWWHw3sv1P
+	 GLdCRPdQPwScHabr63u45iTmjs01hcZUFWorcoDm6mTZMCci1lQ6eeoeFIYgyleRSk
+	 2XhxVfXe9k1/pzR/2oANhI9BPH3rNkzBF1VcWR6+aqYKijQ0TvDhylNAMsgd5tyTf7
+	 PI4hy9v1kXwkzMrpMzi2e88A3jcOeqFjpgHXGDXQ4g50xIBRDHmbrOU4Uj/9HhyTBu
+	 YXn62KVNhr/hg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 sched_ext/for-7.3 22/36] sched_ext: Add
- sub_ecaps_updated() effective-cap change notifier
+Subject: Re: [PATCH v2 sched_ext/for-7.3 35/36] tools/sched_ext: scx_qmap -
+ Expand hierarchical sub-scheduling
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260706014058.439853-23-tj@kernel.org>
+In-Reply-To: <20260706014058.439853-36-tj@kernel.org>
 References: <20260706014058.439853-1-tj@kernel.org>
- <20260706014058.439853-23-tj@kernel.org>
+ <20260706014058.439853-36-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 02:09:23 +0000
-Message-Id: <20260706020925.422B21F00A3A@smtp.kernel.org>
+Date: Mon, 06 Jul 2026 02:10:12 +0000
+Message-Id: <20260706021014.BEB9F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [Critical] Use-After-Free of `pcpu` in `scx_process_sync_ecaps` due to `r=
-q_lock` being dropped
+- [High] Tasks dispatched to time-shared CIDs via `qmap_dispatch` lack the =
+required `SCX_ENQ_IMMED` flag, causing the kernel to reject them and trigge=
+r an infinite bounce loop.
+- [High] Concurrent modifications to `qa.sub_sched_ctxs[i].cgroup_id` durin=
+g attach/detach race with `compute_partition()`, causing `nr_shared` to wra=
+p negative or overflow `MAX_PARTS` and triggering a fatal `scx_bpf_error()`=
+ crash.
+- [Medium] In `redistribute()`, elapsed time is incorrectly charged to the =
+newly computed partition layout rather than the outgoing one, resulting in =
+corrupt allocation statistics.
 --
 
-commit 93fedaa49ec9781e4eea1aa5bfcf150af020301b
+commit 93bb924468eaef8590cfd599f15e87393f92eaa9
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Add sub_ecaps_updated() effective-cap change notifier
+tools/sched_ext: scx_qmap - Expand hierarchical sub-scheduling
 
-This commit adds a sub_ecaps_updated() callback to notify sub-schedulers
-when effective caps change on a CPU. It runs in dispatch context so the
-scheduler can directly insert or preempt tasks, and is hooked up with the
-CPU hotplug machinery.
+This patch expands the scx_qmap demonstration scheduler to support=20
+capacity-based hierarchical sub-scheduling delegation. It introduces logic=
+=20
+to split exclusive CIDs and a shared round-robin pool among child cgroups=20
+based on CPU weight.
 
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 3d488c1b0d599..deb4c802af83a 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
-
+> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bp=
+f.c
+> index f6cfe63425d36..64422e9e1db88 100644
+> --- a/tools/sched_ext/scx_qmap.bpf.c
+> +++ b/tools/sched_ext/scx_qmap.bpf.c
 [ ... ]
-
-> @@ -355,33 +357,140 @@ void scx_process_sync_ecaps(struct rq *rq)
->  	if (likely(llist_empty(&rq->scx.ecaps_to_sync)))
+> @@ -567,11 +627,34 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct =
+task_struct *prev)
+>  	struct cpu_ctx __arena *cpuc;
+>  	task_ctx_t *taskc;
+>  	u32 batch =3D dsp_batch ?: 1;
+> +	s32 owner;
+>  	s32 i;
+> =20
+>  	if (dispatch_highpri(false))
 >  		return;
-> =20
+
+[Severity: High]
+Does this dispatch logic need to include the SCX_ENQ_IMMED flag when moving=
+=20
+tasks to a time-shared CID?
+
+When a child scheduler receives a time-shared CID, it is only granted the
+SCX_CAP_ENQ_IMMED capability for it. However, the subsequent calls to
+scx_bpf_dsq_move_to_local() in qmap_dispatch() pass 0 as the enq_flags.
+
+Similarly, in dispatch_highpri(), scx_bpf_dsq_move() passes SCX_ENQ_PREEMPT.
+
+If a task is moved to the local DSQ of a time-shared CID without including
+the SCX_ENQ_IMMED flag (for instance, via needs_immed(cid)), the kernel will
+reject the local DSQ insert because the child lacks the stronger SCX_CAP_ENQ
+and SCX_CAP_PREEMPT capabilities. This rejection bounces the task back to t=
+he
+global DSQ with SCX_TASK_REENQ_CAP, which can cause an endless bounce loop=
+=20
+and a spike in CPU utilization.
+
 [ ... ]
-> +		ecaps =3D calc_effective_caps(ps, cid);
-> +		WRITE_ONCE(pcpu->ecaps, ecaps);
+> +static void redistribute(void)
+> +{
+> +	s32 i;
 > +
-> +		/* tell the sched its effective caps on this cid changed */
-> +		if (ecaps !=3D pcpu->reported_ecaps &&
-> +		    SCX_HAS_OP(pcpu->sch, sub_ecaps_updated) &&
-> +		    !scx_bypassing(pcpu->sch, cpu)) {
-> +			struct scx_dsp_ctx *dspc =3D &pcpu->dsp_ctx;
+> +	__sync_fetch_and_or(&part_pending, 1);
 > +
-> +			dspc->rq =3D rq;
-> +			/* stash @prev so nested dispatches can access it */
-> +			rq->scx.sub_dispatch_prev =3D prev;
-> +			SCX_CALL_OP(pcpu->sch, sub_ecaps_updated, rq, scx_cpu_arg(cpu),
-> +				    pcpu->reported_ecaps, ecaps);
-> +			rq->scx.sub_dispatch_prev =3D NULL;
-> +			scx_flush_dispatch_buf(pcpu->sch, rq);
-> +			pcpu->reported_ecaps =3D ecaps;
+> +	if (!part_try_start())
+> +		return;
+> +
+> +	bpf_for(i, 0, 1024) {
+> +		__sync_fetch_and_and(&part_pending, 0);
+> +		compute_partition();
+> +		apply_partition();
 
-[Severity: Critical]
-Can this write cause a use-after-free of pcpu if scx_flush_dispatch_buf()
-temporarily drops the rq lock?
+[Severity: Medium]
+Is the elapsed time being incorrectly charged to the newly computed partiti=
+on
+layout instead of the outgoing one?
 
-If the sub_ecaps_updated() callback dispatches a task from a remote
-runqueue, scx_flush_dispatch_buf() -> dispatch_to_local_dsq() can
-temporarily drop the local rq lock:
+Inside this loop, compute_partition() overwrites the qa.part layout,
+including the owners and round-robin positions. Then, apply_partition() is
+called, which in turn calls account_alloc().
 
-kernel/sched/ext/ext.c:dispatch_to_local_dsq() {
-    ...
-    if (locked_rq !=3D src_rq) {
-        raw_spin_rq_unlock(locked_rq);
-        locked_rq =3D src_rq;
-        raw_spin_rq_lock(src_rq);
-    }
-    ...
-}
+Because account_alloc() executes after the layout has already been mutated,
+it uses the new qa.part structure to calculate the time delta for the
+outgoing layout. This could lead to time being attributed to the wrong CIDs
+or sub-schedulers, resulting in corrupted allocation statistics. Should=20
+account_alloc() be invoked before the qa.part structure is overwritten?
 
-If a concurrent detachment is waiting in scx_discard_ecaps_to_sync(), it
-could observe the node off-list while the rq lock is dropped here:
-
-> @@ -371,11 +480,29 @@ void scx_discard_ecaps_to_sync(s32 cpu, struct scx_=
-sched_pcpu *pcpu)
+> +		if (!__sync_fetch_and_or(&part_pending, 0))
+> +			break;
+> +	}
+> +
+> +	part_end();
+> +}
+[ ... ]
+> @@ -1202,13 +1793,20 @@ s32 BPF_STRUCT_OPS(qmap_sub_attach, struct scx_su=
+b_attach_args *args)
 >  {
-> -	scoped_guard (rq_lock_irqsave, cpu_rq(cpu))
-> -		scx_process_sync_ecaps(cpu_rq(cpu));
-> +	struct rq *rq =3D cpu_rq(cpu);
+>  	s32 i;
 > =20
-> -	WARN_ON_ONCE(llist_on_list(&pcpu->ecaps_to_sync_node));
-> +	while (true) {
-> +		scoped_guard (rq_lock_irqsave, rq) {
-> +			/*
-> +			 * scx_process_sync_ecaps() takes the node off the list
-> +			 * before it is done accessing @pcpu but does all of it
-> +			 * under the rq lock. Off-list observed under the rq
-> +			 * lock guarantees that the sync is complete.
-> +			 */
-> +			if (!llist_on_list(&pcpu->ecaps_to_sync_node))
-> +				return;
+> +	/* as long as there is at least one excl cpu, children can attach */
+> +	if (!cmask_weight(&qa.held_excl.mask))
+> +		return -ENOSPC;
+> +
+>  	for (i =3D 0; i < MAX_SUB_SCHEDS; i++) {
+> -		if (!qa.sub_sched_cgroup_ids[i]) {
+> -			qa.sub_sched_cgroup_ids[i] =3D args->ops->sub_cgroup_id;
+> -			bpf_printk("attaching sub-sched[%d] on %s",
+> -				   i, args->cgroup_path);
+> -			return 0;
+> -		}
+> +		if (qa.sub_sched_ctxs[i].cgroup_id)
+> +			continue;
+> +
+> +		qa.sub_sched_ctxs[i].cgroup_id =3D args->ops->sub_cgroup_id;
 
-If scx_discard_ecaps_to_sync() returns and frees pcpu while the rq lock
-is dropped, the assignment to pcpu->reported_ecaps upon returning from
-scx_flush_dispatch_buf() will write to freed memory.
+[Severity: High]
+Could these concurrent modifications to the cgroup_id cause a race condition
+with compute_partition()?
 
-[ ... ]
+In qmap_sub_attach() and qmap_sub_detach(), the cgroup_id is modified direc=
+tly
+without acquiring the part_busy synchronization guard. If a userspace proce=
+ss
+triggers a repartition (via BPF_PROG_RUN) at the same time the cgroup core
+calls ops.sub_attach or ops.sub_detach, compute_partition() could observe
+inconsistent state.
+
+Specifically, the first loop in compute_partition() calculates sum_w based =
+on
+one state of the cgroup_id array, while the second loop allocates total_excl
+based on a potentially different state. This mismatch could cause total_excl
+to exceed nr_excl (resulting in a negative nr_shared that wraps around) or
+fall short (making nr_shared > MAX_PARTS), which would then trigger a fatal
+scx_bpf_error("-ERANGE") in apply_partition() and force a revert to CFS.
+
+> +		qa.sub_sched_ctxs[i].weight =3D 100;	/* until userspace feeds it */
+> +		qa.nr_sub_scheds++;
+> +		bpf_printk("attaching sub-sched[%d] on %s", i, args->cgroup_path);
+> +		redistribute();
+> +		return 0;
+>  	}
+>
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706014058.4398=
-53-1-tj@kernel.org?part=3D22
+53-1-tj@kernel.org?part=3D35
