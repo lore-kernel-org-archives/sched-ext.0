@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D08194C96;
-	Tue,  7 Jul 2026 00:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1538719D8BC;
+	Tue,  7 Jul 2026 00:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783383167; cv=none; b=gL5+KA41XK0ob8nR7i2oMVnHGg/oTYIktdOPM4Htj/CfqLPDAazAlH7j4/DUgVgHNZc7HxZH+3WkWMSzG5fZEJ1wbtPRyQoz2k9GJEArZTOIba9NDM8OhwBzJPQ5MvXoGfZu+ZnrBlO2S054shUm3zVNIQxC24EkzdJRCDZIE9k=
+	t=1783383168; cv=none; b=hJHybW6iYE+nL/H664cO3CHUqZfxD0RH87mXf6P5+QwK/hUv9aq4AcCZZQT63ZMU3jeQBV+F+zrXKF8UTC+JyxGvXuReiamp5EYAVXOcEGwzvQrCUD0bv+Jm8Wth95s0WP69FJQzbCn7hegu1KOKEaqm0VG0owxV/JHj4u/YEjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783383167; c=relaxed/simple;
-	bh=w0ImiDOxTlb/npeCdpy/+VblruQr6nHqE43qkyeEbO8=;
+	s=arc-20240116; t=1783383168; c=relaxed/simple;
+	bh=4HFyDLpfakf7tLEGKBwi6SlVHwSSh82/X6HuLhQkVMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKkSFrxS+V56Zn85dwkbXHIn/gt4mxHqtH0dpf7QbO6N6RLX7cVeVfJW3LCZ3fdbHjd2CQOkrE7bzI6BjKRBfU7rkAUVp6EJ+TmbpOf/0yC4Ni9fS9NQgcgdLTS8Qzj+8PFrOmjkfWaTj0Pi7EvmyuQPounfTNNqiuZePGvV3TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Td8QF/1H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZcHsPQsUwlTQsR7Q/NZDil+Jph5AMFw0Ws8Dh4EibkjCDeOOYIXSYVBYhrWiRGLuOn074P1DOdyoIBkwuNQ0NaVKbcH2VhNht1HeH8O88I3/whZg8Xv14ZLejVKZNF+EOguRRLT9GFnITAcJBcDd6Ck6IUV9DoTFooAXVDTuKDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ig4J/eY5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Td8QF/1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39C81F00A3A;
-	Tue,  7 Jul 2026 00:12:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ig4J/eY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C567F1F00A3E;
+	Tue,  7 Jul 2026 00:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783383164;
-	bh=aA0ubIyNT6z82WAk4ZBwfzNsqJAhdZFnTqNXRrkVxoQ=;
+	s=k20260515; t=1783383166;
+	bh=EcNHFmkXvIJh7WNo+LzwOOXOVMGedpKPjqR24INPXTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Td8QF/1Hq4w61bNVx8HWu6ITbNhRgoptitGx3XYNoVPifavKTFmsC4l8YOAxEq21/
-	 z9tkJHvBEOj6qiW5z2g0XR7ZYaRjvgkIdtg3g6G1AV6PZ9+MwvH0vhSN7YuALKpfly
-	 PH3EMjV9NW/TmwIr3FvPZkUzdW7key0ttfBH+iU7eS0RoiNW6IiPZU/3AErxNi984q
-	 KFwb6wCOA3HHSL7l8W6eLmTq1VdGJX6hA+6etuO0ozpNgWjJ0ypLZnzDUzQVCJqgeU
-	 7D5viZQ/vnoxU/KMXOzrDlT0LVyVBXs3SxUaxd4pXq1WODAZw4Jo7oapLJ4xX+uJuU
-	 R261mimJ4SLjA==
+	b=ig4J/eY5LLvOXbyD0gkG7c1oe8BAplvzWaLzKCMshgOWcpjSsby9vDiab1HJX9l09
+	 Xuw/PHuJYhTRQGpFz4OaWUDXP95ciOEY3DM11AeiSMj/xMXaUk6eIFGQUxJuaKSKmN
+	 ctZkTz+UZu5StxeGT+K/Y6IfoyJtC9VrTkWFI2XKrl/d3+gO0st9Ij2igGa68mRE2x
+	 3z+1wU79UsQGx6L82djidGhC9cn0vcTIuLnAflIjXchQjjGxZyi4EgMOEWQq3JCQaS
+	 XVDwHDG7UHcRj+OqnmpoEpRIExbQoYnuTjYAorn5Lf9385VRMgHZBGHvP8OBOVyXWq
+	 JFtxl1hFIPfVQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v3 sched_ext/for-7.3 14/36] sched_ext: Add per-shard scx_sched storage scaffolding
-Date: Mon,  6 Jul 2026 14:12:07 -1000
-Message-ID: <20260707001229.1410929-15-tj@kernel.org>
+Subject: [PATCH v3 sched_ext/for-7.3 16/36] sched_ext: Build the set_cmask scratch from trusted geometry
+Date: Mon,  6 Jul 2026 14:12:09 -1000
+Message-ID: <20260707001229.1410929-17-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260707001229.1410929-1-tj@kernel.org>
 References: <20260707001229.1410929-1-tj@kernel.org>
@@ -48,176 +48,152 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add struct scx_pshard and sch->pshard[] indexed by shard_idx, each entry
-allocated on its shard's NUMA node from scx_shard_node[si]. The struct
-starts empty (one dummy field). Follow-up patches will grow it as
-shard-local state lands. Only cid-type schedulers with an arena pool get
-pshards.
+scx_call_op_set_cpumask() builds a per-cpu cmask in the set_cmask scratch,
+which lives in BPF-writable arena. A scheduler can corrupt the scratch's
+inline header (base, nr_cids, alloc_words) from another cpu, so sizing and
+indexing the write from it risks an out-of-bounds write.
 
-Allocation happens after ops.init_cids() returns so any
-scx_bpf_cid_override() it issues has finalized scx_nr_cid_shards and
-scx_shard_node[]. sch->nr_pshards records the array size for the async RCU
-free path, which may run after a later scheduler's scx_cid_init() has
-rewritten the global.
-
-v2: Free the partially-allocated pshard array on alloc failure. (sashiko AI)
+Drive the build from kernel-known geometry instead.
+scx_cmask_ref_init_kern() imposes base and nr_cids rather than reading them,
+and scx_cmask_ref_from_cpumask() fills the scratch from the ref. Neither
+reads the header back.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      |  8 +++++++
- kernel/sched/ext/internal.h | 18 +++++++++++++++
- kernel/sched/ext/sub.c      | 46 +++++++++++++++++++++++++++++++++++++
- kernel/sched/ext/sub.h      |  4 ++++
- 4 files changed, 76 insertions(+)
+ kernel/sched/ext/cid.c | 70 ++++++++++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/cid.h |  4 +++
+ kernel/sched/ext/ext.c | 11 ++++---
+ 3 files changed, 81 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 340d1cf3630c..a5e782147bf4 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -4644,6 +4644,8 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 		free_pnode(sch->pnode[node]);
- 	kfree(sch->pnode);
- 
-+	scx_free_pshards(sch);
-+
- 	rhashtable_walk_enter(&sch->dsq_hash, &rht_iter);
- 	do {
- 		rhashtable_walk_start(&rht_iter);
-@@ -6722,6 +6724,12 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		goto err_disable;
- 	}
- 
-+	ret = scx_alloc_pshards(sch);
-+	if (ret) {
-+		cpus_read_unlock();
-+		goto err_disable;
-+	}
-+
- 	if (sch->ops.init) {
- 		ret = SCX_CALL_OP_RET(sch, init, NULL);
- 		if (ret) {
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 61a9230265cd..dce07b83c166 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1183,6 +1183,12 @@ struct scx_sched_pnode {
- 	struct scx_dispatch_q	global_dsq;
- };
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+struct scx_pshard {
-+	int			_dummy;		/* until the first real field lands */
-+};
-+#endif
-+
- struct scx_sched {
- 	/*
- 	 * cpu-form and cid-form ops share field offsets up to .priv (verified
-@@ -1230,6 +1236,9 @@ struct scx_sched {
- 	 */
- 	struct rhashtable	dsq_hash;
- 	struct scx_sched_pnode	**pnode;
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	struct scx_pshard	**pshard;	/* indexed by shard_idx */
-+#endif
- 	struct scx_sched_pcpu __percpu *pcpu;
- 
- 	u64			slice_dfl;
-@@ -1245,6 +1254,15 @@ struct scx_sched {
- 	u32			dsp_max_batch;
- 	s32			level;
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	/*
-+	 * pshard[] size captured at enable for the async RCU free path -
-+	 * scx_nr_cid_shards may be rewritten by a later scx_cid_init() before
-+	 * free runs. While sch is active, use the global.
-+	 */
-+	u32			nr_pshards;
-+#endif
-+
- 	/*
- 	 * Updates to the following warned bitfields can race causing RMW issues
- 	 * but it doesn't really matter.
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index e94a415ee10a..6d8b9bcf2f49 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -82,6 +82,52 @@ void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
- 		rcu_assign_pointer(pos->scx_sched, sch);
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index 02053a4828e3..9dfd242be34f 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -951,6 +951,38 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+ 	return 0;
  }
  
-+static void free_pshard(struct scx_pshard *pshard)
++/**
++ * scx_cmask_ref_init_kern - Bind a scx_cmask_ref to a kernel-owned cmask
++ * @sch: scheduler the cmask belongs to
++ * @m: kernel address of the target cmask, storage sized for @nr_cids at @base
++ * @base: first cid of the active range
++ * @nr_cids: active range length
++ * @ref: output ref
++ *
++ * Like scx_cmask_ref_init() but the geometry is supplied by the caller, not
++ * read from @m's header, so a concurrent BPF write to the header can't steer
++ * later sizing or offsets. Rewrite the header from the trusted geometry and
++ * bind @ref to it.
++ */
++void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
++			     u32 base, u32 nr_cids, struct scx_cmask_ref *ref)
 +{
-+	kfree(pshard);
++	WRITE_ONCE(m->base, base);
++	WRITE_ONCE(m->nr_cids, nr_cids);
++	WRITE_ONCE(m->alloc_words, SCX_CMASK_NR_WORDS(nr_cids));
++
++	ref->sch = sch;
++	ref->src = m;
++	ref->base = base;
++	ref->nr_cids = nr_cids;
++
++	ref->shard_first = scx_cid_to_shard[base];
++	if (likely(nr_cids))
++		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
++	else
++		ref->shard_end = ref->shard_first;
 +}
 +
-+void scx_free_pshards(struct scx_sched *sch)
+ /**
+  * scx_cmask_ref_shard - Read one shard from @ref into @out
+  * @ref: validated ref
+@@ -1032,6 +1064,44 @@ void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask
+ 		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_COPY);
+ }
+ 
++/**
++ * scx_cmask_ref_from_cpumask - Populate @ref's arena cmask from a cpumask
++ * @ref: kern-bound ref, see scx_cmask_ref_init_kern()
++ * @cpumask: cpus to translate into cids
++ *
++ * Write @ref's active range one word at a time, setting each cid's bit when
++ * its cpu is in @cpumask. Offsets and length come from @ref's trusted geometry
++ * and stores use WRITE_ONCE since BPF may read concurrently, so the arena
++ * header is never read.
++ */
++void scx_cmask_ref_from_cpumask(const struct scx_cmask_ref *ref,
++				const struct cpumask *cpumask)
 +{
-+	s32 si;
++	struct scx_cmask *m = ref->src;
++	u32 base = ref->base, nr_cids = ref->nr_cids;
++	u32 wi, nr_words;
 +
-+	if (!sch->pshard)
++	if (!nr_cids)
 +		return;
-+	for (si = 0; si < sch->nr_pshards; si++)
-+		free_pshard(sch->pshard[si]);
-+	kfree(sch->pshard);
-+}
 +
-+static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32 node)
-+{
-+	return kzalloc_node(sizeof(struct scx_pshard), GFP_KERNEL, node);
-+}
++	nr_words = (base + nr_cids - 1) / 64 - base / 64 + 1;
++	for (wi = 0; wi < nr_words; wi++) {
++		u32 word_first_cid = (base / 64 + wi) * 64;
++		u64 word = 0;
++		u32 bit;
 +
-+s32 scx_alloc_pshards(struct scx_sched *sch)
-+{
-+	s32 si;
++		for (bit = 0; bit < 64; bit++) {
++			u32 cid = word_first_cid + bit;
 +
-+	if (!sch->is_cid_type || !sch->arena_pool)
-+		return 0;
-+
-+	sch->pshard = kzalloc_objs(sch->pshard[0], scx_nr_cid_shards, GFP_KERNEL);
-+	if (!sch->pshard)
-+		return -ENOMEM;
-+
-+	sch->nr_pshards = scx_nr_cid_shards;
-+
-+	for (si = 0; si < scx_nr_cid_shards; si++) {
-+		sch->pshard[si] = alloc_pshard(sch, si, scx_shard_node[si]);
-+		if (!sch->pshard[si]) {
-+			/* drop the partial array so the !pshard cap guards hold */
-+			scx_free_pshards(sch);
-+			sch->pshard = NULL;
-+			return -ENOMEM;
++			if (cid < base || cid >= base + nr_cids)
++				continue;
++			if (cpumask_test_cpu(__scx_cid_to_cpu(cid), cpumask))
++				word |= BIT_U64(bit);
 +		}
++		WRITE_ONCE(m->bits[wi], word);
 +	}
-+	return 0;
 +}
 +
- static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
+ int scx_cid_kfunc_init(void)
+ {
+ 	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_init_cids) ?:
+diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
+index 70d97acd0ac4..b36a1a28eac8 100644
+--- a/kernel/sched/ext/cid.h
++++ b/kernel/sched/ext/cid.h
+@@ -295,8 +295,12 @@ static inline s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
  
- void drain_descendants(struct scx_sched *sch)
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index 460a9fd196dc..9fa6b5c8be23 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -24,6 +24,8 @@ void drain_descendants(struct scx_sched *sch);
- void scx_sub_disable(struct scx_sched *sch);
- void scx_sub_enable_workfn(struct kthread_work *work);
- bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux);
-+void scx_free_pshards(struct scx_sched *sch);
-+s32 scx_alloc_pshards(struct scx_sched *sch);
+ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+ 		       struct scx_cmask_ref *ref);
++void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
++			     u32 base, u32 nr_cids, struct scx_cmask_ref *ref);
+ void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
+ 			 struct scx_cmask *out);
++void scx_cmask_ref_from_cpumask(const struct scx_cmask_ref *ref,
++				const struct cpumask *cpumask);
+ void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
+ void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
  
- #else	/* CONFIG_EXT_SUB_SCHED */
- 
-@@ -33,6 +35,8 @@ static inline struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
- static inline void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
- static inline void drain_descendants(struct scx_sched *sch) { }
- static inline void scx_sub_disable(struct scx_sched *sch) { }
-+static inline void scx_free_pshards(struct scx_sched *sch) {}
-+static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
- 
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index a5e782147bf4..8ee980f822aa 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -412,12 +412,15 @@ static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
+ {
+ 	if (scx_is_cid_type()) {
+ 		struct scx_cmask *kern_va = *this_cpu_ptr(sch->set_cmask_scratch);
++		struct scx_cmask_ref ref;
++
+ 		/*
+-		 * Build the per-CPU arena cmask and hand BPF its arena address.
+-		 * Caller holds the rq lock with IRQs disabled, which makes us
+-		 * the sole user of the scratch area.
++		 * Build the per-cpu arena cmask from kernel geometry via @ref,
++		 * never reading its BPF-writable header, and hand BPF the arena
++		 * address. The rq lock makes this cpu the sole kernel writer.
+ 		 */
+-		scx_cpumask_to_cmask(cpumask, kern_va);
++		scx_cmask_ref_init_kern(sch, kern_va, 0, num_possible_cpus(), &ref);
++		scx_cmask_ref_from_cpumask(&ref, cpumask);
+ 		SCX_CALL_CID_OP_TASK(sch, set_cmask, rq, task,
+ 				     scx_kaddr_to_arena(sch, kern_va));
+ 	} else {
 -- 
 2.54.0
 
