@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D49835950;
-	Tue,  7 Jul 2026 00:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A2E81ACD;
+	Tue,  7 Jul 2026 00:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783383169; cv=none; b=qlxme3W+694FNeJl5yByPEmfDJw2b0nGlIEJERXUTWLDZv67NUya1CUHjAWxO0guxfcRIXeeWabotmJNDry7Gqf8emHGHmmwceEPnCafAkJFP901s7EDlODLukadz4Vva0fQRGlEg8NPJS9UV8O8Ib8Ga7vuTgypaSAO03Eiud4=
+	t=1783383170; cv=none; b=O/mrkPPS1M86C8PTMaydUClq7cPQ1sTELiXnRz2r7lEDRBrjf8cR5b/PQ3wAhRiEVWsvznJpnnpLtIEkMtkOgwUUQrv+tGQDM4gc33riMV8wUNd0FQ5Sc8SU5VOTBkTW/jbOHvVjLbSU4xkvochJH1bzEMYIGSVzF3LS+YSEgTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783383169; c=relaxed/simple;
-	bh=1nlocQxpUDxyXpaKhSWE7QfKLJuI3wtYuXOBP8t3zdI=;
+	s=arc-20240116; t=1783383170; c=relaxed/simple;
+	bh=rTjFo89eTNM3ZITRs4ga9Rp/14eeSlsYT83nnJG6Rxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSLckbw895Z01afuNRx4NPl6M41xEc5BFp+8iFUy/xHdhgpdo7J+SEZPIvmy5d3z8mM4U8Or7TShXy87jCvgXEKh2+0PvL5S9i6tTVrDTNe1qRDcPKZSQ7Y0fOxMHMUdyR/sOOdkURUAKvqim1gJAv24YamMrQp/LIdiZAlS/Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJ8jKBgp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PFDe2belCSTJwNbUPQG1j0W+FEJmoU/McqrTXG2V2CpPQTRzzdLeQNVfdQ1yQwx0WlwyJo7uaZwdYhw7s00n2lFvqmxM5ZxHxPMB1vyPDWqsd4m89ua3z52aug6oUdVqL6E0aoecL0R6YWAJU2pNxS00l/XRlFtk2mxNrP2mBHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nbSTwM36; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJ8jKBgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAEC1F00A3F;
-	Tue,  7 Jul 2026 00:12:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nbSTwM36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D881F00A3A;
+	Tue,  7 Jul 2026 00:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783383165;
-	bh=mmBMhDOzTMAta/ZmrQ1Qu2vHAyEKAQWUTop7tPet/H0=;
+	s=k20260515; t=1783383167;
+	bh=6rmFLDBKG8lwGRS3DrXxfsqNXlKBgD2G/yy/FJIking=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TJ8jKBgpWbv8FIg9m0rarrDY45vTCxHVtisOi13xDlQS3RrSUDPTkuTAcjRL18tlk
-	 /th29MNSujR6Sfnw/4JjxcCM86TlbGpPzDX2nYg+h2eK6ROH4ljT9Qd07SaWlkawOD
-	 ovTAwh7dudXi79nM7ki8Jcol0dtGiK2w+RFSzQdgvDFC68JEeiXqEde4cHuqk4ypjs
-	 kDOflkbhpq3/8pV8RvSfpF+g9j/DEyf0a2Rt2+CilHqdk30THOaVfbIJJCJnadtMYU
-	 PfwtcMC9JAglEgPKw9yDZLbkTIzL9V/Buw7PKqBwh58PyCcJ1l0OeNdEWYUaGYlM9P
-	 QlWCTeX7Cmd1w==
+	b=nbSTwM36xoTbOWd7UqXWN2fKI4p03KUI+OawwHh/KupBvrmUoMUxfStdtAeWkZG0A
+	 t4hjwrltqNPLpyQiGVwTI8QmI7WLiZqDzTWBc0XYfty4VFcC50r59S8gZS6z01pchL
+	 1rP+E8UWl0EC6hMUkMj4GTUYzQWPOzaWZivvxcIAERcdoflHqlc+mnv7ZgxFnEIRqf
+	 TVAKHWe9Tks8oxqt7F5sJBlxFL+T7mACaKEs3iYoBQimhRpkunTScxG7DxwjO1B0QP
+	 29tbTTkNLhDJq7UofuR96EA/gYYXfo/3fIg+x4kAa3CUlW/9kWCEAT5mP9Y10wlKlX
+	 LzMtx8HRQmdmg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v3 sched_ext/for-7.3 15/36] sched_ext: Add scx_cmask_ref for validated arena cmask access
-Date: Mon,  6 Jul 2026 14:12:08 -1000
-Message-ID: <20260707001229.1410929-16-tj@kernel.org>
+Subject: [PATCH v3 sched_ext/for-7.3 18/36] sched_ext: Add scx_skip_subtree_pre()
+Date: Mon,  6 Jul 2026 14:12:11 -1000
+Message-ID: <20260707001229.1410929-19-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260707001229.1410929-1-tj@kernel.org>
 References: <20260707001229.1410929-1-tj@kernel.org>
@@ -48,264 +48,95 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kfuncs taking struct scx_cmask * from BPF arena memory have two problems.
-The pointer can be any value the BPF prog hands in, and the header (@base,
-@nr_cids, @alloc_words) can be mutated by the prog concurrently with kernel
-access.
+Factor the sibling/ancestor portion of scx_next_descendant_pre() out as
+scx_skip_subtree_pre(), a pre-order walk primitive that skips @pos's
+subtree, and call it from scx_next_descendant_pre(). Same locking rules as
+the existing primitive.
 
-Add scx_cmask_ref, a validated handle. _init() normalizes the input pointer
-into the arena's kern_vm range via scx_arena_to_kaddr() and snapshots the
-header, rejecting a range outside the machine or a nr_cids whose words
-exceed the declared @alloc_words. Downstream sizing uses the snapshot, not
-the live header. _shard() reads slices while _or() and _copy() write back,
-all bounded by the snapshot. No callers yet.
-
-struct scx_cmask's bits[] carried __counted_by(alloc_words), so
-UBSAN_BOUNDS and FORTIFY_SOURCE bound accesses to the array. That bound is
-read from @alloc_words at the access. For an arena cmask @alloc_words is
-BPF-writable. A prog that sets it larger than the real allocation makes the
-check pass on a genuine overrun, so the annotation catches nothing, and it
-only runs under those debug configs. Drop it - _init() validates
-@alloc_words explicitly, and kernel-owned cmasks set it themselves.
-
-v2: Validate @alloc_words in _init(), drop __counted_by. (Andrea, sashiko AI)
+Used in a follow-up to fast-skip subtrees that have nothing to do during a
+descendant walk.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/cid.c   | 133 +++++++++++++++++++++++++++++++++++++++
- kernel/sched/ext/cid.h   |   7 +++
- kernel/sched/ext/types.h |  39 +++++++++++-
- 3 files changed, 178 insertions(+), 1 deletion(-)
+ kernel/sched/ext/sub.c | 37 ++++++++++++++++++++++++++++---------
+ kernel/sched/ext/sub.h |  2 ++
+ 2 files changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index 6a22bead4c60..02053a4828e3 100644
---- a/kernel/sched/ext/cid.c
-+++ b/kernel/sched/ext/cid.c
-@@ -641,6 +641,12 @@ enum cmask_op2 {
- 	/* predicates - short-circuit when the per-word result is true */
- 	CMASK_OP2_SUBSET,
- 	CMASK_OP2_INTERSECTS,
-+	/*
-+	 * @a is a BPF-arena cmask. Words on @a use READ_ONCE/WRITE_ONCE since
-+	 * BPF may read/write concurrently. See scx_cmask_ref_or() / _copy().
-+	 */
-+	CMASK_OP2_REF_OR,
-+	CMASK_OP2_REF_COPY,
- };
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 5f1661597d70..eb9056f21ce8 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -21,6 +21,33 @@
  
- static __always_inline bool cmask_op2_is_pred(const enum cmask_op2 op)
-@@ -669,6 +675,12 @@ static __always_inline bool cmask_word_op2(u64 *av, const u64 *bp, u64 mask,
- 		return (READ_ONCE(*bp) & ~READ_ONCE(*av)) & mask;
- 	case CMASK_OP2_INTERSECTS:
- 		return (READ_ONCE(*av) & READ_ONCE(*bp)) & mask;
-+	case CMASK_OP2_REF_OR:
-+		WRITE_ONCE(*av, READ_ONCE(*av) | (READ_ONCE(*bp) & mask));
-+		return false;
-+	case CMASK_OP2_REF_COPY:
-+		WRITE_ONCE(*av, (READ_ONCE(*av) & ~mask) | (READ_ONCE(*bp) & mask));
-+		return false;
- 	}
- 	unreachable();
- }
-@@ -899,6 +911,127 @@ static const struct btf_kfunc_id_set scx_kfunc_set_cid = {
- 	.set	= &scx_kfunc_ids_cid,
- };
+ #ifdef CONFIG_EXT_SUB_SCHED
  
 +/**
-+ * scx_cmask_ref_init - Bind a scx_cmask_ref to a BPF-arena cmask
-+ * @sch: scheduler whose arena hosts @src
-+ * @src: BPF-supplied cmask pointer
-+ * @ref: output ref
++ * scx_skip_subtree_pre - Skip @pos's subtree in a pre-order walk
++ * @pos: current position
++ * @root: walk root
 + *
-+ * Snapshot @src's @base, @nr_cids and @alloc_words. The snapshot is necessary
-+ * because BPF may mutate the live header asynchronously.
-+ *
-+ * Return 0 on success, -EINVAL if the range is out of bounds or @alloc_words
-+ * doesn't cover it.
++ * In a walk started by scx_next_descendant_pre(), continue past @pos's subtree:
++ * return @pos's next sibling, or the closest ancestor's next sibling, or NULL
++ * if @pos's subtree is the last under @root. Same locking rules.
 + */
-+int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
-+		       struct scx_cmask_ref *ref)
++struct scx_sched *scx_skip_subtree_pre(struct scx_sched *pos, struct scx_sched *root)
 +{
-+	struct scx_cmask *kern_src = scx_arena_to_kaddr(sch, src);
-+	u32 base, nr_cids, alloc_words, npossible = num_possible_cpus();
++	struct scx_sched *next;
 +
-+	base = READ_ONCE(kern_src->base);
-+	nr_cids = READ_ONCE(kern_src->nr_cids);
-+	alloc_words = READ_ONCE(kern_src->alloc_words);
++	lockdep_assert(lockdep_is_held(&scx_enable_mutex) ||
++		       lockdep_is_held(&scx_sched_lock) ||
++		       rcu_read_lock_any_held());
 +
-+	if (unlikely(base >= npossible || nr_cids > npossible - base ||
-+		     SCX_CMASK_NR_WORDS(nr_cids) > alloc_words))
-+		return -EINVAL;
-+
-+	ref->sch = sch;
-+	ref->src = kern_src;
-+	ref->base = base;
-+	ref->nr_cids = nr_cids;
-+
-+	ref->shard_first = scx_cid_to_shard[base];
-+	if (likely(nr_cids))
-+		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
-+	else
-+		ref->shard_end = ref->shard_first;
-+
-+	return 0;
-+}
-+
-+/**
-+ * scx_cmask_ref_shard - Read one shard from @ref into @out
-+ * @ref: validated ref
-+ * @shard_idx: target shard, in [@ref->shard_first, @ref->shard_end)
-+ * @out: output cmask whose @out->alloc_words must hold the shard
-+ *
-+ * Set @out to the intersection of @ref's range with @shard_idx's cid range,
-+ * with bits[] read from @ref->src via READ_ONCE. Empty intersection sets
-+ * @out->nr_cids to 0. scx_error()s on @ref's sched if @out can't hold the
-+ * shard.
-+ */
-+void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
-+			 struct scx_cmask *out)
-+{
-+	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
-+	u32 shard_base = shard->base_cid;
-+	u32 shard_end = shard_base + shard->nr_cids;
-+	u32 isect_base, isect_end, nr_words, src_off, wi;
-+	u64 head_mask, tail_mask;
-+
-+	isect_base = max(ref->base, shard_base);
-+	isect_end = min(ref->base + ref->nr_cids, shard_end);
-+
-+	if (isect_base >= isect_end) {
-+		out->base = shard_base;
-+		out->nr_cids = 0;
-+		return;
++	while (pos != root) {
++		next = list_next_or_null_rcu(&scx_parent(pos)->children, &pos->sibling,
++					     struct scx_sched, sibling);
++		if (next)
++			return next;
++		pos = scx_parent(pos);
 +	}
-+
-+	nr_words = ((isect_end - 1) / 64) - (isect_base / 64) + 1;
-+	if (nr_words > out->alloc_words) {
-+		scx_error(ref->sch, "scx_cmask_ref_shard: out alloc_words=%u < %u for shard %d",
-+			  out->alloc_words, nr_words, shard_idx);
-+		out->base = shard_base;
-+		out->nr_cids = 0;
-+		return;
-+	}
-+
-+	out->base = isect_base;
-+	out->nr_cids = isect_end - isect_base;
-+	src_off = (isect_base / 64) - (ref->base / 64);
-+
-+	for (wi = 0; wi < nr_words; wi++)
-+		out->bits[wi] = READ_ONCE(ref->src->bits[src_off + wi]);
-+
-+	head_mask = GENMASK_U64(63, isect_base & 63);
-+	out->bits[0] &= head_mask;
-+	tail_mask = GENMASK_U64((isect_end - 1) & 63, 0);
-+	out->bits[nr_words - 1] &= tail_mask;
++	return NULL;
 +}
 +
-+/**
-+ * scx_cmask_ref_or - OR @src into the arena cmask referenced by @ref
-+ * @ref: validated ref
-+ * @src: stable kernel cmask
-+ *
-+ * Bits inside the intersection of @ref's snapshotted range with @src's range
-+ * are OR'd into @ref->src and bits outside are left unchanged. Stores on
-+ * @ref->src use WRITE_ONCE since BPF may read/write concurrently.
-+ */
-+void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(ref->src->bits, ref->base, ref->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_OR);
-+}
-+
-+/**
-+ * scx_cmask_ref_copy - Copy @src into the arena cmask referenced by @ref
-+ * @ref: validated ref
-+ * @src: stable kernel cmask
-+ *
-+ * Bits inside the intersection of @ref's snapshotted range with @src's range
-+ * take @src's values and bits outside are left unchanged. Stores on @ref->src
-+ * use WRITE_ONCE since BPF may read/write concurrently.
-+ */
-+void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(ref->src->bits, ref->base, ref->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_COPY);
-+}
-+
- int scx_cid_kfunc_init(void)
- {
- 	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_init_cids) ?:
-diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-index cdc18a7a48f5..70d97acd0ac4 100644
---- a/kernel/sched/ext/cid.h
-+++ b/kernel/sched/ext/cid.h
-@@ -293,4 +293,11 @@ static inline s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
- 	return scx_cid_to_cpu(sch, cpu_or_cid);
+ /**
+  * scx_next_descendant_pre - find the next descendant for pre-order walk
+  * @pos: the current position (%NULL to initiate traversal)
+@@ -48,15 +75,7 @@ struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sche
+ 		return next;
+ 
+ 	/* no child, visit my or the closest ancestor's next sibling */
+-	while (pos != root) {
+-		next = list_next_or_null_rcu(&scx_parent(pos)->children, &pos->sibling,
+-					     struct scx_sched, sibling);
+-		if (next)
+-			return next;
+-		pos = scx_parent(pos);
+-	}
+-
+-	return NULL;
++	return scx_skip_subtree_pre(pos, root);
  }
  
-+int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
-+		       struct scx_cmask_ref *ref);
-+void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
-+			 struct scx_cmask *out);
-+void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
-+void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
-+
- #endif /* _KERNEL_SCHED_EXT_CID_H */
-diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
-index b31d12931999..a1a05820725e 100644
---- a/kernel/sched/ext/types.h
-+++ b/kernel/sched/ext/types.h
-@@ -116,7 +116,7 @@ struct scx_cmask {
- 	u32 base;
- 	u32 nr_cids;
- 	u32 alloc_words;
--	u64 bits[] __counted_by(alloc_words);
-+	u64 bits[];
- };
+ static struct scx_sched *scx_find_sub_sched(u64 cgroup_id)
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index e936867bc5c5..3d5ad9c36d64 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -15,6 +15,7 @@
  
- /*
-@@ -172,4 +172,41 @@ struct scx_cmask {
- #define SCX_CMASK_DEFINE_SHARD(NAME, BASE, NR_CIDS)				\
- 	__SCX_CMASK_DEFINE(NAME, BASE, NR_CIDS, SCX_CID_SHARD_MAX_CPUS)
+ #ifdef CONFIG_EXT_SUB_SCHED
  
-+/*
-+ * scx_cmask_ref: validated reference to a BPF-arena cmask.
-+ *
-+ * scx_cmask_ref_init() normalizes the pointer into the arena and snapshots
-+ * @base/@nr_cids. The snapshot is what downstream code uses for sizing - the
-+ * live header can be mutated concurrently by BPF.
-+ *
-+ * scx_cmask_ref_shard() reads one shard into a cmask. scx_cmask_ref_or() and
-+ * scx_cmask_ref_copy() write back into the referenced arena cmask, bounded by
-+ * the snapshot.
-+ *
-+ * Typical input use:
-+ *
-+ *	struct scx_cmask_ref ref;
-+ *	SCX_CMASK_DEFINE(shard, 0, SCX_CID_SHARD_MAX_CPUS);
-+ *	s32 idx, ret;
-+ *
-+ *	ret = scx_cmask_ref_init(sch, src, &ref);
-+ *	if (ret < 0)
-+ *		return ret;
-+ *
-+ *	for (idx = ref.shard_first; idx < ref.shard_end; idx++) {
-+ *		scx_cmask_ref_shard(&ref, idx, shard);
-+ *		if (!shard->nr_cids)
-+ *			continue;
-+ *		... use idx and shard ...
-+ *	}
-+ */
-+struct scx_cmask_ref {
-+	struct scx_sched	*sch;
-+	struct scx_cmask	*src;
-+	u32			base;
-+	u32			nr_cids;
-+	s32			shard_first;
-+	s32			shard_end;
-+};
-+
- #endif /* _KERNEL_SCHED_EXT_TYPES_H */
++struct scx_sched *scx_skip_subtree_pre(struct scx_sched *pos, struct scx_sched *root);
+ struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root);
+ void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch);
+ struct cgroup *sch_cgroup(struct scx_sched *sch);
+@@ -30,6 +31,7 @@ s32 scx_alloc_pshards(struct scx_sched *sch);
+ #else	/* CONFIG_EXT_SUB_SCHED */
+ 
+ static inline struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root) { return pos ? NULL : root; }
++static inline struct scx_sched *scx_skip_subtree_pre(struct scx_sched *pos, struct scx_sched *root) { return NULL; }
+ static inline void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch) {}
+ static inline struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
+ static inline void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
 -- 
 2.54.0
 
