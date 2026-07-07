@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D161617D6
-	for <sched-ext@lists.linux.dev>; Tue,  7 Jul 2026 00:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492BF1E32D6
+	for <sched-ext@lists.linux.dev>; Tue,  7 Jul 2026 00:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783384332; cv=none; b=OIYVORylceKJqt6m7Km9J9+2CRdzj0jPaLlZkFwyEpLrrW1dfS1Wl+A/jI6Jtekp2cSFBofGnu2WOqQloyFq8SU0KPAGW04vNeTQwYLW+K11e3qPjuUg2DuNNPxEXSEuu/3YEpgDN7Es5QxWxbmXnx1ghL24saC1xFu8dBKn1EA=
+	t=1783384392; cv=none; b=QeyCEiRPTPLei3GWPZmbtfUFgP7hvp4b8gNY2srYZuvPe0Rob9TUOqqGWNa32hS0pGcpxXfBX0AhUB/WheTv0gEykCoKcinadxO6wMRw+oecMp5Ho3jw5ivsTd8KaYbFuKxn29/AfxwjYolZaFKl+rOaVpiJ1S/3B2pmMpM1miA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783384332; c=relaxed/simple;
-	bh=BnZdgzaCnabjiJFtvqRf7FHTMEDl4UvOPxPev3GiVs8=;
+	s=arc-20240116; t=1783384392; c=relaxed/simple;
+	bh=XWH/zWij5VRArWoQDRlu94gLMyfh+YRPJy4+ZDc/lR0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=HSuZz2KXTPDE2Mtu11q6LfDLVK3MIGTZPwHTkDpm7ccR+nb1VfrUYKfi40zcqLj83RomWUZjeKwiZrThx2y/XsJRxQqlA4ACccYkw0B8rNVy3I77j5h3SGjFJ7OsgqGSGbtwhk7WVDcbxXaz4wHjLdAeVlpR05HirRXThL3F1xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OElQx9jw; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=U7ybNEK6tHX6yrAPT4xeaEXUUgQ9mc21qDs9rrUm1E5DewwUTOfjR0nSkhry3DN0LoS9ItoKBTAferxFvry5gVzEehhecrsG/wWj52to4T+mvbPA55j6Y+VxCeC0jpTIERfaRCGO5Feub1f5QcfMDrJX3M4ywKk2IGIzzICCVdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VItz7qNr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OElQx9jw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479301F000E9;
-	Tue,  7 Jul 2026 00:32:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VItz7qNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C271F000E9;
+	Tue,  7 Jul 2026 00:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783384331;
-	bh=AkMWqJqPlduChSkF0h5s7yvQZ0Dzi1YRP/vf8EONb54=;
+	s=k20260515; t=1783384388;
+	bh=KMfo+0LPvCUtLGZg5LZeIIjKy1xGaxMF8ZzGruzx9yA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OElQx9jwRE1tvaAumNOFphaEOR82D5FZbr5piKRlguAhEHAYcMOqx1qc9R4p9VZ7L
-	 Ghb92z0ipEuOLI4qZm4FHxDjw6q2gjeOIo52idVrQQqKmq6adt4XO7AEsRUKuhtqTC
-	 fjGMBxY6qIl52TChWV7tKR2nYsDMgbrxesKN4bskn8pOopZc9ODxIZb8Z/543ChsKz
-	 hpTQHT6if3x6NSB9O9aQohaYDQC2/JoAIcgIudXP0Weog+r6FWfEVk8b/O9eItqTad
-	 B1/WuLcaTvR8/G97lYDhw1dXTgfvltFuBHV8KHJonNkrJcmq1BFYL0iQyDQrDJjZ7S
-	 uLLO6tjA1P9RA==
+	b=VItz7qNr0G6em2Q5E6qIRRU9UMzOjwa6b4wwguAaH2tX0r0lFNVg42vnew3fLXUNt
+	 YyTuZAXbzJQQr1vvm5UdpDTBG26jWr6stXH/dVdvpI6cty3vo+6y1jns5v4Kr2Rlnb
+	 J1kmddVgplydjgsB7fjyQV8eA9tT6SUiccFhdXaixqRO+0kY5xNTDOJeDQMK/xkSir
+	 r5gFq59rYUpXb+/jEOZ46FGGCgLFbRQMiYw2TYjek2Ccnr2Fj62dEm6J+KUn5mUEEW
+	 wpZjwiITP7WbWIPvSII2WZKriuDco+ZU7Xo5RPBH2ok/QdEdvp2qhhqyuDEADwJTuL
+	 ec3wTxlAIfZmA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 sched_ext/for-7.3 25/36] sched_ext: Add the
- SCX_CAP_ENQ_IMMED cap
+Subject: Re: [PATCH v3 sched_ext/for-7.3 20/36] sched_ext: Add coalescing
+ sub_caps_updated() notifier for sub-schedulers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260707001229.1410929-26-tj@kernel.org>
+In-Reply-To: <20260707001229.1410929-21-tj@kernel.org>
 References: <20260707001229.1410929-1-tj@kernel.org>
- <20260707001229.1410929-26-tj@kernel.org>
+ <20260707001229.1410929-21-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Jul 2026 00:32:10 +0000
-Message-Id: <20260707003211.479301F000E9@smtp.kernel.org>
+Date: Tue, 07 Jul 2026 00:33:07 +0000
+Message-Id: <20260707003307.C6C271F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,66 +47,71 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] The SCX_CAP_ENQ_IMMED capability inadvertently allows sub-schedule=
-rs to enqueue non-IMMED tasks to the local DSQ, breaking the CPU isolation =
-guarantee.
+- [High] NULL pointer dereference in scx_bpf_sub_grant() and scx_bpf_sub_re=
+voke() when a sub-scheduler is not a cid-form scheduler.
 --
 
---- Patch [25]: [PATCH v3 sched_ext/for-7.3 25/36] sched_ext: Add the SCX_C=
-AP_ENQ_IMMED cap ---
-commit a4e853c803659c3e80f2be7fcff03bb32c0a8907
+--- Patch [20]: [PATCH v3 sched_ext/for-7.3 20/36] sched_ext: Add coalescin=
+g sub_caps_updated() notifier for sub-schedulers ---
+commit 65f0b1ee489afa8a5521ffd4929c36ec04dc1300
 Author: Tejun Heo <tj@kernel.org>
-sched_ext: Add the SCX_CAP_ENQ_IMMED cap
+Subject: sched_ext: Add coalescing sub_caps_updated() notifier for sub-sche=
+dulers
 
-This commit replaces the dummy placeholder with the SCX_CAP_ENQ_IMMED
-capability to gate inserting IMMED tasks onto a local DSQ. It is intended
-to guarantee that IMMED work gets running at once or is handed back,
-preventing tasks from piling up on the CPU queue.
+This commit wires up ops_cid.sub_caps_updated() to notify sub-schedulers of
+cap changes. It introduces a coalesced notification mechanism to handle
+high-frequency updates and deferred delivery to prevent deep recursion.
 
-> diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-> index 51400e174cd00..f3548976800b0 100644
-> --- a/kernel/sched/ext/sub.h
-> +++ b/kernel/sched/ext/sub.h
+> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+> --- a/kernel/sched/ext/sub.c
+> +++ b/kernel/sched/ext/sub.c
 [ ... ]
-> @@ -106,13 +106,13 @@ static inline u64 scx_missing_caps(struct scx_sched=
- *sch, s32 cpu, u64 needed)
->  /* map @enq_flags to the SCX_CAP_* bit required for the local-DSQ insert=
- */
->  static inline u64 scx_caps_for_enq(u64 enq_flags)
->  {
-> -	return 0;
-> +	return SCX_CAP_ENQ_IMMED;
->  }
+> @@ -887,6 +1010,7 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64=
+ caps,
+>  		SCX_CMASK_DEFINE_SHARD(slice, 0, SCX_CID_SHARD_MAX_CPUS);
+>  		struct scx_pshard *pps =3D parent->pshard[si];
+>  		struct scx_pshard *cps =3D child->pshard[si];
 
 [Severity: High]
-Does unconditionally returning SCX_CAP_ENQ_IMMED allow sub-schedulers to
-bypass IMMED enforcement?
+Can this result in a NULL pointer dereference if the sub-scheduler is not a
+cid-form scheduler?
 
-If a sub-scheduler calls scx_bpf_dsq_insert() or similar dispatch kfuncs
-with enq_flags =3D 0 (omitting SCX_ENQ_IMMED) and without setting
-SCX_OPS_ALWAYS_ENQ_IMMED, scx_caps_for_enq() will still return
-SCX_CAP_ENQ_IMMED.
+If a user loads a root scheduler that is cid-form, and then loads and attac=
+hes
+a sub-scheduler that is cpu-form (or lacks an arena pool), scx_alloc_pshard=
+s()
+might leave child->pshard as NULL.
 
-Because the sub-scheduler possesses this baseline capability, would the
-check in scx_local_or_reject_dsq() pass and allow the task to be enqueued
-to the local DSQ without IMMED semantics? This seems like it could allow
-a sub-scheduler to swamp a shared CPU's local DSQ, breaking the isolation
-guarantee that IMMED work can never pile up.
+Since sub_cap_preamble() only verifies that the root is cid-form without
+checking the child's type, could dereferencing child->pshard[si] cause a cr=
+ash
+here?
 
+> +		u64 granted_caps =3D 0;
+>  		u32 cap_bit;
 > =20
->  /* map queued @p to the SCX_CAP_* bit required to stay on its local DSQ =
-*/
->  static inline u64 scx_caps_for_task(struct task_struct *p)
->  {
-> -	return 0;
-> +	return SCX_CAP_ENQ_IMMED;
->  }
+>  		scx_cmask_ref_shard(&ref, si, slice);
+[ ... ]
+> @@ -974,18 +1122,32 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id,=
+ u64 caps,
+>  		pos =3D scx_next_descendant_pre(NULL, child);
+>  		while (pos) {
+>  			struct scx_pshard *ps =3D pos->pshard[si];
 
 [Severity: High]
-Similarly, does unconditionally returning SCX_CAP_ENQ_IMMED for already
-queued tasks fail to enforce higher capability requirements for non-IMMED
-tasks?
+Similarly, can this dereference pos->pshard[si] when a descendant is a
+cpu-form scheduler?
+
+If pos->pshard is NULL for any descendant in the hierarchy, this loop would
+dereference a NULL pointer.
+
+> +			SCX_CMASK_DEFINE_SHARD(changed_cids, slice->base, slice->nr_cids);
+> +			SCX_CMASK_DEFINE_SHARD(delta, slice->base, slice->nr_cids);
+>  			u64 revoked_caps =3D 0;
+>  			u32 cap_bit;
+> =20
+[ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707001229.1410=
-929-1-tj@kernel.org?part=3D25
+929-1-tj@kernel.org?part=3D20
