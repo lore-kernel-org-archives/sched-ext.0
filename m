@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E230417D6
-	for <sched-ext@lists.linux.dev>; Tue,  7 Jul 2026 00:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D161617D6
+	for <sched-ext@lists.linux.dev>; Tue,  7 Jul 2026 00:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783384295; cv=none; b=KEB4hB15v1eN8Ad/Ncbs6cTl0mvzuKmh0JkqBPJ7EAjW+ptpAV3xW+MAdL6mxdzzG4OdUaxUEAhK7Sx8Ad0kMJppGOycaB3+JfQYKijRpPhk9Kx9BGrXwHeCliXVtDvWfCJeBH6shYkwbnIzw6xqVPpzrCRdFxOVqDEQgxYqn54=
+	t=1783384332; cv=none; b=OIYVORylceKJqt6m7Km9J9+2CRdzj0jPaLlZkFwyEpLrrW1dfS1Wl+A/jI6Jtekp2cSFBofGnu2WOqQloyFq8SU0KPAGW04vNeTQwYLW+K11e3qPjuUg2DuNNPxEXSEuu/3YEpgDN7Es5QxWxbmXnx1ghL24saC1xFu8dBKn1EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783384295; c=relaxed/simple;
-	bh=L716oNi0RsjS3hb1ThhDBfocHtnErPXB/6t6h0cK4zM=;
+	s=arc-20240116; t=1783384332; c=relaxed/simple;
+	bh=BnZdgzaCnabjiJFtvqRf7FHTMEDl4UvOPxPev3GiVs8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=M1Ry9lpv1HHPtROznK9XkX4d6+kEhOwaOZdSQ5LmoXJB5IlAYVn254y/Y0U7cDiRwAj+OEe5i3Mb3AwKpxlS12xlx779bhQ5EZ8WZAY86dNtI7ZtPSwipkD97GSpxB7PqhNyIQBXUs1oE58Fjze6IIxA2K6sYQ+DDNu+CLbrpjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dlQbFPsn; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=HSuZz2KXTPDE2Mtu11q6LfDLVK3MIGTZPwHTkDpm7ccR+nb1VfrUYKfi40zcqLj83RomWUZjeKwiZrThx2y/XsJRxQqlA4ACccYkw0B8rNVy3I77j5h3SGjFJ7OsgqGSGbtwhk7WVDcbxXaz4wHjLdAeVlpR05HirRXThL3F1xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OElQx9jw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dlQbFPsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81DA1F000E9;
-	Tue,  7 Jul 2026 00:31:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OElQx9jw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479301F000E9;
+	Tue,  7 Jul 2026 00:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783384294;
-	bh=z2W11Z2O/3nH2L8yvRduvM8IyDwo+z5cZ14WFdichMI=;
+	s=k20260515; t=1783384331;
+	bh=AkMWqJqPlduChSkF0h5s7yvQZ0Dzi1YRP/vf8EONb54=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dlQbFPsnVcaRcVZvFPT4ScYyHt4P7fXhRwqYOxl/hZp9LXUwWJDQJQ4YWZwCNJQxD
-	 fhj0t19aefWKt0/ImjuLN9pWMhS4SztPNH/vuEHm5aDaoKia60LoM8zqhQftEBPXZT
-	 bhwU6JNBdpo31QbHWi1eQ3JnYCNMW8SG+RlHevLjckAuXWqNmkyc/nqAJoFeza6b9+
-	 THpcajyauRcYxJ4gzYlnd1EczyceeFEIOzjm6E7tPlsTWULt2bhELOADL2yJTwfvZe
-	 vFrmZSjLPMboAcouN95ttrUxfP+DCv66gMhGNpennWZHawLZgALZd7fwDhkTNe7+qC
-	 bMA/eSbEdHHUA==
+	b=OElQx9jwRE1tvaAumNOFphaEOR82D5FZbr5piKRlguAhEHAYcMOqx1qc9R4p9VZ7L
+	 Ghb92z0ipEuOLI4qZm4FHxDjw6q2gjeOIo52idVrQQqKmq6adt4XO7AEsRUKuhtqTC
+	 fjGMBxY6qIl52TChWV7tKR2nYsDMgbrxesKN4bskn8pOopZc9ODxIZb8Z/543ChsKz
+	 hpTQHT6if3x6NSB9O9aQohaYDQC2/JoAIcgIudXP0Weog+r6FWfEVk8b/O9eItqTad
+	 B1/WuLcaTvR8/G97lYDhw1dXTgfvltFuBHV8KHJonNkrJcmq1BFYL0iQyDQrDJjZ7S
+	 uLLO6tjA1P9RA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 sched_ext/for-7.3 13/36] sched_ext: Defer scx_sched
- kobj sysfs add into the enable workfns
+Subject: Re: [PATCH v3 sched_ext/for-7.3 25/36] sched_ext: Add the
+ SCX_CAP_ENQ_IMMED cap
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260707001229.1410929-14-tj@kernel.org>
+In-Reply-To: <20260707001229.1410929-26-tj@kernel.org>
 References: <20260707001229.1410929-1-tj@kernel.org>
- <20260707001229.1410929-14-tj@kernel.org>
+ <20260707001229.1410929-26-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Jul 2026 00:31:34 +0000
-Message-Id: <20260707003134.A81DA1F000E9@smtp.kernel.org>
+Date: Tue, 07 Jul 2026 00:32:10 +0000
+Message-Id: <20260707003211.479301F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,59 +47,66 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Moving sysfs addition into the new `scx_sched_sysfs_add()` helper =
-introduces a new silent failure path in `scx_sub_enable_workfn()` that leav=
-es the sub-scheduler in a half-initialized zombie state.
+- [High] The SCX_CAP_ENQ_IMMED capability inadvertently allows sub-schedule=
+rs to enqueue non-IMMED tasks to the local DSQ, breaking the CPU isolation =
+guarantee.
 --
 
---- Patch [13]: [PATCH v3 sched_ext/for-7.3 13/36] sched_ext: Defer scx_sch=
-ed kobj sysfs add into the enable workfns ---
-commit 507940b158b167ff0f8a1c4f5cea84a731673de7
+--- Patch [25]: [PATCH v3 sched_ext/for-7.3 25/36] sched_ext: Add the SCX_C=
+AP_ENQ_IMMED cap ---
+commit a4e853c803659c3e80f2be7fcff03bb32c0a8907
 Author: Tejun Heo <tj@kernel.org>
+sched_ext: Add the SCX_CAP_ENQ_IMMED cap
 
-sched_ext: Defer scx_sched kobj sysfs add into the enable workfns
+This commit replaces the dummy placeholder with the SCX_CAP_ENQ_IMMED
+capability to gate inserting IMMED tasks onto a local DSQ. It is intended
+to guarantee that IMMED work gets running at once or is handed back,
+preventing tasks from piling up on the CPU queue.
 
-This commit splits the sysfs kobject addition from the scheduler
-initialization. It introduces a new scx_sched_sysfs_add() helper that is
-called from the enable work functions once the scheduler's sysfs-visible
-state is initialized.
-
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 0504204272732..e94a415ee10a7 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
-
+> diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+> index 51400e174cd00..f3548976800b0 100644
+> --- a/kernel/sched/ext/sub.h
+> +++ b/kernel/sched/ext/sub.h
 [ ... ]
-
-> @@ -363,6 +365,10 @@ void scx_sub_enable_workfn(struct kthread_work *work)
->  	if (ret)
->  		goto err_disable;
-> =20
-> +	ret =3D scx_sched_sysfs_add(sch);
-> +	if (ret)
-> +		goto err_disable;
+> @@ -106,13 +106,13 @@ static inline u64 scx_missing_caps(struct scx_sched=
+ *sch, s32 cpu, u64 needed)
+>  /* map @enq_flags to the SCX_CAP_* bit required for the local-DSQ insert=
+ */
+>  static inline u64 scx_caps_for_enq(u64 enq_flags)
+>  {
+> -	return 0;
+> +	return SCX_CAP_ENQ_IMMED;
+>  }
 
 [Severity: High]
-If scx_sched_sysfs_add() fails (for example, due to ENOMEM in
-kset_create_and_add()), does this jump to err_disable leave the
-sub-scheduler in a zombie state?
+Does unconditionally returning SCX_CAP_ENQ_IMMED allow sub-schedulers to
+bypass IMMED enforcement?
 
-Since scx_error() is not called before jumping here, the scheduler's
-exit_kind remains SCX_EXIT_NONE, which means the disable work is never
-queued. The scx_flush_disable_work() call in the error path will return
-immediately, and the function will set cmd->ret =3D 0, falsely signaling
-success to userspace.
+If a sub-scheduler calls scx_bpf_dsq_insert() or similar dispatch kfuncs
+with enq_flags =3D 0 (omitting SCX_ENQ_IMMED) and without setting
+SCX_OPS_ALWAYS_ENQ_IMMED, scx_caps_for_enq() will still return
+SCX_CAP_ENQ_IMMED.
 
-This could leave the sub-scheduler partially initialized but fully linked
-in scx_sched_hash and parent->children. If the parent scheduler then
-dispatches tasks to it, or if it is disabled by userspace, could this
-crash the kernel due to uninitialized structures?
+Because the sub-scheduler possesses this baseline capability, would the
+check in scx_local_or_reject_dsq() pass and allow the task to be enqueued
+to the local DSQ without IMMED semantics? This seems like it could allow
+a sub-scheduler to swamp a shared CPU's local DSQ, breaking the isolation
+guarantee that IMMED work can never pile up.
 
-> +
->  	if (sch->level >=3D SCX_SUB_MAX_DEPTH) {
->  		scx_error(sch, "max nesting depth %d violated",
->  			  SCX_SUB_MAX_DEPTH);
+> =20
+>  /* map queued @p to the SCX_CAP_* bit required to stay on its local DSQ =
+*/
+>  static inline u64 scx_caps_for_task(struct task_struct *p)
+>  {
+> -	return 0;
+> +	return SCX_CAP_ENQ_IMMED;
+>  }
+
+[Severity: High]
+Similarly, does unconditionally returning SCX_CAP_ENQ_IMMED for already
+queued tasks fail to enforce higher capability requirements for non-IMMED
+tasks?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707001229.1410=
-929-1-tj@kernel.org?part=3D13
+929-1-tj@kernel.org?part=3D25
