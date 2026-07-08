@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6630D41D
-	for <sched-ext@lists.linux.dev>; Wed,  8 Jul 2026 22:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E4230D41D
+	for <sched-ext@lists.linux.dev>; Wed,  8 Jul 2026 22:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783548058; cv=none; b=RyHlrhNrRxK4wDimMfotSNwMKycOZQPdu3EQDQH4nAYoOIBoj22WdSqzjIhUu4kfwNVBMDQBmPvCvdT7SNqRs6NShjsdBAv/3X1fDhSYUS2rpe79YiiSg1bO2hkwSsgIHan1bW/GwQboQnWROLoaabQhF64EfdNAYEAdFFzcpyY=
+	t=1783548142; cv=none; b=el4qWOvgw9iziaBeTMu35RUfhNFO7rd0sLhEUwOZbfVH0vR9d+xEfjEmO4MpYB2MDZycW8sHTHdnnNIt2P5O7bbpSgzHlpIe+QJQx0TT3BInftx6hk5+evz7CDL3W3G4TKoNd91pTznot5/BDHvkOS9NDBOCgjAsoDwtHk8mLno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783548058; c=relaxed/simple;
-	bh=026KcZ24AeP8Ko8hJD6Sz2dtKlla5eFbC7y6qJ1Vsy8=;
+	s=arc-20240116; t=1783548142; c=relaxed/simple;
+	bh=NqDGskIvmMsOZV97uaQkSMpRh6KBdQmJYVwQNuRQn8c=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Fne89ciZD1+kCGKAo3zi1y/1HbY+/LDK50O4tK5Ww/PwXWBS1kmgaLGzyhFJ2idOjXsMKwfinC4rJjQjI0SnQgj0UlbJYlqZuhWboUVq1uB2Vd+jlcM+4YSKcgBM+sAO8SvE2LHlkvN5qVQ9uhRDwrKZz3/Wyd9BZT8bEFB19NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ek0HqvdC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Doo6xp1UZdOCOX0VaKh/WT3l48V3NaN+c0PgYmB8nqda0ci/0KZw6MSFBvfmqpumnAyZxEjmFwCQRmFZVdHussBqrqLj5LkmZJ79ZxIYyD0A8TxDQSo6NQFya1iX1OQa/McQXNd95uimvOe3qGQkvk3SpO8/poGslKFGUo55b7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ejnwXdcl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ek0HqvdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F581F000E9;
-	Wed,  8 Jul 2026 22:00:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejnwXdcl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C181F000E9;
+	Wed,  8 Jul 2026 22:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783548057;
-	bh=oxqtKg8ZR8w3n3xXB3aPWI+iatvlg7jTpUvvZBoa7SE=;
+	s=k20260515; t=1783548140;
+	bh=YuwpriCS9oXzasn7jcZO7aC49QR0VHDM7SYAb9vA3bQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Ek0HqvdCXUYk7mlhh3Mph1SaKeON+CT8g0xw/f8g6IB4mz2ccYURPBHnOjUqyMWft
-	 hJB06FGuPrfSXdADqogmB4HZxTqF87VuacIgcbwpK9uUMQVCLzmakXJWJb4P9S70Ne
-	 0aCKNTYdwAEyWnUdj/Tm4J+SFDIzr7ZehRNsVpdKFruCDkzoFg6hb0cZGZ8vid7fer
-	 f9lL1myO4TMQvcN2Ek5X4AXMAHPIH9ktobzZO0TczTqse6EZrrq5u5/hBm3ZHRib1V
-	 KC9crDpUuvRu7v3MGUP3QwzOX1LxiaQAxB7COp5HX7vqvoOhEZtNa1ej2SqzHbXuAc
-	 FJBkl848EMDSg==
+	b=ejnwXdclFWPqjQ9Xp7UpVTtTUf5TCTX6C30+9S24/1x160dYknkZvp3LdyYBOuxx6
+	 qRRXDqPj/1xIjtocxyRAJLyy0foMWZJ/j5pDIvY1twO/VxU9pmWeUGLRzi0TFr6Wpk
+	 mb23vH8U33atBXF1T78hyJjXC7RbM7h6dqoglYPllvlocxChuQCDPL54E4m4z2FBsg
+	 NzKCoAn37H+tiDBqFq6won08QBBey45nyNKpDi+sLjSmUw8RQuWjb1DdNMTtd+Q07E
+	 QrK4ntI2EmStLJ5REcu+Max8sIlB7pKGTELJMvChrhP9K9oBvcK4fnt1zcKZ9Pj/RE
+	 VWi3jOfMuag4g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 sched_ext/for-7.3 21/40] sched_ext: Add per-shard cap
- delegation for sub-schedulers
+Subject: Re: [PATCH v4 sched_ext/for-7.3 24/40] sched_ext: Add
+ sub_ecaps_updated() effective-cap change notifier
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260708212429.3405787-22-tj@kernel.org>
+In-Reply-To: <20260708212429.3405787-25-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
- <20260708212429.3405787-22-tj@kernel.org>
+ <20260708212429.3405787-25-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 08 Jul 2026 22:00:56 +0000
-Message-Id: <20260708220057.20F581F000E9@smtp.kernel.org>
+Date: Wed, 08 Jul 2026 22:02:19 +0000
+Message-Id: <20260708220220.87C181F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,128 +47,76 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Missing validation for unallocated `pshard` arrays and missing are=
-na maps in `scx_bpf_sub_grant()`, `scx_bpf_sub_revoke()`, and `scx_bpf_sub_=
-caps()` leads to NULL pointer dereferences and invalid memory access Oops.
+- [High] `scx_discard_ecaps_to_sync()` loops infinitely if the target CPU i=
+s starved by RT/DL tasks, stalling scheduler teardown.
 --
 
---- Patch [21]: [PATCH v4 sched_ext/for-7.3 21/40] sched_ext: Add per-shard=
- cap delegation for sub-schedulers ---
-commit 809108a1ad8d6e1bc475090c3e5ff6fba86f6bad
+--- Patch [24]: [PATCH v4 sched_ext/for-7.3 24/40] sched_ext: Add sub_ecaps=
+_updated() effective-cap change notifier ---
+commit acc58dd0c8619664f61b598c2dccb6ac82d1cc5a
 Author: Tejun Heo <tj@kernel.org>
-sched_ext: Add per-shard cap delegation for sub-schedulers
+Subject: sched_ext: Add sub_ecaps_updated() effective-cap change notifier
 
-Caps are per-cid permissions parents delegate to direct children via
-scx_bpf_sub_grant() / scx_bpf_sub_revoke(). A child's cap set is always a
-subset of its parent's. Sub-scheds check their caps locally, and cross-sched
-communication is needed only when the delegation set itself changes.
+This patch adds a notifier for sub-scheduler effective capability
+changes on a CPU. It queues syncs and processes them in dispatch
+context, handling CPU hotplug by zeroing capabilities when offline and
+re-syncing when online.
 
 > diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 8d98250936497..d0ffc3a8550cf 100644
+> index 80f74064ca781..f0ebf7c6e1425 100644
 > --- a/kernel/sched/ext/sub.c
 > +++ b/kernel/sched/ext/sub.c
+
 [ ... ]
-> @@ -760,6 +808,284 @@ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id=
-, const struct bpf_prog_aux *
->  				  true);
->  }
+
+>  void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu)
+>  {
+> -	scoped_guard (rq_lock_irqsave, cpu_rq(cpu))
+> -		scx_process_sync_ecaps(cpu_rq(cpu));
+> +	struct rq *rq =3D cpu_rq(cpu);
 > =20
-> +/* Validate common inputs. On success, *parent_out and *child_out are se=
-t. */
-> +static s32 sub_cap_preamble(u64 cgroup_id, u64 caps, const struct bpf_pr=
-og_aux *aux,
-> +			    struct scx_sched **parent_out, struct scx_sched **child_out)
-> +{
-[ ... ]
-> +	*parent_out =3D parent;
-> +	*child_out =3D child;
-> +	return 0;
-> +}
-> +
-> +/**
-> + * scx_bpf_sub_grant - Grant @caps on @cmask__ign's cids to a direct chi=
-ld
-[ ... ]
-> +__bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
-> +				  const struct scx_cmask *cmask__ign,
-> +				  struct scx_cmask *denied_out__ign,
-> +				  const struct bpf_prog_aux *aux)
-> +{
-[ ... ]
-> +	/* apply the grant one shard at a time */
-> +	for (si =3D ref.shard_first; si < ref.shard_end; si++) {
-> +		SCX_CMASK_DEFINE_SHARD(slice, 0, SCX_CID_SHARD_MAX_CPUS);
-> +		struct scx_pshard *pps =3D parent->pshard[si];
-> +		struct scx_pshard *cps =3D child->pshard[si];
-
-[Severity: High]
-Does this code dereference a NULL pointer if the child scheduler was created
-without a BPF arena?
-
-If the child scheduler has no arena pool, scx_alloc_pshards() skips allocat=
-ing
-the pshard array and leaves it as NULL. When scx_bpf_sub_grant() accesses
-child->pshard[si], it would attempt to dereference that NULL pointer.
-
-> +		u32 cap_bit;
-> +
-> +		scx_cmask_ref_shard(&ref, si, slice);
-> +		if (scx_cmask_empty(slice))
-> +			continue;
-[ ... ]
-> +__bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
-> +				    const struct scx_cmask *cmask__ign,
-> +				    const struct bpf_prog_aux *aux)
-> +{
-[ ... ]
-> +		guard(raw_spinlock)(&parent->pshard[si]->lock);
-> +		pos =3D scx_next_descendant_pre(NULL, child);
-> +		while (pos) {
-> +			struct scx_pshard *ps =3D pos->pshard[si];
-
-[Severity: High]
-Can pos->pshard be NULL here if one of the descendant schedulers was created
-without an arena map?
-
-If a descendant scheduler lacks an arena, pos->pshard is NULL, leading to a
-NULL pointer dereference when accessing pos->pshard[si].
-
-> +			u64 revoked_caps =3D 0;
-> +			u32 cap_bit;
-> +
-> +			scoped_guard (raw_spinlock_nested, &ps->lock) {
-> +				scx_for_each_cap_bit(cap_bit, caps) {
-[ ... ]
-> +__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cma=
-sk *out__ign,
-> +				 const struct bpf_prog_aux *aux)
-> +{
-[ ... ]
-> +	pshard =3D READ_ONCE(target->pshard);
-> +	if (unlikely(!pshard)) {
-> +		scx_error(sch, "scx_bpf_sub_caps() called before caps storage is initi=
-alized");
-> +		return -ENODEV;
+> -	WARN_ON_ONCE(llist_on_list(&pcpu->ecaps_to_sync_node));
+> +	while (true) {
+> +		scoped_guard (rq_lock_irqsave, rq) {
+> +			/*
+> +			 * scx_process_sync_ecaps() takes the node off the list
+> +			 * before it is done accessing @pcpu but does all of it
+> +			 * under the rq lock. Off-list observed under the rq
+> +			 * lock guarantees that the sync is complete.
+> +			 */
+> +			if (!llist_on_list(&pcpu->ecaps_to_sync_node))
+> +				return;
+> +			/*
+> +			 * Discard only when the cpu is truly down. cpu_active()
+> +			 * is already set when scx_online_ecaps() queues an online
+> +			 * resync while SCX_RQ_ONLINE is not - so test cpu_active(),
+> +			 * or that resync would be dropped.
+> +			 */
+> +			if (!scx_enabled() || !cpu_active(cpu)) {
+> +				discard_queued_syncs(rq);
+> +				return;
+> +			}
+> +		}
+> +		resched_cpu(cpu);
+> +		msleep(1);
 > +	}
-> +
-> +	ret =3D scx_cmask_ref_init(sch, out__ign, &ref);
+>  }
 
 [Severity: High]
-Can this lead to an invalid memory access oops if the calling scheduler (sc=
-h)
-has no arena?
+Could this regression lead to an indefinite hang in
+scx_discard_ecaps_to_sync() if the target CPU is starved by RT or DL tasks?
 
-If sch does not have an arena map, its arena_kern_base is 0.=20
-scx_cmask_ref_init() uses this base when resolving the out__ign arena point=
-er,
-resulting in a read from a user-space address and causing a kernel page fau=
-lt.
+If a high-priority RT or DL task monopolizes the target CPU (for example,
+if RT throttling is disabled), pick_next_task() may never fall through
+to the ext_sched_class.
 
-> +	if (ret) {
-> +		scx_error(sch, "invalid out (%d)", ret);
-> +		return ret;
-> +	}
+This prevents pick_task_scx() and balance_one() from being executed on
+the target CPU, so pcpu->ecaps_to_sync_node is never processed and
+removed from the list. The system_dfl_wq worker running
+scx_sched_free_rcu_work() would then block forever in this while (true)
+loop, leaking the scx_sched resources and stalling the sub-scheduler
+teardown.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708212429.3405=
-787-1-tj@kernel.org?part=3D21
+787-1-tj@kernel.org?part=3D24
