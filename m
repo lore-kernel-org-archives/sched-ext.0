@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6024404889;
-	Wed,  8 Jul 2026 21:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0882E3F8EDC;
+	Wed,  8 Jul 2026 21:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783545914; cv=none; b=oNB6DoB3hiM7BRKEGQbK2agpojB+2lm9Oe5Fxa/O4/OvPmZFEeF4WhA2+CXRxd0QC/FDVA73V6ta64ZKGQj4vyKHeaq5kVJ1r3TaqD5Q0PnNYYck0ZxMekpiynJAQJlmfnG9VQ0kGEjMhMYq9Jl966JFWbfNTtfW00rK8oOq6XU=
+	t=1783545916; cv=none; b=k622iMGPoLUqKywAokXG+jxs8BMHvaavcW63k+FWiJp9spZBi3L6tFh0lA1TQcDYPNEMIQxHeg9fUXe2UYNdLgN5HaQ4meFw3tYF+ToGBmn+uRFR9qApaxGHLIaB3u66sU5+J8mN67D37+ZaKeRQH2r60NHpRlRDgH7WPa54Rhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783545914; c=relaxed/simple;
-	bh=OSfz8osZMGJnQHeGsRwE5kNo4Ixc1X+dRtNqmPYsYtA=;
+	s=arc-20240116; t=1783545916; c=relaxed/simple;
+	bh=e2b0rB3V9uEnFcd2l9zEaxpEHLN73n40vWBUHHnpe50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHvOCaxyO22njdwbMTjQtLwJg6fGapvKQookMBDp9kRRCB2icCMl+1IRbO/DfAbJE8a9QuVCqnVtnPZuZl1Jo8OrllK2YuueOtVmYtCxo6GuWrRuHPgyn9s3uZT+RlOIXZ7aCE0hE8Y5o754Daa6B83pMdT57e83eJUvB2vOIys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eb+LF5Ei; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ofS5QxxNeQ5ahzHGB5aVAZ4bA3JloROZgaOiEi3iJsA9GA/oFW8TC6mSV0DabwTlFwI8xg8kYUhlz1iYviH2lOY7SB0jWX7qAGOpFnFwkhWT+SoRHLgzyfTpevaPFw2FznqU6V9Q5tr3khECI/PexUPYgG8CBdiT0H+EY9b3hXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UshyK5Gz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eb+LF5Ei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D88A1F000E9;
-	Wed,  8 Jul 2026 21:25:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UshyK5Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0A11F000E9;
+	Wed,  8 Jul 2026 21:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783545912;
-	bh=WbZpyUudQEfcRgVH9I7nI0yqNCPrWKK16p4KF/TYYe8=;
+	s=k20260515; t=1783545914;
+	bh=QacHpyOsTcfJQEcWhfvHTLEzZgGEI2CmNoKysRjatO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eb+LF5EiywgdNS3jukLhEX0I2PAipn+6QZjzw4oZ2F+7Wxz/u0+yyXgaPfZoSp9KY
-	 TSY3WQ2YFxTi6HB968aWkli7wngXfHqa8eOYGEmvaeb0MoZrIwux2as5Iai7NQ2q2P
-	 zS2GnzpjZXUWgZiNaYhtgIGk7nkA3RrfEkjvYWK4OASe9WLuSCyvuSK7WeZfO6XCkm
-	 zAxsVGIr7YNGb+C0MZ+XFanfSUobB0qmcftiAi+hKVhkmNd+PzthR/e6npuEL2tMdc
-	 qY9us8xhH+lxXxWJVc9CjdD5qqYeYwJOBqpLyyEaMeAhRfhkML9gIT9Fh2Gbc5E1mi
-	 Xs9OXfuw+FCcw==
+	b=UshyK5GzEFRUc+YHSsURyRxSPyKkxsIoPl/MR/ASshWpXBaIzW4ho4rZJZ2ynkx5B
+	 sZRLv8Bp9EArkSU+x8L/6TiHFrU9/5Cf+uABDUGUQFDGlp7+Dtxy/smpvX5JZWx1Hj
+	 n/RnMmOv0AYZEF5eWGyXAo6MmhKCOPrnWkynOD/9/A8X6dDMFPJiING5rRF43/1tTK
+	 ioWB8aN1x8PXDLqmvXuIhPe2s1L+lsXJFlUI2x6MkPxb5HVGZnLW0rUCZJnRATcq2J
+	 kaH4NZ/OK7y79Jgp52es4xH7CzhBkCwRb4VNpzkRr5ifitEXcxwIHN7eLlIsXtHXzf
+	 LDHR4AqtQuZPQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v4 sched_ext/for-7.3 38/40] tools/sched_ext: Add three-mask cmask intersection iterator
-Date: Wed,  8 Jul 2026 11:24:27 -1000
-Message-ID: <20260708212429.3405787-39-tj@kernel.org>
+Subject: [PATCH v4 sched_ext/for-7.3 40/40] tools/sched_ext: scx_qmap - Add sub-sched cap fault injection
+Date: Wed,  8 Jul 2026 11:24:29 -1000
+Message-ID: <20260708212429.3405787-41-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260708212429.3405787-1-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
@@ -48,105 +48,187 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add cmask_next_and2_set() and its round-robin wrap, extending
-cmask_next_and_set() to a three-mask intersection: the next cid set in all
-three masks at or after @start. A caller iterating the intersection of
-three cmasks can then scan it in one pass, folding the third mask into the
-word-level AND rather than skipping non-members one candidate at a time.
+Add a fault-injection mode to the scx_qmap sub-scheduler that deliberately
+dispatches one of its own tasks to a cid it does not hold. The kernel cap
+check must reject it and re-enqueue with SCX_TASK_REENQ_CAP, so the
+nr_inject_attempts counter tracks nr_reenq_cap one to one, exercising the
+delivery-time cap enforcement.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- tools/sched_ext/include/scx/cid.bpf.h | 77 +++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
+ tools/sched_ext/scx_qmap.bpf.c | 40 ++++++++++++++++++++++++++++++++++
+ tools/sched_ext/scx_qmap.c     | 20 +++++++++++++----
+ tools/sched_ext/scx_qmap.h     |  8 +++++++
+ 3 files changed, 64 insertions(+), 4 deletions(-)
 
-diff --git a/tools/sched_ext/include/scx/cid.bpf.h b/tools/sched_ext/include/scx/cid.bpf.h
-index 6b0b4e41b288..69fb4e97bc77 100644
---- a/tools/sched_ext/include/scx/cid.bpf.h
-+++ b/tools/sched_ext/include/scx/cid.bpf.h
-@@ -668,6 +668,83 @@ static __always_inline u32 cmask_next_and_set_wrap(const struct scx_cmask __aren
- 	return found < start ? found : a_end;
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 5b1c3b10ac74..68d360eeecb4 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -378,6 +378,24 @@ static u64 needs_immed(s32 cid)
+ 	return qa.cid_shared[cid] ? SCX_ENQ_IMMED : 0;
  }
  
-+/*
-+ * Like cmask_next_and_set() but over the intersection of THREE masks. Return
-+ * a->base + a->nr_cids if no cid is set in all three at or after @start.
-+ */
-+static __always_inline u32 cmask_next_and2_set(const struct scx_cmask __arena *a,
-+					       const struct scx_cmask __arena *b,
-+					       const struct scx_cmask __arena *c,
-+					       u32 start)
++/* first cid this node does NOT hold for fault injection, -1 if none */
++static s32 first_unavail_cid(void)
 +{
-+	u32 a_end = a->base + a->nr_cids;
-+	u32 b_end = b->base + b->nr_cids;
-+	u32 c_end = c->base + c->nr_cids;
-+	u32 a_wbase = a->base / 64;
-+	u32 b_wbase = b->base / 64;
-+	u32 c_wbase = c->base / 64;
-+	u32 lo = a->base > b->base ? a->base : b->base;
-+	u32 hi = a_end < b_end ? a_end : b_end;
-+	u32 last_wi, start_wi, start_bit, i;
++	s32 nr_cids = qa.nr_cids, c;
 +
-+	lo = lo > c->base ? lo : c->base;
-+	hi = hi < c_end ? hi : c_end;
-+
-+	if (lo >= hi)
-+		return a_end;
-+	if (start < lo)
-+		start = lo;
-+	if (start >= hi)
-+		return a_end;
-+
-+	last_wi = (hi - 1) / 64;
-+	start_wi = start / 64;
-+	start_bit = start & 63;
-+
-+	bpf_for(i, 0, CMASK_MAX_WORDS) {
-+		u32 abs_wi = start_wi + i;
-+		u64 word;
-+		u32 found;
-+
-+		if (abs_wi > last_wi)
-+			break;
-+
-+		word = a->bits[abs_wi - a_wbase] & b->bits[abs_wi - b_wbase] &
-+		       c->bits[abs_wi - c_wbase];
-+		if (i == 0)
-+			word &= GENMASK_U64(63, start_bit);
-+		if (!word)
-+			continue;
-+
-+		found = abs_wi * 64 + ctzll(word);
-+		if (found >= hi)
-+			return a_end;
-+		return found;
++	if (nr_cids > SCX_QMAP_MAX_CPUS) {
++		scx_bpf_error("-ERANGE");
++		return -1;
 +	}
-+	return a_end;
++
++	bpf_for(c, 0, nr_cids) {
++		if (!cmask_test(c, &qa.held_excl.mask) &&
++		    !cmask_test(c, &qa.held_shared.mask))
++			return c;
++	}
++	return -1;
 +}
 +
-+/*
-+ * Round-robin variant of cmask_next_and2_set(): wrap to @a->base if the
-+ * three-way intersection has no cid in the forward half. Return a->base +
-+ * a->nr_cids if empty.
-+ */
-+static __always_inline u32 cmask_next_and2_set_wrap(const struct scx_cmask __arena *a,
-+						    const struct scx_cmask __arena *b,
-+						    const struct scx_cmask __arena *c,
-+						    u32 start)
-+{
-+	u32 a_end = a->base + a->nr_cids;
-+	u32 found;
+ static int weight_to_idx(u32 weight)
+ {
+ 	/* Coarsely map the compound weight to a FIFO. */
+@@ -454,6 +472,28 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+ 		}
+ 	}
+ 
++	/*
++	 * Fault injection: deliberately dispatch one of our own tasks to a cid
++	 * we don't hold. The kernel cap check must reject it and re-enqueue
++	 * with SCX_TASK_REENQ_CAP, so nr_inject_attempts tracks nr_reenq_cap
++	 * and proves delivery-time enforcement. Throttled.
++	 */
++	if (qa.inject_mode == QMAP_INJ_WRONG_CID && p->nr_cpus_allowed > 1 &&
++	    !(enq_flags & SCX_ENQ_REENQ)) {
++		static u32 inj_cnt;
 +
-+	found = cmask_next_and2_set(a, b, c, start);
-+	if (found < a_end || start <= a->base)
-+		return found;
++		if (!(++inj_cnt % 64)) {
++			s32 bad = first_unavail_cid();
 +
-+	found = cmask_next_and2_set(a, b, c, a->base);
-+	return found < start ? found : a_end;
-+}
++			if (bad >= 0 && cmask_test(bad, &taskc->cpus_allowed)) {
++				__sync_fetch_and_add(&qa.nr_inject_attempts, 1);
++				scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | bad,
++						   slice_ns, enq_flags);
++				return;
++			}
++		}
++	}
 +
- /**
-  * cmask_from_cpumask - translate a kernel cpumask to a cid-space cmask
-  * @m: cmask to fill. Zeroed first; only bits within [@m->base, @m->base +
+ 	/*
+ 	 * IMMED stress testing: Every immed_stress_nth'th enqueue, dispatch
+ 	 * directly to prev_cpu's local DSQ even when busy to force dsq->nr > 1
+diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+index 1efffaaa8fe8..d3f766b692b8 100644
+--- a/tools/sched_ext/scx_qmap.c
++++ b/tools/sched_ext/scx_qmap.c
+@@ -52,7 +52,7 @@ const char help_fmt[] =
+ "\n"
+ "Usage: %s [-s SLICE_US] [-e COUNT] [-t COUNT] [-T COUNT] [-l COUNT] [-b COUNT]\n"
+ "       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I]\n"
+-"       [-F COUNT] [-i SEC] [-R MS] [-v]\n"
++"       [-F COUNT] [-i SEC] [-R MS] [-J MODE] [-v]\n"
+ "\n"
+ "  -s SLICE_US   Override slice duration\n"
+ "  -e COUNT      Trigger scx_bpf_error() after COUNT enqueues\n"
+@@ -74,6 +74,7 @@ const char help_fmt[] =
+ "  -C MODE       cid-override test (shuffle|bad-dup|bad-range|bad-mono)\n"
+ "  -i SEC        Stats and weight-refresh interval, seconds (default 5)\n"
+ "  -R MS         Round-robin period for time-shared cpus, ms (default 200)\n"
++"  -J MODE       Fault injection (wrong-cid: dispatch to a cid not held)\n"
+ "  -v            Print libbpf debug messages\n"
+ "  -h            Display this help and exit\n";
+ 
+@@ -183,6 +184,7 @@ struct hier_prev {
+ 	u64 nr_dsps[MAX_SUB_SCHEDS];
+ 	u64 nr_reenq_cap;
+ 	u64 nr_reenq_immed;
++	u64 nr_inject_attempts;
+ };
+ 
+ /* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
+@@ -264,12 +266,14 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
+ 	}
+ 
+ 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
+-	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu\n",
++	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu\n",
+ 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
+ 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
+-	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed));
++	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
++	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts));
+ 	prev->nr_reenq_cap = qa->nr_reenq_cap;
+ 	prev->nr_reenq_immed = qa->nr_reenq_immed;
++	prev->nr_inject_attempts = qa->nr_inject_attempts;
+ 
+ 	printf("hier   : %-4s %10s %4s %6s %8s  %s\n",
+ 	       "", "cgroup", "w", "alloc", "disp/s", "cids");
+@@ -310,6 +314,7 @@ int main(int argc, char **argv)
+ 	struct hier_prev hprev = {};
+ 	const char *sub_cg_path = NULL;
+ 	char tbuf[32];
++	u32 inject_mode = 0;
+ 	u64 own_cgid = 0;
+ 
+ 	libbpf_set_print(libbpf_print_fn);
+@@ -330,7 +335,7 @@ int main(int argc, char **argv)
+ 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
+ 	skel->rodata->max_tasks = 16384;
+ 
+-	while ((opt = getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:vh")) != -1) {
++	while ((opt = getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:vh")) != -1) {
+ 		switch (opt) {
+ 		case 's':
+ 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
+@@ -464,6 +469,12 @@ int main(int argc, char **argv)
+ 			if (round_robin_ms < 10)
+ 				round_robin_ms = 10;
+ 			break;
++		case 'J':
++			if (!strcmp(optarg, "wrong-cid"))
++				inject_mode = QMAP_INJ_WRONG_CID;
++			else
++				inject_mode = strtoul(optarg, NULL, 0);
++			break;
+ 		case 'v':
+ 			verbose = true;
+ 			break;
+@@ -480,6 +491,7 @@ int main(int argc, char **argv)
+ 
+ 	qa = &skel->arena->qa;
+ 	qa->test_error_cnt = test_error_cnt;
++	qa->inject_mode = inject_mode;
+ 
+ 	if (sub_cg_path)
+ 		printf("%s scx_qmap started: sub-scheduler on %s, stats every %ds\n",
+diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
+index 5d44c11c75dd..87642d21fce3 100644
+--- a/tools/sched_ext/scx_qmap.h
++++ b/tools/sched_ext/scx_qmap.h
+@@ -60,6 +60,12 @@ struct qmap_fifo {
+ 	s32 idx;
+ };
+ 
++/* -J fault-injection modes. Selects inject_mode in struct qmap_arena. */
++enum qmap_inject {
++	QMAP_INJ_OFF		= 0,
++	QMAP_INJ_WRONG_CID	= 1,	/* dispatch to a cid we don't hold */
++};
++
+ /*
+  * scx_cmask's are embedded in struct qmap_arena with inline backing storage.
+  * The bpf side uses &field.mask with the normal cmask_* helpers. Userspace
+@@ -167,6 +173,8 @@ struct qmap_arena {
+ 	/* bpf -> userspace: stats */
+ 	u64 nr_reenq_cap;		/* SCX_TASK_REENQ_CAP bounces */
+ 	u64 nr_reenq_immed;		/* SCX_TASK_REENQ_IMMED bounces */
++	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
++	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
+ };
+ 
+ #endif /* __SCX_QMAP_H */
 -- 
 2.54.0
 
