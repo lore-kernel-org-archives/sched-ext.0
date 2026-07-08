@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FBB3F7AB4
-	for <sched-ext@lists.linux.dev>; Wed,  8 Jul 2026 21:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0679D3F8246
+	for <sched-ext@lists.linux.dev>; Wed,  8 Jul 2026 21:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783547241; cv=none; b=XluuAvdZldNREpj+RD06Y+obc2sQOCX+dfcs9CuhIBK/2+MhCHHujMT/NO9QDN2+jmC6T88sWxOXs/aq5qTgH8bkpynxcjgYdSzkOCiwujExWH88rSZ/OV40KqB4Qqc7XradNz802kEVujeLJlQLCzclMgmqRnslQf6PD74cEe4=
+	t=1783547260; cv=none; b=ECduNQ6essgVSGFWsc+Hv0TflQQhdyfPEP2hd/4E7K57RJlKQTXPB0jGJb/B5lWDwHBwvHEZOWzMTA4GUYxjY1j9onLfTYYbFtbhz/UJMJgc3gxCygJWpkVSlSXG3QNuwdFMLIQjV3aExnpA68j7FuXuBNP3KziojxmDyzU+2iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783547241; c=relaxed/simple;
-	bh=x0lOZmznhAbTUB+D6QmfIwMuDZbL0XdW9UF/w5KGMEI=;
+	s=arc-20240116; t=1783547260; c=relaxed/simple;
+	bh=aWw4ipcM/pl9U7mCOTBTEQywFMFOHiSmAXoorI0LHP4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=OnW5PvN6tCNwwoGfToy97mqZK+IZxkBhvbjttNnyg09P1Gc6li8kG952LoiO8XTQzkSqW6bh5+Lwnwn8uQoYMYgpjvw5Rxo53dANKHOWG2/edP/0k/sPWq3lK0jIhYVotRlKNePbrtjCfcUpPtpgO0qdc+xGdPzoxOSBOnBjERo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lf0EOlbj; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=DlY6gDHgKKxYg38Pi7aVfkwFu4iGFcJCe1tvdq20Hh3q0HA6fapPFaFgipEhW6c8ft+aiyl8gQ2WtqnjbhEmbGmfq7MBnJJ9/eji1rVvFTKWwkCNjiaH/ytWlZpWZigvzBsRuDkDXnBNrW+geAOmPCZdQyXW3Hpr6Ytp0X/n3o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqdbC2Eb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lf0EOlbj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193391F000E9;
-	Wed,  8 Jul 2026 21:47:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqdbC2Eb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1811F000E9;
+	Wed,  8 Jul 2026 21:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783547240;
-	bh=iEexQ/DY8Cyq/eWsAGb9T2rnsbAwlA8sGDBiSkvnJVM=;
+	s=k20260515; t=1783547258;
+	bh=z/8cdW+XoyzQ2Tvwk5NsF53J8AbVKJDfek4VFPCVOzY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lf0EOlbjdbqZm6u0jvaIkf1/N6ES0ixStQQ+WJE/QpkYd3NLS7n6IL9d6UyqJLopw
-	 cy70BHrkdJVHZhO8Gam/955vHUCrqWn4Y4nl82hCWEHX+YBfRAvreD05A66AkOWArE
-	 gUnlpyLusYeqCmSc8vH2QvuyP1lVItq7Qu9D4pKmYkoo1s0UN+n6ATUUPa1ULSg6rY
-	 lFRXfipmz6GuwcXRvIBWyZ5YpZ48d43b+p5YvEes+6MK4H/cIdVDHIo84lcBz54E7O
-	 QX+5Z893ZDoa+gZ67XqslUcUQei6kVh+SK17Z8AOvTsczMuqz87Rliyo7Kd7BQzIJr
-	 n9sLTUmD2p3/Q==
+	b=HqdbC2Eb2E3O8bM67jeeXqkFEHZQRC/KXgPxNW8Pnm98oARdgt5UhVKDOTGuweh+A
+	 3+rHo74KlYXqsjq+38/Jw6P0aqBqqZ4Dh5XS3lUHtgUAEyHH7px6Icb6F3KTZSkKcy
+	 UOqceq3nGtAvrMMXD/PyxIfJJSdYyOQj89KEb9k/Dj9pXyo8RR6hsYGYBwrO3H05Nb
+	 gg1oor71AroWeGSW9Rj5DdIwKFuR3tnnWpLyXZSRNuUCWA2dCECQDSjEcbN3Q4l51H
+	 3bkdPU3SuGZXnzHkTXk85bUlmzKtZmZxf5bR9wV4KebCS3+L/8yz8ehEGurpmJAcni
+	 uKpwf++EooYSw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 sched_ext/for-7.3 14/40] sched_ext: Defer scx_sched
- kobj sysfs add into the enable workfns
+Subject: Re: [PATCH v4 sched_ext/for-7.3 13/40] sched_ext: Add shard
+ boundaries to scx_bpf_cid_override()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260708212429.3405787-15-tj@kernel.org>
+In-Reply-To: <20260708212429.3405787-14-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
- <20260708212429.3405787-15-tj@kernel.org>
+ <20260708212429.3405787-14-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 08 Jul 2026 21:47:19 +0000
-Message-Id: <20260708214720.193391F000E9@smtp.kernel.org>
+Date: Wed, 08 Jul 2026 21:47:38 +0000
+Message-Id: <20260708214738.7A1811F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,59 +47,82 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] Meaningful code and commit message mismatch: In sub-schedulers, =
-scx_sched_sysfs_add() is called before ops.init(), contradicting the root s=
-cheduler's behavior and the commit message's goal.
+- [Medium] Unbounded allocation sizes for kmemdup before validation trigger=
+ kernel warnings and allocation failures.
 --
 
---- Patch [14]: [PATCH v4 sched_ext/for-7.3 14/40] sched_ext: Defer scx_sch=
-ed kobj sysfs add into the enable workfns ---
-commit 76fa4bf5abb621f0acd7524a77691d28f4fdf9b7
+--- Patch [13]: [PATCH v4 sched_ext/for-7.3 13/40] sched_ext: Add shard bou=
+ndaries to scx_bpf_cid_override() ---
+commit d662162dc44b1de0465d793b6ec2418996af7aef
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Defer scx_sched kobj sysfs add into the enable workfns
+sched_ext: Add shard boundaries to scx_bpf_cid_override()
 
-This commit splits kobject initialization and addition for schedulers, movi=
-ng
-the sysfs addition to the enable work functions. This ensures the scheduler
-is fully built before becoming visible in sysfs.
+This commit extends scx_bpf_cid_override() to accept explicit shard boundar=
+ies.
+It also snapshots the caller's arrays before validating them to prevent
+concurrent mutations from altering the data between validation and use.
 
->     Prep so a future caps attribute can rely on @sch being fully built by
->     the time it's sysfs-visible.
-
-Does the implementation in scx_sub_enable_workfn() match this description?
-The commit message states that sysfs addition happens once the scheduler is
-fully built and its sysfs-visible state is initialized.
-
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index ce76ae141e0a9..9855a9a4e7095 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
+> diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+> index f3c54f4223b43..6a22bead4c601 100644
+> --- a/kernel/sched/ext/cid.c
+> +++ b/kernel/sched/ext/cid.c
 [ ... ]
-> @@ -363,6 +365,10 @@ void scx_sub_enable_workfn(struct kthread_work *work)
->  	if (ret)
->  		goto err_disable;
-> =20
-> +	ret =3D scx_sched_sysfs_add(sch);
-> +	if (ret)
-> +		goto err_disable;
-> +
->  	if (sch->level >=3D SCX_SUB_MAX_DEPTH) {
->  		scx_error(sch, "max nesting depth %d violated",
->  			  SCX_SUB_MAX_DEPTH);
+> @@ -392,29 +392,66 @@ void scx_cpumask_to_cmask(const struct cpumask *src=
+, struct scx_cmask *dst)
+[ ... ]
+>  	/*
+> -	/* GFP_KERNEL alloc must happen before the rcu read section */
+> +	 * GFP_KERNEL allocs must happen before the rcu read section. Snapshot
+> +	 * the BPF-supplied arrays so a concurrent map mutation can't change
+> +	 * them between validation and use.
+> +	 */
+>  	alloced =3D zalloc_cpumask_var(&seen, GFP_KERNEL);
+> +	node_counts =3D kcalloc(nr_node_ids, sizeof(*node_counts), GFP_KERNEL);
+> +	cpu_to_cid =3D kmemdup(cpu_to_cid_src, cpu_to_cid_src__sz, GFP_KERNEL);
+> +	shard_start =3D kmemdup(shard_start_src, shard_start_src__sz, GFP_KERNE=
+L);
 
 [Severity: Medium]
-Is it intentional that scx_sched_sysfs_add() is called here in
-scx_sub_enable_workfn(), before ops.init() is executed?
+Can a BPF program trigger a page allocator warning here by passing an
+unbounded size for cpu_to_cid_src__sz or shard_start_src__sz?
 
-In scx_root_enable_workfn(), the sysfs addition is deferred until after
-ops.init() runs and SCX_EFLAG_INITIALIZED is set. However, in this
-sub-scheduler path, it is added to sysfs earlier, before ops.init() is
-invoked.
+The sizes are passed directly to kmemdup() before the length validation che=
+cks
+occur below. Would it be safer to validate the expected array sizes before
+attempting to allocate memory for the snapshots?
 
-Will this premature exposure cause issues for future caps attributes that
-expect sub-schedulers to be fully initialized when visible in sysfs?
+> =20
+>  	guard(rcu)();
+> =20
+> @@ -422,17 +459,57 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cp=
+u_to_cid, u32 cpu_to_cid__sz,
+>  	if (unlikely(!sch))
+>  		return;
+> =20
+> -	if (!alloced) {
+> -		scx_error(sch, "scx_bpf_cid_override: failed to allocate cpumask");
+> +	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
+> +		scx_error(sch, "scx_bpf_cid_override: allocation failed");
+>  		return;
+>  	}
+> =20
+> -	if (cpu_to_cid__sz !=3D nr_cpu_ids * sizeof(s32)) {
+> -		scx_error(sch, "scx_bpf_cid_override: expected %zu bytes, got %u",
+> -			  nr_cpu_ids * sizeof(s32), cpu_to_cid__sz);
+> +	if (cpu_to_cid_src__sz !=3D nr_cpu_ids * sizeof(s32)) {
+> +		scx_error(sch, "scx_bpf_cid_override: cpu_to_cid expected %zu bytes, g=
+ot %u",
+> +			  nr_cpu_ids * sizeof(s32), cpu_to_cid_src__sz);
+> +		return;
+> +	}
+> +
+> +	if (!shard_start_src__sz || shard_start_src__sz % sizeof(s32)) {
+> +		scx_error(sch, "scx_bpf_cid_override: invalid shard_start size %u",
+> +			  shard_start_src__sz);
+> +		return;
+> +	}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708212429.3405=
-787-1-tj@kernel.org?part=3D14
+787-1-tj@kernel.org?part=3D13
