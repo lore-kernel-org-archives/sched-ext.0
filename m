@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB153F6C5E;
-	Wed,  8 Jul 2026 21:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0021A3FBED8;
+	Wed,  8 Jul 2026 21:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783545897; cv=none; b=E2eOqhUzVX8yitbOI1mTc4tNRWNusf6+HkuE0MwKFfmxKBWyeIY0vqmrQ7KetDhrZityhtn5zRmrKgW8Lp2zV8i7uGAo+QzkXBgK4kXbNPBllZ2LVCl9crZXM0J4q3aYIqVcJZnm4v6smBqJPOClbBER985qnS8QhwwwxRWA8j0=
+	t=1783545897; cv=none; b=oSqxFOiN2h+3lQyZJqG/q8nfP3mZeelSYk/EpcYDuOHGYWHB+Li2/kFIojVnJg2mdNr7uNMQ1Z3mlV+PWp5lzIoVduY2aqK6Ov29PlGPrWVIudYQA2KzJ11pl06ukDezcPctGAnGwVKy11v7Jr0+m/1vgogfyrFXYhVIifUmvO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783545897; c=relaxed/simple;
-	bh=IWTT43eYKageIH32MkkF6sMB6gnc0BaGVq3mY3j/rLs=;
+	bh=eXAbE0N7PE0rg09ApOtT7Fg4jLOga5PapGvP4np0wcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0/A+SgAZNk3UW68qmrvC8Dpk4KDS2xsOs2W/DN/E8B80C/DtU/eSBTVOiYfWPxgPeU21rwvmYfW0Yp4/ExaS3blMJYDEoXpGXIU0cMbUumnis46wdQHKb7QsM5KUsnslyvCavELjD+3uciGqKyh3VJDOjnJGzm2A2JVweNjFno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fTZEx5Xe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzwdSgBpdquHXUrVd/S0uN28kiN/wn8dExXJ5QamGuujIhtQk6fnaIB7VRjIXcIL9E6+6u9LuDn/fDa5PDPdJ5C6XEHHufcz5iERAd6g5YJn9SyBuljYbI7TV70ZpJf+DWojVxSFk1GdhhH46PA8MmYvTljm9ddR/NSKQFjvvLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8okq1zG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTZEx5Xe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7EB1F00A3A;
-	Wed,  8 Jul 2026 21:24:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8okq1zG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF791F00A3E;
+	Wed,  8 Jul 2026 21:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783545894;
-	bh=Yz2sPyaxPyjRutMGFrN5cwD7Tuzdb8eH5ykLPQM8hAk=;
+	s=k20260515; t=1783545895;
+	bh=bFD8HLslaQyzgnovI4mMVfi+Fxj53kTKC+YSfJFOOqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTZEx5XesSnj6JK93L1ECnbmcVQDsj8/MC0BJ5is3hPFjrYtgL9YTQyKn3ntczGVg
-	 tgjCs86ToFeR5jOm+xFsJJYd+cW+c0lDCyBmVauoYWHSWVmLHCDeDogoQeSAMs3WEr
-	 hmMALRYde25sdwZaJ8h+Y8LMCUwzrp6PN90LXcalohlehsR9hDIpD48uQYUDufHhT0
-	 h9OK8BXs/z9Ex3n4bDI/bliEd+O5wEpBldweyrcq4Z5NXqrlawrXGLmqmDWPwsb2T1
-	 93ws6QT38QkEw6Z/IHDJLXbCS6ldHyorDyNeJL1ahVlCNZGn0QPqE8QVsfbY0H8mBu
-	 /+sypNq6tJz0Q==
+	b=F8okq1zGdenFkpZAFxzwvofoE7G3uXCVxRfQmru6NE8yapYsteD2GAZE002f/OLNZ
+	 rdFefhkufC1Pc5abiEDl8WIQ5Q+FTZcNhuJvtD237LlYJ8iZvs/hCQLaJPn/rpj4H9
+	 3FivqAt0mPmN/mvGJGwZ6r6J2UtMiV9clE5JB2egxg4jNMglIFAGZV2XSEMR7FzwHE
+	 cj98ya4xtSJUDKwUCQy57YCUS3d4wmcBBvy5C4awat+/3ucP3cGTtqM4QCX2JWvLxh
+	 TjFEgzHsZDVT13dCXwnPm9HX8phZhdhIP9LFJh4jxav8yTp8/1fl2zyIK+Yu2O71i1
+	 jNTtQ9UDdeCqQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v4 sched_ext/for-7.3 22/40] sched_ext: Add coalescing sub_caps_updated() notifier for sub-schedulers
-Date: Wed,  8 Jul 2026 11:24:11 -1000
-Message-ID: <20260708212429.3405787-23-tj@kernel.org>
+Subject: [PATCH v4 sched_ext/for-7.3 23/40] sched_ext: Maintain per-cpu effective cap copies for single-read checks
+Date: Wed,  8 Jul 2026 11:24:12 -1000
+Message-ID: <20260708212429.3405787-24-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260708212429.3405787-1-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
@@ -48,510 +48,331 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Wire up ops_cid.sub_caps_updated() to notify sub-scheds of cap changes.
+Checking a sched's caps on a cid would need to test several cap bits against
+caps[] to account for implied caps. Also, caps[] modifications aren't
+synchronized against scheduling operations on each cpu, which can lead to
+awkward race conditions.
 
-Three constraints shape the design:
+Collect them per cpu instead. caps[] under pshard->lock stays the target
+configuration. scx_sched_pcpu->ecaps is added, the transposed effective
+copy: the set of cap bits the sched holds on that cpu which can be accessed
+with a single read. It is stable under the rq lock. It can also be read
+locklessly with READ_ONCE().
 
-  1. Static memory. Deliveries use a fixed-size buffer, both for runtime
-     efficiency and so notifications can't be lost under memory pressure.
-
-  2. High-frequency updates. Grant/revoke can mutate caps in bursts, and the
-     notifier path must absorb that without amplifying it.
-
-  3. Recursive grant/revoke from the callback. A child receiving a
-     notification can call grant/revoke on its own children, which can
-     cascade recursively down its subtree.
-
-(1) and (2) lead to coalescing into a fixed payload. Each delivery carries a
-single (cmask, caps) pair covering every change since the previous one.
-Direction (set vs cleared) isn't encoded as it doesn't fit in the fixed-size
-summary. The callback queries scx_bpf_sub_caps() for current state. Only one
-delivery is in flight per shard. Further changes fold into the same buffer
-and ship as the next callback, so a shard's callbacks fire in order.
-
-(3) leads to deferred delivery. Events accumulate during grant/revoke and
-are delivered after the shard lock is released.
-
-v2:
-- Request a private stack for ops.sub_caps_updated(). (sashiko AI)
-- Build cmask_arena_out via scx_cmask_ref, not by re-reading its header.
+Grant and revoke only mutate caps[]. They queue a sync request on the target
+cpu's rq->scx.ecaps_to_sync and kick it, and the cpu recomputes the queued
+scheds' ecaps from caps[] in balance_one() under its own rq lock. A dying
+sched runs the sync directly to retire its queued request before freeing. As
+held references can defer the freeing past the enclosing root scheduler's
+lifetime, root enable discards leftover sync requests before going live.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      |  13 ++-
- kernel/sched/ext/internal.h |  71 ++++++++++++++
- kernel/sched/ext/sub.c      | 178 ++++++++++++++++++++++++++++++++++--
- kernel/sched/ext/sub.h      |   1 +
- 4 files changed, 254 insertions(+), 9 deletions(-)
+ kernel/sched/ext/ext.c      |  10 +++
+ kernel/sched/ext/internal.h |  21 +++++-
+ kernel/sched/ext/sub.c      | 133 +++++++++++++++++++++++++++++++++++-
+ kernel/sched/ext/sub.h      |  16 +++++
+ kernel/sched/sched.h        |   3 +
+ 5 files changed, 180 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index ef93e3af8fbd..df434fba65c9 100644
+index df434fba65c9..17f361e0d15c 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -7281,6 +7281,11 @@ static int bpf_scx_check_member(const struct btf_type *t,
- 	case offsetof(struct sched_ext_ops, dispatch):
- 		prog->aux->priv_stack_requested = true;
- 		prog->aux->recursion_detected = scx_pstack_recursion_on_dispatch;
-+		break;
-+	case offsetof(struct sched_ext_ops, sub_caps_updated):
-+		prog->aux->priv_stack_requested = true;
-+		prog->aux->recursion_detected = scx_pstack_recursion_on_caps_updated;
-+		break;
+@@ -2595,6 +2595,8 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+ 	rq->scx.flags |= SCX_RQ_IN_BALANCE;
+ 	rq->scx.flags &= ~SCX_RQ_BAL_KEEP;
+ 
++	scx_process_sync_ecaps(rq);
++
+ 	if ((sch->ops.flags & SCX_OPS_HAS_CPU_PREEMPT) &&
+ 	    unlikely(rq->scx.cpu_released)) {
+ 		/*
+@@ -4627,6 +4629,9 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 		 */
+ 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
+ 
++		/* flush the queued ecaps syncs */
++		scx_discard_ecaps_to_sync(cpu, pcpu);
++
+ 		/*
+ 		 * Bypass blocks new kicks. Flush the kick irq_work so this
+ 		 * pcpu's to_kick_node is off the list before it is freed.
+@@ -6389,6 +6394,9 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		node = cpu_to_node(cpu);
+ 		pcpu->sch = sch;
+ 		INIT_LIST_HEAD(&pcpu->deferred_reenq_local.node);
++#ifdef CONFIG_EXT_SUB_SCHED
++		init_llist_node(&pcpu->ecaps_to_sync_node);
++#endif
+ 		INIT_LIST_HEAD(&pcpu->to_kick_node);
+ 		if (!zalloc_cpumask_var_node(&pcpu->cpus_to_kick, GFP_KERNEL, node) ||
+ 		    !zalloc_cpumask_var_node(&pcpu->cpus_to_kick_if_idle, GFP_KERNEL, node) ||
+@@ -6733,6 +6741,8 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 		rq->scx.cpuperf_target = SCX_CPUPERF_ONE;
  	}
- #endif	/* CONFIG_EXT_SUB_SCHED */
  
-@@ -7482,11 +7487,13 @@ static struct bpf_struct_ops bpf_sched_ext_ops = {
- 
- /*
-  * cid-form cfi stubs. Stubs whose signatures match the cpu-form (param types
-- * identical, only param names differ across structs) are reused. Only
-- * set_cmask needs a fresh stub since the second argument type differs.
-+ * identical, only param names differ across structs) are reused. Some need
-+ * fresh stubs, set_cmask due to an argument type difference and the sub-sched
-+ * notifiers because no cpu-form stub exists to reuse.
-  */
- static void sched_ext_ops_cid__set_cmask(struct task_struct *p,
- 					 const struct scx_cmask *cmask) {}
-+static void sched_ext_ops__sub_caps_updated(const struct scx_cmask *cmask, u64 caps) {}
- 
- static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
- 	.select_cid		= sched_ext_ops__select_cpu,
-@@ -7519,6 +7526,7 @@ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
- #endif
- 	.sub_attach		= sched_ext_ops__sub_attach,
- 	.sub_detach		= sched_ext_ops__sub_detach,
-+	.sub_caps_updated	= sched_ext_ops__sub_caps_updated,
- 	.cid_online		= sched_ext_ops__cpu_online,
- 	.cid_offline		= sched_ext_ops__cpu_offline,
- 	.init_cids		= sched_ext_ops__init_cids,
-@@ -9977,6 +9985,7 @@ static int __init scx_init(void)
- 	CID_OFFSET_MATCH(dump_task, dump_task);
- 	CID_OFFSET_MATCH(sub_attach, sub_attach);
- 	CID_OFFSET_MATCH(sub_detach, sub_detach);
-+	CID_OFFSET_MATCH(sub_caps_updated, sub_caps_updated);
- 	CID_OFFSET_MATCH(init_cids, init_cids);
- 	CID_OFFSET_MATCH(init, init);
- 	CID_OFFSET_MATCH(exit, exit);
++	scx_discard_stale_ecaps_syncs();
++
+ 	/*
+ 	 * Keep CPUs stable during enable so that the BPF scheduler can track
+ 	 * online CPUs by watching ->on/offline_cpu() after ->init().
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index e98eea1235e9..0b787be31ec2 100644
+index 0b787be31ec2..212ccd549240 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -757,6 +757,25 @@ struct sched_ext_ops {
- 	 */
- 	void (*sub_detach)(struct scx_sub_detach_args *args);
+@@ -1182,6 +1182,24 @@ struct scx_sched_pcpu {
+ 	cpumask_var_t		cpus_to_wait;
+ 	struct list_head	to_kick_node;
  
-+	/**
-+	 * @sub_caps_updated: Caps on this sub-sched's shard changed
-+	 * @cmask: cids whose caps changed (cmask->base identifies the shard)
-+	 * @caps: SCX_CAP_* that changed
++#ifdef CONFIG_EXT_SUB_SCHED
++	/*
++	 * pshard->caps[cap_bit] is the set of cids the sched holds that one
++	 * cap on. ecaps is its transpose: the set of SCX_CAP_* bits the sched
++	 * holds on this cpu, collected so that the hot-path check is a single
++	 * read.
 +	 *
-+	 * Invoked after grant or revoke modifies caps on a shard. There can be
-+	 * only one in-flight invocation per shard. @cmask and @caps coalesce
-+	 * all changes since the last delivery. Direction (set vs cleared) isn't
-+	 * encoded. Query current state with scx_bpf_sub_caps().
++	 * While pshard->caps[] under pshard->lock is the target configuration,
++	 * ecaps is the effective copy owned by the cpu. It is written under the
++	 * rq lock while processing rq->ecaps_to_sync. Can also be read with
++	 * READ_ONCE() outside rq lock.
 +	 *
-+	 * Delivered asynchronously after the change is recorded, and may run
-+	 * before it takes effect on any given cpu. Use it to track which caps
-+	 * the sub-sched holds and propagate to its own children, not to decide
-+	 * if a task can run on a cpu now.
-+	 *
-+	 * May call scx_bpf_sub_grant() / scx_bpf_sub_revoke() on children.
++	 * See queue_sync_ecaps() and scx_process_sync_ecaps().
 +	 */
-+	void (*sub_caps_updated)(const struct scx_cmask *cmask, u64 caps);
++	u64			ecaps;
++	struct llist_node	ecaps_to_sync_node;
++#endif
 +
  	/*
- 	 * All online ops must come before ops.cpu_online().
- 	 */
-@@ -977,6 +996,7 @@ struct sched_ext_ops_cid {
- #endif	/* CONFIG_EXT_GROUP_SCHED */
- 	s32 (*sub_attach)(struct scx_sub_attach_args *args);
- 	void (*sub_detach)(struct scx_sub_detach_args *args);
-+	void (*sub_caps_updated)(const struct scx_cmask *cmask, u64 caps);
- 	void (*cid_online)(s32 cid);
- 	void (*cid_offline)(s32 cid);
- 	s32 (*init_cids)(void);
-@@ -1224,9 +1244,51 @@ enum scx_cap_flags {
- 	     __caps && ((cap_bit) = __ffs64(__caps), true);		\
- 	     __caps &= __caps - 1)
+ 	 * The event counters are in a per-CPU variable to minimize the
+ 	 * accounting overhead. A system-wide view on the event counter is
+@@ -1291,7 +1309,8 @@ struct scx_pshard {
  
-+/*
-+ * Sub-cap update notifier.
-+ *
-+ * ops_cid.sub_caps_updated() notifies sub-scheds when their cap state changes
-+ * so they can refresh internal state without polling scx_bpf_sub_caps() per
-+ * enqueue.
-+ *
-+ * Three constraints shape the design:
-+ *
-+ *   1. Static memory. Deliveries use a fixed-size buffer, both for runtime
-+ *      efficiency and so notifications can't be lost under memory pressure.
-+ *
-+ *   2. High-frequency updates. Grant/revoke can mutate caps in bursts, and the
-+ *      notifier path must absorb that without amplifying it.
-+ *
-+ *   3. Recursive grant/revoke from the callback. A child receiving a
-+ *      notification can call grant/revoke on its own children, which can
-+ *      cascade recursively down its subtree.
-+ *
-+ * (1) and (2) lead to coalescing into a fixed payload. Each delivery carries a
-+ * single (cmask, caps) pair covering every change since the previous one.
-+ * Direction (set vs cleared) isn't encoded as it doesn't fit in the fixed-size
-+ * summary. The callback queries scx_bpf_sub_caps() for current state. Only one
-+ * delivery is in flight per shard. Further changes fold into the same buffer
-+ * and ship as the next callback, so a shard's callbacks fire in order.
-+ *
-+ * (3) leads to deferred delivery. Events accumulate during grant/revoke and are
-+ * delivered after the shard lock is released.
-+ */
-+struct scx_caps_updated {
-+	raw_spinlock_t		lock;
-+	u64			caps;
-+	struct scx_cmask	*cmask_arena_out;
-+	struct list_head	node_in_flight;
-+	/* Kernel-side accumulator. Access as &cu->cmask. */
-+	TRAILING_OVERLAP(struct scx_cmask, cmask, bits,
-+			 u64 _bits[SCX_CMASK_NR_WORDS(SCX_CID_SHARD_MAX_CPUS)];
-+	);
-+};
-+
- struct scx_pshard {
- 	raw_spinlock_t		lock;		/* serializes caps */
- 	struct scx_sched	*sch;		/* backpointer */
-+	struct scx_caps_updated	caps_updated;
-+
  	/*
  	 * Per-cap cmask, inline via TRAILING_OVERLAP so cmask.bits[] overlaps
- 	 * the trailing _bits[] storage. Access as &caps[i].cmask.
-@@ -1234,6 +1296,15 @@ struct scx_pshard {
+-	 * the trailing _bits[] storage. Access as &caps[i].cmask.
++	 * the trailing _bits[] storage. Access as &caps[i].cmask. See
++	 * scx_sched_pcpu->ecaps.
+ 	 */
  	TRAILING_OVERLAP(struct scx_cmask, cmask, bits,
  			 u64 _bits[SCX_CMASK_NR_WORDS(SCX_CID_SHARD_MAX_CPUS)];
- 	) caps[__SCX_NR_CAPS];
-+
-+	/*
-+	 * Shard geometry captured at alloc. cmask_arena_out's own header is
-+	 * bpf-writable and the live shard range can change before the
-+	 * rcu-deferred free, so re-init and size cmask_arena_out from these
-+	 * trusted copies instead.
-+	 */
-+	u32			base;
-+	u32			nr_cids;
- };
- #endif
- 
 diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index d0ffc3a8550c..ce2fa1409a20 100644
+index ce2fa1409a20..80f74064ca78 100644
 --- a/kernel/sched/ext/sub.c
 +++ b/kernel/sched/ext/sub.c
-@@ -106,6 +106,15 @@ void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
- 
- static void free_pshard(struct scx_pshard *pshard)
- {
-+	struct scx_caps_updated *cu;
-+
-+	if (!pshard)
-+		return;
-+	cu = &pshard->caps_updated;
-+	if (cu->cmask_arena_out)
-+		scx_arena_free(pshard->sch, cu->cmask_arena_out,
-+			       struct_size_t(struct scx_cmask, bits,
-+					     SCX_CMASK_NR_WORDS(pshard->nr_cids)));
- 	kfree(pshard);
+@@ -297,6 +297,125 @@ static void scx_sub_seed_caps(struct scx_sched *sch)
+ 	caps_updated_deliver(&to_deliver);
  }
  
-@@ -123,7 +132,10 @@ void scx_free_pshards(struct scx_sched *sch)
- static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32 node)
- {
- 	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
-+	size_t cmask_size = struct_size_t(struct scx_cmask, bits,
-+					  SCX_CMASK_NR_WORDS(shard->nr_cids));
- 	struct scx_pshard *pshard;
-+	struct scx_caps_updated *cu;
- 	s32 i;
- 
- 	pshard = kzalloc_node(sizeof(*pshard), GFP_KERNEL, node);
-@@ -132,10 +144,25 @@ static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32
- 
- 	raw_spin_lock_init(&pshard->lock);
- 	pshard->sch = sch;
-+	pshard->base = shard->base_cid;
-+	pshard->nr_cids = shard->nr_cids;
- 
- 	for (i = 0; i < __SCX_NR_CAPS; i++)
- 		scx_cmask_init(&pshard->caps[i].cmask, shard->base_cid, shard->nr_cids);
- 
-+	cu = &pshard->caps_updated;
-+	raw_spin_lock_init(&cu->lock);
-+	INIT_LIST_HEAD(&cu->node_in_flight);
-+	__scx_cmask_init(&cu->cmask, shard->base_cid, shard->nr_cids, SCX_CID_SHARD_MAX_CPUS);
-+
-+	cu->cmask_arena_out = scx_arena_alloc(sch, cmask_size);
-+	if (!cu->cmask_arena_out) {
-+		free_pshard(pshard);
-+		return NULL;
-+	}
-+
-+	scx_cmask_init(cu->cmask_arena_out, shard->base_cid, shard->nr_cids);
-+
- 	return pshard;
- }
- 
-@@ -188,6 +215,88 @@ void scx_init_root_caps(struct scx_sched *sch)
- 	}
- }
- 
-+/* record a caps change, see struct scx_caps_updated */
-+static void caps_updated_record(struct scx_pshard *ps, const struct scx_cmask *cids, u64 caps,
-+				struct list_head *to_deliver)
++static u64 calc_effective_caps(struct scx_pshard *ps, s32 cid)
 +{
-+	struct scx_caps_updated *cu = &ps->caps_updated;
++	u64 ecaps = 0;
++	u32 cap_bit;
 +
-+	guard(raw_spinlock)(&cu->lock);
-+	scx_cmask_or(&cu->cmask, cids);
-+	cu->caps |= caps;
-+	if (list_empty(&cu->node_in_flight))
-+		list_add_tail(&cu->node_in_flight, to_deliver);
++	for (cap_bit = 0; cap_bit < __SCX_NR_CAPS; cap_bit++)
++		if (scx_cmask_test(cid, &ps->caps[cap_bit].cmask))
++			ecaps |= BIT_U64(cap_bit) | scx_caps_implied(BIT_U64(cap_bit));
++	return ecaps;
 +}
 +
-+/* deliver queued caps_updated callbacks, see struct scx_caps_updated */
-+static void caps_updated_deliver(struct list_head *to_deliver)
++/**
++ * queue_sync_ecaps - Queue ecaps update for a (sch, cid) pair
++ * @sch: sched to update
++ * @cid: cid to update
++ *
++ * Queue an ecaps update for @sch's @cid and kick the cpu so that it syncs in
++ * balance_one().
++ */
++static void queue_sync_ecaps(struct scx_sched *sch, s32 cid)
 +{
-+	struct scx_caps_updated *cu, *tmp;
++	s32 cpu = __scx_cid_to_cpu(cid);
++	struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
 +
-+	list_for_each_entry_safe(cu, tmp, to_deliver, node_in_flight) {
-+		struct scx_pshard *ps = container_of(cu, struct scx_pshard, caps_updated);
-+		struct scx_sched *sch = ps->sch;
++	/*
++	 * Pairs with smp_mb() in scx_process_sync_ecaps(). Either the check
++	 * below sees the node off the list and queues it, or the in-flight sync
++	 * sees the caps[] update made before this call.
++	 */
++	smp_mb();
 +
-+		while (true) {
-+			u64 caps = 0;
++	/* @cid's pshard->lock excludes concurrent queueing attempts */
++	if (llist_on_list(&pcpu->ecaps_to_sync_node))
++		return;
++	if (llist_add(&pcpu->ecaps_to_sync_node, &cpu_rq(cpu)->scx.ecaps_to_sync))
++		scx_kick_cpu(scx_root, cpu, 0);
++}
 +
-+			/*
-+			 * During enable, has_op is set after ops.sub_attach(),
-+			 * so !has_op means the op is absent or the sched isn't
-+			 * live yet - e.g. caps grant from ops.sub_attach().
-+			 * Either way don't consume - leave for
-+			 * scx_sub_seed_caps() to deliver once live.
-+			 */
-+			scoped_guard (raw_spinlock, &cu->lock) {
-+				if (cu->caps && SCX_HAS_OP(sch, sub_caps_updated) &&
-+				    likely(!READ_ONCE(sch->aborting))) {
-+					struct scx_cmask_ref ref;
++/* discard @rq's queued ecaps syncs */
++static void discard_queued_syncs(struct rq *rq)
++{
++	struct llist_node *pos, *tmp;
 +
-+					caps = cu->caps;
-+					scx_cmask_ref_init_kern(sch, cu->cmask_arena_out,
-+								ps->base, ps->nr_cids, &ref);
-+					scx_cmask_ref_copy(&ref, &cu->cmask);
-+					scx_cmask_clear(&cu->cmask);
-+					cu->caps = 0;
-+				} else {
-+					list_del_init(&cu->node_in_flight);
-+				}
-+			}
-+			if (!caps)
-+				break;
++	lockdep_assert_rq_held(rq);
 +
-+			/* caps != 0 only when deliverable (has_op, above) */
-+			SCX_CALL_OP(sch, sub_caps_updated, NULL,
-+				    scx_kaddr_to_arena(sch, cu->cmask_arena_out),
-+				    caps);
-+		}
++	llist_for_each_safe(pos, tmp, llist_del_all(&rq->scx.ecaps_to_sync))
++		init_llist_node(pos);
++}
++
++/**
++ * scx_process_sync_ecaps - Sync this cpu's ecaps to pshard->caps[]
++ * @rq: the cid's cpu rq
++ *
++ * pshard->caps[] is the target configuration. pcpu->ecaps is the effective
++ * transposed copy owned by the cid's cpu and written only here under @rq's
++ * lock.
++ */
++void scx_process_sync_ecaps(struct rq *rq)
++{
++	s32 cid = __scx_cpu_to_cid(cpu_of(rq));
++	s32 shard = scx_cid_to_shard[cid];
++	struct llist_node *batch, *pos, *tmp;
++
++	lockdep_assert_rq_held(rq);
++
++	if (likely(llist_empty(&rq->scx.ecaps_to_sync)))
++		return;
++
++	batch = llist_del_all(&rq->scx.ecaps_to_sync);
++	llist_for_each_safe(pos, tmp, batch) {
++		struct scx_sched_pcpu *pcpu =
++			container_of(pos, struct scx_sched_pcpu, ecaps_to_sync_node);
++		struct scx_pshard *ps = pcpu->sch->pshard[shard];
++
++		init_llist_node(pos);
++
++		/* pairs with smp_mb() in queue_sync_ecaps(), see there */
++		smp_mb();
++
++		WRITE_ONCE(pcpu->ecaps, calc_effective_caps(ps, cid));
 +	}
 +}
 +
 +/*
-+ * Deliver caps owed to @sch that couldn't be delivered earlier (e.g. a grant
-+ * taken during its sub_attach(), before has_op was set). Called once @sch is
-+ * enabled.
++ * @pcpu's sched was unhashed before the grace period, so nothing new queues.
++ * Flush its pending sync so the pcpu can be freed. scx_process_sync_ecaps()
++ * takes nodes off the list before syncing and acquiring the rq lock waits for
++ * any in-flight walk.
 + */
-+static void scx_sub_seed_caps(struct scx_sched *sch)
++void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu)
 +{
-+	LIST_HEAD(to_deliver);
-+	s32 si;
++	scoped_guard (rq_lock_irqsave, cpu_rq(cpu))
++		scx_process_sync_ecaps(cpu_rq(cpu));
 +
-+	guard(irqsave)();
++	WARN_ON_ONCE(llist_on_list(&pcpu->ecaps_to_sync_node));
++}
 +
-+	for (si = 0; si < sch->nr_pshards; si++) {
-+		struct scx_pshard *ps = sch->pshard[si];
-+		struct scx_caps_updated *cu = &ps->caps_updated;
++/**
++ * scx_discard_stale_ecaps_syncs - Discard ecaps syncs from earlier schedulers
++ *
++ * To be called during root enable before the scheduler goes live. An earlier
++ * root's sub-sched may not have gone through its RCU free path yet (e.g. a
++ * still-open link fd defers it) and can leave queued ecaps syncs behind.
++ * Processing them would decode the dead sched's pshards with the current cid
++ * layout. Discard them instead. The backing scx_sched_pcpu's are still
++ * allocated as the free path drains ecaps_to_sync_node before freeing.
++ */
++void scx_discard_stale_ecaps_syncs(void)
++{
++	s32 cpu;
 +
-+		scoped_guard (raw_spinlock, &cu->lock) {
-+			if (cu->caps && list_empty(&cu->node_in_flight))
-+				list_add_tail(&cu->node_in_flight, &to_deliver);
-+		}
++	for_each_possible_cpu(cpu) {
++		struct rq *rq = cpu_rq(cpu);
++
++		guard(rq_lock_irqsave)(rq);
++		discard_queued_syncs(rq);
 +	}
-+	caps_updated_deliver(&to_deliver);
 +}
 +
  static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
  
  void drain_descendants(struct scx_sched *sch)
-@@ -671,6 +780,9 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+@@ -1059,9 +1178,14 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
+ 				granted_caps |= BIT_U64(cap_bit);
+ 			}
  
- 	scx_bypass(sch, false);
- 
-+	/* @sch is enabled; deliver any caps owed since its sub_attach() */
-+	scx_sub_seed_caps(sch);
+-			if (granted_caps)
++			if (granted_caps) {
++				s32 cid;
 +
- 	pr_info("sched_ext: BPF sub-scheduler \"%s\" enabled\n", sch->ops.name);
- 	kobject_uevent(&sch->kobj, KOBJ_ADD);
- 	ret = 0;
-@@ -757,7 +869,7 @@ static s32 __init scx_cgroup_lifetime_notifier_init(void)
- }
- core_initcall(scx_cgroup_lifetime_notifier_init);
- 
--void scx_pstack_recursion_on_dispatch(struct bpf_prog *prog)
-+static void scx_pstack_recursion(struct bpf_prog *prog, const char *op)
- {
- 	struct scx_sched *sch;
- 
-@@ -766,7 +878,17 @@ void scx_pstack_recursion_on_dispatch(struct bpf_prog *prog)
- 	if (unlikely(!sch))
- 		return;
- 
--	scx_error(sch, "dispatch recursion detected");
-+	scx_error(sch, "%s recursion detected", op);
-+}
-+
-+void scx_pstack_recursion_on_dispatch(struct bpf_prog *prog)
-+{
-+	scx_pstack_recursion(prog, "dispatch");
-+}
-+
-+void scx_pstack_recursion_on_caps_updated(struct bpf_prog *prog)
-+{
-+	scx_pstack_recursion(prog, "sub_caps_updated");
- }
- 
- __bpf_kfunc_start_defs();
-@@ -869,6 +991,7 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 	struct scx_cmask_ref ref, denied_ref;
- 	struct scx_sched *parent, *child;
- 	bool any_denied = false;
-+	LIST_HEAD(to_deliver);
- 	s32 si, ret;
- 
- 	guard(irqsave)();
-@@ -896,6 +1019,7 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 		SCX_CMASK_DEFINE_SHARD(slice, 0, SCX_CID_SHARD_MAX_CPUS);
- 		struct scx_pshard *pps = parent->pshard[si];
- 		struct scx_pshard *cps = child->pshard[si];
-+		u64 granted_caps = 0;
- 		u32 cap_bit;
- 
- 		scx_cmask_ref_shard(&ref, si, slice);
-@@ -903,6 +1027,9 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 			continue;
- 
- 		SCX_CMASK_DEFINE_SHARD(granted_cids, slice->base, slice->nr_cids);
-+		SCX_CMASK_DEFINE_SHARD(changed_cids, slice->base, slice->nr_cids);
-+		SCX_CMASK_DEFINE_SHARD(delta, slice->base, slice->nr_cids);
-+
- 		scx_cmask_copy(granted_cids, slice);
- 
- 		scoped_guard (raw_spinlock, &pps->lock) {
-@@ -915,9 +1042,26 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 			scx_for_each_cap_bit(cap_bit, caps)
- 				scx_cmask_and(granted_cids, &pps->caps[cap_bit].cmask);
- 
--			/* fold granted_cids into the child per requested cap */
--			scx_for_each_cap_bit(cap_bit, caps)
--				scx_cmask_or(&cps->caps[cap_bit].cmask, granted_cids);
-+			/*
-+			 * For each requested cap, fold the newly-set cids into
-+			 * the child and accumulate the delta.
-+			 */
-+			scx_for_each_cap_bit(cap_bit, caps) {
-+				struct scx_cmask *ccm = &cps->caps[cap_bit].cmask;
-+
-+				scx_cmask_copy(delta, granted_cids);
-+				scx_cmask_andnot(delta, ccm);
-+				if (scx_cmask_empty(delta))
-+					continue;
-+
-+				scx_cmask_or(ccm, delta);
-+				scx_cmask_or(changed_cids, delta);
-+				granted_caps |= BIT_U64(cap_bit);
+ 				caps_updated_record(cps, changed_cids, granted_caps,
+ 						    &to_deliver);
++				scx_cmask_for_each_cid(cid, changed_cids)
++					queue_sync_ecaps(child, cid);
 +			}
-+
-+			if (granted_caps)
-+				caps_updated_record(cps, changed_cids, granted_caps,
-+						    &to_deliver);
  		}
  
  		/* record cids that didn't make it through into @denied_out */
-@@ -932,6 +1076,9 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 			}
- 		}
- 	}
-+
-+	caps_updated_deliver(&to_deliver);
-+
- 	return any_denied ? -EPERM : 0;
- }
- 
-@@ -953,6 +1100,7 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
- {
- 	struct scx_cmask_ref ref;
- 	struct scx_sched *parent, *child, *pos;
-+	LIST_HEAD(to_deliver);
- 	s32 si, ret;
- 
- 	guard(irqsave)();
-@@ -983,18 +1131,32 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
- 		pos = scx_next_descendant_pre(NULL, child);
- 		while (pos) {
- 			struct scx_pshard *ps = pos->pshard[si];
-+			SCX_CMASK_DEFINE_SHARD(changed_cids, slice->base, slice->nr_cids);
-+			SCX_CMASK_DEFINE_SHARD(delta, slice->base, slice->nr_cids);
- 			u64 revoked_caps = 0;
- 			u32 cap_bit;
- 
- 			scoped_guard (raw_spinlock_nested, &ps->lock) {
-+				/*
-+				 * For each cap, clear lost cids and accumulate
-+				 * the per-cap diff for notification.
-+				 */
- 				scx_for_each_cap_bit(cap_bit, caps) {
- 					struct scx_cmask *cm = &ps->caps[cap_bit].cmask;
- 
--					if (!scx_cmask_intersects(cm, slice))
-+					scx_cmask_copy(delta, cm);
-+					scx_cmask_and(delta, slice);
-+					if (scx_cmask_empty(delta))
- 						continue;
--					scx_cmask_andnot(cm, slice);
-+
-+					scx_cmask_andnot(cm, delta);
-+					scx_cmask_or(changed_cids, delta);
+@@ -1154,9 +1278,14 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
  					revoked_caps |= BIT_U64(cap_bit);
  				}
+ 
+-				if (revoked_caps)
++				if (revoked_caps) {
++					s32 cid;
 +
-+				if (revoked_caps)
-+					caps_updated_record(ps, changed_cids, revoked_caps,
-+							    &to_deliver);
+ 					caps_updated_record(ps, changed_cids, revoked_caps,
+ 							    &to_deliver);
++					scx_cmask_for_each_cid(cid, changed_cids)
++						queue_sync_ecaps(pos, cid);
++				}
  			}
  
  			if (revoked_caps)
-@@ -1003,6 +1165,8 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
- 				pos = scx_skip_subtree_pre(pos, child);
- 		}
- 	}
-+
-+	caps_updated_deliver(&to_deliver);
- }
- 
- /**
 diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index 3a913cc56422..230345eb1d3a 100644
+index 230345eb1d3a..af289ad2ac07 100644
 --- a/kernel/sched/ext/sub.h
 +++ b/kernel/sched/ext/sub.h
-@@ -21,6 +21,7 @@ void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch);
- struct cgroup *sch_cgroup(struct scx_sched *sch);
- void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch);
- void scx_pstack_recursion_on_dispatch(struct bpf_prog *prog);
-+void scx_pstack_recursion_on_caps_updated(struct bpf_prog *prog);
- void drain_descendants(struct scx_sched *sch);
- void scx_sub_disable(struct scx_sched *sch);
- void scx_sub_enable_workfn(struct kthread_work *work);
+@@ -29,6 +29,9 @@ bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux);
+ void scx_free_pshards(struct scx_sched *sch);
+ s32 scx_alloc_pshards(struct scx_sched *sch);
+ void scx_init_root_caps(struct scx_sched *sch);
++void scx_process_sync_ecaps(struct rq *rq);
++void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu);
++void scx_discard_stale_ecaps_syncs(void);
+ 
+ #else	/* CONFIG_EXT_SUB_SCHED */
+ 
+@@ -42,6 +45,9 @@ static inline void scx_sub_disable(struct scx_sched *sch) { }
+ static inline void scx_free_pshards(struct scx_sched *sch) {}
+ static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
+ static inline void scx_init_root_caps(struct scx_sched *sch) {}
++static inline void scx_process_sync_ecaps(struct rq *rq) {}
++static inline void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu) {}
++static inline void scx_discard_stale_ecaps_syncs(void) {}
+ 
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
+@@ -58,6 +64,16 @@ static inline void scx_init_root_caps(struct scx_sched *sch) {}
+ 	for ((pos) = scx_next_descendant_pre(NULL, (root)); (pos);		\
+ 	     (pos) = scx_next_descendant_pre((pos), (root)))
+ 
++#ifdef CONFIG_EXT_SUB_SCHED
++
++/* caps implied by holding @cap */
++static inline u64 scx_caps_implied(u64 cap)
++{
++	return 0;
++}
++
++#endif	/* CONFIG_EXT_SUB_SCHED */
++
+ /*
+  * One user of this function is scx_bpf_dispatch() which can be called
+  * recursively as sub-sched dispatches nest. Always inline to reduce stack usage
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 9e41a23ef49e..72299c105487 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -806,6 +806,9 @@ struct scx_rq {
+ 	u32			flags;
+ 	u32			nr_immed;		/* ENQ_IMMED tasks on local_dsq */
+ 	u64			clock;			/* current per-rq clock -- see scx_bpf_now() */
++#ifdef CONFIG_EXT_SUB_SCHED
++	struct llist_head	ecaps_to_sync;		/* pending ecaps syncs */
++#endif
+ 	cpumask_var_t		cpus_to_sync;
+ 	bool			kick_sync_pending;
+ 	unsigned long		kick_sync;
 -- 
 2.54.0
 
