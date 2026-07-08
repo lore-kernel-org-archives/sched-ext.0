@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0679D3F8246
-	for <sched-ext@lists.linux.dev>; Wed,  8 Jul 2026 21:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C22B3F787B
+	for <sched-ext@lists.linux.dev>; Wed,  8 Jul 2026 21:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783547260; cv=none; b=ECduNQ6essgVSGFWsc+Hv0TflQQhdyfPEP2hd/4E7K57RJlKQTXPB0jGJb/B5lWDwHBwvHEZOWzMTA4GUYxjY1j9onLfTYYbFtbhz/UJMJgc3gxCygJWpkVSlSXG3QNuwdFMLIQjV3aExnpA68j7FuXuBNP3KziojxmDyzU+2iM=
+	t=1783547616; cv=none; b=gbi9GZhciw6JvlLmlmPllQdzAPSTp9fWxPxwRd9v0zuMWcsrUNcLO+X8fkxCE/02RAdbuyuPJswpCM845ltSD9U2vbT1B0gYfhBuF5xlU6+gYLLeO5tQb/mJpwiYdcj45tVddi4WPrFZZUcmg4j9MGgzOPEHbWHiKD4e5TLPmZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783547260; c=relaxed/simple;
-	bh=aWw4ipcM/pl9U7mCOTBTEQywFMFOHiSmAXoorI0LHP4=;
+	s=arc-20240116; t=1783547616; c=relaxed/simple;
+	bh=7jZy96/Ne0nb49kXuzjXz6gZeOjdgEbNjLqVi73wakc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=DlY6gDHgKKxYg38Pi7aVfkwFu4iGFcJCe1tvdq20Hh3q0HA6fapPFaFgipEhW6c8ft+aiyl8gQ2WtqnjbhEmbGmfq7MBnJJ9/eji1rVvFTKWwkCNjiaH/ytWlZpWZigvzBsRuDkDXnBNrW+geAOmPCZdQyXW3Hpr6Ytp0X/n3o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HqdbC2Eb; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Qg3GBJwd5fkS8TCg/YCY62jJH6pyTyn1yvG12CtNopllLGkPfZj45HsMvfdd638CdREAx9DmMUFbwecJ1+5wmIFIEgNvMWpJtti7wDjim7GCdFjh3592WVGDyCjxFUmQY8fWmSCPEYW7bKhbJyKM03sN+l/0NzbAX6a29s/7VRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gWp1isKt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HqdbC2Eb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1811F000E9;
-	Wed,  8 Jul 2026 21:47:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gWp1isKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747381F000E9;
+	Wed,  8 Jul 2026 21:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783547258;
-	bh=z/8cdW+XoyzQ2Tvwk5NsF53J8AbVKJDfek4VFPCVOzY=;
+	s=k20260515; t=1783547613;
+	bh=kn4/oEWZNQPyJ+Xs/LB0E4nOIiM7P8nJk+tdvN6lX3g=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HqdbC2Eb2E3O8bM67jeeXqkFEHZQRC/KXgPxNW8Pnm98oARdgt5UhVKDOTGuweh+A
-	 3+rHo74KlYXqsjq+38/Jw6P0aqBqqZ4Dh5XS3lUHtgUAEyHH7px6Icb6F3KTZSkKcy
-	 UOqceq3nGtAvrMMXD/PyxIfJJSdYyOQj89KEb9k/Dj9pXyo8RR6hsYGYBwrO3H05Nb
-	 gg1oor71AroWeGSW9Rj5DdIwKFuR3tnnWpLyXZSRNuUCWA2dCECQDSjEcbN3Q4l51H
-	 3bkdPU3SuGZXnzHkTXk85bUlmzKtZmZxf5bR9wV4KebCS3+L/8yz8ehEGurpmJAcni
-	 uKpwf++EooYSw==
+	b=gWp1isKttBxzBa4vtELRC8OcuV8tYFqH4jK877ejV463Cbk99eacmG7otrv4HpJBr
+	 FCoe4cFF+8LdJyo3APHCSq+EYUkXbAml51b0F9mdJgRvKxlHvWMKvOaBKicCIc2h/c
+	 Pyg3KDHalIs2pErtXSFcx0riEBrKmJ6pRxmrPdkP/RZuWtgv2dcWJzDFoCN4CPS4PW
+	 4PMdF+F44Z0UUvXB6qFIM04KvkuwSldzSQFCceG0iOSoOWszBR6iemWipfhyipUXFe
+	 9nz6HK4IWbNU3C1AKjSoHyLP6QO7OJ3SRh682A+ibCbCt5K/sAa1hk6z4GNvA6txTR
+	 8f2g+vLv2YoRg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 sched_ext/for-7.3 13/40] sched_ext: Add shard
- boundaries to scx_bpf_cid_override()
+Subject: Re: [PATCH v4 sched_ext/for-7.3 29/40] sched_ext: Route task slice
+ writes through set_task_slice()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260708212429.3405787-14-tj@kernel.org>
+In-Reply-To: <20260708212429.3405787-30-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
- <20260708212429.3405787-14-tj@kernel.org>
+ <20260708212429.3405787-30-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 08 Jul 2026 21:47:38 +0000
-Message-Id: <20260708214738.7A1811F000E9@smtp.kernel.org>
+Date: Wed, 08 Jul 2026 21:53:32 +0000
+Message-Id: <20260708215333.747381F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,82 +47,57 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] Unbounded allocation sizes for kmemdup before validation trigger=
- kernel warnings and allocation failures.
+
+Pre-existing issues:
+- [High] Data race on a running task's slice (`p->scx.slice`) between the k=
+ernel runqueue update and concurrent BPF kfunc execution.
 --
 
---- Patch [13]: [PATCH v4 sched_ext/for-7.3 13/40] sched_ext: Add shard bou=
-ndaries to scx_bpf_cid_override() ---
-commit d662162dc44b1de0465d793b6ec2418996af7aef
+--- Patch [29]: [PATCH v4 sched_ext/for-7.3 29/40] sched_ext: Route task sl=
+ice writes through set_task_slice() ---
+commit 89b48440e365b5adf1131b995d2e06c22b4e11aa
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Add shard boundaries to scx_bpf_cid_override()
+sched_ext: Route task slice writes through set_task_slice()
 
-This commit extends scx_bpf_cid_override() to accept explicit shard boundar=
-ies.
-It also snapshots the caller's arrays before validating them to prevent
-concurrent mutations from altering the data between validation and use.
+This commit introduces set_task_slice() and routes BPF-triggered writes
+to p->scx.slice through it. This centralizes the writes in preparation for
+a later change to handle pending out-of-band slice requests.
 
-> diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-> index f3c54f4223b43..6a22bead4c601 100644
-> --- a/kernel/sched/ext/cid.c
-> +++ b/kernel/sched/ext/cid.c
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+
 [ ... ]
-> @@ -392,29 +392,66 @@ void scx_cpumask_to_cmask(const struct cpumask *src=
-, struct scx_cmask *dst)
-[ ... ]
->  	/*
-> -	/* GFP_KERNEL alloc must happen before the rcu read section */
-> +	 * GFP_KERNEL allocs must happen before the rcu read section. Snapshot
-> +	 * the BPF-supplied arrays so a concurrent map mutation can't change
-> +	 * them between validation and use.
-> +	 */
->  	alloced =3D zalloc_cpumask_var(&seen, GFP_KERNEL);
-> +	node_counts =3D kcalloc(nr_node_ids, sizeof(*node_counts), GFP_KERNEL);
-> +	cpu_to_cid =3D kmemdup(cpu_to_cid_src, cpu_to_cid_src__sz, GFP_KERNEL);
-> +	shard_start =3D kmemdup(shard_start_src, shard_start_src__sz, GFP_KERNE=
-L);
 
-[Severity: Medium]
-Can a BPF program trigger a page allocator warning here by passing an
-unbounded size for cpu_to_cid_src__sz or shard_start_src__sz?
+> @@ -8651,7 +8657,7 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task=
+_struct *p, u64 slice,
+>  	if (unlikely(!sch || !scx_task_on_sched(sch, p)))
+>  		return false;
+> =20
+> -	p->scx.slice =3D slice;
+> +	set_task_slice(p, slice);
 
-The sizes are passed directly to kmemdup() before the length validation che=
-cks
-occur below. Would it be safer to validate the expected array sizes before
-attempting to allocate memory for the snapshots?
+[Severity: High]
+This is a pre-existing issue, but does this lockless write to the task's
+slice create a dangerous data race with update_curr_scx()?
 
-> =20
->  	guard(rcu)();
-> =20
-> @@ -422,17 +459,57 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cp=
-u_to_cid, u32 cpu_to_cid__sz,
->  	if (unlikely(!sch))
->  		return;
-> =20
-> -	if (!alloced) {
-> -		scx_error(sch, "scx_bpf_cid_override: failed to allocate cpumask");
-> +	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
-> +		scx_error(sch, "scx_bpf_cid_override: allocation failed");
->  		return;
->  	}
-> =20
-> -	if (cpu_to_cid__sz !=3D nr_cpu_ids * sizeof(s32)) {
-> -		scx_error(sch, "scx_bpf_cid_override: expected %zu bytes, got %u",
-> -			  nr_cpu_ids * sizeof(s32), cpu_to_cid__sz);
-> +	if (cpu_to_cid_src__sz !=3D nr_cpu_ids * sizeof(s32)) {
-> +		scx_error(sch, "scx_bpf_cid_override: cpu_to_cid expected %zu bytes, g=
-ot %u",
-> +			  nr_cpu_ids * sizeof(s32), cpu_to_cid_src__sz);
-> +		return;
-> +	}
-> +
-> +	if (!shard_start_src__sz || shard_start_src__sz % sizeof(s32)) {
-> +		scx_error(sch, "scx_bpf_cid_override: invalid shard_start size %u",
-> +			  shard_start_src__sz);
-> +		return;
-> +	}
+When a BPF program locklessly calls scx_bpf_task_set_slice() on a running
+task, it races with the CPU executing update_curr_scx() under the runqueue
+lock. In update_curr_scx(), the slice is updated using min_t():
+
+    curr->scx.slice -=3D min_t(u64, curr->scx.slice, delta_exec);
+
+Because the min_t() macro evaluates its arguments multiple times,
+curr->scx.slice can be read once for the comparison, then concurrently
+updated to a very small value by BPF, and read again for the subtraction.
+This could result in an integer underflow, giving the task a near-infinite
+slice and potentially monopolizing the CPU.
+
+Since the commit message mentions this is in preparation for a later change
+that handles out-of-band slice requests, does that subsequent change
+mitigate this data race?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708212429.3405=
-787-1-tj@kernel.org?part=3D13
+787-1-tj@kernel.org?part=3D29
