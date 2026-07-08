@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E6923E334;
-	Wed,  8 Jul 2026 21:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE97F3F4DF5;
+	Wed,  8 Jul 2026 21:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783545872; cv=none; b=KBiv/xZGaVIZoOT07pIEbzvUH9yE+YPPTdB13bgQfF5WB2yMF5+BKEA5Z/TUxAeicJmAqpgt5O79eUECxy/DyHHabQWHqGid/dRZ17liBCn/PBH6kPoyFCzRcB72D5YCV0z81IOiL8KMQ4mirRbC/iPYiBJ/Ux5qc6YOlFvQK6Y=
+	t=1783545874; cv=none; b=H4nTePRxehTAWdxC8nJOW3SfgeYO4x6Gyy3lv6CQs5Mm/bzztSwxeiyXOpiHXDba4m2EGM1gGj5lhJbiDCsVKXkgdqahn5CUB+zccbTxGFTNvfkvi/W3R4jUKql9p6z2a2mlPOCTqaFteOAhUPlYob7qD8UqRm6E9hudgoXF+T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783545872; c=relaxed/simple;
-	bh=EtlFd+v+lm9iR43926ZeVIk/OTfxZt/nvvg3c6hpvYI=;
+	s=arc-20240116; t=1783545874; c=relaxed/simple;
+	bh=q4XybpGw42HrGGHc/WvRBbcfug4LeqOWQOxtrYNN0e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dqbxl8QpLx3BtEJxbPTjFkkC0+zPxr59xx7qUh16s17QwAwE4EywMJoZ8NMm2nPobhCz4cKGYVB8ji9GNRDnp5u23IMefvF8wzKIBqkQmfYYUzSfb6aplm7qB8B4i98DEeaWzEYanaVBlHpCax7uKu1gS+zHSJ38VqcuVRFliyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DTGmuONE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L3GfkxcHg1xhApI6GYXymOU9WgVPme3R7h5iTu5ZeDKhTPhLMe8tXwsE+sV3SORtb39MqpaDBvDtfMoBvEIk6ujyY1NowfAtXEhmuzZ54BLcq85S5Mb5zvBNrMopgewF23joFqSep0+YS8IPjDPI7wWchTBibJnrnx0SFMTYQB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZezwzLz4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DTGmuONE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5112F1F00A3A;
-	Wed,  8 Jul 2026 21:24:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZezwzLz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3E31F000E9;
+	Wed,  8 Jul 2026 21:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783545871;
-	bh=lkmNpyg/k2l7E3gRK2U3hvu1Xt/k24MRLYyLi4qQrWY=;
+	s=k20260515; t=1783545872;
+	bh=1r4N/mvxRKDE/PAAkn/aDSzcifa2eHUV28nLjPhLHB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTGmuONElNzRillyrs0QnzJ9YXr8iXtjLhm19YXlhO34Y2JCgDh7xm+HqFmIjnkPD
-	 YrzJTolcwlL6Jq9DNsy+xAT0rDRIMO9XQ5xWMrZWMioGkj2WxlsVTWa9HDFSk6+X8T
-	 VdKha2Goi9SHS3UKBiTZOGfxVzE5ZuNPOK5RaT9YU9n0KNUghr9M+EczDlhdX2ke1D
-	 bLODQ6ZdSs5ENCXmDrcdmQrniyO1uPQO8oTSMPlWMUA2S1Rckz2j3beWs8+MkNfYq0
-	 /tSu0FOepkc508tqiTIWleTJeGdWgsuD8MVf6d/DOD4ua80rL5pbHbZ8fOcJ41k6OH
-	 EPrdogPZSaong==
+	b=ZezwzLz4gBGUB7pTQtgJkpkhRni4wtCXMAo+KRkAsdjF0gLgXGaxTU+fTOpMpRXWj
+	 H6GvKJpjKoZw2GpsK4wp1y+W2cEUzndNf9e1cnVdw2dFZj3IxYvnntMItNXQ/DLwvP
+	 a4b5tWQJcS9mS8XO0NaVt0Gxs/cro0/BX9bqCz9c0+ZgQsN+rh/XfCeERTU7qnbOpC
+	 z/irGjIp2p4uxZskL3+ahroW7x6li5elIjuJyZn8SwS8R8a3E8xZQ7tH2EHQP8L5aS
+	 C28VKUN7QmqqZ78qSs7d+K+AgB1nYhyEYuqRxHCiTI/rNvj6h2EmbDAGIbP9Y6F58u
+	 UQeHg7hPMDXYA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v4 sched_ext/for-7.3 01/40] sched_ext: Record an error on errno-only sub-enable failure
-Date: Wed,  8 Jul 2026 11:23:50 -1000
-Message-ID: <20260708212429.3405787-2-tj@kernel.org>
+Subject: [PATCH v4 sched_ext/for-7.3 02/40] sched_ext: Fix premature ops->priv publication in scx_alloc_and_add_sched()
+Date: Wed,  8 Jul 2026 11:23:51 -1000
+Message-ID: <20260708212429.3405787-3-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260708212429.3405787-1-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
@@ -48,38 +48,66 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_sub_enable_workfn() has several failure paths that only return an errno
-(e.g. -ENOMEM from an allocation) and jump to err_disable without calling
-scx_error(). scx_flush_disable_work() runs the disable, and thus ops.exit(),
-only when an error has been recorded, so an errno-only failure leaves the
-half-initialized sub-scheduler linked.
+scx_alloc_and_add_sched() publishes @sch through ops->priv before allocating
+the cgroup path. If that allocation fails, the unwind path clears ops->priv
+and frees @sch immediately. scx_prog_sched() callers can dereference
+ops->priv from RCU context the moment it is set, so freeing without a grace
+period can use-after-free a concurrent kfunc caller.
 
-Record an error at the err_disable sink so every errno-only failure runs the
-disable path.
+Move the publication below the cgroup path allocation so that every failure
+path after publication frees @sch through kobject_put(), whose release path
+defers the freeing by a grace period.
 
-Fixes: ebeca1f930ea ("sched_ext: Introduce cgroup sub-sched support")
+Fixes: 105dcd005be2 ("sched_ext: Introduce scx_prog_sched()")
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/sub.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/ext/ext.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 050420427273..ce76ae141e0a 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -570,6 +570,12 @@ void scx_sub_enable_workfn(struct kthread_work *work)
- 	percpu_up_write(&scx_fork_rwsem);
- err_disable:
- 	mutex_unlock(&scx_enable_mutex);
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 1a0ec985da77..f4725698f5ef 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -6363,11 +6363,6 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		sch->ops = *cmd->ops;
+ 	}
+ 
+-	rcu_assign_pointer(ops->priv, sch);
+-
+-	sch->kobj.kset = scx_kset;
+-	INIT_LIST_HEAD(&sch->all);
+-
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	char *buf = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!buf) {
+@@ -6385,7 +6380,19 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 	sch->cgrp = cgrp;
+ 	INIT_LIST_HEAD(&sch->children);
+ 	INIT_LIST_HEAD(&sch->sibling);
++#endif	/* CONFIG_EXT_SUB_SCHED */
+ 
 +	/*
-+	 * Some enable failures only return an errno (e.g. -ENOMEM from an
-+	 * allocation) without calling scx_error(). Record it so
-+	 * scx_flush_disable_work() runs the disable and ops.exit() fires.
++	 * Publishing makes @sch visible to scx_prog_sched() readers. Failure
++	 * paths after this point must free @sch through kobject_put() whose
++	 * release path defers the actual freeing by an RCU grace period.
 +	 */
-+	scx_error(sch, "scx_sub_enable() failed (%d)", ret);
- 	scx_flush_disable_work(sch);
- 	cmd->ret = 0;
- }
++	rcu_assign_pointer(ops->priv, sch);
++
++	sch->kobj.kset = scx_kset;
++	INIT_LIST_HEAD(&sch->all);
++
++#ifdef CONFIG_EXT_SUB_SCHED
+ 	if (parent) {
+ 		/*
+ 		 * Pin @parent for @sch's lifetime. The kobject hierarchy pins
+@@ -6440,7 +6447,6 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 
+ #ifdef CONFIG_EXT_SUB_SCHED
+ err_free_lb_resched:
+-	RCU_INIT_POINTER(ops->priv, NULL);
+ 	free_cpumask_var(sch->stall_cpus);
+ #endif
+ err_free_lb_resched_cpumask:
 -- 
 2.54.0
 
