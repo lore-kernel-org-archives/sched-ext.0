@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808093F4DCE;
-	Wed,  8 Jul 2026 21:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACA43F54DD;
+	Wed,  8 Jul 2026 21:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783545885; cv=none; b=Y+N5OJmXBpgWxE/Z+l9pZNyr7WOMFdoj62hARA+5NYwWVAQsCATZ6nwttxg8AHYFtQTfTVcfn08M8HX0rJhxbgYc2rvPS6pu5iwI8Iuuga6aY+wD4UyXXyJrz2afdb7aOO7DqnYFHMyOw8v+lInwNKa2eGXfLYH4KwcYa4ix4jw=
+	t=1783545885; cv=none; b=riU7dkawcsa9VOhHRjyMY2c6eTxcOgwMQZmJfB8wn3rSggKEwpWtvaC/QLE3yVoA+/tiJzEZGQJFaoRBau99VPc8hfaxusHcxTuLP70V9e7JJdjQb+Fy5qS7vjwS7M1udse9haFDalgOXrwsFdrxiEr9WFTjH9xBYTZQ6fOr07c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783545885; c=relaxed/simple;
-	bh=tWSAn+gLPo6QyRKRat7UuxhjP0IUgtl7TOesjwpq0FI=;
+	bh=2TmU/nhfjx4TNAqA9Eh0WGu5rhLWBlgTUt/S5ctnpVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGFJhUeF0qU8Bcdj8ymrHpPFfmjPhhlm+klEQlcaSEwKCU6KTcRP52ByLKq/NTxYQ1QSuz1gbzXektMWOxwXqa+AYkO609d69mAQRPvw7MwFKfwFQv7xE0d3mDhF3ZTTETnCHqiMeW5g6IXgvxgoBsJTPdoxwysaugCVbtynil8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bWZqfBYx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rT2QjZnRGlv0qLDbvxMJrIyB6E8K0BrV4qKxWi71xNBVLumGy7hfCIiNcOF3SuzUWTBDKeYU2VjAeKU1wzLN3BnLn1JBrp4hlmqQsEQWj7vdIyyp3GCJZwMrCZ/cD1dVFIj9Jv2aH6vrqIiVWvtQE192loITe0nLOF4QiDrE7z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQEDYrsM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bWZqfBYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365501F000E9;
-	Wed,  8 Jul 2026 21:24:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQEDYrsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65441F00A3D;
+	Wed,  8 Jul 2026 21:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783545880;
-	bh=eHrouy5BCa2Pc/7gOfuw+oBzpZi8n1ia45HjwfR/J0Q=;
+	s=k20260515; t=1783545877;
+	bh=dPBzxd6UuOYSsi2izwuNKdLTbW/dFaJ5qEmWXxlrb8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bWZqfBYxI+lBcJl0gO+Qizc4NcViH0aWMxt5n70wkVGfZBTfWzntU972t3dU57t3k
-	 vT+UjJPCyyn9sEi9OgYxmyy3PkuWXOOV9GH/uyeC0t9OCTQXPVv1Kvdpb8moTIVeqb
-	 bLB3qVDg2pLdGjIJgkDScSisNjLi39f5Zn3GzdhBekHqeKmtVpRg1lOjgtOvfFuDbu
-	 pgdQJGNXdOObQmJ+qKzAeF7N9dS13PowfpZHcYcM3WxOtH/zNrfklBEJ4+/Rz3YDd3
-	 2lmkWxdcAH1iptYE4GiaoPVspa95s2koiEpFK8a4qkEEOXzy0NKWLKMyCSC4D36dPb
-	 0SM7oDC3INGyA==
+	b=cQEDYrsMpUX4TOFbVBc9Bl2JE2j1DiL4ZCc1SobuztgYW7uYrKTUJxfkMz/H8NJ7P
+	 24ZGd40MRTTdvkGG2DRf9/P7w+m5H0YsG3ZOiwDg9NOWeftShvkWpgAeJe+vyHxpKE
+	 mDGfXuWhYE6xR5PBVB6yfmx99vzf+aUHX2d7f7gmvgMCYGbkNgtv03wZHO6rJvt0l3
+	 XITQOMpGZfkVRzIxdv3dZ5ZBRf6M1XXQ2WvjUTi0c9CKOeMjxcj2jaO5zSuI5cSUi4
+	 NeJfISYAbdqIyo3BKLpTL/PVHCeYKJfsQJDE0kIfhVLFkxKb1LeFMEX6t5lCyVhJ9i
+	 9XywKY4WWHXqw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v4 sched_ext/for-7.3 09/40] sched_ext: Make scx_bpf_kick_cid() return void
-Date: Wed,  8 Jul 2026 11:23:58 -1000
-Message-ID: <20260708212429.3405787-10-tj@kernel.org>
+Subject: [PATCH v4 sched_ext/for-7.3 06/40] sched_ext: Rename extra_enq_flags to remote_activate_enq_flags
+Date: Wed,  8 Jul 2026 11:23:55 -1000
+Message-ID: <20260708212429.3405787-7-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260708212429.3405787-1-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
@@ -48,67 +48,65 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_kick_cid() returned an error code, but the value conveys nothing
-actionable and no caller consumes it. The kick is asynchronous, so a
-successful return only means it was queued. An invalid @cid is already
-reported through scx_error() by scx_cid_to_cpu(), and a missing scheduler
-leaves nothing to kick.
+scx_rq.extra_enq_flags carries scx-specific enqueue flags across the
+activate_task() boundary during a cross-rq task move in
+move_remote_task_to_local_dsq(). Rename it to remote_activate_enq_flags to
+name that role, and fix the stale comment that referenced the old
+move_task_to_local_dsq() name.
 
-Make scx_bpf_kick_cid() return void to match scx_bpf_kick_cpu(). The
-cid-form kfuncs are not in practical use yet, so the ABI change is safe.
+No functional change.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c                   | 11 +++++------
- tools/sched_ext/include/scx/common.bpf.h |  2 +-
- 2 files changed, 6 insertions(+), 7 deletions(-)
+ kernel/sched/ext/ext.c | 10 +++++-----
+ kernel/sched/sched.h   |  3 ++-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index bd3cb59b1dbf..187754d0c3c8 100644
+index c050a68189d4..be75bdc9ada2 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -8533,10 +8533,10 @@ __bpf_kfunc void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux
-  * @flags: %SCX_KICK_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-- * cid-addressed equivalent of scx_bpf_kick_cpu(). Return 0 on success,
-- * -errno otherwise.
-+ * cid-addressed equivalent of scx_bpf_kick_cpu(). An invalid @cid aborts the
-+ * scheduler via scx_cid_to_cpu().
-  */
--__bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
-+__bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
+@@ -1824,7 +1824,7 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
  {
- 	struct scx_sched *sch;
- 	s32 cpu;
-@@ -8544,12 +8544,11 @@ __bpf_kfunc s32 scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *
- 	guard(rcu)();
- 	sch = scx_prog_sched(aux);
- 	if (unlikely(!sch))
--		return -ENODEV;
-+		return;
- 	cpu = scx_cid_to_cpu(sch, cid);
- 	if (cpu < 0)
--		return cpu;
-+		return;
- 	scx_kick_cpu(sch, cpu, flags);
--	return 0;
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 	int sticky_cpu = p->scx.sticky_cpu;
+-	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
++	u64 enq_flags = core_enq_flags | rq->scx.remote_activate_enq_flags;
+ 
+ 	if (enq_flags & ENQUEUE_WAKEUP)
+ 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
+@@ -2097,13 +2097,13 @@ static void move_remote_task_to_local_dsq(struct task_struct *p, u64 enq_flags,
+ 	/*
+ 	 * We want to pass scx-specific enq_flags but activate_task() will
+ 	 * truncate the upper 32 bit. As we own @rq, we can pass them through
+-	 * @rq->scx.extra_enq_flags instead.
++	 * @rq->scx.remote_activate_enq_flags instead.
+ 	 */
+ 	WARN_ON_ONCE(!cpumask_test_cpu(cpu_of(dst_rq), p->cpus_ptr));
+-	WARN_ON_ONCE(dst_rq->scx.extra_enq_flags);
+-	dst_rq->scx.extra_enq_flags = enq_flags;
++	WARN_ON_ONCE(dst_rq->scx.remote_activate_enq_flags);
++	dst_rq->scx.remote_activate_enq_flags = enq_flags;
+ 	activate_task(dst_rq, p, 0);
+-	dst_rq->scx.extra_enq_flags = 0;
++	dst_rq->scx.remote_activate_enq_flags = 0;
  }
  
- /**
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index bd51986c4c42..e7b3ba491c5e 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -104,7 +104,7 @@ void scx_bpf_events(struct scx_event_stats *events, size_t events__sz) __ksym __
- s32 scx_bpf_cpu_to_cid(s32 cpu) __ksym __weak;
- s32 scx_bpf_cid_to_cpu(s32 cid) __ksym __weak;
- void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out) __ksym __weak;
--s32 scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
-+void scx_bpf_kick_cid(s32 cid, u64 flags) __ksym __weak;
- s32 scx_bpf_task_cid(const struct task_struct *p) __ksym __weak;
- s32 scx_bpf_this_cid(void) __ksym __weak;
- struct task_struct *scx_bpf_cid_curr(s32 cid) __ksym __weak;
+ /*
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 56acf502ba26..80b72d934ff3 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -797,7 +797,8 @@ struct scx_rq {
+ 	struct list_head	runnable_list;		/* runnable tasks on this rq */
+ 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
+ 	unsigned long		ops_qseq;
+-	u64			extra_enq_flags;	/* see move_task_to_local_dsq() */
++	/* see move_remote_task_to_local_dsq() */
++	u64			remote_activate_enq_flags;
+ 	u32			nr_running;
+ 	u32			cpuperf_target;		/* [0, SCHED_CAPACITY_SCALE] */
+ 	bool			in_select_cpu;
 -- 
 2.54.0
 
