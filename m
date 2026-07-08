@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF2D3F99E5;
-	Wed,  8 Jul 2026 21:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5B13FA5EB;
+	Wed,  8 Jul 2026 21:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783545894; cv=none; b=u1PcYWjT6wqw/uF1gowL+CtVfu2poDtOlTrKXJC86sd8j6cDKBkZWvxsCi8qzvogBpQtS0Oz4Ta5piGLkVOiF8SuQs+tT4eQ7zp71LpVekvj8ZBclZAEe2kBxQj+bkfhr2luRjmIHpati+EV4vQyo8Okke5w3Gd2naOYTj35fLY=
+	t=1783545896; cv=none; b=NUx5XWnAew9ukS4eI5RrkSTsLHEFdBWALTeAMOMf9EhnJrlFrjsjeDFwmAaYQZ0AW2psm0UlDmOC5pfqdBTXYigmXqMRcScpUSmadeu81zeHr+MPAZ7F9lfXCF9naol9c2DODUHubDL9LdlYW5rUfi9tmyGZxEAuNfjg1loiaGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783545894; c=relaxed/simple;
-	bh=rq1pt28f+xhO8N2oS55Ccsl/IJZgEfLoYin7waWE1L4=;
+	s=arc-20240116; t=1783545896; c=relaxed/simple;
+	bh=Jkvq8IyeX5ZCpIq4KCqVk9fPNPdzNVEJ+yT5eDKIcPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3MgfU0A0yGUIj376faEPHi5/doCjRaojM12MJwaZ76tDdznD6c7dwvXd3gZY4onDW4c3zIjTVuASFL9YNrFKXaeI/47mSxZ0RuINHGUXCrn3bMHUsRK7o1kSBq60t6gnwH79VUrm2xTR3u6ipmbCwQOnTIHa1F2U8b6Un0Dd/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vu6llFOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZ85bmWIsDuH2F3AjOyq7Hc+mZQwkTFAzAnqvtYvH9/8LA3H6WxRnff8YHwz9HV4HvMrxgBP+TMFPYSNmx2ckLgF7WXSuOeTSmnnBFOK5bTQ1nBjb/ed+JTtbB16besxsjzZ6XemLHWefKCMjW2l6fGRYoi5s+nqSOgKSWgiw8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8lI8yjh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vu6llFOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A761F00A3D;
-	Wed,  8 Jul 2026 21:24:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8lI8yjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726601F000E9;
+	Wed,  8 Jul 2026 21:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783545892;
-	bh=HFC9ux1zZIh1AHWRbOvtOSZR/UauD1ZQi6B9KdH64tc=;
+	s=k20260515; t=1783545893;
+	bh=HpynuZkVoF9wRiMzibKVi15hjonRzHMt+W8I1i2pYGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vu6llFOUJjcxZnqt0COUrlEZiwJTNbxHNkBBnbkjb/IpjjdNaMGjcnYYTjmTaQ+MK
-	 s/RFvC6m5Y/r8EW6EHZFJ9ZhrfQk1Ldq3D8dk/oM7dg0iCAfMZMUyho4gGxYtChajo
-	 HeaE6leMW+IDg+BW15zRWsVjgYKSMo/PpylcvfSDx64f+Pzm1qKx/kD2z2XJP1GLMz
-	 Nbl7gPOI3bEW69sw5C0wUKETr05ROyPfpYXd0dQbEESXR0cbcSskOc2vud1rzUusQC
-	 0bjqD/QXthp5tUL/ThH6UzkockA6AzRN04qTF0qXhM2KaFdNDma501TCuB8Uc/PkzK
-	 J95OcIbSIgdwg==
+	b=X8lI8yjhMekD56u3jeczqRke0yD6v8ChHgT6th1qWbE1UjgkyJOs1YQfF1FBNdeM5
+	 OU4SBUEg67fbZ29vR6YT/ONDr/MP3189VHRCXA0RL42Ck1DTDB8PsNqoSOpPP1mN8Y
+	 ShABPXqiSVdMvso7fW42r2gWFZ//N3ByffM/s81vHsIEbUPoXES9rMbjbFpC841+WT
+	 9Amy6+Vhg79UOSFM85earg+G8iBY93O/VZU/ud+O9W/BkIKEQNWpuKXtCnlgSJqCE9
+	 +TtQlfFK+ces0ahaxjjeOFE5zpxJVk0FZwHS7v5wEZsttHrAsQR/qt31RDn8oEoPvd
+	 xnlFsczs53THA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v4 sched_ext/for-7.3 20/40] sched_ext: Stop resolving a disabled scheduler's programs
-Date: Wed,  8 Jul 2026 11:24:09 -1000
-Message-ID: <20260708212429.3405787-21-tj@kernel.org>
+Subject: [PATCH v4 sched_ext/for-7.3 21/40] sched_ext: Add per-shard cap delegation for sub-schedulers
+Date: Wed,  8 Jul 2026 11:24:10 -1000
+Message-ID: <20260708212429.3405787-22-tj@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260708212429.3405787-1-tj@kernel.org>
 References: <20260708212429.3405787-1-tj@kernel.org>
@@ -48,101 +48,677 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A scheduler's BPF programs can outlive it. A timer it armed or a tracing
-program it loaded can fire after ops.exit() has run, before the programs are
-unloaded, and scx_prog_sched() still resolves the program to its scheduler
-through ops->priv. Harmless while kfuncs touch only lifetime-stable state,
-but a hazard once a kfunc reads global state a newly loaded scheduler can
-change underneath it.
+Caps are per-cid permissions parents delegate to direct children via
+scx_bpf_sub_grant() / scx_bpf_sub_revoke(). A child's cap set is always a
+subset of its parent's. Sub-scheds check their caps locally, and cross-sched
+communication is needed only when the delegation set itself changes.
 
-Add scx_sched->dead, set right after ops.exit() and drained with
-synchronize_rcu(). It follows exit() rather than preceding it so exit()'s own
-kfunc calls still resolve to @sch. scx_prog_sched() returns NULL for a dead
-scheduler, so every kfunc's existing !sch bail rejects it at one choke
-point.
+Caps will be used to implement sub-sched scheduling on the enqueue path.
+Picking a cid for a task at a leaf depends on which cids the leaf is allowed
+to use, and resolving that programmatically on every enqueue would mean a
+cross-sched round-trip call chain, possibly retrying if the request can't be
+granted as-is. The dispatch path is different - it runs as top-down
+recursion via scx_bpf_sub_dispatch().
+
+Locking is per shard. cid space is split into shards, and each sub-sched has
+its own pshard->lock for each shard. Operations are broken up on shard
+boundaries. Different shards never contend. Shards are expected to be
+topology-aligned and likely to serve as the locality unit when cids are
+allocated to schedulers, so per-shard lock granularity scales naturally with
+the allocation pattern.
+
+This patch adds the framework with a single dummy cap. Real caps land in
+later patches.
+
+The enable path is reordered for pshards. scx_arena_pool_init() moves ahead
+of scx_link_sched() so the pshards are allocated before the sched becomes
+reachable - scx_alloc_pshards() skips allocation when the arena pool isn't
+initialized.
+
+- scx_bpf_sub_grant(): Per-cid all-or-nothing grant to direct child.
+- scx_bpf_sub_revoke(): Clear caps on @cmask across @child and its subtree.
+- scx_bpf_sub_caps(): Lockless snapshot of caps on a cid range.
+
+/sys/kernel/sched_ext/SCHED/caps shows the caps each scheduler currently
+holds.
+
+v4: Move the pshard[] full build/publish and the err_disable scx_error() recording to earlier patches. (sashiko AI)
+v3: Build pshard[] fully before publishing it, read it with READ_ONCE. (sashiko AI)
+v2: Validate ops before scx_link_sched() publishes the sub. (sashiko AI)
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      |  8 ++++++++
- kernel/sched/ext/internal.h | 13 ++++++++++---
- kernel/sched/ext/sub.c      |  9 +++++++++
- 3 files changed, 27 insertions(+), 3 deletions(-)
+ kernel/sched/ext/ext.c                   |  77 ++++-
+ kernel/sched/ext/internal.h              |  56 +++-
+ kernel/sched/ext/sub.c                   | 342 ++++++++++++++++++++++-
+ kernel/sched/ext/sub.h                   |   2 +
+ tools/sched_ext/include/scx/common.bpf.h |   6 +
+ 5 files changed, 468 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 46b80b31925e..b877f2459ff6 100644
+index b877f2459ff6..ef93e3af8fbd 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -5696,6 +5696,14 @@ static void scx_root_disable(struct scx_sched *sch)
- 	if (sch->ops.exit)
- 		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
+@@ -4705,9 +4705,52 @@ static ssize_t scx_attr_events_show(struct kobject *kobj,
+ }
+ SCX_ATTR(events);
  
-+	/*
-+	 * @sch's programs (an armed timer, a tracing prog) can fire after
-+	 * exit(). Now that exit()'s own kfuncs have resolved, stop
-+	 * scx_prog_sched() from resolving to @sch and drain in-flight resolvers.
-+	 */
-+	WRITE_ONCE(sch->dead, true);
-+	synchronize_rcu();
++#ifdef CONFIG_EXT_SUB_SCHED
++static const char *scx_cap_names[__SCX_NR_CAPS] = {
++	[__SCX_CAP_DUMMY]	= "dummy",
++};
 +
- 	scx_unlink_sched(sch);
++static ssize_t scx_attr_caps_show(struct kobject *kobj,
++				  struct kobj_attribute *ka, char *buf)
++{
++	struct scx_sched *sch = container_of(kobj, struct scx_sched, kobj);
++	u32 npossible = num_possible_cpus();
++	struct scx_cmask *agg __free(kfree) =
++		kzalloc(struct_size(agg, bits, SCX_CMASK_NR_WORDS(npossible)), GFP_KERNEL);
++	unsigned long *agg_bm __free(bitmap) = bitmap_zalloc(npossible, GFP_KERNEL);
++	ssize_t count = 0;
++	s32 cap, si;
++
++	if (!agg || !agg_bm)
++		return -ENOMEM;
++
++	for (cap = 0; cap < __SCX_NR_CAPS; cap++) {
++		SCX_CMASK_DEFINE(snap, 0, SCX_CID_SHARD_MAX_CPUS);
++
++		scx_cmask_init(agg, 0, npossible);
++		for (si = 0; si < sch->nr_pshards; si++) {
++			struct scx_cmask *cm = &sch->pshard[si]->caps[cap].cmask;
++
++			scx_cmask_reframe(snap, cm->base, cm->nr_cids);
++			scx_cmask_copy(snap, cm);
++			scx_cmask_or(agg, snap);
++		}
++		/* %*pbl takes unsigned long bitmap layout, convert from u64 */
++		bitmap_from_arr64(agg_bm, agg->bits, npossible);
++		count += sysfs_emit_at(buf, count, "%s: %*pbl\n",
++				       scx_cap_names[cap], npossible, agg_bm);
++	}
++	return count;
++}
++SCX_ATTR(caps);
++#endif	/* CONFIG_EXT_SUB_SCHED */
++
+ static struct attribute *scx_sched_attrs[] = {
+ 	&scx_attr_ops.attr,
+ 	&scx_attr_events.attr,
++#ifdef CONFIG_EXT_SUB_SCHED
++	&scx_attr_caps.attr,
++#endif
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(scx_sched);
+@@ -6724,8 +6767,8 @@ static void scx_root_enable_workfn(struct kthread_work *work)
  
  	/*
+ 	 * A cid-form scheduler finalizes its cid layout in ops.init_cids(),
+-	 * which may call scx_bpf_cid_override(). Run it before ops.init() so
+-	 * the final layout is in effect.
++	 * which may call scx_bpf_cid_override(). Run it before the caps and
++	 * shard state are built so the final layout is in effect.
+ 	 */
+ 	if (sch->is_cid_type && sch->ops_cid.init_cids) {
+ 		ret = SCX_CALL_OP_RET(sch, init_cids, NULL);
+@@ -6755,6 +6798,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 		goto err_disable;
+ 	}
+ 
++	scx_init_root_caps(sch);
++
++	/* the cid caps and shards are live now, so ops.init() can query them */
+ 	if (sch->ops.init) {
+ 		ret = SCX_CALL_OP_RET(sch, init, NULL);
+ 		if (ret) {
+@@ -7436,7 +7482,7 @@ static struct bpf_struct_ops bpf_sched_ext_ops = {
+ 
+ /*
+  * cid-form cfi stubs. Stubs whose signatures match the cpu-form (param types
+- * identical, only param names differ across structs) are reused; only
++ * identical, only param names differ across structs) are reused. Only
+  * set_cmask needs a fresh stub since the second argument type differs.
+  */
+ static void sched_ext_ops_cid__set_cmask(struct task_struct *p,
+@@ -9637,6 +9683,28 @@ __bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
+ }
+ #endif	/* CONFIG_CGROUP_SCHED */
+ 
++#ifndef CONFIG_EXT_SUB_SCHED
++__bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
++				  const struct scx_cmask *cmask__ign,
++				  struct scx_cmask *denied_out__ign,
++				  const struct bpf_prog_aux *aux)
++{
++	return -EOPNOTSUPP;
++}
++
++__bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
++				    const struct scx_cmask *cmask__ign,
++				    const struct bpf_prog_aux *aux)
++{
++}
++
++__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out__ign,
++				 const struct bpf_prog_aux *aux)
++{
++	return -EOPNOTSUPP;
++}
++#endif	/* !CONFIG_EXT_SUB_SCHED */
++
+ __bpf_kfunc_end_defs();
+ 
+ BTF_KFUNCS_START(scx_kfunc_ids_any)
+@@ -9681,6 +9749,9 @@ BTF_ID_FLAGS(func, scx_bpf_events)
+ #ifdef CONFIG_CGROUP_SCHED
+ BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_IMPLICIT_ARGS | KF_RCU | KF_ACQUIRE)
+ #endif
++BTF_ID_FLAGS(func, scx_bpf_sub_grant, KF_IMPLICIT_ARGS)
++BTF_ID_FLAGS(func, scx_bpf_sub_revoke, KF_IMPLICIT_ARGS)
++BTF_ID_FLAGS(func, scx_bpf_sub_caps, KF_IMPLICIT_ARGS)
+ BTF_KFUNCS_END(scx_kfunc_ids_any)
+ 
+ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index dce07b83c166..87582bca5cc4 100644
+index 87582bca5cc4..e98eea1235e9 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1202,6 +1202,7 @@ struct scx_sched {
- 		struct sched_ext_ops_cid	ops_cid;
- 	};
- 	bool			is_cid_type;	/* true if registered via bpf_sched_ext_ops_cid */
-+	bool			dead;		/* set after ops.exit(), gates scx_prog_sched() */
+@@ -786,9 +786,9 @@ struct sched_ext_ops {
+ 	/**
+ 	 * @init_cids: Finalize the cid layout (cid-form only)
+ 	 *
+-	 * Runs after the default cid layout is built, before ops.init(). A
+-	 * cid-form scheduler may call scx_bpf_cid_override() here for a custom
+-	 * layout. Ignored for cpu-form schedulers.
++	 * Runs after the default cid layout is built, before caps and shards
++	 * are finalized. A cid-form scheduler may call scx_bpf_cid_override()
++	 * here for a custom layout. Ignored for cpu-form schedulers.
+ 	 */
+ 	s32 (*init_cids)(void);
  
- 	/*
- 	 * Arena map auto-discovered from member progs at struct_ops attach.
-@@ -1968,14 +1969,20 @@ static inline bool scx_task_on_sched(struct scx_sched *sch,
- static inline struct scx_sched *scx_prog_sched(const struct bpf_prog_aux *aux)
- {
- 	struct sched_ext_ops *ops;
--	struct scx_sched *root;
-+	struct scx_sched *sch, *root;
+@@ -1183,9 +1183,57 @@ struct scx_sched_pnode {
+ 	struct scx_dispatch_q	global_dsq;
+ };
  
- 	ops = bpf_prog_get_assoc_struct_ops(aux);
--	if (likely(ops))
--		return rcu_dereference_all(ops->priv);
-+	if (likely(ops)) {
-+		sch = rcu_dereference_all(ops->priv);
-+		if (sch && unlikely(READ_ONCE(sch->dead)))
-+			return NULL;
-+		return sch;
-+	}
++/*
++ * Sub-sched capability delegation.
++ *
++ * Caps are per-cid permissions parents delegate to direct children via
++ * scx_bpf_sub_grant() / scx_bpf_sub_revoke(). A child's cap set is always a
++ * subset of its parent's. A sub-sched checks its caps locally, and cross-sched
++ * communication is needed only when the delegation set itself changes.
++ *
++ * Caps are used to implement sub-sched scheduling on the enqueue path. Picking
++ * a cid for a task at a leaf depends on which cids the leaf is allowed to use.
++ * Resolving that programmatically on every enqueue would mean a cross-sched
++ * round-trip call chain, possibly retrying if the request can't be granted
++ * as-is.
++ *
++ * The dispatch path is different - it runs as top-down recursion via
++ * scx_bpf_sub_dispatch(): a sched's dispatch op invokes a child's dispatch op
++ * on the local rq, and the subtree dispatches in a single pass.
++ *
++ * Locking is per shard. cid space is split into shards, and each sub-sched has
++ * its own pshard->lock for each shard. Operations are broken up on shard
++ * boundaries. Different shards never contend. Shards are expected to be
++ * topology-aligned and likely to serve as the locality unit when cids are
++ * allocated to schedulers, so per-shard lock granularity scales naturally with
++ * the allocation pattern.
++ */
++enum scx_cap_flags {
++	__SCX_CAP_DUMMY			= 0,
++
++	__SCX_NR_CAPS,
++	__SCX_CAP_ALL			= BIT_U64(__SCX_NR_CAPS) - 1,
++
++	SCX_CAP_DUMMY			= BIT_U64(__SCX_CAP_DUMMY),
++};
++
+ #ifdef CONFIG_EXT_SUB_SCHED
++/* iterate set bits in a u64 cap mask */
++#define scx_for_each_cap_bit(cap_bit, caps)				\
++	for (u64 __caps = (caps);					\
++	     __caps && ((cap_bit) = __ffs64(__caps), true);		\
++	     __caps &= __caps - 1)
++
+ struct scx_pshard {
+-	int			_dummy;		/* until the first real field lands */
++	raw_spinlock_t		lock;		/* serializes caps */
++	struct scx_sched	*sch;		/* backpointer */
++	/*
++	 * Per-cap cmask, inline via TRAILING_OVERLAP so cmask.bits[] overlaps
++	 * the trailing _bits[] storage. Access as &caps[i].cmask.
++	 */
++	TRAILING_OVERLAP(struct scx_cmask, cmask, bits,
++			 u64 _bits[SCX_CMASK_NR_WORDS(SCX_CID_SHARD_MAX_CPUS)];
++	) caps[__SCX_NR_CAPS];
+ };
+ #endif
  
- 	root = rcu_dereference_all(scx_root);
- 	if (root) {
-+		if (unlikely(READ_ONCE(root->dead)))
-+			return NULL;
- 		/*
- 		 * COMPAT-v6.19: Schedulers built before sub-sched support was
- 		 * introduced may have unassociated non-struct_ops programs.
 diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 17ed0d28f383..8d9825093649 100644
+index 8d9825093649..d0ffc3a8550c 100644
 --- a/kernel/sched/ext/sub.c
 +++ b/kernel/sched/ext/sub.c
-@@ -344,6 +344,15 @@ void scx_sub_disable(struct scx_sched *sch)
+@@ -122,7 +122,21 @@ void scx_free_pshards(struct scx_sched *sch)
  
- 	if (sch->ops.exit)
- 		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
+ static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32 node)
+ {
+-	return kzalloc_node(sizeof(struct scx_pshard), GFP_KERNEL, node);
++	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
++	struct scx_pshard *pshard;
++	s32 i;
++
++	pshard = kzalloc_node(sizeof(*pshard), GFP_KERNEL, node);
++	if (!pshard)
++		return NULL;
++
++	raw_spin_lock_init(&pshard->lock);
++	pshard->sch = sch;
++
++	for (i = 0; i < __SCX_NR_CAPS; i++)
++		scx_cmask_init(&pshard->caps[i].cmask, shard->base_cid, shard->nr_cids);
++
++	return pshard;
+ }
+ 
+ s32 scx_alloc_pshards(struct scx_sched *sch)
+@@ -158,6 +172,22 @@ s32 scx_alloc_pshards(struct scx_sched *sch)
+ 	return 0;
+ }
+ 
++/*
++ * Seed the root's caps fully. Root owns all cids on all caps at enable time.
++ * Children acquire caps via scx_bpf_sub_grant().
++ */
++void scx_init_root_caps(struct scx_sched *sch)
++{
++	s32 si, i;
++
++	for (si = 0; si < sch->nr_pshards; si++) {
++		struct scx_pshard *ps = sch->pshard[si];
++
++		for (i = 0; i < __SCX_NR_CAPS; i++)
++			scx_cmask_fill(&ps->caps[i].cmask);
++	}
++}
++
+ static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
+ 
+ void drain_descendants(struct scx_sched *sch)
+@@ -446,6 +476,31 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+ 		goto out_unlock;
+ 	}
+ 
++	/*
++	 * Validate before scx_link_sched() publishes @sch, so an invalid sub
++	 * never becomes visible with an unallocated pshard.
++	 */
++	ret = scx_validate_ops(sch, ops);
++	if (ret)
++		goto err_disable;
 +
 +	/*
-+	 * @sch's programs (an armed timer, a tracing prog) can fire after
-+	 * exit(). Now that exit()'s own kfuncs have resolved, stop
-+	 * scx_prog_sched() from resolving to @sch and drain in-flight resolvers.
++	 * Allocate pshard[] before scx_link_sched() publishes @sch into the
++	 * parent's RCU children list. A concurrent revoke walking the tree
++	 * would otherwise dereference sch->pshard[si] while it's still NULL.
++	 * Unlike the root path, the cid shard layout is stable at this point.
++	 *
++	 * scx_alloc_pshards() skips allocation when @sch's arena pool isn't
++	 * initialized, so scx_arena_pool_init() must run first.
 +	 */
-+	WRITE_ONCE(sch->dead, true);
-+	synchronize_rcu();
++	ret = scx_arena_pool_init(sch);
++	if (ret)
++		goto err_disable;
 +
- 	if (sch->sub_kset)
- 		kobject_del(&sch->sub_kset->kobj);
- 	/* not added if enable failed before scx_sched_sysfs_add() */
++	ret = scx_alloc_pshards(sch);
++	if (ret)
++		goto err_disable;
++
+ 	ret = scx_link_sched(sch);
+ 	if (ret)
+ 		goto err_disable;
+@@ -470,17 +525,10 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+ 		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
+ 	}
+ 
+-	ret = scx_arena_pool_init(sch);
+-	if (ret)
+-		goto err_disable;
+-
+ 	ret = scx_set_cmask_scratch_alloc(sch);
+ 	if (ret)
+ 		goto err_disable;
+ 
+-	if (scx_validate_ops(sch, ops))
+-		goto err_disable;
+-
+ 	struct scx_sub_attach_args sub_attach_args = {
+ 		.ops = &sch->ops,
+ 		.cgroup_path = sch->cgrp_path,
+@@ -760,6 +808,284 @@ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *
+ 				  true);
+ }
+ 
++/* Validate common inputs. On success, *parent_out and *child_out are set. */
++static s32 sub_cap_preamble(u64 cgroup_id, u64 caps, const struct bpf_prog_aux *aux,
++			    struct scx_sched **parent_out, struct scx_sched **child_out)
++{
++	struct scx_sched *parent, *child;
++
++	parent = scx_prog_sched(aux);
++	if (unlikely(!parent))
++		return -ENODEV;
++
++	if (!scx_is_cid_type()) {
++		scx_error(parent, "sub-cap kfuncs require a cid-form scheduler");
++		return -EOPNOTSUPP;
++	}
++
++	child = scx_find_sub_sched(cgroup_id);
++	if (unlikely(!child))
++		return -ENODEV;
++
++	if (unlikely(scx_parent(child) != parent)) {
++		scx_error(parent, "%s: sub-%llu is not a direct child",
++			  parent->cgrp_path, cgroup_id);
++		return -EINVAL;
++	}
++
++	if (unlikely(caps & ~__SCX_CAP_ALL)) {
++		scx_error(parent, "invalid caps 0x%llx", caps);
++		return -EINVAL;
++	}
++
++	*parent_out = parent;
++	*child_out = child;
++	return 0;
++}
++
++/**
++ * scx_bpf_sub_grant - Grant @caps on @cmask__ign's cids to a direct child
++ * @cgroup_id: cgroup id of the direct child sub-sched
++ * @caps: bitmask of SCX_CAP_* to grant
++ * @cmask__ign: cid cmask to grant @caps on (arena pointer)
++ * @denied_out__ign: optional arena cmask accumulating refused cids
++ * @aux: implicit BPF argument
++ *
++ * A cid in @cmask__ign is granted to the child only if the parent holds every
++ * requested cap on it. Refused cids are OR'd into @denied_out__ign when
++ * provided. Refusals outside @denied_out__ign's range are not recorded.
++ *
++ * All-or-nothing keeps the caller-visible result binary per cid, so
++ * @denied_out__ign is one mask to interpret rather than a per-cap matrix.
++ *
++ * Return 0 on full success, -EPERM if any cid was refused, or a negative
++ * errno on other failures.
++ */
++__bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
++				  const struct scx_cmask *cmask__ign,
++				  struct scx_cmask *denied_out__ign,
++				  const struct bpf_prog_aux *aux)
++{
++	struct scx_cmask_ref ref, denied_ref;
++	struct scx_sched *parent, *child;
++	bool any_denied = false;
++	s32 si, ret;
++
++	guard(irqsave)();
++
++	ret = sub_cap_preamble(cgroup_id, caps, aux, &parent, &child);
++	if (ret)
++		return ret;
++
++	ret = scx_cmask_ref_init(parent, cmask__ign, &ref);
++	if (ret) {
++		scx_error(parent, "invalid cmask (%d)", ret);
++		return ret;
++	}
++
++	if (denied_out__ign) {
++		ret = scx_cmask_ref_init(parent, denied_out__ign, &denied_ref);
++		if (ret) {
++			scx_error(parent, "invalid denied_out (%d)", ret);
++			return ret;
++		}
++	}
++
++	/* apply the grant one shard at a time */
++	for (si = ref.shard_first; si < ref.shard_end; si++) {
++		SCX_CMASK_DEFINE_SHARD(slice, 0, SCX_CID_SHARD_MAX_CPUS);
++		struct scx_pshard *pps = parent->pshard[si];
++		struct scx_pshard *cps = child->pshard[si];
++		u32 cap_bit;
++
++		scx_cmask_ref_shard(&ref, si, slice);
++		if (scx_cmask_empty(slice))
++			continue;
++
++		SCX_CMASK_DEFINE_SHARD(granted_cids, slice->base, slice->nr_cids);
++		scx_cmask_copy(granted_cids, slice);
++
++		scoped_guard (raw_spinlock, &pps->lock) {
++			guard(raw_spinlock_nested)(&cps->lock);
++
++			/*
++			 * Narrow granted_cids to cids the parent holds every
++			 * requested cap on. All-or-nothing per cid.
++			 */
++			scx_for_each_cap_bit(cap_bit, caps)
++				scx_cmask_and(granted_cids, &pps->caps[cap_bit].cmask);
++
++			/* fold granted_cids into the child per requested cap */
++			scx_for_each_cap_bit(cap_bit, caps)
++				scx_cmask_or(&cps->caps[cap_bit].cmask, granted_cids);
++		}
++
++		/* record cids that didn't make it through into @denied_out */
++		if (!scx_cmask_subset(slice, granted_cids)) {
++			any_denied = true;
++			if (denied_out__ign) {
++				SCX_CMASK_DEFINE_SHARD(denied, slice->base, slice->nr_cids);
++
++				scx_cmask_copy(denied, slice);
++				scx_cmask_andnot(denied, granted_cids);
++				scx_cmask_ref_or(&denied_ref, denied);
++			}
++		}
++	}
++	return any_denied ? -EPERM : 0;
++}
++
++/**
++ * scx_bpf_sub_revoke - Revoke @caps on @cmask__ign's cids from @child
++ * @cgroup_id: cgroup id of the direct child sub-sched
++ * @caps: bitmask of SCX_CAP_* to revoke
++ * @cmask__ign: cid cmask to revoke @caps on (arena pointer)
++ * @aux: implicit BPF argument
++ *
++ * Clear @caps bits on @cmask__ign from the child named by @cgroup_id and all
++ * its descendants. The origin parent's pshard lock is held across the subtree
++ * walk so a concurrent grant from the origin parent observes the revoked
++ * state.
++ */
++__bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
++				    const struct scx_cmask *cmask__ign,
++				    const struct bpf_prog_aux *aux)
++{
++	struct scx_cmask_ref ref;
++	struct scx_sched *parent, *child, *pos;
++	s32 si, ret;
++
++	guard(irqsave)();
++
++	if (sub_cap_preamble(cgroup_id, caps, aux, &parent, &child))
++		return;
++
++	ret = scx_cmask_ref_init(parent, cmask__ign, &ref);
++	if (ret) {
++		scx_error(parent, "invalid cmask (%d)", ret);
++		return;
++	}
++
++	/* per-shard, walk child's subtree and clear @caps */
++	for (si = ref.shard_first; si < ref.shard_end; si++) {
++		SCX_CMASK_DEFINE_SHARD(slice, 0, SCX_CID_SHARD_MAX_CPUS);
++
++		scx_cmask_ref_shard(&ref, si, slice);
++		if (scx_cmask_empty(slice))
++			continue;
++
++		/*
++		 * Pre-order with subtree skip: a descendant that cleared
++		 * nothing means no descendant of it can hold @caps on these
++		 * cids either.
++		 */
++		guard(raw_spinlock)(&parent->pshard[si]->lock);
++		pos = scx_next_descendant_pre(NULL, child);
++		while (pos) {
++			struct scx_pshard *ps = pos->pshard[si];
++			u64 revoked_caps = 0;
++			u32 cap_bit;
++
++			scoped_guard (raw_spinlock_nested, &ps->lock) {
++				scx_for_each_cap_bit(cap_bit, caps) {
++					struct scx_cmask *cm = &ps->caps[cap_bit].cmask;
++
++					if (!scx_cmask_intersects(cm, slice))
++						continue;
++					scx_cmask_andnot(cm, slice);
++					revoked_caps |= BIT_U64(cap_bit);
++				}
++			}
++
++			if (revoked_caps)
++				pos = scx_next_descendant_pre(pos, child);
++			else
++				pos = scx_skip_subtree_pre(pos, child);
++		}
++	}
++}
++
++/**
++ * scx_bpf_sub_caps - Read self's or a direct child's cap cmasks
++ * @cgroup_id: 0 for self, or a direct child's cgroup id
++ * @caps: one or more SCX_CAP_* bits
++ * @out__ign: arena cmask to receive the union of @caps within its range
++ * @aux: implicit BPF argument
++ *
++ * Read the cap cmasks granted on each cid for self (@cgroup_id 0) or a direct
++ * child - the literal granted set. A sched can read only itself or a direct
++ * child.
++ *
++ * Return 0, -ENODEV if @cgroup_id names no direct child, or -EINVAL on bad
++ * inputs.
++ */
++__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out__ign,
++				 const struct bpf_prog_aux *aux)
++{
++	struct scx_cmask_ref ref;
++	struct scx_sched *sch, *target;
++	struct scx_pshard **pshard;
++	s32 si, ret;
++
++	guard(irqsave)();
++
++	sch = scx_prog_sched(aux);
++	if (unlikely(!sch))
++		return -ENODEV;
++
++	if (!scx_is_cid_type()) {
++		scx_error(sch, "sub-cap kfuncs require a cid-form scheduler");
++		return -EOPNOTSUPP;
++	}
++
++	if (unlikely(caps & ~__SCX_CAP_ALL)) {
++		scx_error(sch, "invalid caps 0x%llx", caps);
++		return -EINVAL;
++	}
++
++	/* @cgroup_id 0 reads self, otherwise a direct child */
++	if (cgroup_id) {
++		target = scx_find_sub_sched(cgroup_id);
++		if (unlikely(!target))
++			return -ENODEV;
++		if (unlikely(scx_parent(target) != sch)) {
++			scx_error(sch, "%s: sub-%llu is not a direct child",
++				  sch->cgrp_path, cgroup_id);
++			return -EINVAL;
++		}
++	} else {
++		target = sch;
++	}
++
++	/*
++	 * The target's caps storage may not be set up yet (e.g. a self-read
++	 * during ops.init_cids()). Pairs with the publish in
++	 * scx_alloc_pshards(): a non-NULL pshard has every element set.
++	 */
++	pshard = READ_ONCE(target->pshard);
++	if (unlikely(!pshard)) {
++		scx_error(sch, "scx_bpf_sub_caps() called before caps storage is initialized");
++		return -ENODEV;
++	}
++
++	ret = scx_cmask_ref_init(sch, out__ign, &ref);
++	if (ret) {
++		scx_error(sch, "invalid out (%d)", ret);
++		return ret;
++	}
++
++	for (si = ref.shard_first; si < ref.shard_end; si++) {
++		const struct scx_cid_shard *shard = &scx_cid_shard_ranges[si];
++		SCX_CMASK_DEFINE_SHARD(local_out, shard->base_cid, shard->nr_cids);
++		u32 cap_bit;
++
++		scx_for_each_cap_bit(cap_bit, caps)
++			scx_cmask_or(local_out, &pshard[si]->caps[cap_bit].cmask);
++		scx_cmask_ref_copy(&ref, local_out);
++	}
++	return 0;
++}
++
+ __bpf_kfunc_end_defs();
+ 
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index 3d5ad9c36d64..3a913cc56422 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -27,6 +27,7 @@ void scx_sub_enable_workfn(struct kthread_work *work);
+ bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux);
+ void scx_free_pshards(struct scx_sched *sch);
+ s32 scx_alloc_pshards(struct scx_sched *sch);
++void scx_init_root_caps(struct scx_sched *sch);
+ 
+ #else	/* CONFIG_EXT_SUB_SCHED */
+ 
+@@ -39,6 +40,7 @@ static inline void drain_descendants(struct scx_sched *sch) { }
+ static inline void scx_sub_disable(struct scx_sched *sch) { }
+ static inline void scx_free_pshards(struct scx_sched *sch) {}
+ static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
++static inline void scx_init_root_caps(struct scx_sched *sch) {}
+ 
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index e7b3ba491c5e..09c21602b2ed 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -114,6 +114,12 @@ u32 scx_bpf_cidperf_cap(s32 cid) __ksym __weak;
+ u32 scx_bpf_cidperf_cur(s32 cid) __ksym __weak;
+ void scx_bpf_cidperf_set(s32 cid, u32 perf) __ksym __weak;
+ 
++/* sub-scheduler cap control, scx_bpf_sub_caps() cgroup_id 0 == self */
++s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask,
++		      struct scx_cmask *denied) __ksym __weak;
++void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask) __ksym __weak;
++s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out) __ksym __weak;
++
+ /*
+  * Use the following as @it__iter when calling scx_bpf_dsq_move[_vtime]() from
+  * within bpf_for_each() loops.
 -- 
 2.54.0
 
