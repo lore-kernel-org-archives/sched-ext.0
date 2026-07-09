@@ -1,63 +1,63 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012065.outbound.protection.outlook.com [40.107.209.65])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011020.outbound.protection.outlook.com [52.101.57.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683E4266576
-	for <sched-ext@lists.linux.dev>; Thu,  9 Jul 2026 20:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38283C7E17
+	for <sched-ext@lists.linux.dev>; Thu,  9 Jul 2026 20:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.20
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783629693; cv=fail; b=LpYqzO+1UmIpfQ1TK/JEdQCH5HFQ7YbVvYjT5XkSW19tfo2nVujZmsA0qyr7era1OdgJi/lNXrvySVAZDrbWc4/gv9HLr8bAYliI3MGatxzf0WAr8akljoaIrIB0kYDEREOCnjVAeZ5AcieG/yIhr5YQxkK8+nTiBOVAwNzfWLA=
+	t=1783629721; cv=fail; b=hlbCo6vniBMBrJ0Q/mqNMmIngiNDIy3PvxwCChEiZxxeJg6Z1doNxT7F0tls8Rr+vOGn9LpVsHL460wnPa74iDO5YPXN8abyjXTQXwPiArq6BlY7upjuqgAGCGMhINOJpICQl2gdygcuIWfZMusBGEAsB81nZmjR1Z2D9qRwc18=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783629693; c=relaxed/simple;
-	bh=eXA7f5XPbc/uk0R+osr/PxTptTNCmneQB5tTWEbOhp8=;
+	s=arc-20240116; t=1783629721; c=relaxed/simple;
+	bh=0pkdAR8FYS3BPdqpH3WoQzZILs/yMomEHxxnxC6UA04=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=HmW5GvX3q1l3s+8DXFQhnjpPXyfJtRzOecwsMjIJdSSBk0Ecs2DqpNl4LDkhUho98ptA2qfXD55jkBAQ/5dAH3P1T7XBO6wth6Xyr1b/58m5ncb2Gil1ui0GilNt+hmu0X337C1q+iknhWawwey0c6J9E1PsR57ztFW9oPNyFhc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OZZukDEf; arc=fail smtp.client-ip=40.107.209.65
+	 Content-Disposition:In-Reply-To:MIME-Version; b=UW5LGRrDzhdq228EjbADOuo6L/Jz66Xxz8p4qiUFpVd7RPoxSv54EnS8LdyIfVGNFtcoQ+y3kGypiU18zKXg+BhVzH6BogWoeZIyEqAnySgyMv9g/ummRnB8Ay+B5PGR1NQH+Zf9tsMCTR6BNjND7m0hUOKy0yEacCosGxXVB3c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=HdWXH/kF; arc=fail smtp.client-ip=52.101.57.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OZZukDEf"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="HdWXH/kF"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=w8JVX4eMutfTlwkp+xuIZtzQSNc7KCV0otHRONgKKxCoz0hHn913Zg2oXmIuL8Z30KjmZkY26JwPDF0qF3QaMd/SjgFuVpDW0XdXMRt3WYXCRc2MAPck9yUrCc/aEWVi1CXUZgixe0ltZjO6Da2YLICa5eoYJeQR+jmuAjvjp2U6SmFc1nfWLLXPT67/2NYS5kqtKq3GgW3qXdI88KMz0wXZp/gWV3SkTuU6ESPS8K8g3Fv1o1bsS/aAXVWB1apIa1ECEFXqs+bO61GpBQq46DLsIzc9NVgDyBW4pXR3V3nEMAAVyS5IziWY+PpVcUZOhmf23I1IQAXZ8KJB8lWZVg==
+ b=cjThWdFCxpY00I3R1h423gotlQFYOgj1PGOVwRi6CuqkAAcjkB/Nx6ZgyD89SZ78+YF7kSSaYKZFkPTZkgrpCDoQy59gIZbqYD33PCPdAwC+dR0dvqJwFooaKb8o8CGTbK6QaO4+KRCn22TK4pIjXlFZzmTAsaFrSPj1r6WNTr3HW12aA6a36dT23myWaPx+F6yPU7TYRIRJeFM9ZvbeV6xK4Vyt9xS8CtL4EKV8Uv5nJ1NvfHJRUyQ+6M0GSV3PHtV3Zm7YRQgDKWJDovCSShthnDdtPg0thIDFiE5dvhyaeZNYpikJnjDGdUoxwLVbXzhycKPKbjvBa+FTW+h+3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oExazeskezcjumy25mt4/GIz3SY4leM8SjTob9lrJTw=;
- b=xMMy73JFd6mKp3adeJIS6JwIUaOn/FyBDAuIgy6FBgu91z6aWYCGlsiqmWUxBnEgLpCppr0FI4Yu8mGCxou7CG5TYXLmaAuIHsfkXfqh9/sSZ61Yw8ttiy+uvVMWI5nP6+Uob05bm65I2uGb2YxZagg+VUu4tluzoHq/pWTYs6vgEcKEEFxcABGbE5DqmaOpnWH4meSMBZHnY/JhmxVifEuFyXRjJf7LIYn91NGKxb1euMJRSA1OQriku5tExDX6H5tb1rZsW29MNVOqNIn5ltIHnWTMyCv0D1r58bup41dj44pwrysLKsrFTEWkj6Ueh4SEfwqjWDj9zWH3VbUP5Q==
+ bh=d5OUBtbwApRftvCSMSt3OutoqVNHn7v9fa2MidKQvxw=;
+ b=vD2yq2skIuPMd41QHDEjdZ5jHvt9VkMGZctRoyYoD0q6eUiyZ7e/JyevQEXjI+8eNqMGOOvvG/SW6siwDp0o84G0YmSIetOrrGKob7XJv8xl0fpvqG6F/P/4i4xYKx7nOlk4BtnAiyC8nU61KuZolK3Qt2UhpEcrKOUjuJt1MDAKBpm9B/Cq9izbe/wWttDqd0CQ+Jv+/0/a/qsKpeh8CxgAQ3Yex2E6k99FjdnqIYkyvB7RmK6znuxWh/rp4LH/b+ZI5ffsJIjGkGRQ6Xp43qTIpA1wqJD7Ti2QrRHarKpUkrGN+ds5LzyfKlyHA8ezwNuRu97QkciO5Umw1yDV/Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oExazeskezcjumy25mt4/GIz3SY4leM8SjTob9lrJTw=;
- b=OZZukDEfH0h1e9TocWjBBp5ookHX7cgQAzNds48fMkW4PDCHi4oNjfYRfXSoeUHz13gUc7oVEyba36xPhf5LcEk89b1SIgPlLADiie0HqWwyVe8qhNsH62HpRcWFHsn2ElKhlig6OvKK76+mQnhvlqToh7Xs60kX0EsmgNlL1vwusaeOWGy7+cm/2PvPi8AH03ewdEIFbeFvaM6snwF0DmpKSNe0KxhMCeCppDquOCqxwymz92MJgyT+oAClMo/vv1gXRrpEuG7nAeTnKs4WOkgW93aEsrSy8xX+YwDtAK8K5v8YYOKWVg0eZAUP/cXkdS+Ww9xrt7RAME6e/qKZBA==
+ bh=d5OUBtbwApRftvCSMSt3OutoqVNHn7v9fa2MidKQvxw=;
+ b=HdWXH/kFJIhPtEnBeVvX3kXu2PQQkRF+mmjJE1TVHpy14uY++bq/7b8jOOUs+qJp05HTaVqiesiXp2PMPeCsvk0RQQ4+u3Lkbm++mQq3QCtwNJy1rgriUvjO1j3W3bfgzWU8TWE6kJ7QWwRgcKbAkf6sgtEe9zl5Wlh7dHV9MfAbPvgDdBj3MPToSnOAWfbLgmAIemE+Pedj4FKJrhXUeB9dukQVWNnCLdHzoNu2foqr9/hjDz3a1Cd+wWnZODWLcyL8UYuSc6nRqCxSdTTsE2GzjrBq2b5GQWXtKMX4mEMNvP62OgjpnT/YR+BL+0vzo6fTaS6l+lmsDQrAKEGwYQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by CH0PR12MB8487.namprd12.prod.outlook.com (2603:10b6:610:18c::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Thu, 9 Jul
- 2026 20:41:27 +0000
+ 2026 20:41:50 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 20:41:27 +0000
-Date: Thu, 9 Jul 2026 22:41:18 +0200
+ 20:41:50 +0000
+Date: Thu, 9 Jul 2026 22:41:42 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 sched_ext/for-7.3 05/40] sched_ext: Add
- SCX_CALL_CID_OP_TASK() for cid-form op dispatch
-Message-ID: <alAHbgsxUZgAtMMW@gpd4>
+Subject: Re: [PATCH v4 sched_ext/for-7.3 06/40] sched_ext: Rename
+ extra_enq_flags to remote_activate_enq_flags
+Message-ID: <alAHhmsgKv4Uv8TV@gpd4>
 References: <20260708212429.3405787-1-tj@kernel.org>
- <20260708212429.3405787-6-tj@kernel.org>
+ <20260708212429.3405787-7-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260708212429.3405787-6-tj@kernel.org>
-X-ClientProxiedBy: MI3PEPF00007538.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::4ca) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260708212429.3405787-7-tj@kernel.org>
+X-ClientProxiedBy: MI0P293CA0013.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:44::18) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,74 +67,67 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CH0PR12MB8487:EE_
-X-MS-Office365-Filtering-Correlation-Id: 78bb1260-cd80-473a-c323-08deddfa72c7
+X-MS-Office365-Filtering-Correlation-Id: 5040a6ef-058f-4df9-293a-08deddfa8093
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|11063799006|5023799004|4143699003|6133799003|22082099003|56012099006|18002099003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|11063799006|4143699003|6133799003|22082099003|56012099006|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	UpwytnY3hg8lZaJKdBUSANVrp4neO/S5HIrBemwKdR2fB89VSCouQWgGVdOvnVegu6ijLpt3WSYGuAZPh1fhxZtusF9yZaNGvCsK3m217x7mDR8fa9eE8V+amjODy0BVJqpbKfi6FpdvIXJlxlVoPteE46PUEs6JrxcT8L3nsawzPj5jYTElXyECF6J0HZdYaXH0/7haBP6eihmvNscNo/NjtWNPJmlFonRJwJOF28UO1PyadvQmDfo5THk6r41dMsw8ZDGCwkxLAdihUXrAQJhQypW/MY4iKD3Axc80tNN/nRMqvNx8qtA9gf1V/ZKLAU60dRjzQw2FDB8o+dTe5fToMWOyV/7hBxaQT/UCXQLaCuRLiD0w961aCuus68MnDnpU022xeqUKZZu0vehMTVyeUkQ5jhr4+07Chaa95uywX4Bhw7MN5ZhuLOOKEMIhy/OWax0kIka1e3X6NTAiu5Axxp+rD7nu1QCj4T5klApgCB0cBQe6R9ewmtQ3YWx6j7Db6tFkJHbxN4ulhlYlYSwclm4GN8B1LAhFfJ4h0SyEKXyMSvSoq244i37HfmsjFkup+LorBjYXKfeBbjteSUNB+ecgSA9mC0pwqXuAD/OuB+L7vBON210H2v6PDRr7jZ2FObZvQVY14ewIXYaxapH0E0GTKMOnR8sF+xEXhcI=
+	Y2LZIrgd2XpJAd3pOoG0fpuzAGH7W1tClg2dkLndd8p4AcvU4AYyvXD97BKhBxCSnRmv/hSZICFkmWl3yfIbmk9qiudnSmeAkZzlScAI/FEKFZ5xscFUcMCQYHCwSMa2fXHUtUapCdwAgZDDRoFunBr3XUeZPoyl1YkTLbebRaU8nRYIJpkBs8EM22gZc9UWW9cX3+E2bNC+EGFbP76hHFCqTDBfmMPtCnRyxRzEvuxO6uNuwEn/eZ2ikDEINJsZ6vBXSrsEb631d2Zqo0GLgb1VkFEFCZJt9LQZWbX+QWXvN/EyrP5ewO10QSNnVzSBaM1Zzm/zCDPjH8orGUFNR0D6XOd0KXKPI1FzSj+yyic6WT89J4CcP1DLECRGi5GmEgpXpOpEap4E8EbTfADI/7zhTDjR+5oc4XEN62p6ua4T+KBWgfE+Znj3csl5q9ssnenvUQ0XJ+XCcX20qDVUOJeQghTyDal8/m0RpeBiXGDSoCPAeSOtXgnmO3Ns2vf+VHqclsp8NdsAp83yNCewJLAmFlhDfdnztkeTJnOWZn09kYoV8SQQhh+nNZizkskvHHidg1iAoqWWUM0R1o+y8XNSMN9xRM3exypMKM/iz37pbfMdTBot5dKxK1Sxtsc7D29deRIiBX/azOWIc2rhjobEvr3nUdaVTNFiUyUtwVY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(11063799006)(5023799004)(4143699003)(6133799003)(22082099003)(56012099006)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(11063799006)(4143699003)(6133799003)(22082099003)(56012099006)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?6zvCwG8l1+eOSZOdZUzqRhuRYpeDC9izo+FO4mhaM/vdMNLPmyVSBhGZrDkc?=
- =?us-ascii?Q?6SZM/rgN3munC6NPK7iE8tRpivCsbrHKCDRiNqYc1Q57l/vVK6NIm5C/T2aq?=
- =?us-ascii?Q?JWczz3gjJW+Ma8eoydcNTwL8rEV00w2sA8MputD/ORN/8xxzYhvlbjQTOg4W?=
- =?us-ascii?Q?wZSr+ZVsxAurMJR8jzQ3+hbp0RE5gRpGNcCSMYn/qai38C7ZcuPYeudd0HT9?=
- =?us-ascii?Q?4s0iRpMGehvZkwxZphy3Qnt2evzv6vnir2zNTEXSsJCb/sPfXjUdBm3GFGDx?=
- =?us-ascii?Q?H3+/AM/CCs6S6aZCN9ZwcDNxaHqa0YLkxsEd6L1Ab/IJxuXlKC7nqQrYnpaO?=
- =?us-ascii?Q?s8S0KUg8dGzi4YOjmI7Al8Ug0c1AwbCUeYSMDi2Crgyx5whZuhxZo7IqM7Xy?=
- =?us-ascii?Q?cUluSxWES4LFqwcybJmEVJto/xDZig7hErRcJOtkSkPfvZpLEMpVnGgggzqg?=
- =?us-ascii?Q?a8nPMBXoSJUEta70bVRnt8Bp2+gt7Mn8h4U5JZexa9FnI6Ugr52yUXLDIhIP?=
- =?us-ascii?Q?6H+xkWp3nwoCONmN8UCP0H8Hrwt7URP35B2kqGg2K7LCwQXZ7IEjN8OVEjCG?=
- =?us-ascii?Q?lzONzpax68tsop4hNTzWorptGlppvuYkoQTTJtEAQG/Fdq1Lo9rDWhJxz5pC?=
- =?us-ascii?Q?PMvskyqAWyZyeJb063aNeNfptE3tuzgLxhjidmrXmeu9MtKJM6nAQY+KEHFN?=
- =?us-ascii?Q?bTWRNSe4aATehAf20pURRSIZyoejgVlZxNhs4lteH64FEH6VDqoi5IjXY5dz?=
- =?us-ascii?Q?oW+VnZqwsZtTpX/5s1SOZ7Q20hmg31kcrMI8RzM4xezBa6T+oCpTc3oSg3TU?=
- =?us-ascii?Q?wGc1U6Mrk0gQwNYniffSXf09h3CUtuznUa+ChKOZq8zoxLdA15IDPiEC1+z4?=
- =?us-ascii?Q?ArRsDiYU/RtDaEGJ6og4er//9HxyX8janQrgssXs9Lrxv2MMMre1tPOV86nb?=
- =?us-ascii?Q?WQSmeVmbjKmDJVeAtgBWBOXAl2nUf2AX9MhGV71c7Uh5LU6BF1AJC+Q3Icqt?=
- =?us-ascii?Q?lFvzwfbSLgxvxEl2uuLgysbuRRRuaLRDVwfeH0zTC5LMuEvHWUZ4VCDNUwxK?=
- =?us-ascii?Q?umgBamKCQk8I3Rv0sZ13BEdy/YZX+apBdgfsiYrbShTOsfUakgQhVGGy+cSE?=
- =?us-ascii?Q?p0MiuzTsi3mTjbNRqYyhzwYxbkm/a1Xm6eKfAYYl6Y9VGgEC8lQhpxk92KqZ?=
- =?us-ascii?Q?t2K9YBflkKhoyPy3waTkni2kJHl90TbjNQHrAbQe8pnDwPymIebgInH7CJHf?=
- =?us-ascii?Q?DX/6V0IN+aJDpN/ZOydAvTP3hj6VcFUJxsqBQ1sGaZv+HY7wT9aVK1K9hVTc?=
- =?us-ascii?Q?+aryWXIKDMcTsLsmI8/zIB0CSFZbXtiEdIkR03tAXGNmyrzr6/kn08Xm8yam?=
- =?us-ascii?Q?uzxq4rko0PkYpKfaPeJ6iLxxNu1i6iFZqZX3/RV0yI4ABuvXoJTRrTHRXwTB?=
- =?us-ascii?Q?1bWX+oL9isnh93NftFndN7tRdUBrYweaba0ZzoTVhcBYGlTqo27iEqywxPov?=
- =?us-ascii?Q?Pb9drS2TJ/oWUkmA5hD2V9FHBhOJbPSVNyHy4VHKgAQtRp/Fjkd/v08LdxSv?=
- =?us-ascii?Q?ZEkKgIviRk4vmlU3JJEJq2hCIQsW543MiWKeBMoChad7EaqFQ49DVJVu7Kj0?=
- =?us-ascii?Q?Q5Wso18AUQe2loqL6nca8jbGAWe7J4+vzTIkAjhLCU6EjkCazeIFlUCoMIVO?=
- =?us-ascii?Q?7SY43yEd2g3+RXl8VHifDjf4Dr7KVDN6ElOEB+Gs9u3pAsXj12+H/hKuDlQt?=
- =?us-ascii?Q?SYEgPuimiA=3D=3D?=
+	=?us-ascii?Q?U19byr2rClrEIgo5aOk6lXVzUFj5IcxHFDNWFtxvwDrRj7Wby1ynYZt7a+Oq?=
+ =?us-ascii?Q?4n4v5TLPX37jM6z4mlTrPso5XWq/rQZBYI7eEY4amalkM/mxtuLo5rBczUju?=
+ =?us-ascii?Q?UqQPD8e3s+VsN4sFUQW1rcntorjhbSyY4w0IRIsMXl3vEVwKF4ZEYhBiGN6k?=
+ =?us-ascii?Q?cWf0Ql7ovHicSBcnThaCpdAsaNXp9uhYaDKydMO/U+E2ckMy2Z+8DShgcJ2b?=
+ =?us-ascii?Q?QaLfE1C/9JuGZRwg7o4Z5vuL/5Pu5u5hUOsZNSN0LFZqYpUmX5J89YniHWQh?=
+ =?us-ascii?Q?K5y/YCpRrYLHHp5gAiV8rJ2CdVoQLJnErHXQcuxpeda3Q+C1BDnh5AXTzS2r?=
+ =?us-ascii?Q?n16BLEw/118TJaa2dl9NwDAbRVdDU5FfSLy4qDG99V69+gFQrU5ChmV4SOJz?=
+ =?us-ascii?Q?J3QL5Y/4htymINA0W9maR+8Fz+LKzAOt9zHuJs6srQlHMZuAtmaGIjR1Ecov?=
+ =?us-ascii?Q?weIewrsQf6F1gdrhQf9+PKlB2Wy/2eomICoGMDImRH28HEFygrxSh8hzXJq6?=
+ =?us-ascii?Q?mEx5m8DUKMaM8DHv50deHDSRQelIJrT+rzPE/u1xdlagHJvPtQe/pqAGH9bv?=
+ =?us-ascii?Q?O2ifwVLffYQ1V9RrSXo92dKIS8JH4BxqFQNYYrCoUf6hTMlbkExSe5hWF9sf?=
+ =?us-ascii?Q?nmEmaJNZuH8u5X6v7QrqhFfJDdKV7edByStxisvegRL43Nx14X6MYxrx1+RH?=
+ =?us-ascii?Q?/23pL6qUBqHKKA4rbTdb4Z92zPm7C94pBOIdKKFKwD0m24M88qNuBQbwUpnc?=
+ =?us-ascii?Q?I2c0nkvTAC5qlx8QLXMs1j2M2oLpgK4Jzpg+6YY0B4SuKDzAjNWoSqcrcidx?=
+ =?us-ascii?Q?TC5Nba3etaxCkth+qrZth0wUdZ4+pW8GNvtT+4hhjBsgPfqdw8nMsN7BFSp6?=
+ =?us-ascii?Q?COuVQQlKAaRu8XCDYpXKyDx+grEp182VUCbhjLFVQjPiaPmMElHCpBJV8h3F?=
+ =?us-ascii?Q?3K9AKhn1REQr/jAVOOyaz/kbGlYZRw6zfl9A3+9jxvwIzkFVdVjk2Tf8sKAD?=
+ =?us-ascii?Q?AkJJxYCmBTFzXF543eEixPVIQlhUcDegC0P8SoKfseJITRI1Zf5s8R7bpMmm?=
+ =?us-ascii?Q?/XVvb55BKaQ4CvHt9+5/ipAXbvV80wBllrcXz4khTA821O0zAyLxjDvYTZgL?=
+ =?us-ascii?Q?hk2zbE5Q5WDozJDXTV9au6Rdf7jzfI2sAKboLPD7wCmf/NFzYFSsof52yIcQ?=
+ =?us-ascii?Q?RBKcChBvvacV9Xs/quhvndeNQIZE7SMrbxlaymAKChGyd0wFHuwllqQhM5k+?=
+ =?us-ascii?Q?Ip2Hls9LRnU3upPBYGjhcpDJ3P6UFwEEJezVoQPXoC57+jilhJ7tsduc21hf?=
+ =?us-ascii?Q?pwCDuOOOuFDOE68kLitScO6xyX+Up6JAOmAtdbhPvmCM9OOqKnJe1ltj4tgZ?=
+ =?us-ascii?Q?sH8vmSML0oPdbrm0XBijBVfxlxDawYWQNL+eOgTYxZEJ8ScOG3pIAa8qyeYj?=
+ =?us-ascii?Q?jZ0HJEb5xmjfPRgWHreQ+lCkGs0Ge5ZKfYjLxm/XUSVaKCBC26jIo7aaV8IR?=
+ =?us-ascii?Q?pWCU24nmdWgtBXSvON9Vxji+lK8y8KVSIeOFnUmTLxOvTXqKpSB2kSfDbZqt?=
+ =?us-ascii?Q?kFidANA+My7ljQvzgdss+mzuHZ+qdRur/sRUbOeZ/qsBgbCQI9EArI3YxMKt?=
+ =?us-ascii?Q?ttey4O2O7Zi9JBKj+q3hwvCBAZrjoRI7QxeST+t87T8UrFSawfOyUpy4bCy4?=
+ =?us-ascii?Q?ZpyltvSpq/GTDIFVG7R7Loesi1bwQcLGhUDXlD4eQjS4z8JSANstNObE5VD7?=
+ =?us-ascii?Q?y2JamnT1DA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 78bb1260-cd80-473a-c323-08deddfa72c7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5040a6ef-058f-4df9-293a-08deddfa8093
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 20:41:27.2198
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 20:41:50.3078
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HQXd31Nr2T1eg2r/NfJYNCD+lJ7WTLoWQDgDA2s5swhhHyj5i/PBxfAPx+D7IEZKJEF+oxmQ/KmY6X4JLGlwbw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: TxSWjG+7bIdI9VVlgqS09m7/QywmCRwuyBjAtb5uL3Vk0wXIn4A3jN6zfRkNzhrxvdCzQuCHflfVtrRK+AWmtA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8487
 
-On Wed, Jul 08, 2026 at 11:23:54AM -1000, Tejun Heo wrote:
-> The cid-form ops overlay their cpu-form siblings at the same struct slot.
-> Ops whose signature matches the sibling are invoked through the cpu-form
-> call sites unchanged, but set_cmask() takes an arena cmask address rather
-> than a cpumask, so scx_call_op_set_cpumask() calls ops_cid.set_cmask()
-> directly and hand-rolled the kf_tasks[] and locked_rq bracket that
-> SCX_CALL_OP_TASK() provides. The hand-rolled bracket reset locked_rq to
-> NULL on exit instead of restoring the saved value, so a nested call would
-> clobber the outer op's locked-rq tracking.
+On Wed, Jul 08, 2026 at 11:23:55AM -1000, Tejun Heo wrote:
+> scx_rq.extra_enq_flags carries scx-specific enqueue flags across the
+> activate_task() boundary during a cross-rq task move in
+> move_remote_task_to_local_dsq(). Rename it to remote_activate_enq_flags to
+> name that role, and fix the stale comment that referenced the old
+> move_task_to_local_dsq() name.
 > 
-> Parameterize the dispatch macros by the ops-table member and add
-> SCX_CALL_CID_OP_TASK(), which routes through sch->ops_cid. Convert
-> scx_call_op_set_cpumask() to it and drop the hand-rolled bracket. The only
-> behavioral change is that locked_rq is now saved and restored like every
-> other op call site.
+> No functional change.
 > 
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 
@@ -144,99 +137,55 @@ Thanks,
 -Andrea
 
 > ---
->  kernel/sched/ext/ext.c      | 14 +++-----------
->  kernel/sched/ext/internal.h | 23 ++++++++++++++++++++---
->  2 files changed, 23 insertions(+), 14 deletions(-)
+>  kernel/sched/ext/ext.c | 10 +++++-----
+>  kernel/sched/sched.h   |  3 ++-
+>  2 files changed, 7 insertions(+), 6 deletions(-)
 > 
 > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index f4725698f5ef..c050a68189d4 100644
+> index c050a68189d4..be75bdc9ada2 100644
 > --- a/kernel/sched/ext/ext.c
 > +++ b/kernel/sched/ext/ext.c
-> @@ -410,11 +410,6 @@ static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
->  					   struct task_struct *task,
->  					   const struct cpumask *cpumask)
+> @@ -1824,7 +1824,7 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
 >  {
-> -	WARN_ON_ONCE(current->scx.kf_tasks[0]);
-> -	current->scx.kf_tasks[0] = task;
-> -	if (rq)
-> -		update_locked_rq(rq);
-> -
->  	if (scx_is_cid_type()) {
->  		struct scx_cmask *kern_va = *this_cpu_ptr(sch->set_cmask_scratch);
->  		/*
-> @@ -423,14 +418,11 @@ static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
->  		 * the sole user of the scratch area.
->  		 */
->  		scx_cpumask_to_cmask(cpumask, kern_va);
-> -		sch->ops_cid.set_cmask(task, scx_kaddr_to_arena(sch, kern_va));
-> +		SCX_CALL_CID_OP_TASK(sch, set_cmask, rq, task,
-> +				     scx_kaddr_to_arena(sch, kern_va));
->  	} else {
-> -		sch->ops.set_cpumask(task, cpumask);
-> +		SCX_CALL_OP_TASK(sch, set_cpumask, rq, task, cpumask);
->  	}
-> -
-> -	if (rq)
-> -		update_locked_rq(NULL);
-> -	current->scx.kf_tasks[0] = NULL;
+>  	struct scx_sched *sch = scx_task_sched(p);
+>  	int sticky_cpu = p->scx.sticky_cpu;
+> -	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
+> +	u64 enq_flags = core_enq_flags | rq->scx.remote_activate_enq_flags;
+>  
+>  	if (enq_flags & ENQUEUE_WAKEUP)
+>  		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
+> @@ -2097,13 +2097,13 @@ static void move_remote_task_to_local_dsq(struct task_struct *p, u64 enq_flags,
+>  	/*
+>  	 * We want to pass scx-specific enq_flags but activate_task() will
+>  	 * truncate the upper 32 bit. As we own @rq, we can pass them through
+> -	 * @rq->scx.extra_enq_flags instead.
+> +	 * @rq->scx.remote_activate_enq_flags instead.
+>  	 */
+>  	WARN_ON_ONCE(!cpumask_test_cpu(cpu_of(dst_rq), p->cpus_ptr));
+> -	WARN_ON_ONCE(dst_rq->scx.extra_enq_flags);
+> -	dst_rq->scx.extra_enq_flags = enq_flags;
+> +	WARN_ON_ONCE(dst_rq->scx.remote_activate_enq_flags);
+> +	dst_rq->scx.remote_activate_enq_flags = enq_flags;
+>  	activate_task(dst_rq, p, 0);
+> -	dst_rq->scx.extra_enq_flags = 0;
+> +	dst_rq->scx.remote_activate_enq_flags = 0;
 >  }
 >  
->  enum scx_dsq_iter_flags {
-> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-> index f9fe7c6ebc4b..5ca44ad88786 100644
-> --- a/kernel/sched/ext/internal.h
-> +++ b/kernel/sched/ext/internal.h
-> @@ -1751,8 +1751,11 @@ static inline void update_locked_rq(struct rq *rq)
 >  /*
->   * SCX ops can recurse via scx_bpf_sub_dispatch() - the inner call must not
->   * clobber the outer's scx_locked_rq_state. Save it on entry, restore on exit.
-> + *
-> + * @ops is the ops table to dispatch through: ops for the cpu form, ops_cid
-> + * for the cid form.
->   */
-> -#define SCX_CALL_OP(sch, op, locked_rq, args...)				\
-> +#define __SCX_CALL_OP(sch, ops, op, locked_rq, args...)				\
->  do {										\
->  	struct rq *__prev_locked_rq;						\
->  										\
-> @@ -1765,6 +1768,9 @@ do {										\
->  		update_locked_rq(__prev_locked_rq);				\
->  } while (0)
->  
-> +#define SCX_CALL_OP(sch, op, locked_rq, args...)				\
-> +	__SCX_CALL_OP(sch, ops, op, locked_rq, ##args)
-> +
->  #define SCX_CALL_OP_RET(sch, op, locked_rq, args...)				\
->  ({										\
->  	struct rq *__prev_locked_rq;						\
-> @@ -1796,14 +1802,25 @@ do {										\
->   * WARN_ON_ONCE() in each macro catches a re-entry of any of the three variants
->   * while a previous one is still in progress.
->   */
-> -#define SCX_CALL_OP_TASK(sch, op, locked_rq, task, args...)			\
-> +#define __SCX_CALL_OP_TASK(sch, ops, op, locked_rq, task, args...)		\
->  do {										\
->  	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
->  	current->scx.kf_tasks[0] = task;					\
-> -	SCX_CALL_OP((sch), op, locked_rq, task, ##args);			\
-> +	__SCX_CALL_OP((sch), ops, op, locked_rq, task, ##args);			\
->  	current->scx.kf_tasks[0] = NULL;					\
->  } while (0)
->  
-> +#define SCX_CALL_OP_TASK(sch, op, locked_rq, task, args...)			\
-> +	__SCX_CALL_OP_TASK(sch, ops, op, locked_rq, task, ##args)
-> +
-> +/*
-> + * Dispatch a task op through the cid-form ops_cid table. Only set_cmask() needs
-> + * this: it takes an arena cmask address instead of a cpumask, so it cannot be
-> + * invoked via its cpu-form set_cpumask() slot.
-> + */
-> +#define SCX_CALL_CID_OP_TASK(sch, op, locked_rq, task, args...)			\
-> +	__SCX_CALL_OP_TASK(sch, ops_cid, op, locked_rq, task, ##args)
-> +
->  #define SCX_CALL_OP_TASK_RET(sch, op, locked_rq, task, args...)			\
->  ({										\
->  	__typeof__((sch)->ops.op(task, ##args)) __ret;				\
+> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+> index 56acf502ba26..80b72d934ff3 100644
+> --- a/kernel/sched/sched.h
+> +++ b/kernel/sched/sched.h
+> @@ -797,7 +797,8 @@ struct scx_rq {
+>  	struct list_head	runnable_list;		/* runnable tasks on this rq */
+>  	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
+>  	unsigned long		ops_qseq;
+> -	u64			extra_enq_flags;	/* see move_task_to_local_dsq() */
+> +	/* see move_remote_task_to_local_dsq() */
+> +	u64			remote_activate_enq_flags;
+>  	u32			nr_running;
+>  	u32			cpuperf_target;		/* [0, SCHED_CAPACITY_SCALE] */
+>  	bool			in_select_cpu;
 > -- 
 > 2.54.0
 > 
