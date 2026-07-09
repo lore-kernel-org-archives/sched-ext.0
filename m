@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95743D88FA;
-	Thu,  9 Jul 2026 22:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2319A3E0C55;
+	Thu,  9 Jul 2026 22:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637466; cv=none; b=byKKgIy4pwiYtu3KubSTD4TMkZByBtKJMIVTdvw1lniHSzKrbaZyXRCfG8ATNzlZpnZBC1a735wGtp0ZE4Y7lzaFaxM2gU9gLJqeGvW/QPoLbH/sS1xLSmgqK+OhE6efGN7UP0nzwUPIwJKRS6zneR/4X/QCmO1drcmZ3JUZcmc=
+	t=1783637467; cv=none; b=uZ92BNkb1YXtGqqvl4lMnX2GKwZo1ZUqm8E9B3DFIHTznn5m782MlAsAkSukh0avTg5lIzuzD/rDyuGQrqVXD9C7B374O8I418bTzO6PwsSZpYJpNE2G6y6CKiMQw+yermzwK8EqQS74XLhVQkSSpax2avgDkqkJR/E/NrsQJQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637466; c=relaxed/simple;
-	bh=3n5t2QGvS6JZy0D0t1d8Bd9Mcx3eF6LsoHNFksZYgK4=;
+	s=arc-20240116; t=1783637467; c=relaxed/simple;
+	bh=bpUcsNHgr0D9Y4CQxg3ipj95hidCPtzowXQmG635p6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q98NFZn3R3M3u9D6R+JM9/qHiRcWvgpR9o7rYlGzN7mWVr6Ww3O85Aw5AjUd0yNIgGeIlwU1sn/c3Po2oto8pxg5wY8AcxNosRKTiTUMUU8J7sZVURp1do/DXNp5Qg9ZTA4r6bgr7nF19hVgiom2E0JuwR+fChJAIx7t/H5l3CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LFAWXGYX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oaZn3RxC/hPnMLAzLFPFIzBKDG0uDKAvBWfRH6Yy/j6xlcXAFyoeOH7jFQ57DW5bd3xT09e+okt/yXp3uPzjxqFD2mEk2tKaeRPJUBbWBIsNg2IbNKy1QadsQtVFSCGn/XhChdVcnx2O1Irq72Ip2oCo3q6Pap3Z70bONUhOdn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLAxAPad; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LFAWXGYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C1E1F000E9;
-	Thu,  9 Jul 2026 22:51:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLAxAPad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6621F00A3D;
+	Thu,  9 Jul 2026 22:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637463;
-	bh=S9uQzdE7/FWYO3BRh5uj+g5rWIjabr6tATKrtSUfdfc=;
+	s=k20260515; t=1783637465;
+	bh=NqiF85oqwkWhGUy2CBua/r+Ht6pqGN2+Y8b9quD6l+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LFAWXGYXUFrdE8d2AEemJsjOtVU5rxPBn1iEKLej4AE/AAKOHE8LtDdTSEOP/vXbz
-	 GFhkPlBGiW3m7E9f3rN7xWV6P6ri7Xj81PLS+SfWO6JRgrTINR0pkT86S3kDZceUKB
-	 Idyh0SZ9I4oF3QQkVR8yTsJYhUqMRXx2qfhDZnh9jRTc0NyAZ+/TbzWqdXAMjwb5o9
-	 z/ZiJewsmj/sH8/K5eB/muBovGaMozRfBns/KHBfW7szdSIBxiKLU4F2vSCq1kPecm
-	 sT7npODQjv8OcNTWG8/Tv90G1RKdjnl88R/mfSDPfwo+C65ziU+gyb2F+pYkJfP7C0
-	 nRTlkDh3oTuJw==
+	b=NLAxAPad0nH42G2Ac5n4jz+EaDGriSdY8GUlOOFSLS2yt33dVjqGWQB+APN/YbdZi
+	 qJcPinkKppE0HTDSmIFEhXCKoJU06LVUqDWgc1zUylxYEwUy1R/FiWrjRGPDZGMXcj
+	 2EVxHDCtKtFsoSzGOp7taW0zLta1H5JJk4KN+cvwPLTJGfvojWEAbQOxfLpwNMsMG2
+	 qwL55gjQXudBY2bGOHd1I5LYpPkUfCARwXeYYVgd8VyWY9V8+/rQaU7MtkG6Nc/q3T
+	 c61W38uaE/2xV2Pa+w9kwqyIwZ37bqiDXJWtBTcQhZscTUBVEN75PhFpLXPq6/dATv
+	 KwVpJkRWWBJqg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 19/33] sched_ext: Add SCX_ENQ_IGNORE_CAPS for in-place restore
-Date: Thu,  9 Jul 2026 12:50:27 -1000
-Message-ID: <20260709225041.1695495-20-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 21/33] sched_ext: Assign a unique id to each scheduler instance
+Date: Thu,  9 Jul 2026 12:50:29 -1000
+Message-ID: <20260709225041.1695495-22-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,68 +48,53 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A SAVE/RESTORE requeue re-inserts a running task in place and is immediately
-followed by set_next_task_scx(). It is not a real scheduling event: the task
-is already admitted to its cid and must return to the local DSQ
-unconditionally.
-
-scx_caps_for_enq() maps an enqueue to the cap its local-DSQ insert requires.
-Add SCX_ENQ_IGNORE_CAPS, set it on the RESTORE-in-place branch of
-enqueue_task_scx(), and have scx_caps_for_enq() require no caps for it, so
-the cid admission gate never diverts an in-place restore to the reject DSQ.
+Neither a scx_sched pointer nor its cgroup id uniquely identifies a
+scheduler instance. A freed sched's memory can be reallocated, and a cgroup
+can detach one sched and attach another. Add a monotonic, never-reused u64
+id. A later patch compares it to drop a slice request that outlived a change
+of a task's owning scheduler.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 7 +++++--
- kernel/sched/ext/internal.h | 1 +
- kernel/sched/ext/sub.h      | 3 +++
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ kernel/sched/ext/ext.c      | 4 ++++
+ kernel/sched/ext/internal.h | 3 +++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 3e1829126fee..80c8971638f9 100644
+index 54ba5b57f283..0efb396de008 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1878,10 +1878,13 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
- 	 * Restoring a running task will be immediately followed by
- 	 * set_next_task_scx() which expects the task to not be on the BPF
- 	 * scheduler as tasks can only start running through local DSQs. Force
--	 * direct-dispatch into the local DSQ by setting the sticky_cpu.
-+	 * direct-dispatch into the local DSQ by setting the sticky_cpu. Mark
-+	 * IGNORE_CAPS to force entry into the local DSQ.
- 	 */
--	if (unlikely(enq_flags & ENQUEUE_RESTORE) && task_current(rq, p))
-+	if (unlikely(enq_flags & ENQUEUE_RESTORE) && task_current(rq, p)) {
- 		sticky_cpu = cpu_of(rq);
-+		enq_flags |= SCX_ENQ_IGNORE_CAPS;
-+	}
+@@ -108,6 +108,9 @@ static bool dsq_is_rq_owned(struct scx_dispatch_q *dsq)
+ 	}
+ }
  
- 	if (p->scx.flags & SCX_TASK_QUEUED) {
- 		WARN_ON_ONCE(!task_runnable(p));
++/* Cursor for unique scx_sched instance ids. id 0 is reserved. */
++static atomic64_t scx_sched_id_cursor = ATOMIC64_INIT(0);
++
+ #ifdef CONFIG_EXT_SUB_SCHED
+ /*
+  * The sub sched being enabled. Used by scx_disable_and_exit_task() to exit
+@@ -6500,6 +6503,7 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		       level * sizeof(parent->ancestors[0]));
+ 	sch->ancestors[level] = sch;
+ 	sch->level = level;
++	sch->id = atomic64_inc_return(&scx_sched_id_cursor);
+ 
+ 	if (ops->timeout_ms)
+ 		sch->watchdog_timeout = msecs_to_jiffies(ops->timeout_ms);
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index a360d312702b..079ee941b343 100644
+index e735812e77a5..ad98e3469b12 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1568,6 +1568,7 @@ enum scx_enq_flags {
- 	SCX_ENQ_DSQ_PRIQ	= 1LLU << 57,
- 	SCX_ENQ_NESTED		= 1LLU << 58,
- 	SCX_ENQ_GDSQ_FALLBACK	= 1LLU << 59,	/* fell back to global DSQ */
-+	SCX_ENQ_IGNORE_CAPS	= 1LLU << 60,	/* admit to local DSQ ignoring caps */
- };
+@@ -1445,6 +1445,9 @@ struct scx_sched {
  
- enum scx_deq_flags {
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index 51400e174cd0..a1a2825dc04e 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -106,6 +106,9 @@ static inline u64 scx_missing_caps(struct scx_sched *sch, s32 cpu, u64 needed)
- /* map @enq_flags to the SCX_CAP_* bit required for the local-DSQ insert */
- static inline u64 scx_caps_for_enq(u64 enq_flags)
- {
-+	/* a restored task must be put into the local DSQ regardless of caps */
-+	if (enq_flags & SCX_ENQ_IGNORE_CAPS)
-+		return 0;
- 	return 0;
- }
+ 	struct list_head	all;
+ 
++	/* unique instance id, monotonic and never reused */
++	u64			id;
++
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	struct rhash_head	hash_node;
  
 -- 
 2.55.0
