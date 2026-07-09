@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C401B7910;
-	Thu,  9 Jul 2026 22:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBE33B19AC;
+	Thu,  9 Jul 2026 22:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637445; cv=none; b=H+YyDdUqxAlzZ+qsXWii8Havk9cHRWf3h8Hu0fRCfx9T74hc97UoLfHfafQSWazz6sWyx5uMMcImbJEfDo0CLx04XO8BQlWRpj+v0aumKAmhiTAHofzXIsXpS3z0HPd34zrUSOXknDJ6m7lmiML0/hdthxGMyjEtaEYhemFwGD4=
+	t=1783637446; cv=none; b=Txe/FQHaAA8iSNt0W96QUv7HNF++AlIDFMLAzK8eS2R2svZElxsfrX2ojB6xiynkqjXf3zQv8xGo0Ktq8juagx9CIMKDYejzVkUBAXxR1I1onCgVkhFBXRwu0Z/08hhKf98VU12VlsRS7FZUozYQJ7SL3Yftim4V/2VPjW490K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637445; c=relaxed/simple;
-	bh=6gwGU20dsGHp+PYnGzFRxinKyQq8BeKSkPlbdAltD8E=;
+	s=arc-20240116; t=1783637446; c=relaxed/simple;
+	bh=Y8vyw5vnxGgPywYLYkZLqSlLb7oTeINDdnpgYLSegd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pxeq4plLSqihu2rKj9rhbuZeRuoj+sWjNH/ZRVnWY+hUbqqJfskYR5+lxNEVchVMblkiggjnL5Poc6asMzaT4x8KSb8u+wpCXzQKNWbIJZ3ubkY3/fEPvPnm34DV7wPlOw3kpJmukPLOunD16RvNgEnUkN9aDOWCVMVH/O4U890=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrjAymCs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a4jKqM4fbAQi8us9H9qYnSz0youJUuLdXObkP/8bXFokCC9XNmcpN0zlNOMsgdA1lBFSXtKJF4bwrec7+1mHSAERMcao9VrTGM9arH2+yfpgJpL8hxHov1ktKZL73QW2Mktk+oDx4wiY+SJQJZ8NrcSVMnwabzRgcaR91X5jKdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CSeABbMx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrjAymCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D1A1F00A3A;
-	Thu,  9 Jul 2026 22:50:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CSeABbMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FF71F000E9;
+	Thu,  9 Jul 2026 22:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637443;
-	bh=FL9n3EWHTffkv0GP/jCWQ4/Ug9iRhn+ugqp0Qzg2iIQ=;
+	s=k20260515; t=1783637444;
+	bh=fJXXH9/VvgLYtiXIFjR+5VLzZoCXeFBFmzRTcgLJLow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrjAymCsl9UzHZQjzLaMiGUzrD/8nuzNvVE5zRbFUAQVc7IYnzNEHCT/11hEREQ9Q
-	 ScKoqwJvsXotLqAaKz3OOjqbUvSnI1/CNiPoWQ0UuN55eALR67b6mSTcSRPnzqw39p
-	 4/DYCGrgxfzL3rWoWV+0ez7v40r3GRIcFsNxbDZJl4zy0Mx+X8siGD4+hfYrI48G9H
-	 KZGhsrz4OrCPgIiY5obVzVUT5sfuDOxaKwY8SuWYUU5WchojMBA8u4hBfkGs676EaV
-	 2QVI45AFzPG9y88j/+ksTUvWUlDtjjZil50IuICmF2yUD/VjmUhJUN5ujvaPeBFHGK
-	 ldPfBUSKp/FUw==
+	b=CSeABbMxNJxgHBrdBLKILjUh6b1oO6fXO/xzxAksSEOzSV70b4tAG+uIcfR7T98aq
+	 o+HgiP1Wm99SxN2zqE/H5TNZTaYjni73qDPMAMPAfokHsfH2X/K/WHbhCsvgsOGVko
+	 QEh1r+BZjlLxw0B72PcNRhEsHYbryxhR6A8cSaZB8Ty2P6heZIBpkMnSoKmlUvJyzq
+	 5+ts60GgiNWxpc9JxfFJpb2hbSL9ttczgkwkPNERzCrt6WaUKRYUB6RLK7wXoV/cZ8
+	 AUmyeFO5JSSVyupwJumVQvKVcF+ast+7xrYpC6lUahNUBqD2AX1o+LG/6dF/LTC8GN
+	 qlMzP4uqoo6zw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 01/33] sched_ext: Assert per-task ops run on the task's owner
-Date: Thu,  9 Jul 2026 12:50:09 -1000
-Message-ID: <20260709225041.1695495-2-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 02/33] sched_ext: Make the kick machinery per-sched
+Date: Thu,  9 Jul 2026 12:50:10 -1000
+Message-ID: <20260709225041.1695495-3-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,101 +48,344 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A per-task op must be dispatched on the scheduler that owns the task.
-SCX_CALL_OP_TASK() and its _RET twin take @sch explicitly, and a caller that
-passes the wrong scheduler would silently run the op on it. Add a
-WARN_ON_ONCE() that @sch matches the task's owner so such a mismatch is
-caught rather than hidden.
+The kick machinery kept its targets in rq->scx shared by every sched on the
+cpu. A preempt kick carried no record of which scheduler requested it.
 
-Two sites legitimately target a scheduler other than the task's owner:
-cgroup_move() runs on the root sched, and scx_sub_init_cancel_task() fires
-exit_task() on a task not yet associated with @sch. Both switch to the inner
-__SCX_CALL_OP_TASK(), which dispatches on the explicit @sch without the
-assert.
+A later patch needs preempt kicks scoped to the requesting scheduler so a
+sub-scheduler can preempt only tasks in its own subtree. Move the kick masks
+into the per-sched per-cpu scx_sched_pcpu and have scx_kick_cpu() link the
+sched onto a per-cpu list (rq->scx.sched_pcpus_to_kick). The cpu's single
+kick irq_work walks that list and kicks each sched's targets on its behalf,
+so a kick stays attributed to its scheduler.
+
+The SCX_KICK_WAIT sync set (cpus_to_sync, the kick_sync snapshot and the
+balance-callback trigger) stays in rq->scx: the waiter is the cpu, not the
+scheduler, and its only writers, the kick irq_work and the wait balance
+callback, are cpu-local.
+
+On disable, free_kick_syncs() flushes each cpu's pending kick irq_work
+before clearing @ksyncs, so a late kick unlinks its to_kick_node instead of
+early-returning on a NULL @ksyncs and leaving the node linked at free.
+
+v3: Flush the kick irq_work in free_kick_syncs() before clearing @ksyncs. (sashiko AI)
+v2: Warn once per sched on scx_bpf_kick_cpu() from NMI.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 20 +++++++++++++-------
- kernel/sched/ext/internal.h | 10 +++++++++-
- 2 files changed, 22 insertions(+), 8 deletions(-)
+ kernel/sched/ext/ext.c      | 121 +++++++++++++++++++++++++++---------
+ kernel/sched/ext/internal.h |  14 +++++
+ kernel/sched/sched.h        |   6 +-
+ 3 files changed, 106 insertions(+), 35 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 5241b55a58ec..acc3b43fe88a 100644
+index acc3b43fe88a..fb33940ca0a6 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1436,8 +1436,12 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
- 		local_dsq_post_enq(sch, dsq, p, enq_flags);
- 	} else {
- 		/*
--		 * Task on global/bypass DSQ: leave custody, task on
--		 * non-terminal DSQ: enter custody.
-+		 * Global and bypass DSQs are terminal - the task leaves the
-+		 * scheduler's custody, so ops.dequeue() fires here. It can run
-+		 * without @p's rq lock (finish_dispatch() passes the dispatch
-+		 * rq); that's safe because dequeue_task_scx() waits on
-+		 * SCX_OPSS_DISPATCHING (see the ops_state note above) and so
-+		 * can't race it. A non-terminal DSQ keeps the task in custody.
+@@ -4661,6 +4661,17 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
  		 */
- 		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
- 			call_task_dequeue(sch, rq, p, 0);
-@@ -3446,8 +3450,9 @@ void scx_sub_init_cancel_task(struct scx_sched *sch, struct task_struct *p)
- 	lockdep_assert_held(&p->pi_lock);
- 	lockdep_assert_rq_held(task_rq(p));
+ 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
  
-+	/* @p was never associated with @sch, dispatch on the explicit @sch */
- 	if (SCX_HAS_OP(sch, exit_task))
--		SCX_CALL_OP_TASK(sch, exit_task, task_rq(p), p, &args);
-+		__SCX_CALL_OP_TASK(sch, ops, exit_task, task_rq(p), p, &args);
++		/*
++		 * Bypass blocks new kicks. Flush the kick irq_work so this
++		 * pcpu's to_kick_node is off the list before it is freed.
++		 */
++		irq_work_sync(&cpu_rq(cpu)->scx.kick_cpus_irq_work);
++		WARN_ON_ONCE(!list_empty(&pcpu->to_kick_node));
++		free_cpumask_var(pcpu->cpus_to_kick);
++		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
++		free_cpumask_var(pcpu->cpus_to_preempt);
++		free_cpumask_var(pcpu->cpus_to_wait);
++
+ 		exit_dsq(scx_bypass_dsq(sch, cpu));
+ 	}
+ 
+@@ -5453,6 +5464,8 @@ static void free_kick_syncs(void)
+ 		struct scx_kick_syncs __rcu **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
+ 		struct scx_kick_syncs *to_free;
+ 
++		/* flush the pending kick before freeing @ksyncs */
++		irq_work_sync(&cpu_rq(cpu)->scx.kick_cpus_irq_work);
+ 		to_free = rcu_replace_pointer(*ksyncs, NULL, true);
+ 		if (to_free)
+ 			kvfree_rcu(to_free, rcu);
+@@ -6004,6 +6017,7 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+ 			 bool dump_all_tasks)
+ {
+ 	struct rq *rq = cpu_rq(cpu);
++	struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+ 	struct rq_flags rf;
+ 	struct task_struct *p;
+ 	struct seq_buf ns;
+@@ -6036,18 +6050,18 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+ 	dump_line(&ns, "          curr=%s[%d] class=%ps",
+ 		  rq->curr->comm, rq->curr->pid,
+ 		  rq->curr->sched_class);
+-	if (!cpumask_empty(rq->scx.cpus_to_kick))
++	if (!cpumask_empty(pcpu->cpus_to_kick))
+ 		dump_line(&ns, "  cpus_to_kick   : %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_kick));
+-	if (!cpumask_empty(rq->scx.cpus_to_kick_if_idle))
++			  cpumask_pr_args(pcpu->cpus_to_kick));
++	if (!cpumask_empty(pcpu->cpus_to_kick_if_idle))
+ 		dump_line(&ns, "  idle_to_kick   : %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_kick_if_idle));
+-	if (!cpumask_empty(rq->scx.cpus_to_preempt))
++			  cpumask_pr_args(pcpu->cpus_to_kick_if_idle));
++	if (!cpumask_empty(pcpu->cpus_to_preempt))
+ 		dump_line(&ns, "  cpus_to_preempt: %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_preempt));
+-	if (!cpumask_empty(rq->scx.cpus_to_wait))
++			  cpumask_pr_args(pcpu->cpus_to_preempt));
++	if (!cpumask_empty(pcpu->cpus_to_wait))
+ 		dump_line(&ns, "  cpus_to_wait   : %*pb",
+-			  cpumask_pr_args(rq->scx.cpus_to_wait));
++			  cpumask_pr_args(pcpu->cpus_to_wait));
+ 	if (!cpumask_empty(rq->scx.cpus_to_sync))
+ 		dump_line(&ns, "  cpus_to_sync   : %*pb",
+ 			  cpumask_pr_args(rq->scx.cpus_to_sync));
+@@ -6339,8 +6353,17 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 	for_each_possible_cpu(cpu) {
+ 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+ 
++		node = cpu_to_node(cpu);
+ 		pcpu->sch = sch;
+ 		INIT_LIST_HEAD(&pcpu->deferred_reenq_local.node);
++		INIT_LIST_HEAD(&pcpu->to_kick_node);
++		if (!zalloc_cpumask_var_node(&pcpu->cpus_to_kick, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_kick_if_idle, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_preempt, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_wait, GFP_KERNEL, node)) {
++			ret = -ENOMEM;
++			goto err_free_pcpu;
++		}
+ 	}
+ 
+ 	sch->helper = kthread_run_worker(0, "sched_ext_helper");
+@@ -6485,6 +6508,14 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ err_stop_helper:
+ 	kthread_destroy_worker(sch->helper);
+ err_free_pcpu:
++	for_each_possible_cpu(cpu) {
++		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
++
++		free_cpumask_var(pcpu->cpus_to_kick);
++		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
++		free_cpumask_var(pcpu->cpus_to_preempt);
++		free_cpumask_var(pcpu->cpus_to_wait);
++	}
+ 	for_each_possible_cpu(cpu) {
+ 		if (cpu == bypass_fail_cpu)
+ 			break;
+@@ -7498,7 +7529,8 @@ static bool can_skip_idle_kick(struct rq *rq)
+ 	return !is_idle_task(rq->curr) && !(rq->scx.flags & SCX_RQ_IN_BALANCE);
  }
  
- void scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
-@@ -4184,12 +4189,13 @@ void scx_cgroup_move_task(struct task_struct *p)
- 	 * cgroup changes. Migration keys off css rather than cgroup identity,
- 	 * so it can hand an unchanged-cgroup task here with cgrp_moving_from
- 	 * NULL. Nothing to report to the BPF scheduler then, so skip it and
--	 * keep prep_move and move paired.
-+	 * keep prep_move and move paired. Cgroup ops run on the root sched,
-+	 * dispatch on the explicit @sch.
+-static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
++static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_rq,
++			 unsigned long *ksyncs)
+ {
+ 	struct rq *rq = cpu_rq(cpu);
+ 	struct scx_rq *this_scx = &this_rq->scx;
+@@ -7517,25 +7549,25 @@ static bool kick_one_cpu(s32 cpu, struct rq *this_rq, unsigned long *ksyncs)
  	 */
- 	if (SCX_HAS_OP(sch, cgroup_move) && p->scx.cgrp_moving_from)
--		SCX_CALL_OP_TASK(sch, cgroup_move, task_rq(p),
--				 p, p->scx.cgrp_moving_from,
--				 tg_cgrp(task_group(p)));
-+		__SCX_CALL_OP_TASK(sch, ops, cgroup_move, task_rq(p),
-+				   p, p->scx.cgrp_moving_from,
-+				   tg_cgrp(task_group(p)));
- 	p->scx.cgrp_moving_from = NULL;
- }
+ 	if ((cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
+ 	    !sched_class_above(cur_class, &ext_sched_class)) {
+-		if (cpumask_test_cpu(cpu, this_scx->cpus_to_preempt)) {
++		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
+ 			if (cur_class == &ext_sched_class)
+ 				rq->curr->scx.slice = 0;
+-			cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
+ 		}
  
+-		if (cpumask_test_cpu(cpu, this_scx->cpus_to_wait)) {
++		if (cpumask_test_cpu(cpu, pcpu->cpus_to_wait)) {
+ 			if (cur_class == &ext_sched_class) {
+ 				cpumask_set_cpu(cpu, this_scx->cpus_to_sync);
+ 				ksyncs[cpu] = rq->scx.kick_sync;
+ 				should_wait = true;
+ 			}
+-			cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 		}
+ 
+ 		resched_curr(rq);
+ 	} else {
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_wait);
++		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
++		cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 	}
+ 
+ 	raw_spin_rq_unlock_irqrestore(rq, flags);
+@@ -7562,6 +7594,7 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ 	struct rq *this_rq = this_rq();
+ 	struct scx_rq *this_scx = &this_rq->scx;
+ 	struct scx_kick_syncs __rcu *ksyncs_pcpu = __this_cpu_read(scx_kick_syncs);
++	struct scx_sched_pcpu *pcpu, *tmp;
+ 	bool should_wait = false;
+ 	unsigned long *ksyncs;
+ 	s32 cpu;
+@@ -7572,15 +7605,24 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ 
+ 	ksyncs = rcu_dereference_bh(ksyncs_pcpu)->syncs;
+ 
+-	for_each_cpu(cpu, this_scx->cpus_to_kick) {
+-		should_wait |= kick_one_cpu(cpu, this_rq, ksyncs);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
+-	}
++	/*
++	 * Walk scheds with pending kicks on this cpu. scx_kick_cpu() adds to
++	 * the list under local_irq_save() and only this irq_work consumes it.
++	 * A plain list without locking is sufficient.
++	 */
++	list_for_each_entry_safe(pcpu, tmp, &this_scx->sched_pcpus_to_kick, to_kick_node) {
++		list_del_init(&pcpu->to_kick_node);
++
++		for_each_cpu(cpu, pcpu->cpus_to_kick) {
++			should_wait |= kick_one_cpu(cpu, pcpu, this_rq, ksyncs);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
++		}
+ 
+-	for_each_cpu(cpu, this_scx->cpus_to_kick_if_idle) {
+-		kick_one_cpu_if_idle(cpu, this_rq);
+-		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick_if_idle);
++		for_each_cpu(cpu, pcpu->cpus_to_kick_if_idle) {
++			kick_one_cpu_if_idle(cpu, this_rq);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
++		}
+ 	}
+ 
+ 	/*
+@@ -7705,11 +7747,8 @@ void __init init_sched_ext_class(void)
+ 		INIT_LIST_HEAD(&rq->scx.runnable_list);
+ 		INIT_LIST_HEAD(&rq->scx.ddsp_deferred_locals);
+ 
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick, GFP_KERNEL, n));
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
+-		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_sync, GFP_KERNEL, n));
++		INIT_LIST_HEAD(&rq->scx.sched_pcpus_to_kick);
+ 		raw_spin_lock_init(&rq->scx.deferred_reenq_lock);
+ 		INIT_LIST_HEAD(&rq->scx.deferred_reenq_locals);
+ 		INIT_LIST_HEAD(&rq->scx.deferred_reenq_users);
+@@ -8491,12 +8530,27 @@ __bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime,
+ 
+ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ {
++	struct scx_sched_pcpu *pcpu;
+ 	struct rq *this_rq;
+ 	unsigned long irq_flags;
+ 
++	/*
++	 * The per-cpu kick list is guarded only by local_irq_save(), which does
++	 * not mask NMIs, so kicking from NMI could corrupt it and is unsupported.
++	 */
++	if (unlikely(in_nmi())) {
++		if (!sch->warned_nmi_kick) {
++			sch->warned_nmi_kick = true;
++			pr_warn("sched_ext: %s: scx_bpf_kick_cpu() from NMI ignored\n",
++				sch->ops.name);
++		}
++		return;
++	}
++
+ 	local_irq_save(irq_flags);
+ 
+ 	this_rq = this_rq();
++	pcpu = this_cpu_ptr(sch->pcpu);
+ 
+ 	/*
+ 	 * While bypassing for PM ops, IRQ handling may not be online which can
+@@ -8510,6 +8564,9 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 	 * Actual kicking is bounced to kick_cpus_irq_workfn() to avoid nesting
+ 	 * rq locks. We can probably be smarter and avoid bouncing if called
+ 	 * from ops which don't hold a rq lock.
++	 *
++	 * The kick masks are owned by @sch->pcpu, so that a preempt kick can be
++	 * attributed to @sch.
+ 	 */
+ 	if (flags & SCX_KICK_IDLE) {
+ 		struct rq *target_rq = cpu_rq(cpu);
+@@ -8524,16 +8581,18 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 			}
+ 			raw_spin_rq_unlock(target_rq);
+ 		}
+-		cpumask_set_cpu(cpu, this_rq->scx.cpus_to_kick_if_idle);
++		cpumask_set_cpu(cpu, pcpu->cpus_to_kick_if_idle);
+ 	} else {
+-		cpumask_set_cpu(cpu, this_rq->scx.cpus_to_kick);
++		cpumask_set_cpu(cpu, pcpu->cpus_to_kick);
+ 
+ 		if (flags & SCX_KICK_PREEMPT)
+-			cpumask_set_cpu(cpu, this_rq->scx.cpus_to_preempt);
++			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt);
+ 		if (flags & SCX_KICK_WAIT)
+-			cpumask_set_cpu(cpu, this_rq->scx.cpus_to_wait);
++			cpumask_set_cpu(cpu, pcpu->cpus_to_wait);
+ 	}
+ 
++	if (list_empty(&pcpu->to_kick_node))
++		list_add_tail(&pcpu->to_kick_node, &this_rq->scx.sched_pcpus_to_kick);
+ 	irq_work_queue(&this_rq->scx.kick_cpus_irq_work);
+ out:
+ 	local_irq_restore(irq_flags);
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 5ca44ad88786..8aabd92fae3b 100644
+index 8aabd92fae3b..2777e50ef6f6 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1810,8 +1810,15 @@ do {										\
- 	current->scx.kf_tasks[0] = NULL;					\
- } while (0)
+@@ -1126,6 +1126,19 @@ struct scx_sched_pcpu {
+ 	struct scx_sched	*sch;
+ 	u64			flags;	/* protected by rq lock */
  
-+/*
-+ * A per-task op runs on @task's owner - WARN if @sch isn't it. Sites that must
-+ * target a different scheduler call __SCX_CALL_OP_TASK() directly.
-+ */
- #define SCX_CALL_OP_TASK(sch, op, locked_rq, task, args...)			\
--	__SCX_CALL_OP_TASK(sch, ops, op, locked_rq, task, ##args)
-+do {										\
-+	WARN_ON_ONCE((sch) != scx_task_sched_rcu(task));			\
-+	__SCX_CALL_OP_TASK((sch), ops, op, locked_rq, task, ##args);		\
-+} while (0)
++	/*
++	 * Kick state owned by this cpu for this sched. scx_kick_cpu() records
++	 * targets here and links @to_kick_node onto the cpu's
++	 * rq->scx.sched_pcpus_to_kick. The cpu's single kick irq_work walks
++	 * that list and kicks each sched's targets on its behalf. Per-sched so
++	 * a kick stays attributed to its scheduler.
++	 */
++	cpumask_var_t		cpus_to_kick;
++	cpumask_var_t		cpus_to_kick_if_idle;
++	cpumask_var_t		cpus_to_preempt;
++	cpumask_var_t		cpus_to_wait;
++	struct list_head	to_kick_node;
++
+ 	/*
+ 	 * The event counters are in a per-CPU variable to minimize the
+ 	 * accounting overhead. A system-wide view on the event counter is
+@@ -1215,6 +1228,7 @@ struct scx_sched {
+ 	 */
+ 	bool			warned_zero_slice:1;
+ 	bool			warned_unassoc_progs:1;
++	bool			warned_nmi_kick:1;
  
- /*
-  * Dispatch a task op through the cid-form ops_cid table. Only set_cmask() needs
-@@ -1824,6 +1831,7 @@ do {										\
- #define SCX_CALL_OP_TASK_RET(sch, op, locked_rq, task, args...)			\
- ({										\
- 	__typeof__((sch)->ops.op(task, ##args)) __ret;				\
-+	WARN_ON_ONCE((sch) != scx_task_sched_rcu(task));			\
- 	WARN_ON_ONCE(current->scx.kf_tasks[0]);					\
- 	current->scx.kf_tasks[0] = task;					\
- 	__ret = SCX_CALL_OP_RET((sch), op, locked_rq, task, ##args);		\
+ 	struct list_head	all;
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 80b72d934ff3..9e41a23ef49e 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -806,14 +806,12 @@ struct scx_rq {
+ 	u32			flags;
+ 	u32			nr_immed;		/* ENQ_IMMED tasks on local_dsq */
+ 	u64			clock;			/* current per-rq clock -- see scx_bpf_now() */
+-	cpumask_var_t		cpus_to_kick;
+-	cpumask_var_t		cpus_to_kick_if_idle;
+-	cpumask_var_t		cpus_to_preempt;
+-	cpumask_var_t		cpus_to_wait;
+ 	cpumask_var_t		cpus_to_sync;
+ 	bool			kick_sync_pending;
+ 	unsigned long		kick_sync;
+ 
++	struct list_head	sched_pcpus_to_kick;	/* see kick_cpus_irq_workfn() */
++
+ 	struct task_struct	*sub_dispatch_prev;
+ 
+ 	raw_spinlock_t		deferred_reenq_lock;
 -- 
 2.55.0
 
