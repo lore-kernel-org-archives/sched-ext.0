@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FF538758E;
-	Thu,  9 Jul 2026 22:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D833AEB2C;
+	Thu,  9 Jul 2026 22:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637454; cv=none; b=CsWltkaOnO88pseDt0gc6qPZZguJcCRA4BIwdjpUfrY9Iw4Bf/Qv78AY69yjzK7HZYE58McAmZmxCia2Gdj4BxBDXtwYb6zyRMCdaGf/peC+HoMRRtoMH3u5dDYIsg7v+vzDovelh44pl3YkpNMoyS4Qz0KEW968DUCkOmq5l8M=
+	t=1783637454; cv=none; b=JuYBzdwiWFGVC6OYO8YuaeTGoCvkmE4E89dJPqTn2GWG9agxmnOVSuXVk66MJ/XMbNKWflP2sHsFhP+PQdCSPfUEHpX25UozhoDurfY1VaCxX0XeAe/tiXgfUFZfs9LWO4LY03XMHbf8wAg/TN+Ya69oRRJNKnn9D++mEGD+VBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783637454; c=relaxed/simple;
-	bh=1Pbe9dRm176aQP+2XFFaSo+ROyWheenT2ROsaP0RTOU=;
+	bh=6XB4jCeM/C8Nvp+p43vyCASSWhmjMfaIeDJEA0is1O4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKNoBawYk1bhDuDBTSHvQPrUzSTHfdM+fz2X87mfUWl3HzHGDWawGP+TRVQizT5qXCS+0U+vaWaFbvEh3REExR8ifN2iX/+G67Jb316HXcp0MgP/ApPYJxOw2ArFLvshVAccz6rWDpCp1qSljIYDC0NjnlLr5xrVU5xyhXvN5c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqIGB++L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AMyf+1VZPdr8HRT1o3sfCDLD5OnxOse73+rm5qzkYmFLBntAA3siWQWzUiTYEeAfW/oAAbpcOKJbm3As2SaSrDK8IfbXa0rsIMCj4mwhbml30Lbv1aXsBJPa8ZCg9QdL9+LqE/km+je74KIoQVGB25TWL6NdTBPxLreyg7HxRTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CBjBDTN2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqIGB++L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8471F00A3E;
-	Thu,  9 Jul 2026 22:50:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CBjBDTN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CC91F000E9;
+	Thu,  9 Jul 2026 22:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637451;
-	bh=oSPeEBz6a74rmkgpk3VBgwFxcTl1urFmaIigL+vygO0=;
+	s=k20260515; t=1783637452;
+	bh=CumzgUi1Y5V5NAFSjgmwQktchldVh4Y3Kzif+08Xbfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqIGB++LjMmNmdPodhKMFhDWYd+Zql4DvEDPw148GyTfKvfZvHrkMfYYrtBWGccsq
-	 D3DBpM4VzGN4TxAwKVt51c1KRQImh7NolMlesgFjiZfuhAkx7t4vRB5wt2T5qFrG/i
-	 EbajmCZingr/SdRrIEDKWyJSlvr8qsC/AX0Z4L7Ja8jqvyeRn9a4rBgJWa5Bl5WJfY
-	 pzp3AZfJVwzDFra3PFo+l/rOUcTXZzWUelQ1w8acHL7fNteo5dsn6ZxSLuRA/ha+Fb
-	 ubmD2aYAMluqMCDCSGh5Ff5WddPN2wdWSat/oxmZW4kUC/YRYLI9G3yA3sP8XrJ/VT
-	 ZVYuS251hdKjQ==
+	b=CBjBDTN2HT3rCz7koG98ABVANYK8dP6p1t3NjDNo2Zxy1Lb6derALqk6+1CcFvtVd
+	 iG6ykLUC0UAN9E12qhIrEOvkLFq/Y7Ufcl2kUEGTWiksPgEP7/5Vfh6gBlqhBFBYgh
+	 aoUWYbVqTGRRaZICWT7JmG6GS5ZUueSaTku+8dYxQmwwwe0zJtp7gHzOemxc2Jufs6
+	 u0nWXY3Bt3ItRI++SUd6R0cj2ssOs925EMnggcX+5AR7xq3M82vXtXAf/RblDplIWl
+	 1FTPY/3MFJVoc6earT8JjVjrxrWLY65VIcVSseVBvloiS8B0mSvNbjUbp7+dCkBm0s
+	 tUvpa8XHqNLRQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 08/33] sched_ext: Add scx_cmask_ref for validated arena cmask access
-Date: Thu,  9 Jul 2026 12:50:16 -1000
-Message-ID: <20260709225041.1695495-9-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 09/33] sched_ext: Build the set_cmask scratch from trusted geometry
+Date: Thu,  9 Jul 2026 12:50:17 -1000
+Message-ID: <20260709225041.1695495-10-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,97 +48,53 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kfuncs taking struct scx_cmask * from BPF arena memory have two problems.
-The pointer can be any value the BPF prog hands in, and the header (@base,
-@nr_cids, @alloc_words) can be mutated by the prog concurrently with kernel
-access.
+scx_call_op_set_cpumask() builds a per-cpu cmask in the set_cmask scratch,
+which lives in BPF-writable arena. A scheduler can corrupt the scratch's
+inline header (base, nr_cids, alloc_words) from another cpu, so sizing and
+indexing the write from it risks an out-of-bounds write.
 
-Add scx_cmask_ref, a validated handle. _init() normalizes the input pointer
-into the arena's kern_vm range via scx_arena_to_kaddr() and snapshots the
-header, rejecting a range outside the machine or a nr_cids whose words
-exceed the declared @alloc_words. Downstream sizing uses the snapshot, not
-the live header. _shard() reads slices while _or() and _copy() write back,
-all bounded by the snapshot. No callers yet.
-
-struct scx_cmask's bits[] carried __counted_by(alloc_words), so
-UBSAN_BOUNDS and FORTIFY_SOURCE bound accesses to the array. That bound is
-read from @alloc_words at the access. For an arena cmask @alloc_words is
-BPF-writable. A prog that sets it larger than the real allocation makes the
-check pass on a genuine overrun, so the annotation catches nothing, and it
-only runs under those debug configs. Drop it - _init() validates
-@alloc_words explicitly, and kernel-owned cmasks set it themselves.
-
-v2: Validate @alloc_words in _init(), drop __counted_by. (Andrea, sashiko AI)
+Drive the build from kernel-known geometry instead.
+scx_cmask_ref_init_kern() imposes base and nr_cids rather than reading them,
+and scx_cmask_ref_from_cpumask() fills the scratch from the ref. Neither
+reads the header back.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/cid.c   | 133 +++++++++++++++++++++++++++++++++++++++
- kernel/sched/ext/cid.h   |   7 +++
- kernel/sched/ext/types.h |  39 +++++++++++-
- 3 files changed, 178 insertions(+), 1 deletion(-)
+ kernel/sched/ext/cid.c | 70 ++++++++++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/cid.h |  4 +++
+ kernel/sched/ext/ext.c | 11 ++++---
+ 3 files changed, 81 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index 6a22bead4c60..02053a4828e3 100644
+index 02053a4828e3..9dfd242be34f 100644
 --- a/kernel/sched/ext/cid.c
 +++ b/kernel/sched/ext/cid.c
-@@ -641,6 +641,12 @@ enum cmask_op2 {
- 	/* predicates - short-circuit when the per-word result is true */
- 	CMASK_OP2_SUBSET,
- 	CMASK_OP2_INTERSECTS,
-+	/*
-+	 * @a is a BPF-arena cmask. Words on @a use READ_ONCE/WRITE_ONCE since
-+	 * BPF may read/write concurrently. See scx_cmask_ref_or() / _copy().
-+	 */
-+	CMASK_OP2_REF_OR,
-+	CMASK_OP2_REF_COPY,
- };
- 
- static __always_inline bool cmask_op2_is_pred(const enum cmask_op2 op)
-@@ -669,6 +675,12 @@ static __always_inline bool cmask_word_op2(u64 *av, const u64 *bp, u64 mask,
- 		return (READ_ONCE(*bp) & ~READ_ONCE(*av)) & mask;
- 	case CMASK_OP2_INTERSECTS:
- 		return (READ_ONCE(*av) & READ_ONCE(*bp)) & mask;
-+	case CMASK_OP2_REF_OR:
-+		WRITE_ONCE(*av, READ_ONCE(*av) | (READ_ONCE(*bp) & mask));
-+		return false;
-+	case CMASK_OP2_REF_COPY:
-+		WRITE_ONCE(*av, (READ_ONCE(*av) & ~mask) | (READ_ONCE(*bp) & mask));
-+		return false;
- 	}
- 	unreachable();
+@@ -951,6 +951,38 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+ 	return 0;
  }
-@@ -899,6 +911,127 @@ static const struct btf_kfunc_id_set scx_kfunc_set_cid = {
- 	.set	= &scx_kfunc_ids_cid,
- };
  
 +/**
-+ * scx_cmask_ref_init - Bind a scx_cmask_ref to a BPF-arena cmask
-+ * @sch: scheduler whose arena hosts @src
-+ * @src: BPF-supplied cmask pointer
++ * scx_cmask_ref_init_kern - Bind a scx_cmask_ref to a kernel-owned cmask
++ * @sch: scheduler the cmask belongs to
++ * @m: kernel address of the target cmask, storage sized for @nr_cids at @base
++ * @base: first cid of the active range
++ * @nr_cids: active range length
 + * @ref: output ref
 + *
-+ * Snapshot @src's @base, @nr_cids and @alloc_words. The snapshot is necessary
-+ * because BPF may mutate the live header asynchronously.
-+ *
-+ * Return 0 on success, -EINVAL if the range is out of bounds or @alloc_words
-+ * doesn't cover it.
++ * Like scx_cmask_ref_init() but the geometry is supplied by the caller, not
++ * read from @m's header, so a concurrent BPF write to the header can't steer
++ * later sizing or offsets. Rewrite the header from the trusted geometry and
++ * bind @ref to it.
 + */
-+int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
-+		       struct scx_cmask_ref *ref)
++void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
++			     u32 base, u32 nr_cids, struct scx_cmask_ref *ref)
 +{
-+	struct scx_cmask *kern_src = scx_arena_to_kaddr(sch, src);
-+	u32 base, nr_cids, alloc_words, npossible = num_possible_cpus();
-+
-+	base = READ_ONCE(kern_src->base);
-+	nr_cids = READ_ONCE(kern_src->nr_cids);
-+	alloc_words = READ_ONCE(kern_src->alloc_words);
-+
-+	if (unlikely(base >= npossible || nr_cids > npossible - base ||
-+		     SCX_CMASK_NR_WORDS(nr_cids) > alloc_words))
-+		return -EINVAL;
++	WRITE_ONCE(m->base, base);
++	WRITE_ONCE(m->nr_cids, nr_cids);
++	WRITE_ONCE(m->alloc_words, SCX_CMASK_NR_WORDS(nr_cids));
 +
 +	ref->sch = sch;
-+	ref->src = kern_src;
++	ref->src = m;
 +	ref->base = base;
 +	ref->nr_cids = nr_cids;
 +
@@ -147,165 +103,97 @@ index 6a22bead4c60..02053a4828e3 100644
 +		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
 +	else
 +		ref->shard_end = ref->shard_first;
-+
-+	return 0;
 +}
 +
+ /**
+  * scx_cmask_ref_shard - Read one shard from @ref into @out
+  * @ref: validated ref
+@@ -1032,6 +1064,44 @@ void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask
+ 		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_COPY);
+ }
+ 
 +/**
-+ * scx_cmask_ref_shard - Read one shard from @ref into @out
-+ * @ref: validated ref
-+ * @shard_idx: target shard, in [@ref->shard_first, @ref->shard_end)
-+ * @out: output cmask whose @out->alloc_words must hold the shard
++ * scx_cmask_ref_from_cpumask - Populate @ref's arena cmask from a cpumask
++ * @ref: kern-bound ref, see scx_cmask_ref_init_kern()
++ * @cpumask: cpus to translate into cids
 + *
-+ * Set @out to the intersection of @ref's range with @shard_idx's cid range,
-+ * with bits[] read from @ref->src via READ_ONCE. Empty intersection sets
-+ * @out->nr_cids to 0. scx_error()s on @ref's sched if @out can't hold the
-+ * shard.
++ * Write @ref's active range one word at a time, setting each cid's bit when
++ * its cpu is in @cpumask. Offsets and length come from @ref's trusted geometry
++ * and stores use WRITE_ONCE since BPF may read concurrently, so the arena
++ * header is never read.
 + */
-+void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
-+			 struct scx_cmask *out)
++void scx_cmask_ref_from_cpumask(const struct scx_cmask_ref *ref,
++				const struct cpumask *cpumask)
 +{
-+	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
-+	u32 shard_base = shard->base_cid;
-+	u32 shard_end = shard_base + shard->nr_cids;
-+	u32 isect_base, isect_end, nr_words, src_off, wi;
-+	u64 head_mask, tail_mask;
++	struct scx_cmask *m = ref->src;
++	u32 base = ref->base, nr_cids = ref->nr_cids;
++	u32 wi, nr_words;
 +
-+	isect_base = max(ref->base, shard_base);
-+	isect_end = min(ref->base + ref->nr_cids, shard_end);
-+
-+	if (isect_base >= isect_end) {
-+		out->base = shard_base;
-+		out->nr_cids = 0;
++	if (!nr_cids)
 +		return;
++
++	nr_words = (base + nr_cids - 1) / 64 - base / 64 + 1;
++	for (wi = 0; wi < nr_words; wi++) {
++		u32 word_first_cid = (base / 64 + wi) * 64;
++		u64 word = 0;
++		u32 bit;
++
++		for (bit = 0; bit < 64; bit++) {
++			u32 cid = word_first_cid + bit;
++
++			if (cid < base || cid >= base + nr_cids)
++				continue;
++			if (cpumask_test_cpu(__scx_cid_to_cpu(cid), cpumask))
++				word |= BIT_U64(bit);
++		}
++		WRITE_ONCE(m->bits[wi], word);
 +	}
-+
-+	nr_words = ((isect_end - 1) / 64) - (isect_base / 64) + 1;
-+	if (nr_words > out->alloc_words) {
-+		scx_error(ref->sch, "scx_cmask_ref_shard: out alloc_words=%u < %u for shard %d",
-+			  out->alloc_words, nr_words, shard_idx);
-+		out->base = shard_base;
-+		out->nr_cids = 0;
-+		return;
-+	}
-+
-+	out->base = isect_base;
-+	out->nr_cids = isect_end - isect_base;
-+	src_off = (isect_base / 64) - (ref->base / 64);
-+
-+	for (wi = 0; wi < nr_words; wi++)
-+		out->bits[wi] = READ_ONCE(ref->src->bits[src_off + wi]);
-+
-+	head_mask = GENMASK_U64(63, isect_base & 63);
-+	out->bits[0] &= head_mask;
-+	tail_mask = GENMASK_U64((isect_end - 1) & 63, 0);
-+	out->bits[nr_words - 1] &= tail_mask;
-+}
-+
-+/**
-+ * scx_cmask_ref_or - OR @src into the arena cmask referenced by @ref
-+ * @ref: validated ref
-+ * @src: stable kernel cmask
-+ *
-+ * Bits inside the intersection of @ref's snapshotted range with @src's range
-+ * are OR'd into @ref->src and bits outside are left unchanged. Stores on
-+ * @ref->src use WRITE_ONCE since BPF may read/write concurrently.
-+ */
-+void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(ref->src->bits, ref->base, ref->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_OR);
-+}
-+
-+/**
-+ * scx_cmask_ref_copy - Copy @src into the arena cmask referenced by @ref
-+ * @ref: validated ref
-+ * @src: stable kernel cmask
-+ *
-+ * Bits inside the intersection of @ref's snapshotted range with @src's range
-+ * take @src's values and bits outside are left unchanged. Stores on @ref->src
-+ * use WRITE_ONCE since BPF may read/write concurrently.
-+ */
-+void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src)
-+{
-+	cmask_walk_op2(ref->src->bits, ref->base, ref->nr_cids,
-+		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_COPY);
 +}
 +
  int scx_cid_kfunc_init(void)
  {
  	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_init_cids) ?:
 diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-index cdc18a7a48f5..70d97acd0ac4 100644
+index 70d97acd0ac4..b36a1a28eac8 100644
 --- a/kernel/sched/ext/cid.h
 +++ b/kernel/sched/ext/cid.h
-@@ -293,4 +293,11 @@ static inline s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
- 	return scx_cid_to_cpu(sch, cpu_or_cid);
- }
+@@ -295,8 +295,12 @@ static inline s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
  
-+int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
-+		       struct scx_cmask_ref *ref);
-+void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
-+			 struct scx_cmask *out);
-+void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
-+void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
+ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+ 		       struct scx_cmask_ref *ref);
++void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
++			     u32 base, u32 nr_cids, struct scx_cmask_ref *ref);
+ void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
+ 			 struct scx_cmask *out);
++void scx_cmask_ref_from_cpumask(const struct scx_cmask_ref *ref,
++				const struct cpumask *cpumask);
+ void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
+ void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
+ 
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 5f2a54039347..c82aa5346772 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -424,12 +424,15 @@ static inline void scx_call_op_set_cpumask(struct scx_sched *sch, struct rq *rq,
+ {
+ 	if (scx_is_cid_type()) {
+ 		struct scx_cmask *kern_va = *this_cpu_ptr(sch->set_cmask_scratch);
++		struct scx_cmask_ref ref;
 +
- #endif /* _KERNEL_SCHED_EXT_CID_H */
-diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
-index b31d12931999..a1a05820725e 100644
---- a/kernel/sched/ext/types.h
-+++ b/kernel/sched/ext/types.h
-@@ -116,7 +116,7 @@ struct scx_cmask {
- 	u32 base;
- 	u32 nr_cids;
- 	u32 alloc_words;
--	u64 bits[] __counted_by(alloc_words);
-+	u64 bits[];
- };
- 
- /*
-@@ -172,4 +172,41 @@ struct scx_cmask {
- #define SCX_CMASK_DEFINE_SHARD(NAME, BASE, NR_CIDS)				\
- 	__SCX_CMASK_DEFINE(NAME, BASE, NR_CIDS, SCX_CID_SHARD_MAX_CPUS)
- 
-+/*
-+ * scx_cmask_ref: validated reference to a BPF-arena cmask.
-+ *
-+ * scx_cmask_ref_init() normalizes the pointer into the arena and snapshots
-+ * @base/@nr_cids. The snapshot is what downstream code uses for sizing - the
-+ * live header can be mutated concurrently by BPF.
-+ *
-+ * scx_cmask_ref_shard() reads one shard into a cmask. scx_cmask_ref_or() and
-+ * scx_cmask_ref_copy() write back into the referenced arena cmask, bounded by
-+ * the snapshot.
-+ *
-+ * Typical input use:
-+ *
-+ *	struct scx_cmask_ref ref;
-+ *	SCX_CMASK_DEFINE(shard, 0, SCX_CID_SHARD_MAX_CPUS);
-+ *	s32 idx, ret;
-+ *
-+ *	ret = scx_cmask_ref_init(sch, src, &ref);
-+ *	if (ret < 0)
-+ *		return ret;
-+ *
-+ *	for (idx = ref.shard_first; idx < ref.shard_end; idx++) {
-+ *		scx_cmask_ref_shard(&ref, idx, shard);
-+ *		if (!shard->nr_cids)
-+ *			continue;
-+ *		... use idx and shard ...
-+ *	}
-+ */
-+struct scx_cmask_ref {
-+	struct scx_sched	*sch;
-+	struct scx_cmask	*src;
-+	u32			base;
-+	u32			nr_cids;
-+	s32			shard_first;
-+	s32			shard_end;
-+};
-+
- #endif /* _KERNEL_SCHED_EXT_TYPES_H */
+ 		/*
+-		 * Build the per-CPU arena cmask and hand BPF its arena address.
+-		 * Caller holds the rq lock with IRQs disabled, which makes us
+-		 * the sole user of the scratch area.
++		 * Build the per-cpu arena cmask from kernel geometry via @ref,
++		 * never reading its BPF-writable header, and hand BPF the arena
++		 * address. The rq lock makes this cpu the sole kernel writer.
+ 		 */
+-		scx_cpumask_to_cmask(cpumask, kern_va);
++		scx_cmask_ref_init_kern(sch, kern_va, 0, num_possible_cpus(), &ref);
++		scx_cmask_ref_from_cpumask(&ref, cpumask);
+ 		SCX_CALL_CID_OP_TASK(sch, set_cmask, rq, task,
+ 				     scx_kaddr_to_arena(sch, kern_va));
+ 	} else {
 -- 
 2.55.0
 
