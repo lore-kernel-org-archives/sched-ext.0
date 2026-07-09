@@ -1,63 +1,63 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011071.outbound.protection.outlook.com [52.101.57.71])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013068.outbound.protection.outlook.com [40.93.201.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515FC379EE8
-	for <sched-ext@lists.linux.dev>; Thu,  9 Jul 2026 20:42:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FA7352006
+	for <sched-ext@lists.linux.dev>; Thu,  9 Jul 2026 20:57:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.68
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783629762; cv=fail; b=oMP456/234+CX7Vd49bE4sEpeTg2J0p1J7px4kV3VB7ebZCVKIJFbh9vxilPuDRxwmBpYByWQLfdLKuEgVT/YdhrDTad4ibHJ3XybsJo11hgvDk1gKx37bDpd0hUgoXPaPmMuhDlDGTwdP8OHwfUQ2wi4t8JdDlrb7eCjw5T+2U=
+	t=1783630627; cv=fail; b=qhTMAY1YZnMLSu9+CyDjmiiKs61xJrszzNX7J0O2Kurn3v56+JUT0BY09ES3R9OLIWu+OosBAfMeuCyPN7jlmWtJ8l16UhkHfVXI9xVGY7YlcOTFyU0zl+b7e+bVaRPMLv9O6/S2CFtwuGLlNg7eehpcN0Vrdqd/k38FmIFyMME=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783629762; c=relaxed/simple;
-	bh=FXlcy036u/KsYGwv5AISLZ4bAmTh35GjhjatfI2yhEc=;
+	s=arc-20240116; t=1783630627; c=relaxed/simple;
+	bh=6z/MtTFlWy6wtUleuAvN6zZbTHJAA75ex1ccT9WGO/g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=UjSNq7M10L0BEzIbEPJVIKNEmHzQRHovjM1+6jvvAQ6Dx6V3INlbubJBYeeNYwSNP3iE3dhN/N08HK75q+ZmS+hxcyImiHiX5JljML/HRM+GObdUxeiaWiSCD0rJF5bPQo9sJocZudf6CrOYYs2d1d8KnZYinl9sPttfCm0vr0I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=k2306IRs; arc=fail smtp.client-ip=52.101.57.71
+	 Content-Disposition:In-Reply-To:MIME-Version; b=JEpt3kGG7eQfr9/s8oteB6xnZlBIyIn+JMLLPAIMkdQ1lhTMGGrsNuR0/y90OvCXfo36umBxV8C2ib4BbFOyL/dH+UklK5Y+w/AY1aAA81Uap1KlfsIUeWLrqZrvh5FUPYapjBohVz/7rS61GavjtPG3YmAbaXfM5+0xsDioG+I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jPvCK54E; arc=fail smtp.client-ip=40.93.201.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="k2306IRs"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jPvCK54E"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=a/o+brMIDaARKatdMHOr6izkxSMpiq0ZcNk2OPZdGDgK7XsxDtlhV3/sgbIbqP8GtcXAjvhz/MdMsgA2/Ody8GqxdneKMxM+Kq2468jBZk7XtDWx5J9EB859/LV+Rdi1A6USkns1sE//+bTh44uH6tgLcb8VSgfztSTBOBenSNPBB+AxYcCGrcNj0uj0oWQK4AitFuypjcH0579ObYdhC9NSeDjOJX6LXNgv75DBMHaSCAcIJPbmjdW+NRAdwNKG86dLOirHlMekxnNkmXbZlWRZnhNpVNGzhy0GiJmsrb8gm7Ip5up+L851xmbWOndV4INdV/xegEKm1T2uW8VCew==
+ b=GmbLEP2IatJNHHoxjV12U11+3o8lB30OM4+PmckbMDdz9Mzv4q3mh3Mqd7TlbFDclmmkHIr2Rq0dN31NZ+JBFAikYOz4NohJ0/9xlnoruY7ZisDyUWbHfy0/c3gPHJWFiNu6k7z+YMgSfk8yjAHdHPTmujAP41GImGtIysgaUvzlRVaiUdsb7fYEl1LA647LhwIuVSP/Z0ba24uRWKGJHw892jyHK8SnIk+4JdvTgOgSEoKWHzWlN8dqTKJR9pJY6e8wj/R7c7A1mTRuuCkNtMEzdALab/SVefxFw3EyfnyrVfncjV6heTt+4C7j0HwI5wGgQb/GEiWTuCQ8gXcC8Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yteHY8GCrXMsqw/oRKWGS4APEivAFCygsLIHiwwdNFE=;
- b=Zo34tyekJXNHzFzg5stbTMvEecqExt7WPw2DUp0W+dx3eMMsy1B/xops994RyA/hObMY6Q0dZfJCgkGbIiqDt33plb6xD2V5kCeDWVHjeUYVLuBER4xkPfLxzgRK0n7ge30avTutBAxxO93J5jtHqQNfsevYoN/6xgFV88f18AbQisPndatr65V4wcqIoj0beiuzUr2KRCsKLMVpYnveh6KLrUt2kU7ERK5BXQtlFSN1qYhnsTAIVjW8x7M1eii+A2SgCSbpsBgfupi82+WbtzZBw9Ro5k0+fKju8UyZI9kM/w0pw8zo8nx2GfP9OQmzjCphviX1/ezqhpKhKqLFzA==
+ bh=/0zAzm0pbI2iBRZUjxW1iV0n91api0g0c0vgkvZ97SA=;
+ b=AVvzqyTZm1OjF+GRjyy4Vz3uB0Un54B9b0bukh3Kstt+6Fh3+lqdIisbGGOc8SEF1e1aRohA/gmoUCxzrZ47BzMn4NLIIwU4bIpKNXDeqboP+KYF/iBkNOZJrjv4HI3Ywaub+8mxafKk8I70pp0IdDOxuBSDUgewKIOq9QiuoxiLa7ok9D204CcGXOLc/m7U5+J01Ov9gyoMx+bm+VxtCPyUYDxjTHPhp/6kgK9LH5loMy8ljWZMkAiI0ckIVRVDCOtex+yWz6YjpOi99EY9qSak6q/aOnSGwb8v2wsIVr6qlzmUvU76e/KkqAF7EXSgHSEqgtONQSv7d0qmzgDGxw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yteHY8GCrXMsqw/oRKWGS4APEivAFCygsLIHiwwdNFE=;
- b=k2306IRslPCyaqUZ868fCZwisfKtg2YYpC7UpRe04pIM1w9zK37H0m+XZVL3bDORymWBlHtwrCVmDCzaT9LWdjm5qVOJWlTSu+Aw0h2wjO7o0ERxmUzd23kNb0B0IEt0Q3JEGOtn9AkcZ6CAv2mAe7sWxQ8Px6XM+/yD82osM1OaWNmfvP6l5rFNBJccDohNSmxDs2w99m6WNGrfLinyOxnEthJmV2aV99UCr1WSkgtUxqVsOjX9uHDo0DEhJwzvsdcli/5qZQH0s4t3GYjJWDrfVjUTwWFMjuTBzzp/IzCFSYb1PWCH7UE6ekPUhcdHWbpBJdjM654S/h0+poi1VQ==
+ bh=/0zAzm0pbI2iBRZUjxW1iV0n91api0g0c0vgkvZ97SA=;
+ b=jPvCK54EYnBUTRxYW0QtYvMGov3qXVUMYSqia1YfKY0vfy3rv1l69SjAM2ftHz4z30RjTxRVJZAr0rJzfPUei0hSNn8lnvf7FuNt+lTNph117zfUExXzUYObEWrc50vdzhXpnLJXEBq7gFeigBjdvxcwGNpPb2XoCX3koPoSpBXPrTXxUEkEzLa9ntLjnwbq1lu8kr7HMDT3CSZpTm1G8K0PIQJSBLt70u1AhDIpU9pGauUZXe1qBXdP4hgnqAV/llyTVUPyZgc0dylVaFk+AA53i+a+tXASD6P21sOr3T9uYVPSysT9PPz9VvOLtI+3IvhM5SVqL4XJh6W+/vVMKw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by CH0PR12MB8487.namprd12.prod.outlook.com (2603:10b6:610:18c::17) with
+ by SA0PR12MB4480.namprd12.prod.outlook.com (2603:10b6:806:99::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Thu, 9 Jul
- 2026 20:42:33 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Thu, 9 Jul
+ 2026 20:57:02 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0181.014; Thu, 9 Jul 2026
- 20:42:33 +0000
-Date: Thu, 9 Jul 2026 22:42:25 +0200
+ 20:57:02 +0000
+Date: Thu, 9 Jul 2026 22:56:53 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 sched_ext/for-7.3 07/40] tools/sched_ext: scx_qmap -
- Use bare u64/u32/s32 integer types
-Message-ID: <alAHsY94lkrpAjEA@gpd4>
+Subject: Re: [PATCH v4 sched_ext/for-7.3 08/40] sched_ext: Reject direct
+ slice and dsq_vtime writes for cid-form schedulers
+Message-ID: <alALFXPBJpxcQWw5@gpd4>
 References: <20260708212429.3405787-1-tj@kernel.org>
- <20260708212429.3405787-8-tj@kernel.org>
+ <20260708212429.3405787-9-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260708212429.3405787-8-tj@kernel.org>
-X-ClientProxiedBy: MI1P293CA0017.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:3::13) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260708212429.3405787-9-tj@kernel.org>
+X-ClientProxiedBy: MI2PEPF00000B8D.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::414) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -66,68 +66,75 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CH0PR12MB8487:EE_
-X-MS-Office365-Filtering-Correlation-Id: c5e45d9a-f045-4f23-31fa-08deddfa9a0f
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SA0PR12MB4480:EE_
+X-MS-Office365-Filtering-Correlation-Id: f2abc5ea-872e-441c-b782-08deddfc9f7c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|11063799006|4143699003|6133799003|22082099003|56012099006|18002099003;
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|22082099003|18002099003|11063799006|56012099006|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	3ZIjv3H2IACy5ia/kqRlzImiTK+U/fEMBtCRMaAHrKpUG/muqidAky6AFI1OBaNQd00rI1f5dJa28pHaEf6NbFQT6YTno5eoJ6GqbNbHx/mgo9hpWgIWjaqawZRmHU8Y9XlkLBCWnujt3oue41o9Q1+Af39+oc8Ft/+Blm4qHR01mhwR70bWBDhXuLOf4mhS56cr2tihyPfXDrfTTwXIPTRer8DUv3G5kFTkIZoLyYfcMpuLRzwjtxjsHbFSa0o2qlcrcj1ygp4ZYxPUd9jNjftBljRQWOLC5FW4ajH9YlA4Ys/12HXi/7VBw66fZbeFDGej9mMMFQwG1qrEnWWKBC3vbghx7tuHaw1q4k2XvjEPLQn8zTT2bd9cA86ap0zgQcgIo0hU39JaOeelX8GqU9fVpujz9hDVTUDPaAgBoEEfgUiU2t4ROi6i2nIu+apSDIP6BP7ysC3x39uEaSae/gBp0bzYE1bx8ImzgwnBJM9W9rA5GOKLiHRfw4Jf/9CE+YKCzSagv8yNHmYD9PheDmyc25K1FKkZTEIOp8iqmC4GEXM0u6GVqL8Shs+reQ4K58sFgC7+zNfVzE+fawg7XvWliXBGKDp4BeIzfklqV3Vy9e1aWZAsP9Z7SkaArP4VOuyMlR12fzJ1vEt9/YQCovbRu26E07n1JuqY/bVztTU=
+	+sh8OJu29e1UJsceX+VzZzytFGl58TYD8/dvHt+fHLAHrbJFJf1eEuujXccSHR0FXiqLpXcf8+9Lmnh3ZtbMq4lYcIlvLapPaSezbI3E0O+nFTrE8DLjoF6iSwBDSfdCdzq6j/Vy0f5mznxsczKIO6nkK6zntrOGU3eHEHYuhi0/+XJ4ztxygX30Ig6KcnrYUztLwrdoImKOFiMhBGnjhvpUfzMWbhczcpeyE9fgGnnWEpxVUWX0VoVMRBAJ9me5d30XXGSkciMU/CtfQrlZzKz3Q7YSpD0xfMOy1wdZozKoszuCTAfXIP1Rrfj2QMuBkQMYx0NhJyzjCfAmUuaDkD68uu/fNAMlNKL1dlswXIb5xIjSgzJp7DjL/RDYOoCaXQQRpIFZo4aNVh/mnnYMBEo3nJkBSFwMIWDqwQtqx7iayl2DNAsB6gTxDL8evl83IcnU0/oe++f0m9BohroDtCXdX9FDq6IUFjUwss3E+cOC0hv/zXs3Lr3A3m6LOGL/AU3w9xCggh3u5azhENzrgmW6sO6ov2J85RAGDbs6sq4fX5QsQb2JzMdp4YWmDOMPkaryjZ7fIwi7O81WhU56On2RiS0kUw6SRzyyQ9XufIddfvScNs1Xl/ZqO9YknqeSMNOW2mKpAqg0x7crGcEjKK3J8Xa6HWUCAP0qN5sD/wc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(11063799006)(4143699003)(6133799003)(22082099003)(56012099006)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?IO288YNSLWgpAda/s+LA20es2UZ072/ndvyWeUIb5dpnzhLOMmYqq59+PemJ?=
- =?us-ascii?Q?dbe3kofuYnRBcaBJPLVKmWcOk1dpOjX9BsR3LH4gXVfpwLs/oEgqejbUkAOY?=
- =?us-ascii?Q?Lu3RRHNiBuVVzHWlpy0QZfIcELV0OqAyg+3CA0rDatjBm408zYktWiSRMBeh?=
- =?us-ascii?Q?JxTLwK3GpGCkHMCCcDslGX7pqwXYnvwyb/C3NXqoAEonAcYknALNMPceucbo?=
- =?us-ascii?Q?cY7GQH+fe98lSDhdw6Bvy08/pTu5ii0bLqFWj04NJGWvJ9qTp+MXt5kF/JRH?=
- =?us-ascii?Q?pCfrQ9hVKKJuRhiAF23hB259AvxHRX3VBR5SyA9/+o90tYGYrHcK/xPjle5m?=
- =?us-ascii?Q?ROO9ylvF8J88+FrhcKWnykjCDa5YIK3APP0xBPkMgh2WufT8911PPZWpMlW8?=
- =?us-ascii?Q?+azJJKRjPTj7txSJUSmRVw6Cc5YM97ScE8hQMUyJXk/c49/Us34GiOodefmN?=
- =?us-ascii?Q?KsoJ1MjayeHNKsaZrEZFpgijadJ3BNv51R6j3KYjnnZ5tOzaMPJObpk/tojj?=
- =?us-ascii?Q?7tNyjJL862mGuckNqP7yriGmIefkX6NCZQDbQJESUMeFiXZyGbLMvBNrg8E3?=
- =?us-ascii?Q?KP9W/TL1nNyTm2wySYXXRGS49Wg6au/oin1fs4SmOnDlU4DovgIAPq99pxNf?=
- =?us-ascii?Q?FVXANDzpOAu48kq5zcrnG516WxmhSpBHC7QVMMKnA4vn9WekKkpnyoH4J4JO?=
- =?us-ascii?Q?oBigj2rKy0sVjIJojo23WANygrNhrUvDdnRRC5qjdNw5KHeF0lvXDMbRGkTC?=
- =?us-ascii?Q?3YQGlzEqUH+04yw4h1opS7l09aH+usWF3suHc69EymnIB7AE8dK2iTTWznZb?=
- =?us-ascii?Q?SGpVUns1nOlw51B3cPL9H/0WvDQCuC7Z+Yp63xstzcX3hE0LtMgyYCyVI0g5?=
- =?us-ascii?Q?Tynof3vPL/HoWOvRbt3VbIWyvlRmSK63R+nC20u3Oeuss00e39Q1yC4ddXi+?=
- =?us-ascii?Q?AA5V141t6hAOHKecWUmSixr8ZiC0zLP6l5BH5q2drVr/0RDhbse3GyyIIhyO?=
- =?us-ascii?Q?kKHdC2aPsS7Elt4NOLzfblt8bjiS1U8ZXO81uyKyH7jGZOvsYuAGxgwa0ozx?=
- =?us-ascii?Q?o+qK2ElZ8Z5cGDEoMSlXTbkyp+BtFVeb6N4RJuA40ZRNBSoxkVpdmsJ106au?=
- =?us-ascii?Q?W1LuBP83wE4t1xregJECrPGjMNgB8BXBUHDU+atlFfv9Z1ugKt8/1UNa/O4r?=
- =?us-ascii?Q?1IW7kby46aQrn5W+rcanIwKKCPB2E71DWkCosfy0o6Ttu01rVU8PV4vGQGLp?=
- =?us-ascii?Q?VCrU98cMn/HvWtpXuR+qACb/y0OrHPz4XPV/rXYrh5Ulg3vNPpfbQwPowp3V?=
- =?us-ascii?Q?JzYrPuTaE4p6sE3q/Cd59iayQQNhviyq/1YeEfGJXxv4Ag8OWxiZ0RpVzhm2?=
- =?us-ascii?Q?q4S2dtuOJbJ8EGs/7NfCc+hzuTfpfsG2BEBf4D5iISwiN9P5Hwe0WfFEAm+J?=
- =?us-ascii?Q?xj2oRWGsK2QvK7hqx92JHClLMo99zkHwF0Il82+EwpEyPexG+GX+Cc+nP1KQ?=
- =?us-ascii?Q?Vj5yLFo+xpyUIA/RDGlrcW8+VJ5X4dLhHJfGr2Ekqj6HILBuMpNUOrofasSd?=
- =?us-ascii?Q?8ZFfapm/cy5W9VC16zdZJcGE5VtA+W7wjHt6/fYe+Ia7OSdRlhJJtGPGrTxn?=
- =?us-ascii?Q?NirL1eI/tCSYPF4QheTQjwBtH+wpiTCTjnO9Oht38dfG3ywSHieupvHASbao?=
- =?us-ascii?Q?61XmPNbz2Tyudpl/aDQLpd/S5L+BuQueY9RCyd+NEnOyG+yvncujykgUeeJN?=
- =?us-ascii?Q?m88crbTcdg=3D=3D?=
+	=?us-ascii?Q?PwklEbJ6HOan1DvlsAm1GoX/6IphaQv/cDWpvJiqLnjGZnotYjqBbF4xvHvS?=
+ =?us-ascii?Q?Fs7m3XY0OHQlAYB8+D01Jd5wz7sQOCFishxk+gTkIKONoh46W4jpgLZo4XVX?=
+ =?us-ascii?Q?JoDL6B5S0g+oyjXVmt7tN4TSEl6A9E+L69Bg/qe1B420L1VmAeA4H6uo9KcQ?=
+ =?us-ascii?Q?5332ckDv4iphXhvUaCLuSpZyV7ODR3GPvfcdJcyh2mWOaNits/97fVz/PoXk?=
+ =?us-ascii?Q?4kTblP3SGtgdMegwnIRTYNCXkeK6rZaFssZ/y2Qv1j04Pf1vd5NSoOZqIMkl?=
+ =?us-ascii?Q?2x5pMJclpX4xjSYyokO2xKndpEwdVL+n8/7KP5MAlMPoDyT1Wb8w/UwzGSK9?=
+ =?us-ascii?Q?H5yzSXCMSonI4AZ1mzYnyX4EvRgSyc2xWh4iQfdTwtOay8V9zuuROJ4pbqJx?=
+ =?us-ascii?Q?SddZGHfqpcFe/EZjZludhZr3dtfma9eeX28D54TzvnHDAW6/mMDFbUDRaYq4?=
+ =?us-ascii?Q?/vnkzxXhx5rp0PcJ4FQa5ZQydk1qmIQwm/mE3TohVDpUFOIF//IkCqnrkUqq?=
+ =?us-ascii?Q?ql8gJaasB/6y9JPuguj/afAZ55w7fNwacLLs0goePxKPZc0oY0OFv2+qFPhR?=
+ =?us-ascii?Q?MuxVHVeqsxqMkxUHN8AaIHq3AXmvVeXand0n3syC+HFYChVeLXxWxQoOkqz6?=
+ =?us-ascii?Q?U7FNbROT3MgatdeGWxLx6++Ep+3HoHCRjOfy/FwrSQoXdOf/F7yvBWqBDoR7?=
+ =?us-ascii?Q?4TBq+VNjaqYYfFUibrQWPvvmRDb2hBbwOIK+/oDKM613SqHwwwbB+S1kH0pT?=
+ =?us-ascii?Q?6g823YWkUFq8uVwp6wNaId8tvh9mNJpv0IFmroWk8r6ciSJ+T7K94MewAoFR?=
+ =?us-ascii?Q?AZ/4amnD+7r4FXx1oF0S2onz/90JUzU/0KR/qVicDmVau0m5i4y2p3cYljLK?=
+ =?us-ascii?Q?v567h97a46rbzWnj1n80b1YX2C1K+YLCe9B/c6SEc4KIWkcyuRJZu3bD903i?=
+ =?us-ascii?Q?0UWSrfhHs1mEAOiBvlBPaV2y2N9FVu3Ee4uzj+/eZ2QXyV1KHO1eRBiw5sTl?=
+ =?us-ascii?Q?ZYmTNww5cbs95vOXyLHbu9GubSdXHWR0T92n1lnkZl5TFPlsMoh1PbGer3mu?=
+ =?us-ascii?Q?E9pxVOLVY/h6JGBBxX3nsyLdZBTsV7aoQcH0dNjpE1qDrTh5JkwOn/mkM+8E?=
+ =?us-ascii?Q?x54Lk8Xizr0ZNEIhKGj73ZWe7HWaze3Xy5fnYCgUYJngt5TyWInTtSh8dndX?=
+ =?us-ascii?Q?O6xJ8h90oC/JHdQ+cOPG96/m1GZPeKBXGDIRMCrI+W1DDsAILPlvHWG/KEda?=
+ =?us-ascii?Q?QP+rqeaFOEmbMGTEW+a2kTgjpcI15Rb+wv3vapgkc17+UqBUC5Qp9AMBv8d0?=
+ =?us-ascii?Q?TNn/u2He4baueROTzX5khvJcvqElA84/noeKzG04nJbW+Fn5LXBKhm6s5+DO?=
+ =?us-ascii?Q?qsPUZiP0CgxZcfj6WX4fpVXf6LcgjtR/2bBM9F0tepezto5soLs3qP7RBrJ+?=
+ =?us-ascii?Q?ISYw6mrsHo2Vm8Ge+c7zyf2FLNFfbEmoT5d1/58Z4RC8vRt+g3jKwhSdOkP6?=
+ =?us-ascii?Q?msUCSBs+XjRubkqQ7ZY3cUiISIOYb06OkhCs4dPOEWE/Kfvp8FytiBNkc0ZI?=
+ =?us-ascii?Q?o2IhEHPW7CN7OnKwpN9YXiRK2sSZdetXNlkEkn9IKxO5GkRoSfaRt3YqagtK?=
+ =?us-ascii?Q?uCPaKlKzsxcPGYVWJhvR1di+ewpWP7oGHD1ikzfrSqXyIytt4WQ2ocVMO74H?=
+ =?us-ascii?Q?SyP8kQQ3wbfFHgaDZimE8SQwT3cfhuOBdU35Vh4h/VBMTvPXtP355g231nhi?=
+ =?us-ascii?Q?Pz3DDOuK/A=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c5e45d9a-f045-4f23-31fa-08deddfa9a0f
+X-MS-Exchange-CrossTenant-Network-Message-Id: f2abc5ea-872e-441c-b782-08deddfc9f7c
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 20:42:33.0875
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2026 20:57:02.1045
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wWUxySZFDdiiprfz17c2oEylc4kHF2Sz+S6T5v9BX53R9w+Tjja53SXViF4GN0/2k8YJSsDrWYZicsK4dKkAMg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB8487
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZJ/m6xQXmItqIAVl8lOe7sNSVpnM7wzmjO2lnbJZf+HhyOs+BYBJUwiPvbFbCC6ppmjEUYTXHApID6S8/kbLaw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4480
 
-On Wed, Jul 08, 2026 at 11:23:56AM -1000, Tejun Heo wrote:
-> scx_qmap.c and the shared scx_qmap.h mixed __u64/__u32/__s32 with the bare
-> typedefs that scx/common.h provides. Convert the remaining __-prefixed
-> integer types to the bare forms for consistency. The struct fields become
-> bare u64 (uint64_t), so the stats printfs that fed them to %llu now cast to
-> unsigned long long. No functional change.
+On Wed, Jul 08, 2026 at 11:23:57AM -1000, Tejun Heo wrote:
+> Direct writes to p->scx.slice and p->scx.dsq_vtime bypass
+> scx_bpf_task_set_slice/dsq_vtime() and the authority checks they carry.
+> Those checks exist for sub-schedulers, which attach only through the
+> cid-form struct_ops, so the direct writes only need to be closed there.
+> 
+> Give sched_ext_ops_cid its own verifier ops that reject the two fields.
+> cid-form is a new interface with no legacy users, so there is no
+> compatibility to keep. The cpu-form keeps direct writes, and the deprecation
+> warning they carried is dropped.
 > 
 > Signed-off-by: Tejun Heo <tj@kernel.org>
+
+The thing reported by sashiko seems more like a BPF issue. From an scx
+perspective this one looks good to me.
 
 Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
@@ -135,108 +142,91 @@ Thanks,
 -Andrea
 
 > ---
->  tools/sched_ext/scx_qmap.c | 21 +++++++++++----------
->  tools/sched_ext/scx_qmap.h | 34 +++++++++++++++++-----------------
->  2 files changed, 28 insertions(+), 27 deletions(-)
+>  kernel/sched/ext/ext.c | 44 ++++++++++++++++++++++++++++++------------
+>  1 file changed, 32 insertions(+), 12 deletions(-)
 > 
-> diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-> index 67ddd483a4c7..f1eaebcab5dc 100644
-> --- a/tools/sched_ext/scx_qmap.c
-> +++ b/tools/sched_ext/scx_qmap.c
-> @@ -67,8 +67,8 @@ int main(int argc, char **argv)
->  	struct scx_qmap *skel;
->  	struct bpf_link *link;
->  	struct qmap_arena *qa;
-> -	__u32 test_error_cnt = 0;
-> -	__u64 ecode;
-> +	u32 test_error_cnt = 0;
-> +	u64 ecode;
->  	int opt;
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index be75bdc9ada2..bd3cb59b1dbf 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -6995,6 +6995,21 @@ static bool bpf_scx_is_valid_access(int off, int size,
+>  	return btf_ctx_access(off, size, type, prog, info);
+>  }
 >  
->  	libbpf_set_print(libbpf_print_fn);
-> @@ -202,15 +202,16 @@ int main(int argc, char **argv)
+> +/* common to both forms: only scx.disallow is writable */
+> +static int bpf_scx_btf_struct_access_common(const struct bpf_reg_state *reg,
+> +					    int off, int size)
+> +{
+> +	const struct btf_type *t;
+> +
+> +	t = btf_type_by_id(reg->btf, reg->btf_id);
+> +	if (t == task_struct_type &&
+> +	    off >= offsetof(struct task_struct, scx.disallow) &&
+> +	    off + size <= offsetofend(struct task_struct, scx.disallow))
+> +		return SCALAR_VALUE;
+> +
+> +	return -EACCES;
+> +}
+> +
+>  static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
+>  				     const struct bpf_reg_state *reg, int off,
+>  				     int size)
+> @@ -7003,23 +7018,22 @@ static int bpf_scx_btf_struct_access(struct bpf_verifier_log *log,
 >  
->  		printf("stats  : enq=%lu dsp=%lu delta=%ld reenq/cid0=%llu/%llu deq=%llu core=%llu enq_ddsp=%llu\n",
->  		       nr_enqueued, nr_dispatched, nr_enqueued - nr_dispatched,
-> -		       qa->nr_reenqueued, qa->nr_reenqueued_cid0,
-> -		       qa->nr_dequeued,
-> -		       qa->nr_core_sched_execed,
-> -		       qa->nr_ddsp_from_enq);
-> +		       (unsigned long long)qa->nr_reenqueued,
-> +		       (unsigned long long)qa->nr_reenqueued_cid0,
-> +		       (unsigned long long)qa->nr_dequeued,
-> +		       (unsigned long long)qa->nr_core_sched_execed,
-> +		       (unsigned long long)qa->nr_ddsp_from_enq);
->  		printf("         exp_local=%llu exp_remote=%llu exp_timer=%llu exp_lost=%llu\n",
-> -		       qa->nr_expedited_local,
-> -		       qa->nr_expedited_remote,
-> -		       qa->nr_expedited_from_timer,
-> -		       qa->nr_expedited_lost);
-> +		       (unsigned long long)qa->nr_expedited_local,
-> +		       (unsigned long long)qa->nr_expedited_remote,
-> +		       (unsigned long long)qa->nr_expedited_from_timer,
-> +		       (unsigned long long)qa->nr_expedited_lost);
->  		if (__COMPAT_has_ksym("scx_bpf_cidperf_cur"))
->  			printf("cpuperf: cur min/avg/max=%u/%u/%u target min/avg/max=%u/%u/%u\n",
->  			       qa->cpuperf_min,
-> diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-> index d15a705d5ac5..808237540f5c 100644
-> --- a/tools/sched_ext/scx_qmap.h
-> +++ b/tools/sched_ext/scx_qmap.h
-> @@ -28,10 +28,10 @@
->  #define SCX_QMAP_MAX_CPUS	1024
+>  	t = btf_type_by_id(reg->btf, reg->btf_id);
+>  	if (t == task_struct_type) {
+> -		/*
+> -		 * COMPAT: Will be removed in v6.23.
+> -		 */
+>  		if ((off >= offsetof(struct task_struct, scx.slice) &&
+>  		     off + size <= offsetofend(struct task_struct, scx.slice)) ||
+>  		    (off >= offsetof(struct task_struct, scx.dsq_vtime) &&
+> -		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime))) {
+> -			pr_warn_ratelimited("sched_ext: Writing directly to p->scx.slice/dsq_vtime is deprecated, use scx_bpf_task_set_slice/dsq_vtime()\n");
+> -			return SCALAR_VALUE;
+> -		}
+> -
+> -		if (off >= offsetof(struct task_struct, scx.disallow) &&
+> -		    off + size <= offsetofend(struct task_struct, scx.disallow))
+> +		     off + size <= offsetofend(struct task_struct, scx.dsq_vtime)))
+>  			return SCALAR_VALUE;
+>  	}
 >  
->  struct cpu_ctx {
-> -	__u64 dsp_idx;		/* dispatch index */
-> -	__u64 dsp_cnt;		/* remaining count */
-> -	__u32 avg_weight;
-> -	__u32 cpuperf_target;
-> +	u64 dsp_idx;		/* dispatch index */
-> +	u64 dsp_cnt;		/* remaining count */
-> +	u32 avg_weight;
-> +	u32 cpuperf_target;
+> -	return -EACCES;
+> +	return bpf_scx_btf_struct_access_common(reg, off, size);
+> +}
+> +
+> +/* cid-form rejects direct slice and dsq_vtime writes in favor of the kfuncs */
+> +static int bpf_scx_cid_btf_struct_access(struct bpf_verifier_log *log,
+> +					 const struct bpf_reg_state *reg, int off,
+> +					 int size)
+> +{
+> +	return bpf_scx_btf_struct_access_common(reg, off, size);
+>  }
+>  
+>  static const struct bpf_verifier_ops bpf_scx_verifier_ops = {
+> @@ -7028,6 +7042,12 @@ static const struct bpf_verifier_ops bpf_scx_verifier_ops = {
+>  	.btf_struct_access = bpf_scx_btf_struct_access,
 >  };
 >  
->  /* Opaque to userspace; defined in scx_qmap.bpf.c. */
-> @@ -40,25 +40,25 @@ struct task_ctx;
->  struct qmap_fifo {
->  	struct task_ctx __arena *head;
->  	struct task_ctx __arena *tail;
-> -	__s32 idx;
-> +	s32 idx;
->  };
->  
->  struct qmap_arena {
->  	/* userspace-visible stats */
-> -	__u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cid0;
-> -	__u64 nr_dequeued, nr_ddsp_from_enq;
-> -	__u64 nr_core_sched_execed;
-> -	__u64 nr_expedited_local, nr_expedited_remote;
-> -	__u64 nr_expedited_lost, nr_expedited_from_timer;
-> -	__u64 nr_highpri_queued;
-> -	__u32 test_error_cnt;
-> -	__u32 cpuperf_min, cpuperf_avg, cpuperf_max;
-> -	__u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
-> +	u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cid0;
-> +	u64 nr_dequeued, nr_ddsp_from_enq;
-> +	u64 nr_core_sched_execed;
-> +	u64 nr_expedited_local, nr_expedited_remote;
-> +	u64 nr_expedited_lost, nr_expedited_from_timer;
-> +	u64 nr_highpri_queued;
-> +	u32 test_error_cnt;
-> +	u32 cpuperf_min, cpuperf_avg, cpuperf_max;
-> +	u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
->  
->  	/* kernel-side runtime state */
-> -	__u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
-> -	__u64 core_sched_head_seqs[5];
-> -	__u64 core_sched_tail_seqs[5];
-> +	u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
-> +	u64 core_sched_head_seqs[5];
-> +	u64 core_sched_tail_seqs[5];
->  
->  	struct cpu_ctx cpu_ctxs[SCX_QMAP_MAX_CPUS];
->  
+> +static const struct bpf_verifier_ops bpf_scx_cid_verifier_ops = {
+> +	.get_func_proto = bpf_base_func_proto,
+> +	.is_valid_access = bpf_scx_is_valid_access,
+> +	.btf_struct_access = bpf_scx_cid_btf_struct_access,
+> +};
+> +
+>  static int bpf_scx_init_member(const struct btf_type *t,
+>  			       const struct btf_member *member,
+>  			       void *kdata, const void *udata)
+> @@ -7368,7 +7388,7 @@ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
+>   * verified to match by the BUILD_BUG_ON checks in scx_init().
+>   */
+>  static struct bpf_struct_ops bpf_sched_ext_ops_cid = {
+> -	.verifier_ops = &bpf_scx_verifier_ops,
+> +	.verifier_ops = &bpf_scx_cid_verifier_ops,
+>  	.reg = bpf_scx_reg_cid,
+>  	.unreg = bpf_scx_unreg,
+>  	.check_member = bpf_scx_check_member,
 > -- 
 > 2.54.0
 > 
