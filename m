@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717F03B6C11;
-	Thu,  9 Jul 2026 22:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FF538758E;
+	Thu,  9 Jul 2026 22:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637452; cv=none; b=njNHG5xMXDkkF/tNoJ2XP6XqrPVf/A7RrqKZrMN+uApxiuC0bOeHiacjqJ1ViDbM5cYhGcox2BXPmvBbpwgqMNptsOtM/BEs21xL/4Eu3muwdTS/SjpzJO4Kd5ewQPBPi2bMGBQGsrMTQOZm7DJZkTwmergewEXcf8s6D3Al40A=
+	t=1783637454; cv=none; b=CsWltkaOnO88pseDt0gc6qPZZguJcCRA4BIwdjpUfrY9Iw4Bf/Qv78AY69yjzK7HZYE58McAmZmxCia2Gdj4BxBDXtwYb6zyRMCdaGf/peC+HoMRRtoMH3u5dDYIsg7v+vzDovelh44pl3YkpNMoyS4Qz0KEW968DUCkOmq5l8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637452; c=relaxed/simple;
-	bh=sBHRQqTTNh6M7vrvx8kuJ/6C79oci0xQBUcbNyeB4SE=;
+	s=arc-20240116; t=1783637454; c=relaxed/simple;
+	bh=1Pbe9dRm176aQP+2XFFaSo+ROyWheenT2ROsaP0RTOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CofnQ27SBfyLhfWo0thdvSV4FRqWb9B1L87LkbcPdueEBlLNwJ7PklB6FSVjACK/rYVXYiyzAIJBXFFTKObwbphy9UK6bvrlfT/xwQHOJa3BNi/Bf1a00v9Qks6YrUx8OLl3DSuxxgNGw/veTWKsoNV369ObETS4XLOJLolMlAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gYbF1DmG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WKNoBawYk1bhDuDBTSHvQPrUzSTHfdM+fz2X87mfUWl3HzHGDWawGP+TRVQizT5qXCS+0U+vaWaFbvEh3REExR8ifN2iX/+G67Jb316HXcp0MgP/ApPYJxOw2ArFLvshVAccz6rWDpCp1qSljIYDC0NjnlLr5xrVU5xyhXvN5c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UqIGB++L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gYbF1DmG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B181F00A3A;
-	Thu,  9 Jul 2026 22:50:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UqIGB++L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8471F00A3E;
+	Thu,  9 Jul 2026 22:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637449;
-	bh=woW66gU/hP00xAr9Z8yWU4emvNhq6+s4HTd02MWvyI8=;
+	s=k20260515; t=1783637451;
+	bh=oSPeEBz6a74rmkgpk3VBgwFxcTl1urFmaIigL+vygO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gYbF1DmGrfB5KMyH4TYOmGB0z82cgV+0LpteQKE4KGnejgg8V4QHTOpoRmn3LzQ3+
-	 rn/HtREnQY72oPnIXj3/W5x8MuNAC56Pr4+FxIgW+dsAeVGIant3d3/UOIRznbIbxu
-	 scc7lOiNHYwwt7A166wlCBgDzGFmvf9kvBuw8q+e9qbz8+caLKyOrLpsaaX4grfQ4H
-	 W7nfRczz9MiCKIj1xpjEZUnHMiQ9GlvtC+JK+fU10oecZNtG+d9UWPwX5xLkFotimm
-	 a5OV/4+rP7WVjjoqGF7m3Uzivn14Kfjz7BhatsD5BOMBnf3pL2pkGMxfHi6pwG8BDz
-	 N2vuflK2PLgcg==
+	b=UqIGB++LjMmNmdPodhKMFhDWYd+Zql4DvEDPw148GyTfKvfZvHrkMfYYrtBWGccsq
+	 D3DBpM4VzGN4TxAwKVt51c1KRQImh7NolMlesgFjiZfuhAkx7t4vRB5wt2T5qFrG/i
+	 EbajmCZingr/SdRrIEDKWyJSlvr8qsC/AX0Z4L7Ja8jqvyeRn9a4rBgJWa5Bl5WJfY
+	 pzp3AZfJVwzDFra3PFo+l/rOUcTXZzWUelQ1w8acHL7fNteo5dsn6ZxSLuRA/ha+Fb
+	 ubmD2aYAMluqMCDCSGh5Ff5WddPN2wdWSat/oxmZW4kUC/YRYLI9G3yA3sP8XrJ/VT
+	 ZVYuS251hdKjQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 06/33] sched_ext: Defer scx_sched kobj sysfs add into the enable workfns
-Date: Thu,  9 Jul 2026 12:50:14 -1000
-Message-ID: <20260709225041.1695495-7-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 08/33] sched_ext: Add scx_cmask_ref for validated arena cmask access
+Date: Thu,  9 Jul 2026 12:50:16 -1000
+Message-ID: <20260709225041.1695495-9-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,167 +48,264 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Split kobject_init_and_add() in scx_alloc_and_add_sched(): only
-kobject_init() runs there. A new scx_sched_sysfs_add() helper does
-kobject_add() (and creates sub_kset when the scheduler implements
-ops.sub_attach), called by both enable workfns once @sch is linked and its
-sysfs-visible state is initialized. Prep so a future caps attribute can rely
-on @sch being fully built by the time it's sysfs-visible. Add early enough
-that a stall later in enable still leaves sysfs inspectable.
+kfuncs taking struct scx_cmask * from BPF arena memory have two problems.
+The pointer can be any value the BPF prog hands in, and the header (@base,
+@nr_cids, @alloc_words) can be mutated by the prog concurrently with kernel
+access.
+
+Add scx_cmask_ref, a validated handle. _init() normalizes the input pointer
+into the arena's kern_vm range via scx_arena_to_kaddr() and snapshots the
+header, rejecting a range outside the machine or a nr_cids whose words
+exceed the declared @alloc_words. Downstream sizing uses the snapshot, not
+the live header. _shard() reads slices while _or() and _copy() write back,
+all bounded by the snapshot. No callers yet.
+
+struct scx_cmask's bits[] carried __counted_by(alloc_words), so
+UBSAN_BOUNDS and FORTIFY_SOURCE bound accesses to the array. That bound is
+read from @alloc_words at the access. For an arena cmask @alloc_words is
+BPF-writable. A prog that sets it larger than the real allocation makes the
+check pass on a genuine overrun, so the annotation catches nothing, and it
+only runs under those debug configs. Drop it - _init() validates
+@alloc_words explicitly, and kernel-owned cmasks set it themselves.
+
+v2: Validate @alloc_words in _init(), drop __counted_by. (Andrea, sashiko AI)
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 73 +++++++++++++++++++++++--------------
- kernel/sched/ext/internal.h |  1 +
- kernel/sched/ext/sub.c      |  8 +++-
- 3 files changed, 53 insertions(+), 29 deletions(-)
+ kernel/sched/ext/cid.c   | 133 +++++++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/cid.h   |   7 +++
+ kernel/sched/ext/types.h |  39 +++++++++++-
+ 3 files changed, 178 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index f12691c839ce..5ed790e016b2 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -5735,7 +5735,9 @@ static void scx_root_disable(struct scx_sched *sch)
- 	if (sch->sub_kset)
- 		kobject_del(&sch->sub_kset->kobj);
- #endif
--	kobject_del(&sch->kobj);
-+	/* not added if enable failed before scx_sched_sysfs_add() */
-+	if (sch->kobj.state_in_sysfs)
-+		kobject_del(&sch->kobj);
- 
- 	free_kick_syncs();
- 
-@@ -6452,36 +6454,15 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 		 * disable. Released in scx_sched_free_rcu_work().
- 		 */
- 		kobject_get(&parent->kobj);
--		ret = kobject_init_and_add(&sch->kobj, &scx_ktype,
--					   &parent->sub_kset->kobj,
--					   "sub-%llu", cgroup_id(cgrp));
--	} else {
--		ret = kobject_init_and_add(&sch->kobj, &scx_ktype, NULL, "root");
--	}
--
--	if (ret < 0) {
--		RCU_INIT_POINTER(ops->priv, NULL);
--		kobject_put(&sch->kobj);
--		return ERR_PTR(ret);
--	}
--
--	if (ops->sub_attach) {
--		sch->sub_kset = kset_create_and_add("sub", NULL, &sch->kobj);
--		if (!sch->sub_kset) {
--			RCU_INIT_POINTER(ops->priv, NULL);
--			kobject_put(&sch->kobj);
--			return ERR_PTR(-ENOMEM);
--		}
--	}
--#else	/* CONFIG_EXT_SUB_SCHED */
--	ret = kobject_init_and_add(&sch->kobj, &scx_ktype, NULL, "root");
--	if (ret < 0) {
--		RCU_INIT_POINTER(ops->priv, NULL);
--		kobject_put(&sch->kobj);
--		return ERR_PTR(ret);
- 	}
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index 6a22bead4c60..02053a4828e3 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -641,6 +641,12 @@ enum cmask_op2 {
+ 	/* predicates - short-circuit when the per-word result is true */
+ 	CMASK_OP2_SUBSET,
+ 	CMASK_OP2_INTERSECTS,
 +	/*
-+	 * Init the kobj but don't add to sysfs yet. The enable path calls
-+	 * scx_sched_sysfs_add() once @sch's sysfs-visible state is initialized.
++	 * @a is a BPF-arena cmask. Words on @a use READ_ONCE/WRITE_ONCE since
++	 * BPF may read/write concurrently. See scx_cmask_ref_or() / _copy().
 +	 */
-+	kobject_init(&sch->kobj, &scx_ktype);
-+
- 	/*
- 	 * Consume the arena_map ref bpf_scx_reg_cid() took. Defer to here so
- 	 * earlier failure paths leave cmd->arena_map set and bpf_scx_reg_cid
-@@ -6539,6 +6520,36 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 	return ERR_PTR(ret);
- }
++	CMASK_OP2_REF_OR,
++	CMASK_OP2_REF_COPY,
+ };
  
-+/*
-+ * Add @sch's kobject to sysfs, and create its sub_kset if the scheduler
-+ * implements ops.sub_attach. Called by the enable workfns once @sch's
-+ * sysfs-visible state is initialized.
+ static __always_inline bool cmask_op2_is_pred(const enum cmask_op2 op)
+@@ -669,6 +675,12 @@ static __always_inline bool cmask_word_op2(u64 *av, const u64 *bp, u64 mask,
+ 		return (READ_ONCE(*bp) & ~READ_ONCE(*av)) & mask;
+ 	case CMASK_OP2_INTERSECTS:
+ 		return (READ_ONCE(*av) & READ_ONCE(*bp)) & mask;
++	case CMASK_OP2_REF_OR:
++		WRITE_ONCE(*av, READ_ONCE(*av) | (READ_ONCE(*bp) & mask));
++		return false;
++	case CMASK_OP2_REF_COPY:
++		WRITE_ONCE(*av, (READ_ONCE(*av) & ~mask) | (READ_ONCE(*bp) & mask));
++		return false;
+ 	}
+ 	unreachable();
+ }
+@@ -899,6 +911,127 @@ static const struct btf_kfunc_id_set scx_kfunc_set_cid = {
+ 	.set	= &scx_kfunc_ids_cid,
+ };
+ 
++/**
++ * scx_cmask_ref_init - Bind a scx_cmask_ref to a BPF-arena cmask
++ * @sch: scheduler whose arena hosts @src
++ * @src: BPF-supplied cmask pointer
++ * @ref: output ref
++ *
++ * Snapshot @src's @base, @nr_cids and @alloc_words. The snapshot is necessary
++ * because BPF may mutate the live header asynchronously.
++ *
++ * Return 0 on success, -EINVAL if the range is out of bounds or @alloc_words
++ * doesn't cover it.
 + */
-+int scx_sched_sysfs_add(struct scx_sched *sch)
++int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
++		       struct scx_cmask_ref *ref)
 +{
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	struct scx_sched *parent = scx_parent(sch);
-+	int ret;
++	struct scx_cmask *kern_src = scx_arena_to_kaddr(sch, src);
++	u32 base, nr_cids, alloc_words, npossible = num_possible_cpus();
 +
-+	if (parent)
-+		ret = kobject_add(&sch->kobj, &parent->sub_kset->kobj,
-+				  "sub-%llu", cgroup_id(sch_cgroup(sch)));
++	base = READ_ONCE(kern_src->base);
++	nr_cids = READ_ONCE(kern_src->nr_cids);
++	alloc_words = READ_ONCE(kern_src->alloc_words);
++
++	if (unlikely(base >= npossible || nr_cids > npossible - base ||
++		     SCX_CMASK_NR_WORDS(nr_cids) > alloc_words))
++		return -EINVAL;
++
++	ref->sch = sch;
++	ref->src = kern_src;
++	ref->base = base;
++	ref->nr_cids = nr_cids;
++
++	ref->shard_first = scx_cid_to_shard[base];
++	if (likely(nr_cids))
++		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
 +	else
-+		ret = kobject_add(&sch->kobj, NULL, "root");
-+	if (ret < 0)
-+		return ret;
++		ref->shard_end = ref->shard_first;
 +
-+	if (sch->ops.sub_attach) {
-+		sch->sub_kset = kset_create_and_add("sub", NULL, &sch->kobj);
-+		if (!sch->sub_kset)
-+			return -ENOMEM;
-+	}
 +	return 0;
-+#else
-+	return kobject_add(&sch->kobj, NULL, "root");
-+#endif
 +}
 +
- static int check_hotplug_seq(struct scx_sched *sch,
- 			      const struct sched_ext_ops *ops)
- {
-@@ -6761,6 +6772,12 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
- 	}
- 
-+	ret = scx_sched_sysfs_add(sch);
-+	if (ret) {
-+		cpus_read_unlock();
-+		goto err_disable;
++/**
++ * scx_cmask_ref_shard - Read one shard from @ref into @out
++ * @ref: validated ref
++ * @shard_idx: target shard, in [@ref->shard_first, @ref->shard_end)
++ * @out: output cmask whose @out->alloc_words must hold the shard
++ *
++ * Set @out to the intersection of @ref's range with @shard_idx's cid range,
++ * with bits[] read from @ref->src via READ_ONCE. Empty intersection sets
++ * @out->nr_cids to 0. scx_error()s on @ref's sched if @out can't hold the
++ * shard.
++ */
++void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
++			 struct scx_cmask *out)
++{
++	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
++	u32 shard_base = shard->base_cid;
++	u32 shard_end = shard_base + shard->nr_cids;
++	u32 isect_base, isect_end, nr_words, src_off, wi;
++	u64 head_mask, tail_mask;
++
++	isect_base = max(ref->base, shard_base);
++	isect_end = min(ref->base + ref->nr_cids, shard_end);
++
++	if (isect_base >= isect_end) {
++		out->base = shard_base;
++		out->nr_cids = 0;
++		return;
 +	}
 +
- 	for (i = SCX_OPI_CPU_HOTPLUG_BEGIN; i < SCX_OPI_CPU_HOTPLUG_END; i++)
- 		if (((void (**)(void))ops)[i])
- 			set_bit(i, sch->has_op);
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 6560a0fa3efa..160ff79faedc 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1690,6 +1690,7 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 					  struct cgroup *cgrp,
- 					  struct scx_sched *parent);
- int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops);
-+int scx_sched_sysfs_add(struct scx_sched *sch);
- 
- extern raw_spinlock_t scx_sched_lock;
- extern struct mutex scx_enable_mutex;
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index ce76ae141e0a..9855a9a4e709 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -270,7 +270,9 @@ void scx_sub_disable(struct scx_sched *sch)
- 		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
- 	if (sch->sub_kset)
- 		kobject_del(&sch->sub_kset->kobj);
--	kobject_del(&sch->kobj);
-+	/* not added if enable failed before scx_sched_sysfs_add() */
-+	if (sch->kobj.state_in_sysfs)
-+		kobject_del(&sch->kobj);
++	nr_words = ((isect_end - 1) / 64) - (isect_base / 64) + 1;
++	if (nr_words > out->alloc_words) {
++		scx_error(ref->sch, "scx_cmask_ref_shard: out alloc_words=%u < %u for shard %d",
++			  out->alloc_words, nr_words, shard_idx);
++		out->base = shard_base;
++		out->nr_cids = 0;
++		return;
++	}
++
++	out->base = isect_base;
++	out->nr_cids = isect_end - isect_base;
++	src_off = (isect_base / 64) - (ref->base / 64);
++
++	for (wi = 0; wi < nr_words; wi++)
++		out->bits[wi] = READ_ONCE(ref->src->bits[src_off + wi]);
++
++	head_mask = GENMASK_U64(63, isect_base & 63);
++	out->bits[0] &= head_mask;
++	tail_mask = GENMASK_U64((isect_end - 1) & 63, 0);
++	out->bits[nr_words - 1] &= tail_mask;
++}
++
++/**
++ * scx_cmask_ref_or - OR @src into the arena cmask referenced by @ref
++ * @ref: validated ref
++ * @src: stable kernel cmask
++ *
++ * Bits inside the intersection of @ref's snapshotted range with @src's range
++ * are OR'd into @ref->src and bits outside are left unchanged. Stores on
++ * @ref->src use WRITE_ONCE since BPF may read/write concurrently.
++ */
++void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src)
++{
++	cmask_walk_op2(ref->src->bits, ref->base, ref->nr_cids,
++		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_OR);
++}
++
++/**
++ * scx_cmask_ref_copy - Copy @src into the arena cmask referenced by @ref
++ * @ref: validated ref
++ * @src: stable kernel cmask
++ *
++ * Bits inside the intersection of @ref's snapshotted range with @src's range
++ * take @src's values and bits outside are left unchanged. Stores on @ref->src
++ * use WRITE_ONCE since BPF may read/write concurrently.
++ */
++void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src)
++{
++	cmask_walk_op2(ref->src->bits, ref->base, ref->nr_cids,
++		       src->bits, src->base, src->nr_cids, CMASK_OP2_REF_COPY);
++}
++
+ int scx_cid_kfunc_init(void)
+ {
+ 	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_init_cids) ?:
+diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
+index cdc18a7a48f5..70d97acd0ac4 100644
+--- a/kernel/sched/ext/cid.h
++++ b/kernel/sched/ext/cid.h
+@@ -293,4 +293,11 @@ static inline s32 scx_cpu_ret(struct scx_sched *sch, s32 cpu_or_cid)
+ 	return scx_cid_to_cpu(sch, cpu_or_cid);
  }
  
- /* verify that a scheduler can be attached to @cgrp and return the parent */
-@@ -363,6 +365,10 @@ void scx_sub_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_disable;
- 
-+	ret = scx_sched_sysfs_add(sch);
-+	if (ret)
-+		goto err_disable;
++int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
++		       struct scx_cmask_ref *ref);
++void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
++			 struct scx_cmask *out);
++void scx_cmask_ref_or(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
++void scx_cmask_ref_copy(const struct scx_cmask_ref *ref, const struct scx_cmask *src);
 +
- 	if (sch->level >= SCX_SUB_MAX_DEPTH) {
- 		scx_error(sch, "max nesting depth %d violated",
- 			  SCX_SUB_MAX_DEPTH);
+ #endif /* _KERNEL_SCHED_EXT_CID_H */
+diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
+index b31d12931999..a1a05820725e 100644
+--- a/kernel/sched/ext/types.h
++++ b/kernel/sched/ext/types.h
+@@ -116,7 +116,7 @@ struct scx_cmask {
+ 	u32 base;
+ 	u32 nr_cids;
+ 	u32 alloc_words;
+-	u64 bits[] __counted_by(alloc_words);
++	u64 bits[];
+ };
+ 
+ /*
+@@ -172,4 +172,41 @@ struct scx_cmask {
+ #define SCX_CMASK_DEFINE_SHARD(NAME, BASE, NR_CIDS)				\
+ 	__SCX_CMASK_DEFINE(NAME, BASE, NR_CIDS, SCX_CID_SHARD_MAX_CPUS)
+ 
++/*
++ * scx_cmask_ref: validated reference to a BPF-arena cmask.
++ *
++ * scx_cmask_ref_init() normalizes the pointer into the arena and snapshots
++ * @base/@nr_cids. The snapshot is what downstream code uses for sizing - the
++ * live header can be mutated concurrently by BPF.
++ *
++ * scx_cmask_ref_shard() reads one shard into a cmask. scx_cmask_ref_or() and
++ * scx_cmask_ref_copy() write back into the referenced arena cmask, bounded by
++ * the snapshot.
++ *
++ * Typical input use:
++ *
++ *	struct scx_cmask_ref ref;
++ *	SCX_CMASK_DEFINE(shard, 0, SCX_CID_SHARD_MAX_CPUS);
++ *	s32 idx, ret;
++ *
++ *	ret = scx_cmask_ref_init(sch, src, &ref);
++ *	if (ret < 0)
++ *		return ret;
++ *
++ *	for (idx = ref.shard_first; idx < ref.shard_end; idx++) {
++ *		scx_cmask_ref_shard(&ref, idx, shard);
++ *		if (!shard->nr_cids)
++ *			continue;
++ *		... use idx and shard ...
++ *	}
++ */
++struct scx_cmask_ref {
++	struct scx_sched	*sch;
++	struct scx_cmask	*src;
++	u32			base;
++	u32			nr_cids;
++	s32			shard_first;
++	s32			shard_end;
++};
++
+ #endif /* _KERNEL_SCHED_EXT_TYPES_H */
 -- 
 2.55.0
 
