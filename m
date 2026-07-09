@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E083B6354;
-	Thu,  9 Jul 2026 22:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AA23B14D0;
+	Thu,  9 Jul 2026 22:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637448; cv=none; b=pYUQS7iYk85rIhJufzLtVwZnyA7tA9J726LG+vODgPlAZxPIyvj4PScfoGAFfzw2dvUQJewP8jOANv3MbTbDGIWoTVCYobAMz8XoCmuUJsBcnDoW8DL655SufEQdjNJK6oXrz2SRszXrH9/6JOPtHiBmJ75CjS7gtTYfseFyoug=
+	t=1783637449; cv=none; b=PIdGoth2MrJOfHpCFFyxxnsfCm/uwvZrGZbhpi69Tn5FxibAx0ioAAu7Ee/CZSvrlRrbNXrJs6/KAg151LSGrU1nYN2vPe0c9OuypGmbHI5elRKYqBNE8iqBATyECzcxSkGM4m8iSSU1Nmt52AiWV6TQ6A9Gx09W+BAuIrOmVNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637448; c=relaxed/simple;
-	bh=7FkKjy6lt0lOaqOe0gbGUOhLyu2fOEjvC+Rob7kKmA0=;
+	s=arc-20240116; t=1783637449; c=relaxed/simple;
+	bh=DlfmyEQ6T0Ghv2IeWBYZDA7j4Wjp8QC0OL7MbEl0hmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdA9V4BAhk42gEvoLP38ybaEu6gaK+cCkmLaZbPfFJK0Ks8XVjtoVPpQHwgwNte027TVPXRCxA+yKxiAJY2DuZeqUgWB06H/Q0Ic7VCXIerTrofJokpkupdBNfhUQzLgIGgOAEfG6sUYAk+tpQi9r3vA21+6WtwJ9buyiTg9zpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HMIs/Ay+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pqJFZ+yhbVVbPQe6CkH7y3GfpUz38MitNdVIUGqfZOlFWTugwy0Wv4N/1DuXv/92t3ugabRokMBZHLt78UxeClTUEPr7IopWIy8up5wLL6Eq8xGv9BV73cekfEL5Xt8VaQ/+2nIJ59Ha2X8FLQTcec+e+Jhw4vkat2c+W5u1pVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMMWWVfg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HMIs/Ay+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC161F00A3A;
-	Thu,  9 Jul 2026 22:50:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMMWWVfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E469B1F00A3E;
+	Thu,  9 Jul 2026 22:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637446;
-	bh=23uJkPmMAB6yhjHuTmwNstZblKGR1E3mslEWAKi8yJ0=;
+	s=k20260515; t=1783637447;
+	bh=lxIr/id9jF63zH3km1y8rt8IwPkA9lcw9OKXDnbsHcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMIs/Ay+dKWDSWQC8Jk5UvTCsbaJ4ddKNyuXg7oACBZ7pTTmx4jXvMfRUpO2KbxgI
-	 YzRVotnLTtjZdzMBY7ol7rBZFOeMjJrz+tMGBeW5GlUqIa4e0FocTBZUR44hPyRKz/
-	 jsRnZgAz0Ax0OIEK5PyRq005OFgvD/2GJxTnBsc6AAjjxypoH6gNP04xfDft1WIgFe
-	 nyK6BLLtpBOHcxuXBWLab+6Qku8VB/jNGGuNjklab97vmxDOqSs33vcoh3iYBkByHJ
-	 cXKlX3NY8EhESawa32mrRk//VoXWYDtqVHp3bMt81M0LZniwmqNxPmyPRFWBm14EVS
-	 iTIHzhRG2tPgQ==
+	b=LMMWWVfgK0UunhlghBGW1B3MD/teMfusVN5oYH3FkMWePeQFacH+dCoCSCW2ZAZul
+	 GUWJvz67dXFQvPa0Az/RFgC3ojNcgn9sR28NDaou4C/pmTNAOAKxWoqtsQfP9VB3Z+
+	 C/bIp1/S/SmxIeT90rGJvH8LJVslkqaRXseFGm/rBwE7GtP51/EWYm1IaDMmGfWBzT
+	 HKy2Ao/Q32IIXkDNFmSMy9jy5DjFtekKgoUwnUIt1laqHkceJTsIf9Rhpr2mu+dSRO
+	 MCNxUtLstDgktBnTsN9BVBB0lPsaxsK1zhBIXc3Kwpixhiw/rYPwiC+D/8l+BU1CWq
+	 DcPKzzVoEHe/g==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 03/33] sched_ext: Add ops.init_cids() to finalize the cid layout before init
-Date: Thu,  9 Jul 2026 12:50:11 -1000
-Message-ID: <20260709225041.1695495-4-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 04/33] sched_ext: Add CID sharding
+Date: Thu,  9 Jul 2026 12:50:12 -1000
+Message-ID: <20260709225041.1695495-5-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,426 +48,416 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A cid-form scheduler that calls scx_bpf_cid_override() to install a custom
-cid layout can only do so from ops.init(). Enable-path setup that depends on
-the cid layout thus has to run after ops.init(), and ops.init() itself can't
-use anything derived from the final layout, which turned out to be too
-restrictive.
+Sub-sched operations need a scalable locking / work domain smaller than the
+whole cid space. Carve the cid space into topology-respecting shards: each
+shard is a contiguous cid range that stays within one LLC, and LLCs larger
+than the per-shard cap (default 24 cids, configurable via
+ops.cid_shard_size) split into enough shards to fit. A hard cap of
+SCX_CID_SHARD_MAX_CPUS prevents pathological sizes under custom
+configurations.
 
-Add an ops.init_cids() callback dedicated to finalizing the cid layout. It
-runs before the rest of the enable-path setup, so the final layout is in
-effect for everything that follows including ops.init(), which now runs
-after the arena pool and cmask scratch allocations.
+No-topo cids pack into their own shards so every cid has a shard assignment.
 
-scx_bpf_cid_override() is restricted to ops.init_cids() at load time. It
-sits in a kfunc set gated by SCX_KF_ALLOW_INIT_CIDS, a flag set only on the
-init_cids op, so the verifier rejects a call from any other context. The
-runtime root-only check is dropped as ops.init_cids() only runs during root
-enable.
-
-The qmap demo moves its override into a dedicated qmap_init_cids() and,
-while at it, introduces an enum for the cid override modes instead of
-hard-coded integers.
+Also build scx_cid_shard_ranges[] for O(1) shard-to-cid-range lookup and
+scx_shard_node[] so callers can size or place work by NUMA without walking
+cids. Auto-built shards inherit their LLC's node. No-topo shards carry
+NUMA_NO_NODE.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/cid.c         | 25 ++++++++-----------
- kernel/sched/ext/cid.h         |  2 +-
- kernel/sched/ext/ext.c         | 41 +++++++++++++++++++++++--------
- kernel/sched/ext/internal.h    | 16 ++++++++++---
- tools/sched_ext/scx_qmap.bpf.c | 44 +++++++++++++++++++++-------------
- tools/sched_ext/scx_qmap.c     | 12 +++++-----
- tools/sched_ext/scx_qmap.h     |  8 +++++++
- 7 files changed, 96 insertions(+), 52 deletions(-)
+ kernel/sched/ext/cid.c      | 132 ++++++++++++++++++++++++++++++++++--
+ kernel/sched/ext/cid.h      |   4 ++
+ kernel/sched/ext/ext.c      |   4 ++
+ kernel/sched/ext/internal.h |  13 ++++
+ kernel/sched/ext/types.h    |  35 ++++++++--
+ 5 files changed, 176 insertions(+), 12 deletions(-)
 
 diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index f31113b080e9..b0ec4d76f855 100644
+index b0ec4d76f855..f3c54f4223b4 100644
 --- a/kernel/sched/ext/cid.c
 +++ b/kernel/sched/ext/cid.c
-@@ -13,10 +13,10 @@
- /*
-  * cid tables.
-  *
-- * Pointers are published once on first enable and never revoked. The default
-- * mapping is populated before ops.init() runs; scx_bpf_cid_override() commits
-- * before it returns. As long as the BPF scheduler only uses the tables from
-- * those points onward, it sees a consistent view.
-+ * Pointers are allocated on first enable and never freed. During root enable,
-+ * the default mapping is populated and then ops.init_cids() is called which can
-+ * use scx_bpf_cid_override() to change the mapping. The mapping stays stable
-+ * until the root is disabled.
+@@ -18,13 +18,17 @@
+  * use scx_bpf_cid_override() to change the mapping. The mapping stays stable
+  * until the root is disabled.
   */
++u32 scx_nr_cid_shards;
  s16 *scx_cid_to_cpu_tbl;
  s16 *scx_cpu_to_cid_tbl;
-@@ -282,7 +282,7 @@ __bpf_kfunc_start_defs();
-  * @cpu_to_cid__sz: must be nr_cpu_ids * sizeof(s32) bytes
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-- * May only be called from ops.init() of the root scheduler. Replace the
-+ * May only be called from ops.init_cids() of the root scheduler. Replace the
-  * topology-probed cid mapping with the caller-provided one. Each possible cpu
-  * must map to a unique cid in [0, num_possible_cpus()). Topo info is cleared.
-  * On invalid input, trigger scx_error() to abort the scheduler.
-@@ -309,11 +309,6 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
- 		return;
- 	}
++s32 *scx_cid_to_shard;
++s32 *scx_shard_node;
++struct scx_cid_shard *scx_cid_shard_ranges;
+ struct scx_cid_topo *scx_cid_topo;
  
--	if (scx_parent(sch)) {
--		scx_error(sch, "scx_bpf_cid_override() only allowed from root sched");
--		return;
--	}
--
- 	if (cpu_to_cid__sz != nr_cpu_ids * sizeof(s32)) {
- 		scx_error(sch, "scx_bpf_cid_override: expected %zu bytes, got %u",
- 			  nr_cpu_ids * sizeof(s32), cpu_to_cid__sz);
-@@ -645,13 +640,13 @@ __bpf_kfunc void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out__uninit,
- 
- __bpf_kfunc_end_defs();
- 
--BTF_KFUNCS_START(scx_kfunc_ids_init)
-+BTF_KFUNCS_START(scx_kfunc_ids_init_cids)
- BTF_ID_FLAGS(func, scx_bpf_cid_override, KF_IMPLICIT_ARGS | KF_SLEEPABLE)
--BTF_KFUNCS_END(scx_kfunc_ids_init)
-+BTF_KFUNCS_END(scx_kfunc_ids_init_cids)
- 
--static const struct btf_kfunc_id_set scx_kfunc_set_init = {
-+static const struct btf_kfunc_id_set scx_kfunc_set_init_cids = {
- 	.owner	= THIS_MODULE,
--	.set	= &scx_kfunc_ids_init,
-+	.set	= &scx_kfunc_ids_init_cids,
- 	.filter	= scx_kfunc_context_filter,
- };
- 
-@@ -668,7 +663,7 @@ static const struct btf_kfunc_id_set scx_kfunc_set_cid = {
- 
- int scx_cid_kfunc_init(void)
- {
--	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_init) ?:
-+	return register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_init_cids) ?:
- 		register_btf_kfunc_id_set(BPF_PROG_TYPE_STRUCT_OPS, &scx_kfunc_set_cid) ?:
- 		register_btf_kfunc_id_set(BPF_PROG_TYPE_TRACING, &scx_kfunc_set_cid) ?:
- 		register_btf_kfunc_id_set(BPF_PROG_TYPE_SYSCALL, &scx_kfunc_set_cid);
-diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-index 54b10df32fd5..cd0d4b9f1088 100644
---- a/kernel/sched/ext/cid.h
-+++ b/kernel/sched/ext/cid.h
-@@ -51,7 +51,7 @@ struct scx_sched;
- extern s16 *scx_cid_to_cpu_tbl;
- extern s16 *scx_cpu_to_cid_tbl;
- extern struct scx_cid_topo *scx_cid_topo;
--extern struct btf_id_set8 scx_kfunc_ids_init;
-+extern struct btf_id_set8 scx_kfunc_ids_init_cids;
- 
- void scx_cmask_clear(struct scx_cmask *m);
- void scx_cmask_fill(struct scx_cmask *m);
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index fb33940ca0a6..7b5eccf0b0cc 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -6723,15 +6723,19 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 
- 	scx_idle_enable(ops);
- 
--	if (sch->ops.init) {
--		ret = SCX_CALL_OP_RET(sch, init, NULL);
-+	/*
-+	 * A cid-form scheduler finalizes its cid layout in ops.init_cids(),
-+	 * which may call scx_bpf_cid_override(). Run it before ops.init() so
-+	 * the final layout is in effect.
-+	 */
-+	if (sch->is_cid_type && sch->ops_cid.init_cids) {
-+		ret = SCX_CALL_OP_RET(sch, init_cids, NULL);
- 		if (ret) {
--			ret = scx_ops_sanitize_err(sch, "init", ret);
-+			ret = scx_ops_sanitize_err(sch, "init_cids", ret);
- 			cpus_read_unlock();
--			scx_error(sch, "ops.init() failed (%d)", ret);
-+			scx_error(sch, "ops.init_cids() failed (%d)", ret);
- 			goto err_disable;
- 		}
--		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
- 	}
- 
- 	ret = scx_arena_pool_init(sch);
-@@ -6746,6 +6750,17 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		goto err_disable;
- 	}
- 
-+	if (sch->ops.init) {
-+		ret = SCX_CALL_OP_RET(sch, init, NULL);
-+		if (ret) {
-+			ret = scx_ops_sanitize_err(sch, "init", ret);
-+			cpus_read_unlock();
-+			scx_error(sch, "ops.init() failed (%d)", ret);
-+			goto err_disable;
-+		}
-+		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
-+	}
-+
- 	for (i = SCX_OPI_CPU_HOTPLUG_BEGIN; i < SCX_OPI_CPU_HOTPLUG_END; i++)
- 		if (((void (**)(void))ops)[i])
- 			set_bit(i, sch->has_op);
-@@ -7182,6 +7197,7 @@ static int bpf_scx_check_member(const struct btf_type *t,
- #endif
- 	case offsetof(struct sched_ext_ops, cpu_online):
- 	case offsetof(struct sched_ext_ops, cpu_offline):
-+	case offsetof(struct sched_ext_ops, init_cids):
- 	case offsetof(struct sched_ext_ops, init):
- 	case offsetof(struct sched_ext_ops, exit):
- 	case offsetof(struct sched_ext_ops, sub_attach):
-@@ -7340,6 +7356,7 @@ static s32 sched_ext_ops__sub_attach(struct scx_sub_attach_args *args) { return
- static void sched_ext_ops__sub_detach(struct scx_sub_detach_args *args) {}
- static void sched_ext_ops__cpu_online(s32 cpu) {}
- static void sched_ext_ops__cpu_offline(s32 cpu) {}
-+static s32 sched_ext_ops__init_cids(void) { return -EINVAL; }
- static s32 sched_ext_ops__init(void) { return -EINVAL; }
- static void sched_ext_ops__exit(struct scx_exit_info *info) {}
- static void sched_ext_ops__dump(struct scx_dump_ctx *ctx) {}
-@@ -7381,6 +7398,7 @@ static struct sched_ext_ops __bpf_ops_sched_ext_ops = {
- 	.sub_detach		= sched_ext_ops__sub_detach,
- 	.cpu_online		= sched_ext_ops__cpu_online,
- 	.cpu_offline		= sched_ext_ops__cpu_offline,
-+	.init_cids		= sched_ext_ops__init_cids,
- 	.init			= sched_ext_ops__init,
- 	.exit			= sched_ext_ops__exit,
- 	.dump			= sched_ext_ops__dump,
-@@ -7443,6 +7461,7 @@ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
- 	.sub_detach		= sched_ext_ops__sub_detach,
- 	.cid_online		= sched_ext_ops__cpu_online,
- 	.cid_offline		= sched_ext_ops__cpu_offline,
-+	.init_cids		= sched_ext_ops__init_cids,
- 	.init			= sched_ext_ops__init,
- 	.exit			= sched_ext_ops__exit,
- 	.dump			= sched_ext_ops__dump,
-@@ -9701,7 +9720,7 @@ BTF_KFUNCS_END(scx_kfunc_ids_cpu_only)
-  */
- enum scx_kf_allow_flags {
- 	SCX_KF_ALLOW_UNLOCKED		= 1 << 0,
--	SCX_KF_ALLOW_INIT		= 1 << 1,
-+	SCX_KF_ALLOW_INIT_CIDS		= 1 << 1,
- 	SCX_KF_ALLOW_CPU_RELEASE	= 1 << 2,
- 	SCX_KF_ALLOW_DISPATCH		= 1 << 3,
- 	SCX_KF_ALLOW_ENQUEUE		= 1 << 4,
-@@ -9733,7 +9752,8 @@ static const u32 scx_kf_allow_flags[] = {
- 	[SCX_OP_IDX(sub_detach)]	= SCX_KF_ALLOW_UNLOCKED,
- 	[SCX_OP_IDX(cpu_online)]	= SCX_KF_ALLOW_UNLOCKED,
- 	[SCX_OP_IDX(cpu_offline)]	= SCX_KF_ALLOW_UNLOCKED,
--	[SCX_OP_IDX(init)]		= SCX_KF_ALLOW_UNLOCKED | SCX_KF_ALLOW_INIT,
-+	[SCX_OP_IDX(init_cids)]		= SCX_KF_ALLOW_UNLOCKED | SCX_KF_ALLOW_INIT_CIDS,
-+	[SCX_OP_IDX(init)]		= SCX_KF_ALLOW_UNLOCKED,
- 	[SCX_OP_IDX(exit)]		= SCX_KF_ALLOW_UNLOCKED,
- };
- 
-@@ -9748,7 +9768,7 @@ static const u32 scx_kf_allow_flags[] = {
- int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- {
- 	bool in_unlocked = btf_id_set8_contains(&scx_kfunc_ids_unlocked, kfunc_id);
--	bool in_init = btf_id_set8_contains(&scx_kfunc_ids_init, kfunc_id);
-+	bool in_init_cids = btf_id_set8_contains(&scx_kfunc_ids_init_cids, kfunc_id);
- 	bool in_select_cpu = btf_id_set8_contains(&scx_kfunc_ids_select_cpu, kfunc_id);
- 	bool in_enqueue = btf_id_set8_contains(&scx_kfunc_ids_enqueue_dispatch, kfunc_id);
- 	bool in_dispatch = btf_id_set8_contains(&scx_kfunc_ids_dispatch, kfunc_id);
-@@ -9759,7 +9779,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	u32 moff, flags;
- 
- 	/* Not an SCX kfunc - allow. */
--	if (!(in_unlocked || in_init || in_select_cpu || in_enqueue || in_dispatch ||
-+	if (!(in_unlocked || in_init_cids || in_select_cpu || in_enqueue || in_dispatch ||
- 	      in_cpu_release || in_idle || in_any))
- 		return 0;
- 
-@@ -9811,7 +9831,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 
- 	if ((flags & SCX_KF_ALLOW_UNLOCKED) && in_unlocked)
- 		return 0;
--	if ((flags & SCX_KF_ALLOW_INIT) && in_init)
-+	if ((flags & SCX_KF_ALLOW_INIT_CIDS) && in_init_cids)
- 		return 0;
- 	if ((flags & SCX_KF_ALLOW_CPU_RELEASE) && in_cpu_release)
- 		return 0;
-@@ -9867,6 +9887,7 @@ static int __init scx_init(void)
- 	CID_OFFSET_MATCH(dump_task, dump_task);
- 	CID_OFFSET_MATCH(sub_attach, sub_attach);
- 	CID_OFFSET_MATCH(sub_detach, sub_detach);
-+	CID_OFFSET_MATCH(init_cids, init_cids);
- 	CID_OFFSET_MATCH(init, init);
- 	CID_OFFSET_MATCH(exit, exit);
- #ifdef CONFIG_EXT_GROUP_SCHED
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 2777e50ef6f6..902244dc27ff 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -780,9 +780,18 @@ struct sched_ext_ops {
- 	void (*cpu_offline)(s32 cpu);
- 
- 	/*
--	 * All CPU hotplug ops must come before ops.init().
-+	 * All CPU hotplug ops must come before ops.init_cids().
- 	 */
- 
-+	/**
-+	 * @init_cids: Finalize the cid layout (cid-form only)
-+	 *
-+	 * Runs after the default cid layout is built, before ops.init(). A
-+	 * cid-form scheduler may call scx_bpf_cid_override() here for a custom
-+	 * layout. Ignored for cpu-form schedulers.
-+	 */
-+	s32 (*init_cids)(void);
-+
- 	/**
- 	 * @init: Initialize the BPF scheduler
- 	 */
-@@ -958,6 +967,7 @@ struct sched_ext_ops_cid {
- 	void (*sub_detach)(struct scx_sub_detach_args *args);
- 	void (*cid_online)(s32 cid);
- 	void (*cid_offline)(s32 cid);
-+	s32 (*init_cids)(void);
- 	s32 (*init)(void);
- 	void (*exit)(struct scx_exit_info *info);
- 
-@@ -982,8 +992,8 @@ enum scx_opi {
- 	SCX_OPI_NORMAL_BEGIN		= 0,
- 	SCX_OPI_NORMAL_END		= SCX_OP_IDX(cpu_online),
- 	SCX_OPI_CPU_HOTPLUG_BEGIN	= SCX_OP_IDX(cpu_online),
--	SCX_OPI_CPU_HOTPLUG_END		= SCX_OP_IDX(init),
--	SCX_OPI_END			= SCX_OP_IDX(init),
-+	SCX_OPI_CPU_HOTPLUG_END		= SCX_OP_IDX(init_cids),
-+	SCX_OPI_END			= SCX_OP_IDX(init_cids),
- };
+ #define SCX_CID_TOPO_NEG	(struct scx_cid_topo) {				\
+ 	.core_cid = -1, .core_idx = -1, .llc_cid = -1, .llc_idx = -1,		\
+-	.node_cid = -1, .node_idx = -1,						\
++	.node_cid = -1, .node_idx = -1, .shard_cid = -1, .shard_idx = -1,	\
+ }
  
  /*
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index fd9a82a67627..2df7c53992dc 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -54,13 +54,9 @@ const volatile u32 max_tasks;
- 
- /*
-  * Optional cid-override test harness. When cid_override_mode is non-zero,
-- * qmap_init() calls scx_bpf_cid_override() with the caller-supplied
-- * cpu_to_cid array to exercise the kfunc's acceptance and error paths.
-- *
-- *   0 = disabled
-- *   1 = valid reverse mapping
-- *   2 = invalid: duplicate cid assignment
-- *   3 = invalid: out-of-range cid
-+ * qmap_init_cids() calls scx_bpf_cid_override() with the caller-supplied
-+ * cpu_to_cid array to exercise the kfunc's acceptance and error paths. See enum
-+ * qmap_cid_override for the modes.
-  */
- const volatile u32 cid_override_mode;
- /*
-@@ -1067,6 +1063,29 @@ static int lowpri_timerfn(void *map, int *key, struct bpf_timer *timer)
- 	return 0;
+@@ -43,11 +47,40 @@ static const struct cpumask *cpu_llc_mask(int cpu, struct cpumask *fallbacks)
+ 	return &ci->info_list[ci->num_leaves - 1].shared_cpu_map;
  }
  
 +/*
-+ * Custom cid layout for the cid-override test. On invalid input the kfunc
-+ * scx_error()s and aborts the scheduler.
++ * Compute per-LLC shard layout. Each shard holds at most @shard_size cids, and
++ * in any case no more than SCX_CID_SHARD_MAX_CPUS. Cores are spread as evenly
++ * as possible across shards so cpu count is balanced: the first *@nr_large_p
++ * shards get (*@cores_per_shard_p + 1) cores, the rest get *@cores_per_shard_p.
 + */
-+s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init_cids)
++static void calc_shard_layout(const struct cpumask *llc_cpus, u32 shard_size,
++			      u32 *cores_per_shard_p, u32 *nr_large_p)
 +{
-+	u32 nr_cpu_ids = scx_bpf_nr_cpu_ids();
++	u32 nr_cores = 0, nr_cpus = 0, nr_shards;
++	int cpu;
 +
-+	if (!cid_override_mode)
-+		return 0;
-+
-+	/* bound the count so the verifier accepts cpu_to_cid's mem/len pair */
-+	if (nr_cpu_ids > SCX_QMAP_MAX_CPUS) {
-+		scx_bpf_error("nr_cpu_ids=%u exceeds SCX_QMAP_MAX_CPUS=%d",
-+			      nr_cpu_ids, SCX_QMAP_MAX_CPUS);
-+		return -EINVAL;
++	for_each_cpu(cpu, llc_cpus) {
++		nr_cpus++;
++		if (cpumask_first(topology_sibling_cpumask(cpu)) == cpu)
++			nr_cores++;
 +	}
 +
-+	scx_bpf_cid_override((const s32 *)cid_override_cpu_to_cid,
-+			     nr_cpu_ids * sizeof(s32));
-+	return 0;
++	nr_shards = max_t(u32, 1, DIV_ROUND_UP(nr_cpus, shard_size));
++	nr_shards = max_t(u32, nr_shards,
++			  DIV_ROUND_UP(nr_cpus, SCX_CID_SHARD_MAX_CPUS));
++
++	*cores_per_shard_p = nr_cores / nr_shards;
++	*nr_large_p = nr_cores % nr_shards;
 +}
 +
- s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
+ /* Allocate the cid tables once on first enable; never freed. */
+ static s32 scx_cid_arrays_alloc(void)
  {
- 	u8 __arena *slab;
-@@ -1089,16 +1108,6 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 		return -EINVAL;
+ 	u32 npossible = num_possible_cpus();
+ 	s16 *cid_to_cpu, *cpu_to_cid;
++	s32 *cid_to_shard;
++	s32 *shard_node;
++	struct scx_cid_shard *cid_shard_ranges;
+ 	struct scx_cid_topo *cid_topo;
+ 
+ 	if (scx_cid_to_cpu_tbl)
+@@ -55,17 +88,27 @@ static s32 scx_cid_arrays_alloc(void)
+ 
+ 	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
+ 	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
++	cid_to_shard = kzalloc_objs(*scx_cid_to_shard, npossible, GFP_KERNEL);
++	shard_node = kmalloc_objs(*scx_shard_node, npossible, GFP_KERNEL);
++	cid_shard_ranges = kzalloc_objs(*scx_cid_shard_ranges, npossible, GFP_KERNEL);
+ 	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
+ 
+-	if (!cid_to_cpu || !cpu_to_cid || !cid_topo) {
++	if (!cid_to_cpu || !cpu_to_cid || !cid_to_shard || !shard_node ||
++	    !cid_shard_ranges || !cid_topo) {
+ 		kfree(cid_to_cpu);
+ 		kfree(cpu_to_cid);
++		kfree(cid_to_shard);
++		kfree(shard_node);
++		kfree(cid_shard_ranges);
+ 		kfree(cid_topo);
+ 		return -ENOMEM;
  	}
  
--	/*
--	 * cid-override test hook. Must run before anything that reads the
--	 * cid space (scx_bpf_nr_cids, cmask_init, etc.). On invalid input,
--	 * the kfunc calls scx_error() which aborts the scheduler.
--	 */
--	if (cid_override_mode) {
--		scx_bpf_cid_override((const s32 *)cid_override_cpu_to_cid,
--				     nr_cpu_ids * sizeof(s32));
--	}
--
+ 	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
+ 	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
++	WRITE_ONCE(scx_cid_to_shard, cid_to_shard);
++	WRITE_ONCE(scx_shard_node, shard_node);
++	WRITE_ONCE(scx_cid_shard_ranges, cid_shard_ranges);
+ 	WRITE_ONCE(scx_cid_topo, cid_topo);
+ 	return 0;
+ }
+@@ -90,17 +133,29 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 	cpumask_var_t online_no_topo __free(free_cpumask_var) = CPUMASK_VAR_NULL;
+ 	u32 next_cid = 0;
+ 	s32 next_node_idx = 0, next_llc_idx = 0, next_core_idx = 0;
+-	s32 cpu, ret;
++	s32 next_shard_idx = 0;
++	u32 shard_size, max_cids;
++	u32 notopo_in_shard;
++	s32 notopo_shard_cid, notopo_shard_idx;
++	s32 cpu, cid, si, ret;
+ 
+ 	/* CMASK_MAX_WORDS in cid.bpf.h covers NR_CPUS up to 8192 */
+ 	BUILD_BUG_ON(NR_CPUS > 8192);
+ 
+ 	lockdep_assert_cpus_held();
+ 
++	shard_size = sch->ops.cid_shard_size ?: SCX_CID_SHARD_SIZE_DFL;
++	max_cids = min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS);
++
+ 	ret = scx_cid_arrays_alloc();
+ 	if (ret)
+ 		return ret;
+ 
++	/* clear shard ranges and reset shard_node for repopulate */
++	memset(scx_cid_shard_ranges, 0, num_possible_cpus() * sizeof(*scx_cid_shard_ranges));
++	for (si = 0; si < num_possible_cpus(); si++)
++		scx_shard_node[si] = NUMA_NO_NODE;
++
+ 	if (!zalloc_cpumask_var(&to_walk, GFP_KERNEL) ||
+ 	    !zalloc_cpumask_var(&node_scratch, GFP_KERNEL) ||
+ 	    !zalloc_cpumask_var(&llc_scratch, GFP_KERNEL) ||
+@@ -142,29 +197,60 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 			const struct cpumask *llc_mask = cpu_llc_mask(ncpu, llc_fallback);
+ 			s32 llc_cid = next_cid;
+ 			s32 llc_idx = next_llc_idx++;
++			u32 cores_per_shard, nr_large;
++			u32 shard_local = 0, cores_in_shard = 0, cids_in_shard = 0;
++			s32 shard_cid, shard_idx;
+ 
+ 			/* llc_scratch = node_scratch & this llc */
+ 			cpumask_and(llc_scratch, node_scratch, llc_mask);
+ 			if (WARN_ON_ONCE(!cpumask_test_cpu(ncpu, llc_scratch)))
+ 				return -EINVAL;
+ 
++			calc_shard_layout(llc_scratch, shard_size, &cores_per_shard, &nr_large);
++			shard_cid = next_cid;
++			shard_idx = next_shard_idx++;
++			scx_shard_node[shard_idx] = nid;
++
+ 			while (!cpumask_empty(llc_scratch)) {
+ 				s32 lcpu = cpumask_first(llc_scratch);
+ 				const struct cpumask *sib = topology_sibling_cpumask(lcpu);
+ 				s32 core_cid = next_cid;
+ 				s32 core_idx = next_core_idx++;
+ 				s32 ccpu;
++				u32 max_cores, cids_in_core;
+ 
+ 				/* core_scratch = llc_scratch & this core */
+ 				cpumask_and(core_scratch, llc_scratch, sib);
+ 				if (WARN_ON_ONCE(!cpumask_test_cpu(lcpu, core_scratch)))
+ 					return -EINVAL;
+ 
++				/*
++				 * Advance to a new shard when either core or
++				 * cid count reaches max. The latter bounds
++				 * shard sizes under uneven SMT. Never start an
++				 * empty shard.
++				 */
++				cids_in_core = cpumask_weight(core_scratch);
++				max_cores = cores_per_shard + (shard_local < nr_large ? 1 : 0);
++				if (cores_in_shard &&
++				    (cores_in_shard >= max_cores ||
++				     cids_in_shard + cids_in_core > max_cids)) {
++					shard_local++;
++					cores_in_shard = 0;
++					cids_in_shard = 0;
++					shard_cid = next_cid;
++					shard_idx = next_shard_idx++;
++					scx_shard_node[shard_idx] = nid;
++				}
++				cores_in_shard++;
++				cids_in_shard += cids_in_core;
++
+ 				for_each_cpu(ccpu, core_scratch) {
+ 					s32 cid = next_cid++;
+ 
+ 					scx_cid_to_cpu_tbl[cid] = ccpu;
+ 					scx_cpu_to_cid_tbl[ccpu] = cid;
++					scx_cid_to_shard[cid] = shard_idx;
+ 					scx_cid_topo[cid] = (struct scx_cid_topo){
+ 						.core_cid = core_cid,
+ 						.core_idx = core_idx,
+@@ -172,6 +258,8 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 						.llc_idx = llc_idx,
+ 						.node_cid = node_cid,
+ 						.node_idx = node_idx,
++						.shard_cid = shard_cid,
++						.shard_idx = shard_idx,
+ 					};
+ 
+ 					cpumask_clear_cpu(ccpu, llc_scratch);
+@@ -184,12 +272,17 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 
  	/*
- 	 * Allocate the task_ctx slab in arena and thread the entire slab onto
- 	 * the free list. max_tasks is set by userspace before load. Each entry
-@@ -1235,6 +1244,7 @@ SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .cgroup_set_bandwidth	= (void *)qmap_cgroup_set_bandwidth,
- 	       .sub_attach		= (void *)qmap_sub_attach,
- 	       .sub_detach		= (void *)qmap_sub_detach,
-+	       .init_cids		= (void *)qmap_init_cids,
- 	       .init			= (void *)qmap_init,
- 	       .exit			= (void *)qmap_exit,
- 	       .timeout_ms		= 5000U,
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index f1eaebcab5dc..c0b5cab579d6 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -157,11 +157,11 @@ int main(int argc, char **argv)
- 			u32 mode, i;
+ 	 * No-topo section: any possible cpu without a cid - normally just the
+-	 * not-online ones. Collect any currently-online cpus that land here in
+-	 * @online_no_topo so we can warn about them at the end.
++	 * not-online ones. Pack into shards of up to min(@shard_size,
++	 * SCX_CID_SHARD_MAX_CPUS) cids so that every cid has a valid shard
++	 * assignment and the hard cap holds even with a large @shard_size.
++	 * Collect any currently-online cpus that land here in @online_no_topo
++	 * so we can warn about them at the end.
+ 	 */
+-	for_each_cpu(cpu, cpu_possible_mask) {
+-		s32 cid;
++	notopo_in_shard = min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS);
++	notopo_shard_cid = -1;
++	notopo_shard_idx = -1;
  
- 			if (!strcmp(optarg, "shuffle"))
--				mode = 1;
-+				mode = QMAP_CID_OVR_SHUFFLE;
- 			else if (!strcmp(optarg, "bad-dup"))
--				mode = 2;
-+				mode = QMAP_CID_OVR_BAD_DUP;
- 			else if (!strcmp(optarg, "bad-range"))
--				mode = 3;
-+				mode = QMAP_CID_OVR_BAD_RANGE;
- 			else {
- 				fprintf(stderr, "unknown cid-override mode '%s'\n", optarg);
- 				return 1;
-@@ -170,14 +170,14 @@ int main(int argc, char **argv)
++	for_each_cpu(cpu, cpu_possible_mask) {
+ 		if (__scx_cpu_to_cid(cpu) != -1)
+ 			continue;
+ 		if (cpu_online(cpu))
+@@ -198,7 +291,18 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 		cid = next_cid++;
+ 		scx_cid_to_cpu_tbl[cid] = cpu;
+ 		scx_cpu_to_cid_tbl[cpu] = cid;
++
++		if (notopo_in_shard >= min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS)) {
++			notopo_shard_cid = cid;
++			notopo_shard_idx = next_shard_idx++;
++			notopo_in_shard = 0;
++		}
++		notopo_in_shard++;
++
++		scx_cid_to_shard[cid] = notopo_shard_idx;
+ 		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
++		scx_cid_topo[cid].shard_cid = notopo_shard_cid;
++		scx_cid_topo[cid].shard_idx = notopo_shard_idx;
+ 	}
  
- 			/* shuffle: reversed cpu_to_cid, bad-dup: dup cid 0, bad-range: identity */
- 			for (i = 0; i < nr_cpus; i++) {
--				if (mode == 1)
-+				if (mode == QMAP_CID_OVR_SHUFFLE)
- 					skel->bss->cid_override_cpu_to_cid[i] = nr_cpus - 1 - i;
- 				else
- 					skel->bss->cid_override_cpu_to_cid[i] = i;
- 			}
--			if (mode == 2 && nr_cpus >= 2)
-+			if (mode == QMAP_CID_OVR_BAD_DUP && nr_cpus >= 2)
- 				skel->bss->cid_override_cpu_to_cid[1] = 0;
--			if (mode == 3)
-+			if (mode == QMAP_CID_OVR_BAD_RANGE)
- 				skel->bss->cid_override_cpu_to_cid[0] = (s32)nr_cpus;
- 			break;
- 		}
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index 808237540f5c..3bcc3579839d 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -27,6 +27,14 @@
+ 	if (!cpumask_empty(llc_fallback))
+@@ -208,6 +312,20 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 		pr_warn("scx_cid: online cpus with no usable topology: %*pbl\n",
+ 			cpumask_pr_args(online_no_topo));
+ 
++	/*
++	 * Fill cid_shard_ranges[] from cid_to_shard[]. Shards are contiguous
++	 * cid ranges by construction: base_cid is the first cid landing in a
++	 * shard, nr_cids is the count.
++	 */
++	for (cid = 0; cid < next_cid; cid++) {
++		s32 sidx = scx_cid_to_shard[cid];
++
++		if (scx_cid_shard_ranges[sidx].nr_cids == 0)
++			scx_cid_shard_ranges[sidx].base_cid = cid;
++		scx_cid_shard_ranges[sidx].nr_cids++;
++	}
++
++	scx_nr_cid_shards = next_shard_idx;
+ 	return 0;
+ }
+ 
+diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
+index cd0d4b9f1088..cdc18a7a48f5 100644
+--- a/kernel/sched/ext/cid.h
++++ b/kernel/sched/ext/cid.h
+@@ -48,8 +48,12 @@ struct scx_sched;
+  * See the comment above the table definitions in cid.c for the
+  * memory-ordering and visibility contract.
   */
- #define SCX_QMAP_MAX_CPUS	1024
++extern u32 scx_nr_cid_shards;
+ extern s16 *scx_cid_to_cpu_tbl;
+ extern s16 *scx_cpu_to_cid_tbl;
++extern s32 *scx_cid_to_shard;
++extern s32 *scx_shard_node;
++extern struct scx_cid_shard *scx_cid_shard_ranges;
+ extern struct scx_cid_topo *scx_cid_topo;
+ extern struct btf_id_set8 scx_kfunc_ids_init_cids;
  
-+/* -C cid-override test modes. Selects cid_override_mode in scx_qmap.bpf.c. */
-+enum qmap_cid_override {
-+	QMAP_CID_OVR_OFF	= 0,	/* disabled */
-+	QMAP_CID_OVR_SHUFFLE	= 1,	/* valid reversed cpu->cid mapping */
-+	QMAP_CID_OVR_BAD_DUP	= 2,	/* invalid: duplicate cid assignment */
-+	QMAP_CID_OVR_BAD_RANGE	= 3,	/* invalid: out-of-range cid */
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 7b5eccf0b0cc..f12691c839ce 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -7172,6 +7172,9 @@ static int bpf_scx_init_member(const struct btf_type *t,
+ 	case offsetof(struct sched_ext_ops, hotplug_seq):
+ 		ops->hotplug_seq = *(u64 *)(udata + moff);
+ 		return 1;
++	case offsetof(struct sched_ext_ops, cid_shard_size):
++		ops->cid_shard_size = *(u32 *)(udata + moff);
++		return 1;
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	case offsetof(struct sched_ext_ops, sub_cgroup_id):
+ 		ops->sub_cgroup_id = *(u64 *)(udata + moff);
+@@ -9865,6 +9868,7 @@ static int __init scx_init(void)
+ 	CID_OFFSET_MATCH(timeout_ms, timeout_ms);
+ 	CID_OFFSET_MATCH(exit_dump_len, exit_dump_len);
+ 	CID_OFFSET_MATCH(hotplug_seq, hotplug_seq);
++	CID_OFFSET_MATCH(cid_shard_size, cid_shard_size);
+ 	CID_OFFSET_MATCH(sub_cgroup_id, sub_cgroup_id);
+ 	/* shared callbacks: the union view requires byte-for-byte offset match */
+ 	CID_OFFSET_MATCH(enqueue, enqueue);
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 902244dc27ff..6560a0fa3efa 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -845,6 +845,18 @@ struct sched_ext_ops {
+ 	 */
+ 	u64 hotplug_seq;
+ 
++	/**
++	 * @cid_shard_size: Target number of CIDs per shard
++	 *
++	 * Shards are contiguous CID ranges used as operation and locking
++	 * domains for sub-scheduling. Each LLC is divided into ceil(nr_cpus /
++	 * @cid_shard_size) shards, then cores are distributed across them
++	 * evenly. If one core has more logical CPUs than @cid_shard_size, its
++	 * shard will become larger than @cid_shard_size. Values above
++	 * SCX_CID_SHARD_MAX_CPUS are capped. 0 means use the default (24).
++	 */
++	u32 cid_shard_size;
++
+ 	/**
+ 	 * @cgroup_id: When >1, attach the scheduler as a sub-scheduler on the
+ 	 * specified cgroup.
+@@ -977,6 +989,7 @@ struct sched_ext_ops_cid {
+ 	u32 timeout_ms;
+ 	u32 exit_dump_len;
+ 	u64 hotplug_seq;
++	u32 cid_shard_size;
+ 	u64 sub_cgroup_id;
+ 	char name[SCX_OPS_NAME_LEN];
+ 
+diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
+index bc74eafd43f1..b31d12931999 100644
+--- a/kernel/sched/ext/types.h
++++ b/kernel/sched/ext/types.h
+@@ -47,11 +47,16 @@ enum scx_consts {
+ };
+ 
+ /*
+- * Per-cid topology info. For each topology level (core, LLC, node), records
+- * the first cid in the unit and its global index. Global indices are
+- * consecutive integers assigned in cid-walk order, so e.g. core_idx ranges
+- * over [0, nr_cores_at_init) with no gaps. No-topo cids have all fields set
+- * to -1.
++ * Per-cid topology info. For each topology level (core, LLC, node) and shard,
++ * records the first cid in the unit and its global index. Global indices are
++ * consecutive integers assigned in cid-walk order, so e.g. core_idx ranges over
++ * [0, nr_cores_at_init) with no gaps. No-topo cids have core/LLC/node fields
++ * set to -1 but always have valid shard assignments.
++ *
++ * Shards are contiguous CID ranges used as scalable locking/work domains for
++ * sub-scheduler operations. By default each LLC becomes one shard, split into
++ * smaller shards if the LLC exceeds the target size. No-topo cids are packed
++ * into their own max-sized shards.
+  *
+  * @core_cid: first cid of this cid's core (smt-sibling group)
+  * @core_idx: global index of that core, in [0, nr_cores_at_init)
+@@ -59,6 +64,8 @@ enum scx_consts {
+  * @llc_idx: global index of that LLC, in [0, nr_llcs_at_init)
+  * @node_cid: first cid of this cid's NUMA node
+  * @node_idx: global index of that node, in [0, nr_nodes_at_init)
++ * @shard_cid: first cid of this cid's shard
++ * @shard_idx: global index of that shard, in [0, scx_nr_cid_shards)
+  */
+ struct scx_cid_topo {
+ 	s32 core_cid;
+@@ -67,6 +74,24 @@ struct scx_cid_topo {
+ 	s32 llc_idx;
+ 	s32 node_cid;
+ 	s32 node_idx;
++	s32 shard_cid;
++	s32 shard_idx;
 +};
 +
- struct cpu_ctx {
- 	u64 dsp_idx;		/* dispatch index */
- 	u64 dsp_cnt;		/* remaining count */
++enum scx_cid_consts {
++	SCX_CID_SHARD_SIZE_DFL		= 24,
++	SCX_CID_SHARD_MAX_CPUS		= 512,
++};
++
++/*
++ * Per-shard metadata for O(1) shard->cid-range lookup.
++ *
++ * @base_cid: first cid of the shard
++ * @nr_cids: number of cids in the shard
++ */
++struct scx_cid_shard {
++	s32			base_cid;
++	s32			nr_cids;
+ };
+ 
+ /*
 -- 
 2.55.0
 
