@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C189F3EF640;
-	Thu,  9 Jul 2026 22:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AAB3F0752;
+	Thu,  9 Jul 2026 22:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637477; cv=none; b=loKlKbSDbwWh5SUegGdCIfUU9lSwJjfypaUxAg5N+wHEQKzh8adAALXkelI1NBQKqSS293jBTWecrCxK4qXcIXSiusaLvSQebXSmSzrmqHzBYxkx4ZYGmP03FWYSrnx/Xz2XZPjiAMi6qCpHEtquhqTylp3s2b4B0sVrGJpystU=
+	t=1783637478; cv=none; b=nZTBP0tYA7SkplDP16hWkUDQnfpSgT1zJIIFFyYAUNe/l+LxWIFY8VKAPGUGipRMDkYmIsPMkIVJd851DWSZ5ofeIJLHewN6bc8wSYrv4PjM0QLjtgkknUgj0auiB1LT8y/VVxNaiNvOfubWTFVD9LsuXqz+fF/E2r3kzyAmaEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637477; c=relaxed/simple;
-	bh=ASkeRa7OwAX9QHy+Mm5bJK2TIm638JxYEQqyhPEvnGQ=;
+	s=arc-20240116; t=1783637478; c=relaxed/simple;
+	bh=8B5ySeswb13wqS9oEKUaRQm/Ghgyk6iLc3T4HRgeDWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XsGCCwvQtvLz+tq3wnCb70FdzZNR2jhMsz+RjomyQ8wJJARQ8oEJ5iDWe26X5P4SmokGqwXJbUYuzSR4KXIKt/l1TAIHBl40aoDuSSmssh/HEQRvtzZ5b7q5OZFqr/JuPMBtNErdBqaLkiO/S7/wOwwgRN35qjThdRjkH+HnZp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVkX3FYa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m7StyS5nbh8Kep0jQuDBZvqMzN5Xo4+J6jP5+dAdCtBhXN2ojgayJZQFeddDb/r8YUvNVeaAXvQdbJudBQJGjZHYInZj8yIsVa6iu/CC7YLrc/GdtecDP/jJboi3UpyvWCu/dFtai4sOncUn+vXtR5lhE7xaq6D1LknZBeT7KN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VZvEzWuB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVkX3FYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AA21F00A3D;
-	Thu,  9 Jul 2026 22:51:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VZvEzWuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF7E1F000E9;
+	Thu,  9 Jul 2026 22:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637475;
-	bh=uxVK0v/ubg1vj0JzXD+i5gLJrDoUjB5EjnxNEyoZWNU=;
+	s=k20260515; t=1783637476;
+	bh=iSM+m43QXK+m4/r6/TQ8Lm7qAn8+SwIi+JGrJPc889I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVkX3FYab5vFoXlmoL7/Zcv8UxVtqqDRik6QiN+EovXzuGatr4VVDZAV+CkhXEbXR
-	 kVYwStse3u61RguaiPnzhG2jfmm+IILgDUtomJZDkf/E7hH5zEQZqqJnxWPkwc+paA
-	 dan0ideXqHOyG5pPTljFsipROZW1MQRtRZOjnu2y6jWOg7kX63O6mFlsdEtuZzXvFU
-	 pCVr5ot1okIPMHbRDyyueoKg4theqf+GNTVtnNN+JR7o3PqRtqZCgPXH48/RTEsTJm
-	 D5IP4GafunzKSMPcphVbb2eCjeRLAVmhZVruQeeJqRQsAAMkrgiWNP1DJPKBFYwdrl
-	 vXYsRJPeBNdkA==
+	b=VZvEzWuB+J+zusCUnTSrQ+GlPxNDDuF2Kms1oEguSuK/I5t28q9e+1qobI0XMJ/qW
+	 zXLbGs2IAr/+pAj+bsXlbl3aCNHJ51jbMvyCfKeOntysMIhK7HN0QkI1wzqsp8BoJa
+	 XvcjmnwwT5M/DUTTZiMSTvYu5kOcPR79DGP+hKgSMEAboAQwEfOo78fvvgKbGpUJ47
+	 3g6MMHIpQgobkvGD+U+IJO0ImqXnEXUOUuoeshHmSNzHnVigzasrmIS0XZJ0rqZSyj
+	 xscWSErUM/B0nOsexPZI6aav2iVQgBPOtrCf+1d75fN81C4nj4kuY9Q3O2ECc/xrGq
+	 9MEWFw276KwOQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 30/33] sched_ext: Add scx_bpf_sub_kill() to evict a child sub-scheduler
-Date: Thu,  9 Jul 2026 12:50:38 -1000
-Message-ID: <20260709225041.1695495-31-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 31/33] tools/sched_ext: Add three-mask cmask intersection iterator
+Date: Thu,  9 Jul 2026 12:50:39 -1000
+Message-ID: <20260709225041.1695495-32-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,251 +48,105 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A cid-form scheduler can grant caps to and revoke them from its child
-sub-schedulers but has no way to tear one down. Add scx_bpf_sub_kill() to
-evict a direct child with a printf-style reason that reaches the child's
-scx_exit_info. No exit code is taken because the child is a separate
-scheduler whose exit-code semantics the parent cannot know. The child and
-its subtree are disabled through the usual async path under a new exit kind,
-SCX_EXIT_PARENT_KILL.
-
-The bstr formatting infrastructure in ext.c is exposed through internal.h
-with scx_ prefixes so the kfunc, which lives in sub.c, can format the
-reason.
+Add cmask_next_and2_set() and its round-robin wrap, extending
+cmask_next_and_set() to a three-mask intersection: the next cid set in all
+three masks at or after @start. A caller iterating the intersection of
+three cmasks can then scan it in one pass, folding the third mask into the
+word-level AND rather than skipping non-members one candidate at a time.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c                   | 28 +++++++-----
- kernel/sched/ext/internal.h              | 11 +++++
- kernel/sched/ext/sub.c                   | 57 ++++++++++++++++++++++++
- tools/sched_ext/include/scx/common.bpf.h | 18 ++++++++
- 4 files changed, 102 insertions(+), 12 deletions(-)
+ tools/sched_ext/include/scx/cid.bpf.h | 77 +++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 778b539a4675..d8dd71ac1cab 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -187,14 +187,8 @@ static const struct rhashtable_params dsq_hash_params = {
- 
- static LLIST_HEAD(dsqs_to_free);
- 
--/* string formatting from BPF */
--struct scx_bstr_buf {
--	u64			data[MAX_BPRINTF_VARARGS];
--	char			line[SCX_EXIT_MSG_LEN];
--};
--
--static DEFINE_RAW_SPINLOCK(scx_exit_bstr_buf_lock);
--static struct scx_bstr_buf scx_exit_bstr_buf;
-+DEFINE_RAW_SPINLOCK(scx_exit_bstr_buf_lock);
-+struct scx_bstr_buf scx_exit_bstr_buf;
- 
- /* ops debug dump */
- static DEFINE_RAW_SPINLOCK(scx_dump_lock);
-@@ -5755,6 +5749,8 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
- 		return "disabled by sysrq-S";
- 	case SCX_EXIT_PARENT:
- 		return "parent exiting";
-+	case SCX_EXIT_PARENT_KILL:
-+		return "killed by parent scheduler";
- 	case SCX_EXIT_ERROR:
- 		return "runtime error";
- 	case SCX_EXIT_ERROR_BPF:
-@@ -9368,8 +9364,8 @@ static s32 __bstr_format(struct scx_sched *sch, u64 *data_buf, char *line_buf,
+diff --git a/tools/sched_ext/include/scx/cid.bpf.h b/tools/sched_ext/include/scx/cid.bpf.h
+index 6b0b4e41b288..69fb4e97bc77 100644
+--- a/tools/sched_ext/include/scx/cid.bpf.h
++++ b/tools/sched_ext/include/scx/cid.bpf.h
+@@ -668,6 +668,83 @@ static __always_inline u32 cmask_next_and_set_wrap(const struct scx_cmask __aren
+ 	return found < start ? found : a_end;
  }
- 
- __printf(3, 0)
--static s32 bstr_format(struct scx_sched *sch, struct scx_bstr_buf *buf,
--		       char *fmt, unsigned long long *data, u32 data__sz)
-+s32 scx_bstr_format(struct scx_sched *sch, struct scx_bstr_buf *buf,
-+		    char *fmt, unsigned long long *data, u32 data__sz)
- {
- 	return __bstr_format(sch, buf->data, buf->line, sizeof(buf->line),
- 			     fmt, data, data__sz);
-@@ -9399,7 +9395,7 @@ __bpf_kfunc void scx_bpf_exit_bstr(s64 exit_code, char *fmt,
- 	raw_spin_lock_irqsave(&scx_exit_bstr_buf_lock, flags);
- 	sch = scx_prog_sched(aux);
- 	if (likely(sch) &&
--	    bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
-+	    scx_bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
- 		scx_exit(sch, SCX_EXIT_UNREG_BPF, exit_code, "%s", scx_exit_bstr_buf.line);
- 	raw_spin_unlock_irqrestore(&scx_exit_bstr_buf_lock, flags);
- }
-@@ -9424,7 +9420,7 @@ __bpf_kfunc void scx_bpf_error_bstr(char *fmt, unsigned long long *data,
- 	raw_spin_lock_irqsave(&scx_exit_bstr_buf_lock, flags);
- 	sch = scx_prog_sched(aux);
- 	if (likely(sch) &&
--	    bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
-+	    scx_bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
- 		scx_exit(sch, SCX_EXIT_ERROR_BPF, 0, "%s", scx_exit_bstr_buf.line);
- 	raw_spin_unlock_irqrestore(&scx_exit_bstr_buf_lock, flags);
- }
-@@ -10060,6 +10056,13 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
- {
- 	return -EOPNOTSUPP;
- }
-+
-+__bpf_kfunc s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
-+				      unsigned long long *data, u32 data__sz,
-+				      const struct bpf_prog_aux *aux)
-+{
-+	return -EOPNOTSUPP;
-+}
- #endif	/* !CONFIG_EXT_SUB_SCHED */
- 
- __bpf_kfunc_end_defs();
-@@ -10109,6 +10112,7 @@ BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_IMPLICIT_ARGS | KF_RCU | KF_ACQUIRE)
- BTF_ID_FLAGS(func, scx_bpf_sub_grant, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_sub_revoke, KF_IMPLICIT_ARGS)
- BTF_ID_FLAGS(func, scx_bpf_sub_caps, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_sub_kill_bstr, KF_IMPLICIT_ARGS)
- BTF_KFUNCS_END(scx_kfunc_ids_any)
- 
- static const struct btf_kfunc_id_set scx_kfunc_set_any = {
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 97d7ce89dd5f..d7a1d6a14ebf 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -51,6 +51,7 @@ enum scx_exit_kind {
- 	SCX_EXIT_UNREG_KERN,	/* kernel-initiated unregistration */
- 	SCX_EXIT_SYSRQ,		/* requested by 'S' sysrq */
- 	SCX_EXIT_PARENT,	/* parent exiting */
-+	SCX_EXIT_PARENT_KILL,	/* killed by parent scheduler */
- 
- 	SCX_EXIT_ERROR = 1024,	/* runtime error, error msg contains details */
- 	SCX_EXIT_ERROR_BPF,	/* ERROR but triggered through scx_bpf_error() */
-@@ -1876,6 +1877,12 @@ struct scx_enable_cmd {
- 	int			ret;
- };
- 
-+/* string formatting from BPF */
-+struct scx_bstr_buf {
-+	u64			data[MAX_BPRINTF_VARARGS];
-+	char			line[SCX_EXIT_MSG_LEN];
-+};
-+
- extern struct scx_sched __rcu *scx_root;
- DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
- 
-@@ -1936,10 +1943,14 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops);
- int scx_sched_sysfs_add(struct scx_sched *sch);
- bool scx_is_descendant(struct scx_sched *sch, struct scx_sched *ancestor);
-+__printf(3, 0) s32 scx_bstr_format(struct scx_sched *sch, struct scx_bstr_buf *buf,
-+				   char *fmt, unsigned long long *data, u32 data__sz);
- 
- extern raw_spinlock_t scx_sched_lock;
- extern struct mutex scx_enable_mutex;
- extern struct percpu_rw_semaphore scx_fork_rwsem;
-+extern raw_spinlock_t scx_exit_bstr_buf_lock;
-+extern struct scx_bstr_buf scx_exit_bstr_buf;
- #ifdef CONFIG_EXT_SUB_SCHED
- extern const struct rhashtable_params scx_sched_hash_params;
- extern struct rhashtable scx_sched_hash;
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index bdcbde37d0d2..68ab3675337f 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -1694,6 +1694,63 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
- 	return 0;
- }
- 
-+/**
-+ * scx_bpf_sub_kill_bstr - Kill a direct child sub-scheduler
-+ * @cgroup_id: cgroup id of the direct child to kill
-+ * @fmt: reason message format string
-+ * @data: format string parameters packaged using ___bpf_fill() macro
-+ * @data__sz: @data len, must end in '__sz' for the verifier
-+ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-+ *
-+ * Evict a direct child sub-scheduler, disabling it with the supplied reason.
-+ * The child and its subtree are torn down asynchronously through the usual
-+ * disable path.
-+ *
-+ * Unlike scx_bpf_exit(), no exit code is taken: the child is a separate
-+ * scheduler with its own exit-code semantics, so a code chosen by the parent
-+ * would have no defined meaning. The reason string carries the intent.
-+ *
-+ * Return 0 on success or -ENODEV if @cgroup_id names no sub-scheduler, which
-+ * can race with the child detaching on its own and so is not a scheduler error.
-+ * Naming a sched that exists but is not a direct child aborts the parent.
-+ */
-+__printf(2, 0)
-+__bpf_kfunc s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
-+				      unsigned long long *data, u32 data__sz,
-+				      const struct bpf_prog_aux *aux)
-+{
-+	struct scx_sched *parent, *child;
-+	s32 ret;
-+
-+	guard(rcu)();
-+
-+	parent = scx_prog_sched(aux);
-+	if (unlikely(!parent))
-+		return -ENODEV;
-+
-+	if (!scx_is_cid_type()) {
-+		scx_error(parent, "sub-cap kfuncs require a cid-form scheduler");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	child = scx_find_sub_sched(cgroup_id);
-+	if (unlikely(!child))
-+		return -ENODEV;
-+
-+	if (unlikely(scx_parent(child) != parent)) {
-+		scx_error(parent, "%s: sub-%llu is not a direct child",
-+			  parent->cgrp_path, cgroup_id);
-+		return -EINVAL;
-+	}
-+
-+	guard(raw_spinlock_irqsave)(&scx_exit_bstr_buf_lock);
-+	ret = scx_bstr_format(parent, &scx_exit_bstr_buf, fmt, data, data__sz);
-+	if (ret < 0)
-+		return ret;
-+	scx_exit(child, SCX_EXIT_PARENT_KILL, 0, "%s", scx_exit_bstr_buf.line);
-+	return 0;
-+}
-+
- __bpf_kfunc_end_defs();
- 
- #endif	/* CONFIG_EXT_SUB_SCHED */
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 09c21602b2ed..acc2b131ea8f 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -119,6 +119,8 @@ s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask,
- 		      struct scx_cmask *denied) __ksym __weak;
- void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask) __ksym __weak;
- s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out) __ksym __weak;
-+s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
-+			  unsigned long long *data, u32 data__sz) __ksym __weak;
- 
- /*
-  * Use the following as @it__iter when calling scx_bpf_dsq_move[_vtime]() from
-@@ -165,6 +167,22 @@ void ___scx_bpf_bstr_format_checker(const char *fmt, ...) {}
- 	___scx_bpf_bstr_format_checker(fmt, ##args);				\
- })
  
 +/*
-+ * scx_bpf_sub_kill() wraps the scx_bpf_sub_kill_bstr() kfunc with variadic
-+ * arguments instead of an array of u64. It kills the direct child sub-scheduler
-+ * @cgid, passing the formatted reason to its user space, and evaluates to the
-+ * kfunc's return value. On a kernel without sub-scheduler support the kfunc is
-+ * absent and it returns -EOPNOTSUPP.
++ * Like cmask_next_and_set() but over the intersection of THREE masks. Return
++ * a->base + a->nr_cids if no cid is set in all three at or after @start.
 + */
-+#define scx_bpf_sub_kill(cgid, fmt, args...)					\
-+({										\
-+	scx_bpf_bstr_preamble(fmt, args)					\
-+	___scx_bpf_bstr_format_checker(fmt, ##args);				\
-+	bpf_ksym_exists(scx_bpf_sub_kill_bstr) ?				\
-+		scx_bpf_sub_kill_bstr((cgid), ___fmt, ___param,			\
-+				      sizeof(___param)) : -EOPNOTSUPP;		\
-+})
++static __always_inline u32 cmask_next_and2_set(const struct scx_cmask __arena *a,
++					       const struct scx_cmask __arena *b,
++					       const struct scx_cmask __arena *c,
++					       u32 start)
++{
++	u32 a_end = a->base + a->nr_cids;
++	u32 b_end = b->base + b->nr_cids;
++	u32 c_end = c->base + c->nr_cids;
++	u32 a_wbase = a->base / 64;
++	u32 b_wbase = b->base / 64;
++	u32 c_wbase = c->base / 64;
++	u32 lo = a->base > b->base ? a->base : b->base;
++	u32 hi = a_end < b_end ? a_end : b_end;
++	u32 last_wi, start_wi, start_bit, i;
 +
- /*
-  * scx_bpf_error() wraps the scx_bpf_error_bstr() kfunc with variadic arguments
-  * instead of an array of u64. Invoking this macro will cause the scheduler to
++	lo = lo > c->base ? lo : c->base;
++	hi = hi < c_end ? hi : c_end;
++
++	if (lo >= hi)
++		return a_end;
++	if (start < lo)
++		start = lo;
++	if (start >= hi)
++		return a_end;
++
++	last_wi = (hi - 1) / 64;
++	start_wi = start / 64;
++	start_bit = start & 63;
++
++	bpf_for(i, 0, CMASK_MAX_WORDS) {
++		u32 abs_wi = start_wi + i;
++		u64 word;
++		u32 found;
++
++		if (abs_wi > last_wi)
++			break;
++
++		word = a->bits[abs_wi - a_wbase] & b->bits[abs_wi - b_wbase] &
++		       c->bits[abs_wi - c_wbase];
++		if (i == 0)
++			word &= GENMASK_U64(63, start_bit);
++		if (!word)
++			continue;
++
++		found = abs_wi * 64 + ctzll(word);
++		if (found >= hi)
++			return a_end;
++		return found;
++	}
++	return a_end;
++}
++
++/*
++ * Round-robin variant of cmask_next_and2_set(): wrap to @a->base if the
++ * three-way intersection has no cid in the forward half. Return a->base +
++ * a->nr_cids if empty.
++ */
++static __always_inline u32 cmask_next_and2_set_wrap(const struct scx_cmask __arena *a,
++						    const struct scx_cmask __arena *b,
++						    const struct scx_cmask __arena *c,
++						    u32 start)
++{
++	u32 a_end = a->base + a->nr_cids;
++	u32 found;
++
++	found = cmask_next_and2_set(a, b, c, start);
++	if (found < a_end || start <= a->base)
++		return found;
++
++	found = cmask_next_and2_set(a, b, c, a->base);
++	return found < start ? found : a_end;
++}
++
+ /**
+  * cmask_from_cpumask - translate a kernel cpumask to a cid-space cmask
+  * @m: cmask to fill. Zeroed first; only bits within [@m->base, @m->base +
 -- 
 2.55.0
 
