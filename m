@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E364B3E6388;
-	Thu,  9 Jul 2026 22:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B723E1688;
+	Thu,  9 Jul 2026 22:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637468; cv=none; b=q7ORUYTyCOEZNpKQXRpNxGKsiWahhjIZ5RUjyu8Riksk1byXDF2+Y4mYy7cZ3AOFi/CYRt6TxlK9tqASD7ug8sC4Gdz/fbMVGOP1tKtc2x7bDzxzB8NXuWosbNmKFh6zpz+yNQin1fTIGAVvmfZXIZic0Ls2W5ITbr3Q+eVxzCA=
+	t=1783637468; cv=none; b=KEJTei3JwaHoQnUgdADsJ0z81wgZPeOQShVjvNze2ZBkTYRNhhw4QY6I8/TwrcebnCjWif2TlkH5HhpBINPJdQv3bsKtfp+6RzvV7nTtKSmNF4c3/JonG+BxOa6Kkk/NQo3Vx7FTAYKjeK2nMrdEz+EiUrswDu7GO8gExdOau6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783637468; c=relaxed/simple;
-	bh=0XlOks45V4BnYKA4XChh+CtBzIx3rJATmxcuLCvmTBg=;
+	bh=0kdeurD0JhxbvgIbB47hPpsYqZX2gJlOkQUVj6dHfes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=diYOF9MlJwip5tooPZPUv0gAMHujsL8ngia766XpiS5Zj6qFasDhzCDXx0GRzGX3DZxgjY0UMG3/IpIryhWEP6h29SeiKC0PKkMZmgMYdU9wmtlRvl6Mrs43vk1/TcGjwgNpGeY/hrzWemJqUGDtyuzbc5SSTTKxaCxqjdPbOxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I6zdiPo4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bZ6r0JzFxkh+Z3TcjxaTEyff6YikRWsn9wuVCk1YMKLQt0UeTxQC5WAmAZD0F+Cij1rfBeHLqJnbKRF7Xc0EYccKaAR6bGfWw8qDJ/OcNWKajxhj0L/ap3TgjdU7PcjVdTUitlySPdElLNxBeQDnHEs9+G9h5X1QidbgU9rJvcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cFUjyZYH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I6zdiPo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9807A1F00A3A;
-	Thu,  9 Jul 2026 22:51:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cFUjyZYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E6B1F000E9;
+	Thu,  9 Jul 2026 22:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637464;
-	bh=RMCi9tud+WL0oRxxgsOd8myAJ/siZDQzj5hMiGVomus=;
+	s=k20260515; t=1783637467;
+	bh=Pfg32u11AcfwrPhnQUPx6DxaPjxWvVfZqwsb4sSxAVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6zdiPo4yLdhK83GTvuIrD4W19weuSohiC6QD/+azxDop9cqce56FV63Lmn14t/fV
-	 EHvpeg7YQUOm1yZ9EiqYQ/mSbVSFysJPTD6mb9yLh/DcFAPwXpCHqfseFtUH9XBrgJ
-	 No18EWi+dlUfhYFtbOq9GzSu3ruRBsY+obPM6qCslQEab3HvJjeTgwmxwu6vEnFui5
-	 rBoSsPuxFzws6BcPMuaU5Zxz+CVq37oc7L2iPtGiTV/zhzenI6IwzsKoRvwfMduW70
-	 YOXK2D5pD42/0hDGrYuc/T0tNGw6LxERkBNJ7LtdLIfP+sIHNtnlmxIClDc0UbL0CB
-	 Ws4PodAoqtd5g==
+	b=cFUjyZYHhaWpzxJehXzuQzbpCAvt7XfG4gjdmx9xz2ZZqnoEdZkP7TvjdH9uuLrSl
+	 RHt9Kpis2t1lqj5gupjgO8WKbNVjht0oA2eYtoVmkaHTnZ9Nog0G5vdspIKgj6A97e
+	 gaBPkcoiNbP+K2EwEagbwHc6NZPyW8U1h6/SDosdCXG6PZ1f8SVWVCqi35w5Hm7+t0
+	 dGV9aewwBeJg72+zwzLH4Uu5tLh0g6/nDROadWORQLC/daBIwKLZnrmQ9rJ7s1SRAF
+	 sBBHCkImoNrMG/0NBQRzXFVfpV2MlB4cDP5Pl8hED2LGh8U9itrnjBCUaBaohCguum
+	 D+xhyRsL4aYlQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 20/33] sched_ext: Add the SCX_CAP_ENQ_IMMED cap
-Date: Thu,  9 Jul 2026 12:50:28 -1000
-Message-ID: <20260709225041.1695495-21-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 22/33] sched_ext: Route task slice writes through set_task_slice()
+Date: Thu,  9 Jul 2026 12:50:30 -1000
+Message-ID: <20260709225041.1695495-23-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,113 +48,141 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace the __SCX_CAP_DUMMY placeholder with SCX_CAP_ENQ_IMMED, which gates
-inserting IMMED tasks onto a cid's local DSQ. An IMMED enqueue is guaranteed
-to either get its task running on the cpu at once or hand it back to the
-scheduler, so IMMED work can never pile up on the cpu's queue and a cpu can
-be shared across sub-scheds through IMMED access without any of them
-swamping it.
+A later change makes set_task_slice() also drop a pending out-of-band slice
+request, so the BPF-triggered writes to p->scx.slice need to funnel through
+one place. Introduce set_task_slice() and route those writes through it.
+update_curr_scx() decrements curr->scx.slice directly for accounting and is
+left alone. No functional change - the helper only assigns p->scx.slice.
 
-That makes ENQ_IMMED the natural baseline, the minimal cap to make any use
-of a cpu. SCX_CAP_BASE aliases it so gates on basic cpu access can state the
-intention instead of naming ENQ_IMMED.
-
-Enforcement covers inserts and queued tasks. An insert without the cap is
-diverted to the reject DSQ, and queued tasks are reenqueued when the cap is
-lost. scx_bpf_sub_dispatch() skips a child that lacks the cap on the cpu, as
-its inserts would only be rejected. Vacating the running task on cap loss
-lands in a later patch.
+v2: Reword the set_task_slice comment to "BPF-triggered writes". (Andrea)
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      |  2 +-
- kernel/sched/ext/internal.h | 11 ++++++++---
- kernel/sched/ext/sub.c      |  8 ++++++++
- kernel/sched/ext/sub.h      |  4 ++--
- 4 files changed, 19 insertions(+), 6 deletions(-)
+ kernel/sched/ext/ext.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 80c8971638f9..54ba5b57f283 100644
+index 0efb396de008..de5a7293c1fb 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -4792,7 +4792,7 @@ SCX_ATTR(events);
- 
- #ifdef CONFIG_EXT_SUB_SCHED
- static const char *scx_cap_names[__SCX_NR_CAPS] = {
--	[__SCX_CAP_DUMMY]	= "dummy",
-+	[__SCX_CAP_ENQ_IMMED]	= "enq_immed",
- };
- 
- static ssize_t scx_attr_caps_show(struct kobject *kobj,
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 079ee941b343..e735812e77a5 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1270,17 +1270,22 @@ struct scx_sched_pnode {
-  * topology-aligned and likely to serve as the locality unit when cids are
-  * allocated to schedulers, so per-shard lock granularity scales naturally with
-  * the allocation pattern.
-+ *
-+ * ENQ_IMMED  insert an IMMED task onto the cid's local DSQ
-  */
- enum scx_cap_flags {
--	__SCX_CAP_DUMMY			= 0,
-+	__SCX_CAP_ENQ_IMMED		= 0,
- 
- 	__SCX_NR_CAPS,
- 	__SCX_CAP_ALL			= BIT_U64(__SCX_NR_CAPS) - 1,
- 
--	SCX_CAP_DUMMY			= BIT_U64(__SCX_CAP_DUMMY),
-+	SCX_CAP_ENQ_IMMED		= BIT_U64(__SCX_CAP_ENQ_IMMED),
-+
-+	/* alias for minimal cap to make any use of a cpu */
-+	SCX_CAP_BASE			= SCX_CAP_ENQ_IMMED,
- 
- 	/* caps whose loss strands queued tasks, see scx_process_sync_ecaps() */
--	SCX_CAPS_REENQ_ON_LOSS		= 0,
-+	SCX_CAPS_REENQ_ON_LOSS		= SCX_CAP_ENQ_IMMED,
- };
- 
- #ifdef CONFIG_EXT_SUB_SCHED
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index bbd068bfd86c..11fda1d3828d 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -1279,6 +1279,14 @@ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *
- 		return false;
- 	}
- 
-+	/*
-+	 * Skip a child that does not effectively hold the base cap on this cpu:
-+	 * its inserts would only be rejected. ecaps are synced at the top of
-+	 * balance_one() before dispatch, so this reflects the in-effect state.
-+	 */
-+	if (scx_missing_caps(child, cpu_of(this_rq), SCX_CAP_BASE))
-+		return false;
-+
- 	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_prev,
- 				  true);
- }
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index a1a2825dc04e..8abc4a262f28 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -109,13 +109,13 @@ static inline u64 scx_caps_for_enq(u64 enq_flags)
- 	/* a restored task must be put into the local DSQ regardless of caps */
- 	if (enq_flags & SCX_ENQ_IGNORE_CAPS)
- 		return 0;
--	return 0;
-+	return SCX_CAP_ENQ_IMMED;
+@@ -1165,6 +1165,12 @@ static void touch_core_sched_dispatch(struct rq *rq, struct task_struct *p)
+ #endif
  }
  
- /* map queued @p to the SCX_CAP_* bit required to stay on its local DSQ */
- static inline u64 scx_caps_for_task(struct task_struct *p)
++/* set @p's slice, BPF-triggered writes to p->scx.slice go through here */
++static void set_task_slice(struct task_struct *p, u64 slice)
++{
++	p->scx.slice = slice;
++}
++
+ static void update_curr_scx(struct rq *rq)
  {
--	return 0;
-+	return SCX_CAP_ENQ_IMMED;
+ 	struct task_struct *curr = rq->curr;
+@@ -1250,7 +1256,7 @@ static void dsq_dec_nr(struct scx_dispatch_q *dsq, struct task_struct *p)
+ 
+ static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
+ {
+-	p->scx.slice = READ_ONCE(sch->slice_dfl);
++	set_task_slice(p, READ_ONCE(sch->slice_dfl));
+ 	__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
  }
  
- /* caps implied by holding @cap */
+@@ -1345,7 +1351,7 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+ 
+ 	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
+ 	    rq->curr->sched_class == &ext_sched_class) {
+-		rq->curr->scx.slice = 0;
++		set_task_slice(rq->curr, 0);
+ 		resched_curr(rq);
+ 	}
+ }
+@@ -2058,7 +2064,7 @@ static void yield_task_scx(struct rq *rq)
+ 	if (SCX_HAS_OP(sch, yield))
+ 		SCX_CALL_OP_2TASKS_RET(sch, yield, rq, p, NULL);
+ 	else
+-		p->scx.slice = 0;
++		set_task_slice(p, 0);
+ }
+ 
+ static bool yield_to_task_scx(struct rq *rq, struct task_struct *to)
+@@ -3302,7 +3308,7 @@ static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
+ 	 * we can't trust the slice management or ops.core_sched_before().
+ 	 */
+ 	if (scx_bypassing(sch, cpu_of(rq))) {
+-		curr->scx.slice = 0;
++		set_task_slice(curr, 0);
+ 		touch_core_sched(rq, curr);
+ 	} else if (SCX_HAS_OP(sch, tick)) {
+ 		SCX_CALL_OP_TASK(sch, tick, rq, curr);
+@@ -3441,7 +3447,7 @@ static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
+ 	 * control, after ops.disable() has observed their final values.
+ 	 */
+ 	p->scx.dsq_vtime = 0;
+-	p->scx.slice = 0;
++	set_task_slice(p, 0);
+ 
+ 	/*
+ 	 * Verify the task is not in BPF scheduler's custody. If flag
+@@ -7091,7 +7097,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 			queue_flags |= DEQUEUE_CLASS;
+ 
+ 		scoped_guard (sched_change, p, queue_flags) {
+-			p->scx.slice = READ_ONCE(sch->slice_dfl);
++			set_task_slice(p, READ_ONCE(sch->slice_dfl));
+ 			p->sched_class = new_class;
+ 		}
+ 	}
+@@ -7734,7 +7740,7 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 	    !sched_class_above(cur_class, &ext_sched_class)) {
+ 		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
+ 			if (cur_class == &ext_sched_class)
+-				rq->curr->scx.slice = 0;
++				set_task_slice(rq->curr, 0);
+ 			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
+ 		}
+ 
+@@ -8084,9 +8090,9 @@ __bpf_kfunc bool scx_bpf_dsq_insert___v2(struct task_struct *p, u64 dsq_id,
+ 		return false;
+ 
+ 	if (slice)
+-		p->scx.slice = slice;
++		set_task_slice(p, slice);
+ 	else
+-		p->scx.slice = p->scx.slice ?: 1;
++		set_task_slice(p, p->scx.slice ?: 1);
+ 
+ 	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags);
+ 
+@@ -8110,9 +8116,9 @@ static bool scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
+ 		return false;
+ 
+ 	if (slice)
+-		p->scx.slice = slice;
++		set_task_slice(p, slice);
+ 	else
+-		p->scx.slice = p->scx.slice ?: 1;
++		set_task_slice(p, p->scx.slice ?: 1);
+ 
+ 	p->scx.dsq_vtime = vtime;
+ 
+@@ -8294,7 +8300,7 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
+ 	if (kit->cursor.flags & __SCX_DSQ_ITER_HAS_VTIME)
+ 		p->scx.dsq_vtime = kit->vtime;
+ 	if (kit->cursor.flags & __SCX_DSQ_ITER_HAS_SLICE)
+-		p->scx.slice = kit->slice;
++		set_task_slice(p, kit->slice);
+ 
+ 	/* execute move */
+ 	locked_rq = move_task_between_dsqs(sch, p, enq_flags, src_dsq, dst_dsq);
+@@ -8687,7 +8693,7 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
+ 	if (unlikely(!sch || !scx_task_on_sched(sch, p)))
+ 		return false;
+ 
+-	p->scx.slice = slice;
++	set_task_slice(p, slice);
+ 	return true;
+ }
+ 
 -- 
 2.55.0
 
