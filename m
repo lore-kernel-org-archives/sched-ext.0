@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8893EDE5D;
-	Thu,  9 Jul 2026 22:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C189F3EF640;
+	Thu,  9 Jul 2026 22:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637476; cv=none; b=eVRGAx/LImYKgYkRnCCUQkgxzd7M6y0LlJ9yDDDdD1N4KnVe+B75TtMF6N3V51stjg4Yx7NstCN6kZHCDYgtWeowgko0GU5GO2mJyQ3ekBDBRYZxu7sS7fQiC/tBJuIMlSgVeR5iDg1Y8l5YsmVcr0RuRzmfXbCU+v+rpkOXPds=
+	t=1783637477; cv=none; b=loKlKbSDbwWh5SUegGdCIfUU9lSwJjfypaUxAg5N+wHEQKzh8adAALXkelI1NBQKqSS293jBTWecrCxK4qXcIXSiusaLvSQebXSmSzrmqHzBYxkx4ZYGmP03FWYSrnx/Xz2XZPjiAMi6qCpHEtquhqTylp3s2b4B0sVrGJpystU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637476; c=relaxed/simple;
-	bh=QyDTb84yvNzwIg/cC50aubJkihEZS+CcCZwTPGxOSnY=;
+	s=arc-20240116; t=1783637477; c=relaxed/simple;
+	bh=ASkeRa7OwAX9QHy+Mm5bJK2TIm638JxYEQqyhPEvnGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DBl2djj31gzxNRNUyVBCa9zw6t9XFScYjcou9oi4lKZyti/lsN+5/g2LVHxTnqaKF0mC3myr1qHtf9WKQZcvz70UuicJVKyUwkZ2MMRAG6S3TLmT7mvGQs3Af86fUNf3bRM67OF3XArZILQU4QMfmrF3cMgioHSCZyMAlhhGM48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2Wjolri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XsGCCwvQtvLz+tq3wnCb70FdzZNR2jhMsz+RjomyQ8wJJARQ8oEJ5iDWe26X5P4SmokGqwXJbUYuzSR4KXIKt/l1TAIHBl40aoDuSSmssh/HEQRvtzZ5b7q5OZFqr/JuPMBtNErdBqaLkiO/S7/wOwwgRN35qjThdRjkH+HnZp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVkX3FYa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2Wjolri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C161F000E9;
-	Thu,  9 Jul 2026 22:51:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVkX3FYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AA21F00A3D;
+	Thu,  9 Jul 2026 22:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637474;
-	bh=DC91Bzm9QJmyHwXo3ny/qiQumAlHc4frpjPdwyH27lE=;
+	s=k20260515; t=1783637475;
+	bh=uxVK0v/ubg1vj0JzXD+i5gLJrDoUjB5EjnxNEyoZWNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2WjolriG/dn50woz5hf/BojU2VtUuys1xFBIrmeQJPizMwg/Y4sM7GYNAfxYJyhO
-	 tjjAJLhAjpmtnvPiqv/7IA7syIfP8tNdxu1MRRr6W11oeG6HzHsYz+LuyphXiGlCOb
-	 lTyyDzLEVO8zzEBLqbJko6HaiGdrgpV6Ma2s6SL0vr3oueWRypjq93FczDGEnCvhd8
-	 smQd8fLHV4kFLikVWmCKzMWtBekHdl71xa0zaGyqx0u06cH/KLlPvrQjstKCQbpYO8
-	 5xm2XFLjhLZIJ1k2B5JJnyMEMBoS++FS8ZuIwnF6BV3fEHKcdangb+EiD8ylK4I9Iz
-	 c2UWvCQVzC1lA==
+	b=hVkX3FYab5vFoXlmoL7/Zcv8UxVtqqDRik6QiN+EovXzuGatr4VVDZAV+CkhXEbXR
+	 kVYwStse3u61RguaiPnzhG2jfmm+IILgDUtomJZDkf/E7hH5zEQZqqJnxWPkwc+paA
+	 dan0ideXqHOyG5pPTljFsipROZW1MQRtRZOjnu2y6jWOg7kX63O6mFlsdEtuZzXvFU
+	 pCVr5ot1okIPMHbRDyyueoKg4theqf+GNTVtnNN+JR7o3PqRtqZCgPXH48/RTEsTJm
+	 D5IP4GafunzKSMPcphVbb2eCjeRLAVmhZVruQeeJqRQsAAMkrgiWNP1DJPKBFYwdrl
+	 vXYsRJPeBNdkA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 29/33] sched_ext: Replay ecaps notifications suppressed by bypass
-Date: Thu,  9 Jul 2026 12:50:37 -1000
-Message-ID: <20260709225041.1695495-30-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 30/33] sched_ext: Add scx_bpf_sub_kill() to evict a child sub-scheduler
+Date: Thu,  9 Jul 2026 12:50:38 -1000
+Message-ID: <20260709225041.1695495-31-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,107 +48,251 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_process_sync_ecaps() consumes ecaps syncs while the sched is bypassing
-without delivering ops.sub_ecaps_updated(), leaving reported_ecaps stale.
-Nothing re-queued a sync when bypass lifted, so a cid whose caps never
-change again would never be notified. Attach-time initial grants hit this
-every time: they are consumed during the enable bypass window, so a sched
-never learned its initial effective caps through the callback.
+A cid-form scheduler can grant caps to and revoke them from its child
+sub-schedulers but has no way to tear one down. Add scx_bpf_sub_kill() to
+evict a direct child with a printf-style reason that reaches the child's
+scx_exit_info. No exit code is taken because the child is a separate
+scheduler whose exit-code semantics the parent cannot know. The child and
+its subtree are disabled through the usual async path under a new exit kind,
+SCX_EXIT_PARENT_KILL.
 
-Re-queue a sync for every (sched, cpu) with an undelivered delta at the
-per-cpu bypass exit in scx_bypass(), next to the idle renotify catch-up. The
-next balance on the cpu then delivers the pending delta with proper dispatch
-context.
+The bstr formatting infrastructure in ext.c is exposed through internal.h
+with scx_ prefixes so the kfunc, which lives in sub.c, can format the
+reason.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c |  4 +++-
- kernel/sched/ext/sub.c | 35 +++++++++++++++++++++++++++++++++++
- kernel/sched/ext/sub.h |  2 ++
- 3 files changed, 40 insertions(+), 1 deletion(-)
+ kernel/sched/ext/ext.c                   | 28 +++++++-----
+ kernel/sched/ext/internal.h              | 11 +++++
+ kernel/sched/ext/sub.c                   | 57 ++++++++++++++++++++++++
+ tools/sched_ext/include/scx/common.bpf.h | 18 ++++++++
+ 4 files changed, 102 insertions(+), 12 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index bc6e3239de3c..778b539a4675 100644
+index 778b539a4675..d8dd71ac1cab 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -5662,8 +5662,10 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
- 				pcpu->flags |= SCX_SCHED_PCPU_BYPASSING;
- 			} else {
- 				pcpu->flags &= ~SCX_SCHED_PCPU_BYPASSING;
--				if (was_bypassing)
-+				if (was_bypassing) {
- 					unbypass_renotify_idle(rq, pos, pcpu);
-+					scx_unbypass_replay_ecaps(rq, pos);
-+				}
- 			}
- 		}
+@@ -187,14 +187,8 @@ static const struct rhashtable_params dsq_hash_params = {
  
+ static LLIST_HEAD(dsqs_to_free);
+ 
+-/* string formatting from BPF */
+-struct scx_bstr_buf {
+-	u64			data[MAX_BPRINTF_VARARGS];
+-	char			line[SCX_EXIT_MSG_LEN];
+-};
+-
+-static DEFINE_RAW_SPINLOCK(scx_exit_bstr_buf_lock);
+-static struct scx_bstr_buf scx_exit_bstr_buf;
++DEFINE_RAW_SPINLOCK(scx_exit_bstr_buf_lock);
++struct scx_bstr_buf scx_exit_bstr_buf;
+ 
+ /* ops debug dump */
+ static DEFINE_RAW_SPINLOCK(scx_dump_lock);
+@@ -5755,6 +5749,8 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
+ 		return "disabled by sysrq-S";
+ 	case SCX_EXIT_PARENT:
+ 		return "parent exiting";
++	case SCX_EXIT_PARENT_KILL:
++		return "killed by parent scheduler";
+ 	case SCX_EXIT_ERROR:
+ 		return "runtime error";
+ 	case SCX_EXIT_ERROR_BPF:
+@@ -9368,8 +9364,8 @@ static s32 __bstr_format(struct scx_sched *sch, u64 *data_buf, char *line_buf,
+ }
+ 
+ __printf(3, 0)
+-static s32 bstr_format(struct scx_sched *sch, struct scx_bstr_buf *buf,
+-		       char *fmt, unsigned long long *data, u32 data__sz)
++s32 scx_bstr_format(struct scx_sched *sch, struct scx_bstr_buf *buf,
++		    char *fmt, unsigned long long *data, u32 data__sz)
+ {
+ 	return __bstr_format(sch, buf->data, buf->line, sizeof(buf->line),
+ 			     fmt, data, data__sz);
+@@ -9399,7 +9395,7 @@ __bpf_kfunc void scx_bpf_exit_bstr(s64 exit_code, char *fmt,
+ 	raw_spin_lock_irqsave(&scx_exit_bstr_buf_lock, flags);
+ 	sch = scx_prog_sched(aux);
+ 	if (likely(sch) &&
+-	    bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
++	    scx_bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
+ 		scx_exit(sch, SCX_EXIT_UNREG_BPF, exit_code, "%s", scx_exit_bstr_buf.line);
+ 	raw_spin_unlock_irqrestore(&scx_exit_bstr_buf_lock, flags);
+ }
+@@ -9424,7 +9420,7 @@ __bpf_kfunc void scx_bpf_error_bstr(char *fmt, unsigned long long *data,
+ 	raw_spin_lock_irqsave(&scx_exit_bstr_buf_lock, flags);
+ 	sch = scx_prog_sched(aux);
+ 	if (likely(sch) &&
+-	    bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
++	    scx_bstr_format(sch, &scx_exit_bstr_buf, fmt, data, data__sz) >= 0)
+ 		scx_exit(sch, SCX_EXIT_ERROR_BPF, 0, "%s", scx_exit_bstr_buf.line);
+ 	raw_spin_unlock_irqrestore(&scx_exit_bstr_buf_lock, flags);
+ }
+@@ -10060,6 +10056,13 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
+ {
+ 	return -EOPNOTSUPP;
+ }
++
++__bpf_kfunc s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
++				      unsigned long long *data, u32 data__sz,
++				      const struct bpf_prog_aux *aux)
++{
++	return -EOPNOTSUPP;
++}
+ #endif	/* !CONFIG_EXT_SUB_SCHED */
+ 
+ __bpf_kfunc_end_defs();
+@@ -10109,6 +10112,7 @@ BTF_ID_FLAGS(func, scx_bpf_task_cgroup, KF_IMPLICIT_ARGS | KF_RCU | KF_ACQUIRE)
+ BTF_ID_FLAGS(func, scx_bpf_sub_grant, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_sub_revoke, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_sub_caps, KF_IMPLICIT_ARGS)
++BTF_ID_FLAGS(func, scx_bpf_sub_kill_bstr, KF_IMPLICIT_ARGS)
+ BTF_KFUNCS_END(scx_kfunc_ids_any)
+ 
+ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 97d7ce89dd5f..d7a1d6a14ebf 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -51,6 +51,7 @@ enum scx_exit_kind {
+ 	SCX_EXIT_UNREG_KERN,	/* kernel-initiated unregistration */
+ 	SCX_EXIT_SYSRQ,		/* requested by 'S' sysrq */
+ 	SCX_EXIT_PARENT,	/* parent exiting */
++	SCX_EXIT_PARENT_KILL,	/* killed by parent scheduler */
+ 
+ 	SCX_EXIT_ERROR = 1024,	/* runtime error, error msg contains details */
+ 	SCX_EXIT_ERROR_BPF,	/* ERROR but triggered through scx_bpf_error() */
+@@ -1876,6 +1877,12 @@ struct scx_enable_cmd {
+ 	int			ret;
+ };
+ 
++/* string formatting from BPF */
++struct scx_bstr_buf {
++	u64			data[MAX_BPRINTF_VARARGS];
++	char			line[SCX_EXIT_MSG_LEN];
++};
++
+ extern struct scx_sched __rcu *scx_root;
+ DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
+ 
+@@ -1936,10 +1943,14 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops);
+ int scx_sched_sysfs_add(struct scx_sched *sch);
+ bool scx_is_descendant(struct scx_sched *sch, struct scx_sched *ancestor);
++__printf(3, 0) s32 scx_bstr_format(struct scx_sched *sch, struct scx_bstr_buf *buf,
++				   char *fmt, unsigned long long *data, u32 data__sz);
+ 
+ extern raw_spinlock_t scx_sched_lock;
+ extern struct mutex scx_enable_mutex;
+ extern struct percpu_rw_semaphore scx_fork_rwsem;
++extern raw_spinlock_t scx_exit_bstr_buf_lock;
++extern struct scx_bstr_buf scx_exit_bstr_buf;
+ #ifdef CONFIG_EXT_SUB_SCHED
+ extern const struct rhashtable_params scx_sched_hash_params;
+ extern struct rhashtable scx_sched_hash;
 diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index a91480debcc2..bdcbde37d0d2 100644
+index bdcbde37d0d2..68ab3675337f 100644
 --- a/kernel/sched/ext/sub.c
 +++ b/kernel/sched/ext/sub.c
-@@ -575,6 +575,41 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 		scx_schedule_reenq_local(rq, SCX_REENQ_CAP_REVOKE);
+@@ -1694,6 +1694,63 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
+ 	return 0;
  }
  
 +/**
-+ * scx_unbypass_replay_ecaps - Replay a bypass-suppressed ecaps notification
-+ * @rq: rq of the cpu leaving bypass
-+ * @sch: scheduler that just left bypass on @rq's cpu
++ * scx_bpf_sub_kill_bstr - Kill a direct child sub-scheduler
++ * @cgroup_id: cgroup id of the direct child to kill
++ * @fmt: reason message format string
++ * @data: format string parameters packaged using ___bpf_fill() macro
++ * @data__sz: @data len, must end in '__sz' for the verifier
++ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
 + *
-+ * scx_process_sync_ecaps() consumes syncs while bypassing without delivering
-+ * ops.sub_ecaps_updated(), leaving reported_ecaps stale. Nothing re-queues a
-+ * sync when bypass lifts, so without a replay a cid that never changes again
-+ * would never be notified. The attach-time initial grants are the acute case
-+ * as they are consumed during the enable bypass window. Re-queue a sync for
-+ * any undelivered delta so the next balance delivers it.
++ * Evict a direct child sub-scheduler, disabling it with the supplied reason.
++ * The child and its subtree are torn down asynchronously through the usual
++ * disable path.
++ *
++ * Unlike scx_bpf_exit(), no exit code is taken: the child is a separate
++ * scheduler with its own exit-code semantics, so a code chosen by the parent
++ * would have no defined meaning. The reason string carries the intent.
++ *
++ * Return 0 on success or -ENODEV if @cgroup_id names no sub-scheduler, which
++ * can race with the child detaching on its own and so is not a scheduler error.
++ * Naming a sched that exists but is not a direct child aborts the parent.
 + */
-+void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
++__printf(2, 0)
++__bpf_kfunc s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
++				      unsigned long long *data, u32 data__sz,
++				      const struct bpf_prog_aux *aux)
 +{
-+	s32 cpu = cpu_of(rq);
-+	struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
-+	struct scx_pshard *ps;
-+	s32 cid;
++	struct scx_sched *parent, *child;
++	s32 ret;
 +
-+	lockdep_assert_rq_held(rq);
++	guard(rcu)();
 +
-+	/* root holds every cap and never uses ecaps */
-+	if (!sch->level)
-+		return;
++	parent = scx_prog_sched(aux);
++	if (unlikely(!parent))
++		return -ENODEV;
 +
-+	if (READ_ONCE(pcpu->ecaps) == pcpu->reported_ecaps)
-+		return;
++	if (!scx_is_cid_type()) {
++		scx_error(parent, "sub-cap kfuncs require a cid-form scheduler");
++		return -EOPNOTSUPP;
++	}
 +
-+	cid = __scx_cpu_to_cid(cpu);
-+	ps = sch->pshard[scx_cid_to_shard[cid]];
++	child = scx_find_sub_sched(cgroup_id);
++	if (unlikely(!child))
++		return -ENODEV;
 +
-+	guard(raw_spinlock)(&ps->lock);
-+	queue_sync_ecaps(sch, cid);
++	if (unlikely(scx_parent(child) != parent)) {
++		scx_error(parent, "%s: sub-%llu is not a direct child",
++			  parent->cgrp_path, cgroup_id);
++		return -EINVAL;
++	}
++
++	guard(raw_spinlock_irqsave)(&scx_exit_bstr_buf_lock);
++	ret = scx_bstr_format(parent, &scx_exit_bstr_buf, fmt, data, data__sz);
++	if (ret < 0)
++		return ret;
++	scx_exit(child, SCX_EXIT_PARENT_KILL, 0, "%s", scx_exit_bstr_buf.line);
++	return 0;
 +}
 +
+ __bpf_kfunc_end_defs();
+ 
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index 09c21602b2ed..acc2b131ea8f 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -119,6 +119,8 @@ s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask,
+ 		      struct scx_cmask *denied) __ksym __weak;
+ void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask) __ksym __weak;
+ s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out) __ksym __weak;
++s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
++			  unsigned long long *data, u32 data__sz) __ksym __weak;
+ 
  /*
-  * A cpu came back. Re-seed each sub-sched's ecaps on the cpu's cid. The sync
-  * recomputes effective caps from the pshard and fires ops.sub_ecaps_updated()
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index d18132288e22..edcdf97f3ba6 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -30,6 +30,7 @@ void scx_free_pshards(struct scx_sched *sch);
- s32 scx_alloc_pshards(struct scx_sched *sch);
- void scx_init_root_caps(struct scx_sched *sch);
- void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev);
-+void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch);
- void scx_online_ecaps(struct rq *rq);
- void scx_offline_ecaps(struct rq *rq);
- void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu);
-@@ -52,6 +53,7 @@ static inline void scx_free_pshards(struct scx_sched *sch) {}
- static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
- static inline void scx_init_root_caps(struct scx_sched *sch) {}
- static inline void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev) {}
-+static inline void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch) {}
- static inline void scx_online_ecaps(struct rq *rq) {}
- static inline void scx_offline_ecaps(struct rq *rq) {}
- static inline void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu) {}
+  * Use the following as @it__iter when calling scx_bpf_dsq_move[_vtime]() from
+@@ -165,6 +167,22 @@ void ___scx_bpf_bstr_format_checker(const char *fmt, ...) {}
+ 	___scx_bpf_bstr_format_checker(fmt, ##args);				\
+ })
+ 
++/*
++ * scx_bpf_sub_kill() wraps the scx_bpf_sub_kill_bstr() kfunc with variadic
++ * arguments instead of an array of u64. It kills the direct child sub-scheduler
++ * @cgid, passing the formatted reason to its user space, and evaluates to the
++ * kfunc's return value. On a kernel without sub-scheduler support the kfunc is
++ * absent and it returns -EOPNOTSUPP.
++ */
++#define scx_bpf_sub_kill(cgid, fmt, args...)					\
++({										\
++	scx_bpf_bstr_preamble(fmt, args)					\
++	___scx_bpf_bstr_format_checker(fmt, ##args);				\
++	bpf_ksym_exists(scx_bpf_sub_kill_bstr) ?				\
++		scx_bpf_sub_kill_bstr((cgid), ___fmt, ___param,			\
++				      sizeof(___param)) : -EOPNOTSUPP;		\
++})
++
+ /*
+  * scx_bpf_error() wraps the scx_bpf_error_bstr() kfunc with variadic arguments
+  * instead of an array of u64. Invoking this macro will cause the scheduler to
 -- 
 2.55.0
 
