@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C183B7779;
-	Thu,  9 Jul 2026 22:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717F03B6C11;
+	Thu,  9 Jul 2026 22:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637452; cv=none; b=L2LcKlT772Wka6w8RNcHSoujOYCWDrjkI3Xl7QnetItrbq+7cPdOwSO3CpLz+/yOAGdKQqtahLTQBaDqQzpPYrCykbBc803/mO0uCQIYEWTcP3sB1vD8uHefcwU/KRtuqY7M1InQlzXKAX+H1P+lIkOxqUNetsnC6TQmdxvPJqA=
+	t=1783637452; cv=none; b=njNHG5xMXDkkF/tNoJ2XP6XqrPVf/A7RrqKZrMN+uApxiuC0bOeHiacjqJ1ViDbM5cYhGcox2BXPmvBbpwgqMNptsOtM/BEs21xL/4Eu3muwdTS/SjpzJO4Kd5ewQPBPi2bMGBQGsrMTQOZm7DJZkTwmergewEXcf8s6D3Al40A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783637452; c=relaxed/simple;
-	bh=laHXilikIqSaVTfFChKd4eru572K4AGWj06YQhy+nQY=;
+	bh=sBHRQqTTNh6M7vrvx8kuJ/6C79oci0xQBUcbNyeB4SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbS+FViQ2laZAHwTCOqYg/aJyxLis4LvHzYDiK4umOeRvRwd2SbCJVGjfkvJklCzCbqWO5sDtHSQc7XxU/FCnzk0JKZeolflLJ/aBk0Jy4Q8++xZvdESPehqcQGHWb0TDOegntYYDloNWp0R6hw/vQk4BQLsojjEXORDc16iHf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YtK/C7nW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CofnQ27SBfyLhfWo0thdvSV4FRqWb9B1L87LkbcPdueEBlLNwJ7PklB6FSVjACK/rYVXYiyzAIJBXFFTKObwbphy9UK6bvrlfT/xwQHOJa3BNi/Bf1a00v9Qks6YrUx8OLl3DSuxxgNGw/veTWKsoNV369ObETS4XLOJLolMlAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gYbF1DmG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YtK/C7nW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EF21F00A3D;
-	Thu,  9 Jul 2026 22:50:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gYbF1DmG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B181F00A3A;
+	Thu,  9 Jul 2026 22:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637450;
-	bh=30lGpwWxKQETn6lkZ7/DdgEdLN2yd6i0LEH7Cr8G5OE=;
+	s=k20260515; t=1783637449;
+	bh=woW66gU/hP00xAr9Z8yWU4emvNhq6+s4HTd02MWvyI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YtK/C7nWVLBPMqwouO8tl8d6BeCp3CzIvhyIf587rfNxHSU31+OvQCNdD+PGNM/ZR
-	 BwTAUixeD0ipJVMpczyUhuXSgRM1ybSgGEKmNwCyvAIOm+Uzwh0Oh8Ejz+EsAKHDPh
-	 FaOBNZ4i9N5nEKFRcEFo5vECx14y8z3tBwO5YlwsTLUV8PiVUOnD7mvFa+7OUo+A/Q
-	 noxlUVLo9VXkLk7/ZzV8S7TnbxTK12zDudPzxyiY+m4GAWD9GmtzJLln0a7g3vRSnY
-	 YzywypomMN4Ioic3CZxeNN0q7i7ELagBeidve6TF/lQAti34+QV3oQ6cVyqMiKXMO4
-	 09lcBDilXleRw==
+	b=gYbF1DmGrfB5KMyH4TYOmGB0z82cgV+0LpteQKE4KGnejgg8V4QHTOpoRmn3LzQ3+
+	 rn/HtREnQY72oPnIXj3/W5x8MuNAC56Pr4+FxIgW+dsAeVGIant3d3/UOIRznbIbxu
+	 scc7lOiNHYwwt7A166wlCBgDzGFmvf9kvBuw8q+e9qbz8+caLKyOrLpsaaX4grfQ4H
+	 W7nfRczz9MiCKIj1xpjEZUnHMiQ9GlvtC+JK+fU10oecZNtG+d9UWPwX5xLkFotimm
+	 a5OV/4+rP7WVjjoqGF7m3Uzivn14Kfjz7BhatsD5BOMBnf3pL2pkGMxfHi6pwG8BDz
+	 N2vuflK2PLgcg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 07/33] sched_ext: Add per-shard scx_sched storage scaffolding
-Date: Thu,  9 Jul 2026 12:50:15 -1000
-Message-ID: <20260709225041.1695495-8-tj@kernel.org>
+Subject: [PATCH v5 sched_ext/for-7.3 06/33] sched_ext: Defer scx_sched kobj sysfs add into the enable workfns
+Date: Thu,  9 Jul 2026 12:50:14 -1000
+Message-ID: <20260709225041.1695495-7-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
 References: <20260709225041.1695495-1-tj@kernel.org>
@@ -48,185 +48,167 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add struct scx_pshard and sch->pshard[] indexed by shard_idx, each entry
-allocated on its shard's NUMA node from scx_shard_node[si]. The struct
-starts empty (one dummy field). Follow-up patches will grow it as
-shard-local state lands. Only cid-type schedulers with an arena pool get
-pshards.
-
-Allocation happens after ops.init_cids() returns so any
-scx_bpf_cid_override() it issues has finalized scx_nr_cid_shards and
-scx_shard_node[]. sch->nr_pshards records the array size for the async RCU
-free path, which may run after a later scheduler's scx_cid_init() has
-rewritten the global.
-
-v3: Build and publish pshard[] fully-formed here rather than a later patch.
-v2: Free the partially-allocated pshard array on alloc failure. (sashiko AI)
+Split kobject_init_and_add() in scx_alloc_and_add_sched(): only
+kobject_init() runs there. A new scx_sched_sysfs_add() helper does
+kobject_add() (and creates sub_kset when the scheduler implements
+ops.sub_attach), called by both enable workfns once @sch is linked and its
+sysfs-visible state is initialized. Prep so a future caps attribute can rely
+on @sch being fully built by the time it's sysfs-visible. Add early enough
+that a stall later in enable still leaves sysfs inspectable.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      |  8 ++++++
- kernel/sched/ext/internal.h | 18 +++++++++++++
- kernel/sched/ext/sub.c      | 54 +++++++++++++++++++++++++++++++++++++
- kernel/sched/ext/sub.h      |  4 +++
- 4 files changed, 84 insertions(+)
+ kernel/sched/ext/ext.c      | 73 +++++++++++++++++++++++--------------
+ kernel/sched/ext/internal.h |  1 +
+ kernel/sched/ext/sub.c      |  8 +++-
+ 3 files changed, 53 insertions(+), 29 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 5ed790e016b2..5f2a54039347 100644
+index f12691c839ce..5ed790e016b2 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -4681,6 +4681,8 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 		free_pnode(sch->pnode[node]);
- 	kfree(sch->pnode);
+@@ -5735,7 +5735,9 @@ static void scx_root_disable(struct scx_sched *sch)
+ 	if (sch->sub_kset)
+ 		kobject_del(&sch->sub_kset->kobj);
+ #endif
+-	kobject_del(&sch->kobj);
++	/* not added if enable failed before scx_sched_sysfs_add() */
++	if (sch->kobj.state_in_sysfs)
++		kobject_del(&sch->kobj);
  
-+	scx_free_pshards(sch);
+ 	free_kick_syncs();
+ 
+@@ -6452,36 +6454,15 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		 * disable. Released in scx_sched_free_rcu_work().
+ 		 */
+ 		kobject_get(&parent->kobj);
+-		ret = kobject_init_and_add(&sch->kobj, &scx_ktype,
+-					   &parent->sub_kset->kobj,
+-					   "sub-%llu", cgroup_id(cgrp));
+-	} else {
+-		ret = kobject_init_and_add(&sch->kobj, &scx_ktype, NULL, "root");
+-	}
+-
+-	if (ret < 0) {
+-		RCU_INIT_POINTER(ops->priv, NULL);
+-		kobject_put(&sch->kobj);
+-		return ERR_PTR(ret);
+-	}
+-
+-	if (ops->sub_attach) {
+-		sch->sub_kset = kset_create_and_add("sub", NULL, &sch->kobj);
+-		if (!sch->sub_kset) {
+-			RCU_INIT_POINTER(ops->priv, NULL);
+-			kobject_put(&sch->kobj);
+-			return ERR_PTR(-ENOMEM);
+-		}
+-	}
+-#else	/* CONFIG_EXT_SUB_SCHED */
+-	ret = kobject_init_and_add(&sch->kobj, &scx_ktype, NULL, "root");
+-	if (ret < 0) {
+-		RCU_INIT_POINTER(ops->priv, NULL);
+-		kobject_put(&sch->kobj);
+-		return ERR_PTR(ret);
+ 	}
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
++	/*
++	 * Init the kobj but don't add to sysfs yet. The enable path calls
++	 * scx_sched_sysfs_add() once @sch's sysfs-visible state is initialized.
++	 */
++	kobject_init(&sch->kobj, &scx_ktype);
 +
- 	rhashtable_walk_enter(&sch->dsq_hash, &rht_iter);
- 	do {
- 		rhashtable_walk_start(&rht_iter);
-@@ -6761,6 +6763,12 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		goto err_disable;
+ 	/*
+ 	 * Consume the arena_map ref bpf_scx_reg_cid() took. Defer to here so
+ 	 * earlier failure paths leave cmd->arena_map set and bpf_scx_reg_cid
+@@ -6539,6 +6520,36 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 	return ERR_PTR(ret);
+ }
+ 
++/*
++ * Add @sch's kobject to sysfs, and create its sub_kset if the scheduler
++ * implements ops.sub_attach. Called by the enable workfns once @sch's
++ * sysfs-visible state is initialized.
++ */
++int scx_sched_sysfs_add(struct scx_sched *sch)
++{
++#ifdef CONFIG_EXT_SUB_SCHED
++	struct scx_sched *parent = scx_parent(sch);
++	int ret;
++
++	if (parent)
++		ret = kobject_add(&sch->kobj, &parent->sub_kset->kobj,
++				  "sub-%llu", cgroup_id(sch_cgroup(sch)));
++	else
++		ret = kobject_add(&sch->kobj, NULL, "root");
++	if (ret < 0)
++		return ret;
++
++	if (sch->ops.sub_attach) {
++		sch->sub_kset = kset_create_and_add("sub", NULL, &sch->kobj);
++		if (!sch->sub_kset)
++			return -ENOMEM;
++	}
++	return 0;
++#else
++	return kobject_add(&sch->kobj, NULL, "root");
++#endif
++}
++
+ static int check_hotplug_seq(struct scx_sched *sch,
+ 			      const struct sched_ext_ops *ops)
+ {
+@@ -6761,6 +6772,12 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 		sch->exit_info->flags |= SCX_EFLAG_INITIALIZED;
  	}
  
-+	ret = scx_alloc_pshards(sch);
++	ret = scx_sched_sysfs_add(sch);
 +	if (ret) {
 +		cpus_read_unlock();
 +		goto err_disable;
 +	}
 +
- 	if (sch->ops.init) {
- 		ret = SCX_CALL_OP_RET(sch, init, NULL);
- 		if (ret) {
+ 	for (i = SCX_OPI_CPU_HOTPLUG_BEGIN; i < SCX_OPI_CPU_HOTPLUG_END; i++)
+ 		if (((void (**)(void))ops)[i])
+ 			set_bit(i, sch->has_op);
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 160ff79faedc..5b18c4192c62 100644
+index 6560a0fa3efa..160ff79faedc 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1183,6 +1183,12 @@ struct scx_sched_pnode {
- 	struct scx_dispatch_q	global_dsq;
- };
+@@ -1690,6 +1690,7 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 					  struct cgroup *cgrp,
+ 					  struct scx_sched *parent);
+ int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops);
++int scx_sched_sysfs_add(struct scx_sched *sch);
  
-+#ifdef CONFIG_EXT_SUB_SCHED
-+struct scx_pshard {
-+	int			_dummy;		/* until the first real field lands */
-+};
-+#endif
-+
- struct scx_sched {
- 	/*
- 	 * cpu-form and cid-form ops share field offsets up to .priv (verified
-@@ -1230,6 +1236,9 @@ struct scx_sched {
- 	 */
- 	struct rhashtable	dsq_hash;
- 	struct scx_sched_pnode	**pnode;
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	struct scx_pshard	**pshard;	/* indexed by shard_idx */
-+#endif
- 	struct scx_sched_pcpu __percpu *pcpu;
- 
- 	u64			slice_dfl;
-@@ -1245,6 +1254,15 @@ struct scx_sched {
- 	u32			dsp_max_batch;
- 	s32			level;
- 
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	/*
-+	 * pshard[] size captured at enable for the async RCU free path -
-+	 * scx_nr_cid_shards may be rewritten by a later scx_cid_init() before
-+	 * free runs. While sch is active, use the global.
-+	 */
-+	u32			nr_pshards;
-+#endif
-+
- 	/*
- 	 * Updates to the following warned bitfields can race causing RMW issues
- 	 * but it doesn't really matter.
+ extern raw_spinlock_t scx_sched_lock;
+ extern struct mutex scx_enable_mutex;
 diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 9855a9a4e709..3adec9343e46 100644
+index ce76ae141e0a..9855a9a4e709 100644
 --- a/kernel/sched/ext/sub.c
 +++ b/kernel/sched/ext/sub.c
-@@ -82,6 +82,60 @@ void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch)
- 		rcu_assign_pointer(pos->scx_sched, sch);
+@@ -270,7 +270,9 @@ void scx_sub_disable(struct scx_sched *sch)
+ 		SCX_CALL_OP(sch, exit, NULL, sch->exit_info);
+ 	if (sch->sub_kset)
+ 		kobject_del(&sch->sub_kset->kobj);
+-	kobject_del(&sch->kobj);
++	/* not added if enable failed before scx_sched_sysfs_add() */
++	if (sch->kobj.state_in_sysfs)
++		kobject_del(&sch->kobj);
  }
  
-+static void free_pshard(struct scx_pshard *pshard)
-+{
-+	kfree(pshard);
-+}
-+
-+void scx_free_pshards(struct scx_sched *sch)
-+{
-+	s32 si;
-+
-+	if (!sch->pshard)
-+		return;
-+	for (si = 0; si < sch->nr_pshards; si++)
-+		free_pshard(sch->pshard[si]);
-+	kfree(sch->pshard);
-+}
-+
-+static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32 node)
-+{
-+	return kzalloc_node(sizeof(struct scx_pshard), GFP_KERNEL, node);
-+}
-+
-+s32 scx_alloc_pshards(struct scx_sched *sch)
-+{
-+	struct scx_pshard **pshard;
-+	s32 si;
-+
-+	if (!sch->is_cid_type || !sch->arena_pool)
-+		return 0;
-+
-+	pshard = kzalloc_objs(pshard[0], scx_nr_cid_shards, GFP_KERNEL);
-+	if (!pshard)
-+		return -ENOMEM;
-+
-+	for (si = 0; si < scx_nr_cid_shards; si++) {
-+		pshard[si] = alloc_pshard(sch, si, scx_shard_node[si]);
-+		if (!pshard[si]) {
-+			while (--si >= 0)
-+				free_pshard(pshard[si]);
-+			kfree(pshard);
-+			return -ENOMEM;
-+		}
-+	}
-+
-+	sch->nr_pshards = scx_nr_cid_shards;
-+	/*
-+	 * Publish only after every entry is built so a reader observing
-+	 * @sch->pshard never sees a partially-filled array. Pair the store
-+	 * with a barrier and READ_ONCE() on the read side.
-+	 */
-+	smp_wmb();
-+	WRITE_ONCE(sch->pshard, pshard);
-+	return 0;
-+}
-+
- static DECLARE_WAIT_QUEUE_HEAD(scx_unlink_waitq);
+ /* verify that a scheduler can be attached to @cgrp and return the parent */
+@@ -363,6 +365,10 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+ 	if (ret)
+ 		goto err_disable;
  
- void drain_descendants(struct scx_sched *sch)
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index 460a9fd196dc..9fa6b5c8be23 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -24,6 +24,8 @@ void drain_descendants(struct scx_sched *sch);
- void scx_sub_disable(struct scx_sched *sch);
- void scx_sub_enable_workfn(struct kthread_work *work);
- bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux);
-+void scx_free_pshards(struct scx_sched *sch);
-+s32 scx_alloc_pshards(struct scx_sched *sch);
- 
- #else	/* CONFIG_EXT_SUB_SCHED */
- 
-@@ -33,6 +35,8 @@ static inline struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
- static inline void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
- static inline void drain_descendants(struct scx_sched *sch) { }
- static inline void scx_sub_disable(struct scx_sched *sch) { }
-+static inline void scx_free_pshards(struct scx_sched *sch) {}
-+static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
- 
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 
++	ret = scx_sched_sysfs_add(sch);
++	if (ret)
++		goto err_disable;
++
+ 	if (sch->level >= SCX_SUB_MAX_DEPTH) {
+ 		scx_error(sch, "max nesting depth %d violated",
+ 			  SCX_SUB_MAX_DEPTH);
 -- 
 2.55.0
 
