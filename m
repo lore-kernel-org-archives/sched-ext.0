@@ -1,45 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097253E314F;
-	Thu,  9 Jul 2026 22:51:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301CE3A48F1
+	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 05:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783637481; cv=none; b=bUMDxyIiJjiGD51nJkj/9F1pXvJxbUeXtTL/7pbuac5KLolILXCixTusvOGFPSjSdBK6/tkunWDXUoTNGbpsF2LLqY4eKsmLlY0PvxnOLFupCJG/88UMCKPXj3ESI57bLw7tnu6N/aA8z2Ae14ad9GK8f9yfiBVLCW9ZKHuixIQ=
+	t=1783663196; cv=none; b=Ouf7QDj89V/ZCwD+KdbDzBrJqBmYttBuXxbjCAsWiNPob8wXiptl0fsxTzEqsLT9oV/RXnxohWGNNTPowC6+s8BW1ykLVMcVJfX/HMv1ESKzgmIm2gHgZDeyQL1iQE5075VcqXa3pB+dxTUVsl1kRupW0SfdF1nIObV9+M887oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783637481; c=relaxed/simple;
-	bh=K3HlwT7gYVeW1jd2YL3hzZOq0N/CPorLRku9X5+W4uE=;
+	s=arc-20240116; t=1783663196; c=relaxed/simple;
+	bh=U5eIq2jJdcr+HL+4cEu8OsiIz4xlUlqpyeR32pmymi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0GwMwpJfWMuRG/Jyck2gGr9zZx5iDlkR9BvzquKQ+56Z4gPgeobfryx5Hyf6NPXfY4b3QWCSSPE92+tNqSx8AVVH+l3AAmkWNa1+OhOIE43N4XG+86d9eNOiYNQkvJFuGvHBam3CG1tpavEjXbPinPFCafxggEuqth2VM9Lgh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NivBlIee; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UAMQZEXaZ3VWj1SRGz3nhOvDYai1o7J/4SIDE782Ndnm/06GFOlEtEyxxV6Fa9bISnvhUDggMrIhv6qiBPh4MwDU+UgfCuZi6GjvHWrGEFaqrPWkXDvFNHACQ8VXonNLwazJLgBOvR5jK0PLnxKwqUhVDzUodgokcIjtKV5ZiC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=likewhatevs.io; spf=pass smtp.mailfrom=likewhatevs.io; dkim=pass (2048-bit key) header.d=likewhatevs.io header.i=@likewhatevs.io header.b=QwC7/MwB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PKpa28h+; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=likewhatevs.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=likewhatevs.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NivBlIee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F201F00A3A;
-	Thu,  9 Jul 2026 22:51:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783637477;
-	bh=DuQy8Ehg5a52+3IcKbwIFkOPfuKW4lYms/9h06Yytqw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NivBlIeeGAF+55/srCgIjKb5UzwqENJlt38mT+QITmjkcgqZhFCMv3jXTbKzX99VQ
-	 IG8w+zsClhRJjC81dGTMWVONrPnIK+mVaNjFqiUX080Ub6zNNfqep3wkvukmvY0ig1
-	 UMlwvlgfBUwfe8mR2aXdB7pwykAmVEridgtGf1UY0XVwiFmmNi7n9tl5UuBysO8sQK
-	 ieJznV9k9l3N6hNmmFWvuCjbgQqqhyzNYjpLb2uyIu/NE79Dv8tpwgtTeuImXnxwRE
-	 aytGfH7nyCotWDMwVGwkLtD1twGUVLqFPV4eRsLmchWSeKgniROXPj0WhDTnYMvBka
-	 pssZtWoUcWIBQ==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
+	dkim=pass (2048-bit key) header.d=likewhatevs.io header.i=@likewhatevs.io header.b="QwC7/MwB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PKpa28h+"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 455EF1D000A8;
+	Fri, 10 Jul 2026 01:59:53 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 10 Jul 2026 01:59:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=likewhatevs.io;
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1783663193; x=
+	1783749593; bh=qPtB2jeXZq8nRuvXh/pXPmUfbAQFKKHP5XyTdhwFbto=; b=Q
+	wC7/MwB/CAbL/eyyCFGVyLn3KAPgjNrohiYB0vb6Tcv3TUpKHyR8cg0chgKyTviM
+	UJrh9CZZC8UwUyhdtFBmFVpoxwZ7fjGY0ydNZUApLkQ/UL1OLlqt8Qg+Efe8pCwE
+	h//3ZF3gXQD/uasfg2tozZ9lAnfcX5cwgcMMqJMF62bcj51c/EdbcsswvdfzJ7eY
+	RuU+3r056F+yPTIPBy9j+Qjvwkqx8JX0Jb7rUxBaiOs2aTkLwyjrY23qOgNb5S8L
+	0bRGu1bs7pHtP+D/ilSPStuF68Jm66u5L+yv9eh0Kj2F+aan8c4+5tlbeNcjN/GV
+	J5d1mEhYiQoHHV/BDnBeA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1783663193; x=1783749593; bh=q
+	PtB2jeXZq8nRuvXh/pXPmUfbAQFKKHP5XyTdhwFbto=; b=PKpa28h+VsVfzEXQI
+	6ulnutyypVsBGWwXXMtvSQ2xdMz2GookRBfKnN9erhdaLBpakyZtl9RJXmMstvH+
+	x7US4VodCdkFthU3hWqn7D3OGl4Ljv2Xhko7HCW+BQy5fnnRKdjrkKa00X5x+uWR
+	MxG7zWeH1Hz7D8bzU/KJovFi5SlxqNUSGUr1nDj3TJY1FQS8Vj09xUNHMnale+UE
+	bUuNJJfhjBYHDUjxk7xVrwfwjFPpZxdUh35OV2UGFwpx8qkHCln++RV+R7uT8too
+	2IJXVeGs9Cuj6taFaFwO1lNCA9u5IytJ9wKboOuSa+ruyGxXjrdAWvWRZEOvPOCN
+	e+btQ==
+X-ME-Sender: <xms:WIpQasVb35w8CTSsd6d_VtcKo7XeR8wFTQCjQkAK2OzRIacfuS-uOw>
+    <xme:WIpQaiE7ymyLiioOjW1xC9RJ-ANeOw-gtTdgOXZ6t5BuXy5yFl2PVi-UfXOHXpsBh
+    _XurMRj977v-Dq2FWF6eG9IF5fk7wkP16b2UxcjRaz4bg0vt5j0Rbj3>
+X-ME-Received: <xmr:WIpQageQvFhyon1gdBPZvdRR0zIG3UwsFq1l8gMdcLkdh9teMKCtNBb6EWITe8QFctGYlPX6q-GZzA>
+X-ME-Proxy-Cause: dmFkZTFdbX781tJ9LjFh+flZnCl7OlU7A3B5rLsLEKTlOltii4CpfyrXUdEavLpjFWWfCx
+    wT8LmsurgKSubKfdEl5nUrtKDHNuSwuHe86jZh1cD0MPrG4x8ZFEkmTQWrUziVwwFQ2SRG
+    Wz167mhs9h1CYFbZamqTj/G1Nt6way5H5uAs3qO2ovmZpF9a7ukl1V12BfOQohoElNDfcD
+    CU4Gz5+zsqQO5grXuYjmBgE4eoCPhfbTp/dbB/KCKNcgSz6ehQTKX829mY2h06/JtbGCBj
+    KTUdnDYBhnSoQIWZo51n0qhPt6p0KfQvLBqu/K3Al1xhYUXZNunMzrQJ4XSPMiU2AFXit1
+    9udI7fiRoNMfwDS+9Uo/GpVza5k+ObEf9164XqlhBIBN7ZVqncMSwbsKAcYuzACPL907eJ
+    DgxTLdLouSxLtbNFz84dIg2hDve7j/GrytQ2dQcLEop3zcrLb2POXXeINoWryX1pV24kPd
+    FS3EbrKI3Os0f+gmJhHGUgI7DLIlWspQvQMuSO0O2h75xKvWnZdRh3L9Q1Txi8pPsf2JtM
+    vgXdoSkv/rF+fIeFaopFISe+tO/n14sQbg5ovUpI5Y9M7oFCgepnHzgXidx2OBVEIrW0Ns
+    QxrwXaszIbGvJM1FpQFpH7yYZLrMUXm39GPoePXUyvtUakgGB8Ie9GR9EX0w
+X-ME-Proxy: <xmx:WIpQarL2Hw7WYINoU8ut65EwJ9-wEzHOiue4u0sfuAjS7X953ChgBQ>
+    <xmx:WIpQatE9kdnIlhhOuBw6C03Lp8cAuE7dbbTNyfSllyoIL-hp71Jb4A>
+    <xmx:WIpQamBZflLgc-l3-cfj7cNIWTWmRWA9tPLtkhZoW6WO7rEK5sostA>
+    <xmx:WIpQao-oW5HOfS9-YAsyzlS5yILOmTwHIqRCHHHsXKho-M3lw_VWmQ>
+    <xmx:WYpQamhuDYMoI2I76X6lHEV1PWlJIt04VV4aSPsw8W-P6WZpMw4rLLeJ>
+Feedback-ID: i7f194913:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jul 2026 01:59:52 -0400 (EDT)
+From: Pat Somaru <patso@likewhatevs.io>
+To: Tejun Heo <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v5 sched_ext/for-7.3 32/33] tools/sched_ext: scx_qmap - Expand hierarchical sub-scheduling
-Date: Thu,  9 Jul 2026 12:50:40 -1000
-Message-ID: <20260709225041.1695495-33-tj@kernel.org>
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Pat Somaru <patso@likewhatevs.io>
+Subject: [PATCH v3] sched_ext: Add tracepoint for scheduler exit
+Date: Fri, 10 Jul 2026 01:59:11 -0400
+Message-ID: <20260710055911.914465-1-patso@likewhatevs.io>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260709225041.1695495-1-tj@kernel.org>
-References: <20260709225041.1695495-1-tj@kernel.org>
+In-Reply-To: <2d3d31a802b30f340248db4a986cfa4c@kernel.org>
+References: <2d3d31a802b30f340248db4a986cfa4c@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -48,1528 +88,131 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-sched_ext sub-scheduling began as dispatch delegation only: a parent could
-call into a child cgroup sub-scheduler's ops.dispatch() from its own
-dispatch path, but could not delegate cpus to the child for enqueue and the
-other paths. sched_ext has since gained cap-based cid delegation, where a
-parent grants and revokes a child's per-cid caps. Expand scx_qmap to
-demonstrate it.
+sched_ext schedulers have state in BPF programs and kernel. scx_dump
+provides kernel state and BPF program state on error, but this is static
+in what it can provide.
 
-scx_qmap can now delegate the cids it holds exclusively, split among itself
-and its children by cpu.weight. Each gets the floor of its share as
-dedicated cids. The leftover from rounding forms a shared pool,
-round-robined among them as an ENQ_IMMED time-share.
+Add a sched_ext_exit tracepoint in scx_claim_exit() so that BPF programs
+can dynamically inspect scheduler specific state at the moment of exit.
+Pass the exiting scx_sched so attached programs can read its state, and,
+since exits propagate through a hierarchy of sub-schedulers, identify
+which scheduler each event belongs to.
 
-This shape is deliberate. Exclusive cids exercise the basic grant and revoke
-of ownership, and the shared pool exercises time-sharing one cid across
-several schedulers. The implemented policy is impractical, but it covers
-most of what a practical sub-scheduler would need without overcomplicating
-qmap.
-
-Delegation nests. A cid a node receives from its parent only as a
-round-robin share stays self-local and is never re-delegated. A node left
-with no exclusive cid, e.g. after its cpus went offline, evicts its
-children.
-
-v5: Highpri dispatch masked with self_cids, single-read dispatch cgroup_id, feed_weights race comment. (sashiko AI)
-v4: Track all idle cids and mask with self_cids at the dispatch pick, dropping the reseed. (sashiko AI)
-v3: Dispatch IMMED flags, repartition accounting order, partition-input snapshot. (sashiko AI)
-v2: Use __sync_fetch_and_add() for the shared nr_dsps counter. (sashiko AI)
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Pat Somaru <patso@likewhatevs.io>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 758 ++++++++++++++++++++++++++++++---
- tools/sched_ext/scx_qmap.c     | 297 ++++++++++++-
- tools/sched_ext/scx_qmap.h     |  98 ++++-
- 3 files changed, 1086 insertions(+), 67 deletions(-)
+Hi Tejun,
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index f6cfe63425d3..49840c49d1fa 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -1,21 +1,39 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /*
-- * A simple five-level FIFO queue scheduler.
-+ * scx_qmap: a demonstration and testing scheduler for sched_ext features.
-  *
-- * There are five FIFOs implemented as arena-backed doubly-linked lists
-- * threaded through per-task context. A task gets assigned to one depending on
-- * its compound weight. Each CPU round robins through the FIFOs and dispatches
-- * more from FIFOs with higher indices - 1 from queue0, 2 from queue1, 4 from
-- * queue2 and so on.
-- *
-- * This scheduler demonstrates:
-+ * A simple scheduler that exercises a broad set of sched_ext features. Unlikely
-+ * to be useful for real workloads. It demonstrates:
-  *
-  * - BPF-side queueing using TIDs.
-  * - BPF arena for scheduler state.
-  * - Core-sched support.
-+ * - Hierarchical sub-scheduling: delegating cpus to child cgroup schedulers.
-+ *
-+ * Base design: Five FIFOs (arena-backed doubly-linked lists through per-task
-+ * context). A task is assigned to a FIFO by its compound weight. Each cpu
-+ * round-robins the FIFOs, dispatching more from higher ones.
-+ *
-+ * Sub-scheduling: Any qmap sched can delegate cpus to its own child cgroup
-+ * schedulers and keep the rest for its tasks. Terminology:
-+ *
-+ *   excl   - A cpu the delegatee owns wholly (ENQ_IMMED|ENQ|PREEMPT).
-+ *   shared - A cpu delegated as ENQ_IMMED only. Time-shared.
-+ *   held_excl / held_shared - What this node was handed by its parent.
-+ *            held-excl cpus are re-delegatable. A held-shared cpu is a
-+ *            time-share that stays self-local.
-+ *   self   - The excl cpus the node kept for itself, plus all of held_shared.
-+ *   owner  - Who holds a cid - a child slot, CID_SELF, or CID_NONE.
-  *
-- * This scheduler is primarily for demonstration and testing of sched_ext
-- * features and unlikely to be useful for actual workloads.
-+ * The scheduler splits its held-excl cpus among self and the children in
-+ * proportion to each node's cpu.weight, handing each the floor of its share as
-+ * excl cpus. The leftover from rounding forms a shared pool the round-robin
-+ * timer hands around. With no excl cpu to delegate, the node evicts its
-+ * children.
-+ *
-+ * This policy is a demonstration only, not a practical one. The split
-+ * considers only direct children and is not work-conserving. It only exists to
-+ * drive sub-sched primitives with as simple logic as possible.
-  *
-  * Copyright (c) 2022 Meta Platforms, Inc. and affiliates.
-  * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
-@@ -52,6 +70,9 @@ const volatile bool always_enq_immed;
- const volatile u32 immed_stress_nth;
- const volatile u32 max_tasks;
+> Thanks, but name and level don't pin down a scheduler in a hierarchy -
+> same-program instances under sibling cgroups share both. Recording
+> sub_cgroup_id and cgrp_path too would make the events self-identifying. Both
+> are already on sch. Care to add them in a v3?
+
+Good idea, I added this, thanks!
+
+v3: also record sub_cgroup_id and cgrp_path so events are self-identifying
+    in a scheduler hierarchy - name and level don't pin down an instance
+    when the same program runs under sibling cgroups (Tejun)
+v2: https://lore.kernel.org/all/20260707090314.2567145-1-patso@likewhatevs.io/
+v1: https://lore.kernel.org/all/20260512055632.1096713-1-patso@likewhatevs.io/
+
+Tested by running scx_mitosis, attaching to the raw tracepoint and
+unregistering the scheduler:
+
+  # bpftrace -e 'rawtracepoint:sched_ext_exit {
+        $sch = (struct scx_sched *)arg0;
+        printf("sch=%p name=%s level=%d sub_cgroup_id=%llu cgrp_path=%s kind=%ld\n",
+               $sch, $sch->ops.name, $sch->level, $sch->ops.sub_cgroup_id,
+               str($sch->cgrp_path), (int64)arg1); }'
+
+  Attached 1 probe
+  sch=0xff3bd35691464000 name=mitosis_1.1.0_x86_64_unknown_linux_gnu level=0 sub_cgroup_id=0 cgrp_path=/ kind=64
+
+and via the tracepoint's formatted event:
+
+  # grep 'sched_ext_exit:' /sys/kernel/tracing/trace
+  scx_mitosis-51 [000] ...1. 30.552740: sched_ext_exit: sched mitosis_1.1.0_x86_64_unknown_linux_gnu level 0 sub_cgroup_id 0 cgrp_path / kind 64
+
+ include/trace/events/sched_ext.h | 28 ++++++++++++++++++++++++++++
+ kernel/sched/ext/ext.c           |  2 ++
+ kernel/sched/ext/sub.h           |  6 ++++++
+ 3 files changed, 36 insertions(+)
+
+diff --git a/include/trace/events/sched_ext.h b/include/trace/events/sched_ext.h
+index d1bf5acd59c5..1e54f9564ef3 100644
+--- a/include/trace/events/sched_ext.h
++++ b/include/trace/events/sched_ext.h
+@@ -84,6 +84,34 @@ TRACE_EVENT(sched_ext_bypass_lb,
+ 	)
+ );
  
-+/* sub-sched: period for handing the round-robin cid pool to the next child */
-+const volatile u64 round_robin_ns;
++TRACE_EVENT(sched_ext_exit,
 +
- /*
-  * Optional cid-override test harness. When cid_override_mode is non-zero,
-  * qmap_init_cids() calls scx_bpf_cid_override() with the caller-supplied arrays
-@@ -89,12 +110,12 @@ struct {
- 
- struct qmap_arena __arena_global qa;
- 
--/*
-- * Global idle-cid tracking, maintained via update_idle / cpu_offline and
-- * scanned by the direct-dispatch path. Allocated in qmap_init() from one
-- * arena page, sized to the full cid space.
-- */
--struct scx_cmask __arena *qa_idle_cids;
-+/* ensure that BPF and userspace are seeing the same size for qmap_cmask */
-+_Static_assert(QMAP_CMASK_WORDS == CMASK_NR_WORDS(SCX_QMAP_MAX_CPUS),
-+	       "QMAP_CMASK_WORDS must equal CMASK_NR_WORDS(SCX_QMAP_MAX_CPUS)");
-+_Static_assert(sizeof(struct qmap_cmask) ==
-+	       struct_size_t(struct scx_cmask, bits, QMAP_CMASK_WORDS),
-+	       "qmap_cmask must be exactly sized to back a full scx_cmask");
- 
- /* Per-queue locks. Each in its own .data section as bpf_res_spin_lock requires. */
- __hidden struct bpf_res_spin_lock qa_q_lock0 SEC(".data.qa_q_lock0");
-@@ -196,7 +217,7 @@ static int qmap_spin_lock(struct bpf_res_spin_lock *lock)
- }
- 
- /*
-- * Try prev_cid, then scan taskc->cpus_allowed AND qa_idle_cids round-robin
-+ * Try prev_cid, then scan cpus_allowed AND idle_cids AND self_cids round-robin
-  * from prev_cid + 1. Atomic claim retries on race; bounded by
-  * IDLE_PICK_RETRIES to keep the verifier's insn budget in check.
-  */
-@@ -212,17 +233,19 @@ static s32 pick_direct_dispatch_cid(struct task_struct *p, s32 prev_cid,
- 	if (!always_enq_immed && p->nr_cpus_allowed == 1)
- 		return prev_cid;
- 
--	if (cmask_test_and_clear(prev_cid, qa_idle_cids))
-+	if (cmask_test(prev_cid, &qa.self_cids.mask) &&
-+	    cmask_test_and_clear(prev_cid, &qa.idle_cids.mask))
- 		return prev_cid;
- 
- 	cid = prev_cid;
- 	bpf_for(i, 0, IDLE_PICK_RETRIES) {
--		cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
--					      qa_idle_cids, cid + 1);
-+		cid = cmask_next_and2_set_wrap(&taskc->cpus_allowed,
-+					       &qa.idle_cids.mask,
-+					       &qa.self_cids.mask, cid + 1);
- 		barrier_var(cid);
- 		if (cid >= nr_cids)
- 			return -1;
--		if (cmask_test_and_clear(cid, qa_idle_cids))
-+		if (cmask_test_and_clear(cid, &qa.idle_cids.mask))
- 			return cid;
- 	}
- 	return -1;
-@@ -346,6 +369,15 @@ s32 BPF_STRUCT_OPS(qmap_select_cid, struct task_struct *p,
- 	}
- }
- 
-+/*
-+ * A received time-shared cid is held ENQ_IMMED-only, so inserts must set
-+ * SCX_ENQ_IMMED.
-+ */
-+static u64 needs_immed(s32 cid)
-+{
-+	return qa.cid_shared[cid] ? SCX_ENQ_IMMED : 0;
-+}
++	TP_PROTO(struct scx_sched *sch, __u32 kind),
 +
- static int weight_to_idx(u32 weight)
- {
- 	/* Coarsely map the compound weight to a FIFO. */
-@@ -369,9 +401,16 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	s32 cid;
- 
- 	if (enq_flags & SCX_ENQ_REENQ) {
-+		u64 reason = p->scx.flags & SCX_TASK_REENQ_REASON_MASK;
++	TP_ARGS(sch, kind),
 +
- 		__sync_fetch_and_add(&qa.nr_reenqueued, 1);
- 		if (scx_bpf_task_cid(p) == 0)
- 			__sync_fetch_and_add(&qa.nr_reenqueued_cid0, 1);
-+		/* cap-loss and IMMED-handback bounces, relocated below */
-+		if (reason == SCX_TASK_REENQ_CAP)
-+			__sync_fetch_and_add(&qa.nr_reenq_cap, 1);
-+		else if (reason == SCX_TASK_REENQ_IMMED)
-+			__sync_fetch_and_add(&qa.nr_reenq_immed, 1);
- 	}
++	TP_STRUCT__entry(
++		__string(	name,		sch->ops.name		)
++		__field(	__s32,		level			)
++		__field(	__u64,		sub_cgroup_id		)
++		__string(	cgrp_path,	sch_cgrp_path(sch)	)
++		__field(	__u32,		kind			)
++	),
++
++	TP_fast_assign(
++		__assign_str(name);
++		__entry->level		= sch->level;
++		__entry->sub_cgroup_id	= sch->ops.sub_cgroup_id;
++		__assign_str(cgrp_path);
++		__entry->kind		= kind;
++	),
++
++	TP_printk("sched %s level %d sub_cgroup_id %llu cgrp_path %s kind %u",
++		  __get_str(name), __entry->level, __entry->sub_cgroup_id,
++		  __get_str(cgrp_path), __entry->kind
++	)
++);
++
+ #endif /* _TRACE_SCHED_EXT_H */
  
- 	if (p->flags & PF_KTHREAD) {
-@@ -394,6 +433,27 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+ /* This part must be outside protection */
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 1a0ec985da77..6ec774435cd1 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -5730,6 +5730,8 @@ static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
  	 */
- 	taskc->core_sched_seq = qa.core_sched_tail_seqs[idx]++;
+ 	WRITE_ONCE(sch->aborting, true);
  
-+	/*
-+	 * A node with children delegates most cids. A task of ours that can run
-+	 * on none of our self cids (e.g. a per-NUMA kthread pinned to delegated
-+	 * cids) would starve in SHARED/FIFO since we never pull those on a
-+	 * delegated cid. Force it onto its first allowed cid's local DSQ with
-+	 * needs_immed(): if we hold access there it runs, else the kernel
-+	 * rejects and bounces it back via REENQ_CAP. Best-effort
-+	 * anti-starvation nudge.
-+	 */
-+	if (qa.nr_sub_scheds && !(enq_flags & SCX_ENQ_REENQ) &&
-+	    !cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
-+		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-+
-+		if (c >= 0 && c < scx_bpf_nr_cids()) {
-+			taskc->force_local = false;
-+			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | c, slice_ns,
-+					   enq_flags | needs_immed(c));
-+			return;
-+		}
-+	}
++	trace_sched_ext_exit(sch, kind);
 +
  	/*
- 	 * IMMED stress testing: Every immed_stress_nth'th enqueue, dispatch
- 	 * directly to prev_cpu's local DSQ even when busy to force dsq->nr > 1
-@@ -416,7 +476,8 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	 */
- 	if (taskc->force_local) {
- 		taskc->force_local = false;
--		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, slice_ns, enq_flags);
-+		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, slice_ns,
-+				   enq_flags | needs_immed(scx_bpf_task_cid(p)));
- 		return;
- 	}
+ 	 * Propagate exits to descendants immediately. Each has a dedicated
+ 	 * helper kthread and can run in parallel. While most of disabling is
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index 460a9fd196dc..9b5ac07e5e76 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -25,11 +25,17 @@ void scx_sub_disable(struct scx_sched *sch);
+ void scx_sub_enable_workfn(struct kthread_work *work);
+ bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *aux);
  
-@@ -431,7 +492,8 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	if (!__COMPAT_is_enq_cpu_selected(enq_flags) &&
- 	    (cid = pick_direct_dispatch_cid(p, scx_bpf_task_cid(p), taskc)) >= 0) {
- 		__sync_fetch_and_add(&qa.nr_ddsp_from_enq, 1);
--		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cid, slice_ns, enq_flags);
-+		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cid, slice_ns,
-+				   enq_flags | needs_immed(cid));
- 		return;
- 	}
- 
-@@ -445,8 +507,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 		s32 cid;
- 
- 		scx_bpf_dsq_insert(p, SHARED_DSQ, 0, enq_flags);
--		cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
--					      qa_idle_cids, 0);
-+		cid = cmask_next_and2_set_wrap(&taskc->cpus_allowed,
-+					       &qa.idle_cids.mask,
-+					       &qa.self_cids.mask, 0);
- 		if (cid < scx_bpf_nr_cids())
- 			scx_bpf_kick_cid(cid, SCX_KICK_IDLE);
- 		return;
-@@ -532,16 +595,19 @@ static bool dispatch_highpri(bool from_timer)
- 		if (!(taskc = lookup_task_ctx(p)))
- 			return false;
- 
--		if (cmask_test(this_cid, &taskc->cpus_allowed))
-+		/* only run highpri tasks on cids this node holds, not delegated ones */
-+		if (cmask_test(this_cid, &taskc->cpus_allowed) &&
-+		    cmask_test(this_cid, &qa.self_cids.mask))
- 			cid = this_cid;
- 		else
--			cid = cmask_next_set_wrap(&taskc->cpus_allowed,
--						  this_cid + 1);
-+			cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
-+						      &qa.self_cids.mask,
-+						      this_cid + 1);
- 		if (cid >= nr_cids)
- 			continue;
- 
- 		if (scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | cid,
--				     SCX_ENQ_PREEMPT)) {
-+				     SCX_ENQ_PREEMPT | needs_immed(cid))) {
- 			if (cid == this_cid) {
- 				dispatched = true;
- 				__sync_fetch_and_add(&qa.nr_expedited_local, 1);
-@@ -567,12 +633,38 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
- 	struct cpu_ctx __arena *cpuc;
- 	task_ctx_t *taskc;
- 	u32 batch = dsp_batch ?: 1;
-+	s32 owner;
- 	s32 i;
- 
- 	if (dispatch_highpri(false))
- 		return;
- 
--	if (!qa.nr_highpri_queued && scx_bpf_dsq_move_to_local(SHARED_DSQ, 0))
-+	/*
-+	 * Sub-sched routing: a child-owned cid goes to its owner. Never run
-+	 * this node's own tasks on a delegated cid. Read without the guard.
-+	 */
-+	owner = qa.part.cid_owner[cid];
-+	if (owner == CID_SHARED) {
-+		/* route to the live rr holder (0 = self, runs below) */
-+		s32 pos = qa.part.rr_pos;
-+		u64 holder_cgid = (pos >= 0 && pos < MAX_PARTS) ?
-+				  qa.part.rr_slots[pos] : 0;
-+
-+		if (holder_cgid) {
-+			scx_bpf_sub_dispatch(holder_cgid);
-+			return;
-+		}
-+	} else if (owner >= 0 && owner < MAX_SUB_SCHEDS) {
-+		u64 cgid = qa.sub_sched_ctxs[owner].cgroup_id;
-+
-+		if (cgid) {
-+			if (scx_bpf_sub_dispatch(cgid))
-+				__sync_fetch_and_add(&qa.sub_sched_ctxs[owner].nr_dsps, 1);
-+			return;
-+		}
-+	}
-+
-+	if (!qa.nr_highpri_queued && scx_bpf_dsq_move_to_local(SHARED_DSQ, needs_immed(cid)))
- 		return;
- 
- 	if (dsp_inf_loop_after && qa.nr_dispatched > dsp_inf_loop_after) {
-@@ -662,7 +754,7 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
- 			if (!batch || !scx_bpf_dispatch_nr_slots()) {
- 				if (dispatch_highpri(false))
- 					return;
--				scx_bpf_dsq_move_to_local(SHARED_DSQ, 0);
-+				scx_bpf_dsq_move_to_local(SHARED_DSQ, needs_immed(cid));
- 				return;
- 			}
- 			if (!cpuc->dsp_cnt)
-@@ -672,12 +764,6 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
- 		cpuc->dsp_cnt = 0;
- 	}
- 
--	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
--		if (qa.sub_sched_cgroup_ids[i] &&
--		    scx_bpf_sub_dispatch(qa.sub_sched_cgroup_ids[i]))
--			return;
--	}
--
- 	/*
- 	 * No other tasks. @prev will keep running. Update its core_sched_seq as
- 	 * if the task were enqueued and dispatched immediately.
-@@ -910,10 +996,18 @@ void BPF_STRUCT_OPS(qmap_cgroup_set_bandwidth, struct cgroup *cgrp,
- void BPF_STRUCT_OPS(qmap_update_idle, s32 cid, bool idle)
- {
- 	QMAP_TOUCH_ARENA();
-+
-+	/*
-+	 * The kernel delivers update_idle() for every cid this node holds
-+	 * SCX_CAP_BASE on. Track every cid's idle state regardless of
-+	 * delegation: the direct-dispatch pick masks idle_cids with self_cids
-+	 * at selection, so a cid already idle when it returns to self needs no
-+	 * reseed here.
-+	 */
- 	if (idle)
--		cmask_set(cid, qa_idle_cids);
-+		cmask_set(cid, &qa.idle_cids.mask);
- 	else
--		cmask_clear(cid, qa_idle_cids);
-+		cmask_clear(cid, &qa.idle_cids.mask);
- }
- 
- void BPF_STRUCT_OPS(qmap_set_cmask, struct task_struct *p,
-@@ -1065,6 +1159,486 @@ static int lowpri_timerfn(void *map, int *key, struct bpf_timer *timer)
- 	return 0;
- }
- 
-+struct round_robin_timer {
-+	struct bpf_timer timer;
-+};
-+
-+struct {
-+	__uint(type, BPF_MAP_TYPE_ARRAY);
-+	__uint(max_entries, 1);
-+	__type(key, u32);
-+	__type(value, struct round_robin_timer);
-+} round_robin_timer SEC(".maps");
-+
-+/*
-+ * Partition update synchronization. qa.part can be written from concurrent
-+ * contexts. This single-runner guard admits one writer at a time without
-+ * holding a lock across the grant/revoke kfuncs. part_pending coalesces
-+ * repartition requests that arrive while it is held.
-+ *
-+ * They live in .bss, not the arena: rr_advance() runs from a bpf_timer
-+ * callback, where the verifier rejects atomic ops on arena memory.
-+ */
-+static u64 part_busy;
-+static u64 part_pending;
-+
-+static bool part_try_start(void)
++static inline const char *sch_cgrp_path(struct scx_sched *sch)
 +{
-+	/* set busy, report whether it was previously clear (we acquired it) */
-+	return !__sync_fetch_and_or(&part_busy, 1);
++	return sch->cgrp_path;
 +}
 +
-+static void part_end(void)
-+{
-+	__sync_fetch_and_and(&part_busy, 0);
-+}
-+
-+/*
-+ * compute_partition() scratch.
-+ *
-+ * The excl-held cids are handed out in cid order: position 0..nr_excl-1 over
-+ * the held cids is split into contiguous ranges, one per participant that gets
-+ * at least one excl cid. Range k is owned by cp_range_owner[k] and ends at the
-+ * cumulative position cp_range_end[k].
-+ */
-+static s32 cp_range_owner[MAX_PARTS];	/* exclusive range k: its owner id ... */
-+static s32 cp_range_end[MAX_PARTS];	/* ... and the cumulative position it ends at */
-+
-+/* a participant in the partition: self or an attached child */
-+struct participant {
-+	s32 slot;	/* child slot, or CID_SELF */
-+	u32 weight;	/* cpu.weight */
-+};
-+
-+/**
-+ * place_one - assign one excl-held cid to its owner
-+ * @cid: the excl-held cid to place
-+ * @n: its position among the excl-held cids, in [0, nr_excl)
-+ * @total_excl:	how many positions are owned exclusively (the rest are shared)
-+ *
-+ * Position @n below @total_excl is owned exclusively. It falls in the range
-+ * whose cumulative end it is under, owned by cp_range_owner[]. A position at or
-+ * above @total_excl is the rounding leftover which joins the shared pool.
-+ *
-+ * A separate __noinline function to help verification.
-+ */
-+__noinline int place_one(s32 cid, s32 n, s32 total_excl)
-+{
-+	s32 owner = CID_SELF, i, s;
-+
-+	if (cid < 0 || cid >= SCX_QMAP_MAX_CPUS || n < 0 || n >= SCX_QMAP_MAX_CPUS ||
-+	    total_excl < 0) {
-+		scx_bpf_error("-ERANGE");
-+		return 0;
-+	}
-+
-+	if (n < total_excl) {
-+		for (i = 0; i < MAX_PARTS; i++) {
-+			if (n < cp_range_end[i]) {
-+				owner = cp_range_owner[i];
-+				break;
-+			}
-+		}
-+		qa.part.cid_owner[cid] = owner;
-+	} else {
-+		s = n - total_excl;
-+		if (s < 0 || s >= MAX_PARTS) {
-+			scx_bpf_error("-ERANGE");
-+			return 0;
-+		}
-+		qa.part.shared_cids[s] = cid;
-+		/* time-shared: dispatch resolves the live holder via rr_pos */
-+		qa.part.cid_owner[cid] = CID_SHARED;
-+	}
-+	return 0;
-+}
-+
-+/**
-+ * compute_partition - build the cid partition from this node's held caps
-+ *
-+ * Decide each cid's owner, the shared pool and the rr rotation. __noinline to
-+ * help verification. See the comment at the top of the file.
-+ */
-+__noinline void compute_partition(void)
-+{
-+	s32 nr_cids = qa.nr_cids;
-+	s32 nr_excl, total_excl = 0, nr_rr = 0;
-+	s32 sum_w, i, cid, n = 0, share, self_w;
-+	u64 cgid_snap[MAX_SUB_SCHEDS];
-+	s32 w_snap[MAX_SUB_SCHEDS];
-+
-+	if (nr_cids > SCX_QMAP_MAX_CPUS) {
-+		scx_bpf_error("-ERANGE");
-+		return;
-+	}
-+
-+	/* find out the cids we hold */
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ, (void *)(long)&qa.held_excl.mask);
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ_IMMED, (void *)(long)&qa.held_shared.mask);
-+	cmask_andnot(&qa.held_shared.mask, &qa.held_excl.mask);	/* held only as ENQ_IMMED */
-+
-+	qa.part.nr_shared = 0;
-+	qa.part.nr_rr = 0;
-+	qa.part.rr_pos = 0;
-+
-+	nr_excl = cmask_weight(&qa.held_excl.mask);
-+	qa.part.nr_excl = nr_excl;
-+
-+	/* no excl cid: held_shared stays self-local, the rest unheld */
-+	if (!nr_excl) {
-+		bpf_for(cid, 0, nr_cids) {
-+			if (cmask_test(cid, &qa.held_shared.mask))
-+				qa.part.cid_owner[cid] = CID_SELF;
-+			else
-+				qa.part.cid_owner[cid] = CID_NONE;
-+		}
-+		return;
-+	}
-+
-+	/*
-+	 * Snapshot membership and weights so the sum_w and share loops agree.
-+	 * A mid-compute change would otherwise wrap nr_shared negative.
-+	 */
-+	self_w = qa.self_weight ?: 100;
-+	bpf_for(i, 0, MAX_SUB_SCHEDS) {
-+		cgid_snap[i] = qa.sub_sched_ctxs[i].cgroup_id;
-+		w_snap[i] = cgid_snap[i] ? (qa.sub_sched_ctxs[i].weight ?: 100) : 0;
-+	}
-+
-+	/*
-+	 * Participants are self plus each child. Give each a fixed range/rr
-+	 * slot: self at slot 0, child i at slot i+1.
-+	 *
-+	 * sum_w totals every participant's weight.
-+	 */
-+	sum_w = self_w;
-+	bpf_for(i, 0, MAX_SUB_SCHEDS) {
-+		barrier_var(sum_w);
-+		sum_w += w_snap[i];
-+	}
-+
-+	/*
-+	 * Split [0, nr_excl) into one contiguous range per participant, each
-+	 * the floor of its weight share. cp_range_owner[]/cp_range_end[] record
-+	 * each range's owner and cumulative end, total_excl counts the
-+	 * exclusive slots, and the rest (nr_excl - total_excl) are shared.
-+	 * rr_slots[] lists every participant for the round-robin.
-+	 */
-+	share = (u64)nr_excl * self_w / sum_w;
-+	total_excl += share;
-+	cp_range_owner[0] = CID_SELF;
-+	cp_range_end[0] = total_excl;
-+	qa.part.rr_slots[nr_rr++] = 0;		/* self holds slot 0 (cgid 0 = no grant) */
-+
-+	bpf_for(i, 0, MAX_SUB_SCHEDS) {
-+		u64 cgid = cgid_snap[i];
-+		s32 w = w_snap[i];
-+
-+		barrier_var(total_excl);
-+		share = (u64)nr_excl * w / sum_w;
-+		total_excl += share;
-+		cp_range_owner[i + 1] = cgid ? i : CID_NONE;
-+		cp_range_end[i + 1] = total_excl;
-+
-+		if (cgid) {
-+			barrier_var(nr_rr);
-+			if (nr_rr < 0 || nr_rr >= MAX_PARTS) {
-+				scx_bpf_error("-ERANGE");
-+				return;
-+			}
-+			qa.part.rr_slots[nr_rr++] = cgid;
-+		}
-+	}
-+
-+	/* assign each cid: held-excl by position, the rest self/none */
-+	bpf_for(cid, 0, nr_cids) {
-+		if (cmask_test(cid, &qa.held_excl.mask)) {
-+			place_one(cid, n, total_excl);
-+			n++;
-+			barrier_var(n);
-+		} else if (cmask_test(cid, &qa.held_shared.mask)) {
-+			qa.part.cid_owner[cid] = CID_SELF;	/* time-share, self-local */
-+		} else {
-+			qa.part.cid_owner[cid] = CID_NONE;	/* not held */
-+		}
-+	}
-+
-+	qa.part.nr_shared = nr_excl - total_excl;
-+	qa.part.nr_rr = nr_rr;
-+}
-+
-+/*
-+ * Charge elapsed wall time to each cid's current owner. Runs under the
-+ * partition guard before every ownership change and from the stats flush, so
-+ * alloc_ns[] reflects the layout that was in effect. Shared-pool time is
-+ * charged to the live round-robin holder.
-+ */
-+static __noinline void account_alloc(void)
-+{
-+	u64 now = bpf_ktime_get_ns();
-+	s32 rr_owner = CID_SELF;
-+	s32 nr_cids = qa.nr_cids;
-+	u64 delta;
-+	s32 cid, i;
-+
-+	if (nr_cids < 0 || nr_cids > SCX_QMAP_MAX_CPUS) {
-+		scx_bpf_error("-ERANGE");
-+		return;
-+	}
-+
-+	/* first call starts the clock */
-+	if (!qa.alloc_ts) {
-+		qa.alloc_ts = now;
-+		return;
-+	}
-+	delta = now - qa.alloc_ts;
-+	qa.alloc_ts = now;
-+	qa.alloc_window_ns += delta;
-+
-+	/* resolve the live shared-pool holder to an owner id */
-+	if (qa.part.nr_shared && qa.part.nr_rr) {
-+		u32 pos = qa.part.rr_pos;
-+		u64 cgid = pos < MAX_PARTS ? qa.part.rr_slots[pos] : 0;
-+
-+		if (cgid) {
-+			rr_owner = CID_NONE;
-+			bpf_for(i, 0, MAX_SUB_SCHEDS)
-+				if (qa.sub_sched_ctxs[i].cgroup_id == cgid)
-+					rr_owner = i;
-+		}
-+	}
-+
-+	bpf_for(cid, 0, nr_cids) {
-+		s32 owner = qa.part.cid_owner[cid];
-+
-+		if (owner == CID_SHARED)
-+			owner = rr_owner;
-+		if (owner >= 0 && owner < MAX_SUB_SCHEDS)
-+			qa.alloc_ns[owner] += delta;
-+		else if (owner == CID_SELF)
-+			qa.self_alloc_ns += delta;
-+	}
-+}
-+
-+/*
-+ * apply_partition - execute the plan compute_partition() built
-+ *
-+ * Turn the owner map into the per-child, shared and self cmasks and issue the
-+ * grant/revoke kfuncs as a delta against each child's previous grant. If no
-+ * excl cid, evict every child.
-+ */
-+__noinline void apply_partition(void)
-+{
-+	s32 nr_cids = qa.nr_cids;
-+	s32 nr_shared = qa.part.nr_shared;
-+	s32 i, cid;
-+
-+	if (nr_cids < 0 || nr_cids > SCX_QMAP_MAX_CPUS ||
-+	    nr_shared < 0 || nr_shared > MAX_PARTS) {
-+		scx_bpf_error("-ERANGE");
-+		return;
-+	}
-+
-+	/* no excl cpu: run own tasks on the held shares, evict children */
-+	if (!qa.part.nr_excl) {
-+		cmask_copy(&qa.self_cids.mask, &qa.held_shared.mask);
-+		bpf_for(i, 0, MAX_SUB_SCHEDS)
-+			if (qa.sub_sched_ctxs[i].cgroup_id)
-+				scx_bpf_sub_kill(qa.sub_sched_ctxs[i].cgroup_id,
-+						 "parent holds no excl cpu to distribute");
-+		return;
-+	}
-+
-+	/*
-+	 * Snapshot the old pool. The per-child revoke below clears ENQ_IMMED on
-+	 * the previously-granted pool, so a cid that left the pool (now a
-+	 * sibling's excl) doesn't keep a stale ENQ_IMMED on its last holder.
-+	 */
-+	cmask_copy(&qa.prev_rr_cids.mask, &qa.rr_cids.mask);
-+
-+	/* turn the owner map into the rr pool, per-child excl, and self sets */
-+	cmask_init(&qa.rr_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.self_cids.mask, 0, nr_cids);
-+
-+	/* snapshot each child's grant, then rebuild the new sets below */
-+	bpf_for(i, 0, MAX_SUB_SCHEDS) {
-+		cmask_copy(&qa.sub_sched_ctxs[i].prev_granted.mask,
-+			   &qa.sub_sched_ctxs[i].granted_cids.mask);
-+		cmask_init(&qa.sub_sched_ctxs[i].granted_cids.mask, 0, nr_cids);
-+	}
-+
-+	bpf_for(i, 0, nr_shared)
-+		cmask_set(qa.part.shared_cids[i], &qa.rr_cids.mask);
-+	bpf_for(cid, 0, nr_cids) {
-+		s32 o = qa.part.cid_owner[cid];
-+
-+		if (cmask_test(cid, &qa.rr_cids.mask))
-+			continue;
-+		if (o >= 0 && o < MAX_SUB_SCHEDS)
-+			cmask_set(cid, &qa.sub_sched_ctxs[o].granted_cids.mask);
-+		else if (o == CID_SELF)
-+			cmask_set(cid, &qa.self_cids.mask);
-+	}
-+
-+	/*
-+	 * Apply each child's exclusive cids as a delta against its previous
-+	 * grant. Separately clear the previous shared grant (ENQ_IMMED on the
-+	 * old pool), covering cids still pooled and cids that left for a
-+	 * sibling's excl. The current holder is granted the new pool below.
-+	 */
-+	bpf_for(i, 0, MAX_SUB_SCHEDS) {
-+		struct sub_sched_ctx __arena *ssc = &qa.sub_sched_ctxs[i];
-+		u64 cgid = ssc->cgroup_id;
-+
-+		if (!cgid)
-+			continue;
-+
-+		cmask_copy(&qa.to_revoke_cids.mask, &ssc->prev_granted.mask);
-+		cmask_andnot(&qa.to_revoke_cids.mask, &ssc->granted_cids.mask);
-+		cmask_copy(&qa.to_grant_cids.mask, &ssc->granted_cids.mask);
-+		cmask_andnot(&qa.to_grant_cids.mask, &ssc->prev_granted.mask);
-+
-+		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ_IMMED,
-+				   (void *)(long)&qa.prev_rr_cids.mask);
-+		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT | SCX_CAP_ENQ_IMMED,
-+				   (void *)(long)&qa.to_revoke_cids.mask);
-+		scx_bpf_sub_grant(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT | SCX_CAP_ENQ_IMMED,
-+				  (void *)(long)&qa.to_grant_cids.mask, NULL);
-+	}
-+
-+	/* the current holder of the shared pool gets ENQ_IMMED on all of it */
-+	if (nr_shared) {
-+		s32 pos = qa.part.rr_pos;
-+		u64 holder_cgid;
-+
-+		if (pos < 0 || pos >= MAX_PARTS) {
-+			scx_bpf_error("-ERANGE");
-+			return;
-+		}
-+
-+		holder_cgid = qa.part.rr_slots[pos];	/* 0 = self, nothing to grant */
-+		if (holder_cgid)
-+			scx_bpf_sub_grant(holder_cgid, SCX_CAP_ENQ_IMMED,
-+					  (void *)(long)&qa.rr_cids.mask, NULL);
-+	}
-+}
-+
-+/*
-+ * Recompute the split off the node's held caps and apply it. The contexts this
-+ * runs from (the sub-sched callbacks, the userspace poke, the rr timer) are not
-+ * serialized by the kernel, so a single runner does the work. A caller that
-+ * finds the guard held leaves part_pending set; the holder drains it before
-+ * releasing, with the rr timer as a backstop.
-+ */
-+static void redistribute(void)
-+{
-+	s32 i;
-+
-+	__sync_fetch_and_or(&part_pending, 1);
-+
-+	if (!part_try_start())
-+		return;
-+
-+	bpf_for(i, 0, 1024) {
-+		__sync_fetch_and_and(&part_pending, 0);
-+		/* charge elapsed time to the current partition before rebuilding it */
-+		account_alloc();
-+		compute_partition();
-+		apply_partition();
-+		if (!__sync_fetch_and_or(&part_pending, 0))
-+			break;
-+	}
-+
-+	part_end();
-+}
-+
-+/* userspace pokes this (PROG_RUN) to resplit after a cpu.weight change */
-+SEC("syscall")
-+int repartition(void *ctx)
-+{
-+	redistribute();
-+	return 0;
-+}
-+
-+/*
-+ * Userspace pokes this (PROG_RUN) to bring alloc_ns[] current before reading
-+ * it for the stats display. Skipping when the partition guard is held is
-+ * fine - alloc_ts is untouched, so the elapsed time is charged next time.
-+ */
-+SEC("syscall")
-+int flush_alloc(void *ctx)
-+{
-+	if (part_try_start()) {
-+		account_alloc();
-+		part_end();
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Hand the shared pool to the next participant in the rotation. Self's turn
-+ * just revokes the pool back to this sched. A child's turn grants it ENQ_IMMED
-+ * on the entire pool. As only excl-held cids are time-shared, a wall-clock
-+ * rotation works. Driven by the round-robin timer.
-+ */
-+static void rr_advance(void)
-+{
-+	s32 nr_shared, old_pos, new_pos;
-+	u64 old_cgid, new_cgid;
-+	u32 nr_rr;		/* unsigned for % */
-+
-+	/* a redistribute holds the partition and rebuilds the pool, so skip */
-+	if (!part_try_start())
-+		return;
-+
-+	nr_rr = qa.part.nr_rr;
-+	nr_shared = qa.part.nr_shared;
-+
-+	if (nr_shared < 0 || nr_shared > MAX_PARTS) {
-+		scx_bpf_error("-ERANGE");
-+		return;
-+	}
-+
-+	if (nr_shared && nr_rr >= 2) {
-+		/* close out the outgoing holder's pool time */
-+		account_alloc();
-+
-+		old_pos = qa.part.rr_pos;
-+		new_pos = (old_pos + 1) % nr_rr;
-+		old_cgid = qa.part.rr_slots[old_pos];
-+		new_cgid = qa.part.rr_slots[new_pos];
-+		qa.part.rr_pos = new_pos;
-+
-+		/*
-+		 * Move the ENQ_IMMED cap to the next participant. The shared
-+		 * cids stay marked CID_SHARED. qmap_dispatch() resolves the
-+		 * live holder via rr_pos without the guard, so a dispatch
-+		 * racing this handoff may reenqueue a task once. Harmless for a
-+		 * time-share.
-+		 */
-+		if (old_cgid)
-+			scx_bpf_sub_revoke(old_cgid, SCX_CAP_ENQ_IMMED,
-+					   (void *)(long)&qa.rr_cids.mask);
-+		if (new_cgid)
-+			scx_bpf_sub_grant(new_cgid, SCX_CAP_ENQ_IMMED,
-+					  (void *)(long)&qa.rr_cids.mask, NULL);
-+	}
-+
-+	part_end();
-+
-+	/* a resplit queued while we held the guard supersedes this rotation */
-+	if (__sync_fetch_and_or(&part_pending, 0))
-+		redistribute();
-+}
-+
-+/* advance the time-shared cid pool every round_robin_ns */
-+static int round_robin_timerfn(void *map, int *key, struct bpf_timer *timer)
-+{
-+	rr_advance();
-+	bpf_timer_start(timer, round_robin_ns, 0);
-+	return 0;
-+}
-+
- /*
-  * Custom cid layout for the cid-override test. On invalid input the kfunc
-  * scx_error()s and aborts the scheduler.
-@@ -1142,16 +1716,43 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 	}
- 	qa.task_free_head = (task_ctx_t *)slab;
+ #else	/* CONFIG_EXT_SUB_SCHED */
  
-+	/* cache the cid count, trusted to be <= SCX_QMAP_MAX_CPUS hereafter */
-+	qa.nr_cids = nr_cids;
-+
-+	/* cmasks are embedded in qa, so they only need initializing */
-+	cmask_init(&qa.idle_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.rr_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.prev_rr_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.self_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.to_revoke_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.to_grant_cids.mask, 0, nr_cids);
-+	cmask_init(&qa.held_excl.mask, 0, nr_cids);
-+	cmask_init(&qa.held_shared.mask, 0, nr_cids);
-+
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ, (void *)(long)&qa.held_excl.mask);
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ_IMMED, (void *)(long)&qa.held_shared.mask);
-+	cmask_andnot(&qa.held_shared.mask, &qa.held_excl.mask);
-+
-+	bpf_for(i, 0, MAX_SUB_SCHEDS) {
-+		cmask_init(&qa.sub_sched_ctxs[i].granted_cids.mask, 0, nr_cids);
-+		cmask_init(&qa.sub_sched_ctxs[i].prev_granted.mask, 0, nr_cids);
-+	}
-+
- 	/*
--	 * Allocate and initialize the idle cmask. Starts empty - update_idle
--	 * fills it as cpus enter idle.
-+	 * The root starts holding every cid. qmap_sub_ecaps_updated() maintains
-+	 * per-cid shared state as effective caps settle, and redistribute()
-+	 * rebuilds owner and self from held caps. A non-root node starts with
-+	 * nothing.
- 	 */
--	qa_idle_cids = bpf_arena_alloc_pages(&arena, NULL, 1, NUMA_NO_NODE, 0);
--	if (!qa_idle_cids) {
--		scx_bpf_error("failed to allocate idle cmask");
--		return -ENOMEM;
-+	bpf_for(i, 0, nr_cids) {
-+		if (!sub_cgroup_id) {
-+			cmask_set(i, &qa.self_cids.mask);
-+			qa.part.cid_owner[i] = CID_SELF;
-+		} else {
-+			qa.part.cid_owner[i] = CID_NONE;
-+		}
- 	}
--	cmask_init(qa_idle_cids, 0, nr_cids);
-+	qa.part.nr_shared = 0;
- 
- 	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
- 	if (ret) {
-@@ -1190,6 +1791,16 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 			return ret;
- 	}
- 
-+	/* sub-sched: drive the boundary-cid round-robin from a bpf timer */
-+	timer = bpf_map_lookup_elem(&round_robin_timer, &key);
-+	if (!timer)
-+		return -ESRCH;
-+	bpf_timer_init(timer, &round_robin_timer, CLOCK_MONOTONIC);
-+	bpf_timer_set_callback(timer, round_robin_timerfn);
-+	ret = bpf_timer_start(timer, round_robin_ns, 0);
-+	if (ret)
-+		return ret;
-+
- 	return 0;
- }
- 
-@@ -1202,13 +1813,20 @@ s32 BPF_STRUCT_OPS(qmap_sub_attach, struct scx_sub_attach_args *args)
- {
- 	s32 i;
- 
-+	/* as long as there is at least one excl cpu, children can attach */
-+	if (!cmask_weight(&qa.held_excl.mask))
-+		return -ENOSPC;
-+
- 	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
--		if (!qa.sub_sched_cgroup_ids[i]) {
--			qa.sub_sched_cgroup_ids[i] = args->ops->sub_cgroup_id;
--			bpf_printk("attaching sub-sched[%d] on %s",
--				   i, args->cgroup_path);
--			return 0;
--		}
-+		if (qa.sub_sched_ctxs[i].cgroup_id)
-+			continue;
-+
-+		qa.sub_sched_ctxs[i].cgroup_id = args->ops->sub_cgroup_id;
-+		qa.sub_sched_ctxs[i].weight = 100;	/* until userspace feeds it */
-+		qa.nr_sub_scheds++;
-+		bpf_printk("attaching sub-sched[%d] on %s", i, args->cgroup_path);
-+		redistribute();
-+		return 0;
- 	}
- 
- 	return -ENOSPC;
-@@ -1219,15 +1837,37 @@ void BPF_STRUCT_OPS(qmap_sub_detach, struct scx_sub_detach_args *args)
- 	s32 i;
- 
- 	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
--		if (qa.sub_sched_cgroup_ids[i] == args->ops->sub_cgroup_id) {
--			qa.sub_sched_cgroup_ids[i] = 0;
--			bpf_printk("detaching sub-sched[%d] on %s",
--				   i, args->cgroup_path);
--			break;
--		}
-+		if (qa.sub_sched_ctxs[i].cgroup_id != args->ops->sub_cgroup_id)
-+			continue;
-+
-+		qa.sub_sched_ctxs[i].cgroup_id = 0;
-+		qa.sub_sched_ctxs[i].weight = 100;
-+		cmask_init(&qa.sub_sched_ctxs[i].granted_cids.mask, 0, qa.nr_cids);
-+		qa.nr_sub_scheds--;
-+		bpf_printk("detaching sub-sched[%d] on %s", i, args->cgroup_path);
-+		redistribute();
-+		break;
- 	}
- }
- 
-+void BPF_STRUCT_OPS(qmap_sub_caps_updated, const struct scx_cmask *cmask, u64 caps)
-+{
-+	/* our held caps changed, redistribute */
-+	redistribute();
-+}
-+
-+void BPF_STRUCT_OPS(qmap_sub_ecaps_updated, s32 cid, u64 before, u64 after)
-+{
-+	/*
-+	 * Effective caps updated. Track which cids hold shared caps so a self
-+	 * task placed there enqueues IMMED.
-+	 */
-+	if (after & SCX_CAP_ENQ_IMMED)
-+		qa.cid_shared[cid] = (after & SCX_CAP_ENQ) ? 0 : 1;
-+	else
-+		qa.cid_shared[cid] = 0;
-+}
-+
- SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .flags			= SCX_OPS_ENQ_EXITING | SCX_OPS_TID_TO_TASK,
- 	       .select_cid		= (void *)qmap_select_cid,
-@@ -1248,6 +1888,8 @@ SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .cgroup_set_bandwidth	= (void *)qmap_cgroup_set_bandwidth,
- 	       .sub_attach		= (void *)qmap_sub_attach,
- 	       .sub_detach		= (void *)qmap_sub_detach,
-+	       .sub_caps_updated	= (void *)qmap_sub_caps_updated,
-+	       .sub_ecaps_updated	= (void *)qmap_sub_ecaps_updated,
- 	       .init_cids		= (void *)qmap_init_cids,
- 	       .init			= (void *)qmap_init,
- 	       .exit			= (void *)qmap_exit,
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 9124183bffec..8249229f25bd 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -4,6 +4,9 @@
-  * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
-  * Copyright (c) 2022 David Vernet <dvernet@meta.com>
-  */
-+#ifndef _GNU_SOURCE
-+#define _GNU_SOURCE
-+#endif
- #include <stdio.h>
- #include <stdlib.h>
- #include <unistd.h>
-@@ -12,19 +15,44 @@
- #include <libgen.h>
- #include <sys/mman.h>
- #include <sys/stat.h>
-+#include <fcntl.h>
-+#include <limits.h>
-+#include <string.h>
-+#include <time.h>
- #include <bpf/bpf.h>
- #include <scx/common.h>
- #include "scx_qmap.h"
- #include "scx_qmap.bpf.skel.h"
- 
-+/* kernfs file-handle type for open_by_handle_at(), from linux/exportfs.h */
-+#ifndef FILEID_KERNFS
-+#define FILEID_KERNFS	0xfe
-+#endif
-+
- const char help_fmt[] =
- "A simple five-level FIFO queue sched_ext scheduler.\n"
- "\n"
--"See the top-level comment in .bpf.c for more details.\n"
-+"It also demonstrates hierarchical sub-scheduling: a scheduler can hand some\n"
-+"of its cpus to a child cgroup that runs its own scheduler. Run one qmap as\n"
-+"the parent, then run another qmap on a child cgroup with -c to attach it\n"
-+"beneath the parent.\n"
-+"\n"
-+"The policy below is deliberately simplistic and the resulting behavior can\n"
-+"look odd. qmap is a demo: it exists to exercise every sub-scheduling\n"
-+"primitive the kernel offers with as little code as possible, not to schedule\n"
-+"well.\n"
-+"\n"
-+"A parent divides the full cpus it holds among itself and its children in\n"
-+"proportion to cpu.weight. The cpus left over by rounding are time-shared,\n"
-+"handed to each participant in turn every -R ms. A cpu a scheduler only\n"
-+"holds a time-share of is never handed further down, and a parent left with\n"
-+"no full cpu of its own shuts its children down.\n"
-+"\n"
-+"See the top-of-file comment in .bpf.c for the design.\n"
- "\n"
- "Usage: %s [-s SLICE_US] [-e COUNT] [-t COUNT] [-T COUNT] [-l COUNT] [-b COUNT]\n"
- "       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I]\n"
--"       [-F COUNT] [-v]\n"
-+"       [-F COUNT] [-i SEC] [-R MS] [-v]\n"
- "\n"
- "  -s SLICE_US   Override slice duration\n"
- "  -e COUNT      Trigger scx_bpf_error() after COUNT enqueues\n"
-@@ -44,6 +72,8 @@ const char help_fmt[] =
- "  -I            Turn on SCX_OPS_ALWAYS_ENQ_IMMED\n"
- "  -F COUNT      IMMED stress: force every COUNT'th enqueue to a busy local DSQ (use with -I)\n"
- "  -C MODE       cid-override test (shuffle|bad-dup|bad-range|bad-mono)\n"
-+"  -i SEC        Stats and weight-refresh interval, seconds (default 5)\n"
-+"  -R MS         Round-robin period for time-shared cpus, ms (default 200)\n"
- "  -v            Print libbpf debug messages\n"
- "  -h            Display this help and exit\n";
- 
-@@ -62,6 +92,214 @@ static void sigint_handler(int dummy)
- 	exit_req = 1;
- }
- 
-+/*
-+ * Open a cgroup directory directly from its id. In cgroup2 the cgroup id is the
-+ * kernfs node id, so a FILEID_KERNFS handle built from the id resolves to the
-+ * directory via open_by_handle_at() against the cgroup mount.
-+ */
-+static int open_cgroup_by_id(u64 cgid)
-+{
-+	static int mnt_fd = -1;
-+	struct {
-+		struct file_handle fh;
-+		u64 id;
-+	} h;
-+
-+	if (mnt_fd < 0) {
-+		mnt_fd = open("/sys/fs/cgroup", O_RDONLY | O_DIRECTORY);
-+		if (mnt_fd < 0)
-+			return -1;
-+	}
-+	h.fh.handle_bytes = sizeof(h.id);
-+	h.fh.handle_type = FILEID_KERNFS;
-+	h.id = cgid;
-+	return open_by_handle_at(mnt_fd, &h.fh, O_RDONLY | O_DIRECTORY);
-+}
-+
-+/* read a cgroup's cpu.weight (1-10000) by id, 0 if unavailable */
-+static u32 read_cgroup_weight(u64 cgid)
-+{
-+	char buf[32];
-+	int dfd, wfd;
-+	u32 w = 0;
-+	ssize_t n;
-+
-+	dfd = open_cgroup_by_id(cgid);
-+	if (dfd < 0)
-+		return 0;
-+	wfd = openat(dfd, "cpu.weight", O_RDONLY);
-+	close(dfd);
-+	if (wfd < 0)
-+		return 0;
-+	n = read(wfd, buf, sizeof(buf) - 1);
-+	close(wfd);
-+	if (n > 0) {
-+		buf[n] = '\0';
-+		w = strtoul(buf, NULL, 10);
-+	}
-+	return w;
-+}
-+
-+/* read each direct child's cpu.weight into the arena, true if any changed */
-+static bool feed_weights(struct qmap_arena *qa)
-+{
-+	bool changed = false;
-+	int i;
-+
-+	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
-+		u64 cgid = qa->sub_sched_ctxs[i].cgroup_id;
-+		u32 w;
-+
-+		if (!cgid)
-+			continue;
-+		/* racy against slot reuse but weight is advisory and self-corrects */
-+		w = read_cgroup_weight(cgid);
-+		if (w && w != qa->sub_sched_ctxs[i].weight) {
-+			qa->sub_sched_ctxs[i].weight = w;
-+			changed = true;
-+		}
-+	}
-+	return changed;
-+}
-+
-+static void invoke_repartition(struct scx_qmap *skel)
-+{
-+	LIBBPF_OPTS(bpf_test_run_opts, opts);
-+
-+	bpf_prog_test_run_opts(bpf_program__fd(skel->progs.repartition), &opts);
-+}
-+
-+static void invoke_flush_alloc(struct scx_qmap *skel)
-+{
-+	LIBBPF_OPTS(bpf_test_run_opts, opts);
-+
-+	bpf_prog_test_run_opts(bpf_program__fd(skel->progs.flush_alloc), &opts);
-+}
-+
-+/* previous counter snapshots for the per-interval hier stats */
-+struct hier_prev {
-+	u64 alloc_ns[MAX_SUB_SCHEDS];
-+	u64 self_alloc_ns;
-+	u64 alloc_window_ns;
-+	u64 nr_dsps[MAX_SUB_SCHEDS];
-+	u64 nr_reenq_cap;
-+	u64 nr_reenq_immed;
-+};
-+
-+/* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
-+static const char *tstamp(char *buf, size_t sz)
-+{
-+	time_t now = time(NULL);
-+
-+	strftime(buf, sz, "%H:%M:%S", localtime(&now));
-+	return buf;
-+}
-+
-+/* format the cids whose cid_owner[] matches @owner as "0-3,8", "-" if none */
-+static void format_cid_ranges(struct qmap_arena *qa, s32 owner, char *buf, size_t sz)
-+{
-+	u32 nr = qa->nr_cids, cid;
-+	size_t off = 0;
-+	s32 start = -1;
-+
-+	buf[0] = '\0';
-+	for (cid = 0; cid <= nr; cid++) {
-+		bool match = cid < nr && qa->part.cid_owner[cid] == owner;
-+		int n;
-+
-+		if (match) {
-+			if (start < 0)
-+				start = cid;
-+			continue;
-+		}
-+		if (start < 0)
-+			continue;
-+
-+		if (start == (s32)cid - 1)
-+			n = snprintf(buf + off, sz - off, "%s%d",
-+				     off ? "," : "", start);
-+		else
-+			n = snprintf(buf + off, sz - off, "%s%d-%d",
-+				     off ? "," : "", start, cid - 1);
-+		if (n < 0 || (size_t)n >= sz - off) {
-+			strcpy(&buf[sz - 4], "...");
-+			return;
-+		}
-+		off += n;
-+		start = -1;
-+	}
-+	if (!off)
-+		strcpy(buf, "-");
-+}
-+
-+/* partition summary + one row per sched: weight, cpus, dispatch rate, cids */
-+static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cgid)
-+{
-+	char ranges[128], who[16];
-+	const char *rr = "-";
-+	double secs;
-+	u32 i;
-+
-+	/*
-+	 * account_alloc() bumps alloc_window_ns together with the per-owner
-+	 * counters, so dividing by the same window yields exact cid counts.
-+	 */
-+	secs = (qa->alloc_window_ns - prev->alloc_window_ns) / 1e9;
-+	prev->alloc_window_ns = qa->alloc_window_ns;
-+
-+	/* resolve the live shared-pool holder */
-+	if (qa->part.nr_shared && qa->part.nr_rr) {
-+		u64 cgid = qa->part.rr_slots[qa->part.rr_pos];
-+
-+		rr = "self";
-+		if (cgid) {
-+			rr = "?";
-+			for (i = 0; i < MAX_SUB_SCHEDS; i++) {
-+				if (qa->sub_sched_ctxs[i].cgroup_id == cgid) {
-+					snprintf(who, sizeof(who), "sub%u", i);
-+					rr = who;
-+					break;
-+				}
-+			}
-+		}
-+	}
-+
-+	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
-+	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu\n",
-+	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
-+	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
-+	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed));
-+	prev->nr_reenq_cap = qa->nr_reenq_cap;
-+	prev->nr_reenq_immed = qa->nr_reenq_immed;
-+
-+	printf("hier   : %-4s %10s %4s %6s %8s  %s\n",
-+	       "", "cgroup", "w", "alloc", "disp/s", "cids");
-+
-+	format_cid_ranges(qa, CID_SELF, ranges, sizeof(ranges));
-+	printf("hier   : %-4s %10llu %4u %6.2f %8s  %s\n", "self",
-+	       (unsigned long long)own_cgid, qa->self_weight,
-+	       secs > 0 ? (qa->self_alloc_ns - prev->self_alloc_ns) / (secs * 1e9) : 0.0,
-+	       "-", ranges);
-+	prev->self_alloc_ns = qa->self_alloc_ns;
-+
-+	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
-+		struct sub_sched_ctx *sc = &qa->sub_sched_ctxs[i];
-+
-+		if (!sc->cgroup_id)
-+			continue;
-+
-+		snprintf(who, sizeof(who), "sub%u", i);
-+		format_cid_ranges(qa, i, ranges, sizeof(ranges));
-+		printf("hier   : %-4s %10llu %4u %6.2f %8.1f  %s\n", who,
-+		       (unsigned long long)sc->cgroup_id, sc->weight,
-+		       secs > 0 ? (qa->alloc_ns[i] - prev->alloc_ns[i]) / (secs * 1e9) : 0.0,
-+		       secs > 0 ? (sc->nr_dsps - prev->nr_dsps[i]) / secs : 0.0,
-+		       ranges);
-+		prev->alloc_ns[i] = qa->alloc_ns[i];
-+		prev->nr_dsps[i] = sc->nr_dsps;
-+	}
-+}
-+
- int main(int argc, char **argv)
- {
- 	struct scx_qmap *skel;
-@@ -69,7 +307,11 @@ int main(int argc, char **argv)
- 	struct qmap_arena *qa;
- 	u32 test_error_cnt = 0;
- 	u64 ecode;
--	int opt;
-+	int opt, stats_intv = 5, i, round_robin_ms = 200;
-+	struct hier_prev hprev = {};
-+	const char *sub_cg_path = NULL;
-+	char tbuf[32];
-+	u64 own_cgid = 0;
- 
- 	libbpf_set_print(libbpf_print_fn);
- 	signal(SIGINT, sigint_handler);
-@@ -89,7 +331,7 @@ int main(int argc, char **argv)
- 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
- 	skel->rodata->max_tasks = 16384;
- 
--	while ((opt = getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:vh")) != -1) {
-+	while ((opt = getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:vh")) != -1) {
- 		switch (opt) {
- 		case 's':
- 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
-@@ -129,6 +371,8 @@ int main(int argc, char **argv)
- 			}
- 			skel->struct_ops.qmap_ops->sub_cgroup_id = st.st_ino;
- 			skel->rodata->sub_cgroup_id = st.st_ino;
-+			own_cgid = st.st_ino;
-+			sub_cg_path = optarg;
- 			break;
- 		}
- 		case 'd':
-@@ -211,6 +455,16 @@ int main(int argc, char **argv)
- 			}
- 			break;
- 		}
-+		case 'i':
-+			stats_intv = atoi(optarg);
-+			if (stats_intv < 1)
-+				stats_intv = 1;
-+			break;
-+		case 'R':
-+			round_robin_ms = atoi(optarg);
-+			if (round_robin_ms < 10)
-+				round_robin_ms = 10;
-+			break;
- 		case 'v':
- 			verbose = true;
- 			break;
-@@ -220,16 +474,30 @@ int main(int argc, char **argv)
- 		}
- 	}
- 
-+	skel->rodata->round_robin_ns = (u64)round_robin_ms * 1000000;
-+
- 	SCX_OPS_LOAD(skel, qmap_ops, scx_qmap, uei);
- 	link = SCX_OPS_ATTACH(skel, qmap_ops, scx_qmap);
- 
- 	qa = &skel->arena->qa;
- 	qa->test_error_cnt = test_error_cnt;
- 
-+	if (sub_cg_path)
-+		printf("%s scx_qmap started: sub-scheduler on %s, stats every %ds\n",
-+		       tstamp(tbuf, sizeof(tbuf)), sub_cg_path, stats_intv);
-+	else
-+		printf("%s scx_qmap started: root scheduler, stats every %ds\n",
-+		       tstamp(tbuf, sizeof(tbuf)), stats_intv);
-+	fflush(stdout);
-+
- 	while (!exit_req && !UEI_EXITED(skel, uei)) {
- 		long nr_enqueued = qa->nr_enqueued;
- 		long nr_dispatched = qa->nr_dispatched;
-+		u32 self_weight;
-+		bool repart;
- 
-+		printf("---- %s ----\n",
-+		       tstamp(tbuf, sizeof(tbuf)));
- 		printf("stats  : enq=%lu dsp=%lu delta=%ld reenq/cid0=%llu/%llu deq=%llu core=%llu enq_ddsp=%llu\n",
- 		       nr_enqueued, nr_dispatched, nr_enqueued - nr_dispatched,
- 		       (unsigned long long)qa->nr_reenqueued,
-@@ -250,8 +518,27 @@ int main(int argc, char **argv)
- 			       qa->cpuperf_target_min,
- 			       qa->cpuperf_target_avg,
- 			       qa->cpuperf_target_max);
-+
-+		self_weight = own_cgid ? read_cgroup_weight(own_cgid) : 100;
-+		if (!self_weight)
-+			self_weight = 100;
-+
-+		repart = feed_weights(qa);
-+
-+		if (self_weight != qa->self_weight) {
-+			qa->self_weight = self_weight;
-+			repart = true;
-+		}
-+
-+		if (repart)
-+			invoke_repartition(skel);
-+
-+		invoke_flush_alloc(skel);
-+		print_hier(qa, &hprev, own_cgid);
- 		fflush(stdout);
--		sleep(1);
-+
-+		for (i = 0; i < stats_intv && !exit_req && !UEI_EXITED(skel, uei); i++)
-+			sleep(1);
- 	}
- 
- 	bpf_link__destroy(link);
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index 6c3ea1fc74ed..5d44c11c75dd 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -20,6 +20,7 @@
- #endif
- 
- #define MAX_SUB_SCHEDS		8
-+#define MAX_PARTS		(MAX_SUB_SCHEDS + 1)	/* participants: children + self */
- 
- /*
-  * cpu_ctxs[] is sized to a fixed cap so the layout is shared between BPF and
-@@ -27,6 +28,16 @@
-  */
- #define SCX_QMAP_MAX_CPUS	1024
- 
-+/*
-+ * An owner id identifies who holds a cid: a child slot in [0, MAX_SUB_SCHEDS),
-+ * CID_SELF for this node, CID_NONE for a cid not currently held, or CID_SHARED
-+ * for a cid in the round-robin pool (its live holder is rr_slots[rr_pos]). Used
-+ * by the partition's cid_owner[].
-+ */
-+#define CID_SELF	(-1)
-+#define CID_NONE	(-2)
-+#define CID_SHARED	(-3)
-+
- /* -C cid-override test modes. Selects cid_override_mode in scx_qmap.bpf.c. */
- enum qmap_cid_override {
- 	QMAP_CID_OVR_OFF	= 0,	/* disabled */
-@@ -43,15 +54,57 @@ struct cpu_ctx {
- 	u32 cpuperf_target;
- };
- 
--/* Opaque to userspace; defined in scx_qmap.bpf.c. */
--struct task_ctx;
--
- struct qmap_fifo {
- 	struct task_ctx __arena *head;
- 	struct task_ctx __arena *tail;
- 	s32 idx;
- };
- 
-+/*
-+ * scx_cmask's are embedded in struct qmap_arena with inline backing storage.
-+ * The bpf side uses &field.mask with the normal cmask_* helpers. Userspace
-+ * doesn't have access to the type definition and sees same-sized opaque words.
-+ * _Static_assert()'s in .bpf.c ensure that they are in sync.
-+ */
-+#define QMAP_CMASK_WORDS	(((SCX_QMAP_MAX_CPUS) + 63) / 64 + 1)
-+struct qmap_cmask {
-+#ifdef __BPF__
-+	union {
-+		struct scx_cmask mask;
-+		u64 words[QMAP_CMASK_WORDS + 2];
-+	};
-+#else
-+	u64 words[QMAP_CMASK_WORDS + 2];
-+#endif
-+};
-+
-+/* Opaque to userspace; defined in scx_qmap.bpf.c. */
-+struct task_ctx;
-+
-+/* per-direct-child state for the sub-scheduler */
-+struct sub_sched_ctx {
-+	u64 cgroup_id;
-+	u32 weight;			/* cpu.weight, fed by userspace */
-+	u64 nr_dsps;
-+	struct qmap_cmask granted_cids;	/* cids granted excl to this child */
-+	struct qmap_cmask prev_granted;	/* last grant, for delta calculation */
-+};
-+
-+/*
-+ * compute_partition() builds the following from this node's held caps, and
-+ * apply_partition()/rr_advance() execute it. Userspace only reads for the
-+ * hierarchy display.
-+ */
-+struct qmap_partition {
-+	u32 nr_excl;			/* number of excl-held (delegatable) cids */
-+	s32 cid_owner[SCX_QMAP_MAX_CPUS]; /* per cid: owner id, or CID_NONE */
-+	s32 shared_cids[MAX_PARTS];	/* the round-robin cid pool */
-+	u32 nr_shared;			/* number of shared_cids entries */
-+	u64 rr_slots[MAX_PARTS];	/* rotation order: holder cgroup_id, 0 = self */
-+	u32 nr_rr;			/* number of rr_slots entries */
-+	u32 rr_pos;			/* current rotation index */
-+};
-+
- struct qmap_arena {
- 	/* userspace-visible stats */
- 	u64 nr_enqueued, nr_dispatched, nr_reenqueued, nr_reenqueued_cid0;
-@@ -65,7 +118,6 @@ struct qmap_arena {
- 	u32 cpuperf_target_min, cpuperf_target_avg, cpuperf_target_max;
- 
- 	/* kernel-side runtime state */
--	u64 sub_sched_cgroup_ids[MAX_SUB_SCHEDS];
- 	u64 core_sched_head_seqs[5];
- 	u64 core_sched_tail_seqs[5];
- 
-@@ -77,6 +129,44 @@ struct qmap_arena {
- 
- 	/* five priority FIFOs, each a doubly-linked list through task_ctx */
- 	struct qmap_fifo fifos[5];
-+
-+	/*
-+	 * Hierarchical sub-scheduling state. See the design comment at the top
-+	 * of scx_qmap.bpf.c.
-+	 */
-+	u32 nr_cids;			/* cid count, cached at init */
-+
-+	/* bpf-owned partition: read by userspace for display */
-+	struct qmap_partition part;
-+
-+	struct sub_sched_ctx sub_sched_ctxs[MAX_SUB_SCHEDS]; /* per-child context */
-+	u64 nr_sub_scheds;		/* number of attached children */
-+	u32 self_weight;		/* this node's cpu.weight, fed by userspace */
-+
-+	/* bpf-internal per-cid state */
-+	u8 cid_shared[SCX_QMAP_MAX_CPUS]; /* per cid: 1 if held shared (ENQ_IMMED-only) */
-+
-+	/* allocated cid-time, charged per owner by account_alloc() */
-+	u64 alloc_ns[MAX_SUB_SCHEDS];	/* per child slot */
-+	u64 self_alloc_ns;
-+	u64 alloc_ts;			/* last accounting timestamp */
-+	u64 alloc_window_ns;		/* total accounted time, the alloc denominator */
-+
-+	/* bpf-internal cmasks (embedded, see struct qmap_cmask) */
-+	struct qmap_cmask self_cids;	/* cids this node runs its own tasks on */
-+	struct qmap_cmask idle_cids;	/* idle state of all cids regardless of delegation */
-+	struct qmap_cmask rr_cids;	/* the shared pool, as a mask for grant/revoke */
-+
-+	/* scratch cmasks */
-+	struct qmap_cmask to_revoke_cids; /* delta cids to revoke */
-+	struct qmap_cmask to_grant_cids; /* delta cids to grant */
-+	struct qmap_cmask prev_rr_cids; /* previous shared pool, to clear stale grants */
-+	struct qmap_cmask held_excl;	/* cids held excl (ENQ): delegatable */
-+	struct qmap_cmask held_shared;	/* cids held shared (ENQ_IMMED only): self-local */
-+
-+	/* bpf -> userspace: stats */
-+	u64 nr_reenq_cap;		/* SCX_TASK_REENQ_CAP bounces */
-+	u64 nr_reenq_immed;		/* SCX_TASK_REENQ_IMMED bounces */
- };
- 
- #endif /* __SCX_QMAP_H */
+ static inline struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root) { return pos ? NULL : root; }
+ static inline void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch) {}
+ static inline struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
++static inline const char *sch_cgrp_path(struct scx_sched *sch) { return "/"; }
+ static inline void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch) {}
+ static inline void drain_descendants(struct scx_sched *sch) { }
+ static inline void scx_sub_disable(struct scx_sched *sch) { }
+
+base-commit: 57194a3172ba0123e8f37c4574a8e2863ab67622
 -- 
 2.55.0
 
