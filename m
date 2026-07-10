@@ -1,47 +1,47 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010000.outbound.protection.outlook.com [52.101.46.0])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011003.outbound.protection.outlook.com [40.107.208.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A183F1653
-	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 08:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B063EFFDB
+	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 08:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.3
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783672778; cv=fail; b=vADKCw4V+EI5dd2bKwnQoq8ht7QsvX9TZ0K8t1+O7keyHjqXNpoD+D+zNRwzNoiDMovogN7sdpP9zI0a3cDS9VEHUSEBb9XjGfpZJExSOjb4t8lkIGfNOVl7E0+zhxA/BE0/5/pBhYs1sC4cFTLTNr72s7aQFx8Q1BrkkpvYkT8=
+	t=1783672787; cv=fail; b=FVtoWxrw4h4faedopk7aCDX/mc2cVUKIikw/RwP7JFNuubwiyOEPxG0Zbt+88hXDsWL+S+wdDXt8012/dCCcXf0qiZSkheXhx5SIalAcdF6iVTL1NPsy7UyXfhYRVfa5FFMuT+Kv4QWTF1FFh0zecH02Gqv3cdKwEsgKi0gHQ5w=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783672778; c=relaxed/simple;
-	bh=sbqmlEJVngOUyh/4M4RvsvkXh9hMAhDrnG1A2JdZtVs=;
+	s=arc-20240116; t=1783672787; c=relaxed/simple;
+	bh=4T7b882NAMu/7csnp2+lnS/iRCWTEiTQomRVsmRaAbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=K+6zYsMfeY0ESfY3NaBKaMRt5o0kJSFJw1Zpnnf5CRj7ZQ3y/MNtz9w6fW6emBD5PnSr04a68Q3W9j34aDCQ5BqVdOBixeVllgHKPp0sHYpAOA3TSx9YcdGAexCCgPot3af/X4+T238E1B8cHgD/sLruhLAsZt52NdiXiL2yF+E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=k6rhFAg1; arc=fail smtp.client-ip=52.101.46.0
+	 Content-Type:MIME-Version; b=Pez016h+jVqMYRXTISkZT618e0eFECxp9Y4IhY+fPjVCMHU6SpOU/8pT7+/C3YVMU9L8h5cOMBHC1k2b04SJv7R/4UN1w+h3PMlNypmpQeJPeW1s80eekNh0jL5RwqDSzfiVOt/IgHaIvnC6Htt1UWWsof8gpAt9BPYM9x4jMZ4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=F+EKXmwA; arc=fail smtp.client-ip=40.107.208.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="k6rhFAg1"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="F+EKXmwA"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WxtYOE/JWBlwSEQdkq5vRGJOR8i3KZWPf9ic2tFcS0YaU3lyNMxaGoxAW2pOfITSE1h2m0XkBsiJwR36PPuiWTeq4lOCykTWlEX+v/rSyf2Yu5IlKWxnmyDNnrdPr16diKGwSbza2BECKZrAxSx2dOpfDWDgcprz5SYh1FbYrL6bboQqKpHWK64SJ8aGVKKRUUIwmlMZszkCW3lfZ8jcM9KGWI+2FwXCxV/IEUiLkGBUBjkyzonDpnylGN/8PyeTuon4z2n7JAvnYNfeIcEZ+lI05RYc6xRJ/v/rscKodY+iQNOLTCb6Yop7GWirKCNp+NP292jF8MQLZwVBLvFHPA==
+ b=vphWKbkjLQ2Ll3+BBQOrQafRcQhes0CIP96e0wgZ5kKyo+c6jHM/dMmlPT/651XBCj/vjdxRSIGOhEdcjxbQW+pNBZ2hvukp1hyKMeuyn9zMsVhBjH7D1QTxDQGoaXxtnVYL4RZVtH9WfrnOk1nZEb+jE+CCW9wdUe5p5mKn2P4KL7myoim3qKEQ2xZUU5usdReBN7Tfp/C1CITSbZ+YGBoZcqPe3Q1UwowN6YJ5A3q/QAFAyhaFaFf7eT4Uc22n+AZgeDCf6Zkj3kVYS6yoxoL9SNtoZctVksIQJstWd30ZyvmdqImxxR17OAmouFEaFYwJ0r/PON66/z2mxNwynA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=T1BXj3F5q/zqtFVa+5u+d1QMzilCWgn9i4xn5aDLyVw=;
- b=QRGAHUxR4jx/MGpdhh4ci1nfmhI/bq4bdSWCE4tzle5fL91/U420r5oDjqNTkGmvIy8jSbTdb8E0ZlEJgXQhW1sbJ1B1fL9ReLlOi2cCroGh/H6FdCm9zT/sn75wsbVcdqeVL/IAHuijEL2fIE3HNkyJ0YYCav6JbJLdshMB88dAxI2VaK6IPvfrXJlXjYjYzM/Gftjbd/bfbZrHblt0t1cuLzv8hMltW8u8hZ4gmg3g50d1+E9zPPuvYPWYI5/MUxDEYvr03tJa3SxqJ+6ZsndvW47mrWutuvNM7tTYzi/JVAwK4Vz/r1dhzCkdLuiGU6q/gQCjmq8AqSjoJKOb8A==
+ bh=v7Okt/mutHVmmpGqwZnS7wYXmf670IY2MbnES/wtObo=;
+ b=CM70EoBy5lqs13++lP40l/CIfKT2Jmvg0ISIOQi+rs/b0epBhazSVQyv/5dIWkz3QC9hmGOQ1HRh0ZRmLiW6tCzAQSrBFUxpwXeGpdzcV6IZun+LZzqXkt1Iz3xLYDJ9T+tQpnMnah0akeR2zD6XKAXwHOOxZuzckf1m1Q8RzDUslPXiwRWhwlohH/WclfRNONU0lijOlr+8+6HMkFsZMLsW7R6vQKa0OdeNRxSSAyf0IdY5/5eoShm1gDSXMYxd3ajEy97KzeBdADvSetPTzjKV6vKyGA0/0P22z3CIjTvUpkJadpqRIqccd7VfKCRy5lAjj0ZHxWU1jdLjccMWAw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=T1BXj3F5q/zqtFVa+5u+d1QMzilCWgn9i4xn5aDLyVw=;
- b=k6rhFAg1Tx7CqSvb0uUeIV/7C0gMY9SSEy2exXuh5QiofZ4VptGav6egmZrvl2lRqZ7SWucee+4E2XSvGdAiLW9Sc5wBQB9Rl2YI4x5WiE3i6xD3CD0AguK1lp2GaCIBCzGA++JxepVkT8LXF+d/ATYWtPZTIIcJztBHoupjacMznOnazhaQOZ04ADLlhU3QrmphF0nx+SvJDT4a7eBZYPmvH1RACy/WP92om9YmEdM6Nok2xZFFYshr70njZfVsKD8o+OoHUAmnJ6UFs1Q/SwA4niSYvn2KQWdIVAVKP3iiWB6pA9f9FfeVKxJUqYxAo/aFhvYb1z78obMKW4mljw==
+ bh=v7Okt/mutHVmmpGqwZnS7wYXmf670IY2MbnES/wtObo=;
+ b=F+EKXmwAZl7IMvukQD+CLG5/Jc/xmtdBOXupxgLiK2ClMX6hyCR9GuGkBtab6jyNbSjIRoRuetdG2i1XlAkcSqCXBkWnthRllV3PoUQUZEs5Tp6Dz4G6vdJiV9Q0cc+17k3+2LG3FBYqS5tT46UcNAfDZXxorp1VZso4MTkCr0vZKbDQn7VArpthFmL2t5/5yEDxjUPl9LNvDS6G4CwbBFrCDY8r0RmJVLpe80bPbDHc4HgY8VYBWr+h6FWoRUSHkXbXU5p5DnoCQnNqekCeO5r5GJTV8LUdm56IRw4F461PgzffhnaGNfyLeFOhpyS3y0DWuYdi3aR0nZpQRBEOcw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by CH1PPFDA9B3771F.namprd12.prod.outlook.com (2603:10b6:61f:fc00::626) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.18; Fri, 10 Jul
- 2026 08:39:29 +0000
+ 2026 08:39:39 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%3]) with mapi id 15.21.0181.014; Fri, 10 Jul 2026
- 08:39:29 +0000
+ 08:39:39 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -64,16 +64,16 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 01/10] sched/core: Drop mutex locks before proxy rescheduling
-Date: Fri, 10 Jul 2026 10:36:25 +0200
-Message-ID: <20260710083913.30573-2-arighi@nvidia.com>
+Subject: [PATCH 02/10] sched_ext: Fix ops.running/stopping() pairing for proxy-exec donors
+Date: Fri, 10 Jul 2026 10:36:26 +0200
+Message-ID: <20260710083913.30573-3-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260710083913.30573-1-arighi@nvidia.com>
 References: <20260710083913.30573-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MI3PEPF00007537.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::4c9) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: MI3PEPF00004EA7.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::44b) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -83,127 +83,160 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CH1PPFDA9B3771F:EE_
-X-MS-Office365-Filtering-Correlation-Id: cf663ed6-726e-4c96-baa2-08dede5ec193
+X-MS-Office365-Filtering-Correlation-Id: 89a4269a-7ff4-422d-75ad-08dede5ec75b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|23010399003|366016|376014|7416014|1800799024|6133799003|56012099006|11063799006|5023799004|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	fYbR1tOoINzIQmGWkrJP/QYUd2gj4YrFhunNRfo5f+MfbDF65ivqAvjLpjr1Za/ka7GbfP+iM8vWletudYZ+lBcez5GzNQ3/BTpcd4Z9FXCQZYerRC6RgWNfNUJ1t431aC10vyWXe/bRx413/Ezr4zSH5x70TroV84wkuXghblkirYEYQWZiSEUAuNJIPwMUXMHivJ3q4p72IJurFhbyVnkVTuoJDu3IzK6IDMHAyihudP0f6lawXWAyLbVTJpEzq+migpVh1Cb2uNrSV1UrTaJv90csiTs7MTvPLW8o9bx6jSlj5wdXgZHiHid1eAaRy2HEpC8ZO0Fc+aLIucbNZksQkawQwBsE19zYVQN8YvsxheWaFtsoY3QoihGIwC1xYZJg203H6pVHHVmYQ3DWfw6r2Va0RNRTQ1T34aSVR1sNpapBksiC2AIhj5nf1yWtKSqPCoCROcC2rNaJv3mdjwFOfIo3eYQp4/fiK71s5kg3aXKtKOtV/3crwi93CBgXM8743t6zqF+Vf6a3MHkxZksTOQ3wK9Rn8Rf3zlOS5Wyip6GTwzlFnSv+DYwvE7Nlu7r2YsjfJ9VIiCnkTH5d4jTF2WaYMvrHWRKsa2b1AwSrxMrv9InDlTsTAnorK4DQEDw1YOceb/1wBA7V5veOjpklIN8/BJ/It8oOYtcJAoU=
+	2zcwQEvCKVmiGUUYHByK+8JtWaqFioV52WNKxsKhmDVSCCFGry/tNSCjsT76nWlSSc+4MCYXcfXxlIORywUXMYpwVYuBfwneiDvjL2Ggju8BaXNZH7QVo/8/+R1LdHMWWb9A4X/n4Y0Eq3UxQ7WuHNt1C7el2TVylVCXZ50kI2Bvz7GFpgrIMI81Z9v+pAGVlGnl/zhL12XsIpc96G7hkY4aIWE+O9ayo+aU74KbGN8cnO6++3zbpHQI1ikBt8ZpmqCg1L+89K89uMTGCmmOi5xiFVZ6DvYxHuv3HH/tQvTGBdqMFEq5y3sPZW5zIoJkyG+1fcF7F7Q0PRmHXIQHxGvDrfDL5bVerRRp25j+E1S5E2qAy+G/QFqQPnFU+uUZ4N2IcfWw7gD2N/ivB77Ho0PAyO+ccd65Vy60dTV5F3DrDuXpQM69xJcKWHYh4zsPFSp02FrHKrpgBeSYlg+rozGY6fxiZL1KXviJZEBjuE4kh5iQxnHrRSiMirwMeVA6M6mwhOgFn1vZGVb6eAZ6zcYyHqwgGqP7WtOqKNV5rUW1j+cJCEioWh12Vt99eJB0Mp3dqM0QK21Z0d1TwVh/rTF8ifMzXV5mpxjvlP0zs/kTb69N74ANjJFkt1bspyRoSFD1iFwQGCc6QwcuRqW/fBsC57FZPU6mFJXB6lDvozQ=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(7416014)(1800799024)(6133799003)(56012099006)(11063799006)(5023799004)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?RdM41clZABwDK131UzaUkdZFxCKgMan42ui3w1lU71VDGO5Sv1475xfv1Kdt?=
- =?us-ascii?Q?hHRRyDHjvtaf//fQEAEVBJ9IXQRGAM1CCNYgXVkO8h7wfic1fuk9HRiABZ2H?=
- =?us-ascii?Q?6fjBeg88ZrY8OnLCEQcdQxqo22cCJFZgVV8lbSJiYKcJ8PyVGUEwlDly79XD?=
- =?us-ascii?Q?ygslxvEZtXtEFZU/7FcD7KKd2sRi+3/6sRlWqzAA9HhdRwLsXlvovaUhiZDy?=
- =?us-ascii?Q?pn80DVpGunW1nOEtk1hmdIb3x8pPacq6VNZcimqeKl2yxHzQ74tEXYPq7JOR?=
- =?us-ascii?Q?tDhUxh9AQnSBxgREBt7eMfgZU4JScMWSlEUiV34Ps3WqDf58VEWsJ0TTouuu?=
- =?us-ascii?Q?//lhnnrojdkJ3yxzgZCg5G505q7i5O7Rw1LT5o8CzfxRWBOporg1VxOjW4oQ?=
- =?us-ascii?Q?4iXO1FbTyijNVt23ljwom6+hXwMzIZJW3YINPRLsbfrh/ewRaqXPG2sNE58F?=
- =?us-ascii?Q?dJlLt3bK/7moiBu3FnvSb6j960l9D0ooktDlxirT4IB+g1DoI3vQK1zuh8cw?=
- =?us-ascii?Q?F+A41UuYvYYutPFZqTdEIS/dgpPzyPhZdgO+MZgL72fT/7/+JjzUkgbz8pe9?=
- =?us-ascii?Q?BY/isBzsy35ea/yuK2BExqqJJ9t3djyGsg0dYhiNUq430HXWYXAMBKx3P43D?=
- =?us-ascii?Q?s9ZOU0x520lD78WiEtuCF/jmU1Y/DjKx1OZXKG83GuCR926AHI3JenDB9Pa0?=
- =?us-ascii?Q?8YjV4fpFkczE6pO3gv7jUYPBHMO3w5hlifDLcy+kRSX57PUgo5MsaUmJPeVo?=
- =?us-ascii?Q?6T20LQOHxgaa8A72yNmXSHDVF/daPjqhUO7YCPHamBy4AmT3CKgjxIHqAHU2?=
- =?us-ascii?Q?b8KtjaG+1AI9ptS/AJZ8bzAfjlt7ZFYYGvhj3HDcEGzI0zs3aMOk4GRzbNI8?=
- =?us-ascii?Q?iaXU9Zwm9VfwQ4LEn8daEPRJX4zP8t+HxBG/E0cUjsF7FP1OzgehwUgTNADN?=
- =?us-ascii?Q?dzCc6SrEYj9g5r1YeLGanktqnKsuWtPPezupKSjRtCbu8qrdlkfZLt/yKEiq?=
- =?us-ascii?Q?HsK+BIQ1oZRocQYcnzX9UD6Ls5siF4t65SzDuAUMBDY0psESmQVasEMF5H6b?=
- =?us-ascii?Q?39hVt5jDoYFY5IYDn3f47dKio4tds465PZDLWrHhAI0KxHc2M0U+RmmnRyZG?=
- =?us-ascii?Q?0OAjGe914mKZk74uveUBWagPFI92CPH76LdmsQh/z2R4Vgc6z9hWHbhQ0qcl?=
- =?us-ascii?Q?BKqA5+ePezkcVDLlzz9qPChkeH0eOfY4Gd/CNcgFzY6d3ir4X5meplKyXPPi?=
- =?us-ascii?Q?sX7LtAB1zMkzr0WGVfnbCGFgjIKsdDC9qCvX2a6Rhq0aB/ro9RhomiIj9AUt?=
- =?us-ascii?Q?g8FYoCvhPLp56XslwPfopEpaUlLQIpeiatPOLIZEGA4ufF9v3xaMIIiODHYa?=
- =?us-ascii?Q?Iq6q4ZonBWmWYGAymUf410e/wtnoP+4Yp4Nw/WoCWweWl6IspX+x8NjO54YD?=
- =?us-ascii?Q?0HYbPJgocxPFMnDWLRftEplG4AK/nxR0JFHh+gAhFrRL7+ucDT+0NjETeHIM?=
- =?us-ascii?Q?GOB0JEE2ISf64tSWvMfnnVh0vAQY1Q3RO9dDfEixHJ2HrKjRUafPaqKHPGgt?=
- =?us-ascii?Q?42Tmhe8nTmXX5Q0Rbv74DcDjxaYk3L3mc66bHmUG9AVuB49uBvOtjQhWJATx?=
- =?us-ascii?Q?Xc2dSUI4CT1MiSof1H5OcNcTceRdzn8kmu6F6SoojNKcXsF+WH54CS9/1P+h?=
- =?us-ascii?Q?/2iwyRQksOPjOQ7mgjfakc4xSMmm8Ol72lOjqYnpOaptNffSY8q1IrX8cNCt?=
- =?us-ascii?Q?y9/oPcd4OQ=3D=3D?=
+	=?us-ascii?Q?BO1hXjW4W9jcODp/6MHE+SKyk/DXd0J9n2A+Kivd2+dP0f2za8I1y18Cc9rs?=
+ =?us-ascii?Q?QUDMv5HxCyK3zOje0HJZXQmLYBIr4m77SUQ3Qz22rEPhwSjzIur1qRoyxehs?=
+ =?us-ascii?Q?ljGnESqb/Z1orEtZFlMRTc2hvxCfao8gIaigEUXei+LnADucyx/kehIogS6V?=
+ =?us-ascii?Q?R6+A3NeEdCT8TJw2CHeuU+Uc99y8IJEgOVqn5rvHOHegtgnOd9ASwjdUcQ5T?=
+ =?us-ascii?Q?JrGJJU8hO/F+795DGECObqz/0GkdvUht0FGDrvwRLjuuBDu5utUvbN895YY4?=
+ =?us-ascii?Q?S3V2LugTrq7BfDpzI4LaAR8bnLqc10vSlzMQY6U7xtH00W2xsn6HSEi4Qs1V?=
+ =?us-ascii?Q?E2OatuAFdAqZ0KuGYdggyRoQuSw/DZWjnWhSyfKBwnIEuAHGjf5sTmSqsq+C?=
+ =?us-ascii?Q?qWn41Mzc4PKnSxSWVXDL0AmY8VaEMwedPRpoMdGHqDx6fYIArvrRh5Avc1rd?=
+ =?us-ascii?Q?1TRshN5y0t5CKDQDduECuyo5FBhb2ApzrPICjnOp2s5iQm/Xp8/YJ6o5+krG?=
+ =?us-ascii?Q?cau3pYY3G5QREKGSGY3uHaivh7E4AmyGG14RtPPDLjpwZ5hIaFpQEyh36VSz?=
+ =?us-ascii?Q?MDDPoFwjHOLB4giS9CzOWDQbpyCCogG/fm7UjKZf6/51E4hBrbvo6nuWs/iF?=
+ =?us-ascii?Q?9gg1QNykpCYmbfggaak9sYi0bYRmTvlpqbH2dIjST0m9WboWl0ymwkINzRNm?=
+ =?us-ascii?Q?N7MvpweHfHNfW3STdj1wf8WOK+mX1yCMZIKXuNvBKJ+QibA4sARkBsT+4yet?=
+ =?us-ascii?Q?J2X6bb4eUUCTfYOmTZTr6FSqinZpmLA1xOoneJvWvNL4zUk6vZHNhrHkOLmV?=
+ =?us-ascii?Q?IvjldPOD18Jh4Y04DFNMTg1ej6s/Fj+405OeP5HcbaGYucEuuRl7SNGkwtTF?=
+ =?us-ascii?Q?z2KUlWgaqTvi1hDWyFJN1zmj/3RlFJlW23maKwz/VK8h/dz4K/jRVSbl/Nl1?=
+ =?us-ascii?Q?sFoNJrqc5wvz0gvj6RYrv9p8kmNf8InE4S8MmnDZq2qQwmQpNFVul1FvrQcS?=
+ =?us-ascii?Q?5E5vUL8DmFGz86f2PDy86wZl2FCAMFx+dXTsdLDxY8t3wQFUWWGpf7EfieDq?=
+ =?us-ascii?Q?9DuqDVHWN0B24/nfoJwO9qXGADRQvVlAGdY9x+9XTiQyObwSBIL85j9CAXC8?=
+ =?us-ascii?Q?PcVOM1veyBXcekawP4xrViGuty/n64l2HCt1mMIHr2LOFLHtpaWQi6LjlR4f?=
+ =?us-ascii?Q?2KCZBnBD3/lCeaFkPsGRFFdvYCX54BIJIQQ2Mh69NlR9RuJ05XXPAB/vNSg1?=
+ =?us-ascii?Q?7yb1AQ9Ryp1P+weppXRkrO60I6SCsTcBq0QtQHcrF87sYNxfEptbBDYCLGBd?=
+ =?us-ascii?Q?UUMELT1Gncz4c5l1yMndzPk/ymHNHCpSiQnSnoobgZ4AHyaBUYU+Y4RAq7P7?=
+ =?us-ascii?Q?K7FkukXP2xw/n4c4QSJJXkggitegoSxSObTqrEfOkShAohdMBQvGgbHNNaen?=
+ =?us-ascii?Q?o7w2SJO9rN2L6ON6nAau4sgJ9Wa2TrCWZFWl2KiVbsNrNeXo8f+IEh3rQoPY?=
+ =?us-ascii?Q?SaVMM8WrpZWTZ1hcHoIo7WsXKVV4ALo5ABadw1ENC2+O3EQTZy/onXNhF2qc?=
+ =?us-ascii?Q?ZefJZ5TAx0ourqbZDZhhcadJjA5VgiIk/6igWHZAngpYgEQcx7L6NaclTVj3?=
+ =?us-ascii?Q?2kOjqFRwykJXcNpqoJOXZUApG/CnE7ZrBqbFq5ALIJHg4MJk0Z+ZV1jraUR4?=
+ =?us-ascii?Q?XQARmUH0sKQRDyWeico4RjNl152mzODtralIzzF3O2abCK8mUJxlk6fA9XVv?=
+ =?us-ascii?Q?DSYsiLSFiQ=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cf663ed6-726e-4c96-baa2-08dede5ec193
+X-MS-Exchange-CrossTenant-Network-Message-Id: 89a4269a-7ff4-422d-75ad-08dede5ec75b
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 08:39:29.1743
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 08:39:39.2284
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CTSvF2xue/FA0eELlb0gRgB8DKCV+YVYzCvVbRyR5V3jKWHiQtQw8+WKY5Ziju3r1ZqBQt6tu75dze8UWbjxIA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: vj+2zKoteByUAc4Lg1WoTrpbBfwSp8VdvC9VEBShUDM8Lw/uWriGm2qxFqYXhmNLzb/dB6YjZnmZJunpEozsOA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPFDA9B3771F
 
-find_proxy_task() can call proxy_resched_idle() while holding a mutex
-wait_lock and the blocked task lock. Guard cleanup does not run until
-after the return expression is evaluated.
+With proxy-exec, pick_next_task() can return a task with blocked_on set
+(a proxy donor). put_prev_set_next_task() then calls set_next_task_scx()
+on this "ghost" task even though the task only provides scheduling
+context and never actually runs.
 
-proxy_resched_idle() invokes scheduling-class callbacks through
-put_prev_set_next_task(). Calling those callbacks with the mutex locks
-held prevents them from safely inspecting the proxy chain, as doing so
-may require acquiring the same locks.
+Calling ops.running() for such a donor produces a spurious running
+event. Simply suppressing ops.running() is not sufficient because the
+following put_prev_task_scx() would still invoke ops.stopping(),
+resulting in an unpaired stopping event.
 
-This is a preparatory change to support proxy execution in sched_ext. It
-leaves the guard scope before calling proxy_resched_idle() so sched_ext
-callbacks can safely inspect the proxy chain.
+Introduce SCX_TASK_IS_RUNNING to track whether a task entered a real
+running transition. Set and clear the flag independently of
+ops.running() and ops.stopping(), as the callbacks are independently
+optional. Invoke ops.running() only for non-blocked tasks and invoke
+ops.stopping() only after a real running transition. This keeps the
+callbacks paired for proxy donors while preserving stopping
+notifications for schedulers which only implement ops.stopping().
 
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+This is a preparatory change for enabling proxy execution together with
+sched_ext. The explicit running-state tracking is also required by later
+donor-based accounting: it prevents an EXT owner executing for a non-EXT
+donor from being treated as the active EXT scheduling context when it is
+dequeued.
+
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- kernel/sched/core.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/linux/sched/ext.h |  2 ++
+ kernel/sched/ext/ext.c    | 33 +++++++++++++++++++++++++--------
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 3cc6fb1d20547..0139cd4a8be7e 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6923,7 +6923,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
- 		if (!READ_ONCE(owner->on_rq) || owner->se.sched_delayed) {
- 			/* XXX Don't handle blocked owners/delayed dequeue yet */
- 			if (curr_in_chain)
--				return proxy_resched_idle(rq);
-+				goto resched_idle;
- 			__clear_task_blocked_on(p, NULL);
- 			goto deactivate;
- 		}
-@@ -6935,7 +6935,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
- 			 * and leave that CPU to sort things out.
- 			 */
- 			if (curr_in_chain)
--				return proxy_resched_idle(rq);
-+				goto resched_idle;
- 			goto migrate_task;
- 		}
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 75cb8b119fb79..c6f58e1a66cdb 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -102,6 +102,8 @@ enum scx_ent_flags {
+ 	SCX_TASK_SUB_INIT	= 1 << 4, /* task being initialized for a sub sched */
+ 	SCX_TASK_IMMED		= 1 << 5, /* task is on local DSQ with %SCX_ENQ_IMMED */
  
-@@ -6948,7 +6948,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
- 			 * case we should end up back in find_proxy_task(), this time
- 			 * hopefully with all relevant tasks already enqueued.
- 			 */
--			return proxy_resched_idle(rq);
-+			goto resched_idle;
- 		}
++	SCX_TASK_IS_RUNNING	= 1 << 6, /* entered a real running transition */
++
+ 	/*
+ 	 * Bits 8 to 10 are used to carry task state:
+ 	 *
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 5241b55a58eca..6b7efb19d2843 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1989,9 +1989,13 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
+ 	 * information meaningful to the BPF scheduler and can be suppressed by
+ 	 * skipping the callbacks if the task is !QUEUED.
+ 	 */
+-	if (SCX_HAS_OP(sch, stopping) && task_current(rq, p)) {
+-		update_curr_scx(rq);
+-		SCX_CALL_OP_TASK(sch, stopping, rq, p, false);
++	if (task_current(rq, p) &&
++	    (p->scx.flags & SCX_TASK_IS_RUNNING)) {
++		if (SCX_HAS_OP(sch, stopping)) {
++			update_curr_scx(rq);
++			SCX_CALL_OP_TASK(sch, stopping, rq, p, false);
++		}
++		p->scx.flags &= ~SCX_TASK_IS_RUNNING;
+ 	}
  
- 		/*
-@@ -6985,7 +6985,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
- 			 * So schedule rq->idle so that ttwu_runnable() can get the rq
- 			 * lock and mark owner as running.
- 			 */
--			return proxy_resched_idle(rq);
-+			goto resched_idle;
- 		}
- 		/*
- 		 * OK, now we're absolutely sure @owner is on this
-@@ -6997,6 +6997,8 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
- 	WARN_ON_ONCE(owner && !owner->on_rq);
- 	return owner;
+ 	if (SCX_HAS_OP(sch, quiescent) && !task_on_rq_migrating(p))
+@@ -2686,9 +2690,17 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
  
-+resched_idle:
-+	return proxy_resched_idle(rq);
- deactivate:
- 	proxy_deactivate(rq, p);
- 	return NULL;
+ 	p->se.exec_start = rq_clock_task(rq);
+ 
+-	/* see dequeue_task_scx() on why we skip when !QUEUED */
+-	if (SCX_HAS_OP(sch, running) && (p->scx.flags & SCX_TASK_QUEUED))
+-		SCX_CALL_OP_TASK(sch, running, rq, p);
++	/*
++	 * See dequeue_task_scx() for why we skip when !QUEUED. A blocked proxy
++	 * donor is also skipped because it provides scheduling context but never
++	 * runs itself.
++	 */
++	if ((p->scx.flags & SCX_TASK_QUEUED) && !task_is_blocked(p)) {
++		if (SCX_HAS_OP(sch, running))
++			SCX_CALL_OP_TASK(sch, running, rq, p);
++
++		p->scx.flags |= SCX_TASK_IS_RUNNING;
++	}
+ 
+ 	clr_task_runnable(p, true);
+ 
+@@ -2791,8 +2803,13 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 	update_curr_scx(rq);
+ 
+ 	/* see dequeue_task_scx() on why we skip when !QUEUED */
+-	if (SCX_HAS_OP(sch, stopping) && (p->scx.flags & SCX_TASK_QUEUED))
+-		SCX_CALL_OP_TASK(sch, stopping, rq, p, true);
++	if ((p->scx.flags & SCX_TASK_QUEUED) &&
++	    (p->scx.flags & SCX_TASK_IS_RUNNING)) {
++		if (SCX_HAS_OP(sch, stopping))
++			SCX_CALL_OP_TASK(sch, stopping, rq, p, true);
++
++		p->scx.flags &= ~SCX_TASK_IS_RUNNING;
++	}
+ 
+ 	if (p->scx.flags & SCX_TASK_QUEUED) {
+ 		set_task_runnable(rq, p);
 -- 
 2.55.0
 
