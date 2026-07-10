@@ -1,141 +1,102 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-wm2-f4.google.com (mail-wm2-f4.google.com [74.125.225.132])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C33F377EAC
-	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 18:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783709780; cv=pass; b=UIv+n6+R1qJrkebqENRSLPdeM5RgikEKqlwi4nAMzBz9J082RDFvUP+VyTvSzSq8okGX4nEYlvr/nE6INrPoIaD7mblytP7UJe12c8mR72tgn8Pw71rrpaPYrwMKt+8t7k/CmygExMximJ6J49U+VXLrM7VgsVnUd1oD0d2Y0XI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783709780; c=relaxed/simple;
-	bh=kChwFwFR0L+SFkFqPralBldVBSypL7OilC3IyfFLxV0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uavCv+rQk/lAhgx6E561VMM2A/Pon3HS+PhjhlodL7KDusq3M7XBF1SvVwpeEOjocnfCfQkvGf7K1miu904FMmBFYRz6t3yqujLVd4e6f9RF52F3O72oVOA4yRMiDugCC1LbTnVsIbr1xJFGb4cVXjzi00LwrExdRlUaOO+TZNs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YK8dbGFj; arc=pass smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D567D3806D7
+	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 19:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.132
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783711032; cv=none; b=srtuQpSuSPPhOvdOTnhmbqIsEodY981NKst1NHDvkKbsL2BtDPyB6ti09+gVl3Ax2mW8TKjXnhnI0T3D86MtxIcYRutvUr60Qjue95LAxa3MHGZ+NUbciqE9pXoZejl90KPzbvMzpQK0Qs+44WyBkFzr+YXJfoPL82PEa9xMAo0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783711032; c=relaxed/simple;
+	bh=fKtx+l1oHOZNTCM/j46NLi2wxexlleELoSfRE/hgiyI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=P6gHrizqRsBcmhbb4RbDvMSxqwl3jO3I4cg9sJbBZl5JNiu1SvXKu7SRMR2P8KEQSCG2PQ/+0vbuWMNZB5EyorA6HVhCoWS9KBRa/ykvtY9C/gjP5WzbyoNKdtqQEdMX1gwtkp+4VByT9k/qmRFEiP+gxh9gw5r8fA5pkKAjmxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AI7UxoOy; arc=none smtp.client-ip=74.125.225.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YK8dbGFj"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-ca00f126b7eso718367a12.2
-        for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 11:56:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1783709778; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Bn6LoqQUONyro4mmYcI0qrI3Q4xr//3bBm4Mw1KRODhIS55dsOttwHxFJupXrPp6bX
-         eTVNLV6iE27m9iYN2MrUp1SSpc3e5XeKVlXb5kCCmK1PDHzBi0tTFHXKRZajFYgtICo/
-         4Oduvf+K885s1cWDGT+rHCSAPdewdBYB1EAFVrzoEGH9NwSGgeIB2HgWJYC9qqCszf0z
-         A3Bp8ph0JIrpXyEKoG609NVCcBKhQ6HtBMmQxwUY9eKFt+82larcbZkeOL3kUxsx12/4
-         LmgNNtcQUdoJOZzIPCLSgXJvoSIopjTGeczXM4n4OZ4feVV6pqaznE+tJzQcP9C50dgz
-         yAPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=kChwFwFR0L+SFkFqPralBldVBSypL7OilC3IyfFLxV0=;
-        fh=WDVLIlsrA5CMG+tHmf/YkXaEV6U+xXB/qiuDYirv38o=;
-        b=UWfwYj4Rsu+NjgUbPDvn8HnH9IZ69LtBzppmzlivLWk5O4ZPAqjbdymBTlvgTWk18v
-         jKN/mfSZBszVzcNAYom5U9lyomRnIwu6NY9uxpLQ/7JNPPfyMR2SguGKxo1PoalgptLT
-         KkfQUNvC+6dB4u6F2H+AhowpvMjflYZmwAuKRLvEY1S6YX/lNykpYAvcIkT74H+Anqp9
-         d/ymv/u5QcnKjZqEpwi/jzXhXeL4rwkgGMjaQTfb7d3xlTDQSPeO4OnL9JuUjm6NPU/Z
-         1gch8xVY7pW2zFEyCXcIeYjnALd6wgc38A+6Zr1gw4MaXNGRPLur5U0DHpRWk3xS3cL8
-         FXRw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AI7UxoOy"
+Received: by mail-wm2-f4.google.com with SMTP id 5b1f17b1804b1-493ec85730eso1472305e9.0
+        for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 12:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1783709778; x=1784314578; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kChwFwFR0L+SFkFqPralBldVBSypL7OilC3IyfFLxV0=;
-        b=YK8dbGFjyZP8MI2UKypwiSEjgvnjavtkFNL1JiAlCRE5+bRE4DL6YxyemT3nvTuJ0J
-         msXSU0Eqai1zrDbAt3UxXycAFdFTmvOf3rIU6tN9w+llTN//e+vA9GAMsmrPgYiznJfh
-         qpPoi3lgoEMJMSy4Kib58KEy/NFqGuS7c5Vy+55FmuUeBSE0QGsIwG4dlVxSHo/JhJYE
-         EHY+GxHvAgwJrVVhx8C933pkS1yrn6l2iA6Uh7cXMQ6GFyqdW1ui7s9oEBsq+bAp3yBe
-         eK+XBnvYoBnyYtuUSyfFKXT6m6CG0ghRJrN0Ichaty7eSXLSLk4OlMZRNCjqbMsYEP9t
-         lwCQ==
+        d=gmail.com; s=20251104; t=1783711029; x=1784315829; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=fKtx+l1oHOZNTCM/j46NLi2wxexlleELoSfRE/hgiyI=;
+        b=AI7UxoOyNP46yIs1FclB2ScfHgAMHjr7nos5O4EIVa87oecNknNOpztqP41aSC4f+j
+         Xav8fWBzozkWuuuYQ/7k/+KMYbDxKtZgQRAh/oVCZGMLObEEeS7AeegriuMt2XZQBvFG
+         hkqVuhxnudrfx9fflEMf2E4OftyFEYRjBmNf+E6bIYF2i/ksp0k2HzpouTXmmvahjgGZ
+         rfWfkLzQ3Fps4Py2uCSzSLsB5ITYVFsTLosRoxSLcteBaUlgVm7C6k8S8GbcjCaghsDe
+         55/0kFc1GHrFay7ZdusoJNC+25WMUto7JGaxryjlgcxu0Imfm+yTWsJv33M7gAYQ07sj
+         NikQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783709778; x=1784314578;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20251104; t=1783711029; x=1784315829;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=kChwFwFR0L+SFkFqPralBldVBSypL7OilC3IyfFLxV0=;
-        b=aHHi6vqYXov3+2rZVe8S40D38IK/IbBXW9ksWnOEqaviLU/l2YUj+jGcg+ZWvmxcCH
-         zoO0H1PTPzoNpERqsQ06e1MdSRXsTCtHR63+HwcGEOXo3ovLZ/J5/IjJ2ireUSHh9EXc
-         8RrCwDFTQTPt1if2ILIaTfMDMZsgbtFiaYiet0UHR1ujztAfAsQ109fURiZy3qdY85zA
-         XDb51kb8hei5Sz8eJ1hiIVxyxN9IyEp3m0AvaKPbmS20bvOTr7Y0LmLhK7uve8/FZf90
-         45cd2/O/xmuoUWwtJGtuoxD2d5CjQinsbQKiOdpYwOcOzlb/iOYIZHrsIqezh6qIs++A
-         0k/A==
-X-Forwarded-Encrypted: i=1; AHgh+RrY2z8hOiGFfSzVqm+9Bom4byRkIIfKH9OG6fFEM6L7LBfPoPPy0JRGJ/2P+8gZg/Gj1QzmvTcFvt0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw48odEHmo3729LvP2LGBhpDLtNGy0ywrCJZ1gxMyonWUdErf0L
-	Wgj0Ncym1xxGShivcQrrKzRH12LkYcZWCpJghNJpj3JqBcQWMuL78557a4PlT/ZWrBYDjQ9soHQ
-	5cWie8Wr37RwORmeIg0Cm88zwnreSIEETeJbFE5E=
-X-Gm-Gg: AfdE7clvxvQuvP2MrlVd5SnKt6sMUaaKm42ojHmPpvsM/zP+xbx1EcIDqsF2A5J6qiD
-	NAxTYLutjbSb+fBJydr+vWrMriN8yXEWc8HqI5DRdy7h419vBKeNT15xPDBzmTKO2xLBeaqb8cg
-	RYGypQp0TsCqeaYKvXCXC+t4zCxKXhEQM98yAImuiCCp4eXaDZB8YI6MTMP5KJFmRwT0itW2NOa
-	Yt/e1q58Aas9WLclowSPJqYV+/yMr6muSWcr5FSrtGyNkwXJHA+gmoLDGFindkbCzf6FL2Zm+8v
-	/jTa20xxrkYr4fe0XYllWgDabtcM+66JZsct05Z2mUjlkbr1zYh7HAxs7rwsWbZX+ejTK1jXJB/
-	10rwSXFXM+/WyAH2cpdtPBEk=
-X-Received: by 2002:a05:6300:2288:b0:3bf:a941:8932 with SMTP id
- adf61e73a8af0-3c110776c46mr240438637.19.1783709777850; Fri, 10 Jul 2026
- 11:56:17 -0700 (PDT)
+        bh=fKtx+l1oHOZNTCM/j46NLi2wxexlleELoSfRE/hgiyI=;
+        b=pdZ+4+cVCApS/z8aNCwBd7t2Sh4NiKloYC63UJnGC6csRQbv6x11haYtVVDBpvcz2t
+         Fhpgh0G921OGYPwe2j7Pry4l/gLk7iZi86rzY6im8qrOa7iR0pn/fdNMkaR8iC8X+OQo
+         l0hOU13hJVvE+GcT+hH952AKLEE/AVF77V0m069DPDbbWt7aH+4/RpfZXiCpBgc7byO6
+         zzoToR5ZksmPBLtVaFgCNAVbGX08TI4JeEzZoa7Z0ue+bvNHIuHKzv28B6hpZeoYWQvu
+         JfMK95XWLRHymzwPYL9bwa8Lc5C8dxkQpRVg04nKh6CU9orBhOQaVF/oRd30ulTXkdVt
+         Yatw==
+X-Forwarded-Encrypted: i=1; AHgh+RqTDaBlhbAvJhpXvHq9qPCBGnfU2EAT+n0pzlCkEkP2bF4c3hF7cRfl6txMrKkCZHLXpCFgAJcU6vE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YybEolml7jZt/NAa3kYZ8PeV4s609UVhK+h12bqV5BdGusJshWD
+	1Nyv3UGMpfJ+9am63bV34316I99O7a137i7hp6A9VXR753+UzQsnQoCO
+X-Gm-Gg: AfdE7ckrxrzjXLtIIIH8dHCJzFZjhgbzwGcIryn1ANiqR2Ibhic3X/jOLdYh+dgIrfz
+	Kpp6ugK8kpq6cF614NTFC+oNMWLIzTTFvyhduwcKjqDP52zi47TU5im3nYtgW7lBPcS7CzfbEl5
+	An0em8O/YM2eU9h+liROAS1phHhgBWr8N3KlQpsPZA5cxdKb6R0Nri5xZLi5iDyvuT8aj7VZdPd
+	eK564xKCQar6INTb1WwwOChMeV5+xbXYct95YoYHhBkmJJJBFZxnSIZ5gI/lzKVYscx2uNqwK63
+	MN1GIsUeCy7TfPi0bKkT1qxu7FUUrtk5+c8gq7n17tlM4lc8bYVC7gC/IJTz34M0Qs8njoqrJ73
+	M44wLJ0NHSkxc5EANdPV87yDaY0C9pFWnfCSmB0eBG8Tl2hRZZIZNvU5on1Yz9eRYWQdkLI3Pp2
+	k6hV3sm3bjYAqWt9HvUF8vCzXUlIqelCqYUZXtU78QxPJA7iwJIvQpSLNDvRYrNUF9btTQTHOFy
+	onbjZECFMlDJ0g7DbSfxdaVI0kopWo7EgZraHvwuIp4XZzFKNjgDgQ=
+X-Received: by 2002:a05:600c:3f06:b0:493:be13:98b with SMTP id 5b1f17b1804b1-493f8820923mr1197835e9.23.1783711029096;
+        Fri, 10 Jul 2026 12:17:09 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493eb6f16cfsm160683635e9.12.2026.07.10.12.17.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Jul 2026 12:17:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260710083913.30573-1-arighi@nvidia.com> <20260710083913.30573-2-arighi@nvidia.com>
-In-Reply-To: <20260710083913.30573-2-arighi@nvidia.com>
-From: John Stultz <jstultz@google.com>
-Date: Fri, 10 Jul 2026 11:56:04 -0700
-X-Gm-Features: AVVi8Cf_lJAovApzKK4A2mFrLZ1pRicbinlzug92rbLp8zcr9LAs-Z4DLoqFVYQ
-Message-ID: <CANDhNCrR+jiW2QEDE9yhbuFEp2nfnWh2Vf-_GT9NWhSP3oSE2Q@mail.gmail.com>
-Subject: Re: [PATCH 01/10] sched/core: Drop mutex locks before proxy rescheduling
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
-	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
-	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, 
-	Christian Loehle <christian.loehle@arm.com>, David Dai <david.dai@linux.dev>, 
-	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>, 
-	Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 10 Jul 2026 21:17:08 +0200
+Message-Id: <DJV4SE3UC9L5.2MM3IGLHLQICW@gmail.com>
+Cc: <tj@kernel.org>, <void@manifault.com>, <arighi@nvidia.com>,
+ <changwoo@igalia.com>, <bpf@vger.kernel.org>, <sched-ext@lists.linux.dev>
+Subject: Re: [PATCH bpf-next v3 0/2] bpf: require an owned cpumask for
+ bpf_cpumask_populate()
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: "Nicholas Dudar" <main.kalliope@gmail.com>, <ast@kernel.org>,
+ <daniel@iogearbox.net>, <andrii@kernel.org>, <eddyz87@gmail.com>,
+ <memxor@gmail.com>, <emil@etsalapatis.com>
+X-Mailer: aerc 0.21.0
+References: <20260709182800.2037938-1-main.kalliope@gmail.com>
+In-Reply-To: <20260709182800.2037938-1-main.kalliope@gmail.com>
 
-On Fri, Jul 10, 2026 at 1:39=E2=80=AFAM Andrea Righi <arighi@nvidia.com> wr=
-ote:
+On Thu Jul 9, 2026 at 8:27 PM CEST, Nicholas Dudar wrote:
+> bpf_cpumask_populate() writes its destination with bitmap_copy() but
+> types it as struct cpumask *, so the verifier accepts a borrowed,
+> read-only cpumask (for example from scx_bpf_get_online_cpumask()) as a
+> writable destination. Fix it and add a selftest for coverage.
 >
-> find_proxy_task() can call proxy_resched_idle() while holding a mutex
-> wait_lock and the blocked task lock. Guard cleanup does not run until
-> after the return expression is evaluated.
->
-> proxy_resched_idle() invokes scheduling-class callbacks through
-> put_prev_set_next_task(). Calling those callbacks with the mutex locks
-> held prevents them from safely inspecting the proxy chain, as doing so
-> may require acquiring the same locks.
->
-> This is a preparatory change to support proxy execution in sched_ext. It
-> leaves the guard scope before calling proxy_resched_idle() so sched_ext
-> callbacks can safely inspect the proxy chain.
 
-Thanks again for sending these out!
++To Emil
 
-So, I wanted to understand more the importance of the sched_ext logic
-being able to inspect the proxy chain?
+Hi sched-ext folks, this fix looks good to me and on cursory look, apart fr=
+om
+potential signature change which may require some adjustment to casts, it s=
+hould
+not break existing intendended usage.
 
-I sort of roughly understand the argument that some sched_ext
-schedulers may not want to keep blocked tasks on the rq (effectively
-what the "Delegate proxy donor admission to BPF schedulers" patch
-does), but that doesn't require deep inspection.
+Could others confirm this? Thanks
 
-This change seems to be needed for "Add proxy destination query
-kfuncs", where the commit message sounds reasonable, but as I think
-more on it, it doesn't look correct (I'll comment more on the patch),
-and I'm still confused a bit as to the purpose.
-
-So can you describe the premise and a bit more detail as to why this
-is important?
-
-thanks
--john
+> [...]
