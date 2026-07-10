@@ -1,119 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476B9405C54
-	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 10:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6472C21C5
+	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 14:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783678656; cv=none; b=cPs8HXxY1wmnOO7kV+I3VGSUswnUy1orftZbMtpPxDARZEqCStwqTDgFYXvZ8hLA/UxgNgYKU2ViLoikQCOIqHlaEPaqv+5Koq7mWpsMl/muXsCTnmw7ff4jVRYT+yJc8m8GLLHVHTwZedTJpDDFL10DXZsrO/76U+76a2KxoxY=
+	t=1783694639; cv=none; b=ETrv4qgXsvSS1ZqflOLPrDRucJRVQJpbu8uDzbCiKqpXPpgDlswBYoORXNLFyNogL/fVbkgpXzGQEOCzjf96aunIIvnMTPfqcEbCABVhlt4sayYqy+2cPIpSAOVebDkWXV5UxfsjguNp+WIpx80HOzhPp8jHEc6Dd9sWia3fRwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783678656; c=relaxed/simple;
-	bh=d+sf52g0FQvamOma3vIzbmg+tQV56fOn2CWBg7C9f5w=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GcLxiHu6gsghjLdyAd7dchvBLqJGjJHk5R91QJh9aEe1t0BqJ440oof1w1lyqo+PPldP3KKQaK7zQFiq4OgC/ihzHEZm/gpIu/lWTfevXPl8DBET3VEfqvSKTMTFusHxCYq+Dg+d/SRpPIdI2VDbp67kxI+3b1S7zYNDEUJ8ktc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HaHtIPnW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783694639; c=relaxed/simple;
+	bh=pzRKBu3SXQKga3pYDi4SadmUoxVjMew/0Myz9yjAuGk=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=qu5ImFeVEuvI5L/H0XPvmZY53LlA0rj/z8njrn5EirK2AopDLw6q/K5Apzxu9p+9e6rx6uQQMA8GNoy9F6HOkwDKHWQ1VSGXxQVua0Lp5znZPM5hscGCRQ53rU3+SVD0ms7NohnAv4W9Sa2tYJbmfLd62EKD8/nCOJvBGcjvdZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mBe6aA7Z; arc=none smtp.client-ip=209.85.218.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HaHtIPnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C481F000E9;
-	Fri, 10 Jul 2026 10:17:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783678652;
-	bh=oyc4gI0V9U3HhVkO6Vafx5cQE65lqWVRQRySNyWoQrc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HaHtIPnWdEYsuxyOBJqMsQgnw3FnrJzS0vknLAIaVmyB6r6qX8ICvxskcQDd8dkCj
-	 q54ly4s/CPVtb3WYSQuWhf2L46UXhXQ6FxKpe4N21WoOIgpmKmvHB+my1yGW/0Y0Gl
-	 ltYjwxQLsjRgXzS8zEmFjK1OGO7gv+RBTca4JZ+DuyxnC4GPT3GzvszKHig8qMcF6m
-	 L6AJ6VZNJb7rxVkSoaQ6HpgTMRKprQ/AVB3gxUKQAkgV9F3hTevkyG0LZK6kLmbW4K
-	 /NrqAMr3KZ33aic3MafUYQTgN3M6TUmGOj1+FuFBXcRRYJ+zGRo9J4aoj4W+9xMoM1
-	 65nPub1FxXJ+A==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: Fix deadlock with PSI trigger creation
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Matt Fleming" <matt@readmodwrite.com>
-Cc: tj@kernel.org, sched-ext@lists.linux.dev, mkoutny@suse.com, hannes@cmpxchg.org
-In-Reply-To: <20260710100441.2653477-1-matt@readmodwrite.com>
-References: <20260710100441.2653477-1-matt@readmodwrite.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 10:17:31 +0000
-Message-Id: <20260710101732.93C481F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mBe6aA7Z"
+Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-c1288e572c9so111604866b.0
+        for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 07:43:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783694636; x=1784299436; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=FxNlQqZ4nmCctseCgXDiOPH8Q0HV/V8Z2ffjauVlT1w=;
+        b=mBe6aA7Zu6Skhvqf6FKj7xc/mnTHksQPyH/eZ5tF+hadY8yvRlXI0+FN6TPaqJ62P3
+         JHryv84lq/NNZKMGNONrQ8jlgds9uA0nlTO1V+61JPuDZsHO5wLbEIHYGCB9plSRWUGE
+         T2G199p/LU15wNjv6vAQlsur0CZYHFHlrLOLyZZNUi1zQ/MAAs4QenYV0pnND3/E4nnX
+         lAsRfYzu6l5l4KL2DG66I9nnzdEl+cvL7gk2YClatppo8ryheBMYarUKYpIi3DLIqrBo
+         9GB6O/R3zrP6GzyOFEyc4/gXhIxrJ85YF5IMjbWSwjOfIXDHASlEIY2G1IGZ1n2R5xZl
+         ZKlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783694636; x=1784299436;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FxNlQqZ4nmCctseCgXDiOPH8Q0HV/V8Z2ffjauVlT1w=;
+        b=MAHJffqgm4u+vqu/e3MBee6emPYe6rDNSsKO4katux8X1PBRvNoWisBVTHHT2pPIdv
+         GZultZgmfW639DJwNjuJPkTfJ+FWlF2n/YoMRLVCu6KPbiVyDfzkP8lEu5+Orwe2sMxe
+         eJHCs2HGRkxFatj/y3ux7bhL+gObWEUuCRwinIk0BEiOrAyGZxl1LChOX6gXhwEKqfKu
+         C99QZNPDNecqd/VVWhngjtsC/0RlL+BYcL3UIGMjD9cRinsc+sp7zgkPCHmSnbOrp2TR
+         XHomOVm0iyyWg5516UnKZPKLRXa5M2FcJKJo3rmlr12MaPUrW2YOwBmLLgejaYdvmh++
+         sqEg==
+X-Forwarded-Encrypted: i=1; AHgh+Rq+TzEypVaSlSqczQEfgNSUbCwOLo41xiT3iWRIm15smf1IlDpdbu43QMlw6zuZx6DWrmFb0MYPVIU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx0FxJc2IZmYL941l8zzTQW/2IjTUy1yF/+wntF+Nfve2Tlis7m
+	lSb6dSOUg6qVUlf0utLBiC7ZRWXyuknnoIxWWZ+3Crc2/dG1UBXEpnIcSmFuKKCnZwEFBjZT4uU
+	85SOsMX4Evb3IdQ==
+X-Received: from ejbgw6.prod.google.com ([2002:a17:906:f146:b0:c12:549e:c2fd])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:907:bd81:b0:c12:a469:c with SMTP id a640c23a62f3a-c15cded3365mr517601366b.9.1783694635943;
+ Fri, 10 Jul 2026 07:43:55 -0700 (PDT)
+Date: Fri, 10 Jul 2026 14:43:41 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.55.0.795.g602f6c329a-goog
+Message-ID: <20260710144342.3802587-1-jpiecuch@google.com>
+Subject: [PATCH sched_ext/for-7.3] sched_ext: skip ops.set_weight() for
+ disabled tasks
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	David Vernet <void@manifault.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Kuba Piecuch <jpiecuch@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+When switching a task's sched_class away from sched_ext, we get the
+following sequence of events in __sched_setscheduler():
 
-Pre-existing issues:
-- [High] The patch fixes an ABBA deadlock between `cgroup_mutex` and `scx_f=
-ork_rwsem` in `scx_root_enable_workfn()`, but leaves the exact same lock in=
-version unpatched in `scx_root_disable()`, `scx_sub_disable()`, and `scx_su=
-b_enable_workfn()`.
---
+sched_change_begin()
+  switched_from_scx()
+    scx_disable_task(p)
+      ops.disable(p)
+__setscheduler_params()
+  set_load_weight()
+    reweight_task_scx(p)
+      ops.set_weight(p)
+p->sched_class = next_class;
+sched_change_end()
+  ...
 
---- Patch [1]: [PATCH] sched_ext: Fix deadlock with PSI trigger creation ---
-commit aacffeaa1e10b05888e4970e698ee8d1863dbbbd
-Author: Matt Fleming <mfleming@cloudflare.com>
+Notably, ops.set_weight() is called _after_ ops.disable().
+This violates the expected semantics of the callbacks, the expectation
+being that ops.disable() can only be followed by ops.exit_task() or
+ops.enable().
 
-sched_ext: Fix deadlock with PSI trigger creation
+Skipping the weight adjustment for disabled tasks should be harmless
+since the weight will be recalculated in scx_enable_task() if the task
+ever rejoins SCX.
 
-This commit fixes an ABBA deadlock between cgroup_mutex and scx_fork_rwsem
-in scx_root_enable_workfn(). It prevents deadlocks that can occur when
-concurrent writes to cgroup PSI trigger files attempt to create kthreads.
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ kernel/sched/ext/ext.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 691d53fe0f648..ba89eafe79643 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -7193,7 +7193,10 @@ static void scx_root_enable_workfn(struct kthread_=
-work *work)
->  	/*
->  	 * Lock out forks, cgroup on/offlining and moves before opening the
->  	 * floodgate so that they don't wander into the operations prematurely.
-> +	 * cgroup_mutex must nest outside scx_fork_rwsem because cgroup file
-> +	 * operations may create kthreads while holding cgroup_mutex.
->  	 */
-> +	scx_cgroup_lock();
->  	percpu_down_write(&scx_fork_rwsem);
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 5241b55a58ec..b75d8d71ef4d 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3673,6 +3673,17 @@ static void reweight_task_scx(struct rq *rq, struct task_struct *p,
+ 	if (task_dead_and_done(p))
+ 		return;
+ 
++	/*
++	 * When switching sched_class away from SCX, reweight_task_scx()
++	 * is called _after_ scx_disable_task(). Skip calling ops.set_weight()
++	 * since the BPF scheduler may have already forgotten the task in
++	 * ops.disable().
++	 * p->scx.weight will be recalculated in scx_enable_task() if the task
++	 * ever returns to SCX class.
++	 */
++	if (scx_get_task_state(p) != SCX_TASK_ENABLED)
++		return;
++
+ 	p->scx.weight = sched_weight_to_cgroup(scale_load_down(lw->weight));
+ 	if (SCX_HAS_OP(sch, set_weight))
+ 		SCX_CALL_OP_TASK(sch, set_weight, rq, p, p->scx.weight);
+-- 
+2.55.0.795.g602f6c329a-goog
 
-[Severity: High]
-This is a pre-existing issue, but does this same lock inversion still exist
-in other scheduler functions?
-
-For example, scx_sub_disable() takes scx_fork_rwsem before scx_cgroup_lock(=
-):
-
-kernel/sched/ext/ext.c:scx_sub_disable() {
-    ...
-    percpu_down_write(&scx_fork_rwsem);
-    scx_cgroup_lock();
-    ...
-}
-
-scx_root_disable() also takes the locks in the old order:
-
-kernel/sched/ext/ext.c:scx_root_disable() {
-    ...
-    percpu_down_write(&scx_fork_rwsem);
-    ...
-    scx_cgroup_lock();
-    ...
-}
-
-And scx_sub_enable_workfn() appears to do the same:
-
-kernel/sched/ext/ext.c:scx_sub_enable_workfn() {
-    ...
-    percpu_down_write(&scx_fork_rwsem);
-    scx_cgroup_lock();
-    ...
-}
-
-Could a concurrent PSI trigger write still cause a deadlock if it races
-with these other paths?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710100441.2653=
-477-1-matt@readmodwrite.com?part=3D1
