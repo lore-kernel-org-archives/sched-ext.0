@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7823F1AD1
-	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 10:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476B9405C54
+	for <sched-ext@lists.linux.dev>; Fri, 10 Jul 2026 10:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783678075; cv=none; b=q5lJzTAy+0/liTHQ1NXo8tEuMkeQU7hK114wR+BFJZBc1N33fICAUWDmA8tFhoTZqGokSmy1AlzZGLV2UvpF5Wa0O8X56iwXDwJU9rAs0kOFuxZl9qttOghnf2DnMw+7CfXq1Ei9LW3OOeerBDtZAQx7tnINTNORtA4F2+0XwFQ=
+	t=1783678656; cv=none; b=cPs8HXxY1wmnOO7kV+I3VGSUswnUy1orftZbMtpPxDARZEqCStwqTDgFYXvZ8hLA/UxgNgYKU2ViLoikQCOIqHlaEPaqv+5Koq7mWpsMl/muXsCTnmw7ff4jVRYT+yJc8m8GLLHVHTwZedTJpDDFL10DXZsrO/76U+76a2KxoxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783678075; c=relaxed/simple;
-	bh=orSZV1/zXQfZkjdxkgTTdm82T68UoUDY1pDQbP9RCtM=;
+	s=arc-20240116; t=1783678656; c=relaxed/simple;
+	bh=d+sf52g0FQvamOma3vIzbmg+tQV56fOn2CWBg7C9f5w=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=dTUcBdTf8TChvqaAKEwtcoD4+pNw49WKG0b2J3mWAp4ixMtNIu9VbEmmGPJRXqfJ0cuPF9U52MUW527hA7m63T68GOviHqKPSinkbb+RSHJDLBflFVUuXKMB8Fc0wLIepBjXO+f5hDbhjEDxYqwWHgIaVbu2NdBz4dtLvhsFl94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l7nm3ODs; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=GcLxiHu6gsghjLdyAd7dchvBLqJGjJHk5R91QJh9aEe1t0BqJ440oof1w1lyqo+PPldP3KKQaK7zQFiq4OgC/ihzHEZm/gpIu/lWTfevXPl8DBET3VEfqvSKTMTFusHxCYq+Dg+d/SRpPIdI2VDbp67kxI+3b1S7zYNDEUJ8ktc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HaHtIPnW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l7nm3ODs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC381F000E9;
-	Fri, 10 Jul 2026 10:07:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HaHtIPnW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C481F000E9;
+	Fri, 10 Jul 2026 10:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783678074;
-	bh=Kh1llx8e73XDC+WePxdSt4UTWBvxTw7ou9M98E9oFr8=;
+	s=k20260515; t=1783678652;
+	bh=oyc4gI0V9U3HhVkO6Vafx5cQE65lqWVRQRySNyWoQrc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=l7nm3ODsl22a8o4MiV6FoPdrfL8Kwdj0gsOvzeXzlCSjvRTxykfK6m3V1F/33yupl
-	 GBxVqcC/LaM2CFDj0BBf0BVVjhNr1zYy8F06ReFt9qnvYMvwLCtjcFfUYlsU81uS6k
-	 XbmDsEWNASYeU4FlSDVJt9Ud5eOooZlQiNUiP6EbgtK7rlVW/Ajm0Qc1D8uCm7iGxO
-	 FuvfTuPZxNe/9HDv3M2aSX67poIP2+skwyngseDbJO7iz+dGQcK5518D7E87s6xsM8
-	 0Q4dSTG5a3oYIyrIMYBVhbWTHxA09nqj0pBLq+k4ZMGHuzFhbxyawd/LWck1HaP+Xp
-	 m/+YjO1fF7BbA==
+	b=HaHtIPnWdEYsuxyOBJqMsQgnw3FnrJzS0vknLAIaVmyB6r6qX8ICvxskcQDd8dkCj
+	 q54ly4s/CPVtb3WYSQuWhf2L46UXhXQ6FxKpe4N21WoOIgpmKmvHB+my1yGW/0Y0Gl
+	 ltYjwxQLsjRgXzS8zEmFjK1OGO7gv+RBTca4JZ+DuyxnC4GPT3GzvszKHig8qMcF6m
+	 L6AJ6VZNJb7rxVkSoaQ6HpgTMRKprQ/AVB3gxUKQAkgV9F3hTevkyG0LZK6kLmbW4K
+	 /NrqAMr3KZ33aic3MafUYQTgN3M6TUmGOj1+FuFBXcRRYJ+zGRo9J4aoj4W+9xMoM1
+	 65nPub1FxXJ+A==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.18.y] rcu-tasks: Defer IRQ-disabled callback enqueue
- to irq_work
+Subject: Re: [PATCH] sched_ext: Fix deadlock with PSI trigger creation
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Matt Fleming" <matt@readmodwrite.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260710095359.2643791-1-matt@readmodwrite.com>
-References: <20260710095359.2643791-1-matt@readmodwrite.com>
+Cc: tj@kernel.org, sched-ext@lists.linux.dev, mkoutny@suse.com, hannes@cmpxchg.org
+In-Reply-To: <20260710100441.2653477-1-matt@readmodwrite.com>
+References: <20260710100441.2653477-1-matt@readmodwrite.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 10:07:53 +0000
-Message-Id: <20260710100754.3CC381F000E9@smtp.kernel.org>
+Date: Fri, 10 Jul 2026 10:17:31 +0000
+Message-Id: <20260710101732.93C481F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,84 +45,75 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] RCU-tasks callbacks queued with IRQs disabled prior to subsystem i=
-nitialization are permanently leaked and never executed.
+
+Pre-existing issues:
+- [High] The patch fixes an ABBA deadlock between `cgroup_mutex` and `scx_f=
+ork_rwsem` in `scx_root_enable_workfn()`, but leaves the exact same lock in=
+version unpatched in `scx_root_disable()`, `scx_sub_disable()`, and `scx_su=
+b_enable_workfn()`.
 --
 
---- Patch [1]: [PATCH 6.18.y] rcu-tasks: Defer IRQ-disabled callback enqueu=
-e to irq_work ---
-commit 0fb74f52f7f1a3087f9fed2016be045b93a6a7a9
+--- Patch [1]: [PATCH] sched_ext: Fix deadlock with PSI trigger creation ---
+commit aacffeaa1e10b05888e4970e698ee8d1863dbbbd
 Author: Matt Fleming <mfleming@cloudflare.com>
 
-rcu-tasks: Defer IRQ-disabled callback enqueue to irq_work
-   =20
-This commit splits the rcu-tasks enqueue path, routing callers with IRQs
-disabled through a lockless per-CPU llist drained by a hard irq_work. This
-prevents acquiring cbs_gbl_lock under unknown outer locks.
+sched_ext: Fix deadlock with PSI trigger creation
 
-Link: https://lore.kernel.org/r/20260609104733.1184001-1-mfleming@cloudflar=
-e.com
+This commit fixes an ABBA deadlock between cgroup_mutex and scx_fork_rwsem
+in scx_root_enable_workfn(). It prevents deadlocks that can occur when
+concurrent writes to cgroup PSI trigger files attempt to create kthreads.
 
-> diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-> index 2dc044fd126eb..56b51946bc6b7 100644
-> --- a/kernel/rcu/tasks.h
-> +++ b/kernel/rcu/tasks.h
-
-[ ... ]
-
-> @@ -276,6 +283,7 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
->  		if (rcu_segcblist_empty(&rtpcp->cblist))
->  			rcu_segcblist_init(&rtpcp->cblist);
->  		INIT_WORK(&rtpcp->rtp_work, rcu_tasks_invoke_cbs_wq);
-> +		init_llist_head(&rtpcp->rtp_irq_bypass_list);
-
-[Severity: High]
-Does this initialization overwrite any callbacks queued early in boot?
-
-If call_rcu_tasks_generic() is invoked with IRQs disabled prior to
-subsystem initialization, it adds the callback to rtp_irq_bypass_list
-and queues the irq_work. Since interrupts are globally disabled early in
-boot, the irq_work won't run until after rcu_init().
-
-When rcu_init() calls cblist_init_generic(), will this unconditionally
-clear the list head and cause pending early-boot callbacks to be
-permanently leaked?
-
-[ ... ]
-
-> @@ -363,43 +492,23 @@ static void call_rcu_tasks_generic(struct rcu_head =
-*rhp, rcu_callback_t func,
->  	chosen_cpu =3D cpumask_next(ideal_cpu - 1, cpu_possible_mask);
->  	WARN_ON_ONCE(chosen_cpu >=3D rcu_task_cpu_ids);
->  	rtpcp =3D per_cpu_ptr(rtp->rtpcpu, chosen_cpu);
-> -	if (!raw_spin_trylock_rcu_node(rtpcp)) { // irqs already disabled.
-
-[ ... ]
-
-> -	// Queuing callbacks before initialization not yet supported.
-> -	if (WARN_ON_ONCE(!rcu_segcblist_is_enabled(&rtpcp->cblist)))
-> -		rcu_segcblist_init(&rtpcp->cblist);
-
-[ ... ]
-
-> -	rcu_segcblist_enqueue(&rtpcp->cblist, rhp);
-> +	if (irqsoff) {
-> +		llist_add((struct llist_node *)rhp, &rtpcp->rtp_irq_bypass_list);
-> +		rcu_read_unlock();
-> +		local_irq_restore(flags);
-> +		irq_work_queue(&rtpcp->rtp_irq_bypass_work);
-> +		return;
->  	}
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 691d53fe0f648..ba89eafe79643 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -7193,7 +7193,10 @@ static void scx_root_enable_workfn(struct kthread_=
+work *work)
+>  	/*
+>  	 * Lock out forks, cgroup on/offlining and moves before opening the
+>  	 * floodgate so that they don't wander into the operations prematurely.
+> +	 * cgroup_mutex must nest outside scx_fork_rwsem because cgroup file
+> +	 * operations may create kthreads while holding cgroup_mutex.
+>  	 */
+> +	scx_cgroup_lock();
+>  	percpu_down_write(&scx_fork_rwsem);
 
 [Severity: High]
-Can this lead to silent data loss if called during early boot?
+This is a pre-existing issue, but does this same lock inversion still exist
+in other scheduler functions?
 
-By routing IRQ-disabled callers directly to the bypass list here, we
-circumvent the pre-existing fallback (removed above) that safely
-initialized the cblist on demand. Could this result in early-boot
-callbacks being queued to an uninitialized list that will subsequently
-be wiped out by cblist_init_generic() during rcu_init()?
+For example, scx_sub_disable() takes scx_fork_rwsem before scx_cgroup_lock(=
+):
+
+kernel/sched/ext/ext.c:scx_sub_disable() {
+    ...
+    percpu_down_write(&scx_fork_rwsem);
+    scx_cgroup_lock();
+    ...
+}
+
+scx_root_disable() also takes the locks in the old order:
+
+kernel/sched/ext/ext.c:scx_root_disable() {
+    ...
+    percpu_down_write(&scx_fork_rwsem);
+    ...
+    scx_cgroup_lock();
+    ...
+}
+
+And scx_sub_enable_workfn() appears to do the same:
+
+kernel/sched/ext/ext.c:scx_sub_enable_workfn() {
+    ...
+    percpu_down_write(&scx_fork_rwsem);
+    scx_cgroup_lock();
+    ...
+}
+
+Could a concurrent PSI trigger write still cause a deadlock if it races
+with these other paths?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710095359.2643=
-791-1-matt@readmodwrite.com?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710100441.2653=
+477-1-matt@readmodwrite.com?part=3D1
