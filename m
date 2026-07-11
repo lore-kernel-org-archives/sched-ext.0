@@ -1,58 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D942A22083;
-	Sat, 11 Jul 2026 23:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8593D23D2B1;
+	Sat, 11 Jul 2026 23:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783813162; cv=none; b=ZApbgpXYLo4kxmU8LbxirZYYThaajcDRc/SV9Xv41wY9u9lABOxJHfP6iyfAus4IQ94kiPyHARJpDFo8DlcnnIP7YaTYD8vPDutLU5TaM4INVngxNOHeWr8lYhrU8E/iQjZyvqqfTdwICXHkziLa+osKgsUsokvby3OoifVTIQg=
+	t=1783814227; cv=none; b=jEMgxnoAR3yjEYJ+22v4rSXlzFtCmSu6Fer4gH6kgjbY0yGJ8N+tocL7M2DEipB8UKKC0wY7FADR6YXK98Kuo7QEthtE7zLAUwe2XSmQn3f06ljonXAzMTYeD1Bz3pJc/V5UXfXdwwAKSzsIfTIU3uplqwonotwUaORYY1CUJWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783813162; c=relaxed/simple;
-	bh=Ix6EaQ4AZEKzYnQtBJLPhEhMiHnwivHrSizMAEPrzVw=;
-	h=Message-ID:From:To:Cc:Subject:In-Reply-To:References:Date; b=mdt1ycNoK1eoXoi1F7uSsn4bNF2BzK3wvJeSYIqSYpDcR+CZxGu9XxTq2/TXlsxk9QU8MRLhjV+JnLKEeTEcmx0r8xQIfy5U53ZnblQGGkwG3T4WF3Ynn8VxR+lp8oDKvU8yZa+o011sZsaxkjNGN9BBk+6hfMbtqbpeJJGKQSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gICOflyv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783814227; c=relaxed/simple;
+	bh=Aj8FUnZpKqQrWDDP0G+micLrUAtdKhV8k/pggfEolKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TznwtQM7I6979YHswwuuLzm6Ansg5Uc4nHjcRbExighWJYBJXqIAjUv7t9nC8Ud0ufITfQUxdU8Ktf8u6TA7v/0HtdNRSZXz0wDRmtJwBPvwfqMXWtjQNUx8LJIwUZ/hqMPhYj+CWhav4fNmucKO0GFv39fTNduZNQTH+RAINhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fpfTykPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gICOflyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F771F000E9;
-	Sat, 11 Jul 2026 23:39:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fpfTykPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2438F1F000E9;
+	Sat, 11 Jul 2026 23:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783813161;
-	bh=6rTitmnwB3slWkXkkO06jq9wjcjVhrdMYERBFoHzaew=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=gICOflyv39hhIh2BVE9kY0OBaVfPjYFRGkxRrJkSOUDBrjkaY9FRgVvEvEOV5fG7C
-	 QpHtyvd/xXcx0AmizvllQz97s1Pe8hN4S0aPoh2x4CH22rKNL2DUhghEHPiOWW2Q5E
-	 ktqIBlYQvXhdvY49znv0bm4rU+ov2eQLawbOMoMyrQeVICPTrg7/vS0vY+eqh+K19e
-	 MDWv9/ChmmdPY3/M8kGjejYfec1GEta7AoMIKuO0b1uOpTSHrAkwc/xRDzGeSTjttI
-	 CeJhATAnYZNcXkgEwSKjQ0pvEzubpElVwfeUQLXi6Nz/6gYWctzDpbJwV+xjNs8HB3
-	 9cmpp3RP2v5gA==
-Message-ID: <bb17a525f0f0a42a1678f117177f0a17@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Nicholas Dudar <main.kalliope@gmail.com>, ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org, eddyz87@gmail.com, emil@etsalapatis.com, void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, bpf@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH bpf-next v3 0/2] bpf: require an owned cpumask for bpf_cpumask_populate()
-In-Reply-To: <DJV4SE3UC9L5.2MM3IGLHLQICW@gmail.com>
-References: <20260709182800.2037938-1-main.kalliope@gmail.com> <DJV4SE3UC9L5.2MM3IGLHLQICW@gmail.com>
-Date: Sat, 11 Jul 2026 13:38:09 -1000
+	s=k20260515; t=1783814226;
+	bh=RoTc3ubU1GUekjrXvQrhpiWw+h5dYYikMu9KV19iKWc=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
+	b=fpfTykPiFAuTdbvYCoXObmXdRjicnMK0n+tY9xylhUHNdpOYwmu6ymkrMLGbtHTTK
+	 ouQyVH8Ib+eWqxqiIDoFfQXj7l66xKkZ12GqcxPfP7OkTApBSsI6g0stoFf2T8Bw6t
+	 9otcZfoQlpixeO3+utISvLrJ1x6l7E4PzmLJfrwrGwR9EJYrWWM1KcvBrBMBOR33pF
+	 7lerjK6055qGzWSrnHw1Go07Wt3rIoGIdtPmIiDEcjQz9tYpzRkLYV/wOi48HJ1iWF
+	 IZALFkyi6DEH4VlRbIPkMj96gUWiyEJFeacFh5N15hFXR1N/VltUTaw8+pDeyucomj
+	 fQyvJnt8bTFPg==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id EFA59CE0806; Sat, 11 Jul 2026 16:57:05 -0700 (PDT)
+Date: Sat, 11 Jul 2026 16:57:05 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Matt Fleming <matt@readmodwrite.com>
+Cc: Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang@linux.dev>, Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>, rcu@vger.kernel.org,
+	linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev,
+	stable@vger.kernel.org, kernel-team@cloudflare.com,
+	Matt Fleming <mfleming@cloudflare.com>
+Subject: Re: [PATCH 6.18.y] rcu-tasks: Defer IRQ-disabled callback enqueue to
+ irq_work
+Message-ID: <fb7338f4-d2e1-43cf-99e6-a6109751d2f3@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20260710095359.2643791-1-matt@readmodwrite.com>
+ <886c23ff-7dca-4679-9d2b-ca499523853c@paulmck-laptop>
+ <alHapJgHNRea7eZz@matt-Precision-5490>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alHapJgHNRea7eZz@matt-Precision-5490>
 
-Hello,
+On Sat, Jul 11, 2026 at 06:56:18AM +0100, Matt Fleming wrote:
+> On Fri, Jul 10, 2026 at 11:16:27AM -0700, Paul E. McKenney wrote:
+> > 
+> > This does look plausible, thank you!  However, it does not apply cleanly
+> > to either current mainline or my -rcu tree.
+> > 
+> > Judging from the subject line, this is against v6.18 rather than current
+> > mainline, correct?  If so, would you be willing to forward-port it?
+> 
+> Yeah, my bad. Since the SRCU code in mainline fixed the original
+> deadlock I reported I kept this to 6.18. But I'm happy to forward port
+> this patch too.
 
-On Fri, Jul 10, 2026 at 09:17:08PM +0200, Kumar Kartikeya Dwivedi wrote:
-> Hi sched-ext folks, this fix looks good to me and on cursory look, apart from
-> potential signature change which may require some adjustment to casts, it should
-> not break existing intendended usage.
->
-> Could others confirm this? Thanks
+It would be good in order to avoid similar issues with call_rcu_tasks()
+and call_rcu_tasks_rude(), so please do!
 
-AFAICS, this shouldn't break anything.
-
-Acked-by: Tejun Heo <tj@kernel.org>
-
-Thanks.
-
--- 
-tejun
+							Thanx, Paul
