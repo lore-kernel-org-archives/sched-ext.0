@@ -1,48 +1,48 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012024.outbound.protection.outlook.com [52.101.48.24])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012034.outbound.protection.outlook.com [40.107.200.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CD923EA97
-	for <sched-ext@lists.linux.dev>; Sat, 11 Jul 2026 09:04:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C60D2853FD
+	for <sched-ext@lists.linux.dev>; Sat, 11 Jul 2026 09:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.34
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783760695; cv=fail; b=UMw+h+iPbZrTNjcpnjtOfPes5n1fisf1UAaZJQIxMwlWM4S+22qHK7n/NkFLVYiXie5hj7PGRX5hClZ5z0ty5ZFn9OQJchxsTb+ZESBwSLxtwCxar0VV3mNJtUHJgqA3D2gFftEkle+mwtX04KcaHIFQvCfzrVxEQWf8GJwrUX4=
+	t=1783760859; cv=fail; b=DFMWMCJ+YnArLZ5nHrAXrix0a7laysjP7N+D8NIwXdqQPq83PAvDUvLxI1tqGDuE2Z/izpyAdCoLrDtAdMUL8l4lfjjR/soGOei7OId0KK3BQP76PsS23VznxowGN2dxzwg4FpG7cXemtfMGFD3Q3xyw/qdPLNI3i5hhtI3WZxY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783760695; c=relaxed/simple;
-	bh=kfqoIcmxAMiK/Oonjl4h+C8ZIUJA2tMq5b3/iBpeyB8=;
+	s=arc-20240116; t=1783760859; c=relaxed/simple;
+	bh=D3XbAsSMLvenUCQiVXgwSTP2R8XwPzK69pdipY1jz5o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=DeuZRACaw5wxXpbn0bbV+Rj9YWyfA1cigGhZDstmJh+XgaOEUcopTaOnTBYaafBtlvy3ngso6jb3yqdyP1vua6PXAhZM2c/yR1YSopKAlqjLATFSncoGnk+DTLUwaD81AznWzGm/pH1vEDjRJ3fYbRePyXxId+DKHzJK8dNSvSY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nax2kt0L; arc=fail smtp.client-ip=52.101.48.24
+	 Content-Disposition:In-Reply-To:MIME-Version; b=s0Q6VQMpKhS2B1WloVURwMIU72ZjIcKk6VfZOnY9SW+NTPJDAInZxELx7y7AzvmWBuu8KfOh0jJLz8eOweayKSk/EqbMfgGO8XoW0RZ0H/An+S7ojeSrzbqfESAv1KkxGz3qo23qUNZ+65GJETFH+jaaAdF4blF4zXMHK/3hhqA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mg31CDnj; arc=fail smtp.client-ip=40.107.200.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nax2kt0L"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mg31CDnj"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=I0wdb0CX23QA+hfzLW1KWBKfmMyXHkOCMtJdIyuvS4j2gK669eQhE7FidcbTtdG+K6c2ompt6WIEF9dEojzx2to4o7fSCqirfYK0f56Kw8lzoTJVKlc4ilw51poDHtJBoAKBtm6sNTAjmdXoMAcc6ETwrq2fy5bILZ3vIaN53qc2MvtHT5VA+D5hbjjHz9KoCPsyDEDYBUM/zDJGc/Za9kW9ahPiuPHwVYbCQRfRaBuLXFPl/X2KKZEoEj2hEjXuZHaNiqrAAMmD9iBuu/cypu9sITEOZvE2PCUk7/u3UHMbziXXP6QSMU4aWxARCPPVpLsn6vx8D/MX6KPfJgbg0Q==
+ b=RYlmS0aF3JSlXy8VIabOuSiF3KLrCb9cooBlgoicQoYfN29pGrkhUEwPpbTr0DnjPzH4fCJw6cHp4c4fGsCY5m2WESRVHdTOD9xYbWJLt9b+T7FTcn8RJAp+aWysBxbjyM74KcfLtLaxhFR8C1ePDdAVtFWXo/1BWC1UgD2HGNuSH0yrxncm90SEtS9N4Q636auCdQ4uhO10OtxCrHKNxGQQr58N/xhsH+j9mqX106ajzkxi+67D3vopPc4UfPXH+ZrvdA8iQwi25u9WgDhCO0GEjJ2TN3WPEbBYXnpNO2KLYpvN9jj25OhhdWBqlLrKbiDk9M/D57Dvlr/+niAlkQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U0Xtwju9Dukohy+L5Xd6r1jo5H6OZBuiu5BDMz0xUWk=;
- b=ixe2d/dIRNsxzB/1JOHRtqXeDqRgYJJshJRV9A0ZzXFrpj4jFm4yUsrGAjJYxFzeiqNjh+PyaMWBYZ0oru4c30KGj9Y9xYnghd9IcSfIJqLiUGq5vHUbz1k7JwFSdEoiIEkekEnjEak1opS2828nSItNRMYDUCf/1FcS+Nwbhy2Tr26P3mFp1cn96gzRwFmIH9Qj0FlgH+I0BZNLaJr1ZjrEv4XuSNQv6oi1bR4hF6gVOtGgXZWOLovQ8ULWetf4hcY78QXP2ZQQ34NzK4ZRaDtIzAY4t3WyH+S9I2HM5ggVGnxkQg3UK+GCRcr4kx2W6k5N5zXFsXFyoeDLUFeF5A==
+ bh=GNP00ryo9fGhxRwkzgwmTYvRv4eEYp0JzJcVXZaGQIg=;
+ b=yxGVO/zFxxiKO96BIaVaoCSwMxjXAIHxEUWIgAr6zXGgTFOTA6CqwdiZ/zRLf+lV3tmgwIIR6DAzjZT7XTIIfqPe94/msxksQca7ox8lHCZ4JBVQa1ANlt8DPxqeF74agwc3OPUZUo5gRUK5whQhuBig/xYX+u/Mz0LoSDxDnEsydHPkRlfGj7FnHBZFDRThWZQls8fv/A50LyllcQyMNP3d5FiTGLXb3OxK+wPVke9XJCL98BLqD2Mh+iAwvSTnSkl9Qkbk36ankzwQsMgbOFxW/1Yt4NVe+4svNC+nS2Du7L9/a10+6M8AgAy6zzp+0mltnbN7D1xOforGDD5l1Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U0Xtwju9Dukohy+L5Xd6r1jo5H6OZBuiu5BDMz0xUWk=;
- b=nax2kt0Lafk/IKG9WkMnsPswQ3jeVVfek7u0dD1l8k5llOIDySvJ1YbgwDr4ltoZY4FJgFUN9ccF64xYzZKvY/qSb3ThpzfsyAGAE7zE4dFV1ATjt1cw0941bd94DC0QjFBMuaQekBi2VYoCwcorI6enbs77wKUenOxFVUxfCFK6ttGTWnpjIdpFBLOIf65xO7NZSGYKnzHP5wFFoEotEw+328axRSr4Qnua6odin75kcAZABvGRWBZb58vMrad/aREpl/wibm8mMc1ILqLUVFtUIncL9FVFCMIJRsZOo8wyWy/52yuc61ydxe17NDZKgYRTbiRpbjLqn6u4a3h0Mg==
+ bh=GNP00ryo9fGhxRwkzgwmTYvRv4eEYp0JzJcVXZaGQIg=;
+ b=mg31CDnj0X12nrapvzcWsHNKv6rF1QkgnpZ1v2M8XA9wA9oUtuvL2ehfaw760F5NfTIxO29+U5M1HHGy+i4NWbYgA+F1zTznR7b9ne4AIdfZ4BbGH6uvQSsTHBf9t3oUws1rtv+kYL99cYhg+k1/LnJxXgF7aKs/jc51IGkdbprrC7CflwuU6Ju41gcjD7P64CsaGpAOxM4Mc2iLR3pvanL2VbfBbJlzqgiMioBUNyekeF2yraMQlrkMiz8SOLCGhUwUdDNBdGyKl/2eTJLX47UpE4x4DeEtsrcIqENqQB3BrrheHMajELOezP+WKr5yaO4XmLYLB/FnNzGotT9fFA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH2PR12MB4824.namprd12.prod.outlook.com (2603:10b6:610:b::22)
  by SN7PR12MB6672.namprd12.prod.outlook.com (2603:10b6:806:26c::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.16; Sat, 11 Jul
- 2026 09:04:47 +0000
+ 2026 09:07:32 +0000
 Received: from CH2PR12MB4824.namprd12.prod.outlook.com
  ([fe80::34d6:fda7:9290:35a9]) by CH2PR12MB4824.namprd12.prod.outlook.com
  ([fe80::34d6:fda7:9290:35a9%3]) with mapi id 15.21.0181.016; Sat, 11 Jul 2026
- 09:04:46 +0000
-Date: Sat, 11 Jul 2026 11:04:37 +0200
+ 09:07:32 +0000
+Date: Sat, 11 Jul 2026 11:07:24 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: John Stultz <jstultz@google.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
@@ -59,20 +59,17 @@ Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
 	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/10] sched/core: Drop mutex locks before proxy
- rescheduling
-Message-ID: <alIHJf72RhxOn40c@gpd4>
+Subject: Re: [PATCH 07/10] sched_ext: Add proxy destination query kfuncs
+Message-ID: <alIHzKRxL2DSwmnB@gpd4>
 References: <20260710083913.30573-1-arighi@nvidia.com>
- <20260710083913.30573-2-arighi@nvidia.com>
- <CANDhNCrR+jiW2QEDE9yhbuFEp2nfnWh2Vf-_GT9NWhSP3oSE2Q@mail.gmail.com>
- <alFaVuDMuGNz8a-g@gpd4>
- <CANDhNCoyO=KaOhQZDy4drXpyeCbwt9src3cpXe+1EFJgEpPN2w@mail.gmail.com>
+ <20260710083913.30573-8-arighi@nvidia.com>
+ <CANDhNCoiA5fqRYSM-Tj3cyJn0tViAgCgbvqK8t=zF-eoTQPTwA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANDhNCoyO=KaOhQZDy4drXpyeCbwt9src3cpXe+1EFJgEpPN2w@mail.gmail.com>
-X-ClientProxiedBy: MI0P293CA0001.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::16) To CH2PR12MB4824.namprd12.prod.outlook.com
+In-Reply-To: <CANDhNCoiA5fqRYSM-Tj3cyJn0tViAgCgbvqK8t=zF-eoTQPTwA@mail.gmail.com>
+X-ClientProxiedBy: MI0P293CA0006.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:44::17) To CH2PR12MB4824.namprd12.prod.outlook.com
  (2603:10b6:610:b::22)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -82,201 +79,158 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR12MB4824:EE_|SN7PR12MB6672:EE_
-X-MS-Office365-Filtering-Correlation-Id: ea8f981e-ee96-4b58-3e1a-08dedf2b73be
+X-MS-Office365-Filtering-Correlation-Id: 661330de-e87f-48e9-cae2-08dedf2bd73b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|7416014|376014|1800799024|366016|23010399003|6133799003|56012099006|4143699003|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	PyF0lUgZzQHVTeO1+qY4kzRT4vVXtcCdC2ZOtImtwH9HJXwwApx8NJJZeP1UxwloG4KhDOBxss2MHg4J11E9YnjgTKv4bYRboihfIh+bxd8ZTmGAf8zAnCabMs+t0tbpggischTHPoFD2tJeUfgqFfyOy8ddz9ADEg/n7QqwZk+4PqwDkwjqnQ9CFtrnWb5B4GgRIJqNBsefEnXle5aUeWaLXuT9CTNJHripSWODPwjSncuHnoun8UdNM7ZEt25yI5HWoSCO95VNbHpChZwDUonbDzx77/Ly49byvivpCGDBJO+D1Jf53guqGOJCFM6jweBYbwzru7+NpwT90vmjQcsVEOy/uSDnJTzL7i93OeLptw+/TvdfN1VnwYZqH50ycjtAxhPgPQ60paJ5/kZoeUo8sB0MP+WipawxMydE8639n9K2rE5CgeB9u8V6TccB+AAaP75T6fXi64Hc1GRJ0llh0aNP1m2imVomMBp7IfdH6m19mt94XlpX3VTEeyJYHG0/+3E9P/m32cVw9eiouFXEm52m+y093ap/T2srATnuBLlI/ncgblnyKm/EA6LWL4HKVuXBIZEztxA8kQAtSl0zFdQt7UWX1WJMKLS6GFWxGJAP2ZdgP7vERCrEJXy+hmK+LHAGARKtN78Y02QVqAaJH4PbA1cHgw8n5uEq8gM=
+	2NRD487j1INBJFIb9Tfrvj8v/GP97g4Htf8IB6sNaL2wIHi5IiLST6dPa/eM+a6sdghRZdRGTfizUYqV+LwtTiWYsNFXUEqbOaGPQBKPEOOBbdE0OfVRg8Jv5SCoJzhH+ovWbjYOEvdJPNJAS2szNMf0e9pG+4JI+K4iccFiPsTELTe0MfyZJefwyAsSZcH7y669rIpHB9DFT+ryKQY2hrbmNjmYPtGLpyJYgnO5k+KEbhjtkKRYqxqoneclxSa99eNZXYIDJQVC0FOAGc7XXwoO4dtSghm/HkNKgrSFoPabarvw2wT8K58cOk3lxr0GfS07mGpr7EKbwKESDB5GySJG+IUqTXvqyS9I+1NiAWcyrr6A9m3kqNQe8b3e0+eCSFGpbnrkiB5yaGcX1sbA7z7FjkFBnjCZpc/dW7z3TLNfyivExhclecrtVKl41hM6N7Hrg3wn1gqfDjpuq3Vz0KUVELhvWho0+B9HZLnmpt19V4/4Ni++hxwI0d3HAFLEbb6nvDRjwtYdk7jxDUZmtt+idBEFwyHjSji5sOBl1Cfd9JkQQNuKfpoduPUOyAR1tGmtupZX8beNf0X9w6l7fbgLaImx1CR8vNRU3O13xBQ0SWGF/zzv1JTKQWv5SDxDnBMH5/QQXa7tFu/CcL9Bldyv3Hl+QF1ZDIaM9MLJBrY=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4824.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(23010399003)(6133799003)(56012099006)(4143699003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Q1Q3M1hxSXJSb0p0bm5ibmxsS3RBbURDZXl6UGlXUXNaQ3JRd2JjOVBxM3Rn?=
- =?utf-8?B?cHo1LzYxeTlQVzJmckVobDNheENWK0lYT3lZMm04cDBoTUNYSEF0aWpyUWJv?=
- =?utf-8?B?RG51QXJtZXpPUmtnbXkzYTFqZk14N25Ibmt0VVMrOXZtWHA1RktkZDZvV0Ur?=
- =?utf-8?B?UGR0R2wxdytwTEUrdFBBR3JhOGVuRlJrRURkT2s1RjBJTndDNmptSFNKTlND?=
- =?utf-8?B?YnhSTm50NVdUY1JEM0NtL3JpMkZGazM4aCtjTHZxSWNHQnFUZVJPQVdza1ZT?=
- =?utf-8?B?bmRTaDFvOHBObmNnTk5TMVhKVzhvTG1udU5XKzdwRGJCd0QxYmpMU2VMQk5Y?=
- =?utf-8?B?UjVpYjZxU0FiNmxvbXdxUDJaL2hRcVFaM3FGcy8rQnRkNUJHMVJsOGlBb1Bk?=
- =?utf-8?B?Y0w4WUN1ekVDd053OHUwa3FFeGlXeTk5VGFGYU0wRjd2aUxXTmZXK3lLYXhI?=
- =?utf-8?B?M25EZ2ZHZ0xYZllqRmdzWkt1dndyRkszc2VNV2Zic0dmdXdGcVd0bU1ZNUVS?=
- =?utf-8?B?OEE5enU4R2VyMWdWblhzUm9CZG1adVBJSEEycGs2MlRZUTRMK0pPTldTdVpT?=
- =?utf-8?B?Qk5mbHlENFhObmM4M1libmJBZU94VXRxL3ZDNGwvajVndjRVSHdvRjRHb1hj?=
- =?utf-8?B?c1ZkWmxaeGJrdUVvaXNuQm55bjdUMExIem4rcUlMQUtKYnVDbnpjQjdtMlZ5?=
- =?utf-8?B?eXk3VXFqNmNrS1lYYW1YWUtQZDJtM1VxMlc0RlQyK3hOczJWSXErL3VlaGlG?=
- =?utf-8?B?QVF4amlXUExoOU5DMzRNamtwdmFNOVZnQVBld3F3ODVjb1grTXdQY1RISlN3?=
- =?utf-8?B?VlA0V3lzbkdleXg3a0haYUpRNDcrclhRcGo4VXp1eGxkbTRSa3AyYjZIVVNx?=
- =?utf-8?B?RTRzL0FFVS9oN1NZY2s0OXFsRVA1MFlHR2FuMjJIdEdXOGNIZkhqa2NXb3Js?=
- =?utf-8?B?MHo1Ly9UOWpxYndPbDlDaitzbVZNVWZIUFZmN1FLcUV4WmEycExSc2N1TzVF?=
- =?utf-8?B?U2tZcVU1UzIyWHhvelNQdzRaa2NJRElhcGwyQURHZVRBMmlSVVNNWWIxL1o1?=
- =?utf-8?B?aktkQjVLRTVOY1NUTW10S05zVGJ6VmVxV2dMQkZNNnc4cVNRMHVVVm85dHpv?=
- =?utf-8?B?STdSeGFocllUdGxGR3B6T0J1UHFFRGVPWjlQd2owUm1uZHZyeWVyVEovYVBy?=
- =?utf-8?B?ejNSL0JqY3dWYWNOZmlUMmo2SXN2VlBNTUtyc2tOd2wva1h2dkw1UkNTcnRu?=
- =?utf-8?B?WkMxYWpVNlljZ3lVMytXS2k2c2EyaWVoaTkxWVJ1RHQ5RW1yMmk4YjFxOUFC?=
- =?utf-8?B?SFEyRTB5SXZneHFjMkJMYU1teElVWExFUzRFZEt3TEloVE8yYXEza2JNZ29v?=
- =?utf-8?B?MDhNeG8ydVRVVk0xK1U1YVUwVHFLMWFRUjE3SUt6cjdCakovblBpcDE0V290?=
- =?utf-8?B?RDgxckU2T2I5amZCUnBzVC8zQ1Y4cUg5bE1xWVRoQncyYzJrSGRvWmFsMTR0?=
- =?utf-8?B?K0hrak1QSVhlSzVTNXlxWUNESDdOdjZoclRDU05lYmxwWFJsOWtMNzIvVjlq?=
- =?utf-8?B?Y0NFaFMydGRkZXFTSkJsMm8vc2VHMXFQNFlBVGNLdlVkVWNBRkNtN25pQkU5?=
- =?utf-8?B?aDY0Y1E4bDlyL0t5NUg0cGI1SUx3blV5azhidGgxTi95bWFFWlVYWUxEVGxB?=
- =?utf-8?B?MncvOFpQaEZicUVmN0JnWXFkK1NEcEVPU3l1RDhoVlVmM0RUd1crSHQvZzJR?=
- =?utf-8?B?bnoxUE04YW9aZXgyOTlJZzBIUDZ0WVpWejF2cjRkK0xjZmkrNE83ZHZITWIy?=
- =?utf-8?B?UVFIaWcvU2tuS3RkSTZSWUlGVDdCVGZPV0hqem1pbUVwbEdROXp5L0diT0ps?=
- =?utf-8?B?WW5nUjg3WjZHQzBOaTIwTzVGajY3ajZ6RFd3amE1U09FUkJZTVIrL3YzamVZ?=
- =?utf-8?B?RFFhd1ZFS2VyT3o3SkkwVkszWUpqR1lSYVE0ai82NHVvL1BTdTZWT1ZEOE1t?=
- =?utf-8?B?TGdUaE5Qanc1cUpLZWVtOWtjOFJIV3JWQU5WMm9hRWEra1R4UVp3OVJ6OVF2?=
- =?utf-8?B?TWs2ZEduanNKQ2pHcjNjZFBGWER3V0FpNk1hY3VtTDYvUXRacTJRbFZPL1hp?=
- =?utf-8?B?ME9zT3hWR0tDWDA4TkFwUjJlYm4zQ1pZK2VVMGhMaWJ0NG43cEZyUjhCaHFy?=
- =?utf-8?B?TUVGMFg2aUtISkRPQVdOU3pHcnQ5d3Z4OCtrNFd1V2djZlVHeitBR0tKMlNY?=
- =?utf-8?B?ZGNzRVNEdVRBNzlNQ3ZzYlNHZlFoTDRodE5TalQxQ1oxYUVoS2NrdHlsNDFD?=
- =?utf-8?B?ZFFPZ20xNmlHOVcvLzhQd3lTUkdzY0VSVVR0S0JjUFJiTTF2QXNkZz09?=
+	=?utf-8?B?aUVPNkZtYjd0Wll3R0xmN2NFdVBuTWJXSUFnd3EvZlpKZVg2TldQWGNiWDVZ?=
+ =?utf-8?B?WkZoazg3dllNZUZLa01lTlVZQVo4UER6aVVCbFFUaUNXVDBYdlRnN3JCVHBy?=
+ =?utf-8?B?SThLOElkM3h3MmtZZ0NZVEVkYUpPbWJCeklrQWwyRm5XQXF1NmowdjNkL3pr?=
+ =?utf-8?B?K3NPbjRIS1ZJLy9seXZCT203b3hVa1hXeTgxQXcvOU9WWlhhblRvM0VFL3gv?=
+ =?utf-8?B?QnZSQnZJVk5acE05UGZOMktzNmVJZHZocDdPYU9BejNtbi85SFNlem9BMm9n?=
+ =?utf-8?B?UTdPY3VTMHh4QmcrUW1nYU1lcXR4SzllcEJsc205YW1nWFgzb1JIRHZ3TFh0?=
+ =?utf-8?B?KzRkOXppVDltWjhhR2tjakJTK2JtQUtENENJalB2YnNXMWtzckVlU056K0Nu?=
+ =?utf-8?B?QWNPb011dXlqR0EzRUdlYUJSNE5jOTQ5WUErUG1nd0NneXA2TUpZenRnKzh4?=
+ =?utf-8?B?M0ZNT0piVEdaOEtDcTJGY0U0aWVDdWFaaGZPSDU5WGEweXJhbmJGVUJPaita?=
+ =?utf-8?B?SVUwTW4yL3V3NThaTkx6L1pJUlVFNVVoYkx1K21pRjFVYmdrRXVYMWFDRGxR?=
+ =?utf-8?B?Ly9tb1lYRUFxZXpKS3BEOVhEdVRKTFkycEQ2OTZ0MllYbU9SNzJ0V2lDMTZs?=
+ =?utf-8?B?MFJMdGlwcmRCYm95UVg1TFl0K3pISDJpVHJjeVc0a3pjZld4alBMWlUzZGNr?=
+ =?utf-8?B?WnFpTDNPYllHaWg5OEsrWVdtQ3R0RFNoQnNaM3RMRVlJUk1MWFVra0ZUY08r?=
+ =?utf-8?B?K0RzSWw4VUdCSmhib3Bqd0RkeTZKNm1EcC92L09wcDdwWEY2Y3dvemhwMVMx?=
+ =?utf-8?B?aVZaR3Btd3NpOEdnblluMDlNVU85OVN4cFZYbyt0dW5VT3VFVEFCRDF5cjB1?=
+ =?utf-8?B?SGJZNncwdzVEV21iUzNSQ2tBNnpCeFk5bFg0UTBSb0RLQ3NZT0E0MUJCcEk5?=
+ =?utf-8?B?WDh1UWpiaVdNekFFWXh0WFRzZDZmRGQ2OHVVRlNQbVZjUG5KNnhTNDE5amdK?=
+ =?utf-8?B?K3FBMjhOQThDRXJWaVRUQXVvWEVVNSs3TWF2ZnFyTDRlRVJ1TE9ZbWlsTGlT?=
+ =?utf-8?B?N1Q1Snc4MEdOTHMxeDQxeDhRNVRiOEk0NURubFFSNTQwOGFiMVdFam5ZK0ZR?=
+ =?utf-8?B?VGJSU1RHV0NRWEFOVjM2WVdnamZhMis4d052eVNGell2ME9LcVhVdGhNWnpq?=
+ =?utf-8?B?OVA2ampsVVgveU56RHNkdk1TQmw4TnhlQVNkL2tiOCtHQVdEQjhLTENGZVNm?=
+ =?utf-8?B?N1J3MVRiZ3FLZlQvRHhyNzEwZUQrODlWekpLY1pDT0QralVjcjVyd2dyMzZN?=
+ =?utf-8?B?UTBoNDdRanVQZFo4SFRMTE1mOWV5eWZmcUJhK0lCS0kzUXlhbXo4RDFQay9p?=
+ =?utf-8?B?bytzZUNJaWJ3c3lmU053NmtBQklEdEMyZTJNcnRldmphMmxUK2NrZGZuRFpO?=
+ =?utf-8?B?MlVGVDdZU2VQZFd0KzFhK2hoRkJ6NnZHV2d6SnYxS3k1SlBXTGF5cVpRNU5N?=
+ =?utf-8?B?SEVYWEdXSSs1bU1DR1phK1YvVmJ3NTU1NThXM1lucU1aQjJtSCtkZi8yU2lx?=
+ =?utf-8?B?ZWNHNjBnbFhnbCtOU3NReElBRm9jNDdRZTA3VkVmOWZlR2hVL1cvdFZSdmto?=
+ =?utf-8?B?RFhhSllpa0VoRXhUaXpHNU91Q29xNGh1N2dycUZWYnMrNTlVMjRaWXlvaUpX?=
+ =?utf-8?B?QWN4VlcwdjJybEdadGhiZEx1YUNrRTJaNi9mNTNvMmJWMmlXbm13YzFpOXZT?=
+ =?utf-8?B?UkNWMkdqVTJZNTFhdnZaNGF3Uk1aUENMcWhwaWZPcktGM1NuVHB4M3ZmekZv?=
+ =?utf-8?B?S1QwZm1KNEM5bUtNUEdVZm5DenlHdDFRM1hyeElqc2RlbENKcmV6Z20wR2hR?=
+ =?utf-8?B?YzVOV1dNbVFpUUJ2VGFMcWI2eHlYb2UxMEZCUUFKclJWSFRkNEVQOFpwV1Aw?=
+ =?utf-8?B?RzhKLzBMeXdUZUl5SzEyN0xoV0tDZUYrSHhOMlJ1dTh2VnkyQ3V4U0lwOUla?=
+ =?utf-8?B?OUlCTHFIODRqVHNDdmU5S0VKVi9MRGUzSVhLVUJ0Sis5ZHdUT0pMM3NuRUFl?=
+ =?utf-8?B?NkFpYXhPZzNxN1paMVNwa1NSd3N0cEptdXFzSno2aHZQeVl4NEVMV3FWOXpx?=
+ =?utf-8?B?RzFwY3I5OTFyWVBKOU5FN3M1VFloTmRMcWtVSnM1dUhwbUthSENlVVVGVGU5?=
+ =?utf-8?B?cnBHc0hsRnZWNG9SSkxEb0Q5ZzBrMGxCLzBqb2oxNnVZcFlDM1dPMW9Wck1q?=
+ =?utf-8?B?bUlaeFJEbVloWkNrZGJKRVMvNlQwT3dMcWhFM2ZCbVVWSlIyRDRyWStyNVZa?=
+ =?utf-8?B?U2puUkFTWGRCZFhEalVETmx0OWhodW8vTHNBemtXdzdqNzRoOWFsdz09?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea8f981e-ee96-4b58-3e1a-08dedf2b73be
+X-MS-Exchange-CrossTenant-Network-Message-Id: 661330de-e87f-48e9-cae2-08dedf2bd73b
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4824.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2026 09:04:46.7400
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jul 2026 09:07:32.6931
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZNfr3RordpwflJl2aUn/p+EtlgbDI48bldjgGa/x+xhU+w+0TdnOLOZhPEpSTWTgWpd+wWP0VXxSr/MGISJ4wg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: sU/YMOONKFajcz7DDxWho5foekKARBsWxfD4jtZss47pB6NsrxZNFPysambPFNZxpsnl6SRbPNWHa9bNsFdZBQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6672
 
-On Fri, Jul 10, 2026 at 05:21:45PM -0700, John Stultz wrote:
-> On Fri, Jul 10, 2026 at 1:47 PM Andrea Righi <arighi@nvidia.com> wrote:
-> > Inspecting the proxy chain is not strictly required. A BPF scheduler can just
-> > accept a blocked donor, enqueue it on its current CPU and let the core
-> > proxy-exec path resolve and "virtually" migrate it as needed to the owner's CPU.
+On Fri, Jul 10, 2026 at 02:54:39PM -0700, John Stultz wrote:
+> On Fri, Jul 10, 2026 at 1:40 AM Andrea Righi <arighi@nvidia.com> wrote:
 > >
-> > The motivation for providing a scx_bpf_task_proxy_cpu() kfunc is purely for
-> > optimization reasons. By knowing the owner's CPU, a scheduler could make more
-> > informed admission decisions. For example, it can inspect the task currently
-> > running on the target CPU, determine whether the donor should take precedence
-> > over the running task and kick that CPU to trigger a preemption. Without this
-> > information, the scheduler can only enqueue the donor and wait until the task
-> > running on the owner's CPU releases it (potentially adding up to one time slice
-> > of latency).
+> > BPF schedulers admitting blocked proxy donors may want to know the CPU
+> > or cid where the mutex owner will execute.
+> >
 > 
-> So... I suspect I'm missing a subtlety of scx, but in the non-scx
-> case, if a blocked task is important enough to be selected on the
-> current cpu, the find_proxy_task() logic will walk the chain and do
-> the proxy-migration if needed and mark resched, so then that cpu can
-> evaluate which of the currently running task or the migrated donor is
-> important enough to run.
-
-With scx if a resched is triggered balance_one() does this:
-
-if (prev is runnable and prev->scx.slice > 0)
-    keep running prev;
-
-We need to set the prev->scx.slice to 0 to select the new task. That means, if
-the donor is "more important" than the task running in the owner's CPU we need
-to zero it's time slice. And This can be done via
-scx_bpf_kick_cpu(cpu, SCX_KICK_PREEMPT).
-
-That's the reason why I was considering introducing the
-scx_bpf_task_proxy_cpu() kfunc.
-
-However, I agree that this is adding too much complexity and we can ignore this
-for now.
-
-Moreover, let's also consider the following:
- - if donor and owner are on the same CPU everything is already working as
-   intended without scx_bpf_task_proxy_cpu()
- - if donor and owner are on different CPUs, something like this should happen
-   (D = donor, O = owner, C = contending task):
-
-  CPU0                              CPU1
-  ----                              ----
-  D blocks                          C runs
-  ops.enqueue(D, SCX_ENQ_BLOCKED)
-    [D inserted into CPU0 local DSQ]
-  D briefly yields to idle
-  D selected from local DSQ
-  D migrates ---------------------> ops.enqueue(D, SCX_ENQ_BLOCKED)
-                                      [D enters CPU1 local DSQ]
-                                    resched, but C retains its slice
-                                    C continues
-                                    C's slice expires
-				    ops.enqueue(C, 0)
-				      [C is returned to the BPF policy]
-                                    D selected as donor
-                                    O proxy-runs using D's slice
-                                    O releases mutex
-
-If we want to handle the preemption when the donor's CPU != owner's CPU we can
-just use SCX_ENQ_PREEMPT when scx_bpf_cpu_curr(scx_bpf_task_cpu(p)) is an SCX
-task.
-
-So the BPF scheduler could do something like this:
-
-ops.enqueue(p, enq_flags) {
-  if (enq_flags & SCX_ENQ_BLOCKED) { // p is a donor
-      struct task_struct *curr = scx_bpf_cpu_curr(cpu);
-
-      if ((curr && task_is_scx(curr) && is_more_important(p, curr))
-          enq_flags |= SCX_ENQ_PREEMPT; // curr->scx.slice to 0 + resched
-
-      scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cpu, 0, flags);
-}
-
-Therefore we don't really need scx_bpf_task_proxy_cpu().
-
+> As I mentioned before, this probably needs some more context as to why
+> this is useful/important to the bpf scheduler.
 > 
-> I worry the difficulty (with my poor understanding of the
-> optimization) is that it seems like its evaluting the preemption on
-> admission (I assume this means the point when we keep the blocked_on
-> task on the rq? I may be totally off base here), is that if a very
-> important task was breifly running at that moment, you might not allow
-> the blocked_on task to be enqueued. And at that point the donor is
-> effectively sleeping and no proxying can happen until it wakes (which
-> may be only when the lock owner eventually runs and releases the
-> lock).  In this way the optimization might make a call in that instant
-> that results in *many* time slices of latency (particularly if there
-> are lots other unimportant tasks on that cpu).
 > 
-> By letting the proxy logic handle the proxy migration and
-> rescheduling, the blocked_on tasks are just in the same pool of
-> selectable tasks on that cpu and the scheduler on that cpu gets to
-> decide what is the most important thing to run next.
+> > Introduce scx_bpf_task_proxy_cpu() and scx_bpf_task_proxy_cid() to
+> > return the CPU or cid of the next mutex owner in the proxy chain.
+> >
+> > The owner relationship may change immediately after the query, so expose
+> > the result only as a scheduling hint. Return a negative errno when no
+> > valid proxy destination or cid mapping is available.
+> >
+> > Provide compatibility wrappers that return -EOPNOTSUPP when the kfuncs
+> > are unavailable.
+> >
+> > Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> > ---
+> >  kernel/sched/core.c                      | 28 ++++++++++++++++
+> >  kernel/sched/ext/ext.c                   | 42 ++++++++++++++++++++++++
+> >  kernel/sched/ext/internal.h              |  6 ++--
+> >  kernel/sched/sched.h                     |  2 ++
+> >  tools/sched_ext/include/scx/common.bpf.h |  2 ++
+> >  tools/sched_ext/include/scx/compat.bpf.h | 18 ++++++++++
+> >  6 files changed, 96 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> > index 3d72f64ffe627..39e2689ea6c3b 100644
+> > --- a/kernel/sched/core.c
+> > +++ b/kernel/sched/core.c
+> > @@ -7046,6 +7046,34 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
+> >         return NULL;
+> >  }
+> >
+> > +int task_proxy_cpu(struct task_struct *p)
+> > +{
+> > +       struct task_struct *owner;
+> > +       struct mutex *mutex;
+> > +
+> > +       if (!sched_proxy_exec() || !READ_ONCE(p->is_blocked))
+> > +               return -ENOENT;
+> > +
+> > +       guard(raw_spinlock_irqsave)(&p->blocked_lock);
+> > +
+> > +       mutex = __get_task_blocked_on(p);
+> > +       if (!mutex)
+> > +               return -ENOENT;
+> > +
+> > +       /*
+> > +        * @blocked_lock stabilizes @blocked_on and thus the mutex lifetime.
+> > +        * The owner is an atomic snapshot used only as a scheduling hint and
+> > +        * may change as soon as this function returns, so wait_lock is not
+> > +        * needed here.
+> > +        */
+> > +       owner = __mutex_owner(mutex);
+> > +       if (!owner)
+> > +               return -ENOENT;
+> > +       if (!READ_ONCE(owner->on_rq) || owner->se.sched_delayed)
+> > +               return -ENOENT;
+> > +
+> > +       return task_cpu(owner);
+> > +}
 > 
-> Now, I can see the benefit of potentially saving the resched kick on
-> the target cpu when we do a proxy-migration - it is an interesting
-> idea I should think more on to see how we might do that better in the
-> core logic.
+> So, I'm somewhat skeptical of this. You do disclaim in the commit log
+> above that this is only a hint and it might change, but I fret it
+> might be to a point it's not worth much as a hint.
 > 
-> > That said, I don't see a correctness dependency on exposing this information.
-> > If the latency-policy use case is not strong enough to justify the API, I'm
-> > happy to drop the query kfuncs and this preparatory lock-scope change for now,
-> > the blocked-donor admission support can stand on its own.
+> First: you're only looking at the immediate mutex owner, not the
+> actual runnable owner of the full chain.  So current could be on cpu1,
+> the next owner on cpu2, but that task also just blocked on a mutex
+> owned on cpu3. And the task on cpu2 may be about to migrate to cpu3
+> (where current should ideally also proxy migrate to).  So I'm not sure
+> what such an ephemeral value might be worth. Again, maybe the
+> optimization you have in mind is worth it, but it probably just needs
+> some additional explanation in the commit message.
 > 
-> Yeah. If that's the case I wonder if it might be worth waiting a bit
-> on these optimizations until after the rest of the core proxy logic
-> makes it upstream and settles a bit?
+> Second: The blocked_lock does stabilize the mutex lifetime, but not
+> the owner's. Once you've read the __mutex_owner(), without holding the
+> mutex wait_lock, the mutex owner can be releasing the lock and then
+> immediately exit, causing the owner dereferences that follow here to
+> cause a UAF.
 
-Agreed. I've already dropped that in my local tree. Let's keep it simple for
-now. :)
+Yep, as mentioned in the previous email, let's get rid of this kfuncs completely
+for now. In this way we can get rid of unnecessary complexity, fix these issues,
+make the patch more self-consitent in sched_ext, it's a win-win. :)
 
-> 
-> It might also help make sure the demand for this
-> optimization/interface is strong before we start adding interfaces
-> prematurely.
-> 
-> Really, I'd like it to all be transparent to the class schedulers, but
-> given the complexities, just having the ability for the scx bpf
-> schedulers to disable keeping blocked_on tasks on the rq (effectively
-> disabling scx proxy donation) seems like a good initial step.
-> 
-> Again, I am really excited about your work here! I've sadly really not
-> had any time since Dec to look into sched_ext details, and I've had to
-> tell a few folks who are interested in both sched_ext and proxy_exec
-> that they should turn proxy_exec off if they want to use sched_ext.
-> So I'm very eager to have a better answer there!
-> 
-> Thanks for all your great work here!
-> -john
-
-Thank you!
+Thanks,
 -Andrea
