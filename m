@@ -1,110 +1,168 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6245433E68
-	for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 13:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783950601; cv=none; b=H9KHTAf6zgWC1KXcjP0auKAmyrLDCr6KurXJQgziTvgBtmC0c8XoBVj88pN+vrINTrmje2rvKe5oIKcvLFqv3mT4U4/bPAMdfTHbMLpHJZlnVptE6lVvU199c4eRME/dutjLAVgQooa7s46ZdaIODYM839pn3Jy+ekhNEXad0uI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783950601; c=relaxed/simple;
-	bh=+lMCCcsL9KhGqzAnvde2v5Etjt6yi8xbmgjj8iFutzQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tjy34xcOTpWR7rJa8BqIwoh/SjwC2veKm0vJVJeuH7mVYb83+ePSOA0+7DHxAvezi++tuS24MYwzhBKwS6as6nlpvrfqKMoQ6w6+DwUfsENr4ZDBOzI9z8VqvdS/yFAzcpMoolRFyChWMyInZR6+Wzq7k+0idqf69mjLde2P+s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com; spf=none smtp.mailfrom=readmodwrite.com; dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b=ASlvNnmr; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=readmodwrite.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3A441CB5F
+	for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 14:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783951690; cv=pass; b=NxugWTy6Ld/l5RctqkocJKUd63C6ZC7SaHB1Q0WeysaWZCYJfu1uk3l3foU1tXoYykNu2s6D+tUxx9/15DCIILPPhQF4vVHdIQm4rG2BkctNm0yucJ1JcOtWZXlLqosA8R9uh5CTVF8UtVrUwQaKvB2xPyPr6pG0YS/5Aa57y8A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783951690; c=relaxed/simple;
+	bh=vqIlEswSbjH4NuGZq6lHoJhIaehD2d6A+4RCBsh341k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BdUGLkIxw+kx8RUI3J4fQQGey6PjHCv6su8Gh4hoVxNgQkY2zXHUm+chNC617f3lQTl4s+4Mmlyklwbgc29DQWSgKwABasajI04J0Dt0wp/Px3JgoWd367as1IT412b3AKra8GjPlPt6SUjBrMbDFN/Hn9Iz9/Kq1CJVCMcNuao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NDGvXlf6; arc=pass smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b="ASlvNnmr"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-c1630cc8d43so160625366b.1
-        for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 06:49:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NDGvXlf6"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-51c10ed63c0so365281cf.1
+        for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 07:08:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783951687; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PCeoYURvQLsgOheMUxg3UZc1EjZNXVdQP0DPuyx3Nh/0ZV4djLlFshOM5Bp0xL+Z2u
+         d1g4T18tiswO9gwv90I07U6Lkgrje1d4B31lXBY/g9vEFucnm3nsSNm+QBqb3H/LkYHg
+         uPAfBdBxvKlpIMadkDyA/oMK/ajJ8VhJBcTcKW+1Cf2tCUacnU1oHetjWU4rXenENV9v
+         luNCbILZt0I3J0Pc9me/qdbDzDlBdizcPCv3IBUFx+ERwcRAXB+kQDVNArNiRLI2BFoF
+         0sGDrYxuKvGKTXGpRYyLdhkBKvliClFlE8IzjPdfm5JJoG5vnRq4SOUYVHWhDsouS67e
+         pdrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=P/B4jzAbemKAfn1pqP8eoojQzyZ93X8qz1xTXY8DGb8=;
+        fh=VTjxwLnJpsfpzEUTcH0ztgK/27VhIJOdAntISuWc05I=;
+        b=C+gSFY6ICpRR/vFZrawGailUJOhouIEzRMtx/SOp1gk89bZnfP1jJNSa01rPslpp18
+         XjDwAL8XZzO4Zjp+ODCDeJVRIHzbciFRF7YiE+QLDqQsMsPFP0AhQNGdFCrKj3ucU5aW
+         v74K9y2VfDt3VPT/G3zYZVf2T9ExiJtQLjaOUZr4SN4nLJonil8TdZ87tbY+TK+O18cR
+         vlzi+Llpl4U+x/LfdZh07Wk/7qq9+8kJJ68jMRqZbPgDw6vg/H55ABPtK+eNkylz0wuS
+         7c4gvxWTNS7ECA3wzaYl1EVXkrfJzuh/D6ujeGL0u7wE1HR8xIZM5lnnoY+Ui2SkDw8h
+         KJZw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=readmodwrite-com.20251104.gappssmtp.com; s=20251104; t=1783950597; x=1784555397; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=google.com; s=20251104; t=1783951687; x=1784556487; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=gHaZPwi3IrnhWNTxPLfcIu6e1zyZHnrUTB5eDWHk9VE=;
-        b=ASlvNnmrOP6i1GfnnGN6+OaU6uhy72+Z19dFnu4vdZ6AszBwN3/OsQ6j+xWLnvx9v6
-         yAtlYqjtm8M+zDtVyC+33WSdXBwNzGhdcVvXD8eOVzgbDKJVdhk/8In70xEPJB8urvd9
-         bnawS0QUtUOxf5ubF2wiumHN/aN5/LOqTsWAY+aN22cuJRs7GsWXfY1QAFHU6fEfm+0m
-         VxZYBRODTOHJbt0ZRt8ijYnQdH4ay2oUrdsy4lGKZm9an/BPQaxc/VY3bhCAygEVNA0q
-         EPJ5VrZTrDOdoxT1uXhjO3IKbqbOPj+vOXYAzQq0s+MelTJMACYARqmas3eMv2E0NReM
-         TqyA==
+        bh=P/B4jzAbemKAfn1pqP8eoojQzyZ93X8qz1xTXY8DGb8=;
+        b=NDGvXlf6VV5PatA2K35ZQhL7/PGjfbXF+DlK9/HEY1f0NBuIO3BI344IgUVyr0SqfW
+         Gy6DBvKdI0h+GJXUPEw/yBpOWjC9GLeU9CafirWv7yO0UHYbuWUQQ+Po4S+rD84d6D/U
+         zzQ1i7Xu/dAWRyNllUNeXMMpRfr6hI/1UnhMQ7Dsbg9BddyBI4Nbm4D4+ordVJ4N/ryw
+         k3sU+GDRs8yyeT1l5nWJVwA3bgVByI140J9U504rD+g5to9B3zCg9AfcB8D9qVlkaxFF
+         H62gaBHLWhXmxejJ9vDOVpIw8oU/0vGgnacNdvJmt6smo9/eVCbATYQep6vajAc05WVi
+         uxWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783950597; x=1784555397;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1783951687; x=1784556487;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gHaZPwi3IrnhWNTxPLfcIu6e1zyZHnrUTB5eDWHk9VE=;
-        b=KJITZvSHj2HxwvhAIK1vv02RnjGGFXHauO6dlNEYhmYvYb7fTs1RU0HE1r+qGFyszQ
-         4gBYnFR6mK1ku6V4T1bssJsjdW5eKVsszic8cC2D1/8K2JGU+0yxoC5opKSOOPi7hAsC
-         atzoMr/5BrUguWASGUHIyVXTGYydrXMHIhnjfnJTDmrne2ny3yUKYuqg+MUMybE7Qxxl
-         E58d3MKWDWs2blWEhcY8gvAIia17Qac4Q/QupfwEEHDacdWZo7uMkKltMNKv2HSIL81j
-         3RLe2BY7z1MjGsIgjeIJHkLrURhXE9ach9NQV7hgrmOCFqgLU4rIc8wVXjTOhTU0QCrN
-         thHg==
-X-Forwarded-Encrypted: i=1; AHgh+RregJ3xN31y+amTn0vKQ3Cei1as6nvkvb5pFRIAyxglGqJZQCr4mh0gHVJ2/AOVNE3uktYSG7dkJjk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxjhYuV3S7YgU2ef/ozhvFpT7xv2tGyaPYjycgQ7Y4KZEDd4TaN
-	hpqV19kuNw71/TikW2lHSoSlg6R2NVFTpZSl6BHYTT8OIYZ/cDqPu8OXncUmstzEADo=
-X-Gm-Gg: AfdE7cnFt5sXJd6X7egiFlldWYbtD60uBNwBWgrH3EkhsWMOQnMrpZWoWQ41sdI3HW4
-	d3w8kO+G/znQohaar95VKNPzJPK/W1qFK53jCpAyrsbioLmz6dhWQgvqZk7h9PdocQPWVmpTTKt
-	UnQ9jMiu2uYFIbgfSUbDdUAvmhSi2J9AyYnaCppjfWc/DJ2al7BEQECeKO9C8GU7ISINNOjg+S3
-	l+aoHZz7IdtcHV7Z04rMRzVoDMj/Ga6RSuKzV9NASkcQ/+x4z01C0RULfv3RGBYWqPArUo2DO3+
-	JW15Lecu33r4A4PBK6AZoEKa39ok0LoUlHkwppFuI9zSF5sGmRPdBNbzGZK5xuMukSYWVEHoE9T
-	LQO0UaNxQSya3+BfOrHieB+mhYcJgF8K5j8r+OjwsOOMZQugqp3i26xB4dlfNMyMSIw7e5Af3fM
-	cC
-X-Received: by 2002:a17:907:95a8:b0:c16:581a:2a51 with SMTP id a640c23a62f3a-c16581a50bemr62872666b.12.1783950597109;
-        Mon, 13 Jul 2026 06:49:57 -0700 (PDT)
-Received: from localhost ([2a09:bac6:37a8:1f19::319:116])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c15ca1bd81asm819021466b.30.2026.07.13.06.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 06:49:56 -0700 (PDT)
-Date: Mon, 13 Jul 2026 14:49:55 +0100
-From: Matt Fleming <matt@readmodwrite.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Edward Adam Davis <eadavis@qq.com>, Chen Ridong <chenridong@huaweicloud.com>, 
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>, "ziwei . dai" <ziwei.dai@unisoc.com>, 
-	"ke . wang" <ke.wang@unisoc.com>, Matt Fleming <mfleming@cloudflare.com>, 
-	sched-ext@lists.linux.dev, cgroups@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org, kernel-team@cloudflare.com
-Subject: Re: [PATCHSET v2] sched/psi: Fix psimon fork deadlock and
- rtpoll_timer UAF
-Message-ID: <alTs1drVX4kb124h@matt-Precision-5490>
-References: <20260712174619.3553231-1-tj@kernel.org>
+        bh=P/B4jzAbemKAfn1pqP8eoojQzyZ93X8qz1xTXY8DGb8=;
+        b=Mzx2BJ7sNTshSkUmZd1VqHUWqOQ673XCL4FlirKbDuv/8L90JPP+dSN6R74aE8dHQG
+         ntfgr9AztNImm5TeDSDPMOT4pJjlcGwiow8sRSUfgJHn3Uko17GbQPAXdGWpVwaaZzMM
+         w21EF2DQc/RYp1woYId7u/AylGGFgQ7QqHYDq3rWJ9i6EVw/ODgllF7SsXJO65zf4E67
+         wfiecUS5Gb/hsE+T81UlA8iVrkYG9kk3e5iKiZfzfLAEz4aKNe7Ps5RZI/SqQYFOdk+d
+         vVgNHpLOI1+OA79EAqdRyVpP+HDFkL+/Gs+i3n+j286BOk/fiJJBK8A5f2OD02J8i7CA
+         Fkgg==
+X-Forwarded-Encrypted: i=1; AHgh+Rq13nlNaJ7ph83lsaKJgZov6xa4CB/y/btJwM7hXHYeZJZYysCRagq2dAOoUGcVs7BsU7ENpvIAaME=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy7UF9FbsZ/JLbkxH/n2AHxLeRNeEiahCEKpBzn1lPfFwxFa5zx
+	mNcvjPEqGu0FNA2HYbRoJCJHYzp4ENHmtLifveoui25Ni7kD0QshnJknqdmavT0G75pEdpmVRzi
+	M9RsQiatZ76mnugITbVL7fwB612vTZeSv9jVDZUEBsLh+H/dB4EHYrgKc
+X-Gm-Gg: AfdE7cl1c9zMC/M5mqNHRoRsf68LfsaRA8MwrkRVnK6tav9x1r1PNtljbTYO1Igjv24
+	cW0YFKnzKIc4PabxhTZOWidBqzDHyI6RtauzuNtKNEZ8e5/70KkXRunknQaCQf/O8uaUenjTRn4
+	jovcQ53rK8nTE7oMsPDJjSXz3EFZmJRmReCsnv4q6OP5JyX0hCekc0+HVMHgxndlBhjzdRIk4Jg
+	RA7LZ4r1/1Jcd3EErL2xvHRMQP49S+TAOLaOb6Aixpci0VyjVK6V/k8032vmt0ijahqxkwVUXFl
+	72QTCA==
+X-Received: by 2002:ac8:7d03:0:b0:51c:104c:100c with SMTP id
+ d75a77b69052e-51d71546a1cmr3059641cf.2.1783951686232; Mon, 13 Jul 2026
+ 07:08:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260712174619.3553231-1-tj@kernel.org>
+References: <20260712174619.3553231-1-tj@kernel.org> <20260712174619.3553231-3-tj@kernel.org>
+ <20260713105655.GC276793@cmpxchg.org>
+In-Reply-To: <20260713105655.GC276793@cmpxchg.org>
+From: Suren Baghdasaryan <surenb@google.com>
+Date: Mon, 13 Jul 2026 07:07:55 -0700
+X-Gm-Features: AUfX_mySUXx60Yrl5QJFzFOTYBVkvBAoiyE97eRZFZR4z-qTHxpoqiaNZ1I-MdA
+Message-ID: <CAJuCfpEocgh+s_R_C6K25ESaSub=-vx6ZwqE-5HJddfBPMt7NA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
+To: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Tejun Heo <tj@kernel.org>, Matt Fleming <matt@readmodwrite.com>, 
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Edward Adam Davis <eadavis@qq.com>, Chen Ridong <chenridong@huaweicloud.com>, 
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>, "ziwei . dai" <ziwei.dai@unisoc.com>, 
+	"ke . wang" <ke.wang@unisoc.com>, Matt Fleming <mfleming@cloudflare.com>, sched-ext@lists.linux.dev, 
+	cgroups@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+	kernel-team@cloudflare.com, Sashiko AI <sashiko-bot@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 12, 2026 at 07:46:17AM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> v2: - Retagged sched/psi (was cgroup) (patch 1).
->     - Added a fix for a pre-existing rtpoll_timer use-after-free that the
->       Sashiko AI review flagged on the previous posting (patch 2).
-> 
-> v1: https://lore.kernel.org/r/20260710134945-psimon-fix-tj@kernel.org
-> 
-> a5b98009f16d ("sched/psi: fix race between file release and pressure
-> write") made pressure_write() fork the psimon kthread while holding
-> cgroup_mutex, which deadlocks against the sched_ext enable path blocking
-> forks before grabbing cgroup_mutex. Patch 1 moves the fork outside
-> cgroup_mutex. Patch 2 fixes the use-after-free from a schedule attempt
-> re-arming group->rtpoll_timer behind psi_trigger_destroy() by shutting
-> down the timer when the group is freed.
-> 
-> Matt, patch 1 is unchanged from the previous posting except for the
-> subject prefix, so test results against that posting still apply.
+On Mon, Jul 13, 2026 at 3:56=E2=80=AFAM Johannes Weiner <hannes@cmpxchg.org=
+> wrote:
+>
+> On Sun, Jul 12, 2026 at 07:46:19AM -1000, Tejun Heo wrote:
+> > psi_schedule_rtpoll_work() is called locklessly from the scheduler hotp=
+ath
+> > and can race psi_trigger_destroy() taking down the last rtpoll trigger =
+under
+> > rtpoll_trigger_lock:
+> >
+> >   psi_schedule_rtpoll_work()        psi_trigger_destroy()
+> >
+> >   rcu_read_lock();
+> >   task =3D rcu_dereference(rtpoll_task);
+> >                                     rcu_assign_pointer(rtpoll_task, NUL=
+L);
+> >                                     timer_delete(&rtpoll_timer);
+> >   mod_timer(&rtpoll_timer, ...);
+> >   rcu_read_unlock();
+> >                                     synchronize_rcu();
+> >                                     kthread_stop(task_to_destroy);
+> >
+> > The group can then be freed with the re-armed timer still pending, and
+> > poll_timer_fn() runs on freed memory.
+> >
+> > 461daba06bdc ("psi: eliminate kthread_worker from psi trigger schedulin=
+g
+> > mechanism") deleted the timer synchronously after the synchronize_rcu()=
+,
+> > which prevented this but raced trigger creation instead: the deletion c=
+ould
+> > cancel the timer that a new trigger set armed during the grace period a=
+nd,
+> > as creation also reinitialized the timer at the time, corrupt it.
+> > 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved=
+ the
+> > initialization into group_init() and the deletion into the locked secti=
+on,
+> > trading the creation races for the window above.
+> >
+> > Neither placement in the destruction path works. A pending timer firing
+> > while the group is alive is harmless though. poll_timer_fn() just wakes=
+ the
+> > rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group=
+'s
+> > lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm=
+ it
+> > by then. timer_shutdown_sync() because the timer is never armed again.
+> >
+> > Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy"=
+)
+> > Cc: stable@vger.kernel.org # v5.10+
+> > Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+> > Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.ke=
+rnel.org/
+> > Signed-off-by: Tejun Heo <tj@kernel.org>
+>
+> Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+>
+> Both these patches look good to me, but Suren can you please also take
+> a look?
 
-I ended up testing both patches. This resolves the issue for me!
-
-Thanks,
-Matt
+Yes, I'm on it. Need some time to remind myself of all the details of
+the implementation.
