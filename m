@@ -1,186 +1,406 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011030.outbound.protection.outlook.com [40.93.194.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB4D396B76
-	for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 07:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783929187; cv=fail; b=HZea88SkLHCSbTpAWJhlhoTjERRsU3VFSMofQW9d+3/hkswLwKztqMsuicY6Ue9C+XzMdA9FAuDc4R9+3Q7dLspksUT2Wnstr62Jwbsk9b4mokdSvt/nGtgNn1oKVjIk3wvbURX54gEyCTKwYyLRp6T2g5DvbxHyDBGQfHyVbos=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783929187; c=relaxed/simple;
-	bh=BNotqpxGPsDORT8s1iuBTWpWeKqS3BZ9J0s3Nk8fwy4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=cc/qNF0JhK5YOgYlEdtMP0iwGIKjurtZE1NNPWv0tdjxFHRwhIcVPqzow9kz5AqymdU99dHYNGDftLia/SgAUCSrEJ6F/sTUxBSTVlmmknEIqBwQdsJ0BGZI7vYpIBq82bYVPe2LLiY6WAkEDq8FxZ5XbUbJkC2G5SpnJeOYzuw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CSNT8oXA; arc=fail smtp.client-ip=40.93.194.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92C03D9530
+	for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 10:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783937574; cv=none; b=DY9FZ9tKEuH81vkBwEoGXA8CLFesdoLOC0usxJCdA0VgjSRlU17/5EpmVm1nmBoFvxbz6Vq5YS2laGpKh78QUWewDZmjV4uW3uevVaGkmCyRcngta84b5AyrFa+igYl5uHnQQsIwaMKiacCsluGgoQFeNkIIZ9lH6rPawfRYVNY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783937574; c=relaxed/simple;
+	bh=I0iNJ5l1KFpuImGwAYZaxJGvSjujxWdh8H760eEBEhU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DZVArL9voohRvmZ+rtNK6/9KlPWbxbM1c3puSK95D2rxyXdH/9sH63r1va3DGjsMUbqOIvEAJ/RineMZyZcQdBJbz7NwggFIqa5RhVgYkgkHtU3PsypIxddQPYBwbBYXjHMQFtedAhmxSvKLDxxdJoPQoizCbc5HJcwgSMclFhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com; spf=none smtp.mailfrom=readmodwrite.com; dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b=QM9D6VmD; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=readmodwrite.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CSNT8oXA"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n9GlGbYALOluT6qKutyubPfBo8t7rOyHBXCNhJBCrWvTw7EsDybdRA0cYBpYt6bckBefC2lmWyGe8kMjg/MxzmMnDVsjWK/8pGACBzLHKy+1/ti1xsqyPpSM/xpZIW1kvMiMXrDCDQXG5MOEwG3VZFqrugAMXlcuLVz872i01OQfZPDLtmb6jGyc7d8lokKioOAIcovFMUGdQ4KYW9Dhu6vLoOtJO1EgB4E76a2fUHx3SYrZC6aeor56MIS/88/jIeqyoZyYUy8Oy2jS1LfHBxlek4EHxt1qiAsRS/J8uJ4gqIv/JRyOZEBMZo9Hp6qEcTHRnjN6dzEfUYIJC3DNhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E/624QWcNoIwNwYr0m/SLCFNN0eontZ2MYmVYNn1yPg=;
- b=W54j+MQX8JPV3RCd5iZDOFAUm4NQE5OqMniWgeeVFzD7r5/Y8Kfed4/4l6IUfUzGuh77R/efqzHcUtCdYYPlg+9gAkuMxWYQsVlWW1rxtvRmtajFU99aJR4OYpLZ8E5qgBhl4DbJMaOArTv6cUHt9TrjvWMMlnRewWbc+05svJLUm3KeBoLpFSgLKyfXjVYBTcZYR/EmFz8kIfqeF0CZWUhBCwlDCQ5U0HAReIS3HF6u4YLR1SdPd92oAlmeG7h9QjEXczmz4YXNp49ZqPGviDzayUGeDalUVWVZFpWcJSmC/z+f3DU3R7JSm/R0HzssXlC8F4l9nCBqEU/DVgst5Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E/624QWcNoIwNwYr0m/SLCFNN0eontZ2MYmVYNn1yPg=;
- b=CSNT8oXArcGO/xYa4S439Hhz/BuEktGyse4Ayahxe9ZyavJNHCR1vQ4J7lZ1oc88Y+I+NwyAegNz4HRCxp1nFd1q55i80LX3oUHTBItuATQNdafL8n1+R6LR3zuo0oZZ2QvMON+cRilxNk2qzdlzl4K5oIsoN1sCXIzMmIT36N+DoFkpBuIAmmd8PXQB1Zch6q1G6JqXSI26aBs3QmfzcwHQW4kY/grhxf0n7jCQP26xZkcu9XL5329jJqOmnZR4y79PwA/GvxQ+bx+krbj6jKKXpSzBfLr59K9krGsYDvuVCtoqaoN5WkPKCWt7NdYNwlYtTDD0eCPG+GqVyxgsRA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by PH0PR12MB8098.namprd12.prod.outlook.com (2603:10b6:510:29a::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 13 Jul
- 2026 07:53:01 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0202.014; Mon, 13 Jul 2026
- 07:53:01 +0000
-Date: Mon, 13 Jul 2026 09:52:50 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: luoliang@kylinos.cn
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] tools/sched_ext: scx_flatcg: Fix uninitialized stats on
- allocation failure
-Message-ID: <alSZUqOKd5ZpH87m@gpd4>
-References: <20260713071808.89847-1-luoliang@kylinos.cn>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260713071808.89847-1-luoliang@kylinos.cn>
-X-ClientProxiedBy: MI2PEPF00000B84.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::41b) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b="QM9D6VmD"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-47f36a122fdso989586f8f.2
+        for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 03:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=readmodwrite-com.20251104.gappssmtp.com; s=20251104; t=1783937570; x=1784542370; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gQDcHMF91uNTbQRKUs7FtApfDoXRXDWv1xLDi776PsY=;
+        b=QM9D6VmDqxN60Jy1s92KOq8SXxNgunqnus6JyhfYjuylT8iuVGbycTgFG7q2/IB9u0
+         FGJ5EC3AmLha+xDZ/2JnlZRZ3Re9JupNHFETlU6B6XCe8MVnA/+2CS2wHyJj89K5ZXEe
+         zo3GN+eBxlb4BC5hGy8Lnhr4ZpxByXDW+dkrc7uMtUM5vWCxVgCYVJj/dUhYW201eqXb
+         DABBBELFm+tP1LdR9aSBMp+SHaijOZl8AtjiKY6gsL2Sl1dncdC8MdAnxEU5WEtyBqJU
+         10LtWiBKrtvdmOjtWRNbTjw0DHp4AufO6CbRZyW4RUZWqBTV12Oy+eJ/9qWkjilaoITp
+         NY1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783937570; x=1784542370;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gQDcHMF91uNTbQRKUs7FtApfDoXRXDWv1xLDi776PsY=;
+        b=eAc5e4xnPMCPqOPyP1TZYSQKNDIyoW47CR5cFHz6pZ7gu3nR/JoYl5bywlZGXw4EGw
+         LrBhRIsqQEDLddVF7QO2/YeMeUkU5pFq6MTAF5hsTfWBWw/WimdEKRbI+i6PSS2PpfU4
+         2JRA8sBB/VvjSEafJfML69ahNiK+ld75nB/cukSfvHk/L+/DbwgxSkZy8RJNiSbdNVFB
+         OdhphzUcB3HV++hhdI9eLUXpFkJfeekPHD6aLUkTRWGmIBzk7BxujvFkBp6253RzALmS
+         Cbq7QUbPqg8lLDhRszVHxynJSXzVB9gGMXA8zmBenCGKbMSWhOIo8h9mRFRFL6CuPCns
+         kZVA==
+X-Forwarded-Encrypted: i=1; AHgh+RpcsGcP2dzo0Y1z6F9jBhdUpZMHu0RisxPJ9eZgQ8pOcEvEJu/IFMxJQLiq1N7LCYKc3e7wfXDlK9k=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyjKIIZxdqbVCG28gtLitQgJDkuFT/NPE9KJXfQ0xOEv+h0H9VH
+	4nWcIlIv3/OBO+oOzKifO8Tqdsaf597iLkuYi6TrQA7PXNxboRaccN8+m2QmWYcSz9o=
+X-Gm-Gg: AfdE7cnQWQQ8HHBX1wvoWbE7OaOOwHU/LqAnsIc6D5fb5XoLhkaD31Gi2R0Y3LdqvTz
+	d/TU/9Uny0O1mJc/miyYaY9g35uts8RPlz+E8dKNULHn7AVCVLnRQoi7S19Bf7/bEBnXtlDzfSh
+	JmEMNxFHrJqbQ9hX2176jANuT4ORSWcHsysv9ulFvgqp9fEGQPz9qZn3kvYTTqKc6i3QClAhQ3L
+	WrvPnriYnJidfgSNis2gs+veAB52fKbEumiYmj6fZhCzil/3rf3cyUC4VahbBjx5XkZWsC7d28U
+	worth2bsz+/zJZUKQJKeGZFwNop/c4uLi9XzVEW80eZ9zSukULlVu4EgJPHGE1DeggHRjOCVuji
+	dq6jhJkImYUxdXJ1uXGSbeWiIfjd9Bw7XbmcS/ONFlX9l40nIRURAJk0RuMDCnBTmeKbXGpmCSR
+	Jl7gcqNY3NYZzGrq5p
+X-Received: by 2002:a05:6000:381:b0:478:6c1:6e34 with SMTP id ffacd0b85a97d-47f2dcde775mr9944873f8f.13.1783937570185;
+        Mon, 13 Jul 2026 03:12:50 -0700 (PDT)
+Received: from matt-Precision-5490.. ([2a09:bac6:37a8:1f19::319:116])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47aa0960b06sm85081489f8f.28.2026.07.13.03.12.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2026 03:12:49 -0700 (PDT)
+From: Matt Fleming <matt@readmodwrite.com>
+To: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Boqun Feng <boqun@kernel.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	rcu@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	stable@vger.kernel.org,
+	kernel-team@cloudflare.com,
+	Matt Fleming <mfleming@cloudflare.com>
+Subject: [PATCH] rcu-tasks: Defer IRQ-disabled callback enqueue to irq_work
+Date: Mon, 13 Jul 2026 11:12:45 +0100
+Message-ID: <20260713101245.3207634-1-matt@readmodwrite.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|PH0PR12MB8098:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81eda707-2c23-453c-9bf5-08dee0b3c2cd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|3023799007|6133799003|18002099003|22082099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	9pYx3geOChv/8EUSvVi+rfBRqaSOnWMnrxQAtHBzLVRvvjbBQWS/KyizWcBJHn5ImU+waSv/1PyC5isDQxiLpJkBPdYZ/wl6NcXnAT1vDMaXb+EeYfiDTOfqYokR/vW9xcx6aRvgrCMkAo7yyMqGrn+EfxhNfvukQrujCpfwky7fdJKlp982D/VhtbDmlaFA2kBJ0RH1B1+Nw2EGdF/lOBaKK4Yhx4LempQ5PKlw5h7mMn6VNyGBs0V1JRBie8taIJoZAPPP721V+8kzKMscUFyGUVxwZRXRuYp4RpK+kPi51WTV/0fTwZY3dmeHh2+SuAbA+y4ifuE1Z2n6/E0lCyCP1ORy91so3nISGT31N5MvO98KM5X3kHtbG/dhZ7/JL34jSx1YOrtAbqW9LRssSQApmPIZkUC1CT1pcvdtoDuIVtSsG05kDEqETwWzTUbv/zpyTUHK/WV104qE/HLUw8JiLCFp2knsvV1paLqjqFitCFN52UHUunq0P7+98N9fYWPm2yiRifL+0XrWhbU9kiTkfGCPc3D1wwuMZPQZFR7PvhQE8ryORqqQv79b7stHJSg4uyadF1xQK1fDsZFyH1evPh4tCX8/0z5G9yBhMSHpUNfBx0W/TIn+ywfMYOxdfFhrf5FqvsqDkCKiu6YGHsGVo7ALnqmQFXxTBogWLcg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(3023799007)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Dp4zmdQnZvUqw52Jb9+1A+pwklfD0vnaInxfFCYEwJMRaVssw0j9+r3Vue8v?=
- =?us-ascii?Q?gQU+tqEXg3Hi+jqJk0w8iH0xGC7/Kvlu0X4CXVFQXdquUfBIEHN32oFxKUAx?=
- =?us-ascii?Q?Wz+hvNNnt2e8eIEtQs035sMsmxT+rGFsodN2AhPQN5hXm+VUnSVTzeLIjyz4?=
- =?us-ascii?Q?bdSlazpfwRNq0ALe93DccwuvxUinprA9ZZhA5YUe9SDigzg6nbw0z6SaVU6Q?=
- =?us-ascii?Q?GzfKwVmeIGlK5stufmEHs+VCw6QYCXWxwIh4O+o6VawETyDXSP/VEMHIr2h0?=
- =?us-ascii?Q?TQTEpDVlOECRwqSZci7dJ3636MxZV5VOVZK3AVF33ZJGK5j5pyajEBvETf70?=
- =?us-ascii?Q?/j2PuVEm+WGrRP7MMM2lcnJOLs5uFi5SOuZddn9d47HE4qiTnq6QhplLL3HQ?=
- =?us-ascii?Q?/Yv6UF5yW6RrxAfKSsSrPR9YBvg4KWqSH+2jYMvNCB2nPyOo3aipfxzjCU9h?=
- =?us-ascii?Q?BDdhVOL05z/fyVdnveMrnzM/4g1k8oAfV6xE5U5sCvO9EmSm/8VYOF4m/Ily?=
- =?us-ascii?Q?kLeNt34kNn/u6e0yrJEWhtAYDA1kDRp2CMBGk0DMBiz4p9HaM2MRtYYCHZ38?=
- =?us-ascii?Q?8vlboRpq/9ZtBVakBl5g/PU3I5gXmwNfzKk5XMir1t9Ebra1MumMLLDzLNtj?=
- =?us-ascii?Q?vp+LIISCPOMl+Kynau7Fx1p9gOmiRW1dfjPYPIlbxVEBDLKWGCQ3uWN6FVwj?=
- =?us-ascii?Q?lpvi5ZhOACFPSiMF2+fQkbqeVhhEPleIvEWab3wIH3eGR4tr3Dlofr2LHfMJ?=
- =?us-ascii?Q?mFmTiZp0UL5PrXVdDvzvwXcRVODy7W0zpmWJgwVxbGtnAP6tgAEFDMCIGJZe?=
- =?us-ascii?Q?7kBPsTRsEPhB8/+F62ELDqlyJ0YpZIiDk3lbGUocuL+Nq1cRwmJ6ht8Iu/kL?=
- =?us-ascii?Q?AgDxyQz7mhbeq8Weg7VZTkQ2Pnh6nsIWwEeVqnqDzVtGDsPZRoj6fCPMprQY?=
- =?us-ascii?Q?iJ8ro1UnxTt1esVZPOlmM9Sv32xf7hTlZTy1/JyPI5f/fXW/ndmlaLMV/ls0?=
- =?us-ascii?Q?SUf68LnTOCee3AHmboaLVFE5gZE06Yar1o7711Aj5FLvkhMJXNy8mAH1W39d?=
- =?us-ascii?Q?YaaggpChkHiFmR5lSv+/jxOy94QeJf2WBCOE07szK67IbTfDMsFIMwjuhT4P?=
- =?us-ascii?Q?uvMyOq9hWngbuIzymPn5kIW8Tr1pyHjLx1i56HmFekm5ytG9h3Q5CP6Z4RTv?=
- =?us-ascii?Q?JaeuxO6a1Y68kn63ZS8CEuHAJzb/MCUZLOShZL3HUBmdgDG0E/JXfI30Q1OW?=
- =?us-ascii?Q?K9c5MBifTMgn88fr47rmTeYAzJaN2jNcGAESGEYKQO4523Rog8EAKrA+Fe+X?=
- =?us-ascii?Q?PQyTc9fKeE2K04JX5B3gRQG8UTEEBbkffew/tVJrkSs5mEPsnI/0lldrMxYF?=
- =?us-ascii?Q?h5VPSHEtjKmwWYBVJjJ7UxpBucxp0y1wRsHEjtOT3fMmWJbJX+GvmjUDUs3h?=
- =?us-ascii?Q?5s0Fd0UbvJxsfzsy+Qwe16WfeKOVtW+k8mUSWB1sfS9rQQBS26nv6iwqbesp?=
- =?us-ascii?Q?0OEGAQBWpCkclAQW+XzTf1rVJAv1R/+DbIUti/Th1+UYPUrGfpFnCqFqKjrq?=
- =?us-ascii?Q?AiFngci8omkyIduzlIjJeGRKZe5ZZYaTmKjsATGFEA6YWPz0XTMZSGMt3V9/?=
- =?us-ascii?Q?wf11WMr4peHZlLvTGjtABicznVapx9V3TyYeX2LMYlozxc7aM196W/45XFqW?=
- =?us-ascii?Q?WniGe6gEqsgZ3D/dzYGAnyyh8I50MryWebxYpny76fX8wh0FGGNex5buJ8ew?=
- =?us-ascii?Q?3Kmom52RBw=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81eda707-2c23-453c-9bf5-08dee0b3c2cd
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jul 2026 07:53:01.5328
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2s40+QbhHJ95pwWYZSU49c7aGrjNgdvZVJuSmERwLqyux+0MUStmm4idiTev4E4JG56iHi0dzy9+W4JaSENSpA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8098
+Content-Transfer-Encoding: 8bit
 
-Hi Liang,
+From: Matt Fleming <mfleming@cloudflare.com>
 
-On Mon, Jul 13, 2026 at 03:18:08PM +0800, luoliang@kylinos.cn wrote:
-> From: Liang Luo <luoliang@kylinos.cn>
-> 
-> In fcg_read_stats(), the memset() that zeroes the output @stats array
-> sits after the calloc() failure check. When calloc() fails, the
-> function returns without writing @stats.
-> 
-> The caller in main() declares acc_stats uninitialized, passes it as
-> the @stats argument, and then reads it unconditionally:
-> 
->     __u64 acc_stats[FCG_NR_STATS];
->     fcg_read_stats(skel, acc_stats);
->     stats[i] = acc_stats[i] - last_stats[i];   // reads garbage
-> 
-> Because fcg_read_stats() returns void, the caller cannot detect the
-> failure. Reading the uninitialized array is undefined behavior, and
-> the garbage is further copied into last_stats via memcpy(), corrupting
-> the baseline used by the next interval.
-> 
-> This regression was introduced by commit cabd76bbc036 ("tools/sched_ext:
-> scx_flatcg: fix potential stack overflow from VLA in fcg_read_stats"),
-> which replaced the VLA with calloc() and inserted the failure check
-> before the existing memset().
-> 
-> Move the memset() above the calloc() failure check so @stats is always
-> zeroed regardless of allocation outcome.
-> 
-> Fixes: cabd76bbc036 ("tools/sched_ext: scx_flatcg: fix potential stack overflow from VLA in fcg_read_stats")
-> Signed-off-by: Liang Luo <luoliang@kylinos.cn>
+call_rcu_tasks_generic() can be invoked with IRQs disabled, and on
+older kernels this exposed an ABBA deadlock against the scheduler
+runqueue lock via sched_ext's task-storage teardown path:
 
-Makes sense.
+        CPU 0                           CPU 1
+        -----                           -----
+sched_ext_free()
+  task_rq_lock()
+    raw_spin_lock(rq->lock)
+                                      rcu_tasks_one_gp()
+                                        raw_spin_lock(cbs_gbl_lock)
+  scx_exit_task()
+    bpf_task_storage_delete()
+      call_rcu_tasks_generic()
+        raw_spin_lock(cbs_gbl_lock)
+          <blocks>
+                                        _printk()
+                                          console_unlock()
+                                            try_to_wake_up()
+                                              raw_spin_lock(rq->lock)
+                                                <blocks>
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Tasks Trace has since moved to SRCU and no longer takes this path, but
+Tasks and Tasks Rude still go through call_rcu_tasks_generic() and
+remain exposed to lock-order inversions against any lock that may be
+held with IRQs disabled by a caller.
 
-Thanks,
--Andrea
+Split the enqueue based on the caller's IRQ state. When IRQs are
+disabled, push the callback onto a statically initialised per-CPU
+lockless llist and schedule a hard irq_work to drain it into the
+segmented callback list under the usual per-CPU lock outside the
+caller's lock context. The drain is also invoked from
+rcu_barrier_tasks_generic() and rcu_tasks_need_gpcb() so barriers
+and grace-period progress cannot miss in-transit callbacks.
+IRQ-enabled callers keep the existing direct-enqueue semantics.
 
-> ---
->  tools/sched_ext/scx_flatcg.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tools/sched_ext/scx_flatcg.c b/tools/sched_ext/scx_flatcg.c
-> index de2bef86d64d..7799782b76d1 100644
-> --- a/tools/sched_ext/scx_flatcg.c
-> +++ b/tools/sched_ext/scx_flatcg.c
-> @@ -105,12 +105,12 @@ static void fcg_read_stats(struct scx_flatcg *skel, __u64 *stats)
->  	__u64 *cnts;
->  	__u32 idx;
->  
-> +	memset(stats, 0, sizeof(stats[0]) * FCG_NR_STATS);
-> +
->  	cnts = calloc(skel->rodata->nr_cpus, sizeof(__u64));
->  	if (!cnts)
->  		return;
->  
-> -	memset(stats, 0, sizeof(stats[0]) * FCG_NR_STATS);
-> -
->  	for (idx = 0; idx < FCG_NR_STATS; idx++) {
->  		int ret, cpu;
->  
-> -- 
-> 2.43.0
-> 
+Fixes: ab97152f88a4 ("rcu-tasks: Use more callback queues if contention encountered")
+Suggested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/20260710095359.2643791-1-matt@readmodwrite.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+---
+
+I have a separately tested 6.18.y backport and will submit it once this
+change lands upstream.
+
+---
+ kernel/rcu/tasks.h | 186 ++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 149 insertions(+), 37 deletions(-)
+
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index f4da5fad70f5..e16d14b7b4df 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -30,6 +30,8 @@ typedef void (*postgp_func_t)(struct rcu_tasks *rtp);
+  * @rtp_n_lock_retries: Rough lock-contention statistic.
+  * @rtp_work: Work queue for invoking callbacks.
+  * @rtp_irq_work: IRQ work queue for deferred wakeups.
++ * @rtp_irq_bypass_work: IRQ work queue for draining IRQ-bypassed callbacks.
++ * @rtp_irq_bypass_list: Lockless callback list for IRQ-disabled callers.
+  * @barrier_q_head: RCU callback for barrier operation.
+  * @rtp_blkd_tasks: List of tasks blocked as readers.
+  * @rtp_exit_list: List of tasks in the latter portion of do_exit().
+@@ -46,6 +48,8 @@ struct rcu_tasks_percpu {
+ 	unsigned int urgent_gp;
+ 	struct work_struct rtp_work;
+ 	struct irq_work rtp_irq_work;
++	struct irq_work rtp_irq_bypass_work;
++	struct llist_head rtp_irq_bypass_list;
+ 	struct rcu_head barrier_q_head;
+ 	struct list_head rtp_blkd_tasks;
+ 	struct list_head rtp_exit_list;
+@@ -129,11 +133,15 @@ struct rcu_tasks {
+ };
+ 
+ static void call_rcu_tasks_iw_wakeup(struct irq_work *iwp);
++static void call_rcu_tasks_iw_drain_irq_bypass(struct irq_work *iwp);
++static void rcu_tasks_adjust_cbs(struct rcu_tasks *rtp);
+ 
+ #define DEFINE_RCU_TASKS(rt_name, gp, call, n)						\
+ static DEFINE_PER_CPU(struct rcu_tasks_percpu, rt_name ## __percpu) = {			\
+ 	.lock = __RAW_SPIN_LOCK_UNLOCKED(rt_name ## __percpu.cbs_pcpu_lock),		\
+ 	.rtp_irq_work = IRQ_WORK_INIT_HARD(call_rcu_tasks_iw_wakeup),			\
++	.rtp_irq_bypass_work = IRQ_WORK_INIT_HARD(call_rcu_tasks_iw_drain_irq_bypass), \
++	.rtp_irq_bypass_list = LLIST_HEAD_INIT(rtp_irq_bypass_list),			\
+ };											\
+ static struct rcu_tasks rt_name =							\
+ {											\
+@@ -328,6 +336,103 @@ static void call_rcu_tasks_generic_timer(struct timer_list *tlp)
+ 		rcuwait_wake_up(&rtp->cbs_wait);
+ }
+ 
++static bool call_rcu_tasks_enqueue_locked(struct rcu_head *rhp,
++					  struct rcu_tasks *rtp,
++					  struct rcu_tasks_percpu *rtpcp)
++{
++	bool havekthread;
++	bool needwake;
++
++	// Queuing callbacks before initialization not yet supported.
++	if (WARN_ON_ONCE(!rcu_segcblist_is_enabled(&rtpcp->cblist)))
++		rcu_segcblist_init(&rtpcp->cblist);
++	/* Pairs with the kthread publication in rcu_tasks_kthread(). */
++	havekthread = smp_load_acquire(&rtp->kthread_ptr);
++	needwake = (!havekthread && rcu_segcblist_empty(&rtpcp->cblist)) ||
++		   (rhp->func == wakeme_after_rcu) ||
++		   (rcu_segcblist_n_cbs(&rtpcp->cblist) == rcu_task_lazy_lim);
++	if (havekthread && !needwake && !timer_pending(&rtpcp->lazy_timer)) {
++		if (rtp->lazy_jiffies)
++			mod_timer(&rtpcp->lazy_timer, rcu_tasks_lazy_time(rtp));
++		else
++			needwake = rcu_segcblist_empty(&rtpcp->cblist);
++	}
++	if (needwake)
++		rtpcp->urgent_gp = 3;
++	rcu_segcblist_enqueue(&rtpcp->cblist, rhp);
++	return needwake;
++}
++
++/* Acquire the callback-list lock and report whether the acquisition contended. */
++static bool call_rcu_tasks_lock(struct rcu_tasks_percpu *rtpcp)
++{
++	if (raw_spin_trylock_rcu_node(rtpcp)) // irqs already disabled.
++		return false;
++	raw_spin_lock_rcu_node(rtpcp); // irqs already disabled.
++	return true;
++}
++
++/* Record one callback-queuing-time contention event. */
++static bool rcu_tasks_need_queue_adjust(struct rcu_tasks *rtp,
++					struct rcu_tasks_percpu *rtpcp)
++{
++	unsigned long j = jiffies;
++
++	if (rtpcp->rtp_jiffies != j) {
++		rtpcp->rtp_jiffies = j;
++		rtpcp->rtp_n_lock_retries = 0;
++	}
++
++	return rcu_task_cb_adjust &&
++	       ++rtpcp->rtp_n_lock_retries > rcu_task_contend_lim &&
++	       READ_ONCE(rtp->percpu_enqueue_lim) != rcu_task_cpu_ids;
++}
++
++static void rcu_tasks_drain_irq_bypass(struct rcu_tasks_percpu *rtpcp)
++{
++	bool contended;
++	bool needadjust = false;
++	bool needwake = false;
++	unsigned long flags;
++	struct llist_node *llnode;
++	struct llist_node *next;
++	struct rcu_head *rhp;
++	struct rcu_tasks *rtp = rtpcp->rtpp;
++
++	local_irq_save(flags);
++	rcu_read_lock();
++	contended = call_rcu_tasks_lock(rtpcp);
++
++	/*
++	 * Serialize the entire bypass-to-cblist transfer with barrier
++	 * entrainment so that a barrier cannot pass callbacks in transit.
++	 */
++	llnode = llist_del_all(&rtpcp->rtp_irq_bypass_list);
++	if (!llnode) {
++		raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
++		rcu_read_unlock();
++		return;
++	}
++
++	if (contended)
++		needadjust = rcu_tasks_need_queue_adjust(rtp, rtpcp);
++
++	llnode = llist_reverse_order(llnode);
++	llist_for_each_safe(llnode, next, llnode) {
++		rhp = (struct rcu_head *)llnode;
++		needwake |= call_rcu_tasks_enqueue_locked(rhp, rtp, rtpcp);
++	}
++	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
++
++	if (unlikely(needadjust))
++		rcu_tasks_adjust_cbs(rtp);
++	rcu_read_unlock();
++
++	/* We can't create the thread unless interrupts are enabled. */
++	if (needwake && READ_ONCE(rtp->kthread_ptr))
++		rcuwait_wake_up(&rtp->cbs_wait);
++}
++
+ // IRQ-work handler that does deferred wakeup for call_rcu_tasks_generic().
+ static void call_rcu_tasks_iw_wakeup(struct irq_work *iwp)
+ {
+@@ -338,15 +443,40 @@ static void call_rcu_tasks_iw_wakeup(struct irq_work *iwp)
+ 	rcuwait_wake_up(&rtp->cbs_wait);
+ }
+ 
++// IRQ-work handler that drains IRQ-bypassed callbacks.
++static void call_rcu_tasks_iw_drain_irq_bypass(struct irq_work *iwp)
++{
++	struct rcu_tasks_percpu *rtpcp;
++
++	rtpcp = container_of(iwp, struct rcu_tasks_percpu, rtp_irq_bypass_work);
++	rcu_tasks_drain_irq_bypass(rtpcp);
++}
++
++static void rcu_tasks_adjust_cbs(struct rcu_tasks *rtp)
++{
++	unsigned long flags;
++	bool expanded = false;
++
++	raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
++	if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
++		WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
++		WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
++		smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
++		expanded = true;
++	}
++	raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
++	if (expanded)
++		pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
++}
++
+ // Enqueue a callback for the specified flavor of Tasks RCU.
+ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
+ 				   struct rcu_tasks *rtp)
+ {
+ 	int chosen_cpu;
+ 	unsigned long flags;
+-	bool havekthread = smp_load_acquire(&rtp->kthread_ptr);
+ 	int ideal_cpu;
+-	unsigned long j;
++	bool irqsoff = irqs_disabled();
+ 	bool needadjust = false;
+ 	bool needwake;
+ 	struct rcu_tasks_percpu *rtpcp;
+@@ -359,44 +489,23 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
+ 	chosen_cpu = cpumask_next(ideal_cpu - 1, cpu_possible_mask);
+ 	WARN_ON_ONCE(chosen_cpu >= rcu_task_cpu_ids);
+ 	rtpcp = per_cpu_ptr(rtp->rtpcpu, chosen_cpu);
+-	if (!raw_spin_trylock_rcu_node(rtpcp)) { // irqs already disabled.
+-		raw_spin_lock_rcu_node(rtpcp); // irqs already disabled.
+-		j = jiffies;
+-		if (rtpcp->rtp_jiffies != j) {
+-			rtpcp->rtp_jiffies = j;
+-			rtpcp->rtp_n_lock_retries = 0;
+-		}
+-		if (rcu_task_cb_adjust && ++rtpcp->rtp_n_lock_retries > rcu_task_contend_lim &&
+-		    READ_ONCE(rtp->percpu_enqueue_lim) != rcu_task_cpu_ids)
+-			needadjust = true;  // Defer adjustment to avoid deadlock.
+-	}
+-	// Queuing callbacks before initialization not yet supported.
+-	if (WARN_ON_ONCE(!rcu_segcblist_is_enabled(&rtpcp->cblist)))
+-		rcu_segcblist_init(&rtpcp->cblist);
+-	needwake = (!havekthread && rcu_segcblist_empty(&rtpcp->cblist)) ||
+-		   (func == wakeme_after_rcu) ||
+-		   (rcu_segcblist_n_cbs(&rtpcp->cblist) == rcu_task_lazy_lim);
+-	if (havekthread && !needwake && !timer_pending(&rtpcp->lazy_timer)) {
+-		if (rtp->lazy_jiffies)
+-			mod_timer(&rtpcp->lazy_timer, rcu_tasks_lazy_time(rtp));
+-		else
+-			needwake = rcu_segcblist_empty(&rtpcp->cblist);
++	if (irqsoff) {
++		llist_add((struct llist_node *)rhp, &rtpcp->rtp_irq_bypass_list);
++		rcu_read_unlock();
++		local_irq_restore(flags);
++		irq_work_queue(&rtpcp->rtp_irq_bypass_work);
++		return;
+ 	}
+-	if (needwake)
+-		rtpcp->urgent_gp = 3;
+-	rcu_segcblist_enqueue(&rtpcp->cblist, rhp);
++
++	if (call_rcu_tasks_lock(rtpcp))
++		needadjust = rcu_tasks_need_queue_adjust(rtp, rtpcp);
++
++	needwake = call_rcu_tasks_enqueue_locked(rhp, rtp, rtpcp);
+ 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
+-	if (unlikely(needadjust)) {
+-		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
+-		if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
+-			WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
+-			WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
+-			smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
+-			pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
+-		}
+-		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
+-	}
++	if (unlikely(needadjust))
++		rcu_tasks_adjust_cbs(rtp);
+ 	rcu_read_unlock();
++
+ 	/* We can't create the thread unless interrupts are enabled. */
+ 	if (needwake && READ_ONCE(rtp->kthread_ptr))
+ 		irq_work_queue(&rtpcp->rtp_irq_work);
+@@ -438,6 +547,7 @@ static void __maybe_unused rcu_barrier_tasks_generic(struct rcu_tasks *rtp)
+ 		if (cpu >= smp_load_acquire(&rtp->percpu_dequeue_lim))
+ 			break;
+ 		rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
++		rcu_tasks_drain_irq_bypass(rtpcp);
+ 		rtpcp->barrier_q_head.func = rcu_barrier_tasks_generic_cb;
+ 		raw_spin_lock_irqsave_rcu_node(rtpcp, flags);
+ 		if (rcu_segcblist_entrain(&rtpcp->cblist, &rtpcp->barrier_q_head))
+@@ -470,6 +580,8 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
+ 			continue;
+ 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+ 
++		rcu_tasks_drain_irq_bypass(rtpcp);
++
+ 		/* Advance and accelerate any new callbacks. */
+ 		if (!rcu_segcblist_n_cbs(&rtpcp->cblist))
+ 			continue;
+-- 
+2.43.0
+
