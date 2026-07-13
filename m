@@ -1,192 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351FF43800C
-	for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 16:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FCD3BBA0B
+	for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 16:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783961289; cv=none; b=IXtYL4x4yU9I89ppiKcJUIqltcc+oq64VXDvOnPhPsIa6cVrJi7qRpcdbGp7QzUgJb30bvlMiEfmgzyVuVzqSVmkWqm//+mJUGLfNI4IjfS9eL6vXLL47/iAqS/NI6eh9Q4/FJUizCVWrLLjwzdzUBIzHKXIIZajE9CWtT561IU=
+	t=1783961390; cv=none; b=YSTQ67kMmhJDQQfdBNUiwhhD68XCfuWdk5Ypos3xYZe84VhdgEpPIFlKjtxLId0k6ua+QM0byzpWXM29JKMmqwjruplO1Q+Jb27TBiyvl8CQEbYzpVKDNNlrDNv6/rObli4JsE8qkpvjriFJngztsXeE100RwuVJHDTNCCqqH6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783961289; c=relaxed/simple;
-	bh=c+xhZJEE+cNisiO22oufonGdU37GYRoBCtwQzJREK+c=;
+	s=arc-20240116; t=1783961390; c=relaxed/simple;
+	bh=nlyChN7qaJ6aoH8zDaeYl+p7vFlmP+iW4oU06D49Ies=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=lqYiij6hf2Y6tFWHoEWd79R29BszIjfHxkDJyuDsOV+kjneQTAq3u+pMJQpjFg3sdRX428tuVrXOsf8mC/ByEkCl7l3RjcSTtY5/hdCNw/1VjyaRPg0id5nFGsnZbnGclVHPLyUeXTQPaXDmmII/CO0/ufcRbEFHV/zls0FVIvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhAVMnGF; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Tdmgl60mWZmMCdXRuywwEPiDbK4iW16Y7MbHHyuAIVm59nSHlLnJjC1P12M3LOg2AVFi/YMolb06BAxFVDL7y1/9wKTFFVUC6z6/4XcN+T8W0RptE0jNkisvyHErSX367HCm9Sjfzu6a64P9sf1cBMRpJxJJDITfU7LjhU9dcDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I9kv+rsT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhAVMnGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5ED21F00A3A;
-	Mon, 13 Jul 2026 16:48:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I9kv+rsT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C02E1F000E9;
+	Mon, 13 Jul 2026 16:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783961288;
-	bh=r/Ydl/IRwIDgHBu9z34mTEdPmTGC1/Cacgl0MZUtD2U=;
+	s=k20260515; t=1783961388;
+	bh=ssOR5qUsyw8oaVJzM6TTfeggfwOSLe5Qs1M7XUAAaao=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OhAVMnGFfnqbmVy2GGIOkFeGbcoYdxd0zRzciSftnAU9doAfVYRjeWqsxIt4P6jPr
-	 BNIMQN49z4Y69O3/o04TbTUpb4IpADrOOOU8Nz8rQNMX30E4SOWuHtMPJyTgTbH7h8
-	 JJf4XOEM+N1I19vbBHXPMu3jSIxbYpoMBjKcQVpkoGydgx1Zhxc8APM/Xy6LhWPvGT
-	 OBINKDCO/uGXqgyTn4GI2/rT7W0wUfO4lIiizS5gn87N0t5a3MvwnI+iGq5KVb/rtC
-	 s4/Gjw6lrhhmSgv6ooTE5wpHuzWJdq1s8a3dzjlYmC2hmWN2x0aNrNBDqP0MxYR7UM
-	 3cxtyysF+ePsw==
+	b=I9kv+rsTiNGVf0SllIZlSrWL/kNnOo0qwIOC8+jaKxMmgxbh/dW1daZqLWtXAAAgw
+	 jc7Tp+TdIwTDE7BevPX0KAxrd7AsDPxderyxwunz6XyMGJwXsf6FrcEyaP5/KDmAUm
+	 g1fopMNA3Xk61F8pUVRRHrhVftXR2bg2OBDZbtYoI6kNfkz4Rv1HWtRcx3OEr0qB1T
+	 5XeTfbvPZIAzntudIOsgGxmA2eTVJqp0K1keXD87WH72zeYHfMVSiYJmVk5gshXZyr
+	 0Wj3pkf+KTxXtrTUrcXnjW9JRaWy9Nt3s/p/fdK80mCfnFTXd1OYR89Z4YLrvfjyuJ
+	 fnjpCWluX4mGw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 04/10] sched_ext: Split curr|donor references properly
+Subject: Re: [PATCH 10/10] sched: Allow enabling proxy exec with sched_ext
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Andrea Righi" <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260713162112.26785-5-arighi@nvidia.com>
+In-Reply-To: <20260713162112.26785-11-arighi@nvidia.com>
 References: <20260713162112.26785-1-arighi@nvidia.com>
- <20260713162112.26785-5-arighi@nvidia.com>
+ <20260713162112.26785-11-arighi@nvidia.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 13 Jul 2026 16:48:06 +0000
-Message-Id: <20260713164807.E5ED21F00A3A@smtp.kernel.org>
+Date: Mon, 13 Jul 2026 16:49:47 +0000
+Message-Id: <20260713164948.4C02E1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Missing conversion from `task_current()` to `task_current_donor()`=
- in sched_ext task state management skips BPF callbacks and corrupts task s=
-tate.
-- [High] BPF kfuncs expose the physical execution context instead of the sc=
-heduling context, violating the commit's design principle.
-- [High] `dequeue_task_scx` unconditionally calls `update_curr_scx`, which =
-steals execution time from non-EXT proxy donors and corrupts their accounti=
-ng.
-- [High] scx_can_stop_tick() stops the tick for FAIR donors executing via E=
-XT owners, bypassing CFS bandwidth constraints.
+- [High] Normal task wakeups are misidentified as blocked proxy donors in s=
+ched_ext operations (`scx_do_enqueue_task` and `wakeup_preempt_scx`), causi=
+ng incorrect `SCX_ENQ_BLOCKED` flags and unconditional reschedules.
 --
 
---- Patch [4]: [PATCH 04/10] sched_ext: Split curr|donor references properl=
-y ---
-commit ed60d9105c70ea6983b5253a3067b0440935ec2f
+--- Patch [10]: [PATCH 10/10] sched: Allow enabling proxy exec with sched_e=
+xt ---
+commit 3a82f8102afed9269cf69799a73d94ed44769f33
 Author: Andrea Righi <arighi@nvidia.com>
 
-sched_ext: Split curr|donor references properly
+sched: Allow enabling proxy exec with sched_ext
+   =20
+Now that sched_ext can handle proxy donors and BPF schedulers can opt in
+to blocked-donor enqueueing with SCX_OPS_ENQ_BLOCKED, remove the
+!SCHED_CLASS_EXT dependency from SCHED_PROXY_EXEC and allow both options
+to be enabled together.
 
-With proxy execution, the task selected by the scheduler and the task
-physically executing can differ. A blocked mutex waiter donates its
-scheduling context to the lock owner.
-
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 1412239d37f52..755ea5cc6169f 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -1170,17 +1170,24 @@ static void touch_core_sched_dispatch(struct rq *=
-rq, struct task_struct *p)
-> =20
->  static void update_curr_scx(struct rq *rq)
->  {
-> -	struct task_struct *curr =3D rq->curr;
-> +	struct task_struct *donor;
->  	s64 delta_exec;
-> =20
-> +	/*
-> +	 * update_curr_scx() is selected through rq->donor->sched_class, not
-> +	 * rq->curr->sched_class, so @donor is always an EXT task here. If an E=
-XT
-> +	 * owner executes for a FAIR donor, FAIR's update_curr() runs instead.
-> +	 */
-> +	donor =3D rq->donor;
-> +
->  	delta_exec =3D update_curr_common(rq);
->  	if (unlikely(delta_exec <=3D 0))
->  		return;
-> =20
-> -	if (curr->scx.slice !=3D SCX_SLICE_INF) {
-> -		curr->scx.slice -=3D min_t(u64, curr->scx.slice, delta_exec);
-> -		if (!curr->scx.slice)
-> -			touch_core_sched(rq, curr);
-> +	if (donor->scx.slice !=3D SCX_SLICE_INF) {
-> +		donor->scx.slice -=3D min_t(u64, donor->scx.slice, delta_exec);
-> +		if (!donor->scx.slice)
-> +			touch_core_sched(rq, donor);
->  	}
+> diff --git a/init/Kconfig b/init/Kconfig
+> index 9ee6447dd454d..52376c44f60a6 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -937,8 +937,6 @@ config SCHED_PROXY_EXEC
+>  	bool "Proxy Execution"
+>  	# Avoid some build failures w/ PREEMPT_RT until it can be fixed
+>  	depends on !PREEMPT_RT
+> -	# Need to investigate how to inform sched_ext of split contexts
+> -	depends on !SCHED_CLASS_EXT
 
 [Severity: High]
-Does this steal execution time from non-EXT proxy donors?
+Does enabling proxy exec with sched_ext here expose an issue where normal
+task wakeups are misidentified as blocked proxy donors?
 
-If an EXT task executes on behalf of a FAIR donor, dequeuing the EXT owner
-calls update_curr_scx() from dequeue_task_scx() because it evaluates
-task_current(rq, p) which matches the EXT owner.
+When tasks go to sleep without pending signals, try_to_block_task() sets
+p->is_blocked =3D 1. When these tasks wake up, ttwu_do_activate() processes
+them in this order:
 
-This code advances rq->donor->se.exec_start via update_curr_common() and
-mutates the non-EXT donor's slice. Will this bypass CFS vruntime and
-bandwidth (throttling) accounting, starving the FAIR task of its tracked
-CPU time?
+kernel/sched/core.c:ttwu_do_activate() {
+        ...
+        activate_task(rq, p, en_flags);
+        wakeup_preempt(rq, p, wake_flags);
+       =20
+        ttwu_do_wakeup(p);
+        ...
+}
 
-[ ... ]
+Because activate_task() and wakeup_preempt() are called before
+ttwu_do_wakeup() clears the p->is_blocked flag, p->is_blocked remains 1
+during the sched_ext callbacks:
 
-> @@ -4081,14 +4092,14 @@ static void run_deferred(struct rq *rq)
->  #ifdef CONFIG_NO_HZ_FULL
->  bool scx_can_stop_tick(struct rq *rq)
->  {
-> -	struct task_struct *p =3D rq->curr;
-> +	struct task_struct *p =3D rq->donor;
->  	struct scx_sched *sch =3D scx_task_sched(p);
-> =20
->  	if (p->sched_class !=3D &ext_sched_class)
->  		return true;
+kernel/sched/ext/ext.c:scx_do_enqueue_task() {
+        ...
+        enq_blocked =3D (sch->ops.flags & SCX_OPS_ENQ_BLOCKED) &&
+                      p->is_blocked;
+        if (enq_blocked)
+                enq_flags |=3D SCX_ENQ_BLOCKED;
+        ...
+}
 
-[Severity: High]
-Does this incorrectly bypass CFS bandwidth constraints for FAIR donors?
+And also in the wakeup path:
 
-If a CPU is running a bandwidth-constrained FAIR donor through an EXT owner
-on a NOHZ CPU, this returns true.
+kernel/sched/ext/ext.c:wakeup_preempt_scx() {
+        ...
+        if (p->is_blocked) {
+                struct scx_sched *sch =3D scx_task_sched(p);
+               =20
+                if (sch && (sch->ops.flags & SCX_OPS_ENQ_BLOCKED))
+                        resched_curr(rq);
+        }
+        return;
+}
 
-This delegates tick responsibility to core generic checks, which mistakenly
-evaluate the EXT owner (rq->curr) instead of the FAIR donor in
-__need_bw_check. Can this allow the FAIR task to bypass CFS quota limits?
+If a BPF scheduler opts into SCX_OPS_ENQ_BLOCKED, will this force an
+unconditional reschedule on every wakeup and skip intended preemption logic,
+since it incorrectly sees all normal waking tasks as SCX_ENQ_BLOCKED?
 
-[ ... ]
+Would it be safer for sched_ext to use task_is_blocked(p) (which evaluates
+!!p->blocked_on) rather than p->is_blocked to correctly identify actual
+blocked proxy donors?
 
-[Severity: High]
-Are we missing conversions from task_current() to checking the donor in the
-enqueue and dequeue paths?
-
-In dequeue_task_scx(), if we have a blocked EXT proxy donor task (where
-rq->donor =3D=3D p but rq->curr !=3D p) that is dequeued, task_current(rq, =
-p)
-evaluates to false:
-
-    if (task_current(rq, p) &&
-        (p->scx.flags & SCX_TASK_RUN_TRACKED)) {
-
-Does this incorrectly skip the BPF stopping() callback and leak the
-SCX_TASK_RUN_TRACKED state?
-
-Similarly, in enqueue_task_scx():
-
-    if (unlikely(enq_flags & ENQUEUE_RESTORE) && task_current(rq, p))
-        sticky_cpu =3D cpu_of(rq);
-
-Does this fail to preserve sticky_cpu for an actively running donor because
-task_current(rq, p) is false, breaking the restore invariants?
-
-[Severity: High]
-Do the BPF kfuncs expose the physical execution context instead of the
-scheduling context?
-
-In scx_bpf_task_running():
-
-    return task_rq(p)->curr =3D=3D p;
-
-This returns false for an active EXT donor because it checks the owner
-(rq->curr) instead of the donor.
-
-In scx_bpf_cpu_curr():
-
-    return rcu_dereference(cpu_rq(cpu)->curr);
-
-And in scx_bpf_cid_curr():
-
-    return rcu_dereference(cpu_rq(cpu)->curr);
-
-Do these expose the physical non-EXT owner to the BPF scheduler instead
-of the expected EXT donor, causing the BPF scheduler to make incorrect
-load-balancing decisions based on invalid task states?
+>  	# Not particularly useful until we get to multi-rq proxying
+>  	depends on EXPERT
+>  	help
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260713162112.2678=
-5-1-arighi@nvidia.com?part=3D4
+5-1-arighi@nvidia.com?part=3D10
