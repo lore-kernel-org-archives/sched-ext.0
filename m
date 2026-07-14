@@ -1,99 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904E83624B2;
-	Tue, 14 Jul 2026 02:55:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B07286A7
+	for <sched-ext@lists.linux.dev>; Tue, 14 Jul 2026 03:21:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783997725; cv=none; b=n8jpwXO6TEuzhHqbkokdYMRFldIcSXijpSScNNJOZgpon9wbt+2eiYGKzdijsSC2PBgbPM/MOQuPLWCjyVJVrtGiO9/b1tcqYH+CceH1vV87IjPCI6tLndfhoiYAR9AC5iYXZ0G8bvP+bmiD694D5QjCafV8k6zcamu+EY7Xx3M=
+	t=1783999263; cv=none; b=Pow8Ebsnus6xG0mmpoV7M0sQ5ip2WBlzI6xZb9KNJaEiBTX/zRLWi0IludiQNB+KVEv+ZfLE2iV6Bz37ARKzkL0fHKMy9hdWjVTiV34VGyKBwt5h+iFdQL1dvAvzgdUMS1Y/KOKS3tDAQMG0Ra8Z5BDVaLUyP/yo9drCNM4zH58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783997725; c=relaxed/simple;
-	bh=EdRfws5VGdNGpD7YHKrBfHSCq7GTWLUE+uE5mCtUTR8=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=PBOtqK8qrusvmp+PITKXSRs/n9Re5ZI4r7k0e70wy41RLKdHmvlUqcDH4Mph14sf8DwAjYX1xQntjEqtGUpuoiLfQ/Z/SipX+h6MHylqc4AGdxLcoEzeY+InjjinWOKRcNaCUcAPvDkGE/KZMXd4pxPI4zMkASbsTLfheROWhuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gmonA6JH; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gmonA6JH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EA31F000E9;
-	Tue, 14 Jul 2026 02:55:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783997724;
-	bh=pD40xZvtuQrXN/MvvewOhM5DYqZCVCE5/okp9BgTKCw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=gmonA6JHCARe/99qVF5EEevmR9Y5riFSnq7tObHU0uFyc0uIyXhIVc2VPlu94HkMV
-	 3HFJ12yb8q0O3Ca1RXydptGNxTjXPK8UxbY38e1sr/Qchms5R0XIOAtHF2lOWNbvJy
-	 dL62tSYU85GpRHKCJwGlTZv14s0nXAsykb6bxS5lOjG03KxUvrCsU40XdQr9v8SxQp
-	 qEEXkRkXth/056yr2ac7zXHcxBpPhnzZ65RMtLcT0Wf3Ycx8pry6Dq7SmomnyePPof
-	 OICOvdnYoC1H89Rb0YjNuIZRzFGnu7TPKQYggFI/8RP5hPhn4C/XNO1Y9pr4hjOfur
-	 Lvf/czp/cBhLw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: Validate cid override before updating tables
-Reply-To: sashiko-reviews@lists.linux.dev
-To: =?utf-8?b?emhpZGFvIHN1IChYaWFvbWkp?= <soolaugust@gmail.com>
-Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20260714024704.3318132-1-soolaugust@gmail.com>
-References: <20260714024704.3318132-1-soolaugust@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 14 Jul 2026 02:55:23 +0000
-Message-Id: <20260714025524.04EA31F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1783999263; c=relaxed/simple;
+	bh=imJj1+N39504qvUUItN2VIC0AAnXvlsLwR+hXt//HQo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AbYyvBGXaNLF6CCJXgON7QHDrpj3ja5M2d0aqF3/tLDOt8cr+E5GT9XYL1jb9oBcLvi16cbnQgUY2fXqLG/5MLhmmSsYKhzEcmHaHcU832nld0Qv+bzaYyltBzLkmX+/K0qTwcmuihahyek5FP5tctM8EEafrkEvF1s3w0IK/uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 072ac4327f3311f1aa26b74ffac11d73-20260714
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:3585a902-582b-4b34-8eff-5454c50c8ded,IP:0,U
+	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:25
+X-CID-META: VersionHash:e7bac3a,CLOUDID:a771dfdb77db12529ee2df7d029e2667,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|136|850|865|898,TC:nil,Content:0
+	|15|50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OS
+	I:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 072ac4327f3311f1aa26b74ffac11d73-20260714
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 576022090; Tue, 14 Jul 2026 11:20:56 +0800
+From: luoliang@kylinos.cn
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Liang Luo <luoliang@kylinos.cn>
+Subject: [PATCH] tools/sched_ext: scx_qmap: Fix stale API name in comment
+Date: Tue, 14 Jul 2026 11:20:51 +0800
+Message-Id: <20260714032051.1834822-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Splitting the `cpu_to_cid` array validation and update into two lo=
-ops introduces a critical double-fetch TOCTOU vulnerability, allowing an ou=
-t-of-bounds kernel memory write.
---
+From: Liang Luo <luoliang@kylinos.cn>
 
---- Patch [1]: [PATCH] sched_ext: Validate cid override before updating tab=
-les ---
-commit 3a1a6d6109297fa0a7f1d91d2dccc68df1527d12
-Author: zhidao su (Xiaomi) <soolaugust@gmail.com>
+The comment above dispatch_highpri() still references
+scx_bpf_dispatch[_vtime]_from_dsq(), which was renamed to
+scx_bpf_dsq_move[_vtime]() in v6.13 to unload the overloaded
+"dispatch" verb. The code below already uses the new names; only the
+comment was left behind during the rename.
 
-sched_ext: Validate cid override before updating tables
+Fixes: 5cbb302880f5 ("sched_ext: Rename scx_bpf_dispatch[_vtime]_from_dsq*() -> scx_bpf_dsq_move[_vtime]*()")
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
+---
+ tools/sched_ext/scx_qmap.bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This patch splits the validation and table updates in scx_bpf_cid_override()
-into separate loops. This prevents partial table updates if the validation
-fails midway through the user-supplied mapping.
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index fd9a82a67627..05f88d819b40 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -495,7 +495,7 @@ static void update_core_sched_head_seq(struct task_struct *p)
+  * moving them to HIGHPRI_DSQ and then consuming them first. This makes minor
+  * difference only when dsp_batch is larger than 1.
+  *
+- * scx_bpf_dispatch[_vtime]_from_dsq() are allowed both from ops.dispatch() and
++ * scx_bpf_dsq_move[_vtime]() are allowed both from ops.dispatch() and
+  * non-rq-lock holding BPF programs. As demonstration, this function is called
+  * from qmap_dispatch() and monitor_timerfn().
+  */
+-- 
+2.43.0
 
-> diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-> index af83084ec740a..e398e3f209bd4 100644
-> --- a/kernel/sched/ext/cid.c
-> +++ b/kernel/sched/ext/cid.c
-> @@ -329,6 +329,11 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu=
-_to_cid, u32 cpu_to_cid__sz,
->  			scx_error(sch, "cid %d assigned to multiple cpus", c);
->  			return;
->  		}
-> +	}
-> +
-> +	for_each_possible_cpu(cpu) {
-> +		s32 c =3D cpu_to_cid[cpu];
-> +
->  		scx_cpu_to_cid_tbl[cpu] =3D c;
->  		scx_cid_to_cpu_tbl[c] =3D cpu;
->  	}
-
-[Severity: High]
-Can the contents of cpu_to_cid change concurrently between these two loops =
-in
-scx_bpf_cid_override()?
-
-If cpu_to_cid points to shared memory, such as a BPF map, could another thr=
-ead
-or BPF program modify cpu_to_cid[cpu] after it passes the validation in the
-first loop?
-
-If this happens, the second loop would fetch the unvalidated value and use =
-it
-as an index for scx_cid_to_cpu_tbl[c], potentially resulting in an
-out-of-bounds write.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714024704.3318=
-132-1-soolaugust@gmail.com?part=3D1
