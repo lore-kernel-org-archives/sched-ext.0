@@ -1,64 +1,63 @@
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012020.outbound.protection.outlook.com [52.101.43.20])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013030.outbound.protection.outlook.com [40.93.196.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3028381B01
-	for <sched-ext@lists.linux.dev>; Tue, 14 Jul 2026 06:18:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6955369D7A
+	for <sched-ext@lists.linux.dev>; Tue, 14 Jul 2026 06:50:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.30
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784009913; cv=fail; b=kLC9vkX504Gwun2S9YWpNn5igN/bgLHGIcz0xzWHRH8tRuPWu3ZF0SRyBHHQ5FYuQJttQCBZ6RtIrtgI7KghilXu5pDxgtTvzwPcot6p420M88A10JGS7mhP3jNbhx1qD1dulcDL41ouoBgbm1V1EfSJH0NzAm567CfatbYGXoc=
+	t=1784011805; cv=fail; b=a0b/ShviDk60Pamsrb5eBHrXy8+LuRhn4W7eL5202cgXFiFiCcjH2TdltUkXBgpoaT1KheYSPDnl893qSKtvscrnEGiodsPuxbtSkYhiZaiKPpLT2FnW8lChQUubeGCIk0EySN9bE5PJBalFCjy85y6Pxom+Nac1AwfmM3CdDVY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784009913; c=relaxed/simple;
-	bh=R2oHqhf6jANKgWwBO3qkUy8qW70gBFd/4Njj3L43Mgo=;
+	s=arc-20240116; t=1784011805; c=relaxed/simple;
+	bh=FVlZ3h5c13cUaWiNWELJmMsvyBygZxU4fbk7ey/0O1c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=p+gnk6Vje5Yq14NGPuORs08X1fEhIRZWy1uENA8MKHSMp/EwFvQXMxhqBV2rj0JPx+1MLIlQhW6Lkq4PXrELZLb4ge6mFofTINYDjLaAKNzj53S37BeN/f+J3nfaf1+zyYdW1Xvw3+C6T+R6Fcb44iaCGNnRIlaXw8lOS70JxWI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=KbtpeuVu; arc=fail smtp.client-ip=52.101.43.20
+	 Content-Disposition:In-Reply-To:MIME-Version; b=aj3Xjh1benshnKXI2Fw2abkqxZxDga2ox1astNx5NAcanBXtXfYRiqtdFFY9Dv+Qd2tRlD8HEfy5sJqlKJYutALIJDLCu1LMJljoy3+5yOExrfO78hWNOfQKQsiD8ZIlpOXiy/ST1CBwDzZjcWYdsgB1+D3ZYVLbybmNYxV+dkQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=UvsIYhb6; arc=fail smtp.client-ip=40.93.196.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="KbtpeuVu"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="UvsIYhb6"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bevEque5/dqg5fkJ/zUUO9B5V6QKMuUFhOeGrY809rAtwHUyoCE8Fo/85OvthhaEl2L85G15fdqawiEGji/DXNjB25u8npcm0Qf29P8wmjvCCC4Z1velcDawhRVTimZyELqf5JwVxIYmfk6TlkbPPDk8NChK5V4Kvvih2oBfTRq2zjUncca3DgEEyu47cilPhWShUMbkt2BX96CACic30GmVvkP4Hzv4zptxH72oXQVZin09pj/gANiSyNtr0wUg+KZgnO9/215pn06hIb55agMzOqnxla1Hdz7KmwC4kG5hZWVuvPjO76FGsq9TdSLvUk/MLJqR2Aao7eXlu2/kYg==
+ b=cAN/zY+Jaj+Mq0MET+6LKBS/eKgveTXucCITLLx5hHYMvJEGVt7/IRrXEHJ7On67Eb0ZxmVl2aS6WCVpSSv3qfhUOdGt2tqIWAP+jlMAKZnZlt+egB/o8C3/KUbrnik1kpRs0k+KnaqIbfdbzbBpkU4wSUkrcMMldAsn7ZMrK/XWMpTvivJymZpa/U+HUoQNjXBRgqyaVssSw3EZoLU9SEBUERWA9HF3FcPleTy4NlPxyxW/ZIqy0qwdnrZ/t7IvMMvH7O+L2yY156FHJdPM5S5BeyZASWzEYQ4noOORHTddWrvMIugKu1xmm3eNx+l1hRW8DtXSFGk3HCwUIgw3Eg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jAk36lMMHOMOuxXfUJi6NvSDkXvxCWeyUX+bNbNmvT8=;
- b=prn1S4TWGm16Ku3drFNxYwwi2hO3hBbY6k0rq6VhkXOSVRXhJKxwysZsigJdHXsFlNuEF0a7AB6u99tvRCFQSbEyFFjU3zfCratbPdQj4PhVWFwYzEigKxEIDQTu7LzoS8Rq3eK74516JRMHCJUJXuhJagPt+ldwxA26WDrctzRZ7X/UKvskYvedBosUrhT4VTNOSIvtnAaVeSe8RDK1aWoVXyCnJ5jNYk2XftWHsGTLYuliUHbrphX2y1XsMGEoFjOEXM6nfVVqfcY/QqdV/N6iMCR2vIrBawb9lU2BQltYsvuXSrNXzhRCnP82h5mt8H8itW7NIOO4vWz6zqFqnw==
+ bh=e0PO0qTpR6ex2rnHyRhVeCrlsEcmEuVwK9YJ7K/qbyQ=;
+ b=dahMtAi8jbA2nO7UtPgGAA21u2ikhE3GB+cUeqDgbkLa6sUn/6x0UQHIdkr9QlBrxZTT8M823ga+G5vgBjch46Eem0LkGBv3B/Q7Xj/BHOOBKTK8kfl1VefMhQTRfMsbOroMoN+/D1m2SKrWa4NOHeJy2W8ORnjiuCTXwXBgCV2ghXztfbDIu8v6zshDn4Jrm5L9KSrBwf3X7TAhNVOJdHvouVyFqOwkBh3XxBNGN+UBgtaRebCj0i51lS6WW/OFgKrFEwF/Mfw/bwofy1N1pkBHwyjIjVwUCfmpJhJVy5AvypuLLvSIa5oLKuFPm5cwbBKN66Wr09y6Nvblw5Sb7g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jAk36lMMHOMOuxXfUJi6NvSDkXvxCWeyUX+bNbNmvT8=;
- b=KbtpeuVuJfOToAO39pdlZbI5XVMmJ8cAOUSp4UIDCIsAfBCVYCi8miceZJgq4zi+rdOk/EqmyI956Hrh7APGqP30VFtYMyWsdZZCwCbR4SzwArNJRiAiHb/ctDhYJdKAcXDHedOieWKGn4Ch4LlhRT70HjcA2KjBoUIr352eIMzHdntGvbjIMWpZgrQ1NNXqO7hbbu/hA73FjbKuu3JWA4Yt/X/osVWdnv1dlPLUUz68hlHq8rmpFUo6gx+qjU3N3dINfFxmcXAVeQsTS6QsOnPy4KUxp6PRuAgWnzd3lPPXbu8VqjcPRdoOa4y7R2cMuDJXTH19sMB3GXMGRiap2w==
+ bh=e0PO0qTpR6ex2rnHyRhVeCrlsEcmEuVwK9YJ7K/qbyQ=;
+ b=UvsIYhb6R1XxZpvKGyl74MMDJPJqhb5B0HAIWnxILzyeGP3XfyIw9cgZQptn17JU7fkK6iv6zk1DTGfuIRN0WiEYkjY6Iq5F2EjD0g9F5Tt29r9BAs2xpbcdL/ooxRTK0we3ucWCP6BZO5n34G62y+Mm9St0AunqLMo92VCbyo4VKt9et8GObiXazb6zsKUMh3MDB6mA9kx8LtIhivd1+A21HGXk7SXm+LgIlwjkT8Gp0MfiMNiN9X4ThbSGYHPR6lU7e1VVQOsCEwAAOJIoqL7fgGT2QFtUs5OhtCioFQQtHr+zxTSYYBP19cijoz8gIOaRyfRO113J0kA5fxAlrQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by LV8PR12MB9112.namprd12.prod.outlook.com (2603:10b6:408:184::17) with
+ by SJ5PPF75EAF8F39.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::999) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Tue, 14 Jul
- 2026 06:18:28 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.22; Tue, 14 Jul
+ 2026 06:49:57 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0202.014; Tue, 14 Jul 2026
- 06:18:28 +0000
-Date: Tue, 14 Jul 2026 08:18:20 +0200
+ 06:49:57 +0000
+Date: Tue, 14 Jul 2026 08:49:49 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 sched_ext/for-7.3 28/33] sched_ext: Route
- ops.update_idle() to sub-schedulers and re-notify owed scheds
-Message-ID: <alXUrLY3WMdAyXIc@gpd4>
+Subject: Re: [PATCH v5 sched_ext/for-7.3 18/33] sched_ext: Add reject DSQ for
+ cap-rejected dispatches
+Message-ID: <alXcDVSLNErhxcHg@gpd4>
 References: <20260709225041.1695495-1-tj@kernel.org>
- <20260709225041.1695495-29-tj@kernel.org>
+ <20260709225041.1695495-19-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260709225041.1695495-29-tj@kernel.org>
-X-ClientProxiedBy: MI0P293CA0015.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::8) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+In-Reply-To: <20260709225041.1695495-19-tj@kernel.org>
+X-ClientProxiedBy: MI1P293CA0023.ITAP293.PROD.OUTLOOK.COM (2603:10a6:290:3::9)
+ To DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -66,149 +65,109 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|LV8PR12MB9112:EE_
-X-MS-Office365-Filtering-Correlation-Id: df1cce8a-dddd-446e-f488-08dee16fb85c
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SJ5PPF75EAF8F39:EE_
+X-MS-Office365-Filtering-Correlation-Id: 959a5b9b-2858-4e61-d22d-08dee1741e25
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|5023799004|11063799006|56012099006|4143699003|6133799003|22082099003|18002099003;
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|11063799006|56012099006|4143699003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	UKgPYmoNIZPHBUpP4v+zzlxgmuxrLSxGwUXWYCy/a6u56qVYfO66WnMJ9EogZYlXU18NdxDDoYph/2owoA5ePBbCmuYYoCEUCeRDef36sPga8fHAhUtkFPm5flOa1O706F/IgbZTM9Ea52hK3NK7vJDssnM3NM8owa4DDi4fCPbT+p7rTOs3YomzI9pM+nDImnJ9uHnkAXn0McH4UAQEuJA712hkQOxTEVwJPJg8KCpiD2Qo/qT5S+Ax7YmJUeTrabeaQKj8QjSPd18z9+k9bK7Wow+fL1q4xZEw61XU7JMIRPFvFINpiRNJXx6FWAK6p4uAQkMICJY1+rHjlx7iR3l8WYjmt0V1UeX/NKqI1LNJjBfydCBMi2XmvvGZ7Ll3ndn0vNkMNNoZX5NJnOXK3YrSOIhohuj+qyepPgajUwCNQ1afuJNSmXpk4m33FiPRIsCGd2DZhvNHqpdhabtP5ZvUClwrSZnEQL14K1tctnlVBZ9TxgYGHBCAzqYyH9fvcPGTNMOHnHE11rDFup+nzD6vpR9T99+j6MIaD/8wVIfVlH0Dnaa5ewAxGDYbFBKtaKBxlMEVhFeMxiLHP7w5GGJTlgRsGFavtq8O+7ZQAyvWjtP4Vki94QCq2NQVhOAAq4WAWlUsXtFUFotP7mXmcMC+w0RHFFWBpTe5JD7qNyk=
+	GzuqivWrcPsDosa1TQT5Y17fiS4XC169UUSxRNq9EFNwUNnwH4hFgmyC73ZTRa1Up9OfsrWVA/uHTYmy/OPKX7WK7oXUA8CVJ8gC2q4tHQ+9oBhd41c3BUmBcJUnhT77/UzE8kwKutAZRfhJwVblW02KL/uuntOClGz0xzj0HvTKbGsJ/lfoVEqkDuLM/0SMJWbmMtFZmXN9wUAud9poye9JIuhw2dHiyDkDC9vougqT1XFhVI4pP7y6AeUVd6APzAkwS/b46dfxrG5GnHzHUv1IVDrtY9PH6cczq5R6Un0uYyUlwicHkgAW9ss0XKy2QCbWZbnBemee2DU9dsuY8/uHccq14jFrlqgfJ1AqP3JIsKQ22c4pJYi9xxVi91961/KGNmo6jHjbI3iJtV9sTwAXJdwYgbGkAo9m/tCKz8/XlFLbMbcRcemdkqC5zkGa2ZAVQs0sMoes4MCfWBggJ+6qi/ZGTuC1KHFnTINmkk8kkjw7Z1EGb9Bptodi25lu4UI4U/3AoHjkPasCIRE2emmuzw+v0rsQbKpSogU8UxM+2K9kK+66QdZzJFK6FBXBpJknSdHL3r5fhWt62tivXuGeNk5VYlvn/Aq8x5qGIhH/y8W84jF+tMqoyXAhC6is208PZ9J6e5xS6zAbwKdLuNVTqD1Hzwqgmb6iWJkk5lw=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(5023799004)(11063799006)(56012099006)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(11063799006)(56012099006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?kzO9nsn3hrvDinneL1RWJzpEsZnSXGjhFA1q9rtQfUMfzVkY9cQpP5BDlQpC?=
- =?us-ascii?Q?rcprc53+n74oZhyAjWJ7zvM3bhefquT3H1UFIsfHitw5+5/HrzukTR+cZSpT?=
- =?us-ascii?Q?MWPFR129pfw08zLmhJneHfMQBKKe4xt86KA10hS1wh7BI3sVbvTpbhqkMf+z?=
- =?us-ascii?Q?agec11p7OXnbH4ffAfYrq18ElbCWmgZvCaR+rLJUGQ+TcD9pYJzlPOQ5DWNh?=
- =?us-ascii?Q?nSCKgIQzXk3quoRsL4rlWDJi7ojHeFSwjuwz6klb2rZbJpTSwxh9vwaa56nw?=
- =?us-ascii?Q?RWOxCQKADULEETaKWgilBy2wv+YL4VRIQ08f1PZ6zc5upkC/sF3lJKOququl?=
- =?us-ascii?Q?L0wfOc1e3HHFRvAl8rvE5wT6WIm+XrwMxuJGP8sn+7ZAD1LcZyYvyc1ZSCB8?=
- =?us-ascii?Q?Cb0GguSiZuE8YBPDf5JxbkAxWlVSMt1FJg+3Wm2C+P158OWbMWpHK1bz7YZC?=
- =?us-ascii?Q?fc1PqJHOAtsEDgkcFAHdg05nJ2fc6D9LjERYO9RcpNbECueuSvBRAAM+O+a/?=
- =?us-ascii?Q?hiBSj2gdBeeyvz3sVrANwUjpcS/8IwasycdTse6xqimkU4YZ4qy4423BwcWT?=
- =?us-ascii?Q?yTGuQaFx+kLV7dRCq+Aaok0xbd9JBgG9swpL1v8oD8YcHPI802AMaTjL+0q6?=
- =?us-ascii?Q?WYx5I9YwNUJ93E8ZemgF+wSOxB1meyDYFAsO43DT3WnUC+vjIV474rxWSZR/?=
- =?us-ascii?Q?JW/4S52XWjJ/fDC2Pd77hIBvgs2j3Saif1L3PId9LaYv3+wf9modj8b9Oe1C?=
- =?us-ascii?Q?OhQ8vXo7xTZHfHAEBJ8JENeuZah8g+M2Oiw3Fq+lHC6ohHoSSlVsPX5adNBZ?=
- =?us-ascii?Q?E4x9r3vU/RLePO3Jvu56dZQDcdhXXrW0dN1eyQquFOpZwk40GzUDHvvY9uma?=
- =?us-ascii?Q?xhWLpyw8QFFXTm4Nut2MMp4mtT+A0bwsSIjDPj26FdpGkbi9tGvkzIQVxCqo?=
- =?us-ascii?Q?qoms1GuTlvYL2weARwDkZfebjn8ucNhgxx/L5ay9jb8j/ohwhyo6+OBqs+dY?=
- =?us-ascii?Q?oudUWfBtFYDftaIBJnA/h53LEw3XS//O3JHVGuJhoT1K7Qry20QsCsMAGvJo?=
- =?us-ascii?Q?6zrUxswHv+jjBUSYNt07miMUMAFRIXG3kAgG97uWSxTT0h6KzgTFh1Cl01Eb?=
- =?us-ascii?Q?N1xwWZURnbH30mHMrAcJvcab8XvYh+/n/V5AbNCrfyTZ8S2Ey+MutZ3o5x52?=
- =?us-ascii?Q?mAMEMMMSQJAKNDoavVscL4mxpW1Wzarw78H/LkYjSb/1vMNyGnclgn14VSZi?=
- =?us-ascii?Q?e/Z3dy7N1UKAzWdWRnq2ynw9KsfqzfclldcTQRQSb53yw9XBmwW7ojuNjun6?=
- =?us-ascii?Q?V4REAIiUzzbEj9WmbVujrRFq8Rd2LMDJcIjna+05aRgRRe2Lb+IiFycdSYMM?=
- =?us-ascii?Q?ciu76p1ZMWZV+2Sed6I7yln4WoXknWyglEyQLC167Coi0Ek4g3ljJLeWgyXU?=
- =?us-ascii?Q?Pw9tbfY9SVpKlBXd4gAtbEewfS1m3faOUxeRIdB6iK+wy8bsMQx4raGbgnT3?=
- =?us-ascii?Q?qWn6yB9IwRj4pNnVwXHaXlBxDqwtS1sVV3ObE+ucdf8f54bCkXBZvs55wgbo?=
- =?us-ascii?Q?tS1wtcB0qRlqJdb8X5url+tSx8QDjrm0FWaItkE+NfJD7ngLtzRP1fGUmrkc?=
- =?us-ascii?Q?loefIwOO/pfw4g16p8cbClLzbPcPTfO9bRk3cktsklQFnFFnv8sWFP4VZYmH?=
- =?us-ascii?Q?CspXEIYoDLpJi+DKZ3rd5Uo2zeq6WWFj2Jqbn6tPJ89+bSjVseDo500WpdGI?=
- =?us-ascii?Q?uz6MN8rWcg=3D=3D?=
+	=?us-ascii?Q?14uo/TLXkCq4v7fC1fAKcVWJtchyqF3tW9O2jkq7YA3uQoEhyPonS4BgUd5A?=
+ =?us-ascii?Q?FnqdZ8blUFpzn7C/P09kIW0UzGUtmwIv5nHEha01UOm1ZzpYdvloJRBh5sNE?=
+ =?us-ascii?Q?f96UyA0tWSyYEVAZLt+Aa+AXTzqnW1Nzm3egc3m1h/CkezsjWIxyvEhZ7D0o?=
+ =?us-ascii?Q?5JPtdSLN9bW/ULseSi+CGYA9rOFaRibGRZYJ67tNE7isVEt+lF82XEULKS88?=
+ =?us-ascii?Q?tpYp/1hNmAP5fsWsYuYVPTxtvRIvYGJhimUlfJOcH+23fXJV+Zhy+tirx5rY?=
+ =?us-ascii?Q?aOLktTqQI3/RKKFek+BHaU/b/mMjEh1CEnIMyiJObUFzDX1Qz2awIxB/XCFK?=
+ =?us-ascii?Q?sZeeQuRFoi1/p2n0uH+ALymS3XLIS3j4sdrZKBw09ngDi14b6vrMtZ8+l60R?=
+ =?us-ascii?Q?l/lpuR82PFbGI0nI3HNQU5fkJ/ipyqmBzdAYW7TqwGMP3LDfqS6+0XgMOHPN?=
+ =?us-ascii?Q?YFxaTcL0STxwKdm74ozFykLAr+N+9QTeFQBMwF5m+n+Q+GEfKafeQwjXv0kQ?=
+ =?us-ascii?Q?kpznlWQF6+29Ybdy39PTUe6sQJ1QJxDyWSnvmotgXHPSxUD1EkwZmvIAHcaq?=
+ =?us-ascii?Q?NoBAFEj4naTKtEyiH08PXF+WfwOH6UXzhDcyu+Go1U53CAhVFEce7kcLfKXN?=
+ =?us-ascii?Q?2aSILxw3yRriFWuikRb1LJ3gync1LM6t1gIpWFj685vbTnafwIHpNWAnN7J4?=
+ =?us-ascii?Q?Uql8faz3v/puE3JlCFrAknDWVpswIFOZKHzp//mrbW79o+fxM2IqcvY7r8sa?=
+ =?us-ascii?Q?X4P1XRAgbqjNtJ1RvR50womztCroQ3xKcbhWblYgJW4xv/j9ipiC80AxexB3?=
+ =?us-ascii?Q?nMHbaMNqGopgCfImjkZ7en718au9+LUAU3IhxvFxlGTq4tJ8ZgtmLqX69xuc?=
+ =?us-ascii?Q?NUIpT489PgpEv8rvwNLyfkHLrhNNJyiETvtSTDDq85uyL0go8I4NwTRj4Yiz?=
+ =?us-ascii?Q?cJojURQWkVZrrQk+6dhpPgw7dF7pYEGbvEeOsFC73bQSTdFnN8rUPo5J1g50?=
+ =?us-ascii?Q?0EvKwr2fv/cVxaWZRJH3xnXK2HpE2XVDjy8IyKZXA7n7x35kmaWpHKCuwC/y?=
+ =?us-ascii?Q?4tUM5+8P4svjV/tbXR9hEX1DOwuonznFBsQDvFEtFFovVgQyJe3+DLkjy/EI?=
+ =?us-ascii?Q?2xvWi4OhndSpLKPZd77HaLLqBdy+696ZM0KXUN2HFTX4ZhypC8p9bACMKrR+?=
+ =?us-ascii?Q?hwRGLPhvCH9qsg36Zjy3Lyx52LKNF9jA/Kyl/w7wuE538bBzWkjIij2tT6Qm?=
+ =?us-ascii?Q?fqvwlnPBJAgbMpFRxHyHekWXroFBRlMAnLh8DZNS1k420AVwuHZgKlvDeLFx?=
+ =?us-ascii?Q?bBkGCHe3HPF8e1BPN6tZM0eyCuDmaEGedXpOmWrBRW9LilxqXUONd1DJwn30?=
+ =?us-ascii?Q?EAn9dnU+6+WktgHmUXaHMYIXK+rayTXM03J/bbYGg2EYX+xCBiKzUIBN+RD+?=
+ =?us-ascii?Q?VUiYinHIlSLKC6/2AfZWCJ+84YKNCCGO8zJNijFNFtzgPTkzeL42lvqjBm2s?=
+ =?us-ascii?Q?yZvDZdVFKhLH7V7HtQAscvAp9EZ0lyUcVRG/29xPe4jIoljvcAESpvAYmCoj?=
+ =?us-ascii?Q?UUJiB+JeyVUZFV+1NxQUbNOzILSv7da1iO5RE8GIGTS6FPKyQR7Amao/p2ac?=
+ =?us-ascii?Q?x0kRfYmOiwXSQKXciq4EXxgLRewu0DnokhTBPcMQrKdva/S8E8GY9gBmY98o?=
+ =?us-ascii?Q?5a6oqmkldTBscajpsSlO2rvINNYkcbl7AM1VuSr8UiIfscAtQlf5B75O6NTy?=
+ =?us-ascii?Q?vnn+lOYDgg=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: df1cce8a-dddd-446e-f488-08dee16fb85c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 959a5b9b-2858-4e61-d22d-08dee1741e25
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 06:18:28.5972
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 06:49:57.3354
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MDQLPTskPE5UXH9Vetr9pd3W9wwVfXWnJxEm1OEtAkv7tfn8OwrI22RQebY8XYt2qJ9reFWyip8VYETEOs25YA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9112
+X-MS-Exchange-CrossTenant-UserPrincipalName: E2f+chGenyNeTh91P607ddyXhY3TcaSPnB/O6ufx4r4MVN+36zgKIzVoxHj0RUkL8iOI7WsR7BzwzJw2kE1Ozw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF75EAF8F39
 
 Hi Tejun,
 
-On Thu, Jul 09, 2026 at 12:50:36PM -1000, Tejun Heo wrote:
-> __scx_update_idle() notified only the root scheduler. A sub-scheduler that
-> holds a cid needs that cid's idle state to place and kick on it.
+On Thu, Jul 09, 2026 at 12:50:26PM -1000, Tejun Heo wrote:
+> When a sub-scheduler dispatches a task to a CPU it lacks the required
+> capability on, the task must be rejected rather than allowed to run.
 > 
-> Deliver ops.update_idle() to every scheduler that holds SCX_CAP_BASE on the
-> transitioning cid. The root holds every cap, so a real transition always
-> reaches it.
+> Add the machinery for that. Each rq gets a reject DSQ, a kernel-internal
+> holding queue that is never run and that the BPF scheduler cannot reach. An
+> insert that must be refused is diverted there instead of the local DSQ, and
+> a deferred requeue then hands the parked tasks back to the BPF scheduler to
+> re-decide. A cap revoke extends this to already-queued tasks. When the
+> revoke reaches the cpu's effective caps, the cpu scans its local DSQ and
+> reenqueues the tasks that no longer qualify.
 > 
-> Real transitions are not enough on their own. A cid that is already idle
-> when a sub-sched gains baseline access produces no transition, so the new
-> holder would never learn it is idle. The ecaps sync arms a re-notify on the
-> gain, and the next idle pick delivers ops.update_idle() to just that sched,
-> leaving holders that already track the cpu untouched. A matching loss of
-> baseline access drops any pending re-notify.
+> A migration-disabled task must run on its cpu, so a capless one is admitted
+> anyway and counted in the new SCX_EV_SUB_FORCED_ADMIT event.
 > 
-> Bypass suppresses ops.update_idle() too, so a cpu that goes idle during a
-> bypass window and stays idle yields no transition to re-deliver on
-> un-bypass. Arm the same re-notify for every sched leaving bypass. The acute
-> case is a child granted cids during its own ops.sub_attach(). The grant
-> lands while the child is bypassed and the notify walk skips it, so on
-> un-bypass it holds cids it never saw go idle. The root is owed the same and
-> is armed through a separate per-rq flag, which keeps this working when
-> sub-schedulers are compiled out.
+> This is preparation for the actual sub-sched cap enforcement. The divert is
+> wired but inert here.
 > 
-> v2: Gate the idle catch-up in pick_task_idle() to avoid a double ops.update_idle(). (sashiko AI)
+> v2: Admit offline-rq and migration_pending inserts to local, not reject. (sashiko AI)
 > 
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 > ---
 
 ...
 
-> +/*
-> + * Notify schedulers of an idle transition on @cpu's cid, delivering to every
-> + * sched that holds %SCX_CAP_BASE on the cid (the root holds every cap). A real
-> + * transition (@do_notify) reaches all holders. A forced one (@root_renotify for
-> + * the root, a sub-sched's idle_renotify marker for a sub) reaches only the owed
-> + * scheds.
-> + */
-> +static void scx_idle_notify(struct rq *rq, bool idle, bool do_notify, bool root_renotify)
-> +{
-> +	s32 cpu = cpu_of(rq);
-> +	s32 cid = scx_cpu_arg(cpu);
-> +	struct scx_sched *pos;
+> @@ -1344,7 +1351,12 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+>  				 struct scx_dispatch_q *dsq, struct task_struct *p,
+>  				 u64 enq_flags)
+>  {
+> -	bool is_rq_owned = dsq_is_rq_owned(dsq);
+> +	bool is_rq_owned = false;
 > +
-> +	lockdep_assert_rq_held(rq);
-> +
-> +	pos = scx_next_descendant_pre(NULL, scx_root);
-> +	while (pos) {
-> +		bool forced = false;
-> +
-> +		if (unlikely(scx_missing_caps(pos, cpu, SCX_CAP_BASE))) {
-> +			pos = scx_skip_subtree_pre(pos, scx_root);
-> +			continue;
-> +		}
-> +
-> +		if (pos == scx_root) {
-> +			forced = root_renotify;
-> +		}
-> +#ifdef CONFIG_EXT_SUB_SCHED
-> +		else if (per_cpu_ptr(pos->pcpu, cpu)->idle_renotify) {
-> +			per_cpu_ptr(pos->pcpu, cpu)->idle_renotify = false;
-> +			forced = true;
-> +		}
-> +#endif
-> +		if ((do_notify || forced) && SCX_HAS_OP(pos, update_idle) &&
-> +		    !scx_bypassing(pos, cpu))
-> +			SCX_CALL_OP(pos, update_idle, rq, cid, idle);
-> +		pos = scx_next_descendant_pre(pos, scx_root);
+> +	if (dsq->id == SCX_DSQ_LOCAL) {
+> +		dsq = scx_local_or_reject_dsq(sch, rq, p, &enq_flags);
+> +		is_rq_owned = true;
 > +	}
-> +}
 
-So, this makes every real idle/busy transition walk the whole scheduler
-hierarchy and potentially invoke ops.update_idle() for every cap-holding
-scheduler while the rq lock is held and IRQs are disabled?
+With CONFIG_EXT_SUB_SCHED=y, this calls scx_local_or_reject_dsq() for every
+local DSQ insertion even when there are no sub-schedulers attached. It shouldn't
+be too bad, but the hot path still pays for the out-of-line call and the
+CID/capability bookkeeping.
 
-This becomes O(number of cap-holding schedulers) BPF callbacks per idle
-transition.
+Maybe the same static key that I suggested for the ops.update_idle() case
+(PATCH 28/33) can be used here as well and we could do something like:
 
-I haven't benchmarked this, so I'm not sure if it's a valid performance concern.
-We don't have to fix this now, it can be a future improvement. In that case, if
-we prove that we have a real bottleneck here, would it make sense to maintain a
-per-rq list of schedulers that both hold effective SCX_CAP_BASE and implement
-ops.update_idle()?
-
-Also, for the root-only case, would it be worth keeping the old direct
-ops.update_idle() path behind a static key which is enabled while any
-sub-scheduler is attached?
+    if (!static_branch_unlikely(&scx_has_sub_scheds))
+        return &rq->scx.local_dsq;
 
 Thanks,
 -Andrea
