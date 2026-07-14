@@ -1,63 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D549C3D3304;
-	Mon, 13 Jul 2026 23:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFB625B0B8
+	for <sched-ext@lists.linux.dev>; Tue, 14 Jul 2026 02:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783984607; cv=none; b=o3nC1XFrtYZbzzhcN81+q9Pp3uBmw/vC5fB+VNO6tze5Z6sH3HTGufgCUO/51V81KqH18oAlpEMHus1gq6qmhhgwiFceUVdERI+BXdDom6zrHWL49Zm6XrRrqbKsK75bIuP1UalqnBi6uZnhf5JfdbBE++MNkFmMbOavsswp4Go=
+	t=1783997235; cv=none; b=Nkwk4hu9+/DxMXhwa1Bc43+KOBR7n7YDZi3XoKML/+9IGiTtYbsqc2BgAhx/4CrjS/H5gHJUpaXQkIpb+Ue+cUxMB0pPDwxmE5iAlVJdwPHQ7RaD5JfFcODcLsatvCwBxg6la07J8+HssmYJ31Mz+xrwSQqK+B/NJGRvhG0Uqz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783984607; c=relaxed/simple;
-	bh=8tHuk1Kwx9gyWdtqKPuFeDMwhWzjGoBmQNc8v9kJqsE=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=BiLLfAFRo3I0UtLGmcQpvO9Nz3Ud/dpc5AnLVgTvLsEM4aM17Mu/2ZsqUgwaAsrueX+9eBpvVB9xBXQYIh74/WCBgxcP64PIsCtdCLn4qxob8pdUqLu7vYKmyRSmt7+OBAFfBdxd61WHIFAK+bnSPHNFc117VfYEXzSy7MU+CPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KovDikER; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783997235; c=relaxed/simple;
+	bh=Jmbq4Z26iQHkmKxrnQWds2dMifspHX44AzT9QT2tZJ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G9KV/HKUTButfK3BtyweDKEXmzrwWgKfmAitSO6n9sZ5dXMbDYy74eU07ugBdjolQwQVHS9uVVpvNJXin0XoEq5UkvI/q96hsxD3SgSTeTuslPTwdDDZVtoMvxhakA/SezBTzpqDDie6yIMifXijQh6QTXbp6U/1DFYpoNvKQ6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AsiVQpAn; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KovDikER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BA91F000E9;
-	Mon, 13 Jul 2026 23:16:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783984600;
-	bh=VHFDmWFWYk+A6dlCWEz6qWbzVTZbqrq9J1f38ZHdzOo=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc;
-	b=KovDikER6q6yj77PHYuf82sGy12rslWxxHvhyJ7IdhyIX/gW+MQ6Vwje/K5pIAsr1
-	 y28B8KV0abad3w8RCvntJbUNBT5Ar6VQi4JhqSo/xVcZMqAJ2TUdj8FqrcEcT1WsH7
-	 G8gQHHiO8TkKjFfvIUTDgzK2UKR2KbpjirstKlDYZW3ZCsZa7TZrChVuLT9GEphTpY
-	 9S6AZeyAgmWPZ19RrGhAh6GHZJg6fNz50DiVQA5kvVAMgNX3XPjRFSzhTboXZJcl6H
-	 r6nZ4JzbxJnxLEEvRXM1XJtPald6n6XE5XOiTMvRRbmOraVRwiaHUElAVXCIUrduom
-	 tkhyarNV+9tUA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 56B563924FA3;
-	Mon, 13 Jul 2026 23:16:16 +0000 (UTC)
-Subject: Re: [GIT PULL] sched_ext: Fixes for v7.2-rc3
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <876d09cb8d47617d382a7e2af7a7fd6b@kernel.org>
-References: <876d09cb8d47617d382a7e2af7a7fd6b@kernel.org>
-X-PR-Tracked-List-Id: <sched-ext.lists.linux.dev>
-X-PR-Tracked-Message-Id: <876d09cb8d47617d382a7e2af7a7fd6b@kernel.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.2-rc3-fixes
-X-PR-Tracked-Commit-Id: 0e2f4ab68a89fad42e0f5a9ff4b740738e7aa1d6
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: f7574d3f906a963d7b70f01beff731ee0351d5c5
-Message-Id: <178398457483.2881721.17658018427084030493.pr-tracker-bot@kernel.org>
-Date: Mon, 13 Jul 2026 23:16:14 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AsiVQpAn"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c966b9ee9cbso2122421a12.1
+        for <sched-ext@lists.linux.dev>; Mon, 13 Jul 2026 19:47:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783997233; x=1784602033; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=C/jMBU38+ad+mYHMb9OoGQI14GFwZsPgUUyAfPzMVGI=;
+        b=AsiVQpAn0GyUMzyz00o+nn8ifsIR++AoyWZ/bZXPZhXcZ0XJzChlGYTyNI03Pkj1fD
+         nvtUp5isbDV5BWVheAVerjfNahrkVc3SnadS5NR6NkE1Xbkv80x1CGftxfR9nlJf1Bbv
+         cW434FPQUWOAUUlEW1fjZhiR6nHybPxOmePt8OGhmRW58QUmTcUHo/KRd9S9avtGIV3e
+         SBOHj7WVSQ1fhY921lDX/ZCyui1eSsPHK3Lw6xM22UmuWEuHlbGC+6BE/IB4W/3HozCA
+         t6oHjNMrIACOfqgKoMRjhcfMVwudWTOS4r7LiSQiFcAD8xJAziMi3P1wc/UZS2HIlXIi
+         PjPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783997233; x=1784602033;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=C/jMBU38+ad+mYHMb9OoGQI14GFwZsPgUUyAfPzMVGI=;
+        b=DaOIVqe26wbh/TpdAJRt7zYRVkaJuMYn8n8iFv5F4PU6knwer6P/+q8v2afhUqdXHF
+         xDOAYF3Rgi2P6FdfN1+2XaxSX0E6rycmpu5tYXIEYj5gLdi2HbjnC+KygOLDPGoKjjMB
+         1AxG1MVikV2XiAiHL4grZb4h4Zj5ytYJ0FD257hHwzwBO+nDrAFaVgddhbWK3LJhs09h
+         n8t9E1f9l2rijcSxX8mEHlBDq3tsWj5gQEsjLiNpshQNOmZVEqE+EYIec9zDZLKM7egY
+         p8mAGt+UtEAVWHlCyYiKv85N7GTCPSkXLT9GUB8glRrMSAQ44wZqWlODqeCEQw0j8HGF
+         Llbw==
+X-Forwarded-Encrypted: i=1; AHgh+RrOzcjnz5jXHk+dPUfTC9QXQzH3ygYNl8QHIou18MRKK2RovyayNri5n/CNngNKOxNejN9JwsOUqmo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxdvHw1fEctFeYT9RfVuJ+v74nYFe35YjmzSar5lGR1pE0uaAB5
+	hNjVRgQgv3tWX9iu32gYdV1vNZKetJnRNC0H46/duP85pZhaKVUT2xfg
+X-Gm-Gg: AfdE7cnls2yJNWCCisUZXKTAq5bJo7IIrFxT365L8QxIE/8hO9rwWLa0FZvgeKaQjSN
+	0++u1WNtjiXh6b2acVapw4cU3CYqTxXv6EaMh/c1j9BSLcibSvCodFw6MVlTP0ZrmmyXTrWvFe7
+	aOGH1zAL0D/O8fk53vCvH7djnr8exXZ3n+2vDqz1P+athyLB6CArxgzTEWvchiCVy0dm8boqPoB
+	sxEcA8qx0YBSrF00ndSTyqHpuXauuKCCYUYwbiVMjYp0hGc2GyktwPZ2huNfaNohxg6T8P6ImYE
+	CsvTTja5y7U+D+ehIeC1kC9EfgFoVZiaeAFngwvQeCcFALfQ3Joj4cbQgyJ8l2laZj0Au8zSXud
+	NXjcfUkQWygo8eS+lR8Y2sUBMArCTOgDNDsz4RD9INkbRcAAkYKVsAwHLqfyYdJn2cjcjMf5VYm
+	AhBg28CmBf1CPiCOMIkKg/USc8idezk/s7ccx3a9QU7WZxM+qJT6puprmjjGbGhas8Jw==
+X-Received: by 2002:a05:6a00:f89:b0:842:2419:6c0b with SMTP id d2e1a72fcca58-84889637ff9mr9176103b3a.10.1783997233424;
+        Mon, 13 Jul 2026 19:47:13 -0700 (PDT)
+Received: from mi-HP-ProDesk-680-G6-PCI-Microtower-PC.mioffice.cn ([43.224.245.226])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f29c7d9sm671460b3a.26.2026.07.13.19.47.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jul 2026 19:47:13 -0700 (PDT)
+From: "zhidao su (Xiaomi)" <soolaugust@gmail.com>
 To: Tejun Heo <tj@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	"zhidao su (Xiaomi)" <soolaugust@gmail.com>
+Subject: [PATCH] sched_ext: Validate cid override before updating tables
+Date: Tue, 14 Jul 2026 10:47:04 +0800
+Message-ID: <20260714024704.3318132-1-soolaugust@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-The pull request you sent on Mon, 13 Jul 2026 11:29:05 -1000:
+scx_bpf_cid_override() currently updates the cid lookup tables as it
+walks the user supplied mapping. If validation fails midway, earlier
+entries may remain installed.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.2-rc3-fixes
+Split validation and table updates so a failed override leaves the
+existing mapping unchanged.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/f7574d3f906a963d7b70f01beff731ee0351d5c5
+Signed-off-by: zhidao su (Xiaomi) <soolaugust@gmail.com>
+---
+ kernel/sched/ext/cid.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Thank you!
-
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index f31113b080e9..9e3a466f296f 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -329,6 +329,11 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
+ 			scx_error(sch, "cid %d assigned to multiple cpus", c);
+ 			return;
+ 		}
++	}
++
++	for_each_possible_cpu(cpu) {
++		s32 c = cpu_to_cid[cpu];
++
+ 		scx_cpu_to_cid_tbl[cpu] = c;
+ 		scx_cid_to_cpu_tbl[c] = cpu;
+ 	}
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+2.43.0
+
