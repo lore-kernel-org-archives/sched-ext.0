@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C142432BF2;
-	Tue, 14 Jul 2026 23:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB702423EAF;
+	Tue, 14 Jul 2026 23:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784070564; cv=none; b=mt5KP75e/e53vzGDOPPyXbnIYzoyvnAhsgfsWBebL8E7zR1F8CaTZOBMu862u0/BT1QG0i6MJH0wJcNSJSDd3xo37S4P4EOUZgdG42OmeIKDBseQXef5ewBK+k6XYOmKHpy7gLC1RnVh7kCW/VtspfJnL4F6kwnH5ZzoJ7f3taQ=
+	t=1784070566; cv=none; b=UQ8lvvCvtaR+R8qDvDE9LxRv9nXKWWazQG7EXVq/X7OEALzvGzfRIqr/HbJ/Z+L2uGtlDHp1tNHeSxfPCXuaBBGHsu6xYOoe3piwF/tVDGXLp6nCEt2zA5R3qe7fcTO1rOlNhEMYZZFset1CmHOTeK+7HNZHUL3FM3rMjPiKmwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784070564; c=relaxed/simple;
-	bh=AinPRch1s6wSU+B4poHiDNO1buWe0vDixm86Iclwt5g=;
+	s=arc-20240116; t=1784070566; c=relaxed/simple;
+	bh=XufO/yqtMcnIxH8QxMFa+00TxB4h4Z5/toBQi/3s/o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWxzqckP3+q4pRVerqpRHEsDjRqhTNQOx1Ry9NcokWl9fafCZOnXcJ9kyZ1GNEaMeO7P8ESTCcsqpwPEIC5m7J6mJq066HP4m0se8NMy+BF712sbz9ntu/Q1KD+W/Tb7Vitc0PT+aKUkBU3vQ/6B9nISrxCkD/Qx4dxySUd+lVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LHrU3J7T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gM+yJdWxnXmT3JGKF2ZxvGtxIjrEpncs8LwKts7Y+QngDoUVg1+WkGnXvDVpqtk5qiFClZcKUJGeuiKxd+PKyIdI5icmyYRa7W9vlifnwCVi7CLQ/hN17qCrWT+imaeFqkYQI3XgdXGdNcpDLJId0UUkLm9mIP+b0q7Uk9ywRnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=InVMqFl/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LHrU3J7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494B51F000E9;
-	Tue, 14 Jul 2026 23:09:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="InVMqFl/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD091F00A3A;
+	Tue, 14 Jul 2026 23:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784070559;
-	bh=8/qloYRphb4DJ+GSDdndAKC1FBBzMea379jAtLUMK1M=;
+	s=k20260515; t=1784070560;
+	bh=o94gM3NnBfKi8tn/2xx10BvSRbnse1wOX0kzMW4tI8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LHrU3J7TP+dGtAwcVDKOdbcsKu2hd6KpYo6jFRvKxpxnaI7k1x+vGZuXA69Nb/vS2
-	 4agH04LpAZTMyczYQEtF7T+wp6nrZdeJEuBz0TKIgVEROckCyfkda70l4kPGwJQ85Z
-	 oQmbiqCkxiVPxgCUor1RzhkpsFQWLh1oArpRCg4sKKXAMIHc5X7v5HKrkvO7wLRrFt
-	 6lbMgcndxd6pwBi4gKwvybOvV+o4POqlWDgTvlr1jsWVaCOSWeHtpIl/xMhjQrUkTu
-	 9cEQkE+Q061FcHmU4TyWTooFcCOtWIZC5QSXoF6K1ruziZTvHDhMyN+m8Ry7Xu3Jam
-	 hFv1YskOXydpQ==
+	b=InVMqFl/z9X6uv32sW/9YvfRytUikkCkX6TELC6seR3h1PAeqyXAg3ExJ2MaXuuP6
+	 gI6gNdD4Z0KKtHFr8VBfqUSgLfurwZJoGfuxnDwQ9p5+m2DJd6FhuFiGRBI8KUUfW8
+	 9AEAdrIy+zkgnGS6u5+oLU+v5w57H8guMFgUIGNlShvaYO6s9oH8p0Lv5L8uCwztxz
+	 y8OBv240jZ2dwEQL1aGSnE+rto95OvIFLCrDzP9Dl0gyGGgbrUxMBya4Oh90FDgJ4I
+	 0xNzSJ5eJsqcjTLW27OYGwWMNP0T+IgybO/XDcMKT5TAmlQonNI3D+8Q7Zy46JiYIj
+	 byfKI9aUDSfeg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: Emil Tsalapatis <emil@etsalapatis.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 1/4] sched_ext: Remove queued ecaps syncs directly on sched teardown
-Date: Tue, 14 Jul 2026 13:09:14 -1000
-Message-ID: <20260714230917.84158-2-tj@kernel.org>
+Subject: [PATCH 2/4] sched_ext: Move scx_dispatch_sched() from sub.h to internal.h
+Date: Tue, 14 Jul 2026 13:09:15 -1000
+Message-ID: <20260714230917.84158-3-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260714230917.84158-1-tj@kernel.org>
 References: <20260714230917.84158-1-tj@kernel.org>
@@ -48,148 +48,255 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_discard_ecaps_to_sync() waited for balance_one() to consume a dying
-sched's queued ecaps sync, polling with resched_cpu() + msleep(). The wait
-is unbounded - the ext dl_server forces picks through sustained fair or RT
-load only while ext tasks are queued, so an ext-idle cpu monopolized by a
-higher class can stall the teardown indefinitely.
-
-Remove the node directly instead: take all queued nodes, drop the dying
-sched's and resplice the rest. Consumption runs under the rq lock and batch
-nodes read as on-list throughout, so the producer-side dedup stays correct.
-
-A node that an in-flight scx_process_sync_ecaps() batch holds across a
-dispatch-induced rq unlock still needs a wait, but one bounded by that batch
-completing rather than by a future balance.
+scx_dispatch_sched() is common dispatch machinery, not sub-scheduler support
+code, and looks out of place in sub.h. Move it to internal.h. cid.h is
+included near the tail for scx_cpu_arg() as it depends on internal.h
+declarations. Pure code move, no functional changes.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c |  2 +-
- kernel/sched/ext/sub.c | 67 ++++++++++++++++++++++++++----------------
- 2 files changed, 43 insertions(+), 26 deletions(-)
+ kernel/sched/ext/internal.h | 111 ++++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/sub.h      | 109 -----------------------------------
+ 2 files changed, 111 insertions(+), 109 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index f8f8597b6f78..428f2bfb2cda 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -4877,7 +4877,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
- 		 */
- 		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index d7a1d6a14ebf..88b2a9b5d3ab 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -2289,4 +2289,115 @@ static inline struct scx_sched *scx_prog_sched(const struct bpf_prog_aux *aux)
+ static inline struct scx_sched *scx_parent(struct scx_sched *sch) { return NULL; }
+ #endif	/* CONFIG_EXT_SUB_SCHED */
  
--		/* retire the queued ecaps syncs so the pcpu can be freed */
-+		/* remove the queued ecaps sync so the pcpu can be freed */
- 		scx_discard_ecaps_to_sync(cpu, pcpu);
- 
- 		/*
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 68ab3675337f..198063a78a3a 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -13,7 +13,6 @@
-  * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-  * Copyright (c) 2026 Tejun Heo <tj@kernel.org>
-  */
--#include <linux/delay.h>
- #include <linux/rhashtable.h>
- #include "internal.h"
- #include "cid.h"
-@@ -537,7 +536,12 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 		gained = ecaps & ~old;
- 		lost_all |= lost;
- 
--		/* tell the sched its effective caps on this cid changed */
++#include "cid.h"
++
++/*
++ * One user of this function is scx_bpf_dispatch() which can be called
++ * recursively as sub-sched dispatches nest. Always inline to reduce stack usage
++ * from the call frame.
++ */
++static __always_inline bool
++scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
++		   struct task_struct *prev, bool nested)
++{
++	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
++	int nr_loops = SCX_DSP_MAX_LOOPS;
++	s32 cpu = cpu_of(rq);
++	bool prev_on_sch = (prev->sched_class == &ext_sched_class) &&
++		scx_task_on_sched(sch, prev);
++
++	if (scx_consume_global_dsq(sch, rq))
++		return true;
++
++	if (scx_bypass_dsp_enabled(sch)) {
++		/* if @sch is bypassing, only the bypass DSQs are active */
++		if (scx_bypassing(sch, cpu))
++			return scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0);
++
++#ifdef CONFIG_EXT_SUB_SCHED
 +		/*
-+		 * Tell the sched its effective caps on this cid changed. The
-+		 * invocation is equivalent to the dispatch path and may drop
-+		 * and re-acquire the rq lock temporarily while the rest of
-+		 * @batch is held privately, see scx_discard_ecaps_to_sync().
++		 * If @sch isn't bypassing but its children are, @sch is
++		 * responsible for making forward progress for both its own
++		 * tasks that aren't bypassing and the bypassing descendants'
++		 * tasks. The following implements a simple built-in behavior -
++		 * let each CPU try to run the bypass DSQ every Nth time.
++		 *
++		 * Later, if necessary, we can add an ops flag to suppress the
++		 * auto-consumption and a kfunc to consume the bypass DSQ and,
++		 * so that the BPF scheduler can fully control scheduling of
++		 * bypassed tasks.
 +		 */
- 		if (ecaps != pcpu->reported_ecaps &&
- 		    SCX_HAS_OP(pcpu->sch, sub_ecaps_updated) &&
- 		    !scx_bypassing(pcpu->sch, cpu)) {
-@@ -661,38 +665,51 @@ void scx_offline_ecaps(struct rq *rq)
- }
- 
- /*
-- * @pcpu's sched was unhashed before the grace period, so nothing new queues.
-- * Flush its pending sync so the pcpu can be freed. If the cpu is online and
-- * scx is enabled, drain via balance_one(). Otherwise, discard under the rq
-- * lock.
-+ * @pcpu's sched was unhashed before the grace period, so nothing re-queues its
-+ * sync node. Remove the node from @rq's pending list so the pcpu can be freed.
-  */
- void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu)
- {
- 	struct rq *rq = cpu_rq(cpu);
-+	struct llist_node *head = NULL, *tail = NULL;
-+	struct llist_node *pos, *tmp;
++		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
++
++		if (!(pcpu->bypass_host_seq++ % SCX_BYPASS_HOST_NTH) &&
++		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
++			__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
++			return true;
++		}
++#endif	/* CONFIG_EXT_SUB_SCHED */
++	}
++
++	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
++		return false;
++
++	dspc->rq = rq;
 +
 +	/*
-+	 * llist can't unlink a single node. Take all queued nodes, drop @pcpu's
-+	 * and resplice the rest. Nodes in the taken batch read as on-list
-+	 * throughout, so queue_sync_ecaps() stays correct.
++	 * The dispatch loop. Because scx_flush_dispatch_buf() may drop the rq
++	 * lock, the local DSQ might still end up empty after a successful
++	 * ops.dispatch(). If the local DSQ is empty even after ops.dispatch()
++	 * produced some tasks, retry. The BPF scheduler may depend on this
++	 * looping behavior to simplify its implementation.
 +	 */
-+	if (llist_on_list(&pcpu->ecaps_to_sync_node)) {
-+		scoped_guard (rq_lock_irqsave, rq) {
-+			llist_for_each_safe(pos, tmp, llist_del_all(&rq->scx.ecaps_to_sync)) {
-+				if (pos == &pcpu->ecaps_to_sync_node) {
-+					init_llist_node(pos);
-+				} else {
-+					pos->next = head;
-+					head = pos;
-+					if (!tail)
-+						tail = pos;
-+				}
-+			}
-+			if (head)
-+				llist_add_batch(head, tail, &rq->scx.ecaps_to_sync);
++	do {
++		dspc->nr_tasks = 0;
++
++		if (nested) {
++			SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
++				    prev_on_sch ? prev : NULL);
++		} else {
++			/* stash @prev so that nested invocations can access it */
++			rq->scx.sub_dispatch_prev = prev;
++			SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
++				    prev_on_sch ? prev : NULL);
++			rq->scx.sub_dispatch_prev = NULL;
 +		}
-+	}
- 
++
++		scx_flush_dispatch_buf(sch, rq);
++
++		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice) {
++			rq->scx.flags |= SCX_RQ_BAL_KEEP;
++			return true;
++		}
++		if (rq->scx.local_dsq.nr)
++			return true;
++		if (scx_consume_global_dsq(sch, rq))
++			return true;
++
++		/*
++		 * ops.dispatch() can trap us in this loop by repeatedly
++		 * dispatching ineligible tasks. Break out once in a while to
++		 * allow the watchdog to run. As IRQ can't be enabled in
++		 * balance(), we want to complete this scheduling cycle and then
++		 * start a new one. IOW, we want to call resched_curr() on the
++		 * next, most likely idle, task, not the current one. Use
++		 * __scx_bpf_kick_cpu() for deferred kicking.
++		 */
++		if (unlikely(!--nr_loops)) {
++			scx_kick_cpu(sch, cpu, 0);
++			break;
++		}
++	} while (dspc->nr_tasks);
++
 +	/*
-+	 * An in-flight scx_process_sync_ecaps() batch may still hold the node
-+	 * privately across dispatch-induced rq unlocks, reading as on-list.
-+	 *
-+	 * Because a bypassing sched gets no op call, init_llist_node() and all
-+	 * @pcpu accesses share one contiguous lock hold, off-list under the rq
-+	 * lock means @pcpu won't be accessed again.
++	 * Prevent the CPU from going idle while bypassed descendants have tasks
++	 * queued. Without this fallback, bypassed tasks could stall if the host
++	 * scheduler's ops.dispatch() doesn't yield any tasks.
 +	 */
- 	while (true) {
- 		scoped_guard (rq_lock_irqsave, rq) {
--			/*
--			 * scx_process_sync_ecaps() takes the node off the list
--			 * before it is done accessing @pcpu but does all of it
--			 * under the rq lock. Off-list observed under the rq
--			 * lock guarantees that the sync is complete.
--			 */
- 			if (!llist_on_list(&pcpu->ecaps_to_sync_node))
- 				return;
--			/*
--			 * Discard only when the cpu is truly down. cpu_active()
--			 * is already set when scx_online_ecaps() queues an online
--			 * resync while SCX_RQ_ONLINE is not - so test cpu_active(),
--			 * or that resync would be dropped.
--			 */
--			if (!scx_enabled() || !cpu_active(cpu)) {
--				discard_queued_syncs(rq);
--				return;
--			}
- 		}
--		resched_cpu(cpu);
--		msleep(1);
-+		cpu_relax();
- 	}
- }
++	if (scx_bypass_dsp_enabled(sch))
++		return scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0);
++
++	return false;
++}
++
+ #endif /* _KERNEL_SCHED_EXT_INTERNAL_H */
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index f72c18a5972a..d06bf24aee83 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -172,113 +172,4 @@ static inline bool scx_task_can_stay_on_cpu(struct rq *rq, struct task_struct *p
  
-@@ -704,7 +721,7 @@ void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu)
-  * still-open link fd defers it) and can leave queued ecaps syncs behind.
-  * Processing them would decode the dead sched's pshards with the current cid
-  * layout. Discard them instead. The backing scx_sched_pcpu's are still
-- * allocated as the free path drains ecaps_to_sync_node before freeing.
-+ * allocated as the free path removes ecaps_to_sync_node before freeing.
-  */
- void scx_discard_stale_ecaps_syncs(void)
- {
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
+-/*
+- * One user of this function is scx_bpf_dispatch() which can be called
+- * recursively as sub-sched dispatches nest. Always inline to reduce stack usage
+- * from the call frame.
+- */
+-static __always_inline bool
+-scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+-		   struct task_struct *prev, bool nested)
+-{
+-	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
+-	int nr_loops = SCX_DSP_MAX_LOOPS;
+-	s32 cpu = cpu_of(rq);
+-	bool prev_on_sch = (prev->sched_class == &ext_sched_class) &&
+-		scx_task_on_sched(sch, prev);
+-
+-	if (scx_consume_global_dsq(sch, rq))
+-		return true;
+-
+-	if (scx_bypass_dsp_enabled(sch)) {
+-		/* if @sch is bypassing, only the bypass DSQs are active */
+-		if (scx_bypassing(sch, cpu))
+-			return scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0);
+-
+-#ifdef CONFIG_EXT_SUB_SCHED
+-		/*
+-		 * If @sch isn't bypassing but its children are, @sch is
+-		 * responsible for making forward progress for both its own
+-		 * tasks that aren't bypassing and the bypassing descendants'
+-		 * tasks. The following implements a simple built-in behavior -
+-		 * let each CPU try to run the bypass DSQ every Nth time.
+-		 *
+-		 * Later, if necessary, we can add an ops flag to suppress the
+-		 * auto-consumption and a kfunc to consume the bypass DSQ and,
+-		 * so that the BPF scheduler can fully control scheduling of
+-		 * bypassed tasks.
+-		 */
+-		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
+-
+-		if (!(pcpu->bypass_host_seq++ % SCX_BYPASS_HOST_NTH) &&
+-		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
+-			__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
+-			return true;
+-		}
+-#endif	/* CONFIG_EXT_SUB_SCHED */
+-	}
+-
+-	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
+-		return false;
+-
+-	dspc->rq = rq;
+-
+-	/*
+-	 * The dispatch loop. Because scx_flush_dispatch_buf() may drop the rq
+-	 * lock, the local DSQ might still end up empty after a successful
+-	 * ops.dispatch(). If the local DSQ is empty even after ops.dispatch()
+-	 * produced some tasks, retry. The BPF scheduler may depend on this
+-	 * looping behavior to simplify its implementation.
+-	 */
+-	do {
+-		dspc->nr_tasks = 0;
+-
+-		if (nested) {
+-			SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
+-				    prev_on_sch ? prev : NULL);
+-		} else {
+-			/* stash @prev so that nested invocations can access it */
+-			rq->scx.sub_dispatch_prev = prev;
+-			SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
+-				    prev_on_sch ? prev : NULL);
+-			rq->scx.sub_dispatch_prev = NULL;
+-		}
+-
+-		scx_flush_dispatch_buf(sch, rq);
+-
+-		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice) {
+-			rq->scx.flags |= SCX_RQ_BAL_KEEP;
+-			return true;
+-		}
+-		if (rq->scx.local_dsq.nr)
+-			return true;
+-		if (scx_consume_global_dsq(sch, rq))
+-			return true;
+-
+-		/*
+-		 * ops.dispatch() can trap us in this loop by repeatedly
+-		 * dispatching ineligible tasks. Break out once in a while to
+-		 * allow the watchdog to run. As IRQ can't be enabled in
+-		 * balance(), we want to complete this scheduling cycle and then
+-		 * start a new one. IOW, we want to call resched_curr() on the
+-		 * next, most likely idle, task, not the current one. Use
+-		 * __scx_bpf_kick_cpu() for deferred kicking.
+-		 */
+-		if (unlikely(!--nr_loops)) {
+-			scx_kick_cpu(sch, cpu, 0);
+-			break;
+-		}
+-	} while (dspc->nr_tasks);
+-
+-	/*
+-	 * Prevent the CPU from going idle while bypassed descendants have tasks
+-	 * queued. Without this fallback, bypassed tasks could stall if the host
+-	 * scheduler's ops.dispatch() doesn't yield any tasks.
+-	 */
+-	if (scx_bypass_dsp_enabled(sch))
+-		return scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0);
+-
+-	return false;
+-}
+-
+ #endif /* _KERNEL_SCHED_EXT_SUB_H */
 -- 
 2.55.0
 
