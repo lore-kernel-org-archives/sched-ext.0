@@ -1,111 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309352E6116
-	for <sched-ext@lists.linux.dev>; Wed, 15 Jul 2026 21:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2186E3C3439;
+	Wed, 15 Jul 2026 23:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784151329; cv=none; b=grlkyIcv09VtKyW0HzUNJ2LdRiL5zCkhkF1Pvrn/veYvML+CNJDmfXbdupzdMH8PiqEOuPdnjmTtzpVjSMIcRm/XrwVFRLdszKoDaQwNXqLqX8BkbflzL/vRqSPn36hEtINLKA3pnPDbQoz2zsJ9P2ov/O4ke5N0iHslnEra7AE=
+	t=1784159496; cv=none; b=eAHTWgtKouoQxvkA5KQWLH7RaIe5Y7Wx5vp0XnNT54V86hXZc3FQ8Uo39o5daAj9wI5TRHJg/mRIv08RT98RRaTnPEx81zjQoJewjrrEIS/wimlld6/GrCwSvuAkZnYyQM23YSmwR6/E3uT4oQgiKnQSMhFLClnzIxCQQlm5qoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784151329; c=relaxed/simple;
-	bh=nZBB7qLFM46Jq2bFzhWFVy3M67b+9UyF4ILsF7c72Ac=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Q74WH4K0/mpv6jOUwvK+U2r4kUzTok2DPLkGeWmjt08Q/euSMlJYZK4PhcpJn9ZoZuaYuPx7p6yuRbtiut7qbvXeDR4OSXBT1QTKQXMKwxoMu1LQtzsTN2H+84xxtG+NFA/Z4o3X6f/Nuhm4f/qAiLWPBe8X2YcQpnz8Rf5MDxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GeTeyysP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784159496; c=relaxed/simple;
+	bh=fl6mQ+JfnEBn5S4YLXZoNhv/udFB2ZQ9F45lyYPqzk0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ewnjfXpKZbex0jKdjeBxgOYJbp2Fyb4sIkRzM5fXAabsvl/yYz0MF0ahj9ybRvYEuejOeeTDqDAwZbo3wf5Fy3SoAiOjjbdr2kjr/C7UJl1jcIn6kfoEVVFxzL4Da5t6267mOEO5sX5tukmNnztFHmSGwZg28I3bifzJaUw70vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NEj5QVXk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GeTeyysP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DB31F000E9;
-	Wed, 15 Jul 2026 21:35:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NEj5QVXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867B01F000E9;
+	Wed, 15 Jul 2026 23:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784151327;
-	bh=KlxAHLBy/+CQ41ro+OT0VAr8KDuvhAK1PsteXZUnjKo=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=GeTeyysPKthCjCH1tmnOr52fiM0ng+8SFgd1A+GaH9zktJXwHDufxTYytOjRtXl2+
-	 /Q8yAYX5F+PwlEO3WS/WkVSVn2tShXk1YySFWJXohC08pz11uKCP13Inxlt9YuQtYW
-	 VJUAJpBUyakFnTuTVVRXAInD0/gMn6xJJHJ6Yhmh0tQr7HYFOERs9Y5rNrPEYUYedO
-	 OZDJ85I/UH3DD9H4Ej67bdP3PMHuo3TGfUM2raeUXY5zG3y20lg8NJvH4wMnEA34/E
-	 bSozG6I57/7roc8376t0kddPrtTzqqnUzmnvsH4LoNwqBan3Q5X55s/y/st2A2qHAE
-	 /MfT3JrfsxiuA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 10/11] sched_ext: scx_qmap: Add proxy execution support
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andrea Righi" <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260715205622.276220-11-arighi@nvidia.com>
-References: <20260715205622.276220-1-arighi@nvidia.com>
- <20260715205622.276220-11-arighi@nvidia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 15 Jul 2026 21:35:27 +0000
-Message-Id: <20260715213527.93DB31F000E9@smtp.kernel.org>
+	s=k20260515; t=1784159494;
+	bh=MofuVK3NiwXs9ZtgKGTm/vRSug843qwtqUJYZVWfpfo=;
+	h=From:To:Cc:Subject:Date;
+	b=NEj5QVXk0SrlfpF9MNr1KTPI/GfZFio0+UHsfV7kklkGsBL2Q4plzFJTmYdEUs52I
+	 uZHU/aWkE50yS/eZ76fM4XduwpKRWNTspmY+PDtGiSEd9Nf/0C4r+rt5qaPlOy9gGA
+	 5wlYZTfdcDznvFRS89jf+8FDKaBK44ypcyQUL7rgTub1QyqurcyEAV5WbTAF7IANmV
+	 adzlDNSsnI4UXd2IKTXMmG9O1RHkPIBrRCKcGK6OBOpFBiheU+VbD68W/g0GFQ55E/
+	 YR/6RrSX1LHej3/9qODiwkoSCsbajwkPvBD7eftV5O8QOUEBtfjx+PjLlOTykVr2Aw
+	 zKlX/BNobTEeA==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-7.3] sched_ext: Sub-scheduler follow-ups
+Date: Wed, 15 Jul 2026 13:51:29 -1000
+Message-ID: <20260715235133.810434-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Infinite re-enqueue loop (hard lockup) for blocked tasks when CPU =
-capability is revoked.
+Hello,
+
+v2: - Host scx_dispatch_sched() in a new inlines.h rather than at the end of
+      internal.h, which formed a circular include with cid.h (sashiko AI),
+      and drop sub.h's now-unused cid.h include.
+
+v1: https://lore.kernel.org/r/20260714230917.84158-1-tj@kernel.org
+
+Follow-ups to the sub-scheduler capability series, addressing two things
+Andrea raised while reviewing v5[1]: sched teardown drained queued ecaps
+syncs with an msleep() poll loop, and with CONFIG_EXT_SUB_SCHED=y hot paths
+keep paying for sub-sched bookkeeping even when no sub-scheduler exists.
+
+Patch 0001 replaces the teardown poll loop with direct removal from the
+llist. Patches 0002-0003 are prep and 0004 adds the scx_has_subs static key
+and gates the sub-sched portions of hot paths on it.
+
+[1] https://lore.kernel.org/r/20260709225041.1695495-1-tj@kernel.org
+
+Based on sched_ext/for-7.3 (35f9cbbacb67).
+
+This patchset contains the following 4 patches.
+
+ 0001 sched_ext: Remove queued ecaps syncs directly on sched teardown
+ 0002 sched_ext: Move scx_dispatch_sched() to a new inlines.h
+ 0003 sched_ext: Gate sub_dispatch_prev with CONFIG_EXT_SUB_SCHED
+ 0004 sched_ext: Add the scx_has_subs static key and gate sub-sched hot paths
+
+The patchset is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-followups-v2
+
+diffstat follows. Thanks.
+
+ kernel/sched/build_policy.c |   1 +
+ kernel/sched/ext/ext.c      |   7 ++-
+ kernel/sched/ext/idle.c     |  10 ++++
+ kernel/sched/ext/inlines.h  | 128 ++++++++++++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/internal.h |  19 ++++++-
+ kernel/sched/ext/sub.c      |  89 ++++++++++++++++++++----------
+ kernel/sched/ext/sub.h      | 125 ++++++------------------------------------
+ kernel/sched/sched.h        |   3 +-
+ 8 files changed, 240 insertions(+), 142 deletions(-)
+
 --
-
---- Patch [10]: [PATCH 10/11] sched_ext: scx_qmap: Add proxy execution supp=
-ort ---
-commit 330898ee3998dc8e218d6fe5b7b813cf89e4a38d
-Author: Andrea Righi <arighi@nvidia.com>
-
-sched_ext: scx_qmap: Add proxy execution support
-   =20
-Add a -B option to opt scx_qmap into queueing mutex-blocked tasks for
-proxy execution. Blocked donors are dispatched directly to the local DSQ=20
-of their current cid with a fresh slice and SCX_ENQ_PREEMPT.
-
-> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bp=
-f.c
-> index 09aee49120c28..dd308d1c89e2e 100644
-> --- a/tools/sched_ext/scx_qmap.bpf.c
-> +++ b/tools/sched_ext/scx_qmap.bpf.c
-
-[ ... ]
-
-> @@ -451,6 +451,22 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct=
- *p, u64 enq_flags)
->  	 */
->  	taskc->core_sched_seq =3D qa.core_sched_tail_seqs[idx]++;
-> =20
-> +	/*
-> +	 * Insert a blocked mutex donor at the head of its current cid's local
-> +	 * DSQ with a fresh slice and %SCX_ENQ_PREEMPT, requesting an immediate
-> +	 * reschedule. Once selected, the core proxy-exec path can immediately
-> +	 * run the mutex owner using the donor's scheduling context.
-> +	 *
-> +	 * This policy is intentionally unfair and can strongly prioritize tasks
-> +	 * using contended mutexes; scx_qmap is a demonstration scheduler and
-> +	 * this behavior makes proxy-exec support easy to observe.
-> +	 */
-> +	if (enq_flags & SCX_ENQ_BLOCKED) {
-> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | scx_bpf_task_cid(p),
-> +				   slice_ns, enq_flags | SCX_ENQ_PREEMPT);
-> +		return;
-> +	}
-
-[Severity: High]
-Can this cause a hard lockup if a sub-scheduler dynamically loses CPU
-capability?
-
-When a sub-scheduler is used (via the -c option) and loses capability on the
-task's current CPU, the kernel routes the task to the reject DSQ and
-re-enqueues it with the SCX_ENQ_REENQ flag.
-
-Since this check unconditionally handles SCX_ENQ_BLOCKED and returns early,
-won't it bypass the SCX_ENQ_REENQ fallback logic later in qmap_enqueue
-that normally routes rejected tasks to SHARED_DSQ?
-
-If the sub-scheduler still lacks capability, the kernel will reject it
-again. Because balance_scx() processes the reject DSQ synchronously until
-empty, won't this create an infinite re-enqueue loop?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260715205622.2762=
-20-1-arighi@nvidia.com?part=3D10
+tejun
