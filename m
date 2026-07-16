@@ -1,90 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4E53C3F6D;
-	Thu, 16 Jul 2026 21:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8501A6823;
+	Thu, 16 Jul 2026 21:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784237379; cv=none; b=Qv1FKDVHJlaV8/XS32p/R38sevHu3SJNFCXjBqwGcRTONLwsJIhhyVMLizlUC1uI6WKYfHD6Lf6DWNE+YAERMecA7Nuxx7234a1au/589E5uO+b0fGF+Fp1GHFN5HC+iFtUfmORGrfDI6wLDFl891oqcRzpQV5I2jrVuEr8Ju7s=
+	t=1784237461; cv=none; b=QMAqT0GnOW0sVr1AkLhwc4kQORb1CkJqeRQOMJ8SzS6kk+myC7t4gZcxfqWJ63RtxZRFFp1xBpkfxQx8HdDzE2qaE/89PNoWaONIuxqb9pFeLG1aUHVgcRWxy5TgZ5JBtcplhzWwAo+sFON/2fY0vvWcwQG3CCXRLlhB4N4mlhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784237379; c=relaxed/simple;
-	bh=iHhKHZwMjn2Y0qBy+r7cHIWTZUnbzBKZTt0+Z9/NfJQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SGhVmoaxJL3pykVeBwkXtRzrn60RukRqjTzkftAV+7hZbY7OPR1a7vLDbyBUNT8YLpJ9l+tydHfhIS8nMvQcCZ160KEfVqmTxdZCDBESzsGOR4GvXglaLkSrmC4rF86NvGB8z0pJqbe/w1KiacJSYvhFG06Q+oBABVwe5FFkb0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lwuf4SZh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784237461; c=relaxed/simple;
+	bh=Q10CB2lrT+QSoBsCk3EWPIR3C0E9tFuUbqMzZR9uzao=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dZNvhi8fx1H/Qr5JKikvsbPKQ4jTmLJ/TCwdZ2UPyvy3x7wHumcQjqAu3EDqy1Fq/H5yojtdoAtSnj5EkYA/7K/VPnE1Y9qlnPcBVx4qEsNm/+RTpbEHoiKr7obk4KvgqRH302OO2AEw9YGiqDZZoAig0yhYWpqhrQj6RNv2yiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vji/KxL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lwuf4SZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFC41F000E9;
-	Thu, 16 Jul 2026 21:29:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vji/KxL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853F71F000E9;
+	Thu, 16 Jul 2026 21:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784237378;
-	bh=xC8BkQ15Ke5dZ75LRZUPah7j0eIbv2+l7v8KGiu9l94=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Lwuf4SZhrOZlJP6W6/TPEZ8xNJ6wzMnTLUiUYHPewWD56c/8fJS1Ogx96eKwQjy81
-	 oT8V8cITjguuTzBadzK3AAwuPiEjipRRh6uqy4pCkByNK1xvsQp8doHSQn8C8GyNTw
-	 nwEmOpJuu2bxO4gHQ6rfxLPhFgpxzWoTG5G/GNjvMBjs37oTxmUUKeAOjsUIhxfqzM
-	 mmnSn9eCg2nwkbWU/QuBuUzNTxhQsVfZexMChwtc7NQLF3U4bsc9H5vBBRHbs17/Q6
-	 Rdu/sNqUQmQd1kxxfwWUEUmamkhRsmN0azTZAYG8qtd4crHFCbKAfvwmuY1HHHOfuf
-	 dFHEMoVtIjh4A==
-Date: Thu, 16 Jul 2026 11:29:37 -1000
+	s=k20260515; t=1784237459;
+	bh=OwuKkXw9EMVDqAF39LAXq/jBdboCxnRC7lUhHn74Yq8=;
+	h=From:To:Cc:Subject:Date;
+	b=Vji/KxL/fATTJTUWr0+DmGEDJ9tP/FWg1JixP2mD0+eUghqyiIPD1p2ZoNJIr58dC
+	 /bE0k4nNxOjgWf4YjvJqFHl59hl+ZGffSdMr1TDsLAYLXTvbgPDH20mB35UkuQ3bEB
+	 jWOSRVLHVBAdR2/Jo0y3MjUaJ6lKLEs+Hh4PQgNzIlqwXS6Sv0M02gzRS+6+6uJ8jh
+	 Y0aInbD5aR8dgoiG4M231D5vGVkYpdJOuTWbomv2r/FWHNSuYv9wWXxtp87Aznk5Y4
+	 qAdkOBbNnZammgC2fahlI9l0bW/tt6VjfyTyl6Yj0OmqAddBg8m/qhiB8tF01eesBV
+	 6sI+RE+WWV3lQ==
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
-	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, Shuah Khan <shuah@kernel.org>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 05/11] sched_ext: Fix TOCTOU race in consume_remote_task()
-Message-ID: <allNQY8BZ7qMQjmm@slm.duckdns.org>
-References: <20260716132229.61603-1-arighi@nvidia.com>
- <20260716132229.61603-6-arighi@nvidia.com>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.2-fixes] sched_ext: Assorted sub-scheduler and cgroup fixes
+Date: Thu, 16 Jul 2026 11:30:54 -1000
+Message-ID: <20260716213058.1739522-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260716132229.61603-6-arighi@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-Hello,
+This patchset contains three sub-scheduler fixes and a cgroup lock
+ordering deadlock fix.
 
-On Thu, Jul 16, 2026 at 03:20:40PM +0200, Andrea Righi wrote:
-> When pulling a task from a non-local DSQ, scx_consume_dispatch_q()
-> filters candidates without holding the task's source rq lock;
-> consume_remote_task() then unlinks the selected task, drops the DSQ and
-> destination rq locks and acquires the source rq lock before migrating
-> it.
-> 
-> Whether the task may be remotely migrated can change across this
-> handoff. In particular, proxy execution allows a task to execute as
-> rq->curr under another task's scheduling context while its own
-> scheduling context remains on a DSQ. The task can therefore become
-> on-CPU or migration disabled without dequeueing its DSQ entry or
-> clearing holding_cpu.
+ 0001-sched_ext-Reject-setting-disallow-from-init_task-out.patch
+ 0002-sched_ext-Take-cgroup_lock-first-in-scx_cgroup_lock.patch
+ 0003-sched_ext-Skip-sub-disable-teardown-for-never-linked.patch
+ 0004-sched_ext-Don-t-enable-non-ext-tasks-in-the-sub-sche.patch
 
-I don't think this can happen w/o proxy execution. The task is enqueued and
-can't be dequeued or start running without grabbing the DSQ lock. Before the
-DSQ lock is dropped, p->scx.holding_cpu is set and if that hasn't been
-cleared, we know that nothing else has touched while we were switching
-locks.
+- 0001 makes ops.init_task() setting p->scx.disallow outside the enable
+  path fail the scheduler. The sub-scheduler disable path could reach the
+  load-path-only policy revert and silently rewrite a live task's policy.
 
-If this no longer holds w/ proxy execution, adding further conditions are
-fine but let's make it explicitly for and confined to proxy execution
-enabled cases. The logic there is already subtle and I want to avoid adding
-misleading checks.
+- 0002 fixes a three-way deadlock among scx_cgroup_lock(), cgroup teardown
+  draining the cpu controller's files, and a concurrent cpu.weight write.
+  Present in released kernels since v6.18 and marked for stable.
 
-Thanks.
+- 0003 fixes a use-after-free when a sub-scheduler whose enable failed
+  before linking is torn down concurrently with root disable.
 
--- 
+- 0004 gates task enabling on the ext class in the sub-scheduler task
+  loops. A non-ext task under an SCX_OPS_SWITCH_PARTIAL root could be
+  marked ENABLED while staying on its own class, corrupting the task state
+  machine.
+
+This is against sched_ext/for-7.2-fixes (0e2f4ab68a89) and also available
+in the following git branch:
+
+ https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-cgroup-fixes
+
+diffstat follows.
+
+ include/linux/sched/ext.h | 10 +++++-----
+ kernel/sched/ext/ext.c    | 47 ++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 43 insertions(+), 14 deletions(-)
+
+--
 tejun
