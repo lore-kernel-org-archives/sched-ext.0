@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA6E2FD1B5;
-	Sat, 18 Jul 2026 10:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A17330675;
+	Sat, 18 Jul 2026 10:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784369432; cv=none; b=Ri7JQy9cQBler675fnsaXHYn04kW2ca3Fm5O6rRYqpqt/esIKN8Zaf5IT+r+tUHlmm9jQ40yNSzRc3ND0l9mOBEOdSBK4FFkhAiUTxvKzXUa0H0pCQOVXsoxl2bKxBs5YhtMVUjPZavAizZb6niRoF7wMXbctKLMSQxO+7Z2v2s=
+	t=1784369434; cv=none; b=nqeKIBVeMDmO8CfNEJgG85dybHpWpap6GPIoWzKSDJlHPB9Z1AjAZ8Dcf0BQSt8k5a8j/oqUKtIG6tAg1lX97JC+uv7vsiBchpjoY5XcDhXS7nZQUL5zaSRLL36vO/yT0+XU5MwwMyvP9ggzzUXUZMxxwxqbfiMIvTGDVtM2g/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784369432; c=relaxed/simple;
-	bh=DyspBFKm0jTK/fnV9SIa1h+7TV05Z+4uFa8EK5yyEqE=;
+	s=arc-20240116; t=1784369434; c=relaxed/simple;
+	bh=OBy3KXT2At51rcQiIoHLxbiSxqTzJSd7kytpSGwF+5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmP4IIplHq2x0toJhJIp8H78pNTFn5uaqXWkVhICJnVLEyovKagSM2+mRttrxu6VkRWytId+e2iBR0UvLrfx1sPSD6MgSYqgC6sRTBVeZmRHOFht/O35E+dADeRXXRG2cJXD4kNtWjJaWkriNRj73J98hBbHOrKj9+3gepJ/mhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S7ZWjcoj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b1qOPgcxL+BX6KVOzKrEsyosfHwpkI2PF396vR8RFdN2Uu6+wJbnN1yZ9/lLHingT9/q3ZL11PeKHCj7lWvu1xanVQnUmKHNrvMTS/wJxiboDWX6H7J9gO7XnmqXRpk/pwlG5kT590guN/3hsn47ICl/wgXKPuqtxdraWdf5W1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GDqz5lLk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S7ZWjcoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3572B1F00A3A;
-	Sat, 18 Jul 2026 10:10:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GDqz5lLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351B91F000E9;
+	Sat, 18 Jul 2026 10:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784369431;
-	bh=Shzu7bqgEBDkHjO2Gj4qgOS97Hid+JKdSvgKYKMsQo0=;
+	s=k20260515; t=1784369432;
+	bh=HdG0farC70vUvjwdDABVfFdEFPNFYtMC/jeYgwre1V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7ZWjcojwXrcWnVRVa+3PHmnQUTPRAPBpACjwwexSqgCTNFT7RF29XvwCRASeUjHj
-	 epOL36P78k4Wz9ebsvuAqUCKCTUwiuIAAr2ahveJtlmiO+QkOcSEMBnvBoCSjJFBhM
-	 e7QTbQ6eicU/ZyjaC1Wc7iCMHngadAegXss0e3Z/fl9+IpPky3yN3CXHoMbM9oltbP
-	 tDOz8HOzN1sh7+9wu7Zq6NMt8jXpMaiym+j9q9XgiJvU8GuZGWKzY1NMuDuGobTPFG
-	 HFdUuEKFyILKpw5znKwbIx7FIUGYSolnz5y0wGao/6R66v3i9MHl7ePldgUZXp8BvQ
-	 ofL6iT6S8ySLg==
+	b=GDqz5lLkVsVtnzVLupfkEFpjjlCXC7wk95f3cHyg0YVSdVpu/SQ3kumGXaahFx4ou
+	 z/taawKaEcv6EjW7El+bjN52GlYL5kWs8X/A2wYtbjRALDe9o9hbmQEp3oya3SwS1M
+	 7Q7S4aFFAIYpGEVKWOo3Sb7IPIOGmlwW2sIWFkVL7qwUzKRYLctjjxtlu6JmfEB7Mi
+	 LIn50I19b31K7WBPDGusNUZoXjOh8JhkiU86NvAHMVt0fOp8OkTK8q/wC6nO5e4a6e
+	 0yo9gVG0WMu+Fo2Jodpi3xSvQdMHyWykd0RWkEzde4I55iWKD6TdYATFvdMSnJxpA+
+	 viK/OHY109rBw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 1/2] tools/sched_ext: Add SCX_OPS_CID_OPEN for cid-form schedulers
-Date: Sat, 18 Jul 2026 00:10:28 -1000
-Message-ID: <20260718101029.725350-2-tj@kernel.org>
+Subject: [PATCH 2/2] sched_ext: Rename the cid-form cgroup ops to cpuctl_*
+Date: Sat, 18 Jul 2026 00:10:29 -1000
+Message-ID: <20260718101029.725350-3-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260718101029.725350-1-tj@kernel.org>
 References: <20260718101029.725350-1-tj@kernel.org>
@@ -48,94 +48,221 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SCX_OPS_OPEN() clears compat-gated ops fields which the running kernel
-lacks. The clears dereference cpu-form member names and compile for
-cid-form skeletons only because both ops structs currently name their
-cgroup ops identically, which an upcoming rename will end. No load-time
-fix-up can apply to a cid-form scheduler anyway as the cid form postdates
-every compat-gated op.
+Two unrelated things go by "cgroup" in the cid form. Sub-schedulers attach
+to cgroups, and the cgroup_*() ops deliver cpu controller events. While the
+ops names suggest cgroup2 hierarchy, they actually operate on the cpu
+controller.
 
-Factor the skeleton open path out of SCX_OPS_OPEN() and add
-SCX_OPS_CID_OPEN() which uses only that shared part. Switch scx_qmap, the
-only cid-form scheduler, over.
+Rename them to cpuctl_* in struct sched_ext_ops_cid, which has no users
+outside scx_qmap yet. The cpu form is deployed ABI and keeps the old names.
+The layout is unchanged and the kernel keeps calling through the cpu-form
+union view.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- tools/sched_ext/include/scx/compat.h | 30 ++++++++++++++++++++--------
- tools/sched_ext/scx_qmap.c           |  2 +-
- 2 files changed, 23 insertions(+), 9 deletions(-)
+ kernel/sched/ext/ext.c         | 36 +++++++++++++++++-----------------
+ kernel/sched/ext/internal.h    | 25 ++++++++++++-----------
+ tools/sched_ext/scx_qmap.bpf.c | 22 ++++++++++-----------
+ tools/sched_ext/scx_qmap.c     |  2 +-
+ tools/sched_ext/scx_qmap.h     |  2 +-
+ 5 files changed, 43 insertions(+), 44 deletions(-)
 
-diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-index 23d9ef3e4c9d..7757252d52e2 100644
---- a/tools/sched_ext/include/scx/compat.h
-+++ b/tools/sched_ext/include/scx/compat.h
-@@ -154,7 +154,7 @@ static inline long scx_hotplug_seq(void)
-  * struct sched_ext_ops can change over time. Two complementary mechanisms
-  * keep BPF schedulers built against newer headers running on older kernels:
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 58cd971e5fc5..b730eac4b13f 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -7952,14 +7952,14 @@ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
+ 	.enable			= sched_ext_ops__enable,
+ 	.disable		= sched_ext_ops__disable,
+ #ifdef CONFIG_EXT_GROUP_SCHED
+-	.cgroup_init		= sched_ext_ops__cgroup_init,
+-	.cgroup_exit		= sched_ext_ops__cgroup_exit,
+-	.cgroup_prep_move	= sched_ext_ops__cgroup_prep_move,
+-	.cgroup_move		= sched_ext_ops__cgroup_move,
+-	.cgroup_cancel_move	= sched_ext_ops__cgroup_cancel_move,
+-	.cgroup_set_weight	= sched_ext_ops__cgroup_set_weight,
+-	.cgroup_set_bandwidth	= sched_ext_ops__cgroup_set_bandwidth,
+-	.cgroup_set_idle	= sched_ext_ops__cgroup_set_idle,
++	.cpuctl_init		= sched_ext_ops__cgroup_init,
++	.cpuctl_exit		= sched_ext_ops__cgroup_exit,
++	.cpuctl_prep_move	= sched_ext_ops__cgroup_prep_move,
++	.cpuctl_move		= sched_ext_ops__cgroup_move,
++	.cpuctl_cancel_move	= sched_ext_ops__cgroup_cancel_move,
++	.cpuctl_set_weight	= sched_ext_ops__cgroup_set_weight,
++	.cpuctl_set_bandwidth	= sched_ext_ops__cgroup_set_bandwidth,
++	.cpuctl_set_idle	= sched_ext_ops__cgroup_set_idle,
+ #endif
+ 	.sub_attach		= sched_ext_ops__sub_attach,
+ 	.sub_detach		= sched_ext_ops__sub_detach,
+@@ -10479,22 +10479,22 @@ static int __init scx_init(void)
+ 	CID_OFFSET_MATCH(init_cids, init_cids);
+ 	CID_OFFSET_MATCH(init, init);
+ 	CID_OFFSET_MATCH(exit, exit);
+-#ifdef CONFIG_EXT_GROUP_SCHED
+-	CID_OFFSET_MATCH(cgroup_init, cgroup_init);
+-	CID_OFFSET_MATCH(cgroup_exit, cgroup_exit);
+-	CID_OFFSET_MATCH(cgroup_prep_move, cgroup_prep_move);
+-	CID_OFFSET_MATCH(cgroup_move, cgroup_move);
+-	CID_OFFSET_MATCH(cgroup_cancel_move, cgroup_cancel_move);
+-	CID_OFFSET_MATCH(cgroup_set_weight, cgroup_set_weight);
+-	CID_OFFSET_MATCH(cgroup_set_bandwidth, cgroup_set_bandwidth);
+-	CID_OFFSET_MATCH(cgroup_set_idle, cgroup_set_idle);
+-#endif
+ 	/* renamed callbacks must occupy the same slot as their cpu-form sibling */
+ 	CID_OFFSET_MATCH(select_cpu, select_cid);
+ 	CID_OFFSET_MATCH(set_cpumask, set_cmask);
+ 	CID_OFFSET_MATCH(cpu_online, cid_online);
+ 	CID_OFFSET_MATCH(cpu_offline, cid_offline);
+ 	CID_OFFSET_MATCH(dump_cpu, dump_cid);
++#ifdef CONFIG_EXT_GROUP_SCHED
++	CID_OFFSET_MATCH(cgroup_init, cpuctl_init);
++	CID_OFFSET_MATCH(cgroup_exit, cpuctl_exit);
++	CID_OFFSET_MATCH(cgroup_prep_move, cpuctl_prep_move);
++	CID_OFFSET_MATCH(cgroup_move, cpuctl_move);
++	CID_OFFSET_MATCH(cgroup_cancel_move, cpuctl_cancel_move);
++	CID_OFFSET_MATCH(cgroup_set_weight, cpuctl_set_weight);
++	CID_OFFSET_MATCH(cgroup_set_bandwidth, cpuctl_set_bandwidth);
++	CID_OFFSET_MATCH(cgroup_set_idle, cpuctl_set_idle);
++#endif
+ 	/* @priv tail must align since both share the same data block */
+ 	CID_OFFSET_MATCH(priv, priv);
+ 	/*
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 0c0a8fdaa2c4..26bfda216524 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -992,6 +992,7 @@ struct sched_ext_ops {
+  *   - cpu_online       -> cid_online
+  *   - cpu_offline      -> cid_offline
+  *   - dump_cpu         -> dump_cid
++ *   - cgroup_*         -> cpuctl_* (they track the cgroup cpu controller)
+  *   - cpu_acquire/cpu_release  -> not present (deprecated in sched_ext_ops)
   *
-- * 1. Load-time fix-up (this macro). For each optional ops callback or field
-+ * 1. Load-time fix-up (SCX_OPS_OPEN()). For each optional ops callback or field
-  *    added to struct sched_ext_ops, an explicit stanza below probes the
-  *    running kernel's BTF via __COMPAT_struct_has_field() and, if the field
-  *    is missing, clears it in the in-memory struct_ops (with a warning to
-@@ -176,16 +176,23 @@ static inline long scx_hotplug_seq(void)
-  * - v6.19: ops.cgroup_set_idle()
-  * - v7.1:  ops.sub_attach(), ops.sub_detach(), ops.sub_cgroup_id
-  */
-+#define __SCX_OPS_OPEN(__ops_name, __scx_name, __ops_struct) ({			\
-+	struct __scx_name *__oskel;						\
-+										\
-+	SCX_BUG_ON(!__COMPAT_struct_has_field(__ops_struct, "dump"),		\
-+		   __ops_struct ".dump() missing, kernel too old?");		\
-+										\
-+	__oskel = __scx_name##__open();						\
-+	SCX_BUG_ON(!__oskel, "Could not open " #__scx_name);			\
-+	__oskel->struct_ops.__ops_name->hotplug_seq = scx_hotplug_seq();	\
-+	SCX_ENUM_INIT(__oskel);							\
-+	__oskel;								\
-+})
-+
- #define SCX_OPS_OPEN(__ops_name, __scx_name) ({					\
- 	struct __scx_name *__skel;						\
- 										\
--	SCX_BUG_ON(!__COMPAT_struct_has_field("sched_ext_ops", "dump"),		\
--		   "sched_ext_ops.dump() missing, kernel too old?");		\
--										\
--	__skel = __scx_name##__open();						\
--	SCX_BUG_ON(!__skel, "Could not open " #__scx_name);			\
--	__skel->struct_ops.__ops_name->hotplug_seq = scx_hotplug_seq();		\
--	SCX_ENUM_INIT(__skel);							\
-+	__skel = __SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops");	\
- 	if (__skel->struct_ops.__ops_name->cgroup_set_bandwidth &&		\
- 	    !__COMPAT_struct_has_field("sched_ext_ops", "cgroup_set_bandwidth")) { \
- 		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_bandwidth()\n"); \
-@@ -214,6 +221,13 @@ static inline long scx_hotplug_seq(void)
- 	__skel; 								\
- })
+  * BPF schedulers using this type cannot call cpu-form scx_bpf_* kfuncs;
+@@ -1027,19 +1028,17 @@ struct sched_ext_ops_cid {
+ 	void (*dump_cid)(struct scx_dump_ctx *ctx, s32 cid, bool idle);
+ 	void (*dump_task)(struct scx_dump_ctx *ctx, struct task_struct *p);
+ #ifdef CONFIG_EXT_GROUP_SCHED
+-	s32 (*cgroup_init)(struct cgroup *cgrp,
+-			    struct scx_cgroup_init_args *args);
+-	void (*cgroup_exit)(struct cgroup *cgrp);
+-	s32 (*cgroup_prep_move)(struct task_struct *p,
+-				 struct cgroup *from, struct cgroup *to);
+-	void (*cgroup_move)(struct task_struct *p,
+-			     struct cgroup *from, struct cgroup *to);
+-	void (*cgroup_cancel_move)(struct task_struct *p,
+-				    struct cgroup *from, struct cgroup *to);
+-	void (*cgroup_set_weight)(struct cgroup *cgrp, u32 weight);
+-	void (*cgroup_set_bandwidth)(struct cgroup *cgrp,
+-				      u64 period_us, u64 quota_us, u64 burst_us);
+-	void (*cgroup_set_idle)(struct cgroup *cgrp, bool idle);
++	s32 (*cpuctl_init)(struct cgroup *cgrp, struct scx_cgroup_init_args *args);
++	void (*cpuctl_exit)(struct cgroup *cgrp);
++	s32 (*cpuctl_prep_move)(struct task_struct *p, struct cgroup *from,
++				struct cgroup *to);
++	void (*cpuctl_move)(struct task_struct *p, struct cgroup *from, struct cgroup *to);
++	void (*cpuctl_cancel_move)(struct task_struct *p, struct cgroup *from,
++				   struct cgroup *to);
++	void (*cpuctl_set_weight)(struct cgroup *cgrp, u32 weight);
++	void (*cpuctl_set_bandwidth)(struct cgroup *cgrp, u64 period_us, u64 quota_us,
++				     u64 burst_us);
++	void (*cpuctl_set_idle)(struct cgroup *cgrp, bool idle);
+ #endif	/* CONFIG_EXT_GROUP_SCHED */
+ 	s32 (*sub_attach)(struct scx_sub_attach_args *args);
+ 	void (*sub_detach)(struct scx_sub_detach_args *args);
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 925ae1a1d440..aead17658573 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -1014,7 +1014,7 @@ void BPF_STRUCT_OPS(qmap_dump_task, struct scx_dump_ctx *dctx, struct task_struc
+ 		     taskc->force_local, taskc->core_sched_seq);
+ }
  
-+/*
-+ * Open a cid-form (struct sched_ext_ops_cid) skeleton. The cid form postdates
-+ * every op the load-time fix-ups above handle, so none of them apply.
-+ */
-+#define SCX_OPS_CID_OPEN(__ops_name, __scx_name)				\
-+	__SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops_cid")
-+
+-s32 BPF_STRUCT_OPS(qmap_cgroup_init, struct cgroup *cgrp, struct scx_cgroup_init_args *args)
++s32 BPF_STRUCT_OPS(qmap_cpuctl_init, struct cgroup *cgrp, struct scx_cgroup_init_args *args)
+ {
+ 	QMAP_TOUCH_ARENA();
+ 
+@@ -1036,7 +1036,7 @@ s32 BPF_STRUCT_OPS(qmap_cgroup_init, struct cgroup *cgrp, struct scx_cgroup_init
+ 
+ static void redistribute(void);
+ 
+-void BPF_STRUCT_OPS(qmap_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
++void BPF_STRUCT_OPS(qmap_cpuctl_set_weight, struct cgroup *cgrp, u32 weight)
+ {
+ 	u64 cgid = cgrp->kn->id;
+ 	s32 i;
+@@ -1062,16 +1062,16 @@ void BPF_STRUCT_OPS(qmap_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
+ 	}
+ }
+ 
+-void BPF_STRUCT_OPS(qmap_cgroup_set_bandwidth, struct cgroup *cgrp,
+-		    u64 period_us, u64 quota_us, u64 burst_us)
++void BPF_STRUCT_OPS(qmap_cpuctl_set_bandwidth, struct cgroup *cgrp, u64 period_us,
++		    u64 quota_us, u64 burst_us)
+ {
+ 	if (print_msgs)
+ 		bpf_printk("CGRP SET %llu period=%lu quota=%ld burst=%lu",
+ 			   cgrp->kn->id, period_us, quota_us, burst_us);
+ }
+ 
+-void BPF_STRUCT_OPS(qmap_cgroup_move, struct task_struct *p,
+-		    struct cgroup *from, struct cgroup *to)
++void BPF_STRUCT_OPS(qmap_cpuctl_move, struct task_struct *p, struct cgroup *from,
++		    struct cgroup *to)
+ {
+ 	if (print_msgs)
+ 		bpf_printk("CGRP MOVE %d %llu -> %llu",
+@@ -1890,7 +1890,7 @@ void BPF_STRUCT_OPS(qmap_exit, struct scx_exit_info *ei)
+ 
  /*
-  * Associate non-struct_ops BPF programs with the scheduler's struct_ops map so
-  * that scx_prog_sched() can determine which scheduler a BPF program belongs
+  * Seed a new sub slot with the cgroup's current weight. The kernel delivers
+- * ops.cgroup_set_weight() only on value-changing writes, so a weight set
++ * ops.cpuctl_set_weight() only on value-changing writes, so a weight set
+  * before the sub attached would otherwise go unnoticed.
+  */
+ static u32 cgrp_cur_weight(u64 cgid)
+@@ -1989,10 +1989,10 @@ SCX_OPS_CID_DEFINE(qmap_ops,
+ 	       .dump			= (void *)qmap_dump,
+ 	       .dump_cid		= (void *)qmap_dump_cid,
+ 	       .dump_task		= (void *)qmap_dump_task,
+-	       .cgroup_init		= (void *)qmap_cgroup_init,
+-	       .cgroup_set_weight	= (void *)qmap_cgroup_set_weight,
+-	       .cgroup_set_bandwidth	= (void *)qmap_cgroup_set_bandwidth,
+-	       .cgroup_move		= (void *)qmap_cgroup_move,
++	       .cpuctl_init		= (void *)qmap_cpuctl_init,
++	       .cpuctl_set_weight	= (void *)qmap_cpuctl_set_weight,
++	       .cpuctl_set_bandwidth	= (void *)qmap_cpuctl_set_bandwidth,
++	       .cpuctl_move		= (void *)qmap_cpuctl_move,
+ 	       .sub_attach		= (void *)qmap_sub_attach,
+ 	       .sub_detach		= (void *)qmap_sub_detach,
+ 	       .sub_caps_updated	= (void *)qmap_sub_caps_updated,
 diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 46892b4bb448..ddb524b4946c 100644
+index ddb524b4946c..27ffda1c519e 100644
 --- a/tools/sched_ext/scx_qmap.c
 +++ b/tools/sched_ext/scx_qmap.c
-@@ -251,7 +251,7 @@ int main(int argc, char **argv)
- 	}
- restart:
- 	optind = 1;
--	skel = SCX_OPS_OPEN(qmap_ops, scx_qmap);
-+	skel = SCX_OPS_CID_OPEN(qmap_ops, scx_qmap);
+@@ -70,7 +70,7 @@ const char help_fmt[] =
+ "  -i SEC        Stats interval, seconds (default 5)\n"
+ "  -R MS         Round-robin period for time-shared cpus, ms (default 200)\n"
+ "  -J MODE       Fault injection (wrong-cid: dispatch to a cid not held,\n"
+-"                init-fail/cgrp-init-fail: fail init_task/cgroup_init for\n"
++"                init-fail/cgrp-init-fail: fail init_task/cpuctl_init for\n"
+ "                \"qmfail*\" comms/cgroups)\n"
+ "  -v            Print libbpf debug messages\n"
+ "  -h            Display this help and exit\n";
+diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
+index cc2840e7aa3c..c42f7ef74b89 100644
+--- a/tools/sched_ext/scx_qmap.h
++++ b/tools/sched_ext/scx_qmap.h
+@@ -65,7 +65,7 @@ enum qmap_inject {
+ 	QMAP_INJ_OFF		= 0,
+ 	QMAP_INJ_WRONG_CID	= 1,	/* dispatch to a cid we don't hold */
+ 	QMAP_INJ_INIT_FAIL	= 2,	/* fail init_task for "qmfail*" comms */
+-	QMAP_INJ_CGRP_INIT_FAIL	= 3,	/* fail cgroup_init for "qmfail*" cgroups */
++	QMAP_INJ_CGRP_INIT_FAIL	= 3,	/* fail cpuctl_init for "qmfail*" cgroups */
+ };
  
- 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
- 	skel->rodata->max_tasks = 16384;
+ /*
 -- 
 2.55.0
 
