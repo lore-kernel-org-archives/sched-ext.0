@@ -1,212 +1,269 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010035.outbound.protection.outlook.com [52.101.56.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5685939282C
-	for <sched-ext@lists.linux.dev>; Fri, 17 Jul 2026 09:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79CC2475E3
+	for <sched-ext@lists.linux.dev>; Sat, 18 Jul 2026 02:29:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784279494; cv=fail; b=CkjzOL8F5PW3O5biJ78VstzMQ0LAjuidw9wp664Ku2HyZeFjQduKUNYelatD1ODULof1saooVYa7pQXcejQWjwZ0D2EyUSs2XlpJ7TmDFTYvXkwZ9WqkY0rGr8OxPRcRxWfJIeW22HsiO7qw9GR4aLrr6LegqR8WBDs3/P97qe0=
+	t=1784341744; cv=pass; b=fr8Bwc5uI/91s++wWYNjDQ0v8kUaiY1auUTrT2qSxzq5sKBs2vE60VeFV63pB5mhdoiQFwehncDwEUIS4RfoDXgWuYOvUEkTnrGrAL+1pYumPRr92gYC3GXZ8jc9OPQiuJ7KFjhn3J+EWhX5zK1nZoExIm+oaQbQnTBRbysOexI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784279494; c=relaxed/simple;
-	bh=fbzosyJZhClKDNQsrLCTY36mmOb+MmfKRfo7WzXsT5Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=pnYboDL+beb3UzwfnnPqpFRsRm9Vo/LaYPWNwYCxxCiLqPEQp+dMm5pbrQxzpgPqfrpylXjZrwwLf+3yDBEtC4wMyrqCHiH8sTLrnQpaZg5FgNub0CtnsY4VgZPZOq0XQ7JFcE+YgLtGf2a1dyVsfNCsgxE41iaTSth9R3RU6Ts=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MZwkra0U; arc=fail smtp.client-ip=52.101.56.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1784341744; c=relaxed/simple;
+	bh=RprgxPFmnpgbC8E8vm25GIOO+muVY0btkoel/uvAQ0w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kJZY0IN25bmi2CqbF/reY+fomW0DQnzLsME9o8zzgNHYB2WJKOj8CcU3YJueJ7nbeRpz13k3WQv0VNmv19G2okLL/rQSKOOM6DlTZM1l8Llr6dQ3Iqbqru8p/R8Z4FyDIVs/mxonSQSrsuuwySvmKC4qIXZbr/EbA7bRcD0vo00=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=g4LGMUMc; arc=pass smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MZwkra0U"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LUCSz8sEBOvMh2baaDnuOPlFT5NQ8JxgMKFBR9AbbzWwjI4mEhP8jsbmd8+mUgbOhiaBAcebaewzb81FRiFo/+ckXCIqHwJWaiCWf7KiT1n232cH6NXzuQzV4bY1GkpGd7xc+zOct6zaPlKDLVYndX739Cm2ls7+q52XKEpgw1n90YI/hGVqax7i/D9TB6tM47unsnDoQynQ7maZfeVMs2ndTzt81S1yDz3CYJ9RXUZOi3GHnor3f5iDh8I4vZan7rLJ4ToeCC1gmi0D4bJ8ZcrzJuiKuG+8DoJ2G+iIzuQd8yygkdiIa5t3agBo1aYDkatfli2/KdNs4aqku39PtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aYfAXnAN9seWD0kJa/bnY1i113OELZ6aG8n1un+NqiI=;
- b=vuqdvUV9aiTVuwWR/ThHf1qdxJPyIOsv+5PJYj+UsxqaR/Xrw0wr9GP1JgX9+JXkGAClEXSRyEcT9egOM5c3E2JqKqxjyh1RrH4YGJUWZ2cwMwTuU4G96V4Ys7Vd3tdmjaeU/90WFI7HNsQdk4JgizuREjLENq7qqjif2ZSt4ULKbUC7YmSDD55dAcP7OTmpJWdIt4xYuumi/w1ravkstffFU7ZclqSwXW5S7lIRinbs41qsA/K++E7bCWCCxsixLahaG/hlMXTi4f4hnKAX14fsH1+/7C2yIFyXIZC+DfT+M+w5f5xcEh+sSxINACFHccJeXNEOw9Zrolyba//rEA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aYfAXnAN9seWD0kJa/bnY1i113OELZ6aG8n1un+NqiI=;
- b=MZwkra0UbTTp80uuskWKTOPTZxqGaKjeRLzJSCLZrogKWUOBD63Bj8qjP9oAGm7POHCZtdHZw0xP2o1xGs4W3NGCNHlFb9eMH/ByemWJ/DluunuO6/f6TlVCuZDeF9eoFAZuSNGrKevQcjnXzGRcILjEWuHJibM3rYOGywG7w73FtTxu5xDw5NnyXB5ORCYCoggmwYIesLtAPm3t7DsqZbpBuCayM+UlEFbzaG3JizKNFZXCsSCn6aHR9otJbSaJUuOrEqeUhPAuX+FEoqh9AF9Vku8s9zgw0KIW69gUU/tjlcgVEw47RiWsW8dMXNgXZUHNx8Hh6g94olgthod/1A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by DM4PR12MB6326.namprd12.prod.outlook.com (2603:10b6:8:a3::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.13; Fri, 17 Jul
- 2026 09:11:22 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0223.008; Fri, 17 Jul 2026
- 09:11:22 +0000
-Date: Fri, 17 Jul 2026 11:11:10 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.2-fixes] sched_ext: Assorted
- sub-scheduler and cgroup fixes
-Message-ID: <alnxrsexEe_nQwqL@gpd4>
-References: <20260716213058.1739522-1-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260716213058.1739522-1-tj@kernel.org>
-X-ClientProxiedBy: ZR0P278CA0209.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:6a::26) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="g4LGMUMc"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-38e08baf860so6025297a91.2
+        for <sched-ext@lists.linux.dev>; Fri, 17 Jul 2026 19:29:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784341742; cv=none;
+        d=google.com; s=arc-20260327;
+        b=AN6vF3VA/apOqWYhcHCAp/VyTWGTi/a4BJuu/v/TsDEDsIonBBEKVvrDBdivuoIao+
+         X9iTdwZV4rjwKZMuAPovzopjMe6cDs0BX2pKLSW8GCeANMw+oH8mYKkaMEezfIsNEjUH
+         EpZLAv74jBxqtnCBnp9/Es8h1BOVN1Ac9jC3snyXSeymtSDRpA+2PQo60ot75UY6VQQw
+         PhpPx//63tk9+s+NgOj8CEzg7qeJSKYqpmpIW6mtUb7qrZmeiggU69ugs0NMX+NvSex7
+         f/Ranq5qwnH/wlyhFPdKdE0rurNCTIMWxB6q1ZqV6DDis9BBt9p91dpqmrmWdmUsDace
+         imJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=qxltxR+k8xkus8Vl5jwvM71LH1G0B1QukqFpM+EHkXM=;
+        fh=dqPFAJopn10j4DBvLu0NpNNFMlOZfEDaLPl0OybC3qY=;
+        b=nsWV0eew3ck9XmVePuuavnhQ28cFTKxynIceQXkn6E4ih9O38D5Z+aNKe+jBLYDcdZ
+         3A5/Orm/DZPZKutDLJ2mVZWMeihcI3T+GbqcvhJZmHxy2fwrTTpsoIbFULe1sYnkR2Op
+         vnWU/tXHVUTA9wvj3mWXgZL9jyij38OsLyR2W2RM/F1gyuoEzgPfid/i5hQ31wmRbUdh
+         t2hVtCjrvv+JN2JGcSifL/mX4NuTKHAxgI6std8KDyNnQLn+SgfU9uRfQkJ1dgB5eal3
+         mi/laDB6g8wulblF5uYtgtFcPaEyfyiVqGDNY3VHZVLYbZbs4ktOUzhMdAw2oV9UKCiS
+         wzTQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784341742; x=1784946542; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=qxltxR+k8xkus8Vl5jwvM71LH1G0B1QukqFpM+EHkXM=;
+        b=g4LGMUMcXd218eU8P3bB8jMhuLsNUbzLRqwFcEwCM0KVgV/QKplaOlS8ox+8uqu9YF
+         WcC1zfXXeW6l8Cj0WI0uuU+YhQiFWBo1l3WT+GZLsNFuMgdb9yqpyLk/pWbWLIdTlNlN
+         humNXbAoGYwuxI0kW8N+T7RyBobpD9ygrmQ9L90IoHP/22qVIaICedYVU1atNp8LTDbG
+         NQYIfKClAeDJVD2ewcJEc9vIUEjyZP+AigRbjpLMZwl5FuWBJB+inXDQ0GZlS/CPRs/m
+         QnjNJppgOV7T77dh19Qp8gfM2sQPHrR5Lge2yXqSQBlqVYyKfUFZXVp9n4RF/C2OdP2u
+         UTqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784341742; x=1784946542;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qxltxR+k8xkus8Vl5jwvM71LH1G0B1QukqFpM+EHkXM=;
+        b=AZihI9Y+J5e6ER9qH+H0UX+deOkt5Zjl1elYDOJFQ/Ws7wk7R6r2YAKrH/TVtGSnNA
+         homGaD4j3sl1uyZTsHwuMGZ4EY/Ywcxc/OgYQb7ccgzNrudFamjPK+d77DTPMthJZsqO
+         98flmDZWJ7kc2DPJLH/7qi+v4IfUvSaniaBLz4g75Va6f7Ei1UUwzmIE1y1ScMwMwRnr
+         n93I6f/RLGIUi9cGWMchKgdk5m7HQHn4Xxu3T9ZWfaiMf7qLCk4iffk3IlAXpyIyaz+a
+         zNxcP11LMRwfbC2kSeabi0GHGs7NvZXSDgs1Te3VH2cT+wbI2AzbXV4sqdBPx5iYKa3Y
+         thOw==
+X-Forwarded-Encrypted: i=1; AHgh+Rpznz4W/bbrzaU4BXJ6ZFNq1ip3u9BJcaPopz04wYjZh4qEwvdSUALWKb2iEqr/uCvWDwJmnzJOiUc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJHWnhrirZiCxO1T88XUfoWsEVRL8NKobwxhjQ8qmTcwBDtLwJ
+	T8fUPPBHTRpeWqRaFUr+/KZyldXSOsaPLriCNOn9F/St7iqPAA7+qEv8/cG4MgEdleFPcp2+q87
+	Yvq6By5LPqk19Auc6MTp+JzCjo1Z0kyufiwD7mzc=
+X-Gm-Gg: AfdE7cnKkF9J2bJ/Ut6T1HfpbrwDgU/yH5PbRZlPzOOLe00x643TAiRi7x7p/es56hs
+	pRDSAgIbV2uUxZrhRC+p6EXgH57aoXu+/a+Sr3JNF80LuAM8JREAdmbarLX133jSLPorJ0HZZiX
+	cuOMI/oQGygQbS4lGncaVrfDz6HzP5MW2fQewc0zx69umcvuQcAaVUAS0sfqnhWbJhKTs14G8IK
+	ek9sCFbc3qOMPMthW9lMQRFlI9mQsZkcXHRJEkp25C+yomfEFq+2GIBi1XSL2z8+MjH65aE3KRm
+	dsPwldiZecXSPB2EhNk4l26EL2/sFDnJIPzlwfJ0p6VrZSyfoELCrSWcBi6iYX0kQtFeag9V2iA
+	HO8V38qyFP7x0nnNnoP7DFhCX
+X-Received: by 2002:a17:90b:5604:b0:37f:9ce2:348f with SMTP id
+ 98e67ed59e1d1-38e4b55ab8dmr5479732a91.32.1784341741540; Fri, 17 Jul 2026
+ 19:29:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DM4PR12MB6326:EE_
-X-MS-Office365-Filtering-Correlation-Id: b9181171-a9d4-4b3f-24cd-08dee3e35e64
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|6133799003|11063799006|56012099006|10067099003|3023799007|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	DP0HvVGLfgnQ5F4UyOZf5rEV6lPgNsfxOFieqGh6p5Y09tN+eEATDxONNSwbIbzsRIYWSanyIt2ZpkVWcVDmj4VwkfFi+jAm8M5ZAr4RdQh6NjfrNzijO+os9USxUtPMQ8/wVjEjkvlZv7bkJ9MLnMybOPLXOWTaUeTAlgfxTvYRDg7Yy1Hu8CJk0KSjEbPHfyuy4DlaYbvXS3P4qPmS1S8ooU0g8C5Y0M1BtQLb4ymAcHbrsz5rYufDlUtde/+5Fe/SQDw/xDEL1GRVYW88CXBYvbo+PEJFT65C41gff8crwDjmPQhRBMRWpD6HmLcO6mSAKhzzKKGWBwxMncrPM3/KbCX68+5CWFShQgrHlagjFQH0luQ1TOWCzaOfPH1/5Dy7wwAlQwdaKDGsqnnjKWPu6tBbfLc0CIEXTvb8erYosXc7aQ1B/j149z+eUxeKRBQx/3SIAgStR6+m2cc521KxpXGayWAGXrmqiq6olS7ixQKwrjJNkem8Nudy0y9xKCNVEg2OXWvdJoW7z5mh5HqbA9Bnxuop7Az/IL0Mta99KyvvXTkMYffTTbxEiKnap6ykdqUytdPmcA6chBP+AKY96pvrZk2kW/asN6HmET/RMS62AANBOOhSW4+9dSVoOi45mdVl2bQzXaixBmncXrXjOZRHU/olguuiLVIZdXw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(6133799003)(11063799006)(56012099006)(10067099003)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zROgUNIkinQdGmpQ4xPZB7YARKrWsmjrheXQmLz0nvuiSk+oeUoyvmLVpR8K?=
- =?us-ascii?Q?tjJT4df7Zmyp0GnZ50NbNUpKKphjqgdEpg7Mu/mRrbfjjjnyWPGy+Yu7yTt7?=
- =?us-ascii?Q?by/AR3i/A1uvxT4P895OGj7sOGegoEE/tPVlFfwK6vCAMBHIV39+MLGe6QVt?=
- =?us-ascii?Q?/dCUcCcBnw4f32T8THn2z68BBf1df7EBFZf2uMhsRarpMW8stDkjzVY+uALm?=
- =?us-ascii?Q?XsLpgWp0EnXrmvT83YeQ/rt5i9tW6XneiEgxQkAkBFOS+DexzJ4Jm5vjWfYw?=
- =?us-ascii?Q?pfGM4V6hR/Lvxu5ndr8rzMMez01+rRwao3mo/mLpa1Zkd7Y7+vrrhWD3vQuN?=
- =?us-ascii?Q?SuBOEuO9h4S2qqdDtju7JSsaHAtdF5jclTCfrntM+wj81wOzNcN2z4zfUpYy?=
- =?us-ascii?Q?myOfifw7vJ38w0lSgx/F05dcsDXqn/14vb0e4zfChG/3gDTDdhjEI495zC0A?=
- =?us-ascii?Q?JxKv8HePQaMIZw8QcsJvBPk6v/prp2gBw9fotlTqCzhyMIyQuEG+3vFdnkZe?=
- =?us-ascii?Q?ASV64Mj8N2k1et80SwiNwq7K+4GCcBfQjcTgEAG6Y5AfXot1JeokwKR60cz6?=
- =?us-ascii?Q?jvw++IL4UMhg78DP9a9W2Zx6GzxUztTGZEiCeJ9OZwB3uDhzVg3oju0ft6Kg?=
- =?us-ascii?Q?xx4YASnrrB9ZSHttnABc8VIdRByEC67vAWyTSMdbe7+ZmVk/GGWf2YPpHLYb?=
- =?us-ascii?Q?L9K0SIsyzk5zSqOzHsKNj554hBQ7YGfWs/v78mdN7Y/KQWWk2/9pi8GXvYP1?=
- =?us-ascii?Q?dV6zazJknKiHzrNXe8aoccrv+ZZNxkzzcsWoBebExi963L3jCNxRt0n9P5Hz?=
- =?us-ascii?Q?UTvwaPs7JUYbv/r10GRvsNgUT0oOs598V18N23Xs3kDzGsLXcFKEl5C8Q/6R?=
- =?us-ascii?Q?KLYjlsTJPAnSse8ldhmJwadpr8Sjpi5RKyQr+rdIJGftrjvMdQe3+TuGMrZV?=
- =?us-ascii?Q?jy7BkpBV7QHXLf4an3sTKJrTTT+fmUFI2QkUV5bRdm1vi1jt0JWZH6RSqX6j?=
- =?us-ascii?Q?1J38prIu1uGUpJMEEuD7bicWMq3cMEFYSlkhcxLnoHKWjJx4iiXL8Je/d7fx?=
- =?us-ascii?Q?OgLF8AXBrTJRTT4gPILJv+2zzRaHWXKektZbEjmnEJ5ttrwqWW3UF0mHCueF?=
- =?us-ascii?Q?kB10Fs1nPF2iwuoKVmNFt0AiqKtnaWYHDQKR7jaIte+zHzye2Ii36rTBvVGk?=
- =?us-ascii?Q?oRi9rPheDY8DL78yLbqOnX70ylB+VE0J+AVOn13rOB8bWHjXVqgsWk8v9Dmg?=
- =?us-ascii?Q?308r+iMM/+3re5ttp0Iyk7czK0DhER/d6cb7zxtkvTH5quehP5XDqz3HIhoQ?=
- =?us-ascii?Q?LbexfsPOYGhcacaTxJLkDJpc8dVfToSxbOiJ3Jc7WgPzH4DSYodLpw9vWthd?=
- =?us-ascii?Q?9Hna08MfFoAhuvNkbHhrsrVSgjUvq4mvFfAHsvQmFfJG+B6RvvKvgR5n4+Rl?=
- =?us-ascii?Q?7e0gHqoRB3zWr/h2zZuHqjFrJ1WjP7aN03ga3oM6qXr2UqowXtJN64XEoOXP?=
- =?us-ascii?Q?mJcf+pChtn2Xni6jQ0IOLxop7f9ZASNXGgfols5aQnN8w1tMCTPBSSeGezt1?=
- =?us-ascii?Q?Ie1uwzNsPTsrIX56msTvFXov1e7AwEPFYHH2kYVQKPngxQQtH80XzAei3uqW?=
- =?us-ascii?Q?3l+Uz2JyriIrslT0Od/o5rbPEJp07B8g5sMpY034n9xqzlVU5GfndAqQhlus?=
- =?us-ascii?Q?0gubcs0388HGVN/rH/pnrHfo0tx4OcwTYRc9wv3ZF6ELH1f9rQBosf/VCPHs?=
- =?us-ascii?Q?xbR6mo/HNQ=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b9181171-a9d4-4b3f-24cd-08dee3e35e64
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2026 09:11:21.8665
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yY4yJoYrDf3tGXoQb3Qph4mEtcQNst+Dxzvnz1q5eyVLbghqROg2MsowekiKQnkFEDUniunjdIbbzM113PN1ag==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6326
+References: <20260716132229.61603-1-arighi@nvidia.com> <20260716132229.61603-11-arighi@nvidia.com>
+In-Reply-To: <20260716132229.61603-11-arighi@nvidia.com>
+From: John Stultz <jstultz@google.com>
+Date: Fri, 17 Jul 2026 19:28:49 -0700
+X-Gm-Features: AUfX_myfNA4CpbxHxErp3EPXjIIuxH1-zr2d7nTnsyDvWBhh9TLOVyhT2ojp6QE
+Message-ID: <CANDhNCoaZnQXeFcxAv4XA4dW9sq9k+nm+0=EcqmLDvhMqKPdnw@mail.gmail.com>
+Subject: Re: [PATCH 10/11] sched_ext: scx_qmap: Add proxy execution support
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
+	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, 
+	Christian Loehle <christian.loehle@arm.com>, David Dai <david.dai@linux.dev>, 
+	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>, 
+	Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Tejun,
+On Thu, Jul 16, 2026 at 6:23=E2=80=AFAM Andrea Righi <arighi@nvidia.com> wr=
+ote:
+>
+> Add a -B option to opt scx_qmap into queueing mutex-blocked tasks for
+> proxy execution. Without the option, SCX_OPS_ENQ_BLOCKED remains clear
+> and mutex waiters block normally. With -B, blocked donors are passed to
+> qmap_enqueue() with SCX_ENQ_BLOCKED.
+>
+> When scx_qmap receives a blocked donor, dispatch it directly to the
+> local DSQ of its current cid with a fresh slice and SCX_ENQ_PREEMPT.
+> This places the donor at the head of the DSQ and requests an immediate
+> reschedule, allowing the core proxy-exec path to run the mutex owner
+> using the donor's scheduling context as soon as the donor is selected.
 
-On Thu, Jul 16, 2026 at 11:30:54AM -1000, Tejun Heo wrote:
-> This patchset contains three sub-scheduler fixes and a cgroup lock
-> ordering deadlock fix.
-> 
->  0001-sched_ext-Reject-setting-disallow-from-init_task-out.patch
->  0002-sched_ext-Take-cgroup_lock-first-in-scx_cgroup_lock.patch
->  0003-sched_ext-Skip-sub-disable-teardown-for-never-linked.patch
->  0004-sched_ext-Don-t-enable-non-ext-tasks-in-the-sub-sche.patch
-> 
-> - 0001 makes ops.init_task() setting p->scx.disallow outside the enable
->   path fail the scheduler. The sub-scheduler disable path could reach the
->   load-path-only policy revert and silently rewrite a live task's policy.
-> 
-> - 0002 fixes a three-way deadlock among scx_cgroup_lock(), cgroup teardown
->   draining the cpu controller's files, and a concurrent cpu.weight write.
->   Present in released kernels since v6.18 and marked for stable.
-> 
-> - 0003 fixes a use-after-free when a sub-scheduler whose enable failed
->   before linking is torn down concurrently with root disable.
-> 
-> - 0004 gates task enabling on the ext class in the sub-scheduler task
->   loops. A non-ext task under an SCX_OPS_SWITCH_PARTIAL root could be
->   marked ENABLED while staying on its own class, corrupting the task state
->   machine.
+Hey Andrea!
 
-I randomly triggered the following with this applied, but it looks unrelated to
-these changes:
+Thanks again for your great work on all this, I'm working to test your
+changes with my full proxy-exec tree, but before that I caught one
+issue here.
 
-  [  140.251732] BUG: unable to handle page fault for address: 0000000000020037
-  [  140.251914] #PF: supervisor write access in kernel mode
-  [  140.252020] #PF: error_code(0x0002) - not-present page
-  [  140.252163] PGD 0 P4D 0
-  [  140.252237] Oops: Oops: 0002 [#1] SMP NOPTI
-  [  140.252339] CPU: 5 UID: 0 PID: 103 Comm: kworker/u65:1 Not tainted 7.1.0-virtme #1 PREEMPT(full)
-  [  140.252575] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-  [  140.252704] Workqueue: events_unbound scx_watchdog_workfn
-  [  140.252766] Sched_ext: qmap (enabled+all), task: runnable_at=-1ms
-  [  140.252768] RIP: 0010:scx_claim_exit+0xfd/0x190
-  [  140.252897] Code: 02 00 74 24 65 8b 05 4a ac ce 02 85 c0 75 19 65 8b 05 27 68 ce 02 a9 ff ff ff 7f
-  75 0b 65 8b 05 a1 a8 ce 02 85 c0 75 46 31 c0 <f0> 45 0f b1 a7 28 04 00 00 75 14 41 c6 87 b4 03 00 00 01
-  49 8d bf
-  [  140.253102] RSP: 0018:ffffc900003f7d10 EFLAGS: 00010046
-  [  140.253160] RAX: 0000000000000000 RBX: ffff888125ed5000 RCX: ffffea0004768bb2
-  [  140.253232] RDX: 000000008881093f RSI: ffffffff83685140 RDI: ffff888100c45440
-  [  140.253316] RBP: 0000000000000001 R08: ffffffff8411c438 R09: ffff888100c45440
-  [  140.253406] R10: 00000000000003e5 R11: ffff888100c44780 R12: 0000000000000044
-  [  140.253501] R13: 0000000000000000 R14: 0000000000000016 R15: 000000000001fc0f
-  [  140.253595] FS:  0000000000000000(0000) GS:ffff8882b379a000(0000) knlGS:0000000000000000
-  [  140.253681] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [  140.253791] CR2: 0000000000020037 CR3: 000000000364c000 CR4: 0000000000750ef0
-  [  140.253865] PKRU: 55555554
-  [  140.253903] Call Trace:
-  [  140.253966]  <TASK>
-  [  140.253996]  scx_vexit+0x3a/0x170
-  [  140.254041]  __scx_exit+0x51/0x70
-  [  140.254087]  scx_watchdog_workfn+0x25f/0x360
-  [  140.254156]  ? process_scheduled_works+0x219/0x510
-  [  140.254208]  process_scheduled_works+0x265/0x510
-  [  140.254272]  worker_thread+0x226/0x360
-  [  140.254311]  ? __pfx_worker_thread+0x10/0x10
-  [  140.254386]  kthread+0x10c/0x140
-  [  140.254425]  ? __pfx_kthread+0x10/0x10
-  [  140.254465]  ret_from_fork+0x189/0x330
-  [  140.254521]  ? __pfx_kthread+0x10/0x10
-  [  140.254562]  ret_from_fork_asm+0x1a/0x30
-  [  140.254608]  </TASK>
-  [  140.254633] Modules linked in:
-  [  140.254689] CR2: 0000000000020037
-  [  140.254733] ---[ end trace 0000000000000000 ]---
+I was excited to try this out, but when building and running this from
+your kernel tree in a VM, (who's kernel is running from the same
+kernel tree, built on the host), I get the following error (with or
+without -B). The other scx_ schedulers in tools/sched_ext/ seem to
+load and run ok.  Maybe is there something I'm forgetting to do here?
 
-This might be a pre-existent bug, I'll investigate a bit.
+thanks
+-john
 
-Thanks,
--Andrea
-
-> 
-> This is against sched_ext/for-7.2-fixes (0e2f4ab68a89) and also available
-> in the following git branch:
-> 
->  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-cgroup-fixes
-> 
-> diffstat follows.
-> 
->  include/linux/sched/ext.h | 10 +++++-----
->  kernel/sched/ext/ext.c    | 47 ++++++++++++++++++++++++++++++++++++++---------
->  2 files changed, 43 insertions(+), 14 deletions(-)
-> 
-> --
-> tejun
+# ./build/bin/scx_qmap -B
+libbpf: prog 'qmap_dequeue': BPF program load failed: -EACCES
+libbpf: prog 'qmap_dequeue': -- BEGIN PROG LOAD LOG --
+0: R1=3Dctx() R10=3Dfp0
+; void BPF_STRUCT_OPS(qmap_dequeue, struct task_struct *p, u64
+deq_flags) @ scx_qmap.bpf.c:584
+0: (79) r2 =3D *(u64 *)(r1 +0)
+func 'dequeue' arg0 has btf_id 142670 type STRUCT 'task_struct'
+1: R1=3Dctx() R2=3Dtrusted_ptr_task_struct()
+1: (79) r4 =3D *(u64 *)(r1 +8)          ; R1=3Dctx() R4=3Dscalar()
+; __sync_fetch_and_add(&qa.nr_dequeued, 1); @ scx_qmap.bpf.c:588
+2: (18) r1 =3D 0x10000fff7000           ; R1=3Dscalar()
+4: (18) r3 =3D 0x10000fff7000           ; R3=3Dscalar()
+6: (07) r3 +=3D 32                      ; R3=3Dscalar()
+7: (bf) r5 =3D addr_space_cast(r3, 0, 1)        ; R3=3Dscalar() R5=3Darena
+8: (b7) r3 =3D 1                        ; R3=3D1
+9: (b7) r0 =3D 1                        ; R0=3D1
+10: (db) lock *(u64 *)(r5 +0) +=3D r0   ; R0=3D1 R5=3Darena
+11: (18) r5 =3D 0x100000000             ; R5=3D0x100000000
+; if (deq_flags & SCX_DEQ_CORE_SCHED_EXEC) @ scx_qmap.bpf.c:589
+13: (5f) r4 &=3D r5                     ;
+R4=3Dscalar(smin=3Dsmin32=3D0,smax=3Dumax=3D0x100000000,smax32=3Dumax32=3D0=
+,var_off=3D(0x0;
+0x100000000))
+14: (15) if r4 =3D=3D 0x0 goto pc+3       ; R4=3D0x100000000
+; __sync_fetch_and_add(&qa.nr_core_sched_execed, 1); @ scx_qmap.bpf.c:590
+15: (07) r1 +=3D 48                     ; R1=3Dscalar()
+16: (bf) r1 =3D addr_space_cast(r1, 0, 1)       ; R1=3Darena
+17: (db) lock *(u64 *)(r1 +0) +=3D r3   ;
+; QMAP_TOUCH_ARENA(); @ scx_qmap.bpf.c:268
+18: (18) r1 =3D 0xffff888104842c00      ; R1=3Dmap_ptr(map=3Darena,ks=3D0,v=
+s=3D0)
+; v =3D bpf_task_storage_get(&task_ctx_stor, p, 0, 0); @ scx_qmap.bpf.c:270
+20: (18) r1 =3D 0xffff88810c333600      ; R1=3Dmap_ptr(map=3Dtask_ctx_stor,=
+ks=3D4,vs=3D8)
+22: (b7) r3 =3D 0                       ; R3=3D0
+23: (b7) r4 =3D 0                       ; R4=3D0
+24: (85) call bpf_task_storage_get#156        ;
+R0=3Dmap_value_or_null(id=3D1,map=3Dtask_ctx_stor,ks=3D4,vs=3D8)
+; if (!v || !v->taskc) @ scx_qmap.bpf.c:271
+25: (15) if r0 =3D=3D 0x0 goto pc+76      ;
+R0=3Dmap_value(id=3D1,map=3Dtask_ctx_stor,ks=3D4,vs=3D8)
+26: (79) r7 =3D *(u64 *)(r0 +0)         ;
+R0=3Dmap_value(id=3D1,map=3Dtask_ctx_stor,ks=3D4,vs=3D8) R7=3Dscalar()
+27: (15) if r7 =3D=3D 0x0 goto pc+74      ; R7=3Dscalar(umin=3D1)
+28: (bf) r9 =3D addr_space_cast(r7, 0, 1)       ; R7=3Dscalar(umin=3D1) R9=
+=3Darena
+; if (taskc && taskc->fifo) { @ scx_qmap.bpf.c:593
+29: (79) r8 =3D *(u64 *)(r9 +24)        ; R8=3Dscalar() R9=3Darena
+30: (15) if r8 =3D=3D 0x0 goto pc+71      ; R8=3Dscalar(umin=3D1)
+; if (taskc->highpri) @ scx_qmap.bpf.c:594
+31: (71) r1 =3D *(u8 *)(r9 +45)         ;
+R1=3Dscalar(smin=3Dsmin32=3D0,smax=3Dumax=3Dsmax32=3Dumax32=3D255,var_off=
+=3D(0x0;
+0xff)) R9=3Darena
+32: (56) if w1 !=3D 0x1 goto pc+9       ; R1=3D1
+33: (b7) r1 =3D 1                       ; R1=3D1
+; __sync_fetch_and_sub(&qa.nr_highpri_queued, 1); @ scx_qmap.bpf.c:595
+34: (87) r1 =3D -r1                     ; R1=3D-1
+35: (18) r2 =3D 0x10000fff7000          ; R2=3Dscalar()
+37: (07) r2 +=3D 88                     ; R2=3Dscalar()
+38: (bf) r2 =3D addr_space_cast(r2, 0, 1)       ; R2=3Darena
+39: (db) lock *(u64 *)(r2 +0) +=3D r1   ; R1=3D-1 R2=3Darena
+; struct qmap_fifo __arena *fifo =3D taskc->fifo; @ scx_qmap.bpf.c:320
+40: (79) r8 =3D *(u64 *)(r9 +24)        ; R8=3Dscalar() R9=3Darena
+; if (!fifo) @ scx_qmap.bpf.c:323
+41: (15) if r8 =3D=3D 0x0 goto pc+60      ; R8=3Dscalar(umin=3D1)
+; lock =3D qa_q_lock(fifo->idx); @ scx_qmap.bpf.c:326
+42: (bf) r2 =3D addr_space_cast(r8, 0, 1)       ; R2=3Darena R8=3Dscalar(um=
+in=3D1)
+43: (61) r1 =3D *(u32 *)(r2 +16)        ;
+R1=3Dscalar(smin=3D0,smax=3Dumax=3D0xffffffff,var_off=3D(0x0; 0xffffffff))
+R2=3Darena
+; switch (qid) { @ scx_qmap.bpf.c:129
+44: (66) if w1 s> 0x1 goto pc+8       ;
+R1=3Dscalar(smin=3D0,smax=3Dumax=3D0xffffffff,smax32=3D1,var_off=3D(0x0;
+0xffffffff))
+45: (18) r6 =3D 0xffff88810c3339f8      ;
+R6=3Dmap_value(map=3D.data.qa_q_lock,ks=3D4,vs=3D4)
+47: (16) if w1 =3D=3D 0x0 goto pc+17      ;
+R1=3Dscalar(smin=3D0,smax=3Dumax=3D0xffffffff,smax32=3D1,var_off=3D(0x0;
+0xffffffff))
+48: (16) if w1 =3D=3D 0x1 goto pc+1 50: R2=3Darena R7=3Dscalar(umin=3D1)
+R8=3Dscalar(umin=3D1) R9=3Darena R10=3Dfp0
+; switch (qid) { @ scx_qmap.bpf.c:129
+50: (18) r6 =3D 0xffff88810c333bf8      ;
+R6=3Dmap_value(map=3D.data.qa_q_lock,ks=3D4,vs=3D4)
+52: (05) goto pc+12
+65: (7b) *(u64 *)(r10 -16) =3D r2       ; R2=3Darena R10=3Dfp0 fp-16=3Daren=
+a
+; if (bpf_res_spin_lock(lock)) { @ scx_qmap.bpf.c:212
+66: (bf) r1 =3D r6                      ;
+R1=3Dmap_value(map=3D.data.qa_q_lock,ks=3D4,vs=3D4)
+R6=3Dmap_value(map=3D.data.qa_q_lock,ks=3D4,vs=3D4)
+67: (85) call bpf_res_spin_lock#85478         ; R0=3D0
+68: (16) if w0 =3D=3D 0x0 goto pc+9       ; R0=3D0
+; if (taskc->fifo !=3D fifo) { @ scx_qmap.bpf.c:331
+78: (79) r1 =3D *(u64 *)(r9 +24)        ; R1=3Dscalar() R9=3Darena
+79: (1d) if r1 =3D=3D r8 goto pc+1 81:
+R6=3Dmap_value(map=3D.data.qa_q_lock,ks=3D4,vs=3D4) R7=3Dscalar(umin=3D1)
+R8=3Dscalar(umin=3D1) R9=3Darena R10=3Dfp0 fp-16=3Darena
+; bpf_res_spin_unlock(lock); @ scx_qmap.bpf.c:332
+81: (79) r2 =3D *(u64 *)(r9 +16)        ; R2=3Dscalar() R9=3Darena
+; if (taskc->q_next) @ scx_qmap.bpf.c:336
+82: (79) r1 =3D *(u64 *)(r9 +8)         ; R1=3Dscalar() R9=3Darena
+83: (15) if r1 =3D=3D 0x0 goto pc+4       ; R1=3Dscalar(umin=3D1)
+84: (bf) r3 =3D addr_space_cast(r1, 0, 1)       ; R1=3Dscalar(umin=3D1) R3=
+=3Darena
+; taskc->q_next->q_prev =3D taskc->q_prev; @ scx_qmap.bpf.c:337
+85: (7b) *(u64 *)(r3 +16) =3D r2        ; R2=3Dscalar() R3=3Darena
+; if (taskc->q_prev) @ scx_qmap.bpf.c:340
+86: (79) r2 =3D *(u64 *)(r9 +16)        ; R2=3Dscalar() R9=3Darena
+; taskc->q_next->q_prev =3D taskc->q_prev; @ scx_qmap.bpf.c:337
+87: (05) goto pc+2
+; fifo->tail =3D taskc->q_prev; @ scx_qmap.bpf.c:339
+90: (07) r7 +=3D 8                      ; R7=3Dscalar()
+; if (taskc->q_prev) @ scx_qmap.bpf.c:340
+91: (15) if r2 =3D=3D 0x0 goto pc+2       ; R2=3Dscalar(umin=3D1)
+92: (07) r2 +=3D 8                      ; R2=3Dscalar()
+93: (bf) r8 =3D r2                      ; R8=3Dscalar(id=3D2)
+94: (bf) r2 =3D addr_space_cast(r8, 0, 1)       ; R2=3Darena R8=3Dscalar(id=
+=3D2)
+95: (7b) *(u64 *)(r2 +0) =3D r1         ; R1=3Dscalar(umin=3D1) R2=3Darena
+96: (b7) r1 =3D 0                       ; R1=3D0
+; taskc->q_prev =3D NULL; @ scx_qmap.bpf.c:345
+97: (7b) *(u64 *)(r7 +16) =3D r1
+R7 invalid mem access 'scalar'
+processed 71 insns (limit 1000000) max_states_per_insn 1 total_states
+5 peak_states 5 mark_read 0
+-- END PROG LOAD LOG --
+libbpf: prog 'qmap_dequeue': failed to load: -EACCES
+libbpf: failed to load object 'scx_qmap'
+libbpf: failed to load BPF skeleton 'scx_qmap': -EACCES
+[SCX_BUG] scx_qmap.c:497 (Permission denied)
+Failed to load skel
