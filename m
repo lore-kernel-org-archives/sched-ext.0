@@ -1,357 +1,419 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010071.outbound.protection.outlook.com [52.101.193.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D59D21FF2E
-	for <sched-ext@lists.linux.dev>; Sun, 19 Jul 2026 14:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784471396; cv=none; b=lUT5BJmEI+7eT6c1joBefdOsPPGKH9/7osLsh43hkUuf4NH17ls3z3KaW18YNFXn/C+ZuJWmG+H31WURvL1dR0DosauJkt1CmAIspY/LIaRUhODynkAvGRfdKy05AqQDHKoUx+7Z+aQ+RcMxILV20njJjOd+d5j0F2yB3EvzJc4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784471396; c=relaxed/simple;
-	bh=vK1NHsoFxzoYLtL9FfdJHceRXotnk2hDmMT9O7bT9dI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DU0/H5XtaDpuDKgdgJpK1jf1SCDGpfmFzi53KHeSQQlTIdT7sGV22fSM8dq0ksIZaaUUTbsZ8M8NIffod3BX9BQTfXccvUxdLZWLTQYRbdQDcmaCu4r4c2e7seRPJGKGxUxlpexmIWbjTjewX310uvEcLHutY05cfTmHXXumNlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nb6YCJdf; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D101922FD
+	for <sched-ext@lists.linux.dev>; Mon, 20 Jul 2026 05:55:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.71
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784526908; cv=fail; b=RNrGwMNyfub9mhImCGZWh/CmZUx8YlG2kqgap75vGLpFbULx3jwBvGXp138GTuSlDi4AvjGn5icCvrLr8iIL9nwESE1nQmhUTsMW5o5sZXFyJNf3PZiYDwn0A9tgeTFkujkbkiZ0FrvXvtVm7mwyEXqQ3uIerwOM7C1H/oxDj94=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784526908; c=relaxed/simple;
+	bh=vXcBW6woytkXb7505H1ntpTcmDykGYvTR1WFm1kXOgw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ml+VQIayx0OTV2nHgBgx+4kQ01hNswpY7Q+RIOil7VStmcHp8eoC1ODg5MJwtv75/oOOLwx/odMcnf5fxIiSLWECkorV1av/O0aFNE+fc+ff0yiTay3cYxSHy0Po0Sn38iAR6FJhbHn6Jk+X0RtABSE5GkLJ+26KSgDz8q6ttsY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=P8imsSCD; arc=fail smtp.client-ip=52.101.193.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nb6YCJdf"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-848882fdb18so6558945b3a.0
-        for <sched-ext@lists.linux.dev>; Sun, 19 Jul 2026 07:29:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784471394; x=1785076194; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=R9AbgzjYqM8eyrJXoFk4tjm/3unbXBCMaGPAMWB7gkY=;
-        b=Nb6YCJdfY8YaiYVzBdAB/ux8T4T9wYcuqUf9W/bK2TMmkwFaBTsfIYIPTvYd3xUciN
-         NCRsUzV3HjS85VDP/OpCl0OetlyKomS78NihmTRA7sD8IYdmfNCu2kUtrRR/00euaW8m
-         +3OaVJ7uvJJiq2v1+DErIolmVLvmzPXg587X/djajNEEJUk0/AlmNsK6tl7c2vj7wr/A
-         CxboFcEkCRauq1goh1sf9eeeCjnSjaUFW+kRQAsaQVOohj+hOCpT6u8IQyEg99d/0zRj
-         6K8h+qyqUEZGP767yP4FQV1cUPmzO3ZsW2uEjqAEFCm4pRKpp9loN6QCxNzV4O1+MuLw
-         WJtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784471394; x=1785076194;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=R9AbgzjYqM8eyrJXoFk4tjm/3unbXBCMaGPAMWB7gkY=;
-        b=K2iEHvbV2Je0MEVRBb9y54PyI0TgCN5OO9Nys/SlAKk7KayYctKq9CydzYtJFJNKY0
-         qfQ3pK8rrcfuO8173MR+sP5mZd5Sjl+yr0e/3ecHzEfMWohIMHsEsH4YY0ih1WQxxHua
-         S/d0QkmIYRKSyDTtUkOelydC9Al6c2gttgUvyMgQVU9XAJIpYBOgfPfLGXA0kLWKwRmj
-         Jo0v3p84uqFqJJ3dbLmo3DJFUFhbAB/jMuvugWSTK7bXsCbXkR8TsEszdr80QlWmO9MK
-         8fIL8coD1c6XNg3SzgmBikrG5Fi3jr2M3L2U3nxMiOVabCdfLiFD4aabQRNJjun6uRBO
-         /M6A==
-X-Gm-Message-State: AOJu0YzvUvmAY1/wOJ49Vy5P6IX3HbJaL8MBJKxjWWNwVOtcGwDFjfun
-	cL9XZm7fyyGJJtqivW3N0mQ6iDqjPVoflIvrkXvbBDeKMhyPxAGuKGME6yjqSg==
-X-Gm-Gg: AfdE7cmR02i6MZWEQPd6fUiZ7I2JWhTWgX5sNtewaPi+f+p3F8hmlQ8pfmxlVRJbi5y
-	2aVDEUtAfV5wVnJZJB554ikntVnXL6zp3CK8XvmK9fQeTZvGwBxDCIXch8mLmWkgd+rfZQy00G5
-	irKJrTHhVZYrMQnbye9tol4O5IqDJo/s6/u3yM55JbOfsI6Ly+OlkP3TumTicV8RujsrfCAKkXT
-	N5CEI1lwUSiQtYJuE1mChNmHP7J18D6vGwX5sLNyBariRKRon5x/05zuCaOOzyEbFQysg42e3g5
-	sTLT2zgO1GJvnwVi5WxjkkcFXJKw4ujyhfY1eY2cCgy0JbEUjYqszyotemEDP8ioYF7yfdxYMwu
-	VEEON6v+qmz6WSxoNZ3aVhQl0oZp9gLWu0ZrlNoTbN5BFhlJKFN1JovSNc2yy5Iyu3JMxrPDv3j
-	UlmKglGo3VIvfi7XLEakYAWxHBe00FiWsrDSG3i+IsvvrWCGYepYPiCH2p3jCG3ZCLaJc=
-X-Received: by 2002:a05:6a00:1f09:b0:845:c662:2be with SMTP id d2e1a72fcca58-84c2946f795mr10073771b3a.42.1784471393439;
-        Sun, 19 Jul 2026 07:29:53 -0700 (PDT)
-Received: from cchengyang.tail151456.ts.net (36-226-195-117.dynamic-ip.hinet.net. [36.226.195.117])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84c2ad8b082sm4221415b3a.9.2026.07.19.07.29.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jul 2026 07:29:52 -0700 (PDT)
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: sched-ext@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
-	Chia-Ping Tsai <chia7712@gmail.com>,
-	chengyang.chou@mediatek.com,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>
-Subject: [PATCH sched_ext/for-7.3] tools/sched_ext: scx_pair: Convert to sched_switch TP
-Date: Sun, 19 Jul 2026 22:28:45 +0800
-Message-ID: <20260719142917.34238-1-yphbchou0911@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="P8imsSCD"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uMQ9hJipOZJqDNs4EoHqaT8G+Y9YMUGy5N3XLMXfTBMoWWwOd5CGo1jIdXKaHyzsRCqqntTZPCEHoM//DQhcvLuwjtBzAXBDtzNwW6fVXmf0BsYe/6bHCeV3KvXyqIV49F397oFyjqiwjp6XQKrhRUSPo8sbj0II5IicAC23NJObmiBSjP0/BrpL9nMOatv/22WNryPImMEzmpDol+++beOPuPAMK2FbTTWJYFIIzKU1zO2voJSsoR7zK66u6SGQv5XJOqRP0sfvuHn9J8s6EUeBK0DeRsHOMfEB1Bcv7aM+NY+WlQ3eKaBABpRLU0zU7RNrVvZy4dWPIt8WbtJ8aQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lYCVabQA0xJOujhr6ebDtz1Ix/FpOcFMunNhIIkxxdY=;
+ b=pLihJhAg1qaJk3JFrY3smuZLAVTajNg6DdZIUW4Z7XnDoiWo/sCeSahxPz9l5wNJ0mfrnPwQXUDLXSfZBDqYrfh04SMrlx9U5DVCTi9fQIrmLAbmzFYhiaS8PNvkdwfhGL2v0LchGXG+OdZs2K50bi4cNQTyMAYkAwn78HuCcP5S976thdxUy1VlfHQLB8dDH2pXQIfJsMcP5bptCLaB53R0pFtvIN0IMhpEgSbQpRuZ7Hrwe200nWlQnG93ReIAIjHus+QM780iEBnxJPpxSh2ORiojVDCD4A8+PoLXBtDRBr2aWHbPQToSPnJVI12QOk0OCP+3zFG5DYg4ouV9hQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lYCVabQA0xJOujhr6ebDtz1Ix/FpOcFMunNhIIkxxdY=;
+ b=P8imsSCDKDW77/OWQPS31HZHXrVmY6opX/Q7si6Da3Qha2bz+KIudGiq4qqmB486hUmwpg1yRpVQ2zEpx37MGQKeFnYPrhUZ04HO0Gu7hE1tSEgQfPTYIO5nQWV/NvJPc65dPJvHyZf1YWue6BqvaypzR23COJewYj7FNT3llZmgnTGrvv2ZzsoejE81Fa1LOqOqtUT83j0mh6awJTNefyXwJSyoOpFw2WD0NBEqfF16uOSxSvm3ps7W0bmwe11kyZlQHbGJIRWgirKT+sU/001wo98njT43tmccKBUrNw8Yxn5891P7DgZ0qN8h1oTJFbWIgQ8+aEt8xDDmNz2n2A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by LV3PR12MB9235.namprd12.prod.outlook.com (2603:10b6:408:1a4::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.16; Mon, 20 Jul
+ 2026 05:54:47 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0223.015; Mon, 20 Jul 2026
+ 05:54:47 +0000
+Date: Mon, 20 Jul 2026 07:54:34 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Koutny <mkoutny@suse.com>, cgroups@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/8] sched_ext: Re-home tasks on cgroup migration
+Message-ID: <al24GoeqoJhGS4_H@gpd4>
+References: <20260718081727.582037-1-tj@kernel.org>
+ <20260718081727.582037-5-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260718081727.582037-5-tj@kernel.org>
+X-ClientProxiedBy: MI1P293CA0018.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:3::12) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|LV3PR12MB9235:EE_
+X-MS-Office365-Filtering-Correlation-Id: 588258af-79bb-4515-252c-08dee6236722
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|6133799003|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	gZ6pA6QOY+bkOvYjatVH1NbuKK8GwqgOxDNp8nODCEcSzwD+MM2coXMDaT9Z4+LX1qYeEBqNm85S5EZMkrnyG6cVIXprM4tmfRSWUIhSyXAIwouu8zn4gsjyhH32Ws8IDa+P1PK0oEtgUh4YfHpRT3wo8+vvyJoxwGL03zIdJlwqyxxYl5BCoI/JdqqcF1cSzr8O8toFu/LrcNwgMImy0TWkQQlCV4PDAYieoJHCmSM6xGpFDHzDDFIGLXXYEm/lF1bTjHMhdyDv+Gia22tg6gjK6TZAcGt/6ALwOphpe71gaJejT74O8xdkd19c80HR33Vw073JN62foiGuSkDuypm/PdqO7c9/slcMlK0UjSrLSlAhkEzSbOG2S+P6Od1BUe98tVXUjwWDEFgeAxt1M1qb8ECl3/FRkjYaNU8eFbDBvSJ9YV4U0haTrMa5UXNJzVHd6KEQAEt6MdBTStDg0tZ/vPW0mgcf3di605kLjlCwvyWeBpGzk3GqKeUpOmWBC+oIrEw1ugZt4BDrYnlcpycNhDznoM3W/mnoOwPK8FLp4m4RWd58tdwjoSfRAQc/RAP7v7KhfwGGRDz+51DNSyp/Gan2j5UdNFMoY8GCk2I4HfIneSgR7jh7muqse+/cdZgVFv/IxwBVq0KGHzqJC2TBV67Nw9KGeVFXKQav9Ig=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?m49fPCReZs/VB6wIr+9PiHTysQvg8J+McLYavnvP4ureOUOUlb4vrZvyboJX?=
+ =?us-ascii?Q?BcrjVnTqLgeRdG+fKArw3DM684eKHEEWp7CZTEfF9B7aUKHBHRUbAZsJgieL?=
+ =?us-ascii?Q?pOgvJZx8Qedf4WC3fOH3dWy1MewMJtCe7SD6Qz7MmyWl1lDOWLFAOe41KFje?=
+ =?us-ascii?Q?t60ywZ2kF1wC2luef/ZnbQuYkVS5dTVJel5M0LIbNna9kxtprAX5M4sYuuNZ?=
+ =?us-ascii?Q?5KFEZu4R/wpmvr80GHgz+CLe53jMeKed3ahMioWArZOrSaUXb9hFDJecatSM?=
+ =?us-ascii?Q?Zd9tnnhyZKbBOcc4CvZ9GVjn2QMtmaf7/N2QM93f4Qwmrc2JyILA4/v2cGPk?=
+ =?us-ascii?Q?ptz8H7WwVNpf2gKh/Cdv5089wpiEcB56lfBq08PO7/J3sGO4R4dEXMbxmwxk?=
+ =?us-ascii?Q?Kh2rtGAg13VLZWKaRBiHshU7DRIw+5PN/c2peyL35Rbcwq1HoTOund6O6fqA?=
+ =?us-ascii?Q?9qP3XL2n4fMtReyWrE46+almTTbwlhQdmFKBkJ5cI0IEFH38hO2qCBOS8q0d?=
+ =?us-ascii?Q?zafwaQi3XRIXeWtIVZ6gc82uu49qYoFjqy2DWVmwAbUCf7BTqOeo8iiJr4qC?=
+ =?us-ascii?Q?K87b/kmj5zqNB8bGyfHLV+yUf2SSSiAbjVgo+WM6DKMY2OprLY/4OFbCBuZp?=
+ =?us-ascii?Q?mIPTqBqn/Sb1mOMw0sXUL0yAj8Pn4p+LFmfaWWYZVVBX3Mte2szBWV3/r6K8?=
+ =?us-ascii?Q?Pg5qYcptPIlDkJuhIr1cT6bIcD18ouGTufBa9kui04ZEg3HIPk/0J490Z3il?=
+ =?us-ascii?Q?gvl2MDn4oR73EoZjA9IF6C1A4cFiW4Kvf+mZzoT/Hact3CeSFHQNZMRL8o4S?=
+ =?us-ascii?Q?UM6z2BgSq4iOEIY9P/XdOH2Bz+wehnzYh1KDdCJMJSXnak4rW6dFSu4MHQ4H?=
+ =?us-ascii?Q?KvyZ7XDYlrxVJWJnmRfmnEYSoYOhEHtScLqXHuHOqqziCIYCWIb4hzhYXJbu?=
+ =?us-ascii?Q?otssgGgp1dM4yffOg4zMCtLPA5zj/wq61cxRteYTC4k4Q8F6gjt1Rb5UJ3yV?=
+ =?us-ascii?Q?WmKNYuc4LfVjVTVk/GkJg3siAExMpzNxTPD4xh7rrsh3soh8bUJJXk3xTgq0?=
+ =?us-ascii?Q?huEvRLUEyDmeKZ67hFPxQqtv4vBsuZ0l12qjJlk/X/3UtZ7kiBBgs7sJ7RB+?=
+ =?us-ascii?Q?1iNUq54TYzChBZWBqB3JrUbOvyz3LNNyfbttcsFI1O9dWUJzCXJ/nLyb5Yvm?=
+ =?us-ascii?Q?2USiyU4+w76IhpakecxoYHjb6OsG57u+BR13YjtDa0SPc8GmvNAUgr8g2YYf?=
+ =?us-ascii?Q?2EEE3MfUH1goUdYrRZpd4lqkdcgCDcHC2GQCS97I5Gf6OIBFAjBXn93zxQtJ?=
+ =?us-ascii?Q?vBOkxGiFsmQavqDCDo1iVwjc7Yjl0/V+5ui5FiQGHLOU5xbB+f5FoR0R9OyQ?=
+ =?us-ascii?Q?m0m0UvRqGl7ncSZxVNF4pndpI+iS2HWoM3u7mx26hG6A3KIORqw3t/5bTGnh?=
+ =?us-ascii?Q?TFJjMeAXil6QTWw+9ithLNVwYJVOcK48LY4xd8Jf3rgKZixFKDxU+x7FnpD4?=
+ =?us-ascii?Q?tfiqURo5qSKSr7yQEu3hdTpntYSc57iocS+gfn5t7Y5Q8l5XZfgBAcIfCOL6?=
+ =?us-ascii?Q?sqVPsGhG45KDODGmXsYTuVwJgMYHODHNb9A6UwkchzMMkzWrmqC73jzt8eHJ?=
+ =?us-ascii?Q?/EughRA5mRGFkiOtYjlo1v0Nqu60kOmL7hur68Xm9DWkfC/WTn+zW6SdxGiL?=
+ =?us-ascii?Q?tYZjKUrSkqYy7EQ970Q72DlG28dZntlRVunQVw0wO2l94+VBaLV9F/6YFbTA?=
+ =?us-ascii?Q?PPh5Obn1yA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 588258af-79bb-4515-252c-08dee6236722
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 05:54:47.4037
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gb4ip5/+a+WrhFwL88s60Lt0ap+Dfzb7A//tviF1rk/BoGlVXEwhFfkWyRsojufseluOytH3/M01FwNBc6WLIw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9235
 
-ops.cpu_acquire/release() are deprecated in favor of tracking CPU
-preemption from a sched_switch tracepoint, see
-commit a3f5d4822253 ("sched_ext: Allow scx_bpf_reenqueue_local() to
-be called from anywhere"). Loading scx_pair currently emits a
-deprecation warning.
+Hi Tejun,
 
-Replace the pair_cpu_acquire/release() callbacks with a
-tp_btf/sched_switch program that edge-detects the same transitions the
-core used to deliver: a release when a running SCX task loses its CPU
-to a higher-priority class, and an acquire when the CPU switches back
-to an SCX task or idle while marked preempted.
+On Fri, Jul 17, 2026 at 10:17:23PM -1000, Tejun Heo wrote:
+> A task's sched (p->scx.sched) must match its cgroup's owner
+> (cgrp->scx_sched). cgroup migration breaks the invariant:
+> scx_cgroup_move_task() only fires root's ops.cgroup_move() and never
+> re-homes the task, leading to wrong-sched scheduling and, once the stale
+> sched is freed, a use-after-free.
+> 
+> Hook into the new cgroup task migration events and re-home each task whose
+> destination cgroup is owned by a different sched. The events map naturally
+> to the transfer: MIGRATING runs the fallible init for the destination sched,
+> letting it reject the migration the same way ops.cgroup_prep_move() can,
+> MIGRATED does the re-home, which can't fail, and CANCELED undoes the init
+> when the migration falls through.
+> 
+> Pre-commit, the task's task_group still reflects the source, so
+> __scx_init_task() grows an explicit cgroup argument for the migration path
+> to hand ops.init_task() the destination cgroup.
+> 
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
-Tasks are classified by effective priority (p->prio) rather than by
-policy: rt_mutex_setprio() boosts a PI beneficiary into the rt/dl
-classes while leaving its policy untouched, so a policy test would
-both miss the release when a boosted task takes the CPU and fire a
-spurious acquire when a boosted task replaces a real rt task.
+Should we add:
 
-A switch from idle straight to a higher-priority task is deliberately
-not treated as a release. The CPU was not running an SCX task, so
-there is nothing to drain, and kicking SCX_KICK_PREEMPT |
-SCX_KICK_WAIT on every rt wakeup would make the pair CPU wait out rt
-bursts it was never coupled to. The old callbacks behaved the same
-way, firing ops.cpu_release() only from switch_class() when an SCX
-task was put for a higher class.
+Fixes: 337ec00b1d9c ("sched_ext: Implement cgroup sub-sched enabling and disabling")
+Closes: https://lore.kernel.org/r/alnxrsexEe_nQwqL@gpd4
 
-The tracepoint runs on every context switch in the system, so the
-common no-transition case is filtered before taking the pair-shared
-lock. This is safe because a CPU's own preempted_mask bit is only ever
-written by this tracepoint running on that CPU.
+Thanks,
+-Andrea
 
-sched_setscheduler() on a running task changes class in place without
-a context switch, so such transitions are only observed at the task's
-next switch. The old callbacks had the same blind spot in
-switch_class(), and try_dispatch() already bounds the resulting wait.
-
-Verified in virtme-ng with the script below. The scheduler must load
-without the deprecation warning, stay enabled through the rt churn and
-the idle soak (the watchdog would otherwise abort it with "runnable
-task stall"), keep its preemption counter advancing, and unregister
-cleanly at the end. A PI rt-mutex churn that repeatedly boosts
-SCX tasks into the rt class was exercised separately:
-
-  #!/bin/bash
-  # vng --verbose --cpus 8 -m 4G --user root -- ./verify.sh
-  # FIFO harness: survives even if all SCHED_NORMAL tasks stall
-  [ "${RT:-0}" = 1 ] || exec chrt -f 5 env RT=1 "$0"
-
-  chrt -o 0 ./tools/sched_ext/build/bin/scx_pair &
-  PAIR=$!
-  sleep 3
-  for round in $(seq 10); do
-    pids=""
-    for i in 0 1 2 3; do  # SCHED_FIFO churn
-      chrt -f 10 bash -c \
-        'e=$((SECONDS+1)); while [ $SECONDS -lt $e ]; do :; done' &
-      pids="$pids $!"
-    done
-    for i in 0 1; do      # SCHED_NORMAL load under scx
-      chrt -o 0 bash -c \
-        'n=0; while [ $n -lt 200000 ]; do n=$((n+1)); done' &
-      pids="$pids $!"
-    done
-    wait $pids            # explicit pids, not the scx_pair job
-  done
-  sleep 300               # idle soak
-  kill -INT $PAIR         # expect clean unregister in dmesg
-
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
----
- tools/sched_ext/scx_pair.bpf.c | 136 ++++++++++++++++++++++-----------
- 1 file changed, 90 insertions(+), 46 deletions(-)
-
-diff --git a/tools/sched_ext/scx_pair.bpf.c b/tools/sched_ext/scx_pair.bpf.c
-index 267011b57cba..0d61b7b812db 100644
---- a/tools/sched_ext/scx_pair.bpf.c
-+++ b/tools/sched_ext/scx_pair.bpf.c
-@@ -93,12 +93,13 @@
-  * -----------------------
-  *
-  * SCX is the lowest priority sched_class, and could be preempted by them at
-- * any time. To address this, the scheduler implements pair_cpu_release() and
-- * pair_cpu_acquire() callbacks which are invoked by the core scheduler when
-- * the scheduler loses and gains control of the CPU respectively.
-+ * any time. To address this, the scheduler watches every sched_switch from
-+ * a tracepoint and edge-detects when a CPU leaves and returns to SCX
-+ * control.
-  *
-- * In pair_cpu_release(), we mark the pair_ctx as having been preempted, and
-- * then invoke:
-+ * When a higher-priority class takes a CPU away from a running SCX task -
-+ * a sched_switch from an SCX task to a higher-priority task - we mark the
-+ * pair_ctx as having been preempted and then invoke:
-  *
-  * scx_bpf_kick_cpu(pair_cpu, SCX_KICK_PREEMPT | SCX_KICK_WAIT);
-  *
-@@ -107,9 +108,19 @@
-  * sched_class that preempted our scheduler does not schedule a task
-  * concurrently with our pair CPU.
-  *
-- * When the CPU is re-acquired in pair_cpu_acquire(), we unmark the preemption
-- * in the pair_ctx, and send another resched IPI to the pair CPU to re-enable
-- * pair scheduling.
-+ * When the CPU returns to SCX or idle, we unmark the preemption in the
-+ * pair_ctx and send another resched IPI to the pair CPU to re-enable pair
-+ * scheduling.
-+ *
-+ * A switch from idle straight to a higher-priority task is not a release:
-+ * the CPU was not running an SCX task, so there is nothing to drain and no
-+ * reason to make the pair wait. Kicking SCX_KICK_WAIT on every such wakeup
-+ * would stall the pair CPU behind rt bursts it was never coupled to.
-+ *
-+ * Note that sched_setscheduler() on a running task changes its class in
-+ * place without a context switch, so such transitions are only observed at
-+ * the task's next switch. Until then the stale active_mask bit makes the
-+ * pair wait in try_dispatch(), which is bounded by that next switch.
-  *
-  * Copyright (c) 2022 Meta Platforms, Inc. and affiliates.
-  * Copyright (c) 2022 Tejun Heo <tj@kernel.org>
-@@ -118,6 +129,8 @@
- #include <scx/common.bpf.h>
- #include "scx_pair.h"
- 
-+#define MAX_RT_PRIO	100
-+
- char _license[] SEC("license") = "GPL";
- 
- /* !0 for veristat, set during init */
-@@ -308,6 +321,40 @@ static int lookup_pairc_and_mask(s32 cpu, struct pair_ctx **pairc, u32 *mask)
- 	return 0;
- }
- 
-+/*
-+ * A task is above SCX whenever its effective priority is in the rt/dl
-+ * range. Test p->prio rather than p->policy: rt_mutex_setprio() boosts
-+ * a PI beneficiary into the rt/dl classes with its policy left
-+ * untouched, so a policy test would misclassify boosted tasks in both
-+ * directions. p->prio follows the boost and the deboost.
-+ *
-+ * This still cannot tell fair and SCX tasks apart. It is complete only
-+ * because scx_pair runs in switch-all mode, where no fair class task
-+ * exists; in partial mode fair is also above SCX and can take the CPU.
-+ */
-+static bool pair_task_is_highpri(struct task_struct *p)
-+{
-+	return p->prio < MAX_RT_PRIO;
-+}
-+
-+static void pair_cpu_acquire_locked(struct pair_ctx *pairc, u32 in_pair_mask,
-+					u32 *kick_flags)
-+{
-+	pairc->preempted_mask &= ~in_pair_mask;
-+	/* Kick the pair CPU, unless it was also preempted. */
-+	*kick_flags = !pairc->preempted_mask ? SCX_KICK_PREEMPT : 0;
-+}
-+
-+static void pair_cpu_release_locked(struct pair_ctx *pairc, u32 in_pair_mask,
-+					u32 *kick_flags)
-+{
-+	pairc->preempted_mask |= in_pair_mask;
-+	pairc->active_mask &= ~in_pair_mask;
-+	/* Kick the pair CPU if it's still running. */
-+	*kick_flags = pairc->active_mask ? SCX_KICK_PREEMPT | SCX_KICK_WAIT : 0;
-+	pairc->draining = true;
-+}
-+
- __attribute__((noinline))
- static int try_dispatch(s32 cpu)
- {
-@@ -500,61 +547,60 @@ void BPF_STRUCT_OPS(pair_dispatch, s32 cpu, struct task_struct *prev)
- 	}
- }
- 
--void BPF_STRUCT_OPS(pair_cpu_acquire, s32 cpu, struct scx_cpu_acquire_args *args)
-+SEC("tp_btf/sched_switch")
-+int BPF_PROG(pair_sched_switch, bool preempt, struct task_struct *prev,
-+	     struct task_struct *next, unsigned int prev_state)
- {
- 	int ret;
-+	s32 cpu = bpf_get_smp_processor_id();
- 	u32 in_pair_mask;
- 	struct pair_ctx *pairc;
--	bool kick_pair;
-+	u32 kick_flags = 0;
-+	bool preempted;
-+	bool release, acquire;
- 
- 	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
- 	if (ret)
--		return;
--
--	bpf_spin_lock(&pairc->lock);
--	pairc->preempted_mask &= ~in_pair_mask;
--	/* Kick the pair CPU, unless it was also preempted. */
--	kick_pair = !pairc->preempted_mask;
--	bpf_spin_unlock(&pairc->lock);
--
--	if (kick_pair) {
--		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
-+		return 0;
- 
--		if (pair) {
--			__sync_fetch_and_add(&nr_kicks, 1);
--			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT);
--		}
-+	/*
-+	 * This runs on every context switch in the system. A CPU's own
-+	 * preempted_mask bit is only ever written by this tracepoint
-+	 * running on that CPU, so the unlocked read is exact and the
-+	 * pair-shared lock is only taken on actual transitions.
-+	 */
-+	preempted = pairc->preempted_mask & in_pair_mask;
-+	if (next->pid && pair_task_is_highpri(next)) {
-+		/* an SCX task lost the CPU to a higher-priority class */
-+		release = !preempted && prev->pid && !pair_task_is_highpri(prev);
-+		acquire = false;
-+	} else {
-+		/* the CPU is back under SCX control (or idle) */
-+		release = false;
-+		acquire = preempted;
- 	}
--}
--
--void BPF_STRUCT_OPS(pair_cpu_release, s32 cpu, struct scx_cpu_release_args *args)
--{
--	int ret;
--	u32 in_pair_mask;
--	struct pair_ctx *pairc;
--	bool kick_pair;
--
--	ret = lookup_pairc_and_mask(cpu, &pairc, &in_pair_mask);
--	if (ret)
--		return;
-+	if (!release && !acquire)
-+		return 0;
- 
- 	bpf_spin_lock(&pairc->lock);
--	pairc->preempted_mask |= in_pair_mask;
--	pairc->active_mask &= ~in_pair_mask;
--	/* Kick the pair CPU if it's still running. */
--	kick_pair = pairc->active_mask;
--	pairc->draining = true;
-+	if (release) {
-+		pair_cpu_release_locked(pairc, in_pair_mask, &kick_flags);
-+		__sync_fetch_and_add(&nr_preemptions, 1);
-+	} else {
-+		pair_cpu_acquire_locked(pairc, in_pair_mask, &kick_flags);
-+	}
- 	bpf_spin_unlock(&pairc->lock);
- 
--	if (kick_pair) {
-+	if (kick_flags) {
- 		s32 *pair = (s32 *)ARRAY_ELEM_PTR(pair_cpu, cpu, nr_cpu_ids);
- 
- 		if (pair) {
- 			__sync_fetch_and_add(&nr_kicks, 1);
--			scx_bpf_kick_cpu(*pair, SCX_KICK_PREEMPT | SCX_KICK_WAIT);
-+			scx_bpf_kick_cpu(*pair, kick_flags);
- 		}
- 	}
--	__sync_fetch_and_add(&nr_preemptions, 1);
-+
-+	return 0;
- }
- 
- s32 BPF_STRUCT_OPS(pair_cgroup_init, struct cgroup *cgrp)
-@@ -602,8 +648,6 @@ void BPF_STRUCT_OPS(pair_exit, struct scx_exit_info *ei)
- SCX_OPS_DEFINE(pair_ops,
- 	       .enqueue			= (void *)pair_enqueue,
- 	       .dispatch		= (void *)pair_dispatch,
--	       .cpu_acquire		= (void *)pair_cpu_acquire,
--	       .cpu_release		= (void *)pair_cpu_release,
- 	       .cgroup_init		= (void *)pair_cgroup_init,
- 	       .cgroup_exit		= (void *)pair_cgroup_exit,
- 	       .exit			= (void *)pair_exit,
--- 
-2.43.0
-
+> ---
+>  kernel/sched/ext/ext.c      |  29 +++++---
+>  kernel/sched/ext/internal.h |   3 +-
+>  kernel/sched/ext/sub.c      | 135 ++++++++++++++++++++++++++++++++++--
+>  3 files changed, 152 insertions(+), 15 deletions(-)
+> 
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index cd99947b4229..6bac68758704 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -3485,15 +3485,28 @@ static struct cgroup *tg_cgrp(struct task_group *tg)
+>  		return &cgrp_dfl_root.cgrp;
+>  }
+>  
+> -#define SCX_INIT_TASK_ARGS_CGROUP(tg)		.cgroup = tg_cgrp(tg),
+> +#define SCX_INIT_TASK_ARGS_CGROUP(cgrp)		.cgroup = (cgrp),
+>  
+>  #else	/* CONFIG_EXT_GROUP_SCHED */
+>  
+> -#define SCX_INIT_TASK_ARGS_CGROUP(tg)
+> +#define SCX_INIT_TASK_ARGS_CGROUP(cgrp)
+>  
+>  #endif	/* CONFIG_EXT_GROUP_SCHED */
+>  
+> -int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
+> +/**
+> + * __scx_init_task - Initialize a task for a sched
+> + * @sch: sched to initialize @p for
+> + * @p: task of interest
+> + * @cgrp: cgroup @p is joining, %NULL for @p's current task_group's cgroup
+> + * @fork: %true if @p is being forked
+> + *
+> + * Pre-commit cgroup migration passes @cgrp explicitly as @p's task_group
+> + * still reflects the source.
+> + *
+> + * Return 0 on success, -errno on failure.
+> + */
+> +int __scx_init_task(struct scx_sched *sch, struct task_struct *p,
+> +		    struct cgroup *cgrp, bool fork)
+>  {
+>  	int ret;
+>  
+> @@ -3501,7 +3514,7 @@ int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork)
+>  
+>  	if (SCX_HAS_OP(sch, init_task)) {
+>  		struct scx_init_task_args args = {
+> -			SCX_INIT_TASK_ARGS_CGROUP(task_group(p))
+> +			SCX_INIT_TASK_ARGS_CGROUP(cgrp ?: tg_cgrp(task_group(p)))
+>  			.fork = fork,
+>  		};
+>  
+> @@ -3747,7 +3760,7 @@ int scx_fork(struct task_struct *p, struct kernel_clone_args *kargs)
+>  		struct scx_sched *sch = scx_root;
+>  #endif
+>  		scx_set_task_state(p, SCX_TASK_INIT_BEGIN);
+> -		ret = __scx_init_task(sch, p, true);
+> +		ret = __scx_init_task(sch, p, NULL, true);
+>  		if (unlikely(ret)) {
+>  			scx_set_task_state(p, SCX_TASK_NONE);
+>  			return ret;
+> @@ -5969,8 +5982,8 @@ static void scx_root_disable(struct scx_sched *sch)
+>  	WRITE_ONCE(scx_switching_all, false);
+>  
+>  	/*
+> -	 * Shut down cgroup support before tasks so that the cgroup attach path
+> -	 * doesn't race against scx_disable_and_exit_task().
+> +	 * Shut down cgroup support before tasks so that the cgroup attach and
+> +	 * migration paths don't race against scx_disable_and_exit_task().
+>  	 */
+>  	scx_cgroup_lock();
+>  	scx_cgroup_enabled = false;
+> @@ -7263,7 +7276,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+>  		scx_set_task_state(p, SCX_TASK_INIT_BEGIN);
+>  		scx_task_iter_unlock(&sti);
+>  
+> -		ret = __scx_init_task(sch, p, false);
+> +		ret = __scx_init_task(sch, p, NULL, false);
+>  
+>  		scx_task_iter_relock(&sti, p);
+>  
+> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+> index d76ac22019af..23fc95502ea6 100644
+> --- a/kernel/sched/ext/internal.h
+> +++ b/kernel/sched/ext/internal.h
+> @@ -1920,7 +1920,8 @@ void scx_flush_dispatch_buf(struct scx_sched *sch, struct rq *rq);
+>  void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags);
+>  void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+>  			u64 reenq_flags, struct rq *locked_rq);
+> -int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fork);
+> +int __scx_init_task(struct scx_sched *sch, struct task_struct *p,
+> +		    struct cgroup *cgrp, bool fork);
+>  void scx_enable_task(struct scx_sched *sch, struct task_struct *p);
+>  void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p);
+>  void scx_sub_init_cancel_task(struct scx_sched *sch, struct task_struct *p);
+> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+> index 5f7ac6696d17..393dbd00d2f7 100644
+> --- a/kernel/sched/ext/sub.c
+> +++ b/kernel/sched/ext/sub.c
+> @@ -906,7 +906,7 @@ void scx_sub_disable(struct scx_sched *sch)
+>  		 * parent. A child can't directly affect the parent through its
+>  		 * own failures.
+>  		 */
+> -		ret = __scx_init_task(parent, p, false);
+> +		ret = __scx_init_task(parent, p, NULL, false);
+>  		if (ret) {
+>  			scx_fail_parent(sch, p, ret);
+>  			put_task_struct(p);
+> @@ -1212,7 +1212,7 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+>  		 * As $p is still on $parent, it can't be transitioned to INIT.
+>  		 * Let's worry about task state later. Use __scx_init_task().
+>  		 */
+> -		ret = __scx_init_task(sch, p, false);
+> +		ret = __scx_init_task(sch, p, NULL, false);
+>  		if (ret)
+>  			goto abort;
+>  
+> @@ -1336,6 +1336,99 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+>  	cmd->ret = 0;
+>  }
+>  
+> +/**
+> + * scx_cgroup_task_migrating - Prepare a task for a cgroup migration
+> + * @ctx: migration being prepared
+> + *
+> + * A task's sched must match its cgroup's owner, so a migration that crosses a
+> + * sched boundary re-homes the task once committed. Run the fallible part here,
+> + * before the migration commits: initialize the task for the destination sched.
+> + * A rejection fails the cgroup.procs write.
+> + */
+> +static s32 scx_cgroup_task_migrating(struct cgroup_task_migrate_ctx *ctx)
+> +{
+> +	struct task_struct *p = ctx->task;
+> +	struct scx_sched *to;
+> +	int ret;
+> +
+> +	/*
+> +	 * Cleared under scx_cgroup_lock() before root disable starts tearing
+> +	 * down tasks. As cgroup_mutex is held, a set flag guarantees that the
+> +	 * teardown loop is not running concurrently.
+> +	 */
+> +	if (!scx_cgroup_enabled)
+> +		return NOTIFY_OK;
+> +
+> +	to = ctx->dst_dcgrp->scx_sched;
+> +	if (scx_task_on_sched(to, p))
+> +		return NOTIFY_OK;
+> +
+> +	ret = __scx_init_task(to, p, ctx->dst_dcgrp, false);
+> +	if (ret)
+> +		return notifier_from_errno(ret);
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+> +/**
+> + * scx_cgroup_task_migrated - Re-home a task that changed cgroups
+> + * @ctx: committed migration
+> + *
+> + * Move the task to its new cgroup's sched, which scx_cgroup_task_migrating()
+> + * already initialized it for. Can't fail.
+> + *
+> + * This is safe against all phases of the destination sched's destruction. A
+> + * disable resets cgroup ownership to the parent and re-homes tasks in one
+> + * scx_cgroup_lock() section. If that section already ran, the destination would
+> + * be the parent. Otherwise, the re-home loop is still ahead and guaranteed to
+> + * visit the task, now in the destination cgroup.
+> + */
+> +static void scx_cgroup_task_migrated(struct cgroup_task_migrate_ctx *ctx)
+> +{
+> +	struct task_struct *p = ctx->task;
+> +	struct scx_sched *to;
+> +	struct rq *rq;
+> +	struct rq_flags rf;
+> +
+> +	if (!scx_cgroup_enabled)
+> +		return;
+> +
+> +	to = ctx->dst_dcgrp->scx_sched;
+> +	if (scx_task_on_sched(to, p))
+> +		return;
+> +
+> +	rq = task_rq_lock(p, &rf);
+> +	scx_rehome_task(to, p);
+> +	task_rq_unlock(rq, p, &rf);
+> +}
+> +
+> +/**
+> + * scx_cgroup_task_migrate_canceled - Undo migration preparation
+> + * @ctx: canceled migration
+> + *
+> + * The migration failed after scx_cgroup_task_migrating() initialized the task
+> + * for the destination sched. The task stays on its current sched in the source
+> + * cgroup. Undo the destination's init.
+> + */
+> +static void scx_cgroup_task_migrate_canceled(struct cgroup_task_migrate_ctx *ctx)
+> +{
+> +	struct task_struct *p = ctx->task;
+> +	struct scx_sched *to;
+> +	struct rq *rq;
+> +	struct rq_flags rf;
+> +
+> +	if (!scx_cgroup_enabled)
+> +		return;
+> +
+> +	to = ctx->dst_dcgrp->scx_sched;
+> +	if (scx_task_on_sched(to, p))
+> +		return;
+> +
+> +	rq = task_rq_lock(p, &rf);
+> +	scx_sub_init_cancel_task(to, p);
+> +	task_rq_unlock(rq, p, &rf);
+> +}
+> +
+>  static s32 scx_cgroup_lifetime_notify(struct notifier_block *nb,
+>  				      unsigned long action, void *data)
+>  {
+> @@ -1367,12 +1460,42 @@ static struct notifier_block scx_cgroup_lifetime_nb = {
+>  	.notifier_call = scx_cgroup_lifetime_notify,
+>  };
+>  
+> -static s32 __init scx_cgroup_lifetime_notifier_init(void)
+> +static s32 scx_cgroup_task_notify(struct notifier_block *nb,
+> +				  unsigned long action, void *data)
+> +{
+> +	struct cgroup_task_migrate_ctx *ctx = data;
+> +
+> +	switch (action) {
+> +	case CGROUP_TASK_MIGRATING:
+> +		return scx_cgroup_task_migrating(ctx);
+> +	case CGROUP_TASK_MIGRATED:
+> +		scx_cgroup_task_migrated(ctx);
+> +		break;
+> +	case CGROUP_TASK_MIGRATE_CANCELED:
+> +		scx_cgroup_task_migrate_canceled(ctx);
+> +		break;
+> +	}
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+> +static struct notifier_block scx_cgroup_task_nb = {
+> +	.notifier_call = scx_cgroup_task_notify,
+> +};
+> +
+> +static s32 __init scx_cgroup_notifier_init(void)
+>  {
+> -	return blocking_notifier_chain_register(&cgroup_lifetime_notifier,
+> -						&scx_cgroup_lifetime_nb);
+> +	s32 ret;
+> +
+> +	ret = blocking_notifier_chain_register(&cgroup_lifetime_notifier,
+> +					       &scx_cgroup_lifetime_nb);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return blocking_notifier_chain_register(&cgroup_task_notifier,
+> +						&scx_cgroup_task_nb);
+>  }
+> -core_initcall(scx_cgroup_lifetime_notifier_init);
+> +core_initcall(scx_cgroup_notifier_init);
+>  
+>  static void scx_pstack_recursion(struct bpf_prog *prog, const char *op)
+>  {
+> -- 
+> 2.55.0
+> 
