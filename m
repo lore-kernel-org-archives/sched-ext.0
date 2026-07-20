@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D471C3CCFDE;
-	Mon, 20 Jul 2026 08:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25E53CB2F6;
+	Mon, 20 Jul 2026 08:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784535967; cv=none; b=IEwWzJKKRNM/xVj26knkvN5MABmg9gPonltUwtpsmYAuRwKEDNXLYZS6aQYC7TgyN/+e7i3aNZYKNOpkJ8A+Iek+Qw64XwAjy4WTW23lUjtaSZ0+gOfBOJDay0FIUGLGpTuIq2ApCmstoqcVvT2ZQFaexeukMdnRcxAq28aEIJg=
+	t=1784535968; cv=none; b=meDCuJF1AEcvSJHIqb/OufPz9X4b6bLkmAbggErF11dC9vX1ObGjqnRfxyWvEQhtz2Z8CiyhBNN2+kFdFJ7bMxGjILC6DYA3c4NRHlZ6AbCYeUetO/2kTblX1unFwTYZYFDXkkNOI8gsY63kf1VjVsRtQ0vA9YH4zDfYFzMNetY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784535967; c=relaxed/simple;
-	bh=aY35KR/EhdepAOr/J5zdQTUsGvH9YuojLeRqDFpXyIY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nQBhd8SvR151e+ssbFUirrNn8xTthPYEs8NeucLxjY6ZG/g2Iv8jt0PNh8oQODtHBQXDe/0j0iwhvlh+/GOMYECZo2gjMHxrwDmfHO6z3x7c+8aKh+y1AlyDTrxrO20wiGJrKEdMyXrpwtqu0gi4XhmlPJTduVqWvz9LBiJ8uKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qu2yuxcX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784535968; c=relaxed/simple;
+	bh=iEpIi4Qa5NpGgD6Ierc/GuvynTAcyIadgREuSfbMMMM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hTpq2BEM1R9G9B2UGM8tUogXNW21oZDYpELfDZGPMN1S4iD2aMgEF95Z5yRTRpSMqa3dRiVVO7no53/N3zZxQuxksRENC/YBSUOTpdfPXkWoPilKBxdagzKNi3+NjoREu9PRmY8ytIXy7/USgjIqP/ZnW5woTsu9erWVvAl4qvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apjc6Cvm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qu2yuxcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FEE1F000E9;
-	Mon, 20 Jul 2026 08:26:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apjc6Cvm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1581F00A3A;
+	Mon, 20 Jul 2026 08:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784535966;
-	bh=9n5bds31+k4gl+d3k7Dt+gFIFbcKkf0LeSZzY1vQQek=;
-	h=From:To:Cc:Subject:Date;
-	b=Qu2yuxcXiJ9OzUzHIXWhZv1AzR+3Bu+AErV2Ahlr7RQ9PfQJ3fRLzEsgjCbovL8Uz
-	 YUZ39o7cFCScHnMYxI2yD+VfecVdjsK31tZ/9hOFzAQLD+0+44gVAdq1pX5Ex5B4qH
-	 XhHDn4BxXzPKC9nwmYhKmI9re5xS5jhsK0y4wNXECJqBoef2dXiuTtX+ocNrwbl8YN
-	 hEsmmfeOXKwVS6iXOIDOi5pf0+vO7YN3o/dlrI/c9ubJHO+cb2Am28IpiE0UXfzls9
-	 tu8AMHnGyvs3QKdMvXVXyY6m/RtLrRyfBqoKDwBrkccETgBoc/xgw6EDASp/J3BbDU
-	 jQO3KOiryGQ8g==
+	s=k20260515; t=1784535967;
+	bh=Gxzi8yFm78Vzpa1VaYX8QMdAUOLSezhMie0/U7K7InY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=apjc6CvmmE0UcepCl7aUJdLMs2/w/znu/agWQZpH8FWzalfocjTA/UlX6ykdWRj84
+	 vmF3irg/Au+MIP93IKTk2kB/5zImjRvrzsyRw0YFRFGP18jSWLf4YwGmgyTLtbgy05
+	 QiDmXXOoZFB5C/2ZHaQYMpWNn+4/b6Y1o8fndd6iVhJIBkFcy5ZTwDQJGUtgR8TTe5
+	 lUb0L0NwoxZiLgCdsHQnN94pBnTA+5zSbdmTmW6v7PBCqIVw68xpZkqZbuVg5BJU7S
+	 8y5YT+ssBiR2Iqd1ifh9w5zUfVD8txv8Wo4G5+UDo9yoDHEY5M1HaTtsQ8Pa+chY+A
+	 a7eXO25GSvSvw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -33,10 +34,12 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET sched_ext/for-7.3] sched_ext: Sub-scheduler and cid fixes
-Date: Sun, 19 Jul 2026 22:26:02 -1000
-Message-ID: <20260720082605.1451945-1-tj@kernel.org>
+Subject: [PATCH 1/3] sched_ext: Blame the DSQ's owning scheduler for a runnable stall
+Date: Sun, 19 Jul 2026 22:26:03 -1000
+Message-ID: <20260720082605.1451945-2-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260720082605.1451945-1-tj@kernel.org>
+References: <20260720082605.1451945-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,34 +48,46 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+check_rq_for_timeouts() blames a runnable stall on the task's owner. Under
+a sub-scheduler hierarchy the stalled task can be sitting on a DSQ that a
+different scheduler has to drain, e.g. an ancestor's bypass DSQ while the
+owner is bypassing. The drainer then escapes blame while the owner is
+exited, and when the owner's exit is already claimed, nothing actionable is
+reported at all.
 
-A few fixes for the sub-scheduler and cid-form code on for-7.3.
+Blame the DSQ's owning scheduler instead. The local DSQ is consumed by the
+cpu itself and keeps blame on the owner. Detection keeps the owner's timeout
+and single-scheduler behavior is unchanged.
 
-- 0001 attributes a runnable stall to the scheduler that owns the DSQ the
-  task is stuck on rather than the task's owner, so a bypassing sub's task
-  parked on an ancestor's bypass DSQ blames the ancestor, not the sub.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext/ext.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-- 0002 skips the default CPU selection while bypassing. The pick is discarded
-  by the bypass enqueue anyway, and it consults idle masks a scheduler doing
-  its own idle tracking leaves frozen.
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index b730eac4b13f..96389ec31ab8 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3391,8 +3391,19 @@ static bool check_rq_for_timeouts(struct rq *rq)
+ 
+ 		if (unlikely(time_after(jiffies,
+ 					last_runnable + READ_ONCE(sch->watchdog_timeout)))) {
++			struct scx_dispatch_q *dsq = READ_ONCE(p->scx.dsq);
+ 			u32 dur_ms = jiffies_to_msecs(jiffies - last_runnable);
+ 
++			/*
++			 * A task can be stuck on a DSQ that a sched other than
++			 * its owner is responsible for draining, e.g. an
++			 * ancestor's bypass DSQ while the owner is bypassing.
++			 * Blame the drainer. The local DSQ is consumed by the
++			 * cpu itself and keeps blame on the owner.
++			 */
++			if (dsq && dsq->sched && dsq->id != SCX_DSQ_LOCAL)
++				sch = dsq->sched;
++
+ 			__scx_exit(sch, SCX_EXIT_ERROR_STALL, 0, cpu_of(rq),
+ 				   "%s[%d] failed to run for %u.%03us",
+ 				   p->comm, p->pid, dur_ms / 1000,
+-- 
+2.55.0
 
-- 0003 guards the cid kfuncs against the cid tables not being allocated yet,
-  which a program can hit while racing the first scheduler enable.
-
-Based on sched_ext/for-7.3 (b20dfde5ec54).
-
-Tejun Heo (3):
-  sched_ext: Blame the DSQ's owning scheduler for a runnable stall
-  sched_ext: Skip the default CPU selection while bypassing
-  sched_ext: Guard the cid kfuncs against unallocated cid tables
-
-Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-fixes
-
- kernel/sched/ext/cid.c |  5 +++--
- kernel/sched/ext/cid.h | 23 +++++++++++++++--------
- kernel/sched/ext/ext.c | 26 ++++++++++++++++++++++++--
- 3 files changed, 42 insertions(+), 12 deletions(-)
-
---
-tejun
