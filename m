@@ -1,62 +1,64 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010058.outbound.protection.outlook.com [52.101.193.58])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011050.outbound.protection.outlook.com [40.93.194.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C303B42CD
-	for <sched-ext@lists.linux.dev>; Mon, 20 Jul 2026 06:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A1B38BF81
+	for <sched-ext@lists.linux.dev>; Mon, 20 Jul 2026 06:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784529006; cv=fail; b=K5bnTYSvWnBADfzAXrTDVCPc30EdacIkgtwpn2Uv6qTWquwptozVipUwd0+A44LdUbroPfLmF/jOmFR/OB6UREnmmHzYz4inhwJmJPCrA0FTB1OuArvOSNkEU07cWjnFFCeR0Lpin/8NjGA25gp/X0zXymnygxWeWGVKItV2rRQ=
+	t=1784529750; cv=fail; b=hwWCXNRojRBKK615UMdTDS5ImyHOdNADlB0jQ/fe9GL6M/8u5wTtCerAxVU+RU8Ed54ln1QBuYp+6ZhSDlMj99VYctGXmQuJPUpck6VlrXw5oRtNLV+hi13vwP89S4lOA9bPZXMcFPSSkdnb/ypcDb5Yp8+cHQYnZtFFvIsP7KM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784529006; c=relaxed/simple;
-	bh=G/gsIBE/aNJwpUH7a2IpaRGpVPIeIjTV7BuV9S6rl4c=;
+	s=arc-20240116; t=1784529750; c=relaxed/simple;
+	bh=826gfcPypoUYb+3IsiSvt2rItlNZtFTIdj0e/ZddyYI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hxZbFFcrgxPhJvluekbNrh67wnzN4kb04lZgZ59kch5pUAdF/o1pPG1dngl7/GdtYe4u87CLk0Uy8E4zwG2gUl9yUXSxxynlF4gG5rITBWpFZPJ8JFNtsg3eKHTyK5MlmTI3wVfEk3z6y/lYI5NKDHmalQKKtbD+C7BOtbwailM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=RUiv1Y0v; arc=fail smtp.client-ip=52.101.193.58
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TjyDtYuaHrgSWVNBc8lY0+zk7pXMgQNnq7Dtd7yfh5UjTlqqmG88wLEyFfm5DE1zxXhAovDGPExsmW4BwrrOKrCT5W//A1jOgq4HPyP2hxJMB9uQjdmhjiwdOC+MNiutwzKOMoi4rFPemtaKIzq4F5+yLjyUSkRoPNAFnLQIfxg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=VMhzljk4; arc=fail smtp.client-ip=40.93.194.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="RUiv1Y0v"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="VMhzljk4"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KrVSjUyJeOHVTF9GSkEai+/2UCDb5ZZXO8ySv0jhi58Nb/47Cvk7QrxySH0K0Q9cjWwI9hYHlLzt30fMpsR/FUdZbLbSfzAOwGzl/R6qI+wj1CTwp0Xs0x52UTrz49o5YRIYzII0v+hidL+Vb4l9+eg7C46+Li463eT6I30uTYUzj0IYlFffTiv1UoWSyDreTWPBynkm1Cg3wSxpivpue2lCI0DJxaPeZVAPRAgQ31mhJNUUHvSEXCXBvJxRSOi9BScLWtcH+xLpjFDau/0ry+vYAGdxeufCrunESJ9YsrY3ubKN1kZWmmQYSoOlCICj6AYAZiPeJ8Fvz+Fwlg4SpQ==
+ b=p4ACK2+GnRmYtarQW/aku2dHX30K7qiKJ1eMR0fFYrxKXI1xPxXoAhQLOm8++ZQJVzvwF80M/dQMq+nsi7K6ihAJuaEmd3MpVx17ZnYTNWuCPEW6fCJp+p5bBg1glQ6MKPC66iGYmRHjJWCB1VG4segaIae6zl9laFRvILG83QQnpIdFLSgU4MCF7jh+hV+t5QOX7m/GCC1DruEg2sHwGvOe+dPINkJIzEB/Oe6H+yMWbv5RyBe0p0kvPNN7/p506+6kYDUyMT5agc12Kxj/Eob+8Q553pOFiG6vu3Wz6QOuc4KbK+XPMi3pffqLROdNozYnfm6HKf3tjgl4zWZ4xw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VP/Ceoq26iZQ80Iw6QdTRvKc2P2MCmEjZOtRj7vVdbE=;
- b=Ba/XTrGVUq8vanFy4MeTMtPMb6S1E6erTetN5ewUwVwBpPA4RFsEKvvCui5rqszmWv3sKxM8dPVB9f5xmEfcaASTovvFrf3yqT5yUO5NvciOf9ztOBN/62AYhLVMJjHPEwh/sD5CDyUunmCqJuIDAPgDtbGwFX16K7Fyj1cYwVzcF0BFoEA8Y53u1d5a9GyBzdoykP5MmeDlXVOSUz6pXT0sQS7VdNaTqcufWHiDuZ1bJS40R6KewrthGAplnQrFnMcwwPMsc50UeO88YVDhrVcbqo0ZaceSWoog9c+0KT8Epb+k3kEX0sabEhI9wZ95ASLBvXrC4pkTFSxyyj2EhA==
+ bh=WQiot40FXYF1wFY0SrKE570KBthgRSLsuJH+6VQSdDI=;
+ b=q0UgoBdakKHyYC3c0w2reHDvYzZ45DbL3Up3kEWR5wmekZvZfQ8xSDGmQTFsuvFlQydR7NEuFk2oDRAPjA1Diq/2OUn6ILXx24GjGOmxcBVlmq6eZqQHQkuILh4beMW9+s8NoaPpZwhZEYcBmhqXkeYyqlT9xYvwZjlLsuFP7Fba+A23ZkH4ZiV4feUEH6F4I8YsaP+UaSGLrmvXTLX8izwIvx7vk8NPghiCwpEU97r0Ixfo7+8UpKZcp3C+eoc13+3GyX9h4vnWh5zLbF3+Tzj0LQrS+97DlKtDzv8X6nx9ZZbEyLCcQb3SZnaJqiiFLM5EQRQMTXAFFlERmV85QA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VP/Ceoq26iZQ80Iw6QdTRvKc2P2MCmEjZOtRj7vVdbE=;
- b=RUiv1Y0vCUyh7PcC2dZCEOFTj+95WiH9S/1Qf8fCp31tT4j/s0mN0SpJGm34mQtVve8ye6ajD8O87urszG/tykMQvAKP1h/+CeHfmjQsrOU0wOQPUwSRvzFKgWgg1uaSD7YuydlKT56+g6AiSLZ6oF9be5ds7dPkhzttC3Su6rdiUn41jPGph1yl83PM8fT5a0JJS5Yvd6Sts5kwsY4FihEJS9XgBUF/+5HsZyQu1m2IMPJY44mzjIp2ESQWVfGcNLQl4ZNSkFsfEOQGqXqMZqfpeKForJRmJ4VQsSDFjHOn8I7JsIlKkIeJDjDPzIHyxJiHrAeisYP3E9O2Yu0W0Q==
+ bh=WQiot40FXYF1wFY0SrKE570KBthgRSLsuJH+6VQSdDI=;
+ b=VMhzljk4WUTz5UGS8IOsFNk8g6dfjOmJ48fmKv0Tad5CBqdK74Rq5OodXx4BbaX4Nv4GI4Vv3fVpeHs/zw8YtCVnUj+KhTjOV+ALpqxe1JyZaKFHovqF/C0xg8Y9qDFB1UiOJeQbEW8kR0+IzUQl6FZ1vku9Rnb2bDH6B2ln0shS1H2Eks6sAzDu0VIP6kksx3JBlZKsZ3lK7ExNt0MeEwX+UETQVCfYBKUbSHdlu8BQVS6Kwh3HNlbPpBA2JNcPtYxiY5C8LgdSqEYqwVfIFv13YGdVxLDd2gja25AvzeZtK+VBsv4k2v3Iw9vH4gH3ze9ALaeQatjVlPSueoc5NQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by LV3PR12MB9259.namprd12.prod.outlook.com (2603:10b6:408:1b0::14) with
+ by SJ2PR12MB8034.namprd12.prod.outlook.com (2603:10b6:a03:4cb::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.202.18; Mon, 20 Jul
- 2026 06:29:58 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.15; Mon, 20 Jul
+ 2026 06:42:24 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0223.015; Mon, 20 Jul 2026
- 06:29:57 +0000
-Date: Mon, 20 Jul 2026 08:29:49 +0200
+ 06:42:24 +0000
+Date: Mon, 20 Jul 2026 08:42:16 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Koutny <mkoutny@suse.com>, cgroups@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.3] sched_ext: Rename the cid-form
- cgroup ops to cpuctl_*
-Message-ID: <al3AXT4K6CuURSxE@gpd4>
-References: <20260718101029.725350-1-tj@kernel.org>
+Subject: Re: [PATCHSET sched_ext/for-7.3] sched_ext: Cgroup migration and op
+ delivery for sub-schedulers
+Message-ID: <al3DSNiAviqdkqZS@gpd4>
+References: <20260718081727.582037-1-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260718101029.725350-1-tj@kernel.org>
-X-ClientProxiedBy: MI3PEPF00004EA1.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::450) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260718081727.582037-1-tj@kernel.org>
+X-ClientProxiedBy: ZR1PEPF000077F0.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:918::455) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -65,107 +67,132 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|LV3PR12MB9259:EE_
-X-MS-Office365-Filtering-Correlation-Id: fc1d4e37-91d4-454c-0a8c-08dee6285199
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SJ2PR12MB8034:EE_
+X-MS-Office365-Filtering-Correlation-Id: e538dffe-9f34-418e-f3c7-08dee62a0e77
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|18002099003|22082099003|11063799006|56012099006|6133799003|10067099003;
+	BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|22082099003|18002099003|56012099006|11063799006|10067099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	n08Jnb1d5UH6RbNKtCQcLYRS00F49WG9EFOhh3+e4o7/Th0n4YpfHtOrj3b84wY/LdfkUKglgFqBTJZRBlA/fhDC5GaQTz+sNMQCsERtfnLIgH1rK8VIza/XE4l7DfBN4R80PhX62Xrq3snK0mzJDOwzS3bUw630jGeIZeDsKNisq9ztGm5zDQFSqCsTbspONHPJfN2FeVFcZ5Jn6dzSrd0kdJ5pL5RSDV+2CBbdr6Ktb19d9yfN1aVgALs/1jQNRekfhds6HFko5T/1PAsBWsDQt5H0EqlHhtW87jcCJQawbj+kSprblmQeAHuG0eyW+jLR0h6cVxYuJ7OW88ROSZ+2c7GHKaRgiUZLVe8xMfO7YLVnRCkzJCuuEl7a5jsJO7uWVx92wxeJAZG3yCkKjqqJB3Mgp54XlJrBPtX7MmvFLg5SzuA4tyTTbyDz3xo2VeAHUeZ4jVYgziHhbGrlmZLrX4m3XKfvVfNLjJajvzocNbdqYtzJZu6MnaL4tNV45V/uwhekY8KilfL8wzS7/+XV3T7fLt6spAN+b4y5W+97jWvbOXDUQFjmDgseflp8pmRV0JcviDGvfVvqqEBKVUB87pXuHkxZKEPr4F3qfZ4mA6zte+FQl29bYbTiSVYd5WupsNpgPqQmu8QXoHt8x04EdjisyeC+0J5K+TRJFkw=
+	qt8oiy5BV8v/GtoPCHZnl/+MAW8jdR97Fyb/lehaewBdpfOF8oeVlyDgnM99ans2Q2DYIPaEDHbbYO81W4r2JR05tK9IkcmBcpd+BvIYFVTFpjxOX3PFD+5ggINsDFsrquiwZVvMTcpRFRhYDo19wp86e7NOlaK+0CiYUE43HVzBRR5yVNNZch89lGgHXJHFxgBa0fsoDsvGUR6XLI/rDcsnaEx7RsZU0mIJBeEh+jv9x12uz6wRMsHab7z8or6IZacyWOF15X2d/sUcGXvatuLwND/ytrnjuO51MJB1od56qQIPLtJG7lnESzcXifc+RX2Yl2+viXjff90O2zS4UTEE4VrWqxAVdcrnv7WTjooLhhHXeaxVAwQFxFNDQFrUwY7XrTrp/zWdI8YPTL4Mh7bZdOtr/bwtB1chwL4bCJAbSJ+kOQtvubeWPxk2gIyZmqXtGqRcuUhvDrclFV0Lr+uvpNT2SRnI+Eieyi0jOZYQyb+nTHUtZwHBn2BCRjWPHb32rzCWKSlVbVhu4EzF8XKtPPgYWmNKMMcyj4fIyY3tiTMe7ay5246k76fHOf5h4qxjrTIq3yxEUBZOo1JPs7rUGgpxHUtq+MBfkZTIDSJKCwfkEy0FwvPvIAH57Zx1b1If4LWqPyVGlqsRlItuXKbJcVYTneoBNyg57ziKYhU=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(6133799003)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(22082099003)(18002099003)(56012099006)(11063799006)(10067099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zJzJXlsQ48XzGf8jKL9/2drduw1ebH+Ohm06HCGC7NbtWHVxOpMp/EV+DQTi?=
- =?us-ascii?Q?rnEbTCk2AZ3b3dqzRBwwptau6rgMyZh5PNxYZLvKGTnJPBsQUl5uMy9QUcXX?=
- =?us-ascii?Q?Qb7CxtYN7+iehAnmqu0tnDKOyLfial7UT1MxuClmjH8aDCwJI6Cqry+LvNwv?=
- =?us-ascii?Q?f51HY8eAa/aA+RYls/L9ce78djy4f3UOWhfEaydbDH3ZAt9qih68/9wDZ1eL?=
- =?us-ascii?Q?yMDoP9UuczGjfyYdZBiSVe1A4niChYZM0zHsOJ7OHtML/aGgQHjBsphGA9qS?=
- =?us-ascii?Q?E3rAZ+yw8e1ol4POP0r7fY0QHcMKGbtijRiCKW7P9c2ia5KvGph+QPD4di4s?=
- =?us-ascii?Q?/q4rADyKizqjjt5N/iGMP41OXEDM071yoQkVKPn+uy3b/xDcaSP8wCVWlwNm?=
- =?us-ascii?Q?wi/Qf13xdZn4/yGlly48c2jtqZotFTudql+gxnhvS+Cnco85R4Tb616qPcFw?=
- =?us-ascii?Q?p8cZGAgZHvVoSQzerjmg5GvldK184n9+wV84GJcrLkTZDferY8xshTq+g/cU?=
- =?us-ascii?Q?tccslTCFkdREienlzpR27lrdmMnUs8yM3nZxsasnxWhtB9+x2AJJKsvO94l8?=
- =?us-ascii?Q?qJZ1bIYus2Zg+5J2pQ+3qxa4Ko3Kl5YThUAJpTv18Ybt+bfVI8TaEoGEN46a?=
- =?us-ascii?Q?euODc99cLgp1ryHoqNbYZYuccfCRNYc4P6FAbsH4jnXktVAWm+mRVeFEqP1e?=
- =?us-ascii?Q?neCmD1S4G77EGH7rP+BjsLMyR/pvUvlnL77U0Go5ZOywTae9+e4y2VrIu3OI?=
- =?us-ascii?Q?WPJdoNIQYMHbhaTwrw+rf4F4KTVQ//E/8BhQ5FZjtA/kvTKgHaEFwpScnw4a?=
- =?us-ascii?Q?aZtsV6FJdt9XDj9Ky54Nzq+tQzlfHV9jIkIyBk+C78ZUWx57JHnXmfytrxWz?=
- =?us-ascii?Q?3bWmSP5iYSJ5v3m/bicQFJMrOUKzAwiMYdfPv2WbXNuRNiaU21LhLIEJKRPF?=
- =?us-ascii?Q?vGdVzmxGBi+1gvM/X7a6zcMDDUJBqjSM5ZGyACFzJVQBMmSjmXgHC+oZ/qrr?=
- =?us-ascii?Q?/fZCnmYVWZO3TommryjiMCB+S977SRL2NnMWWsx7ib2/Miy2kY3aSQV3D+wZ?=
- =?us-ascii?Q?LcRypMWOrE3JdWIuYBX760MjcEAm7Hx9+UzQtOXY3iysY5F5NyC8ruyjfzst?=
- =?us-ascii?Q?US9Q/UoHRHHMPcpaYBD0HI5pIkpHjbVgz/8+8YXtLd7rW7D3RXOesiRqro7b?=
- =?us-ascii?Q?I9izksB1J4nxSHNiwu/V/SrXU1uBRLZsRgLseH3QfeKnja2APSawQjLYJ6ol?=
- =?us-ascii?Q?5HAwBvYKnX2r9Mz6obgWArTP5GLADncPMrhqFdylXPchvXnw+UFfKfyCsVvV?=
- =?us-ascii?Q?hxwpL5XhEzUx0aCtiMPYjXADHhKMCXThMhQI/CftjrXiIGNnQOVkplaVD0Jo?=
- =?us-ascii?Q?xL58GMNDhDpq/fVlmmOtr5SzvkwUQ9yab4XX9qpgDwp57sOBq791zyw8fSls?=
- =?us-ascii?Q?MSrddOwW9hDcfmWawji0CYn1ylkyisy/zYTHAvj/OoYiDeSf+GHs3Vb/Qeiv?=
- =?us-ascii?Q?xycQJckr8qoR+IWZCPYLoIKcf18PHCtlAMnQWjIzcQZROPevg4RemTIWr9Yn?=
- =?us-ascii?Q?CwgiK09yP4yJtuMUkfKRof2o3bJEphXvHtFr8BMkPyMaDnkyK1XwWMvLX+vR?=
- =?us-ascii?Q?zOKcvKgilxi/ydEBeC7e8TSPUNwGG1l5qnncIOxbQHd9kYIf+h8qScY21ShF?=
- =?us-ascii?Q?FOHGtXRMGBlAYwjvXEsfAKttRDh+icXNtx9lSbBULdubdqHNgR9dEJ8xscZZ?=
- =?us-ascii?Q?dDyo6YszBg=3D=3D?=
+	=?us-ascii?Q?nkP1/tjksEpLZ6in+D41lwRA26XExdOik3YOzIg81+RXTdcLIzHGnfZXYQ1P?=
+ =?us-ascii?Q?7Te04Cp8Zuq96y2lRs1oy+gghvMb7t0+9GcPfQckw/cKqn1ln4JvqCohsow9?=
+ =?us-ascii?Q?UdRo++QpZQJWpBQvh2oVjeT2TzljLRJyPtQYGKNeAJ2m7UWpcgM4R70nQquI?=
+ =?us-ascii?Q?ra4SiSpsxuhbKQQUfRVsHpyp3E8x+Aq4rR8UkYhu5aYoUp+CDdQbXgniRuBY?=
+ =?us-ascii?Q?ZGHaokBBY+K0JUHaR9PsjQf9/Ls15rfMTsUK4r3W1XtidST5jmpJZ0gaiSrz?=
+ =?us-ascii?Q?ZNwA/WMc65aQ6NPh2rBfXnsKgbSLSi31YN2dpTKdg3eleqhyjnP80UcChbpF?=
+ =?us-ascii?Q?2upx3UUcL8VbDHq4OdUsWFfhxRSaZlu0LhBR1DufgdM2k6o8e/Xd1utTBjhN?=
+ =?us-ascii?Q?vVCpRce89+O7SRZ6bLbDB2q0t7SkdR5nMk6iL1/vEEDvS7seJnKhwrsVCFuh?=
+ =?us-ascii?Q?7BLrV4dyc3spQCOwxI4h5GJ0eO9bjWbTEViE+NVLi8fZPTc3fuvOHl3t1rO1?=
+ =?us-ascii?Q?Y48oWKANvwbmKWnWJzQwwJ0cpNLESXt+zKiVFVFB780q8BJkW7e/u7x7HfEd?=
+ =?us-ascii?Q?CvJgpi3MSDaD/u5OwoknuH4NqwHQ8Iih6I8FmIBQ3UwImoATgD0Gxm8zPySy?=
+ =?us-ascii?Q?kDXa1WK2Uvt1PyDWpm7nOjmp1Eg5slsLcILLMpG4bZkWfFJ7EOYFaIY+8McR?=
+ =?us-ascii?Q?uTR4wKlx7UPVy2VclCZ+vKA1TkawwnjCXpbjlOIv0FlX/6Ydp5zRHLZdHpog?=
+ =?us-ascii?Q?imZkN37NsOWs95Y6UILIzJcSEHgP94GsBu/waWnLt808fzkct6A+pKly+X3D?=
+ =?us-ascii?Q?NYKvgDWvFVnO9fhj96MNFxsTKHR3CEN7TQGlf/UlIadU0iLRtzN9vqyQjSUr?=
+ =?us-ascii?Q?pobpC6qXZ3F+FWLJjBcSmyQUOnuzq/gs+KGawusZanvMpb6JbQEb9Qf40eWF?=
+ =?us-ascii?Q?b1DOLHKKWY06Kxwoz7sTrV/f6L9nP0g8Av16dlydUFwFxbFaJs1u7nf1xxOl?=
+ =?us-ascii?Q?BnZXU2KZ9SVGW2PGZXLEZPgEVbUAABAtp8KlkP9k13OCca891GFGSOEq4yEi?=
+ =?us-ascii?Q?4igqrazNITljc0KGQXzGOKeoE0r9npB6dPxod3etUdvOpxzGJJoz/QRMfaub?=
+ =?us-ascii?Q?RrLMEAwOCjIiuitgC1FUtJYNWLnFSBqb9dOoJuwv0gItLESGuT+gYcWtqrN+?=
+ =?us-ascii?Q?hn9bf9FqXd6xaw27UKKB6rWG2NaGGe85xQh+sXveG1nlux4SgR7MX9wkCFTp?=
+ =?us-ascii?Q?yRb0Bxgp1jqjxOes0AIxDr+1bv/NP2qCEND/dlw5Bi6lsN3zyVePk7yRFepd?=
+ =?us-ascii?Q?i0l8oOIhAdSuyCkPtm/EJfsEWVGIY23WSa5RtpPrDCY2ItzldJcWgAb22pTF?=
+ =?us-ascii?Q?TCt3xixMc0l3sclPECtbi4WuutHlY30Q+WYFcqX6TI8Ozp4oDpcWeZsazUPd?=
+ =?us-ascii?Q?nKAMrAjO/YlP97p1KD880Ai2EIubzWDJRNbhKy8hZ3ga7o9TStL3XD3/2vXM?=
+ =?us-ascii?Q?DtWp7VLL/4pr923GgIKq+2OhoGhfZ4f4/P2SZFOpwjyFoAPVdwRHc8Tt2O/H?=
+ =?us-ascii?Q?UXUqVxdrCvBXUw8xXrjaIH7tc9/EcAGLFr7AMvpOZASvPOzAAFNB1NxSC4r8?=
+ =?us-ascii?Q?7QA6ddkJtBbrtf1XcVDA9MlhWn2Ww16zQ/4zC1P+SWpce9JGXKxRgdyLcu7L?=
+ =?us-ascii?Q?hyPH8FvPp9AnmMfcMzJo76OiwRyNEYjhVgXKMhkJ0hXJu9TZOxmZPF7IjAt6?=
+ =?us-ascii?Q?91/XcUMO2g=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fc1d4e37-91d4-454c-0a8c-08dee6285199
+X-MS-Exchange-CrossTenant-Network-Message-Id: e538dffe-9f34-418e-f3c7-08dee62a0e77
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 06:29:57.7407
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 06:42:24.1194
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1WfqHu47Y5dGIJtulRF9/OdsycVolbSsGB5B0ry+eCSC873GIHwjbmx0QnjWyDKdY7cFeYCHPACDv05gq3TGDw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9259
+X-MS-Exchange-CrossTenant-UserPrincipalName: /TYeT9365okS08g+QW7ZCeM7Ai49Lgq7F6wtEj0oYhqqNdu8JfzTUGiWoSb53eV0x5juZE2CKPo5b4cyCyVwCw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8034
 
-On Sat, Jul 18, 2026 at 12:10:27AM -1000, Tejun Heo wrote:
+Hi Tejun,
+
+On Fri, Jul 17, 2026 at 10:17:19PM -1000, Tejun Heo wrote:
 > Hello,
 > 
-> Two unrelated things go by "cgroup" in the cid form. Sub-schedulers attach
-> to cgroups, and the cgroup_*() ops deliver cpu controller events. While the
-> ops names suggest cgroup2 hierarchy, they actually operate on the cpu
-> controller. The cid form has no users beyond scx_qmap yet, so rename the
-> ops to cpuctl_* while the ABI can still change. The cpu form is deployed
-> ABI and keeps the old names.
+> A task's sched must match its cgroup's: each sub-scheduler serves the
+> cgroup2 subtree it is attached to and the root scheduler serves the rest.
+> Cgroup migration currently breaks this. A task moved across a
+> sub-scheduler boundary keeps its old sched, leading to wrong-sched
+> scheduling and, once the stale sched is freed, a use-after-free. Cgroup
+> ops are also always delivered to the root scheduler no matter which sched
+> serves the cgroup.
+> 
+> This patchset makes both follow the sub-scheduler topology:
+> 
+> - cgroup gains a task migration notifier (0001). sched_ext uses it to
+>   re-home tasks whose migration crosses a sched boundary: the destination
+>   sched runs the fallible ops.init_task() before the migration commits,
+>   so a rejection fails the cgroup.procs write (0002-0004).
+> 
+> - cgroup_init/exit and the knob ops are delivered to the sched each
+>   task_group is on. The move ops go to the task's sched, only for
+>   migrations that don't re-home it (0005).
+> 
+> - Sub-scheduler enable claims the subtree's cgroups from the parent and
+>   disable returns them. A parent that fails to re-init a returned cgroup
+>   fails in turn and the cgroups move up the chain, ending at the root
+>   scheduler (0006).
+> 
+> - scx_qmap consumes cgroup weights through ops.cgroup_set_weight() and
+>   gains fault injection modes to exercise the failure paths (0007-0008).
+> 
+> Verified with a trace-based suite on the demo scheduler covering op
+> delivery and routing, handover failures, multi-level punt chains, cgroup1
+> and stress.
 
-Conceptually it makes sense, cpuctl_* is a more precise terminology since these
-callbacks report CPU-controller events.
+I left a comment on PATCH 4/8, but overall the series looks good to me.
 
-This breaks existing CID-form schedulers, but I guess it's fine, since we don't
-have any user of the CID-form API right now (except scx_qmap, which is in tree),
-so we should be fine with that.
+I also confirm that, with this applied, I can no longer reproduce the
+use-after-free triggered by moving a task out of a sub-scheduler's cgroup and
+then terminating the sub-scheduler.
 
 Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
+Thanks,
 -Andrea
 
 > 
-> - 0001 factors the skeleton open path out of SCX_OPS_OPEN() and adds
->   SCX_OPS_CID_OPEN() so that cid-form skeletons don't depend on the
->   cpu-form member names dereferenced by the compat clears.
+> Based on sched_ext/for-7.3 (7c2cd767705d).
 > 
-> - 0002 renames the ops to cpuctl_* in struct sched_ext_ops_cid and updates
->   scx_qmap, the only cid-form scheduler.
+> Tejun Heo (8):
+>   cgroup: Add cgroup_task_notifier and task migration events
+>   sched_ext: Factor out scx_rehome_task() and scx_punt_task()
+>   sched_ext: Relocate scx_cgroup_enabled
+>   sched_ext: Re-home tasks on cgroup migration
+>   sched_ext: Deliver cgroup ops to each task_group's sched
+>   sched_ext: Hand over cgroups at sub-scheduler enable/disable
+>   tools/sched_ext: scx_qmap - Consume cgroup weights through set_weight
+>   tools/sched_ext: scx_qmap - Add init fault injection modes
 > 
-> Based on sched_ext/for-7.3 (7c2cd767705d) plus the cgroup migration
-> patchset:
+> Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-cgroup-migration
 > 
->   https://lore.kernel.org/r/20260718081727.582037-1-tj@kernel.org
-> 
-> Tejun Heo (2):
->   tools/sched_ext: Add SCX_OPS_CID_OPEN for cid-form schedulers
->   sched_ext: Rename the cid-form cgroup ops to cpuctl_*
-> 
-> Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-cpuctl-rename
-> 
->  kernel/sched/ext/ext.c               | 36 ++++++++++++++++++------------------
->  kernel/sched/ext/internal.h          | 25 ++++++++++++-------------
->  tools/sched_ext/include/scx/compat.h | 30 ++++++++++++++++++++++--------
->  tools/sched_ext/scx_qmap.bpf.c       | 22 +++++++++++-----------
->  tools/sched_ext/scx_qmap.c           |  4 ++--
->  tools/sched_ext/scx_qmap.h           |  2 +-
->  6 files changed, 66 insertions(+), 53 deletions(-)
+>  include/linux/cgroup.h         |  26 +++
+>  include/linux/sched/ext.h      |  15 ++
+>  kernel/cgroup/cgroup.c         |  93 ++++++++-
+>  kernel/sched/ext/ext.c         | 247 +++++++++++++++++-------
+>  kernel/sched/ext/internal.h    |  44 ++++-
+>  kernel/sched/ext/sub.c         | 418 +++++++++++++++++++++++++++++++++++++----
+>  tools/sched_ext/scx_qmap.bpf.c |  95 ++++++++--
+>  tools/sched_ext/scx_qmap.c     | 110 +----------
+>  tools/sched_ext/scx_qmap.h     |   5 +-
+>  9 files changed, 819 insertions(+), 234 deletions(-)
 > 
 > --
 > tejun
