@@ -1,95 +1,95 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341ED3FDBF7
-	for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 07:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CF02C11E4
+	for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 07:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784617260; cv=pass; b=gaBl/TI2fi3aLFyuGC0vNmNxUAwW95ZxM+fDZUGENeZthqf6yFpA85JW1G+x9r4QiutxAppTNr19cIUWcAdeDvvHnvT9aLV8V6qxX22yXYEQu1HWmwYBQE+USLdyB1UVuivGyn/6Z/wBMvJf0JG8IDvt9jikB8ldZ4IfJT80KBE=
+	t=1784617340; cv=pass; b=bu8GfLB+j5dG+XLVjhMAxYeF5mfXLbOeLQUkEUyVZzBDY0DU8HWkVAXmDUmzJl7x0x5NTpHvgDOmZGpj4mDMf4wMiXWsZc1Zb5+aUvLBY3CC5CVysaFTIZHgKt9VPd1tPqGj9A23z9mfV+KGZKHcdMwC9YqLnxbmXnXyvpg2cQU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784617260; c=relaxed/simple;
-	bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
+	s=arc-20240116; t=1784617340; c=relaxed/simple;
+	bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mkg9lHPqBvAO/GD9GgLwLbHywiEn8RtbsrXzm5DALDE19wP2iPjewfVdJefY0K5AaWB7n4ZzDgPQYcPsaWJmmmLcLnJ1IQEkt3qfySnRtjgT/dfSBqeCAwANVS1x/mPo0oxWbJnfblKTG9Ktdgy3hHO2t2i1J937GWBTm+nXP9E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mVXp4QXc; arc=pass smtp.client-ip=209.85.215.173
+	 To:Cc:Content-Type; b=MNdY3+Rn0AfRp1dMBW5+XaJtPAzxWp73yBEPg7410ANg7Cw/qQ7V922AjvgAypoGFl6+6j0/Irb9GLRj1EPmxvcURHyRTVpEOZbIv5oQa7HUMPzf8cBPrByLDPSdFEJI8cwOL7rnzUVTKrWpo5duTc26NRx/4dw/yrllcd+Qthc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TbKiyO3B; arc=pass smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mVXp4QXc"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-ca7c1176317so8025512a12.1
-        for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 00:00:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784617258; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TbKiyO3B"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so7026974a91.0
+        for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 00:02:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784617339; cv=none;
         d=google.com; s=arc-20260327;
-        b=snOB469pfl9P/oM2agu2lzdj9ijj72rkDc46774JamTRQoD9LMuoy47H5JOT1JVVk3
-         BUsNxZnT6/5kER9eetaFFod5koMDrwuQpEO1R+ie3e27Yua7Q4US0KLqojvNYQNGIkKY
-         pAUabBJZxK5kHOdNBQQGJ6izFpauOG6pJ7tAlcP/p03SGbYsZMGlHBk/YIgMcyKnXEm1
-         UbrcaGyzdyxMK0LIt29uXp6VyH4/+l7S5Zk46NXNeEDRe+mhHWo6ADGEBq6tTPVY61sI
-         PpIVPn0jDcfa3eMhyitDKjUBnK6V+89cl4NtQPvQSs+aUELA5KrPEUlT7lw7oTVRX5kx
-         9fBw==
+        b=jOG42wkyjkMAMGVR2qvlMrh9HfDAND2ObFu8jYAS4nzy9+a59CuFSvG4uUzRfLZkZc
+         C8pZN7Igp/ozFCEUg8bqrKN/XpRyjHeyFKPFv5o9NbxstTszp8LJO7mADyCc+pF3VYu1
+         Zx0Rcj2nWLlLxPozdtXczugSa/np74a6VBj1e4+xGcuJqGJRfU9zG5SxXXNS0b9tvnJy
+         nw0n4OG7742B9aX5UVSAYyOSHRC6qJxnfqGzXennDTraHqSm3jZtG/cwqj9tRT960Vh+
+         WsKFO58DAPQHHGVjtX2dvsXKAKAdBqDvTJGBVUEuNG+yae7nCLk5KAhUfiHaVubuwcPT
+         DvJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
-        fh=1q7SpAh5c8swSn96Ju36J4AqL7v5wngHbp0vDlRS8n0=;
-        b=DECC4deqBtd8mSjBdr2G6wTBUxGwhz8H/8ooBBgAZZo5RRlEFKtCKus1HptW+vdk4D
-         vdNLsqDixpVwTLXwRIezJpkL6+RUWIfk+eOfcHQ/LA8qMrLDvUa9xZL64OZq+wEHVpr7
-         vMaEep6jBEyltRo0eDlMNNfFjWHvdEZ+xsYAmeJUVET2li5D0FxbBL22iV9S6O3PFgqt
-         qnFGeAOXqh+3iFuElK45rm6at16viFqowknnaRhOAFCnXTNC596WApwtVnek9lQAZ1NE
-         YFncAAFSPPMFTovOiT1iOvAQcPATrnBvnCUb1KjdxRIEJZf8gt9DxECnQTFIWGqQqjMo
-         iBKQ==;
+        bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
+        fh=nJgwk62bglFEBR7c3BkJzn0inE8PIZqIypnfJZnn9uE=;
+        b=N/1zoZkitmCz+h4dVtjsKnQCWOux/Ig2nrx8Nm7QZP4OXS69CchuSece01KQ0yiv7r
+         3QeEAgFUG7844Slb1yecHDTbff4BRS/U/uu0yAk1KLLAvHNrh3SUHTybK0eRF4A2+Pxc
+         4dwg4bGEIGriVxoJ6vz26rKoSd8A80l8JGbqwboGMZ2ciajH7ma5Sf6JL2UwmuBIgvh8
+         T/Of1AIk/jOWYqmIcTu/MuasuPyH3YDfup/QsKkhmWF5uVI/G66HHCpW7GZ9hIPaLDC1
+         MTu5jxKaknnFmhOZvywoxdN1OOYTKkzPVV1OeKGolYgENsnU+AZqPHuOT62RQlybuC/T
+         PThw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784617258; x=1785222058; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1784617339; x=1785222139; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
-        b=mVXp4QXcttZvySN97evYZYTfg8+C288rieIiX1opvjTkO1eK6PJhxPNNuP2wxLRxOt
-         sJNxouVGcoWpfhuO1k+PArUb9JD7nsgEnEuAPwZpyzD2K7tzTABqWeY2xXv0eM4vtpQ+
-         XaJ7B4WXPvNGNzbf66UtXPnV/UegrtDUB91hubPnN8s5uYD59C7FZgVGNgYYJkjcyLUX
-         pPcD8fahgbdnEIWxhOWGHNcfhK7rYSOkQNiBX6uIZgmtkKcX0BuL6A3Et/sqhQMT+bwM
-         Ef/IIuD1qYLnqRHCiblS61FeOaX2Ma0ZMBd6zyHjf9f0erjZ7kwxq7Kb3jLxSnS9tv13
-         MlXg==
+        bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
+        b=TbKiyO3BuX3kTaf3eoBCaZMvs46tuv+hwHikF/FfGvjMf6oOQbGbkvkTNeG8c+CG2s
+         nVV0dy/BHdIyEnVwPZwP6JsMZpqK8uBNq0kmqzjmzq3pjpy60pMT0BFzo3k+F85GeDuW
+         I4AuQ00GZxzPCzJBqyJEoV57/rX3P1OOX7KDnxvF0EWNr3KrViTZmeL6HWpnYiV/QAJk
+         h4A94E3nrlcDooWs0KjeyIMLELm4soNinhdBenjqH7na2phHe97VEfcRyvIoGiUEocSk
+         IWAuhpmGk9Bi45dsPQeNzfl2l5Mw/jJRCW8jSYcFd6MhSjXAO4FDvfApNyCh+kphUv5v
+         AivQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784617258; x=1785222058;
+        d=1e100.net; s=20251104; t=1784617339; x=1785222139;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
-        b=HxtUyyx4fouojJb9N/88kEJx3b5eN99mCPusjSXBAj9SJGk7o+T+1dBnhb2+Hpa+c+
-         7MiwuBI0qU53v6HZLOF31VbAKJFmrD8vie/rYz3cSePJCBZYJxUQ6mQq4oY/P6VMALWR
-         ZwGteaQcfZe61kW4e7cKL1u98P9HM6NWNwO6jPbv7UX88qU1nHBvp65CdO4lO5e2kmGe
-         KKRZ5ktSiGJ3RFiiiXLCjSycY+9KyHibkfpMu5/ljsWXI/FCNwcHb67d3QDZLuff0yig
-         4NixQGL/4iUVCh2Wy6Hficf+mMUSSXSI65nLKJgj7KseS+KItCu3cCvgGfKOl7lCXnl/
-         hI5Q==
-X-Forwarded-Encrypted: i=1; AHgh+RoahzPQh83A56Ctx5cXXPU6vXfmAgO1apG3VJYuIunmYx701LJNRvvxEcbzTTZVa1KcO9gfgfQekHs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywj3RfGXI1+3uBFe3DGLnWFkXjsjQkqv6wlS/gTgxr2ClgR1nf4
-	lyFeqsaIKZua42D5hexscrsg9yCP5j7VHGcfXM2APL6lqX7ouF5bsthZO4saVhvNaCPHGF7FhDq
-	OCSdfHGgQTnFxbIhVxf/B76C6XNj5MLT2V3BtktQ=
-X-Gm-Gg: AfdE7cnEfZKqGxZ4vzAsJiGNTFylwNMd8In/NixHOZvWoZUcGCSjlkrpoSGA06sCus7
-	b8xPU1kPMcodopCCw1k46W2uJKQWsQK8h8xBDRSuIf9F6/VWjHTPoRtL6q0br2WhZWCSxSwux1W
-	OLmtyvTgm1LhqXuBePpu3I2PkDmda/icqMBXpOqzj3D4qGQLVeNIW/7OljNOWA2cpLZBS3kOpI1
-	s08Gct+7mYgHp8vdQ2onyO0soMlH91a0ELceLyEYF0WwbTKaqvL3O040I56wCdPDBNNT1k3+iB3
-	C2bfzo0Fx2St2CnEeFqQ5aKEk/TUDq22JTOunzkih6hZZXrOLzyL11TN42q+vJUtqUHpm1FtVFe
-	NwMdqRtcURl6zEA==
-X-Received: by 2002:a05:6a21:7111:b0:3c3:aabb:dba3 with SMTP id
- adf61e73a8af0-3c3adb17f56mr19148506637.76.1784617257722; Tue, 21 Jul 2026
- 00:00:57 -0700 (PDT)
+        bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
+        b=fmah0Z8tqNqT6nKeeTtk48aRmsXY5EbKvhScGzHpA92gObUp73pVnOT99Uwi4RKO7f
+         EwPpGYEwlW2tT0RMhGytEGHi2UrqJbAPGPfA2Cw8QL26yNLc1FyOnG2iEwdlBS0N+3gU
+         P3NBcgcPwa0iUgsxAa5pi4VSBaPsNyD4Ew0Pry6X8zRiyyn7mkY9p1cJj8bYblMue7hI
+         iGUxJ6Ajjm8H1IaAibc3C3ajkGJqSpDbEqAmp9C9mGzxfK7wUht9M+OAZvBdE8jCZ5Ey
+         3m7AyRR0BuiZtJ+RbpiWNHKvxf2AFKpr9ZtrlU5SJzqfMum0XFbJJXyCYXt71h/ps9ii
+         rOWg==
+X-Forwarded-Encrypted: i=1; AHgh+RpylWYwmiktdwdfgFHj2aM8GseOZteGRc6t12O7eRZtB6RATu91aKCFdt2Axxszh/IYbKVkesxWPRw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJi9ov2IoXJ6tk/imFY3ioeDfzPdjhJdu1TZFEI8E2ceBpmJE8
+	U4gwcIxxJJC2H969WUO5frXg0yO8DLhZSinHW+Zi3wW1GG31XaGpXv8UigAuY8i2ZL6ggwcJNRG
+	crZG74hDysCZbMYzmAChmpQpOy5RxCFLXaWJ2moI=
+X-Gm-Gg: AR+sD114/5WPWg9VHELpQWbwZVKc6cAry3PJp68SQ8CejLtO6wvjFdSOMgPHQxmIAC9
+	S4yD9MHy0kffiF6JbVLeBUsnIfbTwyvOAs5oO9Kay7DV/K6tKaKDzWmCkmfbqLrHcFdszWU5Lt8
+	hBRtzUCnTR6JeE62cpnf9j9rzkVwlAI8Mh29TWFr1kZ1jef7146wbObUEUjeNJjgao2xr6JCSyR
+	qlL2jiiw9vKkePehRDeT+27C1zhRvF69U+8v1izb/DtqLjrjZxAiloXiDeopNl0OgWxP5dmw4PJ
+	su+e9/bpTRjBzvagppDOJyJttlUIlTZOSE5ldXG+x5RH3yUJFapl4Pq/7BtV21T/lRveETXbWai
+	6yL8JidrQbqm9Hg==
+X-Received: by 2002:a17:90b:5866:b0:37e:10d1:c05b with SMTP id
+ 98e67ed59e1d1-38e4b5166e5mr16648699a91.22.1784617338392; Tue, 21 Jul 2026
+ 00:02:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260721063242.552774-1-arighi@nvidia.com> <20260721063242.552774-2-arighi@nvidia.com>
-In-Reply-To: <20260721063242.552774-2-arighi@nvidia.com>
+References: <20260721063242.552774-1-arighi@nvidia.com> <20260721063242.552774-4-arighi@nvidia.com>
+In-Reply-To: <20260721063242.552774-4-arighi@nvidia.com>
 From: John Stultz <jstultz@google.com>
-Date: Tue, 21 Jul 2026 00:00:45 -0700
-X-Gm-Features: AUfX_mw5PGiX1OqGyERbO2IVw4mkMhqXcSxvP5BdEHQSwa_V4BsP5XVdmfQ2fcE
-Message-ID: <CANDhNCpTDwDiMqFYprxir4cKtaC5smc_-G730gt1MrAyFU-aKA@mail.gmail.com>
-Subject: Re: [PATCH 01/12] sched/core: Avoid false migration warning for proxy donors
+Date: Tue, 21 Jul 2026 00:02:06 -0700
+X-Gm-Features: AUfX_mwR3JvFbKfVlBbxBb7xkVzqMSaXM3VVTzNUAF7HoTdNkBH9kJQxTMyDofg
+Message-ID: <CANDhNCqn59srtp0n2ZuLp-rd3x8ky+DQoMXY88+zKLKt9sxakQ@mail.gmail.com>
+Subject: Re: [PATCH 03/12] sched: Add helper to block retained proxy donors
 To: Andrea Righi <arighi@nvidia.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
 	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, 
@@ -106,31 +106,19 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, Jul 20, 2026 at 11:33=E2=80=AFPM Andrea Righi <arighi@nvidia.com> w=
 rote:
 >
-> Proxy execution can move a blocked donor's scheduling context to the
-> lock owner's CPU even when the donor is migration-disabled. The donor
-> does not execute there, and its original execution CPU remains recorded
-> in wake_cpu.
+> Scheduler ownership changes may need to turn a mutex-blocked task
+> retained on the runqueue for proxy execution back into a normally
+> blocked task.
 >
-> set_task_cpu() warns unconditionally for migration-disabled tasks, so a
-> subsequent proxy migration or the wakeup path returning the donor home
-> triggers a false positive. Moving a blocked scheduling context does not
-> violate the migration-disabled execution context.
+> Add sched_proxy_block_task() to perform that transition while holding
+> p->pi_lock and the task's runqueue lock. Reset an active donor to the
+> physical current task before blocking it. If DELAY_DEQUEUE keeps a FAIR
+> donor queued, the immediately following sched_change_begin() completes
+> the dequeue through switching_from_fair() before recording its queued
+> state.
 >
-> Exclude blocked proxy donors from the warning. The proxy wakeup path
-> restores an executable placement before clearing the blocked state.
->
-> This is a preparatory fix for enabling proxy execution together with
-> sched_ext.
+> This is a preparatory change to support proxy execution with sched_ext.
 >
 > Signed-off-by: Andrea Righi <arighi@nvidia.com>
 
-Nice catch on this!
-
-I'm wondering why I've not tripped this myself yet. Is
-migration_disabled set more often in the sched_ext paths? Or was there
-a specific workload that you hit this with?
-
 Acked-by: John Stultz <jstultz@google.com>
-
-thanks
--john
