@@ -1,103 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD17408631
-	for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 06:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784616627; cv=none; b=t3n/ru7xh6jWdPt0k/7RM3OsRo78s22euKlShnfQZ6hOtFCYL51MVUvC7mUPKOBL4Bj8VxKgOmf2nZbthpbXmsO4AqBFBGHG5FlX0udI6q4NyvgptfxsUNK4cjVogo94r82tBvX2g3W8N0WHWAuJk+b9iYpxPOdVg2Wf7a1Bq0o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784616627; c=relaxed/simple;
-	bh=LgGv7Hf1uCsoqpJFiVzPHT8h83rsICl9C1q5dpADsHk=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gJPRY6lt6NuE/TQqLq01hZXeV5JFKm9fRP15sOMxmwi9n3vkFc3SQWYM7Kat+sO9vZI/reIlIxjm5VVqn0gijkoFZGg63worKHaSvI5UcsjTQk0RGn8PC+UqWBk2Cpa/47AgSYR5dzUBtsrMjO/aY57JYePOqYBW7zinYiU24lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i8HtZdy3; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341ED3FDBF7
+	for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 07:00:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784617260; cv=pass; b=gaBl/TI2fi3aLFyuGC0vNmNxUAwW95ZxM+fDZUGENeZthqf6yFpA85JW1G+x9r4QiutxAppTNr19cIUWcAdeDvvHnvT9aLV8V6qxX22yXYEQu1HWmwYBQE+USLdyB1UVuivGyn/6Z/wBMvJf0JG8IDvt9jikB8ldZ4IfJT80KBE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784617260; c=relaxed/simple;
+	bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Mkg9lHPqBvAO/GD9GgLwLbHywiEn8RtbsrXzm5DALDE19wP2iPjewfVdJefY0K5AaWB7n4ZzDgPQYcPsaWJmmmLcLnJ1IQEkt3qfySnRtjgT/dfSBqeCAwANVS1x/mPo0oxWbJnfblKTG9Ktdgy3hHO2t2i1J937GWBTm+nXP9E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mVXp4QXc; arc=pass smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i8HtZdy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580A21F000E9;
-	Tue, 21 Jul 2026 06:50:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784616625;
-	bh=Sj3ZkJB3mqzeU4pMuw8/UlnreZeWfHBK8ZBGdPcWcoY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=i8HtZdy3IXw71pXx1MG89YLkg3Sql26SfISTrGbQWEoklTapfZXg3pVvoe0SR7LXJ
-	 xM7ABiXSontw6po1CaWNTzrpAhccNtlx39+eXVuLkzC6QEdLphul6YsfTgG9HGFlQ7
-	 A52gtBYGlObADQ04bxtfzTsZELbDFUCga4MVX6CTKaOFUyrxTedWUAij5vPSFLH89J
-	 zRKljDHX4IsV7j/3FS5hoiW2u2F8UsCEFKZg26tmKGDHSdkhExrh+FtV/69LGxKndv
-	 yd7TCSBW9jB5Pbj1kKB0St6Vxpm0hcA3AHOb2IMrveW6HWNybwIuWIPwpsoL/uRlP5
-	 wsK4pGZQBMaYQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 01/12] sched/core: Avoid false migration warning for
- proxy donors
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andrea Righi" <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260721063242.552774-2-arighi@nvidia.com>
-References: <20260721063242.552774-1-arighi@nvidia.com>
- <20260721063242.552774-2-arighi@nvidia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Jul 2026 06:50:24 +0000
-Message-Id: <20260721065025.580A21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mVXp4QXc"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-ca7c1176317so8025512a12.1
+        for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 00:00:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784617258; cv=none;
+        d=google.com; s=arc-20260327;
+        b=snOB469pfl9P/oM2agu2lzdj9ijj72rkDc46774JamTRQoD9LMuoy47H5JOT1JVVk3
+         BUsNxZnT6/5kER9eetaFFod5koMDrwuQpEO1R+ie3e27Yua7Q4US0KLqojvNYQNGIkKY
+         pAUabBJZxK5kHOdNBQQGJ6izFpauOG6pJ7tAlcP/p03SGbYsZMGlHBk/YIgMcyKnXEm1
+         UbrcaGyzdyxMK0LIt29uXp6VyH4/+l7S5Zk46NXNeEDRe+mhHWo6ADGEBq6tTPVY61sI
+         PpIVPn0jDcfa3eMhyitDKjUBnK6V+89cl4NtQPvQSs+aUELA5KrPEUlT7lw7oTVRX5kx
+         9fBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
+        fh=1q7SpAh5c8swSn96Ju36J4AqL7v5wngHbp0vDlRS8n0=;
+        b=DECC4deqBtd8mSjBdr2G6wTBUxGwhz8H/8ooBBgAZZo5RRlEFKtCKus1HptW+vdk4D
+         vdNLsqDixpVwTLXwRIezJpkL6+RUWIfk+eOfcHQ/LA8qMrLDvUa9xZL64OZq+wEHVpr7
+         vMaEep6jBEyltRo0eDlMNNfFjWHvdEZ+xsYAmeJUVET2li5D0FxbBL22iV9S6O3PFgqt
+         qnFGeAOXqh+3iFuElK45rm6at16viFqowknnaRhOAFCnXTNC596WApwtVnek9lQAZ1NE
+         YFncAAFSPPMFTovOiT1iOvAQcPATrnBvnCUb1KjdxRIEJZf8gt9DxECnQTFIWGqQqjMo
+         iBKQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1784617258; x=1785222058; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
+        b=mVXp4QXcttZvySN97evYZYTfg8+C288rieIiX1opvjTkO1eK6PJhxPNNuP2wxLRxOt
+         sJNxouVGcoWpfhuO1k+PArUb9JD7nsgEnEuAPwZpyzD2K7tzTABqWeY2xXv0eM4vtpQ+
+         XaJ7B4WXPvNGNzbf66UtXPnV/UegrtDUB91hubPnN8s5uYD59C7FZgVGNgYYJkjcyLUX
+         pPcD8fahgbdnEIWxhOWGHNcfhK7rYSOkQNiBX6uIZgmtkKcX0BuL6A3Et/sqhQMT+bwM
+         Ef/IIuD1qYLnqRHCiblS61FeOaX2Ma0ZMBd6zyHjf9f0erjZ7kwxq7Kb3jLxSnS9tv13
+         MlXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784617258; x=1785222058;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KbW8qDpBz7dRQJmz6VBWRl9vWxLvs0K08mcBtFiOVAg=;
+        b=HxtUyyx4fouojJb9N/88kEJx3b5eN99mCPusjSXBAj9SJGk7o+T+1dBnhb2+Hpa+c+
+         7MiwuBI0qU53v6HZLOF31VbAKJFmrD8vie/rYz3cSePJCBZYJxUQ6mQq4oY/P6VMALWR
+         ZwGteaQcfZe61kW4e7cKL1u98P9HM6NWNwO6jPbv7UX88qU1nHBvp65CdO4lO5e2kmGe
+         KKRZ5ktSiGJ3RFiiiXLCjSycY+9KyHibkfpMu5/ljsWXI/FCNwcHb67d3QDZLuff0yig
+         4NixQGL/4iUVCh2Wy6Hficf+mMUSSXSI65nLKJgj7KseS+KItCu3cCvgGfKOl7lCXnl/
+         hI5Q==
+X-Forwarded-Encrypted: i=1; AHgh+RoahzPQh83A56Ctx5cXXPU6vXfmAgO1apG3VJYuIunmYx701LJNRvvxEcbzTTZVa1KcO9gfgfQekHs=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywj3RfGXI1+3uBFe3DGLnWFkXjsjQkqv6wlS/gTgxr2ClgR1nf4
+	lyFeqsaIKZua42D5hexscrsg9yCP5j7VHGcfXM2APL6lqX7ouF5bsthZO4saVhvNaCPHGF7FhDq
+	OCSdfHGgQTnFxbIhVxf/B76C6XNj5MLT2V3BtktQ=
+X-Gm-Gg: AfdE7cnEfZKqGxZ4vzAsJiGNTFylwNMd8In/NixHOZvWoZUcGCSjlkrpoSGA06sCus7
+	b8xPU1kPMcodopCCw1k46W2uJKQWsQK8h8xBDRSuIf9F6/VWjHTPoRtL6q0br2WhZWCSxSwux1W
+	OLmtyvTgm1LhqXuBePpu3I2PkDmda/icqMBXpOqzj3D4qGQLVeNIW/7OljNOWA2cpLZBS3kOpI1
+	s08Gct+7mYgHp8vdQ2onyO0soMlH91a0ELceLyEYF0WwbTKaqvL3O040I56wCdPDBNNT1k3+iB3
+	C2bfzo0Fx2St2CnEeFqQ5aKEk/TUDq22JTOunzkih6hZZXrOLzyL11TN42q+vJUtqUHpm1FtVFe
+	NwMdqRtcURl6zEA==
+X-Received: by 2002:a05:6a21:7111:b0:3c3:aabb:dba3 with SMTP id
+ adf61e73a8af0-3c3adb17f56mr19148506637.76.1784617257722; Tue, 21 Jul 2026
+ 00:00:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20260721063242.552774-1-arighi@nvidia.com> <20260721063242.552774-2-arighi@nvidia.com>
+In-Reply-To: <20260721063242.552774-2-arighi@nvidia.com>
+From: John Stultz <jstultz@google.com>
+Date: Tue, 21 Jul 2026 00:00:45 -0700
+X-Gm-Features: AUfX_mw5PGiX1OqGyERbO2IVw4mkMhqXcSxvP5BdEHQSwa_V4BsP5XVdmfQ2fcE
+Message-ID: <CANDhNCpTDwDiMqFYprxir4cKtaC5smc_-G730gt1MrAyFU-aKA@mail.gmail.com>
+Subject: Re: [PATCH 01/12] sched/core: Avoid false migration warning for proxy donors
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
+	Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, 
+	Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, 
+	Christian Loehle <christian.loehle@arm.com>, David Dai <david.dai@linux.dev>, 
+	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>, 
+	Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The warning for migrating a migration-disabled task is incorrect=
-ly suppressed for all sleeping tasks when proxy execution is enabled, inste=
-ad of just for blocked proxy donors.
---
+On Mon, Jul 20, 2026 at 11:33=E2=80=AFPM Andrea Righi <arighi@nvidia.com> w=
+rote:
+>
+> Proxy execution can move a blocked donor's scheduling context to the
+> lock owner's CPU even when the donor is migration-disabled. The donor
+> does not execute there, and its original execution CPU remains recorded
+> in wake_cpu.
+>
+> set_task_cpu() warns unconditionally for migration-disabled tasks, so a
+> subsequent proxy migration or the wakeup path returning the donor home
+> triggers a false positive. Moving a blocked scheduling context does not
+> violate the migration-disabled execution context.
+>
+> Exclude blocked proxy donors from the warning. The proxy wakeup path
+> restores an executable placement before clearing the blocked state.
+>
+> This is a preparatory fix for enabling proxy execution together with
+> sched_ext.
+>
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
 
---- Patch [1]: [PATCH 01/12] sched/core: Avoid false migration warning for =
-proxy donors ---
-commit 3b0fd432ea71e1ba27a8e56bb387fb372b053daf
-Author: Andrea Righi <arighi@nvidia.com>
+Nice catch on this!
 
-sched/core: Avoid false migration warning for proxy donors
+I'm wondering why I've not tripped this myself yet. Is
+migration_disabled set more often in the sched_ext paths? Or was there
+a specific workload that you hit this with?
 
-This commit updates set_task_cpu to suppress a false positive warning when
-migrating a proxy donor. It allows moving a blocked scheduling context to
-another CPU even when the donor task has migration disabled.
+Acked-by: John Stultz <jstultz@google.com>
 
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-[ ... ]
-> @@ -3376,7 +3376,13 @@ void set_task_cpu(struct task_struct *p, unsigned =
-int new_cpu)
->  	 */
->  	WARN_ON_ONCE(!cpu_online(new_cpu));
-> =20
-> -	WARN_ON_ONCE(is_migration_disabled(p));
-> +	/*
-> +	 * Proxy execution can move a blocked task's scheduling context to any
-> +	 * CPU without moving its migration-disabled execution context. The
-> +	 * wakeup path will return the task to a CPU where it can execute.
-> +	 */
-> +	WARN_ON_ONCE(is_migration_disabled(p) &&
-> +		     !(sched_proxy_exec() && p->is_blocked));
-
-[Severity: Medium]
-Does this logic inadvertently suppress the warning for all sleeping tasks
-rather than just proxy donors?
-
-Because p->is_blocked is set unconditionally for all sleeping tasks when
-__schedule calls try_to_block_task, this condition in set_task_cpu appears
-to suppress the warning for any migration-disabled sleeping task whenever
-proxy execution is globally enabled.
-
-If another scheduler component, such as a load balancer or a BPF sched_ext
-extension, incorrectly migrates a normal sleeping task that has migration
-disabled, this overly broad check might hide the invalid migration and mask
-further issues.
-
-> =20
->  	trace_sched_migrate_task(p, new_cpu);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721063242.5527=
-74-1-arighi@nvidia.com?part=3D1
+thanks
+-john
