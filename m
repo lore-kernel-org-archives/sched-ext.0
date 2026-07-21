@@ -1,95 +1,95 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CF02C11E4
-	for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 07:02:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF8842BEA0
+	for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 07:05:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784617340; cv=pass; b=bu8GfLB+j5dG+XLVjhMAxYeF5mfXLbOeLQUkEUyVZzBDY0DU8HWkVAXmDUmzJl7x0x5NTpHvgDOmZGpj4mDMf4wMiXWsZc1Zb5+aUvLBY3CC5CVysaFTIZHgKt9VPd1tPqGj9A23z9mfV+KGZKHcdMwC9YqLnxbmXnXyvpg2cQU=
+	t=1784617554; cv=pass; b=rjYLkxy8AzsSMazrCNplWXRzY438TWwIPc+jQ3imhp70591Ysr2QtkTE4EjTTtABvqpIsj5VWmGrtCBuoCxL5oCFN2D6nVrysP8WmhhregngGA0hqAkpnS59zW1c7WyTXwNtT9l7Czzfhe+OxgdTA2szEplr2lD/9VhXXQMf1fE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784617340; c=relaxed/simple;
-	bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
+	s=arc-20240116; t=1784617554; c=relaxed/simple;
+	bh=AELB8Gv/075QrrlaSedBhRZvmYOLrqCEZxITUdZ82FI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MNdY3+Rn0AfRp1dMBW5+XaJtPAzxWp73yBEPg7410ANg7Cw/qQ7V922AjvgAypoGFl6+6j0/Irb9GLRj1EPmxvcURHyRTVpEOZbIv5oQa7HUMPzf8cBPrByLDPSdFEJI8cwOL7rnzUVTKrWpo5duTc26NRx/4dw/yrllcd+Qthc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=TbKiyO3B; arc=pass smtp.client-ip=209.85.216.41
+	 To:Cc:Content-Type; b=YSSHES2wpbtmfsZCLRnY2bCKwgaphGb5wYLLULzU+LPRP23Q/lbyBl1SNwl30DYx1NuYvsL4S563S2/6JRTaVidRAVb09ZlcuCIZtg9pyBZNq116VtdTzx24wY7x2TXeV4msdmFIqSA+lgJKWOpT8Ie8V0LH3iUB5ubhQDahLW8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qfwUWOYw; arc=pass smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TbKiyO3B"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so7026974a91.0
-        for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 00:02:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784617339; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qfwUWOYw"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38101f85591so3788152a91.1
+        for <sched-ext@lists.linux.dev>; Tue, 21 Jul 2026 00:05:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784617551; cv=none;
         d=google.com; s=arc-20260327;
-        b=jOG42wkyjkMAMGVR2qvlMrh9HfDAND2ObFu8jYAS4nzy9+a59CuFSvG4uUzRfLZkZc
-         C8pZN7Igp/ozFCEUg8bqrKN/XpRyjHeyFKPFv5o9NbxstTszp8LJO7mADyCc+pF3VYu1
-         Zx0Rcj2nWLlLxPozdtXczugSa/np74a6VBj1e4+xGcuJqGJRfU9zG5SxXXNS0b9tvnJy
-         nw0n4OG7742B9aX5UVSAYyOSHRC6qJxnfqGzXennDTraHqSm3jZtG/cwqj9tRT960Vh+
-         WsKFO58DAPQHHGVjtX2dvsXKAKAdBqDvTJGBVUEuNG+yae7nCLk5KAhUfiHaVubuwcPT
-         DvJg==
+        b=iV4axI7QesS0mC3SO1tMFsjiuG6Hp70EseI4wRl+NDv7KtjLG/dXaUPnlgOXFZUhFp
+         3tgp3Aa/YcZQv9E4EUWNmokh6AqfteBF1xRFr5hf5rVczjDXyykArE9+rqRNVjPZPY29
+         MlJpWc/JF5XHg8eH29WANWyRKZjM6Pzb9+qGCjf23m8NjbATAMMJ7C84WF/ZEEgx5WZ9
+         rWK3ksYlBfYULtx9xSb/eCnlKoZ+Vej1cdIgYVsa4eGAUOoJoL7Sa84iiN6mstzykdw1
+         C073TCwtkK61X8XJ2k7tf/F7DEix3pc+MgcR5CYm4pGsvcboE5RmDAORIg4R9XzRabhJ
+         Mirg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
-        fh=nJgwk62bglFEBR7c3BkJzn0inE8PIZqIypnfJZnn9uE=;
-        b=N/1zoZkitmCz+h4dVtjsKnQCWOux/Ig2nrx8Nm7QZP4OXS69CchuSece01KQ0yiv7r
-         3QeEAgFUG7844Slb1yecHDTbff4BRS/U/uu0yAk1KLLAvHNrh3SUHTybK0eRF4A2+Pxc
-         4dwg4bGEIGriVxoJ6vz26rKoSd8A80l8JGbqwboGMZ2ciajH7ma5Sf6JL2UwmuBIgvh8
-         T/Of1AIk/jOWYqmIcTu/MuasuPyH3YDfup/QsKkhmWF5uVI/G66HHCpW7GZ9hIPaLDC1
-         MTu5jxKaknnFmhOZvywoxdN1OOYTKkzPVV1OeKGolYgENsnU+AZqPHuOT62RQlybuC/T
-         PThw==;
+        bh=AELB8Gv/075QrrlaSedBhRZvmYOLrqCEZxITUdZ82FI=;
+        fh=tHWo/zxxIx8bpxZLAa6JWkJiOlcGzHOsR2zBsBM5gLc=;
+        b=TX1MtG19Jk5hhQrfhrhOjB8Z5SLsy5HvfXzqKr/RiIcKCYTT+Y/LHQjjFtiRubPofh
+         CTMmqwbPiPvvIi8YzKbfIrD+D+1dcFK2vxNRDXO5ClsKj8dFmrqR3YOPlF0/kyufcRp9
+         HGEJqUEfmvvAQEeiTxvOmuAiLo04xrSUlX6gHyVu158JiRmcxHYTp36AVKNF7O5MbYiY
+         u1OCOrddFczCeCkockymvefqYBhq+JjAlzexTsWqn050KSOOYRqdy4aSKKSY3tj4HMqn
+         dD2wBlej30EDqDtKbvw7fKsJO8XwIZZpDxuR45CcGfwfZ/fqwFsOsP/S6WWcDj894IEM
+         kMLA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1784617339; x=1785222139; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1784617551; x=1785222351; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
-        b=TbKiyO3BuX3kTaf3eoBCaZMvs46tuv+hwHikF/FfGvjMf6oOQbGbkvkTNeG8c+CG2s
-         nVV0dy/BHdIyEnVwPZwP6JsMZpqK8uBNq0kmqzjmzq3pjpy60pMT0BFzo3k+F85GeDuW
-         I4AuQ00GZxzPCzJBqyJEoV57/rX3P1OOX7KDnxvF0EWNr3KrViTZmeL6HWpnYiV/QAJk
-         h4A94E3nrlcDooWs0KjeyIMLELm4soNinhdBenjqH7na2phHe97VEfcRyvIoGiUEocSk
-         IWAuhpmGk9Bi45dsPQeNzfl2l5Mw/jJRCW8jSYcFd6MhSjXAO4FDvfApNyCh+kphUv5v
-         AivQ==
+        bh=AELB8Gv/075QrrlaSedBhRZvmYOLrqCEZxITUdZ82FI=;
+        b=qfwUWOYwat516TcYYFT0rXX+ZxkteGgg/+HJIkzFg9mWyE8PLtYd8Q6+3NRVLElWtx
+         ljMb7vw9W3PidUkpj/ns2wcWuqsd0ytLvrlLIZ04wYu4UN1Gs3KZh4r+65Mt4nKc7OGI
+         BCynx5xSJX2i7U5ED6XhMyF1G+XRERRVMnIb4rScFqZQ7Psm3Ppil01nYbxWV8MXilDC
+         ItEdtk8URV8JRZcgxIZPWeyiEkBQVRXpvaOMggFFaA0++sBzZdMf325MI9qU294r+TMm
+         1gfPDsBfx9E6LWl+CZrnAVtIpmI7ErYgOPTuqhGwtLWcIiSjLsZYnV4GPOQ7AxackcWL
+         TeeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784617339; x=1785222139;
+        d=1e100.net; s=20251104; t=1784617551; x=1785222351;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=JARzrLqnQvEgBeB8KCflCeB06cCLs5i5rU0FoC5OqPY=;
-        b=fmah0Z8tqNqT6nKeeTtk48aRmsXY5EbKvhScGzHpA92gObUp73pVnOT99Uwi4RKO7f
-         EwPpGYEwlW2tT0RMhGytEGHi2UrqJbAPGPfA2Cw8QL26yNLc1FyOnG2iEwdlBS0N+3gU
-         P3NBcgcPwa0iUgsxAa5pi4VSBaPsNyD4Ew0Pry6X8zRiyyn7mkY9p1cJj8bYblMue7hI
-         iGUxJ6Ajjm8H1IaAibc3C3ajkGJqSpDbEqAmp9C9mGzxfK7wUht9M+OAZvBdE8jCZ5Ey
-         3m7AyRR0BuiZtJ+RbpiWNHKvxf2AFKpr9ZtrlU5SJzqfMum0XFbJJXyCYXt71h/ps9ii
-         rOWg==
-X-Forwarded-Encrypted: i=1; AHgh+RpylWYwmiktdwdfgFHj2aM8GseOZteGRc6t12O7eRZtB6RATu91aKCFdt2Axxszh/IYbKVkesxWPRw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwJi9ov2IoXJ6tk/imFY3ioeDfzPdjhJdu1TZFEI8E2ceBpmJE8
-	U4gwcIxxJJC2H969WUO5frXg0yO8DLhZSinHW+Zi3wW1GG31XaGpXv8UigAuY8i2ZL6ggwcJNRG
-	crZG74hDysCZbMYzmAChmpQpOy5RxCFLXaWJ2moI=
-X-Gm-Gg: AR+sD114/5WPWg9VHELpQWbwZVKc6cAry3PJp68SQ8CejLtO6wvjFdSOMgPHQxmIAC9
-	S4yD9MHy0kffiF6JbVLeBUsnIfbTwyvOAs5oO9Kay7DV/K6tKaKDzWmCkmfbqLrHcFdszWU5Lt8
-	hBRtzUCnTR6JeE62cpnf9j9rzkVwlAI8Mh29TWFr1kZ1jef7146wbObUEUjeNJjgao2xr6JCSyR
-	qlL2jiiw9vKkePehRDeT+27C1zhRvF69U+8v1izb/DtqLjrjZxAiloXiDeopNl0OgWxP5dmw4PJ
-	su+e9/bpTRjBzvagppDOJyJttlUIlTZOSE5ldXG+x5RH3yUJFapl4Pq/7BtV21T/lRveETXbWai
-	6yL8JidrQbqm9Hg==
-X-Received: by 2002:a17:90b:5866:b0:37e:10d1:c05b with SMTP id
- 98e67ed59e1d1-38e4b5166e5mr16648699a91.22.1784617338392; Tue, 21 Jul 2026
- 00:02:18 -0700 (PDT)
+        bh=AELB8Gv/075QrrlaSedBhRZvmYOLrqCEZxITUdZ82FI=;
+        b=tPr2MDxyFzTqGluidZASzv6hFdPQi/IdvNVpWxum+9/xyzm9Vr20v41nkogAlXnlS/
+         uAVespjGqBSoBV1SgMS23CquBnavQ9yPIRJpJhto8volNfyHGY9jHwIa5rjYN+OJYMcl
+         +TtXhCOn7QEtmjWt/7vBvv8EWNxDWEJ5iHr/9v8MHgUdNjs4qqEhkrhT38bhQTdGzEsH
+         +WJ4Gu7L3wkApR5kc5TJko0DuSrQXRyWp7hKW+gZqBMI2fHV54umLZEFqHl28dHuX+pF
+         5p3yIfOrKTr8dEJfW1S96IT8MUTNDZKE4MAjWEli1TkolEex8qLRgGpzuyonh5HRqRTh
+         QwTg==
+X-Forwarded-Encrypted: i=1; AHgh+RoIjV46XoYPxkMF6ENwZkZpdWtVKs4+sKuxvzL2GN+eOFICe2kG0ih+2u66BlXUiaATq8FZr22fQuQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJ4R6BwyZ/2+zQP3+mWPPyQn1KmndNxukxk4PusxUxKzXxQHKb
+	xLJguCxcbjW653yA5ySc8bYr9MU2STiEjmqgT1V+3dvup592OmDYB9krzJI67DRP4IZkCwnI5CS
+	DpK2z7FUCtA9jlpJ6+9xc/jU5X7uQ5rUbWnMO5Pw=
+X-Gm-Gg: AR+sD12I3EwHI8/3u4xDDycnHHDAp4+BUQCPHodGyMZx0Pr2WdAszpCbjbgZAwyKMuB
+	ira6qjMOSB1s1u9s6sN+6i0lNIN7PnLS+0h6NaljjCzH684FV1tbwa73gJAt0eICCYzHDTKeYR+
+	/8mdbwLlg/HoaxOH1nuGzsARvGLPv1HpAKj0UiTVB55RKnCd86GHGyK9zi+ZnUQa2LLihzOCjqv
+	/VF5QejHMVsbz6HGux6FT0TwMeBjK7dj3bxDuDbL95JFuDYhabANssUY1fv6v+YyqfB0CbpKVed
+	ixJM9RLIeyi4ccBvbcG+s5DVcsiYALcVAXe5eiiqcMTlzhg30gSEPSM0G+1ZYq/V8MC/nAbskue
+	7u3qUn5ZapJs+Tg==
+X-Received: by 2002:a17:90a:ae94:b0:38e:7e9b:5fbc with SMTP id
+ 98e67ed59e1d1-38e7e9b610cmr5588949a91.7.1784617550616; Tue, 21 Jul 2026
+ 00:05:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260721063242.552774-1-arighi@nvidia.com> <20260721063242.552774-4-arighi@nvidia.com>
-In-Reply-To: <20260721063242.552774-4-arighi@nvidia.com>
+References: <20260721063242.552774-1-arighi@nvidia.com> <20260721063242.552774-13-arighi@nvidia.com>
+In-Reply-To: <20260721063242.552774-13-arighi@nvidia.com>
 From: John Stultz <jstultz@google.com>
-Date: Tue, 21 Jul 2026 00:02:06 -0700
-X-Gm-Features: AUfX_mwR3JvFbKfVlBbxBb7xkVzqMSaXM3VVTzNUAF7HoTdNkBH9kJQxTMyDofg
-Message-ID: <CANDhNCqn59srtp0n2ZuLp-rd3x8ky+DQoMXY88+zKLKt9sxakQ@mail.gmail.com>
-Subject: Re: [PATCH 03/12] sched: Add helper to block retained proxy donors
+Date: Tue, 21 Jul 2026 00:05:38 -0700
+X-Gm-Features: AUfX_mzCVsv5mO_nfkH4wgYd1Is51XZC_s9xLeJ72k68chQv1agtTANG4e2bmYM
+Message-ID: <CANDhNCqBnmLfLb9cd47MnPiPUDFcGHoe6yN2Ti1zp5E3_a-Rng@mail.gmail.com>
+Subject: Re: [PATCH 12/12] sched: Allow enabling proxy exec with sched_ext
 To: Andrea Righi <arighi@nvidia.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
 	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, 
@@ -103,22 +103,23 @@ Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jul 20, 2026 at 11:33=E2=80=AFPM Andrea Righi <arighi@nvidia.com> w=
+On Mon, Jul 20, 2026 at 11:34=E2=80=AFPM Andrea Righi <arighi@nvidia.com> w=
 rote:
 >
-> Scheduler ownership changes may need to turn a mutex-blocked task
-> retained on the runqueue for proxy execution back into a normally
-> blocked task.
->
-> Add sched_proxy_block_task() to perform that transition while holding
-> p->pi_lock and the task's runqueue lock. Reset an active donor to the
-> physical current task before blocking it. If DELAY_DEQUEUE keeps a FAIR
-> donor queued, the immediately following sched_change_begin() completes
-> the dequeue through switching_from_fair() before recording its queued
-> state.
->
-> This is a preparatory change to support proxy execution with sched_ext.
+> Now that sched_ext can handle proxy donors and BPF schedulers can opt in
+> to blocked-donor enqueueing with SCX_OPS_ENQ_BLOCKED, remove the
+> !SCHED_CLASS_EXT dependency from SCHED_PROXY_EXEC and allow both options
+> to be enabled together.
 >
 > Signed-off-by: Andrea Righi <arighi@nvidia.com>
 
 Acked-by: John Stultz <jstultz@google.com>
+
+So far things have held up pretty well in my testing.
+I've seen a few cases where the scx scheduler gets disabled due to
+stalls under stress-ng pressure or locktorture+other workloads, but I
+suspect that may be separate from proxy-exec (I'll continue to do some
+testing both with and without to confirm).
+
+Huge thanks for this effort!
+-john
