@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CCA459AE4;
-	Wed, 22 Jul 2026 23:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1234582FD;
+	Wed, 22 Jul 2026 23:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784763363; cv=none; b=WR/nnHJOV17GKe4zRArZL7nXOnDzlKTR0ogN8c3L523Absngofc+IrB9XZ8DxdXDKgakJOoMW9WpPKhu5a53oI3iifo5166omslidbMgKn9aHWsmG1Rf2MrOxz4LYO34V4zmU0r4SE10v8oFmi/c6Rt0hHMku5FR3F4kdgbBUi8=
+	t=1784763367; cv=none; b=C/iWrTQ+elcFn4jWHV+Zc94bU8GHDRBZFgTmII3RuBWgXLzwgv+SK9xxHuLQ06Q0UWBKXe5h0qkCR9e70T6Zg0DtXt2ogDRKF+BEkg0PC2jstqGJUyKLsoGnxOeN0e1vYWY4+fXi7oTL7mkDSRWm0qj+z4oqthSMBWEtiYSUnOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784763363; c=relaxed/simple;
-	bh=e+aXTC/EB1lGzjC3jXrGbdWGaj9vUga9zpOpdviE86Y=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References; b=X550G88WGO8JP/3Cr9Z7+K9bsjo7VCQF0tgJ+ESjZR6H+ZjTNvACYKRiSomEFdfWZ9YoFNdyIIlupj/Y13yHORqqTIHhi+zG+hIfBws0AXj/RWS0+dBZ9YmKhoItimeBKo8T2HFDebqw5lDU8LbNLAyIAXHeacCGWewFuD/8mcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kD1w2lN1; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784763367; c=relaxed/simple;
+	bh=IfWkqpeBfLBAuv9N/WhfKP/zkHXbOKcMJBQm3autBDA=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References; b=se4ta0OUWzwCU9Luc8LM7IucuuM+fo0RIdenz2E4sQvLEs0c1oJYg5piAQzWc2OnbmJa1mpK3nwujonpBe85+kZFhvGUTLYTAh+ZM4cUaBBx2vACFhIB28yPjpZ2zF+k2nahVe7TCZsd2WTXbxqInpSngDPy1XdXWyMxT+U3K9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OwQjG/0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kD1w2lN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DE31F000E9;
-	Wed, 22 Jul 2026 23:36:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OwQjG/0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0378D1F00A3F;
+	Wed, 22 Jul 2026 23:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784763361;
-	bh=yF7k/YnuLVzLhPrTMw2CIr44hNwMazZmMpCI9IoD9rY=;
+	s=k20260515; t=1784763366;
+	bh=swFuh1PPk6kgwBS+ydO+DRiGQfnSWFxZZ/hCz10i32E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kD1w2lN1pckmCdNM2CWE9NSG2C0+ZR8QP7G9reIgGPu1Vjv1QSv4Z2GwMv1VSrny2
-	 pMfMTXXC61llay391uJ9p8UtuH+txoRsQdE59qNenfu7avAUQNui39MdNNio/v4O7n
-	 7d64D5iQ9mQXMiLvAhl+y+7PAkxWRX6o1Bm5t4TTpcYH8mIQpesQB4zwTeGw28XnlJ
-	 0ojrdlx/pyaaCA7EE8NI7wEyFxn4sFtrX/PvtVHg3kC4ChSO8K//+yXaTjAB41IHih
-	 BFxQPmGC/NXh4bbRX+YpvvR+NAuot+s6EtCL3Gq9R2U1uYJj8j/HUs9SVq+aG/BGbw
-	 jIvhD03+fNOCA==
-Message-ID: <1fa1975601015d95f9f5ab5cf0d95963@kernel.org>
+	b=OwQjG/0z+qooG3ikw63aVQjoLA2JFUOlIHlzBv6Db8hgYaegL/Qw2JwxrbIV+JUTF
+	 I0bupjtRiTVWGWREpIPG7D7GNfN3k2p/dF9X9e81r8ZT8wo5dhmcA7gX1I1ndoy+73
+	 uNZhDVMsEQUfrD/kerynB8wPEa97Jsvrywg1gB49TAbE+UqAn7o5m86+o+Ra1LBePI
+	 m8ypgGmqtJdneICBD6qY/MImdq+MeNFq4L8hpz7yH9mRINmjKRUgwRHOB6kAp7ISFi
+	 lUlF5SwSLH0dH/oW6XCE/2666//dc8QBMdM8Lihp6ZTQX1IjoS5rjMDGajuWktUAfi
+	 HH5xDfUqiGd6A==
+Message-ID: <682151bebb5125c1f6ee0eac7b931096@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Andrea Righi <arighi@nvidia.com>
 Cc: David Vernet <void@manifault.com>,
@@ -49,11 +49,11 @@ Cc: David Vernet <void@manifault.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 06/12] sched_ext: Fix proxy-exec race in consume_remote_task()
+Subject: Re: [PATCH 09/12] sched_ext: Delegate proxy donor admission to BPF schedulers
 Date: Wed, 22 Jul 2026 13:26:03 -1000
-In-Reply-To: <20260721063242.552774-7-arighi@nvidia.com>
+In-Reply-To: <20260721063242.552774-10-arighi@nvidia.com>
 References: <20260721063242.552774-1-arighi@nvidia.com>
- <20260721063242.552774-7-arighi@nvidia.com>
+ <20260721063242.552774-10-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -62,68 +62,60 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello, Andrea.
 
-On Tue, Jul 21, 2026 at 08:31:27AM +0200, Andrea Righi wrote:
-> +		/*
-> +		 * Proxy execution may have changed @p's running or migration-disabled
-> +		 * state while switching rq locks without clearing holding_cpu. This is
-> +		 * a kernel-side race, not an invalid BPF placement request, so don't
-> +		 * abort the scheduler on failure. Fall back to the global DSQ, where
-> +		 * normal consumption filters can select a valid destination.
-> +		 */
-> +		if (unlikely(!task_can_move_from_locked_rq(p))) {
-> +			p->scx.dsq = NULL;
-> +			p->scx.holding_cpu = -1;
-> +			scx_dispatch_enqueue(sch, src_rq,
-> +					     find_global_dsq(sch, task_cpu(p)), p,
-> +					     enq_flags | SCX_ENQ_CLEAR_OPSS |
-> +					     SCX_ENQ_GDSQ_FALLBACK);
-> +			if (sched_class_above(p->sched_class,
-> +					      src_rq->donor->sched_class))
-> +				resched_curr(src_rq);
-> +			switch_rq_lock(src_rq, this_rq);
-> +			return false;
-> +		}
+On Tue, Jul 21, 2026 at 08:31:30AM +0200, Andrea Righi wrote:
+> A proxy migration preserves the donor's wake_cpu while moving its
+> scheduling context to the owner's rq, so task_cpu() differs from wake_cpu
+> until the donor wakes. Prevent BPF-directed migrations from pulling a
+> blocked donor off this proxy rq. Otherwise each blocked re-enqueue may
+> move the donor back to its callback rq only for proxy execution to move
+> it to the owner again.
 
-I don't think bouncing the rejected task to the global DSQ is the right
-thing to do. Unlike the existing GDSQ_FALLBACK cases, this fires on plain
-mutex contention with proxy execution enabled, so userspace can trigger it
-routinely, and the bounce bypasses the BPF scheduler's placement. It also
-breaks sub-scheduler containment - when a host consumes the bypass DSQ for
-its bypassing descendants, @sch is the host and a descendant's task lands on
-the host's global DSQ outside its cap grants.
+The description reads scattered - from here on, it's a flat list of corner
+cases, one per hunk, and the design that connects them never gets stated.
 
-How about parking the rejected task on the reject DSQ and bouncing it back
-through the reenqueue path so that the owning scheduler re-places it? The
-two rejection reasons want different timings:
+> +	/* %SCX_OPS_ENQ_BLOCKED takes precedence over the fallbacks below. */
+> +	enq_blocked = (sch->ops.flags & SCX_OPS_ENQ_BLOCKED) &&
+> +		      p->is_blocked && !(enq_flags & SCX_ENQ_WAKEUP);
+> +	if (enq_blocked)
+> +		enq_flags |= SCX_ENQ_BLOCKED;
+> +
+>  	/* see %SCX_OPS_ENQ_EXITING */
+> -	if (!(sch->ops.flags & SCX_OPS_ENQ_EXITING) &&
+> +	if (!enq_blocked && !(sch->ops.flags & SCX_OPS_ENQ_EXITING) &&
+>  	    unlikely(p->flags & PF_EXITING)) {
+>  		__scx_add_event(sch, SCX_EV_ENQ_SKIP_EXITING, 1);
+>  		goto local;
+>  	}
+>
+>  	/* see %SCX_OPS_ENQ_MIGRATION_DISABLED */
+> -	if (!(sch->ops.flags & SCX_OPS_ENQ_MIGRATION_DISABLED) &&
+> +	if (!enq_blocked &&
+> +	    !(sch->ops.flags & SCX_OPS_ENQ_MIGRATION_DISABLED) &&
+>  	    is_migration_disabled(p)) {
+>  		__scx_add_event(sch, SCX_EV_ENQ_SKIP_MIGRATION_DISABLED, 1);
+>  		goto local;
+>  	}
 
-1. A migration-disabled donor can be reenqueued right away. The forced-admit
-   path in scx_local_or_reject_dsq() covers pinned admission and the
-   deferred irq_work wakes up an idle target CPU.
+Both fallbacks repeating !enq_blocked reads awkward. How about grouping
+them?
 
-2. An on-CPU proxy owner should stay parked until it's switched out, or the
-   reenqueue can just cycle back to rejection. This needs a callout at proxy
-   resolution - the owner is still rq->curr when balance runs for the pick
-   that switches it out, so draining from balance alone isn't enough.
+	if (enq_blocked) {
+		enq_flags |= SCX_ENQ_BLOCKED;
+	} else {
+		/* see %SCX_OPS_ENQ_EXITING */
+		if (!(sch->ops.flags & SCX_OPS_ENQ_EXITING) &&
+		    unlikely(p->flags & PF_EXITING)) {
+			...
+		}
 
-That'd make the scan_seq tracking, the resched_curr() and the repeated
-consume attempts against an in-flight proxy section unnecessary. The reject
-DSQ and scx_reenq_reject() are currently sub-sched only and would need
-generalizing.
+		/* see %SCX_OPS_ENQ_MIGRATION_DISABLED */
+		if (!(sch->ops.flags & SCX_OPS_ENQ_MIGRATION_DISABLED) &&
+		    is_migration_disabled(p)) {
+			...
+		}
+	}
 
-> +		/*
-> +		 * consume_remote_task() may drop @dsq->lock and requeue a
-> +		 * rejected task onto this same DSQ. Don't reconsider tasks queued
-> +		 * after this consume attempt started. This bounds the retry loop
-> +		 * even when the rejected task remains on-CPU.
-> +		 */
-> +		if (proxy_exec &&
-> +		    unlikely(u32_before(scan_seq, p->scx.dsq_seq)))
-> +			continue;
-
-If the requeue approach stays, the comment should mention when a task can
-get bounced back - proxy execution turning it on-CPU or migration-disabled
-while its context is still queued. Also, the condition fits on one line,
-ditto the sched_class_above() one above.
+The "takes precedence" comment can then go away as the structure says it.
 
 Thanks.
 
