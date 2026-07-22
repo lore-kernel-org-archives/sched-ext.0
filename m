@@ -1,946 +1,1025 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012033.outbound.protection.outlook.com [40.107.209.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C163368AA;
-	Wed, 22 Jul 2026 08:23:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784708628; cv=none; b=Lk8F+0B6Z53Mbin1qHRcJHtzMyw2GHNDJjD6KHAPdSR+zm3b2wfgo2u5kCdoLUvUXezQnMOjzQmdZ+fTAh8Wz3vBDjt0fx+imsPDB1Jvd6O62IG7aDvEuaPoUbPbPT7OVj9eWxrBbwqemZKYZ3ioA2pvGUkbHhaIiTWmmvV3hsE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784708628; c=relaxed/simple;
-	bh=MmMbp1D0ozg/XUc4KZjt0CES8wTc8BqlBA1cg5PECAk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yy1JIC8MULkdINdJfNXIlnJiBegcK1hdjCmN2/hfSecGI9SodGwic8U0DXpwEKOFzsXoIUsTVv61LV5rWJchTsA6MG03zUWkrJdPsX6LaQ3WrW6pMZuPb+C9DLn1I1rKgg+YmgRmMBWrUxMngsdoOwec66oJCxdpa1ryjpJ/ZkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jXToEQDT; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100503B47D0
+	for <sched-ext@lists.linux.dev>; Wed, 22 Jul 2026 08:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.33
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784708986; cv=fail; b=mWVF6eA0d0OcN2AZyl+t4Sz9GW9BB1SV6S0pdpY2l0FOBsAZIubWxk+TxvZHsxYtIBbmyMkLah28PMRj87OlXk9GAxTs2WNINwTEMvxYCAJcOG/arULudp5hxpSaxcZ/a3UwbqiBk/heZCcOBJdk6B0BokU0MUgGzBZBIjtWhos=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784708986; c=relaxed/simple;
+	bh=sC+bgAMTiqN00YjvIfrniH39GRaXg26yFG/9nUkSqMI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qRcEm28ajOUS0h7zrOa5L91g130f5eA9QW5SuerNhOtHqhf12OUbmiDEI0+KVBXYvpUNOWeXPTG1yayTmt6rYSZ1sDCLkkqYSMT+QfuJZtVQZN/pqembejXAqtaU9M3A2P6Y3QKY+gGlvbbU/Cz/H0YXtXOEpcpFfevIs+VnFbY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Se50CZtM; arc=fail smtp.client-ip=40.107.209.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jXToEQDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60861F00A3A;
-	Wed, 22 Jul 2026 08:23:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784708623;
-	bh=DTZ3vD5Dh2jegguWXW3DT+tqN/ladwcmwEDs2i+sihw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jXToEQDTm9xkDsXDiuU3sBmREddfn4c78XFrXg8rQ/cAZfgZ1KoUK/Mh4nEG0CeL+
-	 eoVwuwaNPdkoTwCaImSCBdOREIj1OmkRG8/vgQUQSlakyYeNlYli2eF9sV7kNtaa0N
-	 NgBQ83LAZqAS87+DAHFm/DsdmPr1uTpwYr5d182bxOwseIhZuNykCXeVgGeOir5NPa
-	 /gYN9gbHxfbIRgr1ic2BpZyqIbLzY1v8YjCFo60HJIP7Orj7EIjzLWyafzxpzbfNae
-	 ueuDnMo1wMiP8aMj6BKcORjqwNfMjZAZaytvYuOX6flfiQuui9i4pVrYKTVGjb/edN
-	 qpMbUoEWBz3RQ==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH v3 4/4] sched_ext: Build the cid tables privately and publish them with RCU
-Date: Tue, 21 Jul 2026 22:23:41 -1000
-Message-ID: <20260722082341.2533979-1-tj@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721223118.2268529-5-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Se50CZtM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oGzhbvW8jfm8/6GgIta9eB5dufJ+Yv8lnW2eivGqG4mTL40r8otoJv+rB4XKOS8Al+8ZJTq9Ez04IJ83/I8xgvReg0BeeP0yKBdQaveY2fbL5zoVfAIJUQTtd1TLMgpygq6aLoR+FkqpxWuGIyj35GAoU8eMAxCp5kwnx54m5TEVs4t4ov4wM3cLUhUIPXnJtX3ogQzmxqik9QQFFqrNrzkiZRs8oSu3GA08sa9nOBAYSId6xNSgtvDq8unZFlDKxImRZLFbGefVaUf348pkfc6R6H2MStY38fQAOzmZkcy04Buc4NmVbNrfnAPtlimOs3Jh70pjLCwE6tw4U/7/iA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iMNM4nYaymfNv9urJ6OPtHoLSVDqVwblAwwSx2Mckz4=;
+ b=MDqGOTaP+99OCIIijgC+Uko8VuoP/MbBOWV85pIWQL8OFo+5BfTlxEgMHX1T+KGD6ZuY/Jn3Efcr0DICkBKUHdYcgWc1JsrUf5Y3DPjQo1D8cdy+rrX86w1noRGUEvZNxpRRjSWDdx9LLfHqjO8Mu5fp8uIlrX4vZcDXi7l6nKzJZt26ehEesB5eB7wuEg4jFh6l0SX/y3Cie5Ss2c9j3wJvKObN5mpc0tjv1blJKLiBaAlZc5xv1OCsRuEH1x+McH6z5d4b14cOnHcrxU0535ix6/2eVI4PIq1ybPFtnlltkpu62IJgGLOZBl2xRBs2lzu22nQupnoT2cNesD7SMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iMNM4nYaymfNv9urJ6OPtHoLSVDqVwblAwwSx2Mckz4=;
+ b=Se50CZtMyssMalNoVD0HDJcCfuo2hgZT5el/PBXi/jmDuRiMLh+WjWh1gt/58HhbFDPVRWa9OuHelbu5MuTnhrFDvnCytR61x41yfPRvVycHjNSaLZaq0SVoJV7aVXN7CRgfUw/WHHMHIKNnQcxtNBXo1ng5l+8GdP8swAHXGNW8a+rV2O0uTEzMsSXwn7kUspxUyBwtDlfFHkCc1jBehaouB3q7unMxUNQcG78t2PUtPde8cyE/3NyN9bodtqv6LmXofrr/KsktROewC+8PkBxBfJSgFY9FK2wMpdZGtCpbGqpcM9QNksvl2bxnMYjK6l2YXaDraIWgYKZizeRjNQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by MW4PR12MB6681.namprd12.prod.outlook.com (2603:10b6:303:1e1::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Wed, 22 Jul
+ 2026 08:29:32 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0245.009; Wed, 22 Jul 2026
+ 08:29:32 +0000
+Date: Wed, 22 Jul 2026 10:29:23 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] sched_ext: Build the cid tables privately and
+ publish them with RCU
+Message-ID: <amB_Y-s4wcQL0_J8@gpd4>
 References: <20260721223118.2268529-5-tj@kernel.org>
+ <20260722082341.2533979-1-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260722082341.2533979-1-tj@kernel.org>
+X-ClientProxiedBy: ZR1PEPF000077A0.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:918::430) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|MW4PR12MB6681:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5c820580-ebdc-44a1-c5b9-08dee7cb5a4f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|6133799003|56012099006|10067099003|4143699003|11063799006|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	wxELBCMJf22L0D0N+0mS3yav5OWzNW4q2AuwzWDQUV39RUB/s+1ksavga/rgilIAziMKOUer4CZ7kfvgvdtaaDvK8BEBBc641ZN5eKEyUp9AprQKYhCObrtsdEY4ssY18S9KcHbKHbI/MYWFNAykN919R78Hg5soyPVaL3ymNO4OhYVjqHtLdrSfj2Sqvx2gFKcoUC6odyC9Q3n0DqweZu37Ml1shhisBNcflixw0RjeyGy0pyNv3/MboocBbzt1EJnbp8yTiO4tZP0wwpdkGJXiD/dRG00Ix8tAP+p37dMEJwKcH73JcdrR9AHMmgXaC3D1Cye5Dry2tYiJOzBcwrubFpyPclTdx0n+scwtcwuPcmU/jVi+VKaeGYA59udB3t8XOgW206DHWBzx+z7ADT4u2tJxsdVHQcj45iRrEJwMFiVKR1oJCd0/9ERgVgX8JoOVnILXAUTBciP3HetfkAtP2ex+9A0Ov67nBN5gzmc0arNGFw5ainkIXnda0JDii+mDzzeQCXFcBl4RO5RzAOFwCskZ726YTx5hbMhTBvUgzFwhULXIC5qSlQeCV2Zlp+GbbuW9EkyeLhlfiefDV8TxirwHWl+0+GGBeQAKfcQgIYYFBodAswHOCaFZIJt0peZZTzSffw2Z4+FBc/3DXHfa6UcuWjfVYuqly59Qt98=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(56012099006)(10067099003)(4143699003)(11063799006)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?NA3sbUOEyeesOAmK2PHfKAVR8tuS6zddjKQW1mpZU1w4OliHZcolEoo9UJQH?=
+ =?us-ascii?Q?dl24sThsufnC4oC56tRACeg+s24V5o7YgYE+gEmbpkDSuAd0r6ZHRGnoAgvB?=
+ =?us-ascii?Q?d/C0aqq2uDBXScXnOHj38NyNOa3EDu0NzuSXkIgCq+W9GJHNSNYy8DwKTW5X?=
+ =?us-ascii?Q?MqJsV5Rjc3VjGyDtDbzzZK+S8pAmZGkLPE8Ih0HQsvvMjJPmqEhkFkOo6FGd?=
+ =?us-ascii?Q?6riLCy7i0zoyK7ufZO30lvljRbfmUUqf1bOUhXkLS/cljVo4QP/8nWlGkPfA?=
+ =?us-ascii?Q?F7e27HXJ7scf2jyAOGQZmNiwnJ8o3YV9r07C1qnQc09AjJjGu75x9j+8DYhO?=
+ =?us-ascii?Q?PCMvFsRM9123ZNXklGBWb5u/heOIij3LnN176Q0FesBVCgEgRLGBAZc6o8C8?=
+ =?us-ascii?Q?2gIXv1ZziKGlIH2e1d/lY2U9Zjyu3WGukhh5WXIK+yzVQQ2xFeeO/gbAj0R/?=
+ =?us-ascii?Q?xh/YVBE7qyROLlX227yFF5UNhASAgGfeJB1jSXaAGs//YoiF69XUBUHS+HZj?=
+ =?us-ascii?Q?BRzQ6ow16qskEV1j83AmwQ244FL02wryVRpa4/wjJPNMFcrXA8xj45qr5L7i?=
+ =?us-ascii?Q?FIH8yDfJFBTdwq5AKtlK8HuiRn4AbJaWzVhTK25uqTr9GBN7+V89G/adiOQr?=
+ =?us-ascii?Q?szg0iGDZEtJhfGPk5+YFhSaMedXqk3DK/4BlY0yFqe9j1+d3nsbeR3IPUE/n?=
+ =?us-ascii?Q?iIToLY6ddTzT33uaUzGfgxT+AeIoOtOlrYmQJ9E31t1V/RzF5JFTUpIhFW8f?=
+ =?us-ascii?Q?qpw9YTEU/+wxfrocO2aECVJKD3JkN9thSQFm57Hb3Yg0L6XHplfAc7gqIUT/?=
+ =?us-ascii?Q?NylIfpRIIMCp/t4czAZy6VruzCxR1jxSTtLMenntx/rPXneDJ/Go98sTpOf0?=
+ =?us-ascii?Q?AaC4txMc1LuPScJ9q4rW8DzMCFgWzgJHvtJqL46waypTwYkn/Lh9V9fpPb8T?=
+ =?us-ascii?Q?26VMyD3hp0RrDwuaCSOsBuAQ6BAGIDVE54rjijUyCO0omIGh2xjHBvfWz9nO?=
+ =?us-ascii?Q?ujQpbthKm82DVSeq51xxIGMFb+CQgLPkqd6dccvsP2jhzmBZqmD1G2gx8h3w?=
+ =?us-ascii?Q?ER1YouEuMHkqkXnnJHNEQa0lMsmf+aKa9C/QY284t/0kv5LKkSnBrYH+4XdV?=
+ =?us-ascii?Q?YtFQLkf/bLObZllfzlC5OxN2O8bYva+Fm2feasEeUUz204Pnw/wMS9ReWEk5?=
+ =?us-ascii?Q?ieRgknYEeRvMRoxAo4rec4TCcXTxVrSNvL9q9xpiEAARkjTa++tjuid8pPFF?=
+ =?us-ascii?Q?Xr9gIgEWrIoPxFxjQNGUHTKHWnMB2+bIAmT0dFB3iRs+cUJe3knqLJu5ubo6?=
+ =?us-ascii?Q?cRemDyq5LoagN3rvUgu1T6USWhoJqBJZWNQyn35NvP8qXZA4rf8SUWveHBZf?=
+ =?us-ascii?Q?F1ED/SffFRzkN8lmY98/whO4cIXrsUAG6eqWwB7emc54OWQ9YngQvoHWynV2?=
+ =?us-ascii?Q?RCmmTCDBIpYOoQtobhfiuf+BrK1E7Gx4xrlhfSWGHnI2K6c3Z752xPatlAPR?=
+ =?us-ascii?Q?IEGu0MGMq7kQ1WaaifiHT7VjqHtPpWG7h33DomDGUfty7HGpowrIBHOiKadB?=
+ =?us-ascii?Q?exdRnZ3SPxv+KU4fcCFAVbY9QaoR8/U8GvYGzVosf+/VSalAaBOw6kVb1VJT?=
+ =?us-ascii?Q?J5kHmt+IxsT4Bs7uyyMeRf6rvQID2cbGmY61Rc3RvjJZRkwEG87RBNSeaxZb?=
+ =?us-ascii?Q?Uo08a6kF7pLRgFhqnOJKfb4a/uDftnM4olu/U7fbaQ7QNnYeB+mRHG4tL+eF?=
+ =?us-ascii?Q?tihaKCGjgw=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5c820580-ebdc-44a1-c5b9-08dee7cb5a4f
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 08:29:32.1158
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MAlVM49/D+7OyvRyuoey8PoNC7eXECOivNPF4SNEhjkfbv9e3nRJFcDBVygwXXqgbDs0fRr0H7weKJASIKqh2w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6681
 
-The cid tables are visible to the cid kfuncs while being modified: the
-first enable publishes the global pointers before filling them,
-ops.init_cids() overrides rewrite them in place, and re-enables rebuild
-them in place. A racing TRACING or SYSCALL program can read unfilled
-entries, including uninitialized memory in the kmalloc'd tables, or torn
-topo updates.
+On Tue, Jul 21, 2026 at 10:23:41PM -1000, Tejun Heo wrote:
+> The cid tables are visible to the cid kfuncs while being modified: the
+> first enable publishes the global pointers before filling them,
+> ops.init_cids() overrides rewrite them in place, and re-enables rebuild
+> them in place. A racing TRACING or SYSCALL program can read unfilled
+> entries, including uninitialized memory in the kmalloc'd tables, or torn
+> topo updates.
+> 
+> Tie the tables' lifetimes to the root sched instead: each root enable
+> builds a fresh set privately and publishes the per-table __rcu globals once
+> the layout is final, and root disable unpublishes and RCU-frees the set. A
+> non-NULL global is now always a fully built table which stays valid for the
+> reader's RCU read section, and lookups stay two loads. Kfuncs treat NULL as
+> no-mapping, also after the scheduler exits instead of reporting the stale
+> last mapping.
+> 
+> The cid kfuncs are available whether the root scheduler is cid-form or
+> cpu-form, the latter to allow gradual migration to cids. Every root
+> therefore builds and publishes a default mapping.
 
-Tie the tables' lifetimes to the root sched instead: each root enable
-builds a fresh set privately and publishes the per-table __rcu globals once
-the layout is final, and root disable unpublishes and RCU-frees the set. A
-non-NULL global is now always a fully built table which stays valid for the
-reader's RCU read section, and lookups stay two loads. Kfuncs treat NULL as
-no-mapping, also after the scheduler exits instead of reporting the stale
-last mapping.
+Looks good. :)
 
-The cid kfuncs are available whether the root scheduler is cid-form or
-cpu-form, the latter to allow gradual migration to cids. Every root
-therefore builds and publishes a default mapping.
+Thanks,
+-Andrea
 
-Every reader must either be gated on scheduler liveness or NULL-check
-inside an RCU read section. Fix the two kfuncs that were neither:
-scx_bpf_this_cid() read the table with no RCU or preemption protection and
-scx_bpf_task_cid() relied on KF_RCU, which doesn't put a sleepable program
-in an RCU read section. The hotplug callbacks are instead serialized by
-retiring the tables inside the cpus_read_lock() section that clears
-scx_root.
-
-v2: Document why every root builds the tables (desc + cid.c comment).
-
-Reported-by: Andrea Righi <arighi@nvidia.com>
-Closes: https://lore.kernel.org/r/al3tLtPZZkFjMveK@gpd4
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext/cid.c      | 260 +++++++++++++++++++++++-------------
- kernel/sched/ext/cid.h      |  57 +++++---
- kernel/sched/ext/ext.c      |  54 ++++++--
- kernel/sched/ext/internal.h |   5 +-
- kernel/sched/ext/sub.c      |  42 ++++--
- 5 files changed, 276 insertions(+), 142 deletions(-)
-
-diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index 5f990d95735f..231c8562d7c7 100644
---- a/kernel/sched/ext/cid.c
-+++ b/kernel/sched/ext/cid.c
-@@ -11,20 +11,22 @@
- #include "cid.h"
- 
- /*
-- * cid tables.
-- *
-- * Pointers are allocated on first enable and never freed. During root enable,
-- * the default mapping is populated and then ops.init_cids() is called which can
-- * use scx_bpf_cid_override() to change the mapping. The mapping stays stable
-- * until the root is disabled.
-+ * cid tables. The cid kfuncs are available whether the root scheduler is
-+ * cid-form or cpu-form, the latter to allow gradual migration to cids, so every
-+ * root builds a default mapping. Each root enable allocates a fresh set, builds
-+ * it privately and publishes the __rcu globals below once the layout is final.
-+ * Root disable unpublishes and RCU-frees the set. kfuncs may run before the
-+ * tables are published and must check for NULL.
-  */
- u32 scx_nr_cid_shards;
--s16 *scx_cid_to_cpu_tbl;
--s16 *scx_cpu_to_cid_tbl;
--s32 *scx_cid_to_shard;
--s32 *scx_shard_node;
--struct scx_cid_shard *scx_cid_shard_ranges;
--struct scx_cid_topo *scx_cid_topo;
-+s16 __rcu *scx_cid_to_cpu_tbl;
-+s16 __rcu *scx_cpu_to_cid_tbl;
-+s32 __rcu *scx_cid_to_shard;
-+s32 __rcu *scx_shard_node;
-+struct scx_cid_shard __rcu *scx_cid_shard_ranges;
-+struct scx_cid_topo __rcu *scx_cid_topo;
-+
-+static struct scx_cid_tables *scx_cid_tables;	/* used only during alloc/free */
- 
- #define SCX_CID_TOPO_NEG	(struct scx_cid_topo) {				\
- 	.core_cid = -1, .core_idx = -1, .llc_cid = -1, .llc_idx = -1,		\
-@@ -73,50 +75,102 @@ static void calc_shard_layout(const struct cpumask *llc_cpus, u32 shard_size,
- 	*nr_large_p = nr_cores % nr_shards;
- }
- 
--/* Allocate the cid tables once on first enable; never freed. */
--static s32 scx_cid_arrays_alloc(void)
-+static void scx_cid_tables_free(struct scx_cid_tables *tbls)
-+{
-+	if (!tbls)
-+		return;
-+	kvfree(tbls->cid_to_cpu);
-+	kvfree(tbls->cpu_to_cid);
-+	kvfree(tbls->cid_to_shard);
-+	kvfree(tbls->shard_node);
-+	kvfree(tbls->shard_ranges);
-+	kvfree(tbls->topo);
-+	kfree(tbls);
-+}
-+
-+static void scx_cid_tables_free_rcufn(struct rcu_head *rcu)
-+{
-+	scx_cid_tables_free(container_of(rcu, struct scx_cid_tables, rcu));
-+}
-+
-+static struct scx_cid_tables *scx_cid_alloc_tables(void)
- {
- 	u32 npossible = num_possible_cpus();
--	s16 *cid_to_cpu, *cpu_to_cid;
--	s32 *cid_to_shard;
--	s32 *shard_node;
--	struct scx_cid_shard *cid_shard_ranges;
--	struct scx_cid_topo *cid_topo;
--
--	if (scx_cid_to_cpu_tbl)
--		return 0;
--
--	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
--	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
--	cid_to_shard = kzalloc_objs(*scx_cid_to_shard, npossible, GFP_KERNEL);
--	shard_node = kmalloc_objs(*scx_shard_node, npossible, GFP_KERNEL);
--	cid_shard_ranges = kzalloc_objs(*scx_cid_shard_ranges, npossible, GFP_KERNEL);
--	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
--
--	if (!cid_to_cpu || !cpu_to_cid || !cid_to_shard || !shard_node ||
--	    !cid_shard_ranges || !cid_topo) {
--		kfree(cid_to_cpu);
--		kfree(cpu_to_cid);
--		kfree(cid_to_shard);
--		kfree(shard_node);
--		kfree(cid_shard_ranges);
--		kfree(cid_topo);
--		return -ENOMEM;
-+	struct scx_cid_tables *tbls;
-+
-+	tbls = kzalloc_obj(*tbls, GFP_KERNEL);
-+	if (!tbls)
-+		return NULL;
-+
-+	tbls->cid_to_cpu = kvcalloc(npossible, sizeof(*tbls->cid_to_cpu), GFP_KERNEL);
-+	tbls->cpu_to_cid = kvcalloc(nr_cpu_ids, sizeof(*tbls->cpu_to_cid), GFP_KERNEL);
-+	tbls->cid_to_shard = kvcalloc(npossible, sizeof(*tbls->cid_to_shard), GFP_KERNEL);
-+	tbls->shard_node = kvcalloc(npossible, sizeof(*tbls->shard_node), GFP_KERNEL);
-+	tbls->shard_ranges = kvcalloc(npossible, sizeof(*tbls->shard_ranges), GFP_KERNEL);
-+	tbls->topo = kvcalloc(npossible, sizeof(*tbls->topo), GFP_KERNEL);
-+
-+	if (!tbls->cid_to_cpu || !tbls->cpu_to_cid || !tbls->cid_to_shard ||
-+	    !tbls->shard_node || !tbls->shard_ranges || !tbls->topo) {
-+		scx_cid_tables_free(tbls);
-+		return NULL;
- 	}
- 
--	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
--	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
--	WRITE_ONCE(scx_cid_to_shard, cid_to_shard);
--	WRITE_ONCE(scx_shard_node, shard_node);
--	WRITE_ONCE(scx_cid_shard_ranges, cid_shard_ranges);
--	WRITE_ONCE(scx_cid_topo, cid_topo);
--	return 0;
-+	return tbls;
-+}
-+
-+/**
-+ * scx_cid_publish_tables - Publish the tables scx_cid_init() built
-+ *
-+ * Called after ops.init_cids() where the layout is final.
-+ */
-+void scx_cid_publish_tables(void)
-+{
-+	struct scx_cid_tables *tbls = scx_cid_tables;
-+
-+	lockdep_assert_held(&scx_enable_mutex);
-+
-+	scx_nr_cid_shards = tbls->nr_shards;
-+	rcu_assign_pointer(scx_cid_to_cpu_tbl, tbls->cid_to_cpu);
-+	rcu_assign_pointer(scx_cpu_to_cid_tbl, tbls->cpu_to_cid);
-+	rcu_assign_pointer(scx_cid_to_shard, tbls->cid_to_shard);
-+	rcu_assign_pointer(scx_shard_node, tbls->shard_node);
-+	rcu_assign_pointer(scx_cid_shard_ranges, tbls->shard_ranges);
-+	rcu_assign_pointer(scx_cid_topo, tbls->topo);
-+}
-+
-+/**
-+ * scx_cid_retire_tables - Unpublish and retire the cid tables
-+ *
-+ * Called by root disable after the readers which dereference without NULL
-+ * checks are drained, inside cpus_read_lock() to exclude the hotplug path.
-+ */
-+void scx_cid_retire_tables(void)
-+{
-+	struct scx_cid_tables *tbls = scx_cid_tables;
-+
-+	lockdep_assert_held(&scx_enable_mutex);
-+	lockdep_assert_cpus_held();
-+
-+	if (!tbls)
-+		return;
-+
-+	scx_cid_tables = NULL;
-+	RCU_INIT_POINTER(scx_cid_to_cpu_tbl, NULL);
-+	RCU_INIT_POINTER(scx_cpu_to_cid_tbl, NULL);
-+	RCU_INIT_POINTER(scx_cid_to_shard, NULL);
-+	RCU_INIT_POINTER(scx_shard_node, NULL);
-+	RCU_INIT_POINTER(scx_cid_shard_ranges, NULL);
-+	RCU_INIT_POINTER(scx_cid_topo, NULL);
-+	call_rcu(&tbls->rcu, scx_cid_tables_free_rcufn);
- }
- 
- /**
-  * scx_cid_init - build the cid mapping
-  * @sch: the scx_sched being initialized; used as the scx_error() target
-  *
-+ * Build a fresh table set. It becomes visible through scx_cid_publish_tables()
-+ * and is retired by scx_cid_retire_tables() at disable.
-+ *
-  * See "Topological CPU IDs" in cid.h for the model. Walk online cpus by
-  * intersection at each level (parent_scratch & this_level_mask), which keeps
-  * containment correct by construction and naturally splits a physical LLC
-@@ -131,30 +185,32 @@ s32 scx_cid_init(struct scx_sched *sch)
- 	cpumask_var_t core_scratch __free(free_cpumask_var) = CPUMASK_VAR_NULL;
- 	cpumask_var_t llc_fallback __free(free_cpumask_var) = CPUMASK_VAR_NULL;
- 	cpumask_var_t online_no_topo __free(free_cpumask_var) = CPUMASK_VAR_NULL;
-+	struct scx_cid_tables *tbls;
- 	u32 next_cid = 0;
- 	s32 next_node_idx = 0, next_llc_idx = 0, next_core_idx = 0;
- 	s32 next_shard_idx = 0;
- 	u32 shard_size, max_cids;
- 	u32 notopo_in_shard;
- 	s32 notopo_shard_cid, notopo_shard_idx;
--	s32 cpu, cid, si, ret;
-+	s32 cpu, cid, si;
- 
- 	/* CMASK_MAX_WORDS in cid.bpf.h covers NR_CPUS up to 8192 */
- 	BUILD_BUG_ON(NR_CPUS > 8192);
- 
- 	lockdep_assert_cpus_held();
-+	lockdep_assert_held(&scx_enable_mutex);
- 
- 	shard_size = sch->ops.cid_shard_size ?: SCX_CID_SHARD_SIZE_DFL;
- 	max_cids = min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS);
- 
--	ret = scx_cid_arrays_alloc();
--	if (ret)
--		return ret;
-+	tbls = scx_cid_alloc_tables();
-+	if (!tbls)
-+		return -ENOMEM;
-+
-+	scx_cid_tables = tbls;
- 
--	/* clear shard ranges and reset shard_node for repopulate */
--	memset(scx_cid_shard_ranges, 0, num_possible_cpus() * sizeof(*scx_cid_shard_ranges));
- 	for (si = 0; si < num_possible_cpus(); si++)
--		scx_shard_node[si] = NUMA_NO_NODE;
-+		tbls->shard_node[si] = NUMA_NO_NODE;
- 
- 	if (!zalloc_cpumask_var(&to_walk, GFP_KERNEL) ||
- 	    !zalloc_cpumask_var(&node_scratch, GFP_KERNEL) ||
-@@ -166,7 +222,7 @@ s32 scx_cid_init(struct scx_sched *sch)
- 
- 	/* -1 sentinels for sparse-possible cpu id holes (0 is a valid cid) */
- 	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
--		scx_cpu_to_cid_tbl[cpu] = -1;
-+		tbls->cpu_to_cid[cpu] = -1;
- 
- 	cpumask_copy(to_walk, cpu_online_mask);
- 
-@@ -209,7 +265,7 @@ s32 scx_cid_init(struct scx_sched *sch)
- 			calc_shard_layout(llc_scratch, shard_size, &cores_per_shard, &nr_large);
- 			shard_cid = next_cid;
- 			shard_idx = next_shard_idx++;
--			scx_shard_node[shard_idx] = nid;
-+			tbls->shard_node[shard_idx] = nid;
- 
- 			while (!cpumask_empty(llc_scratch)) {
- 				s32 lcpu = cpumask_first(llc_scratch);
-@@ -240,7 +296,7 @@ s32 scx_cid_init(struct scx_sched *sch)
- 					cids_in_shard = 0;
- 					shard_cid = next_cid;
- 					shard_idx = next_shard_idx++;
--					scx_shard_node[shard_idx] = nid;
-+					tbls->shard_node[shard_idx] = nid;
- 				}
- 				cores_in_shard++;
- 				cids_in_shard += cids_in_core;
-@@ -248,10 +304,10 @@ s32 scx_cid_init(struct scx_sched *sch)
- 				for_each_cpu(ccpu, core_scratch) {
- 					s32 cid = next_cid++;
- 
--					scx_cid_to_cpu_tbl[cid] = ccpu;
--					scx_cpu_to_cid_tbl[ccpu] = cid;
--					scx_cid_to_shard[cid] = shard_idx;
--					scx_cid_topo[cid] = (struct scx_cid_topo){
-+					tbls->cid_to_cpu[cid] = ccpu;
-+					tbls->cpu_to_cid[ccpu] = cid;
-+					tbls->cid_to_shard[cid] = shard_idx;
-+					tbls->topo[cid] = (struct scx_cid_topo){
- 						.core_cid = core_cid,
- 						.core_idx = core_idx,
- 						.llc_cid = llc_cid,
-@@ -283,14 +339,14 @@ s32 scx_cid_init(struct scx_sched *sch)
- 	notopo_shard_idx = -1;
- 
- 	for_each_cpu(cpu, cpu_possible_mask) {
--		if (__scx_cpu_to_cid(cpu) != -1)
-+		if (tbls->cpu_to_cid[cpu] != -1)
- 			continue;
- 		if (cpu_online(cpu))
- 			cpumask_set_cpu(cpu, online_no_topo);
- 
- 		cid = next_cid++;
--		scx_cid_to_cpu_tbl[cid] = cpu;
--		scx_cpu_to_cid_tbl[cpu] = cid;
-+		tbls->cid_to_cpu[cid] = cpu;
-+		tbls->cpu_to_cid[cpu] = cid;
- 
- 		if (notopo_in_shard >= min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS)) {
- 			notopo_shard_cid = cid;
-@@ -299,10 +355,10 @@ s32 scx_cid_init(struct scx_sched *sch)
- 		}
- 		notopo_in_shard++;
- 
--		scx_cid_to_shard[cid] = notopo_shard_idx;
--		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
--		scx_cid_topo[cid].shard_cid = notopo_shard_cid;
--		scx_cid_topo[cid].shard_idx = notopo_shard_idx;
-+		tbls->cid_to_shard[cid] = notopo_shard_idx;
-+		tbls->topo[cid] = SCX_CID_TOPO_NEG;
-+		tbls->topo[cid].shard_cid = notopo_shard_cid;
-+		tbls->topo[cid].shard_idx = notopo_shard_idx;
- 	}
- 
- 	if (!cpumask_empty(llc_fallback))
-@@ -318,14 +374,14 @@ s32 scx_cid_init(struct scx_sched *sch)
- 	 * shard, nr_cids is the count.
- 	 */
- 	for (cid = 0; cid < next_cid; cid++) {
--		s32 sidx = scx_cid_to_shard[cid];
-+		s32 sidx = tbls->cid_to_shard[cid];
- 
--		if (scx_cid_shard_ranges[sidx].nr_cids == 0)
--			scx_cid_shard_ranges[sidx].base_cid = cid;
--		scx_cid_shard_ranges[sidx].nr_cids++;
-+		if (tbls->shard_ranges[sidx].nr_cids == 0)
-+			tbls->shard_ranges[sidx].base_cid = cid;
-+		tbls->shard_ranges[sidx].nr_cids++;
- 	}
- 
--	scx_nr_cid_shards = next_shard_idx;
-+	tbls->nr_shards = next_shard_idx;
- 	return 0;
- }
- 
-@@ -417,6 +473,7 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 	s32 *cpu_to_cid __free(kfree) = NULL;
- 	s32 *shard_start __free(kfree) = NULL;
- 	u32 npossible = num_possible_cpus();
-+	struct scx_cid_tables *tbls;
- 	struct scx_sched *sch;
- 	u32 nr_shards;
- 	bool alloced;
-@@ -438,6 +495,10 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 	if (unlikely(!sch))
- 		return;
- 
-+	/* called from ops.init_cids(), so the tables exist and are unpublished */
-+	lockdep_assert_held(&scx_enable_mutex);
-+	tbls = scx_cid_tables;
-+
- 	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
- 		scx_error(sch, "scx_bpf_cid_override: allocation failed");
- 		return;
-@@ -488,7 +549,7 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 		return;
- 	}
- 
--	/* Validate first so that invalid input leaves globals untouched. */
-+	/* validate first so that invalid input leaves the tables untouched */
- 	for_each_possible_cpu(cpu) {
- 		s32 c = cpu_to_cid[cpu];
- 
-@@ -503,12 +564,12 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 	for_each_possible_cpu(cpu) {
- 		s32 c = cpu_to_cid[cpu];
- 
--		scx_cpu_to_cid_tbl[cpu] = c;
--		scx_cid_to_cpu_tbl[c] = cpu;
-+		tbls->cpu_to_cid[cpu] = c;
-+		tbls->cid_to_cpu[c] = cpu;
- 	}
- 
- 	/*
--	 * Derive scx_shard_node[] by majority count: an overridden shard may
-+	 * Derive shard_node[] by majority count: an overridden shard may
- 	 * span NUMA nodes, so assign each to the node that owns the most cpus.
- 	 */
- 	for (si = 0; si < nr_shards; si++) {
-@@ -516,12 +577,12 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 
- 		memset(node_counts, 0, nr_node_ids * sizeof(*node_counts));
- 		for (cid = shard_start[si]; cid < end; cid++) {
--			s32 node = cpu_to_node(scx_cid_to_cpu_tbl[cid]);
-+			s32 node = cpu_to_node(tbls->cid_to_cpu[cid]);
- 
- 			if (numa_valid_node(node))
- 				node_counts[node]++;
- 		}
--		scx_shard_node[si] = pick_max_node(node_counts, nr_node_ids);
-+		tbls->shard_node[si] = pick_max_node(node_counts, nr_node_ids);
- 	}
- 
- 	/*
-@@ -532,22 +593,22 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 	for (cid = 0; cid < npossible; cid++) {
- 		if (si + 1 < nr_shards && cid >= shard_start[si + 1])
- 			si++;
--		scx_cid_to_shard[cid] = si;
--		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
--		scx_cid_topo[cid].shard_cid = shard_start[si];
--		scx_cid_topo[cid].shard_idx = si;
-+		tbls->cid_to_shard[cid] = si;
-+		tbls->topo[cid] = SCX_CID_TOPO_NEG;
-+		tbls->topo[cid].shard_cid = shard_start[si];
-+		tbls->topo[cid].shard_idx = si;
- 	}
- 
--	/* Rebuild scx_cid_shard_ranges[] for the new layout. */
--	memset(scx_cid_shard_ranges, 0, npossible * sizeof(*scx_cid_shard_ranges));
-+	/* Rebuild shard_ranges[] for the new layout. */
-+	memset(tbls->shard_ranges, 0, npossible * sizeof(*tbls->shard_ranges));
- 	for (si = 0; si < nr_shards; si++) {
- 		u32 end = (si + 1 < nr_shards) ? shard_start[si + 1] : npossible;
- 
--		scx_cid_shard_ranges[si].base_cid = shard_start[si];
--		scx_cid_shard_ranges[si].nr_cids = end - shard_start[si];
-+		tbls->shard_ranges[si].base_cid = shard_start[si];
-+		tbls->shard_ranges[si].nr_cids = end - shard_start[si];
- 	}
- 
--	scx_nr_cid_shards = nr_shards;
-+	tbls->nr_shards = nr_shards;
- }
- 
- /**
-@@ -849,22 +910,25 @@ bool scx_cmask_empty(const struct scx_cmask *m)
-  *
-  * Fill @out__uninit with the topology info for @cid. Trigger scx_error() if
-  * @cid is out of range. If @cid is valid but in the no-topo section, all fields
-- * are set to -1.
-+ * are set to -1. All fields are also set to -1 when no cid tables have been
-+ * published yet, which a program may observe while racing the root enable.
-  */
- __bpf_kfunc void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out__uninit,
- 				  const struct bpf_prog_aux *aux)
- {
-+	struct scx_cid_topo *topo;
- 	struct scx_sched *sch;
- 
- 	guard(rcu)();
- 
- 	sch = scx_prog_sched(aux);
--	if (unlikely(!sch) || !cid_valid(sch, cid)) {
-+	topo = rcu_dereference(scx_cid_topo);
-+	if (unlikely(!sch) || !cid_valid(sch, cid) || unlikely(!topo)) {
- 		*out__uninit = SCX_CID_TOPO_NEG;
- 		return;
- 	}
- 
--	*out__uninit = READ_ONCE(scx_cid_topo)[cid];
-+	*out__uninit = topo[cid];
- }
- 
- __bpf_kfunc_end_defs();
-@@ -907,6 +971,7 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
- {
- 	struct scx_cmask *kern_src = scx_arena_to_kaddr(sch, src);
- 	u32 base, nr_cids, alloc_words, npossible = num_possible_cpus();
-+	s32 *cid_to_shard;
- 
- 	base = READ_ONCE(kern_src->base);
- 	nr_cids = READ_ONCE(kern_src->nr_cids);
-@@ -921,9 +986,10 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
- 	ref->base = base;
- 	ref->nr_cids = nr_cids;
- 
--	ref->shard_first = scx_cid_to_shard[base];
-+	cid_to_shard = rcu_dereference_all(scx_cid_to_shard);
-+	ref->shard_first = cid_to_shard[base];
- 	if (likely(nr_cids))
--		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
-+		ref->shard_end = cid_to_shard[base + nr_cids - 1] + 1;
- 	else
- 		ref->shard_end = ref->shard_first;
- 
-@@ -946,6 +1012,8 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
- void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
- 			     u32 base, u32 nr_cids, struct scx_cmask_ref *ref)
- {
-+	s32 *cid_to_shard;
-+
- 	WRITE_ONCE(m->base, base);
- 	WRITE_ONCE(m->nr_cids, nr_cids);
- 	WRITE_ONCE(m->alloc_words, SCX_CMASK_NR_WORDS(nr_cids));
-@@ -955,9 +1023,10 @@ void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
- 	ref->base = base;
- 	ref->nr_cids = nr_cids;
- 
--	ref->shard_first = scx_cid_to_shard[base];
-+	cid_to_shard = rcu_dereference_all(scx_cid_to_shard);
-+	ref->shard_first = cid_to_shard[base];
- 	if (likely(nr_cids))
--		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
-+		ref->shard_end = cid_to_shard[base + nr_cids - 1] + 1;
- 	else
- 		ref->shard_end = ref->shard_first;
- }
-@@ -976,7 +1045,8 @@ void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
- void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
- 			 struct scx_cmask *out)
- {
--	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
-+	const struct scx_cid_shard *shard =
-+		&rcu_dereference_all(scx_cid_shard_ranges)[shard_idx];
- 	u32 shard_base = shard->base_cid;
- 	u32 shard_end = shard_base + shard->nr_cids;
- 	u32 isect_base, isect_end, nr_words, src_off, wi;
-diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
-index 470ac9224da4..1f74d1f331f5 100644
---- a/kernel/sched/ext/cid.h
-+++ b/kernel/sched/ext/cid.h
-@@ -48,13 +48,24 @@ struct scx_sched;
-  * See the comment above the table definitions in cid.c for the
-  * memory-ordering and visibility contract.
-  */
-+struct scx_cid_tables {
-+	u32			nr_shards;
-+	s16			*cid_to_cpu;	/* [num_possible_cpus()] */
-+	s16			*cpu_to_cid;	/* [nr_cpu_ids] */
-+	s32			*cid_to_shard;	/* [num_possible_cpus()] */
-+	s32			*shard_node;	/* [num_possible_cpus()] */
-+	struct scx_cid_shard	*shard_ranges;	/* [num_possible_cpus()] */
-+	struct scx_cid_topo	*topo;		/* [num_possible_cpus()] */
-+	struct rcu_head		rcu;
-+};
-+
- extern u32 scx_nr_cid_shards;
--extern s16 *scx_cid_to_cpu_tbl;
--extern s16 *scx_cpu_to_cid_tbl;
--extern s32 *scx_cid_to_shard;
--extern s32 *scx_shard_node;
--extern struct scx_cid_shard *scx_cid_shard_ranges;
--extern struct scx_cid_topo *scx_cid_topo;
-+extern s16 __rcu *scx_cid_to_cpu_tbl;
-+extern s16 __rcu *scx_cpu_to_cid_tbl;
-+extern s32 __rcu *scx_cid_to_shard;
-+extern s32 __rcu *scx_shard_node;
-+extern struct scx_cid_shard __rcu *scx_cid_shard_ranges;
-+extern struct scx_cid_topo __rcu *scx_cid_topo;
- extern struct btf_id_set8 scx_kfunc_ids_init_cids;
- 
- void scx_cmask_clear(struct scx_cmask *m);
-@@ -67,6 +78,8 @@ bool scx_cmask_subset(const struct scx_cmask *sub, const struct scx_cmask *super
- bool scx_cmask_intersects(const struct scx_cmask *a, const struct scx_cmask *b);
- bool scx_cmask_empty(const struct scx_cmask *m);
- s32 scx_cid_init(struct scx_sched *sch);
-+void scx_cid_publish_tables(void);
-+void scx_cid_retire_tables(void);
- int scx_cid_kfunc_init(void);
- 
- /**
-@@ -89,14 +102,12 @@ static inline bool cid_valid(struct scx_sched *sch, s32 cid)
-  * __scx_cid_to_cpu - Unchecked cid->cpu table lookup
-  * @cid: cid to look up. Must be in [0, num_possible_cpus()).
-  *
-- * Intended for callsites that have already validated @cid and that hold a
-- * non-NULL @sch from scx_prog_sched() - a live sched implies the table has
-- * been allocated, so no NULL check is needed here.
-+ * Intended for callsites that have already validated @cid and that run on a
-+ * live scheduler, which guarantees the tables are published and stable.
-  */
- static inline s32 __scx_cid_to_cpu(s32 cid)
- {
--	/* READ_ONCE pairs with WRITE_ONCE in scx_cid_arrays_alloc() */
--	return READ_ONCE(scx_cid_to_cpu_tbl)[cid];
-+	return rcu_dereference_all(scx_cid_to_cpu_tbl)[cid];
- }
- 
- /**
-@@ -107,7 +118,7 @@ static inline s32 __scx_cid_to_cpu(s32 cid)
-  */
- static inline s32 __scx_cpu_to_cid(s32 cpu)
- {
--	return READ_ONCE(scx_cpu_to_cid_tbl)[cpu];
-+	return rcu_dereference_all(scx_cpu_to_cid_tbl)[cpu];
- }
- 
- /**
-@@ -116,15 +127,19 @@ static inline s32 __scx_cpu_to_cid(s32 cpu)
-  * @cid: cid to look up
-  *
-  * Return the cpu for @cid or a negative errno on failure. Invalid cid triggers
-- * scx_error() on @sch. The cid arrays are allocated on first scheduler enable
-- * and never freed, so the returned cpu is stable for the lifetime of the loaded
-- * scheduler.
-+ * scx_error() on @sch. The mapping is stable while the scheduler is live.
-+ *
-+ * Return -EINVAL without triggering scx_error() if no tables have been
-+ * published yet, which a prog-facing kfunc can observe while racing the root
-+ * scheduler enable.
-  */
- static inline s32 scx_cid_to_cpu(struct scx_sched *sch, s32 cid)
- {
--	if (!cid_valid(sch, cid))
-+	s16 *tbl = rcu_dereference_all(scx_cid_to_cpu_tbl);
-+
-+	if (!cid_valid(sch, cid) || unlikely(!tbl))
- 		return -EINVAL;
--	return __scx_cid_to_cpu(cid);
-+	return tbl[cid];
- }
- 
- /**
-@@ -133,13 +148,15 @@ static inline s32 scx_cid_to_cpu(struct scx_sched *sch, s32 cid)
-  * @cpu: cpu to look up
-  *
-  * Return the cid for @cpu or a negative errno on failure. Invalid cpu triggers
-- * scx_error() on @sch. Same lifetime guarantee as scx_cid_to_cpu().
-+ * scx_error() on @sch. Same usage rules as scx_cid_to_cpu().
-  */
- static inline s32 scx_cpu_to_cid(struct scx_sched *sch, s32 cpu)
- {
--	if (!scx_cpu_valid(sch, cpu, NULL))
-+	s16 *tbl = rcu_dereference_all(scx_cpu_to_cid_tbl);
-+
-+	if (!scx_cpu_valid(sch, cpu, NULL) || unlikely(!tbl))
- 		return -EINVAL;
--	return __scx_cpu_to_cid(cpu);
-+	return tbl[cpu];
- }
- 
- /**
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index e6c4cbe1f182..6a4e3a4f6098 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3334,6 +3334,7 @@ static void handle_hotplug(struct rq *rq, bool online)
- {
- 	struct scx_sched *sch = scx_root;
- 	s32 cpu = cpu_of(rq);
-+	s32 cpu_or_cid = cpu;
- 
- 	atomic_long_inc(&scx_hotplug_seq);
- 
-@@ -3353,10 +3354,26 @@ static void handle_hotplug(struct rq *rq, bool online)
- 	else
- 		scx_offline_ecaps(rq);
- 
-+	/*
-+	 * The tables can't be retired while this function is running as the
-+	 * retirement is inside cpus_read_lock. However, scx_cpu_arg() is
-+	 * awkward here as the tables can be NULL after root enable failure and
-+	 * lockdep would trigger without surrounding rcu_read_lock(). Open code
-+	 * the translation. If the table is NULL, the ops are also cleared and
-+	 * @cpu_or_cid goes unused.
-+	 */
-+	if (scx_is_cid_type()) {
-+		s16 *tbl = rcu_dereference_check(scx_cpu_to_cid_tbl,
-+						 lockdep_is_cpus_held());
-+
-+		if (tbl)
-+			cpu_or_cid = tbl[cpu];
-+	}
-+
- 	if (online && SCX_HAS_OP(sch, cpu_online))
--		SCX_CALL_OP(sch, cpu_online, NULL, scx_cpu_arg(cpu));
-+		SCX_CALL_OP(sch, cpu_online, NULL, cpu_or_cid);
- 	else if (!online && SCX_HAS_OP(sch, cpu_offline))
--		SCX_CALL_OP(sch, cpu_offline, NULL, scx_cpu_arg(cpu));
-+		SCX_CALL_OP(sch, cpu_offline, NULL, cpu_or_cid);
- 	else
- 		scx_exit(sch, SCX_EXIT_UNREG_KERN,
- 			 SCX_ECODE_ACT_RESTART | SCX_ECODE_RSN_HOTPLUG,
-@@ -6197,11 +6214,12 @@ static void scx_root_disable(struct scx_sched *sch)
- 	scx_unlink_sched(sch);
- 
- 	/*
--	 * scx_root clearing must be inside cpus_read_lock(). See
--	 * handle_hotplug().
-+	 * scx_root clearing and cid table retirement must be inside
-+	 * cpus_read_lock(). See handle_hotplug().
- 	 */
- 	cpus_read_lock();
- 	RCU_INIT_POINTER(scx_root, NULL);
-+	scx_cid_retire_tables();
- 	cpus_read_unlock();
- 
- 	/*
-@@ -7195,10 +7213,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	cpus_read_lock();
- 
- 	/*
--	 * Build the cid mapping before publishing scx_root. The cid kfuncs
--	 * dereference the cid arrays unconditionally once scx_prog_sched()
--	 * returns non-NULL; the rcu_assign_pointer() below pairs with their
--	 * rcu_dereference() to make the populated arrays visible.
-+	 * Build the cid mapping into a private under-construction set. It
-+	 * becomes visible to readers only through scx_cid_publish_tables() once
-+	 * ops.init_cids() has finalized the layout.
- 	 */
- 	ret = scx_cid_init(sch);
- 	if (ret) {
-@@ -7235,6 +7252,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		}
- 	}
- 
-+	/* the cid layout is final, expose it to readers */
-+	scx_cid_publish_tables();
-+
- 	ret = scx_arena_pool_init(sch);
- 	if (ret) {
- 		cpus_read_unlock();
-@@ -9872,13 +9892,15 @@ __bpf_kfunc u32 scx_bpf_nr_online_cids(void)
-  *
-  * cid-addressed equivalent of bpf_get_smp_processor_id() for scx programs.
-  * The current cpu is trivially valid, so this is just a table lookup. Return
-- * -EINVAL if called from a non-SCX program before any scheduler has ever
-- * been enabled (the cid table is still unallocated at that point).
-+ * -EINVAL if called before any scheduler has ever published its cid tables.
-  */
- __bpf_kfunc s32 scx_bpf_this_cid(void)
- {
--	s16 *tbl = READ_ONCE(scx_cpu_to_cid_tbl);
-+	s16 *tbl;
-+
-+	guard(rcu)();
- 
-+	tbl = rcu_dereference(scx_cpu_to_cid_tbl);
- 	if (!tbl)
- 		return -EINVAL;
- 	return tbl[raw_smp_processor_id()];
-@@ -9937,13 +9959,17 @@ __bpf_kfunc s32 scx_bpf_task_cpu(const struct task_struct *p)
-  * @p: task of interest
-  *
-  * cid-addressed equivalent of scx_bpf_task_cpu(). task_cpu(p) is always a
-- * valid cpu, so this is just a table lookup. Return -EINVAL if called from
-- * a non-SCX program before any scheduler has ever been enabled.
-+ * valid cpu, so this is just a table lookup. Return -EINVAL if called before
-+ * any scheduler has ever published its cid tables.
-  */
- __bpf_kfunc s32 scx_bpf_task_cid(const struct task_struct *p)
- {
--	s16 *tbl = READ_ONCE(scx_cpu_to_cid_tbl);
-+	s16 *tbl;
-+
-+	/* KF_RCU covers only @p - a sleepable program holds no RCU lock */
-+	guard(rcu)();
- 
-+	tbl = rcu_dereference(scx_cpu_to_cid_tbl);
- 	if (!tbl)
- 		return -EINVAL;
- 	return tbl[task_cpu(p)];
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 26bfda216524..a9a853a71061 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1504,8 +1504,9 @@ struct scx_sched {
- #ifdef CONFIG_EXT_SUB_SCHED
- 	/*
- 	 * pshard[] size captured at enable for the async RCU free path -
--	 * scx_nr_cid_shards may be rewritten by a later scx_cid_init() before
--	 * free runs. While sch is active, use the global.
-+	 * scx_nr_cid_shards may be rewritten by a later enable's
-+	 * scx_cid_publish_tables() before free runs. While sch is active, use
-+	 * the global.
- 	 */
- 	u32			nr_pshards;
- #endif
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 8d8737149bc0..d7842a609d96 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -138,7 +138,9 @@ void scx_free_pshards(struct scx_sched *sch)
- 
- static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32 node)
- {
--	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
-+	const struct scx_cid_shard *shard =
-+		&rcu_dereference_protected(scx_cid_shard_ranges,
-+					   lockdep_is_held(&scx_enable_mutex))[shard_idx];
- 	size_t cmask_size = struct_size_t(struct scx_cmask, bits,
- 					  SCX_CMASK_NR_WORDS(shard->nr_cids));
- 	struct scx_pshard *pshard;
-@@ -176,17 +178,21 @@ static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32
- s32 scx_alloc_pshards(struct scx_sched *sch)
- {
- 	struct scx_pshard **pshard;
-+	s32 *shard_node;
- 	s32 si;
- 
- 	if (!sch->is_cid_type || !sch->arena_pool)
- 		return 0;
- 
-+	shard_node = rcu_dereference_protected(scx_shard_node,
-+					       lockdep_is_held(&scx_enable_mutex));
-+
- 	pshard = kzalloc_objs(pshard[0], scx_nr_cid_shards, GFP_KERNEL);
- 	if (!pshard)
- 		return -ENOMEM;
- 
- 	for (si = 0; si < scx_nr_cid_shards; si++) {
--		pshard[si] = alloc_pshard(sch, si, scx_shard_node[si]);
-+		pshard[si] = alloc_pshard(sch, si, shard_node[si]);
- 		if (!pshard[si]) {
- 			while (--si >= 0)
- 				free_pshard(pshard[si]);
-@@ -198,8 +204,9 @@ s32 scx_alloc_pshards(struct scx_sched *sch)
- 	sch->nr_pshards = scx_nr_cid_shards;
- 	/*
- 	 * Publish only after every entry is built so a reader observing
--	 * @sch->pshard never sees a partially-filled array. Pair the store
--	 * with a barrier and READ_ONCE() on the read side.
-+	 * @sch->pshard never sees a partially-filled array or unpublished cid
-+	 * tables. Pair the store with a barrier and an acquire load on the
-+	 * read side.
- 	 */
- 	smp_wmb();
- 	WRITE_ONCE(sch->pshard, pshard);
-@@ -524,7 +531,7 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 
- 	/* @cid is valid here: the cpu is active with queued syncs */
- 	cid = __scx_cpu_to_cid(cpu);
--	shard = scx_cid_to_shard[cid];
-+	shard = rcu_dereference_all(scx_cid_to_shard)[cid];
- 
- 	batch = llist_del_all(&rq->scx.ecaps_to_sync);
- 	llist_for_each_safe(pos, tmp, batch) {
-@@ -618,7 +625,7 @@ void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
- 		return;
- 
- 	cid = __scx_cpu_to_cid(cpu);
--	ps = sch->pshard[scx_cid_to_shard[cid]];
-+	ps = sch->pshard[rcu_dereference_all(scx_cid_to_shard)[cid]];
- 
- 	guard(raw_spinlock)(&ps->lock);
- 	queue_sync_ecaps(sch, cid);
-@@ -631,12 +638,23 @@ void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
-  */
- void scx_online_ecaps(struct rq *rq)
- {
--	s32 cid = __scx_cpu_to_cid(cpu_of(rq));
--	s32 shard = scx_cid_to_shard[cid];
- 	struct scx_sched *pos;
-+	s32 cid, shard;
-+
-+	/*
-+	 * Only a live hierarchy can have ecaps to reseed. This also keeps the
-+	 * table reads below away from an enable that failed before publishing
-+	 * the tables. A concurrent disable can't retire them, see
-+	 * handle_hotplug().
-+	 */
-+	if (!scx_enabled())
-+		return;
- 
- 	guard(rq_lock_irqsave)(rq);
- 
-+	cid = __scx_cpu_to_cid(cpu_of(rq));
-+	shard = rcu_dereference_all(scx_cid_to_shard)[cid];
-+
- 	scx_for_each_descendant_pre(pos, scx_root) {
- 		struct scx_pshard *ps;
- 
-@@ -2074,9 +2092,10 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
- 	/*
- 	 * The target's caps storage may not be set up yet (e.g. a self-read
- 	 * during ops.init_cids()). Pairs with the publish in
--	 * scx_alloc_pshards(): a non-NULL pshard has every element set.
-+	 * scx_alloc_pshards(): a non-NULL pshard has every element set and the
-+	 * acquire also orders the cid table reads below against it.
- 	 */
--	pshard = READ_ONCE(target->pshard);
-+	pshard = smp_load_acquire(&target->pshard);
- 	if (unlikely(!pshard)) {
- 		scx_error(sch, "scx_bpf_sub_caps() called before caps storage is initialized");
- 		return -ENODEV;
-@@ -2089,7 +2108,8 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
- 	}
- 
- 	for (si = ref.shard_first; si < ref.shard_end; si++) {
--		const struct scx_cid_shard *shard = &scx_cid_shard_ranges[si];
-+		const struct scx_cid_shard *shard =
-+			&rcu_dereference_all(scx_cid_shard_ranges)[si];
- 		SCX_CMASK_DEFINE_SHARD(local_out, shard->base_cid, shard->nr_cids);
- 		u32 cap_bit;
- 
--- 
-2.55.0
-
+> 
+> Every reader must either be gated on scheduler liveness or NULL-check
+> inside an RCU read section. Fix the two kfuncs that were neither:
+> scx_bpf_this_cid() read the table with no RCU or preemption protection and
+> scx_bpf_task_cid() relied on KF_RCU, which doesn't put a sleepable program
+> in an RCU read section. The hotplug callbacks are instead serialized by
+> retiring the tables inside the cpus_read_lock() section that clears
+> scx_root.
+> 
+> v2: Document why every root builds the tables (desc + cid.c comment).
+> 
+> Reported-by: Andrea Righi <arighi@nvidia.com>
+> Closes: https://lore.kernel.org/r/al3tLtPZZkFjMveK@gpd4
+> Reviewed-by: Andrea Righi <arighi@nvidia.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
+>  kernel/sched/ext/cid.c      | 260 +++++++++++++++++++++++-------------
+>  kernel/sched/ext/cid.h      |  57 +++++---
+>  kernel/sched/ext/ext.c      |  54 ++++++--
+>  kernel/sched/ext/internal.h |   5 +-
+>  kernel/sched/ext/sub.c      |  42 ++++--
+>  5 files changed, 276 insertions(+), 142 deletions(-)
+> 
+> diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+> index 5f990d95735f..231c8562d7c7 100644
+> --- a/kernel/sched/ext/cid.c
+> +++ b/kernel/sched/ext/cid.c
+> @@ -11,20 +11,22 @@
+>  #include "cid.h"
+>  
+>  /*
+> - * cid tables.
+> - *
+> - * Pointers are allocated on first enable and never freed. During root enable,
+> - * the default mapping is populated and then ops.init_cids() is called which can
+> - * use scx_bpf_cid_override() to change the mapping. The mapping stays stable
+> - * until the root is disabled.
+> + * cid tables. The cid kfuncs are available whether the root scheduler is
+> + * cid-form or cpu-form, the latter to allow gradual migration to cids, so every
+> + * root builds a default mapping. Each root enable allocates a fresh set, builds
+> + * it privately and publishes the __rcu globals below once the layout is final.
+> + * Root disable unpublishes and RCU-frees the set. kfuncs may run before the
+> + * tables are published and must check for NULL.
+>   */
+>  u32 scx_nr_cid_shards;
+> -s16 *scx_cid_to_cpu_tbl;
+> -s16 *scx_cpu_to_cid_tbl;
+> -s32 *scx_cid_to_shard;
+> -s32 *scx_shard_node;
+> -struct scx_cid_shard *scx_cid_shard_ranges;
+> -struct scx_cid_topo *scx_cid_topo;
+> +s16 __rcu *scx_cid_to_cpu_tbl;
+> +s16 __rcu *scx_cpu_to_cid_tbl;
+> +s32 __rcu *scx_cid_to_shard;
+> +s32 __rcu *scx_shard_node;
+> +struct scx_cid_shard __rcu *scx_cid_shard_ranges;
+> +struct scx_cid_topo __rcu *scx_cid_topo;
+> +
+> +static struct scx_cid_tables *scx_cid_tables;	/* used only during alloc/free */
+>  
+>  #define SCX_CID_TOPO_NEG	(struct scx_cid_topo) {				\
+>  	.core_cid = -1, .core_idx = -1, .llc_cid = -1, .llc_idx = -1,		\
+> @@ -73,50 +75,102 @@ static void calc_shard_layout(const struct cpumask *llc_cpus, u32 shard_size,
+>  	*nr_large_p = nr_cores % nr_shards;
+>  }
+>  
+> -/* Allocate the cid tables once on first enable; never freed. */
+> -static s32 scx_cid_arrays_alloc(void)
+> +static void scx_cid_tables_free(struct scx_cid_tables *tbls)
+> +{
+> +	if (!tbls)
+> +		return;
+> +	kvfree(tbls->cid_to_cpu);
+> +	kvfree(tbls->cpu_to_cid);
+> +	kvfree(tbls->cid_to_shard);
+> +	kvfree(tbls->shard_node);
+> +	kvfree(tbls->shard_ranges);
+> +	kvfree(tbls->topo);
+> +	kfree(tbls);
+> +}
+> +
+> +static void scx_cid_tables_free_rcufn(struct rcu_head *rcu)
+> +{
+> +	scx_cid_tables_free(container_of(rcu, struct scx_cid_tables, rcu));
+> +}
+> +
+> +static struct scx_cid_tables *scx_cid_alloc_tables(void)
+>  {
+>  	u32 npossible = num_possible_cpus();
+> -	s16 *cid_to_cpu, *cpu_to_cid;
+> -	s32 *cid_to_shard;
+> -	s32 *shard_node;
+> -	struct scx_cid_shard *cid_shard_ranges;
+> -	struct scx_cid_topo *cid_topo;
+> -
+> -	if (scx_cid_to_cpu_tbl)
+> -		return 0;
+> -
+> -	cid_to_cpu = kzalloc_objs(*scx_cid_to_cpu_tbl, npossible, GFP_KERNEL);
+> -	cpu_to_cid = kzalloc_objs(*scx_cpu_to_cid_tbl, nr_cpu_ids, GFP_KERNEL);
+> -	cid_to_shard = kzalloc_objs(*scx_cid_to_shard, npossible, GFP_KERNEL);
+> -	shard_node = kmalloc_objs(*scx_shard_node, npossible, GFP_KERNEL);
+> -	cid_shard_ranges = kzalloc_objs(*scx_cid_shard_ranges, npossible, GFP_KERNEL);
+> -	cid_topo = kmalloc_objs(*scx_cid_topo, npossible, GFP_KERNEL);
+> -
+> -	if (!cid_to_cpu || !cpu_to_cid || !cid_to_shard || !shard_node ||
+> -	    !cid_shard_ranges || !cid_topo) {
+> -		kfree(cid_to_cpu);
+> -		kfree(cpu_to_cid);
+> -		kfree(cid_to_shard);
+> -		kfree(shard_node);
+> -		kfree(cid_shard_ranges);
+> -		kfree(cid_topo);
+> -		return -ENOMEM;
+> +	struct scx_cid_tables *tbls;
+> +
+> +	tbls = kzalloc_obj(*tbls, GFP_KERNEL);
+> +	if (!tbls)
+> +		return NULL;
+> +
+> +	tbls->cid_to_cpu = kvcalloc(npossible, sizeof(*tbls->cid_to_cpu), GFP_KERNEL);
+> +	tbls->cpu_to_cid = kvcalloc(nr_cpu_ids, sizeof(*tbls->cpu_to_cid), GFP_KERNEL);
+> +	tbls->cid_to_shard = kvcalloc(npossible, sizeof(*tbls->cid_to_shard), GFP_KERNEL);
+> +	tbls->shard_node = kvcalloc(npossible, sizeof(*tbls->shard_node), GFP_KERNEL);
+> +	tbls->shard_ranges = kvcalloc(npossible, sizeof(*tbls->shard_ranges), GFP_KERNEL);
+> +	tbls->topo = kvcalloc(npossible, sizeof(*tbls->topo), GFP_KERNEL);
+> +
+> +	if (!tbls->cid_to_cpu || !tbls->cpu_to_cid || !tbls->cid_to_shard ||
+> +	    !tbls->shard_node || !tbls->shard_ranges || !tbls->topo) {
+> +		scx_cid_tables_free(tbls);
+> +		return NULL;
+>  	}
+>  
+> -	WRITE_ONCE(scx_cid_to_cpu_tbl, cid_to_cpu);
+> -	WRITE_ONCE(scx_cpu_to_cid_tbl, cpu_to_cid);
+> -	WRITE_ONCE(scx_cid_to_shard, cid_to_shard);
+> -	WRITE_ONCE(scx_shard_node, shard_node);
+> -	WRITE_ONCE(scx_cid_shard_ranges, cid_shard_ranges);
+> -	WRITE_ONCE(scx_cid_topo, cid_topo);
+> -	return 0;
+> +	return tbls;
+> +}
+> +
+> +/**
+> + * scx_cid_publish_tables - Publish the tables scx_cid_init() built
+> + *
+> + * Called after ops.init_cids() where the layout is final.
+> + */
+> +void scx_cid_publish_tables(void)
+> +{
+> +	struct scx_cid_tables *tbls = scx_cid_tables;
+> +
+> +	lockdep_assert_held(&scx_enable_mutex);
+> +
+> +	scx_nr_cid_shards = tbls->nr_shards;
+> +	rcu_assign_pointer(scx_cid_to_cpu_tbl, tbls->cid_to_cpu);
+> +	rcu_assign_pointer(scx_cpu_to_cid_tbl, tbls->cpu_to_cid);
+> +	rcu_assign_pointer(scx_cid_to_shard, tbls->cid_to_shard);
+> +	rcu_assign_pointer(scx_shard_node, tbls->shard_node);
+> +	rcu_assign_pointer(scx_cid_shard_ranges, tbls->shard_ranges);
+> +	rcu_assign_pointer(scx_cid_topo, tbls->topo);
+> +}
+> +
+> +/**
+> + * scx_cid_retire_tables - Unpublish and retire the cid tables
+> + *
+> + * Called by root disable after the readers which dereference without NULL
+> + * checks are drained, inside cpus_read_lock() to exclude the hotplug path.
+> + */
+> +void scx_cid_retire_tables(void)
+> +{
+> +	struct scx_cid_tables *tbls = scx_cid_tables;
+> +
+> +	lockdep_assert_held(&scx_enable_mutex);
+> +	lockdep_assert_cpus_held();
+> +
+> +	if (!tbls)
+> +		return;
+> +
+> +	scx_cid_tables = NULL;
+> +	RCU_INIT_POINTER(scx_cid_to_cpu_tbl, NULL);
+> +	RCU_INIT_POINTER(scx_cpu_to_cid_tbl, NULL);
+> +	RCU_INIT_POINTER(scx_cid_to_shard, NULL);
+> +	RCU_INIT_POINTER(scx_shard_node, NULL);
+> +	RCU_INIT_POINTER(scx_cid_shard_ranges, NULL);
+> +	RCU_INIT_POINTER(scx_cid_topo, NULL);
+> +	call_rcu(&tbls->rcu, scx_cid_tables_free_rcufn);
+>  }
+>  
+>  /**
+>   * scx_cid_init - build the cid mapping
+>   * @sch: the scx_sched being initialized; used as the scx_error() target
+>   *
+> + * Build a fresh table set. It becomes visible through scx_cid_publish_tables()
+> + * and is retired by scx_cid_retire_tables() at disable.
+> + *
+>   * See "Topological CPU IDs" in cid.h for the model. Walk online cpus by
+>   * intersection at each level (parent_scratch & this_level_mask), which keeps
+>   * containment correct by construction and naturally splits a physical LLC
+> @@ -131,30 +185,32 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  	cpumask_var_t core_scratch __free(free_cpumask_var) = CPUMASK_VAR_NULL;
+>  	cpumask_var_t llc_fallback __free(free_cpumask_var) = CPUMASK_VAR_NULL;
+>  	cpumask_var_t online_no_topo __free(free_cpumask_var) = CPUMASK_VAR_NULL;
+> +	struct scx_cid_tables *tbls;
+>  	u32 next_cid = 0;
+>  	s32 next_node_idx = 0, next_llc_idx = 0, next_core_idx = 0;
+>  	s32 next_shard_idx = 0;
+>  	u32 shard_size, max_cids;
+>  	u32 notopo_in_shard;
+>  	s32 notopo_shard_cid, notopo_shard_idx;
+> -	s32 cpu, cid, si, ret;
+> +	s32 cpu, cid, si;
+>  
+>  	/* CMASK_MAX_WORDS in cid.bpf.h covers NR_CPUS up to 8192 */
+>  	BUILD_BUG_ON(NR_CPUS > 8192);
+>  
+>  	lockdep_assert_cpus_held();
+> +	lockdep_assert_held(&scx_enable_mutex);
+>  
+>  	shard_size = sch->ops.cid_shard_size ?: SCX_CID_SHARD_SIZE_DFL;
+>  	max_cids = min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS);
+>  
+> -	ret = scx_cid_arrays_alloc();
+> -	if (ret)
+> -		return ret;
+> +	tbls = scx_cid_alloc_tables();
+> +	if (!tbls)
+> +		return -ENOMEM;
+> +
+> +	scx_cid_tables = tbls;
+>  
+> -	/* clear shard ranges and reset shard_node for repopulate */
+> -	memset(scx_cid_shard_ranges, 0, num_possible_cpus() * sizeof(*scx_cid_shard_ranges));
+>  	for (si = 0; si < num_possible_cpus(); si++)
+> -		scx_shard_node[si] = NUMA_NO_NODE;
+> +		tbls->shard_node[si] = NUMA_NO_NODE;
+>  
+>  	if (!zalloc_cpumask_var(&to_walk, GFP_KERNEL) ||
+>  	    !zalloc_cpumask_var(&node_scratch, GFP_KERNEL) ||
+> @@ -166,7 +222,7 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  
+>  	/* -1 sentinels for sparse-possible cpu id holes (0 is a valid cid) */
+>  	for (cpu = 0; cpu < nr_cpu_ids; cpu++)
+> -		scx_cpu_to_cid_tbl[cpu] = -1;
+> +		tbls->cpu_to_cid[cpu] = -1;
+>  
+>  	cpumask_copy(to_walk, cpu_online_mask);
+>  
+> @@ -209,7 +265,7 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  			calc_shard_layout(llc_scratch, shard_size, &cores_per_shard, &nr_large);
+>  			shard_cid = next_cid;
+>  			shard_idx = next_shard_idx++;
+> -			scx_shard_node[shard_idx] = nid;
+> +			tbls->shard_node[shard_idx] = nid;
+>  
+>  			while (!cpumask_empty(llc_scratch)) {
+>  				s32 lcpu = cpumask_first(llc_scratch);
+> @@ -240,7 +296,7 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  					cids_in_shard = 0;
+>  					shard_cid = next_cid;
+>  					shard_idx = next_shard_idx++;
+> -					scx_shard_node[shard_idx] = nid;
+> +					tbls->shard_node[shard_idx] = nid;
+>  				}
+>  				cores_in_shard++;
+>  				cids_in_shard += cids_in_core;
+> @@ -248,10 +304,10 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  				for_each_cpu(ccpu, core_scratch) {
+>  					s32 cid = next_cid++;
+>  
+> -					scx_cid_to_cpu_tbl[cid] = ccpu;
+> -					scx_cpu_to_cid_tbl[ccpu] = cid;
+> -					scx_cid_to_shard[cid] = shard_idx;
+> -					scx_cid_topo[cid] = (struct scx_cid_topo){
+> +					tbls->cid_to_cpu[cid] = ccpu;
+> +					tbls->cpu_to_cid[ccpu] = cid;
+> +					tbls->cid_to_shard[cid] = shard_idx;
+> +					tbls->topo[cid] = (struct scx_cid_topo){
+>  						.core_cid = core_cid,
+>  						.core_idx = core_idx,
+>  						.llc_cid = llc_cid,
+> @@ -283,14 +339,14 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  	notopo_shard_idx = -1;
+>  
+>  	for_each_cpu(cpu, cpu_possible_mask) {
+> -		if (__scx_cpu_to_cid(cpu) != -1)
+> +		if (tbls->cpu_to_cid[cpu] != -1)
+>  			continue;
+>  		if (cpu_online(cpu))
+>  			cpumask_set_cpu(cpu, online_no_topo);
+>  
+>  		cid = next_cid++;
+> -		scx_cid_to_cpu_tbl[cid] = cpu;
+> -		scx_cpu_to_cid_tbl[cpu] = cid;
+> +		tbls->cid_to_cpu[cid] = cpu;
+> +		tbls->cpu_to_cid[cpu] = cid;
+>  
+>  		if (notopo_in_shard >= min_t(u32, shard_size, SCX_CID_SHARD_MAX_CPUS)) {
+>  			notopo_shard_cid = cid;
+> @@ -299,10 +355,10 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  		}
+>  		notopo_in_shard++;
+>  
+> -		scx_cid_to_shard[cid] = notopo_shard_idx;
+> -		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
+> -		scx_cid_topo[cid].shard_cid = notopo_shard_cid;
+> -		scx_cid_topo[cid].shard_idx = notopo_shard_idx;
+> +		tbls->cid_to_shard[cid] = notopo_shard_idx;
+> +		tbls->topo[cid] = SCX_CID_TOPO_NEG;
+> +		tbls->topo[cid].shard_cid = notopo_shard_cid;
+> +		tbls->topo[cid].shard_idx = notopo_shard_idx;
+>  	}
+>  
+>  	if (!cpumask_empty(llc_fallback))
+> @@ -318,14 +374,14 @@ s32 scx_cid_init(struct scx_sched *sch)
+>  	 * shard, nr_cids is the count.
+>  	 */
+>  	for (cid = 0; cid < next_cid; cid++) {
+> -		s32 sidx = scx_cid_to_shard[cid];
+> +		s32 sidx = tbls->cid_to_shard[cid];
+>  
+> -		if (scx_cid_shard_ranges[sidx].nr_cids == 0)
+> -			scx_cid_shard_ranges[sidx].base_cid = cid;
+> -		scx_cid_shard_ranges[sidx].nr_cids++;
+> +		if (tbls->shard_ranges[sidx].nr_cids == 0)
+> +			tbls->shard_ranges[sidx].base_cid = cid;
+> +		tbls->shard_ranges[sidx].nr_cids++;
+>  	}
+>  
+> -	scx_nr_cid_shards = next_shard_idx;
+> +	tbls->nr_shards = next_shard_idx;
+>  	return 0;
+>  }
+>  
+> @@ -417,6 +473,7 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+>  	s32 *cpu_to_cid __free(kfree) = NULL;
+>  	s32 *shard_start __free(kfree) = NULL;
+>  	u32 npossible = num_possible_cpus();
+> +	struct scx_cid_tables *tbls;
+>  	struct scx_sched *sch;
+>  	u32 nr_shards;
+>  	bool alloced;
+> @@ -438,6 +495,10 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+>  	if (unlikely(!sch))
+>  		return;
+>  
+> +	/* called from ops.init_cids(), so the tables exist and are unpublished */
+> +	lockdep_assert_held(&scx_enable_mutex);
+> +	tbls = scx_cid_tables;
+> +
+>  	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
+>  		scx_error(sch, "scx_bpf_cid_override: allocation failed");
+>  		return;
+> @@ -488,7 +549,7 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+>  		return;
+>  	}
+>  
+> -	/* Validate first so that invalid input leaves globals untouched. */
+> +	/* validate first so that invalid input leaves the tables untouched */
+>  	for_each_possible_cpu(cpu) {
+>  		s32 c = cpu_to_cid[cpu];
+>  
+> @@ -503,12 +564,12 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+>  	for_each_possible_cpu(cpu) {
+>  		s32 c = cpu_to_cid[cpu];
+>  
+> -		scx_cpu_to_cid_tbl[cpu] = c;
+> -		scx_cid_to_cpu_tbl[c] = cpu;
+> +		tbls->cpu_to_cid[cpu] = c;
+> +		tbls->cid_to_cpu[c] = cpu;
+>  	}
+>  
+>  	/*
+> -	 * Derive scx_shard_node[] by majority count: an overridden shard may
+> +	 * Derive shard_node[] by majority count: an overridden shard may
+>  	 * span NUMA nodes, so assign each to the node that owns the most cpus.
+>  	 */
+>  	for (si = 0; si < nr_shards; si++) {
+> @@ -516,12 +577,12 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+>  
+>  		memset(node_counts, 0, nr_node_ids * sizeof(*node_counts));
+>  		for (cid = shard_start[si]; cid < end; cid++) {
+> -			s32 node = cpu_to_node(scx_cid_to_cpu_tbl[cid]);
+> +			s32 node = cpu_to_node(tbls->cid_to_cpu[cid]);
+>  
+>  			if (numa_valid_node(node))
+>  				node_counts[node]++;
+>  		}
+> -		scx_shard_node[si] = pick_max_node(node_counts, nr_node_ids);
+> +		tbls->shard_node[si] = pick_max_node(node_counts, nr_node_ids);
+>  	}
+>  
+>  	/*
+> @@ -532,22 +593,22 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+>  	for (cid = 0; cid < npossible; cid++) {
+>  		if (si + 1 < nr_shards && cid >= shard_start[si + 1])
+>  			si++;
+> -		scx_cid_to_shard[cid] = si;
+> -		scx_cid_topo[cid] = SCX_CID_TOPO_NEG;
+> -		scx_cid_topo[cid].shard_cid = shard_start[si];
+> -		scx_cid_topo[cid].shard_idx = si;
+> +		tbls->cid_to_shard[cid] = si;
+> +		tbls->topo[cid] = SCX_CID_TOPO_NEG;
+> +		tbls->topo[cid].shard_cid = shard_start[si];
+> +		tbls->topo[cid].shard_idx = si;
+>  	}
+>  
+> -	/* Rebuild scx_cid_shard_ranges[] for the new layout. */
+> -	memset(scx_cid_shard_ranges, 0, npossible * sizeof(*scx_cid_shard_ranges));
+> +	/* Rebuild shard_ranges[] for the new layout. */
+> +	memset(tbls->shard_ranges, 0, npossible * sizeof(*tbls->shard_ranges));
+>  	for (si = 0; si < nr_shards; si++) {
+>  		u32 end = (si + 1 < nr_shards) ? shard_start[si + 1] : npossible;
+>  
+> -		scx_cid_shard_ranges[si].base_cid = shard_start[si];
+> -		scx_cid_shard_ranges[si].nr_cids = end - shard_start[si];
+> +		tbls->shard_ranges[si].base_cid = shard_start[si];
+> +		tbls->shard_ranges[si].nr_cids = end - shard_start[si];
+>  	}
+>  
+> -	scx_nr_cid_shards = nr_shards;
+> +	tbls->nr_shards = nr_shards;
+>  }
+>  
+>  /**
+> @@ -849,22 +910,25 @@ bool scx_cmask_empty(const struct scx_cmask *m)
+>   *
+>   * Fill @out__uninit with the topology info for @cid. Trigger scx_error() if
+>   * @cid is out of range. If @cid is valid but in the no-topo section, all fields
+> - * are set to -1.
+> + * are set to -1. All fields are also set to -1 when no cid tables have been
+> + * published yet, which a program may observe while racing the root enable.
+>   */
+>  __bpf_kfunc void scx_bpf_cid_topo(s32 cid, struct scx_cid_topo *out__uninit,
+>  				  const struct bpf_prog_aux *aux)
+>  {
+> +	struct scx_cid_topo *topo;
+>  	struct scx_sched *sch;
+>  
+>  	guard(rcu)();
+>  
+>  	sch = scx_prog_sched(aux);
+> -	if (unlikely(!sch) || !cid_valid(sch, cid)) {
+> +	topo = rcu_dereference(scx_cid_topo);
+> +	if (unlikely(!sch) || !cid_valid(sch, cid) || unlikely(!topo)) {
+>  		*out__uninit = SCX_CID_TOPO_NEG;
+>  		return;
+>  	}
+>  
+> -	*out__uninit = READ_ONCE(scx_cid_topo)[cid];
+> +	*out__uninit = topo[cid];
+>  }
+>  
+>  __bpf_kfunc_end_defs();
+> @@ -907,6 +971,7 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+>  {
+>  	struct scx_cmask *kern_src = scx_arena_to_kaddr(sch, src);
+>  	u32 base, nr_cids, alloc_words, npossible = num_possible_cpus();
+> +	s32 *cid_to_shard;
+>  
+>  	base = READ_ONCE(kern_src->base);
+>  	nr_cids = READ_ONCE(kern_src->nr_cids);
+> @@ -921,9 +986,10 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+>  	ref->base = base;
+>  	ref->nr_cids = nr_cids;
+>  
+> -	ref->shard_first = scx_cid_to_shard[base];
+> +	cid_to_shard = rcu_dereference_all(scx_cid_to_shard);
+> +	ref->shard_first = cid_to_shard[base];
+>  	if (likely(nr_cids))
+> -		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
+> +		ref->shard_end = cid_to_shard[base + nr_cids - 1] + 1;
+>  	else
+>  		ref->shard_end = ref->shard_first;
+>  
+> @@ -946,6 +1012,8 @@ int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
+>  void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
+>  			     u32 base, u32 nr_cids, struct scx_cmask_ref *ref)
+>  {
+> +	s32 *cid_to_shard;
+> +
+>  	WRITE_ONCE(m->base, base);
+>  	WRITE_ONCE(m->nr_cids, nr_cids);
+>  	WRITE_ONCE(m->alloc_words, SCX_CMASK_NR_WORDS(nr_cids));
+> @@ -955,9 +1023,10 @@ void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
+>  	ref->base = base;
+>  	ref->nr_cids = nr_cids;
+>  
+> -	ref->shard_first = scx_cid_to_shard[base];
+> +	cid_to_shard = rcu_dereference_all(scx_cid_to_shard);
+> +	ref->shard_first = cid_to_shard[base];
+>  	if (likely(nr_cids))
+> -		ref->shard_end = scx_cid_to_shard[base + nr_cids - 1] + 1;
+> +		ref->shard_end = cid_to_shard[base + nr_cids - 1] + 1;
+>  	else
+>  		ref->shard_end = ref->shard_first;
+>  }
+> @@ -976,7 +1045,8 @@ void scx_cmask_ref_init_kern(struct scx_sched *sch, struct scx_cmask *m,
+>  void scx_cmask_ref_shard(const struct scx_cmask_ref *ref, s32 shard_idx,
+>  			 struct scx_cmask *out)
+>  {
+> -	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
+> +	const struct scx_cid_shard *shard =
+> +		&rcu_dereference_all(scx_cid_shard_ranges)[shard_idx];
+>  	u32 shard_base = shard->base_cid;
+>  	u32 shard_end = shard_base + shard->nr_cids;
+>  	u32 isect_base, isect_end, nr_words, src_off, wi;
+> diff --git a/kernel/sched/ext/cid.h b/kernel/sched/ext/cid.h
+> index 470ac9224da4..1f74d1f331f5 100644
+> --- a/kernel/sched/ext/cid.h
+> +++ b/kernel/sched/ext/cid.h
+> @@ -48,13 +48,24 @@ struct scx_sched;
+>   * See the comment above the table definitions in cid.c for the
+>   * memory-ordering and visibility contract.
+>   */
+> +struct scx_cid_tables {
+> +	u32			nr_shards;
+> +	s16			*cid_to_cpu;	/* [num_possible_cpus()] */
+> +	s16			*cpu_to_cid;	/* [nr_cpu_ids] */
+> +	s32			*cid_to_shard;	/* [num_possible_cpus()] */
+> +	s32			*shard_node;	/* [num_possible_cpus()] */
+> +	struct scx_cid_shard	*shard_ranges;	/* [num_possible_cpus()] */
+> +	struct scx_cid_topo	*topo;		/* [num_possible_cpus()] */
+> +	struct rcu_head		rcu;
+> +};
+> +
+>  extern u32 scx_nr_cid_shards;
+> -extern s16 *scx_cid_to_cpu_tbl;
+> -extern s16 *scx_cpu_to_cid_tbl;
+> -extern s32 *scx_cid_to_shard;
+> -extern s32 *scx_shard_node;
+> -extern struct scx_cid_shard *scx_cid_shard_ranges;
+> -extern struct scx_cid_topo *scx_cid_topo;
+> +extern s16 __rcu *scx_cid_to_cpu_tbl;
+> +extern s16 __rcu *scx_cpu_to_cid_tbl;
+> +extern s32 __rcu *scx_cid_to_shard;
+> +extern s32 __rcu *scx_shard_node;
+> +extern struct scx_cid_shard __rcu *scx_cid_shard_ranges;
+> +extern struct scx_cid_topo __rcu *scx_cid_topo;
+>  extern struct btf_id_set8 scx_kfunc_ids_init_cids;
+>  
+>  void scx_cmask_clear(struct scx_cmask *m);
+> @@ -67,6 +78,8 @@ bool scx_cmask_subset(const struct scx_cmask *sub, const struct scx_cmask *super
+>  bool scx_cmask_intersects(const struct scx_cmask *a, const struct scx_cmask *b);
+>  bool scx_cmask_empty(const struct scx_cmask *m);
+>  s32 scx_cid_init(struct scx_sched *sch);
+> +void scx_cid_publish_tables(void);
+> +void scx_cid_retire_tables(void);
+>  int scx_cid_kfunc_init(void);
+>  
+>  /**
+> @@ -89,14 +102,12 @@ static inline bool cid_valid(struct scx_sched *sch, s32 cid)
+>   * __scx_cid_to_cpu - Unchecked cid->cpu table lookup
+>   * @cid: cid to look up. Must be in [0, num_possible_cpus()).
+>   *
+> - * Intended for callsites that have already validated @cid and that hold a
+> - * non-NULL @sch from scx_prog_sched() - a live sched implies the table has
+> - * been allocated, so no NULL check is needed here.
+> + * Intended for callsites that have already validated @cid and that run on a
+> + * live scheduler, which guarantees the tables are published and stable.
+>   */
+>  static inline s32 __scx_cid_to_cpu(s32 cid)
+>  {
+> -	/* READ_ONCE pairs with WRITE_ONCE in scx_cid_arrays_alloc() */
+> -	return READ_ONCE(scx_cid_to_cpu_tbl)[cid];
+> +	return rcu_dereference_all(scx_cid_to_cpu_tbl)[cid];
+>  }
+>  
+>  /**
+> @@ -107,7 +118,7 @@ static inline s32 __scx_cid_to_cpu(s32 cid)
+>   */
+>  static inline s32 __scx_cpu_to_cid(s32 cpu)
+>  {
+> -	return READ_ONCE(scx_cpu_to_cid_tbl)[cpu];
+> +	return rcu_dereference_all(scx_cpu_to_cid_tbl)[cpu];
+>  }
+>  
+>  /**
+> @@ -116,15 +127,19 @@ static inline s32 __scx_cpu_to_cid(s32 cpu)
+>   * @cid: cid to look up
+>   *
+>   * Return the cpu for @cid or a negative errno on failure. Invalid cid triggers
+> - * scx_error() on @sch. The cid arrays are allocated on first scheduler enable
+> - * and never freed, so the returned cpu is stable for the lifetime of the loaded
+> - * scheduler.
+> + * scx_error() on @sch. The mapping is stable while the scheduler is live.
+> + *
+> + * Return -EINVAL without triggering scx_error() if no tables have been
+> + * published yet, which a prog-facing kfunc can observe while racing the root
+> + * scheduler enable.
+>   */
+>  static inline s32 scx_cid_to_cpu(struct scx_sched *sch, s32 cid)
+>  {
+> -	if (!cid_valid(sch, cid))
+> +	s16 *tbl = rcu_dereference_all(scx_cid_to_cpu_tbl);
+> +
+> +	if (!cid_valid(sch, cid) || unlikely(!tbl))
+>  		return -EINVAL;
+> -	return __scx_cid_to_cpu(cid);
+> +	return tbl[cid];
+>  }
+>  
+>  /**
+> @@ -133,13 +148,15 @@ static inline s32 scx_cid_to_cpu(struct scx_sched *sch, s32 cid)
+>   * @cpu: cpu to look up
+>   *
+>   * Return the cid for @cpu or a negative errno on failure. Invalid cpu triggers
+> - * scx_error() on @sch. Same lifetime guarantee as scx_cid_to_cpu().
+> + * scx_error() on @sch. Same usage rules as scx_cid_to_cpu().
+>   */
+>  static inline s32 scx_cpu_to_cid(struct scx_sched *sch, s32 cpu)
+>  {
+> -	if (!scx_cpu_valid(sch, cpu, NULL))
+> +	s16 *tbl = rcu_dereference_all(scx_cpu_to_cid_tbl);
+> +
+> +	if (!scx_cpu_valid(sch, cpu, NULL) || unlikely(!tbl))
+>  		return -EINVAL;
+> -	return __scx_cpu_to_cid(cpu);
+> +	return tbl[cpu];
+>  }
+>  
+>  /**
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index e6c4cbe1f182..6a4e3a4f6098 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -3334,6 +3334,7 @@ static void handle_hotplug(struct rq *rq, bool online)
+>  {
+>  	struct scx_sched *sch = scx_root;
+>  	s32 cpu = cpu_of(rq);
+> +	s32 cpu_or_cid = cpu;
+>  
+>  	atomic_long_inc(&scx_hotplug_seq);
+>  
+> @@ -3353,10 +3354,26 @@ static void handle_hotplug(struct rq *rq, bool online)
+>  	else
+>  		scx_offline_ecaps(rq);
+>  
+> +	/*
+> +	 * The tables can't be retired while this function is running as the
+> +	 * retirement is inside cpus_read_lock. However, scx_cpu_arg() is
+> +	 * awkward here as the tables can be NULL after root enable failure and
+> +	 * lockdep would trigger without surrounding rcu_read_lock(). Open code
+> +	 * the translation. If the table is NULL, the ops are also cleared and
+> +	 * @cpu_or_cid goes unused.
+> +	 */
+> +	if (scx_is_cid_type()) {
+> +		s16 *tbl = rcu_dereference_check(scx_cpu_to_cid_tbl,
+> +						 lockdep_is_cpus_held());
+> +
+> +		if (tbl)
+> +			cpu_or_cid = tbl[cpu];
+> +	}
+> +
+>  	if (online && SCX_HAS_OP(sch, cpu_online))
+> -		SCX_CALL_OP(sch, cpu_online, NULL, scx_cpu_arg(cpu));
+> +		SCX_CALL_OP(sch, cpu_online, NULL, cpu_or_cid);
+>  	else if (!online && SCX_HAS_OP(sch, cpu_offline))
+> -		SCX_CALL_OP(sch, cpu_offline, NULL, scx_cpu_arg(cpu));
+> +		SCX_CALL_OP(sch, cpu_offline, NULL, cpu_or_cid);
+>  	else
+>  		scx_exit(sch, SCX_EXIT_UNREG_KERN,
+>  			 SCX_ECODE_ACT_RESTART | SCX_ECODE_RSN_HOTPLUG,
+> @@ -6197,11 +6214,12 @@ static void scx_root_disable(struct scx_sched *sch)
+>  	scx_unlink_sched(sch);
+>  
+>  	/*
+> -	 * scx_root clearing must be inside cpus_read_lock(). See
+> -	 * handle_hotplug().
+> +	 * scx_root clearing and cid table retirement must be inside
+> +	 * cpus_read_lock(). See handle_hotplug().
+>  	 */
+>  	cpus_read_lock();
+>  	RCU_INIT_POINTER(scx_root, NULL);
+> +	scx_cid_retire_tables();
+>  	cpus_read_unlock();
+>  
+>  	/*
+> @@ -7195,10 +7213,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+>  	cpus_read_lock();
+>  
+>  	/*
+> -	 * Build the cid mapping before publishing scx_root. The cid kfuncs
+> -	 * dereference the cid arrays unconditionally once scx_prog_sched()
+> -	 * returns non-NULL; the rcu_assign_pointer() below pairs with their
+> -	 * rcu_dereference() to make the populated arrays visible.
+> +	 * Build the cid mapping into a private under-construction set. It
+> +	 * becomes visible to readers only through scx_cid_publish_tables() once
+> +	 * ops.init_cids() has finalized the layout.
+>  	 */
+>  	ret = scx_cid_init(sch);
+>  	if (ret) {
+> @@ -7235,6 +7252,9 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+>  		}
+>  	}
+>  
+> +	/* the cid layout is final, expose it to readers */
+> +	scx_cid_publish_tables();
+> +
+>  	ret = scx_arena_pool_init(sch);
+>  	if (ret) {
+>  		cpus_read_unlock();
+> @@ -9872,13 +9892,15 @@ __bpf_kfunc u32 scx_bpf_nr_online_cids(void)
+>   *
+>   * cid-addressed equivalent of bpf_get_smp_processor_id() for scx programs.
+>   * The current cpu is trivially valid, so this is just a table lookup. Return
+> - * -EINVAL if called from a non-SCX program before any scheduler has ever
+> - * been enabled (the cid table is still unallocated at that point).
+> + * -EINVAL if called before any scheduler has ever published its cid tables.
+>   */
+>  __bpf_kfunc s32 scx_bpf_this_cid(void)
+>  {
+> -	s16 *tbl = READ_ONCE(scx_cpu_to_cid_tbl);
+> +	s16 *tbl;
+> +
+> +	guard(rcu)();
+>  
+> +	tbl = rcu_dereference(scx_cpu_to_cid_tbl);
+>  	if (!tbl)
+>  		return -EINVAL;
+>  	return tbl[raw_smp_processor_id()];
+> @@ -9937,13 +9959,17 @@ __bpf_kfunc s32 scx_bpf_task_cpu(const struct task_struct *p)
+>   * @p: task of interest
+>   *
+>   * cid-addressed equivalent of scx_bpf_task_cpu(). task_cpu(p) is always a
+> - * valid cpu, so this is just a table lookup. Return -EINVAL if called from
+> - * a non-SCX program before any scheduler has ever been enabled.
+> + * valid cpu, so this is just a table lookup. Return -EINVAL if called before
+> + * any scheduler has ever published its cid tables.
+>   */
+>  __bpf_kfunc s32 scx_bpf_task_cid(const struct task_struct *p)
+>  {
+> -	s16 *tbl = READ_ONCE(scx_cpu_to_cid_tbl);
+> +	s16 *tbl;
+> +
+> +	/* KF_RCU covers only @p - a sleepable program holds no RCU lock */
+> +	guard(rcu)();
+>  
+> +	tbl = rcu_dereference(scx_cpu_to_cid_tbl);
+>  	if (!tbl)
+>  		return -EINVAL;
+>  	return tbl[task_cpu(p)];
+> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+> index 26bfda216524..a9a853a71061 100644
+> --- a/kernel/sched/ext/internal.h
+> +++ b/kernel/sched/ext/internal.h
+> @@ -1504,8 +1504,9 @@ struct scx_sched {
+>  #ifdef CONFIG_EXT_SUB_SCHED
+>  	/*
+>  	 * pshard[] size captured at enable for the async RCU free path -
+> -	 * scx_nr_cid_shards may be rewritten by a later scx_cid_init() before
+> -	 * free runs. While sch is active, use the global.
+> +	 * scx_nr_cid_shards may be rewritten by a later enable's
+> +	 * scx_cid_publish_tables() before free runs. While sch is active, use
+> +	 * the global.
+>  	 */
+>  	u32			nr_pshards;
+>  #endif
+> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+> index 8d8737149bc0..d7842a609d96 100644
+> --- a/kernel/sched/ext/sub.c
+> +++ b/kernel/sched/ext/sub.c
+> @@ -138,7 +138,9 @@ void scx_free_pshards(struct scx_sched *sch)
+>  
+>  static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32 node)
+>  {
+> -	const struct scx_cid_shard *shard = &scx_cid_shard_ranges[shard_idx];
+> +	const struct scx_cid_shard *shard =
+> +		&rcu_dereference_protected(scx_cid_shard_ranges,
+> +					   lockdep_is_held(&scx_enable_mutex))[shard_idx];
+>  	size_t cmask_size = struct_size_t(struct scx_cmask, bits,
+>  					  SCX_CMASK_NR_WORDS(shard->nr_cids));
+>  	struct scx_pshard *pshard;
+> @@ -176,17 +178,21 @@ static struct scx_pshard *alloc_pshard(struct scx_sched *sch, s32 shard_idx, s32
+>  s32 scx_alloc_pshards(struct scx_sched *sch)
+>  {
+>  	struct scx_pshard **pshard;
+> +	s32 *shard_node;
+>  	s32 si;
+>  
+>  	if (!sch->is_cid_type || !sch->arena_pool)
+>  		return 0;
+>  
+> +	shard_node = rcu_dereference_protected(scx_shard_node,
+> +					       lockdep_is_held(&scx_enable_mutex));
+> +
+>  	pshard = kzalloc_objs(pshard[0], scx_nr_cid_shards, GFP_KERNEL);
+>  	if (!pshard)
+>  		return -ENOMEM;
+>  
+>  	for (si = 0; si < scx_nr_cid_shards; si++) {
+> -		pshard[si] = alloc_pshard(sch, si, scx_shard_node[si]);
+> +		pshard[si] = alloc_pshard(sch, si, shard_node[si]);
+>  		if (!pshard[si]) {
+>  			while (--si >= 0)
+>  				free_pshard(pshard[si]);
+> @@ -198,8 +204,9 @@ s32 scx_alloc_pshards(struct scx_sched *sch)
+>  	sch->nr_pshards = scx_nr_cid_shards;
+>  	/*
+>  	 * Publish only after every entry is built so a reader observing
+> -	 * @sch->pshard never sees a partially-filled array. Pair the store
+> -	 * with a barrier and READ_ONCE() on the read side.
+> +	 * @sch->pshard never sees a partially-filled array or unpublished cid
+> +	 * tables. Pair the store with a barrier and an acquire load on the
+> +	 * read side.
+>  	 */
+>  	smp_wmb();
+>  	WRITE_ONCE(sch->pshard, pshard);
+> @@ -524,7 +531,7 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
+>  
+>  	/* @cid is valid here: the cpu is active with queued syncs */
+>  	cid = __scx_cpu_to_cid(cpu);
+> -	shard = scx_cid_to_shard[cid];
+> +	shard = rcu_dereference_all(scx_cid_to_shard)[cid];
+>  
+>  	batch = llist_del_all(&rq->scx.ecaps_to_sync);
+>  	llist_for_each_safe(pos, tmp, batch) {
+> @@ -618,7 +625,7 @@ void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
+>  		return;
+>  
+>  	cid = __scx_cpu_to_cid(cpu);
+> -	ps = sch->pshard[scx_cid_to_shard[cid]];
+> +	ps = sch->pshard[rcu_dereference_all(scx_cid_to_shard)[cid]];
+>  
+>  	guard(raw_spinlock)(&ps->lock);
+>  	queue_sync_ecaps(sch, cid);
+> @@ -631,12 +638,23 @@ void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
+>   */
+>  void scx_online_ecaps(struct rq *rq)
+>  {
+> -	s32 cid = __scx_cpu_to_cid(cpu_of(rq));
+> -	s32 shard = scx_cid_to_shard[cid];
+>  	struct scx_sched *pos;
+> +	s32 cid, shard;
+> +
+> +	/*
+> +	 * Only a live hierarchy can have ecaps to reseed. This also keeps the
+> +	 * table reads below away from an enable that failed before publishing
+> +	 * the tables. A concurrent disable can't retire them, see
+> +	 * handle_hotplug().
+> +	 */
+> +	if (!scx_enabled())
+> +		return;
+>  
+>  	guard(rq_lock_irqsave)(rq);
+>  
+> +	cid = __scx_cpu_to_cid(cpu_of(rq));
+> +	shard = rcu_dereference_all(scx_cid_to_shard)[cid];
+> +
+>  	scx_for_each_descendant_pre(pos, scx_root) {
+>  		struct scx_pshard *ps;
+>  
+> @@ -2074,9 +2092,10 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
+>  	/*
+>  	 * The target's caps storage may not be set up yet (e.g. a self-read
+>  	 * during ops.init_cids()). Pairs with the publish in
+> -	 * scx_alloc_pshards(): a non-NULL pshard has every element set.
+> +	 * scx_alloc_pshards(): a non-NULL pshard has every element set and the
+> +	 * acquire also orders the cid table reads below against it.
+>  	 */
+> -	pshard = READ_ONCE(target->pshard);
+> +	pshard = smp_load_acquire(&target->pshard);
+>  	if (unlikely(!pshard)) {
+>  		scx_error(sch, "scx_bpf_sub_caps() called before caps storage is initialized");
+>  		return -ENODEV;
+> @@ -2089,7 +2108,8 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
+>  	}
+>  
+>  	for (si = ref.shard_first; si < ref.shard_end; si++) {
+> -		const struct scx_cid_shard *shard = &scx_cid_shard_ranges[si];
+> +		const struct scx_cid_shard *shard =
+> +			&rcu_dereference_all(scx_cid_shard_ranges)[si];
+>  		SCX_CMASK_DEFINE_SHARD(local_out, shard->base_cid, shard->nr_cids);
+>  		u32 cap_bit;
+>  
+> -- 
+> 2.55.0
+> 
