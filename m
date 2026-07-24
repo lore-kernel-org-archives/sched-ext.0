@@ -1,59 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CB8367B7E;
-	Fri, 24 Jul 2026 19:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2840735CB6F;
+	Fri, 24 Jul 2026 19:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784920071; cv=none; b=PGDynQGmzhi2CXNDyKUHp3o8OnvvpiflQ1LckuLhOw7ezNe19IHYFQ66oxKD56z+GmtwC2pqzeu5NV4vKhZRN4IS5kSB5wYJzrxyj4ke3hK0SDQqT97EGmqcGqXwDPOp/1ioIWM3p9TAygjUE3rYJIQFcV4wWE7bKRCWkrO/2jk=
+	t=1784920614; cv=none; b=Kn91POu+kKLQlmwixeGgoeggatcW1LcTpZHOWTOEI9u31xLJ1QcMr7DUR+Yc7oBFp44kcLx6xKXhvIcEtGInzi+R4bCa7Yzz1InmMA0qiVwQ+1PF1BWs2s2GHanVNwHxEDjckjy3yjtm6dRrxsx9x49zc1wxUDC7Q8Qlp96OBaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784920071; c=relaxed/simple;
-	bh=E+QueYGwfixlDVZ/ecdI77df+89jSuP8asTRKU6wEKc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=qmZPGE9Xa19EuJgodAdZSsURRsDQrmc3ioQqBfjldj7buf7JW3wbs4s6C4QWq/GjHGdEemTdVJow/S0SnMQa1Ql/Nib9dxvYMft+7CtH1pp9kgu7Ngs3syWSCQ2LqFUmOk6I2Z+K7ffWtAbDDryYBGI2OszDoKXtcAZcq+tHxi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5AkyLal; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784920614; c=relaxed/simple;
+	bh=cy2wE3R0dHWYq+kWDx7CbqN+CaDJuTUZnfVbPk3FCjQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DeZzvSg/5ZaGr+ilgdf9d2Livk64IEBLuJ9dnyiT68/lMsWe8oNlRFXRprvk73dObLS1gTPThyFA+3K9n+xuYCtD/HbVwRRWt6TimIHNZV40HxKh+1NznAcNT+f2i0a6qRvpr2EUFGwVBOyZ3PUNgnaUaVRLbohZF1EGu0d/8Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oTs+YdZA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5AkyLal"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67AF1F000E9;
-	Fri, 24 Jul 2026 19:07:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oTs+YdZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956851F000E9;
+	Fri, 24 Jul 2026 19:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784920070;
-	bh=E+QueYGwfixlDVZ/ecdI77df+89jSuP8asTRKU6wEKc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=c5AkyLalgssx/UUcuYSXfd2NcHrBs9RDz4TTewAY8BfPs+uCndCc4ZnOYnJwYG5Q2
-	 Fd91jHhqus/lUzb2N9EdPtq47/GSVxdtH/pFyuRuVJHuKInPTxOky/Lk60f8Q/cMi0
-	 ZZaeHjjGVkQEfQoJNcEG/IRKmEjEvXQep15ulQvqtwNsYGtsdy2zj52gQtxKDekmqH
-	 QmihnL84Vi+v5krIPgprxNgZGp0wRVR9qAzuQyfaeGfQnLU8upRiKcOJBukMWSAlmD
-	 PgNZ6jzFEMWB7ohKG3O33KRpNKhFlzK7s5euPCv+P5OCUpLqWeIU38IaCICA7o4Apv
-	 DyxMe0DV8xO5A==
-Date: Fri, 24 Jul 2026 09:07:49 -1000
-Message-ID: <ab7fd0a02dcef6bb60ffee9bb0c1f8ba@kernel.org>
+	s=k20260515; t=1784920612;
+	bh=6NK3QyVREn3L8bxkVQS1QuG6Ozoq3GOKYWn3bLL1DHc=;
+	h=From:To:Cc:Subject:Date;
+	b=oTs+YdZABP9PkhbqnFcarpRXsIeVIbBRbq2xNfMFaD4SQ6tXAqv8WVeN/wzZwNliJ
+	 XXdoS8USY4js4ot9hadUgiOpWGOK1bCjNPGkebgzegcnO+uHxEfBQXmc5aLxT734Pj
+	 E2f3aIgNZ2WQx4rb70j7rQbjcrmjq79vulmuLqWf0kImpTAx1M5jBQvqVOj5L1H1W8
+	 km2vc1vib7Qo70AGnp4Z4fUXsNcDRdxdsHB7k8hpYxma3PVZtGjZEmrNp9iUqM6bC3
+	 PxrbKZUOqqzU91Gs3Z2KnLFRPZM3Qe5s624q+BnB02kPGK6GJLwdFQwAW8lkSG9QFn
+	 2xMKG5T7mvt+Q==
 From: Tejun Heo <tj@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH 5/5] sched_ext: Gate scx_bpf_cidperf_set() behind a new SCX_CAP_PERF
-In-Reply-To: <20260724184605.EB6641F01559@smtp.kernel.org>
-References: <20260724182125.985061-6-tj@kernel.org> <20260724184605.EB6641F01559@smtp.kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCHSET v2 sched_ext/for-7.3] sched_ext: Follow-up fixes and missing cap enforcement
+Date: Fri, 24 Jul 2026 09:16:46 -1000
+Message-ID: <20260724191651.1040227-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 24, 2026 at 06:46:05PM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does unconditionally passing SCX_CAP_PERF break backward compatibility on
-> older kernels?
->
-> If scx_qmap is loaded on a pre-gate kernel where SCX_CAP_PERF is not part of
-> __SCX_CAP_ALL, won't the kernel's scx_bpf_sub_grant() and scx_bpf_sub_revoke()
-> reject the unknown cap bit?
+Hello,
 
-It would, but that's fine. The sub-scheduler caps interface is still
-going through initial development and there is no cross-version
-compatibility commitment for it yet. The in-tree schedulers track the
-in-tree kernel for these interfaces.
+Follow-up fixes and enforcement holes plugged from the recent
+sub-scheduler work. The first patch fixes the tools' restart loop
+clobbering an exit that was requested while a restart was pending.
 
-Thanks.
+The rest tighten how cid-addressed operations from sub-schedulers are
+handled when the caller lacks the necessary caps. Reenq to another
+sched's local DSQs is now denied and counted, and a new event counts
+the already-denied kicks. These checks are lockless - transient false
+positives from cap rotation are harmless and false negatives can't
+happen by visibility. cpuperf control moves behind a new SCX_CAP_PERF
+which only the root holds by default, and scx_bpf_cidperf_set() reports
+the result synchronously as its check is authoritative under the
+target's rq lock.
+
+v2: - Kernel-doc comment moved to scx_bpf_cpuperf_set() instead of being
+      left attached to the factored-out helper (0004, reported by
+      sashiko).
+    - The versioned scx_bpf_cidperf_set___v2() interface and the tools
+      compat wrapper are dropped. The cid-form interface is still under
+      initial development, so the signature is changed in place to
+      return s32 (0005).
+
+v1: https://lore.kernel.org/r/20260724182125.985061-1-tj@kernel.org
+
+ 0001-tools-sched_ext-Don-t-restart-over-a-pending-exit-re.patch
+ 0002-sched_ext-Gate-local-DSQ-reenq-on-baseline-cid-acces.patch
+ 0003-sched_ext-Count-kicks-denied-for-lacking-baseline-ci.patch
+ 0004-sched_ext-Factor-out-scx_cpuperf_set.patch
+ 0005-sched_ext-Gate-scx_bpf_cidperf_set-behind-a-new-SCX_.patch
+
+Based on sched_ext/for-7.3 (c509d8107026).
+
+The patches are also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-cap-gates-v2
+
+diffstat follows. Thanks.
+
+ kernel/sched/ext/ext.c                   | 139 +++++++++++++++++++++----------
+ kernel/sched/ext/internal.h              |  31 ++++++-
+ tools/sched_ext/include/scx/common.bpf.h |   2 +-
+ tools/sched_ext/scx_central.c            |   2 +-
+ tools/sched_ext/scx_cpu0.c               |   2 +-
+ tools/sched_ext/scx_flatcg.c             |   2 +-
+ tools/sched_ext/scx_pair.c               |   2 +-
+ tools/sched_ext/scx_qmap.bpf.c           |  17 ++--
+ tools/sched_ext/scx_qmap.c               |   2 +-
+ tools/sched_ext/scx_sdt.c                |   2 +-
+ tools/sched_ext/scx_simple.c             |   2 +-
+ tools/sched_ext/scx_userland.c           |  11 +--
+ 12 files changed, 149 insertions(+), 65 deletions(-)
 
 --
 tejun
