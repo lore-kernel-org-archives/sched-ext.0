@@ -1,45 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6086314D1F;
-	Fri, 24 Jul 2026 01:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2933CB544
+	for <sched-ext@lists.linux.dev>; Fri, 24 Jul 2026 08:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784856559; cv=none; b=mIMQ5Egx6bEqjzHr1sbn9rO7HOW1vPVbFRfIGmukD9UmVgsywjnHXbP7A/iWAfvtIlWgMe2VH8jL+jacwX6GoMNWdz/52G9JJh28JQVQRnaa094NCxzB+MTOddaZFcTvwnXLtkAhx7tNtvIQEJzGTQDuWOZZjwSc/2sxP8W2QVQ=
+	t=1784880526; cv=none; b=nHV8J+rhjp6IWDBPEntkk0EKKRUEI/V9PlmTEqBuxxDBPOu3DRd9ahP082WkNcdjof1Qr9nWdN7OyoEieCTgvvoq1PMCejtEPeTXVjyOKOaI+c3H3A2OsFyVNibghuUlHbBCOOfNfNkshHxoCWPl2PouAkcOJwB/tmlFpNYfoTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784856559; c=relaxed/simple;
-	bh=pzKLtTKZ8lEWpvBFSC31ckNFoxAzvuBi4sGs74nv0as=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOQ3vIKdOlrpjYI/aXxALvv2sCl++e34oFfuAx937YZS6TQBE49DQL5Cv30MSdIxmtTMMhjTFJLJLZy2wELI+tS4lbPIT5jIMCwpXM3oO41dVyGy8C223QD7PV7SO14OyFJn/0X8we4+YT8URXlVxcBVsPhm3o/1fhZfT+OxD8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jJT7LTpB; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jJT7LTpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837031F00A3A;
-	Fri, 24 Jul 2026 01:29:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784856558;
-	bh=rf2NANC+jWhvNmBCJnAv2iuGbYbpQknxh3LL7TOLu3Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jJT7LTpBrm3Fj4+U2ciEigKCVCS/MZzEydguHrKcnwKfOyyZ4akFHy49kP7XPdphD
-	 +AVP2I/bJnHgm4dv5AmO01LH5nNW69Abx3Dz6e7u5ua4wIbyUXTRK4MHGpsP6DRfSc
-	 lINQoBr7+UNTmcA6g+VCY1a8UlinBWNo6QPlnluHsug5iWrL0/pl2VwpfyQmfbpgiJ
-	 W6cPcwIY7ShwVXgu9SOpYZoxzEX6JlODrFuAOfb1zllcjHG+c5HYN1fz5MaX3PGs9E
-	 2jRCHjJKwZtnS7xgyjDJYOUsGHIHgzRuL7TkxZ2kbXZ00eWC5EXqSCBtl8k19v+arx
-	 v9IGAhLgN/y3Q==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
+	s=arc-20240116; t=1784880526; c=relaxed/simple;
+	bh=O86RicdFStfo5mxExHlM3c9GvksAJlrnlskL0EJpE8A=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=slSMra/dhm1GQYvdodDK17nXKGn5gzsax6B9KTBN/rf9Yox4hx7zCZX3TD/Gs89eAIKH7XAhtRW4Xumh9t4byS0x6epEQfqS8EAssgER65uCG+vGf7tgsVy8nDiEXP9xcHuvoEawCRmKwsvESZ7QEFXAzht9ryvHNZ8YQHiWm+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: da7e062c873611f1aa26b74ffac11d73-20260724
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:a23b71f7-e8aa-4fde-957d-35e711556b59,IP:0,U
+	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:25
+X-CID-META: VersionHash:e7bac3a,CLOUDID:0a2b2bf4b04257b66df7bb0150cda503,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|850|865|898,TC:nil,Content:0|15|
+	50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,
+	OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: da7e062c873611f1aa26b74ffac11d73-20260724
+X-User: luoliang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <luoliang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1325976147; Fri, 24 Jul 2026 16:08:28 +0800
+From: luoliang@kylinos.cn
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/3] sched_ext: Use rcu_access_pointer() for the first_task comparison
-Date: Thu, 23 Jul 2026 15:29:14 -1000
-Message-ID: <20260724012914.107823-4-tj@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260724012914.107823-1-tj@kernel.org>
-References: <20260724012914.107823-1-tj@kernel.org>
+	Liang Luo <luoliang@kylinos.cn>
+Subject: [PATCH] sched_ext: Fix incorrect SCX_PICK_IDLE_CPU_* flag prefix in kernel-doc
+Date: Fri, 24 Jul 2026 16:08:24 +0800
+Message-Id: <20260724080824.2483100-1-luoliang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -48,29 +52,55 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-dsq->first_task is __rcu for the lockless scx_bpf_dsq_peek(). The task
-removal path compares it against the departing task with a plain load, which
-sparse flags. The comparison runs under the dsq lock and only tests
-identity, so rcu_access_pointer() is the fit.
+From: Liang Luo <luoliang@kylinos.cn>
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
+The flags passed to the pick-idle kfuncs are values from the
+scx_pick_idle_cpu_flags enum, whose members are prefixed
+SCX_PICK_IDLE_ (SCX_PICK_IDLE_CORE, SCX_PICK_IDLE_IN_NODE).
+
+Three kernel-doc comments in idle.c erroneously used
+%SCX_PICK_IDLE_CPU_* which does not correspond to any defined flag
+name, while the adjacent scx_bpf_pick_idle_cpu_node() correctly
+documents %SCX_PICK_IDLE_*.
+
+Fix the three occurrences to use the correct SCX_PICK_IDLE_* prefix.
+
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
 ---
- kernel/sched/ext/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext/idle.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 95aadce7b104..53e4aaac46b7 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1642,7 +1642,7 @@ static void task_unlink_from_dsq(struct task_struct *p,
- 	list_del_init(&p->scx.dsq_list.node);
- 	dsq_dec_nr(dsq, p);
- 
--	if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN) && dsq->first_task == p) {
-+	if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN) && rcu_access_pointer(dsq->first_task) == p) {
- 		struct task_struct *first_task;
- 
- 		first_task = nldsq_next_task(dsq, NULL, false);
+diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
+index 16ebe3ab8647..079a47ca8c2f 100644
+--- a/kernel/sched/ext/idle.c
++++ b/kernel/sched/ext/idle.c
+@@ -1352,7 +1352,7 @@ __bpf_kfunc s32 scx_bpf_pick_idle_cpu_node(const struct cpumask *cpus_allowed,
+ /**
+  * scx_bpf_pick_idle_cpu - Pick and claim an idle cpu
+  * @cpus_allowed: Allowed cpumask
+- * @flags: %SCX_PICK_IDLE_CPU_* flags
++ * @flags: %SCX_PICK_IDLE_* flags
+  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+  *
+  * Pick and claim an idle cpu in @cpus_allowed. Returns the picked idle cpu
+@@ -1399,7 +1399,7 @@ __bpf_kfunc s32 scx_bpf_pick_idle_cpu(const struct cpumask *cpus_allowed,
+  *			       or pick any CPU from @node
+  * @cpus_allowed: Allowed cpumask
+  * @node: target NUMA node
+- * @flags: %SCX_PICK_IDLE_CPU_* flags
++ * @flags: %SCX_PICK_IDLE_* flags
+  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+  *
+  * Pick and claim an idle cpu in @cpus_allowed. If none is available, pick any
+@@ -1450,7 +1450,7 @@ __bpf_kfunc s32 scx_bpf_pick_any_cpu_node(const struct cpumask *cpus_allowed,
+ /**
+  * scx_bpf_pick_any_cpu - Pick and claim an idle cpu if available or pick any CPU
+  * @cpus_allowed: Allowed cpumask
+- * @flags: %SCX_PICK_IDLE_CPU_* flags
++ * @flags: %SCX_PICK_IDLE_* flags
+  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+  *
+  * Pick and claim an idle cpu in @cpus_allowed. If none is available, pick any
 -- 
-2.55.0
+2.43.0
 
