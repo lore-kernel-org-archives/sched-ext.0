@@ -1,49 +1,41 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2933CB544
-	for <sched-ext@lists.linux.dev>; Fri, 24 Jul 2026 08:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4403431A30;
+	Fri, 24 Jul 2026 18:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784880526; cv=none; b=nHV8J+rhjp6IWDBPEntkk0EKKRUEI/V9PlmTEqBuxxDBPOu3DRd9ahP082WkNcdjof1Qr9nWdN7OyoEieCTgvvoq1PMCejtEPeTXVjyOKOaI+c3H3A2OsFyVNibghuUlHbBCOOfNfNkshHxoCWPl2PouAkcOJwB/tmlFpNYfoTQ=
+	t=1784917287; cv=none; b=Waw/Ct+F1fPHzVcZFRgLbQu/hgKX9yTLXLRfA69hjjL5aIJEwGPrFBORXsTp7aU76hKTV1XcgKQ/GjeuWOsxUR1ua3kPhSC3XnaKAbeQ4WXLcgKgBX6qgFq/2Wg5qGBDr6weFErlyahHRXjaEuf5J56BD3INPFd2RWdSbiuk/uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784880526; c=relaxed/simple;
-	bh=O86RicdFStfo5mxExHlM3c9GvksAJlrnlskL0EJpE8A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=slSMra/dhm1GQYvdodDK17nXKGn5gzsax6B9KTBN/rf9Yox4hx7zCZX3TD/Gs89eAIKH7XAhtRW4Xumh9t4byS0x6epEQfqS8EAssgER65uCG+vGf7tgsVy8nDiEXP9xcHuvoEawCRmKwsvESZ7QEFXAzht9ryvHNZ8YQHiWm+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: da7e062c873611f1aa26b74ffac11d73-20260724
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:a23b71f7-e8aa-4fde-957d-35e711556b59,IP:0,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:25
-X-CID-META: VersionHash:e7bac3a,CLOUDID:0a2b2bf4b04257b66df7bb0150cda503,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102|123|850|865|898,TC:nil,Content:0|15|
-	50,EDM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,
-	OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: da7e062c873611f1aa26b74ffac11d73-20260724
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1325976147; Fri, 24 Jul 2026 16:08:28 +0800
-From: luoliang@kylinos.cn
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>,
+	s=arc-20240116; t=1784917287; c=relaxed/simple;
+	bh=97LIeKWXsaBt/VFTCvvsImjqqOtZHhgcRM5QOyaibAg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=O85BN3FLY6gOI4uxX0Lv/ejsziF5/08sEN7w16friHDTCQQLxfX0BVXAsAd6v/IN+bbk/XtM7Orp0JQqgcvkCG8END1m1Zca1bBF4Ml5e1NnYTi7BoptKPB49vdYKYC6YKH1uWdZL0KIwvFzbmBkSiJLQRlH4Y5CnOS69vnoFhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jPJ1dAyF; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jPJ1dAyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9F11F000E9;
+	Fri, 24 Jul 2026 18:21:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784917286;
+	bh=5QwUGbP2GAkxPOEzKx9LoGqdib0Oep9WS3v9ChzdZ6k=;
+	h=From:To:Cc:Subject:Date;
+	b=jPJ1dAyFmYlPoSOIKu3VE+ceZdiCb2T0kZvRIBIpSkjwzNCf7t/zm71g5+B+Zrl4o
+	 yoQgKxCcUXtj9WhZsZ+wpODppi5rl9sXT/hHoC9VRgHclUFYgwXCmukz6YdAA2dTMb
+	 aBDGUpe6YP4Q9dM/l7fw6yJDnsrh7xOonCsrcVsTmX64x/xUeVCIDsocZLt/EW0bJU
+	 OzR3ScNQ0DFYXwSZQ5uYmSeShSNztgwXGvS4OYnoaJ/QwqiURI2nSJzdVgTqUOQ/Bu
+	 B6pQTxBvsoQt2ZYG0hZXJt7kVMjV9/wt73VUTK8oOBV9JXED+FYmF88uhaquOFRZ5R
+	 CXyyfpUK+QhhA==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH] sched_ext: Fix incorrect SCX_PICK_IDLE_CPU_* flag prefix in kernel-doc
-Date: Fri, 24 Jul 2026 16:08:24 +0800
-Message-Id: <20260724080824.2483100-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCHSET sched_ext/for-7.3] sched_ext: Follow-up fixes and missing cap enforcement
+Date: Fri, 24 Jul 2026 08:21:20 -1000
+Message-ID: <20260724182125.985061-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -52,55 +44,50 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Liang Luo <luoliang@kylinos.cn>
+Hello,
 
-The flags passed to the pick-idle kfuncs are values from the
-scx_pick_idle_cpu_flags enum, whose members are prefixed
-SCX_PICK_IDLE_ (SCX_PICK_IDLE_CORE, SCX_PICK_IDLE_IN_NODE).
+Follow-up fixes and enforcement holes plugged from the recent
+sub-scheduler work. The first patch fixes the tools' restart loop
+clobbering an exit that was requested while a restart was pending.
 
-Three kernel-doc comments in idle.c erroneously used
-%SCX_PICK_IDLE_CPU_* which does not correspond to any defined flag
-name, while the adjacent scx_bpf_pick_idle_cpu_node() correctly
-documents %SCX_PICK_IDLE_*.
+The rest tighten how cid-addressed operations from sub-schedulers are
+handled when the caller lacks the necessary caps. Reenq to another
+sched's local DSQs is now denied and counted, and a new event counts
+the already-denied kicks. These checks are lockless - transient false
+positives from cap rotation are harmless and false negatives can't
+happen by visibility. cpuperf control moves behind a new SCX_CAP_PERF
+which only the root holds by default, and scx_bpf_cidperf_set() reports
+the result synchronously through a new versioned interface as its check
+is authoritative under the target's rq lock.
 
-Fix the three occurrences to use the correct SCX_PICK_IDLE_* prefix.
+ 0001-tools-sched_ext-Don-t-restart-over-a-pending-exit-re.patch
+ 0002-sched_ext-Gate-local-DSQ-reenq-on-baseline-cid-acces.patch
+ 0003-sched_ext-Count-kicks-denied-for-lacking-baseline-ci.patch
+ 0004-sched_ext-Factor-out-scx_cpuperf_set.patch
+ 0005-sched_ext-Gate-scx_bpf_cidperf_set-behind-a-new-SCX_.patch
 
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
----
- kernel/sched/ext/idle.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Based on sched_ext/for-7.3 (c509d8107026).
 
-diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
-index 16ebe3ab8647..079a47ca8c2f 100644
---- a/kernel/sched/ext/idle.c
-+++ b/kernel/sched/ext/idle.c
-@@ -1352,7 +1352,7 @@ __bpf_kfunc s32 scx_bpf_pick_idle_cpu_node(const struct cpumask *cpus_allowed,
- /**
-  * scx_bpf_pick_idle_cpu - Pick and claim an idle cpu
-  * @cpus_allowed: Allowed cpumask
-- * @flags: %SCX_PICK_IDLE_CPU_* flags
-+ * @flags: %SCX_PICK_IDLE_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-  * Pick and claim an idle cpu in @cpus_allowed. Returns the picked idle cpu
-@@ -1399,7 +1399,7 @@ __bpf_kfunc s32 scx_bpf_pick_idle_cpu(const struct cpumask *cpus_allowed,
-  *			       or pick any CPU from @node
-  * @cpus_allowed: Allowed cpumask
-  * @node: target NUMA node
-- * @flags: %SCX_PICK_IDLE_CPU_* flags
-+ * @flags: %SCX_PICK_IDLE_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-  * Pick and claim an idle cpu in @cpus_allowed. If none is available, pick any
-@@ -1450,7 +1450,7 @@ __bpf_kfunc s32 scx_bpf_pick_any_cpu_node(const struct cpumask *cpus_allowed,
- /**
-  * scx_bpf_pick_any_cpu - Pick and claim an idle cpu if available or pick any CPU
-  * @cpus_allowed: Allowed cpumask
-- * @flags: %SCX_PICK_IDLE_CPU_* flags
-+ * @flags: %SCX_PICK_IDLE_* flags
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-  * Pick and claim an idle cpu in @cpus_allowed. If none is available, pick any
--- 
-2.43.0
+The patches are also available in the following git branch:
 
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-sub-cap-gates
+
+diffstat follows. Thanks.
+
+ kernel/sched/ext/ext.c                   | 152 ++++++++++++++++++++++---------
+ kernel/sched/ext/internal.h              |  31 ++++++-
+ tools/sched_ext/include/scx/common.bpf.h |   2 +-
+ tools/sched_ext/include/scx/compat.bpf.h |  18 ++++
+ tools/sched_ext/scx_central.c            |   2 +-
+ tools/sched_ext/scx_cpu0.c               |   2 +-
+ tools/sched_ext/scx_flatcg.c             |   2 +-
+ tools/sched_ext/scx_pair.c               |   2 +-
+ tools/sched_ext/scx_qmap.bpf.c           |  17 ++--
+ tools/sched_ext/scx_qmap.c               |   2 +-
+ tools/sched_ext/scx_sdt.c                |   2 +-
+ tools/sched_ext/scx_simple.c             |   2 +-
+ tools/sched_ext/scx_userland.c           |  11 ++-
+ 13 files changed, 181 insertions(+), 64 deletions(-)
+
+--
+tejun
