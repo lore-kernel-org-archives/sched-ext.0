@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0336434FF45;
-	Fri, 24 Jul 2026 19:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92A236D9E0;
+	Fri, 24 Jul 2026 19:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784920617; cv=none; b=FG9aV8byFiaEX4B/uHXbdPWwYIm6Xv1qRt/Nj+ml/MEor9vw7GasQOx3GDmd/m2h97OWu8Bl2XhILI7t81ekWbJOFLoSo78QKpgFFCQ5RA3fw5ZsxUP/ESyz/8LXIxTfPhHoei3S5LwmVdZRjIsoJ/xNHPsKUvS+d/aNwvLDiCY=
+	t=1784920620; cv=none; b=kfaxjRt9NeEWB7aUvE+U2rGdedvy+/3BMH4AxD82R70xAVot9Nxt0wmAiMzWNQJIlKvGLz0j6/AsjpMqGItWqt0LIMOpq3fRt3vi+oM1BFOB1WfwlVMnpTv55eAc0AAdGVQceWvCKMXsTSlkulC1lyhsoHzg+ldw1WEAPwqFPas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784920617; c=relaxed/simple;
-	bh=IsQiZOx5g3d7sUGPARj9PNgRb2ELI+dOUh7LtyeZeoE=;
+	s=arc-20240116; t=1784920620; c=relaxed/simple;
+	bh=zNPbLhLQcx8LikdUy8MrZxDADOyKTlOZjokCcS6Wp3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHB9DXk0XSTiFPrpZpefkikJ7i0GGBVq6DVzs760lmzniQOiRaWnDrMw+f/kqNL+hz/4D/NiO2zmHOJgrN/4iEzJ3gR3GcOsPS5tAZs0djvI5YHWq+aC0SeZ8nyNMK/6KCdv8meOs9L0UPe7ZPq29zGGNhVFGa1qfvtUB6jL+VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=El/FNDKn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TKkbu89CyS/L8BZZcjKGFPCikazFwFPDTXhLApo462oZGwcu7kuCYF4rweMG/mK28zcAGW0Ybi/N18J1nviNHGNnEvWdTrf2hdIUgSFaFirMvhFUydp8/gEgSi20jfsv6cYGIIIfPKVqSSy1S5lqQY4Nmc+v5KnwUrmk1zYtJXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dwfKI4LR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="El/FNDKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840D31F00A3A;
-	Fri, 24 Jul 2026 19:16:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dwfKI4LR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0C21F000E9;
+	Fri, 24 Jul 2026 19:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784920615;
-	bh=cg+SBG271+Icv77zPaEzMH8/nEUykrnFb4Vyl7dzrcU=;
+	s=k20260515; t=1784920617;
+	bh=Z70ncc0+HIt0UoHVwiFtBWDxSat2kaF8ZkHkl1Ix3gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=El/FNDKnflzJZk4cXrJDDqi73dA/680hpzwqYZEGIcvRkqfLBCbKNwlwMdsHMj2Tx
-	 PDZEMdrQQoaNEDczFUfd9u4aSpwFJAqhi28DH8MCTgv1q7VNmmYvpLWouZ2z1jkH/R
-	 Q717kM5ST8NxLJdaO5tWFvobS4E+9pL37Ngvr8PrZ7hNiR1arGHvN6oEiwpJyJNOha
-	 kUR+a53hibN1kDglB2weEO2OFSt19gPfbrYz0xQc8vOBlZZrVm4Hls43+pbFjJhc5K
-	 cBihinqAhV5MKq+bVZz4FzL1ivp0sIEMeJT6mcPe6nfnHY4iSbdcNCtMHZc80l2iI2
-	 6RC25UGAN2qHg==
+	b=dwfKI4LRwSjyoQlxO5iPfv9rdUQSZRfEltK0zv57HYo79Mra08uujJIKeCIRE2PCU
+	 /CBjU4yw2aDoFsvVDmPJtHJ98EX9hQr8Vi1LA/CzvJVL28t02dT+AjVB4/REHQqXX7
+	 b3jwT4pN0+pXxNh+wJmjkpe6Le+XSmLlkzm2VtXXHEOU9cea0PiR/lpKhOzRzGJZ6n
+	 RsorQ8gm1fT9PqkhMO3Rggub38gKNK8b9RvMxQMasKIeHpORH260ODg+vLfEARGpLV
+	 POwulo9BTcn8dFbQ7JHsa3lNdSKPyiNv6/5/DEAESQvO2U0ijPW5lyGghc9izrGA/R
+	 +aKtV/hp1GpdA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/5] sched_ext: Count kicks denied for lacking baseline cid access
-Date: Fri, 24 Jul 2026 09:16:49 -1000
-Message-ID: <20260724191651.1040227-4-tj@kernel.org>
+Subject: [PATCH 5/5] sched_ext: Gate scx_bpf_cidperf_set() behind a new SCX_CAP_PERF
+Date: Fri, 24 Jul 2026 09:16:51 -1000
+Message-ID: <20260724191651.1040227-6-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260724191651.1040227-1-tj@kernel.org>
 References: <20260724191651.1040227-1-tj@kernel.org>
@@ -48,97 +48,229 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kick_one_cpu() silently skips a kick when the kicking sub-sched lacks
-SCX_CAP_BASE on the target cid, as does kick_one_cpu_if_idle() for idle
-kicks. The skips are sound with the same logic as the reenq gate but are
-invisible today, unlike the preempt degradation counted in
-SCX_EV_SUB_PREEMPT_DENIED. Count them in a new SCX_EV_SUB_KICK_DENIED event
-so every cap denial is observable.
+scx_bpf_cidperf_set() reaches cpufreq with no cap check, so any cid-form
+sub-sched can steer the frequency of any cid in its view, including ones it
+holds nothing on.
+
+Gate it behind a new SCX_CAP_PERF rather than SCX_CAP_BASE: hardware control
+is a separate axis from queue access - a parent may well delegate scheduling
+on a cid without handing over its frequency. PERF neither implies nor is
+implied by the other caps. The check runs under the target rq's lock, which
+ecaps updates are also folded under, so it is authoritative - a write can
+never land after a revoke has taken effect. Denials are counted in
+SCX_EV_SUB_CIDPERF_DENIED.
+
+The operation is synchronous and the outcome is reported to the caller:
+scx_bpf_cidperf_set() now returns 0 or -errno, -EACCES on denial. The
+cid-form interface is still under initial development, so the signature is
+changed in place without versioning.
+
+scx_qmap grants PERF alongside its existing cid grants so the cpuperf demo
+keeps working in sub-scheds.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 20 ++++++++++++++------
- kernel/sched/ext/internal.h |  8 ++++++++
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ kernel/sched/ext/ext.c                   | 35 ++++++++++++++++++------
+ kernel/sched/ext/internal.h              | 16 ++++++++++-
+ tools/sched_ext/include/scx/common.bpf.h |  2 +-
+ tools/sched_ext/scx_qmap.bpf.c           | 17 ++++++++----
+ 4 files changed, 53 insertions(+), 17 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index fd88b4d4f12a..5d02bb99c09d 100644
+index e11c66bd23e7..aca8d2380509 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -8118,6 +8118,7 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
- 	struct scx_rq *this_scx = &this_rq->scx;
- 	const struct sched_class *cur_class;
- 	bool should_wait = false;
-+	bool kickable;
- 	unsigned long flags;
+@@ -5144,6 +5144,7 @@ static const char *scx_cap_names[__SCX_NR_CAPS] = {
+ 	[__SCX_CAP_ENQ_IMMED]	= "enq_immed",
+ 	[__SCX_CAP_ENQ]		= "enq",
+ 	[__SCX_CAP_PREEMPT]	= "preempt",
++	[__SCX_CAP_PERF]	= "perf",
+ };
  
- 	raw_spin_rq_lock_irqsave(rq, flags);
-@@ -8131,9 +8132,10 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
- 	 * business forcing a reschedule there - skip. This is the authoritative
- 	 * cap check: ecaps is read here under @rq's lock.
- 	 */
--	if ((cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
--	    !sched_class_above(cur_class, &ext_sched_class) &&
--	    !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)) {
-+	kickable = (cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
-+		   !sched_class_above(cur_class, &ext_sched_class);
-+
-+	if (kickable && !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)) {
- 		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
- 			if (cur_class == &ext_sched_class) {
- 				if (likely(!scx_missing_caps(pcpu->sch, cpu,
-@@ -8157,6 +8159,9 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ static ssize_t scx_attr_caps_show(struct kobject *kobj,
+@@ -9786,6 +9787,7 @@ static s32 scx_cpuperf_set(struct scx_sched *sch, s32 cpu, u32 perf)
+ {
+ 	struct rq *rq, *locked_rq;
+ 	struct rq_flags rf;
++	s32 ret;
  
- 		resched_curr(rq);
- 	} else {
-+		/* a kickable cpu was skipped solely for the missing caps */
-+		if (kickable)
-+			__scx_add_event(pcpu->sch, SCX_EV_SUB_KICK_DENIED, 1);
- 		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
- 		cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 	if (unlikely(perf > SCX_CPUPERF_ONE)) {
+ 		scx_error(sch, "Invalid cpuperf target %u for CPU %d", perf, cpu);
+@@ -9816,13 +9818,24 @@ static s32 scx_cpuperf_set(struct scx_sched *sch, s32 cpu, u32 perf)
+ 		update_rq_clock(rq);
  	}
-@@ -8176,9 +8181,12 @@ static void kick_one_cpu_if_idle(s32 cpu, struct scx_sched_pcpu *pcpu,
  
- 	/* idle kicks need baseline access too, see kick_one_cpu() */
- 	if (!can_skip_idle_kick(rq) &&
--	    (cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
--	    !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE))
--		resched_curr(rq);
-+	    (cpu_online(cpu) || cpu == cpu_of(this_rq))) {
-+		if (likely(!scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)))
-+			resched_curr(rq);
-+		else
-+			__scx_add_event(pcpu->sch, SCX_EV_SUB_KICK_DENIED, 1);
+-	rq->scx.cpuperf_target = perf;
+-	cpufreq_update_util(rq, 0);
++	/*
++	 * ecaps updates are folded under the rq lock, making this test
++	 * authoritative: a write can never land after a revoke has taken
++	 * effect on @cpu.
++	 */
++	if (likely(!scx_missing_caps(sch, cpu, SCX_CAP_PERF))) {
++		rq->scx.cpuperf_target = perf;
++		cpufreq_update_util(rq, 0);
++		ret = 0;
++	} else {
++		__scx_add_event(sch, SCX_EV_SUB_CIDPERF_DENIED, 1);
++		ret = -EACCES;
 +	}
  
- 	raw_spin_rq_unlock_irqrestore(rq, flags);
+ 	if (!locked_rq)
+ 		rq_unlock_irqrestore(rq, &rf);
+ 
+-	return 0;
++	return ret;
  }
+ 
+ /**
+@@ -9859,10 +9872,13 @@ __bpf_kfunc void scx_bpf_cpuperf_set(s32 cpu, u32 perf, const struct bpf_prog_au
+  * @perf: target performance level [0, %SCX_CPUPERF_ONE]
+  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
+  *
+- * cid-addressed equivalent of scx_bpf_cpuperf_set().
++ * cid-addressed equivalent of scx_bpf_cpuperf_set(). A sub-sched needs
++ * SCX_CAP_PERF on @cid. Returns 0 if the target was applied, -%EACCES if
++ * the write was denied for missing caps, other -errnos if @cid didn't
++ * resolve.
+  */
+-__bpf_kfunc void scx_bpf_cidperf_set(s32 cid, u32 perf,
+-				     const struct bpf_prog_aux *aux)
++__bpf_kfunc s32 scx_bpf_cidperf_set(s32 cid, u32 perf,
++				    const struct bpf_prog_aux *aux)
+ {
+ 	struct scx_sched *sch;
+ 	s32 cpu;
+@@ -9871,11 +9887,12 @@ __bpf_kfunc void scx_bpf_cidperf_set(s32 cid, u32 perf,
+ 
+ 	sch = scx_prog_sched(aux);
+ 	if (unlikely(!sch))
+-		return;
++		return -ENODEV;
+ 	cpu = scx_cid_to_cpu(sch, cid);
+ 	if (cpu < 0)
+-		return;
+-	scx_bpf_cpuperf_set(cpu, perf, aux);
++		return cpu;
++
++	return scx_cpuperf_set(sch, cpu, perf);
+ }
+ 
+ /**
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 1bdf34f3fc3c..308d16320818 100644
+index 308d16320818..886f1d132e6b 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1194,6 +1194,13 @@ struct scx_event_stats {
- 	 */
- 	s64		SCX_EV_SUB_PREEMPT_DENIED;
- 
-+	/*
-+	 * The number of times a kick was skipped because the sub-sched lacked
-+	 * baseline access on the target cid. The preempt-part degradation of a
-+	 * delivered kick is counted in SCX_EV_SUB_PREEMPT_DENIED instead.
-+	 */
-+	s64		SCX_EV_SUB_KICK_DENIED;
-+
- 	/*
- 	 * The number of times a local DSQ reenq was dropped because the
+@@ -1206,6 +1206,12 @@ struct scx_event_stats {
  	 * sub-sched lacked baseline access on the target cid.
-@@ -1219,6 +1226,7 @@ struct scx_event_stats {
- 	SCX_EVENT(SCX_EV_SUB_BYPASS_DISPATCH);				\
+ 	 */
+ 	s64		SCX_EV_SUB_REENQ_DENIED;
++
++	/*
++	 * The number of times scx_bpf_cidperf_set() was denied because the
++	 * sub-sched lacked SCX_CAP_PERF on the target cid.
++	 */
++	s64		SCX_EV_SUB_CIDPERF_DENIED;
+ };
+ 
+ #define SCX_EVENTS_LIST(SCX_EVENT)					\
+@@ -1227,7 +1233,8 @@ struct scx_event_stats {
  	SCX_EVENT(SCX_EV_SUB_FORCED_ADMIT);				\
  	SCX_EVENT(SCX_EV_SUB_PREEMPT_DENIED);				\
-+	SCX_EVENT(SCX_EV_SUB_KICK_DENIED);				\
- 	SCX_EVENT(SCX_EV_SUB_REENQ_DENIED)
+ 	SCX_EVENT(SCX_EV_SUB_KICK_DENIED);				\
+-	SCX_EVENT(SCX_EV_SUB_REENQ_DENIED)
++	SCX_EVENT(SCX_EV_SUB_REENQ_DENIED);				\
++	SCX_EVENT(SCX_EV_SUB_CIDPERF_DENIED)
  
  struct scx_sched;
+ 
+@@ -1353,6 +1360,11 @@ struct scx_sched_pnode {
+  *            - SCX_ENQ_PREEMPT inserts
+  *            - SCX_KICK_PREEMPT kicks
+  *
++ * PERF       control the cid's cpu power/perf management state, currently the
++ *            cpufreq target set through scx_bpf_cidperf_set(). Hardware
++ *            control is a separate axis from queue access: PERF neither
++ *            implies nor is implied by the caps above.
++ *
+  * Implied caps apply to the holder's own use of a cid, not to delegation.
+  * scx_bpf_sub_grant() delegates literally-held caps, so a cap held only through
+  * implication is usable but cannot be re-delegated to a child. When granting a
+@@ -1363,6 +1375,7 @@ enum scx_cap_flags {
+ 	__SCX_CAP_ENQ_IMMED		= 0,
+ 	__SCX_CAP_ENQ			= 1,
+ 	__SCX_CAP_PREEMPT		= 2,
++	__SCX_CAP_PERF			= 3,
+ 
+ 	__SCX_NR_CAPS,
+ 	__SCX_CAP_ALL			= BIT_U64(__SCX_NR_CAPS) - 1,
+@@ -1370,6 +1383,7 @@ enum scx_cap_flags {
+ 	SCX_CAP_ENQ_IMMED		= BIT_U64(__SCX_CAP_ENQ_IMMED),
+ 	SCX_CAP_ENQ			= BIT_U64(__SCX_CAP_ENQ),
+ 	SCX_CAP_PREEMPT			= BIT_U64(__SCX_CAP_PREEMPT),
++	SCX_CAP_PERF			= BIT_U64(__SCX_CAP_PERF),
+ 
+ 	/* alias for minimal cap to make any use of a cpu */
+ 	SCX_CAP_BASE			= SCX_CAP_ENQ_IMMED,
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index acc2b131ea8f..6035d007c43f 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -112,7 +112,7 @@ u32 scx_bpf_nr_cids(void) __ksym __weak;
+ u32 scx_bpf_nr_online_cids(void) __ksym __weak;
+ u32 scx_bpf_cidperf_cap(s32 cid) __ksym __weak;
+ u32 scx_bpf_cidperf_cur(s32 cid) __ksym __weak;
+-void scx_bpf_cidperf_set(s32 cid, u32 perf) __ksym __weak;
++s32 scx_bpf_cidperf_set(s32 cid, u32 perf) __ksym __weak;
+ 
+ /* sub-scheduler cap control, scx_bpf_sub_caps() cgroup_id 0 == self */
+ s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask,
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index aead17658573..8822ed11c0d8 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -1585,11 +1585,13 @@ __noinline void apply_partition(void)
+ 		cmask_copy(&qa.to_grant_cids.mask, &ssc->granted_cids.mask);
+ 		cmask_andnot(&qa.to_grant_cids.mask, &ssc->prev_granted.mask);
+ 
+-		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ_IMMED,
++		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
+ 				   (void *)(long)&qa.prev_rr_cids.mask);
+-		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT | SCX_CAP_ENQ_IMMED,
++		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT |
++				   SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
+ 				   (void *)(long)&qa.to_revoke_cids.mask);
+-		scx_bpf_sub_grant(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT | SCX_CAP_ENQ_IMMED,
++		scx_bpf_sub_grant(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT |
++				  SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
+ 				  (void *)(long)&qa.to_grant_cids.mask, NULL);
+ 	}
+ 
+@@ -1605,7 +1607,8 @@ __noinline void apply_partition(void)
+ 
+ 		holder_cgid = qa.part.rr_slots[pos];	/* 0 = self, nothing to grant */
+ 		if (holder_cgid)
+-			scx_bpf_sub_grant(holder_cgid, SCX_CAP_ENQ_IMMED,
++			scx_bpf_sub_grant(holder_cgid,
++					  SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
+ 					  (void *)(long)&qa.rr_cids.mask, NULL);
+ 	}
+ }
+@@ -1696,10 +1699,12 @@ static void rr_advance(void)
+ 		 * time-share.
+ 		 */
+ 		if (old_cgid)
+-			scx_bpf_sub_revoke(old_cgid, SCX_CAP_ENQ_IMMED,
++			scx_bpf_sub_revoke(old_cgid,
++					   SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
+ 					   (void *)(long)&qa.rr_cids.mask);
+ 		if (new_cgid)
+-			scx_bpf_sub_grant(new_cgid, SCX_CAP_ENQ_IMMED,
++			scx_bpf_sub_grant(new_cgid,
++					  SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
+ 					  (void *)(long)&qa.rr_cids.mask, NULL);
+ 	}
+ 
 -- 
 2.55.0
 
