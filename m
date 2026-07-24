@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CCA435AB2;
-	Fri, 24 Jul 2026 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B9E442B05;
+	Fri, 24 Jul 2026 18:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784917290; cv=none; b=WacWd+KWP8ZjZ+/ItPnGxkmJWSSJs0ZS0jKRQKZAlOw5wTGrX79XLSulUL84i98FVx6IFMR/abBy7PJzWs8/LOSzF5XB/MoUw48YJjZEt0xVsGIg2WyM4kcO24B82FYCN56FEN83mp20Z2hcbwZczRhfBjAjQfg3AeYorejVS88=
+	t=1784917291; cv=none; b=N8YbJdBcFOs3pRQLsPH0NJYI9mWxsAjUAXUC7akq8v7yVYSNDSaSL0VNJsVIgB8IJGctigdsRwQjqJa/aow3DXRzaIcQ8VZkKC0wsIiSAD4PUnR+JR50UD3HJh9xbCeVNdpKojTt/PHZq5GAL4NgEX1rCvdKenIrdXc7nO0p7PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784917290; c=relaxed/simple;
-	bh=4OJdglxeMFMFhyMlEBS6SWDckYYt80WsKWZRWN6smVM=;
+	s=arc-20240116; t=1784917291; c=relaxed/simple;
+	bh=IsQiZOx5g3d7sUGPARj9PNgRb2ELI+dOUh7LtyeZeoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WkugtTp62sh+z5QQPhHEnSUSE1uRr7Yn6M2rPAFZ0+yl75T1wFXKcWUYSuG3efGEqHHalbFbxV7qFkuiQkCTPmmBK1nK3jJfY2wt97YkXYWn6IIyU9CKvvS9b1P9HZ0nT+CSpvBmS9ajT0pfL5DohytOMt9VSu+AQ2F1Ee3kgzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fu/7ZCyb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U4j7S99nATye2bW2IqpMcRVaYSTX8eDnXUpBdZFmVod/hu0I5ycMVeEvuBUDwQQ89RScBlEa2fO+6ZmbKR2HojNJun/kTCcBw4aCgckL3Ip7K3ypxfDqqFESCZsGUPUAcG/7ne70zrxVxM1SGqnN2tfefUqTrJPZikLzySF9r+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aW8ARnqL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fu/7ZCyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671381F00A3D;
-	Fri, 24 Jul 2026 18:21:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aW8ARnqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FBA1F000E9;
+	Fri, 24 Jul 2026 18:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784917288;
-	bh=6qeurfsUzj3xkyaUaOCSI0sTEi+XPfVRaXP02g9gMV8=;
+	s=k20260515; t=1784917289;
+	bh=cg+SBG271+Icv77zPaEzMH8/nEUykrnFb4Vyl7dzrcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fu/7ZCybBdQ5E8URlZJG8rM4SMOMuOag1Ieo5YULlDc39lMNiHFcCKfUdZue3eoA9
-	 N1k9b0FsuPvIQqGg6QZ7AAavvR+BRdyT7/zchm2s6yU9vlacA2i5BLE4hq+4Q4VQ57
-	 Yv4fQOG4HZnebwdm4Z6RvTpM2n1iVoulEr7VTlXMznnYQkUK/R75kbwfiEhnmEIubl
-	 tU6TvQwcHcWtJzslNFxPTcXASK9V6lJhLHXd+jjt5B9Zn+Hz4Zgges2mWhGBKxLE3a
-	 8XjMQDAQZpBTn388aWUiPfNw11M0DIDl9EGIPwWi/Q5rkxKdQuor+cggVoersrPQrY
-	 FMQmWL1pxlpTg==
+	b=aW8ARnqLsn1BTuV6LOb8aV92d5/w6mE7kQWZHjTDwU/r4/Q2D8Xv2vTZByAAZTDxh
+	 jPEdIKFyvgV/PKzOWlMlqkKGZCTZkGnlA3NpVA42qCYJa3ibKT6TxEtnm/Lw0flcKK
+	 xdelOay0gWq47NjzRE6vInWcpYINN2KREWPskacptJ+tSXqBAsOvOMMIQ+wq8OlWWK
+	 6Dk+NHLjuCUtUmsuP6C6/E/3iZmjuZT7mp6TNA7+B9ABlmcB923vlWfugjCzRPoFPC
+	 nznmCtvhTaLKJy9Mw9Bjx5aJB2WJ41cf+0dfOHOzCOXhnXl2WIgr4uFRhCvF9qGQmP
+	 QOBKHAVJAosMg==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/5] sched_ext: Gate local DSQ reenq on baseline cid access
-Date: Fri, 24 Jul 2026 08:21:22 -1000
-Message-ID: <20260724182125.985061-3-tj@kernel.org>
+Subject: [PATCH 3/5] sched_ext: Count kicks denied for lacking baseline cid access
+Date: Fri, 24 Jul 2026 08:21:23 -1000
+Message-ID: <20260724182125.985061-4-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260724182125.985061-1-tj@kernel.org>
 References: <20260724182125.985061-1-tj@kernel.org>
@@ -48,76 +48,97 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_dsq_reenq() with an SCX_DSQ_LOCAL_ON target schedules deferred reenq
-work on the cid's cpu, raising an IPI when the target rq isn't the locked
-one. Nothing checks caps along the way, so a sub-sched holding no cap at all
-on a cid can force its cpu to take IPIs and rq lock cycles at will. The
-analogous scx_bpf_kick_cid() path gates delivery on SCX_CAP_BASE in
-kick_one_cpu() to prevent exactly this.
-
-Apply the same rule at the reenq scheduling point: if the calling sched
-lacks SCX_CAP_BASE on the target cid, drop the reenq and count it in the new
-SCX_EV_SUB_REENQ_DENIED event. The check is lockless, which is fine: a reenq
-slipping through right after a revoke is harmless, and a wrong denial can't
-happen - if the caller has seen its ownership of the cpu, the check sees it
-too.
+kick_one_cpu() silently skips a kick when the kicking sub-sched lacks
+SCX_CAP_BASE on the target cid, as does kick_one_cpu_if_idle() for idle
+kicks. The skips are sound with the same logic as the reenq gate but are
+invisible today, unlike the preempt degradation counted in
+SCX_EV_SUB_PREEMPT_DENIED. Count them in a new SCX_EV_SUB_KICK_DENIED event
+so every cap denial is observable.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 12 ++++++++++++
- kernel/sched/ext/internal.h |  9 ++++++++-
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ kernel/sched/ext/ext.c      | 20 ++++++++++++++------
+ kernel/sched/ext/internal.h |  8 ++++++++
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 81c2d8eeae41..fd88b4d4f12a 100644
+index fd88b4d4f12a..5d02bb99c09d 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1071,6 +1071,18 @@ void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 	if (dsq->id == SCX_DSQ_LOCAL) {
- 		rq = container_of(dsq, struct rq, scx.local_dsq);
+@@ -8118,6 +8118,7 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 	struct scx_rq *this_scx = &this_rq->scx;
+ 	const struct sched_class *cur_class;
+ 	bool should_wait = false;
++	bool kickable;
+ 	unsigned long flags;
  
-+		/*
-+		 * A sub-sched lacking baseline access on the target cid has no
-+		 * business triggering IPIs. The lockless test is fine: slipping
-+		 * through right after a revoke is harmless and a wrong denial
-+		 * can't happen - if the caller has seen its ownership, so does
-+		 * this test.
-+		 */
-+		if (unlikely(scx_missing_caps(sch, cpu_of(rq), SCX_CAP_BASE))) {
-+			__scx_add_event(sch, SCX_EV_SUB_REENQ_DENIED, 1);
-+			return;
-+		}
+ 	raw_spin_rq_lock_irqsave(rq, flags);
+@@ -8131,9 +8132,10 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 	 * business forcing a reschedule there - skip. This is the authoritative
+ 	 * cap check: ecaps is read here under @rq's lock.
+ 	 */
+-	if ((cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
+-	    !sched_class_above(cur_class, &ext_sched_class) &&
+-	    !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)) {
++	kickable = (cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
++		   !sched_class_above(cur_class, &ext_sched_class);
 +
- 		struct scx_sched_pcpu *sch_pcpu = per_cpu_ptr(sch->pcpu, cpu_of(rq));
- 		struct scx_deferred_reenq_local *drl = &sch_pcpu->deferred_reenq_local;
++	if (kickable && !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)) {
+ 		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
+ 			if (cur_class == &ext_sched_class) {
+ 				if (likely(!scx_missing_caps(pcpu->sch, cpu,
+@@ -8157,6 +8159,9 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
  
+ 		resched_curr(rq);
+ 	} else {
++		/* a kickable cpu was skipped solely for the missing caps */
++		if (kickable)
++			__scx_add_event(pcpu->sch, SCX_EV_SUB_KICK_DENIED, 1);
+ 		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
+ 		cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 	}
+@@ -8176,9 +8181,12 @@ static void kick_one_cpu_if_idle(s32 cpu, struct scx_sched_pcpu *pcpu,
+ 
+ 	/* idle kicks need baseline access too, see kick_one_cpu() */
+ 	if (!can_skip_idle_kick(rq) &&
+-	    (cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
+-	    !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE))
+-		resched_curr(rq);
++	    (cpu_online(cpu) || cpu == cpu_of(this_rq))) {
++		if (likely(!scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)))
++			resched_curr(rq);
++		else
++			__scx_add_event(pcpu->sch, SCX_EV_SUB_KICK_DENIED, 1);
++	}
+ 
+ 	raw_spin_rq_unlock_irqrestore(rq, flags);
+ }
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index a9a853a71061..1bdf34f3fc3c 100644
+index 1bdf34f3fc3c..308d16320818 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1193,6 +1193,12 @@ struct scx_event_stats {
- 	 * kick degrades to a plain reschedule.
+@@ -1194,6 +1194,13 @@ struct scx_event_stats {
  	 */
  	s64		SCX_EV_SUB_PREEMPT_DENIED;
-+
-+	/*
-+	 * The number of times a local DSQ reenq was dropped because the
-+	 * sub-sched lacked baseline access on the target cid.
-+	 */
-+	s64		SCX_EV_SUB_REENQ_DENIED;
- };
  
- #define SCX_EVENTS_LIST(SCX_EVENT)					\
-@@ -1212,7 +1218,8 @@ struct scx_event_stats {
- 	SCX_EVENT(SCX_EV_INSERT_NOT_OWNED);				\
++	/*
++	 * The number of times a kick was skipped because the sub-sched lacked
++	 * baseline access on the target cid. The preempt-part degradation of a
++	 * delivered kick is counted in SCX_EV_SUB_PREEMPT_DENIED instead.
++	 */
++	s64		SCX_EV_SUB_KICK_DENIED;
++
+ 	/*
+ 	 * The number of times a local DSQ reenq was dropped because the
+ 	 * sub-sched lacked baseline access on the target cid.
+@@ -1219,6 +1226,7 @@ struct scx_event_stats {
  	SCX_EVENT(SCX_EV_SUB_BYPASS_DISPATCH);				\
  	SCX_EVENT(SCX_EV_SUB_FORCED_ADMIT);				\
--	SCX_EVENT(SCX_EV_SUB_PREEMPT_DENIED)
-+	SCX_EVENT(SCX_EV_SUB_PREEMPT_DENIED);				\
-+	SCX_EVENT(SCX_EV_SUB_REENQ_DENIED)
+ 	SCX_EVENT(SCX_EV_SUB_PREEMPT_DENIED);				\
++	SCX_EVENT(SCX_EV_SUB_KICK_DENIED);				\
+ 	SCX_EVENT(SCX_EV_SUB_REENQ_DENIED)
  
  struct scx_sched;
- 
 -- 
 2.55.0
 
