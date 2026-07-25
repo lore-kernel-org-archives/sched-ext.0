@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8BA2BEFEB;
-	Sat, 25 Jul 2026 00:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA403126B9;
+	Sat, 25 Jul 2026 00:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784940624; cv=none; b=m4iD5n9sVJhG5ccF6tVw0nDs2V8mEBAsD0HyW+ieyh3i8HSlFjDY2a6vom/2AlwDeF1Y0PRHzNzZJgnCM5xZMBUyMvZq8FereUQ+fRptM6K4kNn/4M9Hp1AWtn2iGFB6MgAeOCtxbLzj35IIkyqudDKCbQw9pUAIGT9YlmPB6Ng=
+	t=1784940625; cv=none; b=Va62J9dLF6dpod0HkcukPOdO4Hq6cGWaU9p+E24kRcQdjP/SzgiPZqtQYcQ7dbioLj/T9g9S8Wy5T8RMz/Y2EXMepZIx7y0dMVCczwMEQkkjfgR05kqdtGPSsKgRMEUXp+Z5kJ9xh4kfuZ2i7BFkhW3UF8aaD898sM1Fxi2XcK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784940624; c=relaxed/simple;
-	bh=U2YaFMMABy+NgO0Ne31k2KgBEx7woo2aToivNws208o=;
+	s=arc-20240116; t=1784940625; c=relaxed/simple;
+	bh=5R1oNpuxwnD/mLYU4R0LbsnTyBo60Hrk6tzhi8mhvJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xw9MUOIiPLKq+nOdYez9oUQ26tzfXP80hjq7kHh6Vz/n2OGmo4tERILPk1be2zys3wVPnpbMxjMdoOuRqS9P6gocjhibex6TbMcbo6aOgmsMvYBHAAfvsTdVIBcPL3zIAoafpcwZV/BMhqGdPI3z9idrubmAEnUu5dLTJzpBcCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkSjI4TS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KywSGXjngeT5DEJ1B3uTytsnNM4tWzUC5Rqna9OfvVl0iXUzDxgQ6ibFtgUPwC23XjjlyaLLuJSwR7IvDTBMIbC6O+A7iBfI/A/T7wS7apZJrNmOstq0uOh6ZNg4486pOlS+6ZECBcfWk7s7Yzsho9ks02V9TXGCs9pKEz+aSQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bRtq4o+u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkSjI4TS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34871F00A3A;
-	Sat, 25 Jul 2026 00:50:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bRtq4o+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EC41F00A3D;
+	Sat, 25 Jul 2026 00:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784940623;
-	bh=V8QdcNYMKnGDOJkuOriwtS3IYUCaZznC2QPPFiXjK04=;
+	s=k20260515; t=1784940624;
+	bh=afQgCkiGzgAbX7OCYcm0u9z4G7NSoUP6hhZ8nWHzcYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KkSjI4TSRH4o+bbbURpr8JF6W39G/7ggtwoBY/vR6prggxZjG3U+X6CNzZOaLFJ3x
-	 YaHMMTF0eed2JUm76Bh6RkNGhfPXUwxnzPbLdMHX0ucWTj7KRmbcGEVGPRs6mTXK0B
-	 pFxIZx+qbFp29VLj9/j/DOmBaR6+TnAQ+D6pFraRR9SdzX1mxXwoMSi2zBlb3xofYK
-	 miX9/b0cur+SjE+IGPX93AX7nyTNsBeS5EcszdO2Y9ZpyZss65cU7lbJTrMMCJL17W
-	 R3oKJtbVxfWg4a1UmTEx8X79iPH5Q3qagP1w6HnaA2TgBvrTDHHl1QJ2mAMxHvjGUI
-	 H9w4A9J7WmQzw==
+	b=bRtq4o+uBt+UtBFJFMJt3WeLFJmAh/iX7zPz0MGxfLNp/9LBfXrAUdNK0eGBo/C7G
+	 ZgzNeJg0BF3ezwyy2bLrnNQyakKhva57Buz4m1Evbs2Jy+dZyK482tjggtj8oUiXAB
+	 s2GCJFgPh2ZCiQ7WBUQt4Hek+8G/Xiw6admzEBVNYDAMhXKj39ZwJF/k7auM7fybvC
+	 5id6ysb9EFVa6M2WYtZ1oUUyyAYpDihLP/6brkCrOMvDqXM+cUiiSBHD0obKDeoNfm
+	 +/QfeSryVnwgkTAhUW+8txGtRfo/bxeKWsr64s6Tkzyei6FrGCgQOfokDXV6vcbpDV
+	 8lHJu3n3FVTKQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/5] sched_ext: Report NMI kicks with scx_error()
-Date: Fri, 24 Jul 2026 14:50:17 -1000
-Message-ID: <20260725005019.1297049-4-tj@kernel.org>
+Subject: [PATCH 4/5] sched_ext: Abort directly from the hardlockup handler
+Date: Fri, 24 Jul 2026 14:50:18 -1000
+Message-ID: <20260725005019.1297049-5-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260725005019.1297049-1-tj@kernel.org>
 References: <20260725005019.1297049-1-tj@kernel.org>
@@ -48,48 +48,82 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The per-cpu kick lists are protected by IRQ masking which doesn't stop NMIs,
-so scx_bpf_kick_cpu() from NMI silently drops the kick after a one-time
-warning. A dropped kick can leave a CPU idle when the scheduler believes it
-was woken, which is a correctness problem for the scheduler even if the
-kernel is fine. Now that scx_error() works from NMI, abort the scheduler
-instead so that the bug is surfaced deterministically. The warned_nmi_kick
-tracking is no longer needed.
+scx_hardlockup() defers the abort to an irq_work because exit claiming used
+to take scx_sched_lock and couldn't run from NMI. The deferral is now
+unnecessary - claiming is NMI-safe and asserting ->aborting is exactly what
+breaks the live-locks that hard-lock CPUs. Call handle_lockup() directly and
+drop the irq_work. This also makes the self-detected case recoverable: the
+perf watchdog fires on the hard-locked CPU itself, where a queued irq_work
+never runs with IRQs off.
 
+Also fix the return value: %true used to be returned whenever sched_ext was
+loaded, suppressing the kernel's hardlockup report even when the abort was
+refused. Return %true only when this call initiated the abort.
+
+Fixes: bd2d76455b65 ("sched_ext: Defer scx_hardlockup() out of NMI")
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 6 +-----
- kernel/sched/ext/internal.h | 1 -
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ kernel/sched/ext/ext.c | 35 +++++++++--------------------------
+ 1 file changed, 9 insertions(+), 26 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 29ca5f5ec30b..4338dc6a3f3a 100644
+index 4338dc6a3f3a..9f5729c2c5e2 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -9208,11 +9208,7 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
- 	 * not mask NMIs, so kicking from NMI could corrupt it and is unsupported.
- 	 */
- 	if (unlikely(in_nmi())) {
--		if (!sch->warned_nmi_kick) {
--			sch->warned_nmi_kick = true;
--			pr_warn("sched_ext: %s: scx_bpf_kick_cpu() from NMI ignored\n",
--				sch->ops.name);
--		}
-+		scx_error(sch, "scx_bpf_kick_cpu() called from NMI");
- 		return;
- 	}
+@@ -5382,25 +5382,6 @@ void scx_softlockup(u32 dur_s)
+ 			cpu, dur_s);
+ }
  
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index a0659f74b065..b141f0104b44 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1546,7 +1546,6 @@ struct scx_sched {
- 	 */
- 	bool			warned_zero_slice:1;
- 	bool			warned_unassoc_progs:1;
--	bool			warned_nmi_kick:1;
+-/*
+- * scx_hardlockup() runs from NMI and eventually calls scx_claim_exit(),
+- * which takes scx_sched_lock. scx_sched_lock isn't NMI-safe and grabbing
+- * it from NMI context can lead to deadlocks. Defer via irq_work; the
+- * disable path runs off irq_work anyway.
+- */
+-static atomic_t scx_hardlockup_cpu = ATOMIC_INIT(-1);
+-
+-static void scx_hardlockup_irq_workfn(struct irq_work *work)
+-{
+-	int cpu = atomic_xchg(&scx_hardlockup_cpu, -1);
+-
+-	if (cpu >= 0 && handle_lockup(cpu, "hard lockup - CPU %d", cpu))
+-		printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
+-				cpu);
+-}
+-
+-static DEFINE_IRQ_WORK(scx_hardlockup_irq_work, scx_hardlockup_irq_workfn);
+-
+ /**
+  * scx_hardlockup - sched_ext hardlockup handler
+  * @cpu: the target CPU
+@@ -5410,19 +5391,21 @@ static DEFINE_IRQ_WORK(scx_hardlockup_irq_work, scx_hardlockup_irq_workfn);
+  * Try kicking out the current scheduler in an attempt to recover the system to
+  * a good state before taking more drastic actions.
+  *
+- * Queues an irq_work; the handle_lockup() call happens in IRQ context (see
+- * scx_hardlockup_irq_workfn).
++ * Called from NMI. Aborting the scheduler sets ->aborting throughout the
++ * hierarchy before returning, which is what breaks the dispatch-path live-locks
++ * that can hard-lock CPUs.
+  *
+- * Returns %true if sched_ext is enabled and the work was queued, %false
+- * otherwise.
++ * Returns %true if sched_ext is enabled and abort was initiated, which may
++ * resolve the lockup. %false if sched_ext is not enabled or abort was already
++ * initiated by someone else.
+  */
+ bool scx_hardlockup(int cpu)
+ {
+-	if (!rcu_access_pointer(scx_root))
++	if (!handle_lockup(cpu, "hard lockup - CPU %d", cpu))
+ 		return false;
  
- 	struct list_head	all;
+-	atomic_cmpxchg(&scx_hardlockup_cpu, -1, cpu);
+-	irq_work_queue(&scx_hardlockup_irq_work);
++	printk_deferred(KERN_ERR "sched_ext: Hard lockup - CPU %d, disabling BPF scheduler\n",
++			cpu);
+ 	return true;
+ }
  
 -- 
 2.55.0
