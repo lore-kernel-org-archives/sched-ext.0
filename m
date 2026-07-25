@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20883009CB;
-	Sat, 25 Jul 2026 18:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D245248867;
+	Sat, 25 Jul 2026 19:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785005468; cv=none; b=tJAESS/51dqF4BT20ttCnm262KoNe7vztk6UBoPhdzR29DR3LR3EGbCybJzq19FjpySjuHP1rxPSUrTHOQ7x/1acc07s5+Z/j34GMwprvFkm42yR4KYWsjo/0pS/VXuw6OJmbIAAyhteOOx0upMra9Bhoi3pZLgqJ7znWpKrDN4=
+	t=1785006342; cv=none; b=PktEvdjhVgDNUcI2UmUKsWtPf103Q9hFlbM90YfvgmTLrjcZFY3LVqRY5PkzH14udLSwjXnCuOsu1/sGz5cL01sEQ2WAIaXhbUmX2C/zLVjz0/cGD0wD2J5nZhMJGck6IfVkUBYauCG+c1J0ccRiUn11+/L3vz3/eXbRY+F5Ihg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785005468; c=relaxed/simple;
-	bh=xbmh9B7axmRUGEhseIxWIhlw74ryl7NoNZLGc9N6/FY=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=bF67LMkEkMkwDAJoLgTRS5z5LG47MaC8XM9G+/rHKkw0lKR8PGuDt6kA3y8ymdBbU41jAaY6z3HFhyOTMPLIJ3oA+TrW68nisCPkBVZfGu/y4sWs3q7aeGuEQUTMXLl8gFBz8erkubK2I5hqnyy/sarV1BwNrqECb/9DG4/BvXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZyVB6Mv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785006342; c=relaxed/simple;
+	bh=701NeQS8E0FykGwQcnRHCXLhCRqldp0lIL0u4hWXGEU=;
+	h=Date:Message-ID:From:To:Cc:In-Reply-To:References:Subject; b=mbi9CT0rUjJkUSKgf9/JMoH3mWurXdgv6ZKs5wJFModp37Aduvhrbv3xM/c/TIoJmiI+rmVvOaWEi2GdQEMKwaW624UJvzkm86U/hGEK3e3kb/NeCp0mDMUPTdKLKTo4JoRK1AXUWILB84gyiMs67nKrUpP43beuyNa3lRttBZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V4XZjx2X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZyVB6Mv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C021F000E9;
-	Sat, 25 Jul 2026 18:51:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V4XZjx2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819031F000E9;
+	Sat, 25 Jul 2026 19:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785005466;
-	bh=5+EeWz2Ak6A3Zcvi8sTKFnHB33dbw2gWKPfuuH/6NAk=;
-	h=Date:From:To:Cc:Subject;
-	b=CZyVB6MvdQZQ4/IBJ3lS5IMOBFKvmLMM8ddpP3JBdRACVVczJaiF3NiBOvSYOI4wB
-	 YofPXMIfpHZCP8NwrQG9zpGJItJjkTV6aVTyzbuz913G/tU1ESQOqnaZtspkrPYkd9
-	 5D9SIeaicsVHRorK1nBdqRIW0ezuzWoeXo6vpgNHfQuGefauoaSLuTL+7OIzI5STKd
-	 zwIARy+OXZaIFQI0rSkN0DQRbttw6cH7pFj6F0u4328I6q1gTbligK1FV/iQqMTZwv
-	 9GlA7d0hPjUGA69KdV2rClNtFX51HLYPqHja48NkGYCjvF1tHVrMSjd+safka9tluN
-	 +d/KOanF7e2Hw==
-Date: Sat, 25 Jul 2026 08:51:05 -1000
-Message-ID: <7f80005b54904a9a037822c2df5bcbc2@kernel.org>
+	s=k20260515; t=1785006340;
+	bh=427JGuryQ/p3DFWvhHKib+1DIv/rbXUXhr8IzzH0+9Y=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=V4XZjx2XC9s1YSYfofr1fi2wqbzWAr70Y+NAsf+xuBotbFp41JN9feKw8JvnZ25GR
+	 TZog3T7CfjOE1mF2R3+hhGOobU3j93aDbq4bpHxVuAXq0ngOhtrUFFaMzXJilGGzYX
+	 x8t2ojlFrR6ibuYfnly08K4JEm7d2bwO8rmdC3w9zdP7dwHcAAwiF1KaBsoIZpYOpw
+	 2lqDrbjYWwNx2XPViP6zhy0RMZs8svYdqZtSp+OO6JZBzxUbOsx56xLVWTZTpTrWJz
+	 TcxA7l2EQeoCwB45FTyv57VkP5noX4CJvV0DfF+dBeOwHPNxwJ/0UW7dGjV3X2LknT
+	 SvokBjLGuFnKw==
+Date: Sat, 25 Jul 2026 09:05:39 -1000
+Message-ID: <2f7e89d4ee0ce10c24782ad35279a1bd@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
     Andrea Righi <arighi@nvidia.com>,
@@ -34,7 +34,9 @@ To: David Vernet <void@manifault.com>,
 Cc: sched-ext@lists.linux.dev,
     Emil Tsalapatis <emil@etsalapatis.com>,
     linux-kernel@vger.kernel.org
-Subject: [PATCH sched_ext/for-7.3] sched_ext: Bound per-task reenqueues and eject the owning scheduler
+In-Reply-To: <7f80005b54904a9a037822c2df5bcbc2@kernel.org>
+References: <7f80005b54904a9a037822c2df5bcbc2@kernel.org>
+Subject: [PATCH v2 sched_ext/for-7.3] sched_ext: Bound per-task reenqueues and eject the owning scheduler
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -62,17 +64,20 @@ scheduler is ejected with a new SCX_EXIT_ERROR_REENQ and the task is left
 stranded to be picked up during sched exit.
 
 The SCX_EV_REENQ_LOCAL_REPEAT event becomes SCX_EV_REENQ_REPEAT, counting
-reenqueues from all sources.
+repeat reenqueues from all sources.
+
+v2: Count SCX_EV_REENQ_REPEAT only when a reenqueue leads to another
+    reenqueue, not on every reenqueue.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
  include/linux/sched/ext.h   |    1
- kernel/sched/ext/ext.c      |   56 +++++++++++++++++++++++++-------------------
+ kernel/sched/ext/ext.c      |   57 +++++++++++++++++++++++++-------------------
  kernel/sched/ext/internal.h |   19 ++++++--------
  kernel/sched/ext/sub.c      |    6 ++--
  kernel/sched/ext/types.h    |    2 -
  kernel/sched/sched.h        |    1 
- 6 files changed, 45 insertions(+), 40 deletions(-)
+ 6 files changed, 46 insertions(+), 40 deletions(-)
 
 --- a/include/linux/sched/ext.h
 +++ b/include/linux/sched/ext.h
@@ -86,7 +91,7 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
  	s32			selected_cpu;
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1892,6 +1892,23 @@ void scx_do_enqueue_task(struct rq *rq,
+@@ -1892,6 +1892,24 @@ void scx_do_enqueue_task(struct rq *rq,
  	p->scx.flags &= ~SCX_TASK_IMMED;
  
  	/*
@@ -96,9 +101,10 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
 +	 * to be picked up during sched exit.
 +	 */
 +	if (enq_flags & SCX_ENQ_REENQ) {
-+		__scx_add_event(sch, SCX_EV_REENQ_REPEAT, 1);
++		if (++p->scx.reenq_cnt > 1)
++			__scx_add_event(sch, SCX_EV_REENQ_REPEAT, 1);
 +
-+		if (unlikely(++p->scx.reenq_cnt > SCX_REENQ_MAX_REPEAT)) {
++		if (unlikely(p->scx.reenq_cnt > SCX_REENQ_MAX_REPEAT)) {
 +			__scx_exit(sch, SCX_EXIT_ERROR_REENQ, 0, cpu_of(rq),
 +				   "%s[%d] reenqueued %u times without running",
 +				   p->comm, p->pid, p->scx.reenq_cnt);
@@ -110,7 +116,7 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
  	 * If !scx_rq_online(), we already told the BPF scheduler that the CPU
  	 * is offline and are just running the hotplug path. Don't bother the
  	 * BPF scheduler.
-@@ -2013,8 +2030,10 @@ static void clr_task_runnable(struct tas
+@@ -2013,8 +2031,10 @@ static void clr_task_runnable(struct tas
  {
  	list_del_init(&p->scx.runnable_node);
  	WRITE_ONCE(p->scx.runnable_cpu, -1);
@@ -122,7 +128,7 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
  }
  
  static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_flags)
-@@ -4053,8 +4072,8 @@ static void process_ddsp_deferred_locals
+@@ -4053,8 +4073,8 @@ static void process_ddsp_deferred_locals
   * Reenqueued tasks go through ops.enqueue() with %SCX_ENQ_REENQ |
   * %SCX_TASK_REENQ_IMMED. If the BPF scheduler dispatches back to the same local
   * DSQ with %SCX_ENQ_IMMED while the CPU is still unavailable, this triggers
@@ -133,7 +139,7 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
   */
  static bool local_task_should_reenq(struct rq *rq, struct task_struct *p,
  				    u64 *reenq_flags, u32 *reason)
-@@ -4162,14 +4181,16 @@ static u32 reenq_local(struct scx_sched
+@@ -4162,14 +4182,16 @@ static u32 reenq_local(struct scx_sched
  
  static void process_deferred_reenq_locals(struct rq *rq)
  {
@@ -153,7 +159,7 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
  
  		scoped_guard (raw_spinlock, &rq->scx.deferred_reenq_lock) {
  			struct scx_deferred_reenq_local *drl =
-@@ -4188,27 +4209,12 @@ static void process_deferred_reenq_local
+@@ -4188,27 +4210,12 @@ static void process_deferred_reenq_local
  			reenq_flags = drl->flags;
  			WRITE_ONCE(drl->flags, 0);
  			list_del_init(&drl->node);
@@ -184,7 +190,7 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
  	}
  }
  
-@@ -5925,6 +5931,8 @@ static const char *scx_exit_reason(enum
+@@ -5925,6 +5932,8 @@ static const char *scx_exit_reason(enum
  		return "scx_bpf_error";
  	case SCX_EXIT_ERROR_STALL:
  		return "runnable task stall";
@@ -214,11 +220,11 @@ Signed-off-by: Tejun Heo <tj@kernel.org>
 -	 * that scenario is very unlikely and this count going up regularly
 -	 * indicates that the BPF scheduler is handling %SCX_ENQ_REENQ
 -	 * incorrectly causing recursive reenqueues.
-+	 * The number of times a task was reenqueued (%SCX_ENQ_REENQ) without
-+	 * having run in between. This count climbing rapidly indicates that the
-+	 * BPF scheduler keeps re-deciding placements it can't honor. A single
-+	 * task reenqueued more than %SCX_REENQ_MAX_REPEAT times gets its owning
-+	 * scheduler ejected.
++	 * The number of times a reenqueue (%SCX_ENQ_REENQ) led to another
++	 * reenqueue without the task running in between. This count climbing
++	 * rapidly indicates that the BPF scheduler keeps re-deciding placements
++	 * it can't honor. A single task reenqueued more than
++	 * %SCX_REENQ_MAX_REPEAT times gets its owning scheduler ejected.
  	 */
 -	s64		SCX_EV_REENQ_LOCAL_REPEAT;
 +	s64		SCX_EV_REENQ_REPEAT;
