@@ -1,47 +1,47 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012007.outbound.protection.outlook.com [52.101.48.7])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010005.outbound.protection.outlook.com [40.93.198.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9E931352D
-	for <sched-ext@lists.linux.dev>; Tue, 28 Jul 2026 15:45:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBFF335BDB
+	for <sched-ext@lists.linux.dev>; Tue, 28 Jul 2026 15:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.5
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785253548; cv=fail; b=gNPsIFiL1kxjf5L2eqgVVvC9MRJOGdA1CS5S5SNClu/CDmbSyckkp41bn+a/DGkTstyvm81ZK07kKS0UAlZhMacgsVrXVgJH8lHgBf8y5IEZF/Yks3h+UoJND4OvN430s8JqIsjbnO5mtWIKOA++9lRgi1wbzYVG3zaWLLLHvVo=
+	t=1785253551; cv=fail; b=omsFG+It9FXFvIwmH5Tk5urhCrPNXk4gohFcAGOWitkgeIPq+lTsgXmK/H05+3gmylG9lVmOmXcAZxY+679UKjshPxFHITEzspI73SR+hnSaFYNnW5iVfty2aGFYtZ1lNUSjKVkcFZSACAJ+BkOqush4jSMc9EPArSkjdHNQY3Q=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785253548; c=relaxed/simple;
-	bh=RSFrbsojGcZtbuUs3GT7+QKSrVLaeSS7H4MfeGyBRjA=;
+	s=arc-20240116; t=1785253551; c=relaxed/simple;
+	bh=CpFKOC5cnQygKtz7QRHcDpKgvDYMZlw1LEUuMXrxCcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=AbM7EcMI2CYY/LHajTMBR2njye05dZTK5033loBaTzInlurBcQZGZnaedyay/xc3qYZTlA1qWTXVaE8SFlbPdcQi357EY8Ktzp/KEskBaD4/rN4wG3ypNRj7/1NlHy1Cyd+LmhT0DwJhLSaxMQ6Ci3h1AjL7e3m2QfgTvbU3pkA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=p+GcUS/n; arc=fail smtp.client-ip=52.101.48.7
+	 Content-Type:MIME-Version; b=WCvI74AsBms2GZddlTCMh/X9vDrF5WT3adpnxuI2GH83rWGWN/ZRnk+uk3cC4lAyxZujNtVWYOCwJhimLoCAohUYg98xWTZuA8XLQ7oDfxz+Rqs7bt7x1tOZfh3PT0QvwpMJHHq7xx3mEgQ5UvdLXLsNYOituTOURRpLk+BVkTU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ANS58S0a; arc=fail smtp.client-ip=40.93.198.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="p+GcUS/n"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ANS58S0a"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q42EB/HPSZVSLJ1DdrLniFeguaCRKtoT4N3+v7tgx6iF/0lb4hypyzwR2HvtDtV+GlYxK9iH3aoO6/5D9fIE9QGzMCq2F2nqMscu+jOfyhxSYQYUlZIaSH0FEB3wAI2cL3ZkeblE8kLDq22EM8iTfuCguBybKDRF2X/JVftU2TtZKx51+yQ7ufeIDBP8FWGLz55qqnWloy6kekjeINIl/JWcmcluFsJyuUob46emfdcyv+90oSO+w0wT3uHDDW2C64Y5ya6uyXlSiAsXA0rQ7/ZSKXjslSn9M6nOfHmk9dad0HSQDghhP/7yJa48jvNfFU1l9z+0PaUbyNTs+JQsDw==
+ b=W0tmEi+NXqmhdAhHvNRKKYZYcPvzcssxecQP7pYo3wWRZaYzzFWlpEvvaRDkp2CVgyt1O2P1etPjmNfFDGzCXPPlzsD6WZmzTrNt/qfpznCK5roX4D9B6go01xCTU1MLS29baBNkWiqymLrUlp4wipep2DzrNZE6hQ5HoPVnX1lXdaSotf0p6RZIzgWH8sLoVb4jznbXISiyF09GyaKnZpbWSskVfPAEaEY7sXfuhcPNMu8IvQVOjoGCedQ98xzFsWgwY2c2/qHbP6PwzGGUsqRK4nCXvji1SH2uM34dQMeIXDb40Kd3TqpNCMYtEyoJB476vdyg0y7u6rBpEl300g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MtFz0AVf6UfKP/Sakkw9RPsa1SBJFbnhgKBEPT+7pCM=;
- b=m2L9RJhvN4e2jefXhz61HZCCaHOkZCZxQi0E6yZkN99SK1pxLfvKcMjgQZimNeTKz4WwP/bttjWjYeAIvqD0MOpp3MQIIk6sVgTepLt2AM0fALjat910Q8+a7acmsLi/7rlgpAg0fUH06OJ1RVPg7D6YOkSVrKf8X15teyS/JamNiumHN8nlgOktUvpK88yDthJVve2QhopPy1TufcgDKfONPTgdvdShmes4ntMEfWT5gspQE14DRYbauI7nqBxbhcWuQR4Q0f97Dxn6Xp+EUlhsd7ZI5DZoE2pdClZqPHijQ4lYGfTtA/RdhQZUqTVNbiF8A4z2TiSrnECQOvKtkQ==
+ bh=XDniAHKatrVE2DaLYtI3VL7YVxIZcxQ/Pk9SNNMA2zM=;
+ b=ZKjoNTSDocv3trTwdAKgy5p2g9ZCd+N1vO5w+8r2k0O8l5XkBmJjC+tk6Q1hOh9IsS0bIG27Af7KbYsYpaczpTtbyLh6Im9D8Z9inI9xVAEEGlHRngWZcqmGPYqKPNzIVoV81Iasy1qC8NfS6navQlPKN1htKGdA6xM+pzGPmcNlZrotQOKLMFaF7szHmO5Nz/xQHM4AVzMUBU2kKXl4ckdw1PrQa9G2YWPvxRXIqLQ2M0VNbgQ5ju0YzIL+5NSDT8PXfQxNaXaglAURFOZc98emqy33hS10GN5ewr8EpCnCm1Pn8p94+7uD0hvWVwzhiXkbkAImwndd5LqqtXA5Ng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MtFz0AVf6UfKP/Sakkw9RPsa1SBJFbnhgKBEPT+7pCM=;
- b=p+GcUS/nuTjZaaMy3Yd0yFJAgb4MxhYR2x+c6uNJOl94xSBmMDWVlkbNAVGDG5ErEdr6YhFJXHW74lKZ8wbnrr2JGqDlvqI9TrpHN2BWmKow1icuaAv3BdaAf9uCmJgKH0aURmDL09UtLyPDPaq0wgXyOTWyNtroDVRomrHQElT4nDbIXoX8cGPfM5alRRG4e5DG0KIRVtlOJ/eyiEUqwb8Q6JNjgr7VrA13XMenh1DjfdJ2/M8UcG5iNE6HJ0zr/ZpPu4HKJM0R7yvYV5Ct4VvM9u3G82sxeFtLyFU2eHm5/+Nbui+89a8pyf3f6OabsbeQG3uZ1FCzALBes9ycCA==
+ bh=XDniAHKatrVE2DaLYtI3VL7YVxIZcxQ/Pk9SNNMA2zM=;
+ b=ANS58S0aswBzdADKono8xSCoyqeYuXepo+Q4b5Vs8QEmjHkBoiQgIPHmIsCmP9Q6mxuBFihW0dqKp2V8U7yUbN/gXT/Xt7dfS5+FhTPlbZOEOIxTyjaP3LSHLHT8vLqNwZ9/mBtP9sxNTx2kAhs/9uIu7nqGjp+T4jVDOuC7G1F5zeQEYlsMrucN8YIChdKCi/fnKfNNqjJpTDD8Am0Oc7ZxezZKtrPWW+uRklCLtGCv8UYRa6C39sbMW2GR48Oa2wNxOGRaIjlYZUzGPVW+z5htj1ir1lUwZNMK8YXGO5DKI6u5a1oYrQEfnd6AYASG4WezXiXXlnuI7q80BCPgRw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by SN7PR12MB7023.namprd12.prod.outlook.com (2603:10b6:806:260::16) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 15:45:37 +0000
+ 2026 15:45:41 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0245.012; Tue, 28 Jul 2026
- 15:45:37 +0000
+ 15:45:41 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -64,16 +64,16 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 11/15] sched_ext: Split curr|donor references properly
-Date: Tue, 28 Jul 2026 17:43:29 +0200
-Message-ID: <20260728154425.1549660-12-arighi@nvidia.com>
+Subject: [PATCH 12/15] sched_ext: Delegate proxy donor admission to BPF schedulers
+Date: Tue, 28 Jul 2026 17:43:30 +0200
+Message-ID: <20260728154425.1549660-13-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260728154425.1549660-1-arighi@nvidia.com>
 References: <20260728154425.1549660-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BY1P220CA0007.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:59d::13) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR03CA0017.namprd03.prod.outlook.com
+ (2603:10b6:a03:33a::22) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -83,526 +83,524 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SN7PR12MB7023:EE_
-X-MS-Office365-Filtering-Correlation-Id: 380b1d83-aa13-41e6-8827-08deecbf44cb
+X-MS-Office365-Filtering-Correlation-Id: 646c12ce-94d2-46aa-6194-08deecbf4763
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|7416014|5023799004|11063799006|10067099003|56012099006|6133799003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	OdvPPKV8OrOCZbdpjx2gFSat3rUyNYSrGkOYA37d3UuK0TMu+4LTFpoUaTTn7LOf0JmQipw4qJ46Oe+LyfyvxKw2f9gqHQ5+OC0I/uT/5FVUimypHT5v3cNW2R8V9Vo1vMeuOMUhplZCfdvY62tZgSm+QB6SUDK53XMNMrcu4JPnwXaap9caTn9SoHacVw6DK4HdnFT2peD2PQAXjNqkt3iepX5E4wFlg7H9T05KKG+2uV8r0LGH/r8+i6d6zhrFqOzyXosuVpi+7MjKhorhF82c5BBR2BGwU4zC6D/ai0eutsb1OPsM8a+VEOeE3s0J2eMv86u7jPSggX7rJ/Gr+Dq8YJ8x2V0/ZkM66/yvl5tvi63Onmhv2giPGX5dl19mtc47yn6o9xF6SYnnITQsq2VVMq2AOH4of5BGPc7c4F5WecWc6OndWKbKwL6NeroqTh1L9AGEYP+iW00t9Ag5qCl+ti+7TTORqRtgFgAjjprgKQMIhzysSRtvT2XWZ/CM3HsX7W7t/SJ8AxRMAO1Wr0bR6zaCsRo1ei8y+5XDVN9wPkfW4wJpT8UXnzGVESl6j317jNW4Z/TO/nkMMjBgzQg2qq2wwQeMl+ijWzo0ZVWlHNriMhbpb36vQTl4TKjJeRP+5Lt8qUpiN5KbkTh5vXLCs2RL4ujzM36iY4myunw=
+	9nXBej8dVeiSos3KYae/vr6tz4AtoHiqWTOD6sDOhbJGilwdoRnRkCChsOPMYvfis7d+ureXTGwK9RzcRbwpzRLkDEsqSWVD8nwfEFKP/b8YvK7oBdqsefVqUNRrmdB4DFc1ayV5+LAdlOd9RG7xBVPWx9Y4wVmJOsdgtJOpLS+ZYBZX+noyA1ESHObjdqXm4I0jjoW/gopJ7TM0UvO/8Gb90rrMFM98ZyPQZi91TpVRGGU+QSnHFKci0wF3A5QRwJW8enl3SF6knkn7bawQLs26kA0pqxYC+d164GB6eAwy4NCX9Q+TUUQQG7Lh2xvnFz5ARBwYvEofJfS2Cswv40DbAi7d0PdLwRahlp2uu1SIWg4U2zN9qDZihkprtUW+tKBRpcn44uauhxHh9Oef1hUjwvLkwkxQNRjx7lUIfohqb/C6cAcqv0kFRxqD2AJmrO/BfMCE3IN2gSecPD3V31p6w8MXkykvvViFu9iwEoioqN7aV3VfJhhKnx/jnqBxHRDsq2IwCIHo12tq22ZHR1+wJME5fPccHzk6K8neQC9+jl7LlNG70pYKEQ0X239M6XRywVmQMflzWCN4lezlX4a/TGs6pX3N1c757kUOZWkYb7SbcA518hoNhgBtbulOo+HUaPv9dVsiQfkYWMw3+Z/m+B8PjYBkxoDEmilsCts=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(5023799004)(11063799006)(10067099003)(56012099006)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0c90VbYVCThCsJOfU71wWyq9Pm6+fnJaeW22V6guFuaIB34j9wfD0MM+A11M?=
- =?us-ascii?Q?Uq8lEOQoXQPCkDTzFb+MuI0fFC09SdPW3Ijg9pkDWpXAHdHLdBYKrHcsZTKm?=
- =?us-ascii?Q?t3+Wc+1tC/RhBc3PS7hUBHJVbPKFO2fZuhmKANcr+Cdc1L8QQY5ulEmSb3Es?=
- =?us-ascii?Q?e7JUQLJNEtemt3hKN6roPJOTxsZ0THy2PfwqcGh25bI3bzDHTuXBSlEFICsL?=
- =?us-ascii?Q?XWVh9bYaUhwQqV284K9eutKxS8AhmuM7VnN/zxwlNnSUaQU8RyhEnLUt9jmk?=
- =?us-ascii?Q?BbB3FptxaH8KUqBYJmjSHKRX6ITHEjDWlVFGH+Sgl79xs9G8b/+TwsGBRQPd?=
- =?us-ascii?Q?k/M2mU4k891y8NYCBLF6+RiBhG1N/J1Qy3uB6bTnc+gGEsknWrF2LK3RwUkk?=
- =?us-ascii?Q?OG1SOFGnGx/EMf/Klc/x44By1AaHKl+dRo3a32CC4oKb2gBN09FwT3FuNRX2?=
- =?us-ascii?Q?hA9gkbHDJMORQ9kqyn8bIV98yvSHBE8XxYGQL+tPc6pGgUe81F8QULS8N3Zg?=
- =?us-ascii?Q?w/20Rt0GFUxohUhBTUn2YqiEMncgd5uqVxiWuhlOb2UCJC2uIzY/KUvS0bQ0?=
- =?us-ascii?Q?llCGgwe54AGRmWq3d/cqUTsyx68Okz7ta0Lxyo+Fikm6WGpcA7jiaAzDlBEG?=
- =?us-ascii?Q?sUqz1p/Eo8p5RME6Eu565sj5DVEe4AO0P1t5prhpSt5+hMg0Gnw+d9RgkC0b?=
- =?us-ascii?Q?Z4HdZPTucXOVhZmJPO/c3mY0QbXRPWbbTmWKvepZvIclARe9a3p7fYDCUqn3?=
- =?us-ascii?Q?OmN1tyidQRh4CJEjKNKw2A+gqG0g80oltRG9PHMPWOZGfWON5tL7nCWvB3RC?=
- =?us-ascii?Q?qwfK7m0e7NJ30xxWO8FaapwQBWGs73TvzKnUZhj5xk9JvkH5LRwaR3kzgd7j?=
- =?us-ascii?Q?uLyz83dAUB9xurbEZqhT/yMO2Dx60wKQNz4uBp+KkhQYN1SqB6739UjYcPB9?=
- =?us-ascii?Q?NFaWsGxIPPKiD3Or0IFW7lkGBbpJ0I8CJZx+pjT71+mGIdFBHOLi4+jj7rTD?=
- =?us-ascii?Q?y4vIXusaIU0tWHS4cEOivZ33iqhJAjhQpSOsJujvNBv6AAoNBHhLzDwqC7wf?=
- =?us-ascii?Q?JXZDEHbyYru74H5UzLzdGL49/AH/12HeAyMyqED67rc4v/B30LwLsU8+PhrD?=
- =?us-ascii?Q?lPa8qHoB/HcTKg3faeTnaMKcsEq8CFDH4+CFGFqMQTt3AOKTvAOkXylQITCX?=
- =?us-ascii?Q?Spr+cGOMFE2zj1J15mfYMb7yt86ydME/PbED+SikGjUrbZNiIPSxIgZqwlnE?=
- =?us-ascii?Q?fns/1LKWUS4liRpfU3G6hgOgYX/NAjL84WUJZ5AEw2co+/fkWM4QhKdX3SWe?=
- =?us-ascii?Q?HXaxdUWtW3EDZFw4aeLzpwh7nLd3W+SP2VIZHAF3WPBekxV5EagXJjrJTY5k?=
- =?us-ascii?Q?iTk6E6NBrwXbD3XBgOX21RT7sAtopUh5iZ05hPMuAF92c+aY6qHm769nFxYi?=
- =?us-ascii?Q?XsOYRqhEiAgiVExCaQ7Wj6bHmPcj3/jGLUp7uBGIN0y49RyHS+ylp5fjyHSw?=
- =?us-ascii?Q?9GyRdiiW73l+LaqmDe9LpJpf8QBXhQIzugIC0Y1Qq8nzBJ4rG2XY3vk96Ax6?=
- =?us-ascii?Q?9ElvLq7s9+WtAFeSc0Qdb2H79/rHO4nHKRhYTvBTFywAdvXfxryWDT5w5FeY?=
- =?us-ascii?Q?MLtdABlZktmiK3QngZf3px5rD8J6Qt9FnJ2smHze2qXCTm877B9zxAPxpdHh?=
- =?us-ascii?Q?RIu/GD+e2waqR6zVERBSDDiEp6igEEjSn+tjFPVaOnO5VCi4zzL+jEqYn/mN?=
- =?us-ascii?Q?B6kdrY0WuA=3D=3D?=
+	=?us-ascii?Q?uQ0vQP3SpC0qX+eX9IARPyNXFFVY09Gn6qUXS/Z6T58tUNesa4CzpgEATdvC?=
+ =?us-ascii?Q?dfLoTRLTMYTNFx8MqdutPMNyUF4JJ58FX42M4W5Lg307058mL+ljPPySYA2B?=
+ =?us-ascii?Q?hOZ+RpmEiRqB8hDAXTa0hsRHUB9xCbILaalTyaH0gmp6E1nluNYGeWIpQvSz?=
+ =?us-ascii?Q?H4yVCkdbJvSh/SXGZjc5A4/UXhfimWfbXqoLz2YvLkho0ySj3U+jkjBZe+DQ?=
+ =?us-ascii?Q?CxqhaJasgfOjIa25sD/cINn4uJPrUtwf3BwTZwE/DmBH+LlyRchIa1p4eckA?=
+ =?us-ascii?Q?21pgjKeEb43pcK7nSABP5Dzu9yey7DHYIkzcpxEV259kkoBt1QCAkRNPzT4J?=
+ =?us-ascii?Q?PIxIImip56xNWC4ougCufYuBmoubiYicggkTF0zaX5j0bsD/GqwKy8RXqJPH?=
+ =?us-ascii?Q?j8pGg/m+PaZEB1iirMiG8qrJMbxDW7xfocIa2i/0YGfZOp77XZwtlt9bXvX0?=
+ =?us-ascii?Q?n24329CiVuEY7Ed2Gze2W6v0famqAYgD11yHT9PXPAFlocIPG4zTvSu1l/T9?=
+ =?us-ascii?Q?ODLJT8crNE/mHW7iI9tVIaLJ8ODstXX48XZYd5m7vSfJDlGwma3BBhf27gKB?=
+ =?us-ascii?Q?pqdKNsAqCq/5NWmuJVwV0KjpMVYsZeQvISTC9qi+REg1KPMACUaJIfqHwyxi?=
+ =?us-ascii?Q?usyydgmlAJ0Nbudr1Jm2raGD/M0+g0+aWpEHJUVv0OYaizhlFgeEaXg9QriO?=
+ =?us-ascii?Q?11PujasSfScY7rJPraqWycxTswS+Nv0uthLloSS2MRFaIgFiXp86YQOa9X+D?=
+ =?us-ascii?Q?YsDUAcHKMLGjR5coEMRUCYyaXwaSyc9YpHxnpWgE+YT/wzctmFAZi6F671rg?=
+ =?us-ascii?Q?NpDwJ9FVhXOZ1M7h+qYE8EhvBkKna6vLp/1A+3ImuLpca7NUF8WmP9l7EGpc?=
+ =?us-ascii?Q?a5vRWLt9SC8cOjHGVlAgc4YIdpeHpE08AgJJXBPNFHAGSOMLZDDYOx4T4KK/?=
+ =?us-ascii?Q?g43PkfF+/81Xc6JBm1cjkCnf7tV5XjWbuzWzxKm7K6SHw6wPOea4ImXYFKI/?=
+ =?us-ascii?Q?yVFOYOgV8d2YvJqaN9hNNMrSvmHlj9VKeX63Ly0JZ+vMxA0H4Ps4ee+ZR2dQ?=
+ =?us-ascii?Q?0gWOEGVLYy9u5MdN707ohT5DHKa7grdQX9xUSjuaUQMWbmkwoY77lZQFNgvp?=
+ =?us-ascii?Q?DBtWJbtHxZ1Jj4u4ynVIWSiRfzUimiYY/xHZDJ2Jxoz7luS60jeVZ+E8WVwE?=
+ =?us-ascii?Q?25HgjEt9I94hVbxXrr50VNx6GLgEv9kw9HH+dpaV/KhjZoBcIy02JrZxv7Qy?=
+ =?us-ascii?Q?j7TaM2E4LHs5dY3cEccAbUEjLrTnUls9t3uoEEPU52pZ2GKgM7eBNEWy/92V?=
+ =?us-ascii?Q?NBnLDP/tSM52XpiDxmaYyBaVAhZw1iqLxg6m90txSTxYaLTeUO7NYPKItUsI?=
+ =?us-ascii?Q?H1zHw+q8V9tkKQTTpvZQjoUw5w4LoOjWf5ocbdMteI8OWU4E0uVGUGZjefZB?=
+ =?us-ascii?Q?VsAjSHK1mUMtjM2JzsoD4oiHQxrVSuPKDuTZZXItw8aspQCgdCx1sdzNXOie?=
+ =?us-ascii?Q?2xBn/2fGIPMG0asU/zIO2qOFNmo0WCh0DaX2MAoclHIFQVn+JUk1KJSlncJ8?=
+ =?us-ascii?Q?wLNKAgsnyTMaUcsVbk32ouigYIpbeJjnDycQQ5B7+5V/alqaxTIo/biLxFC2?=
+ =?us-ascii?Q?8bocja4hRNcA+NAtCbZYk2m7dxqwHQh33DvbzuhzFgGLaIZHZ3+qrj3nYdhc?=
+ =?us-ascii?Q?c2GMwrfJySNziCFVVckyT59tsJn40CrIrlaDXkD8PvFHTQH94grPx3oPpOMQ?=
+ =?us-ascii?Q?dakaqwNVtQ=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 380b1d83-aa13-41e6-8827-08deecbf44cb
+X-MS-Exchange-CrossTenant-Network-Message-Id: 646c12ce-94d2-46aa-6194-08deecbf4763
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:45:37.2405
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:45:41.8498
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DnAZczeeUQxgjYZrnE9/pIuItUl+0MfJ0veVk0Tcpm0NAAjlAsHnvMxXwchQXcmcV54WfcNZLWhFy2khE8znPQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: JJ0neHFYHYWkLSL12A1AIJiBj6BBMOKe5AFePSalX6LouuzM3agHnXdHFr6O1Arga30b2u8FMKO57m2Fm7rXYA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7023
 
-With proxy execution, the task selected by the scheduler and the task
-physically executing can differ. A blocked mutex waiter donates its
-scheduling context to the lock owner:
+Proxy execution keeps a mutex-blocked donor runnable so that its
+scheduling context can execute the mutex owner.
 
-  D -----------------> M -------------> O ----------------> T
-  [donor] blocked on [mutex] owned by [owner] preempted by [task]
-     \_________________________________^
-          donates scheduling context
+Define SCX_OPS_ENQ_BLOCKED as both an admission contract and an
+ownership rule for retained donors. Schedulers without the flag block
+EXT donors normally. Schedulers with the flag continue to own blocked
+donors and receive them through ops.enqueue() with SCX_ENQ_BLOCKED,
+allowing BPF to choose their DSQ, CPU and ordering.
 
-where:
+Once BPF dispatches a donor, proxy execution may move its scheduling
+context to the mutex owner's rq. This move is distinct from BPF
+placement: wake_cpu continues to identify the donor's callback CPU,
+while task_cpu() identifies the proxy CPU. When the donor wakes, the
+normal wakeup path uses wake_cpu as prev_cpu when returning the task to
+the BPF scheduler, which can then choose its next placement normally.
 
-  D = blocked donor
-  M = mutex
-  O = mutex owner
-  T = competing runnable task
+Apply the same admission contract across scheduler ownership changes: a
+retained donor moving into a scheduler without SCX_OPS_ENQ_BLOCKED is
+fully deactivated and remains on the mutex wait path; a donor moving
+into an opted-in scheduler remains queued and is handed to that
+scheduler. Tasks without an assigned scheduler retain the generic
+proxy-execution fallback during the transition.
 
-During a proxy execution switch, D supplies the scheduling class,
-priority, and runtime budget, while O supplies the execution context: O
-is the task whose code physically executes. T is a competing runnable
-task which may preempt the D/O proxy execution.
+Blocked-donor enqueueing takes precedence over the exiting and
+migration-disabled local-DSQ fallbacks, so that an opted-in scheduler
+sees every eligible donor request.
 
-Consider FAIR and EXT tasks with sched_ext running in partial mode. FAIR
-can be replaced with a higher scheduling class such as RT or deadline
-without changing the class interaction described here. The possible
-combinations are:
+Putting these rules together, the donor admission flow is the following:
 
-  1. D is EXT, O is EXT, T is EXT
-
-     D can interrupt T according to BPF scheduling policy. O executes
-     with D's EXT priority and runtime budget, while T waits in EXT.
-
-  2. D is EXT, O is EXT, T is FAIR
-
-     D is visible to the BPF scheduler, but cannot preempt T because
-     EXT is below FAIR. Once T stops, BPF can dispatch D and O executes
-     with D's EXT priority and runtime budget. If T becomes runnable
-     again, it preempts the D/O proxy execution.
-
-  3. D is EXT, O is FAIR, T is EXT
-
-     This cannot represent T preempting O because EXT is below FAIR.
-
-  4. D is EXT, O is FAIR, T is FAIR
-
-     D cannot boost O above T because EXT is below FAIR. O and T
-     continue competing under FAIR. Once O releases M, D wakes and
-     resumes normal EXT scheduling.
-
-  5. D is FAIR, O is EXT, T is EXT
-
-     D preempts T as the higher-class scheduling context. O executes
-     with D's FAIR priority and runtime budget, while T waits in EXT.
-     D is not visible to the BPF scheduler.
-
-  6. D is FAIR, O is EXT, T is FAIR
-
-     D competes with T according to its FAIR deadline. When D is
-     selected, O executes with D's FAIR priority and runtime budget.
-     D is not visible to the BPF scheduler.
-
-  7. D is FAIR, O is FAIR, T is EXT
-
-     This cannot represent T preempting O because EXT is below FAIR.
-
-  8. D is FAIR, O is FAIR, T is FAIR
-
-     O, T, and D all have FAIR scheduling contexts. D remains runnable
-     as a blocked proxy donor. When CFS selects D, O executes using D's
-     FAIR scheduling context. When CFS selects O, O executes using its
-     own FAIR context, and when CFS selects T, T executes normally. D
-     is not visible to the BPF scheduler.
-
-Thus, sched_ext policy and accounting must generally use rq->donor, the
-scheduler-selected task which supplies the scheduling context, rather
-than rq->curr, the task whose code physically executes. Without proxy
-execution they are the same task.
-
-On nohz_full CPUs, a blocked proxy donor must retain the scheduler tick
-even when it has an infinite slice. Otherwise, a full dynticks CPU could
-stop the tick while rq->curr and rq->donor differ, violating assumptions
-made by the remote NOHZ tick path.
-
-This is a conservative compromise that keeps the change local to
-sched_ext, at the cost of a periodic tick while a blocked proxy donor is
-selected. Allowing blocked proxy donors to run tickless would require
-making the core scheduler's remote tick handling aware that rq->curr and
-rq->donor can differ.
-
-Moreover, extend scx_dump_state() to report both contexts. Each CPU
-record now includes a donor= line. If an EXT donor differs from
-rq->curr, also emit its detailed task record. The existing '*' marker
-continues to identify rq->curr, while the donor= line identifies the
-otherwise unmarked donor record.
-
-Note that at this point in the series, CONFIG_SCHED_PROXY_EXEC still
-depends on !CONFIG_SCHED_CLASS_EXT, so proxy execution and sched_ext
-cannot be enabled together. The scheduling changes are therefore
-preparatory. A later patch removes this restriction.
+    D ------ blocked on -----> M ------ owned by -----> O
+ [donor]                    [mutex]                [owner]
+    |
+    v
+ +--------------------------+
+ | SCX_OPS_ENQ_BLOCKED set? |
+ +------------+-------------+
+          no  |  yes
+       +------+-------+
+       |              |
+       v              v
+ block normally   D runnable
+                      |
+                      v
+          ops.enqueue(D, SCX_ENQ_BLOCKED)
+                      |
+                      v
+             BPF admission policy
+                      |
+                  D selected
+                      |
+                      v
+             proxy-exec resolves
+                 D -> M -> O
+                      |
+                      v
+               rq->donor = D
+               rq->curr  = O
+                      |
+                O releases M
+                      |
+                      v
+               D returns through
+                the wakeup path
+                      |
+                      v
+              BPF handles D as
+              an unblocked task
 
 Co-developed-by: John Stultz <jstultz@google.com>
 Signed-off-by: John Stultz <jstultz@google.com>
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- Documentation/scheduler/sched-ext.rst |   6 ++
- kernel/sched/ext/ext.c                | 115 +++++++++++++++++---------
- kernel/sched/ext/sub.h                |   8 +-
- 3 files changed, 86 insertions(+), 43 deletions(-)
+ include/linux/sched/ext.h                     |   1 +
+ kernel/sched/ext/ext.c                        | 155 ++++++++++++++++--
+ kernel/sched/ext/internal.h                   |  23 ++-
+ kernel/sched/ext/sub.c                        |   6 +-
+ tools/sched_ext/include/scx/compat.h          |   1 +
+ .../sched_ext/include/scx/enum_defs.autogen.h |   1 +
+ .../sched_ext/include/scx/enums.autogen.bpf.h |   3 +
+ tools/sched_ext/include/scx/enums.autogen.h   |   1 +
+ 8 files changed, 171 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index ad2fff3c05937..db1ef89ed8f2a 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -487,6 +487,12 @@ and edge cases, to name a few examples:
-   class, in which case it will exit the tick-dispatch loop even though it is runnable
-   and has a non-zero slice.
- 
-+* Under proxy execution, sched_ext continues to observe the donor as the current
-+  scheduling context. A blocked donor does not enter an ``ops.running()`` /
-+  ``ops.stopping()`` session because it does not execute itself, and the lock
-+  owner executing on its behalf is intentionally not reported through these
-+  callbacks.
-+
- See the "Scheduling Cycle" section for a more detailed description of how
- a freshly woken up task gets on a CPU.
- 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 3fe66298d1811..5dbf89debc6c7 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1336,20 +1336,27 @@ static void apply_task_slice_oob(struct rq *rq, struct task_struct *p)
- 
- static void update_curr_scx(struct rq *rq)
- {
--	struct task_struct *curr = rq->curr;
-+	struct task_struct *donor;
- 	s64 delta_exec;
- 
-+	/*
-+	 * update_curr_scx() is selected through rq->donor->sched_class, not
-+	 * rq->curr->sched_class, so @donor is always an EXT task here. If an EXT
-+	 * owner executes for a FAIR donor, FAIR's update_curr() runs instead.
-+	 */
-+	donor = rq->donor;
-+
- 	/* apply even on 0 delta_exec, callers may still act on the slice */
--	apply_task_slice_oob(rq, curr);
-+	apply_task_slice_oob(rq, donor);
- 
- 	delta_exec = update_curr_common(rq);
- 	if (unlikely(delta_exec <= 0))
- 		return;
- 
--	if (curr->scx.slice != SCX_SLICE_INF) {
--		curr->scx.slice -= min_t(u64, curr->scx.slice, delta_exec);
--		if (!curr->scx.slice)
--			touch_core_sched(rq, curr);
-+	if (donor->scx.slice != SCX_SLICE_INF) {
-+		donor->scx.slice -= min_t(u64, donor->scx.slice, delta_exec);
-+		if (!donor->scx.slice)
-+			touch_core_sched(rq, donor);
- 	}
- 
- 	dl_server_update(&rq->ext_server, delta_exec);
-@@ -1525,9 +1532,9 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
- 	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
- 		return;
- 
--	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
--	    rq->curr->sched_class == &ext_sched_class) {
--		set_task_slice(rq->curr, 0);
-+	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->donor &&
-+	    rq->donor->sched_class == &ext_sched_class) {
-+		set_task_slice(rq->donor, 0);
- 		resched_curr(rq);
- 	}
- }
-@@ -2090,13 +2097,14 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
- 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 53da9eea0c925..8944e96fd4673 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -103,6 +103,7 @@ enum scx_ent_flags {
+ 	SCX_TASK_SUB_INIT	= 1 << 4, /* task being initialized for a sub sched */
+ 	SCX_TASK_IMMED		= 1 << 5, /* task is on local DSQ with %SCX_ENQ_IMMED */
+ 	SCX_TASK_RUN_TRACKED	= 1 << 6, /* task is in an ops.running()/stopping() session */
++	SCX_TASK_ENQ_WAKEUP	= 1 << 7, /* wakeup enqueue awaiting wakeup_preempt() */
  
  	/*
--	 * Restoring a running task will be immediately followed by
--	 * set_next_task_scx() which expects the task to not be on the BPF
-+	 * Restoring the current scheduling context will be immediately followed
-+	 * by set_next_task_scx() which expects the task to not be on the BPF
- 	 * scheduler as tasks can only start running through local DSQs. Force
- 	 * direct-dispatch into the local DSQ by setting the sticky_cpu. Mark
- 	 * IGNORE_CAPS to force entry into the local DSQ.
- 	 */
--	if (unlikely(enq_flags & ENQUEUE_RESTORE) && task_current(rq, p)) {
-+	if (unlikely(enq_flags & ENQUEUE_RESTORE) &&
-+	    task_current_donor(rq, p)) {
- 		sticky_cpu = cpu_of(rq);
- 		enq_flags |= SCX_ENQ_IGNORE_CAPS;
- 	}
-@@ -2812,7 +2820,8 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 		}
+ 	 * Bits 8 to 10 are used to carry task state:
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 5dbf89debc6c7..e7ef114f5f074 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -26,15 +26,51 @@ DEFINE_RAW_SPINLOCK(scx_sched_lock);
  
- 		/* if the destination CPU is idle, wake it up */
--		if (!fallback && sched_class_above(p->sched_class, dst_rq->curr->sched_class))
-+		if (!fallback && sched_class_above(p->sched_class,
-+						      dst_rq->donor->sched_class))
- 			resched_curr(dst_rq);
- 	}
- 
-@@ -3036,6 +3045,8 @@ static void scx_start_task_running(struct rq *rq, struct task_struct *p)
- 
- static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
+ bool scx_allow_proxy_exec(const struct task_struct *p)
  {
-+	bool can_stop_tick;
+-	return p->sched_class != &ext_sched_class;
++	struct scx_sched *sch;
++
++	if (p->sched_class != &ext_sched_class)
++		return true;
++
++	/*
++	 * scx_enabled() may change while __schedule() holds only @p's rq lock.
++	 * Once @p is associated with a scheduler, use that scheduler's policy
++	 * even while the global enable state is transitioning.
++	 */
++	sch = scx_task_sched(p);
++	return !sch || (sch->ops.flags & SCX_OPS_ENQ_BLOCKED);
+ }
+ 
+ static void prepare_switch_scx(struct rq *rq, struct task_struct *p)
+ {
++	struct scx_sched *sch;
++
+ 	lockdep_assert_held(&p->pi_lock);
+ 	lockdep_assert_rq_held(rq);
+ 
+-	sched_proxy_block_task(rq, p);
++	sch = scx_task_sched(p);
++	if (WARN_ON_ONCE(!sch))
++		return;
++
++	/* Block retained donors that the incoming scheduler cannot manage. */
++	if (!(sch->ops.flags & SCX_OPS_ENQ_BLOCKED))
++		sched_proxy_block_task(rq, p);
++}
++
++/*
++ * Called with @p's pi and rq locks held immediately before
++ * sched_change_begin(). The caller must pass DEQUEUE_NOCLOCK so the rq clock
++ * is updated only once.
++ */
++void scx_prepare_task_sched_change(struct task_struct *p, struct scx_sched *sch)
++{
++	lockdep_assert_held(&p->pi_lock);
++	lockdep_assert_rq_held(task_rq(p));
++
++	update_rq_clock(task_rq(p));
++
++	/* Block retained donors that the incoming scheduler cannot manage. */
++	if (!(sch->ops.flags & SCX_OPS_ENQ_BLOCKED))
++		sched_proxy_block_task(task_rq(p), p);
+ }
+ 
+ /*
+@@ -1925,6 +1961,7 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 	struct task_struct **ddsp_taskp;
+ 	struct scx_dispatch_q *dsq;
++	bool enq_blocked;
+ 	unsigned long qseq;
+ 
+ 	WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_QUEUED));
+@@ -1975,18 +2012,24 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
+ 		goto direct;
+ 
+-	/* see %SCX_OPS_ENQ_EXITING */
+-	if (!(sch->ops.flags & SCX_OPS_ENQ_EXITING) &&
+-	    unlikely(p->flags & PF_EXITING)) {
+-		__scx_add_event(sch, SCX_EV_ENQ_SKIP_EXITING, 1);
+-		goto local;
+-	}
++	enq_blocked = (sch->ops.flags & SCX_OPS_ENQ_BLOCKED) &&
++		      p->is_blocked && !(enq_flags & SCX_ENQ_WAKEUP);
++	if (enq_blocked) {
++		enq_flags |= SCX_ENQ_BLOCKED;
++	} else {
++		/* see %SCX_OPS_ENQ_EXITING */
++		if (!(sch->ops.flags & SCX_OPS_ENQ_EXITING) &&
++		    unlikely(p->flags & PF_EXITING)) {
++			__scx_add_event(sch, SCX_EV_ENQ_SKIP_EXITING, 1);
++			goto local;
++		}
+ 
+-	/* see %SCX_OPS_ENQ_MIGRATION_DISABLED */
+-	if (!(sch->ops.flags & SCX_OPS_ENQ_MIGRATION_DISABLED) &&
+-	    is_migration_disabled(p)) {
+-		__scx_add_event(sch, SCX_EV_ENQ_SKIP_MIGRATION_DISABLED, 1);
+-		goto local;
++		/* see %SCX_OPS_ENQ_MIGRATION_DISABLED */
++		if (!(sch->ops.flags & SCX_OPS_ENQ_MIGRATION_DISABLED) &&
++		    is_migration_disabled(p)) {
++			__scx_add_event(sch, SCX_EV_ENQ_SKIP_MIGRATION_DISABLED, 1);
++			goto local;
++		}
+ 	}
+ 
+ 	if (unlikely(!SCX_HAS_OP(sch, enqueue)))
+@@ -2093,8 +2136,17 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
+ 	int sticky_cpu = p->scx.sticky_cpu;
+ 	u64 enq_flags = core_enq_flags | rq->scx.remote_activate_enq_flags;
+ 
+-	if (enq_flags & ENQUEUE_WAKEUP)
++	/*
++	 * p->is_blocked is cleared after wakeup_preempt(), so remember whether
++	 * this is a full wakeup activation. If wakeup_preempt_scx() isn't called,
++	 * set_next_task_scx() or a subsequent non-wakeup enqueue clears the flag.
++	 */
++	if (enq_flags & ENQUEUE_WAKEUP) {
+ 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
++		p->scx.flags |= SCX_TASK_ENQ_WAKEUP;
++	} else {
++		p->scx.flags &= ~SCX_TASK_ENQ_WAKEUP;
++	}
+ 
+ 	/*
+ 	 * Restoring the current scheduling context will be immediately followed
+@@ -2299,11 +2351,24 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
+ {
+ 	/*
+ 	 * Preemption between SCX tasks is implemented by resetting the victim
+-	 * task's slice to 0 and triggering reschedule on the target CPU.
+-	 * Nothing to do.
++	 * task's slice to 0 and triggering reschedule on the target CPU. A
++	 * mutex-blocked task is kept queued for proxy execution, so its wakeup
++	 * doesn't go through enqueue_task_scx(). If the BPF scheduler manages
++	 * blocked donors, reschedule explicitly so that it can reconsider a
++	 * donor it declined to dispatch while blocked.
+ 	 */
+-	if (p->sched_class == &ext_sched_class)
++	if (p->sched_class == &ext_sched_class) {
++		bool enq_wakeup = p->scx.flags & SCX_TASK_ENQ_WAKEUP;
++
++		p->scx.flags &= ~SCX_TASK_ENQ_WAKEUP;
++		if (!enq_wakeup && p->is_blocked) {
++			struct scx_sched *sch = scx_task_sched(p);
++
++			if (sch && (sch->ops.flags & SCX_OPS_ENQ_BLOCKED))
++				resched_curr(rq);
++		}
+ 		return;
++	}
+ 
+ 	/*
+ 	 * Getting preempted by a higher-priority class. Reenqueue IMMED tasks.
+@@ -2418,6 +2483,20 @@ static bool task_can_run_on_remote_rq(struct scx_sched *sch,
+ 
+ 	WARN_ON_ONCE(task_cpu(p) == cpu);
+ 
++	/*
++	 * A blocked donor may be moved normally to select a new callback rq.
++	 * set_task_cpu() updates wake_cpu and makes the destination rq its new
++	 * callback home.
++	 *
++	 * proxy_set_task_cpu() instead preserves wake_cpu when moving a donor to
++	 * its lock owner's CPU. Keep such a donor on the proxy rq until it wakes;
++	 * otherwise normal BPF placement may repeatedly pull it back to its
++	 * callback rq only for proxy execution to move it to the owner again.
++	 */
++	if (sched_proxy_exec() && p->is_blocked &&
++	    task_cpu(p) != p->wake_cpu)
++		return false;
++
+ 	/*
+ 	 * If @p has migration disabled, @p->cpus_ptr is updated to contain only
+ 	 * the pinned CPU in migrate_disable_switch() while @p is being switched
+@@ -3047,6 +3126,8 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
+ {
+ 	bool can_stop_tick;
+ 
++	p->scx.flags &= ~SCX_TASK_ENQ_WAKEUP;
 +
  	if (p->scx.flags & SCX_TASK_QUEUED) {
  		/*
  		 * Core-sched might decide to execute @p before it is
-@@ -3060,6 +3071,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
+@@ -3198,6 +3279,37 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 	if (p->scx.flags & SCX_TASK_QUEUED) {
+ 		set_task_runnable(rq, p);
  
- 	/* apply any pending out-of-band slice request before the tick decision */
- 	apply_task_slice_oob(rq, p);
-+	can_stop_tick = p->scx.slice == SCX_SLICE_INF && !p->is_blocked;
- 
- 	/*
- 	 * @p is getting newly scheduled or got kicked after someone updated its
-@@ -3070,7 +3082,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
- 	 * nohz. In the future, we might want to add a mechanism to update
- 	 * load_avgs periodically on tick-stopped CPUs.
- 	 */
--	if (p->scx.slice == SCX_SLICE_INF) {
-+	if (can_stop_tick) {
- 		if (!(rq->scx.flags & SCX_RQ_CAN_STOP_TICK)) {
- 			/*
- 			 * Bypass mode always assigns finite slices, so @p
-@@ -3091,7 +3103,8 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
- 
- 		/*
- 		 * @rq still references the outgoing scheduling context. A finite
--		 * slice is sufficient by itself to require the tick.
-+		 * slice or a blocked proxy donor is sufficient by itself to require
-+		 * the tick.
- 		 */
- 		if (tick_nohz_full_cpu(cpu_of(rq)))
- 			tick_nohz_dep_set_cpu(cpu_of(rq), TICK_DEP_BIT_SCHED);
-@@ -3280,7 +3293,7 @@ static struct task_struct *first_local_task(struct rq *rq)
- static struct task_struct *
- do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- {
--	struct task_struct *prev = rq->curr;
-+	struct task_struct *prev = rq->donor;
- 	bool keep_prev;
- 	struct task_struct *p;
- 
-@@ -3679,9 +3692,9 @@ void scx_tick(struct rq *rq)
- 	update_other_load_avgs(rq);
- }
- 
--static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
-+static void task_tick_scx(struct rq *rq, struct task_struct *donor, int queued)
- {
--	struct scx_sched *sch = scx_task_sched(curr);
-+	struct scx_sched *sch = scx_task_sched(donor);
- 
- 	update_curr_scx(rq);
- 
-@@ -3690,13 +3703,13 @@ static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
- 	 * we can't trust the slice management or ops.core_sched_before().
- 	 */
- 	if (scx_bypassing(sch, cpu_of(rq))) {
--		set_task_slice(curr, 0);
--		touch_core_sched(rq, curr);
-+		set_task_slice(donor, 0);
-+		touch_core_sched(rq, donor);
- 	} else if (SCX_HAS_OP(sch, tick)) {
--		SCX_CALL_OP_TASK(sch, tick, rq, curr);
-+		SCX_CALL_OP_TASK(sch, tick, rq, donor);
- 	}
- 
--	if (!curr->scx.slice)
-+	if (!donor->scx.slice)
- 		resched_curr(rq);
- }
- 
-@@ -4335,16 +4348,16 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
- 	}
- 
- 	/*
--	 * The revoke that scheduled this scan may have raced the pick: curr
-+	 * The revoke that scheduled this scan may have raced the pick: donor
- 	 * may be a now-capless task, either one that kept running or one
- 	 * promoted off the local DSQ between the ecaps sync and this scan.
- 	 * Zero the slice to evict it. The enqueue gate blocks new capless
- 	 * inserts, so no later pick can slip through after the scan.
- 	 */
- 	if ((reenq_flags & SCX_REENQ_CAP_REVOKE) &&
--	    rq->curr->sched_class == &ext_sched_class &&
--	    scx_task_reenq_on_cap_revoke(rq, rq->curr)) {
--		set_task_slice(rq->curr, 0);
-+	    rq->donor->sched_class == &ext_sched_class &&
-+	    scx_task_reenq_on_cap_revoke(rq, rq->donor)) {
-+		set_task_slice(rq->donor, 0);
- 		resched_curr(rq);
- 	}
- 
-@@ -4581,14 +4594,18 @@ static void run_deferred(struct rq *rq)
- #ifdef CONFIG_NO_HZ_FULL
- bool scx_can_stop_tick(struct rq *rq)
- {
--	struct task_struct *p = rq->curr;
-+	struct task_struct *p = rq->donor;
- 	struct scx_sched *sch = scx_task_sched(p);
- 
-+	/* The remote tick path assumes that proxy execution is not active. */
-+	if (rq->curr != rq->donor)
-+		return false;
++		/*
++		 * The rq lock has remained held since scx_allow_proxy_exec(), so
++		 * @p's scheduler association cannot have changed. An associated
++		 * donor stays queued only when its BPF scheduler enables
++		 * %SCX_OPS_ENQ_BLOCKED; delegate its admission to that scheduler.
++		 *
++		 * If @sch is NULL, @p is transitioning into the root scheduler. The
++		 * root is published before tasks enter EXT and cannot be cleared while
++		 * this rq is locked. Preserve generic proxy execution by placing the
++		 * donor directly on the local DSQ.
++		 */
++		if (p->is_blocked) {
++			/*
++			 * If the donor is the same and only the mutex owner
++			 * changes, avoid triggering another ops.enqueue(): the
++			 * BPF scheduler has already admitted the donor, so it
++			 * can continue running.
++			 */
++			if (next == p)
++				goto switch_class;
 +
- 	if (p->sched_class != &ext_sched_class)
- 		return true;
- 
- 	/*
--	 * @rq->curr may still reference an outgoing EXT task after it has been
-+	 * @rq->donor may still reference an outgoing EXT task after it has been
- 	 * dequeued. If no EXT tasks are accounted on @rq, ignore its stale
- 	 * slice state. If another task is dispatched from a DSQ,
- 	 * set_next_task_scx() will update the dependency for the incoming task.
-@@ -4602,7 +4619,8 @@ bool scx_can_stop_tick(struct rq *rq)
- 	/*
- 	 * @rq can dispatch from different DSQs, so we can't tell whether it
- 	 * needs the tick or not by looking at nr_running. Allow stopping ticks
--	 * iff the BPF scheduler indicated so. See set_next_task_scx().
-+	 * iff set_next_task_scx() determined that the selected scheduling context
-+	 * can run tickless.
- 	 */
- 	return rq->scx.flags & SCX_RQ_CAN_STOP_TICK;
- }
-@@ -6796,6 +6814,9 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
- 	dump_line(&ns, "          curr=%s[%d] class=%ps",
- 		  rq->curr->comm, rq->curr->pid,
- 		  rq->curr->sched_class);
-+	dump_line(&ns, "          donor=%s[%d] class=%ps",
-+		  rq->donor->comm, rq->donor->pid,
-+		  rq->donor->sched_class);
- 	if (!cpumask_empty(pcpu->cpus_to_kick))
- 		dump_line(&ns, "  cpus_to_kick   : %*pb",
- 			  cpumask_pr_args(pcpu->cpus_to_kick));
-@@ -6839,6 +6860,10 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
- 	if (rq->curr->sched_class == &ext_sched_class &&
- 	    (dump_all_tasks || scx_task_on_sched(sch, rq->curr)))
- 		scx_dump_task(sch, s, dctx, rq, rq->curr, '*');
-+	if (rq->donor != rq->curr &&
-+	    rq->donor->sched_class == &ext_sched_class &&
-+	    (dump_all_tasks || scx_task_on_sched(sch, rq->donor)))
-+		scx_dump_task(sch, s, dctx, rq, rq->donor, ' ');
- 
- 	list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node)
- 		if (dump_all_tasks || scx_task_on_sched(sch, p))
-@@ -8367,7 +8392,7 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
- 	unsigned long flags;
- 
- 	raw_spin_rq_lock_irqsave(rq, flags);
--	cur_class = rq->curr->sched_class;
-+	cur_class = rq->donor->sched_class;
- 
- 	/*
- 	 * During CPU hotplug, a CPU may depend on kicking itself to make
-@@ -8385,7 +8410,7 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
- 			if (cur_class == &ext_sched_class) {
- 				if (likely(!scx_missing_caps(pcpu->sch, cpu,
- 							     scx_caps_for_preempt(pcpu->sch, rq))))
--					set_task_slice(rq->curr, 0);
-+					set_task_slice(rq->donor, 0);
- 				else
- 					__scx_add_event(pcpu->sch,
- 							SCX_EV_SUB_PREEMPT_DENIED, 1);
-@@ -9360,13 +9385,15 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
- 		return false;
- 
- 	/*
--	 * Directly write only when we hold the lock of the rq @p is queued or
--	 * running on. See the slice write rules above.
-+	 * Directly write only when we hold the lock of the rq @p is queued on or
-+	 * provides the current scheduling context for. Under proxy execution,
-+	 * rq->donor owns and consumes the slice while rq->curr executes on its
-+	 * behalf. See the slice write rules above.
- 	 */
- 	locked_rq = scx_locked_rq();
- 	if (!locked_rq ||
- 	    (READ_ONCE(p->scx.runnable_cpu) != cpu_of(locked_rq) &&
--	     !task_current(locked_rq, p))) {
-+	     !task_current_donor(locked_rq, p))) {
- 		set_task_slice_oob(sch, p, slice);
- 		return true;
++			if (sch) {
++				WARN_ON_ONCE(!(sch->ops.flags & SCX_OPS_ENQ_BLOCKED));
++				scx_do_enqueue_task(rq, p, 0, -1);
++			} else {
++				scx_dispatch_enqueue(scx_root, rq, &rq->scx.local_dsq,
++						     p, 0);
++			}
++			goto switch_class;
++		}
++
+ 		/*
+ 		 * If @p has slice left and is being put, @p is getting
+ 		 * preempted by a higher priority scheduler class or core-sched
+@@ -7372,6 +7484,11 @@ int scx_validate_ops(struct scx_sched *sch, const struct sched_ext_ops *ops)
+ 		return -EINVAL;
  	}
-@@ -10251,12 +10278,17 @@ __bpf_kfunc void scx_bpf_put_cpumask(const struct cpumask *cpumask)
- }
  
- /**
-- * scx_bpf_task_running - Is task currently running?
-+ * scx_bpf_task_running - Is task the current scheduling context?
-  * @p: task of interest
-+ *
-+ * Under proxy execution, this reports the donor rather than the task whose
-+ * code is physically executing. The physical execution context is intentionally
-+ * not exposed to the BPF scheduler, which continues to observe the donor as the
-+ * running scheduling context.
-  */
- __bpf_kfunc bool scx_bpf_task_running(const struct task_struct *p)
- {
--	return task_rq(p)->curr == p;
-+	return rcu_access_pointer(task_rq(p)->donor) == p;
- }
++	if ((ops->flags & SCX_OPS_ENQ_BLOCKED) && !ops->enqueue) {
++		scx_error(sch, "SCX_OPS_ENQ_BLOCKED requires ops.enqueue() to be implemented");
++		return -EINVAL;
++	}
++
+ 	/*
+ 	 * SCX_OPS_TID_TO_TASK is enabled by the root scheduler. A sub-sched
+ 	 * may set it to declare a dependency; reject if the root hasn't
+@@ -7758,6 +7875,10 @@ static void scx_root_enable_workfn(struct kthread_work *work)
  
- /**
-@@ -10317,10 +10349,15 @@ __bpf_kfunc struct rq *scx_bpf_locked_rq(const struct bpf_prog_aux *aux)
- }
+ 		if (old_class != new_class)
+ 			queue_flags |= DEQUEUE_CLASS;
++		if (old_class == new_class && new_class == &ext_sched_class) {
++			scx_prepare_task_sched_change(p, sch);
++			queue_flags |= DEQUEUE_NOCLOCK;
++		}
  
- /**
-- * scx_bpf_cpu_curr - Return remote CPU's curr task
-+ * scx_bpf_cpu_curr - Return remote CPU's current scheduling context
-  * @cpu: CPU of interest
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-+ * Under proxy execution, this returns the donor, which supplies the scheduling
-+ * policy and runtime budget, rather than the task whose code is physically
-+ * executing. The physical execution context is intentionally not exposed to
-+ * the BPF scheduler.
-+ *
-  * Callers must hold RCU read lock (KF_RCU).
-  */
- __bpf_kfunc struct task_struct *scx_bpf_cpu_curr(s32 cpu, const struct bpf_prog_aux *aux)
-@@ -10336,7 +10373,7 @@ __bpf_kfunc struct task_struct *scx_bpf_cpu_curr(s32 cpu, const struct bpf_prog_
- 	if (!scx_cpu_valid(sch, cpu, NULL))
- 		return NULL;
+ 		scoped_guard (sched_change, p, new_class, queue_flags) {
+ 			set_task_slice(p, READ_ONCE(sch->slice_dfl));
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index c3b1f9a5cf3a9..40bc2ec217a79 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -214,6 +214,19 @@ enum scx_ops_flags {
+ 	 */
+ 	SCX_OPS_TID_TO_TASK		= 1LLU << 8,
  
--	return rcu_dereference(cpu_rq(cpu)->curr);
-+	return rcu_dereference(cpu_rq(cpu)->donor);
- }
++	/*
++	 * If set, mutex-blocked tasks remain runnable as proxy donors and are
++	 * passed to ops.enqueue() with %SCX_ENQ_BLOCKED. The BPF scheduler controls
++	 * when donors are dispatched and whether they should preempt other work.
++	 *
++	 * If clear, mutex-blocked tasks are removed from the runqueue normally
++	 * and cannot donate their scheduling context through proxy execution.
++	 *
++	 * For blocked donors, this flag takes precedence over
++	 * %SCX_OPS_ENQ_EXITING and %SCX_OPS_ENQ_MIGRATION_DISABLED.
++	 */
++	SCX_OPS_ENQ_BLOCKED		= 1LLU << 9,
++
+ 	SCX_OPS_ALL_FLAGS		= SCX_OPS_KEEP_BUILTIN_IDLE |
+ 					  SCX_OPS_ENQ_LAST |
+ 					  SCX_OPS_ENQ_EXITING |
+@@ -222,7 +235,8 @@ enum scx_ops_flags {
+ 					  SCX_OPS_SWITCH_PARTIAL |
+ 					  SCX_OPS_BUILTIN_IDLE_PER_NODE |
+ 					  SCX_OPS_ALWAYS_ENQ_IMMED |
+-					  SCX_OPS_TID_TO_TASK,
++					  SCX_OPS_TID_TO_TASK |
++					  SCX_OPS_ENQ_BLOCKED,
  
- /**
-@@ -10360,7 +10397,7 @@ __bpf_kfunc struct task_struct *scx_bpf_cid_curr(s32 cid, const struct bpf_prog_
- 	cpu = scx_cid_to_cpu(sch, cid);
- 	if (cpu < 0)
- 		return NULL;
--	return rcu_dereference(cpu_rq(cpu)->curr);
-+	return rcu_dereference(cpu_rq(cpu)->donor);
- }
+ 	/* high 8 bits are internal, don't include in SCX_OPS_ALL_FLAGS */
+ 	__SCX_OPS_INTERNAL_MASK		= 0xffLLU << 56,
+@@ -1678,6 +1692,12 @@ enum scx_enq_flags {
+ 	 */
+ 	SCX_ENQ_LAST		= 1LLU << 41,
  
- /**
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index b5870aeb9c625..0579e32015d17 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -153,14 +153,14 @@ static inline u64 scx_caps_for_task(struct task_struct *p)
- 	return SCX_CAP_ENQ;
- }
++	/*
++	 * The task is blocked on a mutex and is being kept runnable as a proxy
++	 * donor. Only passed to ops.enqueue() when %SCX_OPS_ENQ_BLOCKED is set.
++	 */
++	SCX_ENQ_BLOCKED		= 1LLU << 42,
++
+ 	/* high 8 bits are internal */
+ 	__SCX_ENQ_INTERNAL_MASK	= 0xffLLU << 56,
  
--/* the cap @sch needs to preempt @rq's current task, 0 if none */
-+/* the cap @sch needs to preempt @rq's current scheduling context, 0 if none */
- static inline u64 scx_caps_for_preempt(struct scx_sched *sch, struct rq *rq)
- {
--	struct task_struct *curr = rq->curr;
-+	struct task_struct *donor = rq->donor;
+@@ -1974,6 +1994,7 @@ void scx_task_iter_start(struct scx_task_iter *iter, struct cgroup *cgrp);
+ void scx_task_iter_unlock(struct scx_task_iter *iter);
+ void scx_task_iter_stop(struct scx_task_iter *iter);
+ struct task_struct *scx_task_iter_next_locked(struct scx_task_iter *iter);
++void scx_prepare_task_sched_change(struct task_struct *p, struct scx_sched *sch);
+ void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p);
+ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 			 int sticky_cpu);
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 640e4a4f3c07f..0fc08781e0347 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -751,8 +751,9 @@ static void scx_rehome_task(struct scx_sched *to, struct task_struct *p)
+ 	lockdep_assert_held(&p->pi_lock);
+ 	lockdep_assert_rq_held(task_rq(p));
  
- 	/* a non-ext task can't be preempted by ext, own-subtree needs no cap */
--	if (curr->sched_class != &ext_sched_class ||
--	    scx_is_descendant(scx_task_sched(curr), sch))
-+	if (donor->sched_class != &ext_sched_class ||
-+	    scx_is_descendant(scx_task_sched(donor), sch))
- 		return 0;
- 	return SCX_CAP_PREEMPT;
- }
++	scx_prepare_task_sched_change(p, to);
+ 	scoped_guard (sched_change, p, p->sched_class,
+-		      DEQUEUE_SAVE | DEQUEUE_MOVE) {
++		      DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
+ 		scx_disable_and_exit_task(scx_task_sched(p), p);
+ 		scx_set_task_state(p, SCX_TASK_INIT_BEGIN);
+ 		scx_set_task_state(p, SCX_TASK_INIT);
+@@ -782,8 +783,9 @@ static void scx_punt_task(struct scx_sched *to, struct task_struct *p)
+ 	lockdep_assert_rq_held(task_rq(p));
+ 	WARN_ON_ONCE(!READ_ONCE(to->bypass_depth));
+ 
++	scx_prepare_task_sched_change(p, to);
+ 	scoped_guard (sched_change, p, p->sched_class,
+-		      DEQUEUE_SAVE | DEQUEUE_MOVE) {
++		      DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK) {
+ 		scx_disable_and_exit_task(scx_task_sched(p), p);
+ 		scx_set_task_sched(p, to);
+ 	}
+diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
+index 7757252d52e21..0e83ebfbee2b5 100644
+--- a/tools/sched_ext/include/scx/compat.h
++++ b/tools/sched_ext/include/scx/compat.h
+@@ -117,6 +117,7 @@ static inline bool __COMPAT_struct_has_field(const char *type, const char *field
+ #define SCX_OPS_ALLOW_QUEUED_WAKEUP SCX_OPS_FLAG(SCX_OPS_ALLOW_QUEUED_WAKEUP)
+ #define SCX_OPS_BUILTIN_IDLE_PER_NODE SCX_OPS_FLAG(SCX_OPS_BUILTIN_IDLE_PER_NODE)
+ #define SCX_OPS_ALWAYS_ENQ_IMMED SCX_OPS_FLAG(SCX_OPS_ALWAYS_ENQ_IMMED)
++#define SCX_OPS_ENQ_BLOCKED SCX_OPS_FLAG(SCX_OPS_ENQ_BLOCKED)
+ 
+ #define SCX_PICK_IDLE_FLAG(name) __COMPAT_ENUM_OR_ZERO("scx_pick_idle_cpu_flags", #name)
+ 
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index 0379eff117c9e..d0b7516a05d96 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -73,6 +73,7 @@
+ #define HAVE_SCX_ENQ_IMMED
+ #define HAVE_SCX_ENQ_REENQ
+ #define HAVE_SCX_ENQ_LAST
++#define HAVE_SCX_ENQ_BLOCKED
+ #define HAVE___SCX_ENQ_INTERNAL_MASK
+ #define HAVE_SCX_ENQ_CLEAR_OPSS
+ #define HAVE_SCX_ENQ_DSQ_PRIQ
+diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+index dafccbb6b69d2..7efe7b9346b49 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
++++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+@@ -130,6 +130,9 @@ const volatile u64 __SCX_ENQ_REENQ __weak;
+ const volatile u64 __SCX_ENQ_LAST __weak;
+ #define SCX_ENQ_LAST __SCX_ENQ_LAST
+ 
++const volatile u64 __SCX_ENQ_BLOCKED __weak;
++#define SCX_ENQ_BLOCKED __SCX_ENQ_BLOCKED
++
+ const volatile u64 __SCX_ENQ_CLEAR_OPSS __weak;
+ #define SCX_ENQ_CLEAR_OPSS __SCX_ENQ_CLEAR_OPSS
+ 
+diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
+index bbd4901f4fce3..f8fbeb7fbf95b 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.h
++++ b/tools/sched_ext/include/scx/enums.autogen.h
+@@ -47,6 +47,7 @@
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_IMMED); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_REENQ); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_LAST); \
++	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_BLOCKED); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_CLEAR_OPSS); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_DSQ_PRIQ); \
+ 	SCX_ENUM_SET(skel, scx_deq_flags, SCX_DEQ_SCHED_CHANGE); \
 -- 
 2.55.0
 
