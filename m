@@ -1,75 +1,117 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189813A8746
-	for <sched-ext@lists.linux.dev>; Tue, 28 Jul 2026 07:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937D33F1ADC
+	for <sched-ext@lists.linux.dev>; Tue, 28 Jul 2026 10:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785222230; cv=none; b=ONi8wuNOXtyofQuu7k9zIbxvE+YjsTABIy1YpXM20lNebjkTgNZQkwIO8uVZ7CVXEuEnC0PvuCrKsobVnNWYeVFm2LYt2IdJjFbjHshChO4uWlLP2NAgOHMUs4F7pPafY/bywy8TVw3NpKsEdgaupzbJFOvWTCWg6voj9DcFxqg=
+	t=1785235179; cv=none; b=NBodYT/y71IdYu4xqsTCCY8LjE9EZOtwxhiBfUz4KcxP8iNX6xriPNzk6wn7zv0fr04GX6ICWG3y/ylf5t6y+C2Bf7+GCwM3Px3EiiPFEqdeV2e+DxdeJ76WWFLuFCtkE5qoC+fYjHjSG/R+kDe4PAJioIX/fwjOGv6ME6uMZhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785222230; c=relaxed/simple;
-	bh=rGSLuoDS4fOWrRKncenBOVYRF0363p1nNd/yFQxOdBM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=XYiyCnFVTPIL4FEmfAE1yXjUBk2tPLSX9c43c6nzDlFqXYsrshajb89PHyHi4q9CkmhHmIhtNhGudYwMhJrXvbZxtrl+ngfY6PQdB1+p5uD6AmZ9mCB75HbYn1+xrd9r7l7vfrhimX9TUUeI4JKGCXIhQOR+Bi6rC7s6NtD8TOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 756d5ec68a5211f1aa26b74ffac11d73-20260728
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:f0181b3b-d5ec-436a-9492-509dfc33ec2b,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:e7bac3a,CLOUDID:24643f741f5a2896be89ea29474c2b66,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|123|136|850|865|898,TC:n
-	il,Content:0|15|50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC
-	:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 756d5ec68a5211f1aa26b74ffac11d73-20260728
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1731402860; Tue, 28 Jul 2026 15:03:38 +0800
-From: luoliang@kylinos.cn
-To: sashiko-bot@kernel.org
-Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH] sched_ext: Set errno on ENABLING -> ENABLED transition failure
-Date: Tue, 28 Jul 2026 15:03:36 +0800
-Message-Id: <20260728070336.4175761-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260728062807.17E041F000E9@smtp.kernel.org>
-References: <20260728062807.17E041F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1785235179; c=relaxed/simple;
+	bh=qpSpYBhIpJtMXaX73sqUbb/dClW7iZn/LKMcEnuzdf4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oJ7ejkZZWOzI6FpPSpxmYm6mqa15+4ToJ/1I6wM9xEos3TApRZXEbzNO+9tEBpvxH85yLDGZGXmtoshDdQU/cgjwGk1r0INUK1CDIK4LWzRUpqr28Uj+hJNajyttRzCN1Fdv7ZvR8B8XH479aIkxsvm750FACjPIGxBy9znvAy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com; spf=none smtp.mailfrom=readmodwrite.com; dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b=zlwvHa4q; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=readmodwrite.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=readmodwrite.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=readmodwrite-com.20251104.gappssmtp.com header.i=@readmodwrite-com.20251104.gappssmtp.com header.b="zlwvHa4q"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-49555a0e68bso18755195e9.2
+        for <sched-ext@lists.linux.dev>; Tue, 28 Jul 2026 03:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=readmodwrite-com.20251104.gappssmtp.com; s=20251104; t=1785235176; x=1785839976; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Hh9GGg57kuY2hD4zZm36wFzr1EZULMRj8TJL33H+8H4=;
+        b=zlwvHa4qeiyWDpmp6/S6T1Nja4ODAs3+1rE1iWeFHLBL1tbIMEfSmANy857q7CpNYZ
+         rXKjLMzv7VHNYGAtSU9SP0XrM2OkIfNA//+6gS0ThUzilKOubUG+s4YHgUPZ1NZihV/e
+         dMCjT8/C/f5Frs+oWkMaDwYmASbMoxiTMguC9OCIjEe0mm2e6q2R8kXCjBqQc+pInW9f
+         8eRCDhsL0D/k5Ir7N/JIEahdLGAdpDPf6j405Kl2y48/u3tulmfd18krwjP8E9CyWNvr
+         aqwLLiLH/V7ysnGNz6AVkiQWddE5HpHHQOnVhgU3HQ3k3stpthUBYvFi84rYS+Yl0W3w
+         gggA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785235176; x=1785839976;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Hh9GGg57kuY2hD4zZm36wFzr1EZULMRj8TJL33H+8H4=;
+        b=nODTcUT09/TJTCq3uYd1uGQug+Kws2CPe32BBuXn6Ovb3QEpg5HAtXliXjq3652Qvg
+         XJb67EpVoEF9dvJfq3iXWZB6uGi2TUCZDl6/Qu9NnWhuoW+rVOZjdz1FksgnVeODAOKS
+         N1WtyXN8FxEMW1rZD7BQdTVpTKlVg/YknYRr1gxv78/x03nMGz+5iD25K3eXYSVlEphr
+         NGM0kBYjNsVwboiZAllmp5NY792eSafst2EnY8duC7npjELrOe9nKQuHKnR/O1xdhT06
+         WdvTxFMV6svbq/64eAh7Sms/vyFAkHtShCJmkXdMyhsTJ5MT0seJYSZj7mvjisVSdB+h
+         7qhQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rp1D1W9+nAC6cKAER+EKxB3UV5sq9kWgsZBhlgu6fNRxCdSx7xgjI/hmFKRMux70C2OxISeisX0dsg=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzz7g+8A4QDpIymGVXjs9zIBKMUj85rpgXxaORrRNTxMLzlH8q6
+	IGx9tRifnX03KDFajUt/YGUWv4nmLTxr9hzaireJmEjbg6vvVGyRJdQ9oVqK/4IAe8s=
+X-Gm-Gg: AR+sD111Qez/Qcbiko09xmDSTUL1WVNVQO7V38H/DQGfjb73caOkzYS+RS8kmkA4jJ8
+	qirsyAMkaXP3oobBMjS+QOFuasaW534Hia9KkIfCRUxD66tQtfoQtesxW1pKdnya9PiPl631to8
+	HXu2mA+sxc2AopKvIu/hTUJ3Wa2Ru/ywafZNASZPzRszJiFmc99NvQze5RCjhFGQHDlykpCU7LB
+	PVasFQORIR0An/g+y62ei3RnHwqJuo2H26GYwe/uEcuLBo8gYKg5lgbKqkCiC0FlsVbVI7lTI/D
+	Kif6B9LQWAkD8GE0he0MA/3VfOYs6f5fUHy3rGCEb7ntCMW6g/6eFpMo/ja7TiHZekthEGt+YeU
+	gIawL3ARRmTUB0iFBLQ2XjK+mYVW3GEAU8H1NWuoegUgFvf/MdnLtRfUXs8iwgwPjiyk8bS5DpA
+	==
+X-Received: by 2002:a05:600c:8b74:b0:495:4b42:8677 with SMTP id 5b1f17b1804b1-496c657651cmr19071605e9.18.1785235175708;
+        Tue, 28 Jul 2026 03:39:35 -0700 (PDT)
+Received: from localhost ([2a09:bac6:37a8:26a0::3d9:b])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957bfd1a60sm293299405e9.2.2026.07.28.03.39.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Jul 2026 03:39:34 -0700 (PDT)
+Date: Tue, 28 Jul 2026 11:39:33 +0100
+From: Matt Fleming <matt@readmodwrite.com>
+To: "Paul E . McKenney" <paulmck@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>, 
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Joel Fernandes <joelagnelf@nvidia.com>, 
+	Josh Triplett <josh@joshtriplett.org>, Boqun Feng <boqun@kernel.org>, 
+	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Lai Jiangshan <jiangshanlai@gmail.com>, 
+	Zqiang <qiang.zhang@linux.dev>, Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, 
+	rcu@vger.kernel.org, linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
+	stable@vger.kernel.org, kernel-team@cloudflare.com, 
+	Matt Fleming <mfleming@cloudflare.com>
+Subject: Re: [PATCH] rcu-tasks: Defer IRQ-disabled callback enqueue to
+ irq_work
+Message-ID: <amiGJWJ-tzUMYizu@matt-Precision-5490>
+References: <20260713101245.3207634-1-matt@readmodwrite.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260713101245.3207634-1-matt@readmodwrite.com>
 
-On Tue, Jul 28, 2026 at 06:28:06AM +0000, sashiko-bot@kernel.org wrote:
-> Unlike scx_root_enable_workfn(), the err_disable label in
-> scx_sub_enable_workfn() lacks a catch-all scx_error() call. If an error
-> path jumps there without already invoking scx_error(), it appears to
-> result in a silent failure.
+On Mon, Jul 13, 2026 at 11:12:45AM +0100, Matt Fleming wrote:
+> From: Matt Fleming <mfleming@cloudflare.com>
+> 
+> call_rcu_tasks_generic() can be invoked with IRQs disabled, and on
+> older kernels this exposed an ABBA deadlock against the scheduler
+> runqueue lock via sched_ext's task-storage teardown path:
+> 
+>         CPU 0                           CPU 1
+>         -----                           -----
+> sched_ext_free()
+>   task_rq_lock()
+>     raw_spin_lock(rq->lock)
+>                                       rcu_tasks_one_gp()
+>                                         raw_spin_lock(cbs_gbl_lock)
+>   scx_exit_task()
+>     bpf_task_storage_delete()
+>       call_rcu_tasks_generic()
+>         raw_spin_lock(cbs_gbl_lock)
+>           <blocks>
+>                                         _printk()
+>                                           console_unlock()
+>                                             try_to_wake_up()
+>                                               raw_spin_lock(rq->lock)
+>                                                 <blocks>
 
-The catch-all scx_error() at the err_disable sink in
-scx_sub_enable_workfn() already exists in mainline. It was added by
-commit db4e9defd2e8 ("sched_ext: Record an error on errno-only
-sub-enable failure"):
+Hey Paul, it looks like this didn't get picked up and now won't apply
+cleanly to your tree. Should I submit a v2?
 
-    err_disable:
-        mutex_unlock(&scx_enable_mutex);
-        /*
-         * Some enable failures only return an errno (e.g. -ENOMEM from an
-         * allocation) without calling scx_error(). Record it so
-         * scx_flush_disable_work() runs the disable and ops.exit() fires.
-         */
-        scx_error(sch, "scx_sub_enable() failed (%d)", ret);
-        scx_flush_disable_work(sch);
-        cmd->ret = 0;
-
-So the silent failure described in the review no longer exists.
+Thanks,
+Matt
