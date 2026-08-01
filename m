@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71743A4539;
-	Sat,  1 Aug 2026 08:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE07396D1A;
+	Sat,  1 Aug 2026 08:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785574325; cv=none; b=atp0gadllZWEtAC7vuZ0DJNAyj4l4nEKokBBr6t5Ri1owMka+QvhLn5bQl/ahcfhLzjj7PrGiMcxB8TGIK/oDKZZ/nezWuKKznp9IAIXc87vGRzMwEDT6RCRntp4QzGPlk6rxYo4f+dO1eSL3ob+x/qTFk3BZuGsLil6LMPzaZA=
+	t=1785574326; cv=none; b=Vz7L6NH/+Xckkg5ECktt6EriRPF6p7e1mqjATrbqRuvV/skv52jiUHP3YlWyWXJqcm5Xf11nmZbWh/mAwxb+TlsO30FT9ZEgDwgqziWfXWQbC0CjoBm2UrcH9p93BlBjiYPHfAOomCKx7tZIlksLSR82DhXqxbv4m+8TR/QB76s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785574325; c=relaxed/simple;
-	bh=23NcIP94gUlHbQBPJRwH9AsdAkZrWmZBC2PbTnDqpVQ=;
+	s=arc-20240116; t=1785574326; c=relaxed/simple;
+	bh=qQPmmjl8wbo45uxK5/41SJEe28yE11WsXlyhMjak6VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdSxVwUCkw+QWk0+n+YAEu1+2S89AeNVjAKGuitAmDCHWY6fdeKLifH/yRxsl2RZGSnnACd2IR3rR82XiXNLS7F4K34r5rcBydBoPSi2Rp21+3Li4R+mDqixwLlFuonktqrgUknEW2Z1M/en4XT++7tYqM8GxilSvBVTsPkz0NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CT3TgkyA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SmmsOQmglOrbhcGyrE8A1ifkxJICEn09mEucD/oilDDzBYRuOoa3msp/B228SWup0Z5GqlMBvc42YPv7qylCw3j6ze8vd3Thd+8ue0AAg0z3w/KYDNp73/JG2+2gcmFp9F8vy7YdzlTNWPEY5E6jU5MQYIKIJIBfJDYBM3MfK4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=erqriynM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CT3TgkyA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B441F00AC4;
-	Sat,  1 Aug 2026 08:52:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="erqriynM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC521F00ADF;
+	Sat,  1 Aug 2026 08:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785574320;
-	bh=mbBswfbzmj2fdNIDDmwghQK7A1qTiuxzYLQZDI9VEL4=;
+	s=k20260515; t=1785574323;
+	bh=9hY4MjBegmD9JLUyMx1jGbPbVaFKE9L0IzRJ3YDmCds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CT3TgkyAfTWAToqtIQvVK5Nrmj3F5DhL1cKJuFxLsC8QMVRJtqta92vJa2jCHcYgB
-	 o4kfrCk2HEHo8Pq7ubW0E+8wJgpc5B7fjKpwoDkyNGT6nqRgXkhU0ICy3KzpO46QQ6
-	 Q+MrlnTntAnAhWvVQVlAYt4aFeb6PQgDBHQg1k9BNvPb32Ku1pAWoyHYNsCfxez1Zu
-	 cyPl3tqxqTCHL3d7jEC7aRmd9cSqjFm5cn01p89Vw3qb/pOxEI/LvnkGQoCauoftRz
-	 6eLcxiQTUyjJ30qdLkVQuhgFq/K091A0uA4zqM2SDoDd5nrBJ5QUAhjgFhqDI3vPLV
-	 OHDZKbIhXvX4w==
+	b=erqriynMjMqwViND+J2WeXE1d6U8S+tNQ2ekPaAtNQT5ydonZ49Q6kB1ww9lJZ8/o
+	 moYaYACN96yfeUWK02I9VirIQfuBA3YNfMA2+f2sgCt3ADZm98W1CXIpKKBYeHhkGc
+	 0aN13A5GhbVoEbbi3SbLuEqOviCCrt1EqUxmAcYdk6pO7rv5jaUnrQq2uqv2cN+BCc
+	 R/1X0gLY6o6DUfubUa6b0QqFAf5DNSkxiJCU9BwagSFuNX4pjDwON/pdA+X4KSmuAx
+	 6A0ACQqNLNhXj1+gYiymBKnpllHjPDwd3/bawVtZo6xjjUVjBffDQfb8k9bpmFA881
+	 ipgsP4NNtnW4g==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 09/12] sched_ext: Eject the top rescue consumer on overload
-Date: Fri, 31 Jul 2026 22:51:47 -1000
-Message-ID: <20260801085150.2697653-10-tj@kernel.org>
+Subject: [PATCH 12/12] sched_ext: scx_qmap - Add rescue support
+Date: Fri, 31 Jul 2026 22:51:50 -1000
+Message-ID: <20260801085150.2697653-13-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260801085150.2697653-1-tj@kernel.org>
 References: <20260801085150.2697653-1-tj@kernel.org>
@@ -48,344 +48,291 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When rescue demand on a cpu persistently exceeds the configured bandwidth,
-tasks age on that cpu's rescue DSQ until the stall watchdog fires. The
-watchdog blames the waiting task's owner, but the misbehaving party is
-whoever floods the queue, not whoever happens to time out.
+A sched holds only the cids its parent granted and nothing guarantees that
+they cover its tasks' affinities. A task that can run on none of them has
+nowhere to go and qmap stalls out: it force-inserts the task onto its first
+allowed cid, but the kernel bounces the insert back and the task parks in
+SHARED_DSQ, which is drained only on self cids it can't run on.
 
-Track each sched's recent rescue consumption per cpu as a decaying average.
-Once the oldest waiter on a cpu's rescue DSQ has been queued past a
-threshold derived from the rescue knobs (4s at the defaults), the rescue
-timer ejects the sub with the highest recent consumption on that cpu with
-SCX_EXIT_ERROR_RESCUE. With no recent consumer there is no victim and
-nothing is ejected - the generic stall watchdog eventually blames the
-waiter's owner instead. Ejections on a cpu are spaced one threshold apart so
-the freed bandwidth can drain the backlog before another sub is judged.
+Set SCX_ENQ_RESCUE on these inserts so the kernel diverts such tasks to its
+rescue path instead of bouncing them. The force-insert covers scheds with
+and without children and fires on re-enqueues, and the SHARED_DSQ scan on
+every dispatch rescues tasks stranded there - the enqueue-time check misses
+a task whose cids were lost while it was already queued. The wrong-cid fault
+injection carries the flag too and doubles as a deterministic rescue-traffic
+generator.
 
-The overload check only wins the race against the stall watchdog when the
-watchdog timeout clears the threshold, and a single in-budget wait must not
-cross the trigger on its own. Warn on a scheduler whose timeout doesn't fit
-and on knobs whose funding period exceeds half the threshold.
+-B and -q set the root-only rescue bandwidth and quantum ops knobs. -B 0
+maps to SCX_RESCUE_DISABLE and turns rescue off kernel-side. Rescue inserts
+are counted and reported in the hier stats line.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h   |   3 +
- kernel/sched/ext/ext.c      |   2 +
- kernel/sched/ext/internal.h |   9 +++
- kernel/sched/ext/sub.c      | 136 +++++++++++++++++++++++++++++++++---
- kernel/sched/ext/types.h    |   3 +
- kernel/sched/sched.h        |   1 +
- 6 files changed, 143 insertions(+), 11 deletions(-)
+ tools/sched_ext/scx_qmap.bpf.c | 85 +++++++++++++++++++++++-----------
+ tools/sched_ext/scx_qmap.c     | 23 +++++++--
+ tools/sched_ext/scx_qmap.h     |  1 +
+ 3 files changed, 79 insertions(+), 30 deletions(-)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index a6aabbefd185..a3ec980e2925 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -215,6 +215,9 @@ struct sched_ext_entity {
- #ifdef CONFIG_SCHED_CORE
- 	u64			core_sched_at;	/* see scx_prio_less() */
- #endif
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	unsigned long		rescue_at;	/* queued on a rescue DSQ at, jiffies */
-+#endif
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 9a0321e84e88..b6e7b004611c 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -449,31 +449,33 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+ 	taskc->core_sched_seq = qa.core_sched_tail_seqs[idx]++;
  
  	/*
- 	 * Unique non-zero task ID assigned at fork. Persists across exec and
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 1bae142c4e6d..89b490b287b9 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -6140,6 +6140,8 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
- 		return "runnable task stall";
- 	case SCX_EXIT_ERROR_REENQ:
- 		return "reenqueue limit";
-+	case SCX_EXIT_ERROR_RESCUE:
-+		return "rescue bandwidth overload";
- 	default:
- 		return "<UNKNOWN>";
+-	 * A node with children delegates most cids. A task of ours that can run
+-	 * on none of our self cids (e.g. a per-NUMA kthread pinned to delegated
+-	 * cids) would starve in SHARED/FIFO since we never pull those on a
+-	 * delegated cid. Force it onto its first allowed cid's local DSQ with
+-	 * needs_immed(): if we hold access there it runs, else the kernel
+-	 * rejects and bounces it back via REENQ_CAP. Best-effort
+-	 * anti-starvation nudge.
++	 * A task of ours that can run on none of our self cids - the parent
++	 * didn't grant them or we delegated them to children - would starve in
++	 * SHARED/FIFO since we only pull from those on self cids.
++	 *
++	 * Force it onto its first allowed cid's local DSQ. If we hold that cid
++	 * it runs. Otherwise the insert carries SCX_ENQ_RESCUE and the kernel
++	 * diverts the task to its rescue path.
+ 	 */
+-	if (qa.nr_sub_scheds && !(enq_flags & SCX_ENQ_REENQ) &&
+-	    !cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
++	if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
+ 		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
+ 
+ 		if (c >= 0 && c < scx_bpf_nr_cids()) {
+ 			taskc->force_local = false;
++			__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
+ 			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | c, slice_ns,
+-					   enq_flags | needs_immed(c));
++					   enq_flags | needs_immed(c) | SCX_ENQ_RESCUE);
+ 			return;
+ 		}
  	}
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 7a2b0357b04f..75ec512d664f 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -57,6 +57,7 @@ enum scx_exit_kind {
- 	SCX_EXIT_ERROR_BPF,	/* ERROR but triggered through scx_bpf_error() */
- 	SCX_EXIT_ERROR_STALL,	/* watchdog detected stalled runnable tasks */
- 	SCX_EXIT_ERROR_REENQ,	/* task hit reenqueue limit without running */
-+	SCX_EXIT_ERROR_RESCUE,	/* ejected for overloading rescue execution */
- };
+ 
+ 	/*
+ 	 * Fault injection: deliberately dispatch one of our own tasks to a cid
+-	 * we don't hold. The kernel cap check must reject it and re-enqueue
+-	 * with SCX_TASK_REENQ_CAP, so nr_inject_attempts tracks nr_reenq_cap
+-	 * and proves delivery-time enforcement. Throttled.
++	 * we don't hold. The inserts carry SCX_ENQ_RESCUE and divert to the
++	 * kernel rescue path, a deterministic rescue-traffic generator. Under
++	 * -B 0 the kernel cap check rejects and re-enqueues them instead, so
++	 * nr_inject_attempts tracks nr_reenq_cap 1:1 and proves delivery-time
++	 * enforcement. Throttled.
+ 	 */
+ 	if (qa.inject_mode == QMAP_INJ_WRONG_CID && p->nr_cpus_allowed > 1 &&
+ 	    !(enq_flags & SCX_ENQ_REENQ)) {
+@@ -484,8 +486,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+ 
+ 			if (bad >= 0 && cmask_test(bad, &taskc->cpus_allowed)) {
+ 				__sync_fetch_and_add(&qa.nr_inject_attempts, 1);
+-				scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | bad,
+-						   slice_ns, enq_flags);
++				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
++				scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | bad, slice_ns,
++						   enq_flags | SCX_ENQ_RESCUE);
+ 				return;
+ 			}
+ 		}
+@@ -588,29 +591,47 @@ static void update_core_sched_head_seq(struct task_struct *p)
+ }
  
  /*
-@@ -1340,6 +1341,14 @@ struct scx_sched_pcpu {
- 	bool			idle_renotify;
- 	/* effective caps as of the last sub_ecaps_updated() delivery */
- 	u64			reported_ecaps;
-+
-+	/*
-+	 * Decaying rescue runtime consumed on this cpu, see
-+	 * scx_rescue_decay_avg(). Overload on this cpu ejects the sub with the
-+	 * largest value. Accessed only under this cpu's rq lock.
-+	 */
-+	u64			rescue_avg;
-+	unsigned long		rescue_avg_at;	/* last decay, jiffies */
- #endif
- 
- 	/*
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 3c1f11268e7f..fdbe1c1bfaa8 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -32,6 +32,8 @@ DEFINE_STATIC_KEY_FALSE(__scx_has_subs);
- static s32 scx_rescue_bw_1024;
- static s64 scx_rescue_quantum_ns;
- static s64 scx_rescue_sat_delta_ns;
-+static unsigned long scx_rescue_decay_halflife;
-+static unsigned long scx_rescue_overload_after;
- 
- /**
-  * scx_skip_subtree_pre - Skip @pos's subtree in a pre-order walk
-@@ -242,6 +244,23 @@ static s64 scx_rescue_slice_remaining(struct rq *rq)
- 	return max(rq->scx.rescue.slice - served, 0);
- }
- 
-+/*
-+ * Decay @pcpu's rescue usage average in place, halving per the knob-derived
-+ * halflife, see scx_rescue_set_knobs(). The timestamp advances only by whole
-+ * halflives.
-+ */
-+static u64 scx_rescue_decay_avg(struct scx_sched_pcpu *pcpu)
-+{
-+	unsigned long halflife = scx_rescue_decay_halflife;
-+	unsigned long n = (jiffies - pcpu->rescue_avg_at) / halflife;
-+
-+	if (n) {
-+		pcpu->rescue_avg = n < 64 ? pcpu->rescue_avg >> n : 0;
-+		pcpu->rescue_avg_at += n * halflife;
-+	}
-+	return pcpu->rescue_avg;
-+}
-+
- /**
-  * scx_rescue_charge - Charge the rescuee's runtime
-  * @rq: rq the rescuee is running on
-@@ -253,6 +272,8 @@ static s64 scx_rescue_slice_remaining(struct rq *rq)
-  */
- void scx_rescue_charge(struct rq *rq, s64 delta_exec)
- {
-+	struct scx_sched_pcpu *pcpu;
-+
- 	lockdep_assert_rq_held(rq);
- 
- 	/*
-@@ -263,6 +284,10 @@ void scx_rescue_charge(struct rq *rq, s64 delta_exec)
- 
- 	rq->scx.rescue.budget -= delta_exec;
- 
-+	/* per-cpu usage average feeds the overload victim pick */
-+	pcpu = per_cpu_ptr(scx_task_sched(rq->curr)->pcpu, cpu_of(rq));
-+	pcpu->rescue_avg = scx_rescue_decay_avg(pcpu) + delta_exec;
-+
- 	if (!scx_rescue_slice_remaining(rq))
- 		scx_task_slice_ended(rq, rq->scx.rescue.curr);
- }
-@@ -434,6 +459,63 @@ static bool scx_rescue_try_admit(struct rq *rq, struct task_struct *p)
- 	return false;
- }
- 
-+/**
-+ * scx_rescue_check_overload - Eject the top rescue consumer on a stuck rescue
-+ * @rq: rq whose rescue timer fired
++ * One pass over SHARED_DSQ: rescue stranded tasks and boost highpri ones. A
++ * task whose cids were lost while it was queued in the fifos would strand on
++ * SHARED_DSQ, which is consumed only on self cids it can't run on - move it to
++ * the kernel rescue path. One whose cids were lost after the highpri cull is
++ * likewise rescued out of HIGHPRI_DSQ below.
 + *
-+ * If the oldest waiter on @rq's rescue DSQ has been queued for too long, rescue
-+ * demand on this cpu persistently exceeds the configured bandwidth. Eject the
-+ * sub with the highest recent rescue consumption instead of letting the
-+ * scheduler stall path blame the waiter's owner, who may just be crowded out.
-+ */
-+static void scx_rescue_check_overload(struct rq *rq)
-+{
-+	struct scx_sched *victim = NULL, *pos;
-+	struct task_struct *p;
-+	int cpu = cpu_of(rq);
-+	u64 max_avg = 0;
-+	u32 dur_ms;
-+
-+	lockdep_assert_rq_held(rq);
-+
-+	p = list_first_entry_or_null(&rq->scx.rescue.dsq.list, struct task_struct,
-+				     scx.dsq_list.node);
-+	if (!p)
-+		return;
-+
-+	/* has the head waiter been queued for longer than the threshold? */
-+	if (time_before(jiffies, p->scx.rescue_at + scx_rescue_overload_after))
-+		return;
-+
-+	/*
-+	 * Grace period after the last ejection on this cpu - the freed
-+	 * bandwidth gets one threshold's worth of time to drain the backlog
-+	 * before another sub is judged.
-+	 */
-+	if (time_before(jiffies, rq->scx.rescue.kill_at + scx_rescue_overload_after))
-+		return;
-+
-+	list_for_each_entry_rcu(pos, &scx_sched_all, all) {
-+		u64 avg = scx_rescue_decay_avg(per_cpu_ptr(pos->pcpu, cpu));
-+
-+		/* skip an already-exiting sub, else the ejection is wasted */
-+		if (pos->level && avg > max_avg &&
-+		    atomic_read(&pos->exit_kind) == SCX_EXIT_NONE) {
-+			max_avg = avg;
-+			victim = pos;
-+		}
-+	}
-+	if (!victim)
-+		return;
-+
-+	rq->scx.rescue.kill_at = jiffies;
-+	dur_ms = jiffies_to_msecs(jiffies - p->scx.rescue_at);
-+	__scx_exit(victim, SCX_EXIT_ERROR_RESCUE, 0, cpu,
-+		   "used too much rescue CPU time (%llums) while %s[%d] waited %u.%03us to be rescued",
-+		   div_u64(max_avg, NSEC_PER_MSEC), p->comm, p->pid, dur_ms / 1000,
-+		   dur_ms % 1000);
-+}
-+
- /**
-  * scx_rescue_timerfn - Drive and pace rescue execution
-  * @timer: rq->scx.rescue.timer
-@@ -443,7 +525,8 @@ static bool scx_rescue_try_admit(struct rq *rq, struct task_struct *p)
-  * full quantum and granted its slice, see scx_rescue_next_slice(). A session
-  * whose budget accumulates over two quanta with the admitted rescuee still
-  * waiting escalates - the rescuee's remaining slice turns into protected
-- * execution and it preempts the current task.
-+ * execution and it preempts the current task. An overloaded rescue queue ejects
-+ * the top consumer, see scx_rescue_check_overload().
+  * To demonstrate the use of scx_bpf_dsq_move(), implement silly selective
+- * priority boosting mechanism by scanning SHARED_DSQ looking for highpri tasks,
+- * moving them to HIGHPRI_DSQ and then consuming them first. This makes minor
+- * difference only when dsp_batch is larger than 1.
++ * priority boosting mechanism by moving highpri tasks to HIGHPRI_DSQ and then
++ * consuming them first. This makes minor difference only when dsp_batch is
++ * larger than 1.
+  *
+  * scx_bpf_dsq_move[_vtime]() are allowed both from ops.dispatch() and
+  * non-rq-lock holding BPF programs. As demonstration, this function is called
+  * from qmap_dispatch() and monitor_timerfn().
   */
- static void scx_rescue_timerfn(struct timer_list *timer)
+-static bool dispatch_highpri(bool from_timer)
++static bool scan_shared_dsq(bool from_timer)
  {
-@@ -457,6 +540,7 @@ static void scx_rescue_timerfn(struct timer_list *timer)
+ 	struct task_struct *p;
+ 	s32 this_cid = scx_bpf_this_cid();
+ 	u32 nr_cids = scx_bpf_nr_cids();
+ 
+-	/* scan SHARED_DSQ and move highpri tasks to HIGHPRI_DSQ */
++	/* rescue strands and move highpri tasks to HIGHPRI_DSQ */
+ 	bpf_for_each(scx_dsq, p, SHARED_DSQ, 0) {
+ 		static u64 highpri_seq;
+ 		task_ctx_t *taskc;
++		s32 c;
+ 
+ 		if (!(taskc = lookup_task_ctx(p)))
+ 			return false;
+ 
++		/* stranded? rescue - it can't be dispatched here either way */
++		if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
++			c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
++			if (c >= 0 && c < scx_bpf_nr_cids()) {
++				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
++				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
++						 needs_immed(c) | SCX_ENQ_RESCUE);
++			}
++			continue;
++		}
++
+ 		if (taskc->highpri) {
+ 			/* exercise the set_*() and vtime interface too */
+ 			scx_bpf_dsq_move_set_slice(BPF_FOR_EACH_ITER, slice_ns * 2);
+@@ -640,8 +661,17 @@ static bool dispatch_highpri(bool from_timer)
+ 			cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
+ 						      &qa.self_cids.mask,
+ 						      this_cid + 1);
+-		if (cid >= nr_cids)
++		if (cid >= nr_cids) {
++			/* stranded after the cull - rescue it from here */
++			s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
++
++			if (c >= 0 && c < nr_cids) {
++				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
++				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
++						 needs_immed(c) | SCX_ENQ_RESCUE);
++			}
+ 			continue;
++		}
+ 
+ 		if (scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | cid,
+ 				     SCX_ENQ_PREEMPT | needs_immed(cid))) {
+@@ -670,10 +700,9 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
+ 	struct cpu_ctx __arena *cpuc;
+ 	task_ctx_t *taskc;
+ 	u32 batch = dsp_batch ?: 1;
+-	s32 owner;
+-	s32 i;
++	s32 owner, i;
+ 
+-	if (dispatch_highpri(false))
++	if (scan_shared_dsq(false))
  		return;
  
- 	scx_rescue_accrue(rq);
-+	scx_rescue_check_overload(rq);
- 
- 	if (!p) {
- 		s64 slice = scx_rescue_next_slice(rq);
-@@ -528,11 +612,28 @@ void scx_rescue_dump(struct seq_buf *s, struct rq *rq)
- 		      p ? p->comm : "none", p ? p->pid : -1);
- }
- 
-+/*
-+ * A scheduler whose stall watchdog is shorter than the overload threshold gets
-+ * stall-killed over its parked waiters before the overload check can eject the
-+ * actual top consumer. The root's knobs set the threshold, warn on any
-+ * scheduler that doesn't fit it.
-+ */
-+static void scx_rescue_check_timeout(struct scx_sched *sch)
-+{
-+	if (!scx_rescue_bw_1024 || sch->watchdog_timeout > scx_rescue_overload_after)
-+		return;
-+
-+	pr_warn("sched_ext: %s: watchdog timeout %ums <= rescue overload threshold %ums\n",
-+		sch->ops.name, jiffies_to_msecs(sch->watchdog_timeout),
-+		jiffies_to_msecs(scx_rescue_overload_after));
-+}
-+
- /* latch the rescue parameters on root scheduler enable */
- void scx_rescue_set_knobs(struct scx_sched *sch)
- {
- 	s32 bw_ppt = sch->ops.rescue_bandwidth_ppt ?: SCX_RESCUE_DFL_BW_PPT;
- 	s64 quantum_us = sch->ops.rescue_quantum_us ?: SCX_RESCUE_DFL_QUANTUM_US;
-+	s64 period_ns;
- 
- 	if (sch->ops.rescue_bandwidth_ppt == SCX_RESCUE_DISABLE) {
- 		scx_rescue_bw_1024 = 0;
-@@ -546,21 +647,30 @@ void scx_rescue_set_knobs(struct scx_sched *sch)
- 			scx_rescue_bw_1024);
- 
  	/*
--	 * A rescued task is guaranteed to run after two full periods - one to
--	 * be admitted, one more to escalate. Require the two periods to fit in
--	 * a quarter of the watchdog timeout, so one full period may take at
--	 * most an eighth.
-+	 * The overload threshold and the decay halflife scale with the funding
-+	 * period - the time the bucket takes to fund one full quantum.
- 	 */
--	if (div_s64(scx_rescue_quantum_ns << SCHED_CAPACITY_SHIFT, scx_rescue_bw_1024) >
--	    jiffies_to_nsecs(sch->watchdog_timeout) / 8)
--		pr_warn("sched_ext: rescue may not run a stuck task before the %ums watchdog timeout, decrease rescue_quantum_us or increase rescue_bandwidth_ppt\n",
--			jiffies_to_msecs(sch->watchdog_timeout));
-+	period_ns = div_s64(scx_rescue_quantum_ns << SCHED_CAPACITY_SHIFT, scx_rescue_bw_1024);
-+	scx_rescue_overload_after =
-+		clamp(nsecs_to_jiffies(SCX_RESCUE_OVERLOAD_MULT * period_ns),
-+		      msecs_to_jiffies(SCX_RESCUE_MIN_OVERLOAD_MS),
-+		      msecs_to_jiffies(SCX_RESCUE_MAX_OVERLOAD_MS));
-+	scx_rescue_decay_halflife = scx_rescue_overload_after / 4;
-+
-+	/* a single in-budget wait must not cross the overload trigger */
-+	if (nsecs_to_jiffies(period_ns) > scx_rescue_overload_after / 2)
-+		pr_warn("sched_ext: %s: rescue funding period %lldms > overload threshold %ums / 2\n",
-+			sch->ops.name, div_s64(period_ns, NSEC_PER_MSEC),
-+			jiffies_to_msecs(scx_rescue_overload_after));
-+
-+	scx_rescue_check_timeout(sch);
- }
- 
- void scx_rescue_init(struct rq *rq)
- {
- 	BUG_ON(scx_init_dsq(&rq->scx.rescue.dsq, SCX_DSQ_RESCUE, NULL));
- 	timer_setup(&rq->scx.rescue.timer, scx_rescue_timerfn, TIMER_PINNED);
-+	rq->scx.rescue.kill_at = jiffies;
- }
- 
- /**
-@@ -633,8 +743,10 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
- 		__scx_add_event(sch, SCX_EV_SUB_RESCUE, 1);
- 		if (scx_rescue_try_admit(rq, p))
- 			return &rq->scx.local_dsq;
--		else
--			return &rq->scx.rescue.dsq;
-+
-+		/* queueing, the overload trigger measures the wait from here */
-+		p->scx.rescue_at = jiffies;
-+		return &rq->scx.rescue.dsq;
+@@ -785,11 +814,10 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
+ 			 */
+ 			if (!cmask_test(cid, &taskc->cpus_allowed))
+ 				scx_bpf_kick_cid(scx_bpf_task_cid(p), 0);
+-
+ 			batch--;
+ 			cpuc->dsp_cnt--;
+ 			if (!batch || !scx_bpf_dispatch_nr_slots()) {
+-				if (dispatch_highpri(false))
++				if (scan_shared_dsq(false))
+ 					return;
+ 				scx_bpf_dsq_move_to_local(SHARED_DSQ, needs_immed(cid));
+ 				return;
+@@ -801,6 +829,9 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
+ 		cpuc->dsp_cnt = 0;
  	}
  
- 	p->scx.reenq_reason_caps = missing;
-@@ -1654,6 +1766,8 @@ void scx_sub_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_disable;
- 
-+	scx_rescue_check_timeout(sch);
++	if (scan_shared_dsq(false))
++		return;
 +
  	/*
- 	 * Allocate pshard[] before scx_link_sched() publishes @sch into the
- 	 * parent's RCU children list. A concurrent revoke walking the tree
-diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
-index d39588717e9b..1eb3ac8508f6 100644
---- a/kernel/sched/ext/types.h
-+++ b/kernel/sched/ext/types.h
-@@ -27,6 +27,9 @@ enum scx_consts {
- 	SCX_RESCUE_MIN_QUANTUM_US	= 1000,
- 	SCX_RESCUE_MAX_QUANTUM_US	= 100000,
- 	SCX_RESCUE_MIN_SLICE_US		= 1000,		/* floor of the divided slice */
-+	SCX_RESCUE_OVERLOAD_MULT	= 16,		/* overload threshold in funding periods */
-+	SCX_RESCUE_MIN_OVERLOAD_MS	= 1000,
-+	SCX_RESCUE_MAX_OVERLOAD_MS	= 15000,
+ 	 * No other tasks. @prev will keep running. Update its core_sched_seq as
+ 	 * if the task were enqueued and dispatched immediately.
+@@ -1185,7 +1216,7 @@ static void dump_shared_dsq(void)
+ static int monitor_timerfn(void *map, int *key, struct bpf_timer *timer)
+ {
+ 	bpf_rcu_read_lock();
+-	dispatch_highpri(true);
++	scan_shared_dsq(true);
+ 	bpf_rcu_read_unlock();
  
- 	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
- 	SCX_TID_CHUNK			= 1024,
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 289e298df628..6d796f9ba17a 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -803,6 +803,7 @@ struct scx_rq_rescue {
- 	s64			slice;			/* curr's admitted slice */
- 	u64			exec_snap;		/* sum_exec_runtime at admission */
- 	struct timer_list	timer;			/* paces admission and escalation */
-+	unsigned long		kill_at;		/* last ejection, init before any */
+ 	monitor_cpuperf();
+diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+index 3f54796e48be..189c8fed2f68 100644
+--- a/tools/sched_ext/scx_qmap.c
++++ b/tools/sched_ext/scx_qmap.c
+@@ -72,6 +72,8 @@ const char help_fmt[] =
+ "  -J MODE       Fault injection (wrong-cid: dispatch to a cid not held,\n"
+ "                init-fail/cgrp-init-fail: fail init_task/cpuctl_init for\n"
+ "                \"qmfail*\" comms/cgroups)\n"
++"  -B PPT        Rescue bandwidth in parts per thousand, 0 disables (root only, default 20)\n"
++"  -q US         Rescue batch quantum in microseconds (root only, default 5000)\n"
+ "  -v            Print libbpf debug messages\n"
+ "  -h            Display this help and exit\n";
+ 
+@@ -106,6 +108,7 @@ struct hier_prev {
+ 	u64 nr_reenq_cap;
+ 	u64 nr_reenq_immed;
+ 	u64 nr_inject_attempts;
++	u64 nr_rescue_dsp;
  };
  
- struct scx_rq {
+ /* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
+@@ -187,14 +190,16 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
+ 	}
+ 
+ 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
+-	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu\n",
++	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu rescue=+%llu\n",
+ 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
+ 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
+ 	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
+-	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts));
++	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
++	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
+ 	prev->nr_reenq_cap = qa->nr_reenq_cap;
+ 	prev->nr_reenq_immed = qa->nr_reenq_immed;
+ 	prev->nr_inject_attempts = qa->nr_inject_attempts;
++	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
+ 
+ 	printf("hier   : %-4s %10s %4s %6s %8s  %s\n",
+ 	       "", "cgroup", "w", "alloc", "disp/s", "cids");
+@@ -256,7 +261,8 @@ int main(int argc, char **argv)
+ 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
+ 	skel->rodata->max_tasks = 16384;
+ 
+-	while ((opt = getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:vh")) != -1) {
++	while ((opt = getopt(argc, argv,
++			     "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:B:q:vh")) != -1) {
+ 		switch (opt) {
+ 		case 's':
+ 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
+@@ -400,6 +406,17 @@ int main(int argc, char **argv)
+ 			else
+ 				inject_mode = strtoul(optarg, NULL, 0);
+ 			break;
++		case 'B': {
++			u32 ppt = strtoul(optarg, NULL, 0);
++
++			if (!ppt)
++				ppt = __COMPAT_ENUM_OR_ZERO("scx_consts", "SCX_RESCUE_DISABLE");
++			skel->struct_ops.qmap_ops->rescue_bandwidth_ppt = ppt;
++			break;
++		}
++		case 'q':
++			skel->struct_ops.qmap_ops->rescue_quantum_us = strtoul(optarg, NULL, 0);
++			break;
+ 		case 'v':
+ 			verbose = true;
+ 			break;
+diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
+index c42f7ef74b89..c8f602d58ca3 100644
+--- a/tools/sched_ext/scx_qmap.h
++++ b/tools/sched_ext/scx_qmap.h
+@@ -175,6 +175,7 @@ struct qmap_arena {
+ 	u64 nr_reenq_cap;		/* SCX_TASK_REENQ_CAP bounces */
+ 	u64 nr_reenq_immed;		/* SCX_TASK_REENQ_IMMED bounces */
+ 	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
++	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
+ 	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
+ };
+ 
 -- 
 2.55.0
 
