@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B27846A;
-	Sat,  1 Aug 2026 08:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C687030D40C;
+	Sat,  1 Aug 2026 08:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785574317; cv=none; b=LqbjmbLwnxPKAZgSTiwmVgG5i8IT1tc7orz7ZX4fv8Zwdab98mCqIVxwsbePqXGKlcP5tEBozuq0kz4xZd9hmPVw1S63kPnye7PQ1UAQMJDsKu0zRchi8HSEb0B0jxnzdtV8F9alivUgzU6NyfoOszWaArFP0YyNdST/rjlc8+c=
+	t=1785574318; cv=none; b=hXwSWE7nlRQPApcrExVB0WkX8o38xbmACQW49vzdqGkTyxh/ChQY0dZmuNKz0onKzXRctAB9Me1/ORKe7gJ8KFC/2jNxihuI4rVMzG8nOBt6jwLLtyWXimWEKAcG5GTPZoeOyfJxJZdUsSW0fkw8RRKVJlRRqsQqhnrhMN6q69Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785574317; c=relaxed/simple;
-	bh=J5DV9VvcBTHGZ6DCK3OSV2r8qVjUpJ5ye40RyKFKbnA=;
+	s=arc-20240116; t=1785574318; c=relaxed/simple;
+	bh=XZONJ9lPw3tjNrlADzxNnhs9eSsq0/bISOFJn34AkFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qajyi0OeO7wKnPrtIwwh+pgMMiyjITTEXVIvOZyOKS/5OCRSL8TWO9KxQvS77Rd+AjxSTUEOMvQkzFruvb41RijkjC54uRFd0nwA1ueU4ql5TbN4HaMLokLIWbuk76WoLr50Twz9Ln5QQLSIFJUH/kDdLcBjMgbrC2qOUzv2HY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VeERScBs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dZbZbw5KKvNfc3G5jmg2nVhi5DLim5RgVVATQsPKc6QJFqiMSnWxbYJz4xKgJsASG04n5GVfLxr0V6MCmEr6zgIhGEHo+60JStV0bj17NUc2c+D9WH6vD7XEOs+vYfSd5LfephupEkowFJ36rcgxWZo8XFoJCQT1PpM4/i///9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gCmFKUNL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VeERScBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899331F00ADE;
-	Sat,  1 Aug 2026 08:51:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gCmFKUNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843EA1F00ACF;
+	Sat,  1 Aug 2026 08:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785574315;
-	bh=2p4h7LgtBqZLcaXjtZmO6y8QdHjeUJC+/DixWNs6qa8=;
+	s=k20260515; t=1785574316;
+	bh=K/317PVlmAcvln/XpEI8ixcX2VntzmVKxKDHESAiE4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VeERScBsysEtOEmPrBuR5dCIAIPoaz7V+SdIv6hafa1WmlILw60X0/pzGnR7vv2Gm
-	 mX5JVc6YqYREmtcLiANWV203rQWNcLI76k/1uDUJEYod4KK9YvlF9gW/H0A+xRLBjK
-	 fCOiLanXUoUuuDOPRzIAWxygNyAGarWzZHWSedB6/F00gnzeLqUTHwDwftBd71GbOg
-	 QxGwmNC7YuEelTQxAMjn1rs3A4d2cAhWMH/Cc02fsmII7PWh1/JQBHZS87SvJgPFe1
-	 7CeqqZZFJQlo81Lp+76kDKiW+jnwKzVp7MTrTasYeIRy3QpdYg8sZ7JTABlylk4UKg
-	 JfVINALo4GmFg==
+	b=gCmFKUNLFZX/Qf4wzcUUHNZijDrinez4AVPXNGBTqQU70Fcd6AoZWOVgtsnOvlZcS
+	 yVteCi5S9rGXw+Is3eTswMB4d8UmLj88e2X1hmut/aBZ8oYEnocW3jh1AN819FzSB0
+	 fOFYFjuqqbsOA1jvf+j3AM2tdJfeT9+UK6C/fsaPaNm+tWBymjWt0ZMmiJBIcMXM3C
+	 y2Nk7QfLHd0M7uSHDF7lGfXsliMyUTP90Cxca2fzVJerPP9Ah83DpRZqi1r1U7CPLF
+	 7BSv6Uyyolr1oRjcSgzZregFG0somRs73QF6BmS265HsjIt7u77IUxHNe7Vk39bpDT
+	 /cBR+LGELQV6A==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 04/12] sched_ext: Reject internal enq_flags in the dsq move kfuncs
-Date: Fri, 31 Jul 2026 22:51:42 -1000
-Message-ID: <20260801085150.2697653-5-tj@kernel.org>
+Subject: [PATCH 05/12] sched_ext: Make SCX_ENQ_IGNORE_CAPS waive the preemption cap too
+Date: Fri, 31 Jul 2026 22:51:43 -1000
+Message-ID: <20260801085150.2697653-6-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260801085150.2697653-1-tj@kernel.org>
 References: <20260801085150.2697653-1-tj@kernel.org>
@@ -48,86 +48,85 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The dsq insert kfuncs reject __SCX_ENQ_INTERNAL_MASK bits in
-scx_dsq_insert_preamble() instead of scx_vet_enq_flags(). A scheduler can
-smuggle internal flags such as SCX_ENQ_CLEAR_OPSS through the dsq move
-kfuncs and corrupt the dispatch protocol. Move the rejection into
-scx_vet_enq_flags(). The vtime move wrapper OR'd the internal
-SCX_ENQ_DSQ_PRIQ bit into enq_flags before the vet; the bit now goes in
-inside scx_dsq_move() after the vet.
+SCX_ENQ_IGNORE_CAPS is kernel-internal and marks a placement the kernel
+forces. scx_caps_for_enq() waives the enqueue cap for it, but a PREEMPT
+insert still picks up the preemption cap requirement from
+scx_caps_for_preempt(). Update scx_caps_for_preempt() to take enq_flags and
+require nothing when SCX_ENQ_IGNORE_CAPS is set.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ kernel/sched/ext/ext.c | 5 +++--
+ kernel/sched/ext/sub.c | 2 +-
+ kernel/sched/ext/sub.h | 9 ++++++---
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 9ce7e50c13d3..028cfbcd1314 100644
+index 028cfbcd1314..bf1f9f4d0847 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -8393,6 +8393,11 @@ static bool scx_vet_enq_flags(struct scx_sched *sch, u64 dsq_id, u64 *enq_flags)
- 	bool is_local = dsq_id == SCX_DSQ_LOCAL ||
- 		(dsq_id & SCX_DSQ_LOCAL_ON) == SCX_DSQ_LOCAL_ON;
- 
-+	if (unlikely(*enq_flags & __SCX_ENQ_INTERNAL_MASK)) {
-+		scx_error(sch, "invalid enq_flags 0x%llx", *enq_flags);
-+		return false;
-+	}
+@@ -8149,8 +8149,9 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 	if (kickable && !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)) {
+ 		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
+ 			if (cur_class == &ext_sched_class) {
+-				if (likely(!scx_missing_caps(pcpu->sch, cpu,
+-							     scx_caps_for_preempt(pcpu->sch, rq))))
++				u64 caps = scx_caps_for_preempt(pcpu->sch, rq, 0);
 +
- 	if (*enq_flags & SCX_ENQ_IMMED) {
- 		if (unlikely(!is_local)) {
- 			scx_error(sch, "SCX_ENQ_IMMED on a non-local DSQ 0x%llx", dsq_id);
-@@ -8415,11 +8420,6 @@ static bool scx_dsq_insert_preamble(struct scx_sched *sch, struct task_struct *p
- 		return false;
- 	}
++				if (likely(!scx_missing_caps(pcpu->sch, cpu, caps)))
+ 					scx_set_task_slice(rq->curr, 0);
+ 				else
+ 					__scx_add_event(pcpu->sch,
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 2ea9a690e986..c30f48ee07f9 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -262,7 +262,7 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
+ 	 * @p's owner (@sch). Check caps against the scheduling sched.
+ 	 */
+ 	if (*enq_flags & SCX_ENQ_PREEMPT)
+-		needed |= scx_caps_for_preempt(asch, rq);
++		needed |= scx_caps_for_preempt(asch, rq, *enq_flags);
+ 	missing = scx_missing_caps(asch, cpu_of(rq), needed);
  
--	if (unlikely(*enq_flags & __SCX_ENQ_INTERNAL_MASK)) {
--		scx_error(sch, "invalid enq_flags 0x%llx", *enq_flags);
--		return false;
--	}
--
- 	/* see SCX_EV_INSERT_NOT_OWNED definition */
- 	if (unlikely(!scx_task_on_sched(sch, p))) {
- 		__scx_add_event(sch, SCX_EV_INSERT_NOT_OWNED, 1);
-@@ -8651,7 +8651,8 @@ static const struct btf_kfunc_id_set scx_kfunc_set_enqueue_dispatch = {
- };
- 
- static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
--			 struct task_struct *p, u64 dsq_id, u64 enq_flags)
-+			 struct task_struct *p, u64 dsq_id, u64 enq_flags,
-+			 bool priq)
+ 	/* requirements met */
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index db449559bbe8..fe1d82e6c1d5 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -140,7 +140,7 @@ static inline u64 scx_missing_caps(struct scx_sched *sch, s32 cpu, u64 needed)
+ static inline u64 scx_caps_for_enq(u64 enq_flags)
  {
- 	struct scx_dispatch_q *src_dsq = kit->dsq, *dst_dsq;
- 	struct scx_sched *sch;
-@@ -8673,6 +8674,10 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 	if (!scx_vet_enq_flags(sch, dsq_id, &enq_flags))
- 		return false;
- 
-+	/* internal bit, can only go in after @enq_flags is vetted */
-+	if (priq)
-+		enq_flags |= SCX_ENQ_DSQ_PRIQ;
-+
- 	/*
- 	 * If the BPF scheduler keeps calling this function repeatedly, it can
- 	 * cause similar live-lock conditions as scx_consume_dispatch_q().
-@@ -8929,7 +8934,7 @@ __bpf_kfunc bool scx_bpf_dsq_move(struct bpf_iter_scx_dsq *it__iter,
- 				  u64 enq_flags)
- {
- 	return scx_dsq_move((struct bpf_iter_scx_dsq_kern *)it__iter,
--			    p, dsq_id, enq_flags);
-+			    p, dsq_id, enq_flags, false);
+ 	/* a restored task must be put into the local DSQ regardless of caps */
+-	if (enq_flags & SCX_ENQ_IGNORE_CAPS)
++	if (unlikely(enq_flags & SCX_ENQ_IGNORE_CAPS))
+ 		return 0;
+ 	if (enq_flags & SCX_ENQ_IMMED)
+ 		return SCX_CAP_ENQ_IMMED;
+@@ -156,10 +156,13 @@ static inline u64 scx_caps_for_task(struct task_struct *p)
  }
  
- /**
-@@ -8954,7 +8959,7 @@ __bpf_kfunc bool scx_bpf_dsq_move_vtime(struct bpf_iter_scx_dsq *it__iter,
- 					u64 enq_flags)
+ /* the cap @sch needs to preempt @rq's current task, 0 if none */
+-static inline u64 scx_caps_for_preempt(struct scx_sched *sch, struct rq *rq)
++static inline u64 scx_caps_for_preempt(struct scx_sched *sch, struct rq *rq, u64 enq_flags)
  {
- 	return scx_dsq_move((struct bpf_iter_scx_dsq_kern *)it__iter,
--			    p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
-+			    p, dsq_id, enq_flags, true);
- }
+ 	struct task_struct *curr = rq->curr;
  
- __bpf_kfunc_end_defs();
++	/* a kernel-forced placement preempts regardless of caps */
++	if (unlikely(enq_flags & SCX_ENQ_IGNORE_CAPS))
++		return 0;
+ 	/* a non-ext task can't be preempted by ext, own-subtree needs no cap */
+ 	if (curr->sched_class != &ext_sched_class ||
+ 	    scx_is_descendant(scx_task_sched(curr), sch))
+@@ -195,7 +198,7 @@ static inline bool scx_task_can_stay_on_cpu(struct rq *rq, struct task_struct *p
+ #else	/* CONFIG_EXT_SUB_SCHED */
+ 
+ static inline u64 scx_missing_caps(struct scx_sched *sch, s32 cpu, u64 needed) { return 0; }
+-static inline u64 scx_caps_for_preempt(struct scx_sched *sch, struct rq *rq) { return 0; }
++static inline u64 scx_caps_for_preempt(struct scx_sched *sch, struct rq *rq, u64 enq_flags) { return 0; }
+ static inline bool scx_task_can_stay_on_cpu(struct rq *rq, struct task_struct *p) { return true; }
+ 
+ #endif	/* CONFIG_EXT_SUB_SCHED */
 -- 
 2.55.0
 
