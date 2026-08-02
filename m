@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCB93D1CBE;
-	Sun,  2 Aug 2026 21:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A31C3D565E;
+	Sun,  2 Aug 2026 21:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785707698; cv=none; b=rQHfbsBw5HXUIoRx9r1bfeEz8N6AQj9+Y6wSChTRPZlv0vFzLZkewRPeA8ddlAeI0lBm4tskUmhmcY9H6zpGQZ7o2BJGdJPdPZ5uCbTXak/tPIoqfqHCxYFZFCuymOrkr3iQDZTo6gHf8s0ODZtx33HwiUNjg9dYDYoznMd0oZQ=
+	t=1785707699; cv=none; b=QPkICay5Y0Gpeb8lRSUYcBv2q78GKAj7N6/31LmEca4+DEePWSmOhL/3XR5A6+Qb6Gpe6TWm7AP8eRve+Y5sOPTUpVSLTu1hWRq1Jfr781m3Lon3FlBv4AIsuhmIMPYgcBD5ws1MykZN+jaDEZT6m1KpmFIvuVGE06FMPBWFk7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785707698; c=relaxed/simple;
-	bh=iUZck+SYkjo5z7YKVB3MdDLO2V4I6h0B1z96/dUEDMg=;
+	s=arc-20240116; t=1785707699; c=relaxed/simple;
+	bh=VFwoOH/rJhQ3x4GDlUKFlJYUJunaZvv3YQxexa9vWos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiUCr+iJf6ewjWuRmyp7QMPZKQ018pydbWz/eRRY/vTJm+l0jW0vjhibkykxZGerpwlEInsGy8LJxnnAUmj4MsM8DgUDIBfRAUXOdHLlreZkyoCQ9WflrWr8MTaoa3YxMNvMRmTWHG8nFzPkARdTtKJp5JRzCsJD/RD3xrMni1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XBvxpPn5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bGeCfGXo7spluLIoC5kfFU7fZFU8FElMT+Y8UkhTArKfgqpxFuq79t+92Idwef6b2Amcy0pJ7hsl+K7wOxQ03Xxc2O31QPKA8pHod+bJ5H+XIMUxBF2tTlkRS60z6UU1ZJngULhFxB7nWELDWUGOVXhr2eex5M3rOlSgAzAXh8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fUGUvAUG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XBvxpPn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6E51F000E9;
-	Sun,  2 Aug 2026 21:54:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fUGUvAUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95501F00A3A;
+	Sun,  2 Aug 2026 21:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785707696;
-	bh=h90+VaBTMv2jI9tSIbejlap5kItQ3HnCxXiY4oQhumg=;
+	s=k20260515; t=1785707697;
+	bh=6C72SZkthJuIp+kZcPc92L8sFG/r4P5gI1b3cefqKag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBvxpPn5NXgqgTiiDhk4w0AXLa84E8RIk3e0smh9Hgcqvnu0pjqVS/tE7WiUq2GZp
-	 +AsJz6wh9pTYcr9DtM2a1yPSkXptaWL/iOzfw3i2PFjlq9LhdEP6A1xCegBrZhXL1M
-	 kG/Criz99T40hi3lhfPkinj0lhTu+G/LuDt8hweQxkaITK3HnyRox/DEu/+4vHahGt
-	 0UdsCIm6z7iLlmWn7ZH/KnzHQO+t9IstUG+S8yc4YiFq3JfQEZebc6SQz9lkKTZRA2
-	 CA+733gub5Yv6fP1DfKnNS7mOW9dkth2llQpkmianpnVfrDEewzvH12satjc2Nx44q
-	 6shAOjw5oUhtg==
+	b=fUGUvAUG5CdXzllyP2bIfPqasvyLBBJu13fiQcMRRrYt+vPUPKZxIL5bYM4xONuow
+	 Yh+zRrCrcTziiP5sq8d/WzlbfwIBfV0RB0BJ6vWnQ5OF/6PhlDBc6IrqB/3uZPs8zz
+	 Y+Z/G15SzdatbPdGkl6q4BQVqh5vBjny+aoyi9p8SKQHnH+ajjWTpoCbIEkRFDVfHn
+	 1hqxXyGz7WTQk9mjA8ZURPYSc+BdP8dB/zMMcrgTva+rSz5p7GeMa6d9JEWiYRO1w2
+	 zm/dBrznXbSnK49o3LJDrAhEvmJw82Qf4iHqLQUUCfy+0opQrXey6fyj7VznbRaN3q
+	 xITc+oJtFSh6A==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 09/12] sched_ext: Eject the top rescue consumer on overload
-Date: Sun,  2 Aug 2026 11:54:44 -1000
-Message-ID: <20260802215447.3134509-10-tj@kernel.org>
+Subject: [PATCH 10/12] sched_ext: Sync tools autogen enum headers
+Date: Sun,  2 Aug 2026 11:54:45 -1000
+Message-ID: <20260802215447.3134509-11-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260802215447.3134509-1-tj@kernel.org>
 References: <20260802215447.3134509-1-tj@kernel.org>
@@ -48,353 +48,105 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When rescue demand on a cpu persistently exceeds the configured bandwidth,
-tasks age on that cpu's rescue DSQ until the stall watchdog fires. The
-watchdog blames the waiting task's owner, but the misbehaving party is
-whoever floods the queue, not whoever happens to time out.
-
-Track each sched's recent rescue consumption per cpu as a decaying average.
-Once the oldest waiter on a cpu's rescue DSQ has been queued past a
-threshold derived from the rescue knobs (4s at the defaults), the rescue
-timer ejects the sub with the highest recent consumption on that cpu with
-SCX_EXIT_ERROR_RESCUE. With no recent consumer there is no victim and
-nothing is ejected - the generic stall watchdog eventually blames the
-waiter's owner instead. Ejections on a cpu are spaced one threshold apart so
-the freed bandwidth can drain the backlog before another sub is judged.
-
-The overload check only wins the race against the stall watchdog when the
-watchdog timeout clears the threshold, and a single in-budget wait must not
-cross the trigger on its own. Warn on a scheduler whose timeout doesn't fit
-and on knobs whose funding period exceeds half the threshold.
-
-v2: - Track kill_at in jiffies_64 - on 32-bit, the time_before() grace check
-      wraps 2^31 ticks after the last ejection and suppresses ejections.
-      (sashiko AI)
-
-    - Track rescue_avg_at in jiffies_64 likewise - the unsigned long decay
-      delta truncates mod 2^32 on 32-bit and can revive a weeks-old usage
-      average in the victim pick.
+Mechanical regeneration for the enumerators added by the slice write rework
+and the rescue machinery. BPF schedulers reference SCX_ENQ_RESCUE, the rest
+are enum_defs presence markers.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h   |   3 +
- kernel/sched/ext/ext.c      |   2 +
- kernel/sched/ext/internal.h |   9 +++
- kernel/sched/ext/sub.c      | 137 +++++++++++++++++++++++++++++++++---
- kernel/sched/ext/types.h    |   3 +
- kernel/sched/sched.h        |   1 +
- 6 files changed, 144 insertions(+), 11 deletions(-)
+ tools/sched_ext/include/scx/enum_defs.autogen.h | 16 ++++++++++++++++
+ tools/sched_ext/include/scx/enums.autogen.bpf.h |  3 +++
+ tools/sched_ext/include/scx/enums.autogen.h     |  1 +
+ 3 files changed, 20 insertions(+)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index a6aabbefd185..a3ec980e2925 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -215,6 +215,9 @@ struct sched_ext_entity {
- #ifdef CONFIG_SCHED_CORE
- 	u64			core_sched_at;	/* see scx_prio_less() */
- #endif
-+#ifdef CONFIG_EXT_SUB_SCHED
-+	unsigned long		rescue_at;	/* queued on a rescue DSQ at, jiffies */
-+#endif
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index 0379eff117c9..c05d4b572955 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -26,6 +26,16 @@
+ #define HAVE_SCX_DSP_DFL_MAX_BATCH
+ #define HAVE_SCX_DSP_MAX_LOOPS
+ #define HAVE_SCX_WATCHDOG_MAX_TIMEOUT
++#define HAVE_SCX_RESCUE_DFL_BW_PPT
++#define HAVE_SCX_RESCUE_MAX_BW_PPT
++#define HAVE_SCX_RESCUE_DISABLE
++#define HAVE_SCX_RESCUE_DFL_QUANTUM_US
++#define HAVE_SCX_RESCUE_MIN_QUANTUM_US
++#define HAVE_SCX_RESCUE_MAX_QUANTUM_US
++#define HAVE_SCX_RESCUE_MIN_SLICE_US
++#define HAVE_SCX_RESCUE_OVERLOAD_MULT
++#define HAVE_SCX_RESCUE_MIN_OVERLOAD_MS
++#define HAVE_SCX_RESCUE_MAX_OVERLOAD_MS
+ #define HAVE_SCX_TID_CHUNK
+ #define HAVE_SCX_EXIT_BT_LEN
+ #define HAVE_SCX_EXIT_MSG_LEN
+@@ -53,6 +63,7 @@
+ #define HAVE_SCX_DSQ_LOCAL
+ #define HAVE_SCX_DSQ_BYPASS
+ #define HAVE_SCX_DSQ_REJECT
++#define HAVE_SCX_DSQ_RESCUE
+ #define HAVE_SCX_DSQ_LOCAL_ON
+ #define HAVE_SCX_DSQ_LOCAL_CPU_MASK
+ #define HAVE_SCX_DSQ_ITER_REV
+@@ -71,6 +82,7 @@
+ #define HAVE_SCX_ENQ_CPU_SELECTED
+ #define HAVE_SCX_ENQ_PREEMPT
+ #define HAVE_SCX_ENQ_IMMED
++#define HAVE_SCX_ENQ_RESCUE
+ #define HAVE_SCX_ENQ_REENQ
+ #define HAVE_SCX_ENQ_LAST
+ #define HAVE___SCX_ENQ_INTERNAL_MASK
+@@ -79,6 +91,8 @@
+ #define HAVE_SCX_ENQ_NESTED
+ #define HAVE_SCX_ENQ_GDSQ_FALLBACK
+ #define HAVE_SCX_ENQ_IGNORE_CAPS
++#define HAVE_SCX_ENQ_APPLY_SLICE
++#define HAVE_SCX_ENQ_SLICE_DFL
+ #define HAVE_SCX_TASK_DSQ_ON_PRIQ
+ #define HAVE_SCX_TASK_QUEUED
+ #define HAVE_SCX_TASK_IN_CUSTODY
+@@ -86,6 +100,7 @@
+ #define HAVE_SCX_TASK_DEQD_FOR_SLEEP
+ #define HAVE_SCX_TASK_SUB_INIT
+ #define HAVE_SCX_TASK_IMMED
++#define HAVE_SCX_TASK_PROTECTED
+ #define HAVE_SCX_TASK_STATE_SHIFT
+ #define HAVE_SCX_TASK_STATE_BITS
+ #define HAVE_SCX_TASK_STATE_MASK
+@@ -120,6 +135,7 @@
+ #define HAVE_SCX_EXIT_ERROR_BPF
+ #define HAVE_SCX_EXIT_ERROR_STALL
+ #define HAVE_SCX_EXIT_ERROR_REENQ
++#define HAVE_SCX_EXIT_ERROR_RESCUE
+ #define HAVE_SCX_KF_ALLOW_UNLOCKED
+ #define HAVE_SCX_KF_ALLOW_INIT_CIDS
+ #define HAVE_SCX_KF_ALLOW_CPU_RELEASE
+diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+index dafccbb6b69d..11bd9b70811a 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
++++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+@@ -124,6 +124,9 @@ const volatile u64 __SCX_ENQ_PREEMPT __weak;
+ const volatile u64 __SCX_ENQ_IMMED __weak;
+ #define SCX_ENQ_IMMED __SCX_ENQ_IMMED
  
- 	/*
- 	 * Unique non-zero task ID assigned at fork. Persists across exec and
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 7f86d4adcd0d..0bbe144c9811 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -6140,6 +6140,8 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
- 		return "runnable task stall";
- 	case SCX_EXIT_ERROR_REENQ:
- 		return "reenqueue limit";
-+	case SCX_EXIT_ERROR_RESCUE:
-+		return "rescue bandwidth overload";
- 	default:
- 		return "<UNKNOWN>";
- 	}
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 18983dbe81f4..b699e7c1103f 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -57,6 +57,7 @@ enum scx_exit_kind {
- 	SCX_EXIT_ERROR_BPF,	/* ERROR but triggered through scx_bpf_error() */
- 	SCX_EXIT_ERROR_STALL,	/* watchdog detected stalled runnable tasks */
- 	SCX_EXIT_ERROR_REENQ,	/* task hit reenqueue limit without running */
-+	SCX_EXIT_ERROR_RESCUE,	/* ejected for overloading rescue execution */
- };
- 
- /*
-@@ -1340,6 +1341,14 @@ struct scx_sched_pcpu {
- 	bool			idle_renotify;
- 	/* effective caps as of the last sub_ecaps_updated() delivery */
- 	u64			reported_ecaps;
++const volatile u64 __SCX_ENQ_RESCUE __weak;
++#define SCX_ENQ_RESCUE __SCX_ENQ_RESCUE
 +
-+	/*
-+	 * Decaying rescue runtime consumed on this cpu, see
-+	 * scx_rescue_decay_avg(). Overload on this cpu ejects the sub with the
-+	 * largest value. Accessed only under this cpu's rq lock.
-+	 */
-+	u64			rescue_avg;
-+	u64			rescue_avg_at;	/* last decay, jiffies_64 */
- #endif
+ const volatile u64 __SCX_ENQ_REENQ __weak;
+ #define SCX_ENQ_REENQ __SCX_ENQ_REENQ
  
- 	/*
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 3c1f11268e7f..b81254be1b04 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -32,6 +32,8 @@ DEFINE_STATIC_KEY_FALSE(__scx_has_subs);
- static s32 scx_rescue_bw_1024;
- static s64 scx_rescue_quantum_ns;
- static s64 scx_rescue_sat_delta_ns;
-+static unsigned long scx_rescue_decay_halflife;
-+static unsigned long scx_rescue_overload_after;
- 
- /**
-  * scx_skip_subtree_pre - Skip @pos's subtree in a pre-order walk
-@@ -242,6 +244,23 @@ static s64 scx_rescue_slice_remaining(struct rq *rq)
- 	return max(rq->scx.rescue.slice - served, 0);
- }
- 
-+/*
-+ * Decay @pcpu's rescue usage average in place, halving per the knob-derived
-+ * halflife, see scx_rescue_set_knobs(). The timestamp advances only by whole
-+ * halflives.
-+ */
-+static u64 scx_rescue_decay_avg(struct scx_sched_pcpu *pcpu)
-+{
-+	unsigned long halflife = scx_rescue_decay_halflife;
-+	u64 n = div_u64(get_jiffies_64() - pcpu->rescue_avg_at, halflife);
-+
-+	if (n) {
-+		pcpu->rescue_avg = n < 64 ? pcpu->rescue_avg >> n : 0;
-+		pcpu->rescue_avg_at += n * halflife;
-+	}
-+	return pcpu->rescue_avg;
-+}
-+
- /**
-  * scx_rescue_charge - Charge the rescuee's runtime
-  * @rq: rq the rescuee is running on
-@@ -253,6 +272,8 @@ static s64 scx_rescue_slice_remaining(struct rq *rq)
-  */
- void scx_rescue_charge(struct rq *rq, s64 delta_exec)
- {
-+	struct scx_sched_pcpu *pcpu;
-+
- 	lockdep_assert_rq_held(rq);
- 
- 	/*
-@@ -263,6 +284,10 @@ void scx_rescue_charge(struct rq *rq, s64 delta_exec)
- 
- 	rq->scx.rescue.budget -= delta_exec;
- 
-+	/* per-cpu usage average feeds the overload victim pick */
-+	pcpu = per_cpu_ptr(scx_task_sched(rq->curr)->pcpu, cpu_of(rq));
-+	pcpu->rescue_avg = scx_rescue_decay_avg(pcpu) + delta_exec;
-+
- 	if (!scx_rescue_slice_remaining(rq))
- 		scx_task_slice_ended(rq, rq->scx.rescue.curr);
- }
-@@ -434,6 +459,64 @@ static bool scx_rescue_try_admit(struct rq *rq, struct task_struct *p)
- 	return false;
- }
- 
-+/**
-+ * scx_rescue_check_overload - Eject the top rescue consumer on a stuck rescue
-+ * @rq: rq whose rescue timer fired
-+ *
-+ * If the oldest waiter on @rq's rescue DSQ has been queued for too long, rescue
-+ * demand on this cpu persistently exceeds the configured bandwidth. Eject the
-+ * sub with the highest recent rescue consumption instead of letting the
-+ * scheduler stall path blame the waiter's owner, who may just be crowded out.
-+ */
-+static void scx_rescue_check_overload(struct rq *rq)
-+{
-+	struct scx_sched *victim = NULL, *pos;
-+	struct task_struct *p;
-+	int cpu = cpu_of(rq);
-+	u64 max_avg = 0;
-+	u32 dur_ms;
-+
-+	lockdep_assert_rq_held(rq);
-+
-+	p = list_first_entry_or_null(&rq->scx.rescue.dsq.list, struct task_struct,
-+				     scx.dsq_list.node);
-+	if (!p)
-+		return;
-+
-+	/* has the head waiter been queued for longer than the threshold? */
-+	if (time_before(jiffies, p->scx.rescue_at + scx_rescue_overload_after))
-+		return;
-+
-+	/*
-+	 * Grace period after the last ejection on this cpu - the freed
-+	 * bandwidth gets one threshold's worth of time to drain the backlog
-+	 * before another sub is judged.
-+	 */
-+	if (time_before64(get_jiffies_64(), rq->scx.rescue.kill_at +
-+			  scx_rescue_overload_after))
-+		return;
-+
-+	list_for_each_entry_rcu(pos, &scx_sched_all, all) {
-+		u64 avg = scx_rescue_decay_avg(per_cpu_ptr(pos->pcpu, cpu));
-+
-+		/* skip an already-exiting sub, else the ejection is wasted */
-+		if (pos->level && avg > max_avg &&
-+		    atomic_read(&pos->exit_kind) == SCX_EXIT_NONE) {
-+			max_avg = avg;
-+			victim = pos;
-+		}
-+	}
-+	if (!victim)
-+		return;
-+
-+	rq->scx.rescue.kill_at = get_jiffies_64();
-+	dur_ms = jiffies_to_msecs(jiffies - p->scx.rescue_at);
-+	__scx_exit(victim, SCX_EXIT_ERROR_RESCUE, 0, cpu,
-+		   "used too much rescue CPU time (%llums) while %s[%d] waited %u.%03us to be rescued",
-+		   div_u64(max_avg, NSEC_PER_MSEC), p->comm, p->pid, dur_ms / 1000,
-+		   dur_ms % 1000);
-+}
-+
- /**
-  * scx_rescue_timerfn - Drive and pace rescue execution
-  * @timer: rq->scx.rescue.timer
-@@ -443,7 +526,8 @@ static bool scx_rescue_try_admit(struct rq *rq, struct task_struct *p)
-  * full quantum and granted its slice, see scx_rescue_next_slice(). A session
-  * whose budget accumulates over two quanta with the admitted rescuee still
-  * waiting escalates - the rescuee's remaining slice turns into protected
-- * execution and it preempts the current task.
-+ * execution and it preempts the current task. An overloaded rescue queue ejects
-+ * the top consumer, see scx_rescue_check_overload().
-  */
- static void scx_rescue_timerfn(struct timer_list *timer)
- {
-@@ -457,6 +541,7 @@ static void scx_rescue_timerfn(struct timer_list *timer)
- 		return;
- 
- 	scx_rescue_accrue(rq);
-+	scx_rescue_check_overload(rq);
- 
- 	if (!p) {
- 		s64 slice = scx_rescue_next_slice(rq);
-@@ -528,11 +613,28 @@ void scx_rescue_dump(struct seq_buf *s, struct rq *rq)
- 		      p ? p->comm : "none", p ? p->pid : -1);
- }
- 
-+/*
-+ * A scheduler whose stall watchdog is shorter than the overload threshold gets
-+ * stall-killed over its parked waiters before the overload check can eject the
-+ * actual top consumer. The root's knobs set the threshold, warn on any
-+ * scheduler that doesn't fit it.
-+ */
-+static void scx_rescue_check_timeout(struct scx_sched *sch)
-+{
-+	if (!scx_rescue_bw_1024 || sch->watchdog_timeout > scx_rescue_overload_after)
-+		return;
-+
-+	pr_warn("sched_ext: %s: watchdog timeout %ums <= rescue overload threshold %ums\n",
-+		sch->ops.name, jiffies_to_msecs(sch->watchdog_timeout),
-+		jiffies_to_msecs(scx_rescue_overload_after));
-+}
-+
- /* latch the rescue parameters on root scheduler enable */
- void scx_rescue_set_knobs(struct scx_sched *sch)
- {
- 	s32 bw_ppt = sch->ops.rescue_bandwidth_ppt ?: SCX_RESCUE_DFL_BW_PPT;
- 	s64 quantum_us = sch->ops.rescue_quantum_us ?: SCX_RESCUE_DFL_QUANTUM_US;
-+	s64 period_ns;
- 
- 	if (sch->ops.rescue_bandwidth_ppt == SCX_RESCUE_DISABLE) {
- 		scx_rescue_bw_1024 = 0;
-@@ -546,21 +648,30 @@ void scx_rescue_set_knobs(struct scx_sched *sch)
- 			scx_rescue_bw_1024);
- 
- 	/*
--	 * A rescued task is guaranteed to run after two full periods - one to
--	 * be admitted, one more to escalate. Require the two periods to fit in
--	 * a quarter of the watchdog timeout, so one full period may take at
--	 * most an eighth.
-+	 * The overload threshold and the decay halflife scale with the funding
-+	 * period - the time the bucket takes to fund one full quantum.
- 	 */
--	if (div_s64(scx_rescue_quantum_ns << SCHED_CAPACITY_SHIFT, scx_rescue_bw_1024) >
--	    jiffies_to_nsecs(sch->watchdog_timeout) / 8)
--		pr_warn("sched_ext: rescue may not run a stuck task before the %ums watchdog timeout, decrease rescue_quantum_us or increase rescue_bandwidth_ppt\n",
--			jiffies_to_msecs(sch->watchdog_timeout));
-+	period_ns = div_s64(scx_rescue_quantum_ns << SCHED_CAPACITY_SHIFT, scx_rescue_bw_1024);
-+	scx_rescue_overload_after =
-+		clamp(nsecs_to_jiffies(SCX_RESCUE_OVERLOAD_MULT * period_ns),
-+		      msecs_to_jiffies(SCX_RESCUE_MIN_OVERLOAD_MS),
-+		      msecs_to_jiffies(SCX_RESCUE_MAX_OVERLOAD_MS));
-+	scx_rescue_decay_halflife = scx_rescue_overload_after / 4;
-+
-+	/* a single in-budget wait must not cross the overload trigger */
-+	if (nsecs_to_jiffies(period_ns) > scx_rescue_overload_after / 2)
-+		pr_warn("sched_ext: %s: rescue funding period %lldms > overload threshold %ums / 2\n",
-+			sch->ops.name, div_s64(period_ns, NSEC_PER_MSEC),
-+			jiffies_to_msecs(scx_rescue_overload_after));
-+
-+	scx_rescue_check_timeout(sch);
- }
- 
- void scx_rescue_init(struct rq *rq)
- {
- 	BUG_ON(scx_init_dsq(&rq->scx.rescue.dsq, SCX_DSQ_RESCUE, NULL));
- 	timer_setup(&rq->scx.rescue.timer, scx_rescue_timerfn, TIMER_PINNED);
-+	rq->scx.rescue.kill_at = get_jiffies_64();
- }
- 
- /**
-@@ -633,8 +744,10 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
- 		__scx_add_event(sch, SCX_EV_SUB_RESCUE, 1);
- 		if (scx_rescue_try_admit(rq, p))
- 			return &rq->scx.local_dsq;
--		else
--			return &rq->scx.rescue.dsq;
-+
-+		/* queueing, the overload trigger measures the wait from here */
-+		p->scx.rescue_at = jiffies;
-+		return &rq->scx.rescue.dsq;
- 	}
- 
- 	p->scx.reenq_reason_caps = missing;
-@@ -1654,6 +1767,8 @@ void scx_sub_enable_workfn(struct kthread_work *work)
- 	if (ret)
- 		goto err_disable;
- 
-+	scx_rescue_check_timeout(sch);
-+
- 	/*
- 	 * Allocate pshard[] before scx_link_sched() publishes @sch into the
- 	 * parent's RCU children list. A concurrent revoke walking the tree
-diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
-index d39588717e9b..1eb3ac8508f6 100644
---- a/kernel/sched/ext/types.h
-+++ b/kernel/sched/ext/types.h
-@@ -27,6 +27,9 @@ enum scx_consts {
- 	SCX_RESCUE_MIN_QUANTUM_US	= 1000,
- 	SCX_RESCUE_MAX_QUANTUM_US	= 100000,
- 	SCX_RESCUE_MIN_SLICE_US		= 1000,		/* floor of the divided slice */
-+	SCX_RESCUE_OVERLOAD_MULT	= 16,		/* overload threshold in funding periods */
-+	SCX_RESCUE_MIN_OVERLOAD_MS	= 1000,
-+	SCX_RESCUE_MAX_OVERLOAD_MS	= 15000,
- 
- 	/* per-CPU chunk size for p->scx.tid allocation, see scx_alloc_tid() */
- 	SCX_TID_CHUNK			= 1024,
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 289e298df628..63786712a115 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -803,6 +803,7 @@ struct scx_rq_rescue {
- 	s64			slice;			/* curr's admitted slice */
- 	u64			exec_snap;		/* sum_exec_runtime at admission */
- 	struct timer_list	timer;			/* paces admission and escalation */
-+	u64			kill_at;		/* last ejection, init before any */
- };
- 
- struct scx_rq {
+diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
+index bbd4901f4fce..0cc4f21c6b6a 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.h
++++ b/tools/sched_ext/include/scx/enums.autogen.h
+@@ -45,6 +45,7 @@
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_HEAD); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_PREEMPT); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_IMMED); \
++	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_RESCUE); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_REENQ); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_LAST); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_CLEAR_OPSS); \
 -- 
 2.55.0
 
