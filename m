@@ -1,87 +1,73 @@
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com [209.85.128.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B130F22173D
-	for <sched-ext@lists.linux.dev>; Sat,  1 Aug 2026 10:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA31314A9E;
+	Sun,  2 Aug 2026 19:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785580529; cv=none; b=ljZXmz8m/RqSkHWG+IzOm6oVAJtuVK48XRkIykOBfG2ggV8EGSkhY/5j4YdW4kUwyp/SleB4F2T1Y0lEZ7DfYsJOqco2MxjTn4SEsFk7ZIzoXUuLYSbHA4XSXo12zTEL1KbWh7jhbKVy3zTIbmEawPBF5hKonOGbgrcAWA49oco=
+	t=1785698390; cv=none; b=MUuwfsVoIbroiqIDKiL2/EPSXGTPOl0kYU1nN5tPs1l4KNLX98nJBqSxEqrU5d2shSJX8Gi8ln9Tt1J6LozfOBKKTIgcZa8fL0Eh66aeFC+ymr1yDHhVpxMjIW3m+Ft29Ivl6UIHz1+njE6fCZk2haJorR4iTTDwtaQggs8Qwhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785580529; c=relaxed/simple;
-	bh=bwlUSI7TgtwbSZUG1kvau3EDCZuauBS7kN5yVJx+KeU=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=QV6fLyr85OEpzK9FwiFYhpqVbzwU1xkLbgJMlEohTv+UnFuQh0ePCYZieMLDs2eX520ppUm1caK0pflr416LIogNRvzCmTu0oCRoSwRP40gD+oAgYp+nshPQ/FUdnO5N6Rox0AxKJ5nrqsJ0gBt0l72Ip0+SjqR3gifQVVSw8U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M0e0enxq; arc=none smtp.client-ip=209.85.128.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1785698390; c=relaxed/simple;
+	bh=3ljYw2cpsk8dk/f4GmRpwF7tUcTDJrbgT61kjZoMiXI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e9pZwiI3x9Auz8V9LfAX2EhSYV0WYDFSRimG21vGk8mZizDIvsjjBgMxi9i9ZFoHibd9YAbarDE5cyWS9p7V3gSx5Paj8Qh7yZSVo5YGKywAqed3PeFMxL2Sqgmj11zngmU7OSmLFea2i2k4wPQOx8aEG44NuaZJks2AIJulpec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHLJacuc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M0e0enxq"
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-495495ad5ddso2337175e9.3
-        for <sched-ext@lists.linux.dev>; Sat, 01 Aug 2026 03:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1785580526; x=1786185326; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bwlUSI7TgtwbSZUG1kvau3EDCZuauBS7kN5yVJx+KeU=;
-        b=M0e0enxq1tmUmincSKQxgAsYUXYSbVowhxdzHiWlAI8yzqAv2T1XXqPKOzOCzOiWxK
-         bDB48k1DQxqOg0m/9NTadeQpydnmZHGJVkP/jVt4TWvMiQuoMGO+q5CHkJPEry4eLFpz
-         kUZwrZv0OPKTnLaB8m38/rHX4yjL4srJ/RyYz4rBK+NR4TZSp+3RWbJ6c+PlNnFqpdBS
-         i1Y+LDc0RtbeME1YSxy9lm03oOeVBPa5ZoA4PtpJRsHDBHhKInszshFDurdrpK4uu3yJ
-         8caJzLSadJ/UnZQK0ccGtdlpZslf5kTll8zlayBcVHsF+H6djFF6mmc0YVzw2fFGfATX
-         eB7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785580526; x=1786185326;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bwlUSI7TgtwbSZUG1kvau3EDCZuauBS7kN5yVJx+KeU=;
-        b=ZvVOHwS/8aYeiXAqhGVrqI9hFoCt3nE9egQxibWUxm0KocpnjXoRpU4U7Z/u58ONSR
-         ZnMTYFX4dfD5Muv2yzOOkLbaarFA/IvNBImad450C0fiktdlu+Tu7fsV9XU3CIgMVqPo
-         K3LC3JoH0ydwp2j2ai6vJ72h8s83Z2Df06LgFGQLETxFpaY7nT89nVJ6xVfIUqvSyo5j
-         Y/mK4HAp8Jt98GB1668iz0nuqN5W4TomYqc5aJBkgHGbz1phayASUE8MrvU6tG3eslPV
-         jCkMRILueto8+mLWadygaK8W7m9PJQ1Lk+wu6cfplhXMfkLj/5J0iyElXV5WUIJhGi+9
-         iz7Q==
-X-Forwarded-Encrypted: i=1; AHgh+Rq1uREiPI5XkmcG7DQcHf+9qExti6GGNY1zcOvotUaafkVH2Uj2nzV2rXmCccOFwKkfpXoP4AISj1o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzYpumuiYM0bXNABHXvNDUJ0I4syRTOCh/wwi8p7StxGT+zIImm
-	0QA4ydi13Q+mWA5LDGY/A4PPdZTzu45GaoAZaV2Kv/n39IxKXnB02VrcxErh6lyl88iKsWZb+iW
-	BYnIHW7ALrQfprA==
-X-Received: from wmoi20.prod.google.com ([2002:a05:600c:4814:b0:495:6708:efe5])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:2294:b0:492:4e09:9fc1 with SMTP id 5b1f17b1804b1-4980c67af97mr31980915e9.15.1785580525709;
- Sat, 01 Aug 2026 03:35:25 -0700 (PDT)
-Date: Sat, 01 Aug 2026 10:35:24 +0000
-In-Reply-To: <amy-pKcguBtwJQZE@gpd4>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHLJacuc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDD81F000E9;
+	Sun,  2 Aug 2026 19:19:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785698389;
+	bh=gI5KZ0e4LVfFSjWI+ZoUmddDL49Y9Q82NbHh+k/OlDc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=UHLJacuc3S4lnnV3d6a0MMJ+FLckSfHXZx3qdFSAYbhWgE6Kf7ydCQdsN2Re4jxLw
+	 c8WbC81XLq3atDQcKcl0/5lYIRQd8ZfbxMfZRr16Hz3ocKFQcpBbck1o7gGSXyuyyw
+	 zGIRCMa+8SGU17E/gUUlVkQAsQugH1zUTWxRX4FF6mOgAUOOBS0xqtQhnqH4IwqUW/
+	 IcwYYrtGPJVlWLmdYpbekL5Mkh0qYmN+7YgDtBhPh6RV+6CzJn9dETZK7N3AMhNioy
+	 nDzVhxKy/J81KMVIKhiVbEcvfa8imztsqbSqqlB8Ew1YH9rE9n2yEfGsBmoHipftRY
+	 BVrV5SXavdV6g==
+Date: Sun, 2 Aug 2026 09:19:48 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] sched_ext: Initialize idle masks before ops.init()
+Message-ID: <am-YVNN5Ga12zHpM@slm.duckdns.org>
+References: <20260731182406.3166853-1-arighi@nvidia.com>
+ <20260731182406.3166853-2-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260731090334.2911948-1-arighi@nvidia.com> <20260731090334.2911948-3-arighi@nvidia.com>
- <DKCPMDMRE6FN.3EII6EE13O4SY@google.com> <amy-pKcguBtwJQZE@gpd4>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-Message-ID: <DKDJGWYH2NUN.1OZFGQKJUVFHH@google.com>
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Make allowed_cpus idle
- validation race-free
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Andrea Righi <arighi@nvidia.com>, Kuba Piecuch <jpiecuch@google.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Changwoo Min <changwoo@igalia.com>, <sched-ext@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260731182406.3166853-2-arighi@nvidia.com>
 
-On Fri Jul 31, 2026 at 3:26 PM UTC, Andrea Righi wrote:
-> On Fri, Jul 31, 2026 at 11:12:09AM +0000, Kuba Piecuch wrote:
->> Could we check a stronger invariant by also checking that the bit in the idle
->> mask is set if we're running an idle task? We can get the idle cpumask through
->> scx_bpf_get_idle_cpumask() and check bits without clearing them using
->> bpf_cpumask_test_cpu().
->
-> I don't think the other direction always holds: an idle CPU can be claimed by
-> another BPF idle CPU selection helper, which can clear the idle bit before the
-> CPU necessarily stops running the idle task. In that case, observing an idle
-> task with a clear idle bit is legitimate.
+Hello,
 
-Right, thanks for pointing that out.
+On Fri, Jul 31, 2026 at 08:23:33PM +0200, Andrea Righi wrote:
+> The built-in idle masks are reset with all online CPUs marked idle, but
+> idle state tracking starts only after the scheduler is fully enabled.
+> As a result, ops.init() can observe busy CPUs as idle, and those CPUs
+> remain incorrectly advertised until their next idle transition.
+> 
+> Enable built-in idle tracking before ops.init() and refresh every online
+> CPU under its rq lock. Once a CPU is refreshed, later transitions keep
+> its state accurate. Keep ops.update_idle() notifications disabled until
+> the scheduler is fully enabled.
 
+While a sched is being loaded, bypass mode is on and when we get out of
+bypass mode, we set RENOTIFY and trigger kick each CPU, which, if the CPU
+has been or is entering idle, triggers ops.update_idle(). So, BPF
+implemented idle tracking gets the actual idle state update when bypass goes
+off, which makes sense. Would the problem you were seeing go away if we just
+clear all idle bits on load instead of setting them? The lifting of bypass
+mode at the end should set idle bits for all actually idle CPUs.
+
+Thanks.
+
+-- 
+tejun
