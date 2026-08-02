@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BD775801;
-	Sun,  2 Aug 2026 21:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525A133557D;
+	Sun,  2 Aug 2026 21:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785707689; cv=none; b=qbroaXMOJjyR63MTwy3mMPO9PITfEuaualCqvl5jzBxqZXiaxULVX09mg1Q2JPqNRanEznhmLowttjo6YQLgvveJM4Z/DdLEaxmCyXGSOANvXj/QcyJjGRqoz3GeCYhggDZ+/Ubd8ODeJ3gNRurEwG8tYh9dj4ljfBChdUsQdnc=
+	t=1785707690; cv=none; b=Y6nscpwFwkBtvWErfg2s1XXpTryVl9VCDGpoI2lohGxpP4eUTMCpO0uAmoqhakJ7t1gArPrzdp8WxYc6Ikf7lDxOpwTCwxsCc8Va8N53SRsbOkFk7LQSwxd3C5WkQ8p8nwf31zAw8mTlhn6ds3fzCDtU9bQeEj+UveY3S0/eKug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785707689; c=relaxed/simple;
-	bh=cxQw2/b/J4xBQO5TVVUUzObXXV89h5BwvBDLj8EAacg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DKJUOO8mWoW8Gb+Ce/lUtlPi4le7b2ojO8rr3NWyhhTKOC7rxWHqXmvbgUUlCtl4IkqSt4aSTqXVurtFzYOSGjEeS7G+N4J1nG1s51DIATPWGYdnDu08LKcWQgWTbAeZD7+j43/22dO/nWMP0RoL7gio9cVPRBr2xqjlYyiCKDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aE/Rl+SK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785707690; c=relaxed/simple;
+	bh=xDsG8zPZ0e5SvEK1kCWjm2KrhPMaxpckWoFYFzfHxic=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FidFk2THi17tGJIATADu01SVzeVU65wGeS1vArJLIlAvL6NVFcbMpfxxuCP9OMbkWDFEa/rGAEV73zEGckcCkPokojckLSqKrCLr40vs+H88muexpWD723wvhkbe1rRth1RyAhp3rME3nIBTPwSS1NskcEZoPYdb3lKVHBWsCwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k40tMgR0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aE/Rl+SK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B421F000E9;
-	Sun,  2 Aug 2026 21:54:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k40tMgR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9211F00A3A;
+	Sun,  2 Aug 2026 21:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785707688;
-	bh=NVwjZYSYQt34aKOHmt/XjMl9xoBqi7S5UyPbN2YyzZg=;
-	h=From:To:Cc:Subject:Date;
-	b=aE/Rl+SKY3ZOG6YyJYNv/Zj2T5jli2QxS66OnDdN2Vpaz62HTQLfryWcXd+dtWFoS
-	 PKu0I2+tEZZfcEQKkb48oWqDHq1Hlvec0eD3WV3USZPIMl67YFuNAXwiBaH1cOtQiW
-	 p69U42J4zIXew7y9fPafz5QMkNVHTMcdAx2MbFPCs8lEeYn5FbK167Nc1O8pjfZ3xx
-	 z8M3W0gLaqafDnORTHNLanygn+8m2KgTWlaK/HO6rdI2pg95t2KDsyw18ntK0DBlLl
-	 9asPeRLTiNzAG2ft4HAOMVdq6oKp9GfYABEoWavHV1W6VQ8MbntCwmLL0Wpn+whgpC
-	 xPPVAvUNIVN1A==
+	s=k20260515; t=1785707689;
+	bh=ogUOXETMQlXJTJr1i4dEC9jxsqqK5Lqsp+thX7AI4Sc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=k40tMgR0rT8g58tmiXMpTECZKYooLuOQvDazOr9pXk60Fg84U0uku+QXDlbel9jFS
+	 dAa29RHiVzIRkaXQb9ssx4mLJS3UqDhLZdx9c/eedPmLm77/G2nuGomDsLc8NyDEpH
+	 ZSDzCk47ugQDyP/oyS3OI5Mskh06zQCuS1oP+vlQNDHeS2hwzA82Y6vz8xOVwOdSr7
+	 AFY9YFQsb+YXtndIq5xaTi/CQQ1h8QH5PjmQ+VT8YZ4ncUc0VYoFrZ7ARKQIEufwlJ
+	 jqVlUSa23szl/uORA7T8ZUbUIHPKi6HLiJRST0M+IEjLyFcV6th7B7iXGmeQYBz39b
+	 ZJaOqNl3Y/+Sw==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>
 Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCHSET v2 sched_ext/for-7.3] sched_ext: Bandwidth-limited rescue execution for stranded tasks
-Date: Sun,  2 Aug 2026 11:54:35 -1000
-Message-ID: <20260802215447.3134509-1-tj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 01/12] sched_ext: Rename scx_local_or_reject_dsq() to scx_resolve_local_dsq()
+Date: Sun,  2 Aug 2026 11:54:36 -1000
+Message-ID: <20260802215447.3134509-2-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260802215447.3134509-1-tj@kernel.org>
+References: <20260802215447.3134509-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -44,79 +48,87 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+The following rescue execution addition gives the function a third possible
+destination, making a name that enumerates the outcomes a poor fit. Rename
+to the destination-neutral scx_resolve_local_dsq(). No functional changes.
 
-v2: Changes from the sashiko AI review:
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext/ext.c | 4 ++--
+ kernel/sched/ext/sub.c | 6 +++---
+ kernel/sched/ext/sub.h | 6 +++---
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-    - Declare scx_sched_all outside the CONFIG_EXT_SUB_SCHED block, the
-      definition is unconditional (0002).
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 6a3e94707c8b..8e5c7e45520e 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1507,7 +1507,7 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 	bool is_rq_owned = false;
+ 
+ 	if (dsq->id == SCX_DSQ_LOCAL) {
+-		dsq = scx_local_or_reject_dsq(sch, rq, p, &enq_flags);
++		dsq = scx_resolve_local_dsq(sch, rq, p, &enq_flags);
+ 		is_rq_owned = true;
+ 	}
+ 
+@@ -2279,7 +2279,7 @@ static void move_local_task_to_local_dsq(struct scx_sched *sch,
+ 					 struct scx_dispatch_q *src_dsq,
+ 					 struct rq *dst_rq)
+ {
+-	struct scx_dispatch_q *dst_dsq = scx_local_or_reject_dsq(sch, dst_rq, p, &enq_flags);
++	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, &enq_flags);
+ 
+ 	/* @dsq is locked and @p is on @dst_rq */
+ 	lockdep_assert_held(&src_dsq->lock);
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index daf7fbd3d0c3..2ea9a690e986 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -230,7 +230,7 @@ void scx_init_root_caps(struct scx_sched *sch)
+ }
+ 
+ /**
+- * scx_local_or_reject_dsq - Pick the local or reject DSQ for an insert
++ * scx_resolve_local_dsq - Pick the local or reject DSQ for an insert
+  * @sch: enqueuing sub-sched
+  * @rq: rq whose local DSQ @p targets
+  * @p: task being inserted
+@@ -246,8 +246,8 @@ void scx_init_root_caps(struct scx_sched *sch)
+  * to and run by its nearest non-bypassing ancestor. If root is bypassing, it
+  * always holds all caps.
+  */
+-struct scx_dispatch_q *scx_local_or_reject_dsq(struct scx_sched *sch, struct rq *rq,
+-					       struct task_struct *p, u64 *enq_flags)
++struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *rq,
++					     struct task_struct *p, u64 *enq_flags)
+ {
+ 	if (!scx_has_subs())
+ 		return &rq->scx.local_dsq;
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index 0019b75a2560..db449559bbe8 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -34,8 +34,8 @@ void scx_online_ecaps(struct rq *rq);
+ void scx_offline_ecaps(struct rq *rq);
+ void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu);
+ void scx_discard_stale_ecaps_syncs(void);
+-struct scx_dispatch_q *scx_local_or_reject_dsq(struct scx_sched *sch, struct rq *rq,
+-					       struct task_struct *p, u64 *enq_flags);
++struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *rq,
++					     struct task_struct *p, u64 *enq_flags);
+ bool scx_task_reenq_on_cap_revoke(struct rq *rq, struct task_struct *p);
+ void scx_reenq_reject(struct rq *rq);
+ 
+@@ -84,7 +84,7 @@ static inline void scx_online_ecaps(struct rq *rq) {}
+ static inline void scx_offline_ecaps(struct rq *rq) {}
+ static inline void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcpu) {}
+ static inline void scx_discard_stale_ecaps_syncs(void) {}
+-static inline struct scx_dispatch_q *scx_local_or_reject_dsq(struct scx_sched *sch, struct rq *rq, struct task_struct *p, u64 *enq_flags) { return &rq->scx.local_dsq; }
++static inline struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *rq, struct task_struct *p, u64 *enq_flags) { return &rq->scx.local_dsq; }
+ static inline bool scx_task_reenq_on_cap_revoke(struct rq *rq, struct task_struct *p) { return false; }
+ static inline void scx_reenq_reject(struct rq *rq) {}
+ static inline void scx_dec_has_subs(struct scx_sched *sch) {}
+-- 
+2.55.0
 
-    - Track the overload grace and usage-decay timestamps in jiffies_64 so
-      that 32-bit arithmetic on them can't wrap (0009).
-
-    - Drop the now-unread always_enq_immed rodata mirror (0011).
-
-v1: https://lore.kernel.org/r/20260801085150.2697653-1-tj@kernel.org
-
-A sub-scheduler holds only the cids its parent granted and nothing
-guarantees that they cover its tasks' affinities. A task that can run on
-none of them currently has no good ending: the scheduler's insert is
-cap-rejected and reenqueued until the repeat limit ejects the scheduler, or
-the task stalls into the watchdog.
-
-This series adds kernel-side rescue execution. A scheduler marks an insert
-that may be cap-rejected with SCX_ENQ_RESCUE and the kernel, instead of
-bouncing it, runs the task on the target cpu at a small configured
-bandwidth. A rescue starts out non-disruptive. Schedulers that hold caps on
-the cid largely stay in control of the cpu - a preemption cap, for example,
-still lets its holder preempt the rescuee. When a rescue goes unserved for
-too long, it escalates into protected execution.
-
-When a cpu's rescue queue stays oversaturated past the overload threshold,
-the kernel ejects the sub-scheduler with the highest recent rescue
-consumption on that cpu instead of misblaming the waiter's owner.
-
-- 0001-0005 are preps: naming, helper visibility, dsq-move flag vetting and
-  the IGNORE_CAPS preemption waiver.
-- 0006-0007 synchronize slice/dsq_vtime writes at insertion commit and add
-  SCX_TASK_PROTECTED, the groundwork that lets a kernel-granted slice
-  survive scheduler writes.
-- 0008-0009 add the rescue machinery and the overload ejection.
-- 0010 syncs the tools autogen enum headers.
-- 0011-0012 fix scx_qmap's pinned-task direct dispatch and add rescue
-  support as the demonstration consumer.
-
- 0001-sched_ext-Rename-scx_local_or_reject_dsq-to-scx_reso.patch
- 0002-sched_ext-Make-several-ext.c-helpers-available-outsi.patch
- 0003-sched_ext-Factor-out-__scx_bpf_now.patch
- 0004-sched_ext-Reject-internal-enq_flags-in-the-dsq-move-.patch
- 0005-sched_ext-Make-SCX_ENQ_IGNORE_CAPS-waive-the-preempt.patch
- 0006-sched_ext-Synchronize-slice-and-dsq_vtime-writes.patch
- 0007-sched_ext-Add-SCX_TASK_PROTECTED.patch
- 0008-sched_ext-Add-bandwidth-limited-rescue-execution-for.patch
- 0009-sched_ext-Eject-the-top-rescue-consumer-on-overload.patch
- 0010-sched_ext-Sync-tools-autogen-enum-headers.patch
- 0011-sched_ext-scx_qmap-Idle-check-pinned-tasks-before-di.patch
- 0012-sched_ext-scx_qmap-Add-rescue-support.patch
-
-Based on sched_ext/for-7.3 (c5b9316cf3d5).
-
-Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-rescue-v2
-
- include/linux/sched/ext.h                       |   7 +
- kernel/sched/ext/ext.c                          | 690 ++++++++++++++++--------
- kernel/sched/ext/internal.h                     |  78 ++-
- kernel/sched/ext/sub.c                          | 497 ++++++++++++++++-
- kernel/sched/ext/sub.h                          |  41 +-
- kernel/sched/ext/types.h                        |  12 +
- kernel/sched/sched.h                            |  13 +
- tools/sched_ext/include/scx/enum_defs.autogen.h |  16 +
- tools/sched_ext/include/scx/enums.autogen.bpf.h |   3 +
- tools/sched_ext/include/scx/enums.autogen.h     |   1 +
- tools/sched_ext/scx_qmap.bpf.c                  |  89 +--
- tools/sched_ext/scx_qmap.c                      |  24 +-
- tools/sched_ext/scx_qmap.h                      |   1 +
- 13 files changed, 1187 insertions(+), 285 deletions(-)
-
---
-tejun
