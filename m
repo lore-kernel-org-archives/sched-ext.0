@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2303D75D1;
-	Sun,  2 Aug 2026 21:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93F93D8131;
+	Sun,  2 Aug 2026 21:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785707695; cv=none; b=KmbiLSlGnylwHZKhInhkUJ04WUTpa5VGdT25Jz+Uj/9jXmRv/Q5fasH2kleZecPhktc5fOnbFH7TMtPEmM2V78ybjl5ku3DI4Rhsf5vK3cdSrYGXXegJQee27iZWz3mVBISxJaf1EaEWs+cRXjYBnhhwG7QXP05jYL8wDmkNcHg=
+	t=1785707696; cv=none; b=cgYZpgCnNaAQW+jyWkCVckGcXEYFSTbWdXRFlDqwUn1tb3N+kOZ2j2SsJbIIaXfDCB+15Jtc12wzW2Y7gsz94EJc/UcpUrYZwpvsMQWC6JJ60WcBhr5ExhhVDAE8koqeVWEWJfsl44POQyG6Yb62/nkF/BJUiqGDB9zY06sp2tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785707695; c=relaxed/simple;
-	bh=Ee7uOUleovcEEtvXpIeTqwe2+qm56Y4zxfDts6EoRHg=;
+	s=arc-20240116; t=1785707696; c=relaxed/simple;
+	bh=jp54ecepG8N+p1JJoy6S+t1c6d9ybypwnE5qhehB3Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yl2ntC4nrwLbPcpOdmFGLbvui3uvrwNGFWUOqdtFLWaR/duMLg9+h4CvJxZJE66MGkST1g1InXfaQWXRkM7f4e0M4HYEEC6756ll4IEUIg0yCUHd4aNOCWZZOB8KAfHNmQyRTG8N9EAS/QdADnCRx6MCbfS/hyT97tuJHX8z0LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gZtgNa4B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aCfUhgDUnTn6bNJ+n6uT1RqC3TyJQEt/NQqRzE9KOwpygIEkqV3d8aKKriGVkbO2os/SXjCFTH+VVjuPG7dFphsLhelWkYs5pdAoA0ITbBlQzqyby457TrxEfu87ZIyYMoy8Hmn2rz0ENYc/OhPwp2tdf6RTDcy04WKic7T3EmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q9Me1SF/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gZtgNa4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6391F00A3A;
-	Sun,  2 Aug 2026 21:54:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q9Me1SF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A765B1F000E9;
+	Sun,  2 Aug 2026 21:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785707693;
-	bh=cww84J6x/L2oWKZR64hTEihdvXCJWXEuf+1/RF5u4ek=;
+	s=k20260515; t=1785707694;
+	bh=Hi870zweoADQ95QoJGscGxdZJFONSPc6C5J8mM1Q/Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gZtgNa4BrLgHwLLxdF8sJyon45ZuiAC4duHY4lhCzQv/si4/naZsZQnUxOvkIbFUF
-	 gHrgmlveBA97V/qGTj37Nnz9Ligcwy3/8tgTQ0Pwhw+/nLVhGBBDAi6ubTq41DB+nm
-	 zEQgWe/idS8T6yqnjEhCL0H/8OdM0NCwe6Idn/7/gHAB8BGR/xi0cBTFtkLfd2VgTp
-	 xXGgcV6AIorcyBdmDqH6OeN+EwlKHUnLY+t5x5nJmWE7rgQXdmCqSPAmj9tSyzVmPC
-	 Y7o2n1tPS1fpwVkT/xmRn/dJIDuVbvsE05jtmTBLc32ao/o0xaosMSwc7RcxeYAjNk
-	 2fq6AXGV4WRyQ==
+	b=Q9Me1SF/EhNKKL2sNq+QwgOBrqKgIH8S3+XYhE/tKQMrFdCDGPnSgAn8t8fpuDapH
+	 fDEXoRy2GEyAJZiqpDmy4Ws9buRXe9bKQ8XnppHlR/PynzV7QGtM/JS6Xo8o6d868U
+	 PVKt9S3ylvQFjuVNDkHLg9scY1PugjjNdAcMXDhCsr/Ue5ZL05KDeUflXxZ6JvXxGK
+	 kh5iyKG2OZrWsdwx63WHsVWqit7q58Gti1LwYGtRcLYC7qGMedXMn3ltsAuPbnZar1
+	 DGSiyfg7qECvpBGPwxOIUxngasVIzfBCkOmlPqDdEN9jFGUWtG2Xor/iE/ssjGJ/p7
+	 TDXeav6TfKpuQ==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -34,9 +34,9 @@ Cc: sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 06/12] sched_ext: Synchronize slice and dsq_vtime writes
-Date: Sun,  2 Aug 2026 11:54:41 -1000
-Message-ID: <20260802215447.3134509-7-tj@kernel.org>
+Subject: [PATCH 07/12] sched_ext: Add SCX_TASK_PROTECTED
+Date: Sun,  2 Aug 2026 11:54:42 -1000
+Message-ID: <20260802215447.3134509-8-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260802215447.3134509-1-tj@kernel.org>
 References: <20260802215447.3134509-1-tj@kernel.org>
@@ -48,499 +48,369 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-p->scx.slice and p->scx.dsq_vtime writes have no synchronization rules. The
-dsq insert kfuncs write both fields synchronously from whatever context
-they're called in - a direct dispatch from ops.select_cpu() writes with only
-pi_lock held - and, as the kfuncs are safe to call spuriously with the
-invalid dispatch discarded later, a scheduler can modify any task's slice by
-spuriously calling them. The latter stands in the way of an upcoming patch
-which adds kernel-granted slices that the schedulers must not be able to
-modify.
+A BPF scheduler can displace any of its tasks at will - cut a running one's
+slice with an SCX_ENQ_PREEMPT dispatch, an SCX_KICK_PREEMPT kick or a direct
+shortening, and jump a queued one with HEAD insertions. Sometimes the kernel
+needs a slice and a DSQ position to stick regardless.
 
-Give both fields explicit rules. While the task is running, sleeping or
-queued on an rq-owned DSQ, the rq lock protects them - these are the states
-where the kernel consumes the slice. While queued on a user DSQ or on the
-BPF side, the kernel neither consumes nor decides on the fields and every
-writer acts for the BPF scheduler - synchronizing the writers is the
-scheduler's responsibility and whichever write lands last wins.
+Add SCX_TASK_PROTECTED, guarding both:
 
-To conform, an insert kfunc no longer writes the fields when called. The
-values travel with the dispatch and take effect when the task is inserted. A
-discarded dispatch has no side effects. The rq lock rule is asserted at the
-slice store.
+- The slice becomes immutable. Every scheduler-reachable write is refused
+  and counted as SCX_EV_SLICE_DENIED. Higher scheduling classes are
+  unaffected. PREEMPT|IMMED can't preempt a running protected task and gets
+  reenqueued.
+
+- A protected task that reached the head of its DSQ keeps it - HEAD
+  insertions land behind the leading run of protected tasks and reenqueue
+  sweeps skip them. Only rq-owned DSQs can hold protected tasks, so the walk
+  runs only for them.
+
+The bit lives in p->scx.flags so that both the refusal and the head walk
+read it under the rq lock that protects it.
+
+Protection ends when the slice is consumed, when the task leaves the rq
+except for a save/restore on the running task, on a yield, when the
+scheduler enters bypass, and when the task leaves scx. The flag is
+kernel-internal and not used yet.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h   |   2 +
- kernel/sched/ext/ext.c      | 184 ++++++++++++++++++++++--------------
- kernel/sched/ext/internal.h |   4 +
- 3 files changed, 120 insertions(+), 70 deletions(-)
+ include/linux/sched/ext.h   |   1 +
+ kernel/sched/ext/ext.c      | 165 +++++++++++++++++++++++++++++++-----
+ kernel/sched/ext/internal.h |   2 +-
+ 3 files changed, 144 insertions(+), 24 deletions(-)
 
 diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index bd9c4059e8fc..3166a0c3d892 100644
+index 3166a0c3d892..b519fbc88e17 100644
 --- a/include/linux/sched/ext.h
 +++ b/include/linux/sched/ext.h
-@@ -192,6 +192,8 @@ struct sched_ext_entity {
- 	atomic_long_t		ops_state;
- 	u64			ddsp_dsq_id;
- 	u64			ddsp_enq_flags;
-+	u64			ddsp_slice;
-+	u64			ddsp_vtime;
- 	struct scx_dsq_list_node dsq_list;	/* dispatch order */
- 	struct rb_node		dsq_priq;	/* p->scx.dsq_vtime order */
- 	u32			dsq_seq;
+@@ -102,6 +102,7 @@ enum scx_ent_flags {
+ 	SCX_TASK_DEQD_FOR_SLEEP	= 1 << 3, /* last dequeue was for SLEEP */
+ 	SCX_TASK_SUB_INIT	= 1 << 4, /* task being initialized for a sub sched */
+ 	SCX_TASK_IMMED		= 1 << 5, /* task is on local DSQ with %SCX_ENQ_IMMED */
++	SCX_TASK_PROTECTED	= 1 << 6, /* slice and DSQ head position protected */
+ 
+ 	/*
+ 	 * Bits 8 to 10 are used to carry task state:
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index c603b90f16a1..6e59f2669c47 100644
+index 6e59f2669c47..0121ecec8b25 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -1204,34 +1204,29 @@ enum scx_slice_oob_consts {
- };
+@@ -386,8 +386,16 @@ static bool rq_is_open(struct rq *rq, u64 enq_flags)
+ 	 * so allow it to avoid spuriously triggering reenq on a combined
+ 	 * PREEMPT|IMMED insertion.
+ 	 */
+-	if (enq_flags & SCX_ENQ_PREEMPT)
+-		return true;
++	if (enq_flags & SCX_ENQ_PREEMPT) {
++		struct task_struct *curr = rq->curr;
++
++		/*
++		 * A protected slice refuses the preemption and the cpu stays
++		 * occupied. See rq_owned_post_enq().
++		 */
++		return curr->sched_class != &ext_sched_class ||
++			likely(!(curr->scx.flags & SCX_TASK_PROTECTED));
++	}
  
- /*
-- * Slice write rules
-+ * Slice and dsq_vtime write rules
+ 	/*
+ 	 * @rq is either in transition to or running an SCX task and can't go
+@@ -1224,6 +1232,9 @@ enum scx_slice_oob_consts {
+  * only if @p's rq lock is already held, otherwise it bounces through
+  * p->scx.slice_oob, applied under @p's rq lock at the next slice consideration.
   *
-- * A task's slice - how long it may hold its cpu - is an occupancy grant owned
-- * by the task's scheduler. How it may be written depends on whether the task is
-- * running.
-+ * While @p is running, sleeping or queued on an rq-owned DSQ, both fields are
-+ * protected by the rq lock. While running, the rq lock is required because
-+ * update_curr_scx() RMWs the slice and the cap check for slice extension is
-+ * only reliable under the rq lock.
-  *
-- * Queued, not running: the slice grants no occupancy yet and nothing consumes
-- * it, so the owner writes it directly - via scx_bpf_dsq_insert(), the dsq move
-- * kfuncs, or scx_bpf_task_set_slice(). Serializing its own writers is then the
-- * scheduler's job, not the kernel's.
-+ * While @p is queued on a user DSQ or on the BPF side, the kernel neither
-+ * consumes nor decides on the fields. Synchronizing the writers is the BPF
-+ * scheduler's responsibility. An rq-locked scx_bpf_task_set_slice() write and a
-+ * concurrent DSQ insertion commit can race each other and whichever lands last
-+ * wins.
-  *
-- * Running: the slice must be changed under the task's rq lock, because:
-+ * A DSQ insert kfunc doesn't update the fields directly. The verdict carries
-+ * the values and apply_slice_vtime() commits them at the insertion.
-  *
-- * - Raising it extends occupancy, allowed only with %SCX_CAP_BASE on the cpu,
-- *   and that cap check is coherent only under the rq lock. Shortening is always
-- *   allowed.
-+ * scx_bpf_task_set_slice() may be called from any context and writes directly
-+ * only if @p's rq lock is already held, otherwise it bounces through
-+ * p->scx.slice_oob, applied under @p's rq lock at the next slice consideration.
-  *
-- * - The kernel decrements it there as the task runs. The decrement is a
-- *   read-modify-write, so a racing write can be clobbered.
-- *
-- * scx_bpf_task_set_slice() writes directly only when @p is queued or running
-- * on the rq lock it holds. That is the only state where the lock keeps us @p's
-- * owner: @p can't move to another rq without it. A task that isn't queued here
-- * can instead be woken onto a different rq without taking this lock, and that
-- * dispatch sets its slice - so a direct write would race. Those cases stash
-- * into p->scx.slice_oob to be applied under @p's actual rq lock. A later in-band
-- * write supersedes a stash, and a stash whose scheduler id no longer matches
-- * @p's owner is dropped.
-+ * dsq_vtime orders the next PRIQ insertion and has no running-side consumer, so
-+ * scx_bpf_task_set_dsq_vtime() writes it directly. Fork-time init and direct
-+ * BPF stores from non-cid-form schedulers are outside these rules.
-  */
++ * While %SCX_TASK_PROTECTED is set, every scheduler-reachable slice update is
++ * refused. See set_task_slice_keep_oob().
++ *
+  * dsq_vtime orders the next PRIQ insertion and has no running-side consumer, so
+  * scx_bpf_task_set_dsq_vtime() writes it directly. Fork-time init and direct
+  * BPF stores from non-cid-form schedulers are outside these rules.
+@@ -1236,18 +1247,92 @@ static void clear_task_slice_oob(struct task_struct *p)
+ 		atomic64_set(&p->scx.slice_oob, 0);
+ }
  
- /* clear a pending slice request */
-@@ -1244,6 +1239,7 @@ static void clear_task_slice_oob(struct task_struct *p)
- /* set @p's slice, leaving any pending out-of-band request in place */
- static void set_task_slice_keep_oob(struct task_struct *p, u64 slice)
+-/* set @p's slice, leaving any pending out-of-band request in place */
+-static void set_task_slice_keep_oob(struct task_struct *p, u64 slice)
++/**
++ * dsq_insert_head - FIFO head insertion honoring %SCX_TASK_PROTECTED
++ * @dsq: DSQ to insert into
++ * @p: task being inserted
++ *
++ * A HEAD insert should land behind any leading protected tasks. Return %true
++ * indicates whether @p became the first entry.
++ */
++static bool dsq_insert_head(struct scx_dispatch_q *dsq, struct task_struct *p)
++{
++	struct list_head *pos = &dsq->list;
++	struct scx_dsq_list_node *node;
++
++	/*
++	 * Only rq-owned DSQs can hold protected tasks and the associated rq
++	 * lock keeps their flags stable.
++	 */
++	if (!dsq_is_rq_owned(dsq)) {
++		list_add(&p->scx.dsq_list.node, &dsq->list);
++		return true;
++	}
++
++	list_for_each_entry(node, &dsq->list, node) {
++		struct task_struct *q;
++
++		if (WARN_ON_ONCE(node->flags & SCX_DSQ_LNODE_ITER_CURSOR))
++			continue;
++
++		q = container_of(node, struct task_struct, scx.dsq_list);
++		if (!(q->scx.flags & SCX_TASK_PROTECTED))
++			break;
++
++		pos = &node->node;
++	}
++
++	list_add(&p->scx.dsq_list.node, pos);
++
++	return pos == &dsq->list;
++}
++
++/**
++ * set_task_slice_keep_oob - Set @p's slice, leaving any pending oob request
++ * @p: task of interest
++ * @slice: slice to set
++ *
++ * While %SCX_TASK_PROTECTED is set, BPF schedulers may not modify the slice.
++ * Refuse and return %false.
++ */
++static bool set_task_slice_keep_oob(struct task_struct *p, u64 slice)
  {
-+	lockdep_assert_rq_held(task_rq(p));
+ 	lockdep_assert_rq_held(task_rq(p));
++
++	if (unlikely(p->scx.flags & SCX_TASK_PROTECTED))
++		return false;
++
  	p->scx.slice = slice;
++	return true;
  }
  
-@@ -1254,7 +1250,7 @@ void scx_set_task_slice(struct task_struct *p, u64 slice)
- 	clear_task_slice_oob(p);
- }
- 
--/* request @p's slice to be set to @slice, see the slice write rules above */
-+/* request @p's slice to be set to @slice, see the write rules above */
- static void set_task_slice_oob(struct scx_sched *sch, struct task_struct *p, u64 slice)
+ /* set @p's slice, superseding any pending out-of-band request */
+-void scx_set_task_slice(struct task_struct *p, u64 slice)
++bool scx_set_task_slice(struct task_struct *p, u64 slice)
  {
- 	u64 dur;
-@@ -1276,7 +1272,7 @@ static void set_task_slice_oob(struct scx_sched *sch, struct task_struct *p, u64
+-	set_task_slice_keep_oob(p, slice);
++	if (!set_task_slice_keep_oob(p, slice))
++		return false;
+ 	clear_task_slice_oob(p);
++	return true;
++}
++
++/**
++ * scx_task_slice_ended - @p's slice is consumed or given up
++ * @rq: rq @p is on
++ * @p: task of interest
++ *
++ * End what rides on the slice - the protection.
++ *
++ * A dequeue normally ends the slice too. The exception is a save/restore pair
++ * on the running task. Attribute changes like renice cycle the task through
++ * dequeue and enqueue while it keeps executing, so the slice continues. A
++ * queued task instead loses its DSQ position on any dequeue and the slice ends
++ * with it.
++ */
++static void scx_task_slice_ended(struct rq *rq, struct task_struct *p)
++{
++	lockdep_assert_rq_held(rq);
++
++	p->scx.flags &= ~SCX_TASK_PROTECTED;
+ }
+ 
+ /* request @p's slice to be set to @slice, see the write rules above */
+@@ -1271,8 +1356,9 @@ static void set_task_slice_oob(struct scx_sched *sch, struct task_struct *p, u64
+ /*
   * Apply a pending out-of-band slice request under @rq's lock. A request whose
   * packed id no longer matches @p's current owner is dropped. An extension needs
-  * baseline cpu access on @p's cid. %SCX_EV_SLICE_DENIED counts the denials.
-- * Shortening is always allowed. See the slice write rules above.
-+ * Shortening is always allowed. See the write rules above.
+- * baseline cpu access on @p's cid. %SCX_EV_SLICE_DENIED counts the denials.
+- * Shortening is always allowed. See the write rules above.
++ * baseline cpu access on @p's cid, shortening is always allowed, and a
++ * protected slice refuses both. %SCX_EV_SLICE_DENIED counts the denials. See
++ * the write rules above.
   */
  static void apply_task_slice_oob(struct rq *rq, struct task_struct *p)
  {
-@@ -1305,7 +1301,30 @@ static void apply_task_slice_oob(struct rq *rq, struct task_struct *p)
+@@ -1301,7 +1387,8 @@ static void apply_task_slice_oob(struct rq *rq, struct task_struct *p)
  		return;
  	}
  
--	p->scx.slice = slice;
-+	set_task_slice_keep_oob(p, slice);
-+}
+-	set_task_slice_keep_oob(p, slice);
++	if (unlikely(!set_task_slice_keep_oob(p, slice)))
++		__scx_add_event(scx_task_sched(p), SCX_EV_SLICE_DENIED, 1);
+ }
+ 
+ /*
+@@ -1514,8 +1601,10 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+ 
+ 	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
+ 	    rq->curr->sched_class == &ext_sched_class) {
+-		scx_set_task_slice(rq->curr, 0);
+-		resched_curr(rq);
++		if (likely(scx_set_task_slice(rq->curr, 0)))
++			resched_curr(rq);
++		else
++			__scx_add_event(sch, SCX_EV_SLICE_DENIED, 1);
+ 	}
+ }
+ 
+@@ -1606,9 +1695,8 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 				  dsq->id);
+ 
+ 		if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT)) {
+-			list_add(&p->scx.dsq_list.node, &dsq->list);
+ 			/* new task inserted at head - use fastpath */
+-			if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN))
++			if (dsq_insert_head(dsq, p) && !(dsq->id & SCX_DSQ_FLAG_BUILTIN))
+ 				rcu_assign_pointer(dsq->first_task, p);
+ 		} else {
+ 			/*
+@@ -2254,6 +2342,11 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
+ 	sub_nr_running(rq, 1);
+ 
+ 	scx_dispatch_dequeue(rq, p);
 +
-+/*
-+ * A dsq insert kfunc doesn't write slice or dsq_vtime. The verdict carries them
-+ * and they are committed here, at the insertion. A zero @slice keeps the
-+ * current value, floored at 1 so the task isn't treated as expired.
-+ */
-+static void apply_slice_vtime(struct task_struct *p, u64 slice, u64 vtime, u64 enq_flags)
-+{
-+	if (slice) {
-+		p->scx.slice = slice;
-+		/*
-+		 * An explicit slice supersedes a pending oob request. A carried
-+		 * default refill is not an explicit request and must keep it.
-+		 */
-+		if (!(enq_flags & SCX_ENQ_SLICE_DFL))
-+			clear_task_slice_oob(p);
-+	} else if (!p->scx.slice) {
-+		p->scx.slice = 1;
++	/* see scx_task_slice_ended() for the save/restore exception */
++	if (!((deq_flags & DEQUEUE_SAVE) && task_current(rq, p)))
++		scx_task_slice_ended(rq, p);
++
+ 	clear_direct_dispatch(p);
+ 	return true;
+ }
+@@ -2263,6 +2356,9 @@ static void yield_task_scx(struct rq *rq)
+ 	struct task_struct *p = rq->donor;
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 
++	/* a yield gives the slice up */
++	scx_task_slice_ended(rq, p);
++
+ 	if (SCX_HAS_OP(sch, yield))
+ 		SCX_CALL_OP_2TASKS_RET(sch, yield, rq, p, NULL);
+ 	else
+@@ -2274,6 +2370,9 @@ static bool yield_to_task_scx(struct rq *rq, struct task_struct *to)
+ 	struct task_struct *from = rq->donor;
+ 	struct scx_sched *sch = scx_task_sched(from);
+ 
++	/* like a plain yield, giving the slice up ends the protection */
++	scx_task_slice_ended(rq, from);
++
+ 	if (SCX_HAS_OP(sch, yield) && sch == scx_task_sched(to))
+ 		return SCX_CALL_OP_2TASKS_RET(sch, yield, rq, from, to);
+ 	else
+@@ -2317,7 +2416,7 @@ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct
+ 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
+ 
+ 	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+-		list_add(&p->scx.dsq_list.node, &dst_dsq->list);
++		dsq_insert_head(dst_dsq, p);
+ 	else
+ 		list_add_tail(&p->scx.dsq_list.node, &dst_dsq->list);
+ 
+@@ -3051,6 +3150,10 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 
+ 	update_curr_scx(rq);
+ 
++	/* the slice is consumed, protection ends with it */
++	if (!p->scx.slice)
++		scx_task_slice_ended(rq, p);
++
+ 	/* see dequeue_task_scx() on why we skip when !QUEUED */
+ 	if (SCX_HAS_OP(sch, stopping) && (p->scx.flags & SCX_TASK_QUEUED))
+ 		SCX_CALL_OP_TASK(sch, stopping, rq, p, true);
+@@ -3204,8 +3307,11 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 	 */
+ 	if (keep_prev) {
+ 		p = prev;
+-		if (!p->scx.slice)
++		if (!p->scx.slice) {
++			/* the slice is consumed, protection ends */
++			scx_task_slice_ended(rq, p);
+ 			refill_task_slice_dfl(scx_task_sched(p), p);
++		}
+ 	} else {
+ 		p = first_local_task(rq);
+ 		if (!p)
+@@ -3725,6 +3831,7 @@ static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
+ 	 * control, after ops.disable() has observed their final values.
+ 	 */
+ 	p->scx.dsq_vtime = 0;
++	scx_task_slice_ended(rq, p);
+ 	scx_set_task_slice(p, 0);
+ 	p->scx.reenq_cnt = 0;
+ 
+@@ -4137,6 +4244,9 @@ static bool local_task_should_reenq(struct rq *rq, struct task_struct *p,
+ 	first = !(*reenq_flags & SCX_REENQ_TSR_NOT_FIRST);
+ 	*reenq_flags |= SCX_REENQ_TSR_NOT_FIRST;
+ 
++	if (unlikely(p->scx.flags & SCX_TASK_PROTECTED))
++		return false;
++
+ 	*reason = SCX_TASK_REENQ_KFUNC;
+ 
+ 	if ((p->scx.flags & SCX_TASK_IMMED) &&
+@@ -5901,6 +6011,13 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+ 			if (!scx_is_descendant(scx_task_sched(p), sch))
+ 				continue;
+ 
++			/*
++			 * Bypass trumps protection. Cycling clears for queued
++			 * tasks but current task needs explicit stripping.
++			 */
++			if (bypass && task_current(rq, p))
++				scx_task_slice_ended(rq, p);
++
+ 			/* cycling deq/enq is enough, see the function comment */
+ 			scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
+ 				/* nothing */ ;
+@@ -8197,11 +8314,10 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 			if (cur_class == &ext_sched_class) {
+ 				u64 caps = scx_caps_for_preempt(pcpu->sch, rq, 0);
+ 
+-				if (likely(!scx_missing_caps(pcpu->sch, cpu, caps)))
+-					scx_set_task_slice(rq->curr, 0);
+-				else
+-					__scx_add_event(pcpu->sch,
+-							SCX_EV_SUB_PREEMPT_DENIED, 1);
++				if (unlikely(scx_missing_caps(pcpu->sch, cpu, caps)))
++					__scx_add_event(pcpu->sch, SCX_EV_SUB_PREEMPT_DENIED, 1);
++				else if (unlikely(!scx_set_task_slice(rq->curr, 0)))
++					__scx_add_event(pcpu->sch, SCX_EV_SLICE_DENIED, 1);
+ 			}
+ 			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
+ 		}
+@@ -9192,10 +9308,13 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
+ 
+ 	/* under the rq lock: apply now, extensions gated on baseline access */
+ 	if (slice > p->scx.slice &&
+-	    unlikely(scx_missing_caps(sch, cpu_of(locked_rq), SCX_CAP_BASE)))
++	    unlikely(scx_missing_caps(sch, cpu_of(locked_rq), SCX_CAP_BASE))) {
++		__scx_add_event(sch, SCX_EV_SLICE_DENIED, 1);
++		return true;
 +	}
 +
-+	if (enq_flags & SCX_ENQ_DSQ_PRIQ)
-+		p->scx.dsq_vtime = vtime;
- }
- 
- static void update_curr_scx(struct rq *rq)
-@@ -1502,7 +1521,7 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
- 
- static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
- 				 struct scx_dispatch_q *dsq, struct task_struct *p,
--				 u64 enq_flags)
-+				 u64 slice, u64 vtime, u64 enq_flags)
- {
- 	bool is_rq_owned = false;
- 
-@@ -1541,6 +1560,13 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
- 		enq_flags &= ~SCX_ENQ_DSQ_PRIQ;
- 	}
- 
-+	/*
-+	 * @dsq is locked and @enq_flags is sanitized. Commit the carried slice
-+	 * and vtime before the PRIQ insertion below reads the new dsq_vtime.
-+	 */
-+	if (enq_flags & SCX_ENQ_APPLY_SLICE)
-+		apply_slice_vtime(p, slice, vtime, enq_flags);
-+
- 	if (enq_flags & SCX_ENQ_DSQ_PRIQ) {
- 		struct rb_node *rbp;
- 
-@@ -1763,7 +1789,7 @@ static struct scx_dispatch_q *find_dsq_for_dispatch(struct scx_sched *sch,
- static void mark_direct_dispatch(struct scx_sched *sch,
- 				 struct task_struct *ddsp_task,
- 				 struct task_struct *p, u64 dsq_id,
--				 u64 enq_flags)
-+				 u64 slice, u64 vtime, u64 enq_flags)
- {
- 	/*
- 	 * Mark that dispatch already happened from ops.select_cpu() or
-@@ -1787,6 +1813,8 @@ static void mark_direct_dispatch(struct scx_sched *sch,
- 	WARN_ON_ONCE(p->scx.ddsp_dsq_id != SCX_DSQ_INVALID);
- 	WARN_ON_ONCE(p->scx.ddsp_enq_flags);
- 
-+	p->scx.ddsp_slice = slice;
-+	p->scx.ddsp_vtime = vtime;
- 	p->scx.ddsp_dsq_id = dsq_id;
- 	p->scx.ddsp_enq_flags = enq_flags;
- }
-@@ -1818,7 +1846,7 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
- 	struct rq *rq = task_rq(p);
- 	struct scx_dispatch_q *dsq =
- 		find_dsq_for_dispatch(sch, rq, p->scx.ddsp_dsq_id, task_cpu(p));
--	u64 ddsp_enq_flags;
-+	u64 ddsp_enq_flags, slice, vtime;
- 
- 	touch_core_sched_dispatch(rq, p);
- 
-@@ -1860,9 +1888,12 @@ static void direct_dispatch(struct scx_sched *sch, struct task_struct *p,
- 	}
- 
- 	ddsp_enq_flags = p->scx.ddsp_enq_flags;
-+	slice = p->scx.ddsp_slice;
-+	vtime = p->scx.ddsp_vtime;
- 	clear_direct_dispatch(p);
- 
--	scx_dispatch_enqueue(sch, rq, dsq, p, ddsp_enq_flags | SCX_ENQ_CLEAR_OPSS);
-+	scx_dispatch_enqueue(sch, rq, dsq, p, slice, vtime,
-+			     ddsp_enq_flags | SCX_ENQ_APPLY_SLICE | SCX_ENQ_CLEAR_OPSS);
- }
- 
- bool scx_rq_online(struct rq *rq)
-@@ -1983,7 +2014,7 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	direct_dispatch(sch, p, enq_flags);
- 	return;
- local_norefill:
--	scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, enq_flags);
-+	scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, 0, 0, enq_flags);
- 	return;
- local:
- 	dsq = &rq->scx.local_dsq;
-@@ -2004,7 +2035,7 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	touch_core_sched(rq, p);
- 	refill_task_slice_dfl(sch, p);
- 	clear_direct_dispatch(p);
--	scx_dispatch_enqueue(sch, rq, dsq, p, enq_flags);
-+	scx_dispatch_enqueue(sch, rq, dsq, p, 0, 0, enq_flags);
- }
- 
- static bool task_runnable(const struct task_struct *p)
-@@ -2542,7 +2573,7 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 		dispatch_dequeue_locked(p, src_dsq);
- 		raw_spin_unlock(&src_dsq->lock);
- 
--		scx_dispatch_enqueue(sch, dst_rq, dst_dsq, p, enq_flags);
-+		scx_dispatch_enqueue(sch, dst_rq, dst_dsq, p, 0, 0, enq_flags);
- 	}
- 
- 	return dst_rq;
-@@ -2608,6 +2639,8 @@ bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq)
-  * @rq: current rq which is locked
-  * @dst_dsq: destination DSQ
-  * @p: task to dispatch
-+ * @slice: slice carried by the insert verdict, 0 keeps the current value
-+ * @vtime: vtime carried by the insert verdict, committed on PRIQ inserts
-  * @enq_flags: %SCX_ENQ_*
-  *
-  * We're holding @rq lock and want to dispatch @p to @dst_dsq which is a local
-@@ -2618,8 +2651,8 @@ bool scx_consume_global_dsq(struct scx_sched *sch, struct rq *rq)
-  * %SCX_OPSS_DISPATCHING).
-  */
- static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
--				  struct scx_dispatch_q *dst_dsq,
--				  struct task_struct *p, u64 enq_flags)
-+				  struct scx_dispatch_q *dst_dsq, struct task_struct *p,
-+				  u64 slice, u64 vtime, u64 enq_flags)
- {
- 	struct rq *src_rq = task_rq(p);
- 	struct rq *dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
-@@ -2632,8 +2665,8 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 	 * If dispatching to @rq that @p is already on, no lock dancing needed.
- 	 */
- 	if (rq == src_rq && rq == dst_rq) {
--		scx_dispatch_enqueue(sch, rq, dst_dsq, p,
--				     enq_flags | SCX_ENQ_CLEAR_OPSS);
-+		scx_dispatch_enqueue(sch, rq, dst_dsq, p, slice, vtime,
-+				     enq_flags | SCX_ENQ_APPLY_SLICE | SCX_ENQ_CLEAR_OPSS);
- 		return;
- 	}
- 
-@@ -2671,13 +2704,16 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 		if (src_rq == dst_rq) {
- 			p->scx.holding_cpu = -1;
- 			scx_dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
--					     enq_flags);
-+					     slice, vtime, enq_flags | SCX_ENQ_APPLY_SLICE);
- 		} else if (unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
- 			p->scx.holding_cpu = -1;
- 			fallback = true;
- 			scx_dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
--					     p, enq_flags | SCX_ENQ_GDSQ_FALLBACK);
-+					     p, slice, vtime,
-+					     enq_flags | SCX_ENQ_APPLY_SLICE |
-+					     SCX_ENQ_GDSQ_FALLBACK);
- 		} else {
-+			apply_slice_vtime(p, slice, vtime, enq_flags);
- 			move_remote_task_to_local_dsq(sch, p, enq_flags, src_rq, dst_rq);
- 			/* task has been moved to dst_rq, which is now locked */
- 			locked_rq = dst_rq;
-@@ -2713,10 +2749,9 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
-  * was valid in the first place. Make sure that the task is still owned by the
-  * BPF scheduler and claim the ownership before dispatching.
-  */
--static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
--			    struct task_struct *p,
--			    unsigned long qseq_at_dispatch,
--			    u64 dsq_id, u64 enq_flags)
-+static void finish_dispatch(struct scx_sched *sch, struct rq *rq, struct task_struct *p,
-+			    unsigned long qseq_at_dispatch, u64 dsq_id,
-+			    u64 slice, u64 vtime, u64 enq_flags)
- {
- 	struct scx_dispatch_q *dsq;
- 	unsigned long opss;
-@@ -2776,9 +2811,10 @@ static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
- 	dsq = find_dsq_for_dispatch(sch, this_rq(), dsq_id, task_cpu(p));
- 
- 	if (dsq->id == SCX_DSQ_LOCAL)
--		dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
-+		dispatch_to_local_dsq(sch, rq, dsq, p, slice, vtime, enq_flags);
- 	else
--		scx_dispatch_enqueue(sch, rq, dsq, p, enq_flags | SCX_ENQ_CLEAR_OPSS);
-+		scx_dispatch_enqueue(sch, rq, dsq, p, slice, vtime,
-+				     enq_flags | SCX_ENQ_APPLY_SLICE | SCX_ENQ_CLEAR_OPSS);
- }
- 
- void scx_flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
-@@ -2790,7 +2826,7 @@ void scx_flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
- 		struct scx_dsp_buf_ent *ent = &dspc->buf[u];
- 
- 		finish_dispatch(sch, rq, ent->task, ent->qseq, ent->dsq_id,
--				ent->enq_flags);
-+				ent->slice, ent->vtime, ent->enq_flags);
- 	}
- 
- 	dspc->nr_tasks += dspc->cursor;
-@@ -3035,7 +3071,8 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 				scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
- 				p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
- 			} else {
--				scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, SCX_ENQ_HEAD);
-+				scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, 0, 0,
-+						     SCX_ENQ_HEAD);
- 			}
- 			goto switch_class;
- 		}
-@@ -3319,7 +3356,13 @@ static int select_task_rq_scx(struct task_struct *p, int prev_cpu, int wake_flag
- 
- 		cpu = scx_select_cpu_dfl(p, prev_cpu, wake_flags, NULL, 0);
- 		if (cpu >= 0) {
--			refill_task_slice_dfl(sch, p);
-+			/*
-+			 * Carry the slice refill and let the insertion commit
-+			 * it under rq lock. See the write rules.
-+			 */
-+			__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
-+			p->scx.ddsp_slice = READ_ONCE(sch->slice_dfl);
-+			p->scx.ddsp_enq_flags = SCX_ENQ_SLICE_DFL;
- 			p->scx.ddsp_dsq_id = SCX_DSQ_LOCAL;
- 		} else {
- 			cpu = prev_cpu;
-@@ -4051,13 +4094,15 @@ static void process_ddsp_deferred_locals(struct rq *rq)
- 		struct scx_dispatch_q *dsq;
- 		u64 dsq_id = p->scx.ddsp_dsq_id;
- 		u64 enq_flags = p->scx.ddsp_enq_flags;
-+		u64 slice = p->scx.ddsp_slice;
-+		u64 vtime = p->scx.ddsp_vtime;
- 
- 		list_del_init(&p->scx.dsq_list.node);
- 		clear_direct_dispatch(p);
- 
- 		dsq = find_dsq_for_dispatch(sch, rq, dsq_id, task_cpu(p));
- 		if (!WARN_ON_ONCE(dsq->id != SCX_DSQ_LOCAL))
--			dispatch_to_local_dsq(sch, rq, dsq, p, enq_flags);
-+			dispatch_to_local_dsq(sch, rq, dsq, p, slice, vtime, enq_flags);
- 	}
- }
- 
-@@ -5487,7 +5532,7 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, s32 donor,
- 		 * between bypass DSQs.
- 		 */
- 		dispatch_dequeue_locked(p, donor_dsq);
--		scx_dispatch_enqueue(sch, cpu_rq(donee), donee_dsq, p, SCX_ENQ_NESTED);
-+		scx_dispatch_enqueue(sch, cpu_rq(donee), donee_dsq, p, 0, 0, SCX_ENQ_NESTED);
- 
- 		/*
- 		 * $donee might have been idle and need to be woken up. No need
-@@ -8435,14 +8480,14 @@ static bool scx_dsq_insert_preamble(struct scx_sched *sch, struct task_struct *p
- }
- 
- static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
--				  u64 dsq_id, u64 enq_flags)
-+				  u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags)
- {
- 	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
- 	struct task_struct *ddsp_task;
- 
- 	ddsp_task = __this_cpu_read(direct_dispatch_task);
- 	if (ddsp_task) {
--		mark_direct_dispatch(sch, ddsp_task, p, dsq_id, enq_flags);
-+		mark_direct_dispatch(sch, ddsp_task, p, dsq_id, slice, vtime, enq_flags);
- 		return;
- 	}
- 
-@@ -8455,6 +8500,8 @@ static void scx_dsq_insert_commit(struct scx_sched *sch, struct task_struct *p,
- 		.task = p,
- 		.qseq = atomic_long_read(&p->scx.ops_state) & SCX_OPSS_QSEQ_MASK,
- 		.dsq_id = dsq_id,
-+		.slice = slice,
-+		.vtime = vtime,
- 		.enq_flags = enq_flags,
- 	};
- }
-@@ -8515,12 +8562,7 @@ __bpf_kfunc bool scx_bpf_dsq_insert___v2(struct task_struct *p, u64 dsq_id,
- 	if (!scx_dsq_insert_preamble(sch, p, dsq_id, &enq_flags))
- 		return false;
- 
--	if (slice)
--		scx_set_task_slice(p, slice);
++	if (unlikely(!scx_set_task_slice(p, slice)))
+ 		__scx_add_event(sch, SCX_EV_SLICE_DENIED, 1);
 -	else
--		set_task_slice_keep_oob(p, p->scx.slice ?: 1);
--
--	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags);
-+	scx_dsq_insert_commit(sch, p, dsq_id, slice, 0, enq_flags);
+-		scx_set_task_slice(p, slice);
  
  	return true;
  }
-@@ -8541,14 +8583,7 @@ static bool scx_dsq_insert_vtime(struct scx_sched *sch, struct task_struct *p,
- 	if (!scx_dsq_insert_preamble(sch, p, dsq_id, &enq_flags))
- 		return false;
- 
--	if (slice)
--		scx_set_task_slice(p, slice);
--	else
--		set_task_slice_keep_oob(p, p->scx.slice ?: 1);
--
--	p->scx.dsq_vtime = vtime;
--
--	scx_dsq_insert_commit(sch, p, dsq_id, enq_flags | SCX_ENQ_DSQ_PRIQ);
-+	scx_dsq_insert_commit(sch, p, dsq_id, slice, vtime, enq_flags | SCX_ENQ_DSQ_PRIQ);
- 
- 	return true;
- }
-@@ -8724,9 +8759,9 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 	dst_dsq = find_dsq_for_dispatch(sch, this_rq, dsq_id, task_cpu(p));
- 
- 	/*
--	 * Apply vtime and slice updates before moving so that the new time is
--	 * visible before inserting into $dst_dsq. @p is still on $src_dsq but
--	 * this is safe as we're locking it.
-+	 * Apply vtime and slice updates before moving. @p is still on $src_dsq
-+	 * with both $src_dsq and its task_rq locked, satisfying the write
-+	 * rules, and the PRIQ insertion into $dst_dsq reads the new vtime.
- 	 */
- 	if (kit->cursor.flags & __SCX_DSQ_ITER_HAS_VTIME)
- 		p->scx.dsq_vtime = kit->vtime;
-@@ -9136,7 +9171,16 @@ __bpf_kfunc bool scx_bpf_task_set_slice(struct task_struct *p, u64 slice,
- 
- 	/*
- 	 * Directly write only when we hold the lock of the rq @p is queued or
--	 * running on. See the slice write rules above.
-+	 * running on. See the write rules above.
-+	 *
-+	 * While @p is queued on a user DSQ or in the BPF scheduler,
-+	 * synchronization is the scheduler's responsibility. This write can
-+	 * race a concurrent dispatch's commit, see apply_slice_vtime().
-+	 *
-+	 * Making this kfunc always go through the oob stash would leave the
-+	 * commit as the only direct writer and close the race, but that would
-+	 * require two more oob application points - the dispatch keep-prev test
-+	 * and the tick-time expiry check.
- 	 */
- 	locked_rq = scx_locked_rq();
- 	if (!locked_rq ||
 diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index a0a2294f1dc2..a11ed6e1e028 100644
+index a11ed6e1e028..d418935f1e6b 100644
 --- a/kernel/sched/ext/internal.h
 +++ b/kernel/sched/ext/internal.h
-@@ -1246,6 +1246,8 @@ struct scx_dsp_buf_ent {
- 	struct task_struct	*task;
- 	unsigned long		qseq;
- 	u64			dsq_id;
-+	u64			slice;
-+	u64			vtime;
- 	u64			enq_flags;
- };
- 
-@@ -1680,6 +1682,8 @@ enum scx_enq_flags {
- 	SCX_ENQ_NESTED		= 1LLU << 58,
- 	SCX_ENQ_GDSQ_FALLBACK	= 1LLU << 59,	/* fell back to global DSQ */
- 	SCX_ENQ_IGNORE_CAPS	= 1LLU << 60,	/* admit to local DSQ ignoring caps */
-+	SCX_ENQ_APPLY_SLICE	= 1LLU << 61,	/* apply carried slice/vtime at insertion */
-+	SCX_ENQ_SLICE_DFL	= 1LLU << 62,	/* carried slice is a default refill */
- };
- 
- enum scx_deq_flags {
+@@ -1972,7 +1972,7 @@ void scx_task_iter_start(struct scx_task_iter *iter, struct cgroup *cgrp);
+ void scx_task_iter_unlock(struct scx_task_iter *iter);
+ void scx_task_iter_stop(struct scx_task_iter *iter);
+ struct task_struct *scx_task_iter_next_locked(struct scx_task_iter *iter);
+-void scx_set_task_slice(struct task_struct *p, u64 slice);
++bool scx_set_task_slice(struct task_struct *p, u64 slice);
+ void scx_task_unlink_from_dsq(struct task_struct *p, struct scx_dispatch_q *dsq);
+ void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p);
+ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
 -- 
 2.55.0
 
