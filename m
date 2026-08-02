@@ -1,73 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA31314A9E;
-	Sun,  2 Aug 2026 19:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F283368A2;
+	Sun,  2 Aug 2026 19:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785698390; cv=none; b=MUuwfsVoIbroiqIDKiL2/EPSXGTPOl0kYU1nN5tPs1l4KNLX98nJBqSxEqrU5d2shSJX8Gi8ln9Tt1J6LozfOBKKTIgcZa8fL0Eh66aeFC+ymr1yDHhVpxMjIW3m+Ft29Ivl6UIHz1+njE6fCZk2haJorR4iTTDwtaQggs8Qwhc=
+	t=1785700308; cv=none; b=EFxT+zR39bGnZPhpN4+JNxBYSdRBVREs4+zgeIiVGBu/XEnJC3Jm3hLFfQipoSOT0W7Q1dQm5S2/2dKa6j/lhLhzYGB45gTadEqnvuPmBVEgc2Hx80blZuXJd6GBqqJij3J/i7KDvW+5iPKV87+HD/uyRO/qgvN8L3u2z5egE9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785698390; c=relaxed/simple;
-	bh=3ljYw2cpsk8dk/f4GmRpwF7tUcTDJrbgT61kjZoMiXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e9pZwiI3x9Auz8V9LfAX2EhSYV0WYDFSRimG21vGk8mZizDIvsjjBgMxi9i9ZFoHibd9YAbarDE5cyWS9p7V3gSx5Paj8Qh7yZSVo5YGKywAqed3PeFMxL2Sqgmj11zngmU7OSmLFea2i2k4wPQOx8aEG44NuaZJks2AIJulpec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHLJacuc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785700308; c=relaxed/simple;
+	bh=dZ7OFfi9eF/jIWoS8fdkKKbzbRf0Q5uDnCjryE23lFo=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=R9UWBEptkQN3XWxm5sVM3d2FBpy1c2zYvMu42QiRDUwhJD/vSo/sVctR59GUpgFNkac1ptkrS7RoSGHN/eNTA/zxTreS/hhExBN97T5Jo8T8MPFXrVVtEv0xIcnPY9wheWwigkeR/cQs1uHTKCVDKyEAZwYIn7H2r80XqvnrBbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJ1zlQ/Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHLJacuc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDD81F000E9;
-	Sun,  2 Aug 2026 19:19:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJ1zlQ/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41C71F00A3D;
+	Sun,  2 Aug 2026 19:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785698389;
-	bh=gI5KZ0e4LVfFSjWI+ZoUmddDL49Y9Q82NbHh+k/OlDc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=UHLJacuc3S4lnnV3d6a0MMJ+FLckSfHXZx3qdFSAYbhWgE6Kf7ydCQdsN2Re4jxLw
-	 c8WbC81XLq3atDQcKcl0/5lYIRQd8ZfbxMfZRr16Hz3ocKFQcpBbck1o7gGSXyuyyw
-	 zGIRCMa+8SGU17E/gUUlVkQAsQugH1zUTWxRX4FF6mOgAUOOBS0xqtQhnqH4IwqUW/
-	 IcwYYrtGPJVlWLmdYpbekL5Mkh0qYmN+7YgDtBhPh6RV+6CzJn9dETZK7N3AMhNioy
-	 nDzVhxKy/J81KMVIKhiVbEcvfa8imztsqbSqqlB8Ew1YH9rE9n2yEfGsBmoHipftRY
-	 BVrV5SXavdV6g==
-Date: Sun, 2 Aug 2026 09:19:48 -1000
+	s=k20260515; t=1785700306;
+	bh=dZ7OFfi9eF/jIWoS8fdkKKbzbRf0Q5uDnCjryE23lFo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=eJ1zlQ/QnxKCicr1sKvibjYV1i7AZ7WroQsWrAYqNn/SVfg7B/QwxxfIJrlYAptT5
+	 glME0wbRL8Zy04BJY48Se6YE/Dmc5mpWhLqQofYGf7Zofn/acC7XHbZ5n2KkOZfxhl
+	 8bCPh0A9AyrmQr+89MAMpp992V2jAUcRRXIh2cXa6hJr0zoNprBQlgqX9zNm/IIFAP
+	 bYJCM4I419W6hlw2aigLRmbQqthF0G+yx1Tn5Y7uWxRHaFXErbrMAIrJzI7XEbWVvf
+	 k41p4bs5ivfoC5S/W/NkxWCet2dYHFTotfLcHj/zoD5sW9PK5sm8DtZE05FPZne7UL
+	 5qdoLoLWf305w==
+Date: Sun, 02 Aug 2026 09:51:45 -1000
+Message-ID: <53990ac674de2b3dfcec0fb18168a5ab@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Initialize idle masks before ops.init()
-Message-ID: <am-YVNN5Ga12zHpM@slm.duckdns.org>
-References: <20260731182406.3166853-1-arighi@nvidia.com>
- <20260731182406.3166853-2-arighi@nvidia.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 12/12] sched_ext: scx_qmap - Add rescue support
+In-Reply-To: <20260801090603.593D51F00AC4@smtp.kernel.org>
+References: <20260801085150.2697653-13-tj@kernel.org> <20260801090603.593D51F00AC4@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260731182406.3166853-2-arighi@nvidia.com>
 
-Hello,
+On Sat, Aug 01, 2026 at 09:06:02AM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Does removing the !(enq_flags & SCX_ENQ_REENQ) check here cause an
+> infinite bounce loop when rescue is disabled kernel-side?
+>
+> If scx_qmap is executed with -B 0, the kernel capability check rejects the
+> insert and bounces the task back to ops.enqueue() with the SCX_ENQ_REENQ
+> flag.
+>
+> Without the check for SCX_ENQ_REENQ, qmap_enqueue() will immediately hit
+> this condition again and force-insert the task back to the target CPU.
+>
+> Could this lead to an endless, unthrottled loop that locks up the core?
 
-On Fri, Jul 31, 2026 at 08:23:33PM +0200, Andrea Righi wrote:
-> The built-in idle masks are reset with all online CPUs marked idle, but
-> idle state tracking starts only after the scheduler is fully enabled.
-> As a result, ops.init() can observe busy CPUs as idle, and those CPUs
-> remain incorrectly advertised until their next idle transition.
-> 
-> Enable built-in idle tracking before ops.init() and refresh every online
-> CPU under its rq lock. Once a CPU is refreshed, later transitions keep
-> its state accurate. Keep ops.update_idle() notifications disabled until
-> the scheduler is fully enabled.
-
-While a sched is being loaded, bypass mode is on and when we get out of
-bypass mode, we set RENOTIFY and trigger kick each CPU, which, if the CPU
-has been or is entering idle, triggers ops.update_idle(). So, BPF
-implemented idle tracking gets the actual idle state update when bypass goes
-off, which makes sense. Would the problem you were seeing go away if we just
-clear all idle bits on load instead of setting them? The lifting of bypass
-mode at the end should set idle bits for all actually idle CPUs.
+The loop is bounded. Each bounce goes back through scx_do_enqueue_task()
+which counts it in p->scx.reenq_cnt, and crossing SCX_REENQ_MAX_REPEAT
+ejects the owning scheduler. With -B 0, a stranded task takes down qmap
+instead of starving or burning the CPU, which is the intended failure mode
+when rescue is turned off.
 
 Thanks.
 
--- 
+--
 tejun
