@@ -1,47 +1,47 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012070.outbound.protection.outlook.com [40.107.209.70])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013012.outbound.protection.outlook.com [40.93.196.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8535395AF2
-	for <sched-ext@lists.linux.dev>; Mon,  3 Aug 2026 06:09:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063C630E0C0
+	for <sched-ext@lists.linux.dev>; Mon,  3 Aug 2026 06:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785737390; cv=fail; b=q+JyqzJfYMMKIndiP3cs6r717v5JDaGbJEefu3tMkRt2Ktm3NbcSABGSPeMO/ZSLDnwxUmICdN0pb02iMtJyCRrNxdIEms1bVhBBSJspFhFrCes0wDy439nBCD7V4VktqreHgsl6C/jyL8j/SAJG2iNph6ps3bWVcBbQtHbsdRY=
+	t=1785737396; cv=fail; b=Bhb5/cTL1kK9+X8uEtRk6JHIN4GJSc18zWSHrC/7a4GtKw0fP9FaqtETCct+6Bt7vCXWaI217nJflqsBTHmlLL9GqfJlpPftzWMQ9d5u0dfgVsXAwupDWaAFKMXVkSD2ciRVMgKItDYqb/Z0P1JCwmC+KTEof72TwYDiUBc4iFk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785737390; c=relaxed/simple;
-	bh=kOhJz2UoestB7id5zE5Y2CeoSwB5N1ku0RkzINmQ9BU=;
+	s=arc-20240116; t=1785737396; c=relaxed/simple;
+	bh=5nsI47bNkIR5yAxxYStDZetHqah/zNbOlFKHvuhD6U4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=eDs3/+J1pYd6pM3bLMK0eiBdysSMxFMMpY6DUkf6L5yE0cjHeByJTe4ctcdL93keVVFBtp+MjjYu5eJEFrkmaAcV0zdzIQWlms79ZMSkx3ckSYjmUGPrJU3ZZzRFtR++RckWlwHGUtfpKH1r1Vb8RwyR8xrYVGBVhGQyAM5Y9mQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=V40CUOjo; arc=fail smtp.client-ip=40.107.209.70
+	 Content-Type:MIME-Version; b=u4Knt8LJRHP4POL3BXOAqk83KUZoEcCRYAvbE3SrOf+1PL0huk5F+qWRrbVwo6RvIf37ZfE7te00Ey8wOj6Wtw2fPj2cGIsDFAz9FhkcpRdL1uLH3l2fae6oP35jc1m38Egtr8F2OzIZ2pM3EZuCGfcir4NEsCpckLChDgRUO4I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bxXG3yF9; arc=fail smtp.client-ip=40.93.196.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="V40CUOjo"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bxXG3yF9"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IgGNjYXG1HBczRmpTuLqVOiy2rSidjBIW7J14ZMQJWTXOcqwWwdSccQ3EAeBb8E1BqucQdUR9ei9jU837NRB8QzoRGVVfFVVMTs84v7sGUcX0l/QpObGZBxxQ/MwIy4Kxr8ig3ZQkKGNwAC/ZlVCFyUR+xQSo/pGzloLnnTUx9O0t3/pXe2WKMo6xNQqJJplFo3HsrvZORlyUDU9GzpmawHIXGlpBIPHQTjWPXNLMdfBq8W02WyvILSTJ91xY+V749oYouP+mprGURxarB1g0UCeDXIy9BmkE6ildZnr6dXZHLMCFzrmh/b3gX8VmVknNRnyby2oc/iHpk7BGWb5bQ==
+ b=glFr4GgcCiODI1BZG3jiYFkF6Gf8HT53A6emW8/j9MEb1LZTfyok329u/MU7qw/cfDYQUT+qkHRn8b1sMH3PBa7eKN1/V87x8RWL0n0WOu/zRzZBpwBiWf2v93fX2eSeA79g97kZSXR1E4z4EluzwFxW09LetT6P/nzYZjluFVGt+bz2Fv6rH2jWKo4XRd/xQhMZqGuTeTfLWcZd+NvfDvmdGmcaWJXJV+UK5RcGpRcktE5QFgT7Ul2nmkFHTzeZModywDhc3tq0icksRuGrscgaCs8fk4r9FLiyE48SjiOWmuoJ6a/ZSA9HMjw0EUF8IF8gAhxV6P8BSDDzuzSw2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qMHLfRHO2JQHNWohi8I1NZbrtpxJTcYf4flie+TO9F0=;
- b=IUNy1x3WcvhWrrRREmiax5WPb0sw3fNmHKaTaeBdUWM4e/qSWbneYUBqSqjLgtptEGImn8ObXWvg466j7HrkR3fAiGBSClmE7wAnSIxJgFeLHrZ65SX8eLIZ6rGMgJTKwZJ3BdSp3DhAwBCC81FvgSN4cwuG1gOiaiSfAFTTqv/6/vhyHHJtHdEfeob4BD9tusOfevY0WJxF1ggbdGKA/dujvMa//Pd8RHHs5OM/xEwLajRgBpaE0po+0EgJr9OqY2AWYs5gupI/CGCLXaw49KyF+jm6+69V1+q8/Dby7pBNHDwgnKceubtgE4KoRxhw3jAUE/nmtLQ2X6BRLUn6Lg==
+ bh=yjUU83kZia6yUgwG1bcElLsuwy2lB0ZiZSxzFR5dQgI=;
+ b=CFoxMj4WJ1oqkAaCgD5B9T/lD9sSydEHwgwjqufAgIsTVClAjCxIBqrkF5hk/SErIX2K+mzqNDJPJopIuPKECCqiPA57HI63nZYBBo8cAbhQ9GiOJC4eyGz9byEzEuyGdIabkV6VKPKNFOL5GmEnGHV27/WVN5lOCzNpz8QgIHeytFZ2NRR1cBrxGGR0QmyHN6JHPmYphXzDWCffJW+ou7aElsCRR8T+5udNkeeYA8NwcvRL/qBGpHPesw6XcGuJUmDXC0ChkreGHW2e0qzzrdcCD5yyF5qYEN3Hw/5JiTDSZ+YCtLJGV+pTVH9xRB88A5s/y/pN5Z6CybppwXSamw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qMHLfRHO2JQHNWohi8I1NZbrtpxJTcYf4flie+TO9F0=;
- b=V40CUOjoj+/13SodDpvqcsXxx5L2nludeXt11158vpWrcPBFx11Bt1r+m4r9Iah/FJSerZABN3wrzjz1AwRvSREiMN7MOGWEqri3UkZe18X3VHCpSk2GWWcULHo1qaPeVktUKFDe1hMg09cC7IE14FVAnS60DWPOXGzcbuIiQ21cry13WQBklFWJt/ISNwbZQ/wVXReVV/aenlyFeVpG4bF6nTBBIkZ8X0cNjzbEo+P0GJ+Rh+WFYSv3FmMlWXgbuMl4ySyZkqbLdUFdHNBRVt1lsuTrmdX1jYbQaSIkWkTdPVAiqyeDfQoSxXVJguuN6Ln1eQ2L3XWSdqKMkQVR3w==
+ bh=yjUU83kZia6yUgwG1bcElLsuwy2lB0ZiZSxzFR5dQgI=;
+ b=bxXG3yF9CPxQW/YbDZeVV6NjOqkvjUn+oPTLpAbu8QdYfeDshNeImv7vN9jfFLkAhBctr3VE8ZPrUopQULHHqLFPbm8u6TvLWUWjFzPJMQoNDkl1upmyHNO+q5I2gFqSMibGsS6okA0KiJNp6724Mgwbhb/mH8CwsnqZxGcuJinLgj8kbhNLB3jbOc7Hznj3zhZ2egbbPmeIlrLBi++MC5DNF+5x+Yaq58GzAUxBKaOBtRR+Xy75RijUbpkdANGszxRHB+FstyBSJ5qkHq5/yqVVHHvpFS4RUSTbdj0iEg6v7xZ7TuuZPSy6z0eylSfhz0y4YZjEgh3Sbrdx+g5+og==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by DM6PR12MB4300.namprd12.prod.outlook.com (2603:10b6:5:21a::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.17; Mon, 3 Aug
- 2026 06:09:46 +0000
+ 2026 06:09:50 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0270.016; Mon, 3 Aug 2026
- 06:09:46 +0000
+ 06:09:50 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -49,16 +49,16 @@ To: Tejun Heo <tj@kernel.org>,
 Cc: Kuba Piecuch <jpiecuch@google.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] sched_ext: Initialize idle masks as busy
-Date: Mon,  3 Aug 2026 08:08:12 +0200
-Message-ID: <20260803060930.4111746-2-arighi@nvidia.com>
+Subject: [PATCH 2/2] selftests/sched_ext: Make allowed_cpus idle validation race-free
+Date: Mon,  3 Aug 2026 08:08:13 +0200
+Message-ID: <20260803060930.4111746-3-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260803060930.4111746-1-arighi@nvidia.com>
 References: <20260803060930.4111746-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BY3PR04CA0003.namprd04.prod.outlook.com
- (2603:10b6:a03:217::8) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR13CA0098.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c5::13) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -68,108 +68,168 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DM6PR12MB4300:EE_
-X-MS-Office365-Filtering-Correlation-Id: a8831b61-d4e2-435d-edcf-08def125d122
+X-MS-Office365-Filtering-Correlation-Id: b3af485a-e0dd-49d6-e6ee-08def125d3d0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|11063799006|56012099006|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|6133799003|11063799006|56012099006|10067099003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	4zhY5JNxwDXUGtiEjS480xbVvtOxHEJf/cu+NSGy1IVT+EAfK47YYGAnB08xY0+kwODObPZMNRK+RHNNjMU9dWjKceWl65OFmQ+YZnDv5J8A+yPTzeZcnh2sx+QjNv9jhK75VOw0od6vMmcL9xe/qGShrMXIokibiEDCazBrBI+4N7O9VdbVnsPfiGguVT8sl0aiuQN/2ImfF+2rzfOLMaWYBXE1ZNYmvv2HH3Ijac0SU0nGVS6rpkeZy4IA9Si/euPmO5AdHskKeA9MUTXxvjznb5kL0kWWhffw1jqQNIc6xXV6bE8n5nHhHAfJBNz0/VhIOA8a5J0SsEQqoc4tjgqub3UMHMTVRZ9BfK703ufQ5Tn7Ol8uFjPZSLB8/OZ9h/xolA+s3Cwp/+vT8NDjR8VuqXWU49L1jFSOL6t8hfKI+2r0SBgqJyTooeGKQ417x9znkzYSrHrDTII4ztCTu8wL6snU+nlY0QqfsBgHNS7T+eUAqVpDolhZsltXPgY2Jl6hLP1+w8Ox40mzvZ2pHoFDnw+2Qziu4trFX98KDJAidnF+V4S7keGhjn323gDnRKCYeGW7IVfhRd/PD9Gp2PBgO0ae7zOGNAjdHpkLpnsrcO6Jx2rbAx4v6NbHfHm8KvaKZAzeFGXfgdEk0ws4nmiz/MKY/sokNBUMe+dkUb8=
+	xGdWxgayQpbsBDb1oI6u2CVIieUdM4jcPL0dhoc3L7d7YM5sCjqDTd284KzYctgWSSLM2g9iZPLE8FgC6SrcLVTlVxzcsD3D8pO6uyJd6IJKmHvVmDGIT2ghW1lCVNtRtw1vVKn4BGWQ4hZ7M8dLj+oY2Y70xazo1s/Qo/nvQXSZOvC7ctNqKiGnR3qiHufVKOCuB3agKC7aUFtZZ3oU8pyN+SRoTG/nflc0cOKwgneqf69yZAGOSheBlB0Z+fqQ/hEeAmSuGk+RxF2zSStUxAgiZlT4NymOxMtteeTHYwVnhCfXJZRDVH0e8Z8mfrhxCpu/FUm1isfhedaGEKYlUwiNHDEcoc2GqaB+o1vULlXOuW9QEgmwBsqfnd93p3nOx1oDxXnIHtCs4q0qMEQjD6l1Hi2PG0rGdo7R/TnXqQSamQMHYJMeGO6AT5nidavRDksb+hV2ZvZUBS6dHrNiQBIUwoFdP6xYOaf+STjr0yr5Y1po7wSJb/OvfWqOJyn27Riazhjld4qrCtBM5XSOLaAmP31q0T5wCOMKhaDU49tjno65M5TwjDhFP6Ij76E4Apmrd9t3k6oO6d3wAucjPpQ+W/2Guu5vING/+rwUWAmhIHaTxYZlWjKkqx7HfTLOFuc6+5F8QX3wDYkOI1/uQ8zFKb5mymvK64INAyIEA8M=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(6133799003)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?PU4otI3kECr75Jld9creVQcLK3NtI9aFwSMOyMgvYAiPLHWq7vhCVW7nfIgh?=
- =?us-ascii?Q?1550SVLeAszKrxjKlKPVlaTDGtvsarWg0bz5YaTbDdm2Ktaqb28H1h1iOWm+?=
- =?us-ascii?Q?W1E0HE4bEjAiNdVUrIQYJ/L5c/gDk40WP5+AOx8UCuO3nb0gzx8F80uESkkA?=
- =?us-ascii?Q?tnbF7fOwCGpCn1dXx7mxo+UdTwDGLFh8I2aw7TiIx6MwbjuHBZDh4xDfdAmM?=
- =?us-ascii?Q?crhe///O+m7x0PpC1MTsgooVYx2oxEN3xIxenI6y5a18hs0iYyRi7dnEQtOu?=
- =?us-ascii?Q?uUt2KDb3qfxuK5/GvtrdFRL+n9jqtnUATiNmAhcsABcblgXuyakBO05K5bIu?=
- =?us-ascii?Q?eHC9/K8t6TmP+bRPlmswhHeQ5qcLsHk3bg4rj9WHCokA/NcgyK4VXPJz2r9y?=
- =?us-ascii?Q?3EmleX0ys5VsvSfUAgztsmgAdMbyKmywxsOY/v4EbVnXcyJw/U+NVdALCFsJ?=
- =?us-ascii?Q?+aw5CkExXjFZIbgtgdUfvwm6KqL8Lg1w1sJIFQ7PSQYlfP2S2oGTjYZK7hIa?=
- =?us-ascii?Q?aIjIQz4m61dwL06do3sm1lxNQYrmXrbnEOKapeWNgc4GsbGbodEPBxzNaAa0?=
- =?us-ascii?Q?o+GRN/p3WdSP0b35prcsSseMnkyhRhvrbv7lu5jFNXJGdyrSMbPpK3NpvD+p?=
- =?us-ascii?Q?/iCA2ueOSJVsAeebAjvwaBlsqWchpTVltr28dpmJ15zu4h52VeG6+Xj03RwT?=
- =?us-ascii?Q?E3/xyHgo5BKtxuWVhyr+P45I/FmMQXDnIPHagPBocsntXfZk76T37Semb7Gu?=
- =?us-ascii?Q?xe3nztXcrk1528l4S7S2PzFWT/AXIafK2I6ud+6fiSFf4B5pEa5RLNMYWfvj?=
- =?us-ascii?Q?XbdnK9zO87pliqCmHzPJw0/uptf1rOmQtNTJ+LLwlQ9/podCn0SsSrxkYzEg?=
- =?us-ascii?Q?uU1A3zMBfqj/Bw7nwp/OKfcx7QCsmIStLTog3YaLQmSsmwnhbrdL7JL9DP2F?=
- =?us-ascii?Q?l5SHLQG5NQOfpSXjSWBcbAo5Q+diCddfhDRNmyiJblpMtF7JIMhBS11ZZhll?=
- =?us-ascii?Q?Y0rCRb7DZXGYyvKV5NbChqQQfFedbgpJQWPSzQq9/1wRd4XnwAPNvvjwEVlX?=
- =?us-ascii?Q?uTfijw6XS/KXdeQEzaGQwJAeeTqoDvMdODP5ab0UDv207/eu0PE/Tu3HKfu1?=
- =?us-ascii?Q?FHWkY31c0VdH/l41wWNINVGF/7CvWAAAwSU9RKtv0+kYP+MTfILw3UQ7UY2f?=
- =?us-ascii?Q?jtkq0levkhnzvD56r0JYwQqMxaV7e8vBhD2oIyQzl1Xmri8N8vfOBLYW77Zs?=
- =?us-ascii?Q?Fmt4qDcAi7V4zYxy66qZdJV16RdKOyo7Dp1jzNPfyoD1YeDCABuogn2hQJQ7?=
- =?us-ascii?Q?81rK+9pySrSQI7mJy1l56FIgjklBovnNMmNVDQlhNNASHIxgzRWCbVzT74wn?=
- =?us-ascii?Q?hhsLRA7ITEGbwX9Sv7tmFhMKfa9E/jDkgpPf1wFXLpBhJMnq1wvq/rSwmT/b?=
- =?us-ascii?Q?faW+anCWxNQ99mn+R9cx5m1gd0SJT2JjBixcNE2CQi8+GyIZVROTim346Vyh?=
- =?us-ascii?Q?98NxoIAof4sQdiCyUxfJYVaThQi26FREsHKunOAbyRgFvoR/JimAgy/Wy8oh?=
- =?us-ascii?Q?yrExhq/4I8TseY4w2zOrP4xVHt73yE0Q/StGdIykhsyReFWgcoTQefZB17A+?=
- =?us-ascii?Q?6ojYuROtJ/mUmpAxoCH4RomaGygYCDkzf/Rt+fbv73qp10LGNcPaFc0DGBbY?=
- =?us-ascii?Q?HDB12qRQIdM5k9VGF7JnXm8Kfhlp1IiD8+qaJcc3yug3Pmxqu/SGnkMuqJD3?=
- =?us-ascii?Q?nSYWgm+z2Q=3D=3D?=
+	=?us-ascii?Q?W9rYV5P/tdveQe9vce8NtAT4zHOKuT7qI+NU8pGO/ixsgYhWfLjMMp5k9IuP?=
+ =?us-ascii?Q?ntFzmefZc4x9y8KEeB5baOJ+o3kg7D6/mTJgjE/1sd3tYbT1WHHIoHnHEMRa?=
+ =?us-ascii?Q?EdMH9W/3eFoGdPiaygaM9T2k/ZGn4JDecaKYPKcB5i5w+qvpmpKmUCKG4QRB?=
+ =?us-ascii?Q?/iBON7V+mwm10+KmRVLb8+Crx3arTJULIT90zKBDQqQas7yBUcwmYYZlrf4p?=
+ =?us-ascii?Q?I+C3veeHnyGXp/Hubnqh3cd4t7dfQ0ktGNANtiVMYTdMTgBnQ9PtlgtLvNPY?=
+ =?us-ascii?Q?k1t+Z+ArTyunBlNT24vbwJjmkWeBysIvLBE/en83GA9cdJEW9f+BBBS2ZjWB?=
+ =?us-ascii?Q?n1MzsQkbqr3/5Hzh5tZd0VjSHg/0HxKDNuGXeaC2BAmcNK+7l9YYIqktlpA0?=
+ =?us-ascii?Q?GvmdFHTj1MnTumgKu228sDL++3DjOLx9Nh4UWa5B26+vWwb3/yfB/3fqdeDs?=
+ =?us-ascii?Q?dfgTihtdViIqQMKV2RYstsfL6ft8O4o/7tdZ4IERQIuCsk94lFCR4NVfCimT?=
+ =?us-ascii?Q?eyCktKT/U7qcdGrf9tf08JvYMh7JMLYisuTefxaSDok4nwEj+2SbNy+AjPDE?=
+ =?us-ascii?Q?8Fi2sDMhtMFga/ptuq7VYGz+LvQt/dl5Fl3hHuleGM/Fm33hMqwYKDPLKIYX?=
+ =?us-ascii?Q?ujkJqXER3zftRrrXsGkkCekn6TcF9Zyx7UiO/JhIdgDk4TEWbsV+isULcNbn?=
+ =?us-ascii?Q?wmmSqHsBALH/U2VYDY2APepRhH0ZLvDU+2kcSUmkWB9X6Nwn0KHUgYjULOk2?=
+ =?us-ascii?Q?DVDkOyrOcirZka9U63uqCDSPgg6E3dRJexVEq2TSmTjCcja6uKGFAJdo11i5?=
+ =?us-ascii?Q?S9Ohfu2dHWq2qFFVAG8c3DSgBYiYybvcAHrlkm9c6SNnu99Fay+ayB5xk7x/?=
+ =?us-ascii?Q?MlrRW9KlvxRTpP5WYv+5wHOsofNxpA+C2P1PKwqhc6bEinF6gEpkLONHMIUD?=
+ =?us-ascii?Q?Kn0cm/WCzGVG12RKanmRz1aHCeaKrRGGm4Se3tFNPhqb4nEqkd/xpFk5pSM0?=
+ =?us-ascii?Q?GYXVG6fXPis4mLpFlz0OW83nocGPXSm7SQ/VxzGogWqRL8zJffit5kEJw5hg?=
+ =?us-ascii?Q?r82BNGIfJ258/BU8oj253ag41QCEaejkZIGoawJAnLQtcrCeEvyIGtW8cMG7?=
+ =?us-ascii?Q?RhjmAloZ3eKV2ZBIfjQ3j3rqHpijyyOhkR25dk3HaaioHF9WAZtkE4Znx9aa?=
+ =?us-ascii?Q?Oby/+rgJAMkyJQ+j9MqcjifI03w2jbfWoxxZhWJz3PWyS8pHQApyGGe4+xyt?=
+ =?us-ascii?Q?Vx73HhjwVhZa+W+Hcnx9MMB8E8TCxUZHvtSBkp5PpgPiy7dVnZKGYM81GJ0W?=
+ =?us-ascii?Q?b6y6Z673YrU8JHjsZ2mhIf0uMxBTUCaif1GFv6JfyYDY/LNeXDF220mWqi9F?=
+ =?us-ascii?Q?WMTt+9lcXYhYHMcfL1wSrQoFBwCZ5peSRyuvkv6JQI9tP3wqpZfs63zhqUWT?=
+ =?us-ascii?Q?VXdPolDYegK00+UrDGPlLPRLilZUa2D0QIxLDPl8uYIhJWF6smv6+F+LHdXE?=
+ =?us-ascii?Q?iF9VUM7tS3PBR0X+kh27t8zCUOiB0Zih3B898dLJx6ZFuiVJcBwIGFgbhfRI?=
+ =?us-ascii?Q?ewy3kvFcZB3TeVbI8qgE4vBUePU64Ck0NpoY6FjfnUsilKERYdHmMpKbrQiL?=
+ =?us-ascii?Q?oIe/HtRr0njL5M75IcswqVDqpNStgICjUj9t7V/GlhUI0KMsnQX6mublE79s?=
+ =?us-ascii?Q?NLYY4SxOneHSt9OvNWmoXZf6QgbovUZZ56UnmCSYn3F9IpzcyVbRCml+VcnF?=
+ =?us-ascii?Q?IgcfMa1EJQ=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a8831b61-d4e2-435d-edcf-08def125d122
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3af485a-e0dd-49d6-e6ee-08def125d3d0
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Aug 2026 06:09:45.9535
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Aug 2026 06:09:50.4171
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9GuH2GcjKVI4z4Vgmc0i6OxlJHFcNarWSrnd6w3wPQ3VyK5L2ThoCZ+lMbUiDIcZQTLleA2TFafJBNVzTA6taQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: kHU3D5/9YWCtPnDh9ooe4GfB0YioZaTI9p3vQSw/LFrp9+tFxb7k0Ac5WUcYKgA1hsjR7uDxAtPT54N4bSUJIQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4300
 
-The built-in idle masks are reset with all online CPUs marked idle
-before sched_ext is enabled. Busy CPUs can therefore be incorrectly
-advertised as idle until their next idle transition.
+A remotely selected CPU can be re-advertised as idle by an idle-to-idle
+re-pick before the BPF program validates the selection. Checking that
+the selected CPU remains absent from the idle mask is therefore
+inherently racy.
 
-Initialize the masks empty so that the initial state is conservative.
-When bypass is lifted, every CPU is rescheduled and idle-to-idle
-re-picks populate the masks with CPUs that are actually idle. Later
-idle transitions keep the masks up to date.
+Validate a stable local invariant instead: a CPU executing
+ops.select_cpu() or ops.enqueue() in a non-idle scheduling context must
+not be advertised as idle. Read the idle mask without modifying it and
+also validate selected CPUs against the requested domain and task
+affinity.
 
-Cc: Kuba Piecuch <jpiecuch@google.com>
-Suggested-by: Tejun Heo <tj@kernel.org>
+Suggested-by: Kuba Piecuch <jpiecuch@google.com>
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- kernel/sched/ext/idle.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ .../selftests/sched_ext/allowed_cpus.bpf.c    | 49 ++++++++++++++++---
+ 1 file changed, 42 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
-index 3e9d6a44bf431..33bd51ab3cede 100644
---- a/kernel/sched/ext/idle.c
-+++ b/kernel/sched/ext/idle.c
-@@ -838,20 +838,20 @@ static void reset_idle_masks(struct sched_ext_ops *ops)
- 	int node;
+diff --git a/tools/testing/selftests/sched_ext/allowed_cpus.bpf.c b/tools/testing/selftests/sched_ext/allowed_cpus.bpf.c
+index 35923e74a2ec3..9dd72d0da29b2 100644
+--- a/tools/testing/selftests/sched_ext/allowed_cpus.bpf.c
++++ b/tools/testing/selftests/sched_ext/allowed_cpus.bpf.c
+@@ -15,15 +15,48 @@ UEI_DEFINE(uei);
+ private(PREF_CPUS) struct bpf_cpumask __kptr * allowed_cpumask;
  
- 	/*
--	 * Consider all online cpus idle. Should converge to the actual state
--	 * quickly.
-+	 * Start with all CPUs marked busy. The idle masks are populated when
-+	 * bypass is lifted and each idle CPU is forced through an idle re-pick.
-+	 * This may temporarily omit idle CPUs but never advertises a busy CPU as
-+	 * idle.
- 	 */
- 	if (!(ops->flags & SCX_OPS_BUILTIN_IDLE_PER_NODE)) {
--		cpumask_copy(idle_cpumask(NUMA_NO_NODE)->cpu, cpu_online_mask);
--		cpumask_copy(idle_cpumask(NUMA_NO_NODE)->smt, cpu_online_mask);
-+		cpumask_clear(idle_cpumask(NUMA_NO_NODE)->cpu);
-+		cpumask_clear(idle_cpumask(NUMA_NO_NODE)->smt);
- 		return;
- 	}
+ static void
+-validate_idle_cpu(const struct task_struct *p, const struct cpumask *allowed, s32 cpu)
++validate_local_idle_state(void)
+ {
+-	if (scx_bpf_test_and_clear_cpu_idle(cpu))
+-		scx_bpf_error("CPU %d should be marked as busy", cpu);
++	const struct cpumask *idle;
++	struct task_struct *curr;
++	s32 cpu = bpf_get_smp_processor_id();
++	bool cpu_is_idle, curr_is_idle;
  
- 	for_each_node(node) {
--		const struct cpumask *node_mask = cpumask_of_node(node);
--
--		cpumask_and(idle_cpumask(node)->cpu, cpu_online_mask, node_mask);
--		cpumask_and(idle_cpumask(node)->smt, cpu_online_mask, node_mask);
-+		cpumask_clear(idle_cpumask(node)->cpu);
-+		cpumask_clear(idle_cpumask(node)->smt);
- 	}
+-	if (bpf_cpumask_subset(allowed, p->cpus_ptr) &&
+-	    !bpf_cpumask_test_cpu(cpu, allowed))
++	bpf_rcu_read_lock();
++	curr = scx_bpf_cpu_curr(cpu);
++	curr_is_idle = curr && (curr->flags & PF_IDLE);
++	bpf_rcu_read_unlock();
++
++	idle = scx_bpf_get_idle_cpumask();
++	cpu_is_idle = bpf_cpumask_test_cpu(cpu, idle);
++	scx_bpf_put_idle_cpumask(idle);
++
++	/*
++	 * Unlike a remote selected CPU, the local CPU cannot go through an
++	 * idle re-pick while this callback is running. If it is running a
++	 * non-idle scheduling context, it must not be advertised as idle.
++	 */
++	if (!curr_is_idle && cpu_is_idle)
++		scx_bpf_error("running CPU %d should be marked as busy", cpu);
++}
++
++static void
++validate_selected_cpu(const struct task_struct *p, s32 cpu)
++{
++	const struct cpumask *allowed = cast_mask(allowed_cpumask);
++
++	if (!allowed) {
++		scx_bpf_error("allowed domain not initialized");
++		return;
++	}
++
++	if (!bpf_cpumask_test_cpu(cpu, allowed))
+ 		scx_bpf_error("CPU %d not in the allowed domain for %d (%s)",
+ 			      cpu, p->pid, p->comm);
++
++	if (!bpf_cpumask_test_cpu(cpu, p->cpus_ptr))
++		scx_bpf_error("CPU %d not in the affinity mask for %d (%s)",
++			      cpu, p->pid, p->comm);
  }
  
+ s32 BPF_STRUCT_OPS(allowed_cpus_select_cpu,
+@@ -32,6 +65,7 @@ s32 BPF_STRUCT_OPS(allowed_cpus_select_cpu,
+ 	const struct cpumask *allowed;
+ 	s32 cpu;
+ 
++	validate_local_idle_state();
+ 	allowed = cast_mask(allowed_cpumask);
+ 	if (!allowed) {
+ 		scx_bpf_error("allowed domain not initialized");
+@@ -43,7 +77,7 @@ s32 BPF_STRUCT_OPS(allowed_cpus_select_cpu,
+ 	 */
+ 	cpu = scx_bpf_select_cpu_and(p, prev_cpu, wake_flags, allowed, 0);
+ 	if (cpu >= 0) {
+-		validate_idle_cpu(p, allowed, cpu);
++		validate_selected_cpu(p, cpu);
+ 		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL, 0);
+ 
+ 		return cpu;
+@@ -59,6 +93,7 @@ void BPF_STRUCT_OPS(allowed_cpus_enqueue, struct task_struct *p, u64 enq_flags)
+ 
+ 	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
+ 
++	validate_local_idle_state();
+ 	allowed = cast_mask(allowed_cpumask);
+ 	if (!allowed) {
+ 		scx_bpf_error("allowed domain not initialized");
+@@ -71,7 +106,7 @@ void BPF_STRUCT_OPS(allowed_cpus_enqueue, struct task_struct *p, u64 enq_flags)
+ 	 */
+ 	cpu = scx_bpf_select_cpu_and(p, prev_cpu, 0, allowed, 0);
+ 	if (cpu >= 0) {
+-		validate_idle_cpu(p, allowed, cpu);
++		validate_selected_cpu(p, cpu);
+ 		scx_bpf_kick_cpu(cpu, SCX_KICK_IDLE);
+ 	}
+ }
 -- 
 2.55.0
 
