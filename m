@@ -1,63 +1,61 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011069.outbound.protection.outlook.com [40.107.208.69])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012031.outbound.protection.outlook.com [40.107.209.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF481F2380
-	for <sched-ext@lists.linux.dev>; Mon,  3 Aug 2026 05:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A799D38F64E
+	for <sched-ext@lists.linux.dev>; Mon,  3 Aug 2026 06:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.31
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785736037; cv=fail; b=KjTUL7tUpSTVJnatXVMcaWI+7iV+m09Uikoeb3TcnIglh0E0WiA8zZQX7m9sm4OdfPEBW8IaChZr1Z+TJNCij3mtZ1tumbi2UBP0aree6awsPrSQtnip6yppenMazaPBP1giNso4owvTV9W5fjKLCr5W+zCo6trJFZq5u1lbgAQ=
+	t=1785737386; cv=fail; b=k0XSRSiCgJ7/aepqdX52JKV6U5LqZ+9PYa9nD21pXFb5SwoHGGOU2+nmLBC7kQxzww7haqaMZsro773bALXzBirbgDg5ACI6e32n4xnUcyOVhT6Bc/oSZFgS7+u98BjabY1zlrU6vymIiiRUTgQngT11YugRe+f6XfFXEqNfrkI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785736037; c=relaxed/simple;
-	bh=PCvLiHL8etPxi8QR+W0NZ6ltnF2A4SBTyp7WgCsg80M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=eXVk9rSETts/XYidejVo1DMUVBHtHuSdEnpAt9frP47bBsQgdqD0UwJwgPrrgrnZNLweUhV7/266R6XAuZEVNFU5RFBOVuf1M9Z25iVBsxjFiSh7T5PjHGEZwZpGVP4sajlRWZNGzBEjxsCyE0zE2LRV6hGVjE43sF2au3k6YKU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DvB7DLda; arc=fail smtp.client-ip=40.107.208.69
+	s=arc-20240116; t=1785737386; c=relaxed/simple;
+	bh=QQn+xZeXplX1ZCp4o9oN5Uxph39jvxj0OL6W+V9dsek=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Bie/0VhPhSAQQ3Mot6jmJQsPFyIcqetyLgJerqnU2C5YubTS3ZokePyaiyrRGqv+UnTfgwd0RfgRQ20qFKXLr10QMN06+4EaPQ80MLPbQx1RQlLUGQr4N5XcQlLuchVnfLx+wyO6w8lzaJeBQS59/KMUeoWrfrj2IM7LpT3bxUU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nKMyWRh3; arc=fail smtp.client-ip=40.107.209.31
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DvB7DLda"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nKMyWRh3"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YWJGUnSkZWrfqAo1uHi29W82l3/ItcK8qZ9R90zEz6dO8+O2EQPzAkwHtHBgA8IebL2tQ1sA21ge3lXeKD/TRhjt0w0URWtp343dJv6fviCwQa7SkAPaBO6d8nVQ04OLW/TljTkQtQb0aDLR2+1e3fmKBhjz5B8iiv5SVaf1WB+9KtnJ5gBYw/DESe7m8EuhGR3rA/czOO3JdiQK7E3Uso/ZfN7nBPyzD7VhfQcuoYlokjjJ55TeGSZO35f6SMfiDodpnxnOsas1epq/gofDYcLEB0E5dxgN9VWdKiW43+9z0nRI7BlUGvG20dmxjmjmgnUGkFu7oQeWd9bvIwFnmg==
+ b=kE3gwsfK5tM/EL2jEbmwRVMt8XJqYpdCfp72AfP2lVs7h0uA7PUPtm5e+ogHbRvGvsYc/KJPZ7EZKl9ncHybGNVWvfypBJuMf06pG8dckkjVa43UhCtIezlCy+/XT7ADkQ74/aolmPmKgcMR9xN2B5gX1f5dvIhWwwqIbzg9IDK0vHL6bb/xUIzcqellRZu+LG0o6nTKHv5s34Evn1yRM24xij00r906jCHip+OUaHam1EyD1iWE7ZFIPtEYA5Z4XyibzEFz1SPEnTU1aPMeVlDxid9TEbP3Rx+LubUoqAKRGthw2/ck4VOxyeIuquujgb3kokmS2/+wFxD0QOEQig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+axCPuaVmV3H1zmoFhRxPMBxpKFVUFsx1lkze7DZcvQ=;
- b=jj1Eu76IKQpsONDFOCgFGJMHxSVk74G3eecuiBgrCR/dIdn3fnlTMIF2fxfzX+YuESxktj76X5sjZVD6GJlEZODvLD4L914lelUEJnFw0bpGmoNkbhOFsPKH82TsC9x4xAFCmDefmZ5qZC3JlnZxDqD70EM874b13Fd2MnNHdccP3hrxLLMYBSbQW9J9PrpsPy5yezA6HdcUmjQpliIF1xToOJYwlRsDIiUKyezVZ7yVQGZCxtD0J9XwGTqzAIqgjTe1doRIuUIw02tGEb7lTA82omo0AGYdizi61JGs+Bt1/8P2oiG/MALifMm1Da8JwNx8R6tyj1EoVCdkZYJdSQ==
+ bh=LXAFd2uCvYgx2UoSpjcGV7p1RxsBV8b5XqqRprNJNrM=;
+ b=sqBCcCuFlKLbY7D170iMqpwE99k9cwirux15yqfrFoXJPeuIJKajzwLyPBiHqpeNe1DCY/fCfFgAwSH3G/zUDcmVFvQqZp3aeKvfGNM07eeilNm/Md8svNwrBUNvcKdCEQfkENrvsYJeKIK/zAJNvzPBSYneHi0Lw0+PyPJNY50E+2C0A2oVF1J8rW9sJO5PiFGsm4sZqGgMxU+Q/IOu688HQ4BLfME8PNMGzw3BGqirV5tD6T6OH0RM2GqUSVI7dVEqRLcG+4bPVczSO3K5rLzxvo23gJ2MoeiIJqTHdSVvgy3BRLQGfkyMrplnInovLLBFLfhaGMiJKmodLjt5vg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+axCPuaVmV3H1zmoFhRxPMBxpKFVUFsx1lkze7DZcvQ=;
- b=DvB7DLdaD1xash6pyzP6+qp4gvu75fS1PujkAczTgtBviI3TvC9zZJ0rkU74TUSruBHbIGNqvlot15Dyuwbms+IHCypG4S72gRDAx/A5lJsXq1dv4f5GDYyFIr1ssO9ey+lrNhrfe975PCLySoMCp8AJTMtLUz3djnxG9STGQnPOq2+78riV5io9CoNNHBVDZvX1gOLYuFuwX7Ex8pYB4VvDkgMg81A46R4vZq1yEHtuSumRLL82AXc6peyG5WBzpxpZYJnUmbAxs6pMOF9bYgxA/rUieu+1ffO1luaNVgn+5MoE6TC+1od/eMF62H8ovfTEk/jd9xXztRQXOXgmoA==
+ bh=LXAFd2uCvYgx2UoSpjcGV7p1RxsBV8b5XqqRprNJNrM=;
+ b=nKMyWRh3u3cotDQbWcz7hGQGFtH1xa7HBWDAvuJAfKEFzXedw7Rs0wnrQrurfPx3v8ECn4aQRMrdbl83WI5fO5JcuLo4lN5xfyMvBpgVUANLK8hzHhP2DxFYG8/xFMps512pLFCxay5HdNZOoi+jYRHiycXlfD8PPuQYyudLFOoUOY07elnKZzeY8EDtC/i5f/eDcU8tXXthe7DVs+/XrGv0nRgXlO8K/OOIu9AWhLuWFXDOTkhLm6D2I92Lr4GxiUAjgncNMXuW3kInKJBbtDaU2xjaSUlzvpWyarMtXxj/L5zisR9g/zxm/GP26Br6wFnnfQlE6A2X7j9SwBhwQg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by SJ0PR12MB6853.namprd12.prod.outlook.com (2603:10b6:a03:47b::17) with
+ by DM6PR12MB4300.namprd12.prod.outlook.com (2603:10b6:5:21a::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.17; Mon, 3 Aug
- 2026 05:47:12 +0000
+ 2026 06:09:40 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0270.016; Mon, 3 Aug 2026
- 05:47:11 +0000
-Date: Mon, 3 Aug 2026 07:46:57 +0200
+ 06:09:40 +0000
 From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>,
+	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Initialize idle masks before ops.init()
-Message-ID: <anArUap-URclDfww@gpd4>
-References: <20260731182406.3166853-1-arighi@nvidia.com>
- <20260731182406.3166853-2-arighi@nvidia.com>
- <am-YVNN5Ga12zHpM@slm.duckdns.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <am-YVNN5Ga12zHpM@slm.duckdns.org>
-X-ClientProxiedBy: MI3PEPF00007534.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::4c6) To DM6PR12MB4827.namprd12.prod.outlook.com
+Subject: [PATCHSET v4 sched_ext/for-7.3] sched_ext: Fix idle CPU state initialization and validation
+Date: Mon,  3 Aug 2026 08:08:11 +0200
+Message-ID: <20260803060930.4111746-1-arighi@nvidia.com>
+X-Mailer: git-send-email 2.55.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MI1P293CA0029.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:3::15) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -66,94 +64,108 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SJ0PR12MB6853:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0706bc9-1c90-4989-bbf7-08def122a9d8
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DM6PR12MB4300:EE_
+X-MS-Office365-Filtering-Correlation-Id: 34ed6127-4b10-4ba7-d0e9-08def125cd8d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|22082099003|18002099003|4143699003|11063799006|6133799003|10067099003|56012099006;
+	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|6133799003|11063799006|56012099006|10067099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	rpdN5RD/Hv0eVMxhmjjuFxl79bh6Av699nWevRsl02Z6wn3Xr1+kQfCg32NX0n/NB+TIqhleflRc2xXuCsxi7WKJfpi6S3EHnvHtoFSZ6EH7VhoH4q5ClWnoLwq+szNusoK21hX7xX3l+sDCINWg5bL6gvf85vadX42pMlXWf5bqybNp7jK2OY69+u8KcXfgGB8QFq/cSaKjXXqOD81OFzzNr6CflzEQhcYkBeYqe3qTKwMNpumAHyYSMnYQhuxpqiN9vDSTqc4H78ZrMhb7jNRzt163cBEuADc9sVYiX9J3LZYXMF4egiW9uFtB3gDSdmZfCsmBjNxmNq5kN5PAxx7AuRHWQ+a40Z3asKizbZd+jVEjKMoWlAJicBX6j0iBLmCyXDUjd1WVeBG8I3LSkMPoTc5yjMaNjohmIvIJa6bb9zyRn1zDFGc0LAaqoH+9tE9y/+We5qtH4mW5dRfXSOo5C8tSaB8LjeJBFXk7+DnsCZBiYI2iBwbp+puiU/m9RnWkTiPwlaPCQErik0OHHjjcdarNDFdisQck8ObNhmMYd+80Y88FyLvRc8LwvcGjxu9q1FWTvOyUqhKjSvlmEb3Uv9BZOoxKsteWvIq0bvzBmNM7Ro4GDyDX9bO1Cos6zOr7To64uujbDdVUYiPJAIIpbgtdgyk3+FV4Pqar+Jo=
+	rh/w3IMjNxQ09K5PBb7v1uuResWo1MiP8/Lh1rdaazZWWc3mDxFULV+pWZeQVOe/J9uZwQZsfUqCL8OiJ8IWCjfzn8V4YVmbUgBmSuwe/D6ZQ+K2bPUqhxa1EZSBqK0GSiI18IJgTWL3Mx9PDjgp7riJOCapQYFjO14OyawBZlIkyRuCHS9Vw6zkDgR0IOZ57tgALVcF3ygSBudVilp/YOhn9EWp1244OKFyjP8UnFpAlUlsaofyCe+bvo1ZknZLfxH6FNdqS7MTyqPMei+lb5m1tz0ZHOR46cj0MoC2U3Uw8kzkrLmlL2z8IN2gD6iKK7WQWdsHtvEyyoNj0utiiSvt4EqFTC0AjIT10q/QKe8Pj6UxsRmGiULpd3iLfy8hKzVChNGM9zDNyeLNHAq5883Z4eROy+SZIPE3kktTnzfah5o91lFIa0TN8JwhLL56+XHY8f2js0TcOd+Rq52/3ZS1BsRo6Bu3Gmd44EwsiSX22X43mZhuUW/nru4GamV9Q+V0q9y9zDiPVGz8aWZlOpYP+lzR0SXneLxPwoMI+SuQYYdH33ssnKS5iVJ62WkfW37DXxzdeoDoi6UJdc9ce3DgnMWdtfNlavgVNFgbZ9VFRN+PuxyOiqRkwDuWbbG7He0V+PZ8EYQIpS02HJ8Bq6toIGQU/WRX6gQAVcZpzjs=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(4143699003)(11063799006)(6133799003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(6133799003)(11063799006)(56012099006)(10067099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3V8ChpI6aF4GoIH0mU43gn7tZWB/6kKk+ESpyaqWxuaf/j1hZ1zi75W3GRf9?=
- =?us-ascii?Q?/TnqGT/qut+luaedZXu3Xp+Qv47BkvuXaof5i9iRmW1kqoCVgk+WXIbs4X8W?=
- =?us-ascii?Q?jKd3+mCO+NFaovySH0XMMOIvfja3IEx2w5WVHagz1820r6Xuv0YX9WntoQNz?=
- =?us-ascii?Q?D03revweaOaX65QNogyQJdh8NiGrt8WBfYmqYXEWQTlVDmMseN0QnYzrbYiT?=
- =?us-ascii?Q?jX/uJ2KrU1pqxG2XTqxBmMehi2MmQwyYNI4PQZjFFGzl5J9wyqHyBdj+LEjG?=
- =?us-ascii?Q?qwQ0GGB4CyZea6ZT5d2/41iEf+S9k6a7XW5pk/hMfJYf5vxCY1FPjtjecWQu?=
- =?us-ascii?Q?ygaPLmwMNl10U1+njML/aHNMent+DzDDodhF3CHpQdFytkf8ZHwZottxoeiI?=
- =?us-ascii?Q?PKDwHg1t5MDRnmK1aDm5hzd1rVB4eYJKxA0r2GxwVi8gjUJOWRuTumohUy6c?=
- =?us-ascii?Q?mxfSnOLR9dVRxumSdUDbDuuoFn+9M7BUE1hoH/U06RwflKWKdociAu9Hf7if?=
- =?us-ascii?Q?y50qUVfx+ADW4b6yOL5+ncM77mocZ4GaSOG/x18uW455dxUs8YzX8MRY2H+8?=
- =?us-ascii?Q?DcWwcqAKAOU4xefPjf67GlWX6rTn/DMAM7ygyBqkTGoQj3wGDHqFQyLyC7m4?=
- =?us-ascii?Q?LCWOdgHCgwjdKTmKWwiilV4g+2sdzjVoQFl8d6dKepfA05v4EwcdcNEnREch?=
- =?us-ascii?Q?FuxGwrL817QJCA54bIKjCFI9ODR9X/TR8/zgqqylH351AuBemJDgMxPApxlN?=
- =?us-ascii?Q?ASysOBKjdFKOWPViGlg9FFTHDrx/A7DP0JRPqg3U+2toHyAe1ZpJKUohGkcr?=
- =?us-ascii?Q?uBKE5Rm0hAj5kZOvOt/Jlg5cgMiVHwa7JrElgpsnWQ76BtxW4YUhY43EUe6O?=
- =?us-ascii?Q?ow6HBoebwQHERwZVZMv6mABOfzr99lvMUvTtT/r00FVdh9pj7OU+s32NZxNZ?=
- =?us-ascii?Q?eYLXT7cchYmUDDVERpyVeNlBC1VeaNHk/hg/tev/+BFL6oLsEhW5h1uYjipd?=
- =?us-ascii?Q?uUQZXhymn+8Kq70oGedQnRV7onVeV9zu8BRhuYDpf8Tn13rWRPsUMEhKAyMm?=
- =?us-ascii?Q?N0qkYUIcEA3zGZvs5jmB3pvZ0ae6JbQdxyxRgJgwaHfbMh4serVs+Aj9pwyG?=
- =?us-ascii?Q?PHNLrWsRO1yOaDa6MU9y9aCeeZtfDG4iN9pF2Z4X/EQ/X8HMowhSFyPSrpP+?=
- =?us-ascii?Q?Lh8+QZFdKN3ROyPg1pzD5mhIPksX3TUVKnwgUm2L1DnuklKQUJ3zjX3jykOV?=
- =?us-ascii?Q?GCnW/vT+JAuTGiZ5sLJkOuk1i1Xb3zKa4hUrNIEC5LnJtiGdHZp1lu/5V4UJ?=
- =?us-ascii?Q?tcngBk8m8Mch5hH+Eh3n7wOwbXEYLIeEedW4T03UIMG8/avjDz0l1kn2Gn6I?=
- =?us-ascii?Q?FoehsYvH5Eu1y6BUoeMnmAlslOUXCYt5FBDBb9i2oLLGgTJ+PHB4OqW5jKro?=
- =?us-ascii?Q?3Wtew9xgD4fY14bTf7w/tymtiuFUivY3zUj7cW6qJmh4OTiopFN3r7Xum5hm?=
- =?us-ascii?Q?TGPGAOOEVLeeb0Ebpl495LMkcZvjDQlrKdHrbT+GZ6TdURvDJ3T97mIcBSOH?=
- =?us-ascii?Q?/GRVQz8qw0SHLEeq3shuAv5b5uqwC1G2ADeE12rbtFbyZWsreLxnifGrj75E?=
- =?us-ascii?Q?wG23H0lE1SP6AQ6im4ne0hii+5BsTmRq6msMIsyCs2aKtw2Sy6Xa2JwmWTgc?=
- =?us-ascii?Q?rnXNk10yLqYMMDFLbIxee3vjHDX3BK+5QVi/PD5IYeSTX0+mUS4nepFneRP8?=
- =?us-ascii?Q?kkHb1F36yQ=3D=3D?=
+	=?us-ascii?Q?XxvqwBOGYBmldgxB69fqeUTYncFQUzqyDz+c/fmYPBWLPbYrCubThag6PxTF?=
+ =?us-ascii?Q?ecaO5HIvJQAWW2cYWYmPilUUsL1lSuFCNWcpDkeDXKDVPSy+rBIYUNZfwBN/?=
+ =?us-ascii?Q?X4dDiXZoGseaatYl83kFIsaA4j6gQE2qQ20esLl5+eMTVCTE+URk4pMC5Z7s?=
+ =?us-ascii?Q?ZM0Oy7ra+bIBLK4XH/mSUlmcR1ZOD6yWbOQWdE3DshRx8tO6pukV+98EZ0UJ?=
+ =?us-ascii?Q?qSrvbWQTAZSx+zHKhj2YjcRtcmeJJbCDx5cp3+geRdxcGq1hEr/Dd6O8WoxV?=
+ =?us-ascii?Q?KNsaP+IB7T9m4kIKCK+yYgUZABOE2mi4dWFQurlwh9ABd1pyOn5jBbHFa5bM?=
+ =?us-ascii?Q?0bZ5iodyYUrJFEtUiU81RbiijQEt+m8LmgFU5TnMOGoi8wOQWbDdE4cLvzWi?=
+ =?us-ascii?Q?kGsPcSaS20FnRHJK8vUt+E7veJsv+peNo4LVr92ZuVCVYcxNweWwGBuiJxUQ?=
+ =?us-ascii?Q?oAT5eEYOshuEeDYdTRRpcNfDlrTOzf6yK0UZgFEvdl6sZkzCzd6/gGC8SWfJ?=
+ =?us-ascii?Q?3uApfdt5a1DB365naX2xXirRGmkYoG7Et/068FJ4b8zzaEeFh5fp7LCZK6cN?=
+ =?us-ascii?Q?bg0FpCUti6YTqiSv2wkvXpvgZuSslvdeZYJdv0bs0eaMrhsckAdqQDsA9jme?=
+ =?us-ascii?Q?LF/SCvZKhF6A1S4MJN+4QU0HjW4THptSo8AffWz1kUC9lup9AxB2QG6osmr0?=
+ =?us-ascii?Q?IP6nNDGz9XEDJHGr5i1GLmiKz5hK4GVkColuz+KGfGqOWvqwUFmtygyRFEWj?=
+ =?us-ascii?Q?Z6z0tZsKnZfc2C2Cv5yenN37/vM0pWYuz8bNpdvhydp5PmDKeRmQznzfdqlG?=
+ =?us-ascii?Q?v6PLZYKq2tQKQIKEtYRv0cDRhwhHKE5kg5zVSfLXYWa+3OYTvLaO4YmMixQY?=
+ =?us-ascii?Q?7pt56q0vGLA0uAkAyWiBBMmgKf/yeFlX4dyDOBVzZyKxry6gxTlDl0POIMND?=
+ =?us-ascii?Q?mrAHZATRvWqUmJi2Izj3Z6NlLJvZYV1Rci8pPGs0Pb48edzlBJSiT/qKlJLc?=
+ =?us-ascii?Q?5OSi3rbdwqWxA4frkVjgem2rKXdDLSbNOl+mNlR+3FsI9C/lrQUgfEbwlHd0?=
+ =?us-ascii?Q?RGN3Jp6RR8vBlGGEbpjMCwDCIgfDFrMtz2nZHzGrOKS7hv1H4VPSgrpix/U3?=
+ =?us-ascii?Q?UM6hvSvb9aO7Gu1RkdZDL2gYQVMUybhKW3rMuPcldq9P5zhtBxTkn81PZ4Bg?=
+ =?us-ascii?Q?13v4pvwbP437lxkl11SoSC0OuoLWqD7OOt3lKdIr0v7jw4osGgKaGgrxNeAU?=
+ =?us-ascii?Q?dqGfxqZiieUW+UmZi72aC5wuK85buYEucvbtd8Q1T9XciztEvTiU1EEitP0s?=
+ =?us-ascii?Q?jVi8JAzpsc9o1feqAFkJXzlJx5dqxu7yeWShspYr3/cLUHsabrNOeTVpLHIx?=
+ =?us-ascii?Q?fQw5DMfYaqzeel9nKqr/ZXEoUrIQ1Xu9KbIdJ0657cA99BlMUrPSy/3LgBjI?=
+ =?us-ascii?Q?m53ItL3EQ5r8CIBNSgBPv/ZlPGVFxXREe3rht8X1bB/owtSdZwJxbCCv57LX?=
+ =?us-ascii?Q?SRv5Ya7E6phEmel5fkCwhTPmrowtJNxPKZ8DqUHn0u/hHOErYJOouP3hYTJl?=
+ =?us-ascii?Q?ChTI7WkCyg4C5UbaSod65ucVH4OuhTRstzPqmWvyRfXXIyfSEsNs8j9E4o1z?=
+ =?us-ascii?Q?sC69I6+i4HlN+Z5DmlpO5u+1R8rWZXGrI89JFj6TcHmBoNLpMaEoBNEo7kF+?=
+ =?us-ascii?Q?iuaEXs2guu1axK2T97tqLiWOzccV6rSKr5a9WRfvdTWimFrm0r7zkLSO5M6p?=
+ =?us-ascii?Q?FWGT40xG4Q=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0706bc9-1c90-4989-bbf7-08def122a9d8
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34ed6127-4b10-4ba7-d0e9-08def125cd8d
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Aug 2026 05:47:11.7012
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Aug 2026 06:09:40.0970
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aj3rpKsF9Xt2yw2hRSCRQg4+xI1VRnXTxgo98UdyTOlXDcsRW7kavyM4KKMZn2NxxKBYx/MAWIxIBGNWCs9Z7Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6853
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2h8hWbanMCxePkj6q0MFbqsuh1bbT/5Hu8wefTjbmZBcEiGpiAm1dTt1mz6XU5eIBy4sMpQq7YrsZc7K2LAOrQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4300
 
-Hi Tejun,
+The built-in idle masks are initialized with all online CPUs marked idle, but
+idle tracking currently starts only after sched_ext is fully enabled. This
+leaves busy CPUs incorrectly advertised as idle during ops.init() and until
+their next idle transition.
 
-On Sun, Aug 02, 2026 at 09:19:48AM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> On Fri, Jul 31, 2026 at 08:23:33PM +0200, Andrea Righi wrote:
-> > The built-in idle masks are reset with all online CPUs marked idle, but
-> > idle state tracking starts only after the scheduler is fully enabled.
-> > As a result, ops.init() can observe busy CPUs as idle, and those CPUs
-> > remain incorrectly advertised until their next idle transition.
-> > 
-> > Enable built-in idle tracking before ops.init() and refresh every online
-> > CPU under its rq lock. Once a CPU is refreshed, later transitions keep
-> > its state accurate. Keep ops.update_idle() notifications disabled until
-> > the scheduler is fully enabled.
-> 
-> While a sched is being loaded, bypass mode is on and when we get out of
-> bypass mode, we set RENOTIFY and trigger kick each CPU, which, if the CPU
-> has been or is entering idle, triggers ops.update_idle(). So, BPF
-> implemented idle tracking gets the actual idle state update when bypass goes
-> off, which makes sense. Would the problem you were seeing go away if we just
-> clear all idle bits on load instead of setting them? The lifting of bypass
-> mode at the end should set idle bits for all actually idle CPUs.
+Moreover, the allowed_cpus selftest checks that a remotely selected CPU is no
+longer present in the idle mask. An idle-to-idle re-pick can re-advertise the
+CPU before the test performs this check, making the validation inherently racy.
 
-Yes, I think clearing the masks should be sufficient: it makes the initial state
-conservative, so ops.init() sees no idle CPUs instead of potentially seeing busy
-CPUs as idle.
+Fix this by initializing the built-in idle masks empty. This makes the initial
+state conservative, so busy CPUs are never incorrectly advertised as idle. Once
+the scheduler is enabled and bypass is lifted, the existing idle re-notification
+path reschedules every online CPU. Idle-to-idle re-picks then populate the masks
+with CPUs that are actually idle.
 
-Once __scx_enabled is set, exiting bypass arms the idle re-notification and
-reschedules every online CPU, an idle-to-idle re-pick then updates the built-in
-mask as well and triggers ops.update_idle(). Busy CPUs remain clear. The mask is
-temporarily incomplete, including during ops.init(), but that should be safe and
-it will quickly converge to the actual idle state. So everything should work.
-I'll send a new version with this logic.
+Also rework the allowed_cpus kselftest to replace the racy remote-CPU check with
+a stable local invariant: a CPU running a non-idle scheduling context must not
+be advertised as idle.
 
-Thanks,
--Andrea
+Changes in v4:
+ - Initialize the built-in idle masks empty instead of enabling idle tracking
+   before ops.init() and refreshing every CPU under its rq lock (Tejun Heo)
+ - Rely on the existing bypass idle re-notification path to populate the masks
+   with CPUs that are actually idle
+ - Link to v3: https://lore.kernel.org/all/20260731182406.3166853-1-arighi@nvidia.com/
+
+Changes in v3:
+ - Reuse the built-in idle-selection static key instead of introducing a
+   dedicated idle-tracking key (Kuba Piecuch)
+ - Check the local CPU-idle invariant from both ops.select_cpu() and
+   ops.enqueue() (Kuba Piecuch)
+ - Inspect the idle mask without modifying it and perform the check before
+   calling scx_bpf_select_cpu_and() (Kuba Piecuch)
+ - Link to v2: https://lore.kernel.org/all/20260731090334.2911948-1-arighi@nvidia.com/
+
+Changes in v2:
+ - Move idle-mask initialization from the selftest into the sched_ext
+   core (Kuba Piecuch)
+ - Add a dedicated idle-tracking static key so transitions are tracked
+   before the scheduler is fully enabled (Kuba Piecuch)
+ - Rework the allowed_cpus selftest to validate the stable local CPU-idle
+   invariant
+ - Link to v1: https://lore.kernel.org/all/20260726064754.378671-1-arighi@nvidia.com/
+
+Andrea Righi (2):
+      sched_ext: Initialize idle masks as busy
+      selftests/sched_ext: Make allowed_cpus idle validation race-free
+
+ kernel/sched/ext/idle.c                            | 16 +++----
+ .../testing/selftests/sched_ext/allowed_cpus.bpf.c | 49 ++++++++++++++++++----
+ 2 files changed, 50 insertions(+), 15 deletions(-)
