@@ -1,45 +1,54 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6333D47DD;
-	Sun,  2 Aug 2026 21:54:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFC41FBE90;
+	Mon,  3 Aug 2026 00:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785707701; cv=none; b=tYnr8dQ/xoDSU3RVF5BlczdnQEN8P1L/Jx+QdjdeEktCZhgXSGl9H2pdfc7RRVk2EOfLynuanEqTEcBnNoRdsixk/xaqjpUIXTrTVFgKpsLOrRVpfEpziy5BkLK5bvzJ2kK2vCVv81/EKQyzEpPSeVC3m7YRIgpExFor4iebRaI=
+	t=1785716314; cv=none; b=ptPPmVjPB6v+LbSYy/hSsMNXI+F7jLDhELxmm2b2TYclwbcgfnhqZ8LsVm7Jtv4vup2UM2pai4viBG2Gj80y7Ji6JbJQtqzApfmQK+5HRBK4qqz6NgbPa+6YmGcF3PY1WYT05cVv3hzD5KrvTQzbku8zfw6Tr6JGjMbwoNr8W4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785707701; c=relaxed/simple;
-	bh=TeoscqiEz8JVJpSa4nR94NKrPfkTPqbGoplCxYG6Nso=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QoxsXI/kYV/a6iFWqJqe42BiQnQt2I15CTdjw/xlyvim2vmiL+Y8s4Q5hswVUCga+ljIcP+gPwFRMlgApT3kqYWB85YQrPA+9Gko2U2vN81cgIHYA1ZujaBKueeTgo/XWtrYd/5DWc0hwPROOrOxyjcIEMZuAtECh2o94uNCIX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W3ehN6yj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785716314; c=relaxed/simple;
+	bh=4G4qkqcfZJqsxDoMwOpwGSK3L4CO0VbzmkKKK274Dko=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Wd/77fKCMzSgHRFGwHnmGTT7vKxfL7Mv0nvQaZrhIkSPX+Tnr58ubA2kddUb3LOrR61bFvb5D1wt36Uw+/MME39gN+YMzpImZdD0+6RfnewK5c4aO2H5hhCbR3wYKKHDMPsrJUXCLzP9VVPob/7hJm2hGI/opEvLMyT+mtU6f28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=rBhbQh9U; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W3ehN6yj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E601F000E9;
-	Sun,  2 Aug 2026 21:54:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785707699;
-	bh=QWYhbq3PJyYFV1vCBs4nyeDZDCkIQFisJOZjHNnJGU8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W3ehN6yjdFMuxxn9JWet7xKmr6n1No5V5IO98dUI5WZ4lZa4YGigXaOK2OHVYW18a
-	 488KmWNmGybT8+SMRMP8Dduv2aX4VDRiZY171odzTYp7NWm++Vi9A0tI7Swhz2UssK
-	 4olxyowj9LAU00/0AgBJ426GpEuqPqJR6cqrcxY3byYzRkIVHE0vufZ1TZN+6qsd1B
-	 X6Kk7ejjqP9pAjzU/dIKXab2EBjMJj303p0xm002TRq1eRgcY17gor1ptch7T7godt
-	 oSxTglnYgGxekqO/HhEL6G7OMSsyfyDxw5YuYeB6fjGCM93WzwApbfVcyq1efH3z4u
-	 kMZp6uaCoH3pQ==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="rBhbQh9U"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Reply-To; bh=NtvZNxuGXBE6cCwIJ9jXeZKQzir6kUFrZef6tlTlq3Y=; b=
+	rBhbQh9UcM8s+a3xoAtdYgcjrFfPejWVAP02zixW4ane1I+KWzZ1dc6wyz/G8RWUE0AkJpiQxcttp
+	+qjuf6fQLE5qz93AHAGPb/3DVUnA72hPqGazbnRNA0tcGhZnswBLyMqTDVXivYmkanJxr9lVFFmaQ
+	YaZ7DrTe27LEs6LFzHb1HwHkpX3f69xyAx+JFQBO8UBT4M6CxgDq8NR5wlp8vY0IF00OQV05Ri3Mq
+	9Vifvi/Q3EK1xsLGeRkWE6AicAK0F3F5sdKNhgtsvUS56OqnyB5jiWisS3eUdA+8P1bL0n249FM5z
+	v6Sb/9xeHYE3OreRvZ3aHw6nJcbC39itfw==;
+Received: from [58.29.145.179] (helo=localhost)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wqgNj-00CkKO-F9; Mon, 03 Aug 2026 02:18:16 +0200
+From: Changwoo Min <changwoo@igalia.com>
+To: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	bpf@vger.kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 12/12] sched_ext: scx_qmap - Add rescue support
-Date: Sun,  2 Aug 2026 11:54:47 -1000
-Message-ID: <20260802215447.3134509-13-tj@kernel.org>
+	changwoo@igalia.com,
+	kernel-dev@igalia.com
+Subject: [PATCH] selftests/bpf: Remove duplicate copies of the arena spinlock qnodes
+Date: Mon,  3 Aug 2026 09:18:07 +0900
+Message-ID: <20260803001807.646357-1-changwoo@igalia.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260802215447.3134509-1-tj@kernel.org>
-References: <20260802215447.3134509-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -48,291 +57,87 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A sched holds only the cids its parent granted and nothing guarantees that
-they cover its tasks' affinities. A task that can run on none of them has
-nowhere to go and qmap stalls out: it force-inserts the task onto its first
-allowed cid, but the kernel bounces the insert back and the task parks in
-SHARED_DSQ, which is drained only on self cids it can't run on.
+bpf_arena_spin_lock.h defines its 64KB qnodes array in the header, so
+every translation unit including it emits a copy. __weak makes them all
+resolve to one instance, but bpftool gen object merges only the symbols
+and concatenates each input's .addr_space.1 bytes, leaving the surplus
+copies unreferenced in the linked object.
 
-Set SCX_ENQ_RESCUE on these inserts so the kernel diverts such tasks to its
-rescue path instead of bouncing them. The force-insert covers scheds with
-and without children and fires on re-enqueues, and the SHARED_DSQ scan on
-every dispatch rescues tasks stranded there - the enqueue-time check misses
-a task whose cids were lost while it was already queued. The wrong-cid fault
-injection carries the flag too and doubles as a deterministic rescue-traffic
-generator.
+libarena links ten such units, so nine copies were dead weight (bytes):
 
--B and -q set the root-only rescue bandwidth and quantum ops knobs. -B 0
-maps to SCX_RESCUE_DISABLE and turns rescue off kernel-side. Rescue inserts
-are counted and reported in the hier stats line.
+  object                             before       after
+  -----------------------------------------------------
+  .addr_space.1 in libarena.bpf.o    676200       86376
+  libarena.skel.h                   2100123      892371
+  libarena_asan.skel.h              2641124     1466477
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Declare qnodes in the header and let each program define it once:
+libarena in src/common.bpf.c, and the arena_spin_lock test beside the
+lock it guards.
+
+Tested with test_progs -t arena_spin_lock and -t libarena.
+
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 85 +++++++++++++++++++++++-----------
- tools/sched_ext/scx_qmap.c     | 23 +++++++--
- tools/sched_ext/scx_qmap.h     |  1 +
- 3 files changed, 79 insertions(+), 30 deletions(-)
+ .../selftests/bpf/libarena/include/bpf_arena_spin_lock.h   | 7 +------
+ tools/testing/selftests/bpf/libarena/src/common.bpf.c      | 7 +++++++
+ tools/testing/selftests/bpf/progs/arena_spin_lock.c        | 7 +++++++
+ 3 files changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 87612fa7e00d..dd0434437835 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -448,31 +448,33 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	taskc->core_sched_seq = qa.core_sched_tail_seqs[idx]++;
+diff --git a/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h b/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
+index ae6b72d15bb6..71d9db610263 100644
+--- a/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
++++ b/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
+@@ -103,12 +103,7 @@ struct arena_qnode {
+ #define _Q_LOCKED_VAL		(1U << _Q_LOCKED_OFFSET)
+ #define _Q_PENDING_VAL		(1U << _Q_PENDING_OFFSET)
  
- 	/*
--	 * A node with children delegates most cids. A task of ours that can run
--	 * on none of our self cids (e.g. a per-NUMA kthread pinned to delegated
--	 * cids) would starve in SHARED/FIFO since we never pull those on a
--	 * delegated cid. Force it onto its first allowed cid's local DSQ with
--	 * needs_immed(): if we hold access there it runs, else the kernel
--	 * rejects and bounces it back via REENQ_CAP. Best-effort
--	 * anti-starvation nudge.
-+	 * A task of ours that can run on none of our self cids - the parent
-+	 * didn't grant them or we delegated them to children - would starve in
-+	 * SHARED/FIFO since we only pull from those on self cids.
-+	 *
-+	 * Force it onto its first allowed cid's local DSQ. If we hold that cid
-+	 * it runs. Otherwise the insert carries SCX_ENQ_RESCUE and the kernel
-+	 * diverts the task to its rescue path.
- 	 */
--	if (qa.nr_sub_scheds && !(enq_flags & SCX_ENQ_REENQ) &&
--	    !cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
-+	if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
- 		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
+-/*
+- * The qnodes are marked __weak so we can define them in the header
+- * while still ensuring all compilation units use the same struct
+- * instance.
+- */
+-struct arena_qnode __weak __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
++extern struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
  
- 		if (c >= 0 && c < scx_bpf_nr_cids()) {
- 			taskc->force_local = false;
-+			__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
- 			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | c, slice_ns,
--					   enq_flags | needs_immed(c));
-+					   enq_flags | needs_immed(c) | SCX_ENQ_RESCUE);
- 			return;
- 		}
- 	}
- 
- 	/*
- 	 * Fault injection: deliberately dispatch one of our own tasks to a cid
--	 * we don't hold. The kernel cap check must reject it and re-enqueue
--	 * with SCX_TASK_REENQ_CAP, so nr_inject_attempts tracks nr_reenq_cap
--	 * and proves delivery-time enforcement. Throttled.
-+	 * we don't hold. The inserts carry SCX_ENQ_RESCUE and divert to the
-+	 * kernel rescue path, a deterministic rescue-traffic generator. Under
-+	 * -B 0 the kernel cap check rejects and re-enqueues them instead, so
-+	 * nr_inject_attempts tracks nr_reenq_cap 1:1 and proves delivery-time
-+	 * enforcement. Throttled.
- 	 */
- 	if (qa.inject_mode == QMAP_INJ_WRONG_CID && p->nr_cpus_allowed > 1 &&
- 	    !(enq_flags & SCX_ENQ_REENQ)) {
-@@ -483,8 +485,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 
- 			if (bad >= 0 && cmask_test(bad, &taskc->cpus_allowed)) {
- 				__sync_fetch_and_add(&qa.nr_inject_attempts, 1);
--				scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | bad,
--						   slice_ns, enq_flags);
-+				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
-+				scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | bad, slice_ns,
-+						   enq_flags | SCX_ENQ_RESCUE);
- 				return;
- 			}
- 		}
-@@ -587,29 +590,47 @@ static void update_core_sched_head_seq(struct task_struct *p)
- }
- 
- /*
-+ * One pass over SHARED_DSQ: rescue stranded tasks and boost highpri ones. A
-+ * task whose cids were lost while it was queued in the fifos would strand on
-+ * SHARED_DSQ, which is consumed only on self cids it can't run on - move it to
-+ * the kernel rescue path. One whose cids were lost after the highpri cull is
-+ * likewise rescued out of HIGHPRI_DSQ below.
-+ *
-  * To demonstrate the use of scx_bpf_dsq_move(), implement silly selective
-- * priority boosting mechanism by scanning SHARED_DSQ looking for highpri tasks,
-- * moving them to HIGHPRI_DSQ and then consuming them first. This makes minor
-- * difference only when dsp_batch is larger than 1.
-+ * priority boosting mechanism by moving highpri tasks to HIGHPRI_DSQ and then
-+ * consuming them first. This makes minor difference only when dsp_batch is
-+ * larger than 1.
-  *
-  * scx_bpf_dsq_move[_vtime]() are allowed both from ops.dispatch() and
-  * non-rq-lock holding BPF programs. As demonstration, this function is called
-  * from qmap_dispatch() and monitor_timerfn().
-  */
--static bool dispatch_highpri(bool from_timer)
-+static bool scan_shared_dsq(bool from_timer)
+ static inline u32 encode_tail(int cpu, int idx)
  {
- 	struct task_struct *p;
- 	s32 this_cid = scx_bpf_this_cid();
- 	u32 nr_cids = scx_bpf_nr_cids();
+diff --git a/tools/testing/selftests/bpf/libarena/src/common.bpf.c b/tools/testing/selftests/bpf/libarena/src/common.bpf.c
+index 50be57213dfb..06481f2a2892 100644
+--- a/tools/testing/selftests/bpf/libarena/src/common.bpf.c
++++ b/tools/testing/selftests/bpf/libarena/src/common.bpf.c
+@@ -8,6 +8,13 @@ const volatile u32 zero = 0;
  
--	/* scan SHARED_DSQ and move highpri tasks to HIGHPRI_DSQ */
-+	/* rescue strands and move highpri tasks to HIGHPRI_DSQ */
- 	bpf_for_each(scx_dsq, p, SHARED_DSQ, 0) {
- 		static u64 highpri_seq;
- 		task_ctx_t *taskc;
-+		s32 c;
+ struct buddy __arena buddy;
  
- 		if (!(taskc = lookup_task_ctx(p)))
- 			return false;
- 
-+		/* stranded? rescue - it can't be dispatched here either way */
-+		if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
-+			c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-+			if (c >= 0 && c < scx_bpf_nr_cids()) {
-+				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
-+				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
-+						 needs_immed(c) | SCX_ENQ_RESCUE);
-+			}
-+			continue;
-+		}
++/*
++ * Storage for the queue nodes declared by bpf_arena_spin_lock.h. Each program
++ * linking the arena spinlock provides exactly one definition, so that the array
++ * is emitted once rather than once per translation unit.
++ */
++struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
 +
- 		if (taskc->highpri) {
- 			/* exercise the set_*() and vtime interface too */
- 			scx_bpf_dsq_move_set_slice(BPF_FOR_EACH_ITER, slice_ns * 2);
-@@ -639,8 +660,17 @@ static bool dispatch_highpri(bool from_timer)
- 			cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
- 						      &qa.self_cids.mask,
- 						      this_cid + 1);
--		if (cid >= nr_cids)
-+		if (cid >= nr_cids) {
-+			/* stranded after the cull - rescue it from here */
-+			s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-+
-+			if (c >= 0 && c < nr_cids) {
-+				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
-+				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
-+						 needs_immed(c) | SCX_ENQ_RESCUE);
-+			}
- 			continue;
-+		}
- 
- 		if (scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | cid,
- 				     SCX_ENQ_PREEMPT | needs_immed(cid))) {
-@@ -669,10 +699,9 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
- 	struct cpu_ctx __arena *cpuc;
- 	task_ctx_t *taskc;
- 	u32 batch = dsp_batch ?: 1;
--	s32 owner;
--	s32 i;
-+	s32 owner, i;
- 
--	if (dispatch_highpri(false))
-+	if (scan_shared_dsq(false))
- 		return;
- 
- 	/*
-@@ -784,11 +813,10 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
- 			 */
- 			if (!cmask_test(cid, &taskc->cpus_allowed))
- 				scx_bpf_kick_cid(scx_bpf_task_cid(p), 0);
--
- 			batch--;
- 			cpuc->dsp_cnt--;
- 			if (!batch || !scx_bpf_dispatch_nr_slots()) {
--				if (dispatch_highpri(false))
-+				if (scan_shared_dsq(false))
- 					return;
- 				scx_bpf_dsq_move_to_local(SHARED_DSQ, needs_immed(cid));
- 				return;
-@@ -800,6 +828,9 @@ void BPF_STRUCT_OPS(qmap_dispatch, s32 cid, struct task_struct *prev)
- 		cpuc->dsp_cnt = 0;
- 	}
- 
-+	if (scan_shared_dsq(false))
-+		return;
-+
- 	/*
- 	 * No other tasks. @prev will keep running. Update its core_sched_seq as
- 	 * if the task were enqueued and dispatched immediately.
-@@ -1184,7 +1215,7 @@ static void dump_shared_dsq(void)
- static int monitor_timerfn(void *map, int *key, struct bpf_timer *timer)
+ int arena_fls(__u64 word)
  {
- 	bpf_rcu_read_lock();
--	dispatch_highpri(true);
-+	scan_shared_dsq(true);
- 	bpf_rcu_read_unlock();
- 
- 	monitor_cpuperf();
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index c4c4cee11f8e..988b6931633e 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -72,6 +72,8 @@ const char help_fmt[] =
- "  -J MODE       Fault injection (wrong-cid: dispatch to a cid not held,\n"
- "                init-fail/cgrp-init-fail: fail init_task/cpuctl_init for\n"
- "                \"qmfail*\" comms/cgroups)\n"
-+"  -B PPT        Rescue bandwidth in parts per thousand, 0 disables (root only, default 20)\n"
-+"  -q US         Rescue batch quantum in microseconds (root only, default 5000)\n"
- "  -v            Print libbpf debug messages\n"
- "  -h            Display this help and exit\n";
- 
-@@ -106,6 +108,7 @@ struct hier_prev {
- 	u64 nr_reenq_cap;
- 	u64 nr_reenq_immed;
- 	u64 nr_inject_attempts;
-+	u64 nr_rescue_dsp;
- };
- 
- /* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
-@@ -187,14 +190,16 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
- 	}
- 
- 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
--	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu\n",
-+	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu rescue=+%llu\n",
- 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
- 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
- 	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
--	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts));
-+	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
-+	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
- 	prev->nr_reenq_cap = qa->nr_reenq_cap;
- 	prev->nr_reenq_immed = qa->nr_reenq_immed;
- 	prev->nr_inject_attempts = qa->nr_inject_attempts;
-+	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
- 
- 	printf("hier   : %-4s %10s %4s %6s %8s  %s\n",
- 	       "", "cgroup", "w", "alloc", "disp/s", "cids");
-@@ -256,7 +261,8 @@ int main(int argc, char **argv)
- 	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
- 	skel->rodata->max_tasks = 16384;
- 
--	while ((opt = getopt(argc, argv, "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:vh")) != -1) {
-+	while ((opt = getopt(argc, argv,
-+			     "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:B:q:vh")) != -1) {
- 		switch (opt) {
- 		case 's':
- 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
-@@ -399,6 +405,17 @@ int main(int argc, char **argv)
- 			else
- 				inject_mode = strtoul(optarg, NULL, 0);
- 			break;
-+		case 'B': {
-+			u32 ppt = strtoul(optarg, NULL, 0);
+ 	if (!word)
+diff --git a/tools/testing/selftests/bpf/progs/arena_spin_lock.c b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
+index cf7cda79c16c..92e75ec3844c 100644
+--- a/tools/testing/selftests/bpf/progs/arena_spin_lock.c
++++ b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
+@@ -23,6 +23,13 @@ int cs_count;
+ #if defined(ENABLE_ATOMICS_TESTS) && defined(__BPF_FEATURE_ADDR_SPACE_CAST)
+ arena_spinlock_t __arena lock;
+ int test_skip = 1;
 +
-+			if (!ppt)
-+				ppt = __COMPAT_ENUM_OR_ZERO("scx_consts", "SCX_RESCUE_DISABLE");
-+			skel->struct_ops.qmap_ops->rescue_bandwidth_ppt = ppt;
-+			break;
-+		}
-+		case 'q':
-+			skel->struct_ops.qmap_ops->rescue_quantum_us = strtoul(optarg, NULL, 0);
-+			break;
- 		case 'v':
- 			verbose = true;
- 			break;
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index c42f7ef74b89..c8f602d58ca3 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -175,6 +175,7 @@ struct qmap_arena {
- 	u64 nr_reenq_cap;		/* SCX_TASK_REENQ_CAP bounces */
- 	u64 nr_reenq_immed;		/* SCX_TASK_REENQ_IMMED bounces */
- 	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
-+	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
- 	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
- };
- 
++/*
++ * Storage for the queue nodes declared by bpf_arena_spin_lock.h. Each program
++ * linking the arena spinlock provides exactly one definition; libarena's lives
++ * in libarena/src/common.bpf.c.
++ */
++struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
+ #else
+ int test_skip = 2;
+ #endif
 -- 
 2.55.0
 
