@@ -1,45 +1,43 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4380D411A05
-	for <sched-ext@lists.linux.dev>; Fri,  7 Aug 2026 12:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017637DAC2;
+	Fri,  7 Aug 2026 21:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786107475; cv=none; b=h4l0EF3zJu21nq0OJ0WG8rAAyqC/Fw8ZHlwRGoRVLjyatFu2fWjhMpBrQBLbO+F4OltEToAcGRUH8niyje9ZBDwj0Mp9tRJ3zVbvyI+AhVHSSSiNRYiw9RJNUs8d2wF1XfhsEC+oB2Sofi3dp73rDHOOUIv5TSrsNkfTA+lKyjA=
+	t=1786136544; cv=none; b=gC+8NQuZPIGsxHluHs22MkKhYVoOtLQ/NAynQGnaDd4Shk4DFESntDofrZ0mV14VBcTZI+206DIMDtsDkzYa8rFOcisr42GHElqAtHBwC940Ex7xCZTrNE5LXI9C0JSqEzxKfW8KLVoBMBEap0pQaHpZKueGi+8CrR67G2Ob0tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786107475; c=relaxed/simple;
-	bh=Y9/aekxWQuoAMUmR6BdZp3iMVUakfDh7O5ktnd+DwPs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=mRHbq692xyKs5RU5rLK1ylE246JgjmWYw7v6OHmM/tBqdG6cfKcrKT3cYbADJGTvYnUoM5IsRk9Xe+Opl4TfVE9RTrWk9wOzSoqiPjTZube1afDz4b/ZdYRkOnypFgSS6YoY3VOsSJah5DMcM56ukiuTCBVfkaxW9iGYDrB+rTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=YpXNasDB; arc=none smtp.client-ip=220.197.31.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1786136544; c=relaxed/simple;
+	bh=T0vYDodMThkSWZL1vSofZVUWtXP1YmxfOnY6IjkaQvA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HzUnopUO7Fqr6U0GJtt0UfzzehNagnszKEYkbOK5qIqBzsaBeV8ow9Iidqo3Tx4r272eFJKtdncmOwR+ZllPOkN4OVfV7HIOEDxuM0SgaG9KhatFzr9eV0QIMiTJB8IZw1c1ylWEXs+lV+wbpb9g3r1nkK3n+uIvIIEpzhGbRY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HHAahZaA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="YpXNasDB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=4Y
-	cHFwfxuPptEHniUxgvrZUbdZPNkJGiJoN2Tgxz3Bk=; b=YpXNasDBGwg7DiErIY
-	IyE7rkHbG8U0VJEo2r1O1/lgO1gtdap9FKtdzGwzswgDCi5MGtC7FnJeV/1WLFM7
-	spwBXuicnGjwsa4oV4aS0PHmw/D88CzNBlYWe6nKAsn/PHeQAX4XgstGqqarQQko
-	GluO+eD7gAJ1SNwAtv0gOZRLg=
-Received: from cuijian-virtual-machine.localdomain (unknown [])
-	by gzsmtp2 (Coremail) with SMTP id PSgvCgCHGwAt1nVqgcHtKA--.4340S2;
-	Fri, 07 Aug 2026 20:57:18 +0800 (CST)
-From: Cui Jian <cjian720@163.com>
-To: Zhan Xusheng <zhanxusheng1024@gmail.com>
-Cc: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HHAahZaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FB41F000E9;
+	Fri,  7 Aug 2026 21:02:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786136542;
+	bh=2LwQlWWffhdkaRbn6Tk/e/3e0fOAY9QNWVpR9N/j3iw=;
+	h=From:To:Cc:Subject:Date;
+	b=HHAahZaAAP5rphsLlhdqE9wowOkumiLAsWsH9jk5zGv1BXgOmI68u/vVCcpuO6q9c
+	 vUnocPiwe4p/73mPhszWyOXmvlDFo6qfRQ4b071Ln9fSCdbH4mVwzIgLDiUArAZAlp
+	 n42l4gSUHntgfp1LSmT7Mu4kUG/0Yiz5YUjO0dqERB3wKNql9sHGVO1s2NWUhGRWl3
+	 NaJoWeAVCo5G9pF5D9XySITe0kjuyoCDokIlGk1d+nkTdvmUzESh6ragPra+Kq66XT
+	 IgXD4jrmcXATKkG5jhdj3eKLPz4eZr1ttTUGjsnRgOOQVhYaIujck624QifFdO3ywq
+	 +k5OmWAiY+K+Q==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Cui Jian <cjian720@163.com>
-Subject: [PATCH] sched_ext: Add NULL check in find_parent_sched()
-Date: Fri,  7 Aug 2026 20:57:16 +0800
-Message-Id: <20260807125716.56531-1-cjian720@163.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260807114534.1253158-1-zhanxusheng@xiaomi.com>
-References: <20260807114534.1253158-1-zhanxusheng@xiaomi.com>
+	sched-ext@lists.linux.dev
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	ElXreno <elxreno@gmail.com>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCHSET sched_ext/for-7.2-fixes] sched_ext: Fix core scheduling
+Date: Fri,  7 Aug 2026 11:02:15 -1000
+Message-ID: <20260807210221.232543-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,38 +45,43 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PSgvCgCHGwAt1nVqgcHtKA--.4340S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7GrykXr1xWw13JrW7Kw45ZFb_yoW3tFb_Zw
-	sxGF1UG34UCr1DKw17Cw4fXryrKFW8WF95ZF9rKFZ8JF18JrZIqrn5CF95trnxKayIvF98
-	Cr9FqF98Cwn7CjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sRibyCDUUUUU==
-X-CM-SenderInfo: pfmlt0qxsqqiywtou0bp/xtbC+A64RWp11i6GDQAA3n
 
-find_parent_sched() dereferences cgrp->scx_sched without checking
-for NULL. This is safe in practice because scx_sched is always
-set for cgroups that can reach this function, but add a defensive
-check for robustness.
+Hello,
 
-Signed-off-by: Cui Jian <cjian720@163.com>
----
- kernel/sched/ext/sub.c | 4 ++++
- 1 file changed, 4 insertions(+)
+sched_ext's core scheduling support has been broken since 4c95380701f5
+("sched/ext: Fold balance_scx() into pick_task_scx()") made dispatch run
+from inside ->pick_task(). Dispatching can release the rq lock, which lets
+core-wide selections on the same core interleave and corrupt each other's
+state - crashing on a cleared rq->core_pick or leaving a dequeued task
+running, which wedges the machine:
 
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index d7842a609d96..6395281bae71 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -1209,6 +1209,10 @@ static struct scx_sched *find_parent_sched(struct cgroup *cgrp)
- 
- 	lockdep_assert_held(&scx_sched_lock);
- 
-+	/* no SCX sched */
-+	if (!parent)
-+		return ERR_PTR(-ENODEV);
-+
- 	/* can't attach twice to the same cgroup */
- 	if (parent->cgrp == cgrp)
- 		return ERR_PTR(-EBUSY);
+  https://github.com/sched-ext/scx/issues/3715
+
+The main fix (0006) makes the core-sched pick return RETRY_TASK whenever
+its dispatch released the rq lock, so that a selection only ever commits
+picks made under a continuously held lock. The preceding patches update
+the core-sched pick to handle lock-dropping picks (0001-0002) and fix
+adjacent breakages from the same fold that core scheduling support needs
+(0003-0005).
+
+ 0001-sched-core-Handle-pick_task-releasing-the-rq-lock.patch
+ 0002-sched-core-Make-core-sched-flips-wait-for-in-flight-.patch
+ 0003-sched_ext-Replace-SCX_RQ_BAL_KEEP-with-a-dispatch-ve.patch
+ 0004-sched_ext-Fix-this_rq-assumptions-in-dispatch-kfuncs.patch
+ 0005-sched_ext-Count-rq-lock-releases-in-rq-scx.lock_drop.patch
+ 0006-sched_ext-Fix-rq-core_pick-corruption-under-core-sch.patch
+
+Based on sched_ext/for-7.2-fixes (d4a00d61a5c2). The patchset is also
+available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git coresched-fixes
+
+diffstat follows.
+
+ kernel/sched/core.c    |  49 ++++++--
+ kernel/sched/ext/ext.c | 302 +++++++++++++++++++++++++++++++++++--------------
+ kernel/sched/sched.h   |   5 +-
+ 3 files changed, 265 insertions(+), 91 deletions(-)
+
 -- 
-2.34.1
-
+tejun
