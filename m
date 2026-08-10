@@ -1,137 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57F5379C48
-	for <sched-ext@lists.linux.dev>; Fri,  7 Aug 2026 21:26:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8BB3644B3;
+	Mon, 10 Aug 2026 11:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786138010; cv=none; b=YlgPCWIlDlaqytaFD7TULL1xhAPn89R2doV70s9K1udOuXP9tdQN9tdYFDqFagQaJyi2TLu3mM0FA81m/2plwbvo0lwJV4lwXikjun2EHlwfnHm/YbbzvCWuLRRGmRer0Y7ooC9Jba8xwai4hxpzd30SjzGjKaOL4G+BmkfUZqA=
+	t=1786359627; cv=none; b=tiKXksNRx2UrqHSVXhChRQAgxy1qfqMp5BNq9tieF6kq6cjOnjz8OQUtNc03nmr8lbQemICgpBeF3BSucmC1a2uoPXuiM5mSPvkNnrVhBwXg3zih5i91XOzImliQWlnDGaq2NRhArP6mx7/wZwOjS7YHZhm4FrFqd1faIlS3fq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786138010; c=relaxed/simple;
-	bh=/eE6KoBjG4zjvQ0gXWYFEr3Fq1nxxX3RZDh1rW5jwCI=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ZLO+vLJ31nv0+xiqGxbM5VVp625H/fxTgb2AGhJXlDk8Xlcfr+aZlpGytVUNly5kPUvf9Nrb/uaJ5ImILV/v7mfrf6L5TMaLsFBOLcmVwgIIlJY4jVU+wt0MoWYehM9SQ8q4SPixW2IGYnzk0eMxtpoA0SXK+UL/4smXtOaDR6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qp9tKQQF; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786359627; c=relaxed/simple;
+	bh=Brz+WD8hrSSKGhX4ROvk13PtJi9YRL44b1YF9vPw5Tw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=azXYTspEYNKPAG+jjmvYHUDj1Cmt/V6v3SIwNhtoKF9ZHm3RZzMK/fw0DF3BH9uEd2ODjgdHs8zIa8+F2W4SveNUD0YU3eIi2VSRFWj3EkzRP/LkeIZ8L8dn7OqDxF8AlH3/Tvazuzz19hDphehgMCmx6+nvbMnYk7vBa2sqmKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=YLgpLAR3; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qp9tKQQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D811F000E9;
-	Fri,  7 Aug 2026 21:26:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786138009;
-	bh=EBuTyWjh7gvdmR/eF01AMau+hfJvINkhF1aoikQcMT8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Qp9tKQQFaLpZrOjwnM+HJV5J/FtrycN3Ha29HkrTLb4Gc4Oa+KDCOLC0liJ6MyYfy
-	 8nUDMvirgA+aGDOTjr+EDHDBAiy+J6bii+TJdrQd4MuEhwxU441HCiU5JcWT/amr4X
-	 ly2rtLRsKFj4ExN4VmTtzCQ25zZCRQSL2+dgbOWUTFAdP0MOPB+LwMnKBwNRZ8M0aA
-	 nUuWcOaY36EJc3UyzUaIQwKSVpwhOUoYNPzh8I0k2W9M3cYjmvcnmDpI1BI3p1MPCe
-	 7bn9GQctfqG2U52v7XyRMILIYBmJBVTzpjb0GJrm1kzP3syjd+1c8pBnxl9BQjmx2j
-	 yWBSRqtzsw4jw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/6] sched/core: Handle pick_task() releasing the rq
- lock
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tejun Heo" <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260807210221.232543-2-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="YLgpLAR3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=2blWNErbolu0mwOLr8kBfLG6M2VVhHB5f7lUthlHo2Y=; b=YLgpLAR3frCMZjhmljpKri38vy
+	TXvipJL8/AxVZE2a3tLsokZ1PqQackREZEdQ2q4/FP77L2TK3oawA5aq2Am5wkXLseGWa0xcE3gRY
+	cELX83nvJk+FAM8vtHrWLeoyoJn9HHbUhe7dPhnPa9jVI5/Gd/xMVyV/trtx2beUQuzVduosEGex6
+	MZLFAoqlmF1GIgrLJfihILHFpL5tMeRSfwaWAPCqDsafZZF6NwRG9UsNDLq2pK9TS1O74L2Hvl2Q8
+	WVjSDQRK9FlaMHXnGJkofhnqDZuZsxVOr5VixypN/fMPhubN80igrMXc4qICc31KdCBC+cApfsASA
+	TgU2tCXw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
+	id 1wtNju-0000000Ditp-0uvU;
+	Mon, 10 Aug 2026 11:00:18 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id D2D1D30019A; Mon, 10 Aug 2026 13:00:16 +0200 (CEST)
+Date: Mon, 10 Aug 2026 13:00:16 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>, ElXreno <elxreno@gmail.com>,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/6] sched/core: Handle pick_task() releasing the rq lock
+Message-ID: <20260810110016.GU687043@noisy.programming.kicks-ass.net>
 References: <20260807210221.232543-1-tj@kernel.org>
  <20260807210221.232543-2-tj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 07 Aug 2026 21:26:47 +0000
-Message-Id: <20260807212648.A6D811F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260807210221.232543-2-tj@kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Stale runqueue clock and WARN_DOUBLE_CLOCK splats upon pick_task()=
- retry
---
+On Fri, Aug 07, 2026 at 11:02:16AM -1000, Tejun Heo wrote:
+> Core scheduling's pick_next_task() breaks when a ->pick_task()
+> implementation can release the rq lock. The selection state derived on entry
+> is only valid while the lock is held continuously. Once a pick can drop the
+> lock, an interleaving selection can invalidate all of it: the single-CPU
+> fast path can commit an uncookied pick although the core went cookied during
+> the release, and forceidle committed by the interleaving selection skews the
+> restarted pass's accounting.
+> 
+> Fix it by restarting the whole selection when a pick returns RETRY_TASK
+> after releasing the lock: a single restart point above the state derivation
+> replaces the per-loop restart labels, so a retry picks up state committed by
+> interleaving selections and accounts and resets forceidle like a fresh
+> selection would.
+> 
+> need_sync and fi_before latch across retries. Clock validity can't be
+> re-derived - there is no program-ordered way to tell whether the own and
+> core rq clocks are still updated after the lock was released, as other
+> lockers' pin cycles may or may not have invalidated them. When restarting,
+> clear core_clock_updated so that the sibling loop re-updates the core rq,
+> and update the own rq clock if invalidated.
+> 
+> Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
+> Cc: stable@vger.kernel.org # v6.19+
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
---- Patch [1]: [PATCH 1/6] sched/core: Handle pick_task() releasing the rq =
-lock ---
-commit e3861f6642d2aed51cd1900fde0081c42124a072
-Author: Tejun Heo <tj@kernel.org>
+Ah, yes indeed.
 
-sched/core: Handle pick_task() releasing the rq lock
-
-Core scheduling's pick_next_task() breaks when a ->pick_task() implementati=
-on
-can release the rq lock. This patch handles this by restarting the whole
-selection when a pick returns RETRY_TASK after releasing the lock.
-
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index 96226707c2f61..136246846e792 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-[ ... ]
-> @@ -6301,10 +6303,15 @@ pick_next_task(struct rq *rq, struct rq_flags *rf)
->  	 * and there are no cookied tasks running on siblings.
->  	 */
->  	if (!need_sync) {
->  		next =3D pick_task(rq, rf);
-> -		if (unlikely(next =3D=3D RETRY_TASK))
-> -			goto restart_single;
-> +		if (unlikely(next =3D=3D RETRY_TASK)) {
-> +			/* rq lock may have been dropped, clocks invalidated */
-> +			core_clock_updated =3D false;
-> +			if (!(rq->clock_update_flags & RQCF_UPDATED))
-> +				update_rq_clock(rq);
-
-[Severity: High]
-Does this bypass the clock update entirely? When pick_task() drops the lock
-and repins it, the rq->clock_update_flags are preserved and restored. This
-means RQCF_UPDATED would still be set, making this condition false and leav=
-ing
-the runqueue clock stale despite the lock having been dropped.
-
-> +			goto restart;
-> +		}
-> +
->  		if (!next->core_cookie) {
->  			rq->core_pick =3D NULL;
->  			rq->core_dl_server =3D NULL;
-> @@ -6324,7 +6331,6 @@ pick_next_task(struct rq *rq, struct rq_flags *rf)
->  	 *
->  	 * Tie-break prio towards the current CPU
->  	 */
->  	max =3D NULL;
->  	for_each_cpu_wrap(i, smt_mask, cpu) {
->  		rq_i =3D cpu_rq(i);
-> @@ -6338,8 +6344,13 @@ pick_next_task(struct rq *rq, struct rq_flags *rf)
->  			update_rq_clock(rq_i);
-
-[Severity: High]
-Will this trigger a WARN_DOUBLE_CLOCK splat for sibling runqueues if the
-loop is restarted?=20
-
-If a previous pass updated the clock for rq_i, the RQCF_UPDATED flag is set.
-When we hit goto restart, we loop again and call update_rq_clock(rq_i)
-unconditionally without clearing the flag first.
-
-> =20
->  		p =3D pick_task(rq_i, rf);
-> -		if (unlikely(p =3D=3D RETRY_TASK))
-> -			goto restart_multi;
-> +		if (unlikely(p =3D=3D RETRY_TASK)) {
-> +			/* rq lock may have been dropped, clocks invalidated */
-> +			core_clock_updated =3D false;
-> +			if (!(rq->clock_update_flags & RQCF_UPDATED))
-> +				update_rq_clock(rq);
-
-[Severity: High]
-Similarly, does this bypass the clock update on the local runqueue because
-RQCF_UPDATED is still set after restoring the pin context?
-
-> +			goto restart;
-> +		}
-> =20
->  		rq_i->core_pick =3D p;
->  		rq_i->core_dl_server =3D rq_i->dl_server;
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260807210221.2325=
-43-1-tj@kernel.org?part=3D1
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
