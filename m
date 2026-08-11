@@ -1,84 +1,144 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com [209.85.218.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A768434F27B
-	for <sched-ext@lists.linux.dev>; Tue, 11 Aug 2026 10:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A345B43CE69
+	for <sched-ext@lists.linux.dev>; Tue, 11 Aug 2026 14:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786444313; cv=none; b=QuXzEUehSuOPddxyYACYSyXPxFCdep6dMRDCDjSA6xCXkRram9fdq1eaj9jpVm+L2mDGeUJHsIEdSodLvQI3cMuLTyDt21qa2cXfDGGtONWiCB4BM/1CP9H32TDl1mNbY7hBatm4YVNsA33QvGhr/ylTtqr+gC9xMg/YZmN8MpU=
+	t=1786457645; cv=none; b=FJDepYDxKBxPewMT6tfdm2yvautF/2I7jUPgBdLKURvlWVFz1GJ3SMdxvsy3J/kYypI2uNHvVAvrlIkXEo47Z7U20PirfApYafWzY0rHrrj7Rbk8rYeR57pEG2JcC2iYJtuU8JDWK3sJLXlh832UXie1x1diGKQCvvgiiuhHqH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786444313; c=relaxed/simple;
-	bh=OVBvx9P63qbdCm81YGL65qP7CzKdU9QIj4qTvVtPTcA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=c/7B4xchpUyyT0OgzMZDj4UbBstY7B5lua9FdZbo46jHDazt08CAmGZLgM8ElE8h4aVm7InxVLmhtD2rRtwulh8hc9eL2jZ4dG6GTaeyuJTSrRnfneVEaWkHcNK8XjbAhdIY1aJdu3lHltjJ1xwpi1bZpwM6ZZfZ7d3Ylrik3nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WItRofii; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786457645; c=relaxed/simple;
+	bh=JotZ2xau8mAN2tR4U7+23HdeiUKQKBxFHUJQFHYwxwQ=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=bpn9DLprFzDOoT1hPocEkSKYPV3Q1OCjcIBrjV4AfgQWaswzsGlxp+5RhPyfWXvOih5Rws5E6e18oMNAdpvaAn9lg/FoHRE/RFYo5+pnimVhkJighKBC/cPh7pSE8hx/KSiftKZSx3hC0ZFgrGkUmeRdpz0DPfBKhFkvEZG7G4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VGcKIq3E; arc=none smtp.client-ip=209.85.218.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WItRofii"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786444306;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=t09GNjGvOxrA+ki1RYZJjqgi+sjsgwDT7vGmVGyXz6g=;
-	b=WItRofiiDb7g13CzRZC5tljY6ujgTBe+E96qvxqL6wZGUpZQ6XvAHXXHxnp0v1HNZng2rl
-	ugqSuu+1sZN6LNJWRzfb+gxVUo/fX+JtzMC1798/REKLXgZ8OLrva/3+BkVGpBopvFd0pR
-	pDbMQ/wucbUK9wYPaokO9BmA4QbJVxE=
-From: Tao Cui <cui.tao@linux.dev>
-To: tj@kernel.org
-Cc: sched-ext@lists.linux.dev,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	linux-kernel@vger.kernel.org,
-	cui.tao@linux.dev,
-	Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH] sched_ext: don't rehome a dead task in scx_cgroup_task_migrated
-Date: Tue, 11 Aug 2026 18:31:22 +0800
-Message-ID: <20260811103122.357067-1-cui.tao@linux.dev>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VGcKIq3E"
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c15fed5653eso197821366b.2
+        for <sched-ext@lists.linux.dev>; Tue, 11 Aug 2026 07:14:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786457642; x=1787062442; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=R1OJbwEkT9wgwkVybNm7HK0Xy2ztcCHJVSG06MAs0zA=;
+        b=VGcKIq3EwVTNOkDvwJmlH/SibppjkCiFPgyHK78Ebt2nwC5Y94O2IDuXDGK7n2CeDZ
+         9tO48hx1SLY2Rdr2xWXNgWQOS/Q6d3sA/PI/83KXFazegsKs6GnXh6mDeBumMsaihicR
+         HKGY5SIktzSI6syKIhpcaDRsM/clyN4HSEHKmEYdmzmPJR2Um5AquRIdCJ0IewDUVDaB
+         snpVpgwL4q850pn0csUyol8KRf2fdoei9PUTYzo/qEwJfDet67EHq2zFFk7F60077zi8
+         FfGn7J/BZod6WUGNf/jnvw/on5/2HzSWOkNgZv0w1tehw2+Fd06S/FZKhUTNUoXrZCUz
+         2X5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786457642; x=1787062442;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=R1OJbwEkT9wgwkVybNm7HK0Xy2ztcCHJVSG06MAs0zA=;
+        b=HEmgitIAorkykfaC+NQ5CltnmHz/3qT+yJwSDKj+BC5QGEvVwvG3z4FmgUFMWD0EVr
+         SnMocnq+yRhZiFGeyJtJdVfU+XF5Oc09a7K7fSO3+2LD9fK1bbDgBtF0CvIcSyFuGrPU
+         QGXPgnCW9n/dk1/K3WnPR/lRZKCtOhAVWub3NGhuxSefm0EjkW8gbOuRJLvbFXHutmp3
+         qK27M4rF8ZHJRCBHQGRzVhKzKv7C5JoCFlgwFB1OWbhR/s+u7D/PMazCI6ARGixkGuGq
+         orD13shD1wS+xMzwPhqW1stLSF5yAxWiuPqnK6puAQuWYKuDUk9UMryuZwIzSEyKF+X1
+         1ENA==
+X-Forwarded-Encrypted: i=1; AHgh+Ro7BKLWgjfz07FF8UfplkwBxR9h+rdjb+JkZsbrnlwu27Ywc9wa2e6alKrZDm5Ul4/CxMpyFpyhIN0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwPCH6ObjQFaD9aGFDeFRgpzXOp/OnFCj2gtze1qeNQOTwg8jKl
+	QyYI3dVMc4z5CIlllrpIn/ZQIvk4K2Pp9N/sevYAiAiVk6+U5I6GCfv/JIbbAArSXeHsWguVhS+
+	DYl4qLySiORUVFZM2TQ==
+X-Received: from ejed9.prod.google.com ([2002:a17:906:1749:b0:c12:718d:1964])
+ (user=michalblk job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:906:f59b:b0:c20:295d:6574 with SMTP id a640c23a62f3a-c20e605337bmr193175366b.12.1786457641579;
+ Tue, 11 Aug 2026 07:14:01 -0700 (PDT)
+Date: Tue, 11 Aug 2026 14:13:58 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.55.0.679.g6767b8d81c-goog
+Message-ID: <20260811141358.2767765-1-michalblk@google.com>
+Subject: [PATCH] selftests/sched_ext: Fix flaky ddsp failure tests on busy systems
+From: Michal Blaszczyk <michalblk@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Michal Blaszczyk <michalblk@google.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Tao Cui <cuitao@kylinos.cn>
+The ddsp_vtimelocal_fail and ddsp_bogus_dsq_fail tests skip calling
+scx_bpf_dsq_insert_vtime() if scx_bpf_pick_idle_cpu() fails to find
+an idle CPU (returns -1). On loaded systems, this results in the tests
+skipping the very assertions they are meant to verify.
 
-A task can exit between cgroup migration commit and the MIGRATED callback:
-sched_ext_dead() marks it SCX_TASK_DEAD before cgroup_task_dead() removes it
-from the migration list, so scx_cgroup_task_migrated() can pick up a dead
-task and call scx_rehome_task(), which re-enables it and leaks the BPF
-scheduler's per-task resources. The other scx_rehome_task() callers already
-check for this; do the same here.
+Eliminate this flakiness by falling back to prev_cpu if no idle CPU is
+found, ensuring the illegal dispatch operations are unconditionally
+attempted and tested.
 
-Fixes: bf9dee58ab56 ("sched_ext: Re-home tasks on cgroup migration")
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Signed-off-by: Michal Blaszczyk <michalblk@google.com>
 ---
- kernel/sched/ext/sub.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../sched_ext/ddsp_bogus_dsq_fail.bpf.c       | 20 +++++++++----------
+ .../sched_ext/ddsp_vtimelocal_fail.bpf.c      | 13 ++++++------
+ 2 files changed, 15 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index b81254be1b04..8f8d21b85abe 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -2083,6 +2083,13 @@ static void scx_cgroup_task_migrated(struct cgroup_task_migrate_ctx *ctx)
- 		return;
+diff --git a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+index 6f4c3f5a1c5d..7ef9de7b27eb 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+@@ -14,18 +14,16 @@ s32 BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_select_cpu, struct task_struct *p,
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
++	if (cpu < 0)
++		cpu = prev_cpu;
  
- 	rq = task_rq_lock(p, &rf);
-+
-+	if (scx_get_task_state(p) == SCX_TASK_DEAD) {
-+		/* sched_ext_dead() raced us */
-+		task_rq_unlock(rq, p, &rf);
-+		return;
-+	}
-+
- 	scx_rehome_task(to, p);
- 	task_rq_unlock(rq, p, &rf);
+-	if (cpu >= 0) {
+-		/*
+-		 * If we dispatch to a bogus DSQ that will fall back to the
+-		 * builtin global DSQ, we fail gracefully.
+-		 */
+-		scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
+-				       p->scx.dsq_vtime, 0);
+-		return cpu;
+-	}
+-
+-	return prev_cpu;
++	/*
++	 * If we dispatch to a bogus DSQ that will fall back to the
++	 * builtin global DSQ, we fail gracefully.
++	 */
++	scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
++				 p->scx.dsq_vtime, 0);
++	return cpu;
  }
+ 
+ void BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_exit, struct scx_exit_info *ei)
+diff --git a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+index e4a55027778f..82dca4cdc0a6 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+@@ -14,15 +14,14 @@ s32 BPF_STRUCT_OPS(ddsp_vtimelocal_fail_select_cpu, struct task_struct *p,
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	s32 cpu = scx_bpf_pick_idle_cpu(p->cpus_ptr, 0);
++	if (cpu < 0)
++		cpu = prev_cpu;
+ 
+-	if (cpu >= 0) {
+-		/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
+-		scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
+-					 p->scx.dsq_vtime, 0);
+-		return cpu;
+-	}
++	/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
++	scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
++				 p->scx.dsq_vtime, 0);
+ 
+-	return prev_cpu;
++	return cpu;
+ }
+ 
+ void BPF_STRUCT_OPS(ddsp_vtimelocal_fail_exit, struct scx_exit_info *ei)
 -- 
-2.43.0
+2.55.0.679.g6767b8d81c-goog
 
