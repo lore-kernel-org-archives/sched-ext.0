@@ -1,174 +1,403 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5237F30F92E
-	for <sched-ext@lists.linux.dev>; Wed, 12 Aug 2026 07:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F7647CC62;
+	Wed, 12 Aug 2026 17:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786518237; cv=none; b=Bj1BpS9l+BqgrR1/Dp6D0IUjFLl/kNR9+ywIEk+9O8+IUGnMDyvrxaFMHhTThGgsFxcDwAcXT34bqFWtccnOq09kL7GWNXlU9wCUDWVAm9O4rX0xPSvhNTBkE6sXyd+XfZfGLUu7PnCaz1s1tNfBfU1SPZphqufUp3kxIiQ08MA=
+	t=1786554405; cv=none; b=f7TpZfcNDgLgYpA9h6/DRC/3+nXkDMFvaUMi7+Ptt3YrkpLFcDsV/CdB0FDI1CMhqryeKB7JWIqRNb2XMOB9dPF9ZapxlmEt9xuWkx32JhcHTFpyCPiih9tT2Vheq+LGHvWRwrm1uLaDhTbeQhip9WDqDYC4wn0fevdL9ydeCQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786518237; c=relaxed/simple;
-	bh=GCkBXddSbeHCDvY1GzromperE2nmzYP3jL1SLw1+JJI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S29Sm6s8xiZk3dbNrEc9o5guKtbdO5PSnp4Y9ro+tZ2ysiWAFQmLlIqr8CP2uHPA2ByTuytAZQ5SGnewLirYwBjkV+I44xAbcaWHnkB7WrsklvHrRsAurYe6iwyPEENdA9b44fIoRwzuY1dO3+UE+nRwDM8zcW7d2NwColMkSL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AwIq+J9d; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1786554405; c=relaxed/simple;
+	bh=64jYg+YJid8hRVh1CynPhSBhT3TZ1X8nhDZkUyfYZSw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QF+xnHdmGfI5ivtCSPX6xY/Ijbs1BCXFe7r7rrcxO0opOfsWhoQK6iE4UGSHYlrClBAFeK+eu6qZk+sryX2imUxUnTmB/GS8tXF0c4c60P/D5hU1nzsgvyg+WlBBzffMZwpHmXC4v8YDt/CZMbQyyHnTXU8HxQV9nzNR1F1Cmqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lY6VZ7p6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AwIq+J9d"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1786518235;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GMSQFwJ3Pn8MGM6lOdOzrV1KHdix97IWR2KeUG/GEeU=;
-	b=AwIq+J9dxpqYQWpI96V9rbgJb1hxlMkzj1AcQiN5/EmSzIHw/e9412XXmI/d+xqKPYWkRj
-	3vqiQWNr0UyzcChbdaQSDAR2AIOUV5EZjfVdMZRyCww5B50bvFclPeF00ElRiiUnECmX6d
-	j14rpKS03OPNq1zt1uguIFbWWtPJLSw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-522--KlUSLrGPRSpcIda3rCd3A-1; Wed, 12 Aug 2026 03:03:51 -0400
-X-MC-Unique: -KlUSLrGPRSpcIda3rCd3A-1
-X-Mimecast-MFC-AGG-ID: -KlUSLrGPRSpcIda3rCd3A_1786518230
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4954fd771baso9045615e9.0
-        for <sched-ext@lists.linux.dev>; Wed, 12 Aug 2026 00:03:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786518230; x=1787123030;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GMSQFwJ3Pn8MGM6lOdOzrV1KHdix97IWR2KeUG/GEeU=;
-        b=etNb6ELa35OdqVwH37Qoblqq24DbZyVIwVXfnHXsRPG+ju7Y9UnN1/yfGw066lcE1z
-         OevBem8a+XXLvaUIk4GvWzBWpvxLrK2vgChu+/v3C36TVRI/vW0vE54bHeAjtb1mQeEQ
-         /TCWh4sR7805wHkbajvy/sQYUBa3+mIi8UnYduRe7gfWpr0vo3TiQxl1XwiK8D3aPrqc
-         NBcS9TwTJEIxQuFUhnWl9cqs/0EmPeUdr3mZFQrwa3Nmjmnt5vWviTDaUUJO/Xx8g9kq
-         rK3apmEia8AKMoDgY1E9KU78J5JMVaQldb02qmdXPIYe39FYygo7FQgwYY8XzYl86hMA
-         z+5w==
-X-Forwarded-Encrypted: i=1; AHgh+Roq1fntmvInRyi8ow7cnmjSUs8eIuiBy0BNlFPtkq7gV3yfyqSeeCVK4jPC5c0nmHuyX5fjvCX4qN0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6s5kkxV3sld37uevoyBasFod5Qn2lSXV/pXNuyXADUoqL3jCe
-	fQhcEYYEWS/uJeUWQLRZZ/lj+NJWneN/x5U/KmyRWbPq6c3TeVCn+QnyflwPNpL1YlfXTrEjezv
-	kqglzNJoA7IvUUIZJhKWoIRD2u1+TxTNgnpMVSzm4c9T/qi92dWSgD1s5asRP
-X-Gm-Gg: AR+sD12WfvwHBaDxzuAgauMsh5U7/xQB3aj5EjalpaMkuPD8xyIyFGlYxsTBvOcCvHf
-	vCQQSF/HlXYWPLbHEcdNvLa9oNhurlMBVmKBONderg60K4rxx3kSv/bIMGaOow2zadpN03k7Xeo
-	FJ23/K3kzQ941/H6xoexybISf2e75FyPcsqDKeOnkoHBopYuvoXNJgjPMRdENIhBPpRzUFPR409
-	fsT/Vq43uCZ5L8Qep7fV22imMsUJZ+X0u4zQlWpt03wQP4O5+vI9G7kfkbtRKlzo2ojVOm9huvv
-	ccaUCp57uZkBfKjhOKQSBZ6A72hnoTqsYwkXD54n+p6/7N9W3MeVN1XPnZ9rZm15nbDKDT5draM
-	THK2L8jycDTPBjfYnxZQTVpeNtpMPuzWS1SI=
-X-Received: by 2002:a05:600c:138b:b0:495:5d6d:9cc1 with SMTP id 5b1f17b1804b1-4997c30b80fmr29456845e9.0.1786518229782;
-        Wed, 12 Aug 2026 00:03:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:138b:b0:495:5d6d:9cc1 with SMTP id 5b1f17b1804b1-4997c30b80fmr29455945e9.0.1786518229435;
-        Wed, 12 Aug 2026 00:03:49 -0700 (PDT)
-Received: from [192.168.0.135] (185-219-167-205-static.vivo.cz. [185.219.167.205])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4997ada79a3sm46337885e9.1.2026.08.12.00.03.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Aug 2026 00:03:48 -0700 (PDT)
-Message-ID: <02ce6b65-7670-4dac-ac9c-8875867d6ad3@redhat.com>
-Date: Wed, 12 Aug 2026 09:03:47 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lY6VZ7p6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC401F000E9;
+	Wed, 12 Aug 2026 17:06:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786554400;
+	bh=ztRIyi9F5qrWMg6NnQF1dtozo2QwHBfgHy5ykIcGE9s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=lY6VZ7p6NuLoRkWSIGnQ41Mmje4Xj9bb0F1R7tVziMPxBRWZL0fkprZV2W/BlB28G
+	 0iE/1AHT+1/w11rgOtJYQC1ugFYnrnKkXCk6AyNz+pVEr5OlwANJ5Nmnkpm3KYgIPr
+	 T2f41+2d5TUSKC25Dwp+yLmd33eQ++XAJJ0ROmc9jiCCX0GZUNSpSaqG3iQGj8Xq76
+	 8Z3uawJKzpDmPG8f0YRwLsbD+eGBnD+LkivZiABN83hsmnApCeB5rhbOGPe/FwP+Oy
+	 B/6rnMvh5V+EO2af6U+uFTLJWlzw6lOET5ixsCl4WdF9XiDmLEFPgtuCSXbFjPFvUC
+	 YsFYNzqPgNbTQ==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	ElXreno <elxreno@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH v2 3/6] sched_ext: Replace SCX_RQ_BAL_KEEP with a dispatch verdict return
+Date: Wed, 12 Aug 2026 07:06:39 -1000
+Message-ID: <20260812170639.2212301-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260807210221.232543-4-tj@kernel.org>
+References: <20260807210221.232543-4-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] selftests: add shared lib.bpf.mk to build BPF
- progs and skeletons
-To: Ziyang Men <ziyang.meme@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>, Tejun Heo <tj@kernel.org>,
- Johannes Weiner <hannes@cmpxchg.org>, =?UTF-8?Q?Michal_Koutn=C3=BD?=
- <mkoutny@suse.com>, Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <bentiss@kernel.org>, David Vernet <void@manifault.com>,
- Eduard Zingerman <eddyz87@gmail.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, Michal Hocko <mhocko@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Shakeel Butt <shakeel.butt@linux.dev>, Muchun Song <muchun.song@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>, JP Kobryn
- <inwardvessel@gmail.com>, Mykola Lysenko <mykolal@meta.com>,
- Nathan Chancellor <nathan@kernel.org>, linux-kselftest@vger.kernel.org,
- cgroups@vger.kernel.org, linux-input@vger.kernel.org,
- sched-ext@lists.linux.dev, linux-mm@kvack.org, kernel-team@meta.com,
- bpf@vger.kernel.org, llvm@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20260721174833.1232771-1-ziyang.meme@gmail.com>
- <20260721174833.1232771-2-ziyang.meme@gmail.com>
- <f2a0db3b-ac66-4b29-9dff-a691d9464123@redhat.com>
- <anTlFSsr5FqQt+o8@devvm16600.scu0.facebook.com>
-From: Viktor Malik <vmalik@redhat.com>
-In-Reply-To: <anTlFSsr5FqQt+o8@devvm16600.scu0.facebook.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: v19VejohRGU8eqtEG3Tj9Sxu-Z7vTfePZuWznryuBKg_1786518230
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/6/26 21:48, Ziyang Men wrote:
-> On Wed, Jul 22, 2026 at 08:50:06AM +0200, Viktor Malik wrote:
+SCX_RQ_BAL_KEEP tells the pick to keep running the previous task, a leftover
+from when balancing and picking were separate operations. An rq-level flag
+only works while dispatches and picks pair up one to one, which core
+scheduling breaks: selections interleave through dispatch's lock drops and a
+pick can consume a stale flag, keeping a task that has since been dequeued.
+Fixing core scheduling support requires the decision to travel with the
+dispatch that made it. Make scx_dispatch_sched() and balance_one() return an
+explicit verdict instead and drop the flag's plumbing from the tools autogen
+enum headers.
 
-[...]
+Also factor the pick-side invocation, its follow-up queueing and the
+post-dispatch checks out of do_pick_task_scx() into dispatch_pick(). No
+functional changes intended.
 
-> Hi Viktor, 
-> 
-> Thanks for your suggestions!
->>
->> Looking at the same line in tools/testing/selftests/bpf/Makefile:
->>
->>            EXTRA_CFLAGS='-g $(OPT_FLAGS) $(SAN_CFLAGS) $(EXTRA_CFLAGS)' \
->>
->> is there a reason why this is not respected and -O0 and -fPIC are
->> hard-coded?
-> Yes it is true that there is no good reason. I will fix it in the next version.
-> 
->> What if someone wants to build selftests (including libbpf)
->> with -O2 and some additional flags?
-> I will add a flag such as OPT_FLAGS ?= $(if $(RELEASE),-O2,O0), which follows
-> the pattern in the bpf/Makefile:37. So if we run 
-> $ make -> -g -O0 -fPIC (taget libbpf) and -g -O0 (host bpftool)
-> $ make RELEASE=1 -> -g -O2 -fPIC (taget libbpf) and -g -O2 (host bpftool)
-> 
->> Is that possible with the new
->> lib.bpf.mk? It would be nice if it used at least EXTRA_CFLAGS or
->> USERCFLAGS defined in lib.mk.
-> Good idea. I will add the EXTRA_CFLAGS for target libbpf, host libbpf and host
-> bpgtool. Such that: 
-> $ make OPT_FLAGS=-O2 EXTRA_CFLAGS=-DFOO -> -g -O2 -fPIC -DFOO (for target
-> libbpf) and -g -O2 -DFOO (for host bpftool)
+v2: Drop the SCX_RQ_BAL_KEEP plumbing from the tools autogen enum headers
+    as well (Andrea).
 
-I'm wondering if we could use USERCFLAGS (and USERLDFLAGS) instead.
-These seem to be the preferred way for all selftests, per
-tools/testing/selftests/lib.mk:
+Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+Applied to sched_ext/for-7.2-fixes.
 
-    # Enables to extend CFLAGS and LDFLAGS from command line, e.g.
-    # make USERCFLAGS=-Werror USERLDFLAGS=-static
-    CFLAGS += $(USERCFLAGS)
-    LDFLAGS += $(USERLDFLAGS)
+ kernel/sched/ext/ext.c                        | 124 +++++++++++-------
+ kernel/sched/sched.h                          |   1 -
+ .../sched_ext/include/scx/enum_defs.autogen.h |   1 -
+ .../sched_ext/include/scx/enums.autogen.bpf.h |   3 -
+ tools/sched_ext/include/scx/enums.autogen.h   |   1 -
+ 5 files changed, 73 insertions(+), 57 deletions(-)
 
-At the time I was adding the extra flags to libbpf/bpftool sub-makes, I
-wasn't aware of USER*FLAGS so I used EXTRA_*FLAGS instead. But now, when
-someone wants to build multiple selftest collections with extra flags,
-they need to define both. For instance, building with PIE requires:
-
-    make -C tools/testing/selftests TARGETS="bpf ..." \
-        USERCFLAGS=-fpie EXTRA_CFLAGS=-fpie \
-        USERLDFLAGS=-pie EXTRA_LDFLAGS=-pie \
-
-Switching to USER*FLAGS for bpf selftests would simplify things a bit.
-
-Viktor
-
-> 
->>
->> Same questions would apply to other rules for libbpf and bpftool below.
-> I would check it them as as well in next version.
-> 
->> Thanks!
->> Viktor
->>
->>
-> Thanks for your time and reviewing. Please let me know your concerns. Thanks!
-> 
-> Best,
-> Ziyang
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 18183062f751..ffbe4f7edc99 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2774,12 +2774,19 @@ static inline void maybe_queue_balance_callback(struct rq *rq)
+ 	rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
+ }
+ 
++/* what dispatch concluded, consumed by the pick that follows */
++enum scx_dsp_verdict {
++	SCX_DSP_NONE,		/* nothing to run */
++	SCX_DSP_LOCAL,		/* local DSQ has tasks */
++	SCX_DSP_PREV,		/* keep running @prev */
++};
++
+ /*
+  * One user of this function is scx_bpf_dispatch() which can be called
+  * recursively as sub-sched dispatches nest. Always inline to reduce stack usage
+  * from the call frame.
+  */
+-static __always_inline bool
++static __always_inline enum scx_dsp_verdict
+ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 		   struct task_struct *prev, bool nested)
+ {
+@@ -2790,12 +2797,15 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 		scx_task_on_sched(sch, prev);
+ 
+ 	if (consume_global_dsq(sch, rq))
+-		return true;
++		return SCX_DSP_LOCAL;
+ 
+ 	if (bypass_dsp_enabled(sch)) {
+ 		/* if @sch is bypassing, only the bypass DSQs are active */
+-		if (scx_bypassing(sch, cpu))
+-			return consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0);
++		if (scx_bypassing(sch, cpu)) {
++			if (consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0))
++				return SCX_DSP_LOCAL;
++			return SCX_DSP_NONE;
++		}
+ 
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 		/*
+@@ -2815,13 +2825,13 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 		if (!(pcpu->bypass_host_seq++ % SCX_BYPASS_HOST_NTH) &&
+ 		    consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0)) {
+ 			__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
+-			return true;
++			return SCX_DSP_LOCAL;
+ 		}
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 	}
+ 
+ 	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
+-		return false;
++		return SCX_DSP_NONE;
+ 
+ 	dspc->rq = rq;
+ 
+@@ -2848,14 +2858,12 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 
+ 		flush_dispatch_buf(sch, rq);
+ 
+-		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice) {
+-			rq->scx.flags |= SCX_RQ_BAL_KEEP;
+-			return true;
+-		}
++		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice)
++			return SCX_DSP_PREV;
+ 		if (rq->scx.local_dsq.nr)
+-			return true;
++			return SCX_DSP_LOCAL;
+ 		if (consume_global_dsq(sch, rq))
+-			return true;
++			return SCX_DSP_LOCAL;
+ 
+ 		/*
+ 		 * ops.dispatch() can trap us in this loop by repeatedly
+@@ -2877,20 +2885,20 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 	 * queued. Without this fallback, bypassed tasks could stall if the host
+ 	 * scheduler's ops.dispatch() doesn't yield any tasks.
+ 	 */
+-	if (bypass_dsp_enabled(sch))
+-		return consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0);
++	if (bypass_dsp_enabled(sch) && consume_dispatch_q(sch, rq, bypass_dsq(sch, cpu), 0))
++		return SCX_DSP_LOCAL;
+ 
+-	return false;
++	return SCX_DSP_NONE;
+ }
+ 
+-static int balance_one(struct rq *rq, struct task_struct *prev)
++static enum scx_dsp_verdict balance_one(struct rq *rq, struct task_struct *prev)
+ {
+ 	struct scx_sched *sch = scx_root;
++	enum scx_dsp_verdict verdict;
+ 	s32 cpu = cpu_of(rq);
+ 
+ 	lockdep_assert_rq_held(rq);
+ 	rq->scx.flags |= SCX_RQ_IN_BALANCE;
+-	rq->scx.flags &= ~SCX_RQ_BAL_KEEP;
+ 
+ 	if ((sch->ops.flags & SCX_OPS_HAS_CPU_PREEMPT) &&
+ 	    unlikely(rq->scx.cpu_released)) {
+@@ -2920,16 +2928,19 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+ 		 */
+ 		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice &&
+ 		    !scx_bypassing(sch, cpu)) {
+-			rq->scx.flags |= SCX_RQ_BAL_KEEP;
++			verdict = SCX_DSP_PREV;
+ 			goto has_tasks;
+ 		}
+ 	}
+ 
+ 	/* if there already are tasks to run, nothing to do */
+-	if (rq->scx.local_dsq.nr)
++	if (rq->scx.local_dsq.nr) {
++		verdict = SCX_DSP_LOCAL;
+ 		goto has_tasks;
++	}
+ 
+-	if (scx_dispatch_sched(sch, rq, prev, false))
++	verdict = scx_dispatch_sched(sch, rq, prev, false);
++	if (verdict != SCX_DSP_NONE)
+ 		goto has_tasks;
+ 
+ 	/*
+@@ -2938,12 +2949,12 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+ 	 */
+ 	if ((prev->scx.flags & SCX_TASK_QUEUED) &&
+ 	    (!(sch->ops.flags & SCX_OPS_ENQ_LAST) || scx_bypassing(sch, cpu))) {
+-		rq->scx.flags |= SCX_RQ_BAL_KEEP;
+ 		__scx_add_event(sch, SCX_EV_DISPATCH_KEEP_LAST, 1);
++		verdict = SCX_DSP_PREV;
+ 		goto has_tasks;
+ 	}
+ 	rq->scx.flags &= ~SCX_RQ_IN_BALANCE;
+-	return false;
++	return SCX_DSP_NONE;
+ 
+ has_tasks:
+ 	/*
+@@ -2960,7 +2971,7 @@ static int balance_one(struct rq *rq, struct task_struct *prev)
+ 		schedule_reenq_local(rq, 0);
+ 
+ 	rq->scx.flags &= ~SCX_RQ_IN_BALANCE;
+-	return true;
++	return verdict;
+ }
+ 
+ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
+@@ -3179,27 +3190,23 @@ static struct task_struct *first_local_task(struct rq *rq)
+ 					struct task_struct, scx.dsq_list.node);
+ }
+ 
+-static struct task_struct *
+-do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
++/*
++ * Run dispatch and queue the follow-up work for a pick.
++ */
++static enum scx_dsp_verdict dispatch_pick(struct rq *rq, struct rq_flags *rf,
++					  struct task_struct *prev)
+ {
+-	struct task_struct *prev = rq->curr;
+-	bool keep_prev;
+-	struct task_struct *p;
+-
+-	/* see kick_sync_wait_bal_cb() */
+-	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
+-
+-	rq_modified_begin(rq, &ext_sched_class);
++	enum scx_dsp_verdict verdict;
+ 
+ 	rq_unpin_lock(rq, rf);
+-	balance_one(rq, prev);
++	verdict = balance_one(rq, prev);
+ 	rq_repin_lock(rq, rf);
+ 	maybe_queue_balance_callback(rq);
+ 
+ 	/*
+-	 * Defer to a balance callback which can drop rq lock and enable
+-	 * IRQs. Waiting directly in the pick path would deadlock against
+-	 * CPUs sending us IPIs (e.g. TLB flushes) while we wait for them.
++	 * Defer to a balance callback which can drop rq lock and enable IRQs.
++	 * Waiting directly in the pick path would deadlock against CPUs sending
++	 * us IPIs (e.g. TLB flushes) while we wait for them.
+ 	 */
+ 	if (unlikely(rq->scx.kick_sync_pending)) {
+ 		rq->scx.kick_sync_pending = false;
+@@ -3207,10 +3214,32 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 				       kick_sync_wait_bal_cb);
+ 	}
+ 
++	if (unlikely(verdict == SCX_DSP_PREV && prev->sched_class != &ext_sched_class)) {
++		WARN_ON_ONCE(scx_enable_state() == SCX_ENABLED);
++		verdict = SCX_DSP_LOCAL;
++	}
++
++	return verdict;
++}
++
++static struct task_struct *
++do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
++{
++	struct task_struct *prev = rq->curr;
++	enum scx_dsp_verdict verdict;
++	struct task_struct *p;
++
++	/* see kick_sync_wait_bal_cb() */
++	smp_store_release(&rq->scx.kick_sync, rq->scx.kick_sync + 1);
++
++	rq_modified_begin(rq, &ext_sched_class);
++
++	verdict = dispatch_pick(rq, rf, prev);
++
+ 	/*
+-	 * If any higher-priority sched class enqueued a runnable task on
+-	 * this rq during balance_one(), abort and return RETRY_TASK, so
+-	 * that the scheduler loop can restart.
++	 * If any higher-priority sched class enqueued a runnable task on this
++	 * rq during balance_one(), abort and return RETRY_TASK, so that the
++	 * scheduler loop can restart.
+ 	 *
+ 	 * If @force_scx is true, always try to pick a SCHED_EXT task,
+ 	 * regardless of any higher-priority sched classes activity.
+@@ -3218,19 +3247,12 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
+ 	if (!force_scx && rq_modified_above(rq, &ext_sched_class))
+ 		return RETRY_TASK;
+ 
+-	keep_prev = rq->scx.flags & SCX_RQ_BAL_KEEP;
+-	if (unlikely(keep_prev &&
+-		     prev->sched_class != &ext_sched_class)) {
+-		WARN_ON_ONCE(scx_enable_state() == SCX_ENABLED);
+-		keep_prev = false;
+-	}
+-
+ 	/*
+ 	 * If balance_one() is telling us to keep running @prev, replenish slice
+ 	 * if necessary and keep running @prev. Otherwise, pop the first one
+ 	 * from the local DSQ.
+ 	 */
+-	if (keep_prev) {
++	if (verdict == SCX_DSP_PREV) {
+ 		p = prev;
+ 		if (!p->scx.slice)
+ 			refill_task_slice_dfl(scx_task_sched(p), p);
+@@ -5573,7 +5595,7 @@ static void disable_bypass_dsp(struct scx_sched *sch)
+  *
+  * - ops.dispatch() is ignored.
+  *
+- * - balance_one() does not set %SCX_RQ_BAL_KEEP on non-zero slice as slice
++ * - balance_one() does not report %SCX_DSP_PREV on non-zero slice as slice
+  *   can't be trusted. Whenever a tick triggers, the running task is rotated to
+  *   the tail of the queue with core_sched_at touched.
+  *
+@@ -9201,8 +9223,8 @@ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *
+ 		return false;
+ 	}
+ 
+-	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_prev,
+-				  true);
++	return scx_dispatch_sched(child, this_rq, this_rq->scx.sub_dispatch_prev, true) !=
++		SCX_DSP_NONE;
+ }
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 450b6a04669f..14c2df6fd9af 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -784,7 +784,6 @@ enum scx_rq_flags {
+ 	 */
+ 	SCX_RQ_ONLINE		= 1 << 0,
+ 	SCX_RQ_CAN_STOP_TICK	= 1 << 1,
+-	SCX_RQ_BAL_KEEP		= 1 << 3, /* balance decided to keep current */
+ 	SCX_RQ_CLK_VALID	= 1 << 5, /* RQ clock is fresh and valid */
+ 	SCX_RQ_BAL_CB_PENDING	= 1 << 6, /* must queue a cb after dispatching */
+ 
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index da4b459820fd..8e287c88ad90 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -143,7 +143,6 @@
+ #define HAVE___SCX_REENQ_TSR_MASK
+ #define HAVE_SCX_RQ_ONLINE
+ #define HAVE_SCX_RQ_CAN_STOP_TICK
+-#define HAVE_SCX_RQ_BAL_KEEP
+ #define HAVE_SCX_RQ_CLK_VALID
+ #define HAVE_SCX_RQ_BAL_CB_PENDING
+ #define HAVE_SCX_RQ_IN_WAKEUP
+diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+index dafccbb6b69d..d02abed94e8e 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
++++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+@@ -22,9 +22,6 @@ const volatile u64 __SCX_RQ_CAN_STOP_TICK __weak;
+ const volatile u64 __SCX_RQ_BAL_PENDING __weak;
+ #define SCX_RQ_BAL_PENDING __SCX_RQ_BAL_PENDING
+ 
+-const volatile u64 __SCX_RQ_BAL_KEEP __weak;
+-#define SCX_RQ_BAL_KEEP __SCX_RQ_BAL_KEEP
+-
+ const volatile u64 __SCX_RQ_BYPASSING __weak;
+ #define SCX_RQ_BYPASSING __SCX_RQ_BYPASSING
+ 
+diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
+index bbd4901f4fce..c26934a3d8e9 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.h
++++ b/tools/sched_ext/include/scx/enums.autogen.h
+@@ -11,7 +11,6 @@
+ 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_ONLINE); \
+ 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_CAN_STOP_TICK); \
+ 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_BAL_PENDING); \
+-	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_BAL_KEEP); \
+ 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_BYPASSING); \
+ 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_CLK_VALID); \
+ 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_IN_WAKEUP); \
+-- 
+2.55.0
 
