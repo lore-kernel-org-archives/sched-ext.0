@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112BA395ACC;
-	Wed, 12 Aug 2026 21:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91C948BD26;
+	Wed, 12 Aug 2026 21:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786569374; cv=none; b=E3weExYyDGNlSPqIJtVHmjIXzHN+geOGyG1ky4QF7caTwxxQW0iIqualH4Dq2L2QkLCnxBDXMQL+IXpZFNl1mLQfEwk4NoTjGa6Q7gSZb4+BlDF88CAgm1CeB6xqQ5BiTcMnF6RshE1fVtaBichZFCk34kcv4t9+3i8rCoQCrhc=
+	t=1786569375; cv=none; b=by+S5jwxaiayEdLtWhJTLSMw6KQ+4qW6+deTJuqkFqfGjgKMI6IsAb1jMl/mFEmfN6/1YUUZ64H5sfzjWa0yUz7PYZIwC8AR8jkflLWDS7njU5bExr6BC5TxxnmYLnGUk6wZC4bLHevlFFAU+UrYoGmW3sEUUe5f2KIA93FKGjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786569374; c=relaxed/simple;
-	bh=q8wMDZqzV4ChIsiOGnX5d4iAYVqghWg+r+mFf0phrPc=;
+	s=arc-20240116; t=1786569375; c=relaxed/simple;
+	bh=Q1ZVL5+h9KWBnuLbrf1kGK+ilHxQOFhrTssLxZwmww4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fG9gqkpaukZMerbP1Jfz2vf1XkJtUa5VbF8bJyTQuoj9k5mBMxXgnC3zr5ZdPR+/CBH1dYSUFOuhsKI5hDVgYpOhNljYRV1AZYcOoWUQqU3WXZN/IBTZKjNo4zaFqxS+R+rDylucldaKmrpHQus8FvwlmyyOZA0rI+YSpNsFF5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDMOe3HE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z2t0Kp+ze7+whgNIpn39d5005urRt+sJ5U1SBhavvLrntufOaBF0Z86Tc8xbHXmlHJrjna88kGPKXzJYZDhZdT4lYvOie8pJhBvGjG4KeC6OM8hg+4HYCiZwl3XSm/NBBCxudYd+3ybgS0m9rsN4g2fCbpGiiSBLSzmycMqiVeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/Cs0rJj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDMOe3HE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEB11F000E9;
-	Wed, 12 Aug 2026 21:16:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/Cs0rJj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691FC1F00A3A;
+	Wed, 12 Aug 2026 21:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786569372;
-	bh=ChFuAZmGqAomJtJidqURGTbUT+hiDQjo+FuxkDuYl0w=;
+	s=k20260515; t=1786569373;
+	bh=Z9QDjMwDB1kVgPqfdOvsIMCsBPRn1QGeOmh/VWo0+RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDMOe3HE6fshPpZf5cXL/j3WCq0ddf0HMJFWxbSHLPmk0BrRjcyN/aamxvdlVci2R
-	 bc9Sl0uVmJu8nT/e/YTNlCtmUr/vNtSPqH0xC7RlDsRCUcGFo4zshaoFOd0sCmdseF
-	 nROImNqIvV5QBGCzWcQT5OqP8Z31UgIWQdpZ8Tb5+GBXOGGydgDEVkFKZLvmSaE7Po
-	 My2cV4PrhWR+hOOkuZtW7T3/dgfHmlE8z5k2oK/Vbijb47CKBvfD1jdm8vb7VJCTOH
-	 I6THeswn7FffbSYoUErylmKfMFsBX+9v0MfM3u2sg99ldi0E6hKb97jj+GImIzhOyG
-	 Xt0P06/nGzGHA==
+	b=k/Cs0rJjKOjpTZqZtpc+gR9+ozubVhKqRo9bMQxXF0DP9UZfBZ/HvqU4lU0hdfvgY
+	 2eqehBcUKfF4srxxf/92AWXATNDQsAs8ecDFePdkB70f/kaH74i8pGwUxBfPGybv4/
+	 sgSD7uBSkKECHaoTIreuqwaCAXqqj6IxNPZ/7tbGPb+7rl7MQByawSfCusTIt6KHui
+	 TuC6HwC7VmoAE8Olzc/ea8FLR/f+SRMhuONgULH17nwgZu8mk4vCWblnHOfciJEMQx
+	 fE13uRRXACKyzoCCstbRqtb9JrW6sbcOHqYhtgVElZuckm/vEu1mOGMiluMs+i5icu
+	 2yMxUynlvJN3w==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -35,9 +35,9 @@ Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/3] sched_ext: Convert sub-cap kfuncs to __arena cmask arguments
-Date: Wed, 12 Aug 2026 11:16:08 -1000
-Message-ID: <20260812211609.2495583-3-tj@kernel.org>
+Subject: [PATCH 3/3] sched_ext: Convert scx_bpf_cid_override() to __arena array arguments
+Date: Wed, 12 Aug 2026 11:16:09 -1000
+Message-ID: <20260812211609.2495583-4-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260812211609.2495583-1-tj@kernel.org>
 References: <20260812211609.2495583-1-tj@kernel.org>
@@ -49,345 +49,327 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The sub-cap kfuncs take their cmask arguments as __ign pointers. The values
-cross the kfunc boundary as unchecked scalars and scx_cmask_ref_init()
-rebases them into the arena by hand.
+scx_bpf_cid_override() predates the cid-form arena transition and takes its
+arrays as verifier-checked mem+size buffers, forcing scx_qmap to keep the
+cpu_to_cid and shard_start arrays in writable bss while the rest of its
+state lives in the arena. Unify on arena arguments before cid-form
+schedulers start seeing real use.
 
 BPF now translates between BPF and kernel arena addresses for __arena
-arguments. Tag the cmask arguments __arena so the kfuncs receive kernel
-addresses and scx_cmask_ref_init() loses the hand-rolled conversion. The
-optional denied_out keeps its NULL not-provided signal via
-__arena__nullable. The mandatory masks use plain __arena.
+arguments. Take the arrays as __arena arguments, with the counts passed in
+entries. The counts now size the snapshot copies and are bounds-checked
+before them.
 
-scx_qmap's call sites drop the (void *)(long) casts since the BPF-side
-declarations type the cmask arguments __arena and take arena pointers
-directly.
+scx_qmap moves the arrays into struct qmap_arena. As the arena is mmapped at
+load, the loader populates them between load and attach instead of before
+load.
 
 The arena argument address translation is currently implemented only on
-x86-64. Schedulers calling these kfuncs load only there for now.
+x86-64. Schedulers calling this kfunc load only there for now.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/cid.c                   | 11 +++---
- kernel/sched/ext/ext.c                   |  8 ++--
- kernel/sched/ext/sub.c                   | 49 ++++++++++++------------
- kernel/sched/ext/types.h                 |  6 +--
- tools/sched_ext/include/scx/common.bpf.h | 11 +++---
- tools/sched_ext/scx_qmap.bpf.c           | 20 +++++-----
- 6 files changed, 51 insertions(+), 54 deletions(-)
+ kernel/sched/ext/cid.c                   | 49 +++++++++--------
+ tools/sched_ext/include/scx/compat.bpf.h | 14 ++---
+ tools/sched_ext/scx_qmap.bpf.c           | 16 ++----
+ tools/sched_ext/scx_qmap.c               | 68 ++++++++++++++----------
+ tools/sched_ext/scx_qmap.h               |  4 ++
+ 5 files changed, 84 insertions(+), 67 deletions(-)
 
 diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index 231c8562d7c7..11fe9be80f1e 100644
+index 11fe9be80f1e..39f88deb94bc 100644
 --- a/kernel/sched/ext/cid.c
 +++ b/kernel/sched/ext/cid.c
-@@ -957,7 +957,7 @@ static const struct btf_kfunc_id_set scx_kfunc_set_cid = {
- /**
-  * scx_cmask_ref_init - Bind a scx_cmask_ref to a BPF-arena cmask
-  * @sch: scheduler whose arena hosts @src
-- * @src: BPF-supplied cmask pointer
-+ * @src: BPF-supplied cmask, rebased to its kernel address
-  * @ref: output ref
-  *
-  * Snapshot @src's @base, @nr_cids and @alloc_words. The snapshot is necessary
-@@ -969,20 +969,19 @@ static const struct btf_kfunc_id_set scx_kfunc_set_cid = {
- int scx_cmask_ref_init(struct scx_sched *sch, const struct scx_cmask *src,
- 		       struct scx_cmask_ref *ref)
- {
--	struct scx_cmask *kern_src = scx_arena_to_kaddr(sch, src);
- 	u32 base, nr_cids, alloc_words, npossible = num_possible_cpus();
- 	s32 *cid_to_shard;
- 
--	base = READ_ONCE(kern_src->base);
--	nr_cids = READ_ONCE(kern_src->nr_cids);
--	alloc_words = READ_ONCE(kern_src->alloc_words);
-+	base = READ_ONCE(src->base);
-+	nr_cids = READ_ONCE(src->nr_cids);
-+	alloc_words = READ_ONCE(src->alloc_words);
- 
- 	if (unlikely(base >= npossible || nr_cids > npossible - base ||
- 		     SCX_CMASK_NR_WORDS(nr_cids) > alloc_words))
- 		return -EINVAL;
- 
- 	ref->sch = sch;
--	ref->src = kern_src;
-+	ref->src = (struct scx_cmask *)src;
- 	ref->base = base;
- 	ref->nr_cids = nr_cids;
- 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index c12327b6d541..26dbbbfe5a87 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -10677,20 +10677,20 @@ __bpf_kfunc struct cgroup *scx_bpf_task_cgroup(struct task_struct *p,
- 
- #ifndef CONFIG_EXT_SUB_SCHED
- __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
--				  const struct scx_cmask *cmask__ign,
--				  struct scx_cmask *denied_out__ign,
-+				  const struct scx_cmask *cmask__arena,
-+				  struct scx_cmask *denied_out__arena__nullable,
- 				  const struct bpf_prog_aux *aux)
- {
- 	return -EOPNOTSUPP;
- }
- 
- __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
--				    const struct scx_cmask *cmask__ign,
-+				    const struct scx_cmask *cmask__arena,
- 				    const struct bpf_prog_aux *aux)
- {
- }
- 
--__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out__ign,
-+__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out__arena,
- 				 const struct bpf_prog_aux *aux)
- {
- 	return -EOPNOTSUPP;
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 0978581d8c8e..d874ad41a8ed 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -2287,26 +2287,26 @@ static s32 sub_cap_preamble(u64 cgroup_id, u64 caps, const struct bpf_prog_aux *
- }
+@@ -449,10 +449,10 @@ __bpf_kfunc_start_defs();
  
  /**
-- * scx_bpf_sub_grant - Grant @caps on @cmask__ign's cids to a direct child
-+ * scx_bpf_sub_grant - Grant @caps on a cmask's cids to a direct child
-  * @cgroup_id: cgroup id of the direct child sub-sched
-  * @caps: bitmask of SCX_CAP_* to grant
-- * @cmask__ign: cid cmask to grant @caps on (arena pointer)
-- * @denied_out__ign: optional arena cmask accumulating refused cids
-+ * @cmask__arena: cid cmask to grant @caps on
-+ * @denied_out__arena__nullable: optional cmask accumulating refused cids
-  * @aux: implicit BPF argument
+  * scx_bpf_cid_override - Install an explicit cpu->cid mapping with shard info
+- * @cpu_to_cid_src: array of nr_cpu_ids s32 entries (cid for each cpu)
+- * @cpu_to_cid_src__sz: must be nr_cpu_ids * sizeof(s32) bytes
+- * @shard_start_src: array of first-cid-of-each-shard, strictly increasing from 0
+- * @shard_start_src__sz: nr_shards * sizeof(s32) bytes
++ * @cpu_to_cid__arena: array of nr_cpu_ids s32 entries (cid for each cpu)
++ * @cpu_to_cid_cnt: number of entries, must be nr_cpu_ids
++ * @shard_start__arena: array of first-cid-of-each-shard, one entry per shard
++ * @shard_start_cnt: number of shards
+  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
   *
-- * A cid in @cmask__ign is granted to the child only if the parent holds every
-- * requested cap on it. Refused cids are OR'd into @denied_out__ign when
-- * provided. Refusals outside @denied_out__ign's range are not recorded.
-+ * A cid in @cmask__arena is granted to the child only if the parent holds every
-+ * requested cap on it. Refused cids are OR'd into the denied mask when
-+ * provided. Refusals outside the denied mask's range are not recorded.
-  *
-- * All-or-nothing keeps the caller-visible result binary per cid, so
-- * @denied_out__ign is one mask to interpret rather than a per-cap matrix.
-+ * All-or-nothing keeps the caller-visible result binary per cid, so the denied
-+ * mask is one mask to interpret rather than a per-cap matrix.
-  *
-  * Return 0 on full success, -EPERM if any cid was refused, or a negative
-  * errno on other failures.
+  * May only be called from ops.init_cids() of the root scheduler. Replace the
+@@ -464,9 +464,9 @@ __bpf_kfunc_start_defs();
+  * (core/LLC/node) is cleared and the shard layout is set from the input. On
+  * invalid input, abort the scheduler.
   */
- __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
--				  const struct scx_cmask *cmask__ign,
--				  struct scx_cmask *denied_out__ign,
-+				  const struct scx_cmask *cmask__arena,
-+				  struct scx_cmask *denied_out__arena__nullable,
- 				  const struct bpf_prog_aux *aux)
+-__bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_src__sz,
+-				       const s32 *shard_start_src, u32 shard_start_src__sz,
+-				       const struct bpf_prog_aux *aux)
++__bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid__arena, u32 cpu_to_cid_cnt,
++				      const s32 *shard_start__arena, u32 shard_start_cnt,
++				      const struct bpf_prog_aux *aux)
  {
- 	struct scx_cmask_ref ref, denied_ref;
-@@ -2321,14 +2321,14 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 	if (ret)
- 		return ret;
+ 	cpumask_var_t seen __free(free_cpumask_var) = CPUMASK_VAR_NULL;
+ 	u32 *node_counts __free(kfree) = NULL;
+@@ -475,19 +475,28 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+ 	u32 npossible = num_possible_cpus();
+ 	struct scx_cid_tables *tbls;
+ 	struct scx_sched *sch;
+-	u32 nr_shards;
++	u32 nr_shards = shard_start_cnt;
+ 	bool alloced;
+ 	s32 cpu, cid, si;
  
--	ret = scx_cmask_ref_init(parent, cmask__ign, &ref);
-+	ret = scx_cmask_ref_init(parent, cmask__arena, &ref);
- 	if (ret) {
- 		scx_error(parent, "invalid cmask (%d)", ret);
- 		return ret;
+ 	/*
+ 	 * GFP_KERNEL allocs must happen before the rcu read section. Snapshot
+-	 * the BPF-supplied arrays so a concurrent map mutation can't change
++	 * the BPF-supplied arrays so a concurrent arena write can't change
+ 	 * them between validation and use.
++	 *
++	 * The BPF-supplied counts size the snapshots and thus the arena reads.
++	 * Gate the copies on the count bounds, reported below once @sch is
++	 * available. The bounded reads, at most 32KB, stay within the guard
++	 * region that arena fault recovery covers.
+ 	 */
+ 	alloced = zalloc_cpumask_var(&seen, GFP_KERNEL);
+ 	node_counts = kcalloc(nr_node_ids, sizeof(*node_counts), GFP_KERNEL);
+-	cpu_to_cid = kmemdup(cpu_to_cid_src, cpu_to_cid_src__sz, GFP_KERNEL);
+-	shard_start = kmemdup(shard_start_src, shard_start_src__sz, GFP_KERNEL);
++	if (cpu_to_cid_cnt == nr_cpu_ids)
++		cpu_to_cid = kmemdup(cpu_to_cid__arena, cpu_to_cid_cnt * sizeof(s32),
++				     GFP_KERNEL);
++	if (nr_shards && nr_shards <= npossible)
++		shard_start = kmemdup(shard_start__arena, nr_shards * sizeof(s32),
++				      GFP_KERNEL);
+ 
+ 	guard(rcu)();
+ 
+@@ -499,25 +508,23 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
+ 	lockdep_assert_held(&scx_enable_mutex);
+ 	tbls = scx_cid_tables;
+ 
+-	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
+-		scx_error(sch, "scx_bpf_cid_override: allocation failed");
++	if (cpu_to_cid_cnt != nr_cpu_ids) {
++		scx_error(sch, "scx_bpf_cid_override: cpu_to_cid expected %u entries, got %u",
++			  nr_cpu_ids, cpu_to_cid_cnt);
+ 		return;
  	}
  
--	if (denied_out__ign) {
--		ret = scx_cmask_ref_init(parent, denied_out__ign, &denied_ref);
-+	if (denied_out__arena__nullable) {
-+		ret = scx_cmask_ref_init(parent, denied_out__arena__nullable, &denied_ref);
- 		if (ret) {
- 			scx_error(parent, "invalid denied_out (%d)", ret);
- 			return ret;
-@@ -2395,10 +2395,10 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
- 			}
- 		}
+-	if (cpu_to_cid_src__sz != nr_cpu_ids * sizeof(s32)) {
+-		scx_error(sch, "scx_bpf_cid_override: cpu_to_cid expected %zu bytes, got %u",
+-			  nr_cpu_ids * sizeof(s32), cpu_to_cid_src__sz);
++	if (!nr_shards || nr_shards > npossible) {
++		scx_error(sch, "scx_bpf_cid_override: invalid shard_start count %u",
++			  nr_shards);
+ 		return;
+ 	}
  
--		/* record cids that didn't make it through into @denied_out */
-+		/* record cids that didn't make it into the denied mask */
- 		if (!scx_cmask_subset(slice, granted_cids)) {
- 			any_denied = true;
--			if (denied_out__ign) {
-+			if (denied_out__arena__nullable) {
- 				SCX_CMASK_DEFINE_SHARD(denied, slice->base, slice->nr_cids);
+-	if (!shard_start_src__sz || shard_start_src__sz % sizeof(s32)) {
+-		scx_error(sch, "scx_bpf_cid_override: invalid shard_start size %u",
+-			  shard_start_src__sz);
++	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
++		scx_error(sch, "scx_bpf_cid_override: allocation failed");
+ 		return;
+ 	}
  
- 				scx_cmask_copy(denied, slice);
-@@ -2414,19 +2414,18 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
+-	nr_shards = shard_start_src__sz / sizeof(s32);
+-
+ 	/* validate shard_start[]: starts at 0, strictly increasing, in range */
+ 	if (shard_start[0] != 0) {
+ 		scx_error(sch, "scx_bpf_cid_override: shard_start[0] must be 0, got %d",
+diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
+index 1b45655a64a3..7c735eb09c07 100644
+--- a/tools/sched_ext/include/scx/compat.bpf.h
++++ b/tools/sched_ext/include/scx/compat.bpf.h
+@@ -125,15 +125,17 @@ static inline bool scx_bpf_sub_dispatch(u64 cgroup_id)
+  * v7.3: scx_bpf_cid_override() for explicit cid and shard mapping. Ignore if
+  * missing.
+  */
+-void scx_bpf_cid_override___compat(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
+-				    const s32 *shard_start, u32 shard_start__sz) __ksym __weak;
++void scx_bpf_cid_override___compat(const s32 __arena *cpu_to_cid__arena,
++				   u32 cpu_to_cid_cnt,
++				   const s32 __arena *shard_start__arena,
++				   u32 shard_start_cnt) __ksym __weak;
+ 
+-static inline void scx_bpf_cid_override(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
+-					 const s32 *shard_start, u32 shard_start__sz)
++static inline void scx_bpf_cid_override(const s32 __arena *cpu_to_cid, u32 cpu_to_cid_cnt,
++					const s32 __arena *shard_start, u32 shard_start_cnt)
+ {
+ 	if (bpf_ksym_exists(scx_bpf_cid_override___compat))
+-		scx_bpf_cid_override___compat(cpu_to_cid, cpu_to_cid__sz,
+-					      shard_start, shard_start__sz);
++		scx_bpf_cid_override___compat(cpu_to_cid, cpu_to_cid_cnt,
++					      shard_start, shard_start_cnt);
  }
  
  /**
-- * scx_bpf_sub_revoke - Revoke @caps on @cmask__ign's cids from @child
-+ * scx_bpf_sub_revoke - Revoke @caps on a cmask's cids from a direct child
-  * @cgroup_id: cgroup id of the direct child sub-sched
-  * @caps: bitmask of SCX_CAP_* to revoke
-- * @cmask__ign: cid cmask to revoke @caps on (arena pointer)
-+ * @cmask__arena: cid cmask to revoke @caps on
-  * @aux: implicit BPF argument
-  *
-- * Clear @caps bits on @cmask__ign from the child named by @cgroup_id and all
-+ * Clear @caps bits on @cmask__arena from the child named by @cgroup_id and all
-  * its descendants. The origin parent's pshard lock is held across the subtree
-- * walk so a concurrent grant from the origin parent observes the revoked
-- * state.
-+ * walk so a concurrent grant from the origin parent observes the revoked state.
-  */
- __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
--				    const struct scx_cmask *cmask__ign,
-+				    const struct scx_cmask *cmask__arena,
- 				    const struct bpf_prog_aux *aux)
- {
- 	struct scx_cmask_ref ref;
-@@ -2439,7 +2438,7 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
- 	if (sub_cap_preamble(cgroup_id, caps, aux, &parent, &child))
- 		return;
- 
--	ret = scx_cmask_ref_init(parent, cmask__ign, &ref);
-+	ret = scx_cmask_ref_init(parent, cmask__arena, &ref);
- 	if (ret) {
- 		scx_error(parent, "invalid cmask (%d)", ret);
- 		return;
-@@ -2509,7 +2508,7 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
-  * scx_bpf_sub_caps - Read self's or a direct child's cap cmasks
-  * @cgroup_id: 0 for self, or a direct child's cgroup id
-  * @caps: one or more SCX_CAP_* bits
-- * @out__ign: arena cmask to receive the union of @caps within its range
-+ * @out__arena: cmask to receive the union of @caps within its range
-  * @aux: implicit BPF argument
-  *
-  * Read the cap cmasks granted on each cid for self (@cgroup_id 0) or a direct
-@@ -2519,7 +2518,7 @@ __bpf_kfunc void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps,
-  * Return 0, -ENODEV if @cgroup_id names no direct child, or -EINVAL on bad
-  * inputs.
-  */
--__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out__ign,
-+__bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out__arena,
- 				 const struct bpf_prog_aux *aux)
- {
- 	struct scx_cmask_ref ref;
-@@ -2569,7 +2568,7 @@ __bpf_kfunc s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out_
- 		return -ENODEV;
- 	}
- 
--	ret = scx_cmask_ref_init(sch, out__ign, &ref);
-+	ret = scx_cmask_ref_init(sch, out__arena, &ref);
- 	if (ret) {
- 		scx_error(sch, "invalid out (%d)", ret);
- 		return ret;
-diff --git a/kernel/sched/ext/types.h b/kernel/sched/ext/types.h
-index 1eb3ac8508f6..943d8d429a2c 100644
---- a/kernel/sched/ext/types.h
-+++ b/kernel/sched/ext/types.h
-@@ -187,9 +187,9 @@ struct scx_cmask {
- /*
-  * scx_cmask_ref: validated reference to a BPF-arena cmask.
-  *
-- * scx_cmask_ref_init() normalizes the pointer into the arena and snapshots
-- * @base/@nr_cids. The snapshot is what downstream code uses for sizing - the
-- * live header can be mutated concurrently by BPF.
-+ * scx_cmask_ref_init() snapshots @base/@nr_cids. The snapshot is what
-+ * downstream code uses for sizing - the live header can be mutated concurrently
-+ * by BPF.
-  *
-  * scx_cmask_ref_shard() reads one shard into a cmask. scx_cmask_ref_or() and
-  * scx_cmask_ref_copy() write back into the referenced arena cmask, bounded by
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 6035d007c43f..979d4cabfaf9 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -26,6 +26,7 @@
- #include <asm-generic/errno.h>
- #include "user_exit_info.bpf.h"
- #include "enum_defs.autogen.h"
-+#include "bpf_arena_common.bpf.h"
- 
- #define PF_IDLE				0x00000002	/* I am an IDLE thread */
- #define PF_IO_WORKER			0x00000010	/* Task is an IO worker */
-@@ -115,12 +116,10 @@ u32 scx_bpf_cidperf_cur(s32 cid) __ksym __weak;
- s32 scx_bpf_cidperf_set(s32 cid, u32 perf) __ksym __weak;
- 
- /* sub-scheduler cap control, scx_bpf_sub_caps() cgroup_id 0 == self */
--s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask,
--		      struct scx_cmask *denied) __ksym __weak;
--void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps, const struct scx_cmask *cmask) __ksym __weak;
--s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask *out) __ksym __weak;
--s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt,
--			  unsigned long long *data, u32 data__sz) __ksym __weak;
-+s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps, const struct scx_cmask __arena *cmask__arena, struct scx_cmask __arena *denied_out__arena__nullable) __ksym __weak;
-+void scx_bpf_sub_revoke(u64 cgroup_id, u64 caps, const struct scx_cmask __arena *cmask__arena) __ksym __weak;
-+s32 scx_bpf_sub_caps(u64 cgroup_id, u64 caps, struct scx_cmask __arena *out__arena) __ksym __weak;
-+s32 scx_bpf_sub_kill_bstr(u64 cgroup_id, char *fmt, unsigned long long *data, u32 data__sz) __ksym __weak;
- 
- /*
-  * Use the following as @it__iter when calling scx_bpf_dsq_move[_vtime]() from
 diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index dd0434437835..61dc748742a2 100644
+index 61dc748742a2..d9ca9106a5ce 100644
 --- a/tools/sched_ext/scx_qmap.bpf.c
 +++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -1385,8 +1385,8 @@ __noinline void compute_partition(void)
+@@ -80,14 +80,6 @@ const volatile u64 round_robin_ns;
+  */
+ const volatile u32 cid_override_mode;
+ const volatile u32 cid_override_nr_shards;
+-/*
+- * Arrays live in bss (writable) because scx_bpf_cid_override()'s BPF
+- * verifier signature treats its len-paired pointers as read/write - rodata
+- * fails verification with "write into map forbidden". Userspace populates
+- * them before SCX_OPS_LOAD, same as rodata, and nothing writes them after.
+- */
+-s32 cid_override_cpu_to_cid[SCX_QMAP_MAX_CPUS];
+-s32 cid_override_shard_start[SCX_QMAP_MAX_CPUS];
+ 
+ UEI_DEFINE(uei);
+ 
+@@ -1761,17 +1753,15 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init_cids)
+ 	if (!cid_override_mode)
+ 		return 0;
+ 
+-	/* bound the count so the verifier accepts cpu_to_cid's mem/len pair */
++	/* the arena arrays are sized SCX_QMAP_MAX_CPUS */
+ 	if (nr_cpu_ids > SCX_QMAP_MAX_CPUS) {
+ 		scx_bpf_error("nr_cpu_ids=%u exceeds SCX_QMAP_MAX_CPUS=%d",
+ 			      nr_cpu_ids, SCX_QMAP_MAX_CPUS);
+ 		return -EINVAL;
  	}
  
- 	/* find out the cids we hold */
--	scx_bpf_sub_caps(0, SCX_CAP_ENQ, (void *)(long)&qa.held_excl.mask);
--	scx_bpf_sub_caps(0, SCX_CAP_ENQ_IMMED, (void *)(long)&qa.held_shared.mask);
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ, &qa.held_excl.mask);
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ_IMMED, &qa.held_shared.mask);
- 	cmask_andnot(&qa.held_shared.mask, &qa.held_excl.mask);	/* held only as ENQ_IMMED */
- 
- 	qa.part.nr_shared = 0;
-@@ -1613,13 +1613,13 @@ __noinline void apply_partition(void)
- 		cmask_andnot(&qa.to_grant_cids.mask, &ssc->prev_granted.mask);
- 
- 		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
--				   (void *)(long)&qa.prev_rr_cids.mask);
-+				   &qa.prev_rr_cids.mask);
- 		scx_bpf_sub_revoke(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT |
- 				   SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
--				   (void *)(long)&qa.to_revoke_cids.mask);
-+				   &qa.to_revoke_cids.mask);
- 		scx_bpf_sub_grant(cgid, SCX_CAP_ENQ | SCX_CAP_PREEMPT |
- 				  SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
--				  (void *)(long)&qa.to_grant_cids.mask, NULL);
-+				  &qa.to_grant_cids.mask, NULL);
- 	}
- 
- 	/* the current holder of the shared pool gets ENQ_IMMED on all of it */
-@@ -1636,7 +1636,7 @@ __noinline void apply_partition(void)
- 		if (holder_cgid)
- 			scx_bpf_sub_grant(holder_cgid,
- 					  SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
--					  (void *)(long)&qa.rr_cids.mask, NULL);
-+					  &qa.rr_cids.mask, NULL);
- 	}
+-	scx_bpf_cid_override((const s32 *)cid_override_cpu_to_cid,
+-			     nr_cpu_ids * sizeof(s32),
+-			     (const s32 *)cid_override_shard_start,
+-			     cid_override_nr_shards * sizeof(s32));
++	scx_bpf_cid_override(qa.cid_override_cpu_to_cid, nr_cpu_ids,
++			     qa.cid_override_shard_start, cid_override_nr_shards);
+ 	return 0;
  }
  
-@@ -1728,11 +1728,11 @@ static void rr_advance(void)
- 		if (old_cgid)
- 			scx_bpf_sub_revoke(old_cgid,
- 					   SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
--					   (void *)(long)&qa.rr_cids.mask);
-+					   &qa.rr_cids.mask);
- 		if (new_cgid)
- 			scx_bpf_sub_grant(new_cgid,
- 					  SCX_CAP_ENQ_IMMED | SCX_CAP_PERF,
--					  (void *)(long)&qa.rr_cids.mask, NULL);
-+					  &qa.rr_cids.mask, NULL);
- 	}
+diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+index 988b6931633e..5bb5f687e579 100644
+--- a/tools/sched_ext/scx_qmap.c
++++ b/tools/sched_ext/scx_qmap.c
+@@ -242,6 +242,7 @@ int main(int argc, char **argv)
+ 	char tbuf[32];
+ 	u32 inject_mode = 0;
+ 	u64 own_cgid = 0;
++	s32 cid_override_shard_sz = 4;
  
- 	part_end();
-@@ -1840,8 +1840,8 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
- 	cmask_init(&qa.held_excl.mask, 0, nr_cids);
- 	cmask_init(&qa.held_shared.mask, 0, nr_cids);
+ 	libbpf_set_print(libbpf_print_fn);
+ 	signal(SIGINT, sigint_handler);
+@@ -328,8 +329,7 @@ int main(int argc, char **argv)
+ 			break;
+ 		case 'C': {
+ 			u32 nr_cpus = libbpf_num_possible_cpus();
+-			u32 mode, i;
+-			s32 shard_sz = 4;
++			u32 mode;
  
--	scx_bpf_sub_caps(0, SCX_CAP_ENQ, (void *)(long)&qa.held_excl.mask);
--	scx_bpf_sub_caps(0, SCX_CAP_ENQ_IMMED, (void *)(long)&qa.held_shared.mask);
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ, &qa.held_excl.mask);
-+	scx_bpf_sub_caps(0, SCX_CAP_ENQ_IMMED, &qa.held_shared.mask);
- 	cmask_andnot(&qa.held_shared.mask, &qa.held_excl.mask);
+ 			if (!strcmp(optarg, "shuffle"))
+ 				mode = QMAP_CID_OVR_SHUFFLE;
+@@ -344,18 +344,7 @@ int main(int argc, char **argv)
+ 				return 1;
+ 			}
+ 			skel->rodata->cid_override_mode = mode;
+-
+-			/* shuffle: reversed cpu_to_cid; others: identity */
+-			for (i = 0; i < nr_cpus; i++) {
+-				if (mode == QMAP_CID_OVR_SHUFFLE)
+-					skel->bss->cid_override_cpu_to_cid[i] = nr_cpus - 1 - i;
+-				else
+-					skel->bss->cid_override_cpu_to_cid[i] = i;
+-			}
+-			if (mode == QMAP_CID_OVR_BAD_DUP && nr_cpus >= 2)
+-				skel->bss->cid_override_cpu_to_cid[1] = 0;
+-			if (mode == QMAP_CID_OVR_BAD_RANGE)
+-				skel->bss->cid_override_cpu_to_cid[0] = (s32)nr_cpus;
++			cid_override_shard_sz = 4;
  
- 	bpf_for(i, 0, MAX_SUB_SCHEDS) {
+ 			/*
+ 			 * bad-mono needs >= 3 shards to build a 0-based but
+@@ -368,21 +357,12 @@ int main(int argc, char **argv)
+ 						nr_cpus);
+ 					return 1;
+ 				}
+-				shard_sz = nr_cpus / 3;
++				cid_override_shard_sz = nr_cpus / 3;
+ 			}
+ 
+ 			/* shards of shard_sz each */
+-			skel->rodata->cid_override_nr_shards = (nr_cpus + shard_sz - 1) / shard_sz;
+-			for (i = 0; i < skel->rodata->cid_override_nr_shards; i++)
+-				skel->bss->cid_override_shard_start[i] = i * shard_sz;
+-
+-			if (mode == QMAP_CID_OVR_BAD_MONO) {
+-				/* swap [1] and [2] to break monotonicity */
+-				s32 tmp = skel->bss->cid_override_shard_start[1];
+-				skel->bss->cid_override_shard_start[1] =
+-					skel->bss->cid_override_shard_start[2];
+-				skel->bss->cid_override_shard_start[2] = tmp;
+-			}
++			skel->rodata->cid_override_nr_shards =
++				(nr_cpus + cid_override_shard_sz - 1) / cid_override_shard_sz;
+ 			break;
+ 		}
+ 		case 'i':
+@@ -428,9 +408,43 @@ int main(int argc, char **argv)
+ 	skel->rodata->round_robin_ns = (u64)round_robin_ms * 1000000;
+ 
+ 	SCX_OPS_LOAD(skel, qmap_ops, scx_qmap, uei);
+-	link = SCX_OPS_ATTACH(skel, qmap_ops, scx_qmap);
+ 
+ 	qa = &skel->arena->qa;
++
++	/*
++	 * The cid-override arrays live in the arena, which is mmapped at load.
++	 * Populate them before qmap_init_cids() consumes them at attach.
++	 */
++	if (skel->rodata->cid_override_mode) {
++		u32 mode = skel->rodata->cid_override_mode;
++		u32 nr_cpus = libbpf_num_possible_cpus();
++		u32 i;
++
++		/* shuffle: reversed cpu_to_cid; others: identity */
++		for (i = 0; i < nr_cpus; i++) {
++			if (mode == QMAP_CID_OVR_SHUFFLE)
++				qa->cid_override_cpu_to_cid[i] = nr_cpus - 1 - i;
++			else
++				qa->cid_override_cpu_to_cid[i] = i;
++		}
++		if (mode == QMAP_CID_OVR_BAD_DUP && nr_cpus >= 2)
++			qa->cid_override_cpu_to_cid[1] = 0;
++		if (mode == QMAP_CID_OVR_BAD_RANGE)
++			qa->cid_override_cpu_to_cid[0] = (s32)nr_cpus;
++
++		for (i = 0; i < skel->rodata->cid_override_nr_shards; i++)
++			qa->cid_override_shard_start[i] = i * cid_override_shard_sz;
++
++		if (mode == QMAP_CID_OVR_BAD_MONO) {
++			/* swap [1] and [2] to break monotonicity */
++			s32 tmp = qa->cid_override_shard_start[1];
++			qa->cid_override_shard_start[1] = qa->cid_override_shard_start[2];
++			qa->cid_override_shard_start[2] = tmp;
++		}
++	}
++
++	link = SCX_OPS_ATTACH(skel, qmap_ops, scx_qmap);
++
+ 	qa->test_error_cnt = test_error_cnt;
+ 	qa->inject_mode = inject_mode;
+ 
+diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
+index c8f602d58ca3..c78d61806b39 100644
+--- a/tools/sched_ext/scx_qmap.h
++++ b/tools/sched_ext/scx_qmap.h
+@@ -131,6 +131,10 @@ struct qmap_arena {
+ 
+ 	struct cpu_ctx cpu_ctxs[SCX_QMAP_MAX_CPUS];
+ 
++	/* cid-override test input, populated by the loader before attach */
++	__s32 cid_override_cpu_to_cid[SCX_QMAP_MAX_CPUS];
++	__s32 cid_override_shard_start[SCX_QMAP_MAX_CPUS];
++
+ 	/* task_ctx slab; allocated and threaded by qmap_init() */
+ 	struct task_ctx __arena *task_ctxs;
+ 	struct task_ctx __arena *task_free_head;
 -- 
 2.55.0
 
