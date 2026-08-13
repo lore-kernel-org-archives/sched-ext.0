@@ -1,375 +1,185 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f10.google.com (mail-wm2-f10.google.com [74.125.225.138])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91C948BD26;
-	Wed, 12 Aug 2026 21:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4084931B828
+	for <sched-ext@lists.linux.dev>; Thu, 13 Aug 2026 04:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.138
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786569375; cv=none; b=by+S5jwxaiayEdLtWhJTLSMw6KQ+4qW6+deTJuqkFqfGjgKMI6IsAb1jMl/mFEmfN6/1YUUZ64H5sfzjWa0yUz7PYZIwC8AR8jkflLWDS7njU5bExr6BC5TxxnmYLnGUk6wZC4bLHevlFFAU+UrYoGmW3sEUUe5f2KIA93FKGjc=
+	t=1786595939; cv=none; b=WVzzkWNomgOpkGdcpVwzTGI+5kyVabGjp2Zdxqt3iALL3y8hkraq2cFbiqjgKngU4L9p5TnEYQdAwCoaKH23pkdwzSu47SLOR9hnV4tqndrWMLxNnrZ0gCrZt6AnCyyYyr1JBZYIOd4KgeevbMVA2v58eGzEKYNu7je+l7T4v5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786569375; c=relaxed/simple;
-	bh=Q1ZVL5+h9KWBnuLbrf1kGK+ilHxQOFhrTssLxZwmww4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2t0Kp+ze7+whgNIpn39d5005urRt+sJ5U1SBhavvLrntufOaBF0Z86Tc8xbHXmlHJrjna88kGPKXzJYZDhZdT4lYvOie8pJhBvGjG4KeC6OM8hg+4HYCiZwl3XSm/NBBCxudYd+3ybgS0m9rsN4g2fCbpGiiSBLSzmycMqiVeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/Cs0rJj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786595939; c=relaxed/simple;
+	bh=ZP+YmiMqjne+BIOHGU+qADJTqbtfWsS0k9JYL/OigHc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=bhpTIeAeW1vl1+0Dk7NkgmlaAyWQxjFEHXpg1vBa7caa+k3WX/jwUVcbxy2jH1gDsQqil7ZXPcP4I8RffD4eTXLdk21R2h/EDXcd2rawPztb2Q+GEJU4q0wfX6RtgKcwFjPQ13xPy+6Uu/yTyeUpHMcCETumMjq2X9fuifXYWp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQ4WJtCH; arc=none smtp.client-ip=74.125.225.138
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/Cs0rJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691FC1F00A3A;
-	Wed, 12 Aug 2026 21:16:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786569373;
-	bh=Z9QDjMwDB1kVgPqfdOvsIMCsBPRn1QGeOmh/VWo0+RM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/Cs0rJjKOjpTZqZtpc+gR9+ozubVhKqRo9bMQxXF0DP9UZfBZ/HvqU4lU0hdfvgY
-	 2eqehBcUKfF4srxxf/92AWXATNDQsAs8ecDFePdkB70f/kaH74i8pGwUxBfPGybv4/
-	 sgSD7uBSkKECHaoTIreuqwaCAXqqj6IxNPZ/7tbGPb+7rl7MQByawSfCusTIt6KHui
-	 TuC6HwC7VmoAE8Olzc/ea8FLR/f+SRMhuONgULH17nwgZu8mk4vCWblnHOfciJEMQx
-	 fE13uRRXACKyzoCCstbRqtb9JrW6sbcOHqYhtgVElZuckm/vEu1mOGMiluMs+i5icu
-	 2yMxUynlvJN3w==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/3] sched_ext: Convert scx_bpf_cid_override() to __arena array arguments
-Date: Wed, 12 Aug 2026 11:16:09 -1000
-Message-ID: <20260812211609.2495583-4-tj@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260812211609.2495583-1-tj@kernel.org>
-References: <20260812211609.2495583-1-tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQ4WJtCH"
+Received: by mail-wm2-f10.google.com with SMTP id 5b1f17b1804b1-495501e57beso4404705e9.1
+        for <sched-ext@lists.linux.dev>; Wed, 12 Aug 2026 21:38:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786595935; x=1787200735; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=GAZ+x7z6BZhFTzywSoAUTFEoxQswSZuOueFTYMsV3yc=;
+        b=gQ4WJtCHyew+2EdpKB8DC/fhIZfW6q9AgLUYMzsggKhkyT8G2G+hJTJw6tDzU75phM
+         XYDMniP+ztGXM1Ezikprl0ONCoiyo11AV+RINfWxsHRUGbIUqFvHfXZ2op/sGbXH+3i1
+         86qDtwCJuu1GYfZ3emAHKKVvCu5AksWiPpG663GDx2DNfDbZC9TOhs5BCPItNb6DDkGc
+         cbQUsgguEpEWV02nnqGtiAJ5EutwP8uVCTyRnJ6+iqNYavtM6mMj2v+04TipFc9QEVce
+         bqhe5QU2ySgiTd7a9POYwlBNQD71TdcJZbkmVLToSv959WkL/eVwIDxiZqtoijl7wmYF
+         gI6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786595935; x=1787200735;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GAZ+x7z6BZhFTzywSoAUTFEoxQswSZuOueFTYMsV3yc=;
+        b=CYRE/JYjRbFvjMVkJCIL8r+YHmuOWKSZQnkhSvX9vuZJKRELKjIZzjPA/ZwIF9Gssq
+         Vmar84gj7hB9PAxNb+n8a9T6sMmF8fxBND5DeKYA0E1JbCM/LL9x82AWSk01CEyVIRla
+         +ousRS27fKmxa/ZxSbi2dU8VwBluILEKKaCYUoK0qbFtynxDRtD/nJNe3T9Eqk175QAA
+         RCJ1O4lJrsikGxa4Mz7+iGIxXZx5/AOTUoWSPaBTwOnu4E+Yhn8j8gpqccMucbrqgzQq
+         8mXPP/UkIORccW+vOdI2NmF9xaVnnqcyJi/Tk1RsdlP1dgW0du+P1BGSSdJ/iFRX1bBT
+         qE6Q==
+X-Forwarded-Encrypted: i=1; AHgh+RoGNhI61tS13SEZcnn9fbgql7Fq7yh7mXtJ3ZgbyEvKT8o7FdjG2vRHe2zmGAJ4pU67mDjxHlV1YDA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyNqv/+vxnPZJ4yEnBWX0isypXpc/nbQ3TKnlSuEGEwtuImZQpy
+	CL559cDFBMmW2jX2I/qVDRvStmDnwIj+YEpf9KiQIEbP1wdH7UnOiYdU
+X-Gm-Gg: AR+sD13NG05IrWv5lMaWjCLKVwLq5h6Ao9yrH1CNKSVKXj3HlMQuVQQpK2fiKcGUFU4
+	pt9HYwdQY7lkw/dIPDOyirg3mZS+mmBbO+nsnq5Wc4bebeZmSOlvbOHcDjCk8sVK5lAuR+/aLdf
+	wHWiAcL4K5RT1SiqdQEwFwLCWLy0/Z8HSz+SbTbui5JjtnVNn6m01tMzkssEVmqhLsM9SNKHbe3
+	dvci4NCXV6c3iygC5fceFlxApIylVPRV3EiakXBV7Ac3Py0erzVAMJL2G1mD1CVNPzmJ7K3ULB6
+	Olkq4HKvUOn2Tee2PjJLgnLgVTLQUWUu4nukfJTxwurFSXzk62Q5LIkStSLtX0LPPXgcnAp07kp
+	8fu1qxGJ0l/9CwGwr1BuBJOskWXNzb0jgYjbXjaDC9rAe+bkzrv7YyPAwsg3EyQVlvaUUIus9R3
+	lCnllBTy6FZWkALuCMctmxl+LcDXH0xG4YYT/WLzbaGJXGka/lUCaNp6JViFRHxL51VZbBLpFjP
+	BiVXs36Iacok+R2akA9KHKeivLE1P6DaI1gd6aHnP0Pj80eQuWy94hQQnDBxZFJHsqL3addbQy6
+	AHawsDGRI3IiIi/ypevitos+0X0=
+X-Received: by 2002:a05:600c:310e:b0:499:51f0:a9b2 with SMTP id 5b1f17b1804b1-499821881d3mr26179715e9.1.1786595935294;
+        Wed, 12 Aug 2026 21:38:55 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-499820f5d26sm23033735e9.1.2026.08.12.21.38.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Aug 2026 21:38:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 13 Aug 2026 06:38:54 +0200
+Message-Id: <DKNJEHJWIC8Y.2QH6JE3N590FS@gmail.com>
+Cc: "Martin KaFai Lau" <martin.lau@linux.dev>, "Song Liu" <song@kernel.org>,
+ "Yonghong Song" <yonghong.song@linux.dev>, "Jiri Olsa" <jolsa@kernel.org>,
+ <bpf@vger.kernel.org>, <sched-ext@lists.linux.dev>,
+ <linux-kselftest@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <kernel-dev@igalia.com>
+Subject: Re: [PATCH] selftests/bpf: Remove duplicate copies of the arena
+ spinlock qnodes
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: "Changwoo Min" <changwoo@igalia.com>, "Alexei Starovoitov"
+ <ast@kernel.org>, "Daniel Borkmann" <daniel@iogearbox.net>, "Andrii
+ Nakryiko" <andrii@kernel.org>, "Eduard Zingerman" <eddyz87@gmail.com>,
+ "Shuah Khan" <shuah@kernel.org>, "Emil Tsalapatis" <emil@etsalapatis.com>
+X-Mailer: aerc 0.21.0
+References: <20260803001807.646357-1-changwoo@igalia.com>
+In-Reply-To: <20260803001807.646357-1-changwoo@igalia.com>
 
-scx_bpf_cid_override() predates the cid-form arena transition and takes its
-arrays as verifier-checked mem+size buffers, forcing scx_qmap to keep the
-cpu_to_cid and shard_start arrays in writable bss while the rest of its
-state lives in the arena. Unify on arena arguments before cid-form
-schedulers start seeing real use.
+On Mon Aug 3, 2026 at 2:18 AM CEST, Changwoo Min wrote:
+> bpf_arena_spin_lock.h defines its 64KB qnodes array in the header, so
+> every translation unit including it emits a copy. __weak makes them all
+> resolve to one instance, but bpftool gen object merges only the symbols
+> and concatenates each input's .addr_space.1 bytes, leaving the surplus
+> copies unreferenced in the linked object.
+>
+> libarena links ten such units, so nine copies were dead weight (bytes):
+>
+>   object                             before       after
+>   -----------------------------------------------------
+>   .addr_space.1 in libarena.bpf.o    676200       86376
+>   libarena.skel.h                   2100123      892371
+>   libarena_asan.skel.h              2641124     1466477
+>
+> Declare qnodes in the header and let each program define it once:
+> libarena in src/common.bpf.c, and the arena_spin_lock test beside the
+> lock it guards.
+>
+> Tested with test_progs -t arena_spin_lock and -t libarena.
+>
+> Signed-off-by: Changwoo Min <changwoo@igalia.com>
+> ---
 
-BPF now translates between BPF and kernel arena addresses for __arena
-arguments. Take the arrays as __arena arguments, with the counts passed in
-entries. The counts now size the snapshot copies and are bounds-checked
-before them.
+This seems ok to me. I don't have better ideas. Emil, any thoughts?
 
-scx_qmap moves the arrays into struct qmap_arena. As the arena is mmapped at
-load, the loader populates them between load and attach instead of before
-load.
-
-The arena argument address translation is currently implemented only on
-x86-64. Schedulers calling this kfunc load only there for now.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext/cid.c                   | 49 +++++++++--------
- tools/sched_ext/include/scx/compat.bpf.h | 14 ++---
- tools/sched_ext/scx_qmap.bpf.c           | 16 ++----
- tools/sched_ext/scx_qmap.c               | 68 ++++++++++++++----------
- tools/sched_ext/scx_qmap.h               |  4 ++
- 5 files changed, 84 insertions(+), 67 deletions(-)
-
-diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
-index 11fe9be80f1e..39f88deb94bc 100644
---- a/kernel/sched/ext/cid.c
-+++ b/kernel/sched/ext/cid.c
-@@ -449,10 +449,10 @@ __bpf_kfunc_start_defs();
- 
- /**
-  * scx_bpf_cid_override - Install an explicit cpu->cid mapping with shard info
-- * @cpu_to_cid_src: array of nr_cpu_ids s32 entries (cid for each cpu)
-- * @cpu_to_cid_src__sz: must be nr_cpu_ids * sizeof(s32) bytes
-- * @shard_start_src: array of first-cid-of-each-shard, strictly increasing from 0
-- * @shard_start_src__sz: nr_shards * sizeof(s32) bytes
-+ * @cpu_to_cid__arena: array of nr_cpu_ids s32 entries (cid for each cpu)
-+ * @cpu_to_cid_cnt: number of entries, must be nr_cpu_ids
-+ * @shard_start__arena: array of first-cid-of-each-shard, one entry per shard
-+ * @shard_start_cnt: number of shards
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-  *
-  * May only be called from ops.init_cids() of the root scheduler. Replace the
-@@ -464,9 +464,9 @@ __bpf_kfunc_start_defs();
-  * (core/LLC/node) is cleared and the shard layout is set from the input. On
-  * invalid input, abort the scheduler.
-  */
--__bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_src__sz,
--				       const s32 *shard_start_src, u32 shard_start_src__sz,
--				       const struct bpf_prog_aux *aux)
-+__bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid__arena, u32 cpu_to_cid_cnt,
-+				      const s32 *shard_start__arena, u32 shard_start_cnt,
-+				      const struct bpf_prog_aux *aux)
- {
- 	cpumask_var_t seen __free(free_cpumask_var) = CPUMASK_VAR_NULL;
- 	u32 *node_counts __free(kfree) = NULL;
-@@ -475,19 +475,28 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 	u32 npossible = num_possible_cpus();
- 	struct scx_cid_tables *tbls;
- 	struct scx_sched *sch;
--	u32 nr_shards;
-+	u32 nr_shards = shard_start_cnt;
- 	bool alloced;
- 	s32 cpu, cid, si;
- 
- 	/*
- 	 * GFP_KERNEL allocs must happen before the rcu read section. Snapshot
--	 * the BPF-supplied arrays so a concurrent map mutation can't change
-+	 * the BPF-supplied arrays so a concurrent arena write can't change
- 	 * them between validation and use.
-+	 *
-+	 * The BPF-supplied counts size the snapshots and thus the arena reads.
-+	 * Gate the copies on the count bounds, reported below once @sch is
-+	 * available. The bounded reads, at most 32KB, stay within the guard
-+	 * region that arena fault recovery covers.
- 	 */
- 	alloced = zalloc_cpumask_var(&seen, GFP_KERNEL);
- 	node_counts = kcalloc(nr_node_ids, sizeof(*node_counts), GFP_KERNEL);
--	cpu_to_cid = kmemdup(cpu_to_cid_src, cpu_to_cid_src__sz, GFP_KERNEL);
--	shard_start = kmemdup(shard_start_src, shard_start_src__sz, GFP_KERNEL);
-+	if (cpu_to_cid_cnt == nr_cpu_ids)
-+		cpu_to_cid = kmemdup(cpu_to_cid__arena, cpu_to_cid_cnt * sizeof(s32),
-+				     GFP_KERNEL);
-+	if (nr_shards && nr_shards <= npossible)
-+		shard_start = kmemdup(shard_start__arena, nr_shards * sizeof(s32),
-+				      GFP_KERNEL);
- 
- 	guard(rcu)();
- 
-@@ -499,25 +508,23 @@ __bpf_kfunc void scx_bpf_cid_override(const s32 *cpu_to_cid_src, u32 cpu_to_cid_
- 	lockdep_assert_held(&scx_enable_mutex);
- 	tbls = scx_cid_tables;
- 
--	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
--		scx_error(sch, "scx_bpf_cid_override: allocation failed");
-+	if (cpu_to_cid_cnt != nr_cpu_ids) {
-+		scx_error(sch, "scx_bpf_cid_override: cpu_to_cid expected %u entries, got %u",
-+			  nr_cpu_ids, cpu_to_cid_cnt);
- 		return;
- 	}
- 
--	if (cpu_to_cid_src__sz != nr_cpu_ids * sizeof(s32)) {
--		scx_error(sch, "scx_bpf_cid_override: cpu_to_cid expected %zu bytes, got %u",
--			  nr_cpu_ids * sizeof(s32), cpu_to_cid_src__sz);
-+	if (!nr_shards || nr_shards > npossible) {
-+		scx_error(sch, "scx_bpf_cid_override: invalid shard_start count %u",
-+			  nr_shards);
- 		return;
- 	}
- 
--	if (!shard_start_src__sz || shard_start_src__sz % sizeof(s32)) {
--		scx_error(sch, "scx_bpf_cid_override: invalid shard_start size %u",
--			  shard_start_src__sz);
-+	if (!alloced || !node_counts || !cpu_to_cid || !shard_start) {
-+		scx_error(sch, "scx_bpf_cid_override: allocation failed");
- 		return;
- 	}
- 
--	nr_shards = shard_start_src__sz / sizeof(s32);
--
- 	/* validate shard_start[]: starts at 0, strictly increasing, in range */
- 	if (shard_start[0] != 0) {
- 		scx_error(sch, "scx_bpf_cid_override: shard_start[0] must be 0, got %d",
-diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-index 1b45655a64a3..7c735eb09c07 100644
---- a/tools/sched_ext/include/scx/compat.bpf.h
-+++ b/tools/sched_ext/include/scx/compat.bpf.h
-@@ -125,15 +125,17 @@ static inline bool scx_bpf_sub_dispatch(u64 cgroup_id)
-  * v7.3: scx_bpf_cid_override() for explicit cid and shard mapping. Ignore if
-  * missing.
-  */
--void scx_bpf_cid_override___compat(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
--				    const s32 *shard_start, u32 shard_start__sz) __ksym __weak;
-+void scx_bpf_cid_override___compat(const s32 __arena *cpu_to_cid__arena,
-+				   u32 cpu_to_cid_cnt,
-+				   const s32 __arena *shard_start__arena,
-+				   u32 shard_start_cnt) __ksym __weak;
- 
--static inline void scx_bpf_cid_override(const s32 *cpu_to_cid, u32 cpu_to_cid__sz,
--					 const s32 *shard_start, u32 shard_start__sz)
-+static inline void scx_bpf_cid_override(const s32 __arena *cpu_to_cid, u32 cpu_to_cid_cnt,
-+					const s32 __arena *shard_start, u32 shard_start_cnt)
- {
- 	if (bpf_ksym_exists(scx_bpf_cid_override___compat))
--		scx_bpf_cid_override___compat(cpu_to_cid, cpu_to_cid__sz,
--					      shard_start, shard_start__sz);
-+		scx_bpf_cid_override___compat(cpu_to_cid, cpu_to_cid_cnt,
-+					      shard_start, shard_start_cnt);
- }
- 
- /**
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 61dc748742a2..d9ca9106a5ce 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -80,14 +80,6 @@ const volatile u64 round_robin_ns;
-  */
- const volatile u32 cid_override_mode;
- const volatile u32 cid_override_nr_shards;
--/*
-- * Arrays live in bss (writable) because scx_bpf_cid_override()'s BPF
-- * verifier signature treats its len-paired pointers as read/write - rodata
-- * fails verification with "write into map forbidden". Userspace populates
-- * them before SCX_OPS_LOAD, same as rodata, and nothing writes them after.
-- */
--s32 cid_override_cpu_to_cid[SCX_QMAP_MAX_CPUS];
--s32 cid_override_shard_start[SCX_QMAP_MAX_CPUS];
- 
- UEI_DEFINE(uei);
- 
-@@ -1761,17 +1753,15 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init_cids)
- 	if (!cid_override_mode)
- 		return 0;
- 
--	/* bound the count so the verifier accepts cpu_to_cid's mem/len pair */
-+	/* the arena arrays are sized SCX_QMAP_MAX_CPUS */
- 	if (nr_cpu_ids > SCX_QMAP_MAX_CPUS) {
- 		scx_bpf_error("nr_cpu_ids=%u exceeds SCX_QMAP_MAX_CPUS=%d",
- 			      nr_cpu_ids, SCX_QMAP_MAX_CPUS);
- 		return -EINVAL;
- 	}
- 
--	scx_bpf_cid_override((const s32 *)cid_override_cpu_to_cid,
--			     nr_cpu_ids * sizeof(s32),
--			     (const s32 *)cid_override_shard_start,
--			     cid_override_nr_shards * sizeof(s32));
-+	scx_bpf_cid_override(qa.cid_override_cpu_to_cid, nr_cpu_ids,
-+			     qa.cid_override_shard_start, cid_override_nr_shards);
- 	return 0;
- }
- 
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 988b6931633e..5bb5f687e579 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -242,6 +242,7 @@ int main(int argc, char **argv)
- 	char tbuf[32];
- 	u32 inject_mode = 0;
- 	u64 own_cgid = 0;
-+	s32 cid_override_shard_sz = 4;
- 
- 	libbpf_set_print(libbpf_print_fn);
- 	signal(SIGINT, sigint_handler);
-@@ -328,8 +329,7 @@ int main(int argc, char **argv)
- 			break;
- 		case 'C': {
- 			u32 nr_cpus = libbpf_num_possible_cpus();
--			u32 mode, i;
--			s32 shard_sz = 4;
-+			u32 mode;
- 
- 			if (!strcmp(optarg, "shuffle"))
- 				mode = QMAP_CID_OVR_SHUFFLE;
-@@ -344,18 +344,7 @@ int main(int argc, char **argv)
- 				return 1;
- 			}
- 			skel->rodata->cid_override_mode = mode;
--
--			/* shuffle: reversed cpu_to_cid; others: identity */
--			for (i = 0; i < nr_cpus; i++) {
--				if (mode == QMAP_CID_OVR_SHUFFLE)
--					skel->bss->cid_override_cpu_to_cid[i] = nr_cpus - 1 - i;
--				else
--					skel->bss->cid_override_cpu_to_cid[i] = i;
--			}
--			if (mode == QMAP_CID_OVR_BAD_DUP && nr_cpus >= 2)
--				skel->bss->cid_override_cpu_to_cid[1] = 0;
--			if (mode == QMAP_CID_OVR_BAD_RANGE)
--				skel->bss->cid_override_cpu_to_cid[0] = (s32)nr_cpus;
-+			cid_override_shard_sz = 4;
- 
- 			/*
- 			 * bad-mono needs >= 3 shards to build a 0-based but
-@@ -368,21 +357,12 @@ int main(int argc, char **argv)
- 						nr_cpus);
- 					return 1;
- 				}
--				shard_sz = nr_cpus / 3;
-+				cid_override_shard_sz = nr_cpus / 3;
- 			}
- 
- 			/* shards of shard_sz each */
--			skel->rodata->cid_override_nr_shards = (nr_cpus + shard_sz - 1) / shard_sz;
--			for (i = 0; i < skel->rodata->cid_override_nr_shards; i++)
--				skel->bss->cid_override_shard_start[i] = i * shard_sz;
--
--			if (mode == QMAP_CID_OVR_BAD_MONO) {
--				/* swap [1] and [2] to break monotonicity */
--				s32 tmp = skel->bss->cid_override_shard_start[1];
--				skel->bss->cid_override_shard_start[1] =
--					skel->bss->cid_override_shard_start[2];
--				skel->bss->cid_override_shard_start[2] = tmp;
--			}
-+			skel->rodata->cid_override_nr_shards =
-+				(nr_cpus + cid_override_shard_sz - 1) / cid_override_shard_sz;
- 			break;
- 		}
- 		case 'i':
-@@ -428,9 +408,43 @@ int main(int argc, char **argv)
- 	skel->rodata->round_robin_ns = (u64)round_robin_ms * 1000000;
- 
- 	SCX_OPS_LOAD(skel, qmap_ops, scx_qmap, uei);
--	link = SCX_OPS_ATTACH(skel, qmap_ops, scx_qmap);
- 
- 	qa = &skel->arena->qa;
-+
-+	/*
-+	 * The cid-override arrays live in the arena, which is mmapped at load.
-+	 * Populate them before qmap_init_cids() consumes them at attach.
-+	 */
-+	if (skel->rodata->cid_override_mode) {
-+		u32 mode = skel->rodata->cid_override_mode;
-+		u32 nr_cpus = libbpf_num_possible_cpus();
-+		u32 i;
-+
-+		/* shuffle: reversed cpu_to_cid; others: identity */
-+		for (i = 0; i < nr_cpus; i++) {
-+			if (mode == QMAP_CID_OVR_SHUFFLE)
-+				qa->cid_override_cpu_to_cid[i] = nr_cpus - 1 - i;
-+			else
-+				qa->cid_override_cpu_to_cid[i] = i;
-+		}
-+		if (mode == QMAP_CID_OVR_BAD_DUP && nr_cpus >= 2)
-+			qa->cid_override_cpu_to_cid[1] = 0;
-+		if (mode == QMAP_CID_OVR_BAD_RANGE)
-+			qa->cid_override_cpu_to_cid[0] = (s32)nr_cpus;
-+
-+		for (i = 0; i < skel->rodata->cid_override_nr_shards; i++)
-+			qa->cid_override_shard_start[i] = i * cid_override_shard_sz;
-+
-+		if (mode == QMAP_CID_OVR_BAD_MONO) {
-+			/* swap [1] and [2] to break monotonicity */
-+			s32 tmp = qa->cid_override_shard_start[1];
-+			qa->cid_override_shard_start[1] = qa->cid_override_shard_start[2];
-+			qa->cid_override_shard_start[2] = tmp;
-+		}
-+	}
-+
-+	link = SCX_OPS_ATTACH(skel, qmap_ops, scx_qmap);
-+
- 	qa->test_error_cnt = test_error_cnt;
- 	qa->inject_mode = inject_mode;
- 
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index c8f602d58ca3..c78d61806b39 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -131,6 +131,10 @@ struct qmap_arena {
- 
- 	struct cpu_ctx cpu_ctxs[SCX_QMAP_MAX_CPUS];
- 
-+	/* cid-override test input, populated by the loader before attach */
-+	__s32 cid_override_cpu_to_cid[SCX_QMAP_MAX_CPUS];
-+	__s32 cid_override_shard_start[SCX_QMAP_MAX_CPUS];
-+
- 	/* task_ctx slab; allocated and threaded by qmap_init() */
- 	struct task_ctx __arena *task_ctxs;
- 	struct task_ctx __arena *task_free_head;
--- 
-2.55.0
+>  .../selftests/bpf/libarena/include/bpf_arena_spin_lock.h   | 7 +------
+>  tools/testing/selftests/bpf/libarena/src/common.bpf.c      | 7 +++++++
+>  tools/testing/selftests/bpf/progs/arena_spin_lock.c        | 7 +++++++
+>  3 files changed, 15 insertions(+), 6 deletions(-)
+>
+> diff --git a/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_=
+lock.h b/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
+> index ae6b72d15bb6..71d9db610263 100644
+> --- a/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
+> +++ b/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
+> @@ -103,12 +103,7 @@ struct arena_qnode {
+>  #define _Q_LOCKED_VAL		(1U << _Q_LOCKED_OFFSET)
+>  #define _Q_PENDING_VAL		(1U << _Q_PENDING_OFFSET)
+>
+> -/*
+> - * The qnodes are marked __weak so we can define them in the header
+> - * while still ensuring all compilation units use the same struct
+> - * instance.
+> - */
+> -struct arena_qnode __weak __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NO=
+DES];
+> +extern struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NO=
+DES];
+>
+>  static inline u32 encode_tail(int cpu, int idx)
+>  {
+> diff --git a/tools/testing/selftests/bpf/libarena/src/common.bpf.c b/tool=
+s/testing/selftests/bpf/libarena/src/common.bpf.c
+> index 50be57213dfb..06481f2a2892 100644
+> --- a/tools/testing/selftests/bpf/libarena/src/common.bpf.c
+> +++ b/tools/testing/selftests/bpf/libarena/src/common.bpf.c
+> @@ -8,6 +8,13 @@ const volatile u32 zero =3D 0;
+>
+>  struct buddy __arena buddy;
+>
+> +/*
+> + * Storage for the queue nodes declared by bpf_arena_spin_lock.h. Each p=
+rogram
+> + * linking the arena spinlock provides exactly one definition, so that t=
+he array
+> + * is emitted once rather than once per translation unit.
+> + */
+> +struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
+> +
+>  int arena_fls(__u64 word)
+>  {
+>  	if (!word)
+> diff --git a/tools/testing/selftests/bpf/progs/arena_spin_lock.c b/tools/=
+testing/selftests/bpf/progs/arena_spin_lock.c
+> index cf7cda79c16c..92e75ec3844c 100644
+> --- a/tools/testing/selftests/bpf/progs/arena_spin_lock.c
+> +++ b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
+> @@ -23,6 +23,13 @@ int cs_count;
+>  #if defined(ENABLE_ATOMICS_TESTS) && defined(__BPF_FEATURE_ADDR_SPACE_CA=
+ST)
+>  arena_spinlock_t __arena lock;
+>  int test_skip =3D 1;
+> +
+> +/*
+> + * Storage for the queue nodes declared by bpf_arena_spin_lock.h. Each p=
+rogram
+> + * linking the arena spinlock provides exactly one definition; libarena'=
+s lives
+> + * in libarena/src/common.bpf.c.
+> + */
+> +struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
+>  #else
+>  int test_skip =3D 2;
+>  #endif
 
