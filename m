@@ -1,122 +1,126 @@
-Received: from mta0.migadu.com (out-210.mta0.migadu.com [91.218.175.210])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4933C0610
-	for <sched-ext@lists.linux.dev>; Fri, 14 Aug 2026 14:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C9F47254A;
+	Fri, 14 Aug 2026 17:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786718929; cv=none; b=FEstCRx16mERy0/PDcWTrIwj1HcLDcrIksiG/fs7it6MCdA1Q4teEwwxBDPPDq8g+g2c20DyqUw+9Hk2Y3b/gxymgyMfwk6590I/4VmPP+dgjbcYhl6uWaPtu2ZT1YG1JOwCeyrVy8NrPMnPdSdk26BoV2V34H+wSlj+6ZTSksI=
+	t=1786727112; cv=none; b=E6PHKzOcrDl8Ny33QEVfIb1KIMHvF+gYQY/fZ7V6Rjl7iYrGTJgLpIWwxjGOr4qfLXKeM5QPX1VB0M/mSiOTh6xoUNhVx1NSS94mFYTDebRgPCibJ+nfM3YjaZXMdWafdAF5Zknq9F9DzfzTKi0opTUpi0jD4hbbNFocBAK4/nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786718929; c=relaxed/simple;
-	bh=GHIzj6BHIyXzI9iz97ChDhrFMa0zf+N9Qaq5cFwiLzc=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=KutzIAlgz2oKhzRjBZRsrlYeaQSvy2xB4bZ/TNVnp2ffmvzpd07dv0rpiAodz0/8Q24gWDC7FMo/1IhXd78WqqbdEJzw2mk+rhWk/96v4GIGJWqP/XQirPWV9Fy58fVFGwTIqjHl73mnTiYLgEjMJtEh+Ap45Y+xqqoVW38hTWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=EA7Tcts5; arc=none smtp.client-ip=91.218.175.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786727112; c=relaxed/simple;
+	bh=hmk5DMYYPmU0hVlqz0ianL+11xxxbuG8IpeYoMizpfc=;
+	h=Content-Type:MIME-Version:Message-Id:In-Reply-To:References:
+	 Subject:From:To:Cc:Date; b=i51n+oajP7kNHmIkJJ4awp6lIJuf/o0bg+nMrqjPHPFBylJ2g95PSBimgUGJ8v4HS9bDfd2wlcbVGvQxEui3mgSpoY2Jq31AmAVQmEHh/Oehi92JbYU+ULcCG+wMEJLdAZ2dhXaChREWbQ0fJzwFV1Qlg7v3L35FPBm+CLId2FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ebwNvCqU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="EA7Tcts5"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=GHIzj6BHIyXzI9iz97ChDhrFMa0zf+N9Qaq5cFwiLzc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786718925; v=1; x=1787323725;
- b=EA7Tcts56eIW65AuTXuo5bnfBrljT3kQ7X31sg8TiHmCD9gNHNLPryeVRKCvwCv9kIZIE+4B
- DMQX6v2Y3Ka5uXslHp3qLdwRzZQU9TCoJfZ1/CYCn931uMQIAQVa02voyCpnKzHTnAhT6p/yADe
- eZ70jEyiAjf2fGwaSfd+ntUs=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: from [192.168.1.116] (111.162.215.50)
-	by smtp.migadu.com with ESMTPS id f9f3cc7728ab931f;
-	Fri, 14 Aug 2026 14:48:45 +0000
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <80d78aac-7fc8-4c14-a2ae-419297d953f7@linux.dev>
-Date: Fri, 14 Aug 2026 22:48:35 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ebwNvCqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E461F000E9;
+	Fri, 14 Aug 2026 17:05:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786727111;
+	bh=X/oq0HBoJMRapoD7XWtIdy5xy+Ds8RrmKGd6Lc/Pysc=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=ebwNvCqUju/eAaqKWY2V19wi/U9Lgt/o8wQot0+G2TbFHEvlXiLg0BCdU9eT+x79Y
+	 YyWDrqJD1bqXn15z4tYiP2yWmfOxFMSrwUCq+0KgINHhXxRzNnMatX0TyRRB+EVWr3
+	 +RDRwR8uLF1gVT4ee1tcNIxVuuzuMdm3Vkn98rX6Y4j/P1eHQqd9CCAgDe0LDC9NXc
+	 6Mb8UdJT55rfklnAnJd9Y0Bc78PiZi6kd65v64/v27mEyX429i9ys+xvoeva0cmCrh
+	 8iLtVm32WSB26NoDgxdTTWuqNbB89txZW4zVjbp+DF6FIe2oq9B2BC2FxY7CrfVDUK
+	 Tg2xmyIrwXcGA==
+Content-Type: multipart/mixed; boundary="===============3060449598212239265=="
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, arighi@nvidia.com, changwoo@igalia.com,
- suzhidao@xiaomi.com, yphbchou0911@gmail.com, zhaomengmeng@kylinos.cn,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
- bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH] sched_ext/scx_flatcg: expire cached hweights on weight
- changes
-To: tj@kernel.org, void@manifault.com
-References: <20260814144116.2767304-1-cui.tao@linux.dev>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260814144116.2767304-1-cui.tao@linux.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Message-Id: <a13e1c45f40c04350b700e6b2ad5bae5dc72c8402ec59b0edbfb7907e90ca13e@mail.kernel.org>
+In-Reply-To: <20260814075054.507089-4-ziyang.meme@gmail.com>
+References: <20260814075054.507089-4-ziyang.meme@gmail.com>
+Subject: Re: [PATCH v3 3/4] selftests/hid: build the BPF program via the shared lib.bpf.mk
+From: bot+bpf-ci@kernel.org
+To: ziyang.meme@gmail.com,shuah@kernel.org,tj@kernel.org,hannes@cmpxchg.org,mkoutny@suse.com,jikos@kernel.org,bentiss@kernel.org,void@manifault.com,eddyz87@gmail.com
+Cc: vmalik@redhat.com,arighi@nvidia.com,changwoo@igalia.com,mhocko@kernel.org,roman.gushchin@linux.dev,shakeel.butt@linux.dev,muchun.song@linux.dev,akpm@linux-foundation.org,inwardvessel@gmail.com,mykolal@meta.com,nathan@kernel.org,ziyang.meme@gmail.com,kernel-team@meta.com,linux-kselftest@vger.kernel.org,cgroups@vger.kernel.org,linux-input@vger.kernel.org,sched-ext@lists.linux.dev,linux-mm@kvack.org,bpf@vger.kernel.org,llvm@lists.linux.dev,linux-kernel@vger.kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,clm@meta.com,ihor.solodrai@linux.dev
+Date: Fri, 14 Aug 2026 17:05:09 +0000 (UTC)
+
+--===============3060449598212239265==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+> The generated hid.skel.h public API is same before and after, hid_bpf
+> and hidraw are built and linked the same way.
+
+This isn't a bug, but could the changelog mention that the BPF compile
+flags change with the shared fragment (added -Wall/-std=gnu11/
+-fno-strict-aliasing, added include paths, auto-detected -mcpu instead
+of a hardcoded v3) rather than describing the build as unchanged?
+
+The flags used to compile progs/hid.c do change: the shared BPF_CFLAGS
+add -Wall, -std=gnu11, -fno-strict-aliasing, -I$(APIDIR)
+-I$(TOOLSINCDIR) and the clang system-include set (which the old
+Makefile computed into CLANG_SYS_INCLUDES but never passed), and -mcpu
+becomes auto-detected (v3/v2) instead of hardcoded -mcpu=v3. The
+-Wno-unused-variable line the patch has to add is direct evidence that
+the compile flags are not identical.
+
+> diff --git a/tools/testing/selftests/hid/.gitignore b/tools/testing/selftests/hid/.gitignore
+
+[ ... ]
+
+> diff --git a/tools/testing/selftests/hid/Makefile b/tools/testing/selftests/hid/Makefile
+> index 2f423de83147..1d7c64ec992c 100644
+> --- a/tools/testing/selftests/hid/Makefile
+> +++ b/tools/testing/selftests/hid/Makefile
+
+[ ... ]
+
+> +# progs/hid.c is built into a skeleton by ../lib.bpf.mk.  hid keeps the legacy
+> +# progs/<name>.c layout, hence BPF_PROG_EXT.  BPF_EXTRA_HDRS is deferred: it
+> +# uses $(BPFDIR), which lib.bpf.mk defines.
+> +BPF_SRCS       := $(wildcard progs/*.c)
+> +BPF_PROG_EXT   := .c
+> +BPF_EXTRA_HDRS  = $(wildcard progs/*.h) $(wildcard $(BPFDIR)/hid_bpf_*.h) \
+> +		  $(wildcard $(BPFDIR)/*.bpf.h)
+> +# hid.c predates the shared -Wall and has a few unused locals.
+> +BPF_EXTRA_CFLAGS := -Wno-unused-variable
+
+This isn't a bug, but would dropping the four unused locals in
+progs/hid.c (the `int i` in the three hid_user_* syscall programs and
+the unused `int ret` in hid_test_hidraw_output_report) let this
+directory build without the -Wno-unused-variable override?
+
+The shared lib.bpf.mk compiles BPF objects with -Wall -Werror, and this
+patch reacts by permanently disabling -Wunused-variable for every BPF
+program in this directory. The trigger is exactly four dead locals:
+`int i` in hid_user_raw_request(), hid_user_output_report() and
+hid_user_input_report(), plus an `int ret;` in
+hid_test_hidraw_output_report() that is never assigned or read.
+Deleting those four declarations would let the directory build with the
+shared warning set unmodified, and would keep the suppression from
+silently hiding unused locals in BPF programs added here later.
+
+[ ... ]
+
+> +EXTRA_CLEAN += feature bpftool $(addprefix $(OUTPUT)/,*.o no_alu32)
+
+This isn't a bug, but since the no_alu32 build rule goes away in this
+patch, is the `no_alu32` (and `feature`) entry in EXTRA_CLEAN still
+needed, or could this line shrink to just `$(OUTPUT)/*.o`?
+
+The rewritten EXTRA_CLEAN keeps the `no_alu32` entry, but this patch
+removes the only thing that could ever have produced such an artifact:
+the CLANG_NOALU32_BPF_BUILD_RULE definition (and hid never had the
+selftests/bpf per-flavor subdirectory machinery that creates a
+no_alu32/ tree in the first place). Now that the flavor rule is gone,
+nothing in this directory can create $(OUTPUT)/no_alu32. The `feature`
+entry is in a similar position - libbpf/bpftool feature-detection
+output lands under $(BUILD_DIR)/libbpf/, which is already covered by
+the $(SCRATCH_DIR) entry that lib.bpf.mk adds.
 
 
-在 2026/8/14 22:41, Tao Cui 写道:
-> From: Tao Cui <cuitao@kylinos.cn>
-> 
-> fcg_cgroup_set_weight() updates cgc->weight and the parent's
-> child_weight_sum but doesn't bump hweight_gen, so the hweights cached by
-> cgrp_refresh_hweight() stay stale until some task activation bumps the
-> generation. For cgroups whose tasks never go through a 0->n runnable
-> transition (e.g. persistently busy ones), a cpu.weight change never
-> propagates to scheduling at all.
-> 
-> Bump hweight_gen on weight changes so the next refresh recomputes with
-> the new weight.
-> 
-> Verified on a flatcg VM: a live cpu.weight 100->800 change on a busy
-> cgroup leaves HWT update at 0 and the distribution unchanged; with it,
-> hweight_gen increments and the refresh recomputes.
-> 
-Hello,
+---
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
 
-Some background on how I found this: I was running scx_flatcg in a VM
-with a simple cgroup hierarchy to check how it distributes CPU under
-different cpu.weight values --
-
-    A (100) -> A1 (100), A2 (100)
-    D (weight varies)
-
-with 3 busy tasks in each leaf cgroup, 4 vCPUs, measuring cpu.stat
-usage_usec deltas over 15 seconds.
-
-D=200 gave D roughly 47%; D=800 gave 46% -- the distribution barely
-responded to weight at all. That led me to the missing hweight_gen
-bump, which this patch fixes.
-
-But even with the fix applied, the distribution still doesn't follow
-the documented compounding model. With D=800 (compounded share should
-be 800/900 = 89%), D only gets around 49%. Removing the /2 in
-cgrp_cap_budget()'s max_budget didn't help either (50%).
-
-From what I can tell, the budget clamp is proportional to hweight, so
-light cgroups get a very small budget and are clamped right behind the
-cvtime leader, which keeps them competitive regardless of their
-weight. Under saturation with persistently busy tasks, the
-distribution compresses to near-equal no matter what the weights are.
-
-Is this the intended behavior of the budget clamping, or should the
-steady-state distribution converge to the compounded shares over time?
-The header comment's model doesn't seem to hold in this scenario.
-
-> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-> ---
->  tools/sched_ext/scx_flatcg.bpf.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-> index 0fd214cc61da..2d178c2ecacc 100644
-> --- a/tools/sched_ext/scx_flatcg.bpf.c
-> +++ b/tools/sched_ext/scx_flatcg.bpf.c
-> @@ -605,6 +605,9 @@ void BPF_STRUCT_OPS(fcg_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
->  		pcgc->child_weight_sum += (s64)weight - cgc->weight;
->  	cgc->weight = weight;
->  	bpf_spin_unlock(&cgv_tree_lock);
-> +
-> +	/* expire cached hweights so the new weight propagates */
-> +	__sync_fetch_and_add(&hweight_gen, 1);
->  }
-> 
->  static bool try_pick_next_cgroup(u64 *cgidp)
-
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/31820214629
+--===============3060449598212239265==--
