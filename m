@@ -1,172 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-126.mta0.migadu.com [91.218.175.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43416346A11;
-	Fri, 14 Aug 2026 08:09:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0170C3CF049
+	for <sched-ext@lists.linux.dev>; Fri, 14 Aug 2026 14:41:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786694967; cv=none; b=mfgsDMCeXC9aJPGnMxHtLS3/czbBKTWfLj89DKCGEZFEzT9+r4fiN3z+72xqkL+h7ExF6O7014Dkw7WTqYQlbTBvJGDHVkMcHQgyl0SehkC6DPBL2ouqyFEs6sB9BSQLWgWrlASuYnPzC+/c9rKKye4ZM31fu/12e+8c6Kdebsw=
+	t=1786718491; cv=none; b=Y06699d3WmZVlAO62LOSUkvHZW6mXcgw4s6wD9j06Wy/llz8QXUAoB42HcPfJgc86lUsDBv3Muj3pMumgcB8D8QFMCXirkdlXka3rOBHxILWWplr5FBV4+W+gTmg88DaZ3yqR+DOIZ2/6J9xA2HaxEwcK42hZeFFTvFaChb+CqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786694967; c=relaxed/simple;
-	bh=TA8NjPkJg/wxekqgyP6kvAcIcsIdSbdDYTKUHdghBjE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Q1GBc//GZ7i/72uU66etn80FzCoPDSvJcY28hcIq41DqyQdSZJ0ZnUwkxFwkFF1eIwx5eflxwIz3jzs06nq9dfSOVMJZIiVJkdxmFNA6M6VLTbyWz9rK24UXAmS3c9000InOlts22dDJeHK9jzdduNPsoVhT5fryt1BQQaRU82A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fj1IbOej; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786718491; c=relaxed/simple;
+	bh=zKqD03tzPSsnzH6fyDRxCjMMu9x+GbKs2vMnjO2CWAw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fuWl/+WUz73hOl5Dg4zS0TFYYm71gwkr4CiKcFSeJL6v5SMiTmdFxiCaRjgrI1IpPdf0xKct/A9ehlKHA8OBLu127BSRRI/C7cGG+LEWC/jduM2ozmloq7yrkWgt/I6/nbOW2TH8CdV2VXFwJ38EUn7k/84m/cLUuDIOgXMV9Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=KHDL3CHz; arc=none smtp.client-ip=91.218.175.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fj1IbOej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FA31F000E9;
-	Fri, 14 Aug 2026 08:09:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786694965;
-	bh=JTndrLd9EgESq3MQ2z80GBzpquS37Tpitiqhdh59XX8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Fj1IbOej9hAKuf/WBxehvkR7L+gY8OyJKW91rxtE7wW79QSzQN4rvZh9+9nGx7jcr
-	 SiXuhqDPwMRLYeexSS6JS3GUli9N5SXwGOr5qDt8EzXwh0tm4fu9u6mepbt8fdX0sO
-	 IF4EXeozPhd+9PuRJv7iAYiCprBYP+xNpRYgRU37ksgHVtEhBwVBl7m5ahdFT5h+Gj
-	 dhha2DbKM1bLP5gU/Trw/Je6RGnjEcYBHQlf1ccfjgO191irHDq3d0B6wXJUwtVh5H
-	 XJyfduQ6PpuIhUaOKwYs5FNjHmYqQgJ6MO579A1S62KdKxmAgOKBQi+RetIkCtPs8T
-	 ASDqs9WouEoTw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 2/4] selftests/cgroup: add memcg_stat_cross_cpu
- correctness test for flush
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Ziyang Men" <ziyang.meme@gmail.com>
-Cc: mkoutny@suse.com, sched-ext@lists.linux.dev, dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, bpf@vger.kernel.org, tj@kernel.org, hannes@cmpxchg.org
-In-Reply-To: <20260814075054.507089-3-ziyang.meme@gmail.com>
-References: <20260814075054.507089-1-ziyang.meme@gmail.com>
- <20260814075054.507089-3-ziyang.meme@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Aug 2026 08:09:24 +0000
-Message-Id: <20260814080925.11FA31F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="KHDL3CHz"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=zKqD03tzPSsnzH6fyDRxCjMMu9x+GbKs2vMnjO2CWAw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786718487; v=1; x=1787323287;
+ b=KHDL3CHzvkBLsEegukQIMyFisxV1BTimtAVx8OiFDii94runlD2pCthIkAbLHUU0vo9hZCVL
+ QO72XuD/EDYMWVc+h1zrzTQIA9e/yyS0ZCBxgsh1NM7ovbKXxr2B4E27Pp0+p53iQDXYi8fV+ae
+ VbMfuzKgsn3meWnsMRNHmQb8=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: from ctao-book.. (111.162.215.50)
+	by smtp.migadu.com with ESMTPS id 2b9e08ee58c887bc;
+	Fri, 14 Aug 2026 14:41:27 +0000
+X-Migadu-Flow: FLOW_OUT
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org,
+	void@manifault.com
+Cc: arighi@nvidia.com,
+	changwoo@igalia.com,
+	suzhidao@xiaomi.com,
+	yphbchou0911@gmail.com,
+	zhaomengmeng@kylinos.cn,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH] sched_ext/scx_flatcg: expire cached hweights on weight changes
+Date: Fri, 14 Aug 2026 22:41:16 +0800
+Message-ID: <20260814144116.2767304-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+From: Tao Cui <cuitao@kylinos.cn>
 
-New issues:
-- [Low] Multi-line comment does not follow the correct BPF/kernel style.
+fcg_cgroup_set_weight() updates cgc->weight and the parent's
+child_weight_sum but doesn't bump hweight_gen, so the hweights cached by
+cgrp_refresh_hweight() stay stale until some task activation bumps the
+generation. For cgroups whose tasks never go through a 0->n runnable
+transition (e.g. persistently busy ones), a cpu.weight change never
+propagates to scheduling at all.
 
-Pre-existing issues:
-- [High] The kfuncs bpf_mem_cgroup_memory_events and bpf_mem_cgroup_vm_even=
-ts lack negative bounds checks for their enum parameters, leading to out-of=
--bounds array reads.
---
+Bump hweight_gen on weight changes so the next refresh recomputes with
+the new weight.
 
---- Patch [2]: [PATCH v3 2/4] selftests/cgroup: add memcg_stat_cross_cpu co=
-rrectness test for flush ---
-commit aa1f4cd8dd58a883c661755d56a15bc86e70795f
-Author: Ziyang Men <ziyang.meme@gmail.com>
+Verified on a flatcg VM: a live cpu.weight 100->800 change on a busy
+cgroup leaves HWT update at 0 and the distribution unchanged; with it,
+hweight_gen increments and the refresh recomputes.
 
-selftests/cgroup: add memcg_stat_cross_cpu correctness test for flush
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+---
+ tools/sched_ext/scx_flatcg.bpf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-This patch adds a new selftest, test_memcg_stat_cross_cpu, to verify
-that cgroup flushes happen correctly by ensuring BPF read values match
-cgroupfs file readings. It also strengthens test coverage by scattering
-charges across multiple CPUs.
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 0fd214cc61da..2d178c2ecacc 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -605,6 +605,9 @@ void BPF_STRUCT_OPS(fcg_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
+ 		pcgc->child_weight_sum += (s64)weight - cgc->weight;
+ 	cgc->weight = weight;
+ 	bpf_spin_unlock(&cgv_tree_lock);
++
++	/* expire cached hweights so the new weight propagates */
++	__sync_fetch_and_add(&hweight_gen, 1);
+ }
 
-> diff --git a/tools/testing/selftests/cgroup/memcg_stat_cross_cpu.bpf.c b/=
-tools/testing/selftests/cgroup/memcg_stat_cross_cpu.bpf.c
-> new file mode 100644
-> index 0000000000000..3c2acd49c16ba
-> --- /dev/null
-> +++ b/tools/testing/selftests/cgroup/memcg_stat_cross_cpu.bpf.c
-> @@ -0,0 +1,86 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (c) 2026 Meta Platforms, Inc. and affiliates. */
-> +#define BPF_NO_KFUNC_PROTOTYPES
-> +#include <vmlinux.h>
-> +#include <bpf/bpf_helpers.h>
-> +#include <bpf/bpf_core_read.h>
-> +#include "memcg_stat_cross_cpu.h"
-> +
-> +char _license[] SEC("license") =3D "GPL";
-> +
-> +/*
-> + * Declared here rather than taken from vmlinux.h, which only has them i=
-f the
-> + * build host's own kernel does.  A kernel without them is caught at run=
- time.
-> + */
-> +struct mem_cgroup *bpf_get_mem_cgroup(struct cgroup_subsys_state *css) _=
-_ksym;
-> +void bpf_put_mem_cgroup(struct mem_cgroup *memcg) __ksym;
-> +void bpf_mem_cgroup_flush_stats(struct mem_cgroup *memcg) __ksym;
-> +unsigned long bpf_mem_cgroup_page_state(struct mem_cgroup *memcg, int id=
-x) __ksym;
-> +unsigned long bpf_mem_cgroup_vm_events(struct mem_cgroup *memcg,
-> +				       enum vm_event_item event) __ksym;
-
-[Severity: High]
-This is a pre-existing issue, but does this kfunc allow an out-of-bounds ar=
-ray
-read?
-
-The kfuncs bpf_mem_cgroup_memory_events() and bpf_mem_cgroup_vm_events() la=
-ck
-negative bounds checks for their enum parameters. A BPF program can pass a
-negative integer as the enum parameter to bpf_mem_cgroup_vm_events().
-
-This passes the negative enum to memcg_vm_event_item_valid() in mm/memcontr=
-ol.c:
-
-    if (idx >=3D NR_VM_EVENT_ITEMS)
-
-This validation function omits a negative bounds check (e.g., missing an
-unsigned cast). Because the BPF verifier evaluates enum parameters as signed
-integers without an explicit lower bound check, negative values bypass the
-check. This reaches memcg_events_index() and allows arbitrary memory offsets
-to be read relative to the memcg arrays.
-
-[ ... ]
-
-> diff --git a/tools/testing/selftests/cgroup/test_memcg_stat_cross_cpu.c b=
-/tools/testing/selftests/cgroup/test_memcg_stat_cross_cpu.c
-> new file mode 100644
-> index 0000000000000..9946c41c7a908
-> --- /dev/null
-> +++ b/tools/testing/selftests/cgroup/test_memcg_stat_cross_cpu.c
-
-[ ... ]
-
-> +static int add_node(const char *path, bool is_leaf)
-> +{
-> +	struct cg_node *n =3D &nodes[n_nodes];
-> +
-> +	if (cg_create(path))
-> +		return -1;
-> +
-> +	strncpy(n->path, path, sizeof(n->path) - 1);
-> +	n->id =3D cg_get_id(path);
-> +	n->is_leaf =3D is_leaf;
-> +	if (is_leaf)
-> +		n_leaves++;
-> +	n_nodes++;
-> +	return 0;
-> +}
-> +
-> +/* Create # @levels more levels below @path.
-> + * Only the last level is charged.
-> + */
-
-[Severity: Low]
-Does this multi-line comment style follow the BPF and kernel guidelines?
-The preferred style requires the opening /* to be on its own line:
-
-/*
- * Create # @levels more levels below @path.
- * Only the last level is charged.
- */
-
-> +static int build_children(const char *path, int fanout, int levels)
-> +{
-> +	char child[PATH_MAX];
-> +	int i;
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260814075054.5070=
-89-1-ziyang.meme@gmail.com?part=3D2
+ static bool try_pick_next_cgroup(u64 *cgidp)
+-- 
+2.43.0
