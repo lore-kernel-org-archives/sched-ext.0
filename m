@@ -1,141 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-214.mta0.migadu.com [91.218.175.214])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765B723183F;
-	Sat, 15 Aug 2026 02:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064701D8E01
+	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 03:31:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.214
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786761300; cv=none; b=mwD4KrWqw5U7AHjRwx3Pdl2bbAdyZCMjiMHTWPaeL2D726GwJEm//4NwgQd8ioKKjFmBRD1An+SwM3hlustIN1mcbQWcrg140iv4gJIp+jXSwOdMo/ng5WovRp6jX3PZu0WU/E+upAQaMKqyR+R+pYYNqb51iPDb8XGRUaz4tc0=
+	t=1786764717; cv=none; b=QGBDofPU5wDPm6twQ5aqnoZDqIFUQMw1o4o5bNiDD/2TVvlaS6MFPg09P+won8ZXVbSvbsbO21iiPsHCTVHEboGdqij7LMI1j2mzU+vnwkSdVNsEkW+xuYLg9kZH1un66dSqcAGJjh8hYI79hwURwS2TOIiZ0qFYz2xNtN90JwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786761300; c=relaxed/simple;
-	bh=v9kZ4DiFfItfbLFq88oGrFDpMIcFv/d9OlIR32lh3w0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=eqHNLhqDrJZhgrb5lzlQpKKkkqsQ5aevO+OoUc+wQ26rIbfleNxqi01bn0n64fWEGg3fGeVPhLjIe9oF+HHU3iTW23Rpmjj+IHw50rKeNhZTcxnvEnNXy8fcQrxCTZAPfxdKguFIZcB8Qd0m/KS/gqD6ri5YE0RX5HeO4Vyo+LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nJtZPqs6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786764717; c=relaxed/simple;
+	bh=1ASyJqk7YcVtN755/VCx/q3P97t/MNoATX3Lkx1H1MU=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=jLSkWuUlwANqEYYWkcTq5E7H9QbS9HOzhfuugSkJiGVBCOMBydDQuNfEIryUX+a5LE7s8yKbW69gJxH4dQKC3vF5QFHmV5sCvliZA6T6L0HJVA42lVhRNbe4uDQ9jFhFjgBpLhiVzDWA4IERmhuV2IlowGc+pudLNgVKCh9dpHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ePpjvDRV; arc=none smtp.client-ip=91.218.175.214
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nJtZPqs6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97F81F000E9;
-	Sat, 15 Aug 2026 02:34:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786761299;
-	bh=ojtnXO4HxWnJ+nvelfGCYuXGtfKg/7nwMLhEgUFTNgg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=nJtZPqs60/tWStPFwYb0TseFccm0vY77vx7oiSSOQBZ8py6K+2mh8VRr0e8FC3nqr
-	 x3THss/sXuljYQgikvS+t8Vzrf/MB9xE4jJfneHqVSOSVkVRR+nrGT3xoJFERycPeV
-	 bAtgtCssrhFZ3FxfrOGr0HeTB5SGfBE2dpyytJwyR7efxoYAk4FptT0/OTmpK5F32E
-	 Hv5nCOr8sqSJVSA4aYv/mxYaP+TxVekRDqiyprmNq5V2AygjSaXs9iU4D5SUZEVwcB
-	 A1KasbuNeS6autMoh4mis4mcgXB35+Xs1/O9A3hSjfw85Kht3Jttgt6W+Mt2Y+1/AX
-	 xXkDNkTd3LXKQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] sched_ext: Don't BUG_ON a destroyed DSQ in
- process_deferred_reenq_users
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
-Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20260815022017.3305427-1-cui.tao@linux.dev>
-References: <20260815022017.3305427-1-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 15 Aug 2026 02:34:58 +0000
-Message-Id: <20260815023458.C97F81F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ePpjvDRV"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=1ASyJqk7YcVtN755/VCx/q3P97t/MNoATX3Lkx1H1MU=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786764712; v=1; x=1787369512;
+ b=ePpjvDRV5sB/dXqbOsDPQh0Shkp7v5GAWrCA+rXtZ3t9vfNnyY6bGqH/2qrssBRAQd1M7HMn
+ 5G++CiV1mwPQ1vPPRBRyNXvR7PFWWqAmR2BYRygI4Th0tAdO7W32zJyKRhpIHjPlf8A3DrIb7Jr
+ Gg0jGc1KfcFgPnfm4tS5BCco=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: from [192.168.1.116] (111.162.215.50)
+	by smtp.migadu.com with ESMTPS id d325686902de12c1;
+	Sat, 15 Aug 2026 03:31:42 +0000
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <9b5da7b7-5cd9-4a01-9977-f40fb2e7e279@linux.dev>
+Date: Sat, 15 Aug 2026 11:31:34 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, Tao Cui <cuitao@kylinos.cn>, void@manifault.com,
+ arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: don't rehome a dead task in
+ scx_cgroup_task_migrated
+To: Tejun Heo <tj@kernel.org>
+References: <20260811103122.357067-1-cui.tao@linux.dev>
+ <71d1c173b538ca29d783232d89464d7a@kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <71d1c173b538ca29d783232d89464d7a@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+Hi,
 
-New issues:
-- [High] Lockless double-read of `dsq->id` creates a Time-Of-Check to Time-=
-Of-Use (TOCTOU) race that can still falsely trigger the `BUG_ON`, crashing =
-the kernel.
+在 2026/8/15 03:04, Tejun Heo 写道:
+> Hello,
+> 
+> On Tue, Aug 11, 2026 at 06:31:22PM +0800, Tao Cui wrote:
+>> A task can exit between cgroup migration commit and the MIGRATED callback:
+>> sched_ext_dead() marks it SCX_TASK_DEAD before cgroup_task_dead() removes it
+>> from the migration list, so scx_cgroup_task_migrated() can pick up a dead
+>> task and call scx_rehome_task(), which re-enables it and leaks the BPF
+>> scheduler's per-task resources. The other scx_rehome_task() callers already
+>> check for this; do the same here.
+> 
+> I don't think this window exists. SCX_TASK_DEAD is set only by
+> sched_ext_dead() from finish_task_switch(), which a task reaches only
+> after exit_signals(), and exit_signals() sets PF_EXITING inside
+> cgroup_threadgroup_change_begin(). The MIGRATED notifiers run inside
+> cgroup_migrate_execute() with the same rwsem write-held through
+> cgroup_attach_lock(), so no task in the set can enter the exit path
+> until the migration is done. Tasks which were already exiting are
+> filtered out by the PF_EXITING test in cgroup_migrate_add_task().
+> 
+> The DEAD tests you referenced are in scx_task_iter walks which run
+> without the threadgroup rwsem, where dying tasks can actually show up.
+> 
+> Did you try to reproduce the leak? When code review turns up a
+> suspected bug, it's a good idea to reproduce it first to verify the
+> assumptions before writing a fix.
+> 
+You're right, I missed that. 
+I walked it again, a task past exit_signals() is filtered out by the PF_EXITING test in cgroup_migrate_add_task(), and a task mid-migration can't reach exit_signals() until the rwsem is dropped, so scx_cgroup_task_migrated() always sees a live task. The DEAD checks I pointed at are on task iteration paths without the rwsem, so they don't apply here.
 
-Pre-existing issues:
-- [Critical] Dereferencing `dsq->id` in `process_deferred_reenq_users()` ca=
-uses a Use-After-Free because an RCU grace period can complete while the ta=
-rget CPU is idle, freeing `dsq` before it is accessed.
---
+I didn't try to reproduce the leak first. I will next time.
 
---- Patch [1]: [PATCH v2] sched_ext: Don't BUG_ON a destroyed DSQ in proces=
-s_deferred_reenq_users ---
-commit f1934b9161ead6ceeb2cb6d00c64a01e1a233104
-Author: Tao Cui <cuitao@kylinos.cn>
+Please disregard this patch.Sorry for the noise.
 
-sched_ext: Don't BUG_ON a destroyed DSQ in process_deferred_reenq_users
+Thanks,
+Tao> Thanks.
+> 
+> --
+> tejun
 
-This commit attempts to fix a BUG_ON triggered when process_deferred_reenq_=
-users()
-encounters a destroyed DSQ. It adds a check to skip processing if the DSQ I=
-D=20
-has been set to SCX_DSQ_INVALID.
-
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 18183062f751c..1a059e5f09e80 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -4332,6 +4332,10 @@ static void process_deferred_reenq_users(struct rq=
- *rq)
->  		/* see schedule_dsq_reenq() */
->  		smp_mb();
-> =20
-> +		/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq=
- */
-
-[Severity: Critical]
-This is a pre-existing issue, but does dereferencing dsq->id here outside of
-the rq->scx.deferred_reenq_lock critical section expose the pointer to a
-concurrent kfree() in the RCU teardown path?
-
-If CPU B is idle (in an RCU Extended Quiescent State), and CPU A queues a
-deferred reenq for a DSQ to CPU B and calls destroy_dsq(), the RCU grace
-period can end immediately without waiting for CPU B. The RCU callback
-free_dsq_rcufn then runs on CPU C and calls exit_dsq().
-
-Concurrently, if CPU B wakes up, enters process_deferred_reenq_users(),
-removes dru from the list, and drops the lock:
-
-CPU B:
-scoped_guard (raw_spinlock, &rq->scx.deferred_reenq_lock) {
-	...
-	list_del_init(&dru->node);
-}
-// CPU B is now at the dsq->id check
-
-CPU C's exit_dsq() then evaluates the list without locks:
-
-CPU C:
-exit_dsq() {
-	...
-	if (WARN_ON_ONCE(!list_empty(&dru->node))) {
-		// Skips lock because list is empty
-	}
-	...
-	kfree(dsq);
-}
-
-Would CPU B then read from the freed dsq memory when checking dsq->id?
-
-> +		if (unlikely(dsq->id =3D=3D SCX_DSQ_INVALID))
-> +			continue;
-> +
->  		BUG_ON(dsq->id & SCX_DSQ_FLAG_BUILTIN);
-
-[Severity: High]
-Because dsq->id is accessed twice consecutively without READ_ONCE(), can
-the compiler emit two separate memory loads?
-
-If a concurrent destroy_dsq() sets dsq->id =3D SCX_DSQ_INVALID exactly
-between the two loads, the first load would see a valid user DSQ ID and
-bypass the continue. The second load would then observe SCX_DSQ_INVALID.
-
-Since SCX_DSQ_INVALID evaluates to true for SCX_DSQ_FLAG_BUILTIN,
-wouldn't this still trigger the BUG_ON?
-
->  		reenq_user(rq, dsq, reenq_flags);
->  	}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260815022017.3305=
-427-1-cui.tao@linux.dev?part=3D1
