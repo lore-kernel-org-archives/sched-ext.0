@@ -1,89 +1,83 @@
-Received: from mta0.migadu.com (out-169.mta0.migadu.com [91.218.175.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FDD17BB21
-	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 00:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5354B0491;
+	Sat, 15 Aug 2026 01:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786752095; cv=none; b=rS9eb7mG8TY1BbuhXgmjWfstAYBFfWQFh+kKH3hkWIHbENBicRHDYDe06l0G/9WLBfj13Z/biwxGf2whniRPczbTN39Xp9jkbEvmwPrfTZfbRopcoHWB2GRB9r+kDs11nI2wwqFRkNX46pH6k2QDTCYHv3/GcuwTeJWN7ZZG5Mc=
+	t=1786755934; cv=none; b=W8ipQE+6Tku1CG+Ro3Dqnnu5mQ7S3Z+jUQ8hq//8E58HhDT6ccXWnIQrUT8LMumQl7mqOk10UjVE0g5w6+UYBFliQ7iYo7zm8pesmABYXQt8RivnQvPoUI7uXAnDuL/hLEkzjGTQWjKMNHK9/6pkBJ5nqawNUaAqEO/tYgHBbOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786752095; c=relaxed/simple;
-	bh=ajEtm7Cc9gbBg7ONgIlCKTKF9E+P1en9GcyNIOemgso=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=quqmiCAOBF0mDvnt13iq/9D0sNNfgie2gNNtIhc49rXj0dIzEESuNFmqxno/pYDRCwx2YQ5jcoRLkszlXlWFetLxbEQQueS3Kq0jQZTmFRSKz7It5gFRGzpOIouROEf+hkQE+5UO1e6vP8V1pQoveUTQqeDa0375DP5ptvhcUy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mb28iZQw; arc=none smtp.client-ip=91.218.175.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786755934; c=relaxed/simple;
+	bh=qRpAwc7LQGqT27S7YwlagiSws8YWy4vFAzi4cKd0IB0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GrKVnQncyq7urZRrmnuuWmZ43xt2NTBqzE6ZFAbZ/RGaeGGKVMrSuZL7DsFYP9l4Pt56MqosM0zPhQnvT0ltA/sFQj6fpXTM7UHIQnto+KxorLvMHC+kqBQuepSlRS09xasLnWoiEPZaq+GYSzuqImeDFPzuGQJTtYOavYPMWBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TdIjrRE7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mb28iZQw"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ajEtm7Cc9gbBg7ONgIlCKTKF9E+P1en9GcyNIOemgso=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786752090; v=1; x=1787356890;
- b=mb28iZQw7+Pikc+Vm1b8zir3PTmYz80nHNc0AXqWFiZ376xFV6ZYvPuWObOftdA34MZdtY6x
- /a/JRv+4WdP+GTujwNlJHKnZqkCp9p21rnR+uhZpssbZs9QUoOH+lx/0P0fapN7GwAQPQBdwOoq
- CHfmQMTxUpOBh5iZ+1fhYo1w=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: from [192.168.1.116] (111.162.215.50)
-	by smtp.migadu.com with ESMTPS id 709e2110065d8f26;
-	Sat, 15 Aug 2026 00:01:30 +0000
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <d7e534e1-ab78-4c6e-ad0c-0cfeed5049e6@linux.dev>
-Date: Sat, 15 Aug 2026 08:01:21 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TdIjrRE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3C81F000E9;
+	Sat, 15 Aug 2026 01:05:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786755933;
+	bh=YrISv13l+D0snYUo6wRs6uyOQQkPxz0bbpwBlRyI220=;
+	h=From:To:Cc:Subject:Date;
+	b=TdIjrRE7JBMZhCTu3G14GpcfRh9RoA9PUT7oYO3V7On4NUm5kPUyFSPJRz5OQ+td/
+	 snxMA0M3tvZvEyrzSs+RSGvBhDFzSeNVTHCpO1mJsRAbXk0KRK+ar6NKjC7b9/5cRz
+	 3Zfnb59FijlPOKi9xlNInn449H3AxzT1ye2LzTCJXTbVdCM9Wj+65T/EyYDYrjH1uQ
+	 xPAhI5S2wQZF3ioZYWJ3Wfz/dESnkIExwPgqaxgHe/Lml3hymWvsZPgf5FEkS/g+GP
+	 yj0+ER2OmZotsJRoI9vcwldmwHNCFuwLLyYv+ObF8WCvFKuVEkP5OOwlCgGJZ3/2kg
+	 Eolaims15CxbQ==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.3] sched_ext: Dispatch path follow-ups
+Date: Fri, 14 Aug 2026 15:05:29 -1000
+Message-ID: <20260815010532.3663253-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, Tao Cui <cuitao@kylinos.cn>, void@manifault.com,
- arighi@nvidia.com, changwoo@igalia.com, mingo@redhat.com,
- peterz@infradead.org, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org, bpf@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: don't BUG_ON a destroyed DSQ in
- process_deferred_reenq_users
-To: Tejun Heo <tj@kernel.org>
-References: <20260811075913.344033-1-cui.tao@linux.dev>
- <f3a7965cc9d6527de793fdda816b6b63@kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <f3a7965cc9d6527de793fdda816b6b63@kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+Hello,
 
+Follow-ups to the recent dispatch path rework[1]. 0001 fixes kick_sync waits
+running on foreign CPUs now that dispatch can drop the rq lock with the wait
+callback queued. 0002 and 0003 clean up after the dispatch verdict
+conversion, dropping the keep_prev fixup it obsoleted and renaming the
+remaining balance-era names to dispatch terms.
 
-在 2026/8/15 02:56, Tejun Heo 写道:
-> Hello,
-> 
-> On Tue, Aug 11, 2026 at 03:59:12PM +0800, Tao Cui wrote:
->> -		BUG_ON(dsq->id & SCX_DSQ_FLAG_BUILTIN);
->> +		/* destroy_dsq() may race and invalidate @dsq; skip */
->> +		if (unlikely(dsq->id & SCX_DSQ_FLAG_BUILTIN))
->> +			continue;
-> 
-> Nice catch, but this also swallows states which can never occur
-> legitimately. The only builtin-flagged value that can show up here is
-> SCX_DSQ_INVALID from destroy_dsq(). Let's keep the BUG_ON for everything
-> else:
-> 
-> 	/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq */
-> 	if (unlikely(dsq->id == SCX_DSQ_INVALID))
-> 		continue;
-> 
-> 	BUG_ON(dsq->id & SCX_DSQ_FLAG_BUILTIN);
-> 
-> Can you please spin v2? Also, please capitalize the subject after the
-> prefix ("Don't ...") and remove the blank line between the tags.
-> 
-Right, that was too broad. v2 skips only SCX_DSQ_INVALID and keeps the BUG_ON otherwise, as you suggested. Also fixed the subject capitalization and the blank line between the tags.
+[1] https://lore.kernel.org/r/20260807210221.232543-1-tj@kernel.org
 
-Thanks,
-Tao
+Based on sched_ext/for-7.3 (e72979d3264a).
 
-> Thanks.
-> 
-> --
-> tejun
+This patchset contains the following 3 patches.
 
+ 0001 sched_ext: Keep kick_sync waiting on the rq's own CPU
+ 0002 sched_ext: Drop the stale keep_prev fixup in dispatch_pick()
+ 0003 sched_ext: Rename balance-era identifiers to dispatch terms
+
+The patchset is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git coresched-followups
+
+diffstat follows. Thanks.
+
+ kernel/sched/ext/ext.c                          | 83 +++++++++++++------------
+ kernel/sched/ext/inlines.h                      |  2 +-
+ kernel/sched/ext/sub.c                          |  8 +--
+ kernel/sched/sched.h                            |  2 +-
+ tools/sched_ext/include/scx/enum_defs.autogen.h |  1 +
+ tools/sched_ext/include/scx/enums.autogen.bpf.h |  3 +
+ tools/sched_ext/include/scx/enums.autogen.h     |  1 +
+ 7 files changed, 54 insertions(+), 46 deletions(-)
+
+--
+tejun
