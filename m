@@ -1,46 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-164.mta1.migadu.com [95.215.58.164])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A110284B4F;
-	Sat, 15 Aug 2026 01:05:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FAF126BE1
+	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 02:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786755938; cv=none; b=GBOsamMX5oivaj2qmiPoRtj1rVF2i1J/mMlTAhL9mCwtymU0cRIGe/kGDRNT/zrOXt2T1jK1DOomzeaBAcA5XBlFYtrD1wie41EQAj3cV1qLkpnwJrETvkAADw4U1c7dpgsUOym0YVAk5p7unAeTfUDofNi2MfgyOdQdsv1NLdo=
+	t=1786760436; cv=none; b=eVb6WmEEI48tQwwNb4vJ2XjXLNtgXY0ZF4n6IPSJtRhGBPpPSWZCA6Hqi5DMV2OLcxEDZy8qj0IWTDcLzI8qV5ANZwtVLcH4GZ3v6aReUslf8l3rSnI5DAHOglXJjJmDtWEcCnS6iu3SKTAL1DJM7P6Rcl7rRY94wsGOmrKFHeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786755938; c=relaxed/simple;
-	bh=NXW8WK7CxUjmCj0b0kkV/bBBMokS/ykTcey4J4cOxsA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0n3KbjaewvYMJQXgKARIfFkGyFl0VXH5WOBxRcfD+TAY26p66SiN3q2kMYk9Y2CjRHka0y3CeyZ1n2eYZbORjmEhHSeoAKR8w0ChT6NoGWYlAlj9rZ2zPrxepNDoS+L9aM3cLB7dxJl3JdCO06hHU/qk1ONRFHVRgceW0I9mVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TELFi3I2; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786760436; c=relaxed/simple;
+	bh=0GEb5Od/PvQ0CVIdukkmwdJNdI6cQzLzbMS4Sv189cw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PjNeQizXsAtBa3947oEr7/GpXTBmvbwYooceR3O8I5Bdyx5Gaz1YEYwlezl/f7MUkKg4QPDgljVFVjnGx4oD4+dtYSR+WPvrX+bX5+UQ1QKbWhFRNxMzetgzJgr/OiykJb1aykz4JQlUdFW49pOokj1obYieHWkZKKvcF8qg+PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=f6nVfrY2; arc=none smtp.client-ip=95.215.58.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TELFi3I2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B491F00A3A;
-	Sat, 15 Aug 2026 01:05:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786755936;
-	bh=AIjC5XK6tdIXoaJ7LvpAnOnYae13seDxovWEbuDQfgg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TELFi3I2dvtRHPWwZWb7Ng2PRMDH+5Uhjfa4LZqTBBCFwIRLXf4JnH/2Pw8c/tA9f
-	 N0ZDMQTYOfPrJaqFwic7yug79PdoZdGlttjBOGB6uKZdHrXY0bJosqorFvtP0O8Y74
-	 lKaVghaKuQ+XMgX2vzEoX8uU3lTPlZOyP5qNRyp5qyMNeuIUs5l0FxS9sxwADJPpIj
-	 zafYTGXupTfukdLjN2sKAGpeUvobbx8o042MABRYB9ylOpy16H8nxW3E3jbxVs7cyK
-	 BPJ46Qs0rTzVqER87OqQYsb9fpnx/d4t623CwjTCwXu5tCC8kPyINthMxJxnaz7Rx5
-	 c1m+T0Eeduisw==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="f6nVfrY2"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=0GEb5Od/PvQ0CVIdukkmwdJNdI6cQzLzbMS4Sv189cw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786760431; v=1; x=1787365231;
+ b=f6nVfrY2JKtiSNDY0WwEjg1TYbT1ddb58oJ0yvj+N8+bgMruNBAQCLNgeYf4Oj/vIUKUOuYL
+ N4zzCcbQrI6ngDCkPH4NucnMH8PoP4Y12B0FXYFdySAnLnmTQos/r9wdzyO3ooeo7VCfBEyp2jy
+ qSw7lfZzruqRBeev206qyjpk=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: from ctao-book.. (111.162.215.50)
+	by smtp.migadu.com with ESMTPS id 1b23676e190949c0;
+	Sat, 15 Aug 2026 02:20:30 +0000
+X-Migadu-Flow: FLOW_OUT
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 3/3] sched_ext: Rename balance-era identifiers to dispatch terms
-Date: Fri, 14 Aug 2026 15:05:32 -1000
-Message-ID: <20260815010532.3663253-4-tj@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260815010532.3663253-1-tj@kernel.org>
-References: <20260815010532.3663253-1-tj@kernel.org>
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH v2] sched_ext: Don't BUG_ON a destroyed DSQ in process_deferred_reenq_users
+Date: Sat, 15 Aug 2026 10:20:17 +0800
+Message-ID: <20260815022017.3305427-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,335 +52,38 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-sched_class->balance() is gone from sched_ext and what balance_one() does is
-run dispatch to produce something pickable. Update the balance-era names to
-dispatch terms:
+From: Tao Cui <cuitao@kylinos.cn>
 
-- balance_one() -> dispatch_one()
-- SCX_RQ_IN_BALANCE -> SCX_RQ_IN_DISPATCH
+scx_bpf_dsq_reenq() queues a deferred reenq (dru) that runs from
+run_deferred(), not ops.dispatch(). If the DSQ is destroyed before the dru
+runs, process_deferred_reenq_users() sees dsq->id == SCX_DSQ_INVALID and
+hits the BUG_ON. destroy_dsq() doesn't flush pending drus, so just skip.
 
-No BPF scheduler reads the flag. The enum autogen headers gain the new name
-with the old entry retained like other removed enumerators, zero-filling at
-load time. No functional changes.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
- kernel/sched/ext/ext.c                        | 52 +++++++++----------
- kernel/sched/ext/inlines.h                    |  2 +-
- kernel/sched/ext/sub.c                        |  8 +--
- kernel/sched/sched.h                          |  2 +-
- .../sched_ext/include/scx/enum_defs.autogen.h |  1 +
- .../sched_ext/include/scx/enums.autogen.bpf.h |  3 ++
- tools/sched_ext/include/scx/enums.autogen.h   |  1 +
- 7 files changed, 37 insertions(+), 32 deletions(-)
+Change in v2:
+Only skip SCX_DSQ_INVALID and keep the BUG_ON for other builtin ids
+instead of skipping every builtin-flagged id, per Tejun.
+---
+ kernel/sched/ext/ext.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 19db98f0e727..966cde3e169a 100644
+index 26dbbbfe5a87..7d097209e778 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -377,9 +377,9 @@ static bool rq_is_open(struct rq *rq, u64 enq_flags)
- 	 * If we're in the dispatch path holding rq lock, $curr may or may not
- 	 * be ready depending on whether the on-going dispatch decides to extend
- 	 * $curr's slice. We say yes here and resolve it at the end of dispatch.
--	 * See balance_one().
-+	 * See dispatch_one().
- 	 */
--	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
-+	if (rq->scx.flags & SCX_RQ_IN_DISPATCH)
- 		return true;
+@@ -4637,6 +4637,10 @@ static void process_deferred_reenq_users(struct rq *rq)
+ 		/* see schedule_dsq_reenq() */
+ 		smp_mb();
  
- 	/*
-@@ -1019,7 +1019,7 @@ static void schedule_deferred(struct rq *rq)
- 	/*
- 	 * This is the fallback when schedule_deferred_locked() can't use
- 	 * the cheaper balance callback or wakeup hook paths (the target
--	 * CPU is not in balance or wakeup). Currently, this is primarily
-+	 * CPU is not in dispatch or wakeup). Currently, this is primarily
- 	 * hit by reenqueue operations targeting a remote CPU.
- 	 *
- 	 * Queue on the target CPU. The deferred work can run from any CPU
-@@ -1055,25 +1055,25 @@ static void schedule_deferred_locked(struct rq *rq)
- 		return;
- 
- 	/*
--	 * If in balance, the balance callbacks will be called before rq lock is
--	 * released. Schedule one.
-+	 * If in dispatch, the balance callbacks will be called before rq lock
-+	 * is released. Schedule one.
- 	 *
- 	 *
- 	 * We can't directly insert the callback into the
- 	 * rq's list: The call can drop its lock and make the pending balance
- 	 * callback visible to unrelated code paths that call rq_pin_lock().
- 	 *
--	 * Just let balance_one() know that it must do it itself.
-+	 * Just let dispatch_one() know that it must do it itself.
- 	 */
--	if (rq->scx.flags & SCX_RQ_IN_BALANCE) {
-+	if (rq->scx.flags & SCX_RQ_IN_DISPATCH) {
- 		rq->scx.flags |= SCX_RQ_BAL_CB_PENDING;
- 		return;
- 	}
- 
- 	/*
- 	 * No scheduler hooks available. Use the generic irq_work path. The
--	 * above WAKEUP and BALANCE paths should cover most of the cases and the
--	 * time to IRQ re-enable shouldn't be long.
-+	 * above WAKEUP and DISPATCH paths should cover most of the cases and
-+	 * the time to IRQ re-enable shouldn't be long.
- 	 */
- 	schedule_deferred(rq);
- }
-@@ -1616,14 +1616,14 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
- 		wakeup_preempt(rq, p, 0);
- 
- 	/*
--	 * If @rq is in balance, the CPU is already vacant and looking for the
-+	 * If @rq is in dispatch, the CPU is already vacant and looking for the
- 	 * next task to run. No need to preempt or trigger resched after moving
- 	 * @p into its local DSQ.
- 	 * Note that the wakeup_preempt() above may have already triggered
- 	 * a resched if @rq->next_class was idle. It's harmless, since
- 	 * need_resched is cleared immediately after task pick.
- 	 */
--	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
-+	if (rq->scx.flags & SCX_RQ_IN_DISPATCH)
- 		return;
- 
- 	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
-@@ -2348,7 +2348,7 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
- 	 *
- 	 * @p may go through multiple stopping <-> running transitions between
- 	 * here and put_prev_task_scx() if task attribute changes occur while
--	 * balance_one() leaves @rq unlocked. However, they don't contain any
-+	 * dispatch_one() leaves @rq unlocked. However, they don't contain any
- 	 * information meaningful to the BPF scheduler and can be suppressed by
- 	 * skipping the callbacks if the task is !QUEUED.
- 	 */
-@@ -2976,14 +2976,14 @@ static inline void maybe_queue_balance_callback(struct rq *rq)
- 	rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
- }
- 
--static enum scx_dsp_verdict balance_one(struct rq *rq, struct task_struct *prev)
-+static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev)
- {
- 	struct scx_sched *sch = scx_root_protected_live();
- 	enum scx_dsp_verdict verdict;
- 	s32 cpu = cpu_of(rq);
- 
- 	lockdep_assert_rq_held(rq);
--	rq->scx.flags |= SCX_RQ_IN_BALANCE;
-+	rq->scx.flags |= SCX_RQ_IN_DISPATCH;
- 
- 	scx_process_sync_ecaps(rq, prev);
- 
-@@ -3041,7 +3041,7 @@ static enum scx_dsp_verdict balance_one(struct rq *rq, struct task_struct *prev)
- 		verdict = SCX_DSP_PREV;
- 		goto has_tasks;
- 	}
--	rq->scx.flags &= ~SCX_RQ_IN_BALANCE;
-+	rq->scx.flags &= ~SCX_RQ_IN_DISPATCH;
- 	return SCX_DSP_NONE;
- 
- has_tasks:
-@@ -3058,7 +3058,7 @@ static enum scx_dsp_verdict balance_one(struct rq *rq, struct task_struct *prev)
- 	if (unlikely(rq->scx.local_dsq.nr > 1 && rq->scx.nr_immed))
- 		scx_schedule_reenq_local(rq, 0);
- 
--	rq->scx.flags &= ~SCX_RQ_IN_BALANCE;
-+	rq->scx.flags &= ~SCX_RQ_IN_DISPATCH;
- 	return verdict;
- }
- 
-@@ -3159,7 +3159,7 @@ static void switch_class(struct rq *rq, struct task_struct *next)
- 	 * preempted, and it regaining control of the CPU.
- 	 *
- 	 * ->cpu_release() complements ->cpu_acquire(), which is emitted the
--	 *  next time that balance_one() is invoked.
-+	 *  next time that dispatch_one() is invoked.
- 	 */
- 	if (!rq->scx.cpu_released) {
- 		if (sch->ops.cpu_release) {
-@@ -3340,7 +3340,7 @@ static enum scx_dsp_verdict dispatch_pick(struct rq *rq, struct rq_flags *rf,
- 	enum scx_dsp_verdict verdict;
- 
- 	rq_unpin_lock(rq, rf);
--	verdict = balance_one(rq, prev);
-+	verdict = dispatch_one(rq, prev);
- 	rq_repin_lock(rq, rf);
- 	maybe_queue_balance_callback(rq);
- 
-@@ -3373,12 +3373,12 @@ static enum scx_dsp_verdict dispatch_core_pick(struct rq *rq, struct rq_flags *r
- 	u32 seq = rq->scx.lock_drop_seq;
- 
- 	/* another dispatch is in flight on @rq, let that handle it */
--	if (rq->scx.flags & SCX_RQ_IN_BALANCE)
-+	if (rq->scx.flags & SCX_RQ_IN_DISPATCH)
- 		return SCX_DSP_NONE;
- 
- 	rq_unpin_lock(rq, rf);
- 
--	verdict = balance_one(rq, prev);
-+	verdict = dispatch_one(rq, prev);
- 
- 	if (cpu_of(rq) == smp_processor_id()) {
- 		maybe_queue_balance_callback(rq);
-@@ -3401,7 +3401,7 @@ static enum scx_dsp_verdict dispatch_core_pick(struct rq *rq, struct rq_flags *r
- 
- 	rq_repin_lock(rq, rf);
- 
--	/* if balance_one() released the rq lock, restart the selection */
-+	/* if dispatch_one() released the rq lock, restart the selection */
- 	if (rq->scx.lock_drop_seq != seq)
- 		return SCX_DSP_RETRY;
- 
-@@ -3437,7 +3437,7 @@ do_pick_task_scx(struct rq *rq, struct rq_flags *rf, bool force_scx)
- 
- 	/*
- 	 * If any higher-priority sched class enqueued a runnable task on this
--	 * rq during balance_one(), abort and return RETRY_TASK, so that the
-+	 * rq during dispatch_one(), abort and return RETRY_TASK, so that the
- 	 * scheduler loop can restart.
- 	 *
- 	 * If @force_scx is true, always try to pick a SCHED_EXT task,
-@@ -6072,7 +6072,7 @@ static void unbypass_renotify_idle(struct rq *rq, struct scx_sched *pos,
-  *
-  * - ops.dispatch() is ignored.
-  *
-- * - balance_one() does not report %SCX_DSP_PREV on non-zero slice as slice
-+ * - dispatch_one() does not report %SCX_DSP_PREV on non-zero slice as slice
-  *   can't be trusted. Whenever a tick triggers, the running task is rotated to
-  *   the tail of the queue with core_sched_at touched.
-  *
-@@ -8460,13 +8460,13 @@ static bool can_skip_idle_kick(struct rq *rq)
- 	 * We can skip idle kicking if @rq is going to go through at least one
- 	 * full SCX scheduling cycle before going idle. Just checking whether
- 	 * curr is not idle is insufficient because we could be racing
--	 * balance_one() trying to pull the next task from a remote rq, which
-+	 * dispatch_one() trying to pull the next task from a remote rq, which
- 	 * may fail, and @rq may become idle afterwards.
- 	 *
- 	 * The race window is small and we don't and can't guarantee that @rq is
- 	 * only kicked while idle anyway. Skip only when sure.
- 	 */
--	return !is_idle_task(rq->curr) && !(rq->scx.flags & SCX_RQ_IN_BALANCE);
-+	return !is_idle_task(rq->curr) && !(rq->scx.flags & SCX_RQ_IN_DISPATCH);
- }
- 
- static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_rq,
-@@ -9199,7 +9199,7 @@ __bpf_kfunc bool scx_bpf_dsq_move_to_local___v2(u64 dsq_id, u64 enq_flags,
- 		/*
- 		 * A successfully consumed task can be dequeued before it starts
- 		 * running while the CPU is trying to migrate other dispatched
--		 * tasks. Bump nr_tasks to tell balance_one() to retry on empty
-+		 * tasks. Bump nr_tasks to tell dispatch_one() to retry on empty
- 		 * local DSQ.
- 		 */
- 		dspc->nr_tasks++;
-diff --git a/kernel/sched/ext/inlines.h b/kernel/sched/ext/inlines.h
-index 8f3be59863e5..ed423bcc26b8 100644
---- a/kernel/sched/ext/inlines.h
-+++ b/kernel/sched/ext/inlines.h
-@@ -112,7 +112,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 		 * ops.dispatch() can trap us in this loop by repeatedly
- 		 * dispatching ineligible tasks. Break out once in a while to
- 		 * allow the watchdog to run. As IRQ can't be enabled in
--		 * balance(), we want to complete this scheduling cycle and then
-+		 * dispatch, we want to complete this scheduling cycle and then
- 		 * start a new one. IOW, we want to call resched_curr() on the
- 		 * next, most likely idle, task, not the current one. Use
- 		 * __scx_bpf_kick_cpu() for deferred kicking.
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index ec4729c99763..a7b38c90d095 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -918,7 +918,7 @@ static u64 calc_effective_caps(struct scx_pshard *ps, s32 cid)
-  * @cid: cid to update
-  *
-  * Queue an ecaps update for @sch's @cid and kick the cpu so that it syncs in
-- * balance_one().
-+ * dispatch_one().
-  */
- static void queue_sync_ecaps(struct scx_sched *sch, s32 cid)
- {
-@@ -953,7 +953,7 @@ static void discard_queued_syncs(struct rq *rq)
- /**
-  * scx_process_sync_ecaps - Sync this cpu's ecaps to pshard->caps[]
-  * @rq: the cid's cpu rq
-- * @prev: @rq's previous task from the in-progress balance
-+ * @prev: @rq's previous task from the in-progress dispatch
-  *
-  * pshard->caps[] is the target configuration. pcpu->ecaps is the effective
-  * transposed copy owned by the cid's cpu and written only here under @rq's
-@@ -1069,7 +1069,7 @@ void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
-  * sync when bypass lifts, so without a replay a cid that never changes again
-  * would never be notified. The attach-time initial grants are the acute case
-  * as they are consumed during the enable bypass window. Re-queue a sync for
-- * any undelivered delta so the next balance delivers it.
-+ * any undelivered delta so the next dispatch delivers it.
-  */
- void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
- {
-@@ -2248,7 +2248,7 @@ __bpf_kfunc bool scx_bpf_sub_dispatch(u64 cgroup_id, const struct bpf_prog_aux *
- 	/*
- 	 * Skip a child that does not effectively hold the base cap on this cpu:
- 	 * its inserts would only be rejected. ecaps are synced at the top of
--	 * balance_one() before dispatch, so this reflects the in-effect state.
-+	 * dispatch_one() before dispatch, so this reflects the in-effect state.
- 	 */
- 	if (scx_missing_caps(child, cpu_of(rq), SCX_CAP_BASE))
- 		return false;
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 5ae2d6d2d35b..7701a5a60972 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -790,7 +790,7 @@ enum scx_rq_flags {
- 	SCX_RQ_ROOT_IDLE_RENOTIFY	= 1 << 8, /* the root is owed update_idle() */
- 
- 	SCX_RQ_IN_WAKEUP	= 1 << 16,
--	SCX_RQ_IN_BALANCE	= 1 << 17,
-+	SCX_RQ_IN_DISPATCH	= 1 << 17,
- };
- 
- /* per-rq rescue execution state, see scx_rescue_timerfn() */
-diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
-index d609f369a337..19aa1de3e700 100644
---- a/tools/sched_ext/include/scx/enum_defs.autogen.h
-+++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
-@@ -189,6 +189,7 @@
- #define HAVE_SCX_RQ_ROOT_IDLE_RENOTIFY
- #define HAVE_SCX_RQ_IN_WAKEUP
- #define HAVE_SCX_RQ_IN_BALANCE
-+#define HAVE_SCX_RQ_IN_DISPATCH
- #define HAVE_SCX_SCHED_PCPU_BYPASSING
- #define HAVE_SCX_SLICE_OOB_DUR_BITS
- #define HAVE_SCX_SLICE_OOB_ID_BITS
-diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
-index d74b901688f1..7268131010de 100644
---- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
-+++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
-@@ -34,6 +34,9 @@ const volatile u64 __SCX_RQ_IN_WAKEUP __weak;
- const volatile u64 __SCX_RQ_IN_BALANCE __weak;
- #define SCX_RQ_IN_BALANCE __SCX_RQ_IN_BALANCE
- 
-+const volatile u64 __SCX_RQ_IN_DISPATCH __weak;
-+#define SCX_RQ_IN_DISPATCH __SCX_RQ_IN_DISPATCH
++		/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq */
++		if (unlikely(dsq->id == SCX_DSQ_INVALID))
++			continue;
 +
- const volatile u64 __SCX_DSQ_FLAG_BUILTIN __weak;
- #define SCX_DSQ_FLAG_BUILTIN __SCX_DSQ_FLAG_BUILTIN
- 
-diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
-index d58f3e59680e..e61632654517 100644
---- a/tools/sched_ext/include/scx/enums.autogen.h
-+++ b/tools/sched_ext/include/scx/enums.autogen.h
-@@ -15,6 +15,7 @@
- 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_CLK_VALID); \
- 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_IN_WAKEUP); \
- 	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_IN_BALANCE); \
-+	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_IN_DISPATCH); \
- 	SCX_ENUM_SET(skel, scx_dsq_id_flags, SCX_DSQ_FLAG_BUILTIN); \
- 	SCX_ENUM_SET(skel, scx_dsq_id_flags, SCX_DSQ_FLAG_LOCAL_ON); \
- 	SCX_ENUM_SET(skel, scx_dsq_id_flags, SCX_DSQ_INVALID); \
+ 		BUG_ON(dsq->id & SCX_DSQ_FLAG_BUILTIN);
+ 		reenq_user(rq, dsq, reenq_flags);
+ 	}
 -- 
-2.55.0
+2.43.0
 
