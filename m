@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEA5340A57;
-	Sat, 15 Aug 2026 10:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400EE37F31B;
+	Sat, 15 Aug 2026 10:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786788206; cv=none; b=AmkS8hj1cvIEt6M+phsaA3xKHD5cQYRYL+6BzUU08xKwZiYoQpe2GBUGw5Avjr7BUEyz7LpQrhqN0tO/QSTkigOetil99wZ/1z/LxAC16hs8m8ttyUkmKTgBTjxntPp3y9qozra+sbPluT64vrqVY0yAK9UClvcm7FDgNQBwg7Q=
+	t=1786788628; cv=none; b=PZVgXQZ8EBsiSxZauQGlCBqLKWI/7YXbXlUqoJdS/aaPnAMS/qEIb8SJWR9pXO2vkvgcPPMnn1WbxKq5s2eq+qpnmeUkzdSTOm/RrVwFgy12AUoWApQS/8ojnY2b5lcGqp0EckAWuljrn5SUP1ilotD9KzHJKppcegT5Y3IE8JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786788206; c=relaxed/simple;
-	bh=Gt8YUFMUoftYCnZcgvkKLEsU8EbjCAEMAbVoBRGzQJg=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=SSPI98r6YQHNFZ94Lv2Xc76qz4VQq+fG3TOsKaodu4iuUHZj5ao+GTMIlX/rGMXPXOfYpV7DOVDMPzWdTvoMC7tTv291K7zd62YMCIvBUnOtMLGsmIWNOzRvmXkAG2DIemWYOnXr/8UTTxZ8rikTe2ImH1piajbIUM3lQrZbEBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWvl3iKj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786788628; c=relaxed/simple;
+	bh=PtD24CuAPAd5D795AdNEZvWEx7rpIQjupDI9rzIMuKc=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=XjpGNTs5uTt7/8ypp6X9GoopyJOb+fMFkuMdqWyzOv3QaBVNv3XnebK1itD4aEMlFVNLTIsV1tN3eKH+mpRe/YzxTuWh9L84Xc770stgWnnVnLQPPW4QxyMsGQsItT/U/Bs1rM4OeCA4yyer1W7IPFyOvhpwpRQxj7AN/NjtKhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UyJZLhLR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fWvl3iKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8461F000E9;
-	Sat, 15 Aug 2026 10:03:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UyJZLhLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937251F000E9;
+	Sat, 15 Aug 2026 10:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786788205;
-	bh=7Q1Lj9D4WLozKSge2rbCenX+BRmL88i+T+DzMeV7ZxU=;
+	s=k20260515; t=1786788626;
+	bh=TJkpyB1xCkC3V4XmKBsXPG5MnvqX7LcYWw9EU3+zSuk=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=fWvl3iKjLoLx/4Iq48TGkiGXw2LRWGY1nD68hCac0I0Ie/hI9/lgUm/hnWk6mjZ1e
-	 dUi1bm0N0IK8sSC5vdzkcekcujN+b5tRZnJWjJdgmcYNi2uijWaehh3qAvFOYxoqfC
-	 KJGrlgmEmTOmMRY9PNODsHh88+dg6sCsQ7kdo6yjArveGKJ1Y5K0vTfe6P1xNRGw7w
-	 e0S3B8/4KGbY4r9JQjnnn7YSi3GlxsZ366DzVKrMPflReAY4NrB2OuQpz8yj+fTSw0
-	 Po9z6j1TYigHjDWQPFeWPberVah7/bTl+6p85sHp8Los1vuMWjNmlxE5TiTm+69Ipp
-	 jzmtnlpTebLWA==
-Date: Sat, 15 Aug 2026 00:03:24 -1000
-Message-ID: <2553a685cfa254f339bf04e995e2a9c7@kernel.org>
+	b=UyJZLhLRik7SUD2Vcs+GLY2dPJjMSU2GfFNy0fpHqwOcLUk0UJ1F8G3OChPaYNBpx
+	 cgercjYwy87XYG6BeF+95tvyiFLS56Y8KfB9TN2mwGQoMi7ka0D7T8ct2Y9xiqPCAD
+	 iLE76XXwoav7hoq1RXbKGOYLg4/iEYmwZmhaNh5davOqaNAy2+HlMG4Qj0XcbcwXtw
+	 scmEwtMkLT9zlB/v2DO7qnpVBCx6l6nC6Ccitp2Ra82ZK6RZix1E/RyC60jQQ8Ua1H
+	 64oRG1PwlkfGQWpQKyUiEx+jpVV6D2/vJE2NOtfw4BsVzibsFqioRpowjiGKnucbFp
+	 t4nFHlZwO0u0g==
+Date: Sat, 15 Aug 2026 00:10:25 -1000
+Message-ID: <b63b856f7725bc14f2fe4dcece0022fc@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>,
@@ -34,16 +34,16 @@ To: David Vernet <void@manifault.com>,
 Cc: sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org,
  Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCHSET sched_ext/for-7.3] sched_ext: Misc fixes
-In-Reply-To: <20260815055107.115671-1-tj@kernel.org>
-References: <20260815055107.115671-1-tj@kernel.org>
+Subject: Re: [PATCHSET sched_ext/for-7.3] sched_ext: Dispatch path follow-ups
+In-Reply-To: <20260815010532.3663253-1-tj@kernel.org>
+References: <20260815010532.3663253-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Applied to sched_ext/for-7.3 with the v2 description for the first patch.
+Applied 1-3 to sched_ext/for-7.3.
 
 Thanks.
 
