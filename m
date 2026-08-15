@@ -1,95 +1,119 @@
-Received: from mta0.migadu.com (out-214.mta0.migadu.com [91.218.175.214])
+Received: from mta0.migadu.com (out-88.mta0.migadu.com [91.218.175.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064701D8E01
-	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 03:31:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.214
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559342DB7BF
+	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 04:59:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786764717; cv=none; b=QGBDofPU5wDPm6twQ5aqnoZDqIFUQMw1o4o5bNiDD/2TVvlaS6MFPg09P+won8ZXVbSvbsbO21iiPsHCTVHEboGdqij7LMI1j2mzU+vnwkSdVNsEkW+xuYLg9kZH1un66dSqcAGJjh8hYI79hwURwS2TOIiZ0qFYz2xNtN90JwI=
+	t=1786769972; cv=none; b=BRdLoKebXhi0OSr+TmH0agfS/3GOeRqEQuGEJffneLNwBhpXD5PCoGJuCD90IlRra0YyCPuIXVRpZvJ7M28yu+JezM4u6gwH5W8pX4bmsA5h7zIPZXUvTTAb57jhYH+ufEIriyhCe1EGj4CYs8VMjKw7HXHEyHAPhzU75PyNqs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786764717; c=relaxed/simple;
-	bh=1ASyJqk7YcVtN755/VCx/q3P97t/MNoATX3Lkx1H1MU=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=jLSkWuUlwANqEYYWkcTq5E7H9QbS9HOzhfuugSkJiGVBCOMBydDQuNfEIryUX+a5LE7s8yKbW69gJxH4dQKC3vF5QFHmV5sCvliZA6T6L0HJVA42lVhRNbe4uDQ9jFhFjgBpLhiVzDWA4IERmhuV2IlowGc+pudLNgVKCh9dpHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ePpjvDRV; arc=none smtp.client-ip=91.218.175.214
+	s=arc-20240116; t=1786769972; c=relaxed/simple;
+	bh=CUH7eeS0i72t70xUBn3D8+EnObUyxPUfKS3cVqvrP8o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HyHSwD5cU/7gI4/ylW5PHiLbhicDeXVqRGFHhGIq2oYg8zKLWRvbuh6bh55ItSSyMujB1aOPPUR/zbBb62lutlslw6hlhQJo26jInMum6NkNIBMvk+Xfls9xauUEgHL5pUNELV3dwtubPsoXJx/rii+FJDf1T4fsvLv09DwCl9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=aGcZwbmC; arc=none smtp.client-ip=91.218.175.88
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ePpjvDRV"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="aGcZwbmC"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=1ASyJqk7YcVtN755/VCx/q3P97t/MNoATX3Lkx1H1MU=;
+DKIM-Signature: a=rsa-sha256; bh=CUH7eeS0i72t70xUBn3D8+EnObUyxPUfKS3cVqvrP8o=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1786764712; v=1; x=1787369512;
- b=ePpjvDRV5sB/dXqbOsDPQh0Shkp7v5GAWrCA+rXtZ3t9vfNnyY6bGqH/2qrssBRAQd1M7HMn
- 5G++CiV1mwPQ1vPPRBRyNXvR7PFWWqAmR2BYRygI4Th0tAdO7W32zJyKRhpIHjPlf8A3DrIb7Jr
- Gg0jGc1KfcFgPnfm4tS5BCco=
+ t=1786769967; v=1; x=1787374767;
+ b=aGcZwbmC8l7Rr+apoCRo7le4ctoq272LPJZ85zvPcBsFXAO1C3Gk2O6veDG1GQxcOygsOJCR
+ OoYmqgdJfaGV5JX8OuCrFOjcFAA1kJsaPgvujVD3iDwwaZFGXhNK+2O1Z7Ex4cJCjBQj0WBv/PA
+ QAWGcaZomuyXUytgPQsV+0xU=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: from [192.168.1.116] (111.162.215.50)
-	by smtp.migadu.com with ESMTPS id d325686902de12c1;
-	Sat, 15 Aug 2026 03:31:42 +0000
+Received: from ctao-book.. (111.162.215.50)
+	by smtp.migadu.com with ESMTPS id ac24d4f30141b71b;
+	Sat, 15 Aug 2026 04:59:17 +0000
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <9b5da7b7-5cd9-4a01-9977-f40fb2e7e279@linux.dev>
-Date: Sat, 15 Aug 2026 11:31:34 +0800
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH] sched_ext/scx_flatcg: Fix cvtime true-up on slice expiry
+Date: Sat, 15 Aug 2026 12:59:05 +0800
+Message-ID: <20260815045905.3431991-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, Tao Cui <cuitao@kylinos.cn>, void@manifault.com,
- arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: don't rehome a dead task in
- scx_cgroup_task_migrated
-To: Tejun Heo <tj@kernel.org>
-References: <20260811103122.357067-1-cui.tao@linux.dev>
- <71d1c173b538ca29d783232d89464d7a@kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <71d1c173b538ca29d783232d89464d7a@kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi,
+From: Tao Cui <cuitao@kylinos.cn>
 
-在 2026/8/15 03:04, Tejun Heo 写道:
-> Hello,
-> 
-> On Tue, Aug 11, 2026 at 06:31:22PM +0800, Tao Cui wrote:
->> A task can exit between cgroup migration commit and the MIGRATED callback:
->> sched_ext_dead() marks it SCX_TASK_DEAD before cgroup_task_dead() removes it
->> from the migration list, so scx_cgroup_task_migrated() can pick up a dead
->> task and call scx_rehome_task(), which re-enables it and leaks the BPF
->> scheduler's per-task resources. The other scx_rehome_task() callers already
->> check for this; do the same here.
-> 
-> I don't think this window exists. SCX_TASK_DEAD is set only by
-> sched_ext_dead() from finish_task_switch(), which a task reaches only
-> after exit_signals(), and exit_signals() sets PF_EXITING inside
-> cgroup_threadgroup_change_begin(). The MIGRATED notifiers run inside
-> cgroup_migrate_execute() with the same rwsem write-held through
-> cgroup_attach_lock(), so no task in the set can enter the exit path
-> until the migration is done. Tasks which were already exiting are
-> filtered out by the PF_EXITING test in cgroup_migrate_add_task().
-> 
-> The DEAD tests you referenced are in scx_task_iter walks which run
-> without the threadgroup rwsem, where dying tasks can actually show up.
-> 
-> Did you try to reproduce the leak? When code review turns up a
-> suspected bug, it's a good idea to reproduce it first to verify the
-> assumptions before writing a fix.
-> 
-You're right, I missed that. 
-I walked it again, a task past exit_signals() is filtered out by the PF_EXITING test in cgroup_migrate_add_task(), and a task mid-migration can't reach exit_signals() until the rwsem is dropped, so scx_cgroup_task_migrated() always sees a live task. The DEAD checks I pointed at are on task iteration paths without the rwsem, so they don't apply here.
+fcg_dispatch() true-ups the current cgroup's cvtime when its slice
+expires or its DSQ runs empty while the slice is still active:
 
-I didn't try to reproduce the leak first. I will next time.
+	__sync_fetch_and_add(&cgc->cvtime_delta,
+			     (cpuc->cur_at + cgrp_slice_ns - now) *
+			     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
 
-Please disregard this patch.Sorry for the noise.
+The true-up should be actual minus charged: on CNS_EXPIRE, the overrun
+(now - cur_at - cgrp_slice_ns) should be added; on CNS_EMPTY, the
+unused portion of the slice should be subtracted. The expression above
+has the sign inverted, and in the CNS_EXPIRE case now is already past
+cur_at + cgrp_slice_ns, so the u64 subtraction wraps. The
+multiplication preserves the two's complement encoding but the
+unsigned division by hweight destroys it, adding roughly 2^64/hweight
+per expiry instead of a small correction.
 
-Thanks,
-Tao> Thanks.
-> 
-> --
-> tejun
+Under saturation the hweight budget clamp in cgrp_cap_budget() masks
+most of the garbage, so the weight distribution barely moves, but the
+accounting is broken all the same. Compute the delta as a signed value
+and use fetch_and_add()/fetch_and_sub() so that the dividends stay
+positive, as BPF division is unsigned.
+
+Instrumented the true-up and ran a saturated three-leaf cgroup tree on
+a 4-CPU VM: without the fix, each expiry added ~5e15 (2^64/hweight
+territory) to cvtime_delta; with it, the corrections are back to
+slice scale, with the overrun added and the unused portion subtracted.
+
+Fixes: a4103eacc2ab ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+---
+ tools/sched_ext/scx_flatcg.bpf.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index 0fd214cc61da..ddcf6bc03b11 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -769,10 +769,18 @@ void BPF_STRUCT_OPS(fcg_dispatch, s32 cpu, struct task_struct *prev)
+ 		 * cgroup to execute but the latter needs to be done in a loop
+ 		 * and we can't keep the lock held. Oh well...
+ 		 */
++		s64 delta = now - cpuc->cur_at - cgrp_slice_ns;
++
+ 		bpf_spin_lock(&cgv_tree_lock);
+-		__sync_fetch_and_add(&cgc->cvtime_delta,
+-				     (cpuc->cur_at + cgrp_slice_ns - now) *
+-				     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
++		/* keep the dividends positive, BPF division is unsigned */
++		if (delta >= 0)
++			__sync_fetch_and_add(&cgc->cvtime_delta,
++					     (u64)delta * FCG_HWEIGHT_ONE /
++					     (cgc->hweight ?: 1));
++		else
++			__sync_fetch_and_sub(&cgc->cvtime_delta,
++					     (u64)-delta * FCG_HWEIGHT_ONE /
++					     (cgc->hweight ?: 1));
+ 		bpf_spin_unlock(&cgv_tree_lock);
+ 	} else {
+ 		stat_inc(FCG_STAT_CNS_GONE);
+-- 
+2.43.0
 
