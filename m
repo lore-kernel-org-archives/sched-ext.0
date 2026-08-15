@@ -1,51 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-34.mta1.migadu.com [95.215.58.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400EE37F31B;
-	Sat, 15 Aug 2026 10:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B453633F5BC
+	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 11:56:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786788628; cv=none; b=PZVgXQZ8EBsiSxZauQGlCBqLKWI/7YXbXlUqoJdS/aaPnAMS/qEIb8SJWR9pXO2vkvgcPPMnn1WbxKq5s2eq+qpnmeUkzdSTOm/RrVwFgy12AUoWApQS/8ojnY2b5lcGqp0EckAWuljrn5SUP1ilotD9KzHJKppcegT5Y3IE8JE=
+	t=1786794975; cv=none; b=kTmjiM47ZYI2ko/DnPTucv00/u8M6hMEEiEJVtQsrMLrS+Cyr6AkE2TbIZUS2udIJse5FcL8W2SdzA4oL2y6yN/BPvabxH6/roIo7jLCv76H4+rBK1rF/zkw+Or0diC/+5XjHMbSpL+UDODaNP4OFtCcxEC4RMYGEbCC/d0ouTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786788628; c=relaxed/simple;
-	bh=PtD24CuAPAd5D795AdNEZvWEx7rpIQjupDI9rzIMuKc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=XjpGNTs5uTt7/8ypp6X9GoopyJOb+fMFkuMdqWyzOv3QaBVNv3XnebK1itD4aEMlFVNLTIsV1tN3eKH+mpRe/YzxTuWh9L84Xc770stgWnnVnLQPPW4QxyMsGQsItT/U/Bs1rM4OeCA4yyer1W7IPFyOvhpwpRQxj7AN/NjtKhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UyJZLhLR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786794975; c=relaxed/simple;
+	bh=YkLmU1NxiWB/vciVK99wUc8NOQwVA9xq2ClSCkxrLdg=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=h0kiaUamDoyApxWLYgreZct1MNqQ/TUq4Pxpy5/5oX9l0/JegH42NJYuDQRhdlmxHt4UuhpYigk46FnSaWh7fpMNS60wohtz8BnwM1QqrgfxeDNqmMntY1NKXBC4hYp9XUb25BHj9792TNXwBOy3wNlAsrYruSZ3vKmQiBPUunc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DILQYcgL; arc=none smtp.client-ip=95.215.58.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UyJZLhLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937251F000E9;
-	Sat, 15 Aug 2026 10:10:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786788626;
-	bh=TJkpyB1xCkC3V4XmKBsXPG5MnvqX7LcYWw9EU3+zSuk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=UyJZLhLRik7SUD2Vcs+GLY2dPJjMSU2GfFNy0fpHqwOcLUk0UJ1F8G3OChPaYNBpx
-	 cgercjYwy87XYG6BeF+95tvyiFLS56Y8KfB9TN2mwGQoMi7ka0D7T8ct2Y9xiqPCAD
-	 iLE76XXwoav7hoq1RXbKGOYLg4/iEYmwZmhaNh5davOqaNAy2+HlMG4Qj0XcbcwXtw
-	 scmEwtMkLT9zlB/v2DO7qnpVBCx6l6nC6Ccitp2Ra82ZK6RZix1E/RyC60jQQ8Ua1H
-	 64oRG1PwlkfGQWpQKyUiEx+jpVV6D2/vJE2NOtfw4BsVzibsFqioRpowjiGKnucbFp
-	 t4nFHlZwO0u0g==
-Date: Sat, 15 Aug 2026 00:10:25 -1000
-Message-ID: <b63b856f7725bc14f2fe4dcece0022fc@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCHSET sched_ext/for-7.3] sched_ext: Dispatch path follow-ups
-In-Reply-To: <20260815010532.3663253-1-tj@kernel.org>
-References: <20260815010532.3663253-1-tj@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DILQYcgL"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=YkLmU1NxiWB/vciVK99wUc8NOQwVA9xq2ClSCkxrLdg=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1786794967; v=1; x=1787399767;
+ b=DILQYcgLc7V1r9wYIblCS9C9niCRcXbzsLh3kxLfZlu03VGI6rAiB7kyse9oUp2y7vSJy9CI
+ w1sONtfJgUwkDui1INLe3dfLZ4HOI7VUh2VKdahEDrwScUGJc+yYHgBCb4ANper1BJFdOjy5F8c
+ Sj6C+SI4VH/aG9UhQyzvkh7E=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: from [192.168.1.116] (111.162.215.50)
+	by smtp.migadu.com with ESMTPS id c2dba12a5636e28d;
+	Sat, 15 Aug 2026 11:55:56 +0000
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <e707deeb-6253-4ea0-92de-ebd87f0da707@linux.dev>
+Date: Sat, 15 Aug 2026 19:55:50 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, Tao Cui <cuitao@kylinos.cn>, void@manifault.com,
+ arighi@nvidia.com, changwoo@igalia.com, suzhidao@xiaomi.com,
+ yphbchou0911@gmail.com, zhaomengmeng@kylinos.cn, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, bpf@vger.kernel.org
+Subject: Re: [PATCH] sched_ext/scx_flatcg: expire cached hweights on weight
+ changes
+To: Tejun Heo <tj@kernel.org>
+References: <20260814144116.2767304-1-cui.tao@linux.dev>
+ <80d78aac-7fc8-4c14-a2ae-419297d953f7@linux.dev>
+ <3432f79f1d8195a56a0b4fea53ceb099@kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <3432f79f1d8195a56a0b4fea53ceb099@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Applied 1-3 to sched_ext/for-7.3.
 
-Thanks.
 
--- 
-tejun
+在 2026/8/15 06:23, Tejun Heo 写道:
+> Hello,
+> 
+> On Fri, Aug 14, 2026 at 10:48:35PM +0800, Tao Cui wrote:
+>> Is this the intended behavior of the budget clamping, or should the
+>> steady-state distribution converge to the compounded shares over time?
+>> The header comment's model doesn't seem to hold in this scenario.
+> 
+> The clamp isn't the culprit. I reproduced your setup (3 busy tasks per
+> leaf, 4 CPUs) and dug in.
+> 
+> The dominant factor is that D is runnable-task limited. At weight 800
+> its compounded share is 3.55 CPUs but it only has 3 tasks, so 75% is
+> the best it can do. Below that cap, the window granting loses more:
+> whenever all three of D's tasks are already running and another CPU
+> picks D, the pop from D's DSQ comes up empty, the cgv_node gets
+> stashed and that CPU grants a full cgrp_slice_ns window to another
+> cgroup. The loss scales with the window size. Measured D shares at
+> weight 800:
+> 
+> 	3 tasks/leaf			55-59%
+> 	3 tasks/leaf, 100ms slices	52%
+> 	5 tasks/leaf			84-86%
+> 
+> Disabling the clamp entirely is the 59% above, so it barely matters.
+> With enough runnable tasks per cgroup, the distribution converges to
+> the documented compounding. The model holds, but only when no cgroup
+> is runnable-task limited, and the window granting degrades sooner than
+> per-task fair queueing would as that limit is approached. That's an
+> inherent simplification of this example scheduler.
+> 
+> Separately, while digging into this, I found that the true-up in
+> fcg_dispatch() is broken:
+> 
+> 	__sync_fetch_and_add(&cgc->cvtime_delta,
+> 			     (cpuc->cur_at + cgrp_slice_ns - now) *
+> 			     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
+> 
+> In the CNS_EXPIRE case, now is past cur_at + cgrp_slice_ns, so the u64
+> subexpression wraps. The multiplication preserves the two's complement
+> encoding but the unsigned division by hweight destroys it, adding about
+> 2^64 / hweight per expiry instead of a small correction. The sign is
+> also inverted. The true-up should be actual minus charged, so the
+> expiry overrun should be added and the CNS_EMPTY unused portion
+> subtracted. Under saturation the budget clamp mostly masks the garbage,
+> which is why the numbers above barely move with it fixed (the 86% in
+> the 5 tasks/leaf row), but the accounting is broken all the same. The
+> following fixes it and tests fine (BPF division is unsigned, keep the
+> dividends positive):
+> 
+> 	s64 delta = now - cpuc->cur_at - cgrp_slice_ns;
+> 
+> 	if (delta >= 0)
+> 		__sync_fetch_and_add(&cgc->cvtime_delta,
+> 				     (u64)delta * FCG_HWEIGHT_ONE /
+> 				     (cgc->hweight ?: 1));
+> 	else
+> 		__sync_fetch_and_sub(&cgc->cvtime_delta,
+> 				     (u64)-delta * FCG_HWEIGHT_ONE /
+> 				     (cgc->hweight ?: 1));
+> 
+> Care to send a patch?
+> 
+Hi, tejun
+
+Thanks for the detailed walkthrough. I was chasing the clamp, but the
+runnable-task limit and the window granting behavior explain it much
+better, learned a lot from your analysis.
+
+I sent a fix based on your suggestion, and saw it's been applied to
+your tree:
+
+  sched_ext/scx_flatcg: Fix cvtime true-up on slice overrun
+
+  https://lore.kernel.org/all/20260815045905.3431991-1-cui.tao@linux.dev/
+
+Kept your approach (s64 delta, keep dividends positive) and added
+A/B numbers from the same VM setup in the commit message.
+
+Looking forward to more of this while digging through sched_ext.
+
+Thanks,
+Tao
+
+> Thanks.
+> 
+> --
+> tejun
+
