@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3427A1E32D6
-	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 06:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BCF1E32D6
+	for <sched-ext@lists.linux.dev>; Sat, 15 Aug 2026 06:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786773839; cv=none; b=YrDdAl2ZOB3fnUGMC747Sb28tIwGJNH0TxE81+cM1l2cB6OenTROyu2VoPlC8zFDlTt+ojvvJy3TpPTNN1kDswUWDFK2SVNTR+RzFy2bIMJe+Q1hHphMycQ9NCRtfuwbCBTww95jgHtrjrZAyv0oZm0TYxVcraw8qco7MIu7QLc=
+	t=1786773845; cv=none; b=QWXrQNwg5MSEePQs8xPHHOetpJpfUKBKsNJPHVaxITLi68OsHmTf+8k6iaJZGXrfaGtT2xt+6mH/L9rK2JmKBAxmJoIO/yhuDcJbOn08aLfjmBUz0yRCzehWfr6ty3R2d/Y533YewLwe/PDpNh0DEtxlU1LyloJWdbvRxjPTZ0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786773839; c=relaxed/simple;
-	bh=pSJuGjlYWa2cYC3Ju7oh+eRwF36+fhC6PB4jF93TI+k=;
+	s=arc-20240116; t=1786773845; c=relaxed/simple;
+	bh=W+NZ3pjWiNgMLDn+5ei/FwPxx2QgaYV7nkVMzsJ+rHQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Ym7U5x4OSXPygkHwMXDp0Tyb1w1WFs1SRPK1/FlNJl3+AjOTzAwsmb1NTyGK9d4+o4Sq5fwvJY32w0SyF8kw0rE6lG1EXuSc2GEoMaSNzJPtAxmLdpSMthM8gY81DD8z2/UaNaDU8e5OyCUQhId0ZnT5LHaexawOPCVx/F8mG3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqwhpE8n; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Hah9E4qpEhV+OSAvgVkS2XVANw/rBaQ/B0tbmeMI2tqCsKQ+nDbcgn9gMvJK2zamq1EgKK7nqxs69pcn9iwMMW2J0IHRzWf/+uBoRsNLwJ7B4QnN7Zrgg63D8oWGwRaBLvWB5I2tBypIjlkio5gveuUc8rIYeerJopRIh8PuJWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ubizyo/p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqwhpE8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C101F000E9;
-	Sat, 15 Aug 2026 06:03:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ubizyo/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C69F1F000E9;
+	Sat, 15 Aug 2026 06:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786773837;
-	bh=Wwai/yQA9wCBaLpd6yTepKlk5n/GqojdqGXKqc6xzIc=;
+	s=k20260515; t=1786773843;
+	bh=tagnhSsFz/xKwy6+gjGb3wCVRlk5yqql1EhYNu9DGBQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=gqwhpE8nDQyoDQGXIgdo177h/oO/Dv0IZ3EbEf8YvVjBqqyFRZeJh93FCF3LMNXdp
-	 qmcLk0ijsytrX3ScAUODuUekpd5jRYjskK/s+mmyPAvv8TES2+PdZUOad2NlJuz9NH
-	 3RqnNLx/8A9T4E5awdn8AY5DWW4eXXFXermkgu9CmuzpuiMku76lOSLu7BoY/C35Ya
-	 kHP85aQiQGAM0LJkS1qLYc7uv/O7cbMq4zBels22EPcqzN9gw6kCGRV+U6e7bAMQCQ
-	 sGLBgroS6ts2iOr7O/xkgodw+KUN1u/vVHONCkhIFwm4VbWAjcWhM9xaUa3gwPbAaB
-	 fs2ygk3woADOQ==
+	b=Ubizyo/ptd5yCs63S7yTY+p3lRZ4S4hYhcHZRz9bXSFdn2hvFt1W0fCQF4R0AW0Ru
+	 VbR37cVArj8dssYSUzQ634yXviMlyf5qg+9uxaAywP8hfJ41N+NRfaUSu9GkPrfgtj
+	 QB1Q4XyrdN63QmL6Htru5ccmdw+ADXsqPlDNFnabYY55+hzGmj+dnrSSkF5fLE1riG
+	 1Lc15loGb3Hkqa3X1irM12Xh1En6rp9T4wznCvuV2QJSesijyMBH3fd/DqhuaOdnKu
+	 X3YyS5iWbBy0jSOpet5QyDxWm/sZni8IqcaQ/YPI0I1oSfKlLtFJ8t7RrTLu4VzThe
+	 8DRSFKs+M+mfg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Drop unlocked scx_rq_clock_invalidate()
- from scx_root_disable()
+Subject: Re: [PATCH 2/2] sched_ext: Make scx_bpf_events() read the calling
+ scheduler's counters
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260815055107.115671-2-tj@kernel.org>
+In-Reply-To: <20260815055107.115671-3-tj@kernel.org>
 References: <20260815055107.115671-1-tj@kernel.org>
- <20260815055107.115671-2-tj@kernel.org>
+ <20260815055107.115671-3-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 15 Aug 2026 06:03:56 +0000
-Message-Id: <20260815060357.51C101F000E9@smtp.kernel.org>
+Date: Sat, 15 Aug 2026 06:04:02 +0000
+Message-Id: <20260815060403.0C69F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,88 +49,95 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] This problem wasn't introduced by this patch, but `SCX_RQ_CLK_VALI=
-D` can be permanently stranded as 1 during `scx_root_disable()`, causing th=
-e next SCX scheduler to read a massively outdated clock via `scx_bpf_now()`.
+- [High] A tracing or syscall BPF program can cause an out-of-bounds memory=
+ read by associating with a non-sched_ext struct_ops map (like `tcp_congest=
+ion_ops`), which is then incorrectly cast to `struct sched_ext_ops *` by `s=
+cx_prog_sched()`.
 --
 
---- Patch [1]: [PATCH 1/2] sched_ext: Drop unlocked scx_rq_clock_invalidate=
-() from scx_root_disable() ---
-commit c8d4a8f1095e17e1c662f243f67711302652b61f
+--- Patch [2]: [PATCH 2/2] sched_ext: Make scx_bpf_events() read the callin=
+g scheduler's counters ---
+commit c53feaf881922f5f2912216d45a7b765df97ad06
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Drop unlocked scx_rq_clock_invalidate() from scx_root_disable()
+sched_ext: Make scx_bpf_events() read the calling scheduler's counters
 
-This commit drops the unlocked scx_rq_clock_invalidate() call during
-scx_root_disable(), relying instead on the rq lock cycle and unlock
-path to clear the clock valid flags.
+scx_bpf_events() now resolves the scheduler from the calling program with
+scx_prog_sched(), instead of always reading the root scheduler's event
+counters.
 
 > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 18183062f751c..40c9467d8b186 100644
+> index 40c9467d8b186..ee865d0f65112 100644
 > --- a/kernel/sched/ext/ext.c
 > +++ b/kernel/sched/ext/ext.c
-> @@ -6162,12 +6162,13 @@ static void scx_root_disable(struct scx_sched *sc=
-h)
->  	percpu_up_write(&scx_fork_rwsem);
+
+[ ... ]
+
+> @@ -10418,19 +10418,23 @@ static void scx_read_events(struct scx_sched *s=
+ch, struct scx_event_stats *event
+>  	}
+>  }
 > =20
->  	/*
-> -	 * Invalidate all the rq clocks to prevent getting outdated
-> -	 * rq clocks from a previous scx scheduler.
-> +	 * Re-balance the dl_server bandwidth reservations: detach ext_server
-> +	 * (no more sched_ext tasks) and reinstate fair_server if it was
-> +	 * previously detached because we were running in full mode.
->  	 *
-> -	 * Also re-balance the dl_server bandwidth reservations: detach
-> -	 * ext_server (no more sched_ext tasks) and reinstate fair_server if it
-> -	 * was previously detached because we were running in full mode.
-> +	 * The rq lock cycle also invalidates each rq's clock (rq_unpin_lock()
-> +	 * clears SCX_RQ_CLK_VALID on unlock), preventing the next enable from
-> +	 * seeing outdated rq clocks from this scheduler.
+> -/*
+> - * scx_bpf_events - Get a system-wide event counter to
+> +/**
+> + * scx_bpf_events - Read the event counters of the calling scheduler
+>   * @events: output buffer from a BPF program
+> - * @events__sz: @events len, must end in '__sz'' for the verifier
+> + * @events__sz: @events len, must end in '__sz' for the verifier
+> + * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF pr=
+ogs
+> + *
+> + * Read the event counters of the scheduler associated with the calling =
+program.
+> + * @events is zeroed when no scheduler can be resolved.
+>   */
+> -__bpf_kfunc void scx_bpf_events(struct scx_event_stats *events,
+> -				size_t events__sz)
+> +__bpf_kfunc void scx_bpf_events(struct scx_event_stats *events, size_t e=
+vents__sz,
+> +				const struct bpf_prog_aux *aux)
+>  {
+>  	struct scx_sched *sch;
+>  	struct scx_event_stats e_sys;
+> =20
+>  	rcu_read_lock();
+> -	sch =3D rcu_dereference(scx_root);
+> +	sch =3D scx_prog_sched(aux);
 
 [Severity: High]
-This problem wasn't introduced by this patch, but is it possible for the
-SCX_RQ_CLK_VALID flag to be permanently stranded as 1 during
-scx_root_disable()?
+This is a pre-existing issue, but does this expose us to a type confusion
+and out-of-bounds read?
 
-The commit message and comment note that rq_unpin_lock() clears the flag
-on unlock, and __scx_enabled is turned off later. However, if a concurrent
-CPU takes the rq lock after the cycle but before __scx_enabled is disabled,
-it seems a race can occur:
+Looking at scx_prog_sched() in kernel/sched/ext/internal.h, it retrieves
+associated struct_ops:
 
-CPU N (Normal scheduling):
-Takes rq lock
-update_rq_clock() sets SCX_RQ_CLK_VALID (since __scx_enabled is still true)
+kernel/sched/ext/internal.h:scx_prog_sched() {
+    ...
+    ops =3D bpf_prog_get_assoc_struct_ops(aux);
+    if (likely(ops))
+        return rcu_dereference_all(ops->priv);
+    ...
+}
 
-CPU 0 (scx_root_disable):
-static_branch_disable(&__scx_enabled);
+If a BPF_PROG_TYPE_TRACING or BPF_PROG_TYPE_SYSCALL program is associated
+with a different struct_ops map (like tcp_congestion_ops), the pointer is
+blindly cast to struct sched_ext_ops *.
 
-CPU N (Normal scheduling):
-Releases rq lock -> rq_unpin_lock() -> scx_rq_clock_invalidate()
-scx_rq_clock_invalidate() in kernel/sched/sched.h checks:
-    if (!scx_enabled())
-        return;
+Since struct sched_ext_ops is much larger than other struct_ops structures,
+reading ops->priv could read memory well past the end of the map allocation
+and cause a kernel panic when the garbage value is dereferenced as a
+struct scx_sched *.
 
-Because scx_enabled() now evaluates to false, the function returns early and
-fails to clear SCX_RQ_CLK_VALID.
+Does scx_prog_sched() need to verify the type of the associated struct_ops
+before accessing ops->priv?
 
-When a new BPF scheduler is loaded later, early hooks like ops.select_cpu
-that run without holding the rq lock might call scx_bpf_now() and see
-SCX_RQ_CLK_VALID =3D=3D 1. Will this cause them to use a massively outdated
-clock from the previous scheduler's run?
+>  	if (sch)
+>  		scx_read_events(sch, &e_sys);
+>  	else
 
->  	 *
->  	 * Unlike the enable path, this runs on a recovery path that cannot
->  	 * fail, so we use dl_server_swap_bw() to atomically free ext_server's
-> @@ -6180,8 +6181,6 @@ static void scx_root_disable(struct scx_sched *sch)
->  	for_each_possible_cpu(cpu) {
->  		struct rq *rq =3D cpu_rq(cpu);
-> =20
-> -		scx_rq_clock_invalidate(rq);
-> -
->  		scoped_guard(rq_lock_irqsave, rq) {
->  			update_rq_clock(rq);
->  			if (was_switched_all) {
+[ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260815055107.1156=
-71-1-tj@kernel.org?part=3D1
+71-1-tj@kernel.org?part=3D2
