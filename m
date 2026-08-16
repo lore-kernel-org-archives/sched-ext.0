@@ -1,47 +1,47 @@
 Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012008.outbound.protection.outlook.com [52.101.53.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A05353EF7
-	for <sched-ext@lists.linux.dev>; Sun, 16 Aug 2026 17:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F753B42EB
+	for <sched-ext@lists.linux.dev>; Sun, 16 Aug 2026 17:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786901924; cv=fail; b=e4cSNvKKc49OLCX77Eu5D5sMwgOcdJWa4Xq6T2Y4DeecSoMnAO/9LiTojdL/4ORZlZ0t+A2SA3D8BbkkIUvJR+5nyeCpiNYS972QwmJWjmd04i6x7Mw+GnIiH9T86SXSkWOdnUMZBx9U1TfYUHP5SfRKb51Umgl+gTdrVuvZHC8=
+	t=1786901927; cv=fail; b=MDXz0A+htwLA+77dwt5641BFIArQHoYQEgiqqEUPhIJEYbjkITEXjeoU98oLGKAtVafA/Rap0QRdWJbOaa4a9YbtrD93wVeLTpOZsvKmZxV8QRV4KhvYGZl6ewZX5h+Esp4sE4J7KWar0+ZlrRkN7ZSxjFivZ1dWovfHqBs1THQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786901924; c=relaxed/simple;
-	bh=qpGg/Z320L2aDWzlN8So9159AX8vmBUjro+0tjmIs84=;
+	s=arc-20240116; t=1786901927; c=relaxed/simple;
+	bh=zGU+v26E9iQZgW5motRTm0nd5HzNXJUGjZJibYKlhGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=k2u2A9mQkHXIpafzHn2QRHkqlVL3cYIiVhQ0fTI9Oio19VoJZgiwOdZfmXbfiwew7Md4V1AJR/J+RpNXahTcP3K4hRq2jbmQc/D2L9fOvDv/U5I1Acsr6Etd3MyM2qtRcBNBbDLvVgVTUUbUWiyCHMabQvr/YugWxsh1vJXOkxk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dwOUpQcY; arc=fail smtp.client-ip=52.101.53.8
+	 Content-Type:MIME-Version; b=lIxth1P8RZeQfjopsPSHg+qLr7GQV2s+W0HiOAqNBOiTc6oVOZnp7bXPA634fa4193Ppm4oLfZqHGSQ83VE+JLSBqKbAdkOEyHXVokJUpw5Y+/lUlWaIUOVzQEWHZndSDdNBBt6zWZ0T/SrZdG+ym6gsWj6DeIl+lva/PQXnncM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dnCG1GR0; arc=fail smtp.client-ip=52.101.53.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dwOUpQcY"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dnCG1GR0"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YqzyNlL2X3aR5hPDnIi0G2uQBT7JCrL01TlJEqk9sEZN+cLuwqEcw7pq1yasSOput2BEI7+DePeUxCzkylU+Q1twbNYQogDTW39tlPg6lG9TL7aafVAifU9Qa3/TyUsyYIk/vFo6PSXBiZdYJMK+HuXcmMwjYSkXWMRAZ/XlPx39eBYRr8UbdlSkhasBwyMW1d3mQ6DbXjIrdXTc/+sPerHfdAJgmzs1A20TPE2fVVJlp9vbd8PkSC5OsVSZQFqNbBe5FYzHLVTplK7qqp1BMKU0uUj4+XhBiAsPUC+7kJGO6pZ+6iSMW2Mqh8/Q/WnSRs29PCPdgkb9tykjALFhcg==
+ b=NMz8EQVgWYYTkLx32w48oFrNuLWGAePQxCc+GfjX/+Ijd6EEjDGv4u/ukpvLkCGxdjfMl64iMAJIRTcywrhNhvnAq/t3eLoTndn98cdWTHNSZVahjif3RFoHe5oRvDMuSJACGIon/+nNQQdUbYUssPQb/Y4w5XiOsPnoHYwjxQNoULHTvyKg7U1heCsJAHe1KIVr7iK/+fpKUwQFCT2PnRBpL1cW5iJLrVHzBq+T9xM9wQANxhcRRqSjUetxM5SlB70qp/F1ZCx4SDygRiV3NagGG9P6Kvv5zh9W2m6Go5k60c3qC6B3/U9ksz0Kj2vegunvF6QuwIjTMIm9OlN7Uw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nJ55tvf7KT6dace1gbBsHJsXewIHPLv6doYuED/TrAQ=;
- b=PPBnnJEMI9OTodBGFNI4mso16oqsYBs2FRedafJ02lpDJMaM3XoffpFys3X4ac8N1SdeHISxxmnIXH1n7uTWKECbgAsNpgq31jJCucWkMmG7bBb9JxQTsHRPpPjvy2IBgxfyO9kHxLXuTwCxX9kTZ1zNIf0p1rKPWvsaNSoQTLdZ1tVj2YYCrCkCOnaqYQC1pke5+lMNI508hKvyXHXQt9BDtyvEWsWT9832oYBiA3yQJEbQC93JAjYm9btFI5Mwl3jzk1/MiFuiSk/KWqXIRDD6eAAf818cIxiUpWZWey9Xdu5zT96JbJEqmcN7l4bU4MUXjjYnLUbmizne90XSig==
+ bh=opKePYWxdoyXhk9jdjgNFsKcR+oKfu6/cw78/IypzKE=;
+ b=Pr26GU9rel3za34v31tEzLG8TEF4U0Ls3eQdwJcfc8mcG6N9kj8CB8o06xCvf169hWkKx1pKcL6NWO4nXotzIneNKf4Z3efTLOrfUF8oZAHEY+QWre/ZOv7/UOAxV74fqbWUqnFu4geEsqewiWWvC63jjZtZL80GnzfSROUhFRdRRmxYV4J2D1jPRgH2n+jtSJ9VOwNGnrgmzFcjeEn+TeRBts4QliGBytFpLg8pNALjWouFsO4bogS0ujetCZztDq5goEA1/yMIIF0q8x5Gp++fWAS7c0n3UKixBkoVEUsdiBFD9OjJyiRegSJNFFY1k4QLdvp9SXC+B6BQaAwytg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nJ55tvf7KT6dace1gbBsHJsXewIHPLv6doYuED/TrAQ=;
- b=dwOUpQcYDIhOLf8eJuEXDuzKkKvs2e0tX3Crm8gozH3MdpHcJiTnW/VZ4jqs05p7Srgw1Xw34tmPqP/VklymIdz2Gdq8Lk9XZt3VNZqrOvHsN5kmndW+ge3gb7SzduAH4wSTp2pFc6taLCUbe1TPAabjQlKh8n0LTgEkwusgj+Q6JulLXJFKOZSXhAlO+crwldOSezpshcXhhjY6aXwbdcvVNOBq8Ggltavppoo3v6RQ/9sh2EettgugTr6XkMT/BNdcq7u64XUGP0LMoEEqPsDOJdoDSONW/C0ypi6CmJz9cAPRqsyuW3DocrFfOMzb+naY6uRN0Fwq/HwJZvAktA==
+ bh=opKePYWxdoyXhk9jdjgNFsKcR+oKfu6/cw78/IypzKE=;
+ b=dnCG1GR0U8xIe36vKRtAoIJAtn/jhxcmupbvu2XSTNx1bpSV4rKiuKyDqou4IUYVosrd3tzta3+yHGfuBg6srz30BRDKPXBrDsU+pQ+4rasySH7QnLXkyV8XOnkSniXnP3j/MTRQ37/J2J2Rs5wAvZt2FwsB5ExJXAJPhcGHTE0AoLRG0ohRN2u8GGPMNCGBYQ5kksnweczgmOzPcO85i1Hu9xPzO5+1+tZw7Kj5VenxhfOQ72GfRvvNiNiuvBkqcPeFkKT3YquJuSJmqEBtaRL4btUGN7xJeV97XzTvR4G6VwU+30bOazAxaPpNAok7mpjeQeSfPhgLLLVDOEK5yg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by LV0PR12MB999092.namprd12.prod.outlook.com (2603:10b6:408:32e::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Sun, 16 Aug
- 2026 17:38:39 +0000
+ 2026 17:38:35 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0315.016; Sun, 16 Aug 2026
- 17:38:39 +0000
+ 17:38:35 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -63,16 +63,16 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 16/17] sched_ext: scx_qmap: Add proxy execution support
-Date: Sun, 16 Aug 2026 19:35:14 +0200
-Message-ID: <20260816173732.17162-17-arighi@nvidia.com>
+Subject: [PATCH 15/17] sched_ext: Add selftest for blocked donor admission
+Date: Sun, 16 Aug 2026 19:35:13 +0200
+Message-ID: <20260816173732.17162-16-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260816173732.17162-1-arighi@nvidia.com>
 References: <20260816173732.17162-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MI1PEPF000008CB.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::439) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: MI2P293CA0002.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:45::17) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -82,220 +82,1441 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|LV0PR12MB999092:EE_
-X-MS-Office365-Filtering-Correlation-Id: f536f1b0-f1b6-47f8-d3c3-08defbbd34eb
+X-MS-Office365-Filtering-Correlation-Id: b32c9375-5716-4212-1ea9-08defbbd32e3
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|23010399003|7416014|366016|376014|1800799024|6133799003|22082099003|18002099003|3023799007|10067099003|56012099006|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	P8dv8PznWWdcf7t5TKPrgdFkvSyrnbYtU3g2VL6c1NBazneb8jPZhx7WFv0mx+eF6qjtDwuzaPZjYUwKne6LXNH/uG74PnHJ6Z2veLULd1ZWfhGgBEsOzImzlrgfwmuMTl1Tol7riZHaZJygBffSVKUC2/Jig1UT23Q2iowtBe4x6EZYrh2gW4DB50fGmulwVlrIu1r3YeNjbr9/N0jCYJAyz5y9UZGjnzXs7hA01X4wRjgGO5hhEVr+peeLPg+yKs6xjAaAAEdsvaaaDn/oEgX/zj4E3y6cNl4Y9v8Na6QsJV0DaONg3q31EtY9bbLPKyePnQId57g2JAqpEcEJgPbG4IKrOp43GKrCVk9h8dmy6aSway5N5pi0Hd0iAGO+w78kiliUnpYHQpC+MjsqqXAbCVSV8hgfyFFyE2e/dqZpcNPeCkAeXXmSfe9/OGo/i2Kvf/PBgRh1MIUZwerhN+G0EVFTwPraXgZI+m2ry6T6D8d5TAOW4gyeZvT+OsoTLDgtT1Yf4wK8Kl/kauIcgNPumVZtXyAHLRwZBljRTWVe85rwO6knpxyASOhHHJYLl03nw3TToPfNVIINSLPkGWoxmeEQqp7b5EFz+iJ+4BJ10nkEFn5Xznq1Ln9ILa7uJQ+u0VU5vzL264hpbMdrjneRZMFQQZnJnSkNkH9BQkw=
+	PiVHdTTcfZYlnbrn4vpVZoZ4TUrxO8851vYBZ9TZCuo/YkRc7sExRVZTogamI6axadgZcRZNl1ATcCdQ6/AaW+DiY616Un+jIhlvS/j1hdSc9nCk79Sovi1TLkmLMqSMa2OmELBHIXtgcQKSsZM3UkIWGxcsxmnbhTn+2FjQGBtGpIO9tkqALQPTwd57Xmr3QWzt8O04dZLC9kLM6sJkU/IHLW9L7VTG/zfSXmi/U5KLQrA5BjCyQdibtpo+o0/c14OTtX700RpKZcfOGQJ9MaJYjLyYAxLRN+8NlMaUvOE3cQSyEoD4aWi+V3peftfByDnNhNIfDk1RKJqsveMhZhQVLtwz9dM/Aumyy75BLwI3w69lv+NEQOzriA4QFJ92xtU/qOI4RKjmdJI9NRgzUaq42Oqwsku/Onic9BFoBbaxrcPUvGdvwlb10XZBgZ1TLQT0pAtScRetPIuf4LAonwSpVduLKmFZUDYGkPXwQf0vaPg4wPqwyemXqZ48/HLVziXs5IpalWlCKgEcppmxrnsH3v1Qk+3JsDzGIjagIy1PhJXZGitI1Ay0me5VOhOMTeDj6E97kiusXThL1D7ahVFxq8gec/q+rIMG8OaQUZSC/sQWvCw8iFRYYxOeOOS7blRB9y35SnLamFzN1sOlFMg2Kisw3LxP+TUhY5K8TVc=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(366016)(376014)(1800799024)(6133799003)(22082099003)(18002099003)(3023799007)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?KNBndD0clD7hL94zx9Jxxk9d/xH6xei6CRdSLjlKEhuKos0JD9jzKib3HRDN?=
- =?us-ascii?Q?OXKbhLVkWclRw/QJc04l3RFxw7anz8dX5QWywaFsvoTZtFJTekrUrTD4GcIt?=
- =?us-ascii?Q?p5iIiOlbFoI5DVWVs/QSt9Cq1OQs3yUOVY5hGVf4e5kH8NB4EknnckmbjfXR?=
- =?us-ascii?Q?cyLmsH2M0eDn3N+2mx7J0P07MT0ErMW3Qw2xnUYslz+iQTJvADy6T6P6mg06?=
- =?us-ascii?Q?xuyEstA3nTB1Fw5/V1UTjm51p1SE+W7/mICmMVrpGrKL/qy2LmjfVi71FvUM?=
- =?us-ascii?Q?BElQTAVZkOozH6JvlI4nTdVACFmllkk+ptiWhOEG9hYcA59rPFi+j0x4oJRt?=
- =?us-ascii?Q?3NcftKED0g2SqIfhfkfCU6+hHCE8jguYqBhEaAWAnJVRkCEiaXdVQu2qzZXt?=
- =?us-ascii?Q?Un/8Lrboi5TO+HmDSaiLrA36RjiotOZ07iLWq3raGF0CEPAxm6d3Avk4Nhff?=
- =?us-ascii?Q?qZKszj+nxNmwIkPtERZi85Ao+YZpxr2QuB2gMT4jacGLz4KIlL3E5BODdga8?=
- =?us-ascii?Q?VLEfWUGhki1hTPDl0ytgkeVFZABWTYYBw+ouVajouP3X61sWMS5rMZpABrtL?=
- =?us-ascii?Q?kEmvsOOQeDCmR+Fh1g9N2aj1nNzC+H+mQo28mDF+yfEK0m+WPaWT9iQQR0KF?=
- =?us-ascii?Q?sCxNHEt6YtCjOZuKJbIrXt77eFN48OvGvJN/zj2yWi7+NrTjGn4dVw/ObDz3?=
- =?us-ascii?Q?HfTpx4lJqDZ7jKkIYMK0k8IAwIRMD0t9koh5zaFWOvmn2yKg2u3ys+PwKYvM?=
- =?us-ascii?Q?m4CXZn3Ymk7Q4DX7ie8Xx6AI2EEvfTzu/IutfLEPGaFk1qbhyo/nBBXsnx/0?=
- =?us-ascii?Q?/pZgGhgbcnKuqO5V+IGHDJwIFTFvEUo+RvrDYPKOIuOhP1X+VdvVo67LbYKO?=
- =?us-ascii?Q?4umHRCr4n+iYUm/LtZuGXR/PcdDO+oejQnMWbEkJDY5eF8S7QCnPaEzXdvNY?=
- =?us-ascii?Q?sPUBPkeU+Rz7uWIrSNSOvfRC1igQZ24A0N4AsylvYfHhFSOPNmC4h2U8yzvi?=
- =?us-ascii?Q?qjBRRgbnCfyKtdr9BWpJdLYe4BS4O4wYQabYZxHxNJYkqbx6urwU9KIsCH21?=
- =?us-ascii?Q?soN9K6oq4atJ8yOHmhmjJuXMSBRnL3WBLxmx/ApAqvmPs5OdtTnqio3lsWHB?=
- =?us-ascii?Q?AGqPMOYbCf/TBQZSANp2TlglnXSIWkvCDUIluVEkudoSIl3zD+5fgvEPhW9x?=
- =?us-ascii?Q?iOcy4pXLnbKuWYyeGiqwkY6YSnUfWvrzRtA+fE2ncfSscCcmWOC8qwFRgdRq?=
- =?us-ascii?Q?CtDHonsHoTD0z6URUboYZ8q0o42naElzDWSAm0yp61/YwzsX0xhZd8u0v/4K?=
- =?us-ascii?Q?9AyJ9ViEp/NZmfbFekK0us8uugdGuRMqGm8CJSQyoVw5a3D8oMPLYhD834JX?=
- =?us-ascii?Q?p0MxRHAF+LAqrzseBGkDxJQUT48MqfAWcc680drMP4EPznEiYWiOWInHIQ+c?=
- =?us-ascii?Q?TWbqYH+LS7qC1zsDHiLXAJqUAcFeeg44Sd7CC0gwkTgQ2rRaa6hNkdgaG+Or?=
- =?us-ascii?Q?0dwaqJTPRusURF00QJWie/L8vPO5iXQXUuK80zH5tP7hBC6FNJxNA8+5nGAC?=
- =?us-ascii?Q?RkOPP3cewu7nN3JYvhIwQOP+IdbawkopkPuwjbhChfKBCHVPnsLcCUd6oW/t?=
- =?us-ascii?Q?5SeIB7cHteDTuuhawIziMwMWNBHYxrpM+MMmhyKfzwM3QXtS+vHFzX0tlY4c?=
- =?us-ascii?Q?zIeIUzvEYPPSOp4KQY0DUnjbpuz1JuMUEB/yQwoheSX9u5XQ7uoHemSeUJ4S?=
- =?us-ascii?Q?n1Bja4mRjA=3D=3D?=
+	=?us-ascii?Q?0qL05yKKu1iVYD/9UWJWE1aBtxJ2yB++iczOaby2eqz8+i8kmJ4nV1mbhMzO?=
+ =?us-ascii?Q?+xpWR5OhpFdLzNjlgJQGdcYyiLzZnfhKOVPFCmfg4B0LImUGfuUeoCn7jMrv?=
+ =?us-ascii?Q?zI60Y/ruZLSN2ExCGTJ18V4GFKKR2iXpGiX8I16KHYgW+lYWC0AodGgw6HR5?=
+ =?us-ascii?Q?JNhuUgm8DEw4fmu1dwqx4Dhck1J7VoU61UACluggjEpPAdWtALpD7Ww7FwNR?=
+ =?us-ascii?Q?sz5DYzsjBH+iwAbmBe+TYkbC3dduPKhXdB+uP9sncLTF9INd57NVuO2ydRhC?=
+ =?us-ascii?Q?Mj86KWUDQ93RYFToJ68inW9qB6wQiJE0PMEDuwNEMtUYpM+VZ4zWgrejY8T3?=
+ =?us-ascii?Q?uHhVkJ7lOgMhs3f95/Hc2Ve9ubD8mpjVg3TAkwJ6Z0HNCOq4KCZMzcjFwCEF?=
+ =?us-ascii?Q?BKpXptwVP2pvHc9lAg60021uuO/IrC4nGhL86UXB+4q7/8lk/x427/AN7pkc?=
+ =?us-ascii?Q?3DsNqZ9OfbhShpaSEriz6qK2NEV3CDDIoKbww6+Uzq0OPaA4AuEGlxCChALq?=
+ =?us-ascii?Q?i8EKDCBX5Fh62CqnZdHgR3SCuta4rDvV0x9Orpp+Uq+u0clZZOF9s3SBgj5Y?=
+ =?us-ascii?Q?gadLFu05DokcZ9J33yYfpfxmskDTnXv4rlEVjSMYIYyJekzuQY1M35gTqIUY?=
+ =?us-ascii?Q?zu3wN3gk3FYsG+Fsn8xjKRyZL7OB486ETg4GL/P7Ac2lxX4CuxKEmqQUulz4?=
+ =?us-ascii?Q?qUHhkcUmPTCor3SMmtWPyTGqnMQ3fKoo3I9JzIw1DF1F4wsSWEDmpouNa8U2?=
+ =?us-ascii?Q?sdDAu5ZOQqKCMwmckOPfAni1eNOM5ySaExntSqJVV/bXt5qDaI9c8qWg2heE?=
+ =?us-ascii?Q?ijabs53WOIIm+fJDNqBYeQly6GycJxqmITO7lU96Uv9OBm+ZdrCB7akscSEP?=
+ =?us-ascii?Q?QdFSwbfgAxy/Q7u4yuprMMPURgfBCIGm9PyEuhbfjeidXBV+W4fj+oANQV8X?=
+ =?us-ascii?Q?sQD+BjO5QQXTTQOfACLpJn+dwVadFEQ8HUpb7130fQSvxN2QepY6qZsCjnha?=
+ =?us-ascii?Q?ELyr1jAK7MuH5I8CeerwCaqCjDKb32V3PF137JM4gFhWXgrnEtIJC07PvbRa?=
+ =?us-ascii?Q?NMzvx75Ll61zP9nq3lLHbrhicK3VoHiYxHh2oZIyTScIuwdyjJy+3RgARrcH?=
+ =?us-ascii?Q?zQBZbetpQpqiUqQGghnNa9p0wtFIJG08Ex2zghqzGWnI5A6YjcumhGu8cizu?=
+ =?us-ascii?Q?Sk9lkHegtOzt7GbvUUiXmhWzrucZ85X8WXCChypJnO9KXhiVXCmLL954uorF?=
+ =?us-ascii?Q?oqhRIu4s7QSvOWWvPyb5/TmW+u9rti08nKEOUvbnDRxiwtVMz8m6sIHw65py?=
+ =?us-ascii?Q?iRm6TcoJZwWs9t+gfdVMV1zrmvYsn7vC4DtdgRRQhImChb6M3SYzeiZfQo6h?=
+ =?us-ascii?Q?er697xpVw3dyp02W91LMeDE8Mj43PFfTVcDAOjs+5vj3mYhbKZfr+dtwupfx?=
+ =?us-ascii?Q?coyaiqAoyqlPzaW3mhyx/Cj04ErL8o1Inzk+rdcpUO74Prie+GCSMQyA0bpz?=
+ =?us-ascii?Q?KjUkAw1GLJdWrbbt+Iof26ZB8L4Eg6RsLJN1NNTMCxHWh6JdJRxiscz0Wf0s?=
+ =?us-ascii?Q?a1losNuD1mPsjZRKZsHu2f6nob0qnk+xgwQy7l1oDfW7IXdBiNaHyeUkIISz?=
+ =?us-ascii?Q?71KlHxPN21RC4LoGjzMQ7zQvwcUnM9g+yeZ5AKyFo51GRKRkzKmttw0lMxSP?=
+ =?us-ascii?Q?f4C8cj/Xgfz7mLzXYJvstF1MxyANbICEsLRkAt2LpVsEWCm2VVgXCsVYOqJF?=
+ =?us-ascii?Q?E0osftNAPA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f536f1b0-f1b6-47f8-d3c3-08defbbd34eb
+X-MS-Exchange-CrossTenant-Network-Message-Id: b32c9375-5716-4212-1ea9-08defbbd32e3
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 17:38:39.1055
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 17:38:35.7161
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KrEJmYQN/kVkXIG3RS2iUkL+7ucqa/JbxXN/DojHguoVn0TCHL7qwDyXQc6Dr5Vaq7NgA9pTbzip+1ifvA8hhg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: UmfdGjI04BUKrfrn2mf9Ws2I1QAqj9zRR5QibtS/LHP8wfeSwJX7R4LIiABMsrGzhpb3QGii1oxheaVb/jZkEw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR12MB999092
 
-Add a -X option to opt scx_qmap into queueing mutex-blocked tasks for
-proxy execution. Without the option, SCX_OPS_ENQ_BLOCKED remains clear
-and mutex waiters block normally. With -X, blocked donors are passed to
-qmap_enqueue() with SCX_ENQ_BLOCKED.
+SCX_OPS_ENQ_BLOCKED allows BPF schedulers to receive blocked proxy
+donors through ops.enqueue(). SCX_ENQ_BLOCKED identifies blocked-donor
+admission requests. Add selftest coverage for this interface.
 
-When scx_qmap receives a blocked donor, dispatch it directly to the
-local DSQ of its current cid with a fresh slice and SCX_ENQ_PREEMPT.
-This places the donor at the head of the DSQ and requests an immediate
-reschedule, allowing the core proxy-exec path to run the mutex owner
-using the donor's scheduling context as soon as the donor is selected.
+Exercise a priority inversion using a weighted-vruntime BPF scheduler.
+A nice +19 owner holds a shared mutex, a nice -20 donor blocks on it,
+and nice 0 CPU contenders, one per allowed CPU, keep the system busy.
+Test both a same-CPU topology and a cross-CPU topology with the donor
+and owner on different CPUs.
 
-The blocked policy is intentionally unfair and can strongly prioritize
-tasks using contended mutexes, but scx_qmap is a demo scheduler and such
-aggressive behavior makes proxy-exec support easy to observe. Count
-these dispatch attempts in nr_enq_blocked and report their per-interval
-delta.
+Treat blocked donors according to the normal BPF ordering policy and
+assign the default slice on every enqueue, as for other tasks. Run each
+CPU placement configuration with SCX_OPS_ENQ_BLOCKED first disabled and
+then enabled, count blocked-donor enqueues by CPU and report average
+mutex hold and wait times. Verify that full wakeups are never reported
+as blocked-donor admissions by checking that SCX_ENQ_WAKEUP and
+SCX_ENQ_BLOCKED are not set together.
+
+Proxy execution coverage requires CONFIG_SCHED_PROXY_EXEC=y, which the
+selftest config selects. Access to the kernel mutex is provided via a
+loadable kernel module, built through TEST_GEN_MODS_DIR and managed by
+the test.
 
 Acked-by: John Stultz <jstultz@google.com>
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 40 +++++++++++++++++++++++++++++++++-
- tools/sched_ext/scx_qmap.c     | 13 ++++++++---
- tools/sched_ext/scx_qmap.h     |  1 +
- 3 files changed, 50 insertions(+), 4 deletions(-)
+ tools/testing/selftests/sched_ext/.gitignore  |   4 +
+ tools/testing/selftests/sched_ext/Makefile    |   2 +
+ tools/testing/selftests/sched_ext/config      |   2 +
+ .../selftests/sched_ext/enq_blocked.bpf.c     | 116 +++
+ .../testing/selftests/sched_ext/enq_blocked.c | 917 ++++++++++++++++++
+ .../testing/selftests/sched_ext/enq_blocked.h |  28 +
+ .../selftests/sched_ext/test_modules/Makefile |  13 +
+ .../test_modules/scx_enq_blocked_test.c       | 195 ++++
+ 8 files changed, 1277 insertions(+)
+ create mode 100644 tools/testing/selftests/sched_ext/enq_blocked.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/enq_blocked.c
+ create mode 100644 tools/testing/selftests/sched_ext/enq_blocked.h
+ create mode 100644 tools/testing/selftests/sched_ext/test_modules/Makefile
+ create mode 100644 tools/testing/selftests/sched_ext/test_modules/scx_enq_blocked_test.c
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index a5f666716d803..d14242d0b5d0d 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -454,7 +454,8 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	 *
- 	 * Force it onto its first allowed cid's local DSQ. If we hold that cid
- 	 * it runs. Otherwise the insert carries SCX_ENQ_RESCUE and the kernel
--	 * diverts the task to its rescue path.
-+	 * diverts the task to its rescue path. Do this before the blocked-donor
-+	 * fast paths, which also require an eligible self cid to make progress.
- 	 */
- 	if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
- 		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-@@ -468,6 +469,43 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 		}
- 	}
+diff --git a/tools/testing/selftests/sched_ext/.gitignore b/tools/testing/selftests/sched_ext/.gitignore
+index ae5491a114c09..54a1fd2af713d 100644
+--- a/tools/testing/selftests/sched_ext/.gitignore
++++ b/tools/testing/selftests/sched_ext/.gitignore
+@@ -4,3 +4,7 @@
+ !Makefile
+ !.gitignore
+ !config
++!test_modules/
++!test_modules/scx_enq_blocked_test.c
++!test_modules/Makefile
++test_modules/*.mod.c
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 3cfe90e0f34fa..51a16b3d32d9b 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -5,6 +5,7 @@ include ../../../scripts/Makefile.arch
+ include ../../../scripts/Makefile.include
  
-+	/*
-+	 * SCX_OPS_ALWAYS_ENQ_IMMED makes the local insertion below implicitly
-+	 * carry SCX_ENQ_IMMED. If the CPU can't run the blocked donor immediately,
-+	 * the core returns it through ops.enqueue() with SCX_ENQ_REENQ. Inserting
-+	 * it into the same local DSQ would repeat the IMMED handback until the
-+	 * scheduler is ejected. Move reenqueued blocked donors to the shared DSQ,
-+	 * which doesn't carry SCX_ENQ_IMMED, so another CPU can consume them.
-+	 */
-+	if ((enq_flags & (SCX_ENQ_BLOCKED | SCX_ENQ_REENQ)) ==
-+	    (SCX_ENQ_BLOCKED | SCX_ENQ_REENQ)) {
-+		taskc->force_local = false;
-+		scx_bpf_dsq_insert(p, SHARED_DSQ, 0, enq_flags);
-+		cid = cmask_next_and2_set_wrap(&taskc->cpus_allowed,
-+					       &qa.idle_cids.mask,
-+					       &qa.self_cids.mask, 0);
-+		if (cid < scx_bpf_nr_cids())
-+			scx_bpf_kick_cid(cid, SCX_KICK_IDLE);
-+		return;
-+	}
+ TEST_GEN_PROGS := runner
++TEST_GEN_MODS_DIR := test_modules
+ 
+ # override lib.mk's default rules
+ OVERRIDE_TARGETS := 1
+@@ -164,6 +165,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
+ auto-test-targets :=			\
+ 	create_dsq			\
+ 	dequeue				\
++	enq_blocked			\
+ 	enq_last_no_enq_fails		\
+ 	ddsp_bogus_dsq_fail		\
+ 	ddsp_vtimelocal_fail		\
+diff --git a/tools/testing/selftests/sched_ext/config b/tools/testing/selftests/sched_ext/config
+index aa901b05c8ad6..affa3cf33470a 100644
+--- a/tools/testing/selftests/sched_ext/config
++++ b/tools/testing/selftests/sched_ext/config
+@@ -6,3 +6,5 @@ CONFIG_BPF=y
+ CONFIG_BPF_SYSCALL=y
+ CONFIG_DEBUG_INFO=y
+ CONFIG_DEBUG_INFO_BTF=y
++CONFIG_EXPERT=y
++CONFIG_SCHED_PROXY_EXEC=y
+diff --git a/tools/testing/selftests/sched_ext/enq_blocked.bpf.c b/tools/testing/selftests/sched_ext/enq_blocked.bpf.c
+new file mode 100644
+index 0000000000000..212690bf4e07b
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/enq_blocked.bpf.c
+@@ -0,0 +1,116 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES
++ *
++ * Verify that SCX_OPS_ENQ_BLOCKED passes blocked proxy donors through
++ * ops.enqueue() and record whether callbacks occur on the donor or owner CPU.
++ */
 +
-+	/*
-+	 * Insert a blocked mutex donor at the head of its current cid's local
-+	 * DSQ with a fresh slice and %SCX_ENQ_PREEMPT, requesting an immediate
-+	 * reschedule. Once selected, the core proxy-exec path can immediately
-+	 * run the mutex owner using the donor's scheduling context.
-+	 *
-+	 * This policy is intentionally unfair and can strongly prioritize tasks
-+	 * using contended mutexes; scx_qmap is a demonstration scheduler and
-+	 * this behavior makes proxy-exec support easy to observe.
-+	 */
++#include <scx/common.bpf.h>
++
++#define SHARED_DSQ 0
++
++char _license[] SEC("license") = "GPL";
++
++s32 donor_pid;
++s32 donor_cpu = -1;
++s32 owner_cpu = -1;
++u64 nr_blocked_enqueues;
++u64 nr_blocked_enqueues_donor_cpu;
++u64 nr_blocked_enqueues_owner_cpu;
++u64 nr_blocked_enqueues_other_cpu;
++u64 nr_blocked_wakeups;
++static u64 vtime_now;
++
++UEI_DEFINE(uei);
++
++s32 BPF_STRUCT_OPS(enq_blocked_select_cpu,
++		   struct task_struct *p, s32 prev_cpu, u64 wake_flags)
++{
++	return prev_cpu;
++}
++
++void BPF_STRUCT_OPS(enq_blocked_enqueue, struct task_struct *p, u64 enq_flags)
++{
++	u64 vtime = p->scx.dsq_vtime;
++
 +	if (enq_flags & SCX_ENQ_BLOCKED) {
-+		__sync_fetch_and_add(&qa.nr_enq_blocked, 1);
-+		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | scx_bpf_task_cid(p),
-+				   slice_ns, enq_flags | SCX_ENQ_PREEMPT);
-+		return;
++		int cpu = scx_bpf_task_cpu(p);
++
++		if (enq_flags & SCX_ENQ_WAKEUP)
++			__sync_fetch_and_add(&nr_blocked_wakeups, 1);
++
++		if (p->pid == donor_pid) {
++			__sync_fetch_and_add(&nr_blocked_enqueues, 1);
++			if (cpu == donor_cpu)
++				__sync_fetch_and_add(&nr_blocked_enqueues_donor_cpu, 1);
++			else if (cpu == owner_cpu)
++				__sync_fetch_and_add(&nr_blocked_enqueues_owner_cpu, 1);
++			else
++				__sync_fetch_and_add(&nr_blocked_enqueues_other_cpu, 1);
++		}
 +	}
 +
- 	/*
- 	 * Fault injection: deliberately dispatch one of our own tasks to a cid
- 	 * we don't hold. The inserts carry SCX_ENQ_RESCUE and divert to the
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 988b6931633e9..5b74595d7d452 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -46,7 +46,7 @@ const char help_fmt[] =
- "See the top-of-file comment in .bpf.c for the design.\n"
- "\n"
- "Usage: %s [-s SLICE_US] [-e COUNT] [-t COUNT] [-T COUNT] [-l COUNT] [-b COUNT]\n"
--"       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I]\n"
-+"       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I] [-X]\n"
- "       [-F COUNT] [-i SEC] [-R MS] [-J MODE] [-v]\n"
- "\n"
- "  -s SLICE_US   Override slice duration\n"
-@@ -65,6 +65,7 @@ const char help_fmt[] =
- "  -S            Suppress qmap-specific debug dump\n"
- "  -p            Switch only tasks on SCHED_EXT policy instead of all\n"
- "  -I            Turn on SCX_OPS_ALWAYS_ENQ_IMMED\n"
-+"  -X            Turn on SCX_OPS_ENQ_BLOCKED\n"
- "  -F COUNT      IMMED stress: force every COUNT'th enqueue to a busy local DSQ (use with -I)\n"
- "  -C MODE       cid-override test (shuffle|bad-dup|bad-range|bad-mono)\n"
- "  -i SEC        Stats interval, seconds (default 5)\n"
-@@ -107,6 +108,7 @@ struct hier_prev {
- 	u64 nr_dsps[MAX_SUB_SCHEDS];
- 	u64 nr_reenq_cap;
- 	u64 nr_reenq_immed;
-+	u64 nr_enq_blocked;
- 	u64 nr_inject_attempts;
- 	u64 nr_rescue_dsp;
- };
-@@ -190,14 +192,16 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
- 	}
- 
- 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
--	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu rescue=+%llu\n",
-+	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu\n",
- 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
- 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
- 	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
-+	       (unsigned long long)(qa->nr_enq_blocked - prev->nr_enq_blocked),
- 	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
- 	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
- 	prev->nr_reenq_cap = qa->nr_reenq_cap;
- 	prev->nr_reenq_immed = qa->nr_reenq_immed;
-+	prev->nr_enq_blocked = qa->nr_enq_blocked;
- 	prev->nr_inject_attempts = qa->nr_inject_attempts;
- 	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
- 
-@@ -262,7 +266,7 @@ int main(int argc, char **argv)
- 	skel->rodata->max_tasks = 16384;
- 
- 	while ((opt = getopt(argc, argv,
--			     "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:B:q:vh")) != -1) {
-+			     "s:e:t:T:l:b:N:PMHc:d:D:SpIXF:C:i:R:J:B:q:vh")) != -1) {
- 		switch (opt) {
- 		case 's':
- 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
-@@ -323,6 +327,9 @@ int main(int argc, char **argv)
- 		case 'I':
- 			skel->struct_ops.qmap_ops->flags |= SCX_OPS_ALWAYS_ENQ_IMMED;
- 			break;
-+		case 'X':
-+			skel->struct_ops.qmap_ops->flags |= SCX_OPS_ENQ_BLOCKED;
-+			break;
- 		case 'F':
- 			skel->rodata->immed_stress_nth = strtoul(optarg, NULL, 0);
- 			break;
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index c8f602d58ca3a..ee054f6775ffa 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -174,6 +174,7 @@ struct qmap_arena {
- 	/* bpf -> userspace: stats */
- 	u64 nr_reenq_cap;		/* SCX_TASK_REENQ_CAP bounces */
- 	u64 nr_reenq_immed;		/* SCX_TASK_REENQ_IMMED bounces */
-+	u64 nr_enq_blocked;		/* SCX_ENQ_BLOCKED dispatches */
- 	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
- 	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
- 	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
++	/* Limit the amount of budget an idling task can accumulate. */
++	if (time_before(vtime, vtime_now - SCX_SLICE_DFL))
++		vtime = vtime_now - SCX_SLICE_DFL;
++
++	scx_bpf_dsq_insert_vtime(p, SHARED_DSQ, SCX_SLICE_DFL, vtime,
++				 enq_flags);
++	scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_IDLE);
++}
++
++void BPF_STRUCT_OPS(enq_blocked_dispatch, s32 cpu, struct task_struct *prev)
++{
++	scx_bpf_dsq_move_to_local(SHARED_DSQ, 0);
++}
++
++void BPF_STRUCT_OPS(enq_blocked_running, struct task_struct *p)
++{
++	if (time_before(vtime_now, p->scx.dsq_vtime))
++		vtime_now = p->scx.dsq_vtime;
++}
++
++void BPF_STRUCT_OPS(enq_blocked_stopping, struct task_struct *p, bool runnable)
++{
++	u64 delta = scale_by_task_weight_inverse(p,
++					 SCX_SLICE_DFL - p->scx.slice);
++
++	scx_bpf_task_set_dsq_vtime(p, p->scx.dsq_vtime + delta);
++}
++
++void BPF_STRUCT_OPS(enq_blocked_enable, struct task_struct *p)
++{
++	scx_bpf_task_set_dsq_vtime(p, vtime_now);
++}
++
++s32 BPF_STRUCT_OPS_SLEEPABLE(enq_blocked_init)
++{
++	int ret;
++
++	ret = scx_bpf_create_dsq(SHARED_DSQ, -1);
++	if (ret) {
++		scx_bpf_error("failed to create DSQ %d (%d)", SHARED_DSQ, ret);
++		return ret;
++	}
++
++	return 0;
++}
++
++void BPF_STRUCT_OPS(enq_blocked_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
++SEC(".struct_ops.link")
++struct sched_ext_ops enq_blocked_ops = {
++	.select_cpu		= (void *)enq_blocked_select_cpu,
++	.enqueue		= (void *)enq_blocked_enqueue,
++	.dispatch		= (void *)enq_blocked_dispatch,
++	.running		= (void *)enq_blocked_running,
++	.stopping		= (void *)enq_blocked_stopping,
++	.enable			= (void *)enq_blocked_enable,
++	.init			= (void *)enq_blocked_init,
++	.exit			= (void *)enq_blocked_exit,
++	.name			= "enq_blocked",
++};
+diff --git a/tools/testing/selftests/sched_ext/enq_blocked.c b/tools/testing/selftests/sched_ext/enq_blocked.c
+new file mode 100644
+index 0000000000000..26204548bbf08
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/enq_blocked.c
+@@ -0,0 +1,917 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES
++ *
++ * Exercise a priority inversion with the owner and donor first pinned to the
++ * same CPU, then with each on a different CPU. A high-priority donor blocks on
++ * a mutex held by a low-priority owner while one medium-priority contender per
++ * available CPU keeps the system busy. A weighted-vruntime BPF scheduler runs
++ * both CPU placement configurations with SCX_OPS_ENQ_BLOCKED first disabled
++ * and then enabled. The test validates blocked-donor admission and reports the
++ * average mutex hold and wait times, plus their enabled-minus-disabled deltas,
++ * for each configuration. The timing data is informational.
++ *
++ * CONFIG_SCHED_PROXY_EXEC=y is required to exercise the proxy-execution paths.
++ */
++#define _GNU_SOURCE
++
++#include <bpf/bpf.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <limits.h>
++#include <pthread.h>
++#include <sched.h>
++#include <scx/common.h>
++#include <stdatomic.h>
++#include <stdint.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/ioctl.h>
++#include <sys/resource.h>
++#include <sys/syscall.h>
++#include <time.h>
++#include <unistd.h>
++
++#include "enq_blocked.bpf.skel.h"
++#include "enq_blocked.h"
++#include "scx_test.h"
++
++#define MODULE_NAME	"scx_enq_blocked_test"
++#define MODULE_FILE	"test_modules/" MODULE_NAME ".ko"
++#define DEVICE_PATH	"/dev/scx_enq_blocked"
++#define WAIT_STEP_US	1000
++#define WAIT_TIMEOUT_MS	2000
++#define NR_WARMUP_TRIALS	1
++#define NR_MEASURED_TRIALS	10
++#define NR_TRIALS	(NR_WARMUP_TRIALS + NR_MEASURED_TRIALS)
++#define JOIN_TIMEOUT_MS	((NR_TRIALS + 1) * WAIT_TIMEOUT_MS)
++#define OWNER_NICE	19
++#define DONOR_NICE	-20
++#define CONTENDER_NICE	0
++
++struct thread_ctx {
++	atomic_bool start_donor;
++	atomic_bool abort;
++	atomic_bool stop_contender;
++	atomic_bool measurement_ready;
++	atomic_int donor_pid;
++	atomic_int donor_completed;
++	int fd;
++	int donor_cpu;
++	int owner_cpu;
++};
++
++struct contender_ctx {
++	struct thread_ctx *thread_ctx;
++	atomic_int status;
++	int cpu;
++};
++
++struct run_result {
++	struct enq_blocked_stats stats;
++	u64 nr_blocked_enqueues;
++	u64 nr_blocked_enqueues_donor_cpu;
++	u64 nr_blocked_enqueues_owner_cpu;
++	u64 nr_blocked_enqueues_other_cpu;
++	u64 nr_blocked_wakeups;
++};
++
++static bool parse_bool(const char *value, bool *result)
++{
++	if (!strcasecmp(value, "1") || !strcasecmp(value, "y") ||
++	    !strcasecmp(value, "yes") || !strcasecmp(value, "on") ||
++	    !strcasecmp(value, "true")) {
++		*result = true;
++		return true;
++	}
++
++	if (!strcasecmp(value, "0") || !strcasecmp(value, "n") ||
++	    !strcasecmp(value, "no") || !strcasecmp(value, "off") ||
++	    !strcasecmp(value, "false")) {
++		*result = false;
++		return true;
++	}
++
++	return false;
++}
++
++static bool cmdline_bool(const char *name, bool default_value)
++{
++	char cmdline[4096], *newline, *saveptr = NULL, *token;
++	size_t name_len = strlen(name);
++	bool value = default_value;
++	FILE *file;
++
++	file = fopen("/proc/cmdline", "r");
++	if (!file)
++		return default_value;
++
++	if (!fgets(cmdline, sizeof(cmdline), file)) {
++		fclose(file);
++		return default_value;
++	}
++	fclose(file);
++	newline = strchr(cmdline, '\n');
++	if (newline)
++		*newline = '\0';
++
++	for (token = strtok_r(cmdline, " ", &saveptr); token;
++	     token = strtok_r(NULL, " ", &saveptr)) {
++		bool parsed;
++
++		if (strncmp(token, name, name_len) || token[name_len] != '=')
++			continue;
++		if (parse_bool(token + name_len + 1, &parsed))
++			value = parsed;
++	}
++
++	return value;
++}
++
++static int module_path(char *path, size_t size)
++{
++	ssize_t len;
++	char *slash;
++
++	len = readlink("/proc/self/exe", path, size - 1);
++	if (len < 0)
++		return -errno;
++	path[len] = '\0';
++
++	slash = strrchr(path, '/');
++	if (!slash)
++		return -EINVAL;
++	*slash = '\0';
++
++	if (snprintf(slash, size - (slash - path), "/%s", MODULE_FILE) >=
++	    size - (slash - path))
++		return -ENAMETOOLONG;
++
++	return 0;
++}
++
++static int load_test_module(bool *loaded_here)
++{
++	char path[PATH_MAX];
++	int fd, err;
++
++	err = module_path(path, sizeof(path));
++	if (err)
++		return err;
++
++	fd = open(path, O_RDONLY | O_CLOEXEC);
++	if (fd < 0)
++		return -errno;
++
++	if (syscall(SYS_finit_module, fd, "", 0)) {
++		err = errno;
++		close(fd);
++		if (err == EEXIST)
++			return 0;
++		return -err;
++	}
++
++	close(fd);
++	*loaded_here = true;
++	return 0;
++}
++
++static void unload_test_module(bool loaded_here)
++{
++	if (loaded_here && syscall(SYS_delete_module, MODULE_NAME, O_NONBLOCK))
++		SCX_ERR("Failed to unload %s (%d)", MODULE_NAME, errno);
++}
++
++static int pin_to_cpu(int cpu)
++{
++	cpu_set_t mask;
++
++	CPU_ZERO(&mask);
++	CPU_SET(cpu, &mask);
++	return sched_setaffinity(0, sizeof(mask), &mask) ? errno : 0;
++}
++
++static int select_test_cpus(bool cross_cpu, cpu_set_t *mask, int *donor_cpu,
++			    int *owner_cpu)
++{
++	int cpu, first = -1;
++
++	if (sched_getaffinity(0, sizeof(*mask), mask))
++		return -errno;
++
++	for (cpu = 0; cpu < CPU_SETSIZE; cpu++) {
++		if (!CPU_ISSET(cpu, mask))
++			continue;
++		if (first < 0) {
++			first = cpu;
++			if (!cross_cpu)
++				break;
++		} else {
++			*donor_cpu = first;
++			*owner_cpu = cpu;
++			return 0;
++		}
++	}
++
++	if (first < 0)
++		return -ENODEV;
++	if (cross_cpu)
++		return -EAGAIN;
++
++	*donor_cpu = first;
++	*owner_cpu = first;
++	return 0;
++}
++
++static int set_nice(int nice)
++{
++	return setpriority(PRIO_PROCESS, 0, nice) ? errno : 0;
++}
++
++static bool wait_for_pid(atomic_int *pid)
++{
++	int waited_ms;
++
++	for (waited_ms = 0; waited_ms < WAIT_TIMEOUT_MS; waited_ms++) {
++		if (atomic_load_explicit(pid, memory_order_acquire) > 0)
++			return true;
++		usleep(WAIT_STEP_US);
++	}
++
++	return false;
++}
++
++static int wait_for_contenders(struct contender_ctx *contenders,
++			       size_t nr_contenders)
++{
++	size_t i, nr_ready;
++	int status, waited_ms;
++
++	for (waited_ms = 0; waited_ms < WAIT_TIMEOUT_MS; waited_ms++) {
++		nr_ready = 0;
++		for (i = 0; i < nr_contenders; i++) {
++			status = atomic_load_explicit(&contenders[i].status,
++						      memory_order_acquire);
++			if (status < 0)
++				return status;
++			if (status > 0)
++				nr_ready++;
++		}
++		if (nr_ready == nr_contenders)
++			return 1;
++		usleep(WAIT_STEP_US);
++	}
++
++	return -ETIMEDOUT;
++}
++
++static int wait_for_donor_state(struct thread_ctx *ctx, int expected)
++{
++	int state, waited_ms;
++
++	for (waited_ms = 0; waited_ms < WAIT_TIMEOUT_MS; waited_ms++) {
++		state = ioctl(ctx->fd, ENQ_BLOCKED_IOCTL_DONOR_STATE);
++		if (state == expected)
++			return state;
++		if (state < 0 && errno != ENOENT)
++			return -errno;
++		usleep(WAIT_STEP_US);
++	}
++
++	return -ETIMEDOUT;
++}
++
++static bool wait_for_donor(struct thread_ctx *ctx, int trial)
++{
++	int waited_ms;
++
++	for (waited_ms = 0; waited_ms < WAIT_TIMEOUT_MS; waited_ms++) {
++		if (atomic_load_explicit(&ctx->donor_completed,
++					 memory_order_acquire) >= trial)
++			return true;
++		if (atomic_load_explicit(&ctx->abort, memory_order_relaxed))
++			return false;
++		usleep(WAIT_STEP_US);
++	}
++
++	return false;
++}
++
++static bool wait_for_measurement(struct thread_ctx *ctx)
++{
++	while (!atomic_load_explicit(&ctx->measurement_ready,
++				     memory_order_acquire) &&
++	       !atomic_load_explicit(&ctx->abort, memory_order_relaxed))
++		sched_yield();
++
++	return !atomic_load_explicit(&ctx->abort, memory_order_relaxed);
++}
++
++static void *contender_fn(void *arg)
++{
++	struct contender_ctx *contender = arg;
++	struct thread_ctx *ctx = contender->thread_ctx;
++	int err;
++
++	err = pin_to_cpu(contender->cpu);
++	if (!err)
++		err = set_nice(CONTENDER_NICE);
++	atomic_store_explicit(&contender->status, err ? -err : 1,
++			      memory_order_release);
++	if (err)
++		return (void *)(uintptr_t)err;
++
++	while (!atomic_load_explicit(&ctx->stop_contender,
++				     memory_order_relaxed))
++		;
++
++	return NULL;
++}
++
++static void *owner_fn(void *arg)
++{
++	struct thread_ctx *ctx = arg;
++	int err, i;
++
++	err = pin_to_cpu(ctx->owner_cpu);
++	if (err)
++		return (void *)(uintptr_t)err;
++	err = set_nice(OWNER_NICE);
++	if (err)
++		return (void *)(uintptr_t)err;
++
++	for (i = 0; i < NR_TRIALS; i++) {
++		if (ioctl(ctx->fd, ENQ_BLOCKED_IOCTL_OWNER))
++			return (void *)(uintptr_t)errno;
++		if (!wait_for_donor(ctx, i + 1))
++			return (void *)(uintptr_t)ETIMEDOUT;
++
++		if (i + 1 == NR_WARMUP_TRIALS && !wait_for_measurement(ctx))
++			return NULL;
++	}
++
++	return NULL;
++}
++
++static int run_donor_trial(struct thread_ctx *ctx)
++{
++	int waited_ms;
++
++	for (waited_ms = 0; waited_ms < WAIT_TIMEOUT_MS; waited_ms++) {
++		if (!ioctl(ctx->fd, ENQ_BLOCKED_IOCTL_DONOR))
++			return 0;
++		if (errno != EAGAIN)
++			return -errno;
++		usleep(WAIT_STEP_US);
++	}
++
++	return -ETIMEDOUT;
++}
++
++static void *donor_fn(void *arg)
++{
++	struct thread_ctx *ctx = arg;
++	int err, i;
++
++	err = pin_to_cpu(ctx->donor_cpu);
++	if (err)
++		return (void *)(uintptr_t)err;
++	err = set_nice(DONOR_NICE);
++	if (err)
++		return (void *)(uintptr_t)err;
++
++	atomic_store_explicit(&ctx->donor_pid, syscall(SYS_gettid),
++			      memory_order_release);
++	while (!atomic_load_explicit(&ctx->start_donor, memory_order_acquire) &&
++	       !atomic_load_explicit(&ctx->abort, memory_order_relaxed))
++		sched_yield();
++
++	if (atomic_load_explicit(&ctx->abort, memory_order_relaxed))
++		return NULL;
++
++	for (i = 0; i < NR_TRIALS; i++) {
++		err = run_donor_trial(ctx);
++		if (err)
++			return (void *)(uintptr_t)-err;
++		atomic_store_explicit(&ctx->donor_completed, i + 1,
++				      memory_order_release);
++	}
++
++	return NULL;
++}
++
++static void print_avg_time(const char *name, u64 total_ns, u64 samples)
++{
++	u64 avg_ns = samples ? total_ns / samples : 0;
++
++	printf("  %s_avg_ns=%llu (%llu.%03llu ms, samples=%llu)\n", name,
++	       (unsigned long long)avg_ns,
++	       (unsigned long long)(avg_ns / 1000000),
++	       (unsigned long long)((avg_ns / 1000) % 1000),
++	       (unsigned long long)samples);
++}
++
++static void print_avg_delta(const char *name, u64 disabled_total,
++			    u64 disabled_samples, u64 enabled_total,
++			    u64 enabled_samples)
++{
++	u64 disabled_avg, enabled_avg;
++	s64 delta_ns;
++	double delta_pct;
++
++	if (!disabled_samples || !enabled_samples)
++		return;
++
++	disabled_avg = disabled_total / disabled_samples;
++	enabled_avg = enabled_total / enabled_samples;
++	delta_ns = (s64)enabled_avg - (s64)disabled_avg;
++	delta_pct = disabled_avg ? 100.0 * delta_ns / disabled_avg : 0.0;
++
++	printf("  %s_delta_ns=%+lld (%+.2f%%)\n", name,
++	       (long long)delta_ns, delta_pct);
++}
++
++static int join_thread(pthread_t thread, const struct timespec *deadline,
++		       int *thread_err)
++{
++	void *result;
++	int err;
++
++	err = pthread_timedjoin_np(thread, &result, deadline);
++	if (err)
++		return err;
++
++	*thread_err = (int)(uintptr_t)result;
++	return 0;
++}
++
++static void set_join_deadline(struct timespec *deadline)
++{
++	clock_gettime(CLOCK_REALTIME, deadline);
++	deadline->tv_sec += JOIN_TIMEOUT_MS / 1000;
++	deadline->tv_nsec += (JOIN_TIMEOUT_MS % 1000) * 1000000;
++	if (deadline->tv_nsec >= 1000000000) {
++		deadline->tv_sec++;
++		deadline->tv_nsec -= 1000000000;
++	}
++}
++
++static enum scx_test_status setup(void **ctx)
++{
++	struct enq_blocked *skel;
++	u64 flag;
++
++	skel = enq_blocked__open();
++	SCX_FAIL_IF(!skel, "Failed to open skel");
++	SCX_ENUM_INIT(skel);
++
++	flag = SCX_OPS_ENQ_BLOCKED;
++	if (!flag) {
++		enq_blocked__destroy(skel);
++		fprintf(stderr, "SKIP: SCX_OPS_ENQ_BLOCKED is unavailable\n");
++		return SCX_TEST_SKIP;
++	}
++
++	enq_blocked__destroy(skel);
++	*ctx = NULL;
++	return SCX_TEST_PASS;
++}
++
++static enum scx_test_status run_one(bool enq_blocked, bool cross_cpu,
++				    struct run_result *result)
++{
++	struct enq_blocked *skel;
++	struct thread_ctx thread_ctx = {};
++	struct contender_ctx *contender_ctxs = NULL;
++	struct bpf_link *link = NULL;
++	pthread_t owner, donor, *contenders = NULL;
++	struct timespec join_deadline;
++	cpu_set_t allowed_cpus;
++	bool module_loaded = false;
++	bool owner_started = false, donor_started = false;
++	bool join_timed_out = false;
++	bool proxy_enabled;
++	enum scx_test_status status = SCX_TEST_PASS;
++	int cpu, donor_pid, donor_state, err, thread_err;
++	size_t i, nr_contenders, nr_contenders_started = 0;
++	size_t nr_contenders_joined = 0;
++	u64 nr_blocked, nr_blocked_donor_cpu, nr_blocked_owner_cpu;
++	u64 nr_blocked_other_cpu, nr_blocked_wakeups;
++	struct enq_blocked_stats stats;
++
++	err = select_test_cpus(cross_cpu, &allowed_cpus, &thread_ctx.donor_cpu,
++			       &thread_ctx.owner_cpu);
++	if (err == -EAGAIN) {
++		fprintf(stderr, "SKIP: cross-CPU case requires two allowed CPUs\n");
++		return SCX_TEST_SKIP;
++	}
++	if (err) {
++		SCX_ERR("Failed to select test CPUs (%d)", -err);
++		return SCX_TEST_FAIL;
++	}
++	nr_contenders = CPU_COUNT(&allowed_cpus);
++	contenders = calloc(nr_contenders, sizeof(*contenders));
++	contender_ctxs = calloc(nr_contenders, sizeof(*contender_ctxs));
++	if (!contenders || !contender_ctxs) {
++		SCX_ERR("Failed to allocate %zu contender threads", nr_contenders);
++		status = SCX_TEST_FAIL;
++		goto out_contenders;
++	}
++
++	skel = enq_blocked__open();
++	if (!skel) {
++		SCX_ERR("Failed to open skel");
++		status = SCX_TEST_FAIL;
++		goto out_contenders;
++	}
++	SCX_ENUM_INIT(skel);
++	skel->struct_ops.enq_blocked_ops->flags =
++		SCX_OPS_ENQ_LAST |
++		(enq_blocked ? SCX_OPS_ENQ_BLOCKED : 0);
++	if (enq_blocked__load(skel)) {
++		SCX_ERR("Failed to load skel");
++		status = SCX_TEST_FAIL;
++		goto out_skel;
++	}
++
++	err = load_test_module(&module_loaded);
++	if (err == -EPERM || err == -ENOENT) {
++		fprintf(stderr, "SKIP: cannot load mutex fixture (%d)\n", -err);
++		status = SCX_TEST_SKIP;
++		goto out_skel;
++	}
++	if (err) {
++		SCX_ERR("Failed to load mutex fixture (%d)", -err);
++		status = SCX_TEST_FAIL;
++		goto out_skel;
++	}
++
++	thread_ctx.fd = open(DEVICE_PATH, O_RDONLY | O_CLOEXEC);
++	if (thread_ctx.fd < 0) {
++		SCX_ERR("Failed to open %s (%d)", DEVICE_PATH, errno);
++		status = SCX_TEST_FAIL;
++		goto out_module;
++	}
++	err = ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_PROXY_SUPPORTED);
++	if (err < 0) {
++		SCX_ERR("Failed to query proxy-exec support (%d)", errno);
++		status = SCX_TEST_FAIL;
++		goto out_fd;
++	}
++	proxy_enabled = err && cmdline_bool("sched_proxy_exec", true);
++	if (!proxy_enabled) {
++		fprintf(stderr, "SKIP: proxy execution is not enabled\n");
++		status = SCX_TEST_SKIP;
++		goto out_fd;
++	}
++	if (ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_RESET_STATS)) {
++		SCX_ERR("Failed to reset mutex statistics (%d)", errno);
++		status = SCX_TEST_FAIL;
++		goto out_fd;
++	}
++
++	if (ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_PREP_ATTACH)) {
++		SCX_ERR("Failed to prepare scheduler attachment (%d)", errno);
++		status = SCX_TEST_FAIL;
++		goto out_fd;
++	}
++
++	err = pthread_create(&owner, NULL, owner_fn, &thread_ctx);
++	if (err) {
++		SCX_ERR("Failed to create owner thread (%d)", err);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++	owner_started = true;
++
++	err = pthread_create(&donor, NULL, donor_fn, &thread_ctx);
++	if (err) {
++		SCX_ERR("Failed to create donor thread (%d)", err);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++	donor_started = true;
++
++	if (!wait_for_pid(&thread_ctx.donor_pid)) {
++		SCX_ERR("Timed out waiting for donor thread");
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++
++	donor_pid = atomic_load_explicit(&thread_ctx.donor_pid,
++					 memory_order_acquire);
++	skel->bss->donor_pid = donor_pid;
++	skel->data->donor_cpu = thread_ctx.donor_cpu;
++	skel->data->owner_cpu = thread_ctx.owner_cpu;
++	atomic_store_explicit(&thread_ctx.start_donor, true,
++			      memory_order_release);
++
++	donor_state = ENQ_BLOCKED_DONOR_SLEEPING;
++	if (proxy_enabled)
++		donor_state |= ENQ_BLOCKED_DONOR_ON_RQ;
++	err = wait_for_donor_state(&thread_ctx, donor_state);
++	if (err < 0) {
++		SCX_ERR("Donor did not block before scheduler attachment (%d)", -err);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++
++	link = bpf_map__attach_struct_ops(skel->maps.enq_blocked_ops);
++	if (!link) {
++		SCX_ERR("Failed to attach scheduler");
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++
++	/* Scheduler ownership changes start from a fully blocked donor. */
++	donor_state = ENQ_BLOCKED_DONOR_SLEEPING;
++	err = wait_for_donor_state(&thread_ctx, donor_state);
++	if (err < 0) {
++		SCX_ERR("Unexpected donor state after scheduler attachment (%d)",
++			-err);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++
++	if (ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_ATTACH_DONE)) {
++		SCX_ERR("Failed to complete scheduler attachment (%d)", errno);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++
++	i = 0;
++	for (cpu = 0; cpu < CPU_SETSIZE; cpu++) {
++		if (!CPU_ISSET(cpu, &allowed_cpus))
++			continue;
++
++		contender_ctxs[i].thread_ctx = &thread_ctx;
++		contender_ctxs[i].cpu = cpu;
++		atomic_init(&contender_ctxs[i].status, 0);
++		err = pthread_create(&contenders[i], NULL, contender_fn,
++				     &contender_ctxs[i]);
++		if (err) {
++			SCX_ERR("Failed to create contender for CPU %d (%d)",
++				cpu, err);
++			status = SCX_TEST_FAIL;
++			goto out;
++		}
++		nr_contenders_started++;
++		i++;
++	}
++
++	err = wait_for_contenders(contender_ctxs, nr_contenders);
++	if (err != 1) {
++		SCX_ERR("Contender threads failed (%d)", -err);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++
++	/*
++	 * The first trial spans scheduler attachment and validates the state
++	 * transition, but including it would skew scheduling latency. Exclude it
++	 * from both the mutex and BPF enqueue measurements.
++	 */
++	if (!wait_for_donor(&thread_ctx, NR_WARMUP_TRIALS)) {
++		SCX_ERR("Timed out waiting for warm-up trial");
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++	if (ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_RESET_STATS)) {
++		SCX_ERR("Failed to reset mutex statistics after warm-up (%d)",
++			errno);
++		status = SCX_TEST_FAIL;
++		goto out;
++	}
++	skel->bss->nr_blocked_enqueues = 0;
++	skel->bss->nr_blocked_enqueues_donor_cpu = 0;
++	skel->bss->nr_blocked_enqueues_owner_cpu = 0;
++	skel->bss->nr_blocked_enqueues_other_cpu = 0;
++	skel->bss->nr_blocked_wakeups = 0;
++	atomic_store_explicit(&thread_ctx.measurement_ready, true,
++			      memory_order_release);
++
++out:
++	ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_ATTACH_DONE);
++	if (status != SCX_TEST_PASS) {
++		atomic_store_explicit(&thread_ctx.abort, true, memory_order_release);
++		atomic_store_explicit(&thread_ctx.start_donor, true,
++				      memory_order_release);
++		atomic_store_explicit(&thread_ctx.measurement_ready, true,
++				      memory_order_release);
++	}
++
++	set_join_deadline(&join_deadline);
++	if (donor_started) {
++		err = join_thread(donor, &join_deadline, &thread_err);
++		if (err == ETIMEDOUT) {
++			SCX_ERR("Timed out waiting for donor thread");
++			join_timed_out = true;
++			status = SCX_TEST_FAIL;
++		} else if (err) {
++			SCX_ERR("Failed to join donor thread (%d)", err);
++			status = SCX_TEST_FAIL;
++		} else {
++			donor_started = false;
++			if (thread_err) {
++				SCX_ERR("Donor thread failed (%d)", thread_err);
++				status = SCX_TEST_FAIL;
++			}
++		}
++	}
++	if (!join_timed_out && owner_started) {
++		err = join_thread(owner, &join_deadline, &thread_err);
++		if (err == ETIMEDOUT) {
++			SCX_ERR("Timed out waiting for owner thread");
++			join_timed_out = true;
++			status = SCX_TEST_FAIL;
++		} else if (err) {
++			SCX_ERR("Failed to join owner thread (%d)", err);
++			status = SCX_TEST_FAIL;
++		} else {
++			owner_started = false;
++			if (thread_err) {
++				SCX_ERR("Owner thread failed (%d)", thread_err);
++				status = SCX_TEST_FAIL;
++			}
++		}
++	}
++	atomic_store_explicit(&thread_ctx.stop_contender, true,
++			      memory_order_release);
++	for (i = 0; !join_timed_out && i < nr_contenders_started; i++) {
++		err = join_thread(contenders[i], &join_deadline, &thread_err);
++		if (err == ETIMEDOUT) {
++			SCX_ERR("Timed out waiting for contender on CPU %d",
++				contender_ctxs[i].cpu);
++			join_timed_out = true;
++			status = SCX_TEST_FAIL;
++		} else if (err) {
++			SCX_ERR("Failed to join contender on CPU %d (%d)",
++				contender_ctxs[i].cpu, err);
++			status = SCX_TEST_FAIL;
++		} else {
++			nr_contenders_joined++;
++			if (thread_err) {
++				SCX_ERR("Contender on CPU %d failed (%d)",
++					contender_ctxs[i].cpu, thread_err);
++				status = SCX_TEST_FAIL;
++			}
++		}
++	}
++
++	/* Restore the fair scheduler before waiting for any stranded thread. */
++	if (join_timed_out) {
++		atomic_store_explicit(&thread_ctx.abort, true,
++				      memory_order_release);
++		if (link) {
++			bpf_link__destroy(link);
++			link = NULL;
++		}
++		if (donor_started)
++			pthread_join(donor, NULL);
++		if (owner_started)
++			pthread_join(owner, NULL);
++		for (i = nr_contenders_joined;
++		     i < nr_contenders_started; i++)
++			pthread_join(contenders[i], NULL);
++	}
++
++	if (ioctl(thread_ctx.fd, ENQ_BLOCKED_IOCTL_GET_STATS, &stats)) {
++		SCX_ERR("Failed to read mutex statistics (%d)", errno);
++		status = SCX_TEST_FAIL;
++	} else {
++		result->stats = stats;
++		printf("\n[topology=%s SCX_OPS_ENQ_BLOCKED=%s]\n",
++		       cross_cpu ? "cross-cpu" : "same-cpu",
++		       enq_blocked ? "enabled" : "disabled");
++		printf("  proxy_exec=%s\n",
++		       proxy_enabled ? "enabled" : "disabled");
++		printf("  donor_cpu=%d\n", thread_ctx.donor_cpu);
++		printf("  owner_cpu=%d\n", thread_ctx.owner_cpu);
++		printf("  nr_contenders=%zu\n", nr_contenders);
++		printf("  measured_trials=%d\n", NR_MEASURED_TRIALS);
++		printf("  owner_nice=%d\n", OWNER_NICE);
++		printf("  donor_nice=%d\n", DONOR_NICE);
++		printf("  contender_nice=%d\n", CONTENDER_NICE);
++		print_avg_time("mutex_hold", stats.hold_time_ns, stats.nr_holds);
++		print_avg_time("mutex_wait", stats.wait_time_ns, stats.nr_waits);
++		if (stats.nr_holds != NR_MEASURED_TRIALS ||
++		    stats.nr_waits != NR_MEASURED_TRIALS) {
++			SCX_ERR("Expected %d measured trials, got %llu holds and %llu waits",
++				NR_MEASURED_TRIALS,
++				(unsigned long long)stats.nr_holds,
++				(unsigned long long)stats.nr_waits);
++			status = SCX_TEST_FAIL;
++		}
++	}
++
++	nr_blocked = skel->bss->nr_blocked_enqueues;
++	nr_blocked_donor_cpu = skel->bss->nr_blocked_enqueues_donor_cpu;
++	nr_blocked_owner_cpu = skel->bss->nr_blocked_enqueues_owner_cpu;
++	nr_blocked_other_cpu = skel->bss->nr_blocked_enqueues_other_cpu;
++	nr_blocked_wakeups = skel->bss->nr_blocked_wakeups;
++	result->nr_blocked_enqueues = nr_blocked;
++	result->nr_blocked_enqueues_donor_cpu = nr_blocked_donor_cpu;
++	result->nr_blocked_enqueues_owner_cpu = nr_blocked_owner_cpu;
++	result->nr_blocked_enqueues_other_cpu = nr_blocked_other_cpu;
++	result->nr_blocked_wakeups = nr_blocked_wakeups;
++	printf("  nr_blocked_enqueues=%llu\n",
++	       (unsigned long long)nr_blocked);
++	printf("  nr_blocked_enqueues_donor_cpu=%llu\n",
++	       (unsigned long long)nr_blocked_donor_cpu);
++	printf("  nr_blocked_enqueues_owner_cpu=%llu\n",
++	       (unsigned long long)nr_blocked_owner_cpu);
++	printf("  nr_blocked_enqueues_other_cpu=%llu\n",
++	       (unsigned long long)nr_blocked_other_cpu);
++	printf("  nr_blocked_wakeups=%llu\n",
++	       (unsigned long long)nr_blocked_wakeups);
++	if (status == SCX_TEST_PASS) {
++		if (enq_blocked && proxy_enabled && !nr_blocked) {
++			SCX_ERR("ops.enqueue() did not receive the blocked donor");
++			status = SCX_TEST_FAIL;
++		} else if ((!enq_blocked || !proxy_enabled) && nr_blocked) {
++			SCX_ERR("ops.enqueue() unexpectedly received %llu blocked donors",
++				(unsigned long long)nr_blocked);
++			status = SCX_TEST_FAIL;
++		} else if (nr_blocked_wakeups) {
++			SCX_ERR("Ordinary wakeups received %llu blocked enqueue flags",
++				(unsigned long long)nr_blocked_wakeups);
++			status = SCX_TEST_FAIL;
++		} else if (nr_blocked_other_cpu) {
++			SCX_ERR("Blocked donor had %llu enqueues on unexpected CPUs",
++				(unsigned long long)nr_blocked_other_cpu);
++			status = SCX_TEST_FAIL;
++		}
++	}
++
++	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
++		SCX_ERR("Scheduler exited unexpectedly (kind=%llu code=%lld)",
++			(unsigned long long)skel->data->uei.kind,
++			(long long)skel->data->uei.exit_code);
++		status = SCX_TEST_FAIL;
++	}
++
++	if (link)
++		bpf_link__destroy(link);
++out_fd:
++	close(thread_ctx.fd);
++out_module:
++	unload_test_module(module_loaded);
++out_skel:
++	enq_blocked__destroy(skel);
++out_contenders:
++	free(contender_ctxs);
++	free(contenders);
++	return status;
++}
++
++static enum scx_test_status run_topology(bool cross_cpu)
++{
++	struct run_result disabled = {}, enabled = {};
++	enum scx_test_status status;
++
++	status = run_one(false, cross_cpu, &disabled);
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_one(true, cross_cpu, &enabled);
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	printf("\n[topology=%s delta: enabled - disabled]\n",
++	       cross_cpu ? "cross-cpu" : "same-cpu");
++	print_avg_delta("mutex_hold", disabled.stats.hold_time_ns,
++			disabled.stats.nr_holds, enabled.stats.hold_time_ns,
++			enabled.stats.nr_holds);
++	print_avg_delta("mutex_wait", disabled.stats.wait_time_ns,
++			disabled.stats.nr_waits, enabled.stats.wait_time_ns,
++			enabled.stats.nr_waits);
++
++	return SCX_TEST_PASS;
++}
++
++static enum scx_test_status run(void *ctx)
++{
++	enum scx_test_status status;
++
++	(void)ctx;
++
++	status = run_topology(false);
++	if (status != SCX_TEST_PASS)
++		return status;
++
++	status = run_topology(true);
++	if (status == SCX_TEST_SKIP)
++		return SCX_TEST_PASS;
++
++	return status;
++}
++
++struct scx_test enq_blocked = {
++	.name = "enq_blocked",
++	.description = "Verify proxy donor admission under CPU-wide contention",
++	.setup = setup,
++	.run = run,
++};
++
++REGISTER_SCX_TEST(&enq_blocked)
+diff --git a/tools/testing/selftests/sched_ext/enq_blocked.h b/tools/testing/selftests/sched_ext/enq_blocked.h
+new file mode 100644
+index 0000000000000..ef1eb97feebe6
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/enq_blocked.h
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/* Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES */
++#ifndef __ENQ_BLOCKED_H
++#define __ENQ_BLOCKED_H
++
++#include <linux/ioctl.h>
++#include <linux/types.h>
++
++struct enq_blocked_stats {
++	__u64 hold_time_ns;
++	__u64 wait_time_ns;
++	__u64 nr_holds;
++	__u64 nr_waits;
++};
++
++#define ENQ_BLOCKED_IOCTL_OWNER	_IO('s', 1)
++#define ENQ_BLOCKED_IOCTL_DONOR	_IO('s', 2)
++#define ENQ_BLOCKED_IOCTL_RESET_STATS	_IO('s', 3)
++#define ENQ_BLOCKED_IOCTL_GET_STATS	_IOR('s', 4, struct enq_blocked_stats)
++#define ENQ_BLOCKED_IOCTL_PREP_ATTACH	_IO('s', 5)
++#define ENQ_BLOCKED_IOCTL_ATTACH_DONE	_IO('s', 6)
++#define ENQ_BLOCKED_IOCTL_DONOR_STATE	_IO('s', 7)
++#define ENQ_BLOCKED_IOCTL_PROXY_SUPPORTED _IO('s', 8)
++
++#define ENQ_BLOCKED_DONOR_SLEEPING	(1U << 0)
++#define ENQ_BLOCKED_DONOR_ON_RQ		(1U << 1)
++
++#endif /* __ENQ_BLOCKED_H */
+diff --git a/tools/testing/selftests/sched_ext/test_modules/Makefile b/tools/testing/selftests/sched_ext/test_modules/Makefile
+new file mode 100644
+index 0000000000000..a0e9e9401ead6
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/test_modules/Makefile
+@@ -0,0 +1,13 @@
++# SPDX-License-Identifier: GPL-2.0
++# Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES
++
++TESTMODS_DIR := $(realpath $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
++KDIR ?= $(if $(O),$(O),$(realpath ../../../../..))
++
++obj-m += scx_enq_blocked_test.o
++
++all:
++	+$(Q)$(MAKE) -C $(KDIR) M=$(TESTMODS_DIR) modules
++
++clean:
++	+$(Q)$(MAKE) -C $(KDIR) M=$(TESTMODS_DIR) clean
+diff --git a/tools/testing/selftests/sched_ext/test_modules/scx_enq_blocked_test.c b/tools/testing/selftests/sched_ext/test_modules/scx_enq_blocked_test.c
+new file mode 100644
+index 0000000000000..908689ed55786
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/test_modules/scx_enq_blocked_test.c
+@@ -0,0 +1,195 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES
++ *
++ * Kernel mutex fixture for the sched_ext SCX_OPS_ENQ_BLOCKED selftest.
++ */
++
++#include <linux/atomic.h>
++#include <linux/fs.h>
++#include <linux/jiffies.h>
++#include <linux/ktime.h>
++#include <linux/miscdevice.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/sched.h>
++#include <linux/uaccess.h>
++
++#include "../enq_blocked.h"
++
++#define DONOR_WAIT_TIMEOUT	msecs_to_jiffies(2000)
++#define ATTACH_WAIT_TIMEOUT	msecs_to_jiffies(10000)
++#define MUTEX_HOLD_TIME		msecs_to_jiffies(200)
++
++static DEFINE_MUTEX(test_mutex);
++static DEFINE_SPINLOCK(donor_lock);
++static struct task_struct *donor_task;
++static atomic_t owner_ready = ATOMIC_INIT(0);
++static atomic_t donor_started = ATOMIC_INIT(0);
++static atomic_t attach_pending = ATOMIC_INIT(0);
++static atomic_t attach_done = ATOMIC_INIT(0);
++static atomic64_t hold_time_ns = ATOMIC64_INIT(0);
++static atomic64_t wait_time_ns = ATOMIC64_INIT(0);
++static atomic64_t nr_holds = ATOMIC64_INIT(0);
++static atomic64_t nr_waits = ATOMIC64_INIT(0);
++
++static long run_owner(void)
++{
++	unsigned long timeout;
++	u64 start_ns;
++	long ret = 0;
++
++	atomic_set(&donor_started, 0);
++	mutex_lock(&test_mutex);
++	start_ns = ktime_get_ns();
++	atomic_set(&owner_ready, 1);
++
++	timeout = jiffies + DONOR_WAIT_TIMEOUT;
++	while (!atomic_read(&donor_started)) {
++		if (time_after(jiffies, timeout)) {
++			ret = -ETIMEDOUT;
++			goto out;
++		}
++		cond_resched();
++	}
++	if (atomic_xchg(&attach_pending, 0)) {
++		timeout = jiffies + ATTACH_WAIT_TIMEOUT;
++		while (!atomic_read(&attach_done)) {
++			if (time_after(jiffies, timeout)) {
++				ret = -ETIMEDOUT;
++				goto out;
++			}
++			cond_resched();
++		}
++	}
++
++	/* Keep yielding while the donor blocks on test_mutex. */
++	timeout = jiffies + MUTEX_HOLD_TIME;
++	while (time_before(jiffies, timeout))
++		cond_resched();
++
++out:
++	atomic_set(&owner_ready, 0);
++	atomic64_add(ktime_get_ns() - start_ns, &hold_time_ns);
++	atomic64_inc(&nr_holds);
++	mutex_unlock(&test_mutex);
++	return ret;
++}
++
++static long run_donor(void)
++{
++	unsigned long flags;
++	u64 start_ns;
++
++	if (!atomic_read(&owner_ready))
++		return -EAGAIN;
++
++	get_task_struct(current);
++	spin_lock_irqsave(&donor_lock, flags);
++	WARN_ON_ONCE(donor_task);
++	donor_task = current;
++	spin_unlock_irqrestore(&donor_lock, flags);
++
++	atomic_set(&donor_started, 1);
++	start_ns = ktime_get_ns();
++	mutex_lock(&test_mutex);
++
++	spin_lock_irqsave(&donor_lock, flags);
++	donor_task = NULL;
++	spin_unlock_irqrestore(&donor_lock, flags);
++	put_task_struct(current);
++
++	atomic64_add(ktime_get_ns() - start_ns, &wait_time_ns);
++	atomic64_inc(&nr_waits);
++	mutex_unlock(&test_mutex);
++	return 0;
++}
++
++static long get_donor_state(void)
++{
++	struct task_struct *task;
++	unsigned long flags;
++	long state = 0;
++
++	spin_lock_irqsave(&donor_lock, flags);
++	task = donor_task;
++	if (task)
++		get_task_struct(task);
++	spin_unlock_irqrestore(&donor_lock, flags);
++	if (!task)
++		return -ENOENT;
++
++	if (READ_ONCE(task->__state) != TASK_RUNNING)
++		state |= ENQ_BLOCKED_DONOR_SLEEPING;
++	if (READ_ONCE(task->on_rq))
++		state |= ENQ_BLOCKED_DONOR_ON_RQ;
++	put_task_struct(task);
++	return state;
++}
++
++static void reset_stats(void)
++{
++	atomic64_set(&hold_time_ns, 0);
++	atomic64_set(&wait_time_ns, 0);
++	atomic64_set(&nr_holds, 0);
++	atomic64_set(&nr_waits, 0);
++}
++
++static long get_stats(unsigned long arg)
++{
++	struct enq_blocked_stats stats = {
++		.hold_time_ns = atomic64_read(&hold_time_ns),
++		.wait_time_ns = atomic64_read(&wait_time_ns),
++		.nr_holds = atomic64_read(&nr_holds),
++		.nr_waits = atomic64_read(&nr_waits),
++	};
++
++	return copy_to_user((void __user *)arg, &stats, sizeof(stats)) ?
++		-EFAULT : 0;
++}
++
++static long enq_blocked_ioctl(struct file *file, unsigned int cmd,
++			      unsigned long arg)
++{
++	switch (cmd) {
++	case ENQ_BLOCKED_IOCTL_OWNER:
++		return run_owner();
++	case ENQ_BLOCKED_IOCTL_DONOR:
++		return run_donor();
++	case ENQ_BLOCKED_IOCTL_RESET_STATS:
++		reset_stats();
++		return 0;
++	case ENQ_BLOCKED_IOCTL_GET_STATS:
++		return get_stats(arg);
++	case ENQ_BLOCKED_IOCTL_PREP_ATTACH:
++		atomic_set(&attach_done, 0);
++		atomic_set(&attach_pending, 1);
++		return 0;
++	case ENQ_BLOCKED_IOCTL_ATTACH_DONE:
++		atomic_set(&attach_done, 1);
++		return 0;
++	case ENQ_BLOCKED_IOCTL_DONOR_STATE:
++		return get_donor_state();
++	case ENQ_BLOCKED_IOCTL_PROXY_SUPPORTED:
++		return IS_ENABLED(CONFIG_SCHED_PROXY_EXEC);
++	default:
++		return -EINVAL;
++	}
++}
++
++static const struct file_operations enq_blocked_fops = {
++	.owner			= THIS_MODULE,
++	.unlocked_ioctl		= enq_blocked_ioctl,
++};
++
++static struct miscdevice enq_blocked_device = {
++	.minor	= MISC_DYNAMIC_MINOR,
++	.name	= "scx_enq_blocked",
++	.fops	= &enq_blocked_fops,
++	.mode	= 0600,
++};
++
++module_misc_device(enq_blocked_device);
++MODULE_AUTHOR("Andrea Righi <arighi@nvidia.com>");
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("sched_ext blocked donor test module");
 -- 
 2.55.0
 
