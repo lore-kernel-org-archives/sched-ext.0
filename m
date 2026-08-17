@@ -1,48 +1,48 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010038.outbound.protection.outlook.com [40.93.198.38])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013046.outbound.protection.outlook.com [40.93.196.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8DE3B27F5
-	for <sched-ext@lists.linux.dev>; Mon, 17 Aug 2026 19:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946E3367F31
+	for <sched-ext@lists.linux.dev>; Mon, 17 Aug 2026 19:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786993357; cv=fail; b=UQqaj0kZsFgZDi48AlRlVPvWGUa2yCq/ddR12go/lA2PW6eYh+QjQTM0Iye4tRXr8DyAf0vFkFFhXs9jqKAWM41z1rQExJs9/1wt+pyZ04Eo4jn4rlfRUh49uCZ4I3c4wGyiHSK1s+znhqJCPXJpcUDvUoZK98T93sm6zqZ2e7s=
+	t=1786995175; cv=fail; b=FsW0d0J1T00N08NTEGrRz4o3gRIJb3xJdMl0SBZvFFf/7vTKdVS4aPlVUyRK1ZWBfV+u7nf/c8+hqhiz3NfcrDmkqyHngZF1yykoYJuPnUo/mjUXRQrRRM7htX0XgufUz1xqS9tpvza4e4a+WRkSdQl8c8w6+JJ7mcm76SQaioA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786993357; c=relaxed/simple;
-	bh=jTlCPcaMDcqOj5FrAkG1Oy6sK2/i4mxNWuxBgCNJ9ns=;
+	s=arc-20240116; t=1786995175; c=relaxed/simple;
+	bh=l1TsW/B9B1iWg2a+rbEMTir7J0dp9kaeRokXUK8dMuU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=I0XQJHfRGTOymiiRBstnDjN69ACOB0ld7b0TpMS9mijBZxZGD4HEklrloAKMxEiGbznviP9NaX0hJab/VdzT3l1F3xhNEpPRkn3XiIN+/KYlAQUTNJ/2atOGkxDKkHX+14dmR/SCI9aQP0BmDTD5cM2Ja+4CKGCzN+1mrJYArd8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=p5BhjMXW; arc=fail smtp.client-ip=40.93.198.38
+	 Content-Disposition:In-Reply-To:MIME-Version; b=oIP8+uHKfZD5XyuK+DTXRrMaZEcy0LeEDogfetvQvtF7aNfyavO/HwT/Lrn0qNhzIp6qL1SUzN8HeipqKg6f15m8iQl7xV/27glyNrC+qjgXLVd/hcp6NGS0WM/rXIoQHYm9cBSQ2Nqy3W261eHO2b+4ZC2Qbe+w0mm8zJ2MV28=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XVXOL+7y; arc=fail smtp.client-ip=40.93.196.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="p5BhjMXW"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XVXOL+7y"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N6kfTbeiMAI9SNPg9P1wjAOn1NbTdWEgDmrHGawyr//jPHIUGfTYa4RzTuxdYtBexQqQliN/SYQmvddoff1bc3Lullp513z5ZmsvEvK9UOlP2OmtWZ0EKB/bKgL5gTJCAwsbYi5WNtvQQt+ErlwMszu3qfSUsNRUBUvRLtyHQZZTunHBIOsAQo5Poa7NGD8Ybx9wizLIE+LPDyQOwvH7jYzqV4rlguwV6KIZwa+3L0EWz6I2hZ4S7TvB/FHgPzb0f3Or8IIXBX+FYO7pITPyYk9S1fDI9w11FWwFt5EOSRj2P7e3B/ZS0jPLSEBHjxlDfB3gQVNMiu9NsWKpG1uuZw==
+ b=aYmT/PhI7q+4IMR8vAO4QNY40jjdwuzLCpFeKV1ylO0TyXXDyEmOctKxghxy1eEWRWyjfAcuTgahDpjDlsWSSrTwx89R+8art6jqBv3a+bkpXOZNUQbLWWFRkay3/sekqHr1EkKwA00Rl8bBR3LwBwyvaTkpDYN1Sa+rJImKlUpW5QKxyXsZe/J9Dt8YgO/9wDo+qUp6L9LNcJPW+ANED1UeRGZ2996jx+EkGBvaJx22508Bk5ue7MTHisNyEvF5QTeyM+QGm+wk5L7iPpv9Hd0/PfD71+qelt8EMH7i1M48feHuHASKiI93hrrDBqkUOSTk+2OUDNXqqogDaZLSdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=thH4M8Czrtnh1WaDJOoq40BdIKQ+u3MlE1FTRz8Ft/0=;
- b=OqEsnrbN5hE/Bo1A5jScxbjj4LphXApy5tYRsToaC2c90HAdIm4pG54JeVZTSlghC7jmH4nTvmL68J3FTIPZJ/W8qbanIA9qQZ0aHAeL0yMx4/Vgpdiw+gotr2MC1mHsE8D0ch+AxFVu7XTQVHFLlWVj6Z52yI5YND7LS+6sNkbNmIfv8gmT4spZepPIzSwxVWCfQS8zpfk9gR+A7Uc7ZvAlw3Shu6iRqSjj9ZqZlPY4f8TVSF6TIRj2UhB1eBUPNPkk9Z4pD/b1hiKoWJRzEqd1Dqio6XPdLH7XRoyKOs0h3+grDBvWS23FzQPpfrJr9Upj3PfL81q8RxgHqzk8nQ==
+ bh=qfsJKj0z3BcW0imrwKncvCElRkmamv2GQa0WokfCHyQ=;
+ b=IyvjLPUcMXuCuTcTn9xk8kISxBiMFGdMivO0dvlJkrwSSuAQuwujc+ftGAj+4fR2RGbLfYjamyohfFZpKdDAmoEw6zwTeH1G/yOjYI3+6kAo2L74g/cO1Snvbfq9F6AQJEINRY3hRQ8e2xTEXAs2oG9BBaAPkkAKmysBiCqB8PZ92K+CE2OHQCfz49i7e8qjl1qXzKxi9HsS0bc/ghX2jIGzAOig3y693VST8wcNsO8eOQMxSrTdehQ6vEA4IG/+IQtZnl6dmRX9KAog8izKuFrq7Aqp/9WDC1UK38txBDviVGE2VI6LvI2HDYYUA3agyW0XcVx4mSEK4fm7kWz6mw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=thH4M8Czrtnh1WaDJOoq40BdIKQ+u3MlE1FTRz8Ft/0=;
- b=p5BhjMXWmcWX8m6KlPedO+JViscY3eXlAGxyB5Wpt6HRAJGf3KHO3vZTp6II73MrlP/RvGLBOAp4Xy3fcqjxpLqxkWhDvuXbv2wM02j3d2to+Tgc1Jen/5dMGakQ5bIRyLT8xAvK2zYaxVnmw6TUyrv3b54DkSFw1HTd0JKKS03ibeZWvbRsOQFW1hk0x505i7jo+aMpZ8bGNRGH5R+EMhU10DRT+uRv/S7hkl8ZIvjRU1TBl0yKTTF7Wu4M/CLPvtNOXWPTOk5NZZ5zUWMkckZIolhBKgNo1gSHNoMzW2tbe9w5Me4yIhbzuaA3qzGW27WGZjtE4ZO0qA1tDbRGaA==
+ bh=qfsJKj0z3BcW0imrwKncvCElRkmamv2GQa0WokfCHyQ=;
+ b=XVXOL+7yxnlbXQZHOgDYIxIa3Jb6k6EIrkUptzGocwfci3lHhmzVAKtbUEY4VwDeocyN93+at/q8HJCMmTPzVH0OtY4UTYMH4TTg2l2kxy/Nr/Cr8Q1UBgtwOjb9yqzqYOuc3kSVIZkCescX/60j3nXypUGITUkIdCDF1UEO7HoHnwQ4d/d32z+twDhfWjOVDVbfixHOcg0OlC6Gjk8E65PMHp+CA7NSu9dXO0vx7tZf6f6w75RXvNi0CFgHqATNG2ZCsF8fT0O2nXdwRQWxG8+51QuwpY/OvyE3fJUQkLR/G5wAXnj103n2R+LPr0G/E1o+ExZs9deMRTOhKHKIkQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by DM6PR12MB4123.namprd12.prod.outlook.com (2603:10b6:5:21f::23) with
+ by DS0PR12MB8044.namprd12.prod.outlook.com (2603:10b6:8:148::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 19:02:30 +0000
+ 2026 19:32:42 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 19:02:29 +0000
-Date: Mon, 17 Aug 2026 21:02:26 +0200
+ 19:32:42 +0000
+Date: Mon, 17 Aug 2026 21:32:38 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
@@ -59,17 +59,19 @@ Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
 	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 14/17] sched_ext: Delegate proxy donor admission to BPF
- schedulers
-Message-ID: <aoNawphy4OVGU4ex@gpd4>
+Subject: Re: [PATCH 12/17] sched_ext: Handle proxy-exec races in remote DSQ
+ transfers
+Message-ID: <aoNh1gAh1e8zDRKD@gpd4>
 References: <20260816173732.17162-1-arighi@nvidia.com>
- <20260816173732.17162-15-arighi@nvidia.com>
- <aoJ5q7HbSUOxlC1H@slm.duckdns.org>
+ <20260816173732.17162-13-arighi@nvidia.com>
+ <aoJNrhYq_MjO1bDb@slm.duckdns.org>
+ <aoK1Ck67oyhysjQD@gpd4>
+ <aoNCIwlkVXKNgM5l@slm.duckdns.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aoJ5q7HbSUOxlC1H@slm.duckdns.org>
-X-ClientProxiedBy: MI0P293CA0011.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::11) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <aoNCIwlkVXKNgM5l@slm.duckdns.org>
+X-ClientProxiedBy: MI3PEPF00004E96.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::446) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -78,259 +80,174 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DM6PR12MB4123:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50ae9909-0a9e-4272-7edb-08defc9215e4
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DS0PR12MB8044:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4b61fa72-e7d4-4918-6847-08defc964e4f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|7416014|1800799024|23010399003|6133799003|18002099003|22082099003|3023799007|56012099006|10067099003|11063799006|4143699003|5023799004;
+	BCL:0;ARA:13230040|23010399003|7416014|376014|366016|1800799024|18002099003|56012099006|22082099003|10067099003|11063799006|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	GA01CKgEs2dFlPTqkv+KXO1qNYgv3/30OX0Tb10tx3fvjgryyY56+FshSATmuoSjw0RpdkfWrLM1h1OOmEaHlbEGnF3mTt2oyLDXgS6D/MFeQbsUWf7zj0aczJrK8cb2KwJkiYuUqzeO5Dtms9Cnj4wU8qKBu5oGcvlT3NQ8sNBczwEJV/F1I5ayOvE5vb2Z5bByDeJSq92MhmPcYewyRXxnDBF9i0R+p1AdDpJbe+3nmscPXPAr0JFZ6fZr7I3hjEHDPL0uZLmPdmMvRtklHtDDFzTODkUDxSAbbwV5IfJOyAubg86NDh9N4KTaX6+miDAzD1G88Se09iKHYNZLxHtuyV9Hoebpz7UYZv8yS78Nt2/vkFQZ7gBjvdp2u5Ssk2G3wSGnyHdBHEOMI1KsP0ikoi1yiMoKfAkeAVFb/SodcpmNXTTGwp46Bidyzmf5idrl2yurVpT29dG22RnVpl3c9+8XSIt5olF2LtDvlJjzvldH4qHNy5vAFaDEGYK18caTk7x/3frMWhGsc9VPEhwZz8xQliYRP3FTbnwrtQeq0BIkpk0+jHDYEDv+GN3OYVNh0S4MHHNQXU5Y4pesfGYZTNf/miPz8rqvtWGDDmnev2L6L7Ey0redA62H9LJImF5UJ12Wt/x74XY+bYgHYa55kLK3UmWIs8NkBsE4Ow8=
+	WP9qA/a4EJzgFauG9cIJCnY4aPIvNRirU5MSQGjLMx2fJMMkoE6nA50qZcWVQy2dHF1SAdEBxSaCJgQVMpbrhqjW0t/OWPZpL7lmtwpV99JGMPGJMiV9oDSiRvTiW5EQ595Ekfb5LovmiKfiNyo5RRjk/vmDbKrG+TAJpnKQgH9AmHZc1r3BmGV5LxySvq0kx7xewP7IqtMl4O7aL1GfsiTudqbT4ixZIm4WyafxheFBZmHZiuwbPV20kpBflky5M12ixJWzPNgWhO0BXiwvtsvoij628dPA94n7R3tmGObFSam54UazuXnCXXMQsIsQuTfF3Qco2dj5mHLRNu1+aB68UYx9SmKuxCkWrCFbRSTS7Ogi6SYtpGn7FMIClajM2gnfwLL5/blem8DiRDhb1mjJYe0439v+2WVtUC+33hozrX/q4l/PkPVV5+pBiR7z5dYkrnQG4KNNch8X7BfaoouiSRuBERoOQjjImmqYi0hIOkRHOxEDDYM3aURc0rwTNGAaThtz4+Ar45aoKJ53awNQwoBVbSaoikSqJDF5Fpe7eb5RsgARlkQPuMPG7kEBLUalmlNHUIGDVeKdQEKKGXPXyz9/FHsY3F17b4w+tOji10PKgteia4slENcZ4HBoK0XzU7N3HWNqEiZSK4PTWTQFoOTjLf0iwN1Gd03NPzo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(7416014)(1800799024)(23010399003)(6133799003)(18002099003)(22082099003)(3023799007)(56012099006)(10067099003)(11063799006)(4143699003)(5023799004);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(18002099003)(56012099006)(22082099003)(10067099003)(11063799006)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?5WHAif7/t9B5J89g6vqSu6xBO7/g8RJC8UpOZQ1+6i9puZ/l8trD1FEFSLsn?=
- =?us-ascii?Q?kdSzbVMC8mk4FUhycVl5LDOyi7yTPnB9QYm5awS71E/l353Ytv17fzegQRo7?=
- =?us-ascii?Q?yNyon9GRDjN5vaiygTOGn5bpTQdX1kk3KKi6M4qbluUnX2ek1cNO3W5plSfJ?=
- =?us-ascii?Q?wgUhgaDhPetoYVehRGNIOuWZ6pfnDxHwvrp9mQjMRvbXNJzHfdgTdZ5OzAU6?=
- =?us-ascii?Q?f6+71qPzrEjXy0TMz7lM8b3niSuBuiwb6DxA1TYHObkqbrl+8PgQDtkFrRKK?=
- =?us-ascii?Q?QlIYdDTHDEF0NdvzR6t42SKeeys57FTTYMZuMxg2hGedYOVN1vWx23o557Lz?=
- =?us-ascii?Q?K8VCSS7Nui6Hf075aKN+87QVtUmjpbMrC/nA6ZHPc+kM/GWkzTLyoeajVSig?=
- =?us-ascii?Q?GuCwUmiZ/U2SRwI1IfyMFKO3S0weDTH6YNoNeKrZwcGkE3Sw/J8Cylq59v7Z?=
- =?us-ascii?Q?Jxtg09LV1t2f+HQ/zLPZ7vXxSbS107kpX62yKoCUKERWKEUTwR1g3aD8P40N?=
- =?us-ascii?Q?fG6pb8UHIF5PXtapKgNKu9XY8nELueaU5i3JDlzqvzZVgBAsZ3DfNC8SLl6K?=
- =?us-ascii?Q?bojXEqOydiaKQ46qJ6ZhHIPSZhPYnxTKqajOlHDK9ISxZHN9y3wVXWlwVnhf?=
- =?us-ascii?Q?70Bnsb1+0xSgWcuv58WDdd2l7GtO6ALOD9DoM+NkP2f4Vvt7uAwMqgXVmMRH?=
- =?us-ascii?Q?yL2vqpqIkbR7ezW9UiKEmt/Zp1/HiyDGfw1fFCvzBsaldl+EudI3fWtrJbyR?=
- =?us-ascii?Q?rmKvFO3cVR3I4/RDvqx1SCvJEkxKDhKXejFqbizhhQ+RESlaYicXw1XLo3/j?=
- =?us-ascii?Q?8RKIwioYSzkiOZIXy5mKL5JSPW3J9QMQexQFlDr8ihSZ3ARELUTvJkt1/K1E?=
- =?us-ascii?Q?7ow7ClUTLGbKnhpTVWatgxonhbjPiZRZhcYUnCKNI5irGo5iI2yJMZO2JRTU?=
- =?us-ascii?Q?loP9+PSl6Ckg0fnPs9+4szA9X4HssuObP0zf1REd2brue4WX30SYKWj4GKFZ?=
- =?us-ascii?Q?umlSPch8BaTnzKW7VOTdinQcGVQJ8zHt1nfJ2t8Fx0fvVYXkLQvRCY5ZUmZA?=
- =?us-ascii?Q?xUwNhFOF29SeSFtjPFpYlCXUSotF/TUJnCKcyzlXp4cshAnzsT+IgGIktTLG?=
- =?us-ascii?Q?+OB2wRg4M8IJR+PnrElMIr8XZP+/QF2lVIfMXBArZOXY7Ss7F8lmtuSrMWh9?=
- =?us-ascii?Q?pPNSWDu4aUtUiwPz6uDYho1I2wbt/HSfW/wHrmE7TVpPaYVcmajVDmWmx3TS?=
- =?us-ascii?Q?eJEiZCuwTSyos9CHs+dQChL9V/B5pGCGRU9VJ0U9k4tdZ8XWv6v3tNt5skzN?=
- =?us-ascii?Q?wuTgS1zfWv3ZgdKGQh1WakOfnkflu4IinJpHoeH4Qb1bpIxEN+ZAHxhtoAEx?=
- =?us-ascii?Q?bDJszSwKqBRfW4BCh5CJfOoIsKMvV98KZcWoLN9s5Z3Ck6TqwCWXwDHip8tW?=
- =?us-ascii?Q?NkkB6oZfbkd6fA9/gklHStCpiik877rV5jGh46g9ZK3ubfC15GQUI7UKEWqS?=
- =?us-ascii?Q?ODUyFOjHJCqaCjLW/hyArBChzCTYe7Mrmx2Lhct481tghoLFiPXPOhrtBHK7?=
- =?us-ascii?Q?wOsERVsTfmhAQBnC2DHtjUqqfBMaS/qWJvGDCHNwnkd5Pk50Xfgzw3W7UBTS?=
- =?us-ascii?Q?WyTKIYzIrbdeSGdp2cp2uTMUgVm1HlcxLGMvCa7QaCgLJIizvvmFnxVxmSNK?=
- =?us-ascii?Q?E0QjI5nYfqX9HLUhdc+ENKS3qvFtyj2WViPjxO3YHEuJ8DexUmg27heACFBy?=
- =?us-ascii?Q?Mc4IPFEuXQ=3D=3D?=
+	=?us-ascii?Q?umHxpiiQ3n87JX+rn9bQXmO5VJrtPmrSrHh2jJ1YWRnYXoerle9U6PWuUPwu?=
+ =?us-ascii?Q?BvjRSZGWn3JxpZp2eT2VNzZg9K7KdspAduoKB4KMqWrcit0MkPnzeyE5EXz8?=
+ =?us-ascii?Q?8A2VwTFIxDpgJZP9dADROUi+fZ84jbU+iYaHTUCb31ZUYp1sKMijMBzubhsi?=
+ =?us-ascii?Q?jG2BmchjvW5Dg/6aXNuZUWZOTfIIsSH34RfN6Y33+OdA7+jK3yKPHMNlQIMm?=
+ =?us-ascii?Q?301cjVbn6wI2HbC4sGFas7k1GxYD/Do7Zo8V+zC86mkPML1Vf4rFfbEjjAhg?=
+ =?us-ascii?Q?I8P7UJX6C3ru8asg0p1l0VsHYMPbk3jBuR53GW/yPTBGT5sJfzm0kzkVhgJi?=
+ =?us-ascii?Q?uoS86cajbUsIfjIlK6CkFL8n6GS0d7rRlgFGfCHuXXdhsrg4zauAFnCjSrqj?=
+ =?us-ascii?Q?QeXGHXjE7YnXP6dhaaVurt6xSg8oR3aW2DjDTdNjrqVSz+Nvve6BiAfpr8b+?=
+ =?us-ascii?Q?IC9JE1E0mVvtXVvp82St6VbFgHVYu+WZe1KTYI7zDbgH7sxe75qdxGmtdlCh?=
+ =?us-ascii?Q?cpxzaL7XW9HZGvZd3spz130BwfTYN7LT20nZzzs5mi5pdPSBwMmTlACGVgkH?=
+ =?us-ascii?Q?59O0++VigAfqikAdYouvu0zYGtXVca69HsRsLOgAUCDgLRAcwyH0v3aqKQhA?=
+ =?us-ascii?Q?H41BqhJ3Rr9j2N5z9voES6L7hmDxNRD2Rb2IXFTSKiUIO+G9xQcSLX0lMq4C?=
+ =?us-ascii?Q?P0eRTSRuJpf65iFrVy5BCx2MJjN1wEC9gxekpvrrXtDc4jeeGdy27bjCbuxu?=
+ =?us-ascii?Q?W4Fq/EOzYmLhq2wymhPkEOXWd09ic9WNajlIaf5eWTUmJkJs9APr1NCMdoN4?=
+ =?us-ascii?Q?4nmfkHZMFlB8WEKOWQ/fhK6bdAwdrocSppl9pZ+uKxu0HfVzvlQJMf2eMNgM?=
+ =?us-ascii?Q?5r2RKze2gZmniO+0FmP7KbqtYClmNqj63pmn8QLBefIUsEUQpe7Qh2PGsoz3?=
+ =?us-ascii?Q?o2g+6cEyV1QWn1A/5tGbV/3gU+3pU06gWiReDax0XPpeyMB+qrt7UYAq5yHV?=
+ =?us-ascii?Q?XhQgiOuTln0SrD6pYVVhPenlN+arMjadvjJPV2VZoFEM5laRmy+WG95ewTtu?=
+ =?us-ascii?Q?NnMt71QbVqm0oxbn+XbDC+04rEoCwnVmLfp3CdypNzNdEIALPCDple0f4a25?=
+ =?us-ascii?Q?09JMAgcG5HEZ3xl8znTxYg5HjdbYiS1pI2ne8H5UkEbVzVl+QJ+B+zXuL4aR?=
+ =?us-ascii?Q?flJrqxAQBtl+psREwRmvoSW7UFLsK4MbKKgB4TnZG1+rlzcq751hHth3iALF?=
+ =?us-ascii?Q?/bI7dfDqrO7N1spvfDJ/KJ83ERdTBrxxibAgi7S0lUbx6ruiDAbcQNdzJfuz?=
+ =?us-ascii?Q?RlN6xeY/VBJDLAd8Xc5xeUX1dVRqK36eC6mP2Peh6DJcrUKSnSsARjTnMHiO?=
+ =?us-ascii?Q?QhPKgT01rPHC+Acly+PyJHHAfHRB/jK5JiMhivMOUSJY2sPzuZ5s+rElRreW?=
+ =?us-ascii?Q?ijoW2H3bhev9CS55RPHEijRlU5uyJoQGOIK8a89t2CmqTkVPg834Q5p7Lagb?=
+ =?us-ascii?Q?txCnJ01UCXI+Z96UypTDk5Eff5tMxG8tUcbp+9qoZm6beEjDMlx5hAcsOWpG?=
+ =?us-ascii?Q?kCrEu1MkwZ0v5B42zUYMdwlJLjLKkrmZLrr1fytay/Arnr5FzqAgu5SXdW55?=
+ =?us-ascii?Q?bw6PNrNFKqoCFdVKwIRnsGa3ukpTqp+hLnuVwHlEXzq+hK90cYQMRFj26IPv?=
+ =?us-ascii?Q?L11lV4iT0DiJV1gc97ewYZ5mIhwtd7dbSiU3S14X55XmXWPzLb0qW3Jq21dk?=
+ =?us-ascii?Q?Ea66OpMPKA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50ae9909-0a9e-4272-7edb-08defc9215e4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4b61fa72-e7d4-4918-6847-08defc964e4f
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 19:02:29.7922
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 19:32:42.6816
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XqzaLSDl9ZNFxVX9jLNb17BbA2OB3UgB1E+j+7jSqQKofQma0s/3wxUu8Yx7plBvsdzGiMzPX+NdGyu3fxL8iA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4123
+X-MS-Exchange-CrossTenant-UserPrincipalName: Vkfi82ue5Wg+/abxGUhvndPlblZczVVMWBCdhw3vtopakfufpmCUxM/zNf+2eKCOa/Df6JUJbiknLOxW1BydaA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8044
 
-Hi Tejun,
-
-On Sun, Aug 16, 2026 at 05:02:03PM -1000, Tejun Heo wrote:
-> On Sun, Aug 16, 2026 at 07:35:12PM +0200, Andrea Righi wrote:
-> >  bool scx_allow_proxy_exec(const struct task_struct *p)
-> >  {
-> > -	return p->sched_class != &ext_sched_class;
-> > +	struct scx_sched *sch;
-> > +
-> > +	if (p->sched_class != &ext_sched_class)
-> > +		return true;
-> > +
-> > +	/*
-> > +	 * scx_enabled() may change while __schedule() holds only @p's rq lock.
-> > +	 * Once @p is associated with a scheduler, use that scheduler's policy
-> > +	 * even while the global enable state is transitioning.
-> > +	 */
+On Mon, Aug 17, 2026 at 07:17:23AM -1000, Tejun Heo wrote:
+> Hello,
 > 
-> I'm not sure this comment is necessary. scx_task_sched() is stable while
-> holding the task's rq lock.
-
-That's right, the comment is unnecessary, I'll remove it.
-
+> On Mon, Aug 17, 2026 at 09:15:22AM +0200, Andrea Righi wrote:
+> > > > @@ -1530,12 +1539,17 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+> > > >  	call_task_dequeue(sch, rq, p, 0);
+> > > >  
+> > > >  	/*
+> > > > -	 * Only local inserts get the wakeup treatment below. Rejects kick the
+> > > > -	 * deferred reenq and rescue parks are paced by the rescue timer.
+> > > > +	 * Only local inserts get the wakeup treatment below. Proxy-active tasks
+> > > > +	 * and rescuees remain parked until their respective resolution paths.
+> > > > +	 * Other rejects can be reenqueued immediately.
+> > > >  	 */
+> > > >  	if (unlikely(dsq->id != SCX_DSQ_LOCAL)) {
+> > > > -		if (dsq->id == SCX_DSQ_REJECT)
+> > > > +		if (dsq->id == SCX_DSQ_REJECT) {
+> > > > +			if ((p->scx.flags & SCX_TASK_REENQ_REASON_MASK) ==
+> > > > +			    SCX_TASK_REENQ_PROXY)
+> > > > +				rq->scx.flags |= SCX_RQ_PROXY_REENQ;
+> > > 
+> > > and if my reading above is correct, this wouldn't be necessary, right?
+> > 
+> > The flag isn't needed to provide the post-switch ordering, but it is needed to
+> > record that reject_dsq still needs another drain.
 > 
-> > @@ -2059,19 +2086,25 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
-> >  	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
-> >  		goto direct;
-> >  
-> > +	enq_blocked = (sch->ops.flags & SCX_OPS_ENQ_BLOCKED) &&
-> > +		      p->is_blocked && !(enq_flags & SCX_ENQ_WAKEUP);
-> 
-> Why not just test directly in the if statement? It's not like the test
-> result is used anywhere else. Is the intention giving the test result an
-> intuitive name? I guess is_blocked && WAKEUP is the condition is the donor
-> gaining execution back? Might be worthwhile to add a comment.
+> But wouldn't it be able to use the same schedule_deferred_locked() call like
+> SCX_DSQ_REJECT case so that the PROXY_REENQ flag is only used for retry
+> cases (and maybe renamed accordingly)?
 
-Right, the local var was only intended to give the condition a name. I'll inline
-it and add a comment explaining the WAKEUP exclusion.
+Yes. The initial insertion into reject_dsq can use schedule_deferred_locked()
+without setting a proxy-specific flag. Then we can set the flag only when
+scx_reenq_reject() actually skips a task because it is still running or
+donating. How about renaming to SCX_RQ_PROXY_RETRY to refelct the new meaning?
 
 > 
-> > +	if (enq_blocked) {
-> > +		enq_flags |= SCX_ENQ_BLOCKED;
-> > +	} else {
-> > +		/* see %SCX_OPS_ENQ_EXITING */
-> > +		if (!(sch->ops.flags & SCX_OPS_ENQ_EXITING) &&
-> > +		    unlikely(p->flags & PF_EXITING)) {
+> ...
+> > It also preserves the outstanding drain if proxy re-pick calls
+> > zap_balance_callbacks() before the initially queued callback runs. In
+> > that case, the task is already parked on reject_dsq, but the flag lets
+> > scx_proxy_resolved() queue replacement deferred work.
 > 
-> While at it, can you swap the order? This is ordered this way because OPS
-> testing used to be static_key but now that these are regular tests, it makes
-> more sense to test the unlikely one first, or maybe that belongs in a
-> separate patch.
+> I think this is a generic problem with core scheduling. SCX assumes that
+> deferred scheduilng always runs but core-sched can zap them. We probably
+> need to address this directly using a similar but generic deferred work
+> pending flag.
 
-Ack. I'll test PF_EXITING first. Since this patch already moves that condition
-to handle blocked-donor admission ahead of it, maybe we can fold this into the
-same patch.
+Agreed. This isn't specific to proxy-rejected tasks, any sched_ext deferred work
+queued through a balance callback can be lost if core scheduling zaps the
+callback.
 
-> 
-> > @@ -2183,8 +2216,17 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
-> >  	int sticky_cpu = p->scx.sticky_cpu;
-> >  	u64 enq_flags = core_enq_flags | rq->scx.remote_activate_enq_flags;
-> >  
-> > -	if (enq_flags & ENQUEUE_WAKEUP)
-> > +	/*
-> > +	 * p->is_blocked is cleared after wakeup_preempt(), so remember whether
-> > +	 * this is a full wakeup activation. If wakeup_preempt_scx() isn't called,
-> > +	 * set_next_task_scx() or a subsequent non-wakeup enqueue clears the flag.
-> > +	 */
-> 
-> I can't make heads or tails of this comment. This doesn't seem to explain
-> what TASK_ENQ_WAKEUP is used for but just goes into how it's managed.
+Maybe we can introduce a new generic sched_ext deferred work pending flag, kept
+set until the deferred work actually runs and we can use it to rearm it after
+callback cancellation?
 
-The distinction it was trying to carry is between a retained on-rq donor wakeup,
-which reaches wakeup_preempt_scx() through ttwu_runnable() without another
-ops.enqueue() and a full wakeup activation, which has already enqueued the task.
-
-We can remove SCX_TASK_ENQ_WAKEUP, pass WF_ON_RQ directly from ttwu_runnable()
-and replace the old lifecycle comment with one next to the check explaining that
-WF_ON_RQ identifies the no-enqueue path, which needs resched_curr(), so that BPF
-can reconsider the task after is_blocked is cleared.
+Probably something to do for another patch series...
 
 > 
-> > +	if (enq_flags & ENQUEUE_WAKEUP) {
-> >  		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
-> > +		p->scx.flags |= SCX_TASK_ENQ_WAKEUP;
-> > +	} else {
-> > +		p->scx.flags &= ~SCX_TASK_ENQ_WAKEUP;
-> > +	}
-> >  
-> >  	/*
-> >  	 * Restoring the current scheduling context will be immediately followed
-> > @@ -2399,10 +2441,30 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
-> >  	/*
-> >  	 * Preemption between SCX tasks is implemented by resetting the victim
-> >  	 * task's slice to 0 and triggering reschedule on the target CPU.
-> > -	 * Nothing to do.
-> > +	 *
-> > +	 * A mutex waiter can remain on-rq as a proxy donor while logically
-> > +	 * blocked. If it wakes without having been proxy-migrated,
-> > +	 * ttwu_runnable() calls here without another enqueue_task_scx(). Request
-> > +	 * rescheduling so that ops.dispatch() can reconsider the task after
-> > +	 * ttwu_runnable() clears is_blocked.
-> > +	 *
-> > +	 * A proxy-migrated donor instead returns through the full activation
-> > +	 * path, which calls enqueue_task_scx() before arriving here.
-> > +	 * SCX_TASK_ENQ_WAKEUP records that the enqueue already happened and an
-> > +	 * additional reschedule isn't needed.
-> >  	 */
-> > -	if (p->sched_class == &ext_sched_class)
-> > +	if (p->sched_class == &ext_sched_class) {
-> > +		bool enq_wakeup = p->scx.flags & SCX_TASK_ENQ_WAKEUP;
+> > > > +{
+> > > > +	lockdep_assert_rq_held(rq);
+> > > > +	WARN_ON_ONCE((p->scx.flags & SCX_TASK_REENQ_REASON_MASK) &&
+> > > > +		     !(enq_flags & SCX_ENQ_REENQ));
+> > > 
+> > > In the previous patch, is it possible to clear reason before reenqueueing
+> > > it and get rid of overwrite cases or does that quite not work out?
+> > 
+> > Yes, I think we can get rid of the overwrite cases. There is one constraint,
+> > though: the reason must remain set while ops.enqueue() runs, because BPF reads
+> > it from p->scx.flags.
+> > 
+> > I'll move the clearing into scx_do_enqueue_task() so that it happens immediately
+> > after ops.enqueue() returns and before resolving any direct dispatch requested
+> > by the callback. A rejection caused by that new placement will then see a clear
+> > reason field and can set its own reason without overwriting the previous one.
 > 
-> Ditto with bouncing test result.
-> 
-> > +
-> > +		p->scx.flags &= ~SCX_TASK_ENQ_WAKEUP;
-> 
-> I'm not a big fan of SCX_TASK_ENQ_WAKEUP. This is a roundabout way to detect
-> owner -> donor case, right? Doesn't the caller already know? If so, can't it
-> just pass in that as a wake_flag?
+> I haven't really thought through it so please do whatever that makes the
+> code least ugly.
 
-Ok, as mentioned earlier we can pass WF_ON_RQ to wakeup_preempt_scx() to
-distinguish the two cases.
+Ok, probably moving the clearing into scx_do_enqueue_task(), after ops.enqueue()
+returns but before resolving the resulting placement is the least ugly way...
+This keeps the reason visible to BPF while ensuring that a subsequent rejection
+starts with a clear reason field.
 
 > 
-> > +		if (!enq_wakeup && p->is_blocked) {
-> > +			struct scx_sched *sch = scx_task_sched(p);
-> > +
-> > +			if (sch && (sch->ops.flags & SCX_OPS_ENQ_BLOCKED))
-> > +				resched_curr(rq);
-> > +		}
+> > > > @@ -2633,6 +2719,19 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+> > > >  
+> > > >  	if (dst_dsq->id == SCX_DSQ_LOCAL) {
+> > > >  		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
+> > > > +		/*
+> > > > +		 * Unlike the rq-lock handoff paths, @src_rq has been locked
+> > > > +		 * throughout this operation. Only active proxy state can race the
+> > > > +		 * move here; let the enforcing check below diagnose an ordinary
+> > > > +		 * migration-disabled task.
+> > > > +		 */
+> > > > +		proxy_raced = src_rq != dst_rq && task_proxy_move_active(p);
+> > > > +		if (unlikely(proxy_raced)) {
+> > > 
+> > > I don't know what bouncing through the local var buys. Out of curiosity, if
+> > > task_move_proxy_raced() is used here, does something break or is it just to
+> > > avoid unnecessary tests?
+> > 
+> > Yeah, the local variable doesn't buy anything, I'll remove it.
+> > 
+> > Using task_move_proxy_raced() (aka task_proxy_unsafe_to_move() after the rename)
+> > would change the behavior for an ordinary migration-disabled task. This path
+> > holds src_rq, so that state isn't a lock-handoff race and should still reach
+> > task_can_run_on_remote_rq(..., true), which diagnoses the invalid BPF-directed
+> > migration. Treating it as a proxy rejection instead could hide that error and
+> > cause repeated reenqueues.
 > 
-> It'd nice if we can gate the above behind proxy enabled.
+> That sounds like something which is worth noting in the comment. It's subtle
+> that this site needs a different set of conditions.
 
-Ack.
+Agreed. I'll remove the local variable and expand the comment.
 
-> 
-> > @@ -2517,6 +2579,20 @@ static bool task_can_run_on_remote_rq(struct scx_sched *sch,
-> >  
-> >  	WARN_ON_ONCE(task_cpu(p) == cpu);
-> >  
-> > +	/*
-> > +	 * A blocked donor may be moved normally to select a new callback rq.
-> 
-> What's "callback" rq?
-
-Poor terminology... I meant the rq associated with the donor before proxy
-execution moved its scheduling context. I'll rephrase this.
-
-> 
-> > +	 * set_task_cpu() updates wake_cpu and makes the destination rq its new
-> > +	 * callback home.
-> > +	 *
-> > +	 * proxy_set_task_cpu() instead preserves wake_cpu when moving a donor to
-> > +	 * its lock owner's CPU. Keep such a donor on the proxy rq until it wakes;
-> > +	 * otherwise normal BPF placement may repeatedly pull it back to its
-> > +	 * callback rq only for proxy execution to move it to the owner again.
-> > +	 */
-> > +	if (sched_proxy_exec() && p->is_blocked &&
-> > +	    task_cpu(p) != p->wake_cpu)
-> 
-> No need for line break. Can you elaborate the scenario this scenario is
-> needed for? Is this the exact condition? Let's say a donor is running the
-> owner on the same CPU, so task_cpu(p) == p->wake_cpu. Wouldn't you still
-> want to block scx from moving it to another CPU? What am I missing?
-
-The condition is intended to identify a completed proxy migration, not all
-blocked donors.
-
-For example, suppose BPF places donor D on CPU0 while its mutex owner O runs on
-CPU1, proxy-exec moves D to CPU1 (its scheduling context) using
-proxy_set_task_cpu(), which preserves D->wake_cpu == CPU0.
-
-Then we have:
- - task_cpu(D) = CPU1
- - wake_cpu(D) = CPU0
-
-If D is subsequently put on a shared DSQ, then it could be consumed by CPU0 and
-move it back, only for proxy execution to move it to CPU1 again. The check
-prevents that ping-pong while D remains blocked.
-
-In the same-CPU case, while D is actively proxy-running O on CPU0, D is
-rq->donor and has already been removed from its DSQ, so another CPU cannot
-consume and move it. A remote-transfer race is also rejected by
-task_proxy_move_active (aka task_proxy_running_or_donating() after the rename).
-
-If D is later preempted and re-enqueued while still blocked, it is no longer
-active and BPF may place it elsewhere. Suppose BPF moves it to CPU1. The normal
-migration updates both task_cpu(D) and wake_cpu(D) to CPU1. When CPU1 selects D,
-proxy execution finds O on CPU0 and moves D's scheduling context back to CPU0
-while preserving wake_cpu(D) == CPU1. The resulting mismatch then prevents
-further BPF-directed moves while D remains blocked.
-
-So there are 3 cases:
- - task_proxy_move_active() prevents moving a donor that is currently running or
-   donating,
- - task_cpu(D) != D->wake_cpu prevents moving an inactive donor whose scheduling
-   context has already been moved to its owner's CPU by proxy exec,
- - an inactive donor that has not yet been proxy-migrated remains under BPF
-   placement control.
-
-Thanks,
+Thanks for all the help! Really appreciated!
 -Andrea
