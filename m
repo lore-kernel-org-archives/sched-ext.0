@@ -1,155 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1FC2EC0B0;
-	Mon, 17 Aug 2026 17:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1EA3BADAA
+	for <sched-ext@lists.linux.dev>; Mon, 17 Aug 2026 17:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786987046; cv=none; b=GzPm0wHvEtVNsYF89xhfgRECPhQSEe/pQ3MAsWLH2LW3pv1cupoqKVww3iN7lxbliV9PF9+hX/oylyQg1udwmt3A6OqlhjqtWfSgcjNCHe6t7krHsFoXmHxrEmCzTKNfZ8xUeqYkcZhQ3ol1hcMwgtybUk2IhoV0SGYotmMVtGw=
+	t=1786987293; cv=none; b=puwuXRPZdl3rsPtEJqYjaDu9B4vPmzVCZGwmUyCpU3V35QGIFwC1oxeblFby0xC14tf6/MUYz/xswXVTuWCvAUoCpjYw+ZX0pvawHIBHbQ+PmAB1jATcvSFMWRcSKPf/LcIL8Bsihu1RA2FBRWvmwoW5GbahYTjaxc1r8CtLmd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786987046; c=relaxed/simple;
-	bh=UcYbJd4LXmIHJQw7CqNpwOu83Cs/su9edC6nYFeMMEU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=klQVVmgKT8gcwSe+EasDdowiyfiqk37Q0MK5TUmQQ+jba3/AkDvPeimPQMDf0mg34DEjtO30Q+viJwfyfdlM4kwdAKrxs1FQgwv4ZpGcX9LwltL2orgubOkY28W/JsL2slgfEZWLjkh9nBDzF9PqEklxBifov81564VkzRsdflg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vk/frS+b; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786987293; c=relaxed/simple;
+	bh=s/iZC5FGF7Ja7+u+4jN40drEMRT34HrXRZBvIUGMPhQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=dR6hmzsPiOJ6fsMrqRS4CHM+qBqKJhNCuTLUc3MUSHH6yZ/DHakKcJCjLh79OucHR57zbBKIN5gBJZS0wxvCVUFeDJuIYJaj38angJLJZzvJjzmPFLWn20vA/rik0feWmyU3Qzq7M57gqajDjqh+TfyprMf2yAE13Hg79Qp/VZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UGEafX2v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vk/frS+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619F51F000E9;
-	Mon, 17 Aug 2026 17:17:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UGEafX2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDA51F000E9;
+	Mon, 17 Aug 2026 17:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786987044;
-	bh=mymbQLXdVRVl3EdK2zZha/SVJSzKrSpEaXZmxRwThLo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vk/frS+bFz4rrCfwxw73WoULfMb4vlYlOimZJzu3xzm9eodhlHsKhhmwTB9V9yn5b
-	 49nPN4A+Ji9fTV1UMo2bUh7Xi6jK+u9FeoNab22eEIbSPS68Ln/03wLZwCU6dNVD41
-	 yMbU5fz6aMRYr5yKYYgHUf4X6Fvsx1h1G0G9xLDqZWZdrJZ0Vkxk1uT4FBoW0E8IGY
-	 B4roiH4zwgK4TThUjgudOACvIhzcPmnJRMaMgASlsL15KQLsGEvQAty4Cotj/dvntj
-	 ARvIVkVKiEYX+NLdFX2JORKr2yrFOiOVSfejxJkc8IXTqNk7sGNwJGApb4M/sHzmaC
-	 0GRU7oGVNrTmg==
-Date: Mon, 17 Aug 2026 07:17:23 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
-	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/17] sched_ext: Handle proxy-exec races in remote DSQ
- transfers
-Message-ID: <aoNCIwlkVXKNgM5l@slm.duckdns.org>
-References: <20260816173732.17162-1-arighi@nvidia.com>
- <20260816173732.17162-13-arighi@nvidia.com>
- <aoJNrhYq_MjO1bDb@slm.duckdns.org>
- <aoK1Ck67oyhysjQD@gpd4>
+	s=k20260515; t=1786987292;
+	bh=QS8bOJOyqvYJZldNfqJ+revmVmsCiDpqVoWenzjLxY0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=UGEafX2v7qwCa5ElvV7KkqtQd3T/Yn68t/VutiAfFFrZJaIvzfF0j4dD5iKCyZanc
+	 aa+UryZvrwjFGmG6+gQjP2qDjy6BVqMLHcnZEsENKvV0e9XnJXL6dmF+B6RLYmFkGN
+	 2THU5OQRy31e8pH+Dwv/x3lTPUYIIeHNgVnA/xQ7m964XUBkEeU3NPON7RQmGBPyBX
+	 4qT0K81FuqQ6JqK0EoEynoCuJblVEhhqvngAOl7BHE1u3KJ+UhdWD2a6kyknICz46h
+	 IXACoBrn3CXf8zJfvY99l6zIec8vciMseaTmhFeM1391XYkwTjHarJuzHm8DdLPKJW
+	 64Xm+zjjdqsiw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] sched_ext: allow ops.cgroup_set_bandwidth() to be
+ sleepable
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Changwoo Min" <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260817170941.668571-1-changwoo@igalia.com>
+References: <20260817170941.668571-1-changwoo@igalia.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 17 Aug 2026 17:21:31 +0000
+Message-Id: <20260817172131.BCDA51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aoK1Ck67oyhysjQD@gpd4>
 
-Hello,
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-On Mon, Aug 17, 2026 at 09:15:22AM +0200, Andrea Righi wrote:
-> > > @@ -1530,12 +1539,17 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
-> > >  	call_task_dequeue(sch, rq, p, 0);
-> > >  
-> > >  	/*
-> > > -	 * Only local inserts get the wakeup treatment below. Rejects kick the
-> > > -	 * deferred reenq and rescue parks are paced by the rescue timer.
-> > > +	 * Only local inserts get the wakeup treatment below. Proxy-active tasks
-> > > +	 * and rescuees remain parked until their respective resolution paths.
-> > > +	 * Other rejects can be reenqueued immediately.
-> > >  	 */
-> > >  	if (unlikely(dsq->id != SCX_DSQ_LOCAL)) {
-> > > -		if (dsq->id == SCX_DSQ_REJECT)
-> > > +		if (dsq->id == SCX_DSQ_REJECT) {
-> > > +			if ((p->scx.flags & SCX_TASK_REENQ_REASON_MASK) ==
-> > > +			    SCX_TASK_REENQ_PROXY)
-> > > +				rq->scx.flags |= SCX_RQ_PROXY_REENQ;
-> > 
-> > and if my reading above is correct, this wouldn't be necessary, right?
-> 
-> The flag isn't needed to provide the post-switch ordering, but it is needed to
-> record that reject_dsq still needs another drain.
+Pre-existing issues:
+- [High] Concurrent writes to the cgroup `cpu.max` interface can race, caus=
+ing desynchronization between CFS and SCX bandwidth states and out-of-order=
+ invocations of the BPF callback.
+--
 
-But wouldn't it be able to use the same schedule_deferred_locked() call like
-SCX_DSQ_REJECT case so that the PROXY_REENQ flag is only used for retry
-cases (and maybe renamed accordingly)?
+--- Patch [1]: [PATCH] sched_ext: allow ops.cgroup_set_bandwidth() to be sl=
+eepable ---
+commit 1a287753fea54decaf90a63415735694726dc348
+Author: Changwoo Min <changwoo@igalia.com>
 
-...
-> It also preserves the outstanding drain if proxy re-pick calls
-> zap_balance_callbacks() before the initially queued callback runs. In
-> that case, the task is already parked on reject_dsq, but the flag lets
-> scx_proxy_resolved() queue replacement deferred work.
+sched_ext: allow ops.cgroup_set_bandwidth() to be sleepable
 
-I think this is a generic problem with core scheduling. SCX assumes that
-deferred scheduilng always runs but core-sched can zap them. We probably
-need to address this directly using a similar but generic deferred work
-pending flag.
+This commit allows the cgroup_set_bandwidth BPF scheduler operation to
+sleep. It adds a BTF marker function for userspace to detect this
+capability and documents the potential blocking behavior.
 
-> > > +{
-> > > +	lockdep_assert_rq_held(rq);
-> > > +	WARN_ON_ONCE((p->scx.flags & SCX_TASK_REENQ_REASON_MASK) &&
-> > > +		     !(enq_flags & SCX_ENQ_REENQ));
-> > 
-> > In the previous patch, is it possible to clear reason before reenqueueing
-> > it and get rid of overwrite cases or does that quite not work out?
-> 
-> Yes, I think we can get rid of the overwrite cases. There is one constraint,
-> though: the reason must remain set while ops.enqueue() runs, because BPF reads
-> it from p->scx.flags.
-> 
-> I'll move the clearing into scx_do_enqueue_task() so that it happens immediately
-> after ops.enqueue() returns and before resolving any direct dispatch requested
-> by the callback. A rejection caused by that new placement will then see a clear
-> reason field and can set its own reason without overwriting the previous one.
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 18183062f751c..c48561bf108be 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -4572,6 +4572,15 @@ void scx_group_set_bandwidth(struct task_group *tg,
+> =20
+>  	percpu_up_read(&scx_cgroup_ops_rwsem);
+>  }
 
-I haven't really thought through it so please do whatever that makes the
-code least ugly.
+[Severity: High]
+This is a pre-existing issue, but does making this operation sleepable widen
+the window for a race condition between concurrent cpu.max writers?
 
-> > > @@ -2633,6 +2719,19 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
-> > >  
-> > >  	if (dst_dsq->id == SCX_DSQ_LOCAL) {
-> > >  		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
-> > > +		/*
-> > > +		 * Unlike the rq-lock handoff paths, @src_rq has been locked
-> > > +		 * throughout this operation. Only active proxy state can race the
-> > > +		 * move here; let the enforcing check below diagnose an ordinary
-> > > +		 * migration-disabled task.
-> > > +		 */
-> > > +		proxy_raced = src_rq != dst_rq && task_proxy_move_active(p);
-> > > +		if (unlikely(proxy_raced)) {
-> > 
-> > I don't know what bouncing through the local var buys. Out of curiosity, if
-> > task_move_proxy_raced() is used here, does something break or is it just to
-> > avoid unnecessary tests?
-> 
-> Yeah, the local variable doesn't buy anything, I'll remove it.
-> 
-> Using task_move_proxy_raced() (aka task_proxy_unsafe_to_move() after the rename)
-> would change the behavior for an ordinary migration-disabled task. This path
-> holds src_rq, so that state isn't a lock-handoff race and should still reach
-> task_can_run_on_remote_rq(..., true), which diagnoses the invalid BPF-directed
-> migration. Treating it as a proxy rejection instead could hide that error and
-> cause repeated reenqueues.
+The commit message notes that cfs_constraints_mutex has already been releas=
+ed
+by tg_set_cfs_bandwidth(), leaving only percpu_down_read(&scx_cgroup_ops_rw=
+sem)
+held. Since this is a read lock, concurrent writers to the same cgroup's
+cpu.max interface can execute scx_group_set_bandwidth() at the same time.
 
-That sounds like something which is worth noting in the comment. It's subtle
-that this site needs a different set of conditions.
+If two threads write to cpu.max, they are serialized in tg_set_cfs_bandwidt=
+h(),
+but can race here:
 
-Thanks.
+CPU1                                 CPU2
+tg_set_cfs_bandwidth() (writer A)
+                                     tg_set_cfs_bandwidth() (writer B)
+scx_group_set_bandwidth()
+   percpu_down_read()
+   SCX_CALL_OP(...) // blocks
+                                     scx_group_set_bandwidth()
+                                        percpu_down_read()
+                                        SCX_CALL_OP(...) // returns quickly
+                                        tg->scx.bw_quota_us =3D ...
+   tg->scx.bw_quota_us =3D ...
 
--- 
-tejun
+Can this lead to the BPF callback executing out of order, causing
+desynchronization between the CFS bandwidth state and the SCX scheduler sta=
+te?
+
+Additionally, on 32-bit architectures, could updating the 64-bit
+tg->scx.bw_period_us, bw_quota_us, and bw_burst_us fields without a write
+lock result in torn writes?
+
+> +
+> +/*
+> + * Capability marker for userspace. The sleepable allowance for
+> + * ops.cgroup_set_bandwidth() (see bpf_scx_check_member()) is a verifier
+> + * property with no other symbol a scheduler can probe, so this no-op fu=
+nction
+> + * exists solely so its presence in the kernel's BTF can be detected. It=
+ has no
+> + * callers; __used keeps it from being optimized away.
+> + */
+> +__used void scx_cgroup_set_bandwidth_may_sleep(void) {}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817170941.6685=
+71-1-changwoo@igalia.com?part=3D1
