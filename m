@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0892E37FF68;
-	Mon, 17 Aug 2026 19:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37953BB9EB;
+	Mon, 17 Aug 2026 20:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786996198; cv=none; b=q31Aqe/VVZBGA9iKCnTTzNOMrgBaW30KfLmqDQtfBT+yU1m/HJkeTqrkI7U2nCHSZ12h2GIRS9ZiOSt4sr5K7wcmdo5i7jZI6lAbiTzruRJ24r0nIowCBd0XV+802Mz0nMRJk7Z5dUtxPzgkwdL7jcsqZNNLQMRPaaeWET7qZ7o=
+	t=1786998271; cv=none; b=f64fZFZxIKiuPUQhJwtgoXKENT6o5YgJFAHJSotxg8bCUJ9YxyHUP9oQpsFS5PFa7V/LbNQNzY8HeE/C1pPrK2cv/GlIxRe462QdNHiLAycTmblqugdYI4HnwZEPMUNaCGTuKmTDo2fMHsl0sYDDiOHXjmWg7bdGyCtThh+9bpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786996198; c=relaxed/simple;
-	bh=UvpokTKR7IhFVtkymN/ZRhqGVJRr7V9VosITiCVZH/A=;
+	s=arc-20240116; t=1786998271; c=relaxed/simple;
+	bh=/NSBNG8RzcXDRiB0FQ9kcRWIpVItWmLem6kj6OaPDTU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sq2n7AbTWSYyzRB8K25ZReGYyHuL3bOhStg7S2MDO6OjH0GkPdgq5K6Ys1gfbiiHl1XwXJnmCSU3SB3LXrQ+5cDFlPjyb8780VPY8GI7jKNaOxpOj8qs9lilD5oPi0fZd+pKh5vd8ZoTePcnbZHxd1WfLLRwuejRrg0qXlGuXoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D2BCgyuf; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=sPey+0nu2a6OjcR3uqWr/7tuTqmhPgsV/g2lDRxs0ouFejrcOMZU9yYZrTRBafCbn3k1+dTo6nP1WtAB1Xp8kJpDM4Z7f8NYC3ReYY0NuH1V/j/aendjAQowX4g1WkG7k2PA1y7pMTmdkWDE5NNywk83O4XWFNIOoGFyu5msXyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJZGPQ9x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D2BCgyuf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793201F000E9;
-	Mon, 17 Aug 2026 19:49:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJZGPQ9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771621F00A3A;
+	Mon, 17 Aug 2026 20:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786996196;
-	bh=QUVn+MctyVpQbBo8u7MtfcQOUCPQMjAamdUag18CzzE=;
+	s=k20260515; t=1786998270;
+	bh=PNvZCZGxcP3YNx9ABekBFQEOnTYnjTH0mqihmB2ErIg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=D2BCgyufWoXqXUnGU1sbu4/QbHON7ANMjU0jDqduoLGEScPOf9X7CspL25O/W8c5O
-	 sh1S/HN9/7ej3fkSqJ9EEgGlHyzCWqW+sjCkKNckm6BtdVSkEwaQigB8Y0zi1+eFaY
-	 fp5wYiK6CUa/eM89SgOMp13QLmFTWp9gudLOrorXnayCmPDjJQR+oFHXzUsK3YQaWT
-	 3KGclZXpcGd9XCWDsrKatHxA9Y3BOL2U/NvOVr2gkQVnij0XnOCGklWxQGOp/wX9Uh
-	 9coPDl2UC5GF6s0BBxBZakJoASou3V3jHSLDZ9ehKb+JXogA84OkPrrGFucQSQoROb
-	 oAvE1AIuN1iZw==
-Date: Mon, 17 Aug 2026 09:49:55 -1000
+	b=SJZGPQ9xDweeJkD8BVaYza2VNQgOxx2YJh87/NkWg1bbaoaBDngSjb48pnKPteqea
+	 CsVFbr3shS2zvXWNOm/H+wLvygAk/Jox9SsZRKkRGl82bMjZkYk2y5epahFKOCmpTZ
+	 /1jrwxG0YWpgfOV20CH0/88e7w+CC+lopMFSE+VX6vOzyJpIaSFkJUYuAS4BjFLal1
+	 r9bucvl7L3CGRKho1UTE4gMbMakmuS3Wmg74cAzi5ZyvHAzxwu8QRClAlXF8tznlri
+	 iYfsKyoa0sc57qo/QCyfZ0PY0VK73XS685RrcJ8qFSwcQE3glxRl5iQeKjQmXKuPFj
+	 TL/EWG+FTy3hQ==
+Date: Mon, 17 Aug 2026 10:24:29 -1000
 From: Tejun Heo <tj@kernel.org>
 To: Andrea Righi <arighi@nvidia.com>
 Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
@@ -43,15 +43,13 @@ Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
 	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
 	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/17] sched_ext: Handle proxy-exec races in remote DSQ
- transfers
-Message-ID: <aoNl4ziRiD9QxsOy@slm.duckdns.org>
+Subject: Re: [PATCH 14/17] sched_ext: Delegate proxy donor admission to BPF
+ schedulers
+Message-ID: <aoNt_Rhdwl0NCFOJ@slm.duckdns.org>
 References: <20260816173732.17162-1-arighi@nvidia.com>
- <20260816173732.17162-13-arighi@nvidia.com>
- <aoJNrhYq_MjO1bDb@slm.duckdns.org>
- <aoK1Ck67oyhysjQD@gpd4>
- <aoNCIwlkVXKNgM5l@slm.duckdns.org>
- <aoNh1gAh1e8zDRKD@gpd4>
+ <20260816173732.17162-15-arighi@nvidia.com>
+ <aoJ5q7HbSUOxlC1H@slm.duckdns.org>
+ <aoNawphy4OVGU4ex@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -60,36 +58,25 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aoNh1gAh1e8zDRKD@gpd4>
+In-Reply-To: <aoNawphy4OVGU4ex@gpd4>
 
-On Mon, Aug 17, 2026 at 09:32:38PM +0200, Andrea Righi wrote:
-> > But wouldn't it be able to use the same schedule_deferred_locked() call like
-> > SCX_DSQ_REJECT case so that the PROXY_REENQ flag is only used for retry
-> > cases (and maybe renamed accordingly)?
-> 
-> Yes. The initial insertion into reject_dsq can use schedule_deferred_locked()
-> without setting a proxy-specific flag. Then we can set the flag only when
-> scx_reenq_reject() actually skips a task because it is still running or
-> donating. How about renaming to SCX_RQ_PROXY_RETRY to refelct the new meaning?
+Hello,
 
-Sounds good to me.
+On Mon, Aug 17, 2026 at 09:02:26PM +0200, Andrea Righi wrote:
+...
+> So there are 3 cases:
+>  - task_proxy_move_active() prevents moving a donor that is currently running or
+>    donating,
+>  - task_cpu(D) != D->wake_cpu prevents moving an inactive donor whose scheduling
+>    context has already been moved to its owner's CPU by proxy exec,
+>  - an inactive donor that has not yet been proxy-migrated remains under BPF
+>    placement control.
 
-> > I think this is a generic problem with core scheduling. SCX assumes that
-> > deferred scheduilng always runs but core-sched can zap them. We probably
-> > need to address this directly using a similar but generic deferred work
-> > pending flag.
-> 
-> Agreed. This isn't specific to proxy-rejected tasks, any sched_ext deferred work
-> queued through a balance callback can be lost if core scheduling zaps the
-> callback.
-> 
-> Maybe we can introduce a new generic sched_ext deferred work pending flag, kept
-> set until the deferred work actually runs and we can use it to rearm it after
-> callback cancellation?
-> 
-> Probably something to do for another patch series...
-
-Yeap.
+I think this mostly stems from my not understanding the full picture, so
+while proxy execution is in progress - the donor's context is running the
+owner - the execution cannot leave the owner's last CPU? That *seems* to be
+the behavior assumed by the core code. It's a bit odd that the owner becomes
+essentially CPU-pinned.
 
 Thanks.
 
