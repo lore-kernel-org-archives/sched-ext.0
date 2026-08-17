@@ -1,53 +1,43 @@
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7B4433E82;
-	Mon, 17 Aug 2026 16:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDD7468C02;
+	Mon, 17 Aug 2026 17:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786982589; cv=none; b=UvQS/9oepAX8F4NAdwwprYcP9vZ2WlFg0XCYNCx8Xjbk/J8hR1TCgqKPkiSHsnezxiG/xe3t5bjRbGA5sXKgeOmiZ1ElxDvao1GCD/UnIYuuZc/h2fufycDr2roY+TQH9YFlnazJWD6JWOlUol0kvTsPgKnZ31XPrCxySyclx88=
+	t=1786986602; cv=none; b=sJjDvf7cSKoRxAvL/0XR3S8WAitiTFGLPU3UFWHLquH5uskDFPS3yQ11X5PsQP7q5cy/7KxcKV0thtcIJc76Hrprp/cxa/8WV7ld5sSeYa8l6t1ngyukGvAMFELsKv7fiSHKRZp5K/1pGMFQFntDn/l4PiUebhwPAu+laSDUYoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786982589; c=relaxed/simple;
-	bh=3aKFzH9oggt3+/pGPn+oHLbAfh18UPoKUsQKH1ojzZg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tcf7JUnqrdvqbpxTiB29okbIrZpWRPCvZvCNkz3fFhIZA4+1ZvlJiLFWK8NZ/Q4c+h83jyddkU4ztKlD6zaUO2KtoZXV2eBG5z8t627a+MRoEOG0Lb5jCKGf4eKlAcR7W5DzCzAQsOUXxH5hS3Hhr/rm0Y1O/ThpZzKvAaTw6qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=GKqYkpcx; arc=none smtp.client-ip=213.97.179.56
+	s=arc-20240116; t=1786986602; c=relaxed/simple;
+	bh=pxK5FLzofsL1EsUG8GyqXqB3OyxyPQjsHcGvnbKd5+w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S48PySJFyYhfGBTYunRTRXD5ZGmq6iMWMkLto/sDia/bIiTSqhWoYahwaVDdNFnsRXpMJ3n9NPSyI1vn92b5zp04khAzVEKIRKFX3KDe2DoCpAvW6n357Xgua2D8mz+txe6mXRZwRNknYGxRp4EQTFvWspnJz2SKgtv3kC6Y/QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=VUJ2SjZP; arc=none smtp.client-ip=213.97.179.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="GKqYkpcx"
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="VUJ2SjZP"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-	Cc:To:From:From:Reply-To; bh=ZZeH8P2ExX9NyJj55lAJONKXekD2M9PO9oUi+Q/nrD0=; b=
-	GKqYkpcx0Hq6ZwLYM9s1TjJtHXY5mMIwoWtqAUl0emqL/IiwzcS8lMaJlkNRl0mOiCwCcg3YHwWrJ
-	+hRgCORCr51bnkSYucTAzm01tkmJQC848uiUmGlNEax1ghb3QU5Qvge7V4RxjW0EPpweOn8kXVRIR
-	ZwkA3ad5TQNPzBXazagKjGTjh7CdFgRTJZM0xeEgXL8DH5p9JSnWlzA3sTFn/1NKYfHzNUGZmJGJn
-	e+fis/6QXlJFG+4EJhAywadTgl7j6UXktk1C+rMadw33RT2yuoOaiklzAHDi8omzzXYS5HaIYyrTs
-	ms2/eXOvEuM1Nk0X6Fk/khWTZrqlDhmP3w==;
+	Cc:To:From:From:Reply-To; bh=0ou//kEwQ6SaKepK4qgGqGKvr1r5rIF+tCIrIx+4Gfw=; b=
+	VUJ2SjZPxwy+s16D+C+ahIEe9ioZEPjZJ+Ax3Ro9cSkIvmgP6g0kMkC078fLr2BHUbtGauafZHcbU
+	f1V4gtIzPeZps66DJ1AyHcVa839u2N1eYudfBHULbSZINuy0cSXmd3H4evE3C7cCU98hf08Iz0QBw
+	EIh0UyrQNfaDe3gF+3DWrwsMkzmCCThC1jwOOA6TG0Or/tH1i/7GuP60cJcoR1cnjCRFEIlxVaskr
+	v1cFb9FKdAmKz46a8+oU1KpxITa+6WCTV6aTdbY+LQXybeLSvzw7KsmpsjSsRWENMbIGdfWo3XRqD
+	aX+NEnAdBL/XYGlYN3QYfa2rCm0bpye83g==;
 Received: from [58.29.145.179] (helo=localhost)
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wvznc-004jDG-TO; Mon, 17 Aug 2026 18:02:57 +0200
+	id 1ww0qL-004pOg-Mk; Mon, 17 Aug 2026 19:09:50 +0200
 From: Changwoo Min <changwoo@igalia.com>
-To: Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	bpf@vger.kernel.org,
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: kernel-dev@igalia.com,
 	sched-ext@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	changwoo@igalia.com,
-	kernel-dev@igalia.com
-Subject: [PATCH v2] selftests/bpf: Remove duplicate copies of the arena spinlock qnodes
-Date: Tue, 18 Aug 2026 01:02:49 +0900
-Message-ID: <20260817160249.655916-1-changwoo@igalia.com>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] sched_ext: allow ops.cgroup_set_bandwidth() to be sleepable
+Date: Tue, 18 Aug 2026 02:09:41 +0900
+Message-ID: <20260817170941.668571-1-changwoo@igalia.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -57,91 +47,86 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-bpf_arena_spin_lock.h defines its 64KB qnodes array in the header, so
-every translation unit including it emits a copy. __weak makes them all
-resolve to one instance, but bpftool gen object merges only the symbols
-and concatenates each input's .addr_space.1 bytes, leaving the surplus
-copies unreferenced in the linked object.
+ops.cgroup_set_bandwidth() is delivered from scx_group_set_bandwidth(),
+which runs from the cpu.max cgroup interface write path (tg_set_bandwidth())
+in process context. tg_set_cfs_bandwidth() has already returned by then, so
+its cpus_read_lock and cfs_constraints_mutex are released, and the only lock
+held is percpu_down_read(&scx_cgroup_ops_rwsem), whose read side may sleep.
+The call site is therefore sleepable, like ops.cgroup_init().
 
-libarena links ten such units, so nine copies were dead weight (bytes):
+bpf_scx_check_member() rejects a sleepable program on any member not on its
+allow-list, so a BPF scheduler cannot allocate -- which is sleepable -- when
+a cgroup gains a cpu.max limit at runtime; it must instead pre-reserve memory
+for a callback that cannot allocate. Add cgroup_set_bandwidth() to the
+allow-list so the callback can allocate on demand, and document that it may
+block.
 
-  object                             before       after
-  -----------------------------------------------------
-  .addr_space.1 in libarena.bpf.o    676200       86376
-  libarena.skel.h                   2100123      892371
-  libarena_asan.skel.h              2641124     1466477
-
-Declare qnodes in the header and let each program define it once:
-libarena in src/common.bpf.c, and the arena_spin_lock test beside the
-lock it guards.
-
-Tested with test_progs -t arena_spin_lock and -t libarena.
+A scheduler must decide at load time whether to mark the callback sleepable,
+but the allow-list entry is a verifier property with no symbol to probe. Add
+scx_cgroup_set_bandwidth_may_sleep() as a marker whose presence in the
+kernel's BTF lets userspace detect this support; it has no callers and does
+nothing.
 
 Signed-off-by: Changwoo Min <changwoo@igalia.com>
-Reviewed-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 ---
-Change in v2:
-- Rebased the patch to HEAD of the bpf-next tree.
----
- .../selftests/bpf/libarena/include/bpf_arena_spin_lock.h   | 7 +------
- tools/testing/selftests/bpf/libarena/src/common.bpf.c      | 7 +++++++
- tools/testing/selftests/bpf/progs/arena_spin_lock.c        | 7 +++++++
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ kernel/sched/ext/ext.c      | 10 ++++++++++
+ kernel/sched/ext/ext.h      |  1 +
+ kernel/sched/ext/internal.h |  2 +-
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h b/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
-index ae6b72d15bb6..71d9db610263 100644
---- a/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
-+++ b/tools/testing/selftests/bpf/libarena/include/bpf_arena_spin_lock.h
-@@ -103,12 +103,7 @@ struct arena_qnode {
- #define _Q_LOCKED_VAL		(1U << _Q_LOCKED_OFFSET)
- #define _Q_PENDING_VAL		(1U << _Q_PENDING_OFFSET)
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 10af28a9f2c0..e25a2e9f4eca 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4960,6 +4960,15 @@ void scx_group_set_bandwidth(struct task_group *tg,
  
--/*
-- * The qnodes are marked __weak so we can define them in the header
-- * while still ensuring all compilation units use the same struct
-- * instance.
-- */
--struct arena_qnode __weak __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
-+extern struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
- 
- static inline u32 encode_tail(int cpu, int idx)
- {
-diff --git a/tools/testing/selftests/bpf/libarena/src/common.bpf.c b/tools/testing/selftests/bpf/libarena/src/common.bpf.c
-index 569f0f64d518..41b1de3452fe 100644
---- a/tools/testing/selftests/bpf/libarena/src/common.bpf.c
-+++ b/tools/testing/selftests/bpf/libarena/src/common.bpf.c
-@@ -7,6 +7,13 @@
- struct buddy __arena buddy;
- volatile u32 zero = 0;
- 
-+/*
-+ * Storage for the queue nodes declared by bpf_arena_spin_lock.h. Each program
-+ * linking the arena spinlock provides exactly one definition, so that the array
-+ * is emitted once rather than once per translation unit.
-+ */
-+struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
-+
- int arena_fls(__u64 word)
- {
- 	if (!word)
-diff --git a/tools/testing/selftests/bpf/progs/arena_spin_lock.c b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-index cf7cda79c16c..92e75ec3844c 100644
---- a/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-+++ b/tools/testing/selftests/bpf/progs/arena_spin_lock.c
-@@ -23,6 +23,13 @@ int cs_count;
- #if defined(ENABLE_ATOMICS_TESTS) && defined(__BPF_FEATURE_ADDR_SPACE_CAST)
- arena_spinlock_t __arena lock;
- int test_skip = 1;
+ 	percpu_up_read(&scx_cgroup_ops_rwsem);
+ }
 +
 +/*
-+ * Storage for the queue nodes declared by bpf_arena_spin_lock.h. Each program
-+ * linking the arena spinlock provides exactly one definition; libarena's lives
-+ * in libarena/src/common.bpf.c.
++ * Capability marker for userspace. The sleepable allowance for
++ * ops.cgroup_set_bandwidth() (see bpf_scx_check_member()) is a verifier
++ * property with no other symbol a scheduler can probe, so this no-op function
++ * exists solely so its presence in the kernel's BTF can be detected. It has no
++ * callers; __used keeps it from being optimized away.
 + */
-+struct arena_qnode __arena __hidden qnodes[_Q_MAX_CPUS][_Q_MAX_NODES];
- #else
- int test_skip = 2;
++__used void scx_cgroup_set_bandwidth_may_sleep(void) {}
+ #endif	/* CONFIG_EXT_GROUP_SCHED */
+ 
+ #if defined(CONFIG_EXT_GROUP_SCHED) || defined(CONFIG_EXT_SUB_SCHED)
+@@ -8079,6 +8088,7 @@ static int bpf_scx_check_member(const struct btf_type *t,
+ 	case offsetof(struct sched_ext_ops, cgroup_init):
+ 	case offsetof(struct sched_ext_ops, cgroup_exit):
+ 	case offsetof(struct sched_ext_ops, cgroup_prep_move):
++	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
  #endif
+ 	case offsetof(struct sched_ext_ops, cpu_online):
+ 	case offsetof(struct sched_ext_ops, cpu_offline):
+diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
+index 0b7fc46aee08..e6fcfadc25aa 100644
+--- a/kernel/sched/ext/ext.h
++++ b/kernel/sched/ext/ext.h
+@@ -81,6 +81,7 @@ void scx_cgroup_cancel_attach(struct cgroup_taskset *tset);
+ void scx_group_set_weight(struct task_group *tg, unsigned long cgrp_weight);
+ void scx_group_set_idle(struct task_group *tg, bool idle);
+ void scx_group_set_bandwidth(struct task_group *tg, u64 period_us, u64 quota_us, u64 burst_us);
++void scx_cgroup_set_bandwidth_may_sleep(void);
+ #else	/* CONFIG_EXT_GROUP_SCHED */
+ static inline void scx_tg_init(struct task_group *tg) {}
+ static inline int scx_tg_online(struct task_group *tg) { return 0; }
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 27bbf5e04d90..e2d553d13c49 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -753,7 +753,7 @@ struct sched_ext_ops {
+ 	 * @burst_us: bandwidth control burst
+ 	 *
+ 	 * Update @cgrp's bandwidth control parameters. This is from the cpu.max
+-	 * cgroup interface.
++	 * cgroup interface. This operation may block.
+ 	 *
+ 	 * @quota_us / @period_us determines the CPU bandwidth @cgrp is entitled
+ 	 * to. For example, if @period_us is 1_000_000 and @quota_us is
 -- 
 2.55.0
 
