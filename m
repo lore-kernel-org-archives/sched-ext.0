@@ -1,84 +1,82 @@
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B768A194A6C;
-	Tue, 18 Aug 2026 14:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3B21A9F97;
+	Tue, 18 Aug 2026 15:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787062581; cv=none; b=Kofxo0Vmuxxd3dpMgF8XSPMDFWmLrrHoCk8w07uW3S97aT7nhYTo/YtZ0mEWQsuxqKQ6bpBKKcjoqvI79UrJEwq0CoSeipoWKE8F2ma/PrgifuLSaAxRFI/SBZw8ca+evj3qaVdrovA8SYfroedgbd9TCbvAjUH+3+hc0AHw8MI=
+	t=1787067297; cv=none; b=SO9QnE7yY6mV1/HerL/9pGAfZT8aPbkjFbkseOpMywzP594Esi/9uB1kmxFfII4wqS4AYKVtfGGqcs+stZ0eDhFMYU6VZo4mLHamDspOdpwSLcQW3qoMkyv7IZuqktXOJ0ulNyyMwziK4GMsdo0WP5MnGP+2nNxL8Fb0LkD9Clo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787062581; c=relaxed/simple;
-	bh=8u0oCn+NiSuV+rYi0lA1lQCTq5qZsCZdVncaYbEYCbc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KSTKoUlHraldHzymv7iSkunynUbGiSv+2eAA9BjNMfUts7Y0yuPvit1NNf6gIEKFo3Eb3b+0zNTfQX1XR2tuhEJd2imTgyL4ECo0veqyrVwQtIknUecup1Y/VuJOMPZVZeJwz3QypLXXS2PJEBGqFAUTV5GAz1kzwiq2yMz7138=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Jh5WO0a8; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1787067297; c=relaxed/simple;
+	bh=JpAaPOY70HIcSi3nKGHxEDnVDNYXyksYjrD53OZASAY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OR0Z2ogho12Vq4wF/18iv2i+Le0pkbCVyWXiNPOFZ8XR9kFKDUWcgx1NYCao7EcZJe4qF1fpDlI7FXcOqnFDb2O2NY7HGcg0id+PGQS5TKKTy7sRMBpSwcMxNfK9FO0mayzi5P9+WjERfm1B2slmCJkxkPcOU/IUlHzVFgWxSHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MRDOH9kS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Jh5WO0a8"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
-	MIME-Version:Date:Message-ID:From:Reply-To;
-	bh=7tAq3rCowBXZ9SwgwYlVliEHJMSYCq4wJjeOTJnXxmM=; b=Jh5WO0a8ykWP8fdS8llEUufyVP
-	p9AYgbp4feKpsazNsOHTyepHsW3yfRFVo9mzJ0pPm+Ph6jH4PPwWBiEtFrCyYdlWKp1owKn5A8RYG
-	iZgEjoH/86srUXfNAoccgpa+y5mq3djHiyzXNwmitEc23EcCXsAray1wXWUWPYeLEaQ73SqqvDMon
-	apd/cIbRA7MQ2uD6iUHymILwbCHXRb8O7Q8Zs+kVcEGpEH7K21AjuVdrbZn213nJjAjiyAeS7d07+
-	5YqTah8cbKCUHVRUsIILZELqUrryjQPN8QxsprI/JBNnNPczkmNnU9HKqTSuF8Lsyu1rcP30xBovK
-	NYXjYm2g==;
-Received: from [58.29.145.179] (helo=[192.168.8.203])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1wwKbm-005eOT-41; Tue, 18 Aug 2026 16:16:06 +0200
-Message-ID: <2f65d156-07ad-40aa-9ae1-2e14f836cf69@igalia.com>
-Date: Tue, 18 Aug 2026 23:15:59 +0900
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MRDOH9kS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84F01F000E9;
+	Tue, 18 Aug 2026 15:34:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787067295;
+	bh=wQT+N69ZymfY7ZN2tdlfFkx7UUxCxJ9id+UmuF60iuI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=MRDOH9kSzQ/U6Uu6GIbkphfibKvvhLTLxEGEYM6zOy6l0+8qyd5quejxPvqG+eXmr
+	 2qzI+AkRYCxhxijzuYGTGri4rH2bV1syJTke4CMLVr3Q0gRNYpwDoMsFHR5tbvZHPV
+	 MaVyOiFpEJhNVp9MV5L9afSyu5steEiIuHQ7pRGIhCXcwqmjvThHlMf2HToErjLPR/
+	 mfnFGdv1XIta5vfGzSTCp+twXyrF5chaLALXeH2jS10Xf6J9Vai5jkf/xj06tJ1hdG
+	 yYGfH56owmsfz0Vmkgd+8LhAnpm0gHGAFoQ7LLUpKOA6ZOwkk9cUFuVFTYsbYEEmLf
+	 glQ2D7SKO5E0Q==
+Date: Tue, 18 Aug 2026 05:34:54 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Tao Cui <cui.tao@linux.dev>
+Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+	suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: Re: [PATCH RFC] sched_ext: warn when cpu.max is set but the BPF
+ scheduler doesn't implement bandwidth control
+Message-ID: <aoR7ngyE44epfzXO@slm.duckdns.org>
+References: <20260818135328.174152-1-cui.tao@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] sched_ext: allow ops.cgroup_set_bandwidth() to be
- sleepable
-To: Tejun Heo <tj@kernel.org>
-Cc: void@manifault.com, arighi@nvidia.com, emil@etsalapatis.com,
- kernel-dev@igalia.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20260817170941.668571-1-changwoo@igalia.com>
- <9ffe41fba1d0462a27443e95c5e3e03b@kernel.org>
-From: Changwoo Min <changwoo@igalia.com>
-Content-Language: en-US, ko-KR, en-US-large, ko
-In-Reply-To: <9ffe41fba1d0462a27443e95c5e3e03b@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260818135328.174152-1-cui.tao@linux.dev>
 
 Hello,
 
-On 8/18/26 2:53 AM, Tejun Heo wrote:
-> Hello,
+On Tue, Aug 18, 2026 at 09:53:28PM +0800, Tao Cui wrote:
+> From: Tao Cui <cuitao@kylinos.cn>
 > 
-> On Tue, Aug 18, 2026 at 02:09:41AM +0900, Changwoo Min wrote:
->> +/*
->> + * Capability marker for userspace. The sleepable allowance for
->> + * ops.cgroup_set_bandwidth() (see bpf_scx_check_member()) is a verifier
->> + * property with no other symbol a scheduler can probe, so this no-op function
->> + * exists solely so its presence in the kernel's BTF can be detected. It has no
->> + * callers; __used keeps it from being optimized away.
->> + */
->> +__used void scx_cgroup_set_bandwidth_may_sleep(void) {}
+> The kernel stores cpu.max bandwidth parameters in the task_group and
+> passes them to the BPF scheduler via ops.cgroup_set_bandwidth() and
+> scx_cgroup_init_args, but does not enforce the quota itself. If the
+> loaded BPF scheduler doesn't implement the callback, cpu.max is
+> silently ignored -- the cgroup gets unlimited CPU regardless of the
+> configured quota.
 > 
-> __used only prevents the compiler from dropping the function. With
-> CONFIG_LD_DEAD_CODE_DATA_ELIMINATION, the linker can still garbage
-> collect its section, so please add __retain too (cf. __bpf_kfunc).
+> Of the example schedulers, only scx_qmap implements the callback --
+> and only to bpf_printk() the parameters, so no in-tree scheduler
+> actually enforces the quota. Measured with scx_simple: a
+> cgroup with cpu.max = "50000 100000" (50% of one CPU) and one
+> busy task used 9946ms of CPU in 10 seconds with nr_throttled
+> remaining 0.
 > 
-> Also, we'll likely accumulate more of these markers over time, so let's
-> give them a shared prefix - scx_compat_marker_ or something like that -
-> and collect them in one place, maybe towards the end of ext.c next to
-> the module init code.
+> Print a one-time warning when a finite quota is configured on a
+> cgroup while the active scheduler lacks the callback, so users and
+> container orchestrators know the quota is not enforced.
 
-Thanks for the comments. I will address these two and send v2 shortly.
-Regarding the sashiko review, I think that needs to be addressed
-separately.
+We had something similar with cpu.weight and it created more annoaynces than
+helping anything. cgroup bw control isn't the only thing the BPF scheduler
+may skip to implement. It can also choose to ignore e.g. nice levels
+completely too and there's no way to detect things like that. Documentation
+is probably the right way to handle this.
 
-Regards,
-Changwoo Min
+Thanks.
+
+-- 
+tejun
