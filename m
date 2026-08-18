@@ -1,82 +1,159 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3B21A9F97;
-	Tue, 18 Aug 2026 15:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206A3429033;
+	Tue, 18 Aug 2026 16:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787067297; cv=none; b=SO9QnE7yY6mV1/HerL/9pGAfZT8aPbkjFbkseOpMywzP594Esi/9uB1kmxFfII4wqS4AYKVtfGGqcs+stZ0eDhFMYU6VZo4mLHamDspOdpwSLcQW3qoMkyv7IZuqktXOJ0ulNyyMwziK4GMsdo0WP5MnGP+2nNxL8Fb0LkD9Clo=
+	t=1787069089; cv=none; b=erCYzc+PxB2DOBQhoS6jRMX5+LHquiU9h4OemY2Lnu3uZzOgd7XxvFX7yw2YL/IZxNR2sZf9mesQzdSdYIpIkkxUlutqUTEOOh5WnrlBM2BiKfIVxMILyPc8dMoAfizZe2L8Nfs1iAVFr5J75MA4wIB0xnTnZlIgqWn2ocsdM0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787067297; c=relaxed/simple;
-	bh=JpAaPOY70HIcSi3nKGHxEDnVDNYXyksYjrD53OZASAY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OR0Z2ogho12Vq4wF/18iv2i+Le0pkbCVyWXiNPOFZ8XR9kFKDUWcgx1NYCao7EcZJe4qF1fpDlI7FXcOqnFDb2O2NY7HGcg0id+PGQS5TKKTy7sRMBpSwcMxNfK9FO0mayzi5P9+WjERfm1B2slmCJkxkPcOU/IUlHzVFgWxSHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MRDOH9kS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787069089; c=relaxed/simple;
+	bh=9Rb4U7oqr2k1em1EGiJEyii4jDzpCvm8OV7ZTsUZU5g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HnD9csgiXMXArRZlYjgzipFVo7ahwmABaVwijY30oth2AM3bGAUEJXURFBaqCtBYjUWZxoQngzrGJDQ2Jqv6vLnpgVQ1jLWQa3CC3jZcYXvbKbcYAwJvvZyYo2jvIuCWk2DMH7hm/ohrMtbSmr1K7Pw4BvS9j9e/aZr4duTvolA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Z9zBZais; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MRDOH9kS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84F01F000E9;
-	Tue, 18 Aug 2026 15:34:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787067295;
-	bh=wQT+N69ZymfY7ZN2tdlfFkx7UUxCxJ9id+UmuF60iuI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=MRDOH9kSzQ/U6Uu6GIbkphfibKvvhLTLxEGEYM6zOy6l0+8qyd5quejxPvqG+eXmr
-	 2qzI+AkRYCxhxijzuYGTGri4rH2bV1syJTke4CMLVr3Q0gRNYpwDoMsFHR5tbvZHPV
-	 MaVyOiFpEJhNVp9MV5L9afSyu5steEiIuHQ7pRGIhCXcwqmjvThHlMf2HToErjLPR/
-	 mfnFGdv1XIta5vfGzSTCp+twXyrF5chaLALXeH2jS10Xf6J9Vai5jkf/xj06tJ1hdG
-	 yYGfH56owmsfz0Vmkgd+8LhAnpm0gHGAFoQ7LLUpKOA6ZOwkk9cUFuVFTYsbYEEmLf
-	 glQ2D7SKO5E0Q==
-Date: Tue, 18 Aug 2026 05:34:54 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Tao Cui <cui.tao@linux.dev>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
-	suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
-	Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH RFC] sched_ext: warn when cpu.max is set but the BPF
- scheduler doesn't implement bandwidth control
-Message-ID: <aoR7ngyE44epfzXO@slm.duckdns.org>
-References: <20260818135328.174152-1-cui.tao@linux.dev>
+	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="Z9zBZais"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:From:Reply-To; bh=QJWe2PryGb/+mAp12hGd6NgaJEPJJsvfVGiAbEYPFsA=; b=
+	Z9zBZaiski4Y3Rie8p0XhFiswllo7GyePL5YgvjaH0bTUrDr++WOk2vbEww/jOO+hJ35k1spdxXQv
+	xiTI/u6QHNv/zeg2WxMXCROx8Fb8omBSEQn7GxnsZ5fKJlKXFWbkdV1izdUpAJpuJ7a+3Jk7sL0E3
+	YPRjtPomIjPLBGODYQX88mlOBR+dpDjzNW92v+1vtX5hC3T1iHeH0FU6x6IPM4DhB6kvpBoV4N+rb
+	85pja5VDVFRbdd16oi3hIfE6Z4MU0J4fT6BYK8y/xGyoCZpGKZTWTryvAFUZETj6zNiN4Hy3q6aVP
+	CYQuTsch+gEtO2a/7KAyqMEQdZA2Aak/KA==;
+Received: from [58.29.145.179] (helo=localhost)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wwMIm-005hJ4-F9; Tue, 18 Aug 2026 18:04:37 +0200
+From: Changwoo Min <changwoo@igalia.com>
+To: tj@kernel.org,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Cc: kernel-dev@igalia.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] sched_ext: allow ops.cgroup_set_bandwidth() to be sleepable
+Date: Wed, 19 Aug 2026 01:04:29 +0900
+Message-ID: <20260818160429.932265-1-changwoo@igalia.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260818135328.174152-1-cui.tao@linux.dev>
+Content-Transfer-Encoding: 8bit
 
-Hello,
+ops.cgroup_set_bandwidth() is delivered from scx_group_set_bandwidth(),
+which runs from the cpu.max cgroup interface write path (tg_set_bandwidth())
+in process context. scx_group_set_bandwidth() holds
+percpu_down_read(&scx_cgroup_ops_rwsem), whose read side may sleep.
+The call site is therefore sleepable, like ops.cgroup_init().
 
-On Tue, Aug 18, 2026 at 09:53:28PM +0800, Tao Cui wrote:
-> From: Tao Cui <cuitao@kylinos.cn>
-> 
-> The kernel stores cpu.max bandwidth parameters in the task_group and
-> passes them to the BPF scheduler via ops.cgroup_set_bandwidth() and
-> scx_cgroup_init_args, but does not enforce the quota itself. If the
-> loaded BPF scheduler doesn't implement the callback, cpu.max is
-> silently ignored -- the cgroup gets unlimited CPU regardless of the
-> configured quota.
-> 
-> Of the example schedulers, only scx_qmap implements the callback --
-> and only to bpf_printk() the parameters, so no in-tree scheduler
-> actually enforces the quota. Measured with scx_simple: a
-> cgroup with cpu.max = "50000 100000" (50% of one CPU) and one
-> busy task used 9946ms of CPU in 10 seconds with nr_throttled
-> remaining 0.
-> 
-> Print a one-time warning when a finite quota is configured on a
-> cgroup while the active scheduler lacks the callback, so users and
-> container orchestrators know the quota is not enforced.
+bpf_scx_check_member() rejects a sleepable program on any member not on its
+allow-list, so a BPF scheduler cannot allocate -- which is sleepable -- when
+a cgroup gains a cpu.max limit at runtime; it must instead pre-reserve memory
+for a callback that cannot allocate. Add cgroup_set_bandwidth() to the
+allow-list so the callback can allocate on demand, and document that it may
+block.
 
-We had something similar with cpu.weight and it created more annoaynces than
-helping anything. cgroup bw control isn't the only thing the BPF scheduler
-may skip to implement. It can also choose to ignore e.g. nice levels
-completely too and there's no way to detect things like that. Documentation
-is probably the right way to handle this.
+A scheduler must decide at load time whether to mark the callback sleepable,
+but the allow-list entry is a verifier property with no symbol to probe. Add
+a compatibility marker whose presence in the kernel's BTF lets userspace detect
+this support: DEFINE_SCX_COMPAT_MARKER() emits an empty, callerless function,
+here scx_compat_marker_cgroup_set_bandwidth_may_sleep(). It is __used
+__retain so neither the compiler nor the linker (under
+CONFIG_LD_DEAD_CODE_DATA_ELIMINATION) drops it. The markers share the
+scx_compat_marker_ prefix and are collected near the end of ext.c so more
+can be added as further capabilities appear.
 
-Thanks.
+Signed-off-by: Changwoo Min <changwoo@igalia.com>
+---
+Change in v2:
+- Mark the capability marker __retain in addition to __used so the linker
+  does not garbage-collect it under CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
+  (cf. __bpf_kfunc).
+- Give the markers a shared scx_compat_marker_ prefix via a new
+  DEFINE_SCX_COMPAT_MARKER() helper, collected near the module init code at
+  the end of ext.c so future markers live in one place.
+---
+ kernel/sched/ext/ext.c      | 14 ++++++++++++++
+ kernel/sched/ext/internal.h | 23 ++++++++++++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletion(-)
 
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 10af28a9f2c0..b646711a45fe 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -8079,6 +8079,7 @@ static int bpf_scx_check_member(const struct btf_type *t,
+ 	case offsetof(struct sched_ext_ops, cgroup_init):
+ 	case offsetof(struct sched_ext_ops, cgroup_exit):
+ 	case offsetof(struct sched_ext_ops, cgroup_prep_move):
++	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
+ #endif
+ 	case offsetof(struct sched_ext_ops, cpu_online):
+ 	case offsetof(struct sched_ext_ops, cpu_offline):
+@@ -11041,3 +11042,16 @@ static int __init scx_init(void)
+ 	return 0;
+ }
+ __initcall(scx_init);
++
++/*
++ * Compatibility markers for userspace. Existence of a marker function
++ * represents that the kernel supports that sched-ext feature.
++ */
++
++/*
++ * scx_compat_marker_cgroup_set_bandwidth_may_sleep: advertises that
++ * ops.cgroup_set_bandwidth() may be implemented as a sleepable callback.
++ */
++#ifdef CONFIG_EXT_GROUP_SCHED
++DEFINE_SCX_COMPAT_MARKER(cgroup_set_bandwidth_may_sleep);
++#endif	/* CONFIG_EXT_GROUP_SCHED */
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 27bbf5e04d90..53e136a47924 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -753,7 +753,7 @@ struct sched_ext_ops {
+ 	 * @burst_us: bandwidth control burst
+ 	 *
+ 	 * Update @cgrp's bandwidth control parameters. This is from the cpu.max
+-	 * cgroup interface.
++	 * cgroup interface. This operation may block.
+ 	 *
+ 	 * @quota_us / @period_us determines the CPU bandwidth @cgrp is entitled
+ 	 * to. For example, if @period_us is 1_000_000 and @quota_us is
+@@ -2001,6 +2001,27 @@ struct scx_bstr_buf {
+ 	char			line[SCX_EXIT_MSG_LEN];
+ };
+ 
++/* Internal helper for DEFINE_SCX_COMPAT_MARKER(). */
++#define DECLARE_SCX_COMPAT_MARKER(func)						\
++	extern void scx_compat_marker_##func(void)
++
++/**
++ * DEFINE_SCX_COMPAT_MARKER() - define a userspace capability marker
++ * @func: marker suffix; the defined symbol is scx_compat_marker_@func
++ *
++ * Emit an empty, callerless function that is retained in the kernel's BTF.
++ * Its presence is part of the kernel<->userspace contract: userspace probes
++ * scx_compat_marker_@func (e.g. via BTF) to detect that this kernel supports
++ * the corresponding feature.
++ *
++ * The leading declaration suppresses the missing-prototype warning; the
++ * trailing declaration consumes the semicolon at the use site.
++ */
++#define DEFINE_SCX_COMPAT_MARKER(func)						\
++	DECLARE_SCX_COMPAT_MARKER(func);					\
++	__used __retain void scx_compat_marker_##func(void) {}			\
++	DECLARE_SCX_COMPAT_MARKER(func)
++
+ extern struct scx_sched __rcu *scx_root;
+ DECLARE_PER_CPU(struct rq *, scx_locked_rq_state);
+ 
 -- 
-tejun
+2.55.0
+
