@@ -1,59 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD72947DD78;
-	Tue, 18 Aug 2026 18:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D6031327A;
+	Tue, 18 Aug 2026 20:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787078539; cv=none; b=ByXetHqQEgQ9pPyZITjYr/wu0hNoDu4+pbhxfzhOK2O3fu1AXFX5LvfWMesx5o8xNRNXiNZNk8H1+fN3S2Ry7PH4VcL5ugycSOvnDxppZX7U6E6boY35PHR90VrNwrFUgRH7Gt5r3r8N2UMiEIcMsgqZVgvUhRw4We5KlDq0Tu8=
+	t=1787086635; cv=none; b=CaBYLyE9VaKlYyE0ktoqj5N8NTYr2kSMCFz+hnURzjQqEb1Tt4gh+lrHqH80re7a5bQLUPVKFG9iqMIE6GjJD1wWeIAjNI8cMmeTD3ma4UGXUZD40NU0IaKrE7ieKB9OSDeOoxCFsYZ5kgO/2hbNi9krFq7nsFMxPvuy8jmznJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787078539; c=relaxed/simple;
-	bh=/Kw+r8/b7OHTh6jKMgHll+Ju6/nlABuGk3bbFaqaiDU=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=LygBMMYAmngSGdQbPnZH1Pc+mIGhrFU8z5BhtJpJ7ceM/uVu1qqs7tyjHxd3v8rsjdpHdo2KDtczcjUIYFU5Avftuh4Jssud3lRTW5L2nHTvzyFYTBV16xf8EJLs+JkvKe5Wsdz9sv6/hTAWNRaMXuiN/12H4F/dUkIaHXKKAoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TOzRDRy+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787086635; c=relaxed/simple;
+	bh=1uU6zeWTfTlObZmfvY3DqD8hFHn1jrdON9H1lvDSI84=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=duZpx7n1Q/VHAMuVbXHLWQmA6Y40XYEwAK9MAYGTR+m7+9vm5QDx3m5VJ0Xn11a00VTV6HxdKMzEL0FBdp2lpV8FKR5+4A6CHL665OGaetGqslPO/9Y90iVOljUXjEuHu1BoGMRwh0fLeCI27fyKaS8QxTc1VHTLkHXUOyUs1bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UbUp7UKX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TOzRDRy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446E91F000E9;
-	Tue, 18 Aug 2026 18:42:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UbUp7UKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED0B1F000E9;
+	Tue, 18 Aug 2026 20:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787078538;
-	bh=/Kw+r8/b7OHTh6jKMgHll+Ju6/nlABuGk3bbFaqaiDU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=TOzRDRy+bpqf3WyZUjiTdjbc0uxDyR/KwfHX3anYuN1Vurp2Bjd2wRxzQTyymNwyv
-	 1d/gAIIkZnwTDBPj+Gxt/0kzSKHq3NAxaDvCWYyBVNsBAl+pFSUEptQcUjAcfaPRqa
-	 r35ZbLDSXXTSpwkjc/RL6jLnvbD8envnpP0QSfRF2BPbwgxJqIMbRFOfGLZcXPECXQ
-	 ZTA9pYSehUo8mHvL3GPcwfllM3orkZjOqTZHKxHATlCPXt1css9uw1vM14IecKtzmz
-	 LcxXRZNB5Qrbi0q83JWUNlJ+tDu5+G2d4uOrjZ1IhzQLxKEfSzm+a+JMXu4xzP2WMg
-	 HSsvZloMqjGGw==
-Date: Tue, 18 Aug 2026 08:42:17 -1000
-Message-ID: <70c140870178b9bbf37456ed58959aa6@kernel.org>
+	s=k20260515; t=1787086632;
+	bh=XePrQl5qmxxfBCLNdb0DVsqduySlzHmie3Fd2GCMkeA=;
+	h=From:To:Cc:Subject:Date;
+	b=UbUp7UKX8VfJ1FmKz0BnGEM+fmbleYU6a9AX2ledIPKiHQpIf7087W9sHOHdyAzyu
+	 S9vzDFAauM9AjEEz5McBDvVu5dwBL2UWvKLoCfFthjKHGlyv3AUJnd+AN5ShfyTKma
+	 +zvv6YlSqh4ij4YekRt8K9C7SVHvqXeTzoBaeRvXSp8OwThTfi0Rs9BI81ljYYZobI
+	 7NpgoZhNIe6nvSnv0WqpZJ8BTOwOWGSzGMKVtg4UcNdwJFOPcoyQnx/YJPTB5BzGKJ
+	 RdBI7HhEJEXaDCuKf4CwxD3w4d+5ZU1gaHYvy6yC4Wh8IIUEvci50QNtevrtm4GYr5
+	 m3nUTYRSMYCRg==
 From: Tejun Heo <tj@kernel.org>
-To: Changwoo Min <changwoo@igalia.com>
-Cc: void@manifault.com, arighi@nvidia.com, emil@etsalapatis.com,
-	kernel-dev@igalia.com, sched-ext@lists.linux.dev,
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Gavin Guo <gavinguo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] sched_ext: allow ops.cgroup_set_bandwidth() to be
- sleepable
-In-Reply-To: <20260818160429.932265-1-changwoo@igalia.com>
-References: <20260818160429.932265-1-changwoo@igalia.com>
+Subject: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Sync tools headers from the scx repo
+Date: Tue, 18 Aug 2026 10:57:09 -1000
+Message-ID: <20260818205711.3175265-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On Wed, Aug 19, 2026 at 01:04:29AM +0900, Changwoo Min wrote:
-> ops.cgroup_set_bandwidth() is delivered from scx_group_set_bandwidth(),
-> which runs from the cpu.max cgroup interface write path (tg_set_bandwidth())
-> in process context. scx_group_set_bandwidth() holds
-> percpu_down_read(&scx_cgroup_ops_rwsem), whose read side may sleep.
-> The call site is therefore sleepable, like ops.cgroup_init().
+The scx repo carries copies of the tools/sched_ext/include/scx headers
+which accumulated fixes and improvements that the kernel copies lack. Sync
+them back:
 
-Applied to sched_ext/for-7.3-fixes with the subject capitalization fixed.
+- __COMPAT_read_enum() can now recover 64-bit scx enum values on kernels
+  whose BTF lacks BTF_KIND_ENUM64 encoding, backed by a new autogenerated
+  enumerator ABI table.
+
+- is_migration_disabled() no longer under-reports for the current task on
+  v6.18+ !PREEMPT_RCU kernels where the BPF prolog stopped disabling
+  migration.
+
+- The scx_bpf_dsq_peek() version gate and
+  scx_bpf_reenqueue_local_from_anywhere() which Gavin and Changwoo posted
+  are picked up with the review feedback folded in.
+
+- __COMPAT_scx_bpf_cpu_curr() is restored for schedulers which still run
+  on pre-v6.18 kernels, and the rq clock helpers document their stale-read
+  behavior on idle CPUs.
+
+This patchset contains the following two patches:
+
+ 0001-sched_ext-Sync-tools-autogen-enum-headers-from-the-s.patch
+ 0002-sched_ext-Sync-common-and-compat-headers-from-the-sc.patch
+
+and is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-tools-header-sync
+
+Based on sched_ext/for-7.3-fixes (5f01293930d1).
+
+ tools/sched_ext/include/scx/common.bpf.h        | 140 ++++++++++++---
+ tools/sched_ext/include/scx/compat.bpf.h        |  68 ++++++--
+ tools/sched_ext/include/scx/compat.h            |  97 +++++++++++
+ tools/sched_ext/include/scx/enum_defs.autogen.h |   5 +-
+ tools/sched_ext/include/scx/enums_abi.autogen.h | 223 ++++++++++++++++++++++++
+ 5 files changed, 501 insertions(+), 32 deletions(-)
 
 Thanks.
 
---
+-- 
 tejun
