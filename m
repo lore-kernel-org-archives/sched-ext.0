@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D6031327A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D9937F74C;
 	Tue, 18 Aug 2026 20:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787086635; cv=none; b=CaBYLyE9VaKlYyE0ktoqj5N8NTYr2kSMCFz+hnURzjQqEb1Tt4gh+lrHqH80re7a5bQLUPVKFG9iqMIE6GjJD1wWeIAjNI8cMmeTD3ma4UGXUZD40NU0IaKrE7ieKB9OSDeOoxCFsYZ5kgO/2hbNi9krFq7nsFMxPvuy8jmznJ8=
+	t=1787086635; cv=none; b=P1yUAUoxyh0/g2ZB1GeOvjf5AlaKaqbzkt+OHKNztQElBHi8grbm27bd7O3yfDWYLuB7+CxqLHDvp7DUEUn7TyZKdlwj2EdsMgVc3r0tz8qi02UeTF3tfl6ocVonMv0vFWCwWkfVuLM9iLvPKhFT1CNee7Fr2P2a0JIZCAWc1wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1787086635; c=relaxed/simple;
-	bh=1uU6zeWTfTlObZmfvY3DqD8hFHn1jrdON9H1lvDSI84=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=duZpx7n1Q/VHAMuVbXHLWQmA6Y40XYEwAK9MAYGTR+m7+9vm5QDx3m5VJ0Xn11a00VTV6HxdKMzEL0FBdp2lpV8FKR5+4A6CHL665OGaetGqslPO/9Y90iVOljUXjEuHu1BoGMRwh0fLeCI27fyKaS8QxTc1VHTLkHXUOyUs1bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UbUp7UKX; arc=none smtp.client-ip=100.103.45.18
+	bh=TU8HPsuKiIVAhfsx0tlaTUUqO1nMUc1FuUcVOx8/9oI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FnTyT1RG36LNCybm08l7RTD3H6kXu4yIkic80uzdQ6SG6mgscTt2VUQjjzQsDtDpgCiZjuoUd93F3X5TDxt57P3sY2k0cqFhAS8n+oxD0uyvXMjxOyrZ94BrXyE6UIgcEjqgt3ExiXbOappiAxVZdzrMoHuq0vqEhLrxHe4hp+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nh4vbvrb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UbUp7UKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED0B1F000E9;
-	Tue, 18 Aug 2026 20:57:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nh4vbvrb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43771F00A3A;
+	Tue, 18 Aug 2026 20:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787086632;
-	bh=XePrQl5qmxxfBCLNdb0DVsqduySlzHmie3Fd2GCMkeA=;
-	h=From:To:Cc:Subject:Date;
-	b=UbUp7UKX8VfJ1FmKz0BnGEM+fmbleYU6a9AX2ledIPKiHQpIf7087W9sHOHdyAzyu
-	 S9vzDFAauM9AjEEz5McBDvVu5dwBL2UWvKLoCfFthjKHGlyv3AUJnd+AN5ShfyTKma
-	 +zvv6YlSqh4ij4YekRt8K9C7SVHvqXeTzoBaeRvXSp8OwThTfi0Rs9BI81ljYYZobI
-	 7NpgoZhNIe6nvSnv0WqpZJ8BTOwOWGSzGMKVtg4UcNdwJFOPcoyQnx/YJPTB5BzGKJ
-	 RdBI7HhEJEXaDCuKf4CwxD3w4d+5ZU1gaHYvy6yC4Wh8IIUEvci50QNtevrtm4GYr5
-	 m3nUTYRSMYCRg==
+	s=k20260515; t=1787086633;
+	bh=FSwb2b5muxlB6eaJRaklP8pWuF+dhBmboajzJCfQF7M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=nh4vbvrbpJT0Ss4J6q8NqveNmolo+1BATz7w1KaCzP+bbL1+5zptMMghcZZPm3wV4
+	 nd/96DsbcRnsCpdITEZmZrG5xqlb9AWmRet4iWS9k1YUCP40+o/poN000ywFwBHgLC
+	 1hpuOnjSB/lRnlZEwiPZ/CSrm3TKo5/7c19giu10WwULfUfphTDROCcn0ndk+MrgTs
+	 +Xmh0U4QILxGvvyzYzxtqlcPpVawQPs2t/1hEkFWCvtB/pRR4X9DhxNbT+o4L9lExB
+	 NmDimYBw7nDMCUutIRMTS5FvNrSVXSh0nTyt83tFQ6QI3jkuB8uj/ebG0bdkDni9f/
+	 4Mo0R5HqvxXLA==
 From: Tejun Heo <tj@kernel.org>
 To: David Vernet <void@manifault.com>,
 	Andrea Righi <arighi@nvidia.com>,
@@ -32,11 +33,14 @@ To: David Vernet <void@manifault.com>,
 Cc: Gavin Guo <gavinguo@igalia.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Sync tools headers from the scx repo
-Date: Tue, 18 Aug 2026 10:57:09 -1000
-Message-ID: <20260818205711.3175265-1-tj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 1/2] sched_ext: Sync tools autogen enum headers from the scx repo
+Date: Tue, 18 Aug 2026 10:57:10 -1000
+Message-ID: <20260818205711.3175265-2-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260818205711.3175265-1-tj@kernel.org>
+References: <20260818205711.3175265-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -45,47 +49,271 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Regenerate enum_defs.autogen.h against the current tree, picking up the
+dispatch verdict enums and dropping the marker for the removed
+SCX_RQ_IN_BALANCE. Add enums_abi.autogen.h, a table of 64-bit scx enumerator
+values generated from vmlinux.h, used as the substitution source when the
+running kernel's BTF truncates 64-bit enum values to 32 bits.
 
-The scx repo carries copies of the tools/sched_ext/include/scx headers
-which accumulated fixes and improvements that the kernel copies lack. Sync
-them back:
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ .../sched_ext/include/scx/enum_defs.autogen.h |   5 +-
+ .../sched_ext/include/scx/enums_abi.autogen.h | 223 ++++++++++++++++++
+ 2 files changed, 227 insertions(+), 1 deletion(-)
+ create mode 100644 tools/sched_ext/include/scx/enums_abi.autogen.h
 
-- __COMPAT_read_enum() can now recover 64-bit scx enum values on kernels
-  whose BTF lacks BTF_KIND_ENUM64 encoding, backed by a new autogenerated
-  enumerator ABI table.
-
-- is_migration_disabled() no longer under-reports for the current task on
-  v6.18+ !PREEMPT_RCU kernels where the BPF prolog stopped disabling
-  migration.
-
-- The scx_bpf_dsq_peek() version gate and
-  scx_bpf_reenqueue_local_from_anywhere() which Gavin and Changwoo posted
-  are picked up with the review feedback folded in.
-
-- __COMPAT_scx_bpf_cpu_curr() is restored for schedulers which still run
-  on pre-v6.18 kernels, and the rq clock helpers document their stale-read
-  behavior on idle CPUs.
-
-This patchset contains the following two patches:
-
- 0001-sched_ext-Sync-tools-autogen-enum-headers-from-the-s.patch
- 0002-sched_ext-Sync-common-and-compat-headers-from-the-sc.patch
-
-and is also available in the following git branch:
-
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git scx-tools-header-sync
-
-Based on sched_ext/for-7.3-fixes (5f01293930d1).
-
- tools/sched_ext/include/scx/common.bpf.h        | 140 ++++++++++++---
- tools/sched_ext/include/scx/compat.bpf.h        |  68 ++++++--
- tools/sched_ext/include/scx/compat.h            |  97 +++++++++++
- tools/sched_ext/include/scx/enum_defs.autogen.h |   5 +-
- tools/sched_ext/include/scx/enums_abi.autogen.h | 223 ++++++++++++++++++++++++
- 5 files changed, 501 insertions(+), 32 deletions(-)
-
-Thanks.
-
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index 19aa1de3e700..63b6b14b19bd 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -56,6 +56,10 @@
+ #define HAVE_SCX_DEQ_SLEEP
+ #define HAVE_SCX_DEQ_CORE_SCHED_EXEC
+ #define HAVE_SCX_DEQ_SCHED_CHANGE
++#define HAVE_SCX_DSP_NONE
++#define HAVE_SCX_DSP_LOCAL
++#define HAVE_SCX_DSP_PREV
++#define HAVE_SCX_DSP_RETRY
+ #define HAVE_SCX_DSQ_FLAG_BUILTIN
+ #define HAVE_SCX_DSQ_FLAG_LOCAL_ON
+ #define HAVE_SCX_DSQ_INVALID
+@@ -188,7 +192,6 @@
+ #define HAVE_SCX_RQ_SUB_IDLE_RENOTIFY
+ #define HAVE_SCX_RQ_ROOT_IDLE_RENOTIFY
+ #define HAVE_SCX_RQ_IN_WAKEUP
+-#define HAVE_SCX_RQ_IN_BALANCE
+ #define HAVE_SCX_RQ_IN_DISPATCH
+ #define HAVE_SCX_SCHED_PCPU_BYPASSING
+ #define HAVE_SCX_SLICE_OOB_DUR_BITS
+diff --git a/tools/sched_ext/include/scx/enums_abi.autogen.h b/tools/sched_ext/include/scx/enums_abi.autogen.h
+new file mode 100644
+index 000000000000..d53899764f5a
+--- /dev/null
++++ b/tools/sched_ext/include/scx/enums_abi.autogen.h
+@@ -0,0 +1,223 @@
++/*
++ * WARNING: This file is autogenerated from gen_enum_defs.py [1].
++ *
++ * scx enumerator values from the vmlinux.h this tree is built against.
++ * Used as the substitution source when the running kernel's BTF lacks
++ * BTF_KIND_ENUM64 encoding and 64-bit enum values are truncated.
++ *
++ * [1] https://github.com/sched-ext/scx/blob/main/scripts/gen_enum_defs.py
++ */
++
++#ifndef __ENUMS_ABI_AUTOGEN_H__
++#define __ENUMS_ABI_AUTOGEN_H__
++
++struct __scx_enum_abi_val {
++	const char *type;
++	const char *name;
++	u64 val;
++};
++
++static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
++	__attribute__((unused)) = {
++	{ "scx_arena_consts", "SCX_ARENA_MIN_ORDER", 0x3LLU },
++	{ "scx_arena_consts", "SCX_ARENA_GROW_PAGES", 0x4LLU },
++	{ "scx_cap_flags", "__SCX_CAP_ENQ_IMMED", 0x0LLU },
++	{ "scx_cap_flags", "__SCX_CAP_ENQ", 0x1LLU },
++	{ "scx_cap_flags", "__SCX_CAP_PREEMPT", 0x2LLU },
++	{ "scx_cap_flags", "__SCX_CAP_PERF", 0x3LLU },
++	{ "scx_cap_flags", "__SCX_NR_CAPS", 0x4LLU },
++	{ "scx_cap_flags", "__SCX_CAP_ALL", 0xfLLU },
++	{ "scx_cap_flags", "SCX_CAP_ENQ_IMMED", 0x1LLU },
++	{ "scx_cap_flags", "SCX_CAP_ENQ", 0x2LLU },
++	{ "scx_cap_flags", "SCX_CAP_PREEMPT", 0x4LLU },
++	{ "scx_cap_flags", "SCX_CAP_PERF", 0x8LLU },
++	{ "scx_cap_flags", "SCX_CAP_BASE", 0x1LLU },
++	{ "scx_cap_flags", "SCX_CAPS_REENQ_ON_LOSS", 0x3LLU },
++	{ "scx_cid_consts", "SCX_CID_SHARD_SIZE_DFL", 0x18LLU },
++	{ "scx_cid_consts", "SCX_CID_SHARD_MAX_CPUS", 0x200LLU },
++	{ "scx_consts", "SCX_DSP_DFL_MAX_BATCH", 0x20LLU },
++	{ "scx_consts", "SCX_DSP_MAX_LOOPS", 0x20LLU },
++	{ "scx_consts", "SCX_WATCHDOG_MAX_TIMEOUT", 0x7530LLU },
++	{ "scx_consts", "SCX_RESCUE_DFL_BW_PPT", 0x14LLU },
++	{ "scx_consts", "SCX_RESCUE_MAX_BW_PPT", 0xfaLLU },
++	{ "scx_consts", "SCX_RESCUE_DISABLE", 0xffffffffLLU },
++	{ "scx_consts", "SCX_RESCUE_DFL_QUANTUM_US", 0x1388LLU },
++	{ "scx_consts", "SCX_RESCUE_MIN_QUANTUM_US", 0x3e8LLU },
++	{ "scx_consts", "SCX_RESCUE_MAX_QUANTUM_US", 0x186a0LLU },
++	{ "scx_consts", "SCX_RESCUE_MIN_SLICE_US", 0x3e8LLU },
++	{ "scx_consts", "SCX_RESCUE_OVERLOAD_MULT", 0x10LLU },
++	{ "scx_consts", "SCX_RESCUE_MIN_OVERLOAD_MS", 0x3e8LLU },
++	{ "scx_consts", "SCX_RESCUE_MAX_OVERLOAD_MS", 0x3a98LLU },
++	{ "scx_consts", "SCX_TID_CHUNK", 0x400LLU },
++	{ "scx_consts", "SCX_EXIT_BT_LEN", 0x40LLU },
++	{ "scx_consts", "SCX_EXIT_MSG_LEN", 0x400LLU },
++	{ "scx_consts", "SCX_EXIT_DUMP_DFL_LEN", 0x8000LLU },
++	{ "scx_consts", "SCX_CPUPERF_ONE", 0x400LLU },
++	{ "scx_consts", "SCX_TASK_ITER_BATCH", 0x20LLU },
++	{ "scx_consts", "SCX_BYPASS_HOST_NTH", 0x2LLU },
++	{ "scx_consts", "SCX_BYPASS_LB_DFL_INTV_US", 0x7a120LLU },
++	{ "scx_consts", "SCX_BYPASS_LB_DONOR_PCT", 0x7dLLU },
++	{ "scx_consts", "SCX_BYPASS_LB_MIN_DELTA_DIV", 0x4LLU },
++	{ "scx_consts", "SCX_BYPASS_LB_BATCH", 0x100LLU },
++	{ "scx_consts", "SCX_REENQ_MAX_REPEAT", 0x100LLU },
++	{ "scx_consts", "SCX_SUB_MAX_DEPTH", 0x4LLU },
++	{ "scx_cpu_preempt_reason", "SCX_CPU_PREEMPT_RT", 0x0LLU },
++	{ "scx_cpu_preempt_reason", "SCX_CPU_PREEMPT_DL", 0x1LLU },
++	{ "scx_cpu_preempt_reason", "SCX_CPU_PREEMPT_STOP", 0x2LLU },
++	{ "scx_cpu_preempt_reason", "SCX_CPU_PREEMPT_UNKNOWN", 0x3LLU },
++	{ "scx_deq_flags", "SCX_DEQ_SLEEP", 0x1LLU },
++	{ "scx_deq_flags", "SCX_DEQ_CORE_SCHED_EXEC", 0x100000000LLU },
++	{ "scx_deq_flags", "SCX_DEQ_SCHED_CHANGE", 0x200000000LLU },
++	{ "scx_dsp_verdict", "SCX_DSP_NONE", 0x0LLU },
++	{ "scx_dsp_verdict", "SCX_DSP_LOCAL", 0x1LLU },
++	{ "scx_dsp_verdict", "SCX_DSP_PREV", 0x2LLU },
++	{ "scx_dsp_verdict", "SCX_DSP_RETRY", 0x3LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_FLAG_BUILTIN", 0x8000000000000000LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_FLAG_LOCAL_ON", 0x4000000000000000LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_INVALID", 0x8000000000000000LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_GLOBAL", 0x8000000000000001LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_LOCAL", 0x8000000000000002LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_BYPASS", 0x8000000000000003LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_REJECT", 0x8000000000000004LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_RESCUE", 0x8000000000000005LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_LOCAL_ON", 0xc000000000000000LLU },
++	{ "scx_dsq_id_flags", "SCX_DSQ_LOCAL_CPU_MASK", 0xffffffffLLU },
++	{ "scx_dsq_iter_flags", "SCX_DSQ_ITER_REV", 0x10000LLU },
++	{ "scx_dsq_iter_flags", "__SCX_DSQ_ITER_HAS_SLICE", 0x40000000LLU },
++	{ "scx_dsq_iter_flags", "__SCX_DSQ_ITER_HAS_VTIME", 0x80000000LLU },
++	{ "scx_dsq_iter_flags", "__SCX_DSQ_ITER_USER_FLAGS", 0x10000LLU },
++	{ "scx_dsq_iter_flags", "__SCX_DSQ_ITER_ALL_FLAGS", 0xc0010000LLU },
++	{ "scx_dsq_lnode_flags", "SCX_DSQ_LNODE_ITER_CURSOR", 0x1LLU },
++	{ "scx_dsq_lnode_flags", "__SCX_DSQ_LNODE_PRIV_SHIFT", 0x10LLU },
++	{ "scx_enable_state", "SCX_ENABLING", 0x0LLU },
++	{ "scx_enable_state", "SCX_ENABLED", 0x1LLU },
++	{ "scx_enable_state", "SCX_DISABLING", 0x2LLU },
++	{ "scx_enable_state", "SCX_DISABLED", 0x3LLU },
++	{ "scx_enq_flags", "SCX_ENQ_WAKEUP", 0x1LLU },
++	{ "scx_enq_flags", "SCX_ENQ_HEAD", 0x10000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_CPU_SELECTED", 0x100000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_PREEMPT", 0x100000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_IMMED", 0x200000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_RESCUE", 0x400000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_REENQ", 0x10000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_LAST", 0x20000000000LLU },
++	{ "scx_enq_flags", "__SCX_ENQ_INTERNAL_MASK", 0xff00000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_CLEAR_OPSS", 0x100000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_DSQ_PRIQ", 0x200000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_NESTED", 0x400000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_GDSQ_FALLBACK", 0x800000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_IGNORE_CAPS", 0x1000000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_APPLY_SLICE", 0x2000000000000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_SLICE_DFL", 0x4000000000000000LLU },
++	{ "scx_ent_dsq_flags", "SCX_TASK_DSQ_ON_PRIQ", 0x1LLU },
++	{ "scx_ent_flags", "SCX_TASK_QUEUED", 0x1LLU },
++	{ "scx_ent_flags", "SCX_TASK_IN_CUSTODY", 0x2LLU },
++	{ "scx_ent_flags", "SCX_TASK_RESET_RUNNABLE_AT", 0x4LLU },
++	{ "scx_ent_flags", "SCX_TASK_DEQD_FOR_SLEEP", 0x8LLU },
++	{ "scx_ent_flags", "SCX_TASK_SUB_INIT", 0x10LLU },
++	{ "scx_ent_flags", "SCX_TASK_IMMED", 0x20LLU },
++	{ "scx_ent_flags", "SCX_TASK_PROTECTED", 0x40LLU },
++	{ "scx_ent_flags", "SCX_TASK_STATE_SHIFT", 0x8LLU },
++	{ "scx_ent_flags", "SCX_TASK_STATE_BITS", 0x3LLU },
++	{ "scx_ent_flags", "SCX_TASK_STATE_MASK", 0x700LLU },
++	{ "scx_ent_flags", "SCX_TASK_NONE", 0x0LLU },
++	{ "scx_ent_flags", "SCX_TASK_INIT_BEGIN", 0x100LLU },
++	{ "scx_ent_flags", "SCX_TASK_INIT", 0x200LLU },
++	{ "scx_ent_flags", "SCX_TASK_READY", 0x300LLU },
++	{ "scx_ent_flags", "SCX_TASK_ENABLED", 0x400LLU },
++	{ "scx_ent_flags", "SCX_TASK_DEAD", 0x500LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_SHIFT", 0xcLLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_BITS", 0x3LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_MASK", 0x7000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_NONE", 0x0LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_KFUNC", 0x1000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_IMMED", 0x2000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_PREEMPTED", 0x3000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_CAP", 0x4000LLU },
++	{ "scx_ent_flags", "SCX_TASK_CURSOR", 0xffffffff80000000LLU },
++	{ "scx_exit_code", "SCX_ECODE_RSN_HOTPLUG", 0x100000000LLU },
++	{ "scx_exit_code", "SCX_ECODE_RSN_CGROUP_OFFLINE", 0x200000000LLU },
++	{ "scx_exit_code", "SCX_ECODE_ACT_RESTART", 0x1000000000000LLU },
++	{ "scx_exit_flags", "SCX_EFLAG_INITIALIZED", 0x1LLU },
++	{ "scx_exit_kind", "SCX_EXIT_NONE", 0x0LLU },
++	{ "scx_exit_kind", "SCX_EXIT_DONE", 0x1LLU },
++	{ "scx_exit_kind", "SCX_EXIT_UNREG", 0x40LLU },
++	{ "scx_exit_kind", "SCX_EXIT_UNREG_BPF", 0x41LLU },
++	{ "scx_exit_kind", "SCX_EXIT_UNREG_KERN", 0x42LLU },
++	{ "scx_exit_kind", "SCX_EXIT_SYSRQ", 0x43LLU },
++	{ "scx_exit_kind", "SCX_EXIT_PARENT", 0x44LLU },
++	{ "scx_exit_kind", "SCX_EXIT_PARENT_KILL", 0x45LLU },
++	{ "scx_exit_kind", "SCX_EXIT_ERROR", 0x400LLU },
++	{ "scx_exit_kind", "SCX_EXIT_ERROR_BPF", 0x401LLU },
++	{ "scx_exit_kind", "SCX_EXIT_ERROR_STALL", 0x402LLU },
++	{ "scx_exit_kind", "SCX_EXIT_ERROR_REENQ", 0x403LLU },
++	{ "scx_exit_kind", "SCX_EXIT_ERROR_RESCUE", 0x404LLU },
++	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_UNLOCKED", 0x1LLU },
++	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_INIT_CIDS", 0x2LLU },
++	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_CPU_RELEASE", 0x4LLU },
++	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_DISPATCH", 0x8LLU },
++	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_ENQUEUE", 0x10LLU },
++	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_SELECT_CPU", 0x20LLU },
++	{ "scx_kick_flags", "SCX_KICK_IDLE", 0x1LLU },
++	{ "scx_kick_flags", "SCX_KICK_PREEMPT", 0x2LLU },
++	{ "scx_kick_flags", "SCX_KICK_WAIT", 0x4LLU },
++	{ "scx_opi", "SCX_OPI_BEGIN", 0x0LLU },
++	{ "scx_opi", "SCX_OPI_NORMAL_BEGIN", 0x0LLU },
++	{ "scx_opi", "SCX_OPI_NORMAL_END", 0x21LLU },
++	{ "scx_opi", "SCX_OPI_CPU_HOTPLUG_BEGIN", 0x21LLU },
++	{ "scx_opi", "SCX_OPI_CPU_HOTPLUG_END", 0x23LLU },
++	{ "scx_opi", "SCX_OPI_END", 0x23LLU },
++	{ "scx_ops_flags", "SCX_OPS_KEEP_BUILTIN_IDLE", 0x1LLU },
++	{ "scx_ops_flags", "SCX_OPS_ENQ_LAST", 0x2LLU },
++	{ "scx_ops_flags", "SCX_OPS_ENQ_EXITING", 0x4LLU },
++	{ "scx_ops_flags", "SCX_OPS_SWITCH_PARTIAL", 0x8LLU },
++	{ "scx_ops_flags", "SCX_OPS_ENQ_MIGRATION_DISABLED", 0x10LLU },
++	{ "scx_ops_flags", "SCX_OPS_ALLOW_QUEUED_WAKEUP", 0x20LLU },
++	{ "scx_ops_flags", "SCX_OPS_BUILTIN_IDLE_PER_NODE", 0x40LLU },
++	{ "scx_ops_flags", "SCX_OPS_ALWAYS_ENQ_IMMED", 0x80LLU },
++	{ "scx_ops_flags", "SCX_OPS_TID_TO_TASK", 0x100LLU },
++	{ "scx_ops_flags", "SCX_OPS_ALL_FLAGS", 0x1ffLLU },
++	{ "scx_ops_flags", "__SCX_OPS_INTERNAL_MASK", 0xff00000000000000LLU },
++	{ "scx_ops_flags", "SCX_OPS_HAS_CPU_PREEMPT", 0x100000000000000LLU },
++	{ "scx_ops_state", "SCX_OPSS_NONE", 0x0LLU },
++	{ "scx_ops_state", "SCX_OPSS_QUEUEING", 0x1LLU },
++	{ "scx_ops_state", "SCX_OPSS_QUEUED", 0x2LLU },
++	{ "scx_ops_state", "SCX_OPSS_DISPATCHING", 0x3LLU },
++	{ "scx_ops_state", "SCX_OPSS_QSEQ_SHIFT", 0x2LLU },
++	{ "scx_pick_idle_cpu_flags", "SCX_PICK_IDLE_CORE", 0x1LLU },
++	{ "scx_pick_idle_cpu_flags", "SCX_PICK_IDLE_IN_NODE", 0x2LLU },
++	{ "scx_public_consts", "SCX_OPS_NAME_LEN", 0x80LLU },
++	{ "scx_public_consts", "SCX_SLICE_DFL", 0x1312d00LLU },
++	{ "scx_public_consts", "SCX_SLICE_BYPASS", 0x4c4b40LLU },
++	{ "scx_public_consts", "SCX_SLICE_INF", 0xffffffffffffffffLLU },
++	{ "scx_reenq_flags", "SCX_REENQ_ANY", 0x1LLU },
++	{ "scx_reenq_flags", "SCX_REENQ_CAP_REVOKE", 0x2LLU },
++	{ "scx_reenq_flags", "__SCX_REENQ_FILTER_MASK", 0xffffLLU },
++	{ "scx_reenq_flags", "__SCX_REENQ_USER_MASK", 0x1LLU },
++	{ "scx_reenq_flags", "SCX_REENQ_TSR_RQ_OPEN", 0x100000000LLU },
++	{ "scx_reenq_flags", "SCX_REENQ_TSR_NOT_FIRST", 0x200000000LLU },
++	{ "scx_reenq_flags", "__SCX_REENQ_TSR_MASK", 0xf00000000LLU },
++	{ "scx_rq_flags", "SCX_RQ_ONLINE", 0x1LLU },
++	{ "scx_rq_flags", "SCX_RQ_CAN_STOP_TICK", 0x2LLU },
++	{ "scx_rq_flags", "SCX_RQ_CLK_VALID", 0x20LLU },
++	{ "scx_rq_flags", "SCX_RQ_BAL_CB_PENDING", 0x40LLU },
++	{ "scx_rq_flags", "SCX_RQ_SUB_IDLE_RENOTIFY", 0x80LLU },
++	{ "scx_rq_flags", "SCX_RQ_ROOT_IDLE_RENOTIFY", 0x100LLU },
++	{ "scx_rq_flags", "SCX_RQ_IN_WAKEUP", 0x10000LLU },
++	{ "scx_rq_flags", "SCX_RQ_IN_DISPATCH", 0x20000LLU },
++	{ "scx_sched_pcpu_flags", "SCX_SCHED_PCPU_BYPASSING", 0x1LLU },
++	{ "scx_slice_oob_consts", "SCX_SLICE_OOB_DUR_BITS", 0x2bLLU },
++	{ "scx_slice_oob_consts", "SCX_SLICE_OOB_ID_BITS", 0x14LLU },
++	{ "scx_slice_oob_consts", "SCX_SLICE_OOB_DUR_MASK", 0x7ffffffffffLLU },
++	{ "scx_slice_oob_consts", "SCX_SLICE_OOB_ID_SHIFT", 0x2bLLU },
++	{ "scx_slice_oob_consts", "SCX_SLICE_OOB_ID_MASK", 0xfffffLLU },
++	{ "scx_slice_oob_consts", "SCX_SLICE_OOB_PENDING", 0x8000000000000000LLU },
++	{ "scx_tg_flags", "SCX_TG_ONLINE", 0x1LLU },
++	{ "scx_tg_flags", "SCX_TG_INITED", 0x2LLU },
++	{ "scx_tg_flags", "SCX_TG_SUB_INIT", 0x4LLU },
++	{ "scx_wake_flags", "SCX_WAKE_FORK", 0x4LLU },
++	{ "scx_wake_flags", "SCX_WAKE_TTWU", 0x8LLU },
++	{ "scx_wake_flags", "SCX_WAKE_SYNC", 0x10LLU },
++};
++
++#endif /* __ENUMS_ABI_AUTOGEN_H__ */
 -- 
-tejun
+2.55.0
+
