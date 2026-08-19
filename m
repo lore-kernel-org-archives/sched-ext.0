@@ -1,74 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FDA36DA14;
-	Wed, 19 Aug 2026 19:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5F5390CAB;
+	Wed, 19 Aug 2026 20:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787168942; cv=none; b=MAK4RkvyDUjh6Ggb+m/eM4Zrn/bnZLf2zuFlpd069L0vLbRTmsb6Tq1mpRxPhXN92Hx/pKY0SIs5Uevc7NHYVYpoQjaQdfyboasXJ4z46lzojA4LjpbA7lOUitT/SQTNsNW9ik6+JI0Ec3zjmm7ol9PI25FQICpWSDBzl6VAhPY=
+	t=1787170115; cv=none; b=IImSp4fBZZHhWVo0CGIbEhhKvzS1dwGnFC4jAHo6wEwd3y7EbKB/+K/nk/KNR5h7VIWlRN5flhUSgnv6zMVBM4xeoPv/wuv2TexvN54s8oeYZLNZrJcncQYoTd90rHOFbhBqIQ4mlRN3IqjllsDNxXfwS1gtqS/KPaMs3bcF9k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787168942; c=relaxed/simple;
-	bh=JyE9x7cXkwrSsZzt+/aRirCd95ty1wWbupZ4ZRQbRGU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qlw0wdpEXjHKpVcvmE1m/wexb9Z3yhAx0h40i5sGTlEfRXeHvMqUg545lziYBofSIzwdhYhnrQ3IKfTmkuSKMzNWuPawI+dIcew9djcg4NQ5FVI1l0+3XvbIAFI1kvpVq+Yom++hIvPayBddBGiccq0ihGit1BbYE8zsDls/x/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvkIXW69; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787170115; c=relaxed/simple;
+	bh=UoD2llVl1cMPafKga/q2Sl5f1KAANyS77u+fnt4/V3M=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=sYycFxAaOrULXo71aunY4iclW25UUZ0xnKImp7dlhr5CtIdgGerEiLVjAqGyfl3KIfelWHfyM2/XD4d5voTkXMB+OgL8hFwvA9+xVOOJddm5ADkob+b+d2yZC9ByOfstXTq/Zw9IUnL/Zu8hCf0WNyQCH8igoder5PAOGvF4Kyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YyW5m3xN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvkIXW69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874551F000E9;
-	Wed, 19 Aug 2026 19:49:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YyW5m3xN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0C71F000E9;
+	Wed, 19 Aug 2026 20:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787168940;
-	bh=XfeZJd9fXnBmuXGRHztCBpLwV/tkKcdZ0yLGID9DHG0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LvkIXW69lauoSwueX0qWqInb+OdvHA6E0a456fdQQSX7SUiFiidtUHaCz0bC97Nm1
-	 e2O3bwFosI9KXGlDsb6r3yAet+MCJLo4QKRx1cFENH9MEcwL+aLXTchVv+dFHpGG8n
-	 7eTNftFx5LkdHd+wVv5FQ78ID9c7zD73lahkaE5pLW2Mn8UUJ0JWV9ydg/ERNMQyn0
-	 58VOfk9GA07MAsToQ7c3DSbjVzMF177E0feq3AtF1OQO45fcwoOEAcclo5e2IMXDzV
-	 HnwvLDQThqlURaEZHOT0hOGulD+NdJU1HXW9RNIF7ntOgwgQL10+vqFpo6m/DaOHwW
-	 /ECsNqzEY/+7Q==
-Date: Wed, 19 Aug 2026 09:48:59 -1000
+	s=k20260515; t=1787170113;
+	bh=DWefprdCjuMlbolzkZB8hlEHgmZcllsAC6tbOy7bxGA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=YyW5m3xNH/5e46dKNtn0XxnDZN7+2UC+kY42cPsvM2JmJVC7s0ICfOIIOZMUOrINf
+	 aAUiFbLpN1oUFhewg//M7y4h1/96sGH41MnGGXB+oZps5iWpp3MYL7RZ3nxN1RgHro
+	 sb3uFKr8xm+zAluEVTFnJ+NYL4OclXcAO/2BoQ4D2h/p/DfE+9pxqNQZAWF1kLD4Pz
+	 SA4JRA/0bvufOO3wa7kgbXW5kuQqKFAiAkgo26BCJH9XfdT+0RL1/XOvgFgCX+MUHh
+	 pVqPeONrn6WlmoCUQmDEl5h1VSHemZbhZW9wMu3xF0cvo80nG0tKhSMfPiZ6KbpCpc
+	 +plsBMAdY+TZg==
+Date: Wed, 19 Aug 2026 10:08:32 -1000
+Message-ID: <05fa2ecdf1468ca7454244941343626f@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Tao Cui <cui.tao@linux.dev>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
-	suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
-	Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH v2] docs/sched_ext: document that cgroup CPU knobs are
- scheduler-dependent
-Message-ID: <aoYIq-QwrSBagFB7@slm.duckdns.org>
-References: <20260819012157.220932-1-cui.tao@linux.dev>
+To: luoliang@kylinos.cn
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] Docs/admin-guide/cgroup-v2: document BPF scheduler
+ callbacks for cpu.max and cpu.idle
+In-Reply-To: <20260819031244.178638-2-luoliang@kylinos.cn>
+References: <20260819031244.178638-1-luoliang@kylinos.cn>
+ <20260819031244.178638-2-luoliang@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260819012157.220932-1-cui.tao@linux.dev>
 
 Hello,
 
-On Wed, Aug 19, 2026 at 09:21:57AM +0800, Tao Cui wrote:
-...
-> +The fair class enforces cpu controller knobs such as ``cpu.max``,
-> +``cpu.weight`` and ``cpu.idle`` in the kernel. sched_ext only passes
-> +them to the BPF scheduler through ``ops.cgroup_set_weight()``,
-> +``ops.cgroup_set_idle()``, ``ops.cgroup_set_bandwidth()`` and friends.
-> +Whether and how a knob takes effect is up to the loaded scheduler: if
-> +it doesn't implement the corresponding callback, the knob is ignored.
-> +For example, none of scx_simple, scx_flatcg and scx_central implements
-> +``ops.cgroup_set_bandwidth()``, so with them ``cpu.max`` has no effect
-> +-- the cgroup runs at unlimited CPU with ``nr_throttled`` staying
-> +at 0.
+On Wed, Aug 19, 2026 at 11:12:43AM +0800, luoliang@kylinos.cn wrote:
+> -	This file affects only processes under the fair-class scheduler.
+> +	This file affects only processes under the fair-class scheduler and a BPF
+> +	scheduler with the ``cgroup_set_bandwidth`` callback depending on what
+> +	the callback actually does.
 
-SCX doesn't have nr_throttled routing right now even for scheds that
-implement cpu.max (scx_lavd is the only one right now AFAIK). I'd keep the
-documentation more concise and generic. I don't think listing schedulers
-that don't implement the feature or specifically pointing to nr_throttled is
-all that useful given that most schedulers don't implement it right now.
+The "CPU Interface Files" preamble defines the categories that the
+interface file entries refer back to and it only knows about
+cgroup_set_weight:
+
+  * Processes under the fair-class scheduler
+  * Processes under a BPF scheduler with the ``cgroup_set_weight`` callback
+  * Everything else: ``SCHED_{FIFO,RR,DEADLINE}`` and processes under a BPF
+    scheduler without the ``cgroup_set_weight`` callback
+
+With cpu.max, cpu.max.burst and cpu.idle now referring to
+cgroup_set_bandwidth and cgroup_set_idle, the preamble no longer covers
+the entries that follow it. Can you please update the preamble to match,
+e.g. by making the bullets refer to the corresponding cgroup_set_*
+callback, and resend?
 
 Thanks.
 
--- 
+--
 tejun
