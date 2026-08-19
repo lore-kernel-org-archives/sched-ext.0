@@ -1,115 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-73.mta1.migadu.com [95.215.58.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122685B21A;
-	Tue, 18 Aug 2026 21:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A4E390222
+	for <sched-ext@lists.linux.dev>; Wed, 19 Aug 2026 00:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787088806; cv=none; b=BuPFOZonZacs09N/ZmxNnuWpwM9UwyHGvyak1iLN3pZzgqkUZ9WfYV6minhdR1iR4oVMakV0ytyri+ZdR3PJZ7/L//3uhYqwEAts614fjqtVuyJZVsV3t/PmY8A3prxtkkwW0x7YjXEj7uBEp4w4Kbv37B0JauNDc/upqSU7gew=
+	t=1787101041; cv=none; b=AOtkRTBWVsxVfXIf8h6/cz1n9qa9AlnDh0nEwZA68CFsEnh1dW/W/OC0ycnB8eFjKG9N51nfDRT0W7LAydA3qzRZ7yvMBmtRJkmkWWf2pbJD6FKtgudAWpbv6JtSbwr1eZZwm7NO/nYIjRsnV507Y2tkEGKnVxJ0iQ97NyJD/eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787088806; c=relaxed/simple;
-	bh=6/F2n2xgqXi8tnfmNfjq4MbcmIJ7fNaBh2L63hPR9GQ=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=fNE+SUmgqeDh047gM5pbFENq7G21x7QzPaRSxmQsredHGcvk5PCT3aIZqTd86v49il+nMZNDXQiYRizmvfaMAn4cHdME2TCr7Rs8UtTpU2W+9B98H0yasBj5RHSD53gaOMaxZOWY4vSi3dSODd8j49euil13N64hLYGaQETP30s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nA1/R+Ba; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787101041; c=relaxed/simple;
+	bh=DawAylS0sQ//zw07aB+iq8n9z07w0KhAJLwQZUMzs0E=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=d/55e31LioFldOwt1CtQNcaljtCriGVwtcMLGk10QWx7bDEtDR9QuzQsCF3bFCguPkf8gJK7hsxYO/a6mQEt7etkSgNHUCSJbRj8XuXHrN7HKXzi3qpyLLKNKxqqlsDq5iWqiIgtd6pYkBjklSstnF8GFlUvzGlg7GepxCHsaw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xEiFxova; arc=none smtp.client-ip=95.215.58.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nA1/R+Ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B701F000E9;
-	Tue, 18 Aug 2026 21:33:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787088804;
-	bh=6RBq0peoeyJ8d7IrQlPxjRwmSuGeIm62hZPGpqNoLXM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=nA1/R+BaVGBJ1n5Cv2TMNIvRW/tv5HoXVlG+S/SINW5EEomx5/5QFvgTCRYFojuFC
-	 BcC0a0+CZfQTr+hMcCrR3p6aTtYmARzsgZKKtcuVJp4mnetapLVRCwsrooS6VfuyVt
-	 UlPr+0iHRKpcGS+IiMpUuY09JYdUE5ZJPcNlM4VZWnt1zVRr+i+ZyOUO6XdWpD6RFn
-	 P8ZDDpSmwlaq5eXpX9DC220nnGwpp29eEu7yl4VVTaNubxGIwVrq+mShEFmFxa20u6
-	 zgWz4l6UF9Byf4FGYblnLl4cq0//f1wNvljwfSR6WuX0loZXLtA6xBIMhyXChwARMa
-	 BMKxCzNvUMd+Q==
-Date: Tue, 18 Aug 2026 11:33:23 -1000
-Message-ID: <e2f7a97a70966c6d132a494500b55811@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Changwoo Min <changwoo@igalia.com>
-Cc: sashiko-bot@kernel.org, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Gavin Guo <gavinguo@igalia.com>,
- Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] sched_ext: Sync common and compat headers from the scx repo
-In-Reply-To: <20260818210732.AB27B1F000E9@smtp.kernel.org>
-References: <20260818205711.3175265-1-tj@kernel.org> <20260818205711.3175265-3-tj@kernel.org> <20260818210732.AB27B1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xEiFxova"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=DawAylS0sQ//zw07aB+iq8n9z07w0KhAJLwQZUMzs0E=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787101037; v=1; x=1787705837;
+ b=xEiFxovaigNLrmUiMgsO78sOVZH+fz7Utzr/LEbCdr8F5UZIZWQaLN4jgNMfmDMDOMZ0Fn+c
+ XacZl1AGTYMsm4VFaoquooTVIf+W4zSO6LREw5QxxpNi4HsNJY7UznavF2u2A9CYqve7CQsmQNr
+ Cs5Co3Qx7fs5YKRKKMq4k9i8=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: from [192.168.110.173] (223.70.159.239)
+	by smtp.migadu.com with ESMTPS id 30f13174d05e6ebd;
+	Wed, 19 Aug 2026 00:57:06 +0000
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <593de517-8835-42ce-9d1a-0362f9066e95@linux.dev>
+Date: Wed, 19 Aug 2026 08:57:03 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, void@manifault.com, arighi@nvidia.com,
+ changwoo@igalia.com, suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
+ Tao Cui <cuitao@kylinos.cn>
+Subject: Re: [PATCH RFC] sched_ext: warn when cpu.max is set but the BPF
+ scheduler doesn't implement bandwidth control
+To: Tejun Heo <tj@kernel.org>
+References: <20260818135328.174152-1-cui.tao@linux.dev>
+ <aoR7ngyE44epfzXO@slm.duckdns.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <aoR7ngyE44epfzXO@slm.duckdns.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
 
 Hello,
+在 2026/8/18 23:34, Tejun Heo 写道:
+> Hello,
+> 
+> On Tue, Aug 18, 2026 at 09:53:28PM +0800, Tao Cui wrote:
+>> From: Tao Cui <cuitao@kylinos.cn>
+>>
+>> The kernel stores cpu.max bandwidth parameters in the task_group and
+>> passes them to the BPF scheduler via ops.cgroup_set_bandwidth() and
+>> scx_cgroup_init_args, but does not enforce the quota itself. If the
+>> loaded BPF scheduler doesn't implement the callback, cpu.max is
+>> silently ignored -- the cgroup gets unlimited CPU regardless of the
+>> configured quota.
+>>
+>> Of the example schedulers, only scx_qmap implements the callback --
+>> and only to bpf_printk() the parameters, so no in-tree scheduler
+>> actually enforces the quota. Measured with scx_simple: a
+>> cgroup with cpu.max = "50000 100000" (50% of one CPU) and one
+>> busy task used 9946ms of CPU in 10 seconds with nr_throttled
+>> remaining 0.
+>>
+>> Print a one-time warning when a finite quota is configured on a
+>> cgroup while the active scheduler lacks the callback, so users and
+>> container orchestrators know the quota is not enforced.
+> 
+> We had something similar with cpu.weight and it created more annoaynces than
+> helping anything. cgroup bw control isn't the only thing the BPF scheduler
+> may skip to implement. It can also choose to ignore e.g. nice levels
+> completely too and there's no way to detect things like that. Documentation
+> is probably the right way to handle this.
+> 
 
-On Tue, Aug 18, 2026 at 09:07:32PM +0000, sashiko-bot@kernel.org wrote:
-> > +/*
-> > + * True if the non-sleepable BPF trampoline prolog (__bpf_prog_enter) calls
-> > + * migrate_disable() for the current task. Recorded once by
-> > + * scx_lib_init_probe, an fentry program on bpf_scx_reg() that fires during
-> > + * the natural scheduler-attach call chain (auto-attached by scx_ops_attach!).
-> > + *
-> > + * Defaults to true (conservative). Over-reporting in is_migration_disabled()
-> > + * causes local-only dispatch, which is safe. Under-reporting can crash the
-> > + * scheduler, so we err high if the probe somehow fails to run.
-> > + */
-> > +bool __scx_prolog_disables_migration __weak = true;
->
-> [Severity: High]
-> Does this default value actually under-report if the probe fails to run?
->
-> The documentation indicates that the fallback should err high (over-report)
-> to avoid crashing the scheduler. However, looking at the slow path in
-> is_migration_disabled() below, when __scx_prolog_disables_migration is true,
-> the macro evaluates bpf_get_current_task_btf() != p. This causes it to
-> return false for the current task, which means it incorrectly assumes
-> migration is not disabled (under-reporting).
->
-> Should the default value of __scx_prolog_disables_migration be false
-> instead, so that it falls back to returning true?
+Understood, the cpu.weight precedent makes sense: the scheduler may
+ignore a whole set of knobs, and warning on just one of them would be
+arbitrary.
 
-The comment and the default do disagree. true matches the stock pre-v6.18
-prolog behavior, so a failed probe still yields correct results on stock
-kernels. However, if the probe fails on a kernel that cherry-picked
-8e4f0b1ebcf2 ("bpf: use rcu_read_lock_dont_migrate() for trampoline.c"),
-is_migration_disabled(current) under-reports, which is the direction the
-comment claims to avoid. Erring high would be defaulting to false.
+I'll follow up with a patch to sched-ext.rst instead: a note that
+cgroup CPU knobs like cpu.max only take effect if the loaded scheduler
+implements the corresponding callbacks, and that schedulers may also
+ignore things like nice levels.
 
-Changwoo, this code is synced from the scx repo. Can you update the scx
-side, either flipping the default or fixing the comment? I'll re-sync
-afterwards.
+Thanks,
+Tao
 
-> > +static inline struct task_struct *__COMPAT_scx_bpf_cpu_curr(int cpu)
-> > +{
-> > +	struct rq *rq;
-> > +
-> > +	if (bpf_ksym_exists(scx_bpf_cpu_curr))
-> > +		return scx_bpf_cpu_curr(cpu);
-> > +
-> > +	rq = scx_bpf_cpu_rq(cpu);
->
-> [Severity: High]
-> Will this unconditionally call scx_bpf_cpu_rq() on newer kernels?
->
-> If both scx_bpf_cpu_curr and scx_bpf_cpu_rq have been dropped from the kernel
-> tree, on modern kernels bpf_ksym_exists(scx_bpf_cpu_curr) evaluates to false
-> and the fallback path is taken.
->
-> Because the call to scx_bpf_cpu_rq() is not guarded by its own
-> bpf_ksym_exists() check, won't libbpf poison the missing call and cause the
-> BPF verifier to reject the program on newer kernels? Should we guard the
-> fallback call as well?
+> Thanks.
+> 
 
-scx_bpf_cpu_curr() wasn't dropped. It was added in v6.18 and only
-scx_bpf_cpu_rq() is being removed, so there is no kernel where both are
-missing. On kernels without scx_bpf_cpu_rq(),
-bpf_ksym_exists(scx_bpf_cpu_curr) is constant true, the fallback is dead
-code, and the poisoned call to the missing __weak ksym never reaches the
-verifier.
-
-Thanks.
-
---
-tejun
