@@ -1,25 +1,25 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761283845B0
-	for <sched-ext@lists.linux.dev>; Wed, 19 Aug 2026 03:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50F42DF3F2
+	for <sched-ext@lists.linux.dev>; Wed, 19 Aug 2026 03:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787109181; cv=none; b=kLI4iPh9+ezE+nQu+y0exbgT3RR/ecBhjSu1EDZBO21OT9lg8uFRpcbuY15d5ERT5J4aoL5qA53uOmiNF19BVpItBHtPZb3zz2wUDMPGjO/5GHaI/91g74sm8RSjWeIZQkrveeh8NuY1pULtY8qeBqG9H/dhTbead032fShQ9H8=
+	t=1787109181; cv=none; b=DS1xH2Y3UG/+7UiXokqpPyDdsvG5cqWL4F8XrQWTshRJSZPT339VB7p/E75nE8HAu0GJ2FhLETzwBHnv3B52zT72hH+wLuUKifpbOZLSBQStG0vqRdzXW4NDeJnrGQCWMSKGyI103cmEMygUdtC7Nz7YDHpwl1zlZYkX+v1vrP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1787109181; c=relaxed/simple;
-	bh=2QjuidKP6eexRE9LYaMRC5TleDJm4t+IPnedd6ltN48=;
+	bh=Ha4NBEMBfbDovOyN+LmmgFOARABrz85F4XzqKFqNzVk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LyxLBzjioEN8kvc9VGvQGJ0yuUV/GG49awACJT2Sw2QYh7sd5ajYILkj9fnbJqLXi8sTwj/8F/5lKRMhQ4NWPiVFSNPmWmaOJX1tpSX76RcV+W3WbugOhSMwTYuUxNEgZ/6gBP+396w92dNV22spwlttiCe6jSg+FrTCLb8C31A=
+	 MIME-Version; b=Vhi/ToitjsCwZLh3YRmtGuV4vLlCWWG2XgXIP3ljmGq8SBDmnnXcAjeNHVn/pFWhkmUskUQmEBLk9inzZF3izD4ETgkMD6LG5txOa2Q1l72eGDZ1u/xn3oljZiweHhoOWPmFCQYqek9fICSOp9tTwA0CqPEWLFjQ2ZZAUZ4gyfY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: dd64324a9b7b11f19a56ed5b684f684d-20260819
+X-UUID: ded479329b7b11f19a56ed5b684f684d-20260819
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:0c2070be-5550-4929-9b3d-a5181043b2eb,IP:0,U
+X-CID-O-INFO: VERSION:1.3.19,REQID:ba1682ab-9e29-455a-a890-c48c59a0706a,IP:0,U
 	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
 	:release,TS:25
-X-CID-META: VersionHash:7db8b62,CLOUDID:fb5acf10af2571136c0ea83ef1103ae4,BulkI
+X-CID-META: VersionHash:7db8b62,CLOUDID:4a12cd713266b0b56f53527ca81627fb,BulkI
 	D:nil,BulkQuantity:0,SF:81|82|102|123|850|865|898,TC:nil,Content:0|15|50,E
 	DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
 	0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
@@ -27,12 +27,12 @@ X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: dd64324a9b7b11f19a56ed5b684f684d-20260819
+X-UUID: ded479329b7b11f19a56ed5b684f684d-20260819
 X-User: luoliang@kylinos.cn
 Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
 	(envelope-from <luoliang@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 71192582; Wed, 19 Aug 2026 11:12:52 +0800
+	with ESMTP id 189414787; Wed, 19 Aug 2026 11:12:54 +0800
 From: luoliang@kylinos.cn
 To: Tejun Heo <tj@kernel.org>
 Cc: David Vernet <void@manifault.com>,
@@ -41,9 +41,9 @@ Cc: David Vernet <void@manifault.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH 1/2] Docs/admin-guide/cgroup-v2: document BPF scheduler callbacks for cpu.max and cpu.idle
-Date: Wed, 19 Aug 2026 11:12:43 +0800
-Message-Id: <20260819031244.178638-2-luoliang@kylinos.cn>
+Subject: [PATCH 2/2] sched_ext: Fix nonexistent field in sched-ext.rst example
+Date: Wed, 19 Aug 2026 11:12:44 +0800
+Message-Id: <20260819031244.178638-3-luoliang@kylinos.cn>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260819031244.178638-1-luoliang@kylinos.cn>
 References: <20260819031244.178638-1-luoliang@kylinos.cn>
@@ -57,58 +57,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Liang Luo <luoliang@kylinos.cn>
 
-The cpu.weight and cpu.weight.nice entries already state that the files
-also affect a BPF scheduler through the cgroup_set_weight callback.
-However, cpu.max, cpu.max.burst and cpu.idle only mention the fair-class
-scheduler, even though sched_ext implements the cgroup_set_bandwidth
-(notified with the period/quota from cpu.max and the burst from
-cpu.max.burst) and cgroup_set_idle callbacks from these interfaces.
+The ops.exit() example in sched-ext.rst reads ei->type, but
+struct scx_exit_info has never had a type field - the exit reason is
+exposed as ei->kind since the struct was introduced. A scheduler
+written following the example fails to compile with
 
-Mirror the cpu.weight wording for the three entries so BPF scheduler
-users can discover these notification points.
+    error: no member named 'type' in 'struct scx_exit_info'
 
+Use ei->kind.
+
+Fixes: fa48e8d2c7b5 ("sched_ext: Documentation: scheduler: Document extensible scheduler class")
 Signed-off-by: Liang Luo <luoliang@kylinos.cn>
 ---
- Documentation/admin-guide/cgroup-v2.rst | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ Documentation/scheduler/sched-ext.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
-index aed195a71cbf..3f77f15d0543 100644
---- a/Documentation/admin-guide/cgroup-v2.rst
-+++ b/Documentation/admin-guide/cgroup-v2.rst
-@@ -1202,7 +1202,9 @@ will be referred to. All time durations are in microseconds.
- 	$PERIOD duration.  "max" for $MAX indicates no limit.  If only
- 	one number is written, $MAX is updated.
+diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+index 2771ea4cc14a..96ff66c91ceb 100644
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -229,7 +229,7 @@ optional. The following modified excerpt is from
  
--	This file affects only processes under the fair-class scheduler.
-+	This file affects only processes under the fair-class scheduler and a BPF
-+	scheduler with the ``cgroup_set_bandwidth`` callback depending on what
-+	the callback actually does.
+     void BPF_STRUCT_OPS(simple_exit, struct scx_exit_info *ei)
+     {
+-            exit_type = ei->type;
++            exit_type = ei->kind;
+     }
  
-   cpu.max.burst
- 	A read-write single value file which exists on non-root
-@@ -1210,7 +1212,9 @@ will be referred to. All time durations are in microseconds.
- 
- 	The burst in the range [0, $MAX].
- 
--	This file affects only processes under the fair-class scheduler.
-+	This file affects only processes under the fair-class scheduler and a BPF
-+	scheduler with the ``cgroup_set_bandwidth`` callback depending on what
-+	the callback actually does.
- 
-   cpu.pressure
- 	A read-write nested-keyed file.
-@@ -1262,7 +1266,9 @@ will be referred to. All time durations are in microseconds.
- 	own relative priorities, but the cgroup itself will be treated as
- 	very low priority relative to its peers.
- 
--	This file affects only processes under the fair-class scheduler.
-+	This file affects only processes under the fair-class scheduler and a BPF
-+	scheduler with the ``cgroup_set_idle`` callback depending on what the
-+	callback actually does.
- 
- Memory
- ------
+     SEC(".struct_ops")
 -- 
 2.43.0
 
