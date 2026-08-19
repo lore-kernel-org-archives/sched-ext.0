@@ -1,46 +1,40 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260A93F8234;
-	Wed, 19 Aug 2026 12:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FB23C1F45;
+	Wed, 19 Aug 2026 18:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787142290; cv=none; b=ld56FWdqlvuCiWxs6W+Bt27fiv3fqsAq+wvH4flYvl1itmiLYKZQJACoMLYFK+uL5uaMIm0l5dXDON41OC743pFRWt/vcHXTN8YMYuvCpqohiqpNav0tJDcQicHpnW7BpmWB6RCcbyZ5yk2MOztqzQe3/ao8wXfpyyoA+DDtXRo=
+	t=1787164230; cv=none; b=hHcnFAZRpGguzu1d3QzdZQrMyIIfMbxL+XCUul0ImA6Entvrw5aFugEtwDAldvSANnuZzzDXR7epVMwas5YnkJF86z0gPzsvd67HkgNsT59bidgxP825cbz0c3fw9PMlcihQF9z7aqzSSqvyveaDPOj+/vj76UoPDhPgq1kqXnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787142290; c=relaxed/simple;
-	bh=0rwECUX0kPR0uJ1zP4O9K46OMa03R3gBmvrZ0uUUVY4=;
+	s=arc-20240116; t=1787164230; c=relaxed/simple;
+	bh=EozIj19Q2yBeOKIgTXyY0fdexWuZoPW64RCQOaFGdTE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JVPB8+hODKoERI3vnrNVvetU57NlLpmAHagjhAbGqITuZ+LXekKOrWu6fauDv55Sosj6jy8KKwHHuoOJEpN9LbW17MTOmPAbZeKePckALlh+nl1kPF0aM5WAQOCTJwtFbd07gdKIQ63zT1yy3hx1/8nnpQxXAY7aiXIc3/4I5lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=PdOkKHUb; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=neBHeByggtLoLTnVGMxy0rWSbsNlKP7on2lI+TNSRp+jg19UnMfYEKA/3yA/3h85U+uNSY5iDUhSqsb3JRigdTDM0OEGFmtMUaV81pAPbF8gy4iQKPNRUEgMkZcPaPoeJbwcB08SEKvN852LVEQ8htQPtFe0Ox7CVvY4S5wvdbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F+hTXVTT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="PdOkKHUb"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=oLxnNxSsqZOJ+SWxcB9uaRPw36IEMk2UWFb2NFPfysI=; b=PdOkKHUbHfcq6KADMX1VfWu3/S
-	G9i6SkleWGIoqhaa8Rm0GaGdnObBTyxWOT/wa/l08Z3lq+pudnoas2vR/dqYhAhOYYZ2lqHfJDsDJ
-	lZjyYe82KnU6EWCTW5vRC2sEryKY1jAGEn5SHEfE2YvSfa57Imn66N/TDUOSnBT0d3A5W31C+/W9n
-	py3McbcBDtrQtc+Mo//Ddhvz3/17ichDLCyGToqHibfQioEqMk6AqMj0Nuogel1Le3++vX1KscvE+
-	jyrz3gnEEtsJcnN3+Yk//mzMEJRgjCimAfjjW65HUIMS0gzRtWw6kTeFBxF1bKtHaY0msm1xBLl9o
-	og1uNA+w==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
-	id 1wwfLT-00000002Mz4-3vvr;
-	Wed, 19 Aug 2026 12:24:40 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id A14A130030F; Wed, 19 Aug 2026 14:24:38 +0200 (CEST)
-Date: Wed, 19 Aug 2026 14:24:38 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Tejun Heo <tj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F+hTXVTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B921F000E9;
+	Wed, 19 Aug 2026 18:30:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787164228;
+	bh=DeF3PyNzWGkZKxotm1I3WQHx9rcWHnpKPJu3ApQG1jE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=F+hTXVTTDLGzyYaUmwdSaG3sm0zC5AToT5GtMsTG11trwunxzM4w2dtjYxfBFj8r7
+	 CAq/UtNgEoMo0490bX5Ws/jU6eP0deFp8DyFJpz+sOGeUIAMJW8SFuccKg7j0skCrH
+	 iDM1+wJcAXIRC2H2IYfZm8OqFwcdXBIjB84kUihHXP4+ZO/5MiEEw0ftYyBnwvzRBw
+	 8EUTcbOQa+r7fti29shjWWfovIsi3SOMYRp8ZED6xd7NORif0mkfG1LbDlf7NmjwF9
+	 ogYzUXuqjJ04dK7NjhvWFGtoZM53omJm0C/C3fJKHMKvFaXAeIYx3MP5KBhob4QzYb
+	 tyNALo1V5OSJA==
+Date: Wed, 19 Aug 2026 08:30:27 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Peter Zijlstra <peterz@infradead.org>
 Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
 	Emil Tsalapatis <emil@etsalapatis.com>, ElXreno <elxreno@gmail.com>,
 	linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Subject: Re: [PATCH 1/6] sched/core: Handle pick_task() releasing the rq lock
-Message-ID: <20260819122438.GA1248307@noisy.programming.kicks-ass.net>
+Message-ID: <aoX2Q6VLHHCddHuA@slm.duckdns.org>
 References: <20260807210221.232543-1-tj@kernel.org>
  <20260807210221.232543-2-tj@kernel.org>
  <20260819093751.GI1247881@noisy.programming.kicks-ass.net>
@@ -54,33 +48,10 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20260819093751.GI1247881@noisy.programming.kicks-ass.net>
 
+Hello,
+
 On Wed, Aug 19, 2026 at 11:37:51AM +0200, Peter Zijlstra wrote:
-> On Fri, Aug 07, 2026 at 11:02:16AM -1000, Tejun Heo wrote:
-> > Core scheduling's pick_next_task() breaks when a ->pick_task()
-> > implementation can release the rq lock. The selection state derived on entry
-> > is only valid while the lock is held continuously. Once a pick can drop the
-> > lock, an interleaving selection can invalidate all of it: the single-CPU
-> > fast path can commit an uncookied pick although the core went cookied during
-> > the release, and forceidle committed by the interleaving selection skews the
-> > restarted pass's accounting.
-> > 
-> > Fix it by restarting the whole selection when a pick returns RETRY_TASK
-> > after releasing the lock: a single restart point above the state derivation
-> > replaces the per-loop restart labels, so a retry picks up state committed by
-> > interleaving selections and accounts and resets forceidle like a fresh
-> > selection would.
-> > 
-> > need_sync and fi_before latch across retries. Clock validity can't be
-> > re-derived - there is no program-ordered way to tell whether the own and
-> > core rq clocks are still updated after the lock was released, as other
-> > lockers' pin cycles may or may not have invalidated them. When restarting,
-> > clear core_clock_updated so that the sibling loop re-updates the core rq,
-> > and update the own rq clock if invalidated.
-> > 
-> > Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
-> > Cc: stable@vger.kernel.org # v6.19+
-> > Signed-off-by: Tejun Heo <tj@kernel.org>
-> 
+...
 > Suppose the SMT siblings CPU0 and CPU1; this core sched pick nonsense
 > runs on CPU0 and does that multi pick thing.
 > 
@@ -98,9 +69,15 @@ On Wed, Aug 19, 2026 at 11:37:51AM +0200, Peter Zijlstra wrote:
 > 
 > This is still possible, right?
 
-Ah, I read the follow up patches more carefully, and I think you're
-dealing with that here. That and I misremembered how the re-enqueue
-worked. I though it was still done in pick_task_scx() on RETRY, but we
-moved that to wakeup_preempt_scx().
+Yes, that's possible but it's not different from the task being dispatched
+and starts running and then getting preempted by a FIFO task or the CPU just
+losing to the sibling's pick. Tasks being staged on local DSQs doesn't
+really break anything. There's the question of whether we're triggering
+reenqueue reliably for SCX_ENQ_IMMED tasks for all siblings, which I don't
+think we do for core-sched path but we can get to that later. That's an a
+lot less severe problem than oopsing at least.
 
-OK, let me go over all this once more...
+Thanks.
+
+-- 
+tejun
