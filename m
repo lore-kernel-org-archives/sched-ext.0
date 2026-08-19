@@ -1,90 +1,97 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50F42DF3F2
-	for <sched-ext@lists.linux.dev>; Wed, 19 Aug 2026 03:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4AC3E00B6;
+	Wed, 19 Aug 2026 09:37:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787109181; cv=none; b=DS1xH2Y3UG/+7UiXokqpPyDdsvG5cqWL4F8XrQWTshRJSZPT339VB7p/E75nE8HAu0GJ2FhLETzwBHnv3B52zT72hH+wLuUKifpbOZLSBQStG0vqRdzXW4NDeJnrGQCWMSKGyI103cmEMygUdtC7Nz7YDHpwl1zlZYkX+v1vrP0=
+	t=1787132278; cv=none; b=tRP2kwpfbXSNZ7lO15sYY7/Llgf6IhpPjnFvADcry9jcR52IfxMFHVD9DT0orwUjxNusL1LKnF+F+ltyA54QtJJYLJWZT9i0P+K2BP14nncuJZZ/IGs5Yh8SsIPus926nLztN9DFPZ5l71bKXPd8U6wwOXNrNXsRBLxA5fN9hZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787109181; c=relaxed/simple;
-	bh=Ha4NBEMBfbDovOyN+LmmgFOARABrz85F4XzqKFqNzVk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Vhi/ToitjsCwZLh3YRmtGuV4vLlCWWG2XgXIP3ljmGq8SBDmnnXcAjeNHVn/pFWhkmUskUQmEBLk9inzZF3izD4ETgkMD6LG5txOa2Q1l72eGDZ1u/xn3oljZiweHhoOWPmFCQYqek9fICSOp9tTwA0CqPEWLFjQ2ZZAUZ4gyfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: ded479329b7b11f19a56ed5b684f684d-20260819
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:ba1682ab-9e29-455a-a890-c48c59a0706a,IP:0,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:25
-X-CID-META: VersionHash:7db8b62,CLOUDID:4a12cd713266b0b56f53527ca81627fb,BulkI
-	D:nil,BulkQuantity:0,SF:81|82|102|123|850|865|898,TC:nil,Content:0|15|50,E
-	DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
-	0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: ded479329b7b11f19a56ed5b684f684d-20260819
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 189414787; Wed, 19 Aug 2026 11:12:54 +0800
-From: luoliang@kylinos.cn
+	s=arc-20240116; t=1787132278; c=relaxed/simple;
+	bh=+dRrp3AIN5yuXrdz9NBDxWPSQf9XYQieTKK904kbAHk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SpR/uPBg15BOhZo2Jxput7pEcN0U4QQ/Hz3tZ3JsBs5FDuUpvakY6RenYoJgJymAxdi219qSA5pLJCjmF5DSySVii+YomCu+5HgXAMEgc4JnXYenP1QmnC7oTfSyoKnu6K/dCkiVJxP/C5elOceMzqNMN8Y/FlS82goDiqicLnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=jXnnvXbG; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="jXnnvXbG"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=59z/QIjvMe1nZvRPKTLdtPO+qnUK1cyCF9JMys/gphA=; b=jXnnvXbGNAkklpAFCdrJRz3UHz
+	mGzA3QeExJvWQRdKTliGMH38WGUbA76Fjx5uf90pyd4sl70xXoa6AViG3lMwTpTcBZf2juMA+w8wW
+	SMQakrQjib8KbQ4Njfdg/p0bcq7b/5179QJ4i0eK6+WX40ZY2Xm9zlTrB0JKewpEm4MQ7yjehkIfL
+	v0/TD+eYfqG0m325kZZZSzzSnV6GfF69f9ZMtlH3evsyrVpKWKe8YGojrP4CM6XYzCKyDFUX+jI/I
+	BtkLXEa2zhR+GWkVPRyOL3UDbXHPS8srTsn0w3gfmv9sNmXrB5KxxEbo5OODO3SZEciBr9LHg39LL
+	pThXjZ5g==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wwck3-0000000DRFX-3146;
+	Wed, 19 Aug 2026 09:37:51 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 2E67630030F; Wed, 19 Aug 2026 11:37:51 +0200 (CEST)
+Date: Wed, 19 Aug 2026 11:37:51 +0200
+From: Peter Zijlstra <peterz@infradead.org>
 To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH 2/2] sched_ext: Fix nonexistent field in sched-ext.rst example
-Date: Wed, 19 Aug 2026 11:12:44 +0800
-Message-Id: <20260819031244.178638-3-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260819031244.178638-1-luoliang@kylinos.cn>
-References: <20260819031244.178638-1-luoliang@kylinos.cn>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
+	Emil Tsalapatis <emil@etsalapatis.com>, ElXreno <elxreno@gmail.com>,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/6] sched/core: Handle pick_task() releasing the rq lock
+Message-ID: <20260819093751.GI1247881@noisy.programming.kicks-ass.net>
+References: <20260807210221.232543-1-tj@kernel.org>
+ <20260807210221.232543-2-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260807210221.232543-2-tj@kernel.org>
 
-From: Liang Luo <luoliang@kylinos.cn>
+On Fri, Aug 07, 2026 at 11:02:16AM -1000, Tejun Heo wrote:
+> Core scheduling's pick_next_task() breaks when a ->pick_task()
+> implementation can release the rq lock. The selection state derived on entry
+> is only valid while the lock is held continuously. Once a pick can drop the
+> lock, an interleaving selection can invalidate all of it: the single-CPU
+> fast path can commit an uncookied pick although the core went cookied during
+> the release, and forceidle committed by the interleaving selection skews the
+> restarted pass's accounting.
+> 
+> Fix it by restarting the whole selection when a pick returns RETRY_TASK
+> after releasing the lock: a single restart point above the state derivation
+> replaces the per-loop restart labels, so a retry picks up state committed by
+> interleaving selections and accounts and resets forceidle like a fresh
+> selection would.
+> 
+> need_sync and fi_before latch across retries. Clock validity can't be
+> re-derived - there is no program-ordered way to tell whether the own and
+> core rq clocks are still updated after the lock was released, as other
+> lockers' pin cycles may or may not have invalidated them. When restarting,
+> clear core_clock_updated so that the sibling loop re-updates the core rq,
+> and update the own rq clock if invalidated.
+> 
+> Fixes: 4c95380701f5 ("sched/ext: Fold balance_scx() into pick_task_scx()")
+> Cc: stable@vger.kernel.org # v6.19+
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
-The ops.exit() example in sched-ext.rst reads ei->type, but
-struct scx_exit_info has never had a type field - the exit reason is
-exposed as ei->kind since the struct was introduced. A scheduler
-written following the example fails to compile with
+Suppose the SMT siblings CPU0 and CPU1; this core sched pick nonsense
+runs on CPU0 and does that multi pick thing.
 
-    error: no member named 'type' in 'struct scx_exit_info'
+For CPU0 it pulls a task from the global DSQ, places it in the local
+DSQ, and returns that as the pick. No retry, all good.
 
-Use ei->kind.
+Then for CPU1 it does the same, but hits a RETRY, so it stuffs the task
+back on the global DSQ and return RETRY.
 
-Fixes: fa48e8d2c7b5 ("sched_ext: Documentation: scheduler: Document extensible scheduler class")
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
----
- Documentation/scheduler/sched-ext.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Then on retry we find a FIFO task on CPU0, because lock-break and all
+that.
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index 2771ea4cc14a..96ff66c91ceb 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -229,7 +229,7 @@ optional. The following modified excerpt is from
- 
-     void BPF_STRUCT_OPS(simple_exit, struct scx_exit_info *ei)
-     {
--            exit_type = ei->type;
-+            exit_type = ei->kind;
-     }
- 
-     SEC(".struct_ops")
--- 
-2.43.0
+Now we pick the FIFO task, but have not had an opportunity to put the
+CPU0 task back into the global DSQ.
 
+This is still possible, right?
