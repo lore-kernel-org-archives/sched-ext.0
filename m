@@ -1,102 +1,113 @@
-Received: from mta1.migadu.com (out-73.mta1.migadu.com [95.215.58.73])
+Received: from mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A4E390222
-	for <sched-ext@lists.linux.dev>; Wed, 19 Aug 2026 00:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878F93932E1
+	for <sched-ext@lists.linux.dev>; Wed, 19 Aug 2026 01:22:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787101041; cv=none; b=AOtkRTBWVsxVfXIf8h6/cz1n9qa9AlnDh0nEwZA68CFsEnh1dW/W/OC0ycnB8eFjKG9N51nfDRT0W7LAydA3qzRZ7yvMBmtRJkmkWWf2pbJD6FKtgudAWpbv6JtSbwr1eZZwm7NO/nYIjRsnV507Y2tkEGKnVxJ0iQ97NyJD/eQ=
+	t=1787102537; cv=none; b=Asu6XfLVNDyYLJYwzTp3Us+e8Uvo+NLJmcaC6YEG6vTRYBELDWh2YpwNAu6ciAQL5ARn1CAXNOiBm0FoyOdwbBARI1AKE5J8r/+/uovVYw1bap1T53Q0DhkmKNB5wW3S7U3mlKDLUSKX4HiPYwbrE9EKnr6xZuKMgt/BUA2XY5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787101041; c=relaxed/simple;
-	bh=DawAylS0sQ//zw07aB+iq8n9z07w0KhAJLwQZUMzs0E=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=d/55e31LioFldOwt1CtQNcaljtCriGVwtcMLGk10QWx7bDEtDR9QuzQsCF3bFCguPkf8gJK7hsxYO/a6mQEt7etkSgNHUCSJbRj8XuXHrN7HKXzi3qpyLLKNKxqqlsDq5iWqiIgtd6pYkBjklSstnF8GFlUvzGlg7GepxCHsaw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xEiFxova; arc=none smtp.client-ip=95.215.58.73
+	s=arc-20240116; t=1787102537; c=relaxed/simple;
+	bh=LW5oz5A7LnBblxcZER63gc3Wl37mjgopfABerrOaDJA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aXrripjbLKmllXfZ/4glgADyULia/Tm2cZOmG9nA1ZWFLb9LuNhfM1afFLEoi8iSQbJT1ndEgI7xkiSxf6iePFoB+3E4iH7q6PdaPZetOs/3seo7zvPKYdf9a1nLR6OnckT/NuwvanAE6B8W/bPy8kz2/Q99tCB/c18aVb470hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=YxA++Afh; arc=none smtp.client-ip=91.218.175.189
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xEiFxova"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="YxA++Afh"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=DawAylS0sQ//zw07aB+iq8n9z07w0KhAJLwQZUMzs0E=;
+DKIM-Signature: a=rsa-sha256; bh=LW5oz5A7LnBblxcZER63gc3Wl37mjgopfABerrOaDJA=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787101037; v=1; x=1787705837;
- b=xEiFxovaigNLrmUiMgsO78sOVZH+fz7Utzr/LEbCdr8F5UZIZWQaLN4jgNMfmDMDOMZ0Fn+c
- XacZl1AGTYMsm4VFaoquooTVIf+W4zSO6LREw5QxxpNi4HsNJY7UznavF2u2A9CYqve7CQsmQNr
- Cs5Co3Qx7fs5YKRKKMq4k9i8=
+ t=1787102531; v=1; x=1787707331;
+ b=YxA++AfhJs6H0Ie26agIZ4uK++fXi2gUeEziLYZnXSSl4hw2R7qBZrhWjMm1HGbATUdo8Vmn
+ KcaNcDmJMBaY0z+9gbLxtuk6pH2NK3F0Ul83/booSlqkMcVDwUd3Y7ELEm0IqXiSQ6fK7bUAi5z
+ IrYYJJYU8ch6A9jCWvdRWe2I=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: from [192.168.110.173] (223.70.159.239)
-	by smtp.migadu.com with ESMTPS id 30f13174d05e6ebd;
-	Wed, 19 Aug 2026 00:57:06 +0000
+Received: from ctao-book.. (223.70.159.239)
+	by smtp.migadu.com with ESMTPS id 71d2ed90ecf43179;
+	Wed, 19 Aug 2026 01:22:11 +0000
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <593de517-8835-42ce-9d1a-0362f9066e95@linux.dev>
-Date: Wed, 19 Aug 2026 08:57:03 +0800
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	suzhidao@xiaomi.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH v2] docs/sched_ext: document that cgroup CPU knobs are scheduler-dependent
+Date: Wed, 19 Aug 2026 09:21:57 +0800
+Message-ID: <20260819012157.220932-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, void@manifault.com, arighi@nvidia.com,
- changwoo@igalia.com, suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
- Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH RFC] sched_ext: warn when cpu.max is set but the BPF
- scheduler doesn't implement bandwidth control
-To: Tejun Heo <tj@kernel.org>
-References: <20260818135328.174152-1-cui.tao@linux.dev>
- <aoR7ngyE44epfzXO@slm.duckdns.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <aoR7ngyE44epfzXO@slm.duckdns.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+From: Tao Cui <cuitao@kylinos.cn>
 
-Hello,
-在 2026/8/18 23:34, Tejun Heo 写道:
-> Hello,
-> 
-> On Tue, Aug 18, 2026 at 09:53:28PM +0800, Tao Cui wrote:
->> From: Tao Cui <cuitao@kylinos.cn>
->>
->> The kernel stores cpu.max bandwidth parameters in the task_group and
->> passes them to the BPF scheduler via ops.cgroup_set_bandwidth() and
->> scx_cgroup_init_args, but does not enforce the quota itself. If the
->> loaded BPF scheduler doesn't implement the callback, cpu.max is
->> silently ignored -- the cgroup gets unlimited CPU regardless of the
->> configured quota.
->>
->> Of the example schedulers, only scx_qmap implements the callback --
->> and only to bpf_printk() the parameters, so no in-tree scheduler
->> actually enforces the quota. Measured with scx_simple: a
->> cgroup with cpu.max = "50000 100000" (50% of one CPU) and one
->> busy task used 9946ms of CPU in 10 seconds with nr_throttled
->> remaining 0.
->>
->> Print a one-time warning when a finite quota is configured on a
->> cgroup while the active scheduler lacks the callback, so users and
->> container orchestrators know the quota is not enforced.
-> 
-> We had something similar with cpu.weight and it created more annoaynces than
-> helping anything. cgroup bw control isn't the only thing the BPF scheduler
-> may skip to implement. It can also choose to ignore e.g. nice levels
-> completely too and there's no way to detect things like that. Documentation
-> is probably the right way to handle this.
-> 
+The fair class enforces cpu controller knobs such as cpu.max,
+cpu.weight and cpu.idle in the kernel. sched_ext only passes them to
+the BPF scheduler through the ops.cgroup_set_*() callbacks. Whether
+and how a knob takes effect is up to the loaded scheduler: if it
+doesn't implement the corresponding callback, the knob is ignored.
+For example, none of scx_simple, scx_flatcg and scx_central implements
+ops.cgroup_set_bandwidth(), so with them cpu.max has no effect -- the
+cgroup runs at unlimited CPU with nr_throttled staying at 0.
 
-Understood, the cpu.weight precedent makes sense: the scheduler may
-ignore a whole set of knobs, and warning on just one of them would be
-arbitrary.
+The same applies to other knobs like nice levels.
 
-I'll follow up with a patch to sched-ext.rst instead: a note that
-cgroup CPU knobs like cpu.max only take effect if the loaded scheduler
-implements the corresponding callbacks, and that schedulers may also
-ignore things like nice levels.
+Document this in the basics section so users and container
+orchestrators know what to expect from a BPF scheduler.
 
-Thanks,
-Tao
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+---
+RFC -> v2: v1 added a pr_warn_once() for the missing
+ops.cgroup_set_bandwidth() implementation. Drop the warning and
+document the scheduler-dependent behavior in sched-ext.rst instead,
+as suggested in review.
 
-> Thanks.
-> 
+v1: https://lore.kernel.org/r/20260818135328.174152-1-cui.tao@linux.dev
+
+ Documentation/scheduler/sched-ext.rst | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+index 0e97fd019994..b742af4d3127 100644
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -242,6 +242,24 @@ optional. The following modified excerpt is from
+             .name                   = "simple",
+     };
+ 
++Scheduler-Dependent Knobs
++-------------------------
++
++The fair class enforces cpu controller knobs such as ``cpu.max``,
++``cpu.weight`` and ``cpu.idle`` in the kernel. sched_ext only passes
++them to the BPF scheduler through ``ops.cgroup_set_weight()``,
++``ops.cgroup_set_idle()``, ``ops.cgroup_set_bandwidth()`` and friends.
++Whether and how a knob takes effect is up to the loaded scheduler: if
++it doesn't implement the corresponding callback, the knob is ignored.
++For example, none of scx_simple, scx_flatcg and scx_central implements
++``ops.cgroup_set_bandwidth()``, so with them ``cpu.max`` has no effect
++-- the cgroup runs at unlimited CPU with ``nr_throttled`` staying
++at 0.
++
++The same applies to other knobs like nice levels: the scheduler may
++honor them partially or not at all. When relying on these knobs, check
++the documentation or source of the loaded scheduler.
++
+ Dispatch Queues
+ ---------------
+ 
+-- 
+2.43.0
 
