@@ -1,80 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B939638D3F8;
-	Thu, 20 Aug 2026 17:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639CE390204;
+	Thu, 20 Aug 2026 18:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248256; cv=none; b=LspN/Prpm/lr4D3JpKTvcdsoaZiv061wtTHNFWMh4WjuChUp7b5sH9kwbZErv4eydhUtcoMTlM4i/Sps3Js5UB/ukCEe+EXXfFP4EytWzgA8szpID6TIT3vENB5BdhJeqjVZH4Nmszj78TaC2UWorGS/1FhJ2ETwaE/KTaUT3Bo=
+	t=1787250878; cv=none; b=I5LagfxQbntik8AmedZ7Mt07rKZ+CJsbpZ+ML+zER7CbBtqE99jYudQHPWAMksU+8VKnLcdvBvgZrNBKzkD59a0azO0LuSoQyKcmtNMkOg0socM63SgIsqKbDaO7MY7Kxf7iuYT7u45Vx5fX2qiMLoCxhhkKzlTUZfNQnc9HzVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248256; c=relaxed/simple;
-	bh=8vpswHGtjiLF4kK1ZAALpwzSdQTfKRO3W9ZWvlefv6U=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=RZAAXI2zdk8k0tfiU62eQDfzYeSVU+Mw4/T931Fhb3xPxqa0/HpvNxms3bkmXok4kuiW2v0Mapi1gmNKA2xKPcuF0RszPTuIneDLudFEB/KtrgSnGctZVCu3jrHds9KA/VC0vFBoJROAPCVr2cKh5/0eDi6j7DCqqPr9n2arMRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d1jEyztT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787250878; c=relaxed/simple;
+	bh=pOBbskGIVjW0XcqcMia0eoTejHGSMld1zXd7emc8U2k=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=WxLtfnwYKXUtHzalAem/SC2zwzQ8w0v/KJBWdBaCIjdNc+Ih08wwroxpJ6yK9sTjVmvFh6OgwJLAOLCooEm4HSbA+JSl8HAjpOpskd8HcFrNTe+Au8sSmVO8EO+zoTAJh3uvzmYvfovpFusAyc8oANVEItEzRuNUB38sJff6G/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tv/Wy3Tw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d1jEyztT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583A91F00A3A;
-	Thu, 20 Aug 2026 17:50:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tv/Wy3Tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7111F000E9;
+	Thu, 20 Aug 2026 18:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787248255;
-	bh=HYslVfzV7RW5oVRODKYYfs6n1yrZNOyNaXDZsRd5Mfs=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=d1jEyztThaNoYc2dIrsNE025uG7xQBWbqJU4CjdPnpfCvz9ezJpBdmQVwaJE5jZnT
-	 AkZe82mHuuKVopJO5qDvNnaZ/JyDxUSrS1xxv/zUL+hBG6ACtVyfDPxTkNtnCXY90s
-	 xN7YUolOaYWwY7/QL1OzCoFUR/kLGsyr5LyihMdL5D9T44u5gFj8gNHoojJye/VW2I
-	 cTwut7EKn93Cf6+xqM021Ns70qKP7FDGRmK1odNkZ1jbFXuOCd9nU+wRzCYtLM3tMi
-	 ssy30plQiJ7uL4ZFOb4kGptCsSqahY8AytItGKQX7brLHzpuNUSH+JLCgUA+AP/hKv
-	 IX3PDU2SJPRwQ==
+	s=k20260515; t=1787250866;
+	bh=sIbKoxD/ivodolUdNr9HzLBze2ZMTbn2n85W7AFZYcc=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc;
+	b=Tv/Wy3TwX5RBW4BME+TIJhHwwQb/rNv6UKmcVEr3+s2H7AoisyheVadxVXfdRl/kA
+	 QiWG9fBrOIt42K5qx/Hp+y+v8RVehC4ql6R1f/SkXo8IjMRRa+b7JHAvxanEea2Jpd
+	 53mtLx58SqLtn2skW9Q7F/pVWqvs8wWZU9ImSdtCkop3ZMXSVA10LmoAohKq8Q0p/3
+	 xUriZDfSipImizRhyLyz7kfyONILUqpeYhKmFxSSxy7rV528kqw5DUbZyTQklYD4Z8
+	 nJIil2C67a9s67tWjaQnnMh+FUAGY7WlYX9GRtlCJhHRINJ7/6ad2biAL3ckVvnA6Y
+	 ZVk7yLNwZ7/mQ==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D0AE03822D56;
-	Thu, 20 Aug 2026 17:50:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 199643822D60;
+	Thu, 20 Aug 2026 18:33:38 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Changes for v7.3
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <29c6986172b4eb9ba292643ab4ad9583@kernel.org>
+References: <29c6986172b4eb9ba292643ab4ad9583@kernel.org>
+X-PR-Tracked-List-Id: <sched-ext.lists.linux.dev>
+X-PR-Tracked-Message-Id: <29c6986172b4eb9ba292643ab4ad9583@kernel.org>
+X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.3
+X-PR-Tracked-Commit-Id: fab183d632628381b466a41479489541ac0e29a0
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 11260c335ec6071af5543aef73000b28f041c124
+Message-Id: <178725081673.422553.17918065705276211307.pr-tracker-bot@kernel.org>
+Date: Thu, 20 Aug 2026 18:33:36 +0000
+To: Tejun Heo <tj@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH bpf-next] bpf: sched_ext: Mark ops argument container
- pointer fields as trusted
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <178724820540.396558.13439570619675241228.git-patchwork-notify@kernel.org>
-Date: Thu, 20 Aug 2026 17:50:05 +0000
-References: <95d7ccc17681aa3a4a2eeb1b073f00f7@kernel.org>
-In-Reply-To: <95d7ccc17681aa3a4a2eeb1b073f00f7@kernel.org>
-To: Tejun Heo <tj@kernel.org>
-Cc: ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org,
- eddyz87@gmail.com, memxor@gmail.com, john.fastabend@gmail.com,
- bpf@vger.kernel.org, void@manifault.com, arighi@nvidia.com,
- changwoo@igalia.com, emil@etsalapatis.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
 
-Hello:
+The pull request you sent on Mon, 17 Aug 2026 11:50:02 -1000:
 
-This patch was applied to bpf/bpf-next.git (master)
-by Kumar Kartikeya Dwivedi <memxor@gmail.com>:
+> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.3
 
-On Wed, 19 Aug 2026 19:20:21 -1000 you wrote:
-> Walking an unannotated pointer field of a trusted struct yields a bare
-> PTR_TO_BTF_ID in non-sleepable programs, which kfuncs and helpers accept,
-> but PTR_UNTRUSTED in sleepable programs, which they reject. This gets in the
-> way of making ops.init_task() sleepable, which schedulers want for
-> allocations. For example, passing args->cgroup into bpf_cgrp_storage_get()
-> then fails verification and the only recourse is round-tripping through the
-> cgroup ID with bpf_cgroup_from_id().
-> 
-> [...]
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/11260c335ec6071af5543aef73000b28f041c124
 
-Here is the summary with links:
-  - [bpf-next] bpf: sched_ext: Mark ops argument container pointer fields as trusted
-    https://git.kernel.org/bpf/bpf-next/c/aed1bf1a352a
+Thank you!
 
-You are awesome, thank you!
 -- 
 Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+https://korg.docs.kernel.org/prtracker.html
