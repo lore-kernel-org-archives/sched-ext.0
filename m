@@ -1,133 +1,106 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10D22F549F
-	for <sched-ext@lists.linux.dev>; Thu, 20 Aug 2026 02:37:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16247481B1;
+	Thu, 20 Aug 2026 05:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787193476; cv=none; b=hbvthE06LXGyBvy/zBngYqFihFbe0JoDX9VoyPSvGe5tyH7JQetgyEgHPWJBLjSvynyQZpQjH/YabUtVhrroUXePm8M87VxQr6ayxN2DgixsQDtY4CioDVrKbHdAV8wOvIrf5W0OXwkkUnw4lpVzhVlyqX6DhQ/UJpvdfxgADwE=
+	t=1787203224; cv=none; b=WRieLPQ2QyQWhi+SHIvMHbWQR8RCts5GmgHJnCifJJgIBxKiPtMX3/u+fAyHMXvkrj0fErb+KqcjtvcIh/RujYljyE7itxTAtVeVAg0ejM7OJLrmhehxGEEWcaJ8RgjRRthfbFx2Ltz/gvUIFLk2wVzUL9JogRHcBfeBH0wf6UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787193476; c=relaxed/simple;
-	bh=0L4PfZG7E0vwtJtXjxRrvcdqzzZE4NpMVy97GHRGjx8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cDU3ZsBCIBlE20QvLSn40QZunz/6S8hdnCiORetw5HqY3abHdbD4QxwTMnQrsmNvJkC06fas/mPlba79BZVZGibr1leu84YuQ8tPM5kHB8qZV0EqDNiyEV+UC1NdUwHmcrkrzSzIeyu0zpLIb331GHYXadOxyHilVN7+RNX81c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 21fbbe909c4011f19a56ed5b684f684d-20260820
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:b6d8eedb-761b-4a81-a2d8-4048c7b19469,IP:0,U
-	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:25
-X-CID-META: VersionHash:7db8b62,CLOUDID:46403b67e802efdec153145319f3bd91,BulkI
-	D:nil,BulkQuantity:0,SF:81|82|102|123|850|865|898,TC:nil,Content:0|15|50,E
-	DM:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:
-	0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 21fbbe909c4011f19a56ed5b684f684d-20260820
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1183335667; Thu, 20 Aug 2026 10:37:48 +0800
-From: luoliang@kylinos.cn
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH v2] Docs/admin-guide/cgroup-v2: document BPF scheduler callbacks for cpu.max and cpu.idle
-Date: Thu, 20 Aug 2026 10:37:44 +0800
-Message-Id: <20260820023744.2005150-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260819031244.178638-2-luoliang@kylinos.cn>
-References: <20260819031244.178638-2-luoliang@kylinos.cn>
+	s=arc-20240116; t=1787203224; c=relaxed/simple;
+	bh=m9D/HmIKu2w3+AnPOjYE0hFdp24SHi9mU4PniPoqmFA=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=E93i2N3RsUxKIMOmbAfh1C5XQ9iIUQZKipamtgC6DTraGsnqo6/cx6hrMNBXsJwzzw8fKRC0mlxVYPt0J80PC5pNumNbH+SSr+VBu+7I2h0ijD1zB+Ui8X7hT0YdG9qn6qkDs07WMGou/DYUDa65m+qhsZkk0Dkgvxkub2TK/Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NTiM0aEd; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NTiM0aEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F6F1F000E9;
+	Thu, 20 Aug 2026 05:20:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787203222;
+	bh=DZfBtUsbi/HyiDVjWdSkKSDR9yp2oJWNUC9FSkzF5mo=;
+	h=Date:From:To:Cc:Subject;
+	b=NTiM0aEdcM8/R/J4BnTPmtRuUkMa2/ZQUSFyRVofJCTVWoa6Hxv1J6CQwgGQkplVe
+	 K4w8E+Dua1+ehcw3TFYjgzU/b8sCs15jAhndKdlt0lkduW4iTnfw7catYAWQQ9tu/i
+	 srgIdtzEjYYlDw1aO77qwqsP5G8ybYy39cYO8MGDSHjoYWa4Nhju4PoK8gVhwEbmGZ
+	 uosFc/uVHg+Z+n4LJCRsUGBap1U4JEDEB0g1BfKnBijkT1fl6c184gf6R4d5KPzmAH
+	 L5qSo7SKhwmMe0wnuXMSnE7dWORmAyogUStKZBm33WDzYf47056OAsXjH96kIRm/pz
+	 VjzLNDJjkUe5A==
+Date: Wed, 19 Aug 2026 19:20:21 -1000
+Message-ID: <95d7ccc17681aa3a4a2eeb1b073f00f7@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>
+Cc: Andrii Nakryiko <andrii@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>,
+ Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+ John Fastabend <john.fastabend@gmail.com>, bpf@vger.kernel.org,
+ David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: [PATCH bpf-next] bpf: sched_ext: Mark ops argument container
+ pointer fields as trusted
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Liang Luo <luoliang@kylinos.cn>
+Walking an unannotated pointer field of a trusted struct yields a bare
+PTR_TO_BTF_ID in non-sleepable programs, which kfuncs and helpers accept,
+but PTR_UNTRUSTED in sleepable programs, which they reject. This gets in the
+way of making ops.init_task() sleepable, which schedulers want for
+allocations. For example, passing args->cgroup into bpf_cgrp_storage_get()
+then fails verification and the only recourse is round-tripping through the
+cgroup ID with bpf_cgroup_from_id().
 
-The cpu.weight and cpu.weight.nice entries already state that the files
-also affect a BPF scheduler through the cgroup_set_weight callback.
-However, cpu.max, cpu.max.burst and cpu.idle only mention the fair-class
-scheduler, even though sched_ext implements the cgroup_set_bandwidth
-(notified with the period/quota from cpu.max and the burst from
-cpu.max.burst) and cgroup_set_idle callbacks from these interfaces.
+The pointer fields in the sched_ext ops argument containers are all pinned
+by the callers for the duration of the ops calls and are never NULL. Add
+them to the verifier's trusted-fields whitelist so that they are PTR_TRUSTED
+in both sleepable and non-sleepable programs.
 
-Mirror the cpu.weight wording for the three entries and generalize the
-category preamble to refer to the corresponding cgroup_set_* callback so
-it keeps covering the entries below.
-
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
-
+Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
-v2: Generalize the category preamble to the corresponding cgroup_set_*
-callback so it keeps covering the entries below, per Tejun's review.
+ kernel/bpf/verifier.c |   26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
- Documentation/admin-guide/cgroup-v2.rst | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
-index aed195a71cbf..3dc6889ebdb2 100644
---- a/Documentation/admin-guide/cgroup-v2.rst
-+++ b/Documentation/admin-guide/cgroup-v2.rst
-@@ -1130,9 +1130,9 @@ policy and the underlying scheduler. From the point of view of the cpu controlle
- processes can be categorized as follows:
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -5661,6 +5661,28 @@ BTF_TYPE_SAFE_TRUSTED(struct file) {
+ 	struct inode *f_inode;
+ };
  
- * Processes under the fair-class scheduler
--* Processes under a BPF scheduler with the ``cgroup_set_weight`` callback
-+* Processes under a BPF scheduler with the corresponding ``cgroup_set_*`` callback
- * Everything else: ``SCHED_{FIFO,RR,DEADLINE}`` and processes under a BPF scheduler
--  without the ``cgroup_set_weight`` callback
-+  without the corresponding ``cgroup_set_*`` callback
++/*
++ * The pointer fields in the sched_ext ops argument containers are pinned by the
++ * callers for the duration of the ops calls and are never NULL.
++ */
++BTF_TYPE_SAFE_TRUSTED(struct scx_init_task_args) {
++#ifdef CONFIG_EXT_GROUP_SCHED
++	struct cgroup *cgroup;
++#endif
++};
++
++BTF_TYPE_SAFE_TRUSTED(struct scx_cpu_release_args) {
++	struct task_struct *task;
++};
++
++BTF_TYPE_SAFE_TRUSTED(struct scx_sub_attach_args) {
++	struct sched_ext_ops *ops;
++};
++
++BTF_TYPE_SAFE_TRUSTED(struct scx_sub_detach_args) {
++	struct sched_ext_ops *ops;
++};
++
+ BTF_TYPE_SAFE_TRUSTED_OR_NULL(struct dentry) {
+ 	struct inode *d_inode;
+ };
+@@ -5705,6 +5727,10 @@ static bool type_is_trusted(struct bpf_v
+ 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct bpf_iter__task));
+ 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct linux_binprm));
+ 	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct file));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_init_task_args));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_cpu_release_args));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_sub_attach_args));
++	BTF_TYPE_EMIT(BTF_TYPE_SAFE_TRUSTED(struct scx_sub_detach_args));
  
- For details on when a process is under the fair-class scheduler or a BPF scheduler,
- check out :ref:`Documentation/scheduler/sched-ext.rst <sched-ext>`.
-@@ -1202,7 +1202,9 @@ will be referred to. All time durations are in microseconds.
- 	$PERIOD duration.  "max" for $MAX indicates no limit.  If only
- 	one number is written, $MAX is updated.
- 
--	This file affects only processes under the fair-class scheduler.
-+	This file affects only processes under the fair-class scheduler and a BPF
-+	scheduler with the ``cgroup_set_bandwidth`` callback depending on what
-+	the callback actually does.
- 
-   cpu.max.burst
- 	A read-write single value file which exists on non-root
-@@ -1210,7 +1212,9 @@ will be referred to. All time durations are in microseconds.
- 
- 	The burst in the range [0, $MAX].
- 
--	This file affects only processes under the fair-class scheduler.
-+	This file affects only processes under the fair-class scheduler and a BPF
-+	scheduler with the ``cgroup_set_bandwidth`` callback depending on what
-+	the callback actually does.
- 
-   cpu.pressure
- 	A read-write nested-keyed file.
-@@ -1262,7 +1266,9 @@ will be referred to. All time durations are in microseconds.
- 	own relative priorities, but the cgroup itself will be treated as
- 	very low priority relative to its peers.
- 
--	This file affects only processes under the fair-class scheduler.
-+	This file affects only processes under the fair-class scheduler and a BPF
-+	scheduler with the ``cgroup_set_idle`` callback depending on what the
-+	callback actually does.
- 
- Memory
- ------
--- 
-2.43.0
-
+ 	return btf_nested_type_is_trusted(&env->log, reg, field_name, btf_id, "__safe_trusted");
+ }
