@@ -1,112 +1,87 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B1215075
-	for <sched-ext@lists.linux.dev>; Fri, 21 Aug 2026 06:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6B4376A0A;
+	Fri, 21 Aug 2026 07:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787292978; cv=none; b=OC+fgvPOXFebCe+SXfWG0EaaoEtt83+FPIJ0IXB4QvumdTemKHLlHNcWmXKcn9NyNIvc2/3IpSaIh66APSLzgiFHdUdvTlonak+JKrYVggau+3hEZSFgSi6+goh1payvDBrGWBFRFIe2EMm3LtKAy4m0LBHgSsz6yU9NSAfbtiQ=
+	t=1787297222; cv=none; b=Y76a1fj1oRkX2rWWlRnYR/svgOU7WutbdaQXi3GJ+lBlSIJy471f7oKzKXKFh1kbzyS8DqhiyBz6HaAVgctdSdKm9Td+bDhOmlSl7ySwp8zAjuIhylyu3k8hnGfzw8xFqSKiXb2Bi1van9Rvg2uScEm2KMzoiW5FgboXgcVS8tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787292978; c=relaxed/simple;
-	bh=01Q9RmN+OOG8NquUjicIubTaL5hG5FHpom47jCQMsFM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNdKFfi70ppUIa3ckbX0PwbY4KyS+E7BNdXu2l+mrmS3pC6UfHTD5bcsAs2eRk5N4C5LJNge/J6/xZo5hHs79eMuMIVBM95C0/W8OzO4M5aOTSFLKQd4qgvbb8ESMPIbuKrUF+Tu0ClRFY0czEsKZbbnhl6BLxbM9ZVYEz58Fkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IVC1nO4u; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787297222; c=relaxed/simple;
+	bh=ujs01LsbYoFWDsEKucmYAAeg3X4q6/liv7/0ASjcS70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DoIf/vSf+c7Uq1LY6oUPAHr4wUHs0P98udyvw0TP2hyypmvAkh5TJT8Og2qzXITFlm2qdGdRnjdsNWu6h3OEgvbb5RSv76kR1zoiPRMyrc4Szd+HSH/ACko8bKANTGsOy3eKLNLf88pdLiMipupbQWuBUbvzV+nBTQMHqu917C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=kQxA6f8b; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IVC1nO4u"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d530328efbso6024315ad.0
-        for <sched-ext@lists.linux.dev>; Thu, 20 Aug 2026 23:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787292976; x=1787897776; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6hJ/xBbix/1nmIFPMSZeWh1GNhMvGujT1tgCK301Z50=;
-        b=IVC1nO4u4oj5F6sWU4RY0pY5SCOZwKKMqTQu0PIBMJ3dVZuU97Y/GG+aKfvSZzIZ1b
-         +dPwptL1OYqhMbLAZiH2PcAvANR7uLnFVw5W2Q1LaMZgkemF+wY0fBOdk2V0q+AbYvE+
-         9EICYu3XhrQcXRw8ruH5fujH5Zta3LjTIDM+befEqaZT0FukGVE1Fq06vbX3hVEdL6AV
-         5jRcfraDlZOAxbw2Dsw0BeeJ4BDT6wrNzIqzUj4/xCKI2jSwY/iZI92r5Xiut7WC9L3L
-         xOCvhqq+I1cd/qRl9nt/sCrdnBpdR09ES3cJKJgoLiRXeESqvxQfE8JCNGXIwnvoKluO
-         EWjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787292976; x=1787897776;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6hJ/xBbix/1nmIFPMSZeWh1GNhMvGujT1tgCK301Z50=;
-        b=OpqzKW42/VS/JZCeMRMG0pfUC/XVzmPlQk3rUJcn8M85W2dL0v4I+TgYrY0eJHgPqk
-         LznRYpmZYm+WDK1sD6Qz8Yfvvobn70yIXPFWhGI/RHeAWLW7uedj/baCykWUihPypSgR
-         SAtUVmxUrtmCHJuKa6zyjWzfhnlUB9JWvmOvVv+wK4p+mY6VeGWW53J9ia0yPraPTREi
-         gdlfy1fmV8pXB+89PoPGeRbLEIGbC0llRbIWDdcnQY7WcXrXS+bp4YccFaXxBw9k1g2Y
-         5685oaFj2gTGfcUCBIq6saeWYFIWRnPVUoYC429DWCeXKBQ2WMj+ra+jvknu0ayBTDBd
-         B3JQ==
-X-Gm-Message-State: AFuF++mSgOC+CFyOpE7TjWTPGwjTxr7AR7Us2rAnvm9pyJrD1gytaogY
-	1bjk10DP+BqIhMcnK/8H5sBwOxIzM8vJlKymcKqdtz4NecD2hWcurgaVMVB5zVe5
-X-Gm-Gg: AR+sD12jAfCz+fTkPZEHQoeyq/fnh2psxolUY1klROJoqZP7aBblK43nLbR5YcA42uL
-	3iEk/8zyuIw3pgBSVMnPGykoXm2E1KYL9KIIixVCfEwJ6Nm+IQCDWimPrvMxM1ggoZa6qiQKEL7
-	Nl+pgNIyzvFuwg4uCn/RfkOYTcnAqVHOIVFuL/aKbZJaGbNMsxU/MZ/l6BnSghRzMoZOv6uBjGY
-	EhluoesNMbDeFAGu6IVkVPhd5d6MrmMlAjMINrYl2BiT7x0l8z1uQmZlXV2l1rsDhOQPnXYoVVy
-	303OcjCCNRu72mhOzcBB57UI4EZNDJMzUjPGRzRnkS6uBCk0PNp/JKDjYehalbGIq/4iJLZnh0g
-	Jm4zbt17U+ZQt4xPPabVn1E8kgkSIu5jRsMFBmFfcLmUBVVXF62PSm5IZ7QBzuFjATvCrcmPX5W
-	HvJKVpsMxmR7/tSlHbtRpmjGjeDjdBb5T77QS71KpgRU7M4LYqlJLzmHfpQFJ6TWQ3rUJ10x7a
-X-Received: by 2002:a17:90b:558b:b0:37f:fdc8:71b4 with SMTP id 98e67ed59e1d1-395c33371a9mr8062450a91.2.1787292976085;
-        Thu, 20 Aug 2026 23:16:16 -0700 (PDT)
-Received: from osman.mioffice.cn ([43.224.245.178])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395c45539a1sm1765801a91.3.2026.08.20.23.16.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Aug 2026 23:16:15 -0700 (PDT)
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
-X-Google-Original-From: Zhan Xusheng <zhanxusheng@xiaomi.com>
-To: yaoyiqi3@huawei.com
-Cc: sched-ext@lists.linux.dev,
-	tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	zhanxusheng@xiaomi.com
-Subject: Re: [scx_nest] bpf_timer_cancel() unusable from select_cpu()
-Date: Fri, 21 Aug 2026 14:16:08 +0800
-Message-ID: <20260821061608.1987231-1-zhanxusheng@xiaomi.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <19aa0be21ad34c6cabab7cc8b26d4656@huawei.com>
-References: <6aecefa9aee94aa3a029b66f91692e7c@huawei.com> <19aa0be21ad34c6cabab7cc8b26d4656@huawei.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="kQxA6f8b"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=UknPsqmY1hEIo/lnBl+MoQHeD8mmK/W3caSnngii74U=; b=kQxA6f8b3Xm1fCI/A1xNHey7eH
+	wp3s2nnZjYFLncfQxEAiS0RGxSYG65D02NzFLnTNFLhbc2Fh7ry1F1TA1esBvkArVi6Yo7QV5Bhv/
+	v/pchFUNfRTfcd74rQPDKoTwH3WUGRU04pyGPlL6Im6im05+iBysw7JVBmKvJiJ0Q6BU4ko0HGBNg
+	w/Q48i3oXR5LDlZdsbXKM3kXp5hsBXCNiatlIWKpKN38phn2D/hXfIjnKTFHZOGyZYxyvN+P4ghur
+	YLjwigfkhG6ec3pAwvljLbK8e9rE4QI8TctejROpM2k+qcHl21betVEE+Q4B/MaawV2UKR5OEoh0x
+	vDJ5ifAg==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wxJeR-0000000GwOC-2FH7;
+	Fri, 21 Aug 2026 07:26:55 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 0682F300324; Fri, 21 Aug 2026 09:26:54 +0200 (CEST)
+Date: Fri, 21 Aug 2026 09:26:53 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: Michal Blaszczyk <michalblk@google.com>,
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched: Serialize cgroup updates to prevent CFS/SCX state
+ divergence
+Message-ID: <20260821072653.GD4120091@noisy.programming.kicks-ass.net>
+References: <20260820160956.910663-1-michalblk@google.com>
+ <aoc3fUfZDnZ0eSL_@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aoc3fUfZDnZ0eSL_@slm.duckdns.org>
 
-On Fri, 21 Aug 2026 04:22:26 +0000, yaoyiqi (A) wrote:
-> + if (!pcpu_ctx->scheduled_compaction)
-> +   return 0;
+On Thu, Aug 20, 2026 at 07:21:01AM -1000, Tejun Heo wrote:
+> Hello,
+> 
+> On Thu, Aug 20, 2026 at 04:09:56PM +0000, Michal Blaszczyk wrote:
+> > Concurrent writes to cgroup control files (such as cpu.shares or
+> > cpu.weight) can lead to state divergence between CFS and SCX.
+> > 
+> > For instance, in cpu_shares_write_u64(), the CFS update is serialized
+> > by shares_mutex (internal to fair.c), but this lock is dropped before
+> > scx_group_set_weight() is called. The latter only acquires a read
+> > semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
+> > and act on the sched_ext update concurrently.
+> > 
+> > This serialization gap allows concurrent writes to interleave.
+> > As a result, the recorded state in CFS, the SCX internal bookkeeping
+> > (e.g., tg->scx.weight), and the BPF scheduler itself can end up operating
+> > on completely distinct parameters (pairwise distinct values).
+> > 
+> > Similar races are present in tg_set_bandwidth(), cpu_idle_write_s64(),
+> > cpu_weight_write_u64(), and cpu_weight_nice_write_s64().
+> > 
+> > Fix this by introducing scx_cgroup_mutex in kernel/sched/core.c to
+> > serialize these file write operations.
+> 
+> I wonder whether a better way to do this is just taking out fair's
+> cpu.weight and .max locking into the core layer so that both callbacks are
+> called under the same locking. Peter, what do you think?
 
-stat_inc(NEST_STAT(CALLBACK_COMPACTED)) sits above this, so the stale
-expiries get counted as compactions that did not happen. The counters
-also stop adding up: the cancel in migrate_primary() takes
-CANCELLED_COMPACTION, then the same timer still fires and takes
-CALLBACK_COMPACTED, so SCHEDULED_COMPACTION no longer matches the sum
-unless the core was re-armed in between. Upstream can reach the same
-state, since the callback clears scheduled_compaction only at its end and
-a cancel can arrive while it runs, but there it needs that race. Moving
-the stat_inc() below your check would cover both.
-
-> +    * path, which can run with local IRQs disabled or in hardirq
-> +    * contexts - not merely "non-sleepable" - so the timer cancel
-
-I would drop the "can": it looks unconditional to me. select_task_rq()
-carries lockdep_assert_held(&p->pi_lock) at kernel/sched/core.c:3626, and
-the paths reaching select_task_rq_scx() all hold that lock with IRQs off:
-
-  try_to_wake_up()    scoped_guard(raw_spinlock_irqsave) 4302, call 4403
-  wake_up_new_task()  raw_spin_lock_irqsave() 4957, call 4968
-  sched_exec()        scoped_guard(raw_spinlock_irqsave) 5639, call 5640
-
-So it is the caller's lock rather than the wakeup being IRQ-driven, and
-sched_exec() is not a wakeup at all.
-
-Thanks,
-Zhan Xusheng
+Yeah, makes sense, no point in fair having an extra/superfluous layer of
+locking if it is (also) needed in core.
