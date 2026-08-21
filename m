@@ -1,165 +1,310 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFBD2E1746
-	for <sched-ext@lists.linux.dev>; Fri, 21 Aug 2026 10:51:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7BC4BCADD
+	for <sched-ext@lists.linux.dev>; Fri, 21 Aug 2026 14:08:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787309488; cv=none; b=i5NTW3bUNR1ltiLra5n+rRQqUIRB9hanNZ7eXka7m/xpkZzO0tKEyZ6Y27aC+r3t4QbsjKUoQVBHOQWlaUynUXkKy/Z7ffMTC9GKC9rJvXexPptzlh4jABZhMY9il/HBBZjlDxWUrRADNmJurKR2ufUATJu0P/wvaUoRPpJOAus=
+	t=1787321306; cv=none; b=lKcZW6Iy25cOKoAsOO1ZKQmUe5ds1VBGjdB3IWqhdmkHUP3EhTU+1P7SzI4DUAPl94jZQRYZqtaEyA+ftSDgEhEeFXZxHT88Z0PUCO6vR/LcfrNMGpjRlYlU7fOMZjSCbFPinsjpMtvfrzjI/XvVxbpD+Lb5tr/DonwvMrEeTd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787309488; c=relaxed/simple;
-	bh=pnOHacPiJjOustDq3ioKb1SGwv3LjXZQa2x7Or5xOMY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=NzgaPSp3fW86ZVV8Xz7SGOstgi03USasF97NgzyFEGbcftrYkGpQd+MlmyAMiB/PQpfIgY3LWUciUK9uMmn/h0ToSWZP16Kh05KQsEa6mJbpp+BoQTz8R7KSLnrcbRtC0F5LCkmhFhzqc117TQeiwCqrBsDOzDTHsAGaGFI78ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aL4uSCAH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787321306; c=relaxed/simple;
+	bh=1UUlF2cZTl6c2ibL0rI8cH0G51rHXWflFbG4d2ailV4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=eFrF5g3cb7Gnu0/9wUu/5//7I6R11i1kBKuG/9gIJUIsH0/n5vY8ChkijJbd88YVTJhao4hr3aSRF2DJLjDT+hHZlVPv3thsbyB2nCLr69wojXQts0MKqM0BbIwH+DQ4+byVp0Qf6oCTheZ/CrsUwJ/NuNbIo/LJ8E3RAbBbTTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tOOU3+4B; arc=none smtp.client-ip=209.85.218.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aL4uSCAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DF71F000E9;
-	Fri, 21 Aug 2026 10:51:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787309484;
-	bh=tAhU0a162db0bW1rlkaOhhevY/2ZJbeOSta/eSoL5ZI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=aL4uSCAHv/N4ATOZN9l3JDx5qGb9GaGLL6LMqvUel7/VhbJCFC5jdHAwLRHXbAU4D
-	 HntLjOEyGFTId2Qe7NH7TlQhz9GgmBE4icnRcZOOKSi4scwEgmxd3QMAgsvYbwBWOV
-	 WBnMPEUqmDsAA7NdY7XVWG8p78raNihu9hT3PXoVUtZn3bNgFxAIQM7AiEyr9X/U33
-	 G/EeezoUgJNxSPKm66kVIThtGLnNHweP6YYqmsZia/MHkVdxlHG/KKtbL5oqy2J7Iv
-	 WhnVPQyPlb1oftRR2fUQ6jTS42wwJzYEJZDOIbQMAjrnDG+AKeCy9c+gMcWZk0WgiS
-	 3eLZFc/xZNMnw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: serialize concurrent cpu.max writers in
- scx_group_set_bandwidth()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Changwoo Min" <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260821103519.535987-1-changwoo@igalia.com>
-References: <20260821103519.535987-1-changwoo@igalia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 21 Aug 2026 10:51:24 +0000
-Message-Id: <20260821105124.B8DF71F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tOOU3+4B"
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c15ceb17a28so80099366b.3
+        for <sched-ext@lists.linux.dev>; Fri, 21 Aug 2026 07:08:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1787321303; x=1787926103; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aCzTkx0pupMnYZ6ntE5lO1Cpb9db2o3gqIZbTK/FRCY=;
+        b=tOOU3+4BE1l1WSw8qwatlVHY4glJHh0AcVgLUBFcnmdYf7pauul3RI8M6YeomPRDHo
+         zvY9t9nT2feUa/equQanBEoxp5Yc6xNnuJZkJr6/YAjc95wiKv9hTtCnea8quexObKPc
+         Fj9vxf2xAVQgEkcivFYxl/WRbUFr4pcJApnNlRyhmX1/+K5/SJ70SgO0c6xTyuDqtLtx
+         oWmQX34fiwH1K8hhlT1Y4285SA6aRT6jx/4hCcsLZdUfTkPZ2lP++GoYwi80D4ST22Ig
+         aqipOaUOjsnZ200Ccv+mTQVAUuzMm2cZhNTzZVD/E4kbq2dBnDr0IUhYCjMuZujgBB2v
+         yIng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787321303; x=1787926103;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=aCzTkx0pupMnYZ6ntE5lO1Cpb9db2o3gqIZbTK/FRCY=;
+        b=RQ/XPUzRz3V8JSvpM1BfpXJFo1smUL92KthPcsLTM8HEq3FAfrpzUrvmZ6jCKs3VBx
+         FYgW5z8sqrm8KLO747t5UcfbtJvYneI2Jt4CX+ABq1fj9qZ3+ex6ewKrGtuCMJYkgTg7
+         HTPbunEyOUAL+OnsIZMxDFVHpmeXGK8ZQpNykVWYEQ+7c1Tj7QXd5sQmn5cp7nQRqa1N
+         JYRWd6qtiInbkiqvV22MWT53FZ2T+of/amaQAHKBgwM3ckeeeYpjjAvqYrw98rOcvsXe
+         +UtPKpZd7HtO2yzX2Mn97XhZzeKV6ScsQcZQH4CCiOlVrYIZxBDvKaqEFdsdVyysMWHM
+         saww==
+X-Forwarded-Encrypted: i=1; AHgh+RqIziki0NCXKoEa+T2Zuo3C6J0L/Ycz0XPC/gYYVIyX6kJUGWwFD7z2IOB4ROuqgEmzmAqznB9rNm8=@lists.linux.dev
+X-Gm-Message-State: AFuF++mf82eEiFYlxXIjnqxgZKEZa0nxyaQk4H6LMV75ZOn3LPTB4YKd
+	VfdSOlKy/32z9Oimz8AOl2K5cWNzjMwArqERJh7/Qb7aIAQ6XTEL7QdqThwMuPuBgwoMUPrVV4g
+	TtAQnOkfhrK0soBLWqg==
+X-Received: from ejcus4.prod.google.com ([2002:a17:907:cd04:b0:c21:7748:c9cc])
+ (user=michalblk job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:907:3d0a:b0:c20:83b1:396c with SMTP id a640c23a62f3a-c246a62b68fmr658178466b.17.1787321302375;
+ Fri, 21 Aug 2026 07:08:22 -0700 (PDT)
+Date: Fri, 21 Aug 2026 14:08:18 +0000
+In-Reply-To: <20260820160956.910663-1-michalblk@google.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+Mime-Version: 1.0
+References: <20260820160956.910663-1-michalblk@google.com>
+X-Mailer: git-send-email 2.55.0.860.g4b6b3295ed-goog
+Message-ID: <20260821140818.1559100-1-michalblk@google.com>
+Subject: [PATCH v2] sched: Lift cgroup update locking to core to prevent
+ CFS/SCX divergence
+From: Michal Blaszczyk <michalblk@google.com>
+To: Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>, 
+	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Michal Blaszczyk <michalblk@google.com>, Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+Concurrent writes to cgroup control files (such as cpu.shares or
+cpu.weight) can lead to state divergence between CFS and SCX.
 
-New issues:
-- [Medium] Acquiring a global mutex inside a per-CPU rwsem read-side critic=
-al section causes severe starvation for scheduler operations.
+For instance, in cpu_shares_write_u64(), the CFS update is serialized
+by shares_mutex (internal to fair.c), but this lock is dropped before
+scx_group_set_weight() is called. The latter only acquires a read
+semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
+and act on the sched_ext update concurrently.
 
-Pre-existing issues:
-- [High] Concurrent writers to cgroup bandwidth limits cause the CFS and SC=
-X states to permanently diverge due to split-lock domains.
-- [High] The write-side mutex fails to protect the lockless Read-Modify-Wri=
-te cycle, resulting in lost updates and permanently committed torn reads.
-- [High] Missing serialization for other unprotected cgroup attributes (`cp=
-u.weight` and `cpu.idle`).
---
+This serialization gap allows concurrent writes to interleave.
+As a result, the recorded state in CFS, the SCX internal bookkeeping
+(e.g., tg->scx.weight), and the BPF scheduler itself can end up operating
+on completely distinct parameters (pairwise distinct values).
 
---- Patch [1]: [PATCH] sched_ext: serialize concurrent cpu.max writers in s=
-cx_group_set_bandwidth() ---
-commit bbcc7e2a9caf9650a3bf7bd4d7036631840fbfd4
-Author: Changwoo Min <changwoo@igalia.com>
+Similar races are present in tg_set_bandwidth(), cpu_idle_write_s64(),
+cpu_weight_write_u64(), and cpu_weight_nice_write_s64().
 
-sched_ext: serialize concurrent cpu.max writers in scx_group_set_bandwidth()
+Fix this by moving the CFS locking up into the core layer in
+`kernel/sched/core.c`. By acquiring these locks directly in the core
+write handlers, both the CFS and SCX callbacks are executed atomically
+under the same lock.
 
-Concurrent writes to a cgroup's cpu.max are not serialized by the cgroup or
-kernfs layer. This patch adds scx_cgroup_set_bw_mutex to serialize SCX-side
-updates, preventing interleaved writers and torn 64-bit stores.
+Fixes: 819513666966 ("sched_ext: Add cgroup support")
+Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+---
+v2:
+ - Lifted existing CFS locks up into the Core layer instead of introducing
+   a new global mutex, ensuring both callbacks run atomically under
+   the same lock.
+ - Refactored internal locking callbacks to avoid double-locking scenarios.
 
-Link: https://lore.kernel.org/sched-ext/20260817172131.BCDA51F000E9@smtp.ke=
-rnel.org/
+ kernel/sched/core.c  | 35 +++++++++++++++++++++++------------
+ kernel/sched/fair.c  | 23 ++++++++++++-----------
+ kernel/sched/sched.h |  7 +++++++
+ 3 files changed, 42 insertions(+), 23 deletions(-)
 
-[Severity: High]
-This is a pre-existing issue, but does the split-lock design between CFS
-and SCX cause their states to permanently diverge?
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index f5f7ff8c680a..6dd21a701bb5 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9779,6 +9779,8 @@ static int cpu_uclamp_max_show(struct seq_file *sf, void *v)
+ }
+ #endif /* CONFIG_UCLAMP_TASK_GROUP */
+ 
++DEFINE_MUTEX(shares_mutex);
++
+ #ifdef CONFIG_GROUP_SCHED_WEIGHT
+ static unsigned long tg_weight(struct task_group *tg)
+ {
+@@ -9796,7 +9798,10 @@ static int cpu_shares_write_u64(struct cgroup_subsys_state *css,
+ 
+ 	if (shareval > scale_load_down(ULONG_MAX))
+ 		shareval = MAX_SHARES;
+-	ret = sched_group_set_shares(css_tg(css), scale_load(shareval));
++
++	guard(mutex)(&shares_mutex);
++
++	ret = sched_group_set_shares_locked(css_tg(css), scale_load(shareval));
+ 	if (!ret)
+ 		scx_group_set_weight(css_tg(css),
+ 				     sched_weight_to_cgroup(shareval));
+@@ -9811,8 +9816,6 @@ static u64 cpu_shares_read_u64(struct cgroup_subsys_state *css,
+ #endif /* CONFIG_GROUP_SCHED_WEIGHT */
+ 
+ #ifdef CONFIG_CFS_BANDWIDTH
+-static DEFINE_MUTEX(cfs_constraints_mutex);
+-
+ static int __cfs_schedulable(struct task_group *tg, u64 period, u64 runtime);
+ 
+ static int tg_set_cfs_bandwidth(struct task_group *tg,
+@@ -9831,13 +9834,6 @@ static int tg_set_cfs_bandwidth(struct task_group *tg,
+ 
+ 	burst = (u64)burst_us * NSEC_PER_USEC;
+ 
+-	/*
+-	 * Prevent race between setting of cfs_rq->runtime_enabled and
+-	 * unthrottle_offline_cfs_rqs().
+-	 */
+-	guard(cpus_read_lock)();
+-	guard(mutex)(&cfs_constraints_mutex);
+-
+ 	ret = __cfs_schedulable(tg, period, quota);
+ 	if (ret)
+ 		return ret;
+@@ -10089,6 +10085,8 @@ static u64 cpu_period_read_u64(struct cgroup_subsys_state *css,
+ 	return period_us;
+ }
+ 
++static DEFINE_MUTEX(cfs_constraints_mutex);
++
+ static int tg_set_bandwidth(struct task_group *tg,
+ 			    u64 period_us, u64 quota_us, u64 burst_us)
+ {
+@@ -10131,6 +10129,13 @@ static int tg_set_bandwidth(struct task_group *tg,
+ 					burst_us + quota_us > max_bw_runtime_us))
+ 		return -EINVAL;
+ 
++	/*
++	 * Prevent race between setting of cfs_rq->runtime_enabled and
++	 * unthrottle_offline_cfs_rqs().
++	 */
++	guard(cpus_read_lock)();
++	guard(mutex)(&cfs_constraints_mutex);
++
+ #ifdef CONFIG_CFS_BANDWIDTH
+ 	ret = tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
+ #endif /* CONFIG_CFS_BANDWIDTH */
+@@ -10229,6 +10234,8 @@ static int cpu_idle_write_s64(struct cgroup_subsys_state *css,
+ {
+ 	int ret;
+ 
++	guard(mutex)(&shares_mutex);
++
+ 	ret = sched_group_set_idle(css_tg(css), idle);
+ 	if (!ret)
+ 		scx_group_set_idle(css_tg(css), idle);
+@@ -10405,7 +10412,9 @@ static int cpu_weight_write_u64(struct cgroup_subsys_state *css,
+ 
+ 	weight = sched_weight_from_cgroup(cgrp_weight);
+ 
+-	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
++	guard(mutex)(&shares_mutex);
++
++	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
+ 	if (!ret)
+ 		scx_group_set_weight(css_tg(css), cgrp_weight);
+ 	return ret;
+@@ -10442,7 +10451,9 @@ static int cpu_weight_nice_write_s64(struct cgroup_subsys_state *css,
+ 	idx = array_index_nospec(idx, 40);
+ 	weight = sched_prio_to_weight[idx];
+ 
+-	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
++	guard(mutex)(&shares_mutex);
++
++	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
+ 	if (!ret)
+ 		scx_group_set_weight(css_tg(css),
+ 				     sched_weight_to_cgroup(weight));
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 001140132a7d..9d69372dc0c1 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -15392,8 +15392,6 @@ void init_tg_cfs_entry(struct task_group *tg, struct cfs_rq *cfs_rq,
+ 	se->parent = parent;
+ }
+ 
+-static DEFINE_MUTEX(shares_mutex);
+-
+ static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
+ {
+ 	int i;
+@@ -15430,36 +15428,40 @@ static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
+ 	return 0;
+ }
+ 
+-int sched_group_set_shares(struct task_group *tg, unsigned long shares)
++int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
+ {
+ 	int ret;
+ 
+-	mutex_lock(&shares_mutex);
++	lockdep_assert_held(&shares_mutex);
++
+ 	if (tg_is_idle(tg))
+ 		ret = -EINVAL;
+ 	else
+ 		ret = __sched_group_set_shares(tg, shares);
+-	mutex_unlock(&shares_mutex);
+ 
+ 	return ret;
+ }
+ 
++int sched_group_set_shares(struct task_group *tg, unsigned long shares)
++{
++	guard(mutex)(&shares_mutex);
++	return sched_group_set_shares_locked(tg, shares);
++}
++
+ int sched_group_set_idle(struct task_group *tg, long idle)
+ {
+ 	int i;
+ 
++	lockdep_assert_held(&shares_mutex);
++
+ 	if (tg == &root_task_group)
+ 		return -EINVAL;
+ 
+ 	if (idle < 0 || idle > 1)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&shares_mutex);
+-
+-	if (tg->idle == idle) {
+-		mutex_unlock(&shares_mutex);
++	if (tg->idle == idle)
+ 		return 0;
+-	}
+ 
+ 	tg->idle = idle;
+ 
+@@ -15505,7 +15507,6 @@ int sched_group_set_idle(struct task_group *tg, long idle)
+ 	else
+ 		__sched_group_set_shares(tg, NICE_0_LOAD);
+ 
+-	mutex_unlock(&shares_mutex);
+ 	return 0;
+ }
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 26ae13c86b69..9e14b07bddcf 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -599,7 +599,10 @@ extern void sched_release_group(struct task_group *tg);
+ extern void sched_move_task(struct task_struct *tsk, bool for_autogroup);
+ 
+ #ifdef CONFIG_FAIR_GROUP_SCHED
++extern struct mutex shares_mutex;
++
+ extern int sched_group_set_shares(struct task_group *tg, unsigned long shares);
++extern int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares);
+ 
+ extern int sched_group_set_idle(struct task_group *tg, long idle);
+ 
+@@ -607,6 +610,10 @@ extern void set_task_rq_fair(struct sched_entity *se,
+ 			     struct cfs_rq *prev, struct cfs_rq *next);
+ #else /* !CONFIG_FAIR_GROUP_SCHED: */
+ static inline int sched_group_set_shares(struct task_group *tg, unsigned long shares) { return 0; }
++static inline int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
++{
++	return 0;
++}
+ static inline int sched_group_set_idle(struct task_group *tg, long idle) { return 0; }
+ #endif /* !CONFIG_FAIR_GROUP_SCHED */
+ 
+-- 
+2.55.0.860.g4b6b3295ed-goog
 
-When two concurrent writers modify cpu.max, tg_set_bandwidth() updates
-the CFS subsystem sequentially under cfs_constraints_mutex, and then the
-SCX subsystem under the new scx_cgroup_set_bw_mutex:
-
-kernel/sched/core.c:tg_set_bandwidth()
-#ifdef CONFIG_CFS_BANDWIDTH
-    ret =3D tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
-#endif /* CONFIG_CFS_BANDWIDTH */
-    if (!ret)
-        scx_group_set_bandwidth(tg, period_us, quota_us, burst_us);
-
-Because these locks are not held atomically across both updates, writers
-can interleave. CFS might commit the second writer's limits while SCX
-commits the first writer's limits.
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does the write-side mutex
-fail to protect the lockless Read-Modify-Write cycle?
-
-Handlers like cpu_max_write() and cpu_burst_write_u64() perform an RMW
-cycle by calling tg_bandwidth() to read existing limits locklessly:
-
-kernel/sched/core.c:tg_bandwidth()
-#else /* !CONFIG_CFS_BANDWIDTH */
-    if (period_us_p)
-        *period_us_p =3D tg->scx.bw_period_us;
-    if (quota_us_p)
-        *quota_us_p =3D tg->scx.bw_quota_us;
-
-They then modify one field and write everything back via tg_set_bandwidth().
-
-Concurrent writers to different fields will read each other's stale data
-and overwrite the other's update. Since the new scx_cgroup_set_bw_mutex
-only protects the final write, doesn't this leave the RMW cycle broken,
-allowing corrupted or torn 64-bit limits to be written back on 32-bit
-architectures?
-
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index b646711a45fee..a2fc581d9636d 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-[ ... ]
-> @@ -4945,6 +4952,7 @@ void scx_group_set_bandwidth(struct task_group *tg,
->  	struct scx_sched *sch;
-> =20
->  	percpu_down_read(&scx_cgroup_ops_rwsem);
-> +	mutex_lock(&scx_cgroup_set_bw_mutex);
-
-[Severity: Medium]
-Does acquiring this global mutex inside a per-CPU rwsem read-side locking
-section cause starvation for scheduler operations?
-
-If multiple threads write to cpu.max across any cgroups system-wide, they
-will all acquire the read lock and queue up sequentially on the global
-mutex. If a system thread then attempts an operation requiring the write
-lock, it must wait for every queued thread to individually acquire the
-mutex, run a potentially slow BPF operation, and release the read lock.
-
-Would reversing the lock order avoid inflating the read-side hold time?
-
-[ ... ]
-
-[Severity: High]
-This is a pre-existing issue, but do other cgroup attributes like
-cpu.weight and cpu.idle lack serialization?
-
-For example, in scx_group_set_weight(), concurrent writers can
-race through the SCX_CALL_OP() dispatch and the subsequent assignment
-to tg->scx.weight.
-
-kernel/sched/ext/ext.c:scx_group_set_weight()
-    if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_weight) &&
-        tg->scx.weight !=3D weight)
-        SCX_CALL_OP(sch, cgroup_set_weight, NULL, tg_cgrp(tg), weight);
-
-    tg->scx.weight =3D weight;
-
-Since the BPF dispatch and the cache update are not atomically linked,
-writers can interleave, leaving the BPF scheduler applying one weight
-while the kernel caches another. Should similar serialization be applied
-to scx_group_set_weight() and scx_group_set_idle() to prevent this?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260821103519.5359=
-87-1-changwoo@igalia.com?part=3D1
