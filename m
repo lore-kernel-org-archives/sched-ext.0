@@ -1,310 +1,115 @@
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7BC4BCADD
-	for <sched-ext@lists.linux.dev>; Fri, 21 Aug 2026 14:08:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4311C38E8DA;
+	Fri, 21 Aug 2026 19:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787321306; cv=none; b=lKcZW6Iy25cOKoAsOO1ZKQmUe5ds1VBGjdB3IWqhdmkHUP3EhTU+1P7SzI4DUAPl94jZQRYZqtaEyA+ftSDgEhEeFXZxHT88Z0PUCO6vR/LcfrNMGpjRlYlU7fOMZjSCbFPinsjpMtvfrzjI/XvVxbpD+Lb5tr/DonwvMrEeTd4=
+	t=1787339155; cv=none; b=Bl0yuXJmaP61/Lba541ycvKMUgsGBcW6cBARyqAzO7FwrVge/B6mReal6jQRg+BRx4EB6nYT7O8ndYk+y3W9QA3855/O7jhPv/5FUxLJmPgCKXBkNUP3sMQ+Ez8LOfNR1qkTr4AlhIQgsDtSuwxbT2fJNrizaCbXGeWpP3FUXG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787321306; c=relaxed/simple;
-	bh=1UUlF2cZTl6c2ibL0rI8cH0G51rHXWflFbG4d2ailV4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=eFrF5g3cb7Gnu0/9wUu/5//7I6R11i1kBKuG/9gIJUIsH0/n5vY8ChkijJbd88YVTJhao4hr3aSRF2DJLjDT+hHZlVPv3thsbyB2nCLr69wojXQts0MKqM0BbIwH+DQ4+byVp0Qf6oCTheZ/CrsUwJ/NuNbIo/LJ8E3RAbBbTTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tOOU3+4B; arc=none smtp.client-ip=209.85.218.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com
+	s=arc-20240116; t=1787339155; c=relaxed/simple;
+	bh=BXwzC/o7+wzzyOgny2Iz8qWNgkC9nOGI1B2Rm9yjJ2g=;
+	h=Date:Message-ID:From:To:To:To:Cc:Cc:Cc:Subject; b=J19zg5D1afnyfJehWTS9HqS5kAHrnecWoAg4/corGxEcCRGonXEGazkBTOwYDzELD+3OVbQP7TUtDvjQhbbFcY5Cp2DsNfP5aqYebEuNt35Ods5z66ffhi+isqFxdB+Mcy2N34KBebdEoUZoOpwNazFj8e10NI6CDOCjvm6U0oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKfaO5/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tOOU3+4B"
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c15ceb17a28so80099366b.3
-        for <sched-ext@lists.linux.dev>; Fri, 21 Aug 2026 07:08:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1787321303; x=1787926103; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aCzTkx0pupMnYZ6ntE5lO1Cpb9db2o3gqIZbTK/FRCY=;
-        b=tOOU3+4BE1l1WSw8qwatlVHY4glJHh0AcVgLUBFcnmdYf7pauul3RI8M6YeomPRDHo
-         zvY9t9nT2feUa/equQanBEoxp5Yc6xNnuJZkJr6/YAjc95wiKv9hTtCnea8quexObKPc
-         Fj9vxf2xAVQgEkcivFYxl/WRbUFr4pcJApnNlRyhmX1/+K5/SJ70SgO0c6xTyuDqtLtx
-         oWmQX34fiwH1K8hhlT1Y4285SA6aRT6jx/4hCcsLZdUfTkPZ2lP++GoYwi80D4ST22Ig
-         aqipOaUOjsnZ200Ccv+mTQVAUuzMm2cZhNTzZVD/E4kbq2dBnDr0IUhYCjMuZujgBB2v
-         yIng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787321303; x=1787926103;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=aCzTkx0pupMnYZ6ntE5lO1Cpb9db2o3gqIZbTK/FRCY=;
-        b=RQ/XPUzRz3V8JSvpM1BfpXJFo1smUL92KthPcsLTM8HEq3FAfrpzUrvmZ6jCKs3VBx
-         FYgW5z8sqrm8KLO747t5UcfbtJvYneI2Jt4CX+ABq1fj9qZ3+ex6ewKrGtuCMJYkgTg7
-         HTPbunEyOUAL+OnsIZMxDFVHpmeXGK8ZQpNykVWYEQ+7c1Tj7QXd5sQmn5cp7nQRqa1N
-         JYRWd6qtiInbkiqvV22MWT53FZ2T+of/amaQAHKBgwM3ckeeeYpjjAvqYrw98rOcvsXe
-         +UtPKpZd7HtO2yzX2Mn97XhZzeKV6ScsQcZQH4CCiOlVrYIZxBDvKaqEFdsdVyysMWHM
-         saww==
-X-Forwarded-Encrypted: i=1; AHgh+RqIziki0NCXKoEa+T2Zuo3C6J0L/Ycz0XPC/gYYVIyX6kJUGWwFD7z2IOB4ROuqgEmzmAqznB9rNm8=@lists.linux.dev
-X-Gm-Message-State: AFuF++mf82eEiFYlxXIjnqxgZKEZa0nxyaQk4H6LMV75ZOn3LPTB4YKd
-	VfdSOlKy/32z9Oimz8AOl2K5cWNzjMwArqERJh7/Qb7aIAQ6XTEL7QdqThwMuPuBgwoMUPrVV4g
-	TtAQnOkfhrK0soBLWqg==
-X-Received: from ejcus4.prod.google.com ([2002:a17:907:cd04:b0:c21:7748:c9cc])
- (user=michalblk job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:907:3d0a:b0:c20:83b1:396c with SMTP id a640c23a62f3a-c246a62b68fmr658178466b.17.1787321302375;
- Fri, 21 Aug 2026 07:08:22 -0700 (PDT)
-Date: Fri, 21 Aug 2026 14:08:18 +0000
-In-Reply-To: <20260820160956.910663-1-michalblk@google.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BKfaO5/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65521F000E9;
+	Fri, 21 Aug 2026 19:05:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787339153;
+	bh=EGkvMFqDA+k5y3HDINukKqc1JBSHxHzV/eeNSy25ju8=;
+	h=Date:From:To:To:To:Cc:Cc:Cc:Subject;
+	b=BKfaO5/uUbCUE1aIMXevichpbG7OVDw6zZrGbKX7LYd3HTxvWv20GwD6mt+K8mg7r
+	 Pt+hru2cbWy/EvbyxkCO6MWPq7Ax6eyL0ZcX3WrNycFLK8b5h9HWASz1nObdVasBPv
+	 nUbCxCbVNfZCE4gXt4V1ODKnDUWZy6i9lncMXIarzqtjtErUWomWxjyNXCW+tBI5oj
+	 8EodPTJMF/ogdDGTtgoo3g91y1XXlzfZjyhQ3p/+KYSeEvwiOrkEsSubOsDPzKtPsK
+	 AoFhpKpwoGzeC5o10yW8dbUTqnhgv37N5f1TE5oeWfg8oAh4NVc9FiQaa/BCh6bqwz
+	 rVdTWcnFk8GbA==
+Date: Fri, 21 Aug 2026 09:05:52 -1000
+Message-ID: <7b3b7e35d462fe061105f09de3a2eba9@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>
+To: Andrea Righi <arighi@nvidia.com>
+To: Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>
+Cc: sched-ext@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
+Subject: [PATCH sched_ext/for-7.3-fixes] sched_ext: Fix spurious aborts in scx_bpf_dsq_move() on ownership change races
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260820160956.910663-1-michalblk@google.com>
-X-Mailer: git-send-email 2.55.0.860.g4b6b3295ed-goog
-Message-ID: <20260821140818.1559100-1-michalblk@google.com>
-Subject: [PATCH v2] sched: Lift cgroup update locking to core to prevent
- CFS/SCX divergence
-From: Michal Blaszczyk <michalblk@google.com>
-To: Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>, 
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: Michal Blaszczyk <michalblk@google.com>, Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-Concurrent writes to cgroup control files (such as cpu.shares or
-cpu.weight) can lead to state divergence between CFS and SCX.
+scx_dsq_move() verifies that the task belongs to the calling scheduler
+before taking any locks and aborts the scheduler on mismatch. The task can
+lose the sched association at any point: It can run and fully exit, which
+clears the association, or get rehomed to a different sub-sched. Both are
+benign races, but the early ownership check escalates them into scheduler
+aborts.
 
-For instance, in cpu_shares_write_u64(), the CFS update is serialized
-by shares_mutex (internal to fair.c), but this lock is dropped before
-scx_group_set_weight() is called. The latter only acquires a read
-semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
-and act on the sched_ext update concurrently.
+Move the ownership check below the cursor-lost check. Every ownership change
+dequeues the task first, so a task that is still on the iterated DSQ under
+the lock while owned elsewhere indicates a genuine violation and should
+abort.
 
-This serialization gap allows concurrent writes to interleave.
-As a result, the recorded state in CFS, the SCX internal bookkeeping
-(e.g., tg->scx.weight), and the BPF scheduler itself can end up operating
-on completely distinct parameters (pairwise distinct values).
+Also fix two stale comments still referencing sched_ext_free(), which has
+been renamed to sched_ext_dead().
 
-Similar races are present in tg_set_bandwidth(), cpu_idle_write_s64(),
-cpu_weight_write_u64(), and cpu_weight_nice_write_s64().
-
-Fix this by moving the CFS locking up into the core layer in
-`kernel/sched/core.c`. By acquiring these locks directly in the core
-write handlers, both the CFS and SCX callbacks are executed atomically
-under the same lock.
-
-Fixes: 819513666966 ("sched_ext: Add cgroup support")
-Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+Fixes: bb4d9fd55158 ("sched_ext: scx_dsq_move() should validate the task belongs to the right scheduler")
+Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
-v2:
- - Lifted existing CFS locks up into the Core layer instead of introducing
-   a new global mutex, ensuring both callbacks run atomically under
-   the same lock.
- - Refactored internal locking callbacks to avoid double-locking scenarios.
+ kernel/sched/ext/ext.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
- kernel/sched/core.c  | 35 +++++++++++++++++++++++------------
- kernel/sched/fair.c  | 23 ++++++++++++-----------
- kernel/sched/sched.h |  7 +++++++
- 3 files changed, 42 insertions(+), 23 deletions(-)
-
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index f5f7ff8c680a..6dd21a701bb5 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -9779,6 +9779,8 @@ static int cpu_uclamp_max_show(struct seq_file *sf, void *v)
- }
- #endif /* CONFIG_UCLAMP_TASK_GROUP */
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -7694,7 +7694,7 @@ static void scx_root_enable_workfn(struc
+ 	/*
+ 	 * Enable ops for every task. Fork is excluded by scx_fork_rwsem
+ 	 * preventing new tasks from being added. No need to exclude tasks
+-	 * leaving as sched_ext_free() can handle both prepped and enabled
++	 * leaving as sched_ext_dead() can handle both prepped and enabled
+ 	 * tasks. Prep all tasks first and then enable them with preemption
+ 	 * disabled.
+ 	 *
+@@ -7786,7 +7786,7 @@ static void scx_root_enable_workfn(struc
  
-+DEFINE_MUTEX(shares_mutex);
-+
- #ifdef CONFIG_GROUP_SCHED_WEIGHT
- static unsigned long tg_weight(struct task_group *tg)
- {
-@@ -9796,7 +9798,10 @@ static int cpu_shares_write_u64(struct cgroup_subsys_state *css,
+ 	/*
+ 	 * We're fully committed and can't fail. The task READY -> ENABLED
+-	 * transitions here are synchronized against sched_ext_free() through
++	 * transitions here are synchronized against sched_ext_dead() through
+ 	 * scx_tasks_lock.
+ 	 */
+ 	percpu_down_write(&scx_fork_rwsem);
+@@ -9004,12 +9004,6 @@ static bool scx_dsq_move(struct bpf_iter
+ 	if (unlikely(READ_ONCE(sch->aborting)))
+ 		return false;
  
- 	if (shareval > scale_load_down(ULONG_MAX))
- 		shareval = MAX_SHARES;
--	ret = sched_group_set_shares(css_tg(css), scale_load(shareval));
-+
-+	guard(mutex)(&shares_mutex);
-+
-+	ret = sched_group_set_shares_locked(css_tg(css), scale_load(shareval));
- 	if (!ret)
- 		scx_group_set_weight(css_tg(css),
- 				     sched_weight_to_cgroup(shareval));
-@@ -9811,8 +9816,6 @@ static u64 cpu_shares_read_u64(struct cgroup_subsys_state *css,
- #endif /* CONFIG_GROUP_SCHED_WEIGHT */
- 
- #ifdef CONFIG_CFS_BANDWIDTH
--static DEFINE_MUTEX(cfs_constraints_mutex);
--
- static int __cfs_schedulable(struct task_group *tg, u64 period, u64 runtime);
- 
- static int tg_set_cfs_bandwidth(struct task_group *tg,
-@@ -9831,13 +9834,6 @@ static int tg_set_cfs_bandwidth(struct task_group *tg,
- 
- 	burst = (u64)burst_us * NSEC_PER_USEC;
- 
--	/*
--	 * Prevent race between setting of cfs_rq->runtime_enabled and
--	 * unthrottle_offline_cfs_rqs().
--	 */
--	guard(cpus_read_lock)();
--	guard(mutex)(&cfs_constraints_mutex);
--
- 	ret = __cfs_schedulable(tg, period, quota);
- 	if (ret)
- 		return ret;
-@@ -10089,6 +10085,8 @@ static u64 cpu_period_read_u64(struct cgroup_subsys_state *css,
- 	return period_us;
- }
- 
-+static DEFINE_MUTEX(cfs_constraints_mutex);
-+
- static int tg_set_bandwidth(struct task_group *tg,
- 			    u64 period_us, u64 quota_us, u64 burst_us)
- {
-@@ -10131,6 +10129,13 @@ static int tg_set_bandwidth(struct task_group *tg,
- 					burst_us + quota_us > max_bw_runtime_us))
- 		return -EINVAL;
- 
-+	/*
-+	 * Prevent race between setting of cfs_rq->runtime_enabled and
-+	 * unthrottle_offline_cfs_rqs().
-+	 */
-+	guard(cpus_read_lock)();
-+	guard(mutex)(&cfs_constraints_mutex);
-+
- #ifdef CONFIG_CFS_BANDWIDTH
- 	ret = tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
- #endif /* CONFIG_CFS_BANDWIDTH */
-@@ -10229,6 +10234,8 @@ static int cpu_idle_write_s64(struct cgroup_subsys_state *css,
- {
- 	int ret;
- 
-+	guard(mutex)(&shares_mutex);
-+
- 	ret = sched_group_set_idle(css_tg(css), idle);
- 	if (!ret)
- 		scx_group_set_idle(css_tg(css), idle);
-@@ -10405,7 +10412,9 @@ static int cpu_weight_write_u64(struct cgroup_subsys_state *css,
- 
- 	weight = sched_weight_from_cgroup(cgrp_weight);
- 
--	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
-+	guard(mutex)(&shares_mutex);
-+
-+	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
- 	if (!ret)
- 		scx_group_set_weight(css_tg(css), cgrp_weight);
- 	return ret;
-@@ -10442,7 +10451,9 @@ static int cpu_weight_nice_write_s64(struct cgroup_subsys_state *css,
- 	idx = array_index_nospec(idx, 40);
- 	weight = sched_prio_to_weight[idx];
- 
--	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
-+	guard(mutex)(&shares_mutex);
-+
-+	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
- 	if (!ret)
- 		scx_group_set_weight(css_tg(css),
- 				     sched_weight_to_cgroup(weight));
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 001140132a7d..9d69372dc0c1 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -15392,8 +15392,6 @@ void init_tg_cfs_entry(struct task_group *tg, struct cfs_rq *cfs_rq,
- 	se->parent = parent;
- }
- 
--static DEFINE_MUTEX(shares_mutex);
--
- static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
- {
- 	int i;
-@@ -15430,36 +15428,40 @@ static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
- 	return 0;
- }
- 
--int sched_group_set_shares(struct task_group *tg, unsigned long shares)
-+int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
- {
- 	int ret;
- 
--	mutex_lock(&shares_mutex);
-+	lockdep_assert_held(&shares_mutex);
-+
- 	if (tg_is_idle(tg))
- 		ret = -EINVAL;
- 	else
- 		ret = __sched_group_set_shares(tg, shares);
--	mutex_unlock(&shares_mutex);
- 
- 	return ret;
- }
- 
-+int sched_group_set_shares(struct task_group *tg, unsigned long shares)
-+{
-+	guard(mutex)(&shares_mutex);
-+	return sched_group_set_shares_locked(tg, shares);
-+}
-+
- int sched_group_set_idle(struct task_group *tg, long idle)
- {
- 	int i;
- 
-+	lockdep_assert_held(&shares_mutex);
-+
- 	if (tg == &root_task_group)
- 		return -EINVAL;
- 
- 	if (idle < 0 || idle > 1)
- 		return -EINVAL;
- 
--	mutex_lock(&shares_mutex);
--
--	if (tg->idle == idle) {
--		mutex_unlock(&shares_mutex);
-+	if (tg->idle == idle)
- 		return 0;
+-	if (unlikely(!scx_task_on_sched(sch, p))) {
+-		scx_error(sch, "scx_bpf_dsq_move[_vtime]() on %s[%d] but the task belongs to a different scheduler",
+-			  p->comm, p->pid);
+-		return false;
 -	}
- 
- 	tg->idle = idle;
- 
-@@ -15505,7 +15507,6 @@ int sched_group_set_idle(struct task_group *tg, long idle)
- 	else
- 		__sched_group_set_shares(tg, NICE_0_LOAD);
- 
--	mutex_unlock(&shares_mutex);
- 	return 0;
- }
- 
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 26ae13c86b69..9e14b07bddcf 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -599,7 +599,10 @@ extern void sched_release_group(struct task_group *tg);
- extern void sched_move_task(struct task_struct *tsk, bool for_autogroup);
- 
- #ifdef CONFIG_FAIR_GROUP_SCHED
-+extern struct mutex shares_mutex;
+-
+ 	/*
+ 	 * Can be called from either ops.dispatch() holding the dispatched rq's
+ 	 * lock or any context where no rq lock is held. If latter, lock @p's
+@@ -9040,6 +9034,17 @@ static bool scx_dsq_move(struct bpf_iter
+ 		raw_spin_unlock(&src_dsq->lock);
+ 		goto out;
+ 	}
 +
- extern int sched_group_set_shares(struct task_group *tg, unsigned long shares);
-+extern int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares);
++	/*
++	 * @p has been on $src_dsq and can't move anymore. If @p is not on @sch,
++	 * the caller didn't have authority over @p at the time of the call.
++	 */
++	if (unlikely(!scx_task_on_sched(sch, p))) {
++		scx_error(sch, "scx_bpf_dsq_move[_vtime]() on %s[%d] but the task belongs to a different scheduler",
++			  p->comm, p->pid);
++		raw_spin_unlock(&src_dsq->lock);
++		goto out;
++	}
  
- extern int sched_group_set_idle(struct task_group *tg, long idle);
- 
-@@ -607,6 +610,10 @@ extern void set_task_rq_fair(struct sched_entity *se,
- 			     struct cfs_rq *prev, struct cfs_rq *next);
- #else /* !CONFIG_FAIR_GROUP_SCHED: */
- static inline int sched_group_set_shares(struct task_group *tg, unsigned long shares) { return 0; }
-+static inline int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
-+{
-+	return 0;
-+}
- static inline int sched_group_set_idle(struct task_group *tg, long idle) { return 0; }
- #endif /* !CONFIG_FAIR_GROUP_SCHED */
- 
--- 
-2.55.0.860.g4b6b3295ed-goog
-
+ 	/* @p is still on $src_dsq and stable, determine the destination */
+ 	dst_dsq = find_dsq_for_dispatch(sch, locked_rq ?: this_rq(), dsq_id, task_cpu(p));
