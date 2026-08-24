@@ -1,64 +1,63 @@
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010052.outbound.protection.outlook.com [52.101.85.52])
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010046.outbound.protection.outlook.com [52.101.201.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546EE3B0AE7
-	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 11:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98A1418346
+	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 11:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787570669; cv=fail; b=DCIKA0BQyXHseSkHjKWibWHoKKGfgxw/LU3bxRgLqVGnugS/YzPZqo+pSJoTlMQLtOjCwH4vfDlQPS/oD4mMw6uBMjm3Id08469fmPcZMnVHkuhCGqvnZkaWaajpJhA03wnziBumQaKSs6AEhBQC2+Kn4/eeg5QzDMdhFtI6Hyw=
+	t=1787572536; cv=fail; b=cZmK8iMs8tQ5mLPOGuXnKJ8PD6s9ji20N3k+BqXhSiCdSfr1VPBjSxJI00DYc/VD/OaYvQbX9/FYX0f8IhDkvltbZWwHt8hDW/RF3CS50dAaTJbQRll1yQB6jWz9An+b3SmDow+tmsC/4Rq08MMWCTdbfWoPUTvTiUSQDvcKQpo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787570669; c=relaxed/simple;
-	bh=c2HOmnXN+zDmDlEqPp7uE9OJrGKZty7V5/TdcQwtU3A=;
+	s=arc-20240116; t=1787572536; c=relaxed/simple;
+	bh=gEKznmazVAqD3aD5x5HYOQyGYj8AllAjnYlE7jToN0s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qWSRr7AEIT3KCkwCUgLKcOCY8Rjzfd96OSpc4PkhlBQhn8nwEhGWFwQxmW7fO1P2ldcRLrzJqcJZrnJ6jVftziD21P1uMItwbW9rpHBgGqTZdDfBcw+6IkNma5yOkN5W/82Uv8IMZpKKUU0DZ9B9nMyn4y3UkG6fdhb268PLb4Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=D9n4XRvY; arc=fail smtp.client-ip=52.101.85.52
+	 Content-Disposition:In-Reply-To:MIME-Version; b=VfSSsgcfHiyoultQVyI4ACarZDDRev0LIFqED0Y8XoOt8z13hfiMB6MbEg1/wpvRtbrOTPKQQhO61D77N3yuFAIvSjR47QmapeePs+XpDFcvIBcXKPVAVemQWpxyaBkR2aLnae0HKnzLo0qAYg3PvaspwJPAKYnS1q0EoeugSJk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FOZYdgd3; arc=fail smtp.client-ip=52.101.201.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="D9n4XRvY"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FOZYdgd3"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ew6sNP1JhXfmgwfD6SYB2k8cLzKhi9X56zrmUh+6RZ2UknGMYBKyjzDkCisn05FQ0P2c9UbkLCU3PWp00jAl+YvucFjqUHD3Y4D5BVzIs5hw06AX4b/s0wXp/oQ9b9ZYtza6V8ug0U+1pOEMC3RNieyWNGc3VTCmHuQIfFXTwTwPY7Juy4JZZKJU7trDR1A6kkka102ek3uzCfeRxlO8gwBNBXpNx9cJLI+YUi3Sgm3V7h6SKsPPWT2UKK9L7tFC99sxKc5hr9Ifw/rWY1GcjeDMSNEqjjxBKhs7H9qLC+0HsAY8wU0nOYuoseKgBM3hoi8Il8jKyhLfcocI+0iohg==
+ b=OISKNRySUbBB0mFgsvYHS/OeLKE/9jrhkqyyeOlyt9T+ffR4PpW1oJCstlwFsm/czAO6oOgxsQeSbVX+TTaap9+ldBmtc3pZj05D7T0KpktUob4L+gzXwNCwTqQAGXB6fPctYRG0KORsZDBJivNI08vQ0SRgW/mklID01pgTmDSk0oNPG9eov67hTUmR3NvxNscU3gcee/kFXq3IKtYDkAXRlg+GUXo1J+PG80xhGvWT4yP3jfioncfWArtXV4yegQdvH6LkuRjKIDEBxl/7a+93K659/7Zq0Db1qSK+m+Vb8bVG2MyHVRJZ1y8QBxYuFfKoC8xeMax5Ym8D6ziEqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uk+9lAeTvRyYW0pbpfn9/FAgwBM30AjjYOIUVEOeIKM=;
- b=FUEyq+3E5o08wqOx6V9Euni+AwhSh06HPCSecUSfbLD0QWHwTsQlN9zMwEsaKk95WMmZ0Km4ySVjMPelfM0uEEewZS2ViAU96IkvkWy37a3UdnWa6/mXggakaDCkUpQ7p9oM2GhpfNZLGI+8B7rKG0p52Qf14b9Ity/J52P6S8Nd5dJc8EB2AHbG1MqeMIp1lYXON9nqzZALY0He9wSEfjErbwwcPLaCNlbW8HXzS4AJdJdU/Ek3SztX2rG1lk8UvFMZn/S2xJMaj08RxYAUAi4g5sm8L8HDBtpcujxGq/td/CVemBSSqBgySfi/N1huyDsPr39hX7h8P+O0iAt24A==
+ bh=/N8FQwrTLx14mKpMXPjBPT8NvdFxJOdJU4T32EjJbGg=;
+ b=L6SZJMAicrZ52hwHSCrjqdUW0xaKwqg78Fh4zj2IBfMyWduCJ2YY75D4kAIfuy98H3WvuPNcCEYKY0AR8mCTz8uTdgzhm5r+LAUNZB04HcLbDtN9QuG+5eK3gUzkDCc+bPyDihdb4wmC39QE/2x1DF5VWRT+9tR+WtlAEgFPgdXguQ8GdhIhFfcbK0/np2gAD2SrmSjR/0i/6vwGC2hzgjm41ejKHvOEx3vv933s84xUtN84kwN6Nn8WRn55MLISalRp9DxJsnERusi3axmSbPp8nJx5/J8EpdOOFjDc4LSG10sj9fNALSK5nfoy1Y95MC2RMJx5ByC1AySvOHFwkw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uk+9lAeTvRyYW0pbpfn9/FAgwBM30AjjYOIUVEOeIKM=;
- b=D9n4XRvYm9M6AV22Co5psjS5L5FQELJIVdLLtCO5tnjy2a8v7/GQXg+d1nUKi1qDas0W8cKUmjiQHoy/FJnaVDFwcpNDXBSWrtgmtaJt321hBhXjTECn7PHVgzqa/1rcClqxHRgvo4lMtliKmOaJlajDv9bZVdkcCx+bFiaVeIjca1Nn8a8Rxsbj4OPLqh0/fe0sJO12ictlYqfqpMmHhxHTUicnE7NyzxP29jGNvw6xCNrSVSP6aCmWxGQJzJAnAqsc+P5jScnc+PGIBq8QYJrluwmffuISCj7ry5X/gKNDefjuiD8bqK/5e6BIK/K8ILD3WAJ0N4ODEcAnVhIY+w==
+ bh=/N8FQwrTLx14mKpMXPjBPT8NvdFxJOdJU4T32EjJbGg=;
+ b=FOZYdgd3wt45VL+qWsKNjsAcW42+mCwfbvW6L5sv+N07bAvZPsnyl6awKUYvrWfNJfZHEXdI1ZrnZDDhR0V7y8TjWi0eTGOKuxH5FQFzyDgr7nfZ4Ap0BDnhq6g5y6sGVEQXbmDeNPRVjlr+TwpIpfLiPxm0LhC4iCjABCqR4o7oruy9HFlZtiVsFztWuL38mICLXTMLbG3/0VIldA8MLUNiWRBe5O7dOVqoBSmJTH8EgkBUenWP8nHUdbsLzFrTAqp3Adyw/GyThY2rGtyN9ztJZoxquAq60A3f+QvzPcQ6xC8jBuVKGZsz9wkZ0lkyBwDOqAJwirN+vkU3a1v0Xg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by DS2PR12MB9712.namprd12.prod.outlook.com (2603:10b6:8:275::13) with
+ by SJ5PPF8AECCE022.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::99c) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 11:24:20 +0000
+ 2026 11:55:31 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
- 11:24:20 +0000
-Date: Mon, 24 Aug 2026 13:24:06 +0200
+ 11:55:30 +0000
+Date: Mon, 24 Aug 2026 13:55:16 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Michal Blaszczyk <michalblk@google.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] sched: Lift cgroup update locking to core to prevent
- CFS/SCX divergence
-Message-ID: <aowp1tYb-XeCdKi9@gpd4>
-References: <20260824074913.2468177-1-michalblk@google.com>
+To: Tao Cui <cui.tao@linux.dev>
+Cc: tj@kernel.org, void@manifault.com, changwoo@igalia.com,
+	suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: Re: [PATCH v3] docs/sched_ext: document that cgroup CPU knobs are
+ scheduler-dependent
+Message-ID: <aowxJK_KgBLLnyiN@gpd4>
+References: <20260824091501.547649-1-cui.tao@linux.dev>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260824074913.2468177-1-michalblk@google.com>
-X-ClientProxiedBy: MI2PEPF00000B8C.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::41a) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260824091501.547649-1-cui.tao@linux.dev>
+X-ClientProxiedBy: MI3PEPF00007544.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::4cf) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,316 +66,131 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DS2PR12MB9712:EE_
-X-MS-Office365-Filtering-Correlation-Id: d44a31e4-2ac5-48d3-e140-08df01d23d61
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SJ5PPF8AECCE022:EE_
+X-MS-Office365-Filtering-Correlation-Id: ca5238fc-7a30-4a6b-73ba-08df01d69871
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|6133799003|10067099003|56012099006|11063799006|18002099003|22082099003|3023799007;
+	BCL:0;ARA:13230040|376014|23010399003|1800799024|366016|56012099006|10067099003|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	AHvfxF5uU0RondcS6nG0H1EcyiHDsfXM/KT1ecpQYzMApP0CEttUWh8uGJTgXl92Wz07FSVuzemi5WZI/73BnvTvd4bJZ9D9+HIzvz8bEdZ9F4uCHdEJhwFC3BagHZxSTq+u5qyGzoSxRMecgUdxYXjVDUhzlJKMEm0vqdYG25pX18SHaNi93sH8QB+4LMUWMILAv12a6BfVFSDsF7g/CcqNyqzTq19NNkEiqE/XGYCfRdT8Nts5EJXwidmK5CupQ4FQGMu5kKyyv2t3KLrpMA8nGfEcGMOLNf6NzfFZmeUG8RUsefGr4HkmFt6ba07g/SoEJOtJqYZ18ZAJkz3vY3s4i6vRO+2qytrRJ0UlLimXkAKRQYh/OrP/GRVOiCAAjDrOOCukUUWDvD5FtrIAN9tE3nTc08oLkGMJATQKSGGFC8KyDH4YdSMF05vZEB1DZAujH9z6dbg2YnF26ebnmtCcnXR4nORAbJhvyCyzSOSb7s3M4tfEnTjvULSqdhig4hNMoEMNFCMsOlaVmUTilGdlkUFiKWF7QgMRI1OL6mTi/goa9E9+DayfhAaj4F64qSN/QWXiWXqhgGIGnY1rA6FjoMq1hvhBS9wVYzyyRK2+uthqw9bz0MI0Q42/at/c80B0ey1R+0zgrt7TuI7HFuT8+jx8dlfXl5668aiO/C0=
+	u0Cp6JYqRwOQAx1q6/BoFfFDM/SdCqFt9aSJ91OY1PAMRfPttiNzDJWDXdpt5sb5YOcqAks7r7U7JkgQmrePOfBrSOR3fDCCsIS5uspaC71KFTWmgodP/2S12uXKCWDRF8kYngZ2pJobP/kVCYRX+HfQuhRxDltNoFj6sGo/K0Yxj1B/CfXzaYZstSnMgNd8mU8A70/Umyodcm2PgaU19/yRNiIBRDcEUxG1iiZe4/pJJMKxYDXs0cOjQZGRSDXBWnzihrm4FFar4mEcqlJJIOszbDXud/AtYgPbK4HUh+gjrBqpxZbiwCrmGv9PJJzS0LFa5R9JAcyVPTQTi/CPUO9mcfBcrIpoh4ga1gwk0qJkQNlB06IcZUf5OZGnvkWx1CK6dAeYerC5/bpZJianrWvOl+aUCC5h5G2BNFanaSJnOI/J73UHRjnMB+EEWOsLZS0riMsJaKWaqa6LikEmcwC42s8+VaJoMHl783nWopPS7+PS/7PQAPeduWW8bIPTGgjSSoDm+VuZ1smAxfYHU7CLasZ3ugnX6ENsKZ+G4u8AJubeLjI/wpQ261MnxzNKUhxqHh8wYAh67BcnGTAf1HL6YZNs+W5aJX9E6foIHHF+jw1MauCjjyWQFz/NpHd9iu9zn4aG/fF1Wrt1FPvX5bujvqsk2y6sgnVEzLVREUI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(6133799003)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(56012099006)(10067099003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?2M6nY8FQ0LRRSNrFdfL2Sn/Lb/WTWfMhz15G4rsp79lUbSE6yfnt4b9XCihN?=
- =?us-ascii?Q?7sVsx7/T+oBgUKAcYelgtpdpzAjAcCjqKVMgBDwWJ96iEcyBwvjyUyZVS4gQ?=
- =?us-ascii?Q?Toh8+8S+ga6sOTHWiPmPc1zhEuaLPzygBchR3KbbqE0UqTMQXE9XfPPwi4VU?=
- =?us-ascii?Q?17IkT2LBSObevHbdpXpEUe11iHfDNw/+xpFYJNIsGbYJmsVwd6ANuVL3hkSd?=
- =?us-ascii?Q?IVxmiFgZZQVlFrtRtVzHvoNuVVV44eO0CedQbY3DqdFJUpHYYexWa1nNn1ot?=
- =?us-ascii?Q?dL++GqUfBCdKndj6wGJuT9OaYzPV8TcWmYP1NH8g4wFRlwGorwTk9LpRvBqc?=
- =?us-ascii?Q?2Gkh1PMdYUZ0NeP7+b6F5aKL0YL0tySkJqK3/J3nY8bqq93g3qRhhV/7Z3AQ?=
- =?us-ascii?Q?PruV87wod1UknNBGDdEsPmr5fFjg/j+Hrmqui4p0+eGmZvsXuNPULmotlbjw?=
- =?us-ascii?Q?3MijHDl6YJCcUf13Orfd14jeHm2UGOMpQXPDRnwAAobZqW7sbOAAqb2lmCy5?=
- =?us-ascii?Q?zPkMkOpJDtxdwqCJqdYQF3gi5gdeZY0AMsAvzVZF8vVR9a1OT5geJ7X6vnui?=
- =?us-ascii?Q?P2KYJ6eplnxMqT4226IEIHIxBuoHT92ZtmL3e4ILO7Y7zXLjIhrBxAfGTCYh?=
- =?us-ascii?Q?K4wWZwiCcicfc+lqN0qWOzI4ECoV1RX9cu/AddRw/SKtfSZfnslmNjtu6Ay1?=
- =?us-ascii?Q?zKFg7bCCRpSByZsHY/nujn7WeIQu0vyVcb1/HGGSlIPoDwnja2zNoNq2+So1?=
- =?us-ascii?Q?2H4RQN9QnUPRCwWZsAFPnFquoxSOh6BTpLcbondD1Da2U3JfdgChfpnLfeiR?=
- =?us-ascii?Q?R14zh0YagGamCbL52vsg+6vQNk7qiN0xORU0bDfSRJe9UQXMyk34Wn39K1eC?=
- =?us-ascii?Q?5btD7HjZWI8Je6gfTrFijT7hShOjY0VBj7GG3e6sr73INDdfpyC8OYAmvJHY?=
- =?us-ascii?Q?QW5Tle3PCFnetUqiW4nZlLhb/d86ykxtAUK9GYaKK0PqBZhbEQ/G7rGCfRME?=
- =?us-ascii?Q?wzpAeYUGBiyOiCwnQW4VxEAFBZKBQqyRN4IPI649r0ivJFwSFBp5N9c6TDTb?=
- =?us-ascii?Q?I9SyLEmXWQZ45xlOjMTB4uZT0B4C61k5ccKj50o7vPr7HN76wsqOqUI+c4Pg?=
- =?us-ascii?Q?BL8wiJV7C4jb+GMtSUG57BDcpD+n7pGA9hIuYymfEpxrlqBbyLRkFBnm41Hh?=
- =?us-ascii?Q?RhLZkoHGmidEBPIZEe4O+FejzJwEYkYgysg/33/mFziIqHNLiNhXc2a+nJtt?=
- =?us-ascii?Q?NpIUOhmrDZIKahvmgAZ4WCUixOAt9cawm6bMnH4960giCn3fEsxQ/1+MI9RT?=
- =?us-ascii?Q?VfgnmaPx8zBPY/dMwqmTwCPz0hP9/fnhCtQCar0CP5dHd8fmqABDpmmBHD0A?=
- =?us-ascii?Q?Z+/PuF7d4+XKmbC4/tI7K2dMSYC0OJk1fHq4U2RIX+E3MR9SJJgR4QSoqsWX?=
- =?us-ascii?Q?KVg6C3L/H+QyJGSVqsY7tGhM4Q2nYp4Mk7Junrae3HAbLgmpapNGIYing5mh?=
- =?us-ascii?Q?kwhPOYhmwS70oxD3egf4sd1X+/LcGEin5qP0S8l2/q9VwVMbhdi2qRLkgiHc?=
- =?us-ascii?Q?Ebz8AEjWVcfXZJZP3WTQyYMZ9hU4ZCI01odLkFQo4dUVHULG4WD7K2W1DuMD?=
- =?us-ascii?Q?MUYrwpc8MjqLt5TDZPB9BcJYaitiMIxGdgQjiu2FlnhhdnL+neFYot7+6xj1?=
- =?us-ascii?Q?TuLro5pexm9mCb/i3akARfv3yAksBP/p/wVcaSSVqLQLXRLD/ywy8CyG0ljA?=
- =?us-ascii?Q?hq47loTa9g=3D=3D?=
+	=?us-ascii?Q?y+5adPFMfAgsb6cHxS3tTJfGqu6WYlHCKWMtKdGpBSzQuSTEmHm/FqDelDJr?=
+ =?us-ascii?Q?vrXwszQH4slgc8miHYNw+8BS3/zcJ9ANQhtQ/uVBjpbcc1JiW16hGgk6myqM?=
+ =?us-ascii?Q?zdExYsqk3fj2+qkCjnWTR2Mh2cS/VX7ytQeQlDLNXgSM421fdeaX+1lC1+o1?=
+ =?us-ascii?Q?NB5X5JbZfiFz4dNOdOHRAbnOwRE1iV8B/ySMT+SrbJZjE7ptC15qTSujT0+k?=
+ =?us-ascii?Q?UUXsOndI1iaoICcc3gtaHqm06QAA5ZKrsDH6TX8jhmo3WXnm2mY/BK8MWl1j?=
+ =?us-ascii?Q?8t/vU3/TOwAhyffRDuchEfQbn7P847shAD3ZPB6hxf3uU+MWbUX+6OScZluT?=
+ =?us-ascii?Q?sqwRGjOhR0adYq/3qOKjrYrPcAm56vWqrBbxTaps7WUJ2cz9bqUWHbSLXdmq?=
+ =?us-ascii?Q?lB7pk1zky/Ysa30oy5fADAgMYV1aMyNQ540NuQabrzeJRJh5tVaTXCs5AeTO?=
+ =?us-ascii?Q?IIq9S85HCXdLZS9NRQQSDWClwnWxFkl80LmV7Zwc9OIlKoAD5R6gPnk5JPeF?=
+ =?us-ascii?Q?xtEx9Kj2dEVlMuuRvOUCFCQjCiDlU96YLph+PMjROZZ9LvidssFSX2ILRNx+?=
+ =?us-ascii?Q?T76ekvdT5A1qgYovRCVVC1X3Hr/LGp+73OfOHrDYXeYYOHr9TUFeXZZ4OBl6?=
+ =?us-ascii?Q?CbCEk4Y/3JAvYOIAjH/mMKNLN+OywdohlMzSVLdc9h8QJPHTWhqrmTxltm0k?=
+ =?us-ascii?Q?xMOrPITN8yIxDGiAyzv0RLFXnfdiPrsWf+urDXBLmkflkX74/sq0J/mI5PBl?=
+ =?us-ascii?Q?Aac+JDcs5GsUFSwre10LIbyFXfZNY1pQddJoGRt383dFU6oF6IBFHkzlx6rn?=
+ =?us-ascii?Q?ar9nWp2HxdQBIVRLVQZNdxuT5bp+uaQ/zCHZB6gHuLuj70fxaXOPr77WksOg?=
+ =?us-ascii?Q?CLsnnyx4FHXm3lDyaULKyXSLD9q8ScqtQjpwrnO4COy6CR5EPeGu/L5D26T0?=
+ =?us-ascii?Q?IxE0Z/z1IsCRg7Za4tdy5+SCNiLAdUAG25l9VFSRlgDl1lu7aDKdQXFczMzV?=
+ =?us-ascii?Q?bewOdd6WAXoKUU9GMdEFc7LHW3J47xf5TazT/nUvSL8SZZcjfKKaBP7CRl7F?=
+ =?us-ascii?Q?chX36rMViMf7Sewnkdbz48O5R0ZdFYj9dzJpJAhkweCKiUBX4i2kdcJXyxGq?=
+ =?us-ascii?Q?us/x0Mk6NRVXjQPLuTvj1QYCpIysWGjdeGERsK85hCWvOPvkwjHX+Aw50ARO?=
+ =?us-ascii?Q?QPmV3oFCtRbdfYOQLFE6xHNkYVWm6dwfhmhL+7jt9dys/Ls48KuMDzPKpAkK?=
+ =?us-ascii?Q?SX6ZKLuQney9uU9eJkdwmxXgTsxfX+cDNW1dHvcbtb16E8lncJFfHV6TwVXY?=
+ =?us-ascii?Q?J2xAzptygayelwEZVssTWzgS9ZaNh3cYzUlPnMXkXyc2XjnRqo+ZkqJWKTgA?=
+ =?us-ascii?Q?vlJe4FCuNUh0hvYsowdhmiExej9O/BYKDAtnsZI3qcWID4nFYsf57nnZsZAx?=
+ =?us-ascii?Q?j17re7cmGl3usb2K3CUm1TSIbY7umHrtIFONP6Q4tdtMqzNs6ChDkJdtFWKA?=
+ =?us-ascii?Q?Il52eY9nJTF01ZmaVb5ZP3DuVHYIMnuZQttClIEH+LKOrUwyyWLU2qYefuB/?=
+ =?us-ascii?Q?hsuMWV0v+w+DI40+ewjg9ua56cn+oCrL54F3Ek8y8LWyvuCwD3vz9G4QVBWD?=
+ =?us-ascii?Q?7kX4IIOvIeIRLDTq0dLiJ1z5rDB9uAa2T2IvBwA+Mo4Rf3T2eU8RYaSPdSPq?=
+ =?us-ascii?Q?pdLT8/mJaCi9HVx5jdRt04k2+u7wXMl/YQxjVcESMdm5HP1wgmZz0ZyeuMCC?=
+ =?us-ascii?Q?jsW8s9DWdg=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d44a31e4-2ac5-48d3-e140-08df01d23d61
+X-MS-Exchange-CrossTenant-Network-Message-Id: ca5238fc-7a30-4a6b-73ba-08df01d69871
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 11:24:20.0278
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 11:55:30.7412
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6g4eycBWNTkS/YiC0OCE3JcbZx1Vf11EDVJUe2uMNTTrXHyELbmI/ojl9wAMbdkB6JZtorcGH7kXBlUcK8FxXw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9712
+X-MS-Exchange-CrossTenant-UserPrincipalName: hBnIU1rrWB4oQvK801CT5oO+/pOKwfn67JlbAMoRBUgbGjS4uXfruMMMFskpehcwvfOIUP9RwSNoGAvYxrNHXg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF8AECCE022
 
-Hi Michal,
+Hi Tao,
 
-On Mon, Aug 24, 2026 at 07:49:13AM +0000, Michal Blaszczyk wrote:
-> Concurrent writes to cgroup control files (such as cpu.shares or
-> cpu.weight) can lead to state divergence between CFS and SCX.
+On Mon, Aug 24, 2026 at 05:15:01PM +0800, Tao Cui wrote:
+> From: Tao Cui <cuitao@kylinos.cn>
 > 
-> For instance, in cpu_shares_write_u64(), the CFS update is serialized
-> by shares_mutex (internal to fair.c), but this lock is dropped before
-> scx_group_set_weight() is called. The latter only acquires a read
-> semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
-> and act on the sched_ext update concurrently.
+> The fair class enforces cpu controller knobs such as cpu.max,
+> cpu.weight and cpu.idle in the kernel. sched_ext only passes them to
+> the BPF scheduler through the ops.cgroup_set_*() callbacks. Whether
+> and how a knob takes effect is up to the loaded scheduler: it may
+> implement the corresponding callback partially or not at all. The
+> same applies to other knobs like nice levels.
 > 
-> This serialization gap allows concurrent writes to interleave.
-> As a result, the recorded state in CFS, the SCX internal bookkeeping
-> (e.g., tg->scx.weight), and the BPF scheduler itself can end up operating
-> on completely distinct parameters (pairwise distinct values).
+> Document this in the basics section so users and container
+> orchestrators know what to expect from a BPF scheduler.
 > 
-> Similar races are present in tg_set_bandwidth(), cpu_idle_write_s64(),
-> cpu_weight_write_u64(), and cpu_weight_nice_write_s64().
+> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+> ---
+> v2 -> v3: Drop the scheduler list and the nr_throttled example, keep
+> the section concise and generic, per review.
 > 
-> Fix this by moving the CFS locking up into the core layer in
-> `kernel/sched/core.c`. By acquiring these locks directly in the core
-> write handlers, both the CFS and SCX callbacks are executed atomically
-> under the same lock.
+> v2: https://lore.kernel.org/r/20260819012157.220932-1-cui.tao@linux.dev
 > 
-> Fixes: 819513666966 ("sched_ext: Add cgroup support")
-> Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+>  Documentation/scheduler/sched-ext.rst | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+> 
+> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+> index 35b550671ca7..b594d93dd6aa 100644
+> --- a/Documentation/scheduler/sched-ext.rst
+> +++ b/Documentation/scheduler/sched-ext.rst
+> @@ -242,6 +242,18 @@ optional. The following modified excerpt is from
+>              .name                   = "simple",
+>      };
+>  
+> +Scheduler-Dependent Knobs
+> +-------------------------
+> +
+> +The fair class enforces cpu controller knobs such as ``cpu.max``,
+> +``cpu.weight`` and ``cpu.idle`` in the kernel. sched_ext only passes
+> +them to the BPF scheduler through ``ops.cgroup_set_weight()``,
+> +``ops.cgroup_set_idle()``, ``ops.cgroup_set_bandwidth()`` and friends.
 
-IIUC the bandwidth read-modify-write paths still snapshot the unchanged
-parameters before taking cpu_max_mutex, so concurrent writes to different
-bandwidth knobs can overwrite each other.
+Existing cpu.weight and bandwidth values are delivered via ops.cgroup_init(),
+ops.cgroup_set_*() callbacks handle later changes.
 
-However, this shouldn't be a blocker for this patch. The serialization aspect
-could be addressed in a separate patch, maybe extending the lock over both the
-snapshot and update?
+Moreover, cpu.idle state is not included in scx_cgroup_init_args, so apparently
+BPF schedulers don't receive an initial value (only subsequent writes). This
+should be probably fixed separately.
 
-For now:
+> +Whether and how a knob takes effect is up to the loaded scheduler: it
+> +may implement the corresponding callback partially or not at all. The
+> +same applies to other knobs like nice levels. When relying on these
+> +knobs, check the documentation or source of the loaded scheduler.
+> +
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+"nice levels" can be a bit ambiguous, per-task nice changes are converted to
+weights and reported through ops.set_weight(), writes to the cgroup file
+cpu.weight.nice are reported through ops.cgroup_set_weight().
+
+Maybe we can rephrase the whole paragraph as following, or something along these
+lines:
+
+  The fair-class scheduler enforces CPU controller settings such as cpu.max,
+  cpu.weight, and cpu.idle. For sched_ext tasks, the scheduler core communicates
+  these settings to the BPF scheduler through ops.cgroup_init() and reports
+  subsequent changes through the corresponding ops.cgroup_set_*() callbacks.
+  Similarly, per-task nice changes are converted to weights and reported through
+  ops.set_weight().
+
+  Each BPF scheduler is responsible for implementing the scheduling semantics of
+  these settings and may choose to ignore them. Consult the loaded scheduler's
+  documentation before relying on these controls.
 
 Thanks,
 -Andrea
-
-> ---
-> v3:
-> - Renamed the shares and cfs_constraints mutexes.
-> 
->  kernel/sched/core.c  | 35 +++++++++++++++++++++++------------
->  kernel/sched/fair.c  | 25 +++++++++++++------------
->  kernel/sched/sched.h |  7 +++++++
->  3 files changed, 43 insertions(+), 24 deletions(-)
-> 
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index f5f7ff8c680a..4673a78cb9e8 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -9779,6 +9779,8 @@ static int cpu_uclamp_max_show(struct seq_file *sf, void *v)
->  }
->  #endif /* CONFIG_UCLAMP_TASK_GROUP */
->  
-> +DEFINE_MUTEX(cpu_weight_mutex);
-> +
->  #ifdef CONFIG_GROUP_SCHED_WEIGHT
->  static unsigned long tg_weight(struct task_group *tg)
->  {
-> @@ -9796,7 +9798,10 @@ static int cpu_shares_write_u64(struct cgroup_subsys_state *css,
->  
->  	if (shareval > scale_load_down(ULONG_MAX))
->  		shareval = MAX_SHARES;
-> -	ret = sched_group_set_shares(css_tg(css), scale_load(shareval));
-> +
-> +	guard(mutex)(&cpu_weight_mutex);
-> +
-> +	ret = sched_group_set_shares_locked(css_tg(css), scale_load(shareval));
->  	if (!ret)
->  		scx_group_set_weight(css_tg(css),
->  				     sched_weight_to_cgroup(shareval));
-> @@ -9811,8 +9816,6 @@ static u64 cpu_shares_read_u64(struct cgroup_subsys_state *css,
->  #endif /* CONFIG_GROUP_SCHED_WEIGHT */
->  
->  #ifdef CONFIG_CFS_BANDWIDTH
-> -static DEFINE_MUTEX(cfs_constraints_mutex);
-> -
->  static int __cfs_schedulable(struct task_group *tg, u64 period, u64 runtime);
->  
->  static int tg_set_cfs_bandwidth(struct task_group *tg,
-> @@ -9831,13 +9834,6 @@ static int tg_set_cfs_bandwidth(struct task_group *tg,
->  
->  	burst = (u64)burst_us * NSEC_PER_USEC;
->  
-> -	/*
-> -	 * Prevent race between setting of cfs_rq->runtime_enabled and
-> -	 * unthrottle_offline_cfs_rqs().
-> -	 */
-> -	guard(cpus_read_lock)();
-> -	guard(mutex)(&cfs_constraints_mutex);
-> -
->  	ret = __cfs_schedulable(tg, period, quota);
->  	if (ret)
->  		return ret;
-> @@ -10089,6 +10085,8 @@ static u64 cpu_period_read_u64(struct cgroup_subsys_state *css,
->  	return period_us;
->  }
->  
-> +static DEFINE_MUTEX(cpu_max_mutex);
-> +
->  static int tg_set_bandwidth(struct task_group *tg,
->  			    u64 period_us, u64 quota_us, u64 burst_us)
->  {
-> @@ -10131,6 +10129,13 @@ static int tg_set_bandwidth(struct task_group *tg,
->  					burst_us + quota_us > max_bw_runtime_us))
->  		return -EINVAL;
->  
-> +	/*
-> +	 * Prevent race between setting of cfs_rq->runtime_enabled and
-> +	 * unthrottle_offline_cfs_rqs().
-> +	 */
-> +	guard(cpus_read_lock)();
-> +	guard(mutex)(&cpu_max_mutex);
-> +
->  #ifdef CONFIG_CFS_BANDWIDTH
->  	ret = tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
->  #endif /* CONFIG_CFS_BANDWIDTH */
-> @@ -10229,6 +10234,8 @@ static int cpu_idle_write_s64(struct cgroup_subsys_state *css,
->  {
->  	int ret;
->  
-> +	guard(mutex)(&cpu_weight_mutex);
-> +
->  	ret = sched_group_set_idle(css_tg(css), idle);
->  	if (!ret)
->  		scx_group_set_idle(css_tg(css), idle);
-> @@ -10405,7 +10412,9 @@ static int cpu_weight_write_u64(struct cgroup_subsys_state *css,
->  
->  	weight = sched_weight_from_cgroup(cgrp_weight);
->  
-> -	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
-> +	guard(mutex)(&cpu_weight_mutex);
-> +
-> +	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
->  	if (!ret)
->  		scx_group_set_weight(css_tg(css), cgrp_weight);
->  	return ret;
-> @@ -10442,7 +10451,9 @@ static int cpu_weight_nice_write_s64(struct cgroup_subsys_state *css,
->  	idx = array_index_nospec(idx, 40);
->  	weight = sched_prio_to_weight[idx];
->  
-> -	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
-> +	guard(mutex)(&cpu_weight_mutex);
-> +
-> +	ret = sched_group_set_shares_locked(css_tg(css), scale_load(weight));
->  	if (!ret)
->  		scx_group_set_weight(css_tg(css),
->  				     sched_weight_to_cgroup(weight));
-> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index 001140132a7d..4e0a38b0cb3c 100644
-> --- a/kernel/sched/fair.c
-> +++ b/kernel/sched/fair.c
-> @@ -15392,13 +15392,11 @@ void init_tg_cfs_entry(struct task_group *tg, struct cfs_rq *cfs_rq,
->  	se->parent = parent;
->  }
->  
-> -static DEFINE_MUTEX(shares_mutex);
-> -
->  static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
->  {
->  	int i;
->  
-> -	lockdep_assert_held(&shares_mutex);
-> +	lockdep_assert_held(&cpu_weight_mutex);
->  
->  	/*
->  	 * We can't change the weight of the root cgroup.
-> @@ -15430,36 +15428,40 @@ static int __sched_group_set_shares(struct task_group *tg, unsigned long shares)
->  	return 0;
->  }
->  
-> -int sched_group_set_shares(struct task_group *tg, unsigned long shares)
-> +int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
->  {
->  	int ret;
->  
-> -	mutex_lock(&shares_mutex);
-> +	lockdep_assert_held(&cpu_weight_mutex);
-> +
->  	if (tg_is_idle(tg))
->  		ret = -EINVAL;
->  	else
->  		ret = __sched_group_set_shares(tg, shares);
-> -	mutex_unlock(&shares_mutex);
->  
->  	return ret;
->  }
->  
-> +int sched_group_set_shares(struct task_group *tg, unsigned long shares)
-> +{
-> +	guard(mutex)(&cpu_weight_mutex);
-> +	return sched_group_set_shares_locked(tg, shares);
-> +}
-> +
->  int sched_group_set_idle(struct task_group *tg, long idle)
->  {
->  	int i;
->  
-> +	lockdep_assert_held(&cpu_weight_mutex);
-> +
->  	if (tg == &root_task_group)
->  		return -EINVAL;
->  
->  	if (idle < 0 || idle > 1)
->  		return -EINVAL;
->  
-> -	mutex_lock(&shares_mutex);
-> -
-> -	if (tg->idle == idle) {
-> -		mutex_unlock(&shares_mutex);
-> +	if (tg->idle == idle)
->  		return 0;
-> -	}
->  
->  	tg->idle = idle;
->  
-> @@ -15505,7 +15507,6 @@ int sched_group_set_idle(struct task_group *tg, long idle)
->  	else
->  		__sched_group_set_shares(tg, NICE_0_LOAD);
->  
-> -	mutex_unlock(&shares_mutex);
->  	return 0;
->  }
->  
-> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-> index 26ae13c86b69..a989b54f7017 100644
-> --- a/kernel/sched/sched.h
-> +++ b/kernel/sched/sched.h
-> @@ -599,7 +599,10 @@ extern void sched_release_group(struct task_group *tg);
->  extern void sched_move_task(struct task_struct *tsk, bool for_autogroup);
->  
->  #ifdef CONFIG_FAIR_GROUP_SCHED
-> +extern struct mutex cpu_weight_mutex;
-> +
->  extern int sched_group_set_shares(struct task_group *tg, unsigned long shares);
-> +extern int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares);
->  
->  extern int sched_group_set_idle(struct task_group *tg, long idle);
->  
-> @@ -607,6 +610,10 @@ extern void set_task_rq_fair(struct sched_entity *se,
->  			     struct cfs_rq *prev, struct cfs_rq *next);
->  #else /* !CONFIG_FAIR_GROUP_SCHED: */
->  static inline int sched_group_set_shares(struct task_group *tg, unsigned long shares) { return 0; }
-> +static inline int sched_group_set_shares_locked(struct task_group *tg, unsigned long shares)
-> +{
-> +	return 0;
-> +}
->  static inline int sched_group_set_idle(struct task_group *tg, long idle) { return 0; }
->  #endif /* !CONFIG_FAIR_GROUP_SCHED */
->  
-> -- 
-> 2.55.0.860.g4b6b3295ed-goog
-> 
