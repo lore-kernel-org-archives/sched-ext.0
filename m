@@ -1,100 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E00044BC92
-	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 16:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16671377EA7;
+	Mon, 24 Aug 2026 16:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787587329; cv=none; b=VV45KZKFhBBujwtKFh/z6kub23PViv8TaQebO4yrkmCHPVsrBUZbYmkFVn0/b31TfMSDMocauhTCZSOQLtWJ1A8UEf6fgAds3XWpIuYYu9bSW7AJj29iPGUmc0J4T1E583inRGjmLNgEniCMmkNph2pPMuyDGw/a4s6e2TCysng=
+	t=1787590498; cv=none; b=qjjRgL4U0Dq6SGgJrHjGNBVraXY/jiM/1gQCgljnkDbHSWd+Lp1YatHbAw4RA6Zxs5ydEPplugkJubKEcZ54Vjm5NrRrDSrdobYRCaOxhefmVC7Q0Mvt0bYVkVrNv+k787ra0ReYXEQLoUQ86VlkKmVEKoIaGXKLmSE9VPpWnAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787587329; c=relaxed/simple;
-	bh=hlHQj2wBnEXqNazzXt582e1KKqFOJQ8OIpxXeXE53ac=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=E4hi84ARkGDV2kt6SA4zl8M6ncVnJXydiZVdhibvntyDu6/pCPwvtGYnxZNx+iu/a8zZbq1FjrRSMiGGDW3wYY6XnLf8+NUT9h/1522Z8DBiJsV0L9CbiN1Ostp2UlK/4JisLZ9YuOg3yC/gek5SRPH9+ZUmlszYaaHykaclVXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cvBcRIPh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787590498; c=relaxed/simple;
+	bh=/lqiw1NJh/Yb5p1qWHuE47wYZY4QW2ip+Vl1UQ1DRV0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=Gf49K9EZrkgyBHtB9IZt4igEOPciXjs2WGonRubX8SmZ4EgqXiCUNLTN2a4f93vDQJfv8uszhaaHIYdxqbIVnYkauyqvnKbdK+AL+iZK0nLGYq2kX49MpOfwCDq+xfvXziECF72uTV2yb3myO3BVsIy2sjWFBnjb45p9hjS6S8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAuKRD1P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cvBcRIPh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46791F000E9;
-	Mon, 24 Aug 2026 16:02:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAuKRD1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769081F00AC4;
+	Mon, 24 Aug 2026 16:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787587328;
-	bh=0e4WOglfkFRfxRi5UP6TEfI0eZgNWiB84U6ANdK3O50=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cvBcRIPh5yEY+CWx4af/7aswczCM09o+m1R7XOc7bBPAiF0muvHH4JDNjX4WhpRNc
-	 GaE13HNEA3iiUR8IobWom8jZ0sqk7OHV/2i0ZRzJcI7/kzbe1UP3snza3t4r/PJEnn
-	 6uTkKwLD1WwBHBOZLpmgSSV0P9tHQOgqnaUGOIkmgSkMaPTiD2zPzE5DspVT8GG9ye
-	 YEyehs0SGTx9fjhdQXH+e8qmLH02WAfKWTZSO4p/m/0yuvOg/F6n0AO0tYddgEbAiq
-	 QUEQAFY0le8BaFi9piFYF96pMn+CYyWGuK2lKAu6FoIOBz3P6oHDORrXr+XhVH2UbH
-	 5zizDMkilElTQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH sched_ext/for-7.4] tools/sched_ext: Skip
- scx_lib_init_probe() without CONFIG_FUNCTION_TRACER
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Cheng-Yang Chou" <yphbchou0911@gmail.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260824155051.20841-1-yphbchou0911@gmail.com>
-References: <20260824155051.20841-1-yphbchou0911@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 24 Aug 2026 16:02:07 +0000
-Message-Id: <20260824160207.D46791F000E9@smtp.kernel.org>
+	s=k20260515; t=1787590496;
+	bh=YA5DK6mKhujUxdthBvMWZ+u4S6w37MYXZOMmqOdb73Q=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=XAuKRD1P8CMoNKICONOg+E7kCOzQOpI6K4wuaQZO0adZoIlm+HWO9TsYliGZf1HQN
+	 +AnMqJKw9g80UyJyiij2T5Y+fagRf0TUoyukMWsKv+ruMGT6BTZyctWa/aoayTwVTv
+	 ZeBgnGWQVaLqsi1Gy7jHgYnUMDWPgVBryKDaSZFxEYTnUmiNPTVyvgAeFtqPqyMCrY
+	 UcRr+gzv383RKzhkLKNF38W6TdxltFuSdr0Dcu0e1rDZS0EzMQRf8Ro7A+BRint1p1
+	 bKjbL8v9md3jjOFrWL0lJcBsG6kICrwmaS3HH7zS8quWX894H1EDuPr/odW3jgCbNq
+	 y1O2EmUb/esuw==
+Date: Mon, 24 Aug 2026 06:54:55 -1000
+Message-ID: <20eb5e65cb330a6f9cc41781af302873@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Tao Cui <cui.tao@linux.dev>
+Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+ suzhidao@xiaomi.com, emil@etsalapatis.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, bpf@vger.kernel.org, cuitao@kylinos.cn
+Subject: Re: [PATCH v2] sched_ext: pass the initial cpu.idle state in scx_cgroup_init_args
+In-Reply-To: <20260824142817.568085-1-cui.tao@linux.dev>
+References: <20260824142817.568085-1-cui.tao@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The SCX_OPS_LOAD macro introduces a hard compile-time dependency=
- on `scx_lib_init_probe` existing in the user's BPF skeleton, which will ca=
-use a C compiler error for schedulers that do not define this probe.
---
+Hello, Tao.
 
---- Patch [1]: [PATCH sched_ext/for-7.4] tools/sched_ext: Skip scx_lib_init=
-_probe() without CONFIG_FUNCTION_TRACER ---
-commit fc2df7f154a3b0d6909630ef49d7036552669ee3
-Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
+On Mon, Aug 24, 2026 at 10:28:16PM +0800, Tao Cui wrote:
+> +
+> +	/* whether the cgroup is configured idle via cpu.idle */
+> +	bool			idle;
 
-tools/sched_ext: Skip scx_lib_init_probe() without CONFIG_FUNCTION_TRACER
+In sched_ext, a bare "idle" reads as CPU idle state (ops.update_idle(),
+idle cpumasks, scx_bpf_pick_idle_cpu()). cpu.idle is the cgroup analog
+of the SCHED_IDLE policy, so please name the field sched_idle instead.
+Renaming tg->scx.idle to match would be nice too.
 
-This commit updates the SCX_OPS_LOAD macro to conditionally disable
-autoload for the scx_lib_init_probe program if function tracing is
-unavailable. It also modifies the post-load loop to skip programs that
-have autoload disabled.
+Thanks.
 
-> diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/inclu=
-de/scx/compat.h
-> --- a/tools/sched_ext/include/scx/compat.h
-> +++ b/tools/sched_ext/include/scx/compat.h
-
-[ ... ]
-
->  /* See SCX_OPS_OPEN() above for backward-compatibility handling. */
->  #define SCX_OPS_LOAD(__skel, __ops_name, __scx_name, __uei_name) ({		\
->  	struct bpf_program *__prog;						\
->  	UEI_SET_SIZE(__skel, __ops_name, __uei_name);				\
-> +	if (!__COMPAT_function_tracer_available())				\
-> +		bpf_program__set_autoload((__skel)->progs.scx_lib_init_probe, false); \
-
-[Severity: Medium]
-Will this cause a compile-time failure for out-of-tree schedulers that do
-not include a scx_lib_init_probe program?
-
-Skeletons generated by bpftool only contain fields for BPF programs that
-are actually present in the BPF object. If a user's scheduler skeleton
-lacks this specific probe, (__skel)->progs.scx_lib_init_probe won't exist
-in the generated struct and will trigger a C compiler error when invoking
-this macro.
-
-Could this look up the program dynamically using
-bpf_object__find_program_by_name() at runtime instead, to avoid breaking
-compilation for schedulers without this probe?
-
->  	SCX_BUG_ON(__scx_name##__load((__skel)), "Failed to load skel");	\
-
-[ ... ]
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260824155051.2084=
-1-1-yphbchou0911@gmail.com?part=3D1
+-- 
+tejun
