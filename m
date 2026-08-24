@@ -1,145 +1,106 @@
-Received: from mta1.migadu.com (out-46.mta1.migadu.com [95.215.58.46])
+Received: from mta0.migadu.com (out-158.mta0.migadu.com [91.218.175.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EBB421EF8
-	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 13:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CCD41B355
+	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 13:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787576949; cv=none; b=BP468LH+JxiIGtQQG3GreD18oEgool5Z2KFWc8NstcZK/UfmnF22iWw6ZsKoFOeBYAo4t2kPEpkLhP7o45uKwIjCNArMFmqn2rwmJir5taKhNcQTlfMAwk4oK9hg5N5yMnCJiyXlIdz7AVVw6kRo+kHrUfcko7cW5sJlOpRuhbA=
+	t=1787577692; cv=none; b=YmHjA8LRnVZZDh5D9XReNTBBV7i5ZvlJRnRVw7hcHmYYfvBNApS7qru+r8SIZBc7/0PoHDB/XtTO8eZ63XGkTXMeZReG6THKvybg7YRU14Wdf5PXe4x1WJTmTIZFrygX5jbt7oZrEEWrkD7E8fc9M1p5QFdfgg6U7g05rQVqydY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787576949; c=relaxed/simple;
-	bh=yscKTag0IJQGv9/KR0AUjg/as0gLtN/BNAtD6JEBZL4=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=SM7Ju21DCp1hika9PVynJlguD6H8ctNaCPQ9/sQERQzXOj3lCSMMaerluW4/ynWjhF1GTytRKSi1KrdH/sZlxF431Tob5BJxJ0y8SsffGAWxT10n7jqWkyEoWyT28NSzvraMvDdCyfN/uvdoEb7NG/UiQbZevPuXfijVFWH8Jko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JPPmYPX7; arc=none smtp.client-ip=95.215.58.46
+	s=arc-20240116; t=1787577692; c=relaxed/simple;
+	bh=qf+Yc6atM2RgkejUvwoRCwv1bc3J5o3sptHpC4Mb9oE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RiCX/dZ8ju1KQr5GE7JCOLdJJ0l3K9K50E1nrHL7LLSbWrsZK5f5ec/a7j3A7ynx7TEJEkgN/JOzrYWsn72b0fisaclUIP5Kxv52MsWQQAC8eFYAVeGoFjzqgPK3ed6ajkw1dRNCHavNwh5zt/xuFoj8UlwI31YPIyZowIx281E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=CzV45v8T; arc=none smtp.client-ip=91.218.175.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JPPmYPX7"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="CzV45v8T"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=yscKTag0IJQGv9/KR0AUjg/as0gLtN/BNAtD6JEBZL4=;
+DKIM-Signature: a=rsa-sha256; bh=qf+Yc6atM2RgkejUvwoRCwv1bc3J5o3sptHpC4Mb9oE=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787576944; v=1; x=1788181744;
- b=JPPmYPX70RM+Xb3j9f49Nh5GtaTqzBLMfZmMt9UT5o9zHXb4tLjsf4wZCsfyTt3CWGvkJe1s
- OQZ1++vhS2DUrCJTlbHUuvVcK1ivt7w2kn6kosqlW15l2o2iGW5NlGE/agGrTzksrMXoG3XW8DJ
- kNXUKwP/CPHUHSpnf1Bfu10c=
+ t=1787577688; v=1; x=1788182488;
+ b=CzV45v8T5sS3IsLrFoFPOrrNyb8sWVaHBs2w9nGw01b6lInETnKEqdhtCG9vM0Rbc72iDuez
+ EPm26wKF90SkD7/wLhguR9xU5HUzgtic3dSFCu861h+pimoNKZYStiXEMZKH+v+qyAT9Bt2c/J2
+ HdMofJ62YLEwbLnuWC/B9fMg=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: from [192.168.110.173] (223.70.160.239)
-	by smtp.migadu.com with ESMTPS id fe487304b85a5a72;
-	Mon, 24 Aug 2026 13:08:54 +0000
-X-Mizu-Trace-ID: fe487304b85a5a72
+Received: from ctao-book.. (223.70.159.239)
+	by smtp.migadu.com with ESMTPS id 4b68cc2e2bd4e7c7;
+	Mon, 24 Aug 2026 13:21:28 +0000
+X-Mizu-Trace-ID: 4b68cc2e2bd4e7c7
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <1b2f54bd-97f5-4175-9a92-34871dd6f375@linux.dev>
-Date: Mon, 24 Aug 2026 21:08:45 +0800
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org,
+	arighi@nvidia.com
+Cc: void@manifault.com,
+	changwoo@igalia.com,
+	suzhidao@xiaomi.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH v4] docs/sched_ext: document that cgroup CPU knobs are scheduler-dependent
+Date: Mon, 24 Aug 2026 21:21:16 +0800
+Message-ID: <20260824132116.560347-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, tj@kernel.org, void@manifault.com,
- changwoo@igalia.com, suzhidao@xiaomi.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
- Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH v3] docs/sched_ext: document that cgroup CPU knobs are
- scheduler-dependent
-To: Andrea Righi <arighi@nvidia.com>
-References: <20260824091501.547649-1-cui.tao@linux.dev>
- <aowxJK_KgBLLnyiN@gpd4>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <aowxJK_KgBLLnyiN@gpd4>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello, Andrea,
+From: Tao Cui <cuitao@kylinos.cn>
 
-在 2026/8/24 19:55, Andrea Righi 写道:
-> Hi Tao,
-> 
-> On Mon, Aug 24, 2026 at 05:15:01PM +0800, Tao Cui wrote:
->> From: Tao Cui <cuitao@kylinos.cn>
->>
->> The fair class enforces cpu controller knobs such as cpu.max,
->> cpu.weight and cpu.idle in the kernel. sched_ext only passes them to
->> the BPF scheduler through the ops.cgroup_set_*() callbacks. Whether
->> and how a knob takes effect is up to the loaded scheduler: it may
->> implement the corresponding callback partially or not at all. The
->> same applies to other knobs like nice levels.
->>
->> Document this in the basics section so users and container
->> orchestrators know what to expect from a BPF scheduler.
->>
->> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
->> ---
->> v2 -> v3: Drop the scheduler list and the nr_throttled example, keep
->> the section concise and generic, per review.
->>
->> v2: https://lore.kernel.org/r/20260819012157.220932-1-cui.tao@linux.dev
->>
->>  Documentation/scheduler/sched-ext.rst | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
->>
->> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
->> index 35b550671ca7..b594d93dd6aa 100644
->> --- a/Documentation/scheduler/sched-ext.rst
->> +++ b/Documentation/scheduler/sched-ext.rst
->> @@ -242,6 +242,18 @@ optional. The following modified excerpt is from
->>              .name                   = "simple",
->>      };
->>  
->> +Scheduler-Dependent Knobs
->> +-------------------------
->> +
->> +The fair class enforces cpu controller knobs such as ``cpu.max``,
->> +``cpu.weight`` and ``cpu.idle`` in the kernel. sched_ext only passes
->> +them to the BPF scheduler through ``ops.cgroup_set_weight()``,
->> +``ops.cgroup_set_idle()``, ``ops.cgroup_set_bandwidth()`` and friends.
-> 
-> Existing cpu.weight and bandwidth values are delivered via ops.cgroup_init(),
-> ops.cgroup_set_*() callbacks handle later changes.
-> 
-> Moreover, cpu.idle state is not included in scx_cgroup_init_args, so apparently
-> BPF schedulers don't receive an initial value (only subsequent writes). This
-> should be probably fixed separately.
-> 
->> +Whether and how a knob takes effect is up to the loaded scheduler: it
->> +may implement the corresponding callback partially or not at all. The
->> +same applies to other knobs like nice levels. When relying on these
->> +knobs, check the documentation or source of the loaded scheduler.
->> +
-> 
-> "nice levels" can be a bit ambiguous, per-task nice changes are converted to
-> weights and reported through ops.set_weight(), writes to the cgroup file
-> cpu.weight.nice are reported through ops.cgroup_set_weight().
-> 
-> Maybe we can rephrase the whole paragraph as following, or something along these
-> lines:
-> 
->   The fair-class scheduler enforces CPU controller settings such as cpu.max,
->   cpu.weight, and cpu.idle. For sched_ext tasks, the scheduler core communicates
->   these settings to the BPF scheduler through ops.cgroup_init() and reports
->   subsequent changes through the corresponding ops.cgroup_set_*() callbacks.
->   Similarly, per-task nice changes are converted to weights and reported through
->   ops.set_weight().
-> 
->   Each BPF scheduler is responsible for implementing the scheduling semantics of
->   these settings and may choose to ignore them. Consult the loaded scheduler's
->   documentation before relying on these controls.
-> 
+The scheduler core communicates the initial cpu controller settings
+to the BPF scheduler through ops.cgroup_init() and reports subsequent
+changes through the corresponding ops.cgroup_set_*() callbacks.
+Whether and how a knob takes effect is up to the loaded scheduler:
+it may implement the corresponding callback partially or not at all,
+so cpu.max, cpu.weight and friends can silently have no effect.
 
-Thanks for the review. v4 adopts your wording: ops.cgroup_init()
+Document this in the basics section of sched-ext.rst.
+
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+---
+v3 -> v4: Rephrase per Andrea's suggestion: mention ops.cgroup_init()
 for the initial values, ops.cgroup_set_*() only for subsequent
-changes, and per-task nice disambiguated from cpu.weight.nice via
-ops.set_weight().
+changes, and disambiguate per-task nice (ops.set_weight()) from
+cpu.weight.nice.
 
-On the missing cpu.idle initial value in scx_cgroup_init_args: I can
-look into a separate fix for that.
+v3: https://lore.kernel.org/r/20260824091501.547649-1-cui.tao@linux.dev
 
-Thanks,
-Tao
+ Documentation/scheduler/sched-ext.rst | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-> Thanks,
-> -Andrea
+diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+index 35b550671ca7..794ae80b3ba3 100644
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -242,6 +242,21 @@ optional. The following modified excerpt is from
+             .name                   = "simple",
+     };
+ 
++Scheduler-Dependent Knobs
++-------------------------
++
++The fair-class scheduler enforces CPU controller settings such as
++``cpu.max``, ``cpu.weight`` and ``cpu.idle``. For sched_ext tasks, the
++scheduler core communicates these settings to the BPF scheduler
++through ``ops.cgroup_init()`` and reports subsequent changes through
++the corresponding ``ops.cgroup_set_*()`` callbacks. Similarly, per-task
++nice changes are converted to weights and reported through
++``ops.set_weight()``.
++
++Each BPF scheduler is responsible for implementing the scheduling
++semantics of these settings and may choose to ignore them. Consult the
++loaded scheduler's documentation before relying on these controls.
++
+ Dispatch Queues
+ ---------------
+ 
+-- 
+2.43.0
 
