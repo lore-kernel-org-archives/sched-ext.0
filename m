@@ -1,48 +1,48 @@
-Received: from mta0.migadu.com (out-158.mta0.migadu.com [91.218.175.158])
+Received: from mta0.migadu.com (out-166.mta0.migadu.com [91.218.175.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CCD41B355
-	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 13:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2110429003
+	for <sched-ext@lists.linux.dev>; Mon, 24 Aug 2026 13:40:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787577692; cv=none; b=YmHjA8LRnVZZDh5D9XReNTBBV7i5ZvlJRnRVw7hcHmYYfvBNApS7qru+r8SIZBc7/0PoHDB/XtTO8eZ63XGkTXMeZReG6THKvybg7YRU14Wdf5PXe4x1WJTmTIZFrygX5jbt7oZrEEWrkD7E8fc9M1p5QFdfgg6U7g05rQVqydY=
+	t=1787578833; cv=none; b=upc8Ljm1av+tuA633CycD8VAdz6qeU5R0xWCiKxpM+b7xSDMHpF+8IMZfBVrEznuW1I/rvGwEyUfZTFiWYXqfwrwoG5iIZXXG89p8KGKrAAlIsU+dQlKvOZwWoU1IgrrroTeozqVkQsv7Vf+m7+H9Bl/1F5cFZFGu962obRVvrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787577692; c=relaxed/simple;
-	bh=qf+Yc6atM2RgkejUvwoRCwv1bc3J5o3sptHpC4Mb9oE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RiCX/dZ8ju1KQr5GE7JCOLdJJ0l3K9K50E1nrHL7LLSbWrsZK5f5ec/a7j3A7ynx7TEJEkgN/JOzrYWsn72b0fisaclUIP5Kxv52MsWQQAC8eFYAVeGoFjzqgPK3ed6ajkw1dRNCHavNwh5zt/xuFoj8UlwI31YPIyZowIx281E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=CzV45v8T; arc=none smtp.client-ip=91.218.175.158
+	s=arc-20240116; t=1787578833; c=relaxed/simple;
+	bh=3edNKJO7hDiLr+6N33bx+1GdVJff9by9zddu2YSlVF4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VevZJ9QehYo4rIaeWnJegeXmfc7VaKSbQfUlYmR8JQmPGcd7Cfm/IVtyZmIMTcxLhEe0dA77rKhh6ZA9a0SRcvyZY09QRxOVCgjoZQf5RA3ZzeEhpN55rU/tD4WMlV3zLXAYhApJIQC/mxS56taxTgHadN0DpteGAzWM1tjxAhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=kRZYyx51; arc=none smtp.client-ip=91.218.175.166
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="CzV45v8T"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="kRZYyx51"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=qf+Yc6atM2RgkejUvwoRCwv1bc3J5o3sptHpC4Mb9oE=;
+DKIM-Signature: a=rsa-sha256; bh=3edNKJO7hDiLr+6N33bx+1GdVJff9by9zddu2YSlVF4=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787577688; v=1; x=1788182488;
- b=CzV45v8T5sS3IsLrFoFPOrrNyb8sWVaHBs2w9nGw01b6lInETnKEqdhtCG9vM0Rbc72iDuez
- EPm26wKF90SkD7/wLhguR9xU5HUzgtic3dSFCu861h+pimoNKZYStiXEMZKH+v+qyAT9Bt2c/J2
- HdMofJ62YLEwbLnuWC/B9fMg=
+ t=1787578823; v=1; x=1788183623;
+ b=kRZYyx51myGJ0OEhQ6QlAzfnEpDU7IVRG3/Q1Llp9HelK12nb8KBosQuSXkYSyvh84y5fRhg
+ zAnxogSIf7hMVxxL4oU8AXk9+sjEm7IUFrQZq5g7LpPQu+rI6QlDFPcV4zkNwhXIaJXrhfmSOmi
+ i01u7lQ/fhKvHrYC/Js5zGeA=
 X-Envelope-To: sched-ext@lists.linux.dev
 Received: from ctao-book.. (223.70.159.239)
-	by smtp.migadu.com with ESMTPS id 4b68cc2e2bd4e7c7;
-	Mon, 24 Aug 2026 13:21:28 +0000
-X-Mizu-Trace-ID: 4b68cc2e2bd4e7c7
+	by smtp.migadu.com with ESMTPS id c8db36bdc943f2b5;
+	Mon, 24 Aug 2026 13:40:03 +0000
+X-Mizu-Trace-ID: c8db36bdc943f2b5
 X-Migadu-Flow: FLOW_OUT
 From: Tao Cui <cui.tao@linux.dev>
 To: tj@kernel.org,
+	void@manifault.com,
 	arighi@nvidia.com
-Cc: void@manifault.com,
-	changwoo@igalia.com,
+Cc: changwoo@igalia.com,
 	suzhidao@xiaomi.com,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	bpf@vger.kernel.org,
 	cui.tao@linux.dev,
 	Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH v4] docs/sched_ext: document that cgroup CPU knobs are scheduler-dependent
-Date: Mon, 24 Aug 2026 21:21:16 +0800
-Message-ID: <20260824132116.560347-1-cui.tao@linux.dev>
+Subject: [PATCH] sched_ext: pass the initial cpu.idle state in scx_cgroup_init_args
+Date: Mon, 24 Aug 2026 21:39:54 +0800
+Message-ID: <20260824133954.561956-1-cui.tao@linux.dev>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -54,53 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-The scheduler core communicates the initial cpu controller settings
-to the BPF scheduler through ops.cgroup_init() and reports subsequent
-changes through the corresponding ops.cgroup_set_*() callbacks.
-Whether and how a knob takes effect is up to the loaded scheduler:
-it may implement the corresponding callback partially or not at all,
-so cpu.max, cpu.weight and friends can silently have no effect.
+scx_cgroup_init_args carries the initial weight and bandwidth control
+parameters of a cgroup to ops.cgroup_init(), but not its cpu.idle
+state. A cgroup that was already configured idle before the scheduler
+was loaded (or before it was onlined under it) is presented as
+non-idle, and the BPF scheduler only learns about it if cpu.idle is
+written again later.
 
-Document this in the basics section of sched-ext.rst.
+Add the idle state to scx_cgroup_init_args and fill it in both places
+that build the args -- scx_tg_online() for cgroups created under the
+scheduler and scx_cgroup_init() for cgroups that already exist when
+the scheduler is loaded.
+
+Verified in a VM with a probe scheduler printing the init args: a
+cgroup configured cpu.idle=1 before loading shows idle=1 in
+ops.cgroup_init(), the default shows 0, and later cpu.idle writes
+still come through ops.cgroup_set_idle().
 
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
-v3 -> v4: Rephrase per Andrea's suggestion: mention ops.cgroup_init()
-for the initial values, ops.cgroup_set_*() only for subsequent
-changes, and disambiguate per-task nice (ops.set_weight()) from
-cpu.weight.nice.
+ kernel/sched/ext/ext.c      | 4 +++-
+ kernel/sched/ext/internal.h | 3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-v3: https://lore.kernel.org/r/20260824091501.547649-1-cui.tao@linux.dev
-
- Documentation/scheduler/sched-ext.rst | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index 35b550671ca7..794ae80b3ba3 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -242,6 +242,21 @@ optional. The following modified excerpt is from
-             .name                   = "simple",
-     };
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index b646711a45fe..a7218314dcfb 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4764,7 +4764,8 @@ int scx_tg_online(struct task_group *tg)
+ 				{ .weight = tg->scx.weight,
+ 				  .bw_period_us = tg->scx.bw_period_us,
+ 				  .bw_quota_us = tg->scx.bw_quota_us,
+-				  .bw_burst_us = tg->scx.bw_burst_us };
++				  .bw_burst_us = tg->scx.bw_burst_us,
++				  .idle = tg->scx.idle };
  
-+Scheduler-Dependent Knobs
-+-------------------------
-+
-+The fair-class scheduler enforces CPU controller settings such as
-+``cpu.max``, ``cpu.weight`` and ``cpu.idle``. For sched_ext tasks, the
-+scheduler core communicates these settings to the BPF scheduler
-+through ``ops.cgroup_init()`` and reports subsequent changes through
-+the corresponding ``ops.cgroup_set_*()`` callbacks. Similarly, per-task
-+nice changes are converted to weights and reported through
-+``ops.set_weight()``.
-+
-+Each BPF scheduler is responsible for implementing the scheduling
-+semantics of these settings and may choose to ignore them. Consult the
-+loaded scheduler's documentation before relying on these controls.
-+
- Dispatch Queues
- ---------------
+ 			ret = SCX_CALL_OP_RET(sch, cgroup_init,
+ 					      NULL, tg->css.cgroup, &args);
+@@ -5185,6 +5186,7 @@ static int scx_cgroup_init(struct scx_sched *sch)
+ 				.bw_period_us = tg->scx.bw_period_us,
+ 				.bw_quota_us = tg->scx.bw_quota_us,
+ 				.bw_burst_us = tg->scx.bw_burst_us,
++				.idle = tg->scx.idle,
+ 			};
  
+ 			ret = SCX_CALL_OP_RET(sch, cgroup_init, NULL, css->cgroup, &args);
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 53e136a47924..aa149a9c29f7 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -259,6 +259,9 @@ struct scx_cgroup_init_args {
+ 	u64			bw_period_us;
+ 	u64			bw_quota_us;
+ 	u64			bw_burst_us;
++
++	/* whether the cgroup is configured idle via cpu.idle */
++	bool			idle;
+ };
+ 
+ enum scx_cpu_preempt_reason {
 -- 
 2.43.0
 
