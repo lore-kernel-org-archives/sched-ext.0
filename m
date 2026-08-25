@@ -1,63 +1,72 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013018.outbound.protection.outlook.com [40.93.201.18])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010024.outbound.protection.outlook.com [52.101.85.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6AE3DFC8F
-	for <sched-ext@lists.linux.dev>; Tue, 25 Aug 2026 08:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F8F3E3169
+	for <sched-ext@lists.linux.dev>; Tue, 25 Aug 2026 09:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.24
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787646435; cv=fail; b=fhqI/oSMfpaOvNU1MKBuxQ7OV53cAqVHqgE47IQ4H0yxXgd/JJFKaXg/Kw9f2HUbigDvPlzrkmr9CiO8fbcRti/fXjzO/lnyoXwq7A7bpeLEKN/dAMwjJcOt0S12TnpHDZ3mZjEozpGccV9eCrsN385ZfG08i3jvLnKhYKPEweM=
+	t=1787649726; cv=fail; b=lk04to1+gFj6S+DoaG0qgyxJnP+5xDWzQDp8316Sc+3xUGyJjIq2biBgKwgwY3407nHGWvJAJVhNyjnOJwvhljykPaWk9UIBvcW1UqsvYWPskOBrayVxDY2PioThahfhbap99dLgiUk8HPR/pwm+ngAswDgKLsfInT+S4ItcoN8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787646435; c=relaxed/simple;
-	bh=vVe2utE5wSsNs1aNFcIswYtmA5AhdckmjlszekQWwDw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=OsdHww0+K1k1pKf+uYux6o7mYNlurkQA1zPf8PM6QKC4AFt/sWxP07iht4YA4ZnhBzOofp6mUIy4LXXxOLt5Tpc0lR5x3Eno8UfDdfi2ACGPibQAGLsNNS07fNrlzl7NfBrdze7rTXuG55aqiS9/Gw2EfsrKcERhXSQ87OcL168=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ph28Kcle; arc=fail smtp.client-ip=40.93.201.18
+	s=arc-20240116; t=1787649726; c=relaxed/simple;
+	bh=6qjTRR5OBY+A+CQZpeh+Pn0cnSgaDpLpIxpEPDRAFZI=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ocntAJc2qjhDcNn1GqWiy2heigeepdF2qAJMnlOjxYZ9z0zCVwFLuo8imA3HwLjplVzDys0I5bzVUM+R6MfBj0iHgykxkQKc4IMFNayrY0Z+03lw82BZXdszFHsFJhwpBJDfv2OLM7pnM1bc/neDRFpnH6ZprIYzq6CTO5/6J1Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=pMZ1aVhM; arc=fail smtp.client-ip=52.101.85.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ph28Kcle"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pMZ1aVhM"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NSkErfBljkR6BPyaLUqeYa17Bup/V5l7+CmbtPE4Hh81x11ne7RmAGFv4DE753ybwpROabcqKtp0oQTARQfCndzhfdecxSPlbQ6k79TR7p+tzhIF3EYurcxsewdj6OyYyYZx7A170rYAPMhe3u+oUP0viIWFkUWw+B2gQzEJy8Oyoab01SbqfPrTo9EzrUUTJvuBfWey5rwe8wyz5h+fgKjGKix3bpUWDyfK0UXOqcolGZJ+4Yqo+HSqmFQ5eLOvZMax/gOwT+cTloy/WSb9+lNve5vlVgA39l9/PZDAY7Uo6NfkM8zXOOAaJS+L6XaW8IjrQL12E1x8ayG3y2Jiiw==
+ b=iG+DnAQ5z6YcEpgKIkr5c3KlGRNzG4WXLvgiPwXAZvfzc5W/DQRve/EqWwj/4CKEc4Ea0h1+EjJMESfY8URxv1X4Dcs0a6pv5FrQmFoeT3JFgdLh/t+bPHTQVgOAWUt172s+5pW8O/TBg4gcGJZEGKOJex177tHDjt85AeA6CB1G4wI9D5aaXvV/Qz1VyWi40fEOmVWgNuV/YpAdvvP3atFA5x+Q8ZrwQs7nOfhEjwACOE8X5EZsziKOHhRpDwEoLp2OD3RiP3eLyHV78GWbfBbWJbfjHdhdyDWwahGDOgDU+9gHHAoje8NKgUr6xo7hlzn+nCYRnxQeJkHrxDmzTQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GyjtDcrfNIKrwzjluJxIanIP8scQD6gmUTgIBlIsU/M=;
- b=JrtMOUD/wGMTCHZJdzS1yYDpC7XcwGcFkk/YigXImV5RTi4GUVIKTUH8lsX7szNlGoM5mFTvyG8xt4PKrQwbB4ihc8rJMO3nO5C/95gkOAYFZXgZBKroFtcuS0d6VMzPSH/60o4xN9hGFv1sWVlUMOy9IvlxvqkGssyR5gBl6P+UaYTiux1brdwHJJdGKsHwKC/lsyzhFJ83IKDkrWl5fC+sRcyE6w7+nqT1Gv9jIW1uHN6D6BG5JLRVjVbN2JObxRbvx2HSdzhTY5k2QOqQaEjSlKPtvOV64wXohtLBktA+vFedBkr8vcNfmGVp9xaw3ocQb05+nwKanbog23IVFw==
+ bh=sAl+01u5hlVDspXkN0mXNQ9NT1OrWMTomxB0Jg3xvT8=;
+ b=e8ByB2a242iLlHlDr3mysvbnd6nJrLXPqz3iyze1ROa4WdcWYLUU2KXAs+FdEOyqtD04jCnlCSBas8Cc8gmaD0pcZQopBT9kd6qlzzO1jDGxZ6QeWqCiYmKcVcCO0VE9nMZc0QqboPYmjPIxpxP9JuaZs9XDmpcA1VVvDiuxkv+VNVGAcs0RaFaMOvzQ0ZtIAiGYUmmt5+iJetWmf3LDKQeswigWf1Jxkh5LZpTDRYiJYAsN/EUQcnNgngHof+QNiyMWbeMkzFw3dsvWE0O5PSVOBcb/Aj+TQ9AcOgckcMUICnH7jNqUp3AVzY4R0lJMqyxSdpc8w8WZpS6bOQZ4+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GyjtDcrfNIKrwzjluJxIanIP8scQD6gmUTgIBlIsU/M=;
- b=ph28Kcle2glRHHIGN7p/eSHo35EZy9ftDX9oGFfcl6gwkRXhJhyosttKyFGuQC2JHWGpj5v2pB1TQ7PZGYJxz2WdhHhfQIxBf3c0o8uY1OK+0TSq/M98fWPTwPfhiCwQL96HWptv000Qj2MAOkTaodIwDScf8gR+E5gRCxX5FSa3B05LGqWJXMAX8LZDdF0oes5MFeImSeE3jbBgeVeZwX4h5v1DbRKyYzu1Rh5LPphMDVqL6HUFvwka2DTUDn7TSCwCCeP7uC75ZtauTirhlpqYy/Ni2Di5mniWutM+DXyTr+TehXI45wGaHFfPWVOSK/BePdScbMiiFyLBpjH79w==
+ bh=sAl+01u5hlVDspXkN0mXNQ9NT1OrWMTomxB0Jg3xvT8=;
+ b=pMZ1aVhMULBdZUUoDNV1ytXjg7xkux1th/y2KQk1KYhhNsXVVbqHe6VlcrJvnj+zCDoxdnGhAu31K9inoEVTheXqotnGbopH3sT34soroXz1vgtLunx5rYG4qbBePUycgvxkfoOl3Vzj9DGCCZY8S6IvRV2knKWP7rCCgR6cADBKaEgxexI51J1mR7yzMCnxAADUtVchoa/FYpN8lcWEEPOIaTj2yogvE+n/LU33RXK5xriuNmQnKyaJCqHC55XJv4i5bD029qVQOgl0b+HOZA7/meJQTE2s7o14NOv3hNqUdAYwLMz0dRLuR0hsAd+mcwlVrNTsVojPhgL0AoZ5Dw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by CH2PR12MB4118.namprd12.prod.outlook.com (2603:10b6:610:a4::23) with
+ by MW6PR12MB8833.namprd12.prod.outlook.com (2603:10b6:303:23f::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
- 2026 08:27:09 +0000
+ 2026 09:21:59 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0339.012; Tue, 25 Aug 2026
- 08:27:08 +0000
-Date: Tue, 25 Aug 2026 10:27:03 +0200
+ 09:21:58 +0000
 From: Andrea Righi <arighi@nvidia.com>
-To: Tao Cui <cui.tao@linux.dev>
-Cc: tj@kernel.org, void@manifault.com, changwoo@igalia.com,
-	michalblk@google.com, suzhidao@xiaomi.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be
- sleepable
-Message-ID: <ao1R11aGRZH9hE5f@gpd4>
-References: <20260825052336.46746-1-cui.tao@linux.dev>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260825052336.46746-1-cui.tao@linux.dev>
-X-ClientProxiedBy: MI3PEPF00004E9F.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::451) To DM6PR12MB4827.namprd12.prod.outlook.com
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Tao Cui <cui.tao@linux.dev>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Sashiko <sashiko-bot@kernel.org>
+Subject: [PATCH sched_ext/for-7.3-fixes] sched_ext: Serialize cgroup knob updates
+Date: Tue, 25 Aug 2026 11:21:53 +0200
+Message-ID: <20260825092153.2602809-1-arighi@nvidia.com>
+X-Mailer: git-send-email 2.55.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ZR0P278CA0097.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:23::12) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -66,184 +75,239 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CH2PR12MB4118:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8e5bef82-d601-49ca-5672-08df0282a714
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|MW6PR12MB8833:EE_
+X-MS-Office365-Filtering-Correlation-Id: eba485f8-3e9a-4222-4512-08df028a4fd6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|7416014|1800799024|10067099003|6133799003|11063799006|22082099003|18002099003|5023799004|56012099006;
+	BCL:0;ARA:13230040|1800799024|376014|7416014|366016|23010399003|11063799006|56012099006|10067099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	r6UKmiq5Zwkvp1EJSZZdtcprNauPLGcbB6ePuXifzDpkniXtTOSu2AJrIKhMm2QVe83qnodOqDfEi5NHc1UDBPi3gpGUfRWHGru6gJqzpYP99tGEkWLzc5tdsfdtT7MpwK9F6CAuR42axZ/2RKxhOptPauXHQLIcFEW0SG/ZJ3Hkkhi8QrrRZjLsXX9iZTCNcfxVHAzT529P5ALaGHiPwDlbHGfPt2QLn9Qqbw2DX86sDIRSrCM5oacjlr+kAbV6GITrQFSUgY4a3oz0roGUDhftXU68tx3DXcF5M0C8+kX5Qhrg7ROEXfUQ9g/NfRgWxA44eavKa/YMg5nGB3pkAnVeqLWwCbgGw2uYHga73/9zuDWgka8mqxa4kwJNAO8IO0O4ckJ5x1cc1BR0mbqFYBcJgWYLjKCkYIQA2iJ//PbY7CvA8JWqUK8DFqM/97ky5ZzbLUQptHS0V+MhjLPf8PEno57NhYZHgzy49tgwtgl226Hnn4t/O/i/tKlHgoWSWLp0HRpCOptN3+dvfkbwYPT+x0n8PkHgrVL6xnHO/hPS77woRuFUrY8Mhwd1K39HKbyKwX7gDrQB+k4KawfdY90o04bWAtM8U3QHGpcxgdkW0UrEvLH8or4/SqO9IOI+2brZSIkQ5QgscNY7F43p524efxKn7IpoFR7dbSzjPcg=
+	2Qen52RLB/ETA959ANmZ/ijxnvs5Zhu+GJuvykY1ITiO40ML+kun+dsGdCn1lBpPFOwQPHdL9heoi8MugUW3YPNKLvbaXLtG6kSAIWJjYzkZURKy8ZYsq7xrjYwhEIv+pUWLOYGiT7LGgBrIQCxp4UNOXoC8iorJKXW7htZ23uIU+4B6Yws4DJStOp8O4KpXeqsQTm5lPSHrGm3hTtQwq/x2ZSD4zrTA1eMzdziipNe2pQxpXfAG96idEp602YJPyr6EVtWm3/S7cgCC9zbD685Ans+aL/EU6uFZg22NtBdp6zv8wR0Vb7o6k+mN9ATqVDAHeeiGHTmKNhs3vtSjMi3tcpxY02kDfPJ232ju4X0EDm2GmCqq4EJHoh7d0Ju8RpUFPj1piO0yzQsJl1ZLiMW3XV1qJ56WBao1a7J3K/2KowX8e5wrvedLdwsoBpFhQtbszAn79GxD+bmk5yR5mkriiL09OC1QRepbFywIWqdv4XGvvMDTc56hZJQDqTEIvRC4lLlnBpDH8M5uel9ArOZsmpZ21Yn+xj//G7MnIYWXpvkGwBbaGK3C7L+1ek6GXqawA4MSHYlzej1OjW+mkyLjdByBXk9nEAM2W5H3Y7nHBtV294SxtXrUYNF2dIWv+bIsTpyOh5J8Fc3NBSFxPn7D8gyLeTj/C9Ujd3dlZyo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(7416014)(1800799024)(10067099003)(6133799003)(11063799006)(22082099003)(18002099003)(5023799004)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016)(23010399003)(11063799006)(56012099006)(10067099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?otTQgjt7W0R62EtfQu5OqcbEbvL7TiSeyWxDgQXRLsRP+bxm5PkYhgigZDYM?=
- =?us-ascii?Q?P5AbTJVN9ErRqJdG+fNljADD5O6JVHttAX0XaOrOMqhEMUEZEejdFYXec6bM?=
- =?us-ascii?Q?/sAsN0gu5i9Ql4rAar+dEjq9TXUO9V9dfkSiQJjdtpfOyQqKLjxRmkbFoEvQ?=
- =?us-ascii?Q?PuK/Vvrku8zsdFITwNTO/NkRpxlxHdek642SxQQ6OFBPwGh6frQbokvy3wG0?=
- =?us-ascii?Q?ZOZY1AllK8bpjHbKfmUbuhD5WC+3F+xdzVoW8u3P1CzMFc40Xfv7g62hSCQ3?=
- =?us-ascii?Q?viR3zuLJEBF/3JUa+bkbbiSnlCLWNWckgOClCcbxA0QVHRC7LEe2cq5SYxEV?=
- =?us-ascii?Q?xC8dJwGDstzmcgZoG20CYZvODQTTl3iC5lgk/faJgLW4OiFXdaTq9Xn6HIWJ?=
- =?us-ascii?Q?JdNssp2+GX6iLF9AMNClIi5zY8LA0yRkkmr7fabg+plaKVL2/BwdY5UVECK2?=
- =?us-ascii?Q?4jrEVex1fvb+J2WI80+Cqyn+hgzEE6pyIDoOYFDkhW0zzVYdPqnEDARVABfx?=
- =?us-ascii?Q?UXN1zH4nTFHSIcd1mTgYh3J2//wO1BMa4jcfnt26cPBEbuZQ2x0mNM5ZeTyO?=
- =?us-ascii?Q?g4kgY1/3apdOlfFCwtzVkH86ljAkDgmpVDrHkGvFjVLi3XLl8l8RH3E70oPp?=
- =?us-ascii?Q?jMaUF0VakfF6hSWwigK95eDGi6867tGT370NVx/CC+PeSDX+ujt/netCtOEz?=
- =?us-ascii?Q?nvgiyAn+bXlGLxO77cVmeyKJ82EaDVtvGIPAuxej505Kqg3ReHJj1fkfEaF+?=
- =?us-ascii?Q?/F2kOcgWCsanpUJfBdWl2STr9rQMZpJfFLth5AzVZekDfNVsna+HzW/fo6uJ?=
- =?us-ascii?Q?rqLoBoBWd4DGg363ImJhuMneLsJkLerbY9zX8dlNmVG+wie1veficNrWNyeF?=
- =?us-ascii?Q?HbLEKiIUBiLki09pUIPXTUay7ifFZ8uhsE4CT3p4H5IzukpGUI0FVj7kWHKb?=
- =?us-ascii?Q?rXEYX4b+jGVo536E40UvoWTptZTxumkBLBTiixGdoUAcwJSjWlHBxWyCe3/q?=
- =?us-ascii?Q?xoqJGDjyhYcDTEU4eOhKAqUtd7LmRFbzhpGh1hoDl+Gfz19jHjjDRGmplxxc?=
- =?us-ascii?Q?JhAkWsV9lR4XAXJUxLcDDOscggINiDJtQE1FuSInObpwpGSPxYYCIHrFKF7/?=
- =?us-ascii?Q?IvZV5p87HvLtQ1kt3wMpCWRKhsktz9qfMN3xevcg81HVQ7rqMNvUntNS94N2?=
- =?us-ascii?Q?mRdLseT7KlyH8fBcuM/x9SgQDd0q/VbbQL14+DngfOMkRWBLlzKuCjL/gahJ?=
- =?us-ascii?Q?tMbKS37SmmTu1xlxouYAAY7icD5UGiLZH4O0IXH8RvwEmnajHRMNLP0oFBt/?=
- =?us-ascii?Q?AEzAjUdSFpMxTFu5yCw8mCHRMT9JYrPYy3JimFGfMY8lT1tab+1tYEyxNv6b?=
- =?us-ascii?Q?sQYBKbmx3pCzuZ5xo3YiW/LtIxw2uROJff9e9Wnjm3lm8Ply1F9uaC33Sp8o?=
- =?us-ascii?Q?v8n/B+/FaQy/Ob/mMTymgmrRxBV+yr7jS1xvgVdJezs/oJIgqJ2orUNzubN7?=
- =?us-ascii?Q?5Wck9s9aG2cP/HZwr/HGU9HKFAQigEujxBTUXka5+l7QJmlH2r1Z4wVqXV+c?=
- =?us-ascii?Q?ZGmcaSW45CEsVvAQW2VjGSWeKLGiiSq09LIVqXflYk7skfFi9247unpt2x3v?=
- =?us-ascii?Q?ZTnvYbNel7kJjpwqteZwgB1BABGIC/y+7kDJ7+fl0wis8KmI7le2fCJrIwXK?=
- =?us-ascii?Q?wJMKLrKZchnZuJvOjUBYdSmF+lPpepNgRZu6yj03Knbbo4IZEoUQAj02McvC?=
- =?us-ascii?Q?qICCC5fbRg=3D=3D?=
+	=?us-ascii?Q?SpxJ0b9I4l26tIxnM9UdEb/4wDYJZA7El8sIXQC3qLelzW+SIgMbOwCsHuRm?=
+ =?us-ascii?Q?QwoguR7dn1QYendr0U5R4IJMycrTIfrPwPp2jHf79CFoutUhctq+5+5Nrprs?=
+ =?us-ascii?Q?p4DGR4qFq9w2cL49SyBjb4zw+Yt75t5oG/070+wn2RKOKfiUe4AZ+0yi/O/3?=
+ =?us-ascii?Q?H4qsaFwYita8rEwNabLMMcKeK3OpfzoXYYm3XzeCImJIaxr1WXNKqrop1qLa?=
+ =?us-ascii?Q?ooyZ1EkblXiNenS7hXXfDj3uREAXMoSRWT7MREvjMWhGqtIETGry0xtzaKGf?=
+ =?us-ascii?Q?A6rOqz46qxQUjKBH8I7gTsvu9pEk6QlxXpBMqwfUE7zGT4RQls5t7Y0zULmk?=
+ =?us-ascii?Q?5l+z8SXYI7dTQIG8S68bGXO2AVW/WqQ344JsZ/K8l85YPgvr3Hw72xEsyEgf?=
+ =?us-ascii?Q?gciFqs3PPcbEaGpouM26B5J0Wm1YsxcVFZxrzHh6DiocMzT3jvoZbc/Qz0ci?=
+ =?us-ascii?Q?4jNbH+rxGCfDnSc1L32A1PngYiAGMhQKakGv5rKxJ+4ZCP2R+7L9V/JOP0HO?=
+ =?us-ascii?Q?u4/eW8rdFyuqzViwy0/gVwUMPHLWyKFTktxHuQryNzs59Y4n4wUFG07fSc0Q?=
+ =?us-ascii?Q?Kz+O7bqQqVFzRIBqAKo8/Gb2gS1JCGUmzxXihvWL8PCwA70EquOoG0hz+nqU?=
+ =?us-ascii?Q?WTVUf4Bm/hoE/su6nJlSUcCUkoKP/XmdLCyWj/jOQ1LpEcF/IafIn2BN4/sM?=
+ =?us-ascii?Q?TGTvw9G/HZnp+l9GyI5t8f2OKTTasIHjsdHfxIPjDWuAUTNLvdpQtB0qcK5H?=
+ =?us-ascii?Q?oXfo+uffe+uHxFLYSHYo/xP3Eq9649FdxI0X/MFH7/KUkO5zhGZ9ig0yBOrS?=
+ =?us-ascii?Q?bpwGcnurUb+uNyarkJlaupJrPVaZQkAWnpCjDpvaS11X+/728Widzb7h1Q7Y?=
+ =?us-ascii?Q?/HF2T5TnYYkblQeFqC7b1SXyXKcrwDILJlgdzFBhF5waVOXTAADMGhc8ugcg?=
+ =?us-ascii?Q?CTUMVdv86L2ukjRjDs+81ZZ0vJruOgaQUjGn9k9G2jMbFPfpY+iEDyoDFXY2?=
+ =?us-ascii?Q?jZj0L2vJnV5cEdaA26N51KmpoapQCF+NCoT+DgwmRVW4UfG6P9qbKMNx5tz6?=
+ =?us-ascii?Q?jFqwMD8vae4sWjU4U1QMziDC+AsUrt/Odz2aWPdKT7AS58tbWpCe3rXiJwI6?=
+ =?us-ascii?Q?Vb7XEzr+I2qi5+r/yBw5jBeAyyhx4qBALZEfqJze/pzEDL9JYNo4FNPAKeFm?=
+ =?us-ascii?Q?HSUOLe9XApifyXhfdvqsAFnAJh5TsA9hDwLGPe//aO6q8XBTVpa62k/WeB4X?=
+ =?us-ascii?Q?RIrMI3feP5ttft6gjLt93wIa3uBtkVIU5gjXKP4FLQnbgxNhYNNt4HytfKUu?=
+ =?us-ascii?Q?glcxtyTLAFd1xA/TUhEk1GOk0WSYn3oaP5zGY+VR7UzuoAxWi+Tb2mOMoZPX?=
+ =?us-ascii?Q?fTdN5nIs8+LS0JJU1is0tNeIMjdhNSlcPwGC/HgWtSs3ti11K5jwyYUiQRyr?=
+ =?us-ascii?Q?HqOwmVPxHHfV0+2w29CSZYypx3aMSuNmX+kWe49TTEdl1s/E+QEsZDu7tFS0?=
+ =?us-ascii?Q?i0I7PXNI1tD6FZvD4nP8oUfvCPP+wEEllGFG5rJulm4lSwdkxzLGqNtvMlRm?=
+ =?us-ascii?Q?KGpKOZ/be8i22xkOlWe7ElztGYoZaESAUGEoSlGBFU7RZCjX6wih1ZWXrkVO?=
+ =?us-ascii?Q?w6O27ZsbCT9jrmfhSFv/PsN/IGh+Agk9FHU1EL8+pthrG7TzqY2r5P0U2U5M?=
+ =?us-ascii?Q?NSHvBXZndrD3GNbPMpT02a0BqbzA1KQYrMRKx3I+PS6TpDjdSW01FKNGRR/N?=
+ =?us-ascii?Q?WSc0mpxuRQ=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8e5bef82-d601-49ca-5672-08df0282a714
+X-MS-Exchange-CrossTenant-Network-Message-Id: eba485f8-3e9a-4222-4512-08df028a4fd6
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 08:27:08.4818
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 09:21:58.5418
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JZFIESVA3HUZ5Y4RpI/Gf89dxoDJVNOqrzWGVour6+ZpndNwXxY9FWYOza/goF3dmSB4NzHtZ8I7EVos4vHxQw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4118
+X-MS-Exchange-CrossTenant-UserPrincipalName: fq2+Rzh/paBa/J6bmlPmCtAVyt/UxgYeZWe9ppScSCaKbOwHoY8g7lIs9WpDj/9WrKawALwf0hxYz38J3Tcsfg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8833
 
-Hi Tao,
+Concurrent cgroup knob writes update the core scheduler under its
+internal locks and notify sched_ext only after those locks are released.
 
-On Tue, Aug 25, 2026 at 01:23:36PM +0800, Tao Cui wrote:
-> From: Tao Cui <cuitao@kylinos.cn>
-> 
-> ops.cgroup_set_weight() and ops.cgroup_set_idle() are delivered from
-> scx_group_set_weight() and scx_group_set_idle(), which run from the
-> cpu.weight (and v1 cpu.shares) and cpu.idle cgroup interface write paths
-> in process context. Both hold percpu_down_read(&scx_cgroup_ops_rwsem),
-> whose read side may sleep. The call sites are therefore sleepable, like
-> ops.cgroup_set_bandwidth(), which was recently added to the sleepable
-> allow-list.
+The notifications can therefore complete out of order, leaving the core
+scheduler, the BPF scheduler and the cached sched_ext state with
+different values.
 
-The change itself makes sense, but I think the serialization issue pointed out
-by sashiko is valid. Concurrent cgroup knob updates can complete their sched_ext
-notifications out of order, potentially leaving the core scheduler and BPF
-scheduler with inconsistent state.
+Add a per-task-group mutex and hold it across both the core scheduler
+update and the matching sched_ext notification. Serialize weight, idle
+and bandwidth updates so that their callbacks and cached state follow
+the same order as the core scheduler changes.
 
-We should probably address the race first. I may have a fix and will post it
-shortly (testing right now). Then we can apply this sleepable callback change on
-top.
+Cc: Tao Cui <cui.tao@linux.dev>
+Fixes: 819513666966 ("sched_ext: Add cgroup support")
+Fixes: 347ed2d566da ("sched/ext: Implement cgroup_set_idle() callback")
+Fixes: ddceadce63d9 ("sched_ext: Add support for cgroup bandwidth control interface")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260825053648.EF7D41F000E9@smtp.kernel.org
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+---
+ include/linux/sched/ext.h |  5 +++++
+ kernel/sched/core.c       | 28 ++++++++++++++++++----------
+ kernel/sched/ext/ext.c    |  1 +
+ kernel/sched/ext/ext.h    | 14 ++++++++++++++
+ 4 files changed, 38 insertions(+), 10 deletions(-)
 
-> 
-> bpf_scx_check_member() rejects a sleepable program on any member not on
-> its allow-list, so a BPF scheduler cannot allocate -- which is sleepable
-> -- when a cgroup's weight or idle state changes at runtime. Add
-> cgroup_set_weight() and cgroup_set_idle() to the allow-list so these
-> callbacks can allocate on demand, and document that they may block.
-> 
-> Also add the matching compatibility markers, so userspace can detect
-> this support via BTF, mirroring
-> scx_compat_marker_cgroup_set_bandwidth_may_sleep().
-> 
-> To size the alternative, a scheduler that gives each cgroup a
-> dedicated idle DSQ must create it in ops.cgroup_init() for every
-> cgroup up front. In a VM with 2000 cgroups that is 2000+ standing
-> DSQs, each a struct scx_dispatch_q plus a per-CPU area. With the
-> allow-list entries the same scheduler can create the DSQ lazily on
-> the first cpu.idle=1 write of a cgroup: 4 allocations for the 4
-> cgroups marked idle at runtime, and repeated cpu.idle writes do not re-allocate. Verified with a probe scheduler on an
-> unpatched kernel (load rejected with -EINVAL) and on a patched one.
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 582d7cd4a9839..380b4b96fd08f 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -317,6 +317,11 @@ struct scx_task_group {
+ 	 * cgroup1.
+ 	 */
+ 	struct scx_sched	*sched;
++	/*
++	 * Serialize cgroup knob updates from the core scheduler change through
++	 * the matching ops.cgroup_set_*() callback and cached state update.
++	 */
++	struct mutex		knob_mutex;
+ 
+ 	u32			flags;		/* SCX_TG_* */
+ 	u32			weight;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 145eea2d99a1c..2239ea8e78d15 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9820,14 +9820,16 @@ static unsigned long tg_weight(struct task_group *tg)
+ static int cpu_shares_write_u64(struct cgroup_subsys_state *css,
+ 				struct cftype *cftype, u64 shareval)
+ {
++	struct task_group *tg = css_tg(css);
+ 	int ret;
+ 
+ 	if (shareval > scale_load_down(ULONG_MAX))
+ 		shareval = MAX_SHARES;
+-	ret = sched_group_set_shares(css_tg(css), scale_load(shareval));
++
++	guard(scx_group_knob)(tg);
++	ret = sched_group_set_shares(tg, scale_load(shareval));
+ 	if (!ret)
+-		scx_group_set_weight(css_tg(css),
+-				     sched_weight_to_cgroup(shareval));
++		scx_group_set_weight(tg, sched_weight_to_cgroup(shareval));
+ 	return ret;
+ }
+ 
+@@ -10159,6 +10161,7 @@ static int tg_set_bandwidth(struct task_group *tg,
+ 					burst_us + quota_us > max_bw_runtime_us))
+ 		return -EINVAL;
+ 
++	guard(scx_group_knob)(tg);
+ #ifdef CONFIG_CFS_BANDWIDTH
+ 	ret = tg_set_cfs_bandwidth(tg, period_us, quota_us, burst_us);
+ #endif /* CONFIG_CFS_BANDWIDTH */
+@@ -10255,11 +10258,13 @@ static s64 cpu_idle_read_s64(struct cgroup_subsys_state *css,
+ static int cpu_idle_write_s64(struct cgroup_subsys_state *css,
+ 				struct cftype *cft, s64 idle)
+ {
++	struct task_group *tg = css_tg(css);
+ 	int ret;
+ 
+-	ret = sched_group_set_idle(css_tg(css), idle);
++	guard(scx_group_knob)(tg);
++	ret = sched_group_set_idle(tg, idle);
+ 	if (!ret)
+-		scx_group_set_idle(css_tg(css), idle);
++		scx_group_set_idle(tg, idle);
+ 	return ret;
+ }
+ #endif /* CONFIG_GROUP_SCHED_WEIGHT */
+@@ -10425,6 +10430,7 @@ static u64 cpu_weight_read_u64(struct cgroup_subsys_state *css,
+ static int cpu_weight_write_u64(struct cgroup_subsys_state *css,
+ 				struct cftype *cft, u64 cgrp_weight)
+ {
++	struct task_group *tg = css_tg(css);
+ 	unsigned long weight;
+ 	int ret;
+ 
+@@ -10433,9 +10439,10 @@ static int cpu_weight_write_u64(struct cgroup_subsys_state *css,
+ 
+ 	weight = sched_weight_from_cgroup(cgrp_weight);
+ 
+-	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
++	guard(scx_group_knob)(tg);
++	ret = sched_group_set_shares(tg, scale_load(weight));
+ 	if (!ret)
+-		scx_group_set_weight(css_tg(css), cgrp_weight);
++		scx_group_set_weight(tg, cgrp_weight);
+ 	return ret;
+ }
+ 
+@@ -10460,6 +10467,7 @@ static s64 cpu_weight_nice_read_s64(struct cgroup_subsys_state *css,
+ static int cpu_weight_nice_write_s64(struct cgroup_subsys_state *css,
+ 				     struct cftype *cft, s64 nice)
+ {
++	struct task_group *tg = css_tg(css);
+ 	unsigned long weight;
+ 	int idx, ret;
+ 
+@@ -10470,10 +10478,10 @@ static int cpu_weight_nice_write_s64(struct cgroup_subsys_state *css,
+ 	idx = array_index_nospec(idx, 40);
+ 	weight = sched_prio_to_weight[idx];
+ 
+-	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
++	guard(scx_group_knob)(tg);
++	ret = sched_group_set_shares(tg, scale_load(weight));
+ 	if (!ret)
+-		scx_group_set_weight(css_tg(css),
+-				     sched_weight_to_cgroup(weight));
++		scx_group_set_weight(tg, sched_weight_to_cgroup(weight));
+ 	return ret;
+ }
+ #endif /* CONFIG_GROUP_SCHED_WEIGHT */
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index c539d15cda637..00926485e1b77 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4679,6 +4679,7 @@ DEFINE_STATIC_PERCPU_RWSEM(scx_cgroup_ops_rwsem);
+ 
+ void scx_tg_init(struct task_group *tg)
+ {
++	mutex_init(&tg->scx.knob_mutex);
+ 	tg->scx.weight = CGROUP_WEIGHT_DFL;
+ 	tg->scx.bw_period_us = default_bw_period_us();
+ 	tg->scx.bw_quota_us = RUNTIME_INF;
+diff --git a/kernel/sched/ext/ext.h b/kernel/sched/ext/ext.h
+index 0b7fc46aee08c..68a455e23e3cf 100644
+--- a/kernel/sched/ext/ext.h
++++ b/kernel/sched/ext/ext.h
+@@ -78,6 +78,15 @@ void scx_tg_offline(struct task_group *tg);
+ int scx_cgroup_can_attach(struct cgroup_taskset *tset);
+ void scx_cgroup_move_task(struct task_struct *p);
+ void scx_cgroup_cancel_attach(struct cgroup_taskset *tset);
++static inline void scx_group_knob_lock(struct task_group *tg)
++{
++	mutex_lock(&tg->scx.knob_mutex);
++}
++
++static inline void scx_group_knob_unlock(struct task_group *tg)
++{
++	mutex_unlock(&tg->scx.knob_mutex);
++}
+ void scx_group_set_weight(struct task_group *tg, unsigned long cgrp_weight);
+ void scx_group_set_idle(struct task_group *tg, bool idle);
+ void scx_group_set_bandwidth(struct task_group *tg, u64 period_us, u64 quota_us, u64 burst_us);
+@@ -88,8 +97,13 @@ static inline void scx_tg_offline(struct task_group *tg) {}
+ static inline int scx_cgroup_can_attach(struct cgroup_taskset *tset) { return 0; }
+ static inline void scx_cgroup_move_task(struct task_struct *p) {}
+ static inline void scx_cgroup_cancel_attach(struct cgroup_taskset *tset) {}
++static inline void scx_group_knob_lock(struct task_group *tg) {}
++static inline void scx_group_knob_unlock(struct task_group *tg) {}
+ static inline void scx_group_set_weight(struct task_group *tg, unsigned long cgrp_weight) {}
+ static inline void scx_group_set_idle(struct task_group *tg, bool idle) {}
+ static inline void scx_group_set_bandwidth(struct task_group *tg, u64 period_us, u64 quota_us, u64 burst_us) {}
+ #endif	/* CONFIG_EXT_GROUP_SCHED */
++
++DEFINE_GUARD(scx_group_knob, struct task_group *,
++	     scx_group_knob_lock(_T), scx_group_knob_unlock(_T));
+ #endif	/* CONFIG_CGROUP_SCHED */
+-- 
+2.55.0
 
-nit: this paragraph needs a rewrapping (line too long).
-
-Besides rewrapping, could we simplify this part and rephrase it in terms of DSQs
-rather than allocations? For example (something along these lines):
-
-  Without this support, a scheduler that uses a dedicated idle DSQ for each
-  cgroup must create it eagerly from ops.cgroup_init(). With a sleepable
-  ops.cgroup_set_idle() callback, it can instead create the DSQ
-  lazily when the cgroup is first marked idle, avoiding unnecessary DSQs
-  for cgroups that never use cpu.idle.
-
-Thanks,
--Andrea
-
-> 
-> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-> ---
->  kernel/sched/ext/ext.c      | 18 ++++++++++++++++++
->  kernel/sched/ext/internal.h |  9 +++++----
->  2 files changed, 23 insertions(+), 4 deletions(-)
-> 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index b646711a45fe..53b888f5a6c5 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -8079,7 +8079,9 @@ static int bpf_scx_check_member(const struct btf_type *t,
->  	case offsetof(struct sched_ext_ops, cgroup_init):
->  	case offsetof(struct sched_ext_ops, cgroup_exit):
->  	case offsetof(struct sched_ext_ops, cgroup_prep_move):
-> +	case offsetof(struct sched_ext_ops, cgroup_set_weight):
->  	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
-> +	case offsetof(struct sched_ext_ops, cgroup_set_idle):
->  #endif
->  	case offsetof(struct sched_ext_ops, cpu_online):
->  	case offsetof(struct sched_ext_ops, cpu_offline):
-> @@ -11055,3 +11057,19 @@ __initcall(scx_init);
->  #ifdef CONFIG_EXT_GROUP_SCHED
->  DEFINE_SCX_COMPAT_MARKER(cgroup_set_bandwidth_may_sleep);
->  #endif	/* CONFIG_EXT_GROUP_SCHED */
-> +
-> +/*
-> + * scx_compat_marker_cgroup_set_weight_may_sleep: advertises that
-> + * ops.cgroup_set_weight() may be implemented as a sleepable callback.
-> + */
-> +#ifdef CONFIG_EXT_GROUP_SCHED
-> +DEFINE_SCX_COMPAT_MARKER(cgroup_set_weight_may_sleep);
-> +#endif	/* CONFIG_EXT_GROUP_SCHED */
-> +
-> +/*
-> + * scx_compat_marker_cgroup_set_idle_may_sleep: advertises that
-> + * ops.cgroup_set_idle() may be implemented as a sleepable callback.
-> + */
-> +#ifdef CONFIG_EXT_GROUP_SCHED
-> +DEFINE_SCX_COMPAT_MARKER(cgroup_set_idle_may_sleep);
-> +#endif	/* CONFIG_EXT_GROUP_SCHED */
-> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-> index 53e136a47924..f81d03de2d3c 100644
-> --- a/kernel/sched/ext/internal.h
-> +++ b/kernel/sched/ext/internal.h
-> @@ -736,7 +736,7 @@ struct sched_ext_ops {
->  	 * @cgrp: cgroup whose weight is being updated
->  	 * @weight: new weight [1..10000]
->  	 *
-> -	 * Update @cgrp's weight to @weight.
-> +	 * Update @cgrp's weight to @weight. This operation may block.
->  	 *
->  	 * Knobs of a cgroup belong to the parent, so the set_* ops are
->  	 * delivered to @cgrp's parent's sched. That sched may never have seen
-> @@ -773,9 +773,10 @@ struct sched_ext_ops {
->  	 * @cgrp: cgroup whose idle state is being updated
->  	 * @idle: whether the cgroup is entering or exiting idle state
->  	 *
-> -	 * Update @cgrp's idle state to @idle. This callback is invoked when
-> -	 * a cgroup transitions between idle and non-idle states, allowing the
-> -	 * BPF scheduler to adjust its behavior accordingly.
-> +	 * Update @cgrp's idle state to @idle. This operation may block. This
-> +	 * callback is invoked when a cgroup transitions between idle and
-> +	 * non-idle states, allowing the BPF scheduler to adjust its behavior
-> +	 * accordingly.
->  	 *
->  	 * Delivery follows the same rule as cgroup_set_weight().
->  	 */
-> -- 
-> 2.43.0
-> 
