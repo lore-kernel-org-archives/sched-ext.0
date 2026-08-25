@@ -1,154 +1,133 @@
-Received: from mta1.migadu.com (out-122.mta1.migadu.com [95.215.58.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558F0361947
-	for <sched-ext@lists.linux.dev>; Tue, 25 Aug 2026 05:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0003A4F30;
+	Tue, 25 Aug 2026 05:36:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787635434; cv=none; b=ELlbaYVefgLH4zuxzBd56KNLkgdC66jo0iJrcW5KMXXh6F/VRHPR4bKMC1JMp84bUWHCE+njSDTUQ3WWC8IK/54LfxoTISMeVUNu//CvgklyLjR6z8/pBWpm0jSF1nEAET5wQdxZ94+mOAuGAeNiFIU04PJx8maBvGGGAJ9y73M=
+	t=1787636210; cv=none; b=QNLknxWfrRKhEei9J2UAgk81S8QBupGlBlLokA/LW5WsLnH62fkz8dwUC5bliSPv9OUO8vlpq9Yrs4GcrrmQ9aX3cJQQMsLGp5B9Uw1odm+8tBa9H9l8vc5nA4zuJKCqGqwuTBT5HblQsyN6vgmj06KxGmbuGd+YAdcROSHT9Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787635434; c=relaxed/simple;
-	bh=d3aO4V0vD69y29p/81I8EOU4Lf6+WyM4Fc9GEBJ3SWo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IQANY/O9gXlRbMOdTox8VlMKbuNWYa2+qBwQNw5uw/0cSxYCTTmRJqxp80Wpa9mbSPNoXKYYgMkrUyguX9krkgLM3Rr3K+9lknLY7emgmvGscNaZXy5RTTKD5IE0pghqxzlUtKJ+dOSpTJ3PqNGQv7Z12xsDkjJXVym/C+z8NZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oQWtWfru; arc=none smtp.client-ip=95.215.58.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787636210; c=relaxed/simple;
+	bh=eb+BWMmQhHeqiGyfChvE0Wl33jcA6Fk2uWQZfBWvfRc=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=WWJO8cVGlC6eM33lEO20PDVu4lXbv8AqoiLalV6dPD8dEkpwCb9u5dfDb9ERW5Ixgx7IIJfyIngtap7gYVWlF2W2LawwpVsUllQ9kqEUtmZWeU/jm0Z+5InTAKlNU/mBbVLblx32l9nzwplg4eM7TgOgrz3VR8bdWnGykSFoQH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A7vRY8L/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oQWtWfru"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=d3aO4V0vD69y29p/81I8EOU4Lf6+WyM4Fc9GEBJ3SWo=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787635431; v=1; x=1788240231;
- b=oQWtWfruGf3mpge1Rz4GwfCJRvFopwHrz42Bi9c45Xrysj5fS/oalqLOP48hKf19U86ZRMSd
- MH/wcnnncz284rlhwjR1Gd48C4AR09qaQl8oG2si+VqIxex62xf7U/XfvE3XAVS500g+G2rMi6v
- YHrhhbmQmxe829OX55f/K6l4=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: from ctao-book.. (223.70.159.239)
-	by smtp.migadu.com with ESMTPS id 5837b4b97ec2bdc0;
-	Tue, 25 Aug 2026 05:23:51 +0000
-X-Mizu-Trace-ID: 5837b4b97ec2bdc0
-X-Migadu-Flow: FLOW_OUT
-From: Tao Cui <cui.tao@linux.dev>
-To: tj@kernel.org,
-	void@manifault.com
-Cc: arighi@nvidia.com,
-	changwoo@igalia.com,
-	michalblk@google.com,
-	suzhidao@xiaomi.com,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	cui.tao@linux.dev,
-	Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be sleepable
-Date: Tue, 25 Aug 2026 13:23:36 +0800
-Message-ID: <20260825052336.46746-1-cui.tao@linux.dev>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A7vRY8L/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7D41F000E9;
+	Tue, 25 Aug 2026 05:36:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787636209;
+	bh=WDXaaGRhIFC65XOBXYCwoLxCaDyKLPW6B4ErgZ48WVY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=A7vRY8L/4ZmXww591xGUt5zx3siX/hYVd/vEIYJ4leIS+0JUhImfgqUStpjAM9Uyb
+	 89ukvlz6LOKdsP/CTlj80lfoi41z7vrEoURAqsRZ3BBsDPCuvI87QdM1Um2POqzwzL
+	 gXBHeENjIkzSparAXqu3h7hsvne5MibVw9meDXd9mj8p6RMejZglTPcLmMm084yvVX
+	 UdyNgER1RZJshI7TZnFWDPs8oFZGbdiYzVgCJMaqtGt/uppOTzoq3ytgp3YMdIchaX
+	 XtAlHnfb9HBPrzNvSItnIhFk74OmInB4lyEANAL/gBB6kZvSSFdA6EDfJtvzV1jfXc
+	 T92Kbpy75sQtQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be
+ sleepable
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tao Cui" <cui.tao@linux.dev>
+Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
+In-Reply-To: <20260825052336.46746-1-cui.tao@linux.dev>
+References: <20260825052336.46746-1-cui.tao@linux.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 25 Aug 2026 05:36:48 +0000
+Message-Id: <20260825053648.EF7D41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Tao Cui <cuitao@kylinos.cn>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+
+Pre-existing issues:
+- [High] Concurrent cgroup writes to `cpu.weight`, `cpu.shares`, or `cpu.id=
+le` can permanently desynchronize the core scheduler and BPF scheduler stat=
+e, and cause data races on SCX fields.
+--
+
+--- Patch [1]: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be =
+sleepable ---
+commit 1a01a0e2918fcf8ca79c6152b56ecfa3e223935c
+Author: Tao Cui <cuitao@kylinos.cn>
+
+sched_ext: Allow ops.cgroup_set_weight/idle() to be sleepable
 
 ops.cgroup_set_weight() and ops.cgroup_set_idle() are delivered from
 scx_group_set_weight() and scx_group_set_idle(), which run from the
-cpu.weight (and v1 cpu.shares) and cpu.idle cgroup interface write paths
-in process context. Both hold percpu_down_read(&scx_cgroup_ops_rwsem),
-whose read side may sleep. The call sites are therefore sleepable, like
-ops.cgroup_set_bandwidth(), which was recently added to the sleepable
-allow-list.
+cpu.weight and cpu.idle cgroup interface write paths. This patch adds
+them to the allow-list so these callbacks can allocate on demand.
 
-bpf_scx_check_member() rejects a sleepable program on any member not on
-its allow-list, so a BPF scheduler cannot allocate -- which is sleepable
--- when a cgroup's weight or idle state changes at runtime. Add
-cgroup_set_weight() and cgroup_set_idle() to the allow-list so these
-callbacks can allocate on demand, and document that they may block.
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index c539d15cda637..dd4ecc0b5201d 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -8079,7 +8079,9 @@ static int bpf_scx_check_member(const struct btf_ty=
+pe *t,
+>  	case offsetof(struct sched_ext_ops, cgroup_init):
+>  	case offsetof(struct sched_ext_ops, cgroup_exit):
+>  	case offsetof(struct sched_ext_ops, cgroup_prep_move):
+> +	case offsetof(struct sched_ext_ops, cgroup_set_weight):
+>  	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
+> +	case offsetof(struct sched_ext_ops, cgroup_set_idle):
 
-Also add the matching compatibility markers, so userspace can detect
-this support via BTF, mirroring
-scx_compat_marker_cgroup_set_bandwidth_may_sleep().
+[Severity: High]
+This isn't a bug introduced by this patch, but does making these operations
+sleepable widen a race condition where concurrent cgroup writes could
+permanently desynchronize the core scheduler and BPF scheduler state?
 
-To size the alternative, a scheduler that gives each cgroup a
-dedicated idle DSQ must create it in ops.cgroup_init() for every
-cgroup up front. In a VM with 2000 cgroups that is 2000+ standing
-DSQs, each a struct scx_dispatch_q plus a per-CPU area. With the
-allow-list entries the same scheduler can create the DSQ lazily on
-the first cpu.idle=1 write of a cgroup: 4 allocations for the 4
-cgroups marked idle at runtime, and repeated cpu.idle writes do not re-allocate. Verified with a probe scheduler on an
-unpatched kernel (load rejected with -EINVAL) and on a patched one.
+Looking at kernel/sched/core.c:cpu_weight_write_u64(), the core scheduler is
+updated inside sched_group_set_shares() (which takes and drops shares_mutex=
+),
+leaving a gap before the BPF scheduler is updated:
 
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
----
- kernel/sched/ext/ext.c      | 18 ++++++++++++++++++
- kernel/sched/ext/internal.h |  9 +++++----
- 2 files changed, 23 insertions(+), 4 deletions(-)
+kernel/sched/core.c:cpu_weight_write_u64() {
+    ...
+	ret =3D sched_group_set_shares(css_tg(css), scale_load(weight));
+	if (!ret)
+		scx_group_set_weight(css_tg(css), cgrp_weight);
+    ...
+}
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index b646711a45fe..53b888f5a6c5 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -8079,7 +8079,9 @@ static int bpf_scx_check_member(const struct btf_type *t,
- 	case offsetof(struct sched_ext_ops, cgroup_init):
- 	case offsetof(struct sched_ext_ops, cgroup_exit):
- 	case offsetof(struct sched_ext_ops, cgroup_prep_move):
-+	case offsetof(struct sched_ext_ops, cgroup_set_weight):
- 	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
-+	case offsetof(struct sched_ext_ops, cgroup_set_idle):
- #endif
- 	case offsetof(struct sched_ext_ops, cpu_online):
- 	case offsetof(struct sched_ext_ops, cpu_offline):
-@@ -11055,3 +11057,19 @@ __initcall(scx_init);
- #ifdef CONFIG_EXT_GROUP_SCHED
- DEFINE_SCX_COMPAT_MARKER(cgroup_set_bandwidth_may_sleep);
- #endif	/* CONFIG_EXT_GROUP_SCHED */
-+
-+/*
-+ * scx_compat_marker_cgroup_set_weight_may_sleep: advertises that
-+ * ops.cgroup_set_weight() may be implemented as a sleepable callback.
-+ */
-+#ifdef CONFIG_EXT_GROUP_SCHED
-+DEFINE_SCX_COMPAT_MARKER(cgroup_set_weight_may_sleep);
-+#endif	/* CONFIG_EXT_GROUP_SCHED */
-+
-+/*
-+ * scx_compat_marker_cgroup_set_idle_may_sleep: advertises that
-+ * ops.cgroup_set_idle() may be implemented as a sleepable callback.
-+ */
-+#ifdef CONFIG_EXT_GROUP_SCHED
-+DEFINE_SCX_COMPAT_MARKER(cgroup_set_idle_may_sleep);
-+#endif	/* CONFIG_EXT_GROUP_SCHED */
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 53e136a47924..f81d03de2d3c 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -736,7 +736,7 @@ struct sched_ext_ops {
- 	 * @cgrp: cgroup whose weight is being updated
- 	 * @weight: new weight [1..10000]
- 	 *
--	 * Update @cgrp's weight to @weight.
-+	 * Update @cgrp's weight to @weight. This operation may block.
- 	 *
- 	 * Knobs of a cgroup belong to the parent, so the set_* ops are
- 	 * delivered to @cgrp's parent's sched. That sched may never have seen
-@@ -773,9 +773,10 @@ struct sched_ext_ops {
- 	 * @cgrp: cgroup whose idle state is being updated
- 	 * @idle: whether the cgroup is entering or exiting idle state
- 	 *
--	 * Update @cgrp's idle state to @idle. This callback is invoked when
--	 * a cgroup transitions between idle and non-idle states, allowing the
--	 * BPF scheduler to adjust its behavior accordingly.
-+	 * Update @cgrp's idle state to @idle. This operation may block. This
-+	 * callback is invoked when a cgroup transitions between idle and
-+	 * non-idle states, allowing the BPF scheduler to adjust its behavior
-+	 * accordingly.
- 	 *
- 	 * Delivery follows the same rule as cgroup_set_weight().
- 	 */
--- 
-2.43.0
+Inside scx_group_set_weight(), the SCX scheduler state and tg->scx.weight
+are updated without serialization (holding only a read lock):
 
+kernel/sched/ext/ext.c:scx_group_set_weight() {
+    ...
+	SCX_CALL_OP(sch, cgroup_set_weight, NULL, tg_cgrp(tg), weight);
+
+	tg->scx.weight =3D weight;
+    ...
+}
+
+The same pattern exists in kernel/sched/core.c:cpu_idle_write_s64() calling
+scx_group_set_idle() and updating tg->scx.idle.
+
+If two threads concurrently write to cpu.weight or cpu.idle, they serialize=
+ on
+shares_mutex but drop it before calling the SCX functions. Because this pat=
+ch
+allows ops.cgroup_set_weight and ops.cgroup_set_idle to sleep, could the
+threads execute out of order?=20
+
+If Thread B's core scheduler update runs after Thread A's, but Thread B's B=
+PF
+callback finishes before Thread A's, the final state in the core scheduler
+would be B, while the SCX state ends up as A. Can this lead to incorrect
+functional behavior and data races on tg->scx.weight and tg->scx.idle?
+
+>  #endif
+>  	case offsetof(struct sched_ext_ops, cpu_online):
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825052336.4674=
+6-1-cui.tao@linux.dev?part=3D1
