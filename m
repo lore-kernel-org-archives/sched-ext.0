@@ -1,94 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791E9254AFF
-	for <sched-ext@lists.linux.dev>; Tue, 25 Aug 2026 05:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2F83C1D5F
+	for <sched-ext@lists.linux.dev>; Tue, 25 Aug 2026 06:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787637531; cv=none; b=nt/p5UXxkuBffwjMt5C2ZEMve/YanGy5+Ezm0crO4z1zwKJ2dm0/HtsaMrkL0M17oGTfujEpd3jSaTtCnjSBC6VcUyUnoOtZBVVabz2Lr4NJ7xA5/wE9Wt6ArSStw5n+ahh6Aa+vtMh/Tb3engwGZjhUUOft/YOP0gnYzqsHkH4=
+	t=1787638991; cv=none; b=PcxAgNiwm0KPioxsxXRp+CcaCjNnD9AfFyfQGCqQMpTk276vSLbVk5e2uCDzN6Du+VYQBM6Y1k328qnkwuxZN6q/0VinTOk7KMOaBsW+2SyB4dIABgi/y/6ThDQy9H+uUo4OHr4f5NnI+RYv5LGhJuCsU9zPgXCO//eJR+F3UZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787637531; c=relaxed/simple;
-	bh=H83Fxfz2dB8BdSPl5QQrocsEZCPtOzm6OGAVxSluGeY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=HL5RnH++nzGsIRAS3xlBmPBP21logL2kprA21Qpax5BIDZE9GxIGZ+YiQW4sRq6KlTBZDd0ZFBI7SJJXN6/GwgVBwTY7h+9K57fpB9vJMFITcyxppiZCKa5E9H1+2OaPvFLiJUcSdzoBQFDdEN/Vj2/XWdRfOdu8uuqKHzQLd2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VQKSVSqY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787638991; c=relaxed/simple;
+	bh=6q7j5Ff4GbGeQY3dCFVc6z7uFHjXuAyD8kY5kMwE+iI=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=mwn6pV6FH/ZkKVQ1gW9QNT5Le93nz0cxGMQGtq5mCtxmJtzQqqECEA8HxzF2tM3b5T2izasCgJas25Hu6BMY2a6ukoas8z6cl9vD4WE+ble6c682ywzSxGTwWl/ZFaxzkkNEPolfXej7s0imnKZK25ft4ytrifb8zYzeJT/GPA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FX/qktNc; arc=none smtp.client-ip=91.218.175.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VQKSVSqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF201F000E9;
-	Tue, 25 Aug 2026 05:58:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787637530;
-	bh=XSGl1SabFukx/ZdX78MJzWJIavrIGxtje1sO2UEdzrY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VQKSVSqY1e7SieisKzJQk2mk5qcAeSjbe0+BRvWo66eUF3r/QbL9ameXTa373hHbt
-	 vecQ9yQRoImi2YwMQy2zzlR86/pa8ANtOXynXGxwgxxSE3mSIm/9ApfQJe7VjRcnTz
-	 IG9fpicdCjF236EsPwW/kNYCVdrr6bcw6XxZUBhZPePyggnvlFYNL8FGlOV0uPnhsr
-	 OlM9FDDk+K2FStYaTQHskW0YvTVpPvnNjvqhY4GBj77I7QGfker+aeJA6WU3Fic6yy
-	 yzF3+wsrm2L/LlLywBgGOVxbNc/krNqZgjhpOA/LiHWRU6zj5oIUXMR+6NKYrTWmwp
-	 AvyhMEm7XaiyQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: Fix missing @slice and @vtime descriptions
- in finish_dispatch() kernel-doc
-Reply-To: sashiko-reviews@lists.linux.dev
-To: luoliang@kylinos.cn
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260825055053.2295139-1-luoliang@kylinos.cn>
-References: <20260825055053.2295139-1-luoliang@kylinos.cn>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 25 Aug 2026 05:58:49 +0000
-Message-Id: <20260825055849.ECF201F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FX/qktNc"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=6q7j5Ff4GbGeQY3dCFVc6z7uFHjXuAyD8kY5kMwE+iI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787638986; v=1; x=1788243786;
+ b=FX/qktNc1rxa0BtGahLxT/kqHJmLDTq1SSQIoXwHxnV46HknR+oUH/fMdn8rNnqtocrwb8K0
+ nMu3WzMQ5SOmgpDFh1haBn6lAIBDJuRBPPZro0a1rdrsWDmXfs9dr5Oxf15i0cikMznetoN1VHZ
+ nML/3SCMeynmqENefgUNrfdY=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: from [192.168.110.173] (223.70.159.239)
+	by smtp.migadu.com with ESMTPS id 3176caf5f8563946;
+	Tue, 25 Aug 2026 06:22:56 +0000
+X-Mizu-Trace-ID: 3176caf5f8563946
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <42b9aed5-15aa-47da-897a-0c966ffbd59a@linux.dev>
+Date: Tue, 25 Aug 2026 14:22:54 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, sched-ext@lists.linux.dev, bpf@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be
+ sleepable
+To: sashiko-reviews@lists.linux.dev
+References: <20260825052336.46746-1-cui.tao@linux.dev>
+ <20260825053648.EF7D41F000E9@smtp.kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <20260825053648.EF7D41F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Adding kernel-doc descriptions for non-existent parameters `@slice`=
- and `@vtime` causes an "Excess function parameter" kernel-doc warning.
---
+Hello,
 
---- Patch [1]: [PATCH] sched_ext: Fix missing @slice and @vtime description=
-s in finish_dispatch() kernel-doc ---
-commit 41530400fea7676e4713b34dcf07ebfd18e9b839
-Author: Liang Luo <luoliang@kylinos.cn>
+在 2026/8/25 13:36, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Concurrent cgroup writes to `cpu.weight`, `cpu.shares`, or `cpu.idle` can permanently desynchronize the core scheduler and BPF scheduler state, and cause data races on SCX fields.
+> --
+> 
+> --- Patch [1]: [PATCH] sched_ext: Allow ops.cgroup_set_weight/idle() to be sleepable ---
+> commit 1a01a0e2918fcf8ca79c6152b56ecfa3e223935c
+> Author: Tao Cui <cuitao@kylinos.cn>
+> 
+> sched_ext: Allow ops.cgroup_set_weight/idle() to be sleepable
+> 
+> ops.cgroup_set_weight() and ops.cgroup_set_idle() are delivered from
+> scx_group_set_weight() and scx_group_set_idle(), which run from the
+> cpu.weight and cpu.idle cgroup interface write paths. This patch adds
+> them to the allow-list so these callbacks can allocate on demand.
+> 
+>> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+>> index c539d15cda637..dd4ecc0b5201d 100644
+>> --- a/kernel/sched/ext/ext.c
+>> +++ b/kernel/sched/ext/ext.c
+>> @@ -8079,7 +8079,9 @@ static int bpf_scx_check_member(const struct btf_type *t,
+>>  	case offsetof(struct sched_ext_ops, cgroup_init):
+>>  	case offsetof(struct sched_ext_ops, cgroup_exit):
+>>  	case offsetof(struct sched_ext_ops, cgroup_prep_move):
+>> +	case offsetof(struct sched_ext_ops, cgroup_set_weight):
+>>  	case offsetof(struct sched_ext_ops, cgroup_set_bandwidth):
+>> +	case offsetof(struct sched_ext_ops, cgroup_set_idle):
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does making these operations
+> sleepable widen a race condition where concurrent cgroup writes could
+> permanently desynchronize the core scheduler and BPF scheduler state?
+> 
+> Looking at kernel/sched/core.c:cpu_weight_write_u64(), the core scheduler is
+> updated inside sched_group_set_shares() (which takes and drops shares_mutex),
+> leaving a gap before the BPF scheduler is updated:
+> 
+> kernel/sched/core.c:cpu_weight_write_u64() {
+>     ...
+> 	ret = sched_group_set_shares(css_tg(css), scale_load(weight));
+> 	if (!ret)
+> 		scx_group_set_weight(css_tg(css), cgrp_weight);
+>     ...
+> }
+> 
+> Inside scx_group_set_weight(), the SCX scheduler state and tg->scx.weight
+> are updated without serialization (holding only a read lock):
+> 
+> kernel/sched/ext/ext.c:scx_group_set_weight() {
+>     ...
+> 	SCX_CALL_OP(sch, cgroup_set_weight, NULL, tg_cgrp(tg), weight);
+> 
+> 	tg->scx.weight = weight;
+>     ...
+> }
+> 
+> The same pattern exists in kernel/sched/core.c:cpu_idle_write_s64() calling
+> scx_group_set_idle() and updating tg->scx.idle.
+> 
+> If two threads concurrently write to cpu.weight or cpu.idle, they serialize on
+> shares_mutex but drop it before calling the SCX functions. Because this patch
+> allows ops.cgroup_set_weight and ops.cgroup_set_idle to sleep, could the
+> threads execute out of order? 
+> 
+> If Thread B's core scheduler update runs after Thread A's, but Thread B's BPF
+> callback finishes before Thread A's, the final state in the core scheduler
+> would be B, while the SCX state ends up as A. Can this lead to incorrect
+> functional behavior and data races on tg->scx.weight and tg->scx.idle?
+> 
 
-sched_ext: Fix missing @slice and @vtime descriptions in finish_dispatch() =
-kernel-doc
+That race is pre-existing: the window between
+sched_group_set_shares() dropping its lock and scx_group_set_weight()
+running is unserialized even without a sleepable callback. Making
+the callbacks sleepable only widens the window.
 
-This commit attempts to fix kernel-doc warnings by adding slice and vtime
-parameter descriptions to the finish_dispatch() comment block.
+Michal's "Lift cgroup update locking to core to prevent CFS/SCX
+divergence" series covers both updates with core-side locking and
+fixes it, so this patch doesn't grow a fix for it.
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 18183062f751c..84b2bb05ab90b 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -2664,6 +2664,8 @@ static void dispatch_to_local_dsq(struct scx_sched =
-*sch, struct rq *rq,
->   * @p: task to finish dispatching
->   * @qseq_at_dispatch: qseq when @p started getting dispatched
->   * @dsq_id: destination DSQ ID
-> + * @slice: slice carried by the insert verdict, 0 keeps the current value
-> + * @vtime: vtime carried by the insert verdict, committed on PRIQ inserts
+Thanks.
 
-[Severity: Low]
-Will this trigger "Excess function parameter" kernel-doc warnings?
+>>  #endif
+>>  	case offsetof(struct sched_ext_ops, cpu_online):
+> 
+> [ ... ]
+> 
 
-Looking at the code, finish_dispatch() does not appear to have slice or vti=
-me
-parameters in its signature:
-
-static void finish_dispatch(struct scx_sched *sch, struct rq *rq,
-                            struct task_struct *p,
-                            unsigned long qseq_at_dispatch,
-                            u64 dsq_id, u64 enq_flags)
-
->   * @enq_flags: %SCX_ENQ_*
->   *
->   * Dispatching to local DSQs may need to wait for queueing to complete or
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825055053.2295=
-139-1-luoliang@kylinos.cn?part=3D1
