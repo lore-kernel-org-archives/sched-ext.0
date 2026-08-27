@@ -1,89 +1,105 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7823BF692
-	for <sched-ext@lists.linux.dev>; Thu, 27 Aug 2026 08:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261D13DA7D2
+	for <sched-ext@lists.linux.dev>; Thu, 27 Aug 2026 08:16:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787818074; cv=none; b=rv5/vLKY80cir9IVMBEo4LBPxIYRJm2sGjauQ7RCtKOqIvG9qxW8LmcVfxXkN6eSGKICyFc8ENhNn6LkMbGgSazsRXzUGbuSkE4zOpo8FaKq5ClayD4xJ77Izb1QR0Cbq9qWSMUqMwzYvCdOJshXKJ8I56DrHBT36AMIkoeKVHc=
+	t=1787818612; cv=none; b=OeUoTx18Ot9D2Kpv2/tfY94a8F/iWfvprt7iNcXC+CNCdXytb6nqVhcmSMAihOTF839jev0Dbr8RjexEGavNSZdc8wSPXQvmGuxvhbzu/mRVnxfGQx6iWGk+E46FKHILBoQym5gqPWmJFn7tniufWp0j6kjpmF14cOJaGOIzYE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787818074; c=relaxed/simple;
-	bh=Iq9bINOSPxzr8e89Ie6d/8Vzg93tZ8SYLxSgTF2ETMQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=C4rddxfy+tQaj9UqE0GIfH+5/P9kO1w/qKl0JeCJ4tC3oE8lp4nC1jdp6WZqdHm+uCV9DIZ6nLn5Uj+ITHBMBnWnyxOPNDqt6nCOQOQ6OmckcxEa0IKjqlhQBL26yN04jbGC/ls6O7yssVVFYMjjmh58DAS7AkrW2OT+EVoQ02U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 60753ad0a1ee11f19a56ed5b684f684d-20260827
-X-CID-CACHE: Type:Local,Time:202608271603+08,HitQuantity:1
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:5ea08da1-7c86-46ee-b052-310ade43f29b,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:-25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:-30
-X-CID-META: VersionHash:7db8b62,CLOUDID:35ca360fb1af2561cd20f5597769b48b,BulkI
-	D:nil,BulkQuantity:0,SF:81|82|102|865|898,TC:nil,Content:0|15|50,EDM:2,IP:
-	nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,L
-	ES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 60753ad0a1ee11f19a56ed5b684f684d-20260827
-X-User: liwanwu@kylinos.cn
-Received: from kylinos.cn [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <liwanwu@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 165197243; Thu, 27 Aug 2026 16:07:41 +0800
-From: Wanwu Li <liwanwu@kylinos.cn>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev,
-	Wanwu Li <liwanwu@kylinos.cn>
-Subject: [PATCH] sched_ext: Fix vtime delta loss in scx_flatcg cgroup migration
-Date: Thu, 27 Aug 2026 16:07:37 +0800
-Message-Id: <20260827080738.829103-2-liwanwu@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260827080738.829103-1-liwanwu@kylinos.cn>
+	s=arc-20240116; t=1787818612; c=relaxed/simple;
+	bh=1qKCCnlTdJEVphI6P5lRF4YA2TBQwXGrVTlCGWdPnyE=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=T8lMIbyW9nRY5s4liDiI+oSBs6CJrTJAGqfWNIxN6oUVDrEh4brT5xmrsew9G6Uw71gvtWqPkqKIY1hPWujwNoE6SyTCCBKAmcxLalE4j5nVVOTdbHGT11BSJ4Kyc3xkbVbEdPZ+4CHwPQaDSK72zW9NWjTPj0M6nDPR9TP5nLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UCvGISPS; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UCvGISPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58071F000E9;
+	Thu, 27 Aug 2026 08:16:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787818610;
+	bh=cAWyLhd2Y3MIkOXEZsZ0uofZ470R4PqZMHU128nV6sE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=UCvGISPSceC3GTc81Cm/9JfWAd+gxNzIRwr/eWIfSapctoK+EYMLzUmLP5bhvifhH
+	 KbXwfou2gQdDsIzBifyMiacKQi+TG3yoNks9+pwb144JRG2x+zrYNxxTKRDZJyHLP+
+	 n/bXhkgtzNf0kwJxQ9Q8Ga5wc2H8nMNOw8prSo6eE9oV+nGzznp66etIlRukq170do
+	 sd8tAdM7+sykob6D3LYr5hDV0lTgPIzw5itWHODKGnLPjQu9qCVp5f1Sa+2voONQn4
+	 k64upwgjjkBHNrpxT58XGYMx7t9CD96Y5TgLTdmZUdudJJH7b1yhWoy/kuBHrNDn7v
+	 dz68b2KWEB5Zw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] sched_ext: Check bpf_timer_start return values in
+ scx_qmap
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Wanwu Li" <liwanwu@kylinos.cn>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260827080738.829103-3-liwanwu@kylinos.cn>
 References: <20260827080738.829103-1-liwanwu@kylinos.cn>
+ <20260827080738.829103-3-liwanwu@kylinos.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 27 Aug 2026 08:16:50 +0000
+Message-Id: <20260827081650.C58071F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-fcg_cgroup_move() lost the signed vtime offset across cgroup
-migration in the mechanical conversion to time helpers:
-time_delta() clamps negative deltas to 0, so a queued task (whose
-dsq_vtime is normally behind the source frontier) loses its
-accumulated vtime credit and lands exactly at the destination
-frontier instead of keeping its relative position.  Restore the
-wrapping signed subtraction.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Fixes: 62addc6dbf36 ("sched_ext: Use time helpers in BPF schedulers")
-Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
----
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 64cf4dd964d6..d3186a6038c3 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -931,14 +931,14 @@ void BPF_STRUCT_OPS(fcg_cgroup_move, struct task_struct *p,
- 		    struct cgroup *from, struct cgroup *to)
- {
- 	struct fcg_cgrp_ctx *from_cgc, *to_cgc;
- 	s64 delta;
- 
- 	/* find_cgrp_ctx() triggers scx_bpf_error() on lookup failures */
- 	if (!(from_cgc = find_cgrp_ctx(from)) || !(to_cgc = find_cgrp_ctx(to)))
- 		return;
- 
--	delta = time_delta(p->scx.dsq_vtime, from_cgc->tvtime_now);
-+	delta = (s64)(p->scx.dsq_vtime - from_cgc->tvtime_now);
- 	scx_bpf_task_set_dsq_vtime(p, to_cgc->tvtime_now + delta);
- }
- 
- s32 BPF_STRUCT_OPS_SLEEPABLE(fcg_init)
+Pre-existing issues:
+- [Medium] central_timerfn() unconditionally re-arms the timer with BPF_F_T=
+IMER_CPU_PIN and ignores the return value, causing silent failure on older =
+kernels.
+--
+
+commit b5a91ea2da5adc3305be9b35666d557645b76fd2
+Author: Wanwu Li <liwanwu@kylinos.cn>
+
+sched_ext: Check bpf_timer_start return values in scx_qmap
+
+This commit adds return value checks to bpf_timer_start() calls in several
+timer functions within scx_qmap. If the timer fails to re-arm, it now raises
+an error via scx_bpf_error() rather than silently failing.
+
+> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bp=
+f.c
+> index 5bb8b90a275a3..9f6e61d7ca071 100644
+> --- a/tools/sched_ext/scx_qmap.bpf.c
+> +++ b/tools/sched_ext/scx_qmap.bpf.c
+> @@ -1246,7 +1246,8 @@ static int monitor_timerfn(void *map, int *key, str=
+uct bpf_timer *timer)
+
+[ ... ]
+
+> -	bpf_timer_start(timer, ONE_SEC_IN_NS, 0);
+> +	if (bpf_timer_start(timer, ONE_SEC_IN_NS, 0))
+> +		scx_bpf_error("failed to re-arm stats timer");
+>  	return 0;
+>  }
+
+[Severity: Medium]
+This is a pre-existing issue, but while adding these return value checks he=
+re,
+should we apply the same fix to central_timerfn() in scx_central.bpf.c?
+
+It unconditionally re-arms the timer with BPF_F_TIMER_CPU_PIN and ignores
+the return value:
+
+tools/sched_ext/scx_central.bpf.c:central_timerfn() {
+    ...
+    bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
+    __sync_fetch_and_add(&nr_timers, 1);
+    return 0;
+}
+
+On older kernels that don't support BPF_F_TIMER_CPU_PIN, this fails with
+-EINVAL. While start_central_timer() gracefully falls back to flags =3D 0
+if unsupported, the timer callback unconditionally passes the flag. Because
+the return value is ignored, the timer permanently stops, potentially
+starving tasks.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260827080738.8291=
+03-3-liwanwu@kylinos.cn?part=3D1
