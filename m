@@ -1,65 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9D843F4AB;
-	Mon, 31 Aug 2026 16:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFD7299931;
+	Mon, 31 Aug 2026 16:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788192794; cv=none; b=ow+xOuyoHP2Gmkhddd2WpKxr2VNvWiaDTPjSSP61soA9X5039ucYDeLClKXLgmjRhV9jE46tf9k+OcNqJPv2WdaMmKPQPyrnhO9W+ej35tZ3jwn6pyz1OfzHptyDHsQ5h9WoLLsQ55M3IaU5NglX9qvJ9BxY6CxRfcjdw2W1Ato=
+	t=1788195201; cv=none; b=UgzFGwIRJ806oDO+SprMUlgI4PbdWEcQSk1vvXrPR2jGKkESOgKFlbA+7HHW7zkJYRMmi0nCj4YPm0MTLAOrMLdI6XLPJIzaZxbZ1RZBhAaEPRghf/JoSL87X5CDWIqmW9MiYUj6+SL0eSIXGZBs+FDg1neJEgOU/8XyIjjxIAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788192794; c=relaxed/simple;
-	bh=pnuV4DofHNIVQkX4uArFDlfXayHHgeEO1RGmvH8c54w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BGP6bfhvwVi0IDr5IsvhMTeE3DUoVzU894oJpSTo8MKr75APbOuiZYGYx6wZeUUiOdd95KcjexvA1m5u4F6diMJea52OzXTfkNLZ1s7qdn9blqm6IClAXpZf2r+Sqckqn1Lt2WxEJemwV8dPdyOed4BSa6TUWDjcekSedYrp0oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6mpCpqS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788195201; c=relaxed/simple;
+	bh=Hf55CNxHwi5Gw0KwaOg6hD/UJKALjfT7NNNrrFvTdho=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=o9sRO8+fz3yopuJet/XJ5Wn2o3G5RkOXuH2e+KpULl74uTCGeYgLHomgYALup9D+NNBd+t0MXn+k9ArDGHu0huAPIajxwXeHgLjRIaiIqcaM4qewFMqtuZA2wbJdg2Y6xzpEzf2rhLtqWvcdLKKEGx1wODm96YoJ4m5xXxah4Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dV29g4ng; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6mpCpqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE061F000E9;
-	Mon, 31 Aug 2026 16:13:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dV29g4ng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C80D1F000E9;
+	Mon, 31 Aug 2026 16:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788192792;
-	bh=vbBLSVpBzAajdVu36N3ZXXP0OVMGwY1r8j9t8qEMS+I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=h6mpCpqSuPA8V0S7E+SU22uAoe15aCYfo8gtMQifDmwddKnK7yS/dzTRFZPf4HoP1
-	 53B4tgsMg02Q/xFw+IhyTaf6AlQSUVIZXreZUaIZdo9Qipne+TnR4esqUWuT0N2kAo
-	 iFzdTreqQdCVDUUgDHDKTQrxhhj7iJLtubvKI4a3znSbBdMzOF0fy8D80AM40LTFtJ
-	 7fgGf/IPu12YWbA/Trt16MyB9cqNU0JgdJgGMdrRnUUPOylVGrzcJTP5rZiGz3+6jf
-	 VBnk86dGAtXMYC1R7r91apWj5g8lS4DCR6cSBTCporuqWogdzyOvCmuLDiRQtfocS9
-	 hHkhqhuU5TIDw==
-Date: Mon, 31 Aug 2026 06:13:11 -1000
+	s=k20260515; t=1788195199;
+	bh=pf6uOZhyPK0D+MhWcYqIwphY7/5m+gbhgEZYMoPdIkg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=dV29g4ngMECQh9GMaRtRnURMBhk63VcKwFvShuhoAvGyDBHJv+nscWeJgUx8rzITf
+	 tphApeta6SGi+pfbtwWwsJjios/WID+gqiZGK94fdcypF4ZWxgr/VeslH0HR9Tzzsp
+	 CsUgFFq1osVC7n5IymdmScReg0HMXeCo3jm3jEeiIGL1G+rGdoFUzU3sFnLd55ruSe
+	 wvf0rATnEnFgAQ9lpGruV6CY2cv86nXvSkol0Klgj0GBydp68VqfjXeAMUFzIttZ5L
+	 KsrY1FYT1GglkrpPjQnkCjBqSKTk4b2Z41agrcaWqu1GyQHCyjoCn3sd4qcE9nep5g
+	 qjSNr5Eh8LO+A==
+Date: Mon, 31 Aug 2026 06:53:18 -1000
+Message-ID: <7f7fd4b14d356bd6d0f423591f39a6cf@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Qiurong Fang <fangqiurong@kylinos.cn>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Skip per-CPU data allocation for built-in DSQs
-Message-ID: <apWoF6Czswh-sO6V@slm.duckdns.org>
-References: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
+To: Wanwu Li <liwanwu@kylinos.cn>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] sched_ext: Fix timer pinning and return value in scx_central
+In-Reply-To: <20260827080738.829103-1-liwanwu@kylinos.cn>
+References: <20260827080738.829103-1-liwanwu@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
 
-Hello,
+Applied the following three patches to sched_ext/for-7.3-fixes:
 
-On Thu, Aug 27, 2026 at 04:23:29PM +0800, Qiurong Fang wrote:
-> From: fangqiurong <fangqiurong@kylinos.cn>
-> 
-> Deferred reenqueue tracking is only supported for user DSQs:
-> schedule_dsq_reenq() serves the local DSQ through
-> sch->pcpu->deferred_reenq_local and rejects all other built-in DSQ
-> ids. Every built-in DSQ still carries nr_cpu_ids * sizeof(struct
-> scx_dsq_pcpu) bytes of dead per-CPU memory.
-> 
-> Skip the allocation for built-in DSQ ids.
+  sched_ext: Fix timer pinning and return value in scx_central
+  sched_ext: Fix vtime delta loss in scx_flatcg cgroup migration
+  sched_ext: Check bpf_timer_start return values in scx_qmap
 
-Let's rename it to dsq->pcpu_user while at it.
+The scx_central description attributed the -EINVAL fallback to
+central_init(). It has lived in start_central_timer() since d6edb15ad92c
+("scx_central: Defer timer start to central dispatch to fix init error"), so
+I updated the description accordingly.
 
 Thanks.
 
--- 
+--
 tejun
