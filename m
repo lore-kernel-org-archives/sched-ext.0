@@ -1,62 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19CD392807;
-	Mon, 31 Aug 2026 22:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6137F8C0;
+	Mon, 31 Aug 2026 22:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788215792; cv=none; b=lTjcb9xAr59AnizV1bcG3un7BYUnvxp9ifKFyDsituIOisJfTIXa1GEMzzd4VaH4JlkTIS7kbby0HWo1D9y0hTDtnvV8orWOLsW76ovEAyItSpv5EN7/X64FoIVw5KwXxqm3QtNMnze1xm+JRko75kESrzEDbADbAsXh21J+Y50=
+	t=1788215822; cv=none; b=dE/fuXOK/lJM5yYo7Lt3X1wbhsttqoQ/e0TMEaQV472WJ+zjpk5wjzE7514aaiRN/2ROdu3xRDHBhAUnmIZirf4bt31OwHC4NmN5gDSnHmmpu65jQcWhTJWyObu9U7ere9yg1T5/uGIR2fxnH1WewlUxLop9u8yh/6NCLCj/ghY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788215792; c=relaxed/simple;
-	bh=dHMzgd94yt0GZNrfBJQ6cs++VCcr0oxFyF5G7Q+0jn8=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=QwE/MTEK0Qr9YcxblOBjVihnezZNEoWeVCBsr61AVal5fE7mC0BSnARNJT6wmhyUMS/ZUOm6I4JSQVwahEfqKWiOR+RcdpZvZ6mDu/57IJ/3iqRhjQemLLAo4H8re/y+jLcyRfyLd5176FaTdv0KyDg/6w9ruuY8ByuTh3A26ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1uq4FLD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788215822; c=relaxed/simple;
+	bh=3l45UewGTArFY7R0otFgqfdF/MH4fqTqo7JMz+paUgc=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=iJOQpM4TzKaymFSTIGiVt5rA2Q3mxoI5RzZy8sigAGuo8Y3M2evbrRqdihjk1wWOo/6aUtIJSqwzmhFy8b54st00XnEL+QVekrw/toyrdSsPmByzf2PxmX6XBbKBF75+tdDhoeWl+JePct7pxnn3gzVrK83Jy917DjuyD7w/EeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLthFoQb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1uq4FLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640421F000E9;
-	Mon, 31 Aug 2026 22:36:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLthFoQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587491F000E9;
+	Mon, 31 Aug 2026 22:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788215790;
-	bh=dHMzgd94yt0GZNrfBJQ6cs++VCcr0oxFyF5G7Q+0jn8=;
+	s=k20260515; t=1788215821;
+	bh=dVaXS8IcVxjbTGjuXabSn/O3W2NtZJAOhEqor1sSXvo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Y1uq4FLD0vNbLHbZ1XUDRN7/cBtk9SV34G8vcW5BzN4VLn17OYA+YtjA7pkbdPvLD
-	 MbpTK3OXtaVjE336Nl5uEcK1AGJyjAGa9MC/wD2uHGMs0Q1hOOmQdw1jYX6hzDE0Bo
-	 2hQHMi7mg6HsidRHKJ6Ep1MJg6jLUN2jSqf/YBjvuX6CDlmQ1Xz8k2ATrwCYW9cEPr
-	 Bu+73eKMYWVs9YAjM2gppq6/lTYaFpGeJ7XZxee9Uv9pS/aCvtaSEXNiUO156GakT1
-	 jMT5+/eK3Rmv41rpLgc/Ftsm6c7Di4ERoY/xbRp7hYRdI+braxm0rIJQdyDdwAQ2aN
-	 6xb+Tx0PGdeRw==
-Date: Mon, 31 Aug 2026 12:36:29 -1000
-Message-ID: <e9cd7bd7c303b57d8716c4a8cab35058@kernel.org>
+	b=NLthFoQbjbnT6rOb2qB1GItSCTgTVkunejfgO1DkjKiM+um51c/ku4GoRGWuyHW+E
+	 VQAJUtItlroa7LKQG85raDETfl2wuk/o3GmPL2qo69Cw+5bEmxMiv3WLMgqx3yUYfM
+	 btZIU6rIbn6Xch+q1xkTsXF0c/aDqdmTchhZGk/cn3RAlp8b6oN7ZdjtLFryh4dAOs
+	 i3qjn7HU249Is7DrjNXPcbcwE7n+qE9cvI73OUUKLDaptN/OPmpYpvZF/vlhypSCPv
+	 LlOcWLBjbFSQIe8dq+ZEflsvlHCM2uxI4qv9mUc0uTGC3rCw85bBPiwYNCadHA28zA
+	 lZSjrrr0lhqbw==
+Date: Mon, 31 Aug 2026 12:37:00 -1000
+Message-ID: <16ad7666875543a33b88609ea444fddc@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Michal Blaszczyk <michalblk@google.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Kuba Piecuch <jpiecuch@google.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] sched: Lift cgroup update locking to core to prevent CFS/SCX divergence
-In-Reply-To: <20260824074913.2468177-1-michalblk@google.com>
-References: <20260824074913.2468177-1-michalblk@google.com>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, Tao Cui <cui.tao@linux.dev>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>
+Subject: Re: [PATCH sched_ext/for-7.3-fixes] sched_ext: Serialize cgroup knob updates
+In-Reply-To: <20260825092153.2602809-1-arighi@nvidia.com>
+References: <20260825092153.2602809-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
+Hello, Andrea.
 
-On Mon, Aug 24, 2026 at 07:49:13AM +0000, Michal Blaszczyk wrote:
-> Concurrent writes to cgroup control files (such as cpu.shares or
-> cpu.weight) can lead to state divergence between CFS and SCX.
->
-> For instance, in cpu_shares_write_u64(), the CFS update is serialized
-> by shares_mutex (internal to fair.c), but this lock is dropped before
-> scx_group_set_weight() is called. The latter only acquires a read
-> semaphore (scx_cgroup_ops_rwsem), allowing multiple threads to evaluate
-> and act on the sched_ext update concurrently.
-...
-> Fixes: 819513666966 ("sched_ext: Add cgroup support")
-> Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+On Tue, Aug 25, 2026 at 11:21:53AM +0200, Andrea Righi wrote:
+> Concurrent cgroup knob writes update the core scheduler under its
+> internal locks and notify sched_ext only after those locks are released.
 
-Acked-by: Tejun Heo <tj@kernel.org>
+This is the same race Michal's patch fixes by lifting the fair locking
+into the core write handlers so that both updates run under the same
+lock:
 
-Peter, would you mind picking this up?
+  http://lkml.kernel.org/r/20260824074913.2468177-1-michalblk@google.com
+
+I'm inclined to go with that one.
 
 Thanks.
 
