@@ -1,47 +1,47 @@
 Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012014.outbound.protection.outlook.com [52.101.53.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406C45437F9
-	for <sched-ext@lists.linux.dev>; Mon, 31 Aug 2026 13:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF405419AA
+	for <sched-ext@lists.linux.dev>; Mon, 31 Aug 2026 13:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.14
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788183968; cv=fail; b=JtrN3qKRZ0DXptaLWZbMLABpKuUy0CPdpNFP3PuUJuUi80naUBXOnHobkHo5Z6v+Y/M9H08V/7wzibhkbCW4T/+x/9Og57Zcw4uOPsZEVOzWeiqBElYsuwbvuFz/D3m1DDTU5XBoii1tcaiByX2xkDvAiJevH9KCRFkdOpWzdzQ=
+	t=1788183972; cv=fail; b=osWrvxdo2tWTS5A1Z+gxoKLLdRLx8nzDEBPoyAcUjv/m+RdlN7r+AhkxkhKC2DQjvqav5b62gTf8cFAyu7zj9aggeJACuYV2x3p6cgDAH3BITlPVhBc4gXiDwK0X4n4/HQ+m8yDYkByDh4+jCe6cq1+ZCO+F9Lu0aFxXB8lAPWs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788183968; c=relaxed/simple;
-	bh=WzG0k1yeb5FVPVtC92BF7i1tZyQFwWhU5MMfw9TIIa0=;
+	s=arc-20240116; t=1788183972; c=relaxed/simple;
+	bh=R4jzsFYEnIaUAe3P7VSe6pLAxM6Dgbg8ElRvboxzaSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=LAyBHHWdAmb02fTuyaWhXLmiot+eEiN9L/UUol832qSZjBDTQNsWkJ9gTAtJA+5InE+XfWkjwELEFisR6t/NaihoPrpQ7ulx7QEHBpxeSvf+1II+v7bFOb3z79lWFH0Kc8xcT+PcRNhLDP5kytKO55d6YRVFeGJgRenMM1/dlbU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FGxc16VX; arc=fail smtp.client-ip=52.101.53.14
+	 Content-Type:MIME-Version; b=PsYpF6hGSYAPpHjqEu8U2++7QZiQlOZ0syWbkOauESRtW9CLz4u5V759KDexfsbJ18z+0AG17xxefr+we/jP6fEVSpYPdXstltUt345bfD4aNgleQj5dqAgu883q6SE7TxxbwBWwZgvgZHbNmevtKQi4DBWMc1ZaDDwmW8yO7i8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=fy4vMYGf; arc=fail smtp.client-ip=52.101.53.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FGxc16VX"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="fy4vMYGf"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KkxHvkPhgHisAft6i0Xr5lfoyhvG6z/uVow7kKrBNbzV9nzWgsyEc2RQTvruxMaOs4b0LiEwvA7TTULS881Q3pDBjXEnASo4N7HfJp1dwy6UzV+wIxqkXm3Zt0cD5v6phlSRgoPU/XRYi7oPcRbzZL8N7XkrhUHFUV+YzvRzEEAquMUNL5emh/4UVavBcdBnbBVV2rDisxm0yKwWc5p2nGrmGaqiK8q84e9TCu4lk5s2NeIUM9QEhx2IwJ+AQWz3lenw6tYDVDJ9wRjDzZBef0yWQceEB2kZQyNKVsj7E6RQkcUGQuOjEPnEmqjMNq8w8lUkg6U9zwmnbTGkghVz7A==
+ b=oqmDK1gDhV6Twj0ifdKhEWfzVuICNOSVb9DUv30L2u3cbO7as+Gw5Pjk6/stn9MHUs9dcyUbrwijmZPetWIcSAqlEY0+QayQnXT/kTJeXER29jwPF3ktYhqwEIY0P6uGTXuCoxNaEvz6NycUkyFYv8WOsmyd6ELwurzOz4WkHAKLzm3iD8GA2U5i6ztRyVDsNm1OWsPT7PKmXljshW0VfNtaY5Za466lF+VvU80jQYe5GAxtkDCV64YeuOQiCAYZdh1aWxXDW6EPreFqGfHU5a2A/dSY/2G7O4ErK/km1YtpTwR40Ru3eC7nWdVawUJUsGUyhYAEB4nKom9zhawFWQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Da/6DOy4DCvo0YfMcUzJJ+qiJ4IgyJh83GlRGCukyFA=;
- b=LcRuqFNU0U0YdtZiiQXo1e2yZrH9SIenpsCbLMfxpj3FsLt0UtmfWvgYVo0fgy8mkPUMX/kcCIlUM6i9vHKIGWdksN9j1kErMj/mWOrzGjZFDxOVqnis3MF/kY08LlVbUpKL+pIn0h1j8tLYHrVza+BbqqkEM0u4wv6A+mmQzJJtExVB5nkoG435zwEajW4EsOLN+KxPQqaRFHNgIPWeFdaDq3fp9IxDd9mD8iVA/NyvUQ3Sj8rVn6/vxF9qSWQXupl7IV3ozyljU+9a6P4DMu4qIoJWcdolql1d6wF67oBMJ1TjLscOZUI5R8t7E2N/2axmhKu805/xbi+LsFog1w==
+ bh=W8oIIx5qCJ/qG+Xg6UxdAUrUxgKPrJ4WQy+5Bhc1krA=;
+ b=txl5Sc99guOEwJA/INRv8sCXLMv8X5T5GWAKqk/SvNNjpW4YgIZxtrhDDifGBp3qfkcDGLRwG5CZiKnci8gZsyDzoKzE9UzTNHbn6qUnJTYOCzW8fMaq1hthOgHCJXDi7HV3rlHLK7jpBNesXDsZow+jSVwjXdOidxd/odT+nrcNFNatZkdcZSFtJYjCoXRRJK57dKivKOc/r/kyozNlAovWQMUADv/sZA1B9OVkVW2BoAy7BTVbiJybJPpVVZ2lb+J1EYXFg0KBNpFSI3Hsidd6j+gk0D4gMbwPkuOog5+rzQ/pgHNvwCK/0Go8iMkLPc5WrvRZC+bSCqbFfR+2RA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Da/6DOy4DCvo0YfMcUzJJ+qiJ4IgyJh83GlRGCukyFA=;
- b=FGxc16VXAgncq4QEZKPZ8WLD1eYrZbjr/V1LSCm4qPK9tM9S2PrP3R2jG1jm2TW2uYuClTSAnvNSN+XFrROCNUH0Qp3xTXHXEXklQivsAtilFJLKI0Z67x4Tn6kESyzhwtcY0ybMjzL8JcQwTZGXu6JCEJqxB++ycb2i8mJzw1d2AGx4ea3gAKfHLzqmYawG5tKuauHqSS69nvVh4aWH15fDEtVAYnoSi0aImdinvJgpotgZfm7N4ZLbpvpmQhnw5IwSfcY7enzkyWeue3Cv8eaH0ZB+idTpPr+DcnAlYvx2xEbSmHrD0JfUrnHbRdWWxqGDsf4zrUjEx0KjUZotCg==
+ bh=W8oIIx5qCJ/qG+Xg6UxdAUrUxgKPrJ4WQy+5Bhc1krA=;
+ b=fy4vMYGfnxVyttZBka3OpDF9GO/Y1jY2rqkoAcMusPMz8ckOKM1RDznRr2bEuPMgqkDEVve346RHww4gBT4vYcWufZmwWh+pHC+dgGUnIi+PS1LmI+J8zbpCqSo+TjhwlWX+8blKG1PbKR+KjzCYUemZDaQuGSmwTjBwKt+ZZmpJ+naIiySNRfVVkIDXIpfU3fUkmtyzUsqbNZE2IVvt23dLB61FQewm2FQr2UtUJ1sM3akyOwsW5aYzhL1yomtsyEMU/RQtR6k77TbsSrzUjv8qOqPu2c/2Q1FuII2C2EgNutEBi/8yQBeozp16WWHJGWTytYv2xG0jZeyge88DKQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by MW4PR12MB6755.namprd12.prod.outlook.com (2603:10b6:303:1ea::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.12; Mon, 31 Aug
- 2026 13:45:57 +0000
+ 2026 13:46:01 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
- 13:45:57 +0000
+ 13:46:01 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -66,16 +66,16 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 17/18] sched_ext: scx_qmap: Add proxy execution support
-Date: Mon, 31 Aug 2026 15:42:27 +0200
-Message-ID: <20260831134338.1531664-18-arighi@nvidia.com>
+Subject: [PATCH 18/18] sched: Allow enabling proxy exec with sched_ext
+Date: Mon, 31 Aug 2026 15:42:28 +0200
+Message-ID: <20260831134338.1531664-19-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260831134338.1531664-1-arighi@nvidia.com>
 References: <20260831134338.1531664-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MI1PEPF000008C4.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::426) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: SJ0PR03CA0057.namprd03.prod.outlook.com
+ (2603:10b6:a03:33e::32) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -85,242 +85,83 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|MW4PR12MB6755:EE_
-X-MS-Office365-Filtering-Correlation-Id: e6714003-9915-4b91-8207-08df07662f48
+X-MS-Office365-Filtering-Correlation-Id: 3abbc527-3ef5-4013-529e-08df076631f9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|1800799024|23010399003|366016|6133799003|3023799007|10067099003|56012099006|11063799006|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|7416014|1800799024|23010399003|366016|10067099003|56012099006|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	ccEGpzbXYmZqmaylPcUlgPDsTraLEXy3j/b6Kvlrw3Ol+kAHVRKT0WF/KeMtQ5CiXq34jKTpF92cN8woHaArn/VA95EKUsQhL21NmMaGGWdOaMKcH5HRUOHOkP3+xz7yLWOHncxc2GOgv8c5ffFR9OvjKmmji6eLcoqm2sPJVCUxCy7Z/97m+DBVx4y4kHSWQyb16ajJvipcXPJI2Y0/BdGIPR5WWdmIg3hKu0Wg/Ea9Ysi4QqjxveOWC7oa4+wwulJTyW5n3/GR+Vj0ixkl1vJ2el82VCKZMRkc/OnPUt+XZ6vHNpKeHFSYjN+lkH5rUKmOcrChGXCvOOswWuGI1ep/BYzNGWME0J2C5zZ3XHLXbZUL8gRI2apHpxVJSA0x6I2vZYFKn4MGs8471Wv5CzhR8LFsNOuQBFL5r8CgoVAmf5vGtnPO35Ht2mWq4wrbcfdgAVG4hSdMQB1XVXwOlMtp8+zzyxpxq6RcW4MMQkt6Zw2R2GiVHOSf99LXKPoBHqYps7GyMPiC9g0zbIZvPAJYuMoFhYesXZwoX9fyULLhMqq1VVc8t65rAB0IpEYUgQoet0y5JdzgETouSQ1dUXuzBqHYipL8D4vs4kYxZIwJEQHxPk0gdKYAbukhohHR77ZRjopHxo+9jWoF4YWwIQycMF9Dp+3tupNuenEhX4s=
+	66Nw0kYB79X2ZDyaPd6u8DG/V/H1lNMo4pl707RwoNWUr9ptJ96wuumf8+UDbKVM0Ow+kDqW2mug+n1e7F0PWZD8zWPcfILWA+/hLbgYd+LsYr8wAyc5jtC8zCdMWDtzeCZvT+M5bSYCmj9mQCvcou2Jp1H/dRMwJz2AXD9s0GAafcvB+aYjC7p2EwYlaDXmwXbC+gWHLpuVokdRQdI4jS3j26RIWkq78N91n9muXHeYH/VeQ+DPBoJ2IMn1ukJAyA1U8S6hJPzOdaYwdQ32EJQ/Fws4ckDXpX6VUKUowZqTF1VYunHw1Vux3KDEbe8KrmPqRlPSK2hnXSCiHnVGeyDszlsDQxiW5x4kRuxSahpykWUiJxq/1WDbUFuH7MQny1Q0hJzEzOYAFs9JfudbdWBeS1kPBZXhsOcslSlRNdyeH3UK84GSc8kWYUx/1GfZswA4zcVIv3cVx34rKBf5fTHVk3cGzqriH1R3l6qJVpHePv7WpZD6mqlZ9agC7iilURhe4/s4/r0V+6/5B4g2A1aNE7nGIRtKvYut5gJCdqb5Qz6/8vub37gMXNjI30tvrX9FoztywuNPF7sBHF+cB4CnT/2CTWQMxAeutzlq8LM3z8fS6dVcE+n0/GMczKT9VLXACElI8Bn93v1mOpAiGeIdsYShquVHboWo3wewbkc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(6133799003)(3023799007)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?yOgvFFd9Q6nFD490qT0YOPdql7KP9Hh7m3bYKx2tRsfYbG9F+m5iekcU6LvG?=
- =?us-ascii?Q?g840yqe6ci7VHo+qV7R9+cNj1SOqrEiXpihqdCitFWZDEGEv5RyskSYHYm1P?=
- =?us-ascii?Q?QQu26eWI8hIQjajdxrSci2su6brkS2jXRJLJrqFQLbbVPNHUMsNbtPbSYUbA?=
- =?us-ascii?Q?zw0N99eiq8zyZrRso0mcTawoqDqDqpLYubQxFO+fITTXZUHn3VWhGvRk4vS4?=
- =?us-ascii?Q?9WhwLdtJ6E5/fjKjXxcqYh0ijdJ0AAGpZDfwuvZRo8JKNFBMPQc254zDigWQ?=
- =?us-ascii?Q?yEJcFd+XQpydx4/AKztrkMfORiPyK3Uy7yp0YpZy2Q/wUeIDHgpVuoNwo3jA?=
- =?us-ascii?Q?pxZlSVzM96snKAQzKYFG+WCzh+Tro9n1XO8n3Fwi6WVXSLK9m5VZ1i9sIF0k?=
- =?us-ascii?Q?H6hoBCkCybECfufKqBGgAL216IftjrO/mUbPDSTLT/UI5GLRYG8cKS5/RGGS?=
- =?us-ascii?Q?3YsBq3JY7EDuEJ60hzNosANnhh9We2C6LeR3VCldr88nQSrJAvM/tl6CbFhF?=
- =?us-ascii?Q?F2kqxRm3IdpoP3zD4lUPsa+r1oL2PdIAUvEX7073nw6wFvbSiRFHMT29EouL?=
- =?us-ascii?Q?shKQTLr8e0eVD6lglRcnMB9PO/uQHE4bEcwWx1NTrTlAEmP2e/SL9MyJBjeN?=
- =?us-ascii?Q?FP6MTK+hyxiorC7/pJxWxeKRKlUJD7TAQjjiX1I2lMGxm5KQ3Y0aQtxHE2z6?=
- =?us-ascii?Q?MIgV48X4en6CxkjvcLNt/0gvE+dISf0PyiF5GfQI1n/0zJ+DdPLMi+xnHzCV?=
- =?us-ascii?Q?ZXQ/R9kUaZbvanOTb4AOL7KxtpE+4VLJqCF0NJOvtmmIfTqdgacPJHcWwzq5?=
- =?us-ascii?Q?Cx263EBvelxBh8aKIZKsqJV0Qd+OTx4Xr7awUz5aj44c1VyVLQlGwLP8Z4pg?=
- =?us-ascii?Q?I8l5e+K7zUydxERgT7tZDvRSMmwFPQwd4FuLnkrBFD5Q5B4qX+u/bge/9sE3?=
- =?us-ascii?Q?yJdlFNKjNJ9dTF9cMExYkhsKP4FyaTjM1RwVQQrWRK5aLq6Rr9V6SZA94/7L?=
- =?us-ascii?Q?jzQOdPabfo5Z3Jupn681Pp8H/v0Ewfqk81PBIiq5kp3JLCITcGAgnsa/HbNO?=
- =?us-ascii?Q?McQLkV5wXjF/kiG8hf1C8empwGz50SK5mIW8v601VpUhYEa5xU7FnHsJTdTO?=
- =?us-ascii?Q?72iOOQ8CmmbtdlR8QK/rdGnozyrqQD2bNWhvHol2dHV7LKJoXvc+8XznFuWG?=
- =?us-ascii?Q?STgMHkEyyBnw2xR+P/RoWUM9uN+WmgX7rYx5GfJObJDO5XaRE5gOr+UITHTg?=
- =?us-ascii?Q?8dQgb6urWh0GxnvkHoon8fBwVLtO8flz8TtgXaHwYj2tnoztEPoeiVn1bTY0?=
- =?us-ascii?Q?QWThLvJZH+SPKmkI/h4T0Sm7iW4x7iLLhfEQEIFh3qUTeFt7mnMVMRsm6RFV?=
- =?us-ascii?Q?FTwTJ7Sr7B+2GALgCHTD6pE6OgqaJ6c4Hi9JRgmhOlcOiFY9GNHvOpCSh/ug?=
- =?us-ascii?Q?Ma6J6vRJQepnem7IozPnf/QF+cvfz5HUKSFrXcrGiXRF47PCGs0VrFE6yiAI?=
- =?us-ascii?Q?Wsd4cVxi+DhszvC8V9AHS8FSpfP6vIKvo+AlUwTexkiMCtxJBbDteelPdw7N?=
- =?us-ascii?Q?yx8niFoqNznWKlCj2w51UQr3EpkDGscCp67Es/Z5MwJFI8ns9o0vP3H3bJX5?=
- =?us-ascii?Q?NJroyZH3MNQDI0pN6Xc47Ayb6xuqaFdWXPIy7sqlZ6eMVVit7/qHl6cIDIWc?=
- =?us-ascii?Q?VxiBEo5t/+1/LYNygwLQYYoVvuD5V3oTrSIeiqBQWu/m/PaAHi3EDCEIkgUk?=
- =?us-ascii?Q?QuVoRgGR6A=3D=3D?=
+	=?us-ascii?Q?mMx20tmzyH25fquZqbZyHOz7FiT3T9ABLbvdBQaGXhE5E80TvXFrORAY+C7w?=
+ =?us-ascii?Q?Q7a1DUHXDLyqe1usPx7r0Ar2NGMCJr/3vutOewUy/dooTmanGeKQ4IhdYTas?=
+ =?us-ascii?Q?e226baKBiRWPCuH8AZowbYXqb2Zi120o2ydVqt6Thd4rwQrYts0haD8qtymg?=
+ =?us-ascii?Q?36hiLiNiWfekUjuzuHYOkvYrpBPlFdwSwiPLnKnqdVwj89HErQVONgcKw9r6?=
+ =?us-ascii?Q?0nvTOvykzEoKcGf0mxC6Dn5/NwwM91h9532bPM/UkafoFMV2V06Yo8FOD2/M?=
+ =?us-ascii?Q?/WK2hEXRbekFqLCJNeY0UJTOVOkMVNIS7oxyB+PE0iWWuiBFJmviMdT7T08Q?=
+ =?us-ascii?Q?PpqDmQxJoiU8B467gjznldsF/MWkIABR8oSUpKdahP5K0PlutwB7JhbhREZb?=
+ =?us-ascii?Q?6N+9z/ZlW4JoLyAHfg54ovU05DzZdopQ4wlwDBdnbd24LvxdTVBXHceTjcAU?=
+ =?us-ascii?Q?mxHf6X8GBzY/G7D4QLZDbtSeIZWPVzTzBBjXik1i30TtehqobjELk+8dd7tr?=
+ =?us-ascii?Q?D+fEodhVhnfHi0Sc9wGzmJmPGxUtqnsdg3ZwzFXwklJDhCuML7em1olW0QS2?=
+ =?us-ascii?Q?4Uk5KiU2aMukZp8A/1+j2ncn9ELb4oKWwzlyY5wtfbHPn0Vjd1u6Z08+mPNr?=
+ =?us-ascii?Q?XtRi0ut/6ufoEe63tJgLgWYOkl97w9ttM1ftHV79Xc8OL5YVVuw652z6BF/G?=
+ =?us-ascii?Q?yHWD0VPYpUcHPvHLKnkQwdIMXh2vyGx/cPD938nDPKogcbDV/dVvdEWqrZWw?=
+ =?us-ascii?Q?+oCS+0/5CQOz+OHpVQqlUeEn2eNvBp7NSMBjGVWfKUUReED577Zvjsng8JVI?=
+ =?us-ascii?Q?yt+oiZZn4VX7+xoq+Dy/hHdOJy+WdbM+Z0x/z2BA+amNKQHG4wvFls8PY1dG?=
+ =?us-ascii?Q?Aumx5YR8i+ymOTJNaPwrNBjQ9r+hidRf3KOFeJZuilnldDSdynAZFkKO9a+D?=
+ =?us-ascii?Q?XCf4fdlIZb5exvPxSl5WpQUsKc1rzaEvpH5QVfh3pvoGNnjA/Plc5ytzi27H?=
+ =?us-ascii?Q?tff7Mie9uD0TN2UQX5KqAgt9hv9VoqUNFJhLXCBcwep0B14YV3r/0YZE4SHP?=
+ =?us-ascii?Q?BmwGe2+T7rGEPKQ1oYK07jOL1h03h5SXT5JerInHvG5F4+uQ6cXicqGi4UPZ?=
+ =?us-ascii?Q?CV1Vi3TyRvoI7/K3VI3EnaTNbW9RBPO9Un35Cwc/gh3ZmBZ51RLvLEKjkf4t?=
+ =?us-ascii?Q?ABxj63xTDMo3n06s0Wv0GDFhtUwu8Dohl3158H5P8W5Bp9G+jtDEdWf3axdw?=
+ =?us-ascii?Q?DSxM2h+h579A0gACfOwwW737rNuMGwnoE6p+Pb+wGQ/P78C+ZdoLj1qoxAC+?=
+ =?us-ascii?Q?cxHXiC1uxXRFINtLYo6B7RmkxTCbKgrY5NT4QtULzH5MkqTZtpmQJyLgnZSB?=
+ =?us-ascii?Q?3tIrevXlwGWk9ZXI+W55g9inrVi3M3VwJ26lFzW9Wc/qoKUahOnv5XGSUee4?=
+ =?us-ascii?Q?IDCuBMJInRG7ZghlPWgldDvlfL5osxdLUXFauKr5Gh/OMK5TZlSayEi4zClP?=
+ =?us-ascii?Q?py+HUUAy4fgydoEACQnOw+swfXeBiv34vbj7+T84lUSBeKxLrPsg58jXCrEP?=
+ =?us-ascii?Q?dC1vUzRW85JTBrU/QjaSbr5JGot/a1yDkg2uX70leXZrDQ2Pdro/Q5DqiEfl?=
+ =?us-ascii?Q?dcrd6iCNzpmmn+XL1KO5i2ijskWodIieXoGY9KemZqXkOUo2vRgwYjRwIx08?=
+ =?us-ascii?Q?992KXZkfuyZGsrmefeuJgDTP9zkMa2sjQRHE2E1L9kQ4i7ayaCJIbO2S+U/2?=
+ =?us-ascii?Q?EzN5Kt6S1g=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e6714003-9915-4b91-8207-08df07662f48
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3abbc527-3ef5-4013-529e-08df076631f9
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 13:45:57.2583
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 13:46:01.7792
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dHS4wBbyjx5XNNopSxO1/OxKX9fZ31n98Xy5eZKLvWsV0ZUpRs6kChuQIBDe04O3A6y2zkan1GOt/qNM97UP9g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: IXNuzA/QKH6uWvb6w9tMZRfemw8bkq0bHLOFwmd5uIIRLd8JqxyK42uJTvIWw6ZAa/cG3h1p29DbFb7R5oXjuQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6755
 
-Add a -X option to opt scx_qmap into queueing mutex-blocked tasks for
-proxy execution. Without the option, SCX_OPS_ENQ_BLOCKED remains clear
-and mutex waiters block normally. With -X, blocked donors are passed to
-qmap_enqueue() with SCX_ENQ_BLOCKED.
-
-When scx_qmap receives a blocked donor, select a cid allowed by the task
-and held by qmap, preferring its current cid. Dispatch the donor to that
-cid's local DSQ with a fresh slice and SCX_ENQ_PREEMPT, adding
-SCX_ENQ_IMMED when the cid is time-shared. This places the donor at the
-head of an eligible DSQ and requests an immediate reschedule, allowing
-the core proxy-exec path to run the mutex owner using the donor's
-scheduling context as soon as the donor is selected.
-
-The blocked policy is intentionally unfair and can strongly prioritize
-tasks using contended mutexes, but scx_qmap is a demo scheduler and such
-aggressive behavior makes proxy-exec support easy to observe. Count all
-blocked dispatch attempts in nr_enq_blocked and report their per-interval
-delta.
+Now that sched_ext can handle proxy donors and BPF schedulers can opt in
+to blocked-donor enqueueing with SCX_OPS_ENQ_BLOCKED, remove the
+!SCHED_CLASS_EXT dependency from SCHED_PROXY_EXEC and allow both options
+to be enabled together.
 
 Acked-by: John Stultz <jstultz@google.com>
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 53 +++++++++++++++++++++++++++++++++-
- tools/sched_ext/scx_qmap.c     | 13 +++++++--
- tools/sched_ext/scx_qmap.h     |  1 +
- 3 files changed, 63 insertions(+), 4 deletions(-)
+ init/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 5bb8b90a275a3..21f8a9be9650c 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -439,6 +439,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	 */
- 	taskc->core_sched_seq = qa.core_sched_tail_seqs[idx]++;
- 
-+	if (enq_flags & SCX_ENQ_BLOCKED)
-+		__sync_fetch_and_add(&qa.nr_enq_blocked, 1);
-+
- 	/*
- 	 * A task of ours that can run on none of our self cids - the parent
- 	 * didn't grant them or we delegated them to children - would starve in
-@@ -446,7 +449,8 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	 *
- 	 * Force it onto its first allowed cid's local DSQ. If we hold that cid
- 	 * it runs. Otherwise the insert carries SCX_ENQ_RESCUE and the kernel
--	 * diverts the task to its rescue path.
-+	 * diverts the task to its rescue path. Do this before the blocked-donor
-+	 * fast paths, which also require an eligible self cid to make progress.
- 	 */
- 	if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
- 		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-@@ -460,6 +464,53 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 		}
- 	}
- 
-+	/*
-+	 * SCX_OPS_ALWAYS_ENQ_IMMED makes the local insertion below implicitly
-+	 * carry SCX_ENQ_IMMED. If the CPU can't run the blocked donor immediately,
-+	 * the core returns it through ops.enqueue() with SCX_ENQ_REENQ. Inserting
-+	 * it into the same local DSQ would repeat the IMMED handback until the
-+	 * scheduler is ejected. Move reenqueued blocked donors to the shared DSQ,
-+	 * which doesn't carry SCX_ENQ_IMMED, so another CPU can consume them.
-+	 */
-+	if ((enq_flags & (SCX_ENQ_BLOCKED | SCX_ENQ_REENQ)) ==
-+	    (SCX_ENQ_BLOCKED | SCX_ENQ_REENQ)) {
-+		taskc->force_local = false;
-+		scx_bpf_dsq_insert(p, SHARED_DSQ, 0, enq_flags);
-+		cid = cmask_next_and2_set_wrap(&taskc->cpus_allowed,
-+					       &qa.idle_cids.mask,
-+					       &qa.self_cids.mask, 0);
-+		if (cid < scx_bpf_nr_cids())
-+			scx_bpf_kick_cid(cid, SCX_KICK_IDLE);
-+		return;
-+	}
-+
-+	/*
-+	 * Insert a blocked mutex donor at the head of an eligible local DSQ with
-+	 * a fresh slice and %SCX_ENQ_PREEMPT, requesting an immediate reschedule.
-+	 * The test above guarantees that cpus_allowed intersects self_cids, but
-+	 * the donor's current cid may have been delegated to a child. Search the
-+	 * intersection starting at the current cid, preserving it when qmap still
-+	 * holds it and wrapping to another eligible self cid otherwise.
-+	 *
-+	 * A self cid may be held exclusively with SCX_CAP_ENQ or time-shared with
-+	 * only SCX_CAP_ENQ_IMMED. Add needs_immed() so either kind can accept the
-+	 * local insertion instead of rejecting and reenqueuing the donor for a
-+	 * capability miss. Once selected, the core proxy-exec path can run the
-+	 * mutex owner using the donor's scheduling context.
-+	 *
-+	 * This policy is intentionally unfair and can strongly prioritize tasks
-+	 * using contended mutexes; scx_qmap is a demonstration scheduler and
-+	 * this behavior makes proxy-exec support easy to observe.
-+	 */
-+	if (enq_flags & SCX_ENQ_BLOCKED) {
-+		cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
-+					      &qa.self_cids.mask,
-+					      scx_bpf_task_cid(p));
-+		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cid, slice_ns,
-+				   enq_flags | needs_immed(cid) | SCX_ENQ_PREEMPT);
-+		return;
-+	}
-+
- 	/*
- 	 * Fault injection: deliberately dispatch one of our own tasks to a cid
- 	 * we don't hold. The inserts carry SCX_ENQ_RESCUE and divert to the
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index 5bb5f687e579c..d5226e0716573 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -46,7 +46,7 @@ const char help_fmt[] =
- "See the top-of-file comment in .bpf.c for the design.\n"
- "\n"
- "Usage: %s [-s SLICE_US] [-e COUNT] [-t COUNT] [-T COUNT] [-l COUNT] [-b COUNT]\n"
--"       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I]\n"
-+"       [-N COUNT] [-P] [-M] [-H] [-c CG_PATH] [-d PID] [-D LEN] [-S] [-p] [-I] [-X]\n"
- "       [-F COUNT] [-i SEC] [-R MS] [-J MODE] [-v]\n"
- "\n"
- "  -s SLICE_US   Override slice duration\n"
-@@ -65,6 +65,7 @@ const char help_fmt[] =
- "  -S            Suppress qmap-specific debug dump\n"
- "  -p            Switch only tasks on SCHED_EXT policy instead of all\n"
- "  -I            Turn on SCX_OPS_ALWAYS_ENQ_IMMED\n"
-+"  -X            Turn on SCX_OPS_ENQ_BLOCKED\n"
- "  -F COUNT      IMMED stress: force every COUNT'th enqueue to a busy local DSQ (use with -I)\n"
- "  -C MODE       cid-override test (shuffle|bad-dup|bad-range|bad-mono)\n"
- "  -i SEC        Stats interval, seconds (default 5)\n"
-@@ -107,6 +108,7 @@ struct hier_prev {
- 	u64 nr_dsps[MAX_SUB_SCHEDS];
- 	u64 nr_reenq_cap;
- 	u64 nr_reenq_immed;
-+	u64 nr_enq_blocked;
- 	u64 nr_inject_attempts;
- 	u64 nr_rescue_dsp;
- };
-@@ -190,14 +192,16 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
- 	}
- 
- 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
--	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu inj=+%llu rescue=+%llu\n",
-+	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu\n",
- 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
- 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
- 	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
-+	       (unsigned long long)(qa->nr_enq_blocked - prev->nr_enq_blocked),
- 	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
- 	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
- 	prev->nr_reenq_cap = qa->nr_reenq_cap;
- 	prev->nr_reenq_immed = qa->nr_reenq_immed;
-+	prev->nr_enq_blocked = qa->nr_enq_blocked;
- 	prev->nr_inject_attempts = qa->nr_inject_attempts;
- 	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
- 
-@@ -263,7 +267,7 @@ int main(int argc, char **argv)
- 	skel->rodata->max_tasks = 16384;
- 
- 	while ((opt = getopt(argc, argv,
--			     "s:e:t:T:l:b:N:PMHc:d:D:SpIF:C:i:R:J:B:q:vh")) != -1) {
-+			     "s:e:t:T:l:b:N:PMHc:d:D:SpIXF:C:i:R:J:B:q:vh")) != -1) {
- 		switch (opt) {
- 		case 's':
- 			skel->rodata->slice_ns = strtoull(optarg, NULL, 0) * 1000;
-@@ -324,6 +328,9 @@ int main(int argc, char **argv)
- 		case 'I':
- 			skel->struct_ops.qmap_ops->flags |= SCX_OPS_ALWAYS_ENQ_IMMED;
- 			break;
-+		case 'X':
-+			skel->struct_ops.qmap_ops->flags |= SCX_OPS_ENQ_BLOCKED;
-+			break;
- 		case 'F':
- 			skel->rodata->immed_stress_nth = strtoul(optarg, NULL, 0);
- 			break;
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index c78d61806b398..fc10b542fb477 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -178,6 +178,7 @@ struct qmap_arena {
- 	/* bpf -> userspace: stats */
- 	u64 nr_reenq_cap;		/* SCX_TASK_REENQ_CAP bounces */
- 	u64 nr_reenq_immed;		/* SCX_TASK_REENQ_IMMED bounces */
-+	u64 nr_enq_blocked;		/* SCX_ENQ_BLOCKED dispatches */
- 	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
- 	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
- 	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
+diff --git a/init/Kconfig b/init/Kconfig
+index 8583d9f06c522..f3b3bbd14dc41 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -938,8 +938,6 @@ config SCHED_PROXY_EXEC
+ 	bool "Proxy Execution"
+ 	# Avoid some build failures w/ PREEMPT_RT until it can be fixed
+ 	depends on !PREEMPT_RT
+-	# Need to investigate how to inform sched_ext of split contexts
+-	depends on !SCHED_CLASS_EXT
+ 	# Not particularly useful until we get to multi-rq proxying
+ 	depends on EXPERT
+ 	help
 -- 
 2.55.0
 
