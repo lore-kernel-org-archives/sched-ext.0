@@ -1,33 +1,32 @@
-Received: from mta0.migadu.com (out-194.mta0.migadu.com [91.218.175.194])
+Received: from mta1.migadu.com (out-55.mta1.migadu.com [95.215.58.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA3F42C513
-	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 02:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56113431E51
+	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 02:41:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788230466; cv=none; b=IUsYbpvKuO5lHNux1p/NYXOZYQ/c8LUFrty5wyqfAms7FpsIcCZXPskkyn3HXaxpF/VI6GY7iQY6msfFTns90WK3Nz4SjWEE9xW6NsuPXv4dwuTnn8+yMEm+4Fhxkg+aJGzKRhH6LrcFGVSk84AKaNEdzDLkzz6ZvsAzg4RLxMo=
+	t=1788230471; cv=none; b=baTFBUHGf0iC03ywstO/WdPrDc0xfT310+4DT8ZfLwc9slxWMoTtoskdjzykDECkkwO7D0X/wYjYBmELPATtKud8bF35VWLPALio4aNdP9lNMJO2IqBos2mdokffSIx4H64YlfsHy0LPCrPb5jGAOXqSQR2qUGKy4dHg5CcD+JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788230466; c=relaxed/simple;
-	bh=zGl9k2EKaQ/cypP2a3HZEV5eAmxgn5HG0stOMh5zxuc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MM7KUbYX8eLSRdG5Pnv6KelW0PaPSnVe1/8AdtESghVDC97cCSunFppBcCY9t92JBhxOiDsF3g/xGagWmnTXOTONTeZWJUsvV3QoqK8mZGaZtpJRDnoTdBBAIkqLdsqcKWLXGdN1vqbAMR+7XHJCcIs80buBXsXITYEMQG9V3oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HoiwX54D; arc=none smtp.client-ip=91.218.175.194
+	s=arc-20240116; t=1788230471; c=relaxed/simple;
+	bh=uaa47HjIg5FFqjOeEzANpXLJA0/CX5ySz08yr8qyvWs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tnlJ//UjJdzi6RPrBWf+phUIZjninjYi2Z6rFxL6+VF1ZgHcAIRLKTnDOrZAaR9AJlKth69yhEHaAtWFM46hBYyRz07HGRfIWRFOs7LMOQBmPjHXUxt5olVY7z8o8GU4fsMj0bwnxBMdAC52fkL0EKmXxpgbFx3xxc85mz/FKfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=YpszCp0E; arc=none smtp.client-ip=95.215.58.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HoiwX54D"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="YpszCp0E"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=zGl9k2EKaQ/cypP2a3HZEV5eAmxgn5HG0stOMh5zxuc=;
+DKIM-Signature: a=rsa-sha256; bh=uaa47HjIg5FFqjOeEzANpXLJA0/CX5ySz08yr8qyvWs=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788230454; v=1; x=1788835254;
- b=HoiwX54DQrfYZJWKPMKZesULS90u1xJUpAMjWosCmIkwXCMLXkscriPhKHbeTBn2d3fCAXhC
- xmFdJfSo0UhBSd3njfcbaE/MECAdjAgAwp9cn0yH/UNwImWsnrgvq7EzlQGGjqpwDK+Qxyqiukz
- yQTTtetUoJomPe/KOMzrm0j0=
+ t=1788230461; v=1; x=1788835261;
+ b=YpszCp0EjHmKw35HUzq3ub8Vw0vSTPbCSNmC3taTLlaGuRf2/C4Ee7QwmpIXy/XS+l1TJMHU
+ 1vKLu/e+Zhh+L4AA7gGkcx9qWA+gUD1myXtt08j7bXo6I+08f4BwE4j8mzI+SpoANbjLCDVo4FC
+ PkdB/mjTcQCfAD7niCBtrR78=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 8df81cf4b717920e;
-	Tue, 01 Sep 2026 02:40:54 +0000
-X-Mizu-Trace-ID: 8df81cf4b717920e
+Received: by smtp.migadu.com with ESMTPS id b6cebc90bc5a86e6;
+	Tue, 01 Sep 2026 02:40:50 +0000
+X-Mizu-Trace-ID: b6cebc90bc5a86e6
 X-Migadu-Flow: FLOW_OUT
 From: Tao Cui <cui.tao@linux.dev>
 To: tj@kernel.org,
@@ -41,12 +40,10 @@ Cc: arighi@nvidia.com,
 	bpf@vger.kernel.org,
 	cui.tao@linux.dev,
 	Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH 1/2] sched_ext: fix vtime priority queue inversion on wide vtime spread
-Date: Tue,  1 Sep 2026 10:40:37 +0800
-Message-ID: <20260901024038.730424-2-cui.tao@linux.dev>
+Subject: [PATCH 0/2] sched_ext: fix wraparound-unsafe vtime orderings
+Date: Tue,  1 Sep 2026 10:40:36 +0800
+Message-ID: <20260901024038.730424-1-cui.tao@linux.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260901024038.730424-1-cui.tao@linux.dev>
-References: <20260901024038.730424-1-cui.tao@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -57,42 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-scx_dsq_priq_less() compares dsq_vtime with time_before64(), a cyclic
-comparison that is only valid when the values in the queue are less
-than 2^63 apart. Unlike CFS, which enforces that invariant with
-min_vruntime clamping, sched_ext takes dsq_vtime directly from the BPF
-scheduler and cannot bound the spread. A scheduler that inserts tasks
-with vtimes wider than 2^63 apart into one DSQ gets the order inverted:
-the tasks it placed last run first and the rest starve. Reproduced with
-a probe scheduler assigning half its tasks vtimes near 0 and the other
-half vtimes above 2^63 -- four of eight busy tasks monopolized the CPU
-while the other four starved.
+Two spots order tasks by 64-bit virtual time with comparisons that
+break when the values are far apart: the kernel's vtime DSQ priority
+queue and scx_flatcg's cgroup tree. They need opposite fixes, which
+is the point of this series.
 
-Compare with plain u64 < instead, which is a total order and always
-honors the order the scheduler asked for. The transient misordering
-around the natural 2^64 wrap is the same class of anomaly the cyclic
-comparison trades it for, but bounded.
+The kernel's scx_dsq_priq_less() compares with time_before64(), i.e.
+(s64)(a - b) < 0. That is only a valid ordering when all values in
+the queue are less than 2^63 apart. CFS upholds that invariant with
+min_vruntime clamping; sched_ext cannot, because dsq_vtime comes
+straight from the BPF scheduler. A scheduler that inserts vtimes
+wider than 2^63 apart into one DSQ gets the inverted order -- the
+tasks it placed last run first while the rest starve. Patch 1
+switches to a plain u64 comparison, which is a total order and always
+honors the requested order; it reproduces the inversion with a probe
+scheduler and verifies the fix.
 
-Fixes: 06e51be3d5e7 ("sched_ext: Add vtime-ordered priority queue to dispatch_q's")
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
----
- kernel/sched/ext/ext.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+scx_flatcg's cgv_node_less() has the inverse problem: it compares
+with a plain <, which misorders once cvtime wraps. There the cyclic
+(s64)(a - b) < 0 comparison from patch 1's bug is the correct fix,
+because flatcg does uphold the spread invariant --
+cgrp_cap_budget() clamps every node to within max_budget behind
+cvtime_now -- and the cyclic comparison also carries the ordering
+correctly across the natural 2^64 wrap, which a plain comparison
+would not.
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 8041c87a3562..dd0ce01370d1 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1417,7 +1417,8 @@ static bool scx_dsq_priq_less(struct rb_node *node_a,
- 	const struct task_struct *b =
- 		container_of(node_b, struct task_struct, scx.dsq_priq);
- 
--	return time_before64(a->scx.dsq_vtime, b->scx.dsq_vtime);
-+	/* dsq_vtime is arbitrary BPF input: keep a total order */
-+	return a->scx.dsq_vtime < b->scx.dsq_vtime;
- }
- 
- static void dsq_inc_nr(struct scx_dispatch_q *dsq, struct task_struct *p, u64 enq_flags)
+So: same bug family, opposite fixes, each justified by whether the
+spread invariant exists. This is also why the naive "use
+time_before64 everywhere" suggestion doesn't hold -- without the
+invariant it is exactly the inversion patch 1 fixes.
+
+Tao Cui (2):
+  sched_ext: fix vtime priority queue inversion on wide vtime spread
+  sched_ext/scx_flatcg: make cgv_node_less() wraparound-safe
+
+ kernel/sched/ext/ext.c           | 3 ++-
+ tools/sched_ext/scx_flatcg.bpf.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
 -- 
 2.43.0
 
