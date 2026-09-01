@@ -1,101 +1,120 @@
-Received: from mta1.migadu.com (out-58.mta1.migadu.com [95.215.58.58])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DB130D419
-	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 02:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72703431E4A;
+	Tue,  1 Sep 2026 02:51:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788230477; cv=none; b=neQcEkOCo/XD6jW5S0mL+P5RoFU9tNqM1doJ9LqIbfhKW4L0QJgRfVdWqoF7IVLJUMhJiZuZs3Bz7rXfhZkBnFajKygc0a1YwpwwYXm+bcOuySrD2gpeja/jac/Ty5q5D6M7ETfKbotFrHoULSVrwBv379ExTWwDJ9LsJxIq0UU=
+	t=1788231114; cv=none; b=IwTr8mTbbjI+nndPy/xykQgIN0CQeHCkM5anyOFjWfT9J3c1a//jQAijHIlYAdg/C06gnI06x9zeq/GdJpTCo4RkRgL52ijzehoh8N6qOrFz2JNZPVYpSRqQbP/MA0MkrECVGnCgjkckLWHywxPl+8e5I4HZSDTCdsPKkUU2Gm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788230477; c=relaxed/simple;
-	bh=+g8JFj6bSuPhOwWMaBi1S77p3N0JoJc+KMCCgtIXAqg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YqoBe2DZePrPRlxOsDPAxzua5IYLNZOYOZ8fg+wXq1WbL8MWjHng5AunrMOQVZumjOkpZrXsK8rmtYlg2h8VIf/G9+x9eU1A1COYJQLETf/eD5gzfbpssRtfDnnnLUq2tlZtOg7+L9+JNnLOIp8b8e3HzaV3YlOc7m2TWnwKKcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=LfvTh0FN; arc=none smtp.client-ip=95.215.58.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1788231114; c=relaxed/simple;
+	bh=rSfb0pyyFRAsJKENAJm7gimrGwv0rGDJkKi1uzWlnMk=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=B260TowH2X0VumI3emRAGnyW13ithSOMhZOFfOwOKSr/PB1U4w53a18qsprz1aO6tb0LU2vCpzAuOcbTBPk+PQ4i9JJFt4yt2pr5W3PfpLm2a1nLz14914+EDWbI6YpIO6XZMM9tsMcH8OpFAveLiuWJ8hKRQhiGGF1TK+TNAU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RRJiFh6b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="LfvTh0FN"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=+g8JFj6bSuPhOwWMaBi1S77p3N0JoJc+KMCCgtIXAqg=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788230461; v=1; x=1788835261;
- b=LfvTh0FN43rOVOo09URUo19lOKDNohwxrxEfLNJFn9kiQccjQ5VNlklzE17m9oT7hi85bIIp
- GWqEiFVhoa792eTXaz+4iHRjsXY8hbCC+G0rxSdqzJSrnIQjxgCA0JG60LTTATrj7FdN7NTTrSC
- jKzvBVuGxQM9RbBmAzDmnBMw=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 04d6f9c65dfb2da7;
-	Tue, 01 Sep 2026 02:41:01 +0000
-X-Mizu-Trace-ID: 04d6f9c65dfb2da7
-X-Migadu-Flow: FLOW_OUT
-From: Tao Cui <cui.tao@linux.dev>
-To: tj@kernel.org,
-	void@manifault.com
-Cc: arighi@nvidia.com,
-	changwoo@igalia.com,
-	michalblk@google.com,
-	liwanwu@kylinos.cn,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	cui.tao@linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH 2/2] sched_ext/scx_flatcg: make cgv_node_less() wraparound-safe
-Date: Tue,  1 Sep 2026 10:40:38 +0800
-Message-ID: <20260901024038.730424-3-cui.tao@linux.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260901024038.730424-1-cui.tao@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RRJiFh6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A321F000E9;
+	Tue,  1 Sep 2026 02:51:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788231110;
+	bh=7P52aV/VCgILK2OjDKPwkUA5cqEW0fjhODxg3UQxsho=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=RRJiFh6bI+ioBk2vv4CyNpRrhwA+s59eLaHA1q7e/z7opGGpqf+syFh9MwyFQKgsA
+	 4llu0tpMeEm0XpGT7l3KpEjZvK7IoHOzAvl/NEVM+wdKH+NqOFzzFs02fWjavcjaio
+	 tIGh2LIwvOGS1AOl56AUqOlcdrfhHWukKuP7r49LSMvT7Mr+lgnbGTrKr4ewrAhIi9
+	 XaoSsyYEeEqh8RnIm0O5xk8gpv2WIDDfTuX/0Jd69rtBTvGziFek5jWX//aZajtSKN
+	 5l9zKeTHpqzDM0kOtfihu1H3YSRlHqOMPg0Us82ecr5Q0SZLE/HMST4HtKtzd7cfB1
+	 W44W6+74laafQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/2] sched_ext/scx_flatcg: make cgv_node_less()
+ wraparound-safe
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tao Cui" <cui.tao@linux.dev>
+Cc: bpf@vger.kernel.org, sched-ext@lists.linux.dev
+In-Reply-To: <20260901024038.730424-3-cui.tao@linux.dev>
 References: <20260901024038.730424-1-cui.tao@linux.dev>
+ <20260901024038.730424-3-cui.tao@linux.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 01 Sep 2026 02:51:49 +0000
+Message-Id: <20260901025150.00A321F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Tao Cui <cuitao@kylinos.cn>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+
+Pre-existing issues:
+- [High] Incorrect usage of `__sync_fetch_and_sub` with a self-referencing =
+argument leads to double-counting of concurrent time additions.
+--
+
+commit aa8a669e2d8a03160f8c5bfda45d4fd749f2352c
+Author: Tao Cui <cuitao@kylinos.cn>
+
+sched_ext/scx_flatcg: make cgv_node_less() wraparound-safe
 
 cgv_node_less() compares cvtimes with a plain <, which breaks once
-cvtime wraps. A weight-1 cgroup in a hierarchy summing to 10000
-advances cvtime at up to 10000x wall time, so 2^64 ns of cvtime is
-weeks of continuous saturation away -- unlikely but reachable on a
-long-running host. At the wrap instant the plain comparison puts the
-wrapped node behind everything else permanently.
-
-Compare with (s64)(a - b) < 0 instead, as CFS does for vruntime. A
-cyclic comparison is valid as an rbtree comparator only because
+cvtime wraps. Compare with (s64)(a - b) < 0 instead, as CFS does for vrunti=
+me.
+A cyclic comparison is valid as an rbtree comparator only because
 cgrp_cap_budget() clamps every node to within max_budget behind
-cvtime_now, so any two nodes are far less than 2^63 apart and the
-cyclic order agrees with the true order.
+cvtime_now.
 
-Compile-tested and smoke-tested in a VM: weight distribution and
-dispatch unaffected.
+Link: https://lore.kernel.org/r/3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.=
+dev
 
-Fixes: 7b742aa2c2c9 ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/r/3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.dev
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
----
- tools/sched_ext/scx_flatcg.bpf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatc=
+g.bpf.c
+> index fec3595818269..3a25cfdc97092 100644
+> --- a/tools/sched_ext/scx_flatcg.bpf.c
+> +++ b/tools/sched_ext/scx_flatcg.bpf.c
+> @@ -144,7 +144,8 @@ static bool cgv_node_less(struct bpf_rb_node *a, cons=
+t struct bpf_rb_node *b)
+>  	cgc_a =3D container_of(a, struct cgv_node, rb_node);
+>  	cgc_b =3D container_of(b, struct cgv_node, rb_node);
+> =20
+> -	return cgc_a->cvtime < cgc_b->cvtime;
+> +	/* wrap-safe: cap_budget keeps nodes within 2^63 of each other */
+> +	return (s64)(cgc_a->cvtime - cgc_b->cvtime) < 0;
+>  }
+> =20
+>  static struct fcg_cpu_ctx *find_cpu_ctx(void)
 
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 454ebb820c5e..be03b409db5e 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -144,7 +144,8 @@ static bool cgv_node_less(struct bpf_rb_node *a, const struct bpf_rb_node *b)
- 	cgc_a = container_of(a, struct cgv_node, rb_node);
- 	cgc_b = container_of(b, struct cgv_node, rb_node);
- 
--	return cgc_a->cvtime < cgc_b->cvtime;
-+	/* wrap-safe: cap_budget keeps nodes within 2^63 of each other */
-+	return (s64)(cgc_a->cvtime - cgc_b->cvtime) < 0;
- }
- 
- static struct fcg_cpu_ctx *find_cpu_ctx(void)
--- 
-2.43.0
+[ ... ]
 
+[Severity: High]
+This is a pre-existing issue, but does using __sync_fetch_and_sub() with a
+self-referencing argument cause double-counting of concurrent time addition=
+s?
+
+In tools/sched_ext/scx_flatcg.bpf.c:cgrp_cap_budget():
+
+    delta =3D __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
+
+If fcg_stopping() concurrently updates cgc->cvtime_delta using
+__sync_fetch_and_add() without holding cgv_tree_lock, can this
+sequence occur?
+
+CPU 1 executes cgrp_cap_budget() and reads the second argument (the amount
+to subtract), getting the current value (e.g., X).
+
+CPU 2 executes fcg_stopping() and concurrently adds Y, making the memory
+value X + Y.
+
+CPU 1 executes the atomic subtract of X from X + Y, returning the old
+memory value of X + Y, but leaving Y in memory.
+
+CPU 1 then processes delta as X + Y, while Y remains in memory.
+
+Could this result in the concurrent addition Y being processed immediately,
+and then remaining in memory to be processed again later, incorrectly
+calculating the CPU share for the cgroup?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901024038.7304=
+24-1-cui.tao@linux.dev?part=3D2
