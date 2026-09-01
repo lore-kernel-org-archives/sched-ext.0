@@ -1,113 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38D943149D;
-	Tue,  1 Sep 2026 02:54:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61856426697
+	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 03:11:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788231287; cv=none; b=FcAvBpkkpavknCWv6xMoBXDMdp2CDiLqG0JYEcDAc/LOdhIXaRTQZy+dXHB4D6T9lEga0WBVububC4UgmElMS3Cm9dAmQuSreBcw19nshhQw9mzKe80CpVsExdf8xNbeanyXm8Y9LAnMHTMOOv4qBn3YacJmq/rxU5BcO20MeYY=
+	t=1788232277; cv=none; b=BWEAyBic6sBWyVM4NjULYztn4E8UkM2LI1/Ytqh4jL9uojrSMzgFJkrV8Dhf/8mpFwHy4e7KrwWkE9cJ5xo8gjf2t5PS8xDWVJAiznyc6junwDABaB7Xopbt7eE8sO/k9KZFhv5t2FeILNo5C+ldgWcYRoE3xLFaiyWxbiCneaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788231287; c=relaxed/simple;
-	bh=ML52TpRy/I+ayru1gn3GROsmLypMPRFKOD57sIvLU1c=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=HUnxwI7P+iH1z92mnbfWVN2Lk7eA8oQO/3rJyygRyrhg7R9e/c6CS6W8t8gq7QzQyACoHYgdeFa+fzBwxSYR1ZjGHoLZlNeTNNUSPM546f0RE9SKgSJs5PPrGGpgtrbaJ3jNxr9tiihrjxHPRPVmn2tuDnujueGVFeQbpOYpFpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XfLUcW/c; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788232277; c=relaxed/simple;
+	bh=s5oPWfvcaE1YMaxXsFJOTvk9No3nN8NYNIrkpi80+cM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ArsutGBwXsEGsPvGmd+yDs6HJE2PEr/wRzaa6OGnOgnZvROob5dYuNLmGk9QYW60E+5Orua6WRXj7YTfGdpMdGLtMEaltAmyOmgf5ClztKkb4Z2zPOEsl774D9DXj54/cxiA/VwoQTJb7xULXIXSUaKoHbcGL4MNLCR09u5eJxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=GZs+7PTd; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XfLUcW/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DCE1F000E9;
-	Tue,  1 Sep 2026 02:54:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788231282;
-	bh=oc77boeQMwgpVdXOYlmvg+hfK36P/Af5Fg/tpEILnIU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XfLUcW/ciMn9YTFcnqkRTZykxeZ7Nv347kRMmrtYIncscitntva0jy59/clGGBE0L
-	 BD5sQkhhvyMbFrWEkd51qK4MOFdbI4fjHO+CPtoI196eyF/ewMzYvPFMTcdeeiSc8U
-	 536S0t2qnGuLEa2F8AzVq7jPOdN8+1LH4cxX7a1puB2tUiIC84XF11jPPhegno0643
-	 TeTUipiy3tBVBRkYH94x2R/tf0FkKjtiPityoj9ya9Jylx9EvrIbrof5vhnHvWYD63
-	 OR373mJkP+8+WwwOzuF7819rOm9cV36q+u5qHHi5gK5zytUS8FpCM9zeTQ5hi4kLXv
-	 Gmxb47xZQv0hg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: fix vtime priority queue inversion on
- wide vtime spread
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
-Cc: bpf@vger.kernel.org, sched-ext@lists.linux.dev
-In-Reply-To: <20260901024038.730424-2-cui.tao@linux.dev>
-References: <20260901024038.730424-1-cui.tao@linux.dev>
- <20260901024038.730424-2-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 02:54:41 +0000
-Message-Id: <20260901025441.B3DCE1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="GZs+7PTd"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=s5oPWfvcaE1YMaxXsFJOTvk9No3nN8NYNIrkpi80+cM=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788232273; v=1; x=1788837073;
+ b=GZs+7PTdJi7pNFnigosE7k6tUUzUolpPtnCzVO184D83S/B4IUwY/zFpw0OsIzslmNXC+Lf6
+ pKLj64RdBd+5imouiLK1eKZlPb9q4aSDetjNYXKZKwk15gVuWaFVGwLiEIzTwg/rHX93d4aKYfW
+ RnQ4bEOXRrUpDpuiIWhpaMLM=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b250c1526b7c3aa9;
+	Tue, 01 Sep 2026 03:11:13 +0000
+X-Mizu-Trace-ID: b250c1526b7c3aa9
+X-Migadu-Flow: FLOW_OUT
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	michalblk@google.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH] sched_ext: don't deliver duplicate ops.cgroup_set_idle() for same value
+Date: Tue,  1 Sep 2026 11:11:01 +0800
+Message-ID: <20260901031101.731943-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] The patch silently breaks the established cyclic `vtime` ordering =
-contract by switching to an absolute `<` comparison, causing permanent task=
- starvation upon wraparound and contradicting existing kfunc documentation =
-and selftests.
---
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit b0708e9275ee1ffad12d1e3811001b6d6ee4c741
-Author: Tao Cui <cuitao@kylinos.cn>
+ops.cgroup_set_idle() is documented to be invoked when a cgroup
+transitions between idle and non-idle states, and scx_group_set_weight()
+already skips value-preserving writes. scx_group_set_idle() delivers
+every write unconditionally, so rewriting an already-correct cpu.idle
+value feeds the BPF scheduler a transition callback each time, which
+toggle- or accounting-based schedulers miscount. Mirror the weight
+guard and only deliver on an actual change.
 
-sched_ext: fix vtime priority queue inversion on wide vtime spread
+Verified with a probe scheduler printing each callback: rewriting
+cpu.idle=1 twice on an already-idle cgroup delivered two callbacks
+before and none after.
 
-This commit replaces the time_before64() cyclic comparison in
-scx_dsq_priq_less() with a plain less-than operation to prevent priority qu=
-eue
-inversion when vtimes have a wide spread.
+Fixes: 347ed2d566da ("sched/ext: Implement cgroup_set_idle() callback")
+Link: https://lore.kernel.org/r/b53c61a1-4d7d-4232-941f-d48b0563d4ed
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+---
+ kernel/sched/ext/ext.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 18183062f751c..db1ea9054c0ca 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -1356,7 +1356,8 @@ static bool scx_dsq_priq_less(struct rb_node *node_=
-a,
->  	const struct task_struct *b =3D
->  		container_of(node_b, struct task_struct, scx.dsq_priq);
-> =20
-> -	return time_before64(a->scx.dsq_vtime, b->scx.dsq_vtime);
-> +	/* dsq_vtime is arbitrary BPF input: keep a total order */
-> +	return a->scx.dsq_vtime < b->scx.dsq_vtime;
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 8041c87a3562..8b3625107b72 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4933,7 +4933,8 @@ void scx_group_set_idle(struct task_group *tg, bool idle)
+ 	percpu_down_read(&scx_cgroup_ops_rwsem);
+ 	sch = scx_tg_knob_sched(tg);
+ 
+-	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle))
++	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle) &&
++	    tg->scx.sched_idle != idle)
+ 		SCX_CALL_OP(sch, cgroup_set_idle, NULL, tg_cgrp(tg), idle);
+ 
+ 	/* Update the task group's idle state */
+-- 
+2.43.0
 
-[Severity: High]
-Does this break the established cyclic vtime ordering contract and cause
-permanent task starvation upon wraparound?
-
-If a BPF scheduler assigns vtime to tasks, and the vtime advances and
-eventually wraps around U64_MAX, tasks that are in the queue at the time of
-wraparound (with vtime near U64_MAX) will be indefinitely starved. This hap=
-pens
-because new post-wrap tasks (with small absolute vtimes) will be strictly l=
-ess
-than the old ones and placed ahead of them.
-
-The user-facing kfunc documentation for __scx_bpf_dsq_insert_vtime() in
-kernel/sched/ext/ext.c still explicitly promises the cyclic wrapping behavi=
-or:
-
- * @args->vtime ordering is according to time_before64() which considers
- * wrapping. A numerically larger vtime may indicate an earlier position in=
- the
- * ordering and vice-versa.
-
-Additionally, BPF schedulers still actively rely on the cyclic vtime semant=
-ics,
-as seen in tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c:
-
-static inline bool vtime_before(u64 a, u64 b)
-{
-	return (s64)(a - b) < 0;
-}
-
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901024038.7304=
-24-1-cui.tao@linux.dev?part=3D1
