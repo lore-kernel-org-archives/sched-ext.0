@@ -1,110 +1,58 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9E039A054;
-	Tue,  1 Sep 2026 12:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D063515C2
+	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 13:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788267408; cv=none; b=qQy7OoytWQ41KTTl0zcj++bmq5VQZyrFc/AoiBiFnfc5PPyG1WtYTqBYOVHLPP8DvgQR3Ha+mfSoNYV/TVgsCdvi7WLUYk30/AThvikXMJMrcGSVLbWUU1uEnPzMB7+DgOc/g+XTa6JlfJDT90a0LuTjE1dq9VpY1grjVWaErgY=
+	t=1788269676; cv=none; b=GS9sdg8gnba6gBu1c63FIbA1kERCTE6GWW37AMlOW5t9RBcm80oVC4BCyq6GONhtP5ShYDG3a0myil7i9uNZPxQEbmdSiPW0rGa1/iT1j8elvP4rDOrRVX6a/V/+loIU3ft3Od9CkKcD9gMbKVWHYaD9smssVVfnmAWHTNJewx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788267408; c=relaxed/simple;
-	bh=rDVRkDrV28wDfghg4rwVKQQfENxd1izFza24kT8xpvs=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=pqPYgLcoHHbO5V+xpAl2dkdtrbqZDUOX0zsgSsruPJaZ9pHvs/4DSbaFzaG6pHKPMJnUDZgOvuuFRyr/7ncGkR0OFIXCZ+BHqEOsNrtfMYA7WvMA3TcxEiF9tcW/b26JKvM6Vra1phIZotjV1kjofOgqmJo+2BpZykrevFbBPNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q/nAspJ5; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q/nAspJ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D682B1F000E9;
-	Tue,  1 Sep 2026 12:56:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788267407;
-	bh=pPPYWfnEXXxlePIBP7cnq0DyUwWbd54u3uDbpGavSp8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Q/nAspJ5dXiswLaxawl+5R6xzhqUg2lqNZ4kDnMR4ogd8xRQYy+bpU7crz4/+OvUz
-	 YeOHzjteEA+JZt4wV36tSZRnkEg0PtxDVMTWKnrw9fdUHOmQge4SNc3xyJvthDuZI/
-	 xtvuFCxNqeISlqGHrPSalhCjQ9jI4vKhjpXtYHcs1Q3AZN8WnmW5Ho/gzD8Qa9ZWpQ
-	 kG9SntufqndanDT7vV0ZhsQ9AC7wYD1pgT3l9UxbSvEc13U7Y5uOhEbKevGTlAH4O7
-	 A1UU74E0UuIGvTsaIBZjQHiK+/VUeYVQMi3BJdlvTqCT1jAhQW3Wi3u1J/6emxHetA
-	 RdujtRah+eIIw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] sched_ext: don't deliver duplicate
- ops.cgroup_set_idle() for same value
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
-Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20260901124347.755904-1-cui.tao@linux.dev>
-References: <20260901124347.755904-1-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 12:56:46 +0000
-Message-Id: <20260901125646.D682B1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1788269676; c=relaxed/simple;
+	bh=BpMmoUdZJz5C+Xly0UFL+K5vxlejQKcCLE69xeqVoNU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=nzuHcbF/EBouKD/NwsfoSoIfipRex3eY6NiV4H0Ojvox2X2C7/6FA6/va0DzrdTl3U0krnVyCE38GsSVAkAP48CZC0EX/uceFraGLdpE6KBPaBRrbBf8V+gjMCQN1pqQ+phylxdTZx6cebZ/yT2iAwtp49452HY+dNUW1P/1x5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: d9e7a9baa60911f19a56ed5b684f684d-20260901
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:a58203f0-d71c-4f6d-9cfc-533507975d3a,IP:0,U
+	RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:25
+X-CID-META: VersionHash:7db8b62,CLOUDID:7e4bed32bd1383ad1806b08a1eff91c5,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|83|102|850|865|898,TC:nil,Content:0|15|50,ED
+	M:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0
+	,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: d9e7a9baa60911f19a56ed5b684f684d-20260901
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 2062903539; Tue, 01 Sep 2026 21:34:26 +0800
+From: Qiurong Fang <fangqiurong@kylinos.cn>
+To: zhanxusheng@xiaomi.com
+Cc: Qiurong Fang <fangqiurong@kylinos.cn>,
+	tj@kernel.org,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH v2] sched_ext: Skip per-CPU data allocation for built-in DSQs
+Date: Tue,  1 Sep 2026 21:34:21 +0800
+Message-Id: <20260901133421.2981014-1-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260901022004.1824584-1-zhanxusheng@xiaomi.com>
+References: <20260827082329.3368255-1-fangqiurong@kylinos.cn> <20260901013258.1822890-1-fangqiurong@kylinos.cn> <20260901022004.1824584-1-zhanxusheng@xiaomi.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] Lockless state check introduces a Time-of-Check to Time-of-Use (TO=
-CTOU) race that can permanently desynchronize the BPF scheduler from the ac=
-tual cgroup state.
-- [Low] Compilation failure due to use of non-existent field `sched_idle` i=
-n `struct scx_task_group`.
---
+Hello Zhan,
 
-commit 47d6f0af51f3086b39745cdfc5f053f908dbd0c7
-Author: Tao Cui <cuitao@kylinos.cn>
-
-sched_ext: don't deliver duplicate ops.cgroup_set_idle() for same value
-   =20
-This commit avoids sending duplicate cgroup_set_idle() callbacks to the BPF
-scheduler by checking if the cgroup's idle state has actually changed.
-
-Link: https://lore.kernel.org/r/b53c61a1-4d7d-4232-941f-d48b0563d4ed@linux.=
-dev
-
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index c539d15cda637..c72d9780830b8 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -4930,7 +4930,8 @@ void scx_group_set_idle(struct task_group *tg, bool=
- idle)
->  	percpu_down_read(&scx_cgroup_ops_rwsem);
->  	sch =3D scx_tg_knob_sched(tg);
-> =20
-> -	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle))
-> +	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle) &&
-> +	    tg->scx.sched_idle !=3D idle)
-
-[Severity: Low]
-Does sched_idle exist in struct scx_task_group? It looks like this might
-cause a compile failure when building with CONFIG_SCHED_CLASS_EXT and
-CONFIG_EXT_GROUP_SCHED enabled. Should this be checking tg->scx.idle instea=
-d?
-
-[Severity: High]
-Is it possible for concurrent writes to cpu.idle to permanently desynchroni=
-ze
-the BPF scheduler from the actual cgroup state here?
-
-Since this state check is performed locklessly before the callback is sent,
-if Thread A writes 1 and Thread B concurrently writes 0, could Thread B
-evaluate the new check while the state is still 0, and falsely skip sending
-its callback?
-
-If Thread A then sends its callback for 1, and Thread B subsequently updates
-the state to 0, the BPF scheduler might think the state is 1 while the
-internal tracking state is 0.
-
-If a user tries to manually fix this by echoing 0 again, wouldn't the
-lockless check see the internal state is already 0 and skip the corrective
-callback, leaving the BPF scheduler trapped in the wrong state?
-
->  		SCX_CALL_OP(sch, cgroup_set_idle, NULL, tg_cgrp(tg), idle);
-> =20
->  	/* Update the task group's idle state */
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901124347.7559=
-04-1-cui.tao@linux.dev?part=3D1
+Thanks for the review and the Reviewed-by. I'll fold the changelog
+wording in the next spin, if there is one.
