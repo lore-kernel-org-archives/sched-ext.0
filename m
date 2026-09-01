@@ -1,99 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2710539F165;
-	Tue,  1 Sep 2026 03:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC01376BF2;
+	Tue,  1 Sep 2026 03:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788232962; cv=none; b=dfv+XMwTigtmwXdei/gTsx/M41lq8eY78pBwQ9fAxJ00zs76nZSrZibaOnu3SqstqaJLEFSniMtVUJO+l8r8STgFNIu7MXXHcJck/jzopIh96vgFRmn1FF41B+9Cjg6RKZ2zyFPMLUOJCOvX6Bz72hOITCCBSRcxwL2TawW7Qgc=
+	t=1788234846; cv=none; b=NvPeKqeRqqDAWV5ibjRVciTAZf3CXRM3h/VD9BV2AYFk4OdNnkHkaMcBaNOVY6TZShcuBEDbjpXtwBzvMLu3AJx5FFk8gTrW3khU0M+u0DxgULI0l/Xm/VJr9Z+QgEo8s1ZR9JUn1rBqAY4oYPjs/9i1yxhkxtovGkUUhIRXkZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788232962; c=relaxed/simple;
-	bh=uUuLFTrbgfJ406U75DTXYKVrNpwzrXtWeKIHPTrVbg0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=FUyQTp4JKEret8jKYmHvaUYnqwe6n6b4z7ivzyslXvhfebS3q1G+cZNvee/V5PWq2yGpWHTk9JPgxG13Adk7Sn4IhDxxvBuMzVgjuIZshVqA7hTj9kDeSiTwFZHpowqjSKHodSeCme++MlZFXn+L/Raee51YTJqLXkLSh9yRM/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bKdWwnzP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788234846; c=relaxed/simple;
+	bh=/uxmxuNW7ubkuJFiuo78NaWw1A1Sedf0WeMPwM+xSXQ=;
+	h=Content-Type:MIME-Version:Message-Id:In-Reply-To:References:
+	 Subject:From:To:Cc:Date; b=UKw3VuivMlAq+yWNPSuae8L7ax6Iv0AWKVZEwgivKSng672bo6v6I05Tj4SDMH3wuzHvNh3Qp+aN7Aoewz0MRAStNICJu5JyQ0vsbMaTFpccOHGSdq9gbIK9R4qBb+zVlXpLjEcC3LiRapIr5hP06sdUk+SGsXK++ZRUNRvl6TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pc7WPqlu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bKdWwnzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929AA1F000E9;
-	Tue,  1 Sep 2026 03:22:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pc7WPqlu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A4A1F000E9;
+	Tue,  1 Sep 2026 03:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788232960;
-	bh=posf1Vg6Q8J/1J624lxdJx/BvbrX4NmQPgwuVl+2Ts4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bKdWwnzPzgNZ4smE4jn9fuEy7G19/o18BF1521yBQTArbAFfAg9HqbN1PJ24ErHoW
-	 b2AauLY4L2WeLClaVBfKYKKMpiiHx3iLR0ktxwBvtCk7sZ+F07Hyvpe42kFCsdp7pf
-	 N4lL8gY9RIGiYfoTJcr4LELzOnFZdRQnYvVbuW8EUNcvObCjgziO4Q2I0Rrx/fBr8m
-	 eE8zLQlytQQ+a7ai2ies0XbVq+mkX1GAkKcmRPozcHcmnZRvAXSxNpccqbtI3n2VhO
-	 +r67Pp01yInRiA6cHFChoRF8ssASRkyw3wu0Q6IM6ZEBljEsME6D+uzAz2eU7Nz2+e
-	 SBS2oGx5bAeMQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] sched_ext: don't deliver duplicate
- ops.cgroup_set_idle() for same value
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
-Cc: bpf@vger.kernel.org, sched-ext@lists.linux.dev
-In-Reply-To: <20260901031101.731943-1-cui.tao@linux.dev>
-References: <20260901031101.731943-1-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 03:22:40 +0000
-Message-Id: <20260901032240.929AA1F000E9@smtp.kernel.org>
+	s=k20260515; t=1788234845;
+	bh=ntS0fZGAsm6fdN0hTsYejHV1IT4J1Uj9379eTHdJqi8=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=Pc7WPqlu6rermf8Ip7fEVTJcOkyrnErbbfWVHbZJXHxhN3gE7YFtEqpWU61XLgbKl
+	 mMCFXXtGTc6NnWPV/A2slkTV/ycrB01kuxjUIcj7cyERfoddYWFs2mVPB8ZrtIdN+i
+	 Q+buDZxhzhj9Kk1rPF1Bn2JlQnmXdpRtdeJcqV0+h/sDgrRLYyXDj1vCfaa3fETFzn
+	 lH/HLPPnEscmpcjV4Mvkr+FH7d/lNZ44IAef+tNUJff8cAiX3Dt5mdM1A+dQlhjRDb
+	 z3hx9lua6tpc9mcORBf9sC0ac7lq751poc3UjPzxDbLrtGrg1UaZg+wVTpaBsJpexQ
+	 1ELFnFvwLV3iA==
+Content-Type: multipart/mixed; boundary="===============3705014121917840339=="
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Message-Id: <ac57ae5abecf982961cd6baf346e19884a44be78430b563b781940b625559684@mail.kernel.org>
+In-Reply-To: <20260901024038.730424-3-cui.tao@linux.dev>
+References: <20260901024038.730424-3-cui.tao@linux.dev>
+Subject: Re: [PATCH 2/2] sched_ext/scx_flatcg: make cgv_node_less() wraparound-safe
+From: bot+bpf-ci@kernel.org
+To: cui.tao@linux.dev,tj@kernel.org,void@manifault.com
+Cc: arighi@nvidia.com,changwoo@igalia.com,michalblk@google.com,liwanwu@kylinos.cn,sched-ext@lists.linux.dev,linux-kernel@vger.kernel.org,bpf@vger.kernel.org,cui.tao@linux.dev,cuitao@kylinos.cn,sashiko-bot@kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Tue,  1 Sep 2026 03:54:04 +0000 (UTC)
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] The patch references a non-existent struct member `tg->scx.sched_id=
-le`, which causes a build failure.
---
+--===============3705014121917840339==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-commit b3dc4baced455427fac828517318398556404ffa
-Author: Tao Cui <cuitao@kylinos.cn>
+> cgv_node_less() compares cvtimes with a plain <, which breaks once
+> cvtime wraps. A weight-1 cgroup in a hierarchy summing to 10000
+> advances cvtime at up to 10000x wall time, so 2^64 ns of cvtime is
+> weeks of continuous saturation away -- unlikely but reachable on a
+> long-running host. At the wrap instant the plain comparison puts the
+> wrapped node behind everything else permanently.
+>
+> Compare with (s64)(a - b) < 0 instead, as CFS does for vruntime. A
+> cyclic comparison is valid as an rbtree comparator only because
+> cgrp_cap_budget() clamps every node to within max_budget behind
+> cvtime_now, so any two nodes are far less than 2^63 apart and the
+> cyclic order agrees with the true order.
+>
+> Compile-tested and smoke-tested in a VM: weight distribution and
+> dispatch unaffected.
+>
+> Fixes: 7b742aa2c2c9 ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
+> Reported-by: Sashiko <sashiko-bot@kernel.org>
+> Link: https://lore.kernel.org/r/3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.dev
+> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 
-sched_ext: don't deliver duplicate ops.cgroup_set_idle() for same value
+Is the Fixes: tag correct? The tag references commit 7b742aa2c2c9, which
+does not exist in this repository. The bug was actually introduced by
+commit a4103eacc2ab4 ("sched_ext: Add a cgroup scheduler which uses
+flattened hierarchy"), which added the buggy plain comparison
+'cgc_a->cvtime < cgc_b->cvtime' that this commit fixes. Should the tag
+be:
 
-This commit modifies scx_group_set_idle() to prevent delivering duplicate
-cgroup transition callbacks to the BPF scheduler. It checks if the new idle
-value differs from the existing value before invoking the callback.
+  Fixes: a4103eacc2ab4 ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
 
-Link: https://lore.kernel.org/r/b53c61a1-4d7d-4232-941f-d48b0563d4ed
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index c539d15cda637..c72d9780830b8 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -4930,7 +4930,8 @@ void scx_group_set_idle(struct task_group *tg, bool=
- idle)
->  	percpu_down_read(&scx_cgroup_ops_rwsem);
->  	sch =3D scx_tg_knob_sched(tg);
-> =20
-> -	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle))
-> +	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle) &&
-> +	    tg->scx.sched_idle !=3D idle)
+---
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
 
-[Severity: Low]
-Does this code build successfully when CONFIG_EXT_GROUP_SCHED is enabled?
-It appears tg->scx.sched_idle is referencing a non-existent member in
-struct scx_task_group.
-
-Looking at include/linux/sched/ext.h, the scx_task_group struct defines
-the field simply as idle:
-
-struct scx_task_group {
-    ...
-    bool idle;
-    ...
-};
-
-Should this condition check tg->scx.idle !=3D idle instead?
-
->  		SCX_CALL_OP(sch, cgroup_set_idle, NULL, tg_cgrp(tg), idle);
-> =20
->  	/* Update the task group's idle state */
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901031101.7319=
-43-1-cui.tao@linux.dev?part=3D1
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/33465241568
+--===============3705014121917840339==--
