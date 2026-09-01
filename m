@@ -1,59 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6137F8C0;
-	Mon, 31 Aug 2026 22:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC02926738C;
+	Tue,  1 Sep 2026 00:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788215822; cv=none; b=dE/fuXOK/lJM5yYo7Lt3X1wbhsttqoQ/e0TMEaQV472WJ+zjpk5wjzE7514aaiRN/2ROdu3xRDHBhAUnmIZirf4bt31OwHC4NmN5gDSnHmmpu65jQcWhTJWyObu9U7ere9yg1T5/uGIR2fxnH1WewlUxLop9u8yh/6NCLCj/ghY=
+	t=1788223568; cv=none; b=fy0cOgk7Sv2VTBmOCCop1Pv+5A4WKv/bvwXfy7UCokgwX8zPGrlxFfArxee6BmPJ6OiHJtOdPjQVkZqJPrVQaFiIT8jW1KKQZZY7Z95Lr6orw9PJ1qEJHJ3T45JkvUSORFD4o0mP8U9A+X96fE43DFqxzUaNq/4t2sCwiEtSnYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788215822; c=relaxed/simple;
-	bh=3l45UewGTArFY7R0otFgqfdF/MH4fqTqo7JMz+paUgc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=iJOQpM4TzKaymFSTIGiVt5rA2Q3mxoI5RzZy8sigAGuo8Y3M2evbrRqdihjk1wWOo/6aUtIJSqwzmhFy8b54st00XnEL+QVekrw/toyrdSsPmByzf2PxmX6XBbKBF75+tdDhoeWl+JePct7pxnn3gzVrK83Jy917DjuyD7w/EeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLthFoQb; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788223568; c=relaxed/simple;
+	bh=d+fwOcwzgoPY3iYiDpoERorpIcEI2FlvPaYKLnA04ik=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=kv000PrDjEXgtiJiBYOP/zZAnFdwgOQLOggPCCvuZYrEzfzPR7vJJIXR4scl+XEdfEB79XEtvegXCtX571kmtbp+hfj3Fff/+MBARxEzcQrdYrj+bbyAIfo62/4xbIHM0H54ZAs61prQYnFTYmAqxVxpUfw+e74ls4DsQv7FEQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Hq5cMU1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLthFoQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587491F000E9;
-	Mon, 31 Aug 2026 22:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788215821;
-	bh=dVaXS8IcVxjbTGjuXabSn/O3W2NtZJAOhEqor1sSXvo=;
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Hq5cMU1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973F31F000E9;
+	Tue,  1 Sep 2026 00:46:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux-foundation.org; s=korg; t=1788223566;
+	bh=wfI4nJW4NZXTURLLniIaQtBfHGjWmn+gqY78i2JXq1g=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=NLthFoQbjbnT6rOb2qB1GItSCTgTVkunejfgO1DkjKiM+um51c/ku4GoRGWuyHW+E
-	 VQAJUtItlroa7LKQG85raDETfl2wuk/o3GmPL2qo69Cw+5bEmxMiv3WLMgqx3yUYfM
-	 btZIU6rIbn6Xch+q1xkTsXF0c/aDqdmTchhZGk/cn3RAlp8b6oN7ZdjtLFryh4dAOs
-	 i3qjn7HU249Is7DrjNXPcbcwE7n+qE9cvI73OUUKLDaptN/OPmpYpvZF/vlhypSCPv
-	 LlOcWLBjbFSQIe8dq+ZEflsvlHCM2uxI4qv9mUc0uTGC3rCw85bBPiwYNCadHA28zA
-	 lZSjrrr0lhqbw==
-Date: Mon, 31 Aug 2026 12:37:00 -1000
-Message-ID: <16ad7666875543a33b88609ea444fddc@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, Tao Cui <cui.tao@linux.dev>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>
-Subject: Re: [PATCH sched_ext/for-7.3-fixes] sched_ext: Serialize cgroup knob updates
-In-Reply-To: <20260825092153.2602809-1-arighi@nvidia.com>
-References: <20260825092153.2602809-1-arighi@nvidia.com>
+	b=Hq5cMU1S8uQbYuvCrodD6jKmSm+wxowLUmyrGzsBsHCmq4D3xzPMTIi4Q/BnBxm80
+	 JtL7GP8is89pIBLJGtMFrDDaxmAKdnDP8dQo/uLQhHxF+1yhsoB/wUgdYfuthBFmjk
+	 tppIR+WsAf7ommFZeRL6lw0jdWpBKDxTpsuvCxks=
+Date: Mon, 31 Aug 2026 17:46:05 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
+To: Ziyang Men <ziyang.meme@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>, Tejun Heo <tj@kernel.org>, Johannes
+ Weiner <hannes@cmpxchg.org>, Michal =?ISO-8859-1?Q?Koutn=FD?=
+ <mkoutny@suse.com>, Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires
+ <bentiss@kernel.org>, David Vernet <void@manifault.com>, Eduard Zingerman
+ <eddyz87@gmail.com>, Viktor Malik <vmalik@redhat.com>, Andrea Righi
+ <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Michal Hocko
+ <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, Shakeel
+ Butt <shakeel.butt@linux.dev>, Muchun Song <muchun.song@linux.dev>, JP
+ Kobryn <inwardvessel@gmail.com>, Mykola Lysenko <mykolal@meta.com>, Nathan
+ Chancellor <nathan@kernel.org>, kernel-team@meta.com,
+ linux-kselftest@vger.kernel.org, cgroups@vger.kernel.org,
+ linux-input@vger.kernel.org, sched-ext@lists.linux.dev, linux-mm@kvack.org,
+ bpf@vger.kernel.org, llvm@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/4] selftests: shared lib.bpf.mk for building BPF
+ progs and skeletons
+Message-Id: <20260831174605.4f76fe0a643fac90fce740b5@linux-foundation.org>
+In-Reply-To: <apX9zb+3awc99Pfh@devvm16600.scu0.facebook.com>
+References: <20260814075054.507089-1-ziyang.meme@gmail.com>
+	<apX9zb+3awc99Pfh@devvm16600.scu0.facebook.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hello, Andrea.
+On Mon, 31 Aug 2026 15:18:53 -0700 Ziyang Men <ziyang.meme@gmail.com> wrote:
 
-On Tue, Aug 25, 2026 at 11:21:53AM +0200, Andrea Righi wrote:
-> Concurrent cgroup knob writes update the core scheduler under its
-> internal locks and notify sched_ext only after those locks are released.
+> Just want to follow-up on this patch series. Please let me know the possible
+> issues and I will fix them.
 
-This is the same race Michal's patch fixes by lifting the fair locking
-into the core write handlers so that both updates run under the same
-lock:
+It was sent two weeks ago, during the merge window and bpfbot said lots
+of things and Sashiko said more:
 
-  http://lkml.kernel.org/r/20260824074913.2468177-1-michalblk@google.com
+	https://sashiko.dev/#/patchset/20260814075054.507089-1-ziyang.meme@gmail.com
 
-I'm inclined to go with that one.
-
-Thanks.
-
---
-tejun
+Under these circumstances I expect most reviewers would choose to await
+the next iteration!
