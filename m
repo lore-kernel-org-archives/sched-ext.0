@@ -1,152 +1,111 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0801C3A759C
-	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 01:33:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6880A367287
+	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 02:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788226412; cv=none; b=iVebp8QThdlZSjpGH1s7dpp1JG7oEADeoiQgjlg6RMl98SYhy3RDw40qIeYUvYm+UkO5/axwA+x+anFJ7wj3POxGz6A2chAaz5AWVMDC5UFiHspGm9DIDK+phluguGts8LONrs3E7cQAiLqEJzbzlkUHetoHvUuSsir+dO62iAQ=
+	t=1788229214; cv=none; b=NpRVWHHOOjb1wzGr94xepi1yKbB4rNJIxWNTh/5bXltVjmWXq6PDkHRKMZ9A0AWc1XgUp07tHOtDeJOFr4kYrSzLCN8OzOTWgQytBupV4R7hGk0oXNKGb1gwIdWRMy3JcrJg/DNWEE3SRIV4CL3Obhflq9h80qt4WBNmPIi5/Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788226412; c=relaxed/simple;
-	bh=MVe3fhosTbGp/4ts06944KfXYDttY1ikDT2o/bZl/MI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DuKzFZbYiisrobuCMyaHuj9pPaFo5G6PgXLJXcAQv9ITZ7h/iRtmmz+l7bfv5XgM5ozcI5xjdnAtBx8gX4MEndFhmAlFYXEUoBQGuyJCW+3oU4jeCF/VK87UY5pITTn2TPi9NWvez9rBC0f9cU2AMjbdA3rdB7mHE3Be2J1pTu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 1da4fcd0a5a511f19a56ed5b684f684d-20260901
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:169f227e-99b4-4206-80db-e0307f73e229,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:0
-X-CID-META: VersionHash:7db8b62,CLOUDID:a55854cb5697e8fc70b46ab33d5bccf8,BulkI
-	D:nil,BulkQuantity:0,SF:81|82|102|850|865|898,TC:nil,Content:0|15|50,EDM:5
-	,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
-	:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 1da4fcd0a5a511f19a56ed5b684f684d-20260901
-X-User: fangqiurong@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <fangqiurong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1414786781; Tue, 01 Sep 2026 09:33:21 +0800
-From: Qiurong Fang <fangqiurong@kylinos.cn>
-To: tj@kernel.org
-Cc: fangqiurong <fangqiurong@kylinos.cn>,
+	s=arc-20240116; t=1788229214; c=relaxed/simple;
+	bh=pReCZ/lZVigpmnECFh75mQTJm3paN7ZW20fAMM0zJUY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ld0k6WN6IR9RxQ4TDhcHfe7krjOTOVgxQP55SSYha2KTJlNE+nJqDBaUFMcMJ70RCZ3xLl8TKIkckb3PG1JaKJSRvLT4sBtDba7IublixtHA5RP/TVBx15H6K2MbQdJ89Nu/RJ+uSRF1HYHbLa160fvH417JuwpeDlamdwiHPBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UR4uApsn; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UR4uApsn"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-853e2610bb4so406103b3a.0
+        for <sched-ext@lists.linux.dev>; Mon, 31 Aug 2026 19:20:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788229211; x=1788834011; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=o7V9z4lGg2Zq3oLqNbA6E6uUJgmE6UGQOAlFEXJea6E=;
+        b=UR4uApsnl89hjGoLmzqgF0X9NuoG7g7JkpKd+qhDvEJayVmTuZ7K1T0rln4HFC8qlb
+         eA5ZFbPCH2xvImlGwWn7MeHZeMrCbOfaLqb4mlpm5O+n7kHCJvEmMXqAhXwucdoNBvCm
+         SCPDTTdhQgKOERAleisLIU1QvBitq5HCx9zivQAa3Kg1hMnm8lcnzg61ZFHqllZKOkG9
+         JTnjpkdNZR55gSwoRqS7pJBdy/H+Dz6b/sndNzO/YWty3mhue0UWvlur7rES82Yj29Cj
+         iEFwu8RpINt/oSVoXDfdc9r61KhLNlrmckfdLu8CKJVcdb7dQs3NgD9rB5vDfRpj4fT+
+         /q6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788229211; x=1788834011;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=o7V9z4lGg2Zq3oLqNbA6E6uUJgmE6UGQOAlFEXJea6E=;
+        b=RrimVSd1t/6jtqUAOPVnBQxFtuaGOXQHALz7SVAU6bGG4lj4bHuUlz4fTA78mz6tf6
+         2N1+wIpI8BGYwVWpqV+XqIXSuhQ+ClArz0Joo+l77RPPREIB802dOi/zzSATavtrY8Yz
+         W/9FLSbiUGpqOfUU0vhIh8M+X3lC9URKb1ZXc5j+Swt5WkLfsBrucFZAp+xCgdbTau26
+         nSvXufaWjYiRSaLTfPFzi4aH8CJhHXactj5lenR1tSpKjyowFVaS7FH9pmSSnSSRq69p
+         n98gozkByFFwji/CliKe12VRfU4UFJdYEf7x27XwT+B2TSeWljwYBWu9GfqMXVNIhMSK
+         luqQ==
+X-Forwarded-Encrypted: i=1; AHgh+RomQbDAnco5a1mR2rHW8UP6Pl7ouHeUjcXiNdquG1UIw3bl/WXdIUGTNM/MIzERHJkJIjlCybHZY1U=@lists.linux.dev
+X-Gm-Message-State: AFuF++lRX+ph3VsZyL+Lm/HAz2ibStLwpssWKW5esG87sdujMrw5T4rv
+	PdZWTi/dde6iWWVEdMCvX8BXAHJLn3zf8oYmx0M/9nOIf7JoTF9wzyTD
+X-Gm-Gg: AR+sD11vxRP4OMTIbt7W5yW0ZaC42jt+eM5lmp7fg0FLCXF5Wrb55GqPdGJ3GfUsRtZ
+	1s+gKZ0wNdB5O1xb2IeWhnmSeORXqsBC8cReUlm0ez4jggOGWmY8L9+I2LYsqeosSQ8HMsq8FY6
+	6zE3V4RBGf/+5/9mu7RE0FWNzlQ4n6tdag5nL6Z3TSbLUbAJzCQrqbHQHZjplhD6sEC62V/6wFV
+	2r3ZGDWC8twGcrWp/9EhloLvLN04kdelRl8NoQIe2xuw96EdjB9i96+9rw8Lnt707jg6vv8tBWu
+	NFicBj2OEY9gxRKMcq8v8kZ28YZlnnoftkihhc9cjvI7kQB5TaKU3GvA4RKshRF6WWfK74/QjqJ
+	niIxXTxxegVRCDy9TLZEQi3fJHv0UDS2eEFJg+Su71kzsD1T1syljfZGAZrenMB64PYEJouYE8s
+	YcPpspHv+ONiuWFOsComC85nPIW0T2cENOH5HgT6qXKzgwSgfoUk6LhmN1yT7RrWBcCIdBSRro
+X-Received: by 2002:a05:6a21:71ca:b0:3d3:aed2:6f20 with SMTP id adf61e73a8af0-3d8192ab0cfmr1860014637.20.1788229210603;
+        Mon, 31 Aug 2026 19:20:10 -0700 (PDT)
+Received: from osman.mioffice.cn ([43.224.245.178])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc1f32f698bsm5063022a12.6.2026.08.31.19.20.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Aug 2026 19:20:10 -0700 (PDT)
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+X-Google-Original-From: Zhan Xusheng <zhanxusheng@xiaomi.com>
+To: fangqiurong@kylinos.cn
+Cc: tj@kernel.org,
 	void@manifault.com,
 	arighi@kernel.org,
 	changwoo@kernel.org,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	zhanxusheng@xiaomi.com
-Subject: [PATCH v2] sched_ext: Skip per-CPU data allocation for built-in DSQs
-Date: Tue,  1 Sep 2026 09:32:58 +0800
-Message-Id: <20260901013258.1822890-1-fangqiurong@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
-References: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
+Subject: Re: [PATCH v2] sched_ext: Skip per-CPU data allocation for built-in DSQs
+Date: Tue,  1 Sep 2026 10:20:04 +0800
+Message-ID: <20260901022004.1824584-1-zhanxusheng@xiaomi.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260901013258.1822890-1-fangqiurong@kylinos.cn>
+References: <20260901013258.1822890-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-From: fangqiurong <fangqiurong@kylinos.cn>
-
-Deferred reenqueue tracking is only supported for user DSQs:
-schedule_dsq_reenq() serves the local DSQ through
-sch->pcpu->deferred_reenq_local and rejects all other built-in DSQ
-ids. Every DSQ still allocates nr_cpu_ids * sizeof(struct scx_dsq_pcpu)
-bytes of per-CPU memory for it.
-
-Skip the allocation for built-in DSQ ids. While at it, rename ->pcpu to
-->pcpu_user so that the per-CPU data reads as user-DSQ only.
-
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
----
-v2: Rename ->pcpu to ->pcpu_user as suggested by Tejun. Describe the
-    memory waste as quadratic as pointed out by Zhan Xusheng. Drop the
-    Fixes: tag as this is a plain memory saving with no correctness
-    impact.
----
- include/linux/sched/ext.h |  2 +-
- kernel/sched/ext/ext.c    | 20 ++++++++++++++------
- 2 files changed, 15 insertions(+), 7 deletions(-)
-
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 582d7cd4a983..3c793d51c000 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -91,7 +91,7 @@ struct scx_dispatch_q {
- 	struct rhash_head	hash_node;
- 	struct llist_node	free_node;
- 	struct scx_sched	*sched;
--	struct scx_dsq_pcpu __percpu *pcpu;
-+	struct scx_dsq_pcpu __percpu *pcpu_user;
- 	struct rcu_head		rcu;
- };
- 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index c539d15cda63..efb492876cd6 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1127,7 +1127,8 @@ void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 	} else if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN)) {
- 		rq = this_rq();
- 
--		struct scx_dsq_pcpu *dsq_pcpu = per_cpu_ptr(dsq->pcpu, cpu_of(rq));
-+		struct scx_dsq_pcpu *dsq_pcpu =
-+			per_cpu_ptr(dsq->pcpu_user, cpu_of(rq));
- 		struct scx_deferred_reenq_user *dru = &dsq_pcpu->deferred_reenq_user;
- 
- 		/*
-@@ -5048,12 +5049,16 @@ s32 scx_init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id, struct scx_sched *sch)
- 	dsq->id = dsq_id;
- 	dsq->sched = sch;
- 
--	dsq->pcpu = alloc_percpu(struct scx_dsq_pcpu);
--	if (!dsq->pcpu)
-+	/* Deferred reenqueue tracking is only supported for user DSQs */
-+	if (dsq_id & SCX_DSQ_FLAG_BUILTIN)
-+		return 0;
-+
-+	dsq->pcpu_user = alloc_percpu(struct scx_dsq_pcpu);
-+	if (!dsq->pcpu_user)
- 		return -ENOMEM;
- 
- 	for_each_possible_cpu(cpu) {
--		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
-+		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu_user, cpu);
- 
- 		pcpu->dsq = dsq;
- 		INIT_LIST_HEAD(&pcpu->deferred_reenq_user.node);
-@@ -5066,8 +5071,11 @@ static void exit_dsq(struct scx_dispatch_q *dsq)
- {
- 	s32 cpu;
- 
-+	if (!dsq->pcpu_user)
-+		return;
-+
- 	for_each_possible_cpu(cpu) {
--		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
-+		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu_user, cpu);
- 		struct scx_deferred_reenq_user *dru = &pcpu->deferred_reenq_user;
- 		struct rq *rq = cpu_rq(cpu);
- 
-@@ -5081,7 +5089,7 @@ static void exit_dsq(struct scx_dispatch_q *dsq)
- 		}
- 	}
- 
--	free_percpu(dsq->pcpu);
-+	free_percpu(dsq->pcpu_user);
- }
- 
- static void free_dsq_rcufn(struct rcu_head *rcu)
--- 
-2.43.0
-
+The v2 note says the waste is described as quadratic, but the changelog=0D
+still gives it per DSQ:=0D
+=0D
+> Every DSQ still allocates nr_cpu_ids * sizeof(struct scx_dsq_pcpu)=0D
+> bytes of per-CPU memory for it.=0D
+=0D
+Four of the five built-in ids come one per CPU: SCX_DSQ_BYPASS in the=0D
+for_each_possible_cpu() at ext.c:7173, SCX_DSQ_LOCAL and SCX_DSQ_REJECT in=
+=0D
+the one at 8679, SCX_DSQ_RESCUE per rq in scx_rescue_init().  Only=0D
+SCX_DSQ_GLOBAL is per node.  So the total is nr_cpu_ids squared, and a=0D
+reader of the changelog as it stands will work out a factor of nr_cpu_ids.=
+=0D
+Worth spelling out, since that is where the saving is.=0D
+=0D
+The code is right.  scx_init_dsq() memsets the whole dsq first=0D
+(ext.c:5046) and sets lock, list, id and sched before the new early=0D
+return, so nothing a built-in id needs is skipped, and exit_dsq()'s=0D
+->pcpu_user test is the load-bearing kind: 7101, 5367 and 7334 all call it=
+=0D
+with built-in DSQs.  The only reader of the per-CPU data, ext.c:1130, was=0D
+already behind the !(dsq->id & SCX_DSQ_FLAG_BUILTIN) test above it.=0D
+=0D
+Reviewed-by: Zhan Xusheng <zhanxusheng@xiaomi.com>=0D
+=0D
+Thanks,=0D
+Zhan Xusheng=0D
