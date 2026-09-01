@@ -1,69 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC02926738C;
-	Tue,  1 Sep 2026 00:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0801C3A759C
+	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 01:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788223568; cv=none; b=fy0cOgk7Sv2VTBmOCCop1Pv+5A4WKv/bvwXfy7UCokgwX8zPGrlxFfArxee6BmPJ6OiHJtOdPjQVkZqJPrVQaFiIT8jW1KKQZZY7Z95Lr6orw9PJ1qEJHJ3T45JkvUSORFD4o0mP8U9A+X96fE43DFqxzUaNq/4t2sCwiEtSnYw=
+	t=1788226412; cv=none; b=iVebp8QThdlZSjpGH1s7dpp1JG7oEADeoiQgjlg6RMl98SYhy3RDw40qIeYUvYm+UkO5/axwA+x+anFJ7wj3POxGz6A2chAaz5AWVMDC5UFiHspGm9DIDK+phluguGts8LONrs3E7cQAiLqEJzbzlkUHetoHvUuSsir+dO62iAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788223568; c=relaxed/simple;
-	bh=d+fwOcwzgoPY3iYiDpoERorpIcEI2FlvPaYKLnA04ik=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=kv000PrDjEXgtiJiBYOP/zZAnFdwgOQLOggPCCvuZYrEzfzPR7vJJIXR4scl+XEdfEB79XEtvegXCtX571kmtbp+hfj3Fff/+MBARxEzcQrdYrj+bbyAIfo62/4xbIHM0H54ZAs61prQYnFTYmAqxVxpUfw+e74ls4DsQv7FEQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Hq5cMU1S; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Hq5cMU1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973F31F000E9;
-	Tue,  1 Sep 2026 00:46:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux-foundation.org; s=korg; t=1788223566;
-	bh=wfI4nJW4NZXTURLLniIaQtBfHGjWmn+gqY78i2JXq1g=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Hq5cMU1S8uQbYuvCrodD6jKmSm+wxowLUmyrGzsBsHCmq4D3xzPMTIi4Q/BnBxm80
-	 JtL7GP8is89pIBLJGtMFrDDaxmAKdnDP8dQo/uLQhHxF+1yhsoB/wUgdYfuthBFmjk
-	 tppIR+WsAf7ommFZeRL6lw0jdWpBKDxTpsuvCxks=
-Date: Mon, 31 Aug 2026 17:46:05 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Ziyang Men <ziyang.meme@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>, Tejun Heo <tj@kernel.org>, Johannes
- Weiner <hannes@cmpxchg.org>, Michal =?ISO-8859-1?Q?Koutn=FD?=
- <mkoutny@suse.com>, Jiri Kosina <jikos@kernel.org>, Benjamin Tissoires
- <bentiss@kernel.org>, David Vernet <void@manifault.com>, Eduard Zingerman
- <eddyz87@gmail.com>, Viktor Malik <vmalik@redhat.com>, Andrea Righi
- <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Michal Hocko
- <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, Shakeel
- Butt <shakeel.butt@linux.dev>, Muchun Song <muchun.song@linux.dev>, JP
- Kobryn <inwardvessel@gmail.com>, Mykola Lysenko <mykolal@meta.com>, Nathan
- Chancellor <nathan@kernel.org>, kernel-team@meta.com,
- linux-kselftest@vger.kernel.org, cgroups@vger.kernel.org,
- linux-input@vger.kernel.org, sched-ext@lists.linux.dev, linux-mm@kvack.org,
- bpf@vger.kernel.org, llvm@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/4] selftests: shared lib.bpf.mk for building BPF
- progs and skeletons
-Message-Id: <20260831174605.4f76fe0a643fac90fce740b5@linux-foundation.org>
-In-Reply-To: <apX9zb+3awc99Pfh@devvm16600.scu0.facebook.com>
-References: <20260814075054.507089-1-ziyang.meme@gmail.com>
-	<apX9zb+3awc99Pfh@devvm16600.scu0.facebook.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1788226412; c=relaxed/simple;
+	bh=MVe3fhosTbGp/4ts06944KfXYDttY1ikDT2o/bZl/MI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=DuKzFZbYiisrobuCMyaHuj9pPaFo5G6PgXLJXcAQv9ITZ7h/iRtmmz+l7bfv5XgM5ozcI5xjdnAtBx8gX4MEndFhmAlFYXEUoBQGuyJCW+3oU4jeCF/VK87UY5pITTn2TPi9NWvez9rBC0f9cU2AMjbdA3rdB7mHE3Be2J1pTu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 1da4fcd0a5a511f19a56ed5b684f684d-20260901
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:169f227e-99b4-4206-80db-e0307f73e229,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:0
+X-CID-META: VersionHash:7db8b62,CLOUDID:a55854cb5697e8fc70b46ab33d5bccf8,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|102|850|865|898,TC:nil,Content:0|15|50,EDM:5
+	,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
+	:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 1da4fcd0a5a511f19a56ed5b684f684d-20260901
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1414786781; Tue, 01 Sep 2026 09:33:21 +0800
+From: Qiurong Fang <fangqiurong@kylinos.cn>
+To: tj@kernel.org
+Cc: fangqiurong <fangqiurong@kylinos.cn>,
+	void@manifault.com,
+	arighi@kernel.org,
+	changwoo@kernel.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	zhanxusheng@xiaomi.com
+Subject: [PATCH v2] sched_ext: Skip per-CPU data allocation for built-in DSQs
+Date: Tue,  1 Sep 2026 09:32:58 +0800
+Message-Id: <20260901013258.1822890-1-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
+References: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon, 31 Aug 2026 15:18:53 -0700 Ziyang Men <ziyang.meme@gmail.com> wrote:
+From: fangqiurong <fangqiurong@kylinos.cn>
 
-> Just want to follow-up on this patch series. Please let me know the possible
-> issues and I will fix them.
+Deferred reenqueue tracking is only supported for user DSQs:
+schedule_dsq_reenq() serves the local DSQ through
+sch->pcpu->deferred_reenq_local and rejects all other built-in DSQ
+ids. Every DSQ still allocates nr_cpu_ids * sizeof(struct scx_dsq_pcpu)
+bytes of per-CPU memory for it.
 
-It was sent two weeks ago, during the merge window and bpfbot said lots
-of things and Sashiko said more:
+Skip the allocation for built-in DSQ ids. While at it, rename ->pcpu to
+->pcpu_user so that the per-CPU data reads as user-DSQ only.
 
-	https://sashiko.dev/#/patchset/20260814075054.507089-1-ziyang.meme@gmail.com
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
+---
+v2: Rename ->pcpu to ->pcpu_user as suggested by Tejun. Describe the
+    memory waste as quadratic as pointed out by Zhan Xusheng. Drop the
+    Fixes: tag as this is a plain memory saving with no correctness
+    impact.
+---
+ include/linux/sched/ext.h |  2 +-
+ kernel/sched/ext/ext.c    | 20 ++++++++++++++------
+ 2 files changed, 15 insertions(+), 7 deletions(-)
 
-Under these circumstances I expect most reviewers would choose to await
-the next iteration!
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 582d7cd4a983..3c793d51c000 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -91,7 +91,7 @@ struct scx_dispatch_q {
+ 	struct rhash_head	hash_node;
+ 	struct llist_node	free_node;
+ 	struct scx_sched	*sched;
+-	struct scx_dsq_pcpu __percpu *pcpu;
++	struct scx_dsq_pcpu __percpu *pcpu_user;
+ 	struct rcu_head		rcu;
+ };
+ 
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index c539d15cda63..efb492876cd6 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1127,7 +1127,8 @@ void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+ 	} else if (!(dsq->id & SCX_DSQ_FLAG_BUILTIN)) {
+ 		rq = this_rq();
+ 
+-		struct scx_dsq_pcpu *dsq_pcpu = per_cpu_ptr(dsq->pcpu, cpu_of(rq));
++		struct scx_dsq_pcpu *dsq_pcpu =
++			per_cpu_ptr(dsq->pcpu_user, cpu_of(rq));
+ 		struct scx_deferred_reenq_user *dru = &dsq_pcpu->deferred_reenq_user;
+ 
+ 		/*
+@@ -5048,12 +5049,16 @@ s32 scx_init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id, struct scx_sched *sch)
+ 	dsq->id = dsq_id;
+ 	dsq->sched = sch;
+ 
+-	dsq->pcpu = alloc_percpu(struct scx_dsq_pcpu);
+-	if (!dsq->pcpu)
++	/* Deferred reenqueue tracking is only supported for user DSQs */
++	if (dsq_id & SCX_DSQ_FLAG_BUILTIN)
++		return 0;
++
++	dsq->pcpu_user = alloc_percpu(struct scx_dsq_pcpu);
++	if (!dsq->pcpu_user)
+ 		return -ENOMEM;
+ 
+ 	for_each_possible_cpu(cpu) {
+-		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
++		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu_user, cpu);
+ 
+ 		pcpu->dsq = dsq;
+ 		INIT_LIST_HEAD(&pcpu->deferred_reenq_user.node);
+@@ -5066,8 +5071,11 @@ static void exit_dsq(struct scx_dispatch_q *dsq)
+ {
+ 	s32 cpu;
+ 
++	if (!dsq->pcpu_user)
++		return;
++
+ 	for_each_possible_cpu(cpu) {
+-		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu, cpu);
++		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu_user, cpu);
+ 		struct scx_deferred_reenq_user *dru = &pcpu->deferred_reenq_user;
+ 		struct rq *rq = cpu_rq(cpu);
+ 
+@@ -5081,7 +5089,7 @@ static void exit_dsq(struct scx_dispatch_q *dsq)
+ 		}
+ 	}
+ 
+-	free_percpu(dsq->pcpu);
++	free_percpu(dsq->pcpu_user);
+ }
+ 
+ static void free_dsq_rcufn(struct rcu_head *rcu)
+-- 
+2.43.0
+
