@@ -1,120 +1,94 @@
-Received: from mta1.migadu.com (out-114.mta1.migadu.com [95.215.58.114])
+Received: from mta0.migadu.com (out-40.mta0.migadu.com [91.218.175.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BF733F368
-	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 12:35:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AE038B123
+	for <sched-ext@lists.linux.dev>; Tue,  1 Sep 2026 12:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.40
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788266141; cv=none; b=eHBFJPioD3RtKB9Zttd7+r/BRvbU0Ks9LHDxlv939OkJ4MEFRTUjmE7evtaQKm4mB9rJdbmkRpX15vfOihbVeTXBqXau3aMgKtbbyZNMIgveZF3zb07oqj/WdxiKwSQBnvXpkcFsRBZly+T6EaBqJeXWHWec43pkuJqAMcX0Usc=
+	t=1788266666; cv=none; b=rsJC3Q/+nIjPHMR5m/PYVKpXuTTKgzY5jfuVwRyVufJ01fO25jzIbu0Rv658GWLV/1gpBdDBSXirHu01ajWzC12lN64262P2M/Gcan1TRyAgZFNtTT7ku/WdjopJPlLNEWVRRtnxsm5mhzWP3wF1uwb8L1RbhQxwiUPRUVuvVZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788266141; c=relaxed/simple;
-	bh=X+DkHxLt+CgQ947vh/gRAc51B7xguiauK38xqdvZxys=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=cHxRMLEmcExDQCmdf+IjxQBE7xQ0iV7vu/WA74DmX3udF9QWzHGAkr/exd0zbNwjQSJjpP/W01B0DQw4r4vFpauZOUPRuxJTKDty9SWfDJ7+whbqQjSwOo9gOPOjdmfAuDSPiJ3nrClbyE+gZz2tNXhvtNKHS6pvDSEEG29+zWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TO6oWUUI; arc=none smtp.client-ip=95.215.58.114
+	s=arc-20240116; t=1788266666; c=relaxed/simple;
+	bh=4xYToF5MA/xkEqr/sq1dy954cS2PfO//LD1OfNLVaM0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jwogOOnMJ79lITJZcNjH+w7pj42mvQ3DB71r7zWwIcvBhOWvIjoQzkHbjKdsamCYZxSiKyp9jcW6COYiDaIBmyReCuIjlLBvv/0mPmvBStYU2BzgZCRiwcKE9gXoX65THDZEFtGcMBKAwluFIKxEdpbujwShDdUmBWy4IfME7yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qVJsP0FQ; arc=none smtp.client-ip=91.218.175.40
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TO6oWUUI"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qVJsP0FQ"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=X+DkHxLt+CgQ947vh/gRAc51B7xguiauK38xqdvZxys=;
+DKIM-Signature: a=rsa-sha256; bh=4xYToF5MA/xkEqr/sq1dy954cS2PfO//LD1OfNLVaM0=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788266136; v=1; x=1788870936;
- b=TO6oWUUI09uwb/YfZGHXMwEYOIzjKFgi62j8uJF0gck0b2+dF4synoWsWXs23Q+M989L6zLK
- E4z7+5b8lFl973Tx4oDm98TYi9UxTG1zP2ObCCaSiwlCOG4z2N+zXN3YGI7+sfRxjguKui89MXk
- hFhQfQaGJ4XpqNGVv8IJ8gDw=
+ t=1788266662; v=1; x=1788871462;
+ b=qVJsP0FQsZ3/CX8gVuA6NowMPsoz17VdmS5lsCIxH3q8zr8ue3QvuKfucP3EiTzlQIlmkgOR
+ Mcwtcf2yE8oxpmbCkHOcrklAr5QiQMah1z+K6bD/GlN/YX15kMvvz5GaxJCahMktO0l1qyEZP8W
+ f66s/XijNwkiZmG3RitXzOJE=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 6fb685d0476b67ce;
-	Tue, 01 Sep 2026 12:35:26 +0000
-X-Mizu-Trace-ID: 6fb685d0476b67ce
+Received: by smtp.migadu.com with ESMTPS id 69d6713c70f1300e;
+	Tue, 01 Sep 2026 12:44:21 +0000
+X-Mizu-Trace-ID: 69d6713c70f1300e
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <2da859e8-2025-4926-99f4-8ba595e25abf@linux.dev>
-Date: Tue, 1 Sep 2026 20:35:22 +0800
+From: Tao Cui <cui.tao@linux.dev>
+To: tj@kernel.org,
+	arighi@nvidia.com
+Cc: void@manifault.com,
+	changwoo@igalia.com,
+	michalblk@google.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	cui.tao@linux.dev,
+	Tao Cui <cuitao@kylinos.cn>
+Subject: [PATCH v2] sched_ext: don't deliver duplicate ops.cgroup_set_idle() for same value
+Date: Tue,  1 Sep 2026 20:43:47 +0800
+Message-ID: <20260901124347.755904-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, tj@kernel.org, void@manifault.com,
- changwoo@igalia.com, michalblk@google.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org, bpf@vger.kernel.org,
- Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH] sched_ext: don't deliver duplicate ops.cgroup_set_idle()
- for same value
-To: Andrea Righi <arighi@nvidia.com>
-References: <20260901031101.731943-1-cui.tao@linux.dev>
- <apZ-B__OiVcZW46Z@gpd4>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <apZ-B__OiVcZW46Z@gpd4>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Andrea,
+From: Tao Cui <cuitao@kylinos.cn>
 
-在 2026/9/1 15:25, Andrea Righi 写道:
-> Hi Tao,
-> 
-> On Tue, Sep 01, 2026 at 11:11:01AM +0800, Tao Cui wrote:
->> From: Tao Cui <cuitao@kylinos.cn>
->>
->> ops.cgroup_set_idle() is documented to be invoked when a cgroup
->> transitions between idle and non-idle states, and scx_group_set_weight()
->> already skips value-preserving writes. scx_group_set_idle() delivers
->> every write unconditionally, so rewriting an already-correct cpu.idle
->> value feeds the BPF scheduler a transition callback each time, which
->> toggle- or accounting-based schedulers miscount. Mirror the weight
->> guard and only deliver on an actual change.
->>
->> Verified with a probe scheduler printing each callback: rewriting
->> cpu.idle=1 twice on an already-idle cgroup delivered two callbacks
->> before and none after.
->>
->> Fixes: 347ed2d566da ("sched/ext: Implement cgroup_set_idle() callback")
->> Link: https://lore.kernel.org/r/b53c61a1-4d7d-4232-941f-d48b0563d4ed
-> 
-> This link seems broken, I think the right one is:
-> 
-> Link: https://lore.kernel.org/r/b53c61a1-4d7d-4232-941f-d48b0563d4ed@linux.dev
-> 
+ops.cgroup_set_idle() is documented to be invoked when a cgroup
+transitions between idle and non-idle states, and scx_group_set_weight()
+already skips value-preserving writes. scx_group_set_idle() delivers
+every write unconditionally, so rewriting an already-correct cpu.idle
+value feeds the BPF scheduler a transition callback each time, which
+toggle- or accounting-based schedulers miscount. Mirror the weight
+guard and only deliver on an actual change.
 
-Thanks! Somehow my vim seems to have eaten the `@linux.dev` part of the Message-ID. I'll fix the Link tag in the next revision.
+Verified with a probe scheduler printing each callback: rewriting
+cpu.idle=1 twice on an already-idle cgroup delivered two callbacks
+before and none after.
 
-Thanks for the review!
+Fixes: 347ed2d566da ("sched/ext: Implement cgroup_set_idle() callback")
+Link: https://lore.kernel.org/r/b53c61a1-4d7d-4232-941f-d48b0563d4ed@linux.dev
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+---
+v1 -> v2: Fix the Link: msgid (missing @linux.dev, Andrea).
 
-Best,
-Tao
+ kernel/sched/ext/ext.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
->> Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-> 
-> Other than that looks good to me.
-> 
-> Reviewed-by: Andrea Righi <arighi@nvidia.com>
-> 
-> Thanks,
-> -Andrea
-> 
->> ---
->>  kernel/sched/ext/ext.c | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
->> index 8041c87a3562..8b3625107b72 100644
->> --- a/kernel/sched/ext/ext.c
->> +++ b/kernel/sched/ext/ext.c
->> @@ -4933,7 +4933,8 @@ void scx_group_set_idle(struct task_group *tg, bool idle)
->>  	percpu_down_read(&scx_cgroup_ops_rwsem);
->>  	sch = scx_tg_knob_sched(tg);
->>  
->> -	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle))
->> +	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle) &&
->> +	    tg->scx.sched_idle != idle)
->>  		SCX_CALL_OP(sch, cgroup_set_idle, NULL, tg_cgrp(tg), idle);
->>  
->>  	/* Update the task group's idle state */
->> -- 
->> 2.43.0
->>
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 8041c87a3562..8b3625107b72 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -4933,7 +4933,8 @@ void scx_group_set_idle(struct task_group *tg, bool idle)
+ 	percpu_down_read(&scx_cgroup_ops_rwsem);
+ 	sch = scx_tg_knob_sched(tg);
+ 
+-	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle))
++	if (scx_cgroup_enabled && sch && SCX_HAS_OP(sch, cgroup_set_idle) &&
++	    tg->scx.sched_idle != idle)
+ 		SCX_CALL_OP(sch, cgroup_set_idle, NULL, tg_cgrp(tg), idle);
+ 
+ 	/* Update the task group's idle state */
+-- 
+2.43.0
 
