@@ -1,155 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE19081724;
-	Wed,  2 Sep 2026 03:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CD3308F3B
+	for <sched-ext@lists.linux.dev>; Wed,  2 Sep 2026 03:23:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788318193; cv=none; b=jS6b1mm7AnOmrCYSfQbAGj2nboJnc73IHF6CfK3HZDIXKe9wAdFFrFFFtXDdlkIX8CxqvQna9YJr5WrGZW3omclOxp0RXaqL2KdvwoiBA6SnRH+iqgX7EITPZiHVMabpT/D/vcozupQN/ncNPvHqsBoaRSjODT2L3uIooznW8uA=
+	t=1788319384; cv=none; b=dnLs4Uon16Zd2XboYojEnGeplNK85VbWDB3oCYcfCFg49B/1XYTw++e0LqXkonRVRfT5iICwCX2/UD72cndLOzHeQRLweOtXj0dT26VnhAr3JDWQuwANYjatfivM9fsOQRBNtDJQtWVpk3Ladu95qF49OFJwc+w0Bh2ppdpV+7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788318193; c=relaxed/simple;
-	bh=Ra17aOp1PBdGrZVa7ycjHzC10hcTBqip7TI3O02pcbE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ug1SWmubY5K2UUCqxcpznud7mpkEnAHz/mANd7gFZKCOArevrVUlIGko+fIh+wRqPKZwnQ3T9hhdE2BaDkf/SV6vPX+gOmNKnGoGRRb7qWTLD+hz8oBJDNpYWhMSUdd6rp6Osv6NY/njFTM9FQz8pHPmHkLK2LH33gBCmdJnkJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EOm1+9OW; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EOm1+9OW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A3F1F000E9;
-	Wed,  2 Sep 2026 03:03:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788318191;
-	bh=dl8oTB6DdwkOLdmdai6fx/C47kIEgRoEDTOpE+1lv2g=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=EOm1+9OWcSbrboGxTgqk6pL4YRrSTNGuo8J/wKM58BWgrMolbgR64FvwI9ePrmkLg
-	 7HhjFgLDmu5gsDQvtth8vYrAz5CBgDntU8LkLaRVBb3m45i0dkLK8DbOF+csiV5DVB
-	 IZ4YdQryldJL9qUFaI497bMh+KeczbFqj7hTIr0lJDOmB5rwKKehV7xdxRg+AYq1Jm
-	 ZDeEKowbWLYFgQacx9TkbKuH4StH0+v8KR3ZrZbOa5b/etjXaAjAWyZjoi9GFtjPoV
-	 fHvxEOxKiMif3OaOfCxemWCkPdTYPsSa/Y2eZS2okwehLBumnsl4q8qxqkHGD6qdc7
-	 HSSjqeAXnOFoQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 2/2] sched_ext/scx_flatcg: make cgv_node_less()
- wraparound-safe
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tao Cui" <cui.tao@linux.dev>
-Cc: sched-ext@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20260902024812.794879-3-cui.tao@linux.dev>
-References: <20260902024812.794879-1-cui.tao@linux.dev>
- <20260902024812.794879-3-cui.tao@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 02 Sep 2026 03:03:10 +0000
-Message-Id: <20260902030311.65A3F1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1788319384; c=relaxed/simple;
+	bh=1OQRHH3FcJxCxUg//doq4CF1XgcdY/X5iX+sNOWlXoU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=UAVgSOsQl8qqBkWO260CPTOt4u4wuDNjKCweb6b/zaUAtr9SnHv6hZKsFfyEQznf5/uMmAt8RtBmh12StAos+PieCtQXNqLl7azI69w6QA4MMI+1Qv/5LGIay0iw4yNDXdnAcK/UT3hDRG4QCNG3G03l0t85syd5VMX5S2To/2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 93ab2af2a67d11f19a56ed5b684f684d-20260902
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:63e4de43-1700-4cb7-a66c-bbc38bcd26e9,IP:0,U
+	RL:0,TC:0,Content:0,EDM:25,RT:2,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:27
+X-CID-META: VersionHash:7db8b62,CLOUDID:8652aba4ece6550707548d3256d91286,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|83|102|850|865|898,TC:nil,Content:0|15|50,ED
+	M:5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0
+	,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 93ab2af2a67d11f19a56ed5b684f684d-20260902
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1965554226; Wed, 02 Sep 2026 11:22:50 +0800
+From: Qiurong Fang <fangqiurong@kylinos.cn>
+To: tj@kernel.org
+Cc: arighi@nvidia.com,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH] sched_ext: Delete sub-scheduler kobjects before releasing scx_enable_mutex
+Date: Wed,  2 Sep 2026 11:22:33 +0800
+Message-Id: <20260902032233.135959-1-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <apcuA5kzwRCu_P-V@slm.duckdns.org>
+References: <apcuA5kzwRCu_P-V@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+Hello Tejun,
 
-Pre-existing issues:
-- [High] Unsigned division on a wrapped negative time delta causes massive =
-artificial inflation of virtual time for expired cgroups.
-- [Medium] Race condition in cvtime_delta extraction using __sync_fetch_and=
-_sub(ptr, *ptr) causes double accounting.
---
+On Tue, Sep 01, 2026 at 09:56:51AM -1000, Tejun Heo wrote:
+> Why is this a problem? The subsched hasn't been fully unloaded yet so if you
+> try to attach a new one, it's going to fail.
 
-commit 069998f7546e450b1de3ae56c137b9e1dd16b919
-Author: Tao Cui <cuitao@kylinos.cn>
+When the mutex is released, the cgroup has already been given back to the
+parent and the exiting scheduler unlinked - its sysfs name is the only
+thing left, and only kobject_add() can see it:
 
-sched_ext/scx_flatcg: make cgv_node_less() wraparound-safe
+  exiting sched (disable workfn)        new sched (enable workfn)
+  -----------------------------        ---------------------------
+  mutex_lock(&scx_enable_mutex)
+    set_cgroup_sched(cgrp, parent)
+    scx_unlink_sched(sch)
+  mutex_unlock(&scx_enable_mutex)
+                                       mutex_lock(&scx_enable_mutex)
+                                       find_parent_sched()         ok
+                                       create/validate/link sch    ok
+                                       scx_sched_sysfs_add()
+                                         kobject_add("sub-%llu")  -EEXIST
+                                       err_disable: tear down the
+                                       otherwise healthy sched
+  ops.sub_detach()/exit()      ~100ms
+  synchronize_rcu()
+  kobject_del("sub-%llu")      too late
 
-cgv_node_less() compares cvtimes with a plain <, which misorders once
-cvtime wraps: the wrapped node lands at the front of the tree while
-the unwrapped ones get stuck behind it. Each CPU picking a cgroup
-charges it a full slice, making wrap occur earlier than a naive
-estimate might suggest.
+The new scheduler passes every check and dies only at sysfs_add(); the
+error surfaces via its own ops.exit() while the attach syscall returns 0,
+and there is nothing userspace could wait on. This is the case the root
+path's comment covers by deleting before unlocking.
 
-Link: https://lore.kernel.org/r/3f1ce004-e259-4e72-a5f7-14a5050053bd@linux.=
-dev
+Reproduced with a slow (~100ms) ops.exit() and a second struct_ops
+instance attaching to the same cgroup in a loop: 40/40 iterations hit
+-EEXIST without the patch, 0/40 with it. Happy to turn the reproducer
+into a selftest as a follow-up if wanted.
 
-> diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatc=
-g.bpf.c
-> index fec3595818269..acc1995630e6d 100644
-> --- a/tools/sched_ext/scx_flatcg.bpf.c
-> +++ b/tools/sched_ext/scx_flatcg.bpf.c
-[ ... ]
-> @@ -144,7 +144,7 @@ static bool cgv_node_less(struct bpf_rb_node *a, cons=
-t struct bpf_rb_node *b)
->  	cgc_a =3D container_of(a, struct cgv_node, rb_node);
->  	cgc_b =3D container_of(b, struct cgv_node, rb_node);
-> =20
-> -	return cgc_a->cvtime < cgc_b->cvtime;
-> +	return time_before(cgc_a->cvtime, cgc_b->cvtime);
->  }
+Andrea is right that the concurrent enable must be a different struct_ops
+instance (same instance is rejected by the ops->priv check; sequential
+unregister+register is serialized by bpf_scx_unreg() flushing the disable
+work). Will state that in v2's changelog.
 
-While reviewing this file, I noticed a couple of pre-existing issues:
-
-tools/sched_ext/scx_flatcg.bpf.c:cgrp_cap_budget() {
-    ...
-	delta =3D __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
-	cvtime =3D cgv_node->cvtime + delta;
-    ...
-}
-
-[Severity: Medium]
-This isn't a bug introduced by this patch, but does this create a race cond=
-ition
-that leads to double accounting?
-
-Because __sync_fetch_and_sub(ptr, *ptr) evaluates the second argument before
-the atomic subtraction, a concurrent __sync_fetch_and_add() from another CPU
-between the memory read of cgc->cvtime_delta and the atomic subtraction
-will cause the added delta to be subtracted but still partially left in the
-counter. The atomic operation returns the new value, charging the cgroup for
-the increment, but leaves the increment in the counter to be charged again =
-on
-the next extraction.
-
-If CPU A executes fcg_stopping() or fcg_dispatch() and calls
-__sync_fetch_and_add(&cgc->cvtime_delta, val), and concurrently CPU B
-executes cgrp_cap_budget() and evaluates
-__sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta), a race in the
-tiny window between B's argument evaluation and the atomic subtraction could
-trigger double charging.
-
-Could this be replaced with an atomic exchange (e.g.,
-__sync_lock_test_and_set()) to safely extract and clear the counter?
-
-
-tools/sched_ext/scx_flatcg.bpf.c:fcg_dispatch() {
-    ...
-		bpf_spin_lock(&cgv_tree_lock);
-		__sync_fetch_and_add(&cgc->cvtime_delta,
-				     (cpuc->cur_at + cgrp_slice_ns - now) *
-				     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
-		bpf_spin_unlock(&cgv_tree_lock);
-    ...
-}
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this calculation suffer=
- from
-unsigned division on a wrapped negative time delta?
-
-When a cgroup's slice has expired, the current time 'now' can easily be gre=
-ater
-than 'cpuc->cur_at + cgrp_slice_ns' due to interrupt latency or normal
-scheduling jitter. The '(cpuc->cur_at + cgrp_slice_ns - now)' is computed u=
-sing
-unsigned u64 arithmetic, resulting in a wrapped large positive number. Since
-all operands are unsigned and hweight is a u32, the subsequent multiplicati=
-on
-and division execute as unsigned arithmetic.
-
-The resulting huge positive quotient is then added to cgc->cvtime_delta,
-artificially inflating the virtual time by a massive amount and potentially
-starving all tasks within the cgroup.
-
-Should there be an explicit cast to a signed type (like s64) before division
-to prevent this?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902024812.7948=
-79-1-cui.tao@linux.dev?part=3D2
+Thanks.
