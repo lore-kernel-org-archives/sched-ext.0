@@ -1,136 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED274CCDCA
-	for <sched-ext@lists.linux.dev>; Wed,  2 Sep 2026 09:51:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF06C48035F
+	for <sched-ext@lists.linux.dev>; Wed,  2 Sep 2026 13:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788342697; cv=none; b=HRKmtdZKBe3AADxZgOxzfOIck9Ip6bOtG+ejjt2LdR3SgrIwGLkdOEsKk16V9QlOwr9PGBzr37mAg768e4wEie084se5WrVWld+2S0ktIXXoqk1rKuHSgV2OjtLV1oL6W4KyNS0LK+Ns2A5dZiTFFD/z1IP/ZQ5bDCNGukDSwwE=
+	t=1788356922; cv=none; b=FKMT4bVsI1XZRYMr4MrEez9QnuAYhQN6aDVeBRSvVqQ8y1euV1KEisZ3Ndszp+7xsApzL+a7VfJUJfcmf+Aq8QmUyWPx01+EVbBoQQ7KL1SyM5mKBP2C7rNio7CGXam6YM0S3F8N4GKtuXcYkg3oa7BbyFdplHR+0uYG83gvBcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788342697; c=relaxed/simple;
-	bh=tHUbkvGU90Gj/vtyugettawxvt5waQLWfs1TdxmeSGk=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=PRPh1+wTuLPXlYkxipeyrL17p0zCeAniaOHhRmK3dvtxhUYV7MsNwtAEehJAiSdgmD6JE5NIttct+9k5QLXdlCbCJLXwfW2CDbGjONv0kcNr786v3gqBT4Wi0mQaHLj2q2PXXThpVZC6jyCRV30GZlaQD/FAEynK+JtkYFOBUE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fnqEWJHd; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fnqEWJHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1A01F00A3A;
-	Wed,  2 Sep 2026 09:51:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788342695;
-	bh=xMsvkZqdg1W8FRlc660J+1Ft4F2dMhEX2EaLelMwNOw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fnqEWJHdD4gHxiaDkebpudEN0iVMjuEZtuex+POdKDpBmeQx5TPlBrJKvPYHKooVG
-	 7G/1PldA9PzdInED+rEp1owgkFd0u0t0478ZWoc1vB08ZRgfI9eKzLf3bD9u7oY4tc
-	 h4ckReirOpwiop6gujsAYwQnJTm3KIWS0LBwIjqsiCPU3TkAq66kMVQystV+SiEpDW
-	 X91935f45xedH3RhxspDyAAc+pkCp2De+bZdZZXAOWCrjzXQB0pgsyYDruR73/1aRw
-	 gbCXj0M4J10uW7KanI7MyifnTUvqeEeNhITsW+Gzq3hLVV8ZnQhnrFoYPC55bTfYWI
-	 WRSmh8Nkskuqg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3] sched_ext: Reject NMI calls to lock-taking kfuncs
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Wanwu Li" <liwanwu@kylinos.cn>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260902093611.52651-1-liwanwu@kylinos.cn>
-References: <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
- <20260902093611.52651-1-liwanwu@kylinos.cn>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 02 Sep 2026 09:51:35 +0000
-Message-Id: <20260902095135.AE1A01F00A3A@smtp.kernel.org>
+	s=arc-20240116; t=1788356922; c=relaxed/simple;
+	bh=87Z5OhzR6c8NOsJI5P6GJcp7NU6H5/Cmawvf4H5Lw3I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S79FhKmljIsAKonrQRckLLfn/Fjen4d+S8yEusEpaEsyweCqccaXP10QC6+VoJUFgVHuN7jSD/H09V/dyq/Uz8C5x0QlDdxc8YsPcLkkIiyJSg1WXLPGZ68SAEOO75W/RUbIB6BmP+ba9+umTWQmrrQtrxZ7P68SJRDg6gbptKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: fbc14782a6d411f19a56ed5b684f684d-20260902
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:d1a90793-1942-4e46-8b27-88fcda1c7dce,IP:0,U
+	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:-5
+X-CID-META: VersionHash:7db8b62,CLOUDID:fdee754c57a0b882c07c64f0f407005e,BulkI
+	D:nil,BulkQuantity:0,SF:80|81|82|83|102|865|898,TC:nil,Content:0|15|52,EDM
+	:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0
+	,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: fbc14782a6d411f19a56ed5b684f684d-20260902
+X-User: liwanwu@kylinos.cn
+Received: from [10.42.12.206] [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <liwanwu@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 1468981474; Wed, 02 Sep 2026 21:48:31 +0800
+Message-ID: <1d5f2636-a5e3-4b67-bbb9-12922fa0d804@kylinos.cn>
+Date: Wed, 2 Sep 2026 21:48:28 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] sched_ext: Reject NMI calls to lock-taking kfuncs
+To: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <3a9bfba228c46c69408fe1ef392e60f0@kernel.org>
+ <20260902023124.1422942-1-liwanwu@kylinos.cn>
+ <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
+Content-Language: en-US
+From: liwanwu <liwanwu@kylinos.cn>
+In-Reply-To: <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+Hi Tejun,
 
-Pre-existing issues:
-- [High] scx_bpf_task_set_slice() incorrectly assumes exclusive access base=
-d on scx_locked_rq(), causing data corruption in NMI context.
---
+Thanks for the review. v3 folds in your three points (single
+scx_kf_allowed_ctx() macro with no wrapper, one reject in
+bpf_iter_scx_dsq_new(), unlikely(!sch) in scx_bpf_destroy_dsq()).
 
-commit 2ad0cc408fc1de5da96ae5cb10c0e31d7633a82a
-Author: Wanwu Li <liwanwu@kylinos.cn>
+Continuing the audit that the sashiko bot kicked off, I swept every
+kfunc exposed to BPF_PROG_TYPE_TRACING through the any / idle / cid
+context-filter sets. I found a second class of problems beyond the
+lock-taking set already covered. The first subclass I plan to fold
+into v4 and want to make sure you agree with the scope.
 
-    sched_ext: Reject NMI calls to lock-taking kfuncs
+Three "any"-category kfuncs read scx_locked_rq() on their success path
+and treat a non-NULL return as "the rq lock is already held by me",
+which a false positive under NMI turns into either a data race or a
+wrong result:
 
-This commit introduces the scx_kf_allowed_ctx() helper to reject NMI calls =
-to
-lock-taking kfuncs in sched_ext. It applies this check to several kfuncs th=
-at
-take raw spinlocks to prevent CPU hard-lockups when a tracing program runs =
-in an
-NMI context.
+  - scx_bpf_task_set_slice() (the sashiko bot's finding) races its
+    direct p->scx.slice write with update_curr_scx()'s RMW of the same
+    field.
+  - scx_bpf_dsq_nr_queued() resolves %SCX_DSQ_LOCAL to
+    (scx_locked_rq() ?: this_rq()) and can therefore report the wrong
+    rq's length.
+  - scx_bpf_locked_rq() hands the interrupted context's rq to the BPF
+    program, which may then operate on it as if the lock were owned.
 
-Link: https://lore.kernel.org/r/20260901095652.1009104-1-liwanwu@kylinos.cn
+A second, different subclass I have NOT folded in, and would like your
+guidance on.
 
-> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-> index 27bbf5e04d900..ca8ebb11f03ca 100644
-> --- a/kernel/sched/ext/internal.h
-> +++ b/kernel/sched/ext/internal.h
-> @@ -2091,6 +2091,22 @@ extern struct scx_sched *scx_enabling_sub_sched;
->  #define scx_error(sch, fmt, args...)						\
->  	scx_exit((sch), SCX_EXIT_ERROR, 0, fmt, ##args)
-> =20
-> +/*
-> + * Tracing progs can call kfuncs from NMI. Kfuncs that take scheduler lo=
-cks or
-> + * touch the kick lists, which are only protected by irq masking, can't =
-run
-> + * there, so abort the scheduler instead. scx_error() is NMI-safe.
-> + */
-> +#define scx_kf_allowed_ctx(sch)						\
-> +({										\
-> +	bool __allowed =3D true;							\
-> +										\
-> +	if (unlikely(in_nmi())) {						\
-> +		scx_error((sch), "%s called from NMI", __func__);		\
-> +		__allowed =3D false;						\
-> +	}									\
-> +	__allowed;								\
-> +})
-> +
+scx_bpf_pick_idle_cpu_node() and scx_bpf_pick_any_cpu_node() pass the
+caller's @node and @flags straight through to scx_pick_idle_cpu(). When
+@node != NUMA_NO_NODE and SCX_PICK_IDLE_IN_NODE is not set and no idle
+CPU is found in the starting node, the search falls through to
+pick_idle_cpu_from_online_nodes() (kernel/sched/ext/idle.c:151), which
+writes the per-CPU nodemask per_cpu_unvisited (idle.c:146) under only
+preempt_disable(). preempt_disable() does not mask NMIs, so an NMI that
+lands on a CPU whose interrupted context is mid-way through that loop
+clobbers the scratch nodemask the interrupted context is still
+iterating. Same "irq/preempt-only per-CPU state is not NMI-safe" premise
+behind scx_kick_cpu()'s check, just a scratch buffer rather than a
+lock or a list.
 
-[Severity: High]
-This is a pre-existing issue, but I noticed an NMI-safety gap in
-scx_bpf_task_set_slice() that seems to have been missed in this patch's
-auditing of kfuncs exposed to BPF_PROG_TYPE_TRACING.
+Note this is a wrong-result / lost-scratch race for the interrupted
+struct_ops context, not a hard lockup, and it needs CONFIG_NUMA plus
+per-node idle tracking to be reachable. The non-node
+scx_bpf_pick_idle_cpu()/pick_any_cpu() force NUMA_NO_NODE and never
+reach the scratch, and every cid-set kfunc is an RCU-read lookup, so the
+hazard is confined to those two node-variants.
 
-When a BPF tracing program executes in an NMI context (e.g., via a perf eve=
-nt)
-and calls scx_bpf_task_set_slice(), if the NMI interrupted a context that
-already holds the target task's runqueue lock (such as update_curr_scx()):
+Should these two issue classes be folded into this series or are they 
+out of scope for now? Looking forward to your suggestion.
 
-kernel/sched/ext/ext.c:scx_bpf_task_set_slice() {
-    ...
-	locked_rq =3D scx_locked_rq();
-	if (!locked_rq ||
-	    (READ_ONCE(p->scx.runnable_cpu) !=3D cpu_of(locked_rq) &&
-	     !task_current(locked_rq, p))) {
-		set_task_slice_oob(sch, p, slice);
-		return true;
-	}
-    ...
-}
+Thanks,
+Wanwu
 
-Will scx_locked_rq() incorrectly return the interrupted context's locked ru=
-nqueue
-rather than indicating the lock is not held by the NMI itself?
-
-If so, won't this cause the NMI to bypass the NMI-safe out-of-band request =
-path
-(set_task_slice_oob()) and directly write to p->scx.slice?
-
-Could this write race with the interrupted context, which may simultaneously
-perform a non-atomic read-modify-write on the same variable, causing data
-corruption or a lost update?=20
-
-Should scx_bpf_task_set_slice() also use scx_kf_allowed_ctx() to reject NMI
-calls?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902093611.5265=
-1-1-liwanwu@kylinos.cn?part=3D1
+在 2026/9/2 14:44, Tejun Heo 写道:
+> Hello,
+> 
+> On Wed, Sep 02, 2026 at 10:31:24AM +0800, Wanwu Li wrote:
+>> -	if (sch)
+>> -		destroy_dsq(sch, dsq_id);
+>> +	if (!sch)
+>> +		return;
+> 
+> unlikely(!sch) like the other kfuncs.
+> 
+>> @@ -9756,6 +9755,9 @@ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *i
+>>   	if (!kit->dsq)
+>>   		return NULL;
+>>
+>> +	if (!scx_kf_allowed_ctx(kit->dsq->sched))
+>> +		return NULL;
+> 
+> new(), next() and destroy() always run in the same context, so reject in
+> bpf_iter_scx_dsq_new() and drop the checks from next() and destroy(). With
+> kit->dsq left NULL, both are no-ops.
+> 
+>> +static __always_inline bool __scx_kf_allowed_ctx(struct scx_sched *sch,
+>> +						 const char *who)
+> 
+> No need to wrap.
+> 
+> Thanks.
+> 
