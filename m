@@ -1,74 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2249633BBBD;
-	Wed,  2 Sep 2026 06:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B3939CD11;
+	Wed,  2 Sep 2026 06:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788331500; cv=none; b=M2OXlM1xzy381i5jKUY7H9khSlb4CJX0wGFnVJWiP0YWtEOLawTXeVl5uDskwd9eZVkUVWHdBJ7AdblEtP+JTn9DbbrhLcHAxdsptiVrUPj3u91UFvvxNu9BeqJA47nBjUI/tbpFByV3DSd5MadgTY4kZM0w//m7MlaNQRHqv7I=
+	t=1788332228; cv=none; b=SDSbr3l8Pb17ikUzfXdVdZVN18U1YzxW6VbhvmhYD+jcZT1PxHLQdn/FPw5+MoStgbsIOuebFS7ynSVnEZ0cND97x2OUNapcN5NYQcFbSySUzUoTNgVlXLRCfSMNif9GEzCB0AVU9GZVDjpObIV6DYqhnWrAhvgAxUukLdDRvYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788331500; c=relaxed/simple;
-	bh=NUuwNZ/QMlWFfV+xYcq7rRZrkdEenKWkTHl5DIXeCrU=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=Oak5KHqZoCWKTht9BHu/X3jVJsYVeTlR1gLPsaEa3VSwrwzVHiK1F/M7ue0ffp4BR2Zs/KSKLD6cViS5wcos3csX/C6OF0Ur2hc/hxfiDH+5O7RCk/qAqzaRxCbkZM7aiCXQS2SnPQesK+ezjb1ewebGp/wHEqEupTnk1Q6s5tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jaaGZAke; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788332228; c=relaxed/simple;
+	bh=BeSt1yLLBygtJDuknwIfiypESPW1R02Br6MDmScUFvw=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=SAljEnCBtQO7FHyk5pL/kByGHV0Yo8TMhL4FXfynCK8U7Tw20p6zvbdCXNJng0PMTxiF4hFi1b6t69h2Bd6Ho3caj8qVryRtNH1YyzI5kBegRbDZEiPujVF1agGI9PHK0ZvHDVQjmaQ+BnGs+fePMTBAOP5cEl/POL0h1+2k0Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFE/1VZS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jaaGZAke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833021F00A3A;
-	Wed,  2 Sep 2026 06:44:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFE/1VZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155CD1F000E9;
+	Wed,  2 Sep 2026 06:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788331498;
-	bh=/CBLym/vSOaW1EUlay1WguJ6tPiiOBBP63ZGMjQZitE=;
+	s=k20260515; t=1788332225;
+	bh=BeSt1yLLBygtJDuknwIfiypESPW1R02Br6MDmScUFvw=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=jaaGZAkez03/yePsvSYEA5F7kQ8Im6HbxF6ipSO0mat8p6NHQYBrIrvjibAgLRQCI
-	 iL51dh5ro5rugfXtxTa+qarocVVtkLkzTOWmuZk21QJFNVEptNFwswp2TSj9WA2W43
-	 tCjbCI+Ah5kyzDratJkvGvQSjTFMSDaxUVeVlHbLTjz7lzWW/GWHPoD8iH6DRhapyn
-	 LxpWWMQxpwOpbwbjbEamBqhIwGikIK/tw9qoleG4uroyE/jGTYjXaZrwGTAQdnWVKk
-	 ViBA5kgDiUr9dYeU8ugxWYdb1iPc9evhwfaaROiZfC1KYxXnrK0jvqKIeHh9iLFTPQ
-	 D5MxjRrXfLBlg==
-Date: Tue, 01 Sep 2026 20:44:57 -1000
-Message-ID: <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
+	b=JFE/1VZShS973TmqQMkWciGBNJCsf1VExYaQD7vZQ5+IN4HShuxW+nG27QQRfGFiU
+	 vZMbyLEeQONhgDolZSyK9TkXwXDYZY8oZrU7HKc8LKgYe4P4GsGjWJc9P1FM2gebQk
+	 EcV+DojYS5vyHZjt1sF2tE6K0v3Irt0bvZSb6HFCXwMZrUCj2EVs0Fne/XOHlk2ogm
+	 oulzVdu3U2LHY75lRSnU0UtrjS0+pSfLg4anpf54JoO+VD1LSRQl/6NQEijSERnNy0
+	 kR+YtfvTKahTXBso2wi1d5cS1j3ZhPNDnarl2M4JsgFyfSg/oyjTCSNzfTN+D8z9zf
+	 +2Q7IHgq/a2zw==
+Date: Tue, 01 Sep 2026 20:57:04 -1000
+Message-ID: <bbc31cd1b97a4d0d169103b391a278cb@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Wanwu Li <liwanwu@kylinos.cn>
-Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
- Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] sched_ext: Reject NMI calls to lock-taking kfuncs
-In-Reply-To: <20260902023124.1422942-1-liwanwu@kylinos.cn>
-References: <3a9bfba228c46c69408fe1ef392e60f0@kernel.org>
- <20260902023124.1422942-1-liwanwu@kylinos.cn>
+To: Qiurong Fang <fangqiurong@kylinos.cn>
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	emil@etsalapatis.com,
+	zhanxusheng@xiaomi.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] sched_ext: Skip per-CPU data allocation for built-in DSQs
+In-Reply-To: <20260901013258.1822890-1-fangqiurong@kylinos.cn>
+References: <20260827082329.3368255-1-fangqiurong@kylinos.cn>
+	<20260901013258.1822890-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
-
-On Wed, Sep 02, 2026 at 10:31:24AM +0800, Wanwu Li wrote:
-> -	if (sch)
-> -		destroy_dsq(sch, dsq_id);
-> +	if (!sch)
-> +		return;
-
-unlikely(!sch) like the other kfuncs.
-
-> @@ -9756,6 +9755,9 @@ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *i
->  	if (!kit->dsq)
->  		return NULL;
->
-> +	if (!scx_kf_allowed_ctx(kit->dsq->sched))
-> +		return NULL;
-
-new(), next() and destroy() always run in the same context, so reject in
-bpf_iter_scx_dsq_new() and drop the checks from next() and destroy(). With
-kit->dsq left NULL, both are no-ops.
-
-> +static __always_inline bool __scx_kf_allowed_ctx(struct scx_sched *sch,
-> +						 const char *who)
-
-No need to wrap.
+Applied to sched_ext/for-7.4 with Zhan's Reviewed-by added, the description
+reworded to say the waste is quadratic in the CPU count, and the
+scx_init_dsq() comment reworded as the local DSQ does track deferred reenqs,
+just through sch->pcpu.
 
 Thanks.
 
--- 
+--
 tejun
