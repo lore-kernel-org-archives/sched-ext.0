@@ -1,52 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E58937CD22;
-	Wed,  2 Sep 2026 06:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2249633BBBD;
+	Wed,  2 Sep 2026 06:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788331373; cv=none; b=A7eHbBnmHWvMhrYspXQ3BFm7nB2OdUTDdfG7e1ztp8CmH3B86DWS68klcC3otewT//HeL3SpcSBeaj2AeeKgUOl2nKFORyjn6YTFRxR/hcuebyI0qAwochpaGaT3+2nf1X1+zJjVZdrrdjC7Dm0N7lNsr/CuzzY+IImxrzP/0kQ=
+	t=1788331500; cv=none; b=M2OXlM1xzy381i5jKUY7H9khSlb4CJX0wGFnVJWiP0YWtEOLawTXeVl5uDskwd9eZVkUVWHdBJ7AdblEtP+JTn9DbbrhLcHAxdsptiVrUPj3u91UFvvxNu9BeqJA47nBjUI/tbpFByV3DSd5MadgTY4kZM0w//m7MlaNQRHqv7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788331373; c=relaxed/simple;
-	bh=MkHDGOrhcy2o+SJeYss1DqIYBNnUt7fFtbgQKc5C8N0=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=sk7VFl6WD0EZE5TO3tw3SW4tsiZVrdPuY5AZNCKb0cGLwaonOaLIJTZc6w0bnPUG6C6q3UCIlbB3tOANz3nZk0iyHbXDrf4Hou/HQJleqYSqEqkR7zYyqUJxdCO8K9c3v2TFhsYiAgyPXTeJ/B4nknkNMI5GoPEsBC/RZLkmG/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aoiPKJ9W; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788331500; c=relaxed/simple;
+	bh=NUuwNZ/QMlWFfV+xYcq7rRZrkdEenKWkTHl5DIXeCrU=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=Oak5KHqZoCWKTht9BHu/X3jVJsYVeTlR1gLPsaEa3VSwrwzVHiK1F/M7ue0ffp4BR2Zs/KSKLD6cViS5wcos3csX/C6OF0Ur2hc/hxfiDH+5O7RCk/qAqzaRxCbkZM7aiCXQS2SnPQesK+ezjb1ewebGp/wHEqEupTnk1Q6s5tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jaaGZAke; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aoiPKJ9W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE981F000E9;
-	Wed,  2 Sep 2026 06:42:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jaaGZAke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833021F00A3A;
+	Wed,  2 Sep 2026 06:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788331371;
-	bh=h9qF2enIKFzWkgyEIFlw9mB3wT5BWHNZWJWqQ2AkWCQ=;
+	s=k20260515; t=1788331498;
+	bh=/CBLym/vSOaW1EUlay1WguJ6tPiiOBBP63ZGMjQZitE=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=aoiPKJ9WBKDmaPNmWJez0U2vDHWFTAbT32vyHrWZgVjWFV3FtDY145PIDgyaIrLdv
-	 LJOyh/pnDnb/IdiHgjEW7eI+aoYqExtXpepSV2w8qckAmIzt0/6YecU0KMBl+vrdlY
-	 pboMzKVXAU/rbOXUmIoudTmHxip31qxYLHjNuv4I3/qEXW+fk2WWF8mA5FkX+o00AB
-	 tIx6Cte0FBBI9X/tzzvjPjZNmleq7/kOR8zmi4GGX98Y1MEDKuc2pF3hKElHWW4wz+
-	 4+Ortpr5QINMc8nA0ae625lLICnEZqENP5lnYj5rJv0/tcN7HrmoU2I3zAPs7PNyNj
-	 KIuhgxozebThg==
-Date: Tue, 01 Sep 2026 20:42:50 -1000
-Message-ID: <752cd2e42b6161465a7644c3085ce924@kernel.org>
+	b=jaaGZAkez03/yePsvSYEA5F7kQ8Im6HbxF6ipSO0mat8p6NHQYBrIrvjibAgLRQCI
+	 iL51dh5ro5rugfXtxTa+qarocVVtkLkzTOWmuZk21QJFNVEptNFwswp2TSj9WA2W43
+	 tCjbCI+Ah5kyzDratJkvGvQSjTFMSDaxUVeVlHbLTjz7lzWW/GWHPoD8iH6DRhapyn
+	 LxpWWMQxpwOpbwbjbEamBqhIwGikIK/tw9qoleG4uroyE/jGTYjXaZrwGTAQdnWVKk
+	 ViBA5kgDiUr9dYeU8ugxWYdb1iPc9evhwfaaROiZfC1KYxXnrK0jvqKIeHh9iLFTPQ
+	 D5MxjRrXfLBlg==
+Date: Tue, 01 Sep 2026 20:44:57 -1000
+Message-ID: <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Tao Cui <cui.tao@linux.dev>
-Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com, michalblk@google.com, liwanwu@kylinos.cn, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: Re: [PATCH v3 0/2] sched_ext: document and enforce vtime ordering constraints
-In-Reply-To: <20260902024812.794879-1-cui.tao@linux.dev>
-References: <20260902024812.794879-1-cui.tao@linux.dev>
+To: Wanwu Li <liwanwu@kylinos.cn>
+Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] sched_ext: Reject NMI calls to lock-taking kfuncs
+In-Reply-To: <20260902023124.1422942-1-liwanwu@kylinos.cn>
+References: <3a9bfba228c46c69408fe1ef392e60f0@kernel.org>
+ <20260902023124.1422942-1-liwanwu@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-On Wed, Sep 02, 2026 at 10:48:10AM +0800, Tao Cui wrote:
-> Tao Cui (2):
->   sched_ext: document the rolling-cursor requirement for dsq_vtime
->   sched_ext/scx_flatcg: make cgv_node_less() wraparound-safe
+Hello,
 
-Applied 1-2 to sched_ext/for-7.4 with the subjects capitalized.
+On Wed, Sep 02, 2026 at 10:31:24AM +0800, Wanwu Li wrote:
+> -	if (sch)
+> -		destroy_dsq(sch, dsq_id);
+> +	if (!sch)
+> +		return;
+
+unlikely(!sch) like the other kfuncs.
+
+> @@ -9756,6 +9755,9 @@ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *i
+>  	if (!kit->dsq)
+>  		return NULL;
+>
+> +	if (!scx_kf_allowed_ctx(kit->dsq->sched))
+> +		return NULL;
+
+new(), next() and destroy() always run in the same context, so reject in
+bpf_iter_scx_dsq_new() and drop the checks from next() and destroy(). With
+kit->dsq left NULL, both are no-ops.
+
+> +static __always_inline bool __scx_kf_allowed_ctx(struct scx_sched *sch,
+> +						 const char *who)
+
+No need to wrap.
 
 Thanks.
 
---
+-- 
 tejun
