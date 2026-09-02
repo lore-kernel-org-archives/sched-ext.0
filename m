@@ -1,142 +1,163 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF06C48035F
-	for <sched-ext@lists.linux.dev>; Wed,  2 Sep 2026 13:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA9E4A92EE
+	for <sched-ext@lists.linux.dev>; Wed,  2 Sep 2026 15:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788356922; cv=none; b=FKMT4bVsI1XZRYMr4MrEez9QnuAYhQN6aDVeBRSvVqQ8y1euV1KEisZ3Ndszp+7xsApzL+a7VfJUJfcmf+Aq8QmUyWPx01+EVbBoQQ7KL1SyM5mKBP2C7rNio7CGXam6YM0S3F8N4GKtuXcYkg3oa7BbyFdplHR+0uYG83gvBcI=
+	t=1788363429; cv=none; b=ZlMMxec641ufjnvDX8ftOx9bs3gN9bxJep9UnRuNZw7UhYqodZIfFHu6llPuhMkBALB+pDH+LeNJ6lsxV1z4kbwB1xyWY+2WY3K4IEMrbZohVvSlldx4rQDYL8HSbWfu4yNsm4/LXIvVXx/AqzIgv9PcUI8jhnc6Mg9IPCdnhFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788356922; c=relaxed/simple;
-	bh=87Z5OhzR6c8NOsJI5P6GJcp7NU6H5/Cmawvf4H5Lw3I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S79FhKmljIsAKonrQRckLLfn/Fjen4d+S8yEusEpaEsyweCqccaXP10QC6+VoJUFgVHuN7jSD/H09V/dyq/Uz8C5x0QlDdxc8YsPcLkkIiyJSg1WXLPGZ68SAEOO75W/RUbIB6BmP+ba9+umTWQmrrQtrxZ7P68SJRDg6gbptKc=
+	s=arc-20240116; t=1788363429; c=relaxed/simple;
+	bh=CG8/3kCMtjiLTNK0gdJUbxQM90rolvY7/w/XS4Lx25s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MIk0oYmHsuqdC4KxudZ4orlS1UWap8/bjzSIOrS/QhDsSeESfF3TuWhomDgoN4WxEC5xFhTCrfinb5LkkI+Ss9AhjjuEPGdjtt4xMEEVentxDFnIb9OR8Z2fSpPV3hWzW2zAzPmOfV6/xnzcsKa5tEumwp3unoekpuM05Xz3dCA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: fbc14782a6d411f19a56ed5b684f684d-20260902
+X-UUID: 1a35cac6a6e411f19a56ed5b684f684d-20260902
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:d1a90793-1942-4e46-8b27-88fcda1c7dce,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:-5
-X-CID-META: VersionHash:7db8b62,CLOUDID:fdee754c57a0b882c07c64f0f407005e,BulkI
-	D:nil,BulkQuantity:0,SF:80|81|82|83|102|865|898,TC:nil,Content:0|15|52,EDM
-	:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0
-	,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-O-INFO: VERSION:1.3.19,REQID:a1d729e3-57dc-44a3-b4d5-f7b21592b09c,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:0
+X-CID-META: VersionHash:7db8b62,CLOUDID:e31e44d117130ee6641c1ccc2238a6a5,BulkI
+	D:nil,BulkQuantity:0,SF:102|136|865|898,TC:nil,Content:0|15|50,EDM:5|-100,
+	IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:
+	0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: fbc14782a6d411f19a56ed5b684f684d-20260902
+X-UUID: 1a35cac6a6e411f19a56ed5b684f684d-20260902
 X-User: liwanwu@kylinos.cn
-Received: from [10.42.12.206] [(10.44.16.150)] by mailgw.kylinos.cn
+Received: from kylinos.cn [(10.44.16.150)] by mailgw.kylinos.cn
 	(envelope-from <liwanwu@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1468981474; Wed, 02 Sep 2026 21:48:31 +0800
-Message-ID: <1d5f2636-a5e3-4b67-bbb9-12922fa0d804@kylinos.cn>
-Date: Wed, 2 Sep 2026 21:48:28 +0800
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1363887071; Wed, 02 Sep 2026 23:36:44 +0800
+From: Wanwu Li <liwanwu@kylinos.cn>
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: liwanwu@kylinos.cn,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH] sched_ext: Fix NULL sched deref in select_cpu_and sub-sched error path
+Date: Wed,  2 Sep 2026 23:36:40 +0800
+Message-Id: <20260902153640.144791-1-liwanwu@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] sched_ext: Reject NMI calls to lock-taking kfuncs
-To: Tejun Heo <tj@kernel.org>
-Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
- Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <3a9bfba228c46c69408fe1ef392e60f0@kernel.org>
- <20260902023124.1422942-1-liwanwu@kylinos.cn>
- <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
-Content-Language: en-US
-From: liwanwu <liwanwu@kylinos.cn>
-In-Reply-To: <49faaba5039a29f38ab6f254da6fb8dc@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Tejun,
+scx_bpf_select_cpu_and() errors out @p's scheduler when the root scheduler
+has sub-scheds attached:
 
-Thanks for the review. v3 folds in your three points (single
-scx_kf_allowed_ctx() macro with no wrapper, one reject in
-bpf_iter_scx_dsq_new(), unlikely(!sch) in scx_bpf_destroy_dsq()).
+	scx_error(scx_task_sched(p), "... must be used");
 
-Continuing the audit that the sashiko bot kicked off, I swept every
-kfunc exposed to BPF_PROG_TYPE_TRACING through the any / idle / cid
-context-filter sets. I found a second class of problems beyond the
-lock-taking set already covered. The first subclass I plan to fold
-into v4 and want to make sure you agree with the scope.
+scx_task_sched(p) is p->scx.sched, which is NULL for any task that is not
+on an scx scheduler: it is memset() by init_scx_entity() and cleared by
+scx_disable_and_exit_task() -- which sched_ext_dead() runs when a task
+exits. It is also an rcu_dereference_protected() that must be called with
+@p's pi_lock or rq lock held -- neither of which a BPF_PROG_TYPE_SYSCALL
+program holds.
 
-Three "any"-category kfuncs read scx_locked_rq() on their success path
-and treat a non-NULL return as "the rq lock is already held by me",
-which a false positive under NMI turns into either a data race or a
-wrong result:
+The wrapper is reachable from such a program -- scx_kfunc_context_filter()
+allows the select_cpu kfunc group for BPF_PROG_TYPE_SYSCALL -- and the
+program can pass any task, e.g. one obtained with bpf_task_from_pid() that
+exited in between. scx_error() then calls scx_vexit(), which dereferences
+sch->exit_info unconditionally, so passing NULL oopses the kernel.
 
-  - scx_bpf_task_set_slice() (the sashiko bot's finding) races its
-    direct p->scx.slice write with update_curr_scx()'s RMW of the same
-    field.
-  - scx_bpf_dsq_nr_queued() resolves %SCX_DSQ_LOCAL to
-    (scx_locked_rq() ?: this_rq()) and can therefore report the wrong
-    rq's length.
-  - scx_bpf_locked_rq() hands the interrupted context's rq to the BPF
-    program, which may then operate on it as if the lock were owned.
+This was triggered live on a v7.2 based kernel with a
+BPF_PROG_TYPE_SYSCALL program calling the wrapper on an exited-but-not
+reaped task while a sub-scheduler was attached (faulting instruction is
+the scx_vexit() prologue "mov r15,[rdi+0x398]" with RDI=NULL and 0x398
+the offset of sch->exit_info):
 
-A second, different subclass I have NOT folded in, and would like your
-guidance on.
+  sched_ext: BPF scheduler "kfunc_subsched_null" enabled
+  sched_ext: BPF sub-scheduler "kfunc_subsched_null" enabled
+  sched_ext: Unassociated program run_select_cpu_ (id 76)
+  BUG: kernel NULL pointer dereference, address: 0000000000000398
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  CPU: 7 UID: 0 PID: 8201 Comm: kfunc_test_runn Tainted: G W
+  RIP: 0010:scx_vexit+0x25/0xa0
+  Code: ... <4c> 8b bf 98 03 00 00 ...
+  CR2: 0000000000000398
+  Call Trace:
+   <TASK>
+   __scx_exit+0x4f/0x70
+   scx_bpf_select_cpu_and+0xab/0xb0
+   bpf_prog_430ed61a7b66e03a_run_select_cpu_and+0x9c/0xe7
+   ? __x64_sys_bpf+0x2c/0x40
+   bpf_prog_test_run_syscall+0x130/0x2f0
+   __sys_bpf+0x930/0x10d0
+   ? __x64_sys_bpf+0x2c/0x40
+   __x64_sys_bpf+0x2c/0x40
+   do_syscall_64+0xbc/0x460
+   ? rseq_set_ids_get_csaddr+0x81/0x140
+   ? __rseq_handle_slowpath+0xd0/0x130
+   ? switch_fpu_return+0x51/0xd0
+   ? arch_exit_to_user_mode_prepare.constprop.0+0x87/0xb0
+   ? do_syscall_64+0xf3/0x460
+   ? irqentry_exit+0x48/0x740
+   ? clear_bhb_loop+0x40/0x90
+   ? do_syscall_64+0x35/0x460
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-scx_bpf_pick_idle_cpu_node() and scx_bpf_pick_any_cpu_node() pass the
-caller's @node and @flags straight through to scx_pick_idle_cpu(). When
-@node != NUMA_NO_NODE and SCX_PICK_IDLE_IN_NODE is not set and no idle
-CPU is found in the starting node, the search falls through to
-pick_idle_cpu_from_online_nodes() (kernel/sched/ext/idle.c:151), which
-writes the per-CPU nodemask per_cpu_unvisited (idle.c:146) under only
-preempt_disable(). preempt_disable() does not mask NMIs, so an NMI that
-lands on a CPU whose interrupted context is mid-way through that loop
-clobbers the scratch nodemask the interrupted context is still
-iterating. Same "irq/preempt-only per-CPU state is not NMI-safe" premise
-behind scx_kick_cpu()'s check, just a scratch buffer rather than a
-lock or a list.
+Keep the "error out @p's scheduler" attribution -- it is what every other
+kfunc error path does (select_cpu_from_kfunc()'s cross_task,
+scx_kf_arg_task_ok()) and it is correct for the callers that actually take
+this path: the only other callers are the struct_ops select_cpu/enqueue
+ops, where @p is the caller's own task and p->scx.sched is its scheduler.
+Just read it safely: use scx_task_sched_rcu() (valid under the guard(rcu)()
+the wrapper already holds, no @p lock required) and fall back to @sch -- the
+root scheduler, guaranteed non-NULL here -- when @p is not on an scx
+scheduler, which is precisely the case that used to be NULL.
 
-Note this is a wrong-result / lost-scratch race for the interrupted
-struct_ops context, not a hard lockup, and it needs CONFIG_NUMA plus
-per-node idle tracking to be reachable. The non-node
-scx_bpf_pick_idle_cpu()/pick_any_cpu() force NUMA_NO_NODE and never
-reach the scratch, and every cid-set kfunc is an RCU-read lookup, so the
-hazard is confined to those two node-variants.
+scx_bpf_dsq_insert_vtime() has the same error path but it is not reachable
+with a NULL @p: SYSCALL programs are rejected for its kfunc set and @p is
+always the calling scheduler's own task in the contexts where it runs, so
+it is left unchanged.
 
-Should these two issue classes be folded into this series or are they 
-out of scope for now? Looking forward to your suggestion.
+The proper endgame for these COMPAT wrappers is removal once the
+deprecation grace period is announced and elapsed; this fix only keeps
+the window from oopsing the kernel until that happens.
 
-Thanks,
-Wanwu
+Cc: <stable@vger.kernel.org>
+Fixes: a5fa0708cbfd ("sched_ext: Enforce scheduling authority in dispatch and select_cpu operations")
+Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
+---
+ kernel/sched/ext/idle.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-在 2026/9/2 14:44, Tejun Heo 写道:
-> Hello,
-> 
-> On Wed, Sep 02, 2026 at 10:31:24AM +0800, Wanwu Li wrote:
->> -	if (sch)
->> -		destroy_dsq(sch, dsq_id);
->> +	if (!sch)
->> +		return;
-> 
-> unlikely(!sch) like the other kfuncs.
-> 
->> @@ -9756,6 +9755,9 @@ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *i
->>   	if (!kit->dsq)
->>   		return NULL;
->>
->> +	if (!scx_kf_allowed_ctx(kit->dsq->sched))
->> +		return NULL;
-> 
-> new(), next() and destroy() always run in the same context, so reject in
-> bpf_iter_scx_dsq_new() and drop the checks from next() and destroy(). With
-> kit->dsq left NULL, both are no-ops.
-> 
->> +static __always_inline bool __scx_kf_allowed_ctx(struct scx_sched *sch,
->> +						 const char *who)
-> 
-> No need to wrap.
-> 
-> Thanks.
-> 
+diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
+index d2973fb3af6d..014599d82bb0 100644
+--- a/kernel/sched/ext/idle.c
++++ b/kernel/sched/ext/idle.c
+@@ -1142,10 +1142,15 @@ __bpf_kfunc s32 scx_bpf_select_cpu_and(struct task_struct *p, s32 prev_cpu, u64
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	/*
+ 	 * Disallow if any sub-scheds are attached. There is no way to tell
+-	 * which scheduler called us, just error out @p's scheduler.
++	 * which scheduler called us, so error out @p's scheduler -- but read
++	 * it under RCU (@p's locks aren't held here) and fall back to @sch if
++	 * @p isn't on an scx scheduler: a BPF_PROG_TYPE_SYSCALL prog can pass
++	 * any task and p->scx.sched is NULL for one that has exited or is
++	 * managed by another scheduler.
+ 	 */
+ 	if (unlikely(!list_empty(&sch->children))) {
+-		scx_error(scx_task_sched(p), "__scx_bpf_select_cpu_and() must be used");
++		scx_error(scx_task_sched_rcu(p) ?: sch,
++			  "__scx_bpf_select_cpu_and() must be used");
+ 		return -EINVAL;
+ 	}
+ #endif
+-- 
+2.25.1
+
