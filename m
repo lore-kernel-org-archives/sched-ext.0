@@ -1,86 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-200.mta1.migadu.com [95.215.58.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510083CC33F;
-	Tue,  1 Sep 2026 21:16:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55649266565
+	for <sched-ext@lists.linux.dev>; Wed,  2 Sep 2026 01:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788297362; cv=none; b=ezt1EGiiG11TuPZdyEZ3gmkXlmtTApiC+BOkvN4kkqGrPjuP81/JHmKo3tH8uVGMCOpo4QjeQZGv0u9rsqLMJCexgbGXarHJLZbVk3nEZ7ofYgG2/IxIH86UVvvr6h9VTpEsaQo9Yog3+HkHAtt3yEgcNe4UOuK3DLJHUpH2D68=
+	t=1788312095; cv=none; b=LtZN7FzitD2iKLYhPlNhnSEUmmhU9W4aPW7jnHMYB5j2/neojeAAIEYhKZTYG9FZvKjXuPN9CPTvZ/sbGmE6qSM2KUHlKbiNBS5JXrbeXuvNOFNB12FAvHujLNUD7MJEmM3dxtl5qdqoSe3+WTxo37LKmbsx6F0a3rscS2g4ZvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788297362; c=relaxed/simple;
-	bh=lSbW7CMHA99QRbu3y5Y9AjtPDZpbpMhYHDxluFMtvdY=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=Tcvc3U0u10uxWbNayxZUzKMwaMuViAzLHBsODi8g0tuiS4FQaHXkDCuODEfTz9LLSgS+Ry8OI4jJs0R3lCK/yJaVFEFPmaTdCHK8LKy+/2+lnwcho9xW6Ou5kSHMIFN3QDKgu4wQ24IXM9Ynj5zBnPnKq0QHwzcKZJP/v1d1BYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NpJhdWrk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788312095; c=relaxed/simple;
+	bh=cnYNJPs9LNsxHxYbfan+xf2gAuz5dcYlsIYOr8iWioY=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=n0rAmrO0bFM6iB7jwiZ8GHDkfd8eJxCRzp9tjJ6bzGdvKA3fzKBnnbuOBTjRpJy1V5ercV6pw8way2NYFhuxA4O+8/77DIPT8j4pYK9n/7ZNjjcLGURrov7yIZX7YcxYDvjr/E79P66xY1QNpPL+Si+Rz4XZ9qJB2PhAY01dkGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=I/EKpy6Y; arc=none smtp.client-ip=95.215.58.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NpJhdWrk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59731F00A3A;
-	Tue,  1 Sep 2026 21:16:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788297361;
-	bh=ocZClOGhtCYdBb65IaLJAaGGci+QkprlGO5cDfZ+OSE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=NpJhdWrkQCK7Lg9p+UURJ1MhOGaEGlFU2SKboI4ufZqzjNIdZMbUS9B3XL+a6xcEz
-	 jbbH4Nhp0jRawXrjrzsSKKYFUrdmH7hlvUwC8xoaRzHx0kiMbgoz+pqrkRxikvkgzf
-	 pYG5jfkii/ntlVO3Tf1giydyxTEtwS9op+pPjR1perGCdcP+dXVHNKiG5RAge+B9B0
-	 3CNSYenYNVz34y78bnMbWXxuojcZub3BlIIAqhhgxFMoDKEYJddRepOx8tMDiLiCx0
-	 AAFwmF/r3X9GU+ZxGur0OSINwfzH6lAhvr7he8HCnp5KnP8SFZTm7Zcm9gL2z49Xej
-	 /BM6Giit/9Rfg==
-Date: Tue, 01 Sep 2026 11:16:00 -1000
-Message-ID: <3a9bfba228c46c69408fe1ef392e60f0@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Wanwu Li <liwanwu@kylinos.cn>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Reject NMI calls to lock-taking kfuncs
-In-Reply-To: <20260901095652.1009104-1-liwanwu@kylinos.cn>
-References: <20260901095652.1009104-1-liwanwu@kylinos.cn>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="I/EKpy6Y"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=cnYNJPs9LNsxHxYbfan+xf2gAuz5dcYlsIYOr8iWioY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788312091; v=1; x=1788916891;
+ b=I/EKpy6YleKf2k09kllkG9SVKq6NgoGEUUc66ZHW16Q5xpJTOsEURdaGM1W19cK7n2aCwNx6
+ cx+fIWDSB5oJgqhH8iC6r9h7+mW+ykEdu8qed9ZpbtK4u+HStR29LrZ0xHuo/LWmW/VXkhQMv4W
+ rogA95RpSwiM+JIMMYgzRV8Q=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 16aaff76fb8e100b;
+	Wed, 02 Sep 2026 01:21:31 +0000
+X-Mizu-Trace-ID: 16aaff76fb8e100b
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <485268f6-52e7-4b55-88d0-56c89bf88008@linux.dev>
+Date: Wed, 2 Sep 2026 09:21:05 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, arighi@nvidia.com, void@manifault.com,
+ changwoo@igalia.com, michalblk@google.com, liwanwu@kylinos.cn,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>,
+ Sashiko <sashiko-bot@kernel.org>
+Subject: Re: [PATCH v2 2/2] sched_ext/scx_flatcg: make cgv_node_less()
+ wraparound-safe
+To: Tejun Heo <tj@kernel.org>
+References: <20260901140343.764080-1-cui.tao@linux.dev>
+ <20260901140343.764080-3-cui.tao@linux.dev>
+ <beadefcfd5ae112a703b2514f6eebf34@kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <beadefcfd5ae112a703b2514f6eebf34@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello,
+Hello, Tejun.
 
-On Tue, Sep 01, 2026 at 05:56:52PM +0800, Wanwu Li wrote:
-> +	if (!scx_kfunc_nmi_safe(__func__, sch))
-> +		return -EBUSY;
+在 2026/9/2 04:00, Tejun Heo 写道:
+> Hello,
+> 
+> On Tue, Sep 01, 2026 at 10:03:43PM +0800, Tao Cui wrote:
+> ...
+>> long-running host. At the wrap instant the plain comparison puts the
+>> wrapped node behind everything else permanently.
+> 
+> Plain < puts the wrapped node at the front. The unwrapped ones get stuck
+> behind it. Also, each CPU picking a cgroup charges it a full slice, so the
+> wrap is closer than weeks.
+> 
+> ...
+>> cyclic comparison is valid as an rbtree comparator only because
+>> cgrp_cap_budget() clamps every node to within max_budget behind
+>> cvtime_now, so any two nodes are far less than 2^63 apart and the
+> ...
+> 
+> cgrp_cap_budget() only bounds the lag. The lead is bounded by the slice
+> charge plus pending cvtime_delta on re-insertion.
+> 
+>> Fixes: 7b742aa2c2c9 ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
+> 
+> Not in mainline. The upstream commit is a4103eacc2ab.
+> 
+>> +	/* wrap-safe: cap_budget keeps nodes within 2^63 of each other */
+>> +	return (s64)(cgc_a->cvtime - cgc_b->cvtime) < 0;
+> 
+> Use time_before() and drop the comment.
+> 
 
-The return value doesn't matter much as the scheduler is being terminated.
-Whatever it is, use the same one everywhere. -EBUSY suggests retrying would
-help. Let's use -EDEADLK which is what's being avoided.
+Thanks for both reviews, all points taken. Here's what changed:
 
-> +/*
-> + * sched_ext kfuncs that take scheduler locks are not NMI-safe: a
-> + * BPF_PROG_TYPE_TRACING program can be attached to a function that runs in
-> + * NMI, and scx_kfunc_context_filter() lets such a program call every kfunc in
-> + * the any/cid/idle sets. Acquiring the rq, dsq or pshard raw spinlocks - or
-> + * touching the irq-masking-only kick list - from NMI while the interrupted
-> + * context on the same CPU already holds them deadlocks (or corrupts) it.
-> + * scx_bpf_kick_cpu() was the first guard; route all of them through here.
-> + *
-> + * Returns true when the caller may proceed, false when running from NMI and
-> + * the kfunc must bail without touching locks. scx_error() is NMI-safe (see the
-> + * lock-free ->aborting claim).
-> + */
+1/2: "less than 2^63 apart", folded into the paragraph above.
 
-Too long. Something like:
+2/2: wrapped node goes to the front (not behind), wrap timing
+corrected (per-CPU slice charge), lag and lead bounds both stated,
+Fixes points at a4103eacc2ab, comparator uses time_before(), and the
+comment is dropped.
 
-  /*
-   * Tracing progs can call kfuncs from NMI. Kfuncs that take scheduler locks or
-   * touch the kick lists, which are only protected by irq masking, can't run
-   * there, so abort the scheduler instead. scx_error() is NMI-safe.
-   */
+I'll send v3 shortly.
 
-> +static inline bool scx_kfunc_nmi_safe(const char *who, struct scx_sched *sch)
+Thanks,
+Tao
 
-scx_kfunc_nmi_safe() reads as if it's testing a property of the kfunc. Let's
-call it scx_kf_allowed_ctx() to match scx_kf_allowed(). Also, instead of
-passing @who from each call site, make it a macro wrapper which passes
-__func__ to the inline function.
+> Thanks.
+> 
+> --
+> tejun
 
-Thanks.
-
--- 
-tejun
