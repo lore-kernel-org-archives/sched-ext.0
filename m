@@ -1,116 +1,159 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90031351C04
-	for <sched-ext@lists.linux.dev>; Thu,  3 Sep 2026 03:58:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C92538332F
+	for <sched-ext@lists.linux.dev>; Thu,  3 Sep 2026 04:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788407888; cv=none; b=OQpvxhTPwuO6HEFnhxLn3pYQ6Z+daYrTh6UPLI6b3Z/NjkU+zMYp92PARwMVnBLmZxLwHlH67wtlc8l8lAep04/QeHrsdnzvyDjVg22PCxOiI7BIABjQUngXNHCWz7/YGezp4611z3Uu9vWekGqD/of4y9JaY4dWgOSALPM+1KM=
+	t=1788409146; cv=none; b=BIDAC1tJqdkrHYu5wWZiboE2s/RMsv8CIKQIbbleNnmokNQML7Wo7aIJcwts/0QQLO9FADTY2ypPZOL/XYVbevK/HnNNyGYqbn8sZDHrbqhiE62315h+KTLkxc3Tp+icjeYP+dbpVzVgPAJDtvRdywGkdHl8D1OcKrQLh9at490=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788407888; c=relaxed/simple;
-	bh=CXlpF52qtVFzAMuM4dYkQpB+SckVdivvQaN7BnrTPG8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tqIh0Esg461PRpAa/hhMIe+DrQm4FIePMqT8QOq8GPTJ1f44SaoZ6l/y9zT/5PoTc2G06RcaLiLq7c65eIIgIpz1vcKOymfsxxL1dFkoEa6gHJw9/2xPJ+wjLyXYyAMC8OZYda8aLCWXXiMKa7OKaKpoQZK177+ETV3fdrQiifo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: a8fdb6c6a74b11f19a56ed5b684f684d-20260903
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:dc4f8f8e-66d5-42d7-889a-9c2ea0254c99,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:0
-X-CID-META: VersionHash:7db8b62,CLOUDID:015b5d99587a44c40abb399a106145f7,BulkI
-	D:nil,BulkQuantity:0,SF:81|82|102|865|898,TC:nil,Content:0|15|50,EDM:5,IP:
-	nil,URL:99|1,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:
-	0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_ULS
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: a8fdb6c6a74b11f19a56ed5b684f684d-20260903
-X-User: liwanwu@kylinos.cn
-Received: from kylinos.cn [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <liwanwu@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1298296529; Thu, 03 Sep 2026 11:58:02 +0800
-From: Wanwu Li <liwanwu@kylinos.cn>
-To: tj@kernel.org
-Cc: arighi@nvidia.com,
-	void@manifault.com,
-	changwoo@igalia.com,
-	emil@etsalapatis.com,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	liwanwu@kylinos.cn
-Subject: [PATCH 2/2] sched_ext: Protect the idle-search scratch nodemask with irqsave
-Date: Thu,  3 Sep 2026 11:57:54 +0800
-Message-Id: <20260903035754.722451-1-liwanwu@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260903032953.659847-1-liwanwu@kylinos.cn>
+	s=arc-20240116; t=1788409146; c=relaxed/simple;
+	bh=rPu/G6PIfSetSlhS4fo6Ia2PeSixCLcyJ/ceh12toig=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ZaxN0HPp+cyLvzFsDbyhWtF2wH4Y3b34Go76oHR7obMrTN1r62esTSYH8rBiYU5dcoTATlwoKDn1qbWZ+Nk5IjB5KL//fhjJ8zilVU2lsSpSQ7klSx9zYdxa5zPFl1jDPatjlttbS2+pvhNOHdxEPNB3Nxo8UacnQ8al0HcZmZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g5xWvWlR; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g5xWvWlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936D41F000E9;
+	Thu,  3 Sep 2026 04:18:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788409134;
+	bh=rdI8bgs4Gm6maEqq7h8IqMK3tRLp8Z0KpTzIY7jMi48=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=g5xWvWlRqn8dY2N4C33xlxWObsvv/HiHtmVEYPuB5UJhQRPOGrqnn3TWUN1rNL3on
+	 YMnKfDkysTr66j0JtkwdWMLQF897AtmHATukM49jrY0X1JgyZA0dcPDnm+9thdyIXQ
+	 tIWCEU/D6a67Ct9DTtkXS7h5XNGhVvPcjl0Ua+9W4IldgPwgP6ZkNZnJFo6nw4RLmv
+	 WUNCqYLWkbZA9eHGwdX2pG1QcF0SZmw/IizOlOIuTcKkz6+0ZQwMfd/mMrqm7qK2Yp
+	 x2V0SVv6iPx6lt/D1/tm6L16ADw8FKQIIOJZQRf4RK40seBQhd48rtOclkojRIJqKt
+	 z0Ixv7SZ3mHFA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/2] sched_ext: Make scx_locked_rq() return NULL from
+ NMI
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Wanwu Li" <liwanwu@kylinos.cn>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260903035719.721445-1-liwanwu@kylinos.cn>
 References: <20260903032953.659847-1-liwanwu@kylinos.cn>
+ <20260903035719.721445-1-liwanwu@kylinos.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 03 Sep 2026 04:18:54 +0000
+Message-Id: <20260903041854.936D41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-pick_idle_cpu_from_online_nodes() uses the per-CPU per_cpu_unvisited
-nodemask as scratch while walking the online nodes, protected only by
-preempt_disable(). preempt_disable() does not mask IRQs and the idle
-kfuncs are callable from IRQ-enabled contexts, so a nested invocation
-on the same CPU can overwrite the mask with nodes_copy() while the
-interrupted invocation is still iterating it, leading to a wrong node
-traversal and a wrong idle CPU pick.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-Switch to irqsave so a nested invocation can't run on the same CPU.
-A stack-allocated nodemask would also close the race, but that would
-enlarge the diff to fix a race that is already rare (per-node idle,
-CONFIG_NUMA and a cross-node search all at once); irqsave is the
-minimal fix for the context that actually triggers it. The NMI case is
-deliberately not addressed: there is no legitimate reason to
-call pick_idle from NMI and doing so poses no crash risk, so such a
-caller is on its own.
+New issues:
+- [High] scx_bpf_cpuperf_set() and scx_bpf_cidperf_set() deadlock in NMI wh=
+en scx_locked_rq() returns NULL.
 
-Suggested-by: Tejun Heo <tj@kernel.org>
+Pre-existing issues:
+- [High] Tracing BPF programs executing in NMI context can deadlock the sys=
+tem by calling pre-existing 'any' category kfuncs that acquire raw spinlock=
+s.
+--
+
+commit e3a4b62825e5b60c4d87fa4b8dd2f4b8dee65bbf
+Author: Wanwu Li <liwanwu@kylinos.cn>
+
+sched_ext: Make scx_locked_rq() return NULL from NMI
+
+scx_locked_rq() reads the per-CPU scx_locked_rq_state, which tracks the
+rq locked by the context running on the CPU. Tracing progs can call
+kfuncs from NMI, and an NMI interrupts - rather than replaces - the
+context that set scx_locked_rq_state, so a non-NULL read from NMI
+falsely tells the caller that it holds the interrupted context's rq lock.
+
 Link: https://lore.kernel.org/r/d84b31727f04e1ed0d40042ba1c09e61@kernel.org
-Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
----
- kernel/sched/ext/idle.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
-index d2973fb3af6d..93e2e0b2d1f8 100644
---- a/kernel/sched/ext/idle.c
-+++ b/kernel/sched/ext/idle.c
-@@ -153,7 +153,18 @@ static s32 pick_idle_cpu_from_online_nodes(const struct cpumask *cpus_allowed, i
- 	nodemask_t *unvisited;
- 	s32 cpu = -EBUSY;
- 
--	preempt_disable();
-+	/*
-+	 * @per_cpu_unvisited is per-CPU scratch and the idle kfuncs can be
-+	 * called from IRQ-enabled contexts, so mask IRQs to keep a nested
-+	 * invocation from clobbering the mask an outer invocation is still
-+	 * iterating.
-+	 *
-+	 * NMI nesting is not handled: there is no legitimate reason to call
-+	 * pick_idle from NMI and doing so poses no crash risk, so such a
-+	 * caller is on its own.
-+	 */
-+	guard(irqsave)();
-+
- 	unvisited = this_cpu_ptr(&per_cpu_unvisited);
- 
- 	/*
-@@ -183,7 +194,6 @@ static s32 pick_idle_cpu_from_online_nodes(const struct cpumask *cpus_allowed, i
- 		if (cpu >= 0)
- 			break;
- 	}
--	preempt_enable();
- 
- 	return cpu;
- }
--- 
-2.25.1
+> diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+> index 27bbf5e04d900..faa80ac5a653a 100644
+> --- a/kernel/sched/ext/internal.h
+> +++ b/kernel/sched/ext/internal.h
+> @@ -2181,6 +2181,15 @@ static inline void scx_schedule_reenq_local(struct=
+ rq *rq, u64 reenq_flags)
+>   */
+>  static inline struct rq *scx_locked_rq(void)
+>  {
+> +	/*
+> +	 * Tracing progs can call kfuncs from NMI. scx_locked_rq_state tracks
+> +	 * the rq locked by the interrupted context, so a non-NULL read from
+> +	 * NMI would falsely claim its lock. Return NULL from NMI so that
+> +	 * callers take their unlocked paths.
+> +	 */
+> +	if (unlikely(in_nmi()))
+> +		return NULL;
+> +
+
+[Severity: High]
+Does returning NULL in NMI cause a deadlock in scx_cpuperf_set() and
+scx_cidperf_set()?
+
+When a tracing BPF program executing in NMI context calls
+scx_bpf_cpuperf_set(), it now sees locked_rq as NULL:
+
+kernel/sched/ext/ext.c:scx_cpuperf_set() {
+    [ ... ]
+    locked_rq =3D scx_locked_rq();
+
+    /*
+     * If no rq lock is held, allow to operate on any CPU by acquiring
+     * the corresponding rq lock.
+     */
+    if (!locked_rq) {
+        rq_lock_irqsave(rq, &rf);
+        update_rq_clock(rq);
+    }
+    [ ... ]
+}
+
+If the interrupted kernel context was already holding this CPU's rq->lock,
+wouldn't attempting to unconditionally acquire it here cause the NMI handler
+to spin forever and deadlock the system?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but several any category kfuncs
+unconditionally acquire raw spinlocks. Can these cause similar deadlocks if
+invoked from NMI tracing programs?
+
+For example, scx_bpf_destroy_dsq() calls destroy_dsq():
+
+kernel/sched/ext/ext.c:destroy_dsq() {
+    [ ... ]
+    raw_spin_lock_irqsave(&dsq->lock, flags);
+    [ ... ]
+}
+
+Similarly, bpf_iter_scx_dsq_next() unconditionally takes the dsq lock:
+
+kernel/sched/ext/ext.c:bpf_iter_scx_dsq_next() {
+    [ ... ]
+    guard(raw_spinlock_irqsave)(&kit->dsq->lock);
+    [ ... ]
+}
+
+And scx_bpf_dsq_reenq() calls schedule_dsq_reenq() which also takes a raw
+spinlock:
+
+kernel/sched/ext/ext.c:schedule_dsq_reenq() {
+    [ ... ]
+    guard(raw_spinlock_irqsave)(&rq->scx.deferred_reenq_lock);
+    [ ... ]
+}
+
+If an NMI interrupts a kernel path holding one of these locks and the traci=
+ng
+program invokes the corresponding kfunc, will the NMI handler spin forever
+trying to acquire the held lock?
+
+>  	return __this_cpu_read(scx_locked_rq_state);
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260903032953.6598=
+47-1-liwanwu@kylinos.cn?part=3D1
