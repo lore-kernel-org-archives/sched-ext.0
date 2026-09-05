@@ -1,139 +1,136 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BD94B7162;
-	Sat,  5 Sep 2026 16:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050A127AC45
+	for <sched-ext@lists.linux.dev>; Sat,  5 Sep 2026 16:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788624614; cv=none; b=B0DljkqEdOVsD5BZC5LEnN37Qr61/Ypv9pUUBD9CqIww+N/sr+I48QrAuc2zR7CtxpQ7HlD9tZFSrewSHrpEkBTXO7WkZKWFyFB6tk24VOSQ2ip9hK4fQxf/EsFETGqH05l2o8qA4wkR8MnNljnWlZMnxhhi4dtAcIWzj4AiAPI=
+	t=1788625345; cv=none; b=BUEeAmGXKrcgR5hAkNGGeA1yko+pEe9ZyXJPl63VC2iFLAldav9BADHvnY289+LdB3AvdC0Q/kZuFNwhqEXxqWedfIxn/vdIymrurkFdIcTLfo23QgVNYMGlnNe/76OixI6TdRa9LQTxIrleiiGfW2xHO8Xiaird/8GpfBgpUU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788624614; c=relaxed/simple;
-	bh=GdAmVa7iE3KuZq0pnaElyxTH7QjB87W+q+Kezd277Zk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TV6vDWTq8v0xNUw5nIYN/pujjT7rhthNx8ZXqHtIo5kjFKruDoRFcdlwkGblLGCBaPujgIfLgUDR0r1wyqY8Hpg1PeWyyQHwQ05CHDNQ7I3MBICQXjv87pUF/UCHSqiT1p/i6J29qs9TLsYrcQ1ZTptPA/ddnBGkLBERzcmRvq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QlMMRr9D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788625345; c=relaxed/simple;
+	bh=YYDgakZIY9YHhU60O4k+HU3hOK6YaEGNdxVTKBY+2XA=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=oGJyANJCdL66XIQLFVlxyQCnhqQ7U1wFvND2xM+KYE975acyaQbhyw7KlgoWv/yDjiyqTrQQ2mu2A3z6yvAr5oeDM+9moBpixsA6/CTvJTSqJ7of1NIq306BFkCsloz+Avi333wqbf/znWwf+SvlwDUP1H6ETjhqk65zE/g2aX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1Zpql68; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QlMMRr9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13FA1F00A3F;
-	Sat,  5 Sep 2026 16:10:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1Zpql68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF521F00A3A;
+	Sat,  5 Sep 2026 16:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788624602;
-	bh=a8kzCCf3LkqxothS93JW9562gM6FSJ7HR30H0CavaFM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QlMMRr9DygkCsTl/8C6xL4sfrRWPM2YoG8HMSlAxjvwq6i2wFmVqoRil8nlSmBgnR
-	 4ZLOW5SBXDFXYuM+HjtljchiR6D6ugaxq5LmWyyPjO9UdO1P12WiA/IhRkEzsNMT3O
-	 xWi7G7rbh+G7XkFgqOQnuRtGi0y7GVB18OXW9jVtI1X+4pPlIqojjhpWNHvzcf19EY
-	 Kl5amb98sJmWevy1HN4t+pkpdEvLll4lVJKsc4bXuc52MOO85rW1ieBXuIH2pFsrxK
-	 MW5aZBJXfCIRcSpnITZSYEbw5EywkJekO8cCz85AFSOuJxfHenayYiHWVNjBbvKgyC
-	 Wj3iS9nfCe10Q==
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH sched_ext/for-7.3-fixes 3/4] sched_ext: scx_qmap: Do not add IMMED to rescue inserts
-Date: Sat,  5 Sep 2026 06:09:57 -1000
-Message-ID: <20260905160958.1565156-4-tj@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260905160958.1565156-1-tj@kernel.org>
+	s=k20260515; t=1788625343;
+	bh=9zfJ/EZn5LCeXQWBIHjTBUqv5Y5D+LcBad1+fwXteww=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=F1Zpql685X2Zr9SJlo5eDleRknnrRzLhaYyZ6jvDF70kqgD8vyZACCzi1l+nK1K4G
+	 clgWBfq3XnA0JYtiGZ7m18ofE9Q1LnpTRrTV4esrOtLYhQ/RdyYVo2y65y0yHdF41u
+	 UV6VH+dxGO9XUySp05kS2cJtXDQZybDBDdcd8STwYeRspKxj71MHk2E/rbZoDnFphW
+	 wyIRDu68kE2z3OPZ9KwU8MajmOaJNci01cUSy8MKrJlZodzNy2ZRgxAIC7FS1M7m54
+	 e6qCk5J2NPDjW/WOQRMuzdZjdSYNFQyDKWpb2jnFE0AXk0v84Od/c5OTrWzlWdG8pQ
+	 VHMOkFXR5qLVA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH sched_ext/for-7.3-fixes 4/4] sched_ext: scx_qmap: Place
+ only on cids whose caps are in effect
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tejun Heo" <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260905160958.1565156-5-tj@kernel.org>
 References: <20260905160958.1565156-1-tj@kernel.org>
+ <20260905160958.1565156-5-tj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 05 Sep 2026 16:22:22 +0000
+Message-Id: <20260905162223.6EF521F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-qmap's stranded fallback forces a task that can run on none of its self cids
-onto its first allowed cid with SCX_ENQ_RESCUE, and adds SCX_ENQ_IMMED when
-that cid is a time-share it holds. On such a cid the insert stops being a
-rescue request:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-1. A task is enqueued while none of its allowed cids is in self_cids. At
-   attach self_cids is still empty.
-2. qmap inserts it into cid 0's local DSQ with SCX_ENQ_RESCUE |
-   SCX_ENQ_IMMED.
-3. The kernel finds ENQ_IMMED held on cid 0, admits the insert and skips the
-   rescue diversion.
-4. cid 0's cpu is busy, so the IMMED task is bounced back to qmap with
-   SCX_ENQ_REENQ.
-5. qmap's enqueue sees the same inputs and repeats step 2. Nothing runs in
-   between.
-6. The reenqueue limit ejects qmap with SCX_EXIT_ERROR_REENQ.
+Pre-existing issues:
+- [Medium] Lockless readers observe transiently zeroed `qa.self_cids.mask`,=
+ triggering spurious task rescues.
+--
 
-The caps granted during the parent's ops.sub_attach() are delivered after
-the sub already holds its tasks, while the per-cid effective caps that mark
-the time-shares are delivered from the first dispatch after bypass lifts, so
-every attach that receives a time-share on a task's first allowed cid starts
-the loop. Drop IMMED from the rescue inserts so that step 3 diverts to the
-rescue path.
+commit 64014633e68988338122fb067fb0377be3f61541
+Author: Tejun Heo <tj@kernel.org>
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- tools/sched_ext/scx_qmap.bpf.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+sched_ext: scx_qmap: Place only on cids whose caps are in effect
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 9f6e61d7ca07..e4e51303bd29 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -358,8 +358,8 @@ s32 BPF_STRUCT_OPS(qmap_select_cid, struct task_struct *p,
- }
- 
- /*
-- * A received time-shared cid is held ENQ_IMMED-only, so inserts must set
-- * SCX_ENQ_IMMED.
-+ * A received time-shared cid is held ENQ_IMMED-only, so inserts meant to run
-+ * there must set SCX_ENQ_IMMED.
-  */
- static u64 needs_immed(s32 cid)
- {
-@@ -444,9 +444,11 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 	 * didn't grant them or we delegated them to children - would starve in
- 	 * SHARED/FIFO since we only pull from those on self cids.
- 	 *
--	 * Force it onto its first allowed cid's local DSQ. If we hold that cid
--	 * it runs. Otherwise the insert carries SCX_ENQ_RESCUE and the kernel
--	 * diverts the task to its rescue path.
-+	 * Force it onto its first allowed cid's local DSQ with SCX_ENQ_RESCUE.
-+	 * If we hold ENQ on that cid it runs. Otherwise the kernel diverts the
-+	 * task to its rescue path. IMMED would turn the insert into a legal
-+	 * placement on a time-shared cid and the kernel would bounce it back
-+	 * here instead of rescuing it.
- 	 */
- 	if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
- 		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-@@ -455,7 +457,7 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
- 			taskc->force_local = false;
- 			__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
- 			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | c, slice_ns,
--					   enq_flags | needs_immed(c) | SCX_ENQ_RESCUE);
-+					   enq_flags | SCX_ENQ_RESCUE);
- 			return;
- 		}
- 	}
-@@ -618,7 +620,7 @@ static bool scan_shared_dsq(bool from_timer)
- 			if (c >= 0 && c < scx_bpf_nr_cids()) {
- 				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
- 				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
--						 needs_immed(c) | SCX_ENQ_RESCUE);
-+						 SCX_ENQ_RESCUE);
- 			}
- 			continue;
- 		}
-@@ -659,7 +661,7 @@ static bool scan_shared_dsq(bool from_timer)
- 			if (c >= 0 && c < nr_cids) {
- 				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
- 				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
--						 needs_immed(c) | SCX_ENQ_RESCUE);
-+						 SCX_ENQ_RESCUE);
- 			}
- 			continue;
- 		}
--- 
-2.55.0
+This commit modifies scx_qmap to use a new usable_cids mask for task
+placement, resolving issues where tasks were placed on CPUs whose
+capabilities weren't yet in effect. It preserves the self_cids mask to
+differentiate between stranded tasks and tasks just waiting for
+capabilities to take effect.
 
+> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bp=
+f.c
+> index b0684747f06ca..94cd55dcd9ad6 100644
+> --- a/tools/sched_ext/scx_qmap.bpf.c
+> +++ b/tools/sched_ext/scx_qmap.bpf.c
+
+[ ... ]
+
+> @@ -646,18 +649,23 @@ static bool scan_shared_dsq(bool from_timer)
+>  		if (!(taskc =3D lookup_task_ctx(p)))
+>  			return false;
+> =20
+> -		/* only run highpri tasks on cids this node holds, not delegated ones =
+*/
+> +		/* only run highpri tasks on cids this node can use right now */
+>  		if (cmask_test(this_cid, &taskc->cpus_allowed) &&
+> -		    cmask_test(this_cid, &qa.self_cids.mask))
+> +		    cmask_test(this_cid, &qa.usable_cids.mask))
+>  			cid =3D this_cid;
+>  		else
+>  			cid =3D cmask_next_and_set_wrap(&taskc->cpus_allowed,
+> -						      &qa.self_cids.mask,
+> +						      &qa.usable_cids.mask,
+>  						      this_cid + 1);
+>  		if (cid >=3D nr_cids) {
+> -			/* stranded after the cull - rescue it from here */
+> -			s32 c =3D cmask_next_set_wrap(&taskc->cpus_allowed, 0);
+> +			s32 c;
+> +
+> +			/* self cids lack caps in effect yet, leave it queued */
+> +			if (cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask))
+> +				continue;
+
+[Severity: Medium]
+This is a pre-existing issue, but can lockless readers observe a transiently
+zeroed qa.self_cids.mask here and incorrectly fall through to the rescue bl=
+ock?
+
+Looking at apply_partition(), qa.self_cids.mask is rebuilt non-atomically:
+
+tools/sched_ext/scx_qmap.bpf.c:apply_partition() {
+    ...
+    /* turn the owner map into the rr pool, per-child excl, and self sets */
+    cmask_init(&qa.rr_cids.mask, 0, nr_cids);
+    cmask_init(&qa.self_cids.mask, 0, nr_cids);
+    ...
+    bpf_for(cid, 0, nr_cids) {
+        s32 o =3D qa.part.cid_owner[cid];
+        ...
+        else if (o =3D=3D CID_SELF)
+            cmask_set(cid, &qa.self_cids.mask);
+    }
+    ...
+}
+
+If scan_shared_dsq() reads qa.self_cids.mask while it is being zeroed and
+rebuilt, cmask_intersects() could spuriously return false. This would cause
+valid tasks to be mistakenly marked as stranded and diverted to the fallback
+rescue scheduler.
+
+> =20
+> +			/* stranded after the cull - rescue it from here */
+> +			c =3D cmask_next_set_wrap(&taskc->cpus_allowed, 0);
+>  			if (c >=3D 0 && c < nr_cids) {
+>  				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
+>  				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260905160958.1565=
+156-1-tj@kernel.org?part=3D4
