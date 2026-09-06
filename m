@@ -1,57 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out-zbxj-a87.jellyfish.systems (out-zbxj-a87.jellyfish.systems [198.54.127.87])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB353B95E3;
-	Sat,  5 Sep 2026 22:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF86A3C37A5
+	for <sched-ext@lists.linux.dev>; Sun,  6 Sep 2026 13:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.54.127.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788649070; cv=none; b=O2mBIYXgZmUomBWhf/u3CSctszJR6pLt2WPA+DuwEsdNDD0nw2saBMpUzjLR/KijmS6P8edsws2PJbG0KT5poc7oi5tnr3jBPOE8FAlKenxse9rLKeGk/lRl32nqHteVT0CTgAUI3UA9EMISeM5dhJA1UW3GKBpgLWHK+8BegpU=
+	t=1788702962; cv=none; b=UntMZpM85Kz03dH/Ucs6ArgXTu5OQdxWbtVmT1sdcAMbyVTW3tWA61RPQcyRStVHzJjVirb+ssja7NjecRvmGqSy33IrFR8kVNPJFMW65W92mpLHcNGgV9XSYBHYpCPVIACQtI+8CG2SW1haAc1QpaNj+l07PjNeoh9iJj0pUBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788649070; c=relaxed/simple;
-	bh=GNv138Dy/qz9o4pgYW390AwwY4kt2FflmrtGaUu5RRE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=rZykAsF7eL0tMkPsWK+opjbaKudNhr+hyZ0qzOE1tUWQJ3yfanoY7o/CELywohicG2hGhB7fkfV4lFtbWMsjBgMF9e8QS3ulvcDSqYZRmPGA8nkAB/gjTYqHsckaK1zaVU4YUYu8XkkauzanEBBv/IHQd4FIL7ZpdTjtpf0wx1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bFsT4TqL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788702962; c=relaxed/simple;
+	bh=COd+kAaQDyip65PPi7omYsrkf1H/LFJxKJENx1+pDr4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZPuAL8jO1D4Hjl9uIMEHZ4voXWC2L+dm4KEJ6juw+ELRtD1moy/+ONZPwuuac5UIHaUDBPlHvVAL0X6G5q0JWVoEIbJosUJPX+PB4HERJWI9GMOk0BiAb7/WjrixRvc9HBgLIhgXIx3XQCOgQYyxXGNQvisojVDBb/t2fmaoAF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tychen.cc; spf=pass smtp.mailfrom=tychen.cc; dkim=pass (2048-bit key) header.d=tychen.cc header.i=@tychen.cc header.b=YK25Gdu2; arc=none smtp.client-ip=198.54.127.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tychen.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tychen.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bFsT4TqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEB21F00A3A;
-	Sat,  5 Sep 2026 22:57:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788649067;
-	bh=aCCUUebekDrCMtWHtUAIfe3agnXzsPLaenMDuDu+ET0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=bFsT4TqLJaskBdFNT6AwPlMA+walIo30mHkIRWzmuXo5s6tDJwfZ+qy2I79qE0pQM
-	 yxdz8jN54vM2rY0dgJuTuw99m2ecVrXET88FhFE/JH2B1djRH+JuuDBD0DWwiAM7n7
-	 WI0Gv4DW7S7bH2hO3BcufQLtYYnvKWCubpZ7dYFFq9WW93IXNSGHsBJ0FjO9/8KptQ
-	 dXIahHFYQgmREjYNTPyevBq/9s80M+uayFb58LGoX2pqyEeNHzHuUW+rP0rgKfHkPS
-	 XJLJklSubzGBfmNWqtNGXbKSwMPyCEf5gGY/ZGt/VWHQqeIc5Zmk5ZwFfNlfqjtdtP
-	 OY/asbNnWj5ww==
-Date: Sat, 05 Sep 2026 12:57:47 -1000
-Message-ID: <e715598cd2ce5dd3984f88f94dac8f7a@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, sashiko-bot@kernel.org,
- David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
- sched-ext@lists.linux.dev, Emil Tsalapatis <emil@etsalapatis.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-7.3-fixes 4/4] sched_ext: scx_qmap: Place
- only on cids whose caps are in effect
-In-Reply-To: <apxsZjPo7IzPuC1x@gpd4>
-References: <20260905160958.1565156-1-tj@kernel.org>
- <20260905160958.1565156-5-tj@kernel.org>
- <20260905162223.6EF521F00A3A@smtp.kernel.org>
- <c1b5b24af15ee3e117bfa07f8c89aad2@kernel.org> <apxsZjPo7IzPuC1x@gpd4>
+	dkim=pass (2048-bit key) header.d=tychen.cc header.i=@tychen.cc header.b="YK25Gdu2"
+Received: from fedora (unknown [69.5.53.41])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.spacemail.com (Postfix) with ESMTPSA id 4hdBYX6thCz6tkS;
+	Sun, 06 Sep 2026 13:55:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tychen.cc;
+	s=spacemail; t=1788702948;
+	bh=K7IcHZi0LnYase/ANW87JayKjKxLyrrOICqxy87P0M0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=YK25Gdu2+VNR7fEho2p9K8qZaOoLWNWO8gL81XUWHwwcwnUg6MmIQdpRtwO7tdcQg
+	 Wtpb2D7yhFdGj0QTKMnivdXGcHGIqdqccC1E2PbQ8MPhVoYmL/c4jt/I0NcqyIde9U
+	 ljLHVISniMKzCezV7hmRQpoaJ3GxHPN/SPLOy8G0d2gv6d9rKfFE+LPDNrtCACuh/W
+	 wRekGrgEd/8CmUy6pOyUHwZM2G/yFieOQlRzdiykzpQyGoRbqpuy7AUZIPt3e9ZcQQ
+	 PFkDG4lK4VhHegPQmKa85/CI8yYSZdAsSlnXDoNi5zpoNyVio8oPNc2/O0JCstKCC7
+	 Z+fpVDqdkCsrQ==
+From: Tianyi Chen <hi@tychen.cc>
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>
+Cc: Tianyi Chen <hi@tychen.cc>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Shuah Khan <shuah@kernel.org>,
+	sched-ext@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] selftests/sched_ext: Handle CPU hotplug write failures
+Date: Sun,  6 Sep 2026 21:55:22 +0800
+Message-ID: <20260906135534.749534-1-hi@tychen.cc>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Envelope-From: hi@tychen.cc
 
-Hello, Andrea.
+toggle_online_status() logs failed CPU state changes but discards the
+write result. The hotplug tests can consequently wait indefinitely for
+a scheduler exit that the failed operation never triggered.
 
-Posted a fix:
+Return the write result and stop both hotplug tests when a required
+CPU state change fails. Release the acquired scheduler resources on
+these paths and let the existing cleanup callback retry restoring
+CPU1. Also fail the test when its normal CPU restoration fails.
 
-https://lore.kernel.org/r/4c9a9c9cabc3547e23bae5ae00421a52@kernel.org
+Tested in a two-vCPU VM running a kernel built from the same source
+as the selftests. Injecting EIO with strace into each of the ten CPU
+state writes makes the fixed test return 1, with CPU1 online and
+sched_ext disabled after cleanup. The original test does not finish
+within three seconds when either of the first two writes fails.
+Normal hotplug tests pass before and after the change. Making the
+online file read-only also produces a failure without hanging.
 
-Thanks.
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Assisted-by: LLM
+Signed-off-by: Tianyi Chen <hi@tychen.cc>
+---
+ tools/testing/selftests/sched_ext/hotplug.c | 34 ++++++++++++++-------
+ 1 file changed, 23 insertions(+), 11 deletions(-)
+
+diff --git a/tools/testing/selftests/sched_ext/hotplug.c b/tools/testing/selftests/sched_ext/hotplug.c
+index 0cfbb111a2d..10b8d42bd89 100644
+--- a/tools/testing/selftests/sched_ext/hotplug.c
++++ b/tools/testing/selftests/sched_ext/hotplug.c
+@@ -21,15 +21,17 @@ static bool is_cpu_online(void)
+ 	return file_read_long(online_path) > 0;
+ }
+ 
+-static void toggle_online_status(bool online)
++static int toggle_online_status(bool online)
+ {
+ 	long val = online ? 1 : 0;
+ 	int ret;
+ 
+ 	ret = file_write_long(online_path, val);
+ 	if (ret != 0)
+-		fprintf(stderr, "Failed to bring CPU %s (%s)",
++		fprintf(stderr, "Failed to bring CPU %s (%s)\n",
+ 			online ? "online" : "offline", strerror(errno));
++
++	return ret;
+ }
+ 
+ static enum scx_test_status setup(void **ctx)
+@@ -44,6 +46,7 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ {
+ 	struct hotplug *skel;
+ 	struct bpf_link *link;
++	enum scx_test_status status = SCX_TEST_FAIL;
+ 	long kind, code;
+ 
+ 	SCX_ASSERT(is_cpu_online());
+@@ -54,8 +57,8 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ 	SCX_FAIL_IF(hotplug__load(skel), "Failed to load skel");
+ 
+ 	/* Testing the offline -> online path, so go offline before starting */
+-	if (onlining)
+-		toggle_online_status(0);
++	if (onlining && toggle_online_status(0))
++		goto out_destroy_skel;
+ 
+ 	if (cbs_defined) {
+ 		kind = SCX_KIND_VAL(SCX_EXIT_UNREG_BPF);
+@@ -79,7 +82,8 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ 		return SCX_TEST_FAIL;
+ 	}
+ 
+-	toggle_online_status(onlining ? 1 : 0);
++	if (toggle_online_status(onlining ? 1 : 0))
++		goto out_destroy_link;
+ 
+ 	while (!UEI_EXITED(skel, uei))
+ 		sched_yield();
+@@ -87,20 +91,23 @@ static enum scx_test_status test_hotplug(bool onlining, bool cbs_defined)
+ 	SCX_EQ(skel->data->uei.kind, kind);
+ 	SCX_EQ(UEI_REPORT(skel, uei), code);
+ 
+-	if (!onlining)
+-		toggle_online_status(1);
++	if (!onlining && toggle_online_status(1))
++		goto out_destroy_link;
+ 
++	status = SCX_TEST_PASS;
++out_destroy_link:
+ 	bpf_link__destroy(link);
++out_destroy_skel:
+ 	hotplug__destroy(skel);
+ 
+-	return SCX_TEST_PASS;
++	return status;
+ }
+ 
+ static enum scx_test_status test_hotplug_attach(void)
+ {
+ 	struct hotplug *skel;
+ 	struct bpf_link *link;
+-	enum scx_test_status status = SCX_TEST_PASS;
++	enum scx_test_status status = SCX_TEST_FAIL;
+ 	long kind, code;
+ 
+ 	SCX_ASSERT(is_cpu_online());
+@@ -115,10 +122,12 @@ static enum scx_test_status test_hotplug_attach(void)
+ 	 * Take the CPU offline to increment the global hotplug seq, which
+ 	 * should cause attach to fail due to us setting the hotplug seq above
+ 	 */
+-	toggle_online_status(0);
++	if (toggle_online_status(0))
++		goto out_destroy_skel;
+ 	link = bpf_map__attach_struct_ops(skel->maps.hotplug_nocb_ops);
+ 
+-	toggle_online_status(1);
++	if (toggle_online_status(1))
++		goto out_destroy_link;
+ 
+ 	SCX_ASSERT(link);
+ 	while (!UEI_EXITED(skel, uei))
+@@ -130,7 +139,10 @@ static enum scx_test_status test_hotplug_attach(void)
+ 	SCX_EQ(skel->data->uei.kind, kind);
+ 	SCX_EQ(UEI_REPORT(skel, uei), code);
+ 
++	status = SCX_TEST_PASS;
++out_destroy_link:
+ 	bpf_link__destroy(link);
++out_destroy_skel:
+ 	hotplug__destroy(skel);
+ 
+ 	return status;
 -- 
-tejun
+2.55.0
+
