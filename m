@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD50E59B68A;
-	Tue,  8 Sep 2026 18:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240A85921E0;
+	Tue,  8 Sep 2026 18:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788890706; cv=none; b=suX6bgM0VJf3T6Ekyg1bIS94YU1V2VeptbUv+eWwT/3GIW6Up9GzHEX6FsQLWKJqwJi2fMWiQLmP5PZvH5FcQI7vSmZfd0f6eiALa7xbef0LF+wfwW2VpCWXQNPXlI+lIC0FKiyUTDT2tAKQ2laIB83MCp258d0mWRhqFBeutSA=
+	t=1788890723; cv=none; b=sP+DTS8yvl0mHGBCmcIGYKy/iNHxjPcCrVgnmsCvXAnXJ10TfjlBEArvwPMk7ibObXAU6WM5AUN4QGuCcjZYsCbWRNcprlNqTRvR7FsYzE+3oMhQZ6SRdZ7qceetgyuJx4fnfu0yzy58+V8Am8smU8svSKyXCRI/XHzVL/ltCiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788890706; c=relaxed/simple;
+	s=arc-20240116; t=1788890723; c=relaxed/simple;
 	bh=+izvuhEto/rqxeDKdYSqynpvH9Sk7+k/IJJ1b6pN4dc=;
 	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=duH1YzE1Cm75dKOUc8HE7s8mmd++LZo5HteiEJ6vCvgj28JjX7VUGigNtTcgfPFbk9rVD7Kkh7XMVkCKzPrj/zVzpxVqFk9nzhOzKwE5f4xDhQfGo54+27RLZhCshq7UL9WlZ1HvPQYCIRw6Xcfl3us+ONv53rSBt6HZhglbU9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CjVMB+av; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:MIME-Version; b=rlFeyICQsUzqlRO9TbgoE47brEwkyJMBBwiJibMqrfdHQZdqZK8GBNIaUd8kKaq6wmBhUrG2H5UhQQ3IUQzcLeY+9g7gwCmJSoaoG7Z2DzAZ/2qS9tdPzIyOiH4gbjuWZmGFjppP9Kd9/lRYbayhmqstfn80UaQUS2XIydIvmYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kWh0L6ub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CjVMB+av"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE301F00A3A;
-	Tue,  8 Sep 2026 18:05:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kWh0L6ub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A8E1F00A3A;
+	Tue,  8 Sep 2026 18:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788890704;
+	s=k20260515; t=1788890720;
 	bh=yrCpXGcoydJmpbJVtpIANkua0JB5sKTWmN4rMBY1Ylk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjVMB+av9KBTheJLRA1WjsqdJCb4E2SAzpbgHvd5ayvv10Ji4fxps7KLwcjZR8I2o
-	 tVvdQUewGa0FjXuDDksONWmvISR5Fgxcd641bWDy6OQQpRI0rdY+Rp3NjJIQYzisVi
-	 /fwFsjy4muRz0HeePJeDNtXfqDowNIMOLOPKoSOPejQCNSplnOp1WisiMQOZPUSESa
-	 Yez9rn61M8/wYKthSPZmE1msx4RHATxo7eriUJ1UokASefLAPesKfyzM1F+BSM0t2q
-	 9/0yIOv+EnpTgzjhFOhy6k2OfDHwzkK4YsUi3QYgCh3GXvT5w8kNTBdB0qzDvgno5x
-	 j8Uyvah+V872w==
-Message-ID: <47ce114f204b0c2f630bcdb2900cd5b0@kernel.org>
+	b=kWh0L6ubPYv/MDYuRQxR5esJaWcmU58Vsq1bcH5Ka9bzOQIuDjjkoxw39asU1vaTZ
+	 zE32Ay64ZmP8Kj28fvOV/WXB37zaK9q8n9QYhcgR5I1ZpWhuVkYtP3ylPjhiKMfbcW
+	 c70c2eIAhRK4b6r9sKUo0LTQ0a2UiowQ2AD7uQ83MhLgF++JGRvnCuGyNJ2bdbvZ/c
+	 qO05FIsHl113UKkKRoAELVm0A7AFBocYFE5nSzrrpxM0DGV09haUKT7VHdB7jezI+o
+	 spbIFw+eiCS5DGcHTdUEbxeMl6RbQdQu0+KGeWTjoMv2hVK6x0gxV0Nzzv81TMVWg3
+	 aeqcJD6G/EiYg==
+Message-ID: <87d38cf2983a82fc89e18112510f5091@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Tianyi Chen <hi@tychen.cc>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+Cc: tj@kernel.org, David Vernet <void@manifault.com>,
  Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
  Shuah Khan <shuah@kernel.org>, sched-ext@lists.linux.dev,
  linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
  Emil Tsalapatis <emil@etsalapatis.com>
-Subject: Re: [PATCH] selftests/sched_ext: Handle CPU hotplug write failures
+Subject:
+ Re: [PATCH] selftests/sched_ext: Cover duplicate DSQ creation and ID reuse
 Date: Tue, 08 Sep 2026 08:01:34 -1000
-In-Reply-To: <20260906135534.749534-1-hi@tychen.cc>
-References: <20260906135534.749534-1-hi@tychen.cc>
+In-Reply-To: <20260906144044.849222-1-hi@tychen.cc>
+References: <20260906144044.849222-1-hi@tychen.cc>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
