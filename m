@@ -1,76 +1,62 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011002.outbound.protection.outlook.com [40.107.208.2])
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012020.outbound.protection.outlook.com [52.101.43.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D991034B437
-	for <sched-ext@lists.linux.dev>; Tue,  8 Sep 2026 09:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FF44DBD9B;
+	Tue,  8 Sep 2026 10:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.20
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788860589; cv=fail; b=tGNK2QNZ810hHrz5kvAg42+QfXpsVkdbuRF5rRRWEGWrSlTkcdKZzqnyxWb64POQk7qp/yFFsviiowVpaxRm0e2zsI0es39uXcGkazKLngckHi4KHvkfpsDX8ndcBzP+qAOTi4bwXfeweWYygINUTcntBlfXFCwr5BC1Sz7XvX0=
+	t=1788862121; cv=fail; b=OoZA1DK0K8ugjcN5M21m35QRv3A6XcAUquMV7ddLvc9hbuJpShxnqGPiIEwqSRSFDoFcJqDTLkbqzvReHGt4p6ItrbqZJPt3ikO4A3vSLw4pS+yFtGL9YDJ7Jrlr7OV2PwlYOYcR+9P72DNcbuZnHWc3P4EKlUHZ2+DtSxUCLyQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788860589; c=relaxed/simple;
-	bh=4Gvj2y0U7AJVyw+B3nd4+zdMyDcCPZCkP/A2TiQkIDk=;
+	s=arc-20240116; t=1788862121; c=relaxed/simple;
+	bh=RJyo/dkaCpqe9pt9Tb8mTruPWwkxUW4pr9wiAHZfNDo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=S98uEK8KfcSVrnVLaPeKCTFiPqqE5bKncyxi9iP4rGx0JCintlWn3Gcfsx01oLULNcJi5UPGg86AFoxYqEate4H7Mcx0loB6QG/l/+UD8Pnj6nEDyCxRVd1QfnJu/Rk+d38wdFC0FPGaH1ICfb9DFegwAU3NLWNhHg0XXY23Jak=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=cWOY6Zxn; arc=fail smtp.client-ip=40.107.208.2
+	 Content-Disposition:In-Reply-To:MIME-Version; b=hjvF2e01K7hVkuMHrOuMc5QtrD/bA6oUtIYsefAJOdkOR7GsrvM8+HzMnJ8qk+9G+uv0/qHW2njWgB6Bg0rQhv3WGSOFW/Xih/asBQ42R0CCXEhP0qOSjsEruQ0As4By++oG28ajGaShpaCzR3hO6Ubx91a1Ej45co2IGEsO70g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=L4LF6ttt; arc=fail smtp.client-ip=52.101.43.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="cWOY6Zxn"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="L4LF6ttt"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iJ/ERNS/Ar5V1X4hyIxemEa/O+JnUWzV1JuURqSzm7PdSSgAmUi30MwAGq2/Gs/+AnoLrMNayZCYsZZ/MAqPuYmt9T//TkeidqrHCoiscZun4fbf7Sj6pRvBz94wvXfRe3rGcozwrJ77P593Cc/l+X1+2GCbB1174lm7vnHYcDqZ7RzcxFvzlkEOMMXFFnNPWkxsn7eVBcm/8RIBttO1QHaDZFclwOC3/FWUceXOqh0rOZX6vwWI6+IkvfhVIW/P+ctDsq60MW/DO4lt4yFrPkJ5ytgQq8hdVZMQMnIewvJn29kzshthFqlXlAzvFgCzgnEUUDlq6PINz1lfTLB5fQ==
+ b=jubeR6/jPf1o9CF6eilmOVuLvoM2Qz1/kIH3oV7lzX+O/Om9+PgvPA5g05F9UWJGQnEkCRMu69ZMKOvl9oKOkh2u13NRi7KmEJH3JVlXFrRoEiwxZ9JZKVSF9h1HZoEpJS5/AHtJafbfMgRYhtgp+vdEyPh7C2Q6CwyfeaQ7fvy98rYL6LOoadUYNBO8Zwj66hNz3GunNNU8YrzM7UC6ci29ORpf0p9NeEK0hgVknphzudpaW8VbCsPEdS30zPyt2xk3uJ7UJ/gXwPqkqEHnWYL/m+cUI6tjeDNrdzdJKD698EhDqCLNlD6WKQkm0wEmljwPkSuoqaIJVnM4QjOTeg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=y+B9JbLkECntDfgBbMoJ0BMZXk/374l1z3+awr1EfTs=;
- b=Kg1ylcwtnOWJUSG0Vk2bX/6BvpMk/ZjcEctItIijS7isiSkWqGrkCQL1yP5wQir81aHQCLLvocIrKOsqsx+mJ30MtGCGExuXQpC3p6jkRHsS5ZlasHi/j3VKfj9DqDEdLieX8wmslJB1qk+Y2YFANV7x6IFcwyRCkS+xIIQOLftIjb5S5uqL69Y6OP+X3kk4hi2i5Xfg2gRJED+VhOfLhu3SE2OUHL7dSOZhEVbSaNnu5zeA/DJ+yoKHBHo/UucEKIY+sNfdaujaqzDwFQzN4Lz9Cg17smaPlMehddr2Li1GCG9OK4WI9xD+nLaY7Xv/k+4nnNC2U9Cm9JGaQJLvRg==
+ bh=9+rSzqNW3oknEPjauvAMLWmAGKERNF5GasqiE7IEkL4=;
+ b=kGXmIwJEl1qL8Tzn/rgChPbYpxhWDYOvVr7nTaoBMC6FEQW3ZwLJhwKabp2pXXk++CwXCl/5D84sXPW7of00hL0ohARCfkhwnp01yJqWBJTJcShcjFi4R59OO+cMU1HDg92yc0s9oxq7MeFq6tF4GW62luWywtZFwmjsyEXetS2Usmk/m4SEPr4Hwib1Wq5VLsP0xG9qkeg9X+mSTucG7G8Z+HJ/736bgSXqA6DazEg08deYrGSYdrBWSa61xZPOn3twzeVkr9u34GNB9/IYegs4eVp7bn7shiTzZ5nvRT7kBiEkI8k88PMuJYpHrxqDlmnHQ7yHNSvmh4jE6+BF9w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y+B9JbLkECntDfgBbMoJ0BMZXk/374l1z3+awr1EfTs=;
- b=cWOY6ZxnjEwdrIoK6NEMl9g+CJKvkgMif2gD84a9ZmALv1xJD5J5ehA+z7RTy5XbJxzmMk3/5OiA43oxi6x8QBjEPuDrBc1azwKZ6EsPtmgF7gC05WDJeEXZh/1SdXGXcf5SAJ8ZNK0JKvOHuvisiAhdE+hk+b8PAE1+PbbaT87372mFwQqVU03zpxJcM7FHf8AUOYnDtzUSK8Y63aBKdF01IV+82H+hMeSfOpfj0Vy/u9yzKrAmjjISTfYOIFbtFIxwPOzGGm2oxAJXd+tk2dDkFkOyV2u+Lpok2Vq34YPGOSIZ6m/UmNf0HFPWQxW1ga6lk0KyfiefFCfg89fKog==
+ bh=9+rSzqNW3oknEPjauvAMLWmAGKERNF5GasqiE7IEkL4=;
+ b=L4LF6tttVzEsj4TqLvtOIKU0ASLggzOCU0mUldBFGRQqOnl+hH7/ap0RVgHO9KAA1uyGrqddE2mBzPUCk9Kr0LUl6roxlj0w3506Yjt3UuSrgCotRaKcILEY0tdIfdB4JUjeftMkSH6jqmW37tLB1M+GYeLilK0uiNw15lX9g9k5Exl7KNZKAubGu7cW9d2FcRalw334DZEgEJ8FEbz3069fOvmdKr8rnP250cdb23a46+btIkbu5LTGP/eKo9uRUOs5nZSg8NDnqdojJm1XMUWbCsH8AjrODZpRwLuidJKeURX55Eo4SJT5VVc09pUuFY2HDwd/4NkZwwU441p5dw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by CH3PR12MB7762.namprd12.prod.outlook.com (2603:10b6:610:151::16) with
+ by DS0PR12MB8198.namprd12.prod.outlook.com (2603:10b6:8:f2::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.6; Tue, 8 Sep 2026
- 09:43:01 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Tue, 8 Sep 2026
+ 10:08:35 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%5]) with mapi id 15.21.0382.014; Tue, 8 Sep 2026
- 09:43:01 +0000
-Date: Tue, 8 Sep 2026 11:42:53 +0200
+ 10:08:35 +0000
+Date: Tue, 8 Sep 2026 12:08:24 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Richard Cheng <icheng@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
-	Lee Trager <ltrager@nvidia.com>, Koba Ko <kobak@nvidia.com>,
-	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 17/18] sched_ext: scx_qmap: Add proxy execution support
-Message-ID: <ap_YneRnbmk_ZYeQ@gpd4>
+To: sashiko-reviews@lists.linux.dev
+Cc: sched-ext@lists.linux.dev
+Subject: Re: [PATCH 15/18] sched_ext: Delegate proxy donor admission to BPF
+ schedulers
+Message-ID: <ap_emBJuNQiSOFXg@gpd4>
 References: <20260831134338.1531664-1-arighi@nvidia.com>
- <20260831134338.1531664-18-arighi@nvidia.com>
- <apaDOhiWKcLH5iQt@MWDK4CY14F>
+ <20260831134338.1531664-16-arighi@nvidia.com>
+ <20260831180837.947171F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <apaDOhiWKcLH5iQt@MWDK4CY14F>
-X-ClientProxiedBy: MI0P293CA0014.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::14) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260831180837.947171F000E9@smtp.kernel.org>
+X-ClientProxiedBy: ZR0P278CA0169.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:45::16) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -79,186 +65,139 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CH3PR12MB7762:EE_
-X-MS-Office365-Filtering-Correlation-Id: cee9a495-2770-4551-d5ea-08df0d8d9279
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DS0PR12MB8198:EE_
+X-MS-Office365-Filtering-Correlation-Id: 264846c7-5d11-436a-8fe0-08df0d912497
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|366016|23010399003|1800799024|6133799003|3023799007|10067099003|4143699003|11063799006|56012099006|18002099003|22082099003;
+	BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|4143699003|10067099003|6133799003|11063799006|56012099006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	XA+uHLXnhddgsFMENYVFObDkRrAE5wAqaClSph/UX6fe0fl/n8yme+VRZp3DhXKYP+i8I5yTW/3JR2m6yszRZZwZCN8CiFLepECjrlEZU1SCk+C/o1yN/RcaJgdGzSYziI49AGVhiDShp0j4t/qPa65OHfv9CFCqqEysKZZpSTsZ77BmNUvsYujR3WyGi0i4XYSa3PYjPch/UlkBfqX5W5lAg3IHbOVEWSBWRpG1MsE+LEX1NIXXZl5Sd5mPrrLIePdoNspTj1dM8afcRfogV1KeDH4VQ14+r3pajRhdEvidxJN0TtMvf3XIPKAm3VF2Ia5LTGc2zuhMGH5sPIU+aVCJkHGuQXY4S+Zp2F5knXZxT2EknLcxCZIXS3axQdcl/M9klZBfjh2I/DxvK0ndPHu5twGqHpJvH0IUo/sLz+iSudi0BXKNDJpaaNbGgICzXadUBMBKO/kXIdddAH37SLsdpLULEML0L4lV1GV0akHZpwKTxJaHtmjIy4T0TSkLI61ncQ+/KV2SnahrWTCYMKS1oN3stbvKoCL+UbRfiM1vNeGagFMFjlPI8FPGf3+VMNiNpUE74V+iUh4R0YW2r3VYEybc+F7yL26bSFa67rSCQJnLtkLzXNQXsfH25QRxolh9veAmd67OXGPg/NgLKwI1At8rNEC5FMjCJKsAwvo=
+	/4OpAmr9wv/BR/J5eXSh4Dg7NNmQ3HxN4s1x06vmgFg4dOs4s9DA0NqHV276eMgp3kbwPBfuYqv+ET3QWb5rC5IDm7BfCH/+dYmpNFg2h1PEZEYYJFxJc3KsMVbMCgY7w4Z9ymaoH4dQWe6JZvJfm3mirzvW2tbCy3ut06SJ1tC/hCuvOYJn/tUim1XEf1+72qDQa5JGI3id3m0C0Jt9/yGF/TSC9WiN6g816nZesCsh6nSHI/RS4x1jy3HhYwcSHMJjtAdaxv3ifxCverthcplP+hVVb9Hgydo6krz7hJXsurTxjkyjLfG54IXf0kJlRfzchC8iIM3As0QQFliLPzyU6GtHGoieFynZ1mvbHrHGt59cE+n4Z1VHw/OgOZJkbIRdx/D+MXfPqVVqwmMG/ExfYmeCbe3dCwDVtlobANU1cHsKVutub1PUC6hY4gAOyXwdc9LRlKpquIB3W2cX6Gi65ceSxGWf8ZojSQW9COWKZHldLRc1i79hWpmf0kpjee22yuSFep86ph8y6GkRYsZDf+1CkVNYLhlcWF89atp4G5FSL2Jw1ciDS0FcHevcG2GDAYXPXotckbG55zOpuFOIaHiBrWqE1CChqL3YllPVpZUeP8boRiKRnERiUiy8Wa5GshySTRo/UNaNvNLG7H6JZV7YbX0lWsigmqdrPRI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(23010399003)(1800799024)(6133799003)(3023799007)(10067099003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(4143699003)(10067099003)(6133799003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?gZ/izeGmmlVi/JEOhNaaMEMwuvVwZUnpfdDdoG6ZCqZr4z9r5HH0eZaG2IAL?=
- =?us-ascii?Q?fnI0yVeW6aGIB4PL9sgS/HjXa3KrhTvpu+SpbRmBYvgf6xxWJZg2HuFzFjli?=
- =?us-ascii?Q?xzfmqIvYbHsxBULFCXdUbPMOZL0+UtEQTXVWWP3mVoP28sB8VQTnWCM0GV3T?=
- =?us-ascii?Q?cQOB8KITN5zZ7ywVvtwW8xour5IJYLk8rMsg5aHGDvs5ARlObNhdAgKdnEUc?=
- =?us-ascii?Q?ohmBAgWvkhilKyv1yAnKRKxFbhUUtG25JMsYyI/VNoxVASzu8TRJUlD3x5Xq?=
- =?us-ascii?Q?iFRE9p5xppmEPc5qmw3vImwb51fF9Pma7nBwwBGf+T8jPCnfD4M+ShayTO4s?=
- =?us-ascii?Q?d3d7VdQbcyHIIQ+Ar2ggZfgiiBT5gi6yFtzKQPTsUPif/gPWDM6rmzGRajOX?=
- =?us-ascii?Q?LBcXRi+5kgA42wAfmBSt1gm3KcbGsZcOJ/4719aze0OQHbWtk5AF9ZAzMNlA?=
- =?us-ascii?Q?FNFcSPrJu6mKOi6eYU7e5TMR90o4QaHSYU4uZ0aY+nP0Xa/XwcAWHdum3RTX?=
- =?us-ascii?Q?rzWMP+IR9YEtCdlMT9EWWMW4n9kaEBllpXoXxExRLJRQsgaXefKDO6+bUEVP?=
- =?us-ascii?Q?OcjJNpwfCFi9dst4wrjhRJ/MWi2Osk05J4A0c4SmuNSAhfX2NkuJJ09ad6jq?=
- =?us-ascii?Q?7RhqqyWBAXo1nJuecxpAWGw1coArxxc1byhopCgW3sM8mysbcOdgxjZuPWOr?=
- =?us-ascii?Q?oU9dD0UGDhmFjN+o2ouBwldAkwWHJAgZSMKxLF/QiXTurdR+ZE4M/sW68kRT?=
- =?us-ascii?Q?SfEkZpgFn/hUDLWsEyeATQlK/hiLBALhBsF1pQ+M6Ut4qIKWtPokddBn1hvc?=
- =?us-ascii?Q?MTYm0T35zJSOmYGO0JBr3WxokIEGx1pE2Ncc1PY0narinUKKKvv9u8E9i4Ax?=
- =?us-ascii?Q?fbiysObW+AbqQ/yWYGp+PnIbHwV26IF+i6CWvOLnsfN3DFgiEn8kTF5fmYJ+?=
- =?us-ascii?Q?/1ltgRztg2+kwLm7jR/RWxocG6+XdTILFluAMLF4oXuChbBnwHD37mUw0XuR?=
- =?us-ascii?Q?Jnir4WpeDi8Qg9orapRgLzww+4eDFGebhIFw0IQA73FOsG2a07Dg+OnJgOti?=
- =?us-ascii?Q?w7S+A5OKq5PYtJ+mVYnmn8o0XHJEzCPnouairgxZ7XGfxl5//JDcPZ84QzTl?=
- =?us-ascii?Q?SBgEQWeL5i409306i8RdJhhNdwsra672Fryt6/Q67r4UETy5EbuSp9y5pkrn?=
- =?us-ascii?Q?iv5v6aYIGdmFhuCh9W5FmkxTlNpAYZCU11g3meeIPoD35BpKRxujKX7Sc6Mz?=
- =?us-ascii?Q?scR1Y7cs1n1KWx0o6di5iSNKhZbc49kR7frfHoCLuWrGLbsCGIzk5kjVj2uH?=
- =?us-ascii?Q?aKrh7uhVlKVRsWGPSCe7gusBw4sMlBDsX9xhJGpuIaM/qZf0O2FlwA6AaOTI?=
- =?us-ascii?Q?JszraLVHp2cMWfcfHqJQT0FFbkbnC/iaJTH9UWTT9Wrax3gxAhAIEEw3iPuZ?=
- =?us-ascii?Q?mHXLhXOoKYGy3FfMl0JHzLL2BzT4Um8u7AFx/lMTwKTQZRLbUyGoXuObl9jX?=
- =?us-ascii?Q?2vcft29E0rIZFw3kn6k8Ymp/6ByNLylN3xz1k0TJPM7laYL1U/LUTIJtDcN8?=
- =?us-ascii?Q?n/5SO8XD8t4B8Std01/9NCkbZ5Nh51I7hV3luZjNkidEdCT29FdnstwEILjG?=
- =?us-ascii?Q?t0LgnsJXHVaELcf5ZduB8s2PlcPt86BVCOappsaxjBmZsvWLw3QVKZWkTeti?=
- =?us-ascii?Q?ZFrrhJJBY5HaOXA/+yjQ9IVcqMMwAlQyoKtRNVkNsbx5K7bk0dCDP8FNZ+4n?=
- =?us-ascii?Q?6POkbmrK5g=3D=3D?=
+	=?us-ascii?Q?KMwrQIEi+GkKimJAgtSUasS4KJ3g6Sa8P87b6N9EH+5aB75FZol68UOt7wLM?=
+ =?us-ascii?Q?+KdUBt+jAhPaehbAEMnjR9Zndn0+KPO2TBiBKNQ8634rdnfRT3+Snbr7vLVD?=
+ =?us-ascii?Q?CcMkBLoodio4svCwfSHtXvYmKWNQ6HNGw3AmGtvCMzCeAQOR0ercd3sWckA5?=
+ =?us-ascii?Q?N0HZ661V+NldsfQzOpWXk0uTSi3csValfByTLO5sYGKH1vYXzRKecTXE97GC?=
+ =?us-ascii?Q?mZJlS+GpHQGUAmw7+/JG/2EnwjGqnLjBf/DZo13Z7jy8nuCjlD4Fzw0m2Pnj?=
+ =?us-ascii?Q?6ATijirwsx3aPk0E+6/AZ5VxlnTplwWbgrNnP9Nn7rfJDFtvhbSNl33qqxSO?=
+ =?us-ascii?Q?dXH6DaYtW1SOVmbX9ONlo7jnFMRs1EugD/7YIw6LD8FgX5SHY8x9YKNKpz1c?=
+ =?us-ascii?Q?BSrxJMen52PwWJ53NPmeaC1O3oYqbU4ffiWtTxhaRVNiUGyzGKDBkjbrIK+Y?=
+ =?us-ascii?Q?KSBh2E7ZrXcAHL1SC+dpLyKDOD+jE3HEipnvux44Y4fJ0KBz4t0pm7ldDaph?=
+ =?us-ascii?Q?TLtSmgEs4kONaJUTVhynHicBSn4NBfqAnyN5+zDadyY6K7BM+3v8ucigMw35?=
+ =?us-ascii?Q?6KSuzKo5/jFhOOdVOooG7c6+kAQ6wFUlYoG72To/RRPz9BwxLk7KTmGTroHL?=
+ =?us-ascii?Q?oaF9CJEJUfHlG9ZtRJxYy9m8N/p020U4f0RpcIP1Y3NCVJJ11dLiN9A4bS6i?=
+ =?us-ascii?Q?GYzdxY70aSb/NwjbhGYGrx30tfgYOXxo4KbvVSltHWT1cEunqgLE8YavAKJd?=
+ =?us-ascii?Q?Af4skz6NSq9wl02n14IKHdNOaoi76SrAOEcYdHPmC4desgrfFILzbK2LjW9E?=
+ =?us-ascii?Q?0cpcpRPNaJU8qCmYFuLkCTJIz1+BXfs5vUkdHNRBmc55QpugL3XUFQm4TO7g?=
+ =?us-ascii?Q?AN25+7l4siwgJtxHuFQ2qoH+IXQSeLi/UWLeUqMiUmxbmeuJ4ipRex6h3ik4?=
+ =?us-ascii?Q?KbMZ7zKYD4f2RGVkF9nwpbiq2oMbfKYhy9m4cBi+fIOOMo2I2UwFGeAKJbpP?=
+ =?us-ascii?Q?Dkt877KIcRMcI4NkTL0f8qgeM/Thf+FY+2q9eO4a4lBQKUun+9yC7CpcqkJy?=
+ =?us-ascii?Q?O6Tk3aYnXHRb9fOrDphCZvIt6p6uYCABlrYax5hKJUinQOfFT51VWWK7vvTp?=
+ =?us-ascii?Q?JLYj0ZMqLZgvQYdJNno3rEdDs6EmAscQs0ta/8a4rm/ml1u7Kj6wDbLtiwX4?=
+ =?us-ascii?Q?CZIn/Iz+CINfEMb11Wf46ogvgqRZVynQ7guTzdcPWR4v0QMZUvvhoOSk/bb2?=
+ =?us-ascii?Q?YRYKCrtP3cX5B4cSHl69GjDcG0YIqs0q3ecarrF+1aDVZ0RSgEbW59dMpOrE?=
+ =?us-ascii?Q?BRseUnVNBkHHckfRGsq9AD/XlyEy9zJAnZ+KMIjP4F3Dkaeih5DZbJsrWDnm?=
+ =?us-ascii?Q?Nzl6MLuQ6RAZHng0ToLf5npIy0GrCu6W/opNZt9Knmsj5tgOiQMA/8pIm/5g?=
+ =?us-ascii?Q?kA3zDvyryQYFXca/3FrtPUcb3CrGkDO69Ckvq46H0xojDtFsvM3UafaFVsz6?=
+ =?us-ascii?Q?40ON9jOozRdeUax/MhRSIUr7Rq9wwYlcVA9aOcCe0gNzI37TVONYiJsm+LOt?=
+ =?us-ascii?Q?vwqpzNlk4W2m6qH/puRJrj5KoqOJKtKZm50E/p3aPx/jIV2+wYFGXZGVWbuS?=
+ =?us-ascii?Q?kQYaFt/FDNIHyGRrMpJlwOeRRM/FUJcOJC4b1ZIhbLghFDEigRiFupjSMKr9?=
+ =?us-ascii?Q?3Ztvu62XaGkogZBLfzSwp9byDYU1E5ZJNdJsrO/xZx381/DJTOFYn2yLjFCu?=
+ =?us-ascii?Q?rfr4pE/eAQ=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cee9a495-2770-4551-d5ea-08df0d8d9279
+X-MS-Exchange-CrossTenant-Network-Message-Id: 264846c7-5d11-436a-8fe0-08df0d912497
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 09:43:01.0433
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Sep 2026 10:08:35.2008
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lEywmoWKTdCTnFka1y3/0R0phfv6o7IA1vVya5E8vV0sr+tlJEnfjTDh79ntCoRJD65L4OKpL0VjUdPE/+OlaQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7762
+X-MS-Exchange-CrossTenant-UserPrincipalName: e0LeIKxVm4Je8jVno6CUgZ7OOl37dp5WcIr4pwC4PFY8HJpbj1Q8WB6Gg0l1pJIALRNf82dgxjXpbkX+GdTg2Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8198
 
-Hi Richard,
-
-On Tue, Sep 01, 2026 at 03:52:05PM +0800, Richard Cheng wrote:
-> On Mon, Aug 31, 2026 at 03:42:27PM +0800, Andrea Righi wrote:
-> > Add a -X option to opt scx_qmap into queueing mutex-blocked tasks for
-> > proxy execution. Without the option, SCX_OPS_ENQ_BLOCKED remains clear
-> > and mutex waiters block normally. With -X, blocked donors are passed to
-> > qmap_enqueue() with SCX_ENQ_BLOCKED.
-> > 
-> > When scx_qmap receives a blocked donor, select a cid allowed by the task
-> > and held by qmap, preferring its current cid. Dispatch the donor to that
-> > cid's local DSQ with a fresh slice and SCX_ENQ_PREEMPT, adding
-> > SCX_ENQ_IMMED when the cid is time-shared. This places the donor at the
-> > head of an eligible DSQ and requests an immediate reschedule, allowing
-> > the core proxy-exec path to run the mutex owner using the donor's
-> > scheduling context as soon as the donor is selected.
-> > 
-> > The blocked policy is intentionally unfair and can strongly prioritize
-> > tasks using contended mutexes, but scx_qmap is a demo scheduler and such
-> > aggressive behavior makes proxy-exec support easy to observe. Count all
-> > blocked dispatch attempts in nr_enq_blocked and report their per-interval
-> > delta.
-> > 
-> > Acked-by: John Stultz <jstultz@google.com>
-> > Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> > ---
-> >  tools/sched_ext/scx_qmap.bpf.c | 53 +++++++++++++++++++++++++++++++++-
-> >  tools/sched_ext/scx_qmap.c     | 13 +++++++--
-> >  tools/sched_ext/scx_qmap.h     |  1 +
-> >  3 files changed, 63 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-> > index 5bb8b90a275a3..21f8a9be9650c 100644
-> > --- a/tools/sched_ext/scx_qmap.bpf.c
-> > +++ b/tools/sched_ext/scx_qmap.bpf.c
-> > @@ -439,6 +439,9 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
-> >  	 */
-> >  	taskc->core_sched_seq = qa.core_sched_tail_seqs[idx]++;
+On Mon, Aug 31, 2026 at 06:08:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] The new BPF scheduler receives `ops.dequeue` before `ops.enable` or `ops.enqueue` for retained proxy donors during root scheduler enablement, violating the BPF lifecycle contract.
+> --
+> 
+> commit 2446f36cb7fab90783875259131bf6b0d4fa2d3d
+> Author: Andrea Righi <arighi@nvidia.com>
+> 
+>     sched_ext: Delegate proxy donor admission to BPF schedulers
+> 
+>     Proxy execution keeps a mutex-blocked donor runnable so that its
+>     scheduling context can execute the mutex owner. This patch introduces
+>     SCX_OPS_ENQ_BLOCKED to allow schedulers to continue owning blocked donors.
+>     A proxy-migrated donor returns through the full wakeup activation path
+>     when the mutex is released.
+> 
+> > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> > index f23e9f1ee2f3c..06067fe504a24 100644
+> > --- a/kernel/sched/ext/ext.c
+> > +++ b/kernel/sched/ext/ext.c
+> 
+> [ ... ]
+> 
+> > @@ -8027,6 +8108,14 @@ static void scx_root_enable_workfn(struct kthread_work *work)
 > >  
-> > +	if (enq_flags & SCX_ENQ_BLOCKED)
-> > +		__sync_fetch_and_add(&qa.nr_enq_blocked, 1);
-> > +
-> >  	/*
-> >  	 * A task of ours that can run on none of our self cids - the parent
-> >  	 * didn't grant them or we delegated them to children - would starve in
-> > @@ -446,7 +449,8 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
-> >  	 *
-> >  	 * Force it onto its first allowed cid's local DSQ. If we hold that cid
-> >  	 * it runs. Otherwise the insert carries SCX_ENQ_RESCUE and the kernel
-> > -	 * diverts the task to its rescue path.
-> > +	 * diverts the task to its rescue path. Do this before the blocked-donor
-> > +	 * fast paths, which also require an eligible self cid to make progress.
-> >  	 */
-> >  	if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
-> >  		s32 c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
-> > @@ -460,6 +464,53 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
-> >  		}
-> >  	}
-> >  
-> > +	/*
-> > +	 * SCX_OPS_ALWAYS_ENQ_IMMED makes the local insertion below implicitly
-> > +	 * carry SCX_ENQ_IMMED. If the CPU can't run the blocked donor immediately,
-> > +	 * the core returns it through ops.enqueue() with SCX_ENQ_REENQ. Inserting
-> > +	 * it into the same local DSQ would repeat the IMMED handback until the
-> > +	 * scheduler is ejected. Move reenqueued blocked donors to the shared DSQ,
-> > +	 * which doesn't carry SCX_ENQ_IMMED, so another CPU can consume them.
-> > +	 */
-> > +	if ((enq_flags & (SCX_ENQ_BLOCKED | SCX_ENQ_REENQ)) ==
-> > +	    (SCX_ENQ_BLOCKED | SCX_ENQ_REENQ)) {
-> > +		taskc->force_local = false;
-> > +		scx_bpf_dsq_insert(p, SHARED_DSQ, 0, enq_flags);
-> > +		cid = cmask_next_and2_set_wrap(&taskc->cpus_allowed,
-> > +					       &qa.idle_cids.mask,
-> > +					       &qa.self_cids.mask, 0);
-> > +		if (cid < scx_bpf_nr_cids())
-> > +			scx_bpf_kick_cid(cid, SCX_KICK_IDLE);
-> > +		return;
-> > +	}
-> > +
-> > +	/*
-> > +	 * Insert a blocked mutex donor at the head of an eligible local DSQ with
-> > +	 * a fresh slice and %SCX_ENQ_PREEMPT, requesting an immediate reschedule.
-> > +	 * The test above guarantees that cpus_allowed intersects self_cids, but
-> > +	 * the donor's current cid may have been delegated to a child. Search the
-> > +	 * intersection starting at the current cid, preserving it when qmap still
-> > +	 * holds it and wrapping to another eligible self cid otherwise.
-> > +	 *
-> > +	 * A self cid may be held exclusively with SCX_CAP_ENQ or time-shared with
-> > +	 * only SCX_CAP_ENQ_IMMED. Add needs_immed() so either kind can accept the
-> > +	 * local insertion instead of rejecting and reenqueuing the donor for a
-> > +	 * capability miss. Once selected, the core proxy-exec path can run the
-> > +	 * mutex owner using the donor's scheduling context.
-> > +	 *
-> > +	 * This policy is intentionally unfair and can strongly prioritize tasks
-> > +	 * using contended mutexes; scx_qmap is a demonstration scheduler and
-> > +	 * this behavior makes proxy-exec support easy to observe.
-> > +	 */
-> > +	if (enq_flags & SCX_ENQ_BLOCKED) {
-> > +		cid = cmask_next_and_set_wrap(&taskc->cpus_allowed,
-> > +					      &qa.self_cids.mask,
-> > +					      scx_bpf_task_cid(p));
-> > +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cid, slice_ns,
-> > +				   enq_flags | needs_immed(cid) | SCX_ENQ_PREEMPT);
-> > +		return;
-> > +	}
-> > +
+> >  		if (old_class != new_class)
+> >  			queue_flags |= DEQUEUE_CLASS;
+> > +		if (old_class == new_class && new_class == &ext_sched_class) {
+> > +			/*
+> > +			 * This is an EXT-to-EXT scheduler ownership change, so
+> > +			 * sched_change_begin() won't end retained proxy execution.
+> > +			 */
+> > +			scx_prepare_task_sched_change(p);
+> > +			queue_flags |= DEQUEUE_NOCLOCK;
+> > +		}
+>                  ^
 > 
-> Hi Andrea,
+> [Severity: High]
+> Does this code call ops.dequeue() on the new BPF scheduler before ops.enable()
+> has been called?
 > 
-> Do we need to do serialization between ops.enqueue() and the paths which rebuild qa.self_cids.mask ?
+> Looking at scx_root_enable_workfn() in kernel/sched/ext/ext.c, the task's
+> p->scx.sched is updated to the new scheduler in a previous loop. 
 > 
-> IMHO, appy_partition() can clear or rebuild self_cids after the check but before cmask_next_and_set_wrap().
-> If the intersection is NULL, the helper return CID, and then the value gets passed to needs_immed(), hiwch uses it as
-> an index and do "SCX_DSQ_LOCAL_ON | cid". This will be an invalid CPU.
+> When scx_prepare_task_sched_change(p) is called during an EXT-to-EXT
+> scheduler ownership change, it triggers the following sequence:
 > 
-> Maybe do "cid < scx_bpf_nr_cids()" before using it ?
+> scx_prepare_task_sched_change()
+>   sched_proxy_block_task()
+>     dequeue_task_scx()
+>       ops.dequeue()
+> 
+> Because dequeue_task_scx() sees the SCX_TASK_IN_CUSTODY flag left over from
+> the old scheduler, it executes ops.dequeue() on the new scheduler.
+> 
+> Since DEQUEUE_CLASS is omitted from queue_flags for EXT-to-EXT transitions,
+> the switching_to hook is skipped and scx_enable_task() is never called to
+> initialize the per-task state for the new scheduler.
+> 
+> Can this lead to the BPF program experiencing out-of-bounds map accesses or
+> NULL pointer dereferences, as it relies on ops.enable() to initialize state
+> before ops.dequeue() is called?
 
-I think you're right, the mask can change between the intersection check and
-cmask_next_and_set_wrap(), so the returned cid needs to be validated before it
-is passed to needs_immed() or encoded into the local DSQ id.
+I think the described sequence can't occur during root scheduler enable:
+sched_ext is globally disabled while tasks are initialized, so tasks always
+enter this path from SCX_TASK_NONE without custody from previous BPF scheduler.
 
-I don't think serialization is necessary here. If ownership changes after a
-valid cid has been selected, the core's capability validation should handle the
-race by rejecting and reenqueuing the task.
+And I think the EXT-to-EXT scenario is unreachable. Here's why: after
+__scx_enabled is set, a concurrent transition to EXT goes through
+switching_to_scx(), which calls scx_enable_task() and changes the task from
+SCX_TASK_READY to SCX_TASK_ENABLED. The second loop consequently skips that
+task. Otherwise, a task being moved to EXT still has its old non-EXT class, so
+DEQUEUE_CLASS handles the retained proxy state before switching_to_scx() enables
+it.
 
-I'll add the bounds check and factor out the existing rescue placement.
+Therefore a SCX_TASK_READY task can't legitimately reach the
+old_class == new_class == &ext_sched_class case with SCX_TASK_IN_CUSTODY and
+ops.dequeue() can't be called on the new scheduler before ops.enable().
 
-Thanks,
+So the EXT-to-EXT special case in the root-enable loop can be removed.
+
 -Andrea
