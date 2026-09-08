@@ -1,117 +1,75 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1E540911B
-	for <sched-ext@lists.linux.dev>; Mon,  7 Sep 2026 06:50:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A614C3A718C;
+	Tue,  8 Sep 2026 08:02:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788763805; cv=none; b=LLOD36/RKDg1m4tOkNFO2e5ypdg7vmsfy1Ep6BBXavHcx/pBDuz4LILHOTBg38OYqLsBGC4kBCs0uwXC9RsH4AmiSQIZrpqpZ9JUiSjuhSeo05PFzh27ZlcCjV+BlpwAdETj9eLbbl67gO2OYIG6/CmOfL210gKhy7dnjljRJ5w=
+	t=1788854539; cv=none; b=hHL0VznMieD0zJ5UeTyq6u1jVKe7RVhPyteqUWrtbvbHuUn969b1Th+FDZFJRdgL773nHFdmiXXOp/k1s8wma8rHo/MeRcbhvMDLtbdQfim424uz3zjYdNKId82bzVf5ZYx7ZWdKZkzzyW385Rmh2OeYeOlHKsMIeFgkNvrlo9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788763805; c=relaxed/simple;
-	bh=GnAHVebleQJJnmt8WC+Szgot5FGZ67IN3635nKxQqYc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/JKtkEb0/Kc5b5PQeviu0EtQFRu5qPmKOwFJclaEs3nTaxQXtXOdWBHWWw4h9D08g5bGAmqqpPGDCg5W5FwD6CxyUpEwRy08Nid915itNP0ELjD1bPDp6y9PGMhxqPg5yUVhNo0N10z1T6Ir3ymSoF2eym9fZnC3dPToXY1FmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oTAYQ8CM; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788854539; c=relaxed/simple;
+	bh=SIfeNo7QUvXd05ron26+2AO8RD1jSSsOlIre9dZiEv4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QdmhWzg4dDWEwslMG9ttcq1B4U2vmBdNLv8Y8wgQ28mPBswwf/k6X7feIbwCzwltdGXy+KoW3qsSyGL2Aer+Yz6ZVRDd/ijRc/YOJYjFqqDf6NvlsYj1jcEwBqgXsLyTF84bctB+7IbT9ZF01NYrbfdhEtSROEMuFQaMl++rE5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=hSptTPvc; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oTAYQ8CM"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-8541875f596so1032314b3a.0
-        for <sched-ext@lists.linux.dev>; Sun, 06 Sep 2026 23:50:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788763802; x=1789368602; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=kcyHQ8J0eTBJ6x/cyto2HEpUStNZUbDWvhiih6YejS8=;
-        b=oTAYQ8CMBlcMu9+COa9RsEGNGrprD8S3zRLiovxJ+gkK3P6gFKv7sS3fw6eh7txe68
-         8I2ucgROkwAzuuo19CT9LpO1Cnx0MYdjbMxAXsewzMlzd56pd6KNkGtwzDMM55QyQQ7N
-         Ht2DEPsTngvrF0RUy4vWownkEv8e5oiuO8CUh1mPDzMPFEpjkfw8I+KJb2gaPEAbuMEq
-         k6mYyFdpobVbMuKLvQPV2qU06btpSeG2zRqMePHj4hP8bKdOQcLkcSlMoxH1czyEjvvM
-         EW0tV+FyweVeDvhJw6CHJoX2phD9jn+EOTLVV8E8MEdkLVE23R6BJ1z9/qZQOjsNWmZF
-         V/aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788763802; x=1789368602;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=kcyHQ8J0eTBJ6x/cyto2HEpUStNZUbDWvhiih6YejS8=;
-        b=snWHEBQJMS1kA9ZP4dMLr5uwHZsAK1pocgjXMlQhK7yWwWRnfjwyUHPslnOGFz+sw6
-         SLq1D9co+QLkl4p+RoDUD+KtNE/8RYVlG52Fws4RTwO8FeW+7bg0x+6MBRkdjh7M4/Fo
-         UngRX0Bowm3X0HpAFSzSClbdR0dTffyykwHwymeZMfomboGhFuFXRMbX+smtnN0mrbCw
-         +p6sfDYGn8c++GmyeEdR24/y9EL45HEfl7WF6iD8TT4NkdGf5a7LjGve/KF8KZWbTonI
-         XcZSpV5sh0y2xxsmSeV6rqwGyPIwOelps0tphTRtzHTFm2LQJNHafFsURcsKxQAoZIe9
-         735w==
-X-Gm-Message-State: AFuF++lohrW6WKuZ0bRF5gSe9pk16L7xdAwHz1fnNOPZ0xL/X0b5jEVO
-	jYHrWtbyMoEqGlsIJ54cHxa7j/g8Fw0xrV79XwmaDdeTWBBnkCkL0x6h
-X-Gm-Gg: AYBFou0edaaJQHXgRUa4ch5Xdopk1t6/mFUiOP6QyclTf6xHvcebOUA2T1QsKWqQnvv
-	p2xLdcL9l2l4P/4f718iE5r9txgeAzNmDSX1JnhCG7kC4BSra0eCc9hqvccOlkm1tu6TAbOPz3o
-	lsMFUJup7W8HqR1RVwjW9vzI8hnHMoWVoQEEjyFplojOuv6dT02nCfRa2ErfOGpm/0oyNQpWVbt
-	S01Ay3sIf4g5eXG4w3W1V3om7ZtTVcYTrE36zOo1huO0fJqkcuAn680rsRQx+Ivz45iELNz2ZeF
-	0FzRVPyGRIewrQGF1gxzc9qalVp8tPSiqR2pOnTYafiptml7jChp1VVC9z6+OizflCf2+g2z7Lr
-	o/XbdJwPbqa/YBTGzrcPJ2KdjURU8WOU0bBG9bvvfQF/sXlfW60ibXX/AokZg4nZfjo7WEVt1yU
-	tSFJ5pwB69YxOZORWUVptbYFUVr0j7IJ7QHYz8jxPHA5YBcO/OfoiEdW/hYvKy7A+4nMGNp70Ag
-	po8sV44OfndsA==
-X-Received: by 2002:a05:6a20:5681:b0:3cd:8bba:824f with SMTP id adf61e73a8af0-3da39eacde1mr33933937637.4.1788763801799;
-        Sun, 06 Sep 2026 23:50:01 -0700 (PDT)
-Received: from volcano9f6e-hostos.amd.com ([165.204.217.251])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-338778fb926sm465210eec.31.2026.09.06.23.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Sep 2026 23:50:01 -0700 (PDT)
-From: Hemanth Selam <hemanth.selam@gmail.com>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="hSptTPvc"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=Sj5Jm0tKhZ5OcPXOSI+iQXmJY/DDoKrUk0kxaI0lQCI=; b=hSptTPvcqc2UXJkx9az/oisQD1
+	9YHMu+syqlymAf9KMwdugHeq+ztUd8o74SFHOOBCP+toc7+YKnzf+TlN/gAAcOY8KgHhZnWQx9xWk
+	L1DCMsrDPiArV+jleGG5riiVjLXkxgq3qt//JPHAe8sWDJ1OceI6rcLVdF/y9XAte0dVOfJbMT/ov
+	7vOtpOQjZO+0vUkNWYbTnZDjNpa+nxn5OE/cKlZR9wFbQi863pkuNftjvk74CjK+r3Sm/I0JXslC6
+	LOkmRqsrzPpeL2rkBYWZuIa8ErfLVGKlCNCXJKd413FfkUrlgm18QHBU57VUDx1zcpj0ZFlBg0Dzq
+	wLLS9Isw==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
+	id 1x3qmN-0000000H5j0-3fQd;
+	Tue, 08 Sep 2026 08:02:08 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id CE4D8300A9A; Tue, 08 Sep 2026 10:02:06 +0200 (CEST)
+Date: Tue, 8 Sep 2026 10:02:06 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Tejun Heo <tj@kernel.org>
+Cc: Andrea Righi <arighi@nvidia.com>, David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
+	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
 	Juri Lelli <juri.lelli@redhat.com>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
 	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH 2/2] tools/sched_ext: fix repeated word 'be' in comment
-Date: Mon,  7 Sep 2026 12:19:43 +0530
-Message-ID: <20260907064943.25304-3-hemanth.selam@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260907064943.25304-1-hemanth.selam@gmail.com>
-References: <20260907064943.25304-1-hemanth.selam@gmail.com>
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
+	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
+	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCHSET v13 sched_ext/for-7.4] sched: Make proxy execution
+ compatible with sched_ext
+Message-ID: <20260908080206.GL4121339@noisy.programming.kicks-ass.net>
+References: <20260831134338.1531664-1-arighi@nvidia.com>
+ <apn6AdgyTr0btXDS@slm.duckdns.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <apn6AdgyTr0btXDS@slm.duckdns.org>
 
-Drop the second 'be', reported by checkpatch.pl as a possible repeated
-word.  Only touches a comment, no code changes.
+On Thu, Sep 03, 2026 at 12:51:45PM -1000, Tejun Heo wrote:
+> Hello,
+> 
+> Other than some nits, generally looks okay to me from sched_ext POV and it
+> looks ready to merge and iterate in tree. Peter, what do you think?
 
-Assisted-by: Cursor:claude-opus-5
-Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
----
- tools/sched_ext/include/scx/common.bpf.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 76f5e025e107..9660b43d612c 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -306,7 +306,7 @@ BPF_PROG(name, ##args)
-  * Similar to MEMBER_VPTR() but is intended for use with arrays where the
-  * element count needs to be explicit.
-  * It can be used in cases where a global array is defined with an initial
-- * size but is intended to be be resized before loading the BPF program.
-+ * size but is intended to be resized before loading the BPF program.
-  * Without this version of the macro, MEMBER_VPTR() will use the compile time
-  * size of the array to compute the max, which will result in rejection by
-  * the verifier.
--- 
-2.48.1
-
+I'll try and have a look at things this week -- on a very cursory look
+they do indeed seem fine.
