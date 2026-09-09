@@ -1,186 +1,126 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EB0361DA9
-	for <sched-ext@lists.linux.dev>; Wed,  9 Sep 2026 09:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EA03AE701
+	for <sched-ext@lists.linux.dev>; Wed,  9 Sep 2026 09:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788946291; cv=none; b=mM5uzaJZjt0gmGp66izuSIOdO002HrmF2BmhZ1FgAAB3GnYo9cTd9guz2Y5sWfLBgp2qITTGOV8EkKa0T0xgn0HpPyQyj+IY852eE/ilOT3QIUaYCu4mczUuDRfCDgjSFA0WkJL3ViLyL9QhyqpJHYpc730wkq2+IOWR8Gu+Nys=
+	t=1788947191; cv=none; b=CUQlnf+Hh1bleR3Ts/M5lyrg0YcoImp6WNZRW0HNaKKMU8Rvqj6dFyYsEtvWMJF0Umfn92j1YUfJuXAiovPFNpAbBx5yXx2tqv7Y7kgPecyRalGnXZe6KwC2I1B+V8767a8tsS30if1y7EbO6fyw98+Zih9DCmIERNsvPNf5eiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788946291; c=relaxed/simple;
-	bh=Dz4FveT8OUkLOszhSNpDynyKbpeqEK0RRW5tge5WD5Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkrvgTGRyfk04InpYLKaOILOwESBz/IyTcaOuXMTRybrtR3N++b9zdB+Cvl682xTeH9qFv82h/jsRIYFs+LdKiSZDtP9sY1eqj90jUStic2t70lEVYxL1W/ouLlo4psGas2jpKcaBcMszrltdCEcF8IiMEFinO4mu0HrLtdqT94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=o5WRQfdp; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1788947191; c=relaxed/simple;
+	bh=p0rFHQFStQT/DpBKuRsFBnyoK7x980aoh9fzzELVu6g=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=SBIzDCjc/qZ2GPtRGKchVBJNROtwPINvdB+G+rZu61NcBfrp2ipboDlCF58BBCRqCKKlEGKXFZ0qPv13p3dnZTbuhYeFHez2PD/2ZR8OzcXHLG6PNfb8zAnmCeAj0wfxB5QqqqCYG+ez2XTqrQkhAglCAWx0NlNJSqRkSuPwabc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDfp9DEy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="o5WRQfdp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=hu
-	gNHo8qlNHoP/MVhiB2gdPt4TVaEftzdU5dpBV1j8s=; b=o5WRQfdpGRPCxkR6uZ
-	l8kwU3jyHwHqa6kOX/3k8sHN4SHeV6jXQ4s5rL+I8Pu9KXRHjfei3rU6u6H73OCR
-	Uht4bs97Mw7AM+1iDzosHToQWO9SGgjnCdXH39pqAayKr2acaJ2xrTgSy8Bs1RGH
-	qWMrJFxB3+S2hJNMB6CqilUvE=
-Received: from localhost (unknown [])
-	by gzsmtp3 (Coremail) with SMTP id PigvCgAXJfwUJ6FqRggZRw--.47966S2;
-	Wed, 09 Sep 2026 17:29:56 +0800 (CST)
-From: Hui Su <sh_def@163.com>
-To: peterz@infradead.org,
-	mingo@redhat.com,
-	tim.c.chen@linux.intel.com,
-	yu.c.chen@intel.com,
-	kprateek.nayak@amd.com
-Cc: juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	connoro@google.com,
-	jstultz@google.com,
-	arighi@nvidia.com,
-	tj@kernel.org,
-	void@manifault.com,
-	changwoo@igalia.com,
-	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: [PATCH v4 4/5] sched/rt: Fix RT watchdog accounting for proxy execution
-Date: Wed,  9 Sep 2026 18:29:00 +0900
-Message-ID: <20260909092901.2989564-5-sh_def@163.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260909092901.2989564-1-sh_def@163.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDfp9DEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765871F00A3D;
+	Wed,  9 Sep 2026 09:46:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788947190;
+	bh=rzxxNiiz9cZzQ/G/UBWPM+Q0aT8IFV2AhGBKlt1bg90=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=mDfp9DEyoLAj5YrX15CrLGxhmcpx75E27qJ4JZGUDtpiEiRk4fU4eHD5GuIBGPr4X
+	 vKd1XFEv+k88xCij9lIyoiyJDjyHxua65f8qFddtWTcX8OY3HfYR78l+P2ggU/EnZn
+	 tZq9YSXAUJe1nzSnm3vvIqEhO3i2iDBrEfJhsquvJi6cMBX5bKShF9GjmYFdFtY1Ms
+	 tM2NBIl9QQiEMgALrw32h+TNg7v0tSA5TjokqkwJrCTdAN+VNexPfXS+o3sy1Yzk6I
+	 RNrKYhv+YRgsaDnDU5RyLjLv4lwPrq3GjvJ5JsKPhvbMXhbfRphSF+MjNvc0QZ9+VK
+	 5N5xEAH2EyS+Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v4 1/5] sched: Dispatch task ticks for donor and
+ execution classes
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Hui Su" <sh_def@163.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260909092901.2989564-2-sh_def@163.com>
 References: <20260909092901.2989564-1-sh_def@163.com>
+ <20260909092901.2989564-2-sh_def@163.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 09:46:30 +0000
+Message-Id: <20260909094630.765871F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PigvCgAXJfwUJ6FqRggZRw--.47966S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJw1kGr43Wr1kWF47tFykuFg_yoWrtr18pF
-	ZY9a45Jw1DKFWUKFyxAw4DW3WfGwn3Jay7WF4DJryrAFn8Kr1Fgr1vv34avFW5Cr1SvFya
-	vF4jv3yxC34jyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j3Z2-UUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwhXRMWqhJxUqGgAA3+
 
-Proxy execution separates the scheduling context in rq->donor from the
-execution context in rq->curr.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] Infinite timeslice and preemption bypass during SCX proxy executio=
+n due to a mismatch between slice decrement (execution context) and slice c=
+hecking (scheduling context).
+--
 
-When rq->donor belongs to the RT class, task_tick_rt() keeps RT
-scheduling-class state, load tracking, and RR time-slice management
-associated with rq->donor.
+commit ff57ff4a11692a1b0d98a6cd57257eb58a1bd864
+Author: Hui Su <sh_def@163.com>
 
-The RT watchdog is different. It looks up RLIMIT_RTTIME through its task
-argument and updates that task's rt.timeout and posix_cputimers state.
-update_curr_rt(), however, accounts elapsed task runtime to rq->curr, and
-run_posix_cpu_timers() checks the execution task after the scheduler tick.
+sched: Dispatch task ticks for donor and execution classes
 
-Keep the RT scheduling work on rq->donor, but run watchdog() for rq->curr.
-The watchdog state then follows the task whose execution runtime advances.
-The callback can also be dispatched for an RT execution context whose donor
-belongs to another scheduling class. In that case, run only the watchdog
-for rq->curr, without applying RT donor accounting or RR time-slice
-management.
+Proxy execution can run a task from one scheduling class on behalf of a don=
+or
+from another. This patch updates sched_class::task_tick() to drop the task
+argument, using a common dispatcher to call the donor class first and, if
+needed, the execution class second.
 
-Reset rt.timeout when a task blocks under proxy execution. A mutex-blocked
-task can remain on the runqueue and bypass ENQUEUE_WAKEUP, which normally
-resets the RT watchdog interval. Also reset it when a task without an RT
-policy is subsequently selected with neither the execution nor scheduling
-context in the RT class. Preserve the timeout across ordinary scheduler
-preemption and when an RT-policy task is temporarily PI-boosted into the
-deadline class.
+Link: https://lore.kernel.org/r/20260908104407.GD687043@noisy.programming.k=
+icks-ass.net
 
-The donor/curr attribution was checked with both the in-kernel mutex
-reproducer and a userspace owner in a two-node QEMU guest. FIFO and RR
-donors produced donor-targeted watchdog traces on the baseline kernel and
-execution-owner-targeted traces with this change; both proxy runs
-completed successfully. A DL donor with an RT execution owner was also
-exercised; the execution owner's timeout advanced and SIGXCPU was delivered
-to it, while an RR execution owner's rt.time_slice remained unchanged in
-execution-only callbacks.
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 51de1d8b72a1e..70815bef52960 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+[ ... ]
+> @@ -3789,9 +3789,15 @@ void scx_tick(struct rq *rq)
+>  	update_other_load_avgs(rq);
+>  }
+> =20
+> -static void task_tick_scx(struct rq *rq, struct task_struct *curr, int q=
+ueued)
+> +static void task_tick_scx(struct rq *rq, int queued)
+>  {
+> -	struct scx_sched *sch =3D scx_task_sched(curr);
+> +	struct task_struct *curr =3D rq->donor;
+> +	struct scx_sched *sch;
+> +
+> +	if (curr->sched_class !=3D &ext_sched_class)
+> +		return;
+> +
+> +	sch =3D scx_task_sched(curr);
+> =20
+>  	update_curr_scx(rq);
 
-A targeted rtmutex test set rt.timeout to 123 on a SCHED_FIFO owner. A DL
-waiter then PI-boosted it into the deadline class. Without the policy
-guard, scheduling the boosted owner reset the timeout to zero. With the
-guard, it remained 123 during the boost and after deboosting. A FAIR owner
-leaving an RT proxy interval still reset its timeout from 123 to zero.
+[Severity: High]
+Does this cause an infinite timeslice for SCX tasks during proxy execution?
 
-Fixes: 7de9d4f94638 ("sched: Start blocked_on chain processing in find_proxy_task()")
-Signed-off-by: Hui Su <sh_def@163.com>
----
- kernel/sched/core.c | 18 ++++++++++++++++++
- kernel/sched/rt.c   | 12 ++++++++++--
- 2 files changed, 28 insertions(+), 2 deletions(-)
+When an SCX task acts as a donor in proxy execution, task_tick_scx() sets
+curr to rq->donor. However, update_curr_scx() applies the slice
+decrement to the execution context (rq->curr):
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 05e599665fdd..d8a785bec639 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6768,6 +6768,14 @@ static bool try_to_block_task(struct rq *rq, struct task_struct *p,
- 		return false;
- 	}
- 
-+	/*
-+	 * Proxy execution can keep a mutex-blocked task on the runqueue, so it
-+	 * may not pass through ENQUEUE_WAKEUP, which normally resets the RT
-+	 * watchdog interval.
-+	 */
-+	if (sched_proxy_exec() && p->rt.timeout)
-+		p->rt.timeout = 0;
-+
- 	p->is_blocked = 1;
- 
- 	/*
-@@ -7243,6 +7251,16 @@ static void __sched notrace __schedule(int sched_mode)
- 		rq_set_donor(rq, next);
- 	}
- 
-+	/*
-+	 * End a previous RT proxy watchdog interval once neither context is
-+	 * in the RT class. Preserve the interval for an RT-policy task that is
-+	 * temporarily PI-boosted into the DL class.
-+	 */
-+	if (sched_proxy_exec() && !task_has_rt_policy(next) &&
-+	    !rt_prio(next->prio) &&
-+	    !rt_prio(rq->donor->prio) && next->rt.timeout)
-+		next->rt.timeout = 0;
-+
- picked:
- 	clear_tsk_need_resched(prev);
- 	clear_preempt_need_resched();
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index dd058a6ca06b..0fdb8edb7528 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2542,15 +2542,23 @@ static void task_tick_rt(struct rq *rq, int queued)
- 	struct task_struct *p = rq->donor;
- 	struct sched_rt_entity *rt_se;
- 
--	if (p->sched_class != &rt_sched_class)
-+	if (p->sched_class != &rt_sched_class) {
-+		/*
-+		 * The RT callback can also be dispatched for an RT execution
-+		 * context whose scheduling context belongs to another class.
-+		 * Keep the watchdog tied to the task whose runtime is advancing.
-+		 */
-+		if (rq->curr->sched_class == &rt_sched_class)
-+			watchdog(rq, rq->curr);
- 		return;
-+	}
- 
- 	rt_se = &p->rt;
- 
- 	update_curr_rt(rq);
- 	update_rt_rq_load_avg(rq_clock_pelt(rq), rq, 1);
- 
--	watchdog(rq, p);
-+	watchdog(rq, rq->curr);
- 
- 	/*
- 	 * RR tasks need a special form of time-slice management.
--- 
-2.55.0
+static void update_curr_scx(struct rq *rq)
+{
+        struct task_struct *curr =3D rq->curr;
+        ...
+        if (curr->scx.slice !=3D SCX_SLICE_INF)
+                curr->scx.slice -=3D min_t(u64, curr->scx.slice, delta_exec=
+);
+        ...
+}
 
+Later in task_tick_scx(), the slice check is performed against the donor
+task which was never decremented:
+
+        if (!curr->scx.slice)
+                resched_curr(rq);
+
+Since the donor's slice doesn't decrease, it will never hit zero, meaning
+resched_curr(rq) is bypassed indefinitely.
+
+Additionally, if the proxy task is SCX but the donor is not, task_tick_scx()
+returns early here because the donor is not an SCX task, skipping the SCX
+tick processing completely. Should the slice management be explicitly tied
+to the execution context rather than the donor?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909092901.2989=
+564-1-sh_def@163.com?part=3D1
