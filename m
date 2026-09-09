@@ -1,126 +1,133 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EA03AE701
-	for <sched-ext@lists.linux.dev>; Wed,  9 Sep 2026 09:46:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D7551E448
+	for <sched-ext@lists.linux.dev>; Wed,  9 Sep 2026 10:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788947191; cv=none; b=CUQlnf+Hh1bleR3Ts/M5lyrg0YcoImp6WNZRW0HNaKKMU8Rvqj6dFyYsEtvWMJF0Umfn92j1YUfJuXAiovPFNpAbBx5yXx2tqv7Y7kgPecyRalGnXZe6KwC2I1B+V8767a8tsS30if1y7EbO6fyw98+Zih9DCmIERNsvPNf5eiE=
+	t=1788950650; cv=none; b=sEj0AemTZaplo1Jr2XEbpQP89ZKUvr5H0UTWwyJHS0IJahtWNkn6tFRr4eN5+paiTAFeCby2xvDZCVQUf4XM3maAZ4SmR0sIgC/Ac3Q4Ue2l4h2fckVq3AHlAYJA+TypOw9gNa6UoBmmU3gRaWfqX7YBZWprf0wY9EVILXtdWrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788947191; c=relaxed/simple;
-	bh=p0rFHQFStQT/DpBKuRsFBnyoK7x980aoh9fzzELVu6g=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SBIzDCjc/qZ2GPtRGKchVBJNROtwPINvdB+G+rZu61NcBfrp2ipboDlCF58BBCRqCKKlEGKXFZ0qPv13p3dnZTbuhYeFHez2PD/2ZR8OzcXHLG6PNfb8zAnmCeAj0wfxB5QqqqCYG+ez2XTqrQkhAglCAWx0NlNJSqRkSuPwabc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDfp9DEy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788950650; c=relaxed/simple;
+	bh=9z/dXL45Sap2EQCGlLPR1tXKHotZpfSHIF6xtM8pA68=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SZlOVnKKF5CrhBaV1S+Z6BfEKEv9l9frXpxuxUvtOgelH3HChk8HX553SzUHYzQPaZKWbwI9B88gYKz/uVXHXCRQX580BtjpK1tPasj8Y+FjP0GxTmMzAbs7SJ4UnZ8Tbdm/xB9NkEubaj6a6iDQnZ1dquklzO79WgDkHk8OvtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=c+VL7Ajg; arc=none smtp.client-ip=220.197.31.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDfp9DEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765871F00A3D;
-	Wed,  9 Sep 2026 09:46:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788947190;
-	bh=rzxxNiiz9cZzQ/G/UBWPM+Q0aT8IFV2AhGBKlt1bg90=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mDfp9DEyoLAj5YrX15CrLGxhmcpx75E27qJ4JZGUDtpiEiRk4fU4eHD5GuIBGPr4X
-	 vKd1XFEv+k88xCij9lIyoiyJDjyHxua65f8qFddtWTcX8OY3HfYR78l+P2ggU/EnZn
-	 tZq9YSXAUJe1nzSnm3vvIqEhO3i2iDBrEfJhsquvJi6cMBX5bKShF9GjmYFdFtY1Ms
-	 tM2NBIl9QQiEMgALrw32h+TNg7v0tSA5TjokqkwJrCTdAN+VNexPfXS+o3sy1Yzk6I
-	 RNrKYhv+YRgsaDnDU5RyLjLv4lwPrq3GjvJ5JsKPhvbMXhbfRphSF+MjNvc0QZ9+VK
-	 5N5xEAH2EyS+Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 1/5] sched: Dispatch task ticks for donor and
- execution classes
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Hui Su" <sh_def@163.com>
-Cc: sched-ext@lists.linux.dev
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="c+VL7Ajg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=cS
+	hVqMclSDJnq0xWrDNghDgQjiZqExxEEaxs0dPNIxU=; b=c+VL7Ajg6BtssggmSY
+	CBCMTVziSciXm1u0D8pBAd6zM+xo6hOdWXcDNO7m6+h1myOoGitpnzy0j51Lwf2d
+	/PBRI5J92sjzI+t5N6H6C0za9O/LT45X+uO0f3LkZAGyyS7I2wrnb56E9IfVnURl
+	93k2ICh6+eXc6ZSSyn1KtjPdQ=
+Received: from localhost (unknown [])
+	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wAnc94rOKFq4TXEBg--.61422S2;
+	Wed, 09 Sep 2026 18:42:52 +0800 (CST)
+From: Hui Su <sh_def@163.com>
+To: sh_def@163.com
+Cc: arighi@nvidia.com,
+	bsegall@google.com,
+	changwoo@igalia.com,
+	connoro@google.com,
+	dietmar.eggemann@arm.com,
+	jstultz@google.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org,
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	tim.c.chen@linux.intel.com,
+	tj@kernel.org,
+	vincent.guittot@linaro.org,
+	void@manifault.com,
+	vschneid@redhat.com,
+	yu.c.chen@intel.com
+Subject: Re: [PATCH v4 1/5] sched: Dispatch task ticks for donor and execution classes
+Date: Wed,  9 Sep 2026 19:42:51 +0900
+Message-ID: <20260909104251.3131056-1-sh_def@163.com>
+X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260909092901.2989564-2-sh_def@163.com>
-References: <20260909092901.2989564-1-sh_def@163.com>
- <20260909092901.2989564-2-sh_def@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 09:46:30 +0000
-Message-Id: <20260909094630.765871F00A3D@smtp.kernel.org>
+References: <20260909092901.2989564-2-sh_def@163.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wAnc94rOKFq4TXEBg--.61422S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7ur1UCFyfZr4fuF1Utr15CFg_yoW8tw4DpF
+	ZI93WUZ3yktFWagr1Duw4kX3WfAr4fJF1UGrs8ArW8Cry5Xry8Krsavr1YyFyrZr1vkFnF
+	vws093yfAw1DCFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pR20PsUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6Q0ce2qhOC3+VQAA32
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Infinite timeslice and preemption bypass during SCX proxy executio=
-n due to a mismatch between slice decrement (execution context) and slice c=
-hecking (scheduling context).
---
+On Tue, Sep 09, 2026, Sashiko AI review wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+>
+> - ## [High] Infinite timeslice and preemption bypass during SCX proxy
+>   execution due to a mismatch between slice decrement (execution context)
+>   and slice checking (scheduling context).
+>
+> commit ff57ff4a11692a1b0d98a6cd57257eb58a1bd864
+> Author: Hui Su <sh_def@163.com>
+>
+> Does this cause an infinite timeslice for SCX tasks during proxy execution?
+>
+> When an SCX task acts as a donor in proxy execution, task_tick_scx() sets
+> curr to rq->donor. However, update_curr_scx() applies the slice decrement
+> to the execution context (rq->curr):
+>
+> static void update_curr_scx(struct rq *rq)
+> {
+>         struct task_struct *curr = rq->curr;
+>         ...
+>         if (curr->scx.slice != SCX_SLICE_INF)
+>                 curr->scx.slice -= min_t(u64, curr->scx.slice, delta_exec);
+>         ...
+> }
+>
+> Later in task_tick_scx(), the slice check is performed against the donor
+> task which was never decremented:
+>
+>         if (!curr->scx.slice)
+>                 resched_curr(rq);
+>
+> Since the donor's slice doesn't decrease, it will never hit zero, meaning
+> resched_curr(rq) is bypassed indefinitely.
+>
+> Additionally, if the proxy task is SCX but the donor is not,
+> task_tick_scx() returns early here because the donor is not an SCX task,
+> skipping the SCX tick processing completely. Should the slice management
+> be explicitly tied to the execution context rather than the donor?
+>
+> --
+> Sashiko AI review
 
-commit ff57ff4a11692a1b0d98a6cd57257eb58a1bd864
-Author: Hui Su <sh_def@163.com>
+Thanks for the report.
 
-sched: Dispatch task ticks for donor and execution classes
+This configuration is currently unreachable. CONFIG_SCHED_PROXY_EXEC
+depends on !SCHED_CLASS_EXT, so sched_ext and proxy execution cannot be
+enabled together.
 
-Proxy execution can run a task from one scheduling class on behalf of a don=
-or
-from another. This patch updates sched_class::task_tick() to drop the task
-argument, using a common dispatcher to call the donor class first and, if
-needed, the execution class second.
+When CONFIG_SCHED_CLASS_EXT=y, proxy execution is disabled and rq->donor
+and rq->curr alias the same task. Therefore task_tick_scx() using
+rq->donor and update_curr_scx() using rq->curr still operate on the same
+task, and the slice decrement and check cannot diverge.
 
-Link: https://lore.kernel.org/r/20260908104407.GD687043@noisy.programming.k=
-icks-ass.net
+The sched_ext change in this patch only adapts it to the new task_tick()
+interface for the currently supported configuration.
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 51de1d8b72a1e..70815bef52960 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-[ ... ]
-> @@ -3789,9 +3789,15 @@ void scx_tick(struct rq *rq)
->  	update_other_load_avgs(rq);
->  }
-> =20
-> -static void task_tick_scx(struct rq *rq, struct task_struct *curr, int q=
-ueued)
-> +static void task_tick_scx(struct rq *rq, int queued)
->  {
-> -	struct scx_sched *sch =3D scx_task_sched(curr);
-> +	struct task_struct *curr =3D rq->donor;
-> +	struct scx_sched *sch;
-> +
-> +	if (curr->sched_class !=3D &ext_sched_class)
-> +		return;
-> +
-> +	sch =3D scx_task_sched(curr);
-> =20
->  	update_curr_scx(rq);
+If sched_ext and proxy execution are made compatible in the future, the
+SCX donor/execution-context ownership will need to be handled as part of
+that integration.
 
-[Severity: High]
-Does this cause an infinite timeslice for SCX tasks during proxy execution?
+Thanks,
+Hui
 
-When an SCX task acts as a donor in proxy execution, task_tick_scx() sets
-curr to rq->donor. However, update_curr_scx() applies the slice
-decrement to the execution context (rq->curr):
-
-static void update_curr_scx(struct rq *rq)
-{
-        struct task_struct *curr =3D rq->curr;
-        ...
-        if (curr->scx.slice !=3D SCX_SLICE_INF)
-                curr->scx.slice -=3D min_t(u64, curr->scx.slice, delta_exec=
-);
-        ...
-}
-
-Later in task_tick_scx(), the slice check is performed against the donor
-task which was never decremented:
-
-        if (!curr->scx.slice)
-                resched_curr(rq);
-
-Since the donor's slice doesn't decrease, it will never hit zero, meaning
-resched_curr(rq) is bypassed indefinitely.
-
-Additionally, if the proxy task is SCX but the donor is not, task_tick_scx()
-returns early here because the donor is not an SCX task, skipping the SCX
-tick processing completely. Should the slice management be explicitly tied
-to the execution context rather than the donor?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909092901.2989=
-564-1-sh_def@163.com?part=3D1
