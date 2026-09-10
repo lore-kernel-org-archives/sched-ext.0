@@ -1,116 +1,128 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20D445D92D;
-	Thu, 10 Sep 2026 10:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3AE4582D8
+	for <sched-ext@lists.linux.dev>; Thu, 10 Sep 2026 10:50:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789037144; cv=none; b=sqfB2k3Sz2lQ5Cg7/0oGw2jg3VoS1bZM+5xPkoOfPLLN+HL+trkPEX6ar8wTTn8JBAy8+IDuUkkUxSravNvs60+XdBVkmVFWg/V7zWz/EBNGAmA0LJ6naynlIjcT+a/UNVCXvLm2Mr+Z6FIDzZ4OPUvevAN5mX24Xk0j2jisnXU=
+	t=1789037462; cv=none; b=bOURcEXg6jSpwPJHyaVGIEGbYGN5+vbFpKKVtVL+rUdu9AAb8GxYAPcG8uZcQWZ2UbrSPK7EaGU1qk2kVgJ2ofraiJDo1okE2q3IKt5CiHtkLsX2ryYA2LUzB62MwHsmOtHEuhfHD0+vba3qfadMBsLf4onbe65Ql5V/83Q97CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789037144; c=relaxed/simple;
-	bh=7mB91F2bpOIoDuvFbgbmZ3E1vU8W06FnaPbbY4+0ucs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NYtUOMUxRqz47ch7gXR0yBJVIWL3+bYZCPRjV1ZBi4pJ6aiF9jmkmJKc2OmnlP2Mtv2jIDbjgL4Rj8z7xCf5Bd0ADJmawXPg7fGiF+98ovnQGlulH9Tv90zGVJVwu1HHhFCXAs5c2b0OsxRX4VhbzGgQ4cynBw/uh2Q1LTrBTrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Owjx0cIN; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1789037462; c=relaxed/simple;
+	bh=5hQWqlOjQvOgrULRNQNvsDrFTg3ZUp9uEWavniukEpg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ceRx9qBM8CU4L8uXOn4ZDQitrNQ1hs4W1telbnD25XjVlt89Ad0WEk7iWfPKo2DNuI6/0KDAKm5DmG997GYM97c7Vr3JDxxUKYIdWWKEiQkaDVHh+qWN2NlWk6Fwv8C30I6j2AXoXijEZZYSg3ncgkVtsP9fZp4PJdBn5pp3prE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=lmJDR4Z+; arc=none smtp.client-ip=117.135.210.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Owjx0cIN"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=yhrca4I4IvshIQRv8T/Y6iGQz4G4HSyXgNE0gKp/I2w=; b=Owjx0cIN4maISN3fg2YEEtJouq
-	rJ20mERSUj35VPVu1S1YijmRi+yYMNSnGsqBvmOhuwBbDBIESlXOUReAVeshafzzfQRM3l9jYeAoy
-	01gvfpuh2U420bB/VZlObpUQpTAOCitD5t/eWLPnd2pmZn4gEy0m+S5knSVx2AYUmDeSHnTtYuTMF
-	6hOT2rEwk5s7xCKqchMS0ZrqpFGGKqWBtul2MJClMa7MgDujrk+8+YqfVRb6APSp5aDRO0qT6aDYi
-	mu5ATQzpvo3u8rc0euJDYaE0HktoIGdbBfX6HnhK+tzqP50woxs7pKwgPkWRPvhWDz9B5hn6bMMJK
-	ofejRszQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1x4cHZ-0000000FlVb-0nQo;
-	Thu, 10 Sep 2026 10:45:29 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 29FC2300400; Thu, 10 Sep 2026 12:45:28 +0200 (CEST)
-Date: Thu, 10 Sep 2026 12:45:28 +0200
-From: Peter Zijlstra <peterz@infradead.org>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="lmJDR4Z+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=GR
+	7/FIwN5jSXQMlAo82lPv7zwqHGRXa2o1ep2UsTpec=; b=lmJDR4Z+NFUUaAKfX6
+	hiFukwvl3FfHXFL/i603dsrsvUb26dkCHPMccCLbKRMawMyGrCcmZ6v8Ds4nwzOa
+	Ux7jO4qeJv5Y42nadPr2Qx6PQ0QYckxCJWBEwICCZAv0YYyTXxfyYZDXi+L/a61u
+	8Y5preSfJ8GSqwUY8p9XazDIs=
+Received: from localhost (unknown [])
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgCX1Bw4i6JqOwuKQw--.33571S2;
+	Thu, 10 Sep 2026 18:49:29 +0800 (CST)
+From: Hui Su <sh_def@163.com>
 To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
-	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
-	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/18] sched: Introduce WF_ON_RQ wake flag
-Message-ID: <20260910104528.GI4120091@noisy.programming.kicks-ass.net>
-References: <20260831134338.1531664-1-arighi@nvidia.com>
- <20260831134338.1531664-9-arighi@nvidia.com>
+Cc: peterz@infradead.org,
+	mingo@redhat.com,
+	tim.c.chen@linux.intel.com,
+	yu.c.chen@intel.com,
+	kprateek.nayak@amd.com,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	vschneid@redhat.com,
+	connoro@google.com,
+	jstultz@google.com,
+	tj@kernel.org,
+	void@manifault.com,
+	changwoo@igalia.com,
+	linux-kernel@vger.kernel.org,
+	sched-ext@lists.linux.dev
+Subject: Re: [PATCH v4 1/5] sched: Dispatch task ticks for donor and execution classes
+Date: Thu, 10 Sep 2026 19:49:28 +0900
+Message-ID: <20260910104928.2771533-1-sh_def@163.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <aqGa0J1_LM99oDkP@gpd4>
+References: <20260909092901.2989564-2-sh_def@163.com> <20260909104251.3131056-1-sh_def@163.com> <aqGa0J1_LM99oDkP@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260831134338.1531664-9-arighi@nvidia.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:QCgvCgCX1Bw4i6JqOwuKQw--.33571S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxWr4xGw4rXF4Utry3Gw4rKrg_yoW5Xr4rpF
+	Z5Kay5Kw1DtF1rAr47Zw48X3WrX397Gr1UWrWkArykurWYqry0gFyftF1jva1UWryfuFy2
+	vrs0vws7GFWjvaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UNBMNUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6ho0k2qiizrGXwAA33
 
-On Mon, Aug 31, 2026 at 03:42:18PM +0200, Andrea Righi wrote:
-> ttwu_runnable() handles wakeups for tasks which are already on the
-> runqueue, but scheduling classes cannot distinguish that path from a
-> full wakeup activation in wakeup_preempt().
-> 
-> Pass WF_ON_RQ to wakeup_preempt() from ttwu_runnable() so scheduling
-> classes can handle already-runnable wakeups separately.
-> 
-> This is a preparatory change to support proxy execution with sched_ext.
-> No functional change.
-> 
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
-> ---
->  kernel/sched/core.c  | 2 +-
->  kernel/sched/sched.h | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index d578dd635f2eb..f142ab455b797 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -3908,7 +3908,7 @@ static int ttwu_runnable(struct task_struct *p, int wake_flags)
->  		 * When on_rq && !on_cpu the task is preempted, see if
->  		 * it should preempt the task that is current now.
->  		 */
-> -		wakeup_preempt(rq, p, wake_flags);
-> +		wakeup_preempt(rq, p, wake_flags | WF_ON_RQ);
->  	}
->  	ttwu_do_wakeup(p);
->  	return 1;
-> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-> index 56ac104f1f825..f30d122909e7b 100644
-> --- a/kernel/sched/sched.h
-> +++ b/kernel/sched/sched.h
-> @@ -2538,6 +2538,7 @@ static inline int task_on_rq_migrating(struct task_struct *p)
->  #define WF_MIGRATED		0x20 /* Internal use, task got migrated */
->  #define WF_CURRENT_CPU		0x40 /* Prefer to move the wakee to the current CPU. */
->  #define WF_RQ_SELECTED		0x80 /* ->select_task_rq() was called */
-> +#define WF_ON_RQ		0x100 /* Wakeup of an already runnable task */
+On Wed, Sep 09, 2026 at 07:43:44PM +0200, Andrea Righi wrote:
+> They should be compatible soon:
+> https://lore.kernel.org/r/20260831134338.1531664-1-arighi@nvidia.com/
+>
+> It'd be good to handle SCX donor/execution context ownership in this serie as
+> well, or we can coordinate to figure out the required changes.
+>
+> I haven't looked at the whole patch series yet (will do soon), this is JFYI. :)
 
-I are confused again... help?
+Thanks for the heads-up.
 
-wakeup_preempt() can only ever be called for tasks that are on the
-runqueue. That is more or less the point of wakeup-preemption.
+I kept task_tick_scx() explicitly donor-gated in the current local draft and
+did not duplicate the donor-accounting changes from your v13 series. The common
+task_tick() dispatcher invokes the donor class first and, when the execution
+class differs, invokes the execution class second. If sched_ext is reached
+only as the execution class for a non-EXT donor, task_tick_scx() returns
+without SCX policy or slice work.
 
-Even the already-runnable distinction would mean things like
-move_queued_task() should also have this. The task is new to this
-runqueue, but was definitely already runnable before.
+I previously applied your v13 series and an integration tree containing an
+earlier revision of this five-patch series on the same base. In that
+integration, the task_tick_scx() hunk was the only textual conflict I
+encountered.
 
-What actual distinction are you needing?
+The current revision additionally handles retained-donor scheduling-class
+transitions around sched_change_begin() and sched_change_end(). Your v13
+series also changes that transition path, so I have not revalidated the
+combined tree after this latest P4 change. The expected resolution still
+uses task_tick(rq, queued), derives the donor from rq->donor, keeps the
+explicit donor-class guard, and preserves your donor-based update_curr_scx()
+and SCX proxy accounting.
+
+That earlier combined integration tree built and booted with
+CONFIG_SCHED_CLASS_EXT=y and CONFIG_SCHED_PROXY_EXEC=y. It did not provide a
+stable full mixed EXT->FAIR, FAIR->EXT, EXT->EXT, and RT/DL->EXT runtime
+matrix, and it predates the current P4 transition changes. I am therefore
+not claiming complete runtime compatibility for the current revision.
+
+The resolved task-tick path in the integration tree is:
+
+  struct task_struct *donor = rq->donor;
+
+  if (donor->sched_class != &ext_sched_class)
+          return;
+
+  update_curr_scx(rq);          /* donor-based in your series */
+  SCX_CALL_OP_TASK(sch, tick, rq, donor);
+  if (!donor->scx.slice)
+          resched_curr(rq);
+
+The complete conflict resolution is carried by the integration tree; this
+excerpt records the donor guard retained from this series and the donor
+accounting retained from yours.
+
+Could you take a look at whether this donor-gated integration is the right
+direction? If so, I will revalidate the current combined tree, carry the
+result into the series, and post it as v5 after the pending runtime checks.
+
+Thanks,
+Hui
+
