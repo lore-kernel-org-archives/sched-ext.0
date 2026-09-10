@@ -1,38 +1,38 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768E43D953E;
-	Thu, 10 Sep 2026 09:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F3F3DDB0D;
+	Thu, 10 Sep 2026 10:07:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789034106; cv=none; b=Ak7JoMxvTerbBvmBWrffYC9YN/iFeOfvu6YCxKiqRlF5Q9rVTM2MorlvYptbI35EgSQDDiHVS0aGa97jZ1GKLtfb8E0+cPAXvNUsp9/p/HSI0XVACDK7Jxpowz1WGxG/IYqy6kgYYFrl5fIl8pUtbof0a4qbGhJXHzkKjNFQR/w=
+	t=1789034836; cv=none; b=TdF16RsHYH7uiLVelAT5bY8K5LLeGKQo6e6oj7Jc/aO5mdG1KpnKMMSid9UC9KO8Vppy+UZ374e0xnQpyXdO0OCjm+5C1JPwebaeYcOvmOQlwDvCkyOrovtrIt6IFdBegCSG9+quzDpGtJwLvrAL1rIRAIwvBxW9OQOWBD2ZrG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789034106; c=relaxed/simple;
-	bh=IjQgWcBdDaeIRFoNlHdXHDMf732D8GiR42ZzxWjiN6Q=;
+	s=arc-20240116; t=1789034836; c=relaxed/simple;
+	bh=k94awpgt723oeHEb+b2cubA9NJwFOaBZ3kmkxECckrA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lo85+k2QPYiYzhqAXuSCPjT69EikHnE02Vzl7r6DCmwMv9Pq42RrNOkyONdg8+0PpisMcnA7QUPIlrl9b+yOHUuKdsaG97jUl0pcVSl82l/6QNGu8LGPZV/PKe2avAGyIDEElUFrjOjfFlC8GBddsSrHFqJ5rg7Z9utRVqLRU7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=auGg7QPA; arc=none smtp.client-ip=90.155.50.34
+	 Content-Type:Content-Disposition:In-Reply-To; b=c9hMqctBho9hLoxmcxHOaMHtRkMcci7KdFLj56h0EGL4/2cCy/VcyCiQ7dG9T3x4FuQ2QLz4gbI9OmYf7N8ZoU1XxmDo/oYdYzHMBYbfKigerhGDyOtc9gJ4yplBCUTWmZsqvDP2V8lGcIN3BQWiaCDILoHjS03natTKyysVGXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=YCh1MS/A; arc=none smtp.client-ip=90.155.92.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="auGg7QPA"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="YCh1MS/A"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=z9+OMSGN1tjh9V0hWB/JangblYswcq7i3USvWFkZeZY=; b=auGg7QPA51QZDJGiiW/ZLZmpMO
-	Up7cQSD3NFEcxCFAhcagZDpl2sG3Ccs7iradn+TxTsEu/jCYydQUM8cTYYtCXbxJ/fYJFlPe6EUJY
-	ZbsN4lUCVoSeS9ZuWJlVU3F4nqrJzGDaOAf+0QDS6zux+6JFhHY94OeNb1oxQ0niiSZI5jTXEAz7V
-	PCx4fpxVlut969Iud/f9dbEInKuI68OuE4LMOyDsSEoD30hxDcK2eE65gao37KU0AeM74aGzMdyVk
-	L6LoaPB3kZCehP0bUchg8FCQpTIts//IcZ5Ipzi7u2vXpAp1Mz+ENlUpKUNA+sIDHjHortEJv3YrD
-	L8sQEnNQ==;
+	bh=+8T09nof1B/bWhhdFyjSdHtqI0P0pbt7H2tQc3YbqvY=; b=YCh1MS/AMOPoSKMWUy0dqMojG8
+	yHl6jPItYiQWrRoaFTdb5fpjY8cR4Hjfw+cnjg6Byj7jb6+tD4UuD6WiZqAyQVOTirb4zMtsPGEHR
+	XEVtUNats6GOf1E516SJt9Uk6eBHX4Yx2KITpk3T81g8c7nT0jsvfq+2aVTBCzZvOMiLbTtECFF0m
+	Oxy/Zh/2fPxas8DMXBYEonIMt42QOivGvc31ov5PByHQNhjwkdRJH/vHTbn+ssMamO2yGUyB3ggv7
+	bR143+UwPKs2FwVocJ8HPUsfcwJaL7r/jJezb/B+DooWdSFpjotNQF76b0PY3Yzlvz77VYyBJJ02B
+	4umiXP4w==;
 Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1x4bUX-0000000FHdH-0Lim;
-	Thu, 10 Sep 2026 09:54:49 +0000
+	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
+	id 1x4bgD-00000002Iys-4A2H;
+	Thu, 10 Sep 2026 10:06:54 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 27F0530056B; Thu, 10 Sep 2026 11:54:48 +0200 (CEST)
-Date: Thu, 10 Sep 2026 11:54:48 +0200
+	id B1317300400; Thu, 10 Sep 2026 12:06:52 +0200 (CEST)
+Date: Thu, 10 Sep 2026 12:06:52 +0200
 From: Peter Zijlstra <peterz@infradead.org>
 To: Andrea Righi <arighi@nvidia.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
@@ -50,11 +50,11 @@ Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
 	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
 	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
 	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/18] sched: Make NOHZ CFS bandwidth checks follow proxy
- donor
-Message-ID: <20260910095448.GE4120091@noisy.programming.kicks-ass.net>
+Subject: Re: [PATCH 04/18] sched/core: Avoid false migration warning for
+ proxy donors
+Message-ID: <20260910100652.GF4120091@noisy.programming.kicks-ass.net>
 References: <20260831134338.1531664-1-arighi@nvidia.com>
- <20260831134338.1531664-4-arighi@nvidia.com>
+ <20260831134338.1531664-5-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -63,95 +63,56 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260831134338.1531664-4-arighi@nvidia.com>
+In-Reply-To: <20260831134338.1531664-5-arighi@nvidia.com>
 
-On Mon, Aug 31, 2026 at 03:42:13PM +0200, Andrea Righi wrote:
-> Proxy execution separates the scheduling context in rq->donor from the
-> physical execution context in rq->curr. sched_can_stop_tick() checks the
-> latter for CFS bandwidth constraints and only does so when nr_running is
-> one.
+On Mon, Aug 31, 2026 at 03:42:14PM +0200, Andrea Righi wrote:
+> Proxy execution can move a blocked donor's scheduling context to the
+> lock owner's CPU even when the donor is migration-disabled. The donor
+> does not execute there, and its original execution CPU remains recorded
+> in wake_cpu.
 > 
-> A retained proxy donor keeps both the donor and mutex owner queued. The
-> check therefore misses a constrained FAIR donor and may stop the tick
-> while its runtime still needs to be enforced.
+> set_task_cpu() warns unconditionally for migration-disabled tasks, so a
+> subsequent proxy migration or the wakeup path returning the donor home
+> triggers a false positive. Moving a blocked scheduling context does not
+> violate the migration-disabled execution context.
 > 
-> Check the selected donor instead and remove the nr_running restriction.
-> The donor being a queued FAIR task is sufficient to require bandwidth
-> accounting regardless of other runnable tasks.
+> Exclude blocked proxy donors from the warning. The proxy wakeup path
+> restores an executable placement before clearing the blocked state.
 > 
-> Fixes: af0c8b2bf67b ("sched: Split scheduler and execution contexts")
-> Reported-by: Sashiko <sashiko-bot@kernel.org>
-> Link: https://lore.kernel.org/r/20260713164807.E5ED21F00A3A@smtp.kernel.org
+> This is a preparatory fix for enabling proxy execution together with
+> sched_ext.
+> 
 > Acked-by: John Stultz <jstultz@google.com>
 > Signed-off-by: Andrea Righi <arighi@nvidia.com>
 > ---
->  kernel/sched/core.c | 35 ++++++++++++++++++-----------------
->  kernel/sched/fair.c | 12 +++++++-----
->  2 files changed, 25 insertions(+), 22 deletions(-)
+>  kernel/sched/core.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
 > 
 > diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index 237d216382f46..14d0d5c884393 100644
+> index 14d0d5c884393..0a2eabadfee02 100644
 > --- a/kernel/sched/core.c
 > +++ b/kernel/sched/core.c
-> @@ -1419,11 +1419,8 @@ static void nohz_csd_func(void *info)
->  #endif /* CONFIG_NO_HZ_COMMON */
->  
->  #ifdef CONFIG_NO_HZ_FULL
-> -static inline bool __need_bw_check(struct rq *rq, struct task_struct *p)
-> +static inline bool __need_bw_check(struct task_struct *p)
+> @@ -3351,6 +3351,8 @@ void relax_compatible_cpus_allowed_ptr(struct task_struct *p)
+>  void set_task_cpu(struct task_struct *p, unsigned int new_cpu)
 >  {
-> -	if (rq->nr_running != 1)
-> -		return false;
-> -
->  	if (p->sched_class != &fair_sched_class)
->  		return false;
+>  	unsigned int state = READ_ONCE(p->__state);
+> +	bool proxy_migrated = sched_proxy_exec() && p->is_blocked &&
+> +			      task_cpu(p) != p->wake_cpu;
 >  
-> @@ -1441,6 +1438,14 @@ bool sched_can_stop_tick(struct rq *rq)
->  	if (rq->dl.dl_nr_running)
->  		return false;
->  
-> +	/*
-> +	 * The selected scheduling context can be a constrained FAIR donor even
-> +	 * when rq->curr is an RT task. Check it before the RT fast paths below,
-> +	 * which may report that the tick can stop for a throttled RT context.
-> +	 */
-
-I am most confused... how can we ever have rq->donor be FAIR and
-rq->curr be RT? That makes no sense. If an RT task is runnable, pick
-should just straight up pick that.
-
-> +	if (__need_bw_check(rq->donor) && cfs_task_bw_constrained(rq->donor))
-> +		return false;
-> +
-
-
-> @@ -7114,7 +7107,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
->   */
->  static void __sched notrace __schedule(int sched_mode)
->  {
-> -	struct task_struct *prev, *next;
-> +	struct task_struct *prev, *next, *tick_donor;
 >  	/*
->  	 * On PREEMPT_RT kernel, SM_RTLOCK_WAIT is noted
->  	 * as a preemption by schedule_debug() and RCU.
-> @@ -7168,6 +7161,7 @@ static void __sched notrace __schedule(int sched_mode)
->  	rq->clock_update_flags <<= 1;
->  	update_rq_clock(rq);
->  	rq->clock_update_flags = RQCF_UPDATED;
-> +	tick_donor = rq->donor;
+>  	 * We should never call set_task_cpu() on a blocked task,
+> @@ -3386,7 +3388,12 @@ void set_task_cpu(struct task_struct *p, unsigned int new_cpu)
+>  	 */
+>  	WARN_ON_ONCE(!cpu_online(new_cpu));
 >  
->  	switch_count = &prev->nivcsw;
->  
-> @@ -7243,6 +7237,13 @@ static void __sched notrace __schedule(int sched_mode)
->  	clear_tsk_need_resched(prev);
->  	clear_preempt_need_resched();
->  keep_resched:
+> -	WARN_ON_ONCE(is_migration_disabled(p));
 > +	/*
-> +	 * Enqueue and dequeue updates can evaluate the outgoing donor. Refresh
-> +	 * the dependency after selecting a different scheduling context.
+> +	 * Proxy execution can move a blocked task's scheduling context to any
+> +	 * CPU without moving its migration-disabled execution context. The
+> +	 * wakeup path will return the task to a CPU where it can execute.
 > +	 */
-> +	if (rq->donor != tick_donor)
-> +		sched_update_tick_dependency(rq);
+> +	WARN_ON_ONCE(is_migration_disabled(p) && !proxy_migrated);
+>  
+>  	trace_sched_migrate_task(p, new_cpu);
 
-Please keep all the proxy specific bits inside the one
-sched_proxy_exec() branch above.
+I'm not sure why we're not hitting this upstream?
