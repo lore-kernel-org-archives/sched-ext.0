@@ -1,128 +1,142 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3AE4582D8
-	for <sched-ext@lists.linux.dev>; Thu, 10 Sep 2026 10:50:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE99545FFB5;
+	Thu, 10 Sep 2026 10:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789037462; cv=none; b=bOURcEXg6jSpwPJHyaVGIEGbYGN5+vbFpKKVtVL+rUdu9AAb8GxYAPcG8uZcQWZ2UbrSPK7EaGU1qk2kVgJ2ofraiJDo1okE2q3IKt5CiHtkLsX2ryYA2LUzB62MwHsmOtHEuhfHD0+vba3qfadMBsLf4onbe65Ql5V/83Q97CY=
+	t=1789037628; cv=none; b=aRZn5DU65USuoYxtWKafXTWltW28+r2a1W5ghG1I7TjcIzB1P4+JWWJBm5V3Eflf0+iabc06KWEO3Lid2r705cBOzbfS0fF728pqxqu5RGhmUySWrhyWtvTXdqHo+sh+FEq212srOI7mQc+tIbGf3lssdJ7L9REHTKmLPqLPuGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789037462; c=relaxed/simple;
-	bh=5hQWqlOjQvOgrULRNQNvsDrFTg3ZUp9uEWavniukEpg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ceRx9qBM8CU4L8uXOn4ZDQitrNQ1hs4W1telbnD25XjVlt89Ad0WEk7iWfPKo2DNuI6/0KDAKm5DmG997GYM97c7Vr3JDxxUKYIdWWKEiQkaDVHh+qWN2NlWk6Fwv8C30I6j2AXoXijEZZYSg3ncgkVtsP9fZp4PJdBn5pp3prE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=lmJDR4Z+; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1789037628; c=relaxed/simple;
+	bh=AE87lusMPfPjdrB3o6pXNzFg0voaAAjsIOr74KNCMOE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pY0TZgjlCwAZjdt7+VIHeVo61fl7YvEtsD7Ibe7LWgv/EbswIJuP7E9CsTQlLGkgspnKHHLFFlJbtPe3YRExrk/URwY4nP+0vLlz4appLFnkkbPMSWzCmXoAHMPWkkPNqyt7hK9rgjNj8byWlh/JMYakeE/0JUg+arK+6HIuPwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=qk/Ho36h; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="lmJDR4Z+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=GR
-	7/FIwN5jSXQMlAo82lPv7zwqHGRXa2o1ep2UsTpec=; b=lmJDR4Z+NFUUaAKfX6
-	hiFukwvl3FfHXFL/i603dsrsvUb26dkCHPMccCLbKRMawMyGrCcmZ6v8Ds4nwzOa
-	Ux7jO4qeJv5Y42nadPr2Qx6PQ0QYckxCJWBEwICCZAv0YYyTXxfyYZDXi+L/a61u
-	8Y5preSfJ8GSqwUY8p9XazDIs=
-Received: from localhost (unknown [])
-	by gzsmtp5 (Coremail) with SMTP id QCgvCgCX1Bw4i6JqOwuKQw--.33571S2;
-	Thu, 10 Sep 2026 18:49:29 +0800 (CST)
-From: Hui Su <sh_def@163.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="qk/Ho36h"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=VVwOnaOLvHrmUaRFj0thYlhFFoEcWPkUZVoSbzPkH9U=; b=qk/Ho36hMAqkPKl6+7NAXjyIvF
+	7u76wg+bo0qO7NcQb347SO6o7qkadwSDLlS9yNtLN9gDnhhk8JOlsplDkZufyrHborZlFP7h0Rs2j
+	7LZmZ0fO56Ovvi0JPZtLivtd3IoJkCQTKU6daNeygOLOH2IIf5SKOxZGp47OzvIs+tl9fVJgfl8gO
+	lq9sZXxb1cQNogApEJn8VprKrCvDC/Aatl5/1Sj40I/WuPdJCqFxG4+lM29OyFD7Wajm8CwC4gHM4
+	6K85oTOH/gcfJOn8+dJOzHUeCV+RYvAJbbp3vJwUTGJmGX5u3R42jo8GuaGjzu17kXgNDzG18+sU2
+	0METmk/w==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1x4cPQ-0000000FrM0-19G2;
+	Thu, 10 Sep 2026 10:53:36 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id CF87C30056B; Thu, 10 Sep 2026 12:53:35 +0200 (CEST)
+Date: Thu, 10 Sep 2026 12:53:35 +0200
+From: Peter Zijlstra <peterz@infradead.org>
 To: Andrea Righi <arighi@nvidia.com>
-Cc: peterz@infradead.org,
-	mingo@redhat.com,
-	tim.c.chen@linux.intel.com,
-	yu.c.chen@intel.com,
-	kprateek.nayak@amd.com,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	connoro@google.com,
-	jstultz@google.com,
-	tj@kernel.org,
-	void@manifault.com,
-	changwoo@igalia.com,
-	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: Re: [PATCH v4 1/5] sched: Dispatch task ticks for donor and execution classes
-Date: Thu, 10 Sep 2026 19:49:28 +0900
-Message-ID: <20260910104928.2771533-1-sh_def@163.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <aqGa0J1_LM99oDkP@gpd4>
-References: <20260909092901.2989564-2-sh_def@163.com> <20260909104251.3131056-1-sh_def@163.com> <aqGa0J1_LM99oDkP@gpd4>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
+	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
+	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/18] sched_ext: Block proxy donors across scheduler
+ transitions
+Message-ID: <20260910105335.GJ4120091@noisy.programming.kicks-ass.net>
+References: <20260831134338.1531664-1-arighi@nvidia.com>
+ <20260831134338.1531664-10-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:QCgvCgCX1Bw4i6JqOwuKQw--.33571S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxWr4xGw4rXF4Utry3Gw4rKrg_yoW5Xr4rpF
-	Z5Kay5Kw1DtF1rAr47Zw48X3WrX397Gr1UWrWkArykurWYqry0gFyftF1jva1UWryfuFy2
-	vrs0vws7GFWjvaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UNBMNUUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6ho0k2qiizrGXwAA33
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260831134338.1531664-10-arighi@nvidia.com>
 
-On Wed, Sep 09, 2026 at 07:43:44PM +0200, Andrea Righi wrote:
-> They should be compatible soon:
-> https://lore.kernel.org/r/20260831134338.1531664-1-arighi@nvidia.com/
->
-> It'd be good to handle SCX donor/execution context ownership in this serie as
-> well, or we can coordinate to figure out the required changes.
->
-> I haven't looked at the whole patch series yet (will do soon), this is JFYI. :)
+On Mon, Aug 31, 2026 at 03:42:19PM +0200, Andrea Righi wrote:
+> Proxy execution retains mutex-blocked donors on the runqueue so their
+> scheduling context can execute a lock owner. sched_ext cannot safely retain
+> such donors unless the BPF scheduler explicitly participates in their
+> admission and ordering.
+> 
+> Make sched_ext reject retained donors by default. Implement
+> scx_allow_proxy_exec() to force blocked EXT tasks through the regular block
+> path in schedule().
+> 
+> Also fully deactivate any retained proxy donor in sched_change_begin()
+> before changing its scheduling class. This prevents sched_setscheduler(),
+> PI transitions and sched_ext activation from carrying an existing proxy
+> session into the new class.
+> 
+> Some RT/DL PI transitions could usefully preserve the proxy session. For
+> example, an RT waiter can boost a FAIR donor which is itself blocked on a
+> non-PI mutex; retaining the donor would allow the boosted context to keep
+> proxy-executing that mutex owner. Doing so safely requires defining which
+> scheduling classes can carry retained proxy state across a transition. Keep
+> the conservative reset for now and leave compatible RT/DL PI chains for
+> future work.
+> 
+> This is a preparatory change to support proxy execution with sched_ext.
+> 
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> ---
+>  kernel/sched/core.c    | 9 +++++++++
+>  kernel/sched/ext/ext.c | 2 +-
+>  2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> index f142ab455b797..4bd956182af8d 100644
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -11302,6 +11302,15 @@ sched_change_begin(struct task_struct *p, const struct sched_class *next_class,
+>  		flags |= DEQUEUE_NOCLOCK;
+>  	}
+>  
+> +	/*
+> +	 * Don't carry retained proxy state across scheduling class changes.
+> +	 * Compatible RT/DL PI transitions could preserve the session so that a
+> +	 * boosted donor continues proxy-executing its lock owner. Defining which
+> +	 * class transitions can safely retain that state is left for future work.
+> +	 */
+> +	if ((flags & DEQUEUE_CLASS) && next_class != p->sched_class)
 
-Thanks for the heads-up.
+That's a tautology, having DEQUEUE_CLASS means next_class !=
+->sched_class.
 
-I kept task_tick_scx() explicitly donor-gated in the current local draft and
-did not duplicate the donor-accounting changes from your v13 series. The common
-task_tick() dispatcher invokes the donor class first and, when the execution
-class differs, invokes the execution class second. If sched_ext is reached
-only as the execution class for a non-EXT donor, task_tick_scx() returns
-without SCX policy or slice work.
+> +		sched_proxy_block_task(rq, p);
+> +
+>  	if ((flags & DEQUEUE_CLASS) && p->sched_class->switching_from)
+>  		p->sched_class->switching_from(rq, p);
+>  
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index f3e59f4fad4ac..d5ed996ebfb4c 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -26,7 +26,7 @@ DEFINE_RAW_SPINLOCK(scx_sched_lock);
+>  
+>  bool scx_allow_proxy_exec(const struct task_struct *p)
+>  {
+> -	return true;
+> +	return p->sched_class != &ext_sched_class;
+>  }
 
-I previously applied your v13 series and an integration tree containing an
-earlier revision of this five-patch series on the same base. In that
-integration, the task_tick_scx() hunk was the only textual conflict I
-encountered.
 
-The current revision additionally handles retained-donor scheduling-class
-transitions around sched_change_begin() and sched_change_end(). Your v13
-series also changes that transition path, so I have not revalidated the
-combined tree after this latest P4 change. The expected resolution still
-uses task_tick(rq, queued), derives the donor from rq->donor, keeps the
-explicit donor-class guard, and preserves your donor-based update_curr_scx()
-and SCX proxy accounting.
+Hmmmm... I don't like this. I was expecting this
+sched_proxy_block_task() thing to be called in the big switcheroo
+function when loading one of these ext thing. (scx_root_enable_ or
+somesuch).
 
-That earlier combined integration tree built and booted with
-CONFIG_SCHED_CLASS_EXT=y and CONFIG_SCHED_PROXY_EXEC=y. It did not provide a
-stable full mixed EXT->FAIR, FAIR->EXT, EXT->EXT, and RT/DL->EXT runtime
-matrix, and it predates the current P4 transition changes. I am therefore
-not claiming complete runtime compatibility for the current revision.
-
-The resolved task-tick path in the integration tree is:
-
-  struct task_struct *donor = rq->donor;
-
-  if (donor->sched_class != &ext_sched_class)
-          return;
-
-  update_curr_scx(rq);          /* donor-based in your series */
-  SCX_CALL_OP_TASK(sch, tick, rq, donor);
-  if (!donor->scx.slice)
-          resched_curr(rq);
-
-The complete conflict resolution is carried by the integration tree; this
-excerpt records the donor guard retained from this series and the donor
-accounting retained from yours.
-
-Could you take a look at whether this donor-gated integration is the right
-direction? If so, I will revalidate the current combined tree, carry the
-result into the series, and post it as v5 after the pending runtime checks.
-
-Thanks,
-Hui
-
+We most certainly don't want to do this on every sched class change. It
+isn't even gated by scx_allow_proxy_exec().
