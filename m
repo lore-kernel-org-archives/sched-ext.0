@@ -1,129 +1,104 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4493D9530
-	for <sched-ext@lists.linux.dev>; Fri, 11 Sep 2026 02:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D922A43FD18;
+	Fri, 11 Sep 2026 07:44:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789094599; cv=none; b=jD5Z3Pajr2ieHjgtYgh0q9VQPabUa9l26d3Zfocut/acR54wh8JW4BE3CYdFeF0q+3T7gAaEkuhGS2iDoz7Rjm25e/jA7n9X3TNtZ6UA25ERNSmAwptOtFkw4UrAhhRpx1/HXXH4mq8uSEYDZtTtfZhaOSTjYBpExWZqGDR3QkM=
+	t=1789112694; cv=none; b=PtoUwxkj3V/yik3gZshSNVDn1RGQHjes9D/sl8q51T6oByzKijhoxmBVM6ji59Ny3ZhWwsO4oIIGXehu9O0H1Ypj8zHUH5ZwDxHsipJtlAQlXYHPXuVrOdtKw6E0WoVlIdgRas8aQYYHvGiRtx46Yuvip1C9MC9RIj07uVoLmiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789094599; c=relaxed/simple;
-	bh=hUPE1bdCKDwWiRFRzL9edTj+ovAH6LjQvCi+MCSu0LE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QkAwVt725UMaRUKku3cE9ko4Pyl5u1tW1kNtSUzx6OKWxZzx5MtSuzFs1ZaZ0aFBWNzGL/t2mH6aKHkVFRpqj5JOF5PRIE7wZ6OvVXLdkBEVmqG8svNqOtQJ+hyad+rb69CRFSYUTRUjSsR/2L06VpqutTsAwbBdeX9wQ7S1VUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 871ba92ead8a11f19a56ed5b684f684d-20260911
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:2ee4b41e-827a-41a0-bc02-59c6d5d72191,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACT
-	ION:release,TS:-45
-X-CID-META: VersionHash:7db8b62,CLOUDID:78d31d3c1e458565b743d876c978d37c,BulkI
-	D:nil,BulkQuantity:0,SF:81|82|102|136|850|865|898,TC:nil,Content:0|15|50|9
-	9,EDM:-19|2|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:
-	0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 871ba92ead8a11f19a56ed5b684f684d-20260911
-X-User: fangqiurong@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <fangqiurong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1452422760; Fri, 11 Sep 2026 10:43:10 +0800
-From: Qiurong Fang <fangqiurong@kylinos.cn>
-To: tj@kernel.org
-Cc: sched-ext@lists.linux.dev,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Subject: [PATCH v2] sched_ext: Close the pre-enable ops error claim window
-Date: Fri, 11 Sep 2026 10:42:56 +0800
-Message-Id: <20260911024256.125287-1-fangqiurong@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260910084533.2420199-1-fangqiurong@kylinos.cn>
-References: <20260910084533.2420199-1-fangqiurong@kylinos.cn>
+	s=arc-20240116; t=1789112694; c=relaxed/simple;
+	bh=CozpsqKYWbQnFcDTKflFHOpM+sIi6p3fXyPJ3ObzalM=;
+	h=Content-Type:MIME-Version:Message-Id:In-Reply-To:References:
+	 Subject:From:To:Cc:Date; b=qYyKObEXHxx5ls0CR7IvIEZZUwc0LK004bJaExOdR8UICDWXHtdnQP1BpTVGoJqNQYlJoKohyYjtMPYREzuDiu/ixGuyMC599FLaSEXHu7306KJ9BJAMU2qEP8sAioKD95ERGNpxpyVC+1T0qwnb0It7zKpO6thq29/etP0ODpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nSh8nXxf; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nSh8nXxf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E101F000FF;
+	Fri, 11 Sep 2026 07:44:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789112692;
+	bh=JVNsmiGxY1SdhPHsIl79rzqOKs/aP852ofsVaoPTftY=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=nSh8nXxfkEr1kUl7cfnHIIf1jZLF1ZnKYJMXAxMWbeex/1I+vA4DWR+URZEpMvHbi
+	 Xnd9r+6mji6dWqQ9LCBHTlIGDBmfENwyZi5PoKHpFNaZUjNorCTFH/TTHY/G3I1dA4
+	 S7uGU0ykKRHQQVaF4JDhVsKt2auPoAB+6NT3b+aIPD9mvfkjstADVlQH8nTUnqC0r2
+	 EwAuj7ZGUOIv8VXmM6rLhTrgeRIR/46HXvJwII9OQYXc9vwQOiXOJmpXzAlsrcDx6V
+	 vqfoDjPnSK3T0vArVyKY6JMKGujqewoGn/BM3DPlCS9vZ6WnXsmenQnuYyeu9uaoQT
+	 gm0AJS8Tv+A5w==
+Content-Type: multipart/mixed; boundary="===============1065213570066958851=="
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-Id: <81d809ef7a590d33ae978b98bb3d830b3cff2ce34a091ab3f4a5f0b977bfdfeb@mail.kernel.org>
+In-Reply-To: <20260910233303.1063501-4-ziyang.meme@gmail.com>
+References: <20260910233303.1063501-4-ziyang.meme@gmail.com>
+Subject: Re: [PATCH v5 3/4] selftests/hid: build the BPF program via the shared lib.bpf.mk
+From: bot+bpf-ci@kernel.org
+To: ziyang.meme@gmail.com,shuah@kernel.org,tj@kernel.org,hannes@cmpxchg.org,mkoutny@suse.com,jikos@kernel.org,bentiss@kernel.org,void@manifault.com,eddyz87@gmail.com
+Cc: vmalik@redhat.com,arighi@nvidia.com,changwoo@igalia.com,mhocko@kernel.org,roman.gushchin@linux.dev,shakeel.butt@linux.dev,muchun.song@linux.dev,akpm@linux-foundation.org,inwardvessel@gmail.com,mykolal@meta.com,nathan@kernel.org,ziyang.meme@gmail.com,kernel-team@meta.com,linux-kselftest@vger.kernel.org,cgroups@vger.kernel.org,linux-input@vger.kernel.org,sched-ext@lists.linux.dev,linux-mm@kvack.org,bpf@vger.kernel.org,llvm@lists.linux.dev,linux-kernel@vger.kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Fri, 11 Sep 2026 07:44:50 +0000 (UTC)
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+--===============1065213570066958851==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-scx_alloc_and_add_sched() publishes ops->priv before
-scx_root_enable_workfn() switches the state to SCX_ENABLING. An error
-claimed via scx_bpf_error_bstr() from an associated BPF program in that
-window is consumed by scx_disable_workfn(), which takes the pre-enable
-shortcut in scx_root_disable(). The shortcut returns without any
-teardown and restores SCX_DISABLED with an unconditional
-scx_set_enable_state() xchg racing the enable workfn's own transition.
-The enable then completes with the claim consumed: the scheduler stays
-up but can never be disabled again, and bpf_scx_unreg() frees it while
-still in use, resulting in a use-after-free. Both WARN_ON_ONCE()s fire
-back to back:
+> diff --git a/tools/testing/selftests/hid/Makefile b/tools/testing/selftests/hid/Makefile
+> index 2f423de83147..1190a747036d 100644
+> --- a/tools/testing/selftests/hid/Makefile
+> +++ b/tools/testing/selftests/hid/Makefile
+> @@ -47,7 +47,6 @@ msg =
+>  else
+>  msg = @printf '  %-8s%s %s%s\n' "$(1)" "$(if $(2), [$(2)])" "$(notdir $(3))" "$(if $(4), $(4))";
+>  MAKEFLAGS += --no-print-directory
+> -submake_extras := feature_display=0
+>  endif
 
-  WARNING: kernel/sched/ext/ext.c:7522 at scx_root_enable_workfn+0xeec/0x1be0, CPU#3: scx_enable_help/276
-  WARNING: kernel/sched/ext/ext.c:6398 at scx_root_disable+0xb50/0xdb8, CPU#0: sched_ext_helpe/664
+This isn't a bug, but with submake_extras gone, does anything still need
+this local msg/MAKEFLAGS block?  lib.mk defines both identically a few
+lines below, so it looks like it could be dropped along with the rest of
+the copied machinery.
 
-scx_root_enable_workfn() switches to SCX_ENABLING before the
-allocation, so ops->priv is never visible while SCX_DISABLED and
-claimed errors get the regular scx_root_disable() teardown serialized
-on scx_enable_mutex behind the in-flight enable. 
+> @@ -58,172 +57,25 @@ override define CLEAN
+>  	$(Q)$(RM) -r $(EXTRA_CLEAN)
+>  endef
+>
+> -include ../lib.mk
+> -
+> -TOOLSDIR := $(top_srcdir)/tools
+> -LIBDIR := $(TOOLSDIR)/lib
+> -BPFDIR := $(LIBDIR)/bpf
+> -TOOLSINCDIR := $(TOOLSDIR)/include
+> -BPFTOOLDIR := $(TOOLSDIR)/bpf/bpftool
+> -SCRATCH_DIR := $(OUTPUT)/tools
+> -BUILD_DIR := $(SCRATCH_DIR)/build
+> -INCLUDE_DIR := $(SCRATCH_DIR)/include
+> -BPFOBJ := $(BUILD_DIR)/libbpf/libbpf.a
 
-Fixes: 105dcd005be2 ("sched_ext: Introduce scx_prog_sched()")
-Cc: stable@vger.kernel.org
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
+[ ... ]
+
+> +# Build the legacy progs/*.c layout with the shared BPF rules.
+> +BPF_SRCS       := $(wildcard progs/*.c)
+> +BPF_PROG_EXT   := .c
+> +# BPFDIR is defined when this recursive variable is expanded.
+> +BPF_EXTRA_HDRS  = $(wildcard progs/*.h) $(wildcard $(BPFDIR)/hid_bpf_*.h) \
+> +		  $(wildcard $(BPFDIR)/*.bpf.h)
+> +
+
+This isn't a bug, but do the two $(BPFDIR) wildcards still match anything
+here?  tools/lib/bpf has no hid_bpf_*.h, and lib.bpf.mk's
+lib_bpf_header_sources already covers *.bpf.h - if so, this could become
+a simple BPF_EXTRA_HDRS := $(wildcard progs/*.h) and lose the
+recursive-expansion comment.
+
+
 ---
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
 
-Changes since v1:
- - Drop the conditional restore in the pre-enable shortcut and the
-   tryset/-EBUSY branch on the moved transition; both failure paths are
-   unreachable once SCX_ENABLING precedes ops->priv publication
-   (Tejun Heo).
- - Keep the allocation failure reset.
- kernel/sched/ext/ext.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 10af28a9f2c0..479ae257ea7c 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -7506,22 +7506,23 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- #ifdef CONFIG_EXT_SUB_SCHED
- 	cgroup_get(cgrp);
- #endif
-+	/*
-+	 * Transition to ENABLING and clear exit info to arm the disable path.
-+	 * Failure triggers full disabling from here on.
-+	 */
-+	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
-+	WARN_ON_ONCE(scx_root);
-+
- 	sch = scx_alloc_and_add_sched(cmd, cgrp, NULL);
- 	if (IS_ERR(sch)) {
- 		ret = PTR_ERR(sch);
-+		scx_tryset_enable_state(SCX_DISABLED, SCX_ENABLING);
- 		goto err_free_tid_hash;
- 	}
- 
- 	if (sch->is_cid_type)
- 		static_branch_enable(&__scx_is_cid_type);
- 
--	/*
--	 * Transition to ENABLING and clear exit info to arm the disable path.
--	 * Failure triggers full disabling from here on.
--	 */
--	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
--	WARN_ON_ONCE(scx_root);
--
- 	atomic_long_set(&scx_nr_rejected, 0);
- 
- 	for_each_possible_cpu(cpu) {
--- 
-2.43.0
-
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/34573210499
+--===============1065213570066958851==--
