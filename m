@@ -1,120 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB1D49E12E;
-	Thu, 10 Sep 2026 23:44:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4493D9530
+	for <sched-ext@lists.linux.dev>; Fri, 11 Sep 2026 02:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789083872; cv=none; b=qqPyS5817bi5HzfnHIEL8frrzmmYQXANFd0016KmeSncU0C8FJdM/D0umdR28Y4ANioDwf2xVJs5FEw/UHw0rWKdSFVXeT+o1PG0SBUuwuKJkY9TVvoD3uPxCe+a8e543pDoY30KeE9V0xZHFys59F6dlvd77P8BfO6FJqepkno=
+	t=1789094599; cv=none; b=jD5Z3Pajr2ieHjgtYgh0q9VQPabUa9l26d3Zfocut/acR54wh8JW4BE3CYdFeF0q+3T7gAaEkuhGS2iDoz7Rjm25e/jA7n9X3TNtZ6UA25ERNSmAwptOtFkw4UrAhhRpx1/HXXH4mq8uSEYDZtTtfZhaOSTjYBpExWZqGDR3QkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789083872; c=relaxed/simple;
-	bh=q5yOCD7bAQN2WnLFxlmTUp///2yOwNcPmzOZd+pOuoQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uNupkdvXaZKb74B9jMGJGwKazb8xrJ3Jz0b9bfUijP+o2HC1ULXHo26t7/i6Kw5eAaSxboZ5uKXoJhHD94qY6QD5TMGhCXy+yJEarddTO5pF2U/MwU0YQuML/ApK1cSlz9kMJrP+rjhdGrNQPl+AizHqWjQLhcXbi8sppPG1ItU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZUfhfow; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZUfhfow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37C31F000FF;
-	Thu, 10 Sep 2026 23:44:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789083871;
-	bh=s0SpSGWS6XWmfv9c/2xH8OOL41LcG0eQ7O9HYPwzbRk=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=LZUfhfowkq/5thXpQbDcb19+4hqtfgR5m2Fio5JqXJNxvmbEVDz/azwRQLTxR/F1G
-	 98e/E+MBJ/3esbodQ6iXaidXkgQ/SQqyFh4oQQw2HWKPxOMvyLgsESrOIzDLZqK9nU
-	 JT5aSBpAsBNDi6QkbMmpRpU9xEwWMpGke/VQZXY0LHCOM7lg4GesjVYlgZJdrpu/oT
-	 i6nXO9XLWmBq8BBwKudFBouM8k7P5E84C/ONAL1F2snyG1NqVyB4jXasVdIQIYpi8r
-	 HBUslg57HYaoA2vmZBNyY+EBFYuvGpanQnSEHkWL7xJRlCH3g1tYr6uuPdkLgduFpL
-	 +MUE+TrESGiwQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 2/4] selftests/cgroup: add memcg_stat_cross_cpu
- correctness test for flush
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Ziyang Men" <ziyang.meme@gmail.com>
-Cc: bpf@vger.kernel.org, tj@kernel.org, sched-ext@lists.linux.dev, linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, hannes@cmpxchg.org, mkoutny@suse.com
-In-Reply-To: <20260910233303.1063501-3-ziyang.meme@gmail.com>
-References: <20260910233303.1063501-1-ziyang.meme@gmail.com>
- <20260910233303.1063501-3-ziyang.meme@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Sep 2026 23:44:30 +0000
-Message-Id: <20260910234430.B37C31F000FF@smtp.kernel.org>
+	s=arc-20240116; t=1789094599; c=relaxed/simple;
+	bh=hUPE1bdCKDwWiRFRzL9edTj+ovAH6LjQvCi+MCSu0LE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=QkAwVt725UMaRUKku3cE9ko4Pyl5u1tW1kNtSUzx6OKWxZzx5MtSuzFs1ZaZ0aFBWNzGL/t2mH6aKHkVFRpqj5JOF5PRIE7wZ6OvVXLdkBEVmqG8svNqOtQJ+hyad+rb69CRFSYUTRUjSsR/2L06VpqutTsAwbBdeX9wQ7S1VUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 871ba92ead8a11f19a56ed5b684f684d-20260911
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:2ee4b41e-827a-41a0-bc02-59c6d5d72191,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACT
+	ION:release,TS:-45
+X-CID-META: VersionHash:7db8b62,CLOUDID:78d31d3c1e458565b743d876c978d37c,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|102|136|850|865|898,TC:nil,Content:0|15|50|9
+	9,EDM:-19|2|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:
+	0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 871ba92ead8a11f19a56ed5b684f684d-20260911
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1452422760; Fri, 11 Sep 2026 10:43:10 +0800
+From: Qiurong Fang <fangqiurong@kylinos.cn>
+To: tj@kernel.org
+Cc: sched-ext@lists.linux.dev,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Subject: [PATCH v2] sched_ext: Close the pre-enable ops error claim window
+Date: Fri, 11 Sep 2026 10:42:56 +0800
+Message-Id: <20260911024256.125287-1-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260910084533.2420199-1-fangqiurong@kylinos.cn>
+References: <20260910084533.2420199-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+From: fangqiurong <fangqiurong@kylinos.cn>
 
-Pre-existing issues:
-- [High] Kfuncs taking enum parameters lack negative bounds checks, allowin=
-g out-of-bounds array accesses.
---
+scx_alloc_and_add_sched() publishes ops->priv before
+scx_root_enable_workfn() switches the state to SCX_ENABLING. An error
+claimed via scx_bpf_error_bstr() from an associated BPF program in that
+window is consumed by scx_disable_workfn(), which takes the pre-enable
+shortcut in scx_root_disable(). The shortcut returns without any
+teardown and restores SCX_DISABLED with an unconditional
+scx_set_enable_state() xchg racing the enable workfn's own transition.
+The enable then completes with the claim consumed: the scheduler stays
+up but can never be disabled again, and bpf_scx_unreg() frees it while
+still in use, resulting in a use-after-free. Both WARN_ON_ONCE()s fire
+back to back:
 
-commit ba61caf79f3e8d8099a1b75ad1df31bbdc5f2942
-Author: Ziyang Men <ziyang.meme@gmail.com>
+  WARNING: kernel/sched/ext/ext.c:7522 at scx_root_enable_workfn+0xeec/0x1be0, CPU#3: scx_enable_help/276
+  WARNING: kernel/sched/ext/ext.c:6398 at scx_root_disable+0xb50/0xdb8, CPU#0: sched_ext_helpe/664
 
-selftests/cgroup: add memcg_stat_cross_cpu correctness test for flush
-   =20
-Add test_memcg_stat_cross_cpu, which verifies that flushing a memcg
-subtree produces the same statistics through the BPF memcg kfuncs and
-cgroupfs.
+scx_root_enable_workfn() switches to SCX_ENABLING before the
+allocation, so ops->priv is never visible while SCX_DISABLED and
+claimed errors get the regular scx_root_disable() teardown serialized
+on scx_enable_mutex behind the in-flight enable. 
 
-[ ... ]
+Fixes: 105dcd005be2 ("sched_ext: Introduce scx_prog_sched()")
+Cc: stable@vger.kernel.org
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
+---
 
-> diff --git a/tools/testing/selftests/cgroup/memcg_stat_cross_cpu.bpf.c b/=
-tools/testing/selftests/cgroup/memcg_stat_cross_cpu.bpf.c
-> new file mode 100644
-> index 0000000000000..fff3b9256aa39
-> --- /dev/null
-> +++ b/tools/testing/selftests/cgroup/memcg_stat_cross_cpu.bpf.c
-> @@ -0,0 +1,101 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (c) 2026 Meta Platforms, Inc. and affiliates. */
-> +#define BPF_NO_KFUNC_PROTOTYPES
-> +#include <vmlinux.h>
-> +#include <bpf/bpf_helpers.h>
-> +#include <bpf/bpf_core_read.h>
-> +#include "memcg_stat_cross_cpu.h"
-> +
-> +char _license[] SEC("license") =3D "GPL";
-> +
-> +/* Ensure the upper-bound checks also reject negative BPF arguments. */
-> +_Static_assert((enum vm_event_item)-1 >=3D NR_VM_EVENT_ITEMS,
-> +	       "negative vm_event_item must fail the bounds check");
-> +_Static_assert((enum memcg_memory_event)-1 >=3D MEMCG_NR_MEMORY_EVENTS,
-> +	       "negative memcg_memory_event must fail the bounds check");
+Changes since v1:
+ - Drop the conditional restore in the pre-enable shortcut and the
+   tryset/-EBUSY branch on the moved transition; both failure paths are
+   unreachable once SCX_ENABLING precedes ops->priv publication
+   (Tejun Heo).
+ - Keep the allocation failure reset.
+ kernel/sched/ext/ext.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-[Severity: High]
-This is a pre-existing issue, but while these static asserts guarantee the =
-BPF
-compiler evaluates the check correctly, does the host kernel kfunc itself
-still lack negative bounds checks?
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 10af28a9f2c0..479ae257ea7c 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -7506,22 +7506,23 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	cgroup_get(cgrp);
+ #endif
++	/*
++	 * Transition to ENABLING and clear exit info to arm the disable path.
++	 * Failure triggers full disabling from here on.
++	 */
++	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
++	WARN_ON_ONCE(scx_root);
++
+ 	sch = scx_alloc_and_add_sched(cmd, cgrp, NULL);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
++		scx_tryset_enable_state(SCX_DISABLED, SCX_ENABLING);
+ 		goto err_free_tid_hash;
+ 	}
+ 
+ 	if (sch->is_cid_type)
+ 		static_branch_enable(&__scx_is_cid_type);
+ 
+-	/*
+-	 * Transition to ENABLING and clear exit info to arm the disable path.
+-	 * Failure triggers full disabling from here on.
+-	 */
+-	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
+-	WARN_ON_ONCE(scx_root);
+-
+ 	atomic_long_set(&scx_nr_rejected, 0);
+ 
+ 	for_each_possible_cpu(cpu) {
+-- 
+2.43.0
 
-Looking at bpf_mem_cgroup_memory_events() in mm/bpf_memcontrol.c:
-
-	if (unlikely(event >=3D MEMCG_NR_MEMORY_EVENTS))
-		return (unsigned long)-1;
-
-Since the BPF verifier does not validate enum ranges, a BPF program can pas=
-s a
-negative value as the enum parameter. Because enums can be treated as signed
-integers in C, wouldn't a negative value bypass this upper-bound check (e.g.
--1 >=3D MEMCG_NR_MEMORY_EVENTS evaluates to false), leading to an out-of-bo=
-unds
-array access?
-
-A similar issue appears to exist in bpf_mem_cgroup_vm_events() which calls
-memcg_vm_event_item_valid() in mm/memcontrol.c:
-
-	if (idx >=3D NR_VM_EVENT_ITEMS)
-		return false;
-
-Could this allow an out-of-bounds array read that leaks kernel memory or
-causes a panic?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910233303.1063=
-501-1-ziyang.meme@gmail.com?part=3D2
