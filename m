@@ -1,168 +1,129 @@
-Received: from gentwo.org (gentwo.org [62.72.0.81])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7A13246ED
-	for <sched-ext@lists.linux.dev>; Fri, 11 Sep 2026 23:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.72.0.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8264E2E7F17
+	for <sched-ext@lists.linux.dev>; Sat, 12 Sep 2026 13:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789169501; cv=none; b=ijK7dFqcZfh5V3CuxATe5EQsuEu+MErFGHtWxpLucy26bMTwvySf49lZEivboU2nkhdoMj+/PM8gNL0gB9sveuRy8wazafnLPdgcXW7aDuEsZqFjeMS+LB/Dgh6xU81aLrP3Mx8JOhIXzOwaK0K2b+sWj9t+2qPd1wNg/qmzaVU=
+	t=1789218953; cv=none; b=YLtoTcNSvfWl5CaqnK2GCgwiK8PtTmhyjSGpvBTXUmI9y/09yvAyzONTJx/jkFYdP1kwsGZOG1R5D1UMS35GZbFnJN69e/+IltrGUmS797iQvE2dGjHzLexiD7wwtLMK+P+InPZ1E6xHjR8oC9UTgk4I5a7n08J+AjAiUgTPIyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789169501; c=relaxed/simple;
-	bh=FzgRqxihB+hNLoJgN2QCemjiLyQpY0P4rHHWX6tRwIE=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=WrTe5ZWC09kuWOw54IlFZ0gxY94gyAOg/YoSJmWG7ScogTtjt7cv0dRQXUhK43eXs2y/Nscu7MVCIW1TRHuOMLyCQZM/lnYoAX4WrPpXKsT+idlH2pmxKXEkEN4DGgDig+Y5Hhrnie55L+rnNIPOZ/EOaVFgLalcJDcS9tUZOUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org; spf=pass smtp.mailfrom=gentwo.org; dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b=ot3ePsez; arc=none smtp.client-ip=62.72.0.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentwo.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b="ot3ePsez"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gentwo.org;
-	s=default; t=1789169499;
-	bh=FzgRqxihB+hNLoJgN2QCemjiLyQpY0P4rHHWX6tRwIE=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
-	b=ot3ePseznL1aIJEuhuQ/6uYI4QswWZLcGAqumjC26JGtlNqCjP9TsJJzxGCeBZqiS
-	 oDghBuADZVvBf/XMAs2HB14qfJ1eSZIrZCGQAQS07xZjfzkWQhE5Ve6m+eq/5LWWF3
-	 Ca+gWVkcI1oZ6Or5ZyyunRAdmg601Moox2SmkKmo=
-Received: by gentwo.org (Postfix, from userid 1007)
-	id 052ED402A5; Fri, 11 Sep 2026 16:31:39 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by gentwo.org (Postfix) with ESMTP id 025C940110;
-	Fri, 11 Sep 2026 16:31:39 -0700 (PDT)
-Date: Fri, 11 Sep 2026 16:31:38 -0700 (PDT)
-From: Shubhang <sh@gentwo.org>
-To: sashiko-bot@kernel.org
-cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH v2] sched: Restart hrtick after same-task repicks
-In-Reply-To: <20260911224230.A19611F000FF@smtp.kernel.org>
-Message-ID: <671ad8e4-d252-c492-fc4f-364681655e35@gentwo.org>
-References: <20260911-sched-fair-hrtick-restart-v2-1-0d34db26ecd1@gentwo.org> <20260911224230.A19611F000FF@smtp.kernel.org>
+	s=arc-20240116; t=1789218953; c=relaxed/simple;
+	bh=PpEovBuj7mxNTJlR9fWxqVv1f+zKEkgxigN5hzoVtpc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=OT/X+Kz3nfmLnZQ8gkRtrPV+OSgkiMpuC+tTiGJG5me6GCK4d47i12rLfZoa/qGDDAdnHf9cxHgg4inZ7Pu5gp+WjdNuvc7eSlQAQqc/AM/MuHaAJDZnlblmcoxzHgZsHszttzqZ0doB/KEMMWRmwwb62GFNJk09DRqrK+4z2+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 0851f922aeac11f19a56ed5b684f684d-20260912
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:012749fb-8e23-400e-aa21-445d9976e5ca,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACT
+	ION:release,TS:-45
+X-CID-META: VersionHash:7db8b62,CLOUDID:102ed7b006d4b01fa6412c97f1096438,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|102|136|850|865|898,TC:nil,Content:0|15|50|9
+	9,EDM:-19|2|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:
+	0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 0851f922aeac11f19a56ed5b684f684d-20260912
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 368124738; Sat, 12 Sep 2026 21:15:32 +0800
+From: Qiurong Fang <fangqiurong@kylinos.cn>
+To: tj@kernel.org
+Cc: sched-ext@lists.linux.dev,
+	void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com
+Subject: [PATCH v3] sched_ext: Close the pre-enable ops error claim window
+Date: Sat, 12 Sep 2026 21:15:18 +0800
+Message-Id: <20260912131518.3428032-1-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260911024256.125287-1-fangqiurong@kylinos.cn>
+References: <20260910084533.2420199-1-fangqiurong@kylinos.cn> <20260911024256.125287-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-14539572-1789169499=:1651443"
+Content-Transfer-Encoding: 8bit
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: fangqiurong <fangqiurong@kylinos.cn>
 
---8323329-14539572-1789169499=:1651443
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+scx_alloc_and_add_sched() publishes ops->priv before
+scx_root_enable_workfn() switches the state to SCX_ENABLING. An error
+claimed via scx_bpf_error_bstr() from an associated BPF program in that
+window is consumed by scx_disable_workfn(), which takes the pre-enable
+shortcut in scx_root_disable(). The shortcut returns without any
+teardown and restores SCX_DISABLED with an unconditional
+scx_set_enable_state() xchg racing the enable workfn's own transition.
+The enable then completes with the claim consumed: the scheduler stays
+up but can never be disabled again, and bpf_scx_unreg() frees it while
+still in use, resulting in a use-after-free. Both WARN_ON_ONCE()s fire
+back to back:
 
-Good catch, I missed this when extending the repick handling to DL.
+  WARNING: kernel/sched/ext/ext.c:7522 at scx_root_enable_workfn+0xeec/0x1be0, CPU#3: scx_enable_help/276
+  WARNING: kernel/sched/ext/ext.c:6398 at scx_root_disable+0xb50/0xdb8, CPU#0: sched_ext_helpe/664
 
-On a non-tick reschedule, next == prev skips put_prev_task_dl(), so
-execution since exec_start has not necessarily been charged by
-update_curr_dl(). The new SNT_REPICK path can then call
-start_hrtick_dl() with a stale dl_se->runtime value and delay the
-next DL enforcement point.
+scx_root_enable_workfn() switches to SCX_ENABLING before the
+ops->priv allocation, so ops->priv is never visible while
+SCX_DISABLED. The allocation failure path restores SCX_DISABLED.
 
-Fair does not have the same issue because pick_task_fair() updates 
-the current entity before selecting. The normal DL schedule-out path 
-instead charges current from put_prev_task_dl().
+Fixes: 105dcd005be2 ("sched_ext: Introduce scx_prog_sched()")
+Cc: stable@vger.kernel.org
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
 
-Also, task_tick_dl() already updates current and rearms the DL hrtick
-when the current task remains runnable and leftmost. I will remove the
-DL repick handling in a respin unless there is a DL case which bypasses
-that existing rearm path.
+---
 
-For now, please disregard the DL part of v2.
+Changes since v2:
+ - Restore the state with WARN_ON_ONCE() on the allocation failure
+   path (Tejun Heo).
+ - Fix up the moved comment (Tejun Heo).
+---
+ kernel/sched/ext/ext.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-Thanks,
-Shubhang Kaushik
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 3b525f06a720..ea2f1257aee1 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -7523,22 +7523,24 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ #ifdef CONFIG_EXT_SUB_SCHED
+ 	cgroup_get(cgrp);
+ #endif
++	/*
++	 * Transition to ENABLING and clear exit info to arm the disable path.
++	 * Allocation failure still unwinds locally. Full disabling on failure
++	 * applies only after scx_alloc_and_add_sched() succeeds.
++	 */
++	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
++	WARN_ON_ONCE(scx_root);
++
+ 	sch = scx_alloc_and_add_sched(cmd, cgrp, NULL);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
++		WARN_ON_ONCE(scx_set_enable_state(SCX_DISABLED) != SCX_ENABLING);
+ 		goto err_free_tid_hash;
+ 	}
+ 
+ 	if (sch->is_cid_type)
+ 		static_branch_enable(&__scx_is_cid_type);
+ 
+-	/*
+-	 * Transition to ENABLING and clear exit info to arm the disable path.
+-	 * Failure triggers full disabling from here on.
+-	 */
+-	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
+-	WARN_ON_ONCE(scx_root);
+-
+ 	atomic_long_set(&scx_nr_rejected, 0);
+ 
+ 	for_each_possible_cpu(cpu) {
+-- 
+2.43.0
 
-On Fri, 11 Sep 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Restarting the SCHED_DEADLINE hrtick on same-task repick uses a stale `dl_se->runtime`, pushing the timer expiration into the future and allowing bandwidth overruns.
-> --
->
-> commit fe44140b6abb0653f45d8368ffe6e56a2831b43c
-> Author: Shubhang Kaushik (Ampere) <sh@gentwo.org>
-> sched: Restart hrtick after same-task repicks
->
-> This commit introduces explicit hrtick restarts for same-task repicks in both
-> fair and deadline scheduling classes. It adds a new SNT_REPICK type to bypass
-> normal transition work while still rearming the timer.
->
-> Link: https://lore.kernel.org/r/20260813-sched-fair-hrtick-restart-v1-1-4230d1e18fbb@gentwo.org
->
->> diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
->> index 0663c00c41c04..6c17563f42a1d 100644
->> --- a/kernel/sched/deadline.c
->> +++ b/kernel/sched/deadline.c
-> [ ... ]
->> -static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
->> +static void set_next_task_dl(struct rq *rq, struct task_struct *p, enum snt_e type)
->>  {
->>  	struct sched_dl_entity *dl_se = &p->dl;
->>  	struct dl_rq *dl_rq = &rq->dl;
->>
->> +	if (type == SNT_REPICK)
->> +		goto repick;
->> +
->>  	p->se.exec_start = rq_clock_task(rq);
-> [ ... ]
->>  	deadline_queue_push_tasks(rq);
->>
->> +repick:
->>  	if (hrtick_enabled_dl(rq))
->>  		start_hrtick_dl(rq, &p->dl);
->>  }
->
-> [Severity: High]
-> Does this code use a stale dl_se->runtime to arm the hrtick?
->
-> When a wake-up or other non-tick preemption check sets TIF_NEED_RESCHED
-> on a running SCHED_DEADLINE task without calling update_curr_dl(),
-> __schedule() might repick the same task (e.g., if the woken task was migrated
-> away before picking).
->
-> If that happens, put_prev_set_next_task() takes the SNT_REPICK path, which
-> skips put_prev_task():
->
-> kernel/sched/sched.h:put_prev_set_next_task() {
->    ...
-> 	if (next == prev) {
-> 		next->sched_class->set_next_task(rq, next, SNT_REPICK);
-> 		return;
-> 	}
->    ...
-> }
->
-> Because put_prev_task() is skipped, its embedded update_curr_dl() call is
-> also skipped. As a result, dl_se->runtime is not decremented for the time
-> executed since the last update.
->
-> When start_hrtick_dl() is then invoked from the repick label above, the new
-> hrtick is erroneously scheduled using the un-updated runtime.
->
-> Can this allow SCHED_DEADLINE tasks to exceed their configured bandwidth bounds
-> and starve other tasks?
->
->> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
->> index e656c7059bf86..defcf7fd023fa 100644
->> --- a/kernel/sched/sched.h
->> +++ b/kernel/sched/sched.h
-> [ ... ]
->> @@ -2802,11 +2808,13 @@ static inline void put_prev_set_next_task(struct rq *rq,
->>
->>  	__put_prev_set_next_dl_server(rq, prev, next);
->>
->> -	if (next == prev)
->> +	if (next == prev) {
->> +		next->sched_class->set_next_task(rq, next, SNT_REPICK);
->>  		return;
->> +	}
->>
->>  	prev->sched_class->put_prev_task(rq, prev, next);
->> -	next->sched_class->set_next_task(rq, next, true);
->> +	next->sched_class->set_next_task(rq, next, SNT_PICK);
->>  }
->
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260911-sched-fair-hrtick-restart-v2-1-0d34db26ecd1@gentwo.org?part=1
->
---8323329-14539572-1789169499=:1651443--
