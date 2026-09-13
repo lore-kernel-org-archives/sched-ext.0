@@ -1,53 +1,88 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A90536BCD7
-	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 06:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B4838E8DC
+	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 12:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789282108; cv=none; b=fwsaqVapFM+6RWG+zDDAJYvzCTkmE7Q3DepxBSiFlDM24xouQWN+Lv1PNoyhovHL9rwnoA+MFcidansN8iSGvKE5ggw/vKUPQFd7qkHvK59qloztRjifb6FkTA+vCbvA5BoHzG1uTskM9B9L/zdpcm7X9degG59kGm/8gZCIjbM=
+	t=1789301302; cv=none; b=nAIHezB11FnCUkdV75tmwIkQGby17Y3JCTEH9d2LjAphsgvjQx4Jre/vPdxYsL9MvVtZs7btpPKkhGOdj1tMnbbvar6JnsxnU7Uf+j0Cvrz2g2SBlbEk/Vzph8e9VyI3S0CqqHitdTXw/gq2AVwgMXZTV0NAbB5OHCO07rRUvGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789282108; c=relaxed/simple;
-	bh=9mMiQOw8U0G19b+vr2PVHFWq5kT98PYpQA9pvwG21DA=;
+	s=arc-20240116; t=1789301302; c=relaxed/simple;
+	bh=apY0A4WizTCP59J26TYeXZVRIhy+naRUEHiKeRCe060=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gg5EWUfRdJrWfXwNl7B7VhiQpx5ZU4V47jTho950OEhgM654PzhbuFJcFezOMF+hab/QY+uFQR7uvI0G/P9bW3MbKqtE7ZfnJQHywX5prX0lw7gsEE4DN5Vs6BFts2MmV8jZf7Dv8BHYGBF1rKADZF7TRC0nZ7dGoJ6lPedIM5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=HruOhVy9; arc=none smtp.client-ip=117.135.210.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	 MIME-Version; b=BkCBvRktG0c/912kV+FcqSjqcL3p1Wu5eHBt9NmihReUlUYVWLSHAs8tdCrG93YL+FPgGs3Df8rVAcq27oSMwpZtoTZqueQMHamvFwRekjOz/fM2bbX7TXmrKb8DYyCFaCixzsQEEbfZ/S4aN/V9Orgx28oNtzOYkyrpRXMZW5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EsSWaSDg; arc=none smtp.client-ip=74.125.225.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="HruOhVy9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=mY
-	k33ME0xBHs5d9qvvC1DwhqFT9RdVTw6xajF06W/BE=; b=HruOhVy9LG4klLTNcx
-	shyz9Pk4Bc1qm2vMMWEns+yK7QLHQi8V2NPYHyHKXpoOSp1tRViUyPLvUaeq97sp
-	LBFDvjMZE+fZJWTIrtCNOs9fBHr1ECxl3eNPKX4mgqdO6tPpdv3bmbnG3AEL/3cO
-	jTx1zIye+N1XDk81mM5mg8xSI=
-Received: from localhost (unknown [])
-	by gzsmtp2 (Coremail) with SMTP id PSgvCgDXKosCR6ZqNeXCPw--.41105S2;
-	Sun, 13 Sep 2026 14:47:31 +0800 (CST)
-From: Hui Su <sh_def@163.com>
-To: peterz@infradead.org,
-	soolaugust@gmail.com,
-	arighi@nvidia.com
-Cc: mingo@redhat.com,
-	kprateek.nayak@amd.com,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EsSWaSDg"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482e1b30c94so150336f8f.1
+        for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 05:08:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789301299; x=1789906099; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=8I4hlMRL7jp+sEyBR2jYI/uI6MHf0Koed1W9yy+k+mg=;
+        b=EsSWaSDg1ANjv/1VbWM6yUnU714vR2v6q8Tija/OV3bqhOMoIyZk5LrKwZtwzJy9Gp
+         scs8JjuZuBYOvLMDokXbV1sTbPVeZ2tWnJzEmxhKTCFoe/M+uI/FuVhqFxFnzzocDbB0
+         qvqGpBR5PbqSz9PM9iHQ9KPCZrK2rBOteCWPmbXkweGpBR6jgs8bDNA+M23aoHmpUQVk
+         Q5qnWmC6HtxWclvBrLyNYzVuopxKmhXCyl7quR5MkG7KPdb2TMr3yamGRlDIldfCqp6n
+         w4Y68JCez8VGSx3IofhWDIHy0nmgr8fxIHOOGfUQvpynwNAfZi8EruH2ZqtqKB3uC/1o
+         I1cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789301299; x=1789906099;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=8I4hlMRL7jp+sEyBR2jYI/uI6MHf0Koed1W9yy+k+mg=;
+        b=ZvGEhUZ5/MpvFElT3JK6B4NGEfgvjaUyRK51iquZoeSN7oYDv/PT4WT9yKUJiQPGWu
+         G10I9bVsApPmhXMV+fTAh3Ev2noYWYwKdqGmW9Du+gwF2LdTeH20O0Sj4oI1Jrz+8ByJ
+         urMeJ8xZnhSQiqy++CwFkq4C1Fqo8w6DqOEwAWgKkh03/HyF6c/9hYJFwvI/34C6otMb
+         oRdBAX3DrORHQ+2SPpZYMZNFBl634JkI3pbh4idMYQUUkiWgfRU68JZS3EkwNFqZVaFy
+         HsjS4W9uwwWJqLmowwJRWjZD0ctyXSciv5aG5pLq36o9c281dS7xRdCscE9gt5YNHbwB
+         sM1w==
+X-Forwarded-Encrypted: i=1; AKwUvByk5tmjzFAX2pA7GJ8EJygwKaa/0yECNN6nt+B2mB4i+/9UeF23mfo/UO8YneJkXeDCh+pdmfpDtB0=@lists.linux.dev
+X-Gm-Message-State: AFuF++mSgJZXAy/c5LD1oGYSKP7J/+PFZCxDvXesxQahm0SPneeBs57h
+	0hcI7peb9Rxu9FGR5g8cmREHHluFMrEaRtpMnbI+RIxZnjm4JfZRBfLR
+X-Gm-Gg: AYBFou3RYDzQJIYctmy/TNVxTXzihCF4MhIbtozvTWztIuY1kI6Z1LpN0pEC/V56AHT
+	bG+WmFLE8F1BFsE3wYTil7wqojrhFFf2gjxwU6RSc6r3QHzrTkNJjvbpX8utpyatTcQSkxV/CB0
+	LpcUPlmFT6T5XM0Mfgk8Je4Ox/tcG+CqtjAv3GxHQ3KIUtHL5fpVW86dFOmP0KPqRPHv1dDqyOY
+	UTXbyJeRRriT614/pAT9+5DRmd+ZQegHQR3cMbbOkYHjFSECmHbuuwVI1+T9qDECf5AI+rZ4lzq
+	5bzKNa8HVenueuRTXT8Ddd0IsfW3Bi5vZGeS3vUM0qHFx8a77FkEx3zZ+Fui6RqykQQ21A1LsVo
+	At+Rnc17El25THoMYLERQcrM2tb04dnn5/QYgrQr1nCX29HdMQEd0c3MdEQi8JXa8vtvCQW/eVI
+	iwTnLOCogWpQN3fQ20IKwvDFIiVg4aOsrOsSA6qOQkk9kXKwG15IeioBrpZqU3UwkEFMrg82PSV
+	TlPuIc0MzC/kmvfIuoC
+X-Received: by 2002:a05:600c:4693:b0:49c:e363:c66e with SMTP id 5b1f17b1804b1-49e619abd64mr128256425e9.1.1789301298845;
+        Sun, 13 Sep 2026 05:08:18 -0700 (PDT)
+Received: from lima-kdev.local ([85.100.66.184])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26be3e35sm304455095e9.2.2026.09.13.05.08.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 13 Sep 2026 05:08:18 -0700 (PDT)
+From: Kayra Cizmeci <kayracizmeci@gmail.com>
+To: sh_def@163.com
+Cc: arighi@nvidia.com,
 	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
 	connoro@google.com,
+	dietmar.eggemann@arm.com,
 	jstultz@google.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
 	linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: [PATCH v5 1/4] sched: Dispatch task ticks for donor and execution classes
-Date: Sun, 13 Sep 2026 15:47:19 +0900
-Message-ID: <20260913064722.1534766-2-sh_def@163.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260913064722.1534766-1-sh_def@163.com>
-References: <20260913064722.1534766-1-sh_def@163.com>
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	soolaugust@gmail.com,
+	vincent.guittot@linaro.org,
+	vschneid@redhat.com
+Subject: Re: [PATCH v5 1/4] sched: Dispatch task ticks for donor and execution classes
+Date: Sun, 13 Sep 2026 15:08:14 +0300
+Message-ID: <20260913120814.1273086-1-kayracizmeci@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260913064722.1534766-2-sh_def@163.com>
+References: <20260913064722.1534766-2-sh_def@163.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -55,303 +90,73 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PSgvCgDXKosCR6ZqNeXCPw--.41105S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3ur43Zr1ftFy8Jw1kKF4DArb_yoWDtFWDpF
-	WDXasxGa1DJa1YgryxArWkZ3WfWwn3Xa4agFZ3tw4FkF15tr1FqF1qqF42vr45JrW0vFy2
-	vrWq93y7Kr18G3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UthL5UUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6gMWdWqmRwMqkQAA35
 
-Proxy execution can run a task from one scheduling class on behalf of a
-donor from another. Scheduler ticks therefore need to reach both the class
+Hello All, :>
+
+> Proxy execution can run a task from one scheduling class on behalf of a
+> donor from another. Scheduler ticks therefore need to reach both the class
+> which owns the scheduling context and the class which owns the execution
+> context.
+
+So, donor and curr's classes may be different and we should call both of their task_ticks.
+
+> Calling the donor first preserves the existing runtime-accounting order for
+> execution-context consumers. Keep the existing class-specific tick behavior
+> donor-gated in this patch, so the change only introduces the new interface
+> and dispatch mechanism.
+
+Hm..
+
+> +/*
+> + * Run the scheduling-context class first so its runtime update precedes
+> + * execution-context tick work. A different execution class runs second.
+> + * Same-class proxy execution gets one callback; ownership-specific work
+> + * can select rq->donor or rq->curr as appropriate.
+> + */
+> +static inline void task_tick(struct rq *rq, int queued)
+> +{
+> +	const struct sched_class *curr_class = rq->curr->sched_class;
+> +	const struct sched_class *donor_class = rq->donor->sched_class;
+> +
+> +	donor_class->task_tick(rq, queued);
+> +	if (sched_proxy_exec() && curr_class != donor_class)
+> +		curr_class->task_tick(rq, queued);
+> +}
+
+>  #ifdef CONFIG_SCHED_HRTICK
+>  /*
+>   * Use HR-timers to deliver accurate preemption points.
+> @@ -923,7 +939,7 @@ static enum hrtimer_restart hrtick(struct hrtimer *timer)
+>  
+>  	rq_lock(rq, &rf);
+>  	update_rq_clock(rq);
+> -	rq->donor->sched_class->task_tick(rq, rq->donor, 1);
+> +	task_tick(rq, 1);
+>  	rq_unlock(rq, &rf);
+
+So. Let's assemble a senario.
+
+rq->donor's class method will be DL, and rq->curr's will be fair. And the sched_proxy_exec() will be true.
+
+ON THE OLD:
+Only DL runs. That's all :>
+
+ON THE NEW:
+task_tick firstly runs donor's method. That's DL. Then we goto curr's class which is fair, and run that.
+But because of the newly added checks, because of the donor's sched class not equals to the fair's the code just,
+doesn't run. 
+
+Wouldn't it be better to merge this patch and it's use case together?
+
+The commit message is confusing too "Scheduler ticks therefore need to reach both the class
 which owns the scheduling context and the class which owns the execution
-context.
+context." But the patch doesn't do this on it's own. 
 
-Remove the task argument from sched_class::task_tick() and let each class
-select the state it owns through the runqueue. Add a common task_tick()
-dispatcher which calls the donor class first and, when proxy execution
-splits the classes, the execution class afterwards.
+Thanks, 
+Kayra
 
-Calling the donor first preserves the existing runtime-accounting order for
-execution-context consumers. Keep the existing class-specific tick behavior
-donor-gated in this patch, so the change only introduces the new interface
-and dispatch mechanism.
 
-In particular, keep task_tick_scx() explicitly gated on the donor class.
-If the callback is reached only because the execution context belongs to
-sched_ext while another class supplies the donor, it must not perform SCX
-scheduling-context work. This aligns the dispatcher with the ownership
-direction used by the pending sched_ext proxy-execution work. Full
-sched_ext/proxy-execution integration is not enabled by the current
-Kconfig; that accounting conversion remains outside this patch.
 
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20260908104407.GD687043@noisy.programming.kicks-ass.net
-Link: https://lore.kernel.org/r/aqGa0J1_LM99oDkP@gpd4
-Signed-off-by: Hui Su <sh_def@163.com>
----
- kernel/sched/core.c      | 22 +++++++++++++++++++---
- kernel/sched/deadline.c  | 10 +++++++---
- kernel/sched/ext/ext.c   | 22 +++++++++++++++++-----
- kernel/sched/fair.c      | 25 +++++++++++++++----------
- kernel/sched/idle.c      |  8 ++++----
- kernel/sched/rt.c        | 13 +++++++++----
- kernel/sched/sched.h     |  2 +-
- kernel/sched/stop_task.c |  5 ++---
- 8 files changed, 74 insertions(+), 33 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index b998ef6b87af..05e599665fdd 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -892,6 +892,22 @@ void update_rq_clock(struct rq *rq)
- 	update_rq_clock_task(rq, delta);
- }
- 
-+/*
-+ * Run the scheduling-context class first so its runtime update precedes
-+ * execution-context tick work. A different execution class runs second.
-+ * Same-class proxy execution gets one callback; ownership-specific work
-+ * can select rq->donor or rq->curr as appropriate.
-+ */
-+static inline void task_tick(struct rq *rq, int queued)
-+{
-+	const struct sched_class *curr_class = rq->curr->sched_class;
-+	const struct sched_class *donor_class = rq->donor->sched_class;
-+
-+	donor_class->task_tick(rq, queued);
-+	if (sched_proxy_exec() && curr_class != donor_class)
-+		curr_class->task_tick(rq, queued);
-+}
-+
- #ifdef CONFIG_SCHED_HRTICK
- /*
-  * Use HR-timers to deliver accurate preemption points.
-@@ -923,7 +939,7 @@ static enum hrtimer_restart hrtick(struct hrtimer *timer)
- 
- 	rq_lock(rq, &rf);
- 	update_rq_clock(rq);
--	rq->donor->sched_class->task_tick(rq, rq->donor, 1);
-+	task_tick(rq, 1);
- 	rq_unlock(rq, &rf);
- 
- 	return HRTIMER_NORESTART;
-@@ -5799,7 +5815,7 @@ void sched_tick(void)
- 	if (dynamic_preempt_lazy() && tif_test_bit(TIF_NEED_RESCHED_LAZY))
- 		resched_curr(rq);
- 
--	donor->sched_class->task_tick(rq, donor, 0);
-+	task_tick(rq, 0);
- 	if (sched_feat(LATENCY_WARN))
- 		resched_latency = cpu_resched_latency(rq);
- 	calc_global_load_tick(rq);
-@@ -5895,7 +5911,7 @@ static void sched_tick_remote(struct work_struct *work)
- 				u64 delta = rq_clock_task(rq) - curr->se.exec_start;
- 				WARN_ON_ONCE(delta > (u64)NSEC_PER_SEC * 30);
- 			}
--			curr->sched_class->task_tick(rq, curr, 0);
-+			task_tick(rq, 0);
- 
- 			calc_load_nohz_remote(rq);
- 		}
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 0663c00c41c0..da7613acab18 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2873,11 +2873,15 @@ static void put_prev_task_dl(struct rq *rq, struct task_struct *p, struct task_s
-  *
-  * NOTE: This function can be called remotely by the tick offload that
-  * goes along full dynticks. Therefore no local assumption can be made
-- * and everything must be accessed through the @rq and @curr passed in
-- * parameters.
-+ * and all state must be accessed through @rq.
-  */
--static void task_tick_dl(struct rq *rq, struct task_struct *p, int queued)
-+static void task_tick_dl(struct rq *rq, int queued)
- {
-+	struct task_struct *p = rq->donor;
-+
-+	if (p->sched_class != &dl_sched_class)
-+		return;
-+
- 	update_curr_dl(rq);
- 
- 	update_dl_rq_load_avg(rq_clock_pelt(rq), rq, 1);
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 51de1d8b72a1..8c389852be6e 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3789,9 +3789,21 @@ void scx_tick(struct rq *rq)
- 	update_other_load_avgs(rq);
- }
- 
--static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
-+static void task_tick_scx(struct rq *rq, int queued)
- {
--	struct scx_sched *sch = scx_task_sched(curr);
-+	struct task_struct *donor = rq->donor;
-+	struct scx_sched *sch;
-+
-+	/*
-+	 * task_tick() may also invoke this callback as the execution class
-+	 * after dispatching the donor class. SCX scheduling state belongs to
-+	 * the scheduling context, so there is nothing to do here unless the
-+	 * donor itself belongs to sched_ext.
-+	 */
-+	if (donor->sched_class != &ext_sched_class)
-+		return;
-+
-+	sch = scx_task_sched(donor);
- 
- 	update_curr_scx(rq);
- 
-@@ -3800,11 +3812,11 @@ static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
- 	 * management.
- 	 */
- 	if (scx_bypassing(sch, cpu_of(rq)))
--		scx_set_task_slice(curr, 0);
-+		scx_set_task_slice(donor, 0);
- 	else if (SCX_HAS_OP(sch, tick))
--		SCX_CALL_OP_TASK(sch, tick, rq, curr);
-+		SCX_CALL_OP_TASK(sch, tick, rq, donor);
- 
--	if (!curr->scx.slice)
-+	if (!donor->scx.slice)
- 		resched_curr(rq);
- }
- 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ade1eceb39b8..6f1777799371 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -15057,12 +15057,17 @@ static inline void task_tick_core(struct rq *rq, struct task_struct *curr) {}
-  *
-  * NOTE: This function can be called remotely by the tick offload that
-  * goes along full dynticks. Therefore no local assumption can be made
-- * and everything must be accessed through the @rq and @curr passed in
-- * parameters.
-+ * and all state must be accessed through @rq.
-  */
--static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
-+static void task_tick_fair(struct rq *rq, int queued)
- {
--	struct sched_entity *se = &curr->se;
-+	struct task_struct *donor = rq->donor;
-+	struct sched_entity *se;
-+
-+	if (donor->sched_class != &fair_sched_class)
-+		return;
-+
-+	se = &donor->se;
- 
- 	if (se->on_rq) {
- 		unsigned long weight = NICE_0_LOAD;
-@@ -15075,7 +15080,7 @@ static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
- 			weight = __calc_prop_weight(cfs_rq, se, weight);
- 		}
- 
--		se = &curr->se;
-+		se = &donor->se;
- 		reweight_eevdf(cfs_rq, se, weight, se->on_rq);
- 	}
- 
-@@ -15083,14 +15088,14 @@ static void task_tick_fair(struct rq *rq, struct task_struct *curr, int queued)
- 		return;
- 
- 	if (static_branch_unlikely(&sched_numa_balancing))
--		task_tick_numa(rq, curr);
-+		task_tick_numa(rq, donor);
- 
--	task_tick_cache(rq, curr);
-+	task_tick_cache(rq, donor);
- 
--	update_misfit_status(curr, rq);
--	check_update_overutilized_status(task_rq(curr));
-+	update_misfit_status(donor, rq);
-+	check_update_overutilized_status(task_rq(donor));
- 
--	task_tick_core(rq, curr);
-+	task_tick_core(rq, donor);
- }
- 
- /*
-diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-index eb73b65ce6c4..c1e597b0912a 100644
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -532,12 +532,12 @@ dequeue_task_idle(struct rq *rq, struct task_struct *p, int flags)
-  *
-  * NOTE: This function can be called remotely by the tick offload that
-  * goes along full dynticks. Therefore no local assumption can be made
-- * and everything must be accessed through the @rq and @curr passed in
-- * parameters.
-+ * and all state must be accessed through @rq.
-  */
--static void task_tick_idle(struct rq *rq, struct task_struct *curr, int queued)
-+static void task_tick_idle(struct rq *rq, int queued)
- {
--	update_curr_idle(rq);
-+	if (rq->donor->sched_class == &idle_sched_class)
-+		update_curr_idle(rq);
- }
- 
- static void switching_to_idle(struct rq *rq, struct task_struct *p)
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 85303add726d..dd058a6ca06b 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2535,12 +2535,17 @@ static inline void watchdog(struct rq *rq, struct task_struct *p) { }
-  *
-  * NOTE: This function can be called remotely by the tick offload that
-  * goes along full dynticks. Therefore no local assumption can be made
-- * and everything must be accessed through the @rq and @curr passed in
-- * parameters.
-+ * and all state must be accessed through @rq.
-  */
--static void task_tick_rt(struct rq *rq, struct task_struct *p, int queued)
-+static void task_tick_rt(struct rq *rq, int queued)
- {
--	struct sched_rt_entity *rt_se = &p->rt;
-+	struct task_struct *p = rq->donor;
-+	struct sched_rt_entity *rt_se;
-+
-+	if (p->sched_class != &rt_sched_class)
-+		return;
-+
-+	rt_se = &p->rt;
- 
- 	update_curr_rt(rq);
- 	update_rt_rq_load_avg(rq_clock_pelt(rq), rq, 1);
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index e656c7059bf8..6a8deddc725b 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2718,7 +2718,7 @@ struct sched_class {
- 	 * sched_tick: rq->lock
- 	 * sched_tick_remote: rq->lock
- 	 */
--	void (*task_tick)(struct rq *rq, struct task_struct *p, int queued);
-+	void (*task_tick)(struct rq *rq, int queued);
- 	/*
- 	 * sched_cgroup_fork: p->pi_lock
- 	 */
-diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
-index c909ca0d8c87..87b46fc74f81 100644
---- a/kernel/sched/stop_task.c
-+++ b/kernel/sched/stop_task.c
-@@ -68,10 +68,9 @@ static void put_prev_task_stop(struct rq *rq, struct task_struct *prev, struct t
-  *
-  * NOTE: This function can be called remotely by the tick offload that
-  * goes along full dynticks. Therefore no local assumption can be made
-- * and everything must be accessed through the @rq and @curr passed in
-- * parameters.
-+ * and all state must be accessed through @rq.
-  */
--static void task_tick_stop(struct rq *rq, struct task_struct *curr, int queued)
-+static void task_tick_stop(struct rq *rq, int queued)
- {
- }
- 
--- 
-2.55.0
+
 
