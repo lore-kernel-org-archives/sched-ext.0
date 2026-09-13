@@ -1,30 +1,30 @@
 Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364CD356750
-	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 06:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2282AD2E
+	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 06:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789282105; cv=none; b=MUPNHCLgGoLnNPyl5d0pw5qvgp0pnmDBdHBvrBEaMTpmVIh7sfHQYJtOnaz8GKwc8fKQo9KaAfA/Qn8XpsSaSHjOuwe6LUXpEwaSZY1QYInXwh2bg6tUhlXiN50WOV0Fq/JU5AQmcSkCSFu8PuzCZe2Ya6okZeijFQWnXYWzg3E=
+	t=1789282108; cv=none; b=d+lhtfGNwFZ5JsM1+iz0K9Hvu5TdVJAKSeMZe1CJAZ0LyA/7POygCQZu2cSELJi7xcsTzG8YX3ItlX6TWc09oumIFOjkv3smoo3vnvvY7VAq2UiaFtSka2p336jrd6QyjSCs3gVzmiehQ1qSJ9hMyvAmrtMLCqjVnF+ZEPXHDIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789282105; c=relaxed/simple;
-	bh=N5ToNp5LZjfiYCgANS1U7zesxQ9cbBbdJ9qJa4nhuoc=;
+	s=arc-20240116; t=1789282108; c=relaxed/simple;
+	bh=NutYZjBxzMe66jW2zqFRhhxwy5CY16mbZyEZ+NN/89A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hs8+poRnytN4H8M90xqhMqPROj589Pj6BW4IhcRDq/INu/718RWMAO0F6bWmWtKNTcY3klxOvnj1WdJbCqJazqRKqqEc/B92yOLbVxy0T+94bk1G3MIYnQITVQngpTkXufN6OGYBgcjE621JLJKBJMapoaNaUjjDstRQW8p/lAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=cq/H7W41; arc=none smtp.client-ip=117.135.210.4
+	 MIME-Version; b=ZJdu7eV9BQl3PQ+v0NSto9TAagDH/zH4sUbcbs6OSLCQeQnX+7R28ZMwnsQAdBf0pTGZSMH+Q9CrlX4dZ3PT8G/1zFdZGiYxDNl3mFUb6F2hbSHaLXYDLUFiYSrZqK88xnMo8z2S7DLc4JHh8d31eVqeGgYgitqb0c5gNKia8Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=hCVbDCBa; arc=none smtp.client-ip=117.135.210.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="cq/H7W41"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="hCVbDCBa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=z6
-	VU2sEzMZnU3iYO4KQfIiHIv73H1TxSzgtCCUe/gSg=; b=cq/H7W41JvviZ/6lZT
-	j746NyVWszYL6zQ0lAoUh2GNg1Hfbq7tz84ym6udd0XJZEm1+Mgpmb3DCfF20SGn
-	npQJtaqKFLfw3nfkK47I4LaZ0Fkv/0IQVvvDfRuiovos0cP34nLd3rH19GsrtVUg
-	kMXot8clPn273EWAnwGoaGEdI=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=GU
+	+TuUcfrWu4SxBOyCiFLSOs3WkR+5LcdV+bX5c+4nM=; b=hCVbDCBa8XtpSb2uVt
+	0oQsDngYAWuOTDruf1z1IN7H+bOfMKePyE8ZuvY09t+0OXpLZA1Z4tfqXITK7WLT
+	X2iwlVSGf1Zwekyh8wK/GtJVmRLYDd57oMoFMKb6dEhhuru6Ky5rbWtEu8Ij1t2b
+	NfUvfSofipTVvt9u/bKPat3KI=
 Received: from localhost (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wD3V0ADR6ZqhX2YAQ--.37172S2;
-	Sun, 13 Sep 2026 14:47:32 +0800 (CST)
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgBHJh4ER6ZqaYFfRQ--.32988S2;
+	Sun, 13 Sep 2026 14:47:33 +0800 (CST)
 From: Hui Su <sh_def@163.com>
 To: peterz@infradead.org,
 	soolaugust@gmail.com,
@@ -42,9 +42,9 @@ Cc: mingo@redhat.com,
 	jstultz@google.com,
 	linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
-Subject: [PATCH v5 2/4] sched/numa: Drive NUMA task tick from execution context
-Date: Sun, 13 Sep 2026 15:47:20 +0900
-Message-ID: <20260913064722.1534766-3-sh_def@163.com>
+Subject: [PATCH v5 3/4] sched/cache: Drive cache task tick from execution context
+Date: Sun, 13 Sep 2026 15:47:21 +0900
+Message-ID: <20260913064722.1534766-4-sh_def@163.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260913064722.1534766-1-sh_def@163.com>
 References: <20260913064722.1534766-1-sh_def@163.com>
@@ -55,107 +55,60 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3V0ADR6ZqhX2YAQ--.37172S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJw1kGryUXF48Gr18WrW5Awb_yoW5uFW7pF
-	Z0ka4aqrZrKa1YqF17ZrWDX3WfGwn7A347WF4DGF48ur1Ut39Y9rn3KFWSqF4YyrW0kFy2
-	vrWj9r17Cr1UKw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:QCgvCgBHJh4ER6ZqaYFfRQ--.32988S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Ar4rZr4kAryDGr4rtr15XFb_yoW8ZFyUpr
+	WqgF4UJrWktay5ZFy8Aa9YqF1fuwn3J342gFs8Gr4F9ry5G3WrKrnYq3W2vF10yr40yF12
+	vr1j9r9rGw4jk3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UtrchUUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6QQXdmqmRwSX4wAA33
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6QUXdmqmRwWX8QAA3l
 
 Proxy execution separates the scheduling context in rq->donor from the
-execution context in rq->curr. The task tick dispatcher can therefore
-invoke task_tick_fair() for either side of a cross-class proxy
-relationship.
+execution context in rq->curr. Keep the fair task tick organized as one
+donor-owned block followed by one execution-context block.
 
-task_tick_numa() operates on state associated with the task actually
-executing, including its mm and NUMA work state. Task-level execution
-runtime is likewise accounted to rq->curr, and task_tick_numa() uses that
-runtime to drive periodic NUMA scanning.
+Task cache accounting is performed for rq->curr by account_mm_sched(), and
+cache tick handling must operate on the same execution context. With proxy
+execution, keeping task_tick_cache() on the donor can leave the executing
+task's cache state and epoch stale.
 
-Order task_tick_fair() as one donor-owned block followed by one
-execution-context block. Keep the cache tick in the donor block for this
-patch; the following patch moves it with the other execution-context work.
-Run the NUMA tick only when rq->curr belongs to the fair scheduling class.
-The donor class tick runs first, so execution runtime is accounted before
-the NUMA tick consumes it.
+Move task_tick_cache() into the execution-context section alongside the
+NUMA tick. The final layout has one donor-owned block containing entity,
+misfit, overutilized and core-scheduling work, followed by one
+execution-context block containing NUMA and cache work. Preserve the normal
+queued/hrtick gating while attributing each operation to the right context.
 
-Fixes: 7de9d4f94638 ("sched: Start blocked_on chain processing in find_proxy_task()")
-Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Fixes: df0d98475954 ("sched/cache: Introduce infrastructure for cache-aware load balancing")
 Suggested-by: Tim Chen <tim.c.chen@linux.intel.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20260909110348.GZ4120091@noisy.programming.kicks-ass.net
 Signed-off-by: Hui Su <sh_def@163.com>
 ---
- kernel/sched/fair.c | 46 +++++++++++++++++++++++----------------------
- 1 file changed, 24 insertions(+), 22 deletions(-)
+ kernel/sched/fair.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 6f1777799371..002456cf9f8d 100644
+index 002456cf9f8d..ed08b287016a 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -15061,41 +15061,43 @@ static inline void task_tick_core(struct rq *rq, struct task_struct *curr) {}
-  */
- static void task_tick_fair(struct rq *rq, int queued)
- {
--	struct task_struct *donor = rq->donor;
--	struct sched_entity *se;
-+	struct task_struct *curr = rq->curr, *donor = rq->donor;
- 
--	if (donor->sched_class != &fair_sched_class)
--		return;
-+	if (donor->sched_class == &fair_sched_class) {
-+		struct sched_entity *se = &donor->se;
- 
--	se = &donor->se;
-+		if (se->on_rq) {
-+			unsigned long weight = NICE_0_LOAD;
-+			struct cfs_rq *cfs_rq;
- 
--	if (se->on_rq) {
--		unsigned long weight = NICE_0_LOAD;
--		struct cfs_rq *cfs_rq;
-+			for_each_sched_entity(se) {
-+				cfs_rq = cfs_rq_of(se);
-+				entity_tick(cfs_rq, se, queued);
- 
--		for_each_sched_entity(se) {
--			cfs_rq = cfs_rq_of(se);
--			entity_tick(cfs_rq, se, queued);
-+				weight = __calc_prop_weight(cfs_rq, se, weight);
-+			}
- 
--			weight = __calc_prop_weight(cfs_rq, se, weight);
-+			se = &donor->se;
-+			reweight_eevdf(cfs_rq, se, weight, se->on_rq);
+@@ -15082,7 +15082,6 @@ static void task_tick_fair(struct rq *rq, int queued)
  		}
  
--		se = &donor->se;
--		reweight_eevdf(cfs_rq, se, weight, se->on_rq);
-+		if (!queued) {
-+			task_tick_cache(rq, donor);
-+			update_misfit_status(donor, rq);
-+			check_update_overutilized_status(task_rq(donor));
-+
-+			task_tick_core(rq, donor);
-+		}
- 	}
+ 		if (!queued) {
+-			task_tick_cache(rq, donor);
+ 			update_misfit_status(donor, rq);
+ 			check_update_overutilized_status(task_rq(donor));
  
- 	if (queued)
+@@ -15094,10 +15093,12 @@ static void task_tick_fair(struct rq *rq, int queued)
  		return;
  
--	if (static_branch_unlikely(&sched_numa_balancing))
--		task_tick_numa(rq, donor);
--
--	task_tick_cache(rq, donor);
--
--	update_misfit_status(donor, rq);
--	check_update_overutilized_status(task_rq(donor));
-+	/* Update state owned by the execution context. */
-+	if (curr->sched_class == &fair_sched_class &&
-+	    static_branch_unlikely(&sched_numa_balancing))
-+		task_tick_numa(rq, curr);
+ 	/* Update state owned by the execution context. */
+-	if (curr->sched_class == &fair_sched_class &&
+-	    static_branch_unlikely(&sched_numa_balancing))
+-		task_tick_numa(rq, curr);
++	if (curr->sched_class == &fair_sched_class) {
++		if (static_branch_unlikely(&sched_numa_balancing))
++			task_tick_numa(rq, curr);
  
--	task_tick_core(rq, donor);
++		task_tick_cache(rq, curr);
++	}
  }
  
  /*
