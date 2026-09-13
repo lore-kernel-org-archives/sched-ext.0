@@ -1,106 +1,50 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B984B39A06D
-	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 13:08:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C1D36DA15;
+	Sun, 13 Sep 2026 15:59:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789304907; cv=none; b=Oz35rnoqepDYNPeQQOflrZnYKWPXf4WoL+01nGAENH9c8bTdVJMWl7D+Np7tmR5jUyemvUts4eP1BQboZuv3/h8/HbADp336GajPBXzwuhSEv4XC3wDk9PIcPK3B9Ygje7DQRgP9gulMdHNPXagSd56saqgpGWBy1uCylv/mCrA=
+	t=1789315185; cv=none; b=UIYXB95A+BqAYfhIyG8GoLIfg1C+lcLF+HT4V4esCaOXbRu2E9Db3tw9MUu8izxYtG4w1ZHqqGS/ZfBz7s1hUpFknGTW13QXzGcABPfOpEa/1ZvOlWaqhigU4A9t8PYBlXwpe5bpQ/GOuxrZj/H5lSAoOaSGpY8+CteZDAaKzsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789304907; c=relaxed/simple;
-	bh=25VHASD5cjOlWczoHO+wvaD9h9veY1XdGejCGPyH0T0=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=AHcAoLNkL82X9TUfU75Z55y77pRBc0ykypW96feCt9wqaFIdAI54dblCoTRDW2ATmZf9PLVh3Z+jR77Z05JTlk0ZliZFjRqpfuS6QiKH6Enb9/2QlJVLzN7+u39z3LU2LgUHKbGeeDQTHvuBjg4SmXRaL/vdNjpEXX06bzLr/ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=TTIz/Ff2; arc=none smtp.client-ip=117.135.210.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1789315185; c=relaxed/simple;
+	bh=X5vmnqj3J+VCr8meY4hOwsreJKsImN/OL2V71D8gt3Q=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=X11id9vL322k4p8prnCAzAHQRzuWVL66x0wYxGIF8wiF54v2QqPohqItc/2ebhNbISXXO+6yEldumHPiOfNAXea2xvIuDf27QPFfftRms92Ag5t+EBiVXCuzPV+YwmkM3ieh1wAdS14r24vwkLCvBG44T/wfxnnjj/qi2ZLz9UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n4sHO2xd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="TTIz/Ff2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:Message-ID:From:To:Subject; bh=iq+j5Y36IPqCTqi
-	wN5sH389DCis42pzhKcSl9IbT1M0=; b=TTIz/Ff2YUJBDunsFxd6/0vVHqMfhwp
-	QV3VLs+CEmJfTlxEToqG1rqJx2g+Jmoq1h4xiXuER4zPSRdEg6v86zSHXu91G5nN
-	qWU+xoL57EuQuJ+xScH0LuDuh6vLhdavsZfPFyAk/2gHcsk0EBsQ2I54xdE12wWD
-	kJLTrZBEBLEo=
-Received: from localhost (unknown [])
-	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wD3N7gMoKZqT7TlAQ--.26916S2;
-	Sun, 13 Sep 2026 21:07:25 +0800 (CST)
-Date: Sun, 13 Sep 2026 22:07:24 +0900
-Message-ID: <36503a3fb742ca20fa218ec190a50932.sh_def@163.com>
-From: Hui Su <sh_def@163.com>
-To: Kayra Cizmeci <kayracizmeci@gmail.com>
-Cc: arighi@nvidia.com,
-	bsegall@google.com,
-	connoro@google.com,
-	dietmar.eggemann@arm.com,
-	jstultz@google.com,
-	juri.lelli@redhat.com,
-	kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org,
-	mgorman@suse.de,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	rostedt@goodmis.org,
-	sched-ext@lists.linux.dev,
-	soolaugust@gmail.com,
-	vincent.guittot@linaro.org,
-	vschneid@redhat.com
-Subject: Re: [PATCH v5 1/4] sched: Dispatch task ticks for donor and execution classes
-In-Reply-To: <20260913120814.1273086-1-kayracizmeci@gmail.com>
-References: <20260913064722.1534766-2-sh_def@163.com>
-	<20260913120814.1273086-1-kayracizmeci@gmail.com>
-X-CM-TRANSID:_____wD3N7gMoKZqT7TlAQ--.26916S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KF43GFykWr1UCF1Uur1xXwb_yoW8Zr4rpF
-	ZYgF4rJw4kJFWFkr12y3Z0ga45Ca1fGFyDGrs8Gr48Zr98Xr109ryIqa40kFW3Grn8K3W2
-	vr4qvas3Ja4jyrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UAwIgUUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwg1vzmqmoA1jvQAA3R
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n4sHO2xd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F861F000FF;
+	Sun, 13 Sep 2026 15:59:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789315184;
+	bh=6GfjTwMWK0m8lsyq1cjarbb7FO+Mh+NjaIlzbi9KhiA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=n4sHO2xdU66tAUj1dNfyxTao5anIuyVkti76VH/7/sceN03WtRU1N35V+UD1lOPx9
+	 htXD8Kza4SkjyjWGnqvliOHB6qkQSB2znxRN6ehztUDCJHmX7ljuGRXCiawVx1NvBC
+	 6TExsqHPM/55XQrv7U8wZk5KbOYJIY9eEtukkK1x4i/OiunkdOIIzXZBr36IfqXElF
+	 E2nU7Gu5qVCaxwoQn1SupWI/mlFuML/zEaN2nH5+Yk+Q/cVl9cpN6PwoMxFyVvOyWg
+	 uOaC8aPQPDx8t97/wOTQNo0y217C7Vu1IITuOWjx3+jZLQok0gDMiuRBV1Ngb9dPIj
+	 SZ4J9QYrKpWnA==
+Date: Sun, 13 Sep 2026 05:59:43 -1000
+Message-ID: <f5041873e1431184067cc977634e51ab@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Qiurong Fang <fangqiurong@kylinos.cn>
+Cc: tj@kernel.org, David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
+ Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] sched_ext: Close the pre-enable ops error claim window
+In-Reply-To: <20260912131518.3428032-1-fangqiurong@kylinos.cn>
+References: <20260912131518.3428032-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hi Kayra,
+Applied to sched_ext/for-7.3-fixes with minor wording cleanups.
 
-> Wouldn't it be better to merge this patch and it's use case together?
->
-> The commit message is confusing too "Scheduler ticks therefore need to
-> reach both the class which owns the scheduling context and the class which
-> owns the execution context." But the patch doesn't do this on it's own.
+Thanks.
 
-You are right that patch 1 alone does not enable useful execution-context
-work in the FAIR callback: the callback is still donor-gated there, so a FAIR
-callback reached only as the execution class returns without doing FAIR
-scheduling work.
-
-That is intentional. I split the series so that patch 1 is a
-behavior-preserving conversion of the sched_class::task_tick() interface and
-the common dispatcher:
-
-  - patch 1: generic donor/execution callback dispatch
-  - patch 2: move NUMA tick work to the execution context
-  - patch 3: move cache tick work to the execution context
-
-Keeping patch 1 donor-gated makes the API and dispatcher change independently
-reviewable, while patches 2 and 3 introduce the execution-context users.
-
-I agree that the patch 1 commit message is confusing because its opening
-paragraph can read as if patch 1 itself already enables useful
-execution-context tick work. I will reword it to make the preparatory nature
-explicit, for example:
-
-  This patch adds the common donor/execution task_tick() dispatcher and
-  updates the callback interface. Class-specific tick work remains
-  donor-owned here; subsequent patches use the new dispatch path for
-  execution-context NUMA and cache work.
-
-I would prefer to keep patch 1 separate from patch 2 for now. It keeps the
-sched_class::task_tick() interface conversion and cross-class dispatcher
-separate from the NUMA semantic fix, and keeps the NUMA and cache fixes as
-separate changes with their own Fixes: tags. If there is a preference for
-introducing the dispatcher together with its first execution-context user,
-I can fold patch 2 into patch 1.
-
-Thanks,
-Hui
-
+-- 
+tejun
