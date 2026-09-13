@@ -1,66 +1,33 @@
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B4838E8DC
-	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 12:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B984B39A06D
+	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 13:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789301302; cv=none; b=nAIHezB11FnCUkdV75tmwIkQGby17Y3JCTEH9d2LjAphsgvjQx4Jre/vPdxYsL9MvVtZs7btpPKkhGOdj1tMnbbvar6JnsxnU7Uf+j0Cvrz2g2SBlbEk/Vzph8e9VyI3S0CqqHitdTXw/gq2AVwgMXZTV0NAbB5OHCO07rRUvGY=
+	t=1789304907; cv=none; b=Oz35rnoqepDYNPeQQOflrZnYKWPXf4WoL+01nGAENH9c8bTdVJMWl7D+Np7tmR5jUyemvUts4eP1BQboZuv3/h8/HbADp336GajPBXzwuhSEv4XC3wDk9PIcPK3B9Ygje7DQRgP9gulMdHNPXagSd56saqgpGWBy1uCylv/mCrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789301302; c=relaxed/simple;
-	bh=apY0A4WizTCP59J26TYeXZVRIhy+naRUEHiKeRCe060=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BkCBvRktG0c/912kV+FcqSjqcL3p1Wu5eHBt9NmihReUlUYVWLSHAs8tdCrG93YL+FPgGs3Df8rVAcq27oSMwpZtoTZqueQMHamvFwRekjOz/fM2bbX7TXmrKb8DYyCFaCixzsQEEbfZ/S4aN/V9Orgx28oNtzOYkyrpRXMZW5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EsSWaSDg; arc=none smtp.client-ip=74.125.225.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789304907; c=relaxed/simple;
+	bh=25VHASD5cjOlWczoHO+wvaD9h9veY1XdGejCGPyH0T0=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=AHcAoLNkL82X9TUfU75Z55y77pRBc0ykypW96feCt9wqaFIdAI54dblCoTRDW2ATmZf9PLVh3Z+jR77Z05JTlk0ZliZFjRqpfuS6QiKH6Enb9/2QlJVLzN7+u39z3LU2LgUHKbGeeDQTHvuBjg4SmXRaL/vdNjpEXX06bzLr/ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=TTIz/Ff2; arc=none smtp.client-ip=117.135.210.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EsSWaSDg"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482e1b30c94so150336f8f.1
-        for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 05:08:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789301299; x=1789906099; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=8I4hlMRL7jp+sEyBR2jYI/uI6MHf0Koed1W9yy+k+mg=;
-        b=EsSWaSDg1ANjv/1VbWM6yUnU714vR2v6q8Tija/OV3bqhOMoIyZk5LrKwZtwzJy9Gp
-         scs8JjuZuBYOvLMDokXbV1sTbPVeZ2tWnJzEmxhKTCFoe/M+uI/FuVhqFxFnzzocDbB0
-         qvqGpBR5PbqSz9PM9iHQ9KPCZrK2rBOteCWPmbXkweGpBR6jgs8bDNA+M23aoHmpUQVk
-         Q5qnWmC6HtxWclvBrLyNYzVuopxKmhXCyl7quR5MkG7KPdb2TMr3yamGRlDIldfCqp6n
-         w4Y68JCez8VGSx3IofhWDIHy0nmgr8fxIHOOGfUQvpynwNAfZi8EruH2ZqtqKB3uC/1o
-         I1cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789301299; x=1789906099;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=8I4hlMRL7jp+sEyBR2jYI/uI6MHf0Koed1W9yy+k+mg=;
-        b=ZvGEhUZ5/MpvFElT3JK6B4NGEfgvjaUyRK51iquZoeSN7oYDv/PT4WT9yKUJiQPGWu
-         G10I9bVsApPmhXMV+fTAh3Ev2noYWYwKdqGmW9Du+gwF2LdTeH20O0Sj4oI1Jrz+8ByJ
-         urMeJ8xZnhSQiqy++CwFkq4C1Fqo8w6DqOEwAWgKkh03/HyF6c/9hYJFwvI/34C6otMb
-         oRdBAX3DrORHQ+2SPpZYMZNFBl634JkI3pbh4idMYQUUkiWgfRU68JZS3EkwNFqZVaFy
-         HsjS4W9uwwWJqLmowwJRWjZD0ctyXSciv5aG5pLq36o9c281dS7xRdCscE9gt5YNHbwB
-         sM1w==
-X-Forwarded-Encrypted: i=1; AKwUvByk5tmjzFAX2pA7GJ8EJygwKaa/0yECNN6nt+B2mB4i+/9UeF23mfo/UO8YneJkXeDCh+pdmfpDtB0=@lists.linux.dev
-X-Gm-Message-State: AFuF++mSgJZXAy/c5LD1oGYSKP7J/+PFZCxDvXesxQahm0SPneeBs57h
-	0hcI7peb9Rxu9FGR5g8cmREHHluFMrEaRtpMnbI+RIxZnjm4JfZRBfLR
-X-Gm-Gg: AYBFou3RYDzQJIYctmy/TNVxTXzihCF4MhIbtozvTWztIuY1kI6Z1LpN0pEC/V56AHT
-	bG+WmFLE8F1BFsE3wYTil7wqojrhFFf2gjxwU6RSc6r3QHzrTkNJjvbpX8utpyatTcQSkxV/CB0
-	LpcUPlmFT6T5XM0Mfgk8Je4Ox/tcG+CqtjAv3GxHQ3KIUtHL5fpVW86dFOmP0KPqRPHv1dDqyOY
-	UTXbyJeRRriT614/pAT9+5DRmd+ZQegHQR3cMbbOkYHjFSECmHbuuwVI1+T9qDECf5AI+rZ4lzq
-	5bzKNa8HVenueuRTXT8Ddd0IsfW3Bi5vZGeS3vUM0qHFx8a77FkEx3zZ+Fui6RqykQQ21A1LsVo
-	At+Rnc17El25THoMYLERQcrM2tb04dnn5/QYgrQr1nCX29HdMQEd0c3MdEQi8JXa8vtvCQW/eVI
-	iwTnLOCogWpQN3fQ20IKwvDFIiVg4aOsrOsSA6qOQkk9kXKwG15IeioBrpZqU3UwkEFMrg82PSV
-	TlPuIc0MzC/kmvfIuoC
-X-Received: by 2002:a05:600c:4693:b0:49c:e363:c66e with SMTP id 5b1f17b1804b1-49e619abd64mr128256425e9.1.1789301298845;
-        Sun, 13 Sep 2026 05:08:18 -0700 (PDT)
-Received: from lima-kdev.local ([85.100.66.184])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26be3e35sm304455095e9.2.2026.09.13.05.08.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2026 05:08:18 -0700 (PDT)
-From: Kayra Cizmeci <kayracizmeci@gmail.com>
-To: sh_def@163.com
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="TTIz/Ff2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:Message-ID:From:To:Subject; bh=iq+j5Y36IPqCTqi
+	wN5sH389DCis42pzhKcSl9IbT1M0=; b=TTIz/Ff2YUJBDunsFxd6/0vVHqMfhwp
+	QV3VLs+CEmJfTlxEToqG1rqJx2g+Jmoq1h4xiXuER4zPSRdEg6v86zSHXu91G5nN
+	qWU+xoL57EuQuJ+xScH0LuDuh6vLhdavsZfPFyAk/2gHcsk0EBsQ2I54xdE12wWD
+	kJLTrZBEBLEo=
+Received: from localhost (unknown [])
+	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wD3N7gMoKZqT7TlAQ--.26916S2;
+	Sun, 13 Sep 2026 21:07:25 +0800 (CST)
+Date: Sun, 13 Sep 2026 22:07:24 +0900
+Message-ID: <36503a3fb742ca20fa218ec190a50932.sh_def@163.com>
+From: Hui Su <sh_def@163.com>
+To: Kayra Cizmeci <kayracizmeci@gmail.com>
 Cc: arighi@nvidia.com,
 	bsegall@google.com,
 	connoro@google.com,
@@ -78,85 +45,62 @@ Cc: arighi@nvidia.com,
 	vincent.guittot@linaro.org,
 	vschneid@redhat.com
 Subject: Re: [PATCH v5 1/4] sched: Dispatch task ticks for donor and execution classes
-Date: Sun, 13 Sep 2026 15:08:14 +0300
-Message-ID: <20260913120814.1273086-1-kayracizmeci@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260913064722.1534766-2-sh_def@163.com>
+In-Reply-To: <20260913120814.1273086-1-kayracizmeci@gmail.com>
 References: <20260913064722.1534766-2-sh_def@163.com>
+	<20260913120814.1273086-1-kayracizmeci@gmail.com>
+X-CM-TRANSID:_____wD3N7gMoKZqT7TlAQ--.26916S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7KF43GFykWr1UCF1Uur1xXwb_yoW8Zr4rpF
+	ZYgF4rJw4kJFWFkr12y3Z0ga45Ca1fGFyDGrs8Gr48Zr98Xr109ryIqa40kFW3Grn8K3W2
+	vr4qvas3Ja4jyrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UAwIgUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwg1vzmqmoA1jvQAA3R
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Hello All, :>
+Hi Kayra,
 
-> Proxy execution can run a task from one scheduling class on behalf of a
-> donor from another. Scheduler ticks therefore need to reach both the class
-> which owns the scheduling context and the class which owns the execution
-> context.
+> Wouldn't it be better to merge this patch and it's use case together?
+>
+> The commit message is confusing too "Scheduler ticks therefore need to
+> reach both the class which owns the scheduling context and the class which
+> owns the execution context." But the patch doesn't do this on it's own.
 
-So, donor and curr's classes may be different and we should call both of their task_ticks.
+You are right that patch 1 alone does not enable useful execution-context
+work in the FAIR callback: the callback is still donor-gated there, so a FAIR
+callback reached only as the execution class returns without doing FAIR
+scheduling work.
 
-> Calling the donor first preserves the existing runtime-accounting order for
-> execution-context consumers. Keep the existing class-specific tick behavior
-> donor-gated in this patch, so the change only introduces the new interface
-> and dispatch mechanism.
+That is intentional. I split the series so that patch 1 is a
+behavior-preserving conversion of the sched_class::task_tick() interface and
+the common dispatcher:
 
-Hm..
+  - patch 1: generic donor/execution callback dispatch
+  - patch 2: move NUMA tick work to the execution context
+  - patch 3: move cache tick work to the execution context
 
-> +/*
-> + * Run the scheduling-context class first so its runtime update precedes
-> + * execution-context tick work. A different execution class runs second.
-> + * Same-class proxy execution gets one callback; ownership-specific work
-> + * can select rq->donor or rq->curr as appropriate.
-> + */
-> +static inline void task_tick(struct rq *rq, int queued)
-> +{
-> +	const struct sched_class *curr_class = rq->curr->sched_class;
-> +	const struct sched_class *donor_class = rq->donor->sched_class;
-> +
-> +	donor_class->task_tick(rq, queued);
-> +	if (sched_proxy_exec() && curr_class != donor_class)
-> +		curr_class->task_tick(rq, queued);
-> +}
+Keeping patch 1 donor-gated makes the API and dispatcher change independently
+reviewable, while patches 2 and 3 introduce the execution-context users.
 
->  #ifdef CONFIG_SCHED_HRTICK
->  /*
->   * Use HR-timers to deliver accurate preemption points.
-> @@ -923,7 +939,7 @@ static enum hrtimer_restart hrtick(struct hrtimer *timer)
->  
->  	rq_lock(rq, &rf);
->  	update_rq_clock(rq);
-> -	rq->donor->sched_class->task_tick(rq, rq->donor, 1);
-> +	task_tick(rq, 1);
->  	rq_unlock(rq, &rf);
+I agree that the patch 1 commit message is confusing because its opening
+paragraph can read as if patch 1 itself already enables useful
+execution-context tick work. I will reword it to make the preparatory nature
+explicit, for example:
 
-So. Let's assemble a senario.
+  This patch adds the common donor/execution task_tick() dispatcher and
+  updates the callback interface. Class-specific tick work remains
+  donor-owned here; subsequent patches use the new dispatch path for
+  execution-context NUMA and cache work.
 
-rq->donor's class method will be DL, and rq->curr's will be fair. And the sched_proxy_exec() will be true.
+I would prefer to keep patch 1 separate from patch 2 for now. It keeps the
+sched_class::task_tick() interface conversion and cross-class dispatcher
+separate from the NUMA semantic fix, and keeps the NUMA and cache fixes as
+separate changes with their own Fixes: tags. If there is a preference for
+introducing the dispatcher together with its first execution-context user,
+I can fold patch 2 into patch 1.
 
-ON THE OLD:
-Only DL runs. That's all :>
-
-ON THE NEW:
-task_tick firstly runs donor's method. That's DL. Then we goto curr's class which is fair, and run that.
-But because of the newly added checks, because of the donor's sched class not equals to the fair's the code just,
-doesn't run. 
-
-Wouldn't it be better to merge this patch and it's use case together?
-
-The commit message is confusing too "Scheduler ticks therefore need to reach both the class
-which owns the scheduling context and the class which owns the execution
-context." But the patch doesn't do this on it's own. 
-
-Thanks, 
-Kayra
-
-
-
-
-
+Thanks,
+Hui
 
