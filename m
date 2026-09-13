@@ -1,29 +1,30 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C762123EAAF
-	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 06:48:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F90829AB02
+	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 06:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789282100; cv=none; b=WPXlKdSQZEIvJJxSRfO3/UlNs4geA20W3+t6NVAbGGiOLyqtumgl//bNKZinv/xTmylNI0mPrWXrCbnH5BLWWHUAUTNOloG5Rjr8kpNQnyuh+bkqxH+/VOv/YQmiHAUzgtmz/hqzu94iTAkoFy1kD1dDKoUHR4801MiZUawfUGY=
+	t=1789282102; cv=none; b=Hh6gFv1f/r/tiqdFEmMNX7hzhgFneJqBW+6EDd2rme5Fhpy7n9mkDobUk/F/LliixG0qm3SPq1Co65mRjzRalIcpW+0LeDy4T7WckiAtUklTcRgDYDtI9LGwXZwmvrSfflXsfCU3DA7XJcRdADHg4LwKLXmOJ5bRjGT/mgoVBk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789282100; c=relaxed/simple;
-	bh=ylDw/zn+gDtIaAnq1aLOpxgs6k+8G98P1Y8tRy7MP7Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j8sHwWP3D6lg/F3du/hqD4f1XsLPJva03B/vAp76uWd1s4Svs1EVNdtAjHtOov36RjeSNBErwGnDYQoCQrbJiCtxINUvlBeLgk1Lys7VIl3leQnIkMZTadeoOJrQRLQjkI11iKbTbk0OH9fpB+SAbt5/NbOIVHO+VtMTqQLrOOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=FGspjzRW; arc=none smtp.client-ip=117.135.210.5
+	s=arc-20240116; t=1789282102; c=relaxed/simple;
+	bh=e51Lw+eXyTMRoF1WNvIMXex1i56BEBjlDeaWNEuNchA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DbIdxBcocEW74XgRG51HNv1GGbPglnEbbZM4NRtS68Kg4ZkYqRNFKN3Y08ISHwZBIBnOb+7Q8n4wO4EtVvgNpP5psjWo+4/DZgxiRuTvfnY5L1yPOWpxYf2Ti/lq54INzqiArBNMR3ociMTNrLWi+qz5gJOQ3GixL4Co9C9XQOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=R0FT9v+h; arc=none smtp.client-ip=220.197.31.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="FGspjzRW"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="R0FT9v+h"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=ro
-	LeDVjGGt8xuKfwj/qD3FhBOsewlu8b45zIE7iOyRk=; b=FGspjzRW4LXIFOLOBO
-	eCLVsQLw17WFc7VxzDb5xL1+bKe//gjeNZI4RnzsPiihu2qBhhaJIy/ftTtW0nYm
-	uQawk+m54bfeKFr4Um977XjDaf4gfDsjZZrhlbOLPg0VXc79kZvpEVgQAohLUJr6
-	U6wQV2XVZDqEsimT27GpeQtTo=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=tM
+	jkso+o5p+Voknae42nMgD3a3sKhBWIkLuJ9y3vptM=; b=R0FT9v+hA7ndNtLtO9
+	BEyltfDdpSXjywrUUSiQcJdX7xRG267bMG/IHqmATuhVSHiPG8i/u61JyaUcaYrr
+	rtanmk8uvAbpWo7aRSlqHtCM/DURHOqmzKMSIQWOX3xCiaDkIUy37t6AuzjeOotK
+	6+8Du3ZX9qkEG403hfdQdJlZs=
 Received: from localhost (unknown [])
-	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wBXhwUAR6ZqW16OAQ--.63600S2;
-	Sun, 13 Sep 2026 14:47:29 +0800 (CST)
+	by gzga-smtp-mtada-g1-4 (Coremail) with SMTP id _____wAXqWkGR6ZqwKmwAQ--.56670S2;
+	Sun, 13 Sep 2026 14:47:34 +0800 (CST)
 From: Hui Su <sh_def@163.com>
 To: peterz@infradead.org,
 	soolaugust@gmail.com,
@@ -41,10 +42,12 @@ Cc: mingo@redhat.com,
 	jstultz@google.com,
 	linux-kernel@vger.kernel.org,
 	sched-ext@lists.linux.dev
-Subject: [PATCH v5 0/4] sched: Handle split scheduling and execution contexts in task ticks
-Date: Sun, 13 Sep 2026 15:47:18 +0900
-Message-ID: <20260913064722.1534766-1-sh_def@163.com>
+Subject: [PATCH v5 4/4] sched/core: Fix donor slice accounting under proxy execution
+Date: Sun, 13 Sep 2026 15:47:22 +0900
+Message-ID: <20260913064722.1534766-5-sh_def@163.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260913064722.1534766-1-sh_def@163.com>
+References: <20260913064722.1534766-1-sh_def@163.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -52,75 +55,170 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wBXhwUAR6ZqW16OAQ--.63600S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGF4DXw4UJryUXFy3Gw13XFb_yoW5AF4UpF
-	Z0qFWaqw1kJFy3ArW3ZwsYga4rWwn3Jr17XrsxGr18Xry5Gw4Utr1qvr1UKFW5XryvkFy2
-	vF1DZas7u34Yk3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UtWrAUUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwQIWdWqmRwL56gAA36
+X-CM-TRANSID:_____wAXqWkGR6ZqwKmwAQ--.56670S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3Xr1ruFWkur1xJr17KF4Durg_yoWxZr47pF
+	Z0va4Yqw4Dta4jgFWDArs5Wa43K3s3J345urs8tayFkr1rt3yYqF1Sqr1jvF45Cr1vkF12
+	yr4q9ry7C3W7trJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UCsjbUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6gcXdmqmRwcqvAAA3W
 
-Proxy execution separates the task selected for scheduling from the task
-whose execution state advances. This series dispatches scheduler ticks to
-both contexts, keeps NUMA and cache work tied to the execution task, and
-accounts core-scheduling slice service across same-donor execution-owner
-handoffs.
+Core scheduling uses __entity_slice_used() to decide whether the current
+scheduling context has consumed enough of its slice to let a force-idled
+SMT sibling run.
 
-Scheduling-class policy work remains donor-owned, while execution-context
-consumers use rq->curr. The core-scheduling fix keeps a per-runqueue donor
-service baseline so a synthetic same-donor proxy reselect preserves service
-already consumed on behalf of the donor.
+The check is correctly made against rq->donor, since the slice belongs to
+the scheduling context. With proxy execution, however, task runtime is
+accounted to rq->curr. The donor's sum_exec_runtime therefore does not
+advance while another task executes on its behalf, causing
 
-Link: https://lore.kernel.org/r/20260909092901.2989564-1-sh_def@163.com
+	se->sum_exec_runtime - se->prev_sum_exec_runtime
 
-Changes since v4:
+to remain near zero and preventing the force-idle reschedule from
+triggering.
 
-- Rework FAIR task-tick handling into one donor-owned block followed by one
-  execution-context block, with NUMA and cache work in the latter.
-- Keep task_tick_scx() donor-gated pending the separate sched_ext/proxy
-  execution integration.
-- Preserve the donor core-slice baseline across same-donor synthetic
-  reselects, while resetting it for a new donor or explicit set-next
-  reactivation.
-- Drop the RT watchdog patch from this series; continue that work separately.
+Using rq->curr is not correct either, as that would compare the execution
+task's runtime against its own slice rather than the donor's slice.
 
-Validation:
+Track the donor's task-clock timestamp when it is selected and measure the
+elapsed service using exec_start. update_se() advances the donor's
+exec_start from rq_clock_task() even under proxy execution, while the
+accumulated task runtime itself is charged to rq->curr.
 
-- x86_64 vmlinux/modules/bzImage builds passed with the main configuration
-  and CONFIG_SCHED_PROXY_EXEC=n, CONFIG_SCHED_CORE=n,
-  CONFIG_SCHED_CACHE=n, CONFIG_FAIR_GROUP_SCHED=n,
-  CONFIG_NUMA_BALANCING=y, and CONFIG_SCHED_CLASS_EXT=y variants.
-  sched_ext selftests also built successfully with the SCX-enabled kernel.
-- x86_64 QEMU boot smoke and feature-off boot tests: PASS.
-- Exact-head two-node NUMA/proxy smoke: PASS.
-- Previous validation of the unchanged patch content covers scheduler
-  selftests, NO_HZ_FULL proxy smoke, and SMT core-scheduling behavior.
-- A focused same-donor CORE-01 test split service across two execution
-  owners. Each individual portion stayed below the force-idle threshold,
-  while accumulated donor service crossed it with one core_sched_start
-  baseline.
+Keep the selection baseline in struct rq: there is only one active donor
+per runqueue. Storing it in every sched_entity needlessly increases the
+size of the hot sched_entity structure, especially on 32-bit builds.
 
-No mixed sched_ext/proxy runtime was run because the configurations are
-currently mutually exclusive. Runtime validation was performed on x86_64
-only; no 32-bit or ARM runtime validation was performed for this revision.
+Proxy execution can switch rq->curr from one execution owner to another
+without changing rq->donor. The scheduler performs a synthetic
+put_prev_task()/set_next_task() pair for the unchanged donor in that case.
+Preserve the baseline for that reselect, or service accumulated before the
+owner handoff would be lost. Refresh it when selecting a different donor
+or through an explicit set-next reactivation.
 
-Hui Su (4):
-  sched: Dispatch task ticks for donor and execution classes
-  sched/numa: Drive NUMA task tick from execution context
-  sched/cache: Drive cache task tick from execution context
-  sched/core: Fix donor slice accounting under proxy execution
+Keeping the comparison in the task-clock domain also avoids depending on
+the entity's weight. A vruntime delta accumulated across different weights
+cannot reliably be compared against a slice converted using only the
+current weight.
 
- kernel/sched/core.c      | 22 ++++++++++--
- kernel/sched/deadline.c  | 10 ++++--
- kernel/sched/ext/ext.c   | 22 +++++++++---
- kernel/sched/fair.c      | 77 ++++++++++++++++++++++++----------------
- kernel/sched/idle.c      |  8 ++---
- kernel/sched/rt.c        | 13 ++++---
- kernel/sched/sched.h     |  4 ++-
- kernel/sched/stop_task.c |  5 ++-
- 8 files changed, 108 insertions(+), 53 deletions(-)
+Only snapshot task entities, as task_tick_core() performs the consumed
+slice check on the donor task.
 
+In non-proxy testing, the task-clock predicate matched the existing
+sum_exec_runtime predicate across HZ=100/250/1000 and nice -10/0/+10.
+Under proxy execution, the donor's sum_exec_runtime delta remained zero
+while the task-clock delta advanced and triggered the force-idle
+reschedule. A focused same-donor owner-handoff test split the donor's
+service across two execution owners. Each owner's individual service stayed
+below half of the donor slice, while their accumulated service exceeded the
+threshold and triggered the force-idle reschedule. Both phases kept the
+same core_sched_start baseline.
 
-base-commit: cba2348ab114391f5b1a00fa65c5b739f13f0563
+Fixes: aa4f74dfd42b ("sched: Fix runtime accounting w/ split exec & sched contexts")
+Suggested-by: Tim Chen <tim.c.chen@linux.intel.com>
+Signed-off-by: Hui Su <sh_def@163.com>
+---
+ kernel/sched/fair.c  | 27 ++++++++++++++++++---------
+ kernel/sched/sched.h |  2 ++
+ 2 files changed, 20 insertions(+), 9 deletions(-)
+
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index ed08b287016a..9a7be87f1991 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6469,7 +6469,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
+ }
+ 
+ static void
+-set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
++set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, bool reset_core_slice)
+ {
+ 	/* 'current' is not kept within the tree. */
+ 	if (se->on_rq) {
+@@ -6502,6 +6502,10 @@ set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 	}
+ 
+ 	se->prev_sum_exec_runtime = se->sum_exec_runtime;
++#ifdef CONFIG_SCHED_CORE
++	if (reset_core_slice && entity_is_task(se))
++		rq_of(cfs_rq)->core_sched_start = se->exec_start;
++#endif
+ }
+ 
+ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags);
+@@ -14786,16 +14790,16 @@ static void rq_offline_fair(struct rq *rq)
+ 
+ #ifdef CONFIG_SCHED_CORE
+ static inline bool
+-__entity_slice_used(struct sched_entity *se, int min_nr_tasks)
++__entity_slice_used(struct rq *rq, struct sched_entity *se, int min_nr_tasks)
+ {
+-	u64 rtime = se->sum_exec_runtime - se->prev_sum_exec_runtime;
+-	u64 slice = se->slice;
++	/* exec_start advances with donor service under proxy execution. */
++	u64 rtime = se->exec_start - rq->core_sched_start;
+ 
+-	return (rtime * min_nr_tasks > slice);
++	return (rtime * min_nr_tasks > se->slice);
+ }
+ 
+ #define MIN_NR_TASKS_DURING_FORCEIDLE	2
+-static inline void task_tick_core(struct rq *rq, struct task_struct *curr)
++static inline void task_tick_core(struct rq *rq, struct task_struct *donor)
+ {
+ 	if (!sched_core_enabled(rq))
+ 		return;
+@@ -14815,7 +14819,7 @@ static inline void task_tick_core(struct rq *rq, struct task_struct *curr)
+ 	 * if we need to give up the CPU.
+ 	 */
+ 	if (rq->core->core_forceidle_count && rq->cfs.h_nr_queued == 1 &&
+-	    __entity_slice_used(&curr->se, MIN_NR_TASKS_DURING_FORCEIDLE))
++	    __entity_slice_used(rq, &donor->se, MIN_NR_TASKS_DURING_FORCEIDLE))
+ 		resched_curr(rq);
+ }
+ 
+@@ -15049,7 +15053,7 @@ static int task_is_throttled_fair(struct task_struct *p, int cpu)
+ 	return throttled_hierarchy(cfs_rq);
+ }
+ #else /* !CONFIG_SCHED_CORE: */
+-static inline void task_tick_core(struct rq *rq, struct task_struct *curr) {}
++static inline void task_tick_core(struct rq *rq, struct task_struct *donor) {}
+ #endif /* !CONFIG_SCHED_CORE */
+ 
+ /*
+@@ -15257,6 +15261,11 @@ static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
+ {
+ 	struct sched_entity *se = &p->se;
+ 	bool throttled = false;
++	/*
++	 * Reset for a new donor or reactivation, but preserve a same-donor
++	 * proxy reselect so service before an owner handoff is retained.
++	 */
++	bool reset_core_slice = !first || rq->donor != p;
+ 	struct cfs_rq *cfs_rq = &rq->cfs;
+ 	unsigned long weight = NICE_0_LOAD;
+ 	bool on_rq = se->on_rq;
+@@ -15271,7 +15280,7 @@ static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
+ 
+ 		if (!IS_ENABLED(CONFIG_FAIR_GROUP_SCHED) ||
+ 		    !first || !cfs_rq->h_curr)
+-			set_next_entity(cfs_rq, se);
++			set_next_entity(cfs_rq, se, reset_core_slice);
+ 
+ 		/* ensure bandwidth has been allocated on our new cfs_rq */
+ 		throttled |= account_cfs_rq_runtime(cfs_rq, 0);
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 6a8deddc725b..f2f1e3642831 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1382,6 +1382,8 @@ struct rq {
+ 	unsigned int		core_forceidle_seq;
+ 	unsigned int		core_forceidle_occupation;
+ 	u64			core_forceidle_start;
++	/* Task-clock baseline for the current core-scheduling donor slice. */
++	u64			core_sched_start;
+ 	unsigned int		core_pick_in_flight;
+ #endif /* CONFIG_SCHED_CORE */
+ 
 -- 
 2.55.0
 
