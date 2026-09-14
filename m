@@ -1,337 +1,200 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4FD3C199C;
-	Mon, 14 Sep 2026 23:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942893C279B;
+	Mon, 14 Sep 2026 23:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789429389; cv=none; b=GdfBdxZweyP7a7K6rw5ZgYF8Ylnpog9aB2en1ItwUeajL2e+9wB5QSjUCHu8X8bUz8uQDEhWrR/bMRmSow6SMJjhWQ4cXX8I04HuH6lA3kqDa159aElVXCLYb+nAqJ49MODLqUAgO9ohScWzSfCpUMBR7uL3NZZxgMfHXsinKRU=
+	t=1789429390; cv=none; b=k7tm91LnkSdEspbU3AS3ytRyo3cNs5SVkbxgosOygGlg+y+rG5KDD5/nQmuPB+/qpUpVU+FV/50IbSXQVxN9qO59yNDjNJyOCZjdgR/BegTVryhoVUhTYuFIuA3eE4pfhCOo/2Qmlb9ctTQy35aXe3R+TT/gKKmacEqZeS/I+/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789429389; c=relaxed/simple;
-	bh=3E8geTbYhBWUox9lbnQJ++A6EV6sxl1jjoKTms1DRjg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoKMN1+7jNb0HtgQrc2+4a4eaqjeDXcslIUILlTl7jzmbqs4KTIYOZCA90tqBuamjQEBGecwBovtYkN7HFpDA6KGdnayMK4vrj7H6YyCmggwjaf3mmCUSDOnCItB9aYGqQieork0U9cCilB6nChhuZgl1AwZD6DRW9XEe+5gixk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hgNi9T/c; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789429390; c=relaxed/simple;
+	bh=rd9cH6uYqdbcqqWAKE/6dakACodS2cOjW2Bgl+3BLeY=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=kADZXyWkuQpkC9fb5k5TI2H2zH8nfmJ5/ztxgxb7OBqV8XDMvy/tb1TgMB5q2uS9z16XEYAAbjNb0Z+MoH8TIgwS37Jc6fV2KQ7BgzfP60s/XmIah0twZAHJHNtsBdOsukKGdc+jisJQjDRBfmRKvNJnbRAzFpUCIbks6AXGBIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mZanldW2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hgNi9T/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B2D1F00893;
-	Mon, 14 Sep 2026 23:43:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mZanldW2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BED31F000FF;
+	Mon, 14 Sep 2026 23:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789429381;
-	bh=ii/BA/6tiYCc5mjghpZFLPSkPt99ZmLCaLCr2wju5TA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgNi9T/cJHsyfb42wPn131K+bNldkeQ61acCvYFWqipZlcYbgnJguOUr6KqwaCTX1
-	 0MIEajw+tBMiQgPOi/FHEq6oh17PSe5drYu0bf27w+A4QwxeAefw2fCFHYZ6YAB1tB
-	 /RvNzVIWdYSRkONU8spnTlsFQUmssFiR7b2+Qgf+ulhACCfXf1JNAxUykQGeKSKwjq
-	 e8TVZHsIETNUZH173kutgwL5ulHARkpFEiMNSp4Sc7P9qg205e0sbWYeWP0XoVc8Yn
-	 ehlyrkBsCAL9WQMs7aP4Ik2/Lkr+x8tEBRbMymaf2IpcWV9eKIxrQDQAhIKoY7aWiU
-	 LgEnwtDr/r3mw==
+	s=k20260515; t=1789429384;
+	bh=rG/P63XRfAjkiK3v29BDNXfccJdl4Bv1mJbDPEn8nDY=;
+	h=Date:From:To:Cc:Subject;
+	b=mZanldW2Q1PKl5NiXiDNutUQdo9be+MqVVBHLdBd9rfEXm9Ug/b5R1cqobcT2MkMp
+	 tfz1YMeAFOj4+MuWsRvzRkt2s9uPbNGhrDBIaDMf4fkeq8ue75s0YTHEwVil+lsq5X
+	 T6bviSDOFIVEYcV4S11OrBXC2vfpKW4mzOdit2Dfjdeixav0r1pGBnlXxRBwqN3iot
+	 mY2bD0GXs3imc1+DiljjHladB/oQwEwq3W4RyUsIL9WhCFry+AV6kDTW81u+AU1WFR
+	 c4Y9GBgRDtgSf8N50/de+2GfAwLpiIU571B6Ldu69vkAbsVnRa19W8qYQr6pZ8Seih
+	 Clx2RtKlyjIig==
+Date: Mon, 14 Sep 2026 13:43:03 -1000
+Message-ID: <86d966ec88bbf27d21b2bb4e18c8aa00@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+To: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Amery Hung <ameryhung@gmail.com>,
+	bpf@vger.kernel.org,
 	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 1/2] sched_ext: Fix idle state tracking across idle repicks
-Date: Mon, 14 Sep 2026 13:42:58 -1000
-Message-ID: <20260914234259.3585373-2-tj@kernel.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260914234259.3585373-1-tj@kernel.org>
-References: <20260914234259.3585373-1-tj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH bpf] bpf: Keep generic __uninit kfunc arguments live
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-An idle CPU can be reserved and kicked without receiving a task. When it
-picks idle again, the builtin idle masks recover the reservation, but
-ops.update_idle() is not called. The BPF scheduler's own idle tracking can
-leave the CPU unavailable until another real idle transition. This is a hole
-in the notification interface: BPF schedulers cannot reliably recover unused
-idle reservations, which is required for cid-form schedulers to maintain
-their own idle tracking.
+Stack liveness models a kfunc's __uninit pointer argument as a pure write:
+whatever the buffer holds before the call is dead, and 2cb27158adb3 ("bpf:
+poison dead stack slots") poisons those slots at every checkpoint the path
+visits before the call. Argument validation disagrees. Only dynptr arguments
+honor __uninit. A generic fixed-size buffer goes through check_mem_reg(),
+whose read pass requires every byte readable. The two rules meet at the call
+and the poisoned buffer is rejected with "slot poisoned by dead code
+elimination", even when the program initialized it.
 
-Fix this by notifying on idle-to-idle picks and making these notifications
-automatic for cid-form schedulers. Keep CPU-form schedulers opt-in because
-existing callbacks may restart idle accounting or repeat actions intended
-only for idle entry. The known cid-form users, scx_qmap in tools/sched_ext
-and scx_nitosis in the scx repository, have idempotent update_idle() bodies.
-All sub-schedulers use the cid form, so this is a root property and can use
-a static key.
+Every kfunc with a generic __uninit output argument is affected,
+bpf_ksock_create() through err__uninit and sched_ext's scx_bpf_cid_topo()
+through its output struct. The rejection needs the buffer's slots to be
+allocated and dead at a checkpoint, for example on the second iteration of a
+loop around the call. Before e566701b9b0c ("bpf: Check fixed-size mem args
+of helpers and kfuncs the same way") kfunc arguments could read poisoned
+slots, so the call passed, but the slots stayed poisoned and the program's
+next read of the buffer was rejected instead.
 
-scx_root_enable_workfn() must initialize idle tracking from sch->ops, where
-the automatic cid flag has been set. The local ops pointer still refers to
-the caller-provided table. Using it would leave the static key disabled for
-cid-form schedulers that omit the flag.
+Restrict the liveness write-only exception to dynptr arguments, where
+validation accepts uninitialized output. A generic __uninit buffer stays
+live and is never poisoned, and validation keeps requiring it to be
+initialized. Add a selftest with a scalar output buffer and a checkpoint
+between its initialization and the call.
 
+Fixes: 2cb27158adb3 ("bpf: poison dead stack slots")
+Cc: stable@vger.kernel.org # v7.1+
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c                        |  3 +-
- kernel/sched/ext/idle.c                       | 60 +++++++++++--------
- kernel/sched/ext/internal.h                   | 21 ++++++-
- tools/sched_ext/include/scx/compat.h          |  2 +
- .../sched_ext/include/scx/enum_defs.autogen.h |  1 +
- .../sched_ext/include/scx/enums_abi.autogen.h |  3 +-
- 6 files changed, 60 insertions(+), 30 deletions(-)
+ kernel/bpf/verifier.c                                      |    3 
+ tools/testing/selftests/bpf/prog_tests/verifier.c          |    2 
+ tools/testing/selftests/bpf/progs/verifier_kfunc_uninit.c  |   45 +++++++++++++
+ tools/testing/selftests/bpf/test_kmods/bpf_testmod.c       |    9 ++
+ tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h |    1 
+ 5 files changed, 59 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 83999203a63a..934605dfd950 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -7251,6 +7251,7 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
- 	 */
- 	if (cmd->is_cid_type) {
- 		sch->ops_cid = *cmd->ops_cid;
-+		sch->ops_cid.flags |= SCX_OPS_UPDATE_IDLE_TO_IDLE;
- 		sch->is_cid_type = true;
- 	} else {
- 		sch->ops = *cmd->ops;
-@@ -7575,7 +7576,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 		goto err_disable;
- 	}
- 
--	scx_idle_enable(ops);
-+	scx_idle_enable(&sch->ops);
- 
- 	/*
- 	 * A cid-form scheduler finalizes its cid layout in ops.init_cids(),
-diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
-index aa9fb6de0ad6..ea2fe5030fc4 100644
---- a/kernel/sched/ext/idle.c
-+++ b/kernel/sched/ext/idle.c
-@@ -20,6 +20,9 @@ static DEFINE_STATIC_KEY_FALSE(scx_builtin_idle_enabled);
- /* Enable/disable per-node idle cpumasks */
- static DEFINE_STATIC_KEY_FALSE(scx_builtin_idle_per_node);
- 
-+/* Idle-to-idle notifications are a property of the root hierarchy. */
-+static DEFINE_STATIC_KEY_FALSE(scx_update_idle_to_idle);
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -12755,7 +12755,8 @@ out:
+ 	/* KF_ITER_NEW kfuncs initialize the iterator state at arg 0 */
+ 	if (arg == 0 && meta.kfunc_flags & KF_ITER_NEW)
+ 		return -size;
+-	if (is_kfunc_arg_uninit(btf, &args[arg]))
++	/* only dynptr validation accepts an uninitialized __uninit argument */
++	if (is_kfunc_arg_dynptr(btf, &args[arg]) && is_kfunc_arg_uninit(btf, &args[arg]))
+ 		return -size;
+ 	return size;
+ }
+--- a/tools/testing/selftests/bpf/prog_tests/verifier.c
++++ b/tools/testing/selftests/bpf/prog_tests/verifier.c
+@@ -53,6 +53,7 @@
+ #include "verifier_iterating_callbacks.skel.h"
+ #include "verifier_jeq_infer_not_null.skel.h"
+ #include "verifier_jit_convergence.skel.h"
++#include "verifier_kfunc_uninit.skel.h"
+ #include "verifier_ld_ind.skel.h"
+ #include "verifier_ldsx.skel.h"
+ #include "verifier_leak_ptr.skel.h"
+@@ -214,6 +215,7 @@ void test_verifier_int_ptr(void)
+ void test_verifier_iterating_callbacks(void)  { RUN(verifier_iterating_callbacks); }
+ void test_verifier_jeq_infer_not_null(void)   { RUN(verifier_jeq_infer_not_null); }
+ void test_verifier_jit_convergence(void)      { RUN(verifier_jit_convergence); }
++void test_verifier_kfunc_uninit(void)         { RUN_TESTS(verifier_kfunc_uninit); }
+ void test_verifier_load_acquire(void)         { RUN(verifier_load_acquire); }
+ void test_verifier_ld_ind(void)               { RUN(verifier_ld_ind); }
+ void test_verifier_ldsx(void)                  { RUN(verifier_ldsx); }
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/verifier_kfunc_uninit.c
+@@ -0,0 +1,45 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright (c) 2026 Tejun Heo <tj@kernel.org> */
 +
- /* Enable/disable LLC aware optimizations */
- static DEFINE_STATIC_KEY_FALSE(scx_selcpu_topo_llc);
- 
-@@ -734,13 +737,12 @@ static void update_builtin_idle(int cpu, bool idle)
- }
- 
- /*
-- * Notify schedulers of an idle transition on @cpu's cid, delivering to every
-- * sched that holds %SCX_CAP_BASE on the cid (the root holds every cap). A real
-- * transition (@do_notify) reaches all holders. A forced one (@root_renotify for
-- * the root, a sub-sched's idle_renotify marker for a sub) reaches only the owed
-- * scheds.
-+ * Notify schedulers holding %SCX_CAP_BASE on @rq's cid (the root holds every
-+ * cap). Real transitions and enabled idle repicks (@notify_all) reach all
-+ * holders. A forced notification (@root_renotify for the root, a sub-sched's
-+ * idle_renotify marker for a sub) reaches only the owed scheds.
-  */
--static void scx_idle_notify(struct rq *rq, bool idle, bool do_notify, bool root_renotify)
-+static void scx_idle_notify(struct rq *rq, bool idle, bool notify_all, bool root_renotify)
- {
- 	s32 cpu = cpu_of(rq);
- 	s32 cid = scx_cpu_arg(cpu);
-@@ -751,7 +753,7 @@ static void scx_idle_notify(struct rq *rq, bool idle, bool do_notify, bool root_
- 
- 	/* with no sub-sched, only the root can be owed a notification */
- 	if (!scx_has_subs()) {
--		if ((do_notify || root_renotify) &&
-+		if ((notify_all || root_renotify) &&
- 		    SCX_HAS_OP(root, update_idle) && !scx_bypassing(root, cpu))
- 			SCX_CALL_OP(root, update_idle, rq, cid, idle);
- 		return;
-@@ -775,8 +777,8 @@ static void scx_idle_notify(struct rq *rq, bool idle, bool do_notify, bool root_
- 			forced = true;
- 		}
- #endif
--		if ((do_notify || forced) && SCX_HAS_OP(pos, update_idle) &&
--		    !scx_bypassing(pos, cpu))
-+		if ((notify_all || forced) &&
-+		    SCX_HAS_OP(pos, update_idle) && !scx_bypassing(pos, cpu))
- 			SCX_CALL_OP(pos, update_idle, rq, cid, idle);
- 		pos = scx_next_descendant_pre(pos, root);
- 	}
-@@ -786,21 +788,22 @@ static void scx_idle_notify(struct rq *rq, bool idle, bool do_notify, bool root_
-  * Update the idle state of a CPU to @idle.
-  *
-  * If @do_notify is true, ops.update_idle() is invoked to notify the scx
-- * scheduler of an actual idle state transition (idle to busy or vice
-- * versa). If @do_notify is false, only the idle state in the idle masks is
-- * refreshed without invoking ops.update_idle().
-+ * scheduler of an actual idle state transition (idle to busy or vice versa). If
-+ * @do_notify is false, refresh the idle masks and notify schedulers with
-+ * %SCX_OPS_UPDATE_IDLE_TO_IDLE or an outstanding forced notification.
-  *
-  * This distinction is necessary, because an idle CPU can be "reserved" and
-- * awakened via scx_bpf_pick_idle_cpu() + scx_bpf_kick_cpu(), marking it as
-- * busy even if no tasks are dispatched. In this case, the CPU may return
-- * to idle without a true state transition. Refreshing the idle masks
-- * without invoking ops.update_idle() ensures accurate idle state tracking
-- * while avoiding unnecessary updates and maintaining balanced state
-- * transitions.
-+ * awakened via scx_bpf_pick_idle_cpu() + scx_bpf_kick_cpu(), marking it as busy
-+ * even if no tasks are dispatched. In this case, the CPU may return to idle
-+ * without a true state transition. Refreshing idle tracking restores the unused
-+ * reservation. Schedulers receiving repeated notifications must distinguish
-+ * idle refreshes from transitions for accounting.
-  */
- void __scx_update_idle(struct rq *rq, bool idle, bool do_notify)
- {
- 	int cpu = cpu_of(rq);
-+	u32 renotify;
-+	bool notify_all;
- 
- 	lockdep_assert_rq_held(rq);
- 
-@@ -818,20 +821,19 @@ void __scx_update_idle(struct rq *rq, bool idle, bool do_notify)
- 	 * An idle pick also fires it to flush a forced notify owed to a sched
- 	 * that missed transitions while bypassed or on a cid it just gained.
- 	 * unbypass_renotify_idle() and scx_process_sync_ecaps() arm the per-rq
--	 * gates, and scx_idle_notify() targets the owed scheds.
-+	 * gates, and scx_idle_notify() targets the owed scheds. Schedulers with
-+	 * SCX_OPS_UPDATE_IDLE_TO_IDLE receive every idle pick.
- 	 *
- 	 * This must come after the builtin idle update so that BPF schedulers
- 	 * can create interlocking between ops.update_idle() and ops.enqueue() -
- 	 * either enqueue() sees the idle bit or update_idle() sees the task
- 	 * that enqueue() queued.
- 	 */
--	if (do_notify ||
--	    (idle && (rq->scx.flags &
--		      (SCX_RQ_SUB_IDLE_RENOTIFY | SCX_RQ_ROOT_IDLE_RENOTIFY)))) {
--		bool root_renotify = rq->scx.flags & SCX_RQ_ROOT_IDLE_RENOTIFY;
--
--		rq->scx.flags &= ~(SCX_RQ_SUB_IDLE_RENOTIFY | SCX_RQ_ROOT_IDLE_RENOTIFY);
--		scx_idle_notify(rq, idle, do_notify, root_renotify);
-+	notify_all = do_notify || (idle && static_branch_unlikely(&scx_update_idle_to_idle));
-+	renotify = rq->scx.flags & (SCX_RQ_SUB_IDLE_RENOTIFY | SCX_RQ_ROOT_IDLE_RENOTIFY);
-+	if (notify_all || (idle && renotify)) {
-+		rq->scx.flags &= ~renotify;
-+		scx_idle_notify(rq, idle, notify_all, renotify & SCX_RQ_ROOT_IDLE_RENOTIFY);
- 	}
- }
- 
-@@ -869,6 +871,11 @@ void scx_idle_enable(struct sched_ext_ops *ops)
- 	else
- 		static_branch_disable_cpuslocked(&scx_builtin_idle_per_node);
- 
-+	if (ops->flags & SCX_OPS_UPDATE_IDLE_TO_IDLE)
-+		static_branch_enable_cpuslocked(&scx_update_idle_to_idle);
-+	else
-+		static_branch_disable_cpuslocked(&scx_update_idle_to_idle);
++#include <vmlinux.h>
++#include <bpf/bpf_helpers.h>
++#include "bpf_misc.h"
++#include "../test_kmods/bpf_testmod_kfunc.h"
 +
- 	reset_idle_masks(ops);
- }
- 
-@@ -876,6 +883,7 @@ void scx_idle_disable(void)
- {
- 	static_branch_disable(&scx_builtin_idle_enabled);
- 	static_branch_disable(&scx_builtin_idle_per_node);
-+	static_branch_disable(&scx_update_idle_to_idle);
- }
- 
- /********************************************************************************
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 076a351bb3f2..2586879e9084 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -215,6 +215,14 @@ enum scx_ops_flags {
- 	 */
- 	SCX_OPS_TID_TO_TASK		= 1LLU << 8,
- 
-+	/*
-+	 * Call ops.update_idle() with idle=true when an idle CPU picks idle
-+	 * again. Custom idle tracking can use this to restore an unused idle
-+	 * reservation after a kick that did not dispatch a task. Automatically
-+	 * enabled for cid-form schedulers.
-+	 */
-+	SCX_OPS_UPDATE_IDLE_TO_IDLE	= 1LLU << 9,
++char _license[] SEC("license") = "GPL";
 +
- 	SCX_OPS_ALL_FLAGS		= SCX_OPS_KEEP_BUILTIN_IDLE |
- 					  SCX_OPS_ENQ_LAST |
- 					  SCX_OPS_ENQ_EXITING |
-@@ -223,7 +231,8 @@ enum scx_ops_flags {
- 					  SCX_OPS_SWITCH_PARTIAL |
- 					  SCX_OPS_BUILTIN_IDLE_PER_NODE |
- 					  SCX_OPS_ALWAYS_ENQ_IMMED |
--					  SCX_OPS_TID_TO_TASK,
-+					  SCX_OPS_TID_TO_TASK |
-+					  SCX_OPS_UPDATE_IDLE_TO_IDLE,
++/* keep the BTF FUNC record for the inline assembly reference */
++void __kfunc_btf_root(void)
++{
++	bpf_kfunc_call_test_uninit(0);
++}
++
++SEC("tc")
++__success __retval(42)
++__flag(BPF_F_TEST_STATE_FREQ)
++__naked void uninit_scalar_struct(void)
++{
++	/* dead before the call, so poisoned at the checkpoint */
++	asm volatile (
++	"*(u64 *)(r10 - 16) = 0;"
++	"*(u64 *)(r10 - 8) = 0;"
++	"goto +0;"
++	"r1 = r10;"
++	"r1 += -16;"
++	"call %[bpf_kfunc_call_test_uninit];"
++	"r1 = *(u32 *)(r10 - 16);"
++	"if r1 != 1 goto 1f;"
++	"r1 = *(u32 *)(r10 - 12);"
++	"if r1 != 2 goto 1f;"
++	"r1 = *(u32 *)(r10 - 8);"
++	"if r1 != 3 goto 1f;"
++	"r1 = *(u32 *)(r10 - 4);"
++	"if r1 != 4 goto 1f;"
++	"r0 = 42;"
++	"exit;"
++"1:"
++	"r0 = 0;"
++	"exit;"
++	:: __imm(bpf_kfunc_call_test_uninit)
++	: __clobber_all);
++}
+--- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
++++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+@@ -1087,6 +1087,14 @@ __bpf_kfunc void bpf_kfunc_call_test_pas
+ {
+ }
  
- 	/* high 8 bits are internal, don't include in SCX_OPS_ALL_FLAGS */
- 	__SCX_OPS_INTERNAL_MASK		= 0xffLLU << 56,
-@@ -572,6 +581,14 @@ struct sched_ext_ops {
- 	 *
- 	 * Specify the %SCX_OPS_KEEP_BUILTIN_IDLE flag to keep the built-in idle
- 	 * tracking.
-+	 *
-+	 * With %SCX_OPS_UPDATE_IDLE_TO_IDLE, this operation is also called with
-+	 * @idle true when an idle CPU picks idle again without leaving the
-+	 * idle state. The flag is automatically enabled for cid-form
-+	 * schedulers. Such notifications must not restart idle accounting or
-+	 * repeat actions that require an actual idle entry. Track the previous
-+	 * idle state separately from availability bits cleared by idle
-+	 * reservations.
- 	 */
- 	void (*update_idle)(s32 cpu, bool idle);
++__bpf_kfunc void bpf_kfunc_call_test_uninit(struct prog_test_pass1 *out__uninit)
++{
++	out__uninit->x0 = 1;
++	out__uninit->x1 = 2;
++	out__uninit->x2 = 3;
++	out__uninit->x3 = 4;
++}
++
+ __bpf_kfunc void bpf_kfunc_call_test_fail1(struct prog_test_fail1 *p)
+ {
+ }
+@@ -1493,6 +1501,7 @@ BTF_ID_FLAGS(func, bpf_kfunc_call_int_me
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test_pass_ctx)
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test_pass1)
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test_pass2)
++BTF_ID_FLAGS(func, bpf_kfunc_call_test_uninit)
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test_fail1)
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test_fail2)
+ BTF_ID_FLAGS(func, bpf_kfunc_call_test_fail3)
+--- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h
++++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod_kfunc.h
+@@ -160,6 +160,7 @@ __u64 bpf_kfunc_call_stack_arg_big(__u64
+ void bpf_kfunc_call_test_pass_ctx(struct __sk_buff *skb) __ksym;
+ void bpf_kfunc_call_test_pass1(struct prog_test_pass1 *p) __ksym;
+ void bpf_kfunc_call_test_pass2(struct prog_test_pass2 *p) __ksym;
++void bpf_kfunc_call_test_uninit(struct prog_test_pass1 *out__uninit) __ksym;
+ void bpf_kfunc_call_test_mem_len_fail2(__u64 *mem, int len) __ksym;
  
-@@ -1029,7 +1046,7 @@ struct sched_ext_ops {
-  * Differences from sched_ext_ops:
-  *   - select_cpu       -> select_cid (returns cid)
-  *   - dispatch         -> dispatch (cpu arg is now cid)
-- *   - update_idle      -> update_idle (cpu arg is now cid)
-+ *   - update_idle      -> update_idle (cid arg, also called on idle repicks)
-  *   - set_cpumask      -> set_cmask (cmask instead of cpumask)
-  *   - cpu_online       -> cid_online
-  *   - cpu_offline      -> cid_offline
-diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-index 7c12df45fdba..b96f2cd8b593 100644
---- a/tools/sched_ext/include/scx/compat.h
-+++ b/tools/sched_ext/include/scx/compat.h
-@@ -214,6 +214,7 @@ static inline bool __COMPAT_struct_has_field(const char *type, const char *field
- #define SCX_OPS_ALLOW_QUEUED_WAKEUP SCX_OPS_FLAG(SCX_OPS_ALLOW_QUEUED_WAKEUP)
- #define SCX_OPS_BUILTIN_IDLE_PER_NODE SCX_OPS_FLAG(SCX_OPS_BUILTIN_IDLE_PER_NODE)
- #define SCX_OPS_ALWAYS_ENQ_IMMED SCX_OPS_FLAG(SCX_OPS_ALWAYS_ENQ_IMMED)
-+#define SCX_OPS_UPDATE_IDLE_TO_IDLE SCX_OPS_FLAG(SCX_OPS_UPDATE_IDLE_TO_IDLE)
- 
- #define SCX_PICK_IDLE_FLAG(name) __COMPAT_ENUM_OR_ZERO("scx_pick_idle_cpu_flags", #name)
- 
-@@ -273,6 +274,7 @@ static inline long scx_hotplug_seq(void)
-  * - v6.19: ops.cgroup_set_idle()
-  * - v7.1:  ops.sub_attach(), ops.sub_detach(), ops.sub_cgroup_id
-  * - v7.3:  ops.rescue_bandwidth_ppt, ops.rescue_quantum_us
-+ * - v7.3:  SCX_OPS_UPDATE_IDLE_TO_IDLE
-  */
- #define __SCX_OPS_OPEN(__ops_name, __scx_name, __ops_struct) ({			\
- 	struct __scx_name *__oskel;						\
-diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
-index 63b6b14b19bd..c7a7baae95f4 100644
---- a/tools/sched_ext/include/scx/enum_defs.autogen.h
-+++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
-@@ -164,6 +164,7 @@
- #define HAVE_SCX_OPS_BUILTIN_IDLE_PER_NODE
- #define HAVE_SCX_OPS_ALWAYS_ENQ_IMMED
- #define HAVE_SCX_OPS_TID_TO_TASK
-+#define HAVE_SCX_OPS_UPDATE_IDLE_TO_IDLE
- #define HAVE_SCX_OPS_ALL_FLAGS
- #define HAVE___SCX_OPS_INTERNAL_MASK
- #define HAVE_SCX_OPS_HAS_CPU_PREEMPT
-diff --git a/tools/sched_ext/include/scx/enums_abi.autogen.h b/tools/sched_ext/include/scx/enums_abi.autogen.h
-index d53899764f5a..609ccacaba7e 100644
---- a/tools/sched_ext/include/scx/enums_abi.autogen.h
-+++ b/tools/sched_ext/include/scx/enums_abi.autogen.h
-@@ -176,7 +176,8 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
- 	{ "scx_ops_flags", "SCX_OPS_BUILTIN_IDLE_PER_NODE", 0x40LLU },
- 	{ "scx_ops_flags", "SCX_OPS_ALWAYS_ENQ_IMMED", 0x80LLU },
- 	{ "scx_ops_flags", "SCX_OPS_TID_TO_TASK", 0x100LLU },
--	{ "scx_ops_flags", "SCX_OPS_ALL_FLAGS", 0x1ffLLU },
-+	{ "scx_ops_flags", "SCX_OPS_UPDATE_IDLE_TO_IDLE", 0x200LLU },
-+	{ "scx_ops_flags", "SCX_OPS_ALL_FLAGS", 0x3ffLLU },
- 	{ "scx_ops_flags", "__SCX_OPS_INTERNAL_MASK", 0xff00000000000000LLU },
- 	{ "scx_ops_flags", "SCX_OPS_HAS_CPU_PREEMPT", 0x100000000000000LLU },
- 	{ "scx_ops_state", "SCX_OPSS_NONE", 0x0LLU },
--- 
-2.55.0
-
+ void bpf_kfunc_call_test_destructive(void) __ksym;
