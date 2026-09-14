@@ -1,61 +1,61 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010067.outbound.protection.outlook.com [52.101.61.67])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011042.outbound.protection.outlook.com [52.101.62.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232352C11DF;
-	Mon, 14 Sep 2026 12:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F6A44C4EA;
+	Mon, 14 Sep 2026 12:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789388351; cv=fail; b=qrzsNOj4kZr1P4XHTthpV4c3Bpj9wJGNdG9NgUyNhLTMH/T3VfTLKEXHDWozQ3zQdDTEbt+o6gFWLEgDtzuW4pm8FhflQFyg+Mj5i+Dzw+l10YhVJx5TPDfrpcDiMNCx+ZoCm44/dMI1Lu/wZzZr+zglulKEc8b7Asx4nJYubCw=
+	t=1789388492; cv=fail; b=GVN857v76VeqhS9Y8ZrleP2TOCwFF1MYtfwWkw63VQthGZVjna1QDfXekfVtfXDTvh48S52ff3MaVl11FmVIYaXsC2qKws6T1sXn5KpvgkVVXUATglnXC6xbaO4YXZ/5vUfeImc7jVQhIuyYQdgmDpaI7KckZ6dG7DXQ5W3+FOw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789388351; c=relaxed/simple;
-	bh=W5NOi6Wq5vY31i++tbJAJg0m9wU8YXJUJ/4KMXqC7Zc=;
+	s=arc-20240116; t=1789388492; c=relaxed/simple;
+	bh=DPbUHz8iK+JtmCAWBeTB7jNJlO/NhH+gzslwSP1XjOE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=GfTnbR8fxONwmJ3eIAZhaEondA1Evu2QSSpYb1gez9/DikTs1u9Jo8uhxiFNA43ZnlgF8paoSYmoP8aOymX0mj8EpiUOYiQ6IymLs/zcoYG5PWPNgDLWZOoU5BLi86JzaN5u3vrP0mKeECTajllZUhlTSK6i6cOTglu4IUTAvBU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TtONWYlB; arc=fail smtp.client-ip=52.101.61.67
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TOzw/wovALngk3cWtRDOy0GzVZXRKKJJvTm8uN50pmWWk1G4NUBZCRPD9w0/XorrvYxyANVT7BwaLEBI4h+JXcT4VHZqvQ7F9K5qpiiY6ZZzhBKQHbAeP4MVqmu4eiRh2xSuBgqTUGzJ2S6yYZyVMU4dB9yLH45db3s4ogy77EY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=aRi4AXDp; arc=fail smtp.client-ip=52.101.62.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TtONWYlB"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="aRi4AXDp"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=c61b+CwKwXWBEFHBiHd2XozQPFZj6RuJrKMbTsM3xjvPy2OviLEnK9yZBkeC4NHYv321r69K/X+VtfCvXNcYYft5WrjeV0zM0rMg+KLSl1VkATAWVtPqIcRNzKt49t40/kiRBM9mrg88RBr/WHvQEP0tM9+XlTPsUqqNzeauZMOdd7H6tGWEG79SaDi9gdPwvBv6RPOeIljkv+2FuxdyCrAZuAocBedQURfX0yn/ZHMup+yYY7+p5puVcmplJmoUhwFKMay8Eqek8ULW+RuEMHYcLN5c3Hmnn2PvOx44PdWIOXr5e256PrvLFtcjf8Yd8g87oCu819+cwqhU0vzGeA==
+ b=NL9zwrwJbOnluva3Pa1rZaYjs82UR+y0j3cgybUYl91UAHdiuAxObYZqzTFVTpH/Axoo8bxN72kYRYNJwXAlfZivWlx4GFleNeK1Q6aJ1yaHLLBpEteAEjlOwXdd0Jy5EXMMdlHE1v5VeDp1ExYhlnBeoletTZQGdzZcYTpdbYVVora+I6V3m41sPvaO5ZFv6/6emfsx3/pDkRXGm8GXaY1pP/xkLtqqedkKwW5jk9TRlhrQL+8m3AqZmmujflNnRaO9raGTyZ41UkZ+4sXGVq3Fum0UwxfNqqnOxTUm+tWnnWAeEttJNQsri9ALoTzMVKbcfolOtYzYyhnprxnaiQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=p8YJEh/jVbzhKno7SNxErArxCxr2veKDoUQMr8XGoCo=;
- b=qktniq8S9BKqKxpx6MDhpF8tF3AjlPEdc3VhylTsAasBm3vg64h0X3mxrXVRlWJ2pQ4zK4O+RaXCJXCrZruqfJCmC8Nn1tsfkXahVKoy0fNdq6iLQJX/has4gz9PQBenjw23MG5hWGhnzlMBdWWDiP2LD2j1lIvftZs47W+5JM3Fk7Dmb8s7WaWU1kDizwOChK3sOQmXD4j23e+pMdU1vHFMUDYmSSQc4ytuz0ctF1CFqrK+BB9C/2TUD2ni1tslrt+Hf0dUmpqzjpe31OlmucbVwqUIpNxscSRxzc6gNVZruAPdDjrA+YEhwwf8tdbJT8Kmgs2H0AoTM6FnhwmocA==
+ bh=re0UVsFLztwOlOFSF5HEAvT7ur07dUE08Y/zCzMghHE=;
+ b=H53elitrJfhKDzvLvUe6GOx73wxDZ7ATEmL/QRFbUNirLIzrntBAcmPqgdUxKNsIOqyDUP7k1wmfUaoK1Kwhh8oOrkFsprFKY5ul4w3Niol6nYNxu0ue97Fz+XTyyJoahBCMerj+9RTWNSZnFG8zQc+oYUJ8xqKnweyfWCOuoNdo1krcJNGYpKq5tZnb3plixU/sHXnGd067vDstq7Y4S1Vadc+dap8YnooxQ3M1X4tzK2GVeY2Zre0QnbJp7mQw6yWzKR9rWrDr+UzN7dtK++GUNIG2BHeezgSUPVbXcdJqZjYcJfIt2G+CBVeSmTL7ekzT3liM/7gERqQPVERPrw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=p8YJEh/jVbzhKno7SNxErArxCxr2veKDoUQMr8XGoCo=;
- b=TtONWYlBDwoSJmOcFgrbSOBDiQX/IXzi3rEeeM+66OFhY9PXk8klYYku69gWG5Nrjwmfm4AKXXYhQfnYDfkHC1g4VCawGWAgqvrF4n2/3+6E3poklHGJx+8g6w8/2BjbbSMAHIdLaiwFQFCS7ZdIrd0aJWCbiybq5XhlQovrb9y6sVh6lBpupW+v+AVPndeoXigmaIllbo+XMFxmhgPNhsP4NiiVR3qCLxqYGfWEsNS43EsqmDklSBl0BTTBlAfRI/yHc1ewxVLasHVuRynsUokq3C1xFHdKb8iynBwmjnLxLaDJfrbxK91vzAx3RilqqUSdCNyKnhUiA4qSGng2Lg==
+ bh=re0UVsFLztwOlOFSF5HEAvT7ur07dUE08Y/zCzMghHE=;
+ b=aRi4AXDp/kx0NiFx+xKm+I713Cse4G35sqbb6r/X6t87+5GhFBWifvi0FyjAQwQfMKM9VcMUqaQ+lXExKxa/dT3Y71X88j7SV9zvLkoTVpLNxyPPJ5elwfWUbPMiy7hk3NAZKpsb9r1vCeEv5TAUSfwZmgT1T2+CNIGzBPkSeBO6qesqJpsIlWyfEhdM0l0y/dq5u8t2jfqyukzA9NwOx+OaRcVKFdKqByPfb9RkIgI12LBfdE7rMJePQ4ZR5rkr8H7xTkNE+ggIS8lVao9gmADJ+cz3jaJETmIld9kxZeWnTFOBbFVSCG+1m3WJVTC07mHM6pFWa2xZdja45FQiuA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by BL1PR12MB5851.namprd12.prod.outlook.com (2603:10b6:208:396::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Mon, 14 Sep
- 2026 12:19:05 +0000
+ 2026 12:21:27 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
- 12:19:05 +0000
-Date: Mon, 14 Sep 2026 14:18:53 +0200
+ 12:21:26 +0000
+Date: Mon, 14 Sep 2026 14:21:19 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: sched-ext@lists.linux.dev
-Subject: Re: [PATCH 1/2] sched_ext: Add lazy preemption support
-Message-ID: <aqfmLZXNue5VhK1w@gpd4>
+Subject: Re: [PATCH 2/2] selftests/sched_ext: Add lazy preemption tests
+Message-ID: <aqfmv__uhZ0ReyLo@gpd4>
 References: <20260914084955.1798562-1-arighi@nvidia.com>
- <20260914084955.1798562-2-arighi@nvidia.com>
- <20260914090640.A47A81F000FF@smtp.kernel.org>
+ <20260914084955.1798562-3-arighi@nvidia.com>
+ <20260914090155.DE2901F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260914090640.A47A81F000FF@smtp.kernel.org>
-X-ClientProxiedBy: AU2P273CA0107.AREP273.PROD.OUTLOOK.COM
- (2603:1086:200:6d::11) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260914090155.DE2901F000FF@smtp.kernel.org>
+X-ClientProxiedBy: FR4P281CA0255.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:f5::18) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -65,100 +65,137 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|BL1PR12MB5851:EE_
-X-MS-Office365-Filtering-Correlation-Id: d789d19a-4eac-487d-765a-08df125a5e65
+X-MS-Office365-Filtering-Correlation-Id: 2f87d46d-0538-4016-442e-08df125ab2e8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|10067099003|4143699003|6133799003|22082099003|18002099003|56012099006|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	ARyuD+ZLwYRzWnUMrUZ2QWEpX2sN+/OOnoSWfOTzN708rOOtOR0leUhRPvN8AFL96zYUfcRsfO5kzE0a6jWcI0FShS3O924OLoCtpKC//7FqeKOR70qbLFbFSq/SSvPNyrTTr8BaQs+2Sex3XYEmUxTEXqEQ0EEOuvTKmpRYumyhVXCdD7mgLkLRuRRQOK5U4mEJWkvCyPXXUYXHdIKM+KDr9gg3lr+MIMy0FfJLeW/eOIF8XLzGZd/NiA9AeOGNKbuS/rr19sRadjsKhV5Vj3C/DP91L3E73KinwWsfsXyyvolQOtz7v56FHLDJhnqOenLCuBdbJjuc/S8YzLFrZnZlUlMJuuOJFlFMDbitvkZ0EmX+7P3ElgM5U7t4Tq9WA7vTo06JrNSpbaCmlfoTK9mxaPoXD7a3vMYLH3O/VjuKetQJRNNJ6iy51IB4BYQBrbPb8nHOP4yDKNj9/+HWTHO/SQi/FBD68ki6BKYqsxK+70mY9BeqpJWfg96tIW4s9sH9X0Vwo/L3mMXAZWCATbhPk1D/reuaV/7rYcjPZ6R+WTELyl6RK7rzv0Bc81JI73NDATr/7IW2vLw5Q/vbeQfM2RE/sOK2aCS2w9uCddyhHDkLlXjyW1r2Km9GDmOdpnR4nmkehiuciTDZsBSb4W4zvz+JpJVY3dLeYNVYbY0=
+	Z4jUcDagKTM4T1DcI9zkgc5lDscdxyx2PXnJb0qVbdqRKcVxZo8fpRbK060CdsAN11R6ofBoLTz2EXLQAYtIntqRk0jbnIboRQrJpuqXx1f4GqiIQaGqrRpBv6oXb9fa9blnEQpvKlQ6+k/Wrjmn7ncOiLMrHvbEtaFD5rhgSMbNa4sWMFlVaJyIr/KI38+vznU6QoQ+nb/U1P6v2ksRlQHEsIgNMJPvBQArfeDSkn9i3aF+cK4aSFyUa6W23IQswnwSCJNzk33uJGstOffDnyoGV4Y/BYJz3w9+TsFfszD+JRATQOkD23ExNXM8sQ1XtgxGJptrUGzKTPDihxX3MWvDKmpdiCo8L1Wi218d1pDP/AD8FJbjllqevYpsh388115OFik6TqWWgP7QDRtXFwC4DdqUD6+dx0e+VjNtiUeiFBuadmpXcSksq2wd6/7cyq7b0qq9uljk4/fGr/x/KpEi3616Ez1zqMX72nCPEluJ98aOPHAr+fezxWnRIat0epVhZwGB3zoDCRW8vqXO+Y2YcMbruRUN0Dv3rx9x2iBeqU1Oppj1qVJbj8Ah5E/iJxslwXDjImLNoiv45Yti0fAwvYjbWz6jiOvAiaRu1PUOBfzJfVjKCBwSbiaF5OzB2oHGSZgOa5qLaNz4qfVwS9TUw/FP0YIUH0DVZ9Rtm9k=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(4143699003)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?m5u+fLXClH+qukkA4HFDv1x7BjSVTmLonTV+THzFOl4greReo1wNgxY2rBZv?=
- =?us-ascii?Q?cTqQWXFVsZzf2dfGjwp9uUGFA4yirMAk+Q6rskihIdVKq43b36T6vK5vLzJy?=
- =?us-ascii?Q?O11o+fCW/V+mOII6EhkljRWP9sEvyWhOQhDeveyON3gyj2POQKTVc8aP37VX?=
- =?us-ascii?Q?gD0iw7aBFsj9U3oHpTXtLfJoC/J1/f5fTyebbPAJduJgasUvMD5viBCiHb16?=
- =?us-ascii?Q?QIAdk1iNIYpzASGEZ+rEfXT0KNPQ+L/R19quH/oKdX5+X4QcNKDHW+Bno5sE?=
- =?us-ascii?Q?++rj/RtjqabKk15sXmWMseDx+q4kzyS76qIg+186OXPcVGGmRXkCgGkJ9vN8?=
- =?us-ascii?Q?Umx6OikDolOuGjjPyqEt18533j467n2R3B8C8hiTi2J6N8h1pXI+kwJ87ZJI?=
- =?us-ascii?Q?YY3kgGNaViEtDYIJwVAJWmwmCLnJ2amEAcQoygebwiHRABTmCc7w8p/MIuJy?=
- =?us-ascii?Q?bW+HxXObbgxbCSLTQxgGAxixWemVB8AP29we8FXJU2HYXCv9Q1PZ8IC3TKSa?=
- =?us-ascii?Q?+Kn5pE5V/QahYwZ0wzr2CtQsFh2aTqHlsA8oxVMIuA6t1K1l52pGHMKqvfcm?=
- =?us-ascii?Q?EnQt2EGpaR4zKKPPeSP76/lfLDwQth50ekVC2uOKPKPCueeR8J6RpKa7L9F+?=
- =?us-ascii?Q?nfB83NEkebjysChpo6XdrTQDlS5e0+4FvNxWZ6HFTm73x+kWQvArKfBCXCm2?=
- =?us-ascii?Q?UCfAzbF/AYTmrV9Tqq5rAYCRVXnCkr9yw3FdP7b6Ici5t9pgC/EQiyI8A0Re?=
- =?us-ascii?Q?TmiGQz6Fu5U84Dfy0FxSfvxBLmAunsJaX9DxPZCnnMU/3+7+QqMCmdSniKpX?=
- =?us-ascii?Q?0oLsyV2+bQ5kaNWHIKM83FhdXLGDOlsFW7BLvJeypkfr1A1BvOrffl3X7LFm?=
- =?us-ascii?Q?yITMUlnG1XUXHkFYw0zrzn0mLf6N6f4OPPx5ghCKr6BCvij9m0gGtGu4Kk8x?=
- =?us-ascii?Q?IDijfPUhwRvPI5atOA7MMNuiLeB7kQEVxntEKrZzP26w5E5EKNeaLNqJ7v0N?=
- =?us-ascii?Q?8cXWtRjXVIjoZKcT5POIvCaXehDGM66wmf7zjJM6RwsVVqnMUU5pbADhkyr7?=
- =?us-ascii?Q?5YUS7ZP4zotTcpIWDy848gDbaGV1yTT+Yru2cAGiiGBMVINZ8C44uuW0KamY?=
- =?us-ascii?Q?7fPlviiav4mENvJxq89jmiRU5ampq71ZqdeScgrF5BLQVdyqj2r5fWmc+6+g?=
- =?us-ascii?Q?FuTBzonVeWCFWOzne1SLk5l0qi0Ow35VYTIgYE36uk4ekmFnZf1wwd+pQRFS?=
- =?us-ascii?Q?J8lOZBmCY8AbrwETZ7fvZhFUccYxkfJoxIJty9DOzRhM9mW5eJVr9NVP1L6z?=
- =?us-ascii?Q?eGxtW9KxSebIjOufeceDLzDCy53E1gJJJVPc8t0DOc4WSwjgkodnLkTX89+I?=
- =?us-ascii?Q?plqmDRU04QeZ+s3C7rx+B2c2v+4cNuDVu/vzbYfKrAHsB++zNR2JKAvoZET0?=
- =?us-ascii?Q?L/wuHVaMDm0bVe07oS7pc1kw6yxTIm16Ljn7mebAaGa1FJ65+3ou1FGubrNe?=
- =?us-ascii?Q?6E75b0TUav0uWqgyzlAq6i9qSorHVVFz4g6WWuot5OnRd+eCMtJ5P/cINiBN?=
- =?us-ascii?Q?tj22X20QoiZ6Re+VnJcSr6+85VnNTyYfvm+cJmXwvh9wBP1ms4AwQmSMimvv?=
- =?us-ascii?Q?9TV6Md1QAtE45Y3Z0+ZDprUL466282O00w5PoUHJx3uUhziNf16UuREpYA5Q?=
- =?us-ascii?Q?vHCDJM/w0W8BKdvko5TDjqtARjlQMbKFmwMhOodqTbtdbSaiLDFviRpcZLbD?=
- =?us-ascii?Q?uea4m6LJIw=3D=3D?=
+	=?us-ascii?Q?6ERHrOpOshyXQjSDHcJ9Qw1RiVBnq65CxtSFdVH0iiIvFhZKbL8eH3hefhoi?=
+ =?us-ascii?Q?fPM6PwiLpumBNvVP6JNajTk3qPSoi2QAwhEfT5/9WaWaVHcK0+Wz5lYWl2ON?=
+ =?us-ascii?Q?AdvFpec/LOaTKxQwo+JjFMVU8W++V9BUfT6TB+jnxwp3tXbDno6U76uwsT30?=
+ =?us-ascii?Q?dISU6Q6aqEH7dKSFRQLv+Ws/JjbZWO2uLEN2Wv0tIEFVXqGZSd2Inp7WakcL?=
+ =?us-ascii?Q?IDSAWMluAJTLHf6hX/GHkulmc/O1vmDupiVDd8n0SyAJCRyml0CM9FYbsjBX?=
+ =?us-ascii?Q?Ke0vXRXtvLF52wBlEAl73WLAuPHs6/vrYrDG9VgYaSy3gdzH12+NBPfyWNAt?=
+ =?us-ascii?Q?/3s2ladah0zHRqPq9bDfI/7zz404WeMYAf5d8nVvyG76xF/xMouLFIS4Dj17?=
+ =?us-ascii?Q?T1eyjD23YN9r3hLIsViuFC3rkYXr7V2D2Ib7sHLnf0x9gheMeapz2Tslanoo?=
+ =?us-ascii?Q?82FPS5Ow/ES6cEbbt8R/EIBwbQYHGAyssj5Sp7VGZ7TW3vt4/iV3woyiuRS1?=
+ =?us-ascii?Q?6mP6ld4HGx8aPA+JoeK5ydgUZ9SDnRma2VbuPVkIRzkjtr5aO0km9me4wNb1?=
+ =?us-ascii?Q?ne8Wmn59r+jpKE0RxVLEaePbZc/i6x89doJu6tzbmwdOt5J3de+n5Msy6nzF?=
+ =?us-ascii?Q?s5//P5eU52utK4SdZ3UTkJomBKUN0fCUwPg4+FqYp4A/3SNvZq674OYXuZdX?=
+ =?us-ascii?Q?h270Ws8XGDdR3hdidXVvXRe31DWSt1wPBbCjDSGXNSHR793kACYr0VId8uYW?=
+ =?us-ascii?Q?pcprzz/MSVdd/X9iKrGs/13Gbj/pIPyj7YoaZTk+1Xy+3ae3cIEkLYSSxFhX?=
+ =?us-ascii?Q?ZNs7dWsZOSFCUdNuzLYibcCnWvvBhiO98NxReAC83xOEYiQ0RD2P6jOfZykX?=
+ =?us-ascii?Q?Gvo1GWijhCX53/E/HfcmOBlsGsMMtkSIXkPm+O1m8v5+6lPkCNXCjPYJdS3g?=
+ =?us-ascii?Q?DHnbxeWqLZE/iyq5y/dU44UmjRPtTR9d+rphZtXT4yxCl9zhBFoA01aUQ5Sj?=
+ =?us-ascii?Q?ZJR3MrM5dHQe2XoSfRkENQrHHSk0+2wyU/mv9EXWYb6T3zteC5NPLR3uA+/p?=
+ =?us-ascii?Q?VQfwr9viH80//xi8rfwFT1b2Yw5Bv9G9YLs+UynbNm5BHzNCtn98tzTgMniT?=
+ =?us-ascii?Q?ehKa8zye4ygEntF+5Fily5rewbIuWbxdLg8TXoYv7fyGokFRuhKBASl0Y0jA?=
+ =?us-ascii?Q?6uyCC3ULb8nGF6uLStwIBx3Q82GFxHlbMuTYbyBom1WEL/iovmngi3epG5EN?=
+ =?us-ascii?Q?kr73rWUCbL7HdddK4ln02z5edMal4jcskqB3pFUtfL8UGLlfPBU2p8RD5RC4?=
+ =?us-ascii?Q?z6RNcC/r1Rb0X8MLzFXBeV9GRxWIz22sB9LB7nDLoKctrvLsDLgogxu2FZ/d?=
+ =?us-ascii?Q?AYnunUdRdwf3bRtES5HO9hpkM47vq5vMJWJ5WM8g+kqSd25IMMhCV4Zwruh1?=
+ =?us-ascii?Q?odkeF5etbe/Siwx8sXCEXNbuVT9pNTXa17yQ5PZgegmyLhxFGH27/Q/jXYqR?=
+ =?us-ascii?Q?Sv09O+nyo473JhdNQdfs+l2gqtRLjQcs6dd3GTX5P5J/onmGDId++vkR7w+F?=
+ =?us-ascii?Q?xJJIsUIWqv4/VWf4SnqTy6N6yKFGe8XKLP/0+k1h0fbHT1+bwMnHaHVCV0e4?=
+ =?us-ascii?Q?EtLn8Bd3UBZ4kO51D5iXMxTGGv159GD66VoLABaTEmPJC1BhWW1wOZIenlw6?=
+ =?us-ascii?Q?Ki0J9tkHGNIRd1EPMVrcjkNsY915MsIk0VSNRUK0U+Renv9W63V1ezoLTeXS?=
+ =?us-ascii?Q?ePHkGDr+8g=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d789d19a-4eac-487d-765a-08df125a5e65
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2f87d46d-0538-4016-442e-08df125ab2e8
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 12:19:05.5952
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 12:21:26.9198
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FCN8/tXHa4vEZl7MkyVHulTZZIHDWom7o42lR+e6Iwen4tMHVvtS7xcLrjMmKvwfQS/DCiRNkqJj4xQakqrvQw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: GswUk+IZWJS95rY9hfTkPn6kI2llLOn7NDAEijhVXTohp20GZPRZ7FhSMy/QGI3t4XPc4ZD02PDZdWo8taHSdw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5851
 
-On Mon, Sep 14, 2026 at 09:06:40AM +0000, sashiko-bot@kernel.org wrote:
+On Mon, Sep 14, 2026 at 09:01:55AM +0000, sashiko-bot@kernel.org wrote:
 ...
-> > @@ -1515,6 +1515,23 @@ static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
-> >  	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
-> >  }
-> >  
-> > +/*
-> > + * A task with an infinite slice may be running with its tick stopped. Lazy
-> > + * rescheduling doesn't send an IPI, so restore the tick dependency first to
-> > + * guarantee that the lazy request is promoted by a real scheduler tick.
-> > + */
-> > +static void scx_resched_curr_lazy(struct rq *rq)
-> > +{
-> > +	if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK) {
-> > +		rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
-> > +		update_rq_clock(rq);
-> > +		update_other_load_avgs(rq);
+> > +	victim.pid = fork();
+> > +	if (!victim.pid) {
+> > +		cpu_set_t mask;
+> > +
+> > +		close(ready[0]);
+> > +		close(start[1]);
+> > +		CPU_ZERO(&mask);
+> > +		CPU_SET(cpu, &mask);
+> > +		if (sched_setaffinity(0, sizeof(mask), &mask))
+> > +			_exit(1);
+> > +		if (write(ready[1], &byte, 1) != 1)
+> > +			_exit(1);
+> > +		close(ready[1]);
+> > +		if (read(start[0], &byte, 1) != 1)
+> > +			_exit(1);
+> > +		close(start[0]);
+> > +		for (;;)
+> > +			asm volatile("" ::: "memory");
 > 
 > [Severity: Medium]
-> Does this trigger a SCHED_WARN_ON(rq->clock_update_flags & RQCF_UPDATED)
-> double-clock update warning?
+> Will this lead to orphaned tasks spinning at 100% CPU if the test runner
+> crashes?
 > 
-> It looks like update_rq_clock() can be called from paths where the clock
-> has already been updated or the rq lock was taken without pinning.
+> If the test is forcefully terminated or crashes before stop_victim() is
+> called, the child processes will be orphaned and continue their infinite loop
+> indefinitely.
 > 
-> For example, during a task enqueue, enqueue_task() updates the clock and
-> sets RQCF_UPDATED. The call chain then reaches rq_owned_post_enq() ->
-> scx_resched_curr_lazy(), calling update_rq_clock() while RQCF_UPDATED is
-> still set.
-> 
-> It also appears reachable via kick_one_cpu(), which acquires the runqueue
-> lock using raw_spin_rq_lock_irqsave() rather than rq_pin_lock(). This means
-> RQCF_UPDATED is not cleared from the previous lock hold, and calling
-> scx_resched_curr_lazy() here updates the clock without a valid pin context.
+> Should prctl(PR_SET_PDEATHSIG, SIGKILL) be used here, similar to how it is
+> used in spawn_gated_worker() elsewhere in this patchset?
 
-This seems legit. The enqueue path may have already updated the rq clock before
-reaching sched_resched_curr_lazy(), while the kick path doesn't currently
-establish new rq pin context. I think we can avoid the redundant clock update
-when the clock is already current and using a pinned rq lock helpers in
-kick_one_cpu().
+Although this is a kselftest intended for a test environment, it may still run
+on a persistent test host, and these workers spin indefinitely. Since I'm
+already planning to send a v3, I'll fix this as well.
 
-I'll fix this in v3.
+> 
+> > +	}
+> [ ... ]
+> > diff --git a/tools/testing/selftests/sched_ext/nohz_tick.c b/tools/testing/selftests/sched_ext/nohz_tick.c
+> > index 028f54391c2ca..a5266a5412935 100644
+> > --- a/tools/testing/selftests/sched_ext/nohz_tick.c
+> > +++ b/tools/testing/selftests/sched_ext/nohz_tick.c
+> [ ... ]
+> > +	/* Repeat with a lazy kick delivered from a housekeeping CPU. */
+> > +	__atomic_store_n(&skel->bss->phase, NOHZ_PHASE_LAZY_KICK,
+> > +			 __ATOMIC_RELEASE);
+> > +	victim = spawn_gated_worker(ctx->test_cpu);
+> > +	challenger = spawn_gated_worker(ctx->test_cpu);
+> > +	trigger = spawn_gated_worker(ctx->housekeeping_cpu);
+> > +	if (victim.pid < 0 || challenger.pid < 0 || trigger.pid < 0) {
+> > +		SCX_ERR("Failed to spawn lazy-kick workers");
+> > +		goto out;
+> > +	}
+> > +	skel->bss->victim_pid = victim.pid;
+> > +	skel->bss->challenger_pid = challenger.pid;
+> > +	skel->bss->trigger_pid = trigger.pid;
+> > +	if (!start_gated_worker(&victim) ||
+> > +	    !wait_for_counter(&skel->bss->nr_lazy_victim_running, 2,
+> > +			      PHASE_TIMEOUT_MS)) {
+> 
+> [Severity: Medium]
+> Could this wait condition cause the test to flake by relying on an absolute
+> counter value?
+> 
+> During the teardown of the previous phase (NOHZ_PHASE_LAZY_ENQ), stopping the
+> challenger can allow the original victim to be rescheduled, incrementing
+> nr_lazy_victim_running to 2 before this new phase begins.
+> 
+> If that happens, wait_for_counter() will return immediately here, and the test
+> will proceed to launch the new challenger before the new victim is running. If
+> the new challenger is scheduled before the new victim, the subsequent check on
+> nr_lazy_kick_running can fail.
+> 
+> Should this wait condition account for intermediate preemptions instead of
+> hardcoding 2?
+
+We can snapshot nr_lazy_kick_running before starting the new victim and wait for
+the counter to increase by one. I'll also fix this on v3.
 
 -Andrea
