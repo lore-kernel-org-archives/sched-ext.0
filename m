@@ -1,129 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8188A4779A8
-	for <sched-ext@lists.linux.dev>; Mon, 14 Sep 2026 14:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7068D3C10AE;
+	Mon, 14 Sep 2026 23:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789397968; cv=none; b=auvnJnVppL3bDvu6WnW0LJyoHTJSx9dwrpHNsGnbW4vxdIH2zQ2TaIihdsoSsiHgKrkVPPoGNm6q2RSWzV85d43kJNTtR1rtq0yWdHKC2bVXUA+TWBAd7rVOQUlQjrIpdE+PH7WFyP0yV+rbe5NKM0IOqQMVwild3ZOWqWvlQnQ=
+	t=1789429383; cv=none; b=tDdbiPi4UgZfJw0/44PEaJVdajuJedMMRCMJc3hYbqXPjvDl9flcLMTkXNCAbDNlvmINZFKXOns36ij0U1TJua0+KogHIelVYIGwVjTZqbTNS4XFvka5c/tuXNUxA1wKrTLvatULE0Hz62c9byITZfyHccyI5Zta98rua00aYJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789397968; c=relaxed/simple;
-	bh=5fofTbYN35pCB5eba2s6esOfF5IY7fODgz4mnlpxsDY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=OOMIPMesfgWt5tciI2umxCMkd0M2YH6w/CPBOx1oDTMZ8NDvLIoYh4k3e+bm2BKukThDzbwa0CPHxaWTSjm7KLUfOmtf6dpQesEBZGkosVLlhKDAPniHtRJyPQLGuSw9XLomfvuQpI2NYE6xwB7pi+IdJ9mv3u+yOsFyDzw8thg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxjghqI6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789429383; c=relaxed/simple;
+	bh=G9XXuADMt2Zjd/Tx5UUcXFhxJUMrIAmv21nIOeau/3k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WoiPzMJKIT4crFQsEgKbZ4/rNgtRRvBPwCwgDwiXpWnzK8LOTzgeJmJM5HL+/aXYyLG6x13WryqZQIMjhPoP0F0LYIZD1Gk20/kWSGb2ekuP8ygTuMded6Ye5YhTa5UeQjy6UxU7o+c34H6SyS+XDeEBE7DYviR62zwZJ7mmkVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DBmlijgp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxjghqI6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49B91F008A7;
-	Mon, 14 Sep 2026 14:59:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DBmlijgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4921F000FF;
+	Mon, 14 Sep 2026 23:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789397966;
-	bh=CG55sEWExhXJWniI0gBhZVmI2/qoDXCRK07ANhAWtPw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=jxjghqI6Sm0aQE/BWe+XTxaARFy77SqH519iFDplbaLoGMFA28aluOUwUT+Xmi2gB
-	 YN1RE5nNEgOUOu9LsRkXPmPInm3yBRvrhIYW74H+BeVZuZg2Z5TTNyIO98OaNktkGw
-	 HQYksszs7TgiaPAYsddxr9iHrqp/GyloE8G9fyCRljduSlVeU+CI1NWiQO2IM0WaBP
-	 l94cjw0ZDfZuBh9MtImnv6JH9JwcTeD7s/l/hdYoHyOKHCRpvjd6MAQg2okZGU2lul
-	 p7M8ZSL66W2z45GYe7FPQchtoe3FukIzskpP84NphrJc5RXkTGNaVvssIhCoa+qRHT
-	 HJzOb8Wkrv6xQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Add lazy preemption tests
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Andrea Righi" <arighi@nvidia.com>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260914144620.2032614-3-arighi@nvidia.com>
-References: <20260914144620.2032614-1-arighi@nvidia.com>
- <20260914144620.2032614-3-arighi@nvidia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 14 Sep 2026 14:59:25 +0000
-Message-Id: <20260914145925.E49B91F008A7@smtp.kernel.org>
+	s=k20260515; t=1789429380;
+	bh=qEBVrt8JU1VDFmShvvmCdkC1KCX9KCBd+pFUSdR5nTk=;
+	h=From:To:Cc:Subject:Date;
+	b=DBmlijgpP9n83jR++EMGZ3Ti1MtbkwB1zPJQh94D4bZiH/GPrpUg3I/FcCFwKbwTe
+	 v8IsefW6QJPmOl4dzSawUDkMKCMzhfaMaImIlT04PIaB2qLtfHwOBiY2GT2FAv9Zys
+	 hreDhoWD8LKEaOXxpTFQ9mDsWzCn9qJYxW00N1Du8pX96b+dz2P5v6+s9uvsBYa2mX
+	 tjoL7zVzj+WqlF+tM8whA7q2DWsBiuH1n3cqziA6IFXNogcNuNnYgSQz3VN9WDRr+v
+	 6FtSHkhxLq9hdqAIPl581X5P8H807Tt8q+DQW2z4UrlgW+L2ty/rVyrJfZWD+LU1UN
+	 0gNNTHfV2uMHA==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Idle repick notifications and online cid mask
+Date: Mon, 14 Sep 2026 13:42:57 -1000
+Message-ID: <20260914234259.3585373-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The ENQ_BOTH scenario in the `kick` selftest hangs indefinitely =
-on single-CPU systems due to starvation of the main test process.
+Hello,
+
+Two holes in the cid interface surfaced while converting a scheduler that
+maintains its own idle and online tracking.
+
+An idle CPU can be reserved and kicked without receiving a task. When it
+picks idle again, the builtin idle masks recover the reservation but
+ops.update_idle() is not called, so a scheduler tracking idle CPUs itself
+can lose the CPU until another real transition. The first patch notifies on
+idle-to-idle picks, automatically for cid-form schedulers and opt-in for
+CPU-form ones.
+
+A cid-form scheduler that installs its own mapping has no way to learn which
+cids are online: the online count identifies the set only under the default
+mapping and the CPU-form cpumask is unusable from cid programs. The second
+patch adds scx_bpf_online_cmask(), a kernel-maintained cmask in the
+scheduler's arena that follows the SCX hotplug notifications.
+
+Verified by building and loading a cid-form scheduler that consumes both, by
+local selftests covering the idle notification with and without the flag for
+CPU-form and cid-form schedulers, and by a local selftest that offlines and
+onlines a CPU in a VM and checks the mask and the callbacks at each step.
+
+Based on sched_ext/for-7.3-fixes (c7a1c6e8004a).
+
+This patchset contains the following 2 patches.
+
+ 0001 sched_ext: Fix idle state tracking across idle repicks
+ 0002 sched_ext: Maintain an online cid mask in the scheduler arena
+
+The patchset is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git cid-online-cmask
+
+diffstat follows. Thanks.
+
+ kernel/sched/ext/ext.c                          | 77 ++++++++++++++++++++++---
+ kernel/sched/ext/idle.c                         | 60 ++++++++++---------
+ kernel/sched/ext/internal.h                     | 24 +++++++-
+ kernel/sched/ext/sub.c                          | 10 ++--
+ tools/sched_ext/include/scx/common.bpf.h        |  1 +
+ tools/sched_ext/include/scx/compat.h            |  2 +
+ tools/sched_ext/include/scx/enum_defs.autogen.h |  1 +
+ tools/sched_ext/include/scx/enums_abi.autogen.h |  3 +-
+ 8 files changed, 137 insertions(+), 41 deletions(-)
+
 --
-
-commit 54a68e6d559e121241b4e1714f59dcb8d2d45246
-Author: Andrea Righi <arighi@nvidia.com>
-
-selftests/sched_ext: Add lazy preemption tests
-
-This commit adds trace-based coverage for immediate and lazy preemption.
-It exercises kick requests individually and combined, and extends the
-NO_HZ_FULL test with infinite-slice victims.
-
-> diff --git a/tools/testing/selftests/sched_ext/kick.bpf.c b/tools/testing=
-/selftests/sched_ext/kick.bpf.c
-> new file mode 100644
-> index 0000000000000..03ddc44faf5c4
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/kick.bpf.c
-[ ... ]
-> +void BPF_STRUCT_OPS(kick_enqueue, struct task_struct *p, u64 enq_flags)
-> +{
-> +	switch (scenario) {
-> +	case ENQ_BOTH:
-> +		if (p->pid =3D=3D victim_pid) {
-> +			scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_INF,
-> +					   enq_flags);
-[Severity: Medium]
-Will this assignment of SCX_SLICE_INF to the victim task starve the main
-test process and hang the test indefinitely on single-CPU systems?
-
-When the main test process shares the CPU with the victim, its usleep()
-timer wakeup inadvertently consumes the KICK_STATE_QUEUED state, advancing
-the test state to KICK_STATE_DONE. When it sleeps again inside
-wait_for_state(), it is awoken but enqueued into the global DSQ without
-preemption flags (since the state is no longer QUEUED). Because the victim
-task runs with SCX_SLICE_INF, it is never preempted by the tick, starving
-the main test process forever.
-
-> +		} else if (state =3D=3D KICK_STATE_QUEUED) {
-> +			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
-> +					   enq_flags | SCX_ENQ_PREEMPT |
-> +					   SCX_ENQ_PREEMPT_LAZY);
-> +		} else {
-[ ... ]
-> diff --git a/tools/testing/selftests/sched_ext/kick.c b/tools/testing/sel=
-ftests/sched_ext/kick.c
-> new file mode 100644
-> index 0000000000000..b7af2683c2728
-> --- /dev/null
-> +++ b/tools/testing/selftests/sched_ext/kick.c
-[ ... ]
-> +static enum scx_test_status trace_one(u32 scenario, u64 ops_flags,
-> +				      s32 slice_expiry_override,
-> +				      struct observation *obs)
-> +{
-> +	struct bpf_link *ops_link =3D NULL;
-> +	struct kick *skel =3D NULL;
-> +	struct victim challenger =3D { .pid =3D -1, .start_fd =3D -1 };
-> +	struct victim victim;
-> +	enum scx_test_status ret =3D SCX_TEST_FAIL;
-> +	int cpu =3D pick_target_cpu();
-[Severity: Medium]
-Should we migrate the main test process away from this target CPU, or skip
-the test if a second housekeeping CPU is unavailable (similar to the
-behavior in nohz_tick.c)?
-
-If the main test process runs on the same CPU as the victim task, it can be
-starved by the victim task receiving an infinite time slice during the
-ENQ_BOTH scenario, causing the test to hang indefinitely.
-
-> +
-> +	if (cpu < 0) {
-> +		SCX_ERR("No available CPU");
-> +		return SCX_TEST_FAIL;
-> +	}
-> +	victim =3D spawn_victim(cpu);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914144620.2032=
-614-1-arighi@nvidia.com?part=3D2
+tejun
