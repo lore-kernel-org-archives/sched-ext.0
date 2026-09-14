@@ -1,45 +1,46 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012044.outbound.protection.outlook.com [52.101.48.44])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012000.outbound.protection.outlook.com [52.101.48.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAD341684B
-	for <sched-ext@lists.linux.dev>; Mon, 14 Sep 2026 08:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDCB41BA62
+	for <sched-ext@lists.linux.dev>; Mon, 14 Sep 2026 08:50:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.0
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789375820; cv=fail; b=KpQE+qmSV0lhgAeW4nc6SQ8FOnldy33+4MFBJAILEyDxKu3HngzdWbbp5zhEm7JZ71rsHi0ZXyQxC7w/vdaLQjNUYBy5VJhjH3kgAPipKhT4Pp6HC10HvxME1ppVq9/yxJG/jTAUNSnSj62aeSKJwN5dSOyk8rvBrKtAB7DKaTk=
+	t=1789375839; cv=fail; b=SVCKn5fBkZJRdgHLNqYTxGxKE1FJiC0LfaQ0yr4ESP8prJt9pwiEdn1mFvib3C0s0NikdKRSzQVvtnYZacSpDonw7H05Jzgrn3Od+t1+7NjtoAaTW33JBe/pPPdEiPM3AcZjxBo6PteFcem1R1STUDZFdGH8LX1l9RvWpW/ccrY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789375820; c=relaxed/simple;
-	bh=dezCchqhzhQhzN+flx8TmY6Txfdk2BKb2BrmSu/MZic=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=lLLx/M5zDiqobCOtsjYL3EJfjB1qxdPZyXDlO6Sw8insYg1pSWp1fyrYRvhci5WrzaFPgzl+N4l4p4exBuZYh2mgWWqe7Lg/ymmMZHBa6EHRNyOrrdvsgNw6vy88w/CChLUS37O1leBZvNLfwx92XTlyCFtFAVo8u2XKqg150pY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TRyqArHV; arc=fail smtp.client-ip=52.101.48.44
+	s=arc-20240116; t=1789375839; c=relaxed/simple;
+	bh=OUXWDVYwts/c5+dZH+ZKlekwgrNKuBNWXOgaQMOIjaA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=utJOUMmnFYa3y9F4oynKtn6zPKBE9IuzEBNlSJ2Aq0A93CReuf109/LSycb7uZynG4f7LXAUx3DpLAE7UrUBGzncnOw53DT3Dlt+8y+7USGTmLyI6x/rWHdOaVY5hl1GTEWO/5IyoxftVGbPQxWKdLtsT+nIWjPA1GzzsiiiF+8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=D88ONiiW; arc=fail smtp.client-ip=52.101.48.0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TRyqArHV"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="D88ONiiW"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iwnf1y+/t+9yk8NAVdXeHhUWRWHHi/3biLxUisoD5sM1UJUpAIfgLcE/TzgfEOWAMsTrYMPqyXQk7Q+cdTOEVPzVDnBp1gp63hCmpBRKfiYMij0EUqmOQsGZwkKWxQRttSwBEnzA7cKy841A9yV2bwbS0I8lNtO8lV30pTz10CS7APwENT/225XmroSxTJhakdfYPCSyCcC99CiKh4CvQ89Xgb9MAHZTjibID0hh1bIQgdEWzLPOieY1/E+6j2YpI4NRGaEqYDSgkXCTqnldJpLiX3AsuLbSNFSW3Yt+FvYv2lCRTlpX7Oj9qUA5In/UVhBK7LWvjMkbrrLhjpqRCQ==
+ b=w8XovbX6lADOlQ3bKn76WWjdxxX9DswBMm0+FIflmaPR6K9ZUMjB/iD5SnK+ouc3PsHgx62sBFnVBTMP9vMGCVqaL8nC4m/e98W5LZ66OZqtkwVgROFpkErKwS2A//oh9wEBN+MTzQzROnoR35omDNSGqSXPpd0739Lblvcw0OissjLa73C20HY4dAibCK9UATtW2V5uuj2/NxofVJ5zyZuMw10BLW4pyr88XgRo7E464OEC0qwVYI2nFNQm4t9Nr8ZNshSg+V9JuIujd8iHyR2tVZ/Zo3qtCgRlP1V5Z+Ak0gc+4WyFUYx48UNDOMQmTSKMMzNWbv2HGMXiyIhU8w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jsZ58M60wccX3/kBee6YIGPDb5Qzs+n5tpk+WjpspVE=;
- b=R3M7lzQVsbnTHJHpDD+MI6xWAkyYQZr5RcGaE9lMrimhD2PgSRknAxQZB3yK8GvXoQicYf1rzdx/CyD9G7CKfZJR/pqZjh5t+yAtoZMBe5omW2pizblJVTDd4Hc3DuSCBoSi0FNCLXaLFggO6yKvgK19gZ4nNsZZboUFzoMh9yJCRUmA4k0RthDU/TGu0iTCorP5LykfVQlv6pYRvzWvcruKlUrU8uYz3XdE//KqPTZ7UdIKphHmFysAN1i9mIeQv75dhSSoiGh2tJbb2ySn0S/LnH+HYXJVBAe4nOgGl3P7ZWpYRQpjddqTzUMRu0ky1rEr9A0icLIoQiGzRwB7fA==
+ bh=lU84RN/WiApO/A0j0+x/t7iAPTKijiNmtZYkNOZ8sc8=;
+ b=LCVY0wljafJ2Oci6/bhEPPleIA3pwmmCnfhIo+EZy6GFKXrqsjh+zZI4GqUV9qDEkxY+jUMnzYod9AIT8UxEje9IYA0QQe+FAl2vS0rcm2HFN5iyhnU+5K1cwQV/goeOYWy+2vKpLLgTAzwc/udjyWQq7py0kPmZZwDNXoNxoksog6noCGwwFqooDgem7CDdFr0m9WlCDLOxPBOvb5V5uT/IKXQXPEy0aybHYsBYKPT6ql+VkxEzM6UR6XVUsW5ONZOi9+79XqSdkZ9PvarsN8LGInW++HvrMHUaOSrrn3K2aNebYd7Wa2eAuau0ewEQd6DKBHBuuA8u0U4B93YAMg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jsZ58M60wccX3/kBee6YIGPDb5Qzs+n5tpk+WjpspVE=;
- b=TRyqArHVu4xMDMbQaNcqg0mNFQsbIFvjYMjMnJIewi7mflF1lj6tyEHDa+LaShtSPH/1RqyYRBEVXDcEszSvsiT4uR/0YcakunMUQ48qnaWtZaBOsPQ7budluG5ky/fJ7TVyfijoL+Bwkyp6LM5g7srVW4EyMDDSLUHnuzmi3jpH2PH5EzC/mTfgvc14p4aCr7sDJ9ChFsI4PyD8QSrlATaMwduldUv7RWYcsVnijhjLroU6h5vDTXyDZJ1XUKXNUKTtqGZfc5XFAhqAmSvizLS2CALLWOhBLvW/ZP9Y7AnLZ4syPcCJ1Sk404Pv6NUQYnxAANOaX566OjCQBdfARA==
+ bh=lU84RN/WiApO/A0j0+x/t7iAPTKijiNmtZYkNOZ8sc8=;
+ b=D88ONiiWzX37f+1y1aULGWmy9RJaDMVQvS0OAvDOCTRq6dDqQIJDGTCPlkQffn7+Xa6MuXm3maJUHArSttm9W+zvLYJyi3xTUC1tmyh4sT4ntxx+ACvviyJJHFfDikLyGgugUdzcWD40oJmOxwN7wGnc6BFq2mEa9YDAX11CISI8D9ljrrKlijmYJ8FRuELOZ7B+CBgSJYs+qYmiV7BcYZmxS5tN4DHUWwgtmRmX/S81rqfQl7469ahBw7gndu4gPr3ItEQHpLh9p1yQDoEbr/JxzblcXxqidHzv6V0Xe5x4508i7gmNlSdWGStMfoTDRV5rJFzmMEblp8SjdhSA8Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by DS0PR12MB6464.namprd12.prod.outlook.com (2603:10b6:8:c4::5) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.12; Mon, 14 Sep 2026 08:50:10 +0000
+ 15.21.406.12; Mon, 14 Sep 2026 08:50:16 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
- 08:50:09 +0000
+ 08:50:16 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -47,14 +48,16 @@ To: Tejun Heo <tj@kernel.org>,
 Cc: Emil Tsalapatis <etsal@meta.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCHSET v2 sched_ext/for-7.4] sched_ext: Add lazy preemption support
-Date: Mon, 14 Sep 2026 10:47:44 +0200
-Message-ID: <20260914084955.1798562-1-arighi@nvidia.com>
+Subject: [PATCH 1/2] sched_ext: Add lazy preemption support
+Date: Mon, 14 Sep 2026 10:47:45 +0200
+Message-ID: <20260914084955.1798562-2-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260914084955.1798562-1-arighi@nvidia.com>
+References: <20260914084955.1798562-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MI3PEPF00004EA6.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::45c) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: BY3PR10CA0008.namprd10.prod.outlook.com
+ (2603:10b6:a03:255::13) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -64,128 +67,712 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DS0PR12MB6464:EE_
-X-MS-Office365-Filtering-Correlation-Id: fc10f20e-6012-48a4-6c62-08df123d2eb9
+X-MS-Office365-Filtering-Correlation-Id: ff05075a-b63a-48a5-92c7-08df123d3274
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|11063799006|56012099006|10067099003|18002099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|5023799004|11063799006|56012099006|10067099003|18002099003|22082099003|6133799003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	BTXdTLAM/uOi0diWdN14s5NY1bQkFyUSVUfUo5GxnEnP0NGUyxt3Y1tD/dDdA1W7rwEYzGaFeYdDkOoQjdhTQltV6DZg6/s7PyR7Mxp7c/+zU507U0FslndN/synY+5r9EerXlsqnbFDFaWMNJFbdmgF70BtFG3Y1K6GNMuvABOCE2JHX7dNpw1c+MUww5k/drmaHWhov0ckkLf2u+NMCbH/iZ453ZuUg1S+fa9YY/EQrZGJ6CyaClNNhmH7vL0gHrnEdWYX/GKTIQf+5K656/h37It58NnWo8aKsQQFuXyh0UBTFciE7kpgLX8J3JU1wRWolcLTC16qpE+XUC3988Ai0L5HLEFYB2vqpGHwBMRYAwiQ2Jwe/ukZSFaGi6rlk5StMMc+0UFBfXoQ/I6hFm7nvrUS3yFbzhvOitFKJKy5yYLVEpvnTnipOJFG+5zcKMUOpW6t/K6r30TkBD5Ck1RtKVNDeWnM/+QuYg7p4NtoQAjTWuotvku+gfGDTcBIk4VBicjc6eHsKHJE9AwrUMmgWsPie2JZxraGZ4tiuRqMBqtWE8pl9S6eetznjtyg2kS/DppLRyUq/CdpQbgyPcApPiGbLzkGXp1tZ0p4xvLGnY7mHPk2z03XDBPSzAEwXfgnLvi1Rvn8mHEP3uQkuPNfYqfOv4+3Xx8nqRQuQ3U=
+	3mHoVhJJC0iVRC6IMPH5Lo2wcqFNHYnM1TT9sNs7dTEf3cbNcY0JbrRlLtWxLPpR5BEyZqeZ07KWpYalAjuHicxdItxRhLw10aCmsAMcfBB+0K9i8ekKRGnnB4dpyBvAjvT5Ffd4j4eC7jUPT1MQEDL7ZWRoiuFw54UjmcgbNYTyblAMiUkMT0ASV4ycaXw7SFFgCIIxXGLKi9OvXIMrZIWYagebr69Sv8xDm73e+MjoXMOyx9MsyoRjZNlCLrZ4spkXka98fs5araL1BPm4hd/FnzKSnX9k36Xt96P4P14LWGXLC3K1BJfOBLPFf0ZHdMng7i0TxcmepEgM9KENeZHBq4CqESD4FcBEQlm/NTdyvEqBMItBtuU9BnQlG7O1FXd2WldoEWuRQcYwV7+4lVDZwQl52I1gGOVvqXxEPuKbaYHfFNPz/kJN1P7rCwy93SBTmnqSKnHQlkjkEahcYBHQdG+AyOMrNGZW1UmzJ8T8DbEAtnQmuwOXcIeDKb7yUHqjfaFXsgA/PNVFFhY+a8cqB7n3Qed+1kXvTccp7u1Yeh9GeUdWpkSVKPlX4BKQEjBal2+n+g315Jz4lmqxpB3fw+g5HrKccxk9+mcTPyR4E8H6Q8oXydC4LHnCeOw641aZ8y48IKzrK9X5DLZKt3p07OOTppiYE79ad7E/V2Y=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(11063799006)(56012099006)(10067099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(5023799004)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?boJmGpO3g8rYj4+mhsgPYC398fVYj+wXnV0ReuFz+PIpo7PJkcWzLaDSUDEz?=
- =?us-ascii?Q?VQRc8xT4+zWIBVaxlMIowjRPGCXbaVlqs1tplzMAJ0qJ4z9T2buP3EZX/iXS?=
- =?us-ascii?Q?TDeUkNC3CRv5mRB2h/fKMTrMJwbmaGbwPw8uGR5GrBL7d1n4cGd0zJcB0S1P?=
- =?us-ascii?Q?V2bx1IdrGTTEw9BUbOYpFFbZ7gsakD0skG3XcJfMV15HaWilwCzrpMRU79iL?=
- =?us-ascii?Q?2ioGsFUCSAz4lkkYmw/lWuz8f763AfAgEdWdvkN3oJE2lU58rnAOTqnJVKtH?=
- =?us-ascii?Q?Lz304WNGOz5sk0mWDNwyuMrM8hXeYgBjmTkK7tfgjn7OgkqYkYBCT1VK/Rdc?=
- =?us-ascii?Q?vC2VMg1WLhfE92DJ+LN3AKYM6gMCwp9r8PpydLqv52XZKhMfW3xWlRIlCEyB?=
- =?us-ascii?Q?gi59Zg+GUZLLUY3wmCiAlNttEfeMgXhkIuCwoNXwZt/S1Ff8Qq03K4bI8ygA?=
- =?us-ascii?Q?J0T+NAw66+axdCUhONXwuxXNwidVQO1M+C6TWomuexjJRPfz0LsN/EPHgAu7?=
- =?us-ascii?Q?HsKHiDCLmCE6apUywbHr04xvt885AI92L2P/MRvrqYiuidsRtgR9s7d3Kjaa?=
- =?us-ascii?Q?dtkwrpYhJg4NCgXP6IpspSsePp9ZsFbYdfvz0jaUsRoI85BI2uNtMMHrTspb?=
- =?us-ascii?Q?hT/aWQzSDqP633a8KjsT+sbSWMOkZW6H3pEPW3BGjda98nZx8+Nixu5/oCn1?=
- =?us-ascii?Q?jSk97LnIxGMv57w6yZdI4NddDldB9SVKcZvaKryMP/z+0q0PaBFuS4m4Mboo?=
- =?us-ascii?Q?XEnMwN6tvayNIzwa75JRQhJaLdL0tEg+a8YMC080XtV05ufIF+7BgjkbZxG5?=
- =?us-ascii?Q?LVMuAPBhykXjknfV8MrEkxsdQUx7MevTt++9i+puKKSty/uGPiv+NAz12B7x?=
- =?us-ascii?Q?N/1HrSsPWT0zvZLO3S9i3wei+xZbW0NxgYRPlYBgtcv2+v0jNMfp3PZMI5JW?=
- =?us-ascii?Q?c51Ou0mkr4SArTj5JIvmJH1vL3tgmdFx7w37HB1pY7D6ADiDtdXz9gQcczGx?=
- =?us-ascii?Q?AX2jA10HLcvs+mkuj2ieZqFrTCw4wfB7F145CZ+v9/x6nSPqySO/2DXaAkVO?=
- =?us-ascii?Q?D1Cvzw18q5csel7s2Uy2W9iZz9caZmO8EHSkXjBZVLJUmG7PizouAqQw2o3e?=
- =?us-ascii?Q?HGgL7AFWzQXD4Ja3Zdlg4v80uTyp6JTeq98cqQfH53KKfrlsGRIqtD8oFs8p?=
- =?us-ascii?Q?fPFIsV3zNreHM7mgFSPrjZVgHvcX7XMsb6S7MzLNBJYfwFGrS6JKnPjr7ATP?=
- =?us-ascii?Q?hhz1aq8etm2bms9DmfZ83GEtdmflI0JaK/OXcjjwi9Lr+DLwHwA0OVdjSTSa?=
- =?us-ascii?Q?q7V+HkF9ZbnrUNYv/PkvA6OeGckAXKTlMvCNlmSLfPgDxyI2lOrfTQRoQDq7?=
- =?us-ascii?Q?rSjegbHJewt9cs0tI6nz0r/87RwFT/f8DjYtjKRB1uaAGthwyor4i1BG8QdC?=
- =?us-ascii?Q?hMF2qAo+rPYdcgPiDvAbx4vbR/Grwoz4BABo+bHSPGDqyt8KKyjS6aBZox5O?=
- =?us-ascii?Q?Ko98r0pHnsL5cHPIJWiN1WPF+qx+/OdHYG8TvTwaChBudhRMxoZ4t0jQUWOe?=
- =?us-ascii?Q?mfA1W2jzjDekFgS6bGSOkX/nFO6mAbsxUN/4WPRyGj7KFbF5247CFC9958Ao?=
- =?us-ascii?Q?oPw56YCjhepOlR5bGUs7YWmBB152L/0CziF3JjQb6oMyr3TU++A1waYuUbet?=
- =?us-ascii?Q?/8G4+CWEV+FU3O2P9bVot3KK96LNdnzNgHTxQozsNSHjhiearueb8tjoH4zl?=
- =?us-ascii?Q?/xbrZdB60g=3D=3D?=
+	=?us-ascii?Q?kJSWIp3ClfXkeMULyrhAerKL00We+eokGcl6LIjdq9Z49bVERWF36MKbGv0O?=
+ =?us-ascii?Q?/hU4QJXZCebB36zPL/vTYbqoP/BT8JqHo8QM8TI0MvD4Ho0RP43YwAk2QKS4?=
+ =?us-ascii?Q?dHutFTX6GkdqJariAjLTPsLU9qsU+OUzJSRhraPmeKtaV4ZgAC60VVRYPud9?=
+ =?us-ascii?Q?hmoHU3llakIksEFL8Pf19eph5jlJ8YfpVDeE2DDQTq5RSmEfpeEC6LJ/zpbC?=
+ =?us-ascii?Q?qmhYn6/SoUn9++f23I1PEzfehWJZxc1DAuQpj8clQAA1djsPQDL4FiMl05pF?=
+ =?us-ascii?Q?/Iaq1JW0xCE3ipIggjnSJHlh0v9gXaJQ8vBf3QQo3WcXQVW9rOw5Rw1KNlI2?=
+ =?us-ascii?Q?KQqmreO+ALu0I5Zgoqwe73PeqZ7tn7+Kv9fx67nDSRpaas8oUiVV0FXzSpil?=
+ =?us-ascii?Q?6eJgIZjzhw4sIxUMDJ3vFf9d/ohd9vx4riWxlc+r4wUF7ZlxaejxX7UX40wL?=
+ =?us-ascii?Q?ceVQF/8XzVu6Em8pzTa9RsD11YiHM0unfk3rgseqTPJyXGfNgGslFBea+yxS?=
+ =?us-ascii?Q?B4Gzj3+6dDkFVcBN1gcD81TvvA8tUmtpbJ/8wgJF2ELvhwyni3AvOP5q1kA0?=
+ =?us-ascii?Q?shyiGVsuPP/yChFEV8H2ke2T49cu2BAz9toe8ZoWqFullDs0z4S490T8PaNj?=
+ =?us-ascii?Q?jEtHijDWH+V4VDRrRB4Yu9UXQTFta7lI7q61LKVtnMUg2+u8dL8aL3Mm9v5A?=
+ =?us-ascii?Q?1HB1cmAtDnrpa8SYK/jhOV80FgmHXC18OAEAKVphbwRdZBQxZ05YxcYRhQoZ?=
+ =?us-ascii?Q?aAkkpSdoopiX/X95fm+E1KT48zn96o6nIrWwlFnH/aF5Pc9Iu2GPC4ThayyE?=
+ =?us-ascii?Q?DUGj7uHlWkHbWFXpBOPpXaVx/bZMTIOPZeWhvvVcm4c9idDYDxXs648OIL0v?=
+ =?us-ascii?Q?W4NLhs2ssPAwJ3HuQ3/NJBDZFNPcXLcmPV5CkT7uRIXTMlheefgAKdfZrhgS?=
+ =?us-ascii?Q?XhUDKSKRuiJNOqQNfxT1uuy9uJtlHBJ3cKdLTE3mSsp9B6JSIfgEnjUSxCHW?=
+ =?us-ascii?Q?dzercTC89JbKLw2mxczYOsxEdEpxwLKdBpAJVg25vjEqPoWzzVPUjN1EhUwj?=
+ =?us-ascii?Q?DlSe5dVKw/oUu1jTQwFeRdNnSrLq8tCUB8ElDde0wxi3UhQwpg1gXpraGJB4?=
+ =?us-ascii?Q?Iw+rq5TTS37Bc6XBPEajZGbbUsRfhPhYQcFSZ9mMtpnB11Rj89JtXMji7Vlp?=
+ =?us-ascii?Q?SbUjrB1MxG7xjx121z1pZ+WxJi6ILgFFY4fZpWhkCg1dPhwsQ4Z1ZfcrCahV?=
+ =?us-ascii?Q?4HLjJw5Rx3bdVeMdIfhBgCPtF6EWW/L5fG7rxHZoLVzM/7TcXTLQu/E8aVrT?=
+ =?us-ascii?Q?wRkKI5Awkv125md6ZxpYIYTp1JFSVJHB35QQUTc+L2a3v6sAVQSgCuz3PZ0a?=
+ =?us-ascii?Q?lVqYKTN78g9lnwvTs/uJEvGGARE+CvoqkHsjES9dJElHPXnE4zuXHubALaF9?=
+ =?us-ascii?Q?SoF+a5JGLLhc3nX6bSWY8OHh6IDk+6YtprkR+ebrihXIOcHqV553XywTWU2C?=
+ =?us-ascii?Q?SxEYcKwxJxQre2iV1K000hIwT1m3K7a3+zi5RbqBmAI9ppmW2VQlLzi3qER8?=
+ =?us-ascii?Q?LvwBtlVIpyFVuSuGOaUtiISyzPoqfGKdVQALSBnVeH6RVXyoai8NDVLLtRW/?=
+ =?us-ascii?Q?rLIzTDzMDHCSkFZK/h1gj5CSWiO+DZRVBF3VIrXnkRNF8jRnwz1DBkXH0uwq?=
+ =?us-ascii?Q?b+qHaGNY1XI3MMFtXnNdHi37MYVzoFOY8ZcPMNyOIedDSsYbuytxLyieIkoa?=
+ =?us-ascii?Q?ERbm/uWc6w=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fc10f20e-6012-48a4-6c62-08df123d2eb9
+X-MS-Exchange-CrossTenant-Network-Message-Id: ff05075a-b63a-48a5-92c7-08df123d3274
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 08:50:09.8726
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 08:50:16.2198
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jug3Iufu1rr7j58J2lw2O/KLTwWDNRMRwdOfvqOAbJjWvsg1dTHOPnCIBxkvFGumE8BJsHdWsw6vUGmB3M/GyQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: XH3liauboDrwUAxtyfRKN6jqmgCGWaFFAKUGdoTmtIEx7TMfOl1U2Yvu5ECoqhayyIeqlvoRqkR5b29fwHLCYQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6464
 
-The fair scheduling class can defer a scheduling boundary through lazy
-rescheduling, but sched_ext currently exposes only immediate preemption to BPF
-schedulers.
+The fair scheduling class can request lazy rescheduling, deferring an
+in-kernel scheduling boundary until returning to user space or until the
+next scheduler tick. sched_ext only exposes immediate preemption,
+preventing BPF schedulers from making the same trade-off.
 
-This series adds lazy variants of the enqueue and kick preemption flags. They
-expire the running sched_ext task's slice while allowing the scheduling boundary
-to be deferred until a return to user space or the next scheduler tick.
+Add SCX_ENQ_PREEMPT_LAZY and SCX_KICK_PREEMPT_LAZY. Both expire the
+current sched_ext task slice but request lazy rescheduling. Immediate
+preemption, WAIT and plain kicks take precedence when requests are
+combined, while a lazy enqueue to a non-local DSQ retains the
+head-insertion semantics of SCX_ENQ_PREEMPT.
 
-SCX_OPS_LAZY_SLICE_EXPIRY selects lazy slice expiry by default. Schedulers can
-override that default in either direction for individual tasks through
-scx_bpf_task_set_slice_expiry(). The helper preserves sub-scheduler task
-ownership boundaries. Bypass continues to force immediate rescheduling.
+Add SCX_OPS_LAZY_SLICE_EXPIRY as the default expiry policy for newly
+enabled tasks and initialize it before ops.enable(). Add
+scx_bpf_task_set_slice_expiry() so the owning scheduler can override the
+policy per task from any callback while preserving sub-scheduler task
+ownership boundaries. Bypass continues to force immediate expiry.
 
-Lazy enqueue and kick requests also restore the scheduler tick when targeting an
-infinite-slice task on a NO_HZ_FULL CPU, ensuring forward progress even when the
-target's tick has stopped.
+Restore the scheduler tick dependency before lazily rescheduling a task
+whose infinite slice allowed a NO_HZ_FULL CPU to stop its tick.
+Accumulate kick requests independently and resolve precedence while
+holding the target rq lock. Reject unknown kick flags and invalid
+SCX_KICK_IDLE combinations.
 
-The kselftests cover immediate and lazy preemption, coalescing and precedence
-between kick modes, enqueue preemption, per-task slice-expiry overrides, invalid
-flags and lazy preemption of infinite-slice tasks on NO_HZ_FULL CPUs.
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+---
+ include/linux/sched/ext.h                     |   8 +
+ kernel/sched/ext/ext.c                        | 146 +++++++++++++++---
+ kernel/sched/ext/internal.h                   |  39 ++++-
+ kernel/sched/ext/sub.c                        |  15 +-
+ tools/sched_ext/include/scx/compat.bpf.h      |  13 ++
+ .../sched_ext/include/scx/enum_defs.autogen.h |   3 +
+ .../sched_ext/include/scx/enums.autogen.bpf.h |   6 +
+ tools/sched_ext/include/scx/enums.autogen.h   |   2 +
+ .../sched_ext/include/scx/enums_abi.autogen.h |   5 +-
+ 9 files changed, 200 insertions(+), 37 deletions(-)
 
-Tested in separate virtme-ng runs, covering preempt=lazy and nohz_full:
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 8de69843c2150..685f1846aa386 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -249,6 +249,14 @@ struct sched_ext_entity {
+ 	 */
+ 	u64			dsq_vtime;
+ 
++	/*
++	 * If set, depletion of this task's slice at the scheduler tick requests
++	 * lazy instead of immediate rescheduling. Initialized from
++	 * %SCX_OPS_LAZY_SLICE_EXPIRY immediately before ops.enable() and may be
++	 * modified afterwards with scx_bpf_task_set_slice_expiry().
++	 */
++	bool			slice_expires_lazy;
++
+ 	/*
+ 	 * Out-of-band slice request from scx_bpf_task_set_slice() when the
+ 	 * caller does not hold the rq lock, applied under the rq lock at the
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 4080902a528cd..09fed46cae0df 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -383,11 +383,11 @@ static bool rq_is_open(struct rq *rq, u64 enq_flags)
+ 		return true;
+ 
+ 	/*
+-	 * %SCX_ENQ_PREEMPT clears $curr's slice if on SCX and kicks dispatch,
+-	 * so allow it to avoid spuriously triggering reenq on a combined
++	 * The preemption flags clear $curr's slice if on SCX and kick dispatch,
++	 * so allow them to avoid spuriously triggering reenq on a combined
+ 	 * PREEMPT|IMMED insertion.
+ 	 */
+-	if (enq_flags & SCX_ENQ_PREEMPT) {
++	if (enq_flags & (SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY)) {
+ 		struct task_struct *curr = rq->curr;
+ 
+ 		/*
+@@ -1515,6 +1515,23 @@ static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
+ 	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
+ }
+ 
++/*
++ * A task with an infinite slice may be running with its tick stopped. Lazy
++ * rescheduling doesn't send an IPI, so restore the tick dependency first to
++ * guarantee that the lazy request is promoted by a real scheduler tick.
++ */
++static void scx_resched_curr_lazy(struct rq *rq)
++{
++	if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK) {
++		rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
++		update_rq_clock(rq);
++		update_other_load_avgs(rq);
++		sched_update_tick_dependency(rq);
++	}
++
++	resched_curr_lazy(rq);
++}
++
+ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+ 			      struct scx_dispatch_q *dsq, struct task_struct *p,
+ 			      u64 enq_flags)
+@@ -1577,12 +1594,16 @@ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+ 	if (rq->scx.flags & SCX_RQ_IN_DISPATCH)
+ 		return;
+ 
+-	if ((enq_flags & SCX_ENQ_PREEMPT) && p != rq->curr &&
++	if ((enq_flags & (SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY)) && p != rq->curr &&
+ 	    rq->curr->sched_class == &ext_sched_class) {
+-		if (likely(scx_set_task_slice(rq->curr, 0)))
+-			resched_curr(rq);
+-		else
++		if (likely(scx_set_task_slice(rq->curr, 0))) {
++			if (enq_flags & SCX_ENQ_PREEMPT)
++				resched_curr(rq);
++			else
++				scx_resched_curr_lazy(rq);
++		} else {
+ 			__scx_add_event(sch, SCX_EV_SLICE_DENIED, 1);
++		}
+ 	}
+ }
+ 
+@@ -1672,7 +1693,7 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 			scx_error(sch, "DSQ ID 0x%016llx already had PRIQ-enqueued tasks",
+ 				  dsq->id);
+ 
+-		if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT)) {
++		if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY)) {
+ 			/* new task inserted at head - use fastpath */
+ 			if (dsq_insert_head(dsq, p) && !(dsq->id & SCX_DSQ_FLAG_BUILTIN))
+ 				rcu_assign_pointer(dsq->first_task, p);
+@@ -2386,7 +2407,7 @@ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct
+ 
+ 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
+ 
+-	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
++	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY))
+ 		dsq_insert_head(dst_dsq, p);
+ 	else
+ 		list_add_tail(&p->scx.dsq_list.node, &dst_dsq->list);
+@@ -3804,8 +3825,14 @@ static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
+ 	else if (SCX_HAS_OP(sch, tick))
+ 		SCX_CALL_OP_TASK(sch, tick, rq, curr);
+ 
+-	if (!curr->scx.slice)
+-		resched_curr(rq);
++	if (!curr->scx.slice) {
++		/* the slice can't be trusted while bypassing */
++		if (READ_ONCE(curr->scx.slice_expires_lazy) &&
++		    !scx_bypassing(sch, cpu_of(rq)))
++			resched_curr_lazy(rq);
++		else
++			resched_curr(rq);
++	}
+ }
+ 
+ #ifdef CONFIG_EXT_GROUP_SCHED
+@@ -3921,6 +3948,7 @@ static void __scx_enable_task(struct scx_sched *sch, struct task_struct *p)
+ 		weight = sched_prio_to_weight[p->static_prio - MAX_RT_PRIO];
+ 
+ 	p->scx.weight = sched_weight_to_cgroup(weight);
++	p->scx.slice_expires_lazy = sch->ops.flags & SCX_OPS_LAZY_SLICE_EXPIRY;
+ 
+ 	if (SCX_HAS_OP(sch, enable))
+ 		SCX_CALL_OP_TASK(sch, enable, rq, p);
+@@ -5371,6 +5399,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
+ 		free_cpumask_var(pcpu->cpus_to_kick);
+ 		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
+ 		free_cpumask_var(pcpu->cpus_to_preempt);
++		free_cpumask_var(pcpu->cpus_to_preempt_lazy);
+ 		free_cpumask_var(pcpu->cpus_to_wait);
+ 
+ 		exit_dsq(scx_bypass_dsq(sch, cpu));
+@@ -6883,6 +6912,9 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+ 	if (!cpumask_empty(pcpu->cpus_to_preempt))
+ 		scx_dump_line(&ns, "  cpus_to_preempt: %*pb",
+ 			      cpumask_pr_args(pcpu->cpus_to_preempt));
++	if (!cpumask_empty(pcpu->cpus_to_preempt_lazy))
++		scx_dump_line(&ns, "  preempt_lazy   : %*pb",
++			      cpumask_pr_args(pcpu->cpus_to_preempt_lazy));
+ 	if (!cpumask_empty(pcpu->cpus_to_wait))
+ 		scx_dump_line(&ns, "  cpus_to_wait   : %*pb",
+ 			      cpumask_pr_args(pcpu->cpus_to_wait));
+@@ -7200,6 +7232,7 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		if (!zalloc_cpumask_var_node(&pcpu->cpus_to_kick, GFP_KERNEL, node) ||
+ 		    !zalloc_cpumask_var_node(&pcpu->cpus_to_kick_if_idle, GFP_KERNEL, node) ||
+ 		    !zalloc_cpumask_var_node(&pcpu->cpus_to_preempt, GFP_KERNEL, node) ||
++		    !zalloc_cpumask_var_node(&pcpu->cpus_to_preempt_lazy, GFP_KERNEL, node) ||
+ 		    !zalloc_cpumask_var_node(&pcpu->cpus_to_wait, GFP_KERNEL, node)) {
+ 			ret = -ENOMEM;
+ 			goto err_free_pcpu;
+@@ -7335,6 +7368,7 @@ struct scx_sched *scx_alloc_and_add_sched(struct scx_enable_cmd *cmd,
+ 		free_cpumask_var(pcpu->cpus_to_kick);
+ 		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
+ 		free_cpumask_var(pcpu->cpus_to_preempt);
++		free_cpumask_var(pcpu->cpus_to_preempt_lazy);
+ 		free_cpumask_var(pcpu->cpus_to_wait);
+ 	}
+ 	for_each_possible_cpu(cpu) {
+@@ -7953,7 +7987,7 @@ static bool bpf_scx_is_valid_access(int off, int size,
+ 	return btf_ctx_access(off, size, type, prog, info);
+ }
+ 
+-/* common to both forms: only scx.disallow is writable */
++/* common to both forms: only the fields below are writable */
+ static int bpf_scx_btf_struct_access_common(const struct bpf_reg_state *reg,
+ 					    int off, int size)
+ {
+@@ -7964,7 +7998,6 @@ static int bpf_scx_btf_struct_access_common(const struct bpf_reg_state *reg,
+ 	    off >= offsetof(struct task_struct, scx.disallow) &&
+ 	    off + size <= offsetofend(struct task_struct, scx.disallow))
+ 		return SCALAR_VALUE;
+-
+ 	return -EACCES;
+ }
+ 
+@@ -8462,10 +8495,20 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 	const struct sched_class *cur_class;
+ 	bool should_wait = false;
+ 	bool kickable;
++	bool preempt, preempt_lazy, wait, immediate;
+ 	unsigned long flags;
+ 
+ 	raw_spin_rq_lock_irqsave(rq, flags);
+ 	cur_class = rq->curr->sched_class;
++	preempt = cpumask_test_cpu(cpu, pcpu->cpus_to_preempt);
++	preempt_lazy = cpumask_test_cpu(cpu, pcpu->cpus_to_preempt_lazy);
++	wait = cpumask_test_cpu(cpu, pcpu->cpus_to_wait);
++	/*
++	 * Immediate preemption, waiting and a plain kick take precedence over
++	 * lazy preemption. The lazy request still clears the slice, so all
++	 * accumulated requests are served.
++	 */
++	immediate = preempt || wait || cpumask_test_cpu(cpu, pcpu->cpus_to_kick);
+ 
+ 	/*
+ 	 * During CPU hotplug, a CPU may depend on kicking itself to make
+@@ -8479,19 +8522,23 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 		   !sched_class_above(cur_class, &ext_sched_class);
+ 
+ 	if (kickable && !scx_missing_caps(pcpu->sch, cpu, SCX_CAP_BASE)) {
+-		if (cpumask_test_cpu(cpu, pcpu->cpus_to_preempt)) {
++		if (preempt || preempt_lazy) {
+ 			if (cur_class == &ext_sched_class) {
+ 				u64 caps = scx_caps_for_preempt(pcpu->sch, rq, 0);
+ 
+-				if (unlikely(scx_missing_caps(pcpu->sch, cpu, caps)))
++				if (unlikely(scx_missing_caps(pcpu->sch, cpu, caps))) {
+ 					__scx_add_event(pcpu->sch, SCX_EV_SUB_PREEMPT_DENIED, 1);
+-				else if (unlikely(!scx_set_task_slice(rq->curr, 0)))
++					/* degrade to a plain, immediate kick */
++					immediate = true;
++				} else if (unlikely(!scx_set_task_slice(rq->curr, 0))) {
+ 					__scx_add_event(pcpu->sch, SCX_EV_SLICE_DENIED, 1);
++				}
+ 			}
+ 			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
++			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt_lazy);
+ 		}
+ 
+-		if (cpumask_test_cpu(cpu, pcpu->cpus_to_wait)) {
++		if (wait) {
+ 			if (cur_class == &ext_sched_class) {
+ 				cpumask_set_cpu(cpu, this_scx->cpus_to_sync);
+ 				ksyncs[cpu] = rq->scx.kick_sync;
+@@ -8500,12 +8547,16 @@ static bool kick_one_cpu(s32 cpu, struct scx_sched_pcpu *pcpu, struct rq *this_r
+ 			cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 		}
+ 
+-		resched_curr(rq);
++		if (immediate)
++			resched_curr(rq);
++		else
++			scx_resched_curr_lazy(rq);
+ 	} else {
+ 		/* a kickable cpu was skipped solely for the missing caps */
+ 		if (kickable)
+ 			__scx_add_event(pcpu->sch, SCX_EV_SUB_KICK_DENIED, 1);
+ 		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
++		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt_lazy);
+ 		cpumask_clear_cpu(cpu, pcpu->cpus_to_wait);
+ 	}
+ 
+@@ -8566,6 +8617,14 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ 			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
+ 		}
+ 
++		/*
++		 * kick_one_cpu() clears the lazy bit of every cpu it visited
++		 * above; visit the remaining requests which contain lazy
++		 * preemption, see scx_kick_cpu().
++		 */
++		for_each_cpu(cpu, pcpu->cpus_to_preempt_lazy)
++			kick_one_cpu(cpu, pcpu, this_rq, ksyncs);
++
+ 		for_each_cpu(cpu, pcpu->cpus_to_kick_if_idle) {
+ 			kick_one_cpu_if_idle(cpu, pcpu, this_rq);
+ 			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
+@@ -9531,6 +9590,31 @@ __bpf_kfunc bool scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime,
+ 	return true;
+ }
+ 
++/**
++ * scx_bpf_task_set_slice_expiry - Set task's slice expiry policy
++ * @p: task of interest
++ * @lazy: whether slice expiry should request lazy rescheduling
++ * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
++ *
++ * Choose whether depletion of @p's slice at the scheduler tick requests lazy
++ * or immediate rescheduling. @p must be on the calling scheduler.
++ *
++ * Return %true on success, %false if @p is not on the calling scheduler.
++ */
++__bpf_kfunc bool scx_bpf_task_set_slice_expiry(struct task_struct *p, bool lazy,
++					       const struct bpf_prog_aux *aux)
++{
++	struct scx_sched *sch;
++
++	guard(rcu)();
++	sch = scx_prog_sched(aux);
++	if (unlikely(!sch || !scx_task_on_sched(sch, p)))
++		return false;
++
++	WRITE_ONCE(p->scx.slice_expires_lazy, lazy);
++	return true;
++}
++
+ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ {
+ 	struct scx_sched_pcpu *pcpu;
+@@ -9539,6 +9623,16 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 
+ 	if (!scx_kf_allowed_ctx(sch))
+ 		return;
++	if (unlikely(flags & ~(SCX_KICK_IDLE | SCX_KICK_PREEMPT | SCX_KICK_WAIT |
++			       SCX_KICK_PREEMPT_LAZY))) {
++		scx_error(sch, "invalid kick flags 0x%llx", flags);
++		return;
++	}
++	if (unlikely((flags & SCX_KICK_IDLE) &&
++		     (flags & (SCX_KICK_PREEMPT | SCX_KICK_PREEMPT_LAZY | SCX_KICK_WAIT)))) {
++		scx_error(sch, "PREEMPT/WAIT cannot be used with SCX_KICK_IDLE");
++		return;
++	}
+ 
+ 	local_irq_save(irq_flags);
+ 
+@@ -9564,9 +9658,6 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 	if (flags & SCX_KICK_IDLE) {
+ 		struct rq *target_rq = cpu_rq(cpu);
+ 
+-		if (unlikely(flags & (SCX_KICK_PREEMPT | SCX_KICK_WAIT)))
+-			scx_error(sch, "PREEMPT/WAIT cannot be used with SCX_KICK_IDLE");
+-
+ 		if (raw_spin_rq_trylock(target_rq)) {
+ 			if (can_skip_idle_kick(target_rq)) {
+ 				scx_rq_lock_drop(target_rq);
+@@ -9578,12 +9669,15 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu, u64 flags)
+ 		}
+ 		cpumask_set_cpu(cpu, pcpu->cpus_to_kick_if_idle);
+ 	} else {
+-		cpumask_set_cpu(cpu, pcpu->cpus_to_kick);
+-
++		/* Accumulate requests and resolve their precedence at delivery. */
+ 		if (flags & SCX_KICK_PREEMPT)
+ 			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt);
++		if (flags & SCX_KICK_PREEMPT_LAZY)
++			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt_lazy);
+ 		if (flags & SCX_KICK_WAIT)
+ 			cpumask_set_cpu(cpu, pcpu->cpus_to_wait);
++		if (!(flags & SCX_KICK_PREEMPT_LAZY))
++			cpumask_set_cpu(cpu, pcpu->cpus_to_kick);
+ 	}
+ 
+ 	if (list_empty(&pcpu->to_kick_node))
+@@ -9623,8 +9717,9 @@ __bpf_kfunc void scx_bpf_kick_cpu(s32 cpu, u64 flags, const struct bpf_prog_aux
+  * cid-addressed equivalent of scx_bpf_kick_cpu(). An invalid @cid aborts the
+  * scheduler via scx_cid_to_cpu(). Caps are enforced on the delivery path: a
+  * kick is dropped if the caller lacks baseline access on @cid, and a
+- * %SCX_KICK_PREEMPT degrades to a plain reschedule if the caller lacks
+- * %SCX_CAP_PREEMPT for a task outside its subtree.
++ * %SCX_KICK_PREEMPT or %SCX_KICK_PREEMPT_LAZY request degrades to a plain
++ * reschedule if the caller lacks %SCX_CAP_PREEMPT for a task outside its
++ * subtree.
+  */
+ __bpf_kfunc void scx_bpf_kick_cid(s32 cid, u64 flags, const struct bpf_prog_aux *aux)
+ {
+@@ -10691,6 +10786,7 @@ __bpf_kfunc_end_defs();
+ BTF_KFUNCS_START(scx_kfunc_ids_any)
+ BTF_ID_FLAGS(func, scx_bpf_task_set_slice, KF_IMPLICIT_ARGS | KF_RCU);
+ BTF_ID_FLAGS(func, scx_bpf_task_set_dsq_vtime, KF_IMPLICIT_ARGS | KF_RCU);
++BTF_ID_FLAGS(func, scx_bpf_task_set_slice_expiry, KF_IMPLICIT_ARGS | KF_RCU);
+ BTF_ID_FLAGS(func, scx_bpf_kick_cpu, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_kick_cid, KF_IMPLICIT_ARGS)
+ BTF_ID_FLAGS(func, scx_bpf_dsq_nr_queued, KF_IMPLICIT_ARGS)
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index e1eb3a0d456cb..d73b10d692d21 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -215,6 +215,19 @@ enum scx_ops_flags {
+ 	 */
+ 	SCX_OPS_TID_TO_TASK		= 1LLU << 8,
+ 
++	/*
++	 * If set, tasks default to requesting lazy rescheduling when their slice
++	 * runs out at the tick, the way fair.c expires a slice from update_curr().
++	 * The default is copied to p->scx.slice_expires_lazy immediately before
++	 * ops.enable(), after which scx_bpf_task_set_slice_expiry() may override
++	 * it per task.
++	 * A task in user space still reschedules on the way back from the tick; a
++	 * task in the kernel runs on to its next return to user space or to the
++	 * next tick, which promotes the request. No effect on kernels without
++	 * lazy preemption. Rescheduling while disabling stays immediate.
++	 */
++	SCX_OPS_LAZY_SLICE_EXPIRY	= 1LLU << 9,
++
+ 	SCX_OPS_ALL_FLAGS		= SCX_OPS_KEEP_BUILTIN_IDLE |
+ 					  SCX_OPS_ENQ_LAST |
+ 					  SCX_OPS_ENQ_EXITING |
+@@ -223,7 +236,8 @@ enum scx_ops_flags {
+ 					  SCX_OPS_SWITCH_PARTIAL |
+ 					  SCX_OPS_BUILTIN_IDLE_PER_NODE |
+ 					  SCX_OPS_ALWAYS_ENQ_IMMED |
+-					  SCX_OPS_TID_TO_TASK,
++					  SCX_OPS_TID_TO_TASK |
++					  SCX_OPS_LAZY_SLICE_EXPIRY,
+ 
+ 	/* high 8 bits are internal, don't include in SCX_OPS_ALL_FLAGS */
+ 	__SCX_OPS_INTERNAL_MASK		= 0xffLLU << 56,
+@@ -1327,6 +1341,7 @@ struct scx_sched_pcpu {
+ 	cpumask_var_t		cpus_to_kick;
+ 	cpumask_var_t		cpus_to_kick_if_idle;
+ 	cpumask_var_t		cpus_to_preempt;
++	cpumask_var_t		cpus_to_preempt_lazy;
+ 	cpumask_var_t		cpus_to_wait;
+ 	struct list_head	to_kick_node;
+ 
+@@ -1407,15 +1422,16 @@ struct scx_sched_pnode {
+  * the allocation pattern.
+  *
+  * ENQ_IMMED  insert an IMMED task onto the cid's local DSQ
+- *            - kick the cid's cpu (except SCX_KICK_PREEMPT)
++ *            - kick the cid's cpu (except SCX_KICK_PREEMPT and
++ *              SCX_KICK_PREEMPT_LAZY)
+  *
+  * ENQ        insert any task onto the cid's local DSQ (implies ENQ_IMMED)
+  *
+  * PREEMPT    preempt any task running on the cid regardless of the owning
+  *            sched (implies ENQ). Preempting a task in the sched's own subtree
+  *            doesn't require any cap.
+- *            - SCX_ENQ_PREEMPT inserts
+- *            - SCX_KICK_PREEMPT kicks
++ *            - SCX_ENQ_PREEMPT and SCX_ENQ_PREEMPT_LAZY inserts
++ *            - SCX_KICK_PREEMPT and SCX_KICK_PREEMPT_LAZY kicks
+  *
+  * PERF       control the cid's cpu power/perf management state, currently the
+  *            cpufreq target set through scx_bpf_cidperf_set(). Hardware
+@@ -1685,6 +1701,15 @@ enum scx_enq_flags {
+ 	 */
+ 	SCX_ENQ_PREEMPT		= 1LLU << 32,
+ 
++	/*
++	 * Like %SCX_ENQ_PREEMPT, but request lazy rescheduling. The current
++	 * task's slice is still cleared immediately so that the next scheduling
++	 * boundary observes the new ordering. %SCX_ENQ_PREEMPT takes precedence
++	 * if both are specified. Implies %SCX_ENQ_HEAD, which is all it means on
++	 * a non-local DSQ, as with %SCX_ENQ_PREEMPT.
++	 */
++	SCX_ENQ_PREEMPT_LAZY	= 1LLU << 35,
++
+ 	/*
+ 	 * Only allowed on local DSQs. Guarantees that the task either gets
+ 	 * on the CPU immediately and stays on it, or gets reenqueued back
+@@ -1811,6 +1836,12 @@ enum scx_kick_flags {
+ 	 * is not on SCX.
+ 	 */
+ 	SCX_KICK_WAIT		= 1LLU << 2,
++
++	/*
++	 * Like %SCX_KICK_PREEMPT, but request lazy rescheduling. If combined
++	 * with %SCX_KICK_PREEMPT or %SCX_KICK_WAIT, rescheduling is immediate.
++	 */
++	SCX_KICK_PREEMPT_LAZY	= 1LLU << 3,
+ };
+ 
+ enum scx_tg_flags {
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 380a5653dc529..a88b87614b55e 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -686,9 +686,10 @@ void scx_rescue_init(struct rq *rq)
+  * rescue is enabled, or @rq's reject DSQ after recording the reenq reason on
+  * @p.
+  *
+- * %SCX_ENQ_IMMED, %SCX_ENQ_PREEMPT and %SCX_ENQ_HEAD are cleared when diverting
+- * to rescue or reject. %SCX_ENQ_PREEMPT is also cleared on a fallback
+- * migration-disabled admission.
++ * %SCX_ENQ_IMMED, %SCX_ENQ_PREEMPT, %SCX_ENQ_PREEMPT_LAZY and %SCX_ENQ_HEAD
++ * are cleared when diverting to rescue or reject. %SCX_ENQ_PREEMPT and
++ * %SCX_ENQ_PREEMPT_LAZY are also cleared on a fallback migration-disabled
++ * admission.
+  *
+  * Bypass doesn't need special-casing as a bypassing sched's tasks are enqueued
+  * to and run by its nearest non-bypassing ancestor. If root is bypassing, it
+@@ -709,7 +710,7 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
+ 	 * On a remote activation the scheduling sched (@asch) differs from
+ 	 * @p's owner (@sch). Check caps against the scheduling sched.
+ 	 */
+-	if (*enq_flags & SCX_ENQ_PREEMPT)
++	if (*enq_flags & (SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY))
+ 		needed |= scx_caps_for_preempt(asch, rq, *enq_flags);
+ 	missing = scx_missing_caps(asch, cpu_of(rq), needed);
+ 
+@@ -726,7 +727,7 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
+ 	if (unlikely(!scx_rq_online(rq) || is_migration_disabled(p) ||
+ 		     p->migration_pending)) {
+ 		__scx_add_event(sch, SCX_EV_SUB_FORCED_ADMIT, 1);
+-		*enq_flags &= ~SCX_ENQ_PREEMPT;
++		*enq_flags &= ~(SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY);
+ 		return &rq->scx.local_dsq;
+ 	}
+ 
+@@ -735,8 +736,8 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
+ 	 * or HEAD - a diversion has no priority and IMMED is not allowed on
+ 	 * non-local DSQs. Strip the enq and task flags along with the slice.
+ 	 */
+-	*enq_flags &= ~(SCX_ENQ_IMMED | SCX_ENQ_PREEMPT | SCX_ENQ_HEAD |
+-			SCX_ENQ_APPLY_SLICE | SCX_ENQ_SLICE_DFL);
++	*enq_flags &= ~(SCX_ENQ_IMMED | SCX_ENQ_PREEMPT | SCX_ENQ_PREEMPT_LAZY |
++			SCX_ENQ_HEAD | SCX_ENQ_APPLY_SLICE | SCX_ENQ_SLICE_DFL);
+ 	p->scx.flags &= ~SCX_TASK_IMMED;
+ 
+ 	/* the enqueuer opted for rescue instead of rejection and reenqueue */
+diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
+index 6944221f96cc0..4a9bf1a4bb4a8 100644
+--- a/tools/sched_ext/include/scx/compat.bpf.h
++++ b/tools/sched_ext/include/scx/compat.bpf.h
+@@ -403,6 +403,19 @@ static inline void scx_bpf_task_set_dsq_vtime(struct task_struct *p, u64 vtime)
+ 		p->scx.dsq_vtime = vtime;
+ }
+ 
++/*
++ * v7.4: scx_bpf_task_set_slice_expiry() added to enforce sub-scheduler task
++ * ownership. Preserve until v7.7.
++ */
++bool scx_bpf_task_set_slice_expiry___new(struct task_struct *p, bool lazy) __ksym __weak;
++
++static inline bool scx_bpf_task_set_slice_expiry(struct task_struct *p, bool lazy)
++{
++	if (bpf_ksym_exists(scx_bpf_task_set_slice_expiry___new))
++		return scx_bpf_task_set_slice_expiry___new(p, lazy);
++	return false;
++}
++
+ /*
+  * v7.1: New scx_bpf_dsq_reenq() that allows re-enqueues on more DSQs. This
+  * will eventually deprecate scx_bpf_reenqueue_local().
+diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
+index 63b6b14b19bd4..f1554c22071ff 100644
+--- a/tools/sched_ext/include/scx/enum_defs.autogen.h
++++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
+@@ -85,6 +85,7 @@
+ #define HAVE_SCX_ENQ_HEAD
+ #define HAVE_SCX_ENQ_CPU_SELECTED
+ #define HAVE_SCX_ENQ_PREEMPT
++#define HAVE_SCX_ENQ_PREEMPT_LAZY
+ #define HAVE_SCX_ENQ_IMMED
+ #define HAVE_SCX_ENQ_RESCUE
+ #define HAVE_SCX_ENQ_REENQ
+@@ -148,6 +149,7 @@
+ #define HAVE_SCX_KF_ALLOW_SELECT_CPU
+ #define HAVE_SCX_KICK_IDLE
+ #define HAVE_SCX_KICK_PREEMPT
++#define HAVE_SCX_KICK_PREEMPT_LAZY
+ #define HAVE_SCX_KICK_WAIT
+ #define HAVE_SCX_OPI_BEGIN
+ #define HAVE_SCX_OPI_NORMAL_BEGIN
+@@ -164,6 +166,7 @@
+ #define HAVE_SCX_OPS_BUILTIN_IDLE_PER_NODE
+ #define HAVE_SCX_OPS_ALWAYS_ENQ_IMMED
+ #define HAVE_SCX_OPS_TID_TO_TASK
++#define HAVE_SCX_OPS_LAZY_SLICE_EXPIRY
+ #define HAVE_SCX_OPS_ALL_FLAGS
+ #define HAVE___SCX_OPS_INTERNAL_MASK
+ #define HAVE_SCX_OPS_HAS_CPU_PREEMPT
+diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+index 7268131010de3..2cec24beb2d80 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
++++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
+@@ -109,6 +109,9 @@ const volatile u64 __SCX_KICK_IDLE __weak;
+ const volatile u64 __SCX_KICK_PREEMPT __weak;
+ #define SCX_KICK_PREEMPT __SCX_KICK_PREEMPT
+ 
++const volatile u64 __SCX_KICK_PREEMPT_LAZY __weak;
++#define SCX_KICK_PREEMPT_LAZY __SCX_KICK_PREEMPT_LAZY
++
+ const volatile u64 __SCX_KICK_WAIT __weak;
+ #define SCX_KICK_WAIT __SCX_KICK_WAIT
+ 
+@@ -121,6 +124,9 @@ const volatile u64 __SCX_ENQ_HEAD __weak;
+ const volatile u64 __SCX_ENQ_PREEMPT __weak;
+ #define SCX_ENQ_PREEMPT __SCX_ENQ_PREEMPT
+ 
++const volatile u64 __SCX_ENQ_PREEMPT_LAZY __weak;
++#define SCX_ENQ_PREEMPT_LAZY __SCX_ENQ_PREEMPT_LAZY
++
+ const volatile u64 __SCX_ENQ_IMMED __weak;
+ #define SCX_ENQ_IMMED __SCX_ENQ_IMMED
+ 
+diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
+index e616326545172..dd762ee0ddb36 100644
+--- a/tools/sched_ext/include/scx/enums.autogen.h
++++ b/tools/sched_ext/include/scx/enums.autogen.h
+@@ -40,10 +40,12 @@
+ 	SCX_ENUM_SET(skel, scx_ent_dsq_flags, SCX_TASK_DSQ_ON_PRIQ); \
+ 	SCX_ENUM_SET(skel, scx_kick_flags, SCX_KICK_IDLE); \
+ 	SCX_ENUM_SET(skel, scx_kick_flags, SCX_KICK_PREEMPT); \
++	SCX_ENUM_SET(skel, scx_kick_flags, SCX_KICK_PREEMPT_LAZY); \
+ 	SCX_ENUM_SET(skel, scx_kick_flags, SCX_KICK_WAIT); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_WAKEUP); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_HEAD); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_PREEMPT); \
++	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_PREEMPT_LAZY); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_IMMED); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_RESCUE); \
+ 	SCX_ENUM_SET(skel, scx_enq_flags, SCX_ENQ_REENQ); \
+diff --git a/tools/sched_ext/include/scx/enums_abi.autogen.h b/tools/sched_ext/include/scx/enums_abi.autogen.h
+index d53899764f5ac..672c02a497d14 100644
+--- a/tools/sched_ext/include/scx/enums_abi.autogen.h
++++ b/tools/sched_ext/include/scx/enums_abi.autogen.h
+@@ -97,6 +97,7 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
+ 	{ "scx_enq_flags", "SCX_ENQ_HEAD", 0x10000LLU },
+ 	{ "scx_enq_flags", "SCX_ENQ_CPU_SELECTED", 0x100000LLU },
+ 	{ "scx_enq_flags", "SCX_ENQ_PREEMPT", 0x100000000LLU },
++	{ "scx_enq_flags", "SCX_ENQ_PREEMPT_LAZY", 0x800000000LLU },
+ 	{ "scx_enq_flags", "SCX_ENQ_IMMED", 0x200000000LLU },
+ 	{ "scx_enq_flags", "SCX_ENQ_RESCUE", 0x400000000LLU },
+ 	{ "scx_enq_flags", "SCX_ENQ_REENQ", 0x10000000000LLU },
+@@ -160,6 +161,7 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
+ 	{ "scx_kf_allow_flags", "SCX_KF_ALLOW_SELECT_CPU", 0x20LLU },
+ 	{ "scx_kick_flags", "SCX_KICK_IDLE", 0x1LLU },
+ 	{ "scx_kick_flags", "SCX_KICK_PREEMPT", 0x2LLU },
++	{ "scx_kick_flags", "SCX_KICK_PREEMPT_LAZY", 0x8LLU },
+ 	{ "scx_kick_flags", "SCX_KICK_WAIT", 0x4LLU },
+ 	{ "scx_opi", "SCX_OPI_BEGIN", 0x0LLU },
+ 	{ "scx_opi", "SCX_OPI_NORMAL_BEGIN", 0x0LLU },
+@@ -176,7 +178,8 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
+ 	{ "scx_ops_flags", "SCX_OPS_BUILTIN_IDLE_PER_NODE", 0x40LLU },
+ 	{ "scx_ops_flags", "SCX_OPS_ALWAYS_ENQ_IMMED", 0x80LLU },
+ 	{ "scx_ops_flags", "SCX_OPS_TID_TO_TASK", 0x100LLU },
+-	{ "scx_ops_flags", "SCX_OPS_ALL_FLAGS", 0x1ffLLU },
++	{ "scx_ops_flags", "SCX_OPS_LAZY_SLICE_EXPIRY", 0x200LLU },
++	{ "scx_ops_flags", "SCX_OPS_ALL_FLAGS", 0x3ffLLU },
+ 	{ "scx_ops_flags", "__SCX_OPS_INTERNAL_MASK", 0xff00000000000000LLU },
+ 	{ "scx_ops_flags", "SCX_OPS_HAS_CPU_PREEMPT", 0x100000000000000LLU },
+ 	{ "scx_ops_state", "SCX_OPSS_NONE", 0x0LLU },
+-- 
+2.55.0
 
- $ vng -a "preempt=lazy" -- tools/testing/selftests/sched_ext/runner -t kick
- $ vng -a "preempt=lazy nohz_full=8-15" -- tools/testing/selftests/sched_ext/runner -t nohz_tick
-
-  kick:
-    PASSED:  6
-    SKIPPED: 0
-    FAILED:  0
-
-  nohz_tick:
-    CPU 8 received 7 finite-slice ticks
-    PASSED:  1
-    SKIPPED: 0
-    FAILED:  0
-
-Changes in v2:
- - Make lazy slice expiry a per-task property (Tejun Heo).
- - Add scx_bpf_task_set_slice_expiry() for per-task overrides from any sched_ext
-   callback (preserving sub-scheduler task ownership).
- - Restore the scheduler tick dependency for lazy enqueue and kick preemption of
-   infinite-slice tasks on NO_HZ_FULL CPUs (Tejun Heo).
- - Accumulate immediate and lazy kick requests independently and resolve their
-   precedence in kick_one_cpu() (Tejun Heo).
- - Allow PREEMPT|PREEMPT_LAZY and WAIT|PREEMPT_LAZY, immediate preemption, WAIT
-   and plain kicks take precedence over lazy preemption (Tejun Heo).
- - Clear both preemption masks together when processing or skipping a preemption
-   request (Tejun Heo).
- - Extend the kselftests with combined and ordered kick requests, per-task
-   expiry overrides and NO_HZ_FULL coverage.
- - Link to v1: https://lore.kernel.org/r/20260911195800.974364-1-arighi@nvidia.com
-
-Andrea Righi (2):
-  sched_ext: Add lazy preemption support
-  selftests/sched_ext: Add lazy preemption tests
-
- include/linux/sched/ext.h                         |   8 +
- kernel/sched/ext/ext.c                            | 146 +++++-
- kernel/sched/ext/internal.h                       |  39 +-
- kernel/sched/ext/sub.c                            |  15 +-
- tools/sched_ext/include/scx/compat.bpf.h          |  13 +
- tools/sched_ext/include/scx/enum_defs.autogen.h   |   3 +
- tools/sched_ext/include/scx/enums.autogen.bpf.h   |   6 +
- tools/sched_ext/include/scx/enums.autogen.h       |   2 +
- tools/sched_ext/include/scx/enums_abi.autogen.h   |   5 +-
- tools/testing/selftests/sched_ext/Makefile        |   1 +
- tools/testing/selftests/sched_ext/kick.bpf.c      | 166 +++++++
- tools/testing/selftests/sched_ext/kick.c          | 526 ++++++++++++++++++++++
- tools/testing/selftests/sched_ext/nohz_tick.bpf.c |  54 ++-
- tools/testing/selftests/sched_ext/nohz_tick.c     | 189 +++++++-
- 14 files changed, 1129 insertions(+), 44 deletions(-)
