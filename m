@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE019449ED7
-	for <sched-ext@lists.linux.dev>; Mon, 14 Sep 2026 14:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8188A4779A8
+	for <sched-ext@lists.linux.dev>; Mon, 14 Sep 2026 14:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789397906; cv=none; b=URJtUCMzzjYxMK35oR+mJ8jZGm7a3egb8dRqdCwOsGYQbUYCEflPhpmX2h1W5FGN/ykIYbI74yBPPRttDY74rHV+4Nzh7aRkW2ZRNfMTYealNoVqwbaw3Q44T35Xm+yteti12WfYaPdKiQhxnUcxa+caXWDyMHvKPMy57gOKV/o=
+	t=1789397968; cv=none; b=auvnJnVppL3bDvu6WnW0LJyoHTJSx9dwrpHNsGnbW4vxdIH2zQ2TaIihdsoSsiHgKrkVPPoGNm6q2RSWzV85d43kJNTtR1rtq0yWdHKC2bVXUA+TWBAd7rVOQUlQjrIpdE+PH7WFyP0yV+rbe5NKM0IOqQMVwild3ZOWqWvlQnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789397906; c=relaxed/simple;
-	bh=coW5ThGW44Evm6qa8qCHqAjhpK21l49ITHWwDqOvTU0=;
+	s=arc-20240116; t=1789397968; c=relaxed/simple;
+	bh=5fofTbYN35pCB5eba2s6esOfF5IY7fODgz4mnlpxsDY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=btZYofKdTfr5osBG8fkF63TA86PEbNHvEFdkZAZD9iuFdtPAyLNeQi7NJMJgTwDmiiaZXMTLvqE0fcqkOZbKVtE3H041fPraJr+L1pOsWb0tPhCNgRJeO/X/VTVshRjDd3QxeBGifXZTRWCphsz0iYGP2SEvJt3V7Yr4nnx22XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hSBwBOyd; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=OOMIPMesfgWt5tciI2umxCMkd0M2YH6w/CPBOx1oDTMZ8NDvLIoYh4k3e+bm2BKukThDzbwa0CPHxaWTSjm7KLUfOmtf6dpQesEBZGkosVLlhKDAPniHtRJyPQLGuSw9XLomfvuQpI2NYE6xwB7pi+IdJ9mv3u+yOsFyDzw8thg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jxjghqI6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hSBwBOyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDAA1F000FF;
-	Mon, 14 Sep 2026 14:58:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jxjghqI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49B91F008A7;
+	Mon, 14 Sep 2026 14:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789397904;
-	bh=663MqoHMFtz7l3OHE5EPbyxYctS46CBU9+a0vmIuHxA=;
+	s=k20260515; t=1789397966;
+	bh=CG55sEWExhXJWniI0gBhZVmI2/qoDXCRK07ANhAWtPw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=hSBwBOydPjPkYR7dAr4FWyJl6ffvCY3qmdmN81GvHC6MQzfYR12YjffF1ou3pRYw1
-	 kOEYkNE1D+Lbp1XruNhfZTp5IDI/qYSNmkl0z+SdrDFdMtX0+rdSN9ohHvgeiNUStZ
-	 2RQBpUo7xo1OtJ29aW508y3zeCU1x9/Z4UVSq4/dF0+CSsG9QlCXYCeu1MrGlkVDT1
-	 WQQBuWZwuX01y/3JVNFnBDGDH9ouyqxb9wlWS0L4NjCaJ4nZQtC5LmHvYdCZRl8Jbw
-	 TDgU38QBSOzZOx/uiXEyVrLAjzPZxbsWUfJqZShiwb5Oa/GjsrstZTlYWQGnnFSGvK
-	 uIgjP/A5DBCDA==
+	b=jxjghqI6Sm0aQE/BWe+XTxaARFy77SqH519iFDplbaLoGMFA28aluOUwUT+Xmi2gB
+	 YN1RE5nNEgOUOu9LsRkXPmPInm3yBRvrhIYW74H+BeVZuZg2Z5TTNyIO98OaNktkGw
+	 HQYksszs7TgiaPAYsddxr9iHrqp/GyloE8G9fyCRljduSlVeU+CI1NWiQO2IM0WaBP
+	 l94cjw0ZDfZuBh9MtImnv6JH9JwcTeD7s/l/hdYoHyOKHCRpvjd6MAQg2okZGU2lul
+	 p7M8ZSL66W2z45GYe7FPQchtoe3FukIzskpP84NphrJc5RXkTGNaVvssIhCoa+qRHT
+	 HJzOb8Wkrv6xQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Add lazy preemption support
+Subject: Re: [PATCH 2/2] selftests/sched_ext: Add lazy preemption tests
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Andrea Righi" <arighi@nvidia.com>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260914144620.2032614-2-arighi@nvidia.com>
+In-Reply-To: <20260914144620.2032614-3-arighi@nvidia.com>
 References: <20260914144620.2032614-1-arighi@nvidia.com>
- <20260914144620.2032614-2-arighi@nvidia.com>
+ <20260914144620.2032614-3-arighi@nvidia.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 14 Sep 2026 14:58:23 +0000
-Message-Id: <20260914145824.3EDAA1F000FF@smtp.kernel.org>
+Date: Mon, 14 Sep 2026 14:59:25 +0000
+Message-Id: <20260914145925.E49B91F008A7@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,76 +46,84 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] SCX_KICK_WAIT synchronization fails permanently when combined with=
- SCX_KICK_PREEMPT_LAZY because the synchronization return flag is completel=
-y discarded.
+- [Medium] The ENQ_BOTH scenario in the `kick` selftest hangs indefinitely =
+on single-CPU systems due to starvation of the main test process.
 --
 
-commit 9fb7f95cc0c5449c9ecc76666403b400b99be566
+commit 54a68e6d559e121241b4e1714f59dcb8d2d45246
 Author: Andrea Righi <arighi@nvidia.com>
 
-sched_ext: Add lazy preemption support
+selftests/sched_ext: Add lazy preemption tests
 
-This commit introduces lazy preemption support for sched_ext by adding
-SCX_ENQ_PREEMPT_LAZY and SCX_KICK_PREEMPT_LAZY. It updates the tick logic
-and dispatch queues to handle lazy rescheduling correctly while preserving
-precedence for immediate preemption and wait requests.
+This commit adds trace-based coverage for immediate and lazy preemption.
+It exercises kick requests individually and combined, and extends the
+NO_HZ_FULL test with infinite-slice victims.
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
+> diff --git a/tools/testing/selftests/sched_ext/kick.bpf.c b/tools/testing=
+/selftests/sched_ext/kick.bpf.c
+> new file mode 100644
+> index 0000000000000..03ddc44faf5c4
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/kick.bpf.c
 [ ... ]
-> @@ -8572,6 +8624,14 @@ static void kick_cpus_irq_workfn(struct irq_work *=
-irq_work)
->  			cpumask_clear_cpu(cpu, pcpu->cpus_to_kick_if_idle);
->  		}
-> =20
-> +		/*
-> +		 * kick_one_cpu() clears the lazy bit of every cpu it visited
-> +		 * above; visit the remaining requests which contain lazy
-> +		 * preemption, see scx_kick_cpu().
-> +		 */
-> +		for_each_cpu(cpu, pcpu->cpus_to_preempt_lazy)
-> +			kick_one_cpu(cpu, pcpu, this_rq, ksyncs);
+> +void BPF_STRUCT_OPS(kick_enqueue, struct task_struct *p, u64 enq_flags)
+> +{
+> +	switch (scenario) {
+> +	case ENQ_BOTH:
+> +		if (p->pid =3D=3D victim_pid) {
+> +			scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_INF,
+> +					   enq_flags);
+[Severity: Medium]
+Will this assignment of SCX_SLICE_INF to the victim task starve the main
+test process and hang the test indefinitely on single-CPU systems?
 
-[Severity: High]
-When SCX_KICK_WAIT is combined with SCX_KICK_PREEMPT_LAZY, does this
-discard the wait synchronization requirement?
+When the main test process shares the CPU with the victim, its usleep()
+timer wakeup inadvertently consumes the KICK_STATE_QUEUED state, advancing
+the test state to KICK_STATE_DONE. When it sleeps again inside
+wait_for_state(), it is awoken but enqueued into the global DSQ without
+preemption flags (since the state is no longer QUEUED). Because the victim
+task runs with SCX_SLICE_INF, it is never preempted by the tick, starving
+the main test process forever.
 
-kick_one_cpu() returns a boolean indicating whether synchronization is
-required. In the primary loop above, the result is accumulated into
-should_wait, but here the return value is ignored. If a CPU is only
-processed in this lazy preemption loop, the caller might proceed
-prematurely, breaking the SCX_KICK_WAIT guarantees.
-
+> +		} else if (state =3D=3D KICK_STATE_QUEUED) {
+> +			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
+> +					   enq_flags | SCX_ENQ_PREEMPT |
+> +					   SCX_ENQ_PREEMPT_LAZY);
+> +		} else {
 [ ... ]
-> @@ -9591,12 +9683,15 @@ void scx_kick_cpu(struct scx_sched *sch, s32 cpu,=
- u64 flags)
->  		}
->  		cpumask_set_cpu(cpu, pcpu->cpus_to_kick_if_idle);
->  	} else {
-> -		cpumask_set_cpu(cpu, pcpu->cpus_to_kick);
-> -
-> +		/* Accumulate requests and resolve their precedence at delivery. */
->  		if (flags & SCX_KICK_PREEMPT)
->  			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt);
-> +		if (flags & SCX_KICK_PREEMPT_LAZY)
-> +			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt_lazy);
->  		if (flags & SCX_KICK_WAIT)
->  			cpumask_set_cpu(cpu, pcpu->cpus_to_wait);
-> +		if (!(flags & SCX_KICK_PREEMPT_LAZY))
-> +			cpumask_set_cpu(cpu, pcpu->cpus_to_kick);
+> diff --git a/tools/testing/selftests/sched_ext/kick.c b/tools/testing/sel=
+ftests/sched_ext/kick.c
+> new file mode 100644
+> index 0000000000000..b7af2683c2728
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/kick.c
+[ ... ]
+> +static enum scx_test_status trace_one(u32 scenario, u64 ops_flags,
+> +				      s32 slice_expiry_override,
+> +				      struct observation *obs)
+> +{
+> +	struct bpf_link *ops_link =3D NULL;
+> +	struct kick *skel =3D NULL;
+> +	struct victim challenger =3D { .pid =3D -1, .start_fd =3D -1 };
+> +	struct victim victim;
+> +	enum scx_test_status ret =3D SCX_TEST_FAIL;
+> +	int cpu =3D pick_target_cpu();
+[Severity: Medium]
+Should we migrate the main test process away from this target CPU, or skip
+the test if a second housekeeping CPU is unavailable (similar to the
+behavior in nohz_tick.c)?
 
-[Severity: High]
-Does skipping the assignment to cpus_to_kick when SCX_KICK_PREEMPT_LAZY
-is set force the CPU to be processed exclusively in the secondary loop in
-kick_cpus_irq_workfn()?
+If the main test process runs on the same CPU as the victim task, it can be
+starved by the victim task receiving an infinite time slice during the
+ENQ_BOTH scenario, causing the test to hang indefinitely.
 
-Because the CPU is omitted from cpus_to_kick here, it bypasses the primary
-loop where should_wait is accumulated. Instead, it gets handled entirely
-in the cpus_to_preempt_lazy loop where the return value of kick_one_cpu()
-is ignored, preventing the wait request from being properly respected.
+> +
+> +	if (cpu < 0) {
+> +		SCX_ERR("No available CPU");
+> +		return SCX_TEST_FAIL;
+> +	}
+> +	victim =3D spawn_victim(cpu);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914144620.2032=
-614-1-arighi@nvidia.com?part=3D1
+614-1-arighi@nvidia.com?part=3D2
