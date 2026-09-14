@@ -1,384 +1,213 @@
-Received: from gentwo.org (gentwo.org [62.72.0.81])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010013.outbound.protection.outlook.com [40.93.198.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E31E3438BE
-	for <sched-ext@lists.linux.dev>; Sun, 13 Sep 2026 20:41:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.72.0.81
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789332103; cv=none; b=R5VZoARDDsyAQ/bg7OilgobnWaLdtdJGg6P0bGmbk3Yiz2yeQLnP+lz1AW+UZzzBu3n+ZOX5fo4s+DM6FpdYjVKKNqu4SdYMVz7Js/v1h0QWjVF0pdaHsOohrDA3S+LGVV9i58ctQNNDlego4g3AkHiK2fNNyHrYQ1NDbKks5z0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789332103; c=relaxed/simple;
-	bh=6zqr1nKqSuVDxPSCWfoPP8X08Wola6HhUZBCLnNCs/0=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=JVE0VCgcXlVQI2/G1PWMKvgEhQLDwcdlmcbIpTOpxGasa9w5pUX4wKXUOJQdh7cIuw+Ns9ZwWbwylOAGkwx+5GiBBTLDPASCEcbj2f4IfaB7sEfJbvZnaAaiquk1s1p2xaNqCpICp4jmKE5pPIa+mHqj/1qjAcb+u5kuL+NzokQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org; spf=pass smtp.mailfrom=gentwo.org; dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b=FKHZDVia; arc=none smtp.client-ip=62.72.0.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentwo.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BAA3AA19B
+	for <sched-ext@lists.linux.dev>; Mon, 14 Sep 2026 06:05:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789365956; cv=fail; b=WdhqKF3lTkB2JhdCeNWHCpk32o9MPGqokLcZUwjrS2+CQnNhs/iJvcGMdc7mKxMhIczo98Ulqpwqf3kXrJEUdjIfRaLMAlM87hm94dTEGr4I0i6RgqSql57sjMH8uL/IC3pFBda2wzpno7vxNhfO+pEk0kqlBS6nZ/Pi/XRY96Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789365956; c=relaxed/simple;
+	bh=mxVkRGjFWj0J5FMfUo3DLWMMgrD9gTL13auntm44ac4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=S1OKxgARDe1yqu1oH0deBnyCPN8Piwp+epXechENwMQ9mDf0pilxQZnrK6BBWbyD+B1rsfBxF/yX9R9pEjmYcSKfNwYuYjeFbk70RmT6CDg/oWa6wbYwltvhhvilFV7V181ODL8C68+wJXQssHWSaMJTe6mXoknQ0YgeyaAS+No=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=GI1cC62P; arc=fail smtp.client-ip=40.93.198.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b="FKHZDVia"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gentwo.org;
-	s=default; t=1789330215;
-	bh=6zqr1nKqSuVDxPSCWfoPP8X08Wola6HhUZBCLnNCs/0=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
-	b=FKHZDVia5QyBpdcH+kTBO5vwXVCnBcaSjytx+2M+ZXH3aKXI/+DbJCu41aOA22hL6
-	 aQh95EQcMWsroMoRRKjV0J0rr+8uHeL7/JRnhTiv7ZlAffWeyPO1XoDo21xaT2GQ/V
-	 yzt+Bg3R/QFw4p0rLKILY8CfqecMmQgbbv8X6LU0=
-Received: by gentwo.org (Postfix, from userid 1007)
-	id D92D0402BE; Sun, 13 Sep 2026 13:10:15 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by gentwo.org (Postfix) with ESMTP id D5CE54027F;
-	Sun, 13 Sep 2026 13:10:15 -0700 (PDT)
-Date: Sun, 13 Sep 2026 13:10:15 -0700 (PDT)
-From: Shubhang <sh@gentwo.org>
-To: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
-    Juri Lelli <juri.lelli@redhat.com>, 
-    Vincent Guittot <vincent.guittot@linaro.org>, 
-    Dietmar Eggemann <dietmar.eggemann@arm.com>, 
-    Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, 
-    Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, 
-    K Prateek Nayak <kprateek.nayak@amd.com>, 
-    Shubhang Kaushik <shubhang@os.amperecomputing.com>, 
-    Christoph Lameter <cl@gentwo.org>, Zhan Xusheng <zhanxusheng@xiaomi.com>, 
-    Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-    Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
-cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH v2] sched: Restart hrtick after same-task repicks
-In-Reply-To: <20260911-sched-fair-hrtick-restart-v2-1-0d34db26ecd1@gentwo.org>
-Message-ID: <79a14c31-b4ed-4ff2-0551-8b31b86b91cb@gentwo.org>
-References: <20260911-sched-fair-hrtick-restart-v2-1-0d34db26ecd1@gentwo.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="GI1cC62P"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EloofIuJ92YqqSn5K+F/4OVPF9jLn42DAZvfCakbJmosPTQs6PjEu0XYoU97670aS70Gw4TlG6ahS6AewjsszItqoJj9RHIHwgng+qDg3UgA6eGWYTR4x5XN/CtvENLAaaYNzKW7AQk88RuDwKKlCcpSXOVv8bZ28AyRM1fky3aJ8qUtvYJYF8G4c6/wlyg4Ywjm3QGvF5+bgSjX9mJhF1anNbQS2SVlmGK6h5zuQ7itFakeJrYgutvp/SM+fzMM2IPZZzBDiEcTjbGD0wtqPkxpd24uJhPJwiJdyYohUshFz5xiTStyrd8p7LiKxZlYld9As+q917bxCQaVIZv9Cw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+e+5a7KTmNPK/uzfAVJo7T/Zjv2p13OpHPz2+wCO8BA=;
+ b=dAsZZCH6tCbjgfTby1yq2qS8kc3xdExQBlV+1qZUQg3VsLj+MzelWfgjPl/rb8+hBvxDnpjCU9t8H7OpPvHHgnOtlO00FzBLKqHJAi3mVcdW7KoeQZszWAY+M8S4LykwqoeYCRPWPQpGxMjx8l9HwiIsR91rLnWNJf6XcADl0HvZRB6K5arywc+pQNATX2enwP37pBKevaDbBTe4RmTh5jEizObtIglCHxhYfpE4o6tFKFPOG9njmYSQK7R2Lzr/nwK6dRZXiyL+9LLJBWLFgEGhuA9sv+N5J10SucUOhTl/N3TXEI6KB/mU5Dg7s00q3rMUJy8rCGDFekfjj2DQGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+e+5a7KTmNPK/uzfAVJo7T/Zjv2p13OpHPz2+wCO8BA=;
+ b=GI1cC62PVGOjYj6m5EvbmSZCMrZkXcxwWp6kPRhwzELyWA7rLR8jY82TqUoCHGEWwS1Z9jbbpKcvx5RtI2m4LsKaww6xRnPB2ZOWRKzLJs3nD8yfN2OlEaSRtJ/Roq7/EAQp0JFWIvgH8LQhR1I3Ly60rqIRhxAV6AAz0GYeoIPrSZeUsV7CrxNRPoibCJT0ZgVaYy1PJN+vIaOSXF9g5i0gmjSYLscYOLA3BxMLLTxsQuG9rrxc/pPY/WnZAb++ZkbyeaKMx4j1D9hUHc+uep0HiT5IDx7gvJlHeEEuEv7eGVrxEdBpAh65oRDhJWSfAswkdcsuJ4CM9FxN/GOzTQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
+ by PH7PR12MB5617.namprd12.prod.outlook.com (2603:10b6:510:133::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.11; Mon, 14 Sep
+ 2026 06:05:47 +0000
+Received: from DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
+ ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
+ 06:05:46 +0000
+Date: Mon, 14 Sep 2026 08:05:36 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <etsal@meta.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] sched_ext: Add lazy preemption support
+Message-ID: <aqeOsEWZpsCLqlKT@gpd4>
+References: <20260911195800.974364-1-arighi@nvidia.com>
+ <20260911195800.974364-2-arighi@nvidia.com>
+ <050b21a95813f39e131ff1509ad76120@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <050b21a95813f39e131ff1509ad76120@kernel.org>
+X-ClientProxiedBy: MI3PEPF00004EA1.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::450) To DM6PR12MB4827.namprd12.prod.outlook.com
+ (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|PH7PR12MB5617:EE_
+X-MS-Office365-Filtering-Correlation-Id: ac172475-1a75-4b6e-b061-08df12263781
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|18002099003|22082099003|3023799007|4143699003|10067099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	NzYYtdF0jYDmSSmwCh1jWmoaLyrE5f8Czqv+/iWG0W+clH5fQlHtNDo+B5B+J+Ce8D7xKKGezxE4XbL7ibC8832eWbq594MSMxTz1/kCPeSU+gZ2WTDO4xcEWjby3kC73na5KgWlANaH+S+UhWnAQM22NO3lsTQRpAQSZlLyFaSG9P1V/hqvzZtQcnJZVNGJjj04iBa1SLcn1p3nN+NFcNDlfMqyret7+D+tUqb/t8gHf7y6CB1zuIqBb5aW/NpHkmgi60SsZA1RMrPbsl+wj5Vf5uOX29Ef87Ho7eJ74/XAlBca7vvXMaEpVqjBf6S5ILJfgBgY/4C1Eo7KysXeQx3DrkRxKpklmwZrL2votYTiRzdlOoOCUqmf9LwEFgMSjv/ucGzHksqtQuX0s3nwW+bFPD2ZCd+l0q4+Y8FgYg9UBgGdyH3js6+uYOXrvARXuoAHDsTD8Xu8hJLZ9Rs3hBAFDplulNvpnTTmYKS3mNwYgJkvQR4jZH41olpZXhow9G5U571vUhn0hrcaS+LA12QZZOPtQTpXuuI3O2PP7O43PEOgkgm1QWiymQIHVk2PVBc/kCAVVwZZvc21VRWaOmMMoWEdNPuuHVAIISg1rxikoucdP+CYEtviy3Hftcq0I6WtcN33pQAbHFeECkjIWbI22x4kprIhel/Qvbr4EcY=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(3023799007)(4143699003)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?/9ZioCekrHNbYEJPBStt1GiCxTZPA4Voe/KHOrkWQuCSwUlTf+3b5KYqEmRV?=
+ =?us-ascii?Q?AHFRWIUanQGyiaDC+zJZSoW2ATX1ctql+SgXyWRIRmfUmfs7uxXtqgS6M+AI?=
+ =?us-ascii?Q?ABVHeUhQrnYQCwvuAW6mBWeLfXg+i0nm8qsVQ8xRzyIHYMH/N/SKm5WThBQv?=
+ =?us-ascii?Q?/8UsGkHmev+1uC+ArSTlIb/NUUsCXHB2uGeyNtmTFEs9d+H3RM2XNeAFD5FM?=
+ =?us-ascii?Q?N3zo6sm5G3eHEjpVRAOFei8BAQHAKtmCgukUF2uJfNGC4vAAXZ1UXdwaKIKB?=
+ =?us-ascii?Q?vyqUDvaZUYzRpWKEkr8OweniCaqta1XFzDAZShK+aXqjTcYZlIsvvxi9rFZ3?=
+ =?us-ascii?Q?inh/Q7PclJUHof5P/ZqJv1ysrNKoG1+yGh6LYBsW+0W5ziI7rOSwKWlTTt9P?=
+ =?us-ascii?Q?z2GIj8bx6CtLa0oyFthRkweNgbh24LvnjGSuV27k5HW8GEPf52RJ4iA/7+rS?=
+ =?us-ascii?Q?Y5sPs5DPnznSe34pdFG5i40G3xQ8WloRKckf/VyW13L9q5jQ8BV16s9SqkTh?=
+ =?us-ascii?Q?lfJkA+N/C7Av3nQ+y1ZhQ8kpnxnglUvRgcVD2/qDf+xqGec5xN8mkOaQsiAL?=
+ =?us-ascii?Q?/VtXbM2gQepInq5qflT1HdBjREmeXe2nBRrkJRwPfO51XTM5jKJ9qWZ3rkFR?=
+ =?us-ascii?Q?luSuT0RJMCE2p0KfWgBTjGqpiX+rseS8wDilpx2M4ZGlJt6iucoCaq8K1OhW?=
+ =?us-ascii?Q?evw05OUY7HkJPCTKzVuQ+lS6h0Uqums8C/5TsTHZ+Ij8y9IWzC2ssGbJkLin?=
+ =?us-ascii?Q?vYkLCPCbptuB5+91+9lKrsWtLLYVt8zAeqt/xnVYTfFMlY8kWWWX5lFEL7jq?=
+ =?us-ascii?Q?zw4oZPXYis551anKbOlNT5uoDsxIiXozrNKvEwa2uGJ+GDxXUy5w+hyFCzv2?=
+ =?us-ascii?Q?FBqVQFA/eJzVoJQagme2X8QAB7cYZqE/Syewoj4UYLGyi5zNg0l3z0jQV3ir?=
+ =?us-ascii?Q?eaHoUJlLKV8ZVthTjO2h3Hbe50k3DFnchZVoavg9Bu6w+QKdfGb/Wg+y3V0f?=
+ =?us-ascii?Q?zNGXsLu0r0nU5z//ZfvIiJEz7seqsq5No9WDPlo1dbCFOPcJnbrCGQseuoe8?=
+ =?us-ascii?Q?ao2mso94gYaULheh0K28Yr7lswLxPf81BmrkXCx6LPH8U290a1d/tDvStY9t?=
+ =?us-ascii?Q?nQIBw6wiz0MDWJ2Nh7espPxBWbQOIDInA+HBcSBXIjtOCz6wmj6CK1eTKM77?=
+ =?us-ascii?Q?ZmGhEkbGX8McayBJf04ClT5Bz2xeeDgP2T9MibCWzXl2rEdQVfjc4EfQnEI1?=
+ =?us-ascii?Q?rRyTnBmjnIGkhUcXLHZDah9EpW492cFtfl4teoLhHo5yeKoIcSjAkQ32yHbq?=
+ =?us-ascii?Q?Tp0IU9MEP/st61TyWAwl1Rac1q/dl7Jug04MLao7wtNbQ/pc69FFoiEws+y/?=
+ =?us-ascii?Q?P3vDM7+cNZX4jMb0dxqNtjrTT0q7mGbihDeoYDEfYOkwieMBS5V3/fgQx1tR?=
+ =?us-ascii?Q?l0bi4iQU5tW7IQxcaNgM4/a/vkkOOAhdKnY8a+qRC4Y/RRHTrGkdjtOb2foF?=
+ =?us-ascii?Q?+NGqjUI+XYRsKVUNbVYMAaX6dbpNGk2yIy+CunJpImKdgnvZTzvA4YZ2ihDH?=
+ =?us-ascii?Q?ihklyioH5YRuZewycIO19SyMvQ8meurCedFlE3Ca1z9BQj1a3nuYlv+zzvmw?=
+ =?us-ascii?Q?/VANfLDN5fb6Lcf6OGbrA4GDpScrMmw+0klH6SsbXYyeB6aytLcjioVuqzuF?=
+ =?us-ascii?Q?mTmqZavKWwd+XCksHhshOTcBIJtfcc3QVg/zy9Q8QFLNFLfbdG3TLj3aF0ay?=
+ =?us-ascii?Q?wlgLA+qMGQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac172475-1a75-4b6e-b061-08df12263781
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 06:05:46.4400
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mGN3in3Loee1Y2HfpXvaq3iHEaW00z1/QmIH6rvWvxsH3SYQ1Mz5ytdfu6E+WSnx+XlgsGmGqkatiStKzBFO4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5617
 
-Hi all,
+Hi Tejun,
 
-There seems to be an issue with the DL rearm in v2.
+On Sun, Sep 13, 2026 at 06:50:14AM -1000, Tejun Heo wrote:
+> Hello, Andrea.
+> 
+> This mostly looks fine to me, but the kick path changes could be simpler.
+> 
+> On Fri, Sep 11, 2026 at 09:56:53PM +0200, Andrea Righi wrote:
+> > +		if ((sch->ops.flags & SCX_OPS_LAZY_SLICE_EXPIRY) &&
+> > +		    !scx_bypassing(sch, cpu_of(rq)))
+> > +			resched_curr_lazy(rq);
+> 
+> Could lazy slice expiry be a per-task flag, with the ops flag providing the
+> default? That would let a scheduler choose immediate or lazy expiry for
+> individual tasks. BPF should be able to override the default in either
+> direction, with bypass still forcing immediate rescheduling.
 
-On a non-tick reschedule that repicks the running SCHED_DEADLINE task,
-`next == prev` skips put_prev_task_dl(). Therefore
-update_curr_dl() may not have charged execution since exec_start.
-The v2 SNT_REPICK path then calls start_hrtick_dl() using stale
-dl_se->runtime, which can arm the next hrtick too late and delay
-SCHED_DEADLINE runtime enforcement.
+Yes, that makes sense. We can add a BPF-writable per-task slice-expiry setting
+(e.g., p->scx.slice_expires_lazy), initialize it from SCX_OPS_LAZY_SLICE_EXPIRY
+immediately before ops.enable() and the BPF scheduler may override it from
+ops.enable() or any subsequent callback.
 
-Unless there is a DL case that requires this rearm and accounts current
-beforehand, I will drop the DL SNT_REPICK rearm in the next revision.
+> 
+> There's also a NO_HZ_FULL corner case. If a remote target is running with
+> SCX_SLICE_INF and its tick stopped, resched_curr_lazy() sends no IPI, and
+> clearing the slice doesn't restart the tick. sched_tick_remote() calls
+> task_tick_scx() directly, bypassing the lazy-to-immediate promotion in
+> sched_tick(). With lazy expiry enabled, it keeps requesting lazy
+> rescheduling. That leaves delivery dependent on another interrupt, such as
+> the deadline server timer. Both the kick and enqueue paths need to arrange
+> progress for a tick-stopped target.
 
-So for now, please disregard the DL portion of v2 for review.
+Good point. We can add a common helper for lazy SCX rescheduling, when the
+runqueue was allowed to stop its tick, the helper clears SCX_RQ_CAN_STOP_TICK
+and update the scheduler tick dependency before calling resched_curr_lazy().
+And setting TICK_DEP_BIT_SCHED will restart/kick the tick as needed.
+
+Both the lazy enqueue and lazy kick paths will use this helper after
+successfully clearing the current task's slice.
+
+> 
+> > +	if (preempt)
+> > +		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt);
+> > +	if (preempt_lazy)
+> > +		cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt_lazy);
+> 
+> Why not clear both masks where cpus_to_preempt was previously cleared,
+> including the skipped-kick path? There's no need for the additional
+> conditions here.
+
+Ack. I'll change this.
+
+> 
+> > +	if (unlikely((flags & SCX_KICK_PREEMPT) && (flags & SCX_KICK_PREEMPT_LAZY))) {
+> > +		scx_error(sch, "SCX_KICK_PREEMPT and SCX_KICK_PREEMPT_LAZY cannot be combined");
+> > +		return;
+> > +	}
+> > +	if (unlikely((flags & SCX_KICK_PREEMPT_LAZY) && (flags & SCX_KICK_WAIT))) {
+> > +		scx_error(sch, "SCX_KICK_PREEMPT_LAZY cannot be used with SCX_KICK_WAIT");
+> > +		return;
+> > +	}
+> 
+> Do we need to reject all these combinations? PREEMPT should win over
+> PREEMPT_LAZY, as it does when separate calls request both. WAIT can force
+> immediate rescheduling. A plain kick combined with lazy preemption should
+> still clear the slice and reschedule immediately.
+
+Agreed. We can accept these combinations and apply the following precedence:
+
+ PREEMPT or WAIT > plain kick > PREEMPT_LAZY
+
+A lazy request should still clear the slice when it is combined with an
+immediate request. And I'll make the enqueue interface consistent with kick.
+
+> 
+> > +		if (!cpumask_test_cpu(cpu, pcpu->cpus_to_preempt))
+> > +			cpumask_set_cpu(cpu, pcpu->cpus_to_preempt_lazy);
+> 
+> [ ... ]
+> 
+> > +			cpumask_clear_cpu(cpu, pcpu->cpus_to_preempt_lazy);
+> 
+> Can we just accumulate the requested bits and resolve precedence in
+> kick_one_cpu()? That would remove both the guard against cpus_to_preempt and
+> the clearing of cpus_to_preempt_lazy.
+
+Yep, makes sense.
 
 Thanks,
-Shubhang Kaushik
-
-On Fri, 11 Sep 2026, Shubhang Kaushik (Ampere) wrote:
-
-> Fair and DL hrticks are one-shot timers. After an hrtick expires, the
-> next preemption point must be explicitly armed for the task that remains
-> selected.
->
-> For fair, the missed path is:
->
->  hrtick()
->    -> rq->donor->sched_class->task_tick(rq, rq->donor, 1)
->    -> task_tick_fair(..., queued=1)
->       -> entity_tick()
->          -> resched_curr()
->    -> schedule()
->       -> pick_task_fair() selects the current task again
->       -> put_prev_set_next_task(rq, prev, next)
->          -> next == prev
->          -> return
->
-> put_prev_set_next_task() returns without calling
-> next->sched_class->set_next_task(). Consequently, set_next_task_fair()
-> is not called and does not invoke hrtick_start_fair() to arm the next
-> fair hrtick.
->
-> The same `next == prev` return skips set_next_task_dl() and
-> start_hrtick_dl() when a DL hrtick causes a reschedule that repicks the
-> current DL task.
->
-> Replace the `bool first` argument of set_next_task() with an enum.
-> SNT_NORMAL and SNT_PICK preserve the existing call sites, while
-> SNT_REPICK identifies the next == prev case. On `SNT_REPICK`, fair and DL
-> skip their normal task-transition work because the task is already
-> current, but restart their respective hrticks.
->
-> Calling the class-specific rearm from the repick path also preserves the
-> existing hrtick scheduling rules. The call occurs during schedule(), with
-> hrtick programming deferred by rq->hrtick_sched; hrtick_start()
-> records the new delay and hrtick_schedule_exit() rearms the hrtimer
-> after scheduling completes.
->
-> This replaces the fair specific rq state and runnable count checks with a
-> common scheduler core solution.
->
-> Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
-> ---
-> Testing:
->    - Built and booted baseline 08df884136f1 and v2 with
->      CONFIG_HIGH_RES_TIMERS=y and CONFIG_SCHED_HRTICK=y.
->    - Enabled HRTICK and DELAY_DEQUEUE, set base_slice_ns to 3000000, and
->      pinned two CPU-bound nice-0 fair-class tasks plus a periodic sleeper to
->      CPU 0.
->    - Collected five 10-second `perf sched` traces per kernel.
->
->  Across the CPU-bound fair-class tasks:
->
->    baseline: maximum runtime 5.227ms; 6 samples above 4ms.
->    v2:       maximum runtime 3.386ms; no samples above 4ms.
-> ---
-> Changes in v2:
->
-> - Replace the fair-specific hrtick rearm state with SNT_REPICK.
-> - Restart hrticks for both fair and SCHED_DEADLINE same-task repicks.
-> - Remove the delayed-dequeue runnable-count condition.
->
-> Link to v1: https://lore.kernel.org/r/20260813-sched-fair-hrtick-restart-v1-1-4230d1e18fbb@gentwo.org
-> ---
-> kernel/sched/core.c      |  2 +-
-> kernel/sched/deadline.c  |  8 ++++++--
-> kernel/sched/ext/ext.c   |  5 ++++-
-> kernel/sched/fair.c      | 15 ++++++++++-----
-> kernel/sched/idle.c      |  5 ++++-
-> kernel/sched/rt.c        |  7 +++++--
-> kernel/sched/sched.h     | 16 ++++++++++++----
-> kernel/sched/stop_task.c |  5 ++++-
-> 8 files changed, 46 insertions(+), 17 deletions(-)
->
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index b998ef6b87af4fa60422fe86b3702c43103ea9aa..90607d2f3a93a59c2227ce9775ce3976054a0b96 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -7221,7 +7221,7 @@ static void __sched notrace __schedule(int sched_mode)
-> 			 * on_cpu.
-> 			 */
-> 			donor->sched_class->put_prev_task(rq, donor, donor);
-> -			donor->sched_class->set_next_task(rq, donor, true);
-> +			donor->sched_class->set_next_task(rq, donor, SNT_PICK);
-> 		}
-> 	} else {
-> 		rq_set_donor(rq, next);
-> diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-> index 0663c00c41c04213fda2ebaf16a0bdf34e0849a8..6c17563f42a1d22bae5fc9f85b75497b6b4faccb 100644
-> --- a/kernel/sched/deadline.c
-> +++ b/kernel/sched/deadline.c
-> @@ -2773,11 +2773,14 @@ static void start_hrtick_dl(struct rq *rq, struct sched_dl_entity *dl_se)
->  * DL keeps current in tree, because ->deadline is not typically changed while
->  * a task is runnable.
->  */
-> -static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
-> +static void set_next_task_dl(struct rq *rq, struct task_struct *p, enum snt_e type)
-> {
-> 	struct sched_dl_entity *dl_se = &p->dl;
-> 	struct dl_rq *dl_rq = &rq->dl;
->
-> +	if (type == SNT_REPICK)
-> +		goto repick;
-> +
-> 	p->se.exec_start = rq_clock_task(rq);
-> 	if (on_dl_rq(&p->dl))
-> 		update_stats_wait_end_dl(dl_rq, dl_se);
-> @@ -2788,7 +2791,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
-> 	WARN_ON_ONCE(dl_rq->curr);
-> 	dl_rq->curr = dl_se;
->
-> -	if (!first)
-> +	if (type != SNT_PICK)
-> 		return;
->
-> 	if (rq->donor->sched_class != &dl_sched_class)
-> @@ -2796,6 +2799,7 @@ static void set_next_task_dl(struct rq *rq, struct task_struct *p, bool first)
->
-> 	deadline_queue_push_tasks(rq);
->
-> +repick:
-> 	if (hrtick_enabled_dl(rq))
-> 		start_hrtick_dl(rq, &p->dl);
-> }
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 51de1d8b72a1ede6d16c07b58defb1284285b8a6..31a300f2d3b202d588ca666d6b8f6d4705ee6c79 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-> @@ -3003,10 +3003,13 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
-> 	return verdict;
-> }
->
-> -static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
-> +static void set_next_task_scx(struct rq *rq, struct task_struct *p, enum snt_e type)
-> {
-> 	struct scx_sched *sch = scx_task_sched(p);
->
-> +	if (type == SNT_REPICK)
-> +		return;
-> +
-> 	if (p->scx.flags & SCX_TASK_QUEUED) {
-> 		/*
-> 		 * Core-sched might decide to execute @p before it is
-> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index ade1eceb39b806e60e44efe54e33a7097d01d1df..4a83ad97544675d52ca6b296a5e57356da537293 100644
-> --- a/kernel/sched/fair.c
-> +++ b/kernel/sched/fair.c
-> @@ -15245,14 +15245,18 @@ static void switched_to_fair(struct rq *rq, struct task_struct *p)
-> 	}
-> }
->
-> -static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
-> +static void set_next_task_fair(struct rq *rq, struct task_struct *p, enum snt_e type)
-> {
-> 	struct sched_entity *se = &p->se;
-> -	bool throttled = false;
-> 	struct cfs_rq *cfs_rq = &rq->cfs;
-> 	unsigned long weight = NICE_0_LOAD;
-> +	bool first = type == SNT_PICK;
-> +	bool throttled = false;
-> 	bool on_rq = se->on_rq;
->
-> +	if (type == SNT_REPICK)
-> +		goto repick;
-> +
-> 	clear_buddies(cfs_rq, se);
->
-> 	if (on_rq)
-> @@ -15296,11 +15300,12 @@ static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
->
-> 	WARN_ON_ONCE(se->sched_delayed);
->
-> -	if (hrtick_enabled_fair(rq))
-> -		hrtick_start_fair(rq, p);
-> -
-> 	update_misfit_status(p, rq);
-> 	sched_fair_update_stop_tick(rq, p);
-> +
-> +repick:
-> +	if (hrtick_enabled_fair(rq))
-> +		hrtick_start_fair(rq, p);
-> }
->
-> void init_cfs_rq(struct cfs_rq *cfs_rq)
-> diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-> index eb73b65ce6c4714db1e07066c86a8cf39adbc328..76f3c84ca6846afc30609fdc512553c6797e9557 100644
-> --- a/kernel/sched/idle.c
-> +++ b/kernel/sched/idle.c
-> @@ -487,8 +487,11 @@ static void put_prev_task_idle(struct rq *rq, struct task_struct *prev, struct t
-> 	update_rq_avg_idle(rq);
-> }
->
-> -static void set_next_task_idle(struct rq *rq, struct task_struct *next, bool first)
-> +static void set_next_task_idle(struct rq *rq, struct task_struct *next, enum snt_e type)
-> {
-> +	if (type == SNT_REPICK)
-> +		return;
-> +
-> 	update_idle_core(rq);
-> 	scx_update_idle(rq, true, true);
-> 	schedstat_inc(rq->sched_goidle);
-> diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-> index 85303add726df4c2da846c427aab2d627fca9589..1535046a23ffa0705d90dce301fa4c5b015703a1 100644
-> --- a/kernel/sched/rt.c
-> +++ b/kernel/sched/rt.c
-> @@ -1654,11 +1654,14 @@ static void wakeup_preempt_rt(struct rq *rq, struct task_struct *p, int flags)
-> 		check_preempt_equal_prio(rq, p);
-> }
->
-> -static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool first)
-> +static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, enum snt_e type)
-> {
-> 	struct sched_rt_entity *rt_se = &p->rt;
-> 	struct rt_rq *rt_rq = &rq->rt;
->
-> +	if (type == SNT_REPICK)
-> +		return;
-> +
-> 	p->se.exec_start = rq_clock_task(rq);
-> 	if (on_rt_rq(&p->rt))
-> 		update_stats_wait_end_rt(rt_rq, rt_se);
-> @@ -1666,7 +1669,7 @@ static inline void set_next_task_rt(struct rq *rq, struct task_struct *p, bool f
-> 	/* The running task is never eligible for pushing */
-> 	dequeue_pushable_task(rq, p);
->
-> -	if (!first)
-> +	if (type != SNT_PICK)
-> 		return;
->
-> 	/*
-> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-> index e656c7059bf864d1ed91d4ec3d4624850aded7e0..defcf7fd023fa5bb3c34c3c29f99afe3c42a87de 100644
-> --- a/kernel/sched/sched.h
-> +++ b/kernel/sched/sched.h
-> @@ -2621,6 +2621,12 @@ struct affinity_context {
->
-> extern s64 update_curr_common(struct rq *rq);
->
-> +enum snt_e {
-> +	SNT_NORMAL,
-> +	SNT_PICK,
-> +	SNT_REPICK,
-> +};
-> +
-> struct sched_class {
->
-> #ifdef CONFIG_UCLAMP_TASK
-> @@ -2678,7 +2684,7 @@ struct sched_class {
-> 	 * __schedule: rq->lock
-> 	 */
-> 	void (*put_prev_task)(struct rq *rq, struct task_struct *p, struct task_struct *next);
-> -	void (*set_next_task)(struct rq *rq, struct task_struct *p, bool first);
-> +	void (*set_next_task)(struct rq *rq, struct task_struct *p, enum snt_e type);
->
-> 	/*
-> 	 * select_task_rq: p->pi_lock
-> @@ -2781,7 +2787,7 @@ static inline void put_prev_task(struct rq *rq, struct task_struct *prev)
->
-> static inline void set_next_task(struct rq *rq, struct task_struct *next)
-> {
-> -	next->sched_class->set_next_task(rq, next, false);
-> +	next->sched_class->set_next_task(rq, next, SNT_NORMAL);
-> }
->
-> static inline void
-> @@ -2802,11 +2808,13 @@ static inline void put_prev_set_next_task(struct rq *rq,
->
-> 	__put_prev_set_next_dl_server(rq, prev, next);
->
-> -	if (next == prev)
-> +	if (next == prev) {
-> +		next->sched_class->set_next_task(rq, next, SNT_REPICK);
-> 		return;
-> +	}
->
-> 	prev->sched_class->put_prev_task(rq, prev, next);
-> -	next->sched_class->set_next_task(rq, next, true);
-> +	next->sched_class->set_next_task(rq, next, SNT_PICK);
-> }
->
-> /*
-> diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
-> index c909ca0d8c87c1055ad5ffe58ae9f044194ee358..1e0109ec36b3f9b84f6f7290e584e38257db701c 100644
-> --- a/kernel/sched/stop_task.c
-> +++ b/kernel/sched/stop_task.c
-> @@ -27,8 +27,11 @@ wakeup_preempt_stop(struct rq *rq, struct task_struct *p, int flags)
-> 	/* we're never preempted */
-> }
->
-> -static void set_next_task_stop(struct rq *rq, struct task_struct *stop, bool first)
-> +static void set_next_task_stop(struct rq *rq, struct task_struct *stop, enum snt_e type)
-> {
-> +	if (type == SNT_REPICK)
-> +		return;
-> +
-> 	stop->se.exec_start = rq_clock_task(rq);
-> }
->
->
-> ---
-> base-commit: 08df884136f1c1197bab2a27814404fd329d9aac
-> change-id: 20260813-sched-fair-hrtick-restart-ab9d3d47ef78
->
-> Best regards,
-> -- 
-> Shubhang Kaushik (Ampere) <sh@gentwo.org>
->
+-Andrea
