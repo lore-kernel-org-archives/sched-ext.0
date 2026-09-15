@@ -1,64 +1,60 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011067.outbound.protection.outlook.com [52.101.57.67])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011025.outbound.protection.outlook.com [40.93.194.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0770046D08B
-	for <sched-ext@lists.linux.dev>; Tue, 15 Sep 2026 09:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136FB435508
+	for <sched-ext@lists.linux.dev>; Tue, 15 Sep 2026 09:33:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.25
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789462936; cv=fail; b=MOwXZCVsZHKJ6XZbFetl8EPVfq4zLCby6yGoZIC8Kf+3WCUuucve66h43k81zSvaKrTMt7Ivx73L1QE7HIEX5GGUx642Ysu9MgXW+g6x0lklLA1Ut0xTsDwX4WnBePdHlHbGnc3f/Ox0qUIfCTT0eqrbcXeVkY6/r3yA/AOv6sw=
+	t=1789464805; cv=fail; b=q/GnnqZ7JYUdvwt9jAyFqGqA+dMMqgBJSLIAMhIM+ui/QDIoqoUovun79U/YXTkAHVMkOwKy92cyDqzceL5bhRyPqUGRVzQk5zEctLL3s0ssAD9c/8mSTvrR9IJ+yRC9+VjVvm/VtlanCA26nYt7TezsVwqmEqVcZMXeUdJCCgk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789462936; c=relaxed/simple;
-	bh=aiwrbhjnBeFHTfgmqNvrRy3eepJEr0OdthNlpWhl0m0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GuP5iEaw62riH7EwooRIQtRaeZNy0vCI+PHHXf+9HJI+mPf8epjQ4gwxovIJteDJaCeOdYgoDed9TrMAPHxZJeb3kvpf3gLFwYevRKmUW+YMftj/MisJxEGAyT2+zSW69THp++8j+VUNtsKcV/+uoly8gB/WKhiPcT8D/moDJe0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=VePnP2rS; arc=fail smtp.client-ip=52.101.57.67
+	s=arc-20240116; t=1789464805; c=relaxed/simple;
+	bh=2zXPhuIG+7iZqaUJVSozBEvk050tEvXTWGwAO6gQ/jk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ZA8fyFaXOoVzBnWPt7TYQrQPfXqPQVIwRv8VFRRvvEjrfl2OFz1+eIXniA5phYUiu4LSu9Tclh+t2JGXluesICoLF8EgVGn/cHMbVE+LP1hD8jCpKVNxKfcl1Kg1lHISyLwCikECbzrQTgESmrIM7/vdnw0Iwyr5uW7xT7DHEro=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dn+MSEjb; arc=fail smtp.client-ip=40.93.194.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="VePnP2rS"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dn+MSEjb"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UQVsG5gZBMaUGrs5W7IIM7MRtYkFuNscgdedhhp+icsWSUQsyd8o3cCbRliBC4QtNDfX5ixT0z+ljfLuzzI5iw3J0mqTS/9fw9BNbqEVddftINs1WkqWiqDeiBNS/jFNPMGbS0z/sk6SNWAW1bRTdc+WXoPbSocVoqFcxdeP1LKJ73MD+NqkGXwnunt+4ytWUuAlsvlViTb3SagGq3lJ8xUEkfLV3CnnpTH9Qj90B/KKWWzorlSu+AAjFO7ffDJ41q6d8PaAvY6p6F5k4cU0bPchIF+HpDGFERRt0+2XIyhQyfQ0Sd1M0rqj2tjoxYZBH8SluZhAJMNARP3WWkccRw==
+ b=fRnempBIzuhjF0dMGaj+jscZMUiKdIWNz8LWt5hotVlPdj+wqHjE3HPzBB1DE3jXoJOwsdhEySAKpfCkpBIHNDB3qpAiiTN4YuGZM0K1pDICowDfix60CqmbG66Ak+EmJnJhokyIpq5uLAkggECOASyt71a2WA5LVArOrH/drrH5qZpRRi8i8kt5ulSNzyJh8hPHq/xX/qNDif680uXWjSamf7gyZgb1+Egt2jfXRVAiufH+0q0RCXfyy3T4G8SzIrt7a3ndhv5sozrkRTzR4DUExyDJ1pXD7HNDKje3ut2i6RLafiFGrX9u6pM7mwKoB3IVBm2edn3s2wvPRA/t8Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OxvCdDzD/GJb3TPkbd/kJrrDyydXiUw/pmYYj/i08K4=;
- b=ddWuruyVg96eV/bBkmNknPXmr/zIQK3MCUH+A9mbUp3jFio+C3EyPuLrq5Ly0PYSbcCL69Q74sSVMKQ3P1mAw4PBCW7SRHogkkpa1gGxFT6CLQLd3u6kbvHSN8l7YMZ9mfCQeuq0PGDy3JUV++kJ/oGP+fWAxvpXMFrf3Czr2sAdEfvEibwipdoReyoQpoQfUnXkYuevhpPm8PLF/Yu5obnZJtPUuQYxNFjgAiayf9ayZJJg5f5dh8gEnR0rbyYUqecb2hrXqtFarl+VvUwsWuqCsJBJxT8EfDhgsDGLzZeSn5xM2usnmiEnchzeYjyYc7Lhd7mtWPgAFaEHrfLWGw==
+ bh=A7Z44XvK1RyC0gseZiuYmfqigR+8s39qbETecfZ2Gs0=;
+ b=Jgtrr4S8HtY5/9H1YPmoQD6JNtXqoqewq170KuS969PE2aGz3UuRb8MXhrii9HWQF9ee11gwrX0MeYAZtkG4gRP4TxCLQtWPBfay7Hsj9dQ+PMahbM52h8xWB3+uaIrMgLA3jTSOB3qsBU5p/pJker8mNhEJ/KyJdzHiD/ix9Ny2N3VAoUcMGb5ezRSEl4zyTOTRMQhs3EZz/qNAMcISViKxzkzMaOucYWGf4kalNi6WzpwebRhmxm1pww8rUJdmG5Ul24S0obyRTNzYLbRoyMwB9vAGS0Uhyc5PSUanpVGzI9ltbQ1B93IA4B5PBZQW3gISCCfUoVCYe74LiDTV+Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OxvCdDzD/GJb3TPkbd/kJrrDyydXiUw/pmYYj/i08K4=;
- b=VePnP2rSAY8tfKvmxyVTiCs1kxJYbyuvgP1vjY8d5fsf0oOGYGg9GO03heA8U4UdWSB/pukHpECfQWJxlzxHEEO8nsmAsKfZM95AhYK1vpzkHmrrZZYs9vhCkhKEP9lolDCcqfQxlppDylFhNofhTNe0/sjQ6xCvDaJvvoZ8yL6ZT1HVTzlk6eQ8Ds1/igvyrYdsp94VQId/QgkEzuzNX1y/bVobUbANa3e69t8zg4LhmPeJgYI6yf1ddq0OPv15uf78m0kRHwber3AZs64dQGsjwEK56CX1KC3m4lvHGAvwJq4og4lmk0KxhKF0AZ+oJXofwMHhFnIQu7U5EYTfig==
+ bh=A7Z44XvK1RyC0gseZiuYmfqigR+8s39qbETecfZ2Gs0=;
+ b=dn+MSEjbLd7+E7RibyZsNi79iIpelBphuVtkjNAWD8eVJ7xP6Gx2Uy6QQFOqpFsu2jFSSfoBidZUfZalljcOmhVJFanLb3ZGn3+ww3VZjOvrdWLArTGVfzlqUNu6gFtCrAechJf+p5SlrAbuPRI3NjQEZcOJSIEdvjJknAwgS+EKCP7Q95KqnUOExBaeS5Vf+8dmgqLnTVw+GcVPNo/1YhKNBD68Y11/7qkWYhDRD9y2cZrflgotZnJ4xJFhuUZPDrDYs5QxKAPj4lAR0iEW/QaZnp2FUUV8NSRdIoWk2ZjxZJPYIJhRrktD4lFbIwT1FUrtFiGzAYrEax08NrT49w==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by CY3PR12MB9632.namprd12.prod.outlook.com (2603:10b6:930:100::14) with
+ by MW4PR12MB8610.namprd12.prod.outlook.com (2603:10b6:303:1ef::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Tue, 15 Sep
- 2026 09:01:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Tue, 15 Sep
+ 2026 09:33:17 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0406.007; Tue, 15 Sep 2026
- 09:01:55 +0000
+ 09:33:17 +0000
+Date: Tue, 15 Sep 2026 11:33:08 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
+To: Qiurong Fang <fangqiurong@kylinos.cn>
+Cc: Tejun Heo <tj@kernel.org>, sched-ext@lists.linux.dev,
 	Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <etsal@meta.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] selftests/sched_ext: Add lazy preemption tests
-Date: Tue, 15 Sep 2026 11:00:13 +0200
-Message-ID: <20260915090127.2321020-3-arighi@nvidia.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260915090127.2321020-1-arighi@nvidia.com>
-References: <20260915090127.2321020-1-arighi@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BY1P220CA0018.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:5c3::8) To DM6PR12MB4827.namprd12.prod.outlook.com
+Subject: Re: [PATCH] sched_ext: Don't run ops.dequeue() with a DSQ lock held
+Message-ID: <aqkQ1MtqtqnS0wUs@gpd4>
+References: <20260915081027.4185881-1-fangqiurong@kylinos.cn>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260915081027.4185881-1-fangqiurong@kylinos.cn>
+X-ClientProxiedBy: MI2PEPF00000B85.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::41c) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,1364 +63,296 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|CY3PR12MB9632:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a993eee-6cc1-440d-5217-08df1307fde1
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|MW4PR12MB8610:EE_
+X-MS-Office365-Filtering-Correlation-Id: 43cf80bf-f685-43e3-8ed7-08df130c5f2d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|6133799003|18002099003|22082099003|3023799007|10067099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|10067099003|6133799003|22082099003|18002099003|56012099006|5023799004|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	aEhi4qqzgdQ8LfRvfAIbwyhMserWg/wAxLU2Wzli+DzrYI0TkvLuz4KDDJ9CgRKR9xwTm+rRMCxqqR3WfOMArUJHfF15tUD9a6zpc93esGp9PgOxdd6NLWA/jZO9vcItWfgvvf0NzGnlDniCEKeOYl2OkAkuEncjyxEzyOvBA4pMpOdDbIN9OasnzQgQnPCksuni5L/7Cu4cBLHKCEvoB/l0dXJ/Lo1xwNFuHWgnv8FEvDizG4J2FRrti8+M51C1di7W7wTC09KjAN1bGVcKbmguHEidcA8Mx+1DuGMZGNzg0O0vExZ1aUjX2Y+mxoeC2fONHmrp4rImKbAeRMlQo04galAW0NlceUXYvoGOEngXe7PtNNwDIwKHdkVKgZz14TWrBNDeQiXfNO81/j/HdUQJTHzm47f7C7DpJ0V53QQ9aAipzCfEBTwJGltC2RmhFkn/aztYPdmd5kMsEVyWMMmLCSQPdO9fLQNBjqXLsYovj25EzIvIPur5OLVjhBFEwTVW9yj8e6kKPBxnwa1PUPAc5poXGVyVZAmRpjLP9p+8KX6dtxqF8NH9Ot/iggCGT3nTZiBgPiJKiXP3FdNCqTonbqXjUD3G+nipECjZ/lF7F441eIjmjVAcyQQmWaFj7mfoo/2zSNbubYa1kaMHfL2wT/k+3q/9ovZLQeOFbi0=
+	Y1PVMQQGPYNGF6MU7ooiGj40DdgBd7QP2qBcLHYfIAkyGFGPBb32tSTdwsRoVc2YS/Qz7kMETXIWPLD8QNm781ihJ3CFlY2vl9lUrdLA+3pZI0CzK7zsI83c9VuxAa2GmSQCuOo6wGOJj7FqGbWiHc4mbNbRZf4ZABfTR9mPIEk+PsdS3RztqMK3a7avjRtadrxgGeA3V7R0AYuyaDoskLC7XDH+b0QRVMLJa85vOb0Hh4fXiQDZVZu08cFpJx+uyrxMnPsGtt1Ks7UWgXY4PZgAu0SvF58o38IYYXBjp6P+Lb62S+YYsaYuIpSnMLge/05WlRQJoPkSyPMkuxlF9mO4hnFqYwjMIJxi6S1/Y+rhvrIS/RiM7s+cEYDUS53RVq+Vx3l1+5UtXSBBuHa3SOyg3VgRp7cacNlUMvK55zsKOhMn0qwcfdDAOL2VhEaC1dak7UdQGCbmOQUw1Re86uG5oOB330+mGv+OyHenCsSB4ifzAYpAoO7TF+hY0p8RRJJDm2MDotgzvJy/Zu1ShYIJO09TQ/Mqc2E5k0keAyz+6oyVS1V9gqcBmt8gDMrt8iAZIPlbgJTbbMMHr0U1rdf075l/VAzlzksLUZG0SVrJOmYKXPbIziTSg/Ur35W0gd3Im33NVTwPhGWpXWl4WaCnzD4iNCabMictuN5YxXU=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(6133799003)(18002099003)(22082099003)(3023799007)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(10067099003)(6133799003)(22082099003)(18002099003)(56012099006)(5023799004)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?wTRb6ZqWDcu7ZuiisTmsrtV0Scm2bKb+ZX0vEnWkXprkGX2TUCLL/6LZrOGD?=
- =?us-ascii?Q?lh6z0Bap8pqFmC8roKijjUndstse51lO9+TRdbLt1/bnoy+xlbbmBio3iVS2?=
- =?us-ascii?Q?RQ8kAEQsIuZGmPR/KIIdJ5vSC9vwy0s8XI0mJA+q/yLPHkvdWvIbtqTsPZkq?=
- =?us-ascii?Q?fnMPuBlhTs+1gSxwLUaRGzqONCyXrXOogPy8o1vXzmsJb2ZE6eMK+GvibmeX?=
- =?us-ascii?Q?WsmZgf6JolNjZaL1oSpOyR/jbaT6Dd355/v/YlmgU/XLuCKGuC8OAk2KxPnl?=
- =?us-ascii?Q?UkmiQZSd9M+P51rbTNMGPtU4P45xuDA2O8xAaSZ3rLu8OhUu5xAbK2nreodC?=
- =?us-ascii?Q?dh8qV9vrkGweRT27kLgW63XUhOmB/hXZo9buVgzQS7VasxRe/ukyli8caHkj?=
- =?us-ascii?Q?zSWbUaxdHDS7jc6eKPFwHEa6cAHbjNqzb2oFJCTPGe0JF15z4kEoa3J22wbC?=
- =?us-ascii?Q?B032d0UFvppp3d/u4bqcILadWNeKIuAWkogU1CjNESimvcM846JBOBQ50okW?=
- =?us-ascii?Q?2d1XLx1JyavPjP/2BkQUMxc040ofs2y6nVy94cwn3ud1QA3enRnqPuHHh4ek?=
- =?us-ascii?Q?nuIq6mM0EZig0FkREQkl+/9sTiQzD4OhyT0dNJ0HbzvWlPAJPIPD3Pz1AuwN?=
- =?us-ascii?Q?ZrazYJ8NUVeH85rQ+wqEmGTlZQV4mpa29lvTZKMnc8oA4Hosq5NWvaWvIsix?=
- =?us-ascii?Q?ZzbY4f2BghvYerxlaUNGOp3Cw29RPE+yPdo3V8PfnpxHwonlSuvu7rdxubOS?=
- =?us-ascii?Q?Zm6QxUGb9uIr3VsSljy8Ki3MPb7bpnAdtns5PThNLD4wGSimqmqxplyUwD2/?=
- =?us-ascii?Q?OGb+h8QioaM9FRTnAVs74nRRnuNzHyhSK2yTYOhcgU+MLgjfW28AJS9MTUgm?=
- =?us-ascii?Q?H8u8tOUjXLlpb5PVsai01tkPzXL27SHtRrBdtzlxTlWKsBHMPx8v5EJZNiCG?=
- =?us-ascii?Q?mjvRTBcDVpr8ki9n4xHaY8V8uDP0CeVrot/GFFSysMIGPpOP7KQxMZAMkk6T?=
- =?us-ascii?Q?u42GA6TA/Y/r9UbpwY09Vnvs3uPGtx00XU1E6JRxqzwX5uddBYJ1CNjmF1QB?=
- =?us-ascii?Q?x9Iq7eZAtlbfK9XMyRTQOKk9az8ul8tq7ja3z58ALDrayRo6jdHXjHsDSd+k?=
- =?us-ascii?Q?rNs4xxeVvnQoir9VFbKUwqxRD/EY4my8KZu1LpFhZfFenDjgcgLb9wKgtDWe?=
- =?us-ascii?Q?qefUlqd25iNoWym1BaHZALs4tCyU2vwaNBbSiNhvsrjAT1zZRRa+4gjfSc1Z?=
- =?us-ascii?Q?YOSbc6wW+SgtODdCSJYuOKoYC5xCm88RfaRdkfmIyTTA9S3K06C1pKzJ0KXc?=
- =?us-ascii?Q?pLOOHL07KL0YBla0sSpPiW/xMzXs0NilDEsMR/vNki7hOe/qCSPecbOyzhN0?=
- =?us-ascii?Q?ZAUXOIqhlijV01Y0zSJnoqgoldZg/DTi56+wJx3e7w8uAw4KV1J08Q5iLkhb?=
- =?us-ascii?Q?7VQIb46X4e3sPSR/FyILK/059ch2fhuJpueAb7Nk71gLZAENhL5gPhNqYJRg?=
- =?us-ascii?Q?mVcHlGolgGI1wodiJ7jLx7p0M2WBp9gbJEyk0aZPR/pB17Aw78bRryOvhEd+?=
- =?us-ascii?Q?skt9Pcgpl8rbqRO87ijV1vcD+/bn9/OoqsQ/oOwXm9ysg43OgfiHunIte8KY?=
- =?us-ascii?Q?xz6CkuxlcZW4LmHfiUHOk2YiT0g2iFMSxa3av205kkIRgEowhQ6nGKgYnJfQ?=
- =?us-ascii?Q?jsjm2FaZ5cjTjPY/O6iducI4pBE9zNSbjZ2OdnmpZV9lEottUJOHdjl+Tf+Q?=
- =?us-ascii?Q?4DpUzrFAcg=3D=3D?=
+	=?us-ascii?Q?sAoRuwogyltCRhPhSb02ml96ZUI496XRJwvZBO5N/36p/PNfcnl03s0lq5JN?=
+ =?us-ascii?Q?fFz6hwQT8WPV2ndvfWgY6MtT1xz+CTVCdXC2sRJxZxItbV8VMmXPYXTVyFzL?=
+ =?us-ascii?Q?XmSeckBS99IKiE3bFUEOWX2WiCD7Wm0PA2Tl10fYPtCtm+hxP4tJDvphf/Cz?=
+ =?us-ascii?Q?j167vvrwCy17wjuQblvWJFyyIBYcZuK4oT9qpWt70Jovegfi9Eph1jNYMz7w?=
+ =?us-ascii?Q?Bbfbg7GM7Z3zdzXdGkOIhgjggXjGJ/MohaBGIvuRHJ5OhbWDSBlG7lBndVH/?=
+ =?us-ascii?Q?vkxvCPuNRWbASAHUJfZEwpygH3AXI5kjVBXOPkrV7oqctSMQPf9nPhhTu2X6?=
+ =?us-ascii?Q?oKVMBBhhg8y3x3vYvJ8n8UosILiTHUcRf24W5//dVsJ7UfCKvnLa6Ze9fTGP?=
+ =?us-ascii?Q?DZxDHF5kN9a9nw2kFhi9tHwchoG28By8FX91JI3W/TsnYiUJf73ObHWLXCjA?=
+ =?us-ascii?Q?tF/5Bsa2bn2Q2rVpN5eAQkRZJJw9/9JzpfDn1W9Na7JMxVdtJp9kW7PVaU8M?=
+ =?us-ascii?Q?aEGYrqgKslCBDcLom4ssuaeEgymqnU/mKhVrLxeXkmeFhUJ7q3Hgsw1v9LEA?=
+ =?us-ascii?Q?CWeGIsWUZzCw0o74sVPmufUm4j6tpUwguJRt/GqeRQH+u6LHoKRqoX8k1SES?=
+ =?us-ascii?Q?SbUKSSihpzCT1TZgKJYWwrzGtHbrer7AlJNjrhb9F6oP+Ry0fAisa/zz4i66?=
+ =?us-ascii?Q?sS3YFgl3ErGsJ+I8JFEdq7a+aMwtWG9iLIEgCwJh9aMs9T6LFOAKuBS8CNuJ?=
+ =?us-ascii?Q?v0FnHw5Tmh3Ym9ptsFoh4riOJ4Gs0Q8Ddng2FW56Kf3g05rm1vGSL7V8F2SG?=
+ =?us-ascii?Q?BsATaABp3LLRBo73PcUrBuObgrKTQtqlpu+R+Z5iuRl95ij+oLj5lEI1psUQ?=
+ =?us-ascii?Q?F2KjR8W1X/rbgflQgAP+46tKSfHL+ZN3TMMHruA9uSvLOMisr2J+5IpjhfG+?=
+ =?us-ascii?Q?dVnkuCxzo+tHjJfkuswMzXr5rsPHLHIbI2LA6zEiUD3BO6CDvJj6j7FelHEV?=
+ =?us-ascii?Q?N4gEvh+n54rrESk8qMifIWKlOhTfSKFwc3rTebPInSnRCKAo3/fEi/0ZSmSW?=
+ =?us-ascii?Q?Vu4VAQKcJpJQbh09iL8Oi7fUf96enzy9iT5KQ1/XYeuNLOroKr3aQTBEacn+?=
+ =?us-ascii?Q?42E4dPtGPEu0pQYvw1oE2bM6iix3paFeEFEWonZFVKy6dUHCD0ZgHenuTJcI?=
+ =?us-ascii?Q?ih2cpepyIUnMFL7euUYwYQ/qJLvMZH9zifMcz/6Mv7QMCQSfoaaq4PSAxlvP?=
+ =?us-ascii?Q?4KTsc5hC5m9CWrazSN+R4tcwebwirY4LVuWXoqItP8TBApkq6F3KEhzCw6VV?=
+ =?us-ascii?Q?ELW8g2nb5eKjlWj/+tdjSfxnqsUUVsJKxhzEO7ooUxYF4efinnbTCpwBml2n?=
+ =?us-ascii?Q?ukG1CgPW50Os670F3ZrYo80aOAD4iKBYB+Ae7J9WuRS+bOe0OarbHM2T+ad+?=
+ =?us-ascii?Q?DP3PplngYXk54waktEuyPEEd2TXChcDwi8uwIYlA+Ju8C9uHztnvbs+RdnPK?=
+ =?us-ascii?Q?ecUhD/AxzyGMZuPB5lIgEgLXXLVt01wwHONLxAQiDC5vxocNFIyzR/iVL7LR?=
+ =?us-ascii?Q?Br5ANMetAEjF1X/qUaTvKBg8Ssgul9CoGzlV2VOBlUzhtY8KHsN2vSVqD9dT?=
+ =?us-ascii?Q?MLyTjk1DGetXo4mRZE7jeD91OsEQfES/JYZCoQxGGj406toOzg993wRcsqPG?=
+ =?us-ascii?Q?THMatcaA6NMhc4cL9TvfiRlDvIywoHedd5IBOXMzqiLp9N93IHMPXEhcoRAI?=
+ =?us-ascii?Q?lT4TL1TNUw=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a993eee-6cc1-440d-5217-08df1307fde1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 43cf80bf-f685-43e3-8ed7-08df130c5f2d
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 09:01:55.8579
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2026 09:33:17.2238
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TvzK9lQL63zVx1k6zn/dtSLu+TAs8cmqfdqvFHpTTCULHHXIehlm+2ZWPYYkVY7uzX4uNzI7H1TWwJpw/4n54w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9632
+X-MS-Exchange-CrossTenant-UserPrincipalName: giLVWzuTYkDEPBtnhNuHZlBOg7hfMPxmeQOinKQyvw1OoNLDdUyJp8Z9ipyKZUzFGg5x/0iVGqZRhK0Lsz7BPg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB8610
 
-Add trace-based coverage for immediate and lazy preemption. An fexit
-probe on __resched_curr() records the requested TIF and the current task
-slice, while the stopping callback verifies that the task reaches a
-scheduling boundary.
+Hello,
 
-Exercise kick requests individually, in both orders and combined in one
-call. Verify that immediate preemption and WAIT take precedence over
-lazy preemption, and that combining immediate and lazy enqueue
-preemption follows the same rule. Also test overriding the expiry
-default in both directions through scx_bpf_task_set_slice_expiry().
+On Tue, Sep 15, 2026 at 04:10:27PM +0800, Qiurong Fang wrote:
+> From: fangqiurong <fangqiurong@kylinos.cn>
+> 
+> ops.dequeue() is called with the source user DSQ's lock still held on
+> the consume and move paths (scx_consume_dispatch_q(),
+> move_task_between_dsqs()) and with the terminal global/bypass DSQ's
+> lock still held in scx_dispatch_enqueue(). A BPF scheduler that locks
+> the same DSQ from ops.dequeue() - e.g. by iterating it with
+> bpf_iter_scx_dsq, which takes the DSQ lock on every step -
+> self-deadlocks.
 
-Extend the NO_HZ_FULL test with infinite-slice victims. Verify that lazy
-enqueue and kick requests restart a stopped tick and make forward
-progress. Keep invalid kick flag coverage and skip modes not exposed by
-the running kernel.
+This analysis makes sense to me, ops.dequeue() can iterate the source DSQ and
+recursively acquire the raw spinlock held by these paths.
 
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
----
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- tools/testing/selftests/sched_ext/kick.bpf.c  | 182 ++++++
- tools/testing/selftests/sched_ext/kick.c      | 608 ++++++++++++++++++
- .../selftests/sched_ext/nohz_tick.bpf.c       |  56 +-
- tools/testing/selftests/sched_ext/nohz_tick.c | 249 ++++++-
- 5 files changed, 1069 insertions(+), 27 deletions(-)
- create mode 100644 tools/testing/selftests/sched_ext/kick.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/kick.c
+> 
+> Move the invocation after the DSQ unlock on all three paths.
+> SCX_TASK_IN_CUSTODY is cleared under the lock so that the callback is
+> invoked exactly once; it is not ordered against consumption of the
+> task and may run after the task has re-entered custody.
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 5f5dd9ab903ae..c4ec9b21a4c2a 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -172,6 +172,7 @@ auto-test-targets :=			\
- 	exit				\
- 	hotplug				\
- 	init_enable_count		\
-+	kick				\
- 	maximal				\
- 	maybe_null			\
- 	minimal				\
-diff --git a/tools/testing/selftests/sched_ext/kick.bpf.c b/tools/testing/selftests/sched_ext/kick.bpf.c
-new file mode 100644
-index 0000000000000..5a64e19246004
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/kick.bpf.c
-@@ -0,0 +1,182 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES
-+ */
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+enum kick_scenario {
-+	KICK_IMMEDIATE,
-+	KICK_LAZY,
-+	KICK_LAZY_THEN_IMMEDIATE,
-+	KICK_IMMEDIATE_THEN_LAZY,
-+	KICK_PLAIN_THEN_LAZY,
-+	KICK_LAZY_THEN_PLAIN,
-+	KICK_BOTH,
-+	KICK_LAZY_WAIT,
-+	ENQ_BOTH,
-+	TICK_EXPIRY,
-+	INVALID_KICK_IDLE,
-+	INVALID_KICK_UNKNOWN,
-+};
-+
-+enum kick_state {
-+	KICK_STATE_IDLE,
-+	KICK_STATE_ARMED,
-+	KICK_STATE_QUEUED,
-+	KICK_STATE_RESCHED,
-+	KICK_STATE_DONE,
-+};
-+
-+const volatile u32 scenario;
-+const volatile s32 victim_pid;
-+const volatile s32 challenger_pid;
-+const volatile s32 target_cpu;
-+const volatile s32 slice_expiry_override = -1;
-+
-+u32 state;
-+u64 slice_before;
-+u64 slice_at_resched;
-+s32 resched_tif;
-+u64 nr_wait_callbacks;
-+bool enq_preempt_issued;
-+
-+UEI_DEFINE(uei);
-+
-+static bool is_trace_scenario(void)
-+{
-+	return scenario <= TICK_EXPIRY;
-+}
-+
-+void BPF_STRUCT_OPS(kick_enqueue, struct task_struct *p, u64 enq_flags)
-+{
-+	switch (scenario) {
-+	case ENQ_BOTH:
-+		if (p->pid == victim_pid) {
-+			scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_INF,
-+					   enq_flags);
-+		} else if (p->pid == challenger_pid &&
-+			   state == KICK_STATE_QUEUED) {
-+			enq_preempt_issued = true;
-+			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
-+					   enq_flags | SCX_ENQ_PREEMPT |
-+					   SCX_ENQ_PREEMPT_LAZY);
-+		} else {
-+			scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL,
-+					   enq_flags);
-+		}
-+		return;
-+	case INVALID_KICK_IDLE:
-+		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), SCX_KICK_PREEMPT_LAZY | SCX_KICK_IDLE);
-+		break;
-+	case INVALID_KICK_UNKNOWN:
-+		scx_bpf_kick_cpu(scx_bpf_task_cpu(p), 1LLU << 63);
-+		break;
-+	}
-+
-+	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+}
-+
-+static void set_slice_expiry_override(struct task_struct *p)
-+{
-+	if (p->pid == victim_pid && slice_expiry_override >= 0)
-+		scx_bpf_task_set_slice_expiry(p, slice_expiry_override);
-+}
-+
-+void BPF_STRUCT_OPS(kick_running, struct task_struct *p)
-+{
-+	if (!is_trace_scenario() || p->pid != victim_pid)
-+		return;
-+	set_slice_expiry_override(p);
-+	if (__sync_val_compare_and_swap(&state, KICK_STATE_ARMED, KICK_STATE_QUEUED) !=
-+	    KICK_STATE_ARMED)
-+		return;
-+
-+	slice_before = p->scx.slice;
-+
-+	switch (scenario) {
-+	case KICK_IMMEDIATE:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT);
-+		break;
-+	case KICK_LAZY:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT_LAZY);
-+		break;
-+	case KICK_LAZY_THEN_IMMEDIATE:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT_LAZY);
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT);
-+		break;
-+	case KICK_IMMEDIATE_THEN_LAZY:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT);
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT_LAZY);
-+		break;
-+	case KICK_PLAIN_THEN_LAZY:
-+		scx_bpf_kick_cpu(target_cpu, 0);
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT_LAZY);
-+		break;
-+	case KICK_LAZY_THEN_PLAIN:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT_LAZY);
-+		scx_bpf_kick_cpu(target_cpu, 0);
-+		break;
-+	case KICK_BOTH:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT |
-+				 SCX_KICK_PREEMPT_LAZY);
-+		break;
-+	case KICK_LAZY_WAIT:
-+		scx_bpf_kick_cpu(target_cpu, SCX_KICK_PREEMPT_LAZY |
-+				 SCX_KICK_WAIT);
-+		break;
-+	case ENQ_BOTH:
-+		/* The userspace controller wakes a competing task. */
-+		break;
-+	case TICK_EXPIRY:
-+		/* no kick: the slice runs out at the tick */
-+		break;
-+	}
-+}
-+
-+SEC("fexit/__resched_curr")
-+int BPF_PROG(kick_need_resched, struct rq *rq, int tif)
-+{
-+	struct task_struct *task = BPF_CORE_READ(rq, curr);
-+
-+	if (!task || BPF_CORE_READ(task, pid) != victim_pid ||
-+	    BPF_CORE_READ(rq, cpu) != target_cpu || state != KICK_STATE_QUEUED)
-+		return 0;
-+	if (scenario == ENQ_BOTH && !enq_preempt_issued)
-+		return 0;
-+
-+	slice_at_resched = BPF_CORE_READ(task, scx.slice);
-+	resched_tif = tif;
-+	state = KICK_STATE_RESCHED;
-+	return 0;
-+}
-+
-+SEC("fentry/kick_sync_wait_bal_cb")
-+int BPF_PROG(kick_wait_callback, struct rq *rq)
-+{
-+	if (scenario == KICK_LAZY_WAIT &&
-+	    BPF_CORE_READ(rq, cpu) == target_cpu)
-+		__sync_fetch_and_add(&nr_wait_callbacks, 1);
-+	return 0;
-+}
-+
-+void BPF_STRUCT_OPS(kick_stopping, struct task_struct *p, bool runnable)
-+{
-+	if (p->pid == victim_pid && state == KICK_STATE_RESCHED)
-+		state = KICK_STATE_DONE;
-+}
-+
-+void BPF_STRUCT_OPS(kick_exit, struct scx_exit_info *ei)
-+{
-+	UEI_RECORD(uei, ei);
-+}
-+
-+SEC(".struct_ops.link")
-+struct sched_ext_ops kick_ops = {
-+	.enqueue		= (void *)kick_enqueue,
-+	.running		= (void *)kick_running,
-+	.stopping		= (void *)kick_stopping,
-+	.exit			= (void *)kick_exit,
-+	.name			= "kick",
-+};
-diff --git a/tools/testing/selftests/sched_ext/kick.c b/tools/testing/selftests/sched_ext/kick.c
-new file mode 100644
-index 0000000000000..bd347c5051814
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/kick.c
-@@ -0,0 +1,608 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES
-+ */
-+#define _GNU_SOURCE
-+#include <bpf/bpf.h>
-+#include <errno.h>
-+#include <linux/sched.h>
-+#include <sched.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/prctl.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
-+#include <scx/common.h>
-+
-+#include "kick.bpf.skel.h"
-+#include "scx_test.h"
-+
-+#define WAIT_LOOPS 3000
-+
-+enum kick_scenario {
-+	KICK_IMMEDIATE,
-+	KICK_LAZY,
-+	KICK_LAZY_THEN_IMMEDIATE,
-+	KICK_IMMEDIATE_THEN_LAZY,
-+	KICK_PLAIN_THEN_LAZY,
-+	KICK_LAZY_THEN_PLAIN,
-+	KICK_BOTH,
-+	KICK_LAZY_WAIT,
-+	ENQ_BOTH,
-+	TICK_EXPIRY,
-+	INVALID_KICK_IDLE,
-+	INVALID_KICK_UNKNOWN,
-+};
-+
-+enum kick_state {
-+	KICK_STATE_IDLE,
-+	KICK_STATE_ARMED,
-+	KICK_STATE_QUEUED,
-+	KICK_STATE_RESCHED,
-+	KICK_STATE_DONE,
-+};
-+
-+struct victim {
-+	pid_t pid;
-+	int start_fd;
-+};
-+
-+struct observation {
-+	u64 slice_before;
-+	u64 slice_at_resched;
-+	u64 nr_wait_callbacks;
-+	s32 resched_tif;
-+};
-+
-+struct kick_ctx {
-+	cpu_set_t original_mask;
-+	int target_cpu;
-+};
-+
-+static bool enum_supported(const char *type, const char *name)
-+{
-+	u64 value;
-+
-+	return __COMPAT_read_enum(type, name, &value);
-+}
-+
-+static enum scx_test_status setup_controller(void **ctx_ptr)
-+{
-+	struct kick_ctx *ctx;
-+	cpu_set_t controller_mask;
-+	int cpu, controller_cpu = -1;
-+
-+	ctx = calloc(1, sizeof(*ctx));
-+	SCX_FAIL_IF(!ctx, "Failed to allocate context");
-+	if (sched_getaffinity(0, sizeof(ctx->original_mask),
-+			      &ctx->original_mask)) {
-+		free(ctx);
-+		SCX_FAIL("Failed to get affinity (%d)", errno);
-+	}
-+
-+	for (cpu = 0; cpu < CPU_SETSIZE; cpu++) {
-+		if (!CPU_ISSET(cpu, &ctx->original_mask))
-+			continue;
-+		if (controller_cpu < 0) {
-+			controller_cpu = cpu;
-+		} else {
-+			ctx->target_cpu = cpu;
-+			break;
-+		}
-+	}
-+	if (cpu == CPU_SETSIZE) {
-+		printf("SKIP: two allowed CPUs are required\n");
-+		free(ctx);
-+		return SCX_TEST_SKIP;
-+	}
-+
-+	CPU_ZERO(&controller_mask);
-+	CPU_SET(controller_cpu, &controller_mask);
-+	if (sched_setaffinity(0, sizeof(controller_mask), &controller_mask)) {
-+		free(ctx);
-+		SCX_FAIL("Failed to pin controller to CPU %d (%d)",
-+			 controller_cpu, errno);
-+	}
-+
-+	*ctx_ptr = ctx;
-+	return SCX_TEST_PASS;
-+}
-+
-+static void cleanup_controller(void *ctx_ptr)
-+{
-+	struct kick_ctx *ctx = ctx_ptr;
-+
-+	sched_setaffinity(0, sizeof(ctx->original_mask), &ctx->original_mask);
-+	free(ctx);
-+}
-+
-+static struct victim spawn_victim(int cpu)
-+{
-+	struct victim victim = { .pid = -1, .start_fd = -1 };
-+	int ready[2], start[2];
-+	pid_t parent = getpid();
-+	char byte = 1;
-+
-+	if (pipe(ready))
-+		return victim;
-+	if (pipe(start)) {
-+		close(ready[0]);
-+		close(ready[1]);
-+		return victim;
-+	}
-+
-+	victim.pid = fork();
-+	if (!victim.pid) {
-+		cpu_set_t mask;
-+
-+		close(ready[0]);
-+		close(start[1]);
-+		if (prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != parent)
-+			_exit(1);
-+		CPU_ZERO(&mask);
-+		CPU_SET(cpu, &mask);
-+		if (sched_setaffinity(0, sizeof(mask), &mask))
-+			_exit(1);
-+		if (write(ready[1], &byte, 1) != 1)
-+			_exit(1);
-+		close(ready[1]);
-+		if (read(start[0], &byte, 1) != 1)
-+			_exit(1);
-+		close(start[0]);
-+		for (;;)
-+			asm volatile("" ::: "memory");
-+	}
-+	if (victim.pid < 0) {
-+		close(ready[0]);
-+		close(ready[1]);
-+		close(start[0]);
-+		close(start[1]);
-+		return victim;
-+	}
-+
-+	close(ready[1]);
-+	close(start[0]);
-+	if (read(ready[0], &byte, 1) != 1) {
-+		close(ready[0]);
-+		close(start[1]);
-+		kill(victim.pid, SIGKILL);
-+		waitpid(victim.pid, NULL, 0);
-+		victim.pid = -1;
-+		return victim;
-+	}
-+	close(ready[0]);
-+	victim.start_fd = start[1];
-+	return victim;
-+}
-+
-+static void stop_victim(struct victim *victim)
-+{
-+	if (victim->start_fd >= 0)
-+		close(victim->start_fd);
-+	if (victim->pid > 0) {
-+		kill(victim->pid, SIGKILL);
-+		waitpid(victim->pid, NULL, 0);
-+	}
-+}
-+
-+static bool start_victim(struct victim *victim)
-+{
-+	char byte = 1;
-+
-+	if (write(victim->start_fd, &byte, 1) != 1)
-+		return false;
-+	close(victim->start_fd);
-+	victim->start_fd = -1;
-+	return true;
-+}
-+
-+static bool wait_for_state(struct kick *skel, u32 wanted)
-+{
-+	int i;
-+
-+	for (i = 0; i < WAIT_LOOPS; i++) {
-+		if (__atomic_load_n(&skel->bss->state, __ATOMIC_ACQUIRE) == wanted)
-+			return true;
-+		if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE))
-+			return false;
-+		usleep(1000);
-+	}
-+	return false;
-+}
-+
-+static enum scx_test_status trace_one(struct kick_ctx *ctx, u32 scenario,
-+				      u64 ops_flags,
-+				      s32 slice_expiry_override,
-+				      struct observation *obs)
-+{
-+	struct bpf_link *ops_link = NULL;
-+	struct kick *skel = NULL;
-+	struct victim challenger = { .pid = -1, .start_fd = -1 };
-+	struct victim victim;
-+	enum scx_test_status ret = SCX_TEST_FAIL;
-+	int cpu = ctx->target_cpu;
-+
-+	victim = spawn_victim(cpu);
-+	if (victim.pid < 0) {
-+		SCX_ERR("Failed to spawn victim");
-+		return SCX_TEST_FAIL;
-+	}
-+	if (scenario == ENQ_BOTH) {
-+		challenger = spawn_victim(cpu);
-+		if (challenger.pid < 0) {
-+			SCX_ERR("Failed to spawn enqueue challenger");
-+			goto out;
-+		}
-+	}
-+
-+	skel = kick__open();
-+	if (!skel) {
-+		SCX_ERR("Failed to open scenario %u", scenario);
-+		goto out;
-+	}
-+	SCX_ENUM_INIT(skel);
-+	skel->rodata->scenario = scenario;
-+	skel->rodata->victim_pid = victim.pid;
-+	skel->rodata->challenger_pid = challenger.pid;
-+	skel->rodata->target_cpu = cpu;
-+	skel->rodata->slice_expiry_override = slice_expiry_override;
-+	skel->struct_ops.kick_ops->flags |= ops_flags;
-+	if (kick__load(skel)) {
-+		SCX_ERR("Failed to load scenario %u", scenario);
-+		goto out;
-+	}
-+
-+	bpf_map__set_autoattach(skel->maps.kick_ops, false);
-+	if (kick__attach(skel)) {
-+		SCX_ERR("Failed to attach __resched_curr tracer");
-+		goto out;
-+	}
-+	skel->bss->state = KICK_STATE_ARMED;
-+	ops_link = bpf_map__attach_struct_ops(skel->maps.kick_ops);
-+	if (!ops_link) {
-+		SCX_ERR("Failed to attach scenario %u", scenario);
-+		goto out;
-+	}
-+	if (!start_victim(&victim)) {
-+		SCX_ERR("Failed to start victim");
-+		goto out;
-+	}
-+	if (scenario == ENQ_BOTH) {
-+		if (!wait_for_state(skel, KICK_STATE_QUEUED)) {
-+			SCX_ERR("Enqueue scenario did not arm");
-+			goto out;
-+		}
-+		if (!start_victim(&challenger)) {
-+			SCX_ERR("Failed to start enqueue challenger");
-+			goto out;
-+		}
-+	}
-+	if (!wait_for_state(skel, KICK_STATE_DONE)) {
-+		SCX_ERR("Scenario %u stopped in state %u, exit kind %d", scenario, skel->bss->state,
-+			skel->data->uei.kind);
-+		goto out;
-+	}
-+
-+	obs->slice_before = skel->bss->slice_before;
-+	obs->slice_at_resched = skel->bss->slice_at_resched;
-+	obs->nr_wait_callbacks = skel->bss->nr_wait_callbacks;
-+	obs->resched_tif = skel->bss->resched_tif;
-+	ret = SCX_TEST_PASS;
-+out:
-+	stop_victim(&challenger);
-+	stop_victim(&victim);
-+	if (ops_link)
-+		bpf_link__destroy(ops_link);
-+	if (skel)
-+		kick__destroy(skel);
-+	return ret;
-+}
-+
-+static bool observation_valid(const struct observation *obs)
-+{
-+	return obs->slice_before > 0 && !obs->slice_at_resched;
-+}
-+
-+static int active_lazy_mode(void)
-+{
-+	char buf[128];
-+	FILE *file;
-+
-+	file = fopen("/sys/kernel/debug/sched/preempt", "r");
-+	if (!file)
-+		return -1;
-+	if (!fgets(buf, sizeof(buf), file)) {
-+		fclose(file);
-+		return -1;
-+	}
-+	fclose(file);
-+
-+	if (strstr(buf, "(lazy)"))
-+		return 1;
-+	if (strstr(buf, "(full)"))
-+		return 0;
-+	return -1;
-+}
-+
-+static enum scx_test_status setup_immediate(void **ctx)
-+{
-+	if (!enum_supported("scx_kick_flags", "SCX_KICK_PREEMPT")) {
-+		printf("SKIP: SCX_KICK_PREEMPT is not supported\n");
-+		return SCX_TEST_SKIP;
-+	}
-+	return setup_controller(ctx);
-+}
-+
-+static enum scx_test_status setup_lazy(void **ctx)
-+{
-+	if (!enum_supported("scx_kick_flags", "SCX_KICK_PREEMPT_LAZY")) {
-+		printf("SKIP: SCX_KICK_PREEMPT_LAZY is not supported\n");
-+		return SCX_TEST_SKIP;
-+	}
-+	return setup_immediate(ctx);
-+}
-+
-+static enum scx_test_status setup_tick(void **ctx)
-+{
-+	if (!enum_supported("scx_ops_flags", "SCX_OPS_LAZY_SLICE_EXPIRY")) {
-+		printf("SKIP: SCX_OPS_LAZY_SLICE_EXPIRY is not supported\n");
-+		return SCX_TEST_SKIP;
-+	}
-+	return setup_lazy(ctx);
-+}
-+
-+static enum scx_test_status setup_coalesce(void **ctx)
-+{
-+	if (!enum_supported("scx_enq_flags", "SCX_ENQ_PREEMPT_LAZY")) {
-+		printf("SKIP: SCX_ENQ_PREEMPT_LAZY is not supported\n");
-+		return SCX_TEST_SKIP;
-+	}
-+	return setup_lazy(ctx);
-+}
-+
-+static enum scx_test_status setup_invalid(void **ctx)
-+{
-+	return setup_lazy(ctx);
-+}
-+
-+static enum scx_test_status run_immediate(void *ctx)
-+{
-+	struct observation obs;
-+	enum scx_test_status status;
-+
-+	status = trace_one(ctx, KICK_IMMEDIATE, 0, -1, &obs);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&obs));
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status run_lazy(void *ctx)
-+{
-+	struct observation immediate, lazy;
-+	enum scx_test_status status;
-+	int lazy_mode;
-+
-+	status = trace_one(ctx, KICK_IMMEDIATE, 0, -1, &immediate);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&immediate));
-+	status = trace_one(ctx, KICK_LAZY, 0, -1, &lazy);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&lazy));
-+
-+	lazy_mode = active_lazy_mode();
-+	if (lazy_mode > 0)
-+		SCX_FAIL_IF(lazy.resched_tif == immediate.resched_tif,
-+			    "Lazy mode used immediate TIF %d", lazy.resched_tif);
-+	else if (!lazy_mode)
-+		SCX_EQ(lazy.resched_tif, immediate.resched_tif);
-+	else
-+		printf("INFO: preemption mode unavailable; lazy TIF was %d, immediate TIF was %d\n",
-+		       lazy.resched_tif, immediate.resched_tif);
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status run_coalesce(void *ctx)
-+{
-+	struct observation immediate, lazy_first, immediate_first;
-+	struct observation plain_first, lazy_then_plain;
-+	struct observation both, lazy_wait, enq_both;
-+	enum scx_test_status status;
-+
-+	status = trace_one(ctx, KICK_IMMEDIATE, 0, -1, &immediate);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&immediate));
-+	status = trace_one(ctx, KICK_LAZY_THEN_IMMEDIATE, 0, -1,
-+			   &lazy_first);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&lazy_first));
-+	status = trace_one(ctx, KICK_IMMEDIATE_THEN_LAZY, 0, -1,
-+			   &immediate_first);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&immediate_first));
-+	SCX_EQ(lazy_first.resched_tif, immediate.resched_tif);
-+	SCX_EQ(immediate_first.resched_tif, immediate.resched_tif);
-+
-+	/*
-+	 * A plain kick in the same batch doesn't clear the slice by itself.
-+	 * The lazy preemption must still expire it, and the plain kick must
-+	 * still reschedule immediately, whichever came first.
-+	 */
-+	status = trace_one(ctx, KICK_PLAIN_THEN_LAZY, 0, -1,
-+			   &plain_first);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&plain_first));
-+	status = trace_one(ctx, KICK_LAZY_THEN_PLAIN, 0, -1,
-+			   &lazy_then_plain);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&lazy_then_plain));
-+	SCX_EQ(plain_first.resched_tif, immediate.resched_tif);
-+	SCX_EQ(lazy_then_plain.resched_tif, immediate.resched_tif);
-+
-+	/* Immediate kick and WAIT both take precedence over lazy preemption. */
-+	status = trace_one(ctx, KICK_BOTH, 0, -1, &both);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&both));
-+	status = trace_one(ctx, KICK_LAZY_WAIT, 0, -1, &lazy_wait);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&lazy_wait));
-+	SCX_EQ(both.resched_tif, immediate.resched_tif);
-+	SCX_EQ(lazy_wait.resched_tif, immediate.resched_tif);
-+	SCX_GT(lazy_wait.nr_wait_callbacks, 0);
-+
-+	/* Immediate enqueue preemption likewise takes precedence over lazy. */
-+	status = trace_one(ctx, ENQ_BOTH, 0, -1, &enq_both);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&enq_both));
-+	SCX_EQ(enq_both.resched_tif, immediate.resched_tif);
-+	return SCX_TEST_PASS;
-+}
-+
-+/*
-+ * A slice running out at the tick reschedules immediately by default and
-+ * lazily with SCX_OPS_LAZY_SLICE_EXPIRY, the way fair.c expires a slice.
-+ */
-+static enum scx_test_status run_tick(void *ctx)
-+{
-+	struct observation immediate, lazy, force_lazy, force_immediate;
-+	enum scx_test_status status;
-+	u64 lazy_flag;
-+	int lazy_mode;
-+	bool found;
-+
-+	found = __COMPAT_read_enum("scx_ops_flags", "SCX_OPS_LAZY_SLICE_EXPIRY",
-+				   &lazy_flag);
-+	SCX_ASSERT(found);
-+	status = trace_one(ctx, TICK_EXPIRY, 0, -1, &immediate);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&immediate));
-+	status = trace_one(ctx, TICK_EXPIRY, lazy_flag, -1, &lazy);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&lazy));
-+	status = trace_one(ctx, TICK_EXPIRY, 0, 1, &force_lazy);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&force_lazy));
-+	status = trace_one(ctx, TICK_EXPIRY, lazy_flag, 0,
-+			   &force_immediate);
-+	SCX_EQ(status, SCX_TEST_PASS);
-+	SCX_ASSERT(observation_valid(&force_immediate));
-+
-+	lazy_mode = active_lazy_mode();
-+	if (lazy_mode > 0)
-+		SCX_FAIL_IF(lazy.resched_tif == immediate.resched_tif,
-+			    "Lazy slice expiry used immediate TIF %d", lazy.resched_tif);
-+	else if (!lazy_mode)
-+		SCX_EQ(lazy.resched_tif, immediate.resched_tif);
-+	else
-+		printf("INFO: preemption mode unavailable; lazy TIF was %d, immediate TIF was %d\n",
-+		       lazy.resched_tif, immediate.resched_tif);
-+	SCX_EQ(force_lazy.resched_tif, lazy.resched_tif);
-+	SCX_EQ(force_immediate.resched_tif, immediate.resched_tif);
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status invalid_one(struct kick_ctx *ctx, u32 scenario)
-+{
-+	struct bpf_link *ops_link = NULL;
-+	struct kick *skel = NULL;
-+	struct victim victim;
-+	enum scx_test_status ret = SCX_TEST_FAIL;
-+	int cpu = ctx->target_cpu;
-+	int i;
-+
-+	victim = spawn_victim(cpu);
-+	if (victim.pid < 0)
-+		return SCX_TEST_FAIL;
-+
-+	skel = kick__open();
-+	if (!skel)
-+		goto out;
-+	SCX_ENUM_INIT(skel);
-+	skel->rodata->scenario = scenario;
-+	if (kick__load(skel))
-+		goto out;
-+	ops_link = bpf_map__attach_struct_ops(skel->maps.kick_ops);
-+	if (!ops_link || !start_victim(&victim))
-+		goto out;
-+
-+	for (i = 0; i < WAIT_LOOPS; i++) {
-+		if (skel->data->uei.kind == EXIT_KIND(SCX_EXIT_ERROR)) {
-+			ret = SCX_TEST_PASS;
-+			break;
-+		}
-+		usleep(1000);
-+	}
-+out:
-+	stop_victim(&victim);
-+	if (ops_link)
-+		bpf_link__destroy(ops_link);
-+	if (skel)
-+		kick__destroy(skel);
-+	return ret;
-+}
-+
-+static enum scx_test_status run_invalid(void *ctx)
-+{
-+	enum scx_test_status status;
-+	u32 scenario;
-+
-+	for (scenario = INVALID_KICK_IDLE;
-+	     scenario <= INVALID_KICK_UNKNOWN; scenario++) {
-+		status = invalid_one(ctx, scenario);
-+		SCX_EQ(status, SCX_TEST_PASS);
-+	}
-+	return SCX_TEST_PASS;
-+}
-+
-+static struct scx_test kick_immediate = {
-+	.name = "kick_immediate",
-+	.description = "Trace immediate kick slice expiration and rescheduling",
-+	.setup = setup_immediate,
-+	.run = run_immediate,
-+	.cleanup = cleanup_controller,
-+};
-+
-+static struct scx_test kick_lazy = {
-+	.name = "kick_lazy",
-+	.description = "Trace lazy kick slice expiration and rescheduling",
-+	.setup = setup_lazy,
-+	.run = run_lazy,
-+	.cleanup = cleanup_controller,
-+};
-+
-+static struct scx_test kick_coalesce = {
-+	.name = "kick_coalesce",
-+	.description = "Verify lazy preemption coalesces with immediate requests",
-+	.setup = setup_coalesce,
-+	.run = run_coalesce,
-+	.cleanup = cleanup_controller,
-+};
-+
-+static struct scx_test kick_tick = {
-+	.name = "kick_tick",
-+	.description = "Trace slice expiry at the tick, immediate and lazy",
-+	.setup = setup_tick,
-+	.run = run_tick,
-+	.cleanup = cleanup_controller,
-+};
-+
-+static struct scx_test kick_invalid = {
-+	.name = "kick_invalid",
-+	.description = "Verify invalid kick flag combinations fail",
-+	.setup = setup_invalid,
-+	.run = run_invalid,
-+	.cleanup = cleanup_controller,
-+};
-+
-+__attribute__((constructor))
-+static void register_kick_tests(void)
-+{
-+	scx_test_register(&kick_immediate);
-+	scx_test_register(&kick_lazy);
-+	scx_test_register(&kick_coalesce);
-+	scx_test_register(&kick_tick);
-+	scx_test_register(&kick_invalid);
-+}
-diff --git a/tools/testing/selftests/sched_ext/nohz_tick.bpf.c b/tools/testing/selftests/sched_ext/nohz_tick.bpf.c
-index 6998c5dd6bcb9..96ba1524ca384 100644
---- a/tools/testing/selftests/sched_ext/nohz_tick.bpf.c
-+++ b/tools/testing/selftests/sched_ext/nohz_tick.bpf.c
-@@ -9,10 +9,23 @@
- char _license[] SEC("license") = "GPL";
- 
- const volatile s32 test_cpu;
--bool finite_phase;
-+enum nohz_phase {
-+	NOHZ_PHASE_INF,
-+	NOHZ_PHASE_FINITE,
-+	NOHZ_PHASE_LAZY_ENQ,
-+	NOHZ_PHASE_LAZY_KICK,
-+};
-+
-+u32 phase;
-+s32 victim_pid;
-+s32 challenger_pid;
-+s32 trigger_pid;
- u64 nr_inf_running;
- u64 nr_finite_running;
- u64 nr_finite_ticks;
-+u64 nr_lazy_victim_running;
-+u64 nr_lazy_enq_running;
-+u64 nr_lazy_kick_running;
- 
- UEI_DEFINE(uei);
- 
-@@ -24,9 +37,31 @@ s32 BPF_STRUCT_OPS(nohz_tick_select_cpu, struct task_struct *p, s32 prev_cpu,
- 
- void BPF_STRUCT_OPS(nohz_tick_enqueue, struct task_struct *p, u64 enq_flags)
- {
--	u64 slice = finite_phase ? 1000000ULL : SCX_SLICE_INF;
-+	u64 slice;
-+	u64 dsq_id = SCX_DSQ_GLOBAL;
-+
-+	switch (phase) {
-+	case NOHZ_PHASE_INF:
-+		slice = SCX_SLICE_INF;
-+		break;
-+	case NOHZ_PHASE_FINITE:
-+		slice = 1000000ULL;
-+		break;
-+	case NOHZ_PHASE_LAZY_ENQ:
-+	case NOHZ_PHASE_LAZY_KICK:
-+		dsq_id = SCX_DSQ_LOCAL;
-+		slice = p->pid == victim_pid ? SCX_SLICE_INF : SCX_SLICE_DFL;
-+		if (phase == NOHZ_PHASE_LAZY_ENQ && p->pid == challenger_pid)
-+			enq_flags |= SCX_ENQ_PREEMPT_LAZY;
-+		break;
-+	default:
-+		slice = SCX_SLICE_DFL;
-+		break;
-+	}
- 
--	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, slice, enq_flags);
-+	scx_bpf_dsq_insert(p, dsq_id, slice, enq_flags);
-+	if (phase == NOHZ_PHASE_LAZY_KICK && p->pid == trigger_pid)
-+		scx_bpf_kick_cpu(test_cpu, SCX_KICK_PREEMPT_LAZY);
- 	if (enq_flags & SCX_ENQ_LAST)
- 		scx_bpf_kick_cpu(test_cpu, SCX_KICK_IDLE);
- }
-@@ -36,15 +71,22 @@ void BPF_STRUCT_OPS(nohz_tick_running, struct task_struct *p)
- 	if (bpf_get_smp_processor_id() != test_cpu)
- 		return;
- 
--	if (finite_phase)
-+	if (phase == NOHZ_PHASE_FINITE)
- 		__sync_fetch_and_add(&nr_finite_running, 1);
--	else
-+	else if (phase == NOHZ_PHASE_INF)
- 		__sync_fetch_and_add(&nr_inf_running, 1);
-+	else if (p->pid == victim_pid)
-+		__sync_fetch_and_add(&nr_lazy_victim_running, 1);
-+	else if (phase == NOHZ_PHASE_LAZY_ENQ && p->pid == challenger_pid)
-+		__sync_fetch_and_add(&nr_lazy_enq_running, 1);
-+	else if (phase == NOHZ_PHASE_LAZY_KICK && p->pid == challenger_pid)
-+		__sync_fetch_and_add(&nr_lazy_kick_running, 1);
- }
- 
- void BPF_STRUCT_OPS(nohz_tick_tick, struct task_struct *p)
- {
--	if (bpf_get_smp_processor_id() == test_cpu && finite_phase)
-+	if (bpf_get_smp_processor_id() == test_cpu &&
-+	    phase == NOHZ_PHASE_FINITE)
- 		__sync_fetch_and_add(&nr_finite_ticks, 1);
- }
- 
-@@ -61,5 +103,5 @@ struct sched_ext_ops nohz_tick_ops = {
- 	.tick			= (void *)nohz_tick_tick,
- 	.exit			= (void *)nohz_tick_exit,
- 	.name			= "nohz_tick",
--	.timeout_ms		= 1000U,
-+	.timeout_ms		= 5000U,
- };
-diff --git a/tools/testing/selftests/sched_ext/nohz_tick.c b/tools/testing/selftests/sched_ext/nohz_tick.c
-index 028f54391c2ca..acc6510e239ad 100644
---- a/tools/testing/selftests/sched_ext/nohz_tick.c
-+++ b/tools/testing/selftests/sched_ext/nohz_tick.c
-@@ -28,12 +28,26 @@
- #endif
- 
- #define MIN_FINITE_TICKS 3
--#define PHASE_TIMEOUT_MS 1000
-+#define PHASE_TIMEOUT_MS 5000
- 
- struct nohz_tick_ctx {
- 	struct nohz_tick *skel;
- 	cpu_set_t original_mask;
- 	int test_cpu;
-+	int housekeeping_cpu;
-+	bool lazy_supported;
-+};
-+
-+enum nohz_phase {
-+	NOHZ_PHASE_INF,
-+	NOHZ_PHASE_FINITE,
-+	NOHZ_PHASE_LAZY_ENQ,
-+	NOHZ_PHASE_LAZY_KICK,
-+};
-+
-+struct gated_worker {
-+	pid_t pid;
-+	int start_fd;
- };
- 
- static int first_allowed_cpu(const cpu_set_t *mask, int first, int last)
-@@ -47,20 +61,21 @@ static int first_allowed_cpu(const cpu_set_t *mask, int first, int last)
- 	return -1;
- }
- 
--static int find_nohz_full_cpu(const cpu_set_t *allowed)
-+static int read_nohz_full_mask(cpu_set_t *mask)
- {
- 	char buf[4096], *cur, *end;
- 	FILE *file;
-+	int ret = 0;
- 
- 	file = fopen("/sys/devices/system/cpu/nohz_full", "r");
- 	if (!file)
--		return -1;
-+		return -errno;
- 	if (!fgets(buf, sizeof(buf), file)) {
--		fclose(file);
--		return -1;
-+		ret = ferror(file) ? -errno : -EINVAL;
-+		goto out;
- 	}
--	fclose(file);
- 
-+	CPU_ZERO(mask);
- 	cur = buf;
- 	while (*cur) {
- 		long first, last;
-@@ -73,25 +88,30 @@ static int find_nohz_full_cpu(const cpu_set_t *allowed)
- 
- 		errno = 0;
- 		first = strtol(cur, &end, 10);
--		if (errno || end == cur || first < 0 || first >= CPU_SETSIZE)
--			return -1;
-+		if (errno || end == cur || first < 0 || first >= CPU_SETSIZE) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 		cur = end;
- 		last = first;
- 		if (*cur == '-') {
- 			cur++;
- 			errno = 0;
- 			last = strtol(cur, &end, 10);
--			if (errno || end == cur || last < first)
--				return -1;
-+			if (errno || end == cur || last < first) {
-+				ret = -EINVAL;
-+				goto out;
-+			}
- 			cur = end;
- 		}
- 
--		cpu = first_allowed_cpu(allowed, first, last);
--		if (cpu >= 0)
--			return cpu;
-+		for (cpu = first; cpu <= last && cpu < CPU_SETSIZE; cpu++)
-+			CPU_SET(cpu, mask);
- 	}
- 
--	return -1;
-+out:
-+	fclose(file);
-+	return ret;
- }
- 
- static pid_t start_worker(int cpu)
-@@ -132,6 +152,87 @@ static void stop_worker(pid_t pid)
- 	waitpid(pid, NULL, 0);
- }
- 
-+static struct gated_worker spawn_gated_worker(int cpu)
-+{
-+	struct gated_worker worker = { .pid = -1, .start_fd = -1 };
-+	int ready[2], start[2];
-+	pid_t parent = getpid();
-+	char byte = 1;
-+
-+	if (pipe(ready))
-+		return worker;
-+	if (pipe(start)) {
-+		close(ready[0]);
-+		close(ready[1]);
-+		return worker;
-+	}
-+
-+	worker.pid = fork();
-+	if (!worker.pid) {
-+		struct sched_param param = {};
-+		cpu_set_t mask;
-+
-+		close(ready[0]);
-+		close(start[1]);
-+		if (prctl(PR_SET_PDEATHSIG, SIGKILL) || getppid() != parent)
-+			_exit(1);
-+		CPU_ZERO(&mask);
-+		CPU_SET(cpu, &mask);
-+		if (sched_setaffinity(0, sizeof(mask), &mask))
-+			_exit(1);
-+		if (sched_setscheduler(0, SCHED_EXT, &param))
-+			_exit(1);
-+		if (write(ready[1], &byte, 1) != 1)
-+			_exit(1);
-+		close(ready[1]);
-+		if (read(start[0], &byte, 1) != 1)
-+			_exit(1);
-+		close(start[0]);
-+		for (;;)
-+			asm volatile("" ::: "memory");
-+	}
-+	if (worker.pid < 0) {
-+		close(ready[0]);
-+		close(ready[1]);
-+		close(start[0]);
-+		close(start[1]);
-+		return worker;
-+	}
-+
-+	close(ready[1]);
-+	close(start[0]);
-+	if (read(ready[0], &byte, 1) != 1) {
-+		close(ready[0]);
-+		close(start[1]);
-+		kill(worker.pid, SIGKILL);
-+		waitpid(worker.pid, NULL, 0);
-+		worker.pid = -1;
-+		return worker;
-+	}
-+	close(ready[0]);
-+	worker.start_fd = start[1];
-+	return worker;
-+}
-+
-+static bool start_gated_worker(struct gated_worker *worker)
-+{
-+	char byte = 1;
-+
-+	if (write(worker->start_fd, &byte, 1) != 1)
-+		return false;
-+	close(worker->start_fd);
-+	worker->start_fd = -1;
-+	return true;
-+}
-+
-+static void stop_gated_worker(struct gated_worker *worker)
-+{
-+	if (worker->start_fd >= 0)
-+		close(worker->start_fd);
-+	stop_worker(worker->pid);
-+	worker->pid = -1;
-+}
-+
- static int pause_worker(pid_t pid)
- {
- 	int status;
-@@ -162,8 +263,9 @@ static bool wait_for_counter(const u64 *counter, u64 value, int timeout_ms)
- static enum scx_test_status setup(void **ctx_ptr)
- {
- 	struct nohz_tick_ctx *ctx;
--	cpu_set_t controller_mask;
--	int cpu;
-+	cpu_set_t controller_mask, nohz_full_mask;
-+	u64 enum_value;
-+	int cpu, i, ret;
- 
- 	ctx = calloc(1, sizeof(*ctx));
- 	SCX_FAIL_IF(!ctx, "Failed to allocate context");
-@@ -173,15 +275,27 @@ static enum scx_test_status setup(void **ctx_ptr)
- 		SCX_FAIL("Failed to get affinity (%d)", errno);
- 	}
- 
--	cpu = find_nohz_full_cpu(&ctx->original_mask);
--	if (cpu < 0) {
-+	ret = read_nohz_full_mask(&nohz_full_mask);
-+	if (ret) {
-+		fprintf(stderr, "SKIP: failed to read NOHZ_FULL mask (%d)\n", ret);
-+		free(ctx);
-+		return SCX_TEST_SKIP;
-+	}
-+
-+	for (cpu = 0; cpu < CPU_SETSIZE; cpu++)
-+		if (CPU_ISSET(cpu, &ctx->original_mask) &&
-+		    CPU_ISSET(cpu, &nohz_full_mask))
-+			break;
-+	if (cpu == CPU_SETSIZE) {
- 		fprintf(stderr, "SKIP: no allowed NOHZ_FULL CPU\n");
- 		free(ctx);
- 		return SCX_TEST_SKIP;
- 	}
- 
- 	controller_mask = ctx->original_mask;
--	CPU_CLR(cpu, &controller_mask);
-+	for (i = 0; i < CPU_SETSIZE; i++)
-+		if (CPU_ISSET(i, &nohz_full_mask))
-+			CPU_CLR(i, &controller_mask);
- 	if (CPU_COUNT(&controller_mask) == 0) {
- 		fprintf(stderr, "SKIP: no housekeeping CPU available\n");
- 		free(ctx);
-@@ -189,6 +303,13 @@ static enum scx_test_status setup(void **ctx_ptr)
- 	}
- 
- 	ctx->test_cpu = cpu;
-+	ctx->housekeeping_cpu = first_allowed_cpu(&controller_mask, 0,
-+						  CPU_SETSIZE - 1);
-+	ctx->lazy_supported =
-+		__COMPAT_read_enum("scx_enq_flags", "SCX_ENQ_PREEMPT_LAZY",
-+				   &enum_value) &&
-+		__COMPAT_read_enum("scx_kick_flags", "SCX_KICK_PREEMPT_LAZY",
-+				   &enum_value);
- 	ctx->skel = nohz_tick__open();
- 	if (!ctx->skel) {
- 		free(ctx);
-@@ -220,11 +341,15 @@ static enum scx_test_status run(void *ctx_ptr)
- 	struct nohz_tick_ctx *ctx = ctx_ptr;
- 	struct nohz_tick *skel = ctx->skel;
- 	struct bpf_link *link = NULL;
-+	struct gated_worker victim = { .pid = -1, .start_fd = -1 };
-+	struct gated_worker challenger = { .pid = -1, .start_fd = -1 };
-+	struct gated_worker trigger = { .pid = -1, .start_fd = -1 };
- 	enum scx_test_status status = SCX_TEST_FAIL;
- 	pid_t finite_worker = -1;
- 	pid_t inf_worker = -1;
- 	u64 finite_running;
- 	u64 finite_ticks;
-+	u64 victim_running;
- 	int ret;
- 
- 	link = bpf_map__attach_struct_ops(skel->maps.nohz_tick_ops);
-@@ -260,7 +385,8 @@ static enum scx_test_status run(void *ctx_ptr)
- 	/*
- 	 * The next EXT task receives a finite slice and must restart the tick.
- 	 */
--	__atomic_store_n(&skel->bss->finite_phase, true, __ATOMIC_RELEASE);
-+	__atomic_store_n(&skel->bss->phase, NOHZ_PHASE_FINITE,
-+			 __ATOMIC_RELEASE);
- 	finite_worker = start_worker(ctx->test_cpu);
- 	if (finite_worker < 0) {
- 		SCX_ERR("Failed to start finite-slice worker (%d)", errno);
-@@ -308,7 +434,87 @@ static enum scx_test_status run(void *ctx_ptr)
- 					     finite_ticks));
- 		goto out;
- 	}
-+	stop_worker(finite_worker);
-+	finite_worker = -1;
-+	stop_worker(inf_worker);
-+	inf_worker = -1;
-+	if (!ctx->lazy_supported)
-+		goto check_exit;
-+
-+	/*
-+	 * A lazy local enqueue must restart the tick after clearing the slice of
-+	 * an infinite-slice task on a full-dynticks CPU.
-+	 */
-+	__atomic_store_n(&skel->bss->phase, NOHZ_PHASE_LAZY_ENQ,
-+			 __ATOMIC_RELEASE);
-+	victim = spawn_gated_worker(ctx->test_cpu);
-+	challenger = spawn_gated_worker(ctx->test_cpu);
-+	if (victim.pid < 0 || challenger.pid < 0) {
-+		SCX_ERR("Failed to spawn lazy-enqueue workers");
-+		goto out;
-+	}
-+	skel->bss->victim_pid = victim.pid;
-+	skel->bss->challenger_pid = challenger.pid;
-+	if (!start_gated_worker(&victim) ||
-+	    !wait_for_counter(&skel->bss->nr_lazy_victim_running, 1,
-+			      PHASE_TIMEOUT_MS)) {
-+		SCX_ERR("Lazy-enqueue victim was not scheduled");
-+		goto out;
-+	}
-+	usleep(100000);
-+
-+	if (!start_gated_worker(&challenger) ||
-+	    !wait_for_counter(&skel->bss->nr_lazy_enq_running, 1,
-+			      PHASE_TIMEOUT_MS)) {
-+		SCX_ERR("Lazy enqueue made no progress on CPU %d", ctx->test_cpu);
-+		goto out;
-+	}
-+	stop_gated_worker(&challenger);
-+	stop_gated_worker(&victim);
-+
-+	/* Repeat with a lazy kick delivered from a housekeeping CPU. */
-+	__atomic_store_n(&skel->bss->phase, NOHZ_PHASE_LAZY_KICK,
-+			 __ATOMIC_RELEASE);
-+	victim = spawn_gated_worker(ctx->test_cpu);
-+	challenger = spawn_gated_worker(ctx->test_cpu);
-+	trigger = spawn_gated_worker(ctx->housekeeping_cpu);
-+	if (victim.pid < 0 || challenger.pid < 0 || trigger.pid < 0) {
-+		SCX_ERR("Failed to spawn lazy-kick workers");
-+		goto out;
-+	}
-+	skel->bss->victim_pid = victim.pid;
-+	skel->bss->challenger_pid = challenger.pid;
-+	skel->bss->trigger_pid = trigger.pid;
-+	victim_running = __atomic_load_n(&skel->bss->nr_lazy_victim_running,
-+					 __ATOMIC_RELAXED);
-+	if (!start_gated_worker(&victim) ||
-+	    !wait_for_counter(&skel->bss->nr_lazy_victim_running,
-+			      victim_running + 1,
-+			      PHASE_TIMEOUT_MS)) {
-+		SCX_ERR("Lazy-kick victim was not scheduled");
-+		goto out;
-+	}
-+	if (!start_gated_worker(&challenger)) {
-+		SCX_ERR("Failed to start lazy-kick challenger");
-+		goto out;
-+	}
-+	usleep(100000);
-+	if (__atomic_load_n(&skel->bss->nr_lazy_kick_running,
-+			    __ATOMIC_RELAXED)) {
-+		SCX_ERR("Lazy-kick challenger ran before the kick");
-+		goto out;
-+	}
-+	if (!start_gated_worker(&trigger) ||
-+	    !wait_for_counter(&skel->bss->nr_lazy_kick_running, 1,
-+			      PHASE_TIMEOUT_MS)) {
-+		SCX_ERR("Lazy kick made no progress on CPU %d", ctx->test_cpu);
-+		goto out;
-+	}
-+	stop_gated_worker(&trigger);
-+	stop_gated_worker(&challenger);
-+	stop_gated_worker(&victim);
- 
-+check_exit:
- 	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
- 		SCX_ERR("Scheduler exited unexpectedly (kind=%llu code=%lld)",
- 			(unsigned long long)skel->data->uei.kind,
-@@ -321,6 +527,9 @@ static enum scx_test_status run(void *ctx_ptr)
- 		(unsigned long long)skel->bss->nr_finite_ticks);
- 	status = SCX_TEST_PASS;
- out:
-+	stop_gated_worker(&trigger);
-+	stop_gated_worker(&challenger);
-+	stop_gated_worker(&victim);
- 	stop_worker(finite_worker);
- 	stop_worker(inf_worker);
- 	if (link)
--- 
-2.55.0
+Dropping the DSQ lock does introduce an ordering window: on the global/bypass
+path, another CPU may consume the task and move it to a local DSQ before
+ops.dequeue() returns.
 
+However, I don't see how the task can re-enter BPF custody in that window.
+SCX_OPSS_DISPATCHING remains set until after the callback, so
+set_next_task_scx() and concurrent dequeue paths must wait for the transition to
+complete. On the user-DSQ-to-local paths, the task's rq lock remains held across
+the callback.
+
+Could you clarify the interleaving in which the task re-enters custody before
+ops.dequeue() is invoked? If such an interleaving exists, it may also imply a
+more serious ordering race with a new ops.enqueue() callback. Otherwise, the
+documentation should only say that ops.dequeue() may run after the task has been
+consumed or moved to a terminal/local DSQ.
+
+> 
+> Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+> Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
+> ---
+>  Documentation/scheduler/sched-ext.rst |  4 +-
+>  kernel/sched/ext/ext.c                | 67 +++++++++++++++++++++------
+>  2 files changed, 56 insertions(+), 15 deletions(-)
+> 
+> diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+> index 794ae80b3ba3..741473c5ae43 100644
+> --- a/Documentation/scheduler/sched-ext.rst
+> +++ b/Documentation/scheduler/sched-ext.rst
+> @@ -361,7 +361,9 @@ The following briefly shows how a waking task is scheduled and executed.
+>     ``scx_bpf_dsq_reenq()``. The task stays in BPF custody the entire time.
+>  
+>     When a task leaves BPF scheduler custody, ``ops.dequeue()`` is invoked.
+> -   The dequeue can happen for different reasons, distinguished by flags:
+> +   The callback is not ordered against consumption of the task and may run
+> +   after the task has re-entered custody. The dequeue can happen for
+> +   different reasons, distinguished by flags:
+
+The "re-entered custody" part seems to imply that ops.enqueue() for a new
+custody cycle may run before ops.dequeue() for the previous one. That would
+break the expected enqueue/dequeue lifecycle ordering and could regress
+schedulers that track per-task state in these callbacks.
+
+I don't see such an interleaving here. On the user-DSQ to local DSQ paths, the
+task's rq remains locked across ops.dequeue(). On the global/bypass path, the
+task may be consumed after the DSQ is unlocked, but SCX_OPSS_DISPATCHING remains
+set until after ops.dequeue() returns, so the task should not be able to run and
+enter a new custody cycle first.
+
+If that's the case, I'd suggest either dropping this addition or rephrasing to
+something like:
+
+  The callback is not ordered against consumption of the task and may run after
+  the task has been moved to, or consumed from, a terminal DSQ.
+
+It'd also be useful to add a selftest whose ops.dequeue() callback iterates the
+source user DSQ, directly covering the reported deadlock.
+
+Other than this ordering/documentation/selftest concerns, the fix looks
+reasonable to me.
+
+Acked-by: Andrea Righi <arighi@nvidia.com>
+
+Thanks,
+-Andrea
+
+>  
+>     1. **Regular dispatch**: when a task in BPF custody is dispatched to a
+>        terminal DSQ from ``ops.dispatch()`` (leaving BPF custody for
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 40fa1697bdb7..13efddb729e3 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -1499,20 +1499,28 @@ static inline bool task_scx_migrating(struct task_struct *p)
+>  	return p->scx.sticky_cpu >= 0;
+>  }
+>  
+> +/* Must be called under the lock serializing @p's custody transfers. */
+> +static bool task_leave_custody(struct task_struct *p)
+> +{
+> +	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
+> +		return false;
+> +
+> +	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
+> +	return true;
+> +}
+> +
+>  /*
+>   * Call ops.dequeue() if the task is in BPF custody and not migrating.
+> - * Clears %SCX_TASK_IN_CUSTODY when the callback is invoked.
+> + * Clears %SCX_TASK_IN_CUSTODY before the callback is invoked.
+>   */
+>  static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
+>  			      struct task_struct *p, u64 deq_flags)
+>  {
+> -	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
+> +	if (!task_leave_custody(p))
+>  		return;
+>  
+>  	if (SCX_HAS_OP(sch, dequeue))
+>  		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
+> -
+> -	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
+>  }
+>  
+>  static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+> @@ -1705,20 +1713,28 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+>  	if (is_rq_owned) {
+>  		rq_owned_post_enq(sch, rq, dsq, p, enq_flags);
+>  	} else {
+> +		bool call_dequeue = false;
+> +
+>  		/*
+>  		 * Global and bypass DSQs are terminal - the task leaves the
+> -		 * scheduler's custody, so ops.dequeue() fires here. It can run
+> +		 * scheduler's custody, so ops.dequeue() fires. It can run
+>  		 * without @p's rq lock (finish_dispatch() passes the dispatch
+>  		 * rq); that's safe because dequeue_task_scx() waits on
+>  		 * SCX_OPSS_DISPATCHING (see the ops_state note above) and so
+>  		 * can't race it. A non-terminal DSQ keeps the task in custody.
+> +		 * The custody transfer happens under @dsq->lock so that
+> +		 * later consumers see the flag clear; the callback runs
+> +		 * unlocked - it must not run with a DSQ lock held.
+>  		 */
+>  		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
+> -			call_task_dequeue(sch, rq, p, 0);
+> +			call_dequeue = task_leave_custody(p);
+>  		else
+>  			p->scx.flags |= SCX_TASK_IN_CUSTODY;
+>  
+>  		raw_spin_unlock(&dsq->lock);
+> +
+> +		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
+> +			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
+>  	}
+>  
+>  	/*
+> @@ -2373,11 +2389,13 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
+>  		scx_schedule_reenq_local(rq, 0);
+>  }
+>  
+> -void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
+> -				      u64 enq_flags, struct scx_dispatch_q *src_dsq,
+> -				      struct rq *dst_rq)
+> +static struct scx_dispatch_q *
+> +__scx_move_local_task_to_local_dsq(struct scx_sched *sch,
+> +				   struct task_struct *p, u64 *enq_flags,
+> +				   struct scx_dispatch_q *src_dsq,
+> +				   struct rq *dst_rq)
+>  {
+> -	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, &enq_flags);
+> +	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, enq_flags);
+>  
+>  	/* @p is on @dst_rq, an rq-owned @src_dsq is covered by the rq lock */
+>  	if (!dsq_is_rq_owned(src_dsq))
+> @@ -2386,14 +2404,25 @@ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct
+>  
+>  	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
+>  
+> -	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+> +	if (*enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+>  		dsq_insert_head(dst_dsq, p);
+>  	else
+>  		list_add_tail(&p->scx.dsq_list.node, &dst_dsq->list);
+>  
+> -	dsq_inc_nr(dst_dsq, p, enq_flags);
+> +	dsq_inc_nr(dst_dsq, p, *enq_flags);
+>  	p->scx.dsq = dst_dsq;
+>  
+> +	return dst_dsq;
+> +}
+> +
+> +void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
+> +				      u64 enq_flags, struct scx_dispatch_q *src_dsq,
+> +				      struct rq *dst_rq)
+> +{
+> +	struct scx_dispatch_q *dst_dsq;
+> +
+> +	dst_dsq = __scx_move_local_task_to_local_dsq(sch, p, &enq_flags,
+> +						     src_dsq, dst_rq);
+>  	rq_owned_post_enq(sch, dst_rq, dst_dsq, p, enq_flags);
+>  }
+>  
+> @@ -2628,9 +2657,14 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+>  	if (dst_dsq->id == SCX_DSQ_LOCAL) {
+>  		/* @p is going from a non-local DSQ to a local DSQ */
+>  		if (src_rq == dst_rq) {
+> +			struct scx_dispatch_q *ldsq;
+> +
+>  			scx_task_unlink_from_dsq(p, src_dsq);
+> -			scx_move_local_task_to_local_dsq(sch, p, enq_flags, src_dsq, dst_rq);
+> +			ldsq = __scx_move_local_task_to_local_dsq(sch, p,
+> +								  &enq_flags,
+> +								  src_dsq, dst_rq);
+>  			raw_spin_unlock(&src_dsq->lock);
+> +			rq_owned_post_enq(sch, dst_rq, ldsq, p, enq_flags);
+>  		} else {
+>  			raw_spin_unlock(&src_dsq->lock);
+>  			move_remote_task_to_local_dsq(sch, p, enq_flags, src_rq, dst_rq);
+> @@ -2679,9 +2713,14 @@ bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
+>  			break;
+>  
+>  		if (rq == task_rq) {
+> +			struct scx_dispatch_q *ldsq;
+> +
+>  			scx_task_unlink_from_dsq(p, dsq);
+> -			scx_move_local_task_to_local_dsq(sch, p, enq_flags, dsq, rq);
+> +			ldsq = __scx_move_local_task_to_local_dsq(sch, p,
+> +								  &enq_flags,
+> +								  dsq, rq);
+>  			raw_spin_unlock(&dsq->lock);
+> +			rq_owned_post_enq(sch, rq, ldsq, p, enq_flags);
+>  			return true;
+>  		}
+>  
+> -- 
+> 2.43.0
+> 
