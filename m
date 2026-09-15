@@ -1,46 +1,42 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5C72D2382
-	for <sched-ext@lists.linux.dev>; Tue, 15 Sep 2026 08:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05DD46C4AF;
+	Tue, 15 Sep 2026 08:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789459854; cv=none; b=odPIYJrx1oHD0OvmHYmLxtCHr8JYoJDyWub6aIZTQ61mhSzem3Ez2osjtU8heS2C+j0YzSCsWEsVMSDRBDhgO1uKq8BjenbvKQ1vi+AJX31E4hsb8eIaIixcoF8b39tywlSYP9lVV84+f3BVWzXx+l//rzRCwZ75Kzgbs4Gfbho=
+	t=1789460847; cv=none; b=JeuLmUR72E+7ECHGI/VYnfEcdcuflADZqB3HFmESA8b430zSry+w8WHbCQZSSvu56LegpjNFtddpqLleHXokewGT4PiAtE8Or0L6vbqWVfm5PNE8Hpc57srL3PTBNilvKricGqnZkntU7waHR8gNd6LVc7/l87VNgqS2s+l1cq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789459854; c=relaxed/simple;
-	bh=Qx3G9NPrOwqFb/YCCD+lVkm9cKVCX0YOsg0O5tUqB9k=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Lr/e0IO6sm2xQmtmVMmz09tj8XJPcRBKKo8wTD2JO+jC31z7CXyh9lWiyGEH8ynU5b5ymInhuEH2SGuYfahX5ftC7Cp4btMuL+QSm4tbENaygu022vMFArrpUFXtRsKlpIvBRfQr6f8TD6LlnxjTIy1cq9FgAkWH9ved6OUSb6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: f366b31cb0dc11f19a56ed5b684f684d-20260915
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:e57cdad1-ed24-4632-8c98-f945fd1420f9,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:-20,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACT
-	ION:release,TS:-45
-X-CID-META: VersionHash:7db8b62,CLOUDID:aadba9ea36c244e97e44966e149e52da,BulkI
-	D:nil,BulkQuantity:0,SF:102|136|850|865|898,TC:nil,Content:0|15|50|99,EDM:
-	19|-19|2|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,O
-	SI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: f366b31cb0dc11f19a56ed5b684f684d-20260915
-X-User: fangqiurong@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <fangqiurong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 289329708; Tue, 15 Sep 2026 16:10:44 +0800
-From: Qiurong Fang <fangqiurong@kylinos.cn>
-To: Tejun Heo <tj@kernel.org>,
-	sched-ext@lists.linux.dev
-Cc: Andrea Righi <arighi@nvidia.com>,
+	s=arc-20240116; t=1789460847; c=relaxed/simple;
+	bh=6lVG5RXRTNiFt5ZiZlTDQaLWPlcvcX9I6MMMXviIp6w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HuDVrPBb1Vw+7WSrt4dPYJSvpi8T/nxYaV6K7Ku3wggYqTFWr0ZhxoFL9dqcgKaawJTT4ImtU/2/IYUZRlSgzgsC090N6bpAAkq0/QMLRwKpAQBltvg8V4doDZ+Jy6CgXuYbQwA3WrTvBxR1G1HGBjTC1RAQniOqO+wLpajdHv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NJR30kMF; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NJR30kMF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E331F00898;
+	Tue, 15 Sep 2026 08:27:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789460846;
+	bh=p602bYYAkDW1My1vQzlviFBo0UbaGvakw4smPX6EMb8=;
+	h=From:To:Cc:Subject:Date;
+	b=NJR30kMFNbkYgLLbnXwc06kxa9NEJ5KfhX0n17gZ4uabVV+n9YA2A10YmOdJMmrj8
+	 p+Ge1ut3HlOXlXHAv25IJLQt16EiOtMm9HTuPnMT7Z8Qx1J6bJPu73mz9MXWycvEUG
+	 jH9W0UfRsvm5p001gD1cZ9VkV7AHGh3c8DzHEXx6U6NxvPZZJGhD8ICJa5XYWyi0nt
+	 uzishH2ilu9YLX92JlTlEdhPJJ32yja31nea6x5Oee5XKQA+vWRMSgXJItOiClemTN
+	 ZViRvWYlhSyQWuRirall6gKh+N2ZhHdtj+s7YaI56CrEYpfFpg8YrLOIrcumipM7By
+	 M3cxsFmjyDzMQ==
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
 	Changwoo Min <changwoo@igalia.com>
-Subject: [PATCH] sched_ext: Don't run ops.dequeue() with a DSQ lock held
-Date: Tue, 15 Sep 2026 16:10:27 +0800
-Message-Id: <20260915081027.4185881-1-fangqiurong@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-7.3-fixes] sched_ext: Idle claim recovery and online cid mask
+Date: Mon, 14 Sep 2026 22:27:23 -1000
+Message-ID: <20260915082725.3881071-1-tj@kernel.org>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,189 +45,56 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+Hello,
 
-ops.dequeue() is called with the source user DSQ's lock still held on
-the consume and move paths (scx_consume_dispatch_q(),
-move_task_between_dsqs()) and with the terminal global/bypass DSQ's
-lock still held in scx_dispatch_enqueue(). A BPF scheduler that locks
-the same DSQ from ops.dequeue() - e.g. by iterating it with
-bpf_iter_scx_dsq, which takes the DSQ lock on every step -
-self-deadlocks.
+v2: - Dropped the idle-to-idle notification patch. Restoring an unused idle
+      claim from ops.dispatch() is the established pattern (Andrea Righi).
+      Replaced with a patch fixing scx_qmap to do that and documenting the
+      pattern in ops.update_idle().
+    - Reworded the online cmask getter kerneldoc (Andrea Righi).
 
-Move the invocation after the DSQ unlock on all three paths.
-SCX_TASK_IN_CUSTODY is cleared under the lock so that the callback is
-invoked exactly once; it is not ordered against consumption of the
-task and may run after the task has re-entered custody.
+v1: https://lore.kernel.org/r/20260914234259.3585373-1-tj@kernel.org
 
-Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
----
- Documentation/scheduler/sched-ext.rst |  4 +-
- kernel/sched/ext/ext.c                | 67 +++++++++++++++++++++------
- 2 files changed, 56 insertions(+), 15 deletions(-)
+Two issues surfaced while converting a scheduler that maintains its own idle
+and online tracking.
 
-diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
-index 794ae80b3ba3..741473c5ae43 100644
---- a/Documentation/scheduler/sched-ext.rst
-+++ b/Documentation/scheduler/sched-ext.rst
-@@ -361,7 +361,9 @@ The following briefly shows how a waking task is scheduled and executed.
-    ``scx_bpf_dsq_reenq()``. The task stays in BPF custody the entire time.
- 
-    When a task leaves BPF scheduler custody, ``ops.dequeue()`` is invoked.
--   The dequeue can happen for different reasons, distinguished by flags:
-+   The callback is not ordered against consumption of the task and may run
-+   after the task has re-entered custody. The dequeue can happen for
-+   different reasons, distinguished by flags:
- 
-    1. **Regular dispatch**: when a task in BPF custody is dispatched to a
-       terminal DSQ from ``ops.dispatch()`` (leaving BPF custody for
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 40fa1697bdb7..13efddb729e3 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1499,20 +1499,28 @@ static inline bool task_scx_migrating(struct task_struct *p)
- 	return p->scx.sticky_cpu >= 0;
- }
- 
-+/* Must be called under the lock serializing @p's custody transfers. */
-+static bool task_leave_custody(struct task_struct *p)
-+{
-+	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
-+		return false;
-+
-+	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
-+	return true;
-+}
-+
- /*
-  * Call ops.dequeue() if the task is in BPF custody and not migrating.
-- * Clears %SCX_TASK_IN_CUSTODY when the callback is invoked.
-+ * Clears %SCX_TASK_IN_CUSTODY before the callback is invoked.
-  */
- static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
- 			      struct task_struct *p, u64 deq_flags)
- {
--	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
-+	if (!task_leave_custody(p))
- 		return;
- 
- 	if (SCX_HAS_OP(sch, dequeue))
- 		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
--
--	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
- }
- 
- static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
-@@ -1705,20 +1713,28 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
- 	if (is_rq_owned) {
- 		rq_owned_post_enq(sch, rq, dsq, p, enq_flags);
- 	} else {
-+		bool call_dequeue = false;
-+
- 		/*
- 		 * Global and bypass DSQs are terminal - the task leaves the
--		 * scheduler's custody, so ops.dequeue() fires here. It can run
-+		 * scheduler's custody, so ops.dequeue() fires. It can run
- 		 * without @p's rq lock (finish_dispatch() passes the dispatch
- 		 * rq); that's safe because dequeue_task_scx() waits on
- 		 * SCX_OPSS_DISPATCHING (see the ops_state note above) and so
- 		 * can't race it. A non-terminal DSQ keeps the task in custody.
-+		 * The custody transfer happens under @dsq->lock so that
-+		 * later consumers see the flag clear; the callback runs
-+		 * unlocked - it must not run with a DSQ lock held.
- 		 */
- 		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
--			call_task_dequeue(sch, rq, p, 0);
-+			call_dequeue = task_leave_custody(p);
- 		else
- 			p->scx.flags |= SCX_TASK_IN_CUSTODY;
- 
- 		raw_spin_unlock(&dsq->lock);
-+
-+		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
-+			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
- 	}
- 
- 	/*
-@@ -2373,11 +2389,13 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
- 		scx_schedule_reenq_local(rq, 0);
- }
- 
--void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
--				      u64 enq_flags, struct scx_dispatch_q *src_dsq,
--				      struct rq *dst_rq)
-+static struct scx_dispatch_q *
-+__scx_move_local_task_to_local_dsq(struct scx_sched *sch,
-+				   struct task_struct *p, u64 *enq_flags,
-+				   struct scx_dispatch_q *src_dsq,
-+				   struct rq *dst_rq)
- {
--	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, &enq_flags);
-+	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, enq_flags);
- 
- 	/* @p is on @dst_rq, an rq-owned @src_dsq is covered by the rq lock */
- 	if (!dsq_is_rq_owned(src_dsq))
-@@ -2386,14 +2404,25 @@ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct
- 
- 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
- 
--	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
-+	if (*enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
- 		dsq_insert_head(dst_dsq, p);
- 	else
- 		list_add_tail(&p->scx.dsq_list.node, &dst_dsq->list);
- 
--	dsq_inc_nr(dst_dsq, p, enq_flags);
-+	dsq_inc_nr(dst_dsq, p, *enq_flags);
- 	p->scx.dsq = dst_dsq;
- 
-+	return dst_dsq;
-+}
-+
-+void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
-+				      u64 enq_flags, struct scx_dispatch_q *src_dsq,
-+				      struct rq *dst_rq)
-+{
-+	struct scx_dispatch_q *dst_dsq;
-+
-+	dst_dsq = __scx_move_local_task_to_local_dsq(sch, p, &enq_flags,
-+						     src_dsq, dst_rq);
- 	rq_owned_post_enq(sch, dst_rq, dst_dsq, p, enq_flags);
- }
- 
-@@ -2628,9 +2657,14 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 	if (dst_dsq->id == SCX_DSQ_LOCAL) {
- 		/* @p is going from a non-local DSQ to a local DSQ */
- 		if (src_rq == dst_rq) {
-+			struct scx_dispatch_q *ldsq;
-+
- 			scx_task_unlink_from_dsq(p, src_dsq);
--			scx_move_local_task_to_local_dsq(sch, p, enq_flags, src_dsq, dst_rq);
-+			ldsq = __scx_move_local_task_to_local_dsq(sch, p,
-+								  &enq_flags,
-+								  src_dsq, dst_rq);
- 			raw_spin_unlock(&src_dsq->lock);
-+			rq_owned_post_enq(sch, dst_rq, ldsq, p, enq_flags);
- 		} else {
- 			raw_spin_unlock(&src_dsq->lock);
- 			move_remote_task_to_local_dsq(sch, p, enq_flags, src_rq, dst_rq);
-@@ -2679,9 +2713,14 @@ bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
- 			break;
- 
- 		if (rq == task_rq) {
-+			struct scx_dispatch_q *ldsq;
-+
- 			scx_task_unlink_from_dsq(p, dsq);
--			scx_move_local_task_to_local_dsq(sch, p, enq_flags, dsq, rq);
-+			ldsq = __scx_move_local_task_to_local_dsq(sch, p,
-+								  &enq_flags,
-+								  dsq, rq);
- 			raw_spin_unlock(&dsq->lock);
-+			rq_owned_post_enq(sch, rq, ldsq, p, enq_flags);
- 			return true;
- 		}
- 
--- 
-2.43.0
+An idle CPU can be claimed and kicked without receiving a task. When it
+picks idle again there is no idle transition, so ops.update_idle() stays
+silent and a scheduler tracking idle CPUs itself loses the CPU until an
+unrelated task runs there. scx_qmap has this hole. The first patch restores
+the claim from ops.dispatch(), where a kick guarantees a call, and documents
+the pattern in ops.update_idle().
 
+A cid-form scheduler that installs its own mapping has no way to learn which
+cids are online: the online count identifies the set only under the default
+mapping and the CPU-form cpumask is unusable from cid programs. The second
+patch adds scx_bpf_online_cmask(), a kernel-maintained cmask in the
+scheduler's arena that follows the SCX hotplug notifications.
+
+Verified by building the kernel and tools/sched_ext and running scx_qmap
+under CPU and fork load in a VM. The online cmask patch only changed
+kerneldoc since v1, where a local selftest offlined and onlined a CPU in a
+VM and checked the mask and the callbacks at each step.
+
+Based on sched_ext/for-7.3-fixes (c7a1c6e8004a).
+
+This patchset contains the following 2 patches.
+
+ 0001 sched_ext: scx_qmap: Restore unused idle claims from ops.dispatch()
+ 0002 sched_ext: Maintain an online cid mask in the scheduler arena
+
+The patchset is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git cid-online-cmask-v2
+
+diffstat follows. Thanks.
+
+ kernel/sched/ext/ext.c                   | 75 +++++++++++++++++++++++++++++---
+ kernel/sched/ext/internal.h              |  9 +++-
+ kernel/sched/ext/sub.c                   | 10 +++--
+ tools/sched_ext/include/scx/common.bpf.h |  1 +
+ tools/sched_ext/scx_qmap.bpf.c           | 14 ++++--
+ 5 files changed, 94 insertions(+), 15 deletions(-)
+
+--
+tejun
