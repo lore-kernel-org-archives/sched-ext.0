@@ -1,53 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860504B337E
-	for <sched-ext@lists.linux.dev>; Tue, 15 Sep 2026 16:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830A930C618;
+	Tue, 15 Sep 2026 17:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789491255; cv=none; b=aI3+kmIqtQmF4TUY6UtX8fldLqRJSI9dcd3eoT5FmPvsOWeMBvYh0CngJjCjvNS5Eoy52M6zZ31S2X50NX7jVUq1In9hQvbwuT/1R5j1LYyvCE+dx/5jdMoCQG4+U3DNVrN4Uy0xBWD3krrkGrwz07y1Wu8Yapy5N+GUHLGtRjc=
+	t=1789491711; cv=none; b=mP5ArFlihb42A+zFUoHTiFFf7pbGHWlGxp6KN0Mii++y1aZMaLuPQxr//oj7LdGfhC1UYlu9ZAWctOxF9Mc88ej5oQx1n0V5eiLezgIZ8KSYiZ3DiJtHFZnLxg6NrQZS+ZURiFMSRDdOlcRGacR7Omnaj4YDZL+CDUcfsZ4ayHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789491255; c=relaxed/simple;
-	bh=7lQdceQEdvNvvXX2CI1Kaonl5TZf3J9+900uuOrpBIE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=W2jbKKZ3AuEWNYSuCb535+XvuEF7XiWXC0lWZR2qqO4cIbDgmNONMFBrwpEj1WuYMdpaDkDudfff3x9g3PYW+4IAc7SyCgq//rgPZTmMW5gtEL8a14OS/tCOpOJvYrNFKIK3DFTMXWkXMcPvBmJRP7aiFAolPI2EjB+sR1plwRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V0Bodanb; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789491711; c=relaxed/simple;
+	bh=wkI+Uq9CoTiFuOD2krFI0IZ7m1fd2wBgU5Jf/Dso6Pw=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=Trzg2IHf5QanrOiOGwaYblo6XCMpBiliwsYdv5J32/8x0WzGxJzza8h7R0ELS09bzaYbayKYw9iLfHRcAQVEcJcrFqP3FlTYefVvzKBGpbYf/lCrvAsTXR+nExBIqsnc2JmMpKSgJZtFb5Zqz7vQzvNqnB8Ptu2rhuJBcOl9EAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XvwPg9gu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V0Bodanb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D951F000FF;
-	Tue, 15 Sep 2026 16:54:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XvwPg9gu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28961F000FF;
+	Tue, 15 Sep 2026 17:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789491254;
-	bh=7lQdceQEdvNvvXX2CI1Kaonl5TZf3J9+900uuOrpBIE=;
+	s=k20260515; t=1789491710;
+	bh=fUdvVWUeeMhxJ/c8azgXuwRmK/SDZMMRuDb+OuJ+VNw=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=V0BodanbndwejhZh0Fbrl1cLKifV123ZUYdqitInQYSx2XKBPk3b2eT0zsIw6Wddo
-	 si6OVQpcGUHXe3h+OdQDiZzbCkRSDbtyIhyjVh+oVVAJSIJRZO8918NGIrdqbM+TA5
-	 IpFlujjwvUC+jQz3IRbrtV6dSd/HL1zW4pFGYAt+BvvxCl0Q5CSMeSPfBUaRM1e+pN
-	 jxtX0MHh0+yI1GrK+js7TK3JK9roUpkxvwzfZZy7H9FwZrFI88bj3SpX2ctgBErJSD
-	 HQaTlr8FUVEYK3n/ke8TDqOETXwFHia8lZ/NOtTy2anZ8T+DGjhhHQtw7xqttHkmDs
-	 a63K2aT+ykSFw==
-Date: Tue, 15 Sep 2026 06:54:12 -1000
-Message-ID: <a3c4830e2eb2525d37e3327b628ae73c@kernel.org>
+	b=XvwPg9gujN+iVIX6J8gs5z5aBhg+F9B3JHHMp7/PV6fAkMGLkJSMVImvytlclOAz7
+	 pTmvDJ4D0MMxxlzzZ1nvkwUT64aG3tmVwTW5unJEQac8GMX1sqhYI9t0BTNskjUK2R
+	 Ar1KUv/5fjTd+rUToussysWizbvaJXLovrawMAc0A8EBXxqbOOwEyzEsZB7M6SLdoD
+	 etoB0k0t7Iim98Gz6fuXl7ejtObHwz8akyOypydhEnNHWSCFos5SEddhJYU2bzMdnl
+	 pzMjKQIpvVI+IQUvWRoxm3JhBVGzp8cPAt1DJ9OLW5ybe3MHNKjTzDyleL5x7FJjJR
+	 6NtMuUXynAsnw==
+Date: Tue, 15 Sep 2026 07:01:49 -1000
+Message-ID: <17cdcfca5509c320dd1344c66fff4289@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: Tejun Heo <tj@kernel.org>, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 2/2] sched_ext: Maintain an online cid mask in the
- scheduler arena
-In-Reply-To: <20260915085819.5DB991F000FF@smtp.kernel.org>
+To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>
+Cc: Tejun Heo <tj@kernel.org>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org,
+ sashiko-bot@kernel.org
+Subject: Re: [PATCHSET v2 sched_ext/for-7.3-fixes] sched_ext: Idle claim
+ recovery and online cid mask
+In-Reply-To: <20260915082725.3881071-1-tj@kernel.org>
 References: <20260915082725.3881071-1-tj@kernel.org>
- <20260915082725.3881071-3-tj@kernel.org>
- <20260915085819.5DB991F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-On Tue, Sep 15, 2026 at 08:58:18AM +0000, sashiko-bot@kernel.org wrote:
-> Does casting mask->bits to an unsigned long pointer corrupt the bitmask
-> layout on 32-bit big-endian architectures?
+Hello,
 
-The mask is only allocated for schedulers with an arena and BPF arena
-support is 64bit only, so unsigned long is always 64bit here.
+On Mon, Sep 14, 2026 at 10:27:23PM -1000, Tejun Heo wrote:
+> This patchset contains the following 2 patches.
+>
+>  0001 sched_ext: scx_qmap: Restore unused idle claims from ops.dispatch()
+>  0002 sched_ext: Maintain an online cid mask in the scheduler arena
+
+Applied 1-2 to sched_ext/for-7.3-fixes with Andrea's Reviewed-by added.
 
 Thanks.
 
