@@ -1,111 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8944189C3;
-	Tue, 15 Sep 2026 18:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0F8369224;
+	Tue, 15 Sep 2026 19:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789497617; cv=none; b=HnLjEi+/p0HJhfdXH39nsZnOVGNf8SgmKvPn9ngp1BPJZf9vuj7RlQi5ZH6dOfsP0SQYx16hx9yAZUIxLMAFDYJFOnmM6z0O5grYtvN0cLnv3rzKzbVR1BoqX+od4fQ2Mi0+0pDqQ8D7+1rWApfd5jM40gFzti3QXKT8tR5986o=
+	t=1789499405; cv=none; b=N5JpLyHpZMrTw/V+RFQTL7YkvKEwdF2JmzFoPx9HdzWZNxGU8rtgGXsju5X7mj8iJiW9yKVmJKk/SebW+0QQDUnsGcTS2RZvK9Y46zdfe0mYB44Xa03npKpiLjPezgEJWAPdNKoZ9xg8gIerLnm+os4gqkfFqgsTr2Tizyhhmwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789497617; c=relaxed/simple;
-	bh=c6mfU+sOuiO5rL2mGLrsnIWQBc4pM+qhMVV13HCgHOU=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=VycBO2ZsFBMK5tVtN4QpXb/aJJ8VSkVQNqsCzV1gc7EhjZT6AVtiE837lxMU7UpyRak2kqzHJhYoKE6lBKIpcusjFSYiF94lzXL8NIzbeS6KNTxkovMwAEafOxrktdmwUx35tAxrdSQhd4/vM0VnvzhQr6ldn5xD28UdinJZqew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8juqj3q; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789499405; c=relaxed/simple;
+	bh=Ue5mWf8mDUirgpnnhuzG3Gp9XqpTaq55Bk6NCZCmSCs=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=S1g2iz/OB7BIDo63B5Gvl1vTVUMDc9wFV813mY+IOid4ZlQu92cFxJC0kI6RNns0RJxDQqsUiexr5rxNf3I568Wdw7TtgTlPED5hRDMqgAbc0jc1QfnrcEsZ95BbgCkHOWaX5iL+JAgP76KDZm45IVRzQubjyWETPFt6XQzTfZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jtpu+0+S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8juqj3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217DF1F00893;
-	Tue, 15 Sep 2026 18:40:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jtpu+0+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E6C1F000FF;
+	Tue, 15 Sep 2026 19:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789497616;
-	bh=bAZJlaWUaIC9ATqe/uzoAUFcM0qeIxwjJqAiIphRJkw=;
-	h=Date:From:To:Cc:Subject;
-	b=I8juqj3q3istWJHE2gshfIIcR62DVFV+pVozPW+qGfGqxD78izbGAiGSSuyXtlxJ/
-	 8KNQJo282icE6u9UjVbTS420k/Xb5QJLhq84xePohyJfrE3MFvL/pXb/FbhfdzLRgL
-	 5a+Q3Qvlj926iJqHouRjeocobc7g2kHJ2cTkiF7L2d28hG/Bxo8whc/wcSxXchvc0g
-	 YkaTbnC4UAzqfeHdMH10kO58FoJ8/ZqICxGDXXAL6XfyWBIjEIGS/qAixXAkhECpaz
-	 MzyxR4VA+WdjBjZO0L4M/LAi2qUKornskw+ee9T4bx3na9n0Tpr6wSzhV/6hYNX9Mb
-	 Jdo/80HSg9P+w==
-Date: Tue, 15 Sep 2026 08:40:15 -1000
-Message-ID: <77a248741e07bbe690582f3c31442b7f@kernel.org>
+	s=k20260515; t=1789499403;
+	bh=f6PhqPOqbbuKPz7kclrcySJw5xGN2l1h8uJlpci9x3Q=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=Jtpu+0+SlA/diRv/ZK13CfBwaEZvjKeX//CEtmSPLbEyLQO+JjsTgVxHppvABQgkg
+	 YYxAATuG1x2OjHyLWVbQo1JVHH957x1gEvgT8E6lz6gBnpbk5ADqI0fIvZEMD5AuX4
+	 xZ/d31r8Vbf8/xtqii2s4npOOPp/aWTOJMEXs14ojZUK+sKWdBoV0hZNRqK833I/rs
+	 jcdeoXzBBVpBN80qjPTJ3a4txxBsy//oAirvXu1edZBR0+fZ7c3j81PJ1Cg/wLCnlS
+	 1T6qkrgGoEWkmhNRYMkayK9h5IbrQRa7wf02Ma1DFEcAYP1p8wtyX91mQcHIJH8aJm
+	 e9yTUEkP1I/gw==
+Date: Tue, 15 Sep 2026 09:10:02 -1000
+Message-ID: <e69a808d40739510ffa7d2c7f053a9e8@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
- sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: [GIT PULL] sched_ext: Fixes for v7.3-rc3
+To: Qiurong Fang <fangqiurong@kylinos.cn>
+Cc: Tejun Heo <tj@kernel.org>, arighi@nvidia.com, void@manifault.com,
+ changwoo@igalia.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] sched_ext: Don't run ops.dequeue() with a DSQ
+ lock held
+In-Reply-To: <20260915130334.714388-2-fangqiurong@kylinos.cn>
+References: <aqkQ1MtqtqnS0wUs@gpd4>
+ <20260915130334.714388-1-fangqiurong@kylinos.cn>
+ <20260915130334.714388-2-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
+Hello, Qiurong.
 
-The following changes since commit 068e5a0bc57e57d24cbf38def29cc5fb4db9a0df:
+On Tue, Sep 15, 2026 at 09:03:33PM +0800, Qiurong Fang wrote:
+> ops.dequeue() is called with the source user DSQ's lock still held on
+> the consume and move paths (scx_consume_dispatch_q(),
+> move_task_between_dsqs()) and with the terminal global/bypass DSQ's
+> lock still held in scx_dispatch_enqueue(). A BPF scheduler that locks
+> the same DSQ from ops.dequeue() - e.g. by iterating it with
+> bpf_iter_scx_dsq, which takes the DSQ lock on every step -
+> self-deadlocks.
 
-  sched_ext: Fix missing @slice and @vtime descriptions in finish_dispatch() kernel-doc (2026-08-31 07:28:04 -1000)
+The self-deadlock only exists on the two user DSQ paths. ops.dequeue() can
+only call the "any" kfuncs and none of them can lock a builtin DSQ, so the
+global/bypass path can't deadlock. Moving it out is still right because all
+DSQ locks share one lockdep class and iterating any user DSQ from there
+trips the recursion check. Please describe it that way.
 
-are available in the Git repository at:
+> Move the invocation after the DSQ unlock on all three paths.
+> SCX_TASK_IN_CUSTODY is cleared under the lock so that the callback is
+> invoked exactly once; it is not ordered against consumption of the
+> task and may run after the task has been moved to, or consumed from,
+> a terminal DSQ.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.3-rc3-fixes
+The last sentence and the matching doc addition confuse more than they help.
+The only thing that matters is that the task can't start running or be
+re-enqueued before ops.dequeue() completes. Please state that invariant
+instead or drop it.
 
-for you to fetch changes up to a9e3760b0838299649c0d57cca44daaf40ba3c33:
+That invariant currently has a hole which this patch widens. After the
+unlock, the task sits in an unlocked DSQ with ops_state still DISPATCHING
+until the final store, now for the whole callback, and the reenq paths don't
+wait on DISPATCHING the way ops_dequeue() does. That's from ebf1ccff79c4 and
+I'll fix it separately. No need to address it here.
 
-  sched_ext: Maintain an online cid mask in the scheduler arena (2026-09-15 06:57:20 -1000)
+>  		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
+> -			call_task_dequeue(sch, rq, p, 0);
+> +			call_dequeue = task_leave_custody(p);
+>  		else
+>  			p->scx.flags |= SCX_TASK_IN_CUSTODY;
+>
+>  		raw_spin_unlock(&dsq->lock);
+> +
+> +		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
+> +			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
 
-----------------------------------------------------------------
-sched_ext: Fixes for v7.3-rc3
+This leaves call_task_dequeue() with two callers, both of which are these
+two lines without the unlock in between. Please open-code them too and drop
+call_task_dequeue(). Each ops.dequeue() invocation being explicit is better
+than a helper which may or may not invoke it depending on a flag cleared
+elsewhere.
 
-- An error raised by a BPF program before the scheduler finished enabling
-  was consumed by the disable path's pre-enable shortcut, leaving a
-  running scheduler that couldn't be disabled and was later freed while
-  in use.
+> +static struct scx_dispatch_q *
+> +__scx_move_local_task_to_local_dsq(struct scx_sched *sch,
+> +				   struct task_struct *p, u64 *enq_flags,
+> +				   struct scx_dispatch_q *src_dsq,
+> +				   struct rq *dst_rq)
 
-- Two compat kfuncs dereferenced a NULL scheduler when handed an exited
-  or idle task, oopsing the kernel.
+The split isn't necessary. Unlock @src_dsq right after
+scx_task_unlink_from_dsq() in the two callers and call
+scx_move_local_task_to_local_dsq() as is, dropping its lockdep assert on
+@src_dsq. @p is off the DSQ and its rq is locked, so nothing can reach it in
+between.
 
-- Keep-running decisions in the dispatch path used the root scheduler's
-  flags for tasks belonging to a sub-scheduler, causing warnings and
-  stalls.
+Also, please add Cc: stable # v7.1+.
 
-- Schedulers with their own CPU ID mapping had no way to learn which IDs
-  are online. Add a kernel-maintained online mask to plug the hole.
-
-- Cgroup idle state: the initial cpu.idle state wasn't passed on cgroup
-  init and same-value rewrites delivered spurious callbacks.
-
-- Example scheduler fixes for a reenqueue loop on attach, placements on
-  CPUs without effective grants, stalled partition work and stale idle
-  tracking.
-
-----------------------------------------------------------------
-Tao Cui (2):
-      sched_ext: Pass the initial cpu.idle state in scx_cgroup_init_args
-      sched_ext: Don't deliver duplicate ops.cgroup_set_idle() for same value
-
-Tejun Heo (7):
-      sched_ext: Rename sch to root_sch in dispatch_one()
-      sched_ext: Use @prev's scheduler for the keep decisions in dispatch_one()
-      sched_ext: scx_qmap: Do not add IMMED to rescue inserts
-      sched_ext: scx_qmap: Place only on cids whose caps are in effect
-      sched_ext: scx_qmap: Fix pending partition work handoff
-      sched_ext: scx_qmap: Restore unused idle claims from ops.dispatch()
-      sched_ext: Maintain an online cid mask in the scheduler arena
-
-Wanwu Li (1):
-      sched_ext: Fix NULL sched deref in kfunc sub-sched error paths
-
-fangqiurong (1):
-      sched_ext: Close the pre-enable ops error claim window
-
- kernel/sched/ext/ext.c                   | 142 +++++++++++++++++++++------
- kernel/sched/ext/idle.c                  |  11 ++-
- kernel/sched/ext/internal.h              |  12 ++-
- kernel/sched/ext/sub.c                   |  12 ++-
- tools/sched_ext/include/scx/common.bpf.h |   1 +
- tools/sched_ext/scx_qmap.bpf.c           | 162 +++++++++++++++++++++----------
- tools/sched_ext/scx_qmap.h               |   3 +
- 7 files changed, 254 insertions(+), 89 deletions(-)
+Thanks.
 
 --
 tejun
