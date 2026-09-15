@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0F8369224;
-	Tue, 15 Sep 2026 19:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E088447668A;
+	Tue, 15 Sep 2026 19:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789499405; cv=none; b=N5JpLyHpZMrTw/V+RFQTL7YkvKEwdF2JmzFoPx9HdzWZNxGU8rtgGXsju5X7mj8iJiW9yKVmJKk/SebW+0QQDUnsGcTS2RZvK9Y46zdfe0mYB44Xa03npKpiLjPezgEJWAPdNKoZ9xg8gIerLnm+os4gqkfFqgsTr2Tizyhhmwg=
+	t=1789499406; cv=none; b=edtc60T4tGk+O+M1y91g1Wpj+uigl7/kRw4XGES2Ldi4q0z0NdC8ZZ4tWya2l5Yk5zZOqy9bvVxu8SF7xDR211CZ+Kcrx9r/YpUVSsjC6WNRYLgQLplb4KCyvAMSkh8XmYj7RbdmFeXfniuFIj1sp71BGK2hpWcBEDl1L1SJLfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789499405; c=relaxed/simple;
-	bh=Ue5mWf8mDUirgpnnhuzG3Gp9XqpTaq55Bk6NCZCmSCs=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=S1g2iz/OB7BIDo63B5Gvl1vTVUMDc9wFV813mY+IOid4ZlQu92cFxJC0kI6RNns0RJxDQqsUiexr5rxNf3I568Wdw7TtgTlPED5hRDMqgAbc0jc1QfnrcEsZ95BbgCkHOWaX5iL+JAgP76KDZm45IVRzQubjyWETPFt6XQzTfZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jtpu+0+S; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789499406; c=relaxed/simple;
+	bh=SfE2APAMaL1es2r8mgcf/u/jkJOX00j0G1WeKMDtYik=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=kHweUx39tSOIkf6c5t6JoII2Gj2xaU9iAA78424r9H5P+iDpc0MMNeNTg85ncmhZ5Ieye082gk7u7/+vqNJqtl12q8uUlxJG+Ptj1dN55+e4ir4GVnAamrTYCv+zXa50xiGulghByx5ByJmBX3ZEvZ+I7A4QAV8cxJSi+u6aHTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h1Xob7gN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jtpu+0+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E6C1F000FF;
-	Tue, 15 Sep 2026 19:10:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h1Xob7gN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3B21F00893;
+	Tue, 15 Sep 2026 19:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789499403;
-	bh=f6PhqPOqbbuKPz7kclrcySJw5xGN2l1h8uJlpci9x3Q=;
+	s=k20260515; t=1789499404;
+	bh=cNiEcYLy7D+tM5j8roDET50CSYnfyXH1nZlC9WhByX8=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Jtpu+0+SlA/diRv/ZK13CfBwaEZvjKeX//CEtmSPLbEyLQO+JjsTgVxHppvABQgkg
-	 YYxAATuG1x2OjHyLWVbQo1JVHH957x1gEvgT8E6lz6gBnpbk5ADqI0fIvZEMD5AuX4
-	 xZ/d31r8Vbf8/xtqii2s4npOOPp/aWTOJMEXs14ojZUK+sKWdBoV0hZNRqK833I/rs
-	 jcdeoXzBBVpBN80qjPTJ3a4txxBsy//oAirvXu1edZBR0+fZ7c3j81PJ1Cg/wLCnlS
-	 1T6qkrgGoEWkmhNRYMkayK9h5IbrQRa7wf02Ma1DFEcAYP1p8wtyX91mQcHIJH8aJm
-	 e9yTUEkP1I/gw==
-Date: Tue, 15 Sep 2026 09:10:02 -1000
-Message-ID: <e69a808d40739510ffa7d2c7f053a9e8@kernel.org>
+	b=h1Xob7gNphVhtJjAYfaA0wRio+giKWHXhBHk8J+Vkd7KW+Wxik7oDpbthg6Kng17B
+	 +8VXwwIeNyLJ/Ak3Ttl05kjZIJyMGo7ArPuTt3HG5a9LWchTuKYYikYgCg+YeMH5SU
+	 rOE8lus7FELvDfNtmG/WTcblf4HZeDgE5dfI/6NchXStMtXSrqmQXZPLG1F1D459KD
+	 FDi+yQVB60OsYpXjheqbJwP7JGz/Np05K/4O5ItW3p165GspAq3HbksRsdY6cXB5gk
+	 2cj88LOn8NJCN5HnN8wAMRWuUjMbVSSdZIeBOQbijxRZOaK4tvbohbjAHKaZTvko+j
+	 O+skpytIz1Wjg==
+Date: Tue, 15 Sep 2026 09:10:03 -1000
+Message-ID: <116b78a3d3054246b5dbf5ab0759b5a6@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Qiurong Fang <fangqiurong@kylinos.cn>
 Cc: Tejun Heo <tj@kernel.org>, arighi@nvidia.com, void@manifault.com,
  changwoo@igalia.com, sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] sched_ext: Don't run ops.dequeue() with a DSQ
- lock held
-In-Reply-To: <20260915130334.714388-2-fangqiurong@kylinos.cn>
+Subject: Re: [PATCH v2 2/2] selftests/sched_ext: Test that ops.dequeue() can
+ iterate the consumed DSQ
+In-Reply-To: <20260915130334.714388-3-fangqiurong@kylinos.cn>
 References: <aqkQ1MtqtqnS0wUs@gpd4>
  <20260915130334.714388-1-fangqiurong@kylinos.cn>
- <20260915130334.714388-2-fangqiurong@kylinos.cn>
+ <20260915130334.714388-3-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,68 +46,38 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Hello, Qiurong.
 
-On Tue, Sep 15, 2026 at 09:03:33PM +0800, Qiurong Fang wrote:
-> ops.dequeue() is called with the source user DSQ's lock still held on
-> the consume and move paths (scx_consume_dispatch_q(),
-> move_task_between_dsqs()) and with the terminal global/bypass DSQ's
-> lock still held in scx_dispatch_enqueue(). A BPF scheduler that locks
-> the same DSQ from ops.dequeue() - e.g. by iterating it with
-> bpf_iter_scx_dsq, which takes the DSQ lock on every step -
-> self-deadlocks.
+On Tue, Sep 15, 2026 at 09:03:34PM +0800, Qiurong Fang wrote:
+> Add a scheduler whose ops.dequeue() iterates the user DSQ tasks are
+> dispatched from with bpf_iter_scx_dsq. The iteration takes the DSQ's raw
+> spinlock; on a kernel that runs ops.dequeue() while the consume path
+> still holds that lock, the first task consumed self-deadlocks the CPU
+> until the scheduler watchdog fires and the test fails with a UEI. On a
+> fixed kernel the scheduler runs clean and the test passes.
 
-The self-deadlock only exists on the two user DSQ paths. ops.dequeue() can
-only call the "any" kfuncs and none of them can lock a builtin DSQ, so the
-global/bypass path can't deadlock. Moving it out is still right because all
-DSQ locks share one lockdep class and iterating any user DSQ from there
-trips the recursion check. Please describe it that way.
+The watchdog can't recover from this. Both it and the disable path need the
+wedged CPU's rq lock. The header comment's "wedges the system" is the
+accurate description. Please make the two agree.
 
-> Move the invocation after the DSQ unlock on all three paths.
-> SCX_TASK_IN_CUSTODY is cleared under the lock so that the callback is
-> invoked exactly once; it is not ordered against consumption of the
-> task and may run after the task has been moved to, or consumed from,
-> a terminal DSQ.
+> +void BPF_STRUCT_OPS(dequeue_iter_enqueue, struct task_struct *p, u64 enq_flags)
+> +{
+> +	scx_bpf_dsq_insert(p, TEST_DSQ_ID, SCX_SLICE_DFL, enq_flags);
+> +}
 
-The last sentence and the matching doc addition confuse more than they help.
-The only thing that matters is that the task can't start running or be
-re-enqueued before ops.dequeue() completes. Please state that invariant
-instead or drop it.
+Without ops.select_cpu(), the default direct-dispatches every wakeup that
+finds an idle CPU to the local DSQ, so the poller's own wakeups never reach
+TEST_DSQ_ID and the pass condition depends on unrelated traffic. Add a
+select_cpu() which returns prev_cpu so that everything flows through the DSQ.
 
-That invariant currently has a hole which this patch widens. After the
-unlock, the task sits in an unlocked DSQ with ops_state still DISPATCHING
-until the final store, now for the whole callback, and the reenq paths don't
-wait on DISPATCHING the way ops_dequeue() does. That's from ebf1ccff79c4 and
-I'll fix it separately. No need to address it here.
+> +void BPF_STRUCT_OPS(dequeue_iter_exit, struct scx_exit_info *ei)
+> +{
+> +	scx_bpf_destroy_dsq(TEST_DSQ_ID);
+> +}
 
->  		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
-> -			call_task_dequeue(sch, rq, p, 0);
-> +			call_dequeue = task_leave_custody(p);
->  		else
->  			p->scx.flags |= SCX_TASK_IN_CUSTODY;
->
->  		raw_spin_unlock(&dsq->lock);
-> +
-> +		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
-> +			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
+Without UEI_RECORD() here, UEI_EXITED() is never true and the failure branch
+in run() is dead. Record it, break the poll loop on UEI_EXITED(), and check
+for SCX_EXIT_UNREG after destroying the link like the other tests do.
 
-This leaves call_task_dequeue() with two callers, both of which are these
-two lines without the unlock in between. Please open-code them too and drop
-call_task_dequeue(). Each ops.dequeue() invocation being explicit is better
-than a helper which may or may not invoke it depending on a flag cleared
-elsewhere.
-
-> +static struct scx_dispatch_q *
-> +__scx_move_local_task_to_local_dsq(struct scx_sched *sch,
-> +				   struct task_struct *p, u64 *enq_flags,
-> +				   struct scx_dispatch_q *src_dsq,
-> +				   struct rq *dst_rq)
-
-The split isn't necessary. Unlock @src_dsq right after
-scx_task_unlink_from_dsq() in the two callers and call
-scx_move_local_task_to_local_dsq() as is, dropping its lockdep assert on
-@src_dsq. @p is off the DSQ and its rq is locked, so nothing can reach it in
-between.
-
-Also, please add Cc: stable # v7.1+.
+SCX_ERR() already appends the newline.
 
 Thanks.
 
