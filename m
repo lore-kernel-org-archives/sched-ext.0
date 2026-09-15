@@ -1,63 +1,64 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AAF945DF77;
-	Tue, 15 Sep 2026 07:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB9A190473;
+	Tue, 15 Sep 2026 08:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789456715; cv=none; b=INTSsFE+k9AKQPoulo3LqaDMjsfSruZMzzNKQ/XLfko0D90oiVq4oWQZFQ+No4ZucjAOsXLU0RPdApFGzhGvNvnrlJirp5acv9EdZUt7MclVY32osB4shEkZtIVssb7PfdnSlmOLj+7Vf/cZIZ08c6QSslmRgRlt7kUMM2pX4H0=
+	t=1789459342; cv=none; b=NeUnh8BOEHOqarfKNciHnTL5NkAH+YIBvG/yHuUZ+LHnDCcy+fnINCHYbLy2JIDZb0NK0owVO3Meto9+7dD8WINekN3FwVgXmIrBSz1xlEL3MT/NpNcmNnS6IkUJocR18RQMhaqevsXxkUjbz99o8UpJh6Q8x6fwfGANpjsgS0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789456715; c=relaxed/simple;
-	bh=8JU3wQ5UAveR6AgU9oKwo08O2SofNaKGpS3k9ni4dkE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=JSpfBpB7mYSzVG/liohujPv4ne+WOLG1qZKS7VHhKzXtqLT6gF0NCZSmu06DLmXFh1DCSpe9h7JUMnw76d6y3rltq+XKch8rvI2BHfvbR/tNKsO39WUVmcNUulvyylLX8Qk14znzE6HVnIweZqBEGwSkbi3woSNR0rk9Do8M5zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H2SPgSvP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789459342; c=relaxed/simple;
+	bh=XPCV2EXwKWQyfrvA1QZTuvPMbFthaCSpS33HqZkjmGo=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=Y99sN06igsONf9g1C34gZIzlSoshxuReKH18kmwO/p+ovkfblw72FRV0smOApvs/HP7bNC++fY4OjDUMtzhZgy8AQRSLqcq1riY7NHmtNnBX45ERqcy3IqXOCCDVIyZCB5XuKIjnZr6G5n2MSxbNBOr237p2mNeSjP9sHoIaKe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Za1HnG43; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H2SPgSvP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C611F000FF;
-	Tue, 15 Sep 2026 07:18:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Za1HnG43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1A21F000FF;
+	Tue, 15 Sep 2026 08:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789456713;
-	bh=8JU3wQ5UAveR6AgU9oKwo08O2SofNaKGpS3k9ni4dkE=;
+	s=k20260515; t=1789459341;
+	bh=XPCV2EXwKWQyfrvA1QZTuvPMbFthaCSpS33HqZkjmGo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=H2SPgSvPohZVl2/J84QfGz69hW0xs7fb8WLua+1MwiZbKlg9qI281JesO8wHndjwx
-	 BfQannnNC0BLG20vioLTpLyXCsxlqmkRMenWX+/ps+H3xWbHRFG9n18otdyjdi675/
-	 nfYx8VWo8HIbTOF2GVB04/sKkJzXKYvfxtP8sYbXb6SG8IHKBNG8fV5g5vt1RayFnW
-	 sZTCuVlIrmwDmnduz5bSCxCwQO8wIt7rWlOuIkikoolMZhz931YdYkGFoGI1es5vou
-	 P4Y7LfwBSF3XY7rB76Q0FglCFM8XUKvrn/y5xZxKzdSW9tGG4rxpn6hj7XIG3Ikxap
-	 El2o1QTISiaRA==
-Date: Mon, 14 Sep 2026 21:18:27 -1000
-Message-ID: <15d99d51c32bed6f26b0d3f521e16b53@kernel.org>
+	b=Za1HnG430P/igkseay6f4xXtLHaSx6ssUg3mZXNCdfnDBcRMQ7gvtcB5/j4cwwpOY
+	 FnzdKX0tmkd0Qt4edbQ98PUJlAcYBOw2B4h3M/i4uFBiZGCHUowBHHPqTg4sRqhdeM
+	 fch9hqPmFpXmjUUXa7DFTXv0XBmpVBLZiF4YYTdIzuxjUObaJqVCGCs8xMWE7vbac9
+	 f/jukLc8BQ+FDxLI0bJ1Szh0a9v0xrVqru3+0Y6KEBFjTAExXkis8tSb+UTHWWFw7w
+	 /gxOR+JeuNhigdWLe9QDh8IS+lh3CiyIWueRy2cMYtpk6nCI6jcLye7mAnghmOCsdN
+	 CKshHNLpp0t3Q==
+Date: Mon, 14 Sep 2026 22:02:20 -1000
+Message-ID: <58dade5e9db51c3e4a4110da023704dc@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Amery Hung <ameryhung@gmail.com>
-Cc: Tejun Heo <tj@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>,
- Eduard Zingerman <eddyz87@gmail.com>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>,
- Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
- Yonghong Song <yonghong.song@linux.dev>, Jiri Olsa <jolsa@kernel.org>,
- Emil Tsalapatis <emil@etsalapatis.com>,
- Ihor Solodrai <ihor.solodrai@linux.dev>, bpf@vger.kernel.org,
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
  sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH bpf] bpf: Keep generic __uninit kfunc arguments live
-In-Reply-To:
- <CAMB2axMJ6NJUtDc4xhUbSaqUsRyNXfyWTNTR7SCYyRwiBdoLAg@mail.gmail.com>
-References: <86d966ec88bbf27d21b2bb4e18c8aa00@kernel.org>
- <CAMB2axMJ6NJUtDc4xhUbSaqUsRyNXfyWTNTR7SCYyRwiBdoLAg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] sched_ext: Fix idle state tracking across idle
+ repicks
+In-Reply-To: <aqjkdw_Ds_O8W4eR@gpd4>
+References: <20260914234259.3585373-1-tj@kernel.org>
+ <20260914234259.3585373-2-tj@kernel.org>
+ <aqjkdw_Ds_O8W4eR@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello, Amery.
+Hello, Andrea.
 
-On Mon, Sep 14, 2026 at 05:39:04PM -0700, Amery Hung wrote:
-> A generic __uninit argument should behave like a helper output buffer:
-> generate MEM_UNINIT | MEM_WRITE, validate it as write-only, and mark
-> the written range initialized after the kfunc call.
+On Tue, Sep 15, 2026 at 08:23:51AM +0200, Andrea Righi wrote:
+> We discussed essentially the same behavior here:
+> https://lore.kernel.org/r/Zw5_FlXfbLXDLCPG@slm.duckdns.org
+...
+> The unused-reservation case can already be handled by restoring the cid's idle
+> state at the end of ops.dispatch() when no task was selected for dispatch. For
+> example, scx_cidland does this:
+> https://github.com/sched-ext/scx/blob/6c54f4f664bb8e9cc445c8333128b4ba17b93608/scheds/experimental/scx_cidland/src/bpf/main.bpf.c#L2960
 
-Kumar suggested a similar solution and will drive the fix. Dropping this
-patch.
+I completely forgot about that discussion. You're right, restoring the
+claim from ops.dispatch() is the way to go. Dropping this patch. I'll
+update scx_qmap to do that and document the pattern in ops.update_idle()
+instead.
 
 Thanks.
 
