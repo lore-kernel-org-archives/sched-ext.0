@@ -1,85 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E088447668A;
-	Tue, 15 Sep 2026 19:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADB14D0A05;
+	Tue, 15 Sep 2026 19:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789499406; cv=none; b=edtc60T4tGk+O+M1y91g1Wpj+uigl7/kRw4XGES2Ldi4q0z0NdC8ZZ4tWya2l5Yk5zZOqy9bvVxu8SF7xDR211CZ+Kcrx9r/YpUVSsjC6WNRYLgQLplb4KCyvAMSkh8XmYj7RbdmFeXfniuFIj1sp71BGK2hpWcBEDl1L1SJLfY=
+	t=1789499938; cv=none; b=GKlM1dv000fBrXQMl5GIfwNjoOhE7YK0DCWASFIwlaO1kqwCrPPQwByNdcfPNvHmr0YysZW73nVBYggqFEf1iRfgKrNtJarRJYyVWFVtqFrmeLq9BawZ4iPjF8qZoTMo1o0ANWmc0fVWN4Uj0E5SCFMOrlzYzfPML+YMjDtP6fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789499406; c=relaxed/simple;
-	bh=SfE2APAMaL1es2r8mgcf/u/jkJOX00j0G1WeKMDtYik=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=kHweUx39tSOIkf6c5t6JoII2Gj2xaU9iAA78424r9H5P+iDpc0MMNeNTg85ncmhZ5Ieye082gk7u7/+vqNJqtl12q8uUlxJG+Ptj1dN55+e4ir4GVnAamrTYCv+zXa50xiGulghByx5ByJmBX3ZEvZ+I7A4QAV8cxJSi+u6aHTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h1Xob7gN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789499938; c=relaxed/simple;
+	bh=Yq8EgJtWznu0GVHHIf+c1IP1SVgNl2N6THEt4vYoPM4=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=JhxS0JER++yRhz+PcXCBCa0gGpfTVGsviakFhLXVvUP18yUBAaQRaJMnRbBQz7/TuSjiP8cuZ5TFJN19T9BAuw0ihWYlQf+fYTrwtBGpBCUzpdd6nqHztG3PPQWJmYuY+87b0bYXXMcMbvDkEeYArhcK+cp2BxMop16JYC5ON4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YDXu9Pve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h1Xob7gN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3B21F00893;
-	Tue, 15 Sep 2026 19:10:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YDXu9Pve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9F91F000FF;
+	Tue, 15 Sep 2026 19:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789499404;
-	bh=cNiEcYLy7D+tM5j8roDET50CSYnfyXH1nZlC9WhByX8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=h1Xob7gNphVhtJjAYfaA0wRio+giKWHXhBHk8J+Vkd7KW+Wxik7oDpbthg6Kng17B
-	 +8VXwwIeNyLJ/Ak3Ttl05kjZIJyMGo7ArPuTt3HG5a9LWchTuKYYikYgCg+YeMH5SU
-	 rOE8lus7FELvDfNtmG/WTcblf4HZeDgE5dfI/6NchXStMtXSrqmQXZPLG1F1D459KD
-	 FDi+yQVB60OsYpXjheqbJwP7JGz/Np05K/4O5ItW3p165GspAq3HbksRsdY6cXB5gk
-	 2cj88LOn8NJCN5HnN8wAMRWuUjMbVSSdZIeBOQbijxRZOaK4tvbohbjAHKaZTvko+j
-	 O+skpytIz1Wjg==
-Date: Tue, 15 Sep 2026 09:10:03 -1000
-Message-ID: <116b78a3d3054246b5dbf5ab0759b5a6@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Qiurong Fang <fangqiurong@kylinos.cn>
-Cc: Tejun Heo <tj@kernel.org>, arighi@nvidia.com, void@manifault.com,
- changwoo@igalia.com, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] selftests/sched_ext: Test that ops.dequeue() can
- iterate the consumed DSQ
-In-Reply-To: <20260915130334.714388-3-fangqiurong@kylinos.cn>
-References: <aqkQ1MtqtqnS0wUs@gpd4>
- <20260915130334.714388-1-fangqiurong@kylinos.cn>
- <20260915130334.714388-3-fangqiurong@kylinos.cn>
+	s=k20260515; t=1789499937;
+	bh=t3zKTofBfik+swmHsqdQlF9VIoHqDB0Uq9AToT0B3D0=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc;
+	b=YDXu9PveKtT2mvYcW02oFVVQEyCMdt3KHzkzqXEx5+FJSeIlSUz0mi8HEsdxOCdfi
+	 Abaz+u6hfKQbZOhXANC5IC2f82io0BYqK1EBDHu1wFqm5pFzWLQ0Em+hZ20BqkIbKK
+	 nWz4CGjfsCXYn2ql6obaW9QHYrjfyffNr4lDbzv7yTaDEWw9DINGlFxqW+TYbr+U7h
+	 wnn5nd6OGiRyKyvz1IH6keMPpyjD4nwjtm/DoXZdnnrapEouke1Z1WDXuV7H1Ad9Tz
+	 cl5VYR4PkEsfot0BJvmTDFSB19lQb4uynBRtWYhQUuYHEhbR1Tr3JlP93UJ4y2o/5e
+	 1oeHWitF21C+w==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D09663927050;
+	Tue, 15 Sep 2026 19:17:52 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Fixes for v7.3-rc3
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <77a248741e07bbe690582f3c31442b7f@kernel.org>
+References: <77a248741e07bbe690582f3c31442b7f@kernel.org>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <77a248741e07bbe690582f3c31442b7f@kernel.org>
+X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.3-rc3-fixes
+X-PR-Tracked-Commit-Id: a9e3760b0838299649c0d57cca44daaf40ba3c33
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 9b87fdc9af2fbfcdb5c24a64139685ef80f6573f
+Message-Id: <178949987149.2238025.2488857518081041204.pr-tracker-bot@kernel.org>
+Date: Tue, 15 Sep 2026 19:17:51 +0000
+To: Tejun Heo <tj@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello, Qiurong.
+The pull request you sent on Tue, 15 Sep 2026 08:40:15 -1000:
 
-On Tue, Sep 15, 2026 at 09:03:34PM +0800, Qiurong Fang wrote:
-> Add a scheduler whose ops.dequeue() iterates the user DSQ tasks are
-> dispatched from with bpf_iter_scx_dsq. The iteration takes the DSQ's raw
-> spinlock; on a kernel that runs ops.dequeue() while the consume path
-> still holds that lock, the first task consumed self-deadlocks the CPU
-> until the scheduler watchdog fires and the test fails with a UEI. On a
-> fixed kernel the scheduler runs clean and the test passes.
+> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.3-rc3-fixes
 
-The watchdog can't recover from this. Both it and the disable path need the
-wedged CPU's rq lock. The header comment's "wedges the system" is the
-accurate description. Please make the two agree.
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/9b87fdc9af2fbfcdb5c24a64139685ef80f6573f
 
-> +void BPF_STRUCT_OPS(dequeue_iter_enqueue, struct task_struct *p, u64 enq_flags)
-> +{
-> +	scx_bpf_dsq_insert(p, TEST_DSQ_ID, SCX_SLICE_DFL, enq_flags);
-> +}
+Thank you!
 
-Without ops.select_cpu(), the default direct-dispatches every wakeup that
-finds an idle CPU to the local DSQ, so the poller's own wakeups never reach
-TEST_DSQ_ID and the pass condition depends on unrelated traffic. Add a
-select_cpu() which returns prev_cpu so that everything flows through the DSQ.
-
-> +void BPF_STRUCT_OPS(dequeue_iter_exit, struct scx_exit_info *ei)
-> +{
-> +	scx_bpf_destroy_dsq(TEST_DSQ_ID);
-> +}
-
-Without UEI_RECORD() here, UEI_EXITED() is never true and the failure branch
-in run() is dead. Record it, break the poll loop on UEI_EXITED(), and check
-for SCX_EXIT_UNREG after destroying the link like the other tests do.
-
-SCX_ERR() already appends the newline.
-
-Thanks.
-
---
-tejun
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
