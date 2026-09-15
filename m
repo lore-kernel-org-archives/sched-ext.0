@@ -1,100 +1,111 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421AD43846E;
-	Tue, 15 Sep 2026 17:24:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8944189C3;
+	Tue, 15 Sep 2026 18:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789493074; cv=none; b=Kz9C3ih6Z4HUnhbfdLzmq7lnLVuJp971F7G/ljIneuw/2KszebY6QDCzebeAsv8xACE3a6D0RXja0gFJXz00O0UfAlde4555CnSIE00Ilpm8sZneOgG1uoANUxcDqEBTu5SqKZRjTBWO5XCcI5z/uybcNBeLzciLeeKCQjHdkk8=
+	t=1789497617; cv=none; b=HnLjEi+/p0HJhfdXH39nsZnOVGNf8SgmKvPn9ngp1BPJZf9vuj7RlQi5ZH6dOfsP0SQYx16hx9yAZUIxLMAFDYJFOnmM6z0O5grYtvN0cLnv3rzKzbVR1BoqX+od4fQ2Mi0+0pDqQ8D7+1rWApfd5jM40gFzti3QXKT8tR5986o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789493074; c=relaxed/simple;
-	bh=N1uo+LN+BR8bycRT34CjAMfqEO8I+aN9SICXho/lqhM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZYTXx1qqcV8g9pS2VQjObBk8r18KlXYrD2e/X6PDZIyxi76V7GPwwJ0RDnhdE0Rj6tsj1dXWTn92wPwcrIDEB5fulhBYO6A0MCq6O4Vbl8/Ht8re85tmglVY+i+AeuNTHWIMAu+N+Ay6UYKbPGefVw/PeO5GekPNeCQQOiIS6sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=TRSoUWwF; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1789497617; c=relaxed/simple;
+	bh=c6mfU+sOuiO5rL2mGLrsnIWQBc4pM+qhMVV13HCgHOU=;
+	h=Date:Message-ID:From:To:Cc:Subject; b=VycBO2ZsFBMK5tVtN4QpXb/aJJ8VSkVQNqsCzV1gc7EhjZT6AVtiE837lxMU7UpyRak2kqzHJhYoKE6lBKIpcusjFSYiF94lzXL8NIzbeS6KNTxkovMwAEafOxrktdmwUx35tAxrdSQhd4/vM0VnvzhQr6ldn5xD28UdinJZqew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I8juqj3q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="TRSoUWwF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=o3sBMMNkZYGHRLzQ0L/ylrvpboFh8FkZPjaw8+4m7mg=; b=TRSoUWwFm1Y6hmiYVd7LEdKj/X
-	za/zJaazOFTjy9xXwXfLDvFYzIWFUUBcA3HtZzTojrZPUUeJOqO9wkgFPGrs+j6AYvnSIXzLeGwaZ
-	wMwtSzJXmnBZeI/heWcMhm9oVWkKDp5BQvMWGPw0rs3OqTaJ7UvcURCsokRWe29R81UoBzBW5mwvz
-	FJAGZ48xbbuuFVvXKyPxiEjRnIWINcCEPoe70oKmtoxO28lZGz6ElroCWS8pTg4dt3rLZeI0dQSHg
-	OCYl1wIRcNWRePV3DoaA5lH1VSUAGEzgb8FebOepBC7PxlD9JzFoCfbI/bzPiz0zKAe0/GXg0taEK
-	sYq/bp6w==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1x6WtG-0000000GmAB-1ynd;
-	Tue, 15 Sep 2026 17:24:18 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 7D738300328; Tue, 15 Sep 2026 19:24:17 +0200 (CEST)
-Date: Tue, 15 Sep 2026 19:24:17 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
-	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
-	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 04/18] sched/core: Avoid false migration warning for
- proxy donors
-Message-ID: <20260915172417.GA2835410@noisy.programming.kicks-ass.net>
-References: <20260831134338.1531664-1-arighi@nvidia.com>
- <20260831134338.1531664-5-arighi@nvidia.com>
- <20260910100652.GF4120091@noisy.programming.kicks-ass.net>
- <aqlstkw_QzFqe03A@gpd4>
- <aql-bQRXTP6lCcso@gpd4>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I8juqj3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217DF1F00893;
+	Tue, 15 Sep 2026 18:40:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789497616;
+	bh=bAZJlaWUaIC9ATqe/uzoAUFcM0qeIxwjJqAiIphRJkw=;
+	h=Date:From:To:Cc:Subject;
+	b=I8juqj3q3istWJHE2gshfIIcR62DVFV+pVozPW+qGfGqxD78izbGAiGSSuyXtlxJ/
+	 8KNQJo282icE6u9UjVbTS420k/Xb5QJLhq84xePohyJfrE3MFvL/pXb/FbhfdzLRgL
+	 5a+Q3Qvlj926iJqHouRjeocobc7g2kHJ2cTkiF7L2d28hG/Bxo8whc/wcSxXchvc0g
+	 YkaTbnC4UAzqfeHdMH10kO58FoJ8/ZqICxGDXXAL6XfyWBIjEIGS/qAixXAkhECpaz
+	 MzyxR4VA+WdjBjZO0L4M/LAi2qUKornskw+ee9T4bx3na9n0Tpr6wSzhV/6hYNX9Mb
+	 Jdo/80HSg9P+w==
+Date: Tue, 15 Sep 2026 08:40:15 -1000
+Message-ID: <77a248741e07bbe690582f3c31442b7f@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: [GIT PULL] sched_ext: Fixes for v7.3-rc3
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aql-bQRXTP6lCcso@gpd4>
 
-On Tue, Sep 15, 2026 at 07:20:45PM +0200, Andrea Righi wrote:
+Hello,
 
-> > > I'm not sure why we're not hitting this upstream?
-> > 
-> > I think this can be hit upstream as well. I'll try to create a reproducer.
-> 
-> And I can reproduce this with the latest tip/master:
-> 
->   proxy_migrate_repro: donor blocking on CPU0 with migration disabled
->   proxy_migrate_repro: donor moved from CPU0 to CPU1
->   WARNING: kernel/sched/core.c:3389 at set_task_cpu+0x1d3/0x280
->   ...
->   Call Trace:
->    try_to_wake_up+0x43f/0x780
->    __mutex_unlock_slowpath+0x330/0x540
->    owner_fn+0x9f/0xc0 [proxy_migrate_repro]
->   ...
->   proxy_migrate_repro: donor woke on CPU0, task_cpu=0
->   proxy_migrate_repro: completed
-> 
-> The reproducer creates a mutex owner on CPU1 and a migration-disabled waiter on
-> CPU0. The waiter is proxy-migrated to CPU1 while blocked. When the owner
-> releases the mutex, try_to_wake_up() returns the waiter to its pinned CPU0
-> through set_task_cpu(), triggering the warning.
-> 
-> I guess I can send this as a separate fix, it doesn't necessarily need to be in
-> this series.
+The following changes since commit 068e5a0bc57e57d24cbf38def29cc5fb4db9a0df:
 
-Right, or at the head with a Fixes tag on will do too. Thanks for
-checking!
+  sched_ext: Fix missing @slice and @vtime descriptions in finish_dispatch() kernel-doc (2026-08-31 07:28:04 -1000)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.3-rc3-fixes
+
+for you to fetch changes up to a9e3760b0838299649c0d57cca44daaf40ba3c33:
+
+  sched_ext: Maintain an online cid mask in the scheduler arena (2026-09-15 06:57:20 -1000)
+
+----------------------------------------------------------------
+sched_ext: Fixes for v7.3-rc3
+
+- An error raised by a BPF program before the scheduler finished enabling
+  was consumed by the disable path's pre-enable shortcut, leaving a
+  running scheduler that couldn't be disabled and was later freed while
+  in use.
+
+- Two compat kfuncs dereferenced a NULL scheduler when handed an exited
+  or idle task, oopsing the kernel.
+
+- Keep-running decisions in the dispatch path used the root scheduler's
+  flags for tasks belonging to a sub-scheduler, causing warnings and
+  stalls.
+
+- Schedulers with their own CPU ID mapping had no way to learn which IDs
+  are online. Add a kernel-maintained online mask to plug the hole.
+
+- Cgroup idle state: the initial cpu.idle state wasn't passed on cgroup
+  init and same-value rewrites delivered spurious callbacks.
+
+- Example scheduler fixes for a reenqueue loop on attach, placements on
+  CPUs without effective grants, stalled partition work and stale idle
+  tracking.
+
+----------------------------------------------------------------
+Tao Cui (2):
+      sched_ext: Pass the initial cpu.idle state in scx_cgroup_init_args
+      sched_ext: Don't deliver duplicate ops.cgroup_set_idle() for same value
+
+Tejun Heo (7):
+      sched_ext: Rename sch to root_sch in dispatch_one()
+      sched_ext: Use @prev's scheduler for the keep decisions in dispatch_one()
+      sched_ext: scx_qmap: Do not add IMMED to rescue inserts
+      sched_ext: scx_qmap: Place only on cids whose caps are in effect
+      sched_ext: scx_qmap: Fix pending partition work handoff
+      sched_ext: scx_qmap: Restore unused idle claims from ops.dispatch()
+      sched_ext: Maintain an online cid mask in the scheduler arena
+
+Wanwu Li (1):
+      sched_ext: Fix NULL sched deref in kfunc sub-sched error paths
+
+fangqiurong (1):
+      sched_ext: Close the pre-enable ops error claim window
+
+ kernel/sched/ext/ext.c                   | 142 +++++++++++++++++++++------
+ kernel/sched/ext/idle.c                  |  11 ++-
+ kernel/sched/ext/internal.h              |  12 ++-
+ kernel/sched/ext/sub.c                   |  12 ++-
+ tools/sched_ext/include/scx/common.bpf.h |   1 +
+ tools/sched_ext/scx_qmap.bpf.c           | 162 +++++++++++++++++++++----------
+ tools/sched_ext/scx_qmap.h               |   3 +
+ 7 files changed, 254 insertions(+), 89 deletions(-)
+
+--
+tejun
