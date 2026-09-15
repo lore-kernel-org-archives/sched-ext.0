@@ -1,25 +1,25 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5825F3B6BE5
-	for <sched-ext@lists.linux.dev>; Tue, 15 Sep 2026 13:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A316D3B6C13
+	for <sched-ext@lists.linux.dev>; Tue, 15 Sep 2026 13:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789477441; cv=none; b=PrVESab/lRc7qW7IZL0fVTmOCQbmguF0iUCxpOQaOLw97xObnhd/hs20srWOtflUfvqHC0QX0uAHtSO+IrPWJsKdNQqVTODr1nOSeZZG45nzEYqKvfclLBCjRJXKs13p9DAAoYYcTVobzlDTgPFKU2VZNOnUgzqCpV2nY5cIkgU=
+	t=1789477443; cv=none; b=NKvA7DWAe+tt7ORrbi9N3PgMChoTwoV44hsIkgN8JdMszYv6cN1egQRg4gnOPbMwNan32z2AodyMDy6xM2yFRjwih+28y0OhB9YwaQ0stqCzJ6EvN/CT4l+oIJ/Ra5bC4a/HSYmRuI2vspsuZH0yoHYkTh6AOAPmRdeZLXdl7LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789477441; c=relaxed/simple;
-	bh=cgpfVgPma25Tux9SYWMKSlfrFFzngTxC6/pmAchE5+Q=;
+	s=arc-20240116; t=1789477443; c=relaxed/simple;
+	bh=jrXpJ/hnkP4bPrnUrT2dMme1TFKR5RsE0vgRRUPLXts=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Xba1mj/5zjefGe+tgL496vfDALvk5JYMX+Z99ge4sCOgcKqhgni0vCfGaI89lqyAO0+URsoqyrKhr/FtxX82yjqwluXek8aB0YxZ8WV22ASFJroknfMuI9hLMnADfurSTS2wtgpUXMAQqxHsa67jIwBiichakQDns3R1To33xhU=
+	 MIME-Version; b=MaR+jB18+OZuBflkCebqoDRcB/iQ+KXBhS0DyDfWc40x0MPwHdz7Awkf42txfInR7g4tSjiqJn29wB9aa/RQC+QaucL154SDdJFJT0LN5JGHAidLlgPPY6ZELVo5h4yudiSCHO0X3VquzkKwqBdza32SrGVvjTg7fMAFe20EnZc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: e5a88970b10511f19a56ed5b684f684d-20260915
+X-UUID: e5815a1cb10511f19a56ed5b684f684d-20260915
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:cf0a323b-01ac-44d8-8e93-8b00402cd12b,IP:0,U
+X-CID-O-INFO: VERSION:1.3.19,REQID:393e163d-886d-4b82-87b7-2f87ff33e354,IP:0,U
 	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
 	ON:release,TS:0
-X-CID-META: VersionHash:7db8b62,CLOUDID:639db492312fde2be8e53654d0775788,BulkI
+X-CID-META: VersionHash:7db8b62,CLOUDID:12d433105d933a20fca121374aa7a597,BulkI
 	D:nil,BulkQuantity:0,SF:81|82|102|136|850|865|898,TC:nil,Content:0|15|50|9
 	9,EDM:5|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OS
 	I:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
@@ -27,12 +27,12 @@ X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: e5a88970b10511f19a56ed5b684f684d-20260915
+X-UUID: e5815a1cb10511f19a56ed5b684f684d-20260915
 X-User: fangqiurong@kylinos.cn
 Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
 	(envelope-from <fangqiurong@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 902388786; Tue, 15 Sep 2026 21:03:51 +0800
+	with ESMTP id 1875957571; Tue, 15 Sep 2026 21:03:50 +0800
 From: Qiurong Fang <fangqiurong@kylinos.cn>
 To: tj@kernel.org
 Cc: arighi@nvidia.com,
@@ -40,9 +40,9 @@ Cc: arighi@nvidia.com,
 	changwoo@igalia.com,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] selftests/sched_ext: Test that ops.dequeue() can iterate the consumed DSQ
-Date: Tue, 15 Sep 2026 21:03:34 +0800
-Message-Id: <20260915130334.714388-3-fangqiurong@kylinos.cn>
+Subject: [PATCH v2 1/2] sched_ext: Don't run ops.dequeue() with a DSQ lock held
+Date: Tue, 15 Sep 2026 21:03:33 +0800
+Message-Id: <20260915130334.714388-2-fangqiurong@kylinos.cn>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260915130334.714388-1-fangqiurong@kylinos.cn>
 References: <aqkQ1MtqtqnS0wUs@gpd4>
@@ -57,205 +57,189 @@ Content-Transfer-Encoding: 8bit
 
 From: fangqiurong <fangqiurong@kylinos.cn>
 
-Add a scheduler whose ops.dequeue() iterates the user DSQ tasks are
-dispatched from with bpf_iter_scx_dsq. The iteration takes the DSQ's raw
-spinlock; on a kernel that runs ops.dequeue() while the consume path
-still holds that lock, the first task consumed self-deadlocks the CPU
-until the scheduler watchdog fires and the test fails with a UEI. On a
-fixed kernel the scheduler runs clean and the test passes.
+ops.dequeue() is called with the source user DSQ's lock still held on
+the consume and move paths (scx_consume_dispatch_q(),
+move_task_between_dsqs()) and with the terminal global/bypass DSQ's
+lock still held in scx_dispatch_enqueue(). A BPF scheduler that locks
+the same DSQ from ops.dequeue() - e.g. by iterating it with
+bpf_iter_scx_dsq, which takes the DSQ lock on every step -
+self-deadlocks.
 
+Move the invocation after the DSQ unlock on all three paths.
+SCX_TASK_IN_CUSTODY is cleared under the lock so that the callback is
+invoked exactly once; it is not ordered against consumption of the
+task and may run after the task has been moved to, or consumed from,
+a terminal DSQ.
+
+Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
 ---
- tools/testing/selftests/sched_ext/Makefile    |  1 +
- .../selftests/sched_ext/dequeue_iter.bpf.c    | 65 +++++++++++++
- .../selftests/sched_ext/dequeue_iter.c        | 94 +++++++++++++++++++
- 3 files changed, 160 insertions(+)
- create mode 100644 tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/dequeue_iter.c
+ Documentation/scheduler/sched-ext.rst |  4 +-
+ kernel/sched/ext/ext.c                | 67 +++++++++++++++++++++------
+ 2 files changed, 56 insertions(+), 15 deletions(-)
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 5f5dd9ab903a..08c2646cdd1a 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -164,6 +164,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
- auto-test-targets :=			\
- 	create_dsq			\
- 	dequeue				\
-+	dequeue_iter			\
- 	enq_last_no_enq_fails		\
- 	ddsp_bogus_dsq_fail		\
- 	ddsp_vtimelocal_fail		\
-diff --git a/tools/testing/selftests/sched_ext/dequeue_iter.bpf.c b/tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
-new file mode 100644
-index 000000000000..406a767c31b2
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
-@@ -0,0 +1,65 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * ops.dequeue() of this scheduler iterates the user DSQ tasks are
-+ * consumed from with bpf_iter_scx_dsq, which takes the DSQ lock.
-+ * On a kernel that still runs ops.dequeue() with that lock held, the
-+ * iteration self-deadlocks the CPU - this test wedges the system on
-+ * unfixed kernels instead of failing cleanly.
-+ *
-+ * Copyright (c) 2026 fangqiurong <fangqiurong@kylinos.cn>
-+ */
-+
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+UEI_DEFINE(uei);
-+
-+#define TEST_DSQ_ID 1000
-+
-+u64 dq_count;
-+
-+s32 BPF_STRUCT_OPS_SLEEPABLE(dequeue_iter_init)
+diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+index 794ae80b3ba3..6e65d3b38951 100644
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -361,7 +361,9 @@ The following briefly shows how a waking task is scheduled and executed.
+    ``scx_bpf_dsq_reenq()``. The task stays in BPF custody the entire time.
+ 
+    When a task leaves BPF scheduler custody, ``ops.dequeue()`` is invoked.
+-   The dequeue can happen for different reasons, distinguished by flags:
++   The callback is not ordered against consumption of the task and may run
++   after the task has been moved to, or consumed from, a terminal DSQ. The
++   dequeue can happen for different reasons, distinguished by flags:
+ 
+    1. **Regular dispatch**: when a task in BPF custody is dispatched to a
+       terminal DSQ from ``ops.dispatch()`` (leaving BPF custody for
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 40fa1697bdb7..13efddb729e3 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1499,20 +1499,28 @@ static inline bool task_scx_migrating(struct task_struct *p)
+ 	return p->scx.sticky_cpu >= 0;
+ }
+ 
++/* Must be called under the lock serializing @p's custody transfers. */
++static bool task_leave_custody(struct task_struct *p)
 +{
-+	return scx_bpf_create_dsq(TEST_DSQ_ID, -1);
++	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
++		return false;
++
++	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
++	return true;
 +}
 +
-+void BPF_STRUCT_OPS(dequeue_iter_enqueue, struct task_struct *p, u64 enq_flags)
-+{
-+	scx_bpf_dsq_insert(p, TEST_DSQ_ID, SCX_SLICE_DFL, enq_flags);
+ /*
+  * Call ops.dequeue() if the task is in BPF custody and not migrating.
+- * Clears %SCX_TASK_IN_CUSTODY when the callback is invoked.
++ * Clears %SCX_TASK_IN_CUSTODY before the callback is invoked.
+  */
+ static void call_task_dequeue(struct scx_sched *sch, struct rq *rq,
+ 			      struct task_struct *p, u64 deq_flags)
+ {
+-	if (!(p->scx.flags & SCX_TASK_IN_CUSTODY) || task_scx_migrating(p))
++	if (!task_leave_custody(p))
+ 		return;
+ 
+ 	if (SCX_HAS_OP(sch, dequeue))
+ 		SCX_CALL_OP_TASK(sch, dequeue, rq, p, deq_flags);
+-
+-	p->scx.flags &= ~SCX_TASK_IN_CUSTODY;
+ }
+ 
+ static void rq_owned_post_enq(struct scx_sched *sch, struct rq *rq,
+@@ -1705,20 +1713,28 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 	if (is_rq_owned) {
+ 		rq_owned_post_enq(sch, rq, dsq, p, enq_flags);
+ 	} else {
++		bool call_dequeue = false;
++
+ 		/*
+ 		 * Global and bypass DSQs are terminal - the task leaves the
+-		 * scheduler's custody, so ops.dequeue() fires here. It can run
++		 * scheduler's custody, so ops.dequeue() fires. It can run
+ 		 * without @p's rq lock (finish_dispatch() passes the dispatch
+ 		 * rq); that's safe because dequeue_task_scx() waits on
+ 		 * SCX_OPSS_DISPATCHING (see the ops_state note above) and so
+ 		 * can't race it. A non-terminal DSQ keeps the task in custody.
++		 * The custody transfer happens under @dsq->lock so that
++		 * later consumers see the flag clear; the callback runs
++		 * unlocked - it must not run with a DSQ lock held.
+ 		 */
+ 		if (dsq->id == SCX_DSQ_GLOBAL || dsq->id == SCX_DSQ_BYPASS)
+-			call_task_dequeue(sch, rq, p, 0);
++			call_dequeue = task_leave_custody(p);
+ 		else
+ 			p->scx.flags |= SCX_TASK_IN_CUSTODY;
+ 
+ 		raw_spin_unlock(&dsq->lock);
++
++		if (call_dequeue && SCX_HAS_OP(sch, dequeue))
++			SCX_CALL_OP_TASK(sch, dequeue, rq, p, 0);
+ 	}
+ 
+ 	/*
+@@ -2373,11 +2389,13 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
+ 		scx_schedule_reenq_local(rq, 0);
+ }
+ 
+-void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
+-				      u64 enq_flags, struct scx_dispatch_q *src_dsq,
+-				      struct rq *dst_rq)
++static struct scx_dispatch_q *
++__scx_move_local_task_to_local_dsq(struct scx_sched *sch,
++				   struct task_struct *p, u64 *enq_flags,
++				   struct scx_dispatch_q *src_dsq,
++				   struct rq *dst_rq)
+ {
+-	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, &enq_flags);
++	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, enq_flags);
+ 
+ 	/* @p is on @dst_rq, an rq-owned @src_dsq is covered by the rq lock */
+ 	if (!dsq_is_rq_owned(src_dsq))
+@@ -2386,14 +2404,25 @@ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct
+ 
+ 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
+ 
+-	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
++	if (*enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+ 		dsq_insert_head(dst_dsq, p);
+ 	else
+ 		list_add_tail(&p->scx.dsq_list.node, &dst_dsq->list);
+ 
+-	dsq_inc_nr(dst_dsq, p, enq_flags);
++	dsq_inc_nr(dst_dsq, p, *enq_flags);
+ 	p->scx.dsq = dst_dsq;
+ 
++	return dst_dsq;
 +}
 +
-+void BPF_STRUCT_OPS(dequeue_iter_dispatch, s32 cpu, struct task_struct *task)
++void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
++				      u64 enq_flags, struct scx_dispatch_q *src_dsq,
++				      struct rq *dst_rq)
 +{
-+	scx_bpf_dsq_move_to_local(TEST_DSQ_ID, 0);
-+}
++	struct scx_dispatch_q *dst_dsq;
 +
-+void BPF_STRUCT_OPS(dequeue_iter_dequeue, struct task_struct *p, u64 deq_flags)
-+{
-+	struct bpf_iter_scx_dsq it;
-+	struct task_struct *t;
++	dst_dsq = __scx_move_local_task_to_local_dsq(sch, p, &enq_flags,
++						     src_dsq, dst_rq);
+ 	rq_owned_post_enq(sch, dst_rq, dst_dsq, p, enq_flags);
+ }
+ 
+@@ -2628,9 +2657,14 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+ 	if (dst_dsq->id == SCX_DSQ_LOCAL) {
+ 		/* @p is going from a non-local DSQ to a local DSQ */
+ 		if (src_rq == dst_rq) {
++			struct scx_dispatch_q *ldsq;
 +
-+	if (!bpf_iter_scx_dsq_new(&it, TEST_DSQ_ID, 0)) {
-+		while ((t = bpf_iter_scx_dsq_next(&it)))
-+			;
-+	}
-+	bpf_iter_scx_dsq_destroy(&it);
+ 			scx_task_unlink_from_dsq(p, src_dsq);
+-			scx_move_local_task_to_local_dsq(sch, p, enq_flags, src_dsq, dst_rq);
++			ldsq = __scx_move_local_task_to_local_dsq(sch, p,
++								  &enq_flags,
++								  src_dsq, dst_rq);
+ 			raw_spin_unlock(&src_dsq->lock);
++			rq_owned_post_enq(sch, dst_rq, ldsq, p, enq_flags);
+ 		} else {
+ 			raw_spin_unlock(&src_dsq->lock);
+ 			move_remote_task_to_local_dsq(sch, p, enq_flags, src_rq, dst_rq);
+@@ -2679,9 +2713,14 @@ bool scx_consume_dispatch_q(struct scx_sched *sch, struct rq *rq,
+ 			break;
+ 
+ 		if (rq == task_rq) {
++			struct scx_dispatch_q *ldsq;
 +
-+	__sync_fetch_and_add(&dq_count, 1);
-+}
-+
-+void BPF_STRUCT_OPS(dequeue_iter_exit, struct scx_exit_info *ei)
-+{
-+	scx_bpf_destroy_dsq(TEST_DSQ_ID);
-+}
-+
-+SEC(".struct_ops.link")
-+struct sched_ext_ops dequeue_iter_ops = {
-+	.init			= (void *)dequeue_iter_init,
-+	.enqueue		= (void *)dequeue_iter_enqueue,
-+	.dispatch		= (void *)dequeue_iter_dispatch,
-+	.dequeue		= (void *)dequeue_iter_dequeue,
-+	.exit			= (void *)dequeue_iter_exit,
-+	.timeout_ms		= 5000,
-+	.name			= "dequeue_iter",
-+};
-diff --git a/tools/testing/selftests/sched_ext/dequeue_iter.c b/tools/testing/selftests/sched_ext/dequeue_iter.c
-new file mode 100644
-index 000000000000..35bc52cfc474
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/dequeue_iter.c
-@@ -0,0 +1,94 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2026 fangqiurong <fangqiurong@kylinos.cn>
-+ */
-+#include <bpf/bpf.h>
-+#include <pthread.h>
-+#include <sched.h>
-+#include <scx/common.h>
-+#include <time.h>
-+#include <unistd.h>
-+#include "dequeue_iter.bpf.skel.h"
-+#include "scx_test.h"
-+
-+#define DQ_TARGET	10
-+#define DQ_DEADLINE_MS	3000
-+
-+static unsigned long long now_ms(void)
-+{
-+	struct timespec ts;
-+
-+	clock_gettime(CLOCK_MONOTONIC, &ts);
-+
-+	return ts.tv_sec * 1000ULL + ts.tv_nsec / 1000000;
-+}
-+
-+static void *run_workload(void *arg)
-+{
-+	struct dequeue_iter *skel = arg;
-+	unsigned long long end = now_ms() + DQ_DEADLINE_MS;
-+
-+	while (skel->bss->dq_count < DQ_TARGET && now_ms() < end)
-+		usleep(100);
-+
-+	return NULL;
-+}
-+
-+static enum scx_test_status setup(void **ctx)
-+{
-+	struct dequeue_iter *skel;
-+
-+	skel = dequeue_iter__open();
-+	SCX_FAIL_IF(!skel, "Failed to open");
-+	SCX_ENUM_INIT(skel);
-+	SCX_FAIL_IF(dequeue_iter__load(skel), "Failed to load skel");
-+
-+	*ctx = skel;
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status run(void *ctx)
-+{
-+	struct dequeue_iter *skel = ctx;
-+	struct bpf_link *link;
-+	pthread_t tid;
-+
-+	link = bpf_map__attach_struct_ops(skel->maps.dequeue_iter_ops);
-+	SCX_FAIL_IF(!link, "Failed to attach scheduler");
-+
-+	SCX_FAIL_IF(pthread_create(&tid, NULL, run_workload, skel),
-+		    "Failed to create workload thread");
-+	pthread_join(tid, NULL);
-+	bpf_link__destroy(link);
-+
-+	if (UEI_EXITED(skel, uei)) {
-+		UEI_REPORT(skel, uei);
-+		SCX_ERR("Scheduler exited unexpectedly\n");
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	if (skel->bss->dq_count < DQ_TARGET) {
-+		SCX_ERR("ops.dequeue() fired only %llu times\n",
-+			(unsigned long long)skel->bss->dq_count);
-+		return SCX_TEST_FAIL;
-+	}
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static void cleanup(void *ctx)
-+{
-+	struct dequeue_iter *skel = ctx;
-+
-+	dequeue_iter__destroy(skel);
-+}
-+
-+struct scx_test dequeue_iter = {
-+	.name = "dequeue_iter",
-+	.description = "Verify ops.dequeue() can iterate its source user DSQ",
-+	.setup = setup,
-+	.run = run,
-+	.cleanup = cleanup,
-+};
-+REGISTER_SCX_TEST(&dequeue_iter)
+ 			scx_task_unlink_from_dsq(p, dsq);
+-			scx_move_local_task_to_local_dsq(sch, p, enq_flags, dsq, rq);
++			ldsq = __scx_move_local_task_to_local_dsq(sch, p,
++								  &enq_flags,
++								  dsq, rq);
+ 			raw_spin_unlock(&dsq->lock);
++			rq_owned_post_enq(sch, rq, ldsq, p, enq_flags);
+ 			return true;
+ 		}
+ 
 -- 
 2.43.0
 
