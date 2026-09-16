@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF603B5311;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A97C469838;
 	Wed, 16 Sep 2026 21:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789593562; cv=none; b=JQIHn0qSyFtkHc5gV1UHj18cI9WGrDlLwO2e1AOGjYimAUVijfw8Tc9JJJzK6SWEEYU9p1fYVj8PPkhWfgAnm1qezdRXhqbVfzQN2rDu7XuOArLdyxMdhPNQ9PaspKBY70FgtE1VrYrYbpVlcEgT/bLhCLi3o3OHvZvOl70kXks=
+	t=1789593579; cv=none; b=Eh/INFzI0SEinN+9AafJIbkGvGTGk9nZ7WwYqGy5fqeYFNdJ9fmZ6ndkSa+n3GwyDeI7uqgNT5mXbNO7d0X64Rnl3dJB8MhzPXFKulUTdfG9bfGqgfbfVTx/xEW6RP1aVUZqGfbQsXaQZyhS0amGxf6l4JX9f9VoKNmUA0loLzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789593562; c=relaxed/simple;
-	bh=ZJj6sOnAWihmjCAI1p9TzUptqhR6jfpsZ0hJnvzvjA4=;
+	s=arc-20240116; t=1789593579; c=relaxed/simple;
+	bh=gg6NUaJbHlRIz107NnnQnMyRzFnyxBA0EmVADuWeOnA=;
 	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WJGTpFfK9ItoEOGQwykN4H+dzthW7doYdwBwLHNr3JFMjO/EatUfZB9xNZqU2fEts0/lpq89UZmRyElGppfUPeOxMTuWdq2555t7Y88bWXLBCBuv+CTnNNHZNeyfqCsHxbrvnBYJ6VJFsHBChTWAlkbVN8d8NGP3UwExbf/LF9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=auPAgx9P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uSzQraV0EES3f2FgfUB/gHh0cneToWRGqx/gRyFc18HinkswG8ZK4cn1vBmQxNgJIdK48U+hKgpyI0eN+z7/r+NjP4kOSDouIqCfFIc2pGunxf5tn9uv2vkh1MOepmbtGtkMW2sm1nffO76aH2VoiGdThWeiSoWViTfLFf3Kvuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8cVEAaR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="auPAgx9P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7711F00893;
-	Wed, 16 Sep 2026 21:19:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8cVEAaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863701F000FF;
+	Wed, 16 Sep 2026 21:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789593542;
-	bh=GrE93os0smfRVept2SAd6k9NjBTA7zM10Cs3NirTs20=;
+	s=k20260515; t=1789593541;
+	bh=TYQp4TVbIdc3alj+SnG6vRCYmGaxdN6ohgm5zyM8/9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=auPAgx9PgTFnpeSp/JBqkRFzaWH9lJJ2wDmVTstmDvlNA6hKESZr3jp+YcySerB8l
-	 rDeCRq8tPkt2FO7SR3EdFg5Tg3Rcypd1Fzg15oljQ2ooe2hLxBxDQc1QwEmK+/C9Z2
-	 r6zpeOTUj/kI6VCoUZAJejUNUp/Y0MDCzpsOT1L05BqSxYQC9j3K426mHJ1LNElSm2
-	 zVSySWfgWeQbl7drn54kNXTV5OrM559Bn0Xf13jMSLjipEpAtZ+kwmQieBhJJ/wUxD
-	 7wuVGO542ayrhEeLpSck/+e7zgRnIBtAJSJwIfNSXOxYAXm9oaejNaQ+dDtz4C4fQL
-	 0m93vLFgf9uyg==
-Message-ID: <3cd8e126a2f214673abfa78fc303b1b1@kernel.org>
+	b=V8cVEAaReNNW3QWnzCHFozWPnzJaowMwgOLTyaIWVVR5VqR1BtDJrhXqIJuiqx+Pd
+	 WPu1z/jqT+9+1VmcAv4Ym+R31q8Fw78kk9YcQ1vCaz1ZjRw1mgya6uwJIwkDlLP637
+	 8oJrwrTWwY4J7OXACGXad7zndF9ZpKCx3r740wQYTVP+meHchM/Q7SJL/RQwJiMak/
+	 vD3XQgPrqKOd87EQ3to75URVowYYISG7E+zvwzqDbCDq/O9xoag1txGQ5sDoRIbPkT
+	 KsD0KSC5tnKReEUVFnYDaovPL/Ri42wW+Qdsi0YcAqK8PskgThl6IaPiW0/rwayCKP
+	 wVQHvx04SKhMQ==
+Message-ID: <bce097463a431a8fde2359539e4e5303@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: Andrea Righi <arighi@nvidia.com>
 Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
  Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <etsal@meta.com>,
  Cheng-Yang Chou <yphbchou0911@gmail.com>, sched-ext@lists.linux.dev,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] selftests/sched_ext: Add lazy preemption tests
+Subject: Re: [PATCH 1/2] sched_ext: Add lazy preemption support
 Date: Wed, 16 Sep 2026 11:03:36 -1000
-In-Reply-To: <20260915194611.2674127-3-arighi@nvidia.com>
+In-Reply-To: <20260915194611.2674127-2-arighi@nvidia.com>
 References: <20260915194611.2674127-1-arighi@nvidia.com>
- <20260915194611.2674127-3-arighi@nvidia.com>
+ <20260915194611.2674127-2-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,82 +49,84 @@ Content-Transfer-Encoding: 7bit
 
 Hello, Andrea.
 
-This is an AI review. The tests pass here under vng in lazy, full and none
-modes. The timing below was measured with the target CPU on nohz_full.
+This is an AI review. The series was built and the selftests pass under vng
+here, and the kick and tick paths were traced and look correct. A few things
+to fix up.
 
-On Tue, Sep 15, 2026 at 09:45:13PM +0200, Andrea Righi wrote:
-> +void BPF_STRUCT_OPS(kick_stopping, struct task_struct *p, bool runnable)
+On Tue, Sep 15, 2026 at 09:45:12PM +0200, Andrea Righi wrote:
+> +	 * modified afterwards with scx_bpf_task_set_slice_expiry().
+> +	 */
+> +	bool			slice_expires_lazy;
+
+This adds 8 bytes to task_struct for a bool. Put it next to @disallow, there
+are three bytes of padding after it.
+
+> +	 * A task in user space still reschedules on the way back from the tick; a
+> +	 * task in the kernel runs on to its next return to user space or to the
+> +	 * next tick, which promotes the request. No effect on kernels without
+> +	 * lazy preemption. Rescheduling while disabling stays immediate.
+
+Lazy is a runtime mode under PREEMPT_DYNAMIC, so "kernels without lazy
+preemption" isn't right. And what forces immediate rescheduling is bypassing,
+not disabling.
+
+> +static void scx_resched_curr_lazy(struct rq *rq)
 > +{
-> +	if (p->pid == victim_pid && state == KICK_STATE_RESCHED)
-> +		state = KICK_STATE_DONE;
+> +	if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK) {
+> +		rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
+> +		if (rq->clock_update_flags < RQCF_UPDATED)
+> +			update_rq_clock(rq);
+> +		update_other_load_avgs(rq);
+> +		sched_update_tick_dependency(rq);
+> +	}
+> +
+> +	resched_curr_lazy(rq);
 > +}
 
-In the kick and tick scenarios the victim is the only runnable task on the
-target CPU, so when its slice is cleared the kernel keeps running it with a
-refilled slice and ops.stopping() is never called. DONE only arrives when some
-other task pinned to that CPU wakes up. With the target CPU on nohz_full here,
-the first such wakeup was a kworker 2.86s after the victim started, against
-the 3s wait. Without nohz_full the scenarios still spend about half a second
-each waiting for one. SCX_OPS_ENQ_LAST with the SCX_ENQ_LAST kick as in
-nohz_tick.bpf.c would put the victim through ops.stopping() on its own.
+Setting the TIF bit before restoring the tick dependency would let the tick
+IPI's return to user space serve the reschedule instead of waiting for the
+next tick. Not critical.
 
-> +SEC("fexit/__resched_curr")
-> +int BPF_PROG(kick_need_resched, struct rq *rq, int tif)
-> +{
-> +	struct task_struct *task = BPF_CORE_READ(rq, curr);
-> +
-> +	if (!task || BPF_CORE_READ(task, pid) != victim_pid ||
-> +	    BPF_CORE_READ(rq, cpu) != target_cpu || state != KICK_STATE_QUEUED)
-> +		return 0;
+> -/* common to both forms: only scx.disallow is writable */
+> +/* common to both forms: only the fields below are writable */
 
-This latches the first resched of the victim whatever the cause. A higher
-class wakeup on the target CPU inside the window, which is the whole 20ms
-slice in TICK_EXPIRY, records a full slice and fails observation_valid().
-Skipping observations with a non-zero slice would be more robust.
+Nothing else became writable. Drop the hunk.
 
-> +	SCX_EQ(lazy_wait.resched_tif, immediate.resched_tif);
-> +	SCX_GT(lazy_wait.nr_wait_callbacks, 0);
+> -	raw_spin_rq_lock_irqsave(rq, flags);
+> +	rq_lock_irqsave(rq, &rf);
 
-DONE is set from ops.stopping() before the context switch and the balance
-callback runs after it, so this read can race the increment. Poll for it.
+Please explain this in the description. Pinning clears RQCF_UPDATED, which is
+what makes the clock_update_flags test in scx_resched_curr_lazy() do anything
+on this path.
 
-> +	file = fopen("/sys/kernel/debug/sched/preempt", "r");
-> +	if (!file) {
-> +#if defined(CONFIG_PREEMPT_LAZY) && !defined(CONFIG_PREEMPT_DYNAMIC)
-> +		return 1;
-> +#else
-> +		return -1;
-> +#endif
-
-This reflects the build tree, not the running kernel. Also, none and voluntary
-return -1 and skip the comparison, but the TIFs must match in those modes too.
-
-> +	skel->rodata->scenario = scenario;
-> +	if (kick__load(skel))
-> +		goto out;
-
-If __resched_curr() isn't in BTF, this fails too and kick_invalid FAILs along
-with the other four although it doesn't use the tracer. Skipping when the
-target is missing would be better.
-
-> +	if (!start_gated_worker(&victim) ||
-> +	    !wait_for_counter(&skel->bss->nr_lazy_victim_running, 1,
-> +			      PHASE_TIMEOUT_MS)) {
-> +		SCX_ERR("Lazy-enqueue victim was not scheduled");
-> +		goto out;
+> +	if (unlikely(flags & ~(SCX_KICK_IDLE | SCX_KICK_PREEMPT | SCX_KICK_WAIT |
+> +			       SCX_KICK_PREEMPT_LAZY))) {
+> +		scx_error(sch, "invalid kick flags 0x%llx", flags);
+> +		return;
 > +	}
-> +	usleep(100000);
 
-Neither lazy phase checks that the tick actually stopped before the request,
-so they pass with the tick running the whole time.
+Unknown flags were silently ignored before, so this is a behavior change and
+the description should say so. The SCX_KICK_IDLE check already existed, it
+just returns early now.
 
-> Extend the NO_HZ_FULL test with infinite-slice victims. Verify that lazy
-> enqueue and kick requests restart a stopped tick and make forward
-> progress. Keep invalid kick flag coverage and skip modes not exposed by
-> the running kernel.
+> + *            - SCX_ENQ_PREEMPT and SCX_ENQ_PREEMPT_LAZY inserts
+> + *            - SCX_KICK_PREEMPT and SCX_KICK_PREEMPT_LAZY kicks
 
-kick.c is new, nothing is kept. The controller mask and timeout changes to
-nohz_tick aren't mentioned either.
+insert, kick.
+
+> +/*
+> + * v7.4: scx_bpf_task_set_slice_expiry() added to enforce sub-scheduler task
+> + * ownership. Preserve until v7.7.
+> + */
+
+This is copied from the block above and doesn't apply. The kfunc is new with
+the feature, there was no field write to replace.
+
+> +#define HAVE_SCX_KICK_PREEMPT_LAZY
+>  #define HAVE_SCX_KICK_WAIT
+
+The autogen headers follow definition order, so SCX_KICK_PREEMPT_LAZY goes
+after SCX_KICK_WAIT in all four. Please regenerate them instead of editing.
 
 Thanks.
 
