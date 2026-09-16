@@ -1,168 +1,265 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011018.outbound.protection.outlook.com [52.101.62.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC393B5311
-	for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 06:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789541475; cv=fail; b=CmaMCz7zJ2DphIb5r6+O28E0oe0pWahA2rf4wP6ktDx+ZmhgKZxR03eBMPifraIxIcFvgCwXDByTxfGGSn8gf6kNcocBsffeH8TOMIsR10VX4HthFUyCpVWS/kZwM5CSpM8DUOKYEJkjHsj/uuoatkCdDaj9HGr7B5H7MYwb1jg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789541475; c=relaxed/simple;
-	bh=z5vyVUCMAzwcr4Pb4+2swfB/gY6I9Jh7w6T6sKFQydk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Uy8QUcQHeVyYZvu4G/RTQAhIgxzeQEYewXw9wSkqChhjpnTS4w4WhQMUbl+ZlTZ2L5p1IOiV3FbVG2ELUBlAGpjS1tBuQ3lR6Ce+2Q2jUh3WPeFNBVnDzVAQjR37lTTCMuyLwJQ62z6fGvgRbOZs7PUvBylfI9nhQZ7ksHCGcX4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=M5HXwDBJ; arc=fail smtp.client-ip=52.101.62.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="M5HXwDBJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m/4NGLWSImrHz2TrzwpIKKy3Pr53wu9urvet/nHYYwExPm5oHk1FP7mWok3lT+fkETIV/Q984IXOrVzdaOmZzX56Q8U2UebxhihBqO26DrSNIc+hWpOBukx6Ys1NP4JstCDSI5iWdGY8PJnQXrZIAHg4ky/gmo4tTQTjmrxrr1qh4cfYr5YxQbhpORlizPJjZroPBkRQMC9MTzVStQsEF5gjmvhu8ta5wBfpratqWjJ55bg0CL+j4VzQ5HVZz7UVg5xIsCydnnhXXBuzqsltRc1m3JRBF45niwH6rHjfoZt4cMc2SdpQkQ7qERY4Yt5mZuypz05PTcUmLJ4hGpRpmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2MWl4THuPr42VDsZDGiwuRaB7D0YP2y8n3eqnMRknaA=;
- b=U++3mHZsksBEYn082ZWXWzl4dy/G6DX7puzNz7aFoJgZm96D76WsjUZqH7z3HCoWDUw8Ko6UV70aZhGhORqC3Os/NBmiKqPDh5DtypjUxNq1TebVl9NwvJqUm0mXGQetwpwyFbbBQDVjb1DxakQvIeZv02i8lpH5mVRnOjuCp4LfDFcenZWvogiv1Y4p2EX9k8tOjoFwVAK1MzgQvDn/wH2N32kOBGRbllYAHWJKdP0Dd9U1metr4KYcPug0aymJFEpVm9lxoM4hvkHcWr/9UsGNs4f0HFo2WPqJDUqamf9xVDMwFfp16g88rWgfJueZL7KM15xvTlgRb0tJbEyzWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2MWl4THuPr42VDsZDGiwuRaB7D0YP2y8n3eqnMRknaA=;
- b=M5HXwDBJNhR1BNKd0e8CVu4FCmNo6emIT5e/DPx/9Zkg2moa8GJlaKNelhRes3Eg2QdlJt23n7Q3oj0xpvKpub2d0V1WLibg1YbeNh7m7Uy0eHnQtn80K3Ys3XTd2d36BitOLNhbqijGPjHjXyoyVxHfDX/gIS/c2Yex6XI3tTrW5Y+RwBP7ab2OVwudQg6z9Z3B9iIGzi24hXkpPMFHZdS2anko8KWY+Kb/aSKLp+0oZMCR6X9hedTjWLQJGSrdemf3zR/Gs0VEwCnl2gmzodcVSfgtSuAGUd73CElbJXLUZu4Rf0z1faccOOK1+L5hAJIt/y+XxAUgxD4svFADgQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH2PR12MB4824.namprd12.prod.outlook.com (2603:10b6:610:b::22)
- by CYXPR12MB9278.namprd12.prod.outlook.com (2603:10b6:930:e5::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.9; Wed, 16 Sep
- 2026 06:51:09 +0000
-Received: from CH2PR12MB4824.namprd12.prod.outlook.com
- ([fe80::34d6:fda7:9290:35a9]) by CH2PR12MB4824.namprd12.prod.outlook.com
- ([fe80::34d6:fda7:9290:35a9%3]) with mapi id 15.21.0428.008; Wed, 16 Sep 2026
- 06:51:08 +0000
-Date: Wed, 16 Sep 2026 08:51:01 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
-	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
-	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 15/18] sched_ext: Delegate proxy donor admission to BPF
- schedulers
-Message-ID: <aqo8VVgKOo_VoFsw@gpd4>
-References: <20260831134338.1531664-1-arighi@nvidia.com>
- <20260831134338.1531664-16-arighi@nvidia.com>
- <20260910133900.GT776954@noisy.programming.kicks-ass.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260910133900.GT776954@noisy.programming.kicks-ass.net>
-X-ClientProxiedBy: MI1P293CA0013.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:2::15) To CH2PR12MB4824.namprd12.prod.outlook.com
- (2603:10b6:610:b::22)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A3E4028F7
+	for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 07:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789542511; cv=none; b=RIh2tbMmIlzr0d6fyIBLJSlMPCbU2nv4Z+Z0SM4tWU/247bTT7+PlNkZz8iOLKhUhJiEqN0xj6vNnItgFwJpwTlmqwdipGT++ugZQkqu8FZp23RBznPHS4eXex+VzhFTqA07HFoa6adhm1Y3wLvkU8AcR/VG3Tntsrk1MNxAe/4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789542511; c=relaxed/simple;
+	bh=mq9u9qcfkd8QpAcy1yN31/sAIXLN/xlr17NLNCo9vFg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=hlIg5wXyDMCTCYx1wCfIakIh+891PiyV28E0FVf3caR79OJwj7hbRE0JZmdY60rOsRzr3+ZWuQOVdJBV8nWtG/fcF2KT6qRyuzskVekWQd5F24QcLWsw7+mQt5zOudUSY/zrMqBkhd6iPbQqvVgP6+Skh39erB2PqrGZ/PTglLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 5f1331f6b19d11f19a56ed5b684f684d-20260916
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:5ea7f180-63f9-4aab-aca6-9ebfd3ea28f1,IP:0,U
+	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
+	ON:release,TS:0
+X-CID-META: VersionHash:7db8b62,CLOUDID:b8e9fa0e7382d59fbcee472f82bb53b0,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|102|136|850|865|898,TC:nil,Content:0|15|50|9
+	9,EDM:5|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OS
+	I:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 5f1331f6b19d11f19a56ed5b684f684d-20260916
+X-User: fangqiurong@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <fangqiurong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 2057830666; Wed, 16 Sep 2026 15:08:08 +0800
+From: Qiurong Fang <fangqiurong@kylinos.cn>
+To: tj@kernel.org
+Cc: arighi@nvidia.com,
+	void@manifault.com,
+	changwoo@igalia.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 2/2] selftests/sched_ext: Test that ops.dequeue() can iterate the consumed DSQ
+Date: Wed, 16 Sep 2026 15:07:53 +0800
+Message-Id: <20260916070753.3343113-3-fangqiurong@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260916070753.3343113-1-fangqiurong@kylinos.cn>
+References: <20260916070753.3343113-1-fangqiurong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4824:EE_|CYXPR12MB9278:EE_
-X-MS-Office365-Filtering-Correlation-Id: b388f37c-9c0f-4572-e394-08df13bee30a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|366016|1800799024|23010399003|11063799006|56012099006|4143699003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	7PfrHjd12eAfo4a/vEHPe0ctFyxu6LWuhjvM0Hajf1NipMMGHX8BAnCoNc7XQhvVLUDJWBl4bcvcQYxgqlOBYUF1rY5Bwnusj62WDv0QF8549q3P80ctCxBE8nb8bdjBshFn7avLg0QtRWh1NAQQ5DbYFRTa8/akrXqIZxFCUJKg+1cXzRBTmE11ys5cdTCvbi6IW0hI9wMdS2cVNvOVOi2vQr/bZpRD9HPmEsAHDZYxHeJmBlX9zo+xqcc3JkqZrldB+A9StPz+yorc/HORDXt5QZyggTl3sijVmtdMilfVvdNGN7ExR7HrzcsLwhim9/EUf2nUZ6fP9wdEqYw/Ra8xWbQjWX21bd4uWQ5r2TCtMgUMhT776PS7K2tAtLYdwbI9WAn6nVF1Op5kvvjgw5BxYRO1rgRVDn5SEK7BnT1rFnJUTRGmd5wP4e/rxe2Nax/2XfKF/zLcfv4mDjBQRb5My4iD24Lh0cNOO5mCW9wqYehxb7GabRuJvQeXBsxTmEUEz9HnY7lvX08OKIAFXNIj9H+yjQLSIuSj82KAzBgJ4RdzEIxzyN7/pk/A+VOkyKRjz3S3KA3YRmExg630zYmojR+S9yCjXJ/+fzNnnX+SwoK0DhCmo31+2LmddBVu1PFfflw8gKKkV+svC+rY8vWcIm3rPqr8hUTgat52EY8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH2PR12MB4824.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(23010399003)(11063799006)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?mhAdMa80t6FiUAiT0yYq6RxGVMbPzEhsoW+eM3smRr9JEnN7c0c6DtlzM+Bx?=
- =?us-ascii?Q?Czsh8U2NIv+53HGOpNqsXzD6xZ0KJ38HjqHkdCt8XQhkSYM37fDG9FNvitPz?=
- =?us-ascii?Q?IpLDEYVrtGX/W3Ztqq6fJRavRCAcK1F47lg8qDN/9HFCMV0X6nTUt0nwMbfn?=
- =?us-ascii?Q?h9/Clbsq99CXjhk2HhXv2aZ4yf20pDk8JryGF1sGkNMPKgIJDbO1jk739Goq?=
- =?us-ascii?Q?c9rtX0AoBoMXrrmTm9SOR6Bb5Bi71isiHPhr8Ch3uVkbdnTk9r0ZpokSmv6u?=
- =?us-ascii?Q?BgHJu+13Z9juhSseCcgjHBX34kS8tQlxQd75Bnt64y1vZNaseTUvSTJ887Lr?=
- =?us-ascii?Q?c7iZjY6JetPWOXX2pVV/UVvMkQ6uR1WsrAi60NT2HoIDT+WCD2bxYOIq2SYS?=
- =?us-ascii?Q?cCRT6hy5mc0sxA/9EpWO0uuvzesuibws1bvT09IAvkICN3Q+zHVH/4sAWUg6?=
- =?us-ascii?Q?AJBYdL8wshcdbPvD3p+Lm20RElVTCyZSbO9fDWHrOsYLnbN+FBIB5XK9G07k?=
- =?us-ascii?Q?J7n+BPNZnu2x2TANPu92j3abkGkxG2abTKLjA/DOWkUXEiQOVQxIiHyAKwBP?=
- =?us-ascii?Q?OfHHHsV2GVORDwHAPQVvy2Q/n+4FFUdL94nSPw0xhH0ucl3aSiXjcgf3jX5I?=
- =?us-ascii?Q?pf75+WaOuL2Z98SnJ+asoZjby5xB2oNMcULr0PfsD6VD8jni+zn7+jEx8YpE?=
- =?us-ascii?Q?AAybJH9VsGX6XqsjRg6O4NHqPOZttkfCdRea8bZHVXjsRZLvZDgYhd5qyv6a?=
- =?us-ascii?Q?n1lAz2r1sOhgTmwRy9QFIEMb+UvW0xgByPh00oHmqYLj6HsBC93N8PS0t6YC?=
- =?us-ascii?Q?vEzdPQpNaoEL77LFTbREN0gOqfbU+a7hzOIu/MBX+YPtDb8qHIC94NncJUUy?=
- =?us-ascii?Q?F5Rmmtxhe0i0dJWua9CvAX00SK2VTyHlYK9jhdEMfPzQxNoY4ocGAYB6t7kJ?=
- =?us-ascii?Q?0haAwN9GfiTckuPh7thd0m7Hnzq3iOgDk581x34iMUf2SpwSMgyp8iryEVIr?=
- =?us-ascii?Q?Uhx57Xz/JXPE1o9JoZP/ehKuFkeQfGeMDwen83CocK7ursom2L0bNEKJSW+0?=
- =?us-ascii?Q?plxIFoAydRWjXwX2jMk8IWdEVBwfQfnGY6AhKrHHdOqOonFh4D+G/fPkHeji?=
- =?us-ascii?Q?KU4YwywLmePrr/HU4zPXrTMvwiUuNdZzXM/I2rISsE9/pClkOIAuX/8Hz5U0?=
- =?us-ascii?Q?2hPxeTukfV91k7XG5ZOzdv/ni7o7KBHtEimoYgJnfxNrsrB7jlYRvI7lIPtd?=
- =?us-ascii?Q?MU/V+jMZEl29VSjd3B1zs5K+n4Jo4h+fO1qo37JzEwENenoL0rFIHwXOfBOI?=
- =?us-ascii?Q?xDa4nEkZhM8wWrqJGO+MYfGj1NmV5mWSg8DtdpeIUsr/sY8BXkaMmoqpRTz0?=
- =?us-ascii?Q?1wJwvOwKRHlHYlUaWi1mBgPTJdmZrxZjiSHzJoYF5SZERjCDRcuhiFJjEjOK?=
- =?us-ascii?Q?3rjuIvwaVv9poBynR3srpi1hmOXNyq2+sAcZOxFLUWkHDUHchmGHbxk1bo+b?=
- =?us-ascii?Q?veplWv16q6AVG0P59HQPln8gbjHAm5eoYHagFj7GtIR5z5tJlukhc+litZRQ?=
- =?us-ascii?Q?vs9nBFE6QIvhgPqgATJf5xkLIF5K1gLpU5ihptT1JhjwR+GYzpRe4N6/DfMh?=
- =?us-ascii?Q?DAvjHga5S+6/1qwGIfZFL+T+YNI7OXUwTC4KEc/VTs7DO5XcT4Z7FISvCMBT?=
- =?us-ascii?Q?0zNqenVlJpOvPW3Zu5mww+uFelLJ+Hx+ZE9Fjhnkkm5V0MmaQLNdZBx/yY/W?=
- =?us-ascii?Q?Mv22XqPAlg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b388f37c-9c0f-4572-e394-08df13bee30a
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4824.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 06:51:08.8789
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VdFgfbpNWXa2Xi1cTjTrUEFjUSGmhZ1tTy0NwyUMgBATKHo/tjuFyWX9sGXDaUya0v9kaCJDn5VlTCTKcZOMSQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR12MB9278
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 10, 2026 at 03:39:00PM +0200, Peter Zijlstra wrote:
-> On Mon, Aug 31, 2026 at 03:42:25PM +0200, Andrea Righi wrote:
-> 
-> > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> > index 5f4956cf7e369..aa6ba9e8d7cb0 100644
-> > --- a/kernel/sched/ext/ext.c
-> > +++ b/kernel/sched/ext/ext.c
-> > @@ -26,7 +26,28 @@ DEFINE_RAW_SPINLOCK(scx_sched_lock);
-> >  
-> >  bool scx_allow_proxy_exec(const struct task_struct *p)
-> >  {
-> > -	return p->sched_class != &ext_sched_class;
-> > +	struct scx_sched *sch;
-> > +
-> > +	if (p->sched_class != &ext_sched_class)
-> > +		return true;
-> > +
-> > +	sch = scx_task_sched(p);
-> > +	return !sch || (sch->ops.flags & SCX_OPS_ENQ_BLOCKED);
-> > +}
-> 
-> Can we have this thing either be inline or wrapped in an inline function
-> that has scx_enabled() on?
-> 
+From: fangqiurong <fangqiurong@kylinos.cn>
 
-Yes, that makes sense. This is called from the scheduler blocking path, so the
-inactive sched_ext case should be handled through the scx_enabled() static key.
+Add a scheduler whose ops.dequeue() iterates the source user DSQ with
+bpf_iter_scx_dsq. The iteration takes the DSQ's raw spinlock; on a
+kernel that runs ops.dequeue() while the consume path still holds that
+lock, the first task consumed self-deadlocks the CPU with IRQs
+disabled. The watchdog cannot recover from that state, so on an
+unfixed kernel this test wedges the system instead of failing cleanly.
+On a fixed kernel the scheduler runs clean and the test passes.
 
-I'll add an inline scx_allow_proxy_exec() wrapper that returns true when
-sched_ext is disabled and calls __scx_allow_proxy_exec() otherwise.
+Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
+---
+ tools/testing/selftests/sched_ext/Makefile    |  1 +
+ .../selftests/sched_ext/dequeue_iter.bpf.c    | 73 +++++++++++++++
+ .../selftests/sched_ext/dequeue_iter.c        | 90 +++++++++++++++++++
+ 3 files changed, 164 insertions(+)
+ create mode 100644 tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/dequeue_iter.c
 
-Thanks,
--Andrea
+diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
+index 5f5dd9ab903a..08c2646cdd1a 100644
+--- a/tools/testing/selftests/sched_ext/Makefile
++++ b/tools/testing/selftests/sched_ext/Makefile
+@@ -164,6 +164,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
+ auto-test-targets :=			\
+ 	create_dsq			\
+ 	dequeue				\
++	dequeue_iter			\
+ 	enq_last_no_enq_fails		\
+ 	ddsp_bogus_dsq_fail		\
+ 	ddsp_vtimelocal_fail		\
+diff --git a/tools/testing/selftests/sched_ext/dequeue_iter.bpf.c b/tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
+new file mode 100644
+index 000000000000..7f23b0a8af7f
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
+@@ -0,0 +1,73 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * ops.dequeue() of this scheduler iterates the user DSQ tasks are
++ * consumed from with bpf_iter_scx_dsq, which takes the DSQ lock.
++ * On a kernel that still runs ops.dequeue() with that lock held, the
++ * iteration self-deadlocks the CPU - this test wedges the system on
++ * unfixed kernels instead of failing cleanly.
++ *
++ * Copyright (c) 2026 fangqiurong <fangqiurong@kylinos.cn>
++ */
++
++#include <scx/common.bpf.h>
++
++char _license[] SEC("license") = "GPL";
++
++UEI_DEFINE(uei);
++
++#define TEST_DSQ_ID 1000
++
++u64 dq_count;
++
++s32 BPF_STRUCT_OPS_SLEEPABLE(dequeue_iter_init)
++{
++	return scx_bpf_create_dsq(TEST_DSQ_ID, -1);
++}
++
++s32 BPF_STRUCT_OPS(dequeue_iter_select_cpu, struct task_struct *p,
++		   s32 prev_cpu, u64 wake_flags)
++{
++	return prev_cpu;
++}
++
++void BPF_STRUCT_OPS(dequeue_iter_enqueue, struct task_struct *p, u64 enq_flags)
++{
++	scx_bpf_dsq_insert(p, TEST_DSQ_ID, SCX_SLICE_DFL, enq_flags);
++}
++
++void BPF_STRUCT_OPS(dequeue_iter_dispatch, s32 cpu, struct task_struct *task)
++{
++	scx_bpf_dsq_move_to_local(TEST_DSQ_ID, 0);
++}
++
++void BPF_STRUCT_OPS(dequeue_iter_dequeue, struct task_struct *p, u64 deq_flags)
++{
++	struct bpf_iter_scx_dsq it;
++	struct task_struct *t;
++
++	if (!bpf_iter_scx_dsq_new(&it, TEST_DSQ_ID, 0)) {
++		while ((t = bpf_iter_scx_dsq_next(&it)))
++			;
++	}
++	bpf_iter_scx_dsq_destroy(&it);
++
++	__sync_fetch_and_add(&dq_count, 1);
++}
++
++void BPF_STRUCT_OPS(dequeue_iter_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++	scx_bpf_destroy_dsq(TEST_DSQ_ID);
++}
++
++SEC(".struct_ops.link")
++struct sched_ext_ops dequeue_iter_ops = {
++	.init			= (void *)dequeue_iter_init,
++	.select_cpu		= (void *)dequeue_iter_select_cpu,
++	.enqueue		= (void *)dequeue_iter_enqueue,
++	.dispatch		= (void *)dequeue_iter_dispatch,
++	.dequeue		= (void *)dequeue_iter_dequeue,
++	.exit			= (void *)dequeue_iter_exit,
++	.timeout_ms		= 1000U,
++	.name			= "dequeue_iter",
++};
+diff --git a/tools/testing/selftests/sched_ext/dequeue_iter.c b/tools/testing/selftests/sched_ext/dequeue_iter.c
+new file mode 100644
+index 000000000000..bcd12fc6c781
+--- /dev/null
++++ b/tools/testing/selftests/sched_ext/dequeue_iter.c
+@@ -0,0 +1,90 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2026 fangqiurong <fangqiurong@kylinos.cn>
++ */
++#include <bpf/bpf.h>
++#include <pthread.h>
++#include <scx/common.h>
++#include <time.h>
++#include <unistd.h>
++#include "dequeue_iter.bpf.skel.h"
++#include "scx_test.h"
++
++#define DQ_TARGET	10
++#define DQ_DEADLINE_MS	3000
++
++static unsigned long long now_ms(void)
++{
++	struct timespec ts;
++
++	clock_gettime(CLOCK_MONOTONIC, &ts);
++
++	return ts.tv_sec * 1000ULL + ts.tv_nsec / 1000000;
++}
++
++static void *run_workload(void *arg)
++{
++	struct dequeue_iter *skel = arg;
++	unsigned long long end = now_ms() + DQ_DEADLINE_MS;
++
++	while (skel->bss->dq_count < DQ_TARGET && !UEI_EXITED(skel, uei) &&
++	       now_ms() < end)
++		usleep(100);
++
++	return NULL;
++}
++
++static enum scx_test_status setup(void **ctx)
++{
++	struct dequeue_iter *skel;
++
++	skel = dequeue_iter__open();
++	SCX_FAIL_IF(!skel, "Failed to open");
++	SCX_ENUM_INIT(skel);
++	SCX_FAIL_IF(dequeue_iter__load(skel), "Failed to load skel");
++
++	*ctx = skel;
++
++	return SCX_TEST_PASS;
++}
++
++static enum scx_test_status run(void *ctx)
++{
++	struct dequeue_iter *skel = ctx;
++	struct bpf_link *link;
++	pthread_t tid;
++
++	link = bpf_map__attach_struct_ops(skel->maps.dequeue_iter_ops);
++	SCX_FAIL_IF(!link, "Failed to attach scheduler");
++
++	SCX_FAIL_IF(pthread_create(&tid, NULL, run_workload, skel),
++		    "Failed to create workload thread");
++	pthread_join(tid, NULL);
++	bpf_link__destroy(link);
++
++	SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
++
++	if (skel->bss->dq_count < DQ_TARGET) {
++		SCX_ERR("ops.dequeue() fired only %llu times",
++			(unsigned long long)skel->bss->dq_count);
++		return SCX_TEST_FAIL;
++	}
++
++	return SCX_TEST_PASS;
++}
++
++static void cleanup(void *ctx)
++{
++	struct dequeue_iter *skel = ctx;
++
++	dequeue_iter__destroy(skel);
++}
++
++struct scx_test dequeue_iter = {
++	.name = "dequeue_iter",
++	.description = "Verify ops.dequeue() can iterate its source user DSQ",
++	.setup = setup,
++	.run = run,
++	.cleanup = cleanup,
++};
++REGISTER_SCX_TEST(&dequeue_iter)
+-- 
+2.43.0
+
