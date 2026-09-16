@@ -1,100 +1,121 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A246401A08
-	for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 07:08:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B3F483BF6;
+	Wed, 16 Sep 2026 09:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789542514; cv=none; b=QRAAqkyGOoxBCtD7iTfq4ua34z/TMQT/rscya4HPjIhsa/qpyg1TGCiX4ylpP/onMoVruMAOzkexE59S8hDsBJrKL20JrmqL5w6oXyD02nX+atF4BaXenZVvojAkS8kH5ZK9fandeQhmKkzy1qKMVtBtOPSuXT6LIhwZIzsaJeU=
+	t=1789549256; cv=none; b=l1qtjJWyzO3CDLQaF3ONHtgPHQqwejlTGBel9d9sXjYYkJ9RSiHiEY/UXDm9edgXy/HzXInfWZ3aQJCg9xquKb/ja721nAC/hd5T/IeyJARodtYnQBtO9LSjr4L0/1Qkooyiyy8TMyOJHtuuPzmIZ/j6sBhMwiR0qwqui0RlCYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789542514; c=relaxed/simple;
-	bh=cnT/dXoImjANFOCwNRpprXJfZFQ3nptHbg3AZA9MzFM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UyzKDSeUGztp7XxNBHlX+0R5bhJV3VkVpt9rTGjywLeCzaYyzMMXsotkFKnbt4xovssXzhNn120im34q367o1c/mq8PNjSBNnvwnIksK4g9OVFAg2XM8NbMWrsYqvnrckdu2MAQsHbzX5hwk1eW8jq1MHbW3REac79yfDv1Qcl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 5ec3b888b19d11f19a56ed5b684f684d-20260916
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:9ef3f362-5ecf-419d-b9f5-057c5b199fce,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:0
-X-CID-META: VersionHash:7db8b62,CLOUDID:91bc9b17bf5ce1bb5cb37b154efa11b0,BulkI
-	D:nil,BulkQuantity:0,SF:102|136|850|865|898,TC:nil,Content:0|15|50|99,EDM:
-	5|-100,IP:nil,URL:99|1,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0
-	,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_ULS
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 5ec3b888b19d11f19a56ed5b684f684d-20260916
-X-User: fangqiurong@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <fangqiurong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 511063246; Wed, 16 Sep 2026 15:08:08 +0800
-From: Qiurong Fang <fangqiurong@kylinos.cn>
-To: tj@kernel.org
-Cc: arighi@nvidia.com,
-	void@manifault.com,
-	changwoo@igalia.com,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 0/2] sched_ext: Don't run ops.dequeue() with a DSQ lock held
-Date: Wed, 16 Sep 2026 15:07:51 +0800
-Message-Id: <20260916070753.3343113-1-fangqiurong@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1789549256; c=relaxed/simple;
+	bh=MiqPyjOBo/6FhmQI0L33ejXMpulhlmnTC9H8PQTadHs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g5Hsks6VPTToWnlgqAPg20ejQdMdTgTmTorn6P50Sp9OngRFZGuAdSywyHvbtvQe/DhvLpm57hHyN7qG3rpo3O2M+4O0xA1idLMxqoU3SWXxG4F1g7D1TEdmkgWC+v0jpDxsbD9Bu4FurWQJ8IXTZuFc8jFBgOwBtYwNzyO6xnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=F9Di94Uq; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="F9Di94Uq"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=bMtk8abwTjoKsyJlAN5e81hNdTDsB9SrVtsm0UrhpzY=; b=F9Di94Uqd2leQ49JV27i+aPfHC
+	akzTb0sIR051yLMNR0rp1txc6cEjorSvSOHqZoyqeQolfKKIOkSm6A1LggAhr6uyKp1apGX1PQY9a
+	r1JfmGgb39nTAWJTero/JQTMSO0ibuDrrc8cbm+T/pK2opRJ6hlt6L1udM/fDJ9g7FRfYcW08k/7q
+	jX/5ccWPVs5+eZ0mXr6sZZFl3rdugRUk0Gh8gj8m/W/2pifKKi9TNFUuGFc4qt6yICz3NOADBLNNW
+	JSsc2htZGukzqGW0I2WCfB2Y/D8P2DJO6MBsS9tLVAfACTwDvtsR6WmL3NuKCTuwNaDEsIMcJuxDy
+	Jz+3LGhA==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
+	id 1x6lV5-00000007f7z-0BOA;
+	Wed, 16 Sep 2026 09:00:19 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id 71AF4301BDE; Wed, 16 Sep 2026 11:00:17 +0200 (CEST)
+Date: Wed, 16 Sep 2026 11:00:17 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
+	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
+	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 07/18] sched: Add sched_ext hooks for proxy execution
+Message-ID: <20260916090017.GF4121339@noisy.programming.kicks-ass.net>
+References: <20260831134338.1531664-1-arighi@nvidia.com>
+ <20260831134338.1531664-8-arighi@nvidia.com>
+ <20260910103818.GH4120091@noisy.programming.kicks-ass.net>
+ <aqmq7iahwiBR34zU@gpd4>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aqmq7iahwiBR34zU@gpd4>
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+On Tue, Sep 15, 2026 at 10:30:38PM +0200, Andrea Righi wrote:
+> On Thu, Sep 10, 2026 at 12:38:18PM +0200, Peter Zijlstra wrote:
 
-The consume and move paths invoke ops.dequeue() with the source user
-DSQ's lock held, self-deadlocking any BPF scheduler which locks the
-same DSQ from ops.dequeue(). Move the invocations after the DSQ unlock.
+> > > @@ -7264,6 +7264,8 @@ static void __sched notrace __schedule(int sched_mode)
+> > >  			donor->sched_class->put_prev_task(rq, donor, donor);
+> > >  			donor->sched_class->set_next_task(rq, donor, true);
+> > >  		}
+> > > +		scx_proxy_donor_start(rq);
+> > > +		scx_proxy_resolved(rq);
+> > >  	} else {
+> > >  		rq_set_donor(rq, next);
+> > >  	}
+> > 
+> > Can you expand on the need for scx_proxy_resolved() ? I understand the
+> > other two, but this one I'm struggling with a bit.
+> 
+> Yeah and the name is a poor choice, it should renamed
+> scx_proxy_reenqueue_retry() or something similar.
+> 
+> It's the retry point for a task that sched_ext couldn't move while
+> processing a dispatch from a remote DSQ (used later in the series).
+> 
+> When sched_ext consumes a task dispatched to a CPU other than the one
+> whose rq currently owns it, it may find (after locking the task's
+> source rq) that proxy exec has made the task either the physical
+> current task or the active donor. It can't migrate the task in that
+> state, so it parks the task on the source rq's reject DSQ.
+> 
+> If the deferred reject-DSQ drain runs while the task is still current
+> or donating, the task must remain parked. Retrying immediately could
+> spin until the proxy relationship changes. The hook provides the
+> notification that proxy selection has run again, allowing sched_ext to
+> schedule another deferred drain after the current context switch.
+> 
+> I couldn't find an existing event that covers this transition without
+> periodically retrying the reject-DSQ drain. Is there a better place to
+> trigger this retry?
 
-v2 -> v3:
-- Restrict the deadlock description to the two user DSQ paths; keep
-  the global/bypass move for the shared DSQ lockdep class (Tejun Heo)
-- Drop the ordering sentence and the doc change until the DISPATCHING
-  reenq hole is fixed (Tejun Heo)
-- Open-code the ops.dequeue() invocations and drop call_task_dequeue()
-  (Tejun Heo)
-- Drop the __scx_move_local_task_to_local_dsq() split; unlock @src_dsq
-  right after unlinking (Tejun Heo)
-- selftest: add ops.select_cpu(), record UEI and check SCX_EXIT_UNREG,
-  fix the watchdog wording (Tejun Heo)
-- selftest: set ops.timeout_ms to the suite-standard 1000U
-- Add Cc: stable # v7.1+ (Tejun Heo)
+Ah, so its a little like that problem we had with ->balance() and
+->pick_task(). Where a task gets taken off the DSQ and moved to the
+local queue, but when not picked, it must be moved back.
 
-v1 -> v2:
-- Drop the claim that ops.dequeue() may run after the task has
-  re-entered custody: SCX_OPSS_DISPATCHING is held across the callback
-  on the global/bypass path and @p's rq lock is held across the
-  callback on the user-DSQ-to-local paths (Andrea Righi)
-- Add a selftest whose ops.dequeue() iterates the source user DSQ
-  (Andrea Righi)
+In this case, ->donor is visible to ext and all is well, but ->curr is
+not so easy.
 
-Patch 1 carries Andrea's Acked-by from the v1 review.
-Link: https://lore.kernel.org/all/20260915130334.714388-1-fangqiurong@kylinos.cn/
+I'm still a little confused though, why not leave blocked tasks on this
+reject queue. If they're needed, the proxy mechanism will move them
+around. They won't actually ever run except through proxy.
 
-fangqiurong (2):
-  sched_ext: Don't run ops.dequeue() with a DSQ lock held
-  selftests/sched_ext: Test that ops.dequeue() can iterate the consumed
-    DSQ
+The point where they will become runnable again, is through wakeup. So
+why not delay everything until that point?
 
- kernel/sched/ext/ext.c                        | 41 ++++-----
- tools/testing/selftests/sched_ext/Makefile    |  1 +
- .../selftests/sched_ext/dequeue_iter.bpf.c    | 73 +++++++++++++++
- .../selftests/sched_ext/dequeue_iter.c        | 90 +++++++++++++++++++
- 4 files changed, 185 insertions(+), 20 deletions(-)
- create mode 100644 tools/testing/selftests/sched_ext/dequeue_iter.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/dequeue_iter.c
-
--- 
-2.43.0
-
+Or am I not understanding ext again?
