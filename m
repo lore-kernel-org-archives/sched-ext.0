@@ -1,133 +1,129 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gentwo.org (gentwo.org [62.72.0.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48204B0E34
-	for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 16:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0332931C7
+	for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 19:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.72.0.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789576433; cv=none; b=pqnxwFm8OFB2XZU3qab8kN5LZBhcmCNmljzGige+Yvlbjem2p7Dd2yKy+LdkhNysxQTQkQ58f5iFKBaXPsb/gOS3TZHS/MFVLe9ifpF+WNQK3iEGjlUd4l6BsaC/HSaiKsyR8ekjCKfZvxT9sIxS2IWezAynT0exQ/uQ5lYhDVc=
+	t=1789585639; cv=none; b=nLTJPhC5QZmgH/nRFnmtrV7By8zAYVkw6JOkyIIbzj3SezW2r69+UmqXAKob9cidFcXZhyYazuaoEAjRy9dtto9ANK6x0osjGwtUMxr+xxyPlG27FFOeK0LZSuMhsz20uid2EbFJrNjRXe5wb3nmwippT+F07IK6OgIvAKWFsVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789576433; c=relaxed/simple;
-	bh=f8N8J/QeuskXk440ymUEmj2Y7405//1kx3L7u8wZWLw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iOkvS4EQtlhdMLv/AwghmTmNBHonbpbVgKHqccV9EQUP2R3+Kl0V8jpsWKVyOedT37W6ogBnaGeevbT1famcxPvhrGDjDSS27l+FYKO1Kv/6Tpr8DR9TY8RJ2LUvMc6DoZ4MMx6XneigPi4ENd1Sh1ft1N7mp+NyflzA1QmNRGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F1uOLpXX; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789585639; c=relaxed/simple;
+	bh=6vepIx7Wn3Cy0YUG+bfeq8eP/V5gOOxJlhrvIIkclK8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=KPNVcxkSG/VWqaKUOwRUID/iYG2AWBfgIMWMRGaMoab07l0zK0AsvYCq8y4jEdESMvBedG/Gv3KsQXjARUSb6xwtLfZD0UJnSyhC1M9MHDsYjqCnejAaQduZoQ1cLOS+j5aTCgeDYJYUbulofaa+/MGjNX+JXRlWzogYLrTH5TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org; spf=pass smtp.mailfrom=gentwo.org; dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b=H3jbGfV3; arc=none smtp.client-ip=62.72.0.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentwo.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F1uOLpXX"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2dd58e1e2c7so11197565ad.0
-        for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 09:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789576431; x=1790181231; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LHB0XwQ4+CIcg+wjl8r2PjYlCOQaNGhUptKJ0BrRtuo=;
-        b=F1uOLpXXXDv+q2yhUI0BLUxMtluhFFWp0XBGSgPenRt2GtWEasa5bDBVG+ehPnwmeQ
-         jRkC0EIDbqN5rvVHSbdWpeT/enPzvMOTLOL3cAVYPZsNrphtmUQtMUVN8Pb0+Ctf1FEr
-         vcYQ+C8hBmnl663CUJ4teg5CSWVEGeno5VcD8Ti2G1oTtLyj+6M9itXiGA4mQjKhGljC
-         9l7AFjWt8sdQy7h9eHmVA4YzW1cJba3p+y/mcHxB+fC0Pp/mS0j3MMsQNwL5o8i0s4dg
-         UIo19EdnKH3T5rFRJOPFa0AvRgtk4yeO+zuIqHKn37wvhj58SiyhHOmkwSl+yKKma7E7
-         snuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789576431; x=1790181231;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LHB0XwQ4+CIcg+wjl8r2PjYlCOQaNGhUptKJ0BrRtuo=;
-        b=RYvUe5b8YDPA36nTOZM/j+dEa+F2p7aWVS4PjJe/iogVViySDSW5KPyWQiRBF/9aWk
-         /IrxyXpCwgGn9RHDmtbXol7QDel8sPlMt2l9kYbVWR7MPeO0C/R8myCBjhQVJR7aM0U8
-         /ZMkFCCXnnM0+u3Wz2iZuMU90Pye+GDPg8NK+WfX9hmscjjE13P+k38ojzvsLoolTAUg
-         R57vy2jaGGokU3RkTNx4idKJ1dlvyepYShxwx65EbsLaFK7deVEFJn1LzvFuWp2LhuWC
-         SQhoOEKl8UBxikNJsdnzmzTOR9pEv+aabag622o2x9a5zy1VontwYAHdK9w03Ww7+QM3
-         D+Jw==
-X-Forwarded-Encrypted: i=1; AKwUvBy0ETp0zEh6MgQyvOXVY83RIYDVJbjDX4q5rHuKMEqJ+PB42sLTK7Z7SDEP62is1rjLIqbTuUSR3E4=@lists.linux.dev
-X-Gm-Message-State: AFuF++lAdRgeEMR9ayv9E5G35z1WaSM/sfq23Lk8wHXyV7kfhVFG6Z+a
-	Uez5XTEm6Mi/lPpxkU+yTcn+3n5QIittvZbl/BtXX3Fnwkomkr8OXaXF
-X-Gm-Gg: AYBFou3f8xoTQjsNkMk2CdLTn4LzQxZ+EdNnzusxbCgxpvQF9WZA+Tuxw4KRssuB+zX
-	4IFd59wTQIHYFq2sj3IuHrbpLNt6nbGbvvhA89HzX40Ruvllxj946GKf5hUPEOzMi8ATVaw4wOl
-	syeBdQXDRzYlBDr6oIsPZUN7L4pucl87AFxsqkeJywYZgjQs6BvyiXmHg7tNn9KtEJ3oiU1ZGt3
-	eQcBv96BvKQTgOU+FKo3dfQUwQZNO3prD3rmq6m6qYMa0gz/ENGnaeVbU0lG/Szl/7YNP9+cRep
-	Btx4bG4PyehQs/Tqsd9A9MEss4NQvzcFgepfW/3bkyAzNWUj2CEeN5c1s84MlQwS/JdzyzkfwEf
-	uJPDp4TUqSF2BT9JNcoqeXfChH5M3a8xmz54U4B7YYKtM+rAspTfAwx8bKLZVW0WUpFGsdZhwls
-	j+Mdh+ADofkNjuERdOKD+r10S2s6vjTLJgQQG4nJpsTHUoLWeSJo3zga8MTb6BtMziGAQF/7LZD
-	/fWr5nFKRWPZXeNbyO0uqiopAuSQhm5jJHSMYYSt4trky3fyvJH4LDy0ISQ5ueB3LPwbdEIGGFA
-	aYGNngxN
-X-Received: by 2002:a17:90b:5388:b0:39b:92bb:9eef with SMTP id 98e67ed59e1d1-39e1e509fc1mr7522790a91.22.1789576430914;
-        Wed, 16 Sep 2026 09:33:50 -0700 (PDT)
-Received: from cchengyang.duckdns.org (36-226-250-24.dynamic-ip.hinet.net. [36.226.250.24])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e362ea35asm192984a91.16.2026.09.16.09.33.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 09:33:50 -0700 (PDT)
-Date: Thu, 17 Sep 2026 00:33:47 +0800
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, 
-	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Ching-Chun Huang <jserv@ccns.ncku.edu.tw>, Chia-Ping Tsai <chia7712@gmail.com>, chengyang.chou@mediatek.com
-Subject: Re: [PATCH sched_ext/for-7.3-fixes] sched_ext: Unlink pending local
- reenqueues before freeing scheduler
-Message-ID: <20260917002903.Gf17f@cchengyang.duckdns.org>
-References: <20260916145807.3250167-1-arighi@nvidia.com>
+	dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b="H3jbGfV3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gentwo.org;
+	s=default; t=1789584116;
+	bh=6vepIx7Wn3Cy0YUG+bfeq8eP/V5gOOxJlhrvIIkclK8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+	b=H3jbGfV3tN4x0QDxLPIgV/e1HAMGiMyuGYKZgYIgfefZkJAZSjp+dQ4zlmPOK6VLH
+	 I4GBKLBQHAFepdrGnHd04Nci30ho0rPQOu+SKAV9Xwq7JW/N99/+Cu3uX5C5eLO7xk
+	 FPAUH6AKw1TOgI2zh03xiD6ce+uSxv9qLLgQLK00=
+Received: by gentwo.org (Postfix, from userid 1007)
+	id 0D2F7401C8; Wed, 16 Sep 2026 11:41:56 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by gentwo.org (Postfix) with ESMTP id 090184010E;
+	Wed, 16 Sep 2026 11:41:56 -0700 (PDT)
+Date: Wed, 16 Sep 2026 11:41:55 -0700 (PDT)
+From: Shubhang <sh@gentwo.org>
+To: Zhan Xusheng <zhanxusheng1024@gmail.com>
+cc: Zhan Xusheng <zhanxusheng@xiaomi.com>, Ingo Molnar <mingo@redhat.com>, 
+    Peter Zijlstra <peterz@infradead.org>, Juri Lelli <juri.lelli@redhat.com>, 
+    Vincent Guittot <vincent.guittot@linaro.org>, 
+    Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+    Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, 
+    Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, 
+    K Prateek Nayak <kprateek.nayak@amd.com>, 
+    Shubhang Kaushik <shubhang@os.amperecomputing.com>, 
+    Christoph Lameter <cl@gentwo.org>, Tejun Heo <tj@kernel.org>, 
+    David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+    Changwoo Min <changwoo@igalia.com>, linux-kernel@vger.kernel.org, 
+    sched-ext@lists.linux.dev
+Subject: Re: [PATCH v3] sched: Restart fair hrtick after same-task repicks
+In-Reply-To: <20260916032150.487242-1-zhanxusheng@xiaomi.com>
+Message-ID: <53a32262-4391-ffa0-3391-3772505739b2@gentwo.org>
+References: <20260915-sched-fair-hrtick-restart-v3-1-7517f388f0c8@gentwo.org> <20260916032150.487242-1-zhanxusheng@xiaomi.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260916145807.3250167-1-arighi@nvidia.com>
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 
-Hi Andrea,
+Hi Zhan,
 
-On Wed, Sep 16, 2026 at 04:58:07PM +0200, Andrea Righi wrote:
-[...]
+Thanks for the review and testing. Yes, skipping 
+put_prev_task_*() does not distinguish fair from DL.
 
-> @@ -5380,13 +5380,20 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
->  
->  	for_each_possible_cpu(cpu) {
->  		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
-> +		struct rq *rq = cpu_rq(cpu);
->  
->  		/*
-> -		 * $sch would have entered bypass mode before the RCU grace
-> -		 * period. As that blocks new deferrals, all
-> -		 * deferred_reenq_local_node's must be off-list by now.
-> +		 * Bypass blocks new deferrals, but a request queued before bypass
-> +		 * may still be pending. As run_deferred() runs under the rq lock,
-> +		 * take it to wait for any in-flight processing before unlinking the
-> +		 * now-obsolete request.
->  		 */
-> -		WARN_ON_ONCE(!list_empty(&pcpu->deferred_reenq_local.node));
-> +		scoped_guard (rq_lock_irqsave, rq) {
-> +			guard(raw_spinlock)(&rq->scx.deferred_reenq_lock);
-> +
-> +			if (!list_empty(&pcpu->deferred_reenq_local.node))
-> +				list_del_init(&pcpu->deferred_reenq_local.node);
-> +		}
->  
->  		/* remove the queued ecaps sync so the pcpu can be freed */
->  		scx_discard_ecaps_to_sync(cpu, pcpu);
-> @@ -5395,7 +5402,7 @@ static void scx_sched_free_rcu_work(struct work_struct *work)
->  		 * Bypass blocks new kicks. Flush the kick irq_work so this
->  		 * pcpu's to_kick_node is off the list before it is freed.
->  		 */
-> -		irq_work_sync(&cpu_rq(cpu)->scx.kick_cpus_irq_work);
-> +		irq_work_sync(&rq->scx.kick_cpus_irq_work);
->  		WARN_ON_ONCE(!list_empty(&pcpu->to_kick_node));
->  		free_cpumask_var(pcpu->cpus_to_kick);
->  		free_cpumask_var(pcpu->cpus_to_kick_if_idle);
-> -- 
-> 2.55.0
-> 
+For fair class, pick_task_fair() calls update_curr_eevdf() before 
+selecting the current task again. This refreshes the task entity used 
+by hrtick_start_fair(), including with group scheduling. When that update
+observes an expired slice, it advances the entity's virtual deadline 
+before hrtick_start_fair() computes the next expiry.
 
-Though I couldn't reproduce the issue on my end, the fix lgtm. Thanks!
+pick_task_dl() has no corresponding picker-side runtime update, so
+p->dl.runtime can be stale on SNT_REPICK.
 
-Acked-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+I will clarify this in the changelog, add a comment on the fair repick 
+path, and document the SNT_NORMAL and SNT_PICK meanings.
 
--- 
-Cheers,
-Cheng-Yang
+I also rebuilt with CONFIG_SCHED_CLASS_EXT=y and it compiled
+cleanly on my side.
+
+Thanks,
+Shubhang Kaushik
+
+On Wed, 16 Sep 2026, Zhan Xusheng wrote:
+
+> On Tue, Sep 15, 2026 at 06:13:18PM -0700, Shubhang Kaushik (Ampere) wrote:
+>> Do not restart the DL hrtick for SNT_REPICK. put_prev_task_dl() is
+>> skipped for next == prev, so dl_se->runtime may be stale.
+>
+> put_prev_task_fair() is skipped for next == prev too, so as written this
+> reason applies to fair as well.
+>
+> What separates them is that rq->cfs.curr holds the task entity rather
+> than the root-level one, so pick_task_fair()'s update_curr_eevdf()
+> refreshes exactly the entity hrtick_start_fair() reads, group scheduling
+> or not.  pick_task_dl() has no counterpart.  update_deadline() then exits
+> with deadline > vruntime, which is what keeps the repick out of
+>
+> 	if ((s64)vdelta < 0) {
+> 		if (task_current_donor(rq, p))
+> 			resched_curr(rq);
+> 		return;
+> 	}
+>
+> That branch arms nothing, and __schedule() clears TIF_NEED_RESCHED just
+> after pick_next_task(), so a repick reaching it would come out with no
+> preemption point at all, which is the state you are fixing.  Two lines in
+> the changelog, or a comment at the repick label, would stop that
+> invariant from being broken silently from three functions away.
+>
+>> +enum snt_e {
+>> + SNT_NORMAL,
+>> + SNT_PICK,
+>> + SNT_REPICK,
+>> +};
+>
+> Three values, six classes reading them, no comment.  SNT_REPICK explains
+> itself; NORMAL versus PICK does not.  At the call sites they mean
+> "through set_next_task()" and "the running task changed".
+>
+> I checked the conversion with the compiler rather than by grepping:
+> reverting any one class to bool fails on the incompatible function
+> pointer, and rt, stop, fair, idle and deadline build W=1 clean.
+> ext/ext.c I could not compile, SCHED_CLASS_EXT wants DEBUG_INFO_BTF and
+> pahole is broken here.  first is unused in set_next_task_scx()'s body so
+> the rename is safe, but someone with BTF should build it.
+>
+> Booted 4 CPUs, HRTICK on, four spinners under panic_on_warn=1: clean.  I
+> did not reproduce the latency numbers.
+>
+> Reviewed-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+>
