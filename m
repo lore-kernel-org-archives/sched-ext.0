@@ -1,311 +1,211 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013050.outbound.protection.outlook.com [40.93.196.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79414A5EB8;
-	Wed, 16 Sep 2026 09:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789550404; cv=none; b=UqD3EYfsGRAyRsWbe9iah6zko6vCvtZnZTVp5k+6M6mMmxVUzdisJsyM8+oRgd4DZD7/5pMxGeE1z4tCH95km0WbXwrLzTqL2ARbDz8jiGPchMbPsf+gt9jvwWOLNDEN0xEqlyS9T8dmIdVUgFa0sCMFFBn0LHpLI6AsDpaXjZc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789550404; c=relaxed/simple;
-	bh=9bo681hPnxC/7PYEB4YJR7t/zFa6XOG8NFH0Ij6ePIE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eoIqurae8XYwI4WEXPl0p0HHIA8KquTKu8VJAmuz9FOxeRWKzWwdl0tEWU0gpSXsvOhIbP/M618TJGHYuAieXvDtA9mIEGVPhyZmXpfXAmQWyWTWycY39m4V6CGs/rtsZKZqK8f0OLyaOoz12zZ9jlXXD71pelU+WCzGTMfVRkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=h0hTdgH6; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4E14CB8D9
+	for <sched-ext@lists.linux.dev>; Wed, 16 Sep 2026 10:28:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789554503; cv=fail; b=HZHDyKJxHywHaRvr+s5p7xxVPwK1zE1ZieTAjpfZq4T8g9WNKfn0lFKePYWCqAyGb/sCAo2hWrZ2sveW3ugDknxPyRxgzwMttVuR+Ysup7rf+7lWPYUPFON1czHFcVymObSD9GNyiCbPLR2ktpKL+QsoLkYwK8YyJ9j86Xy2Mf0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789554503; c=relaxed/simple;
+	bh=ukJrqcvL4Sezls3Bj+jfUs9NchCl3CuQDSJIfg9SGD0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=X7Po1WTkCCcX9ozCv3CdcY/YN9e557oI9igpacvAy+NwmtPGuDSXcgQsdeEn3Vp5oPY+fb/MmP0LpyJHvosmOm1Pk4XgQpYzEvHq9zn7/tJjxaJMTpZbcTwVcTgVNIuYlcfHWpP2hSnLUrfZm05RIoNFy0yU27rYjbWteWPLoTg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=DcgT2Q9m; arc=fail smtp.client-ip=40.93.196.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="h0hTdgH6"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description;
-	bh=UAn839ZZxRbCAuApTfK0jneV0NeeQScWBtLsAnEwTTg=; b=h0hTdgH6tZ3SND2iBI1JvQ5wBr
-	jVe2GR4qIull3j7kNKDxcp/YYrd0kGYT8lYuj395Q5FyH7sPaEZ7wMnE0BlxM4KUU6HXvcjMuNIvD
-	TGJ2Gyxk4QNcydD8OWIpC0fWSIlggNb2IryVL7QKpK7Wi11GlowXK8MdKj1BOLZfxb8OM+PSF1TM+
-	3RD2IfecZmoLTuj0txBlXtHmN63AA5bn3WBmvEr0g+oR2tUd/7fQJaYJvwb6WRLki+Cek015De8ku
-	KI8rXZPyed6OjJNwBNvnwxtG7C/0hbE9sX683cSDE3lXPH0/045o0Qn48pSRQ52JHZPpxTiQcbhdU
-	+95LKAmQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
-	id 1x6lnJ-00000007gF7-3GrJ;
-	Wed, 16 Sep 2026 09:19:10 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id B1D7F3012C6; Wed, 16 Sep 2026 11:19:08 +0200 (CEST)
-Date: Wed, 16 Sep 2026 11:19:08 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: John Stultz <jstultz@google.com>
-Cc: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>,
-	Lee Trager <ltrager@nvidia.com>, Richard Cheng <icheng@nvidia.com>,
-	Koba Ko <kobak@nvidia.com>, Aiqun Yu <aiqun.yu@oss.qualcomm.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 08/18] sched: Introduce WF_ON_RQ wake flag
-Message-ID: <20260916091908.GG4121339@noisy.programming.kicks-ass.net>
-References: <20260831134338.1531664-1-arighi@nvidia.com>
- <20260831134338.1531664-9-arighi@nvidia.com>
- <20260910104528.GI4120091@noisy.programming.kicks-ass.net>
- <aqmw0OT5cCtge-QI@gpd4>
- <CANDhNCqN+mJdrjgjRD_pMQYssHCrmrnE9CW8cMprPQm0dZPtWw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="DcgT2Q9m"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QmoJ9el5tXdq4Yp0bcKTY08GZVu7fA8lbw/7AFmcWgskwiFLnqrlQOX5+bjHwzgOHgCTv1UifTV7PBLabuNgdxSIwWH6lCbzLgYxUGaHZZ3BiFapTY2c7EcNTOSgfpe13D1Wy2N3eGOOLWReWQrsy6hT1IuEH8us7t/UuLVMXjkGpwzNzvFr57CFSonnBtwnGr5Ymd5s/yJAcFf69h0LuMohLtysG1p0zy4wvvfta3nrD/jGGdl0t6JOXu3ayQF19qScNm7ng9qZkQZChoNQd6WZOXtc4WDOqz79tdFA5DjorqALj6YMuKCFVnYDqycTE0KWr0O3olYJq/KARhHc1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+wIIn/nQhenGVPpHhmXNQDC/Dz5OMvsLv4e2hQMrrRg=;
+ b=EY4J69uCeZoYY3gd5rIvVnwxCpEBWc83mxD9uprgWxbtHWzJX8XvIOs9E6GgeilTVuhz/9UXnVAkXUZihU3PFmWE2sqy4Qr24jfb8tP/UgYTnRIUMhXto3hsDwboTAg9f1Xj2Hbgx/NGwHjcTMAMX1PMReZ3oc2/vNtCnEifuNAK+OnEY4AQihXJdMu0AriDswErZcyRWkudYEpBWxVKbcmJjWOlxVTdgBiK5x6HABGx5WfyRWmzZI0wie/TUP3DfnukZ3/zgsE3CzRE+m6PmIbwqc7bYVralffTBCkQieKogcvWA/+6/VEb9yTA+ims9eJ159NlCzK17omnD/rWnw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=infradead.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+wIIn/nQhenGVPpHhmXNQDC/Dz5OMvsLv4e2hQMrrRg=;
+ b=DcgT2Q9mBHDUoXLG9y2+g4Oo5aGT/zr7atvVd9YAd2QmWINVhk5smmflsLJUcjhzqobPvBq3IrPjVsCkbtG71/RGap8lbdKwS4pdq+u1Dme6IMpujklm9mYEWpvvPcliKLJ2cjspeR0ESJIq9fvRmPF9oD/r4Us5biOwov1/srY=
+Received: from BN1PR10CA0003.namprd10.prod.outlook.com (2603:10b6:408:e0::8)
+ by IA1PR12MB6484.namprd12.prod.outlook.com (2603:10b6:208:3a7::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Wed, 16 Sep
+ 2026 10:28:05 +0000
+Received: from BL02EPF0002992B.namprd02.prod.outlook.com
+ (2603:10b6:408:e0:cafe::7) by BN1PR10CA0003.outlook.office365.com
+ (2603:10b6:408:e0::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.9 via Frontend Transport; Wed, 16
+ Sep 2026 10:28:04 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0002992B.mail.protection.outlook.com (10.167.249.56) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.428.7 via Frontend Transport; Wed, 16 Sep 2026 10:28:03 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 16 Sep
+ 2026 05:28:03 -0500
+Received: from [10.136.41.131] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.49 via Frontend
+ Transport; Wed, 16 Sep 2026 05:27:55 -0500
+Message-ID: <40a61874-4841-4e38-b22b-6b8c30667340@amd.com>
+Date: Wed, 16 Sep 2026 15:57:54 +0530
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANDhNCqN+mJdrjgjRD_pMQYssHCrmrnE9CW8cMprPQm0dZPtWw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/18] sched: Introduce WF_ON_RQ wake flag
+To: Peter Zijlstra <peterz@infradead.org>, John Stultz <jstultz@google.com>
+CC: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, David Vernet
+	<void@manifault.com>, Changwoo Min <changwoo@igalia.com>, Ingo Molnar
+	<mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot
+	<vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, Mel
+ Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, Christian
+ Loehle <christian.loehle@arm.com>, David Dai <david.dai@linux.dev>, Emil
+ Tsalapatis <etsal@meta.com>, Lee Trager <ltrager@nvidia.com>, Richard Cheng
+	<icheng@nvidia.com>, Koba Ko <kobak@nvidia.com>, Aiqun Yu
+	<aiqun.yu@oss.qualcomm.com>, <sched-ext@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>
+References: <20260831134338.1531664-1-arighi@nvidia.com>
+ <20260831134338.1531664-9-arighi@nvidia.com>
+ <20260910104528.GI4120091@noisy.programming.kicks-ass.net>
+ <aqmw0OT5cCtge-QI@gpd4>
+ <CANDhNCqN+mJdrjgjRD_pMQYssHCrmrnE9CW8cMprPQm0dZPtWw@mail.gmail.com>
+ <20260916091908.GG4121339@noisy.programming.kicks-ass.net>
+Content-Language: en-US
+From: K Prateek Nayak <kprateek.nayak@amd.com>
+In-Reply-To: <20260916091908.GG4121339@noisy.programming.kicks-ass.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0002992B:EE_|IA1PR12MB6484:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4311b2f6-63c7-4a01-5742-08df13dd30d6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700016|23010399003|7416014|376014|22082099003|18002099003|10067099003|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	Z9BxyZMccqg36rswymvnRd8EAQjNr1oGqMGyN5fD7CEzcHaVb/GGQ8FqWNbf5x8NizpP74BqH3WDVXyroC1sR4Ah2fBr31hRy4t6h2B7of9Gzu/NbDN6XzZRK1CS1bQ+bf/8TANtrtGk15LITP/N219+Tg0u7IeUbr+Bn2nECg4S6OisqRU1A4KScGpMcKZEyr/1ZP4piHDjNsKfw6vxto/36ZSJTaQp8Qj0gIPclsX1n2uSaB2XOrxp58ad9Y8pPIYYGDdfwjow5zCd2yvXUjzTGSkIPPixq7yWDhoViBXTH+ExaIu3sXAYwOtUzpeB8FbJw4lKaZVgTpuxAh8DpiLz9nN1OWFAs3RfcVLbsf+Ue5EPCRDys8HeXq2iGvmc1+enOxNHO4SnW7YtH41Jh6RkZBmSVDoRMrHCJw0wpnGhi3OejHxch4i++UeFpGVbR9I7QmCiTkAHCQJyr0kyoq2NpCp/1eXnger7Lr/NfcsA7WSuzmk2HaQZvrt7Os7oYumclakt/g6ah2NzssIV6OPmXcG7leOGvwJk27cIqgi8oWPWUaQqgB77uQrDJ+OokOVBB0z97yywM0/GQKYzLamTPI7KUg0CJERQ4U4jDRK+kbr/z17g6kmgxi+ur4bjyyAY2f28Ro7tLc9oGfXxjCfyppq0nzHGLcFzR3BhE+OVNTDlmTePXrNHukL/uMpNyqW38rWHkA0gJk0AeJV5dg==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700016)(23010399003)(7416014)(376014)(22082099003)(18002099003)(10067099003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	fS/ozqHyxrudfwZIq84VVDFvb78/GMgN+JUuZW+99GIBrB5uV+PLSwFU81gqsel0WcXfNvyV5egOuLHYOOb0AWmnEzFE0RImZpah8CKTr/imA4uwIeCAwbWvCURfbDoCxibFeplftT7EnMnO1tfwB4XiL3YjgDaKFNckxuCgd9RUtG8Of/kiVlOYTlUGXo9Qch4zlVGFEqsUhpLsTaSgWRiCfQuOk0q9ha7bFxLE/VSloI/Fu36JzcmMV+FlWS02gC0w4tfwoFu+ltpADXdIh3yfXRUXE3NcVaRsznHS9CikIcHTCC36VMvaudqMrOkyk3qot3DZGRrZyZPAciZlPp47agY6pEcJvi7X3WaUO5zr7NAUyi60bma0DXscjmAV6oqiIM9fcFOBk6SePvadZRkyr3iCbVCvKaI1PlBBjPUFiPlF7SCs+vwT3MynOhaa
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 10:28:03.7618
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4311b2f6-63c7-4a01-5742-08df13dd30d6
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0002992B.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6484
 
-On Tue, Sep 15, 2026 at 02:14:11PM -0700, John Stultz wrote:
-> On Tue, Sep 15, 2026 at 1:55 PM Andrea Righi <arighi@nvidia.com> wrote:
+Hello Peter,
 
-> > What sched_ext actually needs to know is: did this wakeup use ttwu_runnable(),
-> > changing the task back to TASK_RUNNING without calling activate_task() /
-> > enqueue_task()?
-> >
-> > We need the distinction because a retained proxy donor remains on the runqueue
-> > while blocked. When it wakes, ttwu_runnable() can clear its blocked state
-> > without calling enqueue_task_scx() again.
-> >
-> > sched_ext must therefore request a reschedule so the newly unblocked task
-> > is reconsidered for dispatch. We don't want this extra reschedule for a normal
-> > wakeup because that path already called enqueue_task_scx() and performed the
-> > required sched_ext bookkeeping.
-> 
-> Would it be sufficient to just drop the if (task_cpu(p) ==
-> p->wake_cpu)  shortcut in proxy_needs_return()?
-> (or conditionalize it on the sched_class?)
+On 9/16/2026 2:49 PM, Peter Zijlstra wrote:
+> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> index 91f059a55695..9a583e3cc528 100644
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -305,7 +305,7 @@ static inline int rb_sched_core_cmp(const void *key, const struct rb_node *node)
+>  
+>  void sched_core_enqueue(struct rq *rq, struct task_struct *p)
+>  {
+> -	if (p->se.sched_delayed)
+> +	if (p->is_blocked)
+>  		return;
+>  
+>  	rq->core->core_task_seq++;
+> @@ -318,7 +318,7 @@ void sched_core_enqueue(struct rq *rq, struct task_struct *p)
+>  
+>  void sched_core_dequeue(struct rq *rq, struct task_struct *p, int flags)
+>  {
+> -	if (p->se.sched_delayed)
+> +	if (p->is_blocked)
+>  		return;
+>  
+>  	rq->core->core_task_seq++;
 
-One of the things I have on the TODO list was look at getting rid of
-p->se.sched_delayed usage in the core (That's bugged me ever since I
-introduced it.)
+Although we don't support proxy with mis-matched cookie, this might
+still be required down the line when we add support for it.
 
-We're part-way there with the introduction of p->is_blocked.
+I can add it back then if that is a better option.
 
-The tentative plan -- but I've not tried, or even thought overly much
-about is -- is to do something like the *COMPLETELY*UNTESTED* below.
+> @@ -1880,7 +1880,7 @@ static inline void uclamp_rq_inc(struct rq *rq, struct task_struct *p, int flags
+>  		return;
+>  
+>  	/* Only inc the delayed task which being woken up. */
+> -	if (p->se.sched_delayed && !(flags & ENQUEUE_DELAYED))
+> +	if (p->is_blocked && !(flags & ENQUEUE_BLOCKED))
+>  		return;
+>  
+>  	for_each_clamp_id(clamp_id)
+> @@ -1907,7 +1907,7 @@ static inline void uclamp_rq_dec(struct rq *rq, struct task_struct *p)
+>  	if (unlikely(!p->sched_class->uclamp_enabled))
+>  		return;
+>  
+> -	if (p->se.sched_delayed)
+> +	if (p->is_blocked)
+>  		return;
+>  
+>  	for_each_clamp_id(clamp_id)
+> @@ -2393,8 +2393,8 @@ unsigned long wait_task_inactive(struct task_struct *p, unsigned int match_state
+>  		 * If task is sched_delayed, force dequeue it, to avoid always
+>  		 * hitting the tick timeout in the queued case
+>  		 */
+> -		if (p->se.sched_delayed)
+> -			dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
+> +		if (p->is_blocked)
+> +			dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_BLOCKED);
 
-This would get the class methods {EN,DE}QUEUE_BLOCKED calls (which are
-unhandled except for fair, so that needs fixing at the very least).
+For proxy donors, this will simply dequeue the task without
+transitioning p->on_rq to 0.
 
-I *think* this would allow ext to do the right thing, but I'm not saying
-we have to do this now, this might turn out to be a pain in the arse --
-as these things tend to be.
+If we want to break proxy at this point, maybe we want to bring
+that __block_task() into dequeue task and do it for
+DEQUEUE_BLOCKED?
 
----
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 91f059a55695..9a583e3cc528 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -305,7 +305,7 @@ static inline int rb_sched_core_cmp(const void *key, const struct rb_node *node)
- 
- void sched_core_enqueue(struct rq *rq, struct task_struct *p)
- {
--	if (p->se.sched_delayed)
-+	if (p->is_blocked)
- 		return;
- 
- 	rq->core->core_task_seq++;
-@@ -318,7 +318,7 @@ void sched_core_enqueue(struct rq *rq, struct task_struct *p)
- 
- void sched_core_dequeue(struct rq *rq, struct task_struct *p, int flags)
- {
--	if (p->se.sched_delayed)
-+	if (p->is_blocked)
- 		return;
- 
- 	rq->core->core_task_seq++;
-@@ -1880,7 +1880,7 @@ static inline void uclamp_rq_inc(struct rq *rq, struct task_struct *p, int flags
- 		return;
- 
- 	/* Only inc the delayed task which being woken up. */
--	if (p->se.sched_delayed && !(flags & ENQUEUE_DELAYED))
-+	if (p->is_blocked && !(flags & ENQUEUE_BLOCKED))
- 		return;
- 
- 	for_each_clamp_id(clamp_id)
-@@ -1907,7 +1907,7 @@ static inline void uclamp_rq_dec(struct rq *rq, struct task_struct *p)
- 	if (unlikely(!p->sched_class->uclamp_enabled))
- 		return;
- 
--	if (p->se.sched_delayed)
-+	if (p->is_blocked)
- 		return;
- 
- 	for_each_clamp_id(clamp_id)
-@@ -2393,8 +2393,8 @@ unsigned long wait_task_inactive(struct task_struct *p, unsigned int match_state
- 		 * If task is sched_delayed, force dequeue it, to avoid always
- 		 * hitting the tick timeout in the queued case
- 		 */
--		if (p->se.sched_delayed)
--			dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
-+		if (p->is_blocked)
-+			dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_BLOCKED);
- 		trace_sched_wait_task(p);
- 		running = task_on_cpu(rq, p);
- 		queued = task_on_rq_queued(p);
-@@ -3889,8 +3889,7 @@ static int ttwu_runnable(struct task_struct *p, int wake_flags)
- 
- 	update_rq_clock(rq);
- 	if (p->is_blocked) {
--		if (p->se.sched_delayed)
--			enqueue_task(rq, p, ENQUEUE_NOCLOCK | ENQUEUE_DELAYED);
-+		enqueue_task(rq, p, ENQUEUE_NOCLOCK | ENQUEUE_BLOCKED);
- 		if (proxy_needs_return(rq, p))
- 			return 0;
- 	}
-@@ -4288,7 +4287,6 @@ int try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags)
- 		 *  - we're serialized against set_special_state() by virtue of
- 		 *    it disabling IRQs (this allows not taking ->pi_lock).
- 		 */
--		WARN_ON_ONCE(p->se.sched_delayed);
- 		WARN_ON_ONCE(p->is_blocked);
- 		/* If p is current, we know we can run here, so clear blocked_on */
- 		clear_task_blocked_on(p, NULL);
-@@ -4592,7 +4590,6 @@ static void __sched_fork(u64 clone_flags, struct task_struct *p)
- 	INIT_LIST_HEAD(&p->se.group_node);
- 
- 	/* A delayed task cannot be in clone(). */
--	WARN_ON_ONCE(p->se.sched_delayed);
- 	WARN_ON_ONCE(p->is_blocked);
- 
- #ifdef CONFIG_FAIR_GROUP_SCHED
-@@ -7288,7 +7285,7 @@ static void __sched notrace __schedule(int sched_mode)
- 
- 		psi_account_irqtime(rq, prev, next);
- 		psi_sched_switch(prev, next, !task_on_rq_queued(prev) ||
--					     prev->se.sched_delayed);
-+					     prev->is_blocked);
- 
- 		trace_sched_switch(preempt, prev, next, prev_state);
- 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 4d0b94465d19..ad72f428565f 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6439,7 +6439,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
- 		if (task_on_rq_migrating(task_of(se)))
- 			action |= DO_DETACH;
- 
--		if ((flags & DEQUEUE_SLEEP) && !(flags & DEQUEUE_DELAYED))
-+		if ((flags & DEQUEUE_SLEEP) && !(flags & DEQUEUE_BLOCKED))
- 			action |= UPDATE_UTIL_EST;
- 	}
- 
-@@ -6525,7 +6525,7 @@ pick_next_entity(struct rq *rq, bool protect)
- 
- 	se = pick_eevdf(cfs_rq, protect);
- 	if (se->sched_delayed) {
--		__dequeue_task(rq, task_of(se), DEQUEUE_SLEEP | DEQUEUE_DELAYED);
-+		__dequeue_task(rq, task_of(se), DEQUEUE_SLEEP | DEQUEUE_BLOCKED);
- 		/*
- 		 * Must not reference @se again, see __block_task().
- 		 */
-@@ -8007,13 +8007,14 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
- 	 * Let's add the task's estimated utilization to the cfs_rq's
- 	 * estimated utilization, before we update schedutil.
- 	 */
--	if (!p->se.sched_delayed || (flags & ENQUEUE_DELAYED))
-+	if (!p->se.sched_delayed || (flags & ENQUEUE_BLOCKED))
- 		util_est_enqueue(cfs_rq, p);
- 
- 	update_curr_eevdf(cfs_rq);
- 
--	if (flags & ENQUEUE_DELAYED) {
--		requeue_delayed_entity(cfs_rq, se);
-+	if (flags & ENQUEUE_BLOCKED) {
-+		if (se->sched_delayed)
-+			requeue_delayed_entity(cfs_rq, se);
- 		return;
- 	}
- 
-@@ -8075,7 +8076,7 @@ static void dequeue_hierarchy(struct task_struct *p, int flags)
- {
- 	struct sched_entity *se = &p->se;
- 	bool task_sleep = flags & DEQUEUE_SLEEP;
--	bool task_delayed = flags & DEQUEUE_DELAYED;
-+	bool task_delayed = flags & DEQUEUE_BLOCKED;
- 	bool task_throttled = flags & DEQUEUE_THROTTLE;
- 	int h_nr_runnable = 0;
- 	int h_nr_idle = task_has_idle_policy(p);
-@@ -8111,7 +8112,7 @@ static void dequeue_hierarchy(struct task_struct *p, int flags)
- 			record_throttle_clock(cfs_rq);
- 
- 		flags |= DEQUEUE_SLEEP;
--		flags &= ~(DEQUEUE_DELAYED | DEQUEUE_SPECIAL);
-+		flags &= ~(DEQUEUE_BLOCKED | DEQUEUE_SPECIAL);
- 	}
- }
- 
-@@ -8128,15 +8129,16 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
- 	struct cfs_rq *cfs_rq = &rq->cfs;
- 	bool was_sched_idle = sched_idle_rq(rq);
- 	bool task_sleep = flags & DEQUEUE_SLEEP;
--	bool task_delayed = flags & DEQUEUE_DELAYED;
-+	bool task_delayed = flags & DEQUEUE_BLOCKED;
- 
- 	clear_buddies(cfs_rq, se);
- 
- 	update_curr_eevdf(cfs_rq);
- 	update_entity_lag(cfs_rq, se);
- 
--	if (flags & DEQUEUE_DELAYED) {
--		WARN_ON_ONCE(!se->sched_delayed);
-+	if (flags & DEQUEUE_BLOCKED) {
-+		if (!se->sched_delayed)
-+			return true;
- 	} else {
- 		bool delay = task_sleep;
- 		/*
-@@ -15213,7 +15215,7 @@ static void attach_task_cfs_rq(struct task_struct *p)
- static void switching_from_fair(struct rq *rq, struct task_struct *p)
- {
- 	if (p->se.sched_delayed)
--		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_DELAYED | DEQUEUE_NOCLOCK);
-+		dequeue_task(rq, p, DEQUEUE_SLEEP | DEQUEUE_BLOCKED | DEQUEUE_NOCLOCK);
- }
- 
- static void switched_from_fair(struct rq *rq, struct task_struct *p)
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 6c3ad70e58b8..bd02ae83719c 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2578,7 +2578,7 @@ extern const u32		sched_prio_to_wmult[40];
-  *
-  * MIGRATION - p->on_rq == TASK_ON_RQ_MIGRATING (used for DEADLINE)
-  *
-- * DELAYED - de/re-queue a sched_delayed task
-+ * BLOCKED - de/re-queue a sched_delayed task
-  *
-  * CLASS - going to update p->sched_class; makes sched_change call the
-  *         various switch methods.
-@@ -2598,7 +2598,7 @@ extern const u32		sched_prio_to_wmult[40];
- #define DEQUEUE_NOCLOCK		0x0008 /* Matches ENQUEUE_NOCLOCK */
- 
- #define DEQUEUE_MIGRATING	0x0010 /* Matches ENQUEUE_MIGRATING */
--#define DEQUEUE_DELAYED		0x0020 /* Matches ENQUEUE_DELAYED */
-+#define DEQUEUE_BLOCKED		0x0020 /* Matches ENQUEUE_DELAYED */
- #define DEQUEUE_CLASS		0x0040 /* Matches ENQUEUE_CLASS */
- 
- #define DEQUEUE_SPECIAL		0x00010000
-@@ -2610,7 +2610,7 @@ extern const u32		sched_prio_to_wmult[40];
- #define ENQUEUE_NOCLOCK		0x0008
- 
- #define ENQUEUE_MIGRATING	0x0010
--#define ENQUEUE_DELAYED		0x0020
-+#define ENQUEUE_BLOCKED		0x0020
- #define ENQUEUE_CLASS		0x0040
- 
- #define ENQUEUE_HEAD		0x00010000
+>  		trace_sched_wait_task(p);
+>  		running = task_on_cpu(rq, p);
+>  		queued = task_on_rq_queued(p);
+> @@ -3889,8 +3889,7 @@ static int ttwu_runnable(struct task_struct *p, int wake_flags)
+>  
+>  	update_rq_clock(rq);
+>  	if (p->is_blocked) {
+> -		if (p->se.sched_delayed)
+> -			enqueue_task(rq, p, ENQUEUE_NOCLOCK | ENQUEUE_DELAYED);
+> +		enqueue_task(rq, p, ENQUEUE_NOCLOCK | ENQUEUE_BLOCKED);
+
+For proxy donors on rq that don't belong to fair, this will enqueue
+an already enqueued task.
+
+Although the sched call callbacks may be able to handle it,
+psi_enqueue() will do double accounting since block_task() was
+skipped for proxy donors.
+
+>  		if (proxy_needs_return(rq, p))
+>  			return 0;
+>  	}
+
+-- 
+Thanks and Regards,
+Prateek
+
