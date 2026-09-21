@@ -1,35 +1,35 @@
-Received: from mta0.migadu.com (out-146.mta0.migadu.com [91.218.175.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617894FDE7E
-	for <sched-ext@lists.linux.dev>; Mon, 21 Sep 2026 18:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81B7376A12;
+	Mon, 21 Sep 2026 19:15:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790017200; cv=none; b=IqgQsFRyBzblcwBtuKB4ojbDhmSOMvACvfcVWdZJETNP962Tx9tZDGl175lNrWP6/IFn599yg+kylKlQZz5SJmQmR2ADabs0ZHBnqNNYTM5WB/ehWr1DXFFycXD7iLgNHAO+0RMtqiBrQB/6FW58zAId8KVtiS6wizmx0le0TdQ=
+	t=1790018134; cv=none; b=AbGZeTeKa6rIzFTfM+/j4XJ+q5jQyhoUCgsfh1P4BK5MdMae6H/2mimhgMm8ZMBeHPFjYxpGfu7tSx3olNtyVQpapgwzzSJX6vNXVi641OwB+bCh6VqnykrTu168q9gbsVUkPzdnAymcaeS1fObUcWx+rltz6MAmKBDgKVQfnfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790017200; c=relaxed/simple;
-	bh=OMfLu+KwVGCEytv7WY2nCcPwqM2qjTmGujwtUDmwF2Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U68cD2ZmEnb09MvsUx0tGIhw0zbqAB57Hx0Xl70I4Kj8F4vm3lxFiWi++jp/3LAEGcv17e+KxiDtMO2fck10MhNhrBJowXnaOhgjpgz05iD05+fO9pxRmZDyGW02eGjWLkjD/FNM+4BOkOeMpIAbZymvG9y7iwMqX+qjWiUK/VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DJzggoyG; arc=none smtp.client-ip=91.218.175.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790018134; c=relaxed/simple;
+	bh=1DtMai3V3kiVLqjineDsFbm8zZzMEdYBtgrN2LZaJ4U=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=nq5jNvNjai3a6BxldDO2CbX+h+WsFKHgzOITTKvqVSptDGUqfM8+QHQSRxOaqyCcM7zRehvS2EctypdtAV6QopQHZLo2EIxeLxqNGeZT/nAKowfJNQbegcmUwc4nKVKZoSshgsnfkHQpWZhg2Cn6Qa+TEZoFq+YOgKqIt5sfTSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a02abwHi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DJzggoyG"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=OMfLu+KwVGCEytv7WY2nCcPwqM2qjTmGujwtUDmwF2Q=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790017196; v=1; x=1790621996;
- b=DJzggoyG4KHLODwb/0N8kon7tYWSbmTvZzIVRMdLQc+i49MHQoUJPf2Yk4dJMhLKd7qz97Wy
- mAonsMxncx+jZa1y6PQjOtkdhTh1BKJDPcqmmnlfcIxeSpIpNhHj5cs9QSEutJzSF0cHkpsoiw5
- LJL0lCHgqnZSCNsu9PEJCHj4=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id 197ee3b1a99efb1d;
-	Mon, 21 Sep 2026 18:59:46 +0000
-X-Mizu-Trace-ID: 197ee3b1a99efb1d
-X-Migadu-Flow: FLOW_OUT
-From: Usama Arif <usama.arif@linux.dev>
-To: arighi@nvidia.com,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a02abwHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A774D1F00893;
+	Mon, 21 Sep 2026 19:15:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790018133;
+	bh=8hSkDufjo3UYdhcc6/PO/YCzjZj51zL1OxsBdaPWaTA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=a02abwHizeexXH8wXiUh7evoTHc9Ls8fAxrcjDmU7yj6FsKDRJlPXezmUTV71uNLk
+	 XTvEYUD9RzJrG/RmhAe6dLgFmL4RgaC0v0qyx1EnGHRUE7l++xgBVuUDr3M0vTrNQ3
+	 rmSwLh181vfoqYzm1+VMwjJisKVmoNGaMtXvt+YH/H4j/sSi9IoLMvtu1AG1B3IrCr
+	 6R/lsdBHuyOPF6szN5jipDH6wSkFEfONxM4nfQ56dzVX0ffidfYURERsyHtIpsCbDk
+	 W05xC8NdL4rnaMCRJ4T1jwLa0NHIRQNaY62u2++sE5VngSEwsOZPvBjrlFxoItRX6C
+	 IWuZljjsykTEg==
+Date: Mon, 21 Sep 2026 09:15:32 -1000
+Message-ID: <2460bfe776dad67779dbd5526c14d31a@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: Usama Arif <usama.arif@linux.dev>
+Cc: arighi@nvidia.com,
 	bpf@vger.kernel.org,
 	bsegall@google.com,
 	changwoo@igalia.com,
@@ -48,53 +48,24 @@ To: arighi@nvidia.com,
 	void@manifault.com,
 	vschneid@redhat.com,
 	yphbchou0911@gmail.com
-Cc: Usama Arif <usama.arif@linux.dev>
-Subject: [PATCH 0/2] sched_ext: Specialize TID and scheduler hashtable compares
-Date: Mon, 21 Sep 2026 11:59:10 -0700
-Message-ID: <20260921185943.4031480-1-usama.arif@linux.dev>
-X-Mailer: git-send-email 2.53.0
+Subject: Re: [PATCH 0/2] sched_ext: Specialize TID and scheduler hashtable
+ compares
+In-Reply-To: <20260921185943.4031480-1-usama.arif@linux.dev>
+References: <20260921185943.4031480-1-usama.arif@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-scx_tid_hash and scx_sched_hash both use naturally aligned u64 keys but
-do not provide obj_cmpfn callbacks. As a result, rhashtable falls back
-to rhashtable_compare() for each object visited during a lookup:
+> Usama Arif (2):
+>   sched_ext: Specialize the TID hashtable compare
+>   sched_ext: Specialize the scheduler hashtable compare
 
-  memcmp(ptr + ht->p.key_offset, arg->key, ht->p.key_len)
+Applied 1-2 to sched_ext/for-7.4 with the scx_tid_cmpfn() signature joined
+onto one line.
 
-Although only eight bytes are compared, the generic path loads the key
-offset and length at runtime and emits an out-of-line memcmp() call.
+Thanks.
 
-The first patch adds a specialized comparison for scx_tid_hash. This
-turns comparisons in scx_bpf_tid_to_task() into direct equality tests
-against scx->tid. The kfunc can be used from hot scheduling paths, so
-avoiding the generic comparison is particularly useful there. The
-specialized comparison also covers duplicate checks during insertion.
-
-The second patch specializes scx_sched_hash by comparing keys directly
-against ops.sub_cgroup_id. This removes the generic comparison from
-scx_find_sub_sched(), which is used when dispatching child schedulers
-and by the sub-scheduler capability and management kfuncs.
-
-In both cases, the const rhashtable parameters allow the compiler to
-inline the callback and reduce each object comparison to a single u64
-compare. Disassembly confirms that the lookup loops no longer call
-memcmp() or an out-of-line comparator.
-
-No functional change intended.
-
-Usama Arif (2):
-  sched_ext: Specialize the TID hashtable compare
-  sched_ext: Specialize the scheduler hashtable compare
-
- kernel/sched/ext/ext.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
--- 
-2.53.0-Meta
-
+--
+tejun
