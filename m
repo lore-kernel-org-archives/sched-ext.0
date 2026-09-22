@@ -1,192 +1,265 @@
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11012030.outbound.protection.outlook.com [52.101.126.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42194314D05
-	for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 03:16:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790047001; cv=fail; b=QE8j7i/lnrLC0L+G404CF+cTdh2vL15na/e/oExJPU08eV/9HL73XXieuJ+txyWQAHI1xlo2Y24aih2QtoKtUzpluy+W+oGFMoy+IIr6JzGsqWhSPxSzF43BanSc2ZmhAjOxbbFQCp2FmTTe2DMqfxL344kCWG+IKMEhyPGtMu4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790047001; c=relaxed/simple;
-	bh=BfuIj5EltW2JIX7ZPFCjwPndbltNtZgoMi/lVH1p7jc=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=PSVlGSi/xeEHA5O/SVleGgikA/7h0+wSvLKTQwmsxSpTiZitutwKX4zTb3i+0cm5efVJ5oqNjcWTj6+rfdkUxga91CjrmkaPfYpr5qzwsAC+zDH5hcF2vpidFliHPkdGnr1HPfmq1gzBE185Ejwto9dfbzoEShzoD2xs/UDolZg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=cXTjmkJk; arc=fail smtp.client-ip=52.101.126.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66812560AAE
+	for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 15:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790092253; cv=none; b=u33WbKqgq/8k3T8nrLN1IfSlPWEnacmHOPwBLFlNjuGM7JoTkMttF6oqh0EcEP62PrLDQ0qukI5OsA0oa7AlwDANzBTIu9bSnmbsn/gYU1Z/UR1J9hClJnD4mlCQQBojJR0BaMPBsKLXmO8ntpcC1Mbbv1x2K5pvL1FQquXkcg0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790092253; c=relaxed/simple;
+	bh=rgzYzCDG9ildpCGXEj6xurCzWT2v2wrHAOFhEDpNLeI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cOssKx1hOHAKa+SeUxdpQjW2SJXmZXFVEWrH3jXdv5uVW/MYjVD6J5AIb4ofcl9jnrnqAgmPcELeSXKXBvJTQdN6hjwUmB59PXbKjZKbuvxoqI6QVSMLl/kzktKr/KJcGVLNmjW8cJsegNYD57ioVp/oYDPeRzcj+ABWTS/hSNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KC8Zf173; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="cXTjmkJk"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lVImYO+GBdX5e5H9cur7JszjUHaFXaSWtrwpUGnZiQW0Nr20+0KZeY0B+SvxIezdiF6OCghaY9hD9j5617VY1V0hLOCrhNTGUnLFSFmHNbSokHfB6e4WhYPl0cHJaKlavcSs60zBB5ZwUMEaZOS+/xG6wiGAGYp+Qe2nT5lYrYOkl0C6YxObexzY+G9ORjvay72GJTf1wulNcpemMM7xPO6/4FU2ETKycAeRjwyMd3KIkfWPmwTheAXKaTXpY8/HJA1QzyWwiEUGATwpj3oZIrjvq2KCsBzBwNUu+z+naE7Rl0/ntQrj5REqDpE/dmlYa18ZDFenDgIlyHkR8arfsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=njHuQPuXl1BrKVgAxg1XtuDpP0oCePwjw3cXkyLhqBc=;
- b=swQ7x/VbxSkLGUa/42SR2hjZkJnQ1/KZRfmKV77+2FsEOjNBLgu8u9Ab03jcTaiT2rqOofE016+Pmp6+TgfzFj5yAdHRiHSLrz/hr/Y09eiErtkfbkDWshHV3lPKAd0OsUrJ+jD+KD5OtUSds3mE9CGSJXfKlDikQqYjegyfrLBcXcExAkCgoOau1E1TagLsWjlex+ny48nJgBGR7/oI5W5hd/NX9oX5JwVYI4OwJd3pR8hyaE6qCqpudafoqumVQwIoCHXhn5KWSteDDz7Ta3qjQ5QId+AV/n3Cy23Xleq2oznM8F1X5/fuEV2K/fuewg5ulHeSfZV1rvDLHnnjhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=njHuQPuXl1BrKVgAxg1XtuDpP0oCePwjw3cXkyLhqBc=;
- b=cXTjmkJkoxtxZG2tV1yKLRv6S2TSD5mAe7xGTZALmY/lBRUvUt1mY7UhWHD3aKj3vjNwpewT3+T/HkWkGK9Bvn18cCiVY93ZLsYSx/Uj1PqYEm6P0V2H6IqXGVjVujW8XRVPKx7jsLCMy1RO1Q4IlsWSQTep3Tax/2Pf0HPE5QYsQZRUlk0JfWPDTa16oAYR4BFhggztQIHeRWHtQ1MYOgNJiwSJlbkjphRUlOGAyT2zvr3etbuZPHGZmYqYeY/0isBwLWFV9GFgJe7L/XK4x06l4velbNbwlTTM5VvcJ3GUDirkUJVGTRp4b/li9Qfl1KpBDv/3gFHQHcGuaK+J+A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from PUZPR06MB4742.apcprd06.prod.outlook.com (2603:1096:301:b5::13)
- by TYZPR06MB6894.apcprd06.prod.outlook.com (2603:1096:405:20::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.13; Tue, 22 Sep
- 2026 03:16:29 +0000
-Received: from PUZPR06MB4742.apcprd06.prod.outlook.com
- ([fe80::206c:c661:9838:5571]) by PUZPR06MB4742.apcprd06.prod.outlook.com
- ([fe80::206c:c661:9838:5571%3]) with mapi id 15.21.0428.015; Tue, 22 Sep 2026
- 03:16:29 +0000
-From: Fuyu Zhao <zhaofuyu@vivo.com>
-To: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Fuyu Zhao <zhaofuyu@vivo.com>
-Subject: [PATCH] tools/sched_ext: Add SCX_OPS_OPEN_OPTS for schedulers using open opts
-Date: Tue, 22 Sep 2026 11:16:18 +0800
-Message-Id: <20260922031618.2858-1-zhaofuyu@vivo.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SI2PR01CA0009.apcprd01.prod.exchangelabs.com
- (2603:1096:4:191::18) To PUZPR06MB4742.apcprd06.prod.outlook.com
- (2603:1096:301:b5::13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KC8Zf173"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccd5cef0so56352a91.0
+        for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 08:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790092252; x=1790697052; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=UVqEvmCZkA3mXO6Mi2UxH/AaK/ycjWfvrNW+JUDVq+k=;
+        b=KC8Zf173uhs6gfwXyXpNnJTPFmJ7PNhr1mVa2h+ecxLRUkFb8lVy67p+2UlEq5EX4X
+         u32GmmH+6FXWI0VmbiKeZQsH2sPX02kuluJYY35PklR1XPTBoe9drTL57T8fD3VKoFvH
+         rRtbbrKkOAAhr58tNUpgA3NLwBnK7M2fsn1+vTIz5lvrLh+Z/HfxS2606A/y7aaWeAl8
+         7rV0PE6zUN9ZGiEHH7o67PhSQu16IneGROULBmFZ2w4Rl/pTH/DNWxrJJAD5YWGNKHgP
+         jWUFLvYnbAGylgM4wlt7WSP5smRZg5uZklAmBKRekgxM2zQKS1YdSZrO98mXt7Fk49G6
+         uWWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790092252; x=1790697052;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=UVqEvmCZkA3mXO6Mi2UxH/AaK/ycjWfvrNW+JUDVq+k=;
+        b=Ifgn64ePkRKXlG2YkQmVmx4V8dS4pa7rnxTjXFdGQcfdpPCBvUe3oIbiX6xsVzy5/z
+         Xgtr11ZmbVRgs2db5pr/ubf6fD3F2S3DS2VIbjphbDJaLkF0Y/LWj39MNMPgRcqlCBWT
+         MoJrhXarDSNAG8MlgJznDj9Qf/ids/iGsyciBmTUG+GQie8bgObLK9VB81RYXxbZFqBz
+         R0Q1fglVi7exAS4ZAlGK9KhEZscCbo2hI9xfpSoMl4BqBXTmJDFlo4V2yXFQD2bUm1KT
+         QKUKP0EikgiqdUWzApAKttWhCu+BnSlr3nxbwtQx3BWk32hoEJJjAjUlzYwV/n9+9EIs
+         APag==
+X-Gm-Message-State: AFuF++lrqSopWjG3lTYUL+w5vhAQKM1Ys0gLt7CR401MLCjN/SD3MIBS
+	ZCdSuQogULExUeBVLAS/a8pfAjgfvK5kkc/vBXCJel0JYgPtnc3pC6QvBxDv/w==
+X-Gm-Gg: AYBFou0DJEJ/U39KU46x3yKLqjzzoL+R/tx4G0sSmy36NyRy05OFSiUmR3ksloDUvTP
+	v04StSi7D9BXvf9YYZXcI/nOYoVMWsxvnAJlIV6iLp05Peuag/GiquHz1lmKheOYEbAQbVAGaGo
+	+EGsSDmIRrm0JLmjgIYW6TStJjnh+p0VQI4Vrp7XxtUR5kPGbiUYyYpN/KwxV4197K/iAx10D7x
+	cwA2wYxNFURkeczvDCFy04B6t9sqRGic1j6R6qKs6xmUKhICKTz6bi2tt4UCx/xDi09YmOzclYg
+	6g9lc6lJwqEOQhlfd5yMCN03zcxFsLwjiD8yOB28ksuzBbSJ7ofu0c/rpRlI627fCw8uBdlQ2JV
+	fUK8oFr3Q32w7XkRO+hf7b0M1vP8Lr6L4GXDbyVYmzFmAJVK7PK9YWFvDk1J2DayLd66tVxg44B
+	2nARy2euWLyA9GrCUy9TdrCYxYWqDyefvMfkZG7BBFoLJ00yFtJ5ef/P4Ot4Rj0QlKuRrhCGXLP
+	GyTMu6B/bC0Dvz127TsWUh6UO+8VMBybY5uqviStikhW2g7mVXHBl3FBL79WebX7PhqDHt/qfeQ
+	VGWqfg==
+X-Received: by 2002:a17:90a:c2ce:b0:39e:6a81:f350 with SMTP id 98e67ed59e1d1-3a07320037cmr1703946a91.42.1790092251437;
+        Tue, 22 Sep 2026 08:50:51 -0700 (PDT)
+Received: from cchengyang.duckdns.org (1-164-66-129.dynamic-ip.hinet.net. [1.164.66.129])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a07ddf23desm16090a91.10.2026.09.22.08.50.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2026 08:50:50 -0700 (PDT)
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+To: sched-ext@lists.linux.dev,
+	Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Ching-Chun Huang <jserv@ccns.ncku.edu.tw>,
+	Chia-Ping Tsai <chia7712@gmail.com>,
+	chengyang.chou@mediatek.com,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>
+Subject: [PATCH sched_ext for-7.4] selftests/sched_ext: Fix rt_stall runner abort
+Date: Tue, 22 Sep 2026 23:50:00 +0800
+Message-ID: <20260922155037.17494-1-yphbchou0911@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4742:EE_|TYZPR06MB6894:EE_
-X-MS-Office365-Filtering-Correlation-Id: 63990225-d3b1-46eb-32bb-08df1857e49a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|52116014|1800799024|23010399003|366016|38350700014|6133799003|10067099003|56012099006|11063799006|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	QIX0GgzbiYYTXSEh1HlSdahVV5QC6/BFmc4Td697aD+DwNrA5VDyieoZCzHuFxC+oZ4orX1jxH5joevrSfA4vK5+PmUi71Gjmq0DCt1SJh8UOxUWsjPVIEUa703SlLjRBWrFrkM6eDAVcPeMIKGjZiJ4SfPsfB9jxvID5Xc9Lht2oD2JigoCDewqmQntWwPpHgS7IRiaCgZR5/0/rHONumMBjAazxOxmrhE6Yp/aVMSqu4npSWK824Hv9vVmRhkwF5aO2d3p7SZnDGCAG37+5IZgAViOdaJ7CduUz5msbamYktfhqogA/SivqY2WrfMqcukZhdjal2E9UOXYS0XsMmrHk/GsZXfgjZofkt78DiOp5zcrwvF4TNkqYr4qzsVWhV9tJyemauu6ozwM0tewBUDyUGEeztBpZhEWrXYTArUavZuCCSx5+oxCqxyl72BnbI9q53sPqYCWaH4yHqMvMr+kLXtiDz6sz2VPQxd2C+yg3MQXb9WFifJlO/MWkzcRAa8tpLOsnnsik5wKrKLFNUT7jhHJzVJj/3bcpncf3w7CNUpak+b2pg2l18TNbSZCk1gZG6iMh971lS/R1DmQvpUwM5e+1QJR4OsMHuXZEhgF43RGWjnUneHun9h/ATW/xIln/Ae3OYOnr0JduSdLMAb+p8tufTeKHKgswk576GAZvdLNjeRHhv1mSidY7ROrlval7zsX+8H3ced0VWK81A==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PUZPR06MB4742.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(1800799024)(23010399003)(366016)(38350700014)(6133799003)(10067099003)(56012099006)(11063799006)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?7RUTluvJ65OCXvor4Km/DBaxG/dvTbvUAcGs6hnJ+chOtik6bwVy+I7GMjuU?=
- =?us-ascii?Q?neS5GZJuZcilm0lELF+eONAaXnRCX8V8eMnXHV3Ri7F2GTLPeeQ8czpLBBDP?=
- =?us-ascii?Q?R/pHgtsLhSL+wpiQljd9goXi3oVj3My4O6Vfeqw0YA+q28jN+hsyDu9sIIGR?=
- =?us-ascii?Q?aqn7+0jPwRhGKdAZlGk3p+AQ1QUoBwUAE6litpEvUn9zPV+qCWSjvZVt7uJI?=
- =?us-ascii?Q?v3ObSRpx3pOjkVWPdWcY1ih0h8j0MOg1XSEg9aii6pWIS2RuIUu2ie47b9J6?=
- =?us-ascii?Q?d79deG0+m1UxNA20AwdOmFRmcJfJ79O1K7CVQcxoLzMMXQHdrGewaP/RA/38?=
- =?us-ascii?Q?JnXjvFxPt64mlaQmcdCwfeXxz7eL2uIwe7/LE8FYcRhD7yhwJzfcxhikJjlS?=
- =?us-ascii?Q?Qx0jqrSWYqEuUF14uXdH0Tu/oYdAnrZjYm3TfYgm5txSMqvhLH8COt67K7on?=
- =?us-ascii?Q?j80tca517d/pPLgMvv6bhMOm+e5b3PuNQkm/V6QxNlb7wcFdqvfkYY69TSzI?=
- =?us-ascii?Q?07/kuZzxAtDApU0OZxilybvQVhWVCX+MjaniQufI3S/HRA+CEv8312AMhFEu?=
- =?us-ascii?Q?VnOoPsiTpt1vURCfod809NIjje/qK0bVApIeQXcOgufIT5/dzYQ4D45ENO2P?=
- =?us-ascii?Q?Ms02E4Lyyg4Ggy30EOPOZFnLrs0hHxiRtBWOt6mvoE2hC2S8cL4DALiZ09Nm?=
- =?us-ascii?Q?+W5I5i7LHy39fWKILuMxuxdwetZ1GdKJN6Bz5qAcuv/pWOQboLYMuBCNb4Rd?=
- =?us-ascii?Q?cHLTOXbLCkMtDPm2I3OkjUXNpSJDyFn7ZUF1B/5j7N55i055zK/kr6J1Q0eq?=
- =?us-ascii?Q?lGgj/8b96AawL7C591Dz3dNA1YTSDiSgYW7lyj3MBGiI1S1kyrrAojzvco3H?=
- =?us-ascii?Q?fikRXfjj9XRF5DxQJK8I606Lm3Tq6qEcRZp5+AqLJqyTHzKyCtlRebjT6JJS?=
- =?us-ascii?Q?NJj9fPhzOzLfeShITonFM0tB2r4tcKQjvkPsQc1Ia/jq8dF6S5JlqkG/MCmr?=
- =?us-ascii?Q?rOnKYTa+YNb0SLlAfzP8NG7e49iWuPRtExb3gGg9JDejiYN9OVqucjms93Qb?=
- =?us-ascii?Q?jC2L5Uu1KmtIk2TfHX/3wb37/RYT8ww1Ews+ZdGmjqgj9Mq3qUWUFutR9NMV?=
- =?us-ascii?Q?3uqBRkN9apSVPoA6YtaTx+SmbmwCMhgTSGUgkGvPziPiC/FT/9lMjGi1B5jQ?=
- =?us-ascii?Q?MBjHExMGqq618xjQ43czDpUE21HHlRc4J+/WopbpvNWLdxd00Ngbwmrd2aLb?=
- =?us-ascii?Q?753oBAEKIrFBlxcWG7cNO+rZCsee6W+GKMNecSTS9M4kcIySZmhMCvs5GRcV?=
- =?us-ascii?Q?KdyvS+YfvEsGaUSMqGn/ypzWiPFzBQcvEY6/w8CZj/xgiXQYsVY/Hd778wdM?=
- =?us-ascii?Q?qt+YUaY0v9jIMX5V95i404zQdAvEkQiVKfemZiFOTpATdTkMjrXTmwgr5yvf?=
- =?us-ascii?Q?bOVdeuN0PegCKFF1aY+FFrQC0zQglouB8+ddqjmEnbGGr1QB4qG18LmZGveW?=
- =?us-ascii?Q?cW7N8aHg6vssKJBgv+mfja1uU7tUO98WlDoefnl8syStFwj2pnnqd1Rj1IcN?=
- =?us-ascii?Q?uXgJDa+sG1df7qp6X025Do+A9WhH9sx94glZPxfuwu2mYptV0DxxTZWngfvH?=
- =?us-ascii?Q?OpXwodrrQgo2rq0kmZJK0MHS5v00CUCTD5JF1EWtxoI/5gKHNJDc+92DGt+N?=
- =?us-ascii?Q?PU7OngGf+13XnnuXemX/hByyjVRnMQ/xAXmiwBcc0D1hMzNagDhRiWZwmaSS?=
- =?us-ascii?Q?jo6ZN1wW9Q=3D=3D?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 63990225-d3b1-46eb-32bb-08df1857e49a
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4742.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 03:16:29.2309
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 917XiHwRd+2ttkgS66Eb3zLX4uuUEbXTyd9v3nX0fACJRdYU2LCrnAPdJFASlOLH9D4J0yFvwGZ2C+yL4mmBxA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6894
+Content-Transfer-Encoding: 8bit
 
-Add SCX_OPS_OPEN_OPTS() to allow sched_ext schedulers to pass
-bpf_object_open_opts when opening BPF skeletons.
+rt_stall uses ksft_exit_fail() and friends, which call exit(), so a
+single rt_stall failure or a fork() error kills the runner and skips
+the remaining tests.
 
-Using the *_open_opts() interface generated by bpftool directly would
-bypass the compatibility checks performed by SCX_OPS_OPEN(). Use
-SCX_OPS_OPEN_OPTS() instead to pass open opts while retaining the
-existing compatibility handling.
+Drop the ksft_* usage, report the handshake failure back from
+wait_ready(), and let run() return SCX_TEST_FAIL so the runner records
+the failure and moves on. Since the test now returns rather than
+exiting, route every path after the forks through one cleanup label, so
+a failure cannot leave the SCHED_FIFO task spinning on CORE_ID for the
+tests that follow.
 
-Signed-off-by: Fuyu Zhao <zhaofuyu@vivo.com>
+Also destroy the struct_ops link before checking the exit kind, so the
+link is released when that check fails.
+
+Fixes: be621a76341c ("selftests/sched_ext: Add test for sched_ext dl_server")
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
 ---
- tools/sched_ext/include/scx/compat.h | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ tools/testing/selftests/sched_ext/rt_stall.c | 80 ++++++++++----------
+ 1 file changed, 42 insertions(+), 38 deletions(-)
 
-diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-index d2e4384df..f8c9bf657 100644
---- a/tools/sched_ext/include/scx/compat.h
-+++ b/tools/sched_ext/include/scx/compat.h
-@@ -177,23 +177,25 @@ static inline long scx_hotplug_seq(void)
-  * - v7.1:  ops.sub_attach(), ops.sub_detach(), ops.sub_cgroup_id
-  * - v7.3:  ops.rescue_bandwidth_ppt, ops.rescue_quantum_us
-  */
--#define __SCX_OPS_OPEN(__ops_name, __scx_name, __ops_struct) ({			\
-+#define __SCX_OPS_OPEN_SKEL(__ops_name, __scx_name, __ops_struct,		\
-+			    __open_expr) ({					\
- 	struct __scx_name *__oskel;						\
- 										\
- 	SCX_BUG_ON(!__COMPAT_struct_has_field(__ops_struct, "dump"),		\
- 		   __ops_struct ".dump() missing, kernel too old?");		\
- 										\
--	__oskel = __scx_name##__open();						\
-+	__oskel = (__open_expr);						\
- 	SCX_BUG_ON(!__oskel, "Could not open " #__scx_name);			\
- 	__oskel->struct_ops.__ops_name->hotplug_seq = scx_hotplug_seq();	\
- 	SCX_ENUM_INIT(__oskel);							\
- 	__oskel;								\
- })
+diff --git a/tools/testing/selftests/sched_ext/rt_stall.c b/tools/testing/selftests/sched_ext/rt_stall.c
+index a5041fc2e44f..a1552b38a6e8 100644
+--- a/tools/testing/selftests/sched_ext/rt_stall.c
++++ b/tools/testing/selftests/sched_ext/rt_stall.c
+@@ -17,7 +17,6 @@
+ #include <scx/common.h>
+ #include "rt_stall.bpf.skel.h"
+ #include "scx_test.h"
+-#include "../kselftest.h"
  
--#define SCX_OPS_OPEN(__ops_name, __scx_name) ({					\
-+#define __SCX_OPS_OPEN(__ops_name, __scx_name, __open_expr) ({			\
- 	struct __scx_name *__skel;						\
- 										\
--	__skel = __SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops");	\
-+	__skel = __SCX_OPS_OPEN_SKEL(__ops_name, __scx_name,			\
-+				     "sched_ext_ops", __open_expr);		\
- 	if (__skel->struct_ops.__ops_name->cgroup_set_bandwidth &&		\
- 	    !__COMPAT_struct_has_field("sched_ext_ops", "cgroup_set_bandwidth")) { \
- 		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_bandwidth()\n"); \
-@@ -232,12 +234,20 @@ static inline long scx_hotplug_seq(void)
- 	__skel; 								\
- })
+ #define CORE_ID		0	/* CPU to pin tasks to */
+ #define RUN_TIME        5	/* How long to run the test in seconds */
+@@ -35,15 +34,17 @@ static void signal_ready(int fd)
+ }
  
-+#define SCX_OPS_OPEN(__ops_name, __scx_name)					\
-+	__SCX_OPS_OPEN(__ops_name, __scx_name, __scx_name##__open())
+ /* Wait for a child to signal readiness via a pipe */
+-static void wait_ready(int fd)
++static bool wait_ready(int fd)
+ {
++	bool ready;
+ 	char c;
+ 
+-	if (read(fd, &c, 1) != 1) {
++	ready = read(fd, &c, 1) == 1;
++	if (!ready)
+ 		perror("read from ready pipe");
+-		exit(EXIT_FAILURE);
+-	}
+ 	close(fd);
 +
-+#define SCX_OPS_OPEN_OPTS(__ops_name, __scx_name, __opts)			\
-+	__SCX_OPS_OPEN(__ops_name, __scx_name,					\
-+		       __scx_name##__open_opts(__opts))
-+
- /*
-  * Open a cid-form (struct sched_ext_ops_cid) skeleton. The cid form postdates
-  * every op the load-time fix-ups above handle, so none of them apply.
-  */
- #define SCX_OPS_CID_OPEN(__ops_name, __scx_name)				\
--	__SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops_cid")
-+	__SCX_OPS_OPEN_SKEL(__ops_name, __scx_name,				\
-+			    "sched_ext_ops_cid", __scx_name##__open())
++	return ready;
+ }
  
- /*
-  * Associate non-struct_ops BPF programs with the scheduler's struct_ops map so
+ /* Simple busy-wait function for test tasks */
+@@ -151,13 +152,11 @@ static bool sched_stress_test(bool is_ext)
+ 	float ext_runtime, rt_runtime, actual_ratio;
+ 	int ext_pid, rt_pid;
+ 	int ext_ready[2], rt_ready[2];
+-
+-	ksft_print_header();
+-	ksft_set_plan(1);
++	bool ret = false;
+ 
+ 	if (pipe(ext_ready) || pipe(rt_ready)) {
+ 		perror("pipe");
+-		ksft_exit_fail();
++		return false;
+ 	}
+ 
+ 	/* Create and set up a EXT task */
+@@ -172,7 +171,7 @@ static bool sched_stress_test(bool is_ext)
+ 		exit(0);
+ 	} else if (ext_pid < 0) {
+ 		perror("fork task");
+-		ksft_exit_fail();
++		return false;
+ 	}
+ 
+ 	/* Create an RT task */
+@@ -188,7 +187,7 @@ static bool sched_stress_test(bool is_ext)
+ 		exit(0);
+ 	} else if (rt_pid < 0) {
+ 		perror("fork for RT task");
+-		ksft_exit_fail();
++		goto out_kill_ext;
+ 	}
+ 
+ 	/*
+@@ -199,45 +198,47 @@ static bool sched_stress_test(bool is_ext)
+ 	 */
+ 	close(ext_ready[1]);
+ 	close(rt_ready[1]);
+-	wait_ready(ext_ready[0]);
+-	wait_ready(rt_ready[0]);
++	if (!wait_ready(ext_ready[0]) || !wait_ready(rt_ready[0]))
++		goto out_kill;
+ 
+ 	/* Let the processes run for the specified time */
+ 	sleep(RUN_TIME);
+ 
+ 	/* Get runtime for the EXT task */
+ 	ext_runtime = get_process_runtime(ext_pid);
+-	if (ext_runtime == -1)
+-		ksft_exit_fail_msg("Error getting runtime for %s task (PID %d)\n",
+-				   class_str, ext_pid);
+-	ksft_print_msg("Runtime of %s task (PID %d) is %f seconds\n",
+-		       class_str, ext_pid, ext_runtime);
++	if (ext_runtime == -1) {
++		fprintf(stderr, "Failed to read %s task runtime\n", class_str);
++		goto out_kill;
++	}
+ 
+ 	/* Get runtime for the RT task */
+ 	rt_runtime = get_process_runtime(rt_pid);
+-	if (rt_runtime == -1)
+-		ksft_exit_fail_msg("Error getting runtime for RT task (PID %d)\n", rt_pid);
+-	ksft_print_msg("Runtime of RT task (PID %d) is %f seconds\n", rt_pid, rt_runtime);
+-
+-	/* Kill the processes */
+-	kill(ext_pid, SIGKILL);
+-	kill(rt_pid, SIGKILL);
+-	waitpid(ext_pid, NULL, 0);
+-	waitpid(rt_pid, NULL, 0);
++	if (rt_runtime == -1) {
++		fprintf(stderr, "Failed to read RT task runtime\n");
++		goto out_kill;
++	}
+ 
+ 	/* Verify that the scx task got enough runtime */
+ 	actual_ratio = ext_runtime / (ext_runtime + rt_runtime);
+-	ksft_print_msg("%s task got %.2f%% of total runtime\n",
+-		       class_str, actual_ratio * 100);
++	fprintf(stderr, "%s task ran %.3fs, RT task ran %.3fs (%.2f%% of runtime)\n",
++		class_str, ext_runtime, rt_runtime, actual_ratio * 100);
+ 
+-	if (actual_ratio >= expected_min_ratio) {
+-		ksft_test_result_pass("PASS: %s task got more than %.2f%% of runtime\n",
+-				      class_str, expected_min_ratio * 100);
+-		return true;
++	if (actual_ratio < expected_min_ratio) {
++		fprintf(stderr, "%s task got less than %.2f%% of runtime\n",
++			class_str, expected_min_ratio * 100);
++		goto out_kill;
+ 	}
+-	ksft_test_result_fail("FAIL: %s task got less than %.2f%% of runtime\n",
+-			      class_str, expected_min_ratio * 100);
+-	return false;
++
++	ret = true;
++
++out_kill:
++	kill(rt_pid, SIGKILL);
++	waitpid(rt_pid, NULL, 0);
++out_kill_ext:
++	kill(ext_pid, SIGKILL);
++	waitpid(ext_pid, NULL, 0);
++
++	return ret;
+ }
+ 
+ static enum scx_test_status run(void *ctx)
+@@ -263,14 +264,17 @@ static enum scx_test_status run(void *ctx)
+ 			link = bpf_map__attach_struct_ops(skel->maps.rt_stall_ops);
+ 			SCX_FAIL_IF(!link, "Failed to attach scheduler");
+ 		}
++
+ 		res = sched_stress_test(is_ext);
++
+ 		if (is_ext) {
+-			SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_NONE));
++			int exit_kind = skel->data->uei.kind;
+ 			bpf_link__destroy(link);
++			SCX_EQ(exit_kind, EXIT_KIND(SCX_EXIT_NONE));
+ 		}
+ 
+ 		if (!res)
+-			ksft_exit_fail();
++			return SCX_TEST_FAIL;
+ 	}
+ 
+ 	return SCX_TEST_PASS;
 -- 
-2.34.1
+2.55.0
 
