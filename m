@@ -1,47 +1,47 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013066.outbound.protection.outlook.com [40.93.196.66])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012021.outbound.protection.outlook.com [40.107.200.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96131572697
-	for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 16:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953C6576EBD
+	for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 16:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.21
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790096133; cv=fail; b=HN9JcIdlD2DaoSyRDIevztFEPRC2OFbbFRfQIu7SR3byEPWsQbvx6yqP2K3dxIQeca4FjYHE4SEG0hPj9t1LY8jS9K8t85ywHuBu/2UR08r9zlHljHUuI1wKq0h88I0jWlbFtwXwbg3rrCU9x60+88guyc052ekgUf7HEyEwyN4=
+	t=1790096142; cv=fail; b=RKjMwlvG1mOyYrHRSrs7p9bKhyPTyUxbREUSUtMXZNaH2ku0Was0P13BqnPPK+BiralCiaTOUYWrhoEQM/wg+qzNlvyBa2LPYy6LqQuylibG8lq2EhrH9ZVm1ySBvDStqj0Pr8DBOeHmIyaq/+BHDQTeWnlu2FzUe9WKV2xkRZI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790096133; c=relaxed/simple;
-	bh=Li0l4H5wHMot9EO93ibKx/kLH5jW2VjqQjaL0sTD5Lo=;
+	s=arc-20240116; t=1790096142; c=relaxed/simple;
+	bh=zVCgR6IngwhF5r303pk66mYtiMBahHVgj/ud2EsQWGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YGXf4/PwCZHAgkL/MLAD91q3vVond3LKaSt6RdAsZ+eotSkalGw1cftm7ZvvXG3ymCFWV5xXOKT6nKrZXuv4gcXJ7TzwIvx639c/BFY6j+/nKv/NGC5A5YElkhh3h1VkhrcnSjb1XoF7ry7pKDoYF8/6zRX9KMFWN1YAlQZ+Xuc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OwmBysQ/; arc=fail smtp.client-ip=40.93.196.66
+	 Content-Type:MIME-Version; b=FmT0t7vh5zyj5fOFXmfVpu9aF+xRHWKS8nAtyaYAN5lPHUvfWvV5iRi6Q/jDny9LeQ1mYqgV1fDtZK4lmBFwY5lG4bI+r3xUaLkXLzOvrPfWJSjsgY5x6Gg4tF95pVZRqA3CflpY6Y2EL1QdENy5WcZYYmRVMCfgFXe5qYgEesA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=fFm/m7dj; arc=fail smtp.client-ip=40.107.200.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OwmBysQ/"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="fFm/m7dj"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zCfGpMQnJhlf0QNA+1PuqlNl8NagwSaeSpbRELcKvs4mwzGwwvI81B0bqLzDGK4hFMfAtwnAX5Ta5iFpxIvgKgGOG0bxVF8CBeBp2DzdyUVW5xoLci8/I6AGQDDKkyC1h7vsa+El2c9s34SzmIrbdMGQ9W3Q5HK2zMnD7OPbvBsO1KLcOXvY5OhqxwkGS5mwgJ1uOLUWlsevOs1ne4qtjAe8NL/a5xCstjbR1jxVlsidPfLTVJyVKB10n6bfgzK4VSRi9JV3loqGO/I5j5zw/ridQ+dVlILsyR7YDWvmt0NfxpRweQnzc3rVZHiD4tw4C1/s+mIp6O5z2qTsrrYknQ==
+ b=rc9Zidc4tpApdk/mEoDBeZQ7jLu9vLxM57fhCJZyoHo4nCeD/u9N0go3hEY62SWC/mfasIKoXMiIRDAUGZB/pQIbydZJyo1KDGYlY4mwqkY+v9E1IZ4aC3Q+vWLTlC0NZs/Lp+QNRkyzqzP8+YuItvE3puiwcyduligKAjYyaQhYJ1e+hRrebt4KqmJu/6evHL9Eagz10EB4DrcdDmSumvZHCX72dtLOfGqf0Ve366c+hYVC1TRYlLZOjsF8XySVK2rtLUJsrOXI7sHV/ZfiA87oqEaJhtJK2+yFwFSPsAbJNcBffhXizVLp8L/eqHHk2+qPXewwJSQGc23zZ7kfzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iMxifVclLlESYF30LW4f/1QPsD+d12KRkUvaiyfmb2s=;
- b=s+TN8xLt1GQ4PqcAIqOBhwHbSq/Nf/V3tCDej3sv8mNxT0g5t4SBPtj6vxszKfecjx8wB1cCDNwVmTAiwpy2xpEeWuKbf+/hxUDJ/aelHEnHU4VWWIKsAu2KB4+JICLziBpJHWfxIW22AdoCmRQCA9A2QjJLLULmkZX4ZBjjAjnMOnD1BMeMyvrxAPFeCktcvZqGSdpeY8hjZcUSUthTUS3XxSSnWy9fwu5Z36wBuWlzt5LcL2eLcWlFBsgVad3M/A6+k0pEREXJL/3GpLZnQR+ns25Y4jK3WVdpnOx1aiKlv/cdXF+3LW9Dwu451fueFxBfy8oAqzPizlKrdxL8mQ==
+ bh=Je08prSC14mBI04B5t+uB9bnlNTDtKYoo2+u04UWtnY=;
+ b=N0V0p5Cpc2P5vrYK+sMJ4NZiKIMe1bytOtEh9jaqXRltW89MRf/NUB1p8N404JsTwU0L3l8KpfWxAcsNsR3ldL3qv6xC77RLPISfNPS7ocsuryFQvsK9O0ACC0P1/m1PNB14NZHtKSFWyHm5/bZzZCle8D1iUXNJa8M8Tgt+pm2pMxgSgRFPtLebZdAkJMkS3+JXEDp7zHtxsT70oKMJH7RiEG6YEv6zLTegdYE3DNQXjRh5sVk1ACYyZw2vIQE3BhLnaJ3YRX4Ej7bpczu3G24s6ghrvJ7BjohZX0MP1pBpyJsF1Dex6TMse6Pu5wMaef21jP31kPjdyxKkTuAyKw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iMxifVclLlESYF30LW4f/1QPsD+d12KRkUvaiyfmb2s=;
- b=OwmBysQ/kBaziPlLOP0/iZ+vF6M9fvN4g4PjqTeOCSgu/YOlG5uP8XiBgipnA8RyqxQcSiKTvdejcPbkAooyJYpD6fWyP3/jJhLAljp2IZh9AdYrzGK967C0f7nkuiqW3p5UzajJ72n3svRv2CiLAzwABp41L7lOT73yxfc6HntgdOXGFhNSlc3adybLEVUrHfSW6l6tp+Gbp12MaHhct/hyNX8woN/tfNkoB6kINc40aTyyU/a+YwvJvEUXnb0BPDsaVCnCa31chF94bJWQFpP3bMSMYmbH0Ngrqf2ZCQtSe2GaoC7ySzZuhvIi91vd9xwOotbtq6hd6WSYOBY7IQ==
+ bh=Je08prSC14mBI04B5t+uB9bnlNTDtKYoo2+u04UWtnY=;
+ b=fFm/m7djPjLzjouIHIgQr2R4BprTDKsjJrHYwM5qmF0wCohhV+NRLNfYDi/GP+GEPrAc+1uPgfVg1hlKfc/TVyMZt9LnfLp8ydj+FFM6E+NvXljBgQtyCKFclkPSk27qllRsayvE7fJVEVEcQSy1GlCvM0OPSpDSK7mf23Ao0p5HlwufTTvg45FQC96gsrDp+rpP2awCxPy9xIQVHCsu5D8ziHqRyPa2mBtVJuzLWJ12oRM147z+w3oyJ7sqKLZA9YzRnZnTtq3o6cv43U39t4+ZHruI8FZJmiWHWqGtVn2lUFvVDbR6aKfgG0LogQfRudwOV0yktIPIaxXjEIuyDg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by BY5PR12MB4100.namprd12.prod.outlook.com (2603:10b6:a03:200::13) with
+ by PH8PR12MB7208.namprd12.prod.outlook.com (2603:10b6:510:224::7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Tue, 22 Sep
- 2026 16:55:26 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Tue, 22 Sep
+ 2026 16:55:31 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0428.015; Tue, 22 Sep 2026
- 16:55:26 +0000
+ 16:55:30 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -64,16 +64,16 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 08/16] sched_ext: Move reject DSQ draining into core
-Date: Tue, 22 Sep 2026 18:51:47 +0200
-Message-ID: <20260922165445.943315-9-arighi@nvidia.com>
+Subject: [PATCH 09/16] sched_ext: Generalize the reject DSQ reenqueue path
+Date: Tue, 22 Sep 2026 18:51:48 +0200
+Message-ID: <20260922165445.943315-10-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260922165445.943315-1-arighi@nvidia.com>
 References: <20260922165445.943315-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PR1P264CA0068.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:2cc::6) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: PR1P264CA0110.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:2cf::16) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -82,208 +82,336 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|BY5PR12MB4100:EE_
-X-MS-Office365-Filtering-Correlation-Id: dc2a1a31-2e04-4e27-9030-08df18ca4c8a
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|PH8PR12MB7208:EE_
+X-MS-Office365-Filtering-Correlation-Id: 00321188-3e66-42cb-632a-08df18ca4f61
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|7416014|10067099003|11063799006|56012099006|22082099003|18002099003;
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|7416014|376014|56012099006|11063799006|10067099003|22082099003|18002099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	m9b98TjeNorh7kaDGqn9GBcZ7VFXFA3iR6weMFZBXcTxdg9mVTl7p5n3zPSLSecUpYgkiMNDBAKVLgiJRXc5jOvuqQh6H+HGr5CW/DhOF74mUfiRxxmFx9Agia9B2eTTJrbrGHHG4Bn9JQxMAkTfzf4cNhltNDvORHqIthNXltstumsIgDZeBWll/t4eX2c3gYzgbM0nMfFJjB0J/i9nbj17rhN2lmBNrN41DIXv2oQXe85+ZVfACt+Y2DDWfxuOvVJKpRGYjkzQQw6FwEsQDQwueXmsbnwOJc9d2lwQ6NRdkFRW1i0qTOTByy7mNWK7ZHEO/tvWwress4hX+z+ESVMdJ2Zkncn4zZxfVKpdpsS4DnJs8YKm7Y4vza0RaVlhF2jgtxtem0ptUYSH9VzzbPDVPe4AJw+PjQDqVm/wO4cDSf7BKA29Tm3QWnXGJLlOetyUA4MFcudjPeIF97nSSi2bwq4T0E1NXmPrrAn9u1E7ticBoXIuSzqKsuiT+8aFnzrTJ9BHoD6BcyPVqe6npQQjEgoERJannzF+jE6SJAm3bmk9Rz3QA8xpI9Mf0qEdRyExvi85VkeAzPHolmy/+U1tQXW5PAduVhP9Nn4OPADaShauC9PJaBDiaULlHs+xEiKIvoj2a1bKCjWL8W3Ql2BCNFDK7bCMeSUmv5SGSVo=
+	nkx1SFcwnfHKNDUxCUrt/3YJxB5TcJOPSu8YxRPQCx/X4+RTH/n2xQpC8iqi8wTHZGmBEjj3Dr0pbB19wb0UQtaw7zjnsgPHZ7jQ4VSNBV0vxsEGm2Kk2W9fVUAm5ZrfBvk80Wf1x+u1I71JK1SaqSHJMkUnn2e/aTMXwGmvdG5bH9GYrHVnwjo16HKeiyZmyED26Hl5XHzasKFnPVYGk1fde+VaLbWDHcHQEU4qgjHYr4loBs8QQvAs12clKHXHdqsPvcXUix1ziVwuEBO/rXeR6Jo2rvDCYgPnhmanhVh4x9CecdwxH0/ceEsMm/mzpSDVd5VedIWEJ7sLmYTrkxl3p9LXRijmd4jENYrs8Au2Rn02xBJZHRsgoy8731Qh55PcRprCGnoH9hMwFL2LwtxWAZGCHUgo/KQGpyS9SHCmhkxCjiDsZ1qxbCGwyejA5OFRy4jUk38qGOZj08OroyPM8dfHXjnACYa2NlYJwdge8NVcNleZtLtw4sL2pFlFYFheDuyyum/++27MSyqvp3Udg7rhiy9e2zLKB89+aHgxolA3D9N+CpEUO+bQxRbVewAFgCPQbSjv7Y8C5Jbm677PGhy5cPg26ZXGuzMTqNPrI5za3LJlhAVfTAbkj1ZEP8paQOW1wWVxEPW0t6AN+bouQZd4BSkho88/zKMVA7s=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(7416014)(10067099003)(11063799006)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(7416014)(376014)(56012099006)(11063799006)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?1C8Z6OmIe740xjr4zjUgyvwVVF8YvoGdaJB6SLRE+eLW7U/3xVxEiEfohA+r?=
- =?us-ascii?Q?eQwe1RmQ/ykASz1276fc4plVAJXgMk3ZY/sk5vU7KVXtnUS1reeRATAdJRyQ?=
- =?us-ascii?Q?O//tvgbjtxad5fE2+ZwazYLzwJD+AFYiDsD4cwN+x216VlDRz49JW9MGbcqt?=
- =?us-ascii?Q?cbeZ4u1nQQwPXE+Oj4S222u7lSZlgpS5JiHyG45/WO519v7NgoG2cwJRVzF5?=
- =?us-ascii?Q?EpurCDcuOY6GxK/TpdY7WLJ5kLIVaZsdiBaBo41biR+sf7C2Cc1nBBJzkwyY?=
- =?us-ascii?Q?WEOaCrSTVv3nppY7Rs7CKmQF8PSxUHQIf0ykC8X+B7UfUH0+LgXNQX7ci2S0?=
- =?us-ascii?Q?7SKf7Vsp6eeE4Xk3AS9+zGiLgj3St6QG1VuXGFgR+VbwteQDAPwnH4zSlKOp?=
- =?us-ascii?Q?DS8oRCTDaIuURQ7vP0zaVetZ5cYQE283ax2z9qSiQZvkkgg0CnUwAwY2mKIS?=
- =?us-ascii?Q?fWQMgdt70f6rYp+lvL+6MfsFvfY7BiyFrK/Fl3dhI+xo8NAqah2y0GtjTXoS?=
- =?us-ascii?Q?vqKGvavg7vnu3LeCKlSk/pFbsxYM7WYZIDcge7Y6/nF3bamjXx0Y6sJ5i4+6?=
- =?us-ascii?Q?/p4Rh9+z1fg1DloDp/b6v2zRcJLH9G2ScaD8ehJO16mSpin2kQpjdyAJa6tk?=
- =?us-ascii?Q?aKhMEA39OF4DINMbn2TSU+Iv7dqYc4YtuP5MdV2iTXQ/r+eYXaaUh0rM/4t+?=
- =?us-ascii?Q?M553wZOmbBVQgvIGs8prF6HJafanbupOPFVHcoK4kufmeR6BFTYQG0HpqEYQ?=
- =?us-ascii?Q?lCii9hpyiMF+YLvnNbET4QPB5gBMpuG3vzZntav8n6J0/ImzGBkZIW0RxN+Z?=
- =?us-ascii?Q?Vrwo92ImLPQpxy9ltr24C7Y9SB3ujiiksrzLzNOx+X9IMX635ZWcEmvRHA7t?=
- =?us-ascii?Q?WmL6XtW4GAyMideLPHrepmqzGgYcw3gindWBFEM1ZzEWeNnmOHabDA2iCgeU?=
- =?us-ascii?Q?lAtSuFB8UBEKXIURHK/oi07inquMA8q9rrWghjyAoPULShQCx3AO61TQurAs?=
- =?us-ascii?Q?njlMS9+mLhc4K75F+wORsU7NjoBjJ27/0YuvuckFxOlxuRn7NtQmOB4Plzki?=
- =?us-ascii?Q?NJ6hVCTmiQj1L+seLUmiGWzRrga7dJ6baATVncQDxYrvxFYUCumiGveSWQ1e?=
- =?us-ascii?Q?BDA7TBenbzJjDp5kiKiNsmDSLBW7ANTwjtjp/Kdrer2Jv5udaSM1Zr0monAE?=
- =?us-ascii?Q?8H1J35M+qPxq4CqRZL1G5hSJSTyyw/42F1qs13sb4j8YjLx5sd3Pdvd8mFax?=
- =?us-ascii?Q?kfR5hlPvp8MaFeMgkPnPAy6dev3QoE0FVd7uvtjYvCl6Hpet9y0vJ673H4Tk?=
- =?us-ascii?Q?cyTudyUwFn+pKrz15ZciD3RLusyTvUth99x2aik3334PCqRtr15B+3cOIgJY?=
- =?us-ascii?Q?cjV6DJsIdGBVQztAHo7AIdlRBne+Rqfeym1tNk6tiiWzBSQrzL0kLVbcB284?=
- =?us-ascii?Q?CLVryvLwB9XIxlKmcy5225pMxiMp9bVr9r5IwvN2ZnZyNk6vwLLZ/zCNkbRI?=
- =?us-ascii?Q?gRAhu49+zH2niRSHRFkrCfX0FxYXlnBe5qhRl6U1DIwsGQ5nsiBz9kKnw/yH?=
- =?us-ascii?Q?s0lvDv9OyXdGbJc0tm9Ff1mQiVPESJsdIqcIuptf3CUANObj1IMTrGGXK3VQ?=
- =?us-ascii?Q?bL8OXcI2C4akj8vBX3uMxFIPM/BD3/2pdSjUZKzYxgJW2i/JzmEJPriFvL5/?=
- =?us-ascii?Q?0BfGgBBjzQ/WXpGTrlnmKPd3VLE41RJfAWFRU5nyadKfUdLsR79QvNdk1tUN?=
- =?us-ascii?Q?DLa3y9mrzA=3D=3D?=
+	=?us-ascii?Q?n9ZKHMKxJns61WKb8XDSu28zafLVpAqFU6ahFbyyAEZlTCzQE08xgM7q99EB?=
+ =?us-ascii?Q?YJqTU58KVMt162TnhvnQA7rKyD+cjw/qWyfJY9qJq0wr9kRHC6S8yTdXbpuO?=
+ =?us-ascii?Q?8baEg1LZJW8YgtYxenVFddhgxxg5BxFihDfuGwDGO9DVY3cR5Yj3I1gP30yP?=
+ =?us-ascii?Q?OxB1HzyWO0T+Wmll8BZy4kBOtHosbbjTLOi8S3KuJdQiMjhnL1UPQOPQyeAx?=
+ =?us-ascii?Q?7gRkCPTq1ilT70lkkzC5JGTW46Q4/h/+SsigUTZsOAwE+LLEjjFyMT7xhG0p?=
+ =?us-ascii?Q?yi2PfbPxnMgonOunRY++263k0gHywEzma1tPxuq59u0aVK8UKdwmG8p/tsey?=
+ =?us-ascii?Q?PG5gy+GrYWzfJ2Ga7odN5wE0v1ndg4D5U5k8MQaGEa6UoRAMEKK7y3dUbrqR?=
+ =?us-ascii?Q?pGSiJEq8vRfv3EZnWdiBfmNEYvVoX1FLdk75EnBLe4USJKDgWnxVhzFW7Ebz?=
+ =?us-ascii?Q?AhrZeqQmcrQgyavJDeiH5GtkIzc9mzm/hNC9IIvyLzSePfohjlZN7zKVih58?=
+ =?us-ascii?Q?gn+MFwiRvb20AD46brZxYlArWl71qtsH5aTEWq50lFD7F5e4JpynK8hzN3i5?=
+ =?us-ascii?Q?9oZT2m1oonNC//cmp5bYfSDVqgWKNIKk0ktIMFRmRN6GG+qqulXGVKioOHuF?=
+ =?us-ascii?Q?MnVcdYgHs3Kf7McYstiHDVKoxKgWPOVasuYJJaKR3cXm/ElrJRnDiHUXGBM7?=
+ =?us-ascii?Q?nEWSln7TPuEDrbtwv6TDb8RLVaKIke0RgTh/ltpAiqI49+LQmPT7OQ3E0qMV?=
+ =?us-ascii?Q?yIZ+js2y9xWcKvmHZBM89i3Ib507gmZYt2ljYxJMUPTDD2yl9MnoI28e2hvc?=
+ =?us-ascii?Q?Wz9lnbOvazeK4l0mdkGPbLgyHuwQKv8BUkcQO6tt67ZJkPAQTVXuwqSkbSnY?=
+ =?us-ascii?Q?sPVJNwbDd43mGh+QBxNiAYunG6qJ6Y8faSzc5+whCwrtroXHPY36BxKlCyZT?=
+ =?us-ascii?Q?Z5BNZDocnim/fDrOoibUggi7T2yiam0VjN+nGgYDAXzwmxiOt4Q+3o479dVo?=
+ =?us-ascii?Q?E9RzkUhJnGV5pfWAf2rdbzeUd351Yst5tegr0C+zZsxD37SjhIKWS9ooQ2FF?=
+ =?us-ascii?Q?lgWAmXHvT3P57Z1xV7/LtoRtLu1L8TkDnqK6gzQH6P6zVNSRJMJsfPVtmABA?=
+ =?us-ascii?Q?24OOOV4zf0CoiIj5ZCqFxw06lL1oLdEd7gLalRJvoHDPs5wk/eqiQDpxjqUh?=
+ =?us-ascii?Q?aesn+e94y5sOpijwiqDPade1Q088M5xLaVKm2JIVgrbuEQs2Q1CJNi7vEqKU?=
+ =?us-ascii?Q?jmBTGTJCqtAkRliZDqrvX322Zg7kLV1Toj3OqlU51YSgvV15+OxF6vGpVnEw?=
+ =?us-ascii?Q?oFirOdxGbtNqz6fQq/GFTUTgBw3+9R6tSPcC+zjkOFnkx9Gb37O2qlC85oVv?=
+ =?us-ascii?Q?wzg5+K0CD5wRf+BeXGEKSa2inTzpaeTNyb5+KdvlkexFgBtg2fiB7t6vSaNx?=
+ =?us-ascii?Q?iRxXf0wtIkwY3WjpkM5clxw1vG422DCplsFPnR7Coib+voShGGBqajgvjnK6?=
+ =?us-ascii?Q?4HfLLjHDP9WgD2XbWhMzh+x10Sme/U7UlWVc+EdX7bJIEBEaaZ1JqAPkq90+?=
+ =?us-ascii?Q?voifKFqFPgspN/Bre8DExlVyTAPXPJ7Qz8x2f/KLt5YSsBJYtypt66n8vtLn?=
+ =?us-ascii?Q?NCnpnf4yuYzT/ZqjCP/sIpH6f06z3ovl1AJQ9oq+PwDKSu+LjVLUxPLAKUUb?=
+ =?us-ascii?Q?CKDj+X7oRNHNjk6FW98Z+hnU83JWy1I/rEThTBFX3kfSUnb0F7huG01rVhWF?=
+ =?us-ascii?Q?KbbKLFb0Ww=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc2a1a31-2e04-4e27-9030-08df18ca4c8a
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00321188-3e66-42cb-632a-08df18ca4f61
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 16:55:25.9250
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 16:55:30.5279
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cZ9euTAZFfygW4QAXUt6eevIP0L5RXLegZUJ7HoyZU8/IlmaMPmaMiGfjr+FspTdVoad7XTMWTanGdGbkRFA+Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4100
+X-MS-Exchange-CrossTenant-UserPrincipalName: 25w/IFI9p8lcOLggPdBxvPhsLO6/DvFS/lnljOzlX4jl5IQY2k+bQalBodG3qUff1V+U+PCxzqxi3N1WEjZlCA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7208
 
-The reject DSQ drain will be generalized for placement failures outside
-sub-scheduler capability rejection. Move the drain into the core
-sched_ext implementation first so the subsequent behavioral changes can
-be reviewed separately. No functional change.
+The reject DSQ is currently specific to sub-scheduler cap failures. Its
+storage and initialization depend on CONFIG_EXT_SUB_SCHED, and the drain
+path assumes every rejected task was rejected for SCX_TASK_REENQ_CAP.
+
+Other transient placement failures need the same ability to park a task
+on its source rq and return it to the owning BPF scheduler. Make the
+reject DSQ unconditional and carry the reenqueue reason directly in
+p->scx.flags from the rejection site.
+
+A reenqueue reason remains valid while ops.enqueue() runs so that BPF
+can inspect it. Clear it immediately after the callback returns and
+before resolving a direct dispatch. Paths which bypass ops.enqueue()
+clear the reason before the kernel-selected placement. A rejection from
+the new placement can therefore install its reason into a clear field.
+Route all paths through a common cleanup point to enforce this ordering.
+
+This is a preparatory change to support proxy execution with sched_ext.
 
 Signed-off-by: Andrea Righi <arighi@nvidia.com>
 ---
- kernel/sched/ext/ext.c | 49 ++++++++++++++++++++++++++++++++++++++++++
- kernel/sched/ext/sub.c | 45 --------------------------------------
- kernel/sched/ext/sub.h |  2 --
- 3 files changed, 49 insertions(+), 47 deletions(-)
+ kernel/sched/ext/ext.c | 91 +++++++++++++++++++++++-------------------
+ kernel/sched/ext/sub.c |  2 +
+ kernel/sched/sched.h   |  2 +-
+ 3 files changed, 53 insertions(+), 42 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 3b6caaf70fc77..70832475cbf13 100644
+index 70832475cbf13..f16450dac6406 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -4766,6 +4766,55 @@ static void process_deferred_reenq_users(struct rq *rq)
+@@ -1669,12 +1669,10 @@ static void scx_dispatch_enqueue(struct scx_sched *sch, struct rq *rq,
+ 				 struct scx_dispatch_q *dsq, struct task_struct *p,
+ 				 u64 slice, u64 vtime, u64 enq_flags)
+ {
+-	bool is_rq_owned = false;
++	bool is_rq_owned = dsq_is_rq_owned(dsq);
+ 
+-	if (dsq->id == SCX_DSQ_LOCAL) {
++	if (dsq->id == SCX_DSQ_LOCAL)
+ 		dsq = scx_resolve_local_dsq(sch, rq, p, &enq_flags);
+-		is_rq_owned = true;
+-	}
+ 
+ 	WARN_ON_ONCE(p->scx.dsq || !list_empty(&p->scx.dsq_list.node));
+ 	WARN_ON_ONCE((p->scx.dsq_flags & SCX_TASK_DSQ_ON_PRIQ) ||
+@@ -2054,6 +2052,12 @@ bool scx_rq_online(struct rq *rq)
+ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 			 int sticky_cpu)
+ {
++	enum {
++		ENQ_ACTION_NONE,
++		ENQ_ACTION_DIRECT,
++		ENQ_ACTION_LOCAL_NOREFILL,
++		ENQ_ACTION_ENQUEUE,
++	} action = ENQ_ACTION_NONE;
+ 	struct scx_sched *sch = scx_task_sched(p);
+ 	struct task_struct **ddsp_taskp;
+ 	struct scx_dispatch_q *dsq;
+@@ -2087,7 +2091,7 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 			__scx_exit(sch, SCX_EXIT_ERROR_REENQ, 0, cpu_of(rq),
+ 				   "%s[%d] reenqueued %u times without running",
+ 				   p->comm, p->pid, p->scx.reenq_cnt);
+-			return;
++			goto out;
+ 		}
+ 	}
+ 
+@@ -2152,14 +2156,14 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	 * dequeue may be waiting. The store_release matches their load_acquire.
+ 	 */
+ 	atomic_long_set_release(&p->scx.ops_state, SCX_OPSS_QUEUED | qseq);
+-	return;
++	goto out;
+ 
+ direct:
+-	direct_dispatch(sch, p, enq_flags);
+-	return;
++	action = ENQ_ACTION_DIRECT;
++	goto out;
+ local_norefill:
+-	scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, 0, 0, enq_flags);
+-	return;
++	action = ENQ_ACTION_LOCAL_NOREFILL;
++	goto out;
+ local:
+ 	dsq = &rq->scx.local_dsq;
+ 	goto enqueue;
+@@ -2171,9 +2175,27 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	goto enqueue;
+ 
+ enqueue:
+-	refill_task_slice_dfl(sch, p);
+-	clear_direct_dispatch(p);
+-	scx_dispatch_enqueue(sch, rq, dsq, p, 0, 0, enq_flags);
++	action = ENQ_ACTION_ENQUEUE;
++out:
++	/* The reason is input to ops.enqueue(), not to the resulting placement. */
++	p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
++
++	switch (action) {
++	case ENQ_ACTION_DIRECT:
++		direct_dispatch(sch, p, enq_flags);
++		break;
++	case ENQ_ACTION_LOCAL_NOREFILL:
++		scx_dispatch_enqueue(sch, rq, &rq->scx.local_dsq, p, 0, 0,
++				     enq_flags);
++		break;
++	case ENQ_ACTION_ENQUEUE:
++		refill_task_slice_dfl(sch, p);
++		clear_direct_dispatch(p);
++		scx_dispatch_enqueue(sch, rq, dsq, p, 0, 0, enq_flags);
++		break;
++	case ENQ_ACTION_NONE:
++		break;
++	}
+ }
+ 
+ static bool task_runnable(const struct task_struct *p)
+@@ -2393,6 +2415,7 @@ static bool dequeue_task_scx(struct rq *rq, struct task_struct *p, int core_deq_
+ 	sub_nr_running(rq, 1);
+ 
+ 	scx_dispatch_dequeue(rq, p);
++	p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
+ 
+ 	/* see scx_task_slice_ended() for the save/restore exception */
+ 	if (!((deq_flags & DEQUEUE_SAVE) && task_current(rq, p)))
+@@ -3106,6 +3129,7 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
+ 		 */
+ 		ops_dequeue(rq, p, SCX_DEQ_CORE_SCHED_EXEC);
+ 		scx_dispatch_dequeue(rq, p);
++		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
+ 	}
+ 
+ 	p->se.exec_start = rq_clock_task(rq);
+@@ -3280,7 +3304,6 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 			if (p->scx.flags & SCX_TASK_IMMED) {
+ 				p->scx.flags |= SCX_TASK_REENQ_PREEMPTED;
+ 				scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+-				p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
+ 			} else {
+ 				u64 enq_flags = 0;
+ 
+@@ -4573,8 +4596,7 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
+ 
+ 		scx_dispatch_dequeue(rq, p);
+ 
+-		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
+-			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
++		WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
+ 		p->scx.flags |= reason;
+ 
+ 		list_add_tail(&p->scx.dsq_list.node, &tasks);
+@@ -4585,7 +4607,6 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
+ 
+ 		scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+ 
+-		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
+ 		nr_enqueued++;
+ 	}
+ 
+@@ -4697,14 +4718,11 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
+ 		dispatch_dequeue_locked(p, dsq);
+ 		raw_spin_unlock(&dsq->lock);
+ 
+-		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
+-			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
++		WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
+ 		p->scx.flags |= reason;
+ 
+ 		scx_do_enqueue_task(task_rq, p, SCX_ENQ_REENQ, -1);
+ 
+-		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
+-
+ 		if (!(++nr_enqueued % SCX_TASK_ITER_BATCH)) {
+ 			scx_rq_lock_drop(locked_rq);
+ 			raw_spin_rq_unlock(locked_rq);
+@@ -4766,14 +4784,14 @@ static void process_deferred_reenq_users(struct rq *rq)
  	}
  }
  
-+#ifdef CONFIG_EXT_SUB_SCHED
-+/*
-+ * Drain @rq->scx.reject_dsq, reenqueueing each task so the BPF re-decides
-+ * from p->scx.reenq_reason_*.
-+ *
-+ * A task can be re-rejected repeatedly. The reenqueue is bounded per task in
-+ * scx_do_enqueue_task(), which ejects the owning sub past SCX_REENQ_MAX_REPEAT.
-+ * Rejection can't happen for root.
-+ */
-+static void scx_reenq_reject(struct rq *rq)
-+{
-+	LIST_HEAD(tasks);
-+	struct task_struct *p, *n;
-+
-+	lockdep_assert_rq_held(rq);
-+
-+	if (!scx_has_subs() || list_empty(&rq->scx.reject_dsq.list))
-+		return;
-+
-+	/*
-+	 * Move to a private list so a task re-rejected by the
-+	 * scx_do_enqueue_task() below isn't revisited this round.
-+	 */
-+	list_for_each_entry_safe(p, n, &rq->scx.reject_dsq.list, scx.dsq_list.node) {
-+		/* migration_pending tasks should have bypassed to local DSQ */
-+		if (WARN_ON_ONCE(p->migration_pending))
-+			continue;
-+
-+		scx_dispatch_dequeue(rq, p);
-+
-+		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
-+			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
-+		p->scx.flags |= SCX_TASK_REENQ_CAP;
-+
-+		list_add_tail(&p->scx.dsq_list.node, &tasks);
-+	}
-+
-+	list_for_each_entry_safe(p, n, &tasks, scx.dsq_list.node) {
-+		list_del_init(&p->scx.dsq_list.node);
-+
-+		scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
-+
-+		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
-+	}
-+}
-+#else
-+static void scx_reenq_reject(struct rq *rq) {}
-+#endif
-+
- static void run_deferred(struct rq *rq)
- {
- 	process_ddsp_deferred_locals(rq);
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 1bd1b461ff30c..893d7cdd88b4a 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -775,51 +775,6 @@ bool scx_task_reenq_on_cap_revoke(struct rq *rq, struct task_struct *p)
- 	return true;
- }
- 
--/*
+-#ifdef CONFIG_EXT_SUB_SCHED
+ /*
 - * Drain @rq->scx.reject_dsq, reenqueueing each task so the BPF re-decides
 - * from p->scx.reenq_reason_*.
-- *
++ * Drain @rq->scx.reject_dsq and reenqueue each task so that its owning BPF
++ * scheduler chooses placement again.
+  *
 - * A task can be re-rejected repeatedly. The reenqueue is bounded per task in
 - * scx_do_enqueue_task(), which ejects the owning sub past SCX_REENQ_MAX_REPEAT.
 - * Rejection can't happen for root.
-- */
--void scx_reenq_reject(struct rq *rq)
--{
--	LIST_HEAD(tasks);
--	struct task_struct *p, *n;
--
--	lockdep_assert_rq_held(rq);
--
++ * A task can be re-rejected repeatedly. Reenqueues are bounded per task by
++ * SCX_REENQ_MAX_REPEAT in scx_do_enqueue_task(), which ejects the owning
++ * scheduler. The private list below prevents a task from being revisited in
++ * the same round.
+  */
+ static void scx_reenq_reject(struct rq *rq)
+ {
+@@ -4782,24 +4800,20 @@ static void scx_reenq_reject(struct rq *rq)
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
 -	if (!scx_has_subs() || list_empty(&rq->scx.reject_dsq.list))
--		return;
--
--	/*
++	if (list_empty(&rq->scx.reject_dsq.list))
+ 		return;
+ 
+ 	/*
 -	 * Move to a private list so a task re-rejected by the
--	 * scx_do_enqueue_task() below isn't revisited this round.
--	 */
--	list_for_each_entry_safe(p, n, &rq->scx.reject_dsq.list, scx.dsq_list.node) {
--		/* migration_pending tasks should have bypassed to local DSQ */
++	 * Move tasks to a private list so a task re-rejected by
+ 	 * scx_do_enqueue_task() below isn't revisited this round.
+ 	 */
+ 	list_for_each_entry_safe(p, n, &rq->scx.reject_dsq.list, scx.dsq_list.node) {
+ 		/* migration_pending tasks should have bypassed to local DSQ */
 -		if (WARN_ON_ONCE(p->migration_pending))
 -			continue;
--
--		scx_dispatch_dequeue(rq, p);
--
++		WARN_ON_ONCE(p->migration_pending);
++		WARN_ON_ONCE(!(p->scx.flags & SCX_TASK_REENQ_REASON_MASK));
+ 
+ 		scx_dispatch_dequeue(rq, p);
+ 
 -		if (WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK))
 -			p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
 -		p->scx.flags |= SCX_TASK_REENQ_CAP;
 -
--		list_add_tail(&p->scx.dsq_list.node, &tasks);
--	}
--
--	list_for_each_entry_safe(p, n, &tasks, scx.dsq_list.node) {
--		list_del_init(&p->scx.dsq_list.node);
--
--		scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+ 		list_add_tail(&p->scx.dsq_list.node, &tasks);
+ 	}
+ 
+@@ -4807,13 +4821,8 @@ static void scx_reenq_reject(struct rq *rq)
+ 		list_del_init(&p->scx.dsq_list.node);
+ 
+ 		scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
 -
 -		p->scx.flags &= ~SCX_TASK_REENQ_REASON_MASK;
--	}
--}
--
- /* record a caps change, see struct scx_caps_updated */
- static void caps_updated_record(struct scx_pshard *ps, const struct scx_cmask *cids, u64 caps,
- 				struct list_head *to_deliver)
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index f7bcdfda8dd85..8f2425bdb9530 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -37,7 +37,6 @@ void scx_discard_stale_ecaps_syncs(void);
- struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *rq,
- 					     struct task_struct *p, u64 *enq_flags);
- bool scx_task_reenq_on_cap_revoke(struct rq *rq, struct task_struct *p);
--void scx_reenq_reject(struct rq *rq);
- void scx_rescue_charge(struct rq *rq, s64 delta_exec);
- void scx_rescue_end(struct rq *rq);
- bool scx_rescue_keep(struct rq *rq, struct task_struct *p);
-@@ -93,7 +92,6 @@ static inline void scx_discard_ecaps_to_sync(s32 cpu, struct scx_sched_pcpu *pcp
- static inline void scx_discard_stale_ecaps_syncs(void) {}
- static inline struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *rq, struct task_struct *p, u64 *enq_flags) { return &rq->scx.local_dsq; }
- static inline bool scx_task_reenq_on_cap_revoke(struct rq *rq, struct task_struct *p) { return false; }
--static inline void scx_reenq_reject(struct rq *rq) {}
- static inline void scx_rescue_charge(struct rq *rq, s64 delta_exec) {}
- static inline void scx_rescue_end(struct rq *rq) {}
- static inline bool scx_rescue_keep(struct rq *rq, struct task_struct *p) { return false; }
+ 	}
+ }
+-#else
+-static void scx_reenq_reject(struct rq *rq) {}
+-#endif
+ 
+ static void run_deferred(struct rq *rq)
+ {
+@@ -8909,8 +8918,8 @@ void __init init_sched_ext_class(void)
+ 
+ 		/* local_dsq's sch will be set during scx_root_enable() */
+ 		BUG_ON(scx_init_dsq(&rq->scx.local_dsq, SCX_DSQ_LOCAL, NULL));
+-#ifdef CONFIG_EXT_SUB_SCHED
+ 		BUG_ON(scx_init_dsq(&rq->scx.reject_dsq, SCX_DSQ_REJECT, NULL));
++#ifdef CONFIG_EXT_SUB_SCHED
+ 		scx_rescue_init(rq);
+ #endif
+ 
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 893d7cdd88b4a..cab6ffaea1ab5 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -753,6 +753,8 @@ struct scx_dispatch_q *scx_resolve_local_dsq(struct scx_sched *sch, struct rq *r
+ 
+ 	p->scx.reenq_reason_caps = missing;
+ 	p->scx.reenq_reason_cid = cid;
++	WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
++	p->scx.flags |= SCX_TASK_REENQ_CAP;
+ 
+ 	return &rq->scx.reject_dsq;
+ }
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index a096f23f4fbd0..f94522ef9b34c 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -807,8 +807,8 @@ struct scx_rq_rescue {
+ 
+ struct scx_rq {
+ 	struct scx_dispatch_q	local_dsq;
++	struct scx_dispatch_q	reject_dsq;		/* staging for rejected tasks */
+ #ifdef CONFIG_EXT_SUB_SCHED
+-	struct scx_dispatch_q	reject_dsq;		/* staging for cap-rejected tasks */
+ 	struct scx_rq_rescue	rescue;
+ #endif
+ 	struct list_head	runnable_list;		/* runnable tasks on this rq */
 -- 
 2.55.0
 
