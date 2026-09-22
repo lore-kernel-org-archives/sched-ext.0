@@ -1,46 +1,47 @@
 Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011026.outbound.protection.outlook.com [40.93.194.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF06B569F1D
-	for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 16:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB3C56C63E
+	for <sched-ext@lists.linux.dev>; Tue, 22 Sep 2026 16:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.26
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790096104; cv=fail; b=p6OaQThne4lNzJXoKl9iwPirxmSNR1rEFqaKJZhg/pIvUYyKxUiEM21J2xZgnxCOCcuoEGgHZaIBO9zcGddJQ60WRQSJ7TIx1KZo60JD/2sOYdAAu13kmqWJdm8MECq1QsrOb6wcKIEmMGAH5i0xuRsK9ChOivn4FMivI3ueSTY=
+	t=1790096106; cv=fail; b=Sx51DuLkn3z2OTfsTJph0pu27CvkSLaWkT1itGHHyth2Rlfo/N0z0+h78mi3tkBjhrr6bsVCcj8tbfrOLrsXrd+tVRIL/yIfqyFmowGbpI0BC9+l+aiT8SJeuUEuv3Gan22Qxhen1KviJLwaeuMehruxMEiF8SzcfCSdJ+YVyzk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790096104; c=relaxed/simple;
-	bh=xzsp/rMNhN2QHPbR7xCEU65exmtw/uAhyOczrvnafyo=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=kk2iOFBYOjAxMRxMq2k61r8MxfSIpBX13s1a+ZSH2mIwMgV1FImT9fnC0kfmtblj5L+h3/65Q2y7jo7v+ezS3TzHsNTnUD81B/DlSQ6I8oSOIdVhp4rVANDtenhhZEclbYVKJ6ImihheGtSs1jVpYMt1xm+b53GY/gqLC2L2ZgE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CpgHf7XH; arc=fail smtp.client-ip=40.93.194.26
+	s=arc-20240116; t=1790096106; c=relaxed/simple;
+	bh=Yp6LHnlrryCkdvo8JXnws+6aakEMxrkV7LdcvWujHOY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=JlOizVJxwMLvFNVwzCWjpjlizj6I1LqaBq9M7ytX/8aEnIooNpNflEsC/uHbH32MkAJIZ0LKQqaJDwb+34s+AKA583gXv805vEfzkPopjk/kyQTUWEJ81hypZrnUL7qaFxzHXNYu7dfrUFJYY1YVzpmlum6S3HqZDYZyTV+XLhA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=JUTM3rZ0; arc=fail smtp.client-ip=40.93.194.26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CpgHf7XH"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JUTM3rZ0"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PdMji/wMdQMkiKdSZG6UQJDb+S5KYU8lFzcJn/rXo+q46E+1S3QAK9JjsRyDQ83zylZ5G80EPt0Yij5B78jADSq5tk2xAGZiVf36zM+VXbvJIhXx0cCIXY7LXV+wv+SvKNR2rEBcGMD/IGdxhZEiqJf/pZfZgn8NKGXRE+gl2On3GyHjhrfgrLJPweIHHFsiBw72B/CbovmZuKUlKS8/dxdMQirtcanJjTu9J1sg8qT78fUnNhoA9Rmkpy2ad230R5QpEEOw+3WQTnj+ZvxwtlgiQaDr49ihAII1a+YL/SFhC9lpnYNZ2qL8H1Ru7PVfErNmzD02ePBFUagBuRKDnA==
+ b=UMyCAyp+bIevy1AViFqoajzxvaY0QiMUzIMm5PQC8AipbtvPC1xsAM2kzm/Ub61OMvae8migD3TKktwG/Myq1ZvyCr34eZ8L2oy1tawl+oEKJ/vc+UBBbXFriACmsALz61GQQjYxYqGKairkJ+fkr5qKeWFw/LmrcKQhdm4uBgxR40CETt7XxnIHZNt9BSeaJl7M05qUxhBGo0/7i5zP/U2zr++0rWDHdLRXcajGlc0Rd7u87j7zHgw8uUK6WUC1KZXX/pRqVTdyn/8mrvnrDrYkAcv7Pb3Y/u29g6avNuhh8CRw44pO1arBg7BxWCcnCdAr3DRbMtcQH4M/WiOoFQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U8xxjtwH8nzAL0cQHNS9qu33eUxJqGyoFRS/cbFUfQM=;
- b=l+GVczJ+v3BmvOcqaQ0fey/jmx0mJUrd5x9fZdboTlSW27PzP/yYGNWDDU6no1DV+9tK21rsTVOnCwH69SOjne7uDP4rYR3UosGM5FSDg4fwoyokYXJ/R1hOxDhnnZQToALsBQxzyQxci32Umz5l4CrfuuRG1HKv7o8oeH/98JM6zk30/UIjFCl8w5RO6KLtV8gcUdLWR5Gi6UhlxSU+h2QOYfOv+ncf/Xi/ixn7xv6yvN9QGDsHJ2aHmH9neH7cT3JOHeVuxZTesvMTKfmB3f4rKy0Dm7EFcdbSJnMwj2SZAVYbShKZysBluREHf1nSXER7dQCxPLaUPYLzHEAiYQ==
+ bh=9dOKrBfqq7SO9SYJoMNAM10KZg28qV7ZOTG+MsZtmKk=;
+ b=HLOUkUGv0I1AdEyDKwJwHxowcF9c5qkn1ViZnncGZdcSSNREeoEuaY53qNoUntLC8rKn+iBTmbIG8q3IwjydFyfl/lWvBNwI/ZVq3hph0zA+MJZs7AZwyamMRvO0WmfQYLJxQq0QpsbJqseJ4aviBi4GXTfq5pX2mlwKGk+ENPBdm80pCMFA70gEI5MVPyn2kGPxGiI7SBNHD/k7fzr7l9bzantLKSAD89FjN4YwXo53e39o+fUXoHRA7smazcCJIiSnC2Ryf7t9S/eRn9+gJQMwjIMB7ltJ4Zd3G9rx5b7zw+UmkeHneve8C5Ct1Tw22trSP8x/Kt1dI/soLdFEAA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U8xxjtwH8nzAL0cQHNS9qu33eUxJqGyoFRS/cbFUfQM=;
- b=CpgHf7XHE5ZRZog6uCrDji0N5tvRgqaSqNVPU2X9S2Ng5FIcUbk500a+FYVXAEp8G1QgFy59b4vJo+PWaRB7I/EaKssHpWXe/e5W60ZOu6ovKE8iU3ojE1imM2Z5QtqdVG9tqbwSrQg3B2bhrloye1NXn/Lwn/O2GRjOL9s9cVqxF0avYj+VETbt0vYXt5vkgPOBqk0d1uuwckJkpGMebq4f/NY81AYWKsKiSAIA427rW1LLAfZmiE58erpziLFE5bROuVh78AL4vAUiMcifUqXAmOYlJdGzb49CPtgw0DeWXHEidfV7jj5qGlR62tb+7wQKmRuP0f4bqbpjq7hVdA==
+ bh=9dOKrBfqq7SO9SYJoMNAM10KZg28qV7ZOTG+MsZtmKk=;
+ b=JUTM3rZ0IFyzKFv1iq1qqR3JVpOzza3QbnQ/uMU4R8nLpfz1YRJwyrc6bAyDba/2BaAMq3c6cWgS7xumvNM3mD8PKlU9RvlgEcpdyL+VYcvYcN3ASnlpG0VeSkENLlbIGEEshUjC0zxm/2aQMdNypGkHg8+eUBJ3fYn1mk4VJQxurhDDxh218xv80K7evnEW/VvJuRwdPqv375FhT3x04g3EQWJ/kE3JEhgv3E0ap5F//PrDIuQGOLZgzY7NCR7Nfywzb1LjY4DD55m14ekVA08AtaWxQMHuihtveGVDrZTKYH9c8/8ftJMsb+lsj+BzVHWWdzlrNgdFhFust6GBhA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
  by BY5PR12MB4100.namprd12.prod.outlook.com (2603:10b6:a03:200::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Tue, 22 Sep
- 2026 16:54:52 +0000
+ 2026 16:54:57 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%7]) with mapi id 15.21.0428.015; Tue, 22 Sep 2026
- 16:54:52 +0000
+ 16:54:56 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -63,14 +64,16 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Shuah Khan <shuah@kernel.org>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCHSET v14 sched_ext/for-7.4] sched: Make proxy execution compatible with sched_ext
-Date: Tue, 22 Sep 2026 18:51:39 +0200
-Message-ID: <20260922165445.943315-1-arighi@nvidia.com>
+Subject: [PATCH 01/16] sched/core: Drop mutex locks before proxy rescheduling
+Date: Tue, 22 Sep 2026 18:51:40 +0200
+Message-ID: <20260922165445.943315-2-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260922165445.943315-1-arighi@nvidia.com>
+References: <20260922165445.943315-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PA7P264CA0375.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:399::22) To DM6PR12MB4827.namprd12.prod.outlook.com
+X-ClientProxiedBy: PR1P264CA0040.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:2cb::19) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -80,551 +83,126 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|BY5PR12MB4100:EE_
-X-MS-Office365-Filtering-Correlation-Id: 52ea2e9c-dc28-4935-c14c-08df18ca389f
+X-MS-Office365-Filtering-Correlation-Id: 29ee08bf-7d7c-47ef-533f-08df18ca3ade
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|7416014|10067099003|11063799006|5023799004|6133799003|3023799007|56012099006|18002099003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|7416014|10067099003|11063799006|5023799004|6133799003|56012099006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	rngxpM9yVEKlFgyKkAYbFs5yaIZ3HYQSRLEfgOkABg5ysp5sfj4hqLEwA24gZf3bUG8qaQQzJ1t0kYSXnKbdP8JiE2E/F9fYtfiZaUnoFyfBM4zcOPzdfkhB5PDjVdrpO1zFZyLy2PEdfpuwskyNkRZI03WI1bgQzT0e6EX6ODD9v/1lKLRveDeEU2tJ34BTBiID/ac3C8zpxTxhfW/9TqAGLorasTidRrfLX5mcPcSVZft+9KRZFFFgfb+gMtQUir+3RppQYmanh54w5xwPIKV+kSGABmuclImzAz5Oiniyy9Ekpe+qoo54gKJE+FvgjJ5uA7gIbGTLSkcrujDaN/f/EIhn6ha3fBlWTItdNMKrtMq+YpSyv406OkMrKWBFfGlNwCCynsd3YM7LAGumvIDTIFYg2yVgB+3BbY3uhxEZ0AzZBAtRCfJx5L/ICVR4MMaMeKH/ln/mFlF9lh0C5w0VwDMYXILwUoeRRzCWBjp/Mtmyr2XqTFUEyB5ae3+PWlJdguWg6LvkhoXW33RHJw8e/zDr8B0wFm9S2XfCsfpGgPBp2xl2SeYz/EYbxQ3/pETFO2DlFTmF2OOW3SNPLsY3TadsTrigVv6oX7r2xxfve5GM26n1LXMhE/RmPzltKgwzoxKJ0vpe72KMg1sk5OYJJrxcfWz5JqCra6YGsyQ=
+	Od+GvpndHNiE1VlP3CjIAM0gFiSMmI6rCqbY5lIVSb4n+pJySfSNfP5aGGJ4vmshDbZprOfoloY2sMhWGE16G8FP+A7Y79qCzXtdFc3xSg0ohlRK18p1O1xRmifuEtYsCZKPzq+P/hSyBRSMGpdJwwLtHz1tzFt+p318uyd54hRAIjvPd/ORJJMv+don2qdl33K6hLMuR+ic4y87lKGdt4MYbC+qRN2U4nnWk4JI+CGODsDvKrDFjcoXMScNoLLF4UqnJElS3undGi9hFKIMIl32ftFEmbiE7/t5yZVam1IMeTmdlc6wlOKqhcpN5LvP/WEc56FtE4U1Z4Uce9yYV5k7IhpHoCtb4yTEKCUSSrGeaTxSIgQO77c9MOpmTU6gqd0siufUsbH+dJeQFvwxDTZQi55R72RnX7QmUzaNmYN0c8+gqF9GFZSgkGE7Rz4UXQpC5FZA4DSSw68e+HJU6LK5RIIYcw7E8wtnfV6lfQ64/FFGpMrYeuiVSj8S1GnjV1MqnSw9WZGLLWmXE0odx8fRsf0GteCizRunPUc9li8c4OLU9JOf2PkyeZTHNCG45rvasgcetgbNJWkfOzISSu6uY+eTmDdCv9OpQHxvfKZsRIMM7EXn9imK1xM4CdZs9QK2/TJ25wOTgtdVyod6WC+g+T+w4FPeoUfkbPfb5lI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(7416014)(10067099003)(11063799006)(5023799004)(6133799003)(3023799007)(56012099006)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(7416014)(10067099003)(11063799006)(5023799004)(6133799003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xFJWtCntydmM3eVWRbm3RHtfRRdLtHOabk99+OWAWztFrhdTlv++vJFfw0ZY?=
- =?us-ascii?Q?41fl5sAhxq2dmbVUwXM4L5iU4McDg+YZVhFJ7P5LtLNQOeJneBJccdn4mkvP?=
- =?us-ascii?Q?2ojusLI000y/M43G2S0910J1lWbvHZpLNUbrFVwXBghEEOgfvMOruj21DYuJ?=
- =?us-ascii?Q?xgApGlblDhn8wawj8DdCiB4XRxu1xnbYGJG+iqsCAXLCq8fJs6TvVfBqHDaM?=
- =?us-ascii?Q?TsSyAt3Ptzh5SVfdb9S+AwrBuCbkpH++dXe2xadovDCiMzTCCDywXY6Bs6vj?=
- =?us-ascii?Q?pXlYQAY58sNxI0xZZ2FkBU2eGfj3717LHoAfbZS3k0IPWQW0MJ2dHuhAvkvC?=
- =?us-ascii?Q?VwjnJrUuQ94rwjt4t7Jiz8YBCa09Lc8s8MNr3ygNWd1qWRXLK1OBt9l9Vfho?=
- =?us-ascii?Q?ujBHTZSM+jjLHgcQVybqzfQ+PBpof9U3UMwPWheYRtnAJ+/kpH9alyqOFfpM?=
- =?us-ascii?Q?kjJdj0XfRE55p2GBu6+0sl9ua9pfTiUVfzH1D1mBO+KGJNztQpwnkNBIvuwJ?=
- =?us-ascii?Q?aN4vc5dO73byvYW09mCoVyiAZZ+pNDb0RR1Jwx1AIN6dgLZ8Y1k6MogxAW+Y?=
- =?us-ascii?Q?IVLiO/xS64874sxNicehCOwi/hK7DmXb2/bSptwOCzCwgA4hiI8pn234Wd2h?=
- =?us-ascii?Q?vJgbHyXYalTQURk81mdsHolPQUP8tb4eOlnzUrUg8B6jBRupos3TU2gLlxUL?=
- =?us-ascii?Q?whdhgyRujxxi1S1Zuy1D31vMz4h67V4VF6X4OQUPc/MOwgMoqqIFk8tRA8cL?=
- =?us-ascii?Q?g/wUaFnWMhXTOHtD+6ijacnkuxQvTEH5y6UqWzIlbdDXUivAsVBESy09pI+T?=
- =?us-ascii?Q?1RoK1sJssxGIFsnfZ5Uj4+qiTiOiGW/sG6D2z+mzGVu1qRt6M23yJOOFhiJP?=
- =?us-ascii?Q?feU87TH7gf8kahaHhFddRuxIYHTknaPmZqjYQHpAR1xJg3STwZya13vwciG9?=
- =?us-ascii?Q?5F2kHce3GKFR6AZ/mNeX8SobY2JuCzN+5hyNNfAvFWl4aHbSZv2fv9SfxnxW?=
- =?us-ascii?Q?aYBu2ovKWb6feFu/xyKJ8+cqqLJs1bhMELTbZWhR4ljgu0+uJ8htlRxlSQYC?=
- =?us-ascii?Q?MG/2kE+1X/Me5DU29NGhStTenoVo00RsBN24uaGNRArMf4f1NYVQ4Cs19r1T?=
- =?us-ascii?Q?L+sFm0Qitpsiap+Uk3q55BXVzeJPbRYIYIuW4Cspz8KwfP5v0IlwcNcsNsXm?=
- =?us-ascii?Q?FJK63pkoV1qpW8+cFK3NjNxxc6tI1ojPCY5fOaD9fcSbhh9EOAcDLX2X8qE5?=
- =?us-ascii?Q?5p5Kq/p5pQ5LXBBKDExpvGgxOk9TW/QO7ZGajIT+yPp8cHSE7HeSCGPcwcKH?=
- =?us-ascii?Q?PS0bfE3qOg44H6OW8yhUU2imAuXWoXF4DMwcyBWbLgWprs2XKyqtyavhtPYe?=
- =?us-ascii?Q?rpttsthetfrVHsyFQkZFF9rFLfJxIHJPssJOR+6wFNd1YgGa0w8PwcR2l74o?=
- =?us-ascii?Q?whvkWOrCatzEieR9BxnPFBAqnHBlIim00zGPd7L2gdVkm71Nr14jOq6b1C2w?=
- =?us-ascii?Q?Zr4B1dGln1Rk26zZCPZLmoU0Z/hQgkqlLAppSNS8UrsjxtznvsVZks6nuxVI?=
- =?us-ascii?Q?Oi4IHrcZdUsWOj+APpcd7e3IGkfmXG8Z6bEYzM2/zmaW67vo9SoehdU19LAt?=
- =?us-ascii?Q?Fv9Op+CgrElGlktWXO3HEHwGdJ+bzWkLJFpPe4W1i6ApPDyeL8V/K1MFxts4?=
- =?us-ascii?Q?ygNZqFFVirzFbNYk2M3nhdnASWTFXi+5R2+HUQ/YLbbmhe2D?=
+	=?us-ascii?Q?aBdZZh3rP/rHYWJOElAPuvZHUOKPW7zMywpwbfZOS9Cl4LBWjm/BRoGHrKJE?=
+ =?us-ascii?Q?tRSrDG8uFkYPJhk6CWo1ISeHIN0x77vNkFLA6xgwA0vTOq86Q5qVrVF9BPRq?=
+ =?us-ascii?Q?QVirDozVyyPokEUSiN5U/aX8Smp3we01sef1XsFviTmDUi3d2N07VOOKXQ9n?=
+ =?us-ascii?Q?pBGF7fM2yRRRbCMP9ROryudbvSukNzlRieJR7gDoaeMz6ryRo+CtRngm40LQ?=
+ =?us-ascii?Q?GS0ssJy/y0XTmF39K2A0dH4tQqW3dgzhkzaL8PTLC4THvGp+tQlX55bUgImH?=
+ =?us-ascii?Q?I0J8T8pCUX9mtoyz2jxz41IJiOymyzIGsupG84ubrIGF8tFmPxTZ7FM87Rwy?=
+ =?us-ascii?Q?9GKWALqfjfNQ9mJfJv5PnAmTXN++ruGQIiPphYvjGbxWBAypsz6QsmLh2/Rj?=
+ =?us-ascii?Q?laGctZTGTSyvRecAt/X/NFGMJDsIsUJ7BBS1tifVZdGjGW8/GzUPArzJcdhN?=
+ =?us-ascii?Q?e2odfTaS5L6no9GXtJ73ePEUyDhEDGv35fHRtuGjzDiJb9cbNPz7sCHitttM?=
+ =?us-ascii?Q?RuQoF8yioqIT5tdMalM/46md+gTSthQFEU69tHlbCS0l50CfCzHShsRml4Nl?=
+ =?us-ascii?Q?LRFS5p/UtPsqnLgrOktDOwQ+5nRhOm9aa4DURvnA3IQ8B1pmy1oUu5b/ogZ4?=
+ =?us-ascii?Q?w/Ha2EKoO8xT8plcSeZLOaUdRhGZ+GY4lqtp9D9p7SAEO2Tb6AOWZdWFj208?=
+ =?us-ascii?Q?pqk54yxO0gV62aWwdGG4pLptU8bbSVkdpgKPLsTR1ra+ciiUKzPlJJvgLpwX?=
+ =?us-ascii?Q?joqW4FbImTptY+lt5Qdfz9MuYFlty6vzJ+ZkvUEKS3iL0sY9QPggcRKgmtf+?=
+ =?us-ascii?Q?+eBc/BTpu/eIaRScBTe8qyHSx2If3l9n4SHOFLq42yo91w8VhA0R4UEW7Zg3?=
+ =?us-ascii?Q?F//f1bRPa+zs/6uXT2h8WJMI0W5CX502KfgjsbQ9kLdbpbX3eic3278n99cK?=
+ =?us-ascii?Q?6QBSGlKPTJ6SkvdtUXghqQci0CktoScgBVhZ+nd6RGggSRu02iSKA30naKEv?=
+ =?us-ascii?Q?B68OyeRXdYSbjJr/4ztrzpYW4DAiNgOPlbjQB72mxOP3Rtmleu65wzgaMPdK?=
+ =?us-ascii?Q?Jqg8DHw3rzdVebn3DRhfEvP9TnBNDmIpr1rB/zl0TeGm0aYtOJvL8Q8t1aoG?=
+ =?us-ascii?Q?Sct+PrCF+NdVlkswJYu5ZFV79HVN4SFwa5j2F4XL+9iuCdxxarDkNny4Y46q?=
+ =?us-ascii?Q?BNz3g2+Jj4FxYO6AMXaidxmEkKIIYI2hiTlynNbazXCQdq45Ws2oPA4GTC2W?=
+ =?us-ascii?Q?6l1xNba4paQI3ExmhkV7HEGLwjWrmTjsZfBcomnb/kpH5hentUscm6T+4bGS?=
+ =?us-ascii?Q?xmvJAOWts1hYujWoXowvlUUHWmuLflYrs8Dch3OsMpWJR5RT5b3hYDsHCeOd?=
+ =?us-ascii?Q?Rbgay1tJRZXyDxDjFwa00gmVTR2A6l/jEXi0R0Z+TxNYHyjURuid8MPj27hY?=
+ =?us-ascii?Q?sJoBEe8xIJFFJnG7rbszp50jFW506YQIrjuHLD95cjA+jTFMNxt3OOM9I2z5?=
+ =?us-ascii?Q?YOC4ponnpeG0aMs8NE0mqZ8sSq7wNedmeOthCW7zR1gZ1P4ZSju/4Q8jQDmU?=
+ =?us-ascii?Q?GKybI6PB9eQWaeTC9rN9DPJ4DpjxsxxLzK8sSp9E2axWfGIwXW7B5QQvLOmP?=
+ =?us-ascii?Q?CRwfJUt1kgy64rJ10Qy/exkqTNr+hMCYw21dEw6hipc5KJRtU8HXkqLveNVr?=
+ =?us-ascii?Q?h/an3S7l3YJSZsEJk/X0JkppB2ZS+7b9fhfavt88yGCejZDf?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 52ea2e9c-dc28-4935-c14c-08df18ca389f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 29ee08bf-7d7c-47ef-533f-08df18ca3ade
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 16:54:52.5398
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 16:54:56.3720
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VrL4VqTKKsPqIPGuaTo+Y9ASjbcoq5v8/SeO/JZ9MwVBIxvPIGM6Cs9Gn2ToWSz2w9vlSEYbYkwig0yjnQCxog==
+X-MS-Exchange-CrossTenant-UserPrincipalName: S+BPjNPoAArf/q7BAVB8Oi5WQGbHQ73mqEqJFzGv0O9ZWdkRteob6t6T3ai0FfsfzeK4i8WdT6Ld4qmK44B4xQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4100
 
-This series enables proxy execution with sched_ext and is based on early work by
-John Stultz [1].
+find_proxy_task() can call proxy_resched_idle() from return
+expressions inside mutex wait_lock and blocked task lock guard scopes.
+Return expressions are evaluated before scoped guards are released, so
+proxy_resched_idle() invokes scheduling-class callbacks while both raw
+spinlocks are held.
 
-Background
-==========
+Route these cases through a common label outside the guard scopes. The
+common label is required because a direct return would evaluate
+proxy_resched_idle() before guard cleanup and run the class callbacks
+under the proxy-exec locks again.
 
-Proxy execution (proxy-exec) lets a waiting task ("donor") donate its scheduling
-context to a mutex owner, so the owner can run while the donor stays eligible on
-the runqueue.
+This is a preparatory change to support proxy execution with sched_ext.
 
-Currently, proxy-exec and sched_ext are mutually exclusive at build time: we
-can't enable CONFIG_SCHED_PROXY_EXEC=y and CONFIG_SCHED_CLASS_EXT=y in the same
-kernel.
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+---
+ kernel/sched/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-This restriction can be problematic for Linux distributions and for anyone who
-wants to ship one kernel and choose features at runtime.
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 145eea2d99a1c..3026d01fd7aef 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6961,7 +6961,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
+ 		if (!READ_ONCE(owner->on_rq) || owner->se.sched_delayed) {
+ 			/* XXX Don't handle blocked owners/delayed dequeue yet */
+ 			if (curr_in_chain)
+-				return proxy_resched_idle(rq);
++				goto resched_idle;
+ 			__clear_task_blocked_on(p, NULL);
+ 			goto deactivate;
+ 		}
+@@ -6973,7 +6973,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
+ 			 * and leave that CPU to sort things out.
+ 			 */
+ 			if (curr_in_chain)
+-				return proxy_resched_idle(rq);
++				goto resched_idle;
+ 			goto migrate_task;
+ 		}
+ 
+@@ -6986,7 +6986,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
+ 			 * case we should end up back in find_proxy_task(), this time
+ 			 * hopefully with all relevant tasks already enqueued.
+ 			 */
+-			return proxy_resched_idle(rq);
++			goto resched_idle;
+ 		}
+ 
+ 		/*
+@@ -7023,7 +7023,7 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
+ 			 * So schedule rq->idle so that ttwu_runnable() can get the rq
+ 			 * lock and mark owner as running.
+ 			 */
+-			return proxy_resched_idle(rq);
++			goto resched_idle;
+ 		}
+ 		/*
+ 		 * OK, now we're absolutely sure @owner is on this
+@@ -7035,6 +7035,8 @@ find_proxy_task(struct rq *rq, struct task_struct *donor, struct rq_flags *rf)
+ 	WARN_ON_ONCE(owner && !owner->on_rq);
+ 	return owner;
+ 
++resched_idle:
++	return proxy_resched_idle(rq);
+ deactivate:
+ 	proxy_deactivate(rq, p);
+ 	return NULL;
+-- 
+2.55.0
 
-Why are they mutually exclusive?
-================================
-
-sched_ext schedulers drive dispatch through their own interfaces. A proxy-exec
-handoff can run a task that the BPF scheduler never dispatched through that
-path. sched_ext callbacks then observe a "current" task that does not match what
-the BPF side considers running, so kfuncs and helper state can see an
-inconsistent view of the executing task.
-
-sched_ext also tracks runnable work through Dispatch Queues (DSQs) and BPF
-chosen dispatch rules, while the core scheduler still maintains classic per-CPU
-runqueues and pick paths. A proxy handoff can therefore switch the CPU to a task
-that the BPF scheduler never inserted or ordered through its DSQ interface.
-
-DSQ state, vtime, and "who is running" bookkeeping inside the BPF program can
-then disagree with what the core actually executes, so helpers and kfuncs that
-assume their dispatched task is current may observe stale or inconsistent state.
-
-Design: supporting proxy-exec with sched_ext
-============================================
-
-Provide proxy-exec in sched_ext as optional per-scheduler capability: a BPF
-scheduler can set the ops flag SCX_OPS_ENQ_BLOCKED to keep mutex-blocked donors
-runnable and receive them through ops.enqueue() with SCX_ENQ_BLOCKED set.
-
-This flag requires an ops.enqueue() callback and gives BPF control over whether,
-where, and in what order to dispatch each donor. The core then walks the
-mutex-owner chain and, when needed, migrates the donor's scheduling context to
-the owner's rq before executing the owner.
-
-Without the SCX_OPS_ENQ_BLOCKED flag, mutex waiters block normally and do not
-participate in proxy-exec while owned by that scheduler.
-
-Once BPF dispatches a donor, proxy execution may move its scheduling context to
-the mutex owner's rq. This move is distinct from BPF placement: wake_cpu
-continues to identify the donor's pre-proxy CPU, while task_cpu() identifies the
-proxy CPU. When the donor wakes, the normal wakeup path uses wake_cpu as
-prev_cpu when returning the task to the BPF scheduler, which can then choose its
-next placement normally.
-
-The donor-to-owner handoff is modeled like a "function call" from the
-scheduler's perspective. The donor remains the running scheduling entity
-selected by BPF: its scheduling context, runtime and slice are consumed while
-the core temporarily invokes the mutex owner's code to make the critical section
-progress. It is not a scheduler-visible switch to the owner.
-
-Accordingly, the donor remains the scheduling context presented to sched_ext,
-while the mutex owner is treated solely as the execution context selected
-internally by the core scheduler. Scheduling state is accounted against
-rq->donor where appropriate, while rq->curr identifies the execution context.
-The internal owner substitution does not generate synthetic sched_ext callbacks
-for a task that BPF did not dispatch.
-
-Scheduler-facing current-task kfuncs follow the same rule:
-scx_bpf_task_running(), scx_bpf_cpu_curr() and scx_bpf_cid_curr() report the
-donor selected by the scheduler rather than the mutex owner whose code happens
-to execute on its behalf.
-
-The sched_ext callback bookkeeping is adjusted accordingly. A blocked donor
-enters a tracked ops.running()/ops.stopping() session only after proxy
-resolution succeeds, and ops.stopping() is only called for tasks that entered
-such a session. This state is independent of physical rq->curr execution, which
-may refer to the mutex owner instead of the donor.
-
-Scheduler ownership changes need special handling because a donor may already be
-blocked when a root scheduler is enabled, when a task moves between root and
-sub-schedulers, or when a class transition moves it into or out of EXT. Start
-every scheduling-class or BPF-scheduler ownership change from clean task state:
-fully deactivate a retained donor before the transition and let the incoming
-scheduler apply its own admission policy the next time the task blocks. This
-conservative rule leaves retaining proxy state across compatible RT/DL PI
-transitions as a future improvement.
-
-scx_qmap has been modified with a -X option to enable queueing mutex-blocked
-tasks for proxy-exec. Blocked donors receive a fresh slice and are inserted at
-the head of an eligible local DSQ selected from the task's allowed cids and
-qmap's self cids, preferring the current cid. They request immediate preemption,
-and time-shared targets also carry SCX_ENQ_IMMED. This is an intentionally
-aggressive policy for making proxy-exec easy to observe.
-
-A new kselftest (enq_blocked) is also introduced to validate proxy-exec with
-sched_ext. The test creates a priority inversion with a low-priority owner (nice
-+19), a high-priority donor (nice -20) and one nice 0 contender per available
-CPU. It exercises a same-CPU topology and a cross-CPU topology, where the donor
-and owner run on different CPUs. Each configuration runs with
-SCX_OPS_ENQ_BLOCKED first disabled and then enabled, counts blocked-donor
-enqueues by CPU and reports mutex hold/wait-time deltas. Access to the mutex is
-provided by a loadable kernel module built via TEST_GEN_MODS_DIR, with the test
-responsible for its lifecycle.
-
-Example kselftest run:
-
-===== START =====
-TEST: enq_blocked
-DESCRIPTION: Verify proxy donor admission under CPU-wide contention
-OUTPUT:
-
-[topology=same-cpu SCX_OPS_ENQ_BLOCKED=disabled]
-  proxy_exec=enabled
-  donor_cpu=0
-  owner_cpu=0
-  nr_contenders=16
-  measured_trials=10
-  owner_nice=19
-  donor_nice=-20
-  contender_nice=0
-  mutex_hold_avg_ns=263587544 (263.587 ms, samples=10)
-  mutex_wait_avg_ns=263597934 (263.597 ms, samples=10)
-  nr_blocked_enqueues=0
-  nr_blocked_enqueues_donor_cpu=0
-  nr_blocked_enqueues_owner_cpu=0
-  nr_blocked_enqueues_other_cpu=0
-  nr_blocked_wakeups=0
-
-[topology=same-cpu SCX_OPS_ENQ_BLOCKED=enabled]
-  proxy_exec=enabled
-  donor_cpu=0
-  owner_cpu=0
-  nr_contenders=16
-  measured_trials=10
-  owner_nice=19
-  donor_nice=-20
-  contender_nice=0
-  mutex_hold_avg_ns=251789178 (251.789 ms, samples=10)
-  mutex_wait_avg_ns=209808599 (209.808 ms, samples=10)
-  nr_blocked_enqueues=50
-  nr_blocked_enqueues_donor_cpu=50
-  nr_blocked_enqueues_owner_cpu=0
-  nr_blocked_enqueues_other_cpu=0
-  nr_blocked_wakeups=0
-
-[topology=same-cpu delta: enabled - disabled]
-  mutex_hold_delta_ns=-11798366 (-4.48%)
-  mutex_wait_delta_ns=-53789335 (-20.41%)
-
-[topology=cross-cpu SCX_OPS_ENQ_BLOCKED=disabled]
-  proxy_exec=enabled
-  donor_cpu=0
-  owner_cpu=1
-  nr_contenders=16
-  measured_trials=10
-  owner_nice=19
-  donor_nice=-20
-  contender_nice=0
-  mutex_hold_avg_ns=246794454 (246.794 ms, samples=10)
-  mutex_wait_avg_ns=247298497 (247.298 ms, samples=10)
-  nr_blocked_enqueues=0
-  nr_blocked_enqueues_donor_cpu=0
-  nr_blocked_enqueues_owner_cpu=0
-  nr_blocked_enqueues_other_cpu=0
-  nr_blocked_wakeups=0
-
-[topology=cross-cpu SCX_OPS_ENQ_BLOCKED=enabled]
-  proxy_exec=enabled
-  donor_cpu=0
-  owner_cpu=1
-  nr_contenders=16
-  measured_trials=10
-  owner_nice=19
-  donor_nice=-20
-  contender_nice=0
-  mutex_hold_avg_ns=215486809 (215.486 ms, samples=10)
-  mutex_wait_avg_ns=215498090 (215.498 ms, samples=10)
-  nr_blocked_enqueues=80
-  nr_blocked_enqueues_donor_cpu=20
-  nr_blocked_enqueues_owner_cpu=60
-  nr_blocked_enqueues_other_cpu=0
-  nr_blocked_wakeups=0
-
-[topology=cross-cpu delta: enabled - disabled]
-  mutex_hold_delta_ns=-31307645 (-12.69%)
-  mutex_wait_delta_ns=-31800407 (-12.86%)
-ok 1 enq_blocked #
-=====  END  =====
-
-
-=============================
-
-RESULTS:
-
-PASSED:  1
-SKIPPED: 0
-FAILED:  0
-
-References
-==========
-
-[1] https://lore.kernel.org/all/20251206001451.1418225-1-jstultz@google.com
-
-Git tree: git://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git scx-proxy-exec
-
-Changes in v14:
- - Clarify why a waking EXT donor must be dequeued before rq->donor is reset,
-   and remove the unnecessary cached donor-state variable (K Prateek Nayak)
- - Track resolved proxy sessions explicitly on NOHZ_FULL CPUs, conservatively
-   re-enable the periodic tick during proxy execution
- - Drop the next-class sched_change_begin() argument and move retained-donor
-   cleanup to the sched_ext ownership transitions (Peter Zijlstra)
- - Extend the existing post-resolution scx_proxy_reenqueue_retry() hook with
-   NOHZ proxy-state tracking (Peter Zijlstra)
- - Rename WF_ON_RQ to WF_TTWU_RQ to identify the exact wakeup path that skipped
-   activation and enqueueing, and split the core marker into a preparatory patch
-   (Peter Zijlstra)
- - Gate the blocked-donor admission hook with the scx_enabled() static key and
-   clean up the root-scheduler activation path (Peter Zijlstra)
- - Remove impossible lower-priority-donor cases from the curr/donor class
-   interaction description (Peter Zijlstra)
- - Route reject-DSQ enqueue outcomes through one cleanup point (Tejun Heo)
- - Validate scx_qmap's selected cid after the self-cid mask race and fall back
-   to rescue placement when the intersection disappears (Richard Cheng)
- - Drop "sched/core: Avoid false migration warning for proxy donors", now
-   applied upstream as fe3c73d7bc76 ("sched/core: Avoid false migration
-   warning for proxy donors")
- - Link to v13: https://lore.kernel.org/all/20260831134338.1531664-1-arighi@nvidia.com/
-
-Changes in v13:
- - Keep re-enqueue reason lifetime out of the generic DSQ unlink primitive;
-   preserve it through ops.enqueue() and clear it before resolving the new
-   placement (Tejun Heo)
- - Immediately drain proxy-rejected tasks and request a later retry only when
-   the task is still running or donating, using SCX_RQ_PROXY_RETRY to track
-   the pending retry (Tejun Heo)
- - Restructure proxy reject handling, rename the helpers to describe their
-   roles and document why the locked DSQ move deliberately diagnoses ordinary
-   migration-disabled tasks instead of treating them as proxy races (Tejun Heo)
- - Introduce WF_ON_RQ to distinguish already-runnable wakeups from full
-   activations, replacing SCX_TASK_ENQ_WAKEUP tracking, and gate the sched_ext
-   reschedule path on proxy execution (Tejun Heo)
- - Keep the conservative reset across scheduling-class transitions, retaining
-   proxy state across compatible RT/DL PI transitions remains future work
- - Dispatch scx_qmap blocked donors to an eligible self cid, preferring the
-   current cid, carry SCX_ENQ_IMMED for time-shared targets and count reenqueued
-   shared-DSQ dispatches in nr_enq_blocked
- - Link to v12: https://lore.kernel.org/all/20260816173732.17162-1-arighi@nvidia.com/
-
-Changes in v12:
- - Preserve a fresh re-enqueue reason when ops.enqueue() synchronously rejects
-   a task again and clear the consumed reason only after the task leaves the
-   reject DSQ (sashiko)
- - Immediately process tasks rejected after becoming migration-disabled
-   during an rq-lock handoff, leaving only active proxy contexts parked
-   (sashiko)
- - Use the donor scheduling context for protected-slice admission, rescue
-   preemption, slice save/restore and bypass handling, and charge rescue
-   runtime to the rescued task's scheduler (sashiko)
- - Refresh the NOHZ tick dependency after rq->donor changes in __schedule(),
-   preventing a stale constrained FAIR donor from keeping the tick enabled for
-   an incoming RT task (sashiko)
- - Clarify that ops.running()/ops.stopping() track the donor's scheduling
-   context including blocked donors after successful proxy resolution
-   (sashiko)
- - Restore the change that leaves mutex proxy-lock scopes before calling
-   proxy_resched_idle() (required to avoid scheduling-class callbacks under the
-   extra raw spinlocks)
- - Dequeue waking proxy donors before replacing rq->donor references avoiding
-   callbacks under blocked_lock and transient donor re-enqueueing
- - Harden scx_qmap blocked-donor fast paths against missing eligible self cids
- - Move SCX_TASK_ENQ_WAKEUP to bit 16, leaving room for task-state and
-   re-enqueue-reason expansion
- - Link to v11: https://lore.kernel.org/all/20260810151523.86994-1-arighi@nvidia.com/
-
-Changes in v11:
- - End retained proxy execution before every scheduling-class or BPF-scheduler
-   ownership change, passing the incoming class to sched_change_begin() and
-   removing the prepare_switch() class callback (Tejun Heo)
- - Document the conservative class-transition rule and leave retaining proxy
-   state across compatible RT/DL PI transitions for future work (Tejun Heo)
- - Split reject-DSQ code movement from its generalization and carry the
-   re-enqueue reason directly in p->scx.flags (Tejun Heo)
- - Use one SCX_TASK_REENQ_PROXY reason for all proxy-raced remote transfers,
-   clarify why proxy migration differs from BPF-directed migration and keep
-   tasks parked while affinity migration is pending (Tejun Heo)
- - Factor local-DSQ diversion cleanup into a shared helper, clear HEAD, IMMED,
-   PREEMPT and carried-slice state for proxy rejection (Tejun Heo)
- - Explain the scx_qmap SCX_OPS_ALWAYS_ENQ_IMMED re-enqueue fallback (Tejun Heo)
- - Rename the blocked-donor command-line option to -X, since -B is now taken for
-   the rescue bandwidth setting
- - Drop the SCHED_FLAG_KEEP_PARAMS preparatory fix (this is addressed separately
-   by https://lore.kernel.org/all/20260730135858.2460751-1-arighi@nvidia.com)
- - Link to v10: https://lore.kernel.org/all/20260728154425.1549660-1-arighi@nvidia.com/
-
-Changes in v10:
- - Check constrained FAIR proxy donors before the RT fast paths in
-   sched_can_stop_tick(), so a throttled RT owner cannot bypass bandwidth
-   enforcement (sashiko)
- - Add a preparatory fix that sets DEQUEUE_CLASS only when
-   SCHED_FLAG_KEEP_PARAMS permits the scheduling class to change, preventing
-   class-transition callbacks from running without an actual transition
-   (sashiko)
- - Update try_to_block_task() comment to describe the sched_ext blocked-donor
-   admission check (sashiko)
- - Link to v9: https://lore.kernel.org/all/20260725160513.57477-1-arighi@nvidia.com/
-
-Changes in v9:
- - Add an incoming-class prepare_switch() callback and use it to block retained
-   donors before transitions into sched_ext (Tejun Heo)
- - Generalize the per-rq reject DSQ and use it for proxy-raced remote transfers
-   instead of bouncing tasks to a global DSQ (Tejun Heo)
- - Restrict migration-disabled warning exception to blocked donors whose
-   scheduling context was actually proxy-migrated (sashiko)
- - Keep ops.tick() and other donor accounting inside a tracked
-   ops.running()/ops.stopping() session (sashiko)
- - Prevent BPF-directed migration of an active proxy donor and use the donor as
-   the current scheduling context during restore (sashiko)
- - Update sched_fair_update_stop_tick() to use the number of queued FAIR tasks
-   (sashiko)
- - Fold the temporary local-DSQ donor placement into the final BPF-controlled
-   admission change
- - Link to v8: https://lore.kernel.org/all/20260721063242.552774-1-arighi@nvidia.com/
-
-Changes in v8:
- - Rework remote-DSQ migration check so the locked re-check handles only
-   proxy-exec state changes (Tejun Heo)
- - Use the current-donor helper when preventing migration of an active donor
-   (sashiko)
- - Handle blocked-donor reactivation into scx schedulers without
-   SCX_OPS_ENQ_BLOCKED (John Stultz)
- - Document sched_ext callback behavior under proxy execution (sashiko)
- - Avoid redispatching a rejected blocked donor to the same local DSQ in
-   scx_qmap (sashiko)
- - Add a preparatory fix to avoid false migration warnings when proxy-exec moves
-   a migration-disabled donor
- - Skip the enq_blocked kselftest when proxy execution is unavailable
- - Link to v7: https://lore.kernel.org/all/20260716132229.61603-1-arighi@nvidia.com/
-
-Changes in v7:
- - Move the remote CPU check out of the lockless remote-DSQ scan and perform it
-   only after locking the source rq, retain the locked migration recheck
-   immediately before moving the task (sashiko)
- - Complete the scheduler-context conversion from rq->curr to rq->donor for
-   capability revocation and preemption checks, make scx_bpf_task_running(),
-   scx_bpf_cpu_curr() and scx_bpf_cid_curr() expose the donor selected by the
-   scheduler (sashiko)
- - Handle SCX_ENQ_REENQ before scx_qmap's blocked-donor fast path to avoid an
-   infinite reject/re-enqueue loop (sashiko)
- - Add scx_qmap stat for SCX_ENQ_BLOCKED dispatches
- - Link to v6: https://lore.kernel.org/all/20260715205622.276220-1-arighi@nvidia.com/
-
-Changes in v6:
- - Add a scheduler-core fix to make NOHZ CFS bandwidth checks follow the proxy
-   donor instead of the physical execution context (sashiko)
- - Block retained donors when entering sched_ext through PI de-boosting or
-   global scheduler activation (sashiko)
- - Distinguish ordinary wakeup activations from retained-donor admissions so
-   SCX_ENQ_BLOCKED is not reported for normal wakeups; extend the selftest to
-   detect this regression (sashiko)
- - Validate unexpected-CPU blocked-donor enqueues in both same-CPU and
-   cross-CPU test topologies (sashiko)
- - Link to v5: https://lore.kernel.org/all/20260713162112.26785-1-arighi@nvidia.com/
-
-Changes in v5:
- - Split retained-donor deactivation and sched_ext's default rejection into
-   preparatory patches so the scheduler-core changes can be routed separately
- - Drop the proxy destination query kfuncs and the preparatory mutex lock-scope
-   change (John Stultz)
- - Use p->is_blocked instead of task_is_blocked() to fix a WARN triggered during
-   scx_pair testing (John Stultz)
- - Rename SCX_TASK_IS_RUNNING to SCX_TASK_RUN_TRACKED and document that it
-   tracks an ops.running()/stopping() session rather than physical rq->curr
-   execution
- - Keep a proxy-migrated blocked donor on the owner's rq until wakeup instead of
-   allowing BPF-directed migration to pull it back to wake_cpu and cause
-   repeated donor migration
- - Extend kselftest to cover same-CPU and cross-CPU proxy-exec switches
- - Make scx_qmap insert blocked donors at the head of their current cid's local
-   DSQ and request immediate preemption
- - Link to v4: https://lore.kernel.org/all/20260710083913.30573-1-arighi@nvidia.com/
-
-Changes in v4:
- - Harden scx_bpf_task_proxy_cpu() locking and blocked-state validation, return
-   -ENOENT for unrunnable owners and drop unnecessary donor-affinity checks
-   (K Prateek Nayak, sashiko)
- - Reschedule remote CPUs after donor deactivation, handle sched_setscheduler()
-   admission and assert scheduler-change locking (sashiko)
- - Avoid a potential KCSAN data-race report in the lockless blocked-donor
-   migration check by using rcu_access_pointer() for rq->donor (sashiko)
- - Fix tick dependency updates for incoming EXT contexts and keep the tick
-   enabled for blocked donors (sashiko)
- - Dump EXT donors in scx_dump_state() (sashiko)
- - Reordered the preparatory sched_ext changes so real running-state tracking
-   is established before donor-based accounting, and split the proxy
-   destination query kfuncs into a separate patch
- - Add compatibility wrappers for the proxy CPU/cid kfuncs and document their
-   results as scheduling hints
- - Link to v3: https://lore.kernel.org/all/20260706070410.282826-1-arighi@nvidia.com/
-
-Changes in v3:
- - Dropped the core restrictions on proxy-migrating migration-disabled and
-   single-CPU donors: proxy execution moves the scheduling context, not the
-   task's execution context. (Peter Zijlstra, K Prateek Nayak)
- - Dropped the sched_ext-specific put_prev_task()/set_next_task() exception and
-   fixed ops.running()/ops.stopping() pairing inside sched_ext instead; track a
-   real running transition even when either callback is absent. (Peter Zijlstra)
- - Dropped the kf_tasks[] nesting and nested ops.runnable() patches from v2;
-   extensive proxy-exec testing did not reproduce task-op re-entry, so retain
-   the existing non-nesting invariant.
- - Replaced scx_bpf_task_is_blocked() with SCX_ENQ_BLOCKED in ops.enqueue()
-   flags, identifying blocked-donor admission directly at enqueue time.
- - Expanded the curr/donor description to cover mixed scheduling classes and
-   fixed local preemption to expire rq->donor's slice. (Aiqun Maria Yu)
- - Allow inactive blocked donors to be placed on a remote local DSQ while
-   preventing normal migration of an active rq donor. (Aiqun Maria Yu)
- - Deactivate retained donors when ownership changes to a root or sub-scheduler
-   without SCX_OPS_ENQ_BLOCKED, and extend the selftest to cover attaching a
-   scheduler after the donor blocks. (K Prateek Nayak)
- - Harden remote DSQ consumption by rejecting active tasks and rechecking
-   migration eligibility after locking the source rq. Fall back to the global
-   DSQ without treating an eligibility change during the lock handoff as a BPF
-   scheduler error.
- - scx_qmap has a command line option (-B) to enable blocked-donor queueing
- - Link to v2: https://lore.kernel.org/all/20260702171909.1994478-1-arighi@nvidia.com/
-
-Changes in v2:
- - Rebased onto sched_ext/for-7.3 and adapted the series to the split
-   sched_ext implementation and cid-form scheduler interfaces.
- - Replaced the global sched_proxy_exec_scx boot-time opt-in with the
-   per-scheduler SCX_OPS_ENQ_BLOCKED capability, allowing BPF to control donor
-   admission and ordering through ops.enqueue().
- - Added scx_bpf_task_is_blocked(), scx_bpf_task_proxy_cpu(), and
-   scx_bpf_task_proxy_cid(); enforce CPU/cid API separation for cid-form
-   schedulers.
- - Added proxy exec support to scx_qmap, including optional owner-cid steering,
-   affinity validation, and fallback to the donor's current cid.
- - Added a kselftest with a kernel mutex test and a three-task priority
-   inversion workload, test is executed with blocked task admission disabled and
-   enabled, validates the behavior, and reports hold/wait-time deltas.
- - Link to v1: https://lore.kernel.org/all/20260506174639.535232-1-arighi@nvidia.com/
-
-Andrea Righi (16):
-      sched/core: Drop mutex locks before proxy rescheduling
-      sched/core: Dequeue waking proxy donors before reset
-      sched/core: Mark wakeups completed through ttwu_runnable()
-      sched: Add helper to block retained proxy donors
-      sched: Add sched_ext hooks for proxy execution
-      sched_ext: Block proxy donors before taking control
-      sched_ext: Fix ops.running/stopping() pairing for proxy-exec donors
-      sched_ext: Move reject DSQ draining into core
-      sched_ext: Generalize the reject DSQ reenqueue path
-      sched_ext: Handle proxy-exec races in remote DSQ transfers
-      sched_ext: Split curr|donor references properly
-      sched_ext: Track proxy execution for NOHZ_FULL
-      sched_ext: Delegate proxy donor admission to BPF schedulers
-      sched_ext: Add selftest for blocked donor admission
-      sched_ext: scx_qmap: Add proxy execution support
-      sched: Allow enabling proxy exec with sched_ext
-
- Documentation/scheduler/sched-ext.rst              |  13 +
- include/linux/sched/ext.h                          |   3 +
- init/Kconfig                                       |   2 -
- kernel/sched/core.c                                |  88 +-
- kernel/sched/ext/ext.c                             | 617 +++++++++++---
- kernel/sched/ext/ext.h                             |  17 +
- kernel/sched/ext/internal.h                        |  38 +-
- kernel/sched/ext/sub.c                             |  68 +-
- kernel/sched/ext/sub.h                             |  13 +-
- kernel/sched/sched.h                               |  14 +-
- kernel/sched/syscalls.c                            |   2 +
- tools/sched_ext/include/scx/compat.h               |   1 +
- tools/sched_ext/include/scx/enum_defs.autogen.h    |   3 +
- tools/sched_ext/include/scx/enums.autogen.bpf.h    |   3 +
- tools/sched_ext/include/scx/enums.autogen.h        |   1 +
- tools/sched_ext/include/scx/enums_abi.autogen.h    |   2 +-
- tools/sched_ext/scx_qmap.bpf.c                     |  79 +-
- tools/sched_ext/scx_qmap.c                         |  13 +-
- tools/sched_ext/scx_qmap.h                         |   1 +
- tools/testing/selftests/sched_ext/.gitignore       |   4 +
- tools/testing/selftests/sched_ext/Makefile         |   2 +
- tools/testing/selftests/sched_ext/config           |   2 +
- .../testing/selftests/sched_ext/enq_blocked.bpf.c  | 116 +++
- tools/testing/selftests/sched_ext/enq_blocked.c    | 917 +++++++++++++++++++++
- tools/testing/selftests/sched_ext/enq_blocked.h    |  28 +
- .../selftests/sched_ext/test_modules/Makefile      |  13 +
- .../sched_ext/test_modules/scx_enq_blocked_test.c  | 195 +++++
- 27 files changed, 2051 insertions(+), 204 deletions(-)
- create mode 100644 tools/testing/selftests/sched_ext/enq_blocked.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/enq_blocked.c
- create mode 100644 tools/testing/selftests/sched_ext/enq_blocked.h
- create mode 100644 tools/testing/selftests/sched_ext/test_modules/Makefile
- create mode 100644 tools/testing/selftests/sched_ext/test_modules/scx_enq_blocked_test.c
