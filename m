@@ -1,49 +1,57 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-109.mta0.migadu.com [91.218.175.109])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CF149D5B7
-	for <sched-ext@lists.linux.dev>; Wed, 23 Sep 2026 11:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A0E53A3B3
+	for <sched-ext@lists.linux.dev>; Wed, 23 Sep 2026 14:07:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.109
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790161672; cv=none; b=sEQPe6ENb17H1MjakaNwBUZEtyabF0D2DWSoi3yQ8A8DJJuQyNTWdT4DXMqL45fQO+YZfDT5EYB/Bgghf+Yh1M2R7n2i96q4gMDtU5ht7LDjIVAHJVP9YBY8BWoqvz7yvMp1alVTSQv8Twf0Kqh+bpurcEXfO+yKpJFwrj9BHZ0=
+	t=1790172480; cv=none; b=N0Dj+velaSDxb3gFwp5BLZJC9DIxixefwo1/DmRTfcstPV5R1zKjY/etcR50+joJZTMJVsEZQPSDwrVlvjd+MCrbVAv12Czp2dS9div+bILrhsvyO09mhAuQmmiIObLp5CNn8iYPrqpodTIEKVo4liXCVwEwFTdAVpccQXUdXXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790161672; c=relaxed/simple;
-	bh=q05q06xrOZWDzoeeLkgXU128/uUDN8mIilVBA9NlWIo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QVhMoZJpBhzpT0Iv1D6TjaX12mcWRK57iGReUpmatc/NZGPZ1vO6ktHeB1zBtiO3UVBA5wp7qUG/XqFK8u27vo1eHueS/fLeYlNi8kXx+1ACMXc2Rlp1bx2Lyza+BFjV000tt0/4GKM52s0CPxih//w35SguoTsF1ydJiT40UJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: ff52e5c0b73e11f19a56ed5b684f684d-20260923
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:ed170b95-82a7-4610-85e1-6326cd94c295,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:20
-X-CID-META: VersionHash:7db8b62,CLOUDID:92b57fb9d887d4870761cf701b69c6bb,BulkI
-	D:nil,BulkQuantity:0,SF:102|123|850|865|898,TC:nil,Content:0|15|50|99,EDM:
-	5,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,A
-	V:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: ff52e5c0b73e11f19a56ed5b684f684d-20260923
-X-User: luoliang@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <luoliang@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1437407162; Wed, 23 Sep 2026 19:07:42 +0800
-From: luoliang@kylinos.cn
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
+	s=arc-20240116; t=1790172480; c=relaxed/simple;
+	bh=pdlIPUjgc641og+5ljWmUNziLLzZYsmLnc8hlsa0+Lo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QVt3G1XV3FrPC1QQXNSK7QbXPH2GHCNFYKKJ/WW2tdR89C+gaHkpRL7nq7vRR9SbMW/EyxLyxo0+N+Nsb0+1JIFxkgNiDHvDw7JcCfpkDy9EwcNxlLH8DLUvJEVnLj+JcFxxjX0o+aUT7qc5RHbYfRFR2YFZejFImkzcuMR8Mhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Gcxq+zIu; arc=none smtp.client-ip=91.218.175.109
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Gcxq+zIu"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=pdlIPUjgc641og+5ljWmUNziLLzZYsmLnc8hlsa0+Lo=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790172474; v=1; x=1790777274;
+ b=Gcxq+zIuVO3WbOR/aCUOrGGbEkRYu958J2EQs4UDICzQjvamZ9AGNgoojlGgS+r8xBE2UAUq
+ AGn6R47H0kCT4RNXiZx8ofVgsaPYG8t8gB6VFzt73/WtOj+30I7qHHok7G5UwQByTw5KhH7uEEN
+ gSRvhw8DDFWH1VwRCvSfm/1A=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id f43060941825ca69;
+	Wed, 23 Sep 2026 14:07:54 +0000
+X-Mizu-Trace-ID: f43060941825ca69
+X-Migadu-Flow: FLOW_OUT
+From: Usama Arif <usama.arif@linux.dev>
+To: arighi@nvidia.com,
+	bsegall@google.com,
+	changwoo@igalia.com,
+	dietmar.eggemann@arm.com,
+	etsal@meta.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
 	linux-kernel@vger.kernel.org,
-	Liang Luo <luoliang@kylinos.cn>
-Subject: [PATCH] sched_ext: Count SCX_EV_SUB_BYPASS_DISPATCH in the dispatch fallback
-Date: Wed, 23 Sep 2026 19:07:37 +0800
-Message-Id: <20260923110737.2170928-1-luoliang@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	vincent.guittot@linaro.org,
+	void@manifault.com,
+	vschneid@redhat.com,
+	yphbchou0911@gmail.com
+Cc: Usama Arif <usama.arif@linux.dev>
+Subject: [PATCH] sched_ext: Avoid relocking DSQ during remote consumption
+Date: Wed, 23 Sep 2026 07:07:50 -0700
+Message-ID: <20260923140750.2128382-1-usama.arif@linux.dev>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -52,51 +60,60 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Liang Luo <luoliang@kylinos.cn>
+A remote consume unlinks a task from a non-local DSQ before switching
+to the task's rq. Leaving p->scx.dsq set makes the following
+deactivate_task() reacquire the DSQ lock in scx_dispatch_dequeue() to
+clear the transfer state.
 
-When a descendant scheduler enters bypass mode, its tasks are parked in
-the bypass DSQs of the nearest non-bypassing ancestor, which is then
-responsible for running them. On behalf of such a non-bypassing host,
-scx_dispatch_sched() consumes those bypass DSQs from two places: the
-attempt made every SCX_BYPASS_HOST_NTH dispatches, and the
-end-of-dispatch fallback that keeps the CPU from going idle while
-bypassed descendants still have tasks queued.
+Keep p->scx.dsq set while switching rq locks so that a racing dequeue
+can find the DSQ and cancel the transfer. After acquiring the source rq
+and confirming ownership, clear p->scx.dsq. The subsequent dequeue then
+takes its !dsq path without reacquiring the DSQ lock.
 
-The former increments SCX_EV_SUB_BYPASS_DISPATCH but the latter does
-not, even though both perform the same scx_consume_dispatch_q() on the
-same bypass DSQ. The descendant bypass dispatches done by the fallback
-are therefore missing from the counter exposed via sysfs,
-scx_dump_state() and the scx_bpf_events() kfunc, which under-reports the
-actual number of such dispatches.
+Fleet profiles show that roughly 70% of the cycles attributed to
+scx_dispatch_dequeue() are spent in queued_spin_lock_slowpath() while
+taking dsq->lock.
 
-Add the missing __scx_add_event() so the fallback counts them too. When
-@sch itself is bypassing, scx_dispatch_sched() takes the earlier
-self-bypass branch and returns before reaching these host paths; that
-mode is accounted for by SCX_EV_BYPASS_DISPATCH at enqueue time and is
-intentionally left unchanged.
-
-Fixes: 025b1bd41965 ("sched_ext: Implement hierarchical bypass mode")
-Signed-off-by: Liang Luo <luoliang@kylinos.cn>
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
 ---
- kernel/sched/ext/inlines.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/sched/ext/ext.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/ext/inlines.h b/kernel/sched/ext/inlines.h
-index ed423bcc26b8..2ff5479334cb 100644
---- a/kernel/sched/ext/inlines.h
-+++ b/kernel/sched/ext/inlines.h
-@@ -129,8 +129,10 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
- 	 * scheduler's ops.dispatch() doesn't yield any tasks.
- 	 */
- 	if (scx_bypass_dsp_enabled(sch) &&
--	    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0))
-+	    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
-+		__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
- 		return SCX_DSP_LOCAL;
-+	}
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index cf8e32044ffb1..0135ff6824b03 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2612,7 +2612,7 @@ static bool task_can_run_on_remote_rq(struct scx_sched *sch,
+  * points to this CPU. See scx_dispatch_dequeue() for the counterpart.
+  *
+  * On return, @dsq is unlocked and @src_rq is locked. Returns %true if @p is
+- * still valid. %false if lost to dequeue.
++ * still valid and detached from @dsq. %false if lost to dequeue.
+  */
+ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
+ 					  struct scx_dispatch_q *dsq,
+@@ -2632,8 +2632,19 @@ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
+ 	switch_rq_lock(locked_rq, src_rq);
  
- 	return SCX_DSP_NONE;
+ 	/* task_rq couldn't have changed if we're still the holding cpu */
+-	return likely(p->scx.holding_cpu == cpu) &&
+-		!WARN_ON_ONCE(src_rq != task_rq(p));
++	if (likely(p->scx.holding_cpu == cpu) &&
++	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
++		/*
++		 * Keep ->dsq set until we own @src_rq so that a racing dequeue
++		 * can find @dsq and clear holding_cpu. Once ownership is
++		 * confirmed, clear it under @src_rq so that deactivate_task()
++		 * takes the !dsq path instead of retaking @dsq->lock.
++		 */
++		p->scx.dsq = NULL;
++		return true;
++	}
++
++	return false;
  }
+ 
+ static bool consume_remote_task(struct scx_sched *sch, struct rq *this_rq,
 -- 
-2.43.0
+2.53.0-Meta
 
