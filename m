@@ -1,95 +1,171 @@
-Received: from mta0.migadu.com (out-150.mta0.migadu.com [91.218.175.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855364734C7
-	for <sched-ext@lists.linux.dev>; Wed, 23 Sep 2026 21:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CA657EDAA;
+	Wed, 23 Sep 2026 22:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790199295; cv=none; b=VKMeG0MvO8JDkdHqG+AeYD8J7Fmxk+u68QDIvuDVfNbDyPbxjETYce+vmZRIudGZ+MS8ahBbeOB4L9Yjs3KfODbe81PKNPkqIAFXEthj7XYPnXEFmEd7A9HIu27bCi4NevrWcTQOPccbklTQPaQEzamvBsgDl5NHktKQf+T8DAA=
+	t=1790203162; cv=none; b=s4BCw9l+2JKxxjy7VrvUgl8o4uyHF885Xx+b7mmdlPe4mDi26MAqX1EjlcKWkqLH81lwkmHCFNrPOhtTIfnU8SACD8tqL1t74Fbe4ySYQwG3aXNTF+us5Ax/Hd2jugcRtz8oDRe6cpfhLCi0B4ylmX+Ehz9YwlOddcqOoINSr70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790199295; c=relaxed/simple;
-	bh=rb7CP4UYtgy+IXS6D08jHYPv/a6qcfU7VomdBfispcs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iI2E0SwL0bQ6dOHV38ZZ86dyVdiuKcmBx/v/VVY4QLHQXuIAIpuOU3Te4e/x9TVuXoUWd8jWHadvSZc/G0kMdNgluwHTira/PaB/bUyMjl2Z6s/g8kekSXn0N++765bbzpYmuzQfdA1SJnTbxTuDl79PWDFjhIvj8a8YPPbLoNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=HnL2tipy; arc=none smtp.client-ip=91.218.175.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790203162; c=relaxed/simple;
+	bh=bxtnwjZMrhZyHyjA2jGmjJ7S2fz3fzLfpmSxLclY1jM=;
+	h=Date:From:To:Cc:Message-ID:Subject; b=Dz5zOucv2Uj1iWxHMt5MU/oxLU/9RQdVyYyY+oZTZqdzFvFHhak0pEIhbG11s8NdXCh4oO8/bpnlw34wDLgelqFoLM/MTCCx7viDAh/WoXx0CLmQ9qAUtyjzWmiQ5b68J1NugMCGV70iqfR1X74KMiV1R8jxHFNPIE1cMfKh3tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SAfc4aUU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="HnL2tipy"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=rb7CP4UYtgy+IXS6D08jHYPv/a6qcfU7VomdBfispcs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790199291; v=1; x=1790804091;
- b=HnL2tipyUvMaJvc9BPXNfOHSVSlrZuK6eVs5YSLMdcNDJuoy/K9zZE1KskFjPIsAyleFlTik
- 6dTHonyzloOLQa1xESvu9Ox2t0i9tKvNVTzEjn9EJXocIn9JYDnhGerPN5KUR0eVs/sPDxn33Q1
- FznAACwMWKTZDz2PD2E0S7eU=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 8768a77adbd16e00;
-	Wed, 23 Sep 2026 21:34:51 +0000
-X-Mizu-Trace-ID: 8768a77adbd16e00
-X-Migadu-Flow: FLOW_OUT
-From: Usama Arif <usama.arif@linux.dev>
-To: arighi@nvidia.com,
-	bpf@vger.kernel.org,
-	bsegall@google.com,
-	changwoo@igalia.com,
-	dietmar.eggemann@arm.com,
-	etsal@meta.com,
-	juri.lelli@redhat.com,
-	kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org,
-	mgorman@suse.de,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	rostedt@goodmis.org,
-	sched-ext@lists.linux.dev,
-	tj@kernel.org,
-	vincent.guittot@linaro.org,
-	void@manifault.com,
-	vschneid@redhat.com,
-	yphbchou0911@gmail.com
-Cc: Usama Arif <usama.arif@linux.dev>
-Subject: [PATCH] sched_ext: Avoid relocking DSQ during remote DSQ moves
-Date: Wed, 23 Sep 2026 14:34:44 -0700
-Message-ID: <20260923213444.3231509-1-usama.arif@linux.dev>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SAfc4aUU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90DB1F000FF;
+	Wed, 23 Sep 2026 22:39:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790203161;
+	bh=pdZB0az0opfNfqPRr8PP5HLdxMxCwT3z+qHPPT2GSO4=;
+	h=Date:From:To:Cc:Subject;
+	b=SAfc4aUULAwJpvNJjjqNgQgVIzTfFi7yJeo7xGfx/TNNOVYGygb1M26t9w1OVib16
+	 DK7hjwUq/N5bxjIiNKa5B0pDgI+RSEFqeI0EtGpZRp0icD/qLLLHdSJS6rlxiP+0Ai
+	 U9uR3QPam8BUR0k+sXcYVJ9Bd606lMzvDt1Jf391IPDHrH3v7Az/Ne3MbzNMq7f0rZ
+	 C2EU/y1ML0Tw4SZWJ6t1cg90M7ZxT8yDiG3Zs/OHRNPqorGlTWOKCRHfIM0KhcoX73
+	 1znnpQnhwhD+l+3xWp3/lUyzOZvTUzRb1Aky6Bf4cc73cqG4/e2pMAFk17FoMTbdRY
+	 EmJZwir+Qtxjw==
+Date: Wed, 23 Sep 2026 12:39:20 -1000
+From: Tejun Heo <tj@kernel.org>
+To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>, David Dai <david.dai@linux.dev>,
+	Alap Mohan <mohaalap@meta.com>, Joonwoo Park <joonwoo@meta.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Message-ID: <20260923223825.734003-1-tj@kernel.org>
+Subject: [PATCH sched_ext/for-7.3-fixes] sched_ext: Fix CPU hotplug hang when
+ a dying CPU's tasks sit in the BPF scheduler
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-When scx_bpf_dsq_move*() moves a task from a non-local DSQ to a
-remote local DSQ, move_task_between_dsqs() drops src_dsq->lock while
-leaving p->scx.dsq set. The following deactivate_task() then reacquires
-src_dsq->lock in scx_dispatch_dequeue() to unlink the task and clear
-p->scx.dsq.
+A CPU going down has to empty its own rq. Its hotplug thread waits in
+sched_cpu_wait_empty() until nothing else is left, and the only thing that
+wakes it is balance_push(), which runs from __schedule() on the dying CPU
+and pushes off the migratable tasks the CPU picks.
 
-Both the source rq and src_dsq are already locked before the source DSQ
-lock is dropped. Call dispatch_dequeue_locked() there so that
-deactivate_task() takes the !dsq path and avoids the redundant lock
-acquisition.
+sched_ext breaks this. A task sitting on a user DSQ or held by the BPF
+scheduler is still counted on its rq, but an inactive CPU no longer calls
+ops.dispatch() and can't pull the task back. The dying CPU goes idle with
+the task still counted, and one of two things happens:
 
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
+- Another CPU consumes the task. The rq empties without a __schedule() on
+  the dying CPU, so the hotplug thread is never woken and cpu_down() hangs
+  holding cpu_hotplug_lock.
+- The task is affine only to the dying CPU. Nothing can move it, and the
+  offline stalls until the watchdog ejects the BPF scheduler.
+
+When the rq goes offline, re-enqueue every task on it that isn't already on
+the local DSQ. An enqueue on an offline rq lands on the local DSQ, so the
+dying CPU itself picks the tasks and balance_push() pushes them off, the
+same as for the other sched classes. From then on no sched_ext path on
+another CPU can pull a task off the rq.
+
+ops.dispatch() currently stops as soon as the CPU goes inactive, and CPU
+hotplug then waits for an RCU grace period before taking the rq offline. A
+BPF-held task affine only to the dying CPU and preempted inside an RCU
+read-side critical section would block that grace period, and the rq would
+never go offline. Test SCX_RQ_ONLINE directly so that ops.dispatch() keeps
+running until the rq goes offline. Only the dying CPU's own hotplug thread
+clears the flag during teardown, and task_can_run_on_remote_rq() still keeps
+other rqs' tasks off the CPU.
+
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Fixes: 991ef53a4832 ("sched_ext: Make scx_rq_online() also test cpu_active() in addition to SCX_RQ_ONLINE")
+Cc: stable@vger.kernel.org # v6.12+
+Reported-by: Alap Mohan <mohaalap@meta.com>
+Reported-by: Joonwoo Park <joonwoo@meta.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/ext/ext.c     |   22 ++++++++++++++++++++--
+ kernel/sched/ext/inlines.h |    8 +++++++-
+ kernel/sched/ext/sub.c     |    4 ----
+ kernel/sched/sched.h       |    5 +++--
+ 4 files changed, 30 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index f95d1cf8d3d1c..56bc06a56bb34 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -2710,6 +2710,7 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
- 			raw_spin_unlock(&src_dsq->lock);
- 			scx_move_local_task_to_local_dsq(sch, p, enq_flags, dst_rq);
- 		} else {
-+			dispatch_dequeue_locked(p, src_dsq);
- 			raw_spin_unlock(&src_dsq->lock);
- 			move_remote_task_to_local_dsq(sch, p, enq_flags, src_rq, dst_rq);
- 		}
--- 
-2.53.0-Meta
-
+@@ -2123,8 +2123,8 @@ static void set_task_runnable(struct rq
+ 	}
+ 
+ 	/*
+-	 * list_add_tail() must be used. scx_bypass() depends on tasks being
+-	 * appended to the runnable_list.
++	 * list_add_tail() must be used. scx_bypass() and rq_offline_scx()
++	 * depend on tasks being appended to the runnable_list.
+ 	 */
+ 	list_add_tail(&p->scx.runnable_node, &rq->scx.runnable_list);
+ 
+@@ -3731,8 +3731,26 @@ static void rq_online_scx(struct rq *rq)
+ 
+ static void rq_offline_scx(struct rq *rq)
+ {
++	struct task_struct *p, *n;
++
+ 	rq->scx.flags &= ~SCX_RQ_ONLINE;
++
++	/* sched domain rebuilds call rq_offline with the CPU staying alive */
++	if (cpu_active(cpu_of(rq)))
++		return;
++
+ 	scx_rescue_flush(rq);
++
++	/*
++	 * An offline CPU no longer calls ops.dispatch(). Re-enqueue its tasks
++	 * onto the local DSQ so that they run here and balance_push() moves
++	 * them off.
++	 */
++	list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list, scx.runnable_node) {
++		if (p->scx.dsq == &rq->scx.local_dsq)
++			continue;
++		guard(sched_change)(p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK);
++	}
+ }
+ 
+ static bool check_rq_for_timeouts(struct rq *rq)
+--- a/kernel/sched/ext/inlines.h
++++ b/kernel/sched/ext/inlines.h
+@@ -70,7 +70,13 @@ scx_dispatch_sched(struct scx_sched *sch
+ #endif	/* CONFIG_EXT_SUB_SCHED */
+ 	}
+ 
+-	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
++	/*
++	 * scx_rq_online() can't be used. Its cpu_active() test goes false
++	 * before CPU hotplug waits for an RCU grace period, and
++	 * rq_offline_scx() moves this CPU's tasks to the local DSQ only after
++	 * the wait. The grace period can depend on those tasks running.
++	 */
++	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !(rq->scx.flags & SCX_RQ_ONLINE))
+ 		return SCX_DSP_NONE;
+ 
+ 	dspc->rq = rq;
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -585,10 +585,6 @@ void scx_rescue_flush(struct rq *rq)
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
+-	/* sched domain rebuilds call rq_offline with the CPU staying alive */
+-	if (cpu_active(cpu_of(rq)))
+-		return;
+-
+ 	/* end the current rescue */
+ 	if (rq->scx.rescue.curr)
+ 		scx_task_slice_ended(rq, rq->scx.rescue.curr);
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -4205,8 +4205,9 @@ extern void balance_callbacks(struct rq
+  * after which it is enqueued again.
+  *
+  * Typically this must be called while holding task_rq_lock, since most/all
+- * properties are serialized under those locks. There is currently one
+- * exception to this rule in sched/ext which only holds rq->lock.
++ * properties are serialized under those locks. There are currently two
++ * exceptions to this rule in sched/ext which only hold rq->lock: scx_bypass()
++ * and rq_offline_scx().
+  */
+ 
+ /*
