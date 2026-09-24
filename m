@@ -1,58 +1,52 @@
-Received: from mta1.migadu.com (out-106.mta1.migadu.com [95.215.58.106])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5018348422B
-	for <sched-ext@lists.linux.dev>; Thu, 24 Sep 2026 13:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC19D3CCFCC
+	for <sched-ext@lists.linux.dev>; Thu, 24 Sep 2026 14:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790255116; cv=none; b=cL1GEXQ8qAgKOBpwd19n0o5czIHHBcij+4M3PCVG4RwK7GSH/4QvfDBAOpG1u55+sFpyH5lIN9LNpcOwodCXDCR1ackO6mRwhu/COpOPoO9R7TO++//4FnhzJCGTee1JYHa4Inx8y7afa7CNKmiRv4Jthi0mmHDBR04/v26zuT0=
+	t=1790260634; cv=none; b=ByPJVg65105oeDs5JQUrDrZP+DH3Q68Cwhlb6WKDRpsKpgFqbv7tC1U+v3lmJqFEmh+oEKepJ94yMZLKkGf8XLoPIHd27s8Fo8fNQ6cUcrYJuOgxJZarmTBiJwgVmIMQJDJJNI7CZN45M4k0ILiqrLeFSsceokg5Q9LKbSeeB1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790255116; c=relaxed/simple;
-	bh=EMai31/qqyf5QaAObsfQuiXXHW9sYpANFB9S/2uRX4k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EPqNbUeYmOC9zgcXCLTYZADE7JDcQvDmSYyJs5YTCy3igF99EsEI47+/ggyEcFQOXmfgrP6uXIIZ097k6IN/7TJ/VvvtndKUd4L+TQ2Gdtwp2xAKFSgXDZzEwimyPmmrRDrEXr7sOkrJVbwV4Vpyj5bgS9ZDxp8+evuuCSJJtPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uQ2cB4X9; arc=none smtp.client-ip=95.215.58.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uQ2cB4X9"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=EMai31/qqyf5QaAObsfQuiXXHW9sYpANFB9S/2uRX4k=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790255110; v=1; x=1790859910;
- b=uQ2cB4X9wJuyugFpFTtTRhP/HjBCpOqjMQRAqLoWAPRtfY86I9D+3OubaSCS+b5wdVhI865E
- HoTb0ccpzrouyFtWScBRMCJ752do9et5a7r8StzDFnaSL5FkbpyErxPCIUnFQ0lJuqGwNQ61MVX
- tYkpIsyLcZAgTncAeCeDI4MI=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id a8de4e7e9e9a9053;
-	Thu, 24 Sep 2026 13:05:08 +0000
-X-Mizu-Trace-ID: a8de4e7e9e9a9053
-X-Migadu-Flow: FLOW_OUT
-From: Usama Arif <usama.arif@linux.dev>
-To: arighi@nvidia.com,
-	bpf@vger.kernel.org,
-	bsegall@google.com,
-	changwoo@igalia.com,
-	dietmar.eggemann@arm.com,
-	etsal@meta.com,
-	juri.lelli@redhat.com,
-	kprateek.nayak@amd.com,
+	s=arc-20240116; t=1790260634; c=relaxed/simple;
+	bh=5kklIoyEGyLNoSWopGBLlI5tlwXb/K1YS4DCbLsrkdU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Yt8j2b4qOAmMO08mIrE35nsF9U8zJEH/7o3eVrOmc/zeTnbYL42RATVHl2Ccton+Wdg7SakymRrLiPb+YJxgaib5y18l9wRtCUmIr2v6gWFhX80sDc6ZM+Jj2bGy/Np6OJCe/J7yvyh86IDlssbD4HTk/D60xjNzx+vGTHXLohk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 688030cab82511f19a56ed5b684f684d-20260924
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:5a686878-4dac-45fe-9138-bb5d5df37291,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:7db8b62,CLOUDID:ee4837b54b691d3a67832b22bf0cdb46,BulkI
+	D:nil,BulkQuantity:0,SF:81|82|102|136|865|898,TC:nil,Content:0|15|50|99,ED
+	M:-3|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0
+	,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 688030cab82511f19a56ed5b684f684d-20260924
+X-User: liwanwu@kylinos.cn
+Received: from kylinos.cn [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <liwanwu@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 171834914; Thu, 24 Sep 2026 22:37:03 +0800
+From: Wanwu Li <liwanwu@kylinos.cn>
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	mgorman@suse.de,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	rostedt@goodmis.org,
-	sched-ext@lists.linux.dev,
-	tj@kernel.org,
-	vincent.guittot@linaro.org,
-	void@manifault.com,
-	vschneid@redhat.com,
-	yphbchou0911@gmail.com
-Cc: Usama Arif <usama.arif@linux.dev>
-Subject: [PATCH v2] sched_ext: Update scx_dispatch_dequeue() comments
-Date: Thu, 24 Sep 2026 06:05:03 -0700
-Message-ID: <20260924130503.853919-1-usama.arif@linux.dev>
-X-Mailer: git-send-email 2.53.0
+	Wanwu Li <liwanwu@kylinos.cn>
+Subject: [PATCH 1/3] tools/sched_ext: Increment nr_queued when a task is queued to user space
+Date: Thu, 24 Sep 2026 22:36:57 +0800
+Message-Id: <20260924143659.268595-2-liwanwu@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260924143659.268595-1-liwanwu@kylinos.cn>
+References: <20260924143659.268595-1-liwanwu@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -61,61 +55,38 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Remote consumption now reaches the !dsq branch with holding_cpu set,
-just like dispatch_to_local_dsq(). Clearing holding_cpu in this branch
-also tells dispatch_to_local_dsq() that it lost to a dequeue. The
-dsq-present branch races with unlink_dsq_and_switch_rq_lock(), not
-dispatch_to_local_dsq().
+userland_update_idle() decides whether a CPU going idle must wake the
+user-space scheduler with "if (nr_queued || nr_scheduled)", where
+nr_queued is documented -- both in its declaration and in the NOTE in
+userland_update_idle() -- to be incremented by the BPF component when
+a task is queued to user space.  But enqueue_task_in_user_space()
+never increments it: a successful push only bumps the nr_user_enqueues
+stats counter, so nr_queued stays 0 forever and the check silently
+degrades to nr_scheduled alone.  Tasks sitting in the enqueued map,
+not yet drained by the user-space scheduler, are invisible to a CPU
+going idle.
 
-Update both comments to describe the current transfer paths and race
-semantics. No functional change.
+Increment nr_queued when the push succeeds; the user-space side
+already clears it once the map is drained, as documented.
 
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Fixes: cc4448d0856d ("tools/sched_ext: add scx_userland scheduler")
+Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
 ---
-v1 -> v2: (Tejun)
-- Name dispatch_to_local_dsq() in the comments and commit description.
-- Explain that clearing holding_cpu tells dispatch_to_local_dsq() that it
-  lost to a dequeue.
-- Rewrap both comments to 80 columns.
----
- kernel/sched/ext/ext.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/sched_ext/scx_userland.bpf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 911bb6d433ba7..d01f44839da32 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1821,10 +1821,10 @@ void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p)
- 			list_del_init(&p->scx.dsq_list.node);
- 
- 		/*
--		 * When dispatching directly from the BPF scheduler to a local
--		 * DSQ, the task isn't associated with any DSQ but
--		 * @p->scx.holding_cpu may be set under the protection of
--		 * %SCX_OPSS_DISPATCHING.
-+		 * When dispatch_to_local_dsq() or remote consumption moves a
-+		 * task to a local DSQ, the task isn't associated with any DSQ
-+		 * but @p->scx.holding_cpu may be set. Clearing holding_cpu
-+		 * tells dispatch_to_local_dsq() that it lost to a dequeue.
- 		 */
- 		if (p->scx.holding_cpu >= 0)
- 			p->scx.holding_cpu = -1;
-@@ -1844,10 +1844,10 @@ void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p)
- 		scx_task_unlink_from_dsq(p, dsq);
+diff --git a/tools/sched_ext/scx_userland.bpf.c b/tools/sched_ext/scx_userland.bpf.c
+index f29862b89386..648c6bd230eb 100644
+--- a/tools/sched_ext/scx_userland.bpf.c
++++ b/tools/sched_ext/scx_userland.bpf.c
+@@ -197,6 +197,7 @@ static void enqueue_task_in_user_space(struct task_struct *p, u64 enq_flags)
+ 		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
  	} else {
- 		/*
--		 * We're racing against dispatch_to_local_dsq() which already
--		 * removed @p from @dsq and set @p->scx.holding_cpu. Clear the
--		 * holding_cpu which tells dispatch_to_local_dsq() that it lost
--		 * the race.
-+		 * We're racing against unlink_dsq_and_switch_rq_lock(),
-+		 * which already removed @p from @dsq and set
-+		 * @p->scx.holding_cpu. Clear holding_cpu to tell
-+		 * unlink_dsq_and_switch_rq_lock() that it lost the race.
- 		 */
- 		WARN_ON_ONCE(!list_empty(&p->scx.dsq_list.node));
- 		p->scx.holding_cpu = -1;
+ 		__sync_fetch_and_add(&nr_user_enqueues, 1);
++		__sync_fetch_and_add(&nr_queued, 1);
+ 		set_usersched_needed();
+ 	}
+ }
 -- 
-2.53.0-Meta
+2.25.1
 
