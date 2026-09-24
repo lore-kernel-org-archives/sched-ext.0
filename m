@@ -1,102 +1,121 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-106.mta1.migadu.com [95.215.58.106])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5701E361943;
-	Thu, 24 Sep 2026 09:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5018348422B
+	for <sched-ext@lists.linux.dev>; Thu, 24 Sep 2026 13:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790240959; cv=none; b=Jg6NA2r8XvTtW6cQhYd2ca7no2T3gDNFpNjnnMYtL38dAJ6Wg02g49NHjyI/QujoOupRcAbceKW1BXzeVBoAS0igZuZK1dqywGULQBlSTPYWGgZgYcum1wVWcodTNAYkGmomEmrFjEtUNXDD/DQ3lSztprVyrZiP4p+TVFIUeM0=
+	t=1790255116; cv=none; b=cL1GEXQ8qAgKOBpwd19n0o5czIHHBcij+4M3PCVG4RwK7GSH/4QvfDBAOpG1u55+sFpyH5lIN9LNpcOwodCXDCR1ackO6mRwhu/COpOPoO9R7TO++//4FnhzJCGTee1JYHa4Inx8y7afa7CNKmiRv4Jthi0mmHDBR04/v26zuT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790240959; c=relaxed/simple;
-	bh=dOsSfragpCZL89liI2A5/mqYVe92z3wf5VnFwhzclkw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mzODQQaMvWAPGlNDu9Mse2k3izEQiPeWhtXBn1nU4ejjo06etnuh3J9SqsZJ79ndPcmmRM6XGhXvtbtYtNKG6+dVeTt7U/eY4J3RenaDawCRzgLj3kpIpfENW1v/TM1Q6jDQL1UIfOHfZfpY+pcQcxbY0EgpPTrYQ8QL5/LelGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=NbY6NG6/; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1790255116; c=relaxed/simple;
+	bh=EMai31/qqyf5QaAObsfQuiXXHW9sYpANFB9S/2uRX4k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EPqNbUeYmOC9zgcXCLTYZADE7JDcQvDmSYyJs5YTCy3igF99EsEI47+/ggyEcFQOXmfgrP6uXIIZ097k6IN/7TJ/VvvtndKUd4L+TQ2Gdtwp2xAKFSgXDZzEwimyPmmrRDrEXr7sOkrJVbwV4Vpyj5bgS9ZDxp8+evuuCSJJtPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uQ2cB4X9; arc=none smtp.client-ip=95.215.58.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="NbY6NG6/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=RoVa9dxqACSdBBc9RiLcnsqg8L3EHSWBbwPTgAJYlOg=; b=NbY6NG6/v+bC3MuNiZN4cE28va
-	HQc+HJctv4Lhx4+MllJluCtEFC+L4SOCZ8IoUKcGWO6qg+pL+ZR9jqE+vRJsANQaE6yMHrcfeFfn3
-	0+/tqZ4eO8P54jnE+3OLmug7OLvmb55Ez7GdB+IfRXw34ZIDU0ScBQQawLuZnt/I4VnMmgKxk3aVJ
-	w4qxegA26HWm8n4jdQsyC7yCEuwt9/kJaqoeIKJU74ohigXv+y7WvUfYnjTTRkd80xkkP7qJ5zowL
-	CMFHV6N8ctpfu5cnRfDR9EAN9kcvQVG95gwjLxxa46IltUsnijDBoNtHR/UD5mZ1wtMfPWYJx5FFi
-	xZEZ2o2A==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1x9fRx-0000000G1zG-270n;
-	Thu, 24 Sep 2026 09:09:05 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 66DDF3006DD; Thu, 24 Sep 2026 11:09:04 +0200 (CEST)
-Date: Thu, 24 Sep 2026 11:09:04 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	David Dai <david.dai@linux.dev>, Koba Ko <kobak@nvidia.com>,
-	Aiqun Yu <aiqun.yu@oss.qualcomm.com>, Shuah Khan <shuah@kernel.org>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET v14 sched_ext/for-7.4] sched: Make proxy execution
- compatible with sched_ext
-Message-ID: <20260924090904.GJ2009045@noisy.programming.kicks-ass.net>
-References: <20260922165445.943315-1-arighi@nvidia.com>
- <20260924075237.GH2009045@noisy.programming.kicks-ass.net>
- <20260924075925.GE4121620@noisy.programming.kicks-ass.net>
- <05319013-86e6-4a80-bb8f-385657cee410@amd.com>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uQ2cB4X9"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=EMai31/qqyf5QaAObsfQuiXXHW9sYpANFB9S/2uRX4k=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790255110; v=1; x=1790859910;
+ b=uQ2cB4X9wJuyugFpFTtTRhP/HjBCpOqjMQRAqLoWAPRtfY86I9D+3OubaSCS+b5wdVhI865E
+ HoTb0ccpzrouyFtWScBRMCJ752do9et5a7r8StzDFnaSL5FkbpyErxPCIUnFQ0lJuqGwNQ61MVX
+ tYkpIsyLcZAgTncAeCeDI4MI=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by mta12.migadu.com with ESMTPS id a8de4e7e9e9a9053;
+	Thu, 24 Sep 2026 13:05:08 +0000
+X-Mizu-Trace-ID: a8de4e7e9e9a9053
+X-Migadu-Flow: FLOW_OUT
+From: Usama Arif <usama.arif@linux.dev>
+To: arighi@nvidia.com,
+	bpf@vger.kernel.org,
+	bsegall@google.com,
+	changwoo@igalia.com,
+	dietmar.eggemann@arm.com,
+	etsal@meta.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org,
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	vincent.guittot@linaro.org,
+	void@manifault.com,
+	vschneid@redhat.com,
+	yphbchou0911@gmail.com
+Cc: Usama Arif <usama.arif@linux.dev>
+Subject: [PATCH v2] sched_ext: Update scx_dispatch_dequeue() comments
+Date: Thu, 24 Sep 2026 06:05:03 -0700
+Message-ID: <20260924130503.853919-1-usama.arif@linux.dev>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <05319013-86e6-4a80-bb8f-385657cee410@amd.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 24, 2026 at 01:40:27PM +0530, K Prateek Nayak wrote:
-> On 9/24/2026 1:29 PM, Peter Zijlstra wrote:
-> >>   Almost like switching_to_scx(), except it needs to change ctx->queued in case
-> >>   of p->is_blocked. Hence a new callback ran before sched_change_begin().
-> > 
-> > And I wonder, would something like so work?
-> > 
-> > ---
-> > diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> > index adcc9264c0c6..3e7691d24930 100644
-> > --- a/kernel/sched/core.c
-> > +++ b/kernel/sched/core.c
-> > @@ -11215,8 +11215,13 @@ void sched_change_end(struct sched_change_ctx *ctx)
-> >  	 */
-> >  	WARN_ON_ONCE(p->sched_class != ctx->class && !(ctx->flags & ENQUEUE_CLASS));
-> >  
-> > -	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switching_to)
-> > -		p->sched_class->switching_to(rq, p);
-> > +	if ((ctx->flags & ENQUEUE_CLASS) && p->sched_class->switching_to) {
-> > +		bool block = p->sched_class->switching_to(rq, p);
-> > +		if (block && p->is_blocked) {
-> 
-> Shouldn't this also check for "ctx->queued"?
-> 
-> > +			block_task(rq, p, READ_ONCE(p->__state));
-> 
-> Otherwise we may block an already off rq task.
-> 
-> > +			ctx->queued = false;
-> > +		}
-> > +	}
+Remote consumption now reaches the !dsq branch with holding_cpu set,
+just like dispatch_to_local_dsq(). Clearing holding_cpu in this branch
+also tells dispatch_to_local_dsq() that it lost to a dequeue. The
+dsq-present branch races with unlink_dsq_and_switch_rq_lock(), not
+dispatch_to_local_dsq().
 
-Yes.
+Update both comments to describe the current transfer paths and race
+semantics. No functional change.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+---
+v1 -> v2: (Tejun)
+- Name dispatch_to_local_dsq() in the comments and commit description.
+- Explain that clearing holding_cpu tells dispatch_to_local_dsq() that it
+  lost to a dequeue.
+- Rewrap both comments to 80 columns.
+---
+ kernel/sched/ext/ext.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 911bb6d433ba7..d01f44839da32 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -1821,10 +1821,10 @@ void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p)
+ 			list_del_init(&p->scx.dsq_list.node);
+ 
+ 		/*
+-		 * When dispatching directly from the BPF scheduler to a local
+-		 * DSQ, the task isn't associated with any DSQ but
+-		 * @p->scx.holding_cpu may be set under the protection of
+-		 * %SCX_OPSS_DISPATCHING.
++		 * When dispatch_to_local_dsq() or remote consumption moves a
++		 * task to a local DSQ, the task isn't associated with any DSQ
++		 * but @p->scx.holding_cpu may be set. Clearing holding_cpu
++		 * tells dispatch_to_local_dsq() that it lost to a dequeue.
+ 		 */
+ 		if (p->scx.holding_cpu >= 0)
+ 			p->scx.holding_cpu = -1;
+@@ -1844,10 +1844,10 @@ void scx_dispatch_dequeue(struct rq *rq, struct task_struct *p)
+ 		scx_task_unlink_from_dsq(p, dsq);
+ 	} else {
+ 		/*
+-		 * We're racing against dispatch_to_local_dsq() which already
+-		 * removed @p from @dsq and set @p->scx.holding_cpu. Clear the
+-		 * holding_cpu which tells dispatch_to_local_dsq() that it lost
+-		 * the race.
++		 * We're racing against unlink_dsq_and_switch_rq_lock(),
++		 * which already removed @p from @dsq and set
++		 * @p->scx.holding_cpu. Clear holding_cpu to tell
++		 * unlink_dsq_and_switch_rq_lock() that it lost the race.
+ 		 */
+ 		WARN_ON_ONCE(!list_empty(&p->scx.dsq_list.node));
+ 		p->scx.holding_cpu = -1;
+-- 
+2.53.0-Meta
 
