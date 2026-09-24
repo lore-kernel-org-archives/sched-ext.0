@@ -1,55 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BC649B5AC;
-	Thu, 24 Sep 2026 16:04:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A9D4AB1D3
+	for <sched-ext@lists.linux.dev>; Thu, 24 Sep 2026 16:14:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790265889; cv=none; b=VxwGYzKcavmcr6O8bgRvX5IwgeeVp5CH8vtQj7c6KeQkQzL1L4G2D8jvBzEVjQArCCtNzTBoBI7mUHRiu5sAomeofnUTOrjcAi1ustQgsasBGcAMgBk72FuEVSL4dp3NFD622o+KK13SgG7SFJQCYYxVvnfpnvV716tkwD+1tcI=
+	t=1790266494; cv=none; b=aBrSU+mB8o5IWXcZo6+gH6BkD5ICiTYwOkZ96QUAPcuB2WFsWneiJXnNUeiH+LrRGgy7ovFmyf/hud3vHYDz3XskYVN0t7SQwIsYWAF+06aSVRhabobPx6o3o4v5KtbSwHtvlHwgPKtvFoHNFU93Wv5KndpsXaQfIKSOPByGD8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790265889; c=relaxed/simple;
-	bh=ZBZp9HglQOhQKt4dIt+xL6zDV43m4IyQrnOIZRqaQ38=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=GnsU+26Gbrlf62plNzS1o9ErI9+xaMSYZ9C9IX8RnstTpun+SUykx1TI6HfLaAfNZCb1Al2ouq/rhiPBdNcav8S2idR9AffHMeER+nZj4x/jl/PXiiP/MgiNpg+en8S6Ju+aKDA86ft/B6635yF9AF+F8eO1jQuHMsdOXflXMtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gLkfCbBc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790266494; c=relaxed/simple;
+	bh=E4QrKt+v0lNzALdrCP7x8suqEMSgDgOcYMNuh7YnQQc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YvdAxhmJRiHTWq7O3ll9o3AjMFkwqNN5BbTbUPh/Ix33nhBMWCTdxYiyM4P2491k+mhgmCk9FVVSA7F5rhg0wkA1AphCjLgFjUWehsBU2IRgoRxZx4bYMELVEj4zNjFi/N9bZz+UmhJLsAfaqLMIDaG2XVMZwY/uP1fGSiMkQQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=LsTJkcr1; arc=none smtp.client-ip=95.215.58.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gLkfCbBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE95D1F000FF;
-	Thu, 24 Sep 2026 16:04:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790265887;
-	bh=kfqajJnz6Vz4il9Oe5BJNKl83aa4hZcOU5gr4udVkVQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=gLkfCbBcqHYj08MTCX36R+Sna2nA8MeHJDUVpJEJRlM/a1i3oCMNF7J5duzQIdL/x
-	 uIzsHQQUkVq1QL4ZT2HKZlA4EEKIAytQLoT4qIjzVzKWJW28kFAQz8H7AxHLE43itF
-	 GmmX46bpPeMMBCsg4HsukB/9oaQlw6Ymn59b9TtnrHMfeh5p9Eldi9xPRQ8wGtDIMY
-	 fzMEoZbYIH8yD+C6PADFG3oATJeXxQXmEsrw38YAJbWGoIHkCFX1NI3XY10GzEbHs/
-	 BvJvDiKSMi5Qxau19x74sGsL5ONij5sPbTnhHqqyLDTplbIiQI47L4MJPZ4+U8FlLW
-	 aNnoud2dLT+GA==
-Date: Thu, 24 Sep 2026 06:04:47 -1000
-Message-ID: <9dd9a20323b92268b57c4edd0be094ab@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Usama Arif <usama.arif@linux.dev>
-Cc: arighi@nvidia.com, bpf@vger.kernel.org, bsegall@google.com,
-    changwoo@igalia.com, dietmar.eggemann@arm.com, etsal@meta.com,
-    juri.lelli@redhat.com, kprateek.nayak@amd.com,
-    linux-kernel@vger.kernel.org, mgorman@suse.de, mingo@redhat.com,
-    peterz@infradead.org, rostedt@goodmis.org, sched-ext@lists.linux.dev,
-    vincent.guittot@linaro.org, void@manifault.com, vschneid@redhat.com,
-    yphbchou0911@gmail.com, emil@etsalapatis.com, david.dai@linux.dev
-Subject: Re: [PATCH v2] sched_ext: Update scx_dispatch_dequeue() comments
-In-Reply-To: <20260924130503.853919-1-usama.arif@linux.dev>
-References: <20260924130503.853919-1-usama.arif@linux.dev>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="LsTJkcr1"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=E4QrKt+v0lNzALdrCP7x8suqEMSgDgOcYMNuh7YnQQc=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790266490; v=1; x=1790871290;
+ b=LsTJkcr1rqXmYZFqCkluHSB0RIGfHtM2/s58mbmnN+I4yyJZKRKSn+TT8cz44pdUtMEsMdwz
+ voY4vSlCgzkpddpBrDE4bWDDXW6olUI8xQRiYqykEf+/UUvHRuiz/bl24rYk+xxlgebpvtnhQLz
+ hAugwtKyG5tWQzbDKW16Hoj8=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id 01de6d65797608aa;
+	Thu, 24 Sep 2026 16:14:50 +0000
+X-Mizu-Trace-ID: 01de6d65797608aa
+X-Migadu-Flow: FLOW_OUT
+From: Usama Arif <usama.arif@linux.dev>
+To: arighi@nvidia.com,
+	bpf@vger.kernel.org,
+	bsegall@google.com,
+	changwoo@igalia.com,
+	dietmar.eggemann@arm.com,
+	etsal@meta.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org,
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	vincent.guittot@linaro.org,
+	void@manifault.com,
+	vschneid@redhat.com,
+	yphbchou0911@gmail.com
+Cc: Usama Arif <usama.arif@linux.dev>
+Subject: [PATCH] sched_ext: Place dsq_vtime next to dsq_priq
+Date: Thu, 24 Sep 2026 09:14:46 -0700
+Message-ID: <20260924161446.3039726-1-usama.arif@linux.dev>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Applied to sched_ext/for-7.4 with the following tag added:
+scx_dispatch_enqueue() calls rb_add() for a vtime-ordered DSQ while
+holding dsq->lock. At each level of the descent, scx_dsq_priq_less()
+loads the visited task's dsq_vtime, and that comparison selects rb_left
+or rb_right from the same task's dsq_priq. In the x86-64 benchmark
+configuration, these accesses fell on different 64-byte cache lines
+before this change, so a cold visited task could require a second cache
+line fill on the dependent descent path.
 
-  Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Move dsq_vtime immediately before dsq_priq, keeping dsq_seq and
+dsq_flags next to dsq_list. In the two x86-64 layouts inspected, where
+scx starts at offsets 776 and 840 in task_struct, the fields from
+dsq_list through dsq_priq occupy one cache line. The exact cache line
+placement depends on the containing task_struct layout and is not
+guaranteed for every configuration or architecture. Where they share a
+line, avoiding the dependent cache line fill helps reduce dsq->lock hold
+time during vtime insertion and therefore contention on the lock.
 
-Thanks.
+In a 16-vCPU KVM guest, the instrumented enqueue interval was 4-6%
+shorter with scx_lavd and scx_layered. scx_mitosis and end-to-end
+workload time showed no consistent change.
 
---
-tejun
+This only reorders fields; no scheduling behavior change is intended.
+
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+---
+ include/linux/sched/ext.h | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
+
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 1e1fc3312bc40..b856768716249 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -197,9 +197,19 @@ struct sched_ext_entity {
+ 	u64			ddsp_slice;
+ 	u64			ddsp_vtime;
+ 	struct scx_dsq_list_node dsq_list;	/* dispatch order */
+-	struct rb_node		dsq_priq;	/* p->scx.dsq_vtime order */
+ 	u32			dsq_seq;
+ 	u32			dsq_flags;	/* protected by DSQ lock */
++
++	/*
++	 * Used to order tasks when dispatching to the vtime-ordered priority
++	 * queue of a dsq. This is usually set through
++	 * scx_bpf_dsq_insert_vtime() but can also be modified directly by the
++	 * BPF scheduler. Modifying it while a task is queued on a dsq may
++	 * mangle the ordering and is not recommended. Kept next to @dsq_priq
++	 * as rbtree insertion reads both on every visited node.
++	 */
++	u64			dsq_vtime;
++	struct rb_node		dsq_priq;	/* p->scx.dsq_vtime order */
+ 	u32			flags;		/* protected by rq lock */
+ 	u32			weight;
+ 	u32			reenq_cnt;	/* reenqueues since last run */
+@@ -225,7 +235,7 @@ struct sched_ext_entity {
+ 	u64			tid;
+ 	struct rhash_head	tid_hash_node;	/* see SCX_OPS_TID_TO_TASK */
+ 
+-	/* BPF scheduler modifiable fields */
++	/* BPF scheduler modifiable fields, along with @dsq_vtime above */
+ 
+ 	/*
+ 	 * Runtime budget in nsecs - how long the task may hold its cpu. Owned
+@@ -240,15 +250,6 @@ struct sched_ext_entity {
+ 	 */
+ 	u64			slice;
+ 
+-	/*
+-	 * Used to order tasks when dispatching to the vtime-ordered priority
+-	 * queue of a dsq. This is usually set through
+-	 * scx_bpf_dsq_insert_vtime() but can also be modified directly by the
+-	 * BPF scheduler. Modifying it while a task is queued on a dsq may
+-	 * mangle the ordering and is not recommended.
+-	 */
+-	u64			dsq_vtime;
+-
+ 	/*
+ 	 * Out-of-band slice request from scx_bpf_task_set_slice() when the
+ 	 * caller does not hold the rq lock, applied under the rq lock at the
+-- 
+2.53.0-Meta
+
