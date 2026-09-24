@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070A548550C
-	for <sched-ext@lists.linux.dev>; Thu, 24 Sep 2026 14:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E726485CEF
+	for <sched-ext@lists.linux.dev>; Thu, 24 Sep 2026 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790261275; cv=none; b=kp8pEjvHVUzXipeS6rJNGHNUC13zfbL51v/YE23eN+vrqWQ8L4dVnKz0ry5HwENOTbgVfYqi9BV4lVPcPq/b0bqRE3g9SndT6hIt6yapvFoYOxTN1s8V4uv6n6ZZPWmAzvDvonKgCZ9t8VUbJjW1A216rVs3kdNgSYWjPhPyATg=
+	t=1790261431; cv=none; b=kHkIbn4NCmR70hOqPM3jy+M+x4lRGB9Uocp31kCrWOpC+2/th54h+6mxWuoexrBdqP+svzGrluRcoMX0+7TbuYbLCFzhjNIT11eSd/PFMPSgdRk/J7rlziePUlPz4AJ0EiBxfAbJD2U8lnhEApaCL5XXibErrIFhsIc6Ud80EdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790261275; c=relaxed/simple;
-	bh=6urUQxJn/4NcQqGR0VxEoBYglFi9a3tiSKrl53gL3M4=;
+	s=arc-20240116; t=1790261431; c=relaxed/simple;
+	bh=CK7t7v3wdRTGu7HloRp0djVb/amqSHNOJeoZgphu5HA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GLNIYfVV9c7dVHrQwj9/ZP/s3jPonGDZ40ARDC8xeQH9Z8/zKre7Oq+SoRbFvTteqbdfJsJxNDhxEsJEjWdiCYUEpOcuhPky9dSbYhWTND3aLuPgYYBXRx32QQY4FK+ZsO7OjXrTjFiBqjnmqTF/PK5PmuvYxxFIdYO5mZ8464o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BIc44xmd; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=G4YK62dHixnX0WHOCAifreesK/MYXALHdim7h6rur4S+NiRJGmWCuNVMRoW145Qgf2AJi+eEdlBDipnntX2DFmXMMJyVJ66m+TUZsmvOfd/wD+kX3yWBSvFjLAP7iktfgwvYBsWo3wXU10MJtPHSuzpwnRV9yOt4+j6B+7U9qEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EJZuzqm+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BIc44xmd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D22E1F00893;
-	Thu, 24 Sep 2026 14:47:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EJZuzqm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C295D1F000FF;
+	Thu, 24 Sep 2026 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790261273;
-	bh=22Tjf5R0jXq2p0kNHV6IKp5oPR+qtRqAN71oBuEbpyA=;
+	s=k20260515; t=1790261430;
+	bh=1gUlur7PzvyG78kJn7G0PrhToJT6rGgU2IwVIvLsBNo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BIc44xmdRNI2Nl79epr5MCRlXoxO5t0ss3b00ITz+yxNNQRPinXGeHC2+exTWU+yR
-	 o7tJUe5twcIdBg+wU+jmzFrR5ordOUs5PXjxA4Xoqlk37ThDSu1umS5umV3LWZze08
-	 8X9w09JvTJ30kn1YfrM8YHhjGn71dizqpJJWoUcH2kQZn1nmDH4HejCcxr5WDIAZyy
-	 z90Ho28h7GlJ6S95yumyI+M3f7wJCaUAZPLHNueicaIgucink9IBzwak2wGIJ2my71
-	 LbdH/is2U0hjsabw9MzEjETdSEv8WCa6GuZtwWdclqsOkpIMXfPXAvbBvJwjpcpf1V
-	 KXYwjltWNh9FQ==
+	b=EJZuzqm+kvz2X24JcYABqlJGzqopuc1shpz7xFlgxdGofjMPir8joCeZ9iTLG0KVv
+	 22ZtRnUez5ApjnaDvTfcqJ6F+nRwnYGpj+6HvpvGDJ/dK3cX6G3OhB7rd9C5VF2umO
+	 vGEeh5MFZPOM4PxbP3GBXNsEBaKHEKaEa04gez5O3UjOMgSWkWJ7cNSS1x8oI4lC/8
+	 yWB3kU076Unkea19Z0fmd6EreE03rtkJcxu79QPwvDP9HWrU1UJKxyUGc+1MvDf3ba
+	 t5cYUbqaJIR+aErhK2LyTM2Dmr6X/PSGnXlHNKqc5WetVBGyHQzlTZItuR/xtyrP62
+	 yycxdwAYwIW7A==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/3] tools/sched_ext: Increment nr_queued when a task is
- queued to user space
+Subject: Re: [PATCH 3/3] tools/sched_ext: scx_pair: Verify task cgroup
+ before dispatch
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Wanwu Li" <liwanwu@kylinos.cn>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20260924143659.268595-2-liwanwu@kylinos.cn>
+In-Reply-To: <20260924143659.268595-4-liwanwu@kylinos.cn>
 References: <20260924143659.268595-1-liwanwu@kylinos.cn>
- <20260924143659.268595-2-liwanwu@kylinos.cn>
+ <20260924143659.268595-4-liwanwu@kylinos.cn>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 24 Sep 2026 14:47:53 +0000
-Message-Id: <20260924144753.9D22E1F00893@smtp.kernel.org>
+Date: Thu, 24 Sep 2026 14:50:29 +0000
+Message-Id: <20260924145029.C295D1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,62 +47,69 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] bpf: lost wakeup in scx_userland due to nr_queued TOCTOU race
+- [High] sched_ext: fatal abort in scx_pair due to scx_kf_arg_task_ok() vio=
+lation
 --
 
-commit 58872b4f72d7bfd3655086348da64ace07a2573a
+commit 79e8ca61bf0fbb13b0ca39d2236cec7b65f02134
 Author: Wanwu Li <liwanwu@kylinos.cn>
 
-tools/sched_ext: Increment nr_queued when a task is queued to user space
+tools/sched_ext: scx_pair: Verify task cgroup before dispatch
 
-userland_update_idle() decides whether a CPU going idle must wake the
-user-space scheduler with "if (nr_queued || nr_scheduled)", where
-nr_queued is documented to be incremented when a task is queued. But
-enqueue_task_in_user_space() never increments it, so tasks sitting in the
-enqueued map are invisible to a CPU going idle.
+This commit modifies try_dispatch() to read the task's current cgroup after
+looking it up from its pid. This ensures the task hasn't migrated to another
+cgroup between enqueue and dispatch, dropping tasks that have migrated to
+avoid dispatching them under the wrong cgroup context.
 
-Fixes: cc4448d0856d ("tools/sched_ext: add scx_userland scheduler")
-Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
-
-> diff --git a/tools/sched_ext/scx_userland.bpf.c b/tools/sched_ext/scx_use=
-rland.bpf.c
-> index f29862b89386b..648c6bd230eb2 100644
-> --- a/tools/sched_ext/scx_userland.bpf.c
-> +++ b/tools/sched_ext/scx_userland.bpf.c
-> @@ -197,6 +197,7 @@ static void enqueue_task_in_user_space(struct task_st=
-ruct *p, u64 enq_flags)
->  		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
->  	} else {
->  		__sync_fetch_and_add(&nr_user_enqueues, 1);
-> +		__sync_fetch_and_add(&nr_queued, 1);
+> diff --git a/tools/sched_ext/scx_pair.bpf.c b/tools/sched_ext/scx_pair.bp=
+f.c
+> index 906bb11d678f7..d29bb9fc6c92e 100644
+> --- a/tools/sched_ext/scx_pair.bpf.c
+> +++ b/tools/sched_ext/scx_pair.bpf.c
+> @@ -519,6 +519,25 @@ static int try_dispatch(s32 cpu)
+> =20
+>  	p =3D bpf_task_from_pid(pid);
+>  	if (p) {
+> +		struct cgroup *task_cgrp;
+> +		u64 task_cgid;
+> +
+> +		/*
+> +		 * Without a .dequeue callback, a task that migrated to
+> +		 * another cgroup after being enqueued leaves a stale pid
+> +		 * behind. Dispatching it here would run it under the wrong
+> +		 * cgroup. Drop it and retry.
+> +		 */
+> +		task_cgrp =3D scx_bpf_task_cgroup(p);
 
 [Severity: High]
-Will this introduce a race condition with the user-space scheduler that=20
-leads to a lost wakeup?
+Will this cause a scheduler abort?
 
-When the kernel atomically increments nr_queued here, the user-space
-scheduler unconditionally clobbers it without any synchronization:
+Looking at the kfunc implementation, scx_bpf_task_cgroup() internally
+validates the task using scx_kf_arg_task_ok(), which requires that the
+passed task matches current->scx.kf_tasks[0] (the task currently being
+operated on by a task-specific SCX hook).
 
-tools/sched_ext/scx_userland.c:drain_enqueued_map() {
-    ...
-    if (bpf_map_lookup_and_delete_elem(enqueued_fd, NULL, &task)) {
-        skel->bss->nr_queued =3D 0;
-        ...
-}
+Because try_dispatch() is invoked from the .dispatch scheduler hook
+(pair_dispatch) via SCX_CALL_OP() rather than SCX_CALL_OP_TASK(),
+kf_tasks[0] is not populated and remains NULL during dispatch.
 
-If drain_enqueued_map() finds the map empty, but just before it runs
-skel->bss->nr_queued =3D 0, a concurrent kernel BPF program enqueues a new
-task and increments nr_queued to 1, the user space code will overwrite
-it back to 0.
+Since the looked-up task p is not NULL, won't scx_kf_arg_task_ok()
+unconditionally fail and trigger scx_error(), causing a fallback to CFS
+on the very first task dispatch?
 
-Since both nr_queued and usersched_needed would end up cleared, could this
-cause idle CPUs to fail to wake the scheduler, leaving the newly enqueued
-task stranded?
-
->  		set_usersched_needed();
->  	}
->  }
+> +		task_cgid =3D task_cgrp->kn->id;
+> +		bpf_cgroup_release(task_cgrp);
+> +
+> +		if (task_cgid !=3D cgid) {
+> +			bpf_task_release(p);
+> +			__sync_fetch_and_add(&nr_missing, 1);
+> +			return -EAGAIN;
+> +		}
+> +
+>  		__sync_fetch_and_add(&nr_dispatched, 1);
+>  		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
+>  		bpf_task_release(p);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260924143659.2685=
-95-1-liwanwu@kylinos.cn?part=3D1
+95-1-liwanwu@kylinos.cn?part=3D3
