@@ -1,158 +1,164 @@
-Received: from mta1.migadu.com (out-14.mta1.migadu.com [95.215.58.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB668483BEB
-	for <sched-ext@lists.linux.dev>; Fri, 25 Sep 2026 09:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7434915B5;
+	Fri, 25 Sep 2026 13:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790329084; cv=none; b=fqXanzfc9VpSVtUYM1QIbVl1/Tm71ndpUr+NJUPwxTVQXQPP/L1AD/62r3LigXUtOonIcQIj3DF7AbjCtGUNt7b0HlVk9Lwqr3jL5wmEuDxlwfvPY3kTPX4qSQNPwu7d1SuRxfMLmhyApdKOuWHDVCTRP0upAdwTPo1jgPuQXKE=
+	t=1790344115; cv=none; b=AiwLlISEobbORlF8JTwMiS8MQkx75VQDgjizaryH0Ki+qWTKfHtqjdd2H2BQk7q+0kqn2fRfHjf1A9ni1o2S76NFk66mZgk3w4PWKHv8XC44rXAPecc7Pebk2CmyOkcD7n2ScbctJVbHT1kmyMmmrps9Mqz8yZbrcQ9TPsCVcik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790329084; c=relaxed/simple;
-	bh=GVuf0RwGAnGw1eOY1Wiz9rpD1Ddtfsnx5TiLkQhY7AI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X5LBrEBr0LwUyU1n0l3i7yAiq6eJtThpF3tMmapkw7c9Gd93BwVgNEtf2K+O+jQdiqqTL78Ci+2JKJmNy9f4zcHLhZ1JeRkEAZ+HIP2Tc98simXGZk9FbKp72cZzXAJ/tNQdgwuPoBLiW/xd/IMPFWKHF3DAY2n7fJp4k7DJZUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JxLWxwxN; arc=none smtp.client-ip=95.215.58.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790344115; c=relaxed/simple;
+	bh=dj/7TQJsiVINNZhNqXY5GNwUn8JdvXh/NJTgu0mc68I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sLsZeOGUoXPI/0CuWA3KOCyfYcHNRI3nPdAHBiTXgzhjJptr6FjG00JjmFh4suRtk92onits1H+vhop2oRWVBYyFcgczljWsbegrOZSxt0DYd1cEOVylUIH1RU+NSxrQp96rfVV0my9sHcLkhncEmugbESPRzcDQtpxj8bxOpWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SI+q3W2z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JxLWxwxN"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=GVuf0RwGAnGw1eOY1Wiz9rpD1Ddtfsnx5TiLkQhY7AI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790329080; v=1; x=1790933880;
- b=JxLWxwxN9XMvJORCFC8yCtpYrBIJH9aTD0ct6Kb01NUwXuSLRwwEpC9uZK2JMidY29pqiekn
- Oy3p9UP654adviuCX0UkCL1iiUeR2fYBA5aEWKDns5mmgkM4UoDL8TfTBCxO7pWOiYeY337KNDh
- +Tzn5re2/kyWRtQjo+S5lYxI=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id c7f8fb00bf703aa8;
-	Fri, 25 Sep 2026 09:37:59 +0000
-X-Mizu-Trace-ID: c7f8fb00bf703aa8
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <840c4c37-99a5-44dd-8b33-67057ee23731@linux.dev>
-Date: Fri, 25 Sep 2026 10:37:55 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SI+q3W2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506FB1F000FF;
+	Fri, 25 Sep 2026 13:48:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790344113;
+	bh=0R53dmVkVkTmrf1e5PKjxFKdwBjgP9f5Q2OOaZy8dZc=;
+	h=From:To:Cc:Subject:Date;
+	b=SI+q3W2zA4k3gtpceLq3Ppj3LnvQfB/ACT72MOgrTI44djV2JT7vCS0ZWAneBPZgn
+	 5O4bF/n6LIWO5rhLOZgofS/DqPHRSWwuv/gBD5PzldZrYli3seawMzcftVLlKLH/Tr
+	 l10cqM6r88wBzTf+yjCcXBe7SOkmwujap1Ic2/dnK5WJJ6x9lSmtGdQvOFp91ncrrY
+	 v3cs1K26WblGh8rCfjkKrHLOtEia/DhCexuOFMFgNCsxAv4lgzONpyiIlLqnoGIvLj
+	 0Gb08S/rt36QReoZkR0UCWa/UE1qpaw/7AHby4Ogd2hmfpRBwyGkAdD18+6i1R1Ezt
+	 2Nl4NwX8bt7Mw==
+From: Puranjay Mohan <puranjay@kernel.org>
+To: bpf@vger.kernel.org
+Cc: Puranjay Mohan <puranjay@kernel.org>,
+	"Alexei Starovoitov" <ast@kernel.org>,
+	"Daniel Borkmann" <daniel@iogearbox.net>,
+	"Andrii Nakryiko" <andrii@kernel.org>,
+	"Martin KaFai Lau" <martin.lau@linux.dev>,
+	"Eduard Zingerman" <eddyz87@gmail.com>,
+	"Kumar Kartikeya Dwivedi" <memxor@gmail.com>,
+	"Song Liu" <song@kernel.org>,
+	"Yonghong Song" <yonghong.song@linux.dev>,
+	"Tejun Heo" <tj@kernel.org>,
+	"David Vernet" <void@manifault.com>,
+	"Andrea Righi" <arighi@nvidia.com>,
+	"Changwoo Min" <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH bpf-next v3 0/3] bpf, x86: Support fetching AND/OR/XOR atomics in arena
+Date: Fri, 25 Sep 2026 06:48:19 -0700
+Message-ID: <20260925134828.2012199-1-puranjay@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rhashtable: specialize default comparison for constant
- parameters
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Andrew Morton <akpm@linux-foundation.org>, justinstitt@google.com,
- linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, morbo@google.com, nathan@kernel.org,
- ndesaulniers@google.com, Thomas Graf <tgraf@suug.ch>,
- nickolay.lysenko@gmail.com, peterz@infradead.org, rostedt@goodmis.org,
- sched-ext@lists.linux.dev, tj@kernel.org, yatsenko@meta.com
-References: <20260924184733.2317353-1-usama.arif@linux.dev>
- <arW6ibT1RkVCqTdT@gondor.apana.org.au>
-Content-Language: en-US
-From: Usama Arif <usama.arif@linux.dev>
-In-Reply-To: <arW6ibT1RkVCqTdT@gondor.apana.org.au>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+
+Changelog:
+v1: https://lore.kernel.org/all/20260923165301.3463007-1-puranjay@kernel.org/
+v2: https://lore.kernel.org/all/20260924160354.531101-1-puranjay@kernel.org/
+
+Changes in v3:
+- Patch 2: keep the 32-bit non-fetching and/or/xor as well. v2 only kept the
+  64-bit ones, so the 32-bit arena lowering still lost its coverage.
+- Patch 2: guard the new uaf asm on __BPF_FEATURE_ADDR_SPACE_CAST. It spells
+  addr_space_cast textually, which needs LLVM 19, while uaf was plain C
+  before and so built with older clang.
+- Patch 3: use __sync_fetch_and_or/and in cid.bpf.h and delete the cmpxchg
+  loop, rather than only rewording the comment that justified it. The loop
+  was never the portability fallback it claimed to be: a JIT that rejects a
+  fetching OR or AND in an arena rejects CMPXCHG there too.
+
+Changes in v2:
+- Patch 1: drop the initial load in the arena lowering instead of adding a
+  second exception table entry, per Alexei's review. A losing CMPXCHG
+  reloads RAX from memory, so the loop converges without it and the CMPXCHG
+  is left as the only insn that can fault. This removes the entry the
+  verifier had not reserved, and with it the aux->num_exentries rescan in
+  bpf_int_jit_compile() that v1 needed to account for it.
+- Patch 1: say in the changelog that the bpf_jit_supports_insn() rejection
+  is dropped, since that is what newly admits these programs, and that the
+  arena form now always executes at least two locked CMPXCHGs.
+- Patch 1: rename the shared "mem32 extable bug" message, which the atomic
+  path can now raise, let the non-arena caller pass NULL for the fault and
+  resume out-params, correct the INSN_LEN comment about where the bound is
+  enforced, and drop an unrelated whitespace hunk.
+- Patch 2: keep one __c11_atomic_fetch_*() per operation with the result
+  discarded. v1 converted every case to the fetching form, which left the
+  non-fetching lowering with no coverage at all, on every architecture
+  rather than just x86.
+- Patch 2: add both R0-aliased forms to the uaf test too. v1 only exercised
+  them on live pages, so the BPF_REG_AX substitution never reached the
+  exception table, which is the part patch 1 actually adds.
+- Patch 2: order the new globals so they open fewer holes in .addr_space.1,
+  and correct the comment about why arm64 stays out of the uaf test.
+- Patch 3: new.
+
+A fetching AND/OR/XOR against arena memory is rejected on x86-64:
+
+  BPF_ATOMIC stores into R1 arena is not allowed
+
+x86-64 has no single instruction for these, so the JIT lowers them to a
+CMPXCHG loop. The loop performs two memory accesses, the load of the old
+value and the CMPXCHG itself, and either can fault when the arena page
+goes away. The verifier reserves one exception table entry per
+instruction, so there was nowhere to record the second one and
+bpf_jit_supports_insn() refused the three opcodes instead.
+
+x86-64 is the only architecture that needs this. riscv64 has native
+AMOAND/AMOOR/AMOXOR with fetch, s390 has LAN/LAO/LAX, and arm64 with LSE
+has LDCLRAL/LDSETAL/LDEORAL, so all three already accept these in an
+arena. arm64 without LSE rejects every arena RMW atomic and is unaffected
+either way, since the CMPXCHG that such a lowering would need is not
+available there in an arena either.
+
+Patch 1 emits the loop with R12-indexed addressing and without the initial
+load. A CMPXCHG that loses the comparison loads the current contents into
+RAX, so the loop converges from whatever R0 already holds, and the value it
+stores is computed from RAX, which by definition equalled memory whenever
+the store happened. That leaves the CMPXCHG as the only insn that can
+fault, so the one entry the verifier already reserved is enough and nothing
+has to touch aux->num_exentries. The entry resumes past the whole loop
+rather than past the faulting instruction, with the fetch destination
+cleared, so a fault cannot re-enter the loop. The first CMPXCHG compares
+against an unrelated value, so the arena form executes at least two locked
+CMPXCHGs every time; the non-arena lowering therefore keeps its load.
+
+Patch 2 makes the selftests cover this. The existing arena and/or/xor tests
+discarded the returned value, so clang emitted the non-fetching instruction
+and the fetching one was never exercised. That was deliberate:
+commit 2897b1e2a2f4 ("selftests/bpf: Fix arena_atomics failure due to llvm
+change") switched them to __c11_atomic_fetch_*() with memory_order_relaxed
+to dodge the limitation patch 1 removes. They now check the old
+value via __sync_fetch_and_*(), while keeping one __c11_atomic_fetch_*()
+per operation with the result discarded so the non-fetching lowering does
+not lose its only coverage. A new fetch_r0 test pins the two register
+assignments the JIT special-cases, and both also go into the uaf test,
+since the BPF_REG_AX substitution only reaches the exception table when
+such an access faults. x86 is dropped from the uaf exclusion list.
+
+Patch 3 drops the hand-rolled cmpxchg loop in sched_ext's cid.bpf.h, which
+only existed because of the x86 restriction patch 1 removes, and uses the
+fetching atomics directly. The loop was not a portability fallback either:
+arm64 without LSE rejects every arena read-modify-write including CMPXCHG,
+so it does not work there, and riscv without Zacas rejects only CMPXCHG, so
+it is strictly worse than a fetching OR there. Note the arena form costs an
+extra locked CMPXCHG on x86-64 per patch 1, and cmask_set()/cmask_clear()
+pay for a fetch whose result they discard.
+
+Puranjay Mohan (3):
+  bpf, x86: Support fetching AND/OR/XOR atomics in arena
+  selftests/bpf: Test fetching AND/OR/XOR atomics in arena
+  sched_ext: Use fetching atomics for cmask instead of a cmpxchg loop
+
+ arch/x86/net/bpf_jit_comp.c                   | 236 ++++++++++++------
+ tools/sched_ext/include/scx/cid.bpf.h         |  79 +-----
+ .../selftests/bpf/prog_tests/arena_atomics.c  |  41 +++
+ .../selftests/bpf/progs/arena_atomics.c       | 167 ++++++++++---
+ 4 files changed, 337 insertions(+), 186 deletions(-)
 
 
-
-On 25/09/2026 01:04, Herbert Xu wrote:
-> On Thu, Sep 24, 2026 at 11:47:33AM -0700, Usama Arif wrote:
->> The inline lookup and insert helpers receive the rhashtable parameters by
->> value. With a static const parameter block, key_offset and key_len are
->> compile-time constants at the call site.
->>
->> The default comparison throws that information away by reading both fields
->> back from ht->p. Fixed-size keys consequently load the parameters and call
->> bcmp() for every object in the bucket, even when the compiler could use
->> scalar comparisons instead.
->>
->> The commit "sched_ext: Specialize the DSQ hashtable compare" [1] resulted
->> in a 2.9x faster DSQ lookup after replacing this path for its u64 key
->> with a scalar comparison. Doing that through obj_cmpfn requires every
->> fixed-key user to provide its own callback.
->>
->> Pass the call-site parameters to rhashtable_compare(), as
->> rht_key_get_hash() already does. Use them when key_len is a compile-time
->> constant. Retain the ht->p path for dynamic parameter blocks. A constant
->> zero key_len continues to take the runtime length from ht->p.key_len.
->>
->> This specializes the default comparison for all fixed-size users. With
->> Clang 22 on x86-64, bcmp() disappears from sched_ext, mac80211, NFSd,
->> TIPC, NFQUEUE, VFS superblock, pidfs, SysV IPC and hardware-breakpoint
->> table paths. The affected build_policy.o, sta_info.o and nfsd filecache.o
->> text shrinks by 512, 400 and 352 bytes respectively. Four- and eight-byte
->> keys become direct scalar comparisons; six-byte MAC addresses become a
->> four-byte and a two-byte comparison.
->>
->> Measure the VFS case with ustat() on a mounted ramfs. This exercises
->> user_get_super() and its super_dev lookup. Across ten interleaved baseline
->> and patched VM boot pairs, with five 3 million call samples per boot, the
->> average per-boot median latency drops from 477.2 to 462.6 ns per call, or
->> 3.0%. All ten pairs improved.
->>
->> No functional change intended.
->>
->> [1] https://lore.kernel.org/all/20260921171928.1639407-1-usama.arif@linux.dev/
->>
->> Suggested-by: Mykola Lysenko <nickolay.lysenko@gmail.com>
->> Signed-off-by: Usama Arif <usama.arif@linux.dev>
->> ---
->>  include/linux/rhashtable.h | 20 +++++++++++++++-----
->>  lib/rhashtable.c           |  5 +++--
->>  2 files changed, 18 insertions(+), 7 deletions(-)
-> 
-> Nice work, I'm glad that someone is looking at the assembly :)
-
-Hi Herbert,
-
-Thanks!
-
-> 
->> diff --git a/include/linux/rhashtable.h b/include/linux/rhashtable.h
->> index 57a2a29bef0e8..c9872965b753c 100644
->> --- a/include/linux/rhashtable.h
->> +++ b/include/linux/rhashtable.h
->> @@ -598,13 +598,23 @@ static inline void rht_assign_unlock(struct bucket_table *tbl,
->>  	for (pos = list; pos && rht_entry(tpos, pos, member);		\
->>  	     pos = rcu_dereference_all(pos->next))
->>  
->> -static inline int rhashtable_compare(struct rhashtable_compare_arg *arg,
->> -				     const void *obj)
->> +/*
->> + * Use constant params from inlined callers to specialize memcmp(). If params
->> + * isn't constant, it must be equal to ht->p.
->> + */
->> +static __always_inline int rhashtable_compare(struct rhashtable_compare_arg *arg,
->> +					      const void *obj,
->> +					      const struct rhashtable_params params)
->>  {
->>  	struct rhashtable *ht = arg->ht;
->>  	const char *ptr = obj;
->>  
->> -	return memcmp(ptr + ht->p.key_offset, arg->key, ht->p.key_len);
->> +	if (!__builtin_constant_p(params.key_len))
->> +		return memcmp(ptr + ht->p.key_offset, arg->key,
->> +			      ht->p.key_len);
->> +
->> +	return memcmp(ptr + params.key_offset, arg->key,
->> +		      params.key_len ? : ht->p.key_len);
-> 
-> If there is no obj_cmpfn then there is no obj_hashfn.  If there
-> is no obj_hashfn then params.key_len must be non-zero.  So this
-> could become unconditional, perhaps with a comment.
-
-That holds for the params given to rhashtable_init(), but not for the
-params passed to the fast-path helpers. The BPF resizable hashmap
-passes a constant template with no key_len and no obj_cmpfn
-(rhtab_params in kernel/bpf/hashtab.c), and sets key_len only in the
-copy it gives to rhashtable_init(). Without the "?: ht->p.key_len",
-its lookups would memcmp() zero bytes and return the first object in
-the bucket. rht_key_get_hash() has the same fallback for this user,
-see c9429bf56405a. (I added Mykyta the author of that patch in CC.)
-
-
-> 
-> Thanks,
+base-commit: 7af653d4ebf8e2e17e288715cd67ccf7845f4631
+-- 
+2.53.0-Meta
 
