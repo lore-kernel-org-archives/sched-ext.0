@@ -1,206 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C6C4A49A4;
-	Fri, 25 Sep 2026 13:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D978049EC78;
+	Fri, 25 Sep 2026 14:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790344128; cv=none; b=mIxK9NpDLe8mMlPGxKAn8AOOK9LVDOcU6mqAJzL0lq40H+ckkFDPLua1smw6Dpba9H/5K0fXCN88cAp2H0NrxUEU3eeQBUXBHpMuKelHLAzrQjPAKu+AbK2AycStuCnp3b5LznhCYSuTUiEP/uREYBg7MhRnIh3w56MQptZ+zTQ=
+	t=1790347466; cv=none; b=pvMY8OqGl4Be4+sWtk4HHnaCUvEMFs7z/ch5ZG+Muk/+C1QiXP1ZuqHd1M2EOYnwvAkYtsY9Am/SFYQFNlpNPTcwwGkzsg4IB1xnCjpfKikQZ6YncIpTcFSZGPK5wJz6cxsynbUGLe7X1U4Nvw+enwQh0ODJI2E6B3DU/fB/uEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790344128; c=relaxed/simple;
-	bh=UcrWuWhkRMDMY4gnPWAfQUybcFFH3uus77Mh1K3jYTM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsWdIV9EE6zAKiivz7D4G6M7JJNwSjawop+5JZwJNnKaKTnEpu/nyfFT1i/JULFJsVcapFE36cVif0H6l6cK1WbHTVEqaUFvPXK4a405jLbIRdOM6zgPIZ9LRRZSzmpL5cCatUIgBwTGEWXaIPjWqpPyYzvejqzqr2wdU3AH7Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVzIyaOx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790347466; c=relaxed/simple;
+	bh=wAlG2PZUQ7HMa/vYEBrX6a5yFv7nIWgMApGpO21G8JA=;
+	h=Content-Type:MIME-Version:Message-Id:In-Reply-To:References:
+	 Subject:From:To:Cc:Date; b=nLE5gsK92lzvjyHyatrHY5tOtIHBgv0Ywxzi9yXDOrVc85RwiXGCwVJmZsEdr7V/8xTkLYJ5ik/EHAdCo+jlqkkRP3bu4HekggqWijLjArKF3Bbsz3Abgj0IROs+cvrRGFTzeQx0ab4chk1JSFcsVbyhE5KatX8SyI/9uzIhv/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mYVf0ojW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVzIyaOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A54B1F000FF;
-	Fri, 25 Sep 2026 13:48:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mYVf0ojW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889D61F000FF;
+	Fri, 25 Sep 2026 14:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790344126;
-	bh=fPNhIHFch0A4xLlqEVDNSvcYa4zuY/ufThLtXS9JaHI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVzIyaOxtU6qTk1UJow5QnvefCqdk1CFRr/0HR2kaN4CKgHJuV+LbsgbewPBfC9IQ
-	 xPzVF7oRAxcrn3eZ1t/jjjKU1UhtdXQtdm2GPmeSlcCuAGRzLFN95j2oN5nEKSSsnb
-	 yxolG2p+D7bZywp21kld5Z5ZoX1m2bROivdnH9JehBgnSnot0LCUkV6nrgmNimLKFM
-	 K2PWY7kcWUOyee9rglM0hSa/Ax4Xd68kiT9fPM8xXac7vy8L6eJ3hMDwPYPEl4Ohur
-	 MB5o2tsH10Jlz7nszkk3lYU4BJGbSUrL6KaTyRqZ7atubW08d/i5HvWg22eOb5YGCS
-	 uSljaMjJuJXbA==
-From: Puranjay Mohan <puranjay@kernel.org>
-To: bpf@vger.kernel.org
-Cc: Puranjay Mohan <puranjay@kernel.org>,
-	"Alexei Starovoitov" <ast@kernel.org>,
-	"Daniel Borkmann" <daniel@iogearbox.net>,
-	"Andrii Nakryiko" <andrii@kernel.org>,
-	"Martin KaFai Lau" <martin.lau@linux.dev>,
-	"Eduard Zingerman" <eddyz87@gmail.com>,
-	"Kumar Kartikeya Dwivedi" <memxor@gmail.com>,
-	"Song Liu" <song@kernel.org>,
-	"Yonghong Song" <yonghong.song@linux.dev>,
-	"Tejun Heo" <tj@kernel.org>,
-	"David Vernet" <void@manifault.com>,
-	"Andrea Righi" <arighi@nvidia.com>,
-	"Changwoo Min" <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH bpf-next v3 3/3] sched_ext: Use fetching atomics for cmask instead of a cmpxchg loop
-Date: Fri, 25 Sep 2026 06:48:22 -0700
-Message-ID: <20260925134828.2012199-4-puranjay@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260925134828.2012199-1-puranjay@kernel.org>
-References: <20260925134828.2012199-1-puranjay@kernel.org>
+	s=k20260515; t=1790347459;
+	bh=c2ixQHgTlgBB99aXGpdz0JZkUKgNTS6JeLZqcHbd5j4=;
+	h=In-Reply-To:References:Subject:From:To:Cc:Date;
+	b=mYVf0ojW9fzJxUn9o8DEcdsQmNr+JhjF7+UtnyTJBIQdSsEDqQIMAJMXIacwX2+kU
+	 dbnQqzkgga3PLMUpgVsh01VnAvRS2y7IZeERTT7ff8U6Dp/dtRajJEjCwh7DBNhHIt
+	 amplWJ8PcuG/Ji9vWBCNcPVGOywCDWiertxSLmd6SBzRczNWoKq+NHqvCLs/2hj92Q
+	 VJot9HsoU7FBBjpX++JKZZO7QB9FWZko5DfiZupn/eBZAq5RVVsSJjpxMKzWZpL3yX
+	 pZQktm8Rw2wF7Ph9UmAm6IYmnFYxxs7jdsPf8nsW+iV+seb/hFEUCLMXX/RTbRj/rR
+	 baezkCxO9AzdQ==
+Content-Type: multipart/mixed; boundary="===============3453175654668812954=="
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-Id: <9dae67ce8cecd567b3ca1de28f497be5ecfae3b5b3d94520ae52eefa3662b42d@mail.kernel.org>
+In-Reply-To: <20260925134828.2012199-3-puranjay@kernel.org>
+References: <20260925134828.2012199-3-puranjay@kernel.org>
+Subject: Re: [PATCH bpf-next v3 2/3] selftests/bpf: Test fetching AND/OR/XOR atomics in arena
+From: bot+bpf-ci@kernel.org
+To: puranjay@kernel.org,bpf@vger.kernel.org
+Cc: puranjay@kernel.org,ast@kernel.org,daniel@iogearbox.net,andrii@kernel.org,martin.lau@linux.dev,eddyz87@gmail.com,memxor@gmail.com,song@kernel.org,yonghong.song@linux.dev,tj@kernel.org,void@manifault.com,arighi@nvidia.com,changwoo@igalia.com,sched-ext@lists.linux.dev,linux-kernel@vger.kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
+Date: Fri, 25 Sep 2026 14:44:17 +0000 (UTC)
 
-cid.bpf.h implements cmask_set(), cmask_clear() and the test_and_
-variants with a bounded cmpxchg loop, because the x86 BPF JIT used to
-reject BPF_OR | BPF_FETCH and BPF_AND | BPF_FETCH on arena pointers.
+--===============3453175654668812954==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-It no longer does, and the loop was never the portability fallback its
-comment claimed. A JIT that turns down a fetching OR or AND in an arena
-turns down CMPXCHG there too: arm64 without LSE rejects every arena
-read-modify-write, so the loop does not work there either. riscv without
-Zacas is the other way round and rejects only CMPXCHG, which makes the
-loop strictly worse than the fetching insn on that configuration.
+> diff --git a/tools/testing/selftests/bpf/progs/arena_atomics.c b/tools/testing/selftests/bpf/progs/arena_atomics.c
+> index 73bc2b835f3f..3beca5eab387 100644
+> --- a/tools/testing/selftests/bpf/progs/arena_atomics.c
+> +++ b/tools/testing/selftests/bpf/progs/arena_atomics.c
 
-Native fetching OR and AND are therefore accepted everywhere the loop
-was, and in one place where it was not. Use them, and drop
-CMASK_CAS_TRIES along with the error paths that could only be reached
-from a loop that no longer exists.
+[ ... ]
 
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+> @@ -91,13 +91,22 @@ int sub(const void *ctx)
+>  	return 0;
+>  }
+>
+> -#ifdef __BPF_FEATURE_ATOMIC_MEM_ORDERING
+> -_Atomic __u64 __arena_global and64_value = (0x110ull << 32);
+> -_Atomic __u32 __arena_global and32_value = 0x110;
+> -#else
+> +/*
+> + * Discarding the result of an atomic RMW is what selects the non-fetching
+> + * insn, so keep one of each width per operation to cover that lowering too.
+> + * Declared together rather than per operation to keep them in one place.
+> + */
+> +_Atomic __u64 __arena_global and64_noreturn_value = (0x110ull << 32);
+> +_Atomic __u64 __arena_global or64_noreturn_value = (0x110ull << 32);
+> +_Atomic __u64 __arena_global xor64_noreturn_value = (0x110ull << 32);
+> +_Atomic __u32 __arena_global and32_noreturn_value = 0x110;
+> +_Atomic __u32 __arena_global or32_noreturn_value = 0x110;
+> +_Atomic __u32 __arena_global xor32_noreturn_value = 0x110;
+> +
+>  __u64 __arena_global and64_value = (0x110ull << 32);
+> +__u64 __arena_global and64_result = 0;
+>  __u32 __arena_global and32_value = 0x110;
+> -#endif
+> +__u32 __arena_global and32_result = 0;
+
+Can this ordering still build on clang-17?
+
+The file's existing clang-17 guard (lines 379-402) says clang-17 crashes
+if the .addr_space.1 ELF section has holes, and works around this by
+declaring variables as 64-bit. Before __BPF_FEATURE_ADDR_SPACE_CAST is
+defined (clang 19+), __arena_global expands to SEC(".addr_space.1"), so
+all of these globals go into that section.
+
+Before this commit, the layout had no holes: add/sub (96 bytes), then
+and32/and64/or32/or64/xor64/xor32 filled 96-132 continuously, then
+cmpxchg32 x3 at 132-144 and cmpxchg64 at 144.
+
+After this commit, the three _Atomic __u64 noreturn values fill 96-120
+and the three _Atomic __u32 noreturn values fill 120-132. Then
+and64_value needs 8-byte alignment, creating a 4-byte hole at 132-136.
+The and/or/xor blocks (u64 value, u64 result, u32 value, u32 result) fill
+136-208. cmpxchg32 x3 fill 208-220, then cmpxchg64_value needs 8-byte
+alignment, creating a second 4-byte hole at 220-224.
+
+clang-17's BPF backend pads these holes with code nops. BPF writeNopData
+only handles multiples of 8, so the build fails with 'fatal error: error
+in backend: unable to write nop sequence of 4 bytes'. This is the same
+failure the x86_64-llvm-17 CI job hit when load-acquire tests were added
+(see lore message Z6a_UILNqVGBqnvY@google.com; fixed only in LLVM
+f27c4903c43b, clang 18+).
+
+Could the __u32 globals be reordered to avoid these holes? For example,
+moving xor32_noreturn_value from the grouped block to just after
+xor32_result, next to the three cmpxchg32 values, would give runs of 2
+and 6 u32 values instead of 3 + 3, eliminating both holes. Alternatively,
+the existing clang-17 pattern (declaring them as 64-bit) could be used.
+
+[ ... ]
+
+
 ---
- tools/sched_ext/include/scx/cid.bpf.h | 79 +++------------------------
- 1 file changed, 8 insertions(+), 71 deletions(-)
+AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
+See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
 
-diff --git a/tools/sched_ext/include/scx/cid.bpf.h b/tools/sched_ext/include/scx/cid.bpf.h
-index 69fb4e97bc771..d0d4cea19e29f 100644
---- a/tools/sched_ext/include/scx/cid.bpf.h
-+++ b/tools/sched_ext/include/scx/cid.bpf.h
-@@ -3,8 +3,8 @@
-  * BPF-side helpers for cids and cmasks. See kernel/sched/ext/cid.h for the
-  * authoritative layout and semantics. The BPF-side helpers use the cmask_*
-  * naming (no scx_ prefix); cmask is the SCX bitmap type so the prefix is
-- * redundant in BPF code. Atomics use __sync_val_compare_and_swap and every
-- * helper is inline (no .c counterpart).
-+ * redundant in BPF code. Atomics use the __sync_* builtins and every helper
-+ * is inline (no .c counterpart).
-  *
-  * Included by scx/common.bpf.h; don't include directly.
-  *
-@@ -129,101 +129,38 @@ static __always_inline bool cmask_test(u32 cid, const struct scx_cmask __arena *
- 	return *__cmask_word(cid, m) & BIT_U64(cid & 63);
- }
- 
--/*
-- * x86 BPF JIT rejects BPF_OR | BPF_FETCH and BPF_AND | BPF_FETCH on arena
-- * pointers (see bpf_jit_supports_insn() in arch/x86/net/bpf_jit_comp.c). Only
-- * BPF_CMPXCHG / BPF_XCHG / BPF_ADD with FETCH are allowed. Implement
-- * test_and_{set,clear} and the atomic set/clear via a cmpxchg loop.
-- *
-- * CMASK_CAS_TRIES is sized so exhausting it means seconds of real spinning
-- * on one word - past any plausible contention. Abort hard.
-- */
--#define CMASK_CAS_TRIES		(1U << 23)
--
- static __always_inline void cmask_set(u32 cid, struct scx_cmask __arena *m)
- {
--	u64 __arena *w;
--	u64 bit, old, new;
--	u32 i;
--
- 	if (!__cmask_contains(cid, m))
- 		return;
--	w = __cmask_word(cid, m);
--	bit = BIT_U64(cid & 63);
--	bpf_for(i, 0, CMASK_CAS_TRIES) {
--		old = *w;
--		if (old & bit)
--			return;
--		new = old | bit;
--		if (__sync_val_compare_and_swap(w, old, new) == old)
--			return;
--	}
--	scx_bpf_error("cmask_set CAS exhausted at cid %u", cid);
-+	__sync_fetch_and_or(__cmask_word(cid, m), BIT_U64(cid & 63));
- }
- 
- static __always_inline void cmask_clear(u32 cid, struct scx_cmask __arena *m)
- {
--	u64 __arena *w;
--	u64 bit, old, new;
--	u32 i;
--
- 	if (!__cmask_contains(cid, m))
- 		return;
--	w = __cmask_word(cid, m);
--	bit = BIT_U64(cid & 63);
--	bpf_for(i, 0, CMASK_CAS_TRIES) {
--		old = *w;
--		if (!(old & bit))
--			return;
--		new = old & ~bit;
--		if (__sync_val_compare_and_swap(w, old, new) == old)
--			return;
--	}
--	scx_bpf_error("cmask_clear CAS exhausted at cid %u", cid);
-+	__sync_fetch_and_and(__cmask_word(cid, m), ~BIT_U64(cid & 63));
- }
- 
- static __always_inline bool cmask_test_and_set(u32 cid, struct scx_cmask __arena *m)
- {
--	u64 __arena *w;
--	u64 bit, old, new;
--	u32 i;
-+	u64 bit;
- 
- 	if (!__cmask_contains(cid, m))
- 		return false;
--	w = __cmask_word(cid, m);
- 	bit = BIT_U64(cid & 63);
--	bpf_for(i, 0, CMASK_CAS_TRIES) {
--		old = *w;
--		if (old & bit)
--			return true;
--		new = old | bit;
--		if (__sync_val_compare_and_swap(w, old, new) == old)
--			return false;
--	}
--	scx_bpf_error("cmask_test_and_set CAS exhausted at cid %u", cid);
--	return false;
-+	return __sync_fetch_and_or(__cmask_word(cid, m), bit) & bit;
- }
- 
- static __always_inline bool cmask_test_and_clear(u32 cid, struct scx_cmask __arena *m)
- {
--	u64 __arena *w;
--	u64 bit, old, new;
--	u32 i;
-+	u64 bit;
- 
- 	if (!__cmask_contains(cid, m))
- 		return false;
--	w = __cmask_word(cid, m);
- 	bit = BIT_U64(cid & 63);
--	bpf_for(i, 0, CMASK_CAS_TRIES) {
--		old = *w;
--		if (!(old & bit))
--			return false;
--		new = old & ~bit;
--		if (__sync_val_compare_and_swap(w, old, new) == old)
--			return true;
--	}
--	scx_bpf_error("cmask_test_and_clear CAS exhausted at cid %u", cid);
--	return false;
-+	return __sync_fetch_and_and(__cmask_word(cid, m), ~bit) & bit;
- }
- 
- static __always_inline void __cmask_set(u32 cid, struct scx_cmask __arena *m)
--- 
-2.53.0-Meta
-
+CI run summary: https://github.com/kernel-patches/bpf/actions/runs/36144954909
+--===============3453175654668812954==--
