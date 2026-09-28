@@ -1,61 +1,64 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011007.outbound.protection.outlook.com [52.101.52.7])
+Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010043.outbound.protection.outlook.com [52.101.85.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26428412BF7
-	for <sched-ext@lists.linux.dev>; Mon, 28 Sep 2026 06:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71E847CC9E
+	for <sched-ext@lists.linux.dev>; Mon, 28 Sep 2026 09:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790576798; cv=fail; b=Rr67f24Off4ISJGmDK9RvvyVM+R0SYSPAj7poQVj0R3rrMcSO3ybH3hQuM4JLtVO5j1rvYYZNwtmzGqVu8weHnZEmqZc6LuOB1A34yhU5/VXJYh/EnmtNIsSlTrXD/AnTkzcSvbXO49BL4UJYb1anzstKjTe+sVl01wUm79LD/I=
+	t=1790589381; cv=fail; b=McwByBg+bxoAOOrTfsblyejCq117cnFJlnsS8NN5OV40UI49Nl5Rqqf4AGt4U5o6psZqG8F9hFxEgcD/fgNcvOPdH910SPYBCqEqAkpdQPDUwczV8kqu6+gznJLy9J9kPPvlT15f+qUgMPJwORe5+fUR4BjKjk3C6nrX0Mxbjuk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790576798; c=relaxed/simple;
-	bh=JePT06tIm6tgoV7Ovg9xxuFXqUxP8CLgRJ2FWbXcPKU=;
+	s=arc-20240116; t=1790589381; c=relaxed/simple;
+	bh=QIqHklMevGe6ODzyeExUqSVH1uPq527fdYPC11RiK8s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=N1QAb8O+Je97KcAxW9FiU0kSideAInQPoXMpsMRVsnQiLag4oCpJKX56GnSwoy8SeJshd9MA1yyOd20Qi4xZ8EvvNAzKyz+IeHAaZzndz47khtVtWiVrmOHkRwI+CxWIC/K9mlw1pKoRA1bXroIZcB2Et6IkS+Jm+agrK7R4Qrs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jVQg9fyb; arc=fail smtp.client-ip=52.101.52.7
+	 Content-Disposition:In-Reply-To:MIME-Version; b=dtUSkAeqwo4IM6+zupHSoZthj26wUw1leTSMhFYJZPAjxr0UAa3tksCTYuto2YedHgq+NPMl81voYy0PrtGSyVI2ie1zZfZIvTqSjDJ5NH4yBTH6ZnWnYptfx7DUquNs6Ue+WS66Cijz8ZmDod8e630zOyFUfoj2bIJaQMJP82c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=oaFQPmk9; arc=fail smtp.client-ip=52.101.85.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jVQg9fyb"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="oaFQPmk9"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Oo7hrfmgiNjEAXIUD1buu3QmZJnpATYhWjqC8iwa6IDMhdMCop7f6i2rHeyDtTYEspD1cFeEMjaNEghuzw03Z/ZP8vpbYLxExG+1DpBXDI3ktaO2gSTN5Qhdd9Efw/Q8CabNh1C7wMX+Sf+gCc9dKA4lXcl6FWyHfMoVi9khVOiYViLyoJH+hPDE36iI/EXYozCXCZw3hIRLfySsjAC5UrbImaE7b9S4sego7qjSURD/gA8KmFrChON7rKYNi/47qnUhJ/q03nBSonjmtBP5I3jgxBmrnahB6M5tcTj5FYJRWtgJ6CA61cwh8C95QhIFO2/5bAez0wtm2OvN7WXVgw==
+ b=bMra+uG0qCDlSxl6QQYKO/legceqsh+tMQE5jqv/3o6mf54xHxjiNAwHyBG7iKsw5lzs/HKHrqq+XVZkMQA3EWCrcLBmr4pCsuez1N2Y5wpJwJ43QtZ5ZtRaFCXOX4wx6iL03mEbCNo82Ud1HpZuaCzxVVICMALN43AOQqQlNhR/00tYwm+Id8F6ITEzkntRq+VbW5vwfiSzlDmM/aYUk0X02MuFOfzlhwajyNlZZEiz2sHwMBGv6k/ZRgy9YdGC1LrTVa0MTKFAfHw9s21WN+OaA4imMpfdYg1UlL2KOWyMKPCTvAkgWM4YsgyP1n0LMZkfdwPT0y9qmx+w76kcWQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ScNISTr68T5LnXKOF7WP61DLECV+DUC4p59s0q2mgn0=;
- b=r15Z/Wg8Ox32oNTnWoJkjsRtvUBiuLexmnxtHAjy2Ekzhom3YSpul1fLZPKeFiyyWMkI5RowTGMOWYRDalK7V1EyfnMXnOU4yZQ+zWPR76FzxV1gYldOluzALeLUG5r8ureUS4w+2acKjJ2k5PlkWWaUznrVWSopazmZRQqXBsYzXHoL9/IjuiLOGXwxG5njQdt74hDPejIM8OCBrrfLxpEiB36FFk67YTz4I9HH1zXsTo6HELo7+3jpSIJLsgEMJvCSYggBCOU424aada1S2Lhao05229imnQuOatPwQalqa7IPW/QSC073jyMEQE1DGqa2spHFQQ8Xb9R8ODu6Bw==
+ bh=eWspZCSM2x0jTQdvEHBYdwfoQs+bQFMjCN0vfqifdcI=;
+ b=nqSoTmLV+weYsu18jrlchPWyOGKTbxiObvye0T7Ml3suAudLIrbTsuX9kvY52FqSl7zgkM6HEGpfZDk3SYcIxZkGOJmxGVSfVa5NjkqfZCB32dP2Zqix+3tM/aG1DIdd3Jnyw0coD6mnLS3jSXq9lll/s6oql5ROiAL39yudweojvQeN00GGXMi0E4Uox6Tho0B/+SpgJKH3wBH61kdQEblnzag+eQ6QT2wqJ2udtQltW3BPQWwb/QlarcFlyR5Ckl4Uua00mzWAx8Njnaogsl7l8JjtrW1o+I5/aw8eePbkTMD6fUK4bRyYP2TGP4ZE1KgcD53JHPWubLsYHwk/lw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ScNISTr68T5LnXKOF7WP61DLECV+DUC4p59s0q2mgn0=;
- b=jVQg9fyb8pvGqW+YE+6lyzyW6palD45rLOMmJTW3BVj9Wl+Im0oO6y0kb+o+LdszpLAMJrcF/ncFtIAFzbjiD2cINYVCldIsxkqF6RTS97B2SB6UkVt5I+qdtMiHxz9IF1V97qDJuxIQFjprBpV7P8vIU3p3Tyb23bLojAC/+mdJMqqypfcWhCJW8dDWBGwdfIwJo7FhyMFagQHoeM2mF0LmEpQQMgcEdYv6ZehDpi2qRmzpv5Fe3Z0NbMEFOl0MJsa80jrV8KFbENPZ1j0osjb2TEUtTi7luh0xEB31Dj82bbEL+Fttb3MFecLEhmTF3CVcXIvcxC5qyWOmCW2nNg==
+ bh=eWspZCSM2x0jTQdvEHBYdwfoQs+bQFMjCN0vfqifdcI=;
+ b=oaFQPmk9BgaECos7gOk5UwNwqU7nOIeQoWghUah3XFpOw+6mhjmHHpBQfF2zCeDqzdm3VJKa9ST2WGqL/ywa74sJm5f5hy/oMI5fwrP4yCDETy5dXZkRHTT/eXHc6k4b0EK0vTP0BZDZkunREoQ0o4VKYprStMnkXSjTFXr8YjkZp6EGszgZkRVgsUYi3nnRFUNeBJQbpIX0/g3any+fIjs+s1j989IPn+or/L3eaP8AXfDdVx2mbDBOl8oRe2Uk0mEm8sVXNyUUcwx1wvAHL7S0tpYrx8Jql76HaX6wluG6vKeA5R4BwDGWeBjjcuBg9F+pKrxNtjsfSQiWY5mh0Q==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by DS0PR12MB8019.namprd12.prod.outlook.com (2603:10b6:8:14e::9) with
+ by LV3PR12MB9259.namprd12.prod.outlook.com (2603:10b6:408:1b0::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Mon, 28 Sep
- 2026 06:26:33 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Mon, 28 Sep
+ 2026 09:56:14 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%6]) with mapi id 15.21.0451.022; Mon, 28 Sep 2026
- 06:26:32 +0000
-Date: Mon, 28 Sep 2026 08:26:19 +0200
+ 09:56:14 +0000
+Date: Mon, 28 Sep 2026 11:56:05 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Fuyu Zhao <zhaofuyu@vivo.com>
-Cc: tj@kernel.org, void@manifault.com, changwoo@igalia.com,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] tools/sched_ext: Add SCX_OPS_OPEN_OPTS for schedulers
- using open opts
-Message-ID: <aroIi7aE6wdJH3Tv@gpd4>
-References: <20260928030955.12353-1-zhaofuyu@vivo.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	David Dai <david.dai@linux.dev>, Alap Mohan <mohaalap@meta.com>,
+	Joonwoo Park <joonwoo@meta.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.3-fixes] sched_ext: Fix CPU hotplug hang
+ when a dying CPU's tasks sit in the BPF scheduler
+Message-ID: <aro5tQ5gsoOdHeyO@gpd4>
+References: <20260923223825.734003-1-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260928030955.12353-1-zhaofuyu@vivo.com>
-X-ClientProxiedBy: MI0P293CA0009.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::6) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260923223825.734003-1-tj@kernel.org>
+X-ClientProxiedBy: ZR0P278CA0214.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:6a::9) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -64,68 +67,102 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|DS0PR12MB8019:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9add081a-c2f6-4658-7cdd-08df1d29704c
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|LV3PR12MB9259:EE_
+X-MS-Office365-Filtering-Correlation-Id: 377dad82-9c6e-4de8-29b6-08df1d46bb65
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|22082099003|18002099003|56012099006|11063799006|10067099003;
+	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|18002099003|22082099003|10067099003|56012099006|11063799006|5023799004;
 X-Microsoft-Antispam-Message-Info:
-	nC0+KkjkjIZwvb6sOaZZ9ULfzYq8515EV+80ccYahRXaF6N74yuK7q8tNuNfz0kIaitF7MTUxZR4MQM9GPhlvxnSbSnYtm0HZLk+6nmzyOhtgTYc8ctjVA6Hb9CRF9W3CtPFU5CFb/uqwLm5gyW/827KuJl5fRq2VbVMQrNz4HtRZOJcjTvIs5kCwG96i3k+tptnMVB2klSFU5ll/psaARuB6ncjKPrvxpXyehjSeAbImRTC00fnRbpX/mdGEbelbnGpmr+AzqmvzzNeI5jwJDKSGdjGmBbV+QMAyIfJ8BAYK9hk3obphJTxna7Q1PRc6Dx4W+/rCPb3Ww6IJycAWRrxhBskZL88s1NcXbWAJyHq00YG+uOwLWEqy6RVZiiq3m8yxMpXNVx9rOmVfII0wFMieaFwp/CWIYkdA+sHEkR7ni3vZMT01tibCH/QBTGuXjzjeSmJ3dY5D1truc6YWiGQ+JEWMx/Mz743CmtzTtTNPmJjuDWZ+O9VAJwfE4dgIyekv+S1QnYPC76ZYbDryAmIyWESQaqkSGwENqDLk+9LR60cvGn7qmx879ICabZykTdaU5DWAiSh7T4yWOfQFe9pIMSkhMlr1say7T8CB4/EyPnq4bQQJ7pYuoSL4jDuVX210tFTlQ3zPghvlOS/31qR951RqKnfxdEkKDdVnE8=
+	SOHtTD7QHsgjkVGXrJatScnAYcDzJnB+PYRMOZcWQcJhgyfxFUsnw9H0BMHSki8samitax59Sk5cZhOHRsrNNllGQ8UWed0i824CEbPGrs5j0TEmYpBqNAHHgE5p0AMmV88dpTPwlxXEKgWf53DnWDooP/QZIqCL7D6OWgowaL0fcGMk4HvcljDewZcQMcqeH54PppUtRhTwoOaRhkNdM9etD1rBKuf/dQdHIvVzc4/3TCDpJc+G450vpegBWmt67koiBPzOSTKnHDSibXHSqdW0bA9jjVrJaL08DXgLVHCjEp/prFsmHEk5iUWOeFaBicsSi0uxh+0VzPIn3XJvAaOyx8NEJou7unCY6FyhlkKzCl1QW8y2reO4sMYyckoZs8zHP3dF284HPuX/zhT0B1Qc7laLQqBUXbuPbn9g1qYtdf5ArSxif+PxXl5X6zmFw3qisy5qlNnr7i8gIpd8io2HDrVVgesw9508E9jmRGLD4ZBwtSdDS12C/Ahf5avstsEc+bBrHlXNoLbx2EH60+n6wccB1Frg/ezeJKUsPdK693dSWWm9HVSPM2+8isA2Si44nZU3ZVlEYV8P0ojm9hIyNoa/YSqtNlK/kwpLmBFG1IJk7M8mrXQecNndVQ2x/CbIh/8chgkNQ+KdvpzhLlvpvM4RCFdNPfnNy4SyZYM=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(22082099003)(18002099003)(56012099006)(11063799006)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(18002099003)(22082099003)(10067099003)(56012099006)(11063799006)(5023799004);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?upmgV6idoyuhF71jaqJU5s2wNUt671GWPgKhRmISZCZhVtyVk/QBmO343QHS?=
- =?us-ascii?Q?vomandFJZ6a7G6mOqiIRn9BW3rcys1+JPwZdqQXfr50peJqG6jZWD9RtCpfB?=
- =?us-ascii?Q?yWgU/UMeokQQ8iwIUNpCeMB+HaIfrgCaxb4Fhd8HWnX/TjPV0EqFuKario18?=
- =?us-ascii?Q?4zT5yuJz9lmpIbmBNeDJIsGWTDkTJcdWDcdWB2Q4b4lBUly/N/RetxpJHrBC?=
- =?us-ascii?Q?++lyG8CQkvdsJhWGkwSZH1pEWg/DsTZiHl1ZrsrlfQBviKKoiUhOawyN0BcX?=
- =?us-ascii?Q?9M/vAzpZy0s7yYiSNHTUIbOcDqpsvfv5f7aPNBA98jrQF6w4wLpR61XRx8WM?=
- =?us-ascii?Q?YqosVVzPVlAuvQvu4MNC8vPMO2Rwgvq1V/qabXy9dsLkM63SYdxC/Ujo+WHY?=
- =?us-ascii?Q?pDe8pImx4amRjMLnw6XseJwEHzkiHcPAsj4P0s9p1gPGG2m2FKnTXvcVM4A8?=
- =?us-ascii?Q?JuCxOBrg7jkoLX4Lw140N3Ez9lqqlmPbG4gv4riq2zO0mQbn4dwHhUmIupRx?=
- =?us-ascii?Q?QxUbWkdwUQxTVfSJKUY7moRoD058afUn3SPbQO2sR+j8SLh24kOxcDa5bvYe?=
- =?us-ascii?Q?q0tsVtrpyTNZGUzXXkG746WQ/q6orcEer9XJZZ772k9qwfBw5CMVxdzMu5IE?=
- =?us-ascii?Q?Fit28zSxYn427YB/IIF8ZPkdb3CY+XuITL83UKitvwhsaJTtYRS3W0b8PlJf?=
- =?us-ascii?Q?zVtuSPRFpV6S6lsP3CMqujXrT85pZ75uZKbvU2zeFLizw1mTn0TtJKkOQhFx?=
- =?us-ascii?Q?nZCLtSzBg49WwguttAFyDz19kqHKCC8zirWdUsraZuenhW5UT8X9Jx/59msv?=
- =?us-ascii?Q?FIsU2HvtFBz16fuW/Pi4O90Cr7OyzfCJhSAveQMxb2Ulg/Ax6FoMJL+ftJOU?=
- =?us-ascii?Q?EFFKvSXlqHXYae0CNPqYzsIOBB2+WAYfamG0L9zic32RsQPK4IHywzkGcZGM?=
- =?us-ascii?Q?wAtARxfhMtE7Uv4ewE03tvSaAHy1QgNfh1XZfioW9s9FANZCckivnOzaq10h?=
- =?us-ascii?Q?JCsS5EJQ79YDWOyRa/4R6/IHY/sPdo0l9oRpiuYLMZp1yk4tO8MHM8aW+JrA?=
- =?us-ascii?Q?yFFhy4SMjnDx9X2iqdmgzTvURD2tFIoF3AWR9iEF9U/acasQJoo6xkUf2D1J?=
- =?us-ascii?Q?hyzCc02c6pfrmxYSWr8Pe/sS5KU8IifClIzIU1eAMvTo3Snfy0ql2CNVHzBs?=
- =?us-ascii?Q?bX4VJhLWj01SwdjpaP0c6wxW3wQzuhF4rIl0v5Cj0uf97wkFrSRkyQiZ9aJ/?=
- =?us-ascii?Q?YggFTUdEeOx0+t0RAf2y0iFteiI+i32E8zEQlYbeeL3qOHKCXTMcRAy9pwaJ?=
- =?us-ascii?Q?veIcdUWwXCv4UmtCj4EJHMYKeUFmZo1nWVl36f3na3XeegZp4xF7TzuH6J7n?=
- =?us-ascii?Q?v3liJ8m2Jz+URd8LjoVDuEtvUYxOEP+I5ywvGzvZ4Eg3Pa7abQMc1/33i7Hm?=
- =?us-ascii?Q?IW2iXk4CcyTfI1bbPHYpaZDhx8RK0p4sumaLa92uCMt/gDc6jD5+zMBOpbB5?=
- =?us-ascii?Q?HX7pHTccURWYtBp45V+pNk3bvVZN/vn4oPkMumfFIsl3640ywWXZ0/VZR/KK?=
- =?us-ascii?Q?huIvNcxsKMOKFGKuMdu7t4Uw1KTaVMeCBy4N3w2efCcp7vRxR4Few3fhJZ6L?=
- =?us-ascii?Q?Cx7twHv0i0xNfDOBtyxPam/qkUkczFIzXs2XDRxR9qBND3Zx0AhF5gnGQyOD?=
- =?us-ascii?Q?u7osLfRqanmWI68Upzjr34SXzzUBUeB3HT8UJbhivxVXRuqVQQP9TuT+L61P?=
- =?us-ascii?Q?zzZm0l2R6A=3D=3D?=
+	=?us-ascii?Q?9UNTUpg5PeV5ZAvFY0BmEuvVnhjXw9jgt9JegidaZyGhCRpsjxrkbbwNUBsO?=
+ =?us-ascii?Q?zlZhMPBk/PCryLv8u2n7gN6mvQtD3CyR3XmOSYJ/xElaiL8oQ+oL02hvYeu5?=
+ =?us-ascii?Q?ixDJcOHIGvjF3JXJC97CEdLpOIAiV0SJ2mCQGqWnicwMajWi/ULdXE+gVeOc?=
+ =?us-ascii?Q?uUyp4cFS3Bl4i/gxFMvkUiWR//4VZCbpuymX7zLWk+1xiYoxJXlHwDRj8Xyh?=
+ =?us-ascii?Q?oos3kQdfwn7fz5XCUiaDJE2tTB/Yfjg7vsMMHsveWgb7SWDU0+t3lyNg59sJ?=
+ =?us-ascii?Q?FP8anavEvNn3gv0pqXpc5di2p8FIn5NbG1GRjynXLl3avOvjUQ+/qHhQDfGo?=
+ =?us-ascii?Q?C5Xad/rITVRmG4ETq+wwAFRJHyk72UDX8o2BbpUdAfx3BLijKt6szQrPZ3VD?=
+ =?us-ascii?Q?pfuOhxW/4eb+Go+wcQMlWCpXgX3E/i48EITHkP1hS3OgL2NhJCqOmPhzqU7B?=
+ =?us-ascii?Q?9PLBNk8Do0m6i6N7svvz3/9X17ji7MT+DEHb1eCWGqMHvk5JV/BSIzW2CFZ4?=
+ =?us-ascii?Q?dkIMiidOxbUmtQz9BFIiS4Zqkr++YgCODF3lf/CthMlJ2CX7HirZTwdG5fYk?=
+ =?us-ascii?Q?zqQkCTfbr1nHsdHSoYbBI/85dI+9M3ObIuAkEWJ1w+l0B5jOiuCL8OLRvUsZ?=
+ =?us-ascii?Q?VCDvFtYKf626o9tT4E9eRBBcFWSNVdgMdiodocumtHQOwBrU5zkpaAxJFyxg?=
+ =?us-ascii?Q?qh8gTKZKmeikjNyXYCATO8JSNbaZ4TC86YSNjkKFOpZMVuySY6AqSlElgkgQ?=
+ =?us-ascii?Q?5E/VV4ola/WWh4oiaR8pfiOLgVye8zcvqgHFqRhJVysCO7PgdRK/I0EJDU6b?=
+ =?us-ascii?Q?e6i+dFngKUPgMSP+QH4Y+d83BFZCyBot/kZ4E0KdrkHGl+m4hWXQ2W0ooJry?=
+ =?us-ascii?Q?dbBkjS39XmUtgMw365y9ZCg5meIts+SlPvNVMtI/Pswex64ZOe6uiyYlon3r?=
+ =?us-ascii?Q?Uedqgtju2t3hdlmEAWqnvTxJjGRQtfEWuDwwy9EouqfqylfxKJw7OPLE60rx?=
+ =?us-ascii?Q?msP3ya5eTCzSluPfFsvfGzGEFLyBy7VoUmJTYydsu+Bkd5fJ+SkTtFH6onit?=
+ =?us-ascii?Q?DeE7pWW1YrUTffDgFxithZ4R8L6mdQVnT/lyWXSxPZ26xqajtlUknHVtI2AJ?=
+ =?us-ascii?Q?q+f0P+/hRI3XTmaNAqHZm9ulQCdflXgfwyQqE7+vNiwLFiTJea6bTxl7l37K?=
+ =?us-ascii?Q?vDY/VpH70gtbOUSeRwIB1RXpj+f3ZAxmFQaupujkOEb0CC3RweUV1saVCNMN?=
+ =?us-ascii?Q?2IhghjW7QiMJmPQfJKiVPLctn3mSHbowtS0dmO5PK6a4xuFy5HCe8nDLomFM?=
+ =?us-ascii?Q?ZhG0wPd9RwxAHsvuax5QUBw9pNd4Lw6IeJJNkqYogG4MF2Tjo7BBl9ChpZJW?=
+ =?us-ascii?Q?kr1JENu2dgxjp72ZzCwLM1Sdd4CRn6MROjYhBwz2U7vDXdUbE91ntf3lzOeO?=
+ =?us-ascii?Q?b928dvncngl9Yv5QJbOySnoArdJEVdeyI6JcAk/X4w8N2D+yCnEzfMW9OGTj?=
+ =?us-ascii?Q?dIL2UGXp+SBrCx08swWlhEU+UYf7ksiYgHbBVbm0Zpkb7GY7wMcHViO3kV9N?=
+ =?us-ascii?Q?F/KwBqVROyBGFm/2SnW8XHM0IKBxmPt9kRJraFl77g5b2pdq8550d90q41gS?=
+ =?us-ascii?Q?UbB57eiwM14v/SvzMYX51WEb4XknNPIQAlyrgmrC6uw91Ry5b6uUk2ct2SW5?=
+ =?us-ascii?Q?lWab4/5R/1p/krpPcGsNazYA1SXBbOAOoVnu1NcUzi0+OpDUvGh4Q2H7N0IM?=
+ =?us-ascii?Q?wtQs9AliHw=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9add081a-c2f6-4658-7cdd-08df1d29704c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 377dad82-9c6e-4de8-29b6-08df1d46bb65
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2026 06:26:32.6952
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2026 09:56:14.0680
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pih0MWfy4QkJgoLBEKIBjJNMY7H56vV1hIFvkBhjMBjRskQgme+jCGghZAg93pR8ev3RJBl4AvOkwlR3OGI3/w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8019
+X-MS-Exchange-CrossTenant-UserPrincipalName: eFoPdCKEi3HEIfX/P3rnVC2FsyN6FJHHmYpWSEx3hQYqcSF9wduTU8pYY/tthgjK/VPNeJFWhY6OzNhaf/H7Hw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9259
 
-On Mon, Sep 28, 2026 at 11:09:55AM +0800, Fuyu Zhao wrote:
-> Add SCX_OPS_OPEN_OPTS() and SCX_OPS_CID_OPEN_OPTS() to allow sched_ext
-> schedulers to pass bpf_object_open_opts when opening BPF skeletons.
+Hi Tejun,
+
+On Wed, Sep 23, 2026 at 12:39:20PM -1000, Tejun Heo wrote:
+> A CPU going down has to empty its own rq. Its hotplug thread waits in
+> sched_cpu_wait_empty() until nothing else is left, and the only thing that
+> wakes it is balance_push(), which runs from __schedule() on the dying CPU
+> and pushes off the migratable tasks the CPU picks.
 > 
-> This allows sched_ext schedulers using open opts to retain the existing
-> compatibility handling instead of bypassing it.
+> sched_ext breaks this. A task sitting on a user DSQ or held by the BPF
+> scheduler is still counted on its rq, but an inactive CPU no longer calls
+> ops.dispatch() and can't pull the task back. The dying CPU goes idle with
+> the task still counted, and one of two things happens:
 > 
-> Signed-off-by: Fuyu Zhao <zhaofuyu@vivo.com>
+> - Another CPU consumes the task. The rq empties without a __schedule() on
+>   the dying CPU, so the hotplug thread is never woken and cpu_down() hangs
+>   holding cpu_hotplug_lock.
+> - The task is affine only to the dying CPU. Nothing can move it, and the
+>   offline stalls until the watchdog ejects the BPF scheduler.
+> 
+> When the rq goes offline, re-enqueue every task on it that isn't already on
+> the local DSQ. An enqueue on an offline rq lands on the local DSQ, so the
+> dying CPU itself picks the tasks and balance_push() pushes them off, the
+> same as for the other sched classes. From then on no sched_ext path on
+> another CPU can pull a task off the rq.
+> 
+> ops.dispatch() currently stops as soon as the CPU goes inactive, and CPU
+> hotplug then waits for an RCU grace period before taking the rq offline. A
+> BPF-held task affine only to the dying CPU and preempted inside an RCU
+> read-side critical section would block that grace period, and the rq would
+> never go offline. Test SCX_RQ_ONLINE directly so that ops.dispatch() keeps
+> running until the rq goes offline. Only the dying CPU's own hotplug thread
+> clears the flag during teardown, and task_can_run_on_remote_rq() still keeps
+> other rqs' tasks off the CPU.
+> 
+> Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+> Fixes: 991ef53a4832 ("sched_ext: Make scx_rq_online() also test cpu_active() in addition to SCX_RQ_ONLINE")
+> Cc: stable@vger.kernel.org # v6.12+
+> Reported-by: Alap Mohan <mohaalap@meta.com>
+> Reported-by: Joonwoo Park <joonwoo@meta.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+
+This makes sense to me.
 
 Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
@@ -133,73 +170,93 @@ Thanks,
 -Andrea
 
 > ---
-> v3:
-> - Add SCX_OPS_CID_OPEN_OPTS() to support open opts for
->   SCX_OPS_CID_OPEN() (Tejun).
+>  kernel/sched/ext/ext.c     |   22 ++++++++++++++++++++--
+>  kernel/sched/ext/inlines.h |    8 +++++++-
+>  kernel/sched/ext/sub.c     |    4 ----
+>  kernel/sched/sched.h       |    5 +++--
+>  4 files changed, 30 insertions(+), 9 deletions(-)
 > 
-> v2:
-> - Link: https://lore.kernel.org/sched-ext/20260923035613.20099-1-zhaofuyu@vivo.com/
-> - Make SCX_OPS_OPEN() call SCX_OPS_OPEN_OPTS() with 0 as the opts
->   argument (Tejun).
-> 
-> v1:
-> - Link: https://lore.kernel.org/sched-ext/20260922031618.2858-1-zhaofuyu@vivo.com/
-> ---
->  tools/sched_ext/include/scx/compat.h | 16 +++++++++++-----
->  1 file changed, 11 insertions(+), 5 deletions(-)
-> 
-> diff --git a/tools/sched_ext/include/scx/compat.h b/tools/sched_ext/include/scx/compat.h
-> index d2e4384df..3ae6e0ef1 100644
-> --- a/tools/sched_ext/include/scx/compat.h
-> +++ b/tools/sched_ext/include/scx/compat.h
-> @@ -177,23 +177,23 @@ static inline long scx_hotplug_seq(void)
->   * - v7.1:  ops.sub_attach(), ops.sub_detach(), ops.sub_cgroup_id
->   * - v7.3:  ops.rescue_bandwidth_ppt, ops.rescue_quantum_us
->   */
-> -#define __SCX_OPS_OPEN(__ops_name, __scx_name, __ops_struct) ({			\
-> +#define __SCX_OPS_OPEN(__ops_name, __scx_name, __ops_struct, __opts) ({		\
->  	struct __scx_name *__oskel;						\
->  										\
->  	SCX_BUG_ON(!__COMPAT_struct_has_field(__ops_struct, "dump"),		\
->  		   __ops_struct ".dump() missing, kernel too old?");		\
->  										\
-> -	__oskel = __scx_name##__open();						\
-> +	__oskel = __scx_name##__open_opts(__opts);				\
->  	SCX_BUG_ON(!__oskel, "Could not open " #__scx_name);			\
->  	__oskel->struct_ops.__ops_name->hotplug_seq = scx_hotplug_seq();	\
->  	SCX_ENUM_INIT(__oskel);							\
->  	__oskel;								\
->  })
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -2123,8 +2123,8 @@ static void set_task_runnable(struct rq
+>  	}
 >  
-> -#define SCX_OPS_OPEN(__ops_name, __scx_name) ({					\
-> +#define SCX_OPS_OPEN_OPTS(__ops_name, __scx_name, __opts) ({			\
->  	struct __scx_name *__skel;						\
->  										\
-> -	__skel = __SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops");	\
-> +	__skel = __SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops", __opts); \
->  	if (__skel->struct_ops.__ops_name->cgroup_set_bandwidth &&		\
->  	    !__COMPAT_struct_has_field("sched_ext_ops", "cgroup_set_bandwidth")) { \
->  		fprintf(stderr, "WARNING: kernel doesn't support ops.cgroup_set_bandwidth()\n"); \
-> @@ -232,12 +232,18 @@ static inline long scx_hotplug_seq(void)
->  	__skel; 								\
->  })
+>  	/*
+> -	 * list_add_tail() must be used. scx_bypass() depends on tasks being
+> -	 * appended to the runnable_list.
+> +	 * list_add_tail() must be used. scx_bypass() and rq_offline_scx()
+> +	 * depend on tasks being appended to the runnable_list.
+>  	 */
+>  	list_add_tail(&p->scx.runnable_node, &rq->scx.runnable_list);
 >  
-> +#define SCX_OPS_OPEN(__ops_name, __scx_name)					\
-> +	SCX_OPS_OPEN_OPTS(__ops_name, __scx_name, 0)
+> @@ -3731,8 +3731,26 @@ static void rq_online_scx(struct rq *rq)
+>  
+>  static void rq_offline_scx(struct rq *rq)
+>  {
+> +	struct task_struct *p, *n;
 > +
->  /*
->   * Open a cid-form (struct sched_ext_ops_cid) skeleton. The cid form postdates
->   * every op the load-time fix-ups above handle, so none of them apply.
->   */
-> +#define SCX_OPS_CID_OPEN_OPTS(__ops_name, __scx_name, __opts)			\
-> +	__SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops_cid", __opts)
+>  	rq->scx.flags &= ~SCX_RQ_ONLINE;
 > +
->  #define SCX_OPS_CID_OPEN(__ops_name, __scx_name)				\
-> -	__SCX_OPS_OPEN(__ops_name, __scx_name, "sched_ext_ops_cid")
-> +	SCX_OPS_CID_OPEN_OPTS(__ops_name, __scx_name, 0)
+> +	/* sched domain rebuilds call rq_offline with the CPU staying alive */
+> +	if (cpu_active(cpu_of(rq)))
+> +		return;
+> +
+>  	scx_rescue_flush(rq);
+> +
+> +	/*
+> +	 * An offline CPU no longer calls ops.dispatch(). Re-enqueue its tasks
+> +	 * onto the local DSQ so that they run here and balance_push() moves
+> +	 * them off.
+> +	 */
+> +	list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list, scx.runnable_node) {
+> +		if (p->scx.dsq == &rq->scx.local_dsq)
+> +			continue;
+> +		guard(sched_change)(p, DEQUEUE_SAVE | DEQUEUE_MOVE | DEQUEUE_NOCLOCK);
+> +	}
+>  }
+>  
+>  static bool check_rq_for_timeouts(struct rq *rq)
+> --- a/kernel/sched/ext/inlines.h
+> +++ b/kernel/sched/ext/inlines.h
+> @@ -70,7 +70,13 @@ scx_dispatch_sched(struct scx_sched *sch
+>  #endif	/* CONFIG_EXT_SUB_SCHED */
+>  	}
+>  
+> -	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !scx_rq_online(rq))
+> +	/*
+> +	 * scx_rq_online() can't be used. Its cpu_active() test goes false
+> +	 * before CPU hotplug waits for an RCU grace period, and
+> +	 * rq_offline_scx() moves this CPU's tasks to the local DSQ only after
+> +	 * the wait. The grace period can depend on those tasks running.
+> +	 */
+> +	if (unlikely(!SCX_HAS_OP(sch, dispatch)) || !(rq->scx.flags & SCX_RQ_ONLINE))
+>  		return SCX_DSP_NONE;
+>  
+>  	dspc->rq = rq;
+> --- a/kernel/sched/ext/sub.c
+> +++ b/kernel/sched/ext/sub.c
+> @@ -585,10 +585,6 @@ void scx_rescue_flush(struct rq *rq)
+>  
+>  	lockdep_assert_rq_held(rq);
+>  
+> -	/* sched domain rebuilds call rq_offline with the CPU staying alive */
+> -	if (cpu_active(cpu_of(rq)))
+> -		return;
+> -
+>  	/* end the current rescue */
+>  	if (rq->scx.rescue.curr)
+>  		scx_task_slice_ended(rq, rq->scx.rescue.curr);
+> --- a/kernel/sched/sched.h
+> +++ b/kernel/sched/sched.h
+> @@ -4205,8 +4205,9 @@ extern void balance_callbacks(struct rq
+>   * after which it is enqueued again.
+>   *
+>   * Typically this must be called while holding task_rq_lock, since most/all
+> - * properties are serialized under those locks. There is currently one
+> - * exception to this rule in sched/ext which only holds rq->lock.
+> + * properties are serialized under those locks. There are currently two
+> + * exceptions to this rule in sched/ext which only hold rq->lock: scx_bypass()
+> + * and rq_offline_scx().
+>   */
 >  
 >  /*
->   * Associate non-struct_ops BPF programs with the scheduler's struct_ops map so
-> -- 
-> 2.34.1
-> 
