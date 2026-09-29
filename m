@@ -1,64 +1,64 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010001.outbound.protection.outlook.com [52.101.61.1])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012030.outbound.protection.outlook.com [40.107.200.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510E4361941
-	for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 18:31:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0313C54856E
+	for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 18:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.30
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790706674; cv=fail; b=ADo+ywFOQDO15feHt5OUkdn9JeCIcJfGHaBI/yFMRp3iSaVKiw2jppYc7XtIHxzUpaeoW0buhwq5ve8BgBybd2rZIOF+92d4Xd2maNMOKm0gskAZ2+pgSWIUFM/1cxHf5iJntpKtFsql9SodwJcdlj55nfBg25OBfJpYF7bwi4k=
+	t=1790706841; cv=fail; b=AHsEHZhnVQt3KajuG2QSGsdMToqFbUTKu6NT+1Kz3vn/zZSj5bbwBUclzhy7rFpG35+453tstr+Fu2E12JUwEoYF0AwbFwxy+ZR+zK1wXOaqu6ghn/s/VO79Xd7fUtKfvVP9+WdJq7n5otcqd/hpnWJcvXOCfyKi2sOP5EcVv1Q=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790706674; c=relaxed/simple;
-	bh=Z3UeFkUHlIOcP46K+ut+NUCI8LmaLEpFP1qNcEtHjKM=;
+	s=arc-20240116; t=1790706841; c=relaxed/simple;
+	bh=2rK8LKpDh1P+DhCmHsw9FyQfYr6bzzDEpcqgf4bgEAA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=fW7gpO/eZb1aKMvcENYdLkejyyd5TDpFd8E/bV3ihU5f4dBUFK2DTGGrZusVriiV0hYP1rzj3MQArYXXDxh5DMXkjIzw34FdXkBV1AUIyU0JK+HgX7nn4R2k/oVmYEmM5vG0kwMHhlRUUS2CszhbjxuJq9HAo9dMX8W9K3IaxIc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Tkzq09RI; arc=fail smtp.client-ip=52.101.61.1
+	 Content-Disposition:In-Reply-To:MIME-Version; b=sg4QEia++7OVtSwhySmV+Mr5zukJKv2h7BZ6HOtK1zx5YkUJ7QICJGyYJpfvnikeB5MRKO+zGVd6dGpG+ABT7sKR4QM3ypDKug2W45aFPa2EJcNMpdUPh1KWF+KIRo2WwHK9Yui9nQr2kJTBwBHFAc5BsvqxrhLCJMkYFJ/4184=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=EBY1Zf5d; arc=fail smtp.client-ip=40.107.200.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Tkzq09RI"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="EBY1Zf5d"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nlNDOv7aBP+/d3Rj0BSM2Af5HYdTINw2vAAm7M3n9qC/E7/njGynQZ3T+RV+YQ5m4xKKVaQcc6ssvW8x7yOvRyiSEEC4obDcNx9e7pbSKczbqyKhG0KbM9VICBQTTr/NFj8JFt3rxAx8Htl9uVemoHQ6K2EF62qWhuhbdJHADle+WaLn0zoTf5Kf/zxvH5mKBjxUbrG3qQFt74a2uUV/ZBI9pGPig87qLgBod4InBjqMuChAYzLJdWXCxrt9F3UgB9TKB86e3ewWQ3Vi3wQ+xjP5wP07gQX0CscQMY/YOnL2o/egrbSzHe8mMMfJqyC7fgLp0AZxi2014BEvkvKNSw==
+ b=DoAyBFyGdFdlZT7R9/eSHYKinvUXZq+UDJ5AOnPKGWoCUBFN/y2viJp1NH7mjPBH+O05jn72kdHfyz0VyFOlPJ00d9/jsTpsKOzOqvu4truGuz7iEX9beTD5sqvZPB6PjcagPAednCdRqUXXlu4Pt4B7dgHZ+eHebewZIkKZrOGX9LRURgiZQMbJH8B7rxb/utyRYTe1QVgRHYIgoigXDYxr0sUpoSZb+gc+z8gzjxmL2XHn/BPHKDsh6iX+M5g5HwHJKfmUGXfb/rRJaBbZ7j/UO7AiCt7zg4YqOM35Sgp7ZQhpL9V4/+cQUNW3aQvPq6fZqNashn24xtbjfXbfug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M4LMSDsKsGvRVSE1tpG1C4ubaYLNNH7muZmjT8/nqGU=;
- b=Dg5ILZvgDTBeNScoMsofp1kKadk6aiLz6dQ1jfCWcQGkyyE+L4qnAsC0Ot19IK9MKnVbvD9P81Qnr25k8ZtuY0wPVKpfU7/3WiVFyBA3RYnnfNe3dBOncKsPF4b5cjvegAOg/zA61woDUaXqrUm+VRwwihFhSp1u/MXPmwITr67AjniG0aCj2xgt4r0TlNTSnzjNlFy14VlDBeS47ZfJuZgU/0G8EG4QrjwINXj/aTTi5WWcQv4hQeiaLc+YZZ1OMmvrfmadS2czDD7RHeLGk3pwpmHboGsBwODZhurZBZm2BSPEDUpVUjB/AacocmlophdPaOaDgehMdstXrtzszQ==
+ bh=Dh4hJ44zUxXi++rynGcz1zXDqFHRmtEdfy9xJ8yIVFM=;
+ b=DjrO7VZo/DodR/5cupkKVH/7EK1/vQDcBgRmH2KNmziKAQnNKAYYt93E69c2Pkpy7i+pgCM4XeTV7WOg6m3rtlBPT8LNApDW2vG+41xwFqQ0hlV2aCMC3Nj6BJtRxldgmQX1InyhUIgFtGIsnD1uV7iGoBsy5eMTsuNdmgV5d/yaLTVHHydEfXCEUgAVTGKR70ObEYiGfLY0V3h4F/eUty35iJ7V0FPrFAPeh/mOTvRFWDpztRy0Lr/GlkKwub2JcS4pnPQ7T0MAsq+b8a2wkrCio5KXXWAosiLpEz8K76TkBXPx10IHpXCkHk8R8VWw7/sDrdDabxn66zj+kE/v1Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M4LMSDsKsGvRVSE1tpG1C4ubaYLNNH7muZmjT8/nqGU=;
- b=Tkzq09RImxbugNVIOqBCNntU/l1MKfY3c6qaYqnG7k2HE6qxUOwhNWYftYlClCCwLS4UQI1tcn8WS2/OHbc/hPKxrhOCrYG9+uzQXH+hKgCTTl00SJhVMvdY4ADW3bazxPiM6NxidSg1jmV16KwhZ76xDK5fUGtwkSiIlp0/KNfhq3Ja+i17ifI03mFqJH1aVQlFup9lNNhk8if3HXT8xr5Ie22m//OWmkMZTusi61JiA2v4uXqNFM7CinMzThSkwgWmRu1J0ZvBWRmnQ/QUWp2Hf23Ay1JSwt41bkNnlx5uFrscEX5rmz7UX5YaQOagR4Z3n5VtTeNZ4gTWXu8wJQ==
+ bh=Dh4hJ44zUxXi++rynGcz1zXDqFHRmtEdfy9xJ8yIVFM=;
+ b=EBY1Zf5dUVkM38/uJLmsQWdQSAak14+dkdZlvj9Y1cBiHqg8+BWzU0/vX6Xe8cjokArPpy4XfJvABEuHteM7bMGhZ51AWJ6dTjIH1PMhSGYSP7ZgsLy+kLLge0zdbZiBauLuyD7cVNSnBdNSwnUAh8GcYm0H9HHKSYK3vSgKKSABY8nWP+JRd+CL56nRlNVWBT6STsvy8RDKyNblNn44sR+oTyxVKEoALAcJN1uES08MyrTqVK04Dgsh0jK6s4y+fRFKVYnysPKtojR6chSAIS97R/PN3nR5s0bSO9YyJJCakBVNq97op7gFp8eiG58n9ofWD9yfOa9yom5d/K7dxg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by SA1PR12MB5658.namprd12.prod.outlook.com (2603:10b6:806:235::5) with
+ by SN7PR12MB7276.namprd12.prod.outlook.com (2603:10b6:806:2af::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.26; Tue, 29 Sep
- 2026 18:30:42 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
+ 2026 18:33:53 +0000
 Received: from DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
  ([fe80::6261:3040:864b:159c%6]) with mapi id 15.21.0451.022; Tue, 29 Sep 2026
- 18:30:42 +0000
-Date: Tue, 29 Sep 2026 20:30:32 +0200
+ 18:33:52 +0000
+Date: Tue, 29 Sep 2026 20:33:45 +0200
 From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: Kuba Piecuch <jpiecuch@google.com>, David Vernet <void@manifault.com>,
+To: Kuba Piecuch <jpiecuch@google.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Fix missing
- ops.dequeue() on remote local DSQ moves
-Message-ID: <arwDyGUX7Uq_oeHg@gpd4>
+Subject: Re: [PATCH 2/3] sched_ext: Call ops.dequeue() when a task arrives on
+ a remote local DSQ
+Message-ID: <arwEiZVRNlrOosFi@gpd4>
 References: <20260929161730.185271-1-jpiecuch@google.com>
- <46f4b66249f016b675fa16446b2f2f99@kernel.org>
+ <20260929161730.185271-3-jpiecuch@google.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <46f4b66249f016b675fa16446b2f2f99@kernel.org>
-X-ClientProxiedBy: MI0P293CA0003.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::9) To DM6PR12MB4827.namprd12.prod.outlook.com
+In-Reply-To: <20260929161730.185271-3-jpiecuch@google.com>
+X-ClientProxiedBy: MI1P293CA0005.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:2::12) To DM6PR12MB4827.namprd12.prod.outlook.com
  (2603:10b6:5:1d6::14)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,122 +67,145 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SA1PR12MB5658:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8fc6ca03-0ab4-4968-b0a6-08df1e57c49f
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|SN7PR12MB7276:EE_
+X-MS-Office365-Filtering-Correlation-Id: 254d2cb1-a7ad-47f4-6e95-08df1e583637
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|22082099003|18002099003|56012099006|6133799003|10067099003|11063799006|4143699003;
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|4143699003|10067099003|5023799004|56012099006|11063799006|6133799003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	gCdGZxxD+dg/oHG2IaIQJFpWi+G9f/CSYJhFacQHHuS7b4yTJdjHsN891e2zafWygsHUMwRbnzOLKfg8zN3yYB/nu/fQrGYFrcJKfgkGqcpFpIaOjZPguq+JJFqoet1TIIFSxEEp+0ldiJHvK8tjDJEHUc1ONNlo0phCo09qo6MYQDUEmbuzrKqeok7FBmB6ClvrTD9Z/NQs22wAnL96sDTPQT+z6MoiMTRUTEsxpTfnyd3qDsSsHSNhEs1SCinVUrYELUypghe6UevQmhifSCplKhdXRYCosEpkJ4yQD8IxMyCm0/CICUzfTjaYV7mcpxs3kcMgpxxx+ZGsSTaMC83EUTsXnTlLMRYXtdG6HmNbf8+oPBnTkTbvqL4xKnz5U1srnhu4qKkwgiJLUImj/fk28z8jaE8tzOsqCQr14poBE6jmvd0ByqzNd0t4jbueyxnnO5lvdZDBwNr7TKUafrwa3PeCXVcyu8/cv2sOkBrC+AqddGcQ9PlA64yHIIDNJQLwDYj5HcOH0ZpR7//a438L0k6b8UrXIqPAQw9feJh1dPgdCzT5oBMbTIkl0tymMgyo/oYryvk1dtw9cvTWtKZISC7uynhYQhsx8P+TMlJMP3eV7aQqnnt+A95P5JogFsGOAcERnfnjhSlzQ6SraND3WrTokwNtwNMk8/34J6M=
+	/bZwViR7XhA55c9J1wpIBBtjjkOKcZFcE0ena7GP+GTCDbHoWu//9s5ZRhqm9axyXk/wx8nAM+5Qap+0lbZv72hz5I7Z8sXq7b6K/AmdX3+fH9A3abYxp6RuntmB40u72bzxULfiicSSegRHd01PVIcbE1XzMlQi1efPsSMDbHK1aulKP1stvKC0yahQAGyC74t1+9PC5DdLcU+tykwnveLjp/t/FwvyFKJU3/Y2OqkAceaPdjn6ZBXeO7Qvmp1wyF07VuYdtQ2DGS2ofu9ftYW4xHt90jXV0Yy3dISHCxpEhikVjJm2H2K4qO1rTZuZQRTXCIn3XsAUuYDo0bLoT7oJD51BjoWNqO0Jsm9n/jEVLtr2Ppcx5VZwFgbg8E6YRcsJvDOjMCbvBjOmGICMpBW46nEqFaV3EkR0DCj8dOodW3Y4v606hGk/xJtJfZGw4jvMIsjbZWHLUtZ8d+V0sr6hr5UC7hLvH8ZznXrARadnx+u/uPEnKEJn6nVMb8SYpQ44UYnIqq5dTpbaeIiQzhfUU24/5jxk3TGBH99snpLO59aQzla9X046QaVBW5hEjlkVTMBCFE6jCqMHHHe1dxrzR912sOO41VHJJN8pUrNc4yUpsW3G5UtFZ2mCAhs1gtg+IsHNjzvneN0NbXqCmNgu/ldymsnYGW6p58u7Ym8=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(22082099003)(18002099003)(56012099006)(6133799003)(10067099003)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(4143699003)(10067099003)(5023799004)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3Jbyv0YE1IqMiko6YkQz2UnrZ9YV2WXOYmDdN7Wz3an3xWofNnJL3YstHnVQ?=
- =?us-ascii?Q?wtW+5R/J4XAri6cL2T4nF3WgAfkn25V5SRGrQojGlb/3EbaWP3Batgpz+BdZ?=
- =?us-ascii?Q?ZQ/Cj01aFSkHB0dAlDrVmxti5q8Sy9h4Zp5qe+DCJMm+mQ/OBa0HEpR+nERD?=
- =?us-ascii?Q?szJRb11hSj4QTCGlT3JgD3HBNRYAHgAqyV19ADoo8zdo/HaSXPWxMwNMmtJ7?=
- =?us-ascii?Q?JnNnsyuAsk+RxH6PxPO3UochJCXchQDm0odxRlG5IRslMrYopLK3CYmq897I?=
- =?us-ascii?Q?p8bVzJlfhFZVr415lqnsOGIf4iCbgQiDJ0NnbnXhjbrrIlHBaks3GayBZceA?=
- =?us-ascii?Q?cXK1FKCz+AuHQh91mzf7/s9QvI4t8sa5v9njbI7sucDsnZXVjxYgC4Gaeh3w?=
- =?us-ascii?Q?MzdqSQTFOsP9v5OOPZ3TwFtFr37jAmjRp4rtMzTYRiIlU3SYkb5k2wTXBvGi?=
- =?us-ascii?Q?d5DUocWa85gE3mJajAc1axaD66tjIgQuMFh230bCFU5R20aNtNegDmW+BS6m?=
- =?us-ascii?Q?YkYwjug5HshJwu0YynDZROp/Git7wqE2jx7QVT24jWInhTNI6R0uHd0BnmNA?=
- =?us-ascii?Q?ulHk0MVzuSn6f0JzasHovskT0IxOvu/iG21oNkXLVws08xzuNW4hKbDRrhRL?=
- =?us-ascii?Q?cNLIM2nZqPDCATET5ctKoqBvhtNnycmvaiOS14I/0Jrlx3FT/o/s1ZEIryEC?=
- =?us-ascii?Q?OhFpPDiJpKpUU8T+YkajeMakuszM/Fj+7BIfRC8IvCmxrlezjqKqPfODHXzv?=
- =?us-ascii?Q?4cM4jWHgIUMPcvf9mWJFg5PmC10s46hFyfrGlTjmknqQ6zjBQiUUI2VRsYFL?=
- =?us-ascii?Q?rxeiHob7xJRtqTzrCPGbqrcTlPmI7xLzcJTk3GWZ/Wdr4znnF0XZN4dTMyKo?=
- =?us-ascii?Q?loPSFIZcafoP5e5ACrytpOmVLNzZ5Fhk101NTi5FsEkqmUKCkJUl6trNpZYG?=
- =?us-ascii?Q?WUcg7te/1uIdWQYDoecWHWs+cwpOZSy6DAKvFCUeRLnprImQO2RczbXv3Vp5?=
- =?us-ascii?Q?s81YOkw2wA41KS1BweP0vQNpPMBKpmXOdxHe8peKlhWwxvG4RvxnImBV1Q0b?=
- =?us-ascii?Q?86RR58ioCyvCmu7cbOFENmnzVhwp5QcvLwjVmtXSCuCTdZMj7K5kwxT35CUw?=
- =?us-ascii?Q?7ijOCBuEaeemNdaL1YNNOk8PQBVO8edAd4bXwjnuK/XrScB2BKROrHgVpkzR?=
- =?us-ascii?Q?8Fzj6ezDqLe193ebT/dbhke0h2NcH5dG6FzfU00lLCpyGr9DrILmzu8WBPqA?=
- =?us-ascii?Q?ySHKapT+77tNid+g9LZvQBNUFZD1c1hFyCUl7PZROHKSDtCArwRIThfoy1su?=
- =?us-ascii?Q?w4zA5PZUPVdgeQ3qOVU3236sIX8y7dOfsv3Ic0NXSIIwCVWwgHGfcQI7Mh+B?=
- =?us-ascii?Q?K8X+2sZ7yYD51hXbx43sCbAR8qpMiLMbNMrxx67xzJA7eqd1yXteO/VSOefz?=
- =?us-ascii?Q?W9QhwS3v+MxdkUQLvGuFQtD3vBB77Qd+y51fSpqi3lkndqCxyO7tYS7kbvuZ?=
- =?us-ascii?Q?JuGJqWL9thF0dbWOziZ1EwILq9VtYFkINbHfRFHYmNUtmx1KlVpjKtOGbfi0?=
- =?us-ascii?Q?v+vBW5FPKOMCnWWOSd50Hm2aK5ocAychdh/NM7CR5MKgvyHMsQ4+lo21jJYV?=
- =?us-ascii?Q?miYgSzNJXiAKEjZXYbsHpTBJCR98e6LyiFtROvIIQ2350H8nmmUoWluOQuL2?=
- =?us-ascii?Q?Mco0w9rPna67eujDiF6Jk7R8BdD6qgci6bJsARWDdLsRxzODrXXBDO3ceYrA?=
- =?us-ascii?Q?ZWCGNc1ufA=3D=3D?=
+	=?us-ascii?Q?cG+7mGTAibpNcVDbz/tG6K3zqNDKpV5ZjtQls2ZJoZvKTxa7ttOvHDe93dx6?=
+ =?us-ascii?Q?cG5DprycPUi2ejt9q9XTybBErwuCrmKtsKvJSBOGNXnNbi5CkujG3ZCFH5FL?=
+ =?us-ascii?Q?59T0HSTPN+td8jYcNJVhZrTAGpW7+sBq7xBweOcgyDiBgmxUl3yJFVRatkKi?=
+ =?us-ascii?Q?VJE/g7LOB7l8puEywlh/p86pu6c8opfYqRKvZYXGRE1Q8blIj30H7gQGRqDa?=
+ =?us-ascii?Q?9OZ4eiwjDOBv7bDP/nBcN2g+TtxPcx5yyTAVfWG8kUUhCqYcL9MIdKNT7GCR?=
+ =?us-ascii?Q?5xyWQJyJC+7GJgJAN3LcINR76Nmur1+/jOOdoChjuH3c0Atsf0jZJConx+lU?=
+ =?us-ascii?Q?nzRwLD7N9VJwXOgUNDq8LjHrcZfrB2cSMHaItuU5PfmhUhjJf0sgfrLNYWRm?=
+ =?us-ascii?Q?2NZbK9p1Hd1nYGHZ8lfUXMbtPPsZdJIaYz7+fmnFE5g/MFm5R0OgNQdgMiBb?=
+ =?us-ascii?Q?BZqwLPtVVQeRnP54+mG9R4z19RvYtRBK7QEFCrcaQ6DqRSxnED1QEDEhEiJq?=
+ =?us-ascii?Q?a+DJ5wQgDHTziCE1zijY/RjSnBjz5I9FkjoRZPdHba81YJvCFKCK6MkzdZS4?=
+ =?us-ascii?Q?riLyXilBi7r42te5pPU01DhSBybEWWN9YUg6MutLd7IngFa7ImLkqg8AFpmO?=
+ =?us-ascii?Q?EXpSq2pwH3IlMoACU9+ev2RhakkVQlEDIMLZGsjDylkOAlXoUxwL88Gb+4Ql?=
+ =?us-ascii?Q?SKer8kKDNAkYPlZ9ahH3+L5QHendgNmd9+ERBsPN+EIinMCma7Zgrh+fKwhY?=
+ =?us-ascii?Q?ca8d75E2JnAihSjAWaHb6cMUid82h+ibpGKhPwOMoVIBVIZKFsUhoPKzUpUj?=
+ =?us-ascii?Q?APYrHlFChJuLeKu90FULo+8q2nu5Ws6if2ukvMr0jwOq+4fcXU5W3Yg/4oTq?=
+ =?us-ascii?Q?NjgyowZ2y4yuXx2M/SzAkVlLxb0dhLf37B8RlzhpVO1pRv4bAJXpUqZdJB7V?=
+ =?us-ascii?Q?1lLrEgOPzZxKnRKKlDRNXONod+KOIr+xmbr6VkzMpslPTozrbX6bwa57XRc6?=
+ =?us-ascii?Q?gPaPOGBCaOZSrMORERcmJQkr5+s1a+mIs08ELBX5EYSzu0pIGXr2xB/wgY12?=
+ =?us-ascii?Q?u23GFj58vpz3x72hudg0NGbZtb3Mw6W2ltTQYPzEPAKW/peWWxwtT4drlopM?=
+ =?us-ascii?Q?MUyxQ+7+3UKTpdzIgdrzJqEhQ7hKoi4iaflWP2zUqobecI317Fa8Lpfnp+Fj?=
+ =?us-ascii?Q?Bzs++0CicHgtSbF15DjPJuT6INjzfrnKaUFMMl9tegOznngWG7X1yhh4hNvJ?=
+ =?us-ascii?Q?WyHcY4SfHSKnzndKK4HLS1P6AXRkwS2hbS6x5pyf5giI62rYF2cPzAmwdVZB?=
+ =?us-ascii?Q?KFfTvxB21llY8Hgf54zoi/PG76qnwx5wCuB+ordTx2twQFSvoXw5g/YuVO1S?=
+ =?us-ascii?Q?CzOK/g5CluZ3RTnYvvzqIpk8fEi6NjQmk4NrxMxplW9haczzout6jMyJ4l0Y?=
+ =?us-ascii?Q?zO9sQkadtghssg32z3mXJ0kLWrTYa2xHtim+9HSOcSEgbrQ0vc6LIZ4Zj7nX?=
+ =?us-ascii?Q?SCFMvQ6R0UIecBYw1NYL45i0/CjLN2NQtGfmdvWMT8auuCA7NvSardTdXTws?=
+ =?us-ascii?Q?uLSCu4ylAmkZ87BUVk15s1uKcMYJlpuTuSAxrgI8RbtrKQc5Z8bH/a7d2HNr?=
+ =?us-ascii?Q?Gspm0DIdhGH6N1kh8msQdy+P9yBOVH5tTfD9tRo+TVrD0nOiyLvy+Ug5XE4U?=
+ =?us-ascii?Q?V5+w4ZIkrFkLx4NZh6gqM2tgx5VQKuk78LaVokMKFfYY1KbuVC9Kp2LuUyOI?=
+ =?us-ascii?Q?zDl5aAe/Fg=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fc6ca03-0ab4-4968-b0a6-08df1e57c49f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 254d2cb1-a7ad-47f4-6e95-08df1e583637
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2026 18:30:42.2107
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2026 18:33:52.7944
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ijyiA548Yl+Nior+I4pTZCmKgkiGcK2YMbGOy6UUmFZZcCvxqLqLuA+mVcpS17uCCN5D7nYwtbmekhwMdmZOuw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5658
+X-MS-Exchange-CrossTenant-UserPrincipalName: LwHrXACxXXU98yixrnmSROl9ANW0hYCmjALSFFJyQSwMMO6sbPlaZ7tNd5pSrzWt77m3ucJhpmYv/RVcKdemKg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7276
 
-On Tue, Sep 29, 2026 at 07:13:07AM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> On Tue, Sep 29, 2026 at 04:17:23PM +0000, Kuba Piecuch wrote:
-> > Since ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics"), every task
-> > entering the BPF scheduler's custody gets exactly one ops.dequeue() when
-> > it leaves it. A dispatch to a terminal DSQ ends custody with a flag-less
-> > ops.dequeue() at insertion time.
-> 
-> The fix looks good to me. It effectively reverts the enqueue_task_scx()
-> half of b75aaea24c9f ("sched_ext: Properly mark SCX-internal migrations
-> via sticky_cpu"), which as far as I can see only ever suppressed this
-> ops.dequeue(). Andrea, can you confirm?
+Hi Kuba,
 
-Yes, I confirm. The source-side sticky_cpu assignment remains in place across
-deactivate_task(), so the internal migration doesn't trigger ops.dequeue().
-Kuba, thanks for catching this!
-
+On Tue, Sep 29, 2026 at 04:17:25PM +0000, Kuba Piecuch wrote:
+> When the BPF scheduler moves a task to the local DSQ of a CPU other than
+> the one whose rq the task is on, e.g. with SCX_DSQ_LOCAL_ON dispatch,
+> scx_bpf_dsq_move_to_local() or scx_bpf_dsq_move*(), the task is migrated
+> by move_remote_task_to_local_dsq(). p->scx.sticky_cpu is set across the
+> migration so that dequeueing the task from the source rq isn't treated as
+> the task leaving the BPF scheduler's custody.
 > 
-> - dequeue_remote.c isn't built until 3/3, so 1/3 can't be built or run.
->   Can you put the fix first, followed by the test with its Makefile entry?
+> However, enqueue_task_scx() only clears p->scx.sticky_cpu after
+> scx_do_enqueue_task() has inserted the task into the destination local
+> DSQ. task_leave_custody(), called from rq_owned_post_enq() on insertion,
+> still sees the migration in progress and skips the custody exit. The task
+> ends up on a terminal DSQ with SCX_TASK_IN_CUSTODY set and without
+> ops.dequeue() having been called.
 > 
-> - 2/3: 7.1.y also needs 18d62044cda7 ("sched_ext: Preserve rq tracking
->   across local DSQ dispatch"). Without it, the nested ops.dequeue() trips
->   lockdep when ops.dispatch() uses scx_bpf_dsq_move() to another CPU's
->   local DSQ. It's tagged for stable too, but maybe note it as a
->   prerequisite?
+> The custody exit then happens only when the task is picked for execution,
+> in set_next_task_scx(), which reports it to the BPF scheduler as
+> ops.dequeue(SCX_DEQ_CORE_SCHED_EXEC) even though no core-sched pick took
+> place. If a scheduling property change hits the task while it's waiting
+> on the local DSQ, the BPF scheduler instead gets
+> ops.dequeue(SCX_DEQ_SCHED_CHANGE) for a task that has already left its
+> custody. Both break the ops.dequeue() semantics, under which a dispatch to
+> a terminal DSQ ends custody with an ops.dequeue() call without special
+> flags.
+> 
+> Clear p->scx.sticky_cpu before calling scx_do_enqueue_task(). The routing
+> decision in scx_do_enqueue_task() uses the local copy, and the departure
+> side is unaffected as p->scx.sticky_cpu is still set across
+> deactivate_task(). ops.dequeue() is now invoked on the destination rq when
+> the task is inserted into the local DSQ, as it already is for same-rq
+> dispatches.
+> 
+> Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+> Cc: stable@vger.kernel.org # v7.1+
+> Assisted-by: Claude:claude-opus-5.5
+> Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+> ---
+>  kernel/sched/ext/ext.c | 16 +++++++++++-----
+>  1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index ad391a8cbd05..763de7797056 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -1501,8 +1501,9 @@ static inline bool task_scx_migrating(struct task_struct *p)
+>  	/*
+>  	 * We only need to check sticky_cpu: it is set to the destination
+>  	 * CPU in move_remote_task_to_local_dsq() before deactivate_task()
+> -	 * and cleared when the task is enqueued on the destination, so it
+> -	 * is only non-negative during an internal SCX migration.
+> +	 * and cleared in enqueue_task_scx() on the destination before @p is
+> +	 * inserted into the local DSQ, so it is only non-negative while @p
+> +	 * is in transit between the two rqs.
+>  	 */
+>  	return p->scx.sticky_cpu >= 0;
+>  }
+> @@ -2189,10 +2190,15 @@ static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_
+>  	if (rq->scx.nr_running == 1)
+>  		dl_server_start(&rq->ext_server);
+>  
+> -	scx_do_enqueue_task(rq, p, enq_flags, sticky_cpu);
+> +	/*
+> +	 * An SCX-internal migration ends once @p arrives on the destination
+> +	 * rq. Clear sticky_cpu before enqueueing so that @p leaves the BPF
+> +	 * scheduler's custody when inserted into the destination local DSQ.
+> +	 * The local copy in @sticky_cpu is used for routing.
+> +	 */
+> +	p->scx.sticky_cpu = -1;
+>  
+> -	if (sticky_cpu >= 0)
+> -		p->scx.sticky_cpu = -1;
+> +	scx_do_enqueue_task(rq, p, enq_flags, sticky_cpu);
 
-Agreed. Please mention 18d62044cda7 as a prerequisite for 7.1.y.
+Nit: nothing between the top of enqueue_task_scx() and scx_do_enqueue_task()
+looks at p->scx.sticky_cpu, so p->scx.sticky_cpu = -1 could go right after
+reading it into the local variable, as it was before b75aaea24c9f. Same
+behavior, but it also covers the SCX_TASK_QUEUED early exit, which currently
+leaves p->scx.sticky_cpu set and essentially makes the fix a revert of the
+enqueue side of b75aaea24c9f.
+
+Either way:
+
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
 Thanks,
 -Andrea
-
-> 
-> - 2/3: With sub-scheds, scx_resolve_local_dsq() can divert the task to the
->   reject or rescue DSQ, so "inserted into the local DSQ" in the comments
->   isn't always accurate. Maybe "destination DSQ"? The new comment in
->   enqueue_task_scx() could be two lines, and the description could lead
->   with the late SCX_DEQ_CORE_SCHED_EXEC and be a lot shorter.
-> 
-> - 1/3: A task can only be picked straight out of custody through
->   sched_core_find(), which only returns tasks with a core cookie. Checking
->   p->core_cookie on SCX_DEQ_CORE_SCHED_EXEC would be exact and would
->   remove core_sched_in_use() and the skip.
-> 
-> - 1/3: _SC_NPROCESSORS_ONLN ignores affinity. With the runner confined to
->   one CPU, the test fails instead of skipping. sched_getaffinity() and
->   CPU_COUNT()?
-> 
-> - 1/3: Nits. If the /proc scan stays, PR_SCHED_CORE_GET writes a u64, so
->   the cookie should be u64. ops.dispatch() pops one entry per call, so a
->   stale one idles the CPU until the next kick. Maybe loop a few times?
->   missed_dequeue_cnt and core_sched_exec_dequeue_cnt aren't printed
->   per-scenario like the other counters.
-> 
-> - 1/3: The variants, error conditions and core-sched caveat are repeated
->   across the cover, description, file header and comments. Can you say
->   each once? Also, single-line comments are usually lowercase in
->   sched_ext.
-> 
-> Thanks.
-> 
-> --
-> tejun
-> 
