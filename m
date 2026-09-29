@@ -1,164 +1,160 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1248F32E121
-	for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 15:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D073E5A08
+	for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 16:17:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790695967; cv=none; b=JrBzzSPDl8YKMf3oemoFTlxSNC5LldTTIGx/jePYFLK/PhWP3poIvnDo7d88e+D7Jxa6SocN8EsJiLL2iaS1qo28tHIsjxfXn5gvQBQuKN/4nT/uXE9QzzfZjL2l9+1pwmtKZso9+RpSVqmUIi3BTNYl/OtexQheoOSkuiiS9zY=
+	t=1790698654; cv=none; b=WLl6KFaDSMWHBn3Mcf2VO3LIJrHR1/MXFBAdzS44jHYbceCf+6SyXnk1lgOzXSJHHugRGkcIA1v+RIsT2euDkjaLf00GnaZnoS4trC9edxNC0L/gEwYhNA1T/kf0GKR6QM1mDXb/mSq+txle/0xR8/QTsfyhUuiumu2Cq7o/zBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790695967; c=relaxed/simple;
-	bh=t8mn3gwPrOdOqrmCjRq54KlBWO2U++tWo3nWUN3734M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NdNEeOGnDQREVyfF5KFiWfR1XrIdk+iPofNqIME76/UTpN3wZ8sWf9k3YxEJ0y1buD1mhGNLC7QG1o6/zpauHP0cm7yrKjc9xBeLBKiycWei1KcZ2s54jtAyAmRUXTh0mNeJcyus6r2sxMkrWRpkTv7Zk8oWtHUKHGf/iMLBXdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Hfb6Q7ya; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1790698654; c=relaxed/simple;
+	bh=YdjoKtP1em+LNFUenaaFDnwTq/qBHkbg2KuVHSCYjyE=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=ZY37mpVAj/zP4SCsRvWvEOgNtC8Op70z8A2iXeC6DOa6xmtbplCU7qd2zPItaP22J0UxLp3xuCKflvT/2XehZYcPkX31CWrgqQWeDRjC4Hv/D8N2v5Dos6tSjp4UnwwLnRH2R344xVm+qAZX8o71KMRXsnwbHkZQyeJe729/xFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=O7LzaEh2; arc=none smtp.client-ip=209.85.128.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Hfb6Q7ya"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790695964;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tjIn0aev0a9hJQzIqwYh5+plkSCK9cnTpE6TgaQgUIY=;
-	b=Hfb6Q7yafi50CGNXhnfJ5LGD6W4Fwtf9NnnqbOC8tjUeq+w9k3Hof6m9l/60ukwe8b6dkF
-	uLfNejeZdRklKoRd7Z6KBLgOn3EsgObK3KCCUidGTsPI3ScbZicv9Gjfq0e51XpmTeJRb8
-	9Q1rpt77nQsUbdlU1TZMREEG3PEKPho=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-cc3pLX9QPvGXg7wN_pPROg-1; Tue,
- 29 Sep 2026 11:32:40 -0400
-X-MC-Unique: cc3pLX9QPvGXg7wN_pPROg-1
-X-Mimecast-MFC-AGG-ID: cc3pLX9QPvGXg7wN_pPROg_1790695958
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 33D8519774FC;
-	Tue, 29 Sep 2026 15:32:37 +0000 (UTC)
-Received: from [100.91.18.181] (headnet05.pony-001.prod.iad2.dc.redhat.com [10.2.32.117])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 36F581956095;
-	Tue, 29 Sep 2026 15:32:34 +0000 (UTC)
-Message-ID: <af938567-01d2-4518-8f7e-974828e25d3e@redhat.com>
-Date: Tue, 29 Sep 2026 11:32:33 -0400
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="O7LzaEh2"
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a013ea30c0so1727825e9.0
+        for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 09:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790698651; x=1791303451; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0azr8zZg0nRvm5mZWbQlZBuE34GAu+5gLcWr9Qc6JlQ=;
+        b=O7LzaEh2oKim8mRiD74Ecn+JTGv8njP/2ys2NddEBbQcpvmyi/M2vkjX2AAXdhUIBp
+         q/cVgfrzqlyJTnlJbYPRGAaKzdM7NLBkTmkn9WxgllUZr9m9e8BbZuumQo9su2S83UAJ
+         2ySafvW943vLQGsb4kS13uzUdqddOo75IyC+VNX3ufvRMU0TC1Snkpeb+syezC1D23VY
+         k7udCgKA+yv60Fum+Y5xaejd3K38kNnL1WGOSdANINinxLzWCLG6iUGlYtQyPmKhdUwb
+         6aLSuQvQa+1E3bo3iaZ2W2dh2c7A6gcOSs6X6FovMFynHv9t0Sp9FyHcLRQuUecGmzd8
+         lOYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790698651; x=1791303451;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0azr8zZg0nRvm5mZWbQlZBuE34GAu+5gLcWr9Qc6JlQ=;
+        b=QrK0mxcCFn22Y3MVYo8vqsrHwXjrnrExVZ/zfHk5H6mKuy6Pev2OGxFc5j7LE5BTrj
+         CrM9eHAWsTKHcGUrTB1d264sIRrGcM3HpAhwIDyTL8zxVFimW3f098oz7zowZ+gyCddK
+         8uuyg4VdkPoyojBA5udL0zj5GCFOOf/NmL8BuUv8zQFmwdj1Mj7gOgmY8jw4mL6OtYUD
+         QWNuo0K3zZp5hlSmUboEnNNhTyYCxcbxjZxlKItjrUIEkeNkz3z85L1/g2cvtk1nvKFY
+         8x5N48zgmluII8VCrUbQGFx/rn1GGD5kWGsAX/tmC7Jsg65B9FM5nJwkk17TN35tQaLb
+         BMxA==
+X-Forwarded-Encrypted: i=1; AKwUvBwhuZpxKjraAJdcMFPgc9K6hspEFZ7pQKDu5CI47edAEDseRgS0MZJXMmrbyk6i6S36PHO1MzI2Ua4=@lists.linux.dev
+X-Gm-Message-State: AFuF++km+OMp9m8Doa8cdYgzNXsE/aok9MkQqDGww/SbVeBnwxg1KR/T
+	cQ3mvAf73lVrTbrWr3b2dqGhRGz+60AOgb627kBhC60H2q56PYNK2ZmfoE6Qp8y0SRxg4xWMEDM
+	SfNnOEw5JGjrzow==
+X-Received: from wmbil3.prod.google.com ([2002:a05:600c:a583:b0:4a0:146f:133b])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:698d:b0:49d:1df6:2592 with SMTP id 5b1f17b1804b1-49ff06e504dmr237604865e9.21.1790698651301;
+ Tue, 29 Sep 2026 09:17:31 -0700 (PDT)
+Date: Tue, 29 Sep 2026 16:17:23 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] cgroup/cpuset: Protect is_in_v2_mode() in
- cpuset_num_cpus()
-To: =?UTF-8?Q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>,
- Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Changwoo Min <changwoo@igalia.com>, Ridong Chen <ridong.chen@linux.dev>,
- Johannes Weiner <hannes@cmpxchg.org>, sched-ext@lists.linux.dev,
- cgroups@vger.kernel.org, linux-kernel@vger.kernel.org,
- Peter Zijlstra <peterz@infradead.org>
-References: <20260929084124.626693-1-arighi@nvidia.com>
- <20260929084124.626693-2-arighi@nvidia.com>
- <20260929-making-language-254d9c6a6605@there>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <20260929-making-language-254d9c6a6605@there>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-X-Mimecast-MFC-PROC-ID: ccFq3wn7mj4NqIBTWsxF8Cp_D6SZpe3jxJVX9ykAvo0_1790695958
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
+Message-ID: <20260929161730.185271-1-jpiecuch@google.com>
+Subject: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Fix missing
+ ops.dequeue() on remote local DSQ moves
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 9/29/26 9:47 AM, Michal Koutný wrote:
-> Hi.
->
-> On Tue, Sep 29, 2026 at 10:37:38AM +0200, Andrea Righi <arighi@nvidia.com> wrote:
->> cpuset_num_cpus() enters its RCU read-side section only after checking
->> is_in_v2_mode(). When cpuset is bound to a v1 hierarchy, is_in_v2_mode()
->> dereferences cpuset_cgrp_subsys.root, which is freed via kfree_rcu()
->> once that hierarchy is destroyed and cpuset is rebound to the default
->> hierarchy. A preemptible caller outside RCU can therefore read the flags
->> of a freed root.
->>
->> The only current caller, fair's group share calculation, runs under the
->> rq lock with preemption disabled, so it can't hit this. However, the
->> helper already means to protect itself with RCU, and upcoming sched_ext
->> support exposes it to sleepable BPF programs.
->>
->> Take the RCU read lock before is_in_v2_mode() so that the whole lookup
->> is protected regardless of the caller's context.
-> This feels like mere querying of the mode shouldn't require such
-> constraints (despite it's needed anyway later down). But it could truly
-> happen with the novel usage (CONFIG_CPUSET_V1 && unmounting cpuset
-> hierarchy for some reason, I wonder how you noticed :)).
->
-> Then I'd welcome more structured approach with at least:
->
-> diff --git a/include/linux/cgroup-defs.h b/include/linux/cgroup-defs.h
-> index 3754d697854b3..7f4d346cfb119 100644
-> --- a/include/linux/cgroup-defs.h
-> +++ b/include/linux/cgroup-defs.h
-> @@ -841,7 +841,7 @@ struct cgroup_subsys {
->          const char *legacy_name;
->
->          /* link to parent, protected by cgroup_lock() */
-> -       struct cgroup_root *root;
-> +       struct cgroup_root __rcu *root;
->
->          /* idr for css->id */
->          struct idr css_idr;
-> diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-> index 227d09704ca59..a718b5f521fb2 100644
-> --- a/kernel/cgroup/cgroup.c
-> +++ b/kernel/cgroup/cgroup.c
-> @@ -1909,7 +1909,7 @@ int rebind_subsystems(struct cgroup_root *dst_root, u32 ss_mask)
->                  /* rebind */
->                  RCU_INIT_POINTER(scgrp->subsys[ssid], NULL);
->                  rcu_assign_pointer(dcgrp->subsys[ssid], css);
-> -               ss->root = dst_root;
-> +               rcu_assign_pointer(ss->root, dst_root);
->
->                  spin_lock_irq(&css_set_lock);
->                  css->cgroup = dcgrp;
->
->
-> However, if I zoom out, I see that the intention of reading cpuset's
-> nr_cpus from the scheduler is meant for setups where cpuset tree ~ cpu
-> tree:
->
-> | * This only really works for cgroup-v2 where all the controllers are mounted
-> | * in the same hierarchy. If not cgroup-v2 or no cpuset controller is
-> | * configured it reverts to num_online_cpus().
->
-> Hence it may be just OK to do:
->
->          int nr = num_online_cpus();
->          struct cpuset *cs;
->
-> -       if (is_in_v2_mode()) {
-> +       if (cpuset_v2()) {
->                  guard(rcu)();
->                  cs = css_cs(cgroup_e_css(cgrp, &cpuset_cgrp_subsys));
->                  if (cs)
->
-> I hope Waiman seconds this -- if a feature depends on shared tree,
-> there's only so much that 'cpuset_v2_mode' can guarantee.
+Hi,
 
-I think it is simpler to just change is_in_v2_mode() to cpuset_v2(). 
-Almost all the cpuset functions should either take the callback_lock 
-with interrupt disabled (which is a RCU read-side critical section) or 
-with rcu_read_lock() and cpuset_mutex() acquired. This cpuset_num_cpus() 
-function is an exception. Given what is said in the comment, this 
-function is not supposed to be used with v1 mounted. We should change it 
-to cpuset_v2().
+Since ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics"), every task
+entering the BPF scheduler's custody gets exactly one ops.dequeue() when
+it leaves it. A dispatch to a terminal DSQ ends custody with a flag-less
+ops.dequeue() at insertion time.
 
-Cheers,
-Longman
+That doesn't happen when the task is moved to the local DSQ of a CPU other
+than the one whose rq it's on (SCX_DSQ_LOCAL_ON dispatch,
+scx_bpf_dsq_move_to_local(), scx_bpf_dsq_move*()).
+move_remote_task_to_local_dsq() sets p->scx.sticky_cpu to mark the
+internal migration, but enqueue_task_scx() only clears it after the task
+has been inserted into the destination local DSQ. task_leave_custody()
+thus skips the custody exit on insertion, and the task sits on the local
+DSQ with SCX_TASK_IN_CUSTODY still set. The BPF scheduler is only told
+later, either:
 
->
-> 0.02€,
-> Michal
+ - when the task is picked, via ops.dequeue(SCX_DEQ_CORE_SCHED_EXEC) from
+   set_next_task_scx(), even though core scheduling isn't involved, or
+
+ - on a property change while the task waits on the local DSQ, via
+   ops.dequeue(SCX_DEQ_SCHED_CHANGE) for a task already out of custody.
+
+The existing dequeue selftest doesn't notice because it treats the late
+SCX_DEQ_CORE_SCHED_EXEC dequeue like a regular dispatch dequeue, and it
+still arrives before ops.running().
+
+Patch 1 adds a dequeue_remote selftest that makes remote moves the common
+case and fails on a SCX_DEQ_CORE_SCHED_EXEC dequeue, on a task running
+without a preceding ops.dequeue(), or on unbalanced ops.enqueue() /
+ops.dequeue() calls. Since core scheduling can legitimately pick tasks
+straight out of custody, the test is skipped if any task has a core
+scheduling cookie when it starts. It isn't added to auto-test-targets
+since it fails on the current tree. Patch 2 fixes the bug by clearing
+p->scx.sticky_cpu before scx_do_enqueue_task(). Patch 3 enables the test.
+
+This is based on sched_ext/for-7.3-fixes (94480606a677) and also applies
+cleanly to sched_ext/for-next. Testing was done on x86_64 in virtme-ng
+with 4 vCPUs in an SMT topology (2 cores x 2 threads) and
+CONFIG_SCHED_CORE=y, with no core scheduling cookies in use.
+
+Without patch 2, dequeue_remote fails in every run (30/30), within the
+first few custody enqueues after the scheduler is loaded:
+
+  sched_ext: dequeue_remote: dequeue_remote.bpf.c:143: 156 (runner): late ops.dequeue() with SCX_DEQ_CORE_SCHED_EXEC (enq_cpu=1 cpu=3 seq=1)
+     ...
+     ops_dequeue+0x114/0x170
+     set_next_task_scx+0x104/0x1e0
+
+and the full sched_ext selftest suite reports:
+
+  PASSED:  31
+  SKIPPED: 1  (nohz_tick)
+  FAILED:  1  (dequeue_remote)
+
+With patch 2, dequeue_remote passes in every run (30/30). A typical run
+does ~140k custody enqueues across both variants, each matched by exactly
+one ops.dequeue(), with ~90k of them followed by the task running on a
+CPU other than the one it was enqueued on. The full suite reports:
+
+  PASSED:  32
+  SKIPPED: 1  (nohz_tick)
+  FAILED:  0
+
+With a core scheduling cookie in use, dequeue_remote is skipped as
+expected.
+
+Thanks,
+Kuba
+
+Assisted-by: Claude:claude-opus-5.5
+
+Kuba Piecuch (3):
+  selftests/sched_ext: Add a test for ops.dequeue() on remote local DSQ
+    moves
+  sched_ext: Call ops.dequeue() when a task arrives on a remote local
+    DSQ
+  selftests/sched_ext: Enable the dequeue_remote test
+
+ kernel/sched/ext/ext.c                        |  16 +-
+ tools/testing/selftests/sched_ext/Makefile    |   1 +
+ .../selftests/sched_ext/dequeue_remote.bpf.c  | 272 ++++++++++++++++++
+ .../selftests/sched_ext/dequeue_remote.c      | 243 ++++++++++++++++
+ 4 files changed, 527 insertions(+), 5 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/dequeue_remote.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/dequeue_remote.c
+
+
+base-commit: 94480606a677deb68d5622cf0ded88626514b3f2
+-- 
+2.56.0.rc1.315.gc6ed9934b7-goog
 
