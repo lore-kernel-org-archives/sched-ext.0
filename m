@@ -1,95 +1,125 @@
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com [209.85.128.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BB151DDF5
-	for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 16:17:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2F051C33E
+	for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 16:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790698658; cv=none; b=dl1jtlw/WWOPSTVsLCTyMviI7/add9Mnrzsgv6bkOEixUJAZErhj3TR6Zg4UuYc2+cCmsYD+WOKFhztVPHC5/t+MiH7nzhsmlqXYU+IJPcxaV88sF7bpJdszz3X+eIn85ulUL+6ymjr3oZ+yizmiMdFXAplOa935Y/ClrVAPZ7Y=
+	t=1790699285; cv=none; b=LN7WKIuSX1tvl7qdnw9V2urZPszHxQubVV4O6SGhUCkXTnwsfWD4MyAyr+l07iZEzPT8qtbTtMnZ8hcLiHBidPgMy2SqqoCZUf5pedzTG9NF7J5ixW/zgnG9TKTacmXEThniVk/FXw7ddaElCQR+CsR00aHIpmU4TWMUVhIVwIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790698658; c=relaxed/simple;
-	bh=OSapIsypgzxAwguCwLF3uHoyRFOPYISBOQuUBeBGKjE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=s79cA8ALr5fsRhaPg11WsHKU1bCPMuzF1hU2KqRnYhW6yEqwPldDwUWmWAwHboc+HOL5W94gvdBwlTJh4KZuSLRw0zv09xbW1aviikTg/3KeBqKfQlWfJfpE1/ZLhs7kNgN1TAWZgVrr9SAIZgs0tuUrDX92BgY1YCpp/hKTgKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eE48o9oh; arc=none smtp.client-ip=209.85.128.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1790699285; c=relaxed/simple;
+	bh=90YWAERfQDCwaBojwRXxy+cNkn+HfHFUKmHiLMAGUYg=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=flrs88hgMcs39cqHRU/ilNSoj0emRcMHM6m2Q76pBcEcvLlx2sPO7DiT16wawdXAhwcdwUhbHmoLkJM+pRKomQIv4oSFEVByuycdlfotg/toc8oXdxKnqS6UsfN2+viRS7UI1X8rKk6Dv58ZSAxjEC+Kly2b2vMsidsaTS8iBWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R9CoKc1H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eE48o9oh"
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49fcc575709so44476725e9.3
-        for <sched-ext@lists.linux.dev>; Tue, 29 Sep 2026 09:17:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790698655; x=1791303455; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=z/6pvxZeKIDYo9vdlmIoyBxKuaoJZDw4e5OkPlYPYA8=;
-        b=eE48o9ohNI0csmurWm4M3AvX1Fq0tscRlQn/DPC0OtA8Yb6oG5VgkoDtyXcI3qYgYY
-         7AQRNUWj6tcTGbpl1sdAjIgaFc8paC6Jh2UzlV+yoWkGRZG3k1joRn70icGHxhsWNaje
-         CTz8f4/uiIGpo6/TR7mCs/biKrKJ4qCB1r4YxiZyPwROSwDA+97L8y2nIieXanflgyZY
-         z2myXjN+WRHDeTheHu88Fn5rU9xjSszXP8Sx07nEzDv4hg2MKEtOX1Kh3DLzQxIMn8dP
-         E8ji9vikUwI5O9h+qICYyN75CkyQVIdOQdhBqawQcwRDBoM7VW5xIweCjCVCLzfGSP5E
-         TZWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790698655; x=1791303455;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=z/6pvxZeKIDYo9vdlmIoyBxKuaoJZDw4e5OkPlYPYA8=;
-        b=ES1XcR3x5VsQnn3YF/d4WixzZabJdJ0zPvnr/tXRhFFxFqg3lLPHqFRnsgbIra8Llu
-         iuaTvQgQraOobq7MhGzaCr/Dja5Fe5swbMHqgChqsOjUB37YROHGNkUZQcfhmbqeRLBv
-         PyEDHtPzTEoJMpDLXy5Qj5Uftj9iUNfiqnFStv2t1v7IMq47zsmVgsYzvAXp1bVXXCah
-         fbPD8ytl26ktskrhzDqFwUCrpg9U1xKY5354kGrWvqLLxVSIBMhYdtBBJpkfVYMZ2LoT
-         N5FZ0QsvCHOhHU7MGD0OeOfUqcTkOMtlmoG09xLZUqsoGrq6h3vQUpWKf9heDUfwaDUV
-         cGOg==
-X-Forwarded-Encrypted: i=1; AKwUvBzwXNKRLTWq5W/1c/Z9D4f9atQGK65647OSWzY6+Ra88eQkeWFmYpkNkn69hVJUsoyYcMwAFxjEFdI=@lists.linux.dev
-X-Gm-Message-State: AFuF++mbxmLIgypbACH5TJ3njlP7ErnqnOeKMwGbarHWHy5seknG6/os
-	jy0WXiEMclUBHcTDGG3zCfT125oqxp65WV2TNstZ5tMAK+HLnkSmex3NIEAhFJzCS1yOmM0SXl6
-	n/UyVenNlcq98ww==
-X-Received: from wmpe40.prod.google.com ([2002:a05:600c:4ba8:b0:4a0:137d:1bc8])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:8b33:b0:49f:f9fa:fcfe with SMTP id 5b1f17b1804b1-49ff9fafdccmr173062125e9.13.1790698654808;
- Tue, 29 Sep 2026 09:17:34 -0700 (PDT)
-Date: Tue, 29 Sep 2026 16:17:26 +0000
-In-Reply-To: <20260929161730.185271-1-jpiecuch@google.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R9CoKc1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33D01F000FF;
+	Tue, 29 Sep 2026 16:28:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790699283;
+	bh=7e2etYvGHSCU0DFCgxpLYouAY5v2p0oZJZfsqGeK0Jg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=R9CoKc1Hvsz/vEpm7oeVLjDy1LJ5POFayTWuJLoGtHOCTjGIBcOYDl2l2n1pkjIIh
+	 0ZrM7f19h3jiCfNKW7iSnkHSuwhsuhCdhAyDZB/dwyZBIsoM15scNrt/A+jiURGQPy
+	 T7R8sXPJTkpazQOjZx3afhtOwMZICfqBMoFVrs0fUM18BRV+QMBlLo0RA1NFJJoxuV
+	 t7tzFt0h2g6aDc0OIeUWJ0LC8/rbrfKI2K7D4xIQ2cTFsj/YDG5H5AWgVEuRz5zxLH
+	 1X+d3Sdz0fKebk2DJHCzDoH5PuvqUrJGFH2BXFKY6czmUfgvP0RossoOWvE1UgMsA0
+	 lYPxamSExN9lw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/3] selftests/sched_ext: Add a test for ops.dequeue()
+ on remote local DSQ moves
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Kuba Piecuch" <jpiecuch@google.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260929161730.185271-2-jpiecuch@google.com>
+References: <20260929161730.185271-1-jpiecuch@google.com>
+ <20260929161730.185271-2-jpiecuch@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 29 Sep 2026 16:28:03 +0000
+Message-Id: <20260929162803.B33D01F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260929161730.185271-1-jpiecuch@google.com>
-X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20260929161730.185271-4-jpiecuch@google.com>
-Subject: [PATCH 3/3] selftests/sched_ext: Enable the dequeue_remote test
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: Kuba Piecuch <jpiecuch@google.com>, Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
 
-Now that ops.dequeue() is called when a task arrives on a remote local
-DSQ, the dequeue_remote test passes. Add it to auto-test-targets.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] selftests/sched_ext: leaked bpf_link FD on error path blocks sub=
+sequent tests
+--
 
-Assisted-by: Claude:claude-opus-5.5
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
- tools/testing/selftests/sched_ext/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+commit 1ccbec9969985b2fbfb40e59807388cd3896b3e6
+Author: Kuba Piecuch <jpiecuch@google.com>
+Subject: selftests/sched_ext: Add a test for ops.dequeue() on remote local =
+DSQ moves
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index 4e06d0baaeec..af919a56a4f4 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -165,6 +165,7 @@ auto-test-targets :=			\
- 	create_dsq			\
- 	dequeue				\
- 	dequeue_iter			\
-+	dequeue_remote			\
- 	enq_last_no_enq_fails		\
- 	ddsp_bogus_dsq_fail		\
- 	ddsp_vtimelocal_fail		\
--- 
-2.56.0.rc1.315.gc6ed9934b7-goog
+When a BPF scheduler moves a task that is in its custody to the local DSQ
+of a CPU other than the one whose rq the task is on, sched_ext migrates the
+task with move_remote_task_to_local_dsq(). The task leaves the BPF
+scheduler's custody when it is inserted into the destination local DSQ and
+ops.dequeue() should be called at that point, just like for same-rq
+dispatches.
 
+> diff --git a/tools/testing/selftests/sched_ext/dequeue_remote.c b/tools/t=
+esting/selftests/sched_ext/dequeue_remote.c
+> new file mode 100644
+> index 0000000000000..ab42ac694ac6b
+> --- /dev/null
+> +++ b/tools/testing/selftests/sched_ext/dequeue_remote.c
+[ ... ]
+> +static enum scx_test_status run_scenario(struct dequeue_remote *skel,
+> +					 bool use_move_to_local,
+> +					 const char *name)
+> +{
+> +	struct bpf_link *link;
+> +	pid_t pids[MAX_WORKERS];
+> +	int nr_workers, i, status;
+> +	u64 enq, deq, dsp_deq, chg_deq, remote_dsp, remote_run;
+[ ... ]
+> +	link =3D bpf_map__attach_struct_ops(skel->maps.dequeue_remote_ops);
+> +	SCX_FAIL_IF(!link, "Failed to attach struct_ops for %s", name);
+> +
+> +	fflush(stdout);
+> +	fflush(stderr);
+> +
+> +	for (i =3D 0; i < nr_workers; i++) {
+> +		pids[i] =3D fork();
+> +		SCX_FAIL_IF(pids[i] < 0, "Failed to fork worker %d", i);
+
+[Severity: Medium]
+If fork() fails here, SCX_FAIL_IF() will return immediately. Does this leak
+the bpf_link in the runner process?
+
+Since link is stored in a local variable, it won't be freed by the test
+framework's cleanup() callback. If leaked, this would leave the scheduler
+attached, causing subsequent tests to fail with -EBUSY because only one
+sched_ext scheduler can be active at a time.
+
+> +		if (pids[i] =3D=3D 0)
+> +			worker_fn(i);
+> +	}
+> +
+> +	for (i =3D 0; i < nr_workers; i++) {
+> +		SCX_FAIL_IF(waitpid(pids[i], &status, 0) !=3D pids[i],
+> +			    "Failed to wait for worker %d", i);
+> +		SCX_FAIL_IF(status !=3D 0, "Worker %d exited with status %d", i, statu=
+s);
+
+[Severity: Medium]
+Similarly, if waitpid() fails or a worker exits with a non-zero status, the
+early return will skip bpf_link__destroy(link).
+
+Could the test be updated to use a goto cleanup path, or perhaps assign the
+link to the skeleton so it is destroyed automatically, ensuring it doesn't
+block subsequent tests on error?
+
+> +	}
+> +
+> +	bpf_link__destroy(link);
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260929161730.1852=
+71-1-jpiecuch@google.com?part=3D1
