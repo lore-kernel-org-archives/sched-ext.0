@@ -1,167 +1,137 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E2640A920
-	for <sched-ext@lists.linux.dev>; Wed, 30 Sep 2026 10:18:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13F8489FAA
+	for <sched-ext@lists.linux.dev>; Wed, 30 Sep 2026 10:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790763517; cv=none; b=XSR3njjk+xl8x6MDpSIfS7GvKD+TsA8CydsVfVrIChGRCxdsgjr1pOjV987knh8gtFtauJi/48dUCMxeVAyBIYQPIyYV9vUgHB54yWOjaoR0jBcpP85BRxJAUGeooc8webYDAxLZMoX4d6OhnGVpOaZETUExJxcj++u8PincS0U=
+	t=1790764567; cv=none; b=fFJKeiDpybw5ucxplnb8BK+uccu8sf8XwcbM8gNnkcN2vDANrkcUU+06UQ/85FPjLa4hBzzvHZL+/2u3j2RoYpEI4EZ1fB2xdcMfN+363Fuw0qXdkW6KIgs1MZZgE2C7QPI+l94h3B6aG24SqVA2WMwS9HWfsWibXe0HcZvuo/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790763517; c=relaxed/simple;
-	bh=lv8cEJJhIRBGmZ/58YZwoAIipFgHhAhXSXEuCSLmEjc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=STeHHjJxwBv3zjj/6k8G5aKTf84yr1FLVUwm+V835SeFB/lfOVj4T2C98AHgNcl9ghbjD/1F0IkgvGIpgmYhFRIvA3CtypJEzH7TzRyqgz9sjO+/evDLXGr4I+QHPYF++aej/oT8GlcqvOOEEku684j/WQxnUXotAQvJMf/mE8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=eFFD2Cte; arc=none smtp.client-ip=220.197.31.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1790764567; c=relaxed/simple;
+	bh=9dtCwYfWb6A8dW0X1unVuKbvFyLwjssYOzl1paeOWUQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Wsstf/xpr3yHdb4JyvQ8w1BcLa+k/PRLgNwZKN8/GIYnmjQhAKEVqUS8RHh9pzkrrkMTKCHOnbdViWuNTlI+/HRis8LPKGjpkZ+dHfs6pGc72UiUVfyry4OLZSgB/t2Zsm1YT7+e24ryYLl/UdoYnq+Xg0OGszaGSwjaDqmngQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YBhWdOdD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="eFFD2Cte"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=w0
-	mNDi2wBxp1xFtPYsu1Ehyp75igmnL6MJTjYfrzswg=; b=eFFD2CteANhDDBFW76
-	An4lJY29aLmNBdPEOVOQeLP4TmLOrE9Sx2NWU37XdPZPXHVuMAqK5w+9jX2Z0aya
-	xAPGbo/FQuce3SQP8eafKMEn5Gl6mW1Gh5M20QOUFfFnVg89BSS/+XUxngefXU28
-	rNWpbfNaMuCXOT0cDJMN89Txw=
-Received: from localhost (unknown [])
-	by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id _____wD3f7my4bxqx3XrBg--.5926S2;
-	Wed, 30 Sep 2026 18:17:23 +0800 (CST)
-From: Hui Su <sh_def@163.com>
-To: sched-ext@lists.linux.dev
-Cc: tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org,
-	Hui Su <sh_def@163.com>,
-	stable@vger.kernel.org
-Subject: [PATCH] sched_ext: Hold DSQ refs for deferred reenqueues
-Date: Wed, 30 Sep 2026 19:17:22 +0900
-Message-ID: <20260930101722.2468434-1-sh_def@163.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YBhWdOdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9461F000FF;
+	Wed, 30 Sep 2026 10:36:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790764564;
+	bh=mMOpQBIGcshS6CoqOc5Eho+euYvXdunwIfJZ0yJLyL8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=YBhWdOdD3f5G1r8joEvRg7ee0BDf8QR3Hf0sWcsvohei3aBz/ZOZh444jW3p1AVCW
+	 stZxXPSbjehVqN2LIXt6NYlhohQ4MkSw6pHp9b3Jfpoe7OolF1ui0Jz2uQ2dHqKjLR
+	 bk+kDoBIAcv1AAkk/vkKjC4j5vSG9QL4UG8KhHx0Kep1F6y9kEmt9eBT9EDuAh856S
+	 0+/aWdYB5wuvegYlvx9xDYsRGcPFRaW7N9asZHa2vuuIoxNQ3aUXqmyhlQTZefebLZ
+	 ZkBUwJ8EQiaGYRwCmhC1K7qbJQCp6ZdTOR8c9Ztep+SoYNBEf+Be9eI/YbgnlRpnsb
+	 lCPcj9Qec4rMw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] sched_ext: Hold DSQ refs for deferred reenqueues
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Hui Su" <sh_def@163.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20260930101722.2468434-1-sh_def@163.com>
+References: <20260930101722.2468434-1-sh_def@163.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 30 Sep 2026 10:36:03 +0000
+Message-Id: <20260930103603.DF9461F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3f7my4bxqx3XrBg--.5926S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCF1DtrW7KF1xZw4fur4fuFg_yoWrGr13pF
-	WkXF1UA3yxJry0qr4vvw4xZF1fXrs5uw4xCry8Wr1akan8uwn2q392vF1agFZ8WrZYkw4x
-	Jr1qka12ka90qFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zi7GYPUUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwRNuzWq84bN0IgAA3j
 
-A deferred user-DSQ node can be detached by
-process_deferred_reenq_users() before the DSQ RCU callback reaches
-exit_dsq(). Once detached, exit_dsq() can no longer find the node,
-while the deferred path still uses the raw DSQ pointer after dropping
-deferred_reenq_lock. The callback can therefore free the DSQ before
-the deferred path checks its ID or calls reenq_user().
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] sched_ext: invalid wait context calling kfree() under raw_spinlock=
+_t
+- [High] sched_ext: UAF due to missing memory barrier in deferred reenqueue
+--
 
-An RCU grace period only delays reclamation past pre-existing RCU
-read-side critical sections. It doesn't protect a deferred reenqueue
-which has detached its node and keeps using the raw DSQ pointer
-afterwards.
+commit 32dd5c50544bf44b37d3cb4933b2658023766e35
+Author: Hui Su <sh_def@163.com>
 
-Take a reference under deferred_reenq_lock before detaching the node.
-The RCU callback drops the base reference after exit_dsq(), and the
-deferred path drops its reference after its final DSQ access. This
-keeps the object alive until all detached reenqueues finish while
-preserving invalidated-DSQ behavior.
+sched_ext: Hold DSQ refs for deferred reenqueues
 
-A KASAN regression test of the pre-fix kernel reported the
-use-after-free while processing the deferred reenqueue:
+This patch adds a reference count to DSQ to protect deferred reenqueues.
+It takes a reference before detaching the node and drops it after the final=
+=20
+DSQ access, preventing the DSQ from being freed prematurely by the RCU
+callback.
 
-    BUG: KASAN: slab-use-after-free in run_deferred+0x1312/0x1710
-    Read of size 8 at addr ffff8880087009b0 by task swapper/3/0
-    Call Trace:
-     <IRQ>
-     run_deferred+0x1312/0x1710
-     ttwu_do_activate+0x29a/0x600
-     try_to_wake_up+0x815/0x1700
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 6b037d27c99d3..88f229bd0c4d2 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+[ ... ]
+> @@ -5075,6 +5075,7 @@ static void process_deferred_reenq_users(struct rq =
+*rq)
+>  			dsq_pcpu =3D container_of(dru, struct scx_dsq_pcpu,
+>  						deferred_reenq_user);
+>  			dsq =3D dsq_pcpu->dsq;
+> +			refcount_inc(&dsq->deferred_reenq_refs);
+>  			reenq_flags =3D dru->flags;
+>  			WRITE_ONCE(dru->flags, 0);
+>  			list_del_init(&dru->node);
 
-The patched kernel completed the same regression test without a KASAN
-report.
+[Severity: High]
+Is a memory barrier needed here to ensure the refcount increment is
+visible before the list deletion?
 
-Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
-Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Hui Su <sh_def@163.com>
+Because refcount_inc() uses relaxed atomics, it provides no memory
+ordering guarantees. On weakly-ordered architectures, the CPU can commit
+the list_del_init() to memory before the refcount_inc().
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 23f9e178bc5a..1d36196b2238 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -13,6 +13,7 @@
- 
- #include <linux/llist.h>
- #include <linux/rhashtable-types.h>
-+#include <linux/refcount.h>
- 
- enum scx_public_consts {
- 	SCX_OPS_NAME_LEN	= 128,
-@@ -92,6 +93,8 @@ struct scx_dispatch_q {
- 	struct llist_node	free_node;
- 	struct scx_sched	*sched;
- 	struct scx_dsq_pcpu __percpu *pcpu_user;
-+	/* one base ref held until deferred reclamation, plus detached workers */
-+	refcount_t		deferred_reenq_refs;
- 	struct rcu_head		rcu;
- };
- 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 405d0d1038f8..9fd18fa5725b 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -5057,6 +5057,7 @@ static void process_deferred_reenq_users(struct rq *rq)
- 			dsq_pcpu = container_of(dru, struct scx_dsq_pcpu,
- 						deferred_reenq_user);
- 			dsq = dsq_pcpu->dsq;
-+			refcount_inc(&dsq->deferred_reenq_refs);
- 			reenq_flags = dru->flags;
- 			WRITE_ONCE(dru->flags, 0);
- 			list_del_init(&dru->node);
-@@ -5068,10 +5069,14 @@ static void process_deferred_reenq_users(struct rq *rq)
- 		/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq */
- 		dsq_id = READ_ONCE(dsq->id);
- 		if (unlikely(dsq_id == SCX_DSQ_INVALID))
--			continue;
-+			goto put_dsq;
- 
- 		BUG_ON(dsq_id & SCX_DSQ_FLAG_BUILTIN);
- 		reenq_user(rq, dsq, reenq_flags);
-+
-+put_dsq:
-+		if (refcount_dec_and_test(&dsq->deferred_reenq_refs))
-+			kfree(dsq);
- 	}
- }
- 
-@@ -5565,6 +5570,7 @@ s32 scx_init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id, struct scx_sched *sch)
- 	if (dsq_id & SCX_DSQ_FLAG_BUILTIN)
- 		return 0;
- 
-+	refcount_set(&dsq->deferred_reenq_refs, 1);
- 	dsq->pcpu_user = alloc_percpu(struct scx_dsq_pcpu);
- 	if (!dsq->pcpu_user)
- 		return -ENOMEM;
-@@ -5609,7 +5615,8 @@ static void free_dsq_rcufn(struct rcu_head *rcu)
- 	struct scx_dispatch_q *dsq = container_of(rcu, struct scx_dispatch_q, rcu);
- 
- 	exit_dsq(dsq);
--	kfree(dsq);
-+	if (refcount_dec_and_test(&dsq->deferred_reenq_refs))
-+		kfree(dsq);
- }
- 
- static void free_dsq_irq_workfn(struct irq_work *irq_work)
+Concurrently, exit_dsq() performs a lockless read check:
 
+kernel/sched/ext/ext.c:exit_dsq() {
+    ...
+    if (WARN_ON_ONCE(!list_empty(&dru->node))) {
+        ...
+    }
+}
+
+If exit_dsq() observes the reordered list deletion, it skips acquiring
+the spinlock and proceeds to drop the base refcount. Since the refcount
+increment hasn't reached global visibility yet, the base refcount drops
+from 1 to 0 and dsq is prematurely freed, which can cause a
+use-after-free when the deferred path continues.
+
+Additionally, list_del_init() is not atomic and momentarily leaves
+node->next pointing to the old element before pointing to itself. The
+lockless check in exit_dsq() could evaluate to true during this window,
+triggering a spurious warning.
+
+[ ... ]
+> @@ -5086,10 +5087,14 @@ static void process_deferred_reenq_users(struct r=
+q *rq)
+>  		/* destroy_dsq() may have raced and invalidated @dsq, nothing to reenq=
+ */
+>  		dsq_id =3D READ_ONCE(dsq->id);
+>  		if (unlikely(dsq_id =3D=3D SCX_DSQ_INVALID))
+> -			continue;
+> +			goto put_dsq;
+> =20
+>  		BUG_ON(dsq_id & SCX_DSQ_FLAG_BUILTIN);
+>  		reenq_user(rq, dsq, reenq_flags);
+> +
+> +put_dsq:
+> +		if (refcount_dec_and_test(&dsq->deferred_reenq_refs))
+> +			kfree(dsq);
+
+[Severity: High]
+Does calling kfree() here violate lock nesting rules?
+
+The process_deferred_reenq_users() function is executed with the
+runqueue lock held, which is a raw_spinlock_t (never sleeps).
+
+The slab allocator's kfree() slow path acquires internal spinlock_t or
+local locks, which can sleep on PREEMPT_RT kernels. Acquiring a
+sleepable lock while holding a true spinning lock triggers an "Invalid
+wait context" splat and could potentially lead to deadlocks.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260930101722.2468=
+434-1-sh_def@163.com?part=3D1
