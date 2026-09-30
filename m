@@ -1,73 +1,73 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EDF4E4C30
-	for <sched-ext@lists.linux.dev>; Wed, 30 Sep 2026 15:38:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6E95187EA;
+	Wed, 30 Sep 2026 17:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782708; cv=none; b=emGgIwg3/WnT1mbPRhxpQIw3CmCuNuzFSRsuNq0NQrrt9TaUdjB7rwUT6h5Xesl0+rDrYrOlzQtvqyBACU5GwzR+Se/fo3/UuHkiYXoDwlVQ1U+JcTg1WUwU01pXhwI/uO9MmufP6c9tLfELXKo6t04R1lDpux2o+1qsB+mHvU4=
+	t=1790788522; cv=none; b=tcM6pjX6rVHod7k7isTXX6A6EfJHrnhWs7Y2wsClNYxgPpqpUHB3AV+bW0ZzxpOum3OofC3GJii5z63xA+3ou4toCrkqxHPtmEaZULg3hjuU5FX3a+wJj/HSS+i/A9vpN1SiyGwt41fEwnBpRSEWHDsgVRSeaUHDX6P4Ez+HyRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782708; c=relaxed/simple;
-	bh=lFX3KZrfU92MnwavGd458xUvv9N7aTb4w8OPb37E7w4=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References; b=Cn35vBdJfpFhTh/aQBVLECPZo4oqEFpNByAU9EbwckLI1RSxhSmshLT/J475ZVqDbUr+Wf88NCS0bctf3t0cd4pDFxuuklpsoJOWp7wVX+nj/0RN4vP4k8Dpd44u8Rc911yNG1s4lYAHqga2ACOVpeq8OvLINT5v8f8TPp8KClc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=c8oViUrZ; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1790788522; c=relaxed/simple;
+	bh=Wu7ulRziLcS27Zfc7dqxAoWNHVNjTkfkWKXx36sj64c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FVzFX+KUUTjrV8dc8O+jHQ8E0mzWchhrM9co9jKHd/TF2Nw5VTM8dcqe4q7LbJxtpvxV4Pv3osojHFWqHMXyq2ahfrvtwscj9DjrNyxmhGcO0mL684kjjf/Ta7y4lilsuMrQl014UABs9II7/3aWDxxr9J9ixlF3wv0WgtPbVK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=evvh/Egh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="c8oViUrZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:From:To:Subject:Date; bh=lFX3KZrfU92Mnwa
-	vGd458xUvv9N7aTb4w8OPb37E7w4=; b=c8oViUrZb745itfq7fMVxefKZ+XVeLl
-	78tvnQ9DmI6OjNiChVYcOPztcQyErfVR+fT6XeUboaHZ+TgHiqrSpGgCvOi9ElMu
-	fzdl6mNB/tm+KtoYC7UzT/mHG9qSV+iKP994uS2TlM5Jn1r/8o3TPmJGPsll8u1e
-	SRe/DAkwrgfo=
-Received: from localhost (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wD3xwClLL1qzuoqBw--.14516S2;
-	Wed, 30 Sep 2026 23:37:10 +0800 (CST)
-Message-ID: <68e1d1e0cdfc633520a6593fdcdb3b72.sh_def@163.com>
-From: Hui Su <sh_def@163.com>
-To: sched-ext@lists.linux.dev
-Cc: tj@kernel.org,
- void@manifault.com,
- arighi@nvidia.com,
- changwoo@igalia.com,
- mingo@redhat.com,
- peterz@infradead.org,
- juri.lelli@redhat.com,
- vincent.guittot@linaro.org,
- dietmar.eggemann@arm.com,
- rostedt@goodmis.org,
- bsegall@google.com,
- mgorman@suse.de,
- vschneid@redhat.com,
- kprateek.nayak@amd.com,
- linux-kernel@vger.kernel.org,
- Hui Su <sh_def@163.com>,
- stable@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="evvh/Egh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816EF1F00898;
+	Wed, 30 Sep 2026 17:15:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790788521;
+	bh=7KKJP9qr0HOQ1QifqduNkacWuiGruyNWSL5MJp6keOs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=evvh/EghcuuzAXNa6Of+sqibY2Sx2AwIzS54X993i9UeaYdP7iBurkqV0UmoExgRb
+	 IAuSLYaJxaRNzWjwobIE3rmf3Ec+XFyXw2sddoiPEAVhrPnwL4kOdEH+oy/DjRDbH2
+	 h22URUd93XqXVW9h9SIwGWYnheFKE5WAJCXs7qBtpM5H4vyiQY5vsvPraNJinjINsj
+	 N2nZVfC96BaUD4mID4oJ+f5lVR0qM0+3jcvillgePXVvdkPzQEqTX13orEursa35kQ
+	 jPKlsEbTeV3CJp6yJsA8gMjzJkDQaVLEVTxXK1nMDhlMExLK8BKynukNWvbsfweIlN
+	 iSHdOvR4ZFPtw==
+Date: Wed, 30 Sep 2026 07:15:20 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Hui Su <sh_def@163.com>
+Cc: sched-ext@lists.linux.dev, void@manifault.com, arighi@nvidia.com,
+	changwoo@igalia.com, mingo@redhat.com, peterz@infradead.org,
+	juri.lelli@redhat.com, vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com,
+	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Subject: Re: [PATCH] sched_ext: Hold DSQ refs for deferred reenqueues
-Date: Thu, 01 Oct 2026 00:20:49 +0900
-In-Reply-To: <20260930143443.2862150-1-sh_def@163.com>
+Message-ID: <ar1DqN6Ek2VwYLwO@slm.duckdns.org>
 References: <20260930143443.2862150-1-sh_def@163.com>
-X-CM-TRANSID:_____wD3xwClLL1qzuoqBw--.14516S2
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjTRRuWlUUUUU
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwgY+nWq9LKZoPgAA3s
+ <68e1d1e0cdfc633520a6593fdcdb3b72.sh_def@163.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <68e1d1e0cdfc633520a6593fdcdb3b72.sh_def@163.com>
 
-Please disregard this posting. This was intended to be v2, but I
-accidentally omitted the version tag.
+On Thu, Oct 01, 2026 at 12:20:49AM +0900, Hui Su wrote:
+> Please disregard this posting. This was intended to be v2, but I
+> accidentally omitted the version tag.
+> 
+> I am preparing v3 to address the review feedback. In particular, it
+> will serialize exit_dsq() with deferred detach/reference acquisition
+> using deferred_reenq_lock, and keep final DSQ reclamation out of the
+> deferred path while the rq raw spinlock is held.
+> 
+> The revised design keeps a single DSQ refcount and the existing
+> rcu_head, without polling the refcount from repeated RCU callbacks.
+> 
+> I will post v3 after revalidation. Sorry for the confusion.
 
-I am preparing v3 to address the review feedback. In particular, it
-will serialize exit_dsq() with deferred detach/reference acquisition
-using deferred_reenq_lock, and keep final DSQ reclamation out of the
-deferred path while the rq raw spinlock is held.
+Can you try to do it without refcnts? DSQ destructions are rare events and
+we can reliably detect whether the DSQ is full or not. I'd much rather make
+the destruction path expensive than adding refcnt to hot paths.
 
-The revised design keeps a single DSQ refcount and the existing
-rcu_head, without polling the refcount from repeated RCU callbacks.
+Thanks.
 
-I will post v3 after revalidation. Sorry for the confusion.
-
+-- 
+tejun
