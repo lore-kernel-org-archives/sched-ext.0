@@ -1,80 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B51FDA61;
-	Wed, 30 Sep 2026 00:59:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE8544E055;
+	Wed, 30 Sep 2026 08:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790729945; cv=none; b=c23MWbtDaKeawfu+LDmteJK5vjfOjFdwE7J+d89bPWu5vY7JJj+jbwV7+DiY+eeUjbfWC58OwIpdLxoqNXXjWgJ3tceqynIBB7NsBTOafPKi2eeH+gbBIs0IOrdfEyelXYsH6p2+m37DYJaLfwUGq+bxRoj6d+cmJIKZVzEaSoI=
+	t=1790755904; cv=none; b=afmKHM3B+O92utvLp/37p6Is9OcAmwIhHc6W/ZPdV6OSHhPIn6r3oe5+TrmWkrsRZXp9L85KwlS4zR0ar3Nzu5P5e5SgFvJhQ7ORi17vgcABgJSyS2Y2GX+DeIahiVDuhhqqKFNvaYwywzdjZ5rgwdVIDHTaCXDXwMA1OSc29a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790729945; c=relaxed/simple;
-	bh=qx7lmYGSdJRJeo3RiDyeINkO8lC825afuGcmSQbV+qk=;
-	h=Content-Type:MIME-Version:Message-Id:In-Reply-To:References:
-	 Subject:From:To:Cc:Date; b=VRRiYIIncSRkIby0O0WLTvrqpBwi/e7tgNCf6sDcKKSTb3HMGijY6h2ciAoCSh7yx9RfmkoV+Ial1HQzpIhOSEZhQFYWy4l1cGl4ZyUOEd8Jt4LSwJTWz4lLbHfl8ZY2ScMsCBun3xnBTK52VVs8dhQ3CHZy1Y14yaO6zlCGSAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=biRho/1Z; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790755904; c=relaxed/simple;
+	bh=n6LqOCOL05LpmXLjZqV2F6/Qv/JfqGYo6fy5jnfWq9E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WfO+XjFUGiV7Q39+YKcC5l//+c85FZlBifs1nizzemk8VHpz84seTJgDvxs/IWYGAd+zHHQzNPLK0uvBK92BklgGJxHPBVM76AQ8cSdCRPkUGQIXrOkMdVifogMclzKje/BBzjioNkMH8zPKS1Uwp71zHv/p5i2t09xzq/7SQLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Nw2M0uL1; arc=none smtp.client-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="biRho/1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035721F000FF;
-	Wed, 30 Sep 2026 00:59:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790729943;
-	bh=XTrLrGRG4xIx3eTuE+g1DFQKR2Cwh+SOj4wPxjxRjI0=;
-	h=In-Reply-To:References:Subject:From:To:Cc:Date;
-	b=biRho/1ZbOutBa/vNiqnRhlY6SwZutcqbYN3Ghx2ERPPdyel9b4jYby9XtC61UEsV
-	 wEgUvhg9aE12hy3ZjO2q31Xf1IxrHiecPibhcOFabPBIgmkqZtnqJ+qeedqXfXbSlf
-	 udBQzNwWqjBULWd5KHkQkAUoMCeLkWzU+D7shyl556qZ7oZKcWzD61hrViPzVGtxPs
-	 T8nGaTpU86WzzgCosyuWxin2kk1hDkVrdVL1jYinoDHqsR6MHIUteQkCVKOghO22hL
-	 icPma4AsQcGvuissGa5Mx+Qf+jkynKalCNVyntsiiZ7z0TUKpDD+i0/bQGgRTNZKu6
-	 zf3/ySVQDBmcg==
-Content-Type: multipart/mixed; boundary="===============6181959472590134412=="
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Nw2M0uL1"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=n6LqOCOL05LpmXLjZqV2F6/Qv/JfqGYo6fy5jnfWq9E=; b=Nw2M0uL14wIlEsHYUYs6yOzm3j
+	+dKb5C0Kk3YlSidiL0Ba6JIcuRbWgH5asWlAeQ6RCIgUTxc8oiYwiaW9pTy1YcjraqGOvNuLBHXrR
+	o6hn63cIpymrVnr+g8y2G3DqDw/KecId2PjM7AdgZpUfR5cMKrxcl+ElFJk6DeoSaXvarakfuClBG
+	YUcAa5vqwPJiKioSUMjpt7VInDRpT/eTyDtuCJbY8saKmkBDjg9R/pkGHuEeyyQRGAmJTC7023SEp
+	jLgLIIH8diWHICjaA6J7xsH8JAQC+ZoUOPBCRIWTUGyGPSuAfv/Z09DwpiGj9al/luT4ysuuPEirh
+	s3odEgwg==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by desiato.infradead.org with esmtpsa (Exim 4.99.2 #2 (Red Hat Linux))
+	id 1xBpPT-00000003Vu7-3kBu;
+	Wed, 30 Sep 2026 08:11:28 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id B93F4300673; Wed, 30 Sep 2026 10:11:25 +0200 (CEST)
+Date: Wed, 30 Sep 2026 10:11:25 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Waiman Long <longman@redhat.com>
+Cc: Andrea Righi <arighi@nvidia.com>,
+	Michal =?iso-8859-1?Q?Koutn=FD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Ridong Chen <ridong.chen@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>, sched-ext@lists.linux.dev,
+	cgroups@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] cgroup/cpuset: Protect is_in_v2_mode() in
+ cpuset_num_cpus()
+Message-ID: <20260930081125.GF88198@noisy.programming.kicks-ass.net>
+References: <20260929084124.626693-1-arighi@nvidia.com>
+ <20260929084124.626693-2-arighi@nvidia.com>
+ <20260929-making-language-254d9c6a6605@there>
+ <af938567-01d2-4518-8f7e-974828e25d3e@redhat.com>
+ <arv2-3-6-Ewv0gpb@gpd4>
+ <b8f66cbe-bb1e-4148-b2e2-55bd95f1c8d1@redhat.com>
+ <20260929190853.GE88198@noisy.programming.kicks-ass.net>
+ <500cb19a-549b-4055-a807-c3c40da787ae@redhat.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <92a44bb46f421bebc4ab85faa0f95944cbb9d877d8e9372f51cfaae358841d2b@mail.kernel.org>
-In-Reply-To: <7c139810be5ffc9764ed4236efc28794@kernel.org>
-References: <7c139810be5ffc9764ed4236efc28794@kernel.org>
-Subject: Re: [PATCH sched_ext/for-7.4] sched_ext: Work around pahole 1.32 dropping scx_bpf_task_set_lazy_resched() from BTF
-From: bot+bpf-ci@kernel.org
-To: tj@kernel.org,void@manifault.com,arighi@nvidia.com,changwoo@igalia.com
-Cc: emil@etsalapatis.com,david.dai@linux.dev,yonghong.song@linux.dev,ast@kernel.org,bpf@vger.kernel.org,sched-ext@lists.linux.dev,linux-kernel@vger.kernel.org,ast@kernel.org,andrii@kernel.org,daniel@iogearbox.net,martin.lau@kernel.org,eddyz87@gmail.com,yonghong.song@linux.dev,mason@kernel.org,ihor.solodrai@linux.dev
-Date: Wed, 30 Sep 2026 00:59:02 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <500cb19a-549b-4055-a807-c3c40da787ae@redhat.com>
 
---===============6181959472590134412==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+On Tue, Sep 29, 2026 at 03:46:23PM -0400, Waiman Long wrote:
 
-> sched_ext: Work around pahole 1.32 dropping scx_bpf_task_set_lazy_resched() from BTF
->
-> With clang and pahole 1.32, x86-64 vmlinux BTF lacks
-> scx_bpf_task_set_lazy_resched() and sched_ext fails to initialize:
->
->   sched_ext: Failed to register kfunc sets (-22)
->
-> clang describes the lazy argument only after the prologue moves it into a
-> callee-saved register, which pahole 1.32 rejects as not being the argument
-> register. Released pahole is affected whatever the eventual fix. Keep the
-> argument on the stack with barrier_data() so that its location names no
-> register. OPTIMIZER_HIDE_VAR() would fix x86-64 but break arm64.
->
-> Fixes: f8e5a4e3f3be ("sched_ext: Add lazy preemption support")
+> The cpuset_v2_mode mount option is only for making the cpuset.cpus and
+> cpuset.mems behave like in v2. The cpu-cgroup and cpuset-cgroup can still be
+> in separate hierarchies. If cross-cgroup transition is the main point, it
+> won't work with the cpuset_v2_mode mount option. We should switch to use
+> cpuset_v2().
 
-Does the Fixes tag reference a commit that exists in this branch's history?
-The tag points to f8e5a4e3f3be, but if that commit is not an ancestor of
-this commit, the Fixes tag would be referencing a commit from a different
-tree or branch.
+Yes, the cross-cgroup transition is fundamental to how this works.
+Without that you cannot reasonably talk about the CPUs of a cpu-cgroup,
+you need to have cpu and cpuset aligned.
 
-Can you verify that f8e5a4e3f3be is reachable from this commit's history,
-or clarify which commit in this branch originally introduced the lazy
-preemption support that needs the workaround?
-
-
----
-AI reviewed your patch. Please fix the bug or email reply why it's not a bug.
-See: https://github.com/kernel-patches/vmtest/blob/master/ci/claude/README.md
-
-CI run summary: https://github.com/kernel-patches/bpf/actions/runs/36651688234
---===============6181959472590134412==--
