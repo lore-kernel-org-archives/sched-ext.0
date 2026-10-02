@@ -1,64 +1,64 @@
 Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E8B2EF653
-	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 15:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0A24EC64E
+	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 15:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790955910; cv=none; b=C7+n36I6zQXUC9TiRSOFEfLkk2ZUP/7EML36yejIh9RrfBRfaHZRUeMVm8dQR4bhzNhEAdp/K2SbmqJdg2Ywa5iTk5YPJP+nkmTSpM2KcADrPq4Egh7+SRWsbL6cjmvMK37NXQ3XWNrWLXMRvdCLreheKmvWE8cXYSb1bDjosYY=
+	t=1790955911; cv=none; b=Wrfff1YRKmLwhKoD9y/yGqVFFzdIupMaBiS/SfX5s2cvUHhF9LzGAXo1gbSu/zts1IWRdC9st1STy8wJjdT5J32pTItWltRDBkw8ILWetnytFjyM6HwwHNNHzulvrIGGZCmmztrEtZQ+iquL0gEGo8dzsHUzwq/VKAxQPRwLgFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790955910; c=relaxed/simple;
-	bh=Jf5E32GF85o6HQAbOOcsttI4ZjzXaQd9Z4H5WyGTqyA=;
+	s=arc-20240116; t=1790955911; c=relaxed/simple;
+	bh=Z3OZRU9tUVQEa8ii3OJE37iSt72mrOcOAJir4arnI9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzKMxGftGuXSG5uiwEJTKnRTXmFmu8aL0nsMne6jD+TWP7Mc1xum3uz8Xa3OIZLe6Ko3EpKjredmp0hMD0b3DVBKUBKtLKITQCEfyaTlJpz0QDoleivZMQhNdBCj72/Hme4QkMOOTYlwnxtI2bMSteeFFvLNc+A/f0z+m91Q5Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cyQRH2To; arc=none smtp.client-ip=74.125.225.141
+	 MIME-Version; b=lQwSyOzylXNeDYW59YuoBcefcIrD9R9qtcd4bHAx4CaqL4Vlifz6qFFZIGN0Ewip5k1AsO2e59iBsgYLpVkImXJCC2e04Ld4qDHozaITXR/nJRX2qseGGBRqGf2sdPNjSX4KAn0TUoy2VukhPK7JnahRXFs3o/XuCOdzPgx4f8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rEPmyGOG; arc=none smtp.client-ip=74.125.225.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cyQRH2To"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-4a0977b9c20so298385e9.2
-        for <sched-ext@lists.linux.dev>; Fri, 02 Oct 2026 08:45:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rEPmyGOG"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-4a024e16179so161905e9.2
+        for <sched-ext@lists.linux.dev>; Fri, 02 Oct 2026 08:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1790955906; x=1791560706; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1790955907; x=1791560707; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=P2kuJVAAelDyNc/5dJ9IAgD/T6ohQyK6/p84njFW19Y=;
-        b=cyQRH2To2ImBrJ8Xth8nHl0qRQvt7bJd9Ae2Mo7au/MAn+HD9EzKlgqth6HWuU5gnW
-         GFs2AjcpNGLlzmW9Qh9JnUxIh0X7rrUIOsmZuFTqkb1K2E+QSaQciqq160tOV3jWAVQw
-         I2UteiPaNiQ6znGX/+FNXUyUhUYKqqxEcgcDGYJxNnrDmGxd9GNFJQRmIeyWtFwFS6PC
-         rDOrRG+ZoZYgY+fHgqoTFE5ScNVfYQ61q4arrVw7IRcLxckVA5xfh96NTjCxgq/KMpL6
-         6Cylqs2eHaZV3jhgfOno3+nu9QtJUC+8VhrC9LZ7xRUPYMwMWavMgtmzOY0+yj/yvZND
-         +Dbg==
+        bh=+I4t9viO/Urz7W8GjoAm6BBP/QuCZzvUO0dNV1Sy8FM=;
+        b=rEPmyGOGvg8uc3/MyUbMlc/A8XH+ozJAUVJ2g9xVkwvALtMBhapihJ6oB/Ikn5pBaH
+         Zi3XlZHsEphxyInLC7CttBW98p4BasdtL/jEg0a7TDt8x7rJ+PRvfWxWUfJB1Vp/OW5E
+         TgCYSa5mtNmRbYbXLGBnqKpijQCq6wQse1NI3+oylSHRGZoLvjm6JoUL8a09RpXbU8Mk
+         xr1cFlc1Tk+3WHaWMPK7rJ7YWmG8ZNFlyggNpZxWDxL64/9K6vT1WZcMy52TKOvzAAsD
+         s0T6UMlwisagIZMKm9IX0dox0GEab5q3h4UEnvY6qpSXi9kdA23NcUDweYisj9/GwJ5P
+         wbCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790955906; x=1791560706;
+        d=1e100.net; s=20260707; t=1790955907; x=1791560707;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=P2kuJVAAelDyNc/5dJ9IAgD/T6ohQyK6/p84njFW19Y=;
-        b=x1iFkM2XQ+C74KeTLQSr42+KbYocYlW1XzEku6P+yh4F7YZYb+pWUl3KOksVXsU4H1
-         m0MCXvQ+Nb7tQfmrxLpRWk5gshKFAgNX8VC9iBejQVicwoZum6i/88kwSOqX0+KosnB8
-         ZPwIHth5u6F0r//5VL+q+/yT4T2mUlDwNwJvpR9a1SNGUOdv+2a09pfSxmrH/gnhgz2S
-         9dOmBLROsFgLHUKgbFuI8+V3vHGxfzZL7D7tcBkwtS16RiW3QUH3y6XxxURYDQv7i3zX
-         U2NYe9xM+MzQRRaX5HSDfh3onpJkgI/83EWB0+GuLPo4GEScKG2SYnPXcUzDmIIPZx6D
-         Zk7g==
-X-Forwarded-Encrypted: i=1; AKwUvBy1QyjgxwZR0cm2Ic2FyhTfnOKrsquMkYWQV6E/xWuzrp9M9TIzrPg2QY6vmMBSMqIfYaVw92n8uVo=@lists.linux.dev
-X-Gm-Message-State: AFuF++lIlVKvSRxwf63mkc1TAJfpbMbqMMnUYebtx4rJrTh2sT9cL2Vx
-	HvCeFgWpta70Xxua2hNoPG+ZdoMODWBwiopy385UPYc34ijrSeHPxcezecEdetajzLk=
-X-Gm-Gg: AYBFou3ok4tKYT/KyjH7Qf/8KkKwsKmJJga0jMlIDL8fMvXvWRbHzgrDqfSvNh49le5
-	8hrCNBJ4cNeWFh31+UJeLG6JupAY51ek7+Z2kqWkG6L78QUhg0sZL5Fsq1vqad8qfkc74v4YkZ7
-	cQzFcrw71F1qGZRiDLrYPayWmymjS9ajPlWnDZDtLNVLLNTjhf08sKNz15b4lyS+MlW/gidKh67
-	be8LtvwDjKZDVmZgXAM7DKBdLEW8vnRWhFmCCx81GhCu/f1V7/fx7Ga8jkxBw53e7c90fAeulRp
-	Wfqumcb/OSbqXJxyUW1ml4k5OisMTQFo9WbJA1RVHQZAIxrVhukidNyIZF29j25YbSeAoOhWLCl
-	OGB6fWMmSyaQpTLzHJgL6gW+nvyeezgmbWqWUkCyMMjH+fnO+JzkVVYAizGsCehSwmcxWMKAbOP
-	u5MCW1vlc8LfOn9BMJGmzUBdrVtT4H9WhLZJO+ojHiV8gibHwJzg2tUwkMtMn+BUSAipsR5LXhT
-	+lqpXXrRuNRK7JI
-X-Received: by 2002:a05:600c:a010:b0:4a0:251f:a726 with SMTP id 5b1f17b1804b1-4a02759badbmr51939065e9.24.1790955906410;
-        Fri, 02 Oct 2026 08:45:06 -0700 (PDT)
+        bh=+I4t9viO/Urz7W8GjoAm6BBP/QuCZzvUO0dNV1Sy8FM=;
+        b=YWEd4TqBrDQE5RhxDZJaUaeKSuaPYD2kJai+OdhACq6GecacE2+thlMZsLsjzbMDA7
+         vQ7iJiRNcKPDSMHPbo8LpxpjzOzv7vbH4eEHgTD36/GEWa2k5eu8xJqjcU+v4gPqBkhV
+         ITkpA936mSutuH/gVHWiJ7TIq3HR/QZlHnRaR7w+xPdV+fM3H7LvF8NCrC5JdswgpON1
+         2Q2662furXnzqvza3RQnb5txR6bHm2MsBmL9Oc+1hKK4XD+b6131ZKeXAWbDAZz8VcrZ
+         H0oP0RYcKJYWnF0IyukBQyb03u83BXk8ZaxixGOKhwqT2V7oa6p5yAHDj64q/K+yIN0o
+         7Rbg==
+X-Forwarded-Encrypted: i=1; AKwUvBwzqJoSv0SmICL65H5tTlTo9c3B1TDs57rSRq4U9Y+MPhgHWPqMmvnL13HOSy0yHoaHIIA1E9J5Wds=@lists.linux.dev
+X-Gm-Message-State: AFuF++nazuN8lX/R0uHgzaLvYbwfpKqgeDx5os3rIiRTzvcXnPVGTTiX
+	SYW9AICNaWraUVwDDyuiTOJDVIPvps740lB/CpyMa8XpSsnS7//E6qL3tcUCOvz5hoY=
+X-Gm-Gg: AYBFou3PscX9LHCasP5kU4EYnz0Io/5o02XhR7ry6Sxb6uppBkaLEyk24+J4cjrgnjA
+	hmg5gpj5MHMw+29EGSSXX//X3x+W+VP1awS3Dd+gaFN98yNnD296PI9/b2Aayc+3PYcDokVx0sY
+	9ERm6ce3CPdVEhiDcf85HZoJ9CnvUeHIZ9BTM8MuVl9lADTlGE0pU4mWYAN20Vfei3sCEyVBUT9
+	hUYSLXdCmCr3J1ozlBkQM3CzRQ8299EqHgV42UmzCxeujRJolsde4GHROphdGtKEDlXEd7mT64t
+	3juPr5ay5Ye0SA9eKLrK+opkP7lktFd7BJtG67tzqkaRLg922XXTmw501EKPXt25ciwOXCoUP5f
+	yu9zlMkHEGedmf4D7I3h0zW0YtcMnqeupTT/mD9bpjnilb05V8lINN6rjwukKzkGB6aPGFfEref
+	ymduZn8SSNIwdnfTQS2Vw/N1wp6sDLYWWbd5FFgcVhqzpaavz1D935ByB5wBF8VgJCjEQxepP4I
+	agOeHkDjrASJe5w
+X-Received: by 2002:a05:600c:c16e:b0:49f:ffdc:939d with SMTP id 5b1f17b1804b1-4a02755fd8bmr52292735e9.9.1790955907438;
+        Fri, 02 Oct 2026 08:45:07 -0700 (PDT)
 Received: from vingu-cube.home ([2a01:e0a:11f4:3020:718b:4747:291c:e5d8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280bcf0fsm101958045e9.6.2026.10.02.08.45.05
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280bcf0fsm101958045e9.6.2026.10.02.08.45.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 08:45:05 -0700 (PDT)
+        Fri, 02 Oct 2026 08:45:06 -0700 (PDT)
 From: Vincent Guittot <vincent.guittot@linaro.org>
 To: mingo@redhat.com,
 	peterz@infradead.org,
@@ -83,9 +83,9 @@ Cc: qyousef@layalina.io,
 	pierre.gondois@arm.com,
 	sshegde@linux.ibm.com,
 	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 03/18 v2] sched/eevdf: Add per cpu cached min_slice
-Date: Fri,  2 Oct 2026 17:44:00 +0200
-Message-ID: <20261002154415.2270586-4-vincent.guittot@linaro.org>
+Subject: [PATCH 04/18 v2] sched/eevdf: Compare min slice during wake_affine
+Date: Fri,  2 Oct 2026 17:44:01 +0200
+Message-ID: <20261002154415.2270586-5-vincent.guittot@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261002154415.2270586-1-vincent.guittot@linaro.org>
 References: <20261002154415.2270586-1-vincent.guittot@linaro.org>
@@ -97,86 +97,59 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In order to use min_slice during cpu selection, update a cached value when
-needed after en/dequeing a new task. This cached value includes current
-task.
+Add a new level in wake affine where we check on which CPU the task
+would most probably run 1st between this and prev CPUs.
 
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 ---
- kernel/sched/core.c  |  1 +
- kernel/sched/fair.c  | 20 ++++++++++++++++++++
- kernel/sched/sched.h |  1 +
- 3 files changed, 22 insertions(+)
+ kernel/sched/fair.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index ee9b443f760d..f38cf5a37a8a 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8902,6 +8902,7 @@ void __init sched_init(void)
- 		rq->sd = NULL;
- 		rq->rd = NULL;
- 		rq->cpu_capacity = SCHED_CAPACITY_SCALE;
-+		rq->min_slice = ULONG_MAX;
- 		rq->balance_callback = &balance_push_callback;
- 		rq->active_balance = 0;
- 		rq->next_balance = jiffies;
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 4c8f12fc8869..ad72b8536d6c 100644
+index ad72b8536d6c..eeac0aaba3cd 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -1116,6 +1116,22 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
- 		     run_node, min_vruntime, min_vruntime_update);
+@@ -8422,6 +8422,9 @@ static int wake_wide(struct task_struct *p)
+  * wake_affine_idle() - only considers 'now', it check if the waking CPU is
+  *			cache-affine and is (or	will be) idle.
+  *
++ * wake_affine_slice() - only considers 'now', it check if the waking CPU can
++ *			 be preempted becaus using longerslice.
++ *
+  * wake_affine_weight() - considers the weight to reflect the average
+  *			  scheduling latency of the CPUs. This seems to work
+  *			  for the overloaded case.
+@@ -8457,6 +8460,20 @@ wake_affine_idle(int this_cpu, int prev_cpu, int sync)
+ 	return nr_cpumask_bits;
+ }
  
-+/*
-+ * Entity's slice is in the range [100us:100ms].
-+ */
-+static unsigned long get_rq_min_slice(struct rq *rq)
++static int
++wake_affine_slice(struct task_struct *p, int this_cpu, int prev_cpu)
 +{
-+	return READ_ONCE(rq->min_slice);
++	struct sched_entity *se = &p->se;
++
++	if (se->slice < get_rq_min_slice(cpu_rq(prev_cpu)))
++		return prev_cpu;
++
++	if (se->slice < get_rq_min_slice(cpu_rq(this_cpu)))
++		return this_cpu;
++
++	return nr_cpumask_bits;
 +}
 +
-+static void __update_rq_min_slice(struct rq *rq)
-+{
-+	unsigned long min = cfs_rq_min_slice(&rq->cfs);
-+
-+	if (min != get_rq_min_slice(rq))
-+		WRITE_ONCE(rq->min_slice, min);
-+}
-+
- /*
-  * Enqueue an entity into the rb-tree:
-  */
-@@ -8089,6 +8105,8 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
- 	place_entity(cfs_rq, se, flags | ENQUEUE_QUEUED);
- 	__enqueue_entity(cfs_rq, se);
+ static int
+ wake_affine_weight(struct sched_domain *sd, struct task_struct *p,
+ 		   int this_cpu, int prev_cpu, int sync)
+@@ -8508,6 +8525,9 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
+ 	if (sched_feat(WA_IDLE))
+ 		target = wake_affine_idle(this_cpu, prev_cpu, sync);
  
-+	__update_rq_min_slice(rq);
++	if (sched_feat(PREEMPT_SHORT) && target == nr_cpumask_bits)
++		target = wake_affine_slice(p, this_cpu, prev_cpu);
 +
- 	if (!rq_h_nr_queued && rq->cfs.h_nr_queued)
- 		dl_server_start(&rq->fair_server);
+ 	if (sched_feat(WA_WEIGHT) && target == nr_cpumask_bits)
+ 		target = wake_affine_weight(sd, p, this_cpu, prev_cpu, sync);
  
-@@ -8214,6 +8232,8 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
- 	if (se != cfs_rq->curr)
- 		__dequeue_entity(cfs_rq, se);
- 
-+	__update_rq_min_slice(rq);
-+
- 	sub_nr_running(rq, 1);
- 
- 	/* balance early to pull high priority tasks */
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 69a2a749e188..e025d2a6c302 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1173,6 +1173,7 @@ struct rq {
- #endif
- 	unsigned int		ttwu_pending;
- 	unsigned long		cpu_capacity;
-+	unsigned long		min_slice;
- #ifdef CONFIG_SCHED_PROXY_EXEC
- 	struct task_struct __rcu	*donor;  /* Scheduling context */
- 	struct task_struct __rcu	*curr;   /* Execution context */
 -- 
 2.53.0
 
