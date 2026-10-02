@@ -1,64 +1,64 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322134BE42C
-	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 15:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333D54EE87C
+	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 15:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790955930; cv=none; b=U00j8pUeOYviQctMDRQiI9RN8FhRAQRGUNsTN12x3FCogRxnPEV6aSzlwQtnZn9mXX97UEfZtoX4a5k7lr0vcP5wMBM6E/0P+Gmyy1D1yrpa+nAruIq49QU/mZ+x6VMVm9Mk3f1CwE/jwrxQaAxzgnr0IF0OjHjqahpsRC75Am0=
+	t=1790955930; cv=none; b=qREMvn6xU5uELz8jtabi29xpDoOIj2s9PlszZiAP6QDRjmy/2n9nA0GBmbYBXeiqrU1iVWRtcrQ7Yg5NMwh9zKFIzBoHqrC8GPLSpLkfAz1LmeaAbvqBKdN4zXKK7lpqDixtt186eQ3fIEZoXuc8a4CN2/hHdy5mFgNVSkUAIAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790955930; c=relaxed/simple;
-	bh=CeTHB4ypLnb5H3d23FrgyQcrpY2y8roNeeEMV+cxjyU=;
+	bh=1lvJcxD9+zZwv6HbWjirpJuv17LA3EvKwbPn3OvpJ8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/mJj6IYDZsi1D+/Be8L/15gA83AEMcL/ZVp5WQQwEMvyH+gpVKD/DUafol3FV8N+ZGpFlHGFAIC4Mfs2Heppc9CL4pg7PyH7D+YKydBAm3EvkpItHYkOyZsGuwWz1sP2YwtPTw6PdtXpcVRZUAlgYQQseid64oiGhdD/0nn7h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zct4z6XA; arc=none smtp.client-ip=74.125.225.141
+	 MIME-Version; b=JdZCrra9NEzmGx4E5totmirY6sDbYw9Dg1u6J2dchJ4N7pvJN7eewTR6u/gbr4EX5RbeS8QzgBdy7LmKdBNA9dF8EjHarLoc1livEVbQke+zhRFVZPQh6FCx1SkcmD+p0U5TVfbJ2N31UNRZNSMd+cXZI61meGkA2XjYDfa1cgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pTERlZJ2; arc=none smtp.client-ip=74.125.225.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zct4z6XA"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49b912d3920so262255e9.1
-        for <sched-ext@lists.linux.dev>; Fri, 02 Oct 2026 08:45:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pTERlZJ2"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-4a006bb267eso303475e9.0
+        for <sched-ext@lists.linux.dev>; Fri, 02 Oct 2026 08:45:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1790955922; x=1791560722; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1790955919; x=1791560719; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EZjs7e//iaMUq0DbBBAkyBGkWfGjYDHq+81y/lPHXV0=;
-        b=Zct4z6XAhM9AVyR9AFwOieECxBLULJdH7wNQMSjpFPCH1N99je+TwocbhKo9po+8rm
-         vcEMlxZGuNcVTblYoNcRNfl8Xdx5CcAK4SNMvQSlgQUucu7PWcoWlSa5gf96DM70IXKK
-         pwCOR9ZGOdtu1yoJSraLR9u+Uzzw7zI6Wxu8TWicBIk1e+9N65pS24HUAPfGXTok+ING
-         hQJWwG5S8kW6lGWLIfAwxfUCeNzrK17dnn3PLQtCc0sV93ITd/rIdaOk9T6l75rba3XQ
-         ej6yzOr6ydIWTIeVZ2TqeXNf+CQxZDuIpoYOXFNt98K+4O2K/P+/HA/xWbnwXgqMY89E
-         +/jg==
+        bh=ya9RfmxJPM2JLLUcoTWuhNhFBf+WLZtJ0RXJ7Ml9FIQ=;
+        b=pTERlZJ2G1rHTduFAlSvr9Kth7gZu+9SvFW6NaPGKr8Hg8npVLSbhlK4zTevhQKNDt
+         YYwWqTirKqarqO9cTFkU6zczQ1XD5n9OhY70I56+TAroh94hek8Sx+cM3B+LuyiW68o4
+         sU7uxVRFX03ux1JpIBm9rEUMI2eAhEBU322hvlmcN9ACE/spt1b2aq12jf7xT03fEAKe
+         ZasPMijndo2wU0cYgKh97vYNNaGEVV0rDhI8RWPeqFwN2np2HE4c5EgcFDK1RwmCNyF2
+         xOP26SkwI3p1adgQJQiOUKj3OLrWE0znt47fZErnIr1rgSTUAr6P1D9/O+EohcL30szj
+         Fkwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790955922; x=1791560722;
+        d=1e100.net; s=20260707; t=1790955919; x=1791560719;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EZjs7e//iaMUq0DbBBAkyBGkWfGjYDHq+81y/lPHXV0=;
-        b=jv3xqO+tE9XxClGECUb7gqVuFMb2B9tMjB7dtC/pNUziS4z1SG/8OTqOORE/VfZ75H
-         kMHo56RsJhkMGVKeXtFCU+YAImE6Ib8iyDchTGIk7TUVjZwAytrPQQPCe+k4Z/0RT+Y5
-         e0QuTjapGtIt4hnBl4i4iZH4qMKf0E99IS/yaadqEgRr0AqBAaU6X6FciPfkdChy5ZXz
-         Efil7S+UIFPk43s74x2IOrb9HMRxtozPtIjsBahSvnmcGdSz3UG50/ToqKMC3iDxp0mP
-         SW8zoCPPAmgIHydGtActbdMvJuVUxoroEBGP7aiOWk+O5t1Ax5OWgJkssdVG25gFTLW4
-         sgLA==
-X-Forwarded-Encrypted: i=1; AKwUvByY0ZyAqmco2fV+YMjq5BLdW08TEn3rFH90m3IxwmOIXia6iFGb2xCLaye0a4fv2QX0PKtmhDTpx8k=@lists.linux.dev
-X-Gm-Message-State: AFuF++lgBZvWZmhg06xygaVps8zeFgdxGRT15/ARVKCb6YTV26LZdrh8
-	REYD2o3zPzyhsyco30uiskSNH9LR7T46I4CzuoFLKAN1S4/voJsDTj2g25fofxp5hv8=
-X-Gm-Gg: AYBFou383HFZaErIWCoprT12MHJ5Sbp98hqCwj/tEly1HtgmK9tzK2EJs3i5OU4RoZX
-	80/xueg0vwREdFGseVkP91EzPWHC++KzUGSUYYctmR6BXPJMYg5K1X1DML2MfP7HmHbBwexJUr/
-	ci0bl+AaVUeaNI/ojROoCF1ijhQehp5VLuNjJbdtIqwHVZ9FGxxZclSMUWIlGqiE5fD2L3aUgMH
-	bJ63dQndZgZAxvJ00lrZOtp7MbTnmuoYzpOjFXJXQDFTFiQlheHd+4WF08k4EDBCRi+vWm8XiPy
-	R3XBl4xxysXYHoFnLTSwgkSmub4TzmynWBK1XNK2MCE1PR1+vljkFuZ6nmDhVzQIc+rhoc7AMpp
-	qJ98n5oR8OIudt4v9/Liv2cnGW5B8VeK+yNgUhxJgy+AzcXPtKVLLAtQ09eymPYLnfA1uXR5TXG
-	M9Apg9z72d8ji32r8wqcKxmZWcZ/2amQWOcQU/n7tMYEmO3me70fvy9TeQMkOKTSWptagcRtpRG
-	cYjaaqoqx6N0O1k
-X-Received: by 2002:a05:600c:230b:b0:4a0:2533:c8b7 with SMTP id 5b1f17b1804b1-4a0276c6176mr42183355e9.35.1790955921951;
-        Fri, 02 Oct 2026 08:45:21 -0700 (PDT)
+        bh=ya9RfmxJPM2JLLUcoTWuhNhFBf+WLZtJ0RXJ7Ml9FIQ=;
+        b=e7GmgHHPFHZVw4rLUrtTb/1e6HZszOqThzKDTAHZ0YKycnYnIBcPAd3y9fRAswQP0V
+         n5KliliSdW3jKtyRe3FjAl45Nh5uC71HKYSlk74fq485oSf8XOA3Mk+V123F+ygO/3Ws
+         iVjlkguh4OR0qxnyuivvpZBh/1Zt9fJPP8HR32xfYigneiEtYBkaPo4CDBI3yCYScF+p
+         c7ahfwB1wWyJe1fAnraAY/jw5NlG/zo4PwOvMvx3nk+RDCx0zqF3KQ+O89wK0kF60z2C
+         Bysib1Q71mE1irSJU051+naGJp8hxc+hPwgBYCxhgclbTxXsBnFcyJybHhuzHulgtq04
+         VtxQ==
+X-Forwarded-Encrypted: i=1; AKwUvBx/MU+rTls53kBD4hYpFVtSCj9WD0VLcwS9VqeZLmOuWFOGrjZk3A6L/bja40+9kN2aXeOUIhCz3Zw=@lists.linux.dev
+X-Gm-Message-State: AFuF++njgDTKZAIdQa3tIC0kH3XjWcqXzt1bR0Tajh14Cv+mDILHzB48
+	DEeWwVeroSxy1gWbZ2HdLt4hMO47zB5lY37QgEXx6izTIcWItvJjuzZfnMUx64D/CAo=
+X-Gm-Gg: AYBFou2N41ywOfNAZJfYKGOAkQzHdU2dxtsJ9vbTj3kIRZIHnAuiyiIDcyF8PKkV821
+	SJXvky3p3tfQka8e8WAXpFjr+QvP6+1S5GprWfnsxtSfPSIlLBXnGqkvAXtckaT8Ls5AUeUQfQf
+	gndvMnOXCSZiAxFP06XUPZJD+tTmQ8pS+Szrd9cT5eJuUx9djBB44ZM1rju7HIesaCTZMyEd8nL
+	UDQPtTHWz3ZmoUbgx2xIkyeCdFsGnjpyMSqWEBNsobLwY0WYIxVoGBrG7sa3BrrHcLfAAikzy8V
+	iSgfIgv+cU6RXZ/z+MNuT91fEPDmpF2cbFF6poCKfacS5MhmrxpVCt7EHE0FTrcs4si62RH2ZwX
+	qFWBYYDhjm0xsM4xRtm+jXdflJ24S6xywTkgV+bRQfcZhDJG4aA5bMSdb75g/t0r5zOE9uJvE8k
+	WLloH0bx+H0sX2Zi5isWw4FcTOHxkBIb+Bz9+a7G40ZYEm/fwgzkARBCx7uZUEA57akGwJMxdum
+	uKn75zPa9MGXOjl
+X-Received: by 2002:a05:600c:c08a:b0:4a0:208e:2393 with SMTP id 5b1f17b1804b1-4a0276d9c16mr48912255e9.24.1790955919350;
+        Fri, 02 Oct 2026 08:45:19 -0700 (PDT)
 Received: from vingu-cube.home ([2a01:e0a:11f4:3020:718b:4747:291c:e5d8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280bcf0fsm101958045e9.6.2026.10.02.08.45.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0280bcf0fsm101958045e9.6.2026.10.02.08.45.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 08:45:20 -0700 (PDT)
+        Fri, 02 Oct 2026 08:45:18 -0700 (PDT)
 From: Vincent Guittot <vincent.guittot@linaro.org>
 To: mingo@redhat.com,
 	peterz@infradead.org,
@@ -83,9 +83,9 @@ Cc: qyousef@layalina.io,
 	pierre.gondois@arm.com,
 	sshegde@linux.ibm.com,
 	Vincent Guittot <vincent.guittot@linaro.org>
-Subject: [PATCH 13/18 v2] sched/eevdf: Push short slice task that are not picked
-Date: Fri,  2 Oct 2026 17:44:10 +0200
-Message-ID: <20261002154415.2270586-14-vincent.guittot@linaro.org>
+Subject: [PATCH 11/18 v2] sched/fair: Support not wakeup case in select_idle_sibling
+Date: Fri,  2 Oct 2026 17:44:08 +0200
+Message-ID: <20261002154415.2270586-12-vincent.guittot@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261002154415.2270586-1-vincent.guittot@linaro.org>
 References: <20261002154415.2270586-1-vincent.guittot@linaro.org>
@@ -97,50 +97,34 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Even when set as next buddy, a number of event can prevent short slice
-task to not be picked. Add the task in the pushable list in case it is not
-picked so it get a chance to be pushed on a better CPU.
-
-This can typically happen when several short slice tasks are pushed on the
-same CPU at wake up.
-
-If the task is picked, it will be removed from the pushable list before we
-queue the callback.
+With push callback mecanism, select_task_rq_fair can be called for a task
+that is already enqueued. Task into account this case when choosing idle
+CPU.
 
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 ---
- kernel/sched/fair.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 186f10173eed..cccdc40b8a24 100644
+index 6ed3e5bb7fd6..38eb80dbd1a4 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -9981,6 +9981,12 @@ static void fair_add_pushable_prev(struct rq *rq, struct task_struct *prev, stru
- 		__fair_add_pushable_task(rq, prev);
+@@ -7974,10 +7974,13 @@ static int choose_sched_idle_rq(struct rq *rq, struct task_struct *p)
+ 	return sched_idle_rq(rq) && !task_has_idle_policy(p);
  }
  
-+static void fair_add_pushable_short(struct rq *rq, struct task_struct *p)
-+{
-+	if (sched_push_task_enabled() && __check_pushable_fair_task(rq, p))
-+		__fair_add_pushable_task(rq, p);
-+}
++static int idle_cpu_without(int cpu, struct task_struct *p);
 +
- static int active_load_balance_cpu_stop(void *data);
- 
- /*
-@@ -10419,8 +10425,10 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
- preempt:
- 	cancel_protect_slice(se);
- 
--	if (preempt_action == PREEMPT_WAKEUP_SHORT)
-+	if (preempt_action == PREEMPT_WAKEUP_SHORT) {
- 		set_short_buddy(cfs_rq, pse);
-+		fair_add_pushable_short(rq, p);
-+	}
- 
- 	resched_curr_lazy(rq);
+ static int choose_idle_cpu(int cpu, struct task_struct *p)
+ {
+ 	return available_idle_cpu(cpu) ||
+-	       choose_sched_idle_rq(cpu_rq(cpu), p);
++	       choose_sched_idle_rq(cpu_rq(cpu), p) ||
++	       idle_cpu_without(cpu, p);
  }
+ 
+ static void
 -- 
 2.53.0
 
