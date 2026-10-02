@@ -1,195 +1,237 @@
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+Received: from mta0.migadu.com (out-80.mta0.migadu.com [91.218.175.80])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE72140244F
-	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 20:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1A441DE18
+	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 20:58:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.80
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790974382; cv=none; b=UpBYJe83SI7Cptv3ab2XEJW+mz+3Y5a/g4aVv1cnu9tuXI+3WIrkDVbd5/CMBqQtlr+ESRENCBum7g2W7dAMqamv5SOKChEaf8cVoHCOVChy3z6+nS3vGYdab/I5HwxWtbQbFQ9biPQwAjKtWxKO92aATAHCxIzukm7fjiobK4g=
+	t=1790974708; cv=none; b=ltpwzmM1m1T2gXFz9KL8OiEsBGrXJIn4DSS2xIdpHpPLZdCpkkodUXl8Cwl4vYE2JbURrRiC7A47hOh3sNmmu/8uJ9FxC4uzFPh9j9P2a2zHTQG79asdvPG3xRg/OqtiQ4Uz2vVtHTYIP08CdhNLXhYR4eWB6THNbWmm913SeyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790974382; c=relaxed/simple;
-	bh=P4ANKqW6k3SijlzaDDsRSdx1FhV/zAyS4jS6SjL8g2o=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=MFPlYsji09z1tbxghdzHRfIUHDKvo5nHOBqvriaWRCXJAiSID3Quru0x3kByTfA5s7d6tsR76DMaffW4cKQn5eoYAfB1UeAAIjj4kIqZ6Ca87x6OThL7pOrAMhU0wNOiy6tA/3s/nlHJGYaJT8sh8lnTe5nfE5/QJPe/diEo5kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=J6QUJzRQ; arc=none smtp.client-ip=209.85.208.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1790974708; c=relaxed/simple;
+	bh=cyE7xCmOBBATCOr27hlaYfNiIVy0ZG/W7o34fqS3PW0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D1xUuSeFJYz7NqeRzpcwC1HjzdJoBTyKcrIA3oMBCordSf//gWQAg9cZcHnPRUW6H7BjqDJS91jEOxoijJq2xlH+WBId2kb1dfSe322fC80CRmbXiHHpqND7iFF76YKHJ6AIPFpajZ2g6AUb8SaegYNBOwzlHP9e3fGjtTdJPFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ax+vZviq; arc=none smtp.client-ip=91.218.175.80
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J6QUJzRQ"
-Received: by mail-ed1-f69.google.com with SMTP id 4fb4d7f45d1cf-6aa47eed2c3so412847a12.2
-        for <sched-ext@lists.linux.dev>; Fri, 02 Oct 2026 13:52:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790974370; x=1791579170; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=S5Y8l6zarOho1gqNQcevN8mToET+8rsGamK/Z8+ErYs=;
-        b=J6QUJzRQ6ClIag7QA7R3oW67CCSRFTiQCFaoASNI0tpaZTDJIUx1zM6l+ApwxOdiAl
-         kjrWUrRj8k2OkQbm155Roxq8sr0UJCReoZMEhxqVoIXXZxQzESrzYNnnrt7Asir8n84F
-         QVZ1SN1iTheHtGOTLFRSqof+BB1GvxUO2aJhZRNuEBvj9o7S2WJRLxvYG/vACNuwRtp4
-         vQ+wjuKGq7nRzsQ4iLBzh32t/8kK8zdX0IN9ntyk0CMvWLg765R/Xw/bsEajk9WmSfPC
-         5uBjRlD33A4mo4s1fgRuk7B+IOKTOl8smrghbHDsmjdj1Nta6mA1wVEYL/oHgoKt+n53
-         AHIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790974370; x=1791579170;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=S5Y8l6zarOho1gqNQcevN8mToET+8rsGamK/Z8+ErYs=;
-        b=jwTRwj/7PeA84aP+wOU1U2/DjioPgBJ9BJrRoONJdUNqTpaqlL03Jkt0gXpLNOMWB8
-         Cq4+16NtDTi8HTbCwerpMJXWCmqUI/U4KF8eyKILmEB1qZCJEhV6E+0sIz6MjRpgAqK7
-         VgLNLTLMQ3zleWDVD3l+FqyriTYhfktzUkpJNe3v8qxfP5anqDbkVwD8eHluEqxUVgl/
-         t9zN3+q0xDwoJcTIDU7944azPDGZ1UaksVqtf7+ADrb+ER5xWtCpq35JucbUnu/QdPeM
-         kLhDbREKUlYAHg7KnebHLkalg3+HQ9dgH8JN8gTAKrPfPx3vkg9501suFOc54no0hevV
-         uOKQ==
-X-Forwarded-Encrypted: i=1; AKwUvByhqVlvbj8cdRuY4EbBtTVCsnU+HMjg0OFNOWk92qhbfRAv6/oBFI27N2lvYZ7vBJpqmMAhycU2pEk=@lists.linux.dev
-X-Gm-Message-State: AFq9FYLXIhVHsAAxImlvfch37Qq7wKiSC4jgS9T7C/fMkaWCdZbZm4iB
-	F7kGhd6InRokWYZkVF88wgNV/xu0VEmaxAT0BeTbLsSikqKxVRQlFn6B3GrcUrF3cDB1SdY1BpF
-	YDl2ESKJEuBu/qw==
-X-Received: from edgj17-n1.prod.google.com ([2002:a05:6402:a5d1:10b0:6a6:6326:bdd8])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:3253:b0:6aa:9866:551f with SMTP id 4fb4d7f45d1cf-6af9e3821e3mr2307303a12.45.1790974369334;
- Fri, 02 Oct 2026 13:52:49 -0700 (PDT)
-Date: Fri,  2 Oct 2026 20:52:41 +0000
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ax+vZviq"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=cyE7xCmOBBATCOr27hlaYfNiIVy0ZG/W7o34fqS3PW0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790974701; v=1; x=1791579501;
+ b=ax+vZviqSRu1XPDQEGrAVT+HGPvUUq/pOwLuAN59kN0XrzQ0GMdPmtqRWmTKqVzKLzBFj5Ar
+ VG1+QumlCqDH0np/SydZbLM0hXAuBSkFKaLCyQbsm1jdTGV5zx+j/MyZ/bTFOv3Nuf3mCl8oU/r
+ diH3WnacJGosTjeavKbQZdXQ=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 16a5b7b703a7aea2;
+	Fri, 02 Oct 2026 20:58:20 +0000
+X-Mizu-Trace-ID: 16a5b7b703a7aea2
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <44315425-c505-46fe-8379-f19d78ff3abb@linux.dev>
+Date: Fri, 2 Oct 2026 13:58:06 -0700
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20261002205242.3820674-1-jpiecuch@google.com>
-Subject: [PATCH sched_ext/for-7.3-fixes] sched_ext: Generate qseq from a
- per-task counter
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	David Vernet <void@manifault.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
-	Kuba Piecuch <jpiecuch@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v4 00/12] bpf: make the vmlinux BTF an on-demand
+ loadable module (CONFIG_DEBUG_INFO_BTF=m) to save ~5.4 MB memory
+To: Jay Wang <wanjay@amazon.com>, bpf@vger.kernel.org, ast@kernel.org,
+ daniel@iogearbox.net, andrii@kernel.org, eddyz87@gmail.com, memxor@gmail.com
+Cc: alan.maguire@oracle.com, martin.lau@linux.dev, yonghong.song@linux.dev,
+ jolsa@kernel.org, qmo@kernel.org, nathan@kernel.org, nsc@kernel.org,
+ linux-kbuild@vger.kernel.org, linux@weissschuh.net, christian@heusel.eu,
+ mcgrof@kernel.org, petr.pavlu@suse.com, samitolvanen@google.com,
+ linux-modules@vger.kernel.org, rostedt@goodmis.org, mhiramat@kernel.org,
+ mathieu.desnoyers@efficios.com, linux-trace-kernel@vger.kernel.org,
+ acme@kernel.org, namhyung@kernel.org, irogers@google.com,
+ linux-perf-users@vger.kernel.org, jikos@kernel.org, bentiss@kernel.org,
+ linux-input@vger.kernel.org, tj@kernel.org, void@manifault.com,
+ arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
+ shuah@kernel.org, linux-kselftest@vger.kernel.org, ojeda@kernel.org,
+ rust-for-linux@vger.kernel.org, arnd@arndb.de, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, abuehaze@amazon.com, doebel@amazon.de,
+ mpohlack@amazon.de, jay.wang.upstream@gmail.com
+References: <596bfb65-db2d-413b-8039-c921031b50fd@linux.dev>
+ <20261002073422.14253-1-wanjay@amazon.com>
+Content-Language: en-US
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20261002073422.14253-1-wanjay@amazon.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-finish_dispatch() uses the qseq embedded in p->scx.ops_state to tell
-whether the QUEUED instance of a task it's about to claim is the one
-scx_bpf_dsq_insert() saw. qseq is generated from rq->scx.ops_qseq, but
-the counters of different rqs are independent, so if a task is dequeued
-and re-enqueued on a different rq between scx_bpf_dsq_insert() and
-finish_dispatch(), the new QUEUED instance can end up with the same
-qseq as the old one:
+Hi Jay, thank you for taking the time to reply.
 
-  CPU X                          CPU Z
-  -----                          -----
-                                 enqueue p on rq A, qseq = N
-  ops.dispatch()
-    scx_bpf_dsq_insert(p)
-      records qseq N
-                                 sched_setaffinity(p)
-                                   dequeue p from rq A
-                                   enqueue p on rq B, qseq = N
-  finish_dispatch(p, N)
-    qseq matches, p is claimed
+On 2026-10-02 12:34 a.m., Jay Wang wrote:
+>> A question I had: is it really worth 2k of complicated kernel code to
+>> *maybe sometimes* save <10Mb of memory?
+> 
+> There are many reasons this is worth it.  The main ones:
+> 
+> 1. This did not start from a number we picked, but from a real use
+>     case: users who run large fleets of small instances, 1 GiB of
+>     memory or less, with their workloads sized to fit.  We are not able
+>     to disclose more detail, but for them 5.4 MB on every instance is
+>     real money, and it can be exactly what pushes a workload over its
+>     memory budget and onto the next instance size.  That is why we took
+>     this on, even though we knew it would not be a small change.
 
-The claim itself is still atomic so the core stays consistent, but an
-insert issued for a previous QUEUED instance gets applied to a new one
-which the BPF scheduler has just received through ops.enqueue(). This
-breaks the guarantee that dispatches targeting a stale instance are
-ignored.
+Ok, good to know there is a real customer for this.
 
-Generate qseq from a per-task counter, p->scx.ops_qseq, instead so that
-consecutive QUEUED instances of a task never share a qseq regardless of
-which rq they're on. The counter is only updated in
-scx_do_enqueue_task() with the task's rq locked, so no additional
-synchronization is needed. It's 32 bits so that it fits in an existing
-hole in struct sched_ext_entity on 64bit.
+Obviously I don't know any details of the use-case apart from what
+you've shared. But bear with me trying the customer's hat on:
 
-Never generate qseq 0. NONE and DISPATCHING don't carry a qseq, so
-scx_bpf_dsq_insert() on a task in either state records 0. With a
-per-task counter, every task's first QUEUED instance would otherwise get
-qseq 0 and could be claimed by such an insert.
+   - I am running a workload on a legion of 1GiB instances
+   - I care about memory footprint a lot, because it directly
+     translates into the amount of compute I pay for
+   - If I know I don't need BPF on the workload, and these 5.4 MB
+     bite me, I can just turn off BPF
+   - If I know I need BPF, then those 5.4 MB must be loaded anyways, so
+     I have to look for savings elsewhere
 
-Remove the now unused rq->scx.ops_qseq.
+What I find strange is for a user of this scale *to not know* whether
+BPF will be used in the workload or not, which is what lazy load may
+solve.
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Assisted-by: Claude:claude-opus-5.5
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
- include/linux/sched/ext.h   |  1 +
- kernel/sched/ext/ext.c      | 15 +++++++++++----
- kernel/sched/ext/internal.h |  5 +++++
- kernel/sched/sched.h        |  1 -
- 4 files changed, 17 insertions(+), 5 deletions(-)
+One thing I can imagine is an opaque workload: untrusted (AI agents
+etc), end-user-defined (including BPF usage), or confidential.  But in
+these cases, what are the chances that BPF is used there? They are
+high, BPF is very widespread.
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 582d7cd4a983..36c04797436c 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -207,6 +207,7 @@ struct sched_ext_entity {
- 	s32			holding_cpu;
- 	s32			selected_cpu;
- 	s32			runnable_cpu;	/* cpu @p is runnable on, -1 if not */
-+	u32			ops_qseq;	/* protected by rq lock */
- 	struct task_struct	*kf_tasks[2];	/* see SCX_CALL_OP_TASK() */
- 
- 	struct list_head	runnable_node;	/* rq->scx.runnable_list */
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index e56c3c95018f..7733b4a0f984 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -2057,8 +2057,15 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	if (unlikely(!SCX_HAS_OP(sch, enqueue)))
- 		goto global;
- 
--	/* DSQ bypass didn't trigger, enqueue on the BPF scheduler */
--	qseq = rq->scx.ops_qseq++ << SCX_OPSS_QSEQ_SHIFT;
-+	/*
-+	 * DSQ bypass didn't trigger, enqueue on the BPF scheduler. Brand this
-+	 * QUEUED instance with a fresh per-task qseq. Skip 0 as that's what
-+	 * scx_bpf_dsq_insert() records for a task in NONE or DISPATCHING.
-+	 */
-+	do {
-+		p->scx.ops_qseq++;
-+		qseq = (unsigned long)p->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT;
-+	} while (unlikely(!qseq));
- 
- 	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
- 	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
-@@ -6947,9 +6954,9 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
- 	seq_buf_init(&ns, buf, avail);
- 
- 	dump_newline(&ns);
--	scx_dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu ksync=%lu",
-+	scx_dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ksync=%lu",
- 		      cpu, rq->scx.nr_running, rq->scx.flags, rq->scx.cpu_released,
--		      rq->scx.ops_qseq, rq->scx.kick_sync);
-+		      rq->scx.kick_sync);
- 	scx_rescue_dump(&ns, rq);
- 	scx_dump_line(&ns, "          curr=%s[%d] class=%ps",
- 		      rq->curr->comm, rq->curr->pid, rq->curr->sched_class);
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 1df8f583b0ec..5b37faa532d6 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1998,6 +1998,11 @@ enum scx_ops_state {
- 	 * dequeue/requeue, the dispatcher can tell whether it still has a claim
- 	 * on the task being dispatched.
- 	 *
-+	 * QSEQ is generated from the per-task p->scx.ops_qseq counter so that
-+	 * it doesn't repeat across QUEUED instances of the same task even if
-+	 * the task moves between rqs. 0 is never used as a valid QSEQ since
-+	 * NONE and DISPATCHING map to this value.
-+	 *
- 	 * As some 32bit archs can't do 64bit store_release/load_acquire,
- 	 * p->scx.ops_state is atomic_long_t which leaves 30 bits for QSEQ on
- 	 * 32bit machines. The dispatch race window QSEQ protects is very narrow
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index e656c7059bf8..37df14377516 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -816,7 +816,6 @@ struct scx_rq {
- #endif
- 	struct list_head	runnable_list;		/* runnable tasks on this rq */
- 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
--	unsigned long		ops_qseq;
- 	/* both stashed across the activate_task() in move_remote_task_to_local_dsq() */
- 	u64			remote_activate_enq_flags;
- 	struct scx_sched	*remote_activate_sch;
--- 
-2.56.0.rc1.315.gc6ed9934b7-goog
+I can also imagine normal workload not needing BPF, but when something
+goes wrong an observability or security thing turning on that loads
+BPF programs. But this contradicts the "5.4 MB may push workload over
+1GiB" premise: you still need to reserve/swap memory for just-in-time
+BPF-based tools, otherwise you OOM.
+
+I of course may be missing something, happy to be corrected.
+
+> 
+> 2. Loading code and data only when a system needs them is what kernel
+>     modules exist for.  And most of them take well under ~1 MB once
+>     loaded (nf_conntrack, overlay, vfat); even big ones like ext4, kvm
+>     and btrfs stay around 1-2.5 MB.  The vmlinux BTF is 5.4 MB.
+
+True. At the same time BPF without vmlinux BTF is barely useful. And
+it is trusted by the verifier. Both are addressed by BTF being
+built-in in the kernel image.
+
+> 
+> 3. We are not alone in trying to keep BTF out of memory until it is
+>     needed.  The inline BTF work [1] plans to deliver its data, which
+>     is even larger, through a module too.  The .BTF.link record and the
+>     resolve_btfids option that serve both are already part of this
+>     series (patch 10), so this is not machinery for the vmlinux BTF
+>     alone.
+
+The inline data is different. It's bigger by it's nature, and it has
+more specific users: tracing tools. The userspace tools are able to
+themselves decide whether to use that data. The kernel only needs to
+make it available.
+
+In comparison, as you yourself noted in the cover:
+
+     CO-RE, fentry/fexit, kfuncs, struct_ops, sched_ext and bpf-lsm
+     all depend on vmlinux BTF
+
+> 
+>> Do those tiny VMs that you target run systemd with BPF LSM?
+> 
+> Not necessarily, and that is the image's choice.  Even with BPF LSM
+> built in and bpf in CONFIG_LSM, memory-conscious users can turn it off
+> at boot with an lsm= list that leaves it out, and then systemd does not
+> load restrict_fs at all.
+> 
+> And even where user space is in the way, which as above it does not
+> have to be, the answer is to fix user space so it gets this win too,
+> not to give up on it.
+> 
+>> If the answer is "yes" for the majority of them,
+> 
+> "The majority" is also hard to pin down here: what runs at boot
+> depends on the user space packages built into each image, and on the
+> workload.
+
+Yes, it is hard to pin down. Which is why we first need to figure out
+whether the alleged memory savings actually help anyone.
+
+Adding code to the kernel is not free. More complexity means bigger
+bug surface: more opportunities for concurrency bugs, security bugs
+etc. Especially runtime loads with retries and stuff. I'm sure you
+understand the future cost of all that.
+
+So the bias shouldn't be "let's implement a big thing that might
+hypothetically help someone". It's backwards IMO.
+
+> 
+> So the question should be what it takes to make this work, not whether
+> to drop it because it is complicated.  If there are ways to cut it
+> down, or issues found in the implementation, we would be happy to take
+> them and go through every one.
+
+The question is in the trade-off.
+
+Would you run a million line python program to search for a string in
+a text file? No, that's absurd. But you could.
+
+I'm not saying 2k line patch series is unacceptable in principle. It
+may be justified. But I am not convinced it is justified in this case.
+
+Let's say we (as in kernel devs) decided that we want to reduce
+vmlinux BTF size, and only load it when necessary. Here are a couple
+of alternatives, simpler in comparison to CONFIG_DEBUG_INFO_BTF=m,
+although still a bit complex:
+
+   * Compress it.
+
+     $ ls -lah /sys/kernel/btf/vmlinux
+     -r--r--r-- 1 root root 6.7M Jul 18 01:54 /sys/kernel/btf/vmlinux
+     $ tar --zstd -cf /tmp/vmlinux.btf.zstd -C /sys/kernel/btf vmlinux
+     $ ls -lah /tmp/vmlinux.btf.zstd
+     -rw-r--r-- 1 isolodrai users 2.2M Oct  2 10:11 /tmp/vmlinux.btf.zstd
+
+     3x win right there.
+
+     Keep zstd-compressed blob in the kernel image and decompress and
+     parse it synchronously on first use.
+
+     Here is a prototype (vibe-coded, obviously):
+  
+https://github.com/kernel-patches/bpf/compare/bpf-next_base...theihor:bpf:vmlinux.btf.zstd-20261002
+
+   * Use an external blob.
+
+     Ship /lib/modules/$r/vmlinux.btf, checked against a SHA-256
+     recorded in the image. The catch is a synchronous file I/O under
+     caller locks, so this is less straightforward.
+     But this should cover embedded case that Alan has mentioned.
+
+     Here is a prototype:
+  
+https://github.com/kernel-patches/bpf/compare/bpf-next_base...theihor:bpf:vmlinux.btf.external-20261002
+
+Both alternatives avoid kernel-module loading machine. If we think
+harder, we may come up with something even more clever.
+
+I don't particularly prefer one approach over the other, including the
+module one. Maintainers probably have a better intuition on that.
+
+The point I'm trying to make is that if you could achieve similar
+memory savings with say 500-line well encapsulated diff (or even
+better: by refactoring, simplifying, deleting code) it would have
+already landed.
+
+And if it was a 50-line patch, the discussion on whether anyone cares
+wouldn't be relevant, because it's so cheap.
+
+As it stands, it's not clear (to me at least) in what circumstances
+we'll get the promised memory savings at all.
+
+> 
+> 
+> [1] https://lore.kernel.org/bpf/20260916074118.1007116-1-alan.maguire@oracle.com/
 
