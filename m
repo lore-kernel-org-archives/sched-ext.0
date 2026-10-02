@@ -1,162 +1,195 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011049.outbound.protection.outlook.com [52.101.52.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com [209.85.208.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDF34A43F1
-	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 19:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790969907; cv=fail; b=ZAl5CxHgZAP+wuP/P5lPyXnQba/ut5wj+5YRQcwBaGTScCzujnu5pSH3gM5V2luZW15jzGh2umDjqvSAp0+v0QzNDxp1JgSJQfBYEzQ7gKDkoSKYMPLJpARpgwbb6n4SE0v0VovnQku9iSztr80NVCfTl8KR9ifxMdXb1oCfjPM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790969907; c=relaxed/simple;
-	bh=0q4jygsyVs4MaZZzBZAxPEKsGFPfXbzT7Xgh3P4kkLk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=uQxVHFXn8Wob/IuxivDhGbl972pYSgsA6doqDIM7pt+z4wZLy7VJG4Yv2FLT9bDo4AzxcrVoCksXsz/8a3jktD5tggjYhEUvwwXJNSk8esgJ4RewvfCkKpKYg55GmMlp+hZFJGi5tgxRPawzIoayRisgElOsjNlZzxYG1NdEj70=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Jk1iLssV; arc=fail smtp.client-ip=52.101.52.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE72140244F
+	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 20:52:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.69
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790974382; cv=none; b=UpBYJe83SI7Cptv3ab2XEJW+mz+3Y5a/g4aVv1cnu9tuXI+3WIrkDVbd5/CMBqQtlr+ESRENCBum7g2W7dAMqamv5SOKChEaf8cVoHCOVChy3z6+nS3vGYdab/I5HwxWtbQbFQ9biPQwAjKtWxKO92aATAHCxIzukm7fjiobK4g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790974382; c=relaxed/simple;
+	bh=P4ANKqW6k3SijlzaDDsRSdx1FhV/zAyS4jS6SjL8g2o=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=MFPlYsji09z1tbxghdzHRfIUHDKvo5nHOBqvriaWRCXJAiSID3Quru0x3kByTfA5s7d6tsR76DMaffW4cKQn5eoYAfB1UeAAIjj4kIqZ6Ca87x6OThL7pOrAMhU0wNOiy6tA/3s/nlHJGYaJT8sh8lnTe5nfE5/QJPe/diEo5kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=J6QUJzRQ; arc=none smtp.client-ip=209.85.208.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Jk1iLssV"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=syKScPseqE2o2HdfSFwY6pb+4+DM/9eMVFACPaYqgAdUsOctrTjRfRrMxG3RDPMK6WzVo35XP71SvJgI5vR+VIRBk5+0PMzpSyrRPGKYw7xgCwSWEG51Fr+M3OxNP4si2INOag8rj41FErNWH5fxHwy9ij+EVgvlVi4oG99xbrAw9oIZkP647rqraUWPYodgB83DXDRceX3ukYl013duvTlxjteSpHcyu9RP3CbQhhNTWI+WdF33gPFMyZuaAwwpwJrHXPzRLaeUFqKylJ/8e9YKGF4exNjeSyVA0l3NUdtqP0D1FdSIurLiLHE1qWTLKcV7yjuNmv3+DjZmcBGzQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+WPPCYQ2iFeVXSYQBiboM7o7sBtbPb9TwiJycjj0p8A=;
- b=yHzbYmU1XRcRQuviUyUegVMRmmggcz4uFVFFm5V31+DdjVEpnqOaBmvqM+5o8ObQJkaS7P0oseGT0lzEWXggr+sDA3MTT5OwUAg5mb/dM0sXGZQsCkWxjoQ2eObkP2RiJKXjQSli41PSZxHJc7plctj1uh0GOHiEk25vmkKuns265yIINBd+6+YBGSufzK62J/UoB8IwLpYAGHS1/TEgn5Lp/cl33i0PmmksOD1OoXN7f2SMIAHqEVsk40gehwv0Xl9ntlUfhj/VB5nYu4SVG2T3qz+XeVvEf5E07TPYZj8sOYFjK5BLTlZVRb8WrHeNTGK76ffv+0J13QUmVEQXUw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+WPPCYQ2iFeVXSYQBiboM7o7sBtbPb9TwiJycjj0p8A=;
- b=Jk1iLssV2T+APE8akcIuKXWWmogC+zXFcFQBgrZ4tnN2b8EQa+p0qjBE5R/+9ZZoMHI0m25Twh6CYs3aSF1KqB76FkFUCQqlA6MO7S1SC0gmGWyY2QkQ8ny1TmR1iQH6WQT7rQNyqNbGIscXsbvwCXhm38ho2iXRK/rgc500Uf0eGjGkE4HTgJ3ASV9PwjefdNUldrcx1B5jtj7SAHF1dL80cSYDCRZi2yr+twy+0VniMM8alwPFyZmPzcqGWj/Pygifg8/iaPKV+59YRMdzTNmJmQaDSw5e37kFS3xUNCPChUtBbpt9qOR+9J15rrMERPNt9mkmOGFfeP+Xal7Wyg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com (2603:10b6:5:1d6::14)
- by PH7PR12MB7938.namprd12.prod.outlook.com (2603:10b6:510:276::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.15; Fri, 2 Oct
- 2026 19:38:11 +0000
-Received: from DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c]) by DM6PR12MB4827.namprd12.prod.outlook.com
- ([fe80::6261:3040:864b:159c%6]) with mapi id 15.21.0451.022; Fri, 2 Oct 2026
- 19:38:11 +0000
-Date: Fri, 2 Oct 2026 21:38:08 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	John Stultz <jstultz@google.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH sched_ext/for-7.4] sched_ext: Keep proxy donors with
- slice left on the local DSQ
-Message-ID: <asAIIDSdSjwEjir9@gpd4>
-References: <20261001191216.2391359-1-arighi@nvidia.com>
- <59be0f173a7bc73a5a7eb6927f635605@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <59be0f173a7bc73a5a7eb6927f635605@kernel.org>
-X-ClientProxiedBy: MI2PEPF00000B83.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::419) To DM6PR12MB4827.namprd12.prod.outlook.com
- (2603:10b6:5:1d6::14)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J6QUJzRQ"
+Received: by mail-ed1-f69.google.com with SMTP id 4fb4d7f45d1cf-6aa47eed2c3so412847a12.2
+        for <sched-ext@lists.linux.dev>; Fri, 02 Oct 2026 13:52:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790974370; x=1791579170; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=S5Y8l6zarOho1gqNQcevN8mToET+8rsGamK/Z8+ErYs=;
+        b=J6QUJzRQ6ClIag7QA7R3oW67CCSRFTiQCFaoASNI0tpaZTDJIUx1zM6l+ApwxOdiAl
+         kjrWUrRj8k2OkQbm155Roxq8sr0UJCReoZMEhxqVoIXXZxQzESrzYNnnrt7Asir8n84F
+         QVZ1SN1iTheHtGOTLFRSqof+BB1GvxUO2aJhZRNuEBvj9o7S2WJRLxvYG/vACNuwRtp4
+         vQ+wjuKGq7nRzsQ4iLBzh32t/8kK8zdX0IN9ntyk0CMvWLg765R/Xw/bsEajk9WmSfPC
+         5uBjRlD33A4mo4s1fgRuk7B+IOKTOl8smrghbHDsmjdj1Nta6mA1wVEYL/oHgoKt+n53
+         AHIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790974370; x=1791579170;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=S5Y8l6zarOho1gqNQcevN8mToET+8rsGamK/Z8+ErYs=;
+        b=jwTRwj/7PeA84aP+wOU1U2/DjioPgBJ9BJrRoONJdUNqTpaqlL03Jkt0gXpLNOMWB8
+         Cq4+16NtDTi8HTbCwerpMJXWCmqUI/U4KF8eyKILmEB1qZCJEhV6E+0sIz6MjRpgAqK7
+         VgLNLTLMQ3zleWDVD3l+FqyriTYhfktzUkpJNe3v8qxfP5anqDbkVwD8eHluEqxUVgl/
+         t9zN3+q0xDwoJcTIDU7944azPDGZ1UaksVqtf7+ADrb+ER5xWtCpq35JucbUnu/QdPeM
+         kLhDbREKUlYAHg7KnebHLkalg3+HQ9dgH8JN8gTAKrPfPx3vkg9501suFOc54no0hevV
+         uOKQ==
+X-Forwarded-Encrypted: i=1; AKwUvByhqVlvbj8cdRuY4EbBtTVCsnU+HMjg0OFNOWk92qhbfRAv6/oBFI27N2lvYZ7vBJpqmMAhycU2pEk=@lists.linux.dev
+X-Gm-Message-State: AFq9FYLXIhVHsAAxImlvfch37Qq7wKiSC4jgS9T7C/fMkaWCdZbZm4iB
+	F7kGhd6InRokWYZkVF88wgNV/xu0VEmaxAT0BeTbLsSikqKxVRQlFn6B3GrcUrF3cDB1SdY1BpF
+	YDl2ESKJEuBu/qw==
+X-Received: from edgj17-n1.prod.google.com ([2002:a05:6402:a5d1:10b0:6a6:6326:bdd8])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6402:3253:b0:6aa:9866:551f with SMTP id 4fb4d7f45d1cf-6af9e3821e3mr2307303a12.45.1790974369334;
+ Fri, 02 Oct 2026 13:52:49 -0700 (PDT)
+Date: Fri,  2 Oct 2026 20:52:41 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4827:EE_|PH7PR12MB7938:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1201225a-d063-4c3d-7619-08df20bcb154
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|4143699003|10067099003|56012099006|6133799003|5023799004|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	fkXgAkj9xW0bTjPxdD6gyy79sdT6P3V1L0PgWloHfMR8vUFhldbf9HPmPUHdHBFTt9D+TgVK5jW6b008jwDthwxMLZV3vpA02AtaZC/aPcguYGfMtJ72zXn9U5mx/CVZhfmZYUKHziPIVO1OY4tJPP17pLIdeFgZ20einyOJ2FjiSYPwc9sN4EEnqwAVEAVhpjraeG1Dd+KG7joS4tuUvCVRfgqWBUPBpqHMKvrGqT8vR/miA+6ECtV54Y9Oulof6G6+5k7aD1Ib5EJDD/nQj193npmkEpPVeWSDUYpKFyh5xgNwWJzucRrbbELX0SF+HJZX9IUpn1PKFG8PTDrYH+TsdsyIgEhT0NrCz2u+ip/bUP9JkoDINQT+3f4E3XeFrYU4uMzaAVnfm8DXJ7ozttQWEtP9OdV7MRJj+4OiNyHU7+spy8590etV6416QgvTXLSuaMDGwCwAQ3vpYoWSBvq3hg6tGP+T3IX2XePwqFXJlnjSFdgCxMZlwFctcYN+zYCnun5QHkZjcVhUpAM5OHwrEipSuMuWFLV1zyKiLJ/4VqLZ2CgjGYwlktmQ5kqdQbDImjgHcbLcp1SVRhZugbAhgAYfsdgCnRODL/AaIQIwiqBwUsE/+I1g3TDMG4yI+fZ5Y5oFx4DVtsO8bUEr4uYUsk5jrzI5nigfq+lvDNU=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(4143699003)(10067099003)(56012099006)(6133799003)(5023799004)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?VOTw/OMGwEkAgJ20wC/f0AnUVRmmnKKnIo6Rur4jTwwWrSRvyaVk2pRuZHLi?=
- =?us-ascii?Q?YEcNsGcH8tP6WHavuyFyCbpelOEJ/tdU/Z53otjQY0zr6IWyi5KH/YXltc1Q?=
- =?us-ascii?Q?azg+eHg7723H0ExxzpZBI9/QfIuBCup8BBZjzuvGzqcCTTCV+N7SwrMu62/k?=
- =?us-ascii?Q?YvrN4SsEvSsCG7wN2JCPBGTYyULxkzL/M/RFqTHWosgL2QMldUJ3cB/xOjlK?=
- =?us-ascii?Q?M74JGuR8pyRP0oPa/SY/5VMLde2MS1L4rlgP9+MZ6NL/g/XxlZdpEoVhKc9l?=
- =?us-ascii?Q?vnSk5/ZNiELECDzfSbmHWghaxY6qP5hE4Ep/10V3SlnPmCpMHFK6N433PG0U?=
- =?us-ascii?Q?NNkGPUx7/sUjAbAq10P/u0nPb5BkTojoLINngulMg4GiNBd6OC6dFDZmhHzf?=
- =?us-ascii?Q?rKEXSLsFexweh1LRDoFbBPr8/TYy3ETY0ravLjXQK9f2dn6e0/wfIwySaBKU?=
- =?us-ascii?Q?SGayJPXvyMQ/Wi9xW1dLwVbS7HXxJzFHhgpGHLruGJh7E1F3jI9CLcz5c0Fy?=
- =?us-ascii?Q?LD6x3Ujr7+djV86snnpXIzulTBy5Rxzhny97t9rC53Mbhafnj9MXyzGOMPtg?=
- =?us-ascii?Q?6JJedW8sthucbhXVd3P+gB6EMtL6kb345hHek2UQuGvtrOrythmWo6q/lOFy?=
- =?us-ascii?Q?R5Uwie4mCWMJuzNGKRBwjdWh5PZkYSYlGxlbK43XH1UaTyCzaZ5SlhOiEwyP?=
- =?us-ascii?Q?9VCi4dOg83Zgf2l6qnJTzNrh4sGutdmyuyYy+Y9LOykQpVnRr2HKXSKc+W/O?=
- =?us-ascii?Q?FFErYQwNWChZqx1vDluIyoA86wAn5gP6XMaXcwqdKTqHxIOf+m1Nx1NkCQ7a?=
- =?us-ascii?Q?zwwi34wVqe7kHpOhTwmYhhShL2+MJ+mqIkfSXRby1KCLNqM/ha3y7djhO9jo?=
- =?us-ascii?Q?IZTsDXwiwmrH4/r9vWw17n9iu1jFa4J9hrgFjhUZu5QvSlyuI0ZeaO5plZp5?=
- =?us-ascii?Q?PPHMmtM1XF8aV/F+TUJaJFCUq7+hV7uiJpt8Cot3sAk2PGVyFH5WpAVtG0nj?=
- =?us-ascii?Q?H4q3pgy1KgPpHj4pdLNOF54PjJVaz6kYugzK7mgPI30KLU+iarfGgAp6AEFQ?=
- =?us-ascii?Q?USJxBHRR7Suv0R7g5hm/nF7IGVB73lPsjYbqwaloQFEb8L+oNshcXzbdWfXn?=
- =?us-ascii?Q?0a0EdafBpM0WsEA3dmSkn4cwEb7V063vy72aumkLG14PrmHXQang4+nBIf/M?=
- =?us-ascii?Q?2U3klgKp/gb0FSlxrzNdfg/zWb1copPFOOVTFDOv9RsAtXLpdkq6EyeXIpYG?=
- =?us-ascii?Q?EeyfeCa2VDp3ciPN44OTN5rhSL6BGm4RPzNgXVIzFYT9Dyq7QOjQhPQPV62m?=
- =?us-ascii?Q?KoT2Dwwd8FXvoOaIXMvXlbVLjO+uaIc4czO/LDQa0TSpJdjZpUabedtTJIfZ?=
- =?us-ascii?Q?SDK186QYbMlUfBi6dn2+FfAprE/6dHmr3LfUzXVKHt2J/ZKaW4UI1fbNsclN?=
- =?us-ascii?Q?JaKOjEzI3EMB3Lb6nrLg4IRXwNqzk8H0HKL2gtE+FUZNaJtzpAlUsy5bp0RW?=
- =?us-ascii?Q?YpsdVosJQnZItj5/z/XVTPDSb3+Ly/s6HG1Cv1Q8vFRD/rI9EPB2yr5auyLP?=
- =?us-ascii?Q?PhbQRlo/B+hRHoIykQbiJzgzghwkAlQwzC8LjgQD7KSzy7PA9FueEyWewuc9?=
- =?us-ascii?Q?k2zwWrzRazx1+gq6kyaJuXA/5/7QhtGGXlPGgT+TAiimIUp4i1WBhNFX1ECA?=
- =?us-ascii?Q?5AqrqDXRY5Nopa+im2sLJik0qs/6V2weU+bJYggXCJYMr5QY?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1201225a-d063-4c3d-7619-08df20bcb154
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4827.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 19:38:11.2470
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: oKTMIiOAkaF5pGBha2Lt6qoIVg8xL3enBooGcc4yBItSunzIBa2C2cx3amMZ3qGoyiUsznRMBduBqFHJ9PUh/Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7938
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
+Message-ID: <20261002205242.3820674-1-jpiecuch@google.com>
+Subject: [PATCH sched_ext/for-7.3-fixes] sched_ext: Generate qseq from a
+ per-task counter
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
+	David Vernet <void@manifault.com>
+Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
+	Kuba Piecuch <jpiecuch@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Tejun,
+finish_dispatch() uses the qseq embedded in p->scx.ops_state to tell
+whether the QUEUED instance of a task it's about to claim is the one
+scx_bpf_dsq_insert() saw. qseq is generated from rq->scx.ops_qseq, but
+the counters of different rqs are independent, so if a task is dequeued
+and re-enqueued on a different rq between scx_bpf_dsq_insert() and
+finish_dispatch(), the new QUEUED instance can end up with the same
+qseq as the old one:
 
-On Fri, Oct 02, 2026 at 07:30:16AM -1000, Tejun Heo wrote:
-> Hello, Andrea.
-> 
-> On Thu, Oct 01, 2026 at 09:12:16PM +0200, Andrea Righi wrote:
-> > +			if ((p->scx.flags & SCX_TASK_IMMED) && !proxy_put) {
-> >  				p->scx.flags |= SCX_TASK_REENQ_PREEMPTED;
-> >  				scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
-> 
-> I wonder whether IMMED should matter for a blocked donor at all. IMMED
-> should trigger a reenqueue iff the task is not being serviced by a CPU. A
-> donor under proxy execution is being serviced. The CPU is working on its
-> behalf and there's nothing the scheduler can do to make it go faster by
-> placing it elsewhere. If so, a donor with slice left can stay on the local
-> DSQ regardless of IMMED and of which put this is, and
-> SCX_RQ_PROXY_PICK_PENDING isn't needed. The deferred local check would need
-> the same exemption as the task stays SCX_TASK_IMMED.
+  CPU X                          CPU Z
+  -----                          -----
+                                 enqueue p on rq A, qseq = N
+  ops.dispatch()
+    scx_bpf_dsq_insert(p)
+      records qseq N
+                                 sched_setaffinity(p)
+                                   dequeue p from rq A
+                                   enqueue p on rq B, qseq = N
+  finish_dispatch(p, N)
+    qseq matches, p is claimed
 
-I think you're right, the donor's progress depends on its mutex owner, so
-re-enqueuing the donor alone can't make it run sooner. Therefore we can just
-keep it local, remove SCX_RQ_PROXY_PICK_PENDING and simplify the code.
+The claim itself is still atomic so the core stays consistent, but an
+insert issued for a previous QUEUED instance gets applied to a new one
+which the BPF scheduler has just received through ops.enqueue(). This
+breaks the guarantee that dispatches targeting a stale instance are
+ignored.
 
-> 
-> > +		/* Delegate retained donor admission to its owning BPF scheduler. */
-> > +		if (p->is_blocked) {
-> > +			if (WARN_ON_ONCE(!sch))
-> > +				goto switch_class;
-> > +			WARN_ON_ONCE(!(sch->ops.flags & SCX_OPS_ENQ_BLOCKED));
-> > +			scx_do_enqueue_task(rq, p, 0, -1);
-> > +			goto switch_class;
-> > +		}
-> 
-> Can this be folded into the following block? scx_do_enqueue_task() already
-> adds SCX_ENQ_BLOCKED, so a !p->is_blocked test on the ENQ_LAST condition
-> would route donors to the plain enqueue.
+Generate qseq from a per-task counter, p->scx.ops_qseq, instead so that
+consecutive QUEUED instances of a task never share a qseq regardless of
+which rq they're on. The counter is only updated in
+scx_do_enqueue_task() with the task's rq locked, so no additional
+synchronization is needed. It's 32 bits so that it fits in an existing
+hole in struct sched_ext_entity on 64bit.
 
-Agreed.
+Never generate qseq 0. NONE and DISPATCHING don't carry a qseq, so
+scx_bpf_dsq_insert() on a task in either state records 0. With a
+per-task counter, every task's first QUEUED instance would otherwise get
+qseq 0 and could be claimed by such an insert.
 
-Thanks!
--Andrea
+Remove the now unused rq->scx.ops_qseq.
+
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Assisted-by: Claude:claude-opus-5.5
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ include/linux/sched/ext.h   |  1 +
+ kernel/sched/ext/ext.c      | 15 +++++++++++----
+ kernel/sched/ext/internal.h |  5 +++++
+ kernel/sched/sched.h        |  1 -
+ 4 files changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 582d7cd4a983..36c04797436c 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -207,6 +207,7 @@ struct sched_ext_entity {
+ 	s32			holding_cpu;
+ 	s32			selected_cpu;
+ 	s32			runnable_cpu;	/* cpu @p is runnable on, -1 if not */
++	u32			ops_qseq;	/* protected by rq lock */
+ 	struct task_struct	*kf_tasks[2];	/* see SCX_CALL_OP_TASK() */
+ 
+ 	struct list_head	runnable_node;	/* rq->scx.runnable_list */
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index e56c3c95018f..7733b4a0f984 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2057,8 +2057,15 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	if (unlikely(!SCX_HAS_OP(sch, enqueue)))
+ 		goto global;
+ 
+-	/* DSQ bypass didn't trigger, enqueue on the BPF scheduler */
+-	qseq = rq->scx.ops_qseq++ << SCX_OPSS_QSEQ_SHIFT;
++	/*
++	 * DSQ bypass didn't trigger, enqueue on the BPF scheduler. Brand this
++	 * QUEUED instance with a fresh per-task qseq. Skip 0 as that's what
++	 * scx_bpf_dsq_insert() records for a task in NONE or DISPATCHING.
++	 */
++	do {
++		p->scx.ops_qseq++;
++		qseq = (unsigned long)p->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT;
++	} while (unlikely(!qseq));
+ 
+ 	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
+ 	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
+@@ -6947,9 +6954,9 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
+ 	seq_buf_init(&ns, buf, avail);
+ 
+ 	dump_newline(&ns);
+-	scx_dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu ksync=%lu",
++	scx_dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ksync=%lu",
+ 		      cpu, rq->scx.nr_running, rq->scx.flags, rq->scx.cpu_released,
+-		      rq->scx.ops_qseq, rq->scx.kick_sync);
++		      rq->scx.kick_sync);
+ 	scx_rescue_dump(&ns, rq);
+ 	scx_dump_line(&ns, "          curr=%s[%d] class=%ps",
+ 		      rq->curr->comm, rq->curr->pid, rq->curr->sched_class);
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 1df8f583b0ec..5b37faa532d6 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -1998,6 +1998,11 @@ enum scx_ops_state {
+ 	 * dequeue/requeue, the dispatcher can tell whether it still has a claim
+ 	 * on the task being dispatched.
+ 	 *
++	 * QSEQ is generated from the per-task p->scx.ops_qseq counter so that
++	 * it doesn't repeat across QUEUED instances of the same task even if
++	 * the task moves between rqs. 0 is never used as a valid QSEQ since
++	 * NONE and DISPATCHING map to this value.
++	 *
+ 	 * As some 32bit archs can't do 64bit store_release/load_acquire,
+ 	 * p->scx.ops_state is atomic_long_t which leaves 30 bits for QSEQ on
+ 	 * 32bit machines. The dispatch race window QSEQ protects is very narrow
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index e656c7059bf8..37df14377516 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -816,7 +816,6 @@ struct scx_rq {
+ #endif
+ 	struct list_head	runnable_list;		/* runnable tasks on this rq */
+ 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
+-	unsigned long		ops_qseq;
+ 	/* both stashed across the activate_task() in move_remote_task_to_local_dsq() */
+ 	u64			remote_activate_enq_flags;
+ 	struct scx_sched	*remote_activate_sch;
+-- 
+2.56.0.rc1.315.gc6ed9934b7-goog
+
