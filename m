@@ -1,209 +1,136 @@
-Received: from mta1.migadu.com (out-215.mta1.migadu.com [95.215.58.215])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com [44.246.1.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997BE360EC9
-	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 04:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD89343DED9
+	for <sched-ext@lists.linux.dev>; Fri,  2 Oct 2026 07:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.246.1.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790915801; cv=none; b=i/EFJIb6Dbw+SdM8KHyDTEgAdCZ9pkBqgEfXs6M1RVQhJE/Zw7mrOxDUjgnKGH+Ke2uNgAHn/+XYT9UVw1pgReom0q6bGDo4NQ7hYJXB30PVrFdv0tvLwBcDTCK2KjGzc+eoDFlcnnZ1O/tnywgKZlrIwKyYlxRmfwdWVer33Io=
+	t=1790926465; cv=none; b=amkjYiYHW3DCLDIyKTUmXCMwGMWsqWbajf//YSIO7DWlmFIXitiQJhxYtyaf5oR2XzCzvg2uajjD9XtA/+tvsGP9fmwUL3aGs70gu12Hp/qhM5ESknDuFd+LrVeMtAu5V7LkPhA6Lqf730VX61N8wMpQVnKkj2eySzIvWQYa71Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790915801; c=relaxed/simple;
-	bh=y/0CXx9eIXXSUi0htzgjyz98uoanzac/KLtq3JYsrjo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ViQtp1vNdfVxzhDWedvalhDM2jidKRxbSo1kgTscp8P6S1xxoHX5K34PfFVQElsm1RBaRv/oTtUs5tEZZDCXzSLkMNeEj60p7DB8AY/1/yqfUlJBUSKJ7VxtEuShD98wsCU7OUyqe4SXky8XeYi33cwpO9UT0LM89RWY/NHi1Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=xP7aSUJC; arc=none smtp.client-ip=95.215.58.215
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790926465; c=relaxed/simple;
+	bh=m+LVU2zi0zSOvknT2CQZ4vuI1VWQtPXUViI/XoHlI50=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=M+d5T2ds2YMHYPnnG7W7IdERmZlXmNQQ+UehJrh/xK4wXjCkJ9nGxbWgjSnerfezJT8yAQdIAHbMGCrveDPen6HBhs19LPtL554nbD4YYK9TGaw22bzHGzeH3XJiEbZWfRZzwGz6GRdL4YG+8yz8ScwvwUgrm4PBZFb8u4lqh10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=pWkW/SR5; arc=none smtp.client-ip=44.246.1.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="xP7aSUJC"
-X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=y/0CXx9eIXXSUi0htzgjyz98uoanzac/KLtq3JYsrjo=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790915796; v=1; x=1791520596;
- b=xP7aSUJCP1VTTt6HWpzfU6gfjbJUEIPtiK8ipSLspAPJnzEqFk/WM+JNBurF6U2QCmVsxMvG
- 3PR1iwIg3AKQMVR7+YU7efgObTMGdGBxsTGYBdZZ+wpGtupWp9dgG2wr3Cg9QLQOQHoKY73d1nf
- KBHl4A10s6law16XIbcTgVec=
-X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id d68e9918b237ea7b;
-	Fri, 02 Oct 2026 04:36:36 +0000
-X-Mizu-Trace-ID: d68e9918b237ea7b
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <596bfb65-db2d-413b-8039-c921031b50fd@linux.dev>
-Date: Thu, 1 Oct 2026 21:36:24 -0700
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="pWkW/SR5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1790926463; x=1822462463;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=Tpiacak94CnVvVjiQqt6BeZBKKqRNWtVDXJ5p2keyyY=;
+  b=pWkW/SR5o4ecfiiDnP7CK1rmOpiI1VeyVJ6JWRumilOAInAoMaI/m/F+
+   OEx9y8NDVUzFsmRn1Y0urdTZRVruBT+JKCIfohxUQoIF8PZUZ+zx50Cpr
+   DF4rTY2doqH2dq6PXt+krMhaO+c/CwDBtA3bIdYVgaVDXAtolsO186IdI
+   1iU3rsmUS92WZB3xOamZJTGvFsCEtIofPrb/HF1KEUtzWDbfYdv1CNLye
+   dPZll+uMcY0JB+gKg6XNPyC/SOInfqGxv2OPhrSIPh4l+sl8/5sbbST73
+   bAvDPwCSTCYUlD4bIi+c/1BbVcsaHeJZNEEt5ZMShZYxqj6PYmu2OJ1nz
+   Q==;
+X-CSE-ConnectionGUID: mQGoYcZMSYWiuYG0x9YIvQ==
+X-CSE-MsgGUID: yxmXURUMRpy+DovE+/uubw==
+X-IronPort-AV: E=Sophos;i="6.27,136,1787011200"; 
+   d="scan'208";a="30213323"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+  by internal-pdx-out-002.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2026 07:34:23 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.111:10260]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.24.164:2525] with esmtp (Farcaster)
+ id c36c8b8c-7ef4-4a34-8890-c411c7f7ff52; Fri, 2 Oct 2026 07:34:23 +0000 (UTC)
+X-Farcaster-Flow-ID: c36c8b8c-7ef4-4a34-8890-c411c7f7ff52
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49;
+ Fri, 2 Oct 2026 07:34:23 +0000
+Received: from dev-dsk-wanjay-2c-d25651b4.us-west-2.amazon.com (172.19.198.4)
+ by EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49;
+ Fri, 2 Oct 2026 07:34:22 +0000
+From: Jay Wang <wanjay@amazon.com>
+To: <ihor.solodrai@linux.dev>, <bpf@vger.kernel.org>, <ast@kernel.org>,
+	<daniel@iogearbox.net>, <andrii@kernel.org>, <eddyz87@gmail.com>,
+	<memxor@gmail.com>
+CC: <alan.maguire@oracle.com>, <martin.lau@linux.dev>,
+	<yonghong.song@linux.dev>, <jolsa@kernel.org>, <qmo@kernel.org>,
+	<nathan@kernel.org>, <nsc@kernel.org>, <linux-kbuild@vger.kernel.org>,
+	<linux@weissschuh.net>, <christian@heusel.eu>, <mcgrof@kernel.org>,
+	<petr.pavlu@suse.com>, <samitolvanen@google.com>,
+	<linux-modules@vger.kernel.org>, <rostedt@goodmis.org>,
+	<mhiramat@kernel.org>, <mathieu.desnoyers@efficios.com>,
+	<linux-trace-kernel@vger.kernel.org>, <acme@kernel.org>,
+	<namhyung@kernel.org>, <irogers@google.com>,
+	<linux-perf-users@vger.kernel.org>, <jikos@kernel.org>, <bentiss@kernel.org>,
+	<linux-input@vger.kernel.org>, <tj@kernel.org>, <void@manifault.com>,
+	<arighi@nvidia.com>, <changwoo@igalia.com>, <sched-ext@lists.linux.dev>,
+	<shuah@kernel.org>, <linux-kselftest@vger.kernel.org>, <ojeda@kernel.org>,
+	<rust-for-linux@vger.kernel.org>, <arnd@arndb.de>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<abuehaze@amazon.com>, <doebel@amazon.de>, <mpohlack@amazon.de>,
+	<jay.wang.upstream@gmail.com>
+Subject: Re: [PATCH bpf-next v4 00/12] bpf: make the vmlinux BTF an on-demand loadable module (CONFIG_DEBUG_INFO_BTF=m) to save ~5.4 MB memory
+Date: Fri, 2 Oct 2026 07:34:22 +0000
+Message-ID: <20261002073422.14253-1-wanjay@amazon.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <596bfb65-db2d-413b-8039-c921031b50fd@linux.dev>
+References: <596bfb65-db2d-413b-8039-c921031b50fd@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v4 00/12] bpf: make the vmlinux BTF an on-demand
- loadable module (CONFIG_DEBUG_INFO_BTF=m) to save ~5.4 MB memory
-To: Jay Wang <wanjay@amazon.com>, bpf@vger.kernel.org,
- Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
- Andrii Nakryiko <andrii@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Alan Maguire <alan.maguire@oracle.com>,
- Martin KaFai Lau <martin.lau@linux.dev>,
- Yonghong Song <yonghong.song@linux.dev>, Jiri Olsa <jolsa@kernel.org>,
- Quentin Monnet <qmo@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
- Nicolas Schier <nsc@kernel.org>, linux-kbuild@vger.kernel.org,
- =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
- Christian Heusel <christian@heusel.eu>, Luis Chamberlain
- <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>,
- Sami Tolvanen <samitolvanen@google.com>, linux-modules@vger.kernel.org,
- Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu
- <mhiramat@kernel.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- linux-trace-kernel@vger.kernel.org,
- Arnaldo Carvalho de Melo <acme@kernel.org>,
- Namhyung Kim <namhyung@kernel.org>, Ian Rogers <irogers@google.com>,
- linux-perf-users@vger.kernel.org, Jiri Kosina <jikos@kernel.org>,
- Benjamin Tissoires <bentiss@kernel.org>, linux-input@vger.kernel.org,
- Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
- sched-ext@lists.linux.dev, Shuah Khan <shuah@kernel.org>,
- linux-kselftest@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
- rust-for-linux@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
- Bjoern Doebel <doebel@amazon.de>, Martin Pohlack <mpohlack@amazon.de>,
- jay.wang.upstream@gmail.com
-References: <20261001225214.12351-1-wanjay@amazon.com>
-Content-Language: en-US
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
-In-Reply-To: <20261001225214.12351-1-wanjay@amazon.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: EX19D031UWC004.ant.amazon.com (10.13.139.246) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-On 2026-10-01 3:52 p.m., Jay Wang wrote:
-> Based on and tested against bpf-next commit b5a4aa31abd6 ("bpf, cgroup:
-> Fix cgroup struct_ops query for a second attach type").
-> 
-> This series makes CONFIG_DEBUG_INFO_BTF a tristate, so that it can be
-> set to =m.  With =m the vmlinux BTF is carried by a module, btf_vmlinux,
-> that the kernel loads the first time user space asks for something that
-> needs the BTF.  On a system where nothing does, that saves ~5.4 MB of
-> RAM with a distribution config; on a system that uses BTF, it behaves as
-> with =y.  =y itself is untouched.
-> 
-> Problem
-> -------
-> 
-> The vmlinux BTF that CONFIG_DEBUG_INFO_BTF=y builds into the kernel
-> image takes ~5.4 MB of memory, resident from boot whether anything uses
-> it or not.  On small instances that is not negligible.
-> 
-> A distribution cannot simply turn it off for the users who do not need
-> it: it ships one kernel build for all its users, and BTF is not debug
-> info anymore.  CO-RE, fentry/fexit, kfuncs, struct_ops, sched_ext and
-> bpf-lsm all depend on it, so =n takes those away from everyone who does
-> use them.
-> 
-> Hence this series adds CONFIG_DEBUG_INFO_BTF=m: the BTF becomes an
-> on-demand module.  Users who never use BTF get the memory back; for
-> users who do, the first request that needs it loads it, and everything
-> works as with =y.
-> 
-> [...]
-> 
->   Documentation/bpf/btf.rst                  |   68 ++
->   Makefile                                   |    8 +-
->   include/asm-generic/vmlinux.lds.h          |   32 +-
->   include/linux/bpf.h                        |   15 +
->   include/linux/btf.h                        |   11 +
->   include/linux/btf_ids.h                    |    2 +-
->   include/linux/compiler_types.h             |    2 +-
->   include/linux/module.h                     |    2 +-
->   include/trace/trace_events.h               |    2 +-
->   init/Kconfig                               |    2 +-
->   kernel/bpf/Makefile                        |    6 +-
->   kernel/bpf/bpf_struct_ops.c                |    3 +-
->   kernel/bpf/btf.c                           | 1085 ++++++++++++++++++--
->   kernel/bpf/btf_vmlinux.c                   |   23 +
->   kernel/bpf/inode.c                         |   44 +-
->   kernel/bpf/preload/Kconfig                 |    4 +
->   kernel/bpf/syscall.c                       |   51 +-
->   kernel/bpf/sysfs_btf.c                     |   97 +-
->   kernel/bpf/verifier.c                      |  172 +++-
->   kernel/module/Kconfig                      |    2 +-
->   kernel/module/main.c                       |    4 +-
->   kernel/trace/bpf_trace.c                   |    3 +-
->   kernel/trace/trace_events.c                |   10 +
->   kernel/trace/trace_output.c                |    7 +
->   kernel/trace/trace_probe.c                 |   16 +
->   kernel/trace/trace_syscalls.c              |    6 +-
->   lib/Kconfig.debug                          |   30 +-
->   net/netfilter/Makefile                     |    6 +-
->   net/xfrm/Makefile                          |    4 +-
->   samples/bpf/Makefile                       |    6 +-
->   samples/hid/Makefile                       |    6 +-
->   scripts/Makefile.modfinal                  |   28 +-
->   scripts/Makefile.vmlinux                   |    5 +
->   scripts/gen-btf.sh                         |   53 +-
->   scripts/link-vmlinux.sh                    |   25 +-
->   scripts/package/PKGBUILD                   |    7 +
->   scripts/package/kernel.spec                |    4 +
->   scripts/package/mkspec                     |    7 +
->   tools/bpf/bpftool/Makefile                 |    6 +-
->   tools/bpf/resolve_btfids/main.c            |  217 +++-
->   tools/perf/bpf_skel.mak                    |    8 +-
->   tools/sched_ext/Makefile                   |    6 +-
->   tools/testing/selftests/bpf/Makefile       |    6 +-
->   tools/testing/selftests/hid/Makefile       |    6 +-
->   tools/testing/selftests/sched_ext/Makefile |    6 +-
->   45 files changed, 1936 insertions(+), 177 deletions(-)
+> A question I had: is it really worth 2k of complicated kernel code to
+> *maybe sometimes* save <10Mb of memory?
 
-This series caught my attention because of the sheer amount of the code
-and the iteration speed. I've tried to read the cover (it was
-tiresome, please ask your "agent" to be concise), and fed the series
-to my bot.
+There are many reasons this is worth it.  The main ones:
 
-A question I had: is it really worth 2k of complicated kernel code to
-*maybe sometimes* save <10Mb of memory?
+1. This did not start from a number we picked, but from a real use
+   case: users who run large fleets of small instances, 1 GiB of
+   memory or less, with their workloads sized to fit.  We are not able
+   to disclose more detail, but for them 5.4 MB on every instance is
+   real money, and it can be exactly what pushes a workload over its
+   memory budget and onto the next instance size.  That is why we took
+   this on, even though we knew it would not be a small change.
 
-And then the bot found this:
+2. Loading code and data only when a system needs them is what kernel
+   modules exist for.  And most of them take well under ~1 MB once
+   loaded (nf_conntrack, overlay, vfat); even big ones like ext4, kvm
+   and btrfs stay around 1-2.5 MB.  The vmlinux BTF is 5.4 MB.
 
-     What systemd does at every boot
+3. We are not alone in trying to keep BTF out of memory until it is
+   needed.  The inline BTF work [1] plans to deliver its data, which
+   is even larger, through a module too.  The .BTF.link record and the
+   resolve_btfids option that serve both are already part of this
+   series (patch 10), so this is not machinery for the vmlinux BTF
+   alone.
 
-     PID1 loads and attaches a BTF-dependent LSM program at every boot
+> Do those tiny VMs that you target run systemd with BPF LSM?
 
-       src/core/manager.c:1026-1059, in manager_new():
+Not necessarily, and that is the image's choice.  Even with BPF LSM
+built in and bpf in CONFIG_LSM, memory-conscious users can turn it off
+at boot with an lsm= list that leaves it out, and then systemd does not
+load restrict_fs at all.
 
-       if (FLAGS_SET(test_run_flags, MANAGER_TEST_RUN_MINIMAL)) {
-               ...
-       } else {
-               ...
-               (void) bpf_restrict_fs_setup(m);
-       }
+And even where user space is in the way, which as above it does not
+have to be, the answer is to fix user space so it gets this win too,
+not to give up on it.
 
-https://github.com/systemd/systemd/blob/main/src/core/manager.c#L1026-L1059
-https://github.com/systemd/systemd/blob/main/src/core/bpf-restrict-fs.c#L27-L85
+> If the answer is "yes" for the majority of them,
 
-Do those tiny VMs that you target run systemd with BPF LSM?
-I assume you target concrete VMs, not "small instances" in a vacuum.
+"The majority" is also hard to pin down here: what runs at boot
+depends on the user space packages built into each image, and on the
+workload.
 
-You can check this by booting them with =m and then:
-   $ lsmod | grep btf_vmlinux
-   $ systemctl --version  # look for +BPF_FRAMEWORK
-   $ cat /sys/kernel/security/lsm
+So the question should be what it takes to make this work, not whether
+to drop it because it is complicated.  If there are ways to cut it
+down, or issues found in the implementation, we would be happy to take
+them and go through every one.
 
-If the answer is "yes" for the majority of them, the whole project is
-moot, because the module will be loaded immediately on boot.
 
-My bot found more stuff implementation-wise...
-
-I suggest to slow down, stop burning tokens for a bit, and first try
-to figure out the important details:
-   - who will actually benefit from these memory savings and do they care?
-   - is it worth it in terms of implementation complexity?
-
-Even for LLM it's easier to deal with a 100 lines of code than with 2k.
-
-pw-bot: cr
-
->   create mode 100644 kernel/bpf/btf_vmlinux.c
-> 
-> 
-> base-commit: b5a4aa31abd6fe90009b63e35dc18c67d041ec0c
-
+[1] https://lore.kernel.org/bpf/20260916074118.1007116-1-alan.maguire@oracle.com/
