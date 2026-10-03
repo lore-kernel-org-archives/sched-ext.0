@@ -1,202 +1,107 @@
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A4F3ADB89
-	for <sched-ext@lists.linux.dev>; Sat,  3 Oct 2026 11:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269CA24E4A1
+	for <sched-ext@lists.linux.dev>; Sat,  3 Oct 2026 12:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791028402; cv=none; b=Xn+KA/SHS22Pe+Cg+aDo42rGpkU+SjR4XWWwo56bp0OCwxx6kVhRsyTOmQyHgO/jWNMejRaRoW1MKi5PVIp+h3gDA/Oly9JHHrMkZFQgHmOAN+0UY6MGgSN9SBruL0LvhRFz/EzT4lGlI8Mu33hkDRPl8T2YxCgyRTQo80Bd2ic=
+	t=1791029951; cv=none; b=oGnduoEVP18aig19bUD7l1I464yE4jNywyXvB27Gx/iP/vJBYP4t+bSYViMlruR3rAtK/Q5Ts0WbEdz6H9y1a6q5QjxjXQ9o+i0K0yCxjquh7h8n0CU66YpcrNVPOOoVNJVNUmPT8m+lRPa09hu9dOK2baG9sp+P9FkZA56u0jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791028402; c=relaxed/simple;
-	bh=jTZGWmb6VcxfCgGcuWMPXfcEnRpMmniFwWEtbVf0ElM=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=kY/jY3+c7hc6j/p3G1lkflVWb/Sl2sItv6mRzU3Xx0wPuz98h7grzVD2SNEdIZpaiU6F8xUDIV5kc3Gmdjg7nUnHhq6uUIPA87HbN/y4T6BlUPiQLUQ+c6yK0ggq9oEZetaydKrcuZj3Vz31VZXzYlKoXZVCPUkLri0G+7iDtK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ADOYSyQs; arc=none smtp.client-ip=209.85.128.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
+	s=arc-20240116; t=1791029951; c=relaxed/simple;
+	bh=V0/7vUbzZ2WS3ekKYc+/9kx/XXTqOYvzaiHvHZHSBnk=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
+	 References:MIME-Version; b=JpokhR9bod56aSNpErZN2sEnmKdRxMfllgC50dtjQe/fSkYE13QTNiq4Ybhc7fmp5pSK2/1kLmq+YH239m25uasM+CQ0oLNYeL5exph/3FaenRa6s4xfXV71Uzffd2KR23mzgIMBUdxu4slEA0F/ce84XnsxBaVdE63IzHlBuqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQS0/tR/; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ADOYSyQs"
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-49fcd86b8d3so5195685e9.3
-        for <sched-ext@lists.linux.dev>; Sat, 03 Oct 2026 04:53:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQS0/tR/"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cc4aa02a269so166861a12.2
+        for <sched-ext@lists.linux.dev>; Sat, 03 Oct 2026 05:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791028399; x=1791633199; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CEvcNGC805Yog8asIJdN4QxxjqxMzRIw0qtLJ9yXclk=;
-        b=ADOYSyQs7Jwuoe7wZJ3U0blpCpl3XOvfJs6t5+Oht6Is3T0N7/e/E1aOHqXkO9PDC1
-         1BqGkQIOf/Zxvf8lW4zv52tI+x+xYJKUvEND7VB2ulkR7GttriGylj4QapqgnxaPc4Hb
-         XSCsu/MxK1sU4U9KmK2EJAoKD7JdPeuunWbf8I7mHhlXxLEYUWDI+TKkRY6TuNsi5SlU
-         rXFwA6I7s/4GmcYQpzC4MC8tiEI/QUhhsxUxjSNp7me1yGyqr1ZcbUGApE6VdAcScaTv
-         bHIWHfG/Xpz9KYzf+YqlPpxaYUKSIesrdE3GjRsynVd2WVqmEcO3FUASWpaDFJfUTK1/
-         EzVA==
+        d=gmail.com; s=20251104; t=1791029944; x=1791634744; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:cc:message-id:date:content-type:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=V0/7vUbzZ2WS3ekKYc+/9kx/XXTqOYvzaiHvHZHSBnk=;
+        b=BQS0/tR/zOYxR6OLaYuFTo2H91UB1wh6PfFN82sNc6ezFK3RX4g9ng4YIhYT4VP1D3
+         qAm9LysoD1qYrG5s09PF96cbsuNjxC5SmXptdAa/fKDyLi6XO/Vdvn/1Sh3bJ+DBU2BJ
+         n/rGlLO8w4sBkDmkJknoWMrvQqqmczmHhJ+F8Ib1XNo0gdFPfun9TTsER+Ek6dflkt+2
+         yUF3SNkjVlI5/Wapmiy1ps2xLnJdWSsCmI8MFiyUjurgt/jx4MYlVCW10Xq2FC2dOyWL
+         B6culDbI5ePuK2XLn7MuONQrgIj4OhJG8/AoDdtOtwKCIs+431R4ZAtgKmNzbbylqWPY
+         c2Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791028399; x=1791633199;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
+        d=1e100.net; s=20260707; t=1791029944; x=1791634744;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:cc:message-id:date:content-type:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=CEvcNGC805Yog8asIJdN4QxxjqxMzRIw0qtLJ9yXclk=;
-        b=VJNPTa9n/aK2jcBlv6QXWYq7yIHL7dttTF9AQwDlMbIF0Val6ehbiwTb9Y9e/V0iDH
-         SaIa9HBVwtPaR8sYKB4F/hys8PCNT+OYHn2T5aOqqQXg1QO0Z43E5OBPA84EUZBZnqqH
-         OfzpOXsyW76aCOWuipoNfskb4bQL1G39rEVJeV0N7zbPtQZsvOIXTZBIfTL8OmeJnyZ9
-         tu/UTbxsb8js5RRqU6CRQz3fuFyk4C7uzkmfez/ODbjjXNC/u1HNHfmouIogkPCWCA9T
-         UwXfagyJFLrs7BElaa1k0C97U+MQouIcabQznJJNeFpaF97JUVuuupogZ6b+5bsx7pwk
-         wMwg==
-X-Forwarded-Encrypted: i=1; AKwUvByAuVKKTc8tLqyqTqIiS8BmkOBlbOgk9WrwXryBwZFrMsCy6AyKtqaPkuBSLKDXP4ChTg/2V56rv44=@lists.linux.dev
-X-Gm-Message-State: AFuF++m9M9jf0IU7L35EwlF4CPeX0HTSLTs+tICJgZsBKOBcJBEd2NfB
-	VRT2PycDujg6IhvhngbG2QTXeS2kpsQzQidSFzwmyWxASYu31sS/YYt583S2z3d5cOr7cLeby7f
-	J/RCh2ND5glzAYg==
-X-Received: from wmpm32.prod.google.com ([2002:a05:600c:920:b0:4a1:6843:aebc])
- (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:1d20:b0:49d:2536:402e with SMTP id 5b1f17b1804b1-4a0276affa3mr107157025e9.30.1791028399266;
- Sat, 03 Oct 2026 04:53:19 -0700 (PDT)
-Date: Sat,  3 Oct 2026 11:53:17 +0000
+        bh=V0/7vUbzZ2WS3ekKYc+/9kx/XXTqOYvzaiHvHZHSBnk=;
+        b=Puq5/ai0J11P5QADPyvb1DKHBeAyITcRV45TpdMCNJmoIvfZIcd8/mq52zfQtN1i6j
+         qVT7aa55SKInJ8Gt+llrEtmyIGt/nJPGZWIvzkqycs4fvNgefAE5De82Nor0v2jA5cdf
+         c5SdLseSLara1weMi5Sq57B9VbyU+hZOXQuresImIjAXb2O4akGzWPKuTikGep3uzPDy
+         6uV4wksvjC0igsTu/DwAHlDbyz64Bf5Ct560xqJEs4vNPVd9XZUXn5P4cBzNXeJDLI00
+         4HtO8VqeUvcyItYPRFCaczaM6WMdzevkyb1o6+yfEaeFSMCcz7mB/3v2LEgmYyh9JTjG
+         w1wQ==
+X-Forwarded-Encrypted: i=1; AKwUvBw9LssBu0eVVUaYyIv3AkyBEiXBvkhduA84/HU/Iif0GgkWMsECQpOzi2+n2Tzs9/avby/kFbv7W6Y=@lists.linux.dev
+X-Gm-Message-State: AFuF++nTyTDo2p7zs1OMszPIrw5bViUug4mXLh4KRdkqkCGNTJqhXMAS
+	D03RRNE2eVcFvebJ9nvLV9fGKr0WdFhrx/sWM89uRqLxI8/bnRPHCyQ/
+X-Gm-Gg: AYBFou3MguA/LOycGY+o18ocYCYvQQDLFT8QYP4dK/mWswbXrW5nmUsoXQrzjghQn8O
+	PDq4u1MTCEviEJOpxY+DQOPcyCkzKlO4tNWLecAjejz5IxOUyWjcQZVpq5cIFmVe+Me7N8+enL2
+	bwteUNoq52HvKgyYLOq8OxvHJakYaLQfS8WQzENlRnRcZJKy8kbX4uTO95IE+l9Q5ypmJFl5Bsa
+	ygn9KaVKyI8pdNLqeZcLcEvnOQmHbxxuO1aaga451IxL4eDZewTU1CwKOkWf88fx4pBGOQgsVgm
+	HmqOYiNQsCDKYeU1KE8ryVoeel4vPz58RNU1m7y05xhmR5QK1XpYDYza3yc2zLRH3dCL38CBjQ9
+	xr16hAFr+RNp9tdHFhrzI0tp1AC/pFQpNgTTdpw0/w6kLiaa+InKenAr3AxSdP8lA7wqEacs5gt
+	g4g0qxBJjhH2gZqrHpGluInQSL2CXbWaeeNP2O2d08VhlwtiuuHui03f+MStx8Dg6vul5/oRQ2r
+	r/3H6aq5kPBtqhy9CdOoyR+NXmpcBWpinTFvcPGt3cloYLKnixRiC79b8/2E38AG6yuOGZ0duuE
+	wQ8=
+X-Received: by 2002:a05:6a21:d89:b0:3dd:a197:7360 with SMTP id adf61e73a8af0-3e0d6d8ff80mr2052536637.57.1791029943830;
+        Sat, 03 Oct 2026 05:19:03 -0700 (PDT)
+Received: from localhost ([153.61.198.247])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cca561e9d1dsm1740373a12.6.2026.10.03.05.19.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Oct 2026 05:19:03 -0700 (PDT)
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 03 Oct 2026 12:19:02 +0000
+Message-Id: <DLV74KRI1SBL.MYZVQAB3N6QG@gmail.com>
+Cc: <abuehaze@amazon.com>, <acme@kernel.org>, <andrii@kernel.org>,
+ <arighi@nvidia.com>, <arnd@arndb.de>, <bentiss@kernel.org>,
+ <bpf@vger.kernel.org>, <changwoo@igalia.com>, <christian@heusel.eu>,
+ <daniel@iogearbox.net>, <doebel@amazon.de>, <eddyz87@gmail.com>,
+ <ihor.solodrai@linux.dev>, <irogers@google.com>,
+ <jay.wang.upstream@gmail.com>, <jikos@kernel.org>, <jolsa@kernel.org>,
+ <linux-doc@vger.kernel.org>, <linux-input@vger.kernel.org>,
+ <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-kselftest@vger.kernel.org>, <linux-modules@vger.kernel.org>,
+ <linux-perf-users@vger.kernel.org>, <linux-trace-kernel@vger.kernel.org>,
+ <linux@weissschuh.net>, <martin.lau@linux.dev>,
+ <mathieu.desnoyers@efficios.com>, <mcgrof@kernel.org>, <memxor@gmail.com>,
+ <mhiramat@kernel.org>, <mpohlack@amazon.de>, <namhyung@kernel.org>,
+ <nathan@kernel.org>, <nsc@kernel.org>, <ojeda@kernel.org>,
+ <petr.pavlu@suse.com>, <qmo@kernel.org>, <rostedt@goodmis.org>,
+ <rust-for-linux@vger.kernel.org>, <samitolvanen@google.com>,
+ <sched-ext@lists.linux.dev>, <shuah@kernel.org>, <tj@kernel.org>,
+ <void@manifault.com>, <wanjay@amazon.com>, <yonghong.song@linux.dev>
+Subject: Re: [PATCH bpf-next v4 00/12] bpf: make the vmlinux BTF an
+ on-demand loadable module (CONFIG_DEBUG_INFO_BTF=m) to save ~5.4 MB memory
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: "Alan Maguire" <alan.maguire@oracle.com>
+In-Reply-To: <7fe71959-1c58-4b6f-9019-6f886683530e@oracle.com>
+References: <DLUZVHOLSN1B.115EUX4KJBEA3@gmail.com> <7fe71959-1c58-4b6f-9019-6f886683530e@oracle.com>
+X-Mailer: mkdraft (claude review draft; edit before sending)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20261003115317.43001-1-jpiecuch@google.com>
-Subject: [PATCH v2 sched_ext/for-7.3-fixes] sched_ext: Generate qseq from a
- per-task counter
-From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, 
-	David Vernet <void@manifault.com>
-Cc: linux-kernel@vger.kernel.org, sched-ext@lists.linux.dev, 
-	Kuba Piecuch <jpiecuch@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
 
-finish_dispatch() uses the qseq embedded in p->scx.ops_state to tell
-whether the QUEUED instance of a task it's about to claim is the one
-scx_bpf_dsq_insert() saw. qseq is generated from rq->scx.ops_qseq, but
-the counters of different rqs are independent, so if a task is dequeued
-and re-enqueued on a different rq between scx_bpf_dsq_insert() and
-finish_dispatch(), the new QUEUED instance can end up with the same
-qseq as the old one:
+On Sat, Oct 03, 2026 at 12:45 PM Alan Maguire <alan.maguire@oracle.com> wrote:
+> The only overall cost is if when we wind up using vmlinux BTF with the compressed
+> .BTF section, since we have to do a full vmlinux BTF allocation (on top of the
+> spac taken up by the compressed .BTF section) right? So slight penalty if vmlinux
+> is used, but big gain if not.
 
-  CPU X                          CPU Z
-  -----                          -----
-                                 enqueue p on rq A, qseq = N
-  ops.dispatch()
-    scx_bpf_dsq_insert(p)
-      records qseq N
-                                 sched_setaffinity(p)
-                                   dequeue p from rq A
-                                   enqueue p on rq B, qseq = N
-  finish_dispatch(p, N)
-    qseq matches, p is claimed
-
-The claim itself is still atomic so the core stays consistent, but an
-insert issued for a previous QUEUED instance gets applied to a new one
-which the BPF scheduler has just received through ops.enqueue(). This
-breaks the guarantee that dispatches targeting a stale instance are
-ignored.
-
-Generate qseq from a per-task counter, p->scx.ops_qseq, instead so that
-consecutive QUEUED instances of a task never share a qseq regardless of
-which rq they're on. The counter is only updated in
-scx_do_enqueue_task() with the task's rq locked, so no additional
-synchronization is needed, and it fits in an existing hole in struct
-sched_ext_entity on 64bit. Remove the now unused rq->scx.ops_qseq.
-
-Never generate qseq 0. NONE and DISPATCHING don't carry a qseq, so
-scx_bpf_dsq_insert() on a task in either state records 0. With a
-per-task counter, every task's first QUEUED instance would otherwise get
-qseq 0 and could be claimed by such an insert. Wrap the counter where
-the QSEQ field wraps so that it can't reach a value that shifts to 0 on
-32bit either.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Assisted-by: Claude:claude-opus-5.5
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
-v2:
- - Wrap the counter where the QSEQ field wraps instead of looping to
-   skip 0 (Tejun).
-
-v1: https://lore.kernel.org/all/20261002205242.3820674-1-jpiecuch@google.com/
-
- include/linux/sched/ext.h   |  1 +
- kernel/sched/ext/ext.c      | 16 ++++++++++++----
- kernel/sched/ext/internal.h |  5 +++++
- kernel/sched/sched.h        |  1 -
- 4 files changed, 18 insertions(+), 5 deletions(-)
-
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index 582d7cd4a983..36c04797436c 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -207,6 +207,7 @@ struct sched_ext_entity {
- 	s32			holding_cpu;
- 	s32			selected_cpu;
- 	s32			runnable_cpu;	/* cpu @p is runnable on, -1 if not */
-+	u32			ops_qseq;	/* protected by rq lock */
- 	struct task_struct	*kf_tasks[2];	/* see SCX_CALL_OP_TASK() */
- 
- 	struct list_head	runnable_node;	/* rq->scx.runnable_list */
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index e56c3c95018f..5acb5c325b5e 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -2057,8 +2057,16 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	if (unlikely(!SCX_HAS_OP(sch, enqueue)))
- 		goto global;
- 
--	/* DSQ bypass didn't trigger, enqueue on the BPF scheduler */
--	qseq = rq->scx.ops_qseq++ << SCX_OPSS_QSEQ_SHIFT;
-+	/*
-+	 * DSQ bypass didn't trigger, enqueue on the BPF scheduler.
-+	 * Brand this QUEUED instance with a fresh per-task qseq.
-+	 * Wrap the counter where the QSEQ sub-field of ops_state wraps
-+	 * and skip 0 as that's what scx_bpf_dsq_insert() records
-+	 * for a task in NONE or DISPATCHING.
-+	 */
-+	p->scx.ops_qseq = ((p->scx.ops_qseq + 1) &
-+			   (SCX_OPSS_QSEQ_MASK >> SCX_OPSS_QSEQ_SHIFT)) ?: 1;
-+	qseq = (unsigned long)p->scx.ops_qseq << SCX_OPSS_QSEQ_SHIFT;
- 
- 	WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
- 	atomic_long_set(&p->scx.ops_state, SCX_OPSS_QUEUEING | qseq);
-@@ -6947,9 +6955,9 @@ static void scx_dump_cpu(struct scx_sched *sch, struct seq_buf *s,
- 	seq_buf_init(&ns, buf, avail);
- 
- 	dump_newline(&ns);
--	scx_dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ops_qseq=%lu ksync=%lu",
-+	scx_dump_line(&ns, "CPU %-4d: nr_run=%u flags=0x%x cpu_rel=%d ksync=%lu",
- 		      cpu, rq->scx.nr_running, rq->scx.flags, rq->scx.cpu_released,
--		      rq->scx.ops_qseq, rq->scx.kick_sync);
-+		      rq->scx.kick_sync);
- 	scx_rescue_dump(&ns, rq);
- 	scx_dump_line(&ns, "          curr=%s[%d] class=%ps",
- 		      rq->curr->comm, rq->curr->pid, rq->curr->sched_class);
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 1df8f583b0ec..5b37faa532d6 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1998,6 +1998,11 @@ enum scx_ops_state {
- 	 * dequeue/requeue, the dispatcher can tell whether it still has a claim
- 	 * on the task being dispatched.
- 	 *
-+	 * QSEQ is generated from the per-task p->scx.ops_qseq counter so that
-+	 * it doesn't repeat across QUEUED instances of the same task even if
-+	 * the task moves between rqs. 0 is never used as a valid QSEQ since
-+	 * NONE and DISPATCHING map to this value.
-+	 *
- 	 * As some 32bit archs can't do 64bit store_release/load_acquire,
- 	 * p->scx.ops_state is atomic_long_t which leaves 30 bits for QSEQ on
- 	 * 32bit machines. The dispatch race window QSEQ protects is very narrow
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index e656c7059bf8..37df14377516 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -816,7 +816,6 @@ struct scx_rq {
- #endif
- 	struct list_head	runnable_list;		/* runnable tasks on this rq */
- 	struct list_head	ddsp_deferred_locals;	/* deferred ddsps from enq */
--	unsigned long		ops_qseq;
- 	/* both stashed across the activate_task() in move_remote_task_to_local_dsq() */
- 	u64			remote_activate_enq_flags;
- 	struct scx_sched	*remote_activate_sch;
--- 
-2.56.0.rc1.315.gc6ed9934b7-goog
-
+I think it can be copied compressed into vmalloc area and
+freed after decompress, so memory usage should be exactly the same.
