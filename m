@@ -1,64 +1,64 @@
-Received: from mail-wr2-f33.google.com (mail-wr2-f33.google.com [74.125.225.97])
+Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE78471416
-	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 17:30:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.97
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2D33FFFA7
+	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 19:18:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791135041; cv=none; b=lCd1rFQ6EAH4jnAAX0M3i5u3zGYML4jQJ5QJ2RrzRXoRFOqLFnNjSNBRpsQI3FXqQG7YR1k2qSGve6fjVpJUsORkdp+LbwkZCGB+mhJt+j9lwaXlyq0stiA+QLtXPe/bPnyo1EjeKyl05ZgB0GL/W+n/wKVlOIvSjRUyFvPDIa8=
+	t=1791141505; cv=none; b=AcPCZ32M3xK9ma7WWd2+PJZHiExWQslmaAhfgzWcv49hO4+PU3bbFgQcbH+FuRclwvgiYsALvswx7qvHT3EgcHEAcVEmxj7xrWL5wvEZmE2JZ+0Hpuv/DaFNsFNc3ODIl3XV7UJDGb8LLooapOBXBFDMEDW3IYZ8Zi+ToYixDXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791135041; c=relaxed/simple;
-	bh=WXL5LZkJrtzk9YPJU9X6JrPpHjTvu4EMRFegf6wNEUM=;
+	s=arc-20240116; t=1791141505; c=relaxed/simple;
+	bh=cxqvPvmP5LEKCuOrQcNT+FDABIRF0pkCGT0tYhdiTXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLVYXpNMFctEbGEtqt5RhN9F+ifY3FYgKI5lhlCqPS564Y0F2YJxwHAGFPSMkPGMcrsptB9T5ThbAlwoUukGNoy1BYldD4J4XQZCfEn1SUHunYDtmCvvSJCPyn2bOVNDGvNBwfgPmcc40jo7VOSLDGwSk21gF7dOUvXVLAbwd2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X/q0jqY7; arc=none smtp.client-ip=74.125.225.97
+	 MIME-Version; b=WVmubkHB2VvglQoUWaF1+X+EjkXsvpM4XncA+XFnSNHKY6rbJl13c1UidKnCw9OICNIvEe1YqiI8v7fjbUiZLlsHgkU/anCPKq3f9dn2qNjgtAgcbgABoCrcqftn609L6tGxSlKsCyCTvNdXcDGGRmlsmBTtjzxXNui6S+N8JKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sNg805p8; arc=none smtp.client-ip=74.125.225.98
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X/q0jqY7"
-Received: by mail-wr2-f33.google.com with SMTP id ffacd0b85a97d-48b0f534161so118464f8f.3
-        for <sched-ext@lists.linux.dev>; Sun, 04 Oct 2026 10:30:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sNg805p8"
+Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48afe625404so140121f8f.1
+        for <sched-ext@lists.linux.dev>; Sun, 04 Oct 2026 12:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791135037; x=1791739837; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791141501; x=1791746301; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=K9BNRj1cE9nvNKn/WOlSUCpAG1T6oqBgGlxlrkhv5sI=;
-        b=X/q0jqY7xYZ0jUOaTOM58SoLQPe4epQslyVDQ0Hh25vyHqr5DNgaJ0NRpOo+QkbpAf
-         VHx1i6dw4UaF0hchaonpOxsceQnH9Lrq0WRobaBq6EAv9WDyXNV7sG5xL9OymSKlC/6+
-         WZyk7nRnoYmKjObSjFv4bh+ajFdzhI0DU/y0NKIUj7j66SRSpRp7XIZ+KVGkNqrRLjj0
-         TZkQNFuLK0rliUzR6BIoNfD/eCxv8aWksVrMJLRPY58MN49ZPDDBB4BsceyH36Q2JCab
-         zpomXu8gLIzqKoXvZtnyJLljEs3SLkm28hm+cfejRp57yzkmb126ndFXe1Y0TLLVCtnH
-         3UMg==
+        bh=cPTMVIIAJFn9U/eu7HQEBuEphGxHwxWPSlT9dvO4lqU=;
+        b=sNg805p8h8VJkGeYrwFn7tZnmTWuLYCBfXSKLfir0mG/cyy3I1F8RkSB93aK2a3gpP
+         2KFw2BQabzQb5YW0CXG3CpqwhpWAYmAkwJgfFSTtuQTf670MstKbzQB6pdhxbIsdVpmE
+         pF3T7JHVM1Caki5DJPopN+dDpOKEm7s1GyWIkE867a6rLakOz9WpqllMN639AspZNaT8
+         Nwz4zoMaM+SUWycqEvTFI5EGJtLrjYXFAnLyYEtYh1msbhYoBgte7ItKoJwXNVgPVS0e
+         14Zm4jfKzgZxAd1QIByijFjmRBD5HzSnaWBVU+WSwwfu3NtTLA9oEEGRMOzem1mfXecy
+         Soog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791135037; x=1791739837;
+        d=1e100.net; s=20260707; t=1791141501; x=1791746301;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K9BNRj1cE9nvNKn/WOlSUCpAG1T6oqBgGlxlrkhv5sI=;
-        b=l/sEf5dUeGFtagDKI0mgwUlJZPTVNx5GjkczWlbXC/9v9ifX2qeUdqINH3iTxzcHBu
-         dJkDdpE1FWfQzvMYlwgS4a4MpveY+4I6Q2lfRQpDywgLXL9ntn5Qe5bRYtIaQSKRyQpl
-         welEYKlxJS5Xp7ehLpWDleqJ7son3UcMXh5ibJUegabqNcjXXBLyTzMpx/1TBkX6TWgY
-         IW5I0Z9WKOxP7KEbWeTK7hKF4mj8fpbzTMjVACBeTqN0Bu1a55rj+5fgc6Z+s5VUnX9A
-         KBZ6SD8RBbvV5/ogeIkBkoTXaDcd02zubFGhD3VAQ5J9Qm1Pvv9E8NUO2a+4xvvzV+rQ
-         e9ew==
-X-Forwarded-Encrypted: i=1; AKwUvBxR8Snxtk6QI00xPCdHcCtDlW5xVItDZqsAyQkDyzXosFCuMqsoGOH5f7F+rB/ntBQ7ZP4tX41tkcM=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKwQD5N4Wahj3hLie4ZXLqA0Wn1rsrHuOVRBdHFdswvwBX20q5C
-	Se9J+8b7KLARe0/9+tRI9vy480LEeDR+cP3juO79EBnN89t5Q2b2oDvD
-X-Gm-Gg: AYBFou1NY4a28EigKic5SMEhwgsuo+9mYPQg/c6Imh7KR5SxHBHT76bakUEfWcqui1F
-	Hx5NrPGTGkKi/zhxPWEoVeFixVGsd0KxGv3yqtwtN9v9++Wx6ADE0XLwQQq2rjI0EsZLk1uBBi0
-	d8yVoRPEbD7vNAG8kzqfrDXKt1iwgQ+nzlAcYjAybPA5F7IpMt8KSx0N7q636wQfdF7oeWh7YPn
-	V6yt1ggI06WHeHkV/2zyYUD6/VWpLh93skKxrHCLV9BDZIC0ADoh9SIyDMRiIo+2CHqaPeqOxbl
-	i4h6pcpFNFxUFtusEwAHM/SULuPisUlulVYX4Mc3W6E3LbkC290Puq4fAGO82uHbhikwVlaftma
-	OWbmjf4TD5DS4gUSw78q5CJbl2p0ddDDsgt4j6Da8y+1lktR8BdWA5T5MXODKeA+EYCWPoceHJs
-	IXvkCKt9KlgIgGbsJqEtcdEXB3u0vuC+aDnY39A5TG4LTPiWPUfCCg2Q5gs93oPxxoEdptL2+DJ
-	PunB6wzQVS7PltfAfaUJ/ed7SDC524=
-X-Received: by 2002:a05:6000:2f8a:b0:48c:4802:e253 with SMTP id ffacd0b85a97d-48c4802e368mr8983746f8f.6.1791135036570;
-        Sun, 04 Oct 2026 10:30:36 -0700 (PDT)
+        bh=cPTMVIIAJFn9U/eu7HQEBuEphGxHwxWPSlT9dvO4lqU=;
+        b=efWpE6o70/ZPMLw6gzjt6E8Sy8v2an8kNxrZMttIwww4XIP2IzuEDz+V0hbM5gIUCx
+         XrTOCkuqszW73jAPGh0KjIhUknEof68G4NPh+bmWtCi2KW0xhH35jU44d1i4ZU4TZMN9
+         XaAagJ7Lyaar+K5PiBB39ykIxJ227Pmrht7ET9PkWH05zUtsKDYDnjDThCFjpEiJGg7h
+         OL1In/w52UJ8S/p36nJlGTt37ybp+3e4NHU1mRsmfoR+SdK2ljE09/qqffTb9aSb4VkE
+         dKHBtda5dJIyH7sHoNsmnzw0/1mzwzo4JNyxFdumxgUghMLMEAnrVmMvPogkWwpXZ8bv
+         F7Ig==
+X-Forwarded-Encrypted: i=1; AKwUvBxuinONgeToJkvtqhkdFgFUxeJ4wbj9eBUFvE9Ib5A6q92EIJbIs5XCV2gTT2tpRuwqUvUFb0v5U4A=@lists.linux.dev
+X-Gm-Message-State: AFuF++lze7nbTl5KiOHCHW7s2DTUnbvZwtcrovdlrJCNlkF93f7/sBu/
+	tU1SP+etRCxR9P0IbKjEF1bkKDR9GNsss1eGW8P4f/WyxxBfP/RIAUGp6twy5Q==
+X-Gm-Gg: AYBFou2XHkuMXvD6/KfqlkPYq1HpYbnY5OY/5DdlpVwa3PqjjF158jsLkxKOFOiGrrW
+	wSobmbFT2k/R9YYmwoXdvFf6AVypePY9Se4M040yDX/60UkfOwdYkQQxasiycEJRlUBW7y+Pe/J
+	pEfUM+isSC8z8iVCaoO8dIw+xw2IQZLxBt0s/qy88QAmHDlG0y1t1v1PgAMK8g6yKN03c0xpbNz
+	FsHuylVAe6wAr4CKA8fG/RdznO5c7XBhCwLZxQYw0iF2FyS/7qDpjvVYuM9c2zNTjEWm1xBSoYi
+	Gbi5DSbSLv0WBlIOxHypCVssN0jTjBEdR1BlFXFHbtH2yj0rEqEEYZicnHo7xmOtIwOxZhW5cBq
+	MErOE3Kr3Q/ixVLwBK5lJHH5ra528ZZChhJcER4QlebhOSYxXTRp0nr+F1UnxDaZvUL0060xWOe
+	e1sJQNT4hI5PTyMG+mye2CCeXG2fbZHrsd7hduDq6zHw0w82R/RGOIOMUhD4RGvjaVHzqSwsDyG
+	WdHNm787Yc38iUxVAaM
+X-Received: by 2002:a05:600c:46d5:b0:4a0:1ca8:70e2 with SMTP id 5b1f17b1804b1-4a02751fa7fmr143583805e9.1.1791141501458;
+        Sun, 04 Oct 2026 12:18:21 -0700 (PDT)
 Received: from lima-kdev.local ([85.100.66.184])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b382f8ab4sm18299306f8f.35.2026.10.04.10.30.34
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0276fa954sm279357515e9.3.2026.10.04.12.18.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Oct 2026 10:30:36 -0700 (PDT)
+        Sun, 04 Oct 2026 12:18:21 -0700 (PDT)
 From: Kayra Cizmeci <kayracizmeci@gmail.com>
 To: vincent.guittot@linaro.org
 Cc: arighi@nvidia.com,
@@ -83,12 +83,12 @@ Cc: arighi@nvidia.com,
 	tj@kernel.org,
 	void@manifault.com,
 	vschneid@redhat.com
-Subject: Re: [PATCH 02/18] sched/eevdf: Reset lag when waking up on idle cpu
-Date: Sun,  4 Oct 2026 20:30:32 +0300
-Message-ID: <20261004173032.18867-1-kayracizmeci@gmail.com>
+Subject: Re: [PATCH 05/18 v2] sched/eevdf: Add min slice check when selecting CPU
+Date: Sun,  4 Oct 2026 22:18:17 +0300
+Message-ID: <20261004191817.20225-1-kayracizmeci@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261002154415.2270586-3-vincent.guittot@linaro.org>
-References: <20261002154415.2270586-3-vincent.guittot@linaro.org>
+In-Reply-To: <20261002154415.2270586-6-vincent.guittot@linaro.org>
+References: <20261002154415.2270586-6-vincent.guittot@linaro.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -97,107 +97,84 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> When several tasks wake up simultaneously on an idle CPU, their final vlag
-> will depend of the ordering as the first one will lose its lag but not
-> the next ones.
-> Reset the lag when the enqueue happens while no fair task has already been
-> picked et set as the running task.
+Add a new level for selecting CPU when select_task_rq_fair() fails to find
+an idle CPU. This last level will compare the slice to select a CPU where
+the task could run 1st.
+This helps a waking task to select a CPU where a longer slice runs
+instead of one where a task with the same or shorter slice already run.
 
-There is a typo. ('et', also 'depend' and 'loose' Not sure that's all :>) 
+There's a typo. 'run'
 
-> As a typical example:
-> CPU0 is idle
-> TA with vlag 0ms and TB with vlag 5ms wake up on CPU0 simultaneously.
-> Depending which grab the lock 1st the behavior will be different:
-> If TA is enqueued 1st, TB will be enqueued with a positive lag and will
-> be picked 1st.
-> But if TB is enqueued 1st, it will loose its positive vlag and both TA and
-> TB will have 0 vlag when fair will pick a task.
-
-> diff --git a/include/linux/sched.h b/include/linux/sched.h
-> index d7cc77181ef9..32d7077ef148 100644
-> --- a/include/linux/sched.h
-> +++ b/include/linux/sched.h
-> @@ -592,6 +592,7 @@ struct sched_entity {
->  	u64				vruntime;
->  	/* Approximated virtual lag: */
->  	s64				vlag;
-> +	u32				vlag_seq;
->  	/* 'Protected' deadline, to give out minimum quantums: */
->  	u64				vprot;
->  	u64				slice;
-> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> index 8cda1d39b037..4c8f12fc8869 100644
-> --- a/kernel/sched/fair.c
-> +++ b/kernel/sched/fair.c
-> @@ -893,6 +893,7 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
->  			vlag = min(vlag, 0);
+> @@ -8771,10 +8771,11 @@ static int select_idle_smt(struct task_struct *p, struct sched_domain *sd, int t
+>   * comparing the average scan cost (tracked in sd->avg_scan_cost) against the
+>   * average idle time for this rq (as found in rq->avg_idle).
+>   */
+> -static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool has_idle_core, int target)
+> +static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool has_idle_core, int *best)
+>  {
+>  	struct cpumask *cpus = this_cpu_cpumask_var_ptr(select_rq_mask);
+> -	int i, cpu, idle_cpu = -1, nr = INT_MAX;
+> +	int i, cpu, idle_cpu = -1, slice_cpu = -1, target = *best, nr = INT_MAX;
+> +	unsigned long task_slice;
+>  
+>  	if (sched_feat(SIS_UTIL) && sd->shared) {
+>  		/*
+> @@ -8795,6 +8796,8 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool
+>  	if (!cpumask_and(cpus, sched_domain_span(sd), p->cpus_ptr))
+>  		return -1;
+>  
+> +	task_slice = p->se.slice;
+> +
+>  	if (static_branch_unlikely(&sched_cluster_active)) {
+>  		struct sched_group *sg = sd->groups;
+>  
+> @@ -8814,6 +8817,10 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool
+>  					if ((unsigned int)idle_cpu < nr_cpumask_bits)
+>  						return idle_cpu;
+>  				}
+> +
+> +				if (slice_cpu == -1 &&
+> +				    task_slice < get_rq_min_slice(cpu_rq(cpu)))
+> +					slice_cpu = cpu;
+>  			}
+>  			cpumask_andnot(cpus, cpus, sched_group_span(sg));
+>  		}
+> @@ -8832,11 +8839,18 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool
+>  			if ((unsigned int)idle_cpu < nr_cpumask_bits)
+>  				break;
+>  		}
+> +
+> +		if (slice_cpu == -1 &&
+> +		    task_slice < get_rq_min_slice(cpu_rq(cpu)))
+> +			slice_cpu = cpu;
 >  	}
->  	se->vlag = vlag;
-> +	se->vlag_seq = cfs_rq->idle_seq;
 >  
->  	return avruntime - vlag != se->vruntime;
+>  	if (has_idle_core)
+>  		set_idle_cores(target, false);
+>  
+> +	if (slice_cpu != -1)
+> +		*best = slice_cpu;
+> +
+>  	return idle_cpu;
 >  }
-> @@ -914,9 +915,22 @@ void decay_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
->  
->  	rq = rq_of(cfs_rq);
->  
-> +	/* You can't claim any lag when waking on idle CPU */
-> +	if (rq->curr == rq->idle) {
-> +		se->vlag = 0;
-> +		return;
-> +	}
-> +
-> +	/* Accessing remote rq task clock is a cost */
->   	if (flags & ENQUEUE_MIGRATED)
->  		return;
->  
-> +	/* CPU has been idle in between so the lag has been removed */
-> +	if (se->vlag_seq != cfs_rq->idle_seq) {
-> +		se->vlag = 0;
-> +		return;
-> +	}
-> +
->  	/* Compute sleep time */
->  	delta_exec = rq_clock_task(rq) - se->exec_start;
->  	if (unlikely(delta_exec <= 0))
-> @@ -8190,6 +8204,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
->  
->  	dequeue_hierarchy(p, flags);
->  
-> +	if (!cfs_rq->h_nr_queued)
-> +		cfs_rq->idle_seq++;
 
-Shouldn't this skip DEQUEUE_SAVE?
 
-> +
->  	if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
->  		se->deadline -= se->vruntime;
->  		se->rel_deadline = 1;
-> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-> index b98084e1f5b0..69a2a749e188 100644
-> --- a/kernel/sched/sched.h
-> +++ b/kernel/sched/sched.h
-> @@ -689,6 +689,7 @@ struct cfs_rq {
->  	u64			sum_weight;
->  	u64			zero_vruntime;
->  	unsigned int		sum_shift;
-> +	u32			idle_seq;
->  
->  #ifdef CONFIG_SCHED_CORE
->  	unsigned int		forceidle_seq;
+Also,
 
-Yeah, well AFAICT other things seems OK.
+Scene:
 
-Also, while trying to get this patch series on my tip
-branch I had a hard time. I was at the caves
-of git and b4 figthing with... Everything.
-Like there were no v2 tags on some of the patches
-so b4 didn't tracked them. I had to do some
-things by hand and finally it worked. (Not too greatly tho.)
+Let's say that in our domain there are 8 CPU's and has_idle_core is false. And nr equals 4.
+And sched_cluster_active is true. select_idle_cpu() enters the for_each_cpu_wrap block
+and the else branch. Because nr decrases each time, and if there are not any idle_cpu's
+even if we found any slice_cpu it's not set to best. We just leave the loop after checking 3 CPU's.
 
-But who cares? :>.
+The same thing a bit differently happens below on the main loop too.
 
+But I don't think is more important than typos. Typos is the reason we're here. They are the or nevermind.
+This is a joke btw. (that, destroyed my masterpiece and created a new one. Saying a joke is a joke because it is,
+is one thing while saying a joke is a joke as a joke is one thing. I wanna go on with this but it'll be to long. :<)
+
+I could be getting something wrong tho. (No one is perfect, but I'm not perfect at all so ya know.)
 
 Thanks,
 Kayra
