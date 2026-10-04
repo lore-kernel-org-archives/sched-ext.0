@@ -1,198 +1,203 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011023.outbound.protection.outlook.com [52.101.62.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr2-f33.google.com (mail-wr2-f33.google.com [74.125.225.97])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEE472602
-	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 07:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.23
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791099074; cv=fail; b=W7zgq3i97Uj4YuZJjgFBmjY1Q3CF27DQpkQLnVluRvJ27f1otynHf+5HI3sR8Lks21f5fZES5xTNVBB172ZUZ3O9z37S1cmLio0RrGhu1THLJxSZQNPoT/JpkUb983W2Mb3QSBsdx76V2yMAs7/oJvaQkg3sKeQeAPy3aC8TBxc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791099074; c=relaxed/simple;
-	bh=D+6OrCGRkGbnfjuvCKUIjvm6NJRMp9tiHz1DAAowiYc=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=XlwkhFYOdiY2KpG8P7MUMzjM9bMsKvGoSRcz8c9/6NF9EB+JRl+Jy9xrWqahSBh4SVSBQvogEF8ndA4wY454ExI14heas5ef+IVDGMijmE+7j/07yIGihIGqWRUotRxXxrWgz9jgxwLFxvpx1O8uo056+z7g2unzltpLHu+mYuc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=h/jPSNFH; arc=fail smtp.client-ip=52.101.62.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE78471416
+	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 17:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.97
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791135041; cv=none; b=lCd1rFQ6EAH4jnAAX0M3i5u3zGYML4jQJ5QJ2RrzRXoRFOqLFnNjSNBRpsQI3FXqQG7YR1k2qSGve6fjVpJUsORkdp+LbwkZCGB+mhJt+j9lwaXlyq0stiA+QLtXPe/bPnyo1EjeKyl05ZgB0GL/W+n/wKVlOIvSjRUyFvPDIa8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791135041; c=relaxed/simple;
+	bh=WXL5LZkJrtzk9YPJU9X6JrPpHjTvu4EMRFegf6wNEUM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aLVYXpNMFctEbGEtqt5RhN9F+ifY3FYgKI5lhlCqPS564Y0F2YJxwHAGFPSMkPGMcrsptB9T5ThbAlwoUukGNoy1BYldD4J4XQZCfEn1SUHunYDtmCvvSJCPyn2bOVNDGvNBwfgPmcc40jo7VOSLDGwSk21gF7dOUvXVLAbwd2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X/q0jqY7; arc=none smtp.client-ip=74.125.225.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="h/jPSNFH"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OYt8Tfa7EGlNM71wOPmegzKMJaB/gN+M9lbo5DHtpucdfBgoC1dAFilGOSCUppRdDizDXwqClG2x90h2+rwvve/Xwo67M0evCneXdL44uhZUfSEdtMjwCccxbhaRdLhD9ESqEm6jHCXF2C6uwLNrIhMkbJdCRNVfcXDIa8vqKvG2JYmkzNNkYcwTtVyR1Rf/xIFQFdRt4cFujKX/9a61LeHgzQQgnRcszrnWei277xY9nbQvUIG2nWR97po3WvlAt9L1ODiAWhXrO0+Cd/t7z20NU30tUeiajBaxGcS2FV+XuLDzqlS3kSGzMG0fOPiFmGVuuA6Z/+LWaDfVVsbj2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EXkH/77cy1aPVW7s6iUuOQeAaGos8PRlg8F7+AIbC8c=;
- b=V6ROhyxVRdzfWccUgvt72XV1MxT4y+0R/ANpOKfSuaVNHj4qZBwglO2VJy3+jx5oR/XOcBFJepleXPE5Epv6iYNslSzbaLu+Qs8094/lBwOWpzk00Tdp0Nca3pVaxJwaq/EDkihUCzlnoVJxO/GVGDh09W+X6UhMu03dfmzTbiTPYSP7rGa7H1p70xutBcY2+5UIi+eBrdskEyT2VOnjT+SEn39arAIhd56IRrZjVb1cyK3vwCdNkudVIUT4s7MPRAkMwfi6z1sq8nuYwFnMbf30miiPPD/SR9WJ9Tzav79DRXygUxDE72dD0ijS573QdeFALn3FjAi37LpWCGvz2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EXkH/77cy1aPVW7s6iUuOQeAaGos8PRlg8F7+AIbC8c=;
- b=h/jPSNFHnHebD25QgLH2KPqihvP0UEtOyUDJ+ltGb2eHVAYK4MvCfppLv0KOBII9d0/6a5YB+ShonZPoHhwEBkuDlZrLMER3FSaBrfsSeLksW24tCyBum0zI3pMx22+GqgfYScm+IuVhbEcrWyPnfzbPITfYHgIjjHK9lj1gy3j9j+tgKKczbw3MLywekNMjaRirzIJwwDv3+vu9awGtWihZQHaarxLSRVOvH0DVUSxFdRQl+emYlOiahJo03GSRrowMxqcYo4q/tE+AE+B9bDs5pK4HdY/11bU2ydu4+9bCQiK1xSjVqj6iCKKw21ePO35NCMPbKGXy5LmfMvjCoA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by CY3PR12MB9577.namprd12.prod.outlook.com (2603:10b6:930:109::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sun, 4 Oct
- 2026 07:29:09 +0000
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0472.016; Sun, 4 Oct 2026
- 07:29:09 +0000
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Vladimir Vdovin <deliran@verdict.gg>,
-	Emil Tsalapatis <etsal@meta.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Lee Trager <ltrager@nvidia.com>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X/q0jqY7"
+Received: by mail-wr2-f33.google.com with SMTP id ffacd0b85a97d-48b0f534161so118464f8f.3
+        for <sched-ext@lists.linux.dev>; Sun, 04 Oct 2026 10:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791135037; x=1791739837; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=K9BNRj1cE9nvNKn/WOlSUCpAG1T6oqBgGlxlrkhv5sI=;
+        b=X/q0jqY7xYZ0jUOaTOM58SoLQPe4epQslyVDQ0Hh25vyHqr5DNgaJ0NRpOo+QkbpAf
+         VHx1i6dw4UaF0hchaonpOxsceQnH9Lrq0WRobaBq6EAv9WDyXNV7sG5xL9OymSKlC/6+
+         WZyk7nRnoYmKjObSjFv4bh+ajFdzhI0DU/y0NKIUj7j66SRSpRp7XIZ+KVGkNqrRLjj0
+         TZkQNFuLK0rliUzR6BIoNfD/eCxv8aWksVrMJLRPY58MN49ZPDDBB4BsceyH36Q2JCab
+         zpomXu8gLIzqKoXvZtnyJLljEs3SLkm28hm+cfejRp57yzkmb126ndFXe1Y0TLLVCtnH
+         3UMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791135037; x=1791739837;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=K9BNRj1cE9nvNKn/WOlSUCpAG1T6oqBgGlxlrkhv5sI=;
+        b=l/sEf5dUeGFtagDKI0mgwUlJZPTVNx5GjkczWlbXC/9v9ifX2qeUdqINH3iTxzcHBu
+         dJkDdpE1FWfQzvMYlwgS4a4MpveY+4I6Q2lfRQpDywgLXL9ntn5Qe5bRYtIaQSKRyQpl
+         welEYKlxJS5Xp7ehLpWDleqJ7son3UcMXh5ibJUegabqNcjXXBLyTzMpx/1TBkX6TWgY
+         IW5I0Z9WKOxP7KEbWeTK7hKF4mj8fpbzTMjVACBeTqN0Bu1a55rj+5fgc6Z+s5VUnX9A
+         KBZ6SD8RBbvV5/ogeIkBkoTXaDcd02zubFGhD3VAQ5J9Qm1Pvv9E8NUO2a+4xvvzV+rQ
+         e9ew==
+X-Forwarded-Encrypted: i=1; AKwUvBxR8Snxtk6QI00xPCdHcCtDlW5xVItDZqsAyQkDyzXosFCuMqsoGOH5f7F+rB/ntBQ7ZP4tX41tkcM=@lists.linux.dev
+X-Gm-Message-State: AFq9FYKwQD5N4Wahj3hLie4ZXLqA0Wn1rsrHuOVRBdHFdswvwBX20q5C
+	Se9J+8b7KLARe0/9+tRI9vy480LEeDR+cP3juO79EBnN89t5Q2b2oDvD
+X-Gm-Gg: AYBFou1NY4a28EigKic5SMEhwgsuo+9mYPQg/c6Imh7KR5SxHBHT76bakUEfWcqui1F
+	Hx5NrPGTGkKi/zhxPWEoVeFixVGsd0KxGv3yqtwtN9v9++Wx6ADE0XLwQQq2rjI0EsZLk1uBBi0
+	d8yVoRPEbD7vNAG8kzqfrDXKt1iwgQ+nzlAcYjAybPA5F7IpMt8KSx0N7q636wQfdF7oeWh7YPn
+	V6yt1ggI06WHeHkV/2zyYUD6/VWpLh93skKxrHCLV9BDZIC0ADoh9SIyDMRiIo+2CHqaPeqOxbl
+	i4h6pcpFNFxUFtusEwAHM/SULuPisUlulVYX4Mc3W6E3LbkC290Puq4fAGO82uHbhikwVlaftma
+	OWbmjf4TD5DS4gUSw78q5CJbl2p0ddDDsgt4j6Da8y+1lktR8BdWA5T5MXODKeA+EYCWPoceHJs
+	IXvkCKt9KlgIgGbsJqEtcdEXB3u0vuC+aDnY39A5TG4LTPiWPUfCCg2Q5gs93oPxxoEdptL2+DJ
+	PunB6wzQVS7PltfAfaUJ/ed7SDC524=
+X-Received: by 2002:a05:6000:2f8a:b0:48c:4802:e253 with SMTP id ffacd0b85a97d-48c4802e368mr8983746f8f.6.1791135036570;
+        Sun, 04 Oct 2026 10:30:36 -0700 (PDT)
+Received: from lima-kdev.local ([85.100.66.184])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b382f8ab4sm18299306f8f.35.2026.10.04.10.30.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Oct 2026 10:30:36 -0700 (PDT)
+From: Kayra Cizmeci <kayracizmeci@gmail.com>
+To: vincent.guittot@linaro.org
+Cc: arighi@nvidia.com,
+	bsegall@google.com,
+	changwoo@igalia.com,
+	christian.loehle@arm.com,
+	dietmar.eggemann@arm.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
+	linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	lukasz.luba@arm.com,
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	pierre.gondois@arm.com,
+	qyousef@layalina.io,
+	rafael@kernel.org,
+	rostedt@goodmis.org,
 	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCHSET sched_ext/for-7.4] sched_ext: Add NUMA balancing support
-Date: Sun,  4 Oct 2026 09:27:06 +0200
-Message-ID: <20261004072901.3579967-1-arighi@nvidia.com>
-X-Mailer: git-send-email 2.55.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VE1PR03CA0009.eurprd03.prod.outlook.com
- (2603:10a6:802:a0::21) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+	sshegde@linux.ibm.com,
+	tj@kernel.org,
+	void@manifault.com,
+	vschneid@redhat.com
+Subject: Re: [PATCH 02/18] sched/eevdf: Reset lag when waking up on idle cpu
+Date: Sun,  4 Oct 2026 20:30:32 +0300
+Message-ID: <20261004173032.18867-1-kayracizmeci@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261002154415.2270586-3-vincent.guittot@linaro.org>
+References: <20261002154415.2270586-3-vincent.guittot@linaro.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CY3PR12MB9577:EE_
-X-MS-Office365-Filtering-Correlation-Id: c0687781-205a-41db-d7de-08df21e92dff
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|6133799003|18002099003|10067099003|56012099006|5023799004|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	keQ1KLgjwfXh3u9cD9Jxz5f6W0jkeencM0CbbuZoeUVzuehBGc33ucpnqbesUr8oZVdR/i0pwpecWO+6yZodaPb7KNSPVNzoLXl7CWgz5m1Ykjev/PVaZ+n09llVl4i+90CT+pv3DL6Ie8xAb7Sh2gz8+kMOWANEtTH3886uE38koSoiK2HKJFjmbQaWwWCwRmaQ6CHwjmbxoc2mi0lavHeAnxyFHkXgrm2+tvPW4u8t3UC59T3LoOUAGoZCO/hNQQPwMCOUocZiFuwz1DQkILNOu/fJL7x7qeK8a339Bbq9qncqlnJjJh34/gj1xir4XhWlWSR2iXyIO7BwPeXqg/M2ZzuGpjQsP56aGBQzYRzxo2ydJwUMNPN3vjaJPGxpVVQdz9SV0FOerJr4fiFTpZjGvHEj5hSIFSGbkUhl7FJxy1AM21sHSOkIC3q9IvGYtyoQmf7EaJliNS6OXiQBh1WOUlAdAZQNWiB1tNGmekYXwbe6RRtT5zuxArq8aZ5Xx8KYTLyc4JY7pB1erOmaFUOj6xcjZDhHqwJomGrp8XH0Ax+OFWNDGtYX6w6nhZaX2rsI4SkBjghUhloaD+6YREkA1osL3RDTvZgSbLLrxpvDsmrAuUhkgaANiGHg/T1guCJ/y1Fl4MFT+Zc4lJ0dz+ZgDIrm70XnnW3gzUsQWFI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(6133799003)(18002099003)(10067099003)(56012099006)(5023799004)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?2zOB1FXGlC0d6yefidPjfee6VN0t3YE8NssRHf6QW91EhLl8/DipZAH+hyC/?=
- =?us-ascii?Q?lrPiBIS//qJvpPM5OR+YOlWuVrgG99yZaFh02xYnqKev9DGiMTeRvisKZw8D?=
- =?us-ascii?Q?3Wf3T5IUzuJjY8xUEybhMvDzzmiVut6WsWpLFB2pqk3jiMWukGFcJIl+87Sg?=
- =?us-ascii?Q?A50ul1v7+5sp4vCJwOyoDWQrKm0cbbrK8X1vCySDUPXN/UFfpDaGN+gUE9St?=
- =?us-ascii?Q?03HmD3tYYEx1m1ndDEc/WOstgfiy26eAI2AedFE6bbZRvBulNmD9R57Lp+e6?=
- =?us-ascii?Q?p6ZuFxsp+9e7RJeiXOq5WXhuwgPpOGEDp1TOQ4EnAn1Hr88so0MAhRf1eepR?=
- =?us-ascii?Q?h6pbskGsrA2zqPqOOah/Fh5/oCmBHKj50gm7F2gYGiiaEwvSgg64Yu0jTwv2?=
- =?us-ascii?Q?I6j4xA5lRXgWMEwwwfXni8J9meqLN2iUb8iDKaMfFwaRVJ6V1Jr6auoO4NH/?=
- =?us-ascii?Q?Xqj4+LN3XjJCqhhChY025Yz3sOtNunPSLWNDf6X88NCp0v2ec4o3PEcYTK2U?=
- =?us-ascii?Q?zc88WCSu6NS7C4YvwyKYMNDbTXBciycOAn51RLewex3vRXMgeyPmCtMuGPgi?=
- =?us-ascii?Q?539PH6R/WIgZY/BYp5eOAUM0iyySjGUrLsVOGty7Y2iJ96xN8QHzLUrTZ8KN?=
- =?us-ascii?Q?sdfghO4pdNML5YmWtyk+/+Bq8LzHl/7+R3eAY7Pnp4bKNpsensRrWzRFUN4K?=
- =?us-ascii?Q?EwmIR2Jcu6/dUu3fCuBsK17YnKXU1rsyrccKBUOsB8dT2wIcGDkKS7QV/vC5?=
- =?us-ascii?Q?woterFKa22FNU3pjZnwfQrmvxkgC1CjMtlGWjLBlU/BTYuWHwScB8omxPyH7?=
- =?us-ascii?Q?uFScveCZUnYekzcRlX/zyveBbWIaTt1cPv9BAnNsg9TV8hrWbCuJNcFiNjUZ?=
- =?us-ascii?Q?IMUs/1CghEirhBRXbTIrMeHJA/TKtgwvr0W3517Na1a8tyE3AyLSgE0pgwK+?=
- =?us-ascii?Q?vxUzBao6ovZjhKCD93xHa0RBGUNQLH5Rpwh06AqP3b9BUzwgr5M/krTAk4Ml?=
- =?us-ascii?Q?kayJxxzWBkqs/P2cQip1oBZmbB7sGSognwotHL9FzcE+O4B1g0FLWrp/Y8Rj?=
- =?us-ascii?Q?qQXioYqbvvUxPvOpZoZ/HYuKXTlshSg/ku2eMIOXAMgpw+0JON+rNPVOu5tC?=
- =?us-ascii?Q?BtPRxeianzqW32Gk0wEktD63gDR9Oi4wech0sYGZS9Nqi1rtsvsj6TLcvdgV?=
- =?us-ascii?Q?0y0hQIN0rUbTV2Rdlt28QOhWOr909LNdsbwsHW03FehXiGS/QYRkmq4HGJ5v?=
- =?us-ascii?Q?RFh5HC6HkDONoVQFHiE1uVSWWp5//zwiYTjpl0xipSkaLipnnlNnxQK8TuwP?=
- =?us-ascii?Q?iQW3c1TvonoKjgz6gwVdO1QHd9WViwiyuWej4q1I4y9yP+J4vw0xEZskx9xT?=
- =?us-ascii?Q?86sbVrzilcqaPFBr6Cf9eK78DGZxW14uzWFQHlcnw0fhtkzk2/AhhY0Oh57o?=
- =?us-ascii?Q?fRGTrk/lACbva1Z1CQIc4Fmj0zvpCdLsPtaCWXdf4JIqewy8sf8CSG+j3wMC?=
- =?us-ascii?Q?Xt0kDOfPgkVG5mh0IRhlD3huc68u2pKew0FHTFVEgeex+KRzP5/eRHsEi8FQ?=
- =?us-ascii?Q?q+ZRWcSmbaKd41euCvIUymQSUHFSDUIvo3o+q4MxakewEBFYwV5TA+F1aQhD?=
- =?us-ascii?Q?3jDJPXnZYky3GQIB9ZuLoIV2UCqP45I+TtFCga0gYpC7/HDNP1DIK8kx6uRH?=
- =?us-ascii?Q?Iop/LfMfHWXhcz92XN0iYLVf8UcIsyhpLtLMmMCnXhUprWjkr53ak5yJcJSS?=
- =?us-ascii?Q?8IaqARm3Lg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0687781-205a-41db-d7de-08df21e92dff
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 07:29:09.4824
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: B8iFTWqr73FlnAo3Kr/4yHTLce+yboO6JHfwh1zihW6FLLy+G0JTZH2nNlAzrHGbqd72A0r/vJSsBIsn1FV8Ng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9577
+Content-Transfer-Encoding: 8bit
 
-Tasks running under a BPF scheduler are currently invisible to NUMA balancing:
-their address space is never scanned for hinting faults, so they never record
-NUMA fault statistics and never acquire a preferred node. A BPF scheduler
-therefore has no information about where a task's memory is when deciding where
-to run it.
+> When several tasks wake up simultaneously on an idle CPU, their final vlag
+> will depend of the ordering as the first one will lose its lag but not
+> the next ones.
+> Reset the lag when the enqueue happens while no fair task has already been
+> picked et set as the running task.
 
-This series lets a BPF scheduler opt into the NUMA hinting-fault scan with
-SCX_OPS_NUMA_BALANCING. The existing scan is driven from the sched_ext tick for
-the tasks of such a scheduler, and the hinting faults then work for them as they
-do for fair tasks: the kernel maintains their NUMA fault statistics and
-preferred node, and migrates the memory a task accesses toward the node it runs
-on. The tasks themselves are not migrated: their placement is left to the BPF
-scheduler.
+There is a typo. ('et', also 'depend' and 'loose' Not sure that's all :>) 
 
-The resulting preferred node is exposed to BPF schedulers with
-scx_bpf_task_numa_nid(), which they can use to keep a task close to its memory
-when placing or balancing it. The value is advisory; nothing in the kernel acts
-on it for these tasks.
+> As a typical example:
+> CPU0 is idle
+> TA with vlag 0ms and TB with vlag 5ms wake up on CPU0 simultaneously.
+> Depending which grab the lock 1st the behavior will be different:
+> If TA is enqueued 1st, TB will be enqueued with a positive lag and will
+> be picked 1st.
+> But if TB is enqueued 1st, it will loose its positive vlag and both TA and
+> TB will have 0 vlag when fair will pick a task.
 
-The ultimate goal is to give BPF schedulers both controls that NUMA balancing
-combines: moving a task to the node where its memory is and moving the memory a
-task uses to the node where the task runs. This series provides the first: with
-the preferred node available, a scheduler can decide where to run the task. A
-second series, to follow once this one lands, will provide the second: a kfunc
-that hints the memory manager to migrate the task's memory toward the node its
-scheduler has chosen.
+> diff --git a/include/linux/sched.h b/include/linux/sched.h
+> index d7cc77181ef9..32d7077ef148 100644
+> --- a/include/linux/sched.h
+> +++ b/include/linux/sched.h
+> @@ -592,6 +592,7 @@ struct sched_entity {
+>  	u64				vruntime;
+>  	/* Approximated virtual lag: */
+>  	s64				vlag;
+> +	u32				vlag_seq;
+>  	/* 'Protected' deadline, to give out minimum quantums: */
+>  	u64				vprot;
+>  	u64				slice;
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 8cda1d39b037..4c8f12fc8869 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -893,6 +893,7 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
+>  			vlag = min(vlag, 0);
+>  	}
+>  	se->vlag = vlag;
+> +	se->vlag_seq = cfs_rq->idle_seq;
+>  
+>  	return avruntime - vlag != se->vruntime;
+>  }
+> @@ -914,9 +915,22 @@ void decay_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
+>  
+>  	rq = rq_of(cfs_rq);
+>  
+> +	/* You can't claim any lag when waking on idle CPU */
+> +	if (rq->curr == rq->idle) {
+> +		se->vlag = 0;
+> +		return;
+> +	}
+> +
+> +	/* Accessing remote rq task clock is a cost */
+>   	if (flags & ENQUEUE_MIGRATED)
+>  		return;
+>  
+> +	/* CPU has been idle in between so the lag has been removed */
+> +	if (se->vlag_seq != cfs_rq->idle_seq) {
+> +		se->vlag = 0;
+> +		return;
+> +	}
+> +
+>  	/* Compute sleep time */
+>  	delta_exec = rq_clock_task(rq) - se->exec_start;
+>  	if (unlikely(delta_exec <= 0))
+> @@ -8190,6 +8204,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
+>  
+>  	dequeue_hierarchy(p, flags);
+>  
+> +	if (!cfs_rq->h_nr_queued)
+> +		cfs_rq->idle_seq++;
 
-Vladimir Vdovin recently posted an RFC [1] that drives the scan from the
-sched_ext tick in the same way and skips the fair-class task migration for tasks
-under a BPF scheduler. This series covers what that RFC proposed and adds the
-opt-in flag and the kfunc on top.
+Shouldn't this skip DEQUEUE_SAVE?
 
-Patches 1 and 2 are small preparatory changes to the generic NUMA balancing
-code: the first makes the scan available to other scheduling classes, the second
-skips the fair-class task migration for tasks owned by a BPF scheduler. Neither
-changes the behavior of fair, RT or deadline tasks. Patches 3 and 4 add the
-opt-in flag and the kfunc and patch 5 adds a selftest.
+> +
+>  	if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
+>  		se->deadline -= se->vruntime;
+>  		se->rel_deadline = 1;
+> diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+> index b98084e1f5b0..69a2a749e188 100644
+> --- a/kernel/sched/sched.h
+> +++ b/kernel/sched/sched.h
+> @@ -689,6 +689,7 @@ struct cfs_rq {
+>  	u64			sum_weight;
+>  	u64			zero_vruntime;
+>  	unsigned int		sum_shift;
+> +	u32			idle_seq;
+>  
+>  #ifdef CONFIG_SCHED_CORE
+>  	unsigned int		forceidle_seq;
 
-[1] https://lore.kernel.org/r/20261002124559.10367-1-deliran@verdict.gg
+Yeah, well AFAICT other things seems OK.
 
-Git tree:
-git://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git scx-numa-balancing
+Also, while trying to get this patch series on my tip
+branch I had a hard time. I was at the caves
+of git and b4 figthing with... Everything.
+Like there were no v2 tags on some of the patches
+so b4 didn't tracked them. I had to do some
+things by hand and finally it worked. (Not too greatly tho.)
 
-Andrea Righi (5):
-      sched/numa: Let other scheduling classes drive NUMA scanning
-      sched/numa: Leave the placement of a BPF-scheduled task to its scheduler
-      sched_ext: Scan NUMA hinting faults for opted-in BPF schedulers
-      sched_ext: Add scx_bpf_task_numa_nid()
-      selftests/sched_ext: Add a test for scx_bpf_task_numa_nid()
+But who cares? :>.
 
- kernel/sched/ext/ext.c                           |  39 ++++++++
- kernel/sched/ext/internal.h                      |  16 +++-
- kernel/sched/fair.c                              |  14 ++-
- kernel/sched/sched.h                             |   5 +
- tools/sched_ext/include/scx/compat.bpf.h         |  10 ++
- tools/sched_ext/include/scx/compat.h             |   1 +
- tools/sched_ext/include/scx/enum_defs.autogen.h  |   1 +
- tools/sched_ext/include/scx/enums_abi.autogen.h  |   3 +-
- tools/testing/selftests/sched_ext/Makefile       |   1 +
- tools/testing/selftests/sched_ext/numa_nid.bpf.c |  52 +++++++++++
- tools/testing/selftests/sched_ext/numa_nid.c     | 111 +++++++++++++++++++++++
- 11 files changed, 246 insertions(+), 7 deletions(-)
- create mode 100644 tools/testing/selftests/sched_ext/numa_nid.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/numa_nid.c
+
+Thanks,
+Kayra
