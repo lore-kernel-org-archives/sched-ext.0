@@ -1,47 +1,46 @@
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012062.outbound.protection.outlook.com [40.107.200.62])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011023.outbound.protection.outlook.com [52.101.62.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E275F3F0AA9
-	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 07:29:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEE472602
+	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 07:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.23
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791098984; cv=fail; b=ijCADPXUInykjxo+sdzywVH9EZaU3LpO0Wpgwf9FUixP27b1ns9TkPcxGzM7SrFyUTjdwDwUmo6wJuUDkNFSUIYpHO0w2ERwS+MgpcPNb2cBUdZUShaB+YDGeZtEY1WrXW0FMWlHk+aPAHu5+lbSV2aLZ4g1VHD23oY03Q4s/3c=
+	t=1791099074; cv=fail; b=W7zgq3i97Uj4YuZJjgFBmjY1Q3CF27DQpkQLnVluRvJ27f1otynHf+5HI3sR8Lks21f5fZES5xTNVBB172ZUZ3O9z37S1cmLio0RrGhu1THLJxSZQNPoT/JpkUb983W2Mb3QSBsdx76V2yMAs7/oJvaQkg3sKeQeAPy3aC8TBxc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791098984; c=relaxed/simple;
-	bh=qbqtdF8JPd47FByZeN+tljDdSAyvsZ6S6sg2xkCJtBw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Eo3Tj1mQxyZRrT2F1wpGjq6KTgQW815V3l0+VHvrm5IY+HlBBKBSaht0+w7SheDDCElZv0FP++/XwrPaj8+h6HxvSU1lbnNDHmPay4UWKYPL7V2sNvkr4Tn1+k6AJixv+x6zVqsYocZUeJPS5MhiuLfaubCfDfryHWWaoqRPq1I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=lBbYH49z; arc=fail smtp.client-ip=40.107.200.62
+	s=arc-20240116; t=1791099074; c=relaxed/simple;
+	bh=D+6OrCGRkGbnfjuvCKUIjvm6NJRMp9tiHz1DAAowiYc=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=XlwkhFYOdiY2KpG8P7MUMzjM9bMsKvGoSRcz8c9/6NF9EB+JRl+Jy9xrWqahSBh4SVSBQvogEF8ndA4wY454ExI14heas5ef+IVDGMijmE+7j/07yIGihIGqWRUotRxXxrWgz9jgxwLFxvpx1O8uo056+z7g2unzltpLHu+mYuc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=h/jPSNFH; arc=fail smtp.client-ip=52.101.62.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="lBbYH49z"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="h/jPSNFH"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RZT++R7fHTMYZ70cKDW44vTdIJLbcPnKgnpMQjE0dcMAY7IF8Q+Vlppcb/uBjxpAFFlz8eBTBJzshuXb9nesgO96xWjz1354o7xUa279kG7AjKfa2UvLUABYlPpUdiZVfkRDEo89DHnrhoUc4qousiAfcOkgeCcjqZ0ibsvfJ7Flaal76VFvnxS/OGS41gmp8A0f1YCS3tEyu+0I/dz2YaOxSsnP3KEFzbSjeFm/5lx067RYpxo5DjyRwX4gmb4cHHfhnzWZPltOJG8W5WdotMFEvK72XMoBLKLtBeuCFr6O2EYCsd/Ggp+wfEsodZNB+k8pvFu28iLTNhPWPrYOcA==
+ b=OYt8Tfa7EGlNM71wOPmegzKMJaB/gN+M9lbo5DHtpucdfBgoC1dAFilGOSCUppRdDizDXwqClG2x90h2+rwvve/Xwo67M0evCneXdL44uhZUfSEdtMjwCccxbhaRdLhD9ESqEm6jHCXF2C6uwLNrIhMkbJdCRNVfcXDIa8vqKvG2JYmkzNNkYcwTtVyR1Rf/xIFQFdRt4cFujKX/9a61LeHgzQQgnRcszrnWei277xY9nbQvUIG2nWR97po3WvlAt9L1ODiAWhXrO0+Cd/t7z20NU30tUeiajBaxGcS2FV+XuLDzqlS3kSGzMG0fOPiFmGVuuA6Z/+LWaDfVVsbj2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j7rSfiF0EX99OnhsQUuEzPjtvf8Os0Iz1LHltvM+VVo=;
- b=NkCg/ArGcplQPxDmJn1Z3PM+438CYwDwaaCcn5UUSCAUPnF26caeq/5bBNcMuRpCpZOAMRq1lor9fzq9VxEkX6cmljpwrb1FmZNRlPn8b6Fe7ayhl4S8cB4fPPin72xnoZBe3YXvwvxd3EZGtQujqo48HJDA1xfnlwSjDMCWGsUmdDr5zf8TCk+9X6HyaK7nJyzpDpo/x0G5Wyns007+QGR2JX/JgGzTzq91JZKHeYxtSzubR6juOEXcSFsPzkiUq+2I1zzVO4AyKuOE8MOwfPSbET2HsycVraMa2nAIIg2s2gxUkeS5gUWuSY3/oHN/7r+WLhesn3zcd3luS5WNcg==
+ bh=EXkH/77cy1aPVW7s6iUuOQeAaGos8PRlg8F7+AIbC8c=;
+ b=V6ROhyxVRdzfWccUgvt72XV1MxT4y+0R/ANpOKfSuaVNHj4qZBwglO2VJy3+jx5oR/XOcBFJepleXPE5Epv6iYNslSzbaLu+Qs8094/lBwOWpzk00Tdp0Nca3pVaxJwaq/EDkihUCzlnoVJxO/GVGDh09W+X6UhMu03dfmzTbiTPYSP7rGa7H1p70xutBcY2+5UIi+eBrdskEyT2VOnjT+SEn39arAIhd56IRrZjVb1cyK3vwCdNkudVIUT4s7MPRAkMwfi6z1sq8nuYwFnMbf30miiPPD/SR9WJ9Tzav79DRXygUxDE72dD0ijS573QdeFALn3FjAi37LpWCGvz2Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=j7rSfiF0EX99OnhsQUuEzPjtvf8Os0Iz1LHltvM+VVo=;
- b=lBbYH49zYj+YHBNxmamox85UhIwsba6sy5KqE8nBxq3HK4hB+fGCSb61JwyESk2VTBTStpMhPmg99RCRY6YptZ58blxJ3AFoBokQ3NDSaa6KBchzpLijPtWaPE4n657eCZA71u6YbkGmjNRACnPERto9R6TdwIbMItpEYJ3DzzCAFUVR7noJXM8eePblzNiKMCLBLeMyfzlNFdcVtLO/4zdvbpjqj6aqnsbJ4/HNb5GTmhLwD6u5XGeHKUv2syJdmARcPKQqAcUBSfNfxfu6udwH+6rw10Y6RsIYIpIyu1EHhz6ZCDmzgNnbOTuOJOM6FTLOmvmgRo2Zd186qSrcmg==
+ bh=EXkH/77cy1aPVW7s6iUuOQeAaGos8PRlg8F7+AIbC8c=;
+ b=h/jPSNFHnHebD25QgLH2KPqihvP0UEtOyUDJ+ltGb2eHVAYK4MvCfppLv0KOBII9d0/6a5YB+ShonZPoHhwEBkuDlZrLMER3FSaBrfsSeLksW24tCyBum0zI3pMx22+GqgfYScm+IuVhbEcrWyPnfzbPITfYHgIjjHK9lj1gy3j9j+tgKKczbw3MLywekNMjaRirzIJwwDv3+vu9awGtWihZQHaarxLSRVOvH0DVUSxFdRQl+emYlOiahJo03GSRrowMxqcYo4q/tE+AE+B9bDs5pK4HdY/11bU2ydu4+9bCQiK1xSjVqj6iCKKw21ePO35NCMPbKGXy5LmfMvjCoA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
  by CY3PR12MB9577.namprd12.prod.outlook.com (2603:10b6:930:109::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sun, 4 Oct
- 2026 07:29:28 +0000
+ 2026 07:29:09 +0000
 Received: from BL1PR12MB5174.namprd12.prod.outlook.com
  ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
  ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0472.016; Sun, 4 Oct 2026
- 07:29:28 +0000
+ 07:29:09 +0000
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>,
 	David Vernet <void@manifault.com>,
@@ -63,16 +62,14 @@ Cc: Ingo Molnar <mingo@redhat.com>,
 	Lee Trager <ltrager@nvidia.com>,
 	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] selftests/sched_ext: Add a test for scx_bpf_task_numa_nid()
-Date: Sun,  4 Oct 2026 09:27:11 +0200
-Message-ID: <20261004072901.3579967-6-arighi@nvidia.com>
+Subject: [PATCHSET sched_ext/for-7.4] sched_ext: Add NUMA balancing support
+Date: Sun,  4 Oct 2026 09:27:06 +0200
+Message-ID: <20261004072901.3579967-1-arighi@nvidia.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261004072901.3579967-1-arighi@nvidia.com>
-References: <20261004072901.3579967-1-arighi@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: FR4P281CA0024.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:c9::15) To BL1PR12MB5174.namprd12.prod.outlook.com
+X-ClientProxiedBy: VE1PR03CA0009.eurprd03.prod.outlook.com
+ (2603:10a6:802:a0::21) To BL1PR12MB5174.namprd12.prod.outlook.com
  (2603:10b6:208:31c::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -82,268 +79,120 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CY3PR12MB9577:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0c9e4c04-daa7-43e0-bcef-08df21e9395b
+X-MS-Office365-Filtering-Correlation-Id: c0687781-205a-41db-d7de-08df21e92dff
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|6133799003|22082099003|18002099003|10067099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|6133799003|18002099003|10067099003|56012099006|5023799004|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	OTGueNHwQ4N/JajCm7hyr9KCxqMjdSF0t7rgG6fbtztKTzI6I7ubx1dPbYwu9jlHE9LMnvUMK8v+Oc2gvutmjfpxdon1Plw7VUEMafyZRdFgB97BiTBO1c1ctFD+kfe/P532m9tZg2mLYR3c/GKI7ZnTR4Q/s+FhkJACymeCcJZuot+fQtpNmEG1f+F2jPPonPXH5WcZEqz10PvIYatgpGvLyULJz18p+3PwSa0xfzLxfcsnByHFjGS1BjTaTI+7WZOT9bMndQAJCRfI6HXkvmNevZ6/iHZq332SLf2ZbFps8YKqyIkRUgijdnf8/F8pQU+diKwbXTAsL7E5c0SoJSQrlajBWpns6wuJWLE9DdIhaqCvWJEv4t/dSz3MTmjrmcPDKBamJsJkuw5h4QkZ9h2yew6P6fRSAe1qazqLQlZxipfXYAUCxWxDiVwK9wG282KYHPdTneMgYTUemUpOg26lEqXsElqYELS9Hyg5cueelBZn+jFXpSUhs70S9xN/fOgqC63lTUK/3q2OOc8ON6ExJPYiAzb7Dx2XX++2tuZSn9w9FXtM438LOX/5hQ82hTLfkufkV3Si9HwdyNFLfxRP1YMngEKGd9ecD4QMzr7Y5i/ZGKzKgrHpYWPI3mEWx79n63FL1jHaqm3D/6v+EbPE6uz10rsCNN8SwQ4yWHU=
+	keQ1KLgjwfXh3u9cD9Jxz5f6W0jkeencM0CbbuZoeUVzuehBGc33ucpnqbesUr8oZVdR/i0pwpecWO+6yZodaPb7KNSPVNzoLXl7CWgz5m1Ykjev/PVaZ+n09llVl4i+90CT+pv3DL6Ie8xAb7Sh2gz8+kMOWANEtTH3886uE38koSoiK2HKJFjmbQaWwWCwRmaQ6CHwjmbxoc2mi0lavHeAnxyFHkXgrm2+tvPW4u8t3UC59T3LoOUAGoZCO/hNQQPwMCOUocZiFuwz1DQkILNOu/fJL7x7qeK8a339Bbq9qncqlnJjJh34/gj1xir4XhWlWSR2iXyIO7BwPeXqg/M2ZzuGpjQsP56aGBQzYRzxo2ydJwUMNPN3vjaJPGxpVVQdz9SV0FOerJr4fiFTpZjGvHEj5hSIFSGbkUhl7FJxy1AM21sHSOkIC3q9IvGYtyoQmf7EaJliNS6OXiQBh1WOUlAdAZQNWiB1tNGmekYXwbe6RRtT5zuxArq8aZ5Xx8KYTLyc4JY7pB1erOmaFUOj6xcjZDhHqwJomGrp8XH0Ax+OFWNDGtYX6w6nhZaX2rsI4SkBjghUhloaD+6YREkA1osL3RDTvZgSbLLrxpvDsmrAuUhkgaANiGHg/T1guCJ/y1Fl4MFT+Zc4lJ0dz+ZgDIrm70XnnW3gzUsQWFI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(6133799003)(22082099003)(18002099003)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(6133799003)(18002099003)(10067099003)(56012099006)(5023799004)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?RySXsvcUgJzWA2wIaNw8ZThOEG6N85aUug95U9dtuz/5w0upMNqo+gwnlUlO?=
- =?us-ascii?Q?ciK35SiH4kWM8MMnMiyiI58SyjE4ECnIQM8w3Lv+rOJs2AyP3P47qohXTVjx?=
- =?us-ascii?Q?/0sTypbCDSpSFstT8UY5Ld6+kkdIMIR7TF6OFDeM2+NkZeLK0vB/IS7crFpy?=
- =?us-ascii?Q?4Q8zFUO7di64b12SCq+8l7EccFrNpES2E/VTisQG0Yunlpqz6RUJPDb2UkY6?=
- =?us-ascii?Q?7/mBt9ZirG5067EyUyCUjxI7QLjWlmTYVE5eenhi2Ej5j15DtDNOGlaAcAdJ?=
- =?us-ascii?Q?MoW11Ty1rbo0XsxQ+AsLr+ERsyu6pIXA/OdU9f6Lhm1/lAjbYcJcq8AyMJvh?=
- =?us-ascii?Q?Pb8ezAaM/Y/7hfdVlmyxtPczANoEsZGexFNi1oPx36FUgPC3mQj7fwrRAi9E?=
- =?us-ascii?Q?bKg1dxcdwvpleGfzV2pN1eWsHIzQy94GljQJQlXUsGbOwdG6stRGc9jeKv/R?=
- =?us-ascii?Q?fa88yzKYjQK/68mIQN20wfzQRP96awwmSA7mU/z0ygA4yDPcaeJWm7Cw5Rr+?=
- =?us-ascii?Q?9/HfdR/ZtJOJf7DxEs3ZdOhoyOmVDtn+7YTcu4u/NRjup4BsYs1x8NBT35wn?=
- =?us-ascii?Q?6V7gKOQolY7mwQCHH7W/abDoLZCKV8NamhKhseVm+5FV0y5YOc4/rjNOR1fI?=
- =?us-ascii?Q?PChnY+9FtVtwMmVZZqX08HoFWJI2nhdW9arYmTToli9rzIJS6hBIatm6uNqt?=
- =?us-ascii?Q?oppZl6h/tWAuIpZJA+Jwkd1QRB/relI+2ocHRWm2zb6GEIJ4AbOw+d34roiv?=
- =?us-ascii?Q?A0GGl0/yYSSQQbjCo8sFeyZL4Rh2M8o+daOckqOWTGpkbbBTWaCU86Ta1l9L?=
- =?us-ascii?Q?Mu4HvxL5NFneKfZz25uljpuw1xqLl2aMbxFFs8gIthepShqO1ZRPHYVwZlLH?=
- =?us-ascii?Q?6V7uCOj4YGWv52EOsJ45I+118ixAHNAcGmYyc/rEUrctrGpwX8DiHBQ2MP71?=
- =?us-ascii?Q?9gNT+NK9W6ReuKQo2frytuHnYdPc5W4Z9VzO4zIsd1evyOZ3X3IRwNyUNgWW?=
- =?us-ascii?Q?ALx/t2xIEN1XntK6KAbGZssy6+GUD8TFs3OfQx3M2HAqN24ouvOV6o10ied0?=
- =?us-ascii?Q?KX9h9GhoR7CGbhq+rEbHabzAsaAH9+Y2qNE0Bg0BQoZzww4H/8tpgRo39GYk?=
- =?us-ascii?Q?PU5DkBMMCJpKgCz1FIg/tLzwFmMBFn36Jict8WVT/ZYlnP7x1aGWrfJI2LR+?=
- =?us-ascii?Q?klKedsLX3StOwt0SEqjemHdZcwEI4s9e0Rb4dKuTaKL9SnQ082qURKky2Ch7?=
- =?us-ascii?Q?TwVAV1jpUouko7LBEza38G7stetDlq2Oo6wxKzWJM/i5vumM4c9Xv1eEmr8a?=
- =?us-ascii?Q?K4EzlZWcTnV1z3piY7mYtFtgISevZLvklJpqRjwyjKb9NHBhizdTyE920vOI?=
- =?us-ascii?Q?fM4fB1u5iOW0+lT68auXxUe1nYANoMLLXa9IgfUDt1igsJ++WR4JqApazdhe?=
- =?us-ascii?Q?0I3ovgtI2BGchbBJM/bqvaf4PazqOXvIVDOEBi5IH4VsxL3Cfgu9zQu1s34E?=
- =?us-ascii?Q?bGZtgZhB2Zjg8mfy/BeDW+eh0+PSxfDEfxe+HRFMb5wgBkeWkPTYwJMiTer7?=
- =?us-ascii?Q?TyHJ+MnIOINv1msNztqrjJEOYPDvzvFL4lzudJKzmacQ2CWHDjeRJ+BMusXl?=
- =?us-ascii?Q?ba7GcGBTh7J/I0dtwyfdUzjYVejgQwKv40jT1F1F6ClLa2VkFJKXk+7mhEf+?=
- =?us-ascii?Q?NqvFtRQqgh63IOJZoCpxPorKwfXHP7xCIX1sBbafa8WXaM1UIsbzLEl453iu?=
- =?us-ascii?Q?fvo7dyZhkA=3D=3D?=
+	=?us-ascii?Q?2zOB1FXGlC0d6yefidPjfee6VN0t3YE8NssRHf6QW91EhLl8/DipZAH+hyC/?=
+ =?us-ascii?Q?lrPiBIS//qJvpPM5OR+YOlWuVrgG99yZaFh02xYnqKev9DGiMTeRvisKZw8D?=
+ =?us-ascii?Q?3Wf3T5IUzuJjY8xUEybhMvDzzmiVut6WsWpLFB2pqk3jiMWukGFcJIl+87Sg?=
+ =?us-ascii?Q?A50ul1v7+5sp4vCJwOyoDWQrKm0cbbrK8X1vCySDUPXN/UFfpDaGN+gUE9St?=
+ =?us-ascii?Q?03HmD3tYYEx1m1ndDEc/WOstgfiy26eAI2AedFE6bbZRvBulNmD9R57Lp+e6?=
+ =?us-ascii?Q?p6ZuFxsp+9e7RJeiXOq5WXhuwgPpOGEDp1TOQ4EnAn1Hr88so0MAhRf1eepR?=
+ =?us-ascii?Q?h6pbskGsrA2zqPqOOah/Fh5/oCmBHKj50gm7F2gYGiiaEwvSgg64Yu0jTwv2?=
+ =?us-ascii?Q?I6j4xA5lRXgWMEwwwfXni8J9meqLN2iUb8iDKaMfFwaRVJ6V1Jr6auoO4NH/?=
+ =?us-ascii?Q?Xqj4+LN3XjJCqhhChY025Yz3sOtNunPSLWNDf6X88NCp0v2ec4o3PEcYTK2U?=
+ =?us-ascii?Q?zc88WCSu6NS7C4YvwyKYMNDbTXBciycOAn51RLewex3vRXMgeyPmCtMuGPgi?=
+ =?us-ascii?Q?539PH6R/WIgZY/BYp5eOAUM0iyySjGUrLsVOGty7Y2iJ96xN8QHzLUrTZ8KN?=
+ =?us-ascii?Q?sdfghO4pdNML5YmWtyk+/+Bq8LzHl/7+R3eAY7Pnp4bKNpsensRrWzRFUN4K?=
+ =?us-ascii?Q?EwmIR2Jcu6/dUu3fCuBsK17YnKXU1rsyrccKBUOsB8dT2wIcGDkKS7QV/vC5?=
+ =?us-ascii?Q?woterFKa22FNU3pjZnwfQrmvxkgC1CjMtlGWjLBlU/BTYuWHwScB8omxPyH7?=
+ =?us-ascii?Q?uFScveCZUnYekzcRlX/zyveBbWIaTt1cPv9BAnNsg9TV8hrWbCuJNcFiNjUZ?=
+ =?us-ascii?Q?IMUs/1CghEirhBRXbTIrMeHJA/TKtgwvr0W3517Na1a8tyE3AyLSgE0pgwK+?=
+ =?us-ascii?Q?vxUzBao6ovZjhKCD93xHa0RBGUNQLH5Rpwh06AqP3b9BUzwgr5M/krTAk4Ml?=
+ =?us-ascii?Q?kayJxxzWBkqs/P2cQip1oBZmbB7sGSognwotHL9FzcE+O4B1g0FLWrp/Y8Rj?=
+ =?us-ascii?Q?qQXioYqbvvUxPvOpZoZ/HYuKXTlshSg/ku2eMIOXAMgpw+0JON+rNPVOu5tC?=
+ =?us-ascii?Q?BtPRxeianzqW32Gk0wEktD63gDR9Oi4wech0sYGZS9Nqi1rtsvsj6TLcvdgV?=
+ =?us-ascii?Q?0y0hQIN0rUbTV2Rdlt28QOhWOr909LNdsbwsHW03FehXiGS/QYRkmq4HGJ5v?=
+ =?us-ascii?Q?RFh5HC6HkDONoVQFHiE1uVSWWp5//zwiYTjpl0xipSkaLipnnlNnxQK8TuwP?=
+ =?us-ascii?Q?iQW3c1TvonoKjgz6gwVdO1QHd9WViwiyuWej4q1I4y9yP+J4vw0xEZskx9xT?=
+ =?us-ascii?Q?86sbVrzilcqaPFBr6Cf9eK78DGZxW14uzWFQHlcnw0fhtkzk2/AhhY0Oh57o?=
+ =?us-ascii?Q?fRGTrk/lACbva1Z1CQIc4Fmj0zvpCdLsPtaCWXdf4JIqewy8sf8CSG+j3wMC?=
+ =?us-ascii?Q?Xt0kDOfPgkVG5mh0IRhlD3huc68u2pKew0FHTFVEgeex+KRzP5/eRHsEi8FQ?=
+ =?us-ascii?Q?q+ZRWcSmbaKd41euCvIUymQSUHFSDUIvo3o+q4MxakewEBFYwV5TA+F1aQhD?=
+ =?us-ascii?Q?3jDJPXnZYky3GQIB9ZuLoIV2UCqP45I+TtFCga0gYpC7/HDNP1DIK8kx6uRH?=
+ =?us-ascii?Q?Iop/LfMfHWXhcz92XN0iYLVf8UcIsyhpLtLMmMCnXhUprWjkr53ak5yJcJSS?=
+ =?us-ascii?Q?8IaqARm3Lg=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0c9e4c04-daa7-43e0-bcef-08df21e9395b
+X-MS-Exchange-CrossTenant-Network-Message-Id: c0687781-205a-41db-d7de-08df21e92dff
 X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 07:29:28.5104
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 07:29:09.4824
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TYsZSDyMvTN8E+S7np3+wR4fKmVhJG/ycYYyqtIjARFL3JovB/0LqYsx8kqdW6gt7FHjlvoaqg72lFZKoYFC6A==
+X-MS-Exchange-CrossTenant-UserPrincipalName: B8iFTWqr73FlnAo3Kr/4yHTLce+yboO6JHfwh1zihW6FLLy+G0JTZH2nNlAzrHGbqd72A0r/vJSsBIsn1FV8Ng==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9577
 
-Add a scheduler which opts into NUMA hinting-fault scanning and reads
-every running task's preferred node. Check that each result is either
-NUMA_NO_NODE or a node reported by the kernel.
+Tasks running under a BPF scheduler are currently invisible to NUMA balancing:
+their address space is never scanned for hinting faults, so they never record
+NUMA fault statistics and never acquire a preferred node. A BPF scheduler
+therefore has no information about where a task's memory is when deciding where
+to run it.
 
-The test runs two threads touching memory for a few seconds, which on a
-NUMA machine with numa_balancing enabled is enough for its tasks to be
-scanned and acquire a preferred node. Two threads are needed because
-the scan skips the pages of a single-threaded process that are already
-on the node it runs on. Whether a node is acquired depends on the
-machine, so the test only reports the counts it observed and does not
-require one.
+This series lets a BPF scheduler opt into the NUMA hinting-fault scan with
+SCX_OPS_NUMA_BALANCING. The existing scan is driven from the sched_ext tick for
+the tasks of such a scheduler, and the hinting faults then work for them as they
+do for fair tasks: the kernel maintains their NUMA fault statistics and
+preferred node, and migrates the memory a task accesses toward the node it runs
+on. The tasks themselves are not migrated: their placement is left to the BPF
+scheduler.
 
-Assisted-by: LLM
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
----
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../selftests/sched_ext/numa_nid.bpf.c        |  52 ++++++++
- tools/testing/selftests/sched_ext/numa_nid.c  | 111 ++++++++++++++++++
- 3 files changed, 164 insertions(+)
+The resulting preferred node is exposed to BPF schedulers with
+scx_bpf_task_numa_nid(), which they can use to keep a task close to its memory
+when placing or balancing it. The value is advisory; nothing in the kernel acts
+on it for these tasks.
+
+The ultimate goal is to give BPF schedulers both controls that NUMA balancing
+combines: moving a task to the node where its memory is and moving the memory a
+task uses to the node where the task runs. This series provides the first: with
+the preferred node available, a scheduler can decide where to run the task. A
+second series, to follow once this one lands, will provide the second: a kfunc
+that hints the memory manager to migrate the task's memory toward the node its
+scheduler has chosen.
+
+Vladimir Vdovin recently posted an RFC [1] that drives the scan from the
+sched_ext tick in the same way and skips the fair-class task migration for tasks
+under a BPF scheduler. This series covers what that RFC proposed and adds the
+opt-in flag and the kfunc on top.
+
+Patches 1 and 2 are small preparatory changes to the generic NUMA balancing
+code: the first makes the scan available to other scheduling classes, the second
+skips the fair-class task migration for tasks owned by a BPF scheduler. Neither
+changes the behavior of fair, RT or deadline tasks. Patches 3 and 4 add the
+opt-in flag and the kfunc and patch 5 adds a selftest.
+
+[1] https://lore.kernel.org/r/20261002124559.10367-1-deliran@verdict.gg
+
+Git tree:
+git://git.kernel.org/pub/scm/linux/kernel/git/arighi/linux.git scx-numa-balancing
+
+Andrea Righi (5):
+      sched/numa: Let other scheduling classes drive NUMA scanning
+      sched/numa: Leave the placement of a BPF-scheduled task to its scheduler
+      sched_ext: Scan NUMA hinting faults for opted-in BPF schedulers
+      sched_ext: Add scx_bpf_task_numa_nid()
+      selftests/sched_ext: Add a test for scx_bpf_task_numa_nid()
+
+ kernel/sched/ext/ext.c                           |  39 ++++++++
+ kernel/sched/ext/internal.h                      |  16 +++-
+ kernel/sched/fair.c                              |  14 ++-
+ kernel/sched/sched.h                             |   5 +
+ tools/sched_ext/include/scx/compat.bpf.h         |  10 ++
+ tools/sched_ext/include/scx/compat.h             |   1 +
+ tools/sched_ext/include/scx/enum_defs.autogen.h  |   1 +
+ tools/sched_ext/include/scx/enums_abi.autogen.h  |   3 +-
+ tools/testing/selftests/sched_ext/Makefile       |   1 +
+ tools/testing/selftests/sched_ext/numa_nid.bpf.c |  52 +++++++++++
+ tools/testing/selftests/sched_ext/numa_nid.c     | 111 +++++++++++++++++++++++
+ 11 files changed, 246 insertions(+), 7 deletions(-)
  create mode 100644 tools/testing/selftests/sched_ext/numa_nid.bpf.c
  create mode 100644 tools/testing/selftests/sched_ext/numa_nid.c
-
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index c5d3a2eaea7da..707ab511acb51 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -186,6 +186,7 @@ auto-test-targets :=			\
- 	non_scx_kfunc_deny		\
- 	nohz_tick			\
- 	numa				\
-+	numa_nid			\
- 	allowed_cpus			\
- 	peek_dsq			\
- 	prog_run			\
-diff --git a/tools/testing/selftests/sched_ext/numa_nid.bpf.c b/tools/testing/selftests/sched_ext/numa_nid.bpf.c
-new file mode 100644
-index 0000000000000..54f7bdbc0a3d0
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/numa_nid.bpf.c
-@@ -0,0 +1,52 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * A scheduler that reads the NUMA node a task's hinting faults point at.
-+ *
-+ * Every task that runs is asked for its preferred node. The answer is either
-+ * NUMA_NO_NODE, which a task keeps until its address space has been scanned a
-+ * few times, or a node id the kernel knows about. Anything else means the
-+ * value reaching BPF is not the one the placement code maintains.
-+ *
-+ * Copyright (c) 2026 NVIDIA Corporation.
-+ */
-+
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+UEI_DEFINE(uei);
-+
-+/* Tasks seen with and without a preferred node. */
-+u64 nr_with_nid;
-+u64 nr_without_nid;
-+
-+void BPF_STRUCT_OPS(numa_nid_running, struct task_struct *p)
-+{
-+	s32 nid = scx_bpf_task_numa_nid(p);
-+
-+	if (nid == NUMA_NO_NODE) {
-+		__sync_fetch_and_add(&nr_without_nid, 1);
-+		return;
-+	}
-+
-+	if (nid < 0 || nid >= scx_bpf_nr_node_ids()) {
-+		scx_bpf_error("task %d reported node %d, kernel has %d node ids",
-+			      p->pid, nid, scx_bpf_nr_node_ids());
-+		return;
-+	}
-+
-+	__sync_fetch_and_add(&nr_with_nid, 1);
-+}
-+
-+void BPF_STRUCT_OPS(numa_nid_exit, struct scx_exit_info *ei)
-+{
-+	UEI_RECORD(uei, ei);
-+}
-+
-+SEC(".struct_ops.link")
-+struct sched_ext_ops numa_nid_ops = {
-+	.running			= (void *)numa_nid_running,
-+	.exit				= (void *)numa_nid_exit,
-+	.flags				= SCX_OPS_NUMA_BALANCING,
-+	.name				= "numa_nid",
-+};
-diff --git a/tools/testing/selftests/sched_ext/numa_nid.c b/tools/testing/selftests/sched_ext/numa_nid.c
-new file mode 100644
-index 0000000000000..3aa1630ff6844
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/numa_nid.c
-@@ -0,0 +1,111 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (c) 2026 NVIDIA Corporation.
-+ */
-+#define _GNU_SOURCE
-+#include <bpf/bpf.h>
-+#include <pthread.h>
-+#include <scx/common.h>
-+#include <stdlib.h>
-+#include <time.h>
-+#include <unistd.h>
-+#include "numa_nid.bpf.skel.h"
-+#include "scx_test.h"
-+
-+#define WORKLOAD_SIZE		(64 << 20)
-+#define WORKLOAD_THREADS	2
-+#define WORKLOAD_SECONDS	3
-+
-+/*
-+ * Touch a private buffer for a while. The hinting-fault scan skips the pages
-+ * of a single-threaded process that are already on the node it runs on, so
-+ * one such thread alone would never take a hinting fault: run two of them.
-+ */
-+static void *touch_memory(void *arg)
-+{
-+	struct timespec start, now;
-+	volatile char *buffer;
-+	size_t offset;
-+
-+	buffer = malloc(WORKLOAD_SIZE);
-+	if (!buffer)
-+		return NULL;
-+
-+	clock_gettime(CLOCK_MONOTONIC, &start);
-+	do {
-+		for (offset = 0; offset < WORKLOAD_SIZE; offset += 4096)
-+			buffer[offset]++;
-+		clock_gettime(CLOCK_MONOTONIC, &now);
-+	} while (now.tv_sec - start.tv_sec < WORKLOAD_SECONDS);
-+
-+	free((void *)buffer);
-+	return NULL;
-+}
-+
-+static enum scx_test_status setup(void **ctx)
-+{
-+	struct numa_nid *skel;
-+
-+	skel = numa_nid__open();
-+	SCX_FAIL_IF(!skel, "Failed to open");
-+	SCX_ENUM_INIT(skel);
-+	SCX_FAIL_IF(numa_nid__load(skel), "Failed to load skel");
-+
-+	*ctx = skel;
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static enum scx_test_status run(void *ctx)
-+{
-+	struct numa_nid *skel = ctx;
-+	pthread_t threads[WORKLOAD_THREADS - 1];
-+	struct bpf_link *link;
-+	int i;
-+
-+	link = bpf_map__attach_struct_ops(skel->maps.numa_nid_ops);
-+	SCX_FAIL_IF(!link, "Failed to attach scheduler");
-+
-+	/*
-+	 * Give the scan something to work on, so that the tasks of this test
-+	 * can acquire a preferred node on a NUMA machine with numa_balancing
-+	 * enabled. The test does not require one, as it depends on the
-+	 * machine: the scheduler reports an error through UEI if it ever sees
-+	 * a node id that is not valid and the counts below show what it saw.
-+	 */
-+	for (i = 0; i < WORKLOAD_THREADS - 1; i++) {
-+		if (pthread_create(&threads[i], NULL, touch_memory, NULL)) {
-+			SCX_ERR("Failed to create a worker thread");
-+			bpf_link__destroy(link);
-+			return SCX_TEST_FAIL;
-+		}
-+	}
-+	touch_memory(NULL);
-+	for (i = 0; i < WORKLOAD_THREADS - 1; i++)
-+		pthread_join(threads[i], NULL);
-+
-+	fprintf(stderr, "tasks with a preferred node: %lu, without: %lu\n",
-+		(unsigned long)skel->bss->nr_with_nid,
-+		(unsigned long)skel->bss->nr_without_nid);
-+
-+	bpf_link__destroy(link);
-+	SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG));
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+static void cleanup(void *ctx)
-+{
-+	struct numa_nid *skel = ctx;
-+
-+	numa_nid__destroy(skel);
-+}
-+
-+struct scx_test numa_nid = {
-+	.name = "numa_nid",
-+	.description = "Read a task's preferred NUMA node from BPF",
-+	.setup = setup,
-+	.run = run,
-+	.cleanup = cleanup,
-+};
-+REGISTER_SCX_TEST(&numa_nid)
--- 
-2.55.0
-
