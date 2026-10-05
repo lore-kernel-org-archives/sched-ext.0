@@ -1,182 +1,179 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B95E47DFB9;
-	Mon,  5 Oct 2026 11:33:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AE74CA78B
+	for <sched-ext@lists.linux.dev>; Mon,  5 Oct 2026 15:58:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791200016; cv=none; b=OA6b1DOp5X+myjozcRP3MVPfqEHdbuPDuxbFrqguE8AsjXMXP0N09p6x8lfV3zJwoudtm4ZXu6DG/XjdWzvaEMHX4zCkv5uHBrtYyA/N9zJ08C84MLjCAP/aScpo0kEpIW9Z9AUgUtjBKsffwqzR9NyD53KycH3H6AQYUC95XpQ=
+	t=1791215901; cv=none; b=d9BwkHN2MO7/Yu2O9Eg6z5L61WWQ+IkC5hI4WQeFGk1PMsCvOBC42XNFHDA0t+kG3gv0JdWKlDOmYYbIMtE1rIW0mbMyTKx3tRC7iSTdNBNbGgIrfs8Bf0mOwhw0+oUr48C2X1lampTnDhjhd5CilK80hl5BEK8qlz2T5vxFjYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791200016; c=relaxed/simple;
-	bh=ahBIlnJEjw2sBwQJf8wwHpcKkVLVi+ixJDkQPGiwDsI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TK1thZL7s2A078pDYRxN+aKOO6rZV3pE3Yd2gZ4qXvqfYbd3qLC9/rgPnqSKBNR2Z0iGljhKpz2bTyMK6cqdVU/xmPsxKRoGO08QOUFmRAHpD7OTjw235fg5vccvTvM5Cfbu2mPPO3gxbdiqyaK3j3aZQcmIpH4LYe5lYBFNdM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=daXvwKBf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791215901; c=relaxed/simple;
+	bh=NREAtkckTJS7Rgm5WxX0oAn2XgDJTjfslmcI/YdSoG4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JynPi2+wE56PT+V5edYdlBhoeGMMBe0gwPuZ280Lbd4EKPg9eI0nDGfXiKQOCSMatvHuvXayB144YEottbivPCrO4VGWlYKcueot+CD6r0nw5rnm29v9RgJvnLX65ssLJkIVW/FBquS/l/pEo4jkTpTAF30TxmHZh0LWuVXSsKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NGqtr8gG; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="daXvwKBf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9607C1F000FF;
-	Mon,  5 Oct 2026 11:33:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791200015;
-	bh=44k8QmXo0RbzfFYGwBkCWl1z3Rv7AbzCxmoTN/2j7jE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=daXvwKBfn45TTkPjYEogaW/8bzC7dWExtHjFuOSW+CTnZI8UZJqisOLHtEWUxdmjS
-	 WfR76xQK5ZicHJnvrYGEoLXulXVsrCIzmDyJ9lsvn8Rzme4/ipxNWMP0d8csQdQyTH
-	 qW0Up9Ia05nx3LwvkJ5rKWOUxTVuME3Q7ijIutS1DFPEMA2qqB/G/NducNpTv5StJI
-	 EuTNz1S1c7ZbizJub5Xe5DXhXe87wAdSVK6m/xr550MJVVsJXo+zptvU1KjUHk/VFy
-	 Ep4ud9da7IQSmdxwQ57Hqx3JmE1yzEUstTeqq86eR2N+WPAHxLwii/mxOSjLUaxaYk
-	 r6mFtzcpuM+QA==
-Date: Mon, 5 Oct 2026 13:32:52 +0200
-From: Nicolas Schier <nsc@kernel.org>
-To: Jay Wang <wanjay@amazon.com>
-Cc: bpf@vger.kernel.org, Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Quentin Monnet <qmo@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Christian Heusel <christian@heusel.eu>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	linux-modules@vger.kernel.org, Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	linux-trace-kernel@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>, Ian Rogers <irogers@google.com>,
-	linux-perf-users@vger.kernel.org, Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	linux-input@vger.kernel.org, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
-	Shuah Khan <shuah@kernel.org>, linux-kselftest@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>, rust-for-linux@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>, linux-doc@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGqtr8gG"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49c5a927a1fso881095e9.2
+        for <sched-ext@lists.linux.dev>; Mon, 05 Oct 2026 08:58:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791215898; x=1791820698; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=oHGq165bL6ZkwlwLwwziFcNqAcI7e1VaujqMV2T4VM8=;
+        b=NGqtr8gGbanh+TBpnerDHBUoTOrqbFt1/ZJkpvcfo5Ie0baxh28M/Favcx4BnZ8YPP
+         zrVnPraDyXJy+w1M9HjsIvnC0SV1f9xLKMAEkDr3lIrSZ45wi/OmHHPSnaZh6nA7ihe+
+         RuNrXcPhUGpZe5dgBK9r7XDHg+52QO83nmpBOQGXadZFwKQ82mmDDc2hlVVzZgx7Y8b4
+         XibnSAuQQkWjHn3P5mDaZuzAtRkG5ZV8M6/0ejqzoHExn9Jm5c9NNDA5hXL4XqGV7ijf
+         jyzTcq5TalX/BzgyQoxIuU0glLkc57RVTIPHqeYSZ9J6hHAOQsZKQTUSdvxOS9wStqJX
+         vIqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791215898; x=1791820698;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=oHGq165bL6ZkwlwLwwziFcNqAcI7e1VaujqMV2T4VM8=;
+        b=mgGOpNeKyOcJSTh8SAW5rrR/uuoTIKPH0GCJduG+0BAxZCrOYLGeXA7sotWhbpvoeE
+         gg/l3ERKlOyaqKyfqsrZTi6PTvCjwNl851tjPSVQZwDvXiODhboNydergZ9wbRaqlSla
+         FYp6SL2eBBK7kQNeo3t21jgScK9qP3VYYNDc23QA6/heqojnsKRE/bMB6cnFkr2txpKU
+         PrP5o6jniE0gbIMRPUeZptcG3lHIQQ9jpG58YScfZtlz/uOgwMGm2ryX66M4DeJcvsHp
+         OFlTOM4dhnQ7wHpYqGgB7bwp/FrmWXrt+BAhCYQ6mKr0TZYtWHeSy5YzC03EM1bIpcI7
+         +IOw==
+X-Forwarded-Encrypted: i=1; AKwUvBwQ952nWbFpAizLnDxLJVfM/21FnX0w6YcAoSe/oI3In3I3uWaim9SBvaIf6tCXKSUT0S6ghZ8cnaE=@lists.linux.dev
+X-Gm-Message-State: AFuF++l+E53ydicFe0tmF99of6yPvPiamf79p7QmBS6wY9ETWc+KrKD1
+	tTKVesW5XKgbPikYzEF3IkcTuc4Lh4qsihudZJF1dp5yQRYr4UtcNcJP
+X-Gm-Gg: AYBFou35d5ro5Inak9NqvjbhmrWd6xnQd6PHOfJEJYh2zc/zAy3maW4rFCgGjOqqXhs
+	bCNrHumDkZzzDKe1aywjUsJFmXSUU9q1R+ahjOnxXcz38UVgh7TZ5nOsbNVxWyYc33i6jOLpAwv
+	bjBsQY2QFpCFwRNcamcDZEanBTTW1G7efQKC/TthZJvyWa5TesrDobVnIvdRg8FjcGG/2SiGepk
+	9jUnF1j65InSKAjLdeAAAWqKTR/Y2nhmikUboVYmyH0dsOEX+kiuG162Z1I3pYgZzzAGttASHtA
+	bX4RWyDzN+9DRy4zbzF/3BCLacqFaelNk4z/Yqrr6T2BbI3l3gLIA9gx7Q+oH5WWWzKRIpVjP5R
+	GsAWgngwFi7mlypYZ96z0sk8uYOG6wYitmyrImsQL+GzSNdZOXAYISQ1jRvT7TN5oEw1m/uQxGc
+	0qNX/LOLoffCiW+q38tUaBN85J/8m1RXDXXnwy+oBD2gaHJVW5Qc3/JLF7PISMIusc5hvYRRBNl
+	S+YK1INAwShHTg3Hva6lm3s6/e2ErM=
+X-Received: by 2002:a05:600c:6217:b0:4a0:1e9f:64f6 with SMTP id 5b1f17b1804b1-4a027454f31mr164261805e9.0.1791215897683;
+        Mon, 05 Oct 2026 08:58:17 -0700 (PDT)
+Received: from lima-kdev.local ([85.100.66.184])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1787e7792sm1644085e9.0.2026.10.05.08.58.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2026 08:58:17 -0700 (PDT)
+From: Kayra Cizmeci <kayracizmeci@gmail.com>
+To: vincent.guittot@linaro.org
+Cc: arighi@nvidia.com,
+	bsegall@google.com,
+	changwoo@igalia.com,
+	christian.loehle@arm.com,
+	dietmar.eggemann@arm.com,
+	juri.lelli@redhat.com,
+	kprateek.nayak@amd.com,
 	linux-kernel@vger.kernel.org,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Martin Pohlack <mpohlack@amazon.de>, jay.wang.upstream@gmail.com
-Subject: Re: [PATCH bpf-next v4 09/12] bpf, trace, net: prepare
- CONFIG_DEBUG_INFO_BTF checks for a tristate
-Message-ID: <asOK5Gl1Oe9d5bwr@derry.ads.avm.de>
-Mail-Followup-To: Nicolas Schier <nsc@kernel.org>,
-	Jay Wang <wanjay@amazon.com>, bpf@vger.kernel.org,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Quentin Monnet <qmo@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Christian Heusel <christian@heusel.eu>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	linux-modules@vger.kernel.org, Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	linux-trace-kernel@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>, Ian Rogers <irogers@google.com>,
-	linux-perf-users@vger.kernel.org, Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	linux-input@vger.kernel.org, Tejun Heo <tj@kernel.org>,
-	David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
-	Shuah Khan <shuah@kernel.org>, linux-kselftest@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>, rust-for-linux@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Martin Pohlack <mpohlack@amazon.de>, jay.wang.upstream@gmail.com
-References: <20261001225214.12351-1-wanjay@amazon.com>
- <20261001225214.12351-10-wanjay@amazon.com>
+	linux-pm@vger.kernel.org,
+	lukasz.luba@arm.com,
+	mgorman@suse.de,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	pierre.gondois@arm.com,
+	qyousef@layalina.io,
+	rafael@kernel.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	sshegde@linux.ibm.com,
+	tj@kernel.org,
+	void@manifault.com,
+	vschneid@redhat.com
+Subject: Re: [PATCH 04/18 v2] sched/eevdf: Compare min slice during wake_affine
+Date: Mon,  5 Oct 2026 18:58:13 +0300
+Message-ID: <20261005155813.25126-1-kayracizmeci@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261002154415.2270586-5-vincent.guittot@linaro.org>
+References: <20261002154415.2270586-5-vincent.guittot@linaro.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001225214.12351-10-wanjay@amazon.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 01, 2026 at 10:52:11PM +0000, Jay Wang wrote:
-> The next patch makes CONFIG_DEBUG_INFO_BTF a tristate.  With =m, Kconfig
-> defines CONFIG_DEBUG_INFO_BTF_MODULE instead of CONFIG_DEBUG_INFO_BTF,
-> so every check that must hold for both =y and =m has to be written for
-> it:
+> Add a new level in wake affine where we check on which CPU the task
+> would most probably run 1st between this and prev CPUs.
+
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+
+
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index ad72b8536d6c..eeac0aaba3cd 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -8422,6 +8422,9 @@ static int wake_wide(struct task_struct *p)
+>   * wake_affine_idle() - only considers 'now', it check if the waking CPU is
+>   *			cache-affine and is (or	will be) idle.
+>   *
+> + * wake_affine_slice() - only considers 'now', it check if the waking CPU can
+> + *			 be preempted becaus using longerslice.
+> + *
+>   * wake_affine_weight() - considers the weight to reflect the average
+>   *			  scheduling latency of the CPUs. This seems to work
+>   *			  for the overloaded case.
 > 
->  - #ifdef CONFIG_DEBUG_INFO_BTF becomes #if IS_ENABLED(...) where the
->    generated BTF and its id tables must be the same for =y and =m: the
->    .BTF_ids tables (btf_ids.h), the BTF type tags (compiler_types.h), and
->    the tracepoint and syscall BTF ids (trace_events.h, trace_syscalls.c).
->    Leaving them would silently produce empty id sets with =m.
-> 
->  - obj-$(CONFIG_DEBUG_INFO_BTF) and include-$(CONFIG_DEBUG_INFO_BTF)
->    become $(subst m,y,...) where the object is built into the kernel
->    regardless: sysfs_btf.o, the netfilter and xfrm kfunc objects, and
->    scripts/Makefile.btf.  Otherwise =m would try to build them as
->    modules (xfrm_state_bpf.o fails modpost for lack of MODULE_LICENSE)
->    or skip the BTF generation flags.
-> 
->  - "depends on !DEBUG_INFO_BTF" becomes "depends on DEBUG_INFO_BTF=n"
->    for RUST and GENDWARFKSYMS: with =m the BTF is generated as with =y,
->    so the pahole restrictions they express still apply, but !m is m,
->    which a bool option takes as y.
-> 
-> No functional change: CONFIG_DEBUG_INFO_BTF is still a bool, for which
-> IS_ENABLED() and #ifdef agree, $(subst m,y,y) is y and "=n" is "!".
-> 
-> Signed-off-by: Jay Wang <wanjay@amazon.com>
-> ---
->  Makefile                       | 3 ++-
->  include/linux/btf_ids.h        | 2 +-
->  include/linux/compiler_types.h | 2 +-
->  include/trace/trace_events.h   | 2 +-
->  init/Kconfig                   | 2 +-
->  kernel/bpf/Makefile            | 2 +-
->  kernel/module/Kconfig          | 2 +-
->  kernel/trace/trace_syscalls.c  | 6 +++---
->  net/netfilter/Makefile         | 6 +++---
->  net/xfrm/Makefile              | 4 ++--
->  10 files changed, 16 insertions(+), 15 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index 751a08643bf8..f561516e1735 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1208,7 +1208,8 @@ endif
->  # include additional Makefiles when needed
->  include-y			:= scripts/Makefile.warn
->  include-$(CONFIG_DEBUG_INFO)	+= scripts/Makefile.debug
-> -include-$(CONFIG_DEBUG_INFO_BTF)+= scripts/Makefile.btf
-> +# CONFIG_DEBUG_INFO_BTF is a tristate; BTF is generated for both y and m
-> +include-$(subst m,y,$(CONFIG_DEBUG_INFO_BTF)) += scripts/Makefile.btf
 
-Please drop the comment and use the shorter 'm' to 'y' conversion:
-
-include-$(CONFIG_DEBUG_INFO_BTF:m=y)	+= scripts/Makefile.btf
-
-and possibly also for kernel/bpf/Makefile and net/netfilter/Makefile.
-
-Thanks
+Nice. A typo. 'becaus'. 'be' wanted to be part of Santa Claus instead of 'cause'.
 
 
--- 
-Nicolas
+> +static int
+> +wake_affine_slice(struct task_struct *p, int this_cpu, int prev_cpu)
+> +{
+> +	struct sched_entity *se = &p->se;
+> +
+> +	if (se->slice < get_rq_min_slice(cpu_rq(prev_cpu)))
+> +		return prev_cpu;
+> +
+> +	if (se->slice < get_rq_min_slice(cpu_rq(this_cpu)))
+> +		return this_cpu;
+> +
+> +	return nr_cpumask_bits;
+> +}
+> +
+>  static int
+>  wake_affine_weight(struct sched_domain *sd, struct task_struct *p,
+>  		   int this_cpu, int prev_cpu, int sync)
+> @@ -8508,6 +8525,9 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
+>  	if (sched_feat(WA_IDLE))
+>  		target = wake_affine_idle(this_cpu, prev_cpu, sync);
+>  
+> +	if (sched_feat(PREEMPT_SHORT) && target == nr_cpumask_bits)
+> +		target = wake_affine_slice(p, this_cpu, prev_cpu);
+> +
+> 	if (sched_feat(WA_WEIGHT) && target == nr_cpumask_bits)
+> 		target = wake_affine_weight(sd, p, this_cpu, prev_cpu, sync);
+>
+
+Also,
+
+Scene (Why I always start like this? Answer is... IDK neither. :>):
+
+CPU0 has an RT task running named TA, and CPU1 has a fair task running
+named TB that has 100 ms slice.
+
+cfs_rq_min_slice() looks only to rq's cfs_rq skipping others like dl
+and rt. The value that's coming from cfs_rq_min_slice() is then checked if it
+equals to the currently saved value.
+
+So if the cfs_rq is empty, cfs_rq_min_slice() just returns the starting value of min,
+that is ~0ULL. And we write this.
+
+In the case of CPU0 and CPU1 the behavior will change whenether or not which one
+of these is prev or this CPU. If CPU0 is prev it will be chosen, if not CPU1 will.
+
+IDK if this is tolerated tho. But shouldn't this be changed?
+
+Or Am I getting something wrong?
+
+(To y'all that are currently attending to LPC, enjoy! I'm sadly only enjoying my room.)
+
+Thanks,
+Kayra :>
+
+
