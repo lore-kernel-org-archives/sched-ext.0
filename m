@@ -1,128 +1,99 @@
-Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com [35.155.198.111])
+Received: from outbound.qs.icloud.com (qs-2004j-snip4-4.eps.apple.com [57.103.84.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793D547D44C
-	for <sched-ext@lists.linux.dev>; Sun,  4 Oct 2026 22:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.155.198.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C582F47C11A
+	for <sched-ext@lists.linux.dev>; Mon,  5 Oct 2026 11:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.84.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791152501; cv=none; b=JvjX+XUi8SeqGF4zMqrA+DAUiXTIzSouzWH0820kgeylUp+xSpGZKfty7jDgXZAhQD0azH7ZCnIVApk3gsse4EeRumzeV/SO7D++kAwDz3D+Lw+E4e288234oJkX5QAhb3u5krsQukZhT4dKRGueemp6FPRHcniajDiTM+VyyhA=
+	t=1791199865; cv=none; b=Vj7lvTCjWtRBxVJIUdaXlXIp0t8tG9MKeHqMs42fA43Ujg/bx0dNbf1TN0X3S83oxD0N2GN6hJitzc6h8tiN28xKcceYkk5qqW5wEc7Zt+OYw0kC5vkFTqHNGnf5Rnj+q8eZb0oGLUuVfxOJqyy2tYDg6FqYZ2dmO/hiN1oYiwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791152501; c=relaxed/simple;
-	bh=8MfZas74TP4bH2JkIBPs6F1Wj3cq6DvSuL/z6D0z5ro=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RA3iTjqoAnCuj7P5mZIEmojbM+vz0TvQIqJmVT0ZjtD/F4gGPDF6SWLjSQHk/rFp+Dw+HY/FswJBG4k3P642V/ZFniaMeEYPkRvfSKiICov8snKbm4x7zPqUuDt/MVBAp7a8nk/FDhfaJAMlxH+/IY7O8DiHVs/pWQfBp75RNGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=GeYS9uKr; arc=none smtp.client-ip=35.155.198.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+	s=arc-20240116; t=1791199865; c=relaxed/simple;
+	bh=e8jgra+3c6etf+f1IV+hDahnaTLE+D8VuGRWF+MPfYY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=gPSnQSjrPlrp25mq4B7xTvDLwmeMtjZSlhKOkg9oWObYQfi3OHCCHZThJe/VbTl7fZGS9PbPOYIuhvAjI1pvwAahIvvgRMdETVWzdaAqjRJH4EJnUHXCggdy1Gr02CBIaoL67TXu2CfTtEJ8aGsDOStfr4u5l5OPrG2eqIf+Y+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=verdict.gg; spf=pass smtp.mailfrom=verdict.gg; dkim=pass (2048-bit key) header.d=verdict.gg header.i=@verdict.gg header.b=rB0XH3KG; arc=none smtp.client-ip=57.103.84.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=verdict.gg
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=verdict.gg
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="GeYS9uKr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1791152495; x=1822688495;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=gGkA92gKn6Umlg7Do4va51y7OdkAYyeZaeaCQws/E94=;
-  b=GeYS9uKr1x3TxtDfRskLgDvkbErsCC64o5hdPPA8gEtXQTJ2kFXOiTe6
-   twwnxtpm0xUmyQjHdXh8rNN+BHPa7sOmEsRbLbDmcT9dZ5rqoGgHnkknB
-   cQE/ASE9yUHsfity81TboXIwamKOk3lBwxWbWT50XW+u77q3c2oR4YrhA
-   0LvijiD8EYx1b5jApPvShDibYx720v7+9MgB4TgNTglerum4L4fFkSufb
-   UvFXI9T3h9GJqbC0Nt/1z5/80RY5No4RIVg9fgETy3DGx4dscffKzoHls
-   nktQTFAeMpaxTzLtvpp0gqDuf6c60pd1JaSmGcukZxIABimXsp1q6H30/
-   w==;
-X-CSE-ConnectionGUID: bhwPuL6iQoibWn7EKQVtmQ==
-X-CSE-MsgGUID: iF4tuhgNQbWGyCqDCfgFXA==
-X-IronPort-AV: E=Sophos;i="6.27,141,1787011200"; 
-   d="scan'208";a="30278872"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
-  by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Oct 2026 22:21:32 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:21386]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.24.164:2525] with esmtp (Farcaster)
- id 0691faea-dd80-4741-bdc2-6e25b9dd697c; Sun, 4 Oct 2026 22:21:32 +0000 (UTC)
-X-Farcaster-Flow-ID: 0691faea-dd80-4741-bdc2-6e25b9dd697c
-Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49;
- Sun, 4 Oct 2026 22:21:31 +0000
-Received: from dev-dsk-wanjay-2c-d25651b4.us-west-2.amazon.com (172.19.198.4)
- by EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49;
- Sun, 4 Oct 2026 22:21:31 +0000
-From: Jay Wang <wanjay@amazon.com>
-To: <ihor.solodrai@linux.dev>, <bpf@vger.kernel.org>, <ast@kernel.org>,
-	<daniel@iogearbox.net>, <andrii@kernel.org>, <eddyz87@gmail.com>,
-	<memxor@gmail.com>
-CC: <alan.maguire@oracle.com>, <martin.lau@linux.dev>,
-	<yonghong.song@linux.dev>, <jolsa@kernel.org>, <qmo@kernel.org>,
-	<nathan@kernel.org>, <nsc@kernel.org>, <linux-kbuild@vger.kernel.org>,
-	<linux@weissschuh.net>, <christian@heusel.eu>, <mcgrof@kernel.org>,
-	<petr.pavlu@suse.com>, <samitolvanen@google.com>,
-	<linux-modules@vger.kernel.org>, <rostedt@goodmis.org>,
-	<mhiramat@kernel.org>, <mathieu.desnoyers@efficios.com>,
-	<linux-trace-kernel@vger.kernel.org>, <acme@kernel.org>,
-	<namhyung@kernel.org>, <irogers@google.com>,
-	<linux-perf-users@vger.kernel.org>, <jikos@kernel.org>, <bentiss@kernel.org>,
-	<linux-input@vger.kernel.org>, <tj@kernel.org>, <void@manifault.com>,
-	<arighi@nvidia.com>, <changwoo@igalia.com>, <sched-ext@lists.linux.dev>,
-	<shuah@kernel.org>, <linux-kselftest@vger.kernel.org>, <ojeda@kernel.org>,
-	<rust-for-linux@vger.kernel.org>, <arnd@arndb.de>,
-	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<abuehaze@amazon.com>, <doebel@amazon.de>, <mpohlack@amazon.de>,
-	<jay.wang.upstream@gmail.com>
-Subject: Re: [PATCH bpf-next v4 00/12] bpf: make the vmlinux BTF an on-demand loadable module (CONFIG_DEBUG_INFO_BTF=m) to save ~5.4 MB memory
-Date: Sun, 4 Oct 2026 22:21:27 +0000
-Message-ID: <20261004222127.31128-1-wanjay@amazon.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <44315425-c505-46fe-8379-f19d78ff3abb@linux.dev>
-References: <44315425-c505-46fe-8379-f19d78ff3abb@linux.dev>
+	dkim=pass (2048-bit key) header.d=verdict.gg header.i=@verdict.gg header.b="rB0XH3KG"
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+	by p00-icloudmta-asmtp-us-east-2d-100-percent-1 (Postfix) with ESMTPS id A2086180013B;
+	Mon, 05 Oct 2026 11:30:56 +0000 (UTC)
+X-ICL-RepId: 01a10bd4-c701-74a7-933c-cd54c9c5d69d
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQBIHVwCXRxCCk0dXwdaEhVdRVcIWwJAEVc4RQhFD1sTTVZUChcNVk1PHUEJXghGXl4fEx9UVgBBGRBWAVhWXQVNGlwYWQ8cAUpWWg5bBEcUFxtcABcbRgIEIwJfAEUCXglWATAXD1ZNTx1BCV4IRl5eHxMAXg8PTH00ZDt0OXYqcktrJhlaeDcMMgZabjpkQG8xcxtSGVYZWgwdClBVEgRACFZQVB5BBFYVbAlYBlMZVw==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=verdict.gg; s=sig1; t=1791199861; x=1793791861; bh=OZRWUngntJZLR2dzkgMqR7G6fJ9N6gQT7CyHoAl8Oxs=; h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:x-icloud-hme; b=rB0XH3KGWWHr/bxoFcMUbw1TsifsaeuVMrv6uUqPBYRoDXqB3p+hkYUv/JVcrpLVHgHjV/nj5XjH6IRzscEvC8HrbVY+qujgNdrYioqn2M7CqgzmCgD9peqmnHGfAQmGt0mgpDboG+LnS5n/sgwihosRihY3wVMwIfFlaOORhOkgojr8Ev4kVWSOlE2hXdJ3NXYs+xzI+a1XCWD/h9Qm9CVzLVsTEEmOm+e8mOmakjiLzIRqYApfUC0D8Z8ILL8bd+AiqtlvgeOUGKi7vvDSknHysJfB230euVDiypGIbmwByia1ZV54XT67QGVnLpSQcyThDZW8xU/l/j5a+a69zw==
+mail-alias-created-date: 1621344842221
+Received: from localhost (unknown [17.57.155.37])
+	by p00-icloudmta-asmtp-us-east-2d-100-percent-1 (Postfix) with ESMTPSA id 5AE7218001E2;
+	Mon, 05 Oct 2026 11:30:52 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: EX19D031UWC004.ant.amazon.com (10.13.139.246) To
- EX19D001UWA001.ant.amazon.com (10.13.138.214)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 05 Oct 2026 14:30:50 +0300
+Message-Id: <DLWVCRDZK3XK.1JG5J57YQV0VI@verdict.gg>
+Cc: "Ingo Molnar" <mingo@redhat.com>, "Peter Zijlstra"
+ <peterz@infradead.org>, "Juri Lelli" <juri.lelli@redhat.com>, "Vincent
+ Guittot" <vincent.guittot@linaro.org>, "Dietmar Eggemann"
+ <dietmar.eggemann@arm.com>, "Steven Rostedt" <rostedt@goodmis.org>, "Ben
+ Segall" <bsegall@google.com>, "Mel Gorman" <mgorman@suse.de>, "Valentin
+ Schneider" <vschneid@redhat.com>, "K Prateek Nayak"
+ <kprateek.nayak@amd.com>, "Vladimir Vdovin" <deliran@verdict.gg>, "Emil
+ Tsalapatis" <etsal@meta.com>, "Christian Loehle"
+ <christian.loehle@arm.com>, "Balbir Singh" <balbirs@nvidia.com>, "Lee
+ Trager" <ltrager@nvidia.com>, <sched-ext@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 3/5] sched_ext: Scan NUMA hinting faults for opted-in
+ BPF schedulers
+From: "Vladimir Vdovin" <deliran@verdict.gg>
+To: "Andrea Righi" <arighi@nvidia.com>, "Tejun Heo" <tj@kernel.org>, "David
+ Vernet" <void@manifault.com>, "Changwoo Min" <changwoo@igalia.com>
+X-Mailer: aerc 0.22.0
+References: <20261004072901.3579967-1-arighi@nvidia.com>
+ <20261004072901.3579967-4-arighi@nvidia.com>
+In-Reply-To: <20261004072901.3579967-4-arighi@nvidia.com>
+X-Proofpoint-GUID: -KWyMyzycgyDDQNTQ0UfnRK6tOoVr5ks
+X-Authority-Info-Out: v=2.4 cv=YfqwJgRf c=1 sm=1 tr=0 ts=6ac38a73
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=Byx-y9mGAAAA:8
+ a=tddDIH3rDediNtISCcgA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA0NCBTYWx0ZWRfX8z4ltgwI2vzf
+ Lrt9uH992UprJkHc/vfPLU8QDJkimmvp2Me7hxSwbesMhzs8YbhRgVK8eS9LrvpFhc8YkWfAmBF
+ iwk630YKffHcCluQUpz+nVgeMyNy7i6bFm8/RHO2jepEquGf2zFrJLt+JLJWSniOsmSQ9puRP0+
+ 52TzDIYGItF6xmUc8MgLAKiCW/UVuZqATTZJC7Njbjv113x2XAU1B6b+VQjvS9ubi9JHZY9CDjn
+ 6kaNrmMx3TrgjWtDtbevCWRNiVBLZsgnLRSEL60wlt+S5ciCbo+kKrSB7ErN1ZhaaYEeTudDttM
+ PrKoRxfEY3a+Sj3QipxhKQFeRx4lzervXGTfS/ef/8VI9ZskORDfXU53WJhCxw=
+X-Proofpoint-ORIG-GUID: -KWyMyzycgyDDQNTQ0UfnRK6tOoVr5ks
+X-JNJ: AAAAAAABzjPO6W4rny0V0o6bNlMjhh9AgF0wCO0Am2j5gnoKqV0Cu/ano5uoylOeo1Rs+Dx4cqzL8WIIxfcOpqG/N8yvS/4n3brLBFzmfnNryaheFrRBibwuwJdz1xZ3bjmrRBoqaB6mJODb9Xt9teDUB3UeavBAoICnHVO2Dtd/9O1r3tRWcuXBSyY9aLT3u9Wt/SsQgRPjVu7NjcionUMW+8Hyso8/jT6gUc0Heoq+pPtgm4kwcx/3e6R2/Z9WRyJL2IY51KPff0RFJDBmKpxecW7I7TkEHl40iiP+sW4vx5erQCszzwfLme+PBAx2HIJdwsKUBpRJ5K6jVVLJrpyQa01LNR+s3NSoAByiRecbENvyqiKT23aynHJLZh5KvIHsO6veTnp2YSxFeIpBOENY7lSpnigDFyMo3Z9UW2l776Nj6RJBu/wluvvPGxGk6OI5uNj5atWaMEnHn+9WxZ0p/h3QzTLni2KdAzaSfUEZaw1++At6pc2AXMu3oNYXbMjEizYkQMj62iDgxyMIS0Hzi1Z9i+EuhAPXjGOZip/rUNnbVG5wYfiYEtTGJB8q/C+/s+4ufdEyN1hon0lzP5dBe8hYf629CUwhM1iUP9d6ceXW4MpKoOwZRISFuUAVTy2KteMQL2//i/jiTicdaRTxB5YrtfXkgl8ifX7C7e2Rn8P0GPqgQi40SHioE0cdZL062DpzJsETXFY7uk7SC6aDU+y3pc6recUwQ7kSEloPhZmFOcCJLSrlSivaORAkDx2x5YwVfZubSYAjlqLOUfpvdY9FRLtHmNMn1jVec1pdmjS2+ml85oE3g23tcJUOXu0hNjrGarRQ9gFEWGk8fOd5dpvrz1JYDhjU3lhn+TKssWySXbFxYUct3kdpI9czTwSt1r42nMOj/45aM1ZXoAunBvNhwMorunu+mpH73Aev2oJJ9+8dQG5NYQ0CeudfbxWpKQLd4wVd/8yP1VYAVsJ2I6XdIPq
+ df5YPQB++nYe55OEDCA9X99tGi4jPp6NIKKPxbzQuquuXHg0VAPMwMAX4TI0Q7rvsJD8RDYSbZpMsO9JIRMnQUwKXmX+FuK+sZ88xHgxJTw1GUkoQ5jwyIdAhykYWvb+PNKPP6Qf3alrtimFj4/u0MjBcqYXSQ5K0otugtZqiyp7rZhjQJ5f7J1dn/IuOqHiY+1Cagvv6/takYeeJFhpuLogFyL3Ln9lh1TUOT8IeM1zsTuzEF1smSXRGGv7OVbFD39TwHrvl1mkqCfcGc/bp7KtQ69imu30GJ1ve7tmbt/F7952d4KW6cnjn9YQMv9BUm7mNzxLIef4AHtqQai5v/zJAMGszI+XoALz97l8pExRZKS59sjfY1pnGGCodQBYpK0g/m5OOOqzH3DR1zQNv/ydGMTuGFd9fz/lObByKxfA/OJGcy+umUItOdSpk3x9FkEN1iulYkFF48xkxUaCIKcavq0DsL+17ZEKoBxl8tHZPzQYm5baO+b6cFbOEhP0zrqM=
 
->    - If I know I don't need BPF on the workload, and these 5.4 MB
->      bite me, I can just turn off BPF
+Hi Andrea,
 
-They cannot, even when they know they do not need it.  As the cover
-letter says, the cloud provider usually ships one kernel build to all of
-its customers.  Customers install their own packages and workloads around
-that kernel, but they do not build or customize the kernel.  Turning
-BPF off is not a switch they have.
+Thanks for putting this together so quickly, and for picking up the RFC.
 
-> What I find strange is for a user of this scale *to not know* whether
-> BPF will be used in the workload or not, which is what lazy load may
-> solve.
+On Sun, Oct 04, 2026 at 09:27:09AM +0200, Andrea Righi wrote:
+> +   if (!queued && (sch->ops.flags & SCX_OPS_NUMA_BALANCING) &&
+> +       static_branch_unlikely(&sched_numa_balancing))
+> +           task_tick_numa(rq, donor);
 
-They do know.  They run predictable workloads on a large number of
-small instances, and BPF is not part of them.  They spread the load by
-resource usage, so at that scale every byte matters: more free memory
-on each instance means fewer instances in total.
+One question about proxy execution, which I may well be missing context
+on. Hui Su's tick series moves the fair NUMA tick to the execution
+context, with the reasoning that task_tick_numa() works on the mm and
+NUMA work state of the task that is actually running:
 
->    * Compress it.
-[...]
->      Keep zstd-compressed blob in the kernel image and decompress and
->      parse it synchronously on first use.
+  https://lore.kernel.org/r/20260909092901.2989564-3-sh_def@163.com
 
-Thanks for putting this forward.  This compression approach is simpler 
-than loading a module.  I expect the overall code complexity to stay similar
-to v3, since both need to find the first user and defer the module BTF parsing
-until then, but it should be easier to merge into mainline because it avoids
-the request_module() deadlocks.
+Here the scan is driven from the donor. I understand that in your proxy
+execution integration SCX runtime is accounted to the donor, so maybe
+this is intentional to keep the pacing consistent, but then the scan
+would cover the donor's address space rather than the one being
+accessed. Is the donor the intended choice here, or should this follow
+rq->curr once SCHED_PROXY_EXEC no longer depends on !SCHED_CLASS_EXT?
 
-Would you like to prepare it for a formal submission, or would you
-like me to do so?  Either works for me.  Ideally it lands in time for
-the next LTS kernel, so that we can adopt it there.
-
-From what I can see, most of the work left is in that deferral.
-Whoever needs the BTF first also parses the waiting module BTFs and
-replays the queued registrations, struct_ops ->init() included, under
-whatever locks it holds at that point, e.g. event_mutex or
-bpf_verifier_lock, or inside the module notifier.  So the
-cand_cache_mutex ABBA you found may not be the only deadlock.  Besides
-that, only x86_64 was touched so far, so it needs extending to the
-other architectures as well.
+Thanks,
+Vladimir
