@@ -1,156 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-248.mta1.migadu.com [95.215.58.248])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B844D37DA
-	for <sched-ext@lists.linux.dev>; Mon,  5 Oct 2026 18:10:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717E334EF07
+	for <sched-ext@lists.linux.dev>; Mon,  5 Oct 2026 19:01:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.248
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791223815; cv=none; b=EImxyPk+bAMQPE0PBZi6vey/PZQcRv//MnMhK4OZtBhOF6Cb1eGmBOhO3+LK1z6jx6TG7khcKx0/Qyq8zIS9wbeGoPRD1xWXijfoSZpq8g/b8YKOLd2PQqibdUzJyuPrkKN/mP95HkoF/fP2cLMFNOdcAcsiMArONmkqbtDDajY=
+	t=1791226895; cv=none; b=ReejR45Sth8DNezO1nQz0OZjGDcfp6tLLRQxFEMedhC029XTOFT2kK3qxTvG0cg/gMHKgmWO9Nr1jT8TPqiTfn/+LekTdf4ZNDswylOKX0I7l5TRUbc3SXIO4ob4ySE/jeik1NCbRlIzRsluUcpsfEqddFIOrBEJIJnLt9sJe8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791223815; c=relaxed/simple;
-	bh=gTJZmdpCurjkUHjw3izyVlwCNVUpx5u3q/ZOl8eJgO4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=TnDTPbqH+O+v1EHQWZ+a8AtcZ10jWOzQBz9FJLptNeMcS3x5H85cWCsE6UidPJGVqBsmvintk8zI+1HoTm7YuOLeelcS2LrGTliKQejZZWOknKgkiFSwnQ2i3Tm1LdIutiotjg9IfWuVG0wXNEyJS7IbRPFAqaAQOqBOHx6e3jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fFqHO5tj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791226895; c=relaxed/simple;
+	bh=rJT8G0sgga4UeEHY50WFHahh2k7AQRpW/V4C83LPcM4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=T++hxqVn/V8H76KlBdRyIxV0VGTzLhNgZRbvHyDElImvve90Wpl2vQD1/LpMHIRlRsZh/4n1ARWt/rXwEWrZp2EOQfhkP3lpwK5FDGvXiZ2dXQyJ57m0cbBWbkib9sLdz4B+/hZjxB81xq1CL9kBoPB6CmZjYhokc62ucKeXtxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=rpgOxRCu; arc=none smtp.client-ip=95.215.58.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fFqHO5tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E6B1F000FF;
-	Mon,  5 Oct 2026 18:10:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791223813;
-	bh=ILKMJFgSdS8PtzdG9hyAg8gqnIb5Gx2Nkm55IZ2f6ws=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fFqHO5tjvreS7Zh8HINz5EZqpfUlvoB0paXzwMzVs8Q8gVRWZQ+nEX5OJA2Ad27sX
-	 FroJuj+KILHmBs4wNYY0uUdks/9R7Wom9G1rMYaR+M8k1BRyu2z4dshIVsUcZojpPC
-	 f7i4Of/Sgm+JCcPxMinOf5fjIykf6SjiRcWEwyQCMi9nhxRUMJdjXXm0XwsolibQcV
-	 z2/a89M6UeaRv14Sv6QNWTchJiiCeXaBpNYc7CsMGjxE5e7zYUDHwsdZtldibevIRh
-	 cWC0pxWPiT2DoXu+3T6KEaW6vAFL6gvBlvRbdI4jOMl8tScXJOB+h4ZxIE4fzV/0L0
-	 LYdIYzZkEFaHQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/3] sched_ext: Add ops.sub_cid_sched_updated() to
- report the sched running on a cid
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tejun Heo" <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20261005175520.2756986-2-tj@kernel.org>
-References: <20261005175520.2756986-1-tj@kernel.org>
- <20261005175520.2756986-2-tj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 05 Oct 2026 18:10:12 +0000
-Message-Id: <20261005181013.43E6B1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="rpgOxRCu"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=rJT8G0sgga4UeEHY50WFHahh2k7AQRpW/V4C83LPcM4=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791226891; v=1; x=1791831691;
+ b=rpgOxRCuBdRBG9Cruva0qem46KyAXqHLWajd0ZjIRz0kgD8tNqxyOJ2IoAc2uiVFYp0AWqwU
+ fYK9s+nOEwPq6TEVKyQTb7ZG9spRm+B0UmWQ9BG569oC3jH+5BUQFc768yIcjo1AEuCsOtbT9Nt
+ bjqyL+C+m3j1OwXepyyLRNU0=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 3eee9485e3972e9f;
+	Mon, 05 Oct 2026 19:01:30 +0000
+X-Mizu-Trace-ID: 3eee9485e3972e9f
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <7844ef03-d9b2-4a10-8f14-1b498ada9043@linux.dev>
+Date: Mon, 5 Oct 2026 12:01:17 -0700
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v4 00/12] bpf: make the vmlinux BTF an on-demand
+ loadable module (CONFIG_DEBUG_INFO_BTF=m) to save ~5.4 MB memory
+To: Jay Wang <wanjay@amazon.com>, bpf@vger.kernel.org, ast@kernel.org,
+ daniel@iogearbox.net, andrii@kernel.org, eddyz87@gmail.com, memxor@gmail.com
+Cc: alan.maguire@oracle.com, martin.lau@linux.dev, yonghong.song@linux.dev,
+ jolsa@kernel.org, qmo@kernel.org, nathan@kernel.org, nsc@kernel.org,
+ linux-kbuild@vger.kernel.org, linux@weissschuh.net, christian@heusel.eu,
+ mcgrof@kernel.org, petr.pavlu@suse.com, samitolvanen@google.com,
+ linux-modules@vger.kernel.org, rostedt@goodmis.org, mhiramat@kernel.org,
+ mathieu.desnoyers@efficios.com, linux-trace-kernel@vger.kernel.org,
+ acme@kernel.org, namhyung@kernel.org, irogers@google.com,
+ linux-perf-users@vger.kernel.org, jikos@kernel.org, bentiss@kernel.org,
+ linux-input@vger.kernel.org, tj@kernel.org, void@manifault.com,
+ arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev,
+ shuah@kernel.org, linux-kselftest@vger.kernel.org, ojeda@kernel.org,
+ rust-for-linux@vger.kernel.org, arnd@arndb.de, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, abuehaze@amazon.com, doebel@amazon.de,
+ mpohlack@amazon.de, jay.wang.upstream@gmail.com
+References: <44315425-c505-46fe-8379-f19d78ff3abb@linux.dev>
+ <20261004222127.31128-1-wanjay@amazon.com>
+Content-Language: en-US
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <20261004222127.31128-1-wanjay@amazon.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] sched_ext: skipped NONE notification for the last active schedul=
-er
---
+On 10/4/26 3:21 PM, Jay Wang wrote:
+>>    - If I know I don't need BPF on the workload, and these 5.4 MB
+>>      bite me, I can just turn off BPF
+> 
+> They cannot, even when they know they do not need it.  As the cover
+> letter says, the cloud provider usually ships one kernel build to all of
+> its customers. [...]
 
-commit 24e8930bf2fb59df3460d85d232da97c8cc5102f
-Author: Tejun Heo <tj@kernel.org>
+Ah, I get it now. Thanks.
 
-sched_ext: Add ops.sub_cid_sched_updated() to report the sched running on a=
- cid
+So the constraint is that the cloud provider ships a single kernel
+revision to all users, and there is currently no mechanism to on/off
+BPF other than a kernel build flag.
 
-This commit adds ops.sub_cid_sched_updated() to report changes in the
-scheduler running on a specific cgroup ID. It maintains the notification
-state using a static key that is disabled when the last interested scheduler
-goes away.
+I'd be tempted to say "just ship two kernels", it's simpler than the
+upstream change. But I understand the downsides of that as well.
 
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 6b964743cab9b..59fc506af817e 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
+And obviously a good upstream feature may benefit many more users.
 
-[ ... ]
+> [...]
+>>      Keep zstd-compressed blob in the kernel image and decompress and
+>>      parse it synchronously on first use.
+> 
+> Thanks for putting this forward.  This compression approach is simpler 
+> than loading a module.  I expect the overall code complexity to stay similar
+> to v3, since both need to find the first user and defer the module BTF parsing
+> until then, but it should be easier to merge into mainline because it avoids
+> the request_module() deadlocks.
+> 
+> Would you like to prepare it for a formal submission, or would you
+> like me to do so?  Either works for me.  Ideally it lands in time for
+> the next LTS kernel, so that we can adopt it there.
 
-> @@ -92,6 +99,161 @@ struct scx_sched *scx_next_descendant_pre(struct scx_=
-sched *pos, struct scx_sche
+Please go ahead and submit the compression approach. Looks like we are
+converging on that. Feel free to use the prototype code if it's
+useful, it uses parts of your series anyway.
 
-[ ... ]
+> 
+> From what I can see, most of the work left is in that deferral.
+> Whoever needs the BTF first also parses the waiting module BTFs and
+> replays the queued registrations, struct_ops ->init() included, under
+> whatever locks it holds at that point, e.g. event_mutex or
+> bpf_verifier_lock, or inside the module notifier.  So the
+> cand_cache_mutex ABBA you found may not be the only deadlock.  Besides
+> that, only x86_64 was touched so far, so it needs extending to the
+> other architectures as well.
 
-> +void scx_cid_sched_update(struct rq *rq, struct scx_sched *sch)
-> +{
-> +	struct scx_sched *prev =3D rq->scx.sched;
-> +	s32 level, common =3D -1;
-> +
-> +	lockdep_assert_rq_held(rq);
-> +
-> +	if (!static_branch_unlikely(&__scx_ops_cid_sched_updated_enabled) || pr=
-ev =3D=3D sch)
-> +		return;
+Yes, I think you are right that the hard part here is the deferral,
+because everything expects vmlinux BTF to just be there.  I don't
+think this is avoidable whatever memory saving approach we choose.
 
-[ ... ]
-
-> +void scx_ops_cid_sched_updated_disable(struct scx_sched *sch)
-> +{
-> +	bool last;
-> +	s32 cpu;
-> +
-> +	lockdep_assert_held(&scx_enable_mutex);
-> +
-> +	last =3D SCX_HAS_OP(sch, sub_cid_sched_updated) && !--scx_nr_ops_cid_sc=
-hed_updated;
-> +	if (last)
-> +		static_branch_disable(&__scx_ops_cid_sched_updated_enabled);
-> +
-> +	/*
-> +	 * Re-homing restarts a running task's session under its new sched. A
-> +	 * task that blocked while its cpu's dispatch had the rq lock dropped is
-> +	 * put and set next again without a restart, so rq->scx.sched keeps @sch
-> +	 * until the pick completes:
-> +	 *
-> +	 *   cpu 0, __schedule()                 cpu 1, scx_sub_disable(@sch)
-> +	 *   T of @sch blocks, stops running
-> +	 *   dispatch drops the rq lock
-> +	 *                                       re-home T, nothing to restart
-> +	 *                                       this sweep
-> +	 *   pick N, N's session opens
-> +	 *
-> +	 * Closing the session here reports NONE to @sch and its ancestors now
-> +	 * and lets the pick report N's sched from NONE instead of from @sch.
-> +	 */
-> +	for_each_possible_cpu(cpu) {
-> +		struct rq *rq =3D cpu_rq(cpu);
-> +
-> +		guard(rq_lock_irqsave)(rq);
-> +		if (rq->scx.sched =3D=3D sch)
-> +			scx_cid_sched_update(rq, NULL);
-
-[Severity: Medium]
-When disabling the last active scheduler, does this disable the static bran=
-ch
-too early?
-
-In scx_ops_cid_sched_updated_disable(), if this is the last scheduler, the
-static branch is turned off before the loop:
-
-    last =3D SCX_HAS_OP(sch, sub_cid_sched_updated) && !--scx_nr_ops_cid_sc=
-hed_updated;
-    if (last)
-        static_branch_disable(&__scx_ops_cid_sched_updated_enabled);
-
-Then, the loop calls scx_cid_sched_update(rq, NULL). However,
-scx_cid_sched_update() starts with an early return if the static branch is
-disabled:
-
-    if (!static_branch_unlikely(&__scx_ops_cid_sched_updated_enabled) || pr=
-ev =3D=3D sch)
-        return;
-
-Will this cause the final NONE state notification to be silently dropped for
-the last BPF scheduler unloaded?
-
-> +		if (last)
-> +			rq->scx.sched =3D NULL;
-> +	}
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261005175520.2756=
-986-1-tj@kernel.org?part=3D1
