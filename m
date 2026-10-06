@@ -1,112 +1,113 @@
-Received: from outbound.ci.icloud.com (ci-2007l-snip4-11.eps.apple.com [57.103.88.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9295845D90A
-	for <sched-ext@lists.linux.dev>; Tue,  6 Oct 2026 14:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.88.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FAB3DDDDD
+	for <sched-ext@lists.linux.dev>; Tue,  6 Oct 2026 14:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791297648; cv=none; b=uZJdyEtjkcKl1HKwlEHVv66qTYVg8ZmCF/PzQ2mc0qHoT+e2IR9BxtcjW+ihgwNcg88ymweoPoLiHzdirwtJRJFZapGZbGGdarpVgAZsltLiJlS0Vi66QMAS84ySXc5lWnn4Hpn/O5GX5MlVgeDawQsifA7dRw3DxdeTsuDiG08=
+	t=1791298133; cv=none; b=r/cGrcxJeLWz1nSI0YnUsA2e8LSvsKPzTiHljmiwSam4tWQ6clsdiptQ+bDlJgNh/M6B1T93D2yUQJE64aiUaFAH2qh5G94cQT3I20/YuLtyfSnUIxIEJiUWhD7oKms5T2PubxwUoYZeGewtCg0onKh+jeN0Y0eoCb733nvn7O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791297648; c=relaxed/simple;
-	bh=h/nnP+E7fe1nVoUD+2H9a5/ookyzyglbYchY8DE3q+0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=a03DiGSGib4Euo+Me81QCjpezDpEI3YJCt3auss58rSBeciqGLrC4HKMfIjZjA920H2TCc5tLvIgxdNtieHKxbp2p8H9bqYulIsalmWI0pIkXu9s4933RjgtNpttxTjYM0j9e2ceBYFm/LNwmZnAV8YrQKToa6RtXkms4lYh8e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=verdict.gg; spf=pass smtp.mailfrom=verdict.gg; dkim=pass (2048-bit key) header.d=verdict.gg header.i=@verdict.gg header.b=K3cCcf8H; arc=none smtp.client-ip=57.103.88.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=verdict.gg
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=verdict.gg
+	s=arc-20240116; t=1791298133; c=relaxed/simple;
+	bh=lh+lc2W3C2U0Q2oVFY/hQGFaUopibn3RYOSNgcqU6No=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=XmAqSOekU+HujvU1ngeTYqR1Sas4yOhWNdAXsO7/xeK8N638Rjm169oY7J1ueilmUoJrEh/tp+Tb49bbI/KrHUDr386QabCs3qJ9nY+0fPv5DNhFXpjJEaqAU4qyhezmAOqKM6vXo2TL/mt/kKJmxElbA8q9sICbuZ4HW3uPtB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4T0jch/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=verdict.gg header.i=@verdict.gg header.b="K3cCcf8H"
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
-	by p00-icloudmta-asmtp-us-central-1k-60-percent-0 (Postfix) with ESMTPS id 43127180011A;
-	Tue, 06 Oct 2026 14:40:40 +0000 (UTC)
-X-ICL-RepId: 01a111a8-da67-740e-ab91-79be6018d5d9
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwORQFEF0oBTVIPDxRcFFofVgVyBlwKVwRUHxwXXlhVCQodVwJdEVAZGQxVUEsbDl8GS1oVVRcOAkIfUB9MFldDVAIcGVoUXBhTRVEfVFhDGUVWaUELTx1dGVscQmRYVwkKHVcCXRFQGRkMVVBUEVdQCy9+KGxIfylnPmcjflYBJ3lSaD97TmogYlsFME8dQQleCEZeXh8NTUMSQhUEG0YeQwRfL10XXgxeBQ==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=verdict.gg; s=sig1; t=1791297644; x=1793889644; bh=h/nnP+E7fe1nVoUD+2H9a5/ookyzyglbYchY8DE3q+0=; h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:x-icloud-hme; b=K3cCcf8H8F9+2HE3eH770sAVOMvbgSzpDP3J+evQzHdX9GlEI54a+gCsJkTOKu7MW8il98VwPg82YOaUJ4q/JfHAL8nEEh+IQspRfu1E3Vr9Q/kpyza0tyHlTfL9/nVwBtmnkTGxcLozQfMT3x2XMxlLeICEinh+DkdRu+tqaHFULNndqmZysRFwkAFgNIpRJE7/jC7eMMTeYUgLEbP+3tKTOFj3Q3yTo42dZRWwV7VNxIW/G1M9tH6O247Dbz0vDq0ghr6A5Gnw0nHAFd/apO1kQeYwJVvvWzhXfGDiTL948buOJCiXv7iM3TLJFZk4Y8/ymS069YBOZ0jWO3ZEWw==
-mail-alias-created-date: 1621344842221
-Received: from localhost (unknown [17.57.156.36])
-	by p00-icloudmta-asmtp-us-central-1k-60-percent-0 (Postfix) with ESMTPSA id 7ECC1180197A;
-	Tue, 06 Oct 2026 14:40:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4T0jch/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AA51F0089B;
+	Tue,  6 Oct 2026 14:48:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791298132;
+	bh=MTDCjwJ+vw0nHW57hHDXsIbFkFw7jE49CuTVTrCG67c=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=C4T0jch/h7zzw4Cq3WtA+VvWTYUzGyN2jFQumpnCf9QczEKVnpJYXwy+Uo6c17NiN
+	 cmgt6JCr9ZzD1qcMB22KlTZ9AoKj4xJ4qTABkAUG9QaqCr42hCCuoeyCu6fFRyYC5F
+	 TrbMdyaPD3/uyQYjnnSgRyWTPgikM6AXPaM8CZZpXH3icHfpaxqDR0ph2EqbSnunT7
+	 qHGeSx8jTKxkFF/LdG8DN4m4pTXbT8T1PlylMlGErcsgUxde7MrZ8BLdhVXqjNdaSe
+	 0/5+o21f+Jx23t0xNJJuUUTYH5a1T89QA53sVbjj548NnrVxJGXXc1DLVDXO5N0pn0
+	 hCCad1+xmVPgw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] sched_ext: Reset cpuperf_target when a sub loses
+ SCX_CAP_PERF or dies
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tao Cui" <cui.tao@linux.dev>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20261006142834.2815197-1-cui.tao@linux.dev>
+References: <20261006142834.2815197-1-cui.tao@linux.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 06 Oct 2026 14:48:51 +0000
+Message-Id: <20261006144851.E8AA51F0089B@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 06 Oct 2026 17:40:35 +0300
-Message-Id: <DLXU0LDPUUSG.2JN9ZOB6YMU07@verdict.gg>
-Cc: "Ingo Molnar" <mingo@redhat.com>, "Peter Zijlstra"
- <peterz@infradead.org>, "Juri Lelli" <juri.lelli@redhat.com>, "Vincent
- Guittot" <vincent.guittot@linaro.org>, "Dietmar Eggemann"
- <dietmar.eggemann@arm.com>, "Steven Rostedt" <rostedt@goodmis.org>, "Ben
- Segall" <bsegall@google.com>, "Mel Gorman" <mgorman@suse.de>, "Valentin
- Schneider" <vschneid@redhat.com>, "K Prateek Nayak"
- <kprateek.nayak@amd.com>, "Vladimir Vdovin" <deliran@verdict.gg>, "Emil
- Tsalapatis" <etsal@meta.com>, "Christian Loehle"
- <christian.loehle@arm.com>, "Balbir Singh" <balbirs@nvidia.com>, "Lee
- Trager" <ltrager@nvidia.com>, <sched-ext@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCHSET sched_ext/for-7.4] sched_ext: Add NUMA balancing
- support
-From: "Vladimir Vdovin" <deliran@verdict.gg>
-To: "Andrea Righi" <arighi@nvidia.com>, "Tejun Heo" <tj@kernel.org>, "David
- Vernet" <void@manifault.com>, "Changwoo Min" <changwoo@igalia.com>
-X-Mailer: aerc 0.22.0
-References: <20261004072901.3579967-1-arighi@nvidia.com>
-In-Reply-To: <20261004072901.3579967-1-arighi@nvidia.com>
-X-Authority-Info-Out: v=2.4 cv=XMk9iAhE c=1 sm=1 tr=0 ts=6ac5086a
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=18byMXbjZilrT4O_L_4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA1OCBTYWx0ZWRfX13+4m56Y4Qoq
- jnUay0jZoWCzOqfDFLgMFFWFcHymBFJ4tMkDMbNF8myNI5iZ1pQ2eua6tS8k/w5ulubqOvChFGk
- +3RSNHe/IDbVgH43mBI+jswXod8Pi0/Plr8EtoS81BV7961umvn1WlHzuhY/YERCof86ObXWwym
- wuNOMJnwtd8Q1n8tAEba7zMSClSgUR3g4Dc3T1STT/Yomt8JEDPdBXHOGXE/z8NtMYWuAmChIk7
- 0ahwhO5EFB29lxMPnj96tGHrPyj4fTzUeIZj7UmFeFl4PXvAvY96Zv5S0vb87nsfcFV6GRzPRmH
- dBYfchWbmXUHxDK/nzx1Nc0TXcqkkKcJwUMbYfJbOYARKEgIKYFjYctKOIOcyw=
-X-Proofpoint-GUID: KWxPDw2SAkk9Or2XZ9iIt51MAH6a4z5X
-X-Proofpoint-ORIG-GUID: KWxPDw2SAkk9Or2XZ9iIt51MAH6a4z5X
-X-JNJ: AAAAAAABdUn6sFf76kXbnKpVK/BgksrlIuwj927XxVR2yldzlkmoU7+msZTNypuq+kpmY85OVhgB4EnlUqyNFiEAv2XoQVjT9g3z8HAXooOhxfwRlOdZ1pyucqE8djkCyLeGsIvFecl8unajozkcjPpeNXqmO2kIrTXZuotIMzLGcWNoLFfUwxyBqBNxZuUvhl1HsEIg1TysBayiQDoNRAhKOmwbPJeoRXIz0HNvCs4iOho3iUdKDRn2GsJUy28fats9eS+5xoSpd3R/JMp9ac8tnoP4IR3YCAwEnvurD+jUHFkbbN1w3MhLcLtwHX2Npt3SQNLXYqZz6/+Kiy5lhlvPxo2PTzotLSHvuxsoglmmBLI+K+K8sBVAZMIGhnydBUitJA3x6HOKJalqiFloJOmxxrv1E5BYFc2N7CO75ZHs2qT0wBP8Z/8ePloP9Zb1dpG1Is98Aoyw3eyp9AM+mLTSiE9A1muVr38kb0Kn9toY7dIIBULrmAZg9/+SEeyv8N6OoJ4iiseQjV+fvWqNuhTZpNKGPO6nejxLnXSIFSGw/azX4RImBfNiXjMPMbG7SmjH2fo6LEJcFNryyFLCUZE28OJLgg6bIW1s509roSKR5GxM86Iaah/Mx2CQfapwtSU2SYF7dcAXs0GWqacmANwHn9dr+9akAWIuUdc1Kauwaj4TT/dyEu3eusT5DY0siFKvRqN5cl0r07nPyGpUf4oHhW3jDvGoIx42okl2BSybQenMjWuSzvxL5KgpAm8guWu+bSsN9b2c3NDTWLHR30L9uUK/6CjlV4wzlKTXJfZEuHjcDugrJA7AXyzQ62UR6PlKa6hOTTEw4sD7hPg/RIVtn0YwDu8bRdl7/7XQ0FJZu21G1mUzEpuv/ReQ2lpgE7OK37kQao1wBswm54bXQCqhMEVG0yTbOsEj3DpIK8bIjLpTcj64SDUyjSQnwFF4IFkEiIpIokpWbXZWCKcv1b42RXUhGUA
- 6SxiUlwGUb3P3VuZk5510KvcL6hK8BhYUY8yJhw4AeMD1jrHgqcXuWByCm48az8ZHvRgr+aAmUKs+UIrU7MFCw6v6Q40sNIfrT6Hju53i5fezxVw43YWmdYMR2LA2ckA2OWaAB4shGHBUk4eTJ0ECWr0BdFmqgFwamrCoU5sKezIAUzT3pb60/5XChDPgzs0E/CVgiSbt0MAhRoQ+iXbYuzoAMz3sWzBGpdYONjSMD/kamNkXWvdNn337Hw4WodtzPyjVNhlVKj6008vEZz1zA6CgQSXWAravmoUCon+GQ7VLnFnZiw6wExee8OVa8VZZJGfzHhBRYKgCZmdD2FcC3RIqyhlVrmmE5ceJnsanCr3tCn9q18eZ6OqGPq5CLc1q+mNaM+6rk5s3lC7HDHhf7cxoe2+MOq9Nx+5CUi7aaSND5Qb1O11yQQuiumCDVkDtuBNJxbf9sfIgDI+tlVIw3EGbfVcOcwdCEjH4B4JnAPGshVjdc7u7WeyM6sU=
 
-Hi Andrea,
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] bpf: missing dying scheduler check in scx_bpf_cpuperf_set()
+--
 
-On Sun, Oct 04, 2026 at 09:27:06AM +0200, Andrea Righi wrote:
-> Tasks running under a BPF scheduler are currently invisible to NUMA balan=
-cing:
-> their address space is never scanned for hinting faults, so they never re=
-cord
-> NUMA fault statistics and never acquire a preferred node.
+commit 44646e483943d4ebcaaab6b95abd7f0ef7f1bd41
+Author: Tao Cui <cuitao@kylinos.cn>
 
-In case it's useful, I gave patches 1-3 a try on one of our KVM hosts,
-backported to 6.18.54 and running our in-house sched_ext scheduler.
+sched_ext: Reset cpuperf_target when a sub loses SCX_CAP_PERF or dies
 
-It's not exactly the series as posted: to avoid changing the scheduler,
-the backport drops SCX_OPS_NUMA_BALANCING and drives the scan for all
-sched_ext tasks under the sched_numa_balancing static key alone, and it
-passes curr, as there is no donor there on 6.18. The fair.c parts are
-the same.
+This commit resets the cpuperf_target of a sub-scheduler when it loses
+SCX_CAP_PERF or dies. It adds a dying scheduler check to scx_bpf_cidperf_se=
+t()
+to prevent late writes from polluting the state.
 
-As a controlled check, I used a stress-ng --vm worker touching 4G,
-pinned to a CPU on node 0 and then moved to a CPU on node 1 with
-taskset.
+Link: https://lore.kernel.org/sched-ext/20261004012721.615419-1-cui.tao@lin=
+ux.dev/
 
-Without the patches, under the same scheduler, mm->numa_scan_seq stays
-at 0, numa_preferred_nid stays at -1, numa_pte_updates in /proc/vmstat
-doesn't move, and all 4G stay on node 0.
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 0917f05263a37..8b661e9bdf6bb 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+[ ... ]
+> @@ -10958,6 +10960,15 @@ __bpf_kfunc s32 scx_bpf_cidperf_set(s32 cid, u32=
+ perf,
+>  	if (!scx_kf_allowed_ctx(sch))
+>  		return -EDEADLK;
+> =20
+> +	/*
+> +	 * Reject writes from a dying scheduler. Its targets have been or
+> +	 * will be swept back to the neutral base, but ops.exit() and any
+> +	 * late stragglers still run after that sweep - a write there would
+> +	 * land after the final reset with nothing left to clean it up.
+> +	 */
+> +	if (unlikely(atomic_read(&sch->exit_kind) !=3D SCX_EXIT_NONE))
+> +		return -EACCES;
+> +
 
-With the backport:
+[Severity: High]
+This correctly prevents a dying scheduler from repolluting targets via the
+CID-addressed variant, but should the same check be applied to the
+CPU-addressed variant, scx_bpf_cpuperf_set(), defined just above this
+function?
 
- - mm->numa_scan_seq advances (7 to 12 over two minutes);
- - numa_preferred_nid is 0 before the move and 1 about 20s after it;
- - the whole 4G (~1M pages) is migrated to node 1 within ~20s;
- - the task stays on the CPU it was pinned to.
+Looking at scx_bpf_cpuperf_set() in kernel/sched/ext/ext.c:
 
-On an otherwise idle host, the vCPU threads of a running guest now get
-task_numa_work() calls as well. On a host running the same scheduler
-without the patches, a kprobe on task_numa_work() sees no calls at all
-in 30s, as task_tick_numa() is only reached from task_tick_fair().
+    if (!scx_kf_allowed_ctx(sch))
+            return;
 
-Thanks for working on this,
-Vladimir
+    scx_cpuperf_set(sch, cpu, perf);
+
+If a dying sub-scheduler executes BPF timers or tracers after the final
+cpuperf sweep in scx_sub_disable() but before sch->dead is set, could it use
+scx_bpf_cpuperf_set() to bypass this safety gate and repollute
+rq->scx.cpuperf_target?
+
+Since the root scheduler remains running, would schedutil permanently consu=
+me
+this stale low-frequency target and pin the CPU?
+
+>  	cpu =3D scx_cid_to_cpu(sch, cid);
+>  	if (cpu < 0)
+>  		return cpu;
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261006142834.2815=
+197-1-cui.tao@linux.dev?part=3D1
