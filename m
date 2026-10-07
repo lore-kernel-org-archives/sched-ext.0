@@ -1,116 +1,169 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28917490BE9;
-	Wed,  7 Oct 2026 16:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0B13C1D49
+	for <sched-ext@lists.linux.dev>; Wed,  7 Oct 2026 17:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791390410; cv=none; b=rUhq7z+lRJgDiMUFilEKnDdqQzaup4cd0ETusXJ1QIdy/eX5FPjzzJtDvye8MKvLCUxsRF9T0jzCWonO8Ag826hn5E+IF6rwEi+SyPq0+DXFegPz5ezEv1N48UnpLDoYkC/2zmtXA9Tl3BVj9DBJu+4w6fsanGlBU/v+OgppejU=
+	t=1791395734; cv=none; b=RoiHoZxqAK6TLy33gJ8pMDomC3v2uxeA9RUey5W8FF4B7mfIkCtegDso9fzn0+cSRurRYFLFb2JrLE0Wqp8yJza+M0fAZkUBdY/kqdC+5UGXLHMpjauF/7DshOfrjXOb3dZHxI4BUerk5JdbSBio5uObA/zPNNxRU4m7EkCp2xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791390410; c=relaxed/simple;
-	bh=NOO2Utd1+LiriiW6d5H2cMEDHN7Lj/5gzM35BKKJqkE=;
-	h=Date:Message-ID:From:To:Cc:Subject; b=oxhwQCG07VgUc2uvI/XC5nMLGiWE05s3LUsJNr3HOry2Ku8DXFiUABKK706Rfn8Gy2qin99BxJ8dHq6u1KHc8Jzir4WMIsbOIahYaGHAlrI0splfq7TIG3sSyCz0tcOW5CgipmjHaEABHdj2ANY2E4uS4XqmPXFEGHTWniP7uL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SuDLY++8; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791395734; c=relaxed/simple;
+	bh=C9yfwdCFUFaflhWGnqJx++BjuGQaVBswaweZexH+PSs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PEj/TFLvzowu161/thlGVc3gWRbBdfEgz0bmU+1yjU2rcGvTPP/8NicQ2il/GZhNKlyHvlw8DjbjKvUBjPVRsrOM7yXw3WUxO6w7dNGkf4/HyFYDqKE1++nA0ilVz+6NBIODEcbqfEXf4CQXiiRE5ttHIOp7QRdy1Fi5hDUBJ/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IpTG+ySa; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SuDLY++8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A132F1F000FF;
-	Wed,  7 Oct 2026 16:26:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791390408;
-	bh=xTk6ZSpyKI0cR+ISWGzBScL7TldzKEG6Bh1fMOkPui0=;
-	h=Date:From:To:Cc:Subject;
-	b=SuDLY++8iOA7ZOQoDDP2ybn3BgMlwj5vOLP7wdjaCk1xRkA79j4kMBB9shJwS7p+B
-	 I9RnE/AR+huLXvUvFFsJImWX0TzSWiAFwAo1hg7sGQYo4cnBXwqFUifX4zCjZlonS/
-	 8T+QyhBYjkgPhObq7Q2WOGrDg9rrdOip2Pq3K+ZJZaszjfv/UhH+z4mVLIuLpTlKjx
-	 4BoSlpMKXqE2EuNIbMbRpMzNrz1qyWxfz1OMENPI74mFCzn2g0JBRcE1C8qdIoHH9H
-	 AgjUoLoVDhO4ZpF2LSCq3+r82bFSJPrSK/mFRgsGLRR+ah/0Qm6T4QJMlcS02Qg6n4
-	 ZH889IBwcIkOA==
-Date: Wed, 07 Oct 2026 06:26:47 -1000
-Message-ID: <2b405553751fe811b4cd2c24f307d961@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>
-Cc: Emil Tsalapatis <emil@etsalapatis.com>, David Dai <david.dai@linux.dev>,
-	Dan Schatzberg <schatzberg.dan@gmail.com>, Xiangyu Bu <xbu@meta.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: [PATCH sched_ext/for-7.3-fixes] sched_ext: Fix stall when a task
- enqueued with SCX_ENQ_LAST lands back on its CPU's local DSQ
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IpTG+ySa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791395733; x=1822931733;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=C9yfwdCFUFaflhWGnqJx++BjuGQaVBswaweZexH+PSs=;
+  b=IpTG+ySaaWmwtVl2aFxfS6NMWW2c2mhzzKbGs4e5cgdL/A5Kfdz3+XLl
+   LgKwwwQdgZQysk2z1FmLWP5EV3qaE4k1J43scBrlviV/peYEoH7ZMbhuC
+   I4aiRlb4+TskQMwBZ1qSxpbqrXoSWKldvHUclP0GUAa8SegvXltATkiMl
+   y6tNSvmMckbZEX9T76qETM/4MnIaHeFxdPhUoG43c1SSzYoF6yH4gvkqQ
+   LtPSdlCCC9zB77NDdBZ4JlODIkltQuz/HtyQRL34N+bUHLpb13RBOKhy0
+   1fVxwxu2+sXw2WnZUMPsfvKQ6bfxKquz9O04s6JUdBYk4+fQjlHNqutAy
+   Q==;
+X-CSE-ConnectionGUID: KUy+Ps4rTTWjdF6IRYNGJg==
+X-CSE-MsgGUID: W9OnRuXuQGGJdanFBJDaGA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="67313"
+X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
+   d="scan'208";a="67313"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2026 10:55:16 -0700
+X-CSE-ConnectionGUID: fMvzl4HuTBa1zKTdtBZMvQ==
+X-CSE-MsgGUID: CA2CNo/vT1u4VDB5k2ZQfQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,144,1787036400"; 
+   d="scan'208";a="285591577"
+Received: from unknown (HELO [10.241.243.185]) ([10.241.243.185])
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Oct 2026 10:55:15 -0700
+Message-ID: <62547ac28298442a246abe0471647e36518a93cb.camel@linux.intel.com>
+Subject: Re: [PATCH 11/18 v2] sched/fair: Support not wakeup case in
+ select_idle_sibling
+From: Tim Chen <tim.c.chen@linux.intel.com>
+To: Vincent Guittot <vincent.guittot@linaro.org>, mingo@redhat.com, 
+	peterz@infradead.org, juri.lelli@redhat.com, dietmar.eggemann@arm.com, 
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+ vschneid@redhat.com, 	kprateek.nayak@amd.com, linux-kernel@vger.kernel.org,
+ lukasz.luba@arm.com, 	rafael@kernel.org, linux-pm@vger.kernel.org,
+ tj@kernel.org, void@manifault.com, 	arighi@nvidia.com, changwoo@igalia.com,
+ sched-ext@lists.linux.dev
+Cc: qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
+	sshegde@linux.ibm.com
+Date: Wed, 07 Oct 2026 10:55:15 -0700
+In-Reply-To: <20261002154415.2270586-12-vincent.guittot@linaro.org>
+References: <20261002154415.2270586-1-vincent.guittot@linaro.org>
+	 <20261002154415.2270586-12-vincent.guittot@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.1 (3.58.1-1.fc43) 
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
 
-With SCX_OPS_ENQ_LAST, the last runnable task on a CPU is passed to
-ops.enqueue() instead of being kept running. Exiting tasks without
-SCX_OPS_ENQ_EXITING, migration disabled tasks without
-SCX_OPS_ENQ_MIGRATION_DISABLED and tasks on an offline rq skip ops.enqueue()
-and go straight to the local DSQ. This happens in put_prev_task_scx() after
-the pick has settled on idle, so nothing reschedules the CPU, which idles
-with the task queued until an unrelated wakeup lands on it or the watchdog
-fires.
+On Fri, 2026-10-02 at 17:44 +0200, Vincent Guittot wrote:
+> With push callback mecanism, select_task_rq_fair can be called for a task
+> that is already enqueued. Task into account this case when choosing idle
+> CPU.
+>=20
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> ---
+>  kernel/sched/fair.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 6ed3e5bb7fd6..38eb80dbd1a4 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -7974,10 +7974,13 @@ static int choose_sched_idle_rq(struct rq *rq, st=
+ruct task_struct *p)
+>  	return sched_idle_rq(rq) && !task_has_idle_policy(p);
+>  }
+> =20
+> +static int idle_cpu_without(int cpu, struct task_struct *p);
+> +
+>  static int choose_idle_cpu(int cpu, struct task_struct *p)
+>  {
+>  	return available_idle_cpu(cpu) ||
+> -	       choose_sched_idle_rq(cpu_rq(cpu), p);
+> +	       choose_sched_idle_rq(cpu_rq(cpu), p) ||
+> +	       idle_cpu_without(cpu, p);
+>  }
+> =20
+>  static void
 
-scx_mitosis, which sets SCX_OPS_ENQ_LAST without SCX_OPS_ENQ_EXITING, hit
-this during mass cgroup teardown: exiting tasks stuck in exit_mmap() for
-over 40 seconds.
 
-A task put on the local DSQ runs, as anywhere else. If the SCX_ENQ_LAST
-enqueue left the task on this CPU's local DSQ, set need_resched on the task
-being switched in, as proxy_resched_idle() does. resched_curr() would flag
-the task being put instead, and __schedule() clears that right after the
-pick.
+Hi Vincent,
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Xiangyu Bu <xbu@meta.com>
-Link: https://github.com/sched-ext/scx/pull/3870
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Cc: Dan Schatzberg <schatzberg.dan@gmail.com>
+One concern I have is that many CPUs will try to push
+their tasks onto the same idle CPU and causes over stacking.
+
+idle_cpu_without() doesn't check nr_running. Its comment says:
+
+         * rq->nr_running can't be used but an updated version without the
+         * impact of p on cpu must be used instead. The updated nr_running
+         * be computed and tested before calling idle_cpu_without().
+
+and update_sg_wakeup_stats() does this:
+
+        if (!nr_running && idle_cpu_without(i, p))
+
+choose_idle_cpu() calls it without that test. So a CPU that runs its
+idle task but already has a queued task is now idle for every caller:
+the target, prev and recent_used_cpu checks, __select_idle_cpu(),
+select_idle_smt() and select_idle_capacity(). This affects wakeups
+too, not only pushes.
+
+For a wakeup to an idle CPU, the wakelist usually sets ttwu_pending,
+which idle_cpu_without() checks. A push enqueues the task directly, so
+after a push the destination stays idle for everyone until it
+schedules. If it wakes up from a deep idle state, this can take a
+while, and other CPUs can push or wake their tasks onto it in the
+meantime.
+
+The fixup below removes p from nr_running when p is queued on the CPU,
+and calls idle_cpu_without() only when nothing else is queued. The
+tick case that this patch is for still works: p is the only task, so
+its CPU is still idle without it.
+
+It is build tested only.
+
+Thanks,
+Tim
+
 ---
- kernel/sched/ext/ext.c      |   13 +++++++++++--
- kernel/sched/ext/internal.h |    5 +++--
- 2 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -3213,8 +3213,7 @@ static void put_prev_task_scx(struct rq
- 		/*
- 		 * If @p is runnable but we're about to enter a lower
- 		 * sched_class, %SCX_OPS_ENQ_LAST must be set. Tell
--		 * ops.enqueue() that @p is the only one available for this cpu,
--		 * which should trigger an explicit follow-up scheduling event.
-+		 * ops.enqueue() that @p is the only one available for this cpu.
- 		 * This doesn't apply if the baseline access on the CPU is lost.
- 		 *
- 		 * Under core scheduling, a pick dispatches only when nothing is
-@@ -3226,6 +3225,16 @@ static void put_prev_task_scx(struct rq
- 			WARN_ON_ONCE(!sched_core_enabled(rq) &&
- 				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			scx_do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3eb8a0170902..cb00f24a58fa 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7978,9 +7978,16 @@ static int idle_cpu_without(int cpu, struct task_str=
+uct *p);
+
+ static int choose_idle_cpu(int cpu, struct task_struct *p)
+ {
++       struct rq *rq =3D cpu_rq(cpu);
++       unsigned int nr_running =3D rq->nr_running;
 +
-+			/*
-+			 * A task put on the local DSQ runs, as anywhere else.
-+			 * Here the insert can't reschedule on its own: the pick
-+			 * has settled on @next and @p is still curr, so
-+			 * resched_curr() would flag @p and __schedule() clears
-+			 * that right after the pick. Flag @next instead.
-+			 */
-+			if (p->scx.dsq == &rq->scx.local_dsq)
-+				set_tsk_need_resched(next);
- 		} else {
- 			scx_do_enqueue_task(rq, p, 0, -1);
- 		}
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1774,8 +1774,9 @@ enum scx_enq_flags {
- 	 * %SCX_OPS_ENQ_LAST is specified, they're ops.enqueue()'d with the
- 	 * %SCX_ENQ_LAST flag set.
- 	 *
--	 * The BPF scheduler is responsible for triggering a follow-up
--	 * scheduling event. Otherwise, Execution may stall.
-+	 * If the task is queued on the local DSQ of the CPU it was running on,
-+	 * it continues to run. Otherwise, the CPU goes idle. A scheduler that
-+	 * wants a full dispatch cycle on the CPU should kick it.
- 	 */
- 	SCX_ENQ_LAST		= 1LLU << 41,
- 
++       /* idle_cpu_without() needs nr_running without p */
++       if (task_cpu(p) =3D=3D cpu && task_on_rq_queued(p))
++               nr_running--;
++
+        return available_idle_cpu(cpu) ||
+-              choose_sched_idle_rq(cpu_rq(cpu), p) ||
+-              idle_cpu_without(cpu, p);
++              choose_sched_idle_rq(rq, p) ||
++              (!nr_running && idle_cpu_without(cpu, p));
+ }
+
+ static void
+
