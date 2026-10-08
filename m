@@ -1,46 +1,54 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CE72C87F;
-	Thu,  8 Oct 2026 00:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA82037BE9F
+	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 02:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791417836; cv=none; b=hP20NOjLUv58bax+7DbBh3/Lp34s1DvwnZ3mlAoYD6XYismU43DCxtSquJB1CeZQjGGMub2yvPAdHE5bkiU308BB9d2eD73xTGaCEuIO22abcer8EVso1dwUfYDOOPvm3Y7EyPd+LHzE2jMaXD+Ped1BdRDpsW6LZCKaPR/dWYs=
+	t=1791427746; cv=none; b=NrRgtMhBaZwK8OKQJcBqtLQoB5bx4pf3N5PxE1Xjqkwd840nHx9zNRojPHFxw5ZVqqEP0r9lUKGmYD9HwyCcIw6cMCLLcvgfQjjL7PmwBkgkEwwsj0dwK3NnYiYO9ifxM0tmMuRuGP3ICF8q78W7LY7S7V6oJ7SumY2S48S/jJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791417836; c=relaxed/simple;
-	bh=Z6EoWTwRJA20i9rm/y6Bmv0H94g33VBeQ5Y8ZcYpqoo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reFsVAQdhrsTDKkOHloh4Sebl7g7NORkhqaYHuQyj+Z5Xa9qbi0aOUbblhlS+vSYdMzboQzbDutrGSL9AJG5aX8nBlbf/0tvSFPUCLuG7EVtAIHW2w7Ejt8wYRxjGaJWt0N6rdRVP2WAAW94fhTPY4YqoqwFzNcieIAl1BRKd/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lOhEG8y9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791427746; c=relaxed/simple;
+	bh=OKrmHgSPMHb2julbeoAI4VAzYmtWl/JEjrfi9IxqV+o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lIMPtiD6nH9n5lwoK4j49LmOUnorzTEjIvbAmeAyiaWetryU6yfnNNrmHxnlVSc6P7WevYZ2etAVjGiBSox1ZFcFsYrHYVB/BQSCQ2g0z8VBbHuszHKPaw4qPRZqQJ4ZO9XPw0Q0ODSG3ea3wCO9RrsDPdh06/zRv6tK/RmV84g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=WTLwa6Bp; arc=none smtp.client-ip=117.135.210.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lOhEG8y9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517371F000FF;
-	Thu,  8 Oct 2026 00:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791417835;
-	bh=e5BHidJwH5DYAQ8HAyrTTnFeOfq954w/2YsESkvKaKY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOhEG8y9vIQc10yhFltR45mvk7bS07u/u6MjL1wbbbFI/8ahrs1BLq5eQMGnp08Q2
-	 MDamzVcFqNbQIQvsVC7iF1s06pN1uHxTBVs7cYFF2CX+qcVbn46Fv29XB6QHV4SmIE
-	 V+GrwKkutlez4DDWJFomhkTybN6OEFpZL/Kxqg9uUkbz9+aw9jXqVz+Lxi1Y35ycA5
-	 dYoLUX5P0IKAWIEZYzDMb1gw+eqo6MZMDjs/UZTCZ1Yx3bClbmWTuAFL9voIddWmwm
-	 ZbTYUiQXvUihUbGDMlAQYL7fFsPdU1JpQgqmWJV/VgwoBRFv6WuiXRoslIByhz4he+
-	 4sPkxRfS/8GPw==
-From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>,
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="WTLwa6Bp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=br
+	RJxqNT6EqFF7Z/m/5gnDQF3Ws+MJW+LSRnBiwaYeI=; b=WTLwa6BpUjSr+XT6Tg
+	iyn6QsrQowx7h3dGNjBfRZsIYSkV51QkVUGtzkQHgFWQAZwgZvzj2LKWmqRZOQmU
+	Uev7TmvH2FaiWL9e6HJXdwxQzsjYFYJWdlYFsGULSwsuuLi3QyvgdBo5lIIpgUX/
+	v/cfKDo0yAbwHTZzhswt1e1bs=
+Received: from localhost (unknown [])
+	by gzsmtp3 (Coremail) with SMTP id PigvCgDnz61eBMdq74OuDQ--.5313S2;
+	Thu, 08 Oct 2026 10:47:59 +0800 (CST)
+From: Hui Su <sh_def@163.com>
+To: sched-ext@lists.linux.dev,
+	tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	vschneid@redhat.com,
+	kprateek.nayak@amd.com,
+	yphbchou0911@gmail.com,
+	etsal@meta.com,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/2] sched_ext: scx_qmap: Reset a child's cpuperf targets once its PERF revoke takes effect
-Date: Wed,  7 Oct 2026 14:03:52 -1000
-Message-ID: <20261008000352.1689057-3-tj@kernel.org>
+	Hui Su <sh_def@163.com>,
+	stable@vger.kernel.org
+Subject: [PATCH v3] sched_ext: Serialize user DSQ destruction against deferred reenqueues
+Date: Thu,  8 Oct 2026 11:47:53 +0900
+Message-ID: <20261008024753.4096008-1-sh_def@163.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261008000352.1689057-1-tj@kernel.org>
-References: <20261008000352.1689057-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -48,99 +56,120 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:PigvCgDnz61eBMdq74OuDQ--.5313S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxXw4UAr4kZw1fXF4xGF1fCrg_yoWrWw1UpF
+	W0qry5Cw45tw42gr4ayw4xAF1fXws3uF43WryfGr4Skwn8uws2vFWIvF17uFs0qrs3Cwnx
+	tFnxK3WDKr4DtaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zi7GYPUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwh+kBGrHBF8OEgAA3X
 
-A child that ran a cid at a low cpuperf target leaves the target there when
-PERF is revoked, since the kernel resets targets only at root enable. Reset
-it to SCX_CPUPERF_ONE from ops.sub_child_ecaps_updated() once the revoke is
-in effect, a detach included. Count the deliveries in the hier stats.
+A deferred user-DSQ node can be detached by
+process_deferred_reenq_users() before the DSQ RCU callback reaches
+exit_dsq(). Once detached, exit_dsq() cannot find the node, while the
+deferred path continues using the raw DSQ pointer after dropping
+deferred_reenq_lock. The callback can free the DSQ before the deferred
+path checks its ID or calls reenq_user().
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
+The first RCU grace period drains producers that found @dsq, but does not
+cover a consumer that detached its request and continues using @dsq.
+
+Avoid adding reference counting to the deferred reenqueue hot path.
+Instead, synchronize the rare destruction path with outstanding users.
+After the initial grace period, take every rq lock with its deferred lock.
+This unlinks requests not yet detached and closes the detach-to-cursor
+window for active consumers. reenq_user() leaves its iteration cursor on
+@dsq->list until its final access. Since destroy_dsq() requires @dsq->nr
+to be zero, a non-empty list after the sweep indicates an outstanding
+cursor; defer reclamation through another RCU callback until it exits.
+
+A test-only pre-fix fixture invoked free_dsq_rcufn() after detaching a
+request and before its final DSQ access. KASAN reported the resulting
+use-after-free:
+
+    BUG: KASAN: slab-use-after-free in run_deferred+0x1312/0x1710
+    Read of size 8 at addr ffff8880087009b0 by task swapper/3/0
+    Call Trace:
+     <IRQ>
+     run_deferred+0x1312/0x1710
+     ttwu_do_activate+0x29a/0x600
+     try_to_wake_up+0x815/0x1700
+
+Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Su <sh_def@163.com>
 ---
- tools/sched_ext/scx_qmap.bpf.c | 15 +++++++++++++++
- tools/sched_ext/scx_qmap.c     |  7 +++++--
- tools/sched_ext/scx_qmap.h     |  1 +
- 3 files changed, 21 insertions(+), 2 deletions(-)
+Tested on x86_64 KVM:
+- The pre-fix fixture reproduced the UAF under KASAN; the v3 cursor/reclamation
+  case completed without a report.
+- CONFIG_PROVE_LOCKING=y and CONFIG_LOCKDEP=y completed the same test without
+  lockdep warnings.
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 7f69394556b6..853db13d060e 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -2208,6 +2208,20 @@ void BPF_STRUCT_OPS(qmap_sub_ecaps_updated, s32 cid, u64 before, u64 after)
- 	execute_partition();
+Changes in v3:
+- Drop the refcount approach per Tejun and move synchronization to rare DSQ
+  destruction.
+- Sweep rq/deferred locks and defer reclamation while a reenq_user() cursor
+  remains active.
+- v2 was accidentally posted without the version tag.
+
+v2 (posted without version tag):
+https://lore.kernel.org/lkml/20260930143443.2862150-1-sh_def@163.com/
+---
+ kernel/sched/ext/ext.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 405d0d1038f8..293e5e223277 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -5579,6 +5579,35 @@ s32 scx_init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id, struct scx_sched *sch)
+ 	return 0;
  }
  
-+void BPF_STRUCT_OPS(qmap_sub_child_ecaps_updated, u64 cgroup_id, s32 cid, u64 before,
-+		    u64 after)
++/*
++ * Synchronize DSQ destruction against deferred reenqueues.
++ *
++ * Taking each rq lock with its deferred lock removes requests not yet
++ * detached and closes the detach-to-cursor window. A reenq_user() cursor
++ * stays linked on @dsq->list until its final DSQ access.
++ */
++static bool drain_dsq_reenq_users(struct scx_dispatch_q *dsq)
 +{
-+	__sync_fetch_and_add(&qa.nr_child_ecaps, 1);
++	s32 cpu;
 +
-+	/*
-+	 * A cid's cpuperf target stays where the last write put it. Reset it
-+	 * once a child's PERF revoke is in effect so that the child's last
-+	 * target doesn't outlive the cap.
-+	 */
-+	if ((before & ~after) & SCX_CAP_PERF)
-+		scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE);
++	/* The first RCU grace period has drained producers which found @dsq. */
++	for_each_possible_cpu(cpu) {
++		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu_user, cpu);
++		struct scx_deferred_reenq_user *dru = &pcpu->deferred_reenq_user;
++		struct rq *rq = cpu_rq(cpu);
++
++		scoped_guard (rq_lock_irqsave, rq) {
++			guard(raw_spinlock)(&rq->scx.deferred_reenq_lock);
++
++			if (!list_empty(&dru->node))
++				list_del_init(&dru->node);
++		}
++	}
++
++	guard(raw_spinlock_irqsave)(&dsq->lock);
++	return list_empty(&dsq->list);
 +}
 +
- SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .flags			= SCX_OPS_ENQ_EXITING | SCX_OPS_TID_TO_TASK,
- 	       .select_cid		= (void *)qmap_select_cid,
-@@ -2232,6 +2246,7 @@ SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .sub_caps_updated	= (void *)qmap_sub_caps_updated,
- 	       .sub_ecaps_updated	= (void *)qmap_sub_ecaps_updated,
- 	       .sub_cid_sched_updated	= (void *)qmap_sub_cid_sched_updated,
-+	       .sub_child_ecaps_updated	= (void *)qmap_sub_child_ecaps_updated,
- 	       .init_cids		= (void *)qmap_init_cids,
- 	       .init			= (void *)qmap_init,
- 	       .exit			= (void *)qmap_exit,
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index e83d5e2147dd..17cf584a2a3d 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -113,6 +113,7 @@ struct hier_prev {
- 	u64 nr_enq_blocked;
- 	u64 nr_inject_attempts;
- 	u64 nr_rescue_dsp;
-+	u64 nr_child_ecaps;
- };
+ static void exit_dsq(struct scx_dispatch_q *dsq)
+ {
+ 	s32 cpu;
+@@ -5608,6 +5637,12 @@ static void free_dsq_rcufn(struct rcu_head *rcu)
+ {
+ 	struct scx_dispatch_q *dsq = container_of(rcu, struct scx_dispatch_q, rcu);
  
- /* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
-@@ -208,18 +209,20 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
- 	}
- 
- 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
--	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu\n",
-+	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu child_ecaps=+%llu\n",
- 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
- 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
- 	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
- 	       (unsigned long long)(qa->nr_enq_blocked - prev->nr_enq_blocked),
- 	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
--	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
-+	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp),
-+	       (unsigned long long)(qa->nr_child_ecaps - prev->nr_child_ecaps));
- 	prev->nr_reenq_cap = qa->nr_reenq_cap;
- 	prev->nr_reenq_immed = qa->nr_reenq_immed;
- 	prev->nr_enq_blocked = qa->nr_enq_blocked;
- 	prev->nr_inject_attempts = qa->nr_inject_attempts;
- 	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
-+	prev->nr_child_ecaps = qa->nr_child_ecaps;
- 
- 	/*
- 	 * alloc is the cid-time the partition handed each participant, and used
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index 949459d06a18..9e6eefb39735 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -195,6 +195,7 @@ struct qmap_arena {
- 	u64 nr_enq_blocked;		/* SCX_ENQ_BLOCKED dispatches */
- 	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
- 	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
-+	u64 nr_child_ecaps;		/* ops.sub_child_ecaps_updated() deliveries */
- 	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
- };
- 
--- 
-2.55.0
++	/* An active reenq_user() cursor still references @dsq. */
++	if (!drain_dsq_reenq_users(dsq)) {
++		call_rcu(&dsq->rcu, free_dsq_rcufn);
++		return;
++	}
++
+ 	exit_dsq(dsq);
+ 	kfree(dsq);
+ }
+
+base-commit: f2f095c87603b8dfb6752e130d902970371c3852
 
