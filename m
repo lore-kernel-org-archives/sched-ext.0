@@ -1,219 +1,173 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92B23C3F64
-	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 19:13:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8539844236C
+	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 22:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791486805; cv=none; b=mkrnpzQNENYiuKNWSpDP3SlHKlvPNdGEKLuy+PeQ43OpJ8i8XuONUhWIvx5G2gVR5Tm8J6qHzxxr2y9ilbvtIlpbl/U9cnYSsKvqLefRfpU9ABLU+mCixXdtmu8qg0xue/q3tAZw0OX+0TJsiWJzaEmNTVRzztc979dAR/A8f0A=
+	t=1791499995; cv=none; b=iRJC9+mbFIZUIYrT3HiEMriJ7Su/3uBRQOXdKYHrI8ZnGZ9Z03lI9zXWyaWetW3fjeRAoZHWOa+I9iF7E9BVlMAkucLlYdVdTjghvDR6OJcIT8pYKvipsK3C8nC8x7uyvbC7d9S7Z0Ys8RPdfvmgkCShI8Nv7smihieab6QwCyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791486805; c=relaxed/simple;
-	bh=Gns521/EKZLdx7MAed51/yhfAPJrg46pDNraWUEqGY8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BLYsAHA8XYGuHZl7hd6I11dCzXABHfGOzGp4M4FUTeWt/z0aASP5K3bBMQgs0mFUTTjEglhm40Gf1daj1VPS2aiGeHnu16wGv65sf8XvC7Jvh4w9xTlq8AE8boYoXywFOiwt2754P7ZXwjDD/bumpUIXI3SC2+2JIef0zWvFHjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R+tuIJxj; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791499995; c=relaxed/simple;
+	bh=w19qijWatAGy00RLU4Fjp6Ck0KIkM5bUBb4GG829UWg=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=rJp5ZTrehLg17Q5p7LHlXZplNhGVc8rju9PTK7CLLJhfV1OL2LmPrRYZbyCQETR3PWExfAYMdSo567z78GGghsQJJ0E/NtqRAeSoBO9NauyR53lxzMxGKNTY2H5oXjnYy+9J7TFL5lhLWARRyO1O7h+G+CqjY8p6dmD/59ebsJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dwsHGOOv; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R+tuIJxj"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48b0f063b7bso143000f8f.1
-        for <sched-ext@lists.linux.dev>; Thu, 08 Oct 2026 12:13:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791486802; x=1792091602; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=NsKnBLI7Oap+/MtZR28XECViUHg4ECBk5FTj278RiYo=;
-        b=R+tuIJxjcXP89AFRXhYn0nTN7ha3+MfmSpPMZqR8qs/zmalzT4yf3MRgdspn/2yu9o
-         yJ6mqy//ZsUZhd8XIUbEoHRYsh8RTnUDilYT/5nP+xHCZ0OXwBDLmFkC7ibSGT8FiohJ
-         heC+KGft87QXYMQhWhsEHD+Ua6Xs9Ty1tuKAPWEEVqf+us4t2+s3Y4LkClk2Qy1lUhum
-         Vn0GQVfnRLTaOhmqKIwVKU26AWfcqvZlx5IS5Yk/QpEqyR2cfUJ0tjUNMIPO8d2r+lT6
-         92qxBIbeeIys0hksXx3hYotnFs1caMxvvLdr3v0TztnqWCO984ezIQe1KMSV2xM30PJL
-         PWyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791486802; x=1792091602;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NsKnBLI7Oap+/MtZR28XECViUHg4ECBk5FTj278RiYo=;
-        b=fcqOAJFglPVP8BWwkMlHP5BC/qDQB9wCEXHhlGsuCaWcvxdhTOcN4l4tWTKF0fGsob
-         M0CwYgvOZaC2lVOGbeq9BRcfsHvis1rbJ3CfMbogwxIBGAe6SYybhEwJq7pXd+Wld3DI
-         iCvGJWJtg+lt9pGSmPIwtWydpB2tvwPJBp/Tr347b7OzGNbTwXrEBkGXWIqhIFWgRMbA
-         zTRgzTt6Lj8gHHLVCuToCSq4HZKXEkiI9DvFoCQiUy4ecNunWDJ+1yYChzYanLwopWAe
-         /5HQPaeNUotZvRZruW7lvqfNbM2COpd3D1MrwA/XaadrVZrshrMLQbms78AS1neYoUDH
-         nbnw==
-X-Forwarded-Encrypted: i=1; AKwUvBxRpxc9+qHs6ljm08aJr1OqziJY0mVXP77iiNX39fN7uPOLCLzTLdgKjLpVM5Us0MSq9YnKqIZxx/w=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKLRWuEWXii8Of7gzsaMYZ97toFgzwIZzpH960cYqXRcobNM1zY
-	8CtyQ4sgN/+fdh3A4MYl5LCZ+RjrrpiM80FRdDTrbUVl8X6RZWpaTlPY
-X-Gm-Gg: AYBFou2FkspHSdZivwl9zKOizTio1peWi2lpIuFvO7HOi1sXd4aXIIhqxvIGdkZktEB
-	flP+q7DwLK3yfw4kivF3gihr3gnGd5flcGBoiWGcJrPS70ZB2MYyc8SRHRmjajDKDoFEKJOApG2
-	OWfZ18g2crURQ+8povdCqE/LiZN3vrJnQoU77rWBGsDESZUlJCsnTeP8NWEJM1OEWQZZfYJ7Xho
-	lt2m08959xT97muBMcaCLCxe4pQ+XhKR5FliZRqZivw//6Aey5s5W/XzTXQERHpZwgxBzRacKdO
-	bCNvgQDmzIY9UNU3m7Npf3u+GvyeLzsWnM8jtIGAEjxjQWdGGnLr6U40/cUpiXR1fxjq3HkMYpN
-	HIzzZPXo1mq40Yt/i+Ryos/j5/hZtGLklwmnQtVPheAUdMXJhcezOMI7baNZR4rQTbF05q4WStr
-	I6xS85wSWVtx9XCR0CY5uT9mozWnTrmG4SpKy4IZ4cyvYgOAn+FJV33P1dnrZgyd+dOnAXk4rYI
-	3h2RQU55MX78OzOTcXrYCP4699EW9M=
-X-Received: by 2002:a05:6000:38c:b0:48a:f4c1:4301 with SMTP id ffacd0b85a97d-48c7edcd161mr6378457f8f.6.1791486801862;
-        Thu, 08 Oct 2026 12:13:21 -0700 (PDT)
-Received: from lima-kdev.local ([85.100.66.184])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48db652e52asm1158763f8f.36.2026.10.08.12.13.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 12:13:21 -0700 (PDT)
-From: Kayra Cizmeci <kayracizmeci@gmail.com>
-To: vincent.guittot@linaro.org
-Cc: arighi@nvidia.com,
-	bsegall@google.com,
-	changwoo@igalia.com,
-	christian.loehle@arm.com,
-	dietmar.eggemann@arm.com,
-	juri.lelli@redhat.com,
-	kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	lukasz.luba@arm.com,
-	mgorman@suse.de,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	pierre.gondois@arm.com,
-	qyousef@layalina.io,
-	rafael@kernel.org,
-	rostedt@goodmis.org,
-	sched-ext@lists.linux.dev,
-	sshegde@linux.ibm.com,
-	tj@kernel.org,
-	void@manifault.com,
-	vschneid@redhat.com,
-	Kayra Cizmeci <kayracizmeci@gmail.com>
-Subject: Re: [PATCH 00/18 v2] Improving latency of short slice tasks
-Date: Thu,  8 Oct 2026 22:12:36 +0300
-Message-ID: <20261008191236.152916-1-kayracizmeci@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261002154415.2270586-1-vincent.guittot@linaro.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dwsHGOOv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791499994; x=1823035994;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=w19qijWatAGy00RLU4Fjp6Ck0KIkM5bUBb4GG829UWg=;
+  b=dwsHGOOvNiOJRGeATniOsQokB8zF+4ENnfg1YVaiDf+9z8tLtE6atozg
+   oKvtWAFCyOAVHoypQ/nqQF8s4f0HmiFo2EDneMbMNhohS4IYrcQmkbbMk
+   Yazl56bmxe/w+OKKDxAt9lxClH82D3rAfbZqOtGK6wYB6OuJNVkc0R4T4
+   iksZdRz9aSvKaUAb95d/zCs6n4f7DKj3oV/StSqDf6hjnkX7dCo6Z4DhR
+   1MdiDxlSvZ0endQRKqwqZaGMRJqNe3qtpLS96A/EVtRp3JsA9mm3rRDCu
+   OlNh4rpeHZw5uHC/E1eHZCXjZhzvTFm9I46YhHKwSTbBWjI8ufqpdGhGv
+   Q==;
+X-CSE-ConnectionGUID: N0IbDdKVRlyIyi0q86q6pQ==
+X-CSE-MsgGUID: zCDImhYSSn6L1VdasjezGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11929"; a="176397"
+X-IronPort-AV: E=Sophos;i="6.27,147,1787036400"; 
+   d="scan'208";a="176397"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2026 15:53:13 -0700
+X-CSE-ConnectionGUID: uBz25blqSKOwhlgirliRvQ==
+X-CSE-MsgGUID: W+Z+CTP6Q9S5xcV96HjisQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,147,1787036400"; 
+   d="scan'208";a="608645"
+Received: from unknown (HELO [10.241.243.185]) ([10.241.243.185])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2026 15:53:13 -0700
+Message-ID: <179bcb50be21f834423f9b5c068b5fce4cb65871.camel@linux.intel.com>
+Subject: Re: [PATCH 18/18 v2] sched/fair: Take into account slice in EAS
+From: Tim Chen <tim.c.chen@linux.intel.com>
+To: Vincent Guittot <vincent.guittot@linaro.org>, mingo@redhat.com, 
+	peterz@infradead.org, juri.lelli@redhat.com, dietmar.eggemann@arm.com, 
+	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
+ vschneid@redhat.com, 	kprateek.nayak@amd.com, linux-kernel@vger.kernel.org,
+ lukasz.luba@arm.com, 	rafael@kernel.org, linux-pm@vger.kernel.org,
+ tj@kernel.org, void@manifault.com, 	arighi@nvidia.com, changwoo@igalia.com,
+ sched-ext@lists.linux.dev
+Cc: qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
+	sshegde@linux.ibm.com
+Date: Thu, 08 Oct 2026 15:53:12 -0700
+In-Reply-To: <20261002154415.2270586-19-vincent.guittot@linaro.org>
 References: <20261002154415.2270586-1-vincent.guittot@linaro.org>
+	 <20261002154415.2270586-19-vincent.guittot@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.1 (3.58.1-1.fc43) 
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Hi All,
+On Fri, 2026-10-02 at 17:44 +0200, Vincent Guittot wrote:
+> When the cost is the same, take into account the slice of a task to try t=
+o
+> select a CPU where is will run first.
+>=20
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> ---
+>  kernel/sched/fair.c | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index 94554f165f42..d60bb6db4ce9 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -9598,8 +9598,17 @@ static int check_cpu_with_task(struct task_struct =
+*p, int cpu)
+>   */
+>  static bool update_best_cpu(struct energy_cpu_stat *target,
+>  			    struct energy_cpu_stat *min,
+> -			    int prev, struct sched_domain *sd)
+> +			    int prev, struct sched_domain *sd,
+> +			    struct task_struct *p)
+>  {
+> +	unsigned long task_slice =3D p->se.slice;
+> +
+> +	/*  Select the one where you can run first */
+> +	if (task_slice < get_rq_min_slice(cpu_rq(target->cpu)) &&
+> +	    task_slice >=3D get_rq_min_slice(cpu_rq(min->cpu)))
+> +		return true;
+> +
+> +	/* Favor previous CPU */
+>  	if (target->cpu =3D=3D prev)
+>  		return true;
 
-I wanted to ran some tests for this patch series. I couldn't really
-apply it without some issues, but I think I managed to apply
-it cleanly this time... Tho I may have been doing something wrong.
-Please let me know if so.
+Hi Vincent,
 
-base: 4a3b51aab6e25244d97936aa65e6d5425adf98e1 (on tip/sched/core)
+The slice check above comes before "Favor previous CPU", so I read the inte=
+nt
+as: the CPU where the task can run first wins, even
+against prev_cpu. But the slice check can fail for prev CPU
+and we can skip to "Favor previous CPU" and pick prev CPU, even
+though the task can run on min CPU first but not
+necessarily on prev CPU first.
 
-Command Used Each Run:
+Take an idle CPU X and a busy prev_cpu. Any task can
+run first on X, because an empty rq has min_slice =3D=3D ULONG_MAX:
 
-hackbench -g 4 -l 100000 > /dev/null & sudo chrt -o -T 300000 0 ~/rt-tests/cyclictest --policy=other -t 1 -i 1000 -D 20 -q -m; wait
+- prev_cpu scanned first: when X is the target, the slice check
+  selects X.
+- X scanned first: when prev_cpu is the target, the slice check fails,
+  and "Favor previous CPU" then selects prev_cpu.
 
-Environment:
+In the second case the task is stacked on the busy prev_cpu even though
+it may not run first there.
 
-Zen 3 with 8 Cores and 16 Threads. And Fedora.
+Perhaps something like the following is better.
 
-THE RESULTS (COOKED):
+---
+ kernel/sched/fair.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-On Base in 5 runs, average values are: Min: 3.8, Act: 5.8, Avg: 8.8 and
-Max: 2511.6 (I need tea.)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index a47c6521a411..3fe305d690eb 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -9830,11 +9830,15 @@ static bool update_best_cpu(struct energy_cpu_stat =
+*target,
+                            struct task_struct *p)
+ {
+        unsigned long task_slice =3D p->se.slice;
++       bool target_first =3D task_slice < get_rq_min_slice(cpu_rq(target->=
+cpu));
++       bool min_first =3D task_slice < get_rq_min_slice(cpu_rq(min->cpu));
 
-On Base + Patches in 5 runs, average values bla bla you get it:
-Min 4, Act: 5.8, Avg: 7.2 and Max: 1781.6
+-       /*  Select the one where you can run first */
+-       if (task_slice < get_rq_min_slice(cpu_rq(target->cpu)) &&
+-           task_slice >=3D get_rq_min_slice(cpu_rq(min->cpu)))
+-               return true;
++       /*
++        * Select the one where you can run first. Check both ways, or the
++        * result depends on the order of the CPUs in the PD.
++        */
++       if (target_first !=3D min_first)
++               return target_first;
 
-Or, in the shape of art made with love and passion:
-
- +------BASE-----+--PATCHED--+
- | MIN   3.8     |    4      |
- | ACT   5.8     |   5.8     |
- | AVG   8.8     |   7.2     |
- | MAX  2511.6   |  1781.6   |
- +--------------+------------+ 
-
-Hmhp... Hope I'm not missing something. I need water. Bah.
-
-Tested-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-
-Dancing donkey chases a car while shouting "Linux is the best, my dancing is the coolest. Cry."
-
-Thanks,
-Kayra
-
-
-
-I'll add other not too important things below, these are pretty raw.
-But if you wanna have a look you can.
-
-
-THE RESULTS (RAW):
-
-BASE 7.3.0-rc1+ #2:
-
-RUN 1:
-[1] 1950
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2115) P: 0 I:1000 C:  19990 Min:      4 Act:    6 Avg:    8 Max:    1885
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 2:
-[1] 2132
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2297) P: 0 I:1000 C:  19990 Min:      4 Act:    6 Avg:    9 Max:    2695
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-linuxfucks@micro-softly:~$ (Opsies. Who's hostname is this? It's so cool. Wow. 'linuxfucks')
-
-RUN 3: 
-[1] 2307
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2472) P: 0 I:1000 C:  19988 Min:      4 Act:    5 Avg:    8 Max:    3246
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 4:
-[1] 2493
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2658) P: 0 I:1000 C:  19995 Min:      3 Act:    6 Avg:    9 Max:    1991
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 5:
-[1] 2671
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2836) P: 0 I:1000 C:  19992 Min:      4 Act:    6 Avg:   10 Max:    2741
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-BASE + PATCHES 7.3.0-rc1+ #3:
-
-RUN 1:
-[1] 1490
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 1657) P: 0 I:1000 C:  19993 Min:      4 Act:    5 Avg:    7 Max:    3091
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 2:
-[1] 1671
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 1836) P: 0 I:1000 C:  19999 Min:      4 Act:    6 Avg:    7 Max:    1529
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 3:
-[1] 1848
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2013) P: 0 I:1000 C:  19998 Min:      4 Act:    6 Avg:    7 Max:    1455
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 4:
-[1] 2023
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2188) P: 0 I:1000 C:  19995 Min:      4 Act:    6 Avg:    7 Max:    1524
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
-
-RUN 5:
-[1] 2200
-# /dev/cpu_dma_latency set to 0us
-T: 0 ( 2365) P: 0 I:1000 C:  19989 Min:      4 Act:    6 Avg:    8 Max:    1309
-[1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+        /* Favor previous CPU */
+        if (target->cpu =3D=3D prev)
 
 
+Tim
 
+>  	if (min->cpu =3D=3D prev)
+> @@ -9762,7 +9771,7 @@ static int find_energy_efficient_cpu(struct task_st=
+ruct *p, int prev_cpu)
+>  			 */
+>  			if (target_perf < min_stat.min_perf)
+>  				find_pd_cost(pd->em_pd, target_perf, &target_stat);
+> -			else if (!update_best_cpu(&target_stat, &min_stat, prev_cpu, sd))
+> +			else if (!update_best_cpu(&target_stat, &min_stat, prev_cpu, sd, p))
+>  				continue;
+> =20
+>  			/* Save the new most efficient CPU of the PD */
