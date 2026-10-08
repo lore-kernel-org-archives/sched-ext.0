@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6D7422530;
-	Thu,  8 Oct 2026 09:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35964484883;
+	Thu,  8 Oct 2026 09:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791451953; cv=none; b=p8MGcIDObgjd5Drto688XJJ2Gz4/HoutqXgFU3sBRso16yFvD+vnmZNIh28RFNLMbNVyvOqPRWRlBNNuifx+9FDPl0l+gWGnushAnoRH8OjAokARW8j54JP0BVAyMeg8Vs42Sl4iSTb65Ul+kT7x74CJThJNcH6PSEk+VwoXFhM=
+	t=1791451953; cv=none; b=DSYhNZlzDv+fOEA+BcKssi2eUddYFnRYKW+0lLczWnY2wYacmg7rX9c0VhjTPdkup7yPU+7afOwMynJJP8jm6qI5C0yzPucXNakPevvV08ToqdCpMWW8np/3wq8DuyYuS3sQJ/mRhriuvos9T/ogw49dSh6Zt8ymZInByAozibo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791451953; c=relaxed/simple;
-	bh=iMiJf7fEzifNr/wF090hQM7isM+nesYlTPM7ProQMjA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYrRPoxYyCxniV4YnwsGlDHTGlEtQGRETlCHp9K5JBJydQU/gqY1T7gieJ69q5Wu5zfUx/R0UXGbuc+OKfobKU/Jvo961htzk2IsE2s6K4e+WkEEiWjpyQz/IaRrDt7N+6MyeZkBSN/dfAUP2vcyxnpmVLDM5qxST99cQk6XDAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bLP4DPKx; arc=none smtp.client-ip=100.103.45.18
+	bh=p8LjtC70Lt6xtWUXRote3XXL3lhLfgfvpQRi+E2lazM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pKNyVTd5PXbupxf/uxkSfxZnNTadBCxdIwkY1ahDCjgJ9XyDJsyPIiVxA2NAxg6r+papCWH62M+MBQHTw2RZ/GcuE2htokq9Pv2O2ij/rXwCtvMj4FnqhRvpaQXWMJ0Iw5UwDDr8Arosg4/OyhGhPaBPUK9Ad2wcE3P2zrbDnP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gH9mpQuL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bLP4DPKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B26C1F00898;
-	Thu,  8 Oct 2026 09:32:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gH9mpQuL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A741F000FF;
+	Thu,  8 Oct 2026 09:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791451951;
-	bh=U9EzVHqHib3lrbAj2l54u3YkkWw5idWjnj+X2mkqD+I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLP4DPKx6udV2RR16vfhAAjzLL2we0GvNgGnR9x/2CY6VSWT2dyw6SNRkzYvrSj5r
-	 Eu/mBsCsPT+5nm2VlwuvFeQZ4Yy8PCGOshnbP7o5vLeB3NiTfg+rgbOyp8PJgz77i0
-	 dcIzt1bORi3BNpxd5LE9vlk8Sybfu6bC2jKy+lJ0v6XUVXfvm7DmRztQhdKDgksqYA
-	 MwO6EAUMmelVouqf3kzit3BEdeXTDoPGTG1xEhNW56R5QFZkstENWdYJEzj0qIzafy
-	 /Vl090+KzyVIOHBN3z4rcIUMsrnEkZJCthcBqPeaOo7DqeXd5I7c3GcUipFI809jQ9
-	 A/q886xuNhH/A==
+	s=k20260515; t=1791451949;
+	bh=m2dJ95RPTPKjS3DaSCNzCWojqL4oqW5iTSP5QHUo+iM=;
+	h=From:To:Cc:Subject:Date;
+	b=gH9mpQuLv7gvnf9qUNhprXuZ8fg/liCEB6Khbr7S+Z0V3Cfzt+UtDHjG1tAcwPiJA
+	 +80Cb14oynyOBTjgT9hO4SUAtQDPUCPGg7b7Lt/Xn0QIcwul3T/otQY1nBRpZywpXq
+	 f76MHuE/mQZHts76xpZKpV/aJ0Q1u1vR7RNgGUdbUnUgAmVV/XgS8C3XE0B6I0d/9t
+	 PhE0Rezy6N+AwRcQ4CczMogJ7PP7aiec2+CeCZGrHNpctr/URMKYuEOY75ffCtftNa
+	 wY8XsXh4x+8KCUN40lEKuyeNigR0Q4mMjWQ8deHF9xmNPmfZrqyzqE8bilVqqe1QvO
+	 KgftF21n3YI6w==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -35,12 +34,10 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/2] sched_ext: scx_qmap: Reset a child's cpuperf targets once its PERF revoke takes effect
-Date: Wed,  7 Oct 2026 23:32:28 -1000
-Message-ID: <20261008093228.2015427-3-tj@kernel.org>
+Subject: [PATCHSET v2 sched_ext/for-7.4] sched_ext: Add ops.sub_child_ecaps_updated()
+Date: Wed,  7 Oct 2026 23:32:26 -1000
+Message-ID: <20261008093228.2015427-1-tj@kernel.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261008093228.2015427-1-tj@kernel.org>
-References: <20261008093228.2015427-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -49,130 +46,50 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A child that ran a cid at a low cpuperf target leaves the target there when
-PERF is revoked, since the kernel resets targets only at root enable. Reset
-the target from ops.sub_child_ecaps_updated() once the revoke is in effect.
-A detach reports nothing, so ops.sub_detach() resets the child's cids, the
-pool included. Count the deliveries in the hier stats.
+Hello,
 
-v2: Reset from ops.sub_detach() for a detaching child's cids.
+v2: - A sub's disable no longer reports. The report ran the op outside the
+      dispatch path, which meant setting up that path's context for the op's
+      kfuncs and gating the nested sub dispatch at runtime, and keeping the
+      report clear of the PM bypass took a lock that could stall a suspend.
+      The parent knows what it delegated, so ops.sub_detach() is where it
+      restores it, and its kerneldoc now says so (#1).
+    - scx_qmap resets a detaching child's cids from ops.sub_detach() (#2).
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- tools/sched_ext/scx_qmap.bpf.c | 33 +++++++++++++++++++++++++++++++--
- tools/sched_ext/scx_qmap.c     |  7 +++++--
+v1: https://lore.kernel.org/r/20261008000352.1689057-1-tj@kernel.org
+
+A grant or revoke only records the target caps. They take effect on a cid at
+its next dispatch, and nothing tells the parent when. Without that the
+parent cannot act on a revoke, such as resetting the cpuperf target a child
+left on the cid.
+
+Patch 1 adds ops.sub_child_ecaps_updated(), delivered to the direct parent
+right after the child's own ops.sub_ecaps_updated(), with the child's cgroup
+id and the same before and after caps. A sub's disable reports nothing; the
+parent restores what it delegated from ops.sub_detach(). Patch 2 makes
+scx_qmap reset a child's cpuperf target once its PERF revoke takes effect,
+and from sub_detach() for a detaching child.
+
+Based on sched_ext/for-7.4 (3d7c2f550eef).
+
+This patchset contains the following 2 patches.
+
+ 0001 sched_ext: Add ops.sub_child_ecaps_updated() to report a child's effective cap changes
+ 0002 sched_ext: scx_qmap: Reset a child's cpuperf targets once its PERF revoke takes effect
+
+The patchset is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git sub-child-ecaps-v2
+
+diffstat follows. Thanks.
+
+ kernel/sched/ext/ext.c         |  4 +++
+ kernel/sched/ext/internal.h    | 30 ++++++++++++++++++---
+ kernel/sched/ext/sub.c         | 59 +++++++++++++++++++++++++++++-------------
+ tools/sched_ext/scx_qmap.bpf.c | 33 +++++++++++++++++++++--
+ tools/sched_ext/scx_qmap.c     |  7 +++--
  tools/sched_ext/scx_qmap.h     |  1 +
- 3 files changed, 37 insertions(+), 4 deletions(-)
+ 6 files changed, 109 insertions(+), 25 deletions(-)
 
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 7f69394556b6..4c152b44bc91 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -2167,12 +2167,30 @@ s32 BPF_STRUCT_OPS(qmap_sub_attach, struct scx_sub_attach_args *args)
- 
- void BPF_STRUCT_OPS(qmap_sub_detach, struct scx_sub_detach_args *args)
- {
--	s32 i;
-+	u64 cgid = args->ops->sub_cgroup_id;
-+	s32 nr_cids = qa.nr_cids;
-+	s32 i, cid;
-+
-+	if (nr_cids < 0 || nr_cids > SCX_QMAP_MAX_CPUS) {
-+		scx_bpf_error("-ERANGE");
-+		return;
-+	}
- 
- 	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
--		if (qa.sub_sched_ctxs[i].cgroup_id != args->ops->sub_cgroup_id)
-+		if (qa.sub_sched_ctxs[i].cgroup_id != cgid)
- 			continue;
- 
-+		/*
-+		 * The child's caps are gone without a report, see
-+		 * ops.sub_detach(). cpuperf targets persist until the next
-+		 * write, reset the child's excl cids and the pool it may have
-+		 * held.
-+		 */
-+		bpf_arena_for(cid, 0, nr_cids)
-+			if (cmask_test(cid, &qa.sub_sched_ctxs[i].granted_cids.mask) ||
-+			    cmask_test(cid, &qa.rr_cids.mask))
-+				scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE);
-+
- 		qa.sub_sched_ctxs[i].cgroup_id = 0;
- 		qa.sub_sched_ctxs[i].weight = 100;
- 		cmask_init(&qa.sub_sched_ctxs[i].granted_cids.mask, 0, qa.nr_cids);
-@@ -2208,6 +2226,16 @@ void BPF_STRUCT_OPS(qmap_sub_ecaps_updated, s32 cid, u64 before, u64 after)
- 	execute_partition();
- }
- 
-+void BPF_STRUCT_OPS(qmap_sub_child_ecaps_updated, u64 cgroup_id, s32 cid, u64 before,
-+		    u64 after)
-+{
-+	__sync_fetch_and_add(&qa.nr_child_ecaps, 1);
-+
-+	/* a child's last target must not outlive its PERF cap */
-+	if ((before & ~after) & SCX_CAP_PERF)
-+		scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE);
-+}
-+
- SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .flags			= SCX_OPS_ENQ_EXITING | SCX_OPS_TID_TO_TASK,
- 	       .select_cid		= (void *)qmap_select_cid,
-@@ -2232,6 +2260,7 @@ SCX_OPS_CID_DEFINE(qmap_ops,
- 	       .sub_caps_updated	= (void *)qmap_sub_caps_updated,
- 	       .sub_ecaps_updated	= (void *)qmap_sub_ecaps_updated,
- 	       .sub_cid_sched_updated	= (void *)qmap_sub_cid_sched_updated,
-+	       .sub_child_ecaps_updated	= (void *)qmap_sub_child_ecaps_updated,
- 	       .init_cids		= (void *)qmap_init_cids,
- 	       .init			= (void *)qmap_init,
- 	       .exit			= (void *)qmap_exit,
-diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-index e83d5e2147dd..17cf584a2a3d 100644
---- a/tools/sched_ext/scx_qmap.c
-+++ b/tools/sched_ext/scx_qmap.c
-@@ -113,6 +113,7 @@ struct hier_prev {
- 	u64 nr_enq_blocked;
- 	u64 nr_inject_attempts;
- 	u64 nr_rescue_dsp;
-+	u64 nr_child_ecaps;
- };
- 
- /* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
-@@ -208,18 +209,20 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
- 	}
- 
- 	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
--	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu\n",
-+	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu child_ecaps=+%llu\n",
- 	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
- 	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
- 	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
- 	       (unsigned long long)(qa->nr_enq_blocked - prev->nr_enq_blocked),
- 	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
--	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
-+	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp),
-+	       (unsigned long long)(qa->nr_child_ecaps - prev->nr_child_ecaps));
- 	prev->nr_reenq_cap = qa->nr_reenq_cap;
- 	prev->nr_reenq_immed = qa->nr_reenq_immed;
- 	prev->nr_enq_blocked = qa->nr_enq_blocked;
- 	prev->nr_inject_attempts = qa->nr_inject_attempts;
- 	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
-+	prev->nr_child_ecaps = qa->nr_child_ecaps;
- 
- 	/*
- 	 * alloc is the cid-time the partition handed each participant, and used
-diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
-index 949459d06a18..9e6eefb39735 100644
---- a/tools/sched_ext/scx_qmap.h
-+++ b/tools/sched_ext/scx_qmap.h
-@@ -195,6 +195,7 @@ struct qmap_arena {
- 	u64 nr_enq_blocked;		/* SCX_ENQ_BLOCKED dispatches */
- 	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
- 	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
-+	u64 nr_child_ecaps;		/* ops.sub_child_ecaps_updated() deliveries */
- 	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
- };
- 
--- 
-2.55.0
-
+--
+tejun
