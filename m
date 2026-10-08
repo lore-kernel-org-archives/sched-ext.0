@@ -1,34 +1,35 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA82037BE9F
-	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 02:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C471F37DAA9
+	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 03:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791427746; cv=none; b=NrRgtMhBaZwK8OKQJcBqtLQoB5bx4pf3N5PxE1Xjqkwd840nHx9zNRojPHFxw5ZVqqEP0r9lUKGmYD9HwyCcIw6cMCLLcvgfQjjL7PmwBkgkEwwsj0dwK3NnYiYO9ifxM0tmMuRuGP3ICF8q78W7LY7S7V6oJ7SumY2S48S/jJc=
+	t=1791430766; cv=none; b=shFogiwEB+72vGu6HtSzWGx7Ysh2MNe7Ju2f9/xBRWDL5vkq4Saci2vONXX7RP7VuoXO0aPeZ5RERuI/7i/Va9optM5RWccsDp+ig3StqCIDssXTHkZ3XRVB4TC8EWJH9znIieChvfEJkz5v5jcHGyD2iAZG8j9qzle63zTupXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791427746; c=relaxed/simple;
-	bh=OKrmHgSPMHb2julbeoAI4VAzYmtWl/JEjrfi9IxqV+o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lIMPtiD6nH9n5lwoK4j49LmOUnorzTEjIvbAmeAyiaWetryU6yfnNNrmHxnlVSc6P7WevYZ2etAVjGiBSox1ZFcFsYrHYVB/BQSCQ2g0z8VBbHuszHKPaw4qPRZqQJ4ZO9XPw0Q0ODSG3ea3wCO9RrsDPdh06/zRv6tK/RmV84g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=WTLwa6Bp; arc=none smtp.client-ip=117.135.210.2
+	s=arc-20240116; t=1791430766; c=relaxed/simple;
+	bh=y/ArmdcIN0oSMG/E817Czleq76IrcT3GDRfKm35t634=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References; b=i/nhhtYFswdBt9vOdC84C0hVAddaC7i3ZoAADfxPa4wXcr3PAN4n6k5X6XRXxJKIPTrcbTuJ7F9bpcuMc1BzY6JKuabqYnq1qXDKQoGueZ06swJW2ipgt8ExmbmgmYH1WsJY6z075/olyMoBwPDp9eyhGFQjy1q5e1DGHvixBy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Ej2bKRSg; arc=none smtp.client-ip=220.197.31.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="WTLwa6Bp"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Ej2bKRSg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=br
-	RJxqNT6EqFF7Z/m/5gnDQF3Ws+MJW+LSRnBiwaYeI=; b=WTLwa6BpUjSr+XT6Tg
-	iyn6QsrQowx7h3dGNjBfRZsIYSkV51QkVUGtzkQHgFWQAZwgZvzj2LKWmqRZOQmU
-	Uev7TmvH2FaiWL9e6HJXdwxQzsjYFYJWdlYFsGULSwsuuLi3QyvgdBo5lIIpgUX/
-	v/cfKDo0yAbwHTZzhswt1e1bs=
+	s=s110527; h=Message-ID:From:To:Subject:Date; bh=y/ArmdcIN0oSMG/
+	E817Czleq76IrcT3GDRfKm35t634=; b=Ej2bKRSgMGlwqq3bn7Uea/8k6QAggDj
+	OpUwNwZodny+X7az1+JdFjFIKbEsEPkdaqZcvUNqOhbcTRONlZKecEsog6JD74Ok
+	qqt4bgqheemOiSKMxfRP1MdJ41vPDGkj+D7HfYLrWMpfqi3OJ3aW8RiqiYAYIJqH
+	yx58U0iW3tZQ=
 Received: from localhost (unknown [])
-	by gzsmtp3 (Coremail) with SMTP id PigvCgDnz61eBMdq74OuDQ--.5313S2;
-	Thu, 08 Oct 2026 10:47:59 +0800 (CST)
+	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wAn3rwxEMdqsY6uDA--.23401S2;
+	Thu, 08 Oct 2026 11:38:26 +0800 (CST)
+Message-ID: <afd4a6b6edf916131a089068c1da84db.sh_def@163.com>
 From: Hui Su <sh_def@163.com>
-To: sched-ext@lists.linux.dev,
-	tj@kernel.org
-Cc: void@manifault.com,
-	arighi@nvidia.com,
+To: Andrea Righi <arighi@nvidia.com>
+Cc: sched-ext@lists.linux.dev,
+	tj@kernel.org,
+	void@manifault.com,
 	changwoo@igalia.com,
 	mingo@redhat.com,
 	peterz@infradead.org,
@@ -40,136 +41,72 @@ Cc: void@manifault.com,
 	mgorman@suse.de,
 	vschneid@redhat.com,
 	kprateek.nayak@amd.com,
-	yphbchou0911@gmail.com,
-	etsal@meta.com,
 	linux-kernel@vger.kernel.org,
-	Hui Su <sh_def@163.com>,
 	stable@vger.kernel.org
-Subject: [PATCH v3] sched_ext: Serialize user DSQ destruction against deferred reenqueues
-Date: Thu,  8 Oct 2026 11:47:53 +0900
-Message-ID: <20261008024753.4096008-1-sh_def@163.com>
-X-Mailer: git-send-email 2.55.0
+Subject: Re: [PATCH] sched_ext: Hold DSQ refs for deferred reenqueues
+Date: Thu, 08 Oct 2026 12:38:06 +0900
+In-Reply-To: <ar0qLeKls0oBUEKO@gpd4>
+References: <20260930143443.2862150-1-sh_def@163.com>
+	<ar0qLeKls0oBUEKO@gpd4>
+X-CM-TRANSID:_____wAn3rwxEMdqsY6uDA--.23401S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tryfArWDur4xZF1fAry3CFg_yoW8uw1UpF
+	WrXr1Ykrs5GrZ7trnrWw4UuFyS9ws3Ja1rGryrGr45uw1Ygw1IyrWxZr17WF4ayrs5Cw1U
+	Zw1fuanrC3yqvaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Ut3kNUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwRKc+2rHEDLiEQAA3I
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PigvCgDnz61eBMdq74OuDQ--.5313S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxXw4UAr4kZw1fXF4xGF1fCrg_yoWrWw1UpF
-	W0qry5Cw45tw42gr4ayw4xAF1fXws3uF43WryfGr4Skwn8uws2vFWIvF17uFs0qrs3Cwnx
-	tFnxK3WDKr4DtaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zi7GYPUUUUU=
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbCwh+kBGrHBF8OEgAA3X
 
-A deferred user-DSQ node can be detached by
-process_deferred_reenq_users() before the DSQ RCU callback reaches
-exit_dsq(). Once detached, exit_dsq() cannot find the node, while the
-deferred path continues using the raw DSQ pointer after dropping
-deferred_reenq_lock. The callback can free the DSQ before the deferred
-path checks its ID or calls reenq_user().
+Hi Andrea,
 
-The first RCU grace period drains producers that found @dsq, but does not
-cover a consumer that detached its request and continues using @dsq.
+On Wed, Sep 30, 2026 at 17:26:37 +0200, Andrea Righi wrote:
+> The race looks real, can you also share the test or the steps used to reproduce
+> this? That would help validate the fix and assess the stable backport.
 
-Avoid adding reference counting to the deferred reenqueue hot path.
-Instead, synchronize the rare destruction path with outstanding users.
-After the initial grace period, take every rq lock with its deferred lock.
-This unlinks requests not yet detached and closes the detach-to-cursor
-window for active consumers. reenq_user() leaves its iteration cursor on
-@dsq->list until its final access. Since destroy_dsq() requires @dsq->nr
-to be zero, a non-empty list after the sweep indicates an outstanding
-cursor; defer reclamation through another RCU callback until it exits.
+I originally observed a crash in this area on an unmodified kernel, but I
+don't have a reliable natural reproducer for that schedule. To validate
+the lifetime issue deterministically, I used a validation-only fixture to
+force the window.
 
-A test-only pre-fix fixture invoked free_dsq_rcufn() after detaching a
-request and before its final DSQ access. KASAN reported the resulting
-use-after-free:
+The pre-fix fixture pauses after process_deferred_reenq_users() detaches
+the request, lets the DSQ be destroyed, and directly runs the reclaim
+callback before the deferred path's final DSQ access. KASAN then reports
+the UAF in run_deferred().
 
-    BUG: KASAN: slab-use-after-free in run_deferred+0x1312/0x1710
-    Read of size 8 at addr ffff8880087009b0 by task swapper/3/0
-    Call Trace:
-     <IRQ>
-     run_deferred+0x1312/0x1710
-     ttwu_do_activate+0x29a/0x600
-     try_to_wake_up+0x815/0x1700
+I ran it on 4-vCPU x86_64 KVM with CONFIG_KASAN_GENERIC=y and
+CONFIG_SCHED_CLASS_EXT=y.
 
-Fixes: 84b1a0ea0b7c ("sched_ext: Implement scx_bpf_dsq_reenq() for user DSQs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hui Su <sh_def@163.com>
----
-Tested on x86_64 KVM:
-- The pre-fix fixture reproduced the UAF under KASAN; the v3 cursor/reclamation
-  case completed without a report.
-- CONFIG_PROVE_LOCKING=y and CONFIG_LOCKDEP=y completed the same test without
-  lockdep warnings.
+For v3, I used a separate active-cursor test. Reclamation stayed deferred
+while the reenq_user() cursor was linked and completed after the cursor
+was removed. KASAN and a separate PROVE_LOCKING/LOCKDEP run were clean.
 
-Changes in v3:
-- Drop the refcount approach per Tejun and move synchronization to rare DSQ
-  destruction.
-- Sweep rq/deferred locks and defer reclamation while a reenq_user() cursor
-  remains active.
-- v2 was accidentally posted without the version tag.
+> Sashiko's ordering concern looks like a false positive to me, at least on
+> sched_ext/for-7.4, both this sequence and exit_dsq() list check are protected by
+> deferred_reenq_lock.
 
-v2 (posted without version tag):
-https://lore.kernel.org/lkml/20260930143443.2862150-1-sh_def@163.com/
----
- kernel/sched/ext/ext.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+> Can we avoid repeatedly queueing RCU callbacks while a detached reenqueue holds
+> a reference?
+>
+> The callback leaves the base reference in place whenever a detached reenqueue is
+> active, then starts another grace period just to check the count again. A long
+> reenq_user() could make this repeat several times.
+>
+> Could the first callback instead drop the base reference, and have whichever
+> side drops the final reference arrange the free? This would avoid polling
+> through repeated RCU callbacks.
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 405d0d1038f8..293e5e223277 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -5579,6 +5579,35 @@ s32 scx_init_dsq(struct scx_dispatch_q *dsq, u64 dsq_id, struct scx_sched *sch)
- 	return 0;
- }
- 
-+/*
-+ * Synchronize DSQ destruction against deferred reenqueues.
-+ *
-+ * Taking each rq lock with its deferred lock removes requests not yet
-+ * detached and closes the detach-to-cursor window. A reenq_user() cursor
-+ * stays linked on @dsq->list until its final DSQ access.
-+ */
-+static bool drain_dsq_reenq_users(struct scx_dispatch_q *dsq)
-+{
-+	s32 cpu;
-+
-+	/* The first RCU grace period has drained producers which found @dsq. */
-+	for_each_possible_cpu(cpu) {
-+		struct scx_dsq_pcpu *pcpu = per_cpu_ptr(dsq->pcpu_user, cpu);
-+		struct scx_deferred_reenq_user *dru = &pcpu->deferred_reenq_user;
-+		struct rq *rq = cpu_rq(cpu);
-+
-+		scoped_guard (rq_lock_irqsave, rq) {
-+			guard(raw_spinlock)(&rq->scx.deferred_reenq_lock);
-+
-+			if (!list_empty(&dru->node))
-+				list_del_init(&dru->node);
-+		}
-+	}
-+
-+	guard(raw_spinlock_irqsave)(&dsq->lock);
-+	return list_empty(&dsq->list);
-+}
-+
- static void exit_dsq(struct scx_dispatch_q *dsq)
- {
- 	s32 cpu;
-@@ -5608,6 +5637,12 @@ static void free_dsq_rcufn(struct rcu_head *rcu)
- {
- 	struct scx_dispatch_q *dsq = container_of(rcu, struct scx_dispatch_q, rcu);
- 
-+	/* An active reenq_user() cursor still references @dsq. */
-+	if (!drain_dsq_reenq_users(dsq)) {
-+		call_rcu(&dsq->rcu, free_dsq_rcufn);
-+		return;
-+	}
-+
- 	exit_dsq(dsq);
- 	kfree(dsq);
- }
+v3 follows Tejun's suggestion to avoid refcounts and leave the deferred
+reenqueue hot path unchanged. The destruction-side sweep serializes with
+deferred-list updates and checks whether a cursor remains. A callback may
+still be retried while an active cursor remains, but that retry is
+confined to DSQ destruction.
 
-base-commit: f2f095c87603b8dfb6752e130d902970371c3852
+v3:
+https://lore.kernel.org/lkml/20261008024753.4096008-1-sh_def@163.com/
+
+Thanks,
+Hui
 
