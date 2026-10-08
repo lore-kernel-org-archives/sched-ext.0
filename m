@@ -1,36 +1,35 @@
-Received: from mta0.migadu.com (out-16.mta0.migadu.com [91.218.175.16])
+Received: from mta0.migadu.com (out-238.mta0.migadu.com [91.218.175.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC9327280A
-	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 04:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9231B43B6FD
+	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 08:37:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791434365; cv=none; b=W88nq5TgTpMUEs7BC7Md8MHv2J6GvIq+6TuSBGukv0o4gK5JdvZ4hp4zW24IMkY19OmmJEa4VB23KJ8rdFOJvhcY80UFgeA9T4UK9e75eVpWt0ZyCUipVpnItaxObu0yAvPx9Pb0yKRBgQwXhqNfdHmJr/GbvZRaoK1qlNvdg9E=
+	t=1791448632; cv=none; b=JF/FAq8DLQaHrm4KuGKVUygmFZydaWa3Bx/7Lvx2G4zPlxsQOaVqzaqkO49KHuY/rGG9uBnKuZX6BgvsQnMbsv/TiT0RONJcoShGBtSWIylsYl16gIochTSDvIXNBIPO7FHCGOmgkymdoFHoFyCZKt1yW9pU0SW2GPdxOcUtR74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791434365; c=relaxed/simple;
-	bh=Rx/tqj4wkyZ6VSBTAWBfFMGKzOaN07eLyd4U5584Wl8=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AOr4+HbDhaeZjFmg2Gg7rNRhxX+BGuQE0xnSC67qNT4BKIG9UsaQJ1vQGAa/qO35R0dHi/7rkto/5OSEqMXlEvgY0IFAaosWEjKWnZQNSf/Tom4x1LWk1/w1vhQ70KSb2ZvfigKlVWP63WShX5NErb5xyKOqqH0+uLYLrMb77a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Co8pMymN; arc=none smtp.client-ip=91.218.175.16
+	s=arc-20240116; t=1791448632; c=relaxed/simple;
+	bh=DHTTVgODp6yUSc1x8tQK6NVV9QMxY64le1uUbe0521I=;
+	h=Message-ID:Date:MIME-Version:Cc:To:From:Subject:Content-Type; b=Zstr97KUANeX7tmSX+uwLgRP6Krj6pxvA/wo55ObxSybLfnysvv3erhY/de5n2Kudij7Bv6MyZYdrU/lwWDwhcLyGAvVVTe860Wrg2VgAN0q7BZ6aotUGrSFONFwdkEgp5oaVtGTtJVDmVNZiEBGwOt1GDrdhJV4uqyYaYYyVeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=OX/vYd5h; arc=none smtp.client-ip=91.218.175.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Co8pMymN"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="OX/vYd5h"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Rx/tqj4wkyZ6VSBTAWBfFMGKzOaN07eLyd4U5584Wl8=;
+DKIM-Signature: a=rsa-sha256; bh=DHTTVgODp6yUSc1x8tQK6NVV9QMxY64le1uUbe0521I=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791434361; v=1; x=1792039161;
- b=Co8pMymNq6jUiNTUkebwzeriYuzG4Ivrcs+qPDWGV8nUoJZ8KyGVcL21+6C2aR8KHyahPgFq
- mcLVKku8yvVx3Vi3zrCSqxeLBk7HmIzkBDDQXENBJBbHaAGixu+AgCRh+NlyoJhhfRx3z2g2Uzr
- 6aYxbMITTbku9F3ZNQgLdPq8=
+ t=1791448628; v=1; x=1792053428;
+ b=OX/vYd5h0ooBZZOaiUp+VToYIl/E4129Vncp8pOgJe7oAEl93J8kHLkdQK+zrmdELhHYRLl3
+ V3H8v4BZxV3INFC8ofw6/4fV1VenUpeX4gCi4NCWcT1d7OWzLnyLR/7MMn88HyB/2RjY5VDCAgy
+ 1Ii1po/OWY+jdBFNy01OmgIE=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 2d52907cc6520490;
-	Thu, 08 Oct 2026 04:39:20 +0000
-X-Mizu-Trace-ID: 2d52907cc6520490
+Received: by smtp.migadu.com with ESMTPS id 96be384c8d6a9df7;
+	Thu, 08 Oct 2026 08:36:58 +0000
+X-Mizu-Trace-ID: 96be384c8d6a9df7
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <8fd657b9-4bd4-48a4-a359-62096ba14bec@linux.dev>
-Date: Thu, 8 Oct 2026 12:39:12 +0800
+Message-ID: <163e2397-0e3e-4cc0-842b-0d36598d13d7@linux.dev>
+Date: Thu, 8 Oct 2026 16:36:49 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -38,179 +37,90 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, sched-ext@lists.linux.dev,
- linux-kernel@vger.kernel.org, Emil Tsalapatis <emil@etsalapatis.com>,
- David Dai <david.dai@linux.dev>
-Subject: Re: [PATCH sched_ext/for-7.4] sched_ext: Clear a sub-scheduler's caps
- before ops.sub_detach()
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
- Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>
-References: <b46300eda6da03d56262fcdcbfc9b4fa@kernel.org>
+Cc: cui.tao@linux.dev, David Vernet <void@manifault.com>,
+ sched-ext@lists.linux.dev, Andrea Righi <arighi@nvidia.com>,
+ linux-kernel@vger.kernel.org, Changwoo Min <changwoo@igalia.com>
+To: Tejun Heo <tj@kernel.org>
 From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <b46300eda6da03d56262fcdcbfc9b4fa@kernel.org>
+Subject: [REPORT] sched_ext: sub-scheduler tasks are severely under-scheduled
+ vs root-owned tasks
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 Hello Tejun,
 
-在 2026/10/7 04:31, Tejun Heo 写道:
-> A sub-scheduler can leave standing state behind on the cids delegated to it,
-> cpuperf targets being the obvious case, and the kernel does not track who
-> wrote it. Restoring it is the parent's job and ops.sub_detach() is the place
-> for it. Today the parent can't rely on that: the dying sub-scheduler keeps
-> every cap until it is marked dead after ops.exit(), so its ops.exit() or a
-> late timer can write after the parent has cleaned up.
-> 
-> Clear every cap of the sub-scheduler before ops.sub_detach(). The pshard
-> caps go first as a pending sync recomputes ecaps from them, and ecaps are
-> then zeroed directly. A grant racing the clear is refused under the child's
-> pshard lock, so nothing hands the caps back.
-> 
-> Fixes: 86094b95efcf ("sched_ext: Add per-shard cap delegation for sub-schedulers")
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
-> Applied to sched_ext/for-7.4.
-> 
+During recent testing of the sub-scheduler attach flow, I hit what
+looks like a dispatch starvation for claimed tasks and want to check
+whether it's a known limitation of the sub-sched dispatch model before
+digging further.
 
-Tested this patch on a kvm guest running a sched_ext/for-7.4 based
-tree with the patch applied, using a pair of cid-form test schedulers:
-a parent that grants SCX_CAP_PERF | SCX_CAP_ENQ_IMMED on a cgroup to a
-child, and the child writing cpuperf target 1 from ops.tick(). The
-parent either restores SCX_CPUPERF_ONE for the delegated cids in
-ops.sub_detach() or does nothing, and rq->scx.cpuperf_target is
-sampled every second.
+Setup:
 
-With a restoring parent: the child writes target 1 while alive; after
-SIGTERM and disable, the parent's ops.sub_detach() write of
-SCX_CPUPERF_ONE lands and stays - the child's ops.exit() and timers no
-longer overtake the parent's cleanup, which is exactly the gap this
-patch closes.
+A kvm guest (4 vCPUs, HZ=1000) running a sched_ext/for-7.4 based tree
+with the caps-clear patch applied. A pair of minimal cid-form test
+schedulers: a parent that grants SCX_CAP_PERF | SCX_CAP_ENQ_IMMED over
+a cgroup to a child, and the child writing cpuperf target 1 from
+ops.tick(). A busy-loop task (`taskset 1 sh -c 'while :; do :; done'`)
+is placed in the child's cgroup (pinned to cpu0), and
+rq->scx.cpuperf_target plus per-task CPU time are sampled every second.
 
-With a parent that does not restore: the child's last written target
-persists after the child goes away, as expected from treating the
-target as last-writer-wins state.
+Two attach orders are tested:
+(a) the busy-loop task is moved into the cgroup before the child
+    attaches;
+(b) the task is moved in after the child attaches.
 
-Both runs are clean with lockdep enabled (no warnings or splats).
+Observation:
 
-Tested-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Order (a), 8 rounds: the child claims the task in every round
+(verified: the enable walk's handover fires, p->scx.sched == child),
+but the task then runs at ~0.3% duty cycle - it accumulates 0 or
+~20-27 ticks per 10s window (one SCX_SLICE_DFL slice) while an
+identical task owned by the parent runs at ~100% (1000 ticks/s).
+
+Order (b), 8 rounds: the child claims the task via the migration path
+and the task runs normally (no starvation observed in 16 rounds across
+two parent-load conditions).
+
+Based on the current test data, the disparity is ~300x: root-owned
+tasks run at full duty while child-owned tasks get one slice and then
+starve. The starvation is silent: attach succeeds, the grant succeeds,
+the task's cgroup membership is correct - there is no error, warning,
+or counter that indicates anything is wrong.
+
+Probes and exclusions:
+
+- ops.dispatch() for the child's cid is never invoked: a counter
+  bumped in ops.dispatch() when cid == 0 stays 0 across entire runs,
+  including rounds where the task is starved.
+- ops.tick() for the child fires only when the task actually runs
+  (the tick count matches the starved duty cycle).
+- The parent's ops.dispatch() delegation via
+  scx_bpf_sub_dispatch(cgroup_id) does not change the behavior.
+- An explicit scx_bpf_kick_cid() on the task's cid in ops.enqueue()
+  does not change the behavior.
+- The enable walk's claim is verified: pass 1 (init) and pass 2
+  (handover) both process the task, and a post-handover ownership
+  check (scx_task_on_sched()) passes.
+- Adding a root-owned busy task on another CPU raises the failure rate
+  from ~25% to ~100%, which suggests the claimed task only gets to run
+  when some unrelated event runs balance on its CPU.
+
+This is independent of the caps-clear patch (it reproduces with and
+without it). The root cause is likely in the sub-sched attach->dispatch
+path itself, so any sub-scheduler deployment would be affected.
+
+Questions:
+
+1. Is this a known gap in the sub-sched dispatch model - claimed tasks
+   on idle CPUs waiting for a delegation that only happens when the
+   parent's dispatch runs for that CPU?
+2. Is the intended pattern for parents to kick CPUs on the child's
+   behalf (scx_bpf_kick_cid() after grant/claim), or should the core
+   route the balance to the child?
+
+The repro is deterministic (8/8 rounds with the starvation in order
+(a) under root-side load).
 
 Thanks.
 --
 Tao
-
->  kernel/sched/ext/internal.h |    7 ++++++
->  kernel/sched/ext/sub.c      |   49 ++++++++++++++++++++++++++++++++++++++++----
->  2 files changed, 52 insertions(+), 4 deletions(-)
-> 
-> --- a/kernel/sched/ext/internal.h
-> +++ b/kernel/sched/ext/internal.h
-> @@ -828,6 +828,10 @@ struct sched_ext_ops {
->  	/**
->  	 * @sub_detach: Detach a sub-scheduler
->  	 * @args: argument container, see the struct definition
-> +	 *
-> +	 * The sub-scheduler holds no caps by this point and can no longer
-> +	 * affect any cid. Whatever was delegated to it, e.g. cpuperf targets,
-> +	 * is the parent's to restore here.
->  	 */
->  	void (*sub_detach)(struct scx_sub_detach_args *args);
->  
-> @@ -911,6 +915,9 @@ struct sched_ext_ops {
->  	 * ops.exit() is also called on ops.init() failure, which is a bit
->  	 * unusual. This is to allow rich reporting through @info on how
->  	 * ops.init() failed.
-> +	 *
-> +	 * A sub-scheduler holds no caps by the time ops.exit() runs. Its
-> +	 * cap-gated kfuncs are denied.
->  	 */
->  	void (*exit)(struct scx_exit_info *info);
->  
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
-> @@ -1154,6 +1154,34 @@ void scx_offline_ecaps(struct rq *rq)
->  }
->  
->  /*
-> + * Clear every cap @sch holds. The pshard caps go first as they are the source a
-> + * pending sync recomputes ecaps from. ecaps are then zeroed directly for the
-> + * cap checks.
-> + */
-> +static void clear_all_caps(struct scx_sched *sch)
-> +{
-> +	s32 si, cpu;
-> +	u32 cap_bit;
-> +
-> +	/* enable may have failed before scx_alloc_pshards() */
-> +	if (!sch->pshard)
-> +		return;
-> +
-> +	for (si = 0; si < sch->nr_pshards; si++) {
-> +		struct scx_pshard *ps = sch->pshard[si];
-> +
-> +		guard(raw_spinlock_irqsave)(&ps->lock);
-> +		for (cap_bit = 0; cap_bit < __SCX_NR_CAPS; cap_bit++)
-> +			scx_cmask_clear(&ps->caps[cap_bit].cmask);
-> +	}
-> +
-> +	for_each_possible_cpu(cpu) {
-> +		guard(rq_lock_irqsave)(cpu_rq(cpu));
-> +		WRITE_ONCE(per_cpu_ptr(sch->pcpu, cpu)->ecaps, 0);
-> +	}
-> +}
-> +
-> +/*
->   * @pcpu's sched was unhashed before the grace period, so nothing re-queues its
->   * sync node. Remove the node from @rq's pending list so the pcpu can be freed.
->   */
-> @@ -1628,6 +1656,12 @@ dump:
->  
->  	scx_unlink_sched(sch);
->  
-> +	/*
-> +	 * The parent restores what it delegated in ops.sub_detach(). @sch must
-> +	 * hold no caps by then.
-> +	 */
-> +	clear_all_caps(sch);
-> +
->  	mutex_unlock(&scx_enable_mutex);
->  
->  	/*
-> @@ -2306,8 +2340,8 @@ static s32 sub_cap_preamble(u64 cgroup_i
->   * All-or-nothing keeps the caller-visible result binary per cid, so the denied
->   * mask is one mask to interpret rather than a per-cap matrix.
->   *
-> - * Return 0 on full success, -EPERM if any cid was refused, or a negative
-> - * errno on other failures.
-> + * Return 0 on full success, -EPERM if any cid was refused, -ENODEV if the child
-> + * is gone or being disabled, or a negative errno on other failures.
->   */
->  __bpf_kfunc s32 scx_bpf_sub_grant(u64 cgroup_id, u64 caps,
->  				  const struct scx_cmask *cmask__arena,
-> @@ -2361,6 +2395,12 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cg
->  		scoped_guard (raw_spinlock, &pps->lock) {
->  			guard(raw_spinlock_nested)(&cps->lock);
->  
-> +			/* the child is being disabled, see clear_all_caps() */
-> +			if (unlikely(READ_ONCE(child->aborting))) {
-> +				ret = -ENODEV;
-> +				goto out;
-> +			}
-> +
->  			/*
->  			 * Narrow granted_cids to cids the parent holds every
->  			 * requested cap on. All-or-nothing per cid.
-> @@ -2413,9 +2453,10 @@ __bpf_kfunc s32 scx_bpf_sub_grant(u64 cg
->  		}
->  	}
->  
-> +	ret = any_denied ? -EPERM : 0;
-> +out:
->  	caps_updated_deliver(&to_deliver);
-> -
-> -	return any_denied ? -EPERM : 0;
-> +	return ret;
->  }
->  
->  /**
-
