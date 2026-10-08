@@ -1,86 +1,96 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-1.mta0.migadu.com [91.218.175.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDED127280A
-	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 03:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1D935F164
+	for <sched-ext@lists.linux.dev>; Thu,  8 Oct 2026 04:37:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791431733; cv=none; b=YBJbvAZmNieiK44eZtRI3xfkqBv8Sb2aMlWGwsahHOXAF21pkgODT4JxrXhUjJMlMl0e+aid8yntcHS5bilfs8zmS8o0rajzFFQ8e/Aa52mkbC3mIsJbRSEVJBHgMC/pprEyr5MlW2edQbUEadB59DRSexsx8P1xTm6a8OiM+Hw=
+	t=1791434263; cv=none; b=s68nl9Gm/HB0mkDqW5vvY+KH6MjBIveGqyr0zrTy/anJMF5EQCemZOVfyE8KXEWX1mUbuwQPC3cbF3lUEFHxwctD73+Ak5+lr/Z7A3JaCU/CbR76gtkG0R1NgCM0/B6kQmtwE8ix+nP00MxUzCF+XygtG/4YJg2tBXIC84K675k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791431733; c=relaxed/simple;
-	bh=3uY3LF59sQ0FPvnkPdI0ps87lsfnomv1fTVpGw8r628=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References; b=mhsGl1IJDzw4CatAkwqbs/Nm+RMxO56BZ645Tv++b71A2URizyZeCC45XChCqsdwHP3MRA8wj/Qip3IYxk4/BXGzIRfuBuiwT8mKO0dW2nluSQ49lT77iJoEenHARvTCBLSBCIC2aYvhkT/9pWUNUDnW52Cn36S4WgCIgpS1LGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=TbG+kg4o; arc=none smtp.client-ip=117.135.210.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1791434263; c=relaxed/simple;
+	bh=zswWcY3O4XMtqWpBvYq+kaP2EnDqfQnml08FwKVJWKY=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=TDzOa7bAkpTHZIfpEzHTeMNgkRth+xFTYMelgm3NdKaM74eCECvs4eal4cSeYKy4qpJOMys5xo1NSTrIBCKLSxSz7fvdCcHx1tvIrbGaHApInJlGbu6UYydtS260azpZdbBZqjCtmPaUPTD6qulhtLIt7Zq+cYqOAkOLu8gwx4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=fNAR9wBQ; arc=none smtp.client-ip=91.218.175.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="TbG+kg4o"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:From:To:Subject:Date; bh=3uY3LF59sQ0FPvn
-	kPdI0ps87lsfnomv1fTVpGw8r628=; b=TbG+kg4oAr4l4Po11aV/BQp88w+kmRt
-	XiZrRLHoJOx0e1rbkUG8j+R+kUSXfSuCSkzeppHdTFrKLTY3EDTVMlZAwq5HOeMW
-	jACdDUcGfXMPVgqlGyocnYKLqMrilhzqPR1iL4EcZwjjush0EPjCsRAkr65FwMGj
-	znxQzjS5haVw=
-Received: from localhost (unknown [])
-	by gzsmtp1 (Coremail) with SMTP id PCgvCgDntRbzE8dq_0uECw--.42544S2;
-	Thu, 08 Oct 2026 11:54:28 +0800 (CST)
-Message-ID: <c672e085a5334a02709a891d447ab857.sh_def@163.com>
-From: Hui Su <sh_def@163.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	mingo@redhat.com,
-	peterz@infradead.org,
-	juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	kprateek.nayak@amd.com,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Hold DSQ refs for deferred reenqueues
-Date: Thu, 08 Oct 2026 12:41:18 +0900
-In-Reply-To: <ar1DqN6Ek2VwYLwO@slm.duckdns.org>
-References: <20260930143443.2862150-1-sh_def@163.com>
-	<68e1d1e0cdfc633520a6593fdcdb3b72.sh_def@163.com>
-	<ar1DqN6Ek2VwYLwO@slm.duckdns.org>
-X-CM-TRANSID:PCgvCgDntRbzE8dq_0uECw--.42544S2
-X-Coremail-Antispam: 1Uf129KBjvdXoWruFWDCFWDZrWkXF45CFWfXwb_yoWfZrc_Wr
-	WDtr97K3s5Kr4ktr15KF4I9asxKay3WFyUJFWrGry3tr95J3909an3Crn3urykJ3y0qrnI
-	krn0yryIgw4a9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU1qg4PUUUUU==
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6RSO7WrHE-RPxgAA3d
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="fNAR9wBQ"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=zswWcY3O4XMtqWpBvYq+kaP2EnDqfQnml08FwKVJWKY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791434258; v=1; x=1792039058;
+ b=fNAR9wBQZUepaQQQIFHycEfPSg1BJPM3lzJTjeGXv4VY8cOUa8Mafm7uWGNmoPq0/Ri40HTO
+ mWkJxkR68D4xEHxQ3WobSg7xfyzJnn9Z4oEtHFBre43ttd+O6LBUpPVx8Kb3hhplRaoNizMZs7k
+ NE51MrgdfOvduFjyGbC1iak8=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id d4fbcb3a582d4224;
+	Thu, 08 Oct 2026 04:37:28 +0000
+X-Mizu-Trace-ID: d4fbcb3a582d4224
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <0cca2cd5-b45d-4658-a690-40e54720b952@linux.dev>
+Date: Thu, 8 Oct 2026 12:37:21 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: cui.tao@linux.dev, Tao Cui <cuitao@kylinos.cn>,
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
+ David Vernet <void@manifault.com>, linux-kernel@vger.kernel.org,
+ sched-ext@lists.linux.dev
+Subject: Re: [PATCH v2] sched_ext: Reset cpuperf_target when a sub loses
+ SCX_CAP_PERF or dies
+To: Tejun Heo <tj@kernel.org>
+References: <20261006142834.2815197-1-cui.tao@linux.dev>
+ <4bc0c5e88d602dcbc886b1214c676c8d@kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <4bc0c5e88d602dcbc886b1214c676c8d@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Tejun,
+Hello Tejun,
 
-On Wed, Sep 30, 2026 at 07:15:20AM -1000, Tejun Heo wrote:
-> Can you try to do it without refcnts? DSQ destructions are rare events and
-> we can reliably detect whether the DSQ is full or not. I'd much rather make
-> the destruction path expensive than adding refcnt to hot paths.
+在 2026/10/7 03:31, Tejun Heo 写道:
+> Hello, Tao.
+> 
+> On Tue, Oct 06, 2026 at 10:28:34PM +0800, Tao Cui wrote:
+>> Fix it by restoring the neutral base that the root scheduler establishes
+>> at enable time, at every point where a writer loses the ability to
+>> write:
+> 
+> I don't think the kernel should be picking a value here. The cpuperf target
+> is last-writer-wins state with no owner tracking, and the only value the
+> kernel ever imposes is the initialization at enable. If a parent grants
+> SCX_CAP_PERF to a child, it should expect the child to have changed the
+> targets, and restoring them after a revoke or in ops.sub_detach() is the
+> parent's responsibility. The root holds every cap and a sub-sched parent
+> holds PERF wherever it could grant it, so the rewrite always has the cap.
+> 
+> There is a gap on the kernel side which makes that unreliable right now.
+> ops.sub_detach() runs before the child's ops.exit() and before the child
+> loses kfunc access, so a child timer or its ops.exit() can still write
+> after the parent has cleaned up. I'll post a patch which drops the dying
+> child's caps before ops.sub_detach() so that the child is inert by the time
+> the parent is notified.
+> 
 
-Thanks. v3 follows this direction and adds no refcounting to the deferred
-reenqueue path. After the initial grace period, the destruction callback
-sweeps the per-CPU deferred lists under the rq lock followed by
-deferred_reenq_lock, then checks the DSQ list under its lock. If the list is
-still non-empty, it retries the callback, which also covers the case where
-an active reenq_user() cursor remains; otherwise it proceeds with final
-reclamation.
+Fair points. I conflated "the kernel can see a writer go away" with
+"the kernel should fix the value". Treating the cpuperf target as
+last-writer-wins with enable-time initialization as the only value the
+kernel imposes is a cleaner contract, and whoever granted the cap is
+the right owner for restoring targets after a revoke. I'm dropping my
+patch.
 
-This keeps the additional synchronization on the rare DSQ destruction path.
+Thanks.
+--
+Tao
 
-v3:
-https://lore.kernel.org/lkml/20261008024753.4096008-1-sh_def@163.com/
-
-Thanks,
-Hui
+> Thanks.
+> 
+> --
+> tejun
 
