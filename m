@@ -1,32 +1,32 @@
-Received: from mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+Received: from mta0.migadu.com (out-196.mta0.migadu.com [91.218.175.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260504766A8
-	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 13:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD924E06F1
+	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 13:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791553236; cv=none; b=qyIYA0nJkRC0CiEh8d/KM4RzqzOo5Qdm+80Pja0PcFZ86fmrU2CWX75l++Qda/31HRuTzGJ2dCj2BnnYSQQ+jp8ji/9hvjkvhHsiLTXHo30+ib54p0If/oRr6N1SFkQmS4DZ7uoImt+K8gs17pyGWCtHgg5Hhnt8XFRjM2VNfAY=
+	t=1791553284; cv=none; b=c2EkINm5DhosKWjejfdPoY0VLgSQskYpKM+LsR+KzfWr58y32+RO+4ZSRObQa40CV137cVCAwWI4focnABdzsSSAq84j1RsRPv73e4apdhQQEVLBhdMU+0XSVxbnbfkNs/F91ou5ObsFHkTAKROOc0t5JNZC9mxKY7L6o2BuqYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791553236; c=relaxed/simple;
+	s=arc-20240116; t=1791553284; c=relaxed/simple;
 	bh=gCdjZFwhGZ/EUK4Xd6SSN7hZ8GPt++/qjICTFixal/4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=owvUs3022h9yWSc1KInhbDyBiB0F3oelKm4mRKU1ssT/dc6qiHuFqzOJS9up2MoUDfjqODwlkdH9HDkpVWzB3qgHXBwEbf6tMlJuVlmkC1FmCXtX5Ha5xUphBxuNlk/TaEbE65kL6hDmLlvES84Vrk7kOaJAQMfjdYxt8uedvTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pi3e0QTG; arc=none smtp.client-ip=91.218.175.179
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XzWsQOnnqOYI2pYYchnBgsmA9EZnLVA5v9PgRaaG6qb5Oo3A6QtckRp5nryszby/9VMSILqxIXOugCN4h+hHhv8GnvH8Lzh2Ha9ICVPkFrvC+Qd/cDM+2001uqg5RjYjiTqPvlll5GuaYnInldg+eZfHiLM7kEnsJlU3KhJQozo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WSUHaIgA; arc=none smtp.client-ip=91.218.175.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pi3e0QTG"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WSUHaIgA"
 X-Envelope-To: sched-ext@lists.linux.dev
 DKIM-Signature: a=rsa-sha256; bh=gCdjZFwhGZ/EUK4Xd6SSN7hZ8GPt++/qjICTFixal/4=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791553230; v=1; x=1792158030;
- b=pi3e0QTGK/8bmM6HK/qHkcZMNognmmqDQ5GJViJnLMw48o7tGrOsyHZbGoDahkdI5NKVH61/
- c8yP+qOfbHEHo4iJ5bZ1+uti0lx/sAMM81dIzP/pqAgvHiW1TcWnPN4h4pN+KV70xPZ9FUKqj/t
- 1JcpBjktVGAIQjByVcUegY7Y=
+ t=1791553279; v=1; x=1792158079;
+ b=WSUHaIgAch4VVYXIMy+BGmTe+pquHxNA9ETEW44Zm3ehkRmI9xTbdYwjPJu1MaBKnKAEyuRE
+ 0CNkSHBC5S+rGAVcxgppHJxCU1bY12CRga5T+V2T5YYQXQdoqKFE1gfKU27VMLU1SALGxOLDhzH
+ 1MjaAWqt7cnsuIKoA25XptYQ=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 71c37f6ce2736980;
-	Fri, 09 Oct 2026 13:40:29 +0000
-X-Mizu-Trace-ID: 71c37f6ce2736980
+Received: by smtp.migadu.com with ESMTPS id cdb6281781367fb1;
+	Fri, 09 Oct 2026 13:41:19 +0000
+X-Mizu-Trace-ID: cdb6281781367fb1
 X-Migadu-Flow: FLOW_OUT
 From: Tao Cui <cui.tao@linux.dev>
 To: Tejun Heo <tj@kernel.org>
@@ -37,8 +37,8 @@ Cc: David Vernet <void@manifault.com>,
 	cui.tao@linux.dev,
 	Tao Cui <cuitao@kylinos.cn>
 Subject: [PATCH 0/5] sched_ext: selftest infrastructure fixes
-Date: Fri,  9 Oct 2026 21:40:14 +0800
-Message-ID: <20261009134020.296763-1-cui.tao@linux.dev>
+Date: Fri,  9 Oct 2026 21:40:59 +0800
+Message-ID: <20261009134104.296891-1-cui.tao@linux.dev>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
