@@ -1,95 +1,94 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68144E73D6
-	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 14:47:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35913D1AA6
+	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 14:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557258; cv=pass; b=E+l/oe0FCMIJvejoGIoaQF7bSgmNKshYQu08WwHz1shPcgEXQJRHfRnawFAGl+uVCRYXAW/EGehU8+deS0KwaWcLus3HUPAUhozP5YYhbGFyuK5gjXfabuvbvVD9KAEgEhl6cychB0XGm3bBjfsRZjpXQB80CuorOnHTyMo3NdM=
+	t=1791557830; cv=pass; b=IBb7r0isx6DbiLCCqXC3u3b+05SYVSD4u2Yx3YCZkxn88+pROIiYj/umnc1vybtd2zQxvsjgRH8+cBEkCo3eYzmA50aFtCD54Zb36BZ0wF0fOeLfw5S4ntLQ0qM0EX/iYZIA5CfkwTgt65G3GouwM/Qa9HX6j+fIbZ1p823QF4M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557258; c=relaxed/simple;
-	bh=Blo9bZJVD6llKnlgZ8v9dI0/4WMj577+qqF42yQZww8=;
+	s=arc-20240116; t=1791557830; c=relaxed/simple;
+	bh=7FMDwtFaggzwsWZRhAsGBAF1FXfEG2DezAZSb3qCdh4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gZ/tx7ux/OeJrHQ4f2N1oXwtt7vZW12GtCCixR/RKMSRyF1Hub2xNF8O2vMmuZra5NmocEdD/kpRLuifhGeEQbq7PXb8S+dXBRq0YEr4pLaSLaqk6mj7HmQfsfe+Vq50YVpcorrq5CEOAk7ihgSRxU77WJiIHI3dGbgNlQpHaMc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MggnRDVc; arc=pass smtp.client-ip=209.85.208.50
+	 To:Cc:Content-Type; b=Ipt4Qq+LInafIbxhFB4GMf1yx5U0IBINEZmSFdymloPurM9QU923uzROdiub1RQ7lcJFvKTLvtolIbcKS/jmBvvlVfXtYQQr1A1nITU/88UTHigMSotBlMtPkDfpSB8fypiaQYzcVTIwo1nOinEs+6AVpt2P1bd4KkvI2bzntok=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tXtSQUuw; arc=pass smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MggnRDVc"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6b170129413so2159603a12.1
-        for <sched-ext@lists.linux.dev>; Fri, 09 Oct 2026 07:47:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791557255; cv=none;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tXtSQUuw"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6acb9c018ffso3216190a12.1
+        for <sched-ext@lists.linux.dev>; Fri, 09 Oct 2026 07:57:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791557826; cv=none;
         d=google.com; s=arc-20260327;
-        b=CunDgT3ibxdlrjhbdZTG5JaAckd/uSMtevIf7mLJItA9WI/YNm5O9lgqwxa8oPeQrw
-         4B+AqA5y4s53OLVbkkrzfG6XE862GsJ4nTLz2adMLMMJrOqiwaAXD/IcFOvY8yS3JNzO
-         sHkYwqhDRMZwwAWHHVTkGIEC/NZnBxmvINITLvuMMedAEFwfk6GeN+oci0xfhPFS3sqy
-         lWxwUJ2plykX7FFXUVV7CUrpzFUl2zZ4gCgPuuA+HT6Mocsv3wl5ySxGFEYCsrYYbIEP
-         U+G9g5N/qeEOz2WzeaIMg+ZFGtgJkYnD/s0K9IxfXKpnbUjQho798yzmTTxuzfbKq97H
-         CIGw==
+        b=nl5Uq5/M1G1DA5vt2v6NzMhgNskoE9zUcDz9GMDXb4CGnQ/RNIrQn7IJeXB+j/gPfn
+         bv8SAIyWA0xXib+z0R4d7I1fXww95YZ2+OPnmYykK9aNfLYkUgmGq9VciiZbqWSowtCI
+         LFgdcLfHl/qjvdBQCDqpQIYImpOmW4K6l2lx9+Wc8z/7zlZGgJr+24RSGMXISyTagWb2
+         ji8ZJAfOB10ke1xE3dvmiaX7TDamL7ZfSJTp+S0GPzBuC6SV4NB5P7bBEbCmT8EOULCk
+         R91gpU26dwVc2wV6fUPpRT58x+Fg3a8YZXIRmCPWtJaTXda69Gnud9/JDnndfoVx+0wg
+         Fg+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=fYrhqlvlDqZyhpHYosM1z+TE4xAbOSyFmrTsse4+jk4=;
-        fh=zokDH3sNesGZtjXqrRb0B0Op9ZtC95HQScK2Zi6xhAM=;
-        b=PlIWUC7BdgmsKnbWlGekXQkzUASLYp/jgaiGUSWQ+/KrBUtl2b0oi9q0Tj0ePlBbZc
-         Am/wf84sfGnVBIZOl0A/o38tCHi5vGSl0pDwKB8emY4tk4+e+t/JtQ0dgjskF1Fp3N2H
-         ESziRFdUKEyrmhyNW75CSBgHoyu6b1FWR1K2UiBCNvxJ10cKdgSlDpWivJajnlHHEIgX
-         Wpx9wr/rDjdbXgEmYTuJRTu2ePUF6KKhu+nSMeOllgTO342ovDyOkgP/nkw6Auo5fPqz
-         KPqtKM1qXH/nFOtp2QSAyuMII2CtkFL377R6vVDRepX1Bv7jxbl5IKMqlRwQutkdRhu7
-         YaTg==;
+        bh=9SUnuP/9pVrP+Sunop9ePoVz110aW+tgJ5DFz5LYCdA=;
+        fh=ZojTZs2S0kMQatZ9lC25ikVmAl3p9J9QsqGaopyELZw=;
+        b=fAHllawi2xRaOVYC9M2ZqwB7nDkltn8xKIhdCXAzbfYhtOrcvZwblFCde6964GpSb2
+         WfiRwcYD78wBP3JMRHtiSE8dPJwBw6LhB1ETo3Nh2YXRy8mO0Ll6OGwTalrcDt2t9Bp/
+         J0jR5w6xohLbAcgLJ7VrBMd//tBAy5dSePG0NhvD4i1Eq1HnNBokPsSlx+VCul2/9RSC
+         ZtoTJnNkydIvRAWTfZF1iE7M6Jj9B/xNQlojZ/14ZLE9QAymLHje2/gZeMb33OmCcff8
+         i9upwwip1DRmotx/ug3ZZpmpJgOrv1TUSPtSZak7Kfjlif+Muu9MewwnBxcL4JoU6/fw
+         MXbA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1791557255; x=1792162055; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1791557826; x=1792162626; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fYrhqlvlDqZyhpHYosM1z+TE4xAbOSyFmrTsse4+jk4=;
-        b=MggnRDVcP3B/OxXMPIoCuhYo35scGU6/2cBSoOpXEMj2nHmU98XVMB/+Mf27Qrt7/h
-         aAJlQfe/L36xx5LJxBy0LBEDLprYq3tqMYEGh5+WDfHealDW1E/2Gnm+8+EyqSF1ibbw
-         brdEgyXKn6t/6MrlVTg8d+rNfEUhsEq1oqaUwv6k8xOV6LjvRBu5krBPtoCxb/pGll29
-         84BeQVuHy2HUiTDImUMfIZEBAGhI6wB5MnjPqUjxJj7zfh0GYNS1/vSm1TB+9xUaf/s+
-         ugw7sm2rrUpmlvneae3so53rMCHsjRNHaWftN3k0Ln/okVQmO7xJ23z0gAN+2RRrP/MY
-         2Qnw==
+        bh=9SUnuP/9pVrP+Sunop9ePoVz110aW+tgJ5DFz5LYCdA=;
+        b=tXtSQUuw2EuB1Hu/enuxlCYaSxOe89juCAKsrE7XdMOi87zu2C00lAamNDhgxQi3Jg
+         VSltMfOeJXnIVr/3r1zzYqPyP0oQ+b/KqSZ9QISPiad3mOlZuc20GBaznlYAqlVTVcyo
+         aoRA9uDHrbeyOmHrHFJDgNtG3WG130YMERaudesLUG4g87+YineZm7qJF8lcEICqR8xt
+         b9HWkRyECQUx67fq5+vzCYFYkWLVvutmjHF+v82gFNGCKrrkg1ULRxVoqkxvjEu5I11u
+         oHkkJIjmxiymfcDwB6ZNGJOf/nymQimLntQkXi0DL2y+8myy6Z1g60UR3BSv+8DzLLY6
+         e2SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791557255; x=1792162055;
+        d=1e100.net; s=20260707; t=1791557826; x=1792162626;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=fYrhqlvlDqZyhpHYosM1z+TE4xAbOSyFmrTsse4+jk4=;
-        b=nGpXh23/7FvnGvE5RwrqryiG0jmi3z972Vf7yrdMM5ToUUt7CBa2kD3CYoQ2AZh4or
-         TvTHTwoQYXR0+MQP1OxNbkPhqdHEliMmTQy4Ey+P5E9fzysBry/i//u/SU+KeFDLX5Lc
-         l6j05imG9y2g9RVuFyH383wubeiOte3CeMmM4aGglH7bde2iz0X5MKB+J4a7V+SKTnXF
-         riYQSl/d8pxKXuVnbphEfHP0//DEejgTXDXJm5gVV3gdTjazVdeEQqKFCw7q4cwoIRUQ
-         ZRjh0pszYOU9RFKQ1lLFnpTI5UBdHIcRoB/Y2jxiKm9kcXLyhr5xIPeYjYRV7KE2NpAr
-         VLlA==
-X-Forwarded-Encrypted: i=1; AKwUvBx5nGpBir7V0Rh8Td8tXkQJg7b4OEmR+kl0j2v2WggXuGhg8+ugDjXfOlH+yo79YbL2dtHDEf77R3g=@lists.linux.dev
-X-Gm-Message-State: AFq9FYIzjNpITckiWQd+8YLi6jWztMMjq99v9MlZFXq454zw146jdtPx
-	ac7FBVfyUtxUG5sAPsTst2lavzmev4cMHwtqFSmAHyYRVEwIRDSMYt/kd9rSzUzrSWwalAbFcFp
-	0Fl8g33Z9JymXZDQE5kGIZAHVKn2jsNRSQ07ozD/QXA==
-X-Gm-Gg: AYBFou18HsC9w+U0fmWb6cFGlLe7Bl4RLELNpN/zK74gUZD5ckaR9bpiuB5/AGS8o57
-	yOBu0a9Q5fTNEtvo3Ys8dQ53xhHYOOx/O/mE4Z4vJGnU5oxUJ59SVKvN4s6Pk8pLtPQXu6XP6g2
-	tEYbKBwrIwMgDzRY1jpFJvtR9VHUWl9oipEZMr/caYQjbHL6hFZTzGb9vsv0NTg/8Ruz8iY08Z+
-	5MYWmcaT+qv99IhtK5y/HSbrn5BBOEj9p5Ahcs6XF6GH1MErUX3nEyPE7Af1sYKtAgo9A9sVxEu
-	fS7AqvdgUpk4Lo99U29CAS3F6U+JDVVqltFlq78xt3CPXmUzWorJfcRsdTLMo/+1H7cZMS+BbSs
-	Tky3onttl5xU=
-X-Received: by 2002:a05:6402:2489:b0:6ac:8dce:5a8a with SMTP id
- 4fb4d7f45d1cf-6b17c25d1dbmr1911978a12.9.1791557255037; Fri, 09 Oct 2026
- 07:47:35 -0700 (PDT)
+        bh=9SUnuP/9pVrP+Sunop9ePoVz110aW+tgJ5DFz5LYCdA=;
+        b=VtT6RpwvSAZlcBLheNfCkDbcacmuYPFcAUpgGHIkNLwPkeB7ordjUKnSXBq4+dvyPX
+         MNPVlus5NQvaE6Xb9W/mt7dNxiKIYVuL00SQUH2svLqOUbslPN3/LbabhOmTmLvUiCpg
+         +/UNvl1zge5Yw24SoQFFlGJo96oZC5CUZkM77s9+FpFDxh5ix57XH/Xr9dwWJdlq3zN1
+         EVU2/GoCW7BdiodHLR/J+TaSimvtZrR/2Np3wtuYEIsqnfMtoQaLPqOV5y31oJro6duJ
+         BM+7WnTJtop38UmSt1Pso1xl9hpHI1IWQjma53OskICx5azDRBlAJedb/URW3NQWDl+F
+         aYoQ==
+X-Forwarded-Encrypted: i=1; AKwUvBznZJCy3Th8lbA1C+dnzKnDFKv2H5TXetD/97wmDI5kN+YSsXVGy+668C4n9WDsHbEBCQfOgeiWCiU=@lists.linux.dev
+X-Gm-Message-State: AFq9FYI1nqobu1br5EhRDbzLB05ZBfmjPcf0zwtAtEm/cBk+OyV0VRBr
+	ZTok/Tn5FQLRfNo+f//LkuGN03lJ5X4qcoSRsJyQfSJi/cdAHkFU1fwxPYymlbN8R0hiPqgA+ha
+	ONZzuMLNqJmVq1qZ+972ka7i6M4C3nHH0QsGARDxStw==
+X-Gm-Gg: AYBFou3L7LHdglewANhBuP0CYVuSWxC3WRgygWB48ebyl541rhl5Qy+NJtl2OlnHmSu
+	vJGCc+rQDnHF1lavbEcTZO+GjjMuwWQzwawM/TDGBjmZRTudxX1NE+J3LUz38zErGzRui7usTs5
+	ivuK4SWNCfi1BeLDIs6lqUSBqUtCgceGyzM+iTfOHcyO+dkdPEbdslp0938HYEcQyaevuP9DBCq
+	2VdsNG4T/BRTjEvZrj6gFAC6mdWBrQy/u/xj+uzeiLzPfIwUYqNjSA2yWMqM/cKbthsHvVdgdrH
+	36D64mopb3u/VsKydHaLW+xNztDl8zfytL+aQWVVG/mzIGCRURmpHD6XmkB7Ab5EFEFaXy8Eoob
+	DOGPBQvUo9DA=
+X-Received: by 2002:a05:6402:c50f:20b0:6a9:8863:ada4 with SMTP id
+ 4fb4d7f45d1cf-6b17ae874a7mr1721313a12.3.1791557826030; Fri, 09 Oct 2026
+ 07:57:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261002154415.2270586-11-vincent.guittot@linaro.org>
- <20261009055318.29609-1-kayracizmeci@gmail.com> <CAKfTPtBvGYp2S4P-k_SsFAXMVSSQ6j4F4LO44uUoDo5ZaUe1Bg@mail.gmail.com>
-In-Reply-To: <CAKfTPtBvGYp2S4P-k_SsFAXMVSSQ6j4F4LO44uUoDo5ZaUe1Bg@mail.gmail.com>
+References: <20261002154415.2270586-1-vincent.guittot@linaro.org> <20261008191236.152916-1-kayracizmeci@gmail.com>
+In-Reply-To: <20261008191236.152916-1-kayracizmeci@gmail.com>
 From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Fri, 9 Oct 2026 16:47:23 +0200
-X-Gm-Features: AclHuK9iGeFj7ZuSh47IJz473HQO92ge7LwBJsa7yRJFssp2W5pUDwwA41CDc9g
-Message-ID: <CAKfTPtCAbreGDhesDmFNvXEzjj+anmOH1=jqT-1B6Lfj0FfPqw@mail.gmail.com>
-Subject: Re: [PATCH 10/18 v2] sched/fair: Add force push task mechanism for fair
+Date: Fri, 9 Oct 2026 16:56:54 +0200
+X-Gm-Features: AclHuK_v5n1Ouyt0X_gZmkpqODynvzfs5VCwBcw7-YKwWh2i1MU54JpfI1I1mBY
+Message-ID: <CAKfTPtB4KU_vJ12uvW0aw3CdkCvAujV+0cJYJ3zX3rPPZbCnzQ@mail.gmail.com>
+Subject: Re: [PATCH 00/18 v2] Improving latency of short slice tasks
 To: Kayra Cizmeci <kayracizmeci@gmail.com>
 Cc: arighi@nvidia.com, bsegall@google.com, changwoo@igalia.com, 
 	christian.loehle@arm.com, dietmar.eggemann@arm.com, juri.lelli@redhat.com, 
@@ -101,48 +100,127 @@ Cc: arighi@nvidia.com, bsegall@google.com, changwoo@igalia.com,
 	void@manifault.com, vschneid@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 9 Oct 2026 at 16:04, Vincent Guittot <vincent.guittot@linaro.org> wrote:
+On Thu, 8 Oct 2026 at 21:13, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
 >
-> On Fri, 9 Oct 2026 at 07:53, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
-> >
-> > >       task_tick_cache(rq, curr);
-> > >
-> > > -     update_misfit_status(curr, rq);
-> > > -     check_update_overutilized_status(task_rq(curr));
-> > > +     if (!tick_pushable_task(curr, rq, rf)) {
-> > > +             update_misfit_status(curr, rq);
-> > > +             check_update_overutilized_status(task_rq(curr));
-> > > +     }
-> > >
-> > >       task_tick_core(rq, curr);
-> > >  }
-> >
-> > Hm.
-> >
-> > I think this mechanism added on here does not works.
+> Hi All,
 >
-> Ah yes, while factorizing the code, I removed this main diff between
-> tick and put events
+> I wanted to ran some tests for this patch series. I couldn't really
+> apply it without some issues, but I think I managed to apply
+> it cleanly this time... Tho I may have been doing something wrong.
+> Please let me know if so.
+>
+> base: 4a3b51aab6e25244d97936aa65e6d5425adf98e1 (on tip/sched/core)
+>
+> Command Used Each Run:
+>
+> hackbench -g 4 -l 100000 > /dev/null & sudo chrt -o -T 300000 0 ~/rt-tests/cyclictest --policy=other -t 1 -i 1000 -D 20 -q -m; wait
+>
+> Environment:
+>
+> Zen 3 with 8 Cores and 16 Threads. And Fedora.
+>
+> THE RESULTS (COOKED):
+>
+> On Base in 5 runs, average values are: Min: 3.8, Act: 5.8, Avg: 8.8 and
+> Max: 2511.6 (I need tea.)
+>
+> On Base + Patches in 5 runs, average values bla bla you get it:
+> Min 4, Act: 5.8, Avg: 7.2 and Max: 1781.6
+>
+> Or, in the shape of art made with love and passion:
+>
+>  +------BASE-----+--PATCHED--+
+>  | MIN   3.8     |    4      |
+>  | ACT   5.8     |   5.8     |
+>  | AVG   8.8     |   7.2     |
+>  | MAX  2511.6   |  1781.6   |
+>  +--------------+------------+
 
-In fact this is on purpose.
-fair_check_pushable_task() is the function that is called to decide
-wether we try to push or not a task. In the case of short task, we
-will not push a task that is already alone on the rq
+Thanks for testing
 
 >
-> >
-> > Before fair_check_pushable_task() is called, we check
-> > if nr_running is bigger than 1. If it is we return false.
-> > So when we enter fair_check_pushable_task(), nr_running is
-> > equal or smaller than 1. We first run __check_pushable_fair_task()
-> > but it doesn't really matters, since it's output
-> > can only return false. Next block is skipped to since
-> > next == NULL. When we're at the check_pushable_short_task(),
-> > the h_nr_runnable check is always true on this path,
-> > so we return false.
-> >
-> > It this intentional? Or am I missing something?
-> >
-> > Thanks,
-> > Kayra
-> >
+> Hmhp... Hope I'm not missing something. I need water. Bah.
+>
+> Tested-by: Kayra Cizmeci <kayracizmeci@gmail.com>
+>
+> Dancing donkey chases a car while shouting "Linux is the best, my dancing is the coolest. Cry."
+>
+> Thanks,
+> Kayra
+>
+>
+>
+> I'll add other not too important things below, these are pretty raw.
+> But if you wanna have a look you can.
+>
+>
+> THE RESULTS (RAW):
+>
+> BASE 7.3.0-rc1+ #2:
+>
+> RUN 1:
+> [1] 1950
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2115) P: 0 I:1000 C:  19990 Min:      4 Act:    6 Avg:    8 Max:    1885
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 2:
+> [1] 2132
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2297) P: 0 I:1000 C:  19990 Min:      4 Act:    6 Avg:    9 Max:    2695
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> linuxfucks@micro-softly:~$ (Opsies. Who's hostname is this? It's so cool. Wow. 'linuxfucks')
+>
+> RUN 3:
+> [1] 2307
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2472) P: 0 I:1000 C:  19988 Min:      4 Act:    5 Avg:    8 Max:    3246
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 4:
+> [1] 2493
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2658) P: 0 I:1000 C:  19995 Min:      3 Act:    6 Avg:    9 Max:    1991
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 5:
+> [1] 2671
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2836) P: 0 I:1000 C:  19992 Min:      4 Act:    6 Avg:   10 Max:    2741
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> BASE + PATCHES 7.3.0-rc1+ #3:
+>
+> RUN 1:
+> [1] 1490
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 1657) P: 0 I:1000 C:  19993 Min:      4 Act:    5 Avg:    7 Max:    3091
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 2:
+> [1] 1671
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 1836) P: 0 I:1000 C:  19999 Min:      4 Act:    6 Avg:    7 Max:    1529
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 3:
+> [1] 1848
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2013) P: 0 I:1000 C:  19998 Min:      4 Act:    6 Avg:    7 Max:    1455
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 4:
+> [1] 2023
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2188) P: 0 I:1000 C:  19995 Min:      4 Act:    6 Avg:    7 Max:    1524
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+> RUN 5:
+> [1] 2200
+> # /dev/cpu_dma_latency set to 0us
+> T: 0 ( 2365) P: 0 I:1000 C:  19989 Min:      4 Act:    6 Avg:    8 Max:    1309
+> [1]+  Done                       hackbench -g 4 -l 100000 > /dev/null
+>
+>
+>
