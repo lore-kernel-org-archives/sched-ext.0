@@ -1,64 +1,64 @@
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010020.outbound.protection.outlook.com [52.101.201.20])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011023.outbound.protection.outlook.com [40.107.208.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506E645563C
-	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 11:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C564BEE38
+	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 11:19:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.23
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791544656; cv=fail; b=OHLzDDYa7YM1+2dcbq+3AsOZeDlS14ZIVkqT0dVZ+cL1PXJPkxg1UUl3s86ktYwaeis9sqN9wkVDmlkTvzs2cvdszFVIihK7wnB86BHlrXCl6TArTVRlQ7lKAG5wHWDRBAPkMh6YBlDSjxWWtkqutvEazv0oMZcHNkgqLQHpdL8=
+	t=1791544759; cv=fail; b=cDfbZpDafIbJ9Z70risyQxcOr1qD9puI0xUgPIE5j4Ef53r15TSAwy0AvX/gRB3BP6rXnw6zXwh2HGanxleJ89+bs5olBzWSsDelFsE3oNy75Qf8tY9VqOtpIrzOQV4pW3q5YCTae0fDgxpFfwxeGm0baAMrJt3Av3V3j3fZWNc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791544656; c=relaxed/simple;
-	bh=TZNyAtBjuAD9rvSa39NOcFBgl8TOjqZ+Mbyqn5BFT1M=;
+	s=arc-20240116; t=1791544759; c=relaxed/simple;
+	bh=J5DG2DVJJt6o8s94Y2/JXXx8xr/+gIViZG2TTb/6dOI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=mxIIp5NMCXkp/PD0N8s3Aea39Jl1w12KlnthhBqhvkjGwi0g8zj1bMnT0vfXuPg7X3MhlD8md+oyTSm/MIAVzZhFUWWxRdw1SpL7uGW3wJylABCtoXZcNGhg6BHpTKIwDweBpPSGckIC5JC/FY67vl3CJmw0tkyEBJKbz7Nb9FM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=HPKQonQL; arc=fail smtp.client-ip=52.101.201.20
+	 Content-Disposition:In-Reply-To:MIME-Version; b=iKmktsvuGnSDvYtPwY/ougntjTZermOwLTEb0GoF6KB7VfeSRi7uwHbbqo2yCl6Qd6vTMGNph2A2M7B/jcoFM7xqh+45Z/Edd9myPQJoPp9BDyUUV3NDr8vArXiu0XoKwQq7fPTQs0wVeuxohkAfEQKwQGNDkS7db4hUoQaIGwo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=lviixIHK; arc=fail smtp.client-ip=40.107.208.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="HPKQonQL"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="lviixIHK"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TDhtpNPTJQLxYd52Zqwreh/Mjv4Q9x5oAlCRsevJtTi6yUYSNd/JvbZUePCJ5bpvyeOSVZf1hNBDzHVswXDPV+Mt4D4FKoSxGpvE29xw7jCEGt45fS9bE1/pVR5iUvV3i9wKR0S5g2uTwzmsZDZ/jIViG1iq66Y9JsHm8B8QrjkWt0zlR9xa2YNtuqTenFtBNygVfzwNSiSC55/fHKXo0tt3adiuOlBiSocxj6S27HpPU4PjO37uV8GSbEtBLuxrHuj9gtcXmVxuInW/z+lyfhsXshY9rH3lHVAVNAUFi+p5VVqyfiKWuFdKGNe5FbxgWhEp+AiDSNGNxdJ+vflQQQ==
+ b=Y0kDTVEVbzsL766TwSuxH8+eF9mjW/25NxkrdprDOKyJmUurziwOxUmPOuaLzXEBzjeWkPCV2A1lo+jGnBIuYbflWIY2Jzm8PKdUvwlNs3+nEC7RBPKKopmJO/drwVK9QQxDXa1dhfE+qOYGiWgcu00N+0zvTYu7XKLA0x/mX0C7p7ShrWisd0Ta71xHVseEaF6UO5/N1K+UiVenzYB+DuNNfvu0tNSuZ5IbSJd14i9pdgLw7lDnSmkfWDuBgqCjkPxmbIVv1rKo6xLAyRWLzepiqI9HkVjea4FvGVslsT1ieStuvIiDJsZhqsLY1cW/VRi7KdlqRqKPQLf/79wR+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jG+zaW++qnxehDbvSDAMqOxyTB5sB4se2UuyPD0zhvI=;
- b=ipwU152tNyte+8VXWbKDx9K3jdswPIlrEtFVJAion6A9DVV/Wo9WRdnEx3bIvR2ErF4bMsKbEOxAceG9OJjsRjNwcSqlZZFkO8Hn1VhZCdOn20gitSRgSuL/uUdXGk/HkukjLfJN5LwhpsA+VtL9HHQ6eTVePZ5bZyLSVJA0V97TQ9A+RvtOKvD7oh2/fIAXKG9UJ01GlWIO2CLR8o76yLgaX+ouv+oP/VItbFCMUvjOLQMf8wAh4AU6SjX9OlZDuDK03uV0XcGqQcxsU2u6UAfqStu0pWvrOeap0Haj1xQ6qBUIpPVUlUcw0hHNA4AwvcNVy+CzGPC9kFJQb90YYw==
+ bh=DTuiGGHB1s1MtsjDbxay5SU+/qvLDzRTey+B4wT9/xY=;
+ b=mtzcj2lAHpq1dZVbZvMHUGHZKfIrbxjYk+7fS3QSuKCMIAuLhqfg2LvjVeRi7cSqNlU6mUwlSGYoQiOypo7NE43OAalPLohhwKnnS0Zr8U6AepgyfDpHVbl3UGzN2RNuL4RtO12Ai9D8A8j9rajq6CUK8jyZEOJS+jEq2rDjbtmat+BrvaswYsx3NBZkLgfFFYx5oqnZMTPcVr/jpbA4hcLEW6zcxjOKrdCXv8D304i1fn2bvkSmz5JXb8AM++Dm3PvlqBaNbR2bMkTiHLr8kdtldDtCja4hLVxaOCpo1l10X/pHqDQ74XUKwuQqVbypRBO8TAOOR5WWrHAHj/3GpQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jG+zaW++qnxehDbvSDAMqOxyTB5sB4se2UuyPD0zhvI=;
- b=HPKQonQLZlr0NMJSycu/Baxv1wgrC0gCb7KsiCPudvYRMuOVmDNVzjP90OLy7CNTEIzNp681ga2Fr+Iq60cbi1VueBTdcU4zhOej6f5yoo4uCx8ctf3ENg7qpcgev+oYN1Wofuq3ivBkBdplXaC0RyZ00s9bQtK4UdmmXjkX0JA93BpZD2rKhDOMavTizfE5SqCuvtAgC2ZZN1SKbQPj4ua1hbV5c2nbiP1/TKPeZCK8J4g7IeUQsuAyR28F+0Ej260NpUi5rZVheR5Rw1LCVx4/Bn49VHTcxHfV9fRKpEtX4+sk4y4cENyEpVviJq+IqFyfo3nxrHeJenErdza6Og==
+ bh=DTuiGGHB1s1MtsjDbxay5SU+/qvLDzRTey+B4wT9/xY=;
+ b=lviixIHK/ML8CuFWud2xy5l34/aFyt70IsIRepYUecByqYZ10TvxgV3UFha5Pc/Vma9asjhUlA66RbMAsZNXYO/z1pbsqdpjeLC6UrHMOe7oeFK5tjmBvwPgIzO7i0uBV1iLh83on/woohbXnGhC4LD+FhfCSbZTI4qTLL54FBZJDLIxEapGKoXGu2pbL9cUxOcekY3lAliiKAyL3v+9kIoBf9AmvOaGqMMurncyCEhtoB+bggYU9/o1l92NmS6JzdnXg4JgNm0grNq/2LuujlYt+ET7wBzH3EH3x/jTW4aKayOTY+A7sLxFycCLkZeBy05VNUwOtpi8e4JT8+aSrw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by MW5PR12MB5681.namprd12.prod.outlook.com (2603:10b6:303:19e::20) with
+ by LV2PR12MB6015.namprd12.prod.outlook.com (2603:10b6:408:14f::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Fri, 9 Oct
- 2026 11:17:22 +0000
+ 2026 11:19:04 +0000
 Received: from BL1PR12MB5174.namprd12.prod.outlook.com
  ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
  ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0496.015; Fri, 9 Oct 2026
- 11:17:22 +0000
-Date: Fri, 9 Oct 2026 13:17:15 +0200
+ 11:19:04 +0000
+Date: Fri, 9 Oct 2026 13:18:59 +0200
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] sched_ext: Add ops.sub_child_ecaps_updated() to
- report a child's effective cap changes
-Message-ID: <asjNO0ggCPcfIP7Y@gpd4>
+Subject: Re: [PATCH 2/2] sched_ext: scx_qmap: Reset a child's cpuperf targets
+ once its PERF revoke takes effect
+Message-ID: <asjNo3JmkmeTK8dr@gpd4>
 References: <20261008093228.2015427-1-tj@kernel.org>
- <20261008093228.2015427-2-tj@kernel.org>
+ <20261008093228.2015427-3-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261008093228.2015427-2-tj@kernel.org>
-X-ClientProxiedBy: MI3PEPF00004EA0.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::44f) To BL1PR12MB5174.namprd12.prod.outlook.com
+In-Reply-To: <20261008093228.2015427-3-tj@kernel.org>
+X-ClientProxiedBy: PH8P221CA0061.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:349::17) To BL1PR12MB5174.namprd12.prod.outlook.com
  (2603:10b6:208:31c::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
@@ -67,196 +67,197 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|MW5PR12MB5681:EE_
-X-MS-Office365-Filtering-Correlation-Id: 92e5cf4d-4a90-4be4-2f7b-08df25f6e3de
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|LV2PR12MB6015:EE_
+X-MS-Office365-Filtering-Correlation-Id: c366c594-cdd8-4558-b28f-08df25f7206a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|56012099006|5023799004|4143699003|11063799006|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|6133799003|18002099003|22082099003|4143699003|11063799006|5023799004|10067099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	CKVk+6p1zBqwkmYIzAOb+EmRBuRpFP5QQIcwn8UwID6CObq2kt6pKmR3KnYU9cV1I4frFVl4URKpNojaq2MA/K/pJwByqSORSYUEmuzdtgdxo9GAY6RXEPlvP3bAb07fAkARJCHTHzjpAHVfsu2nAuwrSVeXBYkkLEDNU/bT6qx48CHKS2UipSCtzj16EscicbUaWTGYFIyyf/r/L2TIP1125geO7vlqJSHirr3w7E52FOg9AGCbxjc85gDyANrrSyiWc5V/MHOacidBMmaBaTvLmYX4GXW5gmwjpL0BUeYuOrmm8SB2LdPs0KwXFVDHErihQxCRYg96rBFPApAP55fAsQjGJJiZyVw8j12aB0HGaP5d/kByUV90hVjfTIohSH5PCJLyYk8SJ5Lmuu53OKTFC6PgXjG6wu7cXrUsXZDGL1WiglsHmsthocysQqu70mz3HOzTqeoygaMQhgxKQj48ZsH4gmXhN5Qpmwq3lNo7LWFNCZOes4/jzheJ7cPcFgp5Y3Pzm1TS4x8zT/+fmFUw+PqAFeSiuTrcgFcP5rH/jiwcMDp1SMX72XRwuRbSYeVAWAj+KX8oHZJCaAetKGl4j0Y4DFmUpHCk5s2igLUSdxWoYS+oDK8M3jumG8pXIdictSCP25WHKwTc4/QShXhPYMIdPMLeDoJ2bbQDAFA=
+	dbK4OB8OcIwABYvBs5+t2qWw5lwPAnbkotNp5B/ke+5FARS5MAOwTDHBxfNOQ+YMJCHyNwFTePrVrrBoHRvGtmQ0TX2Eg6rU9DSNDrsA8coLDwu7rltj2rKeNvovRmADGY3KhCMZk8D6AJmuqw4fCzRvdZy5L1PyLKsUu80LY0L46/V2BP1eRwVyIBKc9MlliyqjO5ra6tL/yp1i47ADa8Pdl/J7JuFYkkLqQwS4Ybb8TjarG3vJEhhtwLtjEkp6OimkMyRfYWklxyhr+cSw5xabVLnRA9UnANyvRJbYjv7voc0fogkocEffZ6+3MTsggJKbdnDFuuWkATIAm8BB0Aw+fp+3LEdnUx8qGFv8zlh4XkRycBfbK6RCVc+RNauf93rZmhO+WQnxbEwZRbsWNncL9IC4QIB42S1gHaMV5j4cyL7sjROdXHgyCj77Mu/LoXvwIhL4LtCmpk9HTQBNymXyVL8xzo+qV0Zkk0OL9LSTeXThZocvOCmiobisTHzEIhHuH00cZFaql9jtV/a0uq3CUmgmmPs6rOBI3UR8/G1D2dPvUt6uYAl151zxpPEpqfnsUuCE6jdMSzvIzHDAt8JL2r5NBdIg4C6elui/ubF4dw3vjO94UDpkDDGQH+KHkHPqyQtlpSWbcd1LvxiHzIYFzACg2JLS4W1XaqxdCUc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(5023799004)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(6133799003)(18002099003)(22082099003)(4143699003)(11063799006)(5023799004)(10067099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?aK3YlDePHfVrYats46vMHRk5mXEA7XOTLsni24Q2RGk9RLJebE0DSOy/rkrz?=
- =?us-ascii?Q?K/LumQKEYJkym7ptGML9t3hxbTid4qhzaLSqSfwLqv5ejaNZU0RRXAHPVCyp?=
- =?us-ascii?Q?Fmqhi+Sp5dzuFcO9cOeyAScVWyyx0+4AvFLtNWjLxcYYyHQ7JH38aZZ3OCtx?=
- =?us-ascii?Q?WIX/Y5b8ogSdhK0cuWTkUdcGUFROBwdv1BHWvRlEN7LOilLUQrVaZlSc/u6K?=
- =?us-ascii?Q?jIkMCR4Ds+RqAZb5Gmw1wTAainpYvbgAl52c5oprt2kMBNWXKn8xuulHyBNr?=
- =?us-ascii?Q?ZFjaWZKKJ1tsgkRtA3I3JAEXLyR6f9D9Hu8zZPsyA8NoAVtUf6xluQdLKwzS?=
- =?us-ascii?Q?N7oOn3oS2RTthxW41JNvwtUZy6jDMG74vJrAqUlLBUEcyabxDkf8kWixVoZl?=
- =?us-ascii?Q?JS9yvLHcCCFjZ9pMKGEJeRZNXAzXG2nS86c3MnPvNXr9HalMCjogTMtGOvvn?=
- =?us-ascii?Q?rRukNerNHqB7T7ydZ5ZpUFHY3aqtJgM9T9y+b5o7tdm4ePXuCt8hwHLXlVdQ?=
- =?us-ascii?Q?R4KoimHgRfdTyETi42TInQVGpHox4ASA/MQ2Kydk02BVITDyLXjnuLeobQ3w?=
- =?us-ascii?Q?8Otpv3i5N8STR8mT25FPK7zk32IqSZNbqqa91dfWblDbI+KNVDMY5+UuJATy?=
- =?us-ascii?Q?97waTxlaRFG/zIe/qAc/6hrAJiCeBpveS6YCRbJRrGHSafpBinAcgxDDY9R4?=
- =?us-ascii?Q?jtN3ieKJAaG0XKefx1frAdf1Xebve+0YsEQfF/qTFfjwJzRa3lj8Rd9EVU3v?=
- =?us-ascii?Q?BCRBa9BAecyv6XLNMZaNeD3D5Cvbh87vgADJDstECCRUJZcyI6lthfos2uZn?=
- =?us-ascii?Q?OQwlPZyqug1FfoExDC62mKIdibGiqyF1slpfMAXjb2Nwiwpd1zcTUAZzlQ2X?=
- =?us-ascii?Q?FSHF0hrdXh6SdWiBt62ESHmTgMym5Q59QbaY+oKWysrXwHUUhYq+vol2wK3a?=
- =?us-ascii?Q?AaCXTdPiGxapZFm1oPFwS0xkjJkBA0yVc7PpfblcrqTa3Z/RzU0+ivVnjToU?=
- =?us-ascii?Q?16+3Nh+BFuilRbEkPfD8n+z3WJxocAOaTJuI9jCO3x/wsZViWdhwu6clLsJg?=
- =?us-ascii?Q?v+i+uiPkE7m2anylscNJRj2+C/U+ntDTTmRnWXPNAffaSVhjfNhDHZ3eLddD?=
- =?us-ascii?Q?9uX6TSMjJbWW4+GwY0wrk0gBJ+GXfMx/cOq6G+kvxT4bwLwoiLaK8lc2Fd8P?=
- =?us-ascii?Q?VEEbNfKOWhV2JX8juzPyK1ZYAz0a4/bQFXgp1jYQW6iRLrb353pO8WeYm7FI?=
- =?us-ascii?Q?7g3CLg/P11oBH1mc7h990jYekT+p2UKNcE/6kzPmoHM08zFgGF+HkTahiG29?=
- =?us-ascii?Q?2Lf2VFojsdoK++hiWEWDZjxrev32+0QkAufp+UZsNSPAS+mIqZlh1oAtGM2a?=
- =?us-ascii?Q?8apiw6Q8OA/ni4SQ5L+OvEnT/RezKyyG/mHi7HChjJyI9mGEeQBIoNyyG6wP?=
- =?us-ascii?Q?Aq+KfGh7BCrEjdoJTyD7sqmi8d4853UvYMYxl4t5zzU/1i1oXnqUmXtwAz3e?=
- =?us-ascii?Q?xHsGQuXYs/1jTHIfTceDPJlpbbOLwhiIqZ3fhbXiAntaEivEyB9DV6PMawOY?=
- =?us-ascii?Q?JtusWTlBa/zz5/a+vI9nRPQfVDQax7esem/Ka7Hy/21V5Em2n6Q2rqCysGoq?=
- =?us-ascii?Q?Vphyv70XiZEVNG8wUPWdVsjgj8borpbLPPdHpdEsvkddXIEiTIETIiPg6Eua?=
- =?us-ascii?Q?9IHG8fnRwMoChk7uEZ1AY92VesM+88A2OfvwMrMnpRBwmJ4FQx1ORdZkgBLo?=
- =?us-ascii?Q?Ee624ma7CQ=3D=3D?=
+	=?us-ascii?Q?JtvmenDmxCItq5l6xRj1gGvnKm/Tr7WVh2YZFYx7+9VSFQMnxbVLEYb2nY96?=
+ =?us-ascii?Q?48i8tydmoY1DBLYmWW/WNupUifiP+zdkav4d7sR0x+elZJ1Qm08VPhPxzLY8?=
+ =?us-ascii?Q?pMzynbfjsKwCb7WW3OJhDqYjuyxv5INqK4cE+5AuBkZNUwcEUS3zevIhucfT?=
+ =?us-ascii?Q?AmC/bqGnPNu4/nXlFoeX+zjCfTkgb3ACooOunnar7BfjZhpZO2VXuojGUuJ+?=
+ =?us-ascii?Q?2gwWdwt9WkBYrRcDPTveCuTPkFXGUAprpJz3oTk0WqCNJgbxuX6HCww/kIo1?=
+ =?us-ascii?Q?Sne6oNuFQw1vvc0LXH2Tc3A0cI9b7IOrRbEy9OJ5sK0JngcBcMx6y5jInlpK?=
+ =?us-ascii?Q?aocd4Py85CCoqEMhZAOfRoHrUyE6HO5g3yD8UN+Y9J410cF36BThNljhGnLv?=
+ =?us-ascii?Q?GLgudUrVyvcQ4lrFyB4YxT1tZoziwY3irtioXqdHLw1givwoH4nbb/mhLXm9?=
+ =?us-ascii?Q?VbcFVDqHSV/Rt236IjD43qxMdNKS9dG2+HPr9UkUpBeRE+LC6mPg0F9pmcI8?=
+ =?us-ascii?Q?O9IyrSZ/Ebi8KGh9uJmCBC6ybtX4x69YixIUO4S1ieBfrwLLfUUHneUvnoDo?=
+ =?us-ascii?Q?/c2ABDSReTHcCKlXiykKUBmGIiIYGYfBhIWAQ+Mv4DrOyhfuoQq4GdPtVdUi?=
+ =?us-ascii?Q?QstrfURF8+7wgmTDP2Ob5vV2P/5zj7eVwAx+8GMKll/IQbPWSlbyb9wWnmi1?=
+ =?us-ascii?Q?1AQdtFmz772zbosrGMz4CmFT5XUHsOHjncRf9vV0hxRhLKHuFKWXY5a9duA2?=
+ =?us-ascii?Q?ZuXqdDmfPSYDa1S/Kzz1Lgbqdjrar0zx8TrwX5R1hogRT8/c95OONvX+pYI8?=
+ =?us-ascii?Q?kZ+nkQODjoSPEClY3iO6deUKstnAxvuTgBC1fA0HKk7PZ5qN1qXo+iLD3yzh?=
+ =?us-ascii?Q?VgdhFnMWaAj6bcaCZdiNJvVloUh+j7IgLg1fP0TFHAEVAiWIwoO3njt53lTx?=
+ =?us-ascii?Q?lRbsGp4rfpOEiB3l43s4wWJ6uEAlbj6nAJ0Qoe5X1mQUKwlr3uAWyUIgb6Gz?=
+ =?us-ascii?Q?vY3HEPw8kl1Zoh0War4tsOfUZRYuvH+SQzdpuVnKlwY8ZEsbll7d1gge4QVS?=
+ =?us-ascii?Q?jgy6VafbDIzYNo/Q0NC3ho0zMKu9rT16AZaYLwYReJ5GLdWcghfG7d+H2mFB?=
+ =?us-ascii?Q?oYvwWvO44UDt66oJuI2I6max40l0QDQn7P5ryngkU93+9Awe3PNyVWDOyL9d?=
+ =?us-ascii?Q?8CI2oQv9Ll3omaw6U37twzDTQ9GeivtdAhXENKkVZYZFxvVyudYguBNb/kSB?=
+ =?us-ascii?Q?6GaDcODEEJp0oDElj/DNqqTRXxsyhXZ0KJlQ3fdqtaVj91Qg/LqZ772pgK+n?=
+ =?us-ascii?Q?3dvY6FE8W6HIMXGhvWhYZUnaiV16gp2l7B1WDIvBAESlQ18tGrUxBAzlrxT0?=
+ =?us-ascii?Q?dWfKBPFeKMhbCEVu31Cy8uQeGTAp2D5V+oSKyzl81oC4YEsuaqYNJV84R0Uk?=
+ =?us-ascii?Q?KannQCHNgJJjPMazUGoWshVl2WNg6MSq5yTgkcg+7PMMwWfpqqKOw/08RKSh?=
+ =?us-ascii?Q?1lTIJnzRt/0IKluYSG7ONZCxe6+pOuvh2XLLaSFrlh/grI4V/zIRmSHvlPC3?=
+ =?us-ascii?Q?QLEqXFMqtVb/Kf8pJHouNKNEjwnxZjSSkIb6dj8iNag0fvZH3xlfvdy3/B7Z?=
+ =?us-ascii?Q?khnUrdpXIpQBI2UI4b8KOo5faPS8iN/l+//3Tw8Tqh7VacH/g/C9FGfcexlN?=
+ =?us-ascii?Q?3hBlY4zZuWwqnSkqPrJX/bPW3NgWChk7UqlNhrJw007r0wpwT7CuMLqvAWzL?=
+ =?us-ascii?Q?8ne0z/kFWg=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92e5cf4d-4a90-4be4-2f7b-08df25f6e3de
+X-MS-Exchange-CrossTenant-Network-Message-Id: c366c594-cdd8-4558-b28f-08df25f7206a
 X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2026 11:17:22.6976
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2026 11:19:04.1728
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fGxUr0bWJ9dmd4LPwPLhgOAstUotPtiWZ6+COMtR6U3lu5pUzUM9hn4jLm9tqcci+4/HUgyA55i9vIx3/WRASg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5681
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7gMWfW3bJ0MKBYTvY7XMAmouSyKOTEr03jVOdstWOehhQiK9sCoiPEeE2Zz7h3e2JSxVPBCFei1c/uT6cepS4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB6015
 
 Hi Tejun,
 
-On Wed, Oct 07, 2026 at 11:32:27PM -1000, Tejun Heo wrote:
-> A grant or revoke only records the target caps. They take effect on a cid at
-> its next dispatch, and nothing tells the parent when. Without that the
-> parent cannot act on a revoke: a child that ran a cid at a low cpuperf
-> target leaves the target there when PERF is revoked, as the kernel resets
-> targets only at root enable. Nor can the parent tell when it may schedule on
-> the cid again.
+On Wed, Oct 07, 2026 at 11:32:28PM -1000, Tejun Heo wrote:
+> A child that ran a cid at a low cpuperf target leaves the target there when
+> PERF is revoked, since the kernel resets targets only at root enable. Reset
+> the target from ops.sub_child_ecaps_updated() once the revoke is in effect.
+> A detach reports nothing, so ops.sub_detach() resets the child's cids, the
+> pool included. Count the deliveries in the hier stats.
 > 
-> Add ops.sub_child_ecaps_updated(), delivered to the direct parent right
-> after the child's own ops.sub_ecaps_updated() with the child's cgroup id and
-> the same before and after caps, in the same dispatch context. Both
-> deliveries are suppressed while the child is bypassing and replayed together
-> afterwards. A disabled child reports nothing: ops.sub_detach() is where the
-> parent restores what it had delegated.
-> 
-> A sub is now bypassed before it is linked, so that the grants queued for it
-> from ops.sub_attach() are consumed while it is bypassed and replayed to it
-> and the parent once it is enabled. Otherwise a sync consumed before the
-> sub's ops are registered would reach the parent but never the sub.
-> 
-> v2: Drop the disable report with its sleep lock and nested-dispatch gate,
-> the parent restores from ops.sub_detach() instead.
+> v2: Reset from ops.sub_detach() for a detaching child's cids.
 > 
 > Signed-off-by: Tejun Heo <tj@kernel.org>
 > ---
-
-...
-
-> diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-> index 51a53467cf98..c7c95661280b 100644
-> --- a/kernel/sched/ext/sub.c
-> +++ b/kernel/sched/ext/sub.c
-> @@ -1121,27 +1121,43 @@ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
->  		lost_all |= lost;
+>  tools/sched_ext/scx_qmap.bpf.c | 33 +++++++++++++++++++++++++++++++--
+>  tools/sched_ext/scx_qmap.c     |  7 +++++--
+>  tools/sched_ext/scx_qmap.h     |  1 +
+>  3 files changed, 37 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+> index 7f69394556b6..4c152b44bc91 100644
+> --- a/tools/sched_ext/scx_qmap.bpf.c
+> +++ b/tools/sched_ext/scx_qmap.bpf.c
+> @@ -2167,12 +2167,30 @@ s32 BPF_STRUCT_OPS(qmap_sub_attach, struct scx_sub_attach_args *args)
 >  
->  		/*
-> -		 * Tell the sched its effective caps on this cid changed. The
-> -		 * invocation is equivalent to the dispatch path and may drop
-> -		 * and re-acquire the rq lock temporarily while the rest of
-> -		 * @batch is held privately, see scx_discard_ecaps_to_sync().
-> -		 * The dispatch kfuncs resolve their context on the executing
-> -		 * cpu, which under core scheduling can differ from @rq's cpu,
-> -		 * so the context is set up there. The rq recorded in it keeps
-> -		 * the dispatches targeting @rq.
-> +		 * Tell the sched and its parent that the sched's effective caps
-> +		 * on this cid changed. The invocations are equivalent to the
-> +		 * dispatch path and may drop and re-acquire the rq lock
-> +		 * temporarily while the rest of @batch is held privately, see
-> +		 * scx_discard_ecaps_to_sync(). The dispatch kfuncs resolve
-> +		 * their context on the executing cpu, which under core
-> +		 * scheduling can differ from @rq's cpu, so the context is set
-> +		 * up there. The rq recorded in it keeps the dispatches
-> +		 * targeting @rq.
-> +		 *
-> +		 * Bypass propagates down the hierarchy, so a sched that isn't
-> +		 * bypassing has no bypassing parent. The child's bypass state
-> +		 * gates both deliveries. Both report the same before value, so
-> +		 * one reported_ecaps covers them.
->  		 */
-> -		if (ecaps != pcpu->reported_ecaps &&
-> -		    SCX_HAS_OP(pcpu->sch, sub_ecaps_updated) &&
-> -		    !scx_bypassing(pcpu->sch, cpu)) {
-> -			struct scx_dsp_ctx *dspc = &this_cpu_ptr(pcpu->sch->pcpu)->dsp_ctx;
-> +		if (ecaps != pcpu->reported_ecaps && !scx_bypassing(pcpu->sch, cpu)) {
-> +			struct scx_sched *parent = scx_parent(pcpu->sch);
-> +			struct scx_dsp_ctx *dspc;
+>  void BPF_STRUCT_OPS(qmap_sub_detach, struct scx_sub_detach_args *args)
+>  {
+> -	s32 i;
+> +	u64 cgid = args->ops->sub_cgroup_id;
+> +	s32 nr_cids = qa.nr_cids;
+> +	s32 i, cid;
+> +
+> +	if (nr_cids < 0 || nr_cids > SCX_QMAP_MAX_CPUS) {
+> +		scx_bpf_error("-ERANGE");
+> +		return;
+> +	}
+>  
+>  	for (i = 0; i < MAX_SUB_SCHEDS; i++) {
+> -		if (qa.sub_sched_ctxs[i].cgroup_id != args->ops->sub_cgroup_id)
+> +		if (qa.sub_sched_ctxs[i].cgroup_id != cgid)
+>  			continue;
+>  
+> +		/*
+> +		 * The child's caps are gone without a report, see
+> +		 * ops.sub_detach(). cpuperf targets persist until the next
+> +		 * write, reset the child's excl cids and the pool it may have
+> +		 * held.
+> +		 */
+> +		bpf_arena_for(cid, 0, nr_cids)
+> +			if (cmask_test(cid, &qa.sub_sched_ctxs[i].granted_cids.mask) ||
+> +			    cmask_test(cid, &qa.rr_cids.mask))
+> +				scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE);
+> +
 
-Should ops.sub_child_ecaps_updated() still be delivered to the parent when the
-child is bypassing but the parent is not?
+qa.rr_cids covers the entire shared pool, regardless of its current holder,
+right? If child A detaches during child B's turn, this resets the pool's cpuperf
+target even if B still holds PERF and has written its own target.
 
-For example, the shared pool may rotate away from a bypassing child. IIUC, its
-PERF revoke takes effect at the next dispatch, but the child's bypass state
-suppresses the parent notification too. If the child is being disabled, it never
-leaves bypass, so the parent only gets ops.sub_detach() and cannot tell when the
-revoke took effect.
-
-Could we notify the parent when the revoke takes effect, even if the child is
-bypassing, while continuing to defer the child's own notification until it
-leaves bypass?
+Should we avoid resetting the current holder's target here?
 
 Thanks,
 -Andrea
 
+>  		qa.sub_sched_ctxs[i].cgroup_id = 0;
+>  		qa.sub_sched_ctxs[i].weight = 100;
+>  		cmask_init(&qa.sub_sched_ctxs[i].granted_cids.mask, 0, qa.nr_cids);
+> @@ -2208,6 +2226,16 @@ void BPF_STRUCT_OPS(qmap_sub_ecaps_updated, s32 cid, u64 before, u64 after)
+>  	execute_partition();
+>  }
 >  
-> -			dspc->rq = rq;
->  			/* stash @prev so nested dispatches can access it */
->  			rq->scx.sub_dispatch_prev = prev;
-> -			SCX_CALL_OP(pcpu->sch, sub_ecaps_updated, rq, scx_cpu_arg(cpu),
-> -				    pcpu->reported_ecaps, ecaps);
-> +			if (SCX_HAS_OP(pcpu->sch, sub_ecaps_updated)) {
-> +				dspc = &this_cpu_ptr(pcpu->sch->pcpu)->dsp_ctx;
-> +				dspc->rq = rq;
-> +				SCX_CALL_OP(pcpu->sch, sub_ecaps_updated, rq,
-> +					    scx_cpu_arg(cpu), pcpu->reported_ecaps, ecaps);
-> +				scx_flush_dispatch_buf(pcpu->sch, rq);
-> +			}
-> +			if (SCX_HAS_OP(parent, sub_child_ecaps_updated)) {
-> +				dspc = &this_cpu_ptr(parent->pcpu)->dsp_ctx;
-> +				dspc->rq = rq;
-> +				SCX_CALL_OP(parent, sub_child_ecaps_updated, rq,
-> +					    pcpu->sch->ops.sub_cgroup_id, scx_cpu_arg(cpu),
-> +					    pcpu->reported_ecaps, ecaps);
-> +				scx_flush_dispatch_buf(parent, rq);
-> +			}
->  			rq->scx.sub_dispatch_prev = NULL;
-> -			scx_flush_dispatch_buf(pcpu->sch, rq);
->  			pcpu->reported_ecaps = ecaps;
->  		}
->  
-> @@ -1940,6 +1956,15 @@ void scx_sub_enable_workfn(struct kthread_work *work)
->  	if (ret)
->  		goto err_disable;
->  
-> +	/*
-> +	 * Bypass before @sch is linked and grants can reach it. The parent's
-> +	 * delivery advances reported_ecaps, so a sync consumed before @sch's
-> +	 * ops are registered would reach the parent and never be replayed to
-> +	 * @sch. While bypassed, the syncs are consumed without a delivery and
-> +	 * replayed to both at unbypass.
-> +	 */
-> +	scx_bypass(sch, true);
+> +void BPF_STRUCT_OPS(qmap_sub_child_ecaps_updated, u64 cgroup_id, s32 cid, u64 before,
+> +		    u64 after)
+> +{
+> +	__sync_fetch_and_add(&qa.nr_child_ecaps, 1);
 > +
->  	ret = scx_link_sched(sch);
->  	if (ret)
->  		goto err_disable;
-> @@ -1985,8 +2010,6 @@ void scx_sub_enable_workfn(struct kthread_work *work)
->  	}
->  	sch->sub_attached = true;
+> +	/* a child's last target must not outlive its PERF cap */
+> +	if ((before & ~after) & SCX_CAP_PERF)
+> +		scx_bpf_cidperf_set(cid, SCX_CPUPERF_ONE);
+> +}
+> +
+>  SCX_OPS_CID_DEFINE(qmap_ops,
+>  	       .flags			= SCX_OPS_ENQ_EXITING | SCX_OPS_TID_TO_TASK,
+>  	       .select_cid		= (void *)qmap_select_cid,
+> @@ -2232,6 +2260,7 @@ SCX_OPS_CID_DEFINE(qmap_ops,
+>  	       .sub_caps_updated	= (void *)qmap_sub_caps_updated,
+>  	       .sub_ecaps_updated	= (void *)qmap_sub_ecaps_updated,
+>  	       .sub_cid_sched_updated	= (void *)qmap_sub_cid_sched_updated,
+> +	       .sub_child_ecaps_updated	= (void *)qmap_sub_child_ecaps_updated,
+>  	       .init_cids		= (void *)qmap_init_cids,
+>  	       .init			= (void *)qmap_init,
+>  	       .exit			= (void *)qmap_exit,
+> diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+> index e83d5e2147dd..17cf584a2a3d 100644
+> --- a/tools/sched_ext/scx_qmap.c
+> +++ b/tools/sched_ext/scx_qmap.c
+> @@ -113,6 +113,7 @@ struct hier_prev {
+>  	u64 nr_enq_blocked;
+>  	u64 nr_inject_attempts;
+>  	u64 nr_rescue_dsp;
+> +	u64 nr_child_ecaps;
+>  };
 >  
-> -	scx_bypass(sch, true);
-> -
->  	for (i = SCX_OPI_BEGIN; i < SCX_OPI_END; i++)
->  		if (((void (**)(void))ops)[i])
->  			set_bit(i, sch->has_op);
+>  /* current wall-clock time as "HH:MM:SS" for the startup and interval headers */
+> @@ -208,18 +209,20 @@ static void print_hier(struct qmap_arena *qa, struct hier_prev *prev, u64 own_cg
+>  	}
+>  
+>  	format_cid_ranges(qa, CID_SHARED, ranges, sizeof(ranges));
+> -	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu\n",
+> +	printf("hier   : nsub=%llu excl=%u shared=%s rr=%s reenq cap/immed +%llu/+%llu blocked=+%llu inj=+%llu rescue=+%llu child_ecaps=+%llu\n",
+>  	       (unsigned long long)qa->nr_sub_scheds, qa->part.nr_excl, ranges, rr,
+>  	       (unsigned long long)(qa->nr_reenq_cap - prev->nr_reenq_cap),
+>  	       (unsigned long long)(qa->nr_reenq_immed - prev->nr_reenq_immed),
+>  	       (unsigned long long)(qa->nr_enq_blocked - prev->nr_enq_blocked),
+>  	       (unsigned long long)(qa->nr_inject_attempts - prev->nr_inject_attempts),
+> -	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp));
+> +	       (unsigned long long)(qa->nr_rescue_dsp - prev->nr_rescue_dsp),
+> +	       (unsigned long long)(qa->nr_child_ecaps - prev->nr_child_ecaps));
+>  	prev->nr_reenq_cap = qa->nr_reenq_cap;
+>  	prev->nr_reenq_immed = qa->nr_reenq_immed;
+>  	prev->nr_enq_blocked = qa->nr_enq_blocked;
+>  	prev->nr_inject_attempts = qa->nr_inject_attempts;
+>  	prev->nr_rescue_dsp = qa->nr_rescue_dsp;
+> +	prev->nr_child_ecaps = qa->nr_child_ecaps;
+>  
+>  	/*
+>  	 * alloc is the cid-time the partition handed each participant, and used
+> diff --git a/tools/sched_ext/scx_qmap.h b/tools/sched_ext/scx_qmap.h
+> index 949459d06a18..9e6eefb39735 100644
+> --- a/tools/sched_ext/scx_qmap.h
+> +++ b/tools/sched_ext/scx_qmap.h
+> @@ -195,6 +195,7 @@ struct qmap_arena {
+>  	u64 nr_enq_blocked;		/* SCX_ENQ_BLOCKED dispatches */
+>  	u64 nr_inject_attempts;		/* fault-injection: dispatches to an unheld cid */
+>  	u64 nr_rescue_dsp;		/* SCX_ENQ_RESCUE dispatch attempts */
+> +	u64 nr_child_ecaps;		/* ops.sub_child_ecaps_updated() deliveries */
+>  	u32 inject_mode;		/* fault-injection mode (QMAP_INJ_*) */
+>  };
+>  
 > -- 
 > 2.55.0
 > 
