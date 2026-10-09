@@ -1,92 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694FE3CB8F0;
-	Fri,  9 Oct 2026 23:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B08B381AF;
+	Fri,  9 Oct 2026 23:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791586917; cv=none; b=fBGy2STPO/bcJ6YuEqTEuqRFkli3fRRX+vgLc3pZhTnFVsgpL4D23Cb7Cv9LBEYhEqBVdLaG5W/DnciKHMiadG44MV7u3J/FDLiNvfeGRXSdK565CSoitqmXeuTN68/SD8EfZS59MiQN3MT4vPqWOuqRDszwkBze+yX9fS9S/Iw=
+	t=1791589339; cv=none; b=SNFFV58p8AyWWUFaWhxxsN7zk14o5i6n8zJTaSf8zXL60M94vPFMd58Wdqq1kvjQnfEcsjDQKV2iCBALM1WOO1vB9Kv7xqVrUDECjZM43EOfu/0ma/S/3gkSEyE6mat7ycaZ0rvMY3lZG8uar11uwSrItuEjmq+nKFSY1XFhFSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791586917; c=relaxed/simple;
-	bh=53aA3Jr/Sxw2MD/5w8mjzQtGuXFC4yZv9swUbcXDEwA=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=tMyXnhtmUFFd8YsEzEmDr8iQZ3FppHhYEB862iBj0S378KyDYzMQXZV4rjsgGrFTumKgDqn8orO6lAu8aJhJST1yBOlSFolHYmtiUlFuNiSMiSZmaga19kncySV09fp4h04EOMMr6Vr7WxtfNJdbS098HqK2IAGJIGCZXLrRSSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGUG7dp6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791589339; c=relaxed/simple;
+	bh=Cp3a3Bidu4qsyTN/2DQeZ39pY1x22b1U8VrkcQEKNB8=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fj2YYZAj3MeluoJdtt8a6LRYD7lC1bBUD33LNdXMBechqZza4Urh4FmmC6Vv7xnXgTXHWcJ7UGI5ONYaLLtWQOIr7wL1PCmjJ4O2L9kSmK2MqTHltPjnQMK5exoQrQD8ciPkETwZ/1GszDSgllVpRzKeqWb4pXVxGSHSKC1qBN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NAVUR8G4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGUG7dp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252CF1F000FF;
-	Fri,  9 Oct 2026 23:01:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NAVUR8G4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9039C1F000FF;
+	Fri,  9 Oct 2026 23:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791586916;
-	bh=BPwfZ+pMHA/jXjXFHij6wg8LC56jGiwqEjBKLFTM55A=;
+	s=k20260515; t=1791589337;
+	bh=egVVJEiBsRrkQFZa22HwLAELj6LN9A3YhSgg3tJz14I=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=DGUG7dp69yTfYiB+on5IzedBwpQR9ha8Yg9kO6CJsbyvj9to5pyBSn6SsJtsuDHv5
-	 MCqxAECKtICcg+Fer/j2C5NtKXjOifAnmTn/p8zXuoEmIJA6e19MYUHdQn1yVaiLi7
-	 PmJX3bzYCCtXEcsInX7kezR0kWmRlzUZERae2INlutGI0MvKZ77UEDyQqxBxZyroB1
-	 IKqJTT3WQgw9hAZVSrR0n7yTWLkT3AdpTzR/O8FoxNRxyBBaelYfbic66KuwE9jFVY
-	 7DRHyS94jUErAJyndy8AispHXMzfPIi8hzxw9n1eixxi2I+QRKt83KYQ+OSs0jsycI
-	 zKlnhB3jqr+JQ==
-Date: Fri, 09 Oct 2026 13:01:55 -1000
-Message-ID: <61e309273c68312c1c68e3da2ea45394@kernel.org>
+	b=NAVUR8G4cIs6tTv74CXx4nLpsDZaZ9z8xCJFJNEOVsmlcNMgQACKRN7PCcn8A86W8
+	 3+Na+3HXkykWbygD5GpMa8fN2OwJEPrvD6FTBMQe+AnY3qeH+LmaWJ05rrOPIMXam8
+	 UDaW+4zh/F+gHebYGnBVYwqfLGaZ+2xVbMmxLQgJQmPL9R/ykBUSAyh0lxEhcDuPQ4
+	 UvY17V6SUgnxvqrpAPxPSHtXQMuLDXpF4hzSUD7bnm9vCo2M1NJscO+ZtXNkVZ93+8
+	 yGU0N2i8XlayfZrf4/bPhpi7qO8BdN+LhcJzC/k+oZr0N8Zaav3RcSEHw/dJgzSDG5
+	 HvxD7FaVIqZvg==
+Date: Fri, 09 Oct 2026 13:42:16 -1000
+Message-ID: <14824587e8eb436b2621fef1bb681cce@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>, John Stultz <jstultz@google.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 sched_ext/for-7.4] sched_ext: Keep proxy donors with slice left on the local DSQ
-In-Reply-To: <20261009200827.4026499-1-arighi@nvidia.com>
-References: <20261009200827.4026499-1-arighi@nvidia.com>
+To: Tao Cui <cui.tao@linux.dev>
+Cc: David Vernet <void@manifault.com>, sched-ext@lists.linux.dev, Andrea Righi <arighi@nvidia.com>, linux-kernel@vger.kernel.org, Changwoo Min <changwoo@igalia.com>
+Subject: Re: [REPORT] sched_ext: sub-scheduler tasks are severely under-scheduled vs root-owned tasks
+In-Reply-To: <3e044142-8f2c-45a2-8d5f-75d301526023@linux.dev>
+References: <163e2397-0e3e-4cc0-842b-0d36598d13d7@linux.dev> <68208eef89abff9423de730ef585327f@kernel.org> <3e044142-8f2c-45a2-8d5f-75d301526023@linux.dev>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hello, Andrea.
+Hello, Tao.
 
-On Fri, Oct 09, 2026 at 10:08:26PM +0200, Andrea Righi wrote:
-> 		if ((p->scx.slice || unlikely(p == scx_rescuee(rq))) &&
-> 		    !scx_bypassing(sch, cpu_of(rq))) {
-> -			if (p->scx.flags & SCX_TASK_IMMED) {
-> +			if ((p->scx.flags & SCX_TASK_IMMED) && !proxy_put) {
+The following is a Claude-generated analysis.
 
-The bypassing test skips the keep for a proxy_put as well, so under bypass
-the put falls through to the ENQ_LAST branch with idle as @next, and the
-WARN there fires for an ENQ_BLOCKED scheduler without ENQ_LAST. Every
-blocked donor picked during enable or disable and put back by
-proxy_resched_idle() takes that path; the base tree's blocked-donor block
-never reached it. Reproduced on a 16-CPU VM with pipe mutex contention
-while cycling scx_qmap -X, the first disable trips it on three CPUs:
+On Fri, Oct 09, 2026 at 09:51:35AM +0800, Tao Cui wrote:
+> The scheduler is a single binary (scx_k2) with parent/root and
+> child/sub modes. The parent grants SCX_CAP_PERF | SCX_CAP_ENQ_IMMED
+> to the child over a cgroup, while the child only writes cpuperf
+> target 1 from ops.tick(). Both schedulers print their counters every
+> 2s.
 
-  WARNING: kernel/sched/ext/ext.c:3607 at put_prev_task_scx+0x743/0x870, CPU#5: pipe-contend/2042
-  Sched_ext: qmap (disabling), task: runnable_at=+0ms
-  Call Trace:
-   proxy_resched_idle+0x51/0x120
-   __schedule+0x3f1/0x1900
-   schedule+0xae/0x100
-   schedule_preempt_disabled+0x12/0x20
-   __mutex_lock+0x4d6/0xc20
-   anon_pipe_write+0xa0/0x650
+Reproduced on for-7.4 with your sources in a 4 cpu VM. The starvation
+comes from the two schedulers, not the kernel.
 
-The same branch is also reachable without bypass if an out-of-band slice
-write zeroes a non-running donor's slice before the bookkeeping put.
+The child's ops.enqueue() inserts every task into its own user DSQ. The
+only consumer of that DSQ is the child's ops.dispatch(), and a child's
+dispatch runs only when its parent calls scx_bpf_sub_dispatch() from its
+own ops.dispatch(). scx_k2's parent never does. See the comment above
+enum scx_cap_flags in kernel/sched/ext/internal.h and how scx_qmap
+dispatches its children. The SysRq-D dump during the stall shows the
+spinner in the child's DSQ 0 with a full slice while cpu0 runs root
+tasks.
 
-> +					/* SCX_ENQ_IMMED uses SCX_CAP_ENQ_IMMED, the base cap. */
-> +					if (proxy_put && (p->scx.flags & SCX_TASK_IMMED))
-> +						enq_flags |= SCX_ENQ_IMMED;
+> In an A/B test, having the parent kick the task's CPU from
+> ops.enqueue() with scx_bpf_kick_cid() and hand its dispatch turn to
+> the child with scx_bpf_sub_dispatch() prevents the starvation.
 
-Not from this patch, but noticed while going through it: this insert runs
-with rq->next_class still ext, and proxy_resched_idle() then lowers it to
-idle with the IMMED donor on the local DSQ. A higher class waking on the
-CPU before the re-pick hits the idle class's wakeup_preempt() rather than
-wakeup_preempt_scx(), so nothing reenqueues the donor and it sits behind
-the new task. The scan dsq_inc_nr() queued only helps if it runs after that
-wakeup. proxy_resched_idle() never looked at the local DSQ, but with this
-patch that's the regular state after every IMMED donor's bookkeeping put.
+scx_bpf_sub_dispatch() is only callable from ops.dispatch(). With the
+parent calling it there, the child's dispatch does run, but every
+scx_bpf_dsq_move_to_local() is rejected because the grant lacks
+SCX_CAP_ENQ. SCX_CAP_ENQ_IMMED only covers IMMED inserts. The task goes
+to the reject DSQ and is reenqueued, SCX_EV_REENQ_REPEAT climbs on the
+child, and it still starves. With the sub dispatch call and SCX_CAP_ENQ
+granted as well, the spinner runs at full duty under the child.
 
-The SCX_ENQ_IMMED comment in internal.h describes v2: in v3 an IMMED donor
-stays local only for the bookkeeping put and is reenqueued on preemption or
-by the deferred scan like any other IMMED task. The dispatch_one() addition
-about a blocked IMMED donor making the scan a no-op comes from v2's
-exemption in local_task_should_reenq() too, and the dsq_inc_nr() and
-local_task_should_reenq() comment changes don't go with anything in v3.
+> Actual: the child claims the task, and its ops.tick() initially
+> services it, but setcnt then stops increasing and the task receives
+> little or no CPU time - 0-91 ticks per 6s window across our runs,
+> most rounds 0.
+
+The initial burst is the bypass DSQ drained during attach. In the
+move-after-attach order the task keeps running through dispatch's
+keep-last path until something else wakes on cpu0 and pushes it through
+the child's ops.enqueue(), which is why some windows look healthy. The
+stall watchdog catches it past your 6s window:
+
+  sched_ext: BPF sub-scheduler "k2" disabled (runnable task stall)
+  sched_ext: k2: sh[1401] failed to run for 30.696s
+
+> One possibility is that, on a NO_HZ idle CPU, no balance is
+> triggered for the child's DSQ, so the child's ops.dispatch() is
+> never called.
+
+The parent's dispatch on cid 0 ran several times a second throughout
+the stall. It only consumed the parent's own DSQ.
 
 Thanks.
 
