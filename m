@@ -1,66 +1,66 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2A82D8391
-	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 05:53:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D232A42A152
+	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 06:31:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791525205; cv=none; b=Mn9/dfzLmD1i+ScIzi7usa35K5/ABIfooTcnNYuoi+EdHHdzo2S9cKHhitM7/S9aa/fdfN8+NRJaeplLaa9m3xYIMpAh6cMJ9eSWigzF9cXpiOAZc9JbYRvdCpPMMFcJRrWQJTwhhJDB9BSgbuYwg5hV5YakQ9lj8fi0/wD7hU0=
+	t=1791527508; cv=none; b=jG/C62aFNAVIBDCiTCwNlhEB5zO66Dmvzpnb/szJkO56MMS++7ZSxTCtmgVORYneJV0MgY678oX7YDDGWpgO1xz60QGDhWjSROCpBzZDyye1BoZsJZMXOiWyGxajnVa3xqp1ElzSg580o6hqItUqsln/tm9TNUc8y8RN/vgdvHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791525205; c=relaxed/simple;
-	bh=Ban0n7745AzBI+q28L7dD9Gn9SbstwTnM2yds7GYTLM=;
+	s=arc-20240116; t=1791527508; c=relaxed/simple;
+	bh=G8p969TSPt4pRVkrqnzxS3mmH3ELFFspsjEpF+ZfLvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WufPhktXNCY/WoQqBzka0pGqjC1oRiJyYFMXXQD8Hjkn73X3VjvdW0RFe+X+6oIEb3AcA11PwbRVN6+n6CGWb2yrecRHIcb8KDPQDGRvEekPsYpZ0ZiEenJbYU4DyMIiBYOFTNIUoHpMAxI+G775vvneFNwiN3NQjCMIdtBpEZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h7/Wjofi; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=WZipEzYgDal9mfM6WCFZ5DbElbT7dbwNAEy5y391gbolYdmSnt68qiJ152aHZ49NbUyuTWl3aVn5vMJ92IHRVA/aNvVGXv61mSJiKHxezcr37HX+l/HGBfeIfbeZCGXhc0RRWBm9lejbVVKTN01BPYZfM7wZGWPxqk9Zbre5x/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sw33FHvX; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h7/Wjofi"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48b06f58380so206735f8f.1
-        for <sched-ext@lists.linux.dev>; Thu, 08 Oct 2026 22:53:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sw33FHvX"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-49e6b771d06so4457725e9.2
+        for <sched-ext@lists.linux.dev>; Thu, 08 Oct 2026 23:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791525202; x=1792130002; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791527505; x=1792132305; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=wVlDnOJmdRHsN4qn4A2HDhzFDxkd+SqZNh2m1iwQaYA=;
-        b=h7/WjofihOeIIgwIFRpzxFJgr5Yu85jovWGt6Uv6hPpbqn8wj6WbRigzEsUV6HG+Sn
-         IlZoPWLM9m0rJ2/NSh1JxJH7VAQlLRLBf4q6SWMrva3W28xwqzCOxzFR4uMIp5guL7ZD
-         QZOSbL5xYkK1qRiH31zqqMZp6tmlkYmEcJ577Prx/Az5xrqxWgBJm5qCMIllOTr3m6ie
-         58RgX+kSxFu+9oAlCmUVgbcLAfhaJB0kaXQUhXCbo/z1XL8I6WD5VNt1xEo7BN8sZjSR
-         8wVNpnT2o6l/Jc7you9uhUXA557+JSF5O8LxC8PT8KbVUxdDMNilnTke3lZJpGpzkQPj
-         +cuQ==
+        bh=/prsEyltlekkl/5pKA40pBQXK0nwU4kVOsJT37viE/Y=;
+        b=Sw33FHvXY7v6rHKfxhPGndVaA51a6/IessBTDC8EOrEUVPERVNxCjuPltZgL+uGAe8
+         LPHDITXA4zSa0EIUce9lH6vL+o8yaHnatYxiTaXqhsmjN+nYvxrwu6ekop2tN/eV3zSj
+         nPoqmU1mTdSvmsNnyjqWPjGhYqGPMhy2tMMr7WNO1n4KL7DP+n+X5hYF2G8qnQBDsMSn
+         DvGRCcrM014TkD0HdThe3mWtD9pub1Eg3f8c4jVM5qVqZxNF1wJFvGfE8CwOkYMStv7Z
+         RrCd37hdtRjIZppJD5shd5uu857bj8bDhkoY4kaqKZF16GHRRSL+fjYN+NJP7iJLL1uy
+         wMhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791525202; x=1792130002;
+        d=1e100.net; s=20260707; t=1791527505; x=1792132305;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wVlDnOJmdRHsN4qn4A2HDhzFDxkd+SqZNh2m1iwQaYA=;
-        b=p6X+BXnRSyQyskqCTRyKT7vQ52bXQCQSkbXvsISx0AkuhYr0HO2z4h9hAjAKZAAJ3G
-         +bqE7QIGlNxWgFIBHKYDthUsGTsFC9hsGo6k0Z1Fo7zH9CnGi3KPLb0fjyoTGW67FWxK
-         LojXuBC+gtWDH8ElSF2Z96JufQw4gxPCEQc1cCx0DOqSL/YnRBNjpPTtJLl0XhxCM38A
-         MPSXBAg0V+3vyd67iDRx+BnR3jx0dL4xpISAkkA+VIN30oYvAYqMeNOBfW+RFKLsZXDv
-         BVbE3MZM2On4L6D9xyVNUnb9qVf2whl1Do0NKmBHZNHEO0WwLZummJv5+VBmyO0kxO21
-         NZ5Q==
-X-Forwarded-Encrypted: i=1; AKwUvBwr+rmx72ffpT0KNXCkfX9JvW8g+XARFdEwAyXjp75bQu86uFBxHHDjmT2njVnXACfCuQdmRMvhshM=@lists.linux.dev
-X-Gm-Message-State: AFuF++lMIm9MZjntuJRjLn+61Q6Mo7vvL/g3Z8if8cMlZs3xPz1RIbzW
-	y4VDPO0pqv7gGPaGBYhRX4TGuJuuyep6TsUTLbIVucrRc0ZeXOfjnSpd
-X-Gm-Gg: AYBFou3qLqE8s2EC8Lb4IMlWqgel7jiVzsQBlIt71veclFRyfq4POI5HdnlcB1np1Ec
-	QM1qzXgrl8C5fzGFweeghZppSs+akMWfH3RRcCOVnC88quPInR/sLp54yFL8LvLKbDWl3RTkrpE
-	AgLoQtaCBPOtO3TlMmYxVHKNj0RFJlwYGtEMhFqUnTReUh3deOj0lVtKx7tuDVFFLleVez6Nc4w
-	Bm4ouUHHj/lbUusquB0KQy8xJsVPfWqrX5m8X0D4WfzgALDREMQ42i8jjrvju38jVg/bmovmSLD
-	ht754e3WLuU6TzornqnMKxIRNuMJ7R3YnSjPNcZud665I0noBnbZ6qgc5OkoSDkuBTsS3wCS8Z2
-	Dva2TOr4jqeDpMrQafiRi5hWXrn/BiCuQ8cbt1mjbNCGCZWWeUuYw9XS75WnSygS/2r/1+vrluJ
-	O+aj+cWKWe5lcPsSRl7BN6YDvEJbuFRZY3nADKTI0lPt2++3DBwOCwabEDXoDTz8+Lb2xlVPPNO
-	I1lnsF7Gc6KIspVVgPl
-X-Received: by 2002:a05:600c:1912:b0:4a0:73b:a222 with SMTP id 5b1f17b1804b1-4a18e3ee97dmr11594485e9.0.1791525202556;
-        Thu, 08 Oct 2026 22:53:22 -0700 (PDT)
+        bh=/prsEyltlekkl/5pKA40pBQXK0nwU4kVOsJT37viE/Y=;
+        b=D0Hm0qNaKgPO605r7I1FteGBd6l6mjdsHCylbON0UC2qY2XSWcdLDt1X/tTss/sm5G
+         d+DTJPi1JD44/GoeD0UUpsnhN78wfKmb120TmrVQ4WyjhbfhmKPcvQ4/ajhGn5k/zC5P
+         9Xf1CPp8sKAzZJOb3m3PWUl8NuUbGp/TnOm4if73XmRkwzJclsYAbLP5GYQLmxpL7m78
+         ZSgld1GHC7hNvOlnsTIBzb7y4FT/ChvfPOZYloLkkDns/iJnv50dFHRHvwU+4TWReHyA
+         tKoy2uMMo6v8Mfjls/Sh7Tdyyb6mMvHAR/b8rr83qzbUMRu985SKdvGwQWYEh/LrwFz1
+         Sv0A==
+X-Forwarded-Encrypted: i=1; AKwUvBzQe2dxZ3+NuCcTmohyaMOBe87nXThGNo1j2tURSVzGkCQUzWzwdJpI9NEEA2sQ9XMKoCFnN6Fyz8s=@lists.linux.dev
+X-Gm-Message-State: AFuF++lzJ4h0g4Z6oqljtQcicYwyKZyYPWlrNVR6rlaeR/d+afwgHyVu
+	xruoBPHtqb+nxHeU6fo0V0tZo2Hod5osNpoCXn0aFTX2mhb4PrKfai3M
+X-Gm-Gg: AYBFou2tEPT6JxGQ2U0j6E5qgw34seUSI7KjCQC/XFdcH1FiT4kgLSrTVbqtVUJeZ1E
+	MtxMbQ1FCDUnHC03u6CVSP/c1LJb07Xg22SazFzZuBFarvpN0K4Jb7vz/iIKPGlRg0+hEeIIaA/
+	EHCJM7fsDKKAVIt8KfMuHUg360AMwAqL08KZZuLO3z0QSkhck7tcdX8m7xYxmt2RVoFl7ncxlbw
+	mBdM39w2gRJ+0+DgkM/ch2Ab1Hjy+KfBIISh90oYWkJWXZQkNuAhmAkXvztO2ZHj6byCm5F6zn7
+	hsIFpHqnNxcvSdV4cTA78HNHdT8kTaSh8pszHm2xCTRE6YS1jS2uuxRzIJDyehP7+Pa+AMVPLuU
+	X9KKP2l23FHfZITFNb8Tbkc1C16z7rC9UM+yIC8zeGzezcEOLdCfsopa/9gjjsXGJaMF6gOyIIV
+	/cGtJzaN7Rw+LdElqwTy0SEIk6LoZyCquUwzn0BYcfdVXRfgrOa5aDUoZL7tCFJ8kRYNvyOAVlM
+	9szzzeWWbzUMp32mCgp
+X-Received: by 2002:a05:600c:a086:b0:4a0:1f9e:5f78 with SMTP id 5b1f17b1804b1-4a18e3ea887mr14032945e9.0.1791527504788;
+        Thu, 08 Oct 2026 23:31:44 -0700 (PDT)
 Received: from lima-kdev.local ([85.100.66.184])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a18ca51465sm22826485e9.4.2026.10.08.22.53.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a18bf0abcesm39170955e9.1.2026.10.08.23.31.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 22:53:22 -0700 (PDT)
+        Thu, 08 Oct 2026 23:31:44 -0700 (PDT)
 From: Kayra Cizmeci <kayracizmeci@gmail.com>
-To: vincent.guittot@linaro.org
+To: tim.c.chen@linux.intel.com
 Cc: arighi@nvidia.com,
 	bsegall@google.com,
 	changwoo@igalia.com,
@@ -81,14 +81,15 @@ Cc: arighi@nvidia.com,
 	sched-ext@lists.linux.dev,
 	sshegde@linux.ibm.com,
 	tj@kernel.org,
+	vincent.guittot@linaro.org,
 	void@manifault.com,
 	vschneid@redhat.com
-Subject: Re: [PATCH 10/18 v2] sched/fair: Add force push task mechanism for fair
-Date: Fri,  9 Oct 2026 08:53:17 +0300
-Message-ID: <20261009055318.29609-1-kayracizmeci@gmail.com>
+Subject: Re: [PATCH 18/18 v2] sched/fair: Take into account slice in EAS
+Date: Fri,  9 Oct 2026 09:31:40 +0300
+Message-ID: <20261009063140.30016-1-kayracizmeci@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261002154415.2270586-11-vincent.guittot@linaro.org>
-References: <20261002154415.2270586-11-vincent.guittot@linaro.org>
+In-Reply-To: <179bcb50be21f834423f9b5c068b5fce4cb65871.camel@linux.intel.com>
+References: <179bcb50be21f834423f9b5c068b5fce4cb65871.camel@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -97,34 +98,54 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
->  	task_tick_cache(rq, curr);
->  
-> -	update_misfit_status(curr, rq);
-> -	check_update_overutilized_status(task_rq(curr));
-> +	if (!tick_pushable_task(curr, rq, rf)) {
-> + 		update_misfit_status(curr, rq);
-> +		check_update_overutilized_status(task_rq(curr));
-> +	}
->  
->  	task_tick_core(rq, curr);
->  }
+Hi Tim,
 
-Hm.
+>                             struct task_struct *p)
+>  {
+>         unsigned long task_slice = p->se.slice;
+> +       bool target_first = task_slice < get_rq_min_slice(cpu_rq(target->cpu));
+> +       bool min_first = task_slice < get_rq_min_slice(cpu_rq(min->cpu));
+>
+> -       /*  Select the one where you can run first */
+> -        if (task_slice < get_rq_min_slice(cpu_rq(target->cpu)) &&
+> -           task_slice >= get_rq_min_slice(cpu_rq(min->cpu)))
+> -               return true;
+> +       /*
+> +        * Select the one where you can run first. Check both ways, or the
+> +        * result depends on the order of the CPUs in the PD.
+> +        */
+> +       if (target_first != min_first)
+> +               return target_first;
+>
+>        /* Favor previous CPU */
+>        if (target->cpu == prev)
 
-I think this mechanism added on here does not works.
+> Take an idle CPU X and a busy prev_cpu. Any task can
+> run first on X, because an empty rq has min_slice == ULONG_MAX:
 
-Before fair_check_pushable_task() is called, we check
-if nr_running is bigger than 1. If it is we return false.
-So when we enter fair_check_pushable_task(), nr_running is
-equal or smaller than 1. We first run __check_pushable_fair_task()
-but it doesn't really matters, since it's output
-can only return false. Next block is skipped to since
-next == NULL. When we're at the check_pushable_short_task(),
-the h_nr_runnable check is always true on this path,
-so we return false.
+> - prev_cpu scanned first: when X is the target, the slice check
+>   selects X.
+> - X scanned first: when prev_cpu is the target, the slice check fails,
+>   and "Favor previous CPU" then selects prev_cpu.
 
-It this intentional? Or am I missing something?
+> In the second case the task is stacked on the busy prev_cpu even though
+> it may not run first there.
 
-Thanks,
+Agreed. 
+
+But ULONG_MAX doesn't always means that the rq is empty.
+(See my 18/4 review, maybe I'm getting something wrong)
+
+Also, I assume prev == min-cpu.
+
+Scene:
+
+target is X, min is prev, prev has a 5 ms sliced task while X is empty and task_slice = 4
+target_first comes true and min_first comes true they're equal and min is chosen.
+
+If however, the task_slice was bigger or equal to 5, as correctly target would be chosen.
+
+LGTM atleast. Eh. (ULONG_MAX could be a problem tho.)
+
+Thanks, 
 Kayra
-
