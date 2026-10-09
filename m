@@ -1,215 +1,314 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2091242B742
-	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 13:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7274E0B8A
+	for <sched-ext@lists.linux.dev>; Fri,  9 Oct 2026 13:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791552924; cv=pass; b=mPVdl+fdNPtK9GO1EsKOX2X9xIcNQl/oyCDfZBEfpeOXQPOfblmxoU55t1WYG03hyxQsCrEFXZ7CuFK9NEhnC7tef3/PSjZCao13n+BVTzROWLcZg6ErWkYnHktTYhCj1HgRnHZ90iV7vHkGqY/p+rSvOM6FzTzj7JyYgC1hb7M=
+	t=1791552986; cv=pass; b=RYhMpmZGBENAGQ8AbYYnN8csbvLWyrpbr/XNCSw3TEluPvVVF6pX84GzqSUpjq7PLUfONXFDEcc7J9qq2fCqkX8bRI/dGM4PG/2vsx0WWtbZsDFG3W3GViQCjlGTO5VvD0NeT4y+ceg9OhkFr8acuD4JPeUcz9+xTnnVnLNdx+0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791552924; c=relaxed/simple;
-	bh=NSL1230ZzJQ74Jx1KNkVBnc3qpUs25gQVJx30zAtXRY=;
+	s=arc-20240116; t=1791552986; c=relaxed/simple;
+	bh=4XPCH/MhgvL8FdhVT1IWLnUFXPM2Ro816H8yo3QNtog=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OPnVDjY3gqrmCXhbHBBPD5yzDTmCp/Ucux4QjmyCtUEWW9JX46PXsRmo4kkPpCjYcrj5Iuc/jF8Pvy8WUOFfrJO/ptZ2bpp2k1aFhyAJibhmw5E8ftrJj2fjZmtzFTMnwCKEDvWnaxyXHiAgzX3zl/6v39Go106X2tXjYPn55J0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ogVuEU/3; arc=pass smtp.client-ip=209.85.218.45
+	 To:Cc:Content-Type; b=FbhDRj8wI4kpGLMaVeO9evwNINuVgND3YWVot9v2B+Nw2wplQjB3Z4b1V7rgEy1AMLF5xPlOqpOSBFKrU9BPjD/7MXsccF+9Zu0F8/+F1NyOtx9L2Z8KtgyqNFFpxnC4/5bc7SCDXr9kwh+p6BEN8LjqPbdpFCd1Ss7RxpIluQE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fuWg6Nfx; arc=pass smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ogVuEU/3"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c2e62319cfaso660720866b.2
-        for <sched-ext@lists.linux.dev>; Fri, 09 Oct 2026 06:35:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791552921; cv=none;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fuWg6Nfx"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6ae305e3bd9so4341946a12.0
+        for <sched-ext@lists.linux.dev>; Fri, 09 Oct 2026 06:36:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791552981; cv=none;
         d=google.com; s=arc-20260327;
-        b=m/enK6/Etajp3NvG4YpvUcLGeSFV2PQB/xfcqeVOLGPTnnfgE95S1JkZLX4MSjlNsN
-         ga3gf65mGhNaJVEfTURt6YvKx5ExEvWODyu1Pd9py4X5JtKzEDQVw2Xvfjl0uba7iYIa
-         oIzDVceD56+T0ztCvrn2NXbOLBEWUU2PxaizVY7UUrSfuvgm388lV/vUVkkizhUoRflg
-         ZD6/7BezAf5OuVSi7k3UzrCmxljSHhOQc9Ngx/KiSwJlL441hssJHUCoqGlbz3Hsgqki
-         MsFwUm+fr+0Ce/rCmzmJhQOBryJ04Q+/mbuPJgRs4f6DccyYYiXIH6/lDetjrwLJrac8
-         El6g==
+        b=kndJ6e/NB61Sv8M5pJbxP/kSoilmrlUpfBvcAV7XF8ckgzxzVCVbOxAcnQYqsWKkcJ
+         QEhr48j27gQCqCZZxf2HjF5ex0LEs7DNu9pMOGBRl45CMS2qRckKuzBTRH4vhJFd7WFK
+         SH9cnJUqU48aU9BCfkxfwL106kD5CA1FNNMxbV8iS9CmU9sM/BIZzDlKvTUjwzy1HFdW
+         nphXLl1NXXXJEGiE18ZrlOtLzGpDHuReRiuPPyapNt4k+nLpF62J2U6PobreJ1newXVq
+         B6i6BeQqn3hOmBJoQpTLq7Wtmz4IDSxPDplrSuvIg7eeSxyyoNXd/Q9VuWEXHpoq37I+
+         rTqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=5gh61X4RiGipDxIUahocXKIUNnUE9ZBer048Hrx3Sr0=;
-        fh=bNAoK568glOZHbceI/qhZIK4y2XPKhc+00Bo1gYIoCE=;
-        b=eChS5YVXADy/14Uq7wjicjZTlFZi56/WSP5gn9UaNMh/fIEIK2NzhhcUmpsyTuyc+s
-         ASu/v2j690bDcQW2m8kiDOjcXjEyCzv6zOHQtRWYiC2NuxteYdqErC21q0JZj3oPTCFh
-         NnODrZ70I00YQsEvBzoIudN7mbhWqrXGheh5Ok11USk2rIyTAKk8nUX+em14ndIk5j09
-         v1mIk1wNK5wqXscYEjGDiJtgUHyMaLrUquLZNIv4uBZyfQpeaL0lwtH9oA700xceEpJ7
-         pRHzr2Juo/V4Nqo9HpgTZ4KqH61Z6MaFuenCfgWflxB8LGKTtx0AAxrdOrzP6BG2POVP
-         DZeA==;
+        bh=cSYTF5G/6IBv4qtaPQwsugnglHUYlwR0deKY7PXmuiE=;
+        fh=sc05TGP1wvPXZWcsTZjqT5BBs1WJPMHIzrD3ztv+sOk=;
+        b=iQYV/XyG6ONgPFAzddshy/zoRvVYOC5O2PD4fOxGaA61Ric0Dgvp9+qFnt56RQ2VJV
+         3g8g20FqJblvs5HUESgEWG4HMWThiN6yOONuPw1YGKlZdU+tp1StIyDMyGNhGxsrhibG
+         12O5bLp/v+PLpAc6CzTs+Qt77vWzDqiePwK5KIHvZECpxt3VH2ZYQCVwO4/up/51hvXV
+         crAaYnyN6FH4GtwIOniKsTvu+jtQ4reqlCjWAkgncn6YN8xabpEc2GqeOnyGNvBlkGaa
+         lorC127vBi86LFLG76InD36ElnP8/IqMYyxItd/hDiKMU14zon6LXKJP6lESWdQcpuhh
+         kBzg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1791552921; x=1792157721; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1791552981; x=1792157781; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5gh61X4RiGipDxIUahocXKIUNnUE9ZBer048Hrx3Sr0=;
-        b=ogVuEU/3hpjnKMlZXoKnoF29w1ooVM4C4P/AWcz/zOqmr842y7epmXhckmtd9tKel+
-         DHoc0ReRZowlzo4BgVQiMxilHuYdas++QONastfRO83w0EU3GfI7kl72T/v9ydUkJv5s
-         aNcQiHyYiCqBblxpqDNYHhdA7bF1kBgDhY9Bri4Y609CbIK/QLQ4PZkivx8YoP8v+T5I
-         QRNzdj2idPulCN7hJONwAlyfLtrdbBK0kd+7A3tRp3xNjQO10QwMh8oIiH+HK/ctUTrR
-         kAHUVvYWzuCrV+1fnjM9Wz3MKdzW/y9UE+a0wNa1zkUiFxEL/49eWN7RKMbzlWyIFIbg
-         sSmQ==
+        bh=cSYTF5G/6IBv4qtaPQwsugnglHUYlwR0deKY7PXmuiE=;
+        b=fuWg6NfxvWrwpVETbA0j/po0RbdXofPoSQ67C4kZLTcZ4jnCld3sHaa6EmkC24AEvn
+         1kVK8isjx/Y1gatknb8KdT5oQULLhCRYr55Pz1Zq1QPdRW1yiwU9S4Gk0V4Lnl0eNrs5
+         Bif+Cv0xoDebmQwIaIgtNFbxT8Sw1ebge5zYPKcs3G7dUxYol+kf541aVGNEs0RlLzV0
+         WrWOLubH+d4QepV37B0+UlbK9blFukfniY0gUR/+JQHVF8xgAZeAL7zdVOey1MFMzyZf
+         zlFw87YAkkFynIbHWVpZV6wT/11+kIbx7kIMdiP3QvzweZFRxwvmwSZCqhCxI0C5c/ye
+         JovA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791552921; x=1792157721;
+        d=1e100.net; s=20260707; t=1791552981; x=1792157781;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=5gh61X4RiGipDxIUahocXKIUNnUE9ZBer048Hrx3Sr0=;
-        b=0T2Q6vFG77KmA9S1QHkbybuC80n16+v0YcMeWGn6lD22Xj/tzeUGxJ6XZFReORnvrh
-         cbgiSjXcfXH37fQrlGegArW6334eN6EUkWBDW/1s078VegBUXL2tZGDR/0PWbkE5xAZD
-         bwQZ57+WCgPGqkzs0mae8rb/aXUkF0D7/cUjD9w7ugZM1GbJdhyhfCxeW19Uj6jsP3RR
-         94zrjdpZF41Mos++f0+UyI6u8ylj/++xUeZlooyv5Y2MAPAREqwPTQ7yQw8yD3x2rBsm
-         dBIK2T/yn8YSqrONolkKOFtf3f2uCqpoOreEZtZtN1JCgXwfPAipf2DXypUEIPg4BGAl
-         d20Q==
-X-Forwarded-Encrypted: i=1; AKwUvBziTKnhCzRyAwKxo/xdb9XXdHvcrKQOcd3vXcod3nii7nIv8vFOVL1uo77yzYwPas5EdH5ZaDAqUPU=@lists.linux.dev
-X-Gm-Message-State: AFq9FYJ20FZnmfjt2K39QSAoSuvOKFgRp2EuZ/RAGHYCSBE+AcgknyJt
-	iDb387T5lxo9hP2V7BmsfHV6M4JPlCg5bGoYa9B+Tdp3rn7vk6NXJ/d0d84cBfCXQNPs81zlAIx
-	Gt0t+3Ab5jN80lKT/VjjRg+aEgmWRX9qmRIwqTWRL7g==
-X-Gm-Gg: AYBFou0Cx21IoBEwRQidZYe6H9R5yLHc36GphyEaS+elkxPqjlX1I/VPUChmN5T1hkM
-	PHlWsLhuOAORuaKRYXZ+pGWsIL0SC9RNvSSltfUVyO3aLmVUOGCi4LrPhj59ad35vwDrygRY3Fn
-	H9SsJsS4xJhVo67KxMT6iONnVMlm133cTf92VrqgyVuG4bRS0zZZ6FKdD3i/kGS3zPMx+6L0j+O
-	xb5NgkPMQdbLQUJ82Uy+FVpaYdyzJQQGl8FvfdZEKK3f0SIKr3MD70CwNY6dqKwPtwZuj/Cf1I1
-	ADp/mEiEDfte3T8DVBoySuYgkvVe00Jt0cs7i0BTkD14MS3yHJ7TDThO81I6oX1LJduMRDiyRQZ
-	NIXROVPcLfuU=
-X-Received: by 2002:a17:906:f592:b0:c26:19de:912c with SMTP id
- a640c23a62f3a-c31aa07ba07mr238720566b.31.1791552921162; Fri, 09 Oct 2026
- 06:35:21 -0700 (PDT)
+        bh=cSYTF5G/6IBv4qtaPQwsugnglHUYlwR0deKY7PXmuiE=;
+        b=hPYRUtHbrW/EK6nZJBLwBbtkUSNIrZkD/y/9p4nNPq1d8urBrO6uiZuByX82h64kPA
+         iiU+3gzuIMrRtTzIBjYpS5xsH0JUdan3XXWod3gKd28tGN/IcbC9nGrvKjRN6vV3z3z5
+         HKOk/f6sZs7wayn4LT2OPO9+AbEYbqWk2cbnbt0pabwpeZGBulBV4Dp+mFNZ6aIWcB/s
+         rF/+/axyajG21LrNVCRiysupPqxcmIDJHJwLhapW+EHYGHJNG+5Im7KPji5/HSkxrdxP
+         kgwHMIKQa7n51FTkCtDC/Qm2ykWcmDqIUa9qaYgVNoYg+5eTKpJQMt4RybZrfVwLgwbd
+         OkqA==
+X-Forwarded-Encrypted: i=1; AKwUvByHB+cyqRcmez05YbV7BH/rPUhALA66wH4H32ZAVQEU/FlGG13goeohgrh6ZwQGV1aCidxTWwP1JNo=@lists.linux.dev
+X-Gm-Message-State: AFq9FYJ8NHyuOwhbqQkgQTJ+yTdtRTqmPy1xE+NfRnC8wAhDbumAmIwg
+	cxaV8zfaGSyg07rrNF+iMb0dPevLPjpua/SapL4zGl3J9wWQFsN3cLMU6i0rG+2cVKsedBraF6y
+	qSxasDt8LtTmZIWC4EjxUopAzvyvqRPPu8S3yd1yWNQ==
+X-Gm-Gg: AYBFou2AeKJ0mSddM7/9iplCExFqt0m7bReDGcz/3neMOaXpKv4wm7ar7PVIl9Z92XY
+	0npVMTOhA0ZDgpfJpbfIRil/PH2MhZp0jC2qj2pWXZ6mdRPafnjgXkXyZKcL6+82OLkR+zPvw37
+	/JP/tf+TBOXW03HdT4V7629v81JZieB3ac2Oak7SskkeCefn6/goBURBUveRpBJSxTKOLoyc1Dc
+	fwK4/qkuyY29tbEVM6BovwiNqQWk4P5FHlB8NkQPWeTSXjZ70HHlxtjDtCmYyz7xmr39Pu5bZIp
+	ou9n1K7wk1mhrfyF1NiCxAoOIQdrKo+9EvytKOhhgLhN1Ox5JT03xlz0ryeAikZr0/dzp4L4YxC
+	P+wSyqm02rd4=
+X-Received: by 2002:a17:907:9709:b0:c2e:1b4d:e9f4 with SMTP id
+ a640c23a62f3a-c31a9f68e76mr211664166b.31.1791552980876; Fri, 09 Oct 2026
+ 06:36:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261002154415.2270586-3-vincent.guittot@linaro.org> <20261004173032.18867-1-kayracizmeci@gmail.com>
-In-Reply-To: <20261004173032.18867-1-kayracizmeci@gmail.com>
+References: <20261002154415.2270586-1-vincent.guittot@linaro.org>
+ <20261002154415.2270586-7-vincent.guittot@linaro.org> <95c9b871ab66588afdf09d6ec9bac577c139b8d8.camel@linux.intel.com>
+In-Reply-To: <95c9b871ab66588afdf09d6ec9bac577c139b8d8.camel@linux.intel.com>
 From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Fri, 9 Oct 2026 15:35:08 +0200
-X-Gm-Features: AclHuK8U9thImNFByGGzg7OkoOg8Hahf03eIGKYMWN7wt2qam3WUMqyVYhsj5oM
-Message-ID: <CAKfTPtCWNmVcQ_R+dN0MdZoFnXAGkJL3XmnqSN64vuz_doQzSg@mail.gmail.com>
-Subject: Re: [PATCH 02/18] sched/eevdf: Reset lag when waking up on idle cpu
-To: Kayra Cizmeci <kayracizmeci@gmail.com>
-Cc: arighi@nvidia.com, bsegall@google.com, changwoo@igalia.com, 
-	christian.loehle@arm.com, dietmar.eggemann@arm.com, juri.lelli@redhat.com, 
-	kprateek.nayak@amd.com, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, lukasz.luba@arm.com, mgorman@suse.de, 
-	mingo@redhat.com, peterz@infradead.org, pierre.gondois@arm.com, 
-	qyousef@layalina.io, rafael@kernel.org, rostedt@goodmis.org, 
-	sched-ext@lists.linux.dev, sshegde@linux.ibm.com, tj@kernel.org, 
-	void@manifault.com, vschneid@redhat.com
+Date: Fri, 9 Oct 2026 15:36:09 +0200
+X-Gm-Features: AclHuK8XPSj60dZEKCZiZmDQwF3SMh14jeoyyjcnhNQN71Gr4MJge8CeenQBmyI
+Message-ID: <CAKfTPtCs5FMDWvnb6+wGhWx23YHe2azRWvmqKp0WsYpzU77v5g@mail.gmail.com>
+Subject: Re: [PATCH 06/18 v2] sched/fair: Prepare select_task_rq_fair() to be
+ called for new cases
+To: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
+	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
+	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com, 
+	linux-kernel@vger.kernel.org, lukasz.luba@arm.com, rafael@kernel.org, 
+	linux-pm@vger.kernel.org, tj@kernel.org, void@manifault.com, 
+	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev, 
+	qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
+	sshegde@linux.ibm.com
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, 4 Oct 2026 at 19:30, Kayra Cizmeci <kayracizmeci@gmail.com> wrote:
+On Wed, 7 Oct 2026 at 00:25, Tim Chen <tim.c.chen@linux.intel.com> wrote:
 >
-> > When several tasks wake up simultaneously on an idle CPU, their final vlag
-> > will depend of the ordering as the first one will lose its lag but not
-> > the next ones.
-> > Reset the lag when the enqueue happens while no fair task has already been
-> > picked et set as the running task.
->
-> There is a typo. ('et', also 'depend' and 'loose' Not sure that's all :>)
-
-will fix the typo
-
->
-> > As a typical example:
-> > CPU0 is idle
-> > TA with vlag 0ms and TB with vlag 5ms wake up on CPU0 simultaneously.
-> > Depending which grab the lock 1st the behavior will be different:
-> > If TA is enqueued 1st, TB will be enqueued with a positive lag and will
-> > be picked 1st.
-> > But if TB is enqueued 1st, it will loose its positive vlag and both TA and
-> > TB will have 0 vlag when fair will pick a task.
->
-> > diff --git a/include/linux/sched.h b/include/linux/sched.h
-> > index d7cc77181ef9..32d7077ef148 100644
-> > --- a/include/linux/sched.h
-> > +++ b/include/linux/sched.h
-> > @@ -592,6 +592,7 @@ struct sched_entity {
-> >       u64                             vruntime;
-> >       /* Approximated virtual lag: */
-> >       s64                             vlag;
-> > +     u32                             vlag_seq;
-> >       /* 'Protected' deadline, to give out minimum quantums: */
-> >       u64                             vprot;
-> >       u64                             slice;
+> On Fri, 2026-10-02 at 17:44 +0200, Vincent Guittot wrote:
+> > Update select_task_rq_fair() to be called out of the 3 current cases which
+> > are :
+> > - wake up
+> > - exec
+> > - fork
+> >
+> > We wants to select a rq in some new cases like pushing a runnable task on a
+> > better CPU than the local one. In such case, it's not a wakeup , nor an
+> > exec nor a fork. We make sure to not distrub these cases but still
+> > go through EAS and fast-path.
+> >
+> > Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> > ---
+> >  kernel/sched/core.c |  2 +-
+> >  kernel/sched/fair.c | 57 ++++++++++++++++++++++++++-------------------
+> >  2 files changed, 34 insertions(+), 25 deletions(-)
+> >
+> > diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> > index f38cf5a37a8a..837dc74c9a8d 100644
+> > --- a/kernel/sched/core.c
+> > +++ b/kernel/sched/core.c
+> > @@ -3618,7 +3618,7 @@ static int select_fallback_rq(int cpu, struct task_struct *p)
+> >  }
+> >
+> >  /*
+> > - * The caller (fork, wakeup) owns p->pi_lock, ->cpus_ptr is stable.
+> > + * The caller (fork, wakeup, push) owns p->pi_lock, ->cpus_ptr is stable.
+> >   */
+> >  static inline
+> >  int select_task_rq(struct task_struct *p, int cpu, int *wake_flags)
 > > diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-> > index 8cda1d39b037..4c8f12fc8869 100644
+> > index 19a0e67827f7..f12678850ce2 100644
 > > --- a/kernel/sched/fair.c
 > > +++ b/kernel/sched/fair.c
-> > @@ -893,6 +893,7 @@ bool update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
-> >                       vlag = min(vlag, 0);
-> >       }
-> >       se->vlag = vlag;
-> > +     se->vlag_seq = cfs_rq->idle_seq;
-> >
-> >       return avruntime - vlag != se->vruntime;
+> > @@ -9800,46 +9800,55 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
 > >  }
-> > @@ -914,9 +915,22 @@ void decay_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
 > >
-> >       rq = rq_of(cfs_rq);
+> >  /*
+> > - * select_task_rq_fair: Select target runqueue for the waking task in domains
+> > - * that have the relevant SD flag set. In practice, this is SD_BALANCE_WAKE,
+> > - * SD_BALANCE_FORK, or SD_BALANCE_EXEC.
+> > + * select_task_rq_fair: Select a target runqueue for the task.
+> > + * There are 2 ways to select the target runqueue:
+> > + * - The fast path which only looks for an idle CPU in the LLC or the smallest
+> > + *   asymmetric domain (i.e. the lowest domain with all compute capacities).
+> > + * - The slow path which looks for the idlest CPU in the highest domain with
+> > + *   the relevant SD flag set.
+> >   *
+> > - * Balances load by selecting the idlest CPU in the idlest group, or under
+> > - * certain conditions an idle sibling CPU if the domain has SD_WAKE_AFFINE set.
+> > + * In practice, WF_EXEC and WF_FORK uses the slow path whereas WF_TTWU and no
+> > + * flag (Push) uses the fast path.
+> >   *
+> > - * Returns the target CPU number.
+> >   */
+> >  static int
+> > -select_task_rq_fair(struct task_struct *p, int prev_cpu, int wake_flags)
+> > +select_task_rq_fair(struct task_struct *p, int prev_cpu, int select_flags)
+> >  {
+> > -     int sync = (wake_flags & WF_SYNC) && !(current->flags & PF_EXITING);
+> > +     int sync = (select_flags & WF_SYNC) && !(current->flags & PF_EXITING);
+> > +     int want_sibling = !(select_flags & (WF_EXEC | WF_FORK));
+> > +     int new_cpu, cpu = smp_processor_id();
+> >       struct sched_domain *tmp, *sd = NULL;
+> > -     int cpu = smp_processor_id();
+> > -     int new_cpu = prev_cpu;
+> > -     int want_affine = 0;
+> >       /* SD_flags and WF_flags share the first nibble */
+> > -     int sd_flag = wake_flags & 0xF;
+> > +     int sd_flag = select_flags & 0xF;
+> > +     int want_affine = 0;
 > >
-> > +     /* You can't claim any lag when waking on idle CPU */
-> > +     if (rq->curr == rq->idle) {
-> > +             se->vlag = 0;
-> > +             return;
+> >       /*
+> > -      * required for stable ->cpus_allowed
+> > +      * Required for stable ->cpus_allowed
+> >        */
+> >       lockdep_assert_held(&p->pi_lock);
+> > -     if (wake_flags & WF_TTWU) {
+> > +
+> > +     if (select_flags & WF_TTWU) {
+> >               record_wakee(p);
+> >
+> > -             if ((wake_flags & WF_CURRENT_CPU) &&
+> > +             if ((select_flags & WF_CURRENT_CPU) &&
+> >                   cpumask_test_cpu(cpu, p->cpus_ptr))
+> >                       return cpu;
 > > +     }
-> > +
-> > +     /* Accessing remote rq task clock is a cost */
-> >       if (flags & ENQUEUE_MIGRATED)
-> >               return;
 > >
-> > +     /* CPU has been idle in between so the lag has been removed */
-> > +     if (se->vlag_seq != cfs_rq->idle_seq) {
-> > +             se->vlag = 0;
-> > +             return;
+> > -             if (!is_rd_overutilized(this_rq()->rd)) {
+> > -                     new_cpu = find_energy_efficient_cpu(p, prev_cpu);
+> > -                     if (new_cpu >= 0)
+> > -                             return new_cpu;
+> > -                     new_cpu = prev_cpu;
+> > -             }
+> > +     /*
+> > +      * We don't want EAS to be called for exec or fork but it should be
+> > +      * called for any other case such as wake up or push callback.
+> > +      */
+> > +     if (!is_rd_overutilized(this_rq()->rd) && want_sibling) {
+> > +             new_cpu = find_energy_efficient_cpu(p, prev_cpu);
+> > +             if (new_cpu >= 0)
+> > +                     return new_cpu;
 > > +     }
+> >
+> > +     if (select_flags & WF_TTWU)
+> >               want_affine = !wake_wide(p) && cpumask_test_cpu(cpu, p->cpus_ptr);
+> > -     }
 > > +
-> >       /* Compute sleep time */
-> >       delta_exec = rq_clock_task(rq) - se->exec_start;
-> >       if (unlikely(delta_exec <= 0))
-> > @@ -8190,6 +8204,9 @@ static bool __dequeue_task(struct rq *rq, struct task_struct *p, int flags)
+> > +     new_cpu = prev_cpu;
 > >
-> >       dequeue_hierarchy(p, flags);
+> >       for_each_domain(cpu, tmp) {
+> >               /*
+> > @@ -9871,8 +9880,8 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int wake_flags)
+> >               return sched_balance_find_dst_cpu(sd, p, cpu, prev_cpu, sd_flag);
 > >
-> > +     if (!cfs_rq->h_nr_queued)
-> > +             cfs_rq->idle_seq++;
+> >       /* Fast path */
+> > -     if (wake_flags & WF_TTWU)
+> > -             return select_idle_sibling(p, prev_cpu, new_cpu);
+> > +     if (want_sibling)
+> > +             new_cpu = select_idle_sibling(p, prev_cpu, new_cpu);
 >
-> Shouldn't this skip DEQUEUE_SAVE?
+> Hi Vincent,
+>
+> With this change, a push also goes through select_idle_sibling(), and
+> select_idle_sibling() sets p->recent_used_cpu = prev on every call.
+>
+> For a wakeup, prev is the CPU where the task ran last, and the old
+> value of the hint becomes a second candidate for the next wakeup. For
+> a push, prev is the CPU where the task is queued now. If the push
+> doesn't move the task, the hint becomes the current CPU. When the task
+> later sleeps and wakes up on this CPU, recent_used_cpu is equal to
+> prev, so the wakeup has no second candidate. Each push attempt that
+> fails does this again.
 
-Yes
+I agree that recent_used_cpu will be updated during push selection but
+I'm a bit balanced about making it a special case.
+When a task wakeup several times on the same prev cpu we have the same
+effect for recent_used_cpu.
+
+CPU selection during a push should not differ from CPU selection
+during a wakeup. if we end to the same cpu then it seems reasonable
+that recent_used_cpu equals prev
 
 
 >
-> > +
-> >       if (sched_feat(PLACE_REL_DEADLINE) && !task_sleep) {
-> >               se->deadline -= se->vruntime;
-> >               se->rel_deadline = 1;
-> > diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-> > index b98084e1f5b0..69a2a749e188 100644
-> > --- a/kernel/sched/sched.h
-> > +++ b/kernel/sched/sched.h
-> > @@ -689,6 +689,7 @@ struct cfs_rq {
-> >       u64                     sum_weight;
-> >       u64                     zero_vruntime;
-> >       unsigned int            sum_shift;
-> > +     u32                     idle_seq;
-> >
-> >  #ifdef CONFIG_SCHED_CORE
-> >       unsigned int            forceidle_seq;
+> Perhaps something like the following fix below on top of the series. It
+> passes the select flags to select_idle_sibling() and
+> updates the hint only for WF_TTWU. When fair_push_task() moves the
+> task, it saves the source CPU as the hint, which is what the hint
+> holds after a wakeup migration.
 >
-> Yeah, well AFAICT other things seems OK.
+> Tim
 >
-> Also, while trying to get this patch series on my tip
-> branch I had a hard time. I was at the caves
-> of git and b4 figthing with... Everything.
-> Like there were no v2 tags on some of the patches
-> so b4 didn't tracked them. I had to do some
-> things by hand and finally it worked. (Not too greatly tho.)
+> ---
+>  kernel/sched/fair.c | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
 >
-> But who cares? :>.
+> diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+> index fd22731949c5..3eb8a0170902 100644
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -1381,7 +1381,7 @@ static bool update_deadline(struct cfs_rq *cfs_rq, struct sched_entity *se)
 >
+>  #include "pelt.h"
 >
-> Thanks,
-> Kayra
+> -static int select_idle_sibling(struct task_struct *p, int prev_cpu, int cpu);
+> +static int select_idle_sibling(struct task_struct *p, int prev_cpu, int cpu, int select_flags);
+>  static unsigned long task_h_load(struct task_struct *p);
+>  static unsigned long capacity_of(int cpu);
+>
+> @@ -9072,7 +9072,7 @@ static inline bool asym_fits_cpu(unsigned long util,
+>  /*
+>   * Try and locate an idle core/thread in the LLC cache domain.
+>   */
+> -static int select_idle_sibling(struct task_struct *p, int prev, int target)
+> +static int select_idle_sibling(struct task_struct *p, int prev, int target, int select_flags)
+>  {
+>         bool has_idle_core = false;
+>         struct sched_domain *sd;
+> @@ -9131,7 +9131,9 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+>
+>         /* Check a recently used CPU as a potential idle candidate: */
+>         recent_used_cpu = p->recent_used_cpu;
+> -       p->recent_used_cpu = prev;
+> +       /* A push only updates the hint when it moves the task */
+> +       if (select_flags & WF_TTWU)
+> +               p->recent_used_cpu = prev;
+>         if (recent_used_cpu != prev &&
+>             recent_used_cpu != target &&
+>             cpus_share_cache(recent_used_cpu, target) &&
+> @@ -10015,6 +10017,7 @@ static bool fair_push_task(struct rq *rq)
+>
+>         deactivate_task(rq, next_task, 0);
+>         set_task_cpu(next_task, new_cpu);
+> +       next_task->recent_used_cpu = prev_cpu;
+>         raw_spin_rq_unlock(rq);
+>
+>         raw_spin_rq_lock(new_rq);
+> @@ -10225,7 +10228,7 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int select_flags)
+>
+>         /* Fast path */
+>         if (want_sibling)
+> -               new_cpu = select_idle_sibling(p, prev_cpu, new_cpu);
+> +               new_cpu = select_idle_sibling(p, prev_cpu, new_cpu, select_flags);
+>
+>         return new_cpu;
+>  }
