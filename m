@@ -1,56 +1,51 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284BC3603EE
-	for <sched-ext@lists.linux.dev>; Sat, 10 Oct 2026 07:27:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526153B2FD0;
+	Sat, 10 Oct 2026 08:38:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791617231; cv=none; b=ifhalW7gIhIwxHBaDltBY9tu87gl36BNz5VkFzcE94/q4VbxgyLGJg4u6Gdeut1OeVCr4PHNaDyeuMQItY5FlFPbDPZmvZN1zYH6gGqjBvqzHTrsWBubDbRl3CiyE3mCdvfmzP6TQovXyCa6cqv1u6pAvbKxE8XSLv/1+7tGoW8=
+	t=1791621533; cv=none; b=M/R9p99ov78RD/di1HdDrNUV5UQcENrv2Dt3O6UyGV6f1YVwk4Mmm+1Mctm6T7+nA3rSIpMvDtzj/uk0q3M9YVz7tNpw1w9oT8moO9jW2qREMh1nTwOsyz8k95DBpDXjar7ei1zbz6DsXYr9hEjZ9rKI5c2Yfs4vNGsahEAT0Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791617231; c=relaxed/simple;
-	bh=g4eHFf/k9paFRp0bk4uNRxT9u/IvDo8cgf9cKjk1OyI=;
-	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References; b=uELhXfK+oAQ2S4aTD02bWfiJXdZ1Y3kz0xE0LNaBmev22aJLHyiXdrV3YMkQ7+HWX5YnU1GesmniM3vA/XTcdA5YvRZW2GaJ/rOgoBLJP0kRVe47JPGe1MmO0gfLJaKpnl1o8tNQ7JFjdlCnZr/WdisYjKYZ/2V2jroRAZbIwYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=aaGfZ6nV; arc=none smtp.client-ip=117.135.210.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1791621533; c=relaxed/simple;
+	bh=6Y7vYf/xc/TsRZfeinhAcNhu9VUF65Y4YoGWlsYueBI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=BCQosLKdNGI6XpCvulMqw3U9Q+dmQONIetJqWVXg7a5ASVqYiK8Wylb9KsrWbNFj4ktwjEdNuxQKv4niqX9RTj3dHNwhBYgJEXX/7DeoBbIRo7Hjt/zQNnvq4ZIi/YodhXIlRl2Bo8WLsxl/52WMYGOxb5VqZRndBiflJk9YykY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Exmkicwy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="aaGfZ6nV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:From:To:Subject:Date; bh=g4eHFf/k9paFRp0
-	bk4uNRxT9u/IvDo8cgf9cKjk1OyI=; b=aaGfZ6nVvr5053xP9fbRflDYtanq/h4
-	mm5OyGlJlMbWLrNGesOYoVNI2Ik2BJflnXQ10QWgQhitzXEcM5NZRcyJPkpnaGdO
-	SiZfXLjevYc478arFYPcjDAic2LUaSR4xnRWTkR5FWFFNpsaIDwDXrQoHPtFqrAg
-	alTT1Ouw4e1U=
-Received: from localhost (unknown [])
-	by gzga-smtp-mtada-g0-1 (Coremail) with SMTP id _____wD3n4W66Mlqc7usDQ--.33285S2;
-	Sat, 10 Oct 2026 15:26:50 +0800 (CST)
-Message-ID: <23f74656850cf78261d84fd18bfc7870@163.com>
-From: Hui Su <sh_def@163.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] sched_ext: Fix use-after-free of a destroyed user DSQ by a deferred reenqueue
-Date: Sat, 10 Oct 2026 15:23:23 +0900
-In-Reply-To: <20261009220001.196762128-1-tj@kernel.org>
-References: <20261009220001.196762128-1-tj@kernel.org>
-X-CM-TRANSID:_____wD3n4W66Mlqc7usDQ--.33285S2
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUUmiRUUUUU
-X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6hp11GrJ6LojjAAA3P
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Exmkicwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FF61F000FF;
+	Sat, 10 Oct 2026 08:38:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791621527;
+	bh=6Y7vYf/xc/TsRZfeinhAcNhu9VUF65Y4YoGWlsYueBI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=ExmkicwyB9PupmWVbnQqzcJ1MCtrHzNZknSdPGyAdhA1hkuWr7SrflYugw2wUwwl8
+	 JKZjCIRVPUp4LGpFqZkmiIeNyQxcDcDP1ckzxTkewRxshzcvmPbfyqKv8Z789g+qsM
+	 cxJpkOSpYppKdbTCLLlDHMKGmwi0Kv5RUhSXEjQ569I8YJOQzyXEfSVROrHrB1M16T
+	 A4uu9NKRKTWcTVGXc4X/4JmLaYhmAcmJpyqKSoA3I0kB1tdA+WyEAMjqnBitqe7Bly
+	 mGpBsbiAcMeCNKzR+cgKBwzv8YZ//BBgC4dXB/ecCTB7i1X0KrQVgV3Oqv1vJIx7ka
+	 aUSYHv+biplaA==
+Date: Fri, 09 Oct 2026 22:38:46 -1000
+Message-ID: <85e1c03116c07e0192a982674199d815@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: sched-ext@lists.linux.dev
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
+	David Dai <david.dai@linux.dev>, Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Xiangyu Bu <xbu@meta.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.3-fixes] sched_ext: Fix stall when a task
+ enqueued with SCX_ENQ_LAST lands back on its CPU's local DSQ
+In-Reply-To: <2b405553751fe811b4cd2c24f307d961@kernel.org>
+References: <2b405553751fe811b4cd2c24f307d961@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hi Tejun,
+Applied to sched_ext/for-7.3-fixes.
 
-Tested on x86_64 KVM with KASAN; sched_ext selftests passed, and the targeted
-DSQ lifetime test completed without the pre-fix slab-use-after-free.
+Thanks.
 
-Tested-by: Hui Su <sh_def@163.com>
-
-Thanks,
-Hui
-
+--
+tejun
