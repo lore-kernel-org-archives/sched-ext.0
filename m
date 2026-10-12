@@ -1,64 +1,68 @@
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E81C40F742
-	for <sched-ext@lists.linux.dev>; Mon, 12 Oct 2026 21:07:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5174E0B73
+	for <sched-ext@lists.linux.dev>; Mon, 12 Oct 2026 21:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791839275; cv=none; b=WnfBpGbgabQxQg7w6bFNZ9oGBy+AXj5HR5bFPha2kFSn9dWF6DH/rRUjbfss+avuVZdUHUi//AVtvwvYTv4n6XMWZrUHOC+CX9QhWVHUPoRs09LKC4m9Tj2jm05qm6MvEJKMTWGnqE21P0fRazNjHVkV/8Voc6hiW7p2a+y8tso=
+	t=1791839276; cv=none; b=ZfPI5x8Kv0QM8f6UUK838H/DtdBql3rxcsUaH/sQK09zAQXscHJhlDxyf2ajrpnk6QduJ5A/SjUZ8oMLXQsBSEau91If7Be+x6u2hpyzcUZgAk/nCm+7oo/zyCkYNgAQmxzaxkxjvdrRxfY+domlQoxnaSfW9pORNBXGT4WFad4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791839275; c=relaxed/simple;
-	bh=aeAaA07GABE4JoakZuKvhmq762Hq5uDOPAvt4Crg6zg=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=lMUWjwNmp6c/A/SLTuz7zCdlbsZs+pAvVzQN8vZJK1aNMl4wqo5nRw2kf7jZp1mOzXzTJg9gMMg9IlmL2Feb7AF49UxFE+eQESV1DOMX2GIW3eYzryzC/nOls1bPKuQZ6k6VnK5iI58ysRI4DvE1xZKbV+wCGiqw59UxQJgKdYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cYbFiiGA; arc=none smtp.client-ip=209.85.218.69
+	s=arc-20240116; t=1791839276; c=relaxed/simple;
+	bh=2iGJa1pRiVOXDM67nmTfy4VDeqP8cmUx/xWfbwxMNUk=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=jCbuhYvkkuqkhgZEx+pO9MxCeGeBKxOkID1SDJ/DHycJKJgRnujeVvAW9PizAignmtR8je3h4otlA3mG7SaaP4JkrGxGo51PurNwEXwpPr7OV+AZBZZHwshcL59dnqTRkRfQEsTPWY/8D4atTUfDBhyKIit8DQuanKoZfA2Egxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QMXBbRSS; arc=none smtp.client-ip=209.85.128.72
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cYbFiiGA"
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c29466736e3so244809666b.2
-        for <sched-ext@lists.linux.dev>; Mon, 12 Oct 2026 14:07:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QMXBbRSS"
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a009f82bedso18692785e9.0
+        for <sched-ext@lists.linux.dev>; Mon, 12 Oct 2026 14:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791839271; x=1792444071; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=sR5e3yVayLLoMCHbSaaCawnerE3WPoM3BkiRdMrVVRI=;
-        b=cYbFiiGA4jXH1MvU68zwkMHTwLEzi4QDDcFE+y7buodeM5BpPfjqtViRDgE1wXPGp4
-         bVSVtTdhd+kWbuzwMOijasJsRI+jMhTfUi8mcfiFwHQUwGwmIPvyb9/kl5SlbXihRqv3
-         83L2WXO/tMgbLUh/CnCUKVfJTD3ZelbtCwuRhNuvBqqrBADYTEgQVEMNziWoCL8e6/zJ
-         bf7Mw1+85epDnpyjdQghLZtzRL3LYBGFWv+aCrTWNYzUg+KIAoawmh8J9gVO56EzUMXP
-         sFZsyrWw7kdWnUK0rN9i056NuxtJhiLW9YKwVyIC0j17WzRGQ/4nU8PK+2NMaG7ez/ut
-         TzlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791839271; x=1792444071;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1791839273; x=1792444073; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=sR5e3yVayLLoMCHbSaaCawnerE3WPoM3BkiRdMrVVRI=;
-        b=J0Ty+/xizTBq2XOUlW1RW46B+dsLb4YChZoZRuKhpttZF5QU7Eay4R5+msMKGkLj1p
-         mPcdOwK1YghCqc1nLqV97rlI4kamALJv4Gy3omg8GYwN/QBH6EJS6yY5vbmOZlWjd1sE
-         VATDhHnHThiqtuA7nZ32pHe+K72hLE7DbQmlYx8VX0QBo3clqrRV+Ov//L1IQo1o2P7i
-         QqAMfQfwJwLKcom81j2PuXq62zv+tjy7A2psyYWX6Q9kSqGkqjaUa1jRWYJiB4Nb3QTV
-         9OWjIedXh1r7np8D41LiFfcELgVwIu5Yv/tSvw3qIM7Xpo24hnAzgCjNGsQO4EeHqJpf
-         D4Lw==
-X-Forwarded-Encrypted: i=1; AKwUvBzEztnlQOBDRDX9dAvo3mN722cA+vgud7bncQ4wRylR4JLvUh270NHH3oicFv+f28if3ApESLe9t2A=@lists.linux.dev
-X-Gm-Message-State: AFq9FYLL6r8djwYzm5bFM01CUcwGNR5/FY4DvW/U7HyeCbUP2g/fyoE4
-	rS2eFdBGkqzDwSOxfFkHRPCoUlekLNrTT5EBAlLn8Nc9dqj4Xty75BxtlV83JyLkYh1v0XyLOYs
-	ql8uDgg9dJpAkhw==
-X-Received: from edwf5.prod.google.com ([2002:a05:6402:1505:b0:6b1:b12b:7e7a])
+        bh=W1rYrNeMFCmb08SKOQ3NwME5dyCsxgu8ZWcr1xM3xV0=;
+        b=QMXBbRSSwjLLFf5Ncz+kTb6w+m7XNHYdotExKuU4RYcrT+3wdyOu8w0zs0qK5VckXU
+         ZzVlmCqgDhq1oSVGO2MK+JLxLV7JQFuvvWWbSYC6kCi/eUseDLTJx4n4CImdFVyvZHUo
+         vClNbSImUfLvUUgRDyBvHXXTGZ8Lz931HwGAiNPQ0zIzcpGoe3E7W3P6Xs9bBqXvCVY2
+         4XU0B8Ai1ii0eYiztG6hc+TVYCbKf3bsQ1tKp4DVIu9sgc4TP+eEKW2CW8EFXZtiWqOL
+         r11Oy08kzpCCM52+tnHUjPgRJsWpOXa8Jj/NDAO3RCZA3XPJbvjbNo7QedNZ40Dw1xih
+         rLwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791839273; x=1792444073;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=W1rYrNeMFCmb08SKOQ3NwME5dyCsxgu8ZWcr1xM3xV0=;
+        b=LXk9SgN1f+ReKjMffyirxI5bAxqACvolAvsFkeHxqn1NG3xWVqkS5rAXGR+S/pP24Z
+         LuctAMq415HymHxEtINnHwpvKEIlUp1/dJyXLMJsKKqF7LCS7iL4+NBocw8IKbPUEuzu
+         FCwfdeHu0+zcS2su2AJf8zSthFjeo1896pqfDat6tk0bx13nHr8GRZucumnf1QeFZIQ9
+         IWN8QNy57RNS12DJhdsuUn88H53QRrKRm7x9Xl6QGfy9rqLyohir1Sy5XivThAVtFBK5
+         3f6aPrjubcLfmUE3IN/ySzKsfKsFKMu9SuTXtXZsk4kt3C2EN2x5hHldnFPQVXJfajZT
+         zzKA==
+X-Forwarded-Encrypted: i=1; AKwUvBz+O9sWvOxz3CDxx9K0BWVX/DvXFOxyIUwuc3j7+NAOB1nEdZBF69DI7yqXlpLu1YaxM4bLim6GEyg=@lists.linux.dev
+X-Gm-Message-State: AFq9FYIvTJ3y5HjVKiqRsoax8pDL51FWdbRCjHO82/e128dz4FWNvskN
+	IpYV+h0MKAvJGERPJU9qyVMc02bOIRUJc381Y4kMwSznca6z9nNuCPT0+9V5u0TvgH4gdalFdRA
+	3YcVpgS43HzNmzg==
+X-Received: from wmgb17.prod.google.com ([2002:a05:600c:1511:b0:4a1:989a:a866])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:4290:b0:6b1:e361:5550 with SMTP id 4fb4d7f45d1cf-6b1e36161e8mr754709a12.17.1791839270819;
- Mon, 12 Oct 2026 14:07:50 -0700 (PDT)
-Date: Mon, 12 Oct 2026 21:07:44 +0000
+ 2002:a05:600c:6749:b0:4a0:1a7f:2abf with SMTP id 5b1f17b1804b1-4a18e49d633mr193168105e9.7.1791839272782;
+ Mon, 12 Oct 2026 14:07:52 -0700 (PDT)
+Date: Mon, 12 Oct 2026 21:07:46 +0000
+In-Reply-To: <20261012210749.2955291-1-jpiecuch@google.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
+References: <20261012210749.2955291-1-jpiecuch@google.com>
 X-Mailer: git-send-email 2.56.0.385.gd3acb90ef8-goog
-Message-ID: <20261012210749.2955291-1-jpiecuch@google.com>
-Subject: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Wait for
- SCX_OPSS_DISPATCHING on DSQ consume and move paths
+Message-ID: <20261012210749.2955291-3-jpiecuch@google.com>
+Subject: [PATCH 2/2] sched_ext: Wait for SCX_OPSS_DISPATCHING before moving
+ tasks off DSQs
 From: Kuba Piecuch <jpiecuch@google.com>
 To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
 	Changwoo Min <changwoo@igalia.com>
@@ -66,120 +70,70 @@ Cc: Kuba Piecuch <jpiecuch@google.com>, fangqiurong <fangqiurong@kylinos.cn>,
 	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-When a dispatch finishes into a non-local DSQ, scx_dispatch_enqueue()
-links the task into the DSQ, updates its custody and drops the DSQ lock.
-For the global and bypass DSQs, it then calls ops.dequeue() without
-holding the task's rq lock. Only after that does it store SCX_OPSS_NONE:
+A task can be found on a non-local DSQ while the CPU which dispatched it
+is still running ops.dequeue() and hasn't cleared SCX_OPSS_DISPATCHING.
+The DSQ consume and move paths don't wait for the dispatch to finish and
+can operate on the task concurrently with the dispatcher.
 
-  CPU A (dispatcher)                    CPU B (task_rq(p))
-  ------------------                    ------------------
-  finish_dispatch()
-    QUEUED -> DISPATCHING
-    scx_dispatch_enqueue(GLOBAL)
-      lock dsq; link p; leave custody
-      unlock dsq
-                                        do_pick_task_scx()
-                                          scx_consume_dispatch_q()
-                                            lock dsq; unlink p; unlock dsq
-                                            scx_move_local_task_to_local_dsq()
-                                              /* modifies p->scx */
-      ops.dequeue(p)  /* no rq lock */
-      ops_state = NONE
+Call scx_wait_dispatching() in scx_move_local_task_to_local_dsq(),
+unlink_dsq_and_switch_rq_lock() and move_task_between_dsqs() before they
+operate on the task. In scx_move_local_task_to_local_dsq(), wait before
+scx_resolve_local_dsq() as it may update p->scx.flags.
 
-ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics") moved the final
-store after the DSQ unlock, so the task can be found on a DSQ while still
-in SCX_OPSS_DISPATCHING. cb86607ada73 ("sched_ext: Don't run
-ops.dequeue() with a DSQ lock held") also moved ops.dequeue() for
-global and bypass DSQs out from under the DSQ lock, and the
-scx_move_local_task_to_local_dsq() calls after the unlock as well. Per
-the comment in scx_dispatch_enqueue(), running ops.dequeue() without the
-rq lock is fine because waiting for SCX_OPSS_DISPATCHING to clear
-serializes it against other users of the task.
+Fixes: ebf1ccff79c4 ("sched_ext: Fix ops.dequeue() semantics")
+Fixes: cb86607ada73 ("sched_ext: Don't run ops.dequeue() with a DSQ lock held")
+Cc: stable@vger.kernel.org # v7.1+
+Assisted-by: Claude:claude-opus-5.5
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+---
+ kernel/sched/ext/ext.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-dequeue_task_scx() and set_next_task_scx() wait in ops_dequeue(), and
-7de9a6fb44ea ("sched_ext: Wait for SCX_OPSS_DISPATCHING before
-reenqueueing a task") added the wait to the reenqueue paths. The DSQ
-consume and move paths still don't wait:
-
-- scx_consume_dispatch_q() -> scx_move_local_task_to_local_dsq() when
-  the consuming CPU is task_rq(p), as above. This applies to the global,
-  bypass and user DSQs (scx_bpf_dsq_move_to_local()). For a user DSQ, the
-  consumer takes the task out of custody and calls ops.dequeue() itself
-  while the dispatcher hasn't finished.
-
-- move_task_between_dsqs() (scx_bpf_dsq_move[_vtime]()), which moves the
-  task to another local or non-local DSQ.
-
-In both, the consumer modifies p->scx (dsq, dsq_list, flags and, if
-scx_resolve_local_dsq() diverts the task to the rescue or reject DSQ,
-the reenqueue reason) and may call ops.dequeue() while the dispatcher
-can still be running ops.dequeue() on the same task without the rq lock.
-
-The remote consume path, unlink_dsq_and_switch_rq_lock() followed by
-move_remote_task_to_local_dsq(), is currently covered by the wait in
-deactivate_task() -> ops_dequeue(). The series adds the wait to
-unlink_dsq_and_switch_rq_lock() as well, so that callers which act on
-the task before or without deactivating it are covered too.
-
-Reproduction
-------------
-
-The race is easy to hit by adding
-
-  WARN_ON_ONCE(atomic_long_read(&p->scx.ops_state) != SCX_OPSS_NONE);
-
-to scx_move_local_task_to_local_dsq() and move_task_between_dsqs() and
-modifying the dequeue_remote selftest so that ops.dispatch() inserts
-tasks whose CPU differs from the dispatching CPU into SCX_DSQ_GLOBAL and
-ops.dequeue() kicks the task's CPU and spins for a bit to widen the
-window. The warning fires within seconds in a vng guest:
-
-  WARNING: kernel/sched/ext/ext.c:2416 at scx_move_local_task_to_local_dsq+0xf5/0x110, CPU#4: swapper/4/0
-  RIP: 0010:scx_move_local_task_to_local_dsq+0xf5/0x110
-  RAX: 0000000000000003 ...                    <- SCX_OPSS_DISPATCHING
-  Call Trace:
-   <TASK>
-   scx_consume_dispatch_q+0x13c/0x290
-   do_pick_task_scx+0x10a/0x980
-   __schedule+0x586/0x1020
-   schedule_idle+0x22/0x40
-   cpu_startup_entry+0x29/0x30
-   start_secondary+0xf3/0x100
-   common_startup_64+0x13e/0x158
-   </TASK>
-
-With this series applied, the same setup doesn't trigger the warning,
-and the dequeue, dequeue_iter and dequeue_remote selftests pass with a
-clean dmesg.
-
-Merging into for-7.4
---------------------
-
-Based on sched-ext/for-7.3-fixes. Merging into for-7.4 conflicts in two
-places:
-
-- cea8b60e4aee ("sched_ext: Move reject DSQ draining into core") moved
-  the reject DSQ drain from sub.c into scx_reenq_reject() in ext.c, which
-  needs the rename too.
-
-- 13ae184e4b82 ("sched_ext: Handle proxy-exec races in remote DSQ
-  transfers") restructured unlink_dsq_and_switch_rq_lock(). The wait goes
-  right after p->scx.dsq is cleared, before returning true. This covers
-  the proxy-exec path in consume_remote_task(), which parks the task on
-  the reject DSQ without going through ops_dequeue().
-
-Kuba Piecuch (2):
-  sched_ext: Rename scx_reenq_wait_dispatching() to
-    scx_wait_dispatching()
-  sched_ext: Wait for SCX_OPSS_DISPATCHING before moving tasks off DSQs
-
- kernel/sched/ext/ext.c      | 29 ++++++++++++++++++++---------
- kernel/sched/ext/internal.h |  2 +-
- kernel/sched/ext/sub.c      |  2 +-
- 3 files changed, 22 insertions(+), 11 deletions(-)
-
-
-base-commit: 069403dff337feb192bfc70fb28ddc8a171e20c1
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index acfeadf5503d..d2a69dfda9cc 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2407,11 +2407,14 @@ static void wakeup_preempt_scx(struct rq *rq, struct task_struct *p, int wake_fl
+ void scx_move_local_task_to_local_dsq(struct scx_sched *sch, struct task_struct *p,
+ 				      u64 enq_flags, struct rq *dst_rq)
+ {
+-	struct scx_dispatch_q *dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, &enq_flags);
++	struct scx_dispatch_q *dst_dsq;
+ 
+ 	lockdep_assert_rq_held(dst_rq);
+ 
+ 	WARN_ON_ONCE(p->scx.holding_cpu >= 0);
++	scx_wait_dispatching(p);
++
++	dst_dsq = scx_resolve_local_dsq(sch, dst_rq, p, &enq_flags);
+ 
+ 	if (enq_flags & (SCX_ENQ_HEAD | SCX_ENQ_PREEMPT))
+ 		dsq_insert_head(dst_dsq, p);
+@@ -2591,8 +2594,13 @@ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
+ 	switch_rq_lock(locked_rq, src_rq);
+ 
+ 	/* task_rq couldn't have changed if we're still the holding cpu */
+-	return likely(p->scx.holding_cpu == cpu) &&
+-		!WARN_ON_ONCE(src_rq != task_rq(p));
++	if (likely(p->scx.holding_cpu == cpu) &&
++	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
++		scx_wait_dispatching(p);
++		return true;
++	}
++
++	return false;
+ }
+ 
+ static bool consume_remote_task(struct scx_sched *sch, struct rq *this_rq,
+@@ -2635,6 +2643,8 @@ static struct rq *move_task_between_dsqs(struct scx_sched *sch,
+ 	lockdep_assert_held(&src_dsq->lock);
+ 	lockdep_assert_rq_held(src_rq);
+ 
++	scx_wait_dispatching(p);
++
+ 	if (dst_dsq->id == SCX_DSQ_LOCAL) {
+ 		dst_rq = container_of(dst_dsq, struct rq, scx.local_dsq);
+ 		if (src_rq != dst_rq &&
 -- 
 2.56.0.385.gd3acb90ef8-goog
 
