@@ -1,105 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CFD385D75
-	for <sched-ext@lists.linux.dev>; Sun, 11 Oct 2026 21:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574332E7165
+	for <sched-ext@lists.linux.dev>; Mon, 12 Oct 2026 06:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791755234; cv=none; b=onts3LTYoqtfqnPDTjJWla9hZZ2XRJ4zVJYanVQEmn7/8r4s2er5dRl2eIMnijgJe8pNNQ1Lk7x00ccVVRwq/pvzgZ2ap8CappaqWPrlhBRPX1YFb8cDEGusGpJLDVngQ0ISi0XlbCYZVMYSqZUiafbx1f6/pZcvrA/vVVYggs4=
+	t=1791787959; cv=none; b=GRXpTvmLJWZp+w0GUGcvaqBlY0NwBuNXYK2nRnkPdHYMhTN4jNFGonAJYs3bqFiW/8B+Jl0CDNk4fIWSCyGAn6qdbbj0m5GZSp/qT/kBO3NTrvDcO+YUGK9c331No3R6m2OoPjyoagy4GWHuKPNXj5tibRN2eF/OzicJHWGvgK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791755234; c=relaxed/simple;
-	bh=qdo23Ya/RSTYNvF5Dt57TA0sLzBNQJty9rqW3CWWncU=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=ou86KB94SzsAP2r/XYwcmHJg/5xeV4+lZT3rinVx7dZBaxi6t/0xaKzy6SZrz49uAhMNiLC0BnugCXiu15SEyTEgSjXwuQUshfqJule3vZcOzjkCIHP+WCCSRy5DbrK+bc15uFNSk3ZdpojrZnoBoSiANzjFsFdhaFtu1rBpCzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zlb7uYKY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791787959; c=relaxed/simple;
+	bh=7RZyCjjqnrrE6A55BJPufD/QzIFgteSIBOnZ4RE4WfY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OxILI82a2cE0FRvWv+NB1Y0HrcGzaIhWBd6uY7wRTC9L3eH0RvXHS89qyTGaURlRtKNshg8uLh4p4fuGEpczG3BBYbpUzTLDNNlhDcksLfZxLtcrZ1H9ilM9mFgcspgE3IV7q9Sh1+CXrQectjJ4ZbSMz9uM0WQD+ssfx2AYwIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Mmal001f; arc=none smtp.client-ip=220.197.31.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zlb7uYKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7021F0089B;
-	Sun, 11 Oct 2026 21:47:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791755232;
-	bh=z/Th6lzp+ygVYZCV25n0f142Q1mRhPVCkCeKTFk5u0o=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Zlb7uYKYs4j8QUYrQC6Fub2KpMwRvQNxte5tabkk4z45GSCV1yg7sFbA7z3p3nZAO
-	 b5phn0ech33r3qN/+CF3R3reJFzbVHZtv7mFlfb9QAut8FxTRtElKipGBic02jb8NF
-	 JIagMPY0W3MS5JYivL1kAAsrzwU7f4wP6kOLHpMaz2v74myNTeAsxhm0p/fQ5KB6Fc
-	 o6yQsz3bL+0VPikbtYOJA8AyAri9qoDg7eyIkyoyRei0w1mrJCBQ7xAGPOepFEXL8G
-	 wh2Lzyb89MNHGDPCZec+Vtye1ZEuNGbPeqkc2aml/eiWqGx9wUE6bg3I/E7opRdggg
-	 RPZj7jDtVsZvg==
-Message-ID: <sashiko-outbox-167465@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/2] sched_ext: Fix the bypass dispatch claim for
- schedulers bypassed by an ancestor
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Tejun Heo" <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20261011214028.743546-3-tj@kernel.org>
-References: <20261011214028.743546-1-tj@kernel.org>
- <20261011214028.743546-3-tj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 11 Oct 2026 21:47:11 +0000
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Mmal001f"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=An
+	C8IT+4dyaxMPdiQgKfS8XtYt9lQbNk/TImwHhWU74=; b=Mmal001ftQhvKao90R
+	ZBBRTNFnUag3bs+DohXDKDg8J7lzH+2uhs3O0d4I1lvCHEpznEs5CouoiFzzFNFx
+	5d3Ikh8hniKLGhWUU/ZhohtRtDbJ+oFZMB+19TEGLLPMwGo0UXL5BZy4azbaNhyj
+	nSvwUkTiMOPgJ/H6tOOl5nT5c=
+Received: from localhost (unknown [])
+	by gzsmtp1 (Coremail) with SMTP id PCgvCgCHVBVkg8xqDNsKDg--.48626S2;
+	Mon, 12 Oct 2026 14:51:17 +0800 (CST)
+From: Hui Su <sh_def@163.com>
+To: tj@kernel.org
+Cc: void@manifault.com,
+	arighi@nvidia.com,
+	changwoo@igalia.com,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	dietmar.eggemann@arm.com,
+	rostedt@goodmis.org,
+	bsegall@google.com,
+	mgorman@suse.de,
+	vschneid@redhat.com,
+	kprateek.nayak@amd.com,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	bpf@vger.kernel.org,
+	sh_def@163.com,
+	stable@vger.kernel.org
+Subject: [PATCH 1/2] sched_ext: idle: Honor SCX_PICK_IDLE_CORE in CPU selection shortcuts
+Date: Mon, 12 Oct 2026 15:51:13 +0900
+Message-ID: <20261012065114.3516902-2-sh_def@163.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261012065114.3516902-1-sh_def@163.com>
+References: <20261012065114.3516902-1-sh_def@163.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:PCgvCgCHVBVkg8xqDNsKDg--.48626S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tw47Cw15JF1xCFWrur48WFg_yoW8Ww45pF
+	yYkaya9w4UJF1Fy3y7Jr48C343ur1kuw4agF4rGFsayrW5Kr4FqFyvq3W2qFW5GFn5Zr1f
+	uF1vqrnrKa1UJFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pi038rUUUUU=
+X-CM-SenderInfo: xvkbvvri6rljoofrz/xtbC6QXHJ2rMg2W2+gAA3A
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] sched_ext: Mixing goto-based cleanup and guard() in scx_bypass()
---
+SCX_PICK_IDLE_CORE requires selecting a CPU whose SMT siblings are all
+idle. The restricted select_cpu kfunc path now derives its candidate from
+task state, but it does not check that condition before claiming the CPU.
 
-commit c63689b3855e65ddcc5c7f3211328556c68f2c61
-Author: Tejun Heo <tj@kernel.org>
+The WAKE_SYNC shortcuts in scx_select_cpu_dfl() can bypass strict-core
+selection on SMT systems as well. Skip those shortcuts when
+SCX_PICK_IDLE_CORE is requested, and validate restricted candidates against
+their idle SMT mask before consuming the idle bit.
 
-sched_ext: Fix the bypass dispatch claim for schedulers bypassed by an ance=
-stor
+Preserve individual-idle selection when the flag is not set and on
+non-SMT systems.
 
-This commit fixes a bypass dispatch claim leak when a sub-scheduler's depth
-goes from zero to one under an ancestor. It ensures claims are properly
-propagated to descendants and released when the depth returns to zero.
+Fixes: 683d2d0faba1 ("sched_ext: idle: Introduce scx_bpf_select_cpu_and()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Su <sh_def@163.com>
+---
+ kernel/sched/ext/idle.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Cc: stable@vger.kernel.org # v7.1+
+diff --git a/kernel/sched/ext/idle.c b/kernel/sched/ext/idle.c
+index 28ed9e327085..09e40928aef4 100644
+--- a/kernel/sched/ext/idle.c
++++ b/kernel/sched/ext/idle.c
+@@ -523,7 +523,7 @@ s32 scx_select_cpu_dfl(struct task_struct *p, s32 prev_cpu, u64 wake_flags,
+ 	/*
+ 	 * If WAKE_SYNC, try to migrate the wakee to the waker's CPU.
+ 	 */
+-	if (wake_flags & SCX_WAKE_SYNC) {
++	if ((wake_flags & SCX_WAKE_SYNC) && !(sched_smt_active() && (flags & SCX_PICK_IDLE_CORE))) {
+ 		int waker_node;
+ 
+ 		/*
+@@ -976,6 +976,10 @@ static s32 select_cpu_restricted(struct task_struct *p, s32 prev_cpu,
+ 			return -EBUSY;
+ 	}
+ 
++	if ((flags & SCX_PICK_IDLE_CORE) && sched_smt_active() &&
++	    !cpumask_test_cpu(cpu, idle_cpumask(scx_cpu_node_if_enabled(cpu))->smt))
++		return -EBUSY;
++
+ 	if (!scx_idle_test_and_clear_cpu(cpu))
+ 		return -EBUSY;
+ 
+-- 
+2.55.0
 
-> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index 7df47c6741009..630afee30c0c5 100644
-> --- a/kernel/sched/ext/ext.c
-> +++ b/kernel/sched/ext/ext.c
-
-[ ... ]
-
-> @@ -6197,8 +6197,12 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
->  	}
-> =20
->  	/* disarming must come after moving all tasks out of the bypass DSQs */
-> -	if (!bypass)
-> -		scx_disable_bypass_dsp(sch);
-> +	if (!bypass) {
-> +		guard(raw_spinlock)(&scx_sched_lock);
-> +		scx_for_each_descendant_pre(pos, sch)
-> +			if (!pos->bypass_depth)
-> +				scx_disable_bypass_dsp(pos);
-> +	}
->  unlock:
->  	raw_spin_unlock_irqrestore(&scx_bypass_lock, flags);
->  }
-
-[Severity: Low]
-Does this introduce a mix of scope-based cleanup and goto-based cleanup
-in scx_bypass()?
-
-According to the cleanup subsystem guidelines (include/linux/cleanup.h),
-mixing goto-based cleanup labels with guard() declarations in the same
-function creates confusing ownership semantics and is explicitly prohibited.
-Developers are expected to convert all resources in the function to
-scope-based cleanup, or convert none of them.
-
-This patch introduces guard(raw_spinlock)(&scx_sched_lock) while retaining
-the unlock: label and goto-based cleanup that releases scx_bypass_lock.
-This mixing increases the risk of future LIFO ordering mistakes or
-use-after-free bugs during refactoring.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261011214028.7435=
-46-1-tj@kernel.org?part=3D2
