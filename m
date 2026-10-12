@@ -1,54 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994C44D6C21;
-	Mon, 12 Oct 2026 18:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB06837A831;
+	Mon, 12 Oct 2026 18:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791830420; cv=none; b=b9aGI3kzFON6AngdaK4B2Nq40Stg9GyahsLqcc6cuTljwwAoKprrYh4IORuB6V2a6bORs+w+8UBWHrOxAcQe45oMTUImqxaYGbzvRavLp8Qg/+ERifV0//WdkkaeLZ/avP58N7MiaxdEg1CMQXwJssWElsIoM4jp32HUmVDhpso=
+	t=1791830906; cv=none; b=NBxIMKl4qNvpFuMhM3hmmcwnzpypxzFmQykXnEvYZhESSCPpI32OA0Zn8P5vq9cTG9qXSt0DDwBSc4LYLb5NWFjsoOOJDB+7EKs1TNqJXq6Ns+eBlmmKIKottzQ5lXDKM+cWec1EkAplmEwE73+Vb6Zlf8Ax9Yk62+jor962Zso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791830420; c=relaxed/simple;
-	bh=6ZYSnW3OCQg3rKNEdpSgRQqHzhmP+8hMsQLXdt7kGCc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=c1W+cbYRFN0QplVHu4+WgF6Sw7B8sSVdvVnjy7jVcdjPrrj0xRrr8r9WsVTOMJkg415beaQF1l2CrC2rOhto5ze6RDhpH2Bkad9lLnxO2QQEB8pNUp1NUXvg3g2yjPLdFAEFaoUYiy2FTGrHHtBHplbqYJgBifHJVJQnc31JTl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WlW7Iggr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791830906; c=relaxed/simple;
+	bh=ODqSbBmwpflLPufAW07M5IGv83a8BM9oMbBA55UTjko=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=fm58AjsFYIDv58WAhg+TyoovgEBrlj0huRkUQNI+JIbjwszdZS3ZG+XGLjeRMHHuXi+mOIk5H7vccUGQDx1QIbKQKkQaOV4+OAXaDK2Jl4wxp+EPIxZlgpdzNDXNL/6PwdwqwgOhfpFXtoXTrGIAYiCwK49ExibrdL/+2u+ilQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e6UKQwg7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WlW7Iggr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281DB1F0089B;
-	Mon, 12 Oct 2026 18:40:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e6UKQwg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE3F1F008A1;
+	Mon, 12 Oct 2026 18:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791830419;
-	bh=vdYdcLpEe3pESwXAr8zcjxdN7uRnLh5caQ1PSKsOWB8=;
+	s=k20260515; t=1791830905;
+	bh=NlXNCgfjp00Wqm33N2mGBM2JARc89OfWL98Zhs/TWsI=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=WlW7IggrD58bHGXkVQzS2CcFk+nK40fQDI/lXb16lFlR9qxA5YEgKYaDidenfc7pg
-	 1HEZyuCSu6ClN1BQgL6pge9cBosVxN9j7Atf6s4DGktscV6SM7leuw9ZG9IQmyIWy/
-	 E74XwgrKVQhD9uyl+EjIFqMs4Ri897wI3LAYsBIeS9hrBQdMWzWGHRg0mWPjMw2ju8
-	 KGkdT3D3czsSvvhFbFCItHB38g4+VX9CEbBrPkD2BKOZj1VYVR6yrWZGa8IV6kKdVn
-	 R+qTKt8Tsi0TUlGE60CfXM8DFMofVHNH9m8/qhPOqg5wJ6suY9Mrig4zikVbl3iZ9Y
-	 tnops2bPUGqVA==
-Date: Mon, 12 Oct 2026 08:40:18 -1000
-Message-ID: <03d78d3346d0a0aacdae06c07550775d@kernel.org>
+	b=e6UKQwg7Hm3KU0PPnErQXNUDZQz/9hC7uGq9TcgZ6V+ub1Vc8rQJMR5HB3QVMobJn
+	 72eUsGvHUEKXtCs9p13QoxBG2TQ676uTCYFBVsY+p+Vfzl2zDv9vmGZ+9bQ0Dc9380
+	 MIIbKYF04aVppGQjq5SPsP1+Wi0GJAxWUEwWiFcPF6M57yUyv15x3vKFezmdjlRFns
+	 ZduiksBd3D3GBwnklZah3raT1RjMJPprQ6fx761v3VHrBmY+9YKqoK71DwFILlB6Ph
+	 x1U43OaYXDVELlmJu0z7i3eDO2JjSFNUOueQpLFBV+tf6xIxXkvbrz4RLW5VwJSnwG
+	 2nHWWEAKt7sOA==
+Date: Mon, 12 Oct 2026 08:48:24 -1000
+Message-ID: <d1b3d305ae23badca6eea5d7497db31c@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org,
-	sashiko-bot@kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Fix bypass
- propagation and the bypass dispatch claim for overlapping bypasses
-In-Reply-To: <20261011214028.743546-1-tj@kernel.org>
-References: <20261011214028.743546-1-tj@kernel.org>
+To: Hui Su <sh_def@163.com>
+Cc: void@manifault.com, arighi@nvidia.com, changwoo@igalia.com,
+ mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com,
+ vincent.guittot@linaro.org, dietmar.eggemann@arm.com, rostedt@goodmis.org,
+ bsegall@google.com, mgorman@suse.de, vschneid@redhat.com,
+ kprateek.nayak@amd.com, sched-ext@lists.linux.dev,
+ linux-kernel@vger.kernel.org, bpf@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v3] sched_ext: idle: Respect task affinity in restricted CPU selection
+In-Reply-To: <20261011173100.2090211-1-sh_def@163.com>
+References: <20261011173100.2090211-1-sh_def@163.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-On Sun, Oct 11, 2026 at 11:40:26AM -1000, Tejun Heo wrote:
->  0001 sched_ext: Propagate every bypass depth change to the descendants
->  0002 sched_ext: Fix the bypass dispatch claim for schedulers bypassed by an ancestor
-
-Applied 1-2 to sched_ext/for-7.3-fixes with the following tag added to
-both:
+Applied to sched_ext/for-7.3-fixes with the following tag added:
 
   Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
