@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71A429ACCD
-	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 13:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1429F5208CB
+	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 13:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791984291; cv=none; b=D+xcY4WH5Z6h4Q9S9kw3alXVOIBY3ADXLz4XOOjf/iQ9Z7vUXyTEHZ4pnssSLHyuBeokIAO6PMrzlWHK+C32JJhAp0k91LIaz2LJj7VXLtjAuOqpOE1h6bfzC6/D2zKoGYlGqA0COyw3gE4xPLLgnX2ui/W34+x+Gun5wXWPRvA=
+	t=1791984491; cv=none; b=i6V+/9J5zbrX6Bo1Ux5yVk3aNp6Lz0uvi3KESV9dmGBeRf2oEamhai8193//l6grZLTfNEeW9OzmTp4CmkEStI9azchAIkCzFNtBu1MOmFMR+/jWIF8Fkv2hc9Xu8M45T7wocNtbQfADJUL8pHjW0nBtSwXv92HXkR9VaWD6AdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791984291; c=relaxed/simple;
-	bh=mu+I5RDQHuu0IzZoAfIyHPsS7PhO50eYvLSs0XjVBgk=;
+	s=arc-20240116; t=1791984491; c=relaxed/simple;
+	bh=XnFw6o6zclq7Sye5xp7E77GAbq/tdXjlusok90auGyI=;
 	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=IHM6WoM2zz8dP0Hyu+Ryep0FFgB10Sj2OYre1mSpN5e/P7p8tXeyULaYZ+1tqyW82RuDTOvt3gWPvOJW3uKNCjG6YDshDJ0cIt8Lp7b0rXfTEINQ2S6+qwwdLj6Wwtqvj6ObDQV9aH03zIzK1vycdrbXjb+MpoqniI+6Dft5sac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNPTMD/9; arc=none smtp.client-ip=100.103.45.18
+	 Date; b=rgvNpSTTq05RwKNntCDWc7tyYfOqA9QbOSPaAcsme6LhlGzrAn1wCqTS4j1l5Vm49o5TWxuT5sJEsWgS6w9WmJl+7kzJQV2bqHS5un9UbGM5ptumxcl2muMrwX3W234uYVp8KY7Lh1heiu5h8hisObcku78JFzUEriIbUMoZCv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YZfcRhRa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNPTMD/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719561F00893;
-	Wed, 14 Oct 2026 13:24:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YZfcRhRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301691F000FF;
+	Wed, 14 Oct 2026 13:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791984290;
-	bh=sv9eTbdvhpGgQp0HDBmfj1CBa1w+3c3o83T+BnGSg0s=;
+	s=k20260515; t=1791984484;
+	bh=eu1wgmFZkfW/FHtVPj58z2VrnHtbVvQuKFzaltlYRx4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BNPTMD/9PETHpO1dRxWdz3pppYORbfsC1FOaUysnLXD6+3rXP4R/CSTir9Iq3irZ5
-	 QaX6KbQDHWPsKXy1DkqJo2Y72yKaIVaCmZtOaRLlIefOnBfQnDPtzCK0bsgLZGO9Za
-	 CHK9vhesOVLIEPWZM4+biCTPMBJzKp4Xwgb8WXJHuHFrsAiWKtC4Z8mtWF4YH9/UI5
-	 w3bt/IEh8Y1iMsc7W2xZGrkmTAR8WIs6CUJU5g6BU/lhCHDAXEY5n2FqPcIj7FNiSk
-	 c8glKnhclc36TeKfnlV9im+2xOMkReXWeKc0qXZuSeiiulc55rCmW5EakJwjXM+8Ig
-	 qfEwpnNKTzd0Q==
-Message-ID: <sashiko-outbox-171348@kernel.org>
+	b=YZfcRhRaH7zf/+t7ropRP12SOV/S+i1loIfyWOuvmcegULukfoxSZ4rPsB1/ZGp3n
+	 K+4N9azklvBPtSCyyGYfnRPoXFoCjdXOYEiLWaW4gLfpxy5Fq82npS5lxGMDys1WdI
+	 uV9oBhxdo11y4iMDxfu4ZbU23EElfHb49SGZS5CWyXZ80vhFdZrECx3J9OIsDckiqb
+	 XwJVEQbGwue/u5kxaf0NNRjIx9rN6hKWcdAferzsLI0zeIqQRh50FoHUuBsIwoMBS3
+	 fau/69/5UxytBxsgoNv4VOZxfchlXpUnUnY0w7C8KvcBw2gyn+7EiV/VDWtPfp8CLs
+	 Qoev6GU6TV4Hw==
+Message-ID: <sashiko-outbox-171354@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 6/6] selftests/sched_ext: Report reload_loop attach
- failures
+Subject: Re: [PATCH v2 3/6] selftests/sched_ext: Fail loudly when EXIT_KIND
+ is missing from BTF
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tao Cui" <cui.tao@linux.dev>
 Cc: sched-ext@lists.linux.dev
-In-Reply-To: <20261014131325.793640-7-cui.tao@linux.dev>
+In-Reply-To: <20261014131325.793640-4-cui.tao@linux.dev>
 References: <20261014131325.793640-1-cui.tao@linux.dev>
- <20261014131325.793640-7-cui.tao@linux.dev>
+ <20261014131325.793640-4-cui.tao@linux.dev>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 14 Oct 2026 13:24:50 +0000
+Date: Wed, 14 Oct 2026 13:28:03 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -47,98 +47,103 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] bpf: flaky reload_loop test due to strict iteration limit
+- [Medium] selftests/sched_ext: EXIT_KIND() early return leaks bpf_link and=
+ breaks test suite
 --
 
-commit 8a9da64f2647d703dd026bef834ba09325868dbc
+commit dc88ff2863ae13f6a94ae129f38a8ba739ac1964
 Author: Tao Cui <cuitao@kylinos.cn>
+   =20
+selftests/sched_ext: Fail loudly when EXIT_KIND is missing from BTF
 
-selftests/sched_ext: Report reload_loop attach failures
+EXIT_KIND() resolved scx_exit_kind values through
+__COMPAT_ENUM_OR_ZERO(), which maps a missing enumerator to 0 (=3D=3D
+SCX_EXIT_NONE). struct scx_exit_info carries the enum itself, so the
+BTF of any loaded scheduler always has the type, and every enumerator
+the tests resolve today exists on all sched_ext kernels: the fallback
+got the value right, and the single comparison that could pass
+vacuously was the kick.c error poll.
 
-This commit updates the reload_loop test to record the number of EBUSY
-attach failures per thread. It fails the test if an unexpected errno is
-encountered or if any thread fails to attach the link on every iteration.
-
-> diff --git a/tools/testing/selftests/sched_ext/reload_loop.c b/tools/test=
-ing/selftests/sched_ext/reload_loop.c
-> index a00f3964dba05..7d8880fa1a032 100644
-> --- a/tools/testing/selftests/sched_ext/reload_loop.c
-> +++ b/tools/testing/selftests/sched_ext/reload_loop.c
-
+> diff --git a/tools/testing/selftests/sched_ext/scx_test.h b/tools/testing=
+/selftests/sched_ext/scx_test.h
+> index 90b8d6915bb7e..319e67f19b6dd 100644
+> --- a/tools/testing/selftests/sched_ext/scx_test.h
+> +++ b/tools/testing/selftests/sched_ext/scx_test.h
 [ ... ]
-
-> @@ -31,22 +38,33 @@ static enum scx_test_status setup(void **ctx)
+> @@ -119,13 +117,25 @@ void scx_test_register(struct scx_test *test);
+>  	(s64)__val;								\
+>  })
 > =20
->  static void *do_reload_loop(void *arg)
->  {
-> -	u32 i;
-> +	u32 i, failures =3D 0;
+> +/*
+> + * SCX_KIND_VAL - Resolve an scx_exit_kind enumerator from kernel BTF.
+> + *
+> + * Unlike __COMPAT_ENUM_OR_ZERO(), a missing enumerator fails the test
+> + * loudly instead of silently resolving to 0 (=3D=3D SCX_EXIT_NONE), whi=
+ch
+> + * would make the comparison vacuous.
+> + */
+>  #define SCX_KIND_VAL(__kind) ({							\
+> -        u64 __val =3D 0;								\
+> -	bool __found =3D false;							\
+> +	u64 __val =3D 0;								\
+>  										\
+> -	__found =3D __COMPAT_read_enum("scx_exit_kind", #__kind, &__val);		\
+> -	SCX_ASSERT(__found);							\
+> +	if (!__COMPAT_read_enum("scx_exit_kind", #__kind, &__val))		\
+> +		SCX_FAIL("scx_exit_kind.%s not found in kernel BTF", #__kind);	\
+>  	__val;									\
+>  })
 > =20
-> -	for (i =3D 0; i < 1024 && !force_exit; i++) {
-> +	for (i =3D 0; i < RELOAD_ITERS && !force_exit; i++) {
->  		struct bpf_link *link;
-> =20
-> +		errno =3D 0;
->  		link =3D bpf_map__attach_struct_ops(skel->maps.maximal_ops);
-> -		if (link)
-> -			bpf_link__destroy(link);
-> +		if (!link) {
-> +			int e =3D errno;
+> +/*
+> + * EXIT_KIND - Alias of SCX_KIND_VAL() for resolving scx_exit_kind
+> + * enumerator values, kept for readability at the EXIT_KIND() call sites.
+> + */
+> +#define EXIT_KIND(__ent) SCX_KIND_VAL(__ent)
 > +
-> +			if (e !=3D EBUSY)
-> +				__atomic_store_n(&unexpected_errno, e,
-> +						 __ATOMIC_RELAXED);
-> +			failures++;
-> +			continue;
+>  #endif  // # __SCX_TEST_H__
 
 [Severity: Medium]
-Because this loop does not yield the CPU (e.g., via sched_yield() or usleep=
-())
-when receiving -EBUSY, can a thread rapidly spin through all 1024 iterations
-while the other thread holds the link or is preempted?
+When EXIT_KIND() fails to resolve the enum, SCX_FAIL() triggers a hidden
+return SCX_TEST_FAIL. Does this early return leak resources and break the
+test suite?
 
-> +		}
-> +
-> +		bpf_link__destroy(link);
->  	}
-> =20
-> -	return NULL;
-> +	return (void *)(unsigned long)failures;
->  }
+For example, in tools/testing/selftests/sched_ext/exit.c:run():
 
-[ ... ]
+		link =3D bpf_map__attach_struct_ops(skel->maps.exit_ops);
+		if (!link) {
+			SCX_ERR("Failed to attach scheduler");
+			exit__destroy(skel);
+			return SCX_TEST_FAIL;
+		}
 
-> @@ -60,7 +78,18 @@ static enum scx_test_status run(void *ctx)
->  	}
-> =20
->  	SCX_FAIL_IF(pthread_join(threads[0], &ret), "thread 0 failed");
-> +	failures[0] =3D (unsigned long)ret;
-> +
->  	SCX_FAIL_IF(pthread_join(threads[1], &ret), "thread 1 failed");
-> +	failures[1] =3D (unsigned long)ret;
-> +
-> +	SCX_FAIL_IF(unexpected_errno, "unexpected attach errno %d",
-> +		    unexpected_errno);
-> +
-> +	for (i =3D 0; i < RELOAD_THREADS; i++)
-> +		SCX_FAIL_IF(failures[i] =3D=3D RELOAD_ITERS,
-> +			    "thread %d: every attach failed (%lu EBUSY)",
-> +			    i, failures[i]);
+		/* Assumes uei.kind is written last */
+		while (skel->data->uei.kind =3D=3D EXIT_KIND(SCX_EXIT_NONE))
+			sched_yield();
 
-[Severity: Medium]
-Could this assertion cause spurious test failures on loaded systems?
+		SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_UNREG_BPF));
+		SCX_EQ(skel->data->uei.exit_code, tc);
+		sprintf(buf, "%d", tc);
+		SCX_ASSERT(!strcmp(skel->data->uei.msg, buf));
+		bpf_link__destroy(link);
+		exit__destroy(skel);
 
-Since 1024 syscalls returning -EBUSY execute extremely fast, if one thread
-successfully attaches the link and is temporarily preempted before destroyi=
-ng
-it, the other thread can easily exhaust its RELOAD_ITERS and hit this failu=
-re
-condition.
+If EXIT_KIND() fails inside the SCX_EQ() assertion or the while loop, it
+returns early and bypasses bpf_link__destroy() and exit__destroy(), leaking
+both the BPF link and skeleton.=20
 
-> =20
->  	return SCX_TEST_PASS;
->  }
+Since runner.c executes tests serially in a single process, could the open
+BPF link keep the scheduler active in the kernel, causing all subsequent te=
+sts
+to fail with -EBUSY?
+
+This issue also appears to affect multiple other tests, such as
+ddsp_bogus_dsq_fail.c, prog_run.c, and enq_select_cpu.c, where EXIT_KIND() =
+is
+used inside assertions while a struct bpf_link *link is held. While follow-=
+up
+patches in this series refactor loops to use SCX_TIMED_WAIT_UEI, they do not
+seem to resolve these specific assertion leaks.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261014131325.7936=
-40-1-cui.tao@linux.dev?part=3D6
+40-1-cui.tao@linux.dev?part=3D3
