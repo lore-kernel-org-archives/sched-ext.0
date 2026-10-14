@@ -1,162 +1,142 @@
-Received: from mta0.migadu.com (out-199.mta0.migadu.com [91.218.175.199])
+Received: from mta0.migadu.com (out-32.mta0.migadu.com [91.218.175.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6104E47884D
-	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 10:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5805F309EEC
+	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 13:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791972318; cv=none; b=r4n0ywcjKMsz9hn39er8MIijbXXsKczNKuBqpaNA/YwR8rt7rqJW/nVqeyLWuZViObqSivA5wYpPEJVS3AAEHdSeMrtFc4DkINR/HM0XDG3l2c1PseVkidQy+rMVNva3Cu7Jj/mOtVNG5FDmEt/35emmmF3WbX5LB1+9QIA5c8c=
+	t=1791983617; cv=none; b=XNz2nZMCM83hBsnA1SoFEAIcbBT/fLl2klKQJrT513XR++tgd2nGw5o1nkYkJXlKyXAkquqCrskLkSrxPzpG5pQeEe/dZw0w828cxwqvq0fAE+rHzi6+DqbfNDHK3e2csYwEnEz5z//tVCOMhqGPZ8uvCJtZv+K+hPDTMu7xhtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791972318; c=relaxed/simple;
-	bh=RdgFkO0vK3WrSvtX01n2ZWWqGAoVqNuCElQNCACxwkY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WGxrTkUWvazk6XQkqwvpE9OUUFQNm3V+KC3HWoqSXdDr9H7GksJ0Mxkzxz+8AxtTW4EfEtYxetPXG9gldeG72UpAt0j9cJCJlM8aDbiAHzPS7dJE037yZQQI66PZ8VOuyt+PvEUojuWpuFRs2v4ikcwSWCwbp0ycl3SJ89WVn50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=efN+X+a9; arc=none smtp.client-ip=91.218.175.199
+	s=arc-20240116; t=1791983617; c=relaxed/simple;
+	bh=Qud/y84Ji5GDQQInuXlFLlF0n8J8rV+DIa76LZ7G5n0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Nin9XpV3SAVOEY/8paS+fi3G+WX20MnJe3bUpmAeIwmMjZawOZ+mnxImtPjnuGY+vHWwj7FvYRrE8gj2ZHawDicd8K2KmaItJLMfvLHyZRZhxL9z1KnZnbns/OgCNHLX+/qmmLr26KFuyw3JHwo/6c3Ey9CeIW9ly580xkXeDdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=GOb3Uc/R; arc=none smtp.client-ip=91.218.175.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="efN+X+a9"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="GOb3Uc/R"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=RdgFkO0vK3WrSvtX01n2ZWWqGAoVqNuCElQNCACxwkY=;
+DKIM-Signature: a=rsa-sha256; bh=Qud/y84Ji5GDQQInuXlFLlF0n8J8rV+DIa76LZ7G5n0=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791972313; v=1; x=1792577113;
- b=efN+X+a9ySBD4YXxg1tSIQKpBDFlq0mW7kdL/mReuZGN571heabEdsjVh2hb2h0wNlQq7FxT
- Rx5G+Ku5GgXNl99qf/DgWWCKCjQpwfMsKriJo2SI8FCy8WIFQcs7E1BtE9r8zawtWz5c2pkJeyO
- nauHDuTRjMwwKkatTIv3M12s=
+ t=1791983613; v=1; x=1792588413;
+ b=GOb3Uc/Rqk0GhjK1kelHEa3GZmih/eOAbav64Qi2/2tZDwBrbBwJoFCLmR2aN9SSW2MZ2ltX
+ o/rIt2ToVSWTM1vLjzcSs69f8IxQ/1I0c+UJG54qnXkz5ZCH8W9B7CSc5BAdfQRLJ9DC3he0GwD
+ ZxPp0yMyl59Ja6431ciTkzxc=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 80773e8497cfc15c;
-	Wed, 14 Oct 2026 10:05:11 +0000
-X-Mizu-Trace-ID: 80773e8497cfc15c
+Received: by smtp.migadu.com with ESMTPS id d4a7d5d4729e2af2;
+	Wed, 14 Oct 2026 13:13:32 +0000
+X-Mizu-Trace-ID: d4a7d5d4729e2af2
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <875283f4-ecaf-46ba-b56b-cc5ddb5b1e7b@linux.dev>
-Date: Wed, 14 Oct 2026 18:05:07 +0800
+From: Tao Cui <cui.tao@linux.dev>
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	sched-ext@lists.linux.dev,
+	Tao Cui <cuitao@kylinos.cn>,
+	cui.tao@linux.dev
+Subject: [PATCH v2 0/6] sched_ext: selftest infrastructure fixes
+Date: Wed, 14 Oct 2026 21:13:19 +0800
+Message-ID: <20261014131325.793640-1-cui.tao@linux.dev>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] sched_ext: selftest infrastructure fixes
-To: Tejun Heo <tj@kernel.org>
-Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
- Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
- Tao Cui <cuitao@kylinos.cn>
-References: <20261009134104.296891-1-cui.tao@linux.dev>
- <2e8098a4970602406e335edb4df09a0c@kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <2e8098a4970602406e335edb4df09a0c@kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello Tejun,
+From: Tao Cui <cuitao@kylinos.cn>
 
-在 2026/10/13 7:56, Tejun Heo 写道:
-> Hello, Tao.
-> 
-> The following is a Claude-generated review.
-> 
-> On Fri, Oct 09, 2026 at 09:40:59PM +0800, Tao Cui wrote:
->>   1. selftests/sched_ext: Fix reload_loop error-path use-after-free
-> 
-> Looks good. Inside the if (err) block, SCX_FAIL() reads better than
-> SCX_FAIL_IF(err, ...).
-Done (v2 patch 1).
-> 
->>   2. sched_ext: Add SCX_ECODE_RSN_CGROUP_OFFLINE to user_exit_info.h
-> 
-> Can you name the commit in the description? It's ebeca1f930ea ("sched_ext:
-> Introduce cgroup sub-sched support").
-Done (v2 patch 2), which also fixes the wrong attribution in the v1
-description - I had guessed "lifetime notification support".
-> 
->>   3. selftests/sched_ext: Fail loudly when EXIT_KIND is missing from
->>      BTF. EXIT_KIND() resolves scx_exit_kind values through
->>      __COMPAT_ENUM_OR_ZERO(), which maps a missing enum to 0 (==
->>      SCX_EXIT_NONE), so on kernels whose BTF lacks the enum every
->>      EXIT_KIND() comparison is meaningless.
-> 
-> struct scx_exit_info carries enum scx_exit_kind, so any BTF that loads the
-> skeleton has the enum. What can be missing is an enumerator, and the four
-> the tests use today exist on every sched_ext kernel. On a kernel missing
-> one, the comparisons against SCX_EXIT_NONE get the right value from the
-> fallback, the SCX_EQ()s against UNREG/UNREG_BPF/ERROR fail with a confusing
-> message, and the only vacuous pass is the error poll in kick.c.
-> 
-Conceded - v1's premise was wrong, thanks for the correction.
+The sched_ext selftests pass vacuously or hang in several failure
+scenarios: a scheduler that dies mid-test freezes the state the test
+asserts on, EXIT_KIND() silently maps missing BTF enumerators to
+SCX_EXIT_NONE, waits for scheduler exit are unbounded, attach
+failures in the reload stress test are swallowed, and an error path
+in reload_loop destroys the skeleton under a still-running thread.
 
-> The new EXIT_KIND() is also SCX_KIND_VAL() with a different message. If
-> you want to keep the patch, maybe define one in terms of the other?
-> 
-> With a return hidden in the macro, the remaining
-> kind != EXIT_KIND(SCX_EXIT_NONE) sites (allowed_cpus, cgroup_nr_cpus,
-> cyclic_kick_wait, enq_blocked) jump over their goto cleanup on a miss, and
-> invalid_one() resolves error_kind after the gated worker is spawned.
-> Converting those sites to UEI_EXITED() like the polling helpers and
-> hoisting the lookup above the spawn would close that.
-> 
-> The <unistd.h> include is unused in this patch, and compat.h already pulls
-> it in.
-> 
-Kept, but reshaped along exactly these lines (v2 patch 3): EXIT_KIND()
-is now an alias of SCX_KIND_VAL() so there is a single implementation,
-the four `kind != EXIT_KIND(SCX_EXIT_NONE)` sites are converted to
-UEI_EXITED(), invalid_one() resolves error_kind before spawning the
-gated worker, and cyclic_kick_wait no longer calls EXIT_KIND() at all.
-The unused <unistd.h> include is dropped.
+This is v2 of the series posted as [1]; it applies the review
+feedback from Tejun (and the sashiko bot findings, which overlapped):
 
->>   4. selftests/sched_ext: Add SCX_ASSERT_ALIVE and adopt it.
-> 
-> Looks good. Can SCX_ASSERT_ALIVE() print uei.msg too? That's where the
-> actual error text ends up. UEI_REPORT() already does that.
-> 
-Done (v2 patch 4) - the failure now prints kind, exit code and uei.msg.
+  - P1: use SCX_FAIL() inside the error branch.
+  - P2: name ebeca1f930ea in the description (and fix the wrong
+    attribution the v1 description carried).
+  - P3: the v1 premise was wrong - struct scx_exit_info carries the
+    enum, so the BTF always has the type and the enumerators the
+    tests use exist on all sched_ext kernels. The patch is kept but
+    reshaped: EXIT_KIND() is now an alias of SCX_KIND_VAL() (single
+    implementation), the remaining kind != EXIT_KIND(SCX_EXIT_NONE)
+    sites are converted to UEI_EXITED(), invalid_one() resolves
+    error_kind before spawning the gated worker, and the v1
+    <unistd.h> include is not needed here.
+  - P4: SCX_ASSERT_ALIVE() prints uei.msg too.
+  - P5: split in two. exit.c now destroys the link and the skeleton
+    on its timeout path (a scheduler stuck unexited no longer stays
+    attached and makes every later test fail with EBUSY); reload_loop
+    drops its dead reporting arm and the always-on EBUSY printf, and
+    the failure bar is now "at least one successful attach per
+    thread". The two #defines became an enum and stray blank lines
+    after setup() are gone.
 
->>   5. selftests/sched_ext: Bound exit waits and report reload_loop
->>      failures.
-> 
-> On timeout, exit.c returns with the link and the skel still open. The
-> scheduler that didn't exit stays attached for the rest of the runner
-> process, so every later test fails to attach with EBUSY and the real
-> failure is buried. prog_run and hotplug destroy the link on their timeout
-> paths. Can exit.c do the same, plus exit__destroy()?
-> 
-Done (v2 patch 5) - the timeout path now destroys the link and the
-skeleton before failing.
+Base: tj/sched_ext for-next at 8ef2c4fe917a ("Merge branch
+'for-7.3-fixes' into for-next"), rebased after the review round.
+v1 was based on the then-tip f55a5ae74ca6; the rebase is a pure
+replay (the only selftest-side upstream change in between is a
+dequeue_remote.c build fix outside the files touched here).
 
-> In reload_loop, SCX_FAIL_IF(unexpected_errno, ...) returns before the
-> printf(), so the ", unexpected errno" arm is dead, and the EBUSY count then
-> prints on every run. 2048 of 2048 failing is also a weak bar; "at least one
-> success per thread" would say the same thing more sharply. Would you split
-> the timed wait and the reload_loop accounting into two patches?
-> 
-Split (v2 patches 5/6). The dead arm and the always-on printf are gone;
-failures are reported by the fail conditions themselves. The bar is now
-per-thread: the test fails if either thread failed every attach, and
-the failure message carries the EBUSY count.
+Testing: full sched_ext selftest suite (QEMU/KVM x86_64, 4 vcpus,
+serial console) on a kernel built from this base: a runner built from
+this series and a runner built from the plain base pass identically,
+38 passed / 2 skipped / 0 failed each (the skips are
+environment-dependent: enq_blocked requires PROXY_EXEC and nohz_tick
+requires NOHZ_FULL; kick_coalesce passes since the base kernel has
+lazy preemption). On top of that, A/B checks: a scheduler whose exit
+point never fires wedges a pre-series runner forever in exit's
+unbounded wait, while with patch 5 the runner reports "Timed out
+waiting for scheduler to exit" after ~10s, destroys the link and the
+skeleton, and every subsequent test still attaches and passes (the
+stuck A/B ran on the f55a5ae74ca6 pre-rebase base with identical
+series content; the remaining A/Bs were run the same way on the v1
+base and their code paths are unchanged here); a synthetic BTF
+without the SCX_EXIT_UNREG_BPF enumerator fails loudly with patch 3
+and passes silently without it; an injected scheduler death reports
+kind, exit code and uei.msg through SCX_ASSERT_ALIVE(); under reload
+stress with in-flight teardown, patch 6 classifies the observed
+1125-1233 EBUSY failures and passes as long as each thread completed
+at least one attach.
 
-> Nits: two stray blank lines after setup(), and the two #defines could be an
-> enum.
-> 
-> Can you note the base and how the series was tested in the cover?
-> 
-Done - the v2 cover states the base commit and the testing.
+[1] https://lore.kernel.org/all/20261009134104.296891-1-cui.tao@linux.dev/
 
-The two issues sashiko flagged on 5/5 (exit.c leak on timeout, dead
-reload_loop arm) and the one on 3/5 (EXIT_KIND hidden return in
-invalid_one) are all covered by the above.
+Tao Cui (6):
+  selftests/sched_ext: Fix reload_loop error-path use-after-free
+  sched_ext: Add SCX_ECODE_RSN_CGROUP_OFFLINE to user_exit_info.h
+  selftests/sched_ext: Fail loudly when EXIT_KIND is missing from BTF
+  selftests/sched_ext: Add SCX_ASSERT_ALIVE and adopt it
+  selftests/sched_ext: Bound exit waits
+  selftests/sched_ext: Report reload_loop attach failures
 
-Testing: same setup as v1 - QEMU x86_64 VM on top of the series base;
-full sched_ext selftest run plus the A/B checks for each behavioral
-change (synthetic BTF without the enumerator for patch 3, injected
-scheduler death for patch 4, a scheduler stuck in ops.init for the
-bounded waits, reload stress with in-flight teardown for patch 6).
-Results are in the v2 cover letter.
+ tools/sched_ext/include/scx/user_exit_info.h  |  1 +
+ .../selftests/sched_ext/allowed_cpus.c        |  2 +-
+ .../selftests/sched_ext/cgroup_nr_cpus.c      |  2 +-
+ .../selftests/sched_ext/create_dsq.bpf.c      |  8 +++
+ .../testing/selftests/sched_ext/create_dsq.c  |  2 +
+ .../selftests/sched_ext/cyclic_kick_wait.c    |  2 +-
+ .../testing/selftests/sched_ext/enq_blocked.c |  2 +-
+ tools/testing/selftests/sched_ext/exit.c      |  8 ++-
+ tools/testing/selftests/sched_ext/hotplug.c   | 12 ++--
+ .../sched_ext/init_enable_count.bpf.c         |  8 +++
+ .../selftests/sched_ext/init_enable_count.c   | 13 +++++
+ tools/testing/selftests/sched_ext/kick.c      |  8 ++-
+ .../testing/selftests/sched_ext/maximal.bpf.c |  6 +-
+ tools/testing/selftests/sched_ext/maximal.c   |  2 +
+ tools/testing/selftests/sched_ext/nohz_tick.c |  6 +-
+ tools/testing/selftests/sched_ext/prog_run.c  |  7 ++-
+ .../testing/selftests/sched_ext/reload_loop.c | 49 +++++++++++++---
+ tools/testing/selftests/sched_ext/scx_test.h  | 57 +++++++++++++++++--
+ 18 files changed, 162 insertions(+), 33 deletions(-)
 
-Thanks,
-Tao
-
-> Thanks.
-> 
+-- 
+2.53.0
 
