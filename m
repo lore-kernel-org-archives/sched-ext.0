@@ -1,33 +1,33 @@
-Received: from mta1.migadu.com (out-235.mta1.migadu.com [95.215.58.235])
+Received: from mta1.migadu.com (out-238.mta1.migadu.com [95.215.58.238])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B022DCBE3
-	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 13:13:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5194746B4
+	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 13:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791983628; cv=none; b=GXcoVBAj68HL3gjmOIlgUApif7NEdCzhyVFL84TCamblubDDSlb3PnY+QSwRnQ8ROGoGtwYVLcDkiZ/sacMVcD3qhPDy3E9HOZG4pQL7L5QDSCVqFDQt+HDjm9BQwt8iMh8ozfWBOhMh+FvcMRYjzxVEp6nF9h5X9L8RzCXoi88=
+	t=1791983635; cv=none; b=B2oUAg1WDInxuolEKLEPGpET54xnKRvM+Va5nRsNsOosUu5bkvlwFEDlGRkrX+bMmaB+Oqa2c7v7X0kLNSPMJjTB20qwF3ZpotRxdS//b1yGnX7KI6BvczABtVTBOui4O7VkoY0KirEkh8ax0mHzNgE2Uj3oTM6E90U75ubbnPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791983628; c=relaxed/simple;
-	bh=uy9lxaNgsBqWjoiNid2RrUG6hWU7b6bcgIk3P4K6D78=;
+	s=arc-20240116; t=1791983635; c=relaxed/simple;
+	bh=9Qqlr/f4XYe/8icAZ+Od4PPZEk4dUDN5YnMGc/MtavI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TL2B16gTYZKAkSqYYotmjZlccJhKf9KHMtO2/tj+X9wuqYFNAh4W6wTFzjpZ5XxZKXjw5XVQJB6bP0DnY7MVGhFFvTSyE0hFZ/fDzwPVCswPFFdk3xyQqnB53gNY5Pw1ke70tk74NSlJDSs5RpF9/wTnUvbZiCahgcS13VwfsP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=ovoBnLAO; arc=none smtp.client-ip=95.215.58.235
+	 MIME-Version; b=pUldAo9asR4OcJ8uAKWUURPt9cOgVUIG9nART82KTGDEgdffXWly/2dRikj6EY1lJhgVnJ4+RMFhMUrSn62CK8vi6oI4rz2IxcynRx1QcTlRlxY5vacldBxkst+wMoYpsA726PfP8dnSJh8w77ZdYZvv7ckDZaJ3oQGRLmHBHUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Nf1xzDx3; arc=none smtp.client-ip=95.215.58.238
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="ovoBnLAO"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Nf1xzDx3"
 X-Envelope-To: sched-ext@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=uy9lxaNgsBqWjoiNid2RrUG6hWU7b6bcgIk3P4K6D78=;
+DKIM-Signature: a=rsa-sha256; bh=9Qqlr/f4XYe/8icAZ+Od4PPZEk4dUDN5YnMGc/MtavI=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791983625; v=1; x=1792588425;
- b=ovoBnLAOj8kJ1X4pyxnwFU152P8FxRqk8XlS7DWF2C4cnO4hXTMvQ6uSubjXA+y3WLwMGvD9
- AZ0srBHuUnzVuWXAymB+OwgBI8fZ2H8p6F9Lye0mvSmGr8Ru9HPNJC1M7e7DsFVQM+3SSh5NshK
- 0UGSk9OvN6dd+7tMQJajNWHo=
+ t=1791983631; v=1; x=1792588431;
+ b=Nf1xzDx3Ujbzkin+aAeuwEtXSSVvcGgyLl88NeSjXu+GRGA9k/OG3UwW1JqzvrRpko8H3A/h
+ TFkdc5sC8X+n3fiysbTm+thc78Wbooarny7zbRasPP8zNHyW+1ej00DVA9pyOBVcH/BZv1NK8F2
+ p114s8grv8EbDSj0Od4e2Xik=
 X-Envelope-To: sched-ext@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id db890ba061b1e6da;
-	Wed, 14 Oct 2026 13:13:44 +0000
-X-Mizu-Trace-ID: db890ba061b1e6da
+Received: by smtp.migadu.com with ESMTPS id ebd4c6b66489510f;
+	Wed, 14 Oct 2026 13:13:51 +0000
+X-Mizu-Trace-ID: ebd4c6b66489510f
 X-Migadu-Flow: FLOW_OUT
 From: Tao Cui <cui.tao@linux.dev>
 To: Tejun Heo <tj@kernel.org>
@@ -37,9 +37,9 @@ Cc: David Vernet <void@manifault.com>,
 	sched-ext@lists.linux.dev,
 	Tao Cui <cuitao@kylinos.cn>,
 	cui.tao@linux.dev
-Subject: [PATCH v2 3/6] selftests/sched_ext: Fail loudly when EXIT_KIND is missing from BTF
-Date: Wed, 14 Oct 2026 21:13:22 +0800
-Message-ID: <20261014131325.793640-4-cui.tao@linux.dev>
+Subject: [PATCH v2 4/6] selftests/sched_ext: Add SCX_ASSERT_ALIVE and adopt it
+Date: Wed, 14 Oct 2026 21:13:23 +0800
+Message-ID: <20261014131325.793640-5-cui.tao@linux.dev>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261014131325.793640-1-cui.tao@linux.dev>
 References: <20261014131325.793640-1-cui.tao@linux.dev>
@@ -53,203 +53,205 @@ Content-Transfer-Encoding: 8bit
 
 From: Tao Cui <cuitao@kylinos.cn>
 
-EXIT_KIND() resolved scx_exit_kind values through
-__COMPAT_ENUM_OR_ZERO(), which maps a missing enumerator to 0 (==
-SCX_EXIT_NONE). struct scx_exit_info carries the enum itself, so the
-BTF of any loaded scheduler always has the type, and every enumerator
-the tests resolve today exists on all sched_ext kernels: the fallback
-got the value right, and the single comparison that could pass
-vacuously was the kick.c error poll.
-
-Still, a silently-zeroed lookup is a trap. EXIT_KIND() is now an
-alias of SCX_KIND_VAL(), which fails the test loudly when the
-enumerator is missing. Convert the remaining
-`kind != EXIT_KIND(SCX_EXIT_NONE)` checks (allowed_cpus,
-cgroup_nr_cpus, cyclic_kick_wait and enq_blocked) to UEI_EXITED() so
-they keep their semantics without a BTF lookup, and hoist kick.c
-invalid_one()'s error_kind resolution above the gated-worker spawn so
-a failing lookup cannot bypass its cleanup path. The <unistd.h>
-include that the v1 posting added is not needed here; compat.h
-already pulls it in.
+A scheduler that dies mid-test freezes the state that the test is
+about to assert on, so the assertions can pass vacuously. Add
+SCX_ASSERT_ALIVE(), which fails the test with the recorded exit kind,
+exit code and message, and use it in maximal, create_dsq and
+init_enable_count. Existing open-coded checks keep their goto-based
+cleanup and are not converted. init_enable_count also clears the uei
+between its two attach cycles, since the clean unregister of the first
+cycle would otherwise trip the check of the second.
 
 Signed-off-by: Tao Cui <cuitao@kylinos.cn>
 ---
- .../selftests/sched_ext/allowed_cpus.c        |  2 +-
- .../selftests/sched_ext/cgroup_nr_cpus.c      |  2 +-
- .../selftests/sched_ext/cyclic_kick_wait.c    |  2 +-
- .../testing/selftests/sched_ext/enq_blocked.c |  2 +-
- tools/testing/selftests/sched_ext/kick.c      |  8 ++++---
- tools/testing/selftests/sched_ext/nohz_tick.c |  6 ++---
- tools/testing/selftests/sched_ext/scx_test.h  | 22 ++++++++++++++-----
- 7 files changed, 28 insertions(+), 16 deletions(-)
+ .../selftests/sched_ext/create_dsq.bpf.c       |  8 ++++++++
+ tools/testing/selftests/sched_ext/create_dsq.c |  2 ++
+ .../sched_ext/init_enable_count.bpf.c          |  8 ++++++++
+ .../selftests/sched_ext/init_enable_count.c    | 13 +++++++++++++
+ .../testing/selftests/sched_ext/maximal.bpf.c  |  6 +++++-
+ tools/testing/selftests/sched_ext/maximal.c    |  2 ++
+ tools/testing/selftests/sched_ext/scx_test.h   | 18 ++++++++++++++++++
+ 7 files changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/sched_ext/allowed_cpus.c b/tools/testing/selftests/sched_ext/allowed_cpus.c
-index 773699d120ea..76311728a6b1 100644
---- a/tools/testing/selftests/sched_ext/allowed_cpus.c
-+++ b/tools/testing/selftests/sched_ext/allowed_cpus.c
-@@ -149,7 +149,7 @@ static enum scx_test_status run(void *ctx)
+diff --git a/tools/testing/selftests/sched_ext/create_dsq.bpf.c b/tools/testing/selftests/sched_ext/create_dsq.bpf.c
+index 680cc4b6d8c7..24dacd1aab0c 100644
+--- a/tools/testing/selftests/sched_ext/create_dsq.bpf.c
++++ b/tools/testing/selftests/sched_ext/create_dsq.bpf.c
+@@ -12,6 +12,8 @@ char _license[] SEC("license") = "GPL";
  
- 	/* Just sleeping is fine, plenty of scheduling events happening. */
- 	sleep(1);
--	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
-+	if (UEI_EXITED(skel, uei)) {
- 		SCX_ERR("Scheduler exited unexpectedly");
- 		goto out;
- 	}
-diff --git a/tools/testing/selftests/sched_ext/cgroup_nr_cpus.c b/tools/testing/selftests/sched_ext/cgroup_nr_cpus.c
-index 4973f7080353..1475a8b3f05f 100644
---- a/tools/testing/selftests/sched_ext/cgroup_nr_cpus.c
-+++ b/tools/testing/selftests/sched_ext/cgroup_nr_cpus.c
-@@ -400,7 +400,7 @@ static enum scx_test_status run(void *arg)
- 	    !wait_nr_cpus(&ctx, ctx.leaf, nr_child, "leaf after cpuset disable"))
- 		goto out;
+ u32 nr_lifecycle_tests;
  
--	if (ctx.skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
-+	if (UEI_EXITED(ctx.skel, uei)) {
- 		SCX_ERR("Scheduler exited unexpectedly");
- 		goto out;
- 	}
-diff --git a/tools/testing/selftests/sched_ext/cyclic_kick_wait.c b/tools/testing/selftests/sched_ext/cyclic_kick_wait.c
-index c2e5aa9de715..178d1d75f332 100644
---- a/tools/testing/selftests/sched_ext/cyclic_kick_wait.c
-+++ b/tools/testing/selftests/sched_ext/cyclic_kick_wait.c
-@@ -152,7 +152,7 @@ static enum scx_test_status run(void *ctx)
++UEI_DEFINE(uei);
++
+ void BPF_STRUCT_OPS(create_dsq_exit_task, struct task_struct *p,
+ 		    struct scx_exit_task_args *args)
+ {
+@@ -84,10 +86,16 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(create_dsq_init)
+ 	return 0;
+ }
  
- 	sleep(5);
- 
--	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
-+	if (UEI_EXITED(skel, uei)) {
- 		SCX_ERR("Scheduler exited unexpectedly (kind=%llu code=%lld)",
- 			(unsigned long long)skel->data->uei.kind,
- 			(long long)skel->data->uei.exit_code);
-diff --git a/tools/testing/selftests/sched_ext/enq_blocked.c b/tools/testing/selftests/sched_ext/enq_blocked.c
-index 26204548bbf0..1d5e090b54bc 100644
---- a/tools/testing/selftests/sched_ext/enq_blocked.c
-+++ b/tools/testing/selftests/sched_ext/enq_blocked.c
-@@ -844,7 +844,7 @@ static enum scx_test_status run_one(bool enq_blocked, bool cross_cpu,
- 		}
- 	}
- 
--	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
-+	if (UEI_EXITED(skel, uei)) {
- 		SCX_ERR("Scheduler exited unexpectedly (kind=%llu code=%lld)",
- 			(unsigned long long)skel->data->uei.kind,
- 			(long long)skel->data->uei.exit_code);
-diff --git a/tools/testing/selftests/sched_ext/kick.c b/tools/testing/selftests/sched_ext/kick.c
-index 7f01602c75b2..40c91d54c1eb 100644
---- a/tools/testing/selftests/sched_ext/kick.c
-+++ b/tools/testing/selftests/sched_ext/kick.c
-@@ -97,7 +97,7 @@ static bool wait_for_state(struct kick *skel, u32 wanted)
- 	for (i = 0; i < WAIT_LOOPS; i++) {
- 		if (__atomic_load_n(&skel->bss->state, __ATOMIC_ACQUIRE) == wanted)
- 			return true;
--		if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE))
-+		if (UEI_EXITED(skel, uei))
- 			return false;
- 		usleep(1000);
- 	}
-@@ -111,7 +111,7 @@ static bool wait_for_counter(struct kick *skel, const u64 *counter, u64 wanted)
- 	for (i = 0; i < WAIT_LOOPS; i++) {
- 		if (__atomic_load_n(counter, __ATOMIC_ACQUIRE) >= wanted)
- 			return true;
--		if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE))
-+		if (UEI_EXITED(skel, uei))
- 			return false;
- 		usleep(1000);
- 	}
-@@ -421,7 +421,9 @@ static enum scx_test_status invalid_one(struct kick_ctx *ctx, u32 scenario)
- 	enum scx_test_status ret = SCX_TEST_FAIL;
- 	int cpu = ctx->target_cpu;
- 	int i;
-+	u64 error_kind;
- 
-+	error_kind = EXIT_KIND(SCX_EXIT_ERROR);
- 	victim = scx_test_spawn_gated_worker(cpu, false);
- 	if (victim.pid < 0)
++void BPF_STRUCT_OPS(create_dsq_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
+ SEC(".struct_ops.link")
+ struct sched_ext_ops create_dsq_ops = {
+ 	.init_task		= (void *) create_dsq_init_task,
+ 	.exit_task		= (void *) create_dsq_exit_task,
+ 	.init			= (void *) create_dsq_init,
++	.exit			= (void *) create_dsq_exit,
+ 	.name			= "create_dsq",
+ };
+diff --git a/tools/testing/selftests/sched_ext/create_dsq.c b/tools/testing/selftests/sched_ext/create_dsq.c
+index 422e6532ee71..84143d5710f4 100644
+--- a/tools/testing/selftests/sched_ext/create_dsq.c
++++ b/tools/testing/selftests/sched_ext/create_dsq.c
+@@ -35,6 +35,8 @@ static enum scx_test_status run(void *ctx)
  		return SCX_TEST_FAIL;
-@@ -440,7 +442,7 @@ static enum scx_test_status invalid_one(struct kick_ctx *ctx, u32 scenario)
- 		goto out;
- 
- 	for (i = 0; i < WAIT_LOOPS; i++) {
--		if (skel->data->uei.kind == EXIT_KIND(SCX_EXIT_ERROR)) {
-+		if (UEI_EXITED(skel, uei) == error_kind) {
- 			ret = SCX_TEST_PASS;
- 			break;
- 		}
-diff --git a/tools/testing/selftests/sched_ext/nohz_tick.c b/tools/testing/selftests/sched_ext/nohz_tick.c
-index df40976b9166..e19a97034b7f 100644
---- a/tools/testing/selftests/sched_ext/nohz_tick.c
-+++ b/tools/testing/selftests/sched_ext/nohz_tick.c
-@@ -165,7 +165,7 @@ static bool wait_for_counter(struct nohz_tick *skel, const u64 *counter, u64 val
- 	for (elapsed = 0; elapsed < timeout_ms; elapsed++) {
- 		if (__atomic_load_n(counter, __ATOMIC_RELAXED) >= value)
- 			return true;
--		if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE))
-+		if (UEI_EXITED(skel, uei))
- 			return false;
- 		usleep(1000);
  	}
-@@ -182,7 +182,7 @@ static bool wait_for_tick_stop(struct nohz_tick *skel, const u64 *counter, int t
- 		u64 curr;
  
- 		usleep(1000);
--		if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE))
-+		if (UEI_EXITED(skel, uei))
- 			return false;
- 		curr = __atomic_load_n(counter, __ATOMIC_RELAXED);
- 		if (curr == prev) {
-@@ -461,7 +461,7 @@ static enum scx_test_status run(void *ctx_ptr)
- 	scx_test_stop_gated_worker(&challenger);
++	SCX_ASSERT_ALIVE(skel, uei);
++
+ 	bpf_link__destroy(link);
  
- check_exit:
--	if (skel->data->uei.kind != EXIT_KIND(SCX_EXIT_NONE)) {
-+	if (UEI_EXITED(skel, uei)) {
- 		SCX_ERR("Scheduler exited unexpectedly (kind=%llu code=%lld)",
- 			(unsigned long long)skel->data->uei.kind,
- 			(long long)skel->data->uei.exit_code);
+ 	SCX_EQ(skel->bss->nr_lifecycle_tests, 1024);
+diff --git a/tools/testing/selftests/sched_ext/init_enable_count.bpf.c b/tools/testing/selftests/sched_ext/init_enable_count.bpf.c
+index 5eb9edb1837d..c0a5dd8fe183 100644
+--- a/tools/testing/selftests/sched_ext/init_enable_count.bpf.c
++++ b/tools/testing/selftests/sched_ext/init_enable_count.bpf.c
+@@ -15,6 +15,8 @@ char _license[] SEC("license") = "GPL";
+ u64 init_task_cnt, exit_task_cnt, enable_cnt, disable_cnt;
+ u64 init_fork_cnt, init_transition_cnt;
+ 
++UEI_DEFINE(uei);
++
+ s32 BPF_STRUCT_OPS_SLEEPABLE(cnt_init_task, struct task_struct *p,
+ 			     struct scx_init_task_args *args)
+ {
+@@ -43,11 +45,17 @@ void BPF_STRUCT_OPS(cnt_disable, struct task_struct *p)
+ 	__sync_fetch_and_add(&disable_cnt, 1);
+ }
+ 
++void BPF_STRUCT_OPS(cnt_exit, struct scx_exit_info *ei)
++{
++	UEI_RECORD(uei, ei);
++}
++
+ SEC(".struct_ops.link")
+ struct sched_ext_ops init_enable_count_ops = {
+ 	.init_task	= (void *) cnt_init_task,
+ 	.exit_task	= (void *) cnt_exit_task,
+ 	.enable		= (void *) cnt_enable,
+ 	.disable	= (void *) cnt_disable,
++	.exit		= (void *) cnt_exit,
+ 	.name		= "init_enable_count",
+ };
+diff --git a/tools/testing/selftests/sched_ext/init_enable_count.c b/tools/testing/selftests/sched_ext/init_enable_count.c
+index 44577e30e764..c4a57038a1d6 100644
+--- a/tools/testing/selftests/sched_ext/init_enable_count.c
++++ b/tools/testing/selftests/sched_ext/init_enable_count.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2023 Tejun Heo <tj@kernel.org>
+  */
+ #include <signal.h>
++#include <string.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <sched.h>
+@@ -72,7 +73,17 @@ static enum scx_test_status run_test(bool global)
+ 	close(pipe_fds[1]);
+ 	signal(SIGCHLD, SIG_DFL);
+ 
++	SCX_ASSERT_ALIVE(skel, uei);
++
+ 	bpf_link__destroy(link);
++
++	/*
++	 * The clean unregister above is recorded in uei and would
++	 * otherwise trip the liveness check of the second cycle, which
++	 * reuses this skeleton.
++	 */
++	memset(&skel->data->uei, 0, sizeof(skel->data->uei));
++
+ 	SCX_GE(skel->bss->init_task_cnt, num_pre_forks);
+ 	SCX_GE(skel->bss->exit_task_cnt, num_pre_forks);
+ 
+@@ -124,6 +135,8 @@ static enum scx_test_status run_test(bool global)
+ 			    status);
+ 	}
+ 
++	SCX_ASSERT_ALIVE(skel, uei);
++
+ 	bpf_link__destroy(link);
+ 
+ 	SCX_GE(skel->bss->init_task_cnt, 2 * num_children);
+diff --git a/tools/testing/selftests/sched_ext/maximal.bpf.c b/tools/testing/selftests/sched_ext/maximal.bpf.c
+index 04a369078aac..9ea664e2ff70 100644
+--- a/tools/testing/selftests/sched_ext/maximal.bpf.c
++++ b/tools/testing/selftests/sched_ext/maximal.bpf.c
+@@ -14,6 +14,8 @@ char _license[] SEC("license") = "GPL";
+ 
+ #define DSQ_ID 0
+ 
++UEI_DEFINE(uei);
++
+ s32 BPF_STRUCT_OPS(maximal_select_cpu, struct task_struct *p, s32 prev_cpu,
+ 		   u64 wake_flags)
+ {
+@@ -132,7 +134,9 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(maximal_init)
+ }
+ 
+ void BPF_STRUCT_OPS(maximal_exit, struct scx_exit_info *info)
+-{}
++{
++	UEI_RECORD(uei, info);
++}
+ 
+ SEC(".struct_ops.link")
+ struct sched_ext_ops maximal_ops = {
+diff --git a/tools/testing/selftests/sched_ext/maximal.c b/tools/testing/selftests/sched_ext/maximal.c
+index 1dc369224670..6c6b80e0446e 100644
+--- a/tools/testing/selftests/sched_ext/maximal.c
++++ b/tools/testing/selftests/sched_ext/maximal.c
+@@ -35,6 +35,8 @@ static enum scx_test_status run(void *ctx)
+ 	link = bpf_map__attach_struct_ops(skel->maps.maximal_ops);
+ 	SCX_FAIL_IF(!link, "Failed to attach scheduler");
+ 
++	SCX_ASSERT_ALIVE(skel, uei);
++
+ 	bpf_link__destroy(link);
+ 
+ 	return SCX_TEST_PASS;
 diff --git a/tools/testing/selftests/sched_ext/scx_test.h b/tools/testing/selftests/sched_ext/scx_test.h
-index 90b8d6915bb7..319e67f19b6d 100644
+index 319e67f19b6d..9e102d7f2893 100644
 --- a/tools/testing/selftests/sched_ext/scx_test.h
 +++ b/tools/testing/selftests/sched_ext/scx_test.h
-@@ -18,8 +18,6 @@ enum scx_test_status {
- 	SCX_TEST_FAIL,
- };
- 
--#define EXIT_KIND(__ent) __COMPAT_ENUM_OR_ZERO("scx_exit_kind", #__ent)
--
- struct scx_test {
- 	/**
- 	 * name - The name of the testcase.
-@@ -119,13 +117,25 @@ void scx_test_register(struct scx_test *test);
- 	(s64)__val;								\
- })
+@@ -108,6 +108,24 @@ void scx_test_register(struct scx_test *test);
+ #define SCX_ASSERT(_x) SCX_FAIL_IF(!(_x), "Expected %s to be true (%lu)",		\
+ 				   #_x, (u64)(_x))
  
 +/*
-+ * SCX_KIND_VAL - Resolve an scx_exit_kind enumerator from kernel BTF.
-+ *
-+ * Unlike __COMPAT_ENUM_OR_ZERO(), a missing enumerator fails the test
-+ * loudly instead of silently resolving to 0 (== SCX_EXIT_NONE), which
-+ * would make the comparison vacuous.
++ * SCX_ASSERT_ALIVE - Fail the test if the scheduler under test exited
++ * on its own between attach and this check, e.g. from a runtime error.
++ * A scheduler that dies mid-test freezes whatever state the test is
++ * about to assert on, which can make the assertions pass vacuously.
++ * uei.msg carries the actual error text, so print it alongside the
++ * recorded kind and exit code.
 + */
- #define SCX_KIND_VAL(__kind) ({							\
--        u64 __val = 0;								\
--	bool __found = false;							\
-+	u64 __val = 0;								\
- 										\
--	__found = __COMPAT_read_enum("scx_exit_kind", #__kind, &__val);		\
--	SCX_ASSERT(__found);							\
-+	if (!__COMPAT_read_enum("scx_exit_kind", #__kind, &__val))		\
-+		SCX_FAIL("scx_exit_kind.%s not found in kernel BTF", #__kind);	\
- 	__val;									\
- })
- 
-+/*
-+ * EXIT_KIND - Alias of SCX_KIND_VAL() for resolving scx_exit_kind
-+ * enumerator values, kept for readability at the EXIT_KIND() call sites.
-+ */
-+#define EXIT_KIND(__ent) SCX_KIND_VAL(__ent)
++#define SCX_ASSERT_ALIVE(__skel, __uei)						\
++	do {									\
++		if (UEI_EXITED(__skel, __uei))					\
++			SCX_FAIL("Scheduler exited unexpectedly"		\
++				 " (kind=%llu code=%lld msg='%s')",		\
++				 (unsigned long long)(__skel)->data->__uei.kind, \
++				 (long long)(__skel)->data->__uei.exit_code,	\
++				 (__skel)->data->__uei.msg);			\
++	} while (0)
 +
- #endif  // # __SCX_TEST_H__
+ #define SCX_ECODE_VAL(__ecode) ({						\
+         u64 __val = 0;								\
+ 	bool __found = false;							\
 -- 
 2.53.0
 
