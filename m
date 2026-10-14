@@ -1,166 +1,162 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mta0.migadu.com (out-199.mta0.migadu.com [91.218.175.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454F246D097
-	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 07:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791962474; cv=pass; b=TG9ZZrCPbVJWgfm0zX2LzG6FptjBLenltGU0hs+MvoRDdG0Nf6A7iYcOKiXseknl3Xu6qr+lGem8IbY9fV2iu6C+ZZOdXeFlr4IoKq+1nkbZ9Vx52JUpVS5jpk8Va2jq75bkamnM+nRxd/9KRmK2Sbsc6H11bHihdQDE5y6JplY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791962474; c=relaxed/simple;
-	bh=YChBavy9/hT84sGYMDIbdBzY/1bKyPcMNTRHv9aVaiI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FyoajHIPmluaWj/LFXD8oi+7EfVM1F3ccFaFvhgpwAUfPg7zzQawyl3ngLxRO7aWiKfQdRBetyFWnY3av2Tk1LOCvdVjyHori42eumMlsuhu2jFRqaut/F13iw3D3Zw/OlqEYmSDv2hGc1QkgVmC2kqQ6RG+w/xTrBraJNmtbuQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CS83zNVV; arc=pass smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6104E47884D
+	for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 10:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.199
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791972318; cv=none; b=r4n0ywcjKMsz9hn39er8MIijbXXsKczNKuBqpaNA/YwR8rt7rqJW/nVqeyLWuZViObqSivA5wYpPEJVS3AAEHdSeMrtFc4DkINR/HM0XDG3l2c1PseVkidQy+rMVNva3Cu7Jj/mOtVNG5FDmEt/35emmmF3WbX5LB1+9QIA5c8c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791972318; c=relaxed/simple;
+	bh=RdgFkO0vK3WrSvtX01n2ZWWqGAoVqNuCElQNCACxwkY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WGxrTkUWvazk6XQkqwvpE9OUUFQNm3V+KC3HWoqSXdDr9H7GksJ0Mxkzxz+8AxtTW4EfEtYxetPXG9gldeG72UpAt0j9cJCJlM8aDbiAHzPS7dJE037yZQQI66PZ8VOuyt+PvEUojuWpuFRs2v4ikcwSWCwbp0ycl3SJ89WVn50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=efN+X+a9; arc=none smtp.client-ip=91.218.175.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CS83zNVV"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c2e62319cfaso66704366b.2
-        for <sched-ext@lists.linux.dev>; Wed, 14 Oct 2026 00:21:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791962469; cv=none;
-        d=google.com; s=arc-20260327;
-        b=EgSifruEPcrm9wm2xJdO/hImFqS1jnpsshTEhDhZJjjzXQfuWq7VN1UWT/5+62Cw3E
-         WCpa8osjNow98xyjai/I6dGJT1sqWGktZHJYqvAJyNNE3o1pgrLJoFJp9x6QT3AEuhqZ
-         NLnXg7DmS6qAUGIDOmFrq3/s5CNToOq+S2Gl+I0zgVBh9NSFvHAkPe1WmTEY7d7uGS6W
-         63b1fcUANL8zYrWY1C8FjU0E/UCmfh8MHRh5/e9oyjshO1BJFLOAA0WW1V4gEfHnkv+t
-         AFz2BXp8kY49ZQ6SlIXCM0f0owq64I1xFNCb1gK9OAhfKlw6Zq/e1yVuf5rE6y++JnPS
-         Hrig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=CF+KclfBDMXfeuygyCssleqkU5i6V8LQfkd3LIo/AIg=;
-        fh=fChW9TV/z2khYNJcYGW8GLr1t7QnPclznIashtrzyWs=;
-        b=YF9/KWPMittyTWcW/vilTnslMS3dytRvQDuixI8KSa++0rfc3q74gJsB/ipfL4pfBf
-         9rpMtJWU6oYEP9uY5GWgNU757mVOT46xDq3swp/qG0cDSFUspPIKGuXJ8VggGkI9DmLD
-         k1RS7r8XsoXZ2H93ZjIBXFc+fMFmgWjxUpgLuaa5BDgH7ucBrmSaZ9iCrjYfrC1gJwbc
-         O4qOl7txcIgnAUuvRZMslGDes/aqPYZvVKyyvLbyO/9NZ4/+gPG8nbRS1sJs2Cai2sit
-         B9VxUgTVeEqRGTedmWuPWCjEITpdrUbdLONMWKD9r6CXTBuiLifdE5VwPb8uhA4YyP6E
-         o1QQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1791962469; x=1792567269; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=CF+KclfBDMXfeuygyCssleqkU5i6V8LQfkd3LIo/AIg=;
-        b=CS83zNVVEB5eR8jiyMGDKaDnBR9Oa4pAgnIm9+jZkg4UAZEa1jQi/mGadn85Dno5xS
-         6v4z8roAZu04BdsXiCguj8oq5UxH4tIAg8VWBxGDjsfeYIfbD9SLBvS2cu22X28gfd8w
-         SvvVgxWbqd/EBJxGjfl9Y8lXubIX0mcQlebCMxsCgca0z7pT00wpj/M7ATZENqCa704S
-         Do1Di1jkNzaI+Nem5Oowng/jl4XCXVox0RMkYomrEkfBkE8GkCvu2Eio+xgAKvk+v1VO
-         imDiRckr7AB3a3VWrV9K6GC7GkyXWEzgsRS1pdtZ/uyG+3/R+EQJRpfQXpnZEho7zwxn
-         telw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791962469; x=1792567269;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=CF+KclfBDMXfeuygyCssleqkU5i6V8LQfkd3LIo/AIg=;
-        b=mGgXkkfKZe8490auiHA7Cuz9GsxQ/zSxPXmLLOkyKTiR7mp+V5hC/7Dx6ND/nET89g
-         E+uZlrIHcDjBBi5C7kxwiCJ7YfvBhyAkSqF6C7LgDg2IHGfLNJM/OTNevyYpzJcpwLre
-         11D8VZctx2TtJsTpSlMhNovYtn86/xPTYq/kEpnd8gLUZFq5pZQlOez1O28l9JCuJdX2
-         PxDZbajB3rIT18G4pWCfoGQRnUuw67A1K/CRpwISbNS+5e5yPrKA7uZmtnwm5hbwGMV0
-         JKAR3aWHsR+VbNiMUTXO+SmOVr/Ug6+gBQ9b6jHuaaH3H/CsbbiDoizrhfIfzts5apwS
-         EUMw==
-X-Forwarded-Encrypted: i=1; AKwUvByj/8sdNfTKu3tyEWl1lPYOdrIZ6Bgdbf6MOGNUkuMa98SijXI5S3nsI1kDkQGm7q6Zz2K8ZLJUTjQ=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKB9s+3fKnkKBleHTs7DuMG1+rNhvhCeIRQX2mVPrkZRUmb42o1
-	jHN6mtBflxEhSHs+ZXDQcRCymLFC+nOZkBjv74nCUkMwSYwho6Up++tBcEe50LmoWoBqHfL4vR4
-	PJ/8OwEgRP+5PmTc8qLbAPTJ0fEyhXR5wdZReZhP+og==
-X-Gm-Gg: AYBFou3v/dKtv3HvkYIGUCwbeu3z2/CFj5dy1xS94FuYPCiEKnBP+HTdMdQNOpuxkFj
-	8BurYTB3+Z5aiDl8+/N2akUL6G+QvNqwvAhtrJfYPyM/YdhIrloZM1+cpQWtJ96ygMAXtGdC5NP
-	jPJM8WOnyjIYt3Fj/vijC0MkubuuVlv+19oQLRMmxWtfgdkMTU7/uOUag0x2d8xIVWWyDpdVgAh
-	AWu+/wW7i+rgkRWMHW90JlmOFRLyl4tGxleJfnwJpAkVaGEFNlPDy8CzYk/Eu1BZMhGq1zJBqxX
-	cdIf02p/4N7Bzjr+MZp3kIrv93IlD+40r2iYyc+0ywoxQOBWOHneG/hJ3BSLRZQdsFYxf55nzGK
-	saLxoRlCOZw4=
-X-Received: by 2002:a17:907:e0db:20b0:c35:d50a:1356 with SMTP id
- a640c23a62f3a-c35d50a286cmr419508866b.42.1791962469352; Wed, 14 Oct 2026
- 00:21:09 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="efN+X+a9"
+X-Envelope-To: sched-ext@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=RdgFkO0vK3WrSvtX01n2ZWWqGAoVqNuCElQNCACxwkY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791972313; v=1; x=1792577113;
+ b=efN+X+a9ySBD4YXxg1tSIQKpBDFlq0mW7kdL/mReuZGN571heabEdsjVh2hb2h0wNlQq7FxT
+ Rx5G+Ku5GgXNl99qf/DgWWCKCjQpwfMsKriJo2SI8FCy8WIFQcs7E1BtE9r8zawtWz5c2pkJeyO
+ nauHDuTRjMwwKkatTIv3M12s=
+X-Envelope-To: sched-ext@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 80773e8497cfc15c;
+	Wed, 14 Oct 2026 10:05:11 +0000
+X-Mizu-Trace-ID: 80773e8497cfc15c
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <875283f4-ecaf-46ba-b56b-cc5ddb5b1e7b@linux.dev>
+Date: Wed, 14 Oct 2026 18:05:07 +0800
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261002154415.2270586-1-vincent.guittot@linaro.org>
- <20261002154415.2270586-8-vincent.guittot@linaro.org> <asWyZtW7zPVo3k-A@chenyu-dev>
- <CAKfTPtCyRiBbxT_bU8egEuXtRsOW6TGw3TczyObBLKsE99dMpQ@mail.gmail.com>
- <aspc8doovTKdBqPC@chenyu-dev> <CAKfTPtAy-n5_Dj-9x2qxcu=i7eo9DmZ2aaxig_nbyNDbP2m_Mw@mail.gmail.com>
- <as2-2b417B8ZaFdO@chenyu-dev>
-In-Reply-To: <as2-2b417B8ZaFdO@chenyu-dev>
-From: Vincent Guittot <vincent.guittot@linaro.org>
-Date: Wed, 14 Oct 2026 09:20:58 +0200
-X-Gm-Features: AclHuK8pAU8JrMEVjSxceEUuYpPE0kaNBSBk1NHutmnkX7B9KN-NWtHcn7JJxf0
-Message-ID: <CAKfTPtDB=-NwC=wpv3KiFXe4MwFTs5NTzNcYP00onx7OT967QQ@mail.gmail.com>
-Subject: Re: [PATCH 07/18] sched/fair: Add push task mechanism for fair
-To: Chen Yu <yu.c.chen@intel.com>
-Cc: mingo@redhat.com, peterz@infradead.org, juri.lelli@redhat.com, 
-	dietmar.eggemann@arm.com, rostedt@goodmis.org, bsegall@google.com, 
-	mgorman@suse.de, vschneid@redhat.com, kprateek.nayak@amd.com, 
-	linux-kernel@vger.kernel.org, lukasz.luba@arm.com, rafael@kernel.org, 
-	linux-pm@vger.kernel.org, tj@kernel.org, void@manifault.com, 
-	arighi@nvidia.com, changwoo@igalia.com, sched-ext@lists.linux.dev, 
-	qyousef@layalina.io, christian.loehle@arm.com, pierre.gondois@arm.com, 
-	sshegde@linux.ibm.com, chen.yu@linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] sched_ext: selftest infrastructure fixes
+To: Tejun Heo <tj@kernel.org>
+Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>,
+ Changwoo Min <changwoo@igalia.com>, sched-ext@lists.linux.dev,
+ Tao Cui <cuitao@kylinos.cn>
+References: <20261009134104.296891-1-cui.tao@linux.dev>
+ <2e8098a4970602406e335edb4df09a0c@kernel.org>
+From: Tao Cui <cui.tao@linux.dev>
+In-Reply-To: <2e8098a4970602406e335edb4df09a0c@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, 13 Oct 2026 at 07:30, Chen Yu <yu.c.chen@intel.com> wrote:
->
-> On Mon, Oct 12, 2026 at 11:18:04AM +0200, Vincent Guittot wrote:
-> > On Sat, 10 Oct 2026 at 17:55, Chen Yu <yu.c.chen@intel.com> wrote:
-> > >
-> > > On Fri, Oct 09, 2026 at 04:31:40PM +0200, Vincent Guittot wrote:
-> > > > On Wed, 7 Oct 2026 at 04:59, Chen Yu <yu.c.chen@intel.com> wrote:
-> > >
-> > > [ ... ]
-> > >
-> > > > > @@ -10414,6 +10441,15 @@ select_task_rq_fair(struct task_struct *p, int prev_cpu, int select_flags)
-> > > > >         if (select_flags & WF_TTWU)
-> > > > >                 want_affine = !wake_wide(p) && cpumask_test_cpu(cpu, p->cpus_ptr);
-> > > > >
-> > > > > +       /*
-> > > > > +        * Only a push triggered by cache aware scheduling will push the
-> > > > > +        * task towards its preferred LLC. Pushes for other reasons, like short
-> > > > > +        * slice task, uses the default push strategy.
-> > > > > +        */
-> > > > > +       push_cpu = -1;
-> > > > > +       if (select_flags & WF_RQ_PUSH)
-> > > > > +               push_cpu = check_pushable_cache_task(prev_cpu, p);
-> > > >
-> > > > Is there any reason that you do'nt want to migrate the task at wakeup too ?
-> > > >
-> > >
-> > > The wakeup path seems to be too fast to aggregate the tasks, so that multiple
-> > > CPUs try to migrate the task to the same LLC without synchronization - a task
-> > > bouncing issue was observed when cache-aware migration was enabled in the wakeup
-> > > path. We can double-check in the latest kernel to see if that is still the case,
-> > > and to see if we can mitigate that.
-> >
-> > Yeah, the goal is to use the same select function for all events;
-> > wakeup and push events should be seen as the same event
-> >
-> > Also you should separate the check for adding the task in the pushable
-> > list in fair_check_pushable_task from the decision to select pref_cpu
-> > in select_task_rq_fair. The check added in fair_check_pushable_task is
-> > mainly used to decide if it worth going deeper in the decision with
-> > select_task_rq_fair
-> >
->
-> Do you mean the check in fair_check_pushable_task() should be lightweight
-> and let select_task_rq_fair() make the decision as to which CPU the task
-> should be migrated to, because the former does not hold pi_lock and thus
-> should be best-effort? OK, let me adjust the code.
+Hello Tejun,
 
-Yes and fair_check_pushable_task can be called quite often
+在 2026/10/13 7:56, Tejun Heo 写道:
+> Hello, Tao.
+> 
+> The following is a Claude-generated review.
+> 
+> On Fri, Oct 09, 2026 at 09:40:59PM +0800, Tao Cui wrote:
+>>   1. selftests/sched_ext: Fix reload_loop error-path use-after-free
+> 
+> Looks good. Inside the if (err) block, SCX_FAIL() reads better than
+> SCX_FAIL_IF(err, ...).
+Done (v2 patch 1).
+> 
+>>   2. sched_ext: Add SCX_ECODE_RSN_CGROUP_OFFLINE to user_exit_info.h
+> 
+> Can you name the commit in the description? It's ebeca1f930ea ("sched_ext:
+> Introduce cgroup sub-sched support").
+Done (v2 patch 2), which also fixes the wrong attribution in the v1
+description - I had guessed "lifetime notification support".
+> 
+>>   3. selftests/sched_ext: Fail loudly when EXIT_KIND is missing from
+>>      BTF. EXIT_KIND() resolves scx_exit_kind values through
+>>      __COMPAT_ENUM_OR_ZERO(), which maps a missing enum to 0 (==
+>>      SCX_EXIT_NONE), so on kernels whose BTF lacks the enum every
+>>      EXIT_KIND() comparison is meaningless.
+> 
+> struct scx_exit_info carries enum scx_exit_kind, so any BTF that loads the
+> skeleton has the enum. What can be missing is an enumerator, and the four
+> the tests use today exist on every sched_ext kernel. On a kernel missing
+> one, the comparisons against SCX_EXIT_NONE get the right value from the
+> fallback, the SCX_EQ()s against UNREG/UNREG_BPF/ERROR fail with a confusing
+> message, and the only vacuous pass is the error poll in kick.c.
+> 
+Conceded - v1's premise was wrong, thanks for the correction.
 
-Vincent
+> The new EXIT_KIND() is also SCX_KIND_VAL() with a different message. If
+> you want to keep the patch, maybe define one in terms of the other?
+> 
+> With a return hidden in the macro, the remaining
+> kind != EXIT_KIND(SCX_EXIT_NONE) sites (allowed_cpus, cgroup_nr_cpus,
+> cyclic_kick_wait, enq_blocked) jump over their goto cleanup on a miss, and
+> invalid_one() resolves error_kind after the gated worker is spawned.
+> Converting those sites to UEI_EXITED() like the polling helpers and
+> hoisting the lookup above the spawn would close that.
+> 
+> The <unistd.h> include is unused in this patch, and compat.h already pulls
+> it in.
+> 
+Kept, but reshaped along exactly these lines (v2 patch 3): EXIT_KIND()
+is now an alias of SCX_KIND_VAL() so there is a single implementation,
+the four `kind != EXIT_KIND(SCX_EXIT_NONE)` sites are converted to
+UEI_EXITED(), invalid_one() resolves error_kind before spawning the
+gated worker, and cyclic_kick_wait no longer calls EXIT_KIND() at all.
+The unused <unistd.h> include is dropped.
 
->
-> thanks,
-> Chenyu
->
-> > Vincent
-> >
-> > >
-> > > thanks,
-> > > Chenyu
+>>   4. selftests/sched_ext: Add SCX_ASSERT_ALIVE and adopt it.
+> 
+> Looks good. Can SCX_ASSERT_ALIVE() print uei.msg too? That's where the
+> actual error text ends up. UEI_REPORT() already does that.
+> 
+Done (v2 patch 4) - the failure now prints kind, exit code and uei.msg.
+
+>>   5. selftests/sched_ext: Bound exit waits and report reload_loop
+>>      failures.
+> 
+> On timeout, exit.c returns with the link and the skel still open. The
+> scheduler that didn't exit stays attached for the rest of the runner
+> process, so every later test fails to attach with EBUSY and the real
+> failure is buried. prog_run and hotplug destroy the link on their timeout
+> paths. Can exit.c do the same, plus exit__destroy()?
+> 
+Done (v2 patch 5) - the timeout path now destroys the link and the
+skeleton before failing.
+
+> In reload_loop, SCX_FAIL_IF(unexpected_errno, ...) returns before the
+> printf(), so the ", unexpected errno" arm is dead, and the EBUSY count then
+> prints on every run. 2048 of 2048 failing is also a weak bar; "at least one
+> success per thread" would say the same thing more sharply. Would you split
+> the timed wait and the reload_loop accounting into two patches?
+> 
+Split (v2 patches 5/6). The dead arm and the always-on printf are gone;
+failures are reported by the fail conditions themselves. The bar is now
+per-thread: the test fails if either thread failed every attach, and
+the failure message carries the EBUSY count.
+
+> Nits: two stray blank lines after setup(), and the two #defines could be an
+> enum.
+> 
+> Can you note the base and how the series was tested in the cover?
+> 
+Done - the v2 cover states the base commit and the testing.
+
+The two issues sashiko flagged on 5/5 (exit.c leak on timeout, dead
+reload_loop arm) and the one on 3/5 (EXIT_KIND hidden return in
+invalid_one) are all covered by the above.
+
+Testing: same setup as v1 - QEMU x86_64 VM on top of the series base;
+full sched_ext selftest run plus the A/B checks for each behavioral
+change (synthetic BTF without the enumerator for patch 3, injected
+scheduler death for patch 4, a scheduler stuck in ops.init for the
+bounded waits, reload stress with in-flight teardown for patch 6).
+Results are in the v2 cover letter.
+
+Thanks,
+Tao
+
+> Thanks.
+> 
+
