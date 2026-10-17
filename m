@@ -1,71 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B3034C98C;
-	Sat, 17 Oct 2026 18:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40743D6487;
+	Sat, 17 Oct 2026 18:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792262629; cv=none; b=jQKHdLQHd9mO2MBVqBLOdxHJgaYOmf7/v853kTeK3a0HpjnFS6kXpfxHJO/Xe6NPBRR8cJmd/hO7U3D+LpaVLJ+bdGqj70JEw5yH/0Aifqs6heYaWKlP6ZXFWNYSJzoaKn0zEpcSl8GhDcXWJkdTvZEwgyocHxBsl8L02Hc1dKA=
+	t=1792262696; cv=none; b=C45hxOyrrhN19je0lKLis0h2oHXhpSmRo87y/SnUeSAB2inD3pWI4QT2amMn7nWNzXeFqs0l7nyPIQoafGF1N0rvlYNdnMvOOJl6pU6v2LK55dEvSlneOSQ+hXnrkT8mE8UZpUkIS8Xa2cO9trSREh6ZJbJ4J+UdQ0fv0eLgAg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792262629; c=relaxed/simple;
-	bh=y8ExBTAzTHGONyxcdjk6r0G3qPFtynGEMKvBwzEZZnc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=n7gYLHFabmCZqsO5bARLGrSXMHe5+55psZ+Um2+Er3sReN7pgEAw6A9BydJNiYJwurK+HurqQP2GiVzPhj3QJ2zuSl3gtefEY0z6r6zQTEVq6IaEyfFt1UMoG1KGKpyrF5gWdU2cMN8Xv7ZUzM4R5rgqd7wOL1rAaS+5V/U8+Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AferkPHk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792262696; c=relaxed/simple;
+	bh=6Y7vYf/xc/TsRZfeinhAcNhu9VUF65Y4YoGWlsYueBI=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=jsuXOG/J6OeVbYoMIawgPRX7yG0vqwi23z9X6qaCd8aN+j4uphWCiHt8B7jYbM1TlAMqPBwMwikZdRknE6Edbm43oU14Ed5SUDULAnCoc1mbt/AptZMauy6kjI5cHauBrT9RPWBsKJGAwY2/VvICIk17X8ErlVa3NiskwArBltM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DQLs+Kyt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AferkPHk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E841F000C4;
-	Sat, 17 Oct 2026 18:43:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DQLs+Kyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376D71F000C4;
+	Sat, 17 Oct 2026 18:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792262628;
-	bh=y8ExBTAzTHGONyxcdjk6r0G3qPFtynGEMKvBwzEZZnc=;
+	s=k20260515; t=1792262695;
+	bh=6Y7vYf/xc/TsRZfeinhAcNhu9VUF65Y4YoGWlsYueBI=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=AferkPHk+yqBL49ynhyotZXW+u+UfjQitJcKGSFg3X2jedIPzj8IeTb7GoYBduS1O
-	 9CmKriNGJrPxRLBGPlq3qCu0xJLZRT4H6HX/iqj8CJmeM8DgfBPBHA8ZEa9lr+OJy/
-	 /stukboYQT5MVjwX39MfElX7cbaGH+qrbCZFL0z6Rd1flkLHtMVynZDqNJJZmWRzY5
-	 3UtO3r6bzUqOPLLkKp2oGE/SFtmF5s6zOjwopWaleXW6o1tKBmqbsmPTc4Hno1SX4F
-	 gU6FZZNAg1/QIbDKoJEJlRDoNoP6XD5+wuA924MxgwOK76rxqvYWACZSj9pbtVSUZP
-	 QCHhGJbAHuMow==
-Date: Sat, 17 Oct 2026 08:43:47 -1000
-Message-ID: <6ee796c005fe3cf9d5c3d29aecde0079@kernel.org>
+	b=DQLs+KytNtJSGRRtUosT+uXFw1RcS/lNaRmT4MXAW0p/isLNN3Y2nZ+fn79KPxy+p
+	 PK7NYbP4kCSq7NlAsOVLAhEK4ee/x9geKxtaMs8uMgbe0yHJDLr3PvymuwnRMvJP/t
+	 yxzkFx5licLt1ops+XpIXY7UhxgITe1VuteXXxQI5HFaJar++y1Mvv2rH4lB1WA0Ut
+	 /UN5mW76kZ+drkfud2Fvo58j/EnfAYzzvDAXvadH17xBb/oE74cMDqJNKUtSYs//9I
+	 a58VM7mBTlzI6/asqDBVkhBxBm7DvOxgZ3sy5UkNjvkWIw3O3cbTBbcY/qsS7TK08f
+	 NXA6t1UCPfw6w==
+Date: Sat, 17 Oct 2026 08:44:54 -1000
+Message-ID: <fac1671153b59deddb9847f2c5d946e1@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 5/6] sched_ext: Report the ecaps loss when a cpu goes offline
-In-Reply-To: <sashiko-outbox-175737@kernel.org>
-References: <20261017164556.4136807-1-tj@kernel.org> <20261017164556.4136807-6-tj@kernel.org> <sashiko-outbox-175737@kernel.org>
+To: Andrea Righi <arighi@nvidia.com>
+Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 sched_ext/for-7.3-fixes] sched_ext: Don't leave balance callbacks queued across a pick retry
+In-Reply-To: <20261017152226.3690249-1-arighi@nvidia.com>
+References: <20261017152226.3690249-1-arighi@nvidia.com>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 
-Hello,
-
-On Sat, Oct 17, 2026 at 06:14:02PM +0000, sashiko-bot@kernel.org wrote:
-> The comment notes that scx_enabled() cannot change during hotplug, and that
-> without a live root the ext class will not be picked and the wait would never
-> end. However, static_branch_disable(&__scx_enabled) in scx_root_disable() runs
-> before cpus_read_lock() is acquired.
-
-static_branch_disable() takes cpus_read_lock() itself in
-static_key_disable(), so the flip waits until the cpu down releases
-cpus_write_lock(). scx_enabled() stays true across the down.
-
-> If the offline CPU had not yet picked ext_sched_class before __scx_enabled was
-> disabled and ext_server was detached (for instance, while a fair or RT task
-> was running during ext_server's dl_defer window), __scx_process_sync_ecaps()
-> will never be called on that rq.
-
-The drain doesn't depend on the ext server. scx_offline_ecaps() runs
-from sched_cpu_deactivate() after balance_push_set(), so once the
-hotplug thread sleeps in the wait, balance_push() moves every task but
-per-cpu kthreads and migration-disabled ones off the cpu. With
-scx_enabled() still true, the cpu's first pick with no fair task left
-runs the ext pick, whose dispatch_one() processes the marked sync.
-
-Only a per-cpu kthread or a migration-disabled task that never sleeps
-could hold it off after the ext server is detached, and that would be a
-bug of its own.
+Applied to sched_ext/for-7.3-fixes.
 
 Thanks.
 
