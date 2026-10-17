@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FA9375F9C;
-	Sat, 17 Oct 2026 05:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2843E558D;
+	Sat, 17 Oct 2026 05:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792215439; cv=none; b=UyOJg5vWAaF+/+QE9kwaQTGArrhTKoGW2E3I9CSiezFRdcmeXqQHB3A2muM2SRRap7YYpLp4BUwlDtoaNrr53NZhpNrBM4pHWU2tMhKCpMln1pw4sD/mAd0aYfG+dC/3uUoBuEET8X/7aMcQlQxHvAh/zQzfyNZpFH05QTF7OJE=
+	t=1792215444; cv=none; b=dAlM/yfvHcvsN1T1ApRvYkGD2NsIfXxBpWHKBmlcW4c6LsITK/POmD3cThKau0aGkljFZMlHEV3qwq4DiHUuX+ZcKvlf1xbtSSyVvax7g+EiInbzSJgSyz3y91VXtK8g5Wkk9HxC3Qngt9Q5iGC0/t0w2wP9S1aoNSWGxp3k54M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792215439; c=relaxed/simple;
-	bh=EvIU8EuXNwKOEt+5tNKCNvzueHmtt9H6cO3Bhc8VB34=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=k5ZR+/GNEujrLcNFEtcNo66gpq1iXiM+ErJxB5zyXBuu8Dva8UGBLobGrOO3NdVYvX12jSAkdQjL8x7SRuxPxqqQiPaVrzFkkYy7A+vPk8IljrHp27QHeAytnLoWdu6e6mcDMcLUPo0Dh+NQKOh+Z6IM9sdlg/O6QUmyXfrATAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n7w9P7MX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792215444; c=relaxed/simple;
+	bh=PsPrVLy6AkIrddmi/bMiRtmCHmuce3pAL6AAf5Me+rE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AQnBbqlJXT00GWtlLccBue2Lh3/bcyrSaaTqjrA0qfRl9JGoRmHP6WXBeD3lxOfQoOrY9WYOkRfy48kSYaAy+NPKnoP4yiqVxvXvjQeg28pE6wrqPMNDkhPoFliSourQvJ+ytdq6MlPaVGeEPpSXYnILelsdpjOTXQzSC5PoI6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VcXZqmBs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n7w9P7MX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F28E1F000C4;
-	Sat, 17 Oct 2026 05:37:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VcXZqmBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430851F000C5;
+	Sat, 17 Oct 2026 05:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792215438;
-	bh=3Sjqebret22MRPMuJf2Lbw+gl5w07tTwnx2YlqGOC1k=;
-	h=From:To:Cc:Subject:Date;
-	b=n7w9P7MX1654hBDw+JR+Z+qZybpV/Kqvxdgf58mSIDCMR5vT/qQtjVpZ0HKBfWpgi
-	 NezYtRJW5WUh633OqGUtht78i/pfouzprMSrpMD4TWXwTUVTw5/YpUQ3nIGAz8nh/z
-	 T5T9aaB9FVoQYd1xook4LPUP5zFW2hFoLKg4z+Rh1wjTECEK34zfZqz8zFQTkcgizf
-	 yvIB3XZ2zPb5NWvm92e00er+qf+1aenwbTFYBmS1CDkLBuYGgJHF/xB5lrlQdoR2Op
-	 OF0PRLNuP7Pc+ajlPHQoI8rkGGkllc+pMSKOzq8c6UKXMjajHegfl1eBdpcrs79/vE
-	 0+lKXVvZ8oP4g==
+	s=k20260515; t=1792215439;
+	bh=LRmBMThYMM7ic70JULoLql06ueyZigANJI1ix7iZlWk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=VcXZqmBsBxseUnG7NViMwrqgdXEdX3BcqoXEL39uloXxzaHza1wEWx97mnXpYmXlg
+	 fKFxRSvASwzmSOqf55e5JtU2JjbFYWyOfXu/VFkl3JgMqipbbThzz2lMfqtB6SR8de
+	 jE5/xc9Q8n310BC2r2hh38vjTxPsmCD4VnP7mU6EImdo4AY0lV0yDJtBuj9ItWHscg
+	 aN53YBRuRQMw0CkazbA/i0KPXJFr6ESksh19v7IUvtprlCP81pF+7SN/Jag6JbgzJH
+	 EjUthxILpuO1dgiJEHG6k64wf3UPTHIpzVCW+6xD7r+BCMCcFRihbDxbArJiCe6jjy
+	 AStskyu9c8+Jw==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -34,10 +35,12 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET sched_ext/for-7.3-fixes] sched_ext: Fix bypass leaving the running task protected and bypassed tasks stranded
-Date: Fri, 16 Oct 2026 19:37:15 -1000
-Message-ID: <20261017053717.3162619-1-tj@kernel.org>
+Subject: [PATCH 1/2] sched_ext: Fix the running task keeping its protection into bypass
+Date: Fri, 16 Oct 2026 19:37:16 -1000
+Message-ID: <20261017053717.3162619-2-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261017053717.3162619-1-tj@kernel.org>
+References: <20261017053717.3162619-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,48 +49,57 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Protection ends when the scheduler enters bypass, so that bypass scheduling
+can cut every task's slice. scx_bypass() clears it for the queued tasks by
+cycling them, and strips the running task's in the same walk over
+rq->scx.runnable_list. The running task is never on that list.
+set_next_task_scx() takes it off and put_prev_task_scx() puts it back, so
+the strip never runs. A protected running task then keeps its slice into
+bypass, where the tick's attempts to cut it are refused.
 
-scx_bypass() handles the running task inside its walk over the runnable
-list, which never contains the running task, so the protection strip at
-bypass entry never runs. Separately, a bypassing sub-scheduler's tasks are
-run by its nearest ancestor that isn't bypassing, but whether such a task
-may stay on its cpu is still checked against the caps of its own scheduler.
-A bypassed task that the bypass load balancer moved to a cpu where its
-scheduler holds no caps can't stay there once its slice runs out, and the
-cpu can go idle with the task queued on the ancestor's bypass DSQ.
+Strip the running task's protection outside the walk.
 
-Patch 1 handles the running task outside the walk. Patch 2 checks a bypassed
-task against the caps of the scheduler running it and, in the block patch 1
-adds, evicts the running task when bypass lifts if its own scheduler lacks
-the caps to keep it.
+Fixes: 9cfc6ab34a31 ("sched_ext: Add SCX_TASK_PROTECTED")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext/ext.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-Verified on bare metal by attaching and detaching a sub-scheduler repeatedly
-under load. A debug knob that marks the running task protected at each
-bypass entry finds every such task stripped with patch 1. Without it, they
-all keep their protection and the bypass tick can't cut their slices. In a
-VM, running tasks whose scheduler holds no caps on their cpu leave it within
-about 50us of the bypass lift with patch 2, instead of running out their
-bypass slice. The sched_ext selftests pass.
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 2c213153bdab..d6689bf8e769 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -6318,6 +6318,16 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+ 			continue;
+ 		}
+ 
++		/*
++		 * Bypass trumps protection. Cycling the queued tasks below
++		 * clears theirs. The current task isn't on the runnable list,
++		 * so strip its protection here.
++		 */
++		p = rq->curr;
++		if (bypass && p->sched_class == &ext_sched_class &&
++		    scx_is_descendant(scx_task_sched(p), sch))
++			scx_task_slice_ended(rq, p);
++
+ 		/*
+ 		 * The use of list_for_each_entry_safe_reverse() is required
+ 		 * because each task is going to be removed from and added back
+@@ -6330,13 +6340,6 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+ 			if (!scx_is_descendant(scx_task_sched(p), sch))
+ 				continue;
+ 
+-			/*
+-			 * Bypass trumps protection. Cycling clears for queued
+-			 * tasks but current task needs explicit stripping.
+-			 */
+-			if (bypass && task_current(rq, p))
+-				scx_task_slice_ended(rq, p);
+-
+ 			/* cycling deq/enq is enough, see the function comment */
+ 			scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
+ 				/* nothing */ ;
+-- 
+2.56.0
 
-Based on sched_ext/for-7.3-fixes (43e1ef14a472).
-
-This patchset contains the following 2 patches.
-
- 0001 sched_ext: Fix the running task keeping its protection into bypass
- 0002 sched_ext: Fix a bypassed task stalling on a cpu its scheduler has no caps on
-
-The patchset is also available in the following git branch:
-
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git bypass-stall-fixes
-
-diffstat follows. Thanks.
-
- kernel/sched/ext/ext.c      | 32 +++++++++++++++++++-------------
- kernel/sched/ext/internal.h | 17 +++++++++++++++++
- kernel/sched/ext/sub.c      |  7 +++++--
- kernel/sched/ext/sub.h      |  6 +++++-
- 4 files changed, 46 insertions(+), 16 deletions(-)
-
---
-tejun
