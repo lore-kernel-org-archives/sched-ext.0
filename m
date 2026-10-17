@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625C240B11F;
-	Sat, 17 Oct 2026 22:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D274A207B;
+	Sat, 17 Oct 2026 22:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792276663; cv=none; b=JGlCatDilOJaMMloG1tOtuTBszuxTKHRBRyLDJoozALFX9zCeR2H/I8Y4vbMNRD6Y5QYQpzkxOhAbcZ4UTxiptHIM5eeuabwmWNmyxSixOSYBxMxV5I7H5oYwwTaLtli/sz6h+v1Axbf37ZGOU8vu4bXJJrSVJoyhvQbH1l2Zrg=
+	t=1792276664; cv=none; b=i/ldyz38BDFxtvEUesvYru6afEQX814XIkjR/RL0cNI90MCTL8Fh+JPxqQyfCC7ya4hFkSHzC9H3HoN5Cn6G6p+Fw7ml1qiNI1lmfomOnHK+GMwzehj0mPW1Up9585aP8JguB95Ic9+MKKTLJyCgWXagvaoSNnimbcWvfib/ejc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792276663; c=relaxed/simple;
-	bh=mYQtm8i2mBuvJLt3V2IN6yzw1jk95M+Zamars0cEvZg=;
+	s=arc-20240116; t=1792276664; c=relaxed/simple;
+	bh=aFvsEQiFe+acVRD/OP89N83Pgk7Dhp8uo5/qjL7aCQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=InlbjSkvN1ooe2fXG627I4ZnyGxf++1up/w2I2ny37iaN9AGywqqHOltQ+dJdu3xZt12Mc4CrjtXEKcYcwCQvPelHrB5kCHP4FRU3DqKERJTkQuE8oHTLUXwyGyeGgTcvKPDIxPTVi6uvLBMTfYXjKWPZFLQeriLQeD6TEep1e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W5VUm8mu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bgg1V79Gh5ScnnF3t1qFJdFtG1SkK/bxLMlRhYhz9Z54Xk4bBVOb+AjdYR2EVM6b7eCxHi7aiPv6mGU210H3IR4O8G352GPhnVgXrH5Ra4brh7QkZleF8+GrDemZ9qs96nMb8pzo3UPWBOgoGLCEKuMo66bDdSTF8p7mdDbePGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A4/LQ77V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W5VUm8mu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA431F000C4;
-	Sat, 17 Oct 2026 22:37:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A4/LQ77V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8231F000C5;
+	Sat, 17 Oct 2026 22:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792276662;
-	bh=F8Ya2fY2tiLI6FE9/9wdhWNKP4nDXnKZoDZ38gwykCw=;
+	s=k20260515; t=1792276663;
+	bh=TW+xjrd+vNz++QRmcV1JuE9QIBZEOYwD32mrxTgZJz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W5VUm8mu4LmkrhfJ2FgGYCdDjPzfjgz/lcfl3jjMXB49BY5JOjxS6IelnRs+xWcRe
-	 nxqN/6OyGQtY7kTbPOfAbJ1LQmM9pW16+uCeCKVbTS5L9ppBZNyXkDUeHsUDaZiTOH
-	 JVfi16qA0Tsh607TBFdAL8Xpvo3rxSPf3hBmmWTDbQYrmQRvGUR6WNZkKsI4/ql5K2
-	 hX34LjWzR5oizBpg9A+/rpzitjU4oJ8wQCNhio6STMqwUucLlVjgvSFCxHgYKju0Qh
-	 hOgf3PaghEAUQpQEOfDKS/13P5gsmOmExnZl3IJnVBENyvCX9EyesM9BNVaW64j7Go
-	 mG77dGOdWr3yg==
+	b=A4/LQ77VAHV+d7yUtWzszW839s6l7OdcZ8dWh+KxeshzrFYstfzMoU3ogHLzAhEOx
+	 to1zxgvQGsrM4hW+DTfAhnh7kakiBEqquEVoooeFsrjczk6M3VBLimdqweRj6RHbqD
+	 08yL2YpmJK5RCAqKCbE7dKtvlnhG4r1FFxD80rvgx6HGrUV6sXProZwqBa9hJ/Uiu7
+	 3hqfinYsuuroIxKtFkjWzxijpzY6rFCyPTTyIVOqY603ySgfY9cwsWhDZNz0bHv3ij
+	 Qt99VxXB4MLUkJNyTBz6sHCzfsyr53O1FpbvXjDayYassrCGozJ2S2n/vycYoV4xz/
+	 WtcdpBIFcUAsQ==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -35,9 +35,9 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 2/3] sched_ext: Add scx_bpf_dsq_reenq_task() to re-enqueue single tasks from a DSQ iteration
-Date: Sat, 17 Oct 2026 12:37:37 -1000
-Message-ID: <20261017223738.993262-3-tj@kernel.org>
+Subject: [PATCH 3/3] sched_ext: scx_qmap: Also re-enqueue stranded tasks with scx_bpf_dsq_reenq_task()
+Date: Sat, 17 Oct 2026 12:37:38 -1000
+Message-ID: <20261017223738.993262-4-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261017223738.993262-1-tj@kernel.org>
 References: <20261017223738.993262-1-tj@kernel.org>
@@ -49,238 +49,116 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_bpf_dsq_reenq() re-enqueues a whole DSQ, but a scheduler that loses the
-cpus serving a DSQ, such as a sub-scheduler after a cap revoke, needs only
-the stranded tasks placed again.
+scan_shared_dsq() rescues a task stranded on SHARED_DSQ or HIGHPRI_DSQ by
+moving it to the rescue path with scx_bpf_dsq_move(). For a task with an odd
+pid, mark it with scx_bpf_dsq_reenq_task() instead, which sends it back
+through qmap_enqueue() and its rescue, so that both kfuncs are exercised.
 
-Add scx_bpf_dsq_reenq_task(), which marks a task from a DSQ iteration. When
-the iteration ends, the DSQ's deferred re-enqueue walk is scheduled once and
-re-enqueues only the marked tasks. The kfunc locks the task's rq and the DSQ
-like scx_bpf_dsq_move() and is callable from the same contexts. The mark is
-cleared when the task leaves the DSQ, so a task consumed before the walk is
-not re-enqueued.
-
-An iteration's DSQ can be destroyed before the iteration ends, so
-schedule_dsq_reenq() now skips a destroyed DSQ instead of aborting the
-scheduler. scx_bpf_dsq_reenq() racing scx_bpf_destroy_dsq() takes the same
-path.
-
-Declare the kfunc for the tools and add a compat probe.
+scan_shared_dsq() runs from qmap_dispatch() and from the monitor timer, so
+the kfunc can be called both with the dispatch rq locked and with no rq lock
+held.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h                |  1 +
- kernel/sched/ext/ext.c                   | 79 +++++++++++++++++++++++-
- kernel/sched/ext/internal.h              |  2 +
- tools/sched_ext/include/scx/common.bpf.h |  1 +
- tools/sched_ext/include/scx/compat.bpf.h |  6 ++
- 5 files changed, 86 insertions(+), 3 deletions(-)
+ tools/sched_ext/scx_qmap.bpf.c | 50 +++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index ae696d11dac9..efd635a99309 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -157,6 +157,7 @@ enum scx_ent_flags {
- /* scx_entity.dsq_flags */
- enum scx_ent_dsq_flags {
- 	SCX_TASK_DSQ_ON_PRIQ	= 1 << 0, /* task is queued on the priority queue of a dsq */
-+	SCX_TASK_DSQ_REENQ	= 1 << 1, /* marked by scx_bpf_dsq_reenq_task() */
- };
- 
- enum scx_dsq_lnode_flags {
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 3e707b00e78b..2d274b54904e 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -555,11 +555,13 @@ enum scx_dsq_iter_flags {
- 	/* iterate in the reverse dispatch order */
- 	SCX_DSQ_ITER_REV		= 1U << 16,
- 
-+	__SCX_DSQ_ITER_HAS_REENQ	= 1U << 29,
- 	__SCX_DSQ_ITER_HAS_SLICE	= 1U << 30,
- 	__SCX_DSQ_ITER_HAS_VTIME	= 1U << 31,
- 
- 	__SCX_DSQ_ITER_USER_FLAGS	= SCX_DSQ_ITER_REV,
- 	__SCX_DSQ_ITER_ALL_FLAGS	= __SCX_DSQ_ITER_USER_FLAGS |
-+					  __SCX_DSQ_ITER_HAS_REENQ |
- 					  __SCX_DSQ_ITER_HAS_SLICE |
- 					  __SCX_DSQ_ITER_HAS_VTIME,
- };
-@@ -1292,7 +1294,9 @@ void schedule_dsq_reenq(struct scx_sched *sch, struct scx_dispatch_q *dsq,
- 			WRITE_ONCE(dru->flags, dru->flags | reenq_flags);
- 		}
- 	} else {
--		scx_error(sch, "DSQ 0x%llx not allowed for reenq", dsq->id);
-+		/* destroyed since the caller resolved it, nothing to reenq */
-+		if (READ_ONCE(dsq->id) != SCX_DSQ_INVALID)
-+			scx_error(sch, "DSQ 0x%llx not allowed for reenq", dsq->id);
- 		return;
- 	}
- 
-@@ -1918,6 +1922,7 @@ void scx_task_unlink_from_dsq(struct task_struct *p, struct scx_dispatch_q *dsq)
- 		RB_CLEAR_NODE(&p->scx.dsq_priq);
- 		p->scx.dsq_flags &= ~SCX_TASK_DSQ_ON_PRIQ;
- 	}
-+	p->scx.dsq_flags &= ~SCX_TASK_DSQ_REENQ;
- 
- 	list_del_init(&p->scx.dsq_list.node);
- 	dsq_dec_nr(dsq, p);
-@@ -5095,7 +5100,9 @@ static void process_deferred_reenq_locals(struct rq *rq)
- static bool user_task_should_reenq(struct task_struct *p, u64 reenq_flags, u32 *reason)
- {
- 	*reason = SCX_TASK_REENQ_KFUNC;
--	return reenq_flags & SCX_REENQ_ANY;
-+	if (reenq_flags & SCX_REENQ_ANY)
-+		return true;
-+	return (reenq_flags & SCX_REENQ_MARKED) && (p->scx.dsq_flags & SCX_TASK_DSQ_REENQ);
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 61143a2d79f8..e8e451be862d 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -651,10 +651,35 @@ static void update_core_sched_head_seq(struct task_struct *p)
+ 		qa.core_sched_head_seqs[idx] = taskc->core_sched_seq;
  }
  
- static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flags)
-@@ -10087,6 +10094,8 @@ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_slice, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_vtime, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move_vtime, KF_RCU)
-+/* also in scx_kfunc_ids_unlocked, same contexts as scx_bpf_dsq_move() */
-+BTF_ID_FLAGS(func, scx_bpf_dsq_reenq_task, KF_RCU)
- #ifdef CONFIG_EXT_SUB_SCHED
- BTF_ID_FLAGS(func, scx_bpf_sub_dispatch, KF_IMPLICIT_ARGS)
- #endif
-@@ -10202,6 +10211,7 @@ BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_slice, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move_set_vtime, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move, KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_dsq_move_vtime, KF_RCU)
-+BTF_ID_FLAGS(func, scx_bpf_dsq_reenq_task, KF_RCU)
- /* also in scx_kfunc_ids_select_cpu: also callable from ops.select_cpu()/ops.enqueue() */
- BTF_ID_FLAGS(func, __scx_bpf_select_cpu_and, KF_IMPLICIT_ARGS | KF_RCU)
- BTF_ID_FLAGS(func, scx_bpf_select_cpu_and, KF_RCU)
-@@ -10610,7 +10620,8 @@ __bpf_kfunc struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *i
-  * bpf_iter_scx_dsq_destroy - Destroy a DSQ iterator
-  * @it: iterator to destroy
-  *
-- * Undo bpf_iter_scx_dsq_new().
-+ * Undo bpf_iter_scx_dsq_new(). If the iteration marked tasks with
-+ * scx_bpf_dsq_reenq_task(), schedule their re-enqueue.
-  */
- __bpf_kfunc void bpf_iter_scx_dsq_destroy(struct bpf_iter_scx_dsq *it)
- {
-@@ -10626,6 +10637,13 @@ __bpf_kfunc void bpf_iter_scx_dsq_destroy(struct bpf_iter_scx_dsq *it)
- 		list_del_init(&kit->cursor.node);
- 		raw_spin_unlock_irqrestore(&kit->dsq->lock, flags);
- 	}
-+
-+	if (kit->cursor.flags & __SCX_DSQ_ITER_HAS_REENQ) {
-+		guard(preempt)();
-+		schedule_dsq_reenq(kit->dsq->sched, kit->dsq, SCX_REENQ_MARKED,
-+				   scx_locked_rq());
-+	}
-+
- 	kit->dsq = NULL;
- }
- 
-@@ -10714,6 +10732,61 @@ __bpf_kfunc void scx_bpf_dsq_reenq(u64 dsq_id, u64 reenq_flags,
- 	schedule_dsq_reenq(sch, dsq, reenq_flags, locked_rq);
- }
- 
-+/**
-+ * scx_bpf_dsq_reenq_task - Re-enqueue a task from a DSQ iteration
-+ * @it__iter: DSQ iterator in progress
-+ * @p: task to re-enqueue
-+ *
-+ * Mark @p, which is on the DSQ iterated by @it__iter and was queued before the
-+ * iteration started, for re-enqueue. When the iteration ends, the DSQ's marked
-+ * tasks go through ops.enqueue() with %SCX_ENQ_REENQ in DSQ order and the other
-+ * tasks on the DSQ keep their positions. A marked task that leaves the DSQ in
-+ * the meantime is not re-enqueued. @p must be on the DSQ's scheduler.
-+ *
-+ * Re-enqueues are performed asynchronously. Can be called from ops.dispatch()
-+ * or any BPF context which doesn't hold a rq lock (e.g. BPF timers or SYSCALL
-+ * programs).
-+ *
-+ * Return %true if @p was marked, %false if @p left the DSQ or was queued after
-+ * the iteration started, or the iterator holds no DSQ.
++/*
++ * Send @p, stranded on the DSQ @it iterates, to the kernel rescue path. To
++ * exercise both kfuncs, move tasks with an even pid there with
++ * scx_bpf_dsq_move() and re-enqueue the others with scx_bpf_dsq_reenq_task(),
++ * which takes them through qmap_enqueue()'s rescue. The choice is per task so
++ * that a marked task isn't moved by another scan before the re-enqueue reaches
++ * it.
 + */
-+__bpf_kfunc bool scx_bpf_dsq_reenq_task(struct bpf_iter_scx_dsq *it__iter,
-+					struct task_struct *p)
++static __always_inline void rescue_stranded(struct bpf_iter_scx_dsq *it,
++					    struct task_struct *p, task_ctx_t *taskc)
 +{
-+	struct bpf_iter_scx_dsq_kern *kit = (void *)it__iter;
-+	struct scx_dispatch_q *dsq = kit->dsq;
-+	struct rq *src_rq, *entry_rq;
-+	unsigned long flags;
-+	bool marked = false;
++	s32 c;
 +
-+	/* NULL after a failed bpf_iter_scx_dsq_new(), see scx_dsq_move() */
-+	if (unlikely(!dsq))
-+		return false;
-+
-+	/* the cursor check needs @p's rq locked */
-+	src_rq = task_rq(p);
-+	entry_rq = kf_switch_rq_lock(src_rq, &flags);
-+
-+	scoped_guard (raw_spinlock, &dsq->lock) {
-+		if (nldsq_cursor_lost_task(&kit->cursor, src_rq, dsq, p))
-+			break;
-+
-+		if (unlikely(!scx_task_on_sched(dsq->sched, p))) {
-+			scx_error(dsq->sched, "scx_bpf_dsq_reenq_task() on %s[%d] but the task belongs to a different scheduler",
-+				  p->comm, p->pid);
-+			break;
-+		}
-+
-+		p->scx.dsq_flags |= SCX_TASK_DSQ_REENQ;
-+		/* the walk is scheduled once, by bpf_iter_scx_dsq_destroy() */
-+		kit->cursor.flags |= __SCX_DSQ_ITER_HAS_REENQ;
-+		marked = true;
++	if (p->pid & 1) {
++		scx_bpf_dsq_reenq_task(it, p);
++		return;
 +	}
 +
-+	kf_restore_rq_lock(src_rq, entry_rq, flags);
-+	return marked;
-+}
-+
- /**
-  * scx_bpf_reenqueue_local___v2 - Re-enqueue tasks on a local DSQ
-  * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index b408993af794..29e69a83d876 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -1946,6 +1946,8 @@ enum scx_reenq_flags {
- 
- 	/* internal: kernel-issued on cap revoke, not accepted from BPF */
- 	SCX_REENQ_CAP_REVOKE	= 1LLU << 1,
-+	/* internal: tasks marked by scx_bpf_dsq_reenq_task() */
-+	SCX_REENQ_MARKED	= 1LLU << 2,
- 
- 	__SCX_REENQ_FILTER_MASK	= 0xffffLLU,
- 
-diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
-index 651bd4952647..9376d5704a47 100644
---- a/tools/sched_ext/include/scx/common.bpf.h
-+++ b/tools/sched_ext/include/scx/common.bpf.h
-@@ -75,6 +75,7 @@ struct task_struct *scx_bpf_dsq_peek(u64 dsq_id) __ksym __weak;
- int bpf_iter_scx_dsq_new(struct bpf_iter_scx_dsq *it, u64 dsq_id, u64 flags) __ksym __weak;
- struct task_struct *bpf_iter_scx_dsq_next(struct bpf_iter_scx_dsq *it) __ksym __weak;
- void bpf_iter_scx_dsq_destroy(struct bpf_iter_scx_dsq *it) __ksym __weak;
-+bool scx_bpf_dsq_reenq_task(struct bpf_iter_scx_dsq *it, struct task_struct *p) __ksym __weak;
- void scx_bpf_exit_bstr(s64 exit_code, char *fmt, unsigned long long *data, u32 data__sz) __ksym __weak;
- void scx_bpf_error_bstr(char *fmt, unsigned long long *data, u32 data_len) __ksym;
- void scx_bpf_dump_bstr(char *fmt, unsigned long long *data, u32 data_len) __ksym __weak;
-diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-index c26024a6e2b1..254882bd8ce6 100644
---- a/tools/sched_ext/include/scx/compat.bpf.h
-+++ b/tools/sched_ext/include/scx/compat.bpf.h
-@@ -498,6 +498,12 @@ static inline bool __COMPAT_has_generic_reenq(void)
- 	return bpf_ksym_exists(scx_bpf_dsq_reenq___compat);
- }
- 
-+/* v7.4: Add scx_bpf_dsq_reenq_task(). */
-+static inline bool __COMPAT_has_dsq_reenq_task(void)
-+{
-+	return bpf_ksym_exists(scx_bpf_dsq_reenq_task);
++	c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
++	if (c >= 0 && c < scx_bpf_nr_cids()) {
++		__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
++		scx_bpf_dsq_move(it, p, SCX_DSQ_LOCAL_ON | c, SCX_ENQ_RESCUE);
++	}
 +}
 +
  /*
-  * v6.19: The new void variant can be called from anywhere while the older v1
-  * variant can only be called from ops.cpu_release(). The double ___ prefixes on
+  * One pass over SHARED_DSQ: rescue stranded tasks and boost highpri ones. A
+  * task whose cids were lost while it was queued in the fifos would strand on
+- * SHARED_DSQ, which is consumed only on self cids it can't run on - move it to
++ * SHARED_DSQ, which is consumed only on self cids it can't run on - send it to
+  * the kernel rescue path. One whose cids were lost after the highpri cull is
+  * likewise rescued out of HIGHPRI_DSQ below.
+  *
+@@ -663,9 +688,9 @@ static void update_core_sched_head_seq(struct task_struct *p)
+  * consuming them first. This makes minor difference only when dsp_batch is
+  * larger than 1.
+  *
+- * scx_bpf_dsq_move[_vtime]() are allowed both from ops.dispatch() and
+- * non-rq-lock holding BPF programs. As demonstration, this function is called
+- * from qmap_dispatch() and monitor_timerfn().
++ * scx_bpf_dsq_move[_vtime]() and scx_bpf_dsq_reenq_task() are allowed both from
++ * ops.dispatch() and non-rq-lock holding BPF programs. As demonstration, this
++ * function is called from qmap_dispatch() and monitor_timerfn().
+  */
+ static bool scan_shared_dsq(bool from_timer)
+ {
+@@ -677,19 +702,13 @@ static bool scan_shared_dsq(bool from_timer)
+ 	bpf_for_each(scx_dsq, p, SHARED_DSQ, 0) {
+ 		static u64 highpri_seq;
+ 		task_ctx_t *taskc;
+-		s32 c;
+ 
+ 		if (!(taskc = lookup_task_ctx(p)))
+ 			return false;
+ 
+ 		/* stranded? rescue - it can't be dispatched here either way */
+ 		if (!cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask)) {
+-			c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
+-			if (c >= 0 && c < scx_bpf_nr_cids()) {
+-				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
+-				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
+-						 SCX_ENQ_RESCUE);
+-			}
++			rescue_stranded(BPF_FOR_EACH_ITER, p, taskc);
+ 			continue;
+ 		}
+ 
+@@ -723,19 +742,12 @@ static bool scan_shared_dsq(bool from_timer)
+ 						      &qa.usable_cids.mask,
+ 						      this_cid + 1);
+ 		if (cid >= nr_cids) {
+-			s32 c;
+-
+ 			/* self cids lack caps in effect yet, leave it queued */
+ 			if (cmask_intersects(&taskc->cpus_allowed, &qa.self_cids.mask))
+ 				continue;
+ 
+ 			/* stranded after the cull - rescue it from here */
+-			c = cmask_next_set_wrap(&taskc->cpus_allowed, 0);
+-			if (c >= 0 && c < nr_cids) {
+-				__sync_fetch_and_add(&qa.nr_rescue_dsp, 1);
+-				scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | c,
+-						 SCX_ENQ_RESCUE);
+-			}
++			rescue_stranded(BPF_FOR_EACH_ITER, p, taskc);
+ 			continue;
+ 		}
+ 
 -- 
 2.56.0
 
