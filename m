@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B216A331EB3;
-	Sun, 18 Oct 2026 01:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB11E223323;
+	Sun, 18 Oct 2026 01:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792288794; cv=none; b=arhhOXCbbw9Km1zoAwjyV9AsUXM06bnrG63wb7hBVfStgqw3qFZMMQV2eFEB5BbcCgpgRQCuA8zyf3A1WuPnpao9Ogpoh/J+uK7ZEW/tegclID9TxnnsO3P29Wd2HRzCyP0hmXo1b7CqlP2JEffvdmPj9COCOpnFLhEQDKFJzcU=
+	t=1792288795; cv=none; b=NubORwRG6hiaFeE0N0ucYn0zmI00j1bUJeKVzcgXo5uJlcnp8XN8tRDXWm+jcG6xdhVp78yIPva27uDleTUu5RYp09DwKHxAfcVJ14OMOKNqAcnAXT0bFtqH0jIQCFiTq7jGofHOJ9UDLMA+6KouZgiJ1pvNAaS02t7lZI43oG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792288794; c=relaxed/simple;
-	bh=8dLOFiA4fzpj8NCDNmK7jyvEfF539jlGvoyLwU+eQ7M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pwuA1P0eRrm66NnY2dO9A0DYniSAhxZ9hvu8hblSCt0N+n9dwu1Ve38x96SqkKnGzjsOM0bGTtd8MmDzyeZiqvedeS58dajgAnzq1LPleIPIisamigM9faC/XcnwKMpjWbrqHja+V9wWzLm9hEUJ+y42upj05XZbI8HSQVtRT3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVa7bC6Z; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792288795; c=relaxed/simple;
+	bh=S8ZnW9b5wBDEvs0B3EbM0diMK7kmoSneeUzBiezaON8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Dt1+X6ke6Yc3fJhEYt7oaVsC1aXEcjqjK9uvqC0pW+qlzPZN95v3Z5tY9Eh8fZIiL57ssrk4fU2JlYmfMNPQyEHcARavnQkQAmuAZGszxamQNaIEenc7sc5vHkJcemXdIJ4iFWKD+YBrlW/LntRRtLGjQ1aR6jfsTK5gHMDS3xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P7lnfIyX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVa7bC6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339201F000C4;
-	Sun, 18 Oct 2026 01:59:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P7lnfIyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AB81F000C5;
+	Sun, 18 Oct 2026 01:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792288793;
-	bh=ZVnHd/z4A0/hNmWxtZfdVw8ktzyrwK44lQJwznTmkqM=;
-	h=From:To:Cc:Subject:Date;
-	b=hVa7bC6Z0vVrMF44rdWtm0od+Ofz1iTEJ/1UkWeFucGQOwRWQdNKCbXPhkjef4okC
-	 5mnpe3YM3LsRJEdfZUYDqwk38skBo0aKYgjEvp5haAgvdKKZGb9JjlVrnKQb1TNNmw
-	 19mu3v69DH6FPPqyZ6NMY2UeSEaOTc7cdPBePk3AX166ucFKq7IJFx/ne+Rt3up6No
-	 On9zeqoc0vTz0UUUE+CmgU4K/mLHyiSkih5TcKLICMi+KQwfURDqQja4J6vI/Dib0p
-	 N60/7aM3iq6zHHOLi+Te2pBWOVQc64xKt0SJKF3egkWwnNKNRdeDOGINKBihyaPAUC
-	 gJt4v/HyNR8Dw==
+	s=k20260515; t=1792288794;
+	bh=2fPesr1PfJP7Wky5pNPj4awxPZ4MH4KIlkjzx82QrEE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=P7lnfIyXwV633MEtYcX/tuQymupZs/0dT6Dw1CqdoaPCeOjljhNBYDqqEy0tnUPLn
+	 AJ+CSwDTPBMOCk4AeW05W+4aNuu+geTc6auYuia3qJvj35M7yWtbafo42SJpHKyNYS
+	 lr8ww9xE0mOo6q4pSBtgVB7Bq4lyITj8nxj9rergQFgLTfg1wFWrTPUHRf81Fu0xl8
+	 yxI/TEnzD9xym5+UeFN9i3RcDi+kTBa/XU1+5gYT+HmVJe46aa1RANEOMpb/vHW38c
+	 A9GLN4XZUBmGLBoO/wkR0eDPXk5iHzK0SrPV+bgup3lnxuXZZ+ci7LuxqmXh5CzGx1
+	 5BgctybaM6CIA==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -34,10 +35,12 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET v3 sched_ext/for-7.4] sched_ext: Report a sub-scheduler's ecaps on attach, detach and cpu hotplug
-Date: Sat, 17 Oct 2026 15:59:46 -1000
-Message-ID: <20261018015952.1499528-1-tj@kernel.org>
+Subject: [PATCH 1/6] sched_ext: Factor out cid_pshard()
+Date: Sat, 17 Oct 2026 15:59:47 -1000
+Message-ID: <20261018015952.1499528-2-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261018015952.1499528-1-tj@kernel.org>
+References: <20261018015952.1499528-1-tj@kernel.org>
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -46,85 +49,81 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+Factor the cid to pshard lookup out of the ecaps sync paths into
+cid_pshard() so that new sync paths can share it. No functional change.
 
-v3 (resched from irq work):
-- Reschedule the cpu for its queued ecaps syncs from hard irq work on that
-  cpu instead of a kick. dispatch_one() processes the syncs only at its
-  start, and a kick that lands while the pick has the rq lock dropped is
-  cleared with the pick (#3, #5, sashiko).
-- Fix the SCX_RQ_ONLINE comments (#4) and why no report mark is pending at a
-  suspend down (#6), and update comments and descriptions.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext/sub.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-v2 (detach and cpu hotplug):
-- Report the caps on detach as well as attach, and deliver regardless of
-  bypass, which drops the replay at unbypass (#3).
-- Drop the sync_pcpu_ecaps() factoring. Add the cid_pshard() factoring and
-  free a sub-scheduler a grace period after discarding its syncs (#1, #2).
-- Deliver only while the root has the cpu online, report the loss when a
-  cpu goes offline, and leave suspend and hibernation out (#4-#6).
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index 1345e4174775..7edad2ddaa54 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -1063,6 +1063,12 @@ static void discard_queued_syncs(struct rq *rq)
+ 		init_llist_node(pos);
+ }
+ 
++/* the pshard holding @sch's caps on @cid */
++static struct scx_pshard *cid_pshard(struct scx_sched *sch, s32 cid)
++{
++	return sch->pshard[rcu_dereference_all(scx_cid_to_shard)[cid]];
++}
++
+ /**
+  * __scx_process_sync_ecaps - Sync this cpu's ecaps to pshard->caps[]
+  * @rq: the cid's cpu rq
+@@ -1079,7 +1085,7 @@ static void discard_queued_syncs(struct rq *rq)
+ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
+ {
+ 	s32 cpu = cpu_of(rq);
+-	s32 cid, shard;
++	s32 cid;
+ 	struct llist_node *batch, *pos, *tmp;
+ 	u64 lost_all = 0;
+ 
+@@ -1101,13 +1107,12 @@ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
+ 
+ 	/* @cid is valid here: the cpu is active with queued syncs */
+ 	cid = __scx_cpu_to_cid(cpu);
+-	shard = rcu_dereference_all(scx_cid_to_shard)[cid];
+ 
+ 	batch = llist_del_all(&rq->scx.ecaps_to_sync);
+ 	llist_for_each_safe(pos, tmp, batch) {
+ 		struct scx_sched_pcpu *pcpu =
+ 			container_of(pos, struct scx_sched_pcpu, ecaps_to_sync_node);
+-		struct scx_pshard *ps = pcpu->sch->pshard[shard];
++		struct scx_pshard *ps = cid_pshard(pcpu->sch, cid);
+ 		u64 old, ecaps, lost, gained;
+ 
+ 		init_llist_node(pos);
+@@ -1229,7 +1234,7 @@ void scx_unbypass_replay_ecaps(struct rq *rq, struct scx_sched *sch)
+ void scx_online_ecaps(struct rq *rq)
+ {
+ 	struct scx_sched *root, *pos;
+-	s32 cid, shard;
++	s32 cid;
+ 
+ 	/*
+ 	 * Only a live hierarchy can have ecaps to reseed. This also keeps the
+@@ -1244,7 +1249,6 @@ void scx_online_ecaps(struct rq *rq)
+ 
+ 	root = scx_root_protected();
+ 	cid = __scx_cpu_to_cid(cpu_of(rq));
+-	shard = rcu_dereference_all(scx_cid_to_shard)[cid];
+ 
+ 	scx_for_each_descendant_pre(pos, root) {
+ 		struct scx_pshard *ps;
+@@ -1253,7 +1257,7 @@ void scx_online_ecaps(struct rq *rq)
+ 		if (!pos->level)
+ 			continue;
+ 
+-		ps = pos->pshard[shard];
++		ps = cid_pshard(pos, cid);
+ 		guard(raw_spinlock)(&ps->lock);
+ 		queue_sync_ecaps(pos, cid);
+ 	}
+-- 
+2.56.0
 
-v2: https://lore.kernel.org/r/20261017164556.4136807-1-tj@kernel.org
-v1: https://lore.kernel.org/r/20261009094356.2852794-1-tj@kernel.org
-
-A sub-scheduler learns which cids it holds through ops.sub_ecaps_updated(),
-but the grants its parent makes when it attaches are reported only after its
-enable bypass is lifted, which is also when its tasks are handed to it. So
-it gets its first ops.enqueue() calls before it has been notified of a
-single cid and has to hold the tasks somewhere until the grants arrive.
-
-The losses aren't reported either. The caps go away on detach and when a cpu
-goes offline without a delivery to the sub-scheduler or its parent. The
-reseed of a cpu coming back can also run their ops before the root's
-ops.cpu_online().
-
-With this patchset, a sub-scheduler's ecaps change only with the deliveries
-that report them. The attach-time caps are reported before bypass lifts, the
-loss on detach before any task goes back to the parent, and a cpu's loss and
-regain around the root's ops.cpu_offline() and ops.cpu_online(). Suspend
-and hibernation are left out: a cpu they take down keeps the caps last
-delivered, and the resume reports only the net change.
-
-Verified with sub-schedulers attaching and detaching with tasks queued and
-caps granted and revoked, through cpu hotplug with the races widened by
-debug patches and grants flooding a cpu as it goes down, on PREEMPT_RT as
-well, and across suspend. The protocol between the reports, the per-cpu
-syncs, cpu hotplug, suspend and the free path was model checked with TLC
-for small cpu counts.
-
-Based on sched_ext/for-7.4 (9c0af54cb49c).
-
-This patchset contains the following 6 patches.
-
- 0001 sched_ext: Factor out cid_pshard()
- 0002 sched_ext: Free a sub-scheduler a grace period after discarding its ecaps syncs
- 0003 sched_ext: Report a sub-scheduler's ecaps on attach and detach
- 0004 sched_ext: Deliver ecaps only while the root has the cpu online
- 0005 sched_ext: Report the ecaps loss when a cpu goes offline
- 0006 sched_ext: Leave suspend and hibernation out of the ecaps reports
-
-The patches are organized as follows:
-
-- 0001-0002 are prep. 0002 stops the free path from relying on a bypassing
-  sched's syncs calling no op.
-
-- 0003 reports the caps on attach and detach.
-
-- 0004-0006 cover cpu hotplug.
-
-The patchset is also available in the following git branch:
-
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git sub-attach-ecaps-v3
-
-diffstat follows. Thanks.
-
- kernel/sched/ext/ext.c         | 157 ++++++++---
- kernel/sched/ext/internal.h    |  71 ++++-
- kernel/sched/ext/sub.c         | 625 +++++++++++++++++++++++++++++++----------
- kernel/sched/ext/sub.h         |  10 +-
- kernel/sched/sched.h           |  17 +-
- tools/sched_ext/scx_qmap.bpf.c |  25 +-
- 6 files changed, 683 insertions(+), 222 deletions(-)
-
---
-tejun
