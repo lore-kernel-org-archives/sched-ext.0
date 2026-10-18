@@ -1,372 +1,199 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011038.outbound.protection.outlook.com [52.101.57.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F663382CD;
-	Sun, 18 Oct 2026 01:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792288801; cv=none; b=b/8NF2pD9F6g28VzJcBjvFpUsdgWV1G0waSCjrbu5ZomOBJgcUrZpXI00TBW9Zwx+Ur5Vq6LA0/NL692vdBqRwZ9JjvG5bN50bZROM/G2NBWONNaT8okvrvSuOHnJ9rhDoDCy+jDwOxcWvPIsGYiSImD5uRT9hSiBFytMXjvklw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792288801; c=relaxed/simple;
-	bh=hcZaOyV/Ocb4fvtYIH98ZGCrunylaxsfYB+xh1eplKo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvKrAFQto3WIlDGqZ9F2ZNq50k8J6Y0tzH1Gbzb/hbthynooGKu+Rh28T72cBqy1ALNtqzNsa0yvwU//By2qwp11nr0hkPDOvW+fFhlGtTp9hur7SwnLYp4n7UYjC5RrbGM2xiRXN79zsU3bd3dlw5WSwxOw52PlLGdNxMflNeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XmLCoZdE; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EAA310784
+	for <sched-ext@lists.linux.dev>; Sun, 18 Oct 2026 06:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.38
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792303668; cv=fail; b=VgeeoNHBFQg7zpQ2ANZunfK07KgHGJVijCygmeWEsdlqo1Q5i8M2SCrKTgg11NcI6Tb+03hN/9iiUcj5j1hUY9O0w7UKE3NtEc2G/k8lAc4U5eNp3fgvsUvM28q+pz4zprubVs27STJOKLndxtKRxFB6waNsYmDz5R2trrXSvlI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792303668; c=relaxed/simple;
+	bh=RDe/aSN+P9VzGBJlWsPQF6JC9fgUikpg0YQAhl6p/eE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Fj8VKQ+MLxohGCM1+jBqlM8V+rytj+hm4umYDuenuF9y+ZOtM03tYOEkVVzbwce7QN7/kP/CxWsC6XMsIo8WPnbQQKCOGYOuRkJF7xDWOz6Iuvf0X70rejq0sHFNy+ls/f2AS5o8IfUxsQaANUybrhb7kgYZv8XImFavFr8LJnM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=AaHVfmlM; arc=fail smtp.client-ip=52.101.57.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XmLCoZdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8289C1F000C5;
-	Sun, 18 Oct 2026 01:59:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792288799;
-	bh=XGKin8HwW0nEzPhFPS/TEnDvISmxa+ed801be4BRrEg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XmLCoZdEdK13fc+d5Vc+Bh2/9q/6JNcoSkIM09/4pmL8Z72rTqUDlYwwKLlmVkqWp
-	 ddFpTPsh3cTdvqaCp6lHjJg0DeEO1VGmqCPRnj+cFKOQsCzA0cVT+2UY3JQYk3Fj1O
-	 Tg70aeY0QtT5EJ97t/J2E2B9zCPoXfzOGs/JB708edzbHUScH3q/hXSj/59ZBOScxK
-	 WC+KwsuKd8i+l21aRC7NdAnxOsEVuj0CEOM7/Z+4GZtZUAmLEKjaESAmRaQmqpLCkg
-	 eJaEfaRJPgooDrHsaN/vbUg/ufNnh+4b/S36axZMD8dEZ7cIOHQ2U28dX22ki5pfJW
-	 gtZ62+tJayIpA==
-From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="AaHVfmlM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=guzZopOPUqHWtJt8YUz/yArR32E69Wc7AvdeFx4v8Fx3tF/YTa1rKu/V4u3kPeYarQM45es7nzA72SRzQ4shvO2+f+EVhECXH3AMXiu7YvDA4JrDvdsmfgg8zglCukxPfeL+hiLERNYsbmvOSq4Azsf9xKN/sDbV//lD4CmYHkIH1o+yofAIFu3l4ac8XzyHuhHl1XxJ+aq/wXj+mD0novCxFQFfHaqHpDlD8kVAys3sQi3S3sSQmXgRH/koxMhAMgj4U4zrA+VEzHEoFWWDL00i+ppnKVJN2Ke2si6LNwv3EY7SaQL2/gdoCmbXixLVWyNBNwqsn4QIcYkbbLLIvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4JAEIu2RRqDm7jtsmnRCq7MKcPy4zNsBLSvfrPIhgmM=;
+ b=wavf0wiAu7jN6N3XsSD76aT/4R4084BaXNRYULTZ8VtR4dOxvY7jbKb707Waqe1uuJvqBPt0ipykYDkIMmo1vh/cDkXqbTcbx3bex807ppV/vrqZKsFELQQqU8OiSpvULeU3RmY+ZqCYjTJ5BceX1JsXiXJVtoF8c60QsFMaf/gvONOA7BcJNYfoqPo/nT/2R5e3O5czdacymLob/sBlDo+E8LbDtlJGjxTK8YPi7K4cqCDB/0muNnRFW7w5UI4h8t5M6KWkEQjEKmI/cC0qawDg7vhNzcpC+0CVCKgEa9EzvHk29aFfx8fb3XGQJxL4eFzlzT43ExBDIaHH//Nitw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4JAEIu2RRqDm7jtsmnRCq7MKcPy4zNsBLSvfrPIhgmM=;
+ b=AaHVfmlMhHXAQiu1PHfxGGDLFU09Y2/9jgpIYlPVRJMCrEWieNN678yFbRGVfi+QLzHSuCGpjh6+Nz5RHZDMMOX3q4DXbuHhXn67wfdd/jhiUDL0X0SxPChtmjDvBPbPJIrqA07GJQ5Z38B5BXfR9qJdnqC4VJojYzNJk3kCo2KFepm25reVpU1oHtdgC+Q3JgsIcekOsRWVhMq0rTeipFdPa+FmK8J4VZeWTglQ1yjvwaAhzyzQF5uON1kRIGchcuqc/vuL6tmtni2sKJfp7oowgbEtnw2AZ6/OIi2FN3a34J+XkqkiIfYOAsNayokDDNeu9baocHDuLW3zX+d6Uw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
+ by PH8PR12MB6844.namprd12.prod.outlook.com (2603:10b6:510:1cb::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.18; Sun, 18 Oct
+ 2026 06:07:43 +0000
+Received: from BL1PR12MB5174.namprd12.prod.outlook.com
+ ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
+ ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0522.017; Sun, 18 Oct 2026
+ 06:07:43 +0000
+Date: Sun, 18 Oct 2026 08:07:33 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6/6] sched_ext: Leave suspend and hibernation out of the ecaps reports
-Date: Sat, 17 Oct 2026 15:59:52 -1000
-Message-ID: <20261018015952.1499528-7-tj@kernel.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261018015952.1499528-1-tj@kernel.org>
-References: <20261018015952.1499528-1-tj@kernel.org>
+	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH sched_ext/for-7.4] sched_ext: Drop the locks periodically
+ while walking a user DSQ for re-enqueue
+Message-ID: <atRiJSZfbaRunnkL@gpd4>
+References: <20261017235840.1446655-1-tj@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261017235840.1446655-1-tj@kernel.org>
+X-ClientProxiedBy: MI3PEPF00004E9F.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:298:1::451) To BL1PR12MB5174.namprd12.prod.outlook.com
+ (2603:10b6:208:31c::19)
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|PH8PR12MB6844:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7047d4e2-d08a-4e07-d520-08df2cde1f52
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|3023799007|18002099003|10067099003|22082099003|261009223027099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	93O0am+buCpBk8Ak5CoYqwU6H7Lw5K7iQD3RQvWQZUS6mL/e6y92LsVMyalvKlfUURMVW84QdTbK28BUXI36KdsUomyZo7FihsOVac08DQA4ioDN5RFN+XxCl147y/3+jZsE4ykBO0e4eebLrtko55Ls1Fw/Mv4m/VUhgR0wa7iqbBDND5adWAEl2yLKGWddrkG53Dfe8jLwGEH+/BA1V9aqoRr3Vq7/5W6ey4MTUp+sHXwrqi6+xdF6WrorsfLKdZzHViLIerpejh1l5MdkGZZKj8bbtKuhdEE84MA95VZJD93L7FbCUy3Jnw7P9eaPwsWJ7yd4UqIWUAnrs70BD1RsfijftiS7su4xFnuyeG5ZZsCxK7ZnJdG1H1qBzdiEJ3jzR4whJkW//62zFUZqQNSYiI5zDeDK7K38AqgP08QRbakB3BORDYMQJyN891uGl+i2xdKdTBEbkmNSc1ckRKTPEYZiR/jWabNemEi1WE/ZVZg1Z+mW6vTMd8kRIDd3VKLCXRv7lB2bkQsCmrdqkqJFsNW4BUekPXyu7XygBY+XaXJIVCKFSHV0kPgwX/5Cj6dYesVaNg8rjWiS1636SXO1PXTC/CqviXRc5Dhv1Mpdn+DbE57j6p09pBPi+MImBVhNdCmVJCfRcRpd/KP28LQHmrTR2TBXKc0zvc5ZT6I=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(3023799007)(18002099003)(10067099003)(22082099003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?r4TryT4UXMAaOUyyl6QImCMaWO/52FHdDDxHOh3oAVo8PvmT0dMFxEBoghQ4?=
+ =?us-ascii?Q?bLkfrkQKD3mRtfFzU0uOlUTlK0Tgg+IcFGwyPB8X2GJ5JQednIDYD/MytxYU?=
+ =?us-ascii?Q?vOffzXUR5HpJsApHHM60cBVP1k4FhCm/7kKKoQhEcm80a2Jav7ogzYZdrpmX?=
+ =?us-ascii?Q?oLUQXgu+sUTTEqwwgG2nxU5M+V/yBD03NcfuOCFSy0G7jK7/qEtnUdnu5m2x?=
+ =?us-ascii?Q?5UY0JdGZG0YBLYNmpepR8CQzuoAOKHMwPMRGX5dZ6aC/DAq3TDC0HxxHH2CM?=
+ =?us-ascii?Q?559u0zzoL7IfXRGhhS8jNEEotDngFeIE2OejT/SwbiVBEAOv2t2yRSVEYyRH?=
+ =?us-ascii?Q?nViAwn+mk8LCmrX9igSHGez0B7/htmyZdiJzVDsYYxtxiOSamSVruAsquuVq?=
+ =?us-ascii?Q?zeWvIRtt0zvCJeL350Db8z7Yx5jWggzZsdDPxXxUINjiLfTSK5z+pojnorRt?=
+ =?us-ascii?Q?PqXb4dceR6W+v8z1RicWSu/4GSsnBNZgbA91tpMGWuStjV/HbU6Aw8nm/8i0?=
+ =?us-ascii?Q?OZTBJ1wysXxtZNkXNMm7azPP5pvgcuQwBWfrAt6nDviOambzXBadHz0VEQig?=
+ =?us-ascii?Q?1yZiL5+LEOr2R0o0ITxlRr2haKTpW6iruz4+cbcsw+vFvWBEEXqahvQmGqat?=
+ =?us-ascii?Q?LsunBHDwHEmKUGXjJRq27kWasY0Bb2hXFpSwNLTfup5fnAvbnvHSDurOZU4N?=
+ =?us-ascii?Q?+r31utirH+7H9eio+GaQAZMQqZjltRtvS8PPK7AC0hX/vySWF69bhlB1ljte?=
+ =?us-ascii?Q?06owogZSfG1YfgvP3sj8ZmQuL0iIgcPrZAQ1/6pX+9SFWNTNPEJqYAdz8h+Z?=
+ =?us-ascii?Q?PxIqPsSRJ0kE7pG24GhSyn/xR3aJsY2F+o6n13L/rtpf0qVUpO5ChUQNZGe9?=
+ =?us-ascii?Q?+lIWLkFc0SOGMJMTMztc7Vd+tRu5MAnkW7Fdi7Zjm7wTl/HDOdSl20LmLn/K?=
+ =?us-ascii?Q?bbgFAndpJHgcqUbkyKQG11KZrTzOMgzXKBUqS1XJTGduOOouBEeLwOXTGm7e?=
+ =?us-ascii?Q?l5mT3dU4FQqgDI5ufa6l+kTeF1GlIeFnZ/Vab1vopMpvA7i/CtayRnVXSSwT?=
+ =?us-ascii?Q?gz/d5jCy0JPlROqoQOi1bzs+BIK0cjC2uFW0cOAUq2J3THPwh06v0RzRm6Dw?=
+ =?us-ascii?Q?dlmhcB/3wZ/J/GoUSkbGrX00MyO1O6VL1owGO3kDrYAVj2eaT958IxRKIS7c?=
+ =?us-ascii?Q?XwX0P/FdMp29BpOTE3uF7Hvwu/WNJEBPgkL/jar9fRKWbBpBpurChGfQXGim?=
+ =?us-ascii?Q?AdAT1nXvmqDW/sYIHWiySwqrBS/Iwc8TADX9thE37u5CzIpxnEkrGZhHlBuE?=
+ =?us-ascii?Q?SvksO6xaO43ynDbKKlvbOOizlm+Y0V2cM2rWfBTSYCsntqUijlo5IcxSb9W+?=
+ =?us-ascii?Q?WzxB2BRogvGxFtFFJf183Jz29KGa+s5O4orFvVq5b/Dt6m8SIi7JdNXCLily?=
+ =?us-ascii?Q?uXG9hCPniVzhmLRi/epVAGQKeem+NOTXp2S+yMacvG2e+eVkCJXjMxhGKZNx?=
+ =?us-ascii?Q?3h2bg2hAvfnQFZhWJd81HrMuYecxKc1P97D3Wc57RhSWmP6Wy/J00cg0Xxdh?=
+ =?us-ascii?Q?Tg46dxcAhxuTuL1gJF+Q/KjiW+4pd0Tgt0DOhUcwjgVUsbLLomHPipH2kEip?=
+ =?us-ascii?Q?E98nRLYtAf69spNrO4w8P1sB+stBV1xyXs+l6XLScc3brfN6M9MfC4rqyHpf?=
+ =?us-ascii?Q?u7XeiFoOLwXya5oXhHtjRhmkO/RQB5CybKlxuIJnWqXUvMDcbRayFurpgvlH?=
+ =?us-ascii?Q?VDaW2sCWxQ=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7047d4e2-d08a-4e07-d520-08df2cde1f52
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2026 06:07:43.4288
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NsC70QRv+q4QoKmVRWdr0psPdNYlvGfOt55acCeL4PLDIYEn4DfKJFEMMCTxhWQk0RTuBRN8tFW4Zjt3ehm69Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6844
 
-Suspend and hibernation take down every non-boot cpu and bring them back. A
-loss and a regain per cpu to every sub-scheduler would be noise. Leave them
-out: a cpu they take down reports no loss and keeps the caps last delivered,
-and the reseed after resume reports only the net change. Their downs are the
-ones with cpuhp_tasks_frozen set between the PM notifications. A kexec jump
-sets the flag too but sends no PM notification.
+On Sat, Oct 17, 2026 at 01:58:40PM -1000, Tejun Heo wrote:
+> reenq_user() drops dsq->lock around each re-enqueue and its rq lock every
+> SCX_TASK_ITER_BATCH re-enqueues. A walk filtered by SCX_REENQ_MARKED skips
+> unmarked tasks without dropping either, so a long run of unmarked tasks is
+> walked in one hold of both locks.
+> 
+> Count the visited tasks instead of the re-enqueued ones and drop both locks
+> every SCX_TASK_ITER_BATCH visits. An unfiltered walk drops the locks as
+> often as before.
+> 
+> Suggested-by: Andrea Righi <arighi@nvidia.com>
+> Link: https://lore.kernel.org/all/atP-LIKpxPhR-Nuc@gpd4/
+> Signed-off-by: Tejun Heo <tj@kernel.org>
 
-Two things need care. A cpu that suspend or hibernation takes down doesn't
-wait for its syncs, and no ecaps_report() mark can be pending on it then.
-The attach report runs while the attaching task waits uninterruptibly, which
-holds off the freezer, and the detach report holds cpus_read_lock().
+Looks good!
 
-The detach report reaches only active cpus, and the loss on a cpu that
-suspend or hibernation took down was never delivered. The detach waits for
-those cpus to come back, so every loss is delivered. They come back before
-the tasks thaw, so the wait doesn't hold up the freezer. If one fails to
-come back, the hierarchy is aborted at the end of the PM cycle.
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 
-v2: Fix why no report mark is pending at a PM down, add a data_race().
+Thanks,
+-Andrea
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext/ext.c      |  15 ++++
- kernel/sched/ext/internal.h |   5 +-
- kernel/sched/ext/sub.c      | 148 ++++++++++++++++++++++++++++++++----
- kernel/sched/ext/sub.h      |   6 ++
- 4 files changed, 160 insertions(+), 14 deletions(-)
-
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index c2df269959e4..4d5bb2d7dd2d 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -4165,6 +4165,7 @@ static void handle_hotplug(struct rq *rq, bool online)
- 	s32 cpu_or_cid = cpu;
- 
- 	atomic_long_inc(&scx_hotplug_seq);
-+	scx_update_frozen_cpus(cpu, online);
- 
- 	/*
- 	 * scx_root updates are protected by cpus_read_lock() and will stay
-@@ -9467,6 +9468,20 @@ static int scx_pm_handler(struct notifier_block *nb, unsigned long event, void *
- {
- 	struct scx_sched *sch;
- 
-+	/* track the PM cycle whether or not a root is loaded */
-+	switch (event) {
-+	case PM_HIBERNATION_PREPARE:
-+	case PM_SUSPEND_PREPARE:
-+	case PM_RESTORE_PREPARE:
-+		scx_sub_pm_begin();
-+		break;
-+	case PM_POST_HIBERNATION:
-+	case PM_POST_SUSPEND:
-+	case PM_POST_RESTORE:
-+		scx_sub_pm_end();
-+		break;
-+	}
-+
- 	guard(rcu)();
- 
- 	sch = rcu_dereference(scx_root);
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 619c08700064..26df9da3a4d2 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -934,7 +934,10 @@ struct sched_ext_ops {
- 	 * Deliveries for a cid happen only while the root considers the cid's
- 	 * cpu online, never before the root's ops.cpu_online() or after its
- 	 * ops.cpu_offline() for the cpu. A cpu going offline reports the loss
--	 * of every cap on it, and a cpu coming back reports the regain.
-+	 * of every cap on it, and a cpu coming back reports the regain. A cpu
-+	 * that suspend or hibernation takes down reports no loss and keeps its
-+	 * caps while down. Only its net change, if any, is reported once it is
-+	 * back.
- 	 */
- 	void (*sub_ecaps_updated)(s32 cid, u64 before, u64 after);
- 
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index d88a436f8963..f7f33fd0c5e9 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -56,6 +56,19 @@ static struct rcuwait ecaps_report_wait = __RCUWAIT_INITIALIZER(ecaps_report_wai
- /* a cpu going down waits here for its marked syncs, see scx_offline_ecaps() */
- static DECLARE_WAIT_QUEUE_HEAD(ecaps_offline_waitq);
- 
-+/*
-+ * The cpus that suspend or hibernation took down and that haven't come back.
-+ * Their losses are not delivered, see scx_offline_ecaps(). Hotplug updates the
-+ * set under cpus_write_lock(), and scx_sub_pm_end() clears it under
-+ * cpus_read_lock(). A cpu that fails to come back stays in the set until
-+ * regular hotplug brings it back or the PM cycle ends.
-+ */
-+static struct cpumask scx_frozen_cpus;
-+static DECLARE_WAIT_QUEUE_HEAD(scx_frozen_cpus_waitq);
-+
-+/* between the PREPARE and POST notifications of a PM cycle */
-+static bool scx_pm_in_progress;
-+
- /**
-  * scx_skip_subtree_pre - Skip @pos's subtree in a pre-order walk
-  * @pos: current position
-@@ -1130,6 +1143,17 @@ static void ecaps_offline_done(struct rq *rq, struct scx_sched_pcpu *pcpu)
- 		irq_work_queue(&ecaps_offline_irq_work);
- }
- 
-+/*
-+ * Test whether the hotplug operation in progress is suspend or hibernation
-+ * taking a cpu down or bringing it back. A kexec jump also sets
-+ * cpuhp_tasks_frozen but sends no PM notification, so outside a PM cycle its
-+ * cpu downs deliver their losses as in regular hotplug.
-+ */
-+static bool scx_pm_frozen(void)
-+{
-+	return cpuhp_tasks_frozen && READ_ONCE(scx_pm_in_progress);
-+}
-+
- /**
-  * __scx_process_sync_ecaps - Sync this cpu's ecaps to pshard->caps[]
-  * @rq: the cid's cpu rq
-@@ -1185,6 +1209,8 @@ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 		 * An inactive cpu that can deliver is going down and reads as
- 		 * capless. A delivery below can drop the rq lock and the cpu's
- 		 * active state can change between syncs, so test it per sync.
-+		 * Suspend and hibernation don't deliver the loss of a cpu they
-+		 * take down, see scx_offline_ecaps().
- 		 *
- 		 * A sync that can't deliver leaves the ecaps alone. It may
- 		 * still carry a mark that is cleared below. Don't skip the rest
-@@ -1196,6 +1222,8 @@ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 			ecaps = old;
- 		else if (cpu_active(cpu))
- 			ecaps = calc_effective_caps(ps, cid);
-+		else if (scx_pm_frozen())
-+			ecaps = old;
- 		else
- 			ecaps = 0;
- 		WRITE_ONCE(pcpu->ecaps, ecaps);
-@@ -1270,6 +1298,64 @@ void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev)
- 		scx_schedule_reenq_local(rq, SCX_REENQ_CAP_REVOKE);
- }
- 
-+void scx_sub_pm_begin(void)
-+{
-+	WRITE_ONCE(scx_pm_in_progress, true);
-+}
-+
-+/*
-+ * Called on every cpu down and up whether or not a root is loaded, so that the
-+ * set stays exact when a root is enabled or disabled during a PM cycle. A cpu
-+ * that failed to come back from suspend or hibernation can come back through
-+ * regular hotplug before the PM cycle ends, e.g. through the SMT control. The
-+ * reseed at its activation reports the net change, so any up removes the cpu
-+ * from the set.
-+ */
-+void scx_update_frozen_cpus(s32 cpu, bool online)
-+{
-+	if (online) {
-+		if (!cpumask_test_cpu(cpu, &scx_frozen_cpus))
-+			return;
-+		__cpumask_clear_cpu(cpu, &scx_frozen_cpus);
-+		if (cpumask_empty(&scx_frozen_cpus))
-+			wake_up_all(&scx_frozen_cpus_waitq);
-+	} else if (scx_pm_frozen()) {
-+		__cpumask_set_cpu(cpu, &scx_frozen_cpus);
-+	}
-+}
-+
-+/*
-+ * The PM cycle is over. A cpu still in the set failed to come back, and its
-+ * loss can't be delivered anymore. That breaks the guarantee that every ecaps
-+ * change reaches the sub-scheds and their parents, so abort every sched. A root
-+ * without sub-scheds is owed no reports and keeps running.
-+ *
-+ * Abort before clearing the set and waking the detaches in scx_sub_disable(),
-+ * so that a parent whose ops.sub_detach() runs with that loss unreported is
-+ * already being disabled, which ops.sub_detach() allows for. No exit cpu is
-+ * recorded, as the cpu running this isn't the one that failed.
-+ */
-+void scx_sub_pm_end(void)
-+{
-+	/* hotplug updates the set under cpus_write_lock() */
-+	guard(cpus_read_lock)();
-+
-+	if (unlikely(!cpumask_empty(&scx_frozen_cpus)) && scx_has_subs()) {
-+		struct scx_sched *root;
-+
-+		guard(rcu)();
-+		root = rcu_dereference(scx_root);
-+		if (root)
-+			__scx_exit(root, SCX_EXIT_ERROR, 0, -1,
-+				   "%u cpu(s) failed to come back after suspend or hibernation",
-+				   cpumask_weight(&scx_frozen_cpus));
-+	}
-+
-+	WRITE_ONCE(scx_pm_in_progress, false);
-+	cpumask_clear(&scx_frozen_cpus);
-+	wake_up_all(&scx_frozen_cpus_waitq);
-+}
-+
- /*
-  * Called with cpus_read_lock() held before the root is published. The cpus
-  * active now are online to the root without ops.cpu_online(), so they can
-@@ -1362,6 +1448,11 @@ void scx_online_ecaps(struct rq *rq)
-  * resched_sync_ecaps(). Only the marked syncs count, so a flood of changes on
-  * the cid can't hold up the hotplug. After the wait, every sub-sched's ecaps on
-  * the cpu are zero, and the later syncs have nothing to deliver.
-+ *
-+ * The loss on a cpu that suspend or hibernation takes down is not delivered, so
-+ * that the scheds don't see a PM cycle as cpus leaving and coming back. The cpu
-+ * keeps the caps last delivered until it comes back, and the reseed then
-+ * reports the net change.
-  */
- void scx_offline_ecaps(struct rq *rq)
- {
-@@ -1376,7 +1467,7 @@ void scx_offline_ecaps(struct rq *rq)
- 	 * processed and the wait would never end. scx_enabled() can't change
- 	 * during hotplug.
- 	 */
--	if (scx_enabled()) {
-+	if (scx_enabled() && !scx_pm_frozen()) {
- 		scoped_guard (rq_lock_irqsave, rq) {
- 			root = scx_root_protected();
- 			cid = __scx_cpu_to_cid(cpu);
-@@ -1809,11 +1900,16 @@ static void ecaps_enable(struct scx_sched *sch)
-  * through the dispatch path and wait for it. An inactive cpu is skipped. It may
-  * already be offline, where the mark would never be processed and the wait
-  * would never end. On attach, the reseed at its activation reports its caps. On
-- * detach, its loss was reported as it went down.
-+ * detach, its loss was reported as it went down. A cpu that suspend or
-+ * hibernation took down is back by then, or the hierarchy is aborting, see
-+ * scx_sub_disable().
-  *
-- * If a marked cpu goes down meanwhile, it clears the mark while still online,
-- * as ecaps_report_irq_work would never run on an offline cpu. A cpu going down
-- * waits for the marked sync in scx_offline_ecaps().
-+ * If a marked cpu goes down meanwhile, a regular down waits for the marked sync
-+ * in scx_offline_ecaps() while the cpu is still online, as
-+ * ecaps_report_irq_work would never run on an offline cpu. Suspend and
-+ * hibernation don't wait, but no report runs across their downs. The attach
-+ * report runs while the attaching task waits uninterruptibly, which holds off
-+ * the freezer, and the detach report holds cpus_read_lock().
-  *
-  * Called with scx_enable_mutex held. A sched's attach and detach reports must
-  * not overlap, as the mark is one bit per pcpu.
-@@ -1881,15 +1977,41 @@ void scx_sub_disable(struct scx_sched *sch)
- 	 * skips has finished going down. Its loss was reported as it went down,
- 	 * see scx_offline_ecaps().
- 	 *
--	 * An enable that failed before its attach report has nothing to report.
--	 * If it failed before scx_link_sched(), the root's disable doesn't wait
--	 * for it and may have retired the cid tables that the report reads.
-+	 * The loss on a cpu that suspend or hibernation took down is not
-+	 * delivered. Wait for such cpus to come back so that the report reaches
-+	 * them. They go down only after the freezer has frozen the tasks and
-+	 * come back before the tasks thaw, so the wait doesn't hold up the
-+	 * freezer. If one fails to come back, the wait can last until the PM
-+	 * cycle ends, and scx_sub_pm_end() aborts every sched first.
-+	 *
-+	 * The check and the report run in one cpus_read_lock() section so that
-+	 * no cpu goes down for PM between them. scx_sub_pm_end() can still
-+	 * clear the set meanwhile, which is fine, as it aborts every sched
-+	 * first. The report also needs scx_enable_mutex, see ecaps_report(). A
-+	 * cpu coming back takes cpus_write_lock(), so the wait drops
-+	 * cpus_read_lock(). It drops scx_enable_mutex too so that other enables
-+	 * and disables don't wait behind the PM cycle, and retakes both in
-+	 * order.
-+	 *
-+	 * An enable that failed before its attach report has nothing to report
-+	 * and doesn't wait. If it failed before scx_link_sched(), the root's
-+	 * disable doesn't wait for it and may have retired the cid tables that
-+	 * the report reads.
- 	 */
--	scoped_guard(cpus_read_lock) {
--		clear_all_caps(sch);
--		if (sch->ecaps_enabled)
--			ecaps_report(sch);
--	}
-+	cpus_read_lock();
-+	while (sch->ecaps_enabled && !data_race(cpumask_empty(&scx_frozen_cpus))) {
-+		cpus_read_unlock();
-+		mutex_unlock(&scx_enable_mutex);
-+		/* lockless hint, the loop retests */
-+		wait_event_idle(scx_frozen_cpus_waitq,
-+				data_race(cpumask_empty(&scx_frozen_cpus)));
-+		mutex_lock(&scx_enable_mutex);
-+		cpus_read_lock();
-+	}
-+	clear_all_caps(sch);
-+	if (sch->ecaps_enabled)
-+		ecaps_report(sch);
-+	cpus_read_unlock();
- 
- 	percpu_down_write(&scx_fork_rwsem);
- 	scx_cgroup_lock();
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index 46c7e2a578d1..eb1dba6d51e2 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -32,6 +32,9 @@ void scx_free_pshards(struct scx_sched *sch);
- s32 scx_alloc_pshards(struct scx_sched *sch);
- void scx_init_root_caps(struct scx_sched *sch);
- void __scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev);
-+void scx_sub_pm_begin(void);
-+void scx_update_frozen_cpus(s32 cpu, bool online);
-+void scx_sub_pm_end(void);
- void scx_init_rq_ops_online(void);
- void scx_online_ecaps(struct rq *rq);
- void scx_offline_ecaps(struct rq *rq);
-@@ -110,6 +113,9 @@ static inline void scx_free_pshards(struct scx_sched *sch) {}
- static inline s32 scx_alloc_pshards(struct scx_sched *sch) { return 0; }
- static inline void scx_init_root_caps(struct scx_sched *sch) {}
- static inline void scx_process_sync_ecaps(struct rq *rq, struct task_struct *prev) {}
-+static inline void scx_sub_pm_begin(void) {}
-+static inline void scx_update_frozen_cpus(s32 cpu, bool online) {}
-+static inline void scx_sub_pm_end(void) {}
- static inline void scx_init_rq_ops_online(void) {}
- static inline void scx_online_ecaps(struct rq *rq) {}
- static inline void scx_offline_ecaps(struct rq *rq) {}
--- 
-2.56.0
-
+> ---
+>  kernel/sched/ext/ext.c | 24 ++++++++++++++++--------
+>  1 file changed, 16 insertions(+), 8 deletions(-)
+> 
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 14fe63428036..07857039aee6 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -5111,7 +5111,7 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
+>  	struct scx_sched *sch = dsq->sched;
+>  	struct scx_dsq_list_node cursor = INIT_DSQ_LIST_CURSOR(cursor, dsq, 0);
+>  	struct task_struct *p;
+> -	s32 nr_enqueued = 0;
+> +	s32 nr_visited = 0;
+>  
+>  	lockdep_assert_rq_held(rq);
+>  
+> @@ -5121,6 +5121,21 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
+>  		struct rq *task_rq;
+>  		u32 reason;
+>  
+> +		/*
+> +		 * Count skipped tasks too so that a long walk doesn't hold the
+> +		 * locks throughout. The cursor keeps the position.
+> +		 */
+> +		if (!(++nr_visited % SCX_TASK_ITER_BATCH)) {
+> +			raw_spin_unlock(&dsq->lock);
+> +			if (locked_rq) {
+> +				scx_rq_lock_drop(locked_rq);
+> +				raw_spin_rq_unlock(locked_rq);
+> +				locked_rq = NULL;
+> +			}
+> +			cpu_relax();
+> +			raw_spin_lock(&dsq->lock);
+> +		}
+> +
+>  		p = nldsq_cursor_next_task(&cursor, dsq);
+>  		if (!p)
+>  			break;
+> @@ -5157,13 +5172,6 @@ static void reenq_user(struct rq *rq, struct scx_dispatch_q *dsq, u64 reenq_flag
+>  
+>  		scx_do_enqueue_task(task_rq, p, SCX_ENQ_REENQ, -1);
+>  
+> -		if (!(++nr_enqueued % SCX_TASK_ITER_BATCH)) {
+> -			scx_rq_lock_drop(locked_rq);
+> -			raw_spin_rq_unlock(locked_rq);
+> -			locked_rq = NULL;
+> -			cpu_relax();
+> -		}
+> -
+>  		raw_spin_lock(&dsq->lock);
+>  	}
+>  
+> -- 
+> 2.56.0
+> 
