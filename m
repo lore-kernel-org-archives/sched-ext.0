@@ -1,177 +1,197 @@
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010033.outbound.protection.outlook.com [52.101.201.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com [209.85.128.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373F441E6B9
-	for <sched-ext@lists.linux.dev>; Sun, 18 Oct 2026 09:19:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792315198; cv=fail; b=puKkeVw2nlvBeRRVwuw8RH4dCcbxATbZlGtOKo0DVFRkEt2ry3/CmOED5rpSzPRLsPo6p1LVNlj1qO6iSivasz5OlpI/Ytb1EFt5JjRDiGZk985/mgmUhh7fv+HiNQShAD/vNfDom1LFndLRkYFlh5cWOD+onHyky5jfW52ATe8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792315198; c=relaxed/simple;
-	bh=I3nfEHrllnFZ9XHdR0BQ/0uZ2AIgZOOBHJCKY5LkTFg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=n81cpXZi2hUSNVmiSKEYFXb5lcbu/7LfIHkY7rMbs/9E7HQSTvvAJKeqw5lcnrtyMAaFx4c7taJL8l+aF6uKOIb9jQu0yOpvNkT6GdNAJQrI5AdIS8hb+ZwkBzRotoU9gzG3aKTDVKhU3GLDg7zbXvpWlPu4yZu06dUw3xTTTSo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mZhcw4pN; arc=fail smtp.client-ip=52.101.201.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB8F490BFE
+	for <sched-ext@lists.linux.dev>; Sun, 18 Oct 2026 12:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.70
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792325703; cv=none; b=EsJPZ4bgowQn+5Vor/qbeZnQhgjEMbb6ogrB4GZy4mzUYhaevQ9E21EiwMOjLB3k5SSU8MvfTfY7MSqb9Sfx6fDuQfaI7hWOMPc6mvPcXmEQDMwCHYn9r2z/NVr37jp5+42fpAQ/7gJD0bMuuCXUvDjYb9zg9tyhgbPSDIzYOXU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792325703; c=relaxed/simple;
+	bh=UxjNk5uYSfx/E2gN0ht+iOoT2oc1pgXeBDd9V0fyIt0=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=OnH1qsm5d1obqpcqJhCcD7KnzD9XoiQBtgrj/QV6mSDIR56mySblNhz/6PZ2z3BwmHmHHU5HmAU5tlFUPY3QkbYqFOwNGYIDHlPjgFRwczQyNxS6Mv4SbXgwHCLzLcS6cPZvcNqK34ImzrG1c093hUNng6AmJ3iFfin4E4w8jCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=dDBlhB5f; arc=none smtp.client-ip=209.85.128.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mZhcw4pN"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NJ6NEKhPSNBv8AlKd5NyxCeUD9m9D37lkqHcfBTUJUFTwUZW14aoHVZFY6IJS1CK6viXMkDsVLspm1a50/Ex3Ozl2IThnvUa+qbO+FFs+sbklV9oQgAhlcA+BnCwI/djUxcD9IG09I2Q1r/tw/UTMQkjMuGKOTACWcK+UGxdE01ig+xFI2pgg3+RCtltGeffG9iZY1s18zVZnwdCuF6xStjmAzV3yGWZTbG8OGWCy90oslpA+rh2IrEA7dSt7ALoiSsrM1YzSRRsmPgOkfbS6Fg9vNg50Y6zTEJiZ83Fx0tT9t3BJZiRcr2S3p1SoJWddRYnyTvIFvGB39H54SDh2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nmvcQJCKW/4yCVKyL2MVbITkfgcrIyk2P16k7wkqSYc=;
- b=X5LIPYGySQMyswaL1dpjkDnla0qVlAD3RHwnGc6mscqbJpJhsZB2ZHzpYSh/MSjo/P7NAhojIri0DW9IgczTGXufOAXMNSFxoXJRqvVwaIrfT7ptUIvIIN/E77auy74kXJJPGG+xgK7IMfYlq+zCpdrMq5IYZ9pkybfnC9aqcpSKgFvFiQ3w8G8pNB0KbiR7oS6B/afPYdgW2WgNACqFHrVniYmFEfmdr1UDXhSx3T8bSRvO6E6pl7mblLhulGLv1XgSNVtRwjrnIjo0ASMJt0FXIWc+i2WOr2Ruapi/gjltY3jE9NreV9n8onvYdK6OLfV36Hms6Xq+Vn6lVyWvZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nmvcQJCKW/4yCVKyL2MVbITkfgcrIyk2P16k7wkqSYc=;
- b=mZhcw4pNrzex//geGPvIlgBnRCwsg0tLhQq1ODKFsNWj7KL1NVdogfaWdrS74k1WwZMBsFbzc0h8D3iOAsZFMp+Q0bdro3ONatXH0biltUceXEHFfwMDT91d0lxCsuFWPudLMer86Z6Xnw1GRIhzePxDuUfg4hxxACxRDjTJTp7aQLZkniVIbIqVifMOAAgaRSJmKD5jEBXYBz6oOCN+2ZDF4ICzIjRsa3YnVHWbXIDfnhQCKlRZDfi5FhS6fiLnP0hkcGwuEx6tqc514wDGvLjmkDyMfynoqJ5eHJtHfq7k8NrvA48u7uf3qfvTIt+CgsNH6qgr3HBBJdOr5FcJQw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by LV3PR12MB9353.namprd12.prod.outlook.com (2603:10b6:408:21b::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Sun, 18 Oct
- 2026 09:19:54 +0000
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0522.017; Sun, 18 Oct 2026
- 09:19:54 +0000
-Date: Sun, 18 Oct 2026 11:19:46 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET v3 sched_ext/for-7.4] sched_ext: Report a
- sub-scheduler's ecaps on attach, detach and cpu hotplug
-Message-ID: <atSPMmtaEVJCfZxP@gpd4>
-References: <20261018015952.1499528-1-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261018015952.1499528-1-tj@kernel.org>
-X-ClientProxiedBy: MI1PEPF00000AD4.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::4b1) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dDBlhB5f"
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4a1cf5e7012so10221015e9.2
+        for <sched-ext@lists.linux.dev>; Sun, 18 Oct 2026 05:15:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1792325700; x=1792930500; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=OyLJ1fPr/NVzbEHVO60EnzIzzO/ppvi8bngayEfvgMs=;
+        b=dDBlhB5fnoDhTKxdAKTEsTlL3rRbqjeBdhxM6y9BKRhWxfT4Y3rS3zz8BT27oATRCm
+         lGagGFX1RSWqHCUmQNilKdV7Ln6laNa3hlnsZvwvIulAZ8/a+zqxqv8Wn8TvDLH3EpeV
+         9PCKBc6ON+ZdMp+ypwcqvLultf9S9AOxo4IIBLlbzdU2X2CaifTky8L/ziXjZ+/1IUzx
+         XJu1np/HGe/MVS+ceA2+kiUpWfqxPEIIaGM3Fy8KcjnFE3fR7Pwtap12DKXd9BJUEMJM
+         E1szRWMLaIuJfYFJWNG3d540tjRdRw8LhE+20GT262H2zAzxCUL1TUHdCPCd9XFbDHNF
+         oBZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792325700; x=1792930500;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OyLJ1fPr/NVzbEHVO60EnzIzzO/ppvi8bngayEfvgMs=;
+        b=o1mIjLecBNd9OoAdTTbU6BxrHuCHgobxyTdN414h7oniTqYnQRMRmjC7ulkrmSgnYd
+         0GU3Jz24qVxhZjE90MigOZ60sf0TaumwIT3GmtTYh43UyXb0gOl9VGFjyEuQybGNMAtG
+         IFmsHQbVzzqUhT6WMMkPj1t0m07NqdPjTYQoOgK04EiZyP5zzcnl290j20HseppQndc+
+         i2KZqDe2quNopwRBZEHapZK2MAzgeLp3YNQhDMWfDOjHXzbenbP1S+xFtMdRPyGRtbxZ
+         Bt8KM6bWXvL0ejD1fx6ZQivvW1PKZyagJ+ooR3pgmpncJ6dtQb6dqx0k6/bOiiX5q5ZG
+         vqFQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwI7hPSKJ6VlxtZ3Iz49yXNsXL/shWMuxaeAw0/6ZnE+D7fbFYITrqJ08QppMy+d9T+NGfpxM/np+s=@lists.linux.dev
+X-Gm-Message-State: AFq9FYLx1U1Mtb/pJm8F+yysgZz3DXZvVl+y69rjJWeV/KHlo5u877+K
+	bHtrRjJacKGitjaGKVX/8LadTt0UapxvbuUxMWTwMS1wDsvSqv/m1zuSYwio8UCDKoEdpWVOVPX
+	LKysJRzf3xBxaNw==
+X-Received: from wmbdn26.prod.google.com ([2002:a05:600c:655a:b0:4a1:aef5:769c])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:3ba6:b0:4a1:cef3:622e with SMTP id 5b1f17b1804b1-4a1d75e6f17mr121936875e9.6.1792325699781;
+ Sun, 18 Oct 2026 05:14:59 -0700 (PDT)
+Date: Sun, 18 Oct 2026 12:14:44 +0000
 Precedence: bulk
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|LV3PR12MB9353:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4c965be-3b63-4d1c-4fb0-08df2cf8f86a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|3023799007|56012099006|10067099003|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	Kr0sFN/Dce1l5d/5m/bSjNsktih6w4VW6Ti4DVOWcKVOjdwHvhnYOOfe/nGTm4xuy1k+bUTxb50Ld65A6aygeuxnj9+2qSu9rNiH7ZyLvHsCl9b57DpVSlefx9dHBB/Uu2LEflwYkEBTKkr8dqOff3g9osFc4MS1W+WHO+4GeSrHQf29W68BnOciY1Cm4ZCvfwlj/LFtxPQZJXcJ61fIBBesJzmv5h98c566IM718OSypAkSI7+He+0d/M6LXc8dT2SEIOf27agEwcM8HGjn10vS4SuTRJ+vCdHePaXFPeizLrpAuf7KFXIgcjAt8lZYONYKBcRDznmN8ln2DVjXv+AsTQXZUeO7UbImqhHVg0bLXnzgXaSmB7lqTEO7bx1ZGRu5bmaQ+O49igEVSe7nCjFziAn3aIenCzZDS9hR2y2lXH80mc9df5yVz/u6+Vyt7VkADLpEOPJHQx6Je+P9ZLyIqNXH11WpfDrqwCzEeLYCkKwfzcCckXZk8vyePcMVZiFo/2zu2rrVCZecO2qw57gzyTxM/BC+KMWdAa9RaSwpS+AcEGmLD8Txp1cjYJqEl6PCPfmB+o4GcOpqYaFfqEIWP2skYXWqH14A1uPiJ7SGpprVfKORV2lzTRYAXpjWKOX9vspjJlculddiFHddbWPnmqShW0ackgGodUJn7ho=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(3023799007)(56012099006)(10067099003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?XDT+xaed5rXjLZ3X4ZnVBwQDjd6J25xR6m0fuUYHLG0fBt+2Vc/Ztg2YrIa9?=
- =?us-ascii?Q?A7L6Am6YfAkXixENxBNyChWlmx0y+g6zeEESFKCZWDsb5XtA9x3QcD3/0xwi?=
- =?us-ascii?Q?yCSa3JxlpojR3LiVtQRGlf359pmzhzfd2X/aXF7kNXDWQvWTsQTEfeWGrYnk?=
- =?us-ascii?Q?C8sDWU/dlqH8WaC0URlF8iRVt+kYQzRLndoUk6yuQluv9E/xmeC1goFDwqYC?=
- =?us-ascii?Q?0Ja6zbR/oXlUataGWs5HpoVBOZpTDE0VGUpgoecgVyJLzpn3oZ5WsB6IUQ0y?=
- =?us-ascii?Q?YTqltY1mGxhd5lI5LinBJW9hsW+GmPzrOFy0C8I33CyVBhwujVnqWXuDeim3?=
- =?us-ascii?Q?Smr/4slYoH/kycKEA0+UfvvJPld3SpT75/lQFsGOrNw2OF6gAU8le0gxgITe?=
- =?us-ascii?Q?VAU9F2D5yJcpAO5ISYOfM+UU9mCnA0jUIBnS08iWmBecIOFU+MWE6x+fqWVE?=
- =?us-ascii?Q?n/7RKU8QaUc2ePyPBWCDBp7o9oAgWk+na3xGmqPHSPXtKylXFhWhOiOAW3fv?=
- =?us-ascii?Q?36UX5q5LhmeJeK8ZP9R5Qt4FZ4z1rMtXJVwM4kEFgeimrQxsGnTdfV3VzO8a?=
- =?us-ascii?Q?zYYJcFCtM/LWV8Tv4POSL4EiGjLUWHz2vqHJg5UotOr2lZgushpdmOUC5Obt?=
- =?us-ascii?Q?2jxEMwAVODnPQEHx8dI4XRrZZj1WQb32mdxZpCMLiVGlcoMMBuImZW/7lCz8?=
- =?us-ascii?Q?BywINKOTehPyerZIVxRBc0EU9VzVzlhBAOswRdIGdxUoHC80VKDXeVMtK/fS?=
- =?us-ascii?Q?Amuszcj4bHLRMUJhQikBbE4O42M2p0fz46jHfQ7w1xj7INLafSn2fuJAD8C4?=
- =?us-ascii?Q?ArW+0QPPlwsCb+KGVd9TAxeQT4O6MmG8ikEPQiVej8+vLTg2ji3N531KurGT?=
- =?us-ascii?Q?RsqvWQjoAGnmTRVgOLdYbsYEKELUihbs7mf2ZwhRotc3VavJDY8L3FIlOQnv?=
- =?us-ascii?Q?2Yyyft7DPbGoqG/Qyx779AFfjk5h5YXb6HtCxf14Sf1/tYVQ0FheRiMcYyCo?=
- =?us-ascii?Q?Or+8lj9uUopwQYibYqJbhP+g5M8HVH04ksf4+nDgPWgsE4sLUhK901ljsVcN?=
- =?us-ascii?Q?OIs73bmn3GUh3qv3FB6xGQa/iHrvIoZMQiMZSvORDIDmZJpjmIx/YeJP0HvF?=
- =?us-ascii?Q?QagqhIu+1SppBOoGND/T8WFQAoFdHSxc+TGx3TG6iA4kegBxuo4KlXUOe+IC?=
- =?us-ascii?Q?993rog5GQcdQJ8w/FKkrTI7+EseUEg6oB+iUY7dUcqym8NjqTGv/+QAjfXhz?=
- =?us-ascii?Q?r59pTvIJJPe8r40aHjtdMfu1II2LIOVecAIJwKx6ADlFfZc3qN62BbqziHrB?=
- =?us-ascii?Q?Zv7AAmxdYfxHHbxP7A9OpgOnAkvAFFOiG999vC8aiaVOQL7Xgx0x5q/HOkOS?=
- =?us-ascii?Q?J+1bkjKs1k8nqXdyxts+4ZSUADnF3his6gVmTNKVCKQT0VMVvW2ZDUWwEVuz?=
- =?us-ascii?Q?LPTtc813zZG95O6dib3d/ub3acuxZcqbJZbQgJ6FIqly3aUs2RVhyczXPzr8?=
- =?us-ascii?Q?QlqZy6vkUk6g7dzbjUqg/gWcBm4Cx0wGsndrN/gaIZnKH0mMXepisa8fTODt?=
- =?us-ascii?Q?b5ynDb8dGMvsxXQQruBIWbfYAQ1a1Mc2Yg63YHMeZ6iSWZE6fF8Z9+G4v2e7?=
- =?us-ascii?Q?nIBK6qyXvsG+Yc7lODmAhQQm4HlmH42rQzbrZgLn6RL5jtSV/Rw/LucD6/9s?=
- =?us-ascii?Q?EJRiLl0RJ54E6G0luPIzSF376vmkxpKHX1wuvo+sOOlONu/vaZ0yXMtxvOza?=
- =?us-ascii?Q?5/JUg7AvRA=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4c965be-3b63-4d1c-4fb0-08df2cf8f86a
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Oct 2026 09:19:54.2002
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iUKhb0HW0zcTOX+5LL2Ykir2x2KZne0C4qhfWI3Feqidem4JyzfLWIhNVDyRqgLTgwRJUeNPimtGeFxT3No4jA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9353
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.0.176.g3575e65682-goog
+Message-ID: <cover.1792248922.git.jpiecuch@google.com>
+Subject: [RFC PATCH sched_ext/for-7.4 0/5] sched_ext: Make ops.cpu_acquire/release()
+ reliable
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
+	Changwoo Min <changwoo@igalia.com>
+Cc: Kuba Piecuch <jpiecuch@google.com>, Peter Zijlstra <peterz@infradead.org>, sched-ext@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Tejun,
+Hello,
 
-On Sat, Oct 17, 2026 at 03:59:46PM -1000, Tejun Heo wrote:
-> Hello,
-> 
-> v3 (resched from irq work):
-> - Reschedule the cpu for its queued ecaps syncs from hard irq work on that
->   cpu instead of a kick. dispatch_one() processes the syncs only at its
->   start, and a kick that lands while the pick has the rq lock dropped is
->   cleared with the pick (#3, #5, sashiko).
-> - Fix the SCX_RQ_ONLINE comments (#4) and why no report mark is pending at a
->   suspend down (#6), and update comments and descriptions.
-> 
-> v2 (detach and cpu hotplug):
-> - Report the caps on detach as well as attach, and deliver regardless of
->   bypass, which drops the replay at unbypass (#3).
-> - Drop the sync_pcpu_ecaps() factoring. Add the cid_pshard() factoring and
->   free a sub-scheduler a grace period after discarding its syncs (#1, #2).
-> - Deliver only while the root has the cpu online, report the loss when a
->   cpu goes offline, and leave suspend and hibernation out (#4-#6).
-> 
-> v2: https://lore.kernel.org/r/20261017164556.4136807-1-tj@kernel.org
-> v1: https://lore.kernel.org/r/20261009094356.2852794-1-tj@kernel.org
-> 
-> A sub-scheduler learns which cids it holds through ops.sub_ecaps_updated(),
-> but the grants its parent makes when it attaches are reported only after its
-> enable bypass is lifted, which is also when its tasks are handed to it. So
-> it gets its first ops.enqueue() calls before it has been notified of a
-> single cid and has to hold the tasks somewhere until the grants arrive.
-> 
-> The losses aren't reported either. The caps go away on detach and when a cpu
-> goes offline without a delivery to the sub-scheduler or its parent. The
-> reseed of a cpu coming back can also run their ops before the root's
-> ops.cpu_online().
-> 
-> With this patchset, a sub-scheduler's ecaps change only with the deliveries
-> that report them. The attach-time caps are reported before bypass lifts, the
-> loss on detach before any task goes back to the parent, and a cpu's loss and
-> regain around the root's ops.cpu_offline() and ops.cpu_online(). Suspend
-> and hibernation are left out: a cpu they take down keeps the caps last
-> delivered, and the resume reports only the net change.
-> 
-> Verified with sub-schedulers attaching and detaching with tasks queued and
-> caps granted and revoked, through cpu hotplug with the races widened by
-> debug patches and grants flooding a cpu as it goes down, on PREEMPT_RT as
-> well, and across suspend. The protocol between the reports, the per-cpu
-> syncs, cpu hotplug, suspend and the free path was model checked with TLC
-> for small cpu counts.
+ops.cpu_acquire() and ops.cpu_release() are meant to tell the BPF
+scheduler when a CPU becomes available to it and when it's taken away.
+As they are now, they can't be used to reliably track that:
 
-For the whole series:
+- An RT task waking up on an idle CPU doesn't trigger ops.cpu_release().
+  The release is only emitted from put_prev_task_scx(), i.e. when an SCX
+  task is switched out.
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+- A running SCX task moving to a higher class through
+  sched_setscheduler() or a PI boost doesn't trigger it either, as no
+  context switch takes place.
 
-Thanks,
--Andrea
+- ops.cpu_acquire() is emitted speculatively from dispatch_one(). If a
+  higher class task wins the pick afterwards (dispatch dropped the rq
+  lock, RETRY_TASK, core-sched picking for a sibling), the CPU stays
+  acquired while an RT task runs on it.
+
+- rq->scx.cpu_released carries over from one scheduler to the next and
+  CPU hotplug isn't handled.
+
+Commit a3f5d4822253 ("sched_ext: Allow scx_bpf_reenqueue_local() to be
+called from anywhere") deprecated the callbacks, as closing these gaps
+was thought to require a hook invoked regardless of sched class. This
+series shows that it doesn't.
+
+Whether a CPU is available to the BPF scheduler only depends on the
+class of rq->donor: the CPU is available while an SCX task or the idle
+task runs on it and released while a stop, DL, RT or fair (partial
+mode) task does. Every change of availability has an SCX task or the
+idle task on one side of the switch, so the ext and idle classes' own
+put_prev_task() and set_next_task() see all of them. Switches between
+higher class tasks never change availability. The one remaining case, a
+running task leaving SCX without a context switch, is caught by
+switched_from_scx().
+
+kernel/sched/core.c is left untouched. The idle class gets two calls
+next to its existing scx_update_idle() calls and sched.h gets one new
+scx_rq flag.
+
+Points worth discussing:
+
+- Core-sched forced idle counts as available. Whether a task can be
+  placed on a forced idle CPU depends on that task's cookie, which is
+  for the BPF scheduler to judge.
+
+- ops.cpu_acquire() moves from before ops.dispatch() to the point where
+  the CPU actually switches to an SCX task or idle, so ops.dispatch()
+  may now run on a released CPU. A speculative acquire before dispatch
+  can't be made reliable without hooks in every class.
+
+- The callbacks may be invoked for a remote CPU, with that CPU's rq
+  locked: sched_setscheduler() or a PI boost of a task running on
+  another CPU, and scheduler enable. Patch 1 makes the legacy
+  scx_bpf_reenqueue_local() re-enqueue the locked rq's local DSQ instead
+  of assuming smp_processor_id().
+
+- Every CPU starts out released, and each available online CPU is
+  acquired when the scheduler is enabled. The callbacks are only
+  invoked between ops.cpu_online() and ops.cpu_offline(). Because
+  rq_online_scx() runs before ops.cpu_online() when a CPU comes up,
+  this uses a new SCX_RQ_OPS_ONLINE flag rather than SCX_RQ_ONLINE.
+
+- Schedulers which don't implement the callbacks only pay for a static
+  branch.
+
+- The callbacks stay cpu-form only, which makes them root-only by
+  construction. cid-form variants and fan-out to sub-schedulers (gated
+  on SCX_CAP_BASE, like ops.update_idle()) could follow if there's
+  interest.
+
+Patch 1 makes the legacy scx_bpf_reenqueue_local() target the locked
+rq. Patch 2 emits the callbacks on actual transitions and handles
+scheduler enable/disable and CPU hotplug. Patch 3 releases the CPU when
+its running task leaves SCX. Patch 4 un-deprecates the callbacks and
+documents the contract. Patch 5 adds selftests.
+
+Testing was done in virtme-ng with PROVE_LOCKING, DEBUG_ATOMIC_SLEEP,
+SCHED_CORE and EXT_SUB_SCHED enabled. The full sched_ext selftest suite
+passes without splats. The new cpu_avail test checks the reported state
+on every context switch through a sched_switch tracepoint and covers
+idle -> RT, remote class changes, the legacy re-enqueue from a remote
+release, PI boosting, hotplug, scheduler reloads and partial mode. It
+fails on the base kernel (idle -> RT) and with only patches 1-2 applied
+(remote class change). cpu_avail_core, run in an SMT VM, checks that
+core-sched forced idle doesn't release a CPU while an RT task with a
+matching cookie does.
+
+Not included:
+
+- tools/sched_ext/include/scx/*autogen* isn't regenerated for the new
+  SCX_CPU_PREEMPT_FAIR and SCX_CPU_PREEMPT_CLASS_CHANGE values. I'll add
+  that as a separate patch in a non-RFC posting.
+
+- Unrelated to this series: the comment on SCX_RQ_ONLINE in sched.h says
+  it tracks the ops.cpu_online()/cpu_offline() state, but as noted above
+  rq_online_scx() runs before ops.cpu_online() on hotplug. I can send a
+  separate fix if that's useful.
+
+Kuba Piecuch (5):
+  sched_ext: Make legacy scx_bpf_reenqueue_local() target the locked rq
+  sched_ext: Emit ops.cpu_acquire/release() on actual CPU transitions
+  sched_ext: Release the CPU when its running task leaves SCX
+  sched_ext: Un-deprecate ops.cpu_acquire/release()
+  selftests/sched_ext: Add cpu_avail tests
+
+ kernel/sched/ext/ext.c                        | 265 +++++--
+ kernel/sched/ext/ext.h                        |  19 +
+ kernel/sched/ext/internal.h                   |  69 +-
+ kernel/sched/idle.c                           |   4 +
+ kernel/sched/sched.h                          |   6 +
+ tools/testing/selftests/sched_ext/Makefile    |   2 +
+ .../selftests/sched_ext/cpu_avail.bpf.c       | 218 ++++++
+ tools/testing/selftests/sched_ext/cpu_avail.c | 717 ++++++++++++++++++
+ tools/testing/selftests/sched_ext/cpu_avail.h | 237 ++++++
+ .../selftests/sched_ext/cpu_avail_core.c      | 256 +++++++
+ .../testing/selftests/sched_ext/maximal.bpf.c |  10 +
+ 11 files changed, 1706 insertions(+), 97 deletions(-)
+ create mode 100644 tools/testing/selftests/sched_ext/cpu_avail.bpf.c
+ create mode 100644 tools/testing/selftests/sched_ext/cpu_avail.c
+ create mode 100644 tools/testing/selftests/sched_ext/cpu_avail.h
+ create mode 100644 tools/testing/selftests/sched_ext/cpu_avail_core.c
+
+
+base-commit: 2f2f7eeef8b0a1a9b9ca998231419873ccae8d4e
+-- 
+2.56.0.176.g3575e65682-goog
+
