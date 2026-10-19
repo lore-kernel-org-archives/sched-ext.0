@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1792445544;
-	b=20mbJzWP6b+aRFXRRDKDtqKxFn0zG6rNf9OJ4MA4hqQjVtR0Qk6LtKqBrhfHCwVhXVrR
-	 K+yf7TVGc6BD1P0QlGwD5hYb60nH2XAsffl0COOihIlp5z/qzRU4pgvusVccS/C8LT3u1
-	 84TDXSAkTzw9f7vGtOaphxYYexCw9CB35u6PX4ZB9XCcvPkck5XrlQo+tyRCzfDf4S4Lz
-	 k2R/FIl7OmbdUUpbhtvISrBoNJrecXKLjchzNQpC7wnSDy5/y6rGQMvgVYje3TXMdL/7J
-	 MJkaJC4Gneo/S7GWZhlZSf8XSEZaBoEXcuwhwOIyQVhzcM+II/W9XmTXqTjf3rwpWIw==
+	b=qxRtX027EPZdTxtjz5dvwTJrEnjI7Dvcf7e4Jop+atFNIEszq25u1zdmgtS5nG6Vtk/u
+	 46kP6RPXIv944FbMDtc2sFc2qvl6gXj4YCmh35CLpNfugnR9Nj7dwiismD7LHoOS4ai/J
+	 pOtmRiWKpq3PN3mxWAPkPEr3+FWvcOIShEReESYV+DJKUdxf+OolTYZr6F0bgHUtLsU0r
+	 qqEUQb8PHUPgXu65JeDc7/fnC83J5gkhYAyzkzhFH3CbbowvmRb2Xi49h9+ByaQFumoee
+	 HHYNqTGkHJBclypsmVmp84YXaHrqr1WgPE5LLJhrh5IjYPsQmSWp/AxI3/xZeP1QyUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1792445544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=cRi93T+jNYVirUzUSXcTORRFIMOIJBsGzIUrnsz2YcA=;
-	b=oqpwY5jRrF1MxiaqmPVmtSMicvBbM8bvsQijcX3zAMaLltNIsHRcjhvdUhJSqxXYBwiU
-	 YQ7rCMiuQw0I0hGMXhqoJ8RTfn5cKJm1nNc4828UrdjeSOclaOPknM28+XbD5l6i0JQw7
-	 6CdSZwcS0Gu3YXy7div+m1uxFfa8Gf7RIOMm7tUyO8zgBjwKhWGbCiLlQLlwBHeggHkZ+
-	 Hla3jR/b2mYMe2JAltlp2Zaf0YB5k6jovVaOd6Q/hOgMXulrbaTMBhbrEDL1C20E0cLu5
-	 CNdnzXdiBmMHvxcHzWQazlptJn4AQ4OoVoXyvVW5lsRabEFr3uNuCtb5Y2MOV0Gsp9w==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=z9GvsEDuckMphGMjJIFYtPUmTzrOv5XPqKR74ZrQM74=;
+	b=NjElmr5Y/Q5D+Lq/Uk8RhRxwgvOLi0VK5bcx1H+P3iG8X5A6xxldu9pVc2ESZJic9vpK
+	 2hwVQ9fVYaw0n5KsRAiZS982o/4th31He1uDTUWjz6CXMpftkxTZe3r/VA6VUu/m/EqDk
+	 kOM97So7GvL+71aKIqdSnE2jZEdC3N7qE+fcakn2CpUpTSuLPvIe4OZoad3Omqina7yYg
+	 +nMjTQqHKwrp4uXUebJGbJUNCTKC8AUi/7u205cVcIv83yGSrzAfzquIYeseSqbB8w5iS
+	 tOLkmpuDbx9WFl2pmcX5I+Z0gFYeNo6yTwa6nbzE5iKGCyozaXJ6iuefYL2GyxXHtSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZO6SdweY;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rv0dVbqC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592EB606A31C;
-	Mon, 19 Oct 2026 21:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551BD606A321;
+	Mon, 19 Oct 2026 21:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZO6SdweY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BF01F000C4;
-	Mon, 19 Oct 2026 21:32:22 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rv0dVbqC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0C01F000C5;
+	Mon, 19 Oct 2026 21:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792445543;
-	bh=cRi93T+jNYVirUzUSXcTORRFIMOIJBsGzIUrnsz2YcA=;
-	h=From:To:Cc:Subject:Date;
-	b=ZO6SdweYfLmdFfj8H42zkR+c1UlKibf8J8OtzU4XGMr/NTQLtkDm1SOihFu6HBdgU
-	 pYkOTxbW7GvHmTjyjZ0LH/T0BUCoGBqywF76v78SjDjeHmtjkJ9QnqRaQwlZxTxFQd
-	 XTaoFUNW5ODsAceAhK1bbzHCXEOM+RAThlEbJwdjz3nXVVO5HZ3U8MiltcVV80gB+c
-	 m/iF94ajoMonMb3NzQVKLZSipn40XRWhOD5+/U3eOcgwE2397ydu6yDLYk2UUOFJhC
-	 YnW64SauZ6a9kBRFAu5YS+Kwv+8gng5TTuPCY7+LaBYoKwpX7kWWYiglIcKSnVTU0g
-	 TvT5keA3uraog==
+	s=k20260515; t=1792445544;
+	bh=z9GvsEDuckMphGMjJIFYtPUmTzrOv5XPqKR74ZrQM74=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Rv0dVbqC+MUvHwLJqmnJC9YJuExhh3mb0a5jna0Ll2mrnzu974OZTQ7cILFl8kQkh
+	 uSLmeegFs7dBxQktw3CZSEV7Poi1qbtwRi/Iw/RhC06uCJVC/9MDTmCAA/XzPMjsEI
+	 sHc36JQT48LBWSa0ymDmw/iPij3hbZZRI6IHYk67anqGmEFPeGG5fYFxCMmIMsdNhO
+	 g4y5eW6bOVQ29CKOpDbX+hXfCBPcSKoTpALKnMM/btZGUOiuEbN22Or4mg5/9R6rWF
+	 QlPA22cl/QlzJVjRH/iD3IzX23BRqDj3wDvpIn2n4G1I2ARoARi//NPekyC+B9zahE
+	 HQY57SK6zrYiQ==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -48,10 +48,12 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET sched_ext/for-7.5] sched_ext: scx_qmap: Drop the compat code and fix a lowpri starvation
-Date: Mon, 19 Oct 2026 11:32:19 -1000
-Message-ID: <20261019213221.2919481-1-tj@kernel.org>
+Subject: [PATCH 1/2] sched_ext: scx_qmap: Drop the compat code
+Date: Mon, 19 Oct 2026 11:32:20 -1000
+Message-ID: <20261019213221.2919481-2-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261019213221.2919481-1-tj@kernel.org>
+References: <20261019213221.2919481-1-tj@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -63,37 +65,119 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+scx_qmap demonstrates and tests the sched_ext features of the kernel it
+ships with. It already requires that kernel, as it implements
+ops.sub_cid_sched_updated() and ops.sub_child_ecaps_updated(), so its compat
+checks only keep untested fallbacks around. Drop them, use the kernel
+interfaces directly, and note the coupling in the top comment. No functional
+change on a current kernel.
 
-scx_qmap is often used to exercise sched_ext features as they land and
-already requires the kernel it ships with, so its compat code only keeps
-untested fallbacks around. The first patch drops it.
-
-The second fixes scx_qmap's lowpri path. Nice 19 tasks coming back from
-LOWPRI_DSQ go to SHARED_DSQ, which is consumed ahead of the FIFOs, so enough
-nice 19 CPU hogs starve every other task until the watchdog ejects the
-scheduler. They now go to their FIFO instead.
-
-Tested with root and sub-scheduler instances under nice 0 and nice 19 CPU
-hogs. Without the fix, the root is ejected within seconds. With it, the runs
-complete and the FIFOs keep being dispatched.
-
-Based on sched_ext/for-7.4-fixes (ff343a94e44d).
-
-This patchset contains the following 2 patches.
-
- 0001 sched_ext: scx_qmap: Drop the compat code
- 0002 sched_ext: scx_qmap: Queue re-enqueued lowpri tasks on their FIFO
-
-The patchset is also available in the following git branch:
-
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git qmap-nocompat
-
-diffstat follows. Thanks.
-
- tools/sched_ext/scx_qmap.bpf.c | 40 +++++++++++++++++++++++-----------------
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ tools/sched_ext/scx_qmap.bpf.c | 31 ++++++++++++++++---------------
  tools/sched_ext/scx_qmap.c     | 14 +++++---------
- 2 files changed, 28 insertions(+), 26 deletions(-)
+ 2 files changed, 21 insertions(+), 24 deletions(-)
 
---
-tejun
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 63e3c9080e77..77f02fb70a86 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -10,6 +10,10 @@
+  * - Core-sched support.
+  * - Hierarchical sub-scheduling: delegating cpus to child cgroup schedulers.
+  *
++ * scx_qmap is often used to exercise sched_ext features as they land. It is
++ * coupled with the kernel it ships with and uses its sched_ext interfaces
++ * directly. It isn't expected to load on other kernels.
++ *
+  * Base design: Five FIFOs (arena-backed doubly-linked lists through per-task
+  * context). A task is assigned to a FIFO by its compound weight. Each cpu
+  * round-robins the FIFOs, dispatching more from higher ones.
+@@ -583,14 +587,13 @@ void BPF_STRUCT_OPS(qmap_enqueue, struct task_struct *p, u64 enq_flags)
+ 	}
+ 
+ 	/* see lowpri_timerfn() */
+-	if (__COMPAT_has_generic_reenq() &&
+-	    p->scx.weight < 2 && !(p->flags & PF_KTHREAD) && !(enq_flags & SCX_ENQ_REENQ)) {
++	if (p->scx.weight < 2 && !(p->flags & PF_KTHREAD) && !(enq_flags & SCX_ENQ_REENQ)) {
+ 		scx_bpf_dsq_insert(p, LOWPRI_DSQ, slice_ns, enq_flags);
+ 		return;
+ 	}
+ 
+ 	/* if select_cid() wasn't called, try direct dispatch */
+-	if (!__COMPAT_is_enq_cpu_selected(enq_flags) &&
++	if (!(enq_flags & SCX_ENQ_CPU_SELECTED) &&
+ 	    (cid = pick_direct_dispatch_cid(p, scx_bpf_task_cid(p), taskc)) >= 0) {
+ 		__sync_fetch_and_add(&qa.nr_ddsp_from_enq, 1);
+ 		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | cid, slice_ns,
+@@ -1316,7 +1319,7 @@ static int monitor_timerfn(void *map, int *key, struct bpf_timer *timer)
+ 
+ 		dump_shared_dsq();
+ 
+-		__COMPAT_scx_bpf_events(&events, sizeof(events));
++		scx_bpf_events(&events, sizeof(events));
+ 
+ 		bpf_printk("%35s: %lld", "SCX_EV_SELECT_CPU_FALLBACK",
+ 			   scx_read_event(&events, SCX_EV_SELECT_CPU_FALLBACK));
+@@ -2097,17 +2100,15 @@ s32 BPF_STRUCT_OPS_SLEEPABLE(qmap_init)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (__COMPAT_has_generic_reenq()) {
+-		/* see lowpri_timerfn() */
+-		timer = bpf_map_lookup_elem(&lowpri_timer, &key);
+-		if (!timer)
+-			return -ESRCH;
+-		bpf_timer_init(timer, &lowpri_timer, CLOCK_MONOTONIC);
+-		bpf_timer_set_callback(timer, lowpri_timerfn);
+-		ret = bpf_timer_start(timer, LOWPRI_INTV_NS, 0);
+-		if (ret)
+-			return ret;
+-	}
++	/* see lowpri_timerfn() */
++	timer = bpf_map_lookup_elem(&lowpri_timer, &key);
++	if (!timer)
++		return -ESRCH;
++	bpf_timer_init(timer, &lowpri_timer, CLOCK_MONOTONIC);
++	bpf_timer_set_callback(timer, lowpri_timerfn);
++	ret = bpf_timer_start(timer, LOWPRI_INTV_NS, 0);
++	if (ret)
++		return ret;
+ 
+ 	/* sub-sched: drive the boundary-cid round-robin from a bpf timer */
+ 	timer = bpf_map_lookup_elem(&round_robin_timer, &key);
+diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
+index 17cf584a2a3d..9b1cbe187ebd 100644
+--- a/tools/sched_ext/scx_qmap.c
++++ b/tools/sched_ext/scx_qmap.c
+@@ -294,7 +294,7 @@ int main(int argc, char **argv)
+ 	optind = 1;
+ 	skel = SCX_OPS_CID_OPEN(qmap_ops, scx_qmap);
+ 
+-	skel->rodata->slice_ns = __COMPAT_ENUM_OR_ZERO("scx_public_consts", "SCX_SLICE_DFL");
++	skel->rodata->slice_ns = skel->rodata->__SCX_SLICE_DFL;
+ 	skel->rodata->max_tasks = 16384;
+ 
+ 	while ((opt = getopt(argc, argv,
+@@ -512,14 +512,10 @@ int main(int argc, char **argv)
+ 		       (unsigned long long)qa->nr_expedited_remote,
+ 		       (unsigned long long)qa->nr_expedited_from_timer,
+ 		       (unsigned long long)qa->nr_expedited_lost);
+-		if (__COMPAT_has_ksym("scx_bpf_cidperf_cur"))
+-			printf("cpuperf: cur min/avg/max=%u/%u/%u target min/avg/max=%u/%u/%u\n",
+-			       qa->cpuperf_min,
+-			       qa->cpuperf_avg,
+-			       qa->cpuperf_max,
+-			       qa->cpuperf_target_min,
+-			       qa->cpuperf_target_avg,
+-			       qa->cpuperf_target_max);
++		printf("cpuperf: cur min/avg/max=%u/%u/%u target min/avg/max=%u/%u/%u\n",
++		       qa->cpuperf_min, qa->cpuperf_avg, qa->cpuperf_max,
++		       qa->cpuperf_target_min, qa->cpuperf_target_avg,
++		       qa->cpuperf_target_max);
+ 
+ 		invoke_flush_alloc(skel);
+ 		print_hier(qa, &hprev, own_cgid);
+-- 
+2.56.0
+
