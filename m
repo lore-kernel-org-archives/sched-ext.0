@@ -1,71 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.72
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792482634;
-	b=u0X81zY3kO+RCyuVv7XSRxdyP6uV8vOc+7ocllF6O0ObUK9UpLPdpYVgdqhwB0QXX3Q7
-	 AqYCsaxTs1Dm0QKMjO0MQvQMf+GPiHIGe4vemfxX25mh8ucOYTHsm3Syd9hECpF5IQYwC
-	 a3BcWIuRcYPkb42uoNrrtVW2tgZrx4jjq/Ze2nD1vz28Co5aU113QAatmLzZ2DndaGSkn
-	 tgEzj6BQ7Reo1/Ki0JUbp/Aph1vkUyYlBBlRSxe1D5G0wWx6/2OugwWSYThwh7Jv2sPyK
-	 ZSBB44u+mgfT4TzpTFMeVGokP4FHol0/jna12lsMm0PZUeUthGrIp8zsMkmrSO9d4Jg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792482634;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
-	 Subject:From:To:Cc:Content-Type;
-	bh=Pu3C9gNSSW1SZOaOvtYdw2Ykdk6v6QqTygLjRHUJrNw=;
-	b=3F7G+REdJVni4DlUlRSneLqX3n++C03Z+8W5zX0HiCptnpxozrBViASadfYf1kbjdGlt
-	 +bQiZ7aqZQhrFJOSY+i91bN97J3EzLzFkpfMwJuRPYtT6438JaWXZ0PT8rjJTKS2pvX9F
-	 +xcvbZd+AdTnM2h2CSjuglDPWUt2nSXKZxeGEFV/6MiQlsuWhCkgLTjZbH+qIH3ipGd+V
-	 o6SzQC98b/BScnNDmU5uyHfjcrbisWLmY5Jeazvd9jSkgbH0InlJr4i9u5L6B3AqTXlff
-	 whpAwRjpOjKdBGUJOepC75riaW/97c50MVfoWk/PCx3XYDSHHIG0379mYcRmFoytQsw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=BKVUmjGU;
-	arc=none smtp.remote-ip=209.85.208.72
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com [209.85.208.72])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.37
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792485894;
+	b=QObVgFMxH5AZIYv0oagRyd2V+a19ZadaISkgXwiNEDvBlLGUSdHaXe7lC5FMxofhQnib
+	 iatUiJn47pAAnp1SzaF3ZAV99iZhxJY7znLYaEXl3i8Of3hsNWgB2xS2U3UsC3WJvGE1U
+	 q/O85FJb5SdEfCYBFoQ9jRPj2vTWOZizGjWzLYu+pUu0gCf+8Y2K6v2/mbWRqUtdfdxCO
+	 0IBbJw8JY9JQ9zRCDr9vzjmH1VIi9NDCeKvDUqIRRdDrmkoVeMubRiON/YDSIEpFRpkKp
+	 NJ48l2/skPtLX45V2UBxMfUFbeIdUe5e5vIZCQJJr6y5wocu4zRuvlcEnLPLqVIik5w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792485894;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:Content-Transfer-Encoding:Content-Type:
+	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=+lGJ6BADoHgdKMcBI6uAuyv4TQ1R+n8qZXhWOmKkMW4=;
+	b=JcoYlGx9SgGyEe8EiVbniDduKW/N9gjiomrqdqZCG6QYiKpkxlA5ja14R6c0JdsXoed8
+	 lquwdOYy36pkcJ34OGoPCOkVu6kgDfmdKs+rKyEakd0Q3cCiBwn35oigJ/J2tulrYagkm
+	 +2ozpB6wS2/8TCg2qXj8ZDUxeqg9I7SMpZB10/0cxSO4ZsuMFz//RMEs/8H2xYC8iWJHj
+	 21NoabYdl0QPSKiPMbYEDf7/h1Jz6JTYfaBk00BCHc+19HQSP4TLRYf2KuhOKUbYHnwi4
+	 /HUwHxq5J+iqzvB6Z/taWNgMHYi7VpSleuHRxNzZlfFLI90zOshdGy9XrcXz5sP7FNg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=XyVqg6OO;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.209.37
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012037.outbound.protection.outlook.com [40.107.209.37])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338C7606A324
-	for <sched-ext@lists.linux.dev>; Tue, 20 Oct 2026 07:50:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 338C7606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--michalblk.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C027E60A2602
+	for <sched-ext@lists.linux.dev>; Tue, 20 Oct 2026 08:44:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C027E60A2602
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=BKVUmjGU
-Received: by mail-ed1-f72.google.com with SMTP id 4fb4d7f45d1cf-6b1aa4d7162so3363526a12.1
-        for <sched-ext@lists.linux.dev>; Tue, 20 Oct 2026 00:50:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792482631; x=1793087431; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Pu3C9gNSSW1SZOaOvtYdw2Ykdk6v6QqTygLjRHUJrNw=;
-        b=BKVUmjGU2aXGWpVBslTp+xnR0LGTVWndsfOnlcz2W+5hygkiciOSoxCoYP3I00+yh8
-         sUkIHQKD457tj8bB6RKaybX+qRTkjb4ORLizg7A3qGJWjU7cqN3Cf7XUkIfrPjHjI6z+
-         02iB3vsJ8wRoOH503fpWmHi3vXVk0SAlJZbLa5stU4XlJ13KMLx9Utllvp0wkfGyzSUp
-         xwr/F9sivvDnG95xbO0puq89eTUZ0dQWDlArH1WH4k70/ndkFZP+Ponp0gJ6QGf103+w
-         sf+dOHTRGTlOMcEnXvLO8CQPG/mmwatyaC3dGqBrdz2F06AhUL5iaYYIIt4v7N990qDA
-         XkrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792482631; x=1793087431;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Pu3C9gNSSW1SZOaOvtYdw2Ykdk6v6QqTygLjRHUJrNw=;
-        b=uR8dt0pqzWyuPNPdtpmO4au/C3M/G9sMidD580yIOyDs/dvNqnQS0Mc/XrAR0k/SZD
-         t5432HbJG3bziayvBzFZBQdDo5o51dukPPDhf0DWDn9JSC5UZOTnIobHk0ITHkzMOmpJ
-         +lI9TmkfdhCVS33wOaDcTwnUeZLDCKzP4RQRNbjmcUWGEGfNolTBeM5RSFpDBlRjejG1
-         ttqmAHrYo+jthyt59mxtXEb8F+AWjL7j3mzIYq2cNtjSPLg02odt5ss/X9auen8Gt6D4
-         LvNKI57OYX5hMgilRPleeOvKkA5X4bNaDq5wLaJnkClAiXpmdSmksVBABZQStfykMqJj
-         g3Pw==
-X-Gm-Message-State: AFq9FYI/p4z6lDEexQfa7SAQQhf28XsHxTV2uOJSKFPSbIBH9dm6HUQu
-	7krD9kXyrW6k5ecVhkD6s8geBX6BxfTCjhSpLJT3GxAXzoEcEzFGIJtiZXCL4QKKJ6rvREhCfdH
-	BWeezdcczU7vgtgjAgw==
-X-Received: from edr4.prod.google.com ([2002:a05:6402:44c4:b0:6ac:b90c:5524])
- (user=michalblk job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6402:44da:b0:6b1:b849:c7d8 with SMTP id 4fb4d7f45d1cf-6b3a81ac904mr4648985a12.38.1792482631297;
- Tue, 20 Oct 2026 00:50:31 -0700 (PDT)
-Date: Tue, 20 Oct 2026 07:50:29 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=XyVqg6OO
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XS3MxckC7DqK1RUwITUcwqaqZv+EyAz9GVcbFNItNhHWjIRiOw/pcCDJt+nSz1xx3nm+ZbvWgBhzb9+2cN4aNBVhG/h5vdF4mKZT/JAbBbi6ffHdhgJfNZMIE340HNWEpiCcBHTygU1LmajHm/rEJ1pGt/DR2Ok2P5uzbaTlpQ4Qt6k/y7zgYqrOTjRRoUKIwkxgvQ7Ig6s7OHSfbuJ+kSUX6A8XcJScdARe6cmE2lwIYwpMJeS5Yv+VN+DPnTpdTo6zhSIMtQaurVI514VddaAEc1oBce/NKO54mAivxIgoP28O8gZ+1iVFfMGuHXUynjfDyR/9/xoXOhA8rhoNbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+lGJ6BADoHgdKMcBI6uAuyv4TQ1R+n8qZXhWOmKkMW4=;
+ b=OyzkfY7JwmHV7uNeNc/ENA1L9gV5Do6pau5bnBZmKSG4K6M+4S2lrQPzwSbNWBJ7zdGOvHSEcJXgb12fOlBb7H2I8NBLJX611zMwxz2LV8tjV1AyI9KHB8MkCaHnvOpf3rrPorpLDbJP2UgixbF2rz5DPE3nctNTbFI4+Tdt32lVqU7nAwmnRDF4aj3hKgeYxPk84xtamyAL5eFtAS8kjZEd5ZvxE1AMGS2mndZWlgEhv13u+dJHjW4XzWTUKEgcUOOlPEnxJEqwJaeAXueuFqtLeqBzL1ApLuYJmKCLxW7ntxtQi/hDvfjlE6jHGVxSHE7whQdjrxfHrb2FAMsCew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+lGJ6BADoHgdKMcBI6uAuyv4TQ1R+n8qZXhWOmKkMW4=;
+ b=XyVqg6OO5OxoPqy91tVFcuU8+15q6TUOGGbJ/YDnqTLsTdjarON9bP/m8WgTKkZ66Q6oKOgztP7XHKBKB+KCMWNVZ0FQm6AQ0Drju6sGntjbbA8ovDPw929noajDrAFrUFcA3dKA6wYxjBziH2gjzpQMRzKnlyJ1rRj8YuNsqf3Cj7r9ngJnkIZs0Y21LiMOR5lY3lr43KhRShQoyklmJIIxeIm19Uo8D0lboZ1lVjKgvM67BCDM0daS40RHouvJ7VQfG+vUelEKjbYr8c/p4/OGxweiuHJ/qD15kbjgkNAu1MRGjHNrulzv10fXZnppNnbSPF7cCCfzcBBky4PAoQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
+ by CY8PR12MB7220.namprd12.prod.outlook.com (2603:10b6:930:58::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Tue, 20 Oct
+ 2026 08:44:50 +0000
+Received: from BL1PR12MB5174.namprd12.prod.outlook.com
+ ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
+ ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0546.012; Tue, 20 Oct 2026
+ 08:44:50 +0000
+From: Andrea Righi <arighi@nvidia.com>
+To: Tejun Heo <tj@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>
+Cc: Emil Tsalapatis <emil@etsalapatis.com>,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCHSET sched_ext/for-7.4-fixes] sched_ext: Fix proxy execution balance callbacks
+Date: Tue, 20 Oct 2026 10:43:18 +0200
+Message-ID: <20261020084400.845842-1-arighi@nvidia.com>
+X-Mailer: git-send-email 2.56.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: GV0P278CA0083.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:710:2b::16) To BL1PR12MB5174.namprd12.prod.outlook.com
+ (2603:10b6:208:31c::19)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -74,441 +96,84 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.56.0.212.g129ede20d9-goog
-Message-ID: <20261020075029.330343-1-michalblk@google.com>
-Subject: [PATCH v2] selftests/sched_ext: Add class_switch_stall test
-From: Michal Blaszczyk <michalblk@google.com>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-kselftest@vger.kernel.org, Kuba Piecuch <jpiecuch@google.com>, 
-	Michal Blaszczyk <michalblk@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CY8PR12MB7220:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6289b6dd-8e5b-4fab-7457-08df2e86671b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|10067099003|18002099003|11063799006|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	5XCff0URnjwTC3w59vxzxFKZT/ahwnWiSxep/8GTEERFJYmeHsTG9mAZxJVfiAai9jKLYeJo5r/LOEE8P1xp1iqT9NW/8jObXnlPt3hwxI2O8AcMrE6Daci+4OBnsxrB1+tSjWso9E976gsTj1/2W/fSQDo4sr+qqw0lWFzLIDxhUro64c+QZCnyvxVJR53zY8zeGo31wz5mBHo/w/CTptYAUzULTbjZPnn1x/mDg8hrd95LOeIOUOsFkPO6/gciLL+C5F7m2CIAeqwxXzNuN3Qk5ZybeX/GD5aqdhKTuTDyPu2oxPhPdyvma5X1TMot5Bvw92WrCtaI5xzbGW+aJcQMagQqkDup2Y2sk8hZwzLboEC7iw9oaHTzzTu+zq1HDNSjMsM1EurDNeOXu0ahctfiwdzhyRrV5uPwkhn7lneHsY1+TYsUNwsmpttdqrvUw9O6yHHpk7pVPb4R/yWe01fkjRNjKgdHnXxdBHC3AiFG6upSqpupxiD0d7Bzv8B7WbhN+fUeaYmRPlhY4YOfBUPYst2AITYA8NF0pPW2SCKaZKVz7d0OqCebXiQy+uge1wpsGTMFJqU2TlBXXFtorEMTgav1AKvSJZmc8JMBfYdRe0oJRWH1qWv08R400Vq4NSXsRmNq6chuTQnEACTT0fnujDJbkXyQTUNsjuHD9G8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(10067099003)(18002099003)(11063799006)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?iatw0Al/OchiWmF5T4KTawwIsnMBMrzSwC/0mPEEWBgB19TR1kghFNoa6jkq?=
+ =?us-ascii?Q?iLLtsaB/IcO+2qhRvb+pGgLjdZusyVpyi6An1INxHcddWrTaz3C1J6K4+Nif?=
+ =?us-ascii?Q?t/K4QxUkeCUu6DuhFx+2zVkKhynpmg0dsaQWqtffs07k8OzrQ644jwB6LEhN?=
+ =?us-ascii?Q?L2KC533sltu0SDXyRP/KNpvHhLIz3gcZji0OCNSzxNkiPffy79LFKoq00uDy?=
+ =?us-ascii?Q?Utj7fBVO2ResmbBhMhumY6gDxKsOaVk6/m+0XB/Jz7ogiU81K6VsoL9IVVTX?=
+ =?us-ascii?Q?OshOTD5PhxVbPJbT60yedWGOBiR6xAsB6ive15XPKvpkCXmSmDsIHLew/FkP?=
+ =?us-ascii?Q?nOq6/ArOoqAfOSgsQBBz/pfO/eIVJocxPPyRmuV5t3c0wGnB5SBRxfbAvsf8?=
+ =?us-ascii?Q?wgsiwe19TuwThShQEO1hhTNHKw68q8sMszmaXMBzSGJMlIsayGjWPcOAkdTw?=
+ =?us-ascii?Q?lfbzlgQuZO9Eg8kcVIonHgax+WRcNxFdhLZe+IVW+G58809b8yGVpK8oMs9E?=
+ =?us-ascii?Q?NMKvcXcqxFgRxIdiK7qyn94/MfV9pwVqvOEELnnG2E1YWSQvCZTf+bH5KHWZ?=
+ =?us-ascii?Q?JOlZphz7HO7WkgZ/AKF5ni+yFflNxaLL5jy/lBt+w5qT0rqHD0RFfL43BKL8?=
+ =?us-ascii?Q?VhsECE76VHutuckb+ovbrDoZexzeJX7c6PcZtiV+IK4Lhzsk5/1xGF+EFOPP?=
+ =?us-ascii?Q?NPIV64KSNioKWl0oUnXBJFHeDDKaBua7VpLm/w5Ox2carULXLCUE1Mi5l6J5?=
+ =?us-ascii?Q?HPd3+xoXGiKVaZe69nIQIB7lZO2mRQ2Imd+wF9y+b5LttA3U9EPF/2twTrvI?=
+ =?us-ascii?Q?kj6AJz+vVCrv2D1t1pHDmuNFoV6sDBuCgIvzoYVtzKR3yP+DC6/EatgSCEAg?=
+ =?us-ascii?Q?Pnhz4KK72Cinhj+MQWMqcf1aSikCIxsSXYnE6wY2dbw+9MoIJXDLT0SeGLnh?=
+ =?us-ascii?Q?wDOevrfVMZkdciefD8gm9xL/T+hopr44cN9Ak8bffet+v27AxjHtWNlJotNz?=
+ =?us-ascii?Q?GnrtiqvKI3dOLF028cjjQELHSyrjTxJRiwewZrs+diQlUIa/bpRRWccCRV5f?=
+ =?us-ascii?Q?MifqWeq8C28LwI/sl96xxW6mDhjeS9HkGochXLjWG9622nU/FSWEuiWbvuby?=
+ =?us-ascii?Q?XaCyqPHx77I4HcH7S2Tb8MYKQQtN8l+1oIaaqN0rxhgyfkrq+6eIWsPYKoac?=
+ =?us-ascii?Q?vWQZ43wKbMp4qboVwExYDkGhuWPUqLHezhKnGYgerx3rcawOYCZgGmWcYyCp?=
+ =?us-ascii?Q?Iy0p7hzEYBhWuoyubUT2GuuiiY4+/kZT81K5ypmWOL043HvvaT7ZxfSK8flO?=
+ =?us-ascii?Q?jx7W8+vpcXhdCbGSmwSREwxYQID6vB6xUHjyB1bWTiTpUS62exeLeeb1mFAO?=
+ =?us-ascii?Q?jJ8WNGetrOr60BqrZW64y99TNqYsYlKW8CEQJO5NixSKeme4SJ05QXwUsWR5?=
+ =?us-ascii?Q?fRYgkuz79c66b4z4fcloe0UjenE5pKb0X9L13F6982MIdn1MpkJvSDa4EG7W?=
+ =?us-ascii?Q?YaaHjBHFuQ0uybXqCJvr2AKJy8VAe5nk1Elu5PRRW0ab3mg6KMhjYIu4uTDC?=
+ =?us-ascii?Q?vPHG5XMNZgdg5rHrRtJhPtG2eD9uk6bhByQM9EHtU4zANKMyvvhS8RQyquD+?=
+ =?us-ascii?Q?VCKI1hcQwj+TrKIMuvIuJ6XzX5ULyOvtntqSZMVs0KEAHQOztgLVJLEwgPec?=
+ =?us-ascii?Q?nEWm8SXH+RObjsbyDtthLhEcPiQfqdqcfY3UgNSUlZqSx/v2?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6289b6dd-8e5b-4fab-7457-08df2e86671b
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 08:44:50.1112
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uKvqQ1nHmdNjqBcQolR1bV5/WmvsgSAB7W6z1fRnUfG8bTdzWtg4MvGIRdnW2YwZYQkyCPMZtQuaWXcr82GEsA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7220
 
-Add a test for a task which leaves SCHED_EXT while it's waiting. Its
-scheduler keeps the task waiting on a DSQ after it wakes up. The test
-switches the task to SCHED_OTHER while it's waiting, lets it sleep outside
-of SCHED_EXT for longer than the watchdog timeout, then switches it back
-and wakes it up. The scheduler keeps it waiting again, for longer than the
-watchdog interval but shorter than the timeout, which the watchdog must not
-report as a stall.
+This series addresses the three follow-ups you reported after applying
+"sched_ext: Queue the kick_sync wait from set_next_task_scx()" [1].
 
-Without commit 993e8fbfecbb ("sched_ext: Reset runnable_at when a task
-leaves its scheduler"), the watchdog charges the task for the time it
-spent outside of SCHED_EXT and aborts the scheduler.
+The first patch prevents queue_balance_callback() from requeueing a
+callback that is already the sole list entry. With proxy execution,
+SNT_REPICK followed by SNT_PICK can otherwise queue the kick_sync
+callback twice, linking it to itself and running the wait twice.
 
-Assisted-by: LLM
-Signed-off-by: Michal Blaszczyk <michalblk@google.com>
----
+The second patch routes dispatch-time deferred actions through irq_work
+when proxy execution is enabled. Proxy resolution can zap balance
+callbacks and then select idle or another scheduling class, leaving no
+SCX dispatch to restore the discarded deferred callback.
 
-Notes:
-    v2: Raise the watchdog timeout to 3s and the park time to 2s, set
-    timeout_ms from userspace, shorten the time outside of SCHED_EXT to
-    TIMEOUT_MS + 1s, and derive the second read timeout from TIMEOUT_MS
-    (Andrea). Rebase on sched_ext/for-7.4-fixes, which has the fix this
-    tests, and refer to the fix by its commit ID.
-    
-    v1: https://lore.kernel.org/r/20261019124146.3582127-3-michalblk@google.com
+The third patch removes the now-unreachable foreign CPU check from the
+kick_sync wait callback.
 
- tools/testing/selftests/sched_ext/Makefile    |   1 +
- .../sched_ext/class_switch_stall.bpf.c        | 120 +++++++++
- .../selftests/sched_ext/class_switch_stall.c  | 245 ++++++++++++++++++
- 3 files changed, 366 insertions(+)
- create mode 100644 tools/testing/selftests/sched_ext/class_switch_stall.bpf.c
- create mode 100644 tools/testing/selftests/sched_ext/class_switch_stall.c
+[1] https://lore.kernel.org/r/08cac02c604dd73ef96fc92eb29d692b@kernel.org
 
-diff --git a/tools/testing/selftests/sched_ext/Makefile b/tools/testing/selftests/sched_ext/Makefile
-index c5d3a2eaea7da..44083f1c65969 100644
---- a/tools/testing/selftests/sched_ext/Makefile
-+++ b/tools/testing/selftests/sched_ext/Makefile
-@@ -165,6 +165,7 @@ all_test_bpfprogs := $(foreach prog,$(wildcard *.bpf.c),$(INCLUDE_DIR)/$(patsubs
- 
- auto-test-targets :=			\
- 	cgroup_nr_cpus			\
-+	class_switch_stall		\
- 	create_dsq			\
- 	dequeue				\
- 	dequeue_iter			\
-diff --git a/tools/testing/selftests/sched_ext/class_switch_stall.bpf.c b/tools/testing/selftests/sched_ext/class_switch_stall.bpf.c
-new file mode 100644
-index 0000000000000..8268dcb45a0cc
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/class_switch_stall.bpf.c
-@@ -0,0 +1,120 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * A scheduler that keeps the target task waiting on a DSQ when it wakes up,
-+ * until it's switched out of SCHED_EXT or, if @park_ns is set, for @park_ns.
-+ * This lets userspace switch the target out while it's waiting.
-+ *
-+ * Copyright (c) 2026 Google LLC.
-+ */
-+
-+#include <scx/common.bpf.h>
-+
-+char _license[] SEC("license") = "GPL";
-+
-+#define PARK_DSQ 0
-+
-+UEI_DEFINE(uei);
-+
-+s32 target_pid;		/* set by userspace */
-+bool park;		/* set by userspace, cleared when parking */
-+u64 park_ns;		/* set by userspace, how long to park, 0 for no limit */
-+u64 nr_parked;		/* how many times the target has been parked */
-+u64 nr_released;	/* how many times the target has been released */
-+
-+static bool released;	/* set by the timer, cleared when parking */
-+static s32 target_cpu;	/* CPU to kick when the timer fires */
-+
-+struct release_timer {
-+	struct bpf_timer timer;
-+};
-+
-+struct {
-+	__uint(type, BPF_MAP_TYPE_ARRAY);
-+	__uint(max_entries, 1);
-+	__type(key, u32);
-+	__type(value, struct release_timer);
-+} release_timer SEC(".maps");
-+
-+static int release_timerfn(void *map, int *key, struct bpf_timer *timer)
-+{
-+	released = true;
-+	scx_bpf_kick_cpu(target_cpu, 0);
-+	return 0;
-+}
-+
-+s32 BPF_STRUCT_OPS(class_switch_stall_select_cpu, struct task_struct *p,
-+		   s32 prev_cpu, u64 wake_flags)
-+{
-+	/* Don't dispatch directly so that wakeups go to ops.enqueue(). */
-+	return prev_cpu;
-+}
-+
-+void BPF_STRUCT_OPS(class_switch_stall_enqueue, struct task_struct *p,
-+		    u64 enq_flags)
-+{
-+	struct release_timer *rt;
-+	u32 key = 0;
-+
-+	if (p->pid != target_pid || !park || !(enq_flags & SCX_ENQ_WAKEUP)) {
-+		scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+		return;
-+	}
-+
-+	park = false;
-+	released = false;
-+	target_cpu = scx_bpf_task_cpu(p);
-+	scx_bpf_dsq_insert(p, PARK_DSQ, SCX_SLICE_DFL, enq_flags);
-+	__sync_fetch_and_add(&nr_parked, 1);
-+
-+	if (!park_ns)
-+		return;
-+
-+	rt = bpf_map_lookup_elem(&release_timer, &key);
-+	if (!rt) {
-+		scx_bpf_error("failed to look up the release timer");
-+		return;
-+	}
-+	bpf_timer_start(&rt->timer, park_ns, 0);
-+}
-+
-+void BPF_STRUCT_OPS(class_switch_stall_dispatch, s32 cpu,
-+		    struct task_struct *prev)
-+{
-+	if (released && scx_bpf_dsq_move_to_local(PARK_DSQ, 0))
-+		__sync_fetch_and_add(&nr_released, 1);
-+}
-+
-+s32 BPF_STRUCT_OPS_SLEEPABLE(class_switch_stall_init)
-+{
-+	struct release_timer *rt;
-+	u32 key = 0;
-+	s32 ret;
-+
-+	ret = scx_bpf_create_dsq(PARK_DSQ, -1);
-+	if (ret)
-+		return ret;
-+
-+	rt = bpf_map_lookup_elem(&release_timer, &key);
-+	if (!rt)
-+		return -ESRCH;
-+
-+	bpf_timer_init(&rt->timer, &release_timer, CLOCK_MONOTONIC);
-+	bpf_timer_set_callback(&rt->timer, release_timerfn);
-+	return 0;
-+}
-+
-+void BPF_STRUCT_OPS(class_switch_stall_exit, struct scx_exit_info *ei)
-+{
-+	UEI_RECORD(uei, ei);
-+}
-+
-+SEC(".struct_ops.link")
-+struct sched_ext_ops class_switch_stall_ops = {
-+	.select_cpu		= (void *)class_switch_stall_select_cpu,
-+	.enqueue		= (void *)class_switch_stall_enqueue,
-+	.dispatch		= (void *)class_switch_stall_dispatch,
-+	.init			= (void *)class_switch_stall_init,
-+	.exit			= (void *)class_switch_stall_exit,
-+	.flags			= SCX_OPS_SWITCH_PARTIAL,
-+	.name			= "class_switch_stall",
-+};
-diff --git a/tools/testing/selftests/sched_ext/class_switch_stall.c b/tools/testing/selftests/sched_ext/class_switch_stall.c
-new file mode 100644
-index 0000000000000..2d0ca85caabb7
---- /dev/null
-+++ b/tools/testing/selftests/sched_ext/class_switch_stall.c
-@@ -0,0 +1,245 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Check that a task which leaves SCHED_EXT while it's waiting doesn't carry
-+ * that wait over to its next stay on SCHED_EXT. If it did, the watchdog would
-+ * count the time the task spent outside SCHED_EXT as waiting and abort the
-+ * scheduler.
-+ *
-+ * Copyright (c) 2026 Google LLC.
-+ */
-+#define _GNU_SOURCE
-+
-+#include <bpf/bpf.h>
-+#include <poll.h>
-+#include <sched.h>
-+#include <scx/common.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <string.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
-+#include "class_switch_stall.bpf.skel.h"
-+#include "scx_test.h"
-+
-+#ifndef SCHED_EXT
-+#define SCHED_EXT 7
-+#endif
-+
-+/* watchdog timeout, the watchdog checks every half of it */
-+#define TIMEOUT_MS 3000
-+/* longer than the watchdog interval, but shorter than the timeout */
-+#define PARK_MS 2000
-+/* time spent outside of SCHED_EXT, a stale wait would exceed the timeout */
-+#define OUTSIDE_MS (TIMEOUT_MS + 1000)
-+
-+static enum scx_test_status setup(void **ctx)
-+{
-+	struct class_switch_stall *skel;
-+
-+	skel = class_switch_stall__open();
-+	SCX_FAIL_IF(!skel, "Failed to open");
-+	SCX_ENUM_INIT(skel);
-+	skel->struct_ops.class_switch_stall_ops->timeout_ms = TIMEOUT_MS;
-+	SCX_FAIL_IF(class_switch_stall__load(skel), "Failed to load skel");
-+
-+	*ctx = skel;
-+
-+	return SCX_TEST_PASS;
-+}
-+
-+/* Echoes back each byte from @in_fd. */
-+static void child_main(int in_fd, int out_fd)
-+{
-+	char c;
-+
-+	while (read(in_fd, &c, 1) == 1) {
-+		if (write(out_fd, &c, 1) != 1)
-+			_exit(1);
-+	}
-+	_exit(0);
-+}
-+
-+static bool read_byte(int fd, int timeout_ms)
-+{
-+	struct pollfd pfd = { .fd = fd, .events = POLLIN };
-+	char c;
-+
-+	return poll(&pfd, 1, timeout_ms) == 1 && read(fd, &c, 1) == 1;
-+}
-+
-+/* Waits for up to 1s for @pid to be in interruptible sleep. */
-+static bool wait_for_sleeping(pid_t pid)
-+{
-+	char path[64], buf[512], *state;
-+	bool sleeping;
-+	FILE *f;
-+	int i;
-+
-+	snprintf(path, sizeof(path), "/proc/%d/stat", pid);
-+
-+	for (i = 0; i < 1000; i++) {
-+		f = fopen(path, "r");
-+		if (!f)
-+			return false;
-+		/* The state follows "(comm)", and comm may contain ')'. */
-+		state = fgets(buf, sizeof(buf), f) ? strrchr(buf, ')') : NULL;
-+		sleeping = state && !strncmp(state, ") S", 3);
-+		fclose(f);
-+		if (sleeping)
-+			return true;
-+		usleep(1000);
-+	}
-+	return false;
-+}
-+
-+/* Waits for up to 1s for the target to have been parked @cnt times in total. */
-+static bool wait_for_parked(struct class_switch_stall *skel, u64 cnt)
-+{
-+	int i;
-+
-+	for (i = 0; i < 1000; i++) {
-+		if (skel->bss->nr_parked >= cnt)
-+			return true;
-+		usleep(1000);
-+	}
-+	return false;
-+}
-+
-+static bool set_policy(pid_t pid, int policy)
-+{
-+	struct sched_param param = {};
-+
-+	return !sched_setscheduler(pid, policy, &param);
-+}
-+
-+static enum scx_test_status run(void *ctx)
-+{
-+	struct class_switch_stall *skel = ctx;
-+	enum scx_test_status status = SCX_TEST_FAIL;
-+	int to_child[2] = { -1, -1 }, from_child[2] = { -1, -1 };
-+	struct bpf_link *link = NULL;
-+	pid_t pid = -1;
-+	int i;
-+
-+	if (pipe(to_child) || pipe(from_child)) {
-+		SCX_ERR("Failed to create pipes");
-+		goto out;
-+	}
-+
-+	link = bpf_map__attach_struct_ops(skel->maps.class_switch_stall_ops);
-+	if (!link) {
-+		SCX_ERR("Failed to attach scheduler");
-+		goto out;
-+	}
-+
-+	pid = fork();
-+	if (pid == 0)
-+		child_main(to_child[0], from_child[1]);
-+	if (pid < 0) {
-+		SCX_ERR("Failed to fork");
-+		goto out;
-+	}
-+	skel->bss->target_pid = pid;
-+
-+	if (!wait_for_sleeping(pid) || !set_policy(pid, SCHED_EXT)) {
-+		SCX_ERR("Failed to switch the child to SCHED_EXT");
-+		goto out;
-+	}
-+
-+	/*
-+	 * Keep the child waiting on the DSQ after it wakes up, and switch it to
-+	 * SCHED_OTHER while it's still waiting.
-+	 */
-+	skel->bss->park_ns = 0;
-+	skel->bss->park = true;
-+	if (write(to_child[1], "a", 1) != 1 || !wait_for_parked(skel, 1)) {
-+		SCX_ERR("The child wasn't parked");
-+		goto out;
-+	}
-+	if (!set_policy(pid, SCHED_OTHER) || !read_byte(from_child[0], 1000)) {
-+		SCX_ERR("The child didn't run after leaving SCHED_EXT");
-+		goto out;
-+	}
-+
-+	/* Let time pass while the child sleeps outside of SCHED_EXT. */
-+	if (!wait_for_sleeping(pid)) {
-+		SCX_ERR("The child didn't block in read()");
-+		goto out;
-+	}
-+	usleep(OUTSIDE_MS * 1000);
-+
-+	/*
-+	 * Bring the child back and keep it waiting for longer than the watchdog
-+	 * interval, but shorter than the timeout. Its wait must start now, not
-+	 * when it started waiting before it left SCHED_EXT.
-+	 */
-+	if (!set_policy(pid, SCHED_EXT)) {
-+		SCX_ERR("Failed to switch the child back to SCHED_EXT");
-+		goto out;
-+	}
-+	skel->bss->park_ns = PARK_MS * 1000000ULL;
-+	skel->bss->park = true;
-+	if (write(to_child[1], "b", 1) != 1 || !wait_for_parked(skel, 2)) {
-+		SCX_ERR("The child wasn't parked again");
-+		goto out;
-+	}
-+	/*
-+	 * A stall is detected up to a watchdog interval after the timeout. Wait
-+	 * long enough for it to be reported by the exit info below.
-+	 */
-+	if (!read_byte(from_child[0], 2 * TIMEOUT_MS)) {
-+		SCX_ERR("The child didn't run after the second wait");
-+		goto out;
-+	}
-+
-+	/*
-+	 * Only the watchdog aborting the scheduler lets the child run before
-+	 * it's released. The exit info is recorded asynchronously, wait for it.
-+	 */
-+	if (skel->bss->nr_released != 1)
-+		SCX_TIMED_WAIT_UEI(skel, uei, 1000);
-+
-+	if (UEI_EXITED(skel, uei)) {
-+		SCX_ERR("Scheduler exited (kind=%llu): %s",
-+			(unsigned long long)skel->data->uei.kind,
-+			skel->data->uei.msg);
-+		goto out;
-+	}
-+	if (skel->bss->nr_released != 1) {
-+		SCX_ERR("The child was released %llu times, expected 1",
-+			(unsigned long long)skel->bss->nr_released);
-+		goto out;
-+	}
-+
-+	status = SCX_TEST_PASS;
-+out:
-+	if (pid > 0) {
-+		kill(pid, SIGKILL);
-+		waitpid(pid, NULL, 0);
-+	}
-+	if (link)
-+		bpf_link__destroy(link);
-+	for (i = 0; i < 2; i++) {
-+		if (to_child[i] >= 0)
-+			close(to_child[i]);
-+		if (from_child[i] >= 0)
-+			close(from_child[i]);
-+	}
-+	return status;
-+}
-+
-+static void cleanup(void *ctx)
-+{
-+	struct class_switch_stall *skel = ctx;
-+
-+	class_switch_stall__destroy(skel);
-+}
-+
-+struct scx_test class_switch_stall = {
-+	.name = "class_switch_stall",
-+	.description = "Verify that leaving SCHED_EXT ends a task's wait",
-+	.setup = setup,
-+	.run = run,
-+	.cleanup = cleanup,
-+};
-+REGISTER_SCX_TEST(&class_switch_stall)
+Andrea Righi (3):
+  sched/core: Avoid requeueing a singleton balance callback
+  sched_ext: Use irq_work for deferred actions with proxy execution
+  sched_ext: Remove the foreign CPU check from the kick_sync wait
 
-base-commit: e2859566ffbc3a9f33308255114ccf167124e048
--- 
-2.56.0.212.g129ede20d9-goog
-
+ kernel/sched/ext/ext.c | 18 +++++-------------
+ kernel/sched/sched.h   |  3 ++-
+ 2 files changed, 7 insertions(+), 14 deletions(-)
