@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792520523;
-	b=JVMJC9yBaw9M/w0K10uXqVJ/yz6ZIttDXohqaFsmkvJmOocRxfd0DvTl503O6mqPBoC/
-	 xch1yB0maHkPRj9UcETH0fEv2Y4Rw2BU6jqVIjJ5NewII/DxLIVzCicdnSWtUj4U5JWTu
-	 6fbnDwuTs30LjrRV/eZVZsb1I1tgCn8ykjgUW1Lp+hCNtVS/+Ktw76aU3rqnUXYfKqXzI
-	 jp5jbxOBklr0qOVsuSqiUhMaxEm4dJ6x9d8T41PSnBguz5sA0hEt5IJnMGyhSngC3WEIY
-	 oE4YsqmfjmVE6VrP5Unc1WlBoB0/+Nf52Kb8O5lfZn7CbJ0nEIzCOUgPciWubHmAtiA==
+	t=1792522821;
+	b=GVUDM0VGgd36qu2px6H3dQqHiBaa7LLTYYI0QzYLsGKhBxmKlFOBkVjQgUa1j099XN83
+	 68LWYcjAbG5TEw1Ep6BPtKdjGMQnMqn4xnfVKQyvXZzvLUSH1bzVJ8MOpdbbYA6QKH3lX
+	 mFsITPgdt7AMLQyLnyGFqoYEMaxCQEUUe5AbsVCz5jP8wK5N2soGzHvVHo889oe7AetBW
+	 jo71vA6iUB+H8q1uxp+nke8sTQjXFuoIU5iexSE5rcjgCJ/XPlH6SSHSPvvJvfe5lmyLj
+	 RSjjjsbjYUBtcJScWiTz/jMErfwJNNj+rApazZqCETrnrUf+TpxVWSgkfYfQ5VyhXfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792520523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792522821;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References;
-	bh=60a0/HLjQTWhu7YxyY2UEEVoE9Eqcv8bbTKkNoYxrVU=;
-	b=Wd9BpEnJ3i4Bdm2KhSEXIxhcBQsUO0m6+FK8BNuqAz0UuCZFlecSecm9hTPkoSCGpCwx
-	 +SxhK1+XvNConRGoNezL0LuxWJZyGboMdaM2TnHQRf4wJcaREiKAhICnQXpcF5o/8PQEp
-	 fUeO/r1q7/ZAgBstwFf0IBV+lycQ6VQ0+qECepRPuzGEXRkHjf9cfUVHk3MOg6X7crn6b
-	 amxKeHAuX3eWofQEgYRNrTo1TmQc2jubngAjk+0NGGeg2YzedrfhVrjMZ7Std8Gvuje1l
-	 1ceAJzXOxdnPTxa5TuuEM1BRLNseym3KFOaWuL7ggA8ofdfW7JddIFNgZv5rexU9zqw==
+	bh=lgkDz6HUhM8jgb8b71HsHBngoPIuP4S4i7blBH75xRo=;
+	b=k/BkJIJsk53PFJFOz2FfOtLwI/a2fs7iLKrqV/mXaIoGuCsgMDDpfIfZQ2CSHrds89KI
+	 T1fpDl9w0C+jOVKEeIGyFvNbKu7Ug1x/5GMVbGt6IyTT7RATKU5WSOstIibosqd+jxLyH
+	 77HCyWV+8kqZgUcveozmTFrPHEcL1J7uDtgg1wubMX1Oe3WfYpezg2VfZT/HG1ONXsvXA
+	 kQIstEzKtM13eagmxrMSDZO3QgLo1FUxVHWR+vxMSPF/HZx6JNxNNSgXhH2Cq0moqXdPI
+	 ssidGxgzO0j9v4xvUWISXIry4AOIq/EQs+MWGGPHI0MrlR9wmnhFncd8WUNoGfkdoqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Sog+WkCk;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="B6fb3D/J";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C729606A319;
-	Tue, 20 Oct 2026 18:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA95606A329;
+	Tue, 20 Oct 2026 19:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Sog+WkCk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0AB1F000C9;
-	Tue, 20 Oct 2026 18:22:02 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B6fb3D/J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B1A1F000D3;
+	Tue, 20 Oct 2026 19:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792520522;
-	bh=60a0/HLjQTWhu7YxyY2UEEVoE9Eqcv8bbTKkNoYxrVU=;
+	s=k20260515; t=1792522821;
+	bh=lgkDz6HUhM8jgb8b71HsHBngoPIuP4S4i7blBH75xRo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Sog+WkCkOElzJIX4XVceOM/TY8SvtuNP2JIJCyUnao/31V0DNGKNAx1SVtejAJgpt
-	 giO4Ya0DDiah9C37M3CzhaxtrDieLBjTHV1nfCc+reKZp91PhANfkg41jTzau9Orz2
-	 WigB7SW14r/nMPrqUYV5Cd9mg3PMIa1E7JBSuIwFGds4sDIoYPlj1dr6ci9fUwYVhr
-	 6wuwj2pjSjlTEtPvFtC78NFvtzfRoaunwRA9G4D2qQZVhZSXJEIVQedKfOF26P5oXw
-	 ZMuSOj5I6lzt+SvUszm3yx7q6MscEPXdrZdtX/LFGWHN1qtr2FPw4faxr7MxVSoTOx
-	 3Ovqp3V1KKigQ==
-Date: Tue, 20 Oct 2026 08:22:01 -1000
-Message-ID: <3438e7928ab1bda677019ee77f40e3dc@kernel.org>
+	b=B6fb3D/JC1mAn4582Gu3ax6JNQ8HMxiyYGpSk5MuFjlaUDlqg96EbhNNnX/c3PloV
+	 BUun5EMS4M3znOwG/0UHC18dyoP+ejvM/oS7Xw6m+H+gTvd3Dsdmpbcr++jGNeHK4+
+	 R6aTQ9UTMpJVb6bNM4WyvZrC8OO7PKO6iuAyx9uSbGy9cH0xFc5w5IFxSf461zDjdS
+	 xs2rgOIPHBV7/sVBDMKxpbPE/1PIkGe2uTRXRRuBuQ12iE/Kzn3aiQPYuG2rRq9ZRo
+	 HhiRGpRwhYf7wLM2hTIAk1RwJnHtDGzAOdCVmbDiqb6i6zl8JpeWskmAPz4CHSHexd
+	 f5H4IMvrSRhsg==
+Date: Tue, 20 Oct 2026 09:00:20 -1000
+Message-ID: <ba9d879aa8b0474d09577b82a1d68940@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: Michal Blaszczyk <michalblk@google.com>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Kuba Piecuch <jpiecuch@google.com>,
-	sched-ext@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] selftests/sched_ext: Add class_switch_stall test
-In-Reply-To: <20261020075029.330343-1-michalblk@google.com>
-References: <20261020075029.330343-1-michalblk@google.com>
+To: Kuba Piecuch <jpiecuch@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>, David Vernet <void@manifault.com>,
+ Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>,
+ sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH sched_ext/for-7.4 0/5] sched_ext: Make ops.cpu_acquire/release() reliable
+In-Reply-To: <DM9V2QCIFVGI.3VSJXUCU94ICW@google.com>
+References: <cover.1792248922.git.jpiecuch@google.com> <20261019144807.1207781-1-jpiecuch@google.com> <657547efeaea54276c50a0c106399366@kernel.org> <DM9V2QCIFVGI.3VSJXUCU94ICW@google.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -62,7 +58,32 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 
-Applied to sched_ext/for-7.5.
+Hello, Kuba.
+
+On Tue, Oct 20, 2026 at 06:02:36PM +0000, Kuba Piecuch wrote:
+> That's true if the only thing you do from ops.cpu_release() is
+> re-enqueue the local DSQ. It may not be true if you're trying to do
+> other things like e.g. kicking the sibling CPU in scx_pair.
+>
+> Fixing ops.cpu_release() would let us get rid of the sched_switch hack
+> in scx_pair, which we know isn't perfect at detecting CPU preemption
+> by a higher sched_class.
+
+What I don't like about ops.cpu_acquire/release() is that they track
+whether the CPU is occupied by a sched_class higher than SCX, which seems
+a bit out of scope for a sched_class. Wanting to know that is fine, but
+it's global system state and would be better tracked by hooking into
+system events than built into sched_ext. I don't think the
+acquire/release semantics are a good fit for it either.
+
+> Part of my motivation is Google's BPF schedulers, which are composed
+> of subschedulers, and we explicitly track which CPU is owned by which
+> subscheduler. Having a reliable CPU preemption callback would help with
+> porting them over to sched_ext.
+
+If sched_switch isn't enough, how about adding a tracepoint which tracks
+the sched_class currently in effect on each CPU? That should cover both
+scx_pair and your use case, and would be useful outside sched_ext too.
 
 Thanks.
 
