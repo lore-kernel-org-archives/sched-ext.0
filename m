@@ -1,55 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.69
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792519062;
-	b=RiotqQSUXNbbz+Gp9NkA027AfO5AD6yeaJZ6KZdFFYDuu1flO/8Z2zcMR0SBxJORI4dO
-	 Cp+4tKTuufQF9MdMo6N5x/ty2r15cAOXF+InOP3FkeuhTRxtl3PN4cJxNliRsXp5DACMt
-	 6eUp+yTQfBdfeRJqpUoBr+h1KXB16ySMP6SBP+yHfhmPM4jUDLvB6xlNFJ5ViSjD/pTeh
-	 ZILT9ufgKqeoOHqQXrQV6QArEDQItsGzCEVSiTOG+K55OfqVWyxio6jcVJ75KExnXWvZR
-	 m7Ce2eB43+QyNs/m97w/FDQFyZzggPOw49wz5hVUimljJdJG/HTnYXq4HF2oWcqFYyw==
+	t=1792519359;
+	b=OmDnDYbk+Ju4Hc4zcppavAEDpQrWut1U8l3KNpG5lUSi/DAejNWjLZXG+DF3qoOTh0QH
+	 +SYDzgxeEmjvShQ+BTn+WjLw7aOqSk78J8V0wv7hQuuIiGM2qc5/F5y9f+479Yv1U3El/
+	 fShm7fieskUqggKXSFJBZ4gAfPhN7Bjmg5ET+nLF4+xHPyD6fwnIag6dpxG0PIc54ZdBL
+	 8/UcbecCCiXXaXJVJ9gYYLxJrRz4BsfhtJEkninb30dNqb1SXg8OMPA/cmSw/unEVTVkY
+	 31Z+yiLfVitBVYc0524EcStuvOB7+RepWOT6EhY27Wy4d7Qqy+ZtbKwXLXY3ELd6IOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792519062;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=IwRcxN7dEPpxHN2BvnbyAu/kgxSDCgwFr2QbOAAm33E=;
-	b=RXAFqDZC/ZWN5qdlpZIhpjysG9PAUWjHa2SAsZfmSt/u+2RaAWWF+xu9G5ufP1PBapB/
-	 kUv1oxFSTN8CS2qY1VUYT42Hl4yZzF0vnjHuuV9TbIgJdV44BkMPJqb4nYPg6oPzO8pfR
-	 5eRiNV8I5cVJWj4rlcXw5hY+QN1QlfOPwDiRe+2rpbBoS0/QSbfUH6ZIG2lboDlwan3Lm
-	 I66bQOar0dNyBc8Y0gMgf7oVMmDEnH6fpVSGb8upEMN+LaoUIjNtp5TqaBMitI2tsJSuL
-	 N3x+0xljusL2JhdxYNvnUDgGwvWG7XBqLR2ituL/l+nYw+8N/MknKZrfQF1nehgR8Gw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792519359;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:In-Reply-To:
+	 Mime-Version:References:X-Mailer:Message-ID:Subject:From:To:Cc:
+	 Content-Type;
+	bh=C8rpwcTwhR1wNZ4MDDmn36u6aY9QjfzBpyzkSNu0dN4=;
+	b=xNa1SvBI62iS4b78HokfAAAnsRYISzEdFg6oVdtSLAmSk/aHn4Qlzmsp4oPX17k06Ggv
+	 QUlFYRJr4AR92fkv7m02zxHMgYLgucVyLuES0V6AKdPyh9UugiPj7bSNa0WkqGqS7JE8O
+	 AzvY9b0DSYcJk2w342rlH7H21eoz5Xwbc9AmVr/x+ShazCNlQdTlc/ynZkDTkqvG2QKDv
+	 c/HxpiQ8zIkBN4kujUlnX2J/9+9OC+COCQY3pEKmwaxuhgWuGbdPWjScZ7bHh6xe4bU8L
+	 fZrxN90xjopPRFDGE6CkobC9brMiBb5PyDFlqrrWjWlmAIFqMwRQeiqWH+a26etN/ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=f6MVSwcr;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=j6srGwTV;
+	arc=none smtp.remote-ip=209.85.128.69
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com [209.85.128.69])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE0C606A31D;
-	Tue, 20 Oct 2026 17:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B67606A329
+	for <sched-ext@lists.linux.dev>; Tue, 20 Oct 2026 18:02:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7B67606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=f6MVSwcr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133B21F000C9;
-	Tue, 20 Oct 2026 17:57:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792519062;
-	bh=IwRcxN7dEPpxHN2BvnbyAu/kgxSDCgwFr2QbOAAm33E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=f6MVSwcrIjqLLTmrPAizy5bA4bTqYBQV57yFHQSw3YI+CYUXh4Phgib7ZcUgBOKU3
-	 yqftHN/2SG5ilFd9osBtCYQylpFbcJ60DK/3EAXDGNVsxItUY679rxVDAbS9UtAd92
-	 nDGoajyopa8ux8G50+u5unDEBUNhr4JYsnaBUF+fR86p9cwYfAZu1a5gYM14G6EPud
-	 Z0RHa5B1lFYZ9ac4BI/jKViDg/Qi44+73QUq4cM6btPCSNUJXFkI6SjewowPbAVl/P
-	 tDZPnvngeZHUzwSdRmaDk9zvFgnryNVRrHYXMm4Iy+X6aX9cvlfsqwD57eYpUj1lz3
-	 onYzXI1mUPUJg==
-Date: Tue, 20 Oct 2026 07:57:26 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: David Vernet <void@manifault.com>, Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>, sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] sched/core: Avoid requeueing a singleton balance
- callback
-Message-ID: <aterhhiPAi-Bib7Z@slm.duckdns.org>
-References: <20261020084400.845842-1-arighi@nvidia.com>
- <20261020084400.845842-2-arighi@nvidia.com>
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=j6srGwTV
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-4a17741243eso21204705e9.0
+        for <sched-ext@lists.linux.dev>; Tue, 20 Oct 2026 11:02:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1792519357; x=1793124157; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=C8rpwcTwhR1wNZ4MDDmn36u6aY9QjfzBpyzkSNu0dN4=;
+        b=j6srGwTVIUf4X/6mJ8vbDrdjGqsyrFs3u/RaqahvtptFyQrd5iQQ1nsahx+6Y7ioGC
+         p9FzOYo8wP6WvAm5Ju4Nt3jYHP10TwmgAANkCG74ZvE2PWn+N82V0oza+iMEIDzk3N5i
+         cnTbwitotRlODeQEteBhr1/FkVJ9jqWatxjmrpeC8xK0FR/9IDejYuDnq7PfGE6wUKJF
+         nP8N37oKttVXh9BV7ad1nuvMQVqJH3Eh0TuS6uah7d0Gjo1uAAtV7EGILb9qkkealNw+
+         pLgo/Vcu/8D4jtBvQvqbHF92NTC9jMx7qDW4BVm1IaAg2txutgEKYtGRrXmE95p+mfFK
+         dL8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792519357; x=1793124157;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=C8rpwcTwhR1wNZ4MDDmn36u6aY9QjfzBpyzkSNu0dN4=;
+        b=OHvxVZh7XypEjgJ+7e3zqfy/l1nJ4XECe1fFNGgTS+V5q0Ej/APNdTZg3RsSnZWj5+
+         5UB/CK5c4jjsC3S5CRdqQuswTHE9K7Bmm6JsTw14RE2zsb/0jzrfITvCt+ezKmWhKWCE
+         xQZGSkMHaaYAfMIFnYzcaVaLPZFTQWeewTVYNYHw8jILY8sTxw66hcEpsBzNqHa49pnO
+         cOQHi1rT41cX0/RRZCmcYdHuzPEuR5HrsoxG0i6f4eM517Gzta6E2O138AgiXPYYx4By
+         RL8qMDdRXw7KkPdaZvgIB0FJaelywBJpNMMoU2FYsvly4rHLmxmjP9G2ZXNtE7hlUf64
+         MWaA==
+X-Forwarded-Encrypted: i=1; AKwUvByxsW9BaGau/gDr7TTJ66rGy1f87aanL5jOF32/C7T5jZIue8jEeqc7yBLkTExvwMGRzPYZe/ndJBg=@lists.linux.dev
+X-Gm-Message-State: AFq9FYLh6HaKtupG6Ryj3fb7VrmDSe6D/o1chcubBg8gO22PO4T0bzNT
+	rz/8k9aleQlpR4fuVaeuHNhmDbM29CdVbeabYnM0NS5mUfDi0DeK7dz0v+bXy7BQRwkwQDTq+Bv
+	Xym8SFYiS2icqHA==
+X-Received: from wmfv5.prod.google.com ([2002:a05:600c:15c5:b0:4a1:b6ba:c116])
+ (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:600c:6289:b0:4a1:dadf:9876 with SMTP id 5b1f17b1804b1-4a1dadf98d1mr226083295e9.23.1792519356899;
+ Tue, 20 Oct 2026 11:02:36 -0700 (PDT)
+Date: Tue, 20 Oct 2026 18:02:36 +0000
+In-Reply-To: <657547efeaea54276c50a0c106399366@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -58,33 +78,55 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261020084400.845842-2-arighi@nvidia.com>
+Mime-Version: 1.0
+References: <cover.1792248922.git.jpiecuch@google.com> <20261019144807.1207781-1-jpiecuch@google.com>
+ <657547efeaea54276c50a0c106399366@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DM9V2QCIFVGI.3VSJXUCU94ICW@google.com>
+Subject: Re: [RFC PATCH sched_ext/for-7.4 0/5] sched_ext: Make
+ ops.cpu_acquire/release() reliable
+From: Kuba Piecuch <jpiecuch@google.com>
+To: Tejun Heo <tj@kernel.org>, Kuba Piecuch <jpiecuch@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>, David Vernet <void@manifault.com>, 
+	Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, <sched-ext@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Oct 20, 2026 at 10:43:19AM +0200, Andrea Righi wrote:
-> With proxy execution, __schedule() can call set_next_task_scx() with
-> SNT_REPICK and then SNT_PICK for the same donor. Both calls queue the
-> kick_sync balance callback while kick_sync_pending remains set.
-> 
-> When the callback is the only list entry, its next pointer is NULL, so
-> the existing duplicate check misses it. Queueing it again links it to
-> itself and causes the wait to run twice.
-> 
-> Also check whether the callback is already the head of the list to
-> reject the second insertion.
-> 
-> Fixes: e2859566ffbc ("sched_ext: Queue the kick_sync wait from set_next_task_scx()")
-> Reported-by: Tejun Heo <tj@kernel.org>
-> Link: https://lore.kernel.org/r/08cac02c604dd73ef96fc92eb29d692b@kernel.org
-> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Hi Tejun,
 
-Can you resend this to Peter? Please feel free to add
+On Tue Oct 20, 2026 at 12:31 AM UTC, Tejun Heo wrote:
+> I don't really see a lot of utility in ops.cpu_acquire/release(). As it
+> currently stands, it doesn't add anything that can't be covered by IMMED,
 
- Acked-by: Tejun Heo <tj@kernel.org>
+That's true if the only thing you do from ops.cpu_release() is
+re-enqueue the local DSQ. It may not be true if you're trying to do
+other things like e.g. kicking the sibling CPU in scx_pair.
 
-Thanks.
+Fixing ops.cpu_release() would let us get rid of the sched_switch hack
+in scx_pair, which we know isn't perfect at detecting CPU preemption
+by a higher sched_class.
 
--- 
-tejun
+> and given how asynchronous the events are, I'm not sure an edge-triggered
+> view of CPU availability is particularly useful. IMMED works because it's
+> something the kernel can check and enforce. If there are holes in it,
+> let's plug them, but I don't think the holes justify keeping or updating
+> ops.cpu_acquire/release().
+
+ops.cpu_acquire() is synchronously invoked in the dispatch path, and
+ops.cpu_release() would be invoked when the sched_class of rq->donor
+goes above ext_sched_class, so either in __schedule() or when changing
+the sched_class of a running task. It doesn't strike me as particularly
+asynchronous.
+
+Part of my motivation is Google's BPF schedulers, which are composed
+of subschedulers, and we explicitly track which CPU is owned by which
+subscheduler. Having a reliable CPU preemption callback would help with
+porting them over to sched_ext.
+
+> Can you please send the IMMED fixes separately?
+
+Will do.
+
+Thanks,
+Kuba
+
