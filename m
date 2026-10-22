@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792705118;
-	b=VULxZ0468a9aYyHRnWNtrkrS7Q0UFZT+Yd4P4xK1zQ+cwuPeY9m+LZIsF4LsQv2ZwoXC
-	 tzv9/RVL25BHgHIReYCvDSoIKmtDK1zNJvr6mTCO4VGWn+OBYqDb/xoGiheoxBVtjDxTL
-	 4DarEtlelG/+bOiTNVliPXw3Lr40oCf03ne7QCAo6tcvErPKEZ1xcQE6mUmiH9htR4rph
-	 GPxLtCH8SkWRP5erEyKlqJONCJX7GJAsLNgkdY7tcBXldCeb1Gbg9pRRx/6Q97FqlDiFn
-	 2gaa+6qmwZKyUlAXKbwzc/kYS2TvDz4LvH/mQcEl6wYjWLQVRvVEnXDyYI3PjcBsI7g==
+	t=1792705119;
+	b=S1gUAZLb7Ne8lD7yW3YR8oT9syPZwo94a3eA3/VKT4pTLTtRctQ+hMyXyGTHwfubH937
+	 /OwtUzGijYpT6RaCGCgeWYV4kyUwQK6A7Wbq/4v1+37A39ZTv7iL4fazm6jy5TPBBfUFo
+	 cLBQSwrkjE58th9nkTOSY7/KS/g8iq8DJ5E9IxbLMFqmTFQPSuIKFqNKziZKnwR6jJtEl
+	 AT7k6ZrBb5WegF6LPcOXyv+JM6X+M752PL23vUy/ySCJvp9HI41sbujk/gfrJhwyJgG/u
+	 IKrK6v+C1Pw/ZCTnV2Mtjg0Ki46dg0+xdaZbqtsn0IHMS953BIh7XeZlA6IrqC/VgPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792705118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792705119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=n+YjkxMsXC9SlMtlyl+JGAKtKmpwYJYkOLfhktvnxxE=;
-	b=Cz8oe+Ie9K/R6xAIfbUjTAAt5j3rYDsKeW0/RLNrkpuT9IXAgXgH/cbRQZ0bU/NaGPpI
-	 zokCOwS++9Gnt/JFhiGQQ2dmlMT3ucCIFrMSc3U+40/X0IAGOA3iigfWDEZgVQ9cnzkKu
-	 u3Dfs+IOoI2qFep7krjM/LHm6QtR6lADpHk6jpKz3IOZUJuXYBPCIBiNbs4R/98jucJ94
-	 6CM+oBVvnf4EPZH7GDEjGs8GZRv7ZYYyPu+MHeqHEVAuay9GXoYJoLMOQ/HupJyoQumuv
-	 RKwO+To89+LEVjiOj/8Gc5NNZfEblRs+RW6n9xkfu4bdvUUGHdOKd2M0ZmZyII3/IMQ==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=OuFRntLsKWVkhln7NLPq021dG4sakpiOgmRybSJ2J70=;
+	b=QKHWirsxi9e3VQjgrrFX3GpV6d4Azq6bNnZ+CnNhs/pa521xbyLWug2W86yj4lVHKLsR
+	 XzZA9XmvwpDjADeefWRjgGtoWtpbxyVkzO82vK+skhJa04OCTXsL+FSx5WiHk1QpNs28y
+	 z8+yEiAOiol1pMPTMkZI+3LxZHuRic15wXS4JQBuaU8u/PMgDlgY4IwrsbJuOh/i9NVXQ
+	 WzdjRlopcd0A9Mlx/XjVdrRFqTv16rDAu6Aiyb9v3kUJ9uSfHUTqEqvjseVbpTaR5FIHG
+	 4Du0RZ7gfIjHRwnMOVBiTZvj/Vp0VpwSQB85S/N0a0XjR74TqE5WIQvWI2QbT79UFkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MZElVSnH;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kSD39q6u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B67606A31A;
-	Thu, 22 Oct 2026 21:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E4C606A321;
+	Thu, 22 Oct 2026 21:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MZElVSnH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8441F01825;
-	Thu, 22 Oct 2026 21:38:37 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kSD39q6u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5131F01825;
+	Thu, 22 Oct 2026 21:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792705117;
-	bh=n+YjkxMsXC9SlMtlyl+JGAKtKmpwYJYkOLfhktvnxxE=;
-	h=From:To:Cc:Subject:Date;
-	b=MZElVSnHTfzHt4OpTfMLAlQjib5EjoblP8NjWM/qqRGdUf+t5qgea+7J13aAMJwTk
-	 zMIko2sjPGBfmn8ccOi0csqimCHX2fhoDDPyRyJw/k8zBgr48xU2ISHEpvrIa3oRKF
-	 g6EzniDpp1ot2sKoedczJW0EXZo35gUAujaBxneL84k0tTdS3cr+xrgPgDSDKvBjgS
-	 CMbZnz98Bh2C1DKTzGn26bqJVkPMCTcXrp/H7TDts1SgPkKAHLyWAcVhiv0da0ya53
-	 8EoRrmzr34SIhgDRDD8/mcAn83Jlh/sDQC5aEfoFR6DGnTPn1evJmKl9q4dmY43V5u
-	 r960/+1RjxrIA==
+	s=k20260515; t=1792705118;
+	bh=OuFRntLsKWVkhln7NLPq021dG4sakpiOgmRybSJ2J70=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=kSD39q6uEYfGJjrFFV9LOsddZmhafa0ynYmA70IHa3zJeHfjW/VhTDwWwuLa1b34M
+	 WRYkoqqoHq+hIEN09nwjSNiLoJHAQ9BNj9smlKq/o4Gvb6IJkgjctMJjKng0nmCU3R
+	 etOecexHOer0S7ujdhpjhqQahZtL746OgxnBOXxjmnWlvr0hSD8IoysVTTH+3rxRoG
+	 cKLlCUD9yfpzQrFaoGlgn8koFz/fF4tb05AmBH5fNyhbs0/dAIYOSCJg1GqNdIJbBk
+	 t4lTCdDfBxhxRO121OaPnYDXF+MpmFpI/nsUZkUMo/0B1O5W3dYVYLWaBFu5XlaZL3
+	 uOKUY/nD9fuxg==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -48,10 +48,12 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCHSET sched_ext/for-7.4] sched_ext: Fix bypassed sub-scheduler tasks stalling when the host lacks caps
-Date: Thu, 22 Oct 2026 11:38:22 -1000
-Message-ID: <20261022213836.2259069-1-tj@kernel.org>
+Subject: [PATCH 01/14] sched_ext: Pack scx_ent_flags' multi-bit fields at the top
+Date: Thu, 22 Oct 2026 11:38:23 -1000
+Message-ID: <20261022213836.2259069-2-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261022213836.2259069-1-tj@kernel.org>
+References: <20261022213836.2259069-1-tj@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -63,95 +65,116 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+The following patches add a flag for a kernel-owned slice to scx_ent_flags.
+The two 3-bit fields, the task state at bits 8 to 10 and the reenqueue
+reason at bits 12 to 14, sit right above the single-bit flags, so the new
+flag would have to take bit 11 or 15, out of sequence with the rest.
 
-A bypassing sub-scheduler's tasks run through the per-cpu bypass DSQs of
-its host, the nearest ancestor that is not bypassing. Caps are per cpu, and
-a cpu's dispatch descends into a scheduler only where it holds
-SCX_CAP_BASE, so a bypass DSQ on a cpu where the host lacks BASE is never
-consumed. Bypass placement and the bypass load balancer ignored that. A
-bypassed task could be queued or moved onto such a cpu and sit there until
-the host regained the cap or the bypass window ended, and a host holding
-BASE but not ENQ looped a bypassed task between its bypass DSQ and the
-reject drain instead of running it.
+Pack the fields at the top of the word, below SCX_TASK_CURSOR, the state at
+bits 25 to 27 and the reason at bits 28 to 30, so that the single-bit flags
+continue from bit 8.
 
-The fixes make SCX_CAP_BASE the one cap a bypassed task needs and keep
-bypassed tasks off the cpus where the host lacks it. A bypass consume puts
-the task on the cpu being dispatched for, to run right away, which is what
-BASE grants. Where the host lacks BASE on a task's cpu, the task runs under
-rescue at bounded bandwidth instead of waiting for a dispatch that can't
-reach it. The bypass load balancer spreads tasks over the cpus where the
-host holds BASE only, and when the host loses BASE on a cpu it drains that
-cpu's bypass DSQ to the cpus that can still run the tasks, or sends them
-home to be placed again.
+The renumbering changes the values a BPF scheduler reads from p->scx.flags.
+Nothing in the kernel or the in-tree schedulers hardcodes the numbers. The
+enum ABI table in tools/sched_ext/include/scx/enums_abi.autogen.h, kept for
+repairing enum values that a kernel's BTF truncates, is regenerated for the
+two fields. In the scx repository, scx_eevdf tests SCX_TASK_REENQ_IMMED and
+SCX_TASK_REENQ_PREEMPTED against SCX_TASK_REENQ_REASON_MASK. Those three
+names belong in its load-time enum table, so that they follow the running
+kernel. No behavior change.
 
-Running bypassed tasks under rescue leans on the rescue slice harder than
-before and exposed gaps there: a cpu could go idle with a runnable rescuee
-queued on it, the kernel's own slice writes under bypass served the grant a
-tick at a time, and a scheduler could extend the grant past the rescue's
-bandwidth. The grant is now a kernel-owned slice that the kernel's slice
-housekeeping leaves alone and schedulers can shorten but not extend, and a
-cpu no longer idles over a runnable rescuee.
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ include/linux/sched/ext.h                     | 11 +++++---
+ .../sched_ext/include/scx/enums_abi.autogen.h | 28 +++++++++----------
+ 2 files changed, 21 insertions(+), 18 deletions(-)
 
-Tested with a three-level hierarchy cycling bypass under pinned spinners,
-fork and context-switch storms, with caps revoked under queued tasks. The
-balancer's remote move and the drain were exercised, and the holding_cpu
-handshake, the cap-revoke placement and the rescue keep were model checked
-for small cpu counts.
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index efd635a99309..b341c328948e 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -107,7 +107,10 @@ enum scx_ent_flags {
+ 	SCX_TASK_RUN_TRACKED	= 1 << 7, /* task is in an ops.running()/stopping() session */
+ 
+ 	/*
+-	 * Bits 8 to 10 are used to carry task state:
++	 * The multi-bit fields are packed at the top, below SCX_TASK_CURSOR, so
++	 * that the single-bit flags stay contiguous from bit 0.
++	 *
++	 * Bits 25 to 27 are used to carry task state:
+ 	 *
+ 	 * NONE		ops.init_task() not called yet
+ 	 * INIT_BEGIN	ops.init_task() in flight; see sched_ext_dead()
+@@ -116,7 +119,7 @@ enum scx_ent_flags {
+ 	 * ENABLED	fully initialized and in sched_ext
+ 	 * DEAD		terminal state set by sched_ext_dead()
+ 	 */
+-	SCX_TASK_STATE_SHIFT	= 8,
++	SCX_TASK_STATE_SHIFT	= 25,
+ 	SCX_TASK_STATE_BITS	= 3,
+ 	SCX_TASK_STATE_MASK	= ((1 << SCX_TASK_STATE_BITS) - 1) << SCX_TASK_STATE_SHIFT,
+ 
+@@ -128,7 +131,7 @@ enum scx_ent_flags {
+ 	SCX_TASK_DEAD		= 5 << SCX_TASK_STATE_SHIFT,
+ 
+ 	/*
+-	 * Bits 12 to 14 are used to carry reenqueue reason. In addition to
++	 * Bits 28 to 30 are used to carry reenqueue reason. In addition to
+ 	 * %SCX_ENQ_REENQ flag, ops.enqueue() can also test for
+ 	 * %SCX_TASK_REENQ_REASON_NONE to distinguish reenqueues.
+ 	 *
+@@ -139,7 +142,7 @@ enum scx_ent_flags {
+ 	 * CAP		sub-sched cap miss, see p->scx.reenq_reason_*
+ 	 * PROXY	proxy state prevented a remote DSQ transfer
+ 	 */
+-	SCX_TASK_REENQ_REASON_SHIFT = 12,
++	SCX_TASK_REENQ_REASON_SHIFT = 28,
+ 	SCX_TASK_REENQ_REASON_BITS = 3,
+ 	SCX_TASK_REENQ_REASON_MASK = ((1 << SCX_TASK_REENQ_REASON_BITS) - 1) << SCX_TASK_REENQ_REASON_SHIFT,
+ 
+diff --git a/tools/sched_ext/include/scx/enums_abi.autogen.h b/tools/sched_ext/include/scx/enums_abi.autogen.h
+index 1186daa9cb14..05a460611c4d 100644
+--- a/tools/sched_ext/include/scx/enums_abi.autogen.h
++++ b/tools/sched_ext/include/scx/enums_abi.autogen.h
+@@ -120,24 +120,24 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
+ 	{ "scx_ent_flags", "SCX_TASK_IMMED", 0x20LLU },
+ 	{ "scx_ent_flags", "SCX_TASK_PROTECTED", 0x40LLU },
+ 	{ "scx_ent_flags", "SCX_TASK_RUN_TRACKED", 0x80LLU },
+-	{ "scx_ent_flags", "SCX_TASK_STATE_SHIFT", 0x8LLU },
++	{ "scx_ent_flags", "SCX_TASK_STATE_SHIFT", 0x19LLU },
+ 	{ "scx_ent_flags", "SCX_TASK_STATE_BITS", 0x3LLU },
+-	{ "scx_ent_flags", "SCX_TASK_STATE_MASK", 0x700LLU },
++	{ "scx_ent_flags", "SCX_TASK_STATE_MASK", 0xe000000LLU },
+ 	{ "scx_ent_flags", "SCX_TASK_NONE", 0x0LLU },
+-	{ "scx_ent_flags", "SCX_TASK_INIT_BEGIN", 0x100LLU },
+-	{ "scx_ent_flags", "SCX_TASK_INIT", 0x200LLU },
+-	{ "scx_ent_flags", "SCX_TASK_READY", 0x300LLU },
+-	{ "scx_ent_flags", "SCX_TASK_ENABLED", 0x400LLU },
+-	{ "scx_ent_flags", "SCX_TASK_DEAD", 0x500LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_SHIFT", 0xcLLU },
++	{ "scx_ent_flags", "SCX_TASK_INIT_BEGIN", 0x2000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_INIT", 0x4000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_READY", 0x6000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_ENABLED", 0x8000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_DEAD", 0xa000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_SHIFT", 0x1cLLU },
+ 	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_BITS", 0x3LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_MASK", 0x7000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_MASK", 0x70000000LLU },
+ 	{ "scx_ent_flags", "SCX_TASK_REENQ_NONE", 0x0LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_KFUNC", 0x1000LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_IMMED", 0x2000LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_PREEMPTED", 0x3000LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_CAP", 0x4000LLU },
+-	{ "scx_ent_flags", "SCX_TASK_REENQ_PROXY", 0x5000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_KFUNC", 0x10000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_IMMED", 0x20000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_PREEMPTED", 0x30000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_CAP", 0x40000000LLU },
++	{ "scx_ent_flags", "SCX_TASK_REENQ_PROXY", 0x50000000LLU },
+ 	{ "scx_ent_flags", "SCX_TASK_CURSOR", 0xffffffff80000000LLU },
+ 	{ "scx_exit_code", "SCX_ECODE_RSN_HOTPLUG", 0x100000000LLU },
+ 	{ "scx_exit_code", "SCX_ECODE_RSN_CGROUP_OFFLINE", 0x200000000LLU },
+-- 
+2.56.0
 
-Based on sched_ext/for-7.4 (1f5dde349ac2).
-
-This patchset contains the following 14 patches.
-
- 0001 sched_ext: Pack scx_ent_flags' multi-bit fields at the top
- 0002 sched_ext: Clear holding_cpu where the claim is confirmed
- 0003 sched_ext: Fix bypassed tasks looping on a host without SCX_CAP_ENQ
- 0004 sched_ext: Move refill_task_slice_dfl() below apply_slice_vtime()
- 0005 sched_ext: Restore a rescuee's slice after ops.stopping()
- 0006 sched_ext: Fix a cpu idling with a runnable rescuee
- 0007 sched_ext: Mark the rescue grant as a kernel slice with SCX_TASK_KERNEL_SLICE
- 0008 sched_ext: Refuse extending a kernel slice
- 0009 sched_ext: Fix a cpu idling after put_prev_task_scx() queues its task on the local DSQ
- 0010 sched_ext: Fix bypassed tasks stalling when the host lacks SCX_CAP_BASE
- 0011 sched_ext: Fix the bypass load balancer stranding tasks on cpus where the host lacks SCX_CAP_BASE
- 0012 sched_ext: Factor out bypass_lb_move() and insert with the donor DSQ unlocked
- 0013 sched_ext: Let the bypass load balancer move tasks homed on other cpus
- 0014 sched_ext: Fix queued bypassed tasks stalling when the host loses SCX_CAP_BASE
-
-The patches are organized as follows:
-
-- 0001-0002 prepare: pack scx_ent_flags' multi-bit fields at the top so
-  that the single-bit flags stay contiguous, and clear holding_cpu where
-  the claim is confirmed.
-- 0003 consumes bypass DSQs with SCX_ENQ_IMMED, so that a host with BASE
-  but not ENQ runs its bypassed tasks instead of looping them.
-- 0004-0008 fix the rescue slice handling that bypassed tasks under rescue
-  depend on: restore the remainder after ops.stopping(), keep a cpu from
-  idling with a runnable rescuee, mark the grant as a kernel slice that
-  the kernel's slice writes leave alone, and refuse extending it.
-- 0009 reschedules a cpu after put_prev_task_scx() queues its task on the
-  local DSQ through the plain insert too.
-- 0010 sends a bypassed task to rescue when the host lacks BASE on its cpu.
-- 0011-0014 make the bypass load balancer cap-aware: capacity and donees
-  from BASE cpus only, a factored-out move that inserts with the donor DSQ
-  unlocked, moves of tasks homed on other cpus, and the drain of a cpu's
-  bypass DSQ when the host loses BASE there.
-
-The patchset is also available in the following git branch:
-
- git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git bypass-caps
-
-diffstat follows. Thanks.
-
- include/linux/sched/ext.h                       |  22 +-
- kernel/sched/ext/ext.c                          | 487 +++++++++++++++++-------
- kernel/sched/ext/inlines.h                      |  15 +-
- kernel/sched/ext/internal.h                     |  12 +-
- kernel/sched/ext/sub.c                          |  57 ++-
- kernel/sched/ext/sub.h                          |  16 +
- tools/sched_ext/include/scx/enum_defs.autogen.h |   1 +
- tools/sched_ext/include/scx/enums_abi.autogen.h |  29 +-
- 8 files changed, 458 insertions(+), 181 deletions(-)
-
---
-tejun
