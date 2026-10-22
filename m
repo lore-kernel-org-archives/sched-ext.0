@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792706169;
-	b=Tgo51axWG5rm0nmcbMh6IMKn4rB6rwM5/Lew2okzLE3oCZUJyrIGRzAgZuemSkaXTbys
-	 N8RjA4t2VBRbL1QECIbsLkJaZBFmnI1lkZ8qQiIFkneF6vhMKivTihCw3jTwJDDH9XdSS
-	 QVzg43hd/YWpM04GclrbNgNrG8gLWole/YNxAL+DiJ/h3tjv6+UxRuhc3pEnt4CinXsPA
-	 m5SrC9OOYkWUKn1SZsL07RiiATp5gRDKbNJJ9ibzPTiqzLQ+f6GLziVCVxCo7V9BisGkG
-	 dXOiG2YVGQBMa8CO4j2NLrKcAMCctezd9aM47C7j6Kw7BGwrS10PZOxpRNl9joHiLGQ==
+	t=1792706645;
+	b=mLeXPNi3Fg4fiHlhfP0jzA4lR8UxqO5eEuq663mN0Vohv39mHGDWJctT/G1WVoaRZ5S1
+	 6koN1xQ6B60xAF3rTH49ryWsdxa6082nkVj6nHLLHuCcea29sa5tkaa5Is2oJ3etx0avX
+	 SCT4me7ekffXpnHBzeVkVQ58I4x9LCsSjvYYgHiZEw3wEiN/xS0MlnPgSsWAyyq1q1Dsa
+	 slGse+r8VlQI9WQ9dxREnS1zeoavzpPKJFuYLbdEof6BRf9q+OtQvnuR3iLs4nqNzeIP6
+	 4/vy8mAyulX3F7QDxu64N7CCPQy5SwIPaIOKHwYjkzRAX/Dm9co1IDJsNXumhxbugbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792706169;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792706645;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=ups1s11vrWEtEO9z9HN269lSB+icY81yubi41Edvn1s=;
-	b=Lyqphv8CG81tZ1UjqaVgOEFIxpyVV3ELu/qwVBtR8CF1b6gMwOjBeeShN9xow1i6soTK
-	 jLDanU8qSRmLSToJobSxBQzMQUhAqhEsXVQqFg0KT1QUS5L7Y/0L6kXYBdQrIDe7T4YMq
-	 K8rgRyLihn0UOa8LU00baRK/quXhtuw/MQqTViqiB6JUn6fqJ2mZWrr7KIi7tnzHcPe6p
-	 8ip3a3LNhjmGerWfnHqCKpKiOIOMSMojDmw+Q0HoHPHRqYer5c9STO57Rupp+QSKvt4sh
-	 SsROJBYWFodA4ktVGJCYycG42k7L2mR6r2SVFvDIMoDqDRxAT84iiULAwl34ARIHmOQ==
+	bh=hKF7zSJmJekh6vYlmBJ8ryuL/xyFXt8HgISnJ4u2xA8=;
+	b=PygSjHhp4oF8TYCOtGVI9rvvMzSHv1jTpYF76UHTCI89CSjOe0bNFGD/J8/KeYfGRs2o
+	 Xl5HyQrylqX/BrSXKHPc4vt+jRba2T9nefI1FzUiEl82HM32Lo8Eg+RwhDtb6rB5DT4ur
+	 1rjqmQXgDHNsseWnQ5S45LC4RL2fE8aYH03n23FAUQbgk/ot4KI7ABh0gxHTS7076mwbJ
+	 pepYuIVEy3SlRbYEI3dwLGcBKC2VhYu+IA6hebmg4UN9p1ZHECizIEOdSEQ7PXMtmcxe1
+	 zwPEORrt96UDuONvUQvnAcs/MsIiYumGVkISJbp1NpnM5DBt7/17pYDAbM6cYZfUi1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h8Cs9o3O;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="SnJoWxT/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085CC606A31A
-	for <sched-ext@lists.linux.dev>; Thu, 22 Oct 2026 21:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE83606A319
+	for <sched-ext@lists.linux.dev>; Thu, 22 Oct 2026 22:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h8Cs9o3O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3EF1F01825;
-	Thu, 22 Oct 2026 21:56:08 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SnJoWxT/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3941F01825;
+	Thu, 22 Oct 2026 22:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792706168;
-	bh=ups1s11vrWEtEO9z9HN269lSB+icY81yubi41Edvn1s=;
+	s=k20260515; t=1792706644;
+	bh=hKF7zSJmJekh6vYlmBJ8ryuL/xyFXt8HgISnJ4u2xA8=;
 	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
-	b=h8Cs9o3Ofl2AkFHZhYZzMPYC+WPmNt0AeiRr3ON2Dzw3oaEku2gyTfi0aYNxM/WQH
-	 xiPPz3OEJ2WgM4fRwUYFP5X3qyMh/bHDkScxRh1Vj8I4GrimsfA5DXhXpjW92ycAAN
-	 MtxeP1rxC40cX+fAVqq/hIxP3Wl/cb4f7mdqGFxaUNUm9Z/xmL+tXusXf/Wkp4DTtu
-	 RiJ1c4SAWmLS8GmkzGAH9o5OrOfLR/ogNiXdtpRn/l+PlccmzIb6dM1xVbh2V/JjFc
-	 cdwZNS70QQ8XVK6g1vpeRila+YWubvcBtgXcGqsU7bnl7Si5YEfqgu6qssOfsyByv+
-	 okapYTc8/75uA==
-Message-ID: <sashiko-outbox-182079@kernel.org>
+	b=SnJoWxT/VcIL96CzBnYhQeUwqiO6h7X0gB/pxPisp1QPM2qnoR6pXOufQBn83hQ4V
+	 +lKX46eDlAsWUb+mvFttGqBFbIBZImtBDzY48TE8uczjQTgsO9c3ZkUJ4SVGEfZ/xK
+	 lTrOyoqSXyxMLgg9uVqlhYkVhAiB5HSPxq7UP7ADpUoBNJHr2OpfjxAwy8rHOqkoQG
+	 YY6X+/iBUhJsRwJ1CyKmFHy3S4EMwmp968IPJqp+rg/HzjQzla1zHtdf1AYltGk8Bt
+	 giDIEQgpOV6FBPGn/K/2AHiP87xGfuV0rsMXlTseLi2FEhtsePruEna51YkYwTkvwL
+	 Blcwwr4MCR7kw==
+Message-ID: <sashiko-outbox-182094@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 06/14] sched_ext: Fix a cpu idling with a runnable
- rescuee
+Subject: Re: [PATCH 14/14] sched_ext: Fix queued bypassed tasks stalling
+ when the host loses SCX_CAP_BASE
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Tejun Heo" <tj@kernel.org>, sched-ext@lists.linux.dev
-In-Reply-To: <20261022213836.2259069-7-tj@kernel.org>
+In-Reply-To: <20261022213836.2259069-15-tj@kernel.org>
 References: <20261022213836.2259069-1-tj@kernel.org>
- <20261022213836.2259069-7-tj@kernel.org>
+ <20261022213836.2259069-15-tj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 22 Oct 2026 21:56:08 +0000
+Date: Thu, 22 Oct 2026 22:04:04 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -62,111 +62,156 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] sched_ext: premature rescue end in dispatch_one() via keep-last =
-check
+- [High] sched_ext: bypass_lb_reenq_home() strands tasks when reenq_cnt hit=
+s limit
 --
 
-commit e79ddf5c81c9e04dfc120cdedd71ae201dfeefb0
+commit bed3a8daefa075e0cae6b942479850004d920042
 Author: Tejun Heo <tj@kernel.org>
 
-sched_ext: Fix a cpu idling with a runnable rescuee
+sched_ext: Fix queued bypassed tasks stalling when the host loses SCX_CAP_B=
+ASE
 
-This commit updates dispatch_one() to call scx_rescue_keep() when no other
-task is runnable so that a rescuee with a zeroed slice continues running on
-its unserved rescue remainder instead of letting the CPU go idle.
+This commit drains bypass DSQs on CPUs where the host scheduler has lost
+SCX_CAP_BASE, reenqueuing tasks at their home runqueue when no donee CPU can
+take them or when a remote move is refused, and kicking the bypass load
+balancer timer immediately upon SCX_CAP_BASE loss.
 
 > diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-> index e9224351e9dff..e587743b6136f 100644
+> index 1983ddaa0d605..aaa57143ff751 100644
 > --- a/kernel/sched/ext/ext.c
 > +++ b/kernel/sched/ext/ext.c
-> @@ -3389,6 +3389,26 @@ static enum scx_dsp_verdict dispatch_one(struct rq=
- *rq, struct task_struct *prev
->  			verdict =3D SCX_DSP_PREV;
->  			goto has_tasks;
->  		}
+> @@ -6575,36 +6575,57 @@ bool scx_hardlockup(int cpu)
+>  	return true;
+>  }
+> =20
+> +/**
+> + * bypass_lb_reenq_home - Reenqueue a task at its home from the balancer
+> + * @rq: @p's home rq, locked
+> + * @p: task off any DSQ, taken from the bypass DSQ of @dsq_cpu
+> + * @dsq_cpu: cpu whose bypass DSQ gave up @p
+> + *
+> + * @p came off the bypass DSQ of @dsq_cpu with no donee able to take it.=
+ The
+> + * enqueue sends @p to rescue when the host lacks %SCX_CAP_BASE at home =
+and to
+> + * the home's bypass DSQ otherwise, see bypass_enq_target_dsq(). No DSQ =
+lock may
+> + * be held, as the enqueue takes one.
+> + */
+> +static void bypass_lb_reenq_home(struct rq *rq, struct task_struct *p, s=
+32 dsq_cpu)
+> +{
+> +	lockdep_assert_rq_held(rq);
 > +
-> +		/*
-> +		 * The scheduler preempts a rescuee like any other task by
-> +		 * zeroing its slice. The grant survives the preemption. The
-> +		 * rescuee gets the unserved remainder back and runs again
-> +		 * behind whatever the scheduler wanted to run first.
-> +		 *
-> +		 * Two sites restore the remainder. When another task won the
-> +		 * pick, put_prev_task_scx() restores it and queues the rescuee
-> +		 * at the tail of the local DSQ.
-> +		 *
-> +		 * When nothing else is runnable, the cpu must not go idle with
-> +		 * the rescuee queued. The keep above declined @prev, and a
-> +		 * reinsert from put_prev_task_scx() would come after the pick
-> +		 * settled on idle. Keep @prev running on the remainder here.
-> +		 */
-> +		if (unlikely(prev =3D=3D scx_rescuee(rq)) && scx_rescue_keep(rq, prev)=
-) {
-> +			verdict =3D SCX_DSP_PREV;
-> +			goto has_tasks;
-> +		}
+> +	WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
+> +	p->scx.flags |=3D SCX_TASK_REENQ_CAP;
+> +	p->scx.reenq_reason_caps =3D SCX_CAP_BASE;
+> +	p->scx.reenq_reason_cid =3D __scx_cpu_to_cid(dsq_cpu);
+> +	scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+> +}
 
-[Severity: Medium]
-Should the scx_rescue_keep() check in kernel/sched/ext/ext.c:dispatch_one()
-run before the SCX_EV_DISPATCH_KEEP_LAST check above it?
+[Severity: High]
+Can passing SCX_ENQ_REENQ from bypass_lb_reenq_home() to
+scx_do_enqueue_task() strand p off all DSQs when p->scx.reenq_cnt exceeds
+SCX_REENQ_MAX_REPEAT?
 
-Right before this addition, dispatch_one() checks whether prev can stay on
-the CPU:
+In kernel/sched/ext/ext.c, bypass_lb_move() unlinks p from donor_dsq (leavi=
+ng
+p->scx.dsq =3D=3D NULL) and calls bypass_lb_reenq_home() when donee < 0 or
+task_can_run_on_remote_rq() returns false.
 
-	if (prev->scx.flags & SCX_TASK_QUEUED) {
-		struct scx_sched *prev_sch =3D scx_task_sched(prev);
+In kernel/sched/ext/ext.c:scx_do_enqueue_task(), the SCX_ENQ_REENQ check ru=
+ns
+before the scx_bypassing() check:
 
-		if ((!(prev_sch->ops.flags & SCX_OPS_ENQ_LAST) ||
-		     scx_bypassing(prev_sch, cpu)) && scx_task_can_stay_on_cpu(rq, prev))=
- {
-			__scx_add_event(prev_sch, SCX_EV_DISPATCH_KEEP_LAST, 1);
-			verdict =3D SCX_DSP_PREV;
-			goto has_tasks;
-		}
+	if (enq_flags & SCX_ENQ_REENQ) {
+		if (++p->scx.reenq_cnt > 1)
+			__scx_add_event(sch, SCX_EV_REENQ_REPEAT, 1);
 
-In kernel/sched/ext/sub.h:scx_task_can_stay_on_cpu(), this condition returns
-true for an active rescuee if the task is in a migrate_disable() section, or
-if prev_sch holds SCX_CAP_BASE on the CPU (for instance, when the task was
-diverted to rescue because an enqueue required SCX_CAP_ENQ or SCX_CAP_PREEM=
-PT,
-or if SCX_CAP_BASE was granted after the rescue started):
-
-	if (unlikely(is_migration_disabled(p)))
-		return true;
-
-	/* check caps against the sched running a bypassed task */
-	return likely(!scx_missing_caps(scx_exec_sched(scx_task_sched(p), cpu), cp=
-u,
-					SCX_CAP_BASE));
-
-When !(prev_sch->ops.flags & SCX_OPS_ENQ_LAST) and scx_task_can_stay_on_cpu=
-()
-is true, a rescuee whose slice was zeroed before serving its full rescue
-quantum will take the SCX_EV_DISPATCH_KEEP_LAST branch and return
-SCX_DSP_PREV with prev->scx.slice =3D=3D 0 instead of calling scx_rescue_ke=
-ep().
-
-Then kernel/sched/ext/ext.c:do_pick_task_scx() sees !p->scx.slice:
-
-	if (verdict =3D=3D SCX_DSP_PREV) {
-		p =3D prev;
-		if (!p->scx.slice) {
-			/* the slice is consumed, protection ends */
-			scx_task_slice_ended(rq, p);
-			refill_task_slice_dfl(scx_task_sched(p), p);
+		if (unlikely(p->scx.reenq_cnt > SCX_REENQ_MAX_REPEAT)) {
+			__scx_exit(sch, SCX_EXIT_ERROR_REENQ, 0, cpu_of(rq),
+				   "%s[%d] reenqueued %u times without running",
+				   p->comm, p->pid, p->scx.reenq_cnt);
+			goto out;
 		}
 	}
 
-Wouldn't that call scx_task_slice_ended() -> scx_rescue_end() to terminate
-the rescue prematurely and refill p->scx.slice with an unmetered default
-slice instead of restoring the unserved rescue remainder?
+	if (!scx_rq_online(rq))
+		goto local;
 
->  	}
->  	rq->scx.flags &=3D ~SCX_RQ_IN_DISPATCH;
->  	return SCX_DSP_NONE;
+	if (scx_bypassing(sch, cpu_of(rq))) {
+		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
+		goto bypass;
+	}
+
+When ++p->scx.reenq_cnt > SCX_REENQ_MAX_REPEAT, scx_do_enqueue_task() calls
+__scx_exit() on sch =3D scx_task_sched(p) and jumps to goto out with
+action =3D=3D ENQ_ACTION_NONE, returning without inserting p into any DSQ.
+
+In normal operation, stranding p on rq->scx.runnable_list is recovered when
+scx_sub_disable() or scx_root_disable() calls scx_bypass(sch, true), which
+transitions sch->bypass_depth from 0 to 1 and re-enqueues all runnable tasks
+onto the bypass DSQ.
+
+However, a task on a bypass DSQ already has sch->bypass_depth >=3D 1:
+
+kernel/sched/ext/ext.c:scx_bypass() {
+	if (bypass) {
+		changed =3D inc_bypass_depth(sch);
+		if (changed)
+			enable_bypass_dsp(sch);
+	} else {
+		changed =3D dec_bypass_depth(sch);
+	}
+	...
+	if (!changed)
+		goto unlock;
+}
+
+Because sch is already in bypass mode, scx_bypass(sch, true) either already
+ran or sees changed =3D=3D false and returns early without walking
+rq->scx.runnable_list.
+
+This appears to strand p in two ways:
+
+1. If sch was previously ejected by SCX_EXIT_ERROR_REENQ, p enters
+scx_bypass(sch, true) with p->scx.reenq_cnt =3D=3D SCX_REENQ_MAX_REPEAT + 1.
+During scx_bypass(sch, true), dequeue_task_scx() -> ops_dequeue() calls
+clr_task_runnable(p, false):
+
+kernel/sched/ext/ext.c:clr_task_runnable() {
+	list_del_init(&p->scx.runnable_node);
+	WRITE_ONCE(p->scx.runnable_cpu, -1);
+	if (reset_runnable_at) {
+		p->scx.flags |=3D SCX_TASK_RESET_RUNNABLE_AT;
+		p->scx.reenq_cnt =3D 0;
+	}
+}
+
+Because reset_runnable_at is false until p actually runs in
+set_next_task_scx(), p sits on the bypass DSQ with p->scx.reenq_cnt still
+above SCX_REENQ_MAX_REPEAT. On the first call to bypass_lb_reenq_home()
+before p runs, scx_do_enqueue_task() hits the limit and jumps to goto out
+before reaching goto bypass, leaving p off all DSQs instead of sending it to
+rescue or its home bypass DSQ.
+
+2. Even if p->scx.reenq_cnt starts at 0, after SCX_REENQ_MAX_REPEAT + 1
+passes in bypass mode (for instance, when rescue is disabled on a capless C=
+PU
+or when task_can_run_on_remote_rq() repeatedly refuses a move for a
+proxy-migrated blocked donor), scx_do_enqueue_task() calls __scx_exit() on
+the already-bypassing child sch =3D scx_task_sched(p) rather than the host
+scheduler that lost SCX_CAP_BASE, and jumps to goto out. Since
+sch->bypass_depth is already >=3D 1, nothing rescues p from
+rq->scx.runnable_list, leaving p permanently off all DSQs and able to stall
+scx_sub_disable() or scx_root_disable().
+
+Should scx_do_enqueue_task() avoid stranding p (or check scx_bypassing() /
+target the host scheduler) when reenqueuing a bypassed task?
 
 [ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022213836.2259=
-069-1-tj@kernel.org?part=3D6
+069-1-tj@kernel.org?part=3D14
