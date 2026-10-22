@@ -1,56 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792618349;
-	b=pn3xfF+QMmhhFLWSkn5zC8Motw4kYU4TY/4cJor9Gyta3sUIvi0XE1RYZfqLUkl7hX4J
-	 LFCY9v49WDK76Toua84x/Pzjt57LFq0MaAwij2PL7WGpOBbk1h/ifw0rG5Hut5l8nN0rS
-	 erMWSsHQGlOlnhfqxM78Wh9xgldFNo7TJU5wFFD5lZxwwICtKJsV66kRBZzGUjEmB0XmQ
-	 DyWZ+BXUcQi3fWjt/7acKvXckNp/74na3rheNRSYZbRpOQq58A+pb8dvy5/Zml3qfUX9P
-	 2bBKdH+ImLty9EjN7gxWoEKeowHHryXRMY+mEbkOBi2snYp7GQRwCjokHmM+/9/9wKw==
+	t=1792702222;
+	b=al1NaRjCbYJja09OMRuQLVJRTqq7ZI8TmRoAJ9NULcod5snp8lJz1LpCPh7I5qY0dtLp
+	 5e/zA49o2h5N5Nvp+MCuPKAPRuPVJjhHkGd6jQGQBqiBAljD2S5uZaSnqZe8hMA+c/Y40
+	 b1MLyTF3LEBL5De7SSszdfzl2XNw711hGvmRb8VvOgOovlbQH5UnAAVOGEcR6qHXLGe5Y
+	 jKVdX5aF42seHQtthr338WYzWsIww8Jz5fQvaG4DtRxEZWsab9GnQc2v5smXOZVYwh+Ob
+	 lWBU4hyfxFLqL21GUFZzKmAJ9RSVYqBl8c1z8Vcy3shhKvKgFdxnk0n01qpycZ3rhbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792618349;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References;
-	bh=dFTciILOFGJgvYXDbRHb51pHL8SIU8Y3kc2Zay9gqKI=;
-	b=EeJUrpu4JqQVoNi63hSnI5UOmhJDcbF9HBcLszr+KA5fJb1zH2MjJ+vaWT/bO9zlLePX
-	 GuFaUDUOfX6iqMoZwnp87LANRb/PuF9Qvcka7xfYWA5dVYvteDavplInIssU77ddBFxUM
-	 CDsGzrCRC2eZJ4+X+RF8tYfTaoDBcCZ2oPZKZaQJibHWYlZMJhEQfjt9zzlYHFycFxL3l
-	 kS+V2Z0TDCkRtjtpcInG46VUbx0LBN/taaek1f7vWMlA5ZPduuxkSWI+Fa9xK1DSdNXqs
-	 jHy+fXZQ8IvkIiUeiANE/pmPlsKpaGjoSLEedfzN8Ptq1ds1Tco9qiiMhjhHRukNVJg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792702222;
+	h=Received:DKIM-Signature:Received:Subject:From:In-Reply-To:References:
+	 X-PR-Tracked-List-Id:X-PR-Tracked-Message-Id:X-PR-Tracked-Remote:
+	 X-PR-Tracked-Commit-Id:X-PR-Merge-Tree:X-PR-Merge-Refname:
+	 X-PR-Merge-Commit-Id:Message-Id:Date:To:Cc;
+	bh=gl/pjhBvd6koaePeaTN6OVvZBZPYnAUcq7vCMRJFcqE=;
+	b=fyDZvPbKUV7dVkw881r4zt9xcqYnXr4LGG3mT+BYreEOz+9MQsMxp3WH53c263Qb4sX0
+	 gyd3Uub/Sq+SLWGU18j3gpCqdHnL0Fu3fDk6EehPP5dWlTReoUL+HGaPkqPktIyne/k1q
+	 z3wVLXpyZxL0lAKa+hM/wJgh3EDl8AQHDsJ85BGq6+5p2zSwNXIG9BtP2RLsdHrJDhCGN
+	 KaUy5BA84hSj1cHJyL47motvOgaYuVqlVAw01ciWRWpdCAoihMJO6o5DGaoWbRxd7RIxE
+	 V1ITTgg9JvTcBUBf3SuVvH+uIhV1KMIVsuho8d8YAGMuvD1LEbG8Mr5GLUJ2wmostVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GWTGU2sw;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="fV/AKVvC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170C0606A31B;
-	Wed, 21 Oct 2026 21:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD01260A2610;
+	Thu, 22 Oct 2026 20:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GWTGU2sw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A881F000C1;
-	Wed, 21 Oct 2026 21:32:28 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fV/AKVvC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C508F1F031E6;
+	Thu, 22 Oct 2026 20:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792618348;
-	bh=dFTciILOFGJgvYXDbRHb51pHL8SIU8Y3kc2Zay9gqKI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=GWTGU2swvXbwx486XkoWYqQdy03Lrxp7a4vS9iaBs/3dG8sCGjlLQnyY6IINL1MO0
-	 goZ0hFlMYcB7FZXYTbF5CaFSP3fqf5uiwt9kyL33PIjMTAx/8QoaZcIuooj/imXrIS
-	 KySLCLcV0KrEj3GR6NVO1H1v9kpXMz26GmhOA1/cj+MHIZI6D07N0vQs+fahMHMTJK
-	 SjEbMeQ6nbIRXSxcpat2YxQGiq8MUX0tSy/pzyyIV5yY8CG9NXmY/aAAWeq+OYDG9X
-	 cHlZUXR7QwWhXCa7q1NUO/2vRre8jalgwKIzWcJK4S8MM/OcKxNmmZDoByXdwtQwzk
-	 a7POuS6Rr41aQ==
-Date: Wed, 21 Oct 2026 11:32:27 -1000
-Message-ID: <f742ae35affc8c9a1ae0ec61f58dd5d6@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: Hui Su <sh_def@163.com>
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] sched_ext: Reject oversized automatic CID shards
-In-Reply-To: <20261021091214.1713830-1-sh_def@163.com>
-References: <20261021091214.1713830-1-sh_def@163.com>
+	s=k20260515; t=1792702221;
+	bh=gl/pjhBvd6koaePeaTN6OVvZBZPYnAUcq7vCMRJFcqE=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc;
+	b=fV/AKVvCfjYyDJF5GQOZTi7UYjm4SHXBtJ0tvoWt/oNumgRwsRKlU72C8NkPz78RP
+	 SXG9l+e7LJBlQLX3FOtSAwaDaCuM/e7c9DRUCeudnhI4TmeMFGOmOasrR67IMBKMij
+	 YQNE+sJYjsQdDoHDfZ44AVNekKyiNGERebry+Sisj+vy6sqIYBWbBHaTQPwdQddsOa
+	 JB5mp9ADvvmDq3MiAquP10eNmixfelWO7bQ99nzVD233E8xyDhlsMk0pEnuXLlnf+5
+	 Gj3iwlwkzFligCWBGTjKV258Rkc3zC3NtcPv648jVsRlqsODxgsebf4ZS86o3GsvgG
+	 eQv2Dkvo/ACNg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B5765380822E;
+	Thu, 22 Oct 2026 20:50:21 +0000 (UTC)
+Subject: Re: [GIT PULL] sched_ext: Changes for v7.4
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <d66695d960cabf99877acde0c533c03e@kernel.org>
+References: <d66695d960cabf99877acde0c533c03e@kernel.org>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <d66695d960cabf99877acde0c533c03e@kernel.org>
+X-PR-Tracked-Remote: https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.4
+X-PR-Tracked-Commit-Id: 1f5dde349ac2fca1f119ae8de3f0d2f1c2a8d338
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 98aec86f8c6bf2e1091fefb99eaba8b910e8eef1
+Message-Id: <179270222039.170280.6235702575882879557.pr-tracker-bot@kernel.org>
+Date: Thu, 22 Oct 2026 20:50:20 +0000
+To: Tejun Heo <tj@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, David Dai <david.dai@linux.dev>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -60,10 +68,15 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 
-Applied to sched_ext/for-7.4-fixes with a note added to the description
-that the bug is only reproducible with artificial VM topologies.
+The pull request you sent on Mon, 19 Oct 2026 06:47:06 -1000:
 
-Thanks.
+> https://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git tags/sched_ext-for-7.4
 
---
-tejun
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/98aec86f8c6bf2e1091fefb99eaba8b910e8eef1
+
+Thank you!
+
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
