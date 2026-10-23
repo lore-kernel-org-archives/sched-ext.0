@@ -1,95 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.52.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792734368;
-	b=UnTG6q9HS7+WRGIr3v3dtNPo8h0JRhw0tmvMVJzNwxwgvTLvQ/Ms3fWcrSfBlgFw0zNS
-	 2VpjlxsYo356IhaIHXzJkiohbaXPSU1aNiC9v8JhfoeQGuebJQkpWpUT8aBDHtJipPKem
-	 sxJiUehHXRfKaOpRUH+uV/fYKNtnvCay/ExfBk8EjagP+bgRmPISCpebNtxmj54JViee8
-	 OS6Wz2R1sMWoJYweHZC7Bxp25QQBumT163Pk326vjc9qLGMCNZbmwwfmtlWN2IWFfLsx1
-	 etQZMm0InhH3T94zcmKbuXx7O/+thnhhOI8z1PqHa0K9APSEGU413xGWHOzmpklWfTg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792734368;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=8U1YG8QWpK1PZXUFavlaWOThohr5+MJVVoLtmXeeTcc=;
-	b=5EW9jb/dJOXJ/stA7KiCrG3uBDmABhQ2dYezuI977CMh/VIZwIkMw8C4J03z2KZtWz4K
-	 Z3sxaquAAfKnWVE2mgDBINvOkyPr9K/SO/sHOj3j+EVMw3sR7rdiAoM4kKY/9JMaqSikM
-	 HCALK1In0wOWvfYxzaASg+h7Ux4Rb8I91FqUmDmVrHQ615BAsYJXamG3YlzyG+hUrakvs
-	 VbNWdkx3zalEFfmueVpYGPTSVYhsU+uaIaPx8CJnWlPaBjkAPtQ15JOThohmqD1GJQsec
-	 156cQ27bwz1VDtI4ki4PymXKoiUtQWJyXQtS3J96SD6oMBromLke/O+9L3n23LkclPA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=SqlsijhA;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.52.49
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011049.outbound.protection.outlook.com [52.101.52.49])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792734468;
+	b=PHTt3t0QB4qIZ5P5vz17OC/BFd1XpUTqkAtLq5WQf+7sJ62PQRPQ6HyOyWYkCWCZvjW2
+	 MMuHn8flkWC0grBorN8SlrIfS1JxfT4K5vnAbY2ZF0EW8ipoxxsFQLtBosGFoCyhnG3ap
+	 W4vpqfa70l/QJhk2t4AKfYinmXgl31NCa7J/PpfpOyeiBgY1huOAzeH/i2Wu+qKDHJ9Sy
+	 scYAJyAEbW9FNNSMr89vsMUGZONzYjud7H1GSAa9oSyWVo3HSniELiw8iIF4ZlLqqRsVE
+	 Dh3ncWHIT0RcE3TNIxP2gi7cNXCegtRx0F7idZy7F2cA9YW9GprLtFqSlFva7Iys7nw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792734468;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=J05GD76mQLoBOkvk9WsVrgAdZcrnfGrJOuVXsboJupA=;
+	b=k3Rce0xUQbe+3L2CZkh2Sryb6YJ3MhazVVeUccoNyQj8iRZ33qTOFFL+zSnjT23Lb0/1
+	 IfmuDuBClSgpQQAHrnAIeSk7AX+0uOsqaoeBiD/5GlVWiNpDMBnkE9XjT1EhVwtejwC+9
+	 edUktzj4SZLnGECY9SfD7dhf878knfXMulhoyO6mNErYTlYARt7WvAKWKgU7kKmT7jylq
+	 RDidy/piUcdmuZJDuNMqc5luEDLZE9xOGWXzx1FKcEIqAkCs6bDpzc4KnaHrRGLzBliIA
+	 rYDyfJdTTjhVUWVGHuSCbTyCRgl+xywE5vkk4WMJst6FrI14567CM7x2P5cAbEzvTZQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ikOLElSd;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C75606A31B
-	for <sched-ext@lists.linux.dev>; Fri, 23 Oct 2026 05:46:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8C75606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1796606A31A
+	for <sched-ext@lists.linux.dev>; Fri, 23 Oct 2026 05:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=SqlsijhA
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gNuSFSi5Gwkc9vaOLYRsGTkw5FB0jcf5EUNgrY8Lnh9lrveG75bhzx9+Q5xcus1dhAfylckH3Nnl/A1H/RNzSCs8H5wwA9npUhOWjIRBY0OKcIv7Ivv32P08E2X/64uCneLNNaIIohj4DEzZRuXlYAbWd3UV+fRsnKW9DouLkRKRPNtP1kprN1SG5FEogVzO2TZ23I9R+yMt1qSKuLqiJoeHMO9W4MUO84RlY7+/6UoFL4i+rlqiHv6ujxtJpLcID1t/vHFHA5l+8M6YaaYLxoC7uvv7C2Rroy7xNK8KObhvT1xfSJyebn2bvvrQK/JAaNpKE8z/+n3S621avd2j4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8U1YG8QWpK1PZXUFavlaWOThohr5+MJVVoLtmXeeTcc=;
- b=kMbatyPHIelB7Zse5LJPsoXgEpWs/X7rV5ftdNCsQ+m8iqkalTQdW+yQ3+4B0CtNyhhKQlWRexWDMeE6bAbWN8zt/NrYM+EfgXqy3uF91rCMo+JR7qmeEU84OyJVp+tiBJPxg4Dcsc+xDTsU300f8hL7nZ5U3T5TOPDCFX9sJH78kHyWYYNbosOYolJltpbOq/tAnzqt+U+6oklPYvElP/zQEW3ecDlDjGA4W5FtLOqISeKZaSf8j+effFTRjYyHaC1io2FamwIh68fc9gvPIrLyuXvQJcPSFEN/Taio9uJ7CmMy40k/SF0utZXzUIBfxjs0c8OkbF0VOAx0rODLCw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8U1YG8QWpK1PZXUFavlaWOThohr5+MJVVoLtmXeeTcc=;
- b=SqlsijhA7YxyymPFyrdprPlofZIKColVEkjKpAlBFj1OdBiEHdICBuUIBOOs/fsf9V4UcAmEOIAGQw6Ez/XxRb+srfYl/sUyS8XhbToVY2IfbdZVVod+li/Wmgx1jiqCyXcgmps5VIKNyjDZQox//8uuT9aZxRhXdmzTPTIwFB7AZ9ZzKuZFmvnqlWrHOlurGe+tveIbG0RTMrtSxAN7nHnrtkrkjhZ/bcWPQ+zLBUBgVOjzsiSgvSD3L6auSyjqMIcstXEMta2K0x72UhDlB/prlOb3L24aa0I+CqQLoUtEcgdLaFIwH/KGoLPyt9qIDJWLTSvLh6YIxXozCrmiGA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by DM6PR12MB4403.namprd12.prod.outlook.com (2603:10b6:5:2ab::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Fri, 23 Oct
- 2026 05:46:04 +0000
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0546.017; Fri, 23 Oct 2026
- 05:46:03 +0000
-Date: Fri, 23 Oct 2026 07:45:57 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] sched_ext: scx_qmap: Read SCX_RESCUE_DISABLE through
- the enum lookup tables
-Message-ID: <atr0lZ5dHdoZRz68@gpd4>
-References: <20261023000348.2726436-1-tj@kernel.org>
- <20261023000348.2726436-3-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261023000348.2726436-3-tj@kernel.org>
-X-ClientProxiedBy: FR4P281CA0153.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ba::14) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ikOLElSd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325BC1F01825;
+	Fri, 23 Oct 2026 05:47:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792734467;
+	bh=J05GD76mQLoBOkvk9WsVrgAdZcrnfGrJOuVXsboJupA=;
+	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
+	b=ikOLElSdOS2QRqoZfd1rMnTKajiQke8XB57bRDdzCNliRl0nwawV0p8MnlJJ+BKm4
+	 lPGZaVoqLWY3JfDj3EmKEDthPkigSPEF5biulHj8rjJRyNg3YYetob/tkd72DZiwlU
+	 1sbRQUMDPnhyqpTuk/h8u8DHOlucVDDAJvaQykYqae870sb/ZPTr3PAl6E8NMvQHT/
+	 HxLxodhyfhE+x4WNw9HjlO8LJaO4QE6WHKZtgbUqfbkBvZv7ypyxnv5O+Bh/X/egHQ
+	 yy0rwBTGiEBn0i6YRcBv+0MToD0vpAaeKoMNGu1rk9P2ZIcAfkRmRgwjvAE3yXCVnP
+	 Ks/R0m2alfz7A==
+Message-ID: <sashiko-outbox-182331@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 15/15] sched_ext: Fix queued bypassed tasks stalling
+ when the host loses SCX_CAP_BASE
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Tejun Heo" <tj@kernel.org>, sched-ext@lists.linux.dev
+In-Reply-To: <20261023052452.2889061-16-tj@kernel.org>
+References: <20261023052452.2889061-1-tj@kernel.org>
+ <20261023052452.2889061-16-tj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 23 Oct 2026 05:47:46 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -98,129 +59,179 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|DM6PR12MB4403:EE_
-X-MS-Office365-Filtering-Correlation-Id: 02606dc4-61fe-4e12-9860-08df30c8ecc1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|56012099006|261021123027099003|261022105027099003|261009223027099003|261022075727099003|11063799006|4143699003|10067099003|18002099003|6133799003|261021121427099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	I/lnqvSYihpIF3M7rVLcvFPhp8b0U5PeUOyF2OYVGtEqrORa8x/oLpC7lL5YDu4dX2RCaIOaL14RL6m67UtzikGmGZ1NsPrSfBdafxzCBnXbeJ7dmYNgmdQPQFjuAWavL0GSVGs1k48c3PN3u+3EXnU1GYiCM5O+P3Vu/720hRtVkPgSTvSsV2C6/1U+iYgpjiz1aWJLFA1850iei298IO179ZXWalJYJ2EWhgvOuyGl4Xug0n/459jnRtc2YJiM1rrZhRatPaEGk/e6d+3x/GGM/RfmXUoJoy5fOzRXxQXPRIrDfAEyevnGU0WJYB8+KtUUbKSNZSvxpdmYlgX1EnbKekytq86yHmhTksYm4faSXsPhtMS+IxCwqhClgtRUH3iMvl+f1zhY+i72+jLRMd85xrHFIXMnUEkJSeRd8rdjUmPvcIr7gikgrm0gIErdlEnfR+ylIIRZolxVF+DWNAO6O6lFP5A+8MmLQcPSgxWabq68XWcUUu4oZs8t4aAddAXekR/ZPFo9Y+uFMLFjH7e5pyet0IMMD+jvqD/SCe7nqstujPo/k+XUmkq6yAk6ue5aEESvH8VjWWbbyZ6bIrhUqth/sa3opCE7HPGsOEsZ8LKEFJ/kl1Ev6z7CeVaglj9iCqemVRVETlTPohcVjs58B/I+YN6F9oSoB1jhBQY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(56012099006)(261021123027099003)(261022105027099003)(261009223027099003)(261022075727099003)(11063799006)(4143699003)(10067099003)(18002099003)(6133799003)(261021121427099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zmzoWJxHKt0JX3DVwaqGH4ZYYGZLcrMo9dZ2ge9kyUhHHgV3aRsECSh9MKOP?=
- =?us-ascii?Q?KKCi1fuv671hoMwTDEwVfhFOflA6QYhlEXu9VcPLkPPwqZK22dC9qnKcv11P?=
- =?us-ascii?Q?HU+0n/Bcl0rit1HOKyhABkrW1d4YogbrsuKHa+HvnxZEvNI/Kjxg1FAEtNUW?=
- =?us-ascii?Q?B0wXZ9gP9oPTZ926q2BbRZwarHf4Znnro4xHCR1DPqMrMGNKdiZmgau234UP?=
- =?us-ascii?Q?wc+tkQ+fgAsUoM5Ap2WIEzggjSc4yJC209VWn6axIZphHuDysWNncGiyh71c?=
- =?us-ascii?Q?4X6p+BOXBzOrrgfpxM3+qqPB4cyr59D4MFXn4nutLFweHD5XMYtc1LEjLykP?=
- =?us-ascii?Q?btbIPMMc+EMkL/G0e2VzqKBwFu5agLPf2fE4PtbwLIsSoKNFzdTX3OT9+xyw?=
- =?us-ascii?Q?vCFBO35NQNKVPKFCx4EzD3PkQHZIcBgkSA/Zu7Prib3uBgWrTd1OLs0SoYl+?=
- =?us-ascii?Q?nNS8KUcibk/vpIaYwfqe717yUrcTMFvJx1e5WH9WXjl1CXpQEQBW3e85CkTI?=
- =?us-ascii?Q?ykNi80YFip1A5I/AaxZsmsWZm6FmWkRi2Nr8A3g8y6R63jovs/cdC+bdKA7u?=
- =?us-ascii?Q?2F1R2MDxJqlH+QFXY3XGybTWtfT629Vxa1HUFz56kVrDMrTD3NcxosYrH4xF?=
- =?us-ascii?Q?lJRkRQ9k4lepz+7TUv+sCw7b/OY9Apr0EV/Bhjo7aVfQaOV7nfH1ucPlwC6K?=
- =?us-ascii?Q?0It6ddbd4ic5EsK1uk8+E8RkH54freyM3hcl2cgrHcgSNh+dVNi3j2m8geGf?=
- =?us-ascii?Q?SklHC6PChMRNxDi3ICz6KQZhU65d4VqbNk+1fsoNvM/M0cX5sjR3kE/rUj9H?=
- =?us-ascii?Q?4/meN/a1EA2aytNQo5vegbrLXHtjiwgu3yz7EkwX+afPAUetiVlIMLWHXdKL?=
- =?us-ascii?Q?0S+kRUdFodsJXrtqIK+LnqXZP25AE+eOtJ5YAS94fGtEKOWD+bREaeY+uoF3?=
- =?us-ascii?Q?aYOBq9CQQX7YM4yuRkMtiJqEO+6m6N3inM2ePhw46lQmiHJ9Ounb1D1GYYxH?=
- =?us-ascii?Q?fMgyIIl7RkwE0dH7vdYUq9EfZmNdsKjxpCxOeMNasNXbfumZQwIYEfzk8FqH?=
- =?us-ascii?Q?c5mfd7DyJobjvi+H9MIKXgCuunMZzAwVZk7hRY1Ae+Fm7WkOuZKFqae58wv2?=
- =?us-ascii?Q?Bfv8fRBSIWXqJD5axIJ6XwlMM82JFlzwubrTB6QUXq2inN6KI1p9h2yfYhPB?=
- =?us-ascii?Q?OKcehZsY/GxAyawWfIWzvXe0uUB9GJq/cBMbj07NpPY19poSzAyNpjgO3lhV?=
- =?us-ascii?Q?t1oqRUTL/BlajzO4Vv3AIDKhdXlmS5MtdmCCe8yuCFSMrhYhl4Bn6YN7w/Bm?=
- =?us-ascii?Q?zZ4hStKFnVIq1UQfiHHWzEk7zRcZIvjJWH+kWDw4LQnFPBa7UA2wuRGxTz1l?=
- =?us-ascii?Q?vWaEtf2ScvuqmPXlN/8qjX9ndsmtS2X9zKDigGPw5PeQWcMZK28JsOrmgcXV?=
- =?us-ascii?Q?qpVibCxdhhjA0bFk5YA+bxF9stplCpiYgvhf3M6iyN3oryBEkkLmDuP+sBrn?=
- =?us-ascii?Q?Ze1fU/0Rw1SLlgi2yMER6wASwXbDwvdsphVDJ9IlhctGcRKxAkMb4ED/4RQ/?=
- =?us-ascii?Q?CvFsTobDFq6WHSneu0FRHMkvpUSQ9ARc82mjOIJNnawk+cIRb3Ff7z0NzPI+?=
- =?us-ascii?Q?a6glhu/JS2jp41FLUMEWO2e1aSLuGeYiglQBiFca8IxOmVNmxMdjJvDD36y6?=
- =?us-ascii?Q?1NdLdqVvQVZGni1V73BgSpcIpYPb/EGyMXSgnTR2YZTrWo5d?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 02606dc4-61fe-4e12-9860-08df30c8ecc1
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 05:46:03.4335
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sZUl7jHG+nHqpaux0azi6Tov8TVrpA9WUD6/GB7bunoF9h1FpvZqjUQI6+GWzaca7boevtL6UU75OyfJym4uFQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4403
 
-On Thu, Oct 22, 2026 at 02:03:48PM -1000, Tejun Heo wrote:
-> 788b494fab1c ("sched_ext: scx_qmap: Drop the compat code") left one compat
-> lookup behind: the -B 0 case reads SCX_RESCUE_DISABLE with
-> __COMPAT_ENUM_OR_ZERO(). Userspace can read SCX_RESCUE_DISABLE only from BTF
-> as it is in the kernel-internal enum scx_consts. The enum lookup tables
-> already read their entries from BTF for every scheduler at open time.
-> 
-> Add SCX_RESCUE_DISABLE to the lookup tables and read it from the skeleton's
-> rodata. No behavior change.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] sched_ext: bypass_lb_reenq_home() strands tasks and ejects wrong s=
+cheduler
+--
 
-And, as a reminder, we should add SCX_RESCUE_DISABLE to the scx repo as
-well.
+commit d55be0297257c9718ad7fd18c39f7e2d5c53c076
+Author: Tejun Heo <tj@kernel.org>
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+sched_ext: Fix queued bypassed tasks stalling when the host loses SCX_CAP_B=
+ASE
 
-Thanks,
--Andrea
+This commit updates the bypass load balancer to drain bypass DSQs on CPUs
+where the host scheduler loses SCX_CAP_BASE, reenqueuing tasks at their home
+CPU when no donee CPU can accept them or when a move is refused. It also ki=
+cks
+the balancer timer immediately upon SCX_CAP_BASE loss and uses timer_reduce=
+()
+when arming the timer to preserve pending kicks.
 
-> 
-> Suggested-by: Andrea Righi <arighi@nvidia.com>
-> Link: https://lore.kernel.org/all/ataTuzRFTRm_pax6@gpd4/
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> ---
->  tools/sched_ext/include/scx/enums.autogen.bpf.h | 3 +++
->  tools/sched_ext/include/scx/enums.autogen.h     | 1 +
->  tools/sched_ext/scx_qmap.c                      | 2 +-
->  3 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tools/sched_ext/include/scx/enums.autogen.bpf.h b/tools/sched_ext/include/scx/enums.autogen.bpf.h
-> index 405a3e6b8f33..d0c37018659e 100644
-> --- a/tools/sched_ext/include/scx/enums.autogen.bpf.h
-> +++ b/tools/sched_ext/include/scx/enums.autogen.bpf.h
-> @@ -13,6 +13,9 @@ const volatile u64 __SCX_SLICE_DFL __weak;
->  const volatile u64 __SCX_SLICE_INF __weak;
->  #define SCX_SLICE_INF __SCX_SLICE_INF
->  
-> +const volatile u64 __SCX_RESCUE_DISABLE __weak;
-> +#define SCX_RESCUE_DISABLE __SCX_RESCUE_DISABLE
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 562213f371a61..38d1b9176bd56 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -6515,36 +6515,57 @@ bool scx_hardlockup(int cpu)
+>  	return true;
+>  }
+> =20
+> +/**
+> + * bypass_lb_reenq_home - Reenqueue a task at its home from the balancer
+> + * @rq: @p's home rq, locked
+> + * @p: task off any DSQ, taken from the bypass DSQ of @dsq_cpu
+> + * @dsq_cpu: cpu whose bypass DSQ gave up @p
+> + *
+> + * @p came off the bypass DSQ of @dsq_cpu with no donee able to take it.=
+ The
+> + * enqueue sends @p to rescue when the host lacks %SCX_CAP_BASE at home =
+and to
+> + * the home's bypass DSQ otherwise, see bypass_enq_target_dsq(). No DSQ =
+lock may
+> + * be held, as the enqueue takes one.
+> + */
+> +static void bypass_lb_reenq_home(struct rq *rq, struct task_struct *p, s=
+32 dsq_cpu)
+> +{
+> +	lockdep_assert_rq_held(rq);
 > +
->  const volatile u64 __SCX_RQ_ONLINE __weak;
->  #define SCX_RQ_ONLINE __SCX_RQ_ONLINE
->  
-> diff --git a/tools/sched_ext/include/scx/enums.autogen.h b/tools/sched_ext/include/scx/enums.autogen.h
-> index 7ec2e5e41cb2..c4a7260f0983 100644
-> --- a/tools/sched_ext/include/scx/enums.autogen.h
-> +++ b/tools/sched_ext/include/scx/enums.autogen.h
-> @@ -9,6 +9,7 @@
->  	SCX_ENUM_SET(skel, scx_public_consts, SCX_OPS_NAME_LEN); \
->  	SCX_ENUM_SET(skel, scx_public_consts, SCX_SLICE_DFL); \
->  	SCX_ENUM_SET(skel, scx_public_consts, SCX_SLICE_INF); \
-> +	SCX_ENUM_SET(skel, scx_consts, SCX_RESCUE_DISABLE); \
->  	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_ONLINE); \
->  	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_CAN_STOP_TICK); \
->  	SCX_ENUM_SET(skel, scx_rq_flags, SCX_RQ_BAL_PENDING); \
-> diff --git a/tools/sched_ext/scx_qmap.c b/tools/sched_ext/scx_qmap.c
-> index 9b1cbe187ebd..fe2f206f5c8a 100644
-> --- a/tools/sched_ext/scx_qmap.c
-> +++ b/tools/sched_ext/scx_qmap.c
-> @@ -427,7 +427,7 @@ int main(int argc, char **argv)
->  			u32 ppt = strtoul(optarg, NULL, 0);
->  
->  			if (!ppt)
-> -				ppt = __COMPAT_ENUM_OR_ZERO("scx_consts", "SCX_RESCUE_DISABLE");
-> +				ppt = skel->rodata->__SCX_RESCUE_DISABLE;
->  			skel->struct_ops.qmap_ops->rescue_bandwidth_ppt = ppt;
->  			break;
->  		}
-> -- 
-> 2.56.0
-> 
-> 
+> +	WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
+> +	p->scx.flags |=3D SCX_TASK_REENQ_CAP;
+> +	p->scx.reenq_reason_caps =3D SCX_CAP_BASE;
+> +	p->scx.reenq_reason_cid =3D __scx_cpu_to_cid(dsq_cpu);
+> +	scx_do_enqueue_task(rq, p, SCX_ENQ_REENQ, -1);
+> +}
+
+[Severity: High]
+Can calling scx_do_enqueue_task() with SCX_ENQ_REENQ from
+bypass_lb_reenq_home() permanently strand p off all DSQs while p is already
+in bypass mode, and target the wrong scheduler for SCX_EXIT_ERROR_REENQ?
+
+In bypass_lb_move(), p is unlinked from donor_dsq (setting p->scx.dsq =3D N=
+ULL)
+before calling bypass_lb_reenq_home(). Inside scx_do_enqueue_task(), sch is
+initialized to scx_task_sched(p), and the SCX_ENQ_REENQ repeat check runs
+before the scx_bypassing() check:
+
+kernel/sched/ext/ext.c:scx_do_enqueue_task() {
+    ...
+	if (enq_flags & SCX_ENQ_REENQ) {
+		if (++p->scx.reenq_cnt > 1)
+			__scx_add_event(sch, SCX_EV_REENQ_REPEAT, 1);
+
+		if (unlikely(p->scx.reenq_cnt > SCX_REENQ_MAX_REPEAT)) {
+			__scx_exit(sch, SCX_EXIT_ERROR_REENQ, 0, cpu_of(rq),
+				   "%s[%d] reenqueued %u times without running",
+				   p->comm, p->pid, p->scx.reenq_cnt);
+			goto out;
+		}
+	}
+
+	if (!scx_rq_online(rq))
+		goto local;
+
+	if (scx_bypassing(sch, cpu_of(rq))) {
+		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
+		goto bypass;
+	}
+    ...
+}
+
+When p->scx.reenq_cnt exceeds SCX_REENQ_MAX_REPEAT, scx_do_enqueue_task()
+jumps to out with action =3D=3D ENQ_ACTION_NONE, leaving p off all DSQs whi=
+le
+SCX_TASK_QUEUED and p->on_rq remain set.
+
+In normal operation, stranding p at goto out relies on __scx_exit()
+subsequently running scx_disable_workfn() -> scx_bypass(sch, true), where
+inc_bypass_depth(sch) transitions sch->bypass_depth from 0 to 1 and sweeps
+rq->scx.runnable_list to place p onto a bypass DSQ:
+
+kernel/sched/ext/ext.c:scx_bypass() {
+    ...
+	if (bypass) {
+		changed =3D inc_bypass_depth(sch);
+		if (changed)
+			enable_bypass_dsp(sch);
+	} else {
+		changed =3D dec_bypass_depth(sch);
+	}
+    ...
+	if (!changed)
+		goto unlock;
+    ...
+}
+
+However, any task queued on a bypass DSQ already has its owning scheduler
+sch =3D scx_task_sched(p) in bypass mode (sch->bypass_depth >=3D 1). This a=
+ppears
+to cause two issues when bypass_lb_reenq_home() is called:
+
+1. Immediate stranding on the first bypass_lb_reenq_home() call:
+If a task triggered SCX_EXIT_ERROR_REENQ in normal operation (leaving
+p->scx.reenq_cnt =3D=3D SCX_REENQ_MAX_REPEAT + 1) or entered scx_bypass(sch=
+, true)
+with p->scx.reenq_cnt =3D=3D SCX_REENQ_MAX_REPEAT, scx_bypass(sch, true) cy=
+cles p
+through dequeue_task_scx() -> ops_dequeue() -> clr_task_runnable(p, false) =
+and
+enqueue_task_scx(). Because clr_task_runnable() only resets p->scx.reenq_cnt
+when reset_runnable_at is true:
+
+kernel/sched/ext/ext.c:clr_task_runnable() {
+	list_del_init(&p->scx.runnable_node);
+	WRITE_ONCE(p->scx.runnable_cpu, -1);
+	if (reset_runnable_at) {
+		p->scx.flags |=3D SCX_TASK_RESET_RUNNABLE_AT;
+		p->scx.reenq_cnt =3D 0;
+	}
+}
+
+p is placed onto the bypass DSQ with p->scx.reenq_cnt >=3D SCX_REENQ_MAX_RE=
+PEAT.
+If bypass_lb_reenq_home() is then called on p (even once to send p to the
+rescue DSQ when the host loses SCX_CAP_BASE, or when a donee refuses the
+move), ++p->scx.reenq_cnt > SCX_REENQ_MAX_REPEAT triggers before reaching
+goto bypass and strands p off all DSQs.
+
+2. Wrong scheduler ejection and stranding after SCX_REENQ_MAX_REPEAT passes:
+Because the root scheduler never lacks SCX_CAP_BASE, a host scheduler whose
+bypass DSQ is drained due to losing SCX_CAP_BASE is a non-bypassing ancestor
+sub-scheduler (host =3D scx_exec_sched(sch, cpu_of(rq)) !=3D sch), while
+sch =3D scx_task_sched(p) is an already-bypassing descendant (for example, =
+in
+scx_sub_disable(sch) where sch->exit_kind is already SCX_EXIT_DONE and
+scx_bypass(sch, true) has already completed).
+
+When p is repeatedly reenqueued by bypass_lb_reenq_home() (for instance, on=
+ a
+capless host CPU without rescue, or when task_can_run_on_remote_rq()
+repeatedly refuses a move), __scx_exit(sch, SCX_EXIT_ERROR_REENQ, ...) targ=
+ets
+the already-bypassing descendant sch rather than the host scheduler that la=
+cks
+SCX_CAP_BASE. Neither sch nor host sweeps rq->scx.runnable_list for p
+afterwards (if sch is disabling, __scx_exit() is a no-op and scx_bypass()
+already ran; if sch is in bypass via PM or enable, a later scx_bypass(sch,
+true) sees changed =3D=3D false and skips the runnable_list sweep).
+
+If p is stranded while holding a lock or inside a cgroup operation, could t=
+his
+also block scx_sub_disable() or scx_root_disable() when waiting on
+drain_descendants(), scx_enable_mutex, scx_fork_rwsem, or scx_cgroup_lock()?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261023052452.2889=
+061-1-tj@kernel.org?part=3D15
