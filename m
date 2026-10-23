@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792733103;
-	b=SO1EiPnhSG7BGyco8r8VRpVUFzA5YM6efc3u5VrczdpYJWjShAcC1qMv/tusr7RLQ0a9
-	 GezGQwpgusXaJQXiKd2LT/vi3OQjMtNGlG1TbAg9LIBteDMkzfzRUIc0IPioVNxpvk8Eo
-	 X34eFrsNTFd22BkUPTLW4auaxNsVPyMsELH/zrHdnyndBHi6Y308626ya76cfjtr3YjQi
-	 aR5DHD4JxHOQ2FTwJqodAB2P5b7J3KUDqiM+OJyJwN7EYGa9HYLv9VdmTfjZSY1KXpoxs
-	 wtGy9v1XdAPRg0Ji80bHFpH40aV7eSMR9wSZYRY0bDEbsmE5Rf9FGvVSJtnU/BknMyw==
+	t=1792733105;
+	b=PLZAnSh4QS6NVH5Sn3DiLAWON/ucVYSHz4+Osef0sp5vmxGu4y7am8+fAQiyGfnoo7rz
+	 BH96yqbJCEwrHm7tLJyVROKAXwEwZaH13pgb5Ek/5IwuzM48J0fFdBL9qoZISaNMNI2i8
+	 PWCdSFpq6HjDCT8KAvrKwveCKJ9k/UNsLyg+EiD117ma5l/8ZFc7HCyTlqqP37VFUi3kV
+	 90SgbPXVQUukvfF7ZqSCwREG708ALQ+EmMjOaNgTrrN5XS5dUthd6u9uxbW6xvljEL2ny
+	 4dBELCT0VcIdQujma1burssyJ6E1fA7sjEZS6yhtuhTYJCfZ2INWS6wdIyoe+utY8lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792733103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792733105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=NdfdIDkYAlD1K1U/MPC/6OAvrbjyEtKQ858LOlS3Jaw=;
-	b=ryJRasiMnxSEykMHNWlY4+pjl0xaTXbs9aBYWHV2Y6hI4EfGKA0/xkN7OUsjkOJwL04S
-	 GueVYBgva/Ud88rjEthWR0RCByGkrZ6HoLjuOqfnDq/ZyTDufzbTcyN07SHP0e7NPSVGm
-	 fGhj/sYSeC7Wx05t+YWpnQ1c5koEfeW1y3ou6HQGg5n/l5Jd5Gmaa+2/Q9m7RN/71Wy9y
-	 Dyg1deI5OsLZ1yBaqOpJfEODtI6ndkCD9U61hO1XXTA+0vKtC+hGYpD/bbjlNHrGP5Mvp
-	 oZWMsI9ZqYBS0EGY1HgnVY49QOeNlGzVamIFi+YF/ezQJe2i7xbBcyPb49LlTQPbVow==
+	bh=bcP+QM0h2zOpugkSqG+xGZASRBqc/Y0mF98PeP2sdl8=;
+	b=fKWFWmb8lbGGJCpRaQebsmGoBmrkrxDBfbOlzLfAwOLFzj4ZkS5D6LtQ9YSsdcbtSzNP
+	 sV7GiMTXMHiIQ3o3Y94MsppsXq2+ArJlViRnLfSuSPNmOm+f8EF+V2E/MKDKfB/enkDH7
+	 QKPZ08nXMwiG+mcElU6RdljuEa/bdS9Lpb0UcakXkoenyG4NORORXvRugbpwb639vnrwq
+	 nhDIuI7JCC98BJAtKTHwPUAHKGtJBCzO2MHq1FfcRAAYo0WXFBlTjUOpDa82sWovmWRz6
+	 Prl/uLO0/z69nYfm3nlZjwvcdxkrKt90X3kRJxzxLoIT2WkV5PpLKCj8i4OAudv4K5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aQIv1feO;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RUVGlsmf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F932606A336;
-	Fri, 23 Oct 2026 05:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E399E60A260A;
+	Fri, 23 Oct 2026 05:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aQIv1feO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5D71F031E7;
-	Fri, 23 Oct 2026 05:25:03 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RUVGlsmf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15C51F031E3;
+	Fri, 23 Oct 2026 05:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792733103;
-	bh=NdfdIDkYAlD1K1U/MPC/6OAvrbjyEtKQ858LOlS3Jaw=;
+	s=k20260515; t=1792733104;
+	bh=bcP+QM0h2zOpugkSqG+xGZASRBqc/Y0mF98PeP2sdl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQIv1feOJMoCsbnAE/J73oJrzSUnmwE+eV8UrLy5s7ZihR61C5H8f96cZFquGbFK1
-	 ocmm3pjSQc52nFIbB7WTE2JteyJqjsET12NcGZUVrSdbOOFzrShe3ikC/QOWrE/guy
-	 03Qu7akv/68ZokjPdrzIly0dq0+qBTsRWmqmLroOphKEg+RYqnmOCtbMB6MsFjm+eY
-	 QMd6sdq+NfRkpbnWWcdzrTj1DWyt8O4IZMrl5mofvW4lI2HSRFlcd14QYy6Jefrbh0
-	 RtVlmGfAeZryOC6N1H42OVPfpd6gJBo1zxgchv0R+/IvU+vGCZnyDxq5NDc9cwdUhZ
-	 s776ZjkyVy3bA==
+	b=RUVGlsmfFM0VO9dJTFHHxQE9KlR+fvU2CGvcq+LKxPkIIAfsLAWsFdMsDC9Cx6Nvl
+	 UT3EYIdodV1lHKeSsLRFiOOA47YzA1X/WV6NAu6gQyjfsDFF9L4PBY+4IU5jyZKvbr
+	 SY3+Yk8apLal0dBewIrw+P6Kj3hEmmTKOwRUmmkrpz89A569at9b5w0a6KJ5YxcxX3
+	 /EYJT0fpo1oaYmpRWnkwlSn/RdlQj/F5XUIonzR0FcxGT4kyqgmk2N/sq4z1rPz8zf
+	 EnQ/A2a0KeAAXK3w6TdWoA9EjLCsMEzRptCaYaxvw227VrD4gvVgx2CJGOy+b0gwTK
+	 9d2zNz45/aGHQ==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -48,9 +48,9 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 09/15] sched_ext: Fix a cpu idling after put_prev_task_scx() queues its task on the local DSQ
-Date: Thu, 22 Oct 2026 19:24:46 -1000
-Message-ID: <20261023052452.2889061-10-tj@kernel.org>
+Subject: [PATCH 10/15] sched_ext: Expire prev's slice in dispatch_one() under bypass
+Date: Thu, 22 Oct 2026 19:24:47 -1000
+Message-ID: <20261023052452.2889061-11-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023052452.2889061-1-tj@kernel.org>
 References: <20261023052452.2889061-1-tj@kernel.org>
@@ -65,82 +65,93 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-put_prev_task_scx() enqueues a still-runnable task when the pick has settled
-on idle. The insert can land the task on the cpu's own local DSQ, and then
-the cpu must not go idle over it. 7a9df7667963 ("sched_ext: Fix stall when a
-task enqueued with SCX_ENQ_LAST lands back on its CPU's local DSQ")
-reschedules the idle task in that case, but only after the SCX_ENQ_LAST
-insert.
+The next patch keeps a bypassed rescuee on the local DSQ and needs
+dispatch_one() to keep it running too. dispatch_one()'s keep test refuses
+any prev whose scheduler is bypassing, so another local task could run ahead
+of the rescuee, even an escalated SCX_TASK_PROTECTED one. The test exists
+because a cpu-form scheduler can write p->scx.slice directly from BPF, so
+the slice can't be trusted under bypass.
 
-The plain insert, taken when the task can't stay on the cpu, can land on the
-local DSQ too: rescue can admit a task there when its scheduler lacks
-SCX_CAP_BASE on the cpu. Without the resched the cpu idles with the task
-queued until an unrelated wakeup or the rescue timer's escalation.
+The refusal doesn't hold anyway. Since 025b1bd41965 ("sched_ext: Implement
+hierarchical bypass mode"), the host's ops.dispatch() runs while prev's
+scheduler bypasses, and the post-dispatch test in scx_dispatch_sched() keeps
+a queued prev with slice left without checking bypass. A task dispatched in
+between waits behind prev until the next bypass tick zeroes the slice, at
+most a tick.
 
-Reschedule after either insert. The following patch makes the plain insert
-the common path for bypassed tasks under rescue.
+Expire the slice before the keep test instead when prev's scheduler is
+bypassing, as the bypass tick would. Neither test keeps prev on a zeroed
+slice, so prev rotates. A kernel slice survives the expiry and keeps prev.
+Only a sub-scheduler's task can hold one, and sub-schedulers are cid-form,
+which rejects direct slice writes, so it can be trusted.
 
-Fixes: 5fd501744b10 ("sched_ext: Add bandwidth-limited rescue execution for stranded tasks")
+Drop the stale pointer to scx_disable_workfn(), update scx_bypass()'s
+kerneldoc, and add a TODO noting that the bypass slice handling can be
+cleaned up once the cpu form is deprecated and the kfuncs refuse slice
+raises from a bypassing scheduler.
+
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ kernel/sched/ext/ext.c | 32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 3ca150154a3e..2e8596a74188 100644
+index 2e8596a74188..e3eb19af00e2 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -3599,6 +3599,8 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 			 (rq->scx.flags & SCX_RQ_PROXY_PENDING);
- 	bool proxy_block = rq->scx.flags & SCX_RQ_PROXY_BLOCKING;
- 	bool rescue_keep = false;
-+	bool going_idle = !proxy_put && next &&
-+			  sched_class_above(&ext_sched_class, next->sched_class);
+@@ -3333,18 +3333,33 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
+ 	if (prev->sched_class == &ext_sched_class) {
+ 		update_curr_scx(rq);
  
- 	rq->scx.flags &= ~SCX_RQ_PROXY_PENDING;
- 
-@@ -3704,25 +3706,28 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		 * locally runnable and can legitimately go idle with @p still
- 		 * runnable (see do_pick_task_scx()).
- 		 */
--		if (!proxy_put && next &&
--		    sched_class_above(&ext_sched_class, next->sched_class) &&
--		    scx_task_can_stay_on_cpu(rq, p)) {
-+		if (going_idle && scx_task_can_stay_on_cpu(rq, p)) {
- 			WARN_ON_ONCE(!sched_core_enabled(rq) &&
- 				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			scx_do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
--
--			/*
--			 * A task put on the local DSQ runs, as anywhere else.
--			 * Here the insert can't reschedule on its own: the pick
--			 * has settled on @next and @p is still curr, so
--			 * resched_curr() would flag @p and __schedule() clears
--			 * that right after the pick. Flag @next instead.
--			 */
--			if (p->scx.dsq == &rq->scx.local_dsq)
--				set_tsk_need_resched(next);
- 		} else {
- 			scx_do_enqueue_task(rq, p, 0, -1);
- 		}
-+
 +		/*
-+		 * @p may be on the local DSQ now. With %SCX_ENQ_LAST the
-+		 * scheduler can put the last runnable task there. The plain
-+		 * insert runs when @p cannot stay on this cpu, and rescue can
-+		 * still admit it here.
++		 * Under bypass, @prev's slice can't be trusted as a cpu-form
++		 * scheduler can write it directly from BPF. Skipping the keep
++		 * below is not enough as the post-dispatch test in
++		 * scx_dispatch_sched() would keep @prev on the same slice.
 +		 *
-+		 * The cpu must not go idle with @p queued on its local DSQ. The
-+		 * usual resched doesn't work: the pick has settled on @next and
-+		 * @p is still curr, so resched_curr() would set need_resched on
-+		 * @p, which __schedule() clears right after the pick. Set it on
-+		 * @next instead.
++		 * Expire it as the bypass tick would, so that neither test
++		 * keeps @prev on it and @prev rotates through the bypass
++		 * enqueue. A kernel slice is left alone and the keep below
++		 * keeps @prev on it, see %SCX_TASK_KERNEL_SLICE.
++		 *
++		 * TODO: Once the cpu form is deprecated and the kfuncs refuse
++		 * slice raises from a bypassing scheduler, slices can be
++		 * trusted under bypass. This expiry, the bypass tick's zeroing
++		 * and the related slice handling can then be cleaned up.
 +		 */
-+		if (going_idle && p->scx.dsq == &rq->scx.local_dsq)
-+			set_tsk_need_resched(next);
- 	}
- 
- switch_class:
++		if (scx_bypassing(scx_task_sched(prev), cpu))
++			expire_task_slice(prev);
++
+ 		/*
+ 		 * If @prev is runnable & has slice left, it has priority and
+ 		 * fetching more just increases latency for the fetched tasks.
+ 		 * Tell pick_task_scx() to keep running @prev. If the BPF
+ 		 * scheduler wants to handle this explicitly, it should
+ 		 * implement ->cpu_release().
+-		 *
+-		 * See scx_disable_workfn() for the explanation on the bypassing
+-		 * test.
+ 		 */
+-		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice &&
+-		    !scx_bypassing(scx_task_sched(prev), cpu)) {
++		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice) {
+ 			verdict = SCX_DSP_PREV;
+ 			goto has_tasks;
+ 		}
+@@ -6819,9 +6834,10 @@ static void unbypass_renotify_idle(struct rq *rq, struct scx_sched *pos,
+  *
+  * - ops.dispatch() is ignored.
+  *
+- * - dispatch_one() does not report %SCX_DSP_PREV on non-zero slice as slice
+- *   can't be trusted. Whenever a tick triggers, the running task is rotated to
+- *   the tail of the queue.
++ * - dispatch_one() expires prev's slice before its keep test as the slice can't
++ *   be trusted. Each tick does the same and rotates the running task to the
++ *   tail of the queue. A kernel slice is left alone, see
++ *   %SCX_TASK_KERNEL_SLICE.
+  *
+  * - pick_next_task() suppresses zero slice warning.
+  *
 -- 
 2.56.0
 
