@@ -1,63 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792795641;
-	b=VwIYAj0JYdyBH6IbOfFEN16Ro0S49oNilTPGfq/KbSVW+DWgim5rRFJB1pn7O1AM5cId
-	 K1T3KlZmTuCUj6OvaA3A+2hfPnEh6XJfnXIcQRgknWn2BokAafGeABLQExSzhK6wy1W8f
-	 5DyLvlmJ0LIcqtfvfzOxxY/3F/3qu3NeujvMKn4z/YHZs8Xjlhg/UOFJjoKChT5vKWNEG
-	 Gope7mIh9Ubdnukdg1gclYKfpCAVgH2hCP57/eXIgZXC3ABtfHpRaQ3cBSSsPuKOAaNTj
-	 enXbqNdK15q17iwC0/VRI+OiKG1dHdeKosXRCiY0Iwa6SKDfvgGIAodKgwFC9Qi2/Gg==
+	t=1792797664;
+	b=SIjUP+ITQW8vx5YEqniZ7kDkBvyO3wPjRQ4DI9rATx0ZDvcf+iUiNfR6HRSULO2/jhG2
+	 mxU/GjLbidnyB4WqiTy/M0dQ2Nz+nX8wtKVUwXHHcsftDYxBDuTpWFxPyv+YIpxLME9DS
+	 XlLO3RXw0CsQh8LftAD1tWsrDS+1w2JxnkG6JmPk28EX+eOQCTyF0HHpz/pP/y/NG1qyG
+	 N0Ubp6yR5sLkNI5lVRUtGFVURUVETb+u0w4clavU4kY5gxInj2BRppYI+jV+MDXB6lrVV
+	 wttip2wGFPASo9JorK4oar+MIqBbl+aYFl4IqcexRjO36Q/nN5FOU2TyI3EOUnZ6A/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792795641;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References;
-	bh=NYqDm/1QvLb9/cOBOgwdPYESEm3xrv+yvgkisJotDv4=;
-	b=4PlmQ5Ae/hPUw+oZacxuDVhU0+NIdaoTKPQZI5HUXcJ88nkUQ+lN/vvcL1YMdhIBwkVv
-	 bhKNX/BxOGYd5v6nd9XJJl+aFb9NBseR1nAHGP/RxOWIj3ANJ6bMrUwKOxMIFe2HPUh4t
-	 ZdSiDDY3NKmzjBU2MD71Z2zlZ5M7uyvyU0prXu28amWySAK3fZUg77UlltB8FCuLAX7M6
-	 jMjCpE3ues7hsfIbfuXFhaQJVn67uAbwCEsQlrnH5mlhtqJ1CIFvyveqvqvqwQtUBc0ed
-	 UpoVayl4tepDAZEY3s0irNv11D06f1bqqx+BRBhkjWL8ytMvBn8emaVAgc1WwtSzxbg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792797664;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=6yr2FiD65ejmI2ejP0FjPrTrPZ5wMzbdLZS9mjV5Yys=;
+	b=XArAb5Cm4ipQYuL4VPijbwf0zaSjs0WDfwkwDRJdAftrjHCSX5xOM4yQgcfdMW4JHryl
+	 0FNn53vJnauKi8KeGJ/k8PYKIXIZkuMBl+7vNhp/M7s1kZr8+Ieo4gJ95u1xVBDnb1MOk
+	 CnP6N2Qzztr3cS8UX0T5myj9S965xOaGzUTl9kDjk4FPmo/R3BMUPfNcYUG/VGE9ftwHv
+	 J2GNazbwukYD5Jqhw8gPD0msH1EjpJL8/z1fSt2ZvTfbP4Y0V6GCPiEKH52qW7n4fPyVX
+	 enOgImc1COz7bGjhs0ofq5UjNM4cevWBlSpDQAhtYmAf/GGFxRj/3SGJVdZDfelwppA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FPXcpDeL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EeN3JFAq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A3B606A31A;
-	Fri, 23 Oct 2026 22:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE34B60A2610;
+	Fri, 23 Oct 2026 23:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FPXcpDeL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994111F01825;
-	Fri, 23 Oct 2026 22:47:20 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EeN3JFAq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F851F01828;
+	Fri, 23 Oct 2026 23:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792795640;
-	bh=NYqDm/1QvLb9/cOBOgwdPYESEm3xrv+yvgkisJotDv4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=FPXcpDeLDDUrNjD122pYRGp9vXVSRY9A3Vj2VTwesPT4PstebgEpsheDmXw2k4Z+R
-	 9G1Zmrw51U4tOvPe1zd9V5WOhPXlD21dWUUxtHn+pPKlwoNyAXUQkr2QseEYReunXV
-	 KwL5DZy5bHETzAAmpM/ATU5pojkhoMcx2YVJt4oe/b4nVf3gM7vHpPh+pfC1LWGyTT
-	 8tozX1vMyuO6cNNIKCUcM+GP7fdXRE40GAC6F1+YMgmni6/3KD61v4pMy80bBYqoEY
-	 Xpc+7bYY69s17OszXi3RPaJUogLO63TYUp1kPaeJa0PRkYsx2cZZVSTR/GybijZYQe
-	 2ELfAvmxrnsgA==
-Date: Fri, 23 Oct 2026 12:47:19 -1000
-Message-ID: <a5551d69c989776eeb576456f0056fb9@kernel.org>
+	s=k20260515; t=1792797663;
+	bh=6yr2FiD65ejmI2ejP0FjPrTrPZ5wMzbdLZS9mjV5Yys=;
+	h=From:To:Cc:Subject:Date;
+	b=EeN3JFAq49UJdwFl5VZ60plcvnp/BVxpxfMhP2duXmw5gAPX472SuTnXiNMeyADY/
+	 osV0SXIExVPd7GcteIHfhialhYKMAuWRvMSHiVgLWnWWakiooyNL/ylJuNm4Vo/8Bw
+	 yXYatzBhOJ/kInPZxd/rvXRF7ORMHo+nP+eDKKD4OB0C541JjBon2WJp55CI5urKtW
+	 CInZoN0aeKu3FbbqOr62OZkd+3GZU+v9sh1T0iXQ1P0RWvBYU66u/k8s5kE7H3nE7L
+	 EWYd2ex1/hDzFNriX132rHV97Adb/ESQBIWIAsS3VkC0BZJAfkyAUS0cibstu7y04v
+	 bCyfC9NvEU5OQ==
 From: Tejun Heo <tj@kernel.org>
-To: Qiliang Yuan <odys.yuan@gmail.com>
-Cc: Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>, Jiri Olsa <jolsa@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>, Shuah Khan <shuah@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>, bpf@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org,
-	sched-ext@lists.linux.dev
-Subject: Re: [PATCH bpf-next v6 0/4] bpf: Fix a struct_ops use-after-free behind a flaky assoc_in_timer test
-In-Reply-To: <20261022-selftests-bpf-struct-ops-assoc-timer-v6-0-2c0f18e82582@gmail.com>
-References: <20261022-selftests-bpf-struct-ops-assoc-timer-v6-0-2c0f18e82582@gmail.com>
+To: sched-ext@lists.linux.dev
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	David Dai <david.dai@linux.dev>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCHSET sched_ext/for-7.5] sched_ext: Sync tools headers with scx and fix unsigned enum reads
+Date: Fri, 23 Oct 2026 13:20:58 -1000
+Message-ID: <20261023232102.1124938-1-tj@kernel.org>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -66,25 +60,45 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
 Hello,
 
-The following is a Claude-generated review.
+This patchset fixes __COMPAT_read_enum() sign-extending unsigned 4-byte
+enums, which made SCX_RESCUE_DISABLE read as 0xffffffffffffffff, syncs the
+shared headers in tools/sched_ext/include with the scx repo, and drops the
+enum lookup table entries for enumerators the kernel no longer has. The scx
+side is https://github.com/sched-ext/scx/pull/3930, merged, and
+https://github.com/sched-ext/scx/pull/3932.
 
-On Thu, Oct 22, 2026 at 04:48:35PM +0800, Qiliang Yuan wrote:
-> grace period of bpf_map_put(), so nothing waits for a prog that reads
-> the association in between.
+With both applied, the shared headers in tools/sched_ext/include are
+identical to scx's except the two generated tables, enum_defs.autogen.h and
+enums_abi.autogen.h, which each side regenerates from its own vmlinux.h.
 
-sched_ext hits the same use-after-free. Its kfuncs find the scheduler
-through bpf_prog_get_assoc_struct_ops() in scx_prog_sched(), from bpf_timer
-callbacks too, such as central_timerfn() in scx_central. The series fixes
-that as well.
+Based on sched_ext/for-7.5 (dd3b1d9be27c).
 
-5db69b0fbdc8 ("bpf: Make struct_ops tasks_rcu grace period optional") is in
-the bpf-next-7.4 pull, so the bug lands in 7.4-rc1. Can the fix go through
-bpf for 7.4-rc?
+This patchset contains the following 4 patches.
 
-Thanks.
+ 0001 sched_ext: Don't sign-extend unsigned enums in __COMPAT_read_enum()
+ 0002 sched_ext: Sync tools autogen enum lookup tables from the scx repo
+ 0003 sched_ext: Sync common and compat headers from the scx repo
+ 0004 sched_ext: Drop stale entries from the enum lookup tables
+
+The patchset is also available in the following git branch:
+
+ git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git enums-sync
+
+diffstat follows. Thanks.
+
+ tools/sched_ext/include/scx/bpf_arena_common.bpf.h | 23 +++++++++++++++++++++-
+ tools/sched_ext/include/scx/common.bpf.h           |  9 +++++++++
+ tools/sched_ext/include/scx/compat.bpf.h           | 16 +++++++--------
+ tools/sched_ext/include/scx/compat.h               |  6 +++++-
+ tools/sched_ext/include/scx/enums.autogen.bpf.h    | 18 +++--------------
+ tools/sched_ext/include/scx/enums.autogen.h        |  6 +-----
+ tools/sched_ext/scx_flatcg.bpf.c                   |  5 -----
+ 7 files changed, 48 insertions(+), 35 deletions(-)
 
 --
 tejun
