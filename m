@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792778177;
-	b=q+ksAU5nqLSMjoaecabYy4Qg1aJ0bciER6C6Qw4iD7bbpah5LTosCDrHC9NhyL/DLBZS
-	 /zQXouRhE1bPD1OXOBaIx9OkcwJYgruZuwIoevvKBkRnhQjlqIQvnYJN3yrmz+Rql/zRN
-	 s4AXswKFjEpVJgtTT0OF1mKBgKpWaLQ48FjeDV7hy6y+NdfqyynaufXZL6mo06fpPzuUz
-	 J47wCbQlR5sCzY5Ia4gingdGFcZqSUV+Kf5BJmyeLTR7b7W3JECEgKUIHvXy724P3mZhI
-	 xO4/Z3jBGGJ6QEcrvuhyKSizQMZLfWPfb9LpgfR1iN3oPVAq5bYDUWdIydVcaNYgWbg==
+	t=1792778178;
+	b=xt6/E1/eeEujE28xywz86+4L/n4JtXAjiOqY93FiXK+dY+/cteBbO6/xOdX22XJsNN32
+	 3touyTiaFoVM6t6qEY5NBc/X6fnglA86QUIBrNXBsRM12hq2PIWEuL/8uCqF70q6NxJIY
+	 CpaTHfW+/wEOre1kD6jMO1i2A32Mh2s4BrvwCrw17PaGqPsDtuJu84MmSUztVEAcTkmJU
+	 DhLJm28Ye98nUzlHU+pq0+cisok7zC7sKhkTfzIsrdCxFkT7eawzCoSn7TLIO8xl7C7jT
+	 8/HK5oPPrJw0nAob/m/nG0SDaX11DI2cnIYXNV6ljLGnNs6C/PGomdAAS0QH0HKIUlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792778177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792778178;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=zSb4rfQl0Weo2dJUCs1xxiU8d6Ds6KKUNnumgfdvexY=;
-	b=ulFI+9W6UlDI0qDVKCTVI906k695/RRsv0wxlyEePqjIXxdy01pyt6KdzQDJeT3Mc8zY
-	 Lps+U3xZZbKlgKQr9/YY1dq1bizw0vhCNwJr8teAQjXMQbuExygfPYLusT6MSH+lWDq0S
-	 eOeR1NV4qU8skuMtgtsj6cSKeWl/Lmlvow1zdOd/n5cuvmpIdd6OrWfJ+XMXzZVJdRGHl
-	 mzvpp1FLquz1ba427NZSdcxtn0fTLLp6SAYSWIHcYkTyFvEJhRxIkqQr1Ox97/WFbpxp/
-	 yT1E7oxo6BwXQHRAlAfrfyRuTUCSpBqFp76ftv9OLgMxrEW5+W7NZfpQye9DfQYSgAQ==
+	bh=8I+YqADEE6SEYnCz+JJg1Bnd3FMUkRM02RFKqlGPjiA=;
+	b=u1/o/+ru8V4Kaxpe0W8mr5K2rfi/TC7aGtC4GkrMpEMnIrvOdZdNKEClv2QYVpMO9nwq
+	 qEDtdZao9woyW7HglvwcJugycjE+wdjCaNjTcNPH9OgFKnvm2e+v0LcKhN+nOsz9ihAlC
+	 VTY/BcVabga25OmHf5KqYSe2WNn2EWkOxig7B4DFQW75I++jGMYlrptXrRzu5LS70sgPK
+	 IuC9wZWUPVdTstrUIDMEULlk+dCFQbl/BmapUUNaxNuaFrorDMr1ICWY15PmXEWeph8d+
+	 OnlqZyDompnzp0uJ0R3QpKduR17Bw5lyaQFqWLrfixG7YMtnrmAvf5SBamP42NzQ23A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OwrFQlj1;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XeoVTqCa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AAF606A331;
-	Fri, 23 Oct 2026 17:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44E860A2626;
+	Fri, 23 Oct 2026 17:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OwrFQlj1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF2D1F031E4;
-	Fri, 23 Oct 2026 17:56:12 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XeoVTqCa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD4B1F031EA;
+	Fri, 23 Oct 2026 17:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792778172;
-	bh=zSb4rfQl0Weo2dJUCs1xxiU8d6Ds6KKUNnumgfdvexY=;
+	s=k20260515; t=1792778177;
+	bh=8I+YqADEE6SEYnCz+JJg1Bnd3FMUkRM02RFKqlGPjiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OwrFQlj18AcpMroNgJkW07SVILekV0PtT9abQmQZPTHv3sK9Gq2Cui0hW0k7+UZwQ
-	 iXTq5f5vRjRPaCo3ogm9BEM+mevz1FBMFtYIc814weBBYWybQkuSDnBAXBcaysqTiy
-	 708/CGOEM9iXaFvnipmi8z6as6weQlD+Oag9R6djHt8c7ZD2/TtRqSxsr2gsTiQ8wY
-	 bmebQBtoOVl60j9Dwr8eUjDWldfNKaKpOZvCEL9NzwncU7Nn2whbfN4hrSAGA9Nlop
-	 kFKAnjMgoXRFkns+xZMvr5LF+3zVg73U9padgXEuE7DJCKARnHEvAuqIYTA93JO8Jw
-	 RE/TK9vnKEhdA==
+	b=XeoVTqCaIQLu4YXdJhR0efxti069jbzgwW14ap+12UuK7uaKLYF89XHerxgKhBbAA
+	 noJV7ShjphbkfUzhOPEcVQ//Sf3mQJxyxnoh4tpsU3RS4UwGJUWeIopEIopqRbZqS0
+	 3gOaFtGkysz6lqaZ1KVF3VAGiK1z81d+A9rO9jbJQbHbempzquB2PIWGXLzBhl3Iw8
+	 HxIRAid24RQf7DFY++2DCE+dLRRDD9Wz8P0+exaNYDhF+/GoPaBUfkooIme59pqpQQ
+	 a+IBEKhV2Xu8Gvlt+labv5JA6dJhScru+XDGEZHmN7UpUWQY5DLiDhptokQgz8HGjz
+	 SyUZGulWcq1zA==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -47,11 +47,10 @@ Cc: David Vernet <void@manifault.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH 03/17] sched_ext: Fix bypassed tasks stranded by the reenqueue limit
-Date: Fri, 23 Oct 2026 07:55:54 -1000
-Message-ID: <20261023175608.4120910-4-tj@kernel.org>
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 08/17] sched_ext: Fix a cpu idling with a runnable rescuee
+Date: Fri, 23 Oct 2026 07:55:59 -1000
+Message-ID: <20261023175608.4120910-9-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023175608.4120910-1-tj@kernel.org>
 References: <20261023175608.4120910-1-tj@kernel.org>
@@ -66,131 +65,137 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-scx_do_enqueue_task() counts a task's reenqueues until the task runs. Past
-SCX_REENQ_MAX_REPEAT it ejects the owning scheduler and leaves the task off
-every DSQ for the scheduler's exit to requeue. The count comes before the
-bypass test, so it also counts the reenqueues of a task whose scheduler is
-bypassing.
+A scheduler preempts a running rescuee like any other task by zeroing its
+slice. The rescue grant survives the preemption. put_prev_task_scx()
+restores the unserved remainder through scx_rescue_keep() and queues the
+rescuee at the tail of the local DSQ, behind whatever the scheduler wanted
+to run first.
 
-Those reenqueues are not the scheduler's placements, and ejecting the
-scheduler for them fixes nothing. Under bypass the kernel queues the
-scheduler's tasks on the bypass DSQs. A host calling
-scx_bpf_reenqueue_local() reenqueues a bypassed child's tasks on the cpu's
-local DSQ along with its own, and the reject drain reenqueues a consumed
-task that a cap check rejected.
+That breaks down when the scheduler zeroes the slice but dispatches nothing.
+dispatch_one() keeps the previous task running only with slice left or, when
+nothing else is runnable, with its scheduler holding SCX_CAP_BASE on the cpu
+and not taking the last task through SCX_OPS_ENQ_LAST. A rescuee fails both
+once its slice is zeroed if its scheduler lacks BASE there or takes the last
+task:
 
-In the following patches, the consume itself reenqueues a task it can't run
-right away, and the bypass load balancer reenqueues a task at its home.
+ 1. ops.tick() or scx_bpf_task_set_slice() zeroes the rescuee's slice
+ 2. the pick finds nothing else to run and settles on idle
+ 3. put_prev_task_scx() restores the remainder and queues the rescuee on the
+    local DSQ
+ 4. nothing reschedules the cpu, as the pick has settled and __schedule()
+    clears need_resched right after it
 
-The count is reset only when the task runs or leaves sched_ext, so an
-ejection can lead to a stranding the exit does not recover:
+The cpu idles with the rescuee queued until an unrelated wakeup or the
+rescue timer's escalation.
 
- 1. the task's reenqueues pass the limit, which ejects its scheduler and
-    strands the task
- 2. the exit's scx_bypass() cycles the task through dequeue and enqueue,
-    which requeues it on a bypass DSQ with the count still past the limit
- 3. the task's next reenqueue under bypass strands it again
- 4. scx_bypass() requeues stranded tasks only when the scheduler wasn't
-    bypassing yet, so the task stays off every DSQ until the disable walks
-    the tasks
- 5. the disable takes scx_enable_mutex, the cgroup lock and scx_fork_rwsem
-    before the walk, and hangs if the stranded task holds one of them,
-    forking or attaching to a cgroup
+Restore the remainder from dispatch_one() too. When nothing else is
+runnable, its last keep now keeps the rescuee running on the remainder, so
+the pick never settles on idle with a rescuee runnable. put_prev_task_scx()
+keeps handling a displaced rescuee, where another task won the pick.
 
-Test bypass before the count. A task reenqueued under bypass stays queued
-until a later dispatch or balancer pass, so there is no tight loop to bound,
-and the task's first run resets the count. The offline test moves up with it
-to stay ahead of the bypass test. A reenqueue on an offline cpu goes to the
-local DSQ and isn't counted either.
+A rescuee that passes the existing keep-last test is kept there instead and
+continues as an ordinary task, its rescue ended with the zeroed slice. That
+is fine as its scheduler holds SCX_CAP_BASE on the cpu.
 
-A host that keeps calling scx_bpf_reenqueue_local() could get a bypassed
-child ejected, as the child's tasks on the local DSQ counted against the
-child. The reenqueues are the host's, and its own tasks still count against
-it.
+The new keep also covers bypassed tasks run under rescue in the following
+patches.
 
-Fixes: 7706d6e4f2e3 ("sched_ext: Bound per-task reenqueues and eject the owning scheduler")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
+v2: The dispatch_one() comment and description now say that a rescuee whose
+scheduler holds SCX_CAP_BASE on the cpu passes the keep-last test and
+continues as an ordinary task (sashiko).
+
+Fixes: 5fd501744b10 ("sched_ext: Add bandwidth-limited rescue execution for stranded tasks")
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c | 39 ++++++++++++++++++++++++---------------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ kernel/sched/ext/ext.c | 38 +++++++++++++++++++++++++++++++++++---
+ kernel/sched/ext/sub.c | 15 ++++++++-------
+ 2 files changed, 43 insertions(+), 10 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index bb36264e626f..2e172d8d4572 100644
+index a9961dc33af0..de3fa7476fec 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -2185,11 +2185,31 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
- 	 */
- 	p->scx.flags &= ~SCX_TASK_IMMED;
- 
-+	/*
-+	 * If !scx_rq_online(), we already told the BPF scheduler that the CPU
-+	 * is offline and are just running the hotplug path. Don't bother the
-+	 * BPF scheduler.
-+	 */
-+	if (!scx_rq_online(rq))
-+		goto local;
-+
-+	if (scx_bypassing(sch, cpu_of(rq))) {
-+		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
-+		goto bypass;
-+	}
-+
- 	/*
- 	 * A task reenqueued too many times without running means the scheduler
- 	 * keeps re-deciding a placement it can't honor, e.g. re-inserting to a
- 	 * cid it lacks caps on. Eject the owning scheduler and strand the task
- 	 * to be picked up during sched exit.
-+	 *
-+	 * Bypass guarantees that every runnable task keeps running, and the
-+	 * disable relies on that to take sleeping locks. The kernel places the
-+	 * tasks of a bypassing scheduler and those on an offline rq, and
-+	 * counting their reenqueues could strand a task under bypass and
-+	 * deadlock the disable on a lock the task holds, so both tests stay
-+	 * above the count.
- 	 */
- 	if (enq_flags & SCX_ENQ_REENQ) {
- 		if (++p->scx.reenq_cnt > 1)
-@@ -2203,19 +2223,6 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+@@ -3361,6 +3361,34 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
+ 			verdict = SCX_DSP_PREV;
+ 			goto has_tasks;
  		}
++
++		/*
++		 * The scheduler preempts a rescuee like any other task by
++		 * zeroing its slice. The grant survives the preemption. The
++		 * rescuee gets the unserved remainder back and runs again
++		 * behind whatever the scheduler wanted to run first.
++		 *
++		 * Two sites restore the remainder. When another task won the
++		 * pick, put_prev_task_scx() restores it and queues the rescuee
++		 * at the tail of the local DSQ.
++		 *
++		 * When nothing else is runnable, the cpu must not go idle with
++		 * the rescuee queued. The keep above takes a rescuee whose
++		 * scheduler holds %SCX_CAP_BASE here and doesn't take the last
++		 * task through %SCX_OPS_ENQ_LAST.
++		 *
++		 * The pick then ends its zeroed slice, and the rescue with it,
++		 * and refills a default slice. The task continues as an
++		 * ordinary one, which is fine as its scheduler holds BASE here.
++		 *
++		 * For any other rescuee, a reinsert from put_prev_task_scx()
++		 * would come after the pick settled on idle. Keep it running on
++		 * the remainder here.
++		 */
++		if (unlikely(prev == scx_rescuee(rq)) && scx_rescue_keep(rq, prev)) {
++			verdict = SCX_DSP_PREV;
++			goto has_tasks;
++		}
+ 	}
+ 	rq->scx.flags &= ~SCX_RQ_IN_DISPATCH;
+ 	return SCX_DSP_NONE;
+@@ -3578,9 +3606,13 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
  	}
  
--	/*
--	 * If !scx_rq_online(), we already told the BPF scheduler that the CPU
--	 * is offline and are just running the hotplug path. Don't bother the
--	 * BPF scheduler.
--	 */
--	if (!scx_rq_online(rq))
--		goto local;
--
--	if (scx_bypassing(sch, cpu_of(rq))) {
--		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
--		goto bypass;
--	}
--
- 	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
- 		goto direct;
+ 	/*
+-	 * If the slice is consumed, protection ends with it. A rescuee keeps
+-	 * going when a preemption or ops.stopping() zeroed its slice, see
+-	 * scx_rescue_keep().
++	 * If the slice is consumed, protection ends with it.
++	 *
++	 * A rescuee keeps going when a preemption or ops.stopping() zeroed its
++	 * slice. Here another task won the pick. scx_rescue_keep() restores the
++	 * unserved remainder and the reinsert below queues the rescuee at the
++	 * tail of the local DSQ. When nothing else is runnable, dispatch_one()
++	 * keeps the rescuee running on the remainder instead.
+ 	 */
+ 	if (!p->scx.slice) {
+ 		if (unlikely(p == scx_rescuee(rq)))
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index d3f89ec4e4fa..42ac92ecb627 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -480,16 +480,17 @@ void scx_rescue_end(struct rq *rq)
+ }
  
-@@ -4941,7 +4948,8 @@ static void process_ddsp_deferred_locals(struct rq *rq)
-  * %SCX_TASK_REENQ_IMMED. If the BPF scheduler dispatches back to the same local
-  * DSQ with %SCX_ENQ_IMMED while the CPU is still unavailable, this triggers
-  * another reenq cycle. Repetitions are bounded by %SCX_REENQ_MAX_REPEAT in
-- * scx_do_enqueue_task(), which ejects the task's owning scheduler.
-+ * scx_do_enqueue_task(), which ejects the task's owning scheduler. A bypassing
-+ * scheduler's tasks are placed by the kernel instead and are not counted.
-  */
- static bool local_task_should_reenq(struct rq *rq, struct task_struct *p,
- 				    u64 *reenq_flags, u32 *reason)
-@@ -5236,7 +5244,8 @@ static void process_deferred_reenq_users(struct rq *rq)
+ /**
+- * scx_rescue_keep - Keep the rescue going for a preempted-out rescuee
++ * scx_rescue_keep - Keep the rescue going past a zeroed slice
+  * @rq: rq @p is running on
+- * @p: task under rescue whose slice is exhausted
++ * @p: task under rescue
   *
-  * A task can be re-rejected repeatedly. Reenqueues are bounded per task by
-  * SCX_REENQ_MAX_REPEAT in scx_do_enqueue_task(), which ejects the owning
-- * scheduler.
-+ * scheduler. A bypassing scheduler's tasks are placed by the kernel instead and
-+ * are not counted.
-  */
- static void scx_reenq_reject(struct rq *rq)
- {
+- * Called from put_prev_task_scx() to decide what an exhausted slice means for
+- * the rescuee. scx_rescue_charge() ends the rescue the moment the admitted
++ * Decide what an exhausted slice means for the rescuee. dispatch_one() calls
++ * this when nothing else is runnable and put_prev_task_scx() when another task
++ * won the pick. scx_rescue_charge() ends the rescue the moment the admitted
+  * slice is fully served, so arriving here with the rescue still open means @p
+- * was preempted. Restore the unserved remainder and return %true - @p stays the
+- * rescuee and the caller reinserts it at the tail of the local DSQ, behind
+- * whatever preempted the rescuee.
++ * was preempted. Restore the unserved remainder and return %true. @p stays the
++ * rescuee. dispatch_one() keeps it running and put_prev_task_scx() reinserts it
++ * at the tail of the local DSQ, behind whatever preempted the rescuee.
+  *
+  * Return %false to end the rescue instead - the slice is already fully served,
+  * @p is leaving the rq or bypass is dismantling rescues.
 -- 
 2.56.0
 
