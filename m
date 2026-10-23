@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792713813;
-	b=gNOjIe4H5NzSlso49Q/mSWFG4NeXUvl5zv7YgWU4ns5ox0X6uGAHJwd14iiFDVPiEuKO
-	 53x48MRQcQpmPSBU9KbzxMV85YPc0Mlyb8NnMo4XBz3QPaDrs791gQZADIoN/JyVAOetU
-	 PDTITA75prCWataxjkgqd6T+qWQ+3c+VrM5uAtjbGwk+V41+sfhSgUVz3yNJtM8VDGskm
-	 1HsnVD/Tdr5c3WJSD8Tzi2ZOVbrZw4YJC4RC0qUX8VI1B5MzeIjTk0det+HULWnzgBHd4
-	 CihmLhk//Bc7YtLIXOnQPVg5V+/oc0yFNE6Bfk2O39r2bcXxxueGPrBnxFbgGmRfCWg==
+	t=1792713814;
+	b=L5cz+CBYGtXloRJY0TXGXXln6srbQZg1S6FoG3ChCyjG2AHaWNeFauluWWygjFdOt/dc
+	 mzSdP4axVQR+X6zcG9LCb2glpHp0T/efpwJh46LbkUeb9EsdDc4XkVfHSwjDH33fTjHxY
+	 xul1i1cmqVmX5rDV7QW0lZZGMie1bazB8y/2VvvlPEVbkxUVTADq1g9guOEzTjRizrF6i
+	 cA1NXzxgt8vWgXRxcSMSozPXa4gnXKuZmMGLZfUnukTZ5Cj5vFQSRtKEQ8rgbWMTTiO06
+	 LiMsuRTXhNM6ApS4TMh3QayEluqyuCZYXr7Twnj91jHpQwKjImfcLj57hxlhlFe2nqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792713813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792713814;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References;
-	bh=O6v8TOT8Zv3cJuIGyi4e4QKoLabmEVlogYEBr09n+zM=;
-	b=YuXjN/Cs0YlxiSiXKmoqGzL1lr5JZzIdV8K56SszMaZ58tQLLwb83cuRHHssYD3YLyqL
-	 yjDZLc61+bcIn3yecIB434FZ+zcZ4n0/2J+GuHskcSJ8x0uOVUwU9lu1O2AmIqQWc8Adz
-	 AU/P20T1C/6c/ZiTX1VqkHG1nt5NxLHd1iq5UvLeBk3FlzccOLA7TN/2wCpaCk1y8BrD5
-	 614ClZtS0B2Tgmtjvb7Jc1hkCECyy9n43NIhtCGiFJWsQwEAWEteEQQvB3hoRx7Tz5aJk
-	 MBGqw4ugcGPC/YIhusHkaXRdzWub0wBMQOXZFQ8ogpxvlf+tVq7poOpS+b5YTia0vSQ==
+	bh=J7REHjKN4xxpRijalKL70zgjfl3Kdf8r5hcnizdaRCQ=;
+	b=I0tO4wScc19fSis/Z9SsyfBfdd9jXOMFiXNPb/y3FyMNmZ1mpg+NjhZGi8GBDco7wwAI
+	 MVn71Yxt30qL9WV1ySJb1xFGhF+a7NzNZVzW9QtGuIZmdNTe38HE3yDi1CyWUfdt5+CyB
+	 mwbFLlWSP5sR6z2Kd2XT78JSU8n0uqas9srxl0JuUGByXhg6nGE4E6Mw/yypeofZoYjDj
+	 nsMb41EZs/oB03CZW5MJTmBmIMOGL7o0GqyTnT+nfjRwbAJsWFO9mWzIgA5OLu2ZyuSN5
+	 sgmPdI1WnS/4NAoQXQsWVs9ODKEJyBOZqdPIGA7fA6L7XBCz2xGaRUKFORjnvKZ/DkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZEdYuCi+;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QfnDCyuy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75570606A319;
-	Fri, 23 Oct 2026 00:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D83F606A319;
+	Fri, 23 Oct 2026 00:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZEdYuCi+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C4D1F01828;
-	Fri, 23 Oct 2026 00:03:32 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QfnDCyuy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA4B1F01825;
+	Fri, 23 Oct 2026 00:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792713813;
-	bh=O6v8TOT8Zv3cJuIGyi4e4QKoLabmEVlogYEBr09n+zM=;
+	s=k20260515; t=1792713814;
+	bh=J7REHjKN4xxpRijalKL70zgjfl3Kdf8r5hcnizdaRCQ=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=ZEdYuCi+Ntt0aZix4twMZzayrBid1ob+NTP5O0Y91hDAP50GyZCzfoWNzOJ+t6WDz
-	 Ny1Z/1Te3j64+jNjxVBKV15AOHDLMLxNO1B6xPQAr0Fea5oxSYTxqKm9ywXhXtmOz2
-	 knx2JPjBiKXNnz0u4BG74HxoQDDP21TLgeEm84LxAKvLhhX4J8UEc9PR8B5uhV9a2s
-	 P0guBQzNF/WLVrB4+1f5rMv+9Nn2IBnKjXWIwtVq2r7QxtKoyjNaYz7Ja/5b8pAje7
-	 89qMKgieRkM2q3bg7KMpr0kCvWBDtfRm6/08O7RGVcdCZZwj+wtGAX0SYrOuChuGSz
-	 V+SWEsrgSQOOg==
-Date: Thu, 22 Oct 2026 14:03:32 -1000
-Message-ID: <f80c1546b3d2831782241fb613e5c3ec@kernel.org>
+	b=QfnDCyuy456Qt4VwBeBXDvOhynEj2hBYrbGZV2quU/3b5IGovJhrfRoQ7qYvLv7tl
+	 FV5iOLEKMx5IoHIqFbIOAr0IrjsYl0c+rnkUmMJr1Pown4SIHCZ/BB61cclrjo6pq+
+	 AykG2uLg3VjVDnb10KpLJT7vnJk2JHsVqWa7xQPgGKtiTdM01+cand9Jr2MEL4eV8R
+	 XFEVw13Rc4twGIlEkpFFbuT9ZbUg7/60c0cMQsBXbMpWFD30QCGpazSdARhDMF7IqT
+	 6Qf5AR0M6KUn6XJVAH+/GutIpt6Zc0zXFhB/lFlmeaSAAgsxEzG5+NNe0LcnYCmsa7
+	 frCR5h9TJaEfg==
+Date: Thu, 22 Oct 2026 14:03:33 -1000
+Message-ID: <e89a3bde1785fd3609635c463e382318@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 06/14] sched_ext: Fix a cpu idling with a runnable rescuee
-In-Reply-To: <sashiko-outbox-182079@kernel.org>
-References: <20261022213836.2259069-1-tj@kernel.org> <20261022213836.2259069-7-tj@kernel.org> <sashiko-outbox-182079@kernel.org>
+Subject: Re: [PATCH 10/14] sched_ext: Fix bypassed tasks stalling when the host lacks SCX_CAP_BASE
+In-Reply-To: <sashiko-outbox-182098@kernel.org>
+References: <20261022213836.2259069-1-tj@kernel.org> <20261022213836.2259069-11-tj@kernel.org> <sashiko-outbox-182098@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -58,18 +58,18 @@ Precedence: list
 
 Hello,
 
-On Thu, Oct 22, 2026 at 09:56:08PM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Medium]
-> Should the scx_rescue_keep() check in kernel/sched/ext/ext.c:dispatch_one()
-> run before the SCX_EV_DISPATCH_KEEP_LAST check above it?
+On Thu, Oct 22, 2026 at 10:09:43PM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Should the initial slice check in dispatch_one() also allow a task with
+> scx_task_has_kernel_slice(prev) to keep running while its scheduler is
+> bypassing, matching put_prev_task_scx()?
 
-No. A rescuee which passes the keep-last test is on a CPU where its
-scheduler holds SCX_CAP_BASE. Either the insert it was rescued for
-lacked ENQ or PREEMPT, or BASE came back during the rescue. It can stay
-on that CPU like any other task of its scheduler, so ending the rescue
-and refilling a default slice is fine. The comment saying that the keep
-above declined prev is wrong for this case and the next version fixes
-both the comment and the description.
+Yes, it should keep the rescuee. The next version adds a patch ahead of
+this one. It expires a bypassing prev's slice in dispatch_one() before
+the keep test and drops the bypass test from the keep test. A kernel
+slice survives the expiry, so a bypassed rescuee keeps the CPU. The
+post-dispatch test in scx_dispatch_sched() also can no longer keep a
+prev that dispatch_one() declined.
 
 Thanks.
 
