@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792778171;
-	b=jNWNyzQ0tQWOmu8HPnmsVNI2RK2Q3/SV0ZEPdHQ2vje2/fSxVWm3u9MXCXcNwYcdtSDa
-	 g1Mz1Qcn4oN4XPdlyAI5HfBcMeedS6pIF06TsXs5ylun2d571V4+i6lJqV2pPwaGW7C7v
-	 4DGzU0nAtfF44nVu1500vGJZkVWTpAQr5wi5OghZTw2bzxgAicP3aUkqDyJOXa4Zym+Cs
-	 O6yYettvnUWGg2MwNOdTe+XTb6RYvmW5PWLCboxrazs/80KB/oE8xFP0lbtpfjt4o+sx0
-	 xzVKtoypM7w8jUL6czL6BhpTicF/XTKJzqX9Mu7WpuWAM4rwCvAAm7F5Ei0nMwrxnwA==
+	t=1792778172;
+	b=saL0eMBEezxqIvwkE7T38F4eIwDO3rtJiLcXsD1iLJ6twZWipiyMgq7GEeiJvYWv//Tv
+	 4oCVRyFX7JefoTs+uexMIIsklanimGy+/bYLdPCf4+mcLQ+4BwUpasN6ubkxdZPkZ26lp
+	 ZYD3EgGeENyGQieIqCVi0/BgT5Pv7yEj2q6YLX78NY4UG21+7DAVmgUdCSk80oHQWzzIR
+	 SmlK9X50Dqv24HfKWiP5BmsM0bn88Z6pqp5J1nBkRoOQQIWCRx3Kg+oAJFJyasSqNh2nM
+	 SpXsFo1zaHJVBbYyUvmVIY6dAzW+2Sj9N2t67Jmlu5J2qm07bz5GsHedtrHc14w5Yfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792778171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792778172;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=OuFRntLsKWVkhln7NLPq021dG4sakpiOgmRybSJ2J70=;
-	b=n7CgczQjHG5mEST+vVGxf7MZMoqb1Twe1l+Ab28kcshTtGUdaqqUuHJtej1hWcA9pRkm
-	 DNbcFMQM3h3r3wngwRWoiKx+FLbUpJgglZ24NjdvCPzfYiISDBGceWzGip0EQqYh9VYPz
-	 lhhVnJbvB9xvtpG4zfTRI0Q2q2OR8j69Cm79jYUYvYP5MaZMPrazLuKAfa/1SE7B56M3w
-	 TiGHoB6EVBZ+Y63MQOIR45j1EPQDWuHmYBNnCI2C7AcGkyPnwL49/nrI2fyhKbA8b/Uki
-	 +cs3vAYVB+oHK2dyM57ZGNF58qEms1Sj6GfR5/7bE5IZnnfX6eAA4rFon3uAmntK05w==
+	bh=wRpA4vF4Sk/UfaW67b88A9WROnoA0uJnVaDmwLQ3n0Y=;
+	b=xHGlVRZCVrR2vYXx0NJThyOQfI3cMWx18uDwi/yNQ+6X9noTuYR8WjcRNwQ+t0VGjtJg
+	 9mt6O8I/AWpGsseGTduoeFfTReyZ2jUzCrAbsKbAyVVD94ct4XX54+aRomidY0w3ncFPm
+	 FUQMEKofNkCXZhRMLizkGB9BpVmiWSu4AioPVMz+Prxw8phetjyikZuAfhbW++EBRMWBb
+	 r3S6bI/Vt9Sg8+5XPAkbXR8SR1Bb01HZmdeO4z8jPa3KvD/xktIqKMZvA+2oevzELjfi8
+	 BW0BOMkwXpqNWfFhchpBCYNhCPBXZvbitzrcTZZV5o3FHTfoUkAt5vbWI1wFkvvnDIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=O7bgjUOx;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FWwHgchn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB101606A324;
-	Fri, 23 Oct 2026 17:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7CB606A32E;
+	Fri, 23 Oct 2026 17:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=O7bgjUOx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D911F01829;
-	Fri, 23 Oct 2026 17:56:10 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FWwHgchn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CCE1F01828;
+	Fri, 23 Oct 2026 17:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792778170;
-	bh=OuFRntLsKWVkhln7NLPq021dG4sakpiOgmRybSJ2J70=;
+	s=k20260515; t=1792778171;
+	bh=wRpA4vF4Sk/UfaW67b88A9WROnoA0uJnVaDmwLQ3n0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7bgjUOxKre3iyRlT1Z/5uJaa6OInUZnvus2FGtd4wAVZ87DzyQREbcDGKOk9njvk
-	 g7ZDoy7FBUt0fVYD2Q2LCCTWaIV8b8vF7PXY3y3fxigia5xTBGJGHED399tzXiRJrN
-	 7ey3rM+p6GvEfBsvORM0W933gCT5+Cw1G/ejObLjaMI1DTG6x9ZnB5v76g8Erykpde
-	 uy1whXpH1OZgNYeWNBvbsSAdbIoxYSdFzLX5DbMdLz4k8lBaLuE6KmgEsfe8jVJe/x
-	 fnu2VK7qY9DrFgoMt7pK9L7wuS8saHnZByDMik5ajvk31O1q3fuG1Tpc1lqGYWynR2
-	 er9DhnCss4OOA==
+	b=FWwHgchnIVD9LeRYy5DFjoTaMv+/EGjBqLBznWDMfyznjupoFHlKtXXxwvdiLW7to
+	 9ekvs7gfkfeFGS1ZCypDem84Lm4E/a6uFjwvqxpRCeSVXT1Gmgsxyd93mof8GktZ3n
+	 D4+3HSDI2NugcwTVzgMDoiYywdzwhDM8pdltj7X+yTglLuZQ3K6hbvys4qoRxKOWQc
+	 7h5/RuuurnugJ78/irz4xK6XdH/BOpAEL8bQGfqEOurnjiOfYyptH9KnDc43rqOvPJ
+	 Henw5ZqPijnnti0KQgadDqJBUov4nh/tMkL/NpotNXLx8mFogkk3olajFLl85Ml3mA
+	 6V38vVzP89yPA==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -48,9 +48,9 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 01/17] sched_ext: Pack scx_ent_flags' multi-bit fields at the top
-Date: Fri, 23 Oct 2026 07:55:52 -1000
-Message-ID: <20261023175608.4120910-2-tj@kernel.org>
+Subject: [PATCH 02/17] sched_ext: Clear holding_cpu where the claim is confirmed
+Date: Fri, 23 Oct 2026 07:55:53 -1000
+Message-ID: <20261023175608.4120910-3-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023175608.4120910-1-tj@kernel.org>
 References: <20261023175608.4120910-1-tj@kernel.org>
@@ -65,116 +65,121 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The following patches add a flag for a kernel-owned slice to scx_ent_flags.
-The two 3-bit fields, the task state at bits 8 to 10 and the reenqueue
-reason at bits 12 to 14, sit right above the single-bit flags, so the new
-flag would have to take bit 11 or 15, out of sequence with the rest.
+The bypass load balancer will take tasks off a remote cpu's bypass DSQ with
+unlink_dsq_and_switch_rq_lock() in the following patches and insert them
+into another bypass DSQ. Clearing holding_cpu after the claim is up to each
+claimant, so the balancer would need a clear of its own.
 
-Pack the fields at the top of the word, below SCX_TASK_CURSOR, the state at
-bits 25 to 27 and the reason at bits 28 to 30, so that the single-bit flags
-continue from bit 8.
+unlink_dsq_and_switch_rq_lock() marks a task with holding_cpu for the gap
+between dropping the DSQ lock and taking the task's rq lock, so that a
+dequeue in that gap can tell the claimant it lost. Once the claimant holds
+the rq lock and finds the marker intact, nothing can take the task away
+under it and the marker has no reader left.
 
-The renumbering changes the values a BPF scheduler reads from p->scx.flags.
-Nothing in the kernel or the in-tree schedulers hardcodes the numbers. The
-enum ABI table in tools/sched_ext/include/scx/enums_abi.autogen.h, kept for
-repairing enum values that a kernel's BTF truncates, is regenerated for the
-two fields. In the scx repository, scx_eevdf tests SCX_TASK_REENQ_IMMED and
-SCX_TASK_REENQ_PREEMPTED against SCX_TASK_REENQ_REASON_MASK. Those three
-names belong in its load-time enum table, so that they follow the running
-kernel. No behavior change.
+Each claimant clears it at its own site after that point:
+
+ - dispatch_to_local_dsq(), which runs the handshake inline, in its same-rq
+   and fallback branches
+ - scx_proxy_reject_task() for the proxy reject
+ - the dequeue inside deactivate_task() for both remote moves
+
+Clear it where the claim is confirmed instead and drop the explicit clears.
+No behavior change.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h                     | 11 +++++---
- .../sched_ext/include/scx/enums_abi.autogen.h | 28 +++++++++----------
- 2 files changed, 21 insertions(+), 18 deletions(-)
+ kernel/sched/ext/ext.c      | 19 +++++++++++--------
+ kernel/sched/ext/internal.h | 11 ++++++-----
+ 2 files changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index efd635a99309..b341c328948e 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -107,7 +107,10 @@ enum scx_ent_flags {
- 	SCX_TASK_RUN_TRACKED	= 1 << 7, /* task is in an ops.running()/stopping() session */
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index 07857039aee6..bb36264e626f 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2829,7 +2829,6 @@ static void scx_proxy_reject_task(struct scx_sched *sch, struct rq *rq,
+ 	lockdep_assert_rq_held(rq);
+ 	WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
  
- 	/*
--	 * Bits 8 to 10 are used to carry task state:
-+	 * The multi-bit fields are packed at the top, below SCX_TASK_CURSOR, so
-+	 * that the single-bit flags stay contiguous from bit 0.
-+	 *
-+	 * Bits 25 to 27 are used to carry task state:
- 	 *
- 	 * NONE		ops.init_task() not called yet
- 	 * INIT_BEGIN	ops.init_task() in flight; see sched_ext_dead()
-@@ -116,7 +119,7 @@ enum scx_ent_flags {
- 	 * ENABLED	fully initialized and in sched_ext
- 	 * DEAD		terminal state set by sched_ext_dead()
- 	 */
--	SCX_TASK_STATE_SHIFT	= 8,
-+	SCX_TASK_STATE_SHIFT	= 25,
- 	SCX_TASK_STATE_BITS	= 3,
- 	SCX_TASK_STATE_MASK	= ((1 << SCX_TASK_STATE_BITS) - 1) << SCX_TASK_STATE_SHIFT,
+-	p->scx.holding_cpu = -1;
+ 	p->scx.flags |= SCX_TASK_REENQ_PROXY;
+ 	scx_divert_strip_flags(p, &enq_flags);
  
-@@ -128,7 +131,7 @@ enum scx_ent_flags {
- 	SCX_TASK_DEAD		= 5 << SCX_TASK_STATE_SHIFT,
+@@ -2863,8 +2862,9 @@ static void scx_proxy_reject_task(struct scx_sched *sch, struct rq *rq,
+  * tell whether we lost to dequeue by testing whether the holding_cpu still
+  * points to this CPU. See scx_dispatch_dequeue() for the counterpart.
+  *
+- * On return, @dsq is unlocked and @src_rq is locked. Returns %true if @p is
+- * still valid and detached from @dsq. %false if lost to dequeue.
++ * On return, @dsq is unlocked and @src_rq is locked. Return %true if @p is
++ * still valid and detached from @dsq, with holding_cpu cleared. Return %false
++ * if @p was lost to a dequeue.
+  */
+ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
+ 					  struct scx_dispatch_q *dsq,
+@@ -2887,11 +2887,13 @@ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
+ 	if (likely(p->scx.holding_cpu == cpu) && !WARN_ON_ONCE(src_rq != task_rq(p))) {
+ 		/*
+ 		 * Keep ->dsq set until we own @src_rq so that a racing dequeue
+-		 * can find @dsq and clear holding_cpu. Once ownership is
+-		 * confirmed, clear it under @src_rq so that deactivate_task()
+-		 * takes the !dsq path instead of retaking @dsq->lock.
++		 * can find @dsq and clear holding_cpu. Once we own @src_rq, the
++		 * handshake is over. Clear ->dsq so that deactivate_task()
++		 * takes the !dsq path instead of retaking @dsq->lock. Clear
++		 * holding_cpu with it so that no caller has to.
+ 		 */
+ 		p->scx.dsq = NULL;
++		p->scx.holding_cpu = -1;
+ 		scx_wait_dispatching(p);
+ 		return true;
+ 	}
+@@ -3127,20 +3129,21 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
+ 	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
+ 		bool fallback = false;
  
- 	/*
--	 * Bits 12 to 14 are used to carry reenqueue reason. In addition to
-+	 * Bits 28 to 30 are used to carry reenqueue reason. In addition to
- 	 * %SCX_ENQ_REENQ flag, ops.enqueue() can also test for
- 	 * %SCX_TASK_REENQ_REASON_NONE to distinguish reenqueues.
- 	 *
-@@ -139,7 +142,7 @@ enum scx_ent_flags {
- 	 * CAP		sub-sched cap miss, see p->scx.reenq_reason_*
- 	 * PROXY	proxy state prevented a remote DSQ transfer
- 	 */
--	SCX_TASK_REENQ_REASON_SHIFT = 12,
-+	SCX_TASK_REENQ_REASON_SHIFT = 28,
- 	SCX_TASK_REENQ_REASON_BITS = 3,
- 	SCX_TASK_REENQ_REASON_MASK = ((1 << SCX_TASK_REENQ_REASON_BITS) - 1) << SCX_TASK_REENQ_REASON_SHIFT,
- 
-diff --git a/tools/sched_ext/include/scx/enums_abi.autogen.h b/tools/sched_ext/include/scx/enums_abi.autogen.h
-index 1186daa9cb14..05a460611c4d 100644
---- a/tools/sched_ext/include/scx/enums_abi.autogen.h
-+++ b/tools/sched_ext/include/scx/enums_abi.autogen.h
-@@ -120,24 +120,24 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
- 	{ "scx_ent_flags", "SCX_TASK_IMMED", 0x20LLU },
- 	{ "scx_ent_flags", "SCX_TASK_PROTECTED", 0x40LLU },
- 	{ "scx_ent_flags", "SCX_TASK_RUN_TRACKED", 0x80LLU },
--	{ "scx_ent_flags", "SCX_TASK_STATE_SHIFT", 0x8LLU },
-+	{ "scx_ent_flags", "SCX_TASK_STATE_SHIFT", 0x19LLU },
- 	{ "scx_ent_flags", "SCX_TASK_STATE_BITS", 0x3LLU },
--	{ "scx_ent_flags", "SCX_TASK_STATE_MASK", 0x700LLU },
-+	{ "scx_ent_flags", "SCX_TASK_STATE_MASK", 0xe000000LLU },
- 	{ "scx_ent_flags", "SCX_TASK_NONE", 0x0LLU },
--	{ "scx_ent_flags", "SCX_TASK_INIT_BEGIN", 0x100LLU },
--	{ "scx_ent_flags", "SCX_TASK_INIT", 0x200LLU },
--	{ "scx_ent_flags", "SCX_TASK_READY", 0x300LLU },
--	{ "scx_ent_flags", "SCX_TASK_ENABLED", 0x400LLU },
--	{ "scx_ent_flags", "SCX_TASK_DEAD", 0x500LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_SHIFT", 0xcLLU },
-+	{ "scx_ent_flags", "SCX_TASK_INIT_BEGIN", 0x2000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_INIT", 0x4000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_READY", 0x6000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_ENABLED", 0x8000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_DEAD", 0xa000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_SHIFT", 0x1cLLU },
- 	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_BITS", 0x3LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_MASK", 0x7000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_REASON_MASK", 0x70000000LLU },
- 	{ "scx_ent_flags", "SCX_TASK_REENQ_NONE", 0x0LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_KFUNC", 0x1000LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_IMMED", 0x2000LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_PREEMPTED", 0x3000LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_CAP", 0x4000LLU },
--	{ "scx_ent_flags", "SCX_TASK_REENQ_PROXY", 0x5000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_KFUNC", 0x10000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_IMMED", 0x20000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_PREEMPTED", 0x30000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_CAP", 0x40000000LLU },
-+	{ "scx_ent_flags", "SCX_TASK_REENQ_PROXY", 0x50000000LLU },
- 	{ "scx_ent_flags", "SCX_TASK_CURSOR", 0xffffffff80000000LLU },
- 	{ "scx_exit_code", "SCX_ECODE_RSN_HOTPLUG", 0x100000000LLU },
- 	{ "scx_exit_code", "SCX_ECODE_RSN_CGROUP_OFFLINE", 0x200000000LLU },
++		/* the handshake is over, see unlink_dsq_and_switch_rq_lock() */
++		p->scx.holding_cpu = -1;
++
+ 		/*
+ 		 * If @p is staying on the same rq, there's no need to go
+ 		 * through the full deactivate/activate cycle. Optimize by
+ 		 * abbreviating move_remote_task_to_local_dsq().
+ 		 */
+ 		if (src_rq == dst_rq) {
+-			p->scx.holding_cpu = -1;
+ 			scx_dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
+ 					     slice, vtime, enq_flags | SCX_ENQ_APPLY_SLICE);
+ 		} else if (unlikely(task_proxy_unsafe_to_move(p))) {
+ 			fallback = true;
+ 			scx_proxy_reject_task(sch, src_rq, p, enq_flags);
+ 		} else if (unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
+-			p->scx.holding_cpu = -1;
+ 			fallback = true;
+ 			scx_dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
+ 					     p, slice, vtime,
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 29e69a83d876..44ede6e6fe1a 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -2107,12 +2107,13 @@ static const char *scx_enable_state_str[] = {
+  *   4. Lock src_rq (where the task currently lives)
+  *   5. Verify p->scx.holding_cpu == current CPU, if not, dequeue won the
+  *      race (dequeue clears holding_cpu to -1 when it takes the task), in
+- *      this case migration is aborted
+- *   6. If src_rq == dst_rq: clear holding_cpu and enqueue directly
+- *      into dst_rq's local DSQ (no lock swap needed)
++ *      this case migration is aborted. Otherwise the claim is confirmed and
++ *      holding_cpu is cleared here, see unlink_dsq_and_switch_rq_lock()
++ *   6. If src_rq == dst_rq: enqueue directly into dst_rq's local DSQ (no lock
++ *      swap needed)
+  *   7. Otherwise, verify under src_rq lock that the task can be moved to dst_rq
+- *      (CPU affinity, migration_disabled, etc.). If not, clear holding_cpu,
+- *      leave the task on src_rq, and enqueue it on the fallback DSQ.
++ *      (CPU affinity, migration_disabled, etc.). If not, leave the task on
++ *      src_rq, and enqueue it on the fallback DSQ.
+  *   8. Otherwise (i.e. if the task can be moved to dst_rq), call
+  *      move_remote_task_to_local_dsq(), which releases src_rq, locks dst_rq,
+  *      and performs the deactivate/activate migration cycle
 -- 
 2.56.0
 
