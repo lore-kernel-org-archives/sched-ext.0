@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1792713813;
-	b=eVue9Hp0WBjuU3IMvWe8NZeFnsrhWkxPamZtd5DV/CQ6qPWugHUhI6GKrarWneFRgnAN
-	 366yU98mlz+KDc2iYkpaXQdvooDxHab+Q72ne3pLW/BVPEV8DvT5ef9K5iMMyxjbdGBBV
-	 fvATAyU1h4KYn6KQ4dTBorAhR0GSywgO8JTfEYcCSGTGqauk+an0H/WGdORlR37hpIbY7
-	 YvIzTcu0wQ+jykY/IqzkYGTFSfTDcJ1AcoGEpfIAGKOpQMZFmCuSzObNgAZ66fic8hSIE
-	 Nmte0OppnH1S1K1VKcWBOgOBIIgkI8+CASQOxwVXj2DJjVrWvjjsx8PXVrDesqJWjyQ==
+	b=gNOjIe4H5NzSlso49Q/mSWFG4NeXUvl5zv7YgWU4ns5ox0X6uGAHJwd14iiFDVPiEuKO
+	 53x48MRQcQpmPSBU9KbzxMV85YPc0Mlyb8NnMo4XBz3QPaDrs791gQZADIoN/JyVAOetU
+	 PDTITA75prCWataxjkgqd6T+qWQ+3c+VrM5uAtjbGwk+V41+sfhSgUVz3yNJtM8VDGskm
+	 1HsnVD/Tdr5c3WJSD8Tzi2ZOVbrZw4YJC4RC0qUX8VI1B5MzeIjTk0det+HULWnzgBHd4
+	 CihmLhk//Bc7YtLIXOnQPVg5V+/oc0yFNE6Bfk2O39r2bcXxxueGPrBnxFbgGmRfCWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1792713813;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References;
-	bh=aPRjem8YjBwr4ZE6+eDk5JZGbq0V9A9/6F858J8yDSE=;
-	b=2qQb3Ko1mKMOtApxQ97klMHz18bpIkG3Y5HlCBVSSPN5wdXgQ8PlpyhSC/aPFNxuWe4l
-	 DmtaTk2lHQoEomlg5m36Dhv2oJl+OLRLGPwl74+zoBB20IPZ4JSxfDEkrVuw1TRfIOiQ7
-	 AWyDsl8QbB0KHZJejSjajttNDtDF3/cgRwOhXXnI6xA9oVlPZ46c1RPe3CPnb3u8FoH3D
-	 OQ+JazbdvHNK9/NnSCnfumgnvyZ/zZCBTezZRe/tnHvNHelZMRfJE994kKYLG7AwXGacz
-	 DL7fOoF1K/lTO/x7+XkoitorykTGzzyjkTh5qobyHEem0dX5tLAjAtuxyaykPzn8AaA==
+	bh=O6v8TOT8Zv3cJuIGyi4e4QKoLabmEVlogYEBr09n+zM=;
+	b=YuXjN/Cs0YlxiSiXKmoqGzL1lr5JZzIdV8K56SszMaZ58tQLLwb83cuRHHssYD3YLyqL
+	 yjDZLc61+bcIn3yecIB434FZ+zcZ4n0/2J+GuHskcSJ8x0uOVUwU9lu1O2AmIqQWc8Adz
+	 AU/P20T1C/6c/ZiTX1VqkHG1nt5NxLHd1iq5UvLeBk3FlzccOLA7TN/2wCpaCk1y8BrD5
+	 614ClZtS0B2Tgmtjvb7Jc1hkCECyy9n43NIhtCGiFJWsQwEAWEteEQQvB3hoRx7Tz5aJk
+	 MBGqw4ugcGPC/YIhusHkaXRdzWub0wBMQOXZFQ8ogpxvlf+tVq7poOpS+b5YTia0vSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fFHlb1Sc;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZEdYuCi+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8B9606A319;
-	Fri, 23 Oct 2026 00:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75570606A319;
+	Fri, 23 Oct 2026 00:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fFHlb1Sc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B791F01825;
-	Fri, 23 Oct 2026 00:03:31 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZEdYuCi+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C4D1F01828;
+	Fri, 23 Oct 2026 00:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792713812;
-	bh=aPRjem8YjBwr4ZE6+eDk5JZGbq0V9A9/6F858J8yDSE=;
+	s=k20260515; t=1792713813;
+	bh=O6v8TOT8Zv3cJuIGyi4e4QKoLabmEVlogYEBr09n+zM=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=fFHlb1Sc9z0+E2j84iuomW6Wk9HFLN+w0PqBsOTu4zZAlwacbT/d9awL+5EL57UYj
-	 F4Tsm7jc9vN1kGhHv3+kH4clPGoS3yBVV/TV+jMEDHSASNDH6U0oXyxPIYT2+H8JkJ
-	 493owNVgC2c2dGEOdhugsHBIZYGnDXgv8OkokC2py+c7W3c6ivB6AmtZHndI6bMWtD
-	 ldIvI1qhxatnXIscknV1R8hQyaS0OGFUxgvE0O7ErZd3rM2v6jeIaitXyn5zJVrprl
-	 XKflYvurWnik3q/ITfPdABkvloETFaRTpjXZbUb3QSxBX5+Z/fR/pPhBMZ+Gwfwu/7
-	 cZh4cLuDs2Ahw==
-Date: Thu, 22 Oct 2026 14:03:30 -1000
-Message-ID: <0175dddf51ce08b935d923931f811e5e@kernel.org>
+	b=ZEdYuCi+Ntt0aZix4twMZzayrBid1ob+NTP5O0Y91hDAP50GyZCzfoWNzOJ+t6WDz
+	 Ny1Z/1Te3j64+jNjxVBKV15AOHDLMLxNO1B6xPQAr0Fea5oxSYTxqKm9ywXhXtmOz2
+	 knx2JPjBiKXNnz0u4BG74HxoQDDP21TLgeEm84LxAKvLhhX4J8UEc9PR8B5uhV9a2s
+	 P0guBQzNF/WLVrB4+1f5rMv+9Nn2IBnKjXWIwtVq2r7QxtKoyjNaYz7Ja/5b8pAje7
+	 89qMKgieRkM2q3bg7KMpr0kCvWBDtfRm6/08O7RGVcdCZZwj+wtGAX0SYrOuChuGSz
+	 V+SWEsrgSQOOg==
+Date: Thu, 22 Oct 2026 14:03:32 -1000
+Message-ID: <f80c1546b3d2831782241fb613e5c3ec@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: sashiko-reviews@lists.linux.dev
 Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev
-Subject: Re: [PATCH 03/14] sched_ext: Fix bypassed tasks looping on a host without SCX_CAP_ENQ
-In-Reply-To: <sashiko-outbox-182095@kernel.org>
-References: <20261022213836.2259069-1-tj@kernel.org> <20261022213836.2259069-4-tj@kernel.org> <sashiko-outbox-182095@kernel.org>
+Subject: Re: [PATCH 06/14] sched_ext: Fix a cpu idling with a runnable rescuee
+In-Reply-To: <sashiko-outbox-182079@kernel.org>
+References: <20261022213836.2259069-1-tj@kernel.org> <20261022213836.2259069-7-tj@kernel.org> <sashiko-outbox-182079@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -58,30 +58,18 @@ Precedence: list
 
 Hello,
 
-On Thu, Oct 22, 2026 at 10:04:10PM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Can consuming bypassed tasks with SCX_ENQ_IMMED here cause a bypassed task to
-> be stranded off all dispatch queues in scx_do_enqueue_task() when it gets
-> reenqueued from the local DSQ?
-
-That's intended. A task going past SCX_REENQ_MAX_REPEAT means that the
-scheduler malfunctioned, so it is aborted and the task is stranded until
-the abort's exit path picks it up, as the comment above the check says.
-The exit path re-enqueues every task of the aborted scheduler and
-scx_disable_task() resets reenq_cnt on the way out.
-
+On Thu, Oct 22, 2026 at 09:56:08PM +0000, sashiko-bot@kernel.org wrote:
 > [Severity: Medium]
-> What happens if a child host holding only SCX_CAP_ENQ_IMMED consumes a single
-> bypassed task with SCX_ENQ_IMMED during scx_bpf_sub_dispatch() while
-> rq->scx.local_dsq is empty, and the parent scheduler's ops.dispatch() also
-> extends prev->scx.slice?
+> Should the scx_rescue_keep() check in kernel/sched/ext/ext.c:dispatch_one()
+> run before the SCX_EV_DISPATCH_KEEP_LAST check above it?
 
-A parent which asks a child to dispatch and then extends prev is
-misbehaving. That said, there is a way to get there without the parent
-extending anything. dispatch_one() declines a bypassing prev but the
-test in scx_dispatch_sched() after ops.dispatch() keeps it on the same
-slice. The next version expires a bypassing prev's slice in
-dispatch_one(), which closes that path.
+No. A rescuee which passes the keep-last test is on a CPU where its
+scheduler holds SCX_CAP_BASE. Either the insert it was rescued for
+lacked ENQ or PREEMPT, or BASE came back during the rescue. It can stay
+on that CPU like any other task of its scheduler, so ending the rescue
+and refilling a default slice is fine. The comment saying that the keep
+above declined prev is wrong for this case and the next version fixes
+both the comment and the description.
 
 Thanks.
 
