@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792733101;
-	b=kN69hDYx7HVAE9Zten++Sx3z0p00wFgZ0Hb4ufgIfJMjgIs3xiE1xzO9JDCLjAb8j1FT
-	 TS+XnLoe5J5czgq8vZu0UpdHuSc/s/6fx1kKcFzM4Kc7nXU9AdEITCgce+YriWVnv3c0t
-	 2WZRI/jWCATuHa9K//y0mGh+8C529PrxMBGVsAv/dHvWWiZ1EVxI413TibHq3KE+O1SMb
-	 atqQph9+kvx8NO70yknPVbQmRvFKjMF5akUJPku1ATYz/6S6MlBrwX/LCso2+l/lWzEtr
-	 BlenF3WnH9c5an4mwXyQvBi5CDh/CwQu0MABHfjU2jKeInl/Z1/mAZZRw7x+YQ6++nA==
+	t=1792733097;
+	b=zQDhhdAgcR8CJReKncTeu3+GxjFzHlfdnqLbCrM1H8iJWWdPkPOv9GB9QI0iorNqQDCB
+	 YvT6eHA4mifOvjvoGUzxArqG2f6zDpmObPpvciTyPSlJWh5H+ukuGrJmwBCBU4oECvFLl
+	 iIG8hTrlzbq9nhanob2/3Ubey1uvkugXasRfjPZOHMXWL/OhVt0GhpJg5Wo7BGxI9yV5L
+	 ScjjIatT4tWYJlel/2zNEDiYE13qoHZ4L/ddAATWg4treIleyYYLpb8k3xjezHi18UfZr
+	 exiffHboJo+RShzoCwwsmWj/g0GwOuKTRBPLT7XTVq4BagO7iFxgvrtnIRm0bTbAA/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792733101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792733097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=836PL940WmEhSPhtiJJlst/oz62Ty9ypDftH76mz85M=;
-	b=2cWhWwls3fNLyAcL1pngUvdwLWw6yRqXnRWA1CfJQDvt4khKYA4ND5sD+xIFavxxtv24
-	 rwkpmTXFS8tnUsO15GUdeS8lXpDhajSRVCOzQay/XBlVH+nxZEeiWJmLfSut5BYUVnpge
-	 M2g33YgW98laTyfkBIh8kRxx8NsVALtXYelzPoWaVr8Pk5vfv2qxVtRWr9YZBMWg8TfAF
-	 bX9PrigPIQxOkbYDYCi9LHKnRVrsD2Osmv8joBPN8jAmaadDrsKMAKvKVHv5s4B/uLWvH
-	 hpDbAxZGOZU4h7KnUKtw9VRuhAy+kVFuQgV5wWXfQjRCTtKpJltoA0Wk0CGVHeO6zig==
+	bh=1yAwA9pUm466ezJDd8Y8Vs1FFHhG8k49ArFYwVO8RkY=;
+	b=KRyNs+eQqdSW0RElTngrHBX1HbBl6qZrRNPER4Yp3p7rhedax324SvGPFaV8lSEYvDqK
+	 MdnoHcmiSXJgvtCzek24naTxJ9LzPMlrB0teBX78oL9c5dPFA7Q442qifLgJoNZOAITdz
+	 ikJw4pDys60WmDjj6fTYKFzuxRFxEkgJXwVFN8M8B3JlHIr6hnax04C/s0S0DBy3nX3vE
+	 rLv/uApsAxo4kJXjS8yr8XgkkH1XZn0qauJi9X05mbazWiKEeGVGTQQ1dleKFNc0fo1ne
+	 D83Hrx5CACM3JG2CnVYed19jJpOUjUKPdMOkSr9Bkz9EDemCUKi5rLl382Znjjez5VQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j2xfaIeg;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a116SXFi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A245606A32C;
-	Fri, 23 Oct 2026 05:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B310606A325;
+	Fri, 23 Oct 2026 05:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j2xfaIeg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08311F031E5;
-	Fri, 23 Oct 2026 05:25:00 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a116SXFi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B5E1F031E2;
+	Fri, 23 Oct 2026 05:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792733101;
-	bh=836PL940WmEhSPhtiJJlst/oz62Ty9ypDftH76mz85M=;
+	s=k20260515; t=1792733096;
+	bh=1yAwA9pUm466ezJDd8Y8Vs1FFHhG8k49ArFYwVO8RkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j2xfaIegtfyj8BvEjzod/vAhPRI+dEOMLThO64NJGh8w+St7BqicrAh6hqCIu7iBn
-	 enshY9X/84RodrzrA8p9Wea5kVUfTZe6ZlNtG1Eiw/dyDQA6wiTDv7HmenrAYAA+Ug
-	 P8dVKZj4rk/lFi1kabYLhdOO0Ze/2o2aRmojBGrqkmhBR5eWudQRKjLdBXIX9K8R2P
-	 9PG+KP+QSsAAx1pjmI0Q1H5kWvquOZy8aNePxxdFWGWJHCGFZ4FKs/DsU66w9wyMyu
-	 VNEs+GdiZwwuienwrUSTF0sGnE18QaMmNyDdNeQo7a0rgM7oPhpJmlY5ck5i8cJ7jp
-	 +5xPqf3SMNklw==
+	b=a116SXFi3h2+GTOdrqW7Nms+NhXiDRTrDqjRxN7usHo2QUsGr0RVljjoeELBr1j4B
+	 ZHobxoW5yfEDybUDqpe5xEaizs0x3Ca5XvMFyT7/Bj1BLmEY4IKElsdVMa58PuuvpP
+	 x8LNpxgxvB0tJXodEGPMsnxsjla4CE84vnDI0VOcwe7MyeKBT87msEelRAwFxSppPU
+	 /dpWnBNnk295uriM4Rzx6PkUQX39nMz4g+ntDz/5Kcp/z1u1DhMqpUydQNbNZqi7GS
+	 fmgSxMFr5FzTv9AcYRgp4vTIwuSwCBjJ4+PH8M6Qa71SbdLiranGKPmVuqXfUYJ+LS
+	 4qV7ljz9suIVA==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -48,9 +48,9 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 07/15] sched_ext: Mark the rescue grant as a kernel slice with SCX_TASK_KERNEL_SLICE
-Date: Thu, 22 Oct 2026 19:24:44 -1000
-Message-ID: <20261023052452.2889061-8-tj@kernel.org>
+Subject: [PATCH 03/15] sched_ext: Fix bypassed tasks looping on a host without SCX_CAP_ENQ
+Date: Thu, 22 Oct 2026 19:24:40 -1000
+Message-ID: <20261023052452.2889061-4-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023052452.2889061-1-tj@kernel.org>
 References: <20261023052452.2889061-1-tj@kernel.org>
@@ -65,272 +65,99 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the following patches, bypassed tasks run under rescue when their host
-lacks SCX_CAP_BASE on the cpu. Under bypass the kernel zeroes the running
-task's slice at every tick, as it does not trust the scheduler's slices.
+Bypass exists so that runnable tasks make progress without trusting the BPF
+scheduler. A host with SCX_CAP_ENQ_IMMED (BASE) but not SCX_CAP_ENQ on a cpu
+cannot run a single bypassed task there. The task loops instead:
 
-A rescue grant has to survive that, or it is served a tick at a time with
-the rescuee sent to the tail of the local DSQ each time. The generic slice
-handling can't tell a kernel grant from a scheduler's slice.
+ 1. a bypassed task lands on the host's bypass DSQ for the cpu
+ 2. the cpu's dispatch descends into the host, which holds BASE there
+ 3. the host consumes the task into the local DSQ as a plain insert
+ 4. the insert needs ENQ and the host lacks it, so the task is rejected
+ 5. the reject drain reenqueues the task and it is back at step 1
 
-Mark the grant as a kernel slice with SCX_TASK_KERNEL_SLICE, set at rescue
-admission and cleared when the slice ends. The generic slice handling leaves
-it alone. The default refill does nothing for it, and the three zeroings go
-through the new expire_task_slice(), which skips it:
+A bypass consume puts a task on the cpu being dispatched for, to run right
+away. That is the IMMED contract, and BASE is the cap it needs. Consume with
+SCX_ENQ_IMMED. BASE is then the one cap a bypassed task ever needs. Dispatch
+descends into a host only on a cpu where the host holds BASE, so a consume
+never lacks it.
 
- - the bypass tick's zeroing of the running task
- - the eviction of a running task that can't stay on the cpu when bypass
-   lifts
- - the cap-revoke eviction of a running task
+A consumed task is first on the local DSQ when dispatch enters the host with
+the DSQ empty. That is always the case for the root and normally for a
+parent dispatching into a child.
 
-Schedulers keep their control. Preemption and scx_bpf_task_set_slice() still
-apply, and the rescue stays bounded by served time.
+A consumed task that cannot run right away is reenqueued like any IMMED task
+and goes back to the bypass DSQ. Waiting on the local DSQ would need ENQ.
+The task cannot run right away when a higher class or a HEAD insert took the
+cpu meanwhile, or when the parent queued its own task before dispatching
+into the host. Each such reenqueue counts toward the reenqueue limit.
 
-The sites that recognized the rescuee by identity, the reenqueue scan and
-put_prev_task_scx()'s reinsert, test the flag instead.
-scx_task_has_kernel_slice() hides the test behind the scx_has_subs() static
-key, as only a sub-scheduler's task can carry the flag. The flag's entries
-join the enum tables in tools/sched_ext.
-
-No kernel slice reaches a zeroing until bypassed tasks run under rescue. The
-cap-revoke eviction skipped the rescuee already, and bypass entry ends an
-open rescue, so the bypass tick and the eviction at bypass lift see none.
-
-The refill is the one behavior change. The pick refills a zero slice only
-for a task that can stay on the cpu, so it concerns a rescuee whose
-scheduler holds BASE there. A scheduler may zero such a queued rescuee's
-slice, and the next pick used to refill it to the default.
-
-Now the rescuee runs on the zero slice until the next tick. There
-put_prev_task_scx() restores the remainder when another task is runnable.
-When nothing else is runnable, dispatch_one() keeps the rescuee as the last
-task. The pick then ends its zero slice, which ends the rescue, and refills
-the default.
-
+Fixes: 701b7bcad868 ("sched_ext: Add the SCX_CAP_ENQ cap")
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- include/linux/sched/ext.h                     | 11 +++++
- kernel/sched/ext/ext.c                        | 45 ++++++++++++++-----
- kernel/sched/ext/sub.c                        | 11 ++---
- kernel/sched/ext/sub.h                        |  7 +++
- .../sched_ext/include/scx/enum_defs.autogen.h |  1 +
- .../sched_ext/include/scx/enums_abi.autogen.h |  1 +
- 6 files changed, 60 insertions(+), 16 deletions(-)
+ kernel/sched/ext/inlines.h | 15 ++++++++++++---
+ kernel/sched/ext/sub.c     |  6 ++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
-index b341c328948e..fcf85b87fdd4 100644
---- a/include/linux/sched/ext.h
-+++ b/include/linux/sched/ext.h
-@@ -106,6 +106,17 @@ enum scx_ent_flags {
- 	SCX_TASK_PROTECTED	= 1 << 6, /* slice and DSQ head position protected */
- 	SCX_TASK_RUN_TRACKED	= 1 << 7, /* task is in an ops.running()/stopping() session */
+diff --git a/kernel/sched/ext/inlines.h b/kernel/sched/ext/inlines.h
+index 8de9d8fb4b25..1e39d12678c4 100644
+--- a/kernel/sched/ext/inlines.h
++++ b/kernel/sched/ext/inlines.h
+@@ -39,10 +39,18 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 	if (scx_consume_global_dsq(sch, rq))
+ 		return SCX_DSP_LOCAL;
  
 +	/*
-+	 * The kernel owns the slice, currently the rescue grant. While set:
-+	 *
-+	 * - refill_task_slice_dfl() and expire_task_slice() leave the slice
-+	 *   alone.
-+	 * - Reenqueue scans skip the task.
-+	 * - put_prev_task_scx() keeps a preempted task on the local DSQ.
-+	 * - Scheduler slice writes and preemption still apply.
++	 * A bypass consume puts a task on the cpu being dispatched for, to run
++	 * right away. That is an IMMED insert and needs only
++	 * %SCX_CAP_ENQ_IMMED, the base cap. Dispatch descends into @sch only on
++	 * a cpu where @sch holds the base cap, so @sch holds it here. The same
++	 * holds for the consume at the end of this function.
 +	 */
-+	SCX_TASK_KERNEL_SLICE	= 1 << 8, /* slice owned by the kernel */
-+
- 	/*
- 	 * The multi-bit fields are packed at the top, below SCX_TASK_CURSOR, so
- 	 * that the single-bit flags stay contiguous from bit 0.
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 79552a4afd39..cd363c7b5d71 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -1441,8 +1441,8 @@ bool scx_set_task_slice(struct task_struct *p, u64 slice)
-  * @rq: rq @p is on
-  * @p: task of interest
-  *
-- * End what rides on the slice - the protection, and the rescue if @p is being
-- * rescued.
-+ * End what rides on the slice - the protection, the kernel's ownership of the
-+ * slice, and the rescue if @p is being rescued.
-  *
-  * A dequeue normally ends the slice too. The exception is a save/restore pair
-  * on the running task. Attribute changes like renice cycle the task through
-@@ -1454,7 +1454,7 @@ void scx_task_slice_ended(struct rq *rq, struct task_struct *p)
- {
- 	lockdep_assert_rq_held(rq);
- 
--	p->scx.flags &= ~SCX_TASK_PROTECTED;
-+	p->scx.flags &= ~(SCX_TASK_PROTECTED | SCX_TASK_KERNEL_SLICE);
- 	if (unlikely(p == scx_rescuee(rq)))
- 		scx_rescue_end(rq);
- }
-@@ -1538,8 +1538,16 @@ static void apply_slice_vtime(struct task_struct *p, u64 slice, u64 vtime, u64 e
- 		p->scx.dsq_vtime = vtime;
- }
- 
-+/*
-+ * refill_task_slice_dfl() supplies a slice when the scheduler left none and
-+ * expire_task_slice() takes it away to force the task off the cpu. Neither
-+ * touches a kernel slice, see %SCX_TASK_KERNEL_SLICE.
-+ */
- static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
- {
-+	if (scx_task_has_kernel_slice(p))
-+		return;
-+
- 	/*
- 	 * A default refill is not an explicit request, so it must not drop a
- 	 * pending out-of-band one, which is applied when @p next runs.
-@@ -1548,6 +1556,17 @@ static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
- 	__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
- }
- 
-+static void expire_task_slice(struct task_struct *p)
-+{
-+	/*
-+	 * Unlike the refill above, an expiry supersedes a pending out-of-band
-+	 * request. A kept request would be applied at the next
-+	 * update_curr_scx() and undo the expiry.
-+	 */
-+	if (!scx_task_has_kernel_slice(p))
-+		scx_set_task_slice(p, 0);
-+}
-+
- static void update_curr_scx(struct rq *rq)
- {
- 	struct task_struct *donor;
-@@ -3647,11 +3666,15 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 				u64 enq_flags = 0;
- 
- 				/*
--				 * Keep a preempted rescue going. If preempted
--				 * by another SCX task, append to the local DSQ,
--				 * see scx_rescue_keep().
-+				 * The enqueue caps gate the scheduler's
-+				 * placement. The kernel placed a kernel-slice
-+				 * task here itself, so reinsert it without a
-+				 * cap check, at the head like any preempted
-+				 * task. When scx_rescue_keep() restored a slice
-+				 * the scheduler zeroed, the scheduler wanted
-+				 * something else to run first, so append.
- 				 */
--				if (unlikely(p == scx_rescuee(rq))) {
-+				if (unlikely(scx_task_has_kernel_slice(p))) {
- 					enq_flags |= SCX_ENQ_IGNORE_CAPS;
- 					if (!rescue_keep)
- 						enq_flags |= SCX_ENQ_HEAD;
-@@ -4366,7 +4389,7 @@ static void task_tick_scx(struct rq *rq, struct task_struct *donor, int queued)
- 	 * management.
- 	 */
- 	if (scx_bypassing(sch, cpu_of(rq)))
--		scx_set_task_slice(donor, 0);
-+		expire_task_slice(donor);
- 	else if (SCX_HAS_OP(sch, tick))
- 		SCX_CALL_OP_TASK(sch, tick, rq, donor);
- 
-@@ -4980,7 +5003,7 @@ static bool local_task_should_reenq(struct rq *rq, struct task_struct *p,
- 	first = !(*reenq_flags & SCX_REENQ_TSR_NOT_FIRST);
- 	*reenq_flags |= SCX_REENQ_TSR_NOT_FIRST;
- 
--	if (unlikely((p->scx.flags & SCX_TASK_PROTECTED) || p == scx_rescuee(rq)))
-+	if (unlikely((p->scx.flags & SCX_TASK_PROTECTED) || scx_task_has_kernel_slice(p)))
- 		return false;
- 
- 	*reason = SCX_TASK_REENQ_KFUNC;
-@@ -5083,7 +5106,7 @@ static u32 reenq_local(struct scx_sched *sch, struct rq *rq, u64 reenq_flags)
- 	if ((reenq_flags & SCX_REENQ_CAP_REVOKE) &&
- 	    rq->donor->sched_class == &ext_sched_class &&
- 	    scx_task_reenq_on_cap_revoke(rq, rq->donor)) {
--		scx_set_task_slice(rq->donor, 0);
-+		expire_task_slice(rq->donor);
- 		resched_curr(rq);
- 	}
- 
-@@ -6903,7 +6926,7 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
- 			if (bypass)
- 				scx_task_slice_ended(rq, p);
- 			else if (!scx_task_can_stay_on_cpu(rq, p))
--				scx_set_task_slice(p, 0);
-+				expire_task_slice(p);
+ 	if (scx_bypass_dsp_enabled(sch)) {
+ 		/* if @sch is bypassing, only the bypass DSQs are active */
+ 		if (scx_bypassing(sch, cpu)) {
+-			if (scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0))
++			if (scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu),
++						   SCX_ENQ_IMMED))
+ 				return SCX_DSP_LOCAL;
+ 			return SCX_DSP_NONE;
  		}
+@@ -63,7 +71,8 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 		struct scx_sched_pcpu *pcpu = per_cpu_ptr(sch->pcpu, cpu);
  
- 		/*
+ 		if (!(pcpu->bypass_host_seq++ % SCX_BYPASS_HOST_NTH) &&
+-		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
++		    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu),
++					   SCX_ENQ_IMMED)) {
+ 			__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
+ 			return SCX_DSP_LOCAL;
+ 		}
+@@ -135,7 +144,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 	 * scheduler's ops.dispatch() doesn't yield any tasks.
+ 	 */
+ 	if (scx_bypass_dsp_enabled(sch) &&
+-	    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), 0)) {
++	    scx_consume_dispatch_q(sch, rq, scx_bypass_dsq(sch, cpu), SCX_ENQ_IMMED)) {
+ 		__scx_add_event(sch, SCX_EV_SUB_BYPASS_DISPATCH, 1);
+ 		return SCX_DSP_LOCAL;
+ 	}
 diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index 63d7876fe577..825055208ab3 100644
+index 1345e4174775..d3db1277118e 100644
 --- a/kernel/sched/ext/sub.c
 +++ b/kernel/sched/ext/sub.c
-@@ -581,11 +581,11 @@ static void scx_rescue_timer_arm(struct rq *rq)
-  * @p: task being admitted, off any DSQ
-  * @slice: CPU time to grant
+@@ -2403,6 +2403,12 @@ __bpf_kfunc_start_defs();
+  * child schedulers. The child scheduler runs its dispatch operation to
+  * move tasks from dispatch queues to the local runqueue.
   *
-- * The schedulers keep their normal control over @p and may preempt or reslice
-- * it. @slice is measured on served CPU time against the snapshot taken here, so
-- * neither shortens the rescue, see scx_rescue_charge() and scx_rescue_keep().
-- * Prolonged denial escalates into protected execution, see
-- * scx_rescue_timerfn().
-+ * The slice is a kernel slice, see %SCX_TASK_KERNEL_SLICE. The schedulers keep
-+ * their normal control over @p and may preempt or reslice it. @slice is
-+ * measured on served CPU time against the snapshot taken here, so neither
-+ * shortens the rescue, see scx_rescue_charge() and scx_rescue_keep(). Prolonged
-+ * denial escalates into protected execution, see scx_rescue_timerfn().
++ * Dispatch into a child while the local DSQ is empty, when the cpu needs a
++ * task. A child holding only %SCX_CAP_ENQ_IMMED can insert only IMMED tasks,
++ * and the consume of its bypassing descendants' bypass DSQs is one such insert.
++ * With a task already queued on the local DSQ, such an insert fails and the
++ * task is reenqueued.
++ *
+  * Returns: true on success, false if cgroup_id is invalid, not a direct
+  * child, or caller lacks dispatch permission.
   */
- static void scx_rescue_admit(struct rq *rq, struct task_struct *p, s64 slice)
- {
-@@ -596,6 +596,7 @@ static void scx_rescue_admit(struct rq *rq, struct task_struct *p, s64 slice)
- 	rq->scx.rescue.slice = slice;
- 	rq->scx.rescue.exec_snap = p->se.sum_exec_runtime;
- 	scx_set_task_slice(p, slice);
-+	p->scx.flags |= SCX_TASK_KERNEL_SLICE;
- 	scx_rescue_timer_arm(rq);
- }
- 
-diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
-index b76d750463f0..223c34309b5a 100644
---- a/kernel/sched/ext/sub.h
-+++ b/kernel/sched/ext/sub.h
-@@ -248,12 +248,19 @@ static inline struct task_struct *scx_rescuee(struct rq *rq)
- 	return rq->scx.rescue.curr;
- }
- 
-+/* does the kernel own @p's slice? see %SCX_TASK_KERNEL_SLICE */
-+static inline bool scx_task_has_kernel_slice(const struct task_struct *p)
-+{
-+	return scx_has_subs() && (p->scx.flags & SCX_TASK_KERNEL_SLICE);
-+}
-+
- #else	/* CONFIG_EXT_SUB_SCHED */
- 
- static inline u64 scx_missing_caps(struct scx_sched *sch, s32 cpu, u64 needed) { return 0; }
- static inline u64 scx_caps_for_preempt(struct scx_sched *sch, struct rq *rq, u64 enq_flags) { return 0; }
- static inline bool scx_task_can_stay_on_cpu(struct rq *rq, struct task_struct *p) { return true; }
- static inline struct task_struct *scx_rescuee(struct rq *rq) { return NULL; }
-+static inline bool scx_task_has_kernel_slice(const struct task_struct *p) { return false; }
- 
- #endif	/* CONFIG_EXT_SUB_SCHED */
- 
-diff --git a/tools/sched_ext/include/scx/enum_defs.autogen.h b/tools/sched_ext/include/scx/enum_defs.autogen.h
-index 4fa82033b99c..362e8bb34499 100644
---- a/tools/sched_ext/include/scx/enum_defs.autogen.h
-+++ b/tools/sched_ext/include/scx/enum_defs.autogen.h
-@@ -108,6 +108,7 @@
- #define HAVE_SCX_TASK_IMMED
- #define HAVE_SCX_TASK_PROTECTED
- #define HAVE_SCX_TASK_RUN_TRACKED
-+#define HAVE_SCX_TASK_KERNEL_SLICE
- #define HAVE_SCX_TASK_STATE_SHIFT
- #define HAVE_SCX_TASK_STATE_BITS
- #define HAVE_SCX_TASK_STATE_MASK
-diff --git a/tools/sched_ext/include/scx/enums_abi.autogen.h b/tools/sched_ext/include/scx/enums_abi.autogen.h
-index 05a460611c4d..ad8f56f581ad 100644
---- a/tools/sched_ext/include/scx/enums_abi.autogen.h
-+++ b/tools/sched_ext/include/scx/enums_abi.autogen.h
-@@ -120,6 +120,7 @@ static const struct __scx_enum_abi_val __scx_enum_abi_vals[]
- 	{ "scx_ent_flags", "SCX_TASK_IMMED", 0x20LLU },
- 	{ "scx_ent_flags", "SCX_TASK_PROTECTED", 0x40LLU },
- 	{ "scx_ent_flags", "SCX_TASK_RUN_TRACKED", 0x80LLU },
-+	{ "scx_ent_flags", "SCX_TASK_KERNEL_SLICE", 0x100LLU },
- 	{ "scx_ent_flags", "SCX_TASK_STATE_SHIFT", 0x19LLU },
- 	{ "scx_ent_flags", "SCX_TASK_STATE_BITS", 0x3LLU },
- 	{ "scx_ent_flags", "SCX_TASK_STATE_MASK", 0xe000000LLU },
 -- 
 2.56.0
 
