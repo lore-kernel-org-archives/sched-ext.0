@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792733096;
-	b=DmdwczSdi2mUAKDV/BdoWbOCxxJoJ5n7Uu5KWTcoGOcZz7+cPyW1yJCJqzhRf5r/Eqc9
-	 gzOYT9FmZXXPsuWukIVg4sNZ4IolxvNpWVkwJ0xAoABp1uyQ0XQb05NpZkyuT3AiXH9Yc
-	 siEuP1NQTComj3+Hi+va8OzTdHYN9r1dEdfXm9VEUXnAxWIE8egnFM6TSMlw0Q67Mfsaf
-	 Cz4bAu/PsCILern4JOqBhX8lHZqfJGVJ3ulMgXuwyYwnlpkLgAb2rx8czPD6yBYjJVXzO
-	 5z99Mbr9oDWFSMYh0htTeKNi7eLW0VHbvhjJqT2p/Nw+pBU+mLS/FZMOjWAmZw5ROvw==
+	t=1792733098;
+	b=FkT331kBIQSXJDUAGwZeRjvcFnHC9NYJYrqNNIJZM1xMrL9AnQFS78VK4LTez07S6MGk
+	 v6jpOn4xD9b01CqhuDWUw09LHWBMeXoeT6F4bSx0vM8BVWrZRxVvhBuCIRUFG017Yec02
+	 drQWU01wbPU1NLq4QyrMdFxlyQw6KbmJU1xpW50AXngg2jAL+hTLZ3cCotOb/SsLEtCfg
+	 8WdKB3Ud3jLP83iq+aZu3YbWfPt1b6W38ho4VcnoaHMRBFNnFX7AHX2oZOCOLJRfeGl99
+	 3Ao54lDJ1R8GqdLz7qeazvv0QF0brRqM+xfzXiHQRVrZq91f+lF0MFSy97UenDpXgfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792733096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792733098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=wRpA4vF4Sk/UfaW67b88A9WROnoA0uJnVaDmwLQ3n0Y=;
-	b=JstBNIQyjeLxvDN0bl+odIqWXV62+2bZgcLrYCUxwCbxlktSqaHKWlUbpQgfysKpGkq6
-	 bayRARysnI6I71hVR9ETPXRSjhrDmK+ZWjnja3sODN6VpKMh4C00tw8zPfZbjZSdlUWU7
-	 qMmhvYCrwQ+W+oeb+573VEEr9PRu7fMqPnbtbDbrkokxjKoc5SxiMwFkEnsywYvpKip+B
-	 O7CV2y+MG9RxeldKxn7UPeFXgnuDoo8ycCmJ0m6gtPwNZlczXNLLQPPS/P1QQdGfFYpYx
-	 Jh+7r6nPfE1R6h5OH/qWBJdmXE3bqAyEznJzCXvXwTq195lkdCM+kLwKdbuPB1Brhhw==
+	bh=B47NRnnUZ7eSTS6cdrCNTsuvUnjumFm4UCpKV/5PjLI=;
+	b=w01Yk0BuyR1FIyrMGldziUtNrGj+M2FOgZ0v88LwHxfogEbkeQ4gOt02kF2LmR4JNopk
+	 YvYWrFp103iSykdZlrIhdlkWmqAkt8JOWBptHvyHwDfspZAV/jFSRZu/XO3MFjxCJoy8W
+	 7auYFuKe7IVh97c3LWGi4q1x/RxitkZHP2W7hDe7F+lCjh92q9b28UlY8ZTWSG+JB4Vmt
+	 HUfBWiMTytxLA2+B52gtWhb1ZXnBiNPmkHM8wr5RtsW9D4PhacNolsEwtajBEsrYQrGkw
+	 il1RH18vIL6mbkEMHTuWqPAq2XGT72UHnG57lMM10nIyKsUV8wwyd1hgAyAvfowVO6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OpJyqOFU;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D4fx4c2y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51F1606A32C;
-	Fri, 23 Oct 2026 05:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0DF606A330;
+	Fri, 23 Oct 2026 05:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OpJyqOFU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EDA1F01828;
-	Fri, 23 Oct 2026 05:24:55 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D4fx4c2y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EB91F031E5;
+	Fri, 23 Oct 2026 05:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792733095;
-	bh=wRpA4vF4Sk/UfaW67b88A9WROnoA0uJnVaDmwLQ3n0Y=;
+	s=k20260515; t=1792733097;
+	bh=B47NRnnUZ7eSTS6cdrCNTsuvUnjumFm4UCpKV/5PjLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OpJyqOFUTqB8TmPshpe4LzneastbZoXU6vPr3ivgo+DGC3Mhubhqp2fdjvEyhrgb6
-	 KS4EuMq6vta4aqK89CtYthfWL8OWrgpRrgnWGQlaHRfyaNcZMWzgejNO8D1qH33BqY
-	 KuyDMoYkF1P/P534YHY3GlzlxXBngI9DW0m2OgF1nKWe/+wAMB+Xi2XAdlOUIpCJrz
-	 JOK21D2dVUBw+NbBGQ9KmCElthxF2Pnd9ruPlSgr0rdlkz1WZMYFW/J7TM9hn+ZeFx
-	 PJvT92ZbVLHcFbJ7NOa8qzgJJ1AZSHewjTpg0F/JoyZjj+4oJ0bPgx1obK4llOcZQC
-	 LyqdQonH2x80A==
+	b=D4fx4c2yvJucp3/ZSL/1Lr3FIYZoyHSCGsZpM76oKSHKL29Bo3M/OnrceFa0rE7WI
+	 SCeNa5jwlzqSWu3+b6gPk+Ealdjvmo7a2QBLBJnQGMvz7HITt6TPM8XlNg8eOM/fRn
+	 M+ejb8Jl2gBSNL6paJYJ0vEGvYPGScKVaqPKwYrReCgpPQ79k2J0Nclungz9IfWyBR
+	 vXHYUpBaYvzl4o0FW1UDsljPc2UEp0UqRsdCBBBi6gsQAvKOtFai2DxG1AzeutT557
+	 gC+xGTy2S+J8YLFCCYQidmMHuvYZ4CORp/obABfRKrU8mj+QxGWmffst7L7aU6+0eC
+	 6mMU0cOw7vqSQ==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -48,9 +48,9 @@ Cc: David Vernet <void@manifault.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 02/15] sched_ext: Clear holding_cpu where the claim is confirmed
-Date: Thu, 22 Oct 2026 19:24:39 -1000
-Message-ID: <20261023052452.2889061-3-tj@kernel.org>
+Subject: [PATCH 04/15] sched_ext: Move refill_task_slice_dfl() below apply_slice_vtime()
+Date: Thu, 22 Oct 2026 19:24:41 -1000
+Message-ID: <20261023052452.2889061-5-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023052452.2889061-1-tj@kernel.org>
 References: <20261023052452.2889061-1-tj@kernel.org>
@@ -65,121 +65,53 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The bypass load balancer will take tasks off a remote cpu's bypass DSQ with
-unlink_dsq_and_switch_rq_lock() in the following patches and insert them
-into another bypass DSQ. Clearing holding_cpu after the claim is up to each
-claimant, so the balancer would need a clear of its own.
-
-unlink_dsq_and_switch_rq_lock() marks a task with holding_cpu for the gap
-between dropping the DSQ lock and taking the task's rq lock, so that a
-dequeue in that gap can tell the claimant it lost. Once the claimant holds
-the rq lock and finds the marker intact, nothing can take the task away
-under it and the marker has no reader left.
-
-Each claimant clears it at its own site after that point:
-
- - dispatch_to_local_dsq(), which runs the handshake inline, in its same-rq
-   and fallback branches
- - scx_proxy_reject_task() for the proxy reject
- - the dequeue inside deactivate_task() for both remote moves
-
-Clear it where the claim is confirmed instead and drop the explicit clears.
-No behavior change.
+Move refill_task_slice_dfl() below apply_slice_vtime(), with the other slice
+writers, to prepare for the kernel-slice handling the following patches add
+to them. No functional change.
 
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 19 +++++++++++--------
- kernel/sched/ext/internal.h | 11 ++++++-----
- 2 files changed, 17 insertions(+), 13 deletions(-)
+ kernel/sched/ext/ext.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 07857039aee6..bb36264e626f 100644
+index bb36264e626f..065ecdf3e3bf 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -2829,7 +2829,6 @@ static void scx_proxy_reject_task(struct scx_sched *sch, struct rq *rq,
- 	lockdep_assert_rq_held(rq);
- 	WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
+@@ -1538,6 +1538,16 @@ static void apply_slice_vtime(struct task_struct *p, u64 slice, u64 vtime, u64 e
+ 		p->scx.dsq_vtime = vtime;
+ }
  
--	p->scx.holding_cpu = -1;
- 	p->scx.flags |= SCX_TASK_REENQ_PROXY;
- 	scx_divert_strip_flags(p, &enq_flags);
- 
-@@ -2863,8 +2862,9 @@ static void scx_proxy_reject_task(struct scx_sched *sch, struct rq *rq,
-  * tell whether we lost to dequeue by testing whether the holding_cpu still
-  * points to this CPU. See scx_dispatch_dequeue() for the counterpart.
-  *
-- * On return, @dsq is unlocked and @src_rq is locked. Returns %true if @p is
-- * still valid and detached from @dsq. %false if lost to dequeue.
-+ * On return, @dsq is unlocked and @src_rq is locked. Return %true if @p is
-+ * still valid and detached from @dsq, with holding_cpu cleared. Return %false
-+ * if @p was lost to a dequeue.
-  */
- static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
- 					  struct scx_dispatch_q *dsq,
-@@ -2887,11 +2887,13 @@ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
- 	if (likely(p->scx.holding_cpu == cpu) && !WARN_ON_ONCE(src_rq != task_rq(p))) {
- 		/*
- 		 * Keep ->dsq set until we own @src_rq so that a racing dequeue
--		 * can find @dsq and clear holding_cpu. Once ownership is
--		 * confirmed, clear it under @src_rq so that deactivate_task()
--		 * takes the !dsq path instead of retaking @dsq->lock.
-+		 * can find @dsq and clear holding_cpu. Once we own @src_rq, the
-+		 * handshake is over. Clear ->dsq so that deactivate_task()
-+		 * takes the !dsq path instead of retaking @dsq->lock. Clear
-+		 * holding_cpu with it so that no caller has to.
- 		 */
- 		p->scx.dsq = NULL;
-+		p->scx.holding_cpu = -1;
- 		scx_wait_dispatching(p);
- 		return true;
- 	}
-@@ -3127,20 +3129,21 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
- 		bool fallback = false;
- 
-+		/* the handshake is over, see unlink_dsq_and_switch_rq_lock() */
-+		p->scx.holding_cpu = -1;
++static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
++{
++	/*
++	 * A default refill is not an explicit request, so it must not drop a
++	 * pending out-of-band one, which is applied when @p next runs.
++	 */
++	set_task_slice_keep_oob(p, READ_ONCE(sch->slice_dfl));
++	__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
++}
 +
- 		/*
- 		 * If @p is staying on the same rq, there's no need to go
- 		 * through the full deactivate/activate cycle. Optimize by
- 		 * abbreviating move_remote_task_to_local_dsq().
- 		 */
- 		if (src_rq == dst_rq) {
--			p->scx.holding_cpu = -1;
- 			scx_dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
- 					     slice, vtime, enq_flags | SCX_ENQ_APPLY_SLICE);
- 		} else if (unlikely(task_proxy_unsafe_to_move(p))) {
- 			fallback = true;
- 			scx_proxy_reject_task(sch, src_rq, p, enq_flags);
- 		} else if (unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
--			p->scx.holding_cpu = -1;
- 			fallback = true;
- 			scx_dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
- 					     p, slice, vtime,
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 29e69a83d876..44ede6e6fe1a 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -2107,12 +2107,13 @@ static const char *scx_enable_state_str[] = {
-  *   4. Lock src_rq (where the task currently lives)
-  *   5. Verify p->scx.holding_cpu == current CPU, if not, dequeue won the
-  *      race (dequeue clears holding_cpu to -1 when it takes the task), in
-- *      this case migration is aborted
-- *   6. If src_rq == dst_rq: clear holding_cpu and enqueue directly
-- *      into dst_rq's local DSQ (no lock swap needed)
-+ *      this case migration is aborted. Otherwise the claim is confirmed and
-+ *      holding_cpu is cleared here, see unlink_dsq_and_switch_rq_lock()
-+ *   6. If src_rq == dst_rq: enqueue directly into dst_rq's local DSQ (no lock
-+ *      swap needed)
-  *   7. Otherwise, verify under src_rq lock that the task can be moved to dst_rq
-- *      (CPU affinity, migration_disabled, etc.). If not, clear holding_cpu,
-- *      leave the task on src_rq, and enqueue it on the fallback DSQ.
-+ *      (CPU affinity, migration_disabled, etc.). If not, leave the task on
-+ *      src_rq, and enqueue it on the fallback DSQ.
-  *   8. Otherwise (i.e. if the task can be moved to dst_rq), call
-  *      move_remote_task_to_local_dsq(), which releases src_rq, locks dst_rq,
-  *      and performs the deactivate/activate migration cycle
+ static void update_curr_scx(struct rq *rq)
+ {
+ 	struct task_struct *donor;
+@@ -1631,16 +1641,6 @@ static void dsq_dec_nr(struct scx_dispatch_q *dsq, struct task_struct *p)
+ 	}
+ }
+ 
+-static void refill_task_slice_dfl(struct scx_sched *sch, struct task_struct *p)
+-{
+-	/*
+-	 * A default refill is not an explicit request, so it must not drop a
+-	 * pending out-of-band one, which is applied when @p next runs.
+-	 */
+-	set_task_slice_keep_oob(p, READ_ONCE(sch->slice_dfl));
+-	__scx_add_event(sch, SCX_EV_REFILL_SLICE_DFL, 1);
+-}
+-
+ /*
+  * Return true if @p is moving due to an internal SCX migration, false
+  * otherwise.
 -- 
 2.56.0
 
