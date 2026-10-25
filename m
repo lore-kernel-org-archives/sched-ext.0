@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.30
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.36
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792943235;
-	b=o79wTZmPp3AT5R6rPQZdAEgDr/UZ1Len1TEMHnVAXliibgIBebD/d3/2S9y9YKxI6FpK
-	 7pMKGQYBdDc9ALoDdZuGzQH9fWyb+wIFE4n6Dr+M6uYOglcOyUyk8obqRRnD42eXupl21
-	 uf2sYk7tdHOavGjL+5Zkm2MjaEFfdx6Fw7xYIltt8Se15IcPSdKwNay666TaHXgMVGJoY
-	 +RM1obOaH7EQlRPtoDPqdY4JAWbDnC9KnnRy3xzCyhuOam2qlzZgNGRZJ3J6u2PgGpZlo
-	 DDmIYhhJXczXyr6A86/inTIzSwd3l273O2oyUj6MbV1Ncmg74y++1JG7mFC9/Rh2kbw==
+	t=1792943582;
+	b=pz50SD4ZwK94PFmlLEEuOB2JtUpVvuPDjRd/IHLa/sh3sFoL7LTMohZ803fub9N+KXJB
+	 ibL1TM8SA/xMzsSgRJ+epXkXFndNiVwtNPnm9nSfZT4dJSDAdF0BOEMJIBiD9gL7oL4lw
+	 xOiqdW3WwJx6MrkSuX9lOFIRVH+M9rSY6xPMu3jrWDnFz6DQtokQTN43lrvNAHCdiRoxQ
+	 Nx8wSOw+j7u9iFmFLhUX4miu5w+QLy5QMFLBMUw/AG+TlZSW4JIbv+PNTEu9EgGuvZWNz
+	 7GuXXDohhlGOvDi0WdfgVR6rYoe2Tx2Fo7aPlzCH7QqlzRkU2XlwoM7QWbSBxJu+NXg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792943235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792943582;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
 	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,71 +24,72 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=cIMAxcDIDOWcpd06Lgkq331vUK9QS2aVLxY2Cf5i/bs=;
-	b=eTc5tqHHzgDLtGXJWm8Ik9cDSxfjigp21+qziw0Ka0Z1VonCY0KMNHVmsB4CPFK2vYJV
-	 bH58QM3jKJaPhkuUflvgO38zMgGq5wc4cP5Tm7F+uJUyiTUQEBavU849mwDZIxIdQfcdJ
-	 8RQBa2nwigLQfs+Iysuxy0Ldyqopc5SKTtfAkqn0QLJt1l1qq5xgSFOb11Cxe5oqg6lER
-	 lvpZ7vgZ7c51J7LzcxaJQ6t1fA+b4b2lxjqmDbo6zl5LW2BAY4kQOE+9vv17MhU1b03BS
-	 DCVMU+B50m1ooHtL/nbki2hTFSwhyjyx4iJSh/pkz3kjlib/+V/7dzQdqOGQ7xzWJ2w==
+	bh=sjWgaO6jh1BPiiGiVA4rrv+INReLKQS1gl9MIhKgpaE=;
+	b=VjPFNqtNUihMKu7WkgqFCN0tUe5plnOXFqHh5exGwhkpeEengSXVlOQJMertUWucZRUI
+	 FXx014eEez5/DuuFftwCLqCDKZf9+esE/weYGLAtPLbZdSuiUyD2htwGcX+9LIiRu0Anx
+	 5CuzIDUzTlNDVtBqVPBE/GkKNY63yau7h3tj/Mhs2njIWQ86ufiuhIjDODjnaj06PB3CA
+	 AD5/z9P0k4JJ2zhHtOeTU58carZtPY3xQdKyghFHFA26bf4LI2O9rZfLlWNkOD6wzoweY
+	 1eRQJEU4dRpG92vXDtSRo1xyok8xb1betzQKOAL1ETcR7SG6YyqgzK3ovjrfVV1q9Pg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=p74ewf91;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.30
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010030.outbound.protection.outlook.com [52.101.46.30])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=BckUBVTV;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.57.36
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011036.outbound.protection.outlook.com [52.101.57.36])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5B3606A31A
-	for <sched-ext@lists.linux.dev>; Sun, 25 Oct 2026 15:47:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C5B3606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70276606A31E
+	for <sched-ext@lists.linux.dev>; Sun, 25 Oct 2026 15:53:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70276606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=p74ewf91
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=BckUBVTV
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kjTM6AkuVaFGCS/pWD41eRoR0ENiymnRRI5ky8v0i56oytTXUkIjpz8brg2jbVIRINvolFPqNjlEDLJyOxAQ1huQeWmsFxPnjKUF25cr/pgerBFbn4kWjl+HeJ4K4KRibcOJIQT1b4HpJWpBCRJ+w7Y2oQfhNThs8WqxrcsSb/fN8pIBtY2hTb4EeE1T/5tUQf8ePqbcdsKXvW53CSWVoiKNSdxp71Pe/7RBKBb+8w4Y59dj7W7omXFZzwRTpu4+gKojEixnDrDQ60GiI5ttAJ6/ova5BzUq2LLehi6qT6a9U+4uc3pODLDI+Rn4IItUlQ27kq6Kn9davDA/PlRp5Q==
+ b=CTPOPoUAwV1RB4YreGXcvfUY8JgJpKw3Rsu5V6LBNlc8h9fTHe6uMglshIbshYLHbF+lZVj3IpNyVTdjbz+ckeAH86FkukqZHp+WTHfMz53uymACSSZMHOrMG4CGHGNJGNt/M2RAveJCgIXFZ+NTlaZXQUgoLklTwAazqx+ZRwI6Al/SbBi0Lw/azRx/hN8QLKfGLs2Sl77l7UK1DbkyQ8T7+PVw5YlpYKXARWnrlcpn6rrUzwpbDTl0XCh9bsfSbg2bgnKFOY7MqucoonxAZ9fbyBUkvsTqtVC2GAVC69wZu0AaFNpJlMtDJrVQY99kYiiZ+yXUd0PDcSfZYmHqPA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cIMAxcDIDOWcpd06Lgkq331vUK9QS2aVLxY2Cf5i/bs=;
- b=AlPAzW7hp6uGxDMtFemqo/ugEVYD8uaYJNSv8PBdmjD3BHMZNuukhJHSBWausxRXbznkG5MFndkxE8tsIj1laQgiYuhP5LL+U8ZM773+bVVtnJIN4EItVS9vFOOg+fjgjlyJXrsG7Fur/bZbNUoBNhHA3WHERZCLmYxqnp8IAHaQf66naGNuQOr8R+gepAWcO+aHF2ErKxosPGyWJdrmwLdAE7gT7qcFUUjKR7v0gTlRMqxe5zzVitZe5dNbsJbb30FghaC835UZTSrLs9vuMslFxFrRyodxj1Xq15m/V3px0UbXOKLu0Qh5VibeXQLgL/axD04S0KSSCNFx3vxRgA==
+ bh=sjWgaO6jh1BPiiGiVA4rrv+INReLKQS1gl9MIhKgpaE=;
+ b=NvqPf1pmryREkFRPe1SVbmqiCX9nr5GBhjBXl3wnE+ZDbLJqWAGVDnt+EMZseddHbdUTf5Ay1apK5Ap7FZ1fPRwVUb1v5nQ2d+DdRHpoGzePcuzHkyv4zLMffsIBOYfFnD/BQW3+VbdXTZ5sNKzUpDqT3AB2rv2jeWTFObXby3L5F8u0GujIjJcPjgA00Byk/4gCt6wDQXtVYJyPPzixRywEqlf79r2MUEOumjjqpiBQma/bbGvcnRVRnEesGcAvKRyw2ZnO5IZp4E1hSB64duMJvlOhmPFgvAFku6g73l9qhYXxzBBn4XXAJWligjKroMPdaANkbxnOS0kkSXs65w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cIMAxcDIDOWcpd06Lgkq331vUK9QS2aVLxY2Cf5i/bs=;
- b=p74ewf9169i+Vmiu5/4zyJ4tXNAu9bY/pzTikwnToozCst9BcP/wPSPIOt4s5vuw8AJrVTeuDeDr47wgaDX+Dd8Iq+eWRYkUShgDnp9J8Es0lUgqIYYYXDHWaRVo1dEvZPy8aav85jUHTGDQ5ulRqlC+Txfok269lmGTHgsJ+7/lPp/mtcqP4sh5adM32yRbxwMfTLIK3uoEliiD8+kSa3V3y4st8dZ5VNaOLaN5+Mcg6Yqn2x2P7H4J37Ya3XDdna6eMDveuspl72S/YH+4LeaoZxxDkgC4UztiHlADYMQRipSzjm29YzgCIApTBB/RUtDeLDwP94kDiWi6ED5SkA==
+ bh=sjWgaO6jh1BPiiGiVA4rrv+INReLKQS1gl9MIhKgpaE=;
+ b=BckUBVTVvhs8yyfR9XDpZmkE0xnXaGTo9KkSphIA3WQriPb6kXOH3ln4DS+J8l9HsfLUocqnNtr7fqYSjiC6egzalEK+Y7pvJ17JnUtDAiOJ8sbINkUd1J06HeIxTvc/NE+RwNFDW6/0EDlUQ6uFeEM70wEtbnpmEnCxbB+OBhxbmKGysRTF9LkhWBcze9YnCqG3Gcn6OqEUP+60kaY/NhfWnixmXlDYmmQGAhIJV7436+cjC+ST5eo9eH5YrWZsGn6D5+2r2pTuMTi6vFnH+r0E93co7Uu/P2eO8XkzWUx4dqOCdWF6pHucjKtUB7EZN8bcPGNVMk3d5SQM0ROdRQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by CH3PR12MB7643.namprd12.prod.outlook.com (2603:10b6:610:152::19) with
+ by CH3PR12MB8509.namprd12.prod.outlook.com (2603:10b6:610:157::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Sun, 25 Oct
- 2026 15:47:11 +0000
+ 2026 15:52:58 +0000
 Received: from BL1PR12MB5174.namprd12.prod.outlook.com
  ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
  ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0546.021; Sun, 25 Oct 2026
- 15:47:11 +0000
-Date: Sun, 25 Oct 2026 16:47:03 +0100
+ 15:52:58 +0000
+Date: Sun, 25 Oct 2026 16:52:51 +0100
 From: Andrea Righi <arighi@nvidia.com>
 To: Tejun Heo <tj@kernel.org>
 Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
 	Changwoo Min <changwoo@igalia.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 17/17] sched_ext: Fix queued bypassed tasks stalling when
- the host loses SCX_CAP_BASE
-Message-ID: <at4kd-78BbpBX-_4@gpd4>
+	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org,
+	Sashiko <sashiko-bot@kernel.org>
+Subject: Re: [PATCH 19/17] sched_ext: Fix the stall watchdog blaming a
+ bypassing owner for a stuck task
+Message-ID: <at4l0yXTk7T_ouk0@gpd4>
 References: <20261023175608.4120910-1-tj@kernel.org>
- <20261023175608.4120910-18-tj@kernel.org>
+ <20261023200640.272834-2-tj@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261023175608.4120910-18-tj@kernel.org>
-X-ClientProxiedBy: MI1PEPF00000AE6.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:298:1::4b8) To BL1PR12MB5174.namprd12.prod.outlook.com
+In-Reply-To: <20261023200640.272834-2-tj@kernel.org>
+X-ClientProxiedBy: ZR0P278CA0044.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:1d::13) To BL1PR12MB5174.namprd12.prod.outlook.com
  (2603:10b6:208:31c::19)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
@@ -100,159 +101,120 @@ List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CH3PR12MB7643:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43e514f9-e9d3-45f2-51d7-08df32af3b43
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CH3PR12MB8509:EE_
+X-MS-Office365-Filtering-Correlation-Id: 60748129-91c4-406b-81e9-08df32b00ad6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|22082099003|18002099003|56012099006|4143699003|11063799006|261021121427099003|10067099003|261009223027099003|261022105027099003|261022075727099003;
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|18002099003|22082099003|56012099006|5023799004|11063799006|4143699003|261021121427099003|10067099003|261022075727099003|261022105027099003;
 X-Microsoft-Antispam-Message-Info:
-	XQfszIC3URpGW8cChgVJnjXBpPd9c0LVT9VnqiWmHnOTtPapLq4v3h7Qi+LeIEWS4rBM54jPKUXTKe7iYznUYe5RgrWJ2zZX7lun4+D1nlmwzFz14jf/u/x9IMXsKco9jMJBkWewSqu4UAHmAjpkpbwQUWFzCDGneHANEhfBmFrG7j4IaaEwfH17FvstsYplyBFKZ2e/1dfIvOqiu++j0GWnwFXnT7aA+v5DVpR/nf4FNlycH6+tdaAh1Kd0HsPcTEnbJ2EqdG4+BxH0DbFF60pZqlcqy4MEaZECNJPuiWDddo+HGsdxcmi3gJjeSmFbU+WiVJo/uB0RRGiCdRgSgEDUdaUdUBo9TeBI2jy1okw254gSs4jA1br6HBr/krns6GNQ1UYW51yuxVaRfOM1U9mfq01/LaTAXuak+u9W2xJX0g75vQ6BXH+4fTNwC/mF4DIi76ZAhbxkBucF29cFxBjkiaq2f0bdRgUibbuSHDhJMWourVaXGBMC4dpdec+jGeb47vuqghOAm6GbWnQwLALWVga3UVXf5kCwb1WKB92ccM8DfwAWMGhqZD8Djkb6URR6An0E1DwMyFm71JWgoF+QGspZSPQp4HXCokhxnYJGmeBdBDYvbw/6GNPHC4DKd6m2O17rlGRoaFQk6ywcizU4fiOhspcFeBnLETqqS9g=
+	8Jh+hEcjokH00yvcVFhNUUWPOHwS+9Q5Ox5RWg0YhZmnaaFw8MQGqh+c+2OuCh4dwTCzgWt8drh0N7acc4ziXJkr1HSEADCqZTd6HcsNNWQNtopicuGkjxlFmujeamTCGBCqtv+BhjhErwFyAvx0X4w7T4iHQnwf8p5eYVn0Ep7XiW/gQVixB8bsgM/J4YFDLhqtwoKpbkaS/hFxuk4W3+5I4CzX9slIm5YN9/h1bUNzYoVqzEYVUnRj+4SMQGR79J//MlMu8OZKBsrc/93lwr8Jb29nJa/Dnd/mF/nahDnlVjw6doumAmzZXbgkYPLMIMrnXvi3lMBKlNfoCKv0lhuEUOQTeRzWLaN5ieMGwEyAiGhNOUieM8w5VwiCurXqjPx48FPJWKBrLcgTBPQ4KZS+9MQtJ1nEihz+vRMpSYaVAppsUZ97MaE+3ZdnoQU8GiBENkrzt7dFGoCfsY9swhE9rZyr/NLwyF+5cCvUgfVpBx45Qc5rjlhahXWfdn1uv4TOZroLvQPETRFWMNSM12UBJXizXCC3nwrr+xJiHlRKpDZzQYzIKPyBGsPkwWlA6D+1/807EVIMSJI32jCmGDwpD9BJC/WVpn0z0tb6eSBdfliYnndr1mFtBs7FlfjWuE/Gphkg6/nhzn+8dvh9ZYcHh+WrY2CS9Bp78SySj0c=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(22082099003)(18002099003)(56012099006)(4143699003)(11063799006)(261021121427099003)(10067099003)(261009223027099003)(261022105027099003)(261022075727099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(18002099003)(22082099003)(56012099006)(5023799004)(11063799006)(4143699003)(261021121427099003)(10067099003)(261022075727099003)(261022105027099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ubhlku5pGMlP/1CukSI95icFmNbrtE8CsxKU9u7eKpmbx+GMtrXHs9S/eEvG?=
- =?us-ascii?Q?Yf2H9tbxNxCo/QVdKq4KnU4V1nSBOBIfM77r5QggCBRf/3tgi7XI3cm3YKeS?=
- =?us-ascii?Q?AL324LURhycYQUXa3WZWjdy3pWT7RgQvGWF3oAF3Z6rWJr4UZFQ703Xtw+d3?=
- =?us-ascii?Q?4B71WdIqYP3xZNtxVmmgvGlKqHmYSCAfbB5l3HdSTCSNT1q4z/puIwUL2swf?=
- =?us-ascii?Q?Y8L3b7szH3VwWaEQ4QTkxnkY13YOsE8SO+RW/AY9IybkWcJxPKxMeH+qH7MG?=
- =?us-ascii?Q?LdcO5nJCj2z61UANhRZtdt+c7D8ble3jyS3LH3PS3SAbNByvOTgJ0Z2+FqYA?=
- =?us-ascii?Q?vkIfzm0IbAVFMxo3BN45PU35XsR2D3OdBDDq8zKkXKKO++zgFjf5R2xyPtL0?=
- =?us-ascii?Q?wiLAZISorZcG77T/SnwvwpJSQ4wxuXt0D38LUKGvZsMvPU0e0ELov0TdLbgo?=
- =?us-ascii?Q?cPTm4cdiF/0eImaqfdgfn+yZNn3OPKBJoRpIZ1OBJDJ2irrI9movIb8dNiv+?=
- =?us-ascii?Q?JlLBh9X5N8Je6TznYewh4vZnHy9MOARZrbhJkNx5RQtPfUS5VqZLj3LEB0s8?=
- =?us-ascii?Q?B1q6IFY2jxGj+z5awsMqRohecnPExbS3Mzt+mktY7qr0XPZJEQyobDozSDaO?=
- =?us-ascii?Q?CdG0g3D7/7QDs0M4Ezr5jfMn8zj0uvJP9c7QX1g6jMa527h97pL+F+tYYr3m?=
- =?us-ascii?Q?zEO8oGDBAExmMPbq7eV4ohoAfQlr45hC/WUMQyrE5IfASdZT1t1YMSUUqSO5?=
- =?us-ascii?Q?fFinKH7UPhVJ185TB8r2Bc3EGx2QSEVJ6lfbz+KG3FC4ejlLv8QmYlUzWVwz?=
- =?us-ascii?Q?GPsPIGo0eHx4CpIA8bmMZ73ItJEhzLSmWnGA/ROYxGPBcH8Hn0Fp2Y5USriJ?=
- =?us-ascii?Q?Hqn+IBd2JSl0Bc45RgUD+lc/KayzEiPnBup1BViQHYPl98NWGn+8h6UmWh7u?=
- =?us-ascii?Q?r5GHTOG90JVd7aTQXkOcQAg6tni2Eg96HNm9Bg1xPd6CEzeT5B2uv/ylKNkj?=
- =?us-ascii?Q?xr5pagu6yf5vILCDo7siP4r7/HbFS7g0IgwEzUCaLNhg77a2FlgdRDiqgwCc?=
- =?us-ascii?Q?JV5Slkg3tn78crv/zMyOSAfkndc136PBa6w8H5cXVhFNfvYltLSIRXFpInpA?=
- =?us-ascii?Q?L6qjMwu7ssCHLlZYrzJgdEokwgKxTMBK49QXxeyvu/2Fb56tnbY8VjRfZFbg?=
- =?us-ascii?Q?tPly0t61/A8sVGYuOh8TPp92DCoB5WgGPyKof/lGRNg0Q0zKNYdhrFfjlTD3?=
- =?us-ascii?Q?xMefHKOTEzlX6r4aaf+KR3YQtHhEH/uuwzJunqNm4AHqouuzPlvMnF7uCYmq?=
- =?us-ascii?Q?UIObd6ElHFDz8y+c4nkcWy4LwHORZxSK/7ANsdyA/iBsOHttvMLEqEVUxmex?=
- =?us-ascii?Q?7cvU12FUdEhQhiHn9GaQLHBaf5xKkXAU9+I+pEkvfYjmya6j1k+A6bskakOx?=
- =?us-ascii?Q?X7jLnda8Of7ICb0oJXfV7iHvIou6mTrK/dpUdeordM96RYXJEoYq2ywe3O6b?=
- =?us-ascii?Q?qeW0hfY+d6a0D8DmxVKVgs/hcAAQxcW8QrIbqYNcUhYUEyhdG04U2popqRST?=
- =?us-ascii?Q?CHui8cq3Gf96rMrDV46jz4kzwDLZccQyqpsOdkMfTTITuEewUnKuCwvihS67?=
- =?us-ascii?Q?D7y7OXTvR3M6c2NP7613PMVSRcKTpxIHBXqeb8bp6t3Jul/Aa2W4PGNntnAk?=
- =?us-ascii?Q?Z1Vvv4YbKhIQNc78nmyS3atvvhftTzicBZ5cbAdAVk3370Oe?=
+	=?us-ascii?Q?BnX8qaOKlZVlsUCidPvyADyIZgn7Hfz/O9NpIuhXh01qG4vp8zUli7XvAjXO?=
+ =?us-ascii?Q?hM5xTchKPfYLozVrchJP6kSiVpWH9vPcdgXJ4JrWi/bJYOA/Xy/ry7asTt7w?=
+ =?us-ascii?Q?UXRoUkmdsi0BL0dH1qGl9UQOKhVNxKxiCSlq0mxaiWxGwlULD7Iu7HKzfBK1?=
+ =?us-ascii?Q?yG4mI/lMATFC8cFOkSC40uXUw5iMyvhQ68czdyXxr1Hrg7DGJIGotpqP1uin?=
+ =?us-ascii?Q?+F37rL0hdCfBaFnPN4HyYTx+ZNA1zFJuXT3X5bjpTbRJMtTtqfaLi+2yGFIT?=
+ =?us-ascii?Q?Da7kiDlHPx1tTGDkzpnmA8JkOwECUoiN3luMIBqoYkQ9p66YUx4RVp7v2uYW?=
+ =?us-ascii?Q?koqZ25jB/VySm5tUOQJBaYveIwFtd+ddQEtKLaxKKo4v6nAV31hY2WNEol+D?=
+ =?us-ascii?Q?P6EMcuB1evSK31/H71MS0Rb4MRFv5JNr8JRkqfqowlQjWcdqr4cuCNMz74Of?=
+ =?us-ascii?Q?q6CFmLyYlJrBlAdO1KkkgeshgcEsLuh9NDiONT23OvJ5TD/a6gyZ+F+PnX9s?=
+ =?us-ascii?Q?I54TAkTEbAb29HwEESN6VHdqn8WQqIzTb69VByrze48SKBEahuExZkhQ2iAX?=
+ =?us-ascii?Q?fvMiJfWXpnRKyzuOCLWGlO5rI9MeEWwQ8exoqIn5V14Txevd5qEg8LGXWm57?=
+ =?us-ascii?Q?ozX4Nv0ogsJ8eaBT8Qu7Yn2rsWb/vzbczMbMYiEsdE05lXUPOsrvQBYr+m9U?=
+ =?us-ascii?Q?kiN1/m+C03/L93f/OufvZHU5e0Mkbou/h0ohnnTJL9nF1GcYS8/gHp5aeva4?=
+ =?us-ascii?Q?QnvGjUZ/RuhoJvpO3p7tcDSLHbwoDainud/6B2SXPjOps1dFuhzQxM8nUmqo?=
+ =?us-ascii?Q?saKLbRBBDHbGozPaptZtwr23vAuAh9xs/FuPiV/zX2WSYLlJv5FRm60Eq3hA?=
+ =?us-ascii?Q?/YmLFztrkPZjrZvMpHwaEqf+xY0RxkYKdYANew1103Z53bj7km73X6RzckBx?=
+ =?us-ascii?Q?jDQK2XphIXvHF+XySzewwWWW/hv6fRQbUScbWGT5AKZQ+EJ+RtG066BFFquE?=
+ =?us-ascii?Q?yjM2BkYZsWJvgkr8B5HELbU8V6PVQmitfZAIdziiy7LyTHxXcwNjNa+fRG59?=
+ =?us-ascii?Q?PNnbADeefbu6OAExA4j3dPI3Kk1gw6jbUIzDYHUb9PehqoHpjJdtBVUCFK62?=
+ =?us-ascii?Q?aFAR/ElnH6HTkv4DMNImWgqyKiYl+Qbm9RQJ7QEfqt6A0ll1Lhj7ZooGJIE2?=
+ =?us-ascii?Q?0emtHcPjl0tPlCF0RW3Xk0oI3611Gb6awd8w9sw0y+rzL9Dz9OWM7GmamcIU?=
+ =?us-ascii?Q?bRxnpgUfF5FyedInp8kvuOSXZGsgSc7HEKF3aLYIzFqnfZMmtMLV5GoFIFBI?=
+ =?us-ascii?Q?+IvMl/rA9gq5FkkcS2CC5qtwYttEivqjZ6KFu3z9RGdK+4fHySw68TB16Dso?=
+ =?us-ascii?Q?bqziJFaRNhlrx5NB1vGFzIkoyKEyonRj2krSLjaBGhLHNf1IHl90j1lMYvnB?=
+ =?us-ascii?Q?/JzUUf5DoJwNtT36Llnn6HfxuAhkgEKt4vyggdwxt1nPUmcs4Q5sFw7g+ROZ?=
+ =?us-ascii?Q?dpNJ5fLivi+IYLgf88VbRoTVgx0pTVKu8PaN2LgWrexfpQGpCVsImKlK7Ydk?=
+ =?us-ascii?Q?XnQrMSfxP0i/TO+3IYDUrVviJ0J+PHMmov9V5Z1c1b5E4A2ET0lb0RbnhGWk?=
+ =?us-ascii?Q?ijqU66xreW8N9v5VPutC1I8IO7MTfq8EyAzwKesoAz3j/1fJ92jmTfS5nM9z?=
+ =?us-ascii?Q?K69GP3/DG7vAsbb+2eCKZXFsnRtljdvfyNquRH5uXBj5GOdy?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43e514f9-e9d3-45f2-51d7-08df32af3b43
+X-MS-Exchange-CrossTenant-Network-Message-Id: 60748129-91c4-406b-81e9-08df32b00ad6
 X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2026 15:47:10.6245
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2026 15:52:58.8292
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZPFadppBk9iRzd5AihRjjFyAKg7iE1yv9bFeu7KLAex5NqeqKV+/byusT0Z3znSVGHQ9G+q1pSWMwPfHhzvDnw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7643
+X-MS-Exchange-CrossTenant-UserPrincipalName: EUB3atpUH88BlMPiFT0s0zDZ32zZAo0Ct4VrvcM5WNvyYE7hdObu2Pm5cDqU0EqXpVE3Xy4fBpVNZ53pNyOnjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8509
 
 Hi Tejun,
 
-On Fri, Oct 23, 2026 at 07:56:08AM -1000, Tejun Heo wrote:
-> A task already queued on a bypass DSQ stalls when the host loses
-> SCX_CAP_BASE on that cpu. The cpu's dispatch no longer consumes the DSQ, and
-> the task sits there until the host regains BASE or the bypass window ends.
-> Sending a bypassed task to rescue at enqueue time covers only a task
-> enqueued after the loss, and the balancer no longer donates to a capless
-> cpu.
+On Fri, Oct 23, 2026 at 10:06:40AM -1000, Tejun Heo wrote:
+> check_rq_for_timeouts() blames a stall on the scheduler whose DSQ the task
+> sits on, and on the task's owner when the DSQ has none. A bypassed task can
+> sit on the rescue DSQ or the local DSQ, and the blame then lands on its
+> owner. The owner is bypassing and places nothing. The host, the nearest
+> ancestor that is not bypassing, runs the bypassed tasks.
 > 
-> Have the bypass load balancer drain such a DSQ: a cpu where the host lacks
-> BASE is a donor with a target of zero. The target already counts its tasks
-> against the cpus that hold BASE, so the donees take them under their
-> ordinary fill. The queued-duration threshold doesn't apply to a zero target.
+> That matters when the owner is already exiting, during its own disable for
+> one. __scx_exit() on it is a no-op, the watchdog still ends its pass, and
+> nothing is ejected. If the host is not running the bypassed tasks, the
+> owner's disable, which waits on them, may never finish.
 > 
-> The balancer reenqueues a task no donee can take at its home, under the home
-> rq lock the move holds there anyway. The enqueue sends the task to rescue
-> when the host lacks BASE at home and rescue is enabled, and to the home's
-> bypass DSQ otherwise. A task that must run at home, migration-disabled or
-> with a migration pending, is admitted to the home's local DSQ in either
-> case. Every donee refuses a migration-disabled task, so it always takes this
-> path.
+> Blame the host for a stuck task whose owner is bypassing. Ejecting the host
+> re-hosts the bypassed subtree one level up. A task whose owner is not
+> bypassing keeps the blame on the owner, and with every ancestor bypassing,
+> scx_exec_sched() gives the root. A task on the host's bypass DSQ already led
+> to the host through dsq->sched.
 > 
-> The same reenqueue replaces the put-back for a task that can't run on the
-> donee the walk picked for it. That is a cold path: the donee went inactive
-> or the task is a proxy-migrated blocked donor. An affinity change while the
-> move is in flight dequeues the task and the balancer loses the claim
-> instead.
+> The rescue overload accounting keeps charging the owner. Overload going
+> unanswered while the owner exits is acceptable.
 > 
-> Without rescue, the reenqueue of a task homed on the drained cpu lands on
-> the DSQ it came from, apart from the admit above. A task stuck that way is
-> reenqueued once per pass and waits for the host to regain BASE or the bypass
-> to end, or for the stall watchdog to eject the host, which it blames for a
-> task stuck on its DSQ.
-> 
-> With a zero interval the stuck task is reenqueued once per BASE loss, and a
-> task that lands on the drained DSQ after that pass waits the same way. These
-> reenqueues, like those of a task refused pass after pass, are not counted
-> against the reenqueue limit, as the task's scheduler is bypassing.
-> 
-> On a BASE loss, scx_bypass_lb_kick() sets the balancer's timer to expire
-> now, so that the drain runs before the next interval, and runs at all when
-> the interval is zero. A donee can lose BASE while the balancer is moving
-> tasks onto it, and the kick from that loss covers it.
-> 
-> The balancer re-arms with timer_reduce(), which only brings the expiry
-> forward, so a loss during a run leaves the timer at now and the next run
-> sees it. The arming at bypass dispatch enable uses timer_reduce() too, so
-> that a kick landing there is kept.
-> 
-> v2: The description drops an in-flight affinity change from the causes of a
-> refused balancer move.
-> 
-> v3:
-> - The description says that a stuck task's reenqueues are not counted
->   against the reenqueue limit (sashiko).
-> - The description names the stall watchdog as the way out for a task stuck
->   without rescue, and the tasks a zero interval leaves on a drained DSQ.
-> - bypass_lb_reenq_home()'s kerneldoc and the description give the placement
->   with rescue disabled and for a task that must run at home, and the other
->   two comments on that placement point to the kerneldoc.
-> 
-> Fixes: 147d1885f390 ("sched_ext: Add the SCX_CAP_ENQ_IMMED cap")
+> Fixes: 2c91169377f4 ("sched_ext: Blame the DSQ's owning scheduler for a runnable stall")
+> Reported-by: Sashiko <sashiko-bot@kernel.org>
 > Signed-off-by: Tejun Heo <tj@kernel.org>
+> ---
+>  kernel/sched/ext/ext.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+> index 8241cf374ef9..ae5e8861ca0a 100644
+> --- a/kernel/sched/ext/ext.c
+> +++ b/kernel/sched/ext/ext.c
+> @@ -4376,9 +4376,16 @@ static bool check_rq_for_timeouts(struct rq *rq)
+>  			 * ancestor's bypass DSQ while the owner is bypassing.
+>  			 * Blame the drainer. The local DSQ is consumed by the
+>  			 * cpu itself and keeps blame on the owner.
+> +			 *
+> +			 * A bypassing owner places nothing, and its tasks run
+> +			 * through the host even from the rescue DSQ or the
+> +			 * local DSQ. Blame the host. Blaming an owner that is
+> +			 * already exiting would eject nothing.
+>  			 */
+>  			if (dsq && dsq->sched && dsq->id != SCX_DSQ_LOCAL)
+>  				sch = dsq->sched;
+> +			else if (scx_bypassing(sch, cpu_of(rq)))
+> +				sch = scx_exec_sched(sch, cpu_of(rq));
 
-...
+Should we recheck watchdog_timeout after changing sch?
 
-> @@ -6579,20 +6602,21 @@ static s32 bypass_lb_move(struct scx_sched *sch, struct rq *donor_rq,
->  	/*
->  	 * @p's affinity is stable under its rq lock. A task whose donee is its
->  	 * own cpu can always run there, and task_can_run_on_remote_rq() warns
-> -	 * when asked about a task's own cpu.
-> +	 * when asked about a task's own cpu. A @donee of -1 means none, so
-> +	 * don't pass it to cpu_rq().
->  	 */
-> -	if (donee == task_cpu(p) || task_can_run_on_remote_rq(sch, p, cpu_rq(donee), false)) {
-> -		dst_dsq = scx_bypass_dsq(sch, donee);
-> -		enq_flags = 0;
-> +	if (donee >= 0 && (donee == task_cpu(p) ||
-> +			   task_can_run_on_remote_rq(sch, p, cpu_rq(donee), false))) {
-> +		scx_dispatch_enqueue(sch, rq, scx_bypass_dsq(sch, donee), p, 0, 0, 0);
->  		ret = donee;
->  	} else {
-> -		/* back where it was, at the head so that the walk skips it */
-> -		dst_dsq = donor_dsq;
-> -		enq_flags = SCX_ENQ_HEAD;
-> -		ret = -1;
-> +		/*
-> +		 * No donee, or @p can't run on it. Reenqueue @p at home
-> +		 * instead, see bypass_lb_reenq_home().
-> +		 */
-> +		bypass_lb_reenq_home(rq, p, cpu_of(donor_rq));
-> +		ret = cpu_of(rq);
-
-Not a blocker, but I was wondering if we should preserve the old head or
-ordinary balancing when the donor still holds BASE?
-
-If a selected donee refuses a task homed on the donor, this can put it
-at the tail of the same DSQ. A proxy-migrated blocked donor is refused
-by remote CPUs, so repeated balancing passes could keep pushing it back.
+The stall test above uses the task owner's timeout. So, a bypassing
+child with a short timeout could potentially cause its host to be
+ejected before the host's own timeout expires.
 
 Thanks,
 -Andrea
+
+>  
+>  			__scx_exit(sch, SCX_EXIT_ERROR_STALL, 0, cpu_of(rq),
+>  				   "%s[%d] failed to run for %u.%03us",
+> -- 
+> 2.56.0
+> 
