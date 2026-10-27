@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793060272;
-	b=IZiYFtg8823b6Bx+fHolf5AqRlD4cC3lOD2D/UKSAuQQer9TcEXtPEcPA1wrXt+LAcJV
-	 JNX1/BgQxWuUuiMxhqtXgPSZohI3xkh8bYYq3Wz/AqlxZGRLJZqLikE5r3VtlOz40RwWS
-	 Pf3WnBdbVqP3EUyJbM6bnxBO9ERSxLJkZGWHdKzypiSupsMca/fOQmfiYQT98I6trQ6UI
-	 v3W6ZDvgJcNQU40XtkoaA6QryqGnES69jpOiYzJnhU2OehqX4thIsWTXY1Vi6HHb2oW5c
-	 qX+gzh+O6SEBRuKElF2DEDNO3BPxGb13ixI55LS5nQSZSxYhwE6MVaNoqGpmI/B6imQ==
+	t=1793060273;
+	b=T1On+zHwZmYBq2b9/9tzjnok7t2tCDF3YZPFQyVd3/xwccZKzDlwMgHp6SqmbvOdgSJL
+	 kOaeqC99gpoIIN6HVXEPnojRArZuOPUVcfrXm4ZHf1QyOReHi7fyaAIrP5+MFUv+AC/9P
+	 v4NCTJZV1Jorr409k4LwmgoQXI5o9Gc65GWb9NerWRtUnyJBK6zBYCQ5L2Ofh7TWWlUnJ
+	 zERyXbLC/sX/C7J5Ww0+/LIadqbJ6vQL/5Tytgp8LLm3ukTaLKcqGiOjwdLr1L0kKks/x
+	 eoWv9yxAUwRszn1M1rvNLqLGA5akVZKbG8JJ5ezbF0+q1dxZeB/Oz9OjnmL7SLmLvhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793060272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793060273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=G5jGp37TAZEFo9qCA9DNPVtlJ3p4aTVcndBab/5I5NU=;
-	b=adu+eV22kAIRiZEmKxh+NsT1Iz1mkI3ZKN8SKw9fxATGLLYV9HqpwULxloUch+pebaWY
-	 3wr973GBi5bJ/UEsb0K61V4u1dAd+aqAzUlpJfWy6XnN09+72FLw+pThlNkm/qVXwKY+S
-	 lO6klw+lHRRLw8L1Y7f/8yz3TfuS75iMPh/Oe11O+XuJnkkHD5hUD8JJTwo2VWPA7Jjh7
-	 Fi/fFgTHqCycKgH/F1t/VVm52Opy6OIXxf5844YjoCJkCwjsfRDeHZcgbUd3Piqrqr5ay
-	 gp0tWGDl6aSXGU+t7D8ruSxIeKh6PhSHms4+mU6pBPH4ScYCZhgf8majpxWdciTgGSA==
+	bh=WIIR/IdFFOatmXFPLgDLDbzqyHXY2e/vmad0PcTIILM=;
+	b=eJ/xmiy2GA2S2nu8vgneLbZ2IIuvskRqGjL0R/HJqw1a4rhChnoQZyjjzB2enNd1ZlbB
+	 0gHdsoi+TfVnCoy3GZE4zlAlRkK+ADs8r62IvtMle7GfR3jCyOSuGIcqvklQH90PWqYvY
+	 otujg8pDz205ap9emq+k4P9yPHyy03JhcTebUCTix9jt0N+5Als29CLaNCdFTKo+h0r2C
+	 Du4v7zgDZ0MdboJ4SqbAtqu4TpDAicFxQsE+vPSZVMo1rxx7R+HAdc8PvuKaY7w72Nkmf
+	 eOouKtRvlbM90P+kAWHdLADNti/ZT2MY8NqcuOTWKiqxd2o9Jsp62DABFDp2o+4kA2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UJCiG2Sp;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N1t7Cx35;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9746A606A32E;
-	Tue, 27 Oct 2026 00:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988CD606A335;
+	Tue, 27 Oct 2026 00:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UJCiG2Sp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105121F01825;
-	Tue, 27 Oct 2026 00:17:52 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N1t7Cx35
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3C11F01825;
+	Tue, 27 Oct 2026 00:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793060272;
-	bh=G5jGp37TAZEFo9qCA9DNPVtlJ3p4aTVcndBab/5I5NU=;
+	s=k20260515; t=1793060273;
+	bh=WIIR/IdFFOatmXFPLgDLDbzqyHXY2e/vmad0PcTIILM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJCiG2SpbDZ46EMjt2lPczBZbDhroQXhDxAEK1cto+6atYiVoUbWa5hPd+aoq2HEW
-	 4JcgZJQY97h5hTC2gu7cOmaB5Qn3AanBQ6b03+3c4FwGxq6eH3gz/t8FEmSDJmMMZj
-	 T3USutxxczA92Kz6cYiJlNG7pje8NwcEGazeUDPemFWVdmLyOlyqeb/T4jzscJ5xyN
-	 n1xvvQcLo5gA5NLluJTuaCPn4w1M7KZk5ClMRmXXBqlSZGgZ4LsX1N9YjuibMNKcWP
-	 wbwngt0ovhbjFD0KzfFcjKoKlGLqK9jwCS0U/K9E+teRamZg2azVHtLw9uCKlQRq36
-	 tCWohWaOBxibw==
+	b=N1t7Cx35ysDUmQzR/B746YG/U0wcsmnZOEm9IQ2mHu5oROPErvCEhxRiDBCB/RG2q
+	 8x7HweLkcL2Y/Q5uIVEYW/ssFAwaAuCxHluMCZ/ySSeMec64rba6i0jJk2LoMT/hXl
+	 HUkbfzxD+T8hIJ2kCPwjnkd/qIY0fCsBqZiUuTtjQoUFm+xPOgHgcUUKpNtFzbl9mQ
+	 5d0Ko4v78I2K6XWLxe43Y7MiheMmJW2SCn9mfTVK2w9qPO7lfOVouVpGLxDBY3i+Qi
+	 SkDTeSoNDkjn2F6OgtK1SLMWTPrsFOTsmDp3fJGvHYLGvcV4u0pEMdZDhofSgyF0om
+	 9zuEshcymx0ug==
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>,
@@ -47,10 +47,11 @@ Cc: David Vernet <void@manifault.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	David Dai <david.dai@linux.dev>,
 	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 02/18] sched_ext: Clear holding_cpu where the claim is confirmed
-Date: Mon, 26 Oct 2026 14:17:33 -1000
-Message-ID: <20261027001749.1821379-3-tj@kernel.org>
+	Tejun Heo <tj@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>
+Subject: [PATCH 03/18] sched_ext: Fix bypassed tasks stranded by the reenqueue limit
+Date: Mon, 26 Oct 2026 14:17:34 -1000
+Message-ID: <20261027001749.1821379-4-tj@kernel.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261027001749.1821379-1-tj@kernel.org>
 References: <20261027001749.1821379-1-tj@kernel.org>
@@ -65,121 +66,135 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The bypass load balancer will take tasks off a remote cpu's bypass DSQ with
-unlink_dsq_and_switch_rq_lock() in the following patches and insert them
-into another bypass DSQ. Clearing holding_cpu after the claim is up to each
-claimant, so the balancer would need a clear of its own.
+scx_do_enqueue_task() counts a task's reenqueues until the task runs. Past
+SCX_REENQ_MAX_REPEAT it ejects the owning scheduler and leaves the task off
+every DSQ for the scheduler's exit to requeue. The count comes before the
+bypass test, so it also counts the reenqueues of a task whose scheduler is
+bypassing.
 
-unlink_dsq_and_switch_rq_lock() marks a task with holding_cpu for the gap
-between dropping the DSQ lock and taking the task's rq lock, so that a
-dequeue in that gap can tell the claimant it lost. Once the claimant holds
-the rq lock and finds the marker intact, nothing can take the task away
-under it and the marker has no reader left.
+Those reenqueues are not the scheduler's placements, and ejecting the
+scheduler for them fixes nothing. Under bypass the kernel queues the
+scheduler's tasks on the bypass DSQs. A host calling
+scx_bpf_reenqueue_local() reenqueues a bypassed child's tasks on the cpu's
+local DSQ along with its own, and the reject drain reenqueues a consumed
+task that a cap check rejected.
 
-Each claimant clears it at its own site after that point:
+In the following patches, the consume itself reenqueues a task it can't run
+right away, and the bypass load balancer reenqueues a task at its home.
 
- - dispatch_to_local_dsq(), which runs the handshake inline, in its same-rq
-   and fallback branches
- - scx_proxy_reject_task() for the proxy reject
- - the dequeue inside deactivate_task() for both remote moves
+The count is reset only when the task runs or leaves sched_ext, so an
+ejection can lead to a stranding the exit does not recover:
 
-Clear it where the claim is confirmed instead and drop the explicit clears.
-No behavior change.
+ 1. the task's reenqueues pass the limit, which ejects its scheduler and
+    strands the task
+ 2. the exit's scx_bypass() cycles the task through dequeue and enqueue,
+    which requeues it on a bypass DSQ with the count still past the limit
+ 3. the task's next reenqueue under bypass strands it again
+ 4. scx_bypass() requeues stranded tasks only when the scheduler wasn't
+    bypassing yet, so the task stays off every DSQ until the disable walks
+    the tasks
+ 5. the disable takes scx_enable_mutex, the cgroup lock and scx_fork_rwsem
+    before the walk, and a sub-scheduler's disable the cpu hotplug lock too.
+    It hangs if the stranded task holds one of them, forking, attaching to a
+    cgroup or doing a cpu hotplug
 
+Test bypass before the count. A task reenqueued under bypass stays queued
+until a later dispatch or balancer pass, so there is no tight loop to bound,
+and the task's first run resets the count. The offline test moves up with it
+to stay ahead of the bypass test. A reenqueue on an offline cpu goes to the
+local DSQ and isn't counted either.
+
+A host that keeps calling scx_bpf_reenqueue_local() could get a bypassed
+child ejected, as the child's tasks on the local DSQ counted against the
+child. The reenqueues are the host's, and its own tasks still count against
+it.
+
+v2: The description lists the cpu hotplug lock among the locks a
+sub-scheduler's disable takes before the walk.
+
+Fixes: 7706d6e4f2e3 ("sched_ext: Bound per-task reenqueues and eject the owning scheduler")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 ---
- kernel/sched/ext/ext.c      | 19 +++++++++++--------
- kernel/sched/ext/internal.h | 11 ++++++-----
- 2 files changed, 17 insertions(+), 13 deletions(-)
+ kernel/sched/ext/ext.c | 39 ++++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index a9621bbdb183..0c0046766542 100644
+index 0c0046766542..5d872a155800 100644
 --- a/kernel/sched/ext/ext.c
 +++ b/kernel/sched/ext/ext.c
-@@ -2865,7 +2865,6 @@ static void scx_proxy_reject_task(struct scx_sched *sch, struct rq *rq,
- 	lockdep_assert_rq_held(rq);
- 	WARN_ON_ONCE(p->scx.flags & SCX_TASK_REENQ_REASON_MASK);
+@@ -2216,11 +2216,31 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 	 */
+ 	p->scx.flags &= ~SCX_TASK_IMMED;
  
--	p->scx.holding_cpu = -1;
- 	p->scx.flags |= SCX_TASK_REENQ_PROXY;
- 	scx_divert_strip_flags(p, &enq_flags);
- 
-@@ -2899,8 +2898,9 @@ static void scx_proxy_reject_task(struct scx_sched *sch, struct rq *rq,
-  * tell whether we lost to dequeue by testing whether the holding_cpu still
-  * points to this CPU. See scx_dispatch_dequeue() for the counterpart.
-  *
-- * On return, @dsq is unlocked and @src_rq is locked. Returns %true if @p is
-- * still valid and detached from @dsq. %false if lost to dequeue.
-+ * On return, @dsq is unlocked and @src_rq is locked. Return %true if @p is
-+ * still valid and detached from @dsq, with holding_cpu cleared. Return %false
-+ * if @p was lost to a dequeue.
-  */
- static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
- 					  struct scx_dispatch_q *dsq,
-@@ -2923,11 +2923,13 @@ static bool unlink_dsq_and_switch_rq_lock(struct task_struct *p,
- 	if (likely(p->scx.holding_cpu == cpu) && !WARN_ON_ONCE(src_rq != task_rq(p))) {
- 		/*
- 		 * Keep ->dsq set until we own @src_rq so that a racing dequeue
--		 * can find @dsq and clear holding_cpu. Once ownership is
--		 * confirmed, clear it under @src_rq so that deactivate_task()
--		 * takes the !dsq path instead of retaking @dsq->lock.
-+		 * can find @dsq and clear holding_cpu. Once we own @src_rq, the
-+		 * handshake is over. Clear ->dsq so that deactivate_task()
-+		 * takes the !dsq path instead of retaking @dsq->lock. Clear
-+		 * holding_cpu with it so that no caller has to.
- 		 */
- 		p->scx.dsq = NULL;
-+		p->scx.holding_cpu = -1;
- 		scx_wait_dispatching(p);
- 		return true;
- 	}
-@@ -3163,20 +3165,21 @@ static void dispatch_to_local_dsq(struct scx_sched *sch, struct rq *rq,
- 	    !WARN_ON_ONCE(src_rq != task_rq(p))) {
- 		bool fallback = false;
- 
-+		/* the handshake is over, see unlink_dsq_and_switch_rq_lock() */
-+		p->scx.holding_cpu = -1;
++	/*
++	 * If !scx_rq_online(), we already told the BPF scheduler that the CPU
++	 * is offline and are just running the hotplug path. Don't bother the
++	 * BPF scheduler.
++	 */
++	if (!scx_rq_online(rq))
++		goto local;
 +
- 		/*
- 		 * If @p is staying on the same rq, there's no need to go
- 		 * through the full deactivate/activate cycle. Optimize by
- 		 * abbreviating move_remote_task_to_local_dsq().
- 		 */
- 		if (src_rq == dst_rq) {
--			p->scx.holding_cpu = -1;
- 			scx_dispatch_enqueue(sch, dst_rq, &dst_rq->scx.local_dsq, p,
- 					     slice, vtime, enq_flags | SCX_ENQ_APPLY_SLICE);
- 		} else if (unlikely(task_proxy_unsafe_to_move(p))) {
- 			fallback = true;
- 			scx_proxy_reject_task(sch, src_rq, p, enq_flags);
- 		} else if (unlikely(!task_can_run_on_remote_rq(sch, p, dst_rq, true))) {
--			p->scx.holding_cpu = -1;
- 			fallback = true;
- 			scx_dispatch_enqueue(sch, src_rq, find_global_dsq(sch, task_cpu(p)),
- 					     p, slice, vtime,
-diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
-index 80c746054ce7..752a9a2a94b0 100644
---- a/kernel/sched/ext/internal.h
-+++ b/kernel/sched/ext/internal.h
-@@ -2157,12 +2157,13 @@ static const char *scx_enable_state_str[] = {
-  *   4. Lock src_rq (where the task currently lives)
-  *   5. Verify p->scx.holding_cpu == current CPU, if not, dequeue won the
-  *      race (dequeue clears holding_cpu to -1 when it takes the task), in
-- *      this case migration is aborted
-- *   6. If src_rq == dst_rq: clear holding_cpu and enqueue directly
-- *      into dst_rq's local DSQ (no lock swap needed)
-+ *      this case migration is aborted. Otherwise the claim is confirmed and
-+ *      holding_cpu is cleared here, see unlink_dsq_and_switch_rq_lock()
-+ *   6. If src_rq == dst_rq: enqueue directly into dst_rq's local DSQ (no lock
-+ *      swap needed)
-  *   7. Otherwise, verify under src_rq lock that the task can be moved to dst_rq
-- *      (CPU affinity, migration_disabled, etc.). If not, clear holding_cpu,
-- *      leave the task on src_rq, and enqueue it on the fallback DSQ.
-+ *      (CPU affinity, migration_disabled, etc.). If not, leave the task on
-+ *      src_rq, and enqueue it on the fallback DSQ.
-  *   8. Otherwise (i.e. if the task can be moved to dst_rq), call
-  *      move_remote_task_to_local_dsq(), which releases src_rq, locks dst_rq,
-  *      and performs the deactivate/activate migration cycle
++	if (scx_bypassing(sch, cpu_of(rq))) {
++		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
++		goto bypass;
++	}
++
+ 	/*
+ 	 * A task reenqueued too many times without running means the scheduler
+ 	 * keeps re-deciding a placement it can't honor, e.g. re-inserting to a
+ 	 * cid it lacks caps on. Eject the owning scheduler and strand the task
+ 	 * to be picked up during sched exit.
++	 *
++	 * Bypass guarantees that every runnable task keeps running, and the
++	 * disable relies on that to take sleeping locks. The kernel places the
++	 * tasks of a bypassing scheduler and those on an offline rq, and
++	 * counting their reenqueues could strand a task under bypass and
++	 * deadlock the disable on a lock the task holds, so both tests stay
++	 * above the count.
+ 	 */
+ 	if (enq_flags & SCX_ENQ_REENQ) {
+ 		if (++p->scx.reenq_cnt > 1)
+@@ -2234,19 +2254,6 @@ void scx_do_enqueue_task(struct rq *rq, struct task_struct *p, u64 enq_flags,
+ 		}
+ 	}
+ 
+-	/*
+-	 * If !scx_rq_online(), we already told the BPF scheduler that the CPU
+-	 * is offline and are just running the hotplug path. Don't bother the
+-	 * BPF scheduler.
+-	 */
+-	if (!scx_rq_online(rq))
+-		goto local;
+-
+-	if (scx_bypassing(sch, cpu_of(rq))) {
+-		__scx_add_event(sch, SCX_EV_BYPASS_DISPATCH, 1);
+-		goto bypass;
+-	}
+-
+ 	if (p->scx.ddsp_dsq_id != SCX_DSQ_INVALID)
+ 		goto direct;
+ 
+@@ -4993,7 +5000,8 @@ static void process_ddsp_deferred_locals(struct rq *rq)
+  * %SCX_TASK_REENQ_IMMED. If the BPF scheduler dispatches back to the same local
+  * DSQ with %SCX_ENQ_IMMED while the CPU is still unavailable, this triggers
+  * another reenq cycle. Repetitions are bounded by %SCX_REENQ_MAX_REPEAT in
+- * scx_do_enqueue_task(), which ejects the task's owning scheduler.
++ * scx_do_enqueue_task(), which ejects the task's owning scheduler. A bypassing
++ * scheduler's tasks are placed by the kernel instead and are not counted.
+  */
+ static bool local_task_should_reenq(struct rq *rq, struct task_struct *p,
+ 				    u64 *reenq_flags, u32 *reason)
+@@ -5288,7 +5296,8 @@ static void process_deferred_reenq_users(struct rq *rq)
+  *
+  * A task can be re-rejected repeatedly. Reenqueues are bounded per task by
+  * SCX_REENQ_MAX_REPEAT in scx_do_enqueue_task(), which ejects the owning
+- * scheduler.
++ * scheduler. A bypassing scheduler's tasks are placed by the kernel instead and
++ * are not counted.
+  */
+ static void scx_reenq_reject(struct rq *rq)
+ {
 -- 
 2.56.0
 
