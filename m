@@ -1,78 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.92.199
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793102165;
-	b=lbWcnF0fF4R98ENFubeDtlqonvKOO/W9ssyE7Sg68xoa2BVI6XXeEo0eLygXz+b8LWsk
-	 Wa891YpnaIv8js8uOGtxB1/IAiCaWwuRIQ2Y1kRcZsKcAd54O2JDfyGfPOx+LRwjecVhd
-	 dMCADkRrjVclJ8Ho8tTt3OlKrw7kjYiMAaP6xYMdwQRzf2W9gJXvenHjlSprkL0HWXfOM
-	 VVNvGedz3ECEjtfrW6yHaYB+NkqgJsd7O222DS+vmyIXxTjWT4eQGB4XU3/fF9AGwQIqp
-	 8yGvMFgn4ioiscy2PLnZ3iWK2jHr95zqSQNgY50F8qyPyOH3IHOwKMgSY6IOot8yQfw==
+	t=1793110130;
+	b=04PAXK+KpRw7NLdfb6G5C5J7zNCh38QQa/dRPyDopXli+3J4xpf7n5mu/GpIXbaMOL34
+	 8bgzG245JWtiDtcQat165DqVHd45L0cjF1xI9Wb0Ma6ggEUKSl2smCYG8uRvYGRzNnmsz
+	 nBG6mqYUvqtZyy6a+BW2wN5+FjV8ETp/d7busc1I9ivXDpTlQkTnpfIPPNmd+MRTfMhw6
+	 Wmz/3Q8s+GpT5PJVkOyBqtX/hv0bk7K3v2ZgSrASzqAfJFkqiSa7dWtbjekn/tDIWIBVO
+	 EavntFdgFhDDQpSx2lsX9y1XwQJtdYH/vJSvNkOKgWve5Ot1NscCa9QU/p89sIgmWTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793102165;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=l8DQLQcXXChdw8BNf5nleHOTswysdszObtZfOfnh2QE=;
-	b=CZGTDm9yk32zRW1hdzYQIfRNfyo+5Mis+xNPAn44Q6waQTCHASI7wursj1mkKOaGiHbW
-	 pCiQV1SZDjO1ZyUF0QVoQNsa47qyIjtlvQXTueytm8A013JfDHY6q7qqU5t4loZs4FaG7
-	 dq+Mkk+eQrCbS7xdEXTryQ/vfMEpMvE0shPg9h/nCYq01/Qo/sMnPJp7mT1gxkxk3ZgKy
-	 IBmAJEdooNxu8qasGqIyQfZyemMm2sUc86jI9QO8D7tQ5s6UFcpa0Xkrm/MyTi7+lBo0Z
-	 YmvkGsA7K3j0Idfebg8isPwh0IhA5jUDI1rci+de2woGWwtoZa53IrbdnuMMZ9PdaOQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793110130;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=cOUNxOkSiHz1UCe8MVMbaOdkOf4/O9eR04u47GsA7QY=;
+	b=BvMmllqXguQ27EhczGAzcmnhXRBnJVm6Ul/crjfSnYaT0KJYDwLSCuXxPNde17Tr7L0F
+	 E43DIgDHQTB48umROiLguXTbCdDSZNQTvXvT8rF+pvMO1Egu+A3ukorXMKFtssHfeoPW0
+	 NwjCxVeghnfVNyHaEKtDNe2n154GaOXS3tn/zNHHovxDelQiwbxx4vhcNPoOqe1KcMyc4
+	 S3tJ7Yrz2cQ4ieDcskOFprfoWd6Axmu2YhYZEPcMv23ev5nozAfZiWF2AUECXfVFHv3dw
+	 ICO+aoNo7Rp+MuSw/4PMeT/IrXTzAMHPr3z4dAQ36wsiF16QKM0wfFfrfXs1jhKQeoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=DWbbIRWF;
-	arc=none smtp.remote-ip=90.155.92.199
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AEIji5oT;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBFF606A31A;
-	Tue, 27 Oct 2026 11:56:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CBFF606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C775606A337;
+	Tue, 27 Oct 2026 14:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=desiato.20200630 header.b=DWbbIRWF
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=l8DQLQcXXChdw8BNf5nleHOTswysdszObtZfOfnh2QE=; b=DWbbIRWFUzvB7N+LuyeaAWtKhK
-	SHrET7nN/q1mtpxtFwMELWMCBGMld5wu8jkWTWX8icikvYhhSOjfoRZ8Zn4rpPSFsy3HXfHqO5Z6x
-	S7eKXZ0EW9h/j1yqPIgwbDn/kHrnYr16yMjAcdmOYPDCPYWIEJR/36aQPNtom8OrBtWIcZed5vWzJ
-	AKC0ExQNqK382rhFMVSvyRLy0yI14tk3T8F7NxHTzwFAGLLcIg81ArLhbuKy5e+UGaxY1Dbrxi+p3
-	xtdJodR7Ps9hf2QtVCTLuAmocKlDIBzCtl7PwGRBLJK/0YqkxiNSSOENhXlI1IEwpRQ8VBkqVg0C3
-	n8meoByQ==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xLfmZ-0000000EtUm-2QP0;
-	Tue, 27 Oct 2026 11:55:59 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 7ECC0300DB9; Tue, 27 Oct 2026 12:55:58 +0100 (CET)
-Date: Tue, 27 Oct 2026 12:55:58 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Vladimir Vdovin <deliran@verdict.gg>,
-	Gregory Price <gourry@gourry.net>, David Dai <david.dai@linux.dev>,
-	Emil Tsalapatis <etsal@meta.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Balbir Singh <balbirs@nvidia.com>, Lee Trager <ltrager@nvidia.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET v2 sched_ext/for-7.5] sched_ext: Add NUMA balancing
- support
-Message-ID: <20261027115558.GL2668564@noisy.programming.kicks-ass.net>
-References: <20261027041536.3317971-1-arighi@nvidia.com>
- <20261027105209.GF2668564@noisy.programming.kicks-ass.net>
- <auCNSY0fCBu9uIDB@gpd4>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AEIji5oT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A4F1F031E3;
+	Tue, 27 Oct 2026 14:08:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793110129;
+	bh=cOUNxOkSiHz1UCe8MVMbaOdkOf4/O9eR04u47GsA7QY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=AEIji5oTloCbrt8InyF+KOb4NeVovMN988PPlvWaeQ4KW5z3/xgJxSqeXokh97UwO
+	 IrePtV6zHNGnrDuecld3aflDlhZx8sv4ziUza+0SkoVCiPYeBh5ZL9Q8Mpk4TXTIvq
+	 eXos5vYji3WPwQdY5Dvq3NiVIhjyE6aH1dCghC1kocacYupKWNYri9lOkUMf0J8mWE
+	 Fx13Pu9DczRuszty7h0Ai/I8qh7A0kwDcOrYh7cT7WFQx0GThKETAevX+k2iOiVE/A
+	 r42VNaQgNixhWMJkh4i/clbrjzzaMdl+rexcvCKPwCrktAz5TLrd9scLgvnm+J/Sv+
+	 k1U1SYds3CuUA==
+From: Tejun Heo <tj@kernel.org>
+To: sched-ext@lists.linux.dev
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	David Dai <david.dai@linux.dev>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>
+Subject: [PATCH 19/18] sched_ext: Fix use-after-free of a NONE rescuee leaving its sched while running
+Date: Tue, 27 Oct 2026 04:08:47 -1000
+Message-ID: <20261027140848.2280121-1-tj@kernel.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261027001749.1821379-1-tj@kernel.org>
+References: <20261027001749.1821379-1-tj@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -82,45 +64,166 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <auCNSY0fCBu9uIDB@gpd4>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 27, 2026 at 12:38:49PM +0100, Andrea Righi wrote:
-> On Tue, Oct 27, 2026 at 11:52:09AM +0100, Peter Zijlstra wrote:
-> > On Tue, Oct 27, 2026 at 05:13:29AM +0100, Andrea Righi wrote:
-> > 
-> > > Ideally the ultimate goal is to give BPF schedulers both controls that
-> > > NUMA balancing combines: moving a task to the node where its memory is
-> > > and moving the memory a task uses to the node where the task runs. This
-> > > series provides the first: with the preferred node available, a
-> > > scheduler can decide where to run the task. A second series, to follow
-> > > once this one lands, will provide the second: a kfunc that lets a
-> > > scheduler request the node a task's memory should migrate to.
-> > 
-> > Fair has no real control over the memory migration part either; why
-> > would you want to give BPF that?
-> 
-> Yeah, that's a fair point and the wording in the cover letter is a bit
-> too vague.
-> 
-> The use case behind the second part is accelerator/device locality,
-> discussed at LPC in the sched_ext MC [1]: with multi-GPU systems the
-> heaviest user of a task's host memory is often the device, which NUMA
-> balancing can't see, since hinting faults only track CPU accesses. So
-> memory follows the CPU even when it should stay close to the device, and
-> today the only option is to pin everything with numactl and/or disable
-> NUMA balancing.
-> 
-> But that needs to be discussed separately: as Gregory pointed out at
-> LPC, NUMA balancing needs some cleanups first, and the right interface
-> may not be BPF-specific at all (e.g., extending the home node concept of
-> set_mempolicy_home_node() to NUMA balancing, or a device-aware hint in
-> mm that both fair and ext could use, or something else).
-> 
-> The first step for now is to, at least, allow sched_ext to see the
-> preferred node computed by NUMA balancing, which is what this series
-> does.
+Since an earlier patch sends a bypassed task to rescue when its host lacks
+SCX_CAP_BASE, a task scx_fail_parent() punted to its bypassing parent at
+NONE can be a rescuee.
 
-Right, I think that came up at OSPM as well; regular numa balancing
-would want this as well. This really should not be a bpf thing.
+When a cgroup migration into a root-owned cgroup re-homes it while running,
+nothing resets it: the DEQUEUE_SAVE dequeue and put_prev_task_scx() keep a
+running task's slice, and __scx_disable_and_exit_task() skips a NONE task.
+
+rq->scx.rescue.curr keeps pointing at the task, now on the root. An RT task,
+for example, can keep the task from serving its grant until the last sub is
+freed. From then on scx_rescuee() returns NULL and the rescue never ends.
+scx_rescue_timerfn() keeps accessing the task after it is freed.
+
+Move the reset out of scx_disable_task() into scx_reset_task_fields() and
+call it on every path that takes a task out of its sched's control, the exit
+of a NONE task included.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext/ext.c | 66 +++++++++++++++++++++++++++---------------
+ kernel/sched/ext/sub.c |  4 +--
+ 2 files changed, 44 insertions(+), 26 deletions(-)
+
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index b7a78be01b42..afcbe8f06de6 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -2511,8 +2511,9 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
+ 	/*
+ 	 * Don't reset runnable_at. If @p is waiting, the wait continues across
+ 	 * temporary dequeues, e.g. for a migration or an attribute change.
+-	 * scx_disable_task() ends it if @p leaves its scheduler. scx_bypass()
+-	 * restarts it when its requeue can change the sched running @p.
++	 * scx_reset_task_fields() ends it if @p leaves its sched's control.
++	 * scx_bypass() restarts it when its requeue can change the sched
++	 * running @p.
+ 	 */
+ 	clr_task_runnable(p, false);
+ 
+@@ -4657,23 +4658,20 @@ void scx_enable_task(struct scx_sched *sch, struct task_struct *p)
+ 	scx_set_task_state(p, SCX_TASK_ENABLED);
+ }
+ 
+-static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
++/**
++ * scx_reset_task_fields - Reset what @p carries from its sched's control
++ * @rq: @p's rq, locked
++ * @p: task leaving its sched's control
++ *
++ * The vtime, the slice and what rides on it, the reenqueue count and the
++ * watchdog wait belong to the sched while it controls @p. The control ends when
++ * @p is taken off the sched or leaves the ext class while staying on the sched.
++ * Reset them so that @p starts clean wherever it goes.
++ */
++static void scx_reset_task_fields(struct rq *rq, struct task_struct *p)
+ {
+-	struct rq *rq = task_rq(p);
+-
+ 	lockdep_assert_rq_held(rq);
+-	WARN_ON_ONCE(scx_get_task_state(p) != SCX_TASK_ENABLED);
+-
+-	clear_direct_dispatch(p);
+ 
+-	if (SCX_HAS_OP(sch, disable))
+-		SCX_CALL_OP_TASK(sch, disable, rq, p);
+-	scx_set_task_state(p, SCX_TASK_READY);
+-
+-	/*
+-	 * Reset the SCX-managed fields when @p leaves the BPF scheduler's
+-	 * control, after ops.disable() has observed their final values.
+-	 */
+ 	p->scx.dsq_vtime = 0;
+ 	scx_task_slice_ended(rq, p);
+ 	scx_set_task_slice(p, 0);
+@@ -4681,11 +4679,25 @@ static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
+ 
+ 	/*
+ 	 * If @p is runnable but not running, its wait started at runnable_at,
+-	 * which ops_dequeue() didn't reset. Leaving @sch ends the wait. Reset
+-	 * runnable_at the next time @p is enqueued on SCX, so that the watchdog
+-	 * doesn't count the time @p spends elsewhere.
++	 * which ops_dequeue() didn't reset. Leaving the sched's control ends
++	 * the wait. Reset runnable_at the next time @p is enqueued on SCX, so
++	 * that the watchdog doesn't count the time @p spends elsewhere.
+ 	 */
+ 	p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
++}
++
++static void scx_disable_task(struct scx_sched *sch, struct task_struct *p)
++{
++	struct rq *rq = task_rq(p);
++
++	lockdep_assert_rq_held(rq);
++	WARN_ON_ONCE(scx_get_task_state(p) != SCX_TASK_ENABLED);
++
++	clear_direct_dispatch(p);
++
++	if (SCX_HAS_OP(sch, disable))
++		SCX_CALL_OP_TASK(sch, disable, rq, p);
++	scx_set_task_state(p, SCX_TASK_READY);
+ 
+ 	/*
+ 	 * Verify the task is not in BPF scheduler's custody. If flag
+@@ -4706,6 +4718,11 @@ void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
+ 
+ 	switch (scx_get_task_state(p)) {
+ 	case SCX_TASK_NONE:
++		/*
++		 * No op to call, but @p may still carry @sch's state, e.g. a
++		 * task punted by scx_fail_parent() and being rescued.
++		 */
++		scx_reset_task_fields(task_rq(p), p);
+ 		return;
+ 	case SCX_TASK_INIT:
+ 		args.cancelled = true;
+@@ -4714,6 +4731,8 @@ void __scx_disable_and_exit_task(struct scx_sched *sch, struct task_struct *p)
+ 		break;
+ 	case SCX_TASK_ENABLED:
+ 		scx_disable_task(sch, p);
++		/* after ops.disable() has seen the final values */
++		scx_reset_task_fields(task_rq(p), p);
+ 		break;
+ 	default:
+ 		WARN_ON_ONCE(true);
+@@ -5022,13 +5041,12 @@ static void switched_from_scx(struct rq *rq, struct task_struct *p)
+ 	 * scx_disable_task() would WARN on the non-%ENABLED state and trigger a
+ 	 * NONE -> READY validation failure.
+ 	 *
+-	 * @p can still be a rescuee under the parent. End its slice as
+-	 * scx_disable_task() does for an enabled task.
++	 * Either way, reset @p after ops.disable() has seen the final values. A
++	 * %NONE @p can still be a rescuee under the parent.
+ 	 */
+-	if (scx_get_task_state(p) == SCX_TASK_NONE)
+-		scx_task_slice_ended(rq, p);
+-	else
++	if (scx_get_task_state(p) != SCX_TASK_NONE)
+ 		scx_disable_task(scx_task_sched(p), p);
++	scx_reset_task_fields(rq, p);
+ }
+ 
+ static void switched_to_scx(struct rq *rq, struct task_struct *p) {}
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index ecab82ca5e82..e0aed3ce9735 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -1666,8 +1666,8 @@ static void scx_rehome_task(struct scx_sched *to, struct task_struct *p)
+  * Used when @to must take over @p but failed to initialize it. Bypass keeps
+  * scheduling decisions away from @to but @p can still trigger its task ops,
+  * which may confuse the BPF side. @to is dying anyway. The exit paths call no
+- * op on a %NONE task. __scx_disable_and_exit_task() skips it and
+- * switched_from_scx() only ends its slice.
++ * op on a %NONE task. __scx_disable_and_exit_task() and switched_from_scx()
++ * only reset its fields, see scx_reset_task_fields().
+  */
+ static void scx_punt_task(struct scx_sched *to, struct task_struct *p)
+ {
+-- 
+2.56.0
+
