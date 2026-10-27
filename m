@@ -1,77 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.17
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793098155;
-	b=trL+iQ89u2MfzkTCnQETUuWfeoc16t/A0HFQnYQarrZeXmdqPdumgoJIn31qPU/muMC7
-	 dQy/MwLhH8ADGj9WVCxaoBk47QvGXdflJyUL6GuV3hTA4HBsxGQM+Dextf3Iyj58enVKu
-	 beJXSM+AJb2pzkjlOESr6vDK4oP+3Sp9VWSQ4AXnWwSidYufWp1kAQ8dqsK7R8Lkb059J
-	 Dm8BuWbIa/E8D2DJcLfQFP/JXqUZcAftxT98NslQmJ3ESe5/ZYcp6q5eep1hIp2V0at8O
-	 OilDp3nu+wzcW8+vaxZ3sZXduJHWhRLvEvDAMReY0Rg/S1LyoRN/x0GDx7P4jEnZIgw==
+	t=1793098214;
+	b=WTzEWW+Upjo86DOxZfb612fKlF+P7gy2AMlfHFH1HmhTmcMoYC/Y7Ulvn76VmSbEx+MC
+	 f+ujJ/pIk+YhGLfwfxhEgZfItpyPnFQWGb1a2oM1kCeDb1n6WBV3lN9JbwLLgFkpKUC1U
+	 0J+z1PIrn4+AbqP8ld7RPznRw6E5ApYkMWA24UpoGSVqOtJTx4KSq9MiF+SfjG2zncj5/
+	 oIILkYQEoCmkyM4D6a4fexJH/T/Yf6AO1/0mRGShUhbS8crym+8c2sDBQk88wdxvoe2TU
+	 MX4Xz/qGSwQ/RuloPBMSxcwWZ6j2yMKX8aqEEqwikpIJYYR7dq5rvRlQMJnVZbkS0JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793098155;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=zPGzAkjhF9jYNNS0TSlj8VzbvpVXh28Fd+7heFECekw=;
-	b=bOr1CRKdl5NBmQBn8kv5uvJctnFXGoV0FVVNxZpuzZfgAtR7Ps0mC7+aSIHy3bWf+0nI
-	 wgGEt2g5L0lmM+duUGSoS8thM8yHupOeHeUVeVdwvQqi7uO5qRPD3wsTZ7TFh9ri6t9SS
-	 AxSmQqO990OPFQCawiAdS3CvwcwFNjDen60KcImvqIhG70ThBsrjejtE16zmoDSXgv2o1
-	 u6e0m152k4adJuqgqqBTZxO8KsAly0JCyREe6+GNzYJ9HIqWDHxfeto07UI01zWnXwp53
-	 ingI6YzM5yS2ZlC6+WutkxeluHw1zlQLH3N1CvAdfoqiskNNwDiKt9rLb3INLlknTYg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793098214;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding;
+	bh=Zm1ZMFHt+vDtsE6uhd9cmwQ/XuV6JbZYuMkcY3vwMXo=;
+	b=or7j7aHYTz/OdiFmvC+7QT4iUBPFrG05dXP9N1Tgx8OAFKDqAFu4xgbnBvacRKWMLw8O
+	 Cg5olW7RHSi40xpb5eKHj2JCyFZwo8kUmiNrDuB3Kv2TRcDwcsVAKIghRjYnFhfOy/v72
+	 MqcYdwhyMY2LYfJa7udtbfGB8ld5qTQHcoPo94KQV3M+euxZsRl0vfcmxSJ+M9DTVtpJK
+	 su6rfzF5IlaVIUdNgLIqJHZMsSOUMN+eY9wguQjAGk0F+1L8Ie2P+f1WJoEVHrIJES8KF
+	 2ReNtJFKFENOUUE8QxEe8bzP29VNFUCAmWNQWbpsrYdRkEVkEhXTbliTrrOGPt9U50Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=I2oxQpPy;
-	arc=none smtp.remote-ip=90.155.50.34
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=aqpzT9zB;
+	arc=none smtp.remote-ip=192.198.163.17
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72A7606A31F;
-	Tue, 27 Oct 2026 10:49:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C72A7606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66855606A31B;
+	Tue, 27 Oct 2026 10:50:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66855606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=I2oxQpPy
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=zPGzAkjhF9jYNNS0TSlj8VzbvpVXh28Fd+7heFECekw=; b=I2oxQpPyjn9P8NRLi76d3V3cY0
-	FniO8gJXqdDhaYn1+X26JdmAezcJPIUOWApGbz2ePbNYSvm/bHlv90fH9vB+2BR/gIen5/DohuaKw
-	fyYMhXl9DuIEakbK/RZkzNp/PlppGTACYtns0qiarILtV0I6foFYOeJD96NVCfd0gIGik2Kv667gP
-	HGyGFWo0kJWMnwDCAeK3XqNsmAfL5YalvrU9DQ8XtT8Qxf+6wpyYeCT37fHT3KksUHHXm5pB/b6nS
-	OBlk5sqaKwakVNaoO2qfPNn9rkvW1yqekEU7Up7MF8jlkk6ZpdVqudFPv8IQqht7j7tf4TlEkcoIr
-	TP6suoWA==;
-Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xLejn-0000000D3WM-022z;
-	Tue, 27 Oct 2026 10:49:03 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id DB463300DB9; Tue, 27 Oct 2026 11:49:01 +0100 (CET)
-Date: Tue, 27 Oct 2026 11:49:01 +0100
-From: Peter Zijlstra <peterz@infradead.org>
-To: Andrea Righi <arighi@nvidia.com>
-Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Vladimir Vdovin <deliran@verdict.gg>,
-	Gregory Price <gourry@gourry.net>, David Dai <david.dai@linux.dev>,
-	Emil Tsalapatis <etsal@meta.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Balbir Singh <balbirs@nvidia.com>, Lee Trager <ltrager@nvidia.com>,
-	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/6] sched_ext: Report preferred NUMA nodes through
- ops.set_numa_node()
-Message-ID: <20261027104901.GD2668564@noisy.programming.kicks-ass.net>
-References: <20261027041536.3317971-1-arighi@nvidia.com>
- <20261027041536.3317971-5-arighi@nvidia.com>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=aqpzT9zB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793098214; x=1824634214;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=fZ5z3CH2gHmgn+ZLPgqrXD36V11lVJFgcQBStrMHoGU=;
+  b=aqpzT9zBYWMB2F/R5Rk6RT4szJtHl3aOzL/M01om5eETlYHxk0AlvUA5
+   WSTEfA+CHk9aUnIDx42suNGRRm0bOBuhPc2RBnIuU4ghoSrsTrwwQLt9L
+   YTFJP8tSKNOtbkwLNdzQRTi7CArkOzRl/oFHKt3isErNscwvI3jOO+jfC
+   0p3a49JQi0iN7vpbcdudmVBNYRomDXhSA4LvXkNst0YswtWiUHpYMTS6K
+   5jk2lXZaEhsCbOA6eZQynUr47ObkylM3RfNFXR3s2h/pj91ZWTvTI/c0H
+   I2s2hqqvInFojJc/nsnZkXactphXiO2+cU73/fqCeepCFU5eBJ1fkfIKr
+   Q==;
+X-CSE-ConnectionGUID: sGi9dAr7TnuJZNAcZdMz0w==
+X-CSE-MsgGUID: pPD6FTatRme3n/vF7dShlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11947"; a="1806851"
+X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
+   d="scan'208";a="1806851"
+Received: from fmviesa013.fm.intel.com ([10.60.135.153])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 03:50:12 -0700
+X-CSE-ConnectionGUID: CrPWIebURQa0uyex+Qyzjg==
+X-CSE-MsgGUID: x8zZB4P/QK2/pjVnw9pBNQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
+   d="scan'208";a="6359406"
+Received: from ly-workstation.sh.intel.com (HELO ly-workstation) ([10.239.182.64])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 03:50:10 -0700
+Date: Tue, 27 Oct 2026 18:50:06 +0800
+From: kernel test robot <yi1.lai@intel.com>
+To: Shubhang Kaushik <sh@gentwo.org>
+Cc: oe-lkp@lists.linux.dev, lkp@intel.com, linux-kernel@vger.kernel.org,
+	Peter Zijlstra <peterz@infradead.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>, sched-ext@lists.linux.dev,
+	aubrey.li@linux.intel.com, yu.c.chen@intel.com, yi1.lai@intel.com
+Subject: [linus:master] [sched]  c72945693b:
+ stress-ng.rawudp.packets_32_bytes_received_per_sec 34.2% improvement
+Message-ID: <202610271134.d6bf1e10-lkp@intel.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -81,48 +80,67 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20261027041536.3317971-5-arighi@nvidia.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 27, 2026 at 05:13:33AM +0100, Andrea Righi wrote:
 
-> @@ -4528,6 +4543,15 @@ static void __scx_enable_task(struct scx_sched *sch, struct task_struct *p)
->  
->  	if (SCX_HAS_OP(sch, set_weight))
->  		SCX_CALL_OP_TASK(sch, set_weight, rq, p, p->scx.weight);
-> +
-> +	if (SCX_HAS_OP(sch, set_numa_node)) {
-> +		s32 nid = NUMA_NO_NODE;
-> +
-> +#ifdef CONFIG_NUMA_BALANCING
-> +		nid = p->numa_preferred_nid;
-> +#endif
-> +		SCX_CALL_OP_TASK(sch, set_numa_node, rq, p, nid);
-> +	}
->  }
->  
->  void scx_enable_task(struct scx_sched *sch, struct task_struct *p)
-> @@ -4834,6 +4858,20 @@ void sched_ext_dead(struct task_struct *p)
->  	}
->  }
->  
-> +#ifdef CONFIG_NUMA_BALANCING
-> +static void numa_node_changed_scx(struct rq *rq, struct task_struct *p, int nid)
-> +{
-> +	struct scx_sched *sch = scx_task_sched(p);
-> +
-> +	if (task_dead_and_done(p) ||
-> +	    scx_get_task_state(p) != SCX_TASK_ENABLED)
-> +		return;
-> +
-> +	if (SCX_HAS_OP(sch, set_numa_node))
-> +		SCX_CALL_OP_TASK(sch, set_numa_node, rq, p, nid);
-> +}
-> +#endif
 
-I dont get this; why are you calling set_numa_mode() on enable? The
-signal was sched_setnuma(), but now you're doing more.
+Hello,
 
-Should not the existing enable method check p->numa_preferred_nid rather
-than injecting this weird extra call?
+kernel test robot noticed a 34.2% improvement of stress-ng.rawudp.packets_32_bytes_received_per_sec on:
+
+
+commit: c72945693b90423f1b46ac2dbc8749c2b7804fc8 ("sched: Restart fair hrtick after same-task repicks") https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git master
+
+testcase: stress-ng
+config: x86_64-rhel-9.4
+compiler: gcc-14
+test machine: 192 threads 2 sockets Intel(R) Xeon(R) 6740E  CPU @ 2.4GHz (Sierra Forest) with 256G memory
+parameters:
+
+	nr_threads: 100%
+	testtime: 60s
+	test: rawudp
+	cpufreq_governor: performance
+
+
+Details are as below:
+-------------------------------------------------------------------------------------------------->
+
+
+The kernel config and materials to reproduce are available at:
+https://download.01.org/0day-ci/archive/20261027/202610271134.d6bf1e10-lkp@intel.com
+
+=========================================================================================
+compiler/cpufreq_governor/kconfig/nr_threads/rootfs/tbox_group/test/testcase/testtime:
+  gcc-14/performance/x86_64-rhel-9.4/100%/debian-13-x86_64-20250902.cgz/lkp-srf-2sp3/rawudp/stress-ng/60s
+
+commit: 
+  a9b3c75705 ("sched/headers: Replace __ASSEMBLY__ with __ASSEMBLER__ in the <uapi/linux/sched.h> header")
+  c72945693b ("sched: Restart fair hrtick after same-task repicks")
+
+a9b3c7570564de40 c72945693b90423f1b46ac2dbc8
+---------------- --------------------------- 
+         %stddev     %change         %stddev
+             \          |                \  
+      0.01          +100.0%       0.02        stress-ng.rawudp.MB_recv'd_per_sec
+   4559098           +34.1%    6112029 ±  3%  stress-ng.rawudp.ops
+     76041           +34.0%     101916 ±  3%  stress-ng.rawudp.ops_per_sec
+    395.33           +34.2%     530.63 ±  3%  stress-ng.rawudp.packets_32_bytes_received_per_sec
+   2611008 ±  2%     +14.9%    2999104 ±  5%  stress-ng.time.involuntary_context_switches
+     47.70 ±  7%     +46.7%      69.96 ±  8%  stress-ng.time.user_time
+  20919233 ±  4%     +41.7%   29638128 ±  2%  stress-ng.time.voluntary_context_switches
+
+
+Disclaimer:
+Results have been estimated based on internal Intel analysis and are provided
+for informational purposes only. Any difference in system hardware or software
+design or configuration may affect actual performance.
+
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
+
+
