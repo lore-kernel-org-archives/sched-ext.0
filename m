@@ -1,89 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793078216;
-	b=Qe9E6UFTtsy6BzXztr2HnF8nBgVQzzkZj58fxcrmGgFL8tzSqBiMAipyIH80AGo9kZR7
-	 rcN7a4vpOB4qNtWrQRsWbz+YmKgIr5VT10nu+P0F0kPKecZaMfK++9h4LHOyST4K3mkXA
-	 BxGJGE6ZR+Clo+UykOz8Jh4W1RSTnQN3+XsFxlbrRy9MBgipMqz4NFmOUuLy0vn59GvTp
-	 SYgPpq3XpoTcHLZyNTaq8DVqyR/FcE+1zL6QqnAKFjoLZCnGchUq+hzCulTSWR6YLAFcj
-	 SCOpzScxRWBBwpW43bJcx3HfnvEhpuV8jrCdO/nJIqetXKzK2CjK6a5/LW9+HYYXNBw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793078216;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=vGh75Iw3Cr4ZXSsVzMiMk9iqd5h96hKoaA3EVoxwtCM=;
-	b=cDgUgoZ+q1fFIicVmzwjp9WS2lefFqHEfghHZTm+afXFub7IGw2Ove9WrE+GlD9jnzwW
-	 UIXpf25HwhsstjwrB2Y9gMdENZMttqYH/vOxctC1PIr4x+h8uQ7OqIaBV4xSMbIv3S+GK
-	 Zweainw4Y6afmwMfQOA5z43INkMXNII9+oSfGeISgbvXgKfuMiVM9ugXgq/pVTG1Vy//7
-	 9ud3tDOOtSTLWtKqOP6VsbFpDSNxcnowVAWeqISlHFGWcR4LobzWhaX9bwqTwIorxJem0
-	 cyt/fjpBBkp5/Sjmf3nzZOkdVQPdSwBofpu8moZmpR/2+VuTiY5+NondcNgP9/Baw3A==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=b7HdjCoZ;
-	arc=none smtp.remote-ip=74.125.227.131
-Received: from mail-pj2-f3.google.com (mail-pj2-f3.google.com [74.125.227.131])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.53
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793079030;
+	b=W6yZJBQQhvGriG4M8OGBTcWGK+W+AQmRZnhdwWXjo3jkGpsjFh9xwN3emNHoep8yEsmZ
+	 S3dwitT7kjQxdI6bDhOBQAxSZG3g+w/3Lg/FpN7nQto5fQSiuRm78eTsWb/ViWQHhkv3/
+	 LdnLg+/wXM+4MKCNqMMNIelOTf0F0tQFO6EfnmLnjaljb05UARWS7OzjB8emDZd4LAkoR
+	 BF2dg6oifNpERNYuHKus4vRXTTEVHQmRy9FioU2tnyxEMmfsNPGUa7XPhDDgapqiiuiS0
+	 qt7Vzdciruq/2ISBOK/l9B/kBOY5bZvf39ckln/8hfiS6VBJ3vsFv7APLv2Bo7PsFoQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793079030;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:
+	 CC:References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-EOPAttributedMessage:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=ZzDHygYXrOKIJbl6puacNsd8dR5DBQW5HpxCkO1uSO0=;
+	b=zQ8NGF8frTwHxTfyX/ie0uTKxMkQSbBcSIyRIyoMvLKrUAZW78pls6wWUnFGE2ueB7Tw
+	 pL6qvvkcuhvwkXhywy0YeQlk33fa7va64xgsIVhF7MWr59/FFhtx6u31PTHzoUSZVXBed
+	 YW/XnawjD2QnWMHjNcG+oic+hdmcaaTj6j9gft4yTIE4E5YXunCbEvpq6CHszpfdaiwHg
+	 mqSSv8I+PCeLTbiL835v8tEMDQSfGuA/NbnzEad0YV0ozCh3rV2pA8eFWSNFfDC4QHCFz
+	 3Rk0gnoz/zwItLM9nHjtRAa9h4YnBX9+wBy2dWeFOVvbOtMmk1tcZKjSukTqk7xLWBA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=eueuYFIc;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.53
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012053.outbound.protection.outlook.com [52.101.48.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC81606A31A
-	for <sched-ext@lists.linux.dev>; Tue, 27 Oct 2026 05:16:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9FC81606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED667606A31A
+	for <sched-ext@lists.linux.dev>; Tue, 27 Oct 2026 05:30:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED667606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=b7HdjCoZ
-Received: by mail-pj2-f3.google.com with SMTP id 98e67ed59e1d1-3ada2f39f30so950464a91.0
-        for <sched-ext@lists.linux.dev>; Mon, 26 Oct 2026 22:16:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793078215; x=1793683015; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vGh75Iw3Cr4ZXSsVzMiMk9iqd5h96hKoaA3EVoxwtCM=;
-        b=b7HdjCoZnXTqlMJE6aonI+IetU59wjOOYS93ZeIcX8Jl/naWOU8JsrGD4i0Ure0A7M
-         FD/ZHpkm2nyIGTut/ILqXKHDa71iC5zUXt4FbLojJBi3Kw4TnXlxSY4IH7/5IM3ADy/x
-         TiOWKXFH3MpqMxsAu1LCmyHTnit+lnyO6ojUixPkxRySS+PuC/v5M4GG3IG55Hmks+6X
-         6azFqbPmyRfzlkg5/zdXFPeMpH0GvOWpjUOdOYOEdrq14YyDyCLnDpeMfnVX6JYoGW4k
-         oU+ppvnwdRUKEz0DLlpDKY08iEI5VWvjp5Vc6qMi6O1zxEb+OvPGpDstPnhgMOgng30L
-         31Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793078215; x=1793683015;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=vGh75Iw3Cr4ZXSsVzMiMk9iqd5h96hKoaA3EVoxwtCM=;
-        b=lfQ5zyDVr7wGmC+q01dUgISDUpViLjnWgTJnJfYjCLPUg97pzYJj5QFOZ7RvNbjav8
-         rxMh0UnO7P3aGJlsyVLaJY+KFFkzMmPdXLW2E6Mr2A0MiGRLe4060EQEJFXlG1DaFQNE
-         HBHqGivyf1RhyTwIVoQCfVXOxVfbfmfHcNzTWWGv0G5iRQQLn5vJfJAGfQx3MK21LdRC
-         5ZNoeJfCQxbrLOyTKBLSniO8hfdTwvwncnqjWCh5zpB+GyXLPTKw7kH+qFYL5L9cH6mZ
-         aWs/71W3GyBbDJ00d2ImjndOK5rBU0DyZGWUB7WQFQ8xFqW+L7elITfCKPNUK0zfAfGp
-         8CIw==
-X-Gm-Message-State: AFq9FYIDEIs4eBEPoJzqupYtobt8wrIaq6SdGoTHCPavdWAnXB9wcLGF
-	cgIrlMD1MhQiWVDxK8ut8G678PZhntwg+XzyB/JgNGY1UpjS0ijSjGQ7F2s/IuZKPPBDQw==
-X-Gm-Gg: AYBFou0v8YfRnQU74owVzMAXPpbN4V4ATvWZLBXIEoykXD/RvUpuHgxZPsG5oB3436x
-	mZo9+t4GbRkZhqKnKii0rY4vS9NBKJ6ALdWVbg07Ila30HraUwBEO4JIiXF1Rms7IXBVw7nDG5J
-	UJNjM3A1YjtJ6SP4mu1xs2vj+SZkRenpNH/0ypLHhG4lD9O2lm1Xr/3OVzw0PupRpUkISOQwnEm
-	WEuXazhYDsV9dR+gfTpZTsEC+GPDtcdPIaOFVJvgEbRDPPhf/EVOqXV0Kg7Qe9+1O9x4VHcQ0em
-	Mzklp0cR47sPssjtt9VCb7eRGfKJOIWrurVGdpH7hHaX/Js1OOCrkPPY7nfoZ+2dQmPJwyq9cYn
-	imN8k/KHA9oUbcU2gKohKmTpGvtLZM2LpkR2HkbEUJxYW26xkPCoZncKccoKp7NfbAPT7NBllLE
-	P7qjLHug4jO2ux8NOCd7Mm0ChNzJ+XWRvVsOzkj8K/bQcP9TQDeDeq4zBgrCu/TZKhZN4Kh0yQL
-	XQvtKobiD48+ODU1LFRmrk16wpdURc61jzoVsVUhl87JfRacd/PJKC8PSMUBzv1IWJ/1NI4Pmge
-	0Lbx69M=
-X-Received: by 2002:a17:90b:4a86:b0:3a7:e126:4980 with SMTP id 98e67ed59e1d1-3adeae6d5cdmr7235384a91.43.1793078214787;
-        Mon, 26 Oct 2026 22:16:54 -0700 (PDT)
-Received: from nixos ([2607:9000:3000:11::93f5:b3b7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae40614daasm1920474a91.4.2026.10.26.22.16.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 22:16:54 -0700 (PDT)
-From: sprooc <sprooc69@gmail.com>
-To: tj@kernel.org
-Cc: sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Junbin Zhang <sprooc69@gmail.com>
-Subject: [PATCH] sched_ext: Reject rq-lock-taking kfuncs in tracing programs
-Date: Tue, 27 Oct 2026 13:16:34 +0800
-Message-ID: <20261027051634.2009082-1-sprooc69@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=eueuYFIc
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Se6vAp2Mvbu1HVQprxqFJ5TJLOi0QGJ/GZADsviIXtdwtn4n3cP2/BAuxo7VkA9IvCisNbc6RroD+DqDW8njWG3z79L+PAZb1+auK3qwsbaoEsQXc2cdy3+7OcJp/jIEc5jMeT24trQXDHxjBXn4Pn4hty6s4AtWLXYrs1raXlI89SpM8fsVuSBzw+tE36DtPuU7QQk5gT+7cbspnv6DRcXSn+9sV50eJ0I/pbs80KQRwv0yJihaHXCBZwKc9kLEnpdJMOmZRev8pbqvIAnh22M2JTSdjUNPMmeNyF4H4iTYz5MyDuX1CMbWo0W0h2rVlMJkF0Z+2VtM/FDUImf4WQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZzDHygYXrOKIJbl6puacNsd8dR5DBQW5HpxCkO1uSO0=;
+ b=wUe8/c0ZS7I/JyrfItBmrlMK07zZfSvyvyV3n8uQ/QB6GFdMNwynD8gsLn5eO/aEOMXKwbeieHWVnonNNzH9N8QFrg7oX2omlHA3ZvKYGdpe1D1k5ZEopd0nJqvCRGDTxsEBV4llRzTqKrFBAs9HOaUevtGIzdr+faG5NOGdeHM4pKo8mwCAbpOd81XneFRc9L65cRHwnL4ArP3V1FIqH2YW6XWOtFBaY779oX1iNZwPRVxSeftzh6O36rkEtk/bSYw5R4KtK0iX3eH5Dw85VWUWxE5Ts1cNnsVmqGzCqrOa3mHKGueXA2nM4Kq3XAH3KPyWK3jAK4K7anARKjZs9Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nvidia.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZzDHygYXrOKIJbl6puacNsd8dR5DBQW5HpxCkO1uSO0=;
+ b=eueuYFIck59F1/06uL09itHxlCfEgTTBiRmMKUX36TqU+9NPwgglqvsDPtwoGCjDxjLhpbS1hCO086nGFjthkPD5Loly4wM/tN6XFI/xrFehbGxWO3Nx//g0G6q1HrRb4FD9Z39nWw9zx+mkT2ZO4tzuX5ZLYqn3/ZlcbgnoAJU=
+Received: from BY5PR04CA0002.namprd04.prod.outlook.com (2603:10b6:a03:1d0::12)
+ by MW4PR12MB7481.namprd12.prod.outlook.com (2603:10b6:303:212::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 05:30:25 +0000
+Received: from SJ5PEPF000001F3.namprd05.prod.outlook.com
+ (2603:10b6:a03:1d0:cafe::a7) by BY5PR04CA0002.outlook.office365.com
+ (2603:10b6:a03:1d0::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.22 via Frontend Transport; Tue,
+ 27 Oct 2026 05:30:25 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SJ5PEPF000001F3.mail.protection.outlook.com (10.167.242.71) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.569.4 via Frontend Transport; Tue, 27 Oct 2026 05:30:25 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Tue, 27 Oct
+ 2026 00:30:24 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Tue, 27 Oct
+ 2026 00:30:24 -0500
+Received: from [10.136.43.232] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
+ Transport; Tue, 27 Oct 2026 00:30:18 -0500
+Message-ID: <26d4c1d1-19dd-415e-beb4-05b7f34fecb3@amd.com>
+Date: Tue, 27 Oct 2026 11:00:17 +0530
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -93,145 +105,88 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] sched/numa: Notify the scheduling class of preferred
+ node changes
+To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, David Vernet
+	<void@manifault.com>, Changwoo Min <changwoo@igalia.com>
+CC: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot
+	<vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, "Mel
+ Gorman" <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
+	"Vladimir Vdovin" <deliran@verdict.gg>, Gregory Price <gourry@gourry.net>,
+	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>, Christian
+ Loehle <christian.loehle@arm.com>, Balbir Singh <balbirs@nvidia.com>, Lee
+ Trager <ltrager@nvidia.com>, <sched-ext@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>
+References: <20261027041536.3317971-1-arighi@nvidia.com>
+ <20261027041536.3317971-4-arighi@nvidia.com>
+Content-Language: en-US
+From: K Prateek Nayak <kprateek.nayak@amd.com>
+In-Reply-To: <20261027041536.3317971-4-arighi@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F3:EE_|MW4PR12MB7481:EE_
+X-MS-Office365-Filtering-Correlation-Id: 61433450-a38d-488d-cf0e-08df33eb6752
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|82310400026|36860700016|23010399003|1800799024|261026121527099003|4143699003|11063799006|56012099006|261022105027099003|10067099003|22082099003|18002099003|261026140227099003;
+X-Microsoft-Antispam-Message-Info:
+	9YyIJ0w74LySUSDr+hwAyE6YA1SOxeQFm7j+0d+o+jILMDxM1zijhIwoW6FXt4HOTRyVtq9HG02/7xwQQAIevRin/qs+RNNkwNfPgRXLNfyrrRLAzkUWzpi7VvYPRkVKwfqC4hA1hwiqGylHpV+GqQPLG/lQrHyemheYDjZA9xKIjFQq/OnX+wRgemjhH5c5a3V0jjREUByrwCIc4WOI3mWjeYBLPscs0HFXi1vHDfrIpLIEclKx1CfWbtypuJZeHGfYTUPqTf/ZWJ1y7VZLMvGq24SS0OdlFSvXfXER0qqMutGolHsKQ4TkLdFQ9RmTyFVk3MKpoepLxnFDb6A3WdUP7iyhqZ1YmmwdnV5AxlVUCxD2lWpcUSlN0p4oCMolHZSIsMVaThT0ndeBouGSDusVsoRV6wCujistELaXF0Y4+6aykyu0/XuR0EPYbRQTHjvOrOaIQ47njo17KkXyz7JqJgWkcS3zMS0ZlFR7ybonNealmNPD4ZlmOC+Crm/Gy2l/gSDZ/0G7bHpGeLyZkvYJ7G/6LjBTs/bFa5KV3zVA225YBC54LvsE7mSXp1EGEUzLVerKO99Hr1cTV5bJfXAXoGjy5vcwE8u+AmYhUs7DaZ0OkeD58sqW9qGwMUkiGKTT8s779/aNgJep/j0MqFwQymtTyfJCYcYivr4hIFgsyc+uQ8EZUmITCLUb0rYBzOteqJfeCrnSHfMcqtRmug==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(36860700016)(23010399003)(1800799024)(261026121527099003)(4143699003)(11063799006)(56012099006)(261022105027099003)(10067099003)(22082099003)(18002099003)(261026140227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	EMQo0IIV2X33WAx0MXeusBTRV6Am70P6pTCub2t5HdcwfC0r0mfMdfy1d95XifngDdMuDIBGxVKoAhO5RuKtfWBZQN+MDZOSk12eWP/J3x1HtcpVnHWCLnXa8XlZcWY1gEEWVqJy9D51E0dsT1irqV450FZSPBIb9sKbRzqQLzXkSJ3YeV1GXtWlcJMqwUFtk3GvZxl+QBYFeROxfg00hSMftkaCh8ZqaIlJ1t8knAqc8kNVQYJ3CU3bRP0Oo7bqE+RRsJ0MGHU6Mnt/Bx3a+P+h2eAz/NV26KzWwxITCbA8XJtxLYZjPWFVfjoh0tJFJrkgWmSdCTUESrmkhRv6mPzFcFgNPk7htmJmn5F0lAhx4gV8N9fB3ng57a+WdR4r2j69u2K2msuiAkGC4mpkyUsJC22I01UPJ7pb/5erLtToidg2/3o8FiXrqmmxDlEd
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 05:30:25.2431
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 61433450-a38d-488d-cf0e-08df33eb6752
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001F3.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7481
 
-From: Junbin Zhang <sprooc69@gmail.com>
+Hello Andrea,
 
-scx_bpf_cpuperf_set() and scx_bpf_cidperf_set() are members of
-scx_kfunc_ids_any, which is registered for BPF_PROG_TYPE_TRACING.
-A tracing program can run in a context which already holds the target
-rq lock, in which case scx_cpuperf_set() attempts to acquire the same
-lock again:
+On 10/27/2026 9:43 AM, Andrea Righi wrote:
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -8331,8 +8331,13 @@ int migrate_task_to(struct task_struct *p, int target_cpu)
+>  void sched_setnuma(struct task_struct *p, int nid)
+>  {
+>  	guard(task_rq_lock)(p);
+> -	scoped_guard (sched_change, p, DEQUEUE_SAVE)
+> +	scoped_guard (sched_change, p, DEQUEUE_SAVE) {
+> +		bool changed = p->numa_preferred_nid != nid;
 
-  __schedule()
-    rq_lock(rq);                          /* rq->__lock is held */
-    trace_sched_switch();
-      BPF tracing program
-        scx_bpf_cpuperf_set(smp_processor_id(), 1024);
-          scx_cpuperf_set();
-            locked_rq = scx_locked_rq(); /* NULL */
-            rq_lock_irqsave(rq, &rf);    /* same lock */
+Don't the callers of sched_setnuma() already check for this?
 
-scx_locked_rq() only tracks rq locks held during SCX callback
-invocations, so it cannot detect an rq lock held by the surrounding
-kernel code.
+Only one that doesn't is task_numa_migrate() but
+numa_migrate_preferred() only calls it when
+"task_node(p) == p->numa_preferred_nid" is false and "!sd "case resets
+"p->numa_preferred_nid" to "task_node(p)" when the task cannot be
+migrated.
 
-The deadlock can be reproduced with two BPF programs. The first is a
-minimal SCX scheduler, which only needs to be registered and enabled:
+Afaict, "changed" is always true here. Is there a scenario that I might
+be missing?
 
-  SEC(".struct_ops.link")
-  struct sched_ext_ops minimal_ops = {
-          .name = "minimal",
-  };
+> +
+>  		p->numa_preferred_nid = nid;
+> +		if (changed && p->sched_class->numa_node_changed)
+> +			p->sched_class->numa_node_changed(task_rq(p), p, nid);
+> +	}
+>  }
+>  #endif /* CONFIG_NUMA_BALANCING */
 
-The second is a tracing program attached to tp_btf/sched_switch,
-which fires from __schedule() with rq->__lock already held:
-
-  SEC("tp_btf/sched_switch")
-  int BPF_PROG(on_sched_switch, bool preempt, struct task_struct *prev,
-               struct task_struct *next, unsigned int prev_state)
-  {
-          scx_bpf_cpuperf_set(bpf_get_smp_processor_id(), 1024);
-          return 0;
-  }
-
-With both programs attached, the next context switch on any CPU
-deadlocks that CPU. Lockdep reports:
-
-  WARNING: possible recursive locking detected
-  7.3.0-rc7 #3 Not tainted
-  swapper/3/0 is trying to acquire lock:
-   (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x1e/0x30
-
-  but task is already holding lock:
-   (&rq->__lock){-.-.}-{2:2}, at: __schedule+0xeb/0x1430
-
-   Possible unsafe locking scenario:
-
-         CPU0
-         ----
-    lock(&rq->__lock);
-    lock(&rq->__lock);
-
-    *** DEADLOCK ***
-
-  Call Trace:
-   <TASK>
-   print_deadlock_bug.cold+0xc0/0xd0
-   __lock_acquire+0x12fa/0x1b80
-   lock_acquire+0xd1/0x2f0
-   _raw_spin_lock_nested+0x32/0x40
-   raw_spin_rq_lock_nested+0x1e/0x30
-   scx_cpuperf_set+0x1e9/0x310
-   scx_bpf_cpuperf_set+0x9b/0x230
-   bpf_prog_..._on_sched_switch+0x3d/0x41
-   bpf_trace_run4+0x125/0x450
-   __traceiter_sched_switch+0x4b/0x70
-   __schedule+0x94a/0x1430
-   schedule_idle+0x26/0x50
-   cpu_startup_entry+0x2d/0x30
-   start_secondary+0xfc/0x100
-   </TASK>
-
-The CPU remains locked up with interrupts disabled.
-scx_bpf_cidperf_set() is similarly affected, as it resolves the CID
-through scx_cid_to_cpu() before reaching the same rq-locking path.
-
-There is no reliable way for these kfuncs to determine whether the
-surrounding tracing context already holds an rq lock. Reject calls to
-both kfuncs from tracing programs at verification time, while
-preserving their availability to SCX struct_ops and syscall programs.
-
-Fixes: a11d6784d731 ("sched_ext: Fix missing rq lock in scx_bpf_cpuperf_set()")
-Signed-off-by: Junbin Zhang <sprooc69@gmail.com>
----
- kernel/sched/ext/ext.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 4b7d2602b4d4..88f4abe944a8 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -11822,6 +11822,22 @@ static const struct btf_kfunc_id_set scx_kfunc_set_any = {
- 	.filter			= scx_kfunc_context_filter,
- };
- 
-+/*
-+ * Kfuncs which may take the rq lock on their unlocked path.
-+ *
-+ * A tracing program can execute in any kernel context, including ones which
-+ * already hold the rq lock (e.g. sched_switch). scx_locked_rq() only tracks
-+ * rq locks taken for SCX callbacks, so from such a context it returns NULL
-+ * and these kfuncs would acquire the already held rq lock again and deadlock
-+ * the CPU. They cannot be made safe for tracing programs, so keep them off
-+ * the tracing hook. Members must also stay in scx_kfunc_ids_any so that
-+ * struct_ops and syscall programs keep their access.
-+ */
-+BTF_KFUNCS_START(scx_kfunc_ids_no_tracing)
-+BTF_ID_FLAGS(func, scx_bpf_cpuperf_set, KF_IMPLICIT_ARGS)
-+BTF_ID_FLAGS(func, scx_bpf_cidperf_set, KF_IMPLICIT_ARGS)
-+BTF_KFUNCS_END(scx_kfunc_ids_no_tracing)
-+
- /*
-  * cpu-form kfuncs that are forbidden from cid-form schedulers
-  * (bpf_sched_ext_ops_cid). Programs targeting the cid struct_ops type must
-@@ -11930,6 +11946,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 	bool in_any = btf_id_set8_contains(&scx_kfunc_ids_any, kfunc_id);
- 	bool in_cpu_only = btf_id_set8_contains(&scx_kfunc_ids_cpu_only, kfunc_id);
- 	bool in_cid = btf_id_set8_contains(&scx_kfunc_ids_cid, kfunc_id);
-+	bool in_no_tracing = btf_id_set8_contains(&scx_kfunc_ids_no_tracing, kfunc_id);
- 	u32 moff, flags;
- 
- 	/* Not an SCX kfunc - allow. */
-@@ -11942,7 +11959,7 @@ int scx_kfunc_context_filter(const struct bpf_prog *prog, u32 kfunc_id)
- 		return (in_unlocked || in_select_cpu || in_idle || in_any || in_cid) ? 0 : -EACCES;
- 
- 	if (prog->type != BPF_PROG_TYPE_STRUCT_OPS)
--		return (in_any || in_idle || in_cid) ? 0 : -EACCES;
-+		return (!in_no_tracing && (in_any || in_idle || in_cid)) ? 0 : -EACCES;
- 
- 	/*
- 	 * add_subprog_and_kfunc() collects all kfunc calls, including dead code
 -- 
-2.54.0
+Thanks and Regards,
+Prateek
 
