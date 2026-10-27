@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793110131;
-	b=1d9gMX52A1gCBpiR34NybGLrFZ8ALRTxupSuHIqcvubpGXGNIBIfItX5/KMikDLeFLlA
-	 Do7mmSKy12wSD/0gwEp8XhoWXJnRRw9S4627OSJMSu3ynVlb//OqOAHvT73pToxwr3O2U
-	 Hdsv0DmMprYT3bnICNEyRUP5mJ9Eux3MjWlNE1UchtEWUsSOfiUIOTNxQgzM2aW+GK2Fk
-	 GYX+i/vmDvM/6dcN5X11aZpmVyx44GiPidKacmrmeXMnSfhLOGK/DrN9OygVyh0kQW3M0
-	 Eem8xXUARLjKamXneA/WkL3xBcdQMjy+T96TYIivNffZHpkJVIQJNNHotdtyakdw9iA==
+	t=1793110139;
+	b=WhXprOIUoNw4//C6Fr5Hy+RTgfqiDwW33c1VeyzZ5+ofDB93MoCgwr3HnQRtAipGqB06
+	 puHqcdLaYnroASUicL2jbRFMBi2htxaSvMHwn1vAQDjHJOXMBwEkoJWjQMkjZVUcF3wb+
+	 ueSGEz0xIwivpEHRjoV4sBTF9w8NbqtF4eT2SsxruVDK6PaJ65NpYO96zyY9jyBJ5v5pU
+	 DDVc9vywv7U1yWqVD4csbYqmclna2qZWuofzXYZ2tWbtnJDNiW6OqNUJpPZ9kscGoxk73
+	 qllkE0ugAvHfS/7l5jWZ03XTLbwUvlHAD5xYzrvzyNtbyETak02fmoMDlCT2G6bxEzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793110131;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ZpO7H9AU4vfyL8Hvvsk2x0lIjTRy2eJGqIesA8hsgPg=;
-	b=hHE3kxk+LfxJfW60ESaUGe2vO/Hep4gmPZsgobol2ae9ksosnub82fdmNeutb9QEzd0H
-	 u1k2biiCBPtlpur49jmFpr3SnmPfShjYouwVANBALJSa23zFCkjgoYhyrYSHSeq29aB3e
-	 uZbcFaFFEJH07W+Bko4Vgiaws812VoymHs9mDE3KZiX3kq4GLh4u/ITwN7RYxxZldJ7Kj
-	 Lr/if06M9PHYiPqWsBDTwzPjgMDq8p2zmYgsAftDtbKtfWr6LqrHuG/nyMkiaQb1obDpX
-	 G456lCJz2scER9PjrGeMCaPJ2gSSyUjGUsFsUOIl7aihzIOjypTl4V5erRJJUAYDr/g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793110139;
+	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
+	 In-Reply-To:References;
+	bh=pOeRrVFg/5bk+KzOQ8SoDhqjJ4b9UoNqcA84ZgR/UAM=;
+	b=GK7WFiaPdtpKNmZHrbwq3SsRMjUNoHo3DEnPIRs23aa+oLtTst4ecL+DQz0ayYyGwVoi
+	 6qYT45FSQmhCUDC6P+JBTwedE0zFtLJZvxJHEPOLAD0kIKydx87qxsXlF32zkqtEIzW/3
+	 JC1ndH52UyU6jLmeeNpqzpsmGa4gSGm5vQNCRzR5+UW185nQVxPz2GnGAw6s6z8pbHUn7
+	 IrmO/nGYzjrAPrzYdWk0r7bQZnHJ2qSWPOYTtbHE3ABUXf/3PbyhEycWa60cm7RmeYaXu
+	 /AdSzwOhPW35NWpR43PSOg9NAfLzf5bsvW576BC2vODhQQ1Fg9Ml1X73bJy9ba/o8WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jFq7VLIG;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dM0z+EmR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332CC60A260B;
-	Tue, 27 Oct 2026 14:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F85360A3808;
+	Tue, 27 Oct 2026 14:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jFq7VLIG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB3D1F031E3;
-	Tue, 27 Oct 2026 14:08:50 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dM0z+EmR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9C01F01346;
+	Tue, 27 Oct 2026 14:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793110131;
-	bh=ZpO7H9AU4vfyL8Hvvsk2x0lIjTRy2eJGqIesA8hsgPg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFq7VLIGqr/z4Rap91ja52FCKYrobSoFEs+IGeIOd6/fXzdg9+WVSU38TDbkFVjxx
-	 /Nbg8DGXn/ft6e07UC7BVD3Wp9N72K+Fe7K8+xbnkidXPdYZxKnjXtKpkgA0jerEpc
-	 SU8WyrzeIsBwaTAlcG3v8qv9C624kThb8E9rC7aA5ShAUJHqzbQUE7Tae7dyMSfmVG
-	 MDnIrnLzSWFFNVqlJ4mdE2Vr62mhGO6PVynO2e2V9DS732N5NVBz8/n4Y89dr/82o0
-	 dteamIPRvNX59Ldkpi6k22LAZkWYrIpv6nk4uonB0Ixqo5eOK0Z8S9dAyoG0UBeJy0
-	 IR4+fcnvn2lMg==
+	s=k20260515; t=1793110138;
+	bh=pOeRrVFg/5bk+KzOQ8SoDhqjJ4b9UoNqcA84ZgR/UAM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=dM0z+EmRVdV4BZ+D3nyP2OM6+jSFyl11BxMbWRxkCxLTpV4Jg7T8VrQFDs2zMLkNS
+	 nT0z7YQBTM1f+h4OMwqqSvxNqKslcqdBuIgwjcBfmGUZ+vH6bEzhaciGYe0y0u8jiB
+	 gaH6jA2YYtsN+Tz0sQRS+rKZCobqCjxyqet2wewcMHzKsUBg+KaH0pyg7h2rLQMsP4
+	 TSjd3pKafb+etnc/RXJ0gtY8dpvn20q+taZQJzogl9oztYu29g21/Tpe0PczwLhm8P
+	 O8peJq8iJfySTjrQ9flPd6a4/1EsdLJy/hTEyA47Gv8rpR8MwLUIkRPF5SRfUz2E4t
+	 VoEN8J8FYmJRA==
+Date: Tue, 27 Oct 2026 04:08:58 -1000
+Message-ID: <bfffa63097f862fb222158942b897d66@kernel.org>
 From: Tejun Heo <tj@kernel.org>
-To: sched-ext@lists.linux.dev
-Cc: David Vernet <void@manifault.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>,
-	linux-kernel@vger.kernel.org,
-	Tejun Heo <tj@kernel.org>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH 20/18] sched_ext: Fix the rescue overload pick ejecting the wrong sub under bypass
-Date: Tue, 27 Oct 2026 04:08:48 -1000
-Message-ID: <20261027140848.2280121-2-tj@kernel.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261027001749.1821379-1-tj@kernel.org>
-References: <20261027001749.1821379-1-tj@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev
+Subject: Re: [PATCH 08/18] sched_ext: Fix a cpu idling with a runnable rescuee
+In-Reply-To: <sashiko-outbox-185952@kernel.org>
+References: <20261027001749.1821379-1-tj@kernel.org> <20261027001749.1821379-9-tj@kernel.org> <sashiko-outbox-185952@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -63,56 +55,30 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-An earlier patch sends a bypassed task to rescue when its host lacks
-SCX_CAP_BASE on the cpu. The task's rescue time is charged to its owner, the
-bypassing sub, which is usually exiting. The overload pick skips exiting
-subs and ejects an unrelated sub or nobody. The host runs the task and lacks
-BASE, but carries none of the charge.
+Hello,
 
-Charge the sched running the rescuee, the host while the owner bypasses.
-SCX_EV_SUB_RESCUE already counts on that sched and the stall watchdog blames
-it.
+On Tue, Oct 27, 2026 at 12:34:25AM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Medium]
+> Can calling scx_rescue_keep() inside dispatch_one() restore prev->scx.slice
+> prematurely when the pick is subsequently retried or aborted?
+...
+> Should the slice restoration via scx_rescue_keep() be deferred to the
+> verdict == SCX_DSP_PREV && !p->scx.slice block in do_pick_task_scx(), with
+> dispatch_one() only checking whether the rescuee can be kept (for example,
+> scx_rescue_slice_remaining(rq) > 0 && !scx_bypassing(prev_sch, cpu))?
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
----
- kernel/sched/ext/sub.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+Neither case is wrong. The scheduler zeroing the slice only guarantees a
+pass through the dispatch path. That pass happened, the scheduler had
+nothing, and the rescuee got its slice back afterwards.
 
-diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
-index e0aed3ce9735..068ca57d1bb7 100644
---- a/kernel/sched/ext/sub.c
-+++ b/kernel/sched/ext/sub.c
-@@ -479,9 +479,13 @@ void scx_rescue_charge(struct rq *rq, s64 delta_exec)
- 
- 	rq->scx.rescue.budget -= delta_exec;
- 
--	/* per-cpu usage average feeds the overload victim pick */
--	pcpu = per_cpu_ptr(scx_task_sched(rq->scx.rescue.curr)->pcpu,
--			   cpu_of(rq));
-+	/*
-+	 * The per-cpu usage average feeds the overload victim pick. Charge the
-+	 * sched running the rescuee, which is the host while the rescuee's
-+	 * owner is bypassing.
-+	 */
-+	pcpu = per_cpu_ptr(scx_exec_sched(scx_task_sched(rq->scx.rescue.curr),
-+					  cpu_of(rq))->pcpu, cpu_of(rq));
- 	pcpu->rescue_avg = scx_rescue_decay_avg(pcpu) + delta_exec;
- 
- 	if (!scx_rescue_slice_remaining(rq))
-@@ -665,7 +669,8 @@ static bool scx_rescue_try_admit(struct rq *rq, struct task_struct *p)
-  * If the oldest waiter on @rq's rescue DSQ has been queued for too long, rescue
-  * demand on this cpu persistently exceeds the configured bandwidth. Eject the
-  * sub with the highest recent rescue consumption instead of letting the
-- * scheduler stall path blame the waiter's owner, who may just be crowded out.
-+ * scheduler stall path blame the sched running the waiter, which may just be
-+ * crowded out.
-  */
- static void scx_rescue_check_overload(struct rq *rq)
- {
--- 
-2.56.0
+If something puts a task on the local DSQ while the rq lock is dropped,
+whether it runs before or after the rescuee doesn't matter. A task that
+can't wait on the local DSQ should have IMMED set, and dispatch already
+schedules the IMMED reenqueue when it keeps prev. Without IMMED, there's
+no guarantee about position on the local DSQ anyway. Left as is.
 
+Thanks.
+
+--
+tejun
