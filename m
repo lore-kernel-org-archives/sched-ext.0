@@ -1,101 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.31
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.0
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793081556;
-	b=OqW0Itx329ZIqoXXU1OBqq6du3TprmmXCa8U0Khm4MfMhk4kuG7Tpd+1pM6CRAPi4281
-	 jkHLRAYvNJfaXDsp1NJHQ7XwwXiVb7hm5bVHwkt8yoWVCgcbYunTv+yPShW6PPU8BUpWy
-	 Olin4LA+unabg7MIlBxPf+226t76gFhI08Jt5blz2KRuxvlvqHk5ZtwNKhk5UPZDDfZhA
-	 YqP3WSubpxHB8XhohhLY3+IISu/VPF4R63f9boXX3Xkc+RdSqh6Fq0Rt6fqRUiw9xUPo6
-	 KaPSyflwxe0JLhV5OW1be8zPLe0DrFz3ENRmyENr1/If3Z9yw48hOmhOZiMjv1I2REQ==
+	t=1793083100;
+	b=puCRIMBA0qPQ5i9u0OAgUhFvNW+vUVCkGLizTKrBrRaPd3PGDViHGVVxvh4aaajMq0zL
+	 BcIXZfGnTH58hcUs9OSzmmKwRVPk2V7BaunP2vhs8xaMiYu8l2kd0FGkbnMJw6T6KFwKI
+	 INSeFWiFYEL2Owzj8wMZxF8Vark5uUKZIhIINOlKw7DwHspl+Tpk2lpC9f2lP2SY8LUcM
+	 HVGZlNSKo7J6KNNlQC7oOT+FpmPNDLg3HKHUY6z5KGKSmRBsQdamh6LufJVbbvHRN0R/s
+	 30q6tLPoCDnq8Tk934kmNQYVGRllpaWwmxI1z2M5WZDT1QwA0k4zfuhrxJTmxZcN6xA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793081556;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:
-	 CC:References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793083100;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=18bTafx5rbYmEZkRXuHhVkle3ipOmjLex2FtC4poVSw=;
-	b=e1Rx7u6NcsPqj3MbR0bjh9MWhoIGgrc7P/hqdOhY3QODz/KGJcKDpyiqay2yxs4L/Ifx
-	 kajJPFzj37vlcjjegaTO65JsnhsG7+nCk+jEaV0wDfCdEtMJD4adAWZRAVdHe/wdYm9/U
-	 Ij+zJeL4PeeEe5JfJVWTIepc36SykRZEfzufekmR7A2NfJ0bD25QoUGDh0vlyeSuVzQxR
-	 7LlXZaggjXd18KT6GRiicIgdC9gRfLt25UvfReltl9YGGBYdCiXjXFjQgM8eD16JE/kiw
-	 u/NoOEvNzCp+CA5FtZ+RIQk7z8QmLR/nsMjOrumnGgsBrNkDI1V0jpkEijNAFJLbvKA==
+	bh=lIzj9UagPQr+reBB8hC3wCNCIhgZ0CwHdI9L3VBUv9s=;
+	b=0qVOSOz9iM0+K//HerfBnjjIDjbQRR28b7Xm/+EjSwLw6q7Kl/dF67stJ7camI67U6qP
+	 oGe6DbyNUdMmHPaXu4MDxlbBSEFgzAkpH+EncO2UT2Grz28QDRkhN+vRYEiIELGxixGe6
+	 e9vZcxoHeDhfPnUgYuW2Tm4A2j6FULyrZo1lfHYiVtCLcHLL1k5wIIyKdVlBKOfqCNSKf
+	 P6zcgDZ72pwYMFMP8fWgN+inagWyK2ygCXi2x+I7X0KXKtdvmEiRbeI4722O0YPdEO2jm
+	 O1yNL/OKtmx5bajYIaudf7e30FA3VFmyBjL6d/THjfMW3/L1Rdwtkl3gfoHWsewix8A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=KXYcUj66;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.31
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010031.outbound.protection.outlook.com [52.101.201.31])
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VUFJ3vIF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.0
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010000.outbound.protection.outlook.com [40.93.198.0])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B106606A31B
-	for <sched-ext@lists.linux.dev>; Tue, 27 Oct 2026 06:12:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B106606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C8C606A32E
+	for <sched-ext@lists.linux.dev>; Tue, 27 Oct 2026 06:38:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 44C8C606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=KXYcUj66
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VUFJ3vIF
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=I1syounYGRu+4o4LYU7b5kw5iu8NVwc3KUoHXpI5qlfP6C0gzAukQeM+SfbIczORFTouaM3t9gb99p6anc7ZDN7bWu+tmLoycOcdIzNiP8wkxlxuu9FS+/3eMFlYf+KycHl0zrXbz1pKj6epfgq6Ie7e7EQGuWhtjn5KMPPNRxyP4ViTGROjXCbftUEJWPTwtrFSlYVdKB8Hda2iyY+YCzTHTsWj4oc6Htj4oeqU4FiK7T8e/Wa80jSUYNb6FMoW5mL8l5cRoytahFCZQqxd5Ss5JkRt4wxI+yWjunBFooopGwjBL1D1dBcA89yy1QroPT9UdFdEJwXteH0pJd/jrg==
+ b=hsF9p7pzI6E3i0mdWiQ1jIjUWQMy0ptlzzTQehP+I8y9k2NbHjyDLZPIq/sTdAeYLg6i2XB+k90XYAJ47YQUz6WDMewRitMjuypM0TN5jWIhTXOHd0R3JNooM06V5recU2/G1kQgjxpenYYoRWIZ6hUK2hGWNKropL8rMHR2vG0+T/DCmIzSse1VsS+/wGSgjieF4SGfzCUx8FgEceMLnpjANM1KTTA4cBxpwlpyXJn/YZrHyw8kH7k/m72tV0sU2NdP2JeKoxetRklUkrG9uuZTqVsM8sWPqz49GZqcK8AieuOMli8/MUjCl7B+hcVaG60hTbP7ZgPSCx5uzU0NpA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=18bTafx5rbYmEZkRXuHhVkle3ipOmjLex2FtC4poVSw=;
- b=MYq9riUo8EM6KauM8FCOmgf35tkp+QZXEXJ0hr35vHntZYujkgq20o3ALODX3T8o+dC5/2x1jjPJOXAsojYWyQLut3sAiFXPbag12Sq0AMFufW+licRA+Yg32gECK0GEWzjImiETUpwxMWEwZtnjNXQvwDHyv/BZy+AUudsBuNb+tV0fqwf8f52cX+myWfnKc16X2TmCT/ldHKbM2rn+SGHyvfMTY0AY8Ehw4iPWHGHsJ/SVEB4RDjockXNmhpjyvn0IfYjmqbJOrhYVB70+x23xBSIaArPKoxmfrbIr0L7IY01xfKZ07XrYMLU1Kdl9EAYS+95qzToTfYhxYq3grQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nvidia.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ bh=lIzj9UagPQr+reBB8hC3wCNCIhgZ0CwHdI9L3VBUv9s=;
+ b=PY4o6L7RaZchvq66hF9XJVIlKtYzi0vjYZYeJIb6vQLZ9rEhjXWY/Y1ozkqTwy9TDJaUF/q88JUNSU+tr8aqkUF2lMgEQ6AiI7F3fyVBNZln8EGmgVNzFdO9pvQXhzuPxWIO6saVXOZ80JVCSkkMEk52cD6qz3K5k0qSfJAehWyfkTJwsDiBl/72vquJem8FAPwLTyv2WInAZ51ZAGgT54A1n7ve2wUJGoEoN7Fh5i3XZdEdOw0yRKIxvZNCCT2FnvaH9oVVzKlTxyjuxDn1uV0h3OwkjKl8aLDTqXMk7B3pWoTa9wJ6/w8tuSGedQNMs2Ml4e3t5XAnDwQYooRn+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=18bTafx5rbYmEZkRXuHhVkle3ipOmjLex2FtC4poVSw=;
- b=KXYcUj66N7iXP8JS5weu060jpw2S8Sg+oVT36ZLClgCFkBeXCh1gB9WH3kaZD/U9GyAPUrJu+kwM4JlmzK4vlPlasIHlinQlt/TDHXXWWOosc9SKAdpDuQ939A/dlt4LukKrXv1nNG7FTEX1M1aFJ1Hb8fBrMdNO+BrRHvmkai4=
-Received: from SJ0PR03CA0068.namprd03.prod.outlook.com (2603:10b6:a03:331::13)
- by DM6PR12MB4417.namprd12.prod.outlook.com (2603:10b6:5:2a4::12) with
+ bh=lIzj9UagPQr+reBB8hC3wCNCIhgZ0CwHdI9L3VBUv9s=;
+ b=VUFJ3vIFYIdvnxGviXSSONDzq9r99WBwfc3WQ4cmClPV5w9wDLjdIShM8SDVnsNxm1uS5zAt6HWPvSN7Axxh263q3JheyLFQXx1F1+A3yWmhyCcgWN5yWHaFp4rjZLQ7o1cfyGtEapm5mmZOaxUkyrhY7vHiEIOHmsohYLIpKlEMzyrYSuEjfHwPtaf92tdjHSYSMLNrA++gZNbJ869ER+IwzNS6vKzGMLYX0pplaLziNgmCzgHzI61HoN9tV7jId69FYUCbjU6xHgPyK58bGmvNTyrjtndFkRlkiZaRaVCnlIeShnOqBMw4zDpsAnbSYEiUUtasMR0V/WmXHzRJrA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
+ by CH3PR12MB9282.namprd12.prod.outlook.com (2603:10b6:610:1cb::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 06:12:31 +0000
-Received: from SJ1PEPF0000231D.namprd03.prod.outlook.com
- (2603:10b6:a03:331:cafe::a4) by SJ0PR03CA0068.outlook.office365.com
- (2603:10b6:a03:331::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Tue,
- 27 Oct 2026 06:12:30 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- SJ1PEPF0000231D.mail.protection.outlook.com (10.167.242.234) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.569.4 via Frontend Transport; Tue, 27 Oct 2026 06:12:30 +0000
-Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Tue, 27 Oct
- 2026 01:12:29 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
- (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Tue, 27 Oct
- 2026 01:12:29 -0500
-Received: from [10.136.43.232] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
- Transport; Tue, 27 Oct 2026 01:12:23 -0500
-Message-ID: <cf3e5585-128e-4ee3-9352-afbddbfd50c1@amd.com>
-Date: Tue, 27 Oct 2026 11:42:22 +0530
+ 2026 06:34:32 +0000
+Received: from BL1PR12MB5174.namprd12.prod.outlook.com
+ ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
+ ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 06:34:32 +0000
+Date: Tue, 27 Oct 2026 07:34:21 +0100
+From: Andrea Righi <arighi@nvidia.com>
+To: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>,
+	Changwoo Min <changwoo@igalia.com>, Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>, Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Vladimir Vdovin <deliran@verdict.gg>,
+	Gregory Price <gourry@gourry.net>, David Dai <david.dai@linux.dev>,
+	Emil Tsalapatis <etsal@meta.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Balbir Singh <balbirs@nvidia.com>, Lee Trager <ltrager@nvidia.com>,
+	sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/6] sched/numa: Notify the scheduling class of preferred
+ node changes
+Message-ID: <auBF7UTiwNblg6Uc@gpd4>
+References: <20261027041536.3317971-1-arighi@nvidia.com>
+ <20261027041536.3317971-4-arighi@nvidia.com>
+ <26d4c1d1-19dd-415e-beb4-05b7f34fecb3@amd.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26d4c1d1-19dd-415e-beb4-05b7f34fecb3@amd.com>
+X-ClientProxiedBy: FR2P281CA0151.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:98::14) To BL1PR12MB5174.namprd12.prod.outlook.com
+ (2603:10b6:208:31c::19)
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -105,101 +111,115 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] sched_ext: Add a kfunc to read a task's preferred
- NUMA node
-To: Andrea Righi <arighi@nvidia.com>, Tejun Heo <tj@kernel.org>, David Vernet
-	<void@manifault.com>, Changwoo Min <changwoo@igalia.com>
-CC: Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>, Vincent Guittot
-	<vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, "Mel
- Gorman" <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>,
-	"Vladimir Vdovin" <deliran@verdict.gg>, Gregory Price <gourry@gourry.net>,
-	David Dai <david.dai@linux.dev>, Emil Tsalapatis <etsal@meta.com>, Christian
- Loehle <christian.loehle@arm.com>, Balbir Singh <balbirs@nvidia.com>, Lee
- Trager <ltrager@nvidia.com>, <sched-ext@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>
-References: <20261027041536.3317971-1-arighi@nvidia.com>
- <20261027041536.3317971-6-arighi@nvidia.com>
-Content-Language: en-US
-From: K Prateek Nayak <kprateek.nayak@amd.com>
-In-Reply-To: <20261027041536.3317971-6-arighi@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF0000231D:EE_|DM6PR12MB4417:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1237160e-fe77-4f19-d06b-08df33f1487a
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|CH3PR12MB9282:EE_
+X-MS-Office365-Filtering-Correlation-Id: 74435d22-121f-45c0-f484-08df33f45c3d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|82310400026|36860700016|23010399003|1800799024|261026121527099003|4143699003|5023799004|11063799006|56012099006|261021121427099003|261022075727099003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|7416014|6133799003|18002099003|261026121527099003|22082099003|10067099003|5023799004|56012099006|11063799006|4143699003|261021121427099003|261022105027099003|261026140227099003;
 X-Microsoft-Antispam-Message-Info:
-	jyG4o8rgwMwbjXTnMwiP+nxAka/bvJ7M2eDAkQg+GRbHEAiLmJz1aUTp6xOIGqAEPsxwpzmzV9a8vMtUxD8sKDCvnEb1gNm/+bVNPk4WaFhAVLb7tdzSlnplSjLAZfGxlPgYQ5+YLSh3IZkOdcuKSNhgxkpS6J3Z/Ws3YjdIYJeQeIR8GWesaTPC+DO3RYXQEsHpQUfY106riz0hLXqMhhMACohEmPwdVABd9d4yU5dM08HHocjZzG3qCYdJvOVI4pp68UBHPVRhLs9JZ4hh5y4dZpWV5qT4okY4/DK1iGThEKdP3qm6aawL+4SkRTMHxRtW+9fIr4OYR3Fzgodc9oRSZPHQP5IV6thw+RxX/+h9RM9gaMkH18xzz8rq6pMhgPg9niBAVC2rNtLgqZs/jiVBAVTUX0BWbtVCQ7FMEXRuoOAiUyssMiOn78DaQhYfwUHpPIgz/BHwk7NAL9u6f5hLyjkOGcN+qUP5AhuNseW9rPgqeDRDkU/84EBy/BqU+v789kGWy6Jkd9BB5OQG9Xe/JWZEZMuf/sS8gystCQQo5IjjEVDTc4D25le4Po8/LeMFlfTYxZwQMNRtyPljgA7idSNI2VPXW6Uu7wbzgxQE0vhWCl8cI3ml3YeC3AdEdw1KaSPR3xSaD89IGhLMbW62xlWaAxhldPOBlaV0OSJ3MAufoHlU573u3kPiMx4v
+	xnKTd2sj/BVq6SgUK1JuSGFy9fuAjtltZn7SGKQnCm17JhYhveExdRgm+BcHu711aOvsnF7cW6Y2NM1U+fbQPGMGuiLDfWCct84ZwD+nOw09G1jrE4mGAXEyIwcbciqBnHLEa4btO2vPEFSq14TUiRenQVYp1KplRlIsGa923IJW7uAGnpTZ0jdrE32ctpLvvfXRA1e9DCbMTs5EsUYoIWLFdWqfRev6xpLsaLbaS7mpKjkdms1fucvW7TzrKSS6+Y2rnBOO7bAmCz8hTINLdmBG7FfWLkyZWfnFf4hpv4Ok0a7CeHjo8CvgwwIKZ5un2jxLcC7KMGugtmAEntp/NFMDmVX69qFXufqTY9aYQ3r/nfiBFBi1cocf5LB2Hit2XwWjXsD8JFzAAnsMYY6PKW0MVM9mb493qqh/4KtEjDry4ZLdagahRigOzbo/GhyelkcForZ69+h0RIdB3hsA3C4rMx+0GDaU67JqpFShnrkQw8SqI3rGYfuShZb5i3rtcLIUGrH6Vll0uUPZyEgcqWUm4j2fHtOlMdA4dTaU/TnFZM+x5C7cB/DQy98rjbH8Qvv9vuw5XL8e49mBFLpYZJnn3283AS+K/7H+jhJdUbchE0Mtg7WjfhMAl8sM1HvFFqqxW/NV5xNgKWka2mgh+rWoTSUhtoulvGmfVFWuB2c=
 X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(36860700016)(23010399003)(1800799024)(261026121527099003)(4143699003)(5023799004)(11063799006)(56012099006)(261021121427099003)(261022075727099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(7416014)(6133799003)(18002099003)(261026121527099003)(22082099003)(10067099003)(5023799004)(56012099006)(11063799006)(4143699003)(261021121427099003)(261022105027099003)(261026140227099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	Da7DhH7onSfjvLvidxNzCYNtrEJpTyFjC4TZeJ8Xm+mdmMGP/tyubhHkm9raShc6aLBO03sxrStQP1p+jNitX6VFFWuJBRrieJFUz1EalXdp4ERl7zLAalA2XCFpqfVOPQNJnXJQSVG4IiLexYMXuFHL0VGxC/S7qJg6V5DS9TIO4rxPKy7gdxQ2LcNzNgOCVrAGdY8sGW9ItnRouT0VjRn4E1EBzpLIk8zmGHwWi6t4yGyD9PhOPOoLnddiNkQpg3Rn4MMp87v7KdpMFKHu59xxWeRUcgOjZcAPXiHryu2tjE0JKiEtDP9IPX1svOe/YLQE50BsSgd7F6/bv7DlS9BdNZdHEuOeoXjj/lMxJ6/KgzsUGTMHcQj+zLjUrJM9jakkhr9Rip3X70WV6TgqwBWlz08E8oynPqszd/vfI4AMCSK9KCi0dICU9ZS4rWaO
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 06:12:30.4788
+	=?us-ascii?Q?j46lBtY4O/G3ktVhvdQhf93CrEhztsryCM5MSZpommUjwGM1LbWMAOQqBOtV?=
+ =?us-ascii?Q?M8wn7ml0KFyrNG0f0P/mQZAhEgD0AFomoPniVaeAe9ZlRIK2HvuEWDQiu585?=
+ =?us-ascii?Q?S0Vfb3VsT5bS1dc5KPHj7kBcIU6nkIxkZrGYG1TJJ68tLEHOsF0QWbctRn7t?=
+ =?us-ascii?Q?uDlZBbHDFu2Q1dmswjrnX6vp+OdTrdhoCKay4LiojK8GUPTqxcTt10RO2VqA?=
+ =?us-ascii?Q?GXrxUM+PEr1tSQsZTOfgge2FGQPLKKEnzMiWGL7xFHd2rr8QWn1rMuZ3Cuqk?=
+ =?us-ascii?Q?RyHUljKNbiXw1CkQvvMkfnLnEiVtwst2BykK0S7/K/qlNh22QE4KH4wzUiFP?=
+ =?us-ascii?Q?94jb/5vl8xaf2JVfc+Qu2MK6Ruu/lRmTdZQkgErZALXTe3wYZwiQtKYlIn3r?=
+ =?us-ascii?Q?zQvgnGxbf7Xo1Dpo8FvJLt6Htjmuz0w8zbl7DbCftp4LQFuW5lNshz7poSd3?=
+ =?us-ascii?Q?1GEa1W5uz6R1XBRIrgYrSfBP2vv6r7wjnD4OMO5TLtj6tf866JT5TXboDD4J?=
+ =?us-ascii?Q?YTvHtAvQTFwlNFq3NcoDnQOSPL3CG/hAvoV5Xumkr/a++sJ0VBLV5prELs0Y?=
+ =?us-ascii?Q?hi6+pu0sJs8FcGU6vxOSB8mDA8n/R/uH9UxVE+gHVZxGQ68v1O7akBOYxrdK?=
+ =?us-ascii?Q?HASjgHJZBPQsLECJD+YteP59b0/HMIoKvz+yNdxUZ2pS/5Nh0EZZ/s2V+3oU?=
+ =?us-ascii?Q?pvtimB5oxPBP9f0I7qjMI6Si4tMBWsbvYe34gzMGlqGM24fN5UEt6oy4ZptK?=
+ =?us-ascii?Q?B0dSNC84WOvACaCdSYJc2NJYk7IjrmlMJvzaqdKmLBIzzvJFSI2VKQriDrlL?=
+ =?us-ascii?Q?DW8LOQRyPHjDU32TDP5dOyRv5N3aNKneow591rmDoOM+GNjEVzccgM2SsTfz?=
+ =?us-ascii?Q?Ma2XW4/s5mZ7LOBza1NXVF0oNum77pW2P89/hgQC5g84Ml200E8GhnzbWLdg?=
+ =?us-ascii?Q?Y4XMYED6KnxFIHwMnMsMHpojS7sT9zxc1vSTEAiFDEXRanqTmAHxmMdu3J/X?=
+ =?us-ascii?Q?AQiXtzs30VLRjkZ226KLBPaopW4SwmemLki9nO7zrcwFNwsa/v4piclNED1A?=
+ =?us-ascii?Q?ZnKubVfDbHwwwR7gZeJXxEh86dzOZTyUkMchFqse1dNAMkVuXyug6k8BbsKC?=
+ =?us-ascii?Q?anh9PHnnuJCojUYNJubkpysvRko8V/7PhlE+Enuet0hamTyQnKsiMhcEmQPE?=
+ =?us-ascii?Q?JKWaKXcScBZI+w7gU1TuIucvOKzeKg009IAgFkMHcqtAVRBPe+Q/+lj7tsO5?=
+ =?us-ascii?Q?HfuWc2zQ2sdxQVMX/VklxM4i393N1vrgvYmj6LbPnhfe3UUd8oyVXUFVjvZu?=
+ =?us-ascii?Q?8YoOM1r0dBVJjExue/KBBdJwqILPoLAfbVYT8AM19/eddKu2NQCwenOvsKsO?=
+ =?us-ascii?Q?v3flF8siizTakCakg2NwBbr1W9AoKpeNk0ExXh+RHBeKaovK7ZikOUVEl5Ja?=
+ =?us-ascii?Q?LIPllDWiK/rAqshjc230ifMbvGVPueHDWOs6BXG6B5GZBjsOR1gNIG4TbUEU?=
+ =?us-ascii?Q?z7A5/PSCUd6gPdU53Ih9FvhAjAx4gTgzyvpQ7nKLFaonNjSbVcjIx1PNQ7I/?=
+ =?us-ascii?Q?godqCIo92JfrotPT7OTOioBhJEezHSu74NGGdCrVU8IrUWX1yb2nOp8wK4pS?=
+ =?us-ascii?Q?kbJMVMZYl7D6WW4Ta6B308GF7DdyF7xWqrs8pE0uYRhA4wCqSRSw6K8m93Vt?=
+ =?us-ascii?Q?Pa/J0A//A/WxvlIRGyHzWCxAHZUIzIXW4IfUNmbXq6zgGmVlLuccp8xdvuGu?=
+ =?us-ascii?Q?9ONnWQxc1Q=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74435d22-121f-45c0-f484-08df33f45c3d
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 06:34:32.4464
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1237160e-fe77-4f19-d06b-08df33f1487a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF0000231D.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4417
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aX/2pEuINihVthJZERpMO2LhXIZITlgweg4H2diGtX69tCQeKzHZNv5k7C7D7QbPzS+s1WhbHn+QoEt6FR9O1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9282
 
-Hello Andrea,
+Hi Prateek,
 
-On 10/27/2026 9:43 AM, Andrea Righi wrote:
-> +__bpf_kfunc s32 scx_bpf_task_numa_nid(const struct task_struct *p)
-> +{
-> +#ifdef CONFIG_NUMA_BALANCING
-> +	if (task_on_scx(p)) {
-> +		struct scx_sched *sch;
-> +
-> +		guard(rcu)();
-> +		sch = scx_task_sched_rcu(p);
-> +		if (!sch || !SCX_HAS_OP(sch, set_numa_node))
-> +			return NUMA_NO_NODE;
-> +	}
-> +
-> +	return READ_ONCE(p->numa_preferred_nid);
+On Tue, Oct 27, 2026 at 11:00:17AM +0530, K Prateek Nayak wrote:
+> Hello Andrea,
+> 
+> On 10/27/2026 9:43 AM, Andrea Righi wrote:
+> > --- a/kernel/sched/core.c
+> > +++ b/kernel/sched/core.c
+> > @@ -8331,8 +8331,13 @@ int migrate_task_to(struct task_struct *p, int target_cpu)
+> >  void sched_setnuma(struct task_struct *p, int nid)
+> >  {
+> >  	guard(task_rq_lock)(p);
+> > -	scoped_guard (sched_change, p, DEQUEUE_SAVE)
+> > +	scoped_guard (sched_change, p, DEQUEUE_SAVE) {
+> > +		bool changed = p->numa_preferred_nid != nid;
+> 
+> Don't the callers of sched_setnuma() already check for this?
+> 
+> Only one that doesn't is task_numa_migrate() but
+> numa_migrate_preferred() only calls it when
+> "task_node(p) == p->numa_preferred_nid" is false and "!sd "case resets
+> "p->numa_preferred_nid" to "task_node(p)" when the task cannot be
+> migrated.
+> 
+> Afaict, "changed" is always true here. Is there a scenario that I might
+> be missing?
 
-Would the ext scheduler need the raw numa_preferred_nid when
-sched_numa_balancing is disabled?
+With the current callers it's always true for the tasks that can reach
+the callback.
 
-It may just be pointing to some stale value if NUMA balancing
-was disabled at runtime right?
+ added the check just because ->numa_node_changed() is a generic
+sched_class callback and its contract is that it's invoked only when the
+preferred node actually changes. Checking it in sched_setnuma(), under
+the rq lock we're already holding, makes sure that the contract is
+honored independently of what the callers of sched_setnuma() are doing,
+now and in the future, instead of relying on each of them to check it.
 
-> +#else
-> +	return NUMA_NO_NODE;
-> +#endif
-> +}
-> +
->  /**
->   * scx_bpf_locked_rq - Return the rq currently locked by SCX
->   * @aux: implicit BPF argument to access bpf_prog_aux hidden from BPF progs
-> @@ -11836,6 +11877,7 @@ BTF_ID_FLAGS(func, scx_bpf_put_cpumask, KF_RELEASE)
->  BTF_ID_FLAGS(func, scx_bpf_task_running, KF_RCU)
+That said, I don't have a strong opinion on that, if we prefer to keep
+sched_setnuma() minimal, I can drop the check and document that the
+callers must only invoke it on a change.
 
-On a tangential note, scx_bpf_task_running() just does a
-rcu_access_pointer() (resolves to a READ_ONCE()) and doesn't take a
-rcu_read_lock() so does it really need KF_RCU?
+Thanks,
+-Andrea
 
->  BTF_ID_FLAGS(func, scx_bpf_task_cpu, KF_RCU)
->  BTF_ID_FLAGS(func, scx_bpf_task_cid, KF_RCU)
-> +BTF_ID_FLAGS(func, scx_bpf_task_numa_nid, KF_RCU)
->  BTF_ID_FLAGS(func, scx_bpf_locked_rq, KF_IMPLICIT_ARGS | KF_RET_NULL)
->  BTF_ID_FLAGS(func, scx_bpf_cpu_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
->  BTF_ID_FLAGS(func, scx_bpf_cid_curr, KF_IMPLICIT_ARGS | KF_RET_NULL | KF_RCU_PROTECTED)
-
--- 
-Thanks and Regards,
-Prateek
-
+> 
+> > +
+> >  		p->numa_preferred_nid = nid;
+> > +		if (changed && p->sched_class->numa_node_changed)
+> > +			p->sched_class->numa_node_changed(task_rq(p), p, nid);
+> > +	}
+> >  }
+> >  #endif /* CONFIG_NUMA_BALANCING */
+> 
+> -- 
+> Thanks and Regards,
+> Prateek
+> 
