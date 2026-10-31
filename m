@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793407645;
-	b=Bdgo965zdNXyJCb7XjjKL/tRngZUCZg1jFrR0K/A4c/PH3d3kRXVbaDbZfQCa291aSgg
-	 r+VKolfDXvVhpotUA5i/Cz1ie+pf9a8/KC7rpIc7KL+eCzCVkl1Yd8KpGEOQQV/COSSrB
-	 1g7YPBFRruZplktDOtCyEDFe55u/b0rb7o5xE7Okh7D5WH4AosMKv2uvO4EJbrbJHMDPT
-	 6M8sBpzR6Bfgu6MYqwiqeB5S2FT0Fdu3nnE/zzJxZSnTtg7KgoHCLLdjKNkMKIYZnGHyC
-	 YCi8o6bUgn/m9mgKoPTFEegHoW9w1a24Y/rdfCa0F6TshbWMgSL6Flwz7MGBzrsNG4w==
+	t=1793411656;
+	b=ibMxH+FiBln+N9XNl+kon8q+P1XeA70m0c3TBY4YBerVRSU4TQ7ycWnf96kZL8G1lUjQ
+	 Wt6kugDXgM7DDATe/1uoFhlb4/pZDNW8JUf47eH7rVEmvf2bGURvT83M7bF2n8J5zQjPa
+	 m/hhXgg2/LVy/X/p7QCe6NUGemQjDiDJNSZ1Ay4UU8KJumXTc2BDowu8uyEhiB8cy8xsr
+	 tSM6QhCN2X+DoaOuHv24g72phgA4BH/uRleto8YNw4oTN23clkliDIRaaPhL8dEIa1/w0
+	 1K6VJtyFW/aDr9mhX/GKLwzhrIqYAKIJHaGwGweJ4QXqMBBjMB9pLdHplaVjpqNtbOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793407645;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=gICekddm+mAtn+ovZE3h1rRofC0U8eOQNuHmng1tQgk=;
-	b=NHyF3G/3IM4UhxIvQgABHIrn0o1UrbdaIY2DoB8ZQyQKe1w+gRVuwuogPWbNzSQ+9Qok
-	 7QpElFoccHNlwOxL/Po8lJaMhW3sHikKJiUH5N53dieV/I+SqEr/esroIs+2Bx5KpYgIo
-	 v/uI2NPOSBXvPatwWod3OLHVAGEiA15ZuMOD6Yizu2jeX6HTAQFbmGBaoxPrKSMwL1X2Q
-	 zHBQ0/Tjfawdy/eLKrTsxj5YuWpIlHhDT9LKJ+lknLgybzXO6gqsHS+a7KsSrQaCHt/Kb
-	 5ifWjf/o3mPKz65aLmFXMupMat3F4Z6TM4f3kSbPnRMgSzPinv9iEln6aDPDuDF42AQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793411656;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=E3ZW0Tbm6V7Os5JFX6g9Y3xjSF17p3NQDYhK9LmMYSw=;
+	b=WPNBiySO1myrkEYV6h59d2jHwxd3RnL24NtgOtrUj2NvFciCctvoNpRjtr64AuV9voBd
+	 694fQQFe0JQ9ZUaU2rT462XgHnxMDxj8PST8xdLCbJQDaxbivzpa7ZUb5/gdB/elbl4W2
+	 0SvyvKcYealXrWPw8rwEv9QvQUhiC6BTmAM0nkNJoy00MZ5o7zk2YE7mu3mPVaar673+E
+	 WQsU5nfOOnnCbx+FGehqhjeTMlWr/3YVmvSksCAbWCdJZ1o/m7GXPzLwdw5DCyjyk+CyA
+	 OsFONxnuvFBhADpeoJWWpObY9oxT2e/TsAdMbi9OhHZKijfBSbdCljOI0n8bAa4Rw6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HbHkAiSS;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fk6cd7F5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DA1606A31A;
-	Sat, 31 Oct 2026 00:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156F7606A31E;
+	Sat, 31 Oct 2026 01:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HbHkAiSS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3351F000C1;
-	Sat, 31 Oct 2026 00:47:24 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fk6cd7F5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C80A1F000C1;
+	Sat, 31 Oct 2026 01:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793407644;
-	bh=gICekddm+mAtn+ovZE3h1rRofC0U8eOQNuHmng1tQgk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=HbHkAiSSwMzvNBXoYFivoCfMEWS0OqcwdsYj3mTbqghgp7vwwIybQSTG5YfoReW3K
-	 w+FcP02Y2K335A8q58tNkj/i8qft/eQ8PGcDwApJ23xOldMxd1vdjzeqqJzR878f6W
-	 cQI6qwubl2KjTHsOwV7XGzWICnPOMrjHpVIosUDCjnGgFzQ/OmBNkoLPuI2LhI4/uU
-	 7n6sFQbFYNKOtLn5hLoNQ7hxaPVuApck7jhn4ooisjKtk86Q4JQnQlePUku/DSG1QL
-	 Q9XuRhw98XpYPbSOKkS5Rg4/ulYscecaWNi4lI7qHu9+Pi/QE8rxtvJK+nybxEcTN2
-	 8T4l48YXvonaw==
-Date: Fri, 30 Oct 2026 14:47:23 -1000
-Message-ID: <1a24bcdde0bb6e4a8c839351002e841d@kernel.org>
+	s=k20260515; t=1793411655;
+	bh=E3ZW0Tbm6V7Os5JFX6g9Y3xjSF17p3NQDYhK9LmMYSw=;
+	h=From:To:Cc:Subject:Date;
+	b=fk6cd7F5OsXROGuZQ6OUfOe0JTuZy1OY6IuN+SeePu11JVrOF1zuLPraib2ECDmy9
+	 V3YqA0CZzKXt9/6ux2SBojC/kQfg7Muvgagm1x3S1B2vf+daiFB6TaToq3NO9uK8Vu
+	 7ksZiPxmEzWm8Tdrb88jIVppt+yq4KIcpgUKUgb99oUESjbZZClU5ZYL9H+0PQ00Lf
+	 MrU/YWxOcp4rw0Fr2/yWgUC9SXTCQl81o1F3V5MFfmYi1yGFggti92cL+TVmU3bEh9
+	 x3/eXcz5vvUM9TFAcV5UDGY8KqszcnmG2crudsfd5+kVHkhYfwMEEyAGOPGc6uA0Xq
+	 hPdoWTbDmTrRA==
 From: Tejun Heo <tj@kernel.org>
-To: Juri Lelli <juri.lelli@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Vincent Guittot <vincent.guittot@linaro.org>, Dietmar Eggemann <dietmar.eggemann@arm.com>, Valentin Schneider <vschneid@redhat.com>, K Prateek Nayak <kprateek.nayak@amd.com>, Luca Abeni <luca.abeni@santannapisa.it>, Andrea Righi <arighi@nvidia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: sched/deadline: total_bw leak when a task leaves SCHED_DEADLINE while not queued
-In-Reply-To: <auRh42kZI1xLIWNr@jlelli-thinkpadt14gen4.remote.csb>
-References: <2b5fb3f22bca6aa383be8f4781923392@kernel.org> <auRh42kZI1xLIWNr@jlelli-thinkpadt14gen4.remote.csb>
+To: sched-ext@lists.linux.dev
+Cc: David Vernet <void@manifault.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Changwoo Min <changwoo@igalia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	David Dai <david.dai@linux.dev>,
+	linux-kernel@vger.kernel.org,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH v3 sched_ext/for-7.4-fixes] sched_ext: Fix stale pick when a wakeup resets the donor during dispatch
+Date: Fri, 30 Oct 2026 15:54:14 -1000
+Message-ID: <20261031015414.219280-1-tj@kernel.org>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -57,43 +61,167 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello, Juri.
+With proxy execution, do_pick_task_scx() passes rq->donor to dispatch_one()
+as @prev. Unlike rq->curr, the donor can be moved to another CPU by a wakeup
+while dispatch_one() has the rq lock dropped:
 
-On Fri, Oct 30, 2026 at 10:22:43AM +0100, Juri Lelli wrote:
-> Does the below help?
+1. dispatch_one() drops the rq lock, e.g. to move a task from another CPU.
+2. Another CPU wakes the donor, which proxy execution migrated to this CPU.
+   proxy_needs_return() dequeues it and resets the donor to rq->curr, and
+   the wakeup enqueues it, possibly on another CPU.
+3. dispatch_one() sees @prev queued and returns SCX_DSP_PREV.
+4. do_pick_task_scx() returns @prev, and this CPU runs a task that is queued
+   on another rq.
 
-Yes, it fixes the leak. On abf8c33470f7 with the patch, the reproducer leaks
-0 in all three cases, and 60s of random policy churn ends with total_bw back
-at its starting value. Two problems though.
+sched_proxy_block_task() resets the donor the same way when another CPU sets
+@prev's policy to SCHED_EXT or moves it to another BPF scheduler, and blocks
+@prev instead.
 
-sched_setattr(SCHED_OTHER) with SCHED_FLAG_KEEP_PARAMS on a sleeping
-DEADLINE task leaves it DEADLINE, but each call releases its bandwidth, and
-its exit releases it again. total_bw relative to before the task became
-DEADLINE, with a 2ms/10ms task (0.2 CPU = 209715):
+Whatever dispatch concluded, and whatever it does with @prev after the drop,
+is about a task this CPU no longer owns. rq_modified_above() catches the
+reset only when rq->curr is in a class above ext, and the dl_server pick
+skips the check.
 
-  after the DEADLINE set        +209715
-  after the 1st KEEP_PARAMS call      0
-  after the 2nd                 -209715
-  after the 3rd                 -419430
-  after the task exits          -629145
+Restart the pick when @prev is no longer the donor, as dispatch_core_pick()
+already does after a lock drop. dispatch_one() tests after each step that
+can drop the lock, and scx_dispatch_sched() decides per ops.dispatch() call
+whether to hand @prev over, which also covers a class or scheduler change
+across a drop. The donor only ever changes to rq->curr during a pick, so the
+retried pick can't go stale again.
 
-After that, sched_setattr(SCHED_DEADLINE) for a new 2ms/10ms task fails with
--EBUSY while a 3ms/10ms one is admitted, and offlining a CPU fails with
--EBUSY.
+7a3a6bfbd62a ("sched: Rework prev_balance() to avoid stale prev references")
+closed the same window in prev_balance() by reading rq->donor instead of
+taking @prev. That doesn't work here, as the dispatch never evaluated
+rq->curr, which may not even be a sched_ext task.
 
-Switching a sleeping DEADLINE task to SCHED_OTHER after its CPU was offlined
-crashes in the __dl_sub() the patch adds, dividing by
-dl_bw_cpus(task_cpu(p)), which is 0 for that root domain:
+Verified with a synthetic reproducer.
 
-  Oops: divide error: 0000 [#1] SMP NOPTI
-  RIP: 0010:switched_from_dl+0x13a/0x3e0
+v2: Also cover rq lock drops inside dispatch (sashiko).
 
-Unpatched mainline only leaks in this case.
+v3: Don't keep a stale @prev after ops.dispatch() (sashiko).
 
-Thanks.
+Fixes: c6fe97c34a1a ("sched: Allow enabling proxy exec with sched_ext")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+---
+ kernel/sched/ext/ext.c     | 20 +++++++++++++++++++-
+ kernel/sched/ext/inlines.h | 33 +++++++++++++++++++++++++++++----
+ 2 files changed, 48 insertions(+), 5 deletions(-)
 
---
-tejun
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index cd923f9f1f2a..43cf98c1d511 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3407,6 +3407,12 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
+ 		rq->scx.cpu_released = false;
+ 	}
+ 
++	/* the ecaps sync may have dropped the rq lock */
++	if (scx_dsp_prev_stale(rq, prev)) {
++		verdict = SCX_DSP_RETRY;
++		goto out;
++	}
++
+ 	if (prev->sched_class == &ext_sched_class) {
+ 		update_curr_scx(rq);
+ 
+@@ -3449,8 +3455,19 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
+ 	}
+ 
+ 	verdict = scx_dispatch_sched(root_sch, rq, prev, false);
+-	if (verdict != SCX_DSP_NONE)
++
++	/* scx_dispatch_sched() may have dropped the rq lock */
++	if (scx_dsp_prev_stale(rq, prev))
++		verdict = SCX_DSP_RETRY;
++
++	switch (verdict) {
++	case SCX_DSP_RETRY:
++		goto out;
++	case SCX_DSP_NONE:
++		break;
++	default:
+ 		goto has_tasks;
++	}
+ 
+ 	/*
+ 	 * Didn't find another task to run. Keep running @prev unless its own
+@@ -3517,6 +3534,7 @@ static enum scx_dsp_verdict dispatch_one(struct rq *rq, struct task_struct *prev
+ 		     rq->scx.nr_immed))
+ 		scx_schedule_reenq_local(rq, 0);
+ 
++out:
+ 	rq->scx.flags &= ~SCX_RQ_IN_DISPATCH;
+ 	return verdict;
+ }
+diff --git a/kernel/sched/ext/inlines.h b/kernel/sched/ext/inlines.h
+index 1e39d12678c4..87b8193785d3 100644
+--- a/kernel/sched/ext/inlines.h
++++ b/kernel/sched/ext/inlines.h
+@@ -18,9 +18,28 @@ enum scx_dsp_verdict {
+ 	SCX_DSP_NONE,		/* nothing to run */
+ 	SCX_DSP_LOCAL,		/* local DSQ has tasks */
+ 	SCX_DSP_PREV,		/* keep running @prev */
+-	SCX_DSP_RETRY,		/* pick helpers only: restart the pick */
++	SCX_DSP_RETRY,		/* restart the pick */
+ };
+ 
++/**
++ * scx_dsp_prev_stale - Test whether dispatch's @prev went stale
++ * @rq: rq being dispatched for
++ * @prev: @rq's donor when dispatch started
++ *
++ * With proxy execution, @prev is the donor and may not be the running task.
++ * Another CPU can reset the donor to rq->curr while dispatch has the rq lock
++ * dropped. Dispatch restarts the pick when that happened and doesn't hand the
++ * old donor to the BPF scheduler.
++ *
++ * During a pick, the donor only ever changes to rq->curr. Only __schedule() on
++ * this CPU sets a different donor, after the pick, so the restarted pick takes
++ * rq->curr as @prev and can't go stale again.
++ */
++static inline bool scx_dsp_prev_stale(struct rq *rq, struct task_struct *prev)
++{
++	return sched_proxy_exec() && unlikely(prev != rq->donor);
++}
++
+ /*
+  * One user of this function is scx_bpf_sub_dispatch() which can be called
+  * recursively as sub-sched dispatches nest. Always inline to reduce stack usage
+@@ -33,8 +52,7 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 	struct scx_dsp_ctx *dspc = &this_cpu_ptr(sch->pcpu)->dsp_ctx;
+ 	int nr_loops = SCX_DSP_MAX_LOOPS;
+ 	s32 cpu = cpu_of(rq);
+-	bool prev_on_sch = (prev->sched_class == &ext_sched_class) &&
+-		scx_task_on_sched(sch, prev);
++	bool prev_on_sch;
+ 
+ 	if (scx_consume_global_dsq(sch, rq))
+ 		return SCX_DSP_LOCAL;
+@@ -106,6 +124,11 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 			rq->scx.sub_dispatch_prev = prev;
+ #endif
+ 
++		/* the dispatch so far may have dropped the rq lock */
++		prev_on_sch = !scx_dsp_prev_stale(rq, prev) &&
++			      prev->sched_class == &ext_sched_class &&
++			      scx_task_on_sched(sch, prev);
++
+ 		SCX_CALL_OP(sch, dispatch, rq, scx_cpu_arg(cpu),
+ 			    prev_on_sch ? prev : NULL);
+ 
+@@ -116,7 +139,9 @@ scx_dispatch_sched(struct scx_sched *sch, struct rq *rq,
+ 
+ 		scx_flush_dispatch_buf(sch, rq);
+ 
+-		if ((prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice)
++		/* ops.dispatch() and the flush may have dropped the rq lock */
++		if (!scx_dsp_prev_stale(rq, prev) &&
++		    (prev->scx.flags & SCX_TASK_QUEUED) && prev->scx.slice)
+ 			return SCX_DSP_PREV;
+ 		if (rq->scx.local_dsq.nr)
+ 			return SCX_DSP_LOCAL;
+-- 
+2.56.0
+
