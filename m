@@ -1,94 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.64
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793617932;
-	b=3qKWLl1iN8JcCSkm/Zr7D20LlNtBZk5zwabK16ocInp2dLnRG6+EcAJcNaS76X2RIs0G
-	 +zjqSszm7y2fndtFfgAVPJaU8zRcwhdQ35OCxn9g74uK0005u9gJHiCCx8svaPWKYVn0G
-	 kqxaeNG0h2nhulNyBaGkgFv3GUjtJz2GkMh2/Jw6NbcrTOU1ViZVVBEJ8SWlOJieGEnJh
-	 FbDGvoDnZJWfh72SbGj1AaP8irLfjByK+jcJP7M98Zmsba0ZHOGR3AwcGCazdt82PzH2U
-	 cnbGpu6Ojg6pmAviwAY7MYZku7JBgIT9j8zR87k/kNzjU7RShuCNn1xLgtyjaGGnKWA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793617932;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=8pDTjSsxM5U6Ulfu0iqVLLFejr/vVLquSQNs6jlRCNI=;
-	b=oXj92ElHWepV29nz0hvRHMPSvuNiMEdR8JTVop3PuBAJPYbxlZmXOl+cbbgAJQ/lzK+G
-	 rCHCOEwtynPIoQCRTYDPftOScdzI1+91LV8yLHRUzSItpfcjYTIvJKs000IPlTtfZ040g
-	 ZgOWMM60svUKu4O1bazP/NKINO6Lp7x8dAKDUBgukHD1EiQ+Y7MfOqhs4XlgDMiFkiRpH
-	 HQbWoRdup6jQ6DZytaGWBZRTMa3HqwUbKn4vXdRfgVWGdcizZhzT4Qhs6uM/aK+BV35zF
-	 Qc/RS3oJrgsKQ7G877kbjn01/hUzgreL75a8FdOvAs9WxXU7+a35AqZJ3xRAC5zSFzg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=TqUsZKRz;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.64
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012064.outbound.protection.outlook.com [52.101.43.64])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793618148;
+	b=KlfAY80JIlggGhupljTqC3uI4/1DMB8NmTLqh0s/Wa5XH2Txa0oxVg4yru945Xl01oqG
+	 w2jIMAUF+Qg007VBrJCkYvYVP0BmZPqnzelvR7zIPttIsr+YTlFDeLWNzW5srFB2dhoU4
+	 ZbzJsNKTDW6TCJZXdQwnn5B0xeu5fYLJaybL11Z/DxbV8kmmpoJDx5l06Q/6H29+dT7ZV
+	 x9N/irrhROCxcjJvjuM9IlDbisl7pCcBswZbovHVNqcadf86D61o/hTB5oI3PzHKY/wI0
+	 SGVW6nN6ZsJjbroS+5cYAcV3s9UtgEJswhFIGHQxhzuUoAka/WJ9vUEqjUmNLtQprqg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793618148;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 X-Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:In-Reply-To:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:
+	 X-Mimecast-Originator:Content-Type:Content-Disposition;
+	bh=j3k2JcIDr9e6NfXKHf9MQ7O+/Axvni6jr8jzTqhwKMc=;
+	b=C7lzlNYqlSqd14S+bL8D6XW83uA9SZN++GKl83crnISfmO8naacfmnOb0oHMvK9/ZYaK
+	 5GhOJY4Qs8mvtYTRzpfp0XHa445n75xdqpyFo1NU8EF04kx2xgS1UL2ahWgHoVB9uqNaA
+	 AWVX7x5AD4DcZviGapVkAJ5m9gDBPhjg00dB25zh1Ez5nrJ0GaTK2eW9QBFL1MHu0jBJ5
+	 2HI3/uAOpY6reFJsonO6IpiABCd61es0XSfVsZkY5TIeZXb0kC4J35Fooh0jSGtSa7S5O
+	 v6eb8X2FuxSarDUpnJ13DFKcjM11QKJckYs4146svI+PasAwNTWjtVGzs2sNv5yVGLA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Q99Oixhz;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F1E606A326
-	for <sched-ext@lists.linux.dev>; Mon,  2 Nov 2026 11:12:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6F1E606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BA4606A32E
+	for <sched-ext@lists.linux.dev>; Mon,  2 Nov 2026 11:15:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D6BA4606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=TqUsZKRz
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OXTWCdc88CijbBwsR1SbGDTOBDndFfrXdO4zlFWchh/mTenfracbjQ9jqwNO5IJIEdJQU9S+Qfvgd66tRK+fLjvaPN9lxpU3+GnJkjG8nHMIZ0XhHZ//dLfZy6Mo7RoJNMdtsXmk+aTOvrBsasOZ1dTjdhGE6CuK+IGy6k1m0ZDE5OqUiBWTpp4YIkHhHHilcInO2zgSTfyXTShm7ekNoyvgdRAsi8B2a0y8imyUk41t2JD3HtzkfO+Hl4I9Jqnnp4xTxnjkTL6efK0/joLsrW0U8bFD+3aQhb9ZGpKsDXb8mmYC4LAw+VmpD7NgV00z8Sk8MQvigW/FZ93oz+OvIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8pDTjSsxM5U6Ulfu0iqVLLFejr/vVLquSQNs6jlRCNI=;
- b=uXYN7kV9dGqiB9JbpgHzphC4HJ+r/ib+jaezReEJoT2+bgaSd8IqJb0YazhFE1iIjXP68Vtp0TwPFaC2vTegqolTI6V8rBcM5AYHpVyaErH7Jsg99hgDaes3GNQoRdJ7uDWsIVWSqNumureS90mBXWHJrN7c6zc0CwQh0BFFVKDmc+HIRT3Lj7Cm0sjhXFOXIBzela9D/e7TWJqZBODN4PV4vZB6Fb7C4BqRqnLWpPwMsjYb1HDeCFRAGIzQ5EayIPKNMVqaCTDzaczLbSAKDWcJv8U619MET8T4ETAhDjeDi4ZMCB++lx7J+ALC8Y0JoUitT/Dh7djeIwve32oJ5Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8pDTjSsxM5U6Ulfu0iqVLLFejr/vVLquSQNs6jlRCNI=;
- b=TqUsZKRzQyjb4j8E/BRgpnVWVzfmvd3bb9lJcRHK9XesfJ/UbkZhkE1LObHyGF5jRy8Xsh1E5twI0ZcC8tbNitgsdKQ2jqUNzuQ6ewLkXMIFMzKYiWjgko7K6Kwid/qS3TsJNU7DSnroYjUYpOq6k8nE2hGBgoZOZKFDHpkzPjjI6V7NSMnswJWSVl0afsWJoB/5jhfBsMIdh3LNXsyRq8YUFFO+8a67cWOKr/7yJvyDtZSckdrG6TCqxKusniOZW2RKPe2dWI3BuofYJjD1lZSV+DWfDTbF0MplVkswJIsTLcMqN4oCks7euf9vR6/a+wevCxh16zzczt3yhUkZTw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19)
- by DS0PR12MB9400.namprd12.prod.outlook.com (2603:10b6:8:1b6::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
- 2026 11:12:06 +0000
-Received: from BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9]) by BL1PR12MB5174.namprd12.prod.outlook.com
- ([fe80::58de:822b:868:96e9%6]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
- 11:12:05 +0000
-Date: Mon, 2 Nov 2026 12:11:56 +0100
-From: Andrea Righi <arighi@nvidia.com>
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Q99Oixhz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1793618146;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=j3k2JcIDr9e6NfXKHf9MQ7O+/Axvni6jr8jzTqhwKMc=;
+	b=Q99OixhzJMXl9IEx9Dz/Uz9G7Hs36VunLJ1HDPBqzBbfRTOEvYX5x1y0wJ0XfIuZyOaFW4
+	Bk5n0qRaUPohrUO0CBLdJ5lT43AkhDeAAghQfFPtv9uMy5neV/rfLhkXVIE52OLcLL2zhu
+	5e8Dmmfkyt1ERBCTsZ9yNcC05ovdehg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-G45LLi8WPOqrALzqg9ZoHw-1; Mon, 02 Nov 2026 06:15:45 -0500
+X-MC-Unique: G45LLi8WPOqrALzqg9ZoHw-1
+X-Mimecast-MFC-AGG-ID: G45LLi8WPOqrALzqg9ZoHw_1793618144
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4ae2756fa7aso12594685e9.0
+        for <sched-ext@lists.linux.dev>; Mon, 02 Nov 2026 03:15:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793618144; x=1794222944;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=j3k2JcIDr9e6NfXKHf9MQ7O+/Axvni6jr8jzTqhwKMc=;
+        b=mt80cvs5jpBEPqIWruFZ1QqhB++gaQfecL14Am0CiBe5q6XWWCMTdUTeyyW5VRcGsB
+         5jJjMKStXng3tAbPLruTKThoi6SJekLZ0jVf6dqYVeZmBHF1kVUvZD9d//CpvlTHP5Mn
+         bZmCnh7mPE4yLINAxMgwDmZPEYM8/dIfct2Ckzmrc8oJfDKd7NNycZKTcsA1ixBSPwQm
+         MUm3o44ubmHo9JIsRBz17Sag0ijutozYT9Advlo8oNMMCjMqjzOrqXuMQA8ytemscy2T
+         CJlO20i/HWWZpUcJr5MkKb8LcLH5L8B/E2woib5BFlHpEt9vYtmL5aBjXZ0GEq6HKNM6
+         b0Yg==
+X-Forwarded-Encrypted: i=1; AKwUvBymLKuHXfW3M/0CZjzxZgybMVxgLsu7rfnBBl2a1UKcTR1J9Rlq3MZaVnx/RzZl7fwbnsyVVgGWuKA=@lists.linux.dev
+X-Gm-Message-State: AFq9FYIEb1TiaW/e+GrYKiD+nVQDOqn2waQW9AKu2HlYYvy69SZuJahs
+	c/ZV0+J9jNCVvvPLH1luIQufDUzVyUr+YexRSVXPz+/RjesWYXAcTNjbixBYrua6miDn+15Rakj
+	veBLxd0ulMsapbo7h9IjHqtF6qvojxR65pQ28yL5VyT9/S37C61ibAtC/TgR6OA==
+X-Gm-Gg: AYBFou1886Z9tJ73GB8k47F4IGBldyyrgbDUEcKur2xHTEL0W5MkMRPoRoRTbsF4GK9
+	jGDpKKAy+viUeUKmW7Zb2dionhXQVcn/rDrabq2rij03trnUaEBtj2VkH39O+bhXqG0g+ZnCgGV
+	rx0l+mjUHWdV6/WGz7kAdryGr8HNpUj6ucNqf7ptwBtch5vG6VD9rUxrQszJdCk69WIk8nb6Wq0
+	N9AQqvGj/IjPHizwsviVjROt9UPz2H2TGvQ05JFdQsgpUGWnvIOMHvoMg2KPeHBnwkM2P4ukNQ5
+	n2w7X50KyfkWV8PupAdbGBEo6AwWchLA2u5nbh8+hJJ86+MHRYCz4U9KSBiU5t5YPGQ+T62RYzD
+	eRsBizJd4Efvssx3tGQC49hidBo+og9/lMx5g8Elt8KoLtam3mLxSpZ1rOouk+KojajwIdqhuYZ
+	wp1w==
+X-Received: by 2002:a05:600c:19d1:b0:4a2:677:ad8e with SMTP id 5b1f17b1804b1-4ac1970b9f7mr220395065e9.34.1793618144155;
+        Mon, 02 Nov 2026 03:15:44 -0800 (PST)
+X-Received: by 2002:a05:600c:19d1:b0:4a2:677:ad8e with SMTP id 5b1f17b1804b1-4ac1970b9f7mr220394775e9.34.1793618143852;
+        Mon, 02 Nov 2026 03:15:43 -0800 (PST)
+Received: from jlelli-thinkpadt14gen4.remote.csb ([151.29.158.90])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b9b54dsm19099569f8f.47.2026.11.02.03.15.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 03:15:43 -0800 (PST)
+Date: Mon, 2 Nov 2026 12:15:41 +0100
+From: Juri Lelli <juri.lelli@redhat.com>
 To: Tejun Heo <tj@kernel.org>
-Cc: sched-ext@lists.linux.dev, David Vernet <void@manifault.com>,
-	Changwoo Min <changwoo@igalia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.4-fixes] sched_ext: Fix
- ops.enqueue/dispatch() calls before ops.cpu_online()
-Message-ID: <auhv_Jdir0wpi3fw@gpd4>
-References: <20261031170541.710939-1-tj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261031170541.710939-1-tj@kernel.org>
-X-ClientProxiedBy: MI0P293CA0003.ITAP293.PROD.OUTLOOK.COM
- (2603:10a6:290:44::9) To BL1PR12MB5174.namprd12.prod.outlook.com
- (2603:10b6:208:31c::19)
+Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Luca Abeni <luca.abeni@santannapisa.it>,
+	Andrea Righi <arighi@nvidia.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: sched/deadline: total_bw leak when a task leaves SCHED_DEADLINE
+ while not queued
+Message-ID: <auhw3ctxwy8qeOvs@jlelli-thinkpadt14gen4.remote.csb>
+References: <2b5fb3f22bca6aa383be8f4781923392@kernel.org>
+ <auRh42kZI1xLIWNr@jlelli-thinkpadt14gen4.remote.csb>
+ <1a24bcdde0bb6e4a8c839351002e841d@kernel.org>
+ <auhhGAjRtuSb5JP7@jlelli-thinkpadt14gen4.remote.csb>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -98,101 +112,68 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5174:EE_|DS0PR12MB9400:EE_
-X-MS-Office365-Filtering-Correlation-Id: ccb664a1-b591-4651-4116-08df38d220b5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|11063799006|56012099006|261009223027099003|261028144727099003|261021123027099003|261021121427099003|261026121527099003|261026140227099003|261022105027099003|10067099003|18002099003|22082099003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	rgtZ3HgvpUg6GKBSHA0mNH8FoUO3Yp2NpztHaW0mCD18Ic0hTdNZZsoF3sCM1Ol5R5/RPUlrMwB+JqjNbGhLJEDdtwMMteOY+HLiilAN8wAt6cww/DNU3IZaH07orC+UxpJ/xiMTMP1bp3eOer9W5/ZIrR79FgIpISjFbwvzddJ9514ujflfRXDb3GGVbpFKKPP8Dks72SS4sSrBBcvrMfKAqChkQgHVKgO0WqFc1Dzn5YR1nLgxJ28t5TH7dDd7vJmWTeOQ0jOV9bmqzn2HtPcvMF+/28Gbo8Aov4+uX9le6TgHdAVsEYyiCz0QLkNHNk++2ffGrW7PQI9MPOytFyCOPLYtOL38+0BXWYJVbGUpwgsowZVnrAbpReT0WlQrHei3yxPvBMYuEw+N5rnQtAcIe8BRSM6zfSUsPtDwIBm8xc1I5T76Nk9DpNAszQn0/ysueUxSKQ6lcJh95u+84MGayuiWthj8jBtYLWLaqvOes1BUB6eR3y2fQGYZfH2th0lDGawG9zf8sINABEJt5jbqNUPtGronM69DDjbIozUAicLRRTrI1jYsZT9YJ4t7VuIee75y/GwIL2Q7t+OP3yUarqbK/OL9EScZUe+0I/etcnpfASPegFca0g87wc+Cw+WNne/6zHl63iv2MmFfCG4gWCMnxJ55spGO1H+6flM=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(11063799006)(56012099006)(261009223027099003)(261028144727099003)(261021123027099003)(261021121427099003)(261026121527099003)(261026140227099003)(261022105027099003)(10067099003)(18002099003)(22082099003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?omMzqY5KAWiai6/RoH418vIB3Q1s4XUMPIyq5JYW9lzDqFhwA3j9H53g7vqD?=
- =?us-ascii?Q?azdnEDrj9q/xDAc+dBUkQ91VAnkYKyrdOVZrMmEr+JGReqETEQNlctUlWiyE?=
- =?us-ascii?Q?eW1qw/L3jDNAKHYtQzsSyiuv/4r/f4unb1ED8LSC33ZP+G2QAQ/CJXvGG741?=
- =?us-ascii?Q?XiyX77OeVExIiazGKqG7sAT+6KniuZjyip4qT3rN2kuAGD4zB7Smy91agtRg?=
- =?us-ascii?Q?sTopuQEmF8DqfhXvXK9fupYtrDBFuz0HP8xWp1U59rrFtXHdjOS6TZhiUQxx?=
- =?us-ascii?Q?G0VaP3HjDWgjJ+QsyojIN4r5OnBQOzeM5SFiF9jC1nsoLJAV45gJ0422+MYm?=
- =?us-ascii?Q?11MFQTWzyXpop8qTiWCYVHEzV0JHhxhf5SGXJFyJSf8E4VNO+JCPdaI4kxWM?=
- =?us-ascii?Q?Sb6WdDEmoHhx+KD5RKbCV0+Aso0Y6uhtt/JHJ1mxJ4Lda9VNQjLpWFdhVcRz?=
- =?us-ascii?Q?FqKEu2pFvOm7ScmZJ3aLiGzLpRsDhCPAcG2eTlL+lMxWIdtgq1aUBHALiMad?=
- =?us-ascii?Q?YOugx4vV3gviw+yCN+r0ym1d6z7xvAYqmSFyuTIyxTp/8m1FiRXvQ0pPgGS8?=
- =?us-ascii?Q?fgcKNDSHfh+HRyb1f0CT5bCQrRyN6dDlt1cWCuV3Q+9qL7Mg2JnOuacGcI8Q?=
- =?us-ascii?Q?jLfW4P6BZgX+vDCg2e8DYJYeuAVN50hNrC+mrCEjR/Z/GyZ5hmSeKHbo1DVz?=
- =?us-ascii?Q?6CSIeitkbrDhFm4ih0uBQkr/1Fmaam1cFeZYDCRJzCiCCwf31UFeBn+DTzAP?=
- =?us-ascii?Q?Z71b6OCk6EnPliLpzQJrN8g5QEDcLzWvVnyWOQl2A7Sd5QHhsksdGvuN2J7j?=
- =?us-ascii?Q?SvxYzQ74H8x+AX7+MClf0WMhiidI/lXKr4E5UqtN6La7RjAizV88HTuFc8S6?=
- =?us-ascii?Q?7x+WLvIUcUyX9ulZlbrdqQLQCngJ9wlJFtvOvtU3ARAw3O8IlpylpDV7UGYm?=
- =?us-ascii?Q?5yajuBwEcU27ygk2xi0OppNKYT1s4OgjwPUHUAA0HW3FiK2tyBusSbKAavOe?=
- =?us-ascii?Q?Hwvd37d0g9PKX2dcyvP1cWOCFsqu/2aPk9r7kxYR3tJ7HRLAWxHJYUySfFK3?=
- =?us-ascii?Q?h+gxLv5zZevFUAYu2BD2M+z3UWfV3hDrJXXsvH5TDYljy80joUHjDtDRkwpA?=
- =?us-ascii?Q?Atqr9Kd6rcxrZoeoQ3SbE2Hcebu2Y9qcnVAgtIqVc8QaMx3/py9FCAfNz7At?=
- =?us-ascii?Q?2ymGhQ2vA67qgMFTX0zR7L1Ua1PlxPT26477bfaIUvWLIb//CnLdTEogUpf1?=
- =?us-ascii?Q?OXv0QE05UmrO5LpFyeEbG0sSwh+0OButTseQwpcfe3Y+oSPIanBlDB3kZpUC?=
- =?us-ascii?Q?CyQrNZ6n5njlQGyKutLPXlWbMCHEj1LSIDJKtCdXHsR7aTdttUE2UGtRxccG?=
- =?us-ascii?Q?VU76IkSrxOrmLG/0IMqzBwcMLzaKeWcnxFWCMAcem+NMvndeS+ATyrwFXq+i?=
- =?us-ascii?Q?s7liJEqEyv+bPfzuEWz/G5U7USR6s5NXJmZrGYhK3uI5YRD4nKg2jlqbIPY2?=
- =?us-ascii?Q?GdtmCxc8aFKThBafmI/jiLblJZxoBYFHDTNLtuzr+r76bkNJFU3P3V7v5PsX?=
- =?us-ascii?Q?qpqCmZvbM4oEkv5bZ0jiHikbR8N+2f4vf9yDh7qkTbPRH6Dj3o1zNvYcSSO9?=
- =?us-ascii?Q?c4eqOd3/HnWLCCAg9pOu+ITXjQed/2dOks9w3NTl5Ez/FF6Vx+NZRuAt1/J0?=
- =?us-ascii?Q?Z5p70bK23582m9t0N70gB6zNHKKSg5nmnGe4O3+2wvK1yBP0kvfOnWI/bHsW?=
- =?us-ascii?Q?NtQdObXDuQ=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ccb664a1-b591-4651-4116-08df38d220b5
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 11:12:05.8424
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: C9k4fHlE58tefWQVchzaaw9R+pjwRp9YiLTDC+tQdRHIrX3TL5gsLqOXyG9rBjy6VsI8ZkHDogkqPPq6CaP6Ng==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9400
+In-Reply-To: <auhhGAjRtuSb5JP7@jlelli-thinkpadt14gen4.remote.csb>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: MdNUzPaQYmdMohPwoPf-LEmBCWXrU2xD0_l7vaUeP-g_1793618144
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi Tejun,
-
-On Sat, Oct 31, 2026 at 07:05:39AM -1000, Tejun Heo wrote:
-> Hello,
+On 02/11/26 11:08, Juri Lelli wrote:
+> On 30/10/26 14:47, Tejun Heo wrote:
+> > Hello, Juri.
+> > 
+> > On Fri, Oct 30, 2026 at 10:22:43AM +0100, Juri Lelli wrote:
+> > > Does the below help?
+> > 
+> > Yes, it fixes the leak. On abf8c33470f7 with the patch, the reproducer leaks
+> > 0 in all three cases, and 60s of random policy churn ends with total_bw back
+> > at its starting value. Two problems though.
 > 
-> This patchset fixes ops.enqueue/dispatch() calls for a cpu before the root's
-> ops.cpu_online(). Both ops are gated on SCX_RQ_ONLINE, which follows the
-> core's rq online state, and on a runtime cpu up the sched domain rebuild in
-> sched_cpu_activate() puts the rq online before scx_rq_activate() calls
-> ops.cpu_online().
+> Thanks for testing and reporting the additional issues!
+> 
+> > sched_setattr(SCHED_OTHER) with SCHED_FLAG_KEEP_PARAMS on a sleeping
+> > DEADLINE task leaves it DEADLINE, but each call releases its bandwidth, and
+> > its exit releases it again. total_bw relative to before the task became
+> > DEADLINE, with a 2ms/10ms task (0.2 CPU = 209715):
+> > 
+> >   after the DEADLINE set        +209715
+> >   after the 1st KEEP_PARAMS call      0
+> >   after the 2nd                 -209715
+> >   after the 3rd                 -419430
+> >   after the task exits          -629145
+> > 
+> > After that, sched_setattr(SCHED_DEADLINE) for a new 2ms/10ms task fails with
+> > -EBUSY while a 3ms/10ms one is admitted, and offlining a CPU fails with
+> > -EBUSY.
+> 
+> sched_setattr(OTHER, KEEP_PARAMS) on a DEADLINE task doesn't make much
+> sense to me :).. I'm inclined to think we want to fail early in this
+> case.
+> 
+> > Switching a sleeping DEADLINE task to SCHED_OTHER after its CPU was offlined
+> > crashes in the __dl_sub() the patch adds, dividing by
+> > dl_bw_cpus(task_cpu(p)), which is 0 for that root domain:
+> > 
+> >   Oops: divide error: 0000 [#1] SMP NOPTI
+> >   RIP: 0010:switched_from_dl+0x13a/0x3e0
+> > 
+> > Unpatched mainline only leaks in this case.
+> 
+> This one looks like a pre-existing issue which my total_bw fix makes
+> worse (w/p it we leak but don't crash).
+> 
+> Let me see what I can do about both.
 
-Both patches look good to me, I haven't found any issues.
+Would you be able to re-test with the patches at
 
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+https://github.com/jlelli/linux.git fix/dl-total-bw-leak
+
+BTW, it looks like I could verify with reproducers I pushed to
+https://github.com/jlelli/sched-deadline-tests/commits/fix/dl-total-bw-leak-reproducer
+but I'm not sure if they are similar/equivalent to what you have at your
+end.
 
 Thanks,
--Andrea
+Juri
 
-> 
-> 0002 tracks the flag in handle_hotplug() instead, set right after
-> ops.cpu_online() and cleared when the cpu goes down. 0001 is preparation.
-> 
-> Based on sched_ext/for-7.4-fixes (0aba89317f38).
-> 
-> This patchset contains the following 2 patches.
-> 
->  0001 sched_ext: Factor out drain_offline_rq()
->  0002 sched_ext: Fix ops.enqueue/dispatch() calls before ops.cpu_online()
-> 
-> The patchset is also available in the following git branch:
-> 
->  git://git.kernel.org/pub/scm/linux/kernel/git/tj/sched_ext.git cpu-online-order
-> 
-> diffstat follows. Thanks.
-> 
->  kernel/sched/ext/ext.c     | 93 ++++++++++++++++++++++++++--------------------
->  kernel/sched/ext/inlines.h |  2 +-
->  kernel/sched/ext/sub.c     |  9 +++--
->  kernel/sched/sched.h       | 17 +++++----
->  4 files changed, 68 insertions(+), 53 deletions(-)
-> 
-> --
-> tejun
