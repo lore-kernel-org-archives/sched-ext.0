@@ -1,85 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793606829;
-	b=eKmQwEArH0h5+nXHzXZFgJwBUlbST+1Y1KLJ2GACZz7GseqLPvemUNo//gKnRUSuJ2Q/
-	 YRbCVstRAgbpo+yMe/P2/3mks44NN04Wjaz4aglbE2CXzSFZuSoaMVGKU+bQbPtKBUhh6
-	 t6LdOTGWDx/QunEsSs2++E9A56XJ6RzvXvFYD8vP5rdFww4m2Q9v9D4XYMiInW8rR943a
-	 ezFqCJBMKmJmjuHpANUPK5veYvH9AM+beuESsQmlHD4kqvxkWWQEOj84C9qwuJvqW52xS
-	 +Gqi9yAiTp3iIyncCVWASpkRnL1PyZvaaUsBHBrxjU34Qo67y+HCsc4olJ5bFUihN+A==
+	t=1793614113;
+	b=fEin4Ly9kHatMB9m4y1i+arpd1T9lUWbje7REVGVowQLLP0Nu6xs/XP0FRifqlgiiYSx
+	 dTjf/GAnScklxmfHe9/RNM750ENKSBfKvYeN7VEt2+KBI8PcsvpS+5WHffHqsqMtW35+I
+	 w3KuIFjTgr5UYo95+ITnPdHXrrjOg+qkNFidK9BA/cjSo08uscKu0+q10jWlFnlguKmoj
+	 Imu1KHefhh9C2uWhP2/pLol038/s4zs20wEv0C8H9NQcSdy527wCu5rEeFWQScwMz+rBX
+	 yJGE05TQqPxDbnwiyfjPSOmfCKMGmzzqeiFIdr6lLBfmgfSeFOSbH6DiZmT9qYinVYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793606829;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
-	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To;
-	bh=ZFKEz2Iu0aOPt9Nq3i/pKYGCNKHVigLA2BmD6KDbRRo=;
-	b=Vo6kUSKy4S+Xfy1bVs7EIfN+uS8qeFWNQ0w6+ZKjGcBBepdQSpZ3NinlXfzI0sF/saVR
-	 158whGme5x3Rlz5VlX1LRuOaZloZYCzRTWPxIlXdjl9xQ/tIKm+49nvVoCB8xSW0RN1kA
-	 QDFx+xk8uhjjHw20j6WawIh7bCBsPpljcfLx37R/hTfGkndPx5M873bUmO0pVJtheK+EA
-	 ytevT9DxqmRkuPkhJ/0DdElKSkf4sJkEjWJvdSzo73qbqvHGQUo2RylSrM2UTgtvatt3+
-	 7tSa3XSwn5euKboSQwqi/CFAuw79Mk0ERhH2WpQzqL4LoWaQ5e68ZhO+Pdj4J/Sua6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793614113;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 X-Received:Received:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:In-Reply-To:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:
+	 X-Mimecast-Originator:Content-Type:Content-Disposition;
+	bh=2QAuBoqKuE+cIrY28tIIRA/uX6efXaA0O83MjGB9jy0=;
+	b=mkXQTyfy84V9SHMOgg0FBsxlRtejEI8UtOGR2aEU/tJaVfpXkLCNsuTaIsWbuwC3Y80W
+	 Vp13oq8wTbb87wEVsTJH4zR0tmgwpGGnbwGoNX+FDB2+SsGVy8jKT147E8sqzp3Jvu0PC
+	 ms+d8Fj1Q7StfAMMXv+9rnsZAw1jiGV1cwKrvhoBZhZSNtwsbH7P8AextyxKHjNangoQq
+	 odw68Mjp8K6puWI7CzT0knQysFa8RxCqrLL532oa8yoa3hUHYlaLoUCDeoXFLyOcfltnG
+	 KRhLpO+S1jADusKLut5i+787SRJUJEy1CEknqIUuMEzfjl44yl5i2izWL2V1ezLOGHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=etsalapatis.com;
-	spf=pass smtp.mailfrom=etsalapatis.com;
-	dkim=pass header.d=etsalapatis.com header.i=@etsalapatis.com header.a=rsa-sha256 header.s=google header.b=0v3lotcn;
-	arc=none smtp.remote-ip=209.85.214.172
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b4nA+M5p;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6E1606A324
-	for <sched-ext@lists.linux.dev>; Mon,  2 Nov 2026 08:07:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA6E1606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=etsalapatis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=etsalapatis.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3370606A338
+	for <sched-ext@lists.linux.dev>; Mon,  2 Nov 2026 10:08:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3370606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=etsalapatis.com header.i=@etsalapatis.com header.a=rsa-sha256 header.s=google header.b=0v3lotcn
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ea7987517aso18049555ad.0
-        for <sched-ext@lists.linux.dev>; Mon, 02 Nov 2026 00:07:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=etsalapatis.com; s=google; t=1793606828; x=1794211628; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ZFKEz2Iu0aOPt9Nq3i/pKYGCNKHVigLA2BmD6KDbRRo=;
-        b=0v3lotcnujO4i1qS6BRjOKTKAdQlsCQ3zJlDtNnKP/blJlSp39wE7MJB1wgbikRqdg
-         ToXbqTrzMUvGW+8dPuC3TNEA27wWXw63fQ2F0DW3uHuc0rJ7ob7bZfUAYXiiOeOmTlWx
-         /piue8DuR7Mre7wNFmwk27C2wAVaSjlNEYPt8HYfwN2/bfrYPuwtrSFN4Z2mhVw3medX
-         8S+61Kwm5gJzGoM8fAMPTP1vR2ID2BYT9IgxGBmOdaeoYmFh3wJXpaE4F2IDGcZstlUH
-         NkQjSygN7PJlBr7E0Rm89robikpiSQWrKLY9JuNR4fLVKPJtSe+bJIOwQ55AWTrJdRc1
-         zjJg==
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b4nA+M5p
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1793614112;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2QAuBoqKuE+cIrY28tIIRA/uX6efXaA0O83MjGB9jy0=;
+	b=b4nA+M5purcRMCh4zfZJMDIyF0dBiNa2Ko3iNf2eTJOYPirfzESyWXLkBIFYsL9naoM8ji
+	q/EY+lbhWl914sDuT3dtx9BVAjipPKi+MAMr76ufacX8ENHDFaQhkHL1iQWAq7F5iokN/R
+	h5Zypw8QtGRtT1pb8rGpf8cW9O1dNy8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-120-gwS1lsCCP-mGuhQmUCqdyw-1; Mon, 02 Nov 2026 05:08:28 -0500
+X-MC-Unique: gwS1lsCCP-mGuhQmUCqdyw-1
+X-Mimecast-MFC-AGG-ID: gwS1lsCCP-mGuhQmUCqdyw_1793614108
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-48e0389d6f9so1338351f8f.1
+        for <sched-ext@lists.linux.dev>; Mon, 02 Nov 2026 02:08:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793606828; x=1794211628;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793614107; x=1794218907;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=ZFKEz2Iu0aOPt9Nq3i/pKYGCNKHVigLA2BmD6KDbRRo=;
-        b=MwVCjH6mPJ8Fo40QvFrptW5pZkSNE1LobnRw5knPyH0xqYVhnwRovKBusgiEJciM3y
-         oD6KqcXrPc7ah+TplEh/6OwSVA5PRYz6/p/+A7h074y+X8VFvI3ZR8+OW8agIigYO4Su
-         PbGW3WiAiqg2zXeKYV4jXnafNyvnxMDiBWSyBb0mXerKuMkdh5xh5kW3wqCmB0Wl+QmH
-         PhJdOwlqCJ9GwnmM6pi9z/RvwL5feAVwnVODjPMn+Beo0OpmfvvphdIPZVbXs9mQ00cp
-         GGIBj2BIh5wOF9AqLMa3j/t1awDfd/3UyIGBh9psZPnElfmj7UhXFv9VjhdGVhtNX5MO
-         MluQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzSnTVwGlasOcAkjohfdooekMQI/vWAxpWmLSpgfc9YNuobRzVOAl24RPgHaYr2wvfHwFcQvwZdBxI=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/QNXZkGzwK4cvuQWypT2K0FpdcmjWCc/s4Axs6N55aN0jIUgsU
-	ynypazuuKWprN8meKXoTbsV3e5ak3c+8X37Oe/414ZmJQCb8V7q3U/fjXmiB5RYtZ+M=
-X-Gm-Gg: AYBFou3nk/AxqjlX0q3SIqTQjPheFAL0lLhXznIQHkkKSv7m2XcJlpXsSIXNAs5pEuw
-	VE97xZU9V2csDT1wy8NKqxPgaHjp5K6TyV/4Xr92MPNZqWXkD2iI6CzCZZwEWuZGp/sfPZ+dZIl
-	nMdY4tOonrB4econycJIDZBEivE2PTB50LJgUSZDYCbPRX8lBfB1R74jAIHA1whLo89JzzlTHE3
-	Hx+n5Uwq8af+syVmx+M/Z7gtqSnkOZAPfgp9RMhL0Mu5a1nruDL6u3vNjaxjy80fjTsK2DLc2Ka
-	v4RD7BlMV/PrqsMfPsCriJM1h1+I4Ssi9jndNXSIpq/whiWwxRpDaU3Vkgk01PLM7ZLX6OHUfhp
-	wveCYy7oD48jGMlD5KiCK5etmPknCaP+5iQA8j7HrpykDRhYJZauzwbXro7gxA3gM1nfLZ5n1nV
-	DwGu9LTtSrYcWzJv3PazD2JZGodTGO+xG3pmnt5CFNOpIp9v7x+16RhrOX0/zyoEKus/CW+7m6G
-	pF98tIGU4NhdYGf+t+ff+YP2bw2ZW5OvKIj3gcdZRWHJBvMlI4VOj5aD354feThuQiznLWcxiAy
-	Z6ftiP5fpj/xcozBKsP0rs6NiUgqyYsVla9fuKIn2Kr/cXDRTfSSR2/+9yR61Mmv+ARrajoxiQ5
-	8WTI3
-X-Received: by 2002:a17:902:eccb:b0:2e5:d2b1:c70b with SMTP id d9443c01a7336-2eb36536d3amr90256725ad.60.1793606827873;
-        Mon, 02 Nov 2026 00:07:07 -0800 (PST)
-Received: from localhost (107-190-31-93.cpe.teksavvy.com. [107.190.31.93])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eb39265090sm23623165ad.41.2026.11.02.00.07.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2026 00:07:07 -0800 (PST)
+        bh=2QAuBoqKuE+cIrY28tIIRA/uX6efXaA0O83MjGB9jy0=;
+        b=wyrs9H71wdlCCm8RQDpJONGYROhEZbFc0CDs1M9J3xYwauFQC5GWeRVhleVfc6jioc
+         JuTJKCifbjHCATKEgw0CX5CVIDl+xg8xFP06qs7+nypaRKpiijaFw++mJRTrqcVVPu9y
+         76dhEJOccdGiv378YsolQSn06FlIZM9oPXeUylk+ZQla9sx7Gy87PBIuuiKrt4GKuxAY
+         CWLhmf5W5Qkl5hsWpQlVJgKz9EDyYAckthJMiVw6yNLBgT5LO1scF57nzNM1ztduBjXt
+         KlB0kiIMPnQS/WPS7hyLr1YUizKHbn4XwPmLK77urM+mYx4pF4Dzzu+3wtx1+nvXyTne
+         DF8g==
+X-Forwarded-Encrypted: i=1; AKwUvByhwYBn4IYkNcYA8TlBT8Yz869SRgejMGCfopraRjx3jsmamC0lQo30WFfuzFC8oMAgAi7InHcijnQ=@lists.linux.dev
+X-Gm-Message-State: AFq9FYI+afQ2JttFRCiUsyep59kQDafhgd2B3obNfS4J125VGsnWCp3W
+	/iGffTWusVpeAdEJdgKzxxjmbjA5sZDH6yDi0tXAKWnwFCEDQp7DgHJ+FCR4Tbc5vSVs5VGbDO2
+	K2NU2x2Hn+fzAz2IcQWmH8ZBzQXh6peq7Fsk9LVG7xdciQlmNsNr9XMJAU3okhw==
+X-Gm-Gg: AYBFou1/c1ah1e+U6CJzf4wCwNSxZZlCzClG5B7YA+xUglSmPXHYQWmKA62Cco1hkI+
+	5OgenPA5jHSIHkv1eu7bVxSjYqeAss5pKNxdPF0UAIW2mu6lywr+s25qxFF5HWsnJ2K25kFmq1B
+	K1DBFpMtS0y2CqG+ktAORHrUPWpConCRSRCuQJxsGhlbZwk+JNclV4Zoc23xGbvcs5vOaYNcBUg
+	iDsbpPkJwSKcYdMUkE2+tJ2VBnMe03ZL7tEY+fSr60KPUuiGSekBz0fGhW3fqumkIUat05wJ6z8
+	tS9VkR0laerHgheQWfGTX8AMaXhU070xw2o2CHC/4OOZMuU1nMPcKacXpDoVvFTjXXeB7614zwq
+	EuJ8PrHD4rIqbDghT4gepX3jgTTGL7D6Z85EbgEN7ts/1Bd3y2I2pmucznpBfkM5KrwAZaVLqiM
+	f5IA==
+X-Received: by 2002:a05:600c:3f14:b0:4a3:59ee:86b with SMTP id 5b1f17b1804b1-4ac14ec873emr214702925e9.4.1793614107489;
+        Mon, 02 Nov 2026 02:08:27 -0800 (PST)
+X-Received: by 2002:a05:600c:3f14:b0:4a3:59ee:86b with SMTP id 5b1f17b1804b1-4ac14ec873emr214702595e9.4.1793614107099;
+        Mon, 02 Nov 2026 02:08:27 -0800 (PST)
+Received: from jlelli-thinkpadt14gen4.remote.csb ([151.29.158.90])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abe7700c3bsm239439385e9.0.2026.11.02.02.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 02:08:26 -0800 (PST)
+Date: Mon, 2 Nov 2026 11:08:24 +0100
+From: Juri Lelli <juri.lelli@redhat.com>
+To: Tejun Heo <tj@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Luca Abeni <luca.abeni@santannapisa.it>,
+	Andrea Righi <arighi@nvidia.com>, sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: sched/deadline: total_bw leak when a task leaves SCHED_DEADLINE
+ while not queued
+Message-ID: <auhhGAjRtuSb5JP7@jlelli-thinkpadt14gen4.remote.csb>
+References: <2b5fb3f22bca6aa383be8f4781923392@kernel.org>
+ <auRh42kZI1xLIWNr@jlelli-thinkpadt14gen4.remote.csb>
+ <1a24bcdde0bb6e4a8c839351002e841d@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -88,150 +110,59 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 02 Nov 2026 08:07:06 +0000
-Message-Id: <DMKKK0ZLYSKU.3UZ614ZC9DH05@etsalapatis.com>
-Cc: "Martin KaFai Lau" <martin.lau@linux.dev>, "Song Liu" <song@kernel.org>,
- "Yonghong Song" <yonghong.song@linux.dev>, "Jiri Olsa" <jolsa@kernel.org>,
- "Ihor Solodrai" <ihor.solodrai@linux.dev>, <david.dai@linux.dev>, "Gavin
- Guo" <gavinguo@igalia.com>, <bpf@vger.kernel.org>,
- <sched-ext@lists.linux.dev>, <linux-kselftest@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <kernel-dev@igalia.com>
-Subject: Re: [PATCH bpf-next 3/3] selftests/bpf: libarena: Add rb_next()
-From: "Emil Tsalapatis" <emil@etsalapatis.com>
-To: "Changwoo Min" <changwoo@igalia.com>, "Alexei Starovoitov"
- <ast@kernel.org>, "Daniel Borkmann" <daniel@iogearbox.net>, "Andrii
- Nakryiko" <andrii@kernel.org>, "Eduard Zingerman" <eddyz87@gmail.com>,
- "Kumar Kartikeya Dwivedi" <memxor@gmail.com>, "Shuah Khan"
- <shuah@kernel.org>, "Emil Tsalapatis" <emil@etsalapatis.com>
-X-Mailer: aerc 0.21.0
-References: <20261028060046.549097-1-changwoo@igalia.com>
- <20261028060046.549097-4-changwoo@igalia.com>
-In-Reply-To: <20261028060046.549097-4-changwoo@igalia.com>
+MIME-Version: 1.0
+In-Reply-To: <1a24bcdde0bb6e4a8c839351002e841d@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: H94dlKMN3eRlnbeCBI0g7DBlgSFh7SKD-OqRvi9DXJk_1793614108
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Wed Oct 28, 2026 at 6:00 AM UTC, Changwoo Min wrote:
-> Add rb_next(), the in-order successor through parent pointers.
->
-> Add a selftest that walks a tree with repeated keys and checks the walk
-> against the order in which the head leaves the tree.
->
-> Signed-off-by: Changwoo Min <changwoo@igalia.com>
-> ---
->  .../bpf/libarena/include/libarena/rbtree.h    | 23 ++++++++
->  .../bpf/libarena/selftests/test_rbtree.bpf.c  | 54 +++++++++++++++++++
->  2 files changed, 77 insertions(+)
->
-> diff --git a/tools/testing/selftests/bpf/libarena/include/libarena/rbtree=
-.h b/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
-> index a8dd8c2e7596..956b4a24b52a 100644
-> --- a/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
-> +++ b/tools/testing/selftests/bpf/libarena/include/libarena/rbtree.h
-> @@ -103,6 +103,29 @@ void rb_node_free(struct rbnode __arena *rbnode);
-> =20
->  int rb_integrity_check(struct rbtree __arena *rbtree);
-> =20
-> +/*
-> + * Return the in-order successor of @node, or NULL if @node is the last =
-one.
-> + * Walking from rb_first() with it visits the tree in key order, equal k=
-eys in
-> + * insertion order. Call it under the writer's lock.
-> + */
+On 30/10/26 14:47, Tejun Heo wrote:
+> Hello, Juri.
+> 
+> On Fri, Oct 30, 2026 at 10:22:43AM +0100, Juri Lelli wrote:
+> > Does the below help?
+> 
+> Yes, it fixes the leak. On abf8c33470f7 with the patch, the reproducer leaks
+> 0 in all three cases, and 60s of random policy churn ends with total_bw back
+> at its starting value. Two problems though.
 
-Let's move this to the main *.bpf.c file, with the rest of the traversal fu=
-nctions.
+Thanks for testing and reporting the additional issues!
 
-> +static __always_inline struct rbnode __arena *rb_next(struct rbnode __ar=
-ena *node)
-> +{
-> +	struct rbnode __arena *parent;
-> +
-> +	if (node->right) {
-> +		node =3D node->right;
-> +		while (node->left && can_loop)
-> +			node =3D node->left;
-> +		return node;
-> +	}
-> +
-> +	/* Climb until we leave a left subtree; its parent comes next. */
-> +	while ((parent =3D node->parent) && node =3D=3D parent->right && can_lo=
-op)
-> +		node =3D parent;
-> +
-> +	return parent;
-> +}
-> +
->  /*
->   * Lockless reads of the head and the node count. They need not be calle=
-d
->   * under the writer's lock, so they are advisory: the tree may change be=
-fore
-> diff --git a/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.b=
-pf.c b/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c
-> index 57c4395c046a..784cc9edea17 100644
-> --- a/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c
-> +++ b/tools/testing/selftests/bpf/libarena/selftests/test_rbtree.bpf.c
-> @@ -425,6 +425,60 @@ __weak int test_rbtree_first_update(void)
->  	return rb_destroy(rbtree);
->  }
-> =20
-> +#define NEXT_NR_NODES	64
-> +
-> +static struct rbnode __arena *next_nodes[NEXT_NR_NODES];
-> +
-> +SEC("syscall")
-> +__weak int test_rbtree_next(void)
-> +{
-> +	struct rbtree __arena *rbtree;
-> +	struct rbnode __arena *node;
-> +	u64 seed =3D 0xcafe;
-> +	int i;
-> +
-> +	rbtree =3D rb_create(RB_NOALLOC, RB_DUPLICATE);
-> +	if (!rbtree)
-> +		return 1;
-> +
-> +	/* Pseudo-random keys with repeats, so the walk crosses equal keys. */
-> +	for (i =3D 0; i < NEXT_NR_NODES && can_loop; i++) {
-> +		/* LCG using Knuth's MMIX constants for determinism. */
-> +		seed =3D seed * 6364136223846793005ULL + 1442695040888963407ULL;
-> +		node =3D rb_node_alloc((seed >> 33) % 16, i);
-> +		if (!node)
-> +			return 2;
-> +
-> +		if (rb_insert_node(rbtree, node))
-> +			return 3;
-> +	}
-> +
-> +	node =3D rb_first(rbtree);
-> +	for (i =3D 0; i < NEXT_NR_NODES && can_loop; i++) {
-> +		if (!node)
-> +			return 4;
-> +
-> +		next_nodes[i] =3D node;
-> +		node =3D rb_next(node);
-> +	}
-> +
-> +	if (node)
-> +		return 5;
-> +
-> +	for (i =3D 0; i < NEXT_NR_NODES && can_loop; i++) {
-> +		node =3D rb_first(rbtree);
-> +		if (node !=3D next_nodes[i])
-> +			return 6;
-> +
-> +		if (rb_remove_node(rbtree, node))
-> +			return 7;
-> +
-> +		rb_node_free(node);
-> +	}
-> +
-> +	return rb_destroy(rbtree);
-> +}
-> +
->  struct rb_embed {
->  	u64 pad;
->  	struct rbtree tree;
+> sched_setattr(SCHED_OTHER) with SCHED_FLAG_KEEP_PARAMS on a sleeping
+> DEADLINE task leaves it DEADLINE, but each call releases its bandwidth, and
+> its exit releases it again. total_bw relative to before the task became
+> DEADLINE, with a 2ms/10ms task (0.2 CPU = 209715):
+> 
+>   after the DEADLINE set        +209715
+>   after the 1st KEEP_PARAMS call      0
+>   after the 2nd                 -209715
+>   after the 3rd                 -419430
+>   after the task exits          -629145
+> 
+> After that, sched_setattr(SCHED_DEADLINE) for a new 2ms/10ms task fails with
+> -EBUSY while a 3ms/10ms one is admitted, and offlining a CPU fails with
+> -EBUSY.
+
+sched_setattr(OTHER, KEEP_PARAMS) on a DEADLINE task doesn't make much
+sense to me :).. I'm inclined to think we want to fail early in this
+case.
+
+> Switching a sleeping DEADLINE task to SCHED_OTHER after its CPU was offlined
+> crashes in the __dl_sub() the patch adds, dividing by
+> dl_bw_cpus(task_cpu(p)), which is 0 for that root domain:
+> 
+>   Oops: divide error: 0000 [#1] SMP NOPTI
+>   RIP: 0010:switched_from_dl+0x13a/0x3e0
+> 
+> Unpatched mainline only leaks in this case.
+
+This one looks like a pre-existing issue which my total_bw fix makes
+worse (w/p it we leak but don't crash).
+
+Let me see what I can do about both.
+
+Thanks,
+Juri
 
