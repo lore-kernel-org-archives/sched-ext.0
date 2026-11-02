@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793635452;
-	b=yB/8+05iak5KKP07weDrllt7b8ngAER/i4D/le/knSIqF3HU67bDU6oOl1dKNLXLtebU
-	 M2xrULnmzwwRwMOCabTaUEVJZ1Y3Tvwt9d446UdC5uf4DoPTuEnAyQRYhe8WlsN8en4Z2
-	 PsQF9ja+Crh83h+Bw1FH2uZcoSWQ8SGJCc+saiPvQTY5V2X18TyxTyGSUv1MuTz4k59X/
-	 Jdyan9Ehy7KOYeiK+yUP3Ugtl4mcDytAhoQIp5KyiVmAAslcVGfYaDhfUCvHmMR6ZYR3g
-	 iR34kGDRX2V4k4WOW+ho3yLfskQzEZhZ6qExOrHzcSHXdEyDBFN5+Mt5dKL4nh3C2xQ==
+	t=1793636166;
+	b=n3+JtFiNeHYXe4DgLlfYylUdossaa5muF9OqURHFD1+LcsxvJ9zfpCrU9IvDY45XNhE8
+	 Xm7cLwyppWvTn8hiHas45DA2E1Zkl82Gh/SmQXyb3GQWSAGQNBADaWMmR2Ro8XI2UV5FA
+	 JpzhCX8WUJL1l5qZ8MSjozFG4GNw8E5cENDfib1n1ZTXIUoDIe1kKyUAyHArLzeaTxo2w
+	 cmlV2eUbggQ3ZgcmSnxfQV7CUnYrowyIq+TZOI4mhyk2Rseyu5/Y5zb3e6wkbOa/DMzDI
+	 yIj0ZrP2XhD56TpN2phZpI8AdJLIctfsEjrc252aXuXLfoD3AW958SRHQ3dDybEyrCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793635452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793636166;
 	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=ItvsId50yzDVw06OawIUXmYj/0R1ht6DyNbArDiWRAI=;
-	b=LDePsOPnVSReStxk+GyWcWCmnnN56+yS2l+PcSut0OAaOONq1i0QREur+Tz/Irg8+Y7x
-	 EpubBjFi9JgALaE2+Kv1Xkw8FHTwrvBr5iRKKOW/wkkC1bWtE3xMmL3/K2vqNXeBKVkHc
-	 vsd531ovs6N1fvAqIsZa5mMP+uPkgw7EkB6Vc8hI8sIT5VuRSnUFYqgWpo/rSJ38JKqy9
-	 1Csd+X5S8m70NKlnKuwA4xoWSo5IHZipoYddrDmHvFb5NnboAHSv+iDhBMt6lD/kGgOsC
-	 EalS3biu9eEAh8ch8ljH8bTRPzgKXaFhAM9OVnEhJ/fNlD2ANRbezSZmORwxFPw3g4Q==
+	bh=60a0/HLjQTWhu7YxyY2UEEVoE9Eqcv8bbTKkNoYxrVU=;
+	b=tltmze3wxRxAGbvz6JRCVmShk2osS20BB9JbJIFB2omHwq7GuXg1vZAyzKJEZEsokxHY
+	 z3s7vPj60tspD0M6CqeQ+52swoCdL9YLUaAFYD7WQI0pbNxLoKMsDdHMor+KDus9IuXUJ
+	 5ZGAKwmr6h1aHK0EYNFVlvfB+haU3imfAUZSEJwcTdEnDQUmqoYLcXofeS9MlXlBq9P7H
+	 2HXehsJ2UugREsBid6Fhicf7ob/PJuisrYtByDU9NJXrTDwDiAXyrHrfUHc68bkEQ1DRb
+	 eI0EauSOQ5fRJwAD3bMTbydKczp22Br9z2YH9IzH43WyZm6fTdcqWYSytSjU+7AysNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QMQy9l0W;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FiyyH8PJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF66606A904;
-	Mon,  2 Nov 2026 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D52606AB8C;
+	Mon,  2 Nov 2026 16:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QMQy9l0W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6712A1F00A16;
-	Mon,  2 Nov 2026 16:04:11 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FiyyH8PJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4454B1F00A18;
+	Mon,  2 Nov 2026 16:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793635451;
-	bh=ItvsId50yzDVw06OawIUXmYj/0R1ht6DyNbArDiWRAI=;
+	s=k20260515; t=1793636165;
+	bh=60a0/HLjQTWhu7YxyY2UEEVoE9Eqcv8bbTKkNoYxrVU=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=QMQy9l0WwNsdcal80wFUmfw0XGrJz5XyyRRwOCsiv9ieQQuwKbHlegbcHj9hvT+rD
-	 WAKo8QT9TpwRyZ77/9LDEB8ueMrSuwlhB0CPpG/wHv5aNvom+tXD08PfYa3LKPP2UF
-	 3EHljaVWaGBsrl2ySP8kYGpF18i2B4P1AMsuR1YCaBY4Guu5wxhiUfi1V2j3GuRbhw
-	 EXfX3hNNLynURbZV0FZaj3n1r/J88SjZVf3hgVDHSBbowmxTYheirQepGksjSi2gj6
-	 Obzv2JDmD3EFBWLOwkdYKY7h87HaIcjiKGTzJaWvkj8WXpiEW6du1NaFkN5ARzRtL9
-	 n2qhwGxsPh5OA==
-Date: Mon, 02 Nov 2026 06:04:10 -1000
-Message-ID: <ff8d427a650061733325f00e5442e4e6@kernel.org>
+	b=FiyyH8PJKpC33lyHFq2gD+6Jo/ZJe5p/l8ssoj3XCnAxSu9WEuZCeKT75tJbA6WnV
+	 AGP6D/YBciSmBWciN05AaIk/GGtRjwJq6k7xVXosvC/owKmPr+CKG7/u2Q0M/31w8a
+	 YBH7WtUetHNXyaibZWmlEqDdQN16vFBsNUdTBlvA4pEhi+haCBe6LuMReIFIgJ21lU
+	 l6uiC1A7f9+qIG7z227Q8Y2b3XSMZdTfdorwiffsMj0fJ+CVhYZ7HF8vzhyfNjfbjZ
+	 fv/fCKLb2WrG6myfSr65cEhuzuSl7jIYVtxhbCLKRb55uoDgWsTr2yAXs+Y/yNu1w5
+	 wNuPpYfxm0cUA==
+Date: Mon, 02 Nov 2026 06:16:04 -1000
+Message-ID: <1abd1d80c29698e76b558506ab68e2e2@kernel.org>
 From: Tejun Heo <tj@kernel.org>
 To: sched-ext@lists.linux.dev
 Cc: David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, Changwoo Min <changwoo@igalia.com>, Emil Tsalapatis <emil@etsalapatis.com>, David Dai <david.dai@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCHSET sched_ext/for-7.4-fixes] sched_ext: Fix ops.enqueue/dispatch() calls before ops.cpu_online()
-In-Reply-To: <20261031170541.710939-1-tj@kernel.org>
-References: <20261031170541.710939-1-tj@kernel.org>
+Subject: Re: [PATCH sched_ext/for-7.5] sched_ext: Say "hosting" instead of "running" in scx_exec_sched() comments
+In-Reply-To: <20261102080259.1509843-1-tj@kernel.org>
+References: <20261102080259.1509843-1-tj@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -60,12 +60,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 
->  0001 sched_ext: Factor out drain_offline_rq()
->  0002 sched_ext: Fix ops.enqueue/dispatch() calls before ops.cpu_online()
-
-Applied 1-2 to sched_ext/for-7.4-fixes with the following tag added:
-
-  Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Applied to sched_ext/for-7.5.
 
 Thanks.
 
