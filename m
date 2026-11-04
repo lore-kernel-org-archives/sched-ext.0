@@ -1,72 +1,73 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.71
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793790892;
-	b=06bP6MX1/ekRzTTjIH32px2PAnJxVSAjwN6unwF6AnH0asZJtp2bZ0oZOFw/PiNPIETN
-	 nBZlMrRWaqM2Rc4x05cSlccobPmnnpIvbzvYm0aPkLY91tfY1vq6LtKOKRUM6q7JrblTn
-	 msDXKC68moDKX9ZXGTNIrLFHqav7GK0IuNFVtSd4BEitWqHrhPvemC3fnoTzyIMFj5O2t
-	 tY5Lv/f90twejycOXBztYYis1ejI4tedu63KfPzYzsYQqeFvlItnvCXsGJVkMfx0v0KXl
-	 4nMjEc/oSlcLA2mlB5/sk7xJzhoxiNJqSScz/xBkwi0d405pfEELddmYhbvcM828m+Q==
+	t=1793791911;
+	b=PdoXeh6jsj2YIxndf8EA4umEz/y7w/zjbRo8YKnREdiew56aRhG3jbYlr+/+qU5GzVKu
+	 4J6OcWZLI+jjQrPmECYV8tgc/B4fSvm5OmfMHBSkEUezeBxxjuu67ozuWOeImL5Q+C636
+	 scB2iz1212Yk6T5yqsw/wGNsBwUpED6VOy91WhC+gyk6JHAz6BWqvNONSkztVLSvn+nKZ
+	 X0F6q368NF+kllLmoooIoPC6q/cqbUk6eSrzrYGT+0wxmBYFs52DBE82+My+ipg0H3+zL
+	 dA0PNX8noGxRtVLYFQItz3fEhfJi1NnGdiO1qlRl00U8MhIWfAfQrwX4J/RWFZdUnAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793790892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793791911;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
-	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=xDxDhqJVjBKwoBSqZ4/8zTufBKgQ9/aX3QhT60mdvuE=;
-	b=XZfN+FafsKrvN54co/+3xccjRXaIO1wF4KcYcl7HEb1KyFxutcLww5R+WIxKYasQAty2
-	 5uXNVDOlhoCiZlbLLEPYelJETFuKTy0sJSMA6RGo+luG+WOXbOJ9tD4uOdbuLucNvPC8o
-	 rh+1vUXxhZejTbGbUhmsrRc5AmHV/AXgQFLU4UnQ8x34gIsltA4BuLnJ7Ow6klby86lCc
-	 An878pJKqtBeAwS94eYn/zDGIexEGCYZ04SZOYzFdvU6QyZDtZCmY6oNHkvBlNOcYMgI6
-	 mYsn5SSOh7EWwm2uTjvH+cg5vT/4mkIipU2wAU/JaWIKwqgzykgdCSsQkhCqUW8zxEw==
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=EDullTK0A0ojCa1/qPo0kHUFNMNAZsYWgwEQhoyO/jY=;
+	b=0VqEo2o1MQTjido2dhWZmXhWC/BqK/5T0Lf/VIQY+J80gKv+VnkVlhgGyyxxZ+o+dsPW
+	 cw50Xh4ZSK0i2C6rdYgR3ogVwRuubOfXIE4QBfqpjkjnjT9CS7PCd0F8rDtf5aGhNk2JA
+	 QFlkgCOjoyX4oMsHdgwLuyzLtIjaMoI/uaDGy5NjIWGVoEUOF26LSpQbVn90m8kMX50SC
+	 Of7aw1IcOPJgNadreioRomJ7cSRDfmB//DfyBcjzSXb/21OScqTtQHthvihSUkMp+XNzs
+	 /HqJL6/noILOntrIam4jq3rDjCsN0VwtWtAGMfS2ZayWV0WGP5F8pHhF4IbdtlhmAng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CJ1obGAk;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=bgyoKbqE;
 	arc=none smtp.remote-ip=209.85.128.71
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF61606A31B
-	for <sched-ext@lists.linux.dev>; Wed,  4 Nov 2026 11:14:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2DF61606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB06606A326
+	for <sched-ext@lists.linux.dev>; Wed,  4 Nov 2026 11:31:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DB06606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jpiecuch.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CJ1obGAk
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a009f82bedso5124625e9.0
-        for <sched-ext@lists.linux.dev>; Wed, 04 Nov 2026 03:14:51 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=bgyoKbqE
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4ad3d35e899so6925495e9.1
+        for <sched-ext@lists.linux.dev>; Wed, 04 Nov 2026 03:31:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793790890; x=1794395690; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xDxDhqJVjBKwoBSqZ4/8zTufBKgQ9/aX3QhT60mdvuE=;
-        b=CJ1obGAkXj8uuyS6u6E8YnqLKh7Tz0ILZnlM+hz1yKalkqWGE3+P4qicepToMk/U3p
-         ATtIUXleXQWaqbzw34P7klY9vVy5G4BmSjxIEKdxUPHVpWjIIjTM1mXpbaJT29S0fcOG
-         Dw2h/ln2EkABkqr8VqU1ljbOY4c8v/geLcLi/cM4LddPsUfk42TLppdXdAOV2gx3/stz
-         fYZ6fs0GPNIuq9ULOauWr4+f1EoWlumROm/DTOoewMBet2Q1QagipkImnNt0DE30/5HQ
-         Lp3FQxFGynMAUeznYu++2WWU8YcUb0o/izs1TKwxDSAlroYJWjVE4tcgW7wnXMO2OUXN
-         AAtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793790890; x=1794395690;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20260707; t=1793791910; x=1794396710; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xDxDhqJVjBKwoBSqZ4/8zTufBKgQ9/aX3QhT60mdvuE=;
-        b=IcxPKYy7Ar+8nVzuaa+TkQEE0vADeFNjEb5jYF3F4/286ehFCkEiOr1QGKHHV799kv
-         kldOHJYI6M2C9JApZCv4KCRT8ohIZyFPnf4ttZnyVNioyn4tlP6dcq2bTWs1tHsqL7J8
-         LeDhHcQ0zJRAeYpZIyILkO8SVy1/2WJr9reKFoEESw2M3+c1vLgSxqPAx97cP7l4Qf3Z
-         xXs12BiGtgG0dSpn/OmQ+AhJewDeqmPDp+/Ja7UeWnm3Ps5Lpdoz7Ze+MIk7L8t2g/ZM
-         RmDOS3J3Wz8ril3StjsfYFXLlzIf6CWmHGTpGIX/CnU+wiOgAa7om4jIoXmQ8rTKcCgi
-         Hfvg==
-X-Forwarded-Encrypted: i=1; AKwUvBxDzxx2mQjZ3jCONpBu6+L3j8f38oY8/Jf2bz7Ykyo4ZyEznMCUdJQ+B6+YJzj2B6wFxQcPEtcLdeI=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/aZ9POLTOwjpquSYDhfUEgzRkbPR7VcP+aCDgCTxSNqVK9RMTz
-	gZEo4vSh5ODS6zhWkCm913fxpRqvUUWqCiAOinXYet/MJ8YDr26S09xq/lOUM6+YKTVgNfufPiU
-	1xYHqQuu8/pTUEw==
-X-Received: from wmbjp21.prod.google.com ([2002:a05:600c:5595:b0:4a1:dfb3:2e66])
+        bh=EDullTK0A0ojCa1/qPo0kHUFNMNAZsYWgwEQhoyO/jY=;
+        b=bgyoKbqE70Dk3brjyBlhv6EFU+W80+In4guteLBGX9QVUjLCbjmltKcRFCsa6ZQN6w
+         j0uTpZud8zndDM7QtBkcfjyM/cJ5lASiRjg79d+AKMLbgyzM4UMNrjAo92CGun/vMJJX
+         QYi8ydv1dQ5l4POgH61V3m/rzLazrysLrjSEODCOSUDsXi1Dmk/hv5b6bfDab1Icez4B
+         d4XdgUMaHCFFPhdqrohVwFUhZxkzX9+vrWw7qC+xXIPi5yxZlygtoy8KaM+Bo88N6KZj
+         1l3DeLRFlArIunurbHl78bC+1rQsfpo+XG6rNkXFzqHy3tcdtCR0ISan0X1bslVjND2Y
+         Ee8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793791910; x=1794396710;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EDullTK0A0ojCa1/qPo0kHUFNMNAZsYWgwEQhoyO/jY=;
+        b=K0kgBoELofm9PqCpjTALmj8K/plzZfVfE6yAv9MuZ6+fLdcLnFUU+mCBBhNneO0F6p
+         0yETm0IGeot/QLQPlBmu+XGKM29uousbpsFSt3lIr07eV+72PvDQ2bbh4NUgZLVEVEPf
+         +y1AjYl+Iahxls9ytX30HOLQN9bDT4nx/NfQrYAo9zxwLhVuSlUhmi9DJoJCA8Pd3Slj
+         27jrbA1Dx44rT29/8LPpdiceAYnSiEk+tcMOBSyEamSo+wHigfdYDAu0Qu5JVYGyX809
+         c0oC4WvvaM176bIXbrH7DFL38V4R1kakYzud+7NqL3LR5e2YSV71tAh9DfxYjfetzARh
+         TriA==
+X-Gm-Message-State: APuU4Z8tRpsnRX1+kPG41armTRGuiA/xTkvihaGRicjitoioYF3OcjLV
+	F+ts8RPHZpVGCFVMCzo3tonu1WBtKpbNn5NMBTzaAh4Beo7DWnWHusksW+Vb2zCXJrDiAo0GjLd
+	Hsf32n/9ITk+S8A==
+X-Received: from wmjv14.prod.google.com ([2002:a7b:cb4e:0:b0:4a1:e780:89af])
  (user=jpiecuch job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600d:a:b0:4ac:aae6:6400 with SMTP id 5b1f17b1804b1-4acaae665a6mr272975095e9.13.1793790890378;
- Wed, 04 Nov 2026 03:14:50 -0800 (PST)
-Date: Wed,  4 Nov 2026 11:14:39 +0000
+ 2002:a05:600c:870f:b0:4a2:1612:6367 with SMTP id 5b1f17b1804b1-4ac185bcf74mr348235945e9.15.1793791909664;
+ Wed, 04 Nov 2026 03:31:49 -0800 (PST)
+Date: Wed, 04 Nov 2026 11:31:49 +0000
+In-Reply-To: <sashiko-outbox-195908@kernel.org>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -76,88 +77,100 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
-X-Mailer: git-send-email 2.56.0.398.g882cbad275-goog
-Message-ID: <20261104111449.3984318-1-jpiecuch@google.com>
-Subject: [PATCH sched_ext/for-7.4-fixes] sched_ext: Read exit_kind before
- flushing in scx_flush_disable_work()
+References: <20261103190805.3487350-1-jpiecuch@google.com> <20261103190805.3487350-3-jpiecuch@google.com>
+ <sashiko-outbox-195908@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+Message-ID: <DMME0YKQQQ4D.PNR5XMBJHUV7@google.com>
+Subject: Re: [PATCH 6.18.y 2/2] sched_ext: Fix scx_flush_disable_work() UAF race
 From: Kuba Piecuch <jpiecuch@google.com>
-To: Tejun Heo <tj@kernel.org>, David Vernet <void@manifault.com>, Andrea Righi <arighi@nvidia.com>, 
-	Changwoo Min <changwoo@igalia.com>
-Cc: Kuba Piecuch <jpiecuch@google.com>, Cheng-Yang Chou <yphbchou0911@gmail.com>, 
-	Richard Cheng <icheng@nvidia.com>, sched-ext@lists.linux.dev, linux-kernel@vger.kernel.org
+To: <sashiko-reviews@lists.linux.dev>, Kuba Piecuch <jpiecuch@google.com>
+Cc: <sched-ext@lists.linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 
-scx_disable_workfn() sets exit_kind to SCX_EXIT_DONE before it tears the
-scheduler down. scx_flush_disable_work() reads exit_kind after syncing
-disable_irq_work and flushing disable_work, so it can observe DONE from
-a disable_work that was queued after its flush and return while the
-teardown is still running:
+On Tue Nov 3, 2026 at 7:15 PM UTC, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] sched_ext: premature return in scx_flush_disable_work() on SCX_EXIT_DONE
+> --
+>
+> commit fe0315a0808b95d01cd45741655ca111deb8afc1
+> Author: Cheng-Yang Chou <yphbchou0911@gmail.com>
+>
+> sched_ext: Fix scx_flush_disable_work() UAF race
+>
+> This commit updates scx_flush_disable_work() to loop while syncing
+> sch->error_irq_work and flushing sch->disable_work until sch->exit_kind
+> reaches SCX_EXIT_NONE or SCX_EXIT_DONE. This aims to close a race window
+> where bpf_scx_unreg() frees the scheduler before a concurrent scx_vexit()
+> queues the disable work.
+>
+>> diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+>> index d2460a88fba35..78f15ddc0aa5a 100644
+>> --- a/kernel/sched/ext.c
+>> +++ b/kernel/sched/ext.c
+>> @@ -4217,8 +4217,13 @@ static void scx_disable(struct scx_sched *sch, enum scx_exit_kind kind)
+>>   */
+>>  static void scx_flush_disable_work(struct scx_sched *sch)
+>>  {
+>> -	irq_work_sync(&sch->error_irq_work);
+>> -	kthread_flush_work(&sch->disable_work);
+>> +	int kind;
+>> +
+>> +	do {
+>> +		irq_work_sync(&sch->error_irq_work);
+>> +		kthread_flush_work(&sch->disable_work);
+>> +		kind = atomic_read(&sch->exit_kind);
+>> +	} while (kind != SCX_EXIT_NONE && kind != SCX_EXIT_DONE);
+>
+> [Severity: Critical]
+> Can scx_flush_disable_work() return while sch->disable_work is still
+> running if sch->exit_kind transitions to SCX_EXIT_DONE between
+> kthread_flush_work() and atomic_read(&sch->exit_kind)?
+>
+> In scx_disable_workfn(), sch->exit_kind is set to SCX_EXIT_DONE at the
+> start of the work function before running scx_root_disable(sch):
+>
+> kernel/sched/ext.c:scx_disable_workfn() {
+> 	...
+> 	while (true) {
+> 		if (kind == SCX_EXIT_DONE)	/* already disabled? */
+> 			return;
+> 		WARN_ON_ONCE(kind == SCX_EXIT_NONE);
+> 		if (atomic_try_cmpxchg(&sch->exit_kind, &kind, SCX_EXIT_DONE))
+> 			break;
+> 	}
+> 	ei->kind = kind;
+> 	ei->reason = scx_exit_reason(ei->kind);
+>
+> 	scx_root_disable(sch);
+> }
+>
+> If CPU A is in scx_vexit() (or scx_disable()) between scx_claim_exit() and
+> queuing the work while CPU B enters bpf_scx_unreg() ->
+> scx_flush_disable_work():
+>
+> 1. On CPU B's first pass, irq_work_sync(&sch->error_irq_work) and
+>    kthread_flush_work(&sch->disable_work) return as no-ops because neither
+>    work item has been queued yet.
+> 2. CPU A then queues sch->error_irq_work (or sch->disable_work), and
+>    scx_disable_workfn() starts running on sch->helper, sets sch->exit_kind
+>    to SCX_EXIT_DONE, and enters scx_root_disable(sch).
+> 3. CPU B executes kind = atomic_read(&sch->exit_kind), observes
+>    SCX_EXIT_DONE, and breaks out of the loop without ever having flushed
+>    the running sch->disable_work.
+>
+> Could that allow bpf_scx_unreg() to call kobject_put(&sch->kobj) and return
+> to free the BPF struct_ops map while scx_root_disable(sch) and ops.exit()
+> are still executing? Would reading sch->exit_kind before syncing and
+> flushing (or performing a final kthread_flush_work(&sch->disable_work)
+> after the loop) avoid returning before scx_disable_workfn() finishes?
 
-  CPU A                          CPU B
-  -----                          -----
-  scx_vexit()
-    scx_claim_exit() -> true
-                                 bpf_struct_ops_map_link_detach()
-                                   bpf_scx_unreg()
-                                     scx_disable()
-                                       scx_claim_exit() -> false
-                                     scx_flush_disable_work()
-                                       irq_work_sync()      // not queued
-                                       kthread_flush_work() // not queued
-    irq_work_queue()
-  scx_disable_irq_workfn()
-    kthread_queue_work()
-  scx_disable_workfn()
-    exit_kind = SCX_EXIT_DONE
-    scx_root_disable()
-                                       atomic_read() -> SCX_EXIT_DONE
-                                   bpf_map_put()
+This is an upstream bug, sent a fix for review:
+https://lore.kernel.org/all/20261104111449.3984318-1-jpiecuch@google.com/
 
-Once bpf_scx_unreg() returns, its caller drops the struct_ops map
-reference, and the struct_ops trampolines can be freed while
-scx_root_disable() is still running and can still call into the BPF
-scheduler, e.g. ops.exit().
+I will send the fix for 6.18 once it is merged.
 
-Read exit_kind before syncing and flushing, with acquire ordering paired
-with the atomic_try_cmpxchg() in scx_disable_workfn(). DONE is only set
-from disable_work, so once it is observed, the following
-kthread_flush_work() sees the queued work and waits for the teardown to
-finish.
-
-This patch was created with the help of an AI coding assistant.
-
-Fixes: d99f7a32f09d ("sched_ext: Fix scx_flush_disable_work() UAF race")
-Cc: stable@vger.kernel.org # v7.1+
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-195908@kernel.org/
-Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
----
- kernel/sched/ext/ext.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 6c593d3dee3c..949143bf4752 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -7810,10 +7810,17 @@ void scx_flush_disable_work(struct scx_sched *sch)
- {
- 	int kind;
- 
-+	/*
-+	 * scx_disable_workfn() sets SCX_EXIT_DONE before tearing down. Read
-+	 * exit_kind with acquire ordering (paired with atomic_try_cmpxchg() in
-+	 * scx_disable_workfn()) before syncing and flushing so that, once DONE
-+	 * is seen, the following flush observes the queued work and waits for
-+	 * the teardown to finish.
-+	 */
- 	do {
-+		kind = atomic_read_acquire(&sch->exit_kind);
- 		irq_work_sync(&sch->disable_irq_work);
- 		kthread_flush_work(&sch->disable_work);
--		kind = atomic_read(&sch->exit_kind);
- 	} while (kind != SCX_EXIT_NONE && kind != SCX_EXIT_DONE);
- }
- 
--- 
-2.56.0.398.g882cbad275-goog
+I don't think it should block this series. This series reduces the race
+window from potentially multi-ms, very easy to reproduce with the right
+BPF progs, to a few instructions between the flush and the exit_kind read,
+which I failed to reproduce without adding artificial delays in the kernel.
 
