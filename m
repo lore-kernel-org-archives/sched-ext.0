@@ -1,111 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793909031;
-	b=azLb4wX4VUcEqo6G0WGjTgS4aIsetDf7CZ3IQQTjhwQeHJdrkYkTBTxhPSei0uT6E0n/
-	 M1wkFMGaZ6lwJ9JnJUW0pl0MG40wdWqh2cYBn9+3XS+bFDmTmRMi2vZvhao0gf+PT714j
-	 nb6Ra9kxKeHqEC1cB61alQ7A37IQEjPmMqJ+aZnGaKRkhXI9rGDLxUgL1DkRfl07lJwvG
-	 zO4wSq2B06fONeWQ+tWDfpcBriQhNga1HKUWp8LGL8CN0JEKvLzN1/cOelz6EVEPw8Eib
-	 byA25NE7Lh6ecchwzZNxbAufEciGMovpWCYcvcYOcjv6AqH1uYyE4QXLJb5stH36i/Q==
+	t=1793910811;
+	b=IyTOgCLu794Y/4XGjc2BURAIG+4TN9Zj0Kvkv6vhuyWFrbbAY0VGmIyGAmXaPgddXM6e
+	 Bx85TRDyzbB5G2O78epBIEVSYbkbjpOzkAoTYTlZ4qtMfXZUXFN46wkx1cqXjA+XEut1V
+	 PBciUXhMcaddytcEZpYW0Utzm/GAJw0wcUcyqll1DPD/vNEKjNwlKuMtZDXA8gKIRc6Wf
+	 /6Y/213GDz5BZpG/cuMZFMmaWr4RQcfX7ILlK8ErsTSeuqsn8HPBxYfofW2E+nAQokVCL
+	 FIMfHaYZQjDI8+jYObKVYUzn5Skn7AHgLpEGZC1K6jhsXNrofO4YMxKjfbr3tjBOLkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793909031;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KJNqYYH4eS7zhfJ38fc5jVlk3yATsfNyOP5G1+rP9mE=;
-	b=QLg32mIL+ltLzqFtbptXL+tGV3LHZyYYt3yAlhEtgWfBl5AWUVUYkMtFicjMGdpbUl5Y
-	 HvT8DyV2NciNXu5QuzBtLQbPEAWzeYDthkh0uM/7oRoBfqezuWM8zvzCg4povQiIkVCE4
-	 yTyhUX5pcsu1ifStogKb7/i88Nzf5QKzDuKKDiApCtpUybxu8Euc72JbBB3SPnwCZN6Xm
-	 LDRcz+9fpZ/dR2XfHlp0kDF3wNngBSBgpykJJ2YP/My0Hx908GCWXmGLMfAqDZtCoBAv7
-	 DpOA+TaM6cP3bKyrWlhx076LNtux1VbOKqYyeVebmT78odTXKLOgWNaNAy2pAruz/Ww==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793910811;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=P/Bsy37Bzh45Q+um6Yxg+ZiZr825uDNRkO+9s/JT654=;
+	b=EjhZxdUlkOKw+bWCT/ax8r6255ozQdScuzUlTwUTMQg6dsRHZ36lNLmaPRjUXiuexU3G
+	 IPEaLzkohWauzlxGWew1Fxu+aDUC/8iBZIh5yL+6hMvc2Cd12b+do/8cXCP1q3bhMQ8mN
+	 Th49u6QwQC6VfbUx88qXrKCictsUEso2EexkG1VrCdorwQwHK5YJbMZPpBf7Yq7+MZ3tB
+	 pNPFyVrJU9k0wqgEUYS8W5/CxJ75kCPZAi5zRIzfKPxVVmUN0lyGv1xeUe8gCMA47WazV
+	 wHyDs5us6xxD44no0BXqy0nGJAeubExCA1ds2O5T+vqrzXk7sSi5ymKyhzyjOH11k4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=H0rVY5H+;
-	arc=none smtp.remote-ip=209.85.128.46
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P7qdneVk;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AB9606A336
-	for <sched-ext@lists.linux.dev>; Thu,  5 Nov 2026 20:03:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1AB9606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34801606A32F
+	for <sched-ext@lists.linux.dev>; Thu,  5 Nov 2026 20:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=H0rVY5H+
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a5036bbac7so14671175e9.3
-        for <sched-ext@lists.linux.dev>; Thu, 05 Nov 2026 12:03:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793909029; x=1794513829; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=KJNqYYH4eS7zhfJ38fc5jVlk3yATsfNyOP5G1+rP9mE=;
-        b=H0rVY5H+ALhway3RqF3I+gm7epmZX8MzEv9hhoP8OPwbM4xMl2wcBr1CQtiF31n8yz
-         89kZ4jJOT2TpSr7jTp19Ilzpmv6oyYFZkXVsFQAEjdEvVHsVHDS0JE7jE+h9gh8t3wY3
-         e72VhL71ANJg6wmAz3iw1Gryv+2QmFeoXUjD+MKma2rZ/PHqr7n6/VfqpyOi9vqOP7HS
-         6TUQK/joV/p2PsHCl3RYLFftTLgxf7uBMnkyjNIi7b3lcj7BNG1x5KsZv4S4+t8PHtDM
-         L363WxMzmrEvrfHeJ2uFOmCTxrPtj4+muqFJCxcwfibUbVN2W+EqGJBOqKBsXuLRNAMY
-         EWvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793909029; x=1794513829;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=KJNqYYH4eS7zhfJ38fc5jVlk3yATsfNyOP5G1+rP9mE=;
-        b=tK4YDSXzkRPfJnElIfbjKJzRk2lQFD8NpkQltVrzqTqb5YOHff6Gm9WgibkQdap8Wy
-         wdS8GxO5tD+i57l7ykQveLbgW2ZHGZm8ZuJqpNsa8zsM5gCKSM4sfqMYnqRprxC/uqOl
-         n4kKhPiK15XEOKd5GC1eMBzyVaMXMXr/K39wy5fxQ7SfiTFuQJ1jQhyyO8usw+J9f5sr
-         6kmyRHYbP8YCWCg1ggK7LYbr8OHUANaX8/g6Nyke6v2Ehs6/qp0qXJeY2UgVZI+3Dshr
-         gBYF+XqWph/fDJ5btrr7DYH7Y+P4fJPmGE+PpSyUV1vgC4/winSOtxsMWTGJJgyiV+Ze
-         DBWQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxvieQcVdtGZ95YNdm5ZAgWY47uWO6x7WXgqbAhXLwRLLwRS5H6CdOJT1WpEFuXy3ymTFMVMPbq7XY=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8YkIMRawCGbNbkAJRMau9jRnkOxS8L7sHBbR0R3j0LHki8yGB/
-	o7IPgS1HKgvTi0UYsJQ63p1jt38YTX+NO717DnespX+xnVtVc/0qdL1q
-X-Gm-Gg: AYBFou0UyZ+MKwZsR/3fJ/x9GPZwrhLiEtNkri5Q/2Ey3HCxs13j29dxGL1xj9J9HGV
-	XXDCC5WwVWdHwjpMgskc9+S4mZ8s9i7v94Uk9oj6fvMn/SRjqdH1CHcw28GUUJGcs7LvK+ZYL5W
-	fKwIR+kugl6djP31tisdyQyI+7LK5BBkzQxl94HyFcszd3mH7/TnbucenKY7Exk7pRaDRXaVDzL
-	gmtOdaUGLgaSIzVDojiSmsud9gRKvwrxDHnZEJIwn9VDnSzmKBrf1T4/+wPNlHmA0Hkt3W/Ig/4
-	QHJCFTM/t4mfsrFwT+ZJcuQ9hhJY/T3Lq7AWW4sIYtzr8NaFhX4QLM6F8ngeIwtT+bxuhbZlYcL
-	w/SfK9WXKxvKMZaN+LaL7/hEuYCOhz93qUXAgWfqYh0DPWENQIdVvHf6QjxHCwKM1xtr/5MSNZQ
-	L2w0AysFkHeg5BjZbNtOIIqwCT7ENUwNfCZgZ2SaTROazxv9j+Q9r7qbdHeTwLAPFWqkzpwsoD8
-	S8dbFrGj/HnY/IMG8NYIoo4qALZlDbPWY5tSKwnAFyAWy8D70E4JsUKp60OAfC6YLSQEyBpzqZG
-	qam7+8X2jcWPR+7Qm1iInYbJCM/2wdnyxUnK+SzPgiFQ41Ev/cMmAnqGP8gIUfsOdikLIeO0q8R
-	GbA==
-X-Received: by 2002:a05:600c:1d06:b0:4a2:180b:3153 with SMTP id 5b1f17b1804b1-4b6df02925bmr3479715e9.14.1793909029007;
-        Thu, 05 Nov 2026 12:03:49 -0800 (PST)
-Received: from localhost.localdomain ([86.124.84.219])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b57317cb8esm88965055e9.13.2026.11.05.12.03.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 12:03:48 -0800 (PST)
-From: Radu Toader <radu.m.toader@gmail.com>
-To: peterz@infradead.org,
-	mingo@redhat.com
-Cc: juri.lelli@redhat.com,
-	vincent.guittot@linaro.org,
-	dietmar.eggemann@arm.com,
-	rostedt@goodmis.org,
-	bsegall@google.com,
-	mgorman@suse.de,
-	vschneid@redhat.com,
-	kprateek.nayak@amd.com,
-	tj@kernel.org,
-	void@manifault.com,
-	arighi@nvidia.com,
-	changwoo@igalia.com,
-	frederic@kernel.org,
-	anna-maria@linutronix.de,
-	tglx@kernel.org,
-	sched-ext@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Radu Toader <radu.m.toader@gmail.com>
-Subject: [PATCH 2/2] softirq: Treat an interrupted idle task as idle in tick_irq_exit()
-Date: Thu,  5 Nov 2026 20:02:05 +0000
-Message-ID: <20261105200205.1178097-3-radu.m.toader@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261105200205.1178097-1-radu.m.toader@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P7qdneVk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A057F1F0089F;
+	Thu,  5 Nov 2026 20:33:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793910810;
+	bh=P/Bsy37Bzh45Q+um6Yxg+ZiZr825uDNRkO+9s/JT654=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=P7qdneVkLlfpJF5GrEtgTNswIE+zu6iEZqoNj1d4yCch0OrrAWmBV5MFw1wHiBwRl
+	 8Zxwybg/dYpgBFNFT0EjQ17MYiDwGpi4crm9EDi+kZSlhZ7j5EN+D1+Vs+ALS+pKp/
+	 AXtUgOFb78O8rVM4Y6YNhR+ZvnYUhbGjLo+77Tu0JlneAI6AvuiA9e/E1FALA2McQ/
+	 50hU1soSmA9769W4ijKHTJaOQVnOUITdWaWtn94bj/N5g3yYJeOOCXMSKOtjOPtmJg
+	 nZ/+NorALPNzGjDg4rYfJ31ebXQI1y9/UpX4a0VYQs5ouTvDkDsbfSuA2dPPkfxvA2
+	 y8u7u2oGfTMJA==
+Message-ID: <sashiko-outbox-200111@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/2] sched_ext: Add scx_tickbug, a scheduler that holds
+ a task on an idle CPU
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Radu Toader" <radu.m.toader@gmail.com>
+Cc: sched-ext@lists.linux.dev
+In-Reply-To: <20261105200205.1178097-2-radu.m.toader@gmail.com>
 References: <20261105200205.1178097-1-radu.m.toader@gmail.com>
+ <20261105200205.1178097-2-radu.m.toader@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 05 Nov 2026 20:33:30 +0000
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -114,137 +60,428 @@ List-Subscribe: <mailto:sched-ext+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-tick_irq_exit() only runs tick_nohz_irq_exit() if sched_core_idle_cpu(),
-which is idle_cpu() unless core scheduling is built in. idle_cpu() is
-false when the run queue has tasks while the idle task runs.
+Thank you for your contribution! Sashiko AI review found 6 potential issue(=
+s) to consider:
+- [Medium] sched_ext: SCX_OPS_ENQ_LAST in tickbug_enqueue() fails to hold o=
+r stalls tasks
+- [Medium] sched_ext: global held_at overwritten across queued tasks in tic=
+kbug_enqueue()
+- [Medium] sched_ext: missing ops.dequeue in scx_tickbug corrupts hold_q an=
+d nr_held_now
+- [Medium] sched_ext: scx_tickbug fails to ensure release_timer is armed on=
+ timer_cpu
+- [Medium] sched_ext: scx_tickbug runs untagged tasks on target_cpu during =
+hold
+- [Medium] sched_ext: missing nr_cpu_ids check for default timer_cpu in scx=
+_tickbug
+--
 
-That is the normal state of a CPU under sched_ext whose BPF scheduler
-holds back a runnable task of that CPU in one of its queues, e.g. a task
-of a cgroup at its CPU limit: the task stays queued on the CPU's run
-queue and counts in rq->nr_running, while the CPU sits in the idle loop.
+commit 1398ab9e5efd3cabedac623d79d370424ce29d54
+Author: Radu Toader <radu.m.toader@gmail.com>
 
-tick_nohz_irq_exit() is what marks an idle CPU as idle again for the
-scheduler clock after an interrupt in the idle loop
-(TS_FLAG_IDLE_ACTIVE, sched_clock_idle_sleep_event()). Without it, the
-next exit from the idle loop doesn't resynchronize the CPU's sched_clock
-with sched_clock_idle_wakeup_event(). With an unstable sched_clock, e.g.
-under kvm-clock without a stable TSC, the clock of a CPU in tick-stopped
-idle is clamped to its last stamp plus a tick, so a task picked after a
-reschedule IPI (which doesn't go through irq_enter()) starts with a
-stale exec_start, and the next tick charges the whole idle stretch to
-it. A cgroup holding one such task was charged twice the CPU time it
-could possibly have used; numbers are in the cover letter.
+sched_ext: Add scx_tickbug, a scheduler that holds a task on an idle CPU
 
-Commit 548796e2e70b ("sched/core: introduce sched_core_idle_cpu()")
-fixed this same gate for the other case of "the idle task runs while
-nr_running > 0", forced idle under core scheduling, where the symptom
-was too little idle time in /proc/stat. sched_ext made that state
-reachable without CONFIG_SCHED_CORE, and there the symptom is idle time
-charged to a task as runtime.
+This commit adds the scx_tickbug test scheduler to hold tasks named "spin"
+runnable in a BPF queue while the target CPU remains in the idle loop until
+a periodic timer pinned to another CPU releases them.
 
-Ask whether the idle task is running, which covers both cases. CPUs
-whose run queue is really empty are unaffected; a CPU interrupted
-between leaving the idle loop and switching to a task has need_resched()
-set or has already left the idle accounting, see tick_nohz_irq_exit().
-sched_core_idle_cpu() has no users left and goes.
+> diff --git a/tools/sched_ext/scx_tickbug.bpf.c b/tools/sched_ext/scx_tick=
+bug.bpf.c
+> new file mode 100644
+> index 0000000000000..e6a6d627f042e
+> --- /dev/null
+> +++ b/tools/sched_ext/scx_tickbug.bpf.c
+[ ... ]
+> +s32 BPF_STRUCT_OPS(tickbug_select_cpu, struct task_struct *p,
+> +		   s32 prev_cpu, u64 wake_flags)
+> +{
+> +	if (is_tagged(p))
+> +		return target_cpu;
+> +	return prev_cpu;
+> +}
 
-The new gate is strictly wider than the old one, and deliberately so.
-idle_cpu() is idle_rq(), rq->curr == rq->idle && !rq->nr_running &&
-!rq->ttwu_pending, so besides the two cases above it also skipped a CPU
-idling with a wakeup queued by TTWU_QUEUE whose IPI has not run yet.
-That case is now covered too, on any kernel and not just under
-sched_ext. It is the same latch failure for a shorter window, so
-covering it looks right rather than merely harmless, but it was reached
-by reading the code and not measured on its own. What keeps the wider
-gate from giving a CPU idle accounting it should not have is that
-tick_nohz_irq_exit() tests TS_FLAG_INIDLE itself and only does the idle
-bookkeeping inside the idle loop.
+[Severity: Medium]
+What happens when an untagged task wakes up with prev_cpu =3D=3D target_cpu=
+ while
+target_cpu is idling with a tagged task held in hold_q?
 
-Compile-tested in four x86_64 defconfig variants - SCHED_CORE=y with
-NO_HZ_FULL=y, SCHED_CORE=n, NO_HZ_COMMON=n, and SCHED_CLASS_EXT=y with
-SCHED_CORE=y and NO_HZ_FULL=y - with no new warnings at W=1.
+Because tickbug_select_cpu() returns prev_cpu, ttwu_do_activate() enqueues =
+the
+untagged task on target_cpu and calls wakeup_preempt(), which sees
+rq->next_class =3D=3D &idle_sched_class and calls resched_curr() on target_=
+cpu.
+That forces target_cpu out of do_idle() (calling tick_nohz_idle_exit()) and
+into tickbug_dispatch():
 
-Tooling: the bug was found and this patch and changelog were written by
-Claude Opus 5 (Claude Code), in a session measuring cgroup CPU limit
-enforcement under sched_ext. All of the patch and all of the changelog
-are tool-generated; the cover letter says what was and was not measured.
-By the threat model in Documentation/process/threat-model.rst this is a
-regular bug and not a vulnerability: it misreports CPU time under a
-legitimate configuration and crosses no privilege or isolation boundary.
+	if (cpu =3D=3D target_cpu && release_now) {
+		release_now =3D false;
+		if (release_one())
+			return;
+	}
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Signed-off-by: Radu Toader <radu.m.toader@gmail.com>
----
- include/linux/sched.h   |  2 --
- kernel/sched/syscalls.c | 12 ------------
- kernel/softirq.c        | 12 ++++++++++--
- 3 files changed, 10 insertions(+), 16 deletions(-)
+	scx_bpf_dsq_move_to_local(SHARED_DSQ, 0);
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 1c93da75226e..0e704ea9416f 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -2326,11 +2326,9 @@ extern void sched_core_free(struct task_struct *tsk);
- extern void sched_core_fork(struct task_struct *p);
- extern int sched_core_share_pid(unsigned int cmd, pid_t pid, enum pid_type type,
- 				unsigned long uaddr);
--extern int sched_core_idle_cpu(int cpu);
- #else
- static inline void sched_core_free(struct task_struct *tsk) { }
- static inline void sched_core_fork(struct task_struct *p) { }
--static inline int sched_core_idle_cpu(int cpu) { return idle_cpu(cpu); }
- #endif
- 
- extern void sched_set_stop_task(int cpu, struct task_struct *stop);
-diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
-index 45a127deeadd..22e316680a86 100644
---- a/kernel/sched/syscalls.c
-+++ b/kernel/sched/syscalls.c
-@@ -194,18 +194,6 @@ struct task_struct *idle_task(int cpu)
- 	return cpu_rq(cpu)->idle;
- }
- 
--#ifdef CONFIG_SCHED_CORE
--int sched_core_idle_cpu(int cpu)
--{
--	struct rq *rq = cpu_rq(cpu);
--
--	if (sched_core_enabled(rq) && rq->curr == rq->idle)
--		return 1;
--
--	return idle_cpu(cpu);
--}
--#endif /* CONFIG_SCHED_CORE */
--
- /**
-  * find_process_by_pid - find a process with a matching PID value.
-  * @pid: the pid in question.
-diff --git a/kernel/softirq.c b/kernel/softirq.c
-index 7fc2200392cd..e7d649c29c0c 100644
---- a/kernel/softirq.c
-+++ b/kernel/softirq.c
-@@ -738,8 +738,16 @@ static inline void tick_irq_exit(void)
- #ifdef CONFIG_NO_HZ_COMMON
- 	int cpu = smp_processor_id();
- 
--	/* Make sure that timer wheel updates are propagated */
--	if ((sched_core_idle_cpu(cpu) && !need_resched()) || tick_nohz_full_cpu(cpu)) {
-+	/*
-+	 * Make sure that timer wheel updates are propagated. An interrupted
-+	 * idle loop counts as idle even with runnable tasks queued on the
-+	 * CPU: forced idle under core scheduling, and the tasks sched_ext
-+	 * keeps on a CPU's run queue while its BPF scheduler holds them back.
-+	 * idle_cpu() would skip the idle bookkeeping of tick_nohz_irq_exit()
-+	 * for those, and with an unstable sched_clock the CPU's clock then
-+	 * isn't resynchronized when it leaves the idle loop.
-+	 */
-+	if ((is_idle_task(current) && !need_resched()) || tick_nohz_full_cpu(cpu)) {
- 		if (hardirq_count() == HARDIRQ_OFFSET)
- 			tick_nohz_irq_exit();
- 	}
--- 
-2.43.0
+When release_now is false, tickbug_dispatch() falls through to
+scx_bpf_dsq_move_to_local(SHARED_DSQ, 0) even while nr_held_now > 0 (or when
+prev on target_cpu is a tagged task whose slice just expired), so target_cpu
+executes untagged tasks from SHARED_DSQ instead of remaining idle. Later,
+release_one() still credits the entire now - held_at interval to
+total_held_ns and max_held_ns as if target_cpu had been idle the whole time.
 
+Should tickbug_select_cpu() avoid returning target_cpu for untagged tasks, =
+and
+should tickbug_dispatch() avoid pulling from SHARED_DSQ onto target_cpu whi=
+le
+a tagged task is held?
+
+> +
+> +void BPF_STRUCT_OPS(tickbug_enqueue, struct task_struct *p, u64 enq_flag=
+s)
+> +{
+> +	s32 pid =3D p->pid;
+> +
+> +	__sync_fetch_and_add(&nr_enq, 1);
+> +
+> +	/*
+> +	 * Per-CPU kthreads go to the head of their own CPU's local DSQ with
+> +	 * preemption. The release timer runs from a softirq, so if a kthread
+> +	 * such as ksoftirqd were starved behind a user task the held task
+> +	 * would never be released.
+> +	 */
+> +	if ((p->flags & PF_KTHREAD) && p->nr_cpus_allowed =3D=3D 1) {
+> +		__sync_fetch_and_add(&nr_locals, 1);
+> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, slice_ns,
+> +				   enq_flags | SCX_ENQ_PREEMPT);
+> +		return;
+> +	}
+> +
+> +	if (is_tagged(p)) {
+> +		if (scx_bpf_task_cpu(p) !=3D target_cpu) {
+> +			/*
+> +			 * ops.select_cpu() is only a hint and is not called on
+> +			 * every path. Counted rather than forced: a run with a
+> +			 * non-zero count here did not test what it meant to.
+> +			 */
+> +			__sync_fetch_and_add(&nr_other_cpu, 1);
+> +		} else if (scx_bpf_task_running(p)) {
+> +			/*
+> +			 * Already on the CPU and merely re-enqueued, e.g. after
+> +			 * a kthread preempted it. Holding it here would take
+> +			 * CPU away from work already in progress, which is not
+> +			 * the state under test: the hold belongs at the start
+> +			 * of a run, not in the middle of one. Put it straight
+> +			 * back so it carries on.
+> +			 */
+> +			__sync_fetch_and_add(&nr_requeue, 1);
+> +			scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, slice_ns, enq_flags);
+> +			return;
+> +		} else if (bpf_map_push_elem(&hold_q, &pid, 0)) {
+> +			__sync_fetch_and_add(&nr_overflow, 1);
+> +		} else {
+> +			/*
+> +			 * This is the whole scheduler. The task is already in
+> +			 * target_cpu's rq->nr_running; parking its pid here
+> +			 * and deliberately not kicking the CPU leaves it in
+> +			 * the idle loop with a runnable task queued.
+> +			 */
+> +			held_at =3D scx_bpf_now() ?: 1;
+> +			__sync_fetch_and_add(&nr_held, 1);
+> +			__sync_fetch_and_add(&nr_held_now, 1);
+> +			return;
+> +		}
+> +	}
+> +
+> +	__sync_fetch_and_add(&nr_passthru, 1);
+> +	scx_bpf_dsq_insert(p, SHARED_DSQ, slice_ns, enq_flags);
+> +}
+
+[Severity: Medium]
+Does SCX_OPS_ENQ_LAST in tickbug_ops work as intended with tickbug_enqueue(=
+)?
+
+When the sole runnable task on a CPU exhausts its slice and SHARED_DSQ is
+empty, SCX_OPS_ENQ_LAST prevents dispatch_one() from keeping prev running v=
+ia
+SCX_DSP_PREV. Instead, __pick_next_task() picks next =3D rq->idle and
+put_prev_set_next_task() calls:
+
+  put_prev_task_scx(rq, prev, rq->idle)
+    -> scx_do_enqueue_task(rq, prev, SCX_ENQ_LAST, -1)
+      -> tickbug_enqueue(prev, SCX_ENQ_LAST)
+
+Because __schedule() only updates rq->donor to next via rq_set_donor(rq, ne=
+xt)
+after pick_next_task() returns, task_rq(p)->donor is still p throughout
+put_prev_task_scx(). As a result, scx_bpf_task_running(p) (which checks
+rcu_access_pointer(task_rq(p)->donor) =3D=3D p) is always true on every
+SCX_ENQ_LAST enqueue:
+
+1. For a tagged spin task on target_cpu, tickbug_enqueue() always takes the
+scx_bpf_task_running(p) branch, increments nr_requeue, and inserts p back i=
+nto
+SCX_DSQ_LOCAL instead of holding it in hold_q. In put_prev_task_scx(),
+going_idle && p->scx.dsq =3D=3D &rq->scx.local_dsq then sets need_resched on
+rq->idle, so target_cpu switches to rq->idle, enters do_idle() (calling
+tick_nohz_idle_enter() and tick_nohz_idle_exit()), and immediately switches
+back to spin on every slice expiry.
+
+2. For an untagged task (or a tagged task not on target_cpu) enqueued with
+SCX_ENQ_LAST, tickbug_enqueue() inserts it into SHARED_DSQ without kicking =
+the
+CPU. Because p->scx.dsq is not &rq->scx.local_dsq, put_prev_task_scx() does
+not set need_resched on rq->idle, and the CPU switches to rq->idle and goes=
+ to
+sleep with the task stranded in SHARED_DSQ.
+
+Should tickbug_enqueue() check (enq_flags & SCX_ENQ_LAST) before treating
+scx_bpf_task_running(p) as a mid-run preemption, and either insert untagged
+SCX_ENQ_LAST tasks into SCX_DSQ_LOCAL or kick the CPU?
+
+> +
+> +/* Let one held task run on the CPU we are dispatching for. */
+> +static bool release_one(void)
+> +{
+> +	struct task_struct *p;
+> +	s32 pid;
+> +
+> +	bpf_repeat(BPF_MAX_LOOPS) {
+> +		u64 now, at;
+> +
+> +		if (bpf_map_pop_elem(&hold_q, &pid))
+> +			return false;
+> +
+> +		p =3D bpf_task_from_pid(pid);
+> +		if (!p) {
+> +			__sync_fetch_and_add(&nr_lost, 1);
+> +			__sync_fetch_and_sub(&nr_held_now, 1);
+> +			continue;
+> +		}
+> +
+> +		/*
+> +		 * Affinity may have changed while the task sat in the queue.
+> +		 * Such a task goes to the shared DSQ instead of being pinned
+> +		 * to a CPU it is no longer allowed on.
+> +		 */
+> +		if (!bpf_cpumask_test_cpu(target_cpu, p->cpus_ptr) ||
+> +		    is_migration_disabled(p)) {
+> +			scx_bpf_dsq_insert(p, SHARED_DSQ, slice_ns, 0);
+> +			bpf_task_release(p);
+> +			__sync_fetch_and_sub(&nr_held_now, 1);
+> +			if (!scx_bpf_dispatch_nr_slots())
+> +				return false;
+> +			continue;
+> +		}
+> +
+> +		scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL, slice_ns, 0);
+> +		bpf_task_release(p);
+> +		__sync_fetch_and_sub(&nr_held_now, 1);
+> +
+> +		at =3D held_at;
+> +		now =3D scx_bpf_now();
+> +		if (at && now > at) {
+> +			u64 d =3D now - at;
+> +
+> +			__sync_fetch_and_add(&total_held_ns, d);
+> +			if (d > max_held_ns)
+> +				max_held_ns =3D d;
+> +		}
+> +		held_at =3D 0;
+> +
+> +		__sync_fetch_and_add(&nr_released, 1);
+> +		return true;
+> +	}
+> +
+> +	return false;
+> +}
+
+[Severity: Medium]
+Can a single global held_at variable track hold duration when multiple tagg=
+ed
+tasks are queued in hold_q?
+
+hold_q has 1024 entries and nr_held_now counts how many tagged tasks are
+currently held, but held_at is a single global scalar. If two spin tasks are
+queued in hold_q before release_one() runs:
+
+1. The second task's tickbug_enqueue() overwrites held_at with its own
+timestamp and increments nr_held_now to 2.
+
+2. When release_one() pops the first task, it computes now - held_at using =
+the
+second task's timestamp, clears held_at =3D 0, decrements nr_held_now to 1,=
+ and
+increments nr_released.
+
+3. On the next timer tick, nr_held_now is still 1, so release_timerfn() kic=
+ks
+target_cpu with SCX_KICK_PREEMPT (preempting the first released task mid-ru=
+n),
+and release_one() pops the second task with held_at =3D=3D 0, adding nothin=
+g to
+total_held_ns while incrementing nr_released again, which skews the mean ho=
+ld
+reported by main() (total_held_ns / released).
+
+Should the enqueue timestamp be stored alongside pid in the hold_q map value
+struct instead of in a single global variable?
+
+[ ... ]
+> +void BPF_STRUCT_OPS(tickbug_dispatch, s32 cpu, struct task_struct *prev)
+> +{
+> +	/*
+> +	 * Arm the timer from the CPU it must be pinned to. ops.init() runs in
+> +	 * whatever context loaded the scheduler, which is the wrong CPU.
+> +	 */
+> +	if (cpu =3D=3D timer_cpu)
+> +		start_release_timer();
+
+[Severity: Medium]
+Can start_release_timer() pin release_timer to the wrong CPU or fail to run
+when timer_cpu is busy?
+
+First, start_release_timer() calls bpf_timer_start(timer, hold_ns,
+BPF_F_TIMER_CPU_PIN), which pins the hrtimer to bpf_get_smp_processor_id()
+rather than the cpu argument passed to tickbug_dispatch(). Under
+CONFIG_SCHED_CORE, pick_next_task() on target_cpu can invoke
+dispatch_core_pick() -> tickbug_dispatch(timer_cpu, prev) for its SMT sibli=
+ng
+while executing on target_cpu. Because cpu =3D=3D timer_cpu is true while
+bpf_get_smp_processor_id() =3D=3D target_cpu, release_timer is pinned to
+target_cpu and release_timerfn() then aborts the scheduler via scx_bpf_erro=
+r()
+when curr_cpu =3D=3D target_cpu.
+
+Second, tickbug_init() calls scx_bpf_kick_cpu(timer_cpu, 0) before
+__scx_enabled is set and before tasks are switched to ext_sched_class. When
+SCX is enabled and resched_curr() runs on timer_cpu, if timer_cpu is runnin=
+g a
+task with remaining slice (prev->scx.slice > 0), dispatch_one() returns
+SCX_DSP_PREV without calling tickbug_dispatch(), leaving release_timer
+unstarted unless timer_cpu is kicked with SCX_KICK_PREEMPT when !timer_star=
+ted.
+
+Should start_release_timer() check bpf_get_smp_processor_id() =3D=3D timer_=
+cpu,
+and should tickbug_enqueue() kick timer_cpu with SCX_KICK_PREEMPT if
+!timer_started?
+
+[ ... ]
+> +SCX_OPS_DEFINE(tickbug_ops,
+> +	       /*
+> +		* The last runnable task on a CPU has to come through
+> +		* ops.enqueue() too, otherwise the tagged task would simply
+> +		* keep running on @target_cpu and never be held.
+> +		*/
+> +	       .flags			=3D SCX_OPS_ENQ_LAST,
+> +
+> +	       .select_cpu		=3D (void *)tickbug_select_cpu,
+> +	       .enqueue			=3D (void *)tickbug_enqueue,
+> +	       .dispatch		=3D (void *)tickbug_dispatch,
+> +	       .init			=3D (void *)tickbug_init,
+> +	       .exit			=3D (void *)tickbug_exit,
+
+[Severity: Medium]
+Does tickbug_ops need an ops.dequeue callback to keep hold_q and nr_held_now
+consistent when a held task leaves BPF custody?
+
+In release_one(), the code checks whether a held task's affinity changed wh=
+ile
+it sat in hold_q:
+
+	if (!bpf_cpumask_test_cpu(target_cpu, p->cpus_ptr) ||
+	    is_migration_disabled(p)) {
+
+However, when a task parked in hold_q undergoes an affinity change via
+sched_setaffinity() (or a property change such as setpriority(),
+sched_setscheduler(), or cgroup migration), the scheduler core calls
+dequeue_task_scx() followed by enqueue_task_scx(). Without ops.dequeue:
+
+1. If affinity changed away from target_cpu, move_queued_task() dequeues p
+from target_cpu without decrementing nr_held_now and re-enqueues p on
+dest_cpu !=3D target_cpu, where tickbug_enqueue() dispatches it immediately=
+ to
+SHARED_DSQ while leaving a stale pid in hold_q and nr_held_now inflated.
+
+2. If the property change keeps p on target_cpu, enqueue_task_scx() calls
+tickbug_enqueue() again while scx_bpf_task_running(p) is false, pushing a
+duplicate pid into hold_q and incrementing nr_held_now to 2 for a single ta=
+sk.
+When the first timer tick releases the task, nr_held_now stays at 1, so the
+next release_timerfn() tick kicks target_cpu with SCX_KICK_PREEMPT and
+preempts the running task.
+
+> diff --git a/tools/sched_ext/scx_tickbug.c b/tools/sched_ext/scx_tickbug.c
+> new file mode 100644
+> index 0000000000000..8acca5c1ff6ae
+> --- /dev/null
+> +++ b/tools/sched_ext/scx_tickbug.c
+[ ... ]
+> +	nr_cpu_ids =3D libbpf_num_possible_cpus();
+> +	assert(nr_cpu_ids > 0);
+> +	assert(nr_cpu_ids <=3D INT32_MAX);
+> +
+> +	skel->rodata->nr_cpu_ids =3D nr_cpu_ids;
+> +	skel->rodata->target_cpu =3D 0;
+> +	skel->rodata->timer_cpu =3D 1;
+> +	skel->rodata->hold_ns =3D 10ULL * 1000 * 1000;
+> +	skel->rodata->slice_ns =3D __COMPAT_ENUM_OR_ZERO("scx_public_consts", "=
+SCX_SLICE_DFL");
+> +
+> +	while ((opt =3D getopt(argc, argv, "c:t:H:s:vh")) !=3D -1) {
+> +		switch (opt) {
+> +		case 'c':
+> +		case 't': {
+> +			unsigned long cpu =3D strtoul(optarg, NULL, 0);
+> +
+> +			if (cpu >=3D nr_cpu_ids) {
+> +				fprintf(stderr, "invalid CPU id %lu (%u max)\n",
+> +					cpu, nr_cpu_ids - 1);
+> +				scx_tickbug__destroy(skel);
+> +				return 1;
+> +			}
+> +			if (opt =3D=3D 'c')
+> +				skel->rodata->target_cpu =3D (s32)cpu;
+> +			else
+> +				skel->rodata->timer_cpu =3D (s32)cpu;
+> +			break;
+> +		}
+> +		case 'H':
+> +			skel->rodata->hold_ns =3D strtoull(optarg, NULL, 0) * 1000 * 1000;
+> +			break;
+> +		case 's':
+> +			skel->rodata->slice_ns =3D strtoull(optarg, NULL, 0) * 1000;
+> +			break;
+> +		case 'v':
+> +			verbose =3D true;
+> +			break;
+> +		default:
+> +			fprintf(stderr, help_fmt, basename(argv[0]));
+> +			return opt !=3D 'h';
+> +		}
+> +	}
+
+[Severity: Medium]
+What happens if scx_tickbug is run without -t on a single-CPU system where
+nr_cpu_ids =3D=3D 1?
+
+In main(), skel->rodata->timer_cpu defaults to 1 while cpu >=3D nr_cpu_ids =
+is
+only checked inside the getopt() cases for -c and -t (and rodata->nr_cpu_ids
+is never referenced in scx_tickbug.bpf.c). On a 1-CPU system, timer_cpu =3D=
+ 1
+passes the target_cpu =3D=3D timer_cpu check, loads the BPF program, and th=
+en
+triggers scx_error() in scx_cpu_valid() when tickbug_init() calls
+scx_bpf_kick_cpu(timer_cpu, 0). Also, the default branch in the getopt() lo=
+op
+returns without calling scx_tickbug__destroy(skel).
+
+Should main() verify that nr_cpu_ids >=3D 2 (or validate timer_cpu < nr_cpu=
+_ids
+after the getopt() loop) and destroy skel before returning in the default
+case?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261105200205.1178=
+097-1-radu.m.toader@gmail.com?part=3D1
