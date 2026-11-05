@@ -1,95 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.217
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793823691;
-	b=RZib46uDSfTgj0iGhFL7HCtdnTusP4XWV+IJx8RyyFlCOXyUzPfwLERgR6rBTXsjuZ2A
-	 HjD9guizceSg5vIk9zjocmiCokV8alKnMNIck5NuQ0wS49tGOfK1e7rqljPZNc7jIej+l
-	 PCMf1HJg18OPKP9bBq4c3MZjwvMYZXRP65e8jH8RTwQC0yMwAJfOWnKb/TQ0bBq8W5pDV
-	 crCvsgWMMGFln+mJLDRthoRKxNce+tYwzV+zAFbsZR5T8f+k46WOs9Whi7ktpFzuYvDEU
-	 X2kCyFVdiPlUhPBKLNwkHG4PKdmjiKnVx7r9eWhloIolGOCMq0LwY9je2SThbYWBXhQ==
+	t=1793859410;
+	b=CzTPrlGwMUPNXRiQ8jZ0m6K1wZjQeqlChcIwigl5OSgvjda5zDPUnb18EqNQerIBsLdO
+	 slamBlyvx2saTIxB5zowdkM6g1pBeIzAJ80FveLhyh/kxLYvbCeBMBgSWYnuCqjlJdUYF
+	 3xEqn3rmeWNt1FA35xl4P4M07R91imRnIy9W55HLrXpgyeRzuJa9/H78X2M9lR8aEdMRl
+	 o9uUju/CPurRKv8HE8a6Dq+S3KxCI1dUUxaxNqEKrv/m0fjxGZqOZlHPtHTIfiC0bAFkb
+	 Y7mp85lck0+O7JNnU2rh0/PZxQnB2yhtNeVvEXAyGmEMsG74BT19kaJbiHUvBxSiipA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793823691;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Reply-To:
-	 In-Reply-To:References:Subject:Message-ID:Content-Transfer-Encoding:
-	 Date:MIME-Version:Content-Type;
-	bh=+1YoVC5AL6mwQdUlymRFFKElBBXM5Kk1X54PH2hsQCU=;
-	b=BCH6PZyM1U08jDza6trp+KBPAlBiQCNNkEovwZgMbEId5rodz8n3/U9lWMlCsutWwUGK
-	 ngtJgEKLPCUevRWwdfOna5yx85UgHbRRBlbSzENG5lpwnF7rdjxDWfIRsVaAPTVB1pPlL
-	 X9OtfbSv2J4tZTujpSMG7eCTdh4izrxvn2NUB2UKMQfxrGmrB6ifJ4xwnqy1dCTqFaTtV
-	 +wRl1LBXK5ZDydMo/uugnlkDFy51gc2MQcjbh3XltYljSiKKeBjAI+/k6bowj6QZRdg6a
-	 XxZpKg1NR+39s5MlhiDwUQne3jvLJaGFW8KykKheC6n+fzWluboLtXbecHYdyqH6fHg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793859410;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:From:To:CC:
+	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:X-Originating-IP:X-ClientProxiedBy;
+	bh=/pT5bB/iqBe4l8xXdonjO3NcFwU6d+FBzgM1+k2Uspw=;
+	b=35DTC0w6UwJrDDr+5zT88cJ1Ked+k46KNEsyDtBd12gonGwR8M5WYqT0N/6+mIh9RHLP
+	 sEkG0WlrbsiXIl/2r0Gaqp0SlQiitSPOmD6Oj/4+QAmlgUQPL1usrwCEjbxzBzyj62lQh
+	 AsjQzVLfJUZ1hzSfS7CTtSv0FINmcHxOpIVAV7Z0xEURPlYJm1GiJDtOHjlT7u1XhOO1W
+	 v7UgKJCgeCY3XmU46uVoAjMmJ1zwlgY8Y1Vibj/jledpDGEpiyKGbn7Yy6UzBxGfkeMC2
+	 g7jKeVCbg+hoglNWoKPCBnUnzoCC+wmnoiMO+pZFRXkQfAbu5BfiZ4+N49pK2Ot6MTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=realtoradnan.com;
-	spf=pass smtp.mailfrom=realtoradnan.com;
-	dkim=pass header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=bafoBO4Y;
-	arc=none smtp.remote-ip=209.85.222.172
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=WY3UFdPS;
+	arc=none smtp.remote-ip=113.46.200.217
+Received: from canpmsgout02.his.huawei.com (canpmsgout02.his.huawei.com [113.46.200.217])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA986070418
-	for <sched-ext@lists.linux.dev>; Wed,  4 Nov 2026 20:21:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CAA986070418
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=realtoradnan.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtoradnan.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C28606A31B
+	for <sched-ext@lists.linux.dev>; Thu,  5 Nov 2026 06:16:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33C28606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=realtoradnan.com header.i=@realtoradnan.com header.a=rsa-sha256 header.s=google header.b=bafoBO4Y
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-93cc1ab5f6cso127203485a.0
-        for <sched-ext@lists.linux.dev>; Wed, 04 Nov 2026 12:21:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=realtoradnan.com; s=google; t=1793823690; x=1794428490; darn=lists.linux.dev;
-        h=content-type:mime-version:date:content-transfer-encoding:message-id
-         :subject:references:in-reply-to:reply-to:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+1YoVC5AL6mwQdUlymRFFKElBBXM5Kk1X54PH2hsQCU=;
-        b=bafoBO4Y+jUXFKSDRMCiCIrN4yZvgYuHgroqSTAOJGfyFbXRsskXNiSY1dxOsL1Bv2
-         PNby7NQEl4vA9ZKyhL4VOS61iv1lmcoWQauB0d3HWXL3TBSIxsNNwoDgJ9WxoGL+Z2DI
-         JwrqS4zW7RnINosqisucy1FJKvwTUne8LSb6GLTymu2uAYNhsxm1s6YG8F0mOtu2/BkA
-         yuvzaYk1mFx5A7CbsnmVJ/B6uEFXkvktsKoT9jtI9PUw4xLX2UmhJkXCXW/MhJrkNOSB
-         9pGWdqVFKGoPKMuGYMD/v1N9iQlRfs6uQNIrRtloZxtqeJgweB7QKKEh+nMHZwWBMawi
-         zX7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793823690; x=1794428490;
-        h=content-type:mime-version:date:content-transfer-encoding:message-id
-         :subject:references:in-reply-to:reply-to:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+1YoVC5AL6mwQdUlymRFFKElBBXM5Kk1X54PH2hsQCU=;
-        b=K3omhs4ke2Wa3jQB46+oFWFO6Z044Dk0wz89vmofnWQwGM/+5HXCdC3VHrE5zJpZj3
-         yDOgrbZbxxC0u9I3BEJit00enkd9rFddLSTLW7jd5eSUVvqPL+3F2N1v3+y4dYoNNQFq
-         YbItXde+RvmR4afklV6mmcrvIpuBeyzDngsg8YpK/vNCaBr/zHvCmupW7PYXjJLGOyL2
-         WvKyFfU0z4dYPLtskvJ284+yZvxw8lUNOr4HMbeNq9WNP3CWmezcML1C4elAbm6FZ0vz
-         XnPDhdTbiutKBxxiNV7DIFJKNTeUoSfSNcsV3Wjzv/bW1RNqknzFsBYWIBeImbErNtJ2
-         S73w==
-X-Gm-Message-State: APuU4Z9CZZ2PbWt6uj9uQn2EgEQ2jG/zirNAyJrLE2QQjuJQgi5twMm7
-	Hxh72WSWI8CbgMZVz+CUktBtszejtnWQQex+dzs1oRsEeEJx2HIcvwPsnVvtfIDW5q1w1ZBw/pP
-	WuXHeTfYNROA=
-X-Gm-Gg: AYBFou3sFoNC3gRQBjzo7gc31omleXZ2e7zxVxlL8JpN/NrlnLdm6BNZbN95i6bifSW
-	ftM8bm6/QfB57OsBYjF7C6V9gKfho9YtooQUZILwQNAi0qnrn/KF5WeDOHrdexaoW/T3z655+uF
-	tmIKDl1JiQ5BtoRs1BFp4slkYtEg+PuMW/IRTkLp9k5XBabOSrwF/+1civRuxKLNaJu4NZ7QXWT
-	atlmuKBFh0nVFDrKWlq5lfuAl4wsJWlwiwnC2yGxOyd1meuJ0cbKrQYOcXeVghq0r+16EWUYM19
-	VkQwqNeDMJxYCLOUQ6a8KCw5m6FfJqtoNwqdkEptwbYZvkuuKwdR+zG8nz90VGCTb73YxV9RBJN
-	T7C9UwsirX1r/jF3o2EQXtVR0h7NC5x72SWTSsxZwIZAPDigi2BXLAH/j4DIAlrAmkEAlWGpI26
-	S23R46bnXg8UuR+iFrR6s2inAuatKJ0DH+mgLSGAuZqS+uIlHbktVDkG2ksAwTNFKEVToG4zkWB
-	ZS7CJS/8Mw/sDtbSY5J3mlFB62aT2Z8M9mtGVDihykBx43Ootk/M1KlbFeywqPX8Mc0KqAurHVC
-	6b72evJ327iMqTf+NGlLcED7N3fABnUQrXS8pyw3YWrf7xMTLS9DG1FKl3jtRUCki5bKDT+5fOk
-	HfJD0L/K99Vw=
-X-Received: by 2002:a05:620a:4413:b0:943:faab:a149 with SMTP id af79cd13be357-94421700a82mr2948988885a.63.1793823689768;
-        Wed, 04 Nov 2026 12:21:29 -0800 (PST)
-Received: from realtoradnan.com (vmi3719414.contaboserver.net. [80.190.73.126])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-945d482eb96sm289099985a.23.2026.11.04.12.21.29
-        for <sched-ext@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 12:21:29 -0800 (PST)
-From: Troy Cross <troy@realtoradnan.com>
-To: sched-ext@lists.linux.dev
-Reply-To: Troy Cross <troy@realtoradnan.com>
-In-Reply-To: <2f393418-7255-4743-b185-248dbce5c845@realtoradnan.com>
-References: <2f393418-7255-4743-b185-248dbce5c845@realtoradnan.com>
-Subject: RE: schedkit
-Message-ID: <65c5db2e-bdd8-4266-b975-f786b8a8415d@realtoradnan.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 04 Nov 2026 20:21:29 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=WY3UFdPS
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=/pT5bB/iqBe4l8xXdonjO3NcFwU6d+FBzgM1+k2Uspw=;
+	b=WY3UFdPSDZUhxcTP+d0UxKZiHe8E/UkqazYLa4ex5i80mJLSYv0vu6SV1zr2JkRm0QQ4BBq2s
+	mndno3jhK6REfiSLcX7IHPoMt8Ax5JBq6/uqS9ZjrsaKHDHjJEeZQkI2BMFr87wD+RZe2ZGoD4U
+	XutJ7EmQGe5ou+fOeQqPnwg=
+Received: from mail.maildlp.com (unknown [172.19.163.104])
+	by canpmsgout02.his.huawei.com (SkyGuard) with ESMTPS id 4jKsWh04cdzcb1H;
+	Thu,  5 Nov 2026 14:16:16 +0800 (CST)
+Received: from kwepemk300016.china.huawei.com (unknown [7.202.195.98])
+	by mail.maildlp.com (Postfix) with ESMTPS id 5D6C24058F;
+	Thu,  5 Nov 2026 14:16:44 +0800 (CST)
+Received: from huawei.com (10.67.174.191) by kwepemk300016.china.huawei.com
+ (7.202.195.98) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 5 Nov
+ 2026 14:16:43 +0800
+From: Zhang Qiao <zhangqiao22@huawei.com>
+To: <sched-ext@lists.linux.dev>
+CC: <linux-kernel@vger.kernel.org>, <tj@kernel.org>, <void@manifault.com>,
+	<arighi@nvidia.com>, <changwoo@igalia.com>, <tanghui22@huawei.com>,
+	<zhangqiao22@huawei.com>
+Subject: [PATCH 3/4] sched_ext: Extract construction of a single LLC CID range
+Date: Thu, 5 Nov 2026 14:50:12 +0800
+Message-ID: <20261105065013.784398-4-zhangqiao22@huawei.com>
+X-Mailer: git-send-email 2.18.0.huawei.25
+In-Reply-To: <20261105065013.784398-1-zhangqiao22@huawei.com>
+References: <20261105065013.784398-1-zhangqiao22@huawei.com>
 X-Mailing-List: sched-ext@lists.linux.dev
 List-Id: <sched-ext.lists.linux.dev>
 List-Post: <mailto:sched-ext@lists.linux.dev>
@@ -99,23 +70,249 @@ List-Unsubscribe: <mailto:sched-ext+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sched-ext+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ kwepemk300016.china.huawei.com (7.202.195.98)
 
-Sorry, just making sure you saw this.
+Extract the per-LLC walk into scx_cid_build_llc(), which consumes one
+LLC worth of cpus from b->node_scratch and appends their cores,
+clusters and shards. All per-LLC state - the llc cid and index, the
+shard layout counters and the cluster carry - is local to the helper;
+cross-LLC state stays in the builder.
 
+The two WARN_ON_ONCE checks now return -EINVAL to the caller instead
+of returning straight out of scx_cid_init(); the value and its effect
+on the error path are unchanged.
 
+Signed-off-by: Zhang Qiao <zhangqiao22@huawei.com>
+---
+ kernel/sched/ext/cid.c | 206 ++++++++++++++++++++++-------------------
+ 1 file changed, 109 insertions(+), 97 deletions(-)
 
-On Mon, Nov 2, 2026 at 06:16 PM =
-UTC Troy Cross <troy@realtoradnan.com> wrote:
+diff --git a/kernel/sched/ext/cid.c b/kernel/sched/ext/cid.c
+index ee55f101e5c5..54eacdc23d32 100644
+--- a/kernel/sched/ext/cid.c
++++ b/kernel/sched/ext/cid.c
+@@ -180,6 +180,110 @@ struct scx_cid_builder {
+ 	u32 shard_size, max_cids;
+ };
+ 
++static s32 scx_cid_build_llc(struct scx_cid_builder *b, s32 nid,
++			     s32 node_cid, s32 node_idx)
++{
++	s32 ncpu = cpumask_first(b->node_scratch);
++	const struct cpumask *llc_mask = cpu_llc_mask(ncpu, b->llc_fallback);
++	s32 llc_cid = b->next_cid;
++	s32 llc_idx = b->next_llc_idx++;
++	u32 cores_per_shard, nr_large;
++	u32 shard_local = 0, cores_in_shard = 0, cids_in_shard = 0;
++	s32 shard_cid, shard_idx;
++	s32 cluster_cid = -1, cluster_idx = -1;
++
++	/* b->llc_scratch = b->node_scratch & this llc */
++	cpumask_and(b->llc_scratch, b->node_scratch, llc_mask);
++	if (WARN_ON_ONCE(!cpumask_test_cpu(ncpu, b->llc_scratch)))
++		return -EINVAL;
++
++	calc_shard_layout(b->llc_scratch, b->shard_size, &cores_per_shard, &nr_large);
++	shard_cid = b->next_cid;
++	shard_idx = b->next_shard_idx++;
++	b->tbls->shard_node[shard_idx] = nid;
++
++	while (!cpumask_empty(b->llc_scratch)) {
++		const struct cpumask *sib;
++		s32 core_cid, core_idx, lcpu, ccpu;
++		u32 max_cores, cids_in_core;
++
++		/*
++		 * Take the cores of one cluster before moving
++		 * on, so that a cluster is a contiguous cid
++		 * range like the core, LLC and node levels.
++		 */
++		if (cpumask_empty(b->cluster_scratch)) {
++			s32 xcpu = cpumask_first(b->llc_scratch);
++
++			cpumask_or(b->cluster_scratch,
++				   topology_cluster_cpumask(xcpu),
++				   topology_sibling_cpumask(xcpu));
++			cpumask_and(b->cluster_scratch, b->cluster_scratch,
++				    b->llc_scratch);
++			cluster_cid = b->next_cid;
++			cluster_idx = b->next_cluster_idx++;
++		}
++
++		lcpu = cpumask_first(b->cluster_scratch);
++		sib = topology_sibling_cpumask(lcpu);
++		core_cid = b->next_cid;
++		core_idx = b->next_core_idx++;
++
++		/* b->core_scratch = b->cluster_scratch & this core */
++		cpumask_and(b->core_scratch, b->cluster_scratch, sib);
++		if (WARN_ON_ONCE(!cpumask_test_cpu(lcpu, b->core_scratch)))
++			return -EINVAL;
++
++		/*
++		 * Advance to a new shard when either core or
++		 * cid count reaches max. The latter bounds
++		 * shard sizes under uneven SMT. Never start an
++		 * empty shard.
++		 */
++		cids_in_core = cpumask_weight(b->core_scratch);
++		max_cores = cores_per_shard + (shard_local < nr_large ? 1 : 0);
++		if (cores_in_shard &&
++		    (cores_in_shard >= max_cores ||
++		     cids_in_shard + cids_in_core > b->max_cids)) {
++			shard_local++;
++			cores_in_shard = 0;
++			cids_in_shard = 0;
++			shard_cid = b->next_cid;
++			shard_idx = b->next_shard_idx++;
++			b->tbls->shard_node[shard_idx] = nid;
++		}
++		cores_in_shard++;
++		cids_in_shard += cids_in_core;
++
++		for_each_cpu(ccpu, b->core_scratch) {
++			s32 cid = b->next_cid++;
++
++			b->tbls->cid_to_cpu[cid] = ccpu;
++			b->tbls->cpu_to_cid[ccpu] = cid;
++			b->tbls->cid_to_shard[cid] = shard_idx;
++			b->tbls->topo[cid] = (struct scx_cid_topo){
++				.core_cid = core_cid,
++				.core_idx = core_idx,
++				.llc_cid = llc_cid,
++				.llc_idx = llc_idx,
++				.node_cid = node_cid,
++				.node_idx = node_idx,
++				.shard_cid = shard_cid,
++				.shard_idx = shard_idx,
++				.cluster_cid = cluster_cid,
++				.cluster_idx = cluster_idx,
++			};
++
++			cpumask_clear_cpu(ccpu, b->cluster_scratch);
++			cpumask_clear_cpu(ccpu, b->llc_scratch);
++			cpumask_clear_cpu(ccpu, b->node_scratch);
++			cpumask_clear_cpu(ccpu, b->to_walk);
++		}
++	}
++
++	return 0;
++}
++
+ static void scx_cid_build_notopo(struct scx_cid_builder *b)
+ {
+ 	u32 notopo_in_shard;
+@@ -333,103 +437,11 @@ s32 scx_cid_init(struct scx_sched *sch)
+ 			return -EINVAL;
+ 
+ 		while (!cpumask_empty(b.node_scratch)) {
+-			s32 ncpu = cpumask_first(b.node_scratch);
+-			const struct cpumask *llc_mask = cpu_llc_mask(ncpu, b.llc_fallback);
+-			s32 llc_cid = b.next_cid;
+-			s32 llc_idx = b.next_llc_idx++;
+-			u32 cores_per_shard, nr_large;
+-			u32 shard_local = 0, cores_in_shard = 0, cids_in_shard = 0;
+-			s32 shard_cid, shard_idx;
+-			s32 cluster_cid = -1, cluster_idx = -1;
+-
+-			/* b.llc_scratch = b.node_scratch & this llc */
+-			cpumask_and(b.llc_scratch, b.node_scratch, llc_mask);
+-			if (WARN_ON_ONCE(!cpumask_test_cpu(ncpu, b.llc_scratch)))
+-				return -EINVAL;
+-
+-			calc_shard_layout(b.llc_scratch, b.shard_size, &cores_per_shard, &nr_large);
+-			shard_cid = b.next_cid;
+-			shard_idx = b.next_shard_idx++;
+-			b.tbls->shard_node[shard_idx] = nid;
+-
+-			while (!cpumask_empty(b.llc_scratch)) {
+-				const struct cpumask *sib;
+-				s32 core_cid, core_idx, lcpu, ccpu;
+-				u32 max_cores, cids_in_core;
+-
+-				/*
+-				 * Take the cores of one cluster before moving
+-				 * on, so that a cluster is a contiguous cid
+-				 * range like the core, LLC and node levels.
+-				 */
+-				if (cpumask_empty(b.cluster_scratch)) {
+-					s32 xcpu = cpumask_first(b.llc_scratch);
+-
+-					cpumask_or(b.cluster_scratch,
+-						   topology_cluster_cpumask(xcpu),
+-						   topology_sibling_cpumask(xcpu));
+-					cpumask_and(b.cluster_scratch, b.cluster_scratch,
+-						    b.llc_scratch);
+-					cluster_cid = b.next_cid;
+-					cluster_idx = b.next_cluster_idx++;
+-				}
+-
+-				lcpu = cpumask_first(b.cluster_scratch);
+-				sib = topology_sibling_cpumask(lcpu);
+-				core_cid = b.next_cid;
+-				core_idx = b.next_core_idx++;
+-
+-				/* b.core_scratch = b.cluster_scratch & this core */
+-				cpumask_and(b.core_scratch, b.cluster_scratch, sib);
+-				if (WARN_ON_ONCE(!cpumask_test_cpu(lcpu, b.core_scratch)))
+-					return -EINVAL;
+-
+-				/*
+-				 * Advance to a new shard when either core or
+-				 * cid count reaches max. The latter bounds
+-				 * shard sizes under uneven SMT. Never start an
+-				 * empty shard.
+-				 */
+-				cids_in_core = cpumask_weight(b.core_scratch);
+-				max_cores = cores_per_shard + (shard_local < nr_large ? 1 : 0);
+-				if (cores_in_shard &&
+-				    (cores_in_shard >= max_cores ||
+-				     cids_in_shard + cids_in_core > b.max_cids)) {
+-					shard_local++;
+-					cores_in_shard = 0;
+-					cids_in_shard = 0;
+-					shard_cid = b.next_cid;
+-					shard_idx = b.next_shard_idx++;
+-					b.tbls->shard_node[shard_idx] = nid;
+-				}
+-				cores_in_shard++;
+-				cids_in_shard += cids_in_core;
+-
+-				for_each_cpu(ccpu, b.core_scratch) {
+-					s32 cid = b.next_cid++;
+-
+-					b.tbls->cid_to_cpu[cid] = ccpu;
+-					b.tbls->cpu_to_cid[ccpu] = cid;
+-					b.tbls->cid_to_shard[cid] = shard_idx;
+-					b.tbls->topo[cid] = (struct scx_cid_topo){
+-						.core_cid = core_cid,
+-						.core_idx = core_idx,
+-						.llc_cid = llc_cid,
+-						.llc_idx = llc_idx,
+-						.node_cid = node_cid,
+-						.node_idx = node_idx,
+-						.shard_cid = shard_cid,
+-						.shard_idx = shard_idx,
+-						.cluster_cid = cluster_cid,
+-						.cluster_idx = cluster_idx,
+-					};
+-
+-					cpumask_clear_cpu(ccpu, b.cluster_scratch);
+-					cpumask_clear_cpu(ccpu, b.llc_scratch);
+-					cpumask_clear_cpu(ccpu, b.node_scratch);
+-					cpumask_clear_cpu(ccpu, b.to_walk);
+-				}
+-			}
++			s32 ret;
++
++			ret = scx_cid_build_llc(&b, nid, node_cid, node_idx);
++			if (ret)
++				return ret;
+ 		}
+ 	}
+ 
+-- 
+2.43.0
 
-> Greetings,
->=20
->=20
-> Do you have any interest in=C2=A0schedkit .com for 500 usd? i noticed you=
- own=C2=A0.io version, so maybe you will be interested in this one as well.
->=20
->=20
-> Sincerely,
->=20
->=20
-> Troy
